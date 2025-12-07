@@ -265,6 +265,9 @@
 		external_organs = list()
 	QDEL_LIST_ASSOC_VAL(feature_offsets)
 
+	if(current_gauze)
+		remove_gauze()
+
 	return ..()
 
 /obj/item/bodypart/forceMove(atom/destination) //Please. Never forcemove a limb if its's actually in use. This is only for borgs.
@@ -940,8 +943,8 @@
 /obj/item/bodypart/proc/update_bodypart_damage_state()
 	SHOULD_CALL_PARENT(TRUE)
 
-	var/tbrute = clamp(round((brute_dam/max_damage)*5, 1), 0, 3)
-	var/tburn = clamp(round((burn_dam/max_damage)*5, 1), 0, 3)
+	var/tbrute = clamp(round((brute_dam/max_damage)*4, 1), 0, 3)
+	var/tburn = clamp(round((burn_dam/max_damage)*4, 1), 0, 3)
 
 	if((tbrute != brutestate) || (tburn != burnstate))
 		brutestate = tbrute

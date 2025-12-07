@@ -29,6 +29,7 @@
 			new_gauze.add_mob_blood(owner)
 	SEND_SIGNAL(src, COMSIG_BODYPART_GAUZED, current_gauze, new_gauze)
 	owner.update_bandage_overlays()
+	START_PROCESSING(SSobj, current_gauze)
 
 /obj/item/bodypart/proc/check_gauze_removal(burn, brute)
 	if(!current_gauze)
@@ -47,6 +48,7 @@
 
 /obj/item/bodypart/proc/remove_gauze(atom/remove_to)
 	SEND_SIGNAL(src, COMSIG_BODYPART_UNGAUZED, current_gauze)
+	STOP_PROCESSING(SSobj, current_gauze)
 	if(remove_to)
 		current_gauze.forceMove(remove_to)
 	else
@@ -62,6 +64,8 @@
 		current_gauze.sanitization = current_gauze.sanitization * 0.25
 	if(current_gauze.burn_cleanliness_bonus)
 		current_gauze.burn_cleanliness_bonus = 1.25 //dirty bandages aren't good for wounds
+	current_gauze.stored_heal_brute = 0
+	current_gauze.stored_heal_burn = 0
 	current_gauze.update_appearance(UPDATE_NAME)
 	current_gauze = null
 	owner.update_bandage_overlays()
@@ -144,8 +148,6 @@
 	absorption_capacity = 4
 	splint_factor = 0.7
 	burn_cleanliness_bonus = 0.35
-	heal_burn = 10
-	heal_brute = 10
 	merge_type = /obj/item/stack/medical/gauze
 	/// has this gauze been used? set to true in apply_gauze()
 	var/used = FALSE
@@ -155,6 +157,57 @@
 	var/times_cleaned = 0
 	/// the color of the bandage overlay
 	var/overlay_color = GAUZE_OVERLAY_COLOR
+	/// the amount of stored brute healing this gauze has
+	var/stored_heal_brute = 20
+	/// the amount of stored burn healing this gauze has
+	var/stored_heal_burn = 20
+	/// the amount of stored brute healing applied each tick to the gauzed limb
+	var/stored_heal_brute_rate = 1
+	/// the amount of stored burn healing applied each tick to the gauzed limb
+	var/stored_heal_burn_rate = 1
+	/// the current limb we are healing
+	var/obj/item/bodypart/current_limb
+
+/obj/item/stack/medical/gauze/Destroy(force)
+	. = ..()
+	STOP_PROCESSING(SSobj, src)
+	if(current_limb)
+		current_limb = null
+
+/obj/item/stack/medical/gauze/process(seconds_per_tick)
+	if(!istype(loc, /obj/item/bodypart))
+		STOP_PROCESSING(SSobj, src)
+		return
+
+	if(!current_limb)
+		current_limb = loc
+
+	if(!current_limb.owner)
+		return
+
+	if(!IS_ORGANIC_LIMB(current_limb))
+		return
+
+	if(HAS_TRAIT(current_limb.owner, TRAIT_STASIS) || current_limb.owner.stat == DEAD)
+		return
+
+	var/laying_down_bonus = 1 //laying down heals more
+	if(current_limb.owner.body_position == LYING_DOWN)
+		laying_down_bonus = 1.5
+
+	if(stored_heal_brute > 0)
+		current_limb.heal_damage(stored_heal_brute_rate * laying_down_bonus, 0)
+		stored_heal_brute = max(stored_heal_brute - stored_heal_brute_rate, 0)
+
+	if(stored_heal_burn > 0)
+		current_limb.heal_damage(0, stored_heal_burn_rate * laying_down_bonus)
+		stored_heal_burn = max(stored_heal_burn - stored_heal_burn_rate, 0)
+
+	current_limb.owner.update_damage_overlays()
+
+	if(stored_heal_brute <= 0 && stored_heal_burn <= 0)
+		STOP_PROCESSING(SSobj, src)
+
 
 /obj/item/stack/medical/gauze/update_name(updates)
 	. = ..()
@@ -265,9 +318,6 @@
 			span_infoplain(span_green("You [limb.current_gauze?.type == type ? "replace" : "bandage"] the wounds on [whose] [limb.plaintext_zone].")),
 		)
 	limb.apply_gauze(src)
-	if(iscarbon(patient) && !used)
-		var/mob/living/carbon/carbon_patient = patient
-		heal_carbon(carbon_patient, user, heal_brute, heal_burn, TRUE)
 	return TRUE //for flesh burn wound code
 
 /obj/item/stack/medical/gauze/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
@@ -309,10 +359,10 @@
 	burn_cleanliness_bonus = 0.7
 	absorption_rate = 0.075
 	absorption_capacity = 2
-	heal_burn = 5
-	heal_brute = 5
 	merge_type = /obj/item/stack/medical/gauze/improvised
 	overlay_color = IMPROVISED_GAUZE_OVERLAY_COLOR
+	stored_heal_brute = 10
+	stored_heal_burn = 10
 
 ////////////////
 // Plastiseal //
@@ -328,12 +378,14 @@
 	splint_factor = 0.35
 	burn_cleanliness_bonus = 0.1
 	merge_type = /obj/item/stack/medical/gauze/plastiseal
-	heal_burn = 30
 	sanitization = 3
 	flesh_regeneration = 15
-	heal_brute = 15
 	can_clean = FALSE
 	overlay_color = PLASTISEAL_OVERLAY_COLOR
+	stored_heal_brute = 30
+	stored_heal_burn = 50
+	stored_heal_brute_rate = 6
+	stored_heal_burn_rate = 10
 
 /obj/item/stack/medical/gauze/plastiseal/twelve
 	amount = 12
