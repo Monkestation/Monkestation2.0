@@ -16,7 +16,7 @@
 
 /obj/item/mcobject/messaging/microphone/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods, message_range)
 	. = ..()
-	if(!anchored)
+	if(!anchored || istype(speaker, /obj/item/mcobject))
 		return
 	fire("[relay_speaker ? "[speaker.GetVoice()]:" : ""][html_decode(raw_message)]")
 
