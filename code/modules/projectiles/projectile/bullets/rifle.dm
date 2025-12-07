@@ -89,7 +89,7 @@
 	icon_state = "gaussphase"
 	speed = 0.3
 	damage = 13
-	armour_penetration = 20
+	armour_penetration = 40
 	wound_bonus = -30
 	bare_wound_bonus = -10
 	ricochets_max = 2
@@ -102,11 +102,11 @@
 	if(isliving(target))
 		var/mob/living/poor_sap = target
 
-		// If the target mob has enough armor to stop the bullet, or the bullet has already gone through two people, stop it on this hit
-		if((poor_sap.run_armor_check(def_zone, BULLET, "", "", silent = TRUE) > 30) || (pierces > 2))
+		// If the bullet has already gone through two people, stop it on this hit
+		if((pierces > 2))
 			projectile_piercing = NONE
 
-			armour_penetration -= 10
+			armour_penetration -= 20
 
 	return ..()
 
