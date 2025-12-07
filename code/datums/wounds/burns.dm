@@ -368,7 +368,7 @@
 	damage_multiplier_penalty = 1.2
 	threshold_penalty = 40
 	status_effect_type = /datum/status_effect/wound/burn/flesh/severe
-	treatable_by = list(/obj/item/flashlight/pen/paramedic, /obj/item/stack/medical/ointment, /obj/item/stack/medical/mesh, /obj/item/stack/medical/gauze/plastiseal)
+	treatable_by = list(/obj/item/flashlight/pen, /obj/item/stack/medical/ointment, /obj/item/stack/medical/mesh, /obj/item/stack/medical/gauze/plastiseal)
 	infestation_rate = 0.07 // appx 9 minutes to reach sepsis without any treatment
 	flesh_damage = 12.5
 	scar_keyword = "burnsevere"
