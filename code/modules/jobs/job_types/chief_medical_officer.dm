@@ -57,7 +57,7 @@
 	id_trim = /datum/id_trim/job/chief_medical_officer
 	uniform = /obj/item/clothing/under/rank/medical/chief_medical_officer/turtleneck
 	suit = /obj/item/clothing/suit/toggle/labcoat/cmo
-	suit_store = /obj/item/flashlight/pen/paramedic
+	suit_store = /obj/item/flashlight/pen
 	backpack_contents = list(
 		/obj/item/melee/baton/telescopic = 1,
 		)
@@ -90,5 +90,5 @@
 	head = null
 	uniform = /obj/item/clothing/under/rank/medical/chief_medical_officer
 	mask = /obj/item/clothing/mask/breath/medical
-	r_pocket = /obj/item/flashlight/pen/paramedic
+	r_pocket = /obj/item/flashlight/pen
 	internals_slot = ITEM_SLOT_SUITSTORE

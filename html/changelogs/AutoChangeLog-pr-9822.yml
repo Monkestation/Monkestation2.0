@@ -1,0 +1,9 @@
+author: "SirNightKnight, ghost"
+delete-after: True
+changes:
+  - rscadd: "Paramedics are now issued black work boots as standard workwear."
+  - image: "Paramedic Jackets now match in color to the rest of the Paramedic's gear."
+  - rscdel: "squashed the paramedic penlight uv function into the standard penlight."
+  - rscadd: "penlights are printable at medical lathes."
+  - balance: "turns the penlight UV function into a repeating do after."
+  - qol: "treating a burn with UV from a penlight auto-repeats."

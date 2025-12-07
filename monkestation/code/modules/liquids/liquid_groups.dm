@@ -695,6 +695,8 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	for(var/turf/cached_turf in cached_edge_turfs)
 		for(var/direction in cached_edge_turfs[cached_turf])
 			var/turf/directional_turf = get_step(cached_turf, direction)
+			if(!directional_turf || isclosedturf(directional_turf) || !TURFS_CAN_SHARE(cached_turf, directional_turf) || HAS_TRAIT(directional_turf, TRAIT_BLOCK_LIQUID_SPREAD))
+				continue
 			if(spread_liquid(directional_turf, cached_turf))
 				cached_edge_turfs[cached_turf] -= direction
 				if(!length(cached_edge_turfs[cached_turf]))
@@ -950,11 +952,6 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	turf_reagents.expose(target, method, liquid = TRUE)
 
 /datum/liquid_group/proc/spread_liquid(turf/new_turf, turf/source_turf)
-	if(isclosedturf(new_turf) || !TURFS_CAN_SHARE(source_turf, new_turf))
-		return FALSE
-	if(HAS_TRAIT(new_turf, TRAIT_BLOCK_LIQUID_SPREAD))
-		return FALSE
-
 	if(isopenspaceturf(new_turf))
 		var/turf/Z_turf_below = GET_TURF_BELOW(new_turf)
 		if(!Z_turf_below)

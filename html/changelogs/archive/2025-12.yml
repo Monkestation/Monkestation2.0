@@ -10,3 +10,85 @@
   - map: Oshan transfer centre is now connected to power.
   - map: Oshan Ai sat ai can now see its APC.
   - map: Oshan AI now has additional cameras in various public blind spots
+2025-12-03:
+  Absolucy:
+  - bugfix: Fixed flux and vortex anomalies being able to run on Oshan, when they
+      weren't supposed to.
+  - bugfix: Fixed some turfs (i.e ocean tiles, lava, etc) having liquid on them when
+      they shouldn't have any.
+  - code_imp: Some slight cleanups to liquid code.
+  - qol: Your own asay/msay messages will no longer be highlighted in chat.
+  Absolucy, timothymtorres, SmArtKar, mcbalaam:
+  - sound: Add burning sound loop to bonfires and fireplaces.
+  - code_imp: Improved fireplaces to only process when lit.
+  - qol: Add smoke particles to burning fireplaces.
+  - bugfix: Now trying to light a fireplace will not make you attack it.
+  EssentialTomato:
+  - bugfix: (Metekillot) Atmos machines should no longer remove labels when you adjust
+      their settings.
+  - code_imp: (SyncIt21) Atmos machines turns on/off correctly from the code perspective.
+  - bugfix: (JohnFulpWillard) Airlock pumps no longer draw massive amounts of power.
+  KittyNoodle:
+  - balance: AIs can now examine through their eye.
+  - bugfix: Dullahans can also examine through their head again.
+  Loiosh42:
+  - bugfix: Bomb actualizer now requires a radio to construct, preventing infinite
+      radio generation
+  SmArtKar:
+  - bugfix: Fixed Eldritch Pulse not working
+  Snack-Max:
+  - rscadd: Added two clothing items, Officer's Casual and Adventurer's Cap
+  SyncIt21]:
+  - bugfix: Crafting Menu Should Consistently Craft Items
+  Tractor-Maam:
+  - rscadd: Mouse cubes can now be shaken to create rats.
+  notghosti:
+  - bugfix: Anchoring crystals now apply forced toxin healing rather than regular.
+2025-12-05:
+  Absolucy:
+  - rscdel: You can no longer deep fry brains, unless they're soulless (deep fried
+      Pun Pun brain is still on the menu, don't worry).
+  - bugfix: Fixed voice of god just not working sometimes.
+  - balance: Changelings now need 1 absorb in order to obtain transformation sting.
+  - rscadd: Mutadone can be used to heavily reduce the duration of transformation
+      sting while it's in your system.
+  - balance: When a non-bloodsucker/vassal is breaking out of silver cuffs, the resist
+      will not be canceled by moving them.
+  Absolucy, Ical92, lizardqueenlexi:
+  - map: Demonic-Frost Miner's ruin has received an aesthetic refresh!
+  Absolucy, Melbert:
+  - image: The animation for being dusted now takes into account your sprite, rather
+      than being a normal nude spaceman
+  EssentialTomato:
+  - bugfix: Aux base construction console now builds selected structures instead of
+      just walls.
+  - bugfix: Aux base construction console can be restocked again.
+  - bugfix: Fixed ashwalker clothing storage being invisible.
+  Evalence0:
+  - balance: Potassium now depletes at a reasonable rate from floran's blood, instead
+      of staying forever and causing damage.
+  - bugfix: added metabolism rate to potassium for florans.
+  Gboster-0:
+  - bugfix: the robot wabbajack list is actually weighted now as it was supposed to
+      be
+  Shoddd:
+  - balance: pka pistol capacity returned to 200%
+  Tractor-Maam:
+  - rscadd: Chat Client is now a stock PDA app.
+  - balance: Chat Client is now 4GQ, down from 8GQ.
+2025-12-06:
+  Absolucy:
+  - qol: Xenobio pens now automatically dissolve dead monkeys after 5 minutes.
+  - qol: Larger xenobio pens now have a higher slime capacity.
+2025-12-07:
+  00-Steven, SirNightKnight:
+  - bugfix: Latejoiners with heterochromatic eyes no longer have the wrong fingerprint
+      in the security records.
+  - bugfix: Latejoiners actually have their quirks visible in the medical records.
+  Absolucy:
+  - admin: Microphone mechcomp components no longer spam logs with everything they
+      hear.
+  flleeppyy:
+  - rscadd: Mobs can now pixel tilt, default binding is J
+  notghosti:
+  - rscadd: Defib Blacklisting now shows as soulless
