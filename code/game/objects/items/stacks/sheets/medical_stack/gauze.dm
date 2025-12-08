@@ -229,10 +229,6 @@
 		return .
 	if(used || check.used)
 		return FALSE
-	// need to be in +- 0.5 dirtiness of each other
-	// otherwise you can merge a completely used bandage with a brand new one, which would magically unuse it
-	if(check.absorption_capacity < absorption_capacity || check.absorption_capacity > absorption_capacity)
-		return FALSE
 	return .
 
 /obj/item/stack/medical/gauze/wash(clean_types)
