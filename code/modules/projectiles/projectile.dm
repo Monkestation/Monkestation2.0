@@ -230,8 +230,6 @@
 	var/can_hit_turfs = FALSE
 	///how long we paralyze for as this is a disorient
 	var/paralyze_timer = 0
-	/// How many stacks the projectile applies per hit. Default is 1, each stack adds 0.05, it stacks up to 2x stamina damage
-	var/debilitate_mult = 1
 
 /obj/projectile/Initialize(mapload)
 	. = ..()
