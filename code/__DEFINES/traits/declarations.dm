@@ -141,7 +141,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_XENO_HOST "xeno_host"
 /// This parrot is currently perched
 #define TRAIT_PARROT_PERCHED "parrot_perched"
-/// This mob is immune to stun causing status effects and stamcrit.
+/// This mob is immune to stun causing status effects, stamcrit, and all stamina damage except sprinting.
 /// Prefer to use [/mob/living/proc/check_stun_immunity] over checking for this trait exactly.
 #define TRAIT_STUNIMMUNE "stun_immunity"
 #define TRAIT_BATON_RESISTANCE "baton_resistance"

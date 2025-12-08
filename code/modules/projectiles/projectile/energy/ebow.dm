@@ -3,7 +3,7 @@
 	icon_state = "cbbolt"
 	damage = 15
 	damage_type = TOX
-	stamina = 40
+	stamina = 60
 	eyeblur = 20 SECONDS
 	knockdown = 10
 	slur = 10 SECONDS
