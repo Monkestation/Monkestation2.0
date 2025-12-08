@@ -310,7 +310,7 @@
 
 /// Updates movement speed based on stamina loss
 /mob/living/basic/on_stamina_update()
-	set_varspeed(initial(speed) + (stamina.loss * 0.06))
+	set_varspeed(initial(speed) + (stamina?.loss * 0.06))
 
 /mob/living/basic/get_fire_overlay(stacks, on_fire)
 	var/fire_icon = "generic_fire"
