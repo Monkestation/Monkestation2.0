@@ -863,8 +863,8 @@
 /mob/living/carbon/human/pre_stamina_change(diff as num, forced)
 	. = ..()
 
-	if(diff < 0) //Taking damage, not healing
-		. = diff * physiology.stamina_mod * physiology.temp_stamina_mod
+	if(. < 0) //Taking damage, not healing
+		. = . * physiology.stamina_mod * physiology.temp_stamina_mod
 	return
 
 /mob/living/carbon/human/get_exp_list(minutes)
