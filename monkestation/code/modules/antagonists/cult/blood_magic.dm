@@ -55,7 +55,7 @@
 		to_chat(target, span_userdanger("You barely manage to resist [user]'s spell, falling to the ground in agony, but still able to gather enough strength to act!"), type = MESSAGE_TYPE_COMBAT)
 	target.emote("scream")
 	target.AdjustKnockdown(5 SECONDS)
-	target.stamina.adjust(-80)
+	target.stamina.adjust(-40)
 	target.adjust_timed_status_effect(12 SECONDS, /datum/status_effect/speech/slurring/cult)
 	target.adjust_silence(8 SECONDS)
 	target.adjust_emote_mute(8 SECONDS)

@@ -97,7 +97,7 @@
 		if(CLONE)
 			damage_dealt = -1 *  adjustCloneLoss(damage_amount, forced = forced)
 		if(STAMINA)
-			damage_dealt = -1 * stamina?.adjust(-damage)
+			damage_dealt = -1 * stamina?.adjust(-damage_amount)
 		if(PAIN)
 			if(pain_controller)
 				var/pre_pain = pain_controller.get_average_pain()
@@ -503,9 +503,6 @@
 
 /mob/living/proc/pre_stamina_change(diff as num, forced)
 	return diff
-
-/mob/living/proc/setStaminaLoss(amount, updating_stamina = TRUE, forced = FALSE, required_biotype)
-	return
 
 /**
  * heal ONE external organ, organ gets randomly selected from damaged ones.

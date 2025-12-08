@@ -335,7 +335,7 @@
 	if(isoozeling(affected_mob))
 		shock_timer = 0 //immune to shocks
 		affected_mob.AdjustAllImmobility(-40  *REM * seconds_per_tick)
-		affected_mob.stamina.adjust(2 * REM * seconds_per_tick, 0)
+		affected_mob.stamina.adjust(1 * REM * seconds_per_tick, 0)
 		if(is_species(affected_mob, /datum/species/oozeling/luminescent))
 			var/mob/living/carbon/human/affected_human = affected_mob
 			var/datum/species/oozeling/luminescent/slime_species = affected_human.dna.species

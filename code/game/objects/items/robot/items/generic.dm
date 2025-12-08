@@ -40,7 +40,7 @@
 		COOLDOWN_START(src, non_charge_cooldown, 3 SECONDS)
 		return
 
-	attacked_mob.stamina.adjust(-100)
+	attacked_mob.stamina.adjust(-50)
 	COOLDOWN_START(src, non_charge_cooldown, 5 SECONDS)
 
 	attacked_mob.visible_message(span_danger("[user] prods [attacked_mob] with [src]!"), \

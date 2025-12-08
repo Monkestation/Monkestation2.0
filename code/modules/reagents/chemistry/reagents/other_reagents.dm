@@ -566,7 +566,7 @@
 	if(IS_CULTIST(affected_mob))
 		affected_mob.adjust_drowsiness(-10 SECONDS * REM * seconds_per_tick)
 		affected_mob.AdjustAllImmobility(-40 * REM * seconds_per_tick)
-		affected_mob.stamina.adjust(10 * REM * seconds_per_tick, 0)
+		affected_mob.stamina.adjust(5 * REM * seconds_per_tick, 0)
 		affected_mob.adjustToxLoss(-2 * REM * seconds_per_tick, 0)
 		affected_mob.adjustOxyLoss(-2 * REM * seconds_per_tick, 0)
 		affected_mob.adjustBruteLoss(-2 * REM * seconds_per_tick, 0)
@@ -2587,7 +2587,7 @@
 /datum/reagent/peaceborg/tire/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	var/healthcomp = (100 - affected_mob.health) //DOES NOT ACCOUNT FOR ADMINBUS THINGS THAT MAKE YOU HAVE MORE THAN 200/210 HEALTH, OR SOMETHING OTHER THAN A HUMAN PROCESSING THIS.
 	if(affected_mob.stamina.loss < (45 - healthcomp)) //At 50 health you would have 200 - 150 health meaning 50 compensation. 60 - 50 = 10, so would only do 10-19 stamina.)
-		affected_mob.stamina.adjust(-10 * REM * seconds_per_tick)
+		affected_mob.stamina.adjust(-5 * REM * seconds_per_tick)
 	if(SPT_PROB(16, seconds_per_tick))
 		to_chat(affected_mob, "You should sit down and take a rest...")
 	..()
@@ -2824,7 +2824,7 @@
 	if(IS_HERETIC(drinker))
 		drinker.adjust_drowsiness(-10 * REM * seconds_per_tick)
 		drinker.AdjustAllImmobility(-40 * REM * seconds_per_tick)
-		drinker.stamina.adjust(10 * REM * seconds_per_tick, TRUE)
+		drinker.stamina.adjust(5 * REM * seconds_per_tick, TRUE)
 		drinker.adjustToxLoss(-2 * REM * seconds_per_tick, FALSE, forced = TRUE)
 		drinker.adjustOxyLoss(-2 * REM * seconds_per_tick, FALSE)
 		drinker.adjustBruteLoss(-2 * REM * seconds_per_tick, FALSE)
@@ -2973,7 +2973,7 @@
 /datum/reagent/kronkus_extract/on_mob_life(mob/living/carbon/kronkus_enjoyer)
 	. = ..()
 	kronkus_enjoyer.adjustOrganLoss(ORGAN_SLOT_HEART, 0.1)
-	kronkus_enjoyer.stamina.adjust(2, FALSE)
+	kronkus_enjoyer.stamina.adjust(1, FALSE)
 
 /datum/reagent/brimdust
 	name = "Brimdust"

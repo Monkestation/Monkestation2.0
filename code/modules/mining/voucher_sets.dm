@@ -192,6 +192,7 @@
 		/obj/item/storage/box/sec_smokebomb,
 		)
 
+
 /datum/voucher_set/security/utility/barrier
 	name = "Barrier Grenades"
 	description = "Two barrier grenades."

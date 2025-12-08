@@ -381,8 +381,8 @@ GLOBAL_LIST_INIT(stone_recipes, list ( \
 
 /obj/item/plate/oven_tray/material/fake_tin
 
-#define LARGE_MORTAR_STAMINA_MINIMUM 50 //What is the amount of stam damage that we prevent mortar use at
-#define LARGE_MORTAR_STAMINA_USE 70 //How much stam damage is given to people when the mortar is used
+#define LARGE_MORTAR_STAMINA_MINIMUM 25 //What is the amount of stam damage that we prevent mortar use at
+#define LARGE_MORTAR_STAMINA_USE 35 //How much stam damage is given to people when the mortar is used
 
 /obj/structure/large_mortar
 	name = "large mortar"

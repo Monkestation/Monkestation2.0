@@ -556,7 +556,7 @@
 			affected_mob.set_jitter_if_lower(20 SECONDS)
 
 	affected_mob.AdjustAllImmobility(-20 * REM * seconds_per_tick * normalise_creation_purity())
-	affected_mob.stamina.adjust(1 * REM * seconds_per_tick * normalise_creation_purity(), TRUE)
+	affected_mob.stamina.adjust(0.5 * REM * seconds_per_tick * normalise_creation_purity(), TRUE)
 	..()
 	return TRUE
 
@@ -802,14 +802,14 @@
 			affected_mob.losebreath -= 2 * REM * seconds_per_tick
 	if(affected_mob.losebreath < 0)
 		affected_mob.losebreath = 0
-	affected_mob.stamina.adjust(0.5 * REM * seconds_per_tick, TRUE)
+	affected_mob.stamina.adjust(0.25 * REM * seconds_per_tick, TRUE)
 	if(SPT_PROB(10, seconds_per_tick))
 		affected_mob.AdjustAllImmobility(-20)
 	..()
 
 /datum/reagent/medicine/epinephrine/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
 	if(SPT_PROB(18, REM * seconds_per_tick))
-		affected_mob.stamina.adjust(-2.5, 0)
+		affected_mob.stamina.adjust(-1.25)
 		affected_mob.adjustToxLoss(1, FALSE, required_biotype = affected_biotype)
 		var/obj/item/organ/internal/lungs/affected_lungs = affected_mob.get_organ_slot(ORGAN_SLOT_LUNGS)
 		var/our_respiration_type = affected_lungs ? affected_lungs.respiration_type : affected_mob.mob_respiration_type
@@ -1075,13 +1075,13 @@
 		affected_mob.adjustBruteLoss(-1 * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
 		affected_mob.adjustFireLoss(-1 * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
 	affected_mob.AdjustAllImmobility(-60  * REM * seconds_per_tick)
-	affected_mob.stamina.adjust(10 * REM * seconds_per_tick, TRUE)
+	affected_mob.stamina.adjust(5 * REM * seconds_per_tick, TRUE)
 	..()
 	. = TRUE
 
 /datum/reagent/medicine/stimulants/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
 	if(SPT_PROB(18, seconds_per_tick))
-		affected_mob.stamina.adjust(-2.5, FALSE)
+		affected_mob.stamina.adjust(-1.25, FALSE)
 		affected_mob.adjustToxLoss(1, FALSE, required_biotype = affected_biotype)
 		affected_mob.losebreath++
 		. = TRUE
@@ -1253,7 +1253,7 @@
 
 	if(SPT_PROB(10, seconds_per_tick))
 		affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1, 50, required_organ_flag = affected_organ_flags)
-	affected_mob.stamina.adjust(-2.5 * REM * seconds_per_tick, FALSE)
+	affected_mob.stamina.adjust(-1.25 * REM * seconds_per_tick, FALSE)
 	..()
 	return TRUE
 
@@ -1365,7 +1365,7 @@ MONKESTATION REMOVAL END */
 	if(!overdosed) // We do not want any effects on OD
 		overdose_threshold = overdose_threshold + ((rand(-10, 10) / 10) * REM * seconds_per_tick) // for extra fun
 		metabolizer.AdjustAllImmobility(-5 * REM * seconds_per_tick)
-		metabolizer.stamina.adjust(0.5 * REM * seconds_per_tick, FALSE)
+		metabolizer.stamina.adjust(0.25 * REM * seconds_per_tick, FALSE)
 		metabolizer.set_jitter_if_lower(1 SECONDS * REM * seconds_per_tick)
 		metabolization_rate = 0.005 * REAGENTS_METABOLISM * rand(5, 20) // randomizes metabolism between 0.02 and 0.08 per second
 		. = TRUE

@@ -716,7 +716,7 @@
 	// if you have a liver and that liver is an officer's liver
 	if(liver && HAS_TRAIT(liver, TRAIT_LAW_ENFORCEMENT_METABOLISM))
 		. = TRUE
-		drinker.stamina.adjust(10 * REM * seconds_per_tick)
+		drinker.stamina.adjust(5 * REM * seconds_per_tick)
 		if(SPT_PROB(10, seconds_per_tick))
 			drinker.cause_hallucination(get_random_valid_hallucination_subtype(/datum/hallucination/nearby_fake_item), name)
 		if(SPT_PROB(5, seconds_per_tick))
@@ -1407,14 +1407,14 @@
 	drinker.adjust_dizzy(4 SECONDS * REM * seconds_per_tick)
 	drinker.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1 * REM * seconds_per_tick, 150, required_organ_flag = affected_organ_flags)
 	if(SPT_PROB(10, seconds_per_tick))
-		drinker.stamina.adjust(-10)
+		drinker.stamina.adjust(-5)
 		drinker.drop_all_held_items()
 		to_chat(drinker, span_notice("You cant feel your hands!"))
 	if(current_cycle > 5)
 		if(SPT_PROB(10, seconds_per_tick))
 			var/paralyzed_limb = pick_paralyzed_limb()
 			ADD_TRAIT(drinker, paralyzed_limb, type)
-			drinker.stamina.adjust(-10)
+			drinker.stamina.adjust(-5)
 		if(current_cycle > 30)
 			drinker.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
 			if(current_cycle > 50 && SPT_PROB(7.5, seconds_per_tick))
@@ -1430,7 +1430,7 @@
 	REMOVE_TRAIT(drinker, TRAIT_PARALYSIS_R_ARM, type)
 	REMOVE_TRAIT(drinker, TRAIT_PARALYSIS_R_LEG, type)
 	REMOVE_TRAIT(drinker, TRAIT_PARALYSIS_L_LEG, type)
-	drinker.stamina.adjust(-10)
+	drinker.stamina.adjust(-5)
 	..()
 
 /datum/reagent/consumable/ethanol/hippies_delight
@@ -1622,7 +1622,7 @@
 		drinker.adjustFireLoss(-1 * REM * seconds_per_tick, required_bodytype = affected_bodytype)
 		drinker.adjustToxLoss(-0.5 * REM * seconds_per_tick, required_biotype = affected_biotype)
 		drinker.adjustOxyLoss(-3 * REM * seconds_per_tick, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
-		drinker.stamina.adjust(5 * REM * seconds_per_tick)
+		drinker.stamina.adjust(2.5 * REM * seconds_per_tick)
 		. = TRUE
 	..()
 
@@ -1859,7 +1859,7 @@
 
 /datum/reagent/consumable/ethanol/fanciulli/on_mob_metabolize(mob/living/drinker)
 	if(drinker.health > 0)
-		drinker.stamina.adjust(-20)
+		drinker.stamina.adjust(-10)
 		. = TRUE
 	..()
 
@@ -1879,7 +1879,7 @@
 
 /datum/reagent/consumable/ethanol/branca_menta/on_mob_metabolize(mob/living/drinker)
 	if(drinker.health > 0)
-		drinker.stamina.adjust(-35)
+		drinker.stamina.adjust(-18)
 		. = TRUE
 	..()
 

@@ -3,12 +3,10 @@
 	icon_state = "cbbolt"
 	damage = 15
 	damage_type = TOX
-	stamina = 60
+	stamina = 40
 	eyeblur = 20 SECONDS
 	knockdown = 10
 	slur = 10 SECONDS
-	debilitating = TRUE
-	debilitate_mult = 5
 
 /obj/projectile/energy/bolt/halloween
 	name = "candy corn"

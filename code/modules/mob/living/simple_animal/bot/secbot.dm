@@ -53,7 +53,7 @@
 	///The department the secbot will deposit collected money into
 	var/payment_department = ACCOUNT_SEC
 
-	var/stamina_damage = 95 //3 hit stam crit from full, but they most likely wont be due to running a bit
+	var/stamina_damage = 50 //2 hit stam crit
 
 /mob/living/simple_animal/bot/secbot/beepsky
 	name = "Commander Beep O'sky"

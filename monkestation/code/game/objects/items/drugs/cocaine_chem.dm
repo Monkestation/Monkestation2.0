@@ -52,7 +52,7 @@
 	carbon_mob.AdjustUnconscious(-15 * REM * seconds_per_tick)
 	carbon_mob.AdjustImmobilized(-15 * REM * seconds_per_tick)
 	carbon_mob.AdjustParalyzed(-15 * REM * seconds_per_tick)
-	carbon_mob.stamina.adjust(-2 * REM * seconds_per_tick, 0)
+	carbon_mob.stamina.adjust(-1 * REM * seconds_per_tick, 0)
 	if(SPT_PROB(2.5, seconds_per_tick))
 		carbon_mob.emote("shiver")
 		carbon_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, (rand(1, 2) * unhealthy_multiplier) * REM * seconds_per_tick)

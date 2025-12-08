@@ -32,7 +32,7 @@
 			stopSprint()
 		return
 
-	if(sprint_key_down && !HAS_TRAIT(carbon_parent, TRAIT_NO_SPRINT))
+	if(sprint_key_down && !HAS_TRAIT(carbon_parent, TRAIT_NO_SPRINT) && !(carbon_parent.movement_type & FLOATING))
 		var/_step_size = (direct & (direct-1)) ? 1.4 : 1 //If we're moving diagonally, we're taking roughly 1.4x step size
 		if(!sprinting)
 			sprinting = TRUE
@@ -56,10 +56,7 @@
 					dust.appear("sprint_cloud_tiny", direct, get_turf(carbon_parent), 0.3 SECONDS)
 					last_dust = world.time
 				sustained_moves = 0
-		if(carbon_parent.has_status_effect(/datum/status_effect/stacking/debilitated))
-			sprint_stamina_modifier = 1.3
-		else
-			sprint_stamina_modifier = 1
+		sprint_stamina_modifier = 1
 		if(HAS_TRAIT(carbon_parent, TRAIT_FREERUNNING))
 			sprint_stamina_modifier *= 0.7
 		carbon_parent.stamina.adjust(-STAMINA_SPRINT_COST * sprint_stamina_modifier)

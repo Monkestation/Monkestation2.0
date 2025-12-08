@@ -26,7 +26,7 @@
 	/// The length of the knockdown applied to the user on clumsy_check()
 	var/clumsy_knockdown_time = 18 SECONDS
 	/// How much stamina damage we deal on a successful hit against a living, non-cyborg mob.
-	var/stamina_damage = 95 //3 hit stam crit from full, but they most likely wont be due to running a bit
+	var/stamina_damage = 40 //1 hit to cause stamina damage slowdown - 3 hits to stam crit from full
 	/// Chance of causing force_say() when stunning a human mob
 	var/force_say_chance = 33
 	/// Can we stun cyborgs?
@@ -202,7 +202,7 @@
 		additional_effects_cyborg(target, user)
 	else
 		if(!trait_check)
-			target.stamina.adjust(-stamina_damage)
+			target.stamina.adjust(-stamina_damage) //Intentionally armor piercing!
 		else
 			var/stamina_to_min = (target.stamina.maximum * 0.29)
 			target.stamina.adjust_to(-stamina_damage, stamina_to_min)
@@ -316,6 +316,7 @@
 	bare_wound_bonus = 5
 	clumsy_knockdown_time = 15 SECONDS
 	active = FALSE
+	stamina_damage = 50 //2 hit stamcrit if the hits are landed quickly
 
 	/// The sound effecte played when our baton is extended.
 	var/on_sound = 'sound/weapons/batonextend.ogg'
@@ -340,7 +341,7 @@
 //monkestation edit start
 /obj/item/melee/baton/telescopic/additional_effects_non_cyborg(mob/living/target, mob/living/user)
 	. = ..()
-	target.Disorient(6 SECONDS, 5, paralyze = 3 SECONDS, stack_status = FALSE)
+	target.Disorient(6 SECONDS, 0, stack_status = FALSE)
 //monkestation edit end
 
 /obj/item/melee/baton/telescopic/suicide_act(mob/living/user)
@@ -425,7 +426,7 @@
 	armor_type = /datum/armor/baton_security
 	throwforce = 7
 	force_say_chance = 50
-	stamina_damage = 100 //monke edit
+	stamina_damage = 40
 	knockdown_time = 5 SECONDS
 	clumsy_knockdown_time = 15 SECONDS
 	cooldown = 1 SECONDS //monke edit, enjoy your games, seccies
@@ -641,7 +642,7 @@
  * After a period of time, we then check to see what stun duration we give.
  */
 /obj/item/melee/baton/security/additional_effects_non_cyborg(mob/living/target, mob/living/user)
-	target.Disorient(6 SECONDS, 5, paralyze = 10 SECONDS, stack_status = FALSE)
+	target.Disorient(6 SECONDS, 0, stack_status = FALSE)
 
 	SEND_SIGNAL(target, COMSIG_LIVING_MINOR_SHOCK)
 

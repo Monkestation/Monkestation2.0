@@ -497,28 +497,20 @@
 /mob/living/carbon/on_stamina_update()
 	if(!stamina)
 		return
-	var/stam = stamina.current
-	var/max = stamina.maximum
-	var/is_exhausted = HAS_TRAIT_FROM(src, TRAIT_EXHAUSTED, STAMINA)
 	var/is_stam_stunned = HAS_TRAIT_FROM(src, TRAIT_INCAPACITATED, STAMINA)
-	if((stam < max * STAMINA_EXHAUSTION_THRESHOLD_MODIFIER) && !is_exhausted)
-		ADD_TRAIT(src, TRAIT_EXHAUSTED, STAMINA)
+	//Prevent us from stamcritting ourselves by sprinting.
+	if(stamina.loss_as_percent >= 60)
 		ADD_TRAIT(src, TRAIT_NO_SPRINT, STAMINA)
-		add_movespeed_modifier(/datum/movespeed_modifier/exhaustion)
+	else
+		REMOVE_TRAIT(src, TRAIT_NO_SPRINT, STAMINA)
 
-	if((stam < max * STAMINA_STUN_THRESHOLD_MODIFIER) && !is_stam_stunned && stat <= SOFT_CRIT)
+	if((stamina.current <= 0) && !is_stam_stunned && stat <= SOFT_CRIT)
 		stamina_stun()
 
-	if(is_exhausted && (stam > max * STAMINA_EXHAUSTION_THRESHOLD_MODIFIER_EXIT))
-		REMOVE_TRAIT(src, TRAIT_EXHAUSTED, STAMINA)
-		REMOVE_TRAIT(src, TRAIT_NO_SPRINT, STAMINA)
-		remove_movespeed_modifier(/datum/movespeed_modifier/exhaustion)
+	if(is_stam_stunned && stamina.current >= stamina.maximum)
+		exit_stamina_stun()
 
 	update_stamina_hud()
-
-/datum/movespeed_modifier/exhaustion
-	id = "exhaustion"
-	multiplicative_slowdown = STAMINA_EXHAUSTION_MOVESPEED_SLOWDOWN
 
 /mob/living/carbon/update_sight()
 	if(!client)
@@ -752,9 +744,9 @@
 	//MONKESTATION EDIT START
 	var/current_stamina = stamina.current
 
-	if(stamina.current <= (0.20 * STAMINA_MAX)) //stamina stun threshold
+	if(stamina.current <= 0) //stamina stun threshold
 		hud_used.stamina.icon_state = "stamina_dead"
-	else if(current_stamina <= (0.30 * STAMINA_MAX)) //exhaustion threshold
+	else if(current_stamina <= (0.30 * STAMINA_MAX))
 		hud_used.stamina.icon_state = "stamina_crit"
 	else if(current_stamina <= (0.40 * STAMINA_MAX))
 		hud_used.stamina.icon_state = "stamina_5"
