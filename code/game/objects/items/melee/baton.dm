@@ -316,7 +316,7 @@
 	bare_wound_bonus = 5
 	clumsy_knockdown_time = 15 SECONDS
 	active = FALSE
-	stamina_damage = 50 //2 hit stamcrit if the hits are landed quickly
+	stamina_damage = 55 //2 hit stamcrit if the hits are landed quickly
 
 	/// The sound effecte played when our baton is extended.
 	var/on_sound = 'sound/weapons/batonextend.ogg'
