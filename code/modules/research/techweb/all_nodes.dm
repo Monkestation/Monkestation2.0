@@ -236,6 +236,7 @@
 		"retractor",
 		"scalpel",
 		"stethoscope",
+		"penlight",
 		"surgical_drapes",
 		"surgical_tape",
 		"surgicaldrill",

@@ -80,3 +80,42 @@
   Absolucy:
   - qol: Xenobio pens now automatically dissolve dead monkeys after 5 minutes.
   - qol: Larger xenobio pens now have a higher slime capacity.
+2025-12-07:
+  00-Steven, SirNightKnight:
+  - bugfix: Latejoiners with heterochromatic eyes no longer have the wrong fingerprint
+      in the security records.
+  - bugfix: Latejoiners actually have their quirks visible in the medical records.
+  Absolucy:
+  - admin: Microphone mechcomp components no longer spam logs with everything they
+      hear.
+  Absolucy, TheBoondock, GoblinBackwards, SmArtKar:
+  - sound: added ignition and roaring fire sound to plasma/tritium fire
+  SirNightKnight, ghost:
+  - rscadd: Paramedics are now issued black work boots as standard workwear.
+  - image: Paramedic Jackets now match in color to the rest of the Paramedic's gear.
+  - rscdel: squashed the paramedic penlight uv function into the standard penlight.
+  - rscadd: penlights are printable at medical lathes.
+  - balance: turns the penlight UV function into a repeating do after.
+  - qol: treating a burn with UV from a penlight auto-repeats.
+  flleeppyy:
+  - rscadd: Mobs can now pixel tilt, default binding is J
+  kuricityy:
+  - rscadd: Adds the ability to change prisoner ID names through right clicking ID
+      with a secoff or higher ID card.
+  notghosti:
+  - rscadd: Defib Blacklisting now shows as soulless
+2025-12-08:
+  Absolucy:
+  - bugfix: Fixed awakened dragon not properly giving the name prefix.
+  - admin: Added an admin notification for when people open christmas presents.
+  - rscadd: Nanite programmers now have a GPS signal, named "Nanite Synchronization
+      Signal".
+  Absolucy, Hatterhat:
+  - balance: The mining MODsuit's ash accretion module now fully cancels the base
+      slowdown from activating the MOD.
+  Absolucy, SmArtKar:
+  - bugfix: Mining MODsuits now can store everything that explorer suits can
+  SirNightKnight:
+  - balance: removed the box of flashbangs from security voucher utilities.
+  flleeppyy:
+  - bugfix: PLX_givecoins not properly converting number to text when not using json

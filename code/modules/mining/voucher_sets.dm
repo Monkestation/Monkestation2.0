@@ -174,15 +174,6 @@
 		/obj/item/reagent_containers/cup/glass/coffee,
 		)
 
-/datum/voucher_set/security/utility/flashbangs
-	name = "Box of Flashbangs"
-	description = "<B>WARNING: These devices are extremely dangerous and can cause blindness or deafness in repeated use.</B>"
-	icon = 'icons/obj/weapons/grenade.dmi'
-	icon_state = "flashbang"
-	set_items = list(
-		/obj/item/storage/box/flashbangs,
-		)
-
 /datum/voucher_set/security/utility/smokebombs
 	name = "Box of Smoke Grenades"
 	description = "<B>WARNING: %$#SYTEM_ERROR#$#.</B>"
