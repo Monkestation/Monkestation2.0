@@ -15,7 +15,7 @@
 	volume = 20
 
 /datum/looping_sound/siren/alt
-	mid_sounds = list('sound/items/weeoo2.ogg' = 1)
+	mid_sounds = list('sound/items/weewoo2.ogg' = 1)
 
 /datum/looping_sound/tape_recorder_hiss
 	mid_sounds = list('sound/items/taperecorder/taperecorder_hiss_mid.ogg' = 1)
