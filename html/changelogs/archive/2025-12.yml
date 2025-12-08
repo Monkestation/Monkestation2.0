@@ -104,3 +104,18 @@
       with a secoff or higher ID card.
   notghosti:
   - rscadd: Defib Blacklisting now shows as soulless
+2025-12-08:
+  Absolucy:
+  - bugfix: Fixed awakened dragon not properly giving the name prefix.
+  - admin: Added an admin notification for when people open christmas presents.
+  - rscadd: Nanite programmers now have a GPS signal, named "Nanite Synchronization
+      Signal".
+  Absolucy, Hatterhat:
+  - balance: The mining MODsuit's ash accretion module now fully cancels the base
+      slowdown from activating the MOD.
+  Absolucy, SmArtKar:
+  - bugfix: Mining MODsuits now can store everything that explorer suits can
+  SirNightKnight:
+  - balance: removed the box of flashbangs from security voucher utilities.
+  flleeppyy:
+  - bugfix: PLX_givecoins not properly converting number to text when not using json

@@ -1,0 +1,4 @@
+author: "LassiH"
+delete-after: True
+changes:
+  - balance: "oozeling burn modifier is now 0.8"
