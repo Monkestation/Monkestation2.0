@@ -692,7 +692,7 @@
 
 /obj/item/clothing/head/helmet/toggleable/justice/medical
 	name = "medical emergency helmet"
-	desc = "An fragile, circuitry embedded helmet that was an old R&D project to help medical personnel in emergency retrieval."
+	desc = "A fragile, circuitry embedded helmet that was an old R&D project to help medical personnel in emergency retrieval."
 	icon_state = "justice_medical"
 	base_icon_state = "justice_medical"
 	inhand_icon_state = null
