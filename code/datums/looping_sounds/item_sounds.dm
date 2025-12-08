@@ -16,6 +16,8 @@
 
 /datum/looping_sound/siren/alt
 	mid_sounds = list('sound/items/weewoo2.ogg' = 1)
+	mid_length = 25
+	volume = 30
 
 /datum/looping_sound/tape_recorder_hiss
 	mid_sounds = list('sound/items/taperecorder/taperecorder_hiss_mid.ogg' = 1)
