@@ -503,11 +503,16 @@
 	if(!stamina)
 		return
 	var/is_stam_stunned = HAS_TRAIT_FROM(src, TRAIT_INCAPACITATED, STAMINA)
-	//Prevent us from stamcritting ourselves by sprinting.
-	if(stamina.loss_as_percent >= 60)
+
+	//Prevent us from sprinting when our stamina damage is above 40%
+	var/has_no_sprint = HAS_TRAIT_FROM(src, TRAIT_NO_SPRINT, STAMINA)
+
+	if(stamina.loss_as_percent >= 40 && !has_no_sprint)
 		ADD_TRAIT(src, TRAIT_NO_SPRINT, STAMINA)
-	else
+		to_chat(src, span_warning("You start to feel exhausted from lack of stamina..."))
+	else if (stamina.loss_as_percent <= 30 && has_no_sprint)
 		REMOVE_TRAIT(src, TRAIT_NO_SPRINT, STAMINA)
+		to_chat(src, span_notice("You feel like you can sprint again."))
 
 	if((stamina.current <= 0) && !is_stam_stunned && stat <= SOFT_CRIT)
 		stamina_stun()

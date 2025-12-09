@@ -844,18 +844,15 @@
 /mob/living/carbon/human/on_stamina_update()
 	. = ..()
 
-	var/already_had_slowdown = has_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown)
-
 	update_damage_movespeed()
 
-	if (!already_had_slowdown && has_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown) && stamina?.loss >= 40)
-		to_chat(src, span_warning("You start to feel exhausted from lack of stamina..."))
-
 /mob/living/carbon/human/proc/update_damage_movespeed()
-	var/health_deficiency = max((maxHealth - health), stamina?.loss)
-	if(health_deficiency >= 40)
-		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown, update = FALSE, multiplicative_slowdown = health_deficiency / 75)
-		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying, update = TRUE, multiplicative_slowdown = health_deficiency / 25)
+	var/lethal_deficiency = maxHealth - health
+	var/stamina_deficiency = stamina?.loss
+	var/highest_deficiency = max(lethal_deficiency, stamina_deficiency)
+	if(lethal_deficiency >= 40 || stamina_deficiency >= 60)
+		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown, update = FALSE, multiplicative_slowdown = highest_deficiency / 75)
+		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying, update = TRUE, multiplicative_slowdown = highest_deficiency / 25)
 	else if(LAZYACCESS(movespeed_modification, "[/datum/movespeed_modifier/damage_slowdown]"))
 		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown, update = FALSE)
 		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying, update = TRUE)

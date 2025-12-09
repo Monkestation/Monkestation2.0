@@ -26,7 +26,7 @@
 	/// The length of the knockdown applied to the user on clumsy_check()
 	var/clumsy_knockdown_time = 18 SECONDS
 	/// How much stamina damage we deal on a successful hit against a living, non-cyborg mob.
-	var/stamina_damage = 40 //1 hit to cause stamina damage slowdown - 3 hits to stam crit from full
+	var/stamina_damage = 45 //1 hit to cause loss of sprint - 2 hits to slow - 3 hits to stam crit
 	/// Chance of causing force_say() when stunning a human mob
 	var/force_say_chance = 33
 	/// Can we stun cyborgs?
