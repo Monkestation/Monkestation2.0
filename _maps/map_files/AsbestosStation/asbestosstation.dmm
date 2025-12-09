@@ -10267,12 +10267,12 @@
 /turf/open/floor/iron,
 /area/station/cargo/lobby)
 "haE" = (
-/obj/machinery/door/airlock/maintenance_hatch{
-	name = "Maintenance Hatch"
-	},
+/obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/turf/closed/mineral/random/stationside/asteroid/porus,
+/obj/machinery/camera/autoname/directional/south,
+/turf/open/water/sewage,
 /area/station/maintenance/central/lesser)
 "haO" = (
 /obj/machinery/power/apc/auto_name/directional/west,
@@ -18340,14 +18340,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/entry)
-"mJF" = (
-/obj/structure/lattice/catwalk,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/camera/autoname/directional/south,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/water/sewage,
-/area/station/maintenance/central/lesser)
 "mJL" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -26710,13 +26702,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/closed/wall,
 /area/station/maintenance/abandon_diner)
-"skb" = (
-/obj/machinery/door/airlock/maintenance_hatch{
-	name = "Maintenance Hatch"
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/mineral/random/stationside/asteroid/porus,
-/area/station/maintenance/central/lesser)
 "skf" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/trash_pile,
@@ -70263,7 +70248,7 @@ hYw
 pWY
 cYX
 cYX
-skb
+pWY
 hYw
 hYw
 jza
@@ -72317,7 +72302,7 @@ jza
 jza
 yet
 pWY
-pWY
+hYw
 pWY
 lco
 cYX
@@ -72564,7 +72549,7 @@ qNe
 oDC
 oDC
 jrJ
-oDC
+bNJ
 pWY
 teH
 jFt
@@ -72574,7 +72559,7 @@ jza
 jza
 yet
 yet
-haE
+bNJ
 pWY
 pWY
 cYX
@@ -72821,7 +72806,7 @@ mPG
 oDC
 oDC
 oDC
-oDC
+bNJ
 pWY
 hYw
 jFt
@@ -73349,7 +73334,7 @@ jza
 pWY
 pWY
 cYX
-pqS
+haE
 yet
 pWY
 bNJ
@@ -73604,9 +73589,9 @@ bNJ
 bNJ
 hYw
 hYw
-skb
+pWY
 cYX
-mJF
+pqS
 eKV
 hYw
 bNJ
