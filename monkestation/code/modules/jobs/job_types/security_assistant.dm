@@ -44,17 +44,6 @@
 		"Professional Snitch"
 	)
 
-/datum/job/security_assistant/New()
-	. = ..()
-	RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, PROC_REF(give_stormtrooper_aim))
-
-/datum/job/security_assistant/proc/give_stormtrooper_aim(datum/source, mob/living/carbon/human/crewmember, rank)
-	SIGNAL_HANDLER
-	if(rank != title)
-		return
-
-	ADD_TRAIT(crewmember, TRAIT_POOR_AIM, JOB_TRAIT)
-	to_chat(crewmember, span_warning("As Security Assistant, you were the rejected from the academy for your poor marksmanship. You have a hard time firing guns with any degree of accuracy."))
 
 /datum/outfit/job/security_assistant
 	name = "Security Assistant"
