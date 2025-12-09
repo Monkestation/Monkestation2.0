@@ -147,3 +147,13 @@
       do still apply a short stagger.
   - balance: Tackles now stagger you every time they are used (regardless of hitting
       or missing), preventing tackles from being spammed in short succession.
+  SirNightKnight:
+  - balance: the drunken resilience quirk is incompatible with light drinker quirk.
+  TheColorCyan:
+  - bugfix: cog cultists are protected from cult stun spell again
+  - bugfix: mindshielded targets/target of the cult now once again partially resist
+      cult stun spell
+  - bugfix: being very drunk gives you cult stun immunity again
+  - bugfix: martial arts can once again dodge/deflect cult stun
+  flleeppyy:
+  - code_imp: moved "Join Game" button functionality to its own proc
