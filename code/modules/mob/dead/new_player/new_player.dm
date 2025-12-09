@@ -61,9 +61,12 @@
 		var/datum/poll_question/poll = locate(href_list["votepollref"]) in GLOB.polls
 		vote_on_poll_handler(poll, href_list)
 
-/mob/dead/new_player/verb/join_game(from_lobby_menu = FALSE, params = null)
-	set category = "IC"
+/mob/dead/new_player/verb/_join_game()
 	set name = "Join Game"
+	set category = "IC"
+	join_game(FALSE)
+
+/mob/dead/new_player/proc/join_game(from_lobby_menu = FALSE, params = null)
 	if(isnull(client))
 		return
 
