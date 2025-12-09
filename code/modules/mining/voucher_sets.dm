@@ -174,15 +174,6 @@
 		/obj/item/reagent_containers/cup/glass/coffee,
 		)
 
-/datum/voucher_set/security/utility/flashbangs
-	name = "Box of Flashbangs"
-	description = "<B>WARNING: These devices are extremely dangerous and can cause blindness or deafness in repeated use.</B>"
-	icon = 'icons/obj/weapons/grenade.dmi'
-	icon_state = "flashbang"
-	set_items = list(
-		/obj/item/storage/box/flashbangs,
-		)
-
 /datum/voucher_set/security/utility/smokebombs
 	name = "Box of Smoke Grenades"
 	description = "<B>WARNING: %$#SYTEM_ERROR#$#.</B>"
@@ -342,7 +333,7 @@
 
 /datum/voucher_set/security/assistant/buddy_cop
 	name = "Buddy Cop Kit"
-	description = "Pair up with a security officer and learn the basics of security."
+	description = "Pair up with a security officer and help them in their day to day duties."
 	icon = 'monkestation/icons/obj/clothing/hats.dmi'
 	icon_state = "helmet"
 	set_items = list(
