@@ -482,7 +482,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 			SSquirks.AssignQuirks(newmob, newmob.client, blacklist = assoc_to_keys(skip_quirks)) // Still need to copy over the rest of their quirks.
 
 		if(listed["joined_as_crew"])
-			ADD_TRAIT(newmob.mind, TRAIT_JOINED_AS_CREW, CREW_JOIN_TRAIT)
+			if(newmob.mind)
+				ADD_TRAIT(newmob.mind, TRAIT_JOINED_AS_CREW, CREW_JOIN_TRAIT)
+			else
+				ADD_TRAIT(newmob, TRAIT_JOINED_AS_CREW, CREW_JOIN_TRAIT)
 			GLOB.joined_player_list |= newmob.ckey
 
 		listed["ckey"] = null //incase we fuck up down below
