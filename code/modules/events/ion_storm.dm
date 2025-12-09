@@ -406,7 +406,7 @@
 						if(5) // Species
 							message = "ONLY [ionspecies] ARE CREW"
 						if(6) //Adjective crewmembers
-							message = "ONLY [ionadjectives] PEOPLE ARE CREW"
+							message = "ONLY [ionadjectives] CREW ARE CREW"
 
 						if(7) //Only people who X
 							switch(rand(1,3)) //What is X?
