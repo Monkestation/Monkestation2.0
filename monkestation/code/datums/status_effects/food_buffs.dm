@@ -286,7 +286,7 @@
 /datum/status_effect/food/stam_regen/t2
 	id = "t2_stam_regen"
 	alert_type = /atom/movable/screen/alert/status_effect/food/stam_regen_t2
-	regen_increase = 0.75
+	regen_increase = 0.5
 
 /atom/movable/screen/alert/status_effect/food/stam_regen_t2
 	name = "Moderate Stamina Regeneration Increase"
@@ -296,7 +296,7 @@
 /datum/status_effect/food/stam_regen/t3
 	id = "t2_stam_regen"
 	alert_type = /atom/movable/screen/alert/status_effect/food/stam_regen_t3
-	regen_increase = 1.5
+	regen_increase = 1
 
 /atom/movable/screen/alert/status_effect/food/stam_regen_t3
 	name = "Large Stamina Regeneration Increase"
