@@ -66,7 +66,7 @@
 		if(!isopenturf(open_turf))
 			continue
 		if(open_turf.pollution)
-			open_turf.pollution.scrub_amount(POLLUTION_HEIGHT_DIVISOR)
+			open_turf.pollution.scrub_amount(POLLUTION_HEIGHT_DIVISOR * 2)
 
 	return ..()
 

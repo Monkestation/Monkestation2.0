@@ -76,8 +76,8 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 /obj/machinery/computer/department_orders/ui_static_data(mob/user)
 	var/list/data = list()
 	var/list/supply_data = list() //each item in this needs to be a Category
-	for(var/pack_key in SSshuttle.supply_packs)
-		var/datum/supply_pack/pack = SSshuttle.supply_packs[pack_key]
+	for(var/_pack_key, value in SSshuttle.supply_packs)
+		var/datum/supply_pack/pack = value
 		//skip groups we do not offer
 		if(!(pack.group in dep_groups))
 			continue
@@ -94,7 +94,7 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 			)
 			supply_data += list(target_group)
 		//skip packs we should not show, even if we should show the group
-		if((pack.hidden && !(obj_flags & EMAGGED)) || (pack.special && !pack.special_enabled) || pack.drop_pod_only || pack.goody)
+		if((pack.hidden && !(obj_flags & EMAGGED)) || !pack.available() || pack.drop_pod_only || pack.goody)
 			continue
 		//finally the pack data itself
 		target_group["packs"] += list(list(
@@ -144,7 +144,7 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 	if(!pack)
 		say("Something went wrong!")
 		CRASH("requested supply pack id \"[id]\" not found!")
-	if((pack.hidden && !(obj_flags & EMAGGED)) || (pack.special && !pack.special_enabled) || pack.drop_pod_only || pack.goody)
+	if((pack.hidden && !(obj_flags & EMAGGED)) || !pack.available() || pack.drop_pod_only || pack.goody)
 		return
 	var/name = "*None Provided*"
 	var/rank = "*None Provided*"

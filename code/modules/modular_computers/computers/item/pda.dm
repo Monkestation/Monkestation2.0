@@ -40,10 +40,9 @@
 		/datum/computer_file/program/messenger,
 		/datum/computer_file/program/nt_pay,
 		/datum/computer_file/program/notepad,
-		// monkestation edit: install crew manifest and spess.tv by default
 		/datum/computer_file/program/crew_manifest,
 		/datum/computer_file/program/secureye/spesstv,
-		// monkestation end
+		/datum/computer_file/program/chatclient,
 	)
 	///List of items that can be stored in a PDA
 	var/static/list/contained_item = list(

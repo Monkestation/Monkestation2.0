@@ -145,6 +145,11 @@
 	lace_time = 8 SECONDS
 	species_exception = list(/datum/species/golem/uranium)
 
+/obj/item/clothing/shoes/workboots/black
+	name = "black work boots"
+	desc = "Lace-up work boots to protect the average grey-collar worker from stepping on hazards, from broken glass to dropped pens."
+	icon_state = "workboots_black"
+
 /obj/item/clothing/shoes/workboots/independent //nanotrasen does not make all work boots in existence
 	desc = "A pair of lace-up work boots for the especially blue-collar."
 

@@ -618,7 +618,7 @@
 		combined_msg += bleed_text
 
 	if(stamina.loss)
-		if(stamina.loss > 30)
+		if(stamina.current <= (0.30 * stamina.maximum))
 			combined_msg += span_info("You're completely exhausted.")
 		else
 			combined_msg += span_info("You feel fatigued.")

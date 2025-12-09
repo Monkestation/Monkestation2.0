@@ -1,0 +1,7 @@
+author: "TheColorCyan"
+delete-after: True
+changes:
+  - bugfix: "cog cultists are protected from cult stun spell again"
+  - bugfix: "mindshielded targets/target of the cult now once again partially resist cult stun spell"
+  - bugfix: "being very drunk gives you cult stun immunity again"
+  - bugfix: "martial arts can once again dodge/deflect cult stun"
