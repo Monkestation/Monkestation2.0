@@ -110,12 +110,19 @@
   - admin: Added an admin notification for when people open christmas presents.
   - rscadd: Nanite programmers now have a GPS signal, named "Nanite Synchronization
       Signal".
+  - qol: Revived lavaland elites (as in, a sentient lavaland elite that is revived
+      after being defeated) can now speak.
   Absolucy, Hatterhat:
   - balance: The mining MODsuit's ash accretion module now fully cancels the base
       slowdown from activating the MOD.
   Absolucy, SmArtKar:
   - bugfix: Mining MODsuits now can store everything that explorer suits can
+  JohnFulpWillard:
+  - balance: Bridge Assistants are no longer 'Command' personnel.
+  LassiH:
+  - balance: oozeling burn modifier is now 0.8
   SirNightKnight:
   - balance: removed the box of flashbangs from security voucher utilities.
+  - map: fixed a double placed genetics windoor on pubby station.
   flleeppyy:
   - bugfix: PLX_givecoins not properly converting number to text when not using json
