@@ -139,6 +139,20 @@
 				)
 	crate_name = "neon carpet crate"
 
+/datum/supply_pack/service/carpet_astral
+	name = "Astral Carpet Crate"
+	desc = "Beautiful carpets with a convincing star pattern. Contains 180 tiles."
+	cost = CARGO_CRATE_VALUE * 10
+	contains = list(/obj/item/stack/tile/fakespace/sixty = 3)
+	crate_name = "astral carpet crate"
+	contraband = TRUE
+
+/datum/supply_pack/service/carpet_astral/available()
+	// if the station has no parallax, then no, you can't buy these
+	if(length(SSmapping.levels_by_all_traits(list(ZTRAIT_STATION, ZTRAIT_NOPARALLAX))))
+		return FALSE
+	return ..()
+
 /datum/supply_pack/service/lightbulbs
 	name = "Replacement Lights"
 	desc = "May the light of Aether shine upon this station! Or at least, the light of \

@@ -218,3 +218,16 @@
 		return max(new_value, threshold)
 	if(sign == -1)
 		return min(new_value, threshold * -1)
+
+/proc/poisson_noise(width, height, radius, seed)
+	. = list()
+	if(!seed)
+		seed = rand(0, 50000)
+	var/noise_string = rustg_noise_poisson_map("[seed]", "[width]", "[height]", "[radius]")
+	for(var/idx = 1 to length(noise_string))
+		if(noise_string[idx] != "1")
+			continue
+		var/idx0 = idx - 1
+		var/x = (idx0 % width) + 1
+		var/y = idx0 / width + 1
+		. += list(list(x, y))

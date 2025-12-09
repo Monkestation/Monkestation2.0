@@ -279,6 +279,9 @@
 /datum/world_topic/plx_mobpicture/Run(list/input)
 	var/ckey = input["ckey"]
 
+	if (!ckey)
+		return list("error" = PLEXORA_ERROR_MISSING_CKEY)
+
 	var/client/client = disambiguate_client(ckey)
 
 	if (QDELETED(client))
@@ -303,7 +306,7 @@
 	. = list()
 
 	if (type == "loadout" && !input["loadout"])
-		return
+		return list("error" = PLEXORA_ERROR_BAD_PARAM, "param" = "loadout", "reason" = "loadout type codes require a loadout parameter")
 
 	for (var/i in 1 to codeamount)
 		var/returning = list("type" = type)
@@ -350,6 +353,13 @@
 	var/amount = input["amount"]
 	var/reason = input["reason"]
 
+	amount = text2num(amount)
+	if (!amount)
+		return list("error" = PLEXORA_ERROR_BAD_PARAM, "param" = "amount", "reason" = "parameter must be a number greater than 0")
+
+	if(!ckey)
+		return list("error" = PLEXORA_ERROR_MISSING_CKEY)
+
 	var/client/userclient = disambiguate_client(ckey)
 
 	var/datum/preferences/prefs
@@ -365,12 +375,6 @@
 
 	return list("totalcoins" = prefs.metacoins)
 
-/datum/world_topic/plx_generategiveawaycode
-	keyword = "PLX_generategiveawaycode"
-	require_comms_key = TRUE
-
-/datum/world_topic/plx_generategiveawaycode/Run(list/input)
-
 
 /datum/world_topic/plx_forceemote
 	keyword = "PLX_forceemote"
@@ -380,6 +384,9 @@
 	var/target_ckey = input["ckey"]
 	var/emote = input["emote"]
 	var/emote_args = input["emote_args"]
+
+	if(!target_ckey || !emote)
+		return list("error" = PLEXORA_ERROR_BAD_PARAM, "param" = "ckey/emote", "reason" = "missing required parameter")
 
 	var/client/client = disambiguate_client(ckey(target_ckey))
 
@@ -403,6 +410,9 @@
 	var/target_ckey = input["ckey"]
 	var/message = input["message"]
 
+	if(!target_ckey || !message)
+		return list("error" = PLEXORA_ERROR_BAD_PARAM, "param" = "ckey/message", "reason" = "missing required parameter")
+
 	var/client/client = disambiguate_client(ckey(target_ckey))
 
 	if (QDELETED(client))
@@ -424,8 +434,12 @@
 	// TODO: do something with the executor input
 	//var/executor = input["executor"]
 
+
 	if (!CONFIG_GET(string/twitch_key))
 		return list("error" = PLEXORA_ERROR_NOTWITCHKEY)
+
+	if(!event)
+		return list("error" = PLEXORA_ERROR_BAD_PARAM, "param" = "event", "reason" = "missing required parameter")
 
 	// cant be bothered, lets just call the topic.
 	var/outgoing = list("TWITCH-API", CONFIG_GET(string/twitch_key), event,)
@@ -439,6 +453,9 @@
 	var/target_ckey = input["ckey"]
 	var/selected_smite = input["smite"]
 	var/smited_by = input["smited_by_ckey"]
+
+	if(!target_ckey || !selected_smite || !smited_by)
+		return list("error" = PLEXORA_ERROR_BAD_PARAM, "param" = "ckey/smite/smited_by_ckey", "reason" = "missing required parameter")
 
 	if (!GLOB.smites[selected_smite])
 		return list("error" = PLEXORA_ERROR_INVALIDSMITE)
@@ -468,6 +485,9 @@
 /datum/world_topic/plx_jailmob/Run(list/input)
 	var/ckey = input["ckey"]
 	var/jailer = input["admin_ckey"]
+
+	if(!ckey || !jailer)
+		return list("error" = PLEXORA_ERROR_BAD_PARAM, "param" = "ckey/admin_ckey", "reason" = "missing required parameter")
 
 	var/client/client = disambiguate_client(ckey)
 
@@ -501,6 +521,8 @@
 	var/action_by_ckey = input["action_by"]
 	var/action = input["action"]
 
+	if(!ticketid || !action_by_ckey || !action)
+		return list("error" = PLEXORA_ERROR_BAD_PARAM, "param" = "id/action_by/action", "reason" = "missing required parameter")
 
 	var/datum/client_interface/mockadmin = new(key = action_by_ckey)
 
@@ -544,6 +566,9 @@
 	var/sender = input["sender_ckey"]
 	var/stealth = input["stealth"]
 	var/message = input["message"]
+
+	if(!input_ckey || !sender || !message)
+		return list("error" = PLEXORA_ERROR_BAD_PARAM, "param" = "ckey/sender_ckey/message", "reason" = "missing required parameter")
 
 	var/requested_ckey = ckey(input_ckey)
 	var/client/recipient = disambiguate_client(requested_ckey)
@@ -613,6 +638,9 @@
 	var/sender = input["sender_ckey"]
 	var/message = input["message"]
 
+	if(!target_ckey || !sender || !message)
+		return list("error" = PLEXORA_ERROR_BAD_PARAM, "param" = "ckey/sender_ckey/message", "reason" = "missing required parameter")
+
 	var/client/recipient = disambiguate_client(ckey(target_ckey))
 
 	if (QDELETED(recipient))
@@ -637,6 +665,9 @@
 /datum/world_topic/plx_relayadminsay/Run(list/input)
 	var/sender = input["sender"]
 	var/msg = input["message"]
+
+	if (!sender || !msg)
+		return
 
 	msg = emoji_parse(copytext_char(sanitize(msg), 1, MAX_MESSAGE_LEN))
 	if(!msg)
@@ -674,6 +705,9 @@
 /datum/world_topic/plx_relaymentorsay/Run(list/input)
 	var/sender = input["sender"]
 	var/msg = input["message"]
+
+	if (!sender || !msg)
+		return
 
 	msg = emoji_parse(copytext(sanitize(msg), 1, MAX_MESSAGE_LEN))
 	if(!msg)

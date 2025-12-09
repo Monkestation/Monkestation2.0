@@ -82,6 +82,11 @@
 		if(blocked)
 			visible_message(span_danger("[src] crashes into [victim][extra_speed ? " really hard" : ""], but [victim] blocked the worst of it!"),\
 				span_userdanger("You violently crash into [victim][extra_speed ? " extra hard" : ""], but [victim] managed to block the worst of it!"))
+
+			if(ishuman(victim) && !victim.has_movespeed_modifier(/datum/movespeed_modifier/shove))
+				victim.add_movespeed_modifier(/datum/movespeed_modifier/shove)
+				addtimer(CALLBACK(victim, TYPE_PROC_REF(/mob/living/carbon, clear_shove_slowdown)), SHOVE_SLOWDOWN_LENGTH)
+
 			log_combat(src, victim, "crashed into and was blocked by")
 			return
 		else
@@ -206,10 +211,13 @@
 		return
 	cuffs.item_flags |= BEING_REMOVED
 	breakouttime = cuffs.breakouttime
+	var/timed_action_flags = IGNORE_HELD_ITEM
+	if(cuffs.breakout_while_moving)
+		timed_action_flags |= IGNORE_USER_LOC_CHANGE
 	if(!cuff_break)
 		visible_message(span_warning("[src] attempts to remove [cuffs]!"))
 		to_chat(src, span_notice("You attempt to remove [cuffs]... (This will take around [DisplayTimeText(breakouttime)] and you need to stand still.)"))
-		if(do_after(src, breakouttime, target = src, timed_action_flags = IGNORE_HELD_ITEM, hidden = TRUE))
+		if(do_after(src, breakouttime, target = src, timed_action_flags = timed_action_flags, hidden = TRUE))
 			. = clear_cuffs(cuffs, cuff_break)
 		else
 			to_chat(src, span_warning("You fail to remove [cuffs]!"))
@@ -218,7 +226,7 @@
 		breakouttime = 5 SECONDS
 		visible_message(span_warning("[src] is trying to break [cuffs]!"))
 		to_chat(src, span_notice("You attempt to break [cuffs]... (This will take around 5 seconds and you need to stand still.)"))
-		if(do_after(src, breakouttime, target = src, timed_action_flags = IGNORE_HELD_ITEM))
+		if(do_after(src, breakouttime, target = src, timed_action_flags = timed_action_flags))
 			. = clear_cuffs(cuffs, cuff_break)
 		else
 			to_chat(src, span_warning("You fail to break [cuffs]!"))

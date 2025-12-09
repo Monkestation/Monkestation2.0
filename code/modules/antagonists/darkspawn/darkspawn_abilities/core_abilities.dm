@@ -20,7 +20,7 @@
 /datum/action/cooldown/spell/touch/devour_will
 	name = "Devour Will"
 	desc = "Creates a dark bead that can be used on a human to begin draining the lucidity and willpower from a living target, knocking them unconscious for a time.\
-			<br>Being interrupted will knock you down for a time."
+			<br>Being interrupted will knock you down for a time. Your target will be unable to move however may still act while being drained."
 	panel = "Darkspawn"
 	button_icon = 'icons/mob/actions/actions_darkspawn.dmi'
 	sound = null

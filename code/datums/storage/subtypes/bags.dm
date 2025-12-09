@@ -2,7 +2,7 @@
 /datum/storage/bag/construction
 	max_total_storage = 100
 	max_slots = 50
-	max_specific_storage = WEIGHT_CLASS_SMALL
+	max_specific_storage = WEIGHT_CLASS_NORMAL
 
 /datum/storage/bag/construction/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
@@ -10,15 +10,18 @@
 		/obj/item/assembly,
 		/obj/item/circuitboard,
 		/obj/item/electronics,
+		/obj/item/meteor_shield_capsule,
+		/obj/item/rcd_ammo,
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/stack/cable_coil,
+		/obj/item/stack/ducts,
+		/obj/item/stack/neon_lining,
 		/obj/item/stack/ore/bluespace_crystal,
+		/obj/item/stack/rods,
+		/obj/item/stack/sheet,
+		/obj/item/stack/tile,
 		/obj/item/stock_parts,
 		/obj/item/wallframe/camera,
-		/obj/item/stack/sheet,
-		/obj/item/rcd_ammo,
-		/obj/item/stack/rods,
-		/obj/item/meteor_shield_capsule,
 	))
 
 ///Rebar quiver bag
