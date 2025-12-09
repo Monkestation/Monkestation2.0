@@ -43,8 +43,8 @@
 	filters -= FILTER_STAMINACRIT
 
 	stamina.resume()
-	if (stamina.current < 35)
-		stamina.adjust(35 - stamina.current) //Brings you up to at least 35 stamina after exiting stamcrit - you will still be in stamina damage slowdown for about 5 seconds
+	if (stamina.current < 15)
+		stamina.adjust(15 - stamina.current) //Brings you up to at least 15 stamina after exiting stamcrit - you will still be in stamina damage slowdown for about 5 seconds
 
 /mob/living/carbon/adjust_disgust(amount)
 	disgust = clamp(disgust+amount, 0, DISGUST_LEVEL_MAXEDOUT)
