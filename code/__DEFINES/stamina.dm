@@ -53,7 +53,7 @@
 ///The amount of tiles you need to move to be considered moving in a sustained sprint
 #define STAMINA_SUSTAINED_SPRINT_THRESHOLD 8
 ///How much stamina is taken per tile while sprinting
-#define STAMINA_SPRINT_COST 0.5
+#define STAMINA_SPRINT_COST 0.4
 
 ////
 /// GRAPPLING
