@@ -80,6 +80,12 @@ GLOBAL_DATUM(dj_booth, /obj/machinery/dj_station)
 	if(inserted_tape)
 		context[SCREENTIP_CONTEXT_CTRL_LMB] = "Eject Tape"
 
+/obj/machinery/dj_station/update_overlays()
+	. = ..()
+	if(broadcasting)
+		. += mutable_appearance(icon, "[icon_state]_on")
+		. += emissive_appearance(icon, "[icon_state]_on_e", src, alpha = src.alpha)
+
 /obj/machinery/dj_station/process()
 	if(!playing?.duration || !broadcasting || !song_start_time)
 		return PROCESS_KILL
@@ -89,6 +95,7 @@ GLOBAL_DATUM(dj_booth, /obj/machinery/dj_station)
 		PLAY_CASSETTE_SOUND(SFX_DJSTATION_STOP)
 		broadcasting = FALSE
 		song_start_time = 0
+		update_appearance(UPDATE_OVERLAYS)
 		SStgui.update_uis(src)
 
 /obj/machinery/dj_station/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
@@ -227,6 +234,7 @@ GLOBAL_DATUM(dj_booth, /obj/machinery/dj_station)
 			PLAY_CASSETTE_SOUND(SFX_DJSTATION_PLAY)
 			song_start_time = REALTIMEOFDAY
 			broadcasting = TRUE
+			update_appearance(UPDATE_OVERLAYS)
 			INVOKE_ASYNC(src, PROC_REF(play_to_all_listeners))
 			SStgui.update_uis(src)
 			log_music("[key_name(user)] began playing the track \"[playing.name]\" from [inserted_tape.name] ([inserted_tape.cassette_data?.id || "no cassette id"]) at [AREACOORD(src)]")
@@ -240,6 +248,7 @@ GLOBAL_DATUM(dj_booth, /obj/machinery/dj_station)
 			end_processing()
 			PLAY_CASSETTE_SOUND(SFX_DJSTATION_STOP)
 			broadcasting = FALSE
+			update_appearance(UPDATE_OVERLAYS)
 			song_start_time = 0
 			INVOKE_ASYNC(src, PROC_REF(stop_for_all_listeners))
 			SStgui.update_uis(src)
@@ -284,6 +293,7 @@ GLOBAL_DATUM(dj_booth, /obj/machinery/dj_station)
 			if(broadcasting)
 				broadcasting = FALSE
 				song_start_time = 0
+				update_appearance(UPDATE_OVERLAYS)
 				INVOKE_ASYNC(src, PROC_REF(stop_for_all_listeners))
 			if(playing)
 				PLAY_CASSETTE_SOUND(SFX_DJSTATION_STOP)
