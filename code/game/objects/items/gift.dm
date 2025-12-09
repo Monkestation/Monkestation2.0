@@ -19,6 +19,7 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 	resistance_flags = FLAMMABLE
 
 	var/atom/contains_type
+	var/notify_admins = FALSE
 
 /obj/item/a_gift/Initialize(mapload)
 	. = ..()
@@ -44,19 +45,23 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 
 	qdel(src)
 
+	var/gift_name = contains_type::name
 	if(ispath(contains_type, /obj/item))
 		var/atom/I = new contains_type(get_turf(M))
 		if (!QDELETED(I)) //might contain something like metal rods that might merge with a stack on the ground
 			M.put_in_hands(I)
 			I.add_fingerprint(M)
 			I.AddComponent(/datum/component/gift_item, M) // monkestation edit: gift item info component
+			gift_name = I
 		else
 			M.visible_message(span_danger("Oh no! The present that [M] opened had nothing inside it!"))
 			return
 	else
 		new contains_type(M.drop_location(), M)
-	M.visible_message(span_notice("[M] unwraps \the [src], finding \a [contains_type::name] inside!"))
-	M.investigate_log("has unwrapped a present containing [contains_type].", INVESTIGATE_PRESENTS)
+	M.visible_message(span_notice("[M] unwraps \the [src], finding \a [gift_name] inside!"))
+	M.investigate_log("has unwrapped a present containing [gift_name] ([contains_type]).", INVESTIGATE_PRESENTS)
+	if(notify_admins)
+		message_admins("[ADMIN_LOOKUPFLW(M)] unwrapped a present containing <b>[gift_name]</b> <small>([contains_type])</small>")
 
 /obj/item/a_gift/proc/get_gift_type()
 	var/gift_type_list = list(/obj/item/sord,
@@ -107,6 +112,7 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 /obj/item/a_gift/anything
 	name = "christmas gift"
 	desc = "It could be anything!"
+	notify_admins = TRUE
 
 /obj/item/a_gift/anything/get_gift_type()
 	if(!GLOB.possible_gifts.len)
