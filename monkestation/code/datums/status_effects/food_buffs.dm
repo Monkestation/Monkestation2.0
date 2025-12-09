@@ -26,7 +26,7 @@
 /datum/status_effect/food/stamina_increase
 	id = "t1_stamina"
 	alert_type = /atom/movable/screen/alert/status_effect/food/stamina_increase_t1
-	var/stam_increase = 10
+	var/stam_increase = 4
 
 /datum/status_effect/food/stamina_increase/apply_quality(quality)
 	stam_increase *= 1 + (quality / 50)
@@ -39,7 +39,7 @@
 /datum/status_effect/food/stamina_increase/t2
 	id = "t2_stamina"
 	alert_type = /atom/movable/screen/alert/status_effect/food/stamina_increase_t2
-	stam_increase = 20
+	stam_increase = 8
 
 /atom/movable/screen/alert/status_effect/food/stamina_increase_t2
 	name = "Medium Stamina Increase"
@@ -49,7 +49,7 @@
 /datum/status_effect/food/stamina_increase/t3
 	id = "t3_stamina"
 	alert_type = /atom/movable/screen/alert/status_effect/food/stamina_increase_t3
-	stam_increase = 30
+	stam_increase = 12
 
 /atom/movable/screen/alert/status_effect/food/stamina_increase_t3
 	name = "Large Stamina Increase"
@@ -273,7 +273,7 @@
 /datum/status_effect/food/stam_regen
 	id = "t1_stam_regen"
 	alert_type = /atom/movable/screen/alert/status_effect/food/stam_regen_t1
-	var/regen_increase = 0.5
+	var/regen_increase = 0.25
 
 /datum/status_effect/food/stam_regen/apply_quality(quality)
 	regen_increase *= (1 + (quality / 20))
@@ -286,7 +286,7 @@
 /datum/status_effect/food/stam_regen/t2
 	id = "t2_stam_regen"
 	alert_type = /atom/movable/screen/alert/status_effect/food/stam_regen_t2
-	regen_increase = 1.5
+	regen_increase = 0.75
 
 /atom/movable/screen/alert/status_effect/food/stam_regen_t2
 	name = "Moderate Stamina Regeneration Increase"
@@ -296,7 +296,7 @@
 /datum/status_effect/food/stam_regen/t3
 	id = "t2_stam_regen"
 	alert_type = /atom/movable/screen/alert/status_effect/food/stam_regen_t3
-	regen_increase = 3
+	regen_increase = 1.5
 
 /atom/movable/screen/alert/status_effect/food/stam_regen_t3
 	name = "Large Stamina Regeneration Increase"
