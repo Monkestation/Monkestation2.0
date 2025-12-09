@@ -34,6 +34,9 @@
 	stamina.stop()
 
 /mob/living/carbon/exit_stamina_stun()
+	if(!HAS_TRAIT_FROM(src, TRAIT_INCAPACITATED, STAMINA)) //Not in stamcrit currently
+		return
+
 	REMOVE_TRAIT(src, TRAIT_INCAPACITATED, STAMINA)
 	REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, STAMINA)
 	REMOVE_TRAIT(src, TRAIT_FLOORED, STAMINA)
