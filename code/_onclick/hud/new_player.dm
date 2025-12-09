@@ -228,7 +228,7 @@
 	if(isnull(new_player?.client))
 		return
 
-	new_player.join_game()
+	new_player.join_game(TRUE, params)
 
 
 /atom/movable/screen/lobby/button/join/proc/show_join_button()

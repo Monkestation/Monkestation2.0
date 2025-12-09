@@ -95,7 +95,7 @@
 	//Allow admins and Patreon supporters to bypass the cap/queue
 	if ((relevant_cap && living_player_count() >= relevant_cap) && (persistent_client?.patreon?.is_donator() || is_admin(client) || is_mentor(client)))
 		to_chat(src, span_notice("The server is currently overcap, but you are a(n) patreon/mentor/admin!"))
-	else if (SSticker.queued_players.len || (relevant_cap && living_player_count() >= relevant_cap))
+	else if (length(SSticker.queued_players) || (relevant_cap && living_player_count() >= relevant_cap))
 		to_chat(src, span_danger("[CONFIG_GET(string/hard_popcap_message)]"))
 
 		var/queue_position = SSticker.queued_players.Find(src)
