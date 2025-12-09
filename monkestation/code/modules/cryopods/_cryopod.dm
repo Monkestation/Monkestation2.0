@@ -387,6 +387,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 			"crewfile" = crewfile,
 			"lockfile" = lockfile,
 			"stored_quirks" = stored_quirks,
+			"joined_as_crew" = HAS_MIND_TRAIT(mob_occupant, TRAIT_JOINED_AS_CREW),
 		))
 
 	// Make an announcement and log the person entering storage. If set to quiet, does not make an announcement.
@@ -480,6 +481,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 		if(newmob.client)
 			SSquirks.AssignQuirks(newmob, newmob.client, blacklist = assoc_to_keys(skip_quirks)) // Still need to copy over the rest of their quirks.
 
+		if(listed["joined_as_crew"])
+			ADD_TRAIT(newmob.mind, TRAIT_JOINED_AS_CREW, CREW_JOIN_TRAIT)
+			GLOB.joined_player_list |= newmob.ckey
 
 		listed["ckey"] = null //incase we fuck up down below
 		control_computer.frozen_crew -= list(listed)
