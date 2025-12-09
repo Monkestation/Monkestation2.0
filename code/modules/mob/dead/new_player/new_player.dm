@@ -108,7 +108,7 @@
 			to_chat(src, span_notice("You have been added to the queue to join the game. Your position in queue is [SSticker.queued_players.len]."))
 		return
 
-	if (from_lobby_menu)
+	if(from_lobby_menu)
 		if(!LAZYACCESS(params2list(params), CTRL_CLICK))
 			GLOB.latejoin_menu.ui_interact(src)
 		else

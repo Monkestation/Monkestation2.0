@@ -230,7 +230,6 @@
 
 	new_player.join_game(TRUE, params)
 
-
 /atom/movable/screen/lobby/button/join/proc/show_join_button()
 	SIGNAL_HANDLER
 	set_button_status(TRUE)
