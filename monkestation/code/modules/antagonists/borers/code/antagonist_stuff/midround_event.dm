@@ -56,7 +56,7 @@
 	var/list/candidates = SSpolling.poll_ghost_candidates(
 		role = ROLE_CORTICAL_BORER,
 		ignore_category = POLL_IGNORE_CORTICAL_BORER,
-		alert_pic = /mob/living/basic/cortical_borer,
+		alert_pic = /mob/living/basic/cortical_borer/empowered,
 	)
 
 	if(!length(candidates))
@@ -69,7 +69,7 @@
 		var/mob/dead/observer/new_borer = pick(candidates)
 		candidates -= new_borer
 		var/vent = pick(vents)
-		var/mob/living/basic/cortical_borer/spawned_cb = new /mob/living/basic/cortical_borer(get_turf(vent))
+		var/mob/living/basic/cortical_borer/empowered/spawned_cb = new /mob/living/basic/cortical_borer/empowered(get_turf(vent))
 		spawned_cb.move_into_vent(vent)
 		spawned_cb.PossessByPlayer(new_borer.ckey)
 		spawned_cb.mind.add_antag_datum(/datum/antagonist/cortical_borer/hivemind)
@@ -115,7 +115,7 @@
 
 /datum/dynamic_ruleset/midround/from_ghosts/cortical_borer/generate_ruleset_body(mob/applicant)
 	var/obj/vent = pick_n_take(vents)
-	var/mob/living/basic/cortical_borer/new_borer = new(vent.loc)
+	var/mob/living/basic/cortical_borer/empowered/new_borer = new(vent.loc)
 	new_borer.PossessByPlayer(applicant.key)
 	new_borer.move_into_vent(vent)
 	message_admins("[ADMIN_LOOKUPFLW(new_borer)] has been made into a borer by the midround ruleset.")

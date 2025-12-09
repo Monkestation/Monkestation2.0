@@ -28,9 +28,9 @@
 	QDEL_IN(src, delay) //Gotta let it stop drifting
 	animate(src, alpha = 0, time = delay)
 
-
 /obj/effect/decal/chempuff/proc/loop_ended(datum/move_loop/source)
 	SIGNAL_HANDLER
+
 	if(QDELETED(src))
 		return
 	end_life(source.delay)
@@ -84,9 +84,9 @@
 			spray_down_atom(turf_atom)
 			lifetime -= 1
 
-		if(lifetime >= 0 && (!stream || travelled_max_distance))
-			spray_down_atom(turf_atom)
-			lifetime -= 1
+	if(lifetime >= 0 && (!stream || travelled_max_distance))
+		spray_down_atom(spraying)
+		lifetime -= 1
 
 /// Actually handles exposing the passed atom to the reagents and logging
 /obj/effect/decal/chempuff/proc/spray_down_atom(atom/spraying)

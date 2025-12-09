@@ -142,7 +142,7 @@
 /datum/action/cooldown/bloodsucker/proc/can_use(mob/living/carbon/user, trigger_flags)
 	if(QDELETED(owner))
 		return FALSE
-	if(!isliving(user))
+	if(!isliving(user) || isbrain(user))
 		return FALSE
 	// Torpor?
 	if((check_flags & BP_CANT_USE_IN_TORPOR) && bloodsuckerdatum_power?.is_in_torpor())

@@ -114,8 +114,7 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 	for(var/obj/item/reagent_containers/cup/beaker/beaker in component_parts)
 		reagents.maximum_volume += beaker.reagents.maximum_volume
 		if(!CHECK_BITFIELD(beaker.reagents.flags, NO_REACT))
-			cryogenic = FALSE //at least one of the beakers is not a cryo beaker
-			break // thus we can really just stop here.
+			cryogenic = FALSE
 	if(cryogenic == TRUE)
 		ENABLE_BITFIELD(reagents.flags, NO_REACT)
 	else
