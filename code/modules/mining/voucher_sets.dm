@@ -343,7 +343,7 @@
 
 /datum/voucher_set/security/assistant/buddy_cop
 	name = "Buddy Cop Kit"
-	description = "Pair up with a security officer and learn the basics of security."
+	description = "Pair up with a security officer and help them in their day to day duties."
 	icon = 'monkestation/icons/obj/clothing/hats.dmi'
 	icon_state = "helmet"
 	set_items = list(

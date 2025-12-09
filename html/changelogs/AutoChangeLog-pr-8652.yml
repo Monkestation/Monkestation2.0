@@ -1,0 +1,8 @@
+author: "JupiterJaeden"
+delete-after: True
+changes:
+  - balance: "Mundane sword-type items once again no longer block LEAP_ATTACK attack types- this includes body throws, tackles, and other similar types of attacks. Eswords, dswords, and their variants have 25% blocking against these types of attacks. Shields, on the other hand, have a +25% chance of blocking these types of attacks successfully."
+  - balance: "Shields no longer have a +30% chance of blocking thrown items."
+  - balance: "Tackles do not self-stun the tackler upon being successfully blocked, instead applying an equal stagger to both parties."
+  - balance: "When blocked, body throws do not knockdown or paralyze the victim, but do still apply a short stagger."
+  - balance: "Tackles now stagger you every time they are used (regardless of hitting or missing), preventing tackles from being spammed in short succession."
