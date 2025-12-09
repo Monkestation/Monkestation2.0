@@ -6913,7 +6913,6 @@
 #include "monkestation\code\modules\antagonists\contractor\items\modsuit\modsuit.dm"
 #include "monkestation\code\modules\antagonists\contractor\items\modsuit\modules.dm"
 #include "monkestation\code\modules\antagonists\contractor\items\modsuit\theme.dm"
-#include "monkestation\code\modules\antagonists\cult\blood_magic.dm"
 #include "monkestation\code\modules\antagonists\ert\moff_inspectors.dm"
 #include "monkestation\code\modules\antagonists\evil_clone\evil_clone.dm"
 #include "monkestation\code\modules\antagonists\evil_clone\evil_clone_objective.dm"
