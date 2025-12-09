@@ -60,7 +60,7 @@
 	return ..()
 
 /obj/item/cassette_tape/update_icon_state()
-	icon_state = cassette_data.get_side(!flipped)?.design || src::icon_state
+	icon_state = get_current_side()?.design || src::icon_state
 	return ..()
 
 /obj/item/cassette_tape/examine(mob/user)
