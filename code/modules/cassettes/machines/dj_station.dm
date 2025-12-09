@@ -2,10 +2,6 @@
 
 GLOBAL_DATUM(dj_booth, /obj/machinery/dj_station)
 
-/obj/item/clothing/ears
-	//can we be used to listen to radio?
-	var/radio_compat = FALSE
-
 /obj/machinery/dj_station
 	name = "Cassette Player"
 	desc = "Plays Space Music Board approved cassettes for anyone in the station to listen to."
@@ -26,7 +22,9 @@ GLOBAL_DATUM(dj_booth, /obj/machinery/dj_station)
 	processing_flags = START_PROCESSING_MANUALLY
 	subsystem_type = /datum/controller/subsystem/processing/fastprocess // to try to keep it as seamless as possible when the song ends
 
+	/// Is someone currently ejecting the tape?
 	var/is_ejecting = FALSE
+	/// Are we currently broadcasting a song?
 	var/broadcasting = FALSE
 	/// Are we currently switching tracks?
 	var/switching_tracks = FALSE
@@ -34,7 +32,7 @@ GLOBAL_DATUM(dj_booth, /obj/machinery/dj_station)
 	var/obj/item/cassette_tape/inserted_tape
 	/// The song currently being played, if any.
 	var/datum/cassette_song/playing
-	/// Extra metadata send to tgui panel
+	/// Extra metadata sent to the tgui panel.
 	var/list/playing_extra_data
 	/// The direct URL endpoint of the song being played.
 	var/music_endpoint
@@ -42,6 +40,8 @@ GLOBAL_DATUM(dj_booth, /obj/machinery/dj_station)
 	var/song_start_time
 	/// Looping sound used when switching cassette tracks.
 	var/datum/looping_sound/cassette_track_switch/switch_sound
+	/// If this can play bootleg tapes or not.
+	var/can_play_bootlegs = FALSE
 
 	COOLDOWN_DECLARE(next_song_timer)
 	COOLDOWN_DECLARE(fake_loading_time)
@@ -132,18 +132,24 @@ GLOBAL_DATUM(dj_booth, /obj/machinery/dj_station)
 
 /obj/machinery/dj_station/proc/eject_tape(mob/user)
 	if(is_ejecting)
-		balloon_alert(user, "already ejecting!")
-		return
+		balloon_alert(user, "already ejecting tape!")
+		return FALSE
 	if(!inserted_tape)
 		balloon_alert(user, "no tape inserted!")
-		return
+		return FALSE
+	if(switching_tracks)
+		balloon_alert(user, "busy switching tracks!")
+		return FALSE
+	if(broadcasting)
+		balloon_alert(user, "stop the current track first!")
+		return FALSE
 	end_processing()
 	is_ejecting = TRUE
 	balloon_alert(user, "ejecting tape...")
 	PLAY_CASSETTE_SOUND(SFX_DJSTATION_OPENTAKEOUTANDCLOSE)
 	if (!do_after(user, 1.5 SECONDS, src))
 		is_ejecting = FALSE
-		return
+		return FALSE
 	inserted_tape.forceMove(drop_location())
 	is_ejecting = FALSE
 	log_music("[key_name(user)] ejected [inserted_tape.name] ([inserted_tape.cassette_data?.id || "no cassette id"]) at [AREACOORD(src)]")
@@ -151,18 +157,12 @@ GLOBAL_DATUM(dj_booth, /obj/machinery/dj_station)
 	user.put_in_hands(inserted_tape)
 	inserted_tape = null
 	update_static_data_for_all_viewers()
+	return TRUE
 
 /obj/machinery/dj_station/click_ctrl(mob/user)
 	if(!can_interact(user))
 		return NONE
-	if(is_ejecting)
-		balloon_alert(user, "busy ejecting tape!")
-		return CLICK_ACTION_BLOCKING
-	if(switching_tracks)
-		balloon_alert(user, "busy switching tracks!")
-		return CLICK_ACTION_BLOCKING
-	eject_tape(user)
-	return CLICK_ACTION_SUCCESS
+	return eject_tape(user) ? CLICK_ACTION_SUCCESS : CLICK_ACTION_BLOCKING
 
 /obj/machinery/dj_station/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -257,7 +257,7 @@ GLOBAL_DATUM(dj_booth, /obj/machinery/dj_station)
 				balloon_alert(user, "no cassette tape inserted!")
 				return
 
-			if(inserted_tape.cassette_data?.status != CASSETTE_STATUS_APPROVED)
+			if(!can_play_bootlegs && inserted_tape.cassette_data?.status != CASSETTE_STATUS_APPROVED)
 				balloon_alert(user, "cannot play bootleg tapes!")
 				return
 
@@ -265,14 +265,11 @@ GLOBAL_DATUM(dj_booth, /obj/machinery/dj_station)
 			if(!length(inserted_tape.cassette_data?.front?.songs) && !length(inserted_tape.cassette_data?.back?.songs))
 				balloon_alert(user, "this cassette is blank!")
 				return
-			var/list/cassette_songs = inserted_tape.get_current_side().songs
+			var/list/cassette_songs = inserted_tape.get_current_side()?.songs
 
 			var/song_count = length(cassette_songs)
 			if(!song_count)
 				balloon_alert(user, "no tracks on this side!")
-				return
-			if (!inserted_tape)
-				balloon_alert(user, "no tape inserted!")
 				return
 			var/datum/cassette_song/found_track = cassette_songs[index]
 			if(!found_track)
