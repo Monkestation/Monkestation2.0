@@ -106,9 +106,9 @@ class Controls extends Component<{ data: Data }> {
   async fetchThumbnail() {
     const token = ++this.fetchToken;
     const { current_song: current_songId } = this.props.data;
-    if (current_songId == null) return this.setState({ fetchThumbnail: null });
+    if (current_songId === null) return this.setState({ thumbnailUrl: null });
     const current_song = getSong(current_songId, this.props.data.cassette);
-    if (!current_song?.url) return this.setState({ fetchThumbnail: null });
+    if (!current_song?.url) return this.setState({ thumbnailUrl: null });
     const thumb = await getThumbnailUrl(current_song.url);
     if (token === this.fetchToken) {
       this.setState({ thumbnailUrl: thumb });
@@ -127,21 +127,28 @@ class Controls extends Component<{ data: Data }> {
 
     const current_song = getSong(current_songId, cassette);
 
-    if (current_song == null) this.setState({ fetchThumbnail: null });
-
     const { thumbnailUrl } = this.state;
+    if (current_song === null && thumbnailUrl !== null) {
+      this.setState({ thumbnailUrl: null });
+    }
 
     return (
       <Stack fill vertical>
         <Stack.Item>
           <LabeledList>
             <LabeledList.Item label="Title">
-              <Box>
-                {broadcasting && current_song
-                  ? current_song?.name || 'Stopped'
-                  : 'Stopped'}
-              </Box>
+              <Box>{current_song?.name || 'N/A'}</Box>
             </LabeledList.Item>
+            {current_song?.artist && (
+              <LabeledList.Item label="Artist">
+                {current_song.artist}
+              </LabeledList.Item>
+            )}
+            {current_song?.album && (
+              <LabeledList.Item label="Album">
+                {current_song.album}
+              </LabeledList.Item>
+            )}
             <LabeledList.Item label="Controls">
               <Button
                 icon="play"
@@ -206,14 +213,23 @@ const AvailableTracks = ({
     <Stack vertical fill>
       {songs.map((song, i) => (
         <Stack.Item key={i}>
-          <Button
-            fluid
-            icon="play"
-            selected={currentSong?.name === song.name}
-            onClick={() => act('set_track', { index: i })}
-          >
-            {song.name}
-          </Button>
+          <Stack>
+            <Stack.Item grow>
+              <Button
+                fluid
+                icon="play"
+                selected={currentSong?.name === song.name}
+                onClick={() => act('set_track', { index: i })}
+              >
+                {song.name}
+              </Button>
+            </Stack.Item>
+            <Stack.Item>
+              <a href={song.url}>
+                <Button icon="external-link-alt" tooltip="Open in browser" />
+              </a>
+            </Stack.Item>
+          </Stack>
         </Stack.Item>
       ))}
     </Stack>
@@ -237,7 +253,11 @@ export const DjStation = () => {
           <Stack.Item grow={1}>
             <Stack vertical fill>
               <Section
-                title="Tape Info"
+                title={
+                  cassette
+                    ? cassette.name || 'Untitled Cassette'
+                    : 'No Tape Inserted'
+                }
                 buttons={
                   <Button fluid icon="eject" onClick={() => act('eject')}>
                     Eject
@@ -267,7 +287,7 @@ export const DjStation = () => {
               <Section
                 fill
                 scrollable
-                title={`Track list - Side ${side !== null ? (side ? 'A' : 'B') : '?'}`}
+                title={`Track list - Side ${side !== null ? (side === 0 ? 'A' : 'B') : '?'}`}
               >
                 {songs?.length ? (
                   <AvailableTracks songs={songs} currentSong={currentSong} />
@@ -280,7 +300,16 @@ export const DjStation = () => {
             </Stack>
           </Stack.Item>
           <Stack.Item grow={1}>
-            <Section title="Currently Playing" fill>
+            <Section
+              title={
+                data.broadcasting
+                  ? 'Currently Playing'
+                  : data.current_song
+                    ? 'Selected Track'
+                    : 'No Track Selected'
+              }
+              fill
+            >
               <Controls data={data} />
             </Section>
           </Stack.Item>

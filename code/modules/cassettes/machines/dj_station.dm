@@ -34,6 +34,8 @@ GLOBAL_DATUM(dj_booth, /obj/machinery/dj_station)
 	var/obj/item/cassette_tape/inserted_tape
 	/// The song currently being played, if any.
 	var/datum/cassette_song/playing
+	/// Extra metadata send to tgui panel
+	var/list/playing_extra_data
 	/// The direct URL endpoint of the song being played.
 	var/music_endpoint
 	/// The REALTIMEOFDAY that the current song was started.
@@ -64,9 +66,8 @@ GLOBAL_DATUM(dj_booth, /obj/machinery/dj_station)
 	playing = null
 	if(GLOB.dj_booth == src)
 		GLOB.dj_booth = null
-		for(var/mob/listener as anything in GLOB.music_listeners)
-			if(QDELETED(listener))
-				continue
+		for(var/mob/listener in GLOB.music_listeners)
+			UnregisterSignal(listener, COMSIG_TGUI_PANEL_READY)
 			listener.client?.tgui_panel?.stop_music()
 	return ..()
 
@@ -136,6 +137,7 @@ GLOBAL_DATUM(dj_booth, /obj/machinery/dj_station)
 	if(!inserted_tape)
 		balloon_alert(user, "no tape inserted!")
 		return
+	end_processing()
 	is_ejecting = TRUE
 	balloon_alert(user, "ejecting tape...")
 	PLAY_CASSETTE_SOUND(SFX_DJSTATION_OPENTAKEOUTANDCLOSE)
@@ -169,12 +171,13 @@ GLOBAL_DATUM(dj_booth, /obj/machinery/dj_station)
 		ui.open()
 
 /obj/machinery/dj_station/ui_data(mob/user)
+	var/datum/cassette_side/current_side = inserted_tape?.get_current_side()
 	return list(
 		"broadcasting" = broadcasting,
 		"song_cooldown" = COOLDOWN_TIMELEFT(src, next_song_timer),
 		"progress" = (song_start_time && playing?.duration) ? ((REALTIMEOFDAY - song_start_time) / (playing.duration * 1 SECONDS)) : 0,
 		"side" = inserted_tape?.flipped,
-		"current_song" = switching_tracks ? null : (inserted_tape?.cassette_data ? inserted_tape.cassette_data.get_side(!inserted_tape.flipped).songs.Find(playing) - 1 : null),
+		"current_song" = switching_tracks ? null : (current_side ? current_side.songs.Find(playing) - 1 : null),
 		"switching_tracks" = switching_tracks,
 	)
 
@@ -182,7 +185,7 @@ GLOBAL_DATUM(dj_booth, /obj/machinery/dj_station)
 	. = list("cassette" = null)
 	var/datum/cassette/cassette = inserted_tape?.cassette_data
 	if(cassette)
-		var/datum/cassette_side/side = cassette.get_side()
+		var/datum/cassette_side/side = inserted_tape.get_current_side()
 		.["cassette"] = list(
 			"name" = html_decode(cassette.name),
 			"desc" = html_decode(cassette.desc),
@@ -227,6 +230,7 @@ GLOBAL_DATUM(dj_booth, /obj/machinery/dj_station)
 			INVOKE_ASYNC(src, PROC_REF(play_to_all_listeners))
 			SStgui.update_uis(src)
 			log_music("[key_name(user)] began playing the track \"[playing.name]\" from [inserted_tape.name] ([inserted_tape.cassette_data?.id || "no cassette id"]) at [AREACOORD(src)]")
+			message_admins("[ADMIN_LOOKUPFLW(user)] began playing the track \"[playing.name]\" from [inserted_tape.name] ([inserted_tape.cassette_data?.id || "no cassette id"])")
 			begin_processing()
 		if("stop")
 			. = TRUE
@@ -258,10 +262,10 @@ GLOBAL_DATUM(dj_booth, /obj/machinery/dj_station)
 				return
 
 			// Are both sides blank
-			if(!length(inserted_tape.cassette_data?.front?.songs) || !length(inserted_tape.cassette_data?.back?.songs))
+			if(!length(inserted_tape.cassette_data?.front?.songs) && !length(inserted_tape.cassette_data?.back?.songs))
 				balloon_alert(user, "this cassette is blank!")
 				return
-			var/list/cassette_songs = inserted_tape.cassette_data.get_side(!inserted_tape.flipped).songs
+			var/list/cassette_songs = inserted_tape.get_current_side().songs
 
 			var/song_count = length(cassette_songs)
 			if(!song_count)
@@ -313,8 +317,17 @@ GLOBAL_DATUM(dj_booth, /obj/machinery/dj_station)
 				var/list/metadata = info["metadata"]
 				if(playing.duration <= 0 && metadata?["duration"])
 					playing.duration = metadata["duration"]
+				playing_extra_data = list(
+					"title" = playing.name,
+					"link" = playing.url,
+					"artist" = playing.artist,
+					"album" = playing.album,
+				)
+				if(playing.duration > 0)
+					playing_extra_data["duration"] = DisplayTimeText(playing.duration * 1 SECONDS)
 			else
 				playing = null
+				playing_extra_data = null
 				music_endpoint = null
 				song_start_time = 0
 				balloon_alert(user, "it got stuck! try again?")
@@ -341,21 +354,14 @@ GLOBAL_DATUM(dj_booth, /obj/machinery/dj_station)
 	hitting_projectile.reflect(src)
 	return BULLET_ACT_FORCE_PIERCE
 
+// TODO: clean all of this shit up
 /obj/machinery/dj_station/proc/play_to_all_listeners()
 	if(GLOB.dj_booth != src || !broadcasting || !music_endpoint || !playing)
 		return
-	var/list/extra_data = list(
-		"title" = playing.name,
-		"link" = playing.url,
-		"artist" = playing.artist,
-		"album" = playing.album,
-	)
-	if(playing.duration > 0)
-		extra_data["duration"] = DisplayTimeText(playing.duration * 1 SECONDS)
 	for(var/mob/listener as anything in GLOB.music_listeners)
 		if(QDELETED(listener) || !listener.client?.fully_created)
 			continue
-		listener.client?.tgui_panel?.play_music(music_endpoint, extra_data)
+		listener.client?.tgui_panel?.play_music(music_endpoint, playing_extra_data)
 
 /obj/machinery/dj_station/proc/stop_for_all_listeners()
 	if(GLOB.dj_booth != src)
@@ -365,25 +371,37 @@ GLOBAL_DATUM(dj_booth, /obj/machinery/dj_station)
 			continue
 		listener.client?.tgui_panel?.stop_music()
 
-/obj/machinery/dj_station/proc/on_add_listener(datum/source, mob/listener)
+/obj/machinery/dj_station/proc/on_listener_ready(mob/listener)
 	SIGNAL_HANDLER
-	if(GLOB.dj_booth != src || !broadcasting || !playing || !music_endpoint)
+	addtimer(CALLBACK(src, PROC_REF(play_for_listener), listener), 0.5 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
+
+/obj/machinery/dj_station/proc/play_for_listener(mob/listener)
+	if(GLOB.dj_booth != src || !broadcasting || !music_endpoint || !playing)
 		return
-	var/list/extra_data = list(
-		"title" = playing.name,
-		"link" = playing.url,
-		"artist" = playing.artist,
-		"album" = playing.album,
-	)
+	if(QDELETED(listener) || !HAS_TRAIT(listener, TRAIT_CAN_HEAR_MUSIC))
+		return
+	var/list/extra_data = playing_extra_data.Copy()
 	var/start = floor((REALTIMEOFDAY - song_start_time) / 10)
 	if(start > 0)
 		extra_data["start"] = start
-	if(playing.duration > 0)
-		extra_data["duration"] = DisplayTimeText(playing.duration * 1 SECONDS)
+	listener.client?.tgui_panel?.play_music(music_endpoint, extra_data)
+
+/obj/machinery/dj_station/proc/on_add_listener(datum/source, mob/listener)
+	SIGNAL_HANDLER
+	if(GLOB.dj_booth != src)
+		return
+	RegisterSignal(listener, COMSIG_TGUI_PANEL_READY, PROC_REF(on_listener_ready))
+	if(!broadcasting || !playing || !music_endpoint)
+		return
+	var/list/extra_data = playing_extra_data.Copy()
+	var/start = floor((REALTIMEOFDAY - song_start_time) / 10)
+	if(start > 0)
+		extra_data["start"] = start
 	listener.client?.tgui_panel?.play_music(music_endpoint, extra_data)
 
 /obj/machinery/dj_station/proc/on_remove_listener(datum/source, mob/listener)
 	SIGNAL_HANDLER
+	UnregisterSignal(listener, COMSIG_TGUI_PANEL_READY)
 	if(GLOB.dj_booth == src)
 		listener.client?.tgui_panel?.stop_music()
 

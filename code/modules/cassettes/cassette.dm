@@ -113,8 +113,16 @@
 			return ITEM_INTERACT_SUCCESS
 	return ITEM_INTERACT_BLOCKING
 
+/obj/item/cassette_tape/proc/get_current_side() as /datum/cassette_side
+	return cassette_data?.get_side(!flipped)
+
 /obj/item/cassette_tape/blank
 //	id = "blank"
 
 /obj/item/cassette_tape/friday
 	id = "friday"
+
+/obj/item/cassette_tape/random
+	name = "Not Correctly Created Random Cassette"
+	desc = "How did this happen?"
+	random = TRUE
