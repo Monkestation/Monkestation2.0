@@ -177,7 +177,7 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 			// Block the item listed, and any subtypes too.
 			gift_types_list -= typesof(blocked_item)
 
-		/// List of items with reduced chance items
+		/// List of items with a reduced chance to spawn
 		var/list/reduced_chance_items = list(
 			// Security reasons
 			/obj/item/card/id/advanced/centcom,
