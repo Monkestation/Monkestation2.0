@@ -32,10 +32,8 @@
 /obj/item/cassette_tape/LateInitialize()
 	if(id)
 		cassette_data = SScassettes.load_cassette(id)
-	else if(random)
-		var/list/random_cassette = SScassettes.unique_random_cassettes(amount = 1, status = CASSETTE_STATUS_APPROVED)
-		if(length(random_cassette))
-			cassette_data = random_cassette[1]
+	else if(random && length(GLOB.approved_ids))
+		cassette_data = SScassettes.load_cassette(pick(GLOB.approved_ids))
 	cassette_data ||= new
 	update_appearance(UPDATE_NAME | UPDATE_DESC | UPDATE_ICON_STATE)
 

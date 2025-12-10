@@ -12,8 +12,9 @@
 	density = TRUE
 
 /obj/machinery/cassette/mailbox/Initialize(mapload)
-	. = ..()
-	REGISTER_REQUIRED_MAP_ITEM(1, INFINITY)
+	..()
+	// REGISTER_REQUIRED_MAP_ITEM(1, INFINITY)
+	return INITIALIZE_HINT_QDEL
 
 /*
 /obj/machinery/cassette/mailbox/attackby(obj/item/weapon, mob/user, params)

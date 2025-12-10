@@ -13,7 +13,8 @@
 
 /obj/machinery/cassette/adv_cassette_deck/Initialize(mapload)
 	. = ..()
-	REGISTER_REQUIRED_MAP_ITEM(1, INFINITY)
+	//REGISTER_REQUIRED_MAP_ITEM(1, INFINITY)
+	return INITIALIZE_HINT_QDEL
 
 /obj/machinery/cassette/adv_cassette_deck/wrench_act(mob/living/user, obj/item/wrench)
 	..()
