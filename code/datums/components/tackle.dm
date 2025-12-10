@@ -123,9 +123,10 @@
 	user.Knockdown(base_knockdown, ignore_canstun = TRUE)
 	user.stamina.adjust(-stamina_cost)
 
-	if(ishuman(user) && !user.has_movespeed_modifier(/datum/movespeed_modifier/shove))
-		user.add_movespeed_modifier(/datum/movespeed_modifier/shove)
-		addtimer(CALLBACK(user, TYPE_PROC_REF(/mob/living/carbon, clear_shove_slowdown)), SHOVE_SLOWDOWN_LENGTH)
+	if(ishuman(user))
+		if (!user.has_movespeed_modifier(/datum/movespeed_modifier/shove))
+			user.add_movespeed_modifier(/datum/movespeed_modifier/shove)
+		addtimer(CALLBACK(user, TYPE_PROC_REF(/mob/living/carbon, clear_shove_slowdown)), SHOVE_SLOWDOWN_LENGTH, TIMER_UNIQUE | TIMER_OVERRIDE)
 
 	user.throw_at(clicked_atom, range, speed, user, FALSE)
 	addtimer(CALLBACK(src, PROC_REF(resetTackle)), base_knockdown, TIMER_STOPPABLE)
@@ -179,9 +180,10 @@
 		user.SetKnockdown(0)
 		user.get_up(TRUE)
 
-		if(ishuman(target) && !T.has_movespeed_modifier(/datum/movespeed_modifier/shove))
-			T.add_movespeed_modifier(/datum/movespeed_modifier/shove)
-			addtimer(CALLBACK(T, TYPE_PROC_REF(/mob/living/carbon, clear_shove_slowdown)), SHOVE_SLOWDOWN_LENGTH)
+		if (ishuman(target))
+			if (!target.has_movespeed_modifier(/datum/movespeed_modifier/shove))
+				target.add_movespeed_modifier(/datum/movespeed_modifier/shove)
+			addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living/carbon, clear_shove_slowdown)), SHOVE_SLOWDOWN_LENGTH, TIMER_UNIQUE | TIMER_OVERRIDE)
 		return COMPONENT_MOVABLE_IMPACT_FLIP_HITPUSH
 
 	switch(roll)
@@ -200,9 +202,10 @@
 			to_chat(target, span_userdanger("[user] lands a weak [tackle_word] on you, briefly knocking you off-balance!"))
 
 			user.Knockdown(30)
-			if(ishuman(target) && !T.has_movespeed_modifier(/datum/movespeed_modifier/shove))
-				T.add_movespeed_modifier(/datum/movespeed_modifier/shove) // maybe define a slightly more severe/longer slowdown for this
-				addtimer(CALLBACK(T, TYPE_PROC_REF(/mob/living/carbon, clear_shove_slowdown)), SHOVE_SLOWDOWN_LENGTH * 2)
+			if(ishuman(target))
+				if (!target.has_movespeed_modifier(/datum/movespeed_modifier/shove))
+					target.add_movespeed_modifier(/datum/movespeed_modifier/shove) // maybe define a slightly more severe/longer slowdown for this
+				addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living/carbon, clear_shove_slowdown)), SHOVE_SLOWDOWN_LENGTH * 2, TIMER_UNIQUE | TIMER_OVERRIDE)
 
 		if(-1 to 0) // decent hit, both parties are about equally inconvenienced
 			user.visible_message(span_warning("[user] lands a passable [tackle_word] on [target], sending them both tumbling!"), span_userdanger("You land a passable [tackle_word] on [target], sending you both tumbling!"), ignored_mobs = target)

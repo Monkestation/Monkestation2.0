@@ -205,9 +205,10 @@
 			target.stamina.adjust(-stamina_damage) //Intentionally armor piercing!
 			target.Knockdown((isnull(stun_override) ? knockdown_time : stun_override))
 
-			if(ishuman(target) && !target.has_movespeed_modifier(/datum/movespeed_modifier/shove))
-				target.add_movespeed_modifier(/datum/movespeed_modifier/shove)
-				addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living/carbon, clear_shove_slowdown)), SHOVE_SLOWDOWN_LENGTH)
+			if(ishuman(target))
+				if (!target.has_movespeed_modifier(/datum/movespeed_modifier/shove))
+					target.add_movespeed_modifier(/datum/movespeed_modifier/shove)
+				addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living/carbon, clear_shove_slowdown)), SHOVE_SLOWDOWN_LENGTH, TIMER_UNIQUE | TIMER_OVERRIDE)
 		else
 			target.stamina.adjust(-stamina_damage * 0.5)
 		additional_effects_non_cyborg(target, user)
