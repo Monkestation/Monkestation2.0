@@ -127,6 +127,8 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 		//
 		// Subtypes of these items will also be blocked.
 		var/list/blocked_items = list(
+			// Removes centcom IDs for "security" reasons
+			/obj/item/card/id/advanced/centcom,
 			// Just leaves the coordinates everywhere
 			/obj/item/gps/visible_debug,
 			// Can lag the hell out of the server
