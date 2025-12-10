@@ -126,3 +126,34 @@
   - map: fixed a double placed genetics windoor on pubby station.
   flleeppyy:
   - bugfix: PLX_givecoins not properly converting number to text when not using json
+2025-12-09:
+  Absolucy:
+  - bugfix: Returning from cryo now properly restores your quirks.
+  - bugfix: Returning from cryo now properly allows you to vote on the shuttle transfer
+      vote.
+  JupiterJaeden:
+  - balance: Security assistant slots reduced from 5 to 2.
+  - balance: Minimum security officer slots increased from 5 to 6 (they can also still
+      be scaled higher with population).
+  - balance: Mundane sword-type items once again no longer block LEAP_ATTACK attack
+      types- this includes body throws, tackles, and other similar types of attacks.
+      Eswords, dswords, and their variants have 25% blocking against these types of
+      attacks. Shields, on the other hand, have a +25% chance of blocking these types
+      of attacks successfully.
+  - balance: Shields no longer have a +30% chance of blocking thrown items.
+  - balance: Tackles do not self-stun the tackler upon being successfully blocked,
+      instead applying an equal stagger to both parties.
+  - balance: When blocked, body throws do not knockdown or paralyze the victim, but
+      do still apply a short stagger.
+  - balance: Tackles now stagger you every time they are used (regardless of hitting
+      or missing), preventing tackles from being spammed in short succession.
+  SirNightKnight:
+  - balance: the drunken resilience quirk is incompatible with light drinker quirk.
+  TheColorCyan:
+  - bugfix: cog cultists are protected from cult stun spell again
+  - bugfix: mindshielded targets/target of the cult now once again partially resist
+      cult stun spell
+  - bugfix: being very drunk gives you cult stun immunity again
+  - bugfix: martial arts can once again dodge/deflect cult stun
+  flleeppyy:
+  - code_imp: moved "Join Game" button functionality to its own proc

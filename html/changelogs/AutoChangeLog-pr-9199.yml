@@ -1,5 +1,0 @@
-author: "JupiterJaeden"
-delete-after: True
-changes:
-  - balance: "Security assistant slots reduced from 5 to 2."
-  - balance: "Minimum security officer slots increased from 5 to 6 (they can also still be scaled higher with population)."
