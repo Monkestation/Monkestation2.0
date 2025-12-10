@@ -50,7 +50,7 @@ GLOBAL_DATUM(dj_booth, /obj/machinery/dj_station)
 	. = ..()
 	REGISTER_REQUIRED_MAP_ITEM(1, INFINITY)
 	register_context()
-	if(QDELETED(GLOB.dj_booth))
+	if(QDELETED(GLOB.dj_booth) && (!mapload || is_station_level(loc?.z)))
 		GLOB.dj_booth = src
 	ADD_TRAIT(src, TRAIT_ALT_CLICK_BLOCKER, INNATE_TRAIT)
 	switch_sound = new(src)
