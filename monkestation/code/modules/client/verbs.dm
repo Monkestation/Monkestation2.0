@@ -63,6 +63,7 @@ GLOBAL_LIST(antag_token_config)
 	// Token Panel Addition START
 	var/current_antag_request = new /datum/token_request(mob, client_token_holder, "[chosen_antagonist.name]", tier, using_donor)
 	SStoken_manager.add_pending_request(current_antag_request)
+	client_token_holder.current_antag_request = current_antag_request
 	// Token Panel Addition END
 
 	to_chat(src, span_boldnotice("Your request has been sent to the admins."))
