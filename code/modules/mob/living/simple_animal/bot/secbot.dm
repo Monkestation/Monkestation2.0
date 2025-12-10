@@ -340,7 +340,7 @@
 		if(human_target.check_block(src, 0, "\the [name]", MELEE_ATTACK))
 			return
 	if(HAS_TRAIT(current_target, TRAIT_BATON_RESISTANCE))
-		current_target.stamina.adjust_to(-stamina_damage, current_target.stamina.maximum * 0.29)
+		current_target.stamina.adjust(-stamina_damage * 0.5)
 	else
 		current_target.stamina.adjust(-stamina_damage)
 	// monkestation end

@@ -203,11 +203,13 @@
 	else
 		if(!trait_check)
 			target.stamina.adjust(-stamina_damage) //Intentionally armor piercing!
-		else
-			var/stamina_to_min = (target.stamina.maximum * 0.29)
-			target.stamina.adjust_to(-stamina_damage, stamina_to_min)
-		if(!trait_check)
 			target.Knockdown((isnull(stun_override) ? knockdown_time : stun_override))
+
+			if(ishuman(target) && !target.has_movespeed_modifier(/datum/movespeed_modifier/shove))
+				target.add_movespeed_modifier(/datum/movespeed_modifier/shove)
+				addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living/carbon, clear_shove_slowdown)), SHOVE_SLOWDOWN_LENGTH)
+		else
+			target.stamina.adjust(-stamina_damage * 0.5)
 		additional_effects_non_cyborg(target, user)
 	return TRUE
 
@@ -429,7 +431,6 @@
 	stamina_damage = 40
 	knockdown_time = 5 SECONDS
 	clumsy_knockdown_time = 15 SECONDS
-	cooldown = 1 SECONDS //monke edit, enjoy your games, seccies
 	on_stun_sound = 'sound/weapons/egloves.ogg'
 	on_stun_volume = 50
 	active = FALSE
