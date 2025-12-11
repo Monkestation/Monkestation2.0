@@ -97,7 +97,7 @@ SUBSYSTEM_DEF(floxy)
 	return ..()
 #endif
 
-/datum/controller/subsystem/floxy/proc/queue_media(url, profile = "ogg-opus", ttl)
+/datum/controller/subsystem/floxy/proc/queue_media(url, profile = "ogg-opus", ttl, clean_title = FALSE)
 	if(!url)
 		CRASH("No URL passed to SSfloxy.queue")
 	if(!is_http_protocol(url))
@@ -108,6 +108,9 @@ SUBSYSTEM_DEF(floxy)
 		params["profile"] = profile
 	if(ttl)
 		params["ttl"] = ttl
+	if(!clean_title)
+		params["dontCleanTitle"] = "true"
+
 	var/list/response = http_basicasync("api/media/queue?[list2params(params)]")
 	if(!response)
 		return FALSE
