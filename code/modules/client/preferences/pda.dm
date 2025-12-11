@@ -117,6 +117,24 @@ GLOBAL_LIST_INIT(pda_ringtone_sounds, list(
 	savefile_key = "pda_ringtone_sound"
 	savefile_identifier = PREFERENCE_CHARACTER
 
+/datum/preference/choiced/pda_ringtone_sound/is_valid(value)
+	. = ..()
+	if(.)
+		usr.playsound_local(get_turf(usr), GLOB.pda_ringtone_sounds[sanitize(value)], 90, TRUE, null, 7, pressure_affected = FALSE, use_reverb = FALSE, mixer_channel = CHANNEL_MACHINERY)
+
+/datum/preference_middleware/pda_ringtone_sound
+	COOLDOWN_DECLARE(ringtone_cooldown)
+	action_delegations = list(
+		"play_ringtone_sound" = PROC_REF(play_ringtone_sound),
+	)
+
+/datum/preference_middleware/pda_ringtone_sound/proc/play_ringtone_sound(list/params, mob/user)
+	if(!COOLDOWN_FINISHED(src, ringtone_cooldown))
+		return TRUE
+	usr.playsound_local(get_turf(usr), GLOB.pda_ringtone_sounds[preferences.read_preference(/datum/preference/choiced/pda_ringtone_sound)], 90, TRUE, null, 7, pressure_affected = FALSE, use_reverb = FALSE, mixer_channel = CHANNEL_MACHINERY)
+	COOLDOWN_START(src, ringtone_cooldown, 0.5 SECONDS)
+	return TRUE
+
 /datum/preference/choiced/pda_ringtone_sound/init_possible_values()
 	return GLOB.pda_ringtone_sounds
 

@@ -205,13 +205,25 @@ const ContactsScreen = (props: any) => {
                 />
               </Stack.Item>
               <Stack.Item grow>
-                <Dropdown
-                  width="100%"
-                  selected={data.ringtone_sound}
-                  options={data.available_sounds || []}
-                  onSelected={(value) => act('PDA_soundSet', { sound: value })}
-                  displayHeight="60%"
-                />
+                <Stack fill>
+                  <Stack.Item>
+                    <Dropdown
+                      width="100%"
+                      selected={data.ringtone_sound}
+                      options={data.available_sounds || []}
+                      onSelected={(value) =>
+                        act('PDA_soundSet', { sound: value })
+                      }
+                    />
+                    <Button
+                      onClick={() =>
+                        act('PDA_soundSet', { sound: data.ringtone_sound })
+                      }
+                      icon="volume-up"
+                      fluid
+                    ></Button>
+                  </Stack.Item>
+                </Stack>
               </Stack.Item>
             </Stack>
             {/* Third row */}
