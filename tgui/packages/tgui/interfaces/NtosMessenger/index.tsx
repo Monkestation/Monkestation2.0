@@ -210,6 +210,7 @@ const ContactsScreen = (props: any) => {
                   selected={data.ringtone_sound}
                   options={data.available_sounds || []}
                   onSelected={(value) => act('PDA_soundSet', { sound: value })}
+                  displayHeight="60%"
                 />
               </Stack.Item>
             </Stack>

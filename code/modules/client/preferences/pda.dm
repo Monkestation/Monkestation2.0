@@ -49,6 +49,7 @@
 #define PDA_RINGTONE_ALERT4 "Alert 4"
 #define PDA_RINGTONE_BELL "Bell"
 #define PDA_RINGTONE_BEEP "Beep"
+#define PDA_RINGTONE_BUZZ "BUZZ"
 #define PDA_RINGTONE_BIKEHORN "Bikehorn"
 #define PDA_RINGTONE_CHIME "Chime"
 #define PDA_RINGTONE_CHORD1 "Chord 1"
@@ -90,7 +91,7 @@ GLOBAL_LIST_INIT(pda_ringtone_sounds, list(
 	PDA_RINGTONE_CHIME = 'sound/machines/pda_ringtones/chime.ogg',
 	PDA_RINGTONE_CHORD1 = 'sound/machines/pda_ringtones/chord1.ogg',
 	PDA_RINGTONE_CHORD2 = 'sound/machines/pda_ringtones/chord2.ogg',
-	PDA_RINGTONE_CHORD3 = 'sound/machines/pda_ringtones/chord2.ogg',
+	PDA_RINGTONE_CHORD3 = 'sound/machines/pda_ringtones/chord3.ogg',
 	PDA_RINGTONE_CODEC = 'sound/machines/pda_ringtones/codec.ogg',
 	PDA_RINGTONE_DING = 'sound/machines/pda_ringtones/ding.ogg',
 	PDA_RINGTONE_HORN = 'sound/machines/pda_ringtones/horn.ogg',
