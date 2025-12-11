@@ -106,6 +106,9 @@
 	/// Allow people with chunky fingers to use?
 	var/allow_chunky = FALSE
 
+	/// Monkestation Addition. Do we force ethernet connection.
+	var/ethernet_forced = FALSE
+
 	///The amount of paper currently stored in the PDA
 	var/stored_paper = 10
 	///The max amount of paper that can be held at once.
@@ -636,6 +639,9 @@
 /obj/item/modular_computer/proc/get_ntnet_status()
 	// computers are connected through ethernet
 	if(hardware_flag & PROGRAM_CONSOLE)
+		return NTNET_ETHERNET_SIGNAL
+
+	if(ethernet_forced) //Monkestation Addition - Add a check for forced ethernet
 		return NTNET_ETHERNET_SIGNAL
 
 	// NTNet is down and we are not connected via wired connection. No signal.
