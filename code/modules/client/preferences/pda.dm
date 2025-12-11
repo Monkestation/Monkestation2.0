@@ -58,12 +58,12 @@
 #define PDA_RINGTONE_CODEC "Codec"
 #define PDA_RINGTONE_DING "Ding"
 #define PDA_RINGTONE_HORN "Horn"
-#define PDA_RINGTONE_JINGLE "Jingle"
 #define PDA_RINGTONE_MAUS "Maus"
 #define PDA_RINGTONE_MEOW1 "Meow 1"
 #define PDA_RINGTONE_MEOW2 "Meow 2"
 #define PDA_RINGTONE_MEOW_ELECTRIC "Meow (Electric)"
 #define PDA_RINGTONE_MORSE "Morse"
+#define PDA_RINGTONE_JINGLE "Mysterious Jingle"
 #define PDA_RINGTONE_NORMALIZE "Normalize"
 #define PDA_RINGTONE_NOT_ALPHYS "Not Alphys"
 #define PDA_RINGTONE_PHONE_CHIME "Phone Chime"
@@ -73,7 +73,6 @@
 #define PDA_RINGTONE_SPLAT "Splat"
 #define PDA_RINGTONE_TARGET "Target"
 #define PDA_RINGTONE_TERMINAL_NOTIF1 "Terminal Notif 1"
-#define PDA_RINGTONE_TERMINAL_NOTIF2 "Terminal Notif 2"
 #define PDA_RINGTONE_WEH "Weh"
 
 /// Default ringtone sound
@@ -95,12 +94,12 @@ GLOBAL_LIST_INIT(pda_ringtone_sounds, list(
 	PDA_RINGTONE_CODEC = 'sound/machines/pda_ringtones/codec.ogg',
 	PDA_RINGTONE_DING = 'sound/machines/pda_ringtones/ding.ogg',
 	PDA_RINGTONE_HORN = 'sound/machines/pda_ringtones/horn.ogg',
-	PDA_RINGTONE_JINGLE = 'sound/machines/pda_ringtones/jingle.ogg',
 	PDA_RINGTONE_MAUS = 'sound/machines/pda_ringtones/maus.ogg',
 	PDA_RINGTONE_MEOW1 = 'sound/machines/pda_ringtones/meow1.ogg',
 	PDA_RINGTONE_MEOW2 = 'sound/machines/pda_ringtones/meow2.ogg',
 	PDA_RINGTONE_MEOW_ELECTRIC = 'sound/machines/pda_ringtones/meow_electric.ogg',
 	PDA_RINGTONE_MORSE = 'sound/machines/pda_ringtones/morse.ogg',
+	PDA_RINGTONE_JINGLE = 'sound/machines/pda_ringtones/jingle.ogg',
 	PDA_RINGTONE_BUZZ = 'sound/machines/pda_ringtones/buzz.ogg',
 	PDA_RINGTONE_NOT_ALPHYS = 'sound/machines/pda_ringtones/not_alphys.ogg',
 	PDA_RINGTONE_PHONE_CHIME = 'sound/machines/pda_ringtones/phone_chime.ogg',
@@ -110,7 +109,6 @@ GLOBAL_LIST_INIT(pda_ringtone_sounds, list(
 	PDA_RINGTONE_SPLAT = 'sound/machines/pda_ringtones/splat.ogg',
 	PDA_RINGTONE_TARGET = 'sound/machines/pda_ringtones/target.ogg',
 	PDA_RINGTONE_TERMINAL_NOTIF1 = 'sound/machines/pda_ringtones/terminal_notif1.ogg',
-	PDA_RINGTONE_TERMINAL_NOTIF2 = 'sound/machines/pda_ringtones/terminal_notif2.ogg',
 	PDA_RINGTONE_WEH = 'sound/machines/pda_ringtones/weh.ogg',
 ))
 
