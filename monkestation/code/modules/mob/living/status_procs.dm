@@ -20,11 +20,10 @@
 	var/stam2deal = stamina_amount * stamina_multiplier
 
 	//You can never be stam-stunned w/o overstam
-	if(overstam)
-		stamina.adjust(-stam2deal)
+	if (!overstam && stamina.current > 0 && (stamina.current - stam2deal <= 0))
+		stamina.adjust_to(-stam2deal, 1)
 	else
-		if ((stamina.current - stam2deal) <= 0)
-			stamina.adjust((-stamina.current) + 1)
+		stamina.adjust(-stam2deal)
 
 	if(!HAS_TRAIT(src, TRAIT_CANT_STAMCRIT))
 		if(knockdown)

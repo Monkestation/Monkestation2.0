@@ -754,9 +754,7 @@
 	//MONKESTATION EDIT START
 	var/current_stamina = stamina.current
 
-	if(stamina.current <= 0) //stamina stun threshold
-		hud_used.stamina.icon_state = "stamina_dead"
-	else if(current_stamina <= (0.30 * STAMINA_MAX))
+	if(current_stamina <= (0.20 * STAMINA_MAX))
 		hud_used.stamina.icon_state = "stamina_crit"
 	else if(current_stamina <= (0.40 * STAMINA_MAX))
 		hud_used.stamina.icon_state = "stamina_5"
