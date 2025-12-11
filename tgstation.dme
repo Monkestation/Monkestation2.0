@@ -4029,6 +4029,7 @@
 #include "code\modules\emoji\emoji_parse.dm"
 #include "code\modules\emote_panel\emote_panel.dm"
 #include "code\modules\engineering\tools\multitool.dm"
+#include "code\modules\error_handler\_glitchtip.dm"
 #include "code\modules\error_handler\error_handler.dm"
 #include "code\modules\error_handler\error_viewer.dm"
 #include "code\modules\escape_menu\admin_page.dm"

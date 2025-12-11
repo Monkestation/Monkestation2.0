@@ -157,3 +157,20 @@
   - bugfix: martial arts can once again dodge/deflect cult stun
   flleeppyy:
   - code_imp: moved "Join Game" button functionality to its own proc
+2025-12-11:
+  Absolucy, JohnFulpWillard:
+  - balance: Cultists using Spirit Realm to turn themselves into a ghost can no longer
+      see people's UIs.
+  KittyNoodle:
+  - rscadd: AIs now have access to notepad, emojipedia, themify, supermatter monitor,
+      wirecarp, and the chat client on their PDAs.
+  SirNightKnight:
+  - balance: reduced of chance of centcom IDs spawning in christmas gifts.
+  - bugfix: fixed incorrect toggle messages for riot helmets and justice helmets.
+  - rscadd: added the medical emergency helmet.
+  flleeppyy:
+  - code_imp: Adds error reporting to Glitchtip
+  not the ghost:
+  - balance: Wasteland weapons Slab Grenade launcher, Duster Revolver, Slayer shotgun,
+      Fenrir Auto Shotgun, Hellhound LMG have had their damage to non-fauna decreased
+      by 2-3.
