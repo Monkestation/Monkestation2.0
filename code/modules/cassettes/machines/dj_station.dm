@@ -365,7 +365,6 @@ GLOBAL_DATUM(dj_booth, /obj/machinery/dj_station)
 	// doesn't actually do any damage, this is meant to annoy people when they try to shoot it bc someone played pickle rick
 	hitting_projectile.damage = 0
 	hitting_projectile.stamina = 0
-	hitting_projectile.debilitating = FALSE
 	hitting_projectile.reflect(src)
 	return BULLET_ACT_FORCE_PIERCE
 
