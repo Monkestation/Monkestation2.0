@@ -1,5 +1,5 @@
 SUBSYSTEM_DEF(cassettes)
-	name = "Cassetes"
+	name = "Cassettes"
 	init_order = INIT_ORDER_CASSETTES
 	flags = SS_NO_FIRE
 	/// An associative list of IDs to cassette data.
