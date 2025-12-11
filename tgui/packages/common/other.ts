@@ -141,3 +141,8 @@ const normalizeTrackUrl = (inputUrl) => {
     return inputUrl;
   }
 };
+
+const keyReplacePattern = /[^\da-z]/g;
+export const ckey = (key: string): string => {
+  return key.toLowerCase().replaceAll(keyReplacePattern, '').trim();
+};

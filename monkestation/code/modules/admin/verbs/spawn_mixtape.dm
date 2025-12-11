@@ -23,6 +23,8 @@ ADMIN_VERB(spawn_mixtape, R_FUN, FALSE, "Spawn Mixtape", "Select an approved mix
 	var/list/cassettes = list()
 	for(var/id, value in SScassettes.cassettes)
 		var/datum/cassette/cassette = value
+		if(cassette.status != CASSETTE_STATUS_APPROVED)
+			continue
 		var/list/sides = list()
 		for(var/datum/cassette_side/side as anything in list(cassette.front, cassette.back))
 			var/list/songs = list()
