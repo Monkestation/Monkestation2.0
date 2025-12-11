@@ -159,10 +159,10 @@ SUBSYSTEM_DEF(cassettes)
 	. = list()
 	if(!isnull(user_ckey))
 		user_ckey = ckey(user_ckey)
-	for(var/id in cassettes)
+	for(var/id, value in cassettes)
+		var/datum/cassette/cassette = value
 		if(!isnull(id_blacklist) && (id in id_blacklist))
 			continue
-		var/datum/cassette/cassette = cassettes[id]
 		if(!isnull(user_ckey) && ckey(cassette.author.ckey) != user_ckey)
 			continue
 		if(!isnull(status) && cassette.status != status)
