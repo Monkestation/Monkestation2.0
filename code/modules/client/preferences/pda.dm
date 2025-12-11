@@ -120,7 +120,7 @@ GLOBAL_LIST_INIT(pda_ringtone_sounds, list(
 // abusing this to have sounds play when you select a choice
 /datum/preference/choiced/pda_ringtone_sound/is_valid(value)
 	. = ..()
-	if(.)
+	if(. && usr)
 		usr.playsound_local(get_turf(usr), GLOB.pda_ringtone_sounds[sanitize(value)], 90, TRUE, null, 7, pressure_affected = FALSE, use_reverb = FALSE, mixer_channel = CHANNEL_MACHINERY)
 
 /datum/preference_middleware/pda_ringtone_sound
