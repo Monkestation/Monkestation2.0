@@ -174,7 +174,7 @@ SUBSYSTEM_DEF(cassettes)
 	RETURN_TYPE(/list/datum/cassette)
 	. = list()
 	var/list/cassettes = filtered_cassettes(status, user_ckey, id_blacklist)
-	for(var/i in min(amount, length(cassettes)))
+	for(var/i in 1 to min(amount, length(cassettes)))
 		. += pick_n_take(cassettes)
 
 /datum/controller/subsystem/cassettes/proc/migrate_json_cassettes_to_db()
