@@ -319,6 +319,7 @@
 	bare_wound_bonus = 5
 	clumsy_knockdown_time = 15 SECONDS
 	active = FALSE
+	cooldown = (2 SECONDS)
 	stamina_damage = 55 //2 hit stamcrit if the hits are landed quickly
 
 	/// The sound effecte played when our baton is extended.
@@ -429,7 +430,8 @@
 	armor_type = /datum/armor/baton_security
 	throwforce = 7
 	force_say_chance = 50
-	stamina_damage = 40
+	stamina_damage = 45
+	cooldown = (1.3 SECONDS)
 	knockdown_time = 5 SECONDS
 	clumsy_knockdown_time = 15 SECONDS
 	on_stun_sound = 'sound/weapons/egloves.ogg'
