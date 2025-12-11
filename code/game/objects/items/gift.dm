@@ -234,7 +234,7 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 	var/month = text2num(copytext(time_info, 1, 3))
 	var/day = text2num(copytext(time_info, 4))
 	// first day of winter / sunday before christmas -> day after christmas
-	if(day == 12 && ISINRANGE(day, 21, 26))
+	if(month == 12 && ISINRANGE(day, 21, 26))
 		for(var/blocked_item in boring_items)
 			// Block the item listed, and any subtypes too.
 			. -= typesof(blocked_item)
