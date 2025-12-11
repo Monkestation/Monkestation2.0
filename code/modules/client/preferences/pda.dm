@@ -52,6 +52,7 @@
 #define PDA_RINGTONE_HONK "Honk"
 #define PDA_RINGTONE_WEH "Weh!"
 #define PDA_RINGTONE_CODEC "Codec"
+#define PDA_RINGTONE_MEOW "Meow"
 
 /// Default ringtone sound
 #define PDA_RINGTONE_SOUND_DEFAULT PDA_RINGTONE_BEEP
@@ -66,7 +67,8 @@ GLOBAL_LIST_INIT(pda_ringtone_sounds, list(
 	PDA_RINGTONE_DING = 'sound/machines/ding.ogg',
 	PDA_RINGTONE_HONK = 'sound/items/bikehorn.ogg',
 	PDA_RINGTONE_WEH = 'monkestation/sound/voice/weh.ogg',
-	PDA_RINGTONE_CODEC = 'sound/machines/pda_ringtones/codec.ogg'
+	PDA_RINGTONE_CODEC = 'sound/machines/pda_ringtones/codec.ogg',
+	PDA_RINGTONE_MEOW = 'monkestation/sound/voice/feline/meow1.ogg',
 ))
 
 /datum/preference/choiced/pda_ringtone_sound
