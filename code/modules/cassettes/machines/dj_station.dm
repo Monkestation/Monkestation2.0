@@ -347,8 +347,15 @@ GLOBAL_DATUM(dj_booth, /obj/machinery/dj_station)
 					stack_trace("Floxy did not return a music endpoint for [found_track.url]")
 					balloon_alert(user, "the loader mechanism malfunctioned!")
 				var/list/metadata = info["metadata"]
-				if(playing.duration <= 0 && metadata?["duration"])
-					playing.duration = metadata["duration"]
+				if(metadata)
+					if(metadata["title"])
+						playing.name = metadata["title"]
+					if(metadata["artist"])
+						playing.artist = metadata["artist"]
+					if(metadata["album"])
+						playing.album = metadata["album"]
+					if(playing.duration <= 0 && metadata["duration"])
+						playing.duration = metadata["duration"]
 				playing_extra_data = list(
 					"title" = playing.name,
 					"link" = playing.url,
