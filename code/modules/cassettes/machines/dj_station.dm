@@ -262,6 +262,9 @@ GLOBAL_DATUM(dj_booth, /obj/machinery/dj_station)
 			if(!playing || !broadcasting)
 				balloon_alert(user, "not playing!")
 				return
+			if(is_ejecting)
+				balloon_alert(user, "currently inserting/ejecting tape!")
+				return
 			end_processing()
 			PLAY_CASSETTE_SOUND(SFX_DJSTATION_STOP)
 			broadcasting = FALSE
