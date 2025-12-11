@@ -76,7 +76,7 @@
 #define PDA_RINGTONE_WEH "Weh"
 
 /// Default ringtone sound
-#define PDA_RINGTONE_SOUND_DEFAULT PDA_RINGTONE_TERMINAL_SUCCESS
+#define PDA_RINGTONE_SOUND_DEFAULT PDA_RINGTONE_BEEP
 
 // Map ringtone names to sound files
 GLOBAL_LIST_INIT(pda_ringtone_sounds, list(
