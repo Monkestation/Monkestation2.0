@@ -540,7 +540,7 @@ BLIND     // can't see anything
 	if(up)
 		message = alt_toggle_message ?  "[alt_toggle_message] [src]." : null || "You push [src] out of the way."
 	else
-		message = toggle_message ? "[toggle_message] [src]." : null || "You push [src] back into place."
+		message = toggle_message ? "[toggle_message] [src]." : "You push [src] back into place."
 
 	to_chat(user, span_notice("[message]"))
 
