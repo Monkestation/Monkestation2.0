@@ -39,6 +39,9 @@
 	return FALSE
 
 // Monkestation Ringtone Sounds Addition START
+// To add sounds to the PDA, all you need to do is add the following define ex:
+// #define PDA_RINGTONE_WOOF "Woof"
+// Then Add the PDA_RINGTONE_WOOF to the global list pda_ringtone_sounds, with its associative sound path
 /// List of available ringtone sounds
 #define PDA_RINGTONE_BEEP "Beep"
 #define PDA_RINGTONE_BUZZ "Buzz"
@@ -47,7 +50,8 @@
 #define PDA_RINGTONE_CHIRP "Chirp"
 #define PDA_RINGTONE_DING "Ding"
 #define PDA_RINGTONE_HONK "Honk"
-#define PDA_RINGTONE_WEH = "Weh!"
+#define PDA_RINGTONE_WEH "Weh!"
+#define PDA_RINGTONE_CODEC "Codec"
 
 /// Default ringtone sound
 #define PDA_RINGTONE_SOUND_DEFAULT PDA_RINGTONE_BEEP
@@ -61,7 +65,8 @@ GLOBAL_LIST_INIT(pda_ringtone_sounds, list(
 	PDA_RINGTONE_CHIRP = 'sound/machines/terminal_processing.ogg',
 	PDA_RINGTONE_DING = 'sound/machines/ding.ogg',
 	PDA_RINGTONE_HONK = 'sound/items/bikehorn.ogg',
-	PDA_RINGTONE_WEH =  'monkestation/sound/voice/weh.ogg',
+	PDA_RINGTONE_WEH = 'monkestation/sound/voice/weh.ogg',
+	PDA_RINGTONE_CODEC = 'sound/machines/pda_ringtones/codec.ogg'
 ))
 
 /datum/preference/choiced/pda_ringtone_sound
@@ -70,7 +75,7 @@ GLOBAL_LIST_INIT(pda_ringtone_sounds, list(
 	savefile_identifier = PREFERENCE_CHARACTER
 
 /datum/preference/choiced/pda_ringtone_sound/init_possible_values()
-	return GLOB.pda_ringtone_sounds.Copy()
+	return GLOB.pda_ringtone_sounds
 
 /datum/preference/choiced/pda_ringtone_sound/create_default_value()
 	return PDA_RINGTONE_SOUND_DEFAULT

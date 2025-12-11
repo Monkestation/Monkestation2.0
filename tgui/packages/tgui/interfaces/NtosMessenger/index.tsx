@@ -193,6 +193,7 @@ const ContactsScreen = (props: any) => {
               />
               <Dropdown
                 width="120px"
+                m={0.5}
                 selected={data.ringtone_sound}
                 options={data.available_sounds || []}
                 onSelected={(value) => act('PDA_soundSet', { sound: value })}
