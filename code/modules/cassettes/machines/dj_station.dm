@@ -43,6 +43,9 @@ GLOBAL_DATUM(dj_booth, /obj/machinery/dj_station)
 	/// If this can play bootleg tapes or not.
 	var/can_play_bootlegs = FALSE
 
+	/// How long of a cooldown between playing two songs.
+	var/song_cooldown = 2 MINUTES
+
 	COOLDOWN_DECLARE(next_song_timer)
 	COOLDOWN_DECLARE(fake_loading_time)
 
@@ -93,6 +96,7 @@ GLOBAL_DATUM(dj_booth, /obj/machinery/dj_station)
 		end_processing() // doing this instead of PROCESS_KILL because i think there's a possibility of this sleeping?
 		log_music("Song \"[playing.name]\" from [inserted_tape.name] ([inserted_tape.cassette_data?.id || "no cassette id"]) finished playing at [AREACOORD(src)]")
 		PLAY_CASSETTE_SOUND(SFX_DJSTATION_STOP)
+		COOLDOWN_START(src, next_song_timer, song_cooldown)
 		broadcasting = FALSE
 		song_start_time = 0
 		update_appearance(UPDATE_OVERLAYS)
@@ -231,6 +235,9 @@ GLOBAL_DATUM(dj_booth, /obj/machinery/dj_station)
 			if(!playing || !music_endpoint)
 				balloon_alert(user, "no track set!")
 				return
+			if(broadcasting)
+				balloon_alert(user, "song already playing!")
+				return
 			PLAY_CASSETTE_SOUND(SFX_DJSTATION_PLAY)
 			song_start_time = REALTIMEOFDAY
 			broadcasting = TRUE
@@ -248,6 +255,7 @@ GLOBAL_DATUM(dj_booth, /obj/machinery/dj_station)
 			end_processing()
 			PLAY_CASSETTE_SOUND(SFX_DJSTATION_STOP)
 			broadcasting = FALSE
+			COOLDOWN_START(src, next_song_timer, song_cooldown)
 			update_appearance(UPDATE_OVERLAYS)
 			song_start_time = 0
 			INVOKE_ASYNC(src, PROC_REF(stop_for_all_listeners))
