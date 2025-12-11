@@ -332,7 +332,7 @@
 
 	if(blocked != 100) // not completely blocked
 		var/obj/item/bodypart/hit_bodypart = living_target.get_bodypart(def_zone)
-		if(faction_check(living_target.faction, FACTION_MINING || FACTION_BOSS))
+		if(faction_check(living_target.faction, list(FACTION_MINING, FACTION_BOSS)))
 			damage *= fauna_mod
 		if (damage)
 			if (living_target.blood_volume && damage_type == BRUTE && (isnull(hit_bodypart) || hit_bodypart.can_bleed()))
