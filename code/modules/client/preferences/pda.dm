@@ -117,6 +117,7 @@ GLOBAL_LIST_INIT(pda_ringtone_sounds, list(
 	savefile_key = "pda_ringtone_sound"
 	savefile_identifier = PREFERENCE_CHARACTER
 
+// abusing this to have sounds play when you select a choice
 /datum/preference/choiced/pda_ringtone_sound/is_valid(value)
 	. = ..()
 	if(.)
