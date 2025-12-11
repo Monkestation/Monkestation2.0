@@ -81,3 +81,7 @@ GLOBAL_LIST_INIT(pda_ringtone_sounds, list(
 
 /datum/preference/choiced/pda_ringtone_sound/create_default_value()
 	return PDA_RINGTONE_SOUND_DEFAULT
+
+// Returning false here because this pref is handled a little differently, due to its dependency on the existence of a PDA.
+/datum/preference/choiced/pda_ringtone_sound/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
+	return FALSE
