@@ -429,7 +429,6 @@
 		return
 	var/datum/antagonist/cult/cultist = IS_CULTIST(user)
 	var/datum/team/cult/cult_team = cultist.get_team()
-	var/effect_coef = 1 - (cult_team.cult_risen ? 0.4 : 0) - (cult_team.cult_ascendent ? 0.5 : 0)
 	user.visible_message(
 		span_warning("[user] holds up [user.p_their()] hand, which explodes in a flash of red light!"),
 		span_cult_italic("You attempt to stun [target] with the spell!"),
