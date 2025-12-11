@@ -10394,9 +10394,7 @@
 /obj/effect/turf_decal/siding/thinplating_new{
 	dir = 1
 	},
-/obj/machinery/cassette/dj_station{
-	pixel_y = 12
-	},
+/obj/machinery/dj_station,
 /turf/open/floor/iron/vaporwave,
 /area/station/service/library)
 "drG" = (
