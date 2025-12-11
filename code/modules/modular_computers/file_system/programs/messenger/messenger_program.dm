@@ -47,6 +47,8 @@
 	var/selected_image = null
 	/// Whether or not we're sending (or trying to send) a virus.
 	var/sending_virus = FALSE
+	/// The sound file to play when receiving a message || Monkestation Addition
+	var/ringtone_sound = PDA_RINGTONE_SOUND_DEFAULT
 
 /datum/computer_file/program/messenger/on_install()
 	. = ..()
@@ -320,6 +322,21 @@
 			selected_image = TEMP_IMAGE_PATH(REF(src))
 			update_pictures_for_all()
 			return TRUE
+		// Monkestation Addition START
+		if("PDA_soundSet")
+			var/new_sound = params["sound"]
+			if(!(new_sound in GLOB.pda_ringtone_sounds))
+				return FALSE
+
+			ringtone_sound = new_sound
+
+			// Plays a preview of the sound selected
+			var/mob/living/usr_mob = usr
+			if(in_range(computer, usr_mob))
+				playsound(computer, GLOB.pda_ringtone_sounds[new_sound], 15, TRUE)
+
+			return TRUE
+		// Monkestation Addition END
 
 /datum/computer_file/program/messenger/ui_static_data(mob/user)
 	var/list/static_data = list()
@@ -352,7 +369,12 @@
 	data["alert_silenced"] = alert_silenced
 	data["sending_and_receiving"] = sending_and_receiving
 	data["open_chat"] = viewing_messages_of
-
+	// Monkestation Addition START
+	data["ringtone_sound"] = ringtone_sound
+	data["available_sounds"] = list()
+	for(var/sound_name in GLOB.pda_ringtone_sounds)
+		data["available_sounds"] += sound_name
+	// Monkestation Addition END
 	// silicons handle selecting photos a bit differently for now
 	if(!issilicon(user))
 		var/list/stored_photos = list()

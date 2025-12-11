@@ -37,3 +37,40 @@
 // Returning false here because this pref is handled a little differently, due to its dependency on the existence of a PDA.
 /datum/preference/choiced/pda_theme/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
 	return FALSE
+
+// Monkestation Ringtone Sounds Addition START
+/// List of available ringtone sounds
+#define PDA_RINGTONE_BEEP "Beep"
+#define PDA_RINGTONE_BUZZ "Buzz"
+#define PDA_RINGTONE_CHIME "Chime"
+#define PDA_RINGTONE_PING "Ping"
+#define PDA_RINGTONE_CHIRP "Chirp"
+#define PDA_RINGTONE_DING "Ding"
+#define PDA_RINGTONE_HONK "Honk"
+#define PDA_RINGTONE_WEH = "Weh!"
+
+/// Default ringtone sound
+#define PDA_RINGTONE_SOUND_DEFAULT PDA_RINGTONE_BEEP
+
+// Map ringtone names to sound files
+GLOBAL_LIST_INIT(pda_ringtone_sounds, list(
+	PDA_RINGTONE_BEEP = 'sound/machines/terminal_success.ogg',
+	PDA_RINGTONE_BUZZ = 'sound/machines/buzz-sigh.ogg',
+	PDA_RINGTONE_CHIME = 'sound/machines/chime.ogg',
+	PDA_RINGTONE_PING = 'sound/machines/ping.ogg',
+	PDA_RINGTONE_CHIRP = 'sound/machines/terminal_processing.ogg',
+	PDA_RINGTONE_DING = 'sound/machines/ding.ogg',
+	PDA_RINGTONE_HONK = 'sound/items/bikehorn.ogg',
+	PDA_RINGTONE_WEH =  'monkestation/sound/voice/weh.ogg',
+))
+
+/datum/preference/choiced/pda_ringtone_sound
+	category = PREFERENCE_CATEGORY_NON_CONTEXTUAL
+	savefile_key = "pda_ringtone_sound"
+	savefile_identifier = PREFERENCE_CHARACTER
+
+/datum/preference/choiced/pda_ringtone_sound/init_possible_values()
+	return GLOB.pda_ringtone_sounds.Copy()
+
+/datum/preference/choiced/pda_ringtone_sound/create_default_value()
+	return PDA_RINGTONE_SOUND_DEFAULT

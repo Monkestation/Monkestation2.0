@@ -521,17 +521,36 @@
 /obj/item/modular_computer/proc/ring(ringtone, list/balloon_alertees) // bring bring
 	if(!use_energy())
 		return
+	// Get the messenger app's new sound settings || Monkestation Addition START
+	var/sound_to_play = 'sound/machines/twobeep_high.ogg' //defaults to the original
+	var/datum/computer_file/program/messenger/messenger = locate() in stored_files
+	if(messenger && messenger.ringtone_sound)
+		var/selected_sound = GLOB.pda_ringtone_sounds[messenger.ringtone_sound]
+		if(selected_sound)
+			sound_to_play = selected_sound
+	// Monkestation Addition END
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_PDA_GLITCHED))
 		playsound(src, pick('sound/machines/twobeep_voice1.ogg', 'sound/machines/twobeep_voice2.ogg'), 50, TRUE)
 	else
-		playsound(src, 'sound/machines/twobeep_high.ogg', 50, TRUE)
+		playsound(src, sound_to_play, 50, TRUE) // Monkestation change
 	ringtone = "*[ringtone]*"
 	audible_message(ringtone)
 	for(var/mob/living/alertee in balloon_alertees)
 		alertee.balloon_alert(alertee, ringtone)
 
 /obj/item/modular_computer/proc/send_sound()
-	playsound(src, 'sound/machines/terminal_success.ogg', 15, TRUE)
+	// Monkestation Addition START
+	var/datum/computer_file/program/messenger/messenger = locate() in stored_files
+	if(!messenger)
+		playsound(src, 'sound/machines/terminal_success.ogg', 15, TRUE)
+		return
+
+	var/sound_file = GLOB.pda_ringtone_sounds[messenger.ringtone_sound]
+	if(!sound_file)
+		sound_file = 'sound/machines/terminal_success.ogg'
+
+	playsound(src, sound_file, 15, TRUE)
+	// Monkestation Addition END
 
 // Function used by NanoUI's to obtain data for header. All relevant entries begin with "PC_"
 /obj/item/modular_computer/proc/get_header_data()

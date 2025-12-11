@@ -8,6 +8,7 @@ import {
   TextArea,
   Dimmer,
   Divider,
+  Dropdown,
 } from '../../components';
 import { useBackend, useLocalState } from '../../backend';
 import { createSearch } from 'common/string';
@@ -34,6 +35,8 @@ type NtosMessengerData = {
   on_spam_cooldown: BooleanLike;
   virus_attach: BooleanLike;
   sending_virus: BooleanLike;
+  ringtone_sound: string;
+  available_sounds: string[];
 };
 
 export const NtosMessenger = (props) => {
@@ -187,6 +190,12 @@ const ContactsScreen = (props: any) => {
                 icon="bell"
                 content="Set Ringtone"
                 onClick={() => act('PDA_ringSet')}
+              />
+              <Dropdown
+                width="120px"
+                selected={data.ringtone_sound}
+                options={data.available_sounds || []}
+                onSelected={(value) => act('PDA_soundSet', { sound: value })}
               />
               <Button
                 icon="sort"
