@@ -13,7 +13,7 @@
 		var/obj/item/gun/ballistic/gun = interacting_with
 		if(!gun.magazine)
 			balloon_alert(user, "no magazine!")
-			return ITEM_INTERACTION_BLOCKING
+			return ITEM_INTERACT_BLOCKING
 		target = gun?.magazine
 	else
 		return NONE
