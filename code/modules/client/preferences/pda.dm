@@ -43,32 +43,74 @@
 // #define PDA_RINGTONE_WOOF "Woof"
 // Then Add the PDA_RINGTONE_WOOF to the global list pda_ringtone_sounds, with its associative sound path
 /// List of available ringtone sounds
+#define PDA_RINGTONE_ALERT1 "Alert"
+#define PDA_RINGTONE_ALERT2 "Alert2"
+#define PDA_RINGTONE_ALERT3 "Alert3"
+#define PDA_RINGTONE_ALERT4 "Alert4"
+#define PDA_RINGTONE_ALERT5 "Alert5"
+#define PDA_RINGTONE_BELL "Bell"
 #define PDA_RINGTONE_BEEP "Beep"
-#define PDA_RINGTONE_BUZZ "Buzz"
+#define PDA_RINGTONE_BIKEHORN "Bikehorn"
 #define PDA_RINGTONE_CHIME "Chime"
-#define PDA_RINGTONE_PING "Ping"
-#define PDA_RINGTONE_CHIRP "Chirp"
-#define PDA_RINGTONE_DING "Ding"
-#define PDA_RINGTONE_HONK "Honk"
-#define PDA_RINGTONE_WEH "Weh!"
+#define PDA_RINGTONE_CHORD1 "Chord1"
+#define PDA_RINGTONE_CHORD2 "Chord2"
 #define PDA_RINGTONE_CODEC "Codec"
-#define PDA_RINGTONE_MEOW "Meow"
+#define PDA_RINGTONE_DING "Ding"
+#define PDA_RINGTONE_HORN "Horn"
+#define PDA_RINGTONE_JINGLE "Jingle"
+#define PDA_RINGTONE_MAUS "Maus"
+#define PDA_RINGTONE_MEOW1 "Meow1"
+#define PDA_RINGTONE_MEOW2 "Meow2"
+#define PDA_RINGTONE_MEOW_ELECTRIC "Meow_electric"
+#define PDA_RINGTONE_MORSE "Morse"
+#define PDA_RINGTONE_NORMALIZE "Normalize"
+#define PDA_RINGTONE_NOT_ALPHYS "Not Alphys"
+#define PDA_RINGTONE_PHONE_CHIME "Phone Chime"
+#define PDA_RINGTONE_PIANO "Piano"
+#define PDA_RINGTONE_PING "Ping"
+#define PDA_RINGTONE_SPEAKING "Speaking"
+#define PDA_RINGTONE_SPLAT "Splat"
+#define PDA_RINGTONE_TARGET "Target"
+#define PDA_RINGTONE_TERMINAL_NOTIF1 "Terminal Notif1"
+#define PDA_RINGTONE_TERMINAL_NOTIF2 "Terminal Notif2"
+#define PDA_RINGTONE_WEH "Weh"
 
 /// Default ringtone sound
-#define PDA_RINGTONE_SOUND_DEFAULT PDA_RINGTONE_BEEP
+#define PDA_RINGTONE_SOUND_DEFAULT PDA_RINGTONE_TERMINAL_SUCCESS
 
 // Map ringtone names to sound files
 GLOBAL_LIST_INIT(pda_ringtone_sounds, list(
-	PDA_RINGTONE_BEEP = 'sound/machines/terminal_success.ogg',
-	PDA_RINGTONE_BUZZ = 'sound/machines/buzz-sigh.ogg',
-	PDA_RINGTONE_CHIME = 'sound/machines/chime.ogg',
-	PDA_RINGTONE_PING = 'sound/machines/ping.ogg',
-	PDA_RINGTONE_CHIRP = 'sound/machines/terminal_processing.ogg',
-	PDA_RINGTONE_DING = 'sound/machines/ding.ogg',
-	PDA_RINGTONE_HONK = 'sound/items/bikehorn.ogg',
-	PDA_RINGTONE_WEH = 'monkestation/sound/voice/weh.ogg',
+	PDA_RINGTONE_ALERT1 = 'sound/machines/pda_ringtones/alert.ogg',
+	PDA_RINGTONE_ALERT2 = 'sound/machines/pda_ringtones/alert2.ogg',
+	PDA_RINGTONE_ALERT3 = 'sound/machines/pda_ringtones/alert3.ogg',
+	PDA_RINGTONE_ALERT4 = 'sound/machines/pda_ringtones/alert4.ogg',
+	PDA_RINGTONE_ALERT5 = 'sound/machines/pda_ringtones/alert5.ogg',
+	PDA_RINGTONE_BEEP = 'sound/machines/pda_ringtones/terminal_success.ogg',
+	PDA_RINGTONE_BELL = 'sound/machines/pda_ringtones/bell.ogg',
+	PDA_RINGTONE_BIKEHORN = 'sound/machines/pda_ringtones/bikehorn.ogg',
+	PDA_RINGTONE_CHIME = 'sound/machines/pda_ringtones/chime.ogg',
+	PDA_RINGTONE_CHORD1 = 'sound/machines/pda_ringtones/chord1.ogg',
+	PDA_RINGTONE_CHORD2 = 'sound/machines/pda_ringtones/chord2.ogg',
 	PDA_RINGTONE_CODEC = 'sound/machines/pda_ringtones/codec.ogg',
-	PDA_RINGTONE_MEOW = 'monkestation/sound/voice/feline/meow1.ogg',
+	PDA_RINGTONE_DING = 'sound/machines/pda_ringtones/ding.ogg',
+	PDA_RINGTONE_HORN = 'sound/machines/pda_ringtones/horn.ogg',
+	PDA_RINGTONE_JINGLE = 'sound/machines/pda_ringtones/jingle.ogg',
+	PDA_RINGTONE_MAUS = 'sound/machines/pda_ringtones/maus.ogg',
+	PDA_RINGTONE_MEOW1 = 'sound/machines/pda_ringtones/meow1.ogg',
+	PDA_RINGTONE_MEOW2 = 'sound/machines/pda_ringtones/meow2.ogg',
+	PDA_RINGTONE_MEOW_ELECTRIC = 'sound/machines/pda_ringtones/meow_electric.ogg',
+	PDA_RINGTONE_MORSE = 'sound/machines/pda_ringtones/morse.ogg',
+	PDA_RINGTONE_BUZZ = 'sound/machines/pda_ringtones/buzz.ogg',
+	PDA_RINGTONE_NOT_ALPHYS = 'sound/machines/pda_ringtones/not_alphys.ogg',
+	PDA_RINGTONE_PHONE_CHIME = 'sound/machines/pda_ringtones/phone_chime.ogg',
+	PDA_RINGTONE_PIANO = 'sound/machines/pda_ringtones/piano.ogg',
+	PDA_RINGTONE_PING = 'sound/machines/pda_ringtones/ping.ogg',
+	PDA_RINGTONE_SPEAKING = 'sound/machines/pda_ringtones/speaking.ogg',
+	PDA_RINGTONE_SPLAT = 'sound/machines/pda_ringtones/splat.ogg',
+	PDA_RINGTONE_TARGET = 'sound/machines/pda_ringtones/target.ogg',
+	PDA_RINGTONE_TERMINAL_NOTIF1 = 'sound/machines/pda_ringtones/terminal_notif1.ogg',
+	PDA_RINGTONE_TERMINAL_NOTIF2 = 'sound/machines/pda_ringtones/terminal_notif2.ogg',
+	PDA_RINGTONE_WEH = 'sound/machines/pda_ringtones/weh.ogg',
 ))
 
 /datum/preference/choiced/pda_ringtone_sound
