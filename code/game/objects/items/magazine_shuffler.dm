@@ -13,10 +13,10 @@
 		var/obj/item/gun/ballistic/gun = interacting_with
 		if(!gun.magazine)
 			balloon_alert(user, "no magazine!")
-			return
+			return ITEM_INTERACTION_BLOCKING
 		target = gun?.magazine
 	else
-		return
+		return NONE
 	balloon_alert(user, "shuffling...")
 	playsound(src, 'sound/items/rped.ogg', 50, TRUE)
 	if(do_after(user, 3 SECONDS, interacting_with))
@@ -24,5 +24,5 @@
 		balloon_alert(user, "magazine shuffled")
 	else
 		balloon_alert(user, "aborted!")
-
+	return ITEM_INTERACT_SUCCESS
 
