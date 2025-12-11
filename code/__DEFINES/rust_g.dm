@@ -483,3 +483,5 @@
 	#define url_decode(text) rustg_url_decode(text)
 #endif
 
+/// Generates a version 4 UUID.
+#define rustg_generate_uuid_v4(...) RUSTG_CALL(RUST_G, "uuid_v4")()

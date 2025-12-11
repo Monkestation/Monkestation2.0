@@ -121,7 +121,6 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 			var/obj/item/I = V
 			if((!initial(I.icon_state)) || (!initial(I.inhand_icon_state)) || (initial(I.item_flags) & ABSTRACT))
 				gift_types_list -= V
-		//MONKESTATION EDIT START
 		// List of items we want to block the anything-gift from spawning. Reasons for blocking
 		// these vary, but usually come down to keeping the server (and game clients) stable.
 		//
@@ -173,10 +172,20 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 			/obj/item/camera/spooky/badmin,
 			/obj/item/storage/box/fish_debug,
 			)
+
 		for(var/blocked_item in blocked_items)
 			// Block the item listed, and any subtypes too.
 			gift_types_list -= typesof(blocked_item)
-		//MONKESTATION EDIT END
+
+		/// List of items with a reduced chance to spawn
+		var/list/reduced_chance_items = list(
+			// Security reasons
+			/obj/item/card/id/advanced/centcom,
+		)
+		for(var/reduced_chance_item in reduced_chance_items)
+			if(prob(50))
+				gift_types_list -= typesof(reduced_chance_item)
+
 		GLOB.possible_gifts = gift_types_list
 	var/gift_type = pick(GLOB.possible_gifts)
 

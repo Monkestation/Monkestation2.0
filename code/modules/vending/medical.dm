@@ -24,6 +24,7 @@
 	contraband = list(
 		/obj/item/storage/box/gum/happiness = 3,
 		/obj/item/storage/box/hug/medical = 1,
+		/obj/item/clothing/head/helmet/toggleable/justice/medical = 2,
 	)
 	premium = list(
 		/obj/item/reagent_containers/hypospray/medipen = 3,
