@@ -83,6 +83,13 @@ GLOBAL_DATUM(dj_booth, /obj/machinery/dj_station)
 	if(inserted_tape)
 		context[SCREENTIP_CONTEXT_CTRL_LMB] = "Eject Tape"
 
+/obj/machinery/dj_station/examine(mob/user)
+	. = ..()
+	if(inserted_tape)
+		. += span_notice("It currently has a tape inserted.")
+	if(!COOLDOWN_FINISHED(src, next_song_timer))
+		. += span_notice("It's currently on cooldown, it will be able to play another song in <b>[DisplayTimeText(COOLDOWN_TIMELEFT(src, next_song_timer))]</b>.")
+
 /obj/machinery/dj_station/update_overlays()
 	. = ..()
 	if(broadcasting)
@@ -232,6 +239,9 @@ GLOBAL_DATUM(dj_booth, /obj/machinery/dj_station)
 			return TRUE
 		if("play")
 			. = TRUE
+			if(is_ejecting)
+				balloon_alert(user, "currently inserting/ejecting tape!")
+				return
 			if(!playing || !music_endpoint)
 				balloon_alert(user, "no track set!")
 				return
