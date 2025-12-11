@@ -538,7 +538,7 @@ BLIND     // can't see anything
 
 	var/message
 	if(up)
-		message = alt_toggle_message ?  "[alt_toggle_message] [src]." : null || "You push [src] out of the way."
+		message = alt_toggle_message ?  "[alt_toggle_message] [src]." : "You push [src] out of the way."
 	else
 		message = toggle_message ? "[toggle_message] [src]." : "You push [src] back into place."
 
