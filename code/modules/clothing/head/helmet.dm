@@ -717,8 +717,8 @@
 		return
 	if(mode == MEDICAL_HELMET_EXTREME)
 		. += "A small display on the inside of the helmet next to the amplifier control flashes a bright red [span_red("[mode]")]."
-		return
-	. += "A small display on the inside of the helmet next to the amplifier flashes a [mode]."
+	else
+		. += "A small display on the inside of the helmet next to the amplifier flashes a [mode]."
 
 /obj/item/clothing/head/helmet/toggleable/justice/medical/screwdriver_act(mob/living/carbon/human/user, obj/item/I)
 	if(..())
