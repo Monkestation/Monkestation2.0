@@ -79,7 +79,6 @@
 		if(65 to 67)
 			for(var/index in 1 to 4)
 				new /obj/item/pickaxe/rusted(src)
-			for(var/index in 1 to 4)
 				new /obj/item/dnainjector/dwarf(src)
 			new /obj/structure/closet/crate/miningcar(src)
 		if(68 to 70)
