@@ -13357,7 +13357,7 @@
 /area/station/cargo/storage)
 "dXX" = (
 /obj/structure/table/wood,
-/obj/machinery/cassette/cassette_deck{
+/obj/machinery/cassette_deck{
 	pixel_y = 9
 	},
 /turf/open/floor/carpet/green,

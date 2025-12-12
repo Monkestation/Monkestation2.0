@@ -2886,7 +2886,7 @@
 /area/station/command/heads_quarters/hos)
 "akV" = (
 /obj/structure/table/wood/fancy,
-/obj/machinery/cassette/cassette_deck{
+/obj/machinery/cassette_deck{
 	pixel_y = 8
 	},
 /turf/open/floor/carpet,

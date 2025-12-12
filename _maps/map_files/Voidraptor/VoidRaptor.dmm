@@ -44650,7 +44650,7 @@
 	},
 /obj/machinery/firealarm/directional/west,
 /obj/machinery/light/warm/directional/west,
-/obj/machinery/cassette/cassette_deck{
+/obj/machinery/cassette_deck{
 	pixel_y = 8
 	},
 /turf/open/floor/wood/large,
@@ -52848,7 +52848,7 @@
 	},
 /obj/machinery/requests_console/auto_name/directional/north,
 /obj/structure/window/spawner/directional/west,
-/obj/machinery/cassette/cassette_deck{
+/obj/machinery/cassette_deck{
 	pixel_y = 8
 	},
 /turf/open/floor/carpet,

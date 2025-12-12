@@ -13093,7 +13093,7 @@
 /area/station/hallway/primary/central/aft)
 "grf" = (
 /obj/structure/table/wood,
-/obj/machinery/cassette/cassette_deck{
+/obj/machinery/cassette_deck{
 	pixel_y = 8
 	},
 /turf/open/floor/wood,
@@ -42874,7 +42874,7 @@
 /area/station/cargo/storage)
 "uvq" = (
 /obj/structure/table/wood,
-/obj/machinery/cassette/cassette_deck,
+/obj/machinery/cassette_deck,
 /obj/item/cassette_tape/random,
 /obj/item/cassette_tape/random,
 /obj/item/cassette_tape/random,

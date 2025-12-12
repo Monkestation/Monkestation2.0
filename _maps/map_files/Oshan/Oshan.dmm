@@ -41096,7 +41096,7 @@
 	dir = 1
 	},
 /obj/structure/table/wood,
-/obj/machinery/cassette/cassette_deck{
+/obj/machinery/cassette_deck{
 	pixel_y = 8
 	},
 /turf/open/floor/iron,
@@ -50222,7 +50222,7 @@
 /obj/effect/turf_decal/siding/thinplating_new{
 	dir = 8
 	},
-/obj/machinery/cassette/cassette_deck,
+/obj/machinery/cassette_deck,
 /turf/open/floor/iron/vaporwave,
 /area/station/service/library)
 "pZV" = (

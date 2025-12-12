@@ -13780,7 +13780,7 @@
 /turf/open/floor/engine,
 /area/station/science/xenobiology/cell)
 "fqb" = (
-/obj/machinery/cassette/cassette_deck,
+/obj/machinery/cassette_deck,
 /turf/open/floor/iron/vaporwave,
 /area/station/service/library)
 "fqx" = (

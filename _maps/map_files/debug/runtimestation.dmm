@@ -2047,7 +2047,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "ud" = (
-/obj/machinery/cassette/cassette_deck,
+/obj/machinery/cassette_deck,
 /obj/structure/table/wood,
 /turf/open/floor/plating,
 /area/station/commons/storage/primary)

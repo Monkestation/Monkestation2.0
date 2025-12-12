@@ -11957,7 +11957,7 @@
 	dir = 6
 	},
 /obj/structure/table/wood,
-/obj/machinery/cassette/cassette_deck,
+/obj/machinery/cassette_deck,
 /turf/open/floor/wood/parquet,
 /area/centcom/central_command_areas/arcade)
 "aFR" = (
@@ -21721,7 +21721,7 @@
 /area/centcom/central_command_areas/prison)
 "eFL" = (
 /obj/structure/table/reinforced/plastitaniumglass,
-/obj/machinery/cassette/cassette_deck,
+/obj/machinery/cassette_deck,
 /obj/item/storage/fancy/rollingpapers{
 	pixel_x = -16;
 	pixel_y = 3
@@ -24498,7 +24498,7 @@
 	dir = 10
 	},
 /obj/structure/table/wood,
-/obj/machinery/cassette/cassette_deck,
+/obj/machinery/cassette_deck,
 /turf/open/floor/wood/parquet,
 /area/centcom/central_command_areas/arcade)
 "iUK" = (

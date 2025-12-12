@@ -2979,7 +2979,7 @@
 	pixel_y = 7;
 	pixel_x = -8
 	},
-/obj/machinery/cassette/cassette_deck{
+/obj/machinery/cassette_deck{
 	pixel_y = 8
 	},
 /turf/open/floor/iron/vaporwave,
@@ -47944,7 +47944,7 @@
 "qzS" = (
 /obj/structure/table/wood,
 /obj/machinery/newscaster/directional/west,
-/obj/machinery/cassette/cassette_deck{
+/obj/machinery/cassette_deck{
 	pixel_y = 8
 	},
 /turf/open/floor/wood,

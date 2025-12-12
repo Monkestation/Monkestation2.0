@@ -24131,7 +24131,7 @@
 /area/station/command/bridge)
 "hIW" = (
 /obj/structure/table/wood,
-/obj/machinery/cassette/cassette_deck{
+/obj/machinery/cassette_deck{
 	pixel_y = 8
 	},
 /turf/open/floor/iron/vaporwave,

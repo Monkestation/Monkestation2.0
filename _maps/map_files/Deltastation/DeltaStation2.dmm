@@ -5351,7 +5351,7 @@
 /area/station/service/abandoned_gambling_den)
 "ble" = (
 /obj/structure/table/wood,
-/obj/machinery/cassette/cassette_deck,
+/obj/machinery/cassette_deck,
 /turf/open/floor/iron/vaporwave,
 /area/station/service/library/printer)
 "bli" = (
