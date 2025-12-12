@@ -54,7 +54,7 @@
 
 /obj/item/ammo_box/magazine/internal/shot/buckshotroulette
 	name = "buckshotroulette shotgun internal magazine"
-	ammo_type = /obj/item/ammo_casing/shotgun/buckshot/spent
+	ammo_type = /obj/item/ammo_casing/shotgun/beanbag/blank
 	max_ammo = 10 //WOW THATS A LOT OF BULLETS you might say, however when the gun cant fire at an enemy more than once, i think its ok.
 
 /obj/item/ammo_box/magazine/internal/shot/levergun
