@@ -16134,12 +16134,12 @@
 /turf/open/floor/wood,
 /area/station/service/electronic_marketing_den)
 "jut" = (
-/obj/machinery/atmospherics/pipe/smart/simple/orange/visible,
 /obj/machinery/light/directional/north,
 /obj/machinery/airalarm/directional/north,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/bridge_pipe/orange/visible,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "juu" = (
@@ -20434,6 +20434,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible/layer2{
 	dir = 9
 	},
+/obj/machinery/atmospherics/components/trinary/mixer/flipped,
 /turf/open/floor/plating,
 /area/station/engineering/atmos/storage)
 "lXJ" = (
@@ -24114,9 +24115,8 @@
 /turf/open/floor/plating,
 /area/station/service/library)
 "odi" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 1;
-	name = "Mix to Engine"
+/obj/machinery/atmospherics/components/binary/pump/off{
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
@@ -26707,10 +26707,10 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/upper)
 "pzA" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/purple/visible,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/bridge_pipe/purple/visible,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "pzC" = (
