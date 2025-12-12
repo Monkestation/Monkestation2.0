@@ -78,20 +78,23 @@
 
 	return TRUE
 
-/obj/item/gun/syringe/attackby(obj/item/A, mob/user, params, show_msg = TRUE)
-	if(istype(A, /obj/item/reagent_containers/syringe))
+/obj/item/gun/syringe/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/reagent_containers/syringe/bluespace))
+		balloon_alert(user, "[tool.name] is too big!")
+		return ITEM_INTERACT_BLOCKING
+	if(istype(tool, /obj/item/reagent_containers/syringe))
 		if(syringes.len < max_syringes)
-			if(!user.transferItemToLoc(A, src))
-				return FALSE
-			balloon_alert(user, "[A.name] loaded")
-			syringes += A
+			if(!user.transferItemToLoc(tool, src))
+				return ITEM_INTERACT_BLOCKING
+			balloon_alert(user, "[tool.name] loaded")
+			syringes += tool
 			recharge_newshot()
 			update_appearance()
-			playsound(loc, load_sound, 40)
-			return TRUE
-		else
-			balloon_alert(user, "it's already full!")
-	return FALSE
+			playsound(src, load_sound, 40)
+			return ITEM_INTERACT_SUCCESS
+		balloon_alert(user, "it's full!")
+		return ITEM_INTERACT_BLOCKING
+	return NONE
 
 /obj/item/gun/syringe/update_overlays()
 	. = ..()
@@ -99,6 +102,9 @@
 		return
 	var/syringe_count = syringes.len
 	. += "[initial(icon_state)]_[syringe_count ? clamp(syringe_count, 1, initial(max_syringes)) : "empty"]"
+
+/obj/item/gun/syringe/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_INTERDYNE)
 
 /obj/item/gun/syringe/rapidsyringe
 	name = "compact rapid syringe gun"
@@ -136,6 +142,9 @@
 	can_unsuppress = FALSE //Permanently silenced
 	syringes = list(new /obj/item/reagent_containers/syringe())
 
+/obj/item/gun/syringe/syndicate/prototype/give_manufacturer_examine()
+	return
+
 /obj/item/gun/syringe/dna
 	name = "modified compact syringe gun"
 	desc = "A syringe gun that has been modified to be compact and fit DNA injectors instead of normal syringes."
@@ -156,24 +165,24 @@
 	. = ..()
 	chambered = new /obj/item/ammo_casing/dnainjector(src)
 
-/obj/item/gun/syringe/dna/attackby(obj/item/A, mob/user, params, show_msg = TRUE)
-	if(istype(A, /obj/item/dnainjector))
-		var/obj/item/dnainjector/D = A
+/obj/item/gun/syringe/dna/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/dnainjector))
+		var/obj/item/dnainjector/D = tool
 		if(D.used)
 			balloon_alert(user, "[D.name] is used up!")
-			return
+			return ITEM_INTERACT_BLOCKING
 		if(syringes.len < max_syringes)
 			if(!user.transferItemToLoc(D, src))
-				return FALSE
+				return ITEM_INTERACT_BLOCKING
 			balloon_alert(user, "[D.name] loaded")
 			syringes += D
 			recharge_newshot()
 			update_appearance()
 			playsound(loc, load_sound, 40)
-			return TRUE
-		else
-			balloon_alert(user, "it's already full!")
-	return FALSE
+			return ITEM_INTERACT_SUCCESS
+		balloon_alert(user, "it's already full!")
+		return ITEM_INTERACT_BLOCKING
+	return NONE
 
 /obj/item/gun/syringe/blowgun
 	name = "blowgun"
@@ -202,6 +211,9 @@
 	user.stamina.adjust(-20)
 	user.adjustOxyLoss(20)
 	return ..()
+
+/obj/item/gun/syringe/blowgun/give_manufacturer_examine()
+	return
 
 //Prepare thy coders for a PSYCHIC ATTACK.
 

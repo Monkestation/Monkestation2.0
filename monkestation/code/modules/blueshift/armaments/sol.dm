@@ -50,6 +50,9 @@
 /datum/armament_entry/company_import/sol_defense/armor_hardened/emt_enclosed_helmet
 	item_type = /obj/item/clothing/head/helmet/toggleable/sf_hardened/emt
 
+/datum/armament_entry/company_import/sol_defense/armor_hardened/emt2_enclosed_helmet
+	item_type = /obj/item/clothing/head/helmet/toggleable/sf_hardened/emt2
+
 /datum/armament_entry/company_import/sol_defense/armor_hardened/hardened_vest
 	item_type = /obj/item/clothing/suit/armor/sf_hardened
 

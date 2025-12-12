@@ -33,3 +33,16 @@
 
 /datum/preference/choiced/pod_hair/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["pod_hair"] = value
+
+
+/datum/preference/choiced/pod_hair/compile_constant_data()
+	var/list/data = ..()
+	data[SUPPLEMENTAL_FEATURE_KEY] = list("pod_color")
+	return data
+
+/datum/preference/color/pod_color
+	savefile_key = "pod_color"
+	savefile_identifier = PREFERENCE_CHARACTER
+	category = PREFERENCE_CATEGORY_SUPPLEMENTAL_FEATURES
+	default_null = TRUE
+	allows_nulls = TRUE

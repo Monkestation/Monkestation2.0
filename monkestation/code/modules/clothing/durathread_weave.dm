@@ -29,52 +29,54 @@ GLOBAL_LIST_INIT(durathread_weave_blacklist, typecacheof(list(
 	. = ..()
 	. += span_info("You can click on a piece of clothing, with an active welder in your offhand, in order to reinforce it!")
 
-/obj/item/stack/sheet/durathread/attackby_storage_insert(datum/storage, atom/storage_holder, mob/user)
+/obj/item/stack/sheet/durathread/storage_insert_on_interaction(datum/storage, atom/storage_holder, mob/user)
 	return !isclothing(storage_holder) || !(user?.istate & (ISTATE_HARM | ISTATE_SECONDARY))
 
-/obj/item/stack/sheet/durathread/afterattack(obj/item/clothing/clothing, mob/living/user, proximity)
-	. = ..()
-	if(. || !isliving(user) || !proximity)
-		return
-	. |= AFTERATTACK_PROCESSED_ITEM
+/obj/item/stack/sheet/durathread/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	. = NONE
+	if(isstack(interacting_with) || (!isclothing(interacting_with) && interacting_with.atom_storage))
+		return NONE
 	var/obj/item/welder
 	for(var/obj/item/thingy in user.held_items)
 		if(thingy.tool_behaviour == TOOL_WELDER)
 			welder = thingy
 			break
-	if(QDELETED(welder))
+	if(QDELETED(welder) || !welder)
 		to_chat(user, span_warning("You need to have a welder in your hands in order to reinforce clothing with durathread!"))
-		return
-	else if(!isclothing(clothing) || QDELING(clothing))
+		return ITEM_INTERACT_BLOCKING
+	if(!isclothing(interacting_with) || QDELING(interacting_with))
 		to_chat(user, span_warning("You can only reinforce clothing with durathread!"))
-		return
-	else if(is_type_in_typecache(clothing, GLOB.durathread_weave_blacklist))
+		return ITEM_INTERACT_BLOCKING
+	var/obj/item/clothing/clothing = interacting_with
+	if(is_type_in_typecache(clothing, GLOB.durathread_weave_blacklist))
 		to_chat(user, span_warning("You cannot reinforce [clothing] with durathread!"))
-		return
-	else if(HAS_TRAIT(clothing, TRAIT_DURATHREAD_INFUSED))
+		return ITEM_INTERACT_BLOCKING
+	if(HAS_TRAIT(clothing, TRAIT_DURATHREAD_INFUSED))
 		to_chat(user, span_warning("[clothing] already has durathread reinforcement!"))
-		return
-	else if(amount < 5)
+		return ITEM_INTERACT_BLOCKING
+	if(amount < 5)
 		to_chat(user, span_warning("You need at least 5 durathread to reinforce [src]!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 	to_chat(user, span_info("You begin to reinforce [clothing] with [src]..."))
 	if(!welder.use_tool(clothing, user, 10 SECONDS, 5, extra_checks = CALLBACK(src, PROC_REF(has_enough)), interaction_key = DOAFTER_SOURCE_DURATHREAD_WEAVE))
 		to_chat(user, span_warning("You fail to reinforce [clothing]!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 	var/datum/armor/clothing_armor = clothing.get_armor()
 	var/datum/armor/reinforced_armor = clothing_armor?.combine_max_armor(get_armor_by_type(/datum/armor/durathread_weave))
 	if(isnull(reinforced_armor))
 		CRASH("Got null armor when trying to reinforce clothing with durathread.")
-	else if(reinforced_armor ~= clothing_armor) // the armor was already as good as or better than the durathread reinforcement
+	if(reinforced_armor ~= clothing_armor) // the armor was already as good as or better than the durathread reinforcement
 		to_chat(user, span_warning("[clothing] cannot be further reinforced!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(!use(5))
 		to_chat(user, span_warning("You need at least 5 durathread to reinforce [src]!"))
-		return
+		return ITEM_INTERACT_BLOCKING
+
 	to_chat(user, span_info("You reinforce [clothing] with durathread!"))
 	clothing.set_armor(reinforced_armor)
 	clothing.name = "durathread-reinforced [clothing.name]"
 	ADD_TRAIT(clothing, TRAIT_DURATHREAD_INFUSED, CLOTHING_TRAIT)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/stack/sheet/durathread/proc/has_enough()
 	return amount >= 5

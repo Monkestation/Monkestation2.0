@@ -1,24 +1,35 @@
-import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Box, Button, Section, Stack, Icon } from '../components';
 import { Window } from '../layouts';
 import { MaterialAccessBar } from './Fabrication/MaterialAccessBar';
-import { Design, FabricatorData, MaterialMap } from './Fabrication/Types';
+import { FabricatorData, MaterialMap, Design } from './Fabrication/Types';
 import { DesignBrowser } from './Fabrication/DesignBrowser';
 import { MaterialCostSequence } from './Fabrication/MaterialCostSequence';
 import { Tooltip } from '../components';
 import { BooleanLike, classes } from 'common/react';
 
+type ExosuitDesign = Design & {
+  constructionTime: number;
+  craftable: BooleanLike;
+};
+
 type ExosuitFabricatorData = FabricatorData & {
   processing: BooleanLike;
+  authorization: BooleanLike;
+  alert_level: Number;
+  combat_parts_allowed: BooleanLike;
+  emagged: BooleanLike;
+  silicon_user: BooleanLike;
+  designs: Record<string, ExosuitDesign>;
 };
 
 export const ExosuitFabricator = (props) => {
   const { act, data } = useBackend<ExosuitFabricatorData>();
+  const { materials, SHEET_MATERIAL_AMOUNT } = data;
 
   const availableMaterials: MaterialMap = {};
 
-  for (const material of data.materials) {
+  for (const material of materials) {
     availableMaterials[material.name] = material.amount;
   }
 
@@ -33,7 +44,14 @@ export const ExosuitFabricator = (props) => {
                   designs={Object.values(data.designs)}
                   availableMaterials={availableMaterials}
                   buildRecipeElement={(design, availableMaterials) => (
-                    <Recipe available={availableMaterials} design={design} />
+                    <Recipe
+                      available={availableMaterials}
+                      design={{
+                        ...design,
+                        craftable: (design as any).craftable ?? true, // fallback if missing
+                      }}
+                      SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
+                    />
                   )}
                   categoryButtons={(category) => (
                     <Button
@@ -52,7 +70,8 @@ export const ExosuitFabricator = (props) => {
               <Stack.Item>
                 <Section>
                   <MaterialAccessBar
-                    availableMaterials={data.materials}
+                    availableMaterials={materials}
+                    SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
                     onEjectRequested={(material, amount) => {
                       act('remove_mat', { ref: material.ref, amount });
                     }}
@@ -62,7 +81,11 @@ export const ExosuitFabricator = (props) => {
             </Stack>
           </Stack.Item>
           <Stack.Item width="420px">
-            <Queue availableMaterials={availableMaterials} />
+            <Authorization width="420" />
+            <Queue
+              availableMaterials={availableMaterials}
+              SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
+            />
           </Stack.Item>
         </Stack>
       </Window.Content>
@@ -70,9 +93,15 @@ export const ExosuitFabricator = (props) => {
   );
 };
 
-const Recipe = (props: { design: Design; available: MaterialMap }) => {
-  const { act, data } = useBackend<ExosuitFabricatorData>();
-  const { design, available } = props;
+type RecipeProps = {
+  design: ExosuitDesign;
+  available: MaterialMap;
+  SHEET_MATERIAL_AMOUNT: number;
+};
+
+const Recipe = (props: RecipeProps) => {
+  const { act } = useBackend<ExosuitFabricatorData>();
+  const { design, available, SHEET_MATERIAL_AMOUNT } = props;
 
   const canPrint = !Object.entries(design.cost).some(
     ([material, amount]) =>
@@ -80,7 +109,10 @@ const Recipe = (props: { design: Design; available: MaterialMap }) => {
   );
 
   return (
-    <div className="FabricatorRecipe">
+    <Box
+      className="FabricatorRecipe"
+      backgroundColor={design.craftable ? undefined : 'rgba(255, 0, 0, 0.15)'}
+    >
       <Tooltip content={design.desc} position="right">
         <div
           className={classes([
@@ -98,6 +130,7 @@ const Recipe = (props: { design: Design; available: MaterialMap }) => {
           <MaterialCostSequence
             design={design}
             amount={1}
+            SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
             available={available}
           />
         }
@@ -107,7 +140,9 @@ const Recipe = (props: { design: Design; available: MaterialMap }) => {
             'FabricatorRecipe__Title',
             !canPrint && 'FabricatorRecipe__Title--disabled',
           ])}
-          onClick={() => act('build', { designs: [design.id], now: true })}
+          onClick={() =>
+            canPrint && act('build', { designs: [design.id], now: true })
+          }
         >
           <div className="FabricatorRecipe__Icon">
             <Box
@@ -147,13 +182,18 @@ const Recipe = (props: { design: Design; available: MaterialMap }) => {
           <Icon name="play" />
         </div>
       </Tooltip>
-    </div>
+    </Box>
   );
 };
 
-const Queue = (props: { availableMaterials: MaterialMap }) => {
+type QueueProps = {
+  availableMaterials: MaterialMap;
+  SHEET_MATERIAL_AMOUNT: number;
+};
+
+const Queue = (props: QueueProps) => {
   const { act, data } = useBackend<ExosuitFabricatorData>();
-  const { availableMaterials } = props;
+  const { availableMaterials, SHEET_MATERIAL_AMOUNT } = props;
   const { designs, processing } = data;
 
   const queue = data.queue || [];
@@ -208,6 +248,7 @@ const Queue = (props: { availableMaterials: MaterialMap }) => {
             }
           >
             <MaterialCostSequence
+              SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
               available={availableMaterials}
               costMap={materialCosts}
             />
@@ -218,7 +259,10 @@ const Queue = (props: { availableMaterials: MaterialMap }) => {
           style={{ 'overflow-y': 'auto', 'overflow-x': 'hidden' }}
         >
           <Section fill>
-            <QueueList availableMaterials={availableMaterials} />
+            <QueueList
+              availableMaterials={availableMaterials}
+              SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
+            />
           </Section>
         </Stack.Item>
       </Stack>
@@ -226,9 +270,14 @@ const Queue = (props: { availableMaterials: MaterialMap }) => {
   );
 };
 
-const QueueList = (props: { availableMaterials: MaterialMap }) => {
+type QueueListProps = {
+  availableMaterials: MaterialMap;
+  SHEET_MATERIAL_AMOUNT: number;
+};
+
+const QueueList = (props: QueueListProps) => {
   const { act, data } = useBackend<ExosuitFabricatorData>();
-  const { availableMaterials } = props;
+  const { availableMaterials, SHEET_MATERIAL_AMOUNT } = props;
 
   const queue = data.queue || [];
   const designs = data.designs;
@@ -281,6 +330,7 @@ const QueueList = (props: { availableMaterials: MaterialMap }) => {
                 <MaterialCostSequence
                   design={entry.design}
                   amount={1}
+                  SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
                   available={availableMaterials}
                 />
               }
@@ -328,4 +378,69 @@ const QueueList = (props: { availableMaterials: MaterialMap }) => {
         ))}
     </>
   );
+};
+
+const Authorization = (props, context) => {
+  const { data } = useBackend<ExosuitFabricatorData>();
+  const auth_override = data.authorization;
+  const alert_level = data.alert_level;
+  const combat_parts_allowed = data.combat_parts_allowed;
+  const emagged = data.emagged;
+
+  return (
+    <Section width="420px" style={{ 'white-space': 'pre-wrap' }}>
+      <b>
+        {'User: '}
+        <span
+          style={!combat_parts_allowed ? 'color:#ff0000' : 'color:#00ff00'}
+          font-style:bold
+        >
+          {!combat_parts_allowed
+            ? 'Unauthorized'
+            : !emagged
+              ? 'Authorized'
+              : garbleText(
+                  'ALERT: ROOTKIT_DEV_OVERRIDE RUNNING IN LIVE ENVIROMENT',
+                )}
+        </span>
+        <Tooltip
+          content={
+            'Designs marked in red are classified as combat-level designs. Gain access from a Command member or an elevated station threat level to print them. Blue alert loosens restrictions on non-lethal weapons.'
+          }
+          position="right"
+        >
+          <Icon name="question-circle" />
+        </Tooltip>
+      </b>
+      <br />
+      Combat-level designs are{' '}
+      {combat_parts_allowed ? 'available' : 'unavailable'}.
+      <br />
+      {auth_override
+        ? 'Authorization overriden by a command-level card.\n'
+        : ''}
+      {alert_level === 0
+        ? ''
+        : alert_level >= 4
+          ? 'Credible threat to the station in effect!\n'
+          : 'Increased threat alert is in effect for the station!\n'}
+    </Section>
+  );
+};
+
+const garbleText = (text) => {
+  return text
+    .split('')
+    .map((char) => {
+      if (Math.random() < 0.5) {
+        // Randomly replace with ascii symbol or change case
+        if (Math.random() < 0.5) {
+          return String.fromCharCode(33 + Math.floor(Math.random() * 30));
+        } else {
+          return Math.random() < 0.5 ? char.toUpperCase() : char.toLowerCase();
+        }
+      }
+      return char;
+    })
+    .join('');
 };

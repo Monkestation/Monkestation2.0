@@ -26,15 +26,15 @@
 	QDEL_NULL(current_plate)
 	. = ..()
 
-/obj/machinery/plate_press/attackby(obj/item/I, mob/living/user, params)
+/obj/machinery/plate_press/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(!is_operational)
 		to_chat(user, span_warning("[src] has to be on to do this!"))
 		return FALSE
 	if(current_plate)
 		to_chat(user, span_warning("[src] already has a plate in it!"))
 		return FALSE
-	if(istype(I, /obj/item/stack/license_plates/empty))
-		var/obj/item/stack/license_plates/empty/plate = I
+	if(istype(attacking_item, /obj/item/stack/license_plates/empty))
+		var/obj/item/stack/license_plates/empty/plate = attacking_item
 		plate.use(1)
 		current_plate = new plate.type(src, 1) //Spawn a new single sheet in the machine
 		update_appearance()
@@ -53,12 +53,12 @@
 	update_appearance()
 	to_chat(user, span_notice("You start pressing a new license plate!"))
 
-	if(!do_after(user, 40, target = src))
+	if(!do_after(user, 4 SECONDS, target = src))
 		pressing = FALSE
 		update_appearance()
 		return FALSE
 
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 	to_chat(user, span_notice("You finish pressing a new license plate!"))
 
 	pressing = FALSE

@@ -242,7 +242,7 @@ const JobRow = (props: { className?: string; job: Job; name: string }) => {
           <Stack.Item
             align="center"
             className="job-name"
-            width="50%"
+            width="70%"
             style={{
               'padding-left': '0.3em',
             }}
@@ -263,7 +263,7 @@ const JobRow = (props: { className?: string; job: Job; name: string }) => {
           </Stack.Item>
         </Tooltip>
 
-        <Stack.Item width="50%" className="options" /* SKYRAT EDIT */>
+        <Stack.Item width="40%" className="options" /* SKYRAT EDIT */>
           {rightSide}
         </Stack.Item>
       </Stack>
@@ -353,7 +353,7 @@ const JoblessRoleDropdown = (props) => {
   ];
 
   return (
-    <Box position="absolute" right={0} width="30%">
+    <Box position="absolute" right={1} width="25%">
       <Dropdown
         width="100%"
         selected={selected}

@@ -88,7 +88,7 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(select_equipment, R_FUN, FALSE, "Select Equipment",
 
 /datum/select_equipment/proc/make_outfit_entries(category="General", list/outfit_list)
 	var/list/entries = list()
-	for(var/path as anything in outfit_list)
+	for(var/path in outfit_list)
 		var/datum/outfit/outfit = path
 		entries += list(outfit_entry(category, path, initial(outfit.name)))
 	return entries
@@ -210,7 +210,8 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(select_equipment, R_FUN, FALSE, "Select Equipment",
 
 
 	BLACKBOX_LOG_ADMIN_VERB("Select Equipment")
-	for(var/obj/item/item in human_target.get_equipped_items(include_pockets = delete_pocket))
+	var/includes_flags = delete_pocket ? INCLUDE_POCKETS : NONE
+	for(var/obj/item/item in human_target.get_equipped_items(includes_flags))
 		qdel(item)
 
 	var/obj/item/organ/internal/brain/human_brain = human_target.get_organ_slot(BRAIN)

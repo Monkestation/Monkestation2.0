@@ -72,7 +72,7 @@
 					rgb = "#E6FF81"
 				if ("X","Y","Z")
 					rgb = "#FF9681"
-				if ("C")
+				if ("C", "Ig")
 					rgb = "#F54B4B"
 				//add colors for new special antigens here
 			scan.DrawBox(rgb,i*bar_spacing+bar_offset+x_adjustment,6,i*bar_spacing+bar_width+bar_offset+x_adjustment,6+antibodies[antibody]*3)
@@ -138,7 +138,7 @@
 		else if (I.sterility >= 100)
 			span = "notice"
 		to_chat(user,"<span class='[span]'>Scanning \the [I]...sterility level = [I.sterility]%</span>")
-		if (istype(I,/obj/item/weapon/virusdish))
+		if (isvirusdish(I))
 			var/obj/item/weapon/virusdish/dish = I
 			if (dish.open && dish.contained_virus)
 				to_chat(user,span_danger("However, since its lid has been opened, unprotected contact with the dish can result in infection."))

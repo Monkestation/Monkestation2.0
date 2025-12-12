@@ -25,6 +25,8 @@
 	var/list/data = list( "dates" = list() )
 	var/regex/ymlRegex = regex(@"\.yml", "g")
 
+	data["discord_url"] = CONFIG_GET(string/discordurl)
+
 	for(var/archive_file in sort_list(flist("html/changelogs/archive/")))
 		var/archive_date = ymlRegex.Replace(archive_file, "")
 		data["dates"] = list(archive_date) + data["dates"]

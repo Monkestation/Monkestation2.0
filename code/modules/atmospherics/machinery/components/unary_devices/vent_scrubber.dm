@@ -15,6 +15,7 @@
 	pipe_state = "scrubber"
 	vent_movement = VENTCRAWL_ALLOWED | VENTCRAWL_CAN_SEE | VENTCRAWL_ENTRANCE_ALLOWED
 	processing_flags = NONE
+	interaction_flags_click = NEED_VENTCRAWL
 
 	///The mode of the scrubber (ATMOS_DIRECTION_SCRUBBING or ATMOS_DIRECTION_SIPHONING)
 	var/scrubbing = ATMOS_DIRECTION_SCRUBBING
@@ -184,7 +185,7 @@
 	if(welded || !is_operational)
 		return FALSE
 	if(!nodes[1] || !on || (!filter_types && scrubbing != ATMOS_DIRECTION_SIPHONING))
-		on = FALSE
+		set_on(FALSE)
 		return FALSE
 
 	var/list/changed_gas = air.gases
@@ -201,7 +202,7 @@
 	if(welded || !is_operational)
 		return FALSE
 	if(!nodes[1] || !on)
-		on = FALSE
+		set_on(FALSE)
 		return FALSE
 	var/turf/open/us = loc
 	if(!istype(us))
@@ -222,6 +223,11 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/scrub(turf/tile)
 	if(!istype(tile))
 		return FALSE
+
+	if(istype(tile, /turf/open))
+		var/turf/open/open_tile = tile
+		open_tile?.pollution?.scrub_amount(POLLUTION_HEIGHT_DIVISOR * 2)
+
 	var/datum/gas_mixture/environment = tile.return_air()
 	var/datum/gas_mixture/air_contents = airs[1]
 	var/list/env_gases = environment.gases
@@ -297,7 +303,7 @@
 		else
 			user.visible_message(span_notice("[user] unwelds the scrubber."), span_notice("You unweld the scrubber."), span_hear("You hear welding."))
 			welded = FALSE
-		update_appearance()
+		update_appearance(UPDATE_ICON)
 		pipe_vision_img = image(src, loc, dir = dir)
 		SET_PLANE_EXPLICIT(pipe_vision_img, ABOVE_HUD_PLANE, src)
 		investigate_log("was [welded ? "welded shut" : "unwelded"] by [key_name(user)]", INVESTIGATE_ATMOS)
@@ -316,11 +322,11 @@
 		. += "It seems welded shut."
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/attack_alien(mob/user, list/modifiers)
-	if(!welded || !(do_after(user, 20, target = src)))
+	if(!welded || !(do_after(user, 2 SECONDS, target = src)))
 		return
 	user.visible_message(span_warning("[user] furiously claws at [src]!"), span_notice("You manage to clear away the stuff blocking the scrubber."), span_hear("You hear loud scraping noises."))
 	welded = FALSE
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 	pipe_vision_img = image(src, loc, dir = dir)
 	SET_PLANE_EXPLICIT(pipe_vision_img, ABOVE_HUD_PLANE, src)
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 100, TRUE)
@@ -401,4 +407,4 @@
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/disconnect()
 	..()
-	on = FALSE
+	set_on(FALSE)

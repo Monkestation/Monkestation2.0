@@ -11,19 +11,11 @@
 	bare_wound_bonus = 15
 	sharpness = SHARP_EDGED
 
-/obj/item/mutant_hand/zombie/afterattack(atom/target, mob/living/user, proximity_flag)
-	. = ..()
-	if(!proximity_flag)
-		return
+/obj/item/mutant_hand/zombie/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
+	if(ishuman(target))
+		try_to_zombie_infect(target, user, user.zone_selected)
 	else if(isliving(target))
-		var/mob/living/living_target = target
-		if(!highly_infecious && living_target.stat != DEAD)
-			return
-		if(ishuman(target))
-			try_to_zombie_infect(target, user, user.zone_selected)
-		/*else monkestation temp removal
-			. |= AFTERATTACK_PROCESSED_ITEM
-			check_feast(target, user)*/
+		check_feast(target, user)
 
 /proc/try_to_zombie_infect(mob/living/carbon/human/target, mob/living/user, def_zone = BODY_ZONE_CHEST)
 	CHECK_DNA_AND_SPECIES(target)

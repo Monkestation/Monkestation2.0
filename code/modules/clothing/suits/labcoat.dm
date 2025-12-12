@@ -26,6 +26,7 @@
 		/obj/item/sensor_device,
 		/obj/item/soap,
 		/obj/item/stack/medical,
+		/obj/item/stack/heal_pack,
 		/obj/item/storage/pill_bottle,
 		/obj/item/tank/internals/emergency_oxygen,
 		/obj/item/tank/internals/plasmaman,

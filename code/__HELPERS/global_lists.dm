@@ -44,6 +44,7 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/anime_head, GLOB.anime_top_list) //Monkestation Addition
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/anime_middle, GLOB.anime_middle_list) //Monkestation Addition
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/anime_bottom, GLOB.anime_bottom_list) //Monkestation Addition
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/anime_halo, GLOB.anime_halo_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/arachnid_appendages, GLOB.arachnid_appendages_list) //Monkestation Addition
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/arachnid_chelicerae, GLOB.arachnid_chelicerae_list) //Monkestation Addition
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/goblin_ears, GLOB.goblin_ears_list) //Monkestation Addition
@@ -144,6 +145,7 @@
 		/obj/item/stack/sheet/cardboard = GLOB.cardboard_recipes,
 		/obj/item/stack/sheet/bronze = GLOB.bronze_recipes,
 		/obj/item/stack/sheet/plastic = GLOB.plastic_recipes,
+		/obj/item/stack/sheet/silk = GLOB.silk_recipes,
 		/obj/item/stack/ore/glass = GLOB.sand_recipes,
 		/obj/item/stack/rods = GLOB.rod_recipes,
 		/obj/item/stack/sheet/runed_metal = GLOB.runed_metal_recipes,
@@ -237,7 +239,7 @@
 /proc/init_subtypes_w_path_keys(prototype, list/L)
 	if(!istype(L))
 		L = list()
-	for(var/path as anything in subtypesof(prototype))
+	for(var/path in subtypesof(prototype))
 		L[path] = new path()
 	return L
 

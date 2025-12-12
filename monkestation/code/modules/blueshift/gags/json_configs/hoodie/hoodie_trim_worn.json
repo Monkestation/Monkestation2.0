@@ -4,13 +4,13 @@
 			"type": "icon_state",
 			"icon_state": "hoodie",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
 			"icon_state": "trim",
 			"blend_mode": "overlay",
-			"color_ids": [ 2 ]
+			"color_ids": [2]
 		}
 	],
 	"hoodie_trim_t": [
@@ -18,13 +18,13 @@
 			"type": "icon_state",
 			"icon_state": "hoodie_t",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
 			"icon_state": "trim_t",
 			"blend_mode": "overlay",
-			"color_ids": [ 2 ]
+			"color_ids": [2]
 		}
 	],
 	"hoodie_trim_alt": [
@@ -32,13 +32,13 @@
 			"type": "icon_state",
 			"icon_state": "hoodie",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
 			"icon_state": "trim_alt",
 			"blend_mode": "overlay",
-			"color_ids": [ 2 ]
+			"color_ids": [2]
 		}
 	],
 	"hoodie_trim_alt_t": [
@@ -46,13 +46,13 @@
 			"type": "icon_state",
 			"icon_state": "hoodie_t",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
 			"icon_state": "trim_alt_t",
 			"blend_mode": "overlay",
-			"color_ids": [ 2 ]
+			"color_ids": [2]
 		}
 	]
 }

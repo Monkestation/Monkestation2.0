@@ -30,6 +30,7 @@ ADMIN_VERB(flip_ghost_spawn, R_FUN, FALSE, "Toggle Centcomm Spawning", "Toggles 
 	. = ..()
 	var/datum/action/cooldown/mob_cooldown/return_to_ghost/created_ability = new /datum/action/cooldown/mob_cooldown/return_to_ghost(src)
 	created_ability.Grant(src)
+	ADD_TRAIT(src, TRAIT_SIXTHSENSE, INNATE_TRAIT)
 
 /mob/living/carbon/human/ghost/Destroy()
 	if(linked_button)

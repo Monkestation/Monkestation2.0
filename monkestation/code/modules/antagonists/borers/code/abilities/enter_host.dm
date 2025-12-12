@@ -103,7 +103,7 @@
 	if(singular_host.has_borer())
 		owner.balloon_alert(owner, "target already occupied")
 		return
-	if(!do_after(cortical_owner, (((cortical_owner.upgrade_flags & BORER_FAST_BORING) && !(cortical_owner.upgrade_flags & BORER_HIDING)) ? 3 SECONDS : 6 SECONDS), target = singular_host))
+	if(!do_after(cortical_owner, (((cortical_owner.upgrade_flags & BORER_FAST_BORING) && !(cortical_owner.upgrade_flags & BORER_HIDING)) ? 3 SECONDS : 6 SECONDS), target = singular_host, hidden = TRUE))
 		owner.balloon_alert(owner, "you and target must be still")
 		return
 	if(get_dist(singular_host, cortical_owner) > 1)
@@ -116,6 +116,11 @@
 
 	var/obj/item/organ/internal/borer_body/borer_organ = new(cortical_owner.human_host)
 	borer_organ.borer = owner
+	var/obj/item/organ/internal/brain = cortical_owner.human_host.get_organ_slot(ORGAN_SLOT_BRAIN)
+	if(brain)
+		borer_organ.zone = brain.zone // The worm follows the brain
+	cortical_owner.bodytemp_heat_damage_limit = cortical_owner.human_host.bodytemp_heat_damage_limit
+	cortical_owner.bodytemp_cold_damage_limit = cortical_owner.human_host.bodytemp_cold_damage_limit
 	borer_organ.Insert(cortical_owner.human_host)
 
 	var/turf/human_turftwo = get_turf(cortical_owner.human_host)

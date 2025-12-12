@@ -6,6 +6,7 @@
 #define COMSIG_FOOD_EATEN "food_eaten"
 	#define DESTROY_FOOD (1<<0)
 /// From base of datum/component/edible/on_entered: (mob/crosser, bitecount)
+/// You must call enable_food_crossed() on the edible component in order for this signal to be sent.
 #define COMSIG_FOOD_CROSSED "food_crossed"
 /// From base of Component/edible/On_Consume: (mob/living/eater, mob/living/feeder)
 #define COMSIG_FOOD_CONSUMED "food_consumed"
@@ -33,6 +34,10 @@
 // Grilling foods (griddle, grill, and bonfire)
 ///Called when an object is placed onto a griddle
 #define COMSIG_ITEM_GRILL_PLACED_ON "item_placed_on_griddle"
+///Called when a griddle is turned on
+#define COMSIG_ITEM_GRILL_TURNED_ON "item_grill_turned_on"
+///Called when a griddle is turned off
+#define COMSIG_ITEM_GRILL_TURNED_OFF "item_grill_turned_off"
 ///Called when an object is grilled ontop of a griddle
 #define COMSIG_ITEM_GRILL_PROCESS "item_griddled"
 	/// Return to not burn the item

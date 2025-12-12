@@ -37,7 +37,6 @@
 		return
 	var/obj/structure/carp_rift/new_rift = new(get_turf(owner))
 	playsound(owner.loc, 'sound/vehicles/rocketlaunch.ogg', 100, TRUE)
-	dragon.riftTimer = -1
 	new_rift.dragon = dragon
 	dragon.rift_list += new_rift
 	to_chat(owner, span_boldwarning("The rift has been summoned. Prevent the crew from destroying it at all costs!"))
@@ -216,7 +215,6 @@
 		if(dragon.rifts_charged != 3 && !dragon.objective_complete)
 			dragon.rift_ability = new()
 			dragon.rift_ability.Grant(dragon.owner.current)
-			dragon.riftTimer = 0
 			dragon.rift_empower()
 		// Early return, nothing to do after this point.
 		return

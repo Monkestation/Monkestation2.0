@@ -43,6 +43,7 @@
 	ears?.adjustEarDamage(0, moon_smile_duration + 2 SECONDS)
 
 	cast_on.adjust_silence(moon_smile_duration + 5 SECONDS)
+	cast_on.adjust_emote_mute(moon_smile_duration + 5 SECONDS)
 	cast_on.AdjustKnockdown(2 SECONDS)
 	cast_on.add_mood_event("moon_smile", /datum/mood_event/moon_smile)
 	//Lowers sanity

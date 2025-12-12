@@ -85,8 +85,8 @@
 	if(duration)
 		scanline_timer = addtimer(CALLBACK(src, PROC_REF(set_scanline), "passive"), duration, TIMER_STOPPABLE)
 
-/obj/machinery/scanner_gate/attackby(obj/item/W, mob/user, params)
-	var/obj/item/card/id/card = W.GetID()
+/obj/machinery/scanner_gate/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	var/obj/item/card/id/card = attacking_item.GetID()
 	if(card)
 		if(locked)
 			if(allowed(user))
@@ -94,16 +94,16 @@
 				req_access = list()
 				to_chat(user, span_notice("You unlock [src]."))
 		else if(!(obj_flags & EMAGGED))
-			to_chat(user, span_notice("You lock [src] with [W]."))
-			var/list/access = W.GetAccess()
+			to_chat(user, span_notice("You lock [src] with [attacking_item]."))
+			var/list/access = attacking_item.GetAccess()
 			req_access = access
 			locked = TRUE
 		else
-			to_chat(user, span_warning("You try to lock [src] with [W], but nothing happens."))
+			to_chat(user, span_warning("You try to lock [src] with [attacking_item], but nothing happens."))
 	else
-		if(!locked && default_deconstruction_screwdriver(user, "[initial(icon_state)]_open", initial(icon_state), W))
+		if(!locked && default_deconstruction_screwdriver(user, "[initial(icon_state)]_open", initial(icon_state), attacking_item))
 			return
-		if(panel_open && is_wire_tool(W))
+		if(panel_open && is_wire_tool(attacking_item))
 			wires.interact(user)
 	return ..()
 
@@ -201,7 +201,7 @@
 			assembly?.activate()
 		set_scanline("scanning", 10)
 
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 
 /obj/machinery/scanner_gate/proc/alarm_beep()
 	if(next_beep <= world.time)
@@ -233,7 +233,7 @@
 	data["target_nutrition"] = detect_nutrition
 	return data
 
-/obj/machinery/scanner_gate/ui_act(action, params)
+/obj/machinery/scanner_gate/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

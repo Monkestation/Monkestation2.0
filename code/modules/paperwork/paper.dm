@@ -13,7 +13,7 @@
 /obj/item/paper
 	name = "paper"
 	gender = NEUTER
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "paper"
 	inhand_icon_state = "paper"
 	worn_icon = 'icons/mob/clothing/head/costume.dmi'
@@ -35,6 +35,7 @@
 	grind_results = list(/datum/reagent/cellulose = 3)
 	color = COLOR_WHITE
 	item_flags = SKIP_FANTASY_ON_SPAWN
+	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING
 
 	/// Lazylist of raw, unsanitised, unparsed text inputs that have been made to the paper.
 	var/list/datum/paper_input/raw_text_inputs
@@ -266,7 +267,7 @@
 	if(LAZYLEN(stamp_cache) > MAX_PAPER_STAMPS_OVERLAYS)
 		return
 
-	var/mutable_appearance/stamp_overlay = mutable_appearance('icons/obj/bureaucracy.dmi', "paper_[stamp_icon_state]")
+	var/mutable_appearance/stamp_overlay = mutable_appearance('icons/obj/service/bureaucracy.dmi', "paper_[stamp_icon_state]")
 	stamp_overlay.pixel_x = rand(-2, 2)
 	stamp_overlay.pixel_y = rand(-3, 2)
 	add_overlay(stamp_overlay)
@@ -450,7 +451,7 @@
 	)
 	playsound(src, 'sound/items/handling/standard_stamp.ogg', 50, vary = TRUE)
 
-	return TOOL_ACT_SIGNAL_BLOCKING // Stop the UI from opening.
+	return ITEM_INTERACT_BLOCKING // Stop the UI from opening.
 /**
  * Attempts to ui_interact the paper to the given user, with some sanity checking
  * to make sure the camera still exists via the weakref and that this paper is still
@@ -861,10 +862,14 @@
 
 	fire_act(100)
 
-/obj/item/paper/selfdestruct/AltClick(mob/living/user, obj/item/used_item)
+/obj/item/paper/selfdestruct/click_alt(mob/living/user, obj/item/used_item)
 	if(!armed)
 		to_chat(user, span_warning("You arm the incineration mechanism."))
 		armed = TRUE
-		return
+	return CLICK_ACTION_SUCCESS
 
-	return
+/obj/item/paper/selfdestruct/job_application
+	name = "Job application form"
+	desc = "You cant bear to look at it..."
+	icon_state = "paper_words"
+	armed = TRUE

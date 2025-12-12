@@ -100,7 +100,7 @@
 	. = ..()
 	stored_organ = pick_weight(allowed_organs)
 
-/obj/structure/meateor_fluff/flesh_pod/attackby(obj/item/attacking_item, mob/user, params)
+/obj/structure/meateor_fluff/flesh_pod/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if (attacking_item.sharpness & SHARP_EDGED)
 		cut_open(user)
 		return

@@ -202,6 +202,7 @@
 		ACCESS_CAPTAIN,
 		ACCESS_CHANGE_IDS,
 		ACCESS_HOP,
+		ACCESS_QM,
 	)
 	job = /datum/job/bitrunner
 
@@ -268,12 +269,12 @@
 		ACCESS_BIT_DEN,
 		ACCESS_MINING,
 		ACCESS_MINING_STATION,
-		ACCESS_QM,
 		)
 	template_access = list(
 		ACCESS_CAPTAIN,
 		ACCESS_CHANGE_IDS,
 		ACCESS_HOP,
+		ACCESS_QM,
 		)
 	job = /datum/job/cargo_technician
 
@@ -571,11 +572,13 @@
 		ACCESS_THEATRE,
 		ACCESS_WEAPONS,
 		//monkestation addition start: If the QM isn't a head, then these are part of HoP's responsibility
-		ACCESS_VAULT,
+		ACCESS_BIT_DEN,
 		ACCESS_MINING,
 		ACCESS_MINING_STATION,
 		ACCESS_MECH_MINING,
 		ACCESS_QM,
+		ACCESS_SHIPPING,
+		ACCESS_VAULT,
 		//monkestation addition end
 		)
 	minimal_wildcard_access = list(
@@ -1104,8 +1107,14 @@
 		ACCESS_CAPTAIN,
 		ACCESS_CHANGE_IDS,
 		ACCESS_HOP,
+		ACCESS_QM,
 		)
 	job = /datum/job/shaft_miner
+
+/datum/id_trim/job/shaft_miner/refresh_trim_access()
+	. = ..()
+	if(. && SSmapping.is_planetary())
+		access |= list(ACCESS_EXTERNAL_AIRLOCKS)
 
 /// ID card obtained from the mining Disney dollar points vending machine.
 /datum/id_trim/job/shaft_miner/spare

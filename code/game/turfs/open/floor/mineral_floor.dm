@@ -192,7 +192,7 @@
 	if(isliving(arrived))
 		squeak()
 
-/turf/open/floor/mineral/bananium/attackby(obj/item/W, mob/user, params)
+/turf/open/floor/mineral/bananium/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	.=..()
 	if(!.)
 		honk()
@@ -248,7 +248,7 @@
 	if(isliving(arrived))
 		radiate()
 
-/turf/open/floor/mineral/uranium/attackby(obj/item/W, mob/user, params)
+/turf/open/floor/mineral/uranium/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	.=..()
 	if(!.)
 		radiate()

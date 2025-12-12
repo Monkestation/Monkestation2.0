@@ -66,15 +66,16 @@ In game_options for spooktober SPOOKTOBER_ENABLED
 
 Holidays themselves are more straight forward. Defined using the Events and Holidays subsystem it has a guide to show how to add your own event.
 
-In code\controllers\subsystem\events.dm for the basic proceedure 
-/*
- * It's easy to add stuff. Just add a holiday datum in code/modules/holiday/holidays.dm
- * You can then check if it's a special day in any code in the game by calling check_holidays("Groundhog Day")
-*/
+In code\controllers\subsystem\events.dm for the basic proceedure
+/\*
+
+- It's easy to add stuff. Just add a holiday datum in code/modules/holiday/holidays.dm
+- You can then check if it's a special day in any code in the game by calling check_holidays("Groundhog Day")
+  \*/
 
 code\modules\holiday\holidays.dm
- 
- ```DM
+
+```DM
 /datum/holiday/xmas
 	name = CHRISTMAS
 	begin_day = 8 // monkestation edit
@@ -86,13 +87,15 @@ code\modules\holiday\holidays.dm
 		COLOR_CHRISTMAS_GREEN,
 		COLOR_CHRISTMAS_RED,
 	)
- ```
-In this case, set up your custom holiday, and for the name, make it a define. The CHRISTMAS and other main holiday defines are located in code\__DEFINES\time.dm.
+```
+
+In this case, set up your custom holiday, and for the name, make it a define. The CHRISTMAS and other main holiday defines are located in code\_\_DEFINES\time.dm.
 
 Create your own define for the custom holiday and store it where applicable. Finally, you can link the holiday to an event by setting the holidayID to your new define, similar to CHRISTMAS or VALENTINES, as seen in the Valentine's Day event located in monkestation\code\modules\events\holiday\vday.dm
 
 monkestation\code\modules\events\holiday\vday.dm
- ```DM
+
+```DM
 /datum/round_event_control/valentines
 	name = "Valentines!"
 	holidayID = VALENTINES
@@ -101,6 +104,6 @@ monkestation\code\modules\events\holiday\vday.dm
 	max_occurrences = 1
 	earliest_start = 0 MINUTES
 	category = EVENT_CATEGORY_HOLIDAY
- ```
+```
 
-Should be all you need to get things up and running. 
+Should be all you need to get things up and running.

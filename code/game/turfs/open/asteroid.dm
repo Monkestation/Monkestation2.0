@@ -84,12 +84,12 @@
 		return
 	return ..()
 
-/turf/open/misc/asteroid/attackby(obj/item/W, mob/user, params)
+/turf/open/misc/asteroid/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(.)
 		return TRUE
 
-	if(W.tool_behaviour == TOOL_SHOVEL || W.tool_behaviour == TOOL_MINING)
+	if(attacking_item.tool_behaviour == TOOL_SHOVEL || attacking_item.tool_behaviour == TOOL_MINING)
 		if(!can_dig(user))
 			return TRUE
 
@@ -98,15 +98,15 @@
 
 		balloon_alert(user, "digging...")
 
-		if(W.use_tool(src, user, 40, volume=50))
+		if(attacking_item.use_tool(src, user, 40, volume=50))
 			if(!can_dig(user))
 				return TRUE
 			getDug()
-			SSblackbox.record_feedback("tally", "pick_used_mining", 1, W.type)
+			SSblackbox.record_feedback("tally", "pick_used_mining", 1, attacking_item.type)
 			return TRUE
-	else if(istype(W, /obj/item/storage/bag/ore))
+	else if(istype(attacking_item, /obj/item/storage/bag/ore))
 		for(var/obj/item/stack/ore/O in src)
-			SEND_SIGNAL(W, COMSIG_ATOM_ATTACKBY, O)
+			SEND_SIGNAL(attacking_item, COMSIG_ATOM_ATTACKBY, O)
 
 
 /turf/open/floor/plating/lavaland_baseturf

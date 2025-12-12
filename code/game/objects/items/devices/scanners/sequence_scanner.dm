@@ -19,18 +19,67 @@
 	var/list/discovered = list() //hit a dna console to update the scanners database
 	var/list/buffer
 	var/ready = TRUE
-	var/cooldown = 200
+	var/cooldown = (20 SECONDS)
+	/// genetic makeup data that's scanned
+	var/list/genetic_makeup_buffer = list()
 
-/obj/item/sequence_scanner/attack(mob/living/target, mob/living/carbon/human/user)
+/obj/item/sequence_scanner/examine(mob/user)
+	. = ..()
+	. += span_notice("Use primary attack to scan mutations, Secondary attack to scan genetic makeup")
+	if(LAZYLEN(genetic_makeup_buffer) > 0)
+		. += span_notice("It has the genetic makeup of \"[genetic_makeup_buffer["name"]]\" stored inside its buffer")
+
+/obj/item/sequence_scanner/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(istype(interacting_with, /obj/machinery/computer/dna_console))
+		var/obj/machinery/computer/dna_console/console = interacting_with
+		if(console.stored_research)
+			to_chat(user, span_notice("[name] linked to central research database."))
+			discovered = console.stored_research.discovered_mutations
+		else
+			to_chat(user,span_warning("No database to update from."))
+		return ITEM_INTERACT_SUCCESS
+
+	if(!isliving(interacting_with))
+		return NONE
+
 	add_fingerprint(user)
+
 	//no scanning if its a husk or DNA-less Species
-	if (!HAS_TRAIT(target, TRAIT_GENELESS) && !HAS_TRAIT(target, TRAIT_BADDNA))
-		user.visible_message(span_notice("[user] analyzes [target]'s genetic sequence."))
+	if (!HAS_TRAIT(interacting_with, TRAIT_GENELESS) && !HAS_TRAIT(interacting_with, TRAIT_BADDNA))
+		user.visible_message(span_notice("[user] analyzes [interacting_with]'s genetic sequence."))
 		balloon_alert(user, "sequence analyzed")
-		playsound(user.loc, 'sound/items/healthanalyzer.ogg', 50) // close enough
-		gene_scan(target, user)
-	else
-		user.visible_message(span_notice("[user] fails to analyze [target]'s genetic sequence."), span_warning("[target] has no readable genetic sequence!"))
+		playsound(user, 'sound/items/healthanalyzer.ogg', 50) // close enough
+		gene_scan(interacting_with, user)
+		return ITEM_INTERACT_SUCCESS
+
+	user.visible_message(span_notice("[user] fails to analyze [interacting_with]'s genetic sequence."), span_warning("[interacting_with] has no readable genetic sequence!"))
+	return ITEM_INTERACT_BLOCKING
+
+/obj/item/sequence_scanner/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	if(istype(interacting_with, /obj/machinery/computer/dna_console))
+		var/obj/machinery/computer/dna_console/console = interacting_with
+		var/buffer_index = tgui_input_number(user, "Slot:", "Which slot to export:", 1, LAZYLEN(console.genetic_makeup_buffer), 1)
+		console.genetic_makeup_buffer[buffer_index] = genetic_makeup_buffer
+		return ITEM_INTERACT_SUCCESS
+
+	if(!isliving(interacting_with))
+		return NONE
+
+	add_fingerprint(user)
+
+	//no scanning if its a husk, DNA-less Species or DNA that isn't able to be copied by a changeling/disease
+	if (!HAS_TRAIT(interacting_with, TRAIT_GENELESS) && !HAS_TRAIT(interacting_with, TRAIT_BADDNA) && !HAS_TRAIT(interacting_with, TRAIT_NO_DNA_COPY))
+		user.visible_message(span_warning("[user] is scanning [interacting_with]'s genetic makeup."))
+		if(!do_after(user, 3 SECONDS, interacting_with))
+			balloon_alert(user, "scan failed!")
+			user.visible_message(span_warning("[user] fails to scan [interacting_with]'s genetic makeup."))
+			return ITEM_INTERACT_BLOCKING
+		makeup_scan(interacting_with, user)
+		balloon_alert(user, "makeup scanned")
+		return ITEM_INTERACT_SUCCESS
+
+	user.visible_message(span_notice("[user] fails to analyze [interacting_with]'s genetic makeup."), span_warning("[interacting_with] has no readable genetic makeup!"))
+	return ITEM_INTERACT_BLOCKING
 
 /obj/item/sequence_scanner/attack_self(mob/user)
 	display_sequence(user)
@@ -38,17 +87,7 @@
 /obj/item/sequence_scanner/attack_self_tk(mob/user)
 	return
 
-/obj/item/sequence_scanner/afterattack(obj/object, mob/user, proximity)
-	. = ..()
-	var/obj/machinery/computer/dna_console/console = object
-	if(!istype(console) || !proximity)
-		return
-	if(console.stored_research)
-		to_chat(user, span_notice("[name] linked to central research database."))
-		discovered = console.stored_research.discovered_mutations
-	else
-		to_chat(user, span_warning("No database to update from."))
-
+///proc for scanning someone's mutations
 /obj/item/sequence_scanner/proc/gene_scan(mob/living/carbon/target, mob/living/user)
 	if(!iscarbon(target) || !target.has_dna())
 		return
@@ -72,6 +111,19 @@
 			lines += span_notice("[get_display_name(mutation)]")
 	var/title = "<img class='icon bigicon' src='\ref[icon]?state=[url_encode(icon_state)]'> " + span_bold("Genetic Sequence Analysis")
 	to_chat(user, fieldset_block(title, jointext(lines, "<br>"), "boxed_message blue_box"), type = MESSAGE_TYPE_INFO)
+
+///proc for scanning someone's genetic makeup
+/obj/item/sequence_scanner/proc/makeup_scan(mob/living/carbon/target, mob/living/user)
+	if(!iscarbon(target) || !target.has_dna())
+		return
+
+	genetic_makeup_buffer = list(
+	"label"="Analyzer Slot:[target.real_name]",
+	"UI"=target.dna.unique_identity,
+	"UE"=target.dna.unique_enzymes,
+	"UF"=target.dna.unique_features,
+	"name"=target.real_name,
+	"blood_type"=target?.dna?.human_blood_type)
 
 /obj/item/sequence_scanner/proc/display_sequence(mob/living/user)
 	if(!LAZYLEN(buffer) || !ready)

@@ -197,9 +197,7 @@ There are several things that need to be remembered:
 	if(gloves)
 		var/obj/item/worn_item = gloves
 		update_hud_gloves(worn_item)
-
 		CHECK_SHOULDNT_RENDER(worn_item, ITEM_SLOT_GLOVES) // monkestation edit: combine TRAIT_ALWAYS_RENDER + TRAIT_NO_WORN_ICON + obscure check into a single define
-
 		var/icon_file = 'icons/mob/clothing/hands.dmi'
 
 		var/mutant_override = FALSE
@@ -210,14 +208,30 @@ There are several things that need to be remembered:
 				mutant_override = TRUE
 
 		var/mutable_appearance/gloves_overlay = gloves.build_worn_icon(default_layer = GLOVES_LAYER, default_icon_file = icon_file, override_file = mutant_override ? icon_file : null)
+
+		var/feature_y_offset = 0
 		if(!mutant_override)
-			var/feature_y_offset = 0
-			for (var/obj/item/bodypart/arm/my_hand as anything in hand_bodyparts)
+			//needs to be typed, hand_bodyparts can have nulls
+			for (var/obj/item/bodypart/arm/my_hand in hand_bodyparts)
 				var/list/glove_offset = my_hand.worn_glove_offset?.get_offset()
 				if (glove_offset && (!feature_y_offset || glove_offset["y"] > feature_y_offset))
 					feature_y_offset = glove_offset["y"]
 
 			gloves_overlay.pixel_y += feature_y_offset
+
+			// We dont have any >2 hands human species (and likely wont ever), so theres no point in splitting this because:
+		// It will only run if the left hand OR the right hand is missing, and it wont run if both are missing because you cant wear gloves with no arms
+		// (unless admins mess with this then its their fault)
+		if(num_hands < default_num_hands)
+			var/static/atom/movable/alpha_filter_target
+			if(isnull(alpha_filter_target))
+				alpha_filter_target = new(null)
+			alpha_filter_target.icon = 'icons/effects/effects.dmi'
+			alpha_filter_target.icon_state = "missing[!has_left_hand(check_disabled = FALSE) ? "l" : "r"]"
+			alpha_filter_target.render_target = "*MissGlove [REF(src)] [!has_left_hand(check_disabled = FALSE) ? "L" : "R"]"
+			gloves_overlay.add_overlay(alpha_filter_target)
+			gloves_overlay.filters += filter(type="alpha", render_source=alpha_filter_target.render_target, y=feature_y_offset, flags=MASK_INVERSE)
+
 		overlays_standing[GLOVES_LAYER] = gloves_overlay
 	apply_overlay(GLOVES_LAYER)
 

@@ -429,3 +429,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/boombox, 32)
 	icon_state = "download_gun"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/download, 32)
+
+/obj/structure/sign/poster/official/join_admin
+	name = "You, Join admin!"
+	desc = "A poster reminding the crew that anybody can apply to become an Administrator. Whatever that is."
+	icon_state = "join_admin"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/join_admin, 32)

@@ -21,7 +21,7 @@
 	if(boombox)
 		boombox.Move()
 
-/obj/item/clothing/bomb_vest/MouseDrop(atom/over_object)
+/obj/item/clothing/bomb_vest/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
 	var/mob/M = usr
 
 	if(M.contents.Find(src))
@@ -51,10 +51,10 @@
 			return COMPONENT_ITEM_BLOCK_UNEQUIP
 	return
 
-/obj/item/clothing/bomb_vest/attackby(obj/item/W, mob/user, params)
+/obj/item/clothing/bomb_vest/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(user.contents.Find(src))
 		return //Nope.
-	if(W.tool_behaviour == TOOL_WRENCH)
+	if(attacking_item.tool_behaviour == TOOL_WRENCH)
 		if(ready_to_blow)
 			ready_to_blow = FALSE
 			icon_state = "obj_off"
@@ -66,27 +66,27 @@
 			worn_icon_state = "worn_on"
 			to_chat(user, span_warning("You arm the [src]!"))
 		return
-	if(istype(W,/obj/item/assembly))
-		boombox.attackby(W,user)
+	if(istype(attacking_item,/obj/item/assembly))
+		boombox.attackby(attacking_item,user)
 		return TRUE
-	if(W.tool_behaviour == TOOL_WIRECUTTER)
+	if(attacking_item.tool_behaviour == TOOL_WIRECUTTER)
 		boombox.forceMove(user)
 		boombox = null
 		qdel(src)
 		return
-	if(istype(W, /obj/item/tank))
+	if(istype(attacking_item, /obj/item/tank))
 		if(boombox.tank_one && boombox.tank_two)
 			to_chat(user, span_warning("There are already two tanks attached, remove one first!"))
 			return
 		if(!boombox.tank_one)
-			if(!user.transferItemToLoc(W, src))
+			if(!user.transferItemToLoc(attacking_item, src))
 				return
-			boombox.tank_one = W
+			boombox.tank_one = attacking_item
 			to_chat(user, span_notice("You attach the tank to the [src]."))
 		else if(!boombox.tank_two)
-			if(!user.transferItemToLoc(W, src))
+			if(!user.transferItemToLoc(attacking_item, src))
 				return
-			boombox.tank_two = W
+			boombox.tank_two = attacking_item
 			to_chat(user, span_notice("You attach the tank to the [src]."))
 	return
 

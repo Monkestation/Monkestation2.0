@@ -48,7 +48,7 @@
 		data["glands"] += list(gland_information)
 	return data
 
-/obj/machinery/abductor/gland_dispenser/ui_act(action, list/params)
+/obj/machinery/abductor/gland_dispenser/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -61,12 +61,12 @@
 			Dispense(gland_id)
 			return TRUE
 
-/obj/machinery/abductor/gland_dispenser/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/organ/internal/heart/gland))
-		if(!user.transferItemToLoc(W, src))
+/obj/machinery/abductor/gland_dispenser/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/organ/internal/heart/gland))
+		if(!user.transferItemToLoc(attacking_item, src))
 			return
 		for(var/i in 1 to gland_colors.len)
-			if(gland_types[i] == W.type)
+			if(gland_types[i] == attacking_item.type)
 				amounts[i]++
 	else
 		return ..()

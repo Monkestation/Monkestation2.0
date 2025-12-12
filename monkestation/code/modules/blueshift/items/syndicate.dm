@@ -258,12 +258,9 @@
 		balloon_alert(user, "bad text!")
 		return
 
-	//treat voice
-	var/list/message_data = user.treat_message(input)
-
 	//send
 	priority_announce(
-		text = message_data["message"],
+		text = input,
 		title = title,
 		sound = audio_key,
 		sender_override = origin,

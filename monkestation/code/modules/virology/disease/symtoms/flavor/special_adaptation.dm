@@ -7,10 +7,10 @@
 	severity = 0
 	var/biotypes = MOB_MINERAL | MOB_ROBOTIC
 
-/datum/symptom/adaptation/activate(mob/living/carbon/mob, datum/disease/acute/disease)
+/datum/symptom/adaptation/OnAdd(datum/disease/acute/disease)
 	disease.infectable_biotypes |= biotypes
 
-/datum/symptom/adaptation/deactivate(mob/living/carbon/mob, datum/disease/acute/disease)
+/datum/symptom/adaptation/OnRemove(datum/disease/acute/disease)
 	disease.infectable_biotypes &= ~(biotypes)
 
 /datum/symptom/adaptation/undead
@@ -19,9 +19,10 @@
 	biotypes = MOB_UNDEAD
 	severity = 1
 
-/datum/symptom/adaptation/undead/activate(mob/living/carbon/mob, datum/disease/acute/disease)
+/datum/symptom/adaptation/undead/OnAdd(datum/disease/acute/disease)
 	.=..()
 	disease.process_dead = TRUE
 
-/datum/symptom/adaptation/undead/deactivate(mob/living/carbon/mob, datum/disease/acute/disease)
+/datum/symptom/adaptation/undead/OnRemove(datum/disease/acute/disease)
+	disease.process_dead = FALSE
 	.=..()

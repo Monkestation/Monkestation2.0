@@ -8,26 +8,27 @@
  * This is best called when you're actually changing the app, as we don't check
  * if we're swapping to the current UI repeatedly.
  * Args:
- * user - The person whose UI we're updating.
+ * user - The person whose UI we're updating. Only necessary if we're opening the UI for the first time.
  */
 /obj/item/modular_computer/proc/update_tablet_open_uis(mob/user)
-	var/datum/tgui/active_ui = SStgui.get_open_ui(user, src)
-	if(!active_ui)
+	if(user)
+		var/datum/tgui/active_ui = SStgui.get_open_ui(user, src)
+		if(!active_ui)
+			if(active_program)
+				active_ui = new(user, src, active_program.tgui_id, active_program.filedesc)
+				active_program.ui_interact(user, active_ui)
+			else
+				active_ui = new(user, src, "NtosMain")
+			return active_ui.open()
+
+	for (var/datum/tgui/window as anything in open_uis)
 		if(active_program)
-			active_ui = new(user, src, active_program.tgui_id, active_program.filedesc)
-			active_program.ui_interact(user, active_ui)
+			window.interface = active_program.tgui_id
+			window.title = active_program.filedesc
+			active_program.ui_interact(window.user, window)
 		else
-			active_ui = new(user, src, "NtosMain")
-		return active_ui.open()
-
-	if(active_program)
-		active_ui.interface = active_program.tgui_id
-		active_ui.title = active_program.filedesc
-		active_program.ui_interact(user, active_ui)
-	else
-		active_ui.interface = "NtosMain"
-
-	active_ui.send_assets()
+			window.interface = "NtosMain"
+		window.send_assets()
 	update_static_data_for_all_viewers()
 
 /obj/item/modular_computer/interact(mob/user)
@@ -38,7 +39,7 @@
 
 // Operates TGUI
 /obj/item/modular_computer/ui_interact(mob/user, datum/tgui/ui)
-	if(!enabled || !user.can_read(src, READING_CHECK_LITERACY) || !use_power())
+	if(!enabled || !user.can_read(src, READING_CHECK_LITERACY))
 		ui?.close()
 		return
 
@@ -106,7 +107,7 @@
 		data["programs"] += list(list(
 			"name" = program.filename,
 			"desc" = program.filedesc,
-			"header_program" = program.header_program,
+			"header_program" = !!(program.program_flags & PROGRAM_HEADER),
 			"running" = !!(program in idle_threads),
 			"icon" = program.program_icon,
 			"alert" = program.alert_pending,
@@ -132,13 +133,17 @@
 
 	switch(action)
 		if("PC_exit")
-			active_program?.kill_program(usr)
+			//you can't close apps in emergency mode.
+			if(isnull(internal_cell) || internal_cell.charge)
+				active_program?.kill_program(usr)
 			return TRUE
 		if("PC_shutdown")
 			shutdown_computer()
 			return TRUE
 		if("PC_minimize")
-			active_program?.background_program()
+			if(!active_program || (!isnull(internal_cell) && !internal_cell.charge))
+				return
+			active_program?.background_program(usr)
 			return TRUE
 
 		if("PC_killprogram")
@@ -226,5 +231,4 @@
 
 /obj/item/modular_computer/ui_close(mob/user)
 	. = ..()
-	if(active_program)
-		active_program.ui_close(user)
+	active_program?.ui_close(user)

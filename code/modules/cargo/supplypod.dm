@@ -70,6 +70,15 @@
 	bluespace = TRUE
 	explosionSize = list(0,0,0,0)
 
+/obj/structure/closet/supplypod/podspawn/deathmatch
+	desc = "A blood-red styled drop pod."
+	specialised = TRUE
+
+/obj/structure/closet/supplypod/podspawn/deathmatch/preOpen()
+	for(var/mob/living/critter in contents)
+		critter.faction = list(FACTION_HOSTILE) //No infighting, but also KILL!!
+	return ..()
+
 /obj/structure/closet/supplypod/extractionpod
 	name = "Syndicate Extraction Pod"
 	desc = "A specalised, blood-red styled pod for extracting high-value targets out of active mission areas. <b>Targets must be manually stuffed inside the pod for proper delivery.</b>"
@@ -126,6 +135,21 @@
 	explosionSize = list(0,0,0,0)
 	delays = list(POD_TRANSIT = 20, POD_FALLING = 4, POD_OPENING = 30, POD_LEAVING = 30)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+
+/obj/structure/closet/supplypod/deadmatch_missile
+	name = "cruise missile"
+	desc = "A big ass missile, likely launched from some far-off deep space missile silo."
+	icon_state = "smissile"
+	decal = null
+	door = null
+	fin_mask = null
+	explosionSize = list(0,1,2,2)
+	effectShrapnel = TRUE
+	rubble_type = RUBBLE_THIN
+	specialised = TRUE
+	delays = list(POD_TRANSIT = 2.6 SECONDS, POD_FALLING = 0.4 SECONDS)
+	effectMissile = TRUE
+	shrapnel_type = /obj/projectile/bullet/shrapnel/short_range
 
 /datum/armor/closet_supplypod
 	melee = 30
@@ -247,7 +271,7 @@
 /obj/structure/closet/supplypod/toggle(mob/living/user)
 	return
 
-/obj/structure/closet/supplypod/open(mob/living/user, force = FALSE)
+/obj/structure/closet/supplypod/open(mob/living/user, force = FALSE, special_effects = TRUE)
 	return
 
 /obj/structure/closet/supplypod/proc/handleReturnAfterDeparting(atom/movable/holder = src)
@@ -396,17 +420,21 @@
 	insert(turf_underneath, holder)
 
 /obj/structure/closet/supplypod/insert(atom/to_insert, atom/movable/holder)
-	if(insertion_allowed(to_insert))
-		if(isturf(to_insert))
-			var/turf/turf_to_insert = to_insert
-			turfs_in_cargo += turf_to_insert.type
-			turf_to_insert.ScrapeAway()
-		else
-			var/atom/movable/movable_to_insert = to_insert
-			movable_to_insert.forceMove(holder)
-		return TRUE
-	else
+	if(!insertion_allowed(to_insert))
 		return FALSE
+
+	if(isturf(to_insert))
+		var/turf/turf_to_insert = to_insert
+		turfs_in_cargo += turf_to_insert.type
+		turf_to_insert.ScrapeAway()
+		return TRUE
+
+	var/atom/movable/movable_to_insert = to_insert
+	if (ismob(movable_to_insert))
+		var/mob/mob_to_insert = movable_to_insert
+		if (!isnull(mob_to_insert.buckled))
+			mob_to_insert.buckled.unbuckle_mob(mob_to_insert, force = TRUE)
+	movable_to_insert.forceMove(holder)
 
 /obj/structure/closet/supplypod/insertion_allowed(atom/to_insert)
 	if(to_insert.invisibility == INVISIBILITY_ABSTRACT)
@@ -414,7 +442,7 @@
 	if(ismob(to_insert))
 		if(!reverse_option_list["Mobs"])
 			return FALSE
-		if(!isliving(to_insert)) //let's not put ghosts or camera mobs inside
+		if(!isliving(to_insert)) //let's not put ghosts or eye mobs inside
 			return FALSE
 		var/mob/living/mob_to_insert = to_insert
 		if(mob_to_insert.anchored || mob_to_insert.incorporeal_move)
@@ -474,16 +502,19 @@
 	opened = TRUE
 	set_density(FALSE)
 	update_appearance()
+	after_open(null, FALSE)
 
 /obj/structure/closet/supplypod/extractionpod/setOpened()
 	opened = TRUE
 	set_density(TRUE)
 	update_appearance()
+	after_open(null, FALSE)
 
 /obj/structure/closet/supplypod/setClosed() //Ditto
 	opened = FALSE
 	set_density(TRUE)
 	update_appearance()
+	after_close(null, FALSE)
 
 /obj/structure/closet/supplypod/proc/tryMakeRubble(turf/T) //Ditto
 	if (rubble_type == RUBBLE_NONE)

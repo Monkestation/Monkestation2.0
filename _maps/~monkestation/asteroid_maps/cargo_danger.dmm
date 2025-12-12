@@ -2,49 +2,49 @@
 "a" = (
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/iron/airless,
-/area/space)
+/area/template_noop)
 "r" = (
 /obj/structure/sign/warning/biohazard/directional/east,
 /turf/open/space/basic,
-/area/space)
+/area/template_noop)
 "s" = (
 /obj/structure/sign/warning/biohazard/directional/west,
 /turf/open/space/basic,
-/area/space)
+/area/template_noop)
 "u" = (
 /obj/effect/mob_spawn/corpse/human/cargo_tech,
 /turf/open/floor/iron/airless,
-/area/space)
+/area/template_noop)
 "D" = (
 /turf/closed/wall/r_wall,
-/area/space)
+/area/template_noop)
 "L" = (
 /obj/effect/mob_spawn/corpse/human/assistant,
 /turf/open/floor/iron/airless,
-/area/space)
+/area/template_noop)
 "P" = (
 /obj/machinery/door/poddoor/shutters,
 /turf/open/floor/iron/airless,
-/area/space)
+/area/template_noop)
 "Q" = (
 /turf/open/space/basic,
-/area/space)
+/area/template_noop)
 "S" = (
 /obj/structure/sign/warning/directional/east,
 /turf/open/space/basic,
-/area/space)
+/area/template_noop)
 "W" = (
 /turf/open/floor/iron/airless,
-/area/space)
+/area/template_noop)
 "X" = (
 /obj/structure/sign/warning/directional/west,
 /turf/open/space/basic,
-/area/space)
+/area/template_noop)
 "Z" = (
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/hunter,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/iron/airless,
-/area/space)
+/area/template_noop)
 
 (1,1,1) = {"
 Q

@@ -52,7 +52,7 @@
 	/mob/living/basic/mining/goliath/ = list("Goliath!", "Watch the tentacles!", "We got a goliath!", "Goliath! Don't let it grab you!", "Watch where you stick those tentacles, you blasted sack of hellspawn! "),
 	/mob/living/basic/mining/legion/dwarf/ = list("Legion! He's adorable!", "Little legion here!", "I'm gonna call you Steeve!"),
 	/mob/living/basic/mining/legion/ = list("Legion!", "Don't let it create more!", "Watch the legion!", "We've got a legion!"),
-	/mob/living/basic/legion_brood/ = list("Legion spawn!", "Don't let it down you!", "Watch the legion spawn!", "Get the bigger one too!"),
+	/mob/living/basic/mining/legion_brood/ = list("Legion spawn!", "Don't let it down you!", "Watch the legion spawn!", "Get the bigger one too!"),
 	/mob/living/basic/mining/watcher/  = list("Watcher!","Watcher spotted!", "Watcher! I hate these things!", "Break the watcher!", "Dodge the ice!"),
 	/mob/living/basic/mining/brimdemon/ = list("Brimdemon!", "Brimdemon, watch the beams!", "Spotted a brimdemon!", "Keep your distance!"),
 	/mob/living/basic/mining/bileworm/ = list("Bileworm!", "Take out that bileworm!", "Kill the bileworm before it melts us all!", "Acid spreader!"),

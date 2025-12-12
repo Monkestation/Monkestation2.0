@@ -455,6 +455,11 @@
 	greyscale_colors = CIRCUIT_COLOR_SECURITY
 	build_path = /obj/machinery/computer/prisoner/management
 
+/obj/item/circuitboard/computer/armory
+	name = "Armory Authorization Computer"
+	greyscale_colors = CIRCUIT_COLOR_SECURITY
+	build_path = /obj/machinery/computer/armory
+
 /obj/item/circuitboard/computer/secure_data
 	name = "Security Records Console"
 	greyscale_colors = CIRCUIT_COLOR_SECURITY

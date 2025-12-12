@@ -48,27 +48,28 @@
 		sensor.inlet_id = id_tag
 		multi_tool.set_buffer(null)
 		balloon_alert(user, "input linked to sensor")
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 	balloon_alert(user, "saved in buffer")
 	multi_tool.set_buffer(src)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/atmospherics/components/unary/outlet_injector/CtrlClick(mob/user)
+/obj/machinery/atmospherics/components/unary/outlet_injector/click_ctrl(mob/user)
 	if(can_interact(user))
-		on = !on
+		set_on(!on)
 		balloon_alert(user, "turned [on ? "on" : "off"]")
 		investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
-		update_appearance()
 	return ..()
 
-/obj/machinery/atmospherics/components/unary/outlet_injector/AltClick(mob/user)
-	if(can_interact(user))
-		volume_rate = MAX_TRANSFER_RATE
-		investigate_log("was set to [volume_rate] L/s by [key_name(user)]", INVESTIGATE_ATMOS)
-		balloon_alert(user, "volume output set to [volume_rate] L/s")
-		update_appearance()
-	return ..()
+/obj/machinery/atmospherics/components/unary/outlet_injector/click_alt(mob/user)
+	if(volume_rate == MAX_TRANSFER_RATE)
+		return CLICK_ACTION_BLOCKING
+
+	volume_rate = MAX_TRANSFER_RATE
+	investigate_log("was set to [volume_rate] L/s by [key_name(user)]", INVESTIGATE_ATMOS)
+	balloon_alert(user, "volume output set to [volume_rate] L/s")
+	update_appearance(UPDATE_ICON)
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/update_icon_nopipes()
 	cut_overlays()
@@ -117,14 +118,14 @@
 	data["max_rate"] = round(MAX_TRANSFER_RATE)
 	return data
 
-/obj/machinery/atmospherics/components/unary/outlet_injector/ui_act(action, params)
+/obj/machinery/atmospherics/components/unary/outlet_injector/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
 
 	switch(action)
 		if("power")
-			on = !on
+			set_on(!on)
 			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
 		if("rate")
@@ -138,7 +139,7 @@
 			if(.)
 				volume_rate = clamp(rate, 0, MAX_TRANSFER_RATE)
 				investigate_log("was set to [volume_rate] L/s by [key_name(usr)]", INVESTIGATE_ATMOS)
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/can_unwrench(mob/user)
 	. = ..()

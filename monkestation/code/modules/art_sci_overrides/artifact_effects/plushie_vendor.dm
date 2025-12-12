@@ -1,13 +1,13 @@
 /datum/artifact_effect/plushie
 	examine_hint = "Has some sort of claw mechanism."
 
-	examine_discovered = "Its a claw machine of some kind"
+	examine_discovered = "Its a claw machine of some kind."
 
 	weight = ARTIFACT_UNCOMMON
 
 	activation_message = "summons a toy of some kind!"
 
-	type_name = "Toy Vender Effect"
+	type_name = "Toy Vendor Effect"
 	research_value = TECHWEB_DISCOUNT_MINOR / 2
 
 	var/static/list/obj/item/toy/plush/plushies = list()

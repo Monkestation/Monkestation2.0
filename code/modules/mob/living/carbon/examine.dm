@@ -154,6 +154,9 @@
 				. += "[t_He] look[p_s()] ecstatic."
 	. += "</span>"
 
+	if((isobserver(user) || isrevenant(user)) && user.invisibility <= see_invisible)
+		. += span_revennotice("[t_He] can see you!")
+
 	SEND_SIGNAL(src, COMSIG_ATOM_EXAMINE, user, .)
 
 /mob/living/carbon/examine_more(mob/user)

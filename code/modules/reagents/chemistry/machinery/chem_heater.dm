@@ -59,11 +59,59 @@
 	icon_state = "[base_icon_state][beaker ? 1 : 0]b"
 	return ..()
 
+/obj/machinery/chem_heater/RefreshParts()
+	. = ..()
+	heater_coefficient = 0.1
+	for(var/datum/stock_part/micro_laser/micro_laser in component_parts)
+		heater_coefficient *= micro_laser.tier
+
+/obj/machinery/chem_heater/item_interaction(mob/living/user, obj/item/held_item, list/modifiers)
+	if((user.istate & ISTATE_HARM) || (held_item.item_flags & ABSTRACT) || (held_item.flags_1 & HOLOGRAM_1) || !user.can_perform_action(src, ALLOW_SILICON_REACH | FORBID_TELEKINESIS_REACH))
+		return NONE
+
+	if(!QDELETED(beaker))
+		if(istype(held_item, /obj/item/reagent_containers/dropper) || istype(held_item, /obj/item/reagent_containers/syringe))
+			var/obj/item/reagent_containers/injector = held_item
+			injector.interact_with_atom(beaker, user, modifiers)
+			return ITEM_INTERACT_SUCCESS
+
+	if(is_reagent_container(held_item)  && held_item.is_open_container())
+		if(replace_beaker(user, held_item))
+			ui_interact(user)
+		balloon_alert(user, "beaker added")
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
+
+/obj/machinery/chem_heater/wrench_act(mob/living/user, obj/item/tool)
+	if(user.istate & ISTATE_HARM)
+		return NONE
+
+	. = ITEM_INTERACT_BLOCKING
+	if(default_unfasten_wrench(user, tool) == SUCCESSFUL_UNFASTEN)
+		return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/chem_heater/screwdriver_act(mob/living/user, obj/item/tool)
+	if(user.istate & ISTATE_HARM)
+		return NONE
+
+	. = ITEM_INTERACT_BLOCKING
+	if(default_deconstruction_screwdriver(user, "mixer0b", "[base_icon_state][beaker ? 1 : 0]b", tool))
+		return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/chem_heater/crowbar_act(mob/living/user, obj/item/tool)
+	if(user.istate & ISTATE_HARM)
+		return NONE
+
+	. = ITEM_INTERACT_BLOCKING
+	if(default_deconstruction_crowbar(tool))
+		return ITEM_INTERACT_SUCCESS
+
 /obj/machinery/chem_heater/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
-	if(!can_interact(user) || !user.can_perform_action(src, ALLOW_SILICON_REACH|FORBID_TELEKINESIS_REACH))
+	if(!user.can_perform_action(src, ALLOW_SILICON_REACH | FORBID_TELEKINESIS_REACH))
 		return
 	replace_beaker(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -74,17 +122,28 @@
 /obj/machinery/chem_heater/attack_ai_secondary(mob/user, list/modifiers)
 	return attack_hand_secondary(user, modifiers)
 
+/**
+ * Replace or eject the beaker inside this machine
+ * Arguments
+ * * mob/living/user - the player operating this machine
+ * * obj/item/reagent_containers/new_beaker - the new beaker to replace the current one if not null else it will just eject
+ */
 /obj/machinery/chem_heater/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
-	if(!user)
-		return FALSE
-	if(beaker)
+	PRIVATE_PROC(TRUE)
+
+	if(!QDELETED(beaker))
 		try_put_in_hand(beaker, user)
-		UnregisterSignal(beaker.reagents, COMSIG_REAGENTS_REACTION_STEP)
 		beaker = null
-	if(new_beaker)
+
+	if(!QDELETED(new_beaker))
+		if(!user.transferItemToLoc(new_beaker, src))
+			update_appearance()
+			return FALSE
 		beaker = new_beaker
-		RegisterSignal(beaker.reagents, COMSIG_REAGENTS_REACTION_STEP, PROC_REF(on_reaction_step))
+		RegisterSignal(beaker.reagents, COMSIG_REAGENTS_REACTION_STEP, PROC_REF(on_reaction_step), override = TRUE)
+
 	update_appearance()
+
 	return TRUE
 
 /obj/machinery/chem_heater/RefreshParts()
@@ -153,36 +212,7 @@
 			beaker.reagents.adjust_thermal_energy((target_temperature - beaker.reagents.chem_temp) * heater_coefficient * seconds_per_tick * SPECIFIC_HEAT_DEFAULT * beaker.reagents.total_volume)
 			beaker.reagents.handle_reactions()
 
-			use_power(active_power_usage * seconds_per_tick)
-
-/obj/machinery/chem_heater/attackby(obj/item/I, mob/user, params)
-	if(default_deconstruction_screwdriver(user, "mixer0b", "mixer0b", I))
-		return
-
-	if(default_deconstruction_crowbar(I))
-		return
-
-	if(is_reagent_container(I) && !(I.item_flags & ABSTRACT) && I.is_open_container())
-		. = TRUE //no afterattack
-		var/obj/item/reagent_containers/B = I
-		if(!user.transferItemToLoc(B, src))
-			return
-		replace_beaker(user, B)
-		to_chat(user, span_notice("You add [B] to [src]."))
-		ui_interact(user)
-		update_appearance()
-		return
-
-	if(beaker)
-		if(istype(I, /obj/item/reagent_containers/dropper))
-			var/obj/item/reagent_containers/dropper/D = I
-			D.afterattack(beaker, user, 1)
-			return
-		if(istype(I, /obj/item/reagent_containers/syringe))
-			var/obj/item/reagent_containers/syringe/S = I
-			S.afterattack(beaker, user, 1)
-			return
-	return ..()
+			use_energy(active_power_usage * seconds_per_tick)
 
 /obj/machinery/chem_heater/on_deconstruction()
 	replace_beaker()

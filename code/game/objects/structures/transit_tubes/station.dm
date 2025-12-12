@@ -14,6 +14,7 @@
 	exit_delay = 1
 	enter_delay = 2
 	tube_construction = /obj/structure/c_transit_tube/station
+
 	var/open_status = STATION_TUBE_CLOSED
 	var/pod_moving = FALSE
 	var/cooldown_delay = 50
@@ -40,14 +41,9 @@
 				pod.update_appearance()
 				return
 
-
 //pod insertion
-/obj/structure/transit_tube/station/MouseDrop_T(obj/structure/c_transit_tube_pod/R, mob/user)
-	if(isliving(user))
-		var/mob/living/L = user
-		if(L.incapacitated())
-			return
-	if (!istype(R) || get_dist(user, src) > 1 || get_dist(src,R) > 1)
+/obj/structure/transit_tube/station/mouse_drop_receive(obj/structure/c_transit_tube_pod/R, mob/user, params)
+	if (!istype(R) || get_dist(user, src) > 1 || get_dist(src, R) > 1)
 		return
 	for(var/obj/structure/transit_tube_pod/pod in loc)
 		return //no fun allowed
@@ -73,7 +69,7 @@
 						return
 					for(var/obj/structure/transit_tube_pod/pod in loc)
 						pod.visible_message(span_warning("[user] starts putting [GM] into the [pod]!"))
-						if(do_after(user, 15, target = src))
+						if(do_after(user, 1.5 SECONDS, target = src))
 							if(open_status == STATION_TUBE_OPEN && GM && user.grab_state >= GRAB_AGGRESSIVE && user.pulling == GM && !GM.buckled && !GM.has_buckled_mobs())
 								GM.Paralyze(100)
 								src.Bumped(GM)
@@ -87,7 +83,7 @@
 					else if(open_status == STATION_TUBE_OPEN)
 						if(pod.contents.len && user.loc != pod)
 							user.visible_message(span_notice("[user] starts emptying [pod]'s contents onto the floor."), span_notice("You start emptying [pod]'s contents onto the floor..."))
-							if(do_after(user, 10, target = src)) //So it doesn't default to close_animation() on fail
+							if(do_after(user, 1 SECONDS, target = src)) //So it doesn't default to close_animation() on fail
 								if(pod && pod.loc == loc)
 									for(var/atom/movable/AM in pod)
 										AM.forceMove(get_turf(user))
@@ -97,8 +93,8 @@
 				break
 
 
-/obj/structure/transit_tube/station/attackby(obj/item/W, mob/user, params)
-	if(W.tool_behaviour == TOOL_CROWBAR)
+/obj/structure/transit_tube/station/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(attacking_item.tool_behaviour == TOOL_CROWBAR)
 		for(var/obj/structure/transit_tube_pod/P in loc)
 			P.deconstruct(FALSE, user)
 	else

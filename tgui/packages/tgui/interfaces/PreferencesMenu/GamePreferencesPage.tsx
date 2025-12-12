@@ -44,7 +44,7 @@ export const GamePreferencesPage = (props) => {
     }
 
     let name: InfernoNode = (
-      <Flex.Item grow={1} pr={2} basis={0} ml={2}>
+      <Flex.Item maxWidth="400px" grow={1} pr={2} basis={0} ml={2}>
         {nameInner}
       </Flex.Item>
     );
@@ -58,7 +58,7 @@ export const GamePreferencesPage = (props) => {
     }
 
     const child = (
-      <Flex align="center" key={featureId} pb={2}>
+      <Flex align="center" key={featureId} pb={2} className="candystripe">
         {name}
 
         <Flex.Item grow={1} basis={0}>
@@ -99,6 +99,7 @@ export const GamePreferencesPage = (props) => {
 
   return (
     <TabbedMenu
+      name="Settings"
       categoryEntries={gamePreferenceEntries}
       contentProps={{
         fontSize: 1.5,

@@ -22,13 +22,10 @@
 		machine = null
 	return ..()
 
-/obj/machinery/mineral/stacking_unit_console/multitool_act(mob/living/user, obj/item/I)
-	if(!multitool_check_buffer(user, I))
-		return
-	var/obj/item/multitool/M = I
+/obj/machinery/mineral/stacking_unit_console/multitool_act(mob/living/user, obj/item/multitool/M)
 	M.set_buffer(src)
-	to_chat(user, span_notice("You store linkage information in [I]'s buffer."))
-	return TRUE
+	balloon_alert(user, "saved to multitool buffer")
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/mineral/stacking_unit_console/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -56,7 +53,7 @@
 			))
 	return data
 
-/obj/machinery/mineral/stacking_unit_console/ui_act(action, list/params)
+/obj/machinery/mineral/stacking_unit_console/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -101,7 +98,12 @@
 /obj/machinery/mineral/stacking_machine/Initialize(mapload)
 	. = ..()
 	proximity_monitor = new(src, 1)
-	materials = AddComponent(/datum/component/remote_materials, "stacking", mapload, FALSE, (mapload && force_connect))
+	materials = AddComponent(
+		/datum/component/remote_materials, \
+		mapload, \
+		FALSE, \
+		(mapload && force_connect) \
+	)
 
 /obj/machinery/mineral/stacking_machine/Destroy()
 	if(console)
@@ -116,13 +118,16 @@
 	if(istype(AM, /obj/item/stack/sheet) && AM.loc == get_step(src, input_dir))
 		process_sheet(AM)
 
-/obj/machinery/mineral/stacking_machine/multitool_act(mob/living/user, obj/item/multitool/M)
-	if(istype(M))
-		if(istype(M.buffer, /obj/machinery/mineral/stacking_unit_console))
-			console = M.buffer
-			console.machine = src
-			to_chat(user, span_notice("You link [src] to the console in [M]'s buffer."))
-			return TRUE
+/obj/machinery/mineral/stacking_machine/multitool_act(mob/living/user, obj/item/multitool/multi_tool)
+	if((user.istate & ISTATE_HARM) || multi_tool.item_flags & ABSTRACT || multi_tool.flags_1 & HOLOGRAM_1)
+		return ITEM_INTERACT_SKIP_TO_ATTACK
+
+	. = ITEM_INTERACT_BLOCKING
+	if(istype(multi_tool.buffer, /obj/machinery/mineral/stacking_unit_console))
+		console = multi_tool.buffer
+		console.machine = src
+		to_chat(user, span_notice("You link [src] to the console in [multi_tool]'s buffer."))
+		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/mineral/stacking_machine/proc/rotate(input)
 	if (input)
@@ -140,8 +145,7 @@
 	if(materials.silo && !materials.on_hold())
 		var/matlist = inp.custom_materials & materials.mat_container.materials
 		if (length(matlist))
-			var/inserted = materials.mat_container.insert_item(inp)
-			materials.silo_log(src, "collected", inserted, "sheets", matlist)
+			materials.mat_container.insert_item(inp, context = src)
 			return
 
 	// No silo attached process to internal storage

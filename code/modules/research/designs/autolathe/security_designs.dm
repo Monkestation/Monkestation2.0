@@ -234,7 +234,6 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
-/// Monkestation edit start
 
 /datum/design/c45/rubber
 	name = "Ammo Box (.45) (Rubber)"
@@ -248,7 +247,7 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
-/// Monkestation edit end
+
 /datum/design/g45l
 	name = "Ammo Box (.45 Long) (Rubber)"
 	id = "g45l"
@@ -285,6 +284,18 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
+/datum/design/a40MM
+	name = "Light 40mm HE Grenade"
+	id = "a40mm"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2)
+	build_path = /obj/item/ammo_casing/a40mm/weak
+	category = list(
+		RND_CATEGORY_HACKED,
+		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+
 /datum/design/telescreen_interrogation
 	name = "Interrogation Telescreen"
 	id = "telescreen_interrogation"
@@ -313,5 +324,80 @@
 		RND_CATEGORY_INITIAL,
 		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MOUNTS
 	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+
+
+/datum/design/fss
+	name = "FSS-550"
+	desc = "FSS-550 autorifle."
+	id = "fss"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*10, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
+	build_path = /obj/item/gun/ballistic/automatic/wt550/fss/no_mag
+	category = list(RND_CATEGORY_IMPORTED)
+
+/datum/design/mag_autorifle_fss //WT-550 ammo but printable in autolathe and you get it from a design disk.
+	name = "WT-550 Autorifle Magazine (4.6x30mm) (Lethal)"
+	desc = "A 20 round magazine for the out of date WT-550 Autorifle."
+	id = "mag_autorifle_fss"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*6)
+	build_path = /obj/item/ammo_box/magazine/wt550m9
+	category = list(RND_CATEGORY_IMPORTED)
+
+/datum/design/mag_autorifle_fss/ap_mag
+	name = "WT-550 Autorifle Armour Piercing Magazine (4.6x30mm AP) (Lethal)"
+	desc = "A 20 round armour piercing magazine for the out of date WT-550 Autorifle."
+	id = "mag_autorifle_ap_fss"
+	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT*15, /datum/material/silver = SMALL_MATERIAL_AMOUNT*6)
+	build_path = /obj/item/ammo_box/magazine/wt550m9/wtap
+	category = list(RND_CATEGORY_IMPORTED)
+
+/datum/design/mag_autorifle_fss/ic_mag
+	name = "WT-550 Autorifle Incendiary Magazine (4.6x30mm IC) (Lethal/Highly Destructive)"
+	desc = "A 20 round armour piercing magazine for the out of date WT-550 Autorifle."
+	id = "mag_autorifle_ic_fss"
+	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT*15, /datum/material/silver = SMALL_MATERIAL_AMOUNT*6, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
+	build_path = /obj/item/ammo_box/magazine/wt550m9/wtic
+	category = list(RND_CATEGORY_IMPORTED)
+
+/datum/design/mag_autorifle_fss/rub_mag
+	name = "WT-550 Autorifle Rubber Magazine (4.6x30mm R) (Lethal)"
+	desc = "A 20 round rubber magazine for the out of date WT-550 Autorifle."
+	id = "mag_autorifle_rub_fss"
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*3)
+	build_path = /obj/item/ammo_box/magazine/wt550m9/wtrub
+	category = list(RND_CATEGORY_IMPORTED)
+
+/datum/design/mag_autorifle_fss/salt_mag
+	name = "WT-550 Autorifle Saltshot Magazine (4.6x30mm SALT) (Non-Lethal)"
+	desc = "A 20 round saltshot magazine for the out of date WT-550 Autorifle."
+	id = "mag_autorifle_salt_fss"
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*3, /datum/material/plasma = SMALL_MATERIAL_AMOUNT*6)
+	build_path = /obj/item/ammo_box/magazine/wt550m9/wtsalt
+	category = list(RND_CATEGORY_IMPORTED)
+
+
+/datum/design/nifsoft_remover
+	name = "Lopland 'Wrangler' NIF-Cutter"
+	desc = "A small device that lets the user remove NIFSofts from a NIF user."
+	id = "nifsoft_remover"
+	build_type = PROTOLATHE | AWAY_LATHE
+	build_path = /obj/item/nifsoft_remover
+	materials = list(
+		/datum/material/iron = SMALL_MATERIAL_AMOUNT,
+		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/uranium = HALF_SHEET_MATERIAL_AMOUNT,
+	)
+	category = list(
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_SECURITY,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+
+/datum/design/nifsoft_hud/security
+	name = "Security HUD NIFSoft"
+	desc = "A NIFSoft datadisk containing the Security HUD NIFsoft."
+	id = "nifsoft_hud_security"
+	build_path = /obj/item/disk/nifsoft_uploader/sec_hud
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 

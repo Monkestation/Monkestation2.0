@@ -45,7 +45,7 @@
 		get_asset_datum(/datum/asset/simple/contracts),
 	)
 
-/obj/item/antag_spawner/contract/ui_act(action, list/params)
+/obj/item/antag_spawner/contract/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(used || polling || !ishuman(usr))
 		return
@@ -477,7 +477,7 @@
 			maint_spawn = get_safe_random_station_turf_equal_weight()
 			if(!maint_spawn) // this REALLY shouldn't happen
 				return
-		playsound(src, "sound/creatures/monkey/monkey_screech_[rand(1,7)].ogg", 25, TRUE)
+		playsound(src, SFX_SCREECH, 25, TRUE)
 		spawn_antag(ghostie.client, maint_spawn)
 		sleep(2 SECONDS)
 	do_sparks(4, TRUE, src)

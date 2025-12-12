@@ -62,7 +62,7 @@
 	if(!can_send)
 		relay_information(signal, /obj/machinery/telecomms/broadcaster)
 
-	use_power(idle_power_usage)
+	use_energy(idle_power_usage)
 
 // Simple log entry datum
 /datum/comm_log_entry

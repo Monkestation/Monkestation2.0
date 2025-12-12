@@ -1,3 +1,7 @@
+#define VARIANT_SLASHER "slasher"
+#define VARIANT_CLUWNE "cluwne"
+#define VARIANT_BRUTE "brute"
+
 /datum/action/cooldown/slasher/summon_machette
 	name = "Summon Machette"
 	desc = "Summon your machete to your active hand, or create one if it doesn't exist. This machete deals 15 BRUTE on hit increasing by 2.5 for every soul you own, and stuns on throw."
@@ -18,10 +22,16 @@
 	if(owner.stat == DEAD)
 		return
 	if(!stored_machette || QDELETED(stored_machette))
-		stored_machette = new /obj/item/slasher_machette
 		var/datum/antagonist/slasher/slasherdatum = IS_SLASHER(owner)
 		if(!slasherdatum)
 			return
+		switch(slasherdatum.slasher_variant)
+			if(VARIANT_SLASHER)
+				stored_machette = new /obj/item/slasher_machette
+			if(VARIANT_CLUWNE)
+				stored_machette = new /obj/item/slasher_machette/cluwne
+			if(VARIANT_BRUTE)
+				stored_machette = new /obj/item/slasher_machette/brute
 		slasherdatum.linked_machette = stored_machette
 
 	if(!owner.put_in_hands(stored_machette))
@@ -38,8 +48,8 @@
 	hitsound = 'goon/sounds/impact_sounds/Flesh_Cut_1.ogg'
 
 	inhand_icon_state = "PKMachete0"
-	lefthand_file = 'monkestation/icons/mob/inhands/weapons/melee_lefthand.dmi'
-	righthand_file = 'monkestation/icons/mob/inhands/weapons/melee_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 
 	force = 20 //damage increases by 2.5 for every soul they take
 	throwforce = 20 //damage goes up by 2.5 for every soul they take
@@ -71,13 +81,13 @@
 		// but if it does, then we just prevent the throw.
 		return COMPONENT_CANCEL_THROW
 
-/obj/item/slasher_machette/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+/obj/item/slasher_machette/throw_impact(mob/living/hit_living, datum/thrownthing/throwingdatum)
 	. = ..()
-	if(iscarbon(hit_atom))
-		playsound(src, 'goon/sounds/impact_sounds/Flesh_Stab_3.ogg', 25, 1)
-	if(isliving(hit_atom))
-		var/mob/living/hit_living = hit_atom
+	if(isliving(hit_living))
 		hit_living.Knockdown(1.5 SECONDS)
+		if(iscarbon(hit_living))
+			playsound(src, 'goon/sounds/impact_sounds/Flesh_Stab_3.ogg', 25, 1)
+
 
 /obj/item/slasher_machette/proc/post_throw(obj/item/source, datum/thrownthing, spin)
 	SIGNAL_HANDLER
@@ -85,32 +95,30 @@
 	throwforce = pre_throw_force
 
 /obj/item/slasher_machette/attack_hand(mob/user, list/modifiers)
-	if(isliving(user))
-		var/mob/living/living_user = user
-		if(!user.mind.has_antag_datum(/datum/antagonist/slasher))
-			forceMove(get_turf(user))
-			user.emote("scream")
-			living_user.adjustBruteLoss(force)
-			to_chat(user, span_warning("You scream out in pain as you hold the [src]!"))
-			return FALSE
+	if(force_drop_machete(user))
+		return FALSE
 	var/datum/antagonist/slasher/slasherdatum = IS_SLASHER(user)
-	if(slasherdatum?.active_action && istype(slasherdatum.active_action, /datum/action/cooldown/slasher/soul_steal))
+	if(istype(slasherdatum?.active_action, /datum/action/cooldown/slasher/soul_steal))
 		return FALSE // Blocks the attack
 	return ..() // Proceeds with normal attack if no soul steal is active
 
 /obj/item/slasher_machette/attack(mob/living/target_mob, mob/living/user, params)
-	if(isliving(user))
-		var/mob/living/living_user = user
-		if(!IS_SLASHER(user))
-			forceMove(get_turf(user))
-			user.emote("scream")
-			living_user.adjustBruteLoss(force)
-			to_chat(user, span_warning("You scream out in pain as you hold the [src]!"))
-			return
+	if(force_drop_machete(user))
+		return TRUE
 	var/datum/antagonist/slasher/slasherdatum = IS_SLASHER(user)
 	if(slasherdatum?.active_action)
 		return TRUE // Blocks the attack
 	return ..()
+
+/obj/item/slasher_machette/proc/force_drop_machete(mob/living/victim)
+	if(!isliving(victim) || IS_SLASHER(victim))
+		return FALSE
+	var/hand_zone = ((victim.get_held_index_of_item(src) || victim.active_hand_index) % 2) ? BODY_ZONE_L_ARM : BODY_ZONE_R_ARM
+	victim.dropItemToGround(src, force = TRUE, silent = TRUE)
+	victim.emote("scream")
+	to_chat(victim, span_warning("You scream out in pain as you hold the [src]!"))
+	victim.apply_damage(force, def_zone = hand_zone, sharpness = SHARP_EDGED)
+	return TRUE
 
 /obj/machinery/door/airlock/proc/attack_slasher_machete(atom/target, mob/living/user)
 	if(!IS_SLASHER(user))
@@ -139,3 +147,20 @@
 		if(density && !open(BYPASS_DOOR_CHECKS)) //The airlock is still closed, but something prevented it opening. (Another player noticed and bolted/welded the airlock in time!)
 			to_chat(user, span_warning("Despite your efforts, [src] managed to resist your attempts to open it!"))
 		return
+
+/obj/item/slasher_machette/cluwne
+	name = "Cluwne's Carving Blade"
+	desc = "A Killer Cluwne's favorite tool, its edge is no laughing matter."
+	icon_state = "cluwne_machete"
+	inhand_icon_state = "cluwne_machete"
+
+/obj/item/slasher_machette/brute
+	name = "Brute's Bonecrusher"
+	desc = "A spiked mace, with each victim, its thirst for violence only seems to grow."
+	hitsound = SFX_SWING_HIT
+	icon_state = "brute_mace"
+	inhand_icon_state = "brute_mace"
+
+#undef VARIANT_SLASHER
+#undef VARIANT_CLUWNE
+#undef VARIANT_BRUTE

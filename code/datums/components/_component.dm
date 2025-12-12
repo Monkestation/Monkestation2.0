@@ -53,6 +53,8 @@
 	parent = raw_args[1]
 	var/list/arguments = raw_args.Copy(2)
 	if(Initialize(arglist(arguments)) == COMPONENT_INCOMPATIBLE)
+		if(QDELING(src))
+			return
 		if(isnull(parent))
 			stack_trace("Attempted to assign [type] to null! args: [json_encode(arguments)]")
 		else
@@ -339,7 +341,7 @@
 		component_type = new_component.type
 
 	raw_args[1] = src
-	if(dupe_mode != COMPONENT_DUPE_ALLOWED && dupe_mode != COMPONENT_DUPE_SELECTIVE && dupe_mode != COMPONENT_DUPE_SOURCES)
+	if(dupe_mode != COMPONENT_DUPE_ALLOWED && dupe_mode != COMPONENT_DUPE_SELECTIVE)
 		if(!dupe_type)
 			old_component = GetExactComponent(component_type)
 		else
@@ -392,16 +394,12 @@
 		if(!new_component && make_new_component)
 			new_component = new component_type(raw_args)
 
-	else if(dupe_mode == COMPONENT_DUPE_SOURCES)
-		new_component = new component_type(raw_args)
-		if(new_component.on_source_add(arglist(list(source) + raw_args.Copy(2))) == COMPONENT_INCOMPATIBLE)
-			stack_trace("incompatible source added to a [new_component.type]. Args: [json_encode(raw_args)]")
-			return null
-
 	else if(!new_component)
 		new_component = new component_type(raw_args) // Dupes are allowed, act like normal
 
 	if(!old_component && !QDELETED(new_component)) // Nothing related to duplicate components happened and the new component is healthy
+		if(uses_sources) // add the sources to the new component
+			new_component.on_source_add(arglist(list(source) + raw_args.Copy(2)))
 		SEND_SIGNAL(src, COMSIG_COMPONENT_ADDED, new_component)
 		return new_component
 

@@ -162,11 +162,13 @@ GLOBAL_LIST_EMPTY(tracker_beacons)
 
 //Update the arrow towards another atom
 /datum/component/team_monitor/proc/update_atom_dir(datum/component/tracking_beacon/beacon)
-	if(!updating || !updating.hud_used || !beacon || !beacon.visible)
+	if(!updating?.hud_used || !beacon?.visible)
 		return
 	var/atom/movable/screen/arrow/screen = tracking[beacon]
 	var/turf/target_turf = get_turf(beacon.parent)
 	var/turf/parent_turf = get_turf(parent)
+	if(!target_turf || !parent_turf)
+		return
 	var/share_z = target_turf.z == parent_turf.z
 	if((!share_z && (!multiz)) || target_turf == parent_turf)
 		if(screen)
@@ -181,16 +183,18 @@ GLOBAL_LIST_EMPTY(tracker_beacons)
 		//Create the screen
 		screen = new(null, updating.hud_used)
 		screen.alpha = 240
-		if(multiz && !share_z && screen.color != beacon.z_diff_colour)
-			screen.color = beacon.z_diff_colour
+		if(multiz && !share_z)
+			if(screen.color != beacon.z_diff_colour)
+				screen.color = beacon.z_diff_colour
 		else if(screen.color != beacon.colour)
 			screen.color = beacon.colour
 		updating.hud_used.team_finder_arrows += screen
 		tracking[beacon] = screen
 		//Update their hud
 		updating.hud_used.show_hud(updating.hud_used.hud_version, updating)
-	if(multiz && !share_z && screen.color != beacon.z_diff_colour)
-		screen.color = beacon.z_diff_colour
+	if(multiz && !share_z)
+		if(screen.color != beacon.z_diff_colour)
+			screen.color = beacon.z_diff_colour
 	else if(screen.color != beacon.colour)
 		screen.color = beacon.colour
 	var/matrix/rotationMatrix = matrix()
@@ -235,8 +239,9 @@ GLOBAL_LIST_EMPTY(tracker_beacons)
 		arrow.alpha = 240
 		var/turf/target_turf = get_turf(key.parent)
 		var/turf/parent_turf = get_turf(parent)
-		if(multiz && target_turf.z != parent_turf.z && arrow.color != key.z_diff_colour)
-			arrow.color = key.z_diff_colour
+		if(multiz && target_turf.z != parent_turf.z)
+			if(arrow.color != key.z_diff_colour)
+				arrow.color = key.z_diff_colour
 		else if(arrow.color != key.colour)
 			arrow.color = key.colour
 		target.hud_used.team_finder_arrows += arrow
@@ -328,8 +333,9 @@ GLOBAL_LIST_EMPTY(tracker_beacons)
 			arrow.alpha = 240
 			var/turf/target_turf = get_turf(beacon.parent)
 			var/turf/parent_turf = get_turf(parent)
-			if(multiz && target_turf.z != parent_turf.z && arrow.color != beacon.z_diff_colour)
-				arrow.color = beacon.z_diff_colour
+			if(multiz && target_turf.z != parent_turf.z)
+				if(arrow.color != beacon.z_diff_colour)
+					arrow.color = beacon.z_diff_colour
 			else if(arrow.color != beacon.colour)
 				arrow.color = beacon.colour
 			updating.hud_used.team_finder_arrows += arrow

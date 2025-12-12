@@ -172,7 +172,7 @@
 	if (. & EMP_PROTECT_SELF)
 		return
 	if(get_charge())
-		use_power((cell.charge/3)/(severity*2))
+		use_energy((cell.charge/3)/(severity*2))
 		take_damage(30 / severity, BURN, ENERGY, 1)
 	log_message("EMP detected", LOG_MECHA, color="red")
 
@@ -205,85 +205,119 @@
 			cookedalive.adjust_fire_stacks(1)
 			cookedalive.ignite_mob()
 
-/obj/vehicle/sealed/mecha/attackby_secondary(obj/item/weapon, mob/user, params)
-	if(istype(weapon, /obj/item/mecha_parts))
-		var/obj/item/mecha_parts/parts = weapon
-		parts.try_attach_part(user, src, TRUE)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+/obj/vehicle/sealed/mecha/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/mmi))
+		if(!mmi_move_inside(tool,user))
+			balloon_alert(user, "initialization of MMI failed!")
+			return ITEM_INTERACT_BLOCKING
+
+		balloon_alert(user, "initialized MMI")
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/mecha_ammo))
+		if(ammo_resupply(tool, user))
+			return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/rcd_upgrade))
+		return upgrade_rcd(tool, user)
+
+	if(tool.GetID())
+		if(!allowed(user))
+			if(mecha_flags & ID_LOCK_ON)
+				balloon_alert(user, "access denied!")
+			else
+				balloon_alert(user, "unable to set id lock!")
+			return ITEM_INTERACT_BLOCKING
+		mecha_flags ^= ID_LOCK_ON
+		balloon_alert(user, "[mecha_flags & ID_LOCK_ON ? "enabled" : "disabled"] id lock!")
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/mecha_parts))
+		var/obj/item/mecha_parts/part = tool
+		return part.try_attach_part(user, src, FALSE)
+
+	if(is_wire_tool(tool) && (mecha_flags & PANEL_OPEN))
+		if(wires.interact(user))
+			return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/stock_parts))
+		return try_insert_part(tool, user)
+
+	return NONE
+
+/obj/vehicle/sealed/mecha/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/mecha_parts))
+		var/obj/item/mecha_parts/part = tool
+		return part.try_attach_part(user, src, attach_right = TRUE)
 	return ..()
 
-/obj/vehicle/sealed/mecha/attackby(obj/item/W, mob/living/user, params)
-	if((user.istate & ISTATE_HARM))
-		return ..()
-	if(istype(W, /obj/item/mmi))
-		if(mmi_move_inside(W,user))
-			to_chat(user, span_notice("[src]-[W] interface initialized successfully."))
-		else
-			to_chat(user, span_warning("[src]-[W] interface initialization failed."))
-		return
+/// Try to insert a stock part into the mech
+/obj/vehicle/sealed/mecha/proc/try_insert_part(obj/item/stock_parts/tool, mob/living/user)
+	if(!(mecha_flags & PANEL_OPEN))
+		balloon_alert(user, "open the panel first!")
+		return ITEM_INTERACT_BLOCKING
 
-	if(istype(W, /obj/item/mecha_ammo))
-		ammo_resupply(W, user)
-		return
+	if(istype(tool, /obj/item/stock_parts/power_store/cell))
+		if(cell)
+			balloon_alert(user, "already installed!")
+			return ITEM_INTERACT_BLOCKING
 
-	if(W.GetID())
-		if((mecha_flags & ADDING_ACCESS_POSSIBLE) || (mecha_flags & ADDING_MAINT_ACCESS_POSSIBLE))
-			if(internals_access_allowed(user))
-				ui_interact(user)
-				return
-			to_chat(user, span_warning("Invalid ID: Access denied."))
-			return
-		to_chat(user, span_warning("Maintenance protocols disabled by operator."))
-		return
+		if(!user.transferItemToLoc(tool, src, silent = FALSE))
+			return  ITEM_INTERACT_BLOCKING
 
-	if(istype(W, /obj/item/stock_parts/cell))
-		if(construction_state == MECHA_OPEN_HATCH)
-			if(!cell)
-				if(!user.transferItemToLoc(W, src, silent = FALSE))
-					return
-				var/obj/item/stock_parts/cell/C = W
-				to_chat(user, span_notice("You install the power cell."))
-				playsound(src, 'sound/items/screwdriver2.ogg', 50, FALSE)
-				cell = C
-				log_message("Power cell installed", LOG_MECHA)
-			else
-				to_chat(user, span_warning("There's already a power cell installed!"))
-		return
+		cell = tool
+		balloon_alert(user, "installed power cell")
+		diag_hud_set_mechcell()
+		playsound(src, 'sound/items/tools/screwdriver2.ogg', 50, FALSE)
+		log_message("Power cell installed", LOG_MECHA)
+		return ITEM_INTERACT_SUCCESS
 
-	if(istype(W, /obj/item/stock_parts/scanning_module))
-		if(construction_state == MECHA_OPEN_HATCH)
-			if(!scanmod)
-				if(!user.transferItemToLoc(W, src, silent = FALSE))
-					return
-				to_chat(user, span_notice("You install the scanning module."))
-				playsound(src, 'sound/items/screwdriver2.ogg', 50, FALSE)
-				scanmod = W
-				log_message("[W] installed", LOG_MECHA)
-				update_part_values()
-			else
-				to_chat(user, span_warning("There's already a scanning module installed!"))
-		return
+	if(istype(tool, /obj/item/stock_parts/scanning_module))
+		if(scanmod)
+			balloon_alert(user, "already installed!")
+			return ITEM_INTERACT_BLOCKING
 
-	if(istype(W, /obj/item/stock_parts/capacitor))
-		if(construction_state == MECHA_OPEN_HATCH)
-			if(!capacitor)
-				if(!user.transferItemToLoc(W, src, silent = FALSE))
-					return
-				to_chat(user, span_notice("You install the capacitor."))
-				playsound(src, 'sound/items/screwdriver2.ogg', 50, FALSE)
-				capacitor = W
-				log_message("[W] installed", LOG_MECHA)
-				update_part_values()
-			else
-				to_chat(user, span_warning("There's already a capacitor installed!"))
-		return
+		if(!user.transferItemToLoc(tool, src, silent = FALSE))
+			return ITEM_INTERACT_BLOCKING
 
-	if(istype(W, /obj/item/mecha_parts))
-		var/obj/item/mecha_parts/P = W
-		P.try_attach_part(user, src, FALSE)
-		return
+		scanmod = tool
+		balloon_alert(user, "installed scanning module")
+		playsound(src, 'sound/items/tools/screwdriver2.ogg', 50, FALSE)
+		log_message("[tool] installed", LOG_MECHA)
+		update_part_values()
+		return ITEM_INTERACT_SUCCESS
 
-	return ..()
+	if(istype(tool, /obj/item/stock_parts/capacitor))
+		if(capacitor)
+			balloon_alert(user, "already installed!")
+			return ITEM_INTERACT_BLOCKING
+
+		if(!user.transferItemToLoc(tool, src, silent = FALSE))
+			return ITEM_INTERACT_BLOCKING
+
+		capacitor = tool
+		balloon_alert(user, "installed capacitor")
+		playsound(src, 'sound/items/tools/screwdriver2.ogg', 50, FALSE)
+		log_message("[tool] installed", LOG_MECHA)
+		update_part_values()
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/stock_parts/manipulator))
+		if(manipulator)
+			balloon_alert(user, "already installed!")
+			return ITEM_INTERACT_BLOCKING
+
+		if(!user.transferItemToLoc(tool, src, silent = FALSE))
+			return ITEM_INTERACT_BLOCKING
+
+		manipulator = tool
+		balloon_alert(user, "installed manipulator")
+		playsound(src, 'sound/items/tools/screwdriver2.ogg', 50, FALSE)
+		log_message("[tool] installed", LOG_MECHA)
+		update_part_values()
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 /obj/vehicle/sealed/mecha/attacked_by(obj/item/attacking_item, mob/living/user)
 	if(!attacking_item.force)
@@ -309,28 +343,35 @@
 		try_damage_component(., user.zone_selected)
 
 /obj/vehicle/sealed/mecha/examine(mob/user)
-	.=..()
-	if(construction_state > MECHA_LOCKED)
-		switch(construction_state)
-			if(MECHA_SECURE_BOLTS)
-				. += span_notice("Use a <b>wrench</b> to adjust bolts securing the cover.")
-			if(MECHA_LOOSE_BOLTS)
-				. += span_notice("Use a <b>crowbar</b> to unlock the hatch to the power unit.")
-			if(MECHA_OPEN_HATCH)
-				. += span_notice("Use <b>interface</b> to eject stock parts from the mech.")
+	. = ..()
+	if(mecha_flags & PANEL_OPEN)
+		. += span_notice("The panel is open. You could use a <b>crowbar</b> to eject parts or lock the panel back with a <b>screwdriver</b>.")
+	else
+		. += span_notice("You could unlock the maintenance cover with a <b>screwdriver</b>.")
 
-/obj/vehicle/sealed/mecha/wrench_act(mob/living/user, obj/item/tool)
+/obj/vehicle/sealed/mecha/screwdriver_act(mob/living/user, obj/item/tool)
 	..()
 	. = TRUE
-	if(construction_state == MECHA_SECURE_BOLTS)
-		construction_state = MECHA_LOOSE_BOLTS
-		to_chat(user, span_notice("You undo the securing bolts."))
-		tool.play_tool_sound(src)
-		return
-	if(construction_state == MECHA_LOOSE_BOLTS)
-		construction_state = MECHA_SECURE_BOLTS
-		to_chat(user, span_notice("You tighten the securing bolts."))
-		tool.play_tool_sound(src)
+
+	if(!(mecha_flags & PANEL_OPEN) && LAZYLEN(occupants))
+		for(var/mob/occupant as anything in occupants)
+			occupant.show_message(
+				span_userdanger("[user] is trying to open the maintenance panel of [src]!"), MSG_VISUAL,
+				span_userdanger("You hear someone trying to open the maintenance panel of [src]!"), MSG_AUDIBLE,
+			)
+		visible_message(span_danger("[user] is trying to open the maintenance panel of [src]!"))
+		if(!do_after(user, 5 SECONDS, src))
+			return
+		for(var/mob/occupant as anything in occupants)
+			occupant.show_message(
+				span_userdanger("[user] has opened the maintenance panel of [src]!"), MSG_VISUAL,
+				span_userdanger("You hear someone opening the maintenance panel of [src]!"), MSG_AUDIBLE,
+			)
+		visible_message(span_danger("[user] has opened the maintenance panel of [src]!"))
+
+	mecha_flags ^= PANEL_OPEN
+	balloon_alert(user, (mecha_flags & PANEL_OPEN) ? "panel open" : "panel closed")
+	tool.play_tool_sound(src)
 
 /obj/vehicle/sealed/mecha/crowbar_act(mob/living/user, obj/item/tool)
 	..()
@@ -339,15 +380,38 @@
 		var/obj/item/crowbar/mechremoval/remover = tool
 		remover.empty_mech(src, user)
 		return
-	if(construction_state == MECHA_LOOSE_BOLTS)
-		construction_state = MECHA_OPEN_HATCH
-		to_chat(user, span_notice("You open the hatch to the power unit."))
+	if(!(mecha_flags & PANEL_OPEN))
+		balloon_alert(user, "open the panel first!")
+		return
+	if(dna_lock && user.has_dna())
+		var/mob/living/carbon/user_carbon = user
+		if(user_carbon.dna.unique_enzymes != dna_lock)
+			balloon_alert(user, "access with this DNA denied!")
+			return
+	if((mecha_flags & ID_LOCK_ON) && !allowed(user))
+		balloon_alert(user, "access denied!")
+		return
+
+	var/list/stock_parts = list()
+	if(cell)
+		stock_parts += cell
+	if(scanmod)
+		stock_parts += scanmod
+	if(capacitor)
+		stock_parts += capacitor
+	if(manipulator)
+		stock_parts += manipulator
+
+	if(length(stock_parts))
+		var/obj/item/stock_parts/part_to_remove = tgui_input_list(user, "Which part to remove?", "Part Removal", stock_parts)
+		if(!(locate(part_to_remove) in contents))
+			return
+		user.put_in_hands(part_to_remove)
+		CheckParts()
+		diag_hud_set_mechcell()
 		tool.play_tool_sound(src)
 		return
-	if(construction_state == MECHA_OPEN_HATCH)
-		construction_state = MECHA_LOOSE_BOLTS
-		to_chat(user, span_notice("You close the hatch to the power unit."))
-		tool.play_tool_sound(src)
+	balloon_alert(user, "no parts!")
 
 /obj/vehicle/sealed/mecha/welder_act(mob/living/user, obj/item/W)
 	if((user.istate & ISTATE_HARM))
@@ -387,8 +451,8 @@
 		clear_internal_damage(MECHA_INT_TEMP_CONTROL)
 	if(internal_damage & MECHA_INT_SHORT_CIRCUIT)
 		clear_internal_damage(MECHA_INT_SHORT_CIRCUIT)
-	if(internal_damage & MECHA_INT_TANK_BREACH)
-		clear_internal_damage(MECHA_INT_TANK_BREACH)
+	if(internal_damage & MECHA_CABIN_AIR_BREACH)
+		clear_internal_damage(MECHA_CABIN_AIR_BREACH)
 	if(internal_damage & MECHA_INT_CONTROL_LOST)
 		clear_internal_damage(MECHA_INT_CONTROL_LOST)
 
@@ -408,7 +472,7 @@
 /obj/vehicle/sealed/mecha/proc/ammo_resupply(obj/item/mecha_ammo/A, mob/user,fail_chat_override = FALSE)
 	if(!A.rounds)
 		if(!fail_chat_override)
-			to_chat(user, span_warning("This box of ammo is empty!"))
+			balloon_alert(user, "the box is empty!")
 		return FALSE
 	var/ammo_needed
 	var/found_gun
@@ -460,7 +524,14 @@
 		return TRUE
 	if(!fail_chat_override)
 		if(found_gun)
-			to_chat(user, span_notice("You can't fit any more ammo of this type!"))
+			balloon_alert(user, "ammo storage is full!")
 		else
-			to_chat(user, span_notice("None of the equipment on this exosuit can use this ammo!"))
+			balloon_alert(user, "can't use this ammo!")
 	return FALSE
+
+///Upgrades any attached RCD equipment.
+/obj/vehicle/sealed/mecha/proc/upgrade_rcd(obj/item/rcd_upgrade/rcd_upgrade, mob/user)
+	for(var/obj/item/mecha_parts/mecha_equipment/rcd/rcd_equip in flat_equipment)
+		if(rcd_equip.internal_rcd.install_upgrade(rcd_upgrade, user))
+			return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING

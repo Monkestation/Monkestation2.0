@@ -2,7 +2,7 @@
 	display_name = "Chemical Filter"
 	desc = "General chemical filter."
 	category = "Chemistry"
-	power_usage_per_input = 25
+	energy_usage_per_input = 25
 
 	///this is our chosen chemical
 	var/datum/port/input/chemical_input
@@ -30,7 +30,7 @@
 	var/list/chemical_names = list()
 	chemical_names += filter_list.value
 
-	for(var/name as anything in chemical_names)
+	for(var/name in chemical_names)
 		chemicals_from_names += GLOB.name2reagent[ckey(lowertext(name))]
 
 	var/list/inputted_chemicals = chemical_input.value

@@ -38,10 +38,9 @@
 /obj/item/shield/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(transparent && (hitby.pass_flags & PASSGLASS))
 		return FALSE
-	if(attack_type == THROWN_PROJECTILE_ATTACK)
-		final_block_chance += 30
+	//More likely to block tackles, body throws, and similar attacks
 	if(attack_type == LEAP_ATTACK)
-		final_block_chance = 100
+		final_block_chance += 25
 	. = ..()
 	if(.)
 		on_shield_block(owner, hitby, attack_text, damage, attack_type)
@@ -199,7 +198,7 @@
 			return
 		else
 			to_chat(user, span_notice("You begin to replace the bulb..."))
-			if(do_after(user, 20, target = user))
+			if(do_after(user, 2 SECONDS, target = user))
 				if(QDELETED(flash) || flash.burnt_out)
 					return
 				playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)

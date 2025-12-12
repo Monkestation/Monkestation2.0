@@ -56,7 +56,7 @@
 	var/turf/new_turf = get_turf(src)
 	var/datum/round_event_control/operative/loneopmode = locate(/datum/round_event_control/operative) in SSgamemode.control
 	if(istype(loneopmode) && loneopmode.occurrences < loneopmode.max_occurrences && prob(loneopmode.get_weight()))
-		loneopmode.weight = max(loneopmode.weight - 1, 1) //monkestation edit: increased minimum to 1
+		loneopmode.weight = max(loneopmode.weight - 1, 0)
 		loneopmode.checks_antag_cap = (loneopmode.get_weight() < 3)
 		if(loneopmode.weight % 5 == 0 && SSticker.totalPlayers > 1)
 			message_admins("[src] is secured (currently in [ADMIN_VERBOSEJMP(new_turf)]). The weight of Lone Operative is now [loneopmode.get_weight()] (base [loneopmode.weight]).")

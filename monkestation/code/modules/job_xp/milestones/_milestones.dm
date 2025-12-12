@@ -90,7 +90,7 @@
 		to_chat(mob, span_notice("You have redeemed all the rewards you have for this job."))
 
 	var/list/name_and_path = list()
-	for(var/path as anything in viable_rewards)
+	for(var/path in viable_rewards)
 		var/obj/item/true_path = text2path(path)
 		name_and_path[initial(true_path.name)] = true_path
 

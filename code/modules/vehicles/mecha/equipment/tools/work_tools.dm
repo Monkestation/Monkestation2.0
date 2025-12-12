@@ -122,7 +122,7 @@
 		if(istype(clamptarget, /obj/machinery/door/airlock/))
 			var/obj/machinery/door/airlock/targetairlock = clamptarget
 			playsound(chassis, clampsound, 50, FALSE, -6)
-			targetairlock.try_to_crowbar(src, source)
+			targetairlock.try_to_crowbar(src, source, TRUE)
 			return
 		if(clamptarget.anchored)
 			to_chat(source, "[icon2html(src, source)][span_warning("[target] is firmly secured!")]")
@@ -220,13 +220,10 @@
 		"snowflake_id" = MECHA_SNOWFLAKE_ID_EXTINGUISHER,
 		"reagents" = reagents.total_volume,
 		"total_reagents" = reagents.maximum_volume,
-		"minimum_requ" = required_amount,
+		"reagents_required" = required_amount,
 	)
 
-/obj/item/mecha_parts/mecha_equipment/extinguisher/ui_act(action, list/params)
-	. = ..()
-	if(.)
-		return TRUE
+/obj/item/mecha_parts/mecha_equipment/extinguisher/handle_ui_act(action, list/params)
 	switch(action)
 		if("activate")
 			spray_extinguisher(usr)
@@ -235,121 +232,106 @@
 			attempt_refill(usr)
 			return TRUE
 
-#define MODE_DECONSTRUCT 0
-#define MODE_WALL 1
-#define MODE_AIRLOCK 2
+///Maximum range the RCD can construct at.
+#define RCD_RANGE 3
 
 /obj/item/mecha_parts/mecha_equipment/rcd
 	name = "mounted RCD"
 	desc = "An exosuit-mounted Rapid Construction Device."
 	icon_state = "mecha_rcd"
-	equip_cooldown = 10
-	energy_drain = 250
-	range = MECHA_MELEE|MECHA_RANGED
-	movedelay = 0.4
+	equip_cooldown = 0 // internal RCD already handles it
+	energy_drain = 0 // internal RCD handles power consumption based on matter use
+	range = MECHA_MELEE | MECHA_RANGED
 	item_flags = NO_MAT_REDEMPTION
-	///determines what we'll so when clicking on a turf
-	var/mode = MODE_DECONSTRUCT
+
+	///The location the mech was when it began using the rcd
+	var/atom/initial_location = FALSE
+	///Whether or not to deconstruct instead.
+	var/deconstruct_active = FALSE
+	///The internal RCD item used by this equipment.
+	var/obj/item/construction/rcd/exosuit/internal_rcd
 
 /obj/item/mecha_parts/mecha_equipment/rcd/Initialize(mapload)
 	. = ..()
-	GLOB.rcd_list += src
+	internal_rcd = new(src)
 
 /obj/item/mecha_parts/mecha_equipment/rcd/Destroy()
-	GLOB.rcd_list -= src
+	initial_location = null
+	QDEL_NULL(internal_rcd)
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/rcd/get_snowflake_data()
 	return list(
-		"snowflake_id" = MECHA_SNOWFLAKE_ID_MODE,
-		"name" = "RCD control",
-		"mode" = get_mode_name(),
+		"snowflake_id" = MECHA_SNOWFLAKE_ID_RCD,
+		"scan_ready" = COOLDOWN_FINISHED(internal_rcd, destructive_scan_cooldown),
+		"deconstructing" = deconstruct_active,
+		"mode" = internal_rcd.design_title,
 	)
 
-/// fetches the mode name to display in the UI
-/obj/item/mecha_parts/mecha_equipment/rcd/proc/get_mode_name()
-	switch(mode)
-		if(MODE_DECONSTRUCT)
-			return "Deconstruct"
-		if(MODE_WALL)
-			return "Build wall"
-		if(MODE_AIRLOCK)
-			return "Build Airlock"
-		else
-			return "Someone didnt set this"
-
-/obj/item/mecha_parts/mecha_equipment/rcd/ui_act(action, list/params)
-	. = ..()
-	if(.)
-		return
-	if(action == "change_mode")
-		mode++
-		if(mode > MODE_AIRLOCK)
-			mode = MODE_DECONSTRUCT
-		switch(mode)
-			if(MODE_DECONSTRUCT)
-				to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_notice("Switched RCD to Deconstruct.")]")
-				energy_drain = initial(energy_drain)
-			if(MODE_WALL)
-				to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_notice("Switched RCD to Construct Walls and Flooring.")]")
-				energy_drain = 2*initial(energy_drain)
-			if(MODE_AIRLOCK)
-				to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_notice("Switched RCD to Construct Airlock.")]")
-				energy_drain = 2*initial(energy_drain)
-		return TRUE
-
-/obj/item/mecha_parts/mecha_equipment/rcd/action(mob/source, atom/target, list/modifiers)
-	if(!isturf(target) && !istype(target, /obj/machinery/door/airlock))
-		target = get_turf(target)
-	if(!action_checks(target) || get_dist(chassis, target)>3 || istype(target, /turf/open/space/transit))
-		return
-	playsound(chassis, 'sound/machines/click.ogg', 50, TRUE)
-
-	switch(mode)
-		if(MODE_DECONSTRUCT)
-			to_chat(source, "[icon2html(src, source)][span_notice("Deconstructing [target]...")]")
-			if(iswallturf(target))
-				var/turf/closed/wall/wall_turf = target
-				if(!do_after_cooldown(wall_turf, source))
-					return
-				wall_turf.ScrapeAway()
-			else if(isfloorturf(target))
-				var/turf/open/floor/floor_turf = target
-				if(!do_after_cooldown(floor_turf, source))
-					return
-				floor_turf.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
-			else if (istype(target, /obj/machinery/door/airlock))
-				if(!do_after_cooldown(target, source))
-					return
-				qdel(target)
-		if(MODE_WALL)
-			if(isfloorturf(target))
-				var/turf/open/floor/floor_turf = target
-				to_chat(source, "[icon2html(src, source)][span_notice("Building Wall...")]")
-				if(!do_after_cooldown(floor_turf, source))
-					return
-				floor_turf.PlaceOnTop(/turf/closed/wall)
-			else if(isopenturf(target))
-				var/turf/open/open_turf = target
-				to_chat(source, "[icon2html(src, source)][span_notice("Building Floor...")]")
-				if(!do_after_cooldown(open_turf, source))
-					return
-				open_turf.PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
-		if(MODE_AIRLOCK)
-			if(isfloorturf(target))
-				to_chat(source, "[icon2html(src, source)][span_notice("Building Airlock...")]")
-				if(!do_after_cooldown(target, source))
-					return
-				var/obj/machinery/door/airlock/airlock_door = new /obj/machinery/door/airlock(target)
-				airlock_door.autoclose = TRUE
-				playsound(target, 'sound/effects/sparks2.ogg', 50, TRUE)
-	chassis.spark_system.start()
-	playsound(target, 'sound/items/deconstruct.ogg', 50, TRUE)
+/// Set the RCD's owner when attaching and detaching it
+/obj/item/mecha_parts/mecha_equipment/rcd/attach(obj/vehicle/sealed/mecha/new_mecha, attach_right)
+	internal_rcd.owner = new_mecha
 	return ..()
 
-#undef MODE_DECONSTRUCT
-#undef MODE_WALL
-#undef MODE_AIRLOCK
+/obj/item/mecha_parts/mecha_equipment/rcd/detach(atom/moveto)
+	internal_rcd.owner = null
+	return ..()
+
+/obj/item/mecha_parts/mecha_equipment/rcd/handle_ui_act(action, list/params)
+	switch(action)
+		if("rcd_scan")
+			if(!COOLDOWN_FINISHED(internal_rcd, destructive_scan_cooldown))
+				return FALSE
+			rcd_scan(internal_rcd)
+			COOLDOWN_START(internal_rcd, destructive_scan_cooldown, RCD_DESTRUCTIVE_SCAN_COOLDOWN)
+			return TRUE
+		if("toggle_deconstruct")
+			deconstruct_active = !deconstruct_active
+			return TRUE
+		if("change_mode")
+			for(var/mob/driver as anything in chassis.return_drivers())
+				internal_rcd.ui_interact(driver)
+			return TRUE
+
+
+/obj/item/mecha_parts/mecha_equipment/rcd/do_after_checks(atom/target)
+	// Checks if mech moved during operation
+	if(chassis.loc != initial_location)
+		return FALSE
+
+	// Cancel build if design changes
+	if(!deconstruct_active && internal_rcd.blueprint_changed)
+		return FALSE
+
+	return ..()
+
+/obj/item/mecha_parts/mecha_equipment/rcd/action(mob/source, atom/target, list/modifiers)
+	if(!action_checks(target))
+		return
+	// No meson action!
+	if (!(target in view(RCD_RANGE, get_turf(chassis))))
+		return
+	if(get_dist(chassis, target) > RCD_RANGE)
+		balloon_alert(source, "out of range!")
+		return
+	initial_location = chassis.loc
+
+	..() // do this now because the do_after can take a while
+
+	var/construction_mode = internal_rcd.mode
+	if(deconstruct_active) // deconstruct isn't in the RCD menu so switch it to deconstruct mode and set it back when it's done
+		internal_rcd.mode = RCD_DECONSTRUCT
+	internal_rcd.rcd_create(target, source)
+	internal_rcd.mode = construction_mode
+	return TRUE
+
+/obj/item/mecha_parts/mecha_equipment/rcd/interact_with_atom(obj/item/attacking_item, mob/living/user, list/modifiers)
+	. = NONE
+	if(istype(attacking_item, /obj/item/rcd_upgrade))
+		internal_rcd.install_upgrade(attacking_item, user)
+		return ITEM_INTERACT_SUCCESS
+
+#undef RCD_RANGE
 
 //Dunno where else to put this so shrug
 /obj/item/mecha_parts/mecha_equipment/ripleyupgrade
@@ -365,8 +347,8 @@
 	if(LAZYLEN(mecha.cargo))
 		to_chat(user, span_warning("[mecha]'s cargo hold must be empty before this conversion kit can be applied."))
 		return FALSE
-	if(!(mecha.mecha_flags & ADDING_MAINT_ACCESS_POSSIBLE)) //non-removable upgrade, so lets make sure the pilot or owner has their say.
-		to_chat(user, span_warning("[mecha] must have maintenance protocols active in order to allow this conversion kit."))
+	if(!(mecha.mecha_flags & PANEL_OPEN)) //non-removable upgrade, so lets make sure the pilot or owner has their say.
+		to_chat(user, span_warning("[mecha] panel must be open in order to allow this conversion kit."))
 		return FALSE
 	if(LAZYLEN(mecha.occupants)) //We're actualy making a new mech and swapping things over, it might get weird if players are involved
 		to_chat(user, span_warning("[mecha] must be unoccupied before this conversion kit can be applied."))
@@ -395,6 +377,11 @@
 		marktwo.capacitor = markone.capacitor
 		markone.capacitor.forceMove(marktwo)
 		markone.capacitor = null
+	QDEL_NULL(marktwo.manipulator)
+	if (markone.manipulator)
+		marktwo.manipulator = markone.manipulator
+		markone.manipulator.forceMove(marktwo)
+		markone.manipulator = null
 	marktwo.update_part_values()
 	for(var/obj/item/mecha_parts/mecha_equipment/equipment in markone.flat_equipment) //Move the equipment over...
 		if(istype(equipment, /obj/item/mecha_parts/mecha_equipment/ejector))

@@ -20,9 +20,10 @@
 		/datum/reagent/medicine/synaphydramine,
 		/datum/reagent/medicine/diphenhydramine,
 		/datum/reagent/medicine/changelingadrenaline,
-		/datum/reagent/medicine/spaceacillin
+		/datum/reagent/medicine/antipathogenic/spaceacillin
 	)
 	var/allergy_string
+	species_blacklist = list(SPECIES_IPC)
 
 /datum/quirk/item_quirk/allergic/add_unique(client/client_source)
 	var/list/chem_list = subtypesof(/datum/reagent/medicine) - blacklist

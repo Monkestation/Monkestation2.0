@@ -32,7 +32,7 @@
 	invisibility = 0
 	set_species(/datum/species/monkey)
 	to_chat(src, span_boldnotice("You are now \a [dna.species.name]."))
-	src.fully_replace_character_name(name, pick(GLOB.random_monkey_names))
+	fully_replace_character_name(null, pick(GLOB.random_monkey_names))
 	regenerate_icons()
 	SEND_SIGNAL(src, COMSIG_HUMAN_MONKEYIZE)
 	uncuff()
@@ -214,7 +214,6 @@
 
 	new_xeno.set_combat_mode(TRUE)
 	new_xeno.PossessByPlayer(key)
-	update_atom_languages()
 
 	to_chat(new_xeno, span_boldnotice("You are now an alien."))
 	qdel(src)
@@ -252,7 +251,7 @@
 	return new_slime
 
 /mob/proc/become_overmind(starting_points = OVERMIND_STARTING_POINTS)
-	var/mob/camera/blob/B = new /mob/camera/blob(get_turf(src), starting_points)
+	var/mob/eye/blob/B = new /mob/eye/blob(get_turf(src), starting_points)
 	B.PossessByPlayer(key)
 	. = B
 	qdel(src)
@@ -287,7 +286,7 @@
 
 	SSblackbox.record_feedback("amount", "gorillas_created", 1)
 
-	var/Itemlist = get_equipped_items(include_pockets = TRUE)
+	var/Itemlist = get_equipped_items(INCLUDE_POCKETS)
 	Itemlist += held_items
 	for(var/obj/item/W in Itemlist)
 		dropItemToGround(W, TRUE)

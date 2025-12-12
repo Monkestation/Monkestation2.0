@@ -11,6 +11,15 @@
 
 	threshold_minimum = WOUND_DISMEMBER_OUTRIGHT_THRESH // not actually used since dismembering is handled differently, but may as well assign it since we got it
 
+/datum/wound_pregen_data/loss/can_be_applied_to(obj/item/bodypart/limb, list/suggested_wounding_types, datum/wound/old_wound, random_roll, duplicates_allowed, care_about_existing_wounds)
+	. = ..()
+	if(!. || limb.body_zone != BODY_ZONE_CHEST)
+		return
+	// Stupid way of preventing weird organ dupes with oozelings.
+	// Any extra implants/organs they have will be inside of their core when they die anyways.
+	if(isoozeling(limb.owner))
+		return FALSE
+
 /datum/wound/loss
 	name = "Dismemberment Wound"
 	desc = "oof ouch!!"

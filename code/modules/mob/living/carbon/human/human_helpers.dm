@@ -89,7 +89,7 @@
 //Useful when player is being seen by other mobs
 /mob/living/carbon/human/proc/get_id_name(if_no_id = "Unknown")
 	var/obj/item/storage/wallet/wallet = wear_id
-	var/obj/item/modular_computer/pda/pda = wear_id
+	var/obj/item/modular_computer/pda = wear_id
 	var/obj/item/card/id/id = wear_id
 	if(HAS_TRAIT(src, TRAIT_UNKNOWN))
 		. = if_no_id //You get NOTHING, no id name, good day sir
@@ -112,6 +112,8 @@
 
 /mob/living/carbon/human/can_use_guns(obj/item/G)
 	. = ..()
+	if(G.trigger_guard == TRIGGER_GUARD_ALLOW_ALL)
+		return TRUE
 	if(G.trigger_guard == TRIGGER_GUARD_NORMAL)
 		if(HAS_TRAIT(src, TRAIT_CHUNKYFINGERS))
 			balloon_alert(src, "fingers are too big!")
@@ -241,7 +243,7 @@
 	var/t_is = p_are()
 	//This checks to see if the body is revivable
 	var/client_like = client || HAS_TRAIT(src, TRAIT_MIND_TEMPORARILY_GONE)
-	if(client_like || !get_organ_by_type(/obj/item/organ/internal/brain) || ghost?.can_reenter_corpse)
+	if((client_like || !get_organ_by_type(/obj/item/organ/internal/brain) || ghost?.can_reenter_corpse) && !HAS_TRAIT(src, TRAIT_DEFIB_BLACKLISTED))
 		return span_deadsay("[t_He] [t_is] limp and unresponsive; there are no signs of life...")
 	else
 		return span_deadsay("[t_He] [t_is] limp and unresponsive; there are no signs of life and [t_his] soul has departed...")

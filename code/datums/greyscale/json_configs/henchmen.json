@@ -4,7 +4,7 @@
 			"type": "icon_state",
 			"icon_state": "greyscale_cap",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		}
 	],
 	"greyscale_coat": [
@@ -12,7 +12,7 @@
 			"type": "icon_state",
 			"icon_state": "greyscale_coat",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		}
 	],
 	"greyscale_coat_t": [
@@ -20,7 +20,7 @@
 			"type": "icon_state",
 			"icon_state": "greyscale_coat_t",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		}
 	]
 }

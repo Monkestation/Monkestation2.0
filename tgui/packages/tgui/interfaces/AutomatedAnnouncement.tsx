@@ -33,7 +33,7 @@ export const AutomatedAnnouncement = (props) => {
     node_message,
   } = data;
   return (
-    <Window title="Automated Announcement System" width={500} height={225}>
+    <Window title="Automated Announcement System" width={500} height={255}>
       <Window.Content>
         <Section
           title="Arrival Announcement"

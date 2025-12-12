@@ -66,7 +66,7 @@
 			dust.custom_materials += material
 			dust.custom_materials[material] = quantity
 			dust.set_colors()
-			dust.forceMove(get_step(src, export_side))
+			dust.forceMove(get_step(src, dir))
 
 	if(istype(boulder, /obj/item/boulder/artifact)) // If we are breaking an artifact boulder drop the artifact before deletion.
 		var/obj/item/boulder/artifact/artboulder = boulder
@@ -86,12 +86,12 @@
 		dust.custom_materials += material
 		dust.custom_materials[material] = quantity
 		dust.set_colors()
-		dust.forceMove(get_step(src, export_side))
+		dust.forceMove(get_step(src, dir))
 	qdel(dirty_dust)
 	playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	update_boulder_count()
 
-/obj/machinery/bouldertech/enricher/attackby(obj/item/attacking_item, mob/user, params)
+/obj/machinery/bouldertech/enricher/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(holds_minerals && check_extras(attacking_item)) // Checking for extra items it can refine.
 		var/obj/item/processing/dirty_dust/dirty_dust = attacking_item
 		update_boulder_count()

@@ -65,6 +65,9 @@
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_COLD_BLOODED), PROC_REF(on_cold_blooded_trait_gain))
+	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_COLD_BLOODED), PROC_REF(on_cold_blooded_trait_loss))
+
 /// Called when [TRAIT_KNOCKEDOUT] is added or removed from the mob.
 /mob/living/proc/on_knockedout_trait(datum/source)
 	SIGNAL_HANDLER
@@ -279,3 +282,13 @@
 /mob/living/proc/on_hearing_regain()
 	SIGNAL_HANDLER
 	refresh_looping_ambience()
+
+///Called when [TRAIT_COLD_BLOODED] is added to the mob.
+/mob/living/proc/on_cold_blooded_trait_gain()
+	SIGNAL_HANDLER
+	temperature_insulation -= initial(temperature_insulation)
+
+///Called when [TRAIT_COLD_BLOODED] is added to the mob.
+/mob/living/proc/on_cold_blooded_trait_loss()
+	SIGNAL_HANDLER
+	temperature_insulation += initial(temperature_insulation)

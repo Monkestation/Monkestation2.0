@@ -18,7 +18,8 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 	inhand_icon_state = "gift"
 	resistance_flags = FLAMMABLE
 
-	var/obj/item/contains_type
+	var/atom/contains_type
+	var/notify_admins = FALSE
 
 /obj/item/a_gift/Initialize(mapload)
 	. = ..()
@@ -44,15 +45,23 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 
 	qdel(src)
 
-	var/obj/item/I = new contains_type(get_turf(M))
-	if (!QDELETED(I)) //might contain something like metal rods that might merge with a stack on the ground
-		M.visible_message(span_notice("[M] unwraps \the [src], finding \a [I] inside!"))
-		M.investigate_log("has unwrapped a present containing [I.type].", INVESTIGATE_PRESENTS)
-		M.put_in_hands(I)
-		I.add_fingerprint(M)
-		I.AddComponent(/datum/component/gift_item, M) // monkestation edit: gift item info component
+	var/gift_name = contains_type::name
+	if(ispath(contains_type, /obj/item))
+		var/atom/I = new contains_type(get_turf(M))
+		if (!QDELETED(I)) //might contain something like metal rods that might merge with a stack on the ground
+			M.put_in_hands(I)
+			I.add_fingerprint(M)
+			I.AddComponent(/datum/component/gift_item, M) // monkestation edit: gift item info component
+			gift_name = I
+		else
+			M.visible_message(span_danger("Oh no! The present that [M] opened had nothing inside it!"))
+			return
 	else
-		M.visible_message(span_danger("Oh no! The present that [M] opened had nothing inside it!"))
+		new contains_type(M.drop_location(), M)
+	M.visible_message(span_notice("[M] unwraps \the [src], finding \a [gift_name] inside!"))
+	M.investigate_log("has unwrapped a present containing [gift_name] ([contains_type]).", INVESTIGATE_PRESENTS)
+	if(notify_admins)
+		message_admins("[ADMIN_LOOKUPFLW(M)] unwrapped a present containing <b>[gift_name]</b> <small>([contains_type])</small>")
 
 /obj/item/a_gift/proc/get_gift_type()
 	var/gift_type_list = list(/obj/item/sord,
@@ -103,6 +112,7 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 /obj/item/a_gift/anything
 	name = "christmas gift"
 	desc = "It could be anything!"
+	notify_admins = TRUE
 
 /obj/item/a_gift/anything/get_gift_type()
 	if(!GLOB.possible_gifts.len)
@@ -111,7 +121,6 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 			var/obj/item/I = V
 			if((!initial(I.icon_state)) || (!initial(I.inhand_icon_state)) || (initial(I.item_flags) & ABSTRACT))
 				gift_types_list -= V
-		//MONKESTATION EDIT START
 		// List of items we want to block the anything-gift from spawning. Reasons for blocking
 		// these vary, but usually come down to keeping the server (and game clients) stable.
 		//
@@ -128,7 +137,7 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 			/obj/item/gun/magic/wand/resurrection/debug,
 			//holy fuck why was this enabled
 			/obj/item/debug,
-			/obj/item/storage/box/debugtools,
+			/obj/item/storage/box/debugbox,
 			/obj/item/gun/energy/beam_rifle/debug,
 			/obj/item/multitool/field_debug,
 			/obj/item/bounty_cube/debug_cube,
@@ -137,12 +146,81 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 			/obj/item/uplink/nuclear/debug,
 			//kills only the debug uplink from the gifts.
 			/obj/item/mod/control/pre_equipped/chrono,
+
+			//A list of every debug item I could find. I compiled a list of every item in the possible gifts list
+			//and ran a keyword search through the list. Hopefully, this grabbed most, if not all, of the items.
+			//There are PROBABLY repeats from the list above but it shouldn't matter.
+			//Shaved down to exclude the non-game-breaking ones
+
+
+			/obj/item/mod/control/pre_equipped/debug,
+			/obj/item/reagent_containers/hypospray/medipen/tuberculosiscure/debug,
+			/obj/item/reagent_containers/cup/bottle/disease_debug,
+			/obj/item/pinpointer/area_pinpointer/debug,
+			/obj/item/flashlight/emp/debug,
+			/obj/item/airlock_painter/decal/debug,
+			/obj/item/autosurgeon/organ/nif/debug,
+
+			/obj/item/melee/skateboard/hoverboard/admin,
+			/obj/item/mod/control/pre_equipped/administrative,
+			/obj/item/bombcore/badmin/summon,
+			/obj/item/bombcore/badmin/summon/clown,
+			/obj/item/ai_module/core/full/admin,
+			/obj/item/rwd/admin,
+			/obj/item/mining_scanner/admin,
+			/obj/item/kinetic_crusher/adminpilebunker,
+			/obj/item/camera/spooky/badmin,
+			/obj/item/storage/box/fish_debug,
 			)
-		for(var/blocked_item as anything in blocked_items)
+
+		for(var/blocked_item in blocked_items)
 			// Block the item listed, and any subtypes too.
 			gift_types_list -= typesof(blocked_item)
-		//MONKESTATION EDIT END
+
+		/// List of items with a reduced chance to spawn
+		var/list/reduced_chance_items = list(
+			// Security reasons
+			/obj/item/card/id/advanced/centcom,
+		)
+		for(var/reduced_chance_item in reduced_chance_items)
+			if(prob(50))
+				gift_types_list -= typesof(reduced_chance_item)
+
 		GLOB.possible_gifts = gift_types_list
 	var/gift_type = pick(GLOB.possible_gifts)
 
+	return gift_type
+
+/obj/item/a_gift/spooky
+	name = "spooky gift"
+	desc = "Could contain tricks or treats!"
+
+/obj/item/a_gift/spooky/Initialize(mapload)
+	. = ..()
+	icon_state = "spooky_gift"
+	pixel_x = rand(-10,10)
+	pixel_y = rand(-10,10)
+
+	contains_type = get_gift_type()
+
+/obj/item/a_gift/spooky/get_gift_type()
+	var/gift_type_list = list(/obj/item/food/burger/ghost,
+		/obj/item/paper/selfdestruct/job_application,
+		/obj/item/stack/sheet/hauntium,
+		/obj/item/tome,
+		/obj/item/clothing/suit/costume/ghost_sheet,
+		/obj/item/food/cookie/sugar/spookycoffin,
+		/obj/item/food/cookie/sugar/spookyskull,
+		/mob/living/basic/skeleton,
+		/obj/effect/mine/sound/bwoink,
+		/obj/effect/mine/shrapnel/sting,
+		/obj/item/clothing/mask/cigarette/syndicate,
+		/obj/item/clothing/mask/cigarette/candy,
+		/obj/effect/mine/sound/spooky,
+		/obj/item/knife,
+		/obj/item/restraints/legcuffs/beartrap/prearmed,
+		/obj/item/skeleton_potion,
+		/obj/item/bad_luck
+		)
+	var/gift_type = pick(gift_type_list)
 	return gift_type

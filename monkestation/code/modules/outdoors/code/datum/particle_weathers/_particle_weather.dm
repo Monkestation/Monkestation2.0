@@ -194,6 +194,8 @@ GLOBAL_LIST_EMPTY(siren_objects)
 	var/fire_smothering_strength = 0
 
 	var/last_message = ""
+	///Our weather traits
+	var/weather_traits
 
 	var/plane_type = "Default"
 	var/eclipse = FALSE
@@ -313,7 +315,7 @@ GLOBAL_LIST_EMPTY(siren_objects)
 
 	var/atom/loc_to_check = mob_to_check.loc
 	while(loc_to_check != mob_turf)
-		if((immunity_type && HAS_TRAIT(loc_to_check, immunity_type)) || HAS_TRAIT(loc_to_check, TRAIT_WEATHER_IMMUNE))
+		if(((immunity_type && HAS_TRAIT(loc_to_check, immunity_type)) || HAS_TRAIT(loc_to_check, TRAIT_WEATHER_IMMUNE) || !(mob_turf.turf_flags & TURF_WEATHER)) && !(weather_traits & WEATHERTRAIT_NO_IMMUNITIES))
 			return
 		loc_to_check = loc_to_check.loc
 
@@ -331,15 +333,16 @@ GLOBAL_LIST_EMPTY(siren_objects)
 			affect_mob_effect(target, delta_time)
 	else
 		var/turf/mob_turf = get_turf(target)
-		switch(plane_type)
-			if("Default")
-				if(!SSmapping.level_has_all_traits(mob_turf.z, list(ZTRAIT_STATION)))
-					stop_weather_sound_effect(target)
-			if("Eclipse")
-				if(!SSmapping.level_has_all_traits(mob_turf.z, list(ZTRAIT_ECLIPSE)))
-					stop_weather_sound_effect(target)
-			else
-				stack_trace("[src] had invalid plane_type [plane_type]")
+		if(mob_turf)
+			switch(plane_type)
+				if("Default")
+					if(!is_station_level(mob_turf.z))
+						stop_weather_sound_effect(target)
+				if("Eclipse")
+					if(!is_eclipse_level(mob_turf.z))
+						stop_weather_sound_effect(target)
+				else
+					stack_trace("[src] had invalid plane_type [plane_type]")
 		messaged_mobs -= target
 
 /datum/particle_weather/proc/affect_mob_effect(mob/living/target, delta_time, calculated_damage)

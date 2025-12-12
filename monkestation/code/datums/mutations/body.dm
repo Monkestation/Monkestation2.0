@@ -33,7 +33,7 @@
 	)
 
 /datum/mutation/strong/Destroy()
-	for(var/body_part as anything in affected_limbs)
+	for(var/body_part in affected_limbs)
 		if(!isnull(affected_limbs[body_part]))
 			unregister_limb(null, affected_limbs[body_part])
 	return ..()
@@ -46,7 +46,7 @@
 	ADD_TRAIT(owner, TRAIT_BORG_PUNCHER, GENETIC_MUTATION)
 	RegisterSignal(owner, COMSIG_CARBON_POST_ATTACH_LIMB, PROC_REF(register_limb))
 	RegisterSignal(owner, COMSIG_CARBON_POST_REMOVE_LIMB, PROC_REF(unregister_limb))
-	for(var/body_part as anything in affected_limbs)
+	for(var/body_part in affected_limbs)
 		var/obj/item/bodypart/limb = owner.get_bodypart(check_zone(body_part))
 		if(!limb)
 			continue
@@ -60,7 +60,7 @@
 
 	REMOVE_TRAIT(owner, TRAIT_BORG_PUNCHER, GENETIC_MUTATION)
 	UnregisterSignal(owner, list(COMSIG_CARBON_POST_ATTACH_LIMB, COMSIG_CARBON_POST_REMOVE_LIMB))
-	for(var/body_part as anything in affected_limbs)
+	for(var/body_part in affected_limbs)
 		var/obj/item/bodypart/limb = owner.get_bodypart(check_zone(body_part))
 		if(!limb)
 			continue
@@ -72,7 +72,7 @@
 	if(isnull(owner) || GET_MUTATION_POWER(src) == 1)
 		return
 
-	for(var/body_part as anything in affected_limbs)
+	for(var/body_part in affected_limbs)
 		var/obj/item/bodypart/limb = affected_limbs[body_part]
 		limb.unarmed_damage_low += ((2 * GET_MUTATION_POWER(src)) - 2) // Bit cursed? Yep. Works with any mutation power? Yep.
 		limb.unarmed_damage_high += ((2 * GET_MUTATION_POWER(src)) - 2)

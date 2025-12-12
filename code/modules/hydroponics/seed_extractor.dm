@@ -91,7 +91,7 @@
 /obj/machinery/seed_extractor/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/seed_extractor/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(!isliving(user) || (user.istate & ISTATE_HARM))
@@ -197,7 +197,7 @@
 		piles[seed_id]["refs"] += WEAKREF(to_add)
 	else
 		var/list/seed_data = list()
-		seed_data["icon"] = text_ref(to_add.icon)
+		seed_data["icon"] = to_add.icon
 		seed_data["icon_state"] = to_add.icon_state
 		seed_data["name"] = capitalize(replacetext(to_add.name,"pack of ", ""));
 		seed_data["lifespan"] = to_add.lifespan
@@ -260,7 +260,7 @@
 		data["trait_db"] += trait_data
 	return data
 
-/obj/machinery/seed_extractor/ui_act(action, params)
+/obj/machinery/seed_extractor/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

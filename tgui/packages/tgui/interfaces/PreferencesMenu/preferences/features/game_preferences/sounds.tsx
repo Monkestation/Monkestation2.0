@@ -93,3 +93,16 @@ export const hearmusic: FeatureToggle = {
     'When enabled, hear music played in-game by the cassette player.',
   component: CheckboxInput,
 };
+
+export const sound_elevator: FeatureToggle = {
+  name: 'Enable elevator music',
+  category: 'SOUND',
+  component: CheckboxInput,
+};
+
+export const sound_ai_radio: FeatureToggle = {
+  name: 'Enable AI Radio Sounds',
+  category: 'SOUND',
+  description: 'When enabled, hear blips whenever AIs speak over the radio.',
+  component: CheckboxInput,
+};

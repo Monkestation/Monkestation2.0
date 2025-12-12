@@ -97,8 +97,8 @@
 	anchored_tabletop_offset = 4
 	anchored = FALSE
 	circuit = null
-	powerefficiency = 0.5
-	recharge_amount = 50
+	power_cost = 0.02 KILO WATTS // 250 units with the crap cell it has
+	recharge_amount = 0.05 KILO WATTS // 5 units recharged per process
 	show_ph = FALSE
 	// God's strongest coffee machine
 	dispensable_reagents = list(
@@ -120,7 +120,7 @@
 		/datum/reagent/consumable/enzyme,
 	)
 	/// Since we don't have a board to take from, we use this to give the dispenser a cell on spawning
-	var/cell_we_spawn_with = /obj/item/stock_parts/cell/crap/empty
+	var/cell_we_spawn_with = /obj/item/stock_parts/power_store/cell/crap/empty
 
 /obj/machinery/chem_dispenser/frontier_appliance/Initialize(mapload)
 	. = ..()
@@ -133,8 +133,8 @@
 
 /obj/machinery/chem_dispenser/frontier_appliance/RefreshParts()
 	. = ..()
-	powerefficiency = 0.5
-	recharge_amount = 50
+	power_cost = 0.02 KILO WATTS // 250 units with the crap cell it has
+	recharge_amount = 0.05 KILO WATTS // 5 units recharged per process
 
 /obj/machinery/chem_dispenser/frontier_appliance/examine(mob/user)
 	. = ..()
@@ -369,7 +369,7 @@ GLOBAL_LIST_INIT(cracker_reactions, cracker_reactions_list())
 		allowed_materials, \
 		INFINITY, \
 		MATCONTAINER_EXAMINE, \
-		_after_insert = TYPE_PROC_REF(/obj/machinery/colony_recycler, has_eaten_materials), \
+		container_signals = list(COMSIG_MATCONTAINER_ITEM_CONSUMED = TYPE_PROC_REF(/obj/machinery/colony_recycler, has_eaten_materials)), \
 	)
 
 /obj/machinery/colony_recycler/Destroy()
@@ -391,7 +391,7 @@ GLOBAL_LIST_INIT(cracker_reactions, cracker_reactions_list())
 
 	flick("recycler_grind", src)
 	playsound(src, item_recycle_sound, 50, TRUE)
-	use_power(min(active_power_usage * 0.25, amount_inserted / 100))
+	use_energy(min(active_power_usage * 0.25, amount_inserted / 100))
 
 	if(amount_inserted)
 		materials.retrieve_all(drop_location())
@@ -418,8 +418,8 @@ GLOBAL_LIST_INIT(cracker_reactions, cracker_reactions_list())
 	anchored = TRUE
 	density = FALSE
 	circuit = null
-	heating_power = 20 KW
-	efficiency = 10000
+	heating_energy = 20 KILO JOULES
+	efficiency = 100 MEGA JOULES / STANDARD_CELL_CHARGE
 	display_panel = TRUE
 	/// What this repacks into when its wrenched off a wall
 	var/repacked_type = /obj/item/wallframe/wall_heater
@@ -433,8 +433,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/space_heater/wall_mounted, 29)
 
 /obj/machinery/space_heater/wall_mounted/RefreshParts()
 	. = ..()
-	heating_power = 20 KW
-	efficiency = 10000
+	heating_energy = 20 KILO JOULES
+	efficiency = 100 MEGA JOULES / STANDARD_CELL_CHARGE
 
 /obj/machinery/space_heater/wall_mounted/default_deconstruction_crowbar()
 	return

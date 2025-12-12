@@ -20,41 +20,51 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 /datum/movespeed_modifier/borer_speed
 	multiplicative_slowdown = -0.5
 
+/datum/movespeed_modifier/borer_speed_bonus
+	multiplicative_slowdown = -0.4
+
 /datum/actionspeed_modifier/focus_speed
 	multiplicative_slowdown = -0.3
 	id = ACTIONSPEED_ID_BORER
 
+/// Is the given part of the willing host list.
+/mob/proc/is_willing_host(mob/infected)
+	return (infected?.mind in GLOB.willing_hosts)
+
 //so that we know if a mob has a borer (only humans should have one, but in case)
-/mob/proc/has_borer()
-	for(var/check_content in contents)
-		if(iscorticalborer(check_content))
-			return check_content
-	return FALSE
+/mob/proc/has_borer() as /mob/living/basic/cortical_borer
+	return locate(/mob/living/basic/cortical_borer) in src
 
 //this allows borers to slide under/through a door
-/obj/machinery/door/Bumped(atom/movable/movable_atom)
-	if(iscorticalborer(movable_atom) && density)
-		if(!do_after(movable_atom, 5 SECONDS, src))
+/obj/machinery/door/Bumped(atom/movable/AM)
+	if(iscorticalborer(AM) && density)
+		var/mob/living/basic/cortical_borer/borer = AM
+		if(!do_after(borer, ((borer.upgrade_flags & BORER_ENERGIC) ? 2.5 SECONDS : 5 SECONDS), src, hidden = TRUE))
 			return ..()
-		movable_atom.forceMove(drop_location())
-		to_chat(movable_atom, span_notice("You squeeze through [src]."))
+		borer.forceMove(drop_location())
+		to_chat(borer, span_notice("You squeeze through [src]."))
 		return
 	return ..()
 
 //so if a person is debrained, the borer is removed
 /obj/item/organ/internal/brain/Remove(mob/living/carbon/target, special = 0, no_id_transfer = FALSE)
 	. = ..()
-	var/mob/living/basic/cortical_borer/cb_inside = target.has_borer()
-	if(cb_inside)
-		cb_inside.leave_host()
+	target.has_borer()?.leave_host()
 
 //borers also create an organ, so you dont need to debrain someone
 /obj/item/organ/internal/borer_body
 	name = "engorged cortical borer"
 	desc = "the body of a cortical borer, full of human viscera, blood, and more."
 	zone = BODY_ZONE_HEAD
+	slot = ORGAN_SLOT_BORER_ORGAN
+	organ_flags = parent_type::organ_flags | ORGAN_PROMINENT
 	/// Ref to the borer who this organ belongs to
 	var/mob/living/basic/cortical_borer/borer
+
+/obj/item/organ/internal/borer_body/get_status_text(advanced, add_tooltips)
+	if(advanced && !(borer.upgrade_flags & BORER_STEALTH_MODE))
+		return conditional_tooltip("<font color='#ff9933'>Parasitic infection</font>", "Administer sugar and remove surgically.", add_tooltips)
+	return ..()
 
 /obj/item/organ/internal/borer_body/Destroy()
 	borer = null
@@ -63,19 +73,46 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 /obj/item/organ/internal/borer_body/Insert(mob/living/carbon/carbon_target, special, drop_if_replaced)
 	. = ..()
 	for(var/datum/borer_focus/body_focus as anything in borer.body_focuses)
-		body_focus.on_add()
+		body_focus.on_add(carbon_target, borer)
 	carbon_target.apply_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy, type)
+	if(carbon_target.is_willing_host(carbon_target))
+		carbon_target.add_mood_event("borer", /datum/mood_event/has_borer)
+
+	var/image/holder = carbon_target.hud_list[BORER_HUD]
+	var/mutable_appearance/MA = new /mutable_appearance(holder)
+	MA.icon_state = "virus_infected"
+	MA.layer = BELOW_MOB_LAYER
+	if(borer.neutered)
+		MA.color = COLOR_RED_GRAY
+	else
+		MA.color = COLOR_PURPLE_GRAY
+	MA.alpha = 200
+	holder.appearance = MA
+	var/datum/atom_hud/my_hud = GLOB.huds[DATA_HUD_BORER]
+	my_hud.add_atom_to_hud(carbon_target)
 
 //on removal, force the borer out
 /obj/item/organ/internal/borer_body/Remove(mob/living/carbon/carbon_target, special)
 	. = ..()
 	var/mob/living/basic/cortical_borer/cb_inside = carbon_target.has_borer()
-	for(var/datum/borer_focus/body_focus as anything in cb_inside.body_focuses)
-		body_focus.on_remove()
 	if(cb_inside)
+		for(var/datum/borer_focus/body_focus as anything in cb_inside.body_focuses)
+			body_focus.on_remove(carbon_target, borer)
 		cb_inside.leave_host()
 	carbon_target.remove_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy, type)
 	qdel(src)
+	if(carbon_target.is_willing_host(carbon_target))
+		carbon_target.add_mood_event("borer", /datum/mood_event/no_borer)
+	var/datum/atom_hud/borer/hud = GLOB.huds[DATA_HUD_BORER]
+	hud.remove_atom_from_hud(carbon_target)
+
+/obj/item/organ/internal/borer_body/on_life(seconds_per_tick, times_fired)
+	. = ..()
+	if(!iscarbon(owner) || !owner.reagents)
+		return
+
+	if(owner.is_willing_host(owner))
+		owner.reagents.metabolize(owner, seconds_per_tick, 0, can_overdose=TRUE)
 
 /obj/item/reagent_containers/borer
 	volume = 100
@@ -160,8 +197,8 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 
 	/// How much health you gain per level
 	var/health_per_level = 2.5
-	/// How much health regen you gain per level
-	var/health_regen_per_level = 0.002
+	/// How much health regen you gain per level. Before further upgrades brings borers up to 170 seconds to full heal at level 100, limit is 208 seconds
+	var/health_regen_per_level = 0.012
 
 	/// How much more chemical storage you gain per level
 	var/chem_storage_per_level = 20
@@ -187,8 +224,8 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 	/// What the host gains or loses with the borer
 	var/list/hosts_abilities = list()
 
-	/// How much health we regen per second while in a host (scales with max health) CODER NOTE: The value was 10.02 before. Assuming the first health_regen_per_level should be added to this. (0.002 as of now, so 0.102 instead of 0.1)
-	var/health_regen = 0.102
+	/// How much health we regen per second while in a host. Starts at a 60 seconds to fully to heal. A complete organ manipulation surgery takes 19.8 seconds to compelte with perfect timing to remove a borer
+	var/health_regen = 0.415
 	/// Holds the chems right before injection
 	var/obj/item/reagent_containers/reagent_holder
 	/// Lust a flavor kind of thing
@@ -270,6 +307,9 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 		possible_focuses += new focus_path
 
 	do_evolution(/datum/borer_evolution/base)
+
+	var/datum/atom_hud/borer_hud = GLOB.huds[DATA_HUD_BORER]
+	borer_hud.show_to(src)
 	INVOKE_ASYNC(src, PROC_REF(resolve_misc_issues)) // if things can fail, they will
 
 /mob/living/basic/cortical_borer/Destroy()
@@ -320,8 +360,6 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 	if(prob(5 * host_harm_multiplier * ((upgrade_flags & BORER_STEALTH_MODE) ? 0.1 : 1)) && human_host.getToxLoss() <= (80 * host_harm_multiplier))
 		human_host.adjustToxLoss(2.5 * seconds_per_tick * host_harm_multiplier, TRUE, TRUE)
 
-	human_host.apply_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy, type)
-
 	//cant do anything if the host has sugar
 	if(host_sugar())
 		if(!has_status_effect(/datum/status_effect/borer_sugar))
@@ -338,7 +376,7 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 	//this is regenerating health
 	if(health < maxHealth)
 		if(!(upgrade_flags & BORER_STEALTH_MODE))
-			adjustBruteLoss(maxHealth * -health_regen * seconds_per_tick)
+			adjustBruteLoss(-health_regen * seconds_per_tick)
 
 	//this is so they can evolve
 	mature()
@@ -365,13 +403,15 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 	// So their gen and a random. ex 1-288 is first gen named 288, 4-483 is fourth gen named 483
 	// Additionally we add in a random title,
 	// mainly so people can ahelp borers quicker and admins dont have to look through the logs of the 5 borers that were inside you
-	name = "[initial(name)] ([pick(borer_first_names)]: [pick(borer_second_names)]) ([generation]-[rand(100,999)])"
-
+	name = "[pick(borer_first_names)]: [pick(borer_second_names)]"
+	real_name = "([name]) ([generation]-[rand(100,999)])"
 	if(istype(/mob/living/basic/cortical_borer/empowered, src)) // lets also distinguish empowered borers from normal ones
 		name = "larger [name]"
+		real_name = "larger [real_name]"
 
 	if(generation == 0) //The first ever borer gets a special name
 		name = "The hivequeen [initial(name)]"
+		real_name = name
 
 // if things can go wrong, they will. So this proc is an emergency measure meant to resolve them
 /mob/living/basic/cortical_borer/proc/resolve_misc_issues()
@@ -405,6 +445,8 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 	if(upgrade_flags & BORER_SUGAR_IMMUNE)
 		return FALSE
 	if(human_host?.reagents?.has_reagent(/datum/reagent/consumable/sugar))
+		if(is_willing_host(human_host))
+			human_host.ForceContractDisease(new /datum/disease/anaphylaxis(), make_copy = FALSE, del_on_fail = TRUE)
 		return TRUE
 	return FALSE
 
@@ -434,6 +476,9 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 	var/obj/item/organ/internal/borer_body/borer_organ = locate() in human_host.organs
 	if(borer_organ)
 		borer_organ.Remove(human_host)
+
+	bodytemp_heat_damage_limit = initial(bodytemp_heat_damage_limit) //reset body tempature
+	bodytemp_cold_damage_limit = initial(bodytemp_cold_damage_limit)
 	forceMove(human_host.drop_location())
 	human_host = null
 
@@ -454,24 +499,55 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 	message = sanitize(message)
 	var/list/split_message = splittext(message, "")
 
+	/// Contains the fancy version of our message
+	var/text
+
 	//this is so they can talk in hivemind
 	if(split_message[1] == ";")
 		message = copytext(message, 2)
-		for(var/borer in GLOB.cortical_borers)
-			to_chat(borer, span_purple("<b>Cortical Hivemind: [src] sings, \"[message]\"</b>"))
-		for(var/mob/dead_mob in GLOB.dead_mob_list)
+		message = capitalize(message)
+		if (neutered) 	// Nuetered sound offtune.
+			text = span_red("<b>Cortical Hivemind: [real_name] croons, \"[message]\"</b>")
+		else if (generation == 0) 	//Hivequeens demand attention.
+			text = span_purplelarge("<b>Cortical Hivemind: [real_name] choruses, \"[message]\"</b>")
+		else
+			text = span_purple("<b>Cortical Hivemind: [real_name] sings, \"[message]\"</b>")
+
+		for (var/borer in GLOB.cortical_borers)
+			to_chat(borer, text, type = MESSAGE_TYPE_RADIO)
+
+		for (var/mob/dead_mob in GLOB.dead_mob_list)
 			var/link = FOLLOW_LINK(dead_mob, src)
-			to_chat(dead_mob, span_purple("[link] <b>Cortical Hivemind: [src] sings, \"[message]\"</b>"))
+			to_chat(dead_mob, "[link] [message]", type = MESSAGE_TYPE_RADIO)
+
 		src.log_talk("[key_name(src)] spoke into the Borer hivemind: [message]", LOG_SAY)
 		return
 
-	//this is when they speak normally
-	to_chat(human_host, span_purple("Cortical Link: [src] sings, \"[message]\""))
+	// This is when they speak normally
+	message = capitalize(message)
+
+	if (neutered)
+		text = span_red("Cortical Link: [real_name] croons, \"[message]\"")
+	else if (human_host.is_willing_host(human_host))
+		text = span_purplelarge("Cortical Link: [real_name] choruses, \"[message]\"")
+	else
+		text = span_purple("Cortical Link: [real_name] sings, \"[message]\"")
+
+	to_chat(human_host, text)
+	to_chat(src, text)
+	human_host.balloon_alert(human_host, "you hear a voice")
 	src.log_talk("[key_name(src)] spoke to [key_name(human_host)]: [message]", LOG_SAY)
-	to_chat(src, span_purple("Cortical Link: [src] sings, \"[message]\""))
-	for(var/mob/dead_mob in GLOB.dead_mob_list)
-		var/link = FOLLOW_LINK(dead_mob, src)
-		to_chat(dead_mob, span_purple("[link] Cortical Hivemind: [src] sings to [human_host], \"[message]\""))
+
+	if(neutered)
+		for(var/mob/dead_mob in GLOB.dead_mob_list)
+			var/link = FOLLOW_LINK(dead_mob, src)
+			to_chat(dead_mob, span_red("[link] Cortical Hivemind: [src] croons to [human_host], \"[message]\""))
+	else
+		for(var/mob/dead_mob in GLOB.dead_mob_list)
+			var/link = FOLLOW_LINK(dead_mob, src)
+			to_chat(dead_mob, span_purple("[link] Cortical Hivemind: [src] sings to [human_host], \"[message]\""))
+
+
 
 //borers should not be able to pull anything
 /mob/living/basic/cortical_borer/start_pulling(atom/movable/AM, state, force, supress_message)
@@ -487,21 +563,7 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 
 	maturity_age += DELTA_WORLD_TIME(SSmobs)
 
-	/**
-	 * In the beginning you start out with the following generation:
-	 * Evolution point per 60 seconds
-	 * Chemical point per 30 seconds
-	 */
-
-	//20:40, 15:30, 10:20, 5:10
-	var/maturity_threshold = 30
-	if(GLOB.successful_egg_number >= GLOB.objective_egg_borer_number)
-		maturity_threshold -= 3
-	if(length(GLOB.willing_hosts) >= GLOB.objective_willing_hosts)
-		maturity_threshold -= 15
-	if(GLOB.successful_blood_chem >= GLOB.objective_blood_borer)
-		maturity_threshold -= 4.5
-
+	var/maturity_threshold = calculate_maturation_discounts()
 	if(!chem_point_gained && maturity_age >= maturity_threshold)
 		if(chemical_evolution < limited_borer) //you can only have a default of 10 at a time
 			chemical_evolution++
@@ -526,5 +588,22 @@ GLOBAL_LIST_INIT(borer_second_name, world.file2list("monkestation/code/modules/a
 	max_chemical_storage = initial(max_chemical_storage) + (level * chem_storage_per_level)
 	chemical_regen = initial(chemical_regen) + (level * chem_regen_per_level)
 	health = clamp(old_health, 1, maxHealth)
+
+/mob/living/basic/cortical_borer/proc/calculate_maturation_discounts()
+	/**
+	 * In the beginning you start out with the following generation:
+	 * Evolution point per 60 seconds
+	 * Chemical point per 30 seconds
+	 */
+
+	//20:40, 15:30, 10:20, 5:10
+	var/maturity_threshold = 30
+	if(GLOB.successful_egg_number >= GLOB.objective_egg_borer_number)
+		maturity_threshold -= 5
+	if(length(GLOB.willing_hosts) >= GLOB.objective_willing_hosts)
+		maturity_threshold -= 12.5
+	if(GLOB.successful_blood_chem >= GLOB.objective_blood_borer)
+		maturity_threshold -= 5
+	return maturity_threshold
 
 #undef BODYTEMP_DIVISOR

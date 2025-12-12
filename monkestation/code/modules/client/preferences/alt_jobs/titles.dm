@@ -31,6 +31,7 @@
 		"Off-Duty Crew",
 		"Test Subject",
 		"Vagabond",
+		"Bananotrasen CEO",
 	)
 
 /datum/job/atmospheric_technician
@@ -162,6 +163,7 @@
 		"Head of Medical",
 		"Chief Physician",
 		"Head Physician",
+		"Sr. Attending Physician"
 	)
 
 /datum/job/clown
@@ -206,6 +208,8 @@
 		"Private Investigator",
 		"Forensic Scientist",
 		"Paranormal Investigator",
+		"Inspector",
+		"Gristled PI",
 	)
 
 /datum/job/doctor
@@ -291,6 +295,7 @@
 		"Felon",
 		"Inmate",
 		"Gamer",
+		"Head of Convicts",
 	)
 
 /datum/job/psychologist
@@ -332,6 +337,7 @@
 		"Mechatronic Engineer",
 		"Apprentice Roboticist",
 		"Ripperdoc",
+		"Cybertronic Engineer",
 	)
 
 /datum/job/science_guard //See orderly
@@ -380,6 +386,7 @@
 		"Apprentice Engineer",
 		"Engineering Trainee",
 		"Station Reliability Engineer",
+		"Builder",
 	)
 
 /datum/job/virologist

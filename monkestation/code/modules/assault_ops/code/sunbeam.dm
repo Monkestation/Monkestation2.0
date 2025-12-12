@@ -78,15 +78,20 @@
 		. += beam_overlay
 
 /obj/effect/sunbeam/process(seconds_per_tick)
-	if(!QDELETED(target_atom) && COOLDOWN_FINISHED(src, movement_delay))
+	if(COOLDOWN_FINISHED(src, movement_delay))
+		if (QDELETED(target_atom) || target_atom.z != z)
+			target_atom = find_target()
 		step_towards(src, target_atom)
 		COOLDOWN_START(src, movement_delay, movement_cooldown)
-
 	if(COOLDOWN_FINISHED(src, oblirerate_cooldown))
 		obliterate()
-
+	//Reset target if we are on the same turf
 	if(get_turf(src) == get_turf(target_atom))
-		qdel(src)
+		target_atom = null
+
+//Find the turf on the station to path to
+/obj/effect/sunbeam/proc/find_target()
+	return get_random_station_turf()
 
 /obj/effect/sunbeam/proc/obliterate()
 	if(obliteration_range_fire)
@@ -111,16 +116,33 @@
 
 			if(isliving(atom_to_obliterate))
 				var/mob/living/mob_to_obliterate = atom_to_obliterate
+				mob_to_obliterate.visible_message(span_danger("[mob_to_obliterate] gets absolutely obliterated by \the [src]! Holy fuck!"), \
+					span_userdanger("A blinding flash of light sears into your eyes as you're consumed by \the [src]!"))
 				mob_to_obliterate.apply_damage(200, BURN)
+				mob_to_obliterate.dust(TRUE)
 				continue
 
 	COOLDOWN_START(src, oblirerate_cooldown, obliteration_cooldown)
+
+//Since admin summoned sunbeam targets mobs, it uses a different subtype that paths towards any target atom
+//After destroying the target, it deletes itself
+/obj/effect/sunbeam/targeted
+
+/obj/effect/sunbeam/targeted/process(seconds_per_tick)
+	if(!QDELETED(target_atom) && COOLDOWN_FINISHED(src, movement_delay))
+		step_towards(src, target_atom)
+		COOLDOWN_START(src, movement_delay, movement_cooldown)
+	if(COOLDOWN_FINISHED(src, oblirerate_cooldown))
+		obliterate()
+	if(QDELETED(target_atom))
+		qdel(src)
 
 /datum/looping_sound/sunbeam
 	mid_sounds = list('monkestation/code/modules/assault_ops/sound/sunbeam_loop.ogg' = 1)
 	mid_length = 6.7 SECONDS
 	volume = 100
 	extra_range = 25
+
 ADMIN_VERB(spawn_sunbeam, R_FUN, FALSE, "Spawn Sunbeam", "Spawns an ICARUS sunbeam at your location and sends it towards a target.", ADMIN_CATEGORY_FUN)
 	var/mob/living/target_mob = tgui_input_list(user, "Select a mob", "Mob", GLOB.mob_living_list)
 
@@ -137,10 +159,10 @@ ADMIN_VERB(spawn_sunbeam, R_FUN, FALSE, "Spawn Sunbeam", "Spawns an ICARUS sunbe
 		var/edit_scale_x = tgui_input_number(user, "Scale X", "Scale X", SUNBEAM_DEFAULT_SCALE_X, 20, 0)
 		var/edit_scale_y = tgui_input_number(user, "Scale Y", "Scale Y", SUNBEAM_DEFAULT_SCALE_Y, 20, 0)
 
-		new /obj/effect/sunbeam(user.mob, target_mob, edit_movement_cooldown, edit_cooldown, edit_range_fire, edit_range_flatten, edit_scale_x, edit_scale_y)
+		new /obj/effect/sunbeam/targeted(user.mob, target_mob, edit_movement_cooldown, edit_cooldown, edit_range_fire, edit_range_flatten, edit_scale_x, edit_scale_y)
 		return
 
-	new /obj/effect/sunbeam(user.mob, target_mob)
+	new /obj/effect/sunbeam/targeted(user.mob, target_mob)
 
 
 /datum/round_event_control/icarus_sunbeam

@@ -4,9 +4,9 @@
 /**
  * For when you want to throw a person at something and have fun stuff happen
  *
- * This component is made for carbon mobs (really, humans), and allows its parent to throw themselves and perform tackles. This is done by enabling throw mode, then clicking on your
+ * This component is made for carbon mobs (really, humans), and allows its parent to throw themselves and perform tackles. This is done by enabling throw mode, then right-clicking on your
  *   intended target with an empty hand. You will then launch toward your target. If you hit a carbon, you'll roll to see how hard you hit them. If you hit a solid non-mob, you'll
- *   roll to see how badly you just messed yourself up. If, along your journey, you hit a table, you'll slam onto it and send up to MAX_TABLE_MESSES (8) /obj/items on the table flying,
+ *   roll to see how badly you just messed yourself up. If, along your journey, you hit a table, you'll slam onto it and send up to MAX_TABLE_MESSES /obj/items on the table flying,
  *   and take a bit of extra damage and stun for each thing launched.
  *
  * There are 2 separate """skill rolls""" involved here, which are handled and explained in [rollTackle()][/datum/component/tackler/proc/rollTackle] (for roll 1, carbons), and [splat()][/datum/component/tackler/proc/splat] (for roll 2, walls and solid objects)
@@ -18,7 +18,7 @@
 	var/tackling = TRUE
 	///How much stamina it takes to launch a tackle
 	var/stamina_cost
-	///Launching a tackle calls Knockdown on you for this long, so this is your cooldown. Once you stand back up, you can tackle again.
+	///Launching a tackle calls Knockdown on you for this long.
 	var/base_knockdown
 	///Your max range for how far you can tackle.
 	var/range
@@ -74,7 +74,7 @@
 	if(!modifiers[RIGHT_CLICK] || modifiers[ALT_CLICK] || modifiers[SHIFT_CLICK] || modifiers[CTRL_CLICK] || modifiers[MIDDLE_CLICK])
 		return
 
-	if(!user.throw_mode || user.get_active_held_item() || user.pulling || user.buckled || user.incapacitated())
+	if(!user.throw_mode || user.get_active_held_item() || user.buckled || user.incapacitated())
 		return
 
 	if(!clicked_atom || !(isturf(clicked_atom) || isturf(clicked_atom.loc)))
@@ -96,13 +96,17 @@
 		to_chat(user, span_warning("You're not ready to tackle!"))
 		return
 
-	if(user.has_movespeed_modifier(/datum/movespeed_modifier/shove)) // can't tackle if you just got shoved
+	if(user.has_movespeed_modifier(/datum/movespeed_modifier/shove)) // can't tackle if you just got shoved or tackled recently
 		to_chat(user, span_warning("You're too off balance to tackle!"))
 		return
+
+	if (user.pulling)
+		user.stop_pulling()
 
 	user.face_atom(clicked_atom)
 
 	tackling = TRUE
+	user.toggle_throw_mode()
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(checkObstacle))
 	playsound(user, 'sound/weapons/thudswoosh.ogg', 40, TRUE, -1)
 
@@ -118,6 +122,11 @@
 
 	user.Knockdown(base_knockdown, ignore_canstun = TRUE)
 	user.stamina.adjust(-stamina_cost)
+
+	if(ishuman(user) && !user.has_movespeed_modifier(/datum/movespeed_modifier/shove))
+		user.add_movespeed_modifier(/datum/movespeed_modifier/shove)
+		addtimer(CALLBACK(user, TYPE_PROC_REF(/mob/living/carbon, clear_shove_slowdown)), SHOVE_SLOWDOWN_LENGTH)
+
 	user.throw_at(clicked_atom, range, speed, user, FALSE)
 	addtimer(CALLBACK(src, PROC_REF(resetTackle)), base_knockdown, TIMER_STOPPABLE)
 	return(COMSIG_MOB_CANCEL_CLICKON)
@@ -148,7 +157,6 @@
 		tackle = null
 		return
 
-	user.toggle_throw_mode()
 	if(!iscarbon(hit))
 		if(hit.density)
 			INVOKE_ASYNC(src, PROC_REF(splat), user, hit)
@@ -162,6 +170,19 @@
 	var/roll = rollTackle(target)
 	tackling = FALSE
 	tackle.gentle = TRUE
+
+	if(T.check_block(user, 0, user.name, attack_type = LEAP_ATTACK))
+		user.visible_message(span_danger("[user]'s tackle is blocked by [target], softening the effect!"), span_userdanger("Your tackle is blocked by [target], softening the effect!"), ignored_mobs = target)
+		to_chat(T, span_userdanger("[target] blocks [user]'s tackle attempt, softening the effect!"))
+
+		//Prevent us from getting fucked over too harshly from a tackle being blocked
+		user.SetKnockdown(0)
+		user.get_up(TRUE)
+
+		if(ishuman(target) && !T.has_movespeed_modifier(/datum/movespeed_modifier/shove))
+			T.add_movespeed_modifier(/datum/movespeed_modifier/shove)
+			addtimer(CALLBACK(T, TYPE_PROC_REF(/mob/living/carbon, clear_shove_slowdown)), SHOVE_SLOWDOWN_LENGTH)
+		return COMPONENT_MOVABLE_IMPACT_FLIP_HITPUSH
 
 	switch(roll)
 		if(-INFINITY to -5)

@@ -15,7 +15,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	"Glass" = 'icons/hud/screen_glass.dmi',
 	"Trasen-Knox" = 'icons/hud/screen_trasenknox.dmi',
 	"Detective" = 'icons/hud/screen_detective.dmi',
-	"GrimyPoop" = 'monkestation/icons/hud/screen_grimypoop.dmi'
+	"GrimyPoop" = 'icons/hud/screen_grimypoop.dmi'
 ))
 
 /proc/ui_style2icon(ui_style)
@@ -34,6 +34,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 	var/atom/movable/screen/alien_plasma_display
 	var/atom/movable/screen/alien_queen_finder
+
+	var/atom/movable/screen/bloodling_bio_display
 
 	var/atom/movable/screen/combo/combo_display
 
@@ -103,7 +105,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 	var/atom/movable/screen/vis_holder/vis_holder
 
-	// subtypes can override this to force a specific UI style
+	/// Subtypes can override this to force a specific UI style
 	var/ui_style
 
 	var/list/team_finder_arrows = list()
@@ -185,9 +187,9 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	if(should_sight_scale(new_sight) == should_sight_scale(old_sight))
 		return
 
-	for(var/group_key as anything in master_groups)
+	for(var/group_key in master_groups)
 		var/datum/plane_master_group/group = master_groups[group_key]
-		group.transform_lower_turfs(src, current_plane_offset)
+		group.build_planes_offset(src, current_plane_offset)
 
 /datum/hud/proc/should_use_scale()
 	return should_sight_scale(mymob.sight)
@@ -209,10 +211,9 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	current_plane_offset = new_offset
 
 	SEND_SIGNAL(src, COMSIG_HUD_OFFSET_CHANGED, old_offset, new_offset)
-	if(should_use_scale())
-		for(var/group_key as anything in master_groups)
-			var/datum/plane_master_group/group = master_groups[group_key]
-			group.transform_lower_turfs(src, new_offset)
+	for(var/group_key in master_groups)
+		var/datum/plane_master_group/group = master_groups[group_key]
+		group.build_planes_offset(src, new_offset)
 
 /datum/hud/Destroy()
 	if(mymob.hud_used == src)
@@ -251,6 +252,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	cybernetics_ammo = null //monkestation edit - CYBERNETICS
 	blobpwrdisplay = null
 	alien_plasma_display = null
+	bloodling_bio_display = null
 	alien_queen_finder = null
 	combo_display = null
 

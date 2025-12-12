@@ -19,7 +19,7 @@
 	var/list/player_accounts = list()
 	var/list/audit_list = SSeconomy.audit_log
 
-	for(var/current_account as anything in SSeconomy.bank_accounts_by_id)
+	for(var/current_account in SSeconomy.bank_accounts_by_id)
 		var/datum/bank_account/current_bank_account = SSeconomy.bank_accounts_by_id[current_account]
 		if(!current_bank_account.account_job || !current_bank_account)
 			continue

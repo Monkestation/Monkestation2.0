@@ -256,6 +256,7 @@
 
 /obj/item/holosign_creator/robot_seat/attack_self(mob/user)
 	return
+
 /obj/structure/holosign/robot_seat
 	density = FALSE
 	desc = "Used to indicate a place to sit for a robot tourist. I better be careful."
@@ -273,10 +274,11 @@
 /obj/structure/holosign/robot_seat/attack_holosign(mob/living/user, list/modifiers)
 	return
 
-/obj/structure/holosign/robot_seat/attacked_by(obj/item/I, mob/living/user)
-	. = ..()
-	if(I.type == projector?.type && !linked_venue.linked_seats[src])
+/obj/structure/holosign/robot_seat/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(tool.type == projector?.type && !linked_venue.linked_seats[src])
 		qdel(src)
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
 /obj/structure/holosign/robot_seat/Destroy()
 	linked_venue.linked_seats -= src

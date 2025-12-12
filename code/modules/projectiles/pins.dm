@@ -25,32 +25,31 @@
 	if(isgun(newloc))
 		gun = newloc
 
-/obj/item/firing_pin/afterattack(atom/target, mob/user, proximity_flag)
-	. = ..()
-	if(proximity_flag)
-		if(isgun(target))
-			. |= AFTERATTACK_PROCESSED_ITEM
-			var/obj/item/gun/targeted_gun = target
-			var/obj/item/firing_pin/old_pin = targeted_gun.pin
-			if(old_pin?.pin_removable && (force_replace || old_pin.pin_hot_swappable))
-				if(Adjacent(user))
-					user.put_in_hands(old_pin)
-				else
-					old_pin.forceMove(targeted_gun.drop_location())
-				old_pin.gun_remove(user)
+/obj/item/firing_pin/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!isgun(interacting_with))
+		return NONE
 
-			if(!targeted_gun.pin)
-				if(!user.temporarilyRemoveItemFromInventory(src))
-					return .
-				if(gun_insert(user, targeted_gun))
-					if(old_pin)
-						balloon_alert(user, "swapped firing pin")
-					else
-						balloon_alert(user, "inserted firing pin")
-			else
-				to_chat(user, span_notice("This firearm already has a firing pin installed."))
+	var/obj/item/gun/targeted_gun = interacting_with
+	var/obj/item/firing_pin/old_pin = targeted_gun.pin
+	if(old_pin?.pin_removable && (force_replace || old_pin.pin_hot_swappable))
+		if(Adjacent(user))
+			user.put_in_hands(old_pin)
+		else
+			old_pin.forceMove(targeted_gun.drop_location())
+		old_pin.gun_remove(user)
 
+	if(!targeted_gun.pin)
+		if(!user.temporarilyRemoveItemFromInventory(src))
 			return .
+		if(gun_insert(user, targeted_gun))
+			if(old_pin)
+				balloon_alert(user, "swapped firing pin")
+			else
+				balloon_alert(user, "inserted firing pin")
+	else
+		to_chat(user, span_notice("This firearm already has a firing pin installed."))
+
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/firing_pin/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
@@ -190,13 +189,15 @@
 	fail_message = "dna check failed!"
 	var/unique_enzymes = null
 
-/obj/item/firing_pin/dna/afterattack(atom/target, mob/user, proximity_flag)
-	. = ..()
-	if(proximity_flag && iscarbon(target))
-		var/mob/living/carbon/M = target
+/obj/item/firing_pin/dna/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(iscarbon(interacting_with))
+		var/mob/living/carbon/M = interacting_with
 		if(M.dna && M.dna.unique_enzymes)
 			unique_enzymes = M.dna.unique_enzymes
 			balloon_alert(user, "dna lock set")
+			return ITEM_INTERACT_SUCCESS
+		return ITEM_INTERACT_BLOCKING
+	return ..()
 
 /obj/item/firing_pin/dna/pin_auth(mob/living/carbon/user)
 	if(user && user.dna && user.dna.unique_enzymes)
@@ -385,6 +386,63 @@
 
 /obj/item/firing_pin/monkey/pin_auth(mob/living/user)
 	if(!is_simian(user))
-		playsound(get_turf(src), "sound/creatures/monkey/monkey_screech_[rand(1,7)].ogg", 75, TRUE)
+		playsound(src, SFX_SCREECH, 75, TRUE)
 		return FALSE
 	return TRUE
+
+//Wastes firing pin - restricts a weapon to only outside when mining - based on area defines not z-level
+/obj/item/firing_pin/wastes
+	name = "Wastes firing pin"
+	desc = "This safety firing pin allows weapons to be fired only outside on the wastes of lavaland or icemoon."
+	fail_message = "Wastes check failed! - Make your way to lavaland or the Ice Caves!"
+	pin_hot_swappable = FALSE
+	pin_removable = FALSE
+	var/list/wastes = list( //locations you CAN use this
+		/area/icemoon/underground/unexplored, //surface outdoor of icemoon is not here because its the first floor, full of the most player activity.
+		/area/icemoon/underground/explored,
+
+		/area/lavaland/surface/outdoors,
+
+		/area/ocean/generated,
+		/area/ocean/generated_above,
+
+		/area/ruin,
+
+		/area/centcom/central_command_areas //can be used mostly anywhere on centcom, mainly for admins.
+	)
+	var/list/blacklist = list( //Locations you CANNOT use things with this pin specifically, for stuff like ghost role ruins.
+		/area/space, //no going outside
+		/area/ruin/space, //no explorers >:(
+		/area/ruin/powered/reebe // no stomping clock cults >:(
+	)
+
+/obj/item/firing_pin/wastes/pin_auth(mob/living/user)
+	if(!istype(user) || is_type_in_list(get_area(user), blacklist))
+		return FALSE
+	if (is_type_in_list(get_area(user), wastes)|| SSticker.current_state == GAME_STATE_FINISHED) //now unlocks after game is over. have fun
+		return TRUE
+	return FALSE
+
+/obj/item/firing_pin/cargo //Firing pin for use in cargo only
+	name = "cargo-locked firing pin"
+	desc = "A firing pin that scans the area to check if it is within the station's cargo bay or warehouse before firing."
+	fail_message = "Area check failed"
+	var/list/station_cargo = list(
+		/area/station/cargo/warehouse,
+		/area/station/cargo/storage,
+		/area/station/cargo/office,
+		/area/station/cargo/sorting,
+		)
+
+//Checks to see if the user in cargo or it's warehouse
+/obj/item/firing_pin/cargo/pin_auth(mob/living/user)
+	if(!istype(user))
+		return FALSE
+	if(is_type_in_list(get_area(user), station_cargo))
+		return TRUE
+	return FALSE
+
+
+/obj/item/firing_pin/cargo/unremovable
+	pin_removable = FALSE
+

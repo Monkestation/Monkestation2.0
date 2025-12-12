@@ -16,12 +16,11 @@
 	///Max range this atom can be thrown via telekinesis
 	var/tk_throw_range = 10
 	var/mob/pulledby = null
+	/// What language holder type to init as
 	var/initial_language_holder = /datum/language_holder
 	/// Holds all languages this mob can speak and understand
-	var/datum/language_holder/language_holder
-	/// The list of factions this atom belongs to
+	VAR_PRIVATE/datum/language_holder/language_holder
 	var/list/faction
-
 	var/verb_say = "says"
 	var/verb_ask = "asks"
 	var/verb_exclaim = "exclaims"
@@ -108,6 +107,14 @@
 	/// Will not automatically apply to the turf below you, you need to apply /datum/element/block_explosives in conjunction with this
 	var/explosion_block = 0
 
+	// Access levels, used in modules\jobs\access.dm
+	/// List of accesses needed to use this object: The user must possess all accesses in this list in order to use the object.
+	/// Example: If req_access = list(ACCESS_ENGINE, ACCESS_CE)- then the user must have both ACCESS_ENGINE and ACCESS_CE in order to use the object.
+	var/list/req_access
+	/// List of accesses needed to use this object: The user must possess at least one access in this list in order to use the object.
+	/// Example: If req_one_access = list(ACCESS_ENGINE, ACCESS_CE)- then the user must have either ACCESS_ENGINE or ACCESS_CE in order to use the object.
+	var/list/req_one_access
+
 	///can we grab this object?
 	var/cant_grab = FALSE
 
@@ -116,8 +123,8 @@
 /mutable_appearance/emissive_blocker/New()
 	. = ..()
 	// Need to do this here because it's overriden by the parent call
+	// This is a microop which is the sole reason why this child exists, because its static this is a really cheap way to set color without setting or checking it every time we create an atom
 	color = EM_BLOCK_COLOR
-	appearance_flags = EMISSIVE_APPEARANCE_FLAGS
 
 /atom/movable/Initialize(mapload, ...)
 	. = ..()
@@ -154,8 +161,8 @@
 		blocker.icon = icon
 		blocker.icon_state = icon_state
 		blocker.dir = dir
-		blocker.appearance_flags |= appearance_flags
-		blocker.plane = GET_NEW_PLANE(EMISSIVE_PLANE, PLANE_TO_OFFSET(plane))
+		blocker.appearance_flags = appearance_flags | EMISSIVE_APPEARANCE_FLAGS
+		blocker.plane = GET_NEW_PLANE(EMISSIVE_PLANE, PLANE_TO_OFFSET(plane)) // Takes a light path through the normal macro for a microop
 		// Ok so this is really cursed, but I want to set with this blocker cheaply while
 		// Still allowing it to be removed from the overlays list later
 		// So I'm gonna flatten it, then insert the flattened overlay into overlays AND the managed overlays list, directly
@@ -604,7 +611,7 @@
 			buckled_mob.set_glide_size(target, TRUE)
 
 /**
- * meant for movement with zero side effects. only use for objects that are supposed to move "invisibly" (like camera mobs or ghosts)
+ * meant for movement with zero side effects. only use for objects that are supposed to move "invisibly" (like eye mobs or ghosts)
  * if you want something to move onto a tile with a beartrap or recycler or tripmine or mouse without that object knowing about it at all, use this
  * most of the time you want forceMove()
  */
@@ -1124,6 +1131,7 @@
 	else
 		CRASH("No valid destination passed into forceMove")
 
+///For items that deploy and can be picked up again
 /atom/movable/proc/moveToNullspace()
 	return doMove(null)
 
@@ -1508,51 +1516,59 @@
 */
 
 /// Gets or creates the relevant language holder. For mindless atoms, gets the local one. For atom with mind, gets the mind one.
-/atom/movable/proc/get_language_holder(get_minds = TRUE) as /datum/language_holder
+/atom/movable/proc/get_language_holder()
 	RETURN_TYPE(/datum/language_holder)
+	if(QDELING(src))
+		CRASH("get_language_holder() called on a QDELing atom, \
+			this will try to re-instantiate the language holder that's about to be deleted, which is bad.")
+
 	if(!language_holder)
 		language_holder = new initial_language_holder(src)
 	return language_holder
 
 /// Grants the supplied language and sets omnitongue true.
-/atom/movable/proc/grant_language(language, understood = TRUE, spoken = TRUE, source = LANGUAGE_ATOM)
-	var/datum/language_holder/language_holder = get_language_holder()
-	return language_holder.grant_language(language, understood, spoken, source)
+/atom/movable/proc/grant_language(language, language_flags = ALL, source = LANGUAGE_ATOM)
+	return get_language_holder().grant_language(language, language_flags, source)
 
 /// Grants every language.
-/atom/movable/proc/grant_all_languages(understood = TRUE, spoken = TRUE, grant_omnitongue = TRUE, source = LANGUAGE_MIND)
-	var/datum/language_holder/language_holder = get_language_holder()
-	return language_holder.grant_all_languages(understood, spoken, grant_omnitongue, source)
+/atom/movable/proc/grant_all_languages(language_flags = ALL, grant_omnitongue = TRUE, source = LANGUAGE_MIND)
+	return get_language_holder().grant_all_languages(language_flags, grant_omnitongue, source)
+
+/// Grants partial understanding of a language.
+/atom/movable/proc/grant_partial_language(language, amount = 50, source = LANGUAGE_ATOM)
+	return get_language_holder().grant_partial_language(language, amount, source)
 
 /// Removes a single language.
-/atom/movable/proc/remove_language(language, understood = TRUE, spoken = TRUE, source = LANGUAGE_ALL)
-	var/datum/language_holder/language_holder = get_language_holder()
-	return language_holder.remove_language(language, understood, spoken, source)
+/atom/movable/proc/remove_language(language, language_flags = ALL, source = LANGUAGE_ALL)
+	return get_language_holder().remove_language(language, language_flags, source)
 
 /// Removes every language and sets omnitongue false.
 /atom/movable/proc/remove_all_languages(source = LANGUAGE_ALL, remove_omnitongue = FALSE)
-	var/datum/language_holder/language_holder = get_language_holder()
-	return language_holder.remove_all_languages(source, remove_omnitongue)
+	return get_language_holder().remove_all_languages(source, remove_omnitongue)
+
+/// Removes partial understanding of a language.
+/atom/movable/proc/remove_partial_language(language, source = LANGUAGE_ALL)
+	return get_language_holder().remove_partial_language(language, source)
+
+/// Removes all partial languages.
+/atom/movable/proc/remove_all_partial_languages(source = LANGUAGE_ALL)
+	return get_language_holder().remove_all_partial_languages(source)
 
 /// Adds a language to the blocked language list. Use this over remove_language in cases where you will give languages back later.
 /atom/movable/proc/add_blocked_language(language, source = LANGUAGE_ATOM)
-	var/datum/language_holder/language_holder = get_language_holder()
-	return language_holder.add_blocked_language(language, source)
+	return get_language_holder().add_blocked_language(language, source)
 
 /// Removes a language from the blocked language list.
 /atom/movable/proc/remove_blocked_language(language, source = LANGUAGE_ATOM)
-	var/datum/language_holder/language_holder = get_language_holder()
-	return language_holder.remove_blocked_language(language, source)
+	return get_language_holder().remove_blocked_language(language, source)
 
 /// Checks if atom has the language. If spoken is true, only checks if atom can speak the language.
-/atom/movable/proc/has_language(language, spoken = FALSE)
-	var/datum/language_holder/language_holder = get_language_holder()
-	return language_holder.has_language(language, spoken)
+/atom/movable/proc/has_language(language, flags_to_check)
+	return get_language_holder().has_language(language, flags_to_check)
 
 /// Checks if atom can speak the language.
 /atom/movable/proc/can_speak_language(language)
-	var/datum/language_holder/language_holder = get_language_holder()
-	return language_holder.can_speak_language(language)
+	return get_language_holder().can_speak_language(language)
 
 /// Returns the result of tongue specific limitations on spoken languages.
 /atom/movable/proc/could_speak_language(datum/language/language_path)
@@ -1560,33 +1576,37 @@
 
 /// Returns selected language, if it can be spoken, or finds, sets and returns a new selected language if possible.
 /atom/movable/proc/get_selected_language()
-	var/datum/language_holder/language_holder = get_language_holder()
-	return language_holder.get_selected_language()
+	return get_language_holder().get_selected_language()
 
 /// Gets a random understood language, useful for hallucinations and such.
 /atom/movable/proc/get_random_understood_language()
-	var/datum/language_holder/language_holder = get_language_holder()
-	return language_holder.get_random_understood_language()
+	return get_language_holder().get_random_understood_language()
+
+/// Gets a lazylist of all mutually understood languages.
+/atom/movable/proc/get_partially_understood_languages() as /list
+	RETURN_TYPE(/list)
+	return get_language_holder().best_mutual_languages
 
 /// Gets a random spoken language, useful for forced speech and such.
 /atom/movable/proc/get_random_spoken_language()
-	var/datum/language_holder/language_holder = get_language_holder()
-	return language_holder.get_random_spoken_language()
+	return get_language_holder().get_random_spoken_language()
 
 /// Copies all languages into the supplied atom/language holder. Source should be overridden when you
 /// do not want the language overwritten by later atom updates or want to avoid blocked languages.
-/atom/movable/proc/copy_languages(from_holder, source_override)
-	if(isatom(from_holder))
+/atom/movable/proc/copy_languages(datum/language_holder/from_holder, source_override)
+	if(ismovable(from_holder))
 		var/atom/movable/thing = from_holder
 		from_holder = thing.get_language_holder()
-	var/datum/language_holder/language_holder = get_language_holder()
-	return language_holder.copy_languages(from_holder, source_override)
 
-/// Empties out the atom specific languages and updates them according to the current atoms language holder.
-/// As a side effect, it also creates missing language holders in the process.
-/atom/movable/proc/update_atom_languages()
-	var/datum/language_holder/language_holder = get_language_holder()
-	return language_holder.update_atom_languages(src)
+	return get_language_holder().copy_languages(from_holder, source_override)
+
+/// Sets the passed path as the active language
+/// Returns the currently selected language if successful, if the language was not valid, returns null
+/atom/movable/proc/set_active_language(language_path)
+	var/datum/language_holder/our_holder = get_language_holder()
+	our_holder.selected_language = language_path
+
+	return our_holder.get_selected_language() // verifies its validity, returns it if successful.
 
 /**
  * Randomizes our atom's language to an uncommon language if:
@@ -1613,8 +1633,14 @@
 
 /* End language procs */
 
-//Returns an atom's power cell, if it has one. Overload for individual items.
-/atom/movable/proc/get_cell()
+/**
+ * Returns an atom's power cell, if it has one. Overload for individual items.
+ * Args
+ *
+ * * /atom/movable/interface - the atom that is trying to interact with this cell
+ * * mob/user - the mob that is holding the interface
+ */
+/atom/movable/proc/get_cell(atom/movable/interface, mob/user)
 	return
 
 /atom/movable/proc/can_be_pulled(user, grab_state, force)

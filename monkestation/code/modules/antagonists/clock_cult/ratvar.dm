@@ -1,7 +1,7 @@
 //I would like to do what beestation does and make both this and narsie be children of /eldritch but that would make this very non-modular
 GLOBAL_DATUM(cult_ratvar, /obj/ratvar)
 
-#define RATVAR_CONSUME_RANGE 12
+#define RATVAR_CONSUME_RANGE 20
 #define RATVAR_GRAV_PULL 10
 #define RATVAR_SINGULARITY_SIZE 11
 
@@ -24,7 +24,7 @@ GLOBAL_DATUM(cult_ratvar, /obj/ratvar)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	flags_1 = SUPERMATTER_IGNORES_1
 
-	/// The singularity component to move around Rat'var.
+	/// The singularity component to move around Ratvar.
 	/// A weak ref in case an admin removes the component to preserve the functionality.
 	var/datum/weakref/singularity
 
@@ -50,7 +50,7 @@ GLOBAL_DATUM(cult_ratvar, /obj/ratvar)
 	. = ..()
 	desc = "[text2ratvar("That's Ratvar, the Clockwork Justicar. The great one has risen.")]"
 	sound_to_playing_players('monkestation/sound/effects/ratvar_reveal.ogg', 100)
-	send_to_playing_players(span_reallybig(span_ratvar("The bluespace veil gives way to Rat'var, his light shall shine upon all mortals!")))
+	send_to_playing_players(span_reallybig(span_ratvar("The bluespace veil gives way to Ratvar, his light shall shine upon all mortals!")))
 	UnregisterSignal(src, COMSIG_ATOM_BSA_BEAM)
 	SSshuttle.registerHostileEnvironment(src)
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(clockcult_ending_start)), 5 SECONDS)
@@ -64,7 +64,7 @@ GLOBAL_DATUM(cult_ratvar, /obj/ratvar)
 	if(area)
 		var/mutable_appearance/alert_overlay = mutable_appearance('monkestation/icons/obj/clock_cult/clockwork_effects.dmi', "ratvar_alert")
 		notify_ghosts(
-			"Rat'var has risen in [area]. Reach out to the Justicar to be given a new shell for your soul.",
+			"Ratvar has risen in [area]. Reach out to the Justicar to be given a new shell for your soul.",
 			source = src,
 			alert_overlay = alert_overlay,
 			action = NOTIFY_PLAY,
@@ -111,13 +111,17 @@ GLOBAL_DATUM(cult_ratvar, /obj/ratvar)
 
 /obj/ratvar/attack_ghost(mob/user)
 	. = ..()
+	if(is_banned_from(user.ckey, list(ROLE_CLOCK_CULTIST)))
+		return
 	var/mob/living/basic/drone/created_drone = new /mob/living/basic/drone/cogscarab(get_turf(src))
 	created_drone.flags_1 |= (flags_1 & ADMIN_SPAWNED_1)
 	if(user.mind)
 		user.mind.transfer_to(created_drone, TRUE)
 	else if(isobserver(user))
 		created_drone.PossessByPlayer(user.key)
+		created_drone.mind_initialize()
 	else
+		qdel(created_drone)
 		return
 	created_drone.mind.add_antag_datum(/datum/antagonist/clock_cultist)
 
@@ -134,13 +138,14 @@ GLOBAL_DATUM(cult_ratvar, /obj/ratvar)
 
 /proc/clockcult_ending_start()
 	SSsecurity_level.set_level(SEC_LEVEL_LAMBDA)
-	priority_announce("Huge gravitational-energy spike detected emminating from a neutron star near your sector. Event has been determined to be survivable by 0% of life. \
-					   ESTIMATED TIME UNTIL ENERGY PULSE REACHES [GLOB.station_name]: 56 SECONDS. Godspeed crew, glory to Nanotrasen. -Admiral Telvig.", \
-					   "Central Command Anomolous Materials Division", 'sound/misc/airraid.ogg')
+	priority_announce("Huge gravitational-energy spike detected emminating from a neutron star [text2ratvar("THEY LIE")] near your sector. Event has been determined to be \
+						survivable by 0% of life. ESTIMATED TIME UNTIL ENERGY PULSE REACHES [GLOB.station_name]: 56 SECONDS. Godspeed crew, glory to Nanotrasen. \
+						-Admiral W[text2ratvar("orthless")].", \
+						"Central Command Anomolous Materials Division", 'sound/misc/airraid.ogg')
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(clockcult_pre_ending)), 50 SECONDS)
 
 /proc/clockcult_pre_ending()
-	priority_announce("Station [GLOB.station_name] is in the wa#e %o[text2ratvar("YOU WILL SEE THE LIGHT")] action imminent. Glory[text2ratvar(" TO ENG'INE")].", \
+	priority_announce("Station [GLOB.station_name] is in the wa#e %o[text2ratvar("YOU WILL SEE THE LIGHT")] action imminent. Glory[text2ratvar(" TO ENGINE")].", \
 					  "Central Command Anomolous Materials Division", 'sound/machines/alarm.ogg')
 	for(var/mob/player_mob in GLOB.player_list)
 		if(player_mob.client)
@@ -150,19 +155,22 @@ GLOBAL_DATUM(cult_ratvar, /obj/ratvar)
 
 /proc/clockcult_final_ending()
 	SSshuttle.lockdown = TRUE
-	for(var/mob/lit_mob in GLOB.mob_list)
-		if(lit_mob.client)
-			lit_mob.client.color = LIGHT_COLOR_CLOCKWORK
-			animate(lit_mob.client, color=COLOR_WHITE, time = 5)
-			SEND_SOUND(lit_mob, sound(null))
-			SEND_SOUND(lit_mob, sound('sound/magic/fireball.ogg'))
-		if(!IS_CLOCK(lit_mob) && isliving(lit_mob))
-			var/mob/living/very_lit_mob = lit_mob
-			very_lit_mob.fire_stacks = 1000
-			very_lit_mob.ignite_mob()
-			very_lit_mob.emote("scream")
+	for(var/mob/player_mob in GLOB.player_list)
+		player_mob.client.color = LIGHT_COLOR_CLOCKWORK
+		animate(player_mob.client, color = COLOR_WHITE, time = 5)
+		SEND_SOUND(player_mob, sound(null))
+		SEND_SOUND(player_mob, sound('sound/magic/fireball.ogg'))
+
+	for(var/mob/living/lit_mob in GLOB.mob_living_list)
+		if(!IS_CLOCK(lit_mob))
+			lit_mob.fire_stacks = 100
+			lit_mob.ignite_mob()
+			lit_mob.emote("scream")
 	sleep(1.5 SECONDS)
 	SSticker.force_ending = TRUE
+
+/datum/client_colour/ratvar_vision
+	colour = LIGHT_COLOR_CLOCKWORK
 
 //ratvar_act stuff
 
@@ -236,7 +244,7 @@ GLOBAL_DATUM(cult_ratvar, /obj/ratvar)
 	var/clockwork = FALSE
 
 /obj/machinery/computer/ratvar_act()
-	if(!clockwork)
+	if(!clockwork && !special_appearance)
 		clockwork = TRUE
 		icon_screen = "ratvar[rand(1, 3)]"
 		icon_keyboard = "ratvar_key[rand(1, 2)]"

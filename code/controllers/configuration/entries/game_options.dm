@@ -160,10 +160,10 @@
 	default = "All threats to the station have passed. Security may not have weapons visible, privacy laws are once again fully enforced."
 
 /datum/config_entry/string/alert_blue_upto
-	default = "The station has received reliable information about possible hostile activity on the station. Security staff may have weapons visible, random searches are permitted."
+	default = "The station has received reliable information about possible hostile activity on the station. Security staff may have weapons visible, searches are permitted with probable cause."
 
 /datum/config_entry/string/alert_blue_downto
-	default = "The immediate threat has passed. Security may no longer have weapons drawn at all times, but may continue to have them visible. Random searches are still allowed."
+	default = "The immediate threat has passed. Security may no longer have weapons drawn at all times, but may continue to have them visible. Searches are permitted with probable cause."
 
 /datum/config_entry/string/alert_red_upto
 	default = "There is an immediate serious threat to the station. Security may have weapons unholstered at all times. Random searches are allowed and advised."
@@ -179,7 +179,7 @@
 	default = "Central Command has ordered the Epsilon security level on the station. Consider all contracts terminated."
 
 /datum/config_entry/string/alert_yellow
-	default = "The security alert level has been changed to yellow. There is currently a critical engineering issue on board %STATION_NAME%. Crewmembers are advised to avoid damaged areas, and report them as needed."
+	default = "The security alert level has been changed to yellow. There is currently a critical engineering issue on board %STATION_NAME%. Station automatous drones have been granted relaxed protocols temporarily. Crewmembers are advised to avoid damaged areas, and report them as needed."
 
 /datum/config_entry/string/alert_amber
 	default = "The security alert level has been changed to amber. There is an ongoing C-B-R-N threat to the station. Crewmembers are advised to don protective gear, and personal oxygen systems until the alert is lifted. Report any symptoms to medical personnel immediately."
@@ -363,6 +363,11 @@
 
 /datum/config_entry/number/space_budget
 	default = 16
+	integer = FALSE
+	min_val = 0
+
+/datum/config_entry/number/oshan_budget
+	default = 60
 	integer = FALSE
 	min_val = 0
 

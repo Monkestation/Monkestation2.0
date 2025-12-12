@@ -18,7 +18,7 @@
 	mob.whisper("...[pick(rune_words_rune)]...")
 
 	var/list/turf_list = list()
-	for(var/turf/T in spiral_block(get_turf(mob), 40))
+	for(var/turf/T in spiral_block(get_turf(mob), 10))
 		if(locate(/obj/structure/grille) in T.contents)
 			continue
 		if(istype(get_area(T), /area/station/service/chapel))

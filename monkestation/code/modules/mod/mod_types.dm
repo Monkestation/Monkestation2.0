@@ -31,7 +31,7 @@
 	icon_state = "praetorian-control"
 	theme = /datum/mod_theme/blueshield
 	starting_frequency = MODLINK_FREQ_NANOTRASEN
-	applied_cell = /obj/item/stock_parts/cell/super
+	applied_cell = /obj/item/stock_parts/power_store/cell/super
 	applied_modules = list(
 		/obj/item/mod/module/storage/large_capacity,
 		/obj/item/mod/module/magnetic_harness,

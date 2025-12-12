@@ -1,12 +1,13 @@
 /obj/machinery/button/elevator
 	name = "elevator button"
 	desc = "Go back. Go back. Go back. Can you operate the elevator."
-	icon_state = "hallctrl"
-	skin = "hallctrl"
+	base_icon_state = "tram"
+	icon_state = "tram"
+	can_alter_skin = FALSE
+	light_color = LIGHT_COLOR_DARK_BLUE
 	device_type = /obj/item/assembly/control/elevator
 	req_access = list()
 	id = 1
-	light_mask = "hall-light-mask"
 
 /obj/machinery/button/elevator/Initialize(mapload, ndir, built)
 	. = ..()
@@ -34,7 +35,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/elevator, 32)
 
 	lift_weakref = WEAKREF(lift)
 
-/obj/item/assembly/control/elevator/LateInitialize()
+/obj/item/assembly/control/elevator/LateInitialize(mapload_arg)
 	var/datum/lift_master/lift = get_lift()
 	if(!lift)
 		log_mapping("Elevator call button at [AREACOORD(src)] found no associated lift to link with, this may be a mapping error.")

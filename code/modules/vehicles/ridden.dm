@@ -5,6 +5,7 @@
 	buckle_lying = 0
 	pass_flags_self = PASSTABLE
 	COOLDOWN_DECLARE(message_cooldown)
+	interaction_flags_click = NEED_DEXTERITY
 
 /obj/vehicle/ridden/examine(mob/user)
 	. = ..()
@@ -28,27 +29,28 @@
 	add_occupant(M)
 	return ..()
 
-/obj/vehicle/ridden/attackby(obj/item/I, mob/user, params)
-	if(!key_type || is_key(inserted_key) || !is_key(I))
+/obj/vehicle/ridden/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(!key_type || is_key(inserted_key) || !is_key(attacking_item))
 		return ..()
-	if(!user.transferItemToLoc(I, src))
-		to_chat(user, span_warning("[I] seems to be stuck to your hand!"))
+	if(!user.transferItemToLoc(attacking_item, src))
+		to_chat(user, span_warning("[attacking_item] seems to be stuck to your hand!"))
 		return
-	to_chat(user, span_notice("You insert \the [I] into \the [src]."))
+	to_chat(user, span_notice("You insert \the [attacking_item] into \the [src]."))
 	if(inserted_key) //just in case there's an invalid key
 		inserted_key.forceMove(drop_location())
-	inserted_key = I
+	inserted_key = attacking_item
 
-/obj/vehicle/ridden/AltClick(mob/user)
-	if(!inserted_key || !user.can_perform_action(src, NEED_DEXTERITY))
-		return ..()
+/obj/vehicle/ridden/click_alt(mob/user)
+	if(!inserted_key)
+		return CLICK_ACTION_BLOCKING
 	if(!is_occupant(user))
 		to_chat(user, span_warning("You must be riding the [src] to remove [src]'s key!"))
-		return
+		return CLICK_ACTION_BLOCKING
 	to_chat(user, span_notice("You remove \the [inserted_key] from \the [src]."))
 	inserted_key.forceMove(drop_location())
 	user.put_in_hands(inserted_key)
 	inserted_key = null
+	return CLICK_ACTION_SUCCESS
 
 /obj/vehicle/ridden/user_buckle_mob(mob/living/M, mob/user, check_loc = TRUE)
 	if(!in_range(user, src) || !in_range(M, src))

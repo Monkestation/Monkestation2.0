@@ -42,34 +42,42 @@
 //KNOCKDOWN
 /datum/status_effect/incapacitating/knockdown
 	id = "knockdown"
+	///Boolean that, if TRUE, will prevent the person getting this effect from dropping items.
+	var/prevent_drop = FALSE
 
 /datum/status_effect/incapacitating/knockdown/on_apply()
 	. = ..()
 	if(!.)
 		return
+
+	// anti-drop logic (for shuttle dock or tripped)
+	if(prevent_drop)
+		for(var/obj/item/held_item in owner.held_items)
+			ADD_TRAIT(held_item, TRAIT_NODROP, TRAIT_STATUS_EFFECT(id))
+
+	// Apply floored trait so the mob falls over
 	ADD_TRAIT(owner, TRAIT_FLOORED, TRAIT_STATUS_EFFECT(id))
+
+	// Clean up no-drop immediately after application
+	if(prevent_drop)
+		addtimer(CALLBACK(src, PROC_REF(clear_prevent_drop)), 0)
+
+/datum/status_effect/incapacitating/knockdown/proc/clear_prevent_drop()
+	for(var/obj/item/held_item in owner.held_items)
+		REMOVE_TRAIT(held_item, TRAIT_NODROP, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/incapacitating/knockdown/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_FLOORED, TRAIT_STATUS_EFFECT(id))
 	owner.knockdown_diminish = 1
 	return ..()
 
-// stupid subtype of knockdown for the sole purpose of not being considered a knockdown (to prevent shovestuns) but still having the same effects
+// cleaner tripped version — now uses prevent_drop flag instead of the hack
 /datum/status_effect/incapacitating/knockdown/tripped
 	id = "tripped"
 
 /datum/status_effect/incapacitating/knockdown/tripped/on_apply()
-	// this is a horrible hack to make it so tripping doesn't drop items.
-	// we just apply nodrop to their held items right before tripping them,
-	// and then immediately remove it after the status effect is applied.
-	// i'm sorry ~Lucy
-	var/list/stupid_horrible_list = list()
-	for(var/obj/item/item in owner.held_items)
-		ADD_TRAIT(item, TRAIT_NODROP, TRAIT_STATUS_EFFECT(id))
-		stupid_horrible_list += item
-	. = ..()
-	for(var/obj/item/item in stupid_horrible_list)
-		REMOVE_TRAIT(item, TRAIT_NODROP, TRAIT_STATUS_EFFECT(id))
+	prevent_drop = TRUE
+	return ..()
 
 //IMMOBILIZED
 /datum/status_effect/incapacitating/immobilized
@@ -99,6 +107,21 @@
 /datum/status_effect/incapacitating/paralyzed/on_remove()
 	owner.remove_traits(list(TRAIT_INCAPACITATED, TRAIT_IMMOBILIZED, TRAIT_FLOORED, TRAIT_HANDS_BLOCKED), TRAIT_STATUS_EFFECT(id))
 	owner.paralyze_diminish = 1
+	return ..()
+
+//DAZED
+/// This status effect represents anything that leaves a character unable to perform basic tasks (interrupting do-afters, for example), but doesn't incapacitate them further than that (no stuns etc..)
+/datum/status_effect/incapacitating/dazed
+	id = "dazed"
+
+/datum/status_effect/incapacitating/dazed/on_apply()
+	. = ..()
+	if(!.)
+		return
+	ADD_TRAIT(owner, TRAIT_INCAPACITATED, TRAIT_STATUS_EFFECT(id))
+
+/datum/status_effect/incapacitating/dazed/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_INCAPACITATED, TRAIT_STATUS_EFFECT(id))
 	return ..()
 
 //INCAPACITATED
@@ -340,21 +363,20 @@
 /datum/status_effect/crusher_mark
 	id = "crusher_mark"
 	duration = 300 //if you leave for 30 seconds you lose the mark, deal with it
-	status_type = STATUS_EFFECT_REPLACE
+	status_type = STATUS_EFFECT_REFRESH
 	alert_type = null
 	var/mutable_appearance/marked_underlay
-	var/obj/item/kinetic_crusher/hammer_synced
+	var/boosted = FALSE
 
 
-/datum/status_effect/crusher_mark/on_creation(mob/living/new_owner, obj/item/kinetic_crusher/new_hammer_synced)
+/datum/status_effect/crusher_mark/on_creation(mob/living/new_owner, was_boosted)
 	. = ..()
-	if(.)
-		hammer_synced = new_hammer_synced
+	boosted = was_boosted
 
 /datum/status_effect/crusher_mark/on_apply()
 	var/list/factions = list(FACTION_MINING, FACTION_BOSS) // MONKESTATION ADDITION
 	if(faction_check(owner.faction, factions)) //MONKESTATION EDIT, only marks mining mobs no longer large mobs
-		marked_underlay = mutable_appearance('icons/effects/effects.dmi', "shield2")
+		marked_underlay = mutable_appearance('icons/effects/effects.dmi', boosted ? "shield" : "shield2")
 		marked_underlay.pixel_x = -owner.pixel_x
 		marked_underlay.pixel_y = -owner.pixel_y
 		owner.underlays += marked_underlay
@@ -362,7 +384,6 @@
 	return FALSE
 
 /datum/status_effect/crusher_mark/Destroy()
-	hammer_synced = null
 	if(owner)
 		owner.underlays -= marked_underlay
 	marked_underlay = null
@@ -371,6 +392,18 @@
 /datum/status_effect/crusher_mark/be_replaced()
 	owner.underlays -= marked_underlay //if this is being called, we should have an owner at this point.
 	..()
+
+/datum/status_effect/crusher_mark/admin //admin version that marks any mob
+	id = "admin_crusher_mark"
+	duration = 3000
+
+/datum/status_effect/crusher_mark/admin/on_apply() //this one marks ANYONE :>
+	marked_underlay = mutable_appearance('icons/effects/effects.dmi', "shield2")
+	marked_underlay.pixel_x = -owner.pixel_x
+	marked_underlay.pixel_y = -owner.pixel_y
+	owner.underlays += marked_underlay
+	return TRUE
+
 
 /datum/status_effect/stacking/saw_bleed
 	id = "saw_bleed"
@@ -383,6 +416,16 @@
 	overlay_state = "bleed"
 	underlay_state = "bleed"
 	var/bleed_damage = 200
+
+/datum/status_effect/stacking/saw_bleed/sickle //monke addition
+	id = "sickle_bleed"
+	tick_interval = 6
+	delay_before_decay = 100 //these take longer to decay
+	overlay_file = 'icons/effects/bleed.dmi'
+	underlay_file = 'icons/effects/bleed.dmi'
+	overlay_state = "bleed"
+	underlay_state = "bleed"
+	bleed_damage = 125 //weaker than cleaving saw bleed due to being more available
 
 /datum/status_effect/stacking/saw_bleed/fadeout_effect()
 	new /obj/effect/temp_visual/bleed(get_turf(owner))
@@ -525,6 +568,27 @@
 	. = ..()
 	deltimer(timerid)
 
+/datum/status_effect/progenitor_curse
+	id= "progenitor_curse"
+	tick_interval = 1.5 SECONDS //how often a hand is shot
+	duration = 30 SECONDS
+	alert_type = null
+
+/datum/status_effect/progenitor_curse/tick()
+	if(owner.stat == DEAD)
+		return
+	var/grab_dir = turn(owner.dir, rand(-180, 180)) //grab them from a random direction
+	var/turf/spawn_turf = get_ranged_target_turf(owner, grab_dir, 5)
+	if(spawn_turf)
+		grasp(spawn_turf)
+
+/datum/status_effect/progenitor_curse/proc/grasp(turf/spawn_turf)
+	set waitfor = FALSE
+	new/obj/effect/temp_visual/dir_setting/curse/grasp_portal(spawn_turf, owner.dir)
+	playsound(spawn_turf, pick('sound/effects/curse1.ogg','sound/effects/curse2.ogg','sound/effects/curse3.ogg'), 80, 1, -1)
+	var/obj/projectile/curse_hand/progenitor/pro = new (spawn_turf)
+	pro.preparePixelProjectile(owner, spawn_turf)
+	pro.fire()
 
 /datum/status_effect/gonbola_pacify
 	id = "gonbolaPacify"
@@ -930,21 +994,21 @@
 		to_chat(living, span_notice("You manage to get some of the ants off!"))
 		ant_covered.ants_remaining -= 10 // 5 Times more ants removed per second than just waiting in place
 
-/datum/status_effect/stagger
-	id = "stagger"
+/datum/status_effect/rebuked
+	id = "rebuked"
 	status_type = STATUS_EFFECT_REFRESH
 	duration = 30 SECONDS
 	tick_interval = 1 SECONDS
 	alert_type = null
 
-/datum/status_effect/stagger/on_apply()
+/datum/status_effect/rebuked/on_apply()
 	owner.next_move_modifier *= 1.5
 	if(ishostile(owner))
 		var/mob/living/simple_animal/hostile/simple_owner = owner
 		simple_owner.ranged_cooldown_time *= 2.5
 	return TRUE
 
-/datum/status_effect/stagger/on_remove()
+/datum/status_effect/rebuked/on_remove()
 	. = ..()
 	if(QDELETED(owner))
 		return

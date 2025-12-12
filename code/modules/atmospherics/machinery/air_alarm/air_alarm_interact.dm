@@ -100,25 +100,25 @@
 		new /obj/item/stack/cable_coil(loc, 3)
 	qdel(src)
 
-/obj/machinery/airalarm/attackby(obj/item/W, mob/user, params)
+/obj/machinery/airalarm/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	update_last_used(user)
 	switch(buildstage)
 		if(AIR_ALARM_BUILD_COMPLETE)
-			if(W.GetID())// trying to unlock the interface with an ID card
+			if(attacking_item.GetID())// trying to unlock the interface with an ID card
 				togglelock(user)
 				return
-			else if(panel_open && is_wire_tool(W))
+			else if(panel_open && is_wire_tool(attacking_item))
 				wires.interact(user)
 				return
 		if(AIR_ALARM_BUILD_NO_WIRES)
-			if(istype(W, /obj/item/stack/cable_coil))
-				var/obj/item/stack/cable_coil/cable = W
+			if(istype(attacking_item, /obj/item/stack/cable_coil))
+				var/obj/item/stack/cable_coil/cable = attacking_item
 				if(cable.get_amount() < 5)
 					to_chat(user, span_warning("You need five lengths of cable to wire the air alarm!"))
 					return
 				user.visible_message(span_notice("[user.name] wires the air alarm."), \
 									span_notice("You start wiring the air alarm..."))
-				if (do_after(user, 20, target = src))
+				if (do_after(user, 2 SECONDS, target = src))
 					if (cable.get_amount() >= 5 && buildstage == AIR_ALARM_BUILD_NO_WIRES)
 						cable.use(5)
 						to_chat(user, span_notice("You wire the air alarm."))
@@ -132,17 +132,17 @@
 						update_appearance()
 				return
 		if(AIR_ALARM_BUILD_NO_CIRCUIT)
-			if(istype(W, /obj/item/electronics/airalarm))
-				if(user.temporarilyRemoveItemFromInventory(W))
+			if(istype(attacking_item, /obj/item/electronics/airalarm))
+				if(user.temporarilyRemoveItemFromInventory(attacking_item))
 					to_chat(user, span_notice("You insert the circuit."))
 					buildstage = AIR_ALARM_BUILD_NO_WIRES
 					update_appearance()
-					qdel(W)
+					qdel(attacking_item)
 				return
 
-			if(istype(W, /obj/item/electroadaptive_pseudocircuit))
-				var/obj/item/electroadaptive_pseudocircuit/P = W
-				if(!P.adapt_circuit(user, 25))
+			if(istype(attacking_item, /obj/item/electroadaptive_pseudocircuit))
+				var/obj/item/electroadaptive_pseudocircuit/P = attacking_item
+				if(!P.adapt_circuit(user, 0.025 * STANDARD_CELL_CHARGE))
 					return
 				user.visible_message(span_notice("[user] fabricates a circuit and places it into [src]."), \
 				span_notice("You adapt an air alarm circuit and slot it into the assembly."))

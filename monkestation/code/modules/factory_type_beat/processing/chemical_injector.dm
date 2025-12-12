@@ -37,7 +37,7 @@
 	if(crystal_inside)
 		. += mutable_appearance(icon, "chemical_injection-crystal")
 
-/obj/machinery/bouldertech/chemical_injector/attackby(obj/item/attacking_item, mob/user, params)
+/obj/machinery/bouldertech/chemical_injector/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(holds_minerals && check_extras(attacking_item)) // Checking for extra items it can refine.
 		var/obj/item/processing/my_dust = attacking_item
 		update_boulder_count()
@@ -121,7 +121,7 @@
 			var/input_pipe = initial(pipes.demand_connects) // Call for the initial position then use turn to get its current direction.
 			var/layer_name = (pipes.ducting_layer == THIRD_DUCT_LAYER) ? "Third Layer" : GLOB.plumbing_layer_names["[pipes.ducting_layer]"]
 			if(istype(pipes, /datum/component/plumbing/chemical_injector_brine))
-				. += span_nicegreen("Brine supply connects to the [dir2text(turn(input_pipe, cur_ang_offset))] with YELLOW pipes on the [layer_name]")
+				. += span_nicegreen("Brine supply connects to the [dir2text(turn(input_pipe, cur_ang_offset))] with GREEN pipes on the [layer_name]")
 
 /obj/machinery/bouldertech/chemical_injector/proc/process_crystal(obj/item/processing/crystals/clump)
 	for(var/datum/material/material as anything in clump.custom_materials)
@@ -131,7 +131,7 @@
 		dust.custom_materials += material
 		dust.custom_materials[material] = quantity
 		dust.set_colors()
-		dust.forceMove(get_step(src, export_side))
+		dust.forceMove(get_step(src, dir))
 
 	crystal_inside = FALSE
 	reagents.remove_all(brine_per_use)
@@ -191,7 +191,7 @@
 			dust.custom_materials += material
 			dust.custom_materials[material] = quantity
 			dust.set_colors()
-			dust.forceMove(get_step(src, export_side))
+			dust.forceMove(get_step(src, dir))
 
 	reagents.remove_all(brine_per_use)
 	if(istype(boulder, /obj/item/boulder/artifact)) // If we are breaking an artifact boulder drop the artifact before deletion.
@@ -207,9 +207,9 @@
 
 /datum/component/plumbing/chemical_injector_brine
 	demand_connects = SOUTH
-	demand_color = COLOR_YELLOW
+	demand_color = COLOR_GREEN
 
-	ducting_layer = SECOND_DUCT_LAYER
+	ducting_layer = FOURTH_DUCT_LAYER
 
 /datum/component/plumbing/chemical_injector_brine/send_request(dir)
 	process_request(amount = MACHINE_REAGENT_TRANSFER, reagent = /datum/reagent/brine, dir = dir)

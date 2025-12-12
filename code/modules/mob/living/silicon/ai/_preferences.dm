@@ -74,6 +74,7 @@ GLOBAL_LIST_INIT(ai_core_display_screens, sort_list(list(
 	"Database",
 	"Dorf",
 	"Firewall",
+	"Fracktail",
 	"Fuzzy",
 	"Gentoo",
 	"Glitchman",

@@ -47,16 +47,16 @@
 	attached_object.cant_grab = FALSE
 	attached_object = null
 
-/obj/machinery/cart/AltClick(mob/user)
-	. = ..()
+/obj/machinery/cart/click_alt(mob/living/user)
 	if(!linked_network)
-		return
+		return CLICK_ACTION_BLOCKING
 	visible_message("[user] attempts to disconnect the [src.name] from the network.")
 	if(!do_after(user, 2 SECONDS, src))
-		return
+		return CLICK_ACTION_BLOCKING
 	linked_network.disconnect_train(src, user)
+	return CLICK_ACTION_SUCCESS
 
-/obj/machinery/cart/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
+/obj/machinery/cart/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
 	. = ..()
 	if(!Adjacent(over) || !usr.Adjacent(over))
 		return
@@ -74,29 +74,20 @@
 		return
 	linked_network.connect_train(over, usr)
 
-
-
-/obj/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
-	. = ..()
-	if(istype(src, /obj/vehicle/ridden/cargo_train) || istype(src, /obj/machinery/cart))
+/obj/machinery/cart/mouse_drop_receive(mob/living/dropped, mob/user, params)
+	if(!admeme)
+		if(type in attaching_blacklist)
+			return
+		for(var/obj in blacklist_types)
+			if(type in typesof(obj))
+				return
+	if(attached_object)
 		return
-	if(istype(over, /obj/machinery/cart))
-		var/obj/machinery/cart/dropped_cart = over
-		if(!dropped_cart.admeme)
-			if(!Adjacent(over) || !usr.Adjacent(over))
-				return
-			if(src.type in dropped_cart.attaching_blacklist)
-				return
-			for(var/obj in dropped_cart.blacklist_types)
-				if(src.type in typesof(obj))
-					return
-		if(dropped_cart.attached_object)
-			return
-		visible_message("[usr] attempts to attach the [name] to the [over.name]")
+	visible_message("[user] attempts to attach the [name] to the [dropped.name]")
 
-		if(!do_after(usr, 3 SECONDS, over))
-			return
-		dropped_cart.attached_object = src
+	if(!do_after(user, 3 SECONDS, src))
+		return
+	attached_object = dropped
 
-		cant_grab = TRUE
-		src.forceMove(get_turf(dropped_cart))
+	cant_grab = TRUE
+	forceMove(get_turf(dropped))

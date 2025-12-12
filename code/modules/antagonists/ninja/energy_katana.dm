@@ -37,6 +37,12 @@
 	var/datum/effect_system/spark_spread/spark_system
 	var/datum/action/innate/dash/ninja/jaunt
 
+/obj/item/energy_katana/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	//Swords do not block tackles, body throws, or leaps.
+	if (attack_type == LEAP_ATTACK)
+		final_block_chance = 0
+	return ..()
+
 /obj/item/energy_katana/Initialize(mapload)
 	. = ..()
 	jaunt = new(src)
@@ -44,12 +50,11 @@
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 
-/obj/item/energy_katana/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-		return
-	if(!target.density)
-		jaunt?.teleport(user, target)
+/obj/item/energy_katana/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!interacting_with.density)
+		jaunt?.teleport(user, interacting_with)
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
 /obj/item/energy_katana/equipped(mob/user, slot, initial)
 	. = ..()

@@ -16,6 +16,14 @@
 	var/visor_flags_cover = 0 //same as above, but for flags_cover
 	///What to toggle when toggled with weldingvisortoggle()
 	var/visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT | VISOR_VISIONFLAGS | VISOR_INVISVIEW
+	///Sound this item makes when its visor is flipped down
+	var/visor_toggle_down_sound = null
+	///Sound this item makes when its visor is flipped up
+	var/visor_toggle_up_sound = null
+	///chat message when the visor is toggled down.
+	var/toggle_message
+	///chat message when the visor is toggled up.
+	var/alt_toggle_message
 
 	var/clothing_flags = NONE
 	///List of items that can be equipped in the suit storage slot while we're worn.
@@ -62,6 +70,7 @@
 	//Alternative Scream/Laugh Vars
 	var/list/alternative_screams
 	var/list/alternative_laughs
+	var/list/alternative_deathgasps
 	//MonkeStation Edit End
 
 /obj/item/clothing/Initialize(mapload)
@@ -74,32 +83,6 @@
 	AddElement(/datum/element/attack_equip)
 	if(!icon_state)
 		item_flags |= ABSTRACT
-
-/obj/item/clothing/MouseDrop(atom/over_object)
-	. = ..()
-	var/mob/M = usr
-
-//monkestation edit start, this is currently removed as it breaks things
-/*	if(istype(over_object, /atom/movable/screen/inventory))
-		var/atom/movable/screen/inventory/slot = over_object
-		if(M.get_item_by_slot(slot.slot_id))
-			var/obj/item/clothing/item = M.get_item_by_slot(slot.slot_id)
-			if(!M.temporarilyRemoveItemFromInventory(item))
-				return
-			if(!M.put_in_active_hand(item))
-				if(!M.put_in_inactive_hand(item))
-					if(!M.active_storage?.attempt_insert(item, M))
-						item.forceMove(get_turf(M))
-			item.equip_to_best_slot()*/
-//monkestation edit end
-
-	if(ismecha(M.loc)) // stops inventory actions in a mech
-		return
-
-	if(!M.incapacitated() && loc == M && istype(over_object, /atom/movable/screen/inventory/hand))
-		var/atom/movable/screen/inventory/hand/H = over_object
-		if(M.putItemFromInventoryInHandIfPossible(src, H.held_index))
-			add_fingerprint(usr)
 
 /obj/item/food/clothing
 	name = "temporary moth clothing snack item"
@@ -137,30 +120,31 @@
 		moth_snack.clothing = WEAKREF(src)
 	moth_snack.attack(target, user, params)
 
-/obj/item/clothing/attackby(obj/item/W, mob/user, params)
-	if(!istype(W, repairable_by))
-		return ..()
+/obj/item/clothing/item_interaction(mob/living/user, obj/item/weapon, list/modifiers)
+	. = NONE
+	if(!istype(weapon, repairable_by))
+		return
 
 	switch(damaged_clothes)
 		if(CLOTHING_PRISTINE)
-			return..()
+			return
+
 		if(CLOTHING_DAMAGED)
-			var/obj/item/stack/cloth_repair = W
+			var/obj/item/stack/cloth_repair = weapon
 			cloth_repair.use(1)
-			repair(user, params)
-			return TRUE
+			repair(user)
+			return ITEM_INTERACT_SUCCESS
+
 		if(CLOTHING_SHREDDED)
-			var/obj/item/stack/cloth_repair = W
+			var/obj/item/stack/cloth_repair = weapon
 			if(cloth_repair.amount < 3)
 				to_chat(user, span_warning("You require 3 [cloth_repair.name] to repair [src]."))
-				return TRUE
+				return ITEM_INTERACT_BLOCKING
 			to_chat(user, span_notice("You begin fixing the damage to [src] with [cloth_repair]..."))
 			if(!do_after(user, 6 SECONDS, src) || !cloth_repair.use(3))
-				return TRUE
-			repair(user, params)
-			return TRUE
-
-	return ..()
+				return ITEM_INTERACT_BLOCKING
+			repair(user)
+			return ITEM_INTERACT_SUCCESS
 
 /// Set the clothing's integrity back to 100%, remove all damage to bodyparts, and generally fix it up
 /obj/item/clothing/proc/repair(mob/user, params)
@@ -272,6 +256,8 @@
 		LAZYREMOVE(wearer.alternative_screams, alternative_screams)
 	if(LAZYLEN(alternative_laughs))
 		LAZYREMOVE(wearer.alternative_laughs, alternative_laughs)
+	if(LAZYLEN(alternative_deathgasps))
+		LAZYREMOVE(wearer.alternative_deathgasps, alternative_deathgasps)
 	//MonkeStation Edit End
 
 /obj/item/clothing/equipped(mob/living/user, slot)
@@ -298,6 +284,8 @@
 			LAZYADD(wearer.alternative_screams, alternative_screams)
 		if(LAZYLEN(alternative_laughs))
 			LAZYADD(wearer.alternative_laughs, alternative_laughs)
+		if(LAZYLEN(alternative_deathgasps))
+			LAZYADD(wearer.alternative_deathgasps, alternative_deathgasps)
 		//MonkeStation Edit End
 
 // If the item is a piece of clothing and is being worn, make sure it updates on the player
@@ -357,7 +345,7 @@
 
 	if(TRAIT_CAN_SIGN_ON_COMMS in clothing_traits)
 		. += "[src] allows you talk on radios through sign language."
-	
+
 	switch (max_heat_protection_temperature)
 		if (400 to 1000)
 			. += "[src] offers the wearer limited protection from fire."
@@ -541,6 +529,44 @@ BLIND     // can't see anything
 	update_item_action_buttons()
 	return TRUE
 
+/// Proc that adjusts the clothing item, used by things like breathing masks, welding helmets, welding goggles etc.
+/obj/item/clothing/proc/adjust_visor(mob/living/user)
+	if(!can_use(user))
+		return FALSE
+
+	visor_toggling()
+
+	var/message
+	if(up)
+		message = alt_toggle_message ?  "[alt_toggle_message] [src]." : "You push [src] out of the way."
+	else
+		message = toggle_message ? "[toggle_message] [src]." : "You push [src] back into place."
+
+	to_chat(user, span_notice("[message]"))
+
+	//play sounds when toggling the visor up or down (if there is any)
+	if(visor_toggle_up_sound && up)
+		playsound(src, visor_toggle_up_sound, 20, TRUE, -1)
+	if(visor_toggle_down_sound && !up)
+		playsound(src, visor_toggle_down_sound, 20, TRUE, -1)
+
+	update_item_action_buttons()
+
+	if(user.is_holding(src))
+		user.update_held_items()
+		return TRUE
+	user.update_clothing(slot_flags)
+	if(!iscarbon(user))
+		return TRUE
+	var/mob/living/carbon/carbon_user = user
+	if(up)
+		carbon_user.head_update(src, forced = 1)
+	if(visor_vars_to_toggle & VISOR_TINT)
+		carbon_user.update_tint()
+	if((visor_flags & (MASKINTERNALS|HEADINTERNALS)) && carbon_user.invalid_internals())
+		carbon_user.cutoff_internals()
+	return TRUE
+
 /obj/item/clothing/proc/visor_toggling() //handles all the actual toggling of flags
 	up = !up
 	SEND_SIGNAL(src, COMSIG_CLOTHING_VISOR_TOGGLE, up)
@@ -552,6 +578,7 @@ BLIND     // can't see anything
 		flash_protect ^= initial(flash_protect)
 	if(visor_vars_to_toggle & VISOR_TINT)
 		tint ^= initial(tint)
+	update_icon_state()
 
 /obj/item/clothing/head/helmet/space/plasmaman/visor_toggling() //handles all the actual toggling of flags
 	up = !up

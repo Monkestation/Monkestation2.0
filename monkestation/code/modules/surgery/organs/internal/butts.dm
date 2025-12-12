@@ -235,10 +235,10 @@
 
 
 //Buttbot Production
-/obj/item/organ/internal/butt/attackby(obj/item/I, mob/living/user)
-	if(istype(I, /obj/item/bodypart/arm/left/robot) || istype(I, /obj/item/bodypart/arm/right/robot))
+/obj/item/organ/internal/butt/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/bodypart/arm/left/robot) || istype(attacking_item, /obj/item/bodypart/arm/right/robot))
 		var/mob/living/simple_animal/bot/buttbot/new_butt = new(get_turf(src))
-		qdel(I)
+		qdel(attacking_item)
 		switch(src.type) //A BUTTBOT FOR EVERYONE!
 			if(/obj/item/organ/internal/butt/atomic)
 				new_butt.name = "Atomic Buttbot"
@@ -289,10 +289,13 @@
 	maxHealth = 25
 	bot_type = BUTT_BOT
 	pass_flags = PASSMOB
-	has_unlimited_silicon_privilege = FALSE
 	var/cooling_down = FALSE
 	var/butt_probability = 15
 	var/listen_probability = 30
+
+/mob/living/simple_animal/bot/buttbot/Initialize(mapload)
+	. = ..()
+	REMOVE_TRAIT(src, TRAIT_SILICON_ACCESS, INNATE_TRAIT)
 
 /mob/living/simple_animal/bot/buttbot/emag_act(mob/user)
 	if(!(bot_cover_flags & BOT_COVER_EMAGGED))

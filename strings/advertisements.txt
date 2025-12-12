@@ -1,0 +1,98 @@
+--------------------------------------------------------------------------------------------------------------
+	name: Nanotrasen
+	desc: The one megacorporation to rule them all
+N is for Nanotrasen, your very best friend!
+Parents don't let your children fall behind. Enrol them in a Nanotrasen education program today!
+Asshat subordinates getting you down? Invest in a Galaxywide starship to remind them who's boss.
+Tired of poor public transit? Treat yourself to an ATA spacecraft to get to where you want, when you want.
+Nanotrasen, for a better future!
+Get your boss something special this Nanotrasen approved holiday season.
+You can always rely on Trasen-Knox for scientific expertise!
+Struggling with depression? A Nanotrasen licensed psychologist can get you the medication you need.
+Have an issue with the company? Be sure to complain to your local NT rep for the treatment you deserve!
+Don't be a good consumer when you can be a +great+ consumer!
+Flaunt your inner Nyanotrasen with an anime implant!
+Bring strength and stability to the new frontier by enlisting in the Nanotrasen Deep-Space Security Force!
+Stay connected with society using the NT Galactic Network, providing the highest bandwidth in this sector!
+Join us at Nanotrasen for a life among the stars. Fortune and glory awaits.
+--------------------------------------------------------------------------------------------------------------
+	name: Donk Co.
+	desc: Junkfood, cargo and suspiciously accurate replicas
+Buy Donk-Pockets today!
+The Donk cannot be stopped!
+Get Good. Get Donk.
+Oh boy I '%name%' can't get enough of these Donk-Pockets!
+Buy Donk-Pockets. Proven to taste like food in over 99% of cases!
+Double the fun with Donksoft darts by enjoying them as a bitesized snack!
+The real world sucks! Immerse yourself in the Donksoft arcades instead!
+Get yourself a Donksoft firearm! They almost never explode!
+Try the new Donk-Pocket flavours! 100% satisfaction or none of your money back!
+BLAST OFF with the rapid speeds of Donk Co. cargo shuttles!
+Turbocharge your mind and body with all the 0% natural flavours Donk Co. has to offer!
+Take your armoury to the next level with the new line of Donksoft replica firearms!
+--------------------------------------------------------------------------------------------------------------
+	name: ShadyCigs
+Space cigs taste good like a cigarette should.
+Don't believe the reports, smoke today!
+For each friend you get hooked on smoking, ShadyCigs will gift you a +free+ pack of cigarettes!
+Feeling lost? Nothing going your way? Smoking can give you a new lease on life.
+Nobody likes a quitter. But if you're determined to stop smoking, give ShadyCigs' Nicotine Gum a shot!
+--------------------------------------------------------------------------------------------------------------
+	name: SpaceBooze Corp
+Alcohol, the one friend who will never leave you!
+Booze is good for you!
+Beer is good for you!
+Alcohol is the galaxy's best friend.
+Nothing cures you like booze!
+Booze O'Mats serve only the finest alcohol!
+For the best quality booze around, a Booze O'Mat must be found!
+Feeling stressed? Have a drink!
+ALERT! Only 25% of your system drinks daily. Getting that to 30% will cut prices! Tell your friends!
+FIGHTERS! Test your mettle in the SpaceBooze thunderdome! Open to all ages.
+--------------------------------------------------------------------------------------------------------------
+	name: DeForest Medical Corporation
+You never know when disaster could strike. Get DeForest Medical Insurance today!
+Get DeForest Medical Insurance for a safer you!
+Purchase a 1 year license to DeForest implants for as little as $100,000
+Caution. Unlicensed cybernetics have been linked to a rise in severe and irreversible psychosis and/or injury.
+--------------------------------------------------------------------------------------------------------------
+	name: SSC
+Refresh yourself on a vacation to one of the Spinward Sector's many deep space holiday resorts!
+--------------------------------------------------------------------------------------------------------------
+	name: Tider's Union
+Only those that wear the gray can truly be free. Join the Tider's Union.
+Corridors are for the sleeping. The awake travel by the tunnels. Join the Tider's Union.
+Heed the call of maintenance. One day we shall all roam free in her glory. Join the Tider's Union.
+Daily, countless assistants suffer life altering burns. Donate as little as $400 to insuls4all to save a life.
+Please don't stand on a photocopier to scan your ass. And +please+ do not fax that photo to all of command.
+--------------------------------------------------------------------------------------------------------------
+	name: Carwo Defense Systems
+Kiboko Grenade Launchers. The perfect gift for the person who has everything.
+--------------------------------------------------------------------------------------------------------------
+	name: Floran
+Floran sells weapons! You buy weapons! Everybody happy! Good!
+Floran sells meats! They are good meats! Yum!
+--------------------------------------------------------------------------------------------------------------
+	name: Interdyne Pharmaceutics
+You might be able to dodge taxes, but you can't dodge an supernova. Buy a clone license before it's too late!
+Tackle ape infestations with ease with a Rapid Tranquiliser Gun from Interdyne Pharmaceutics.
+--------------------------------------------------------------------------------------------------------------
+	name: Elaine Anders
+How do I use NT Search? Please tell me how my nephew Carl Anders is doing. How do I delete text? What is NT Advertisement Service?
+--------------------------------------------------------------------------------------------------------------
+	name: Big Bill Hell's Ships
+Fuck you! Come to Big Bill Hell's Ships! Bad deals! Ships that break down! Hurry up or go to hell assholes!
+--------------------------------------------------------------------------------------------------------------
+	name: Cybersun
+Tune in for a live game of positronic life and death in The Diresteel Mech Wars! Sponsored by Cybersun.
+--------------------------------------------------------------------------------------------------------------
+	name: Clown Planet
+	desc: ive got the nasty jokes. untouched in their low quality. too painful for even your most boring coworker
+The only difference between the clown and the captain is a sense of humour.
+Why didn't the HoP see the nukies? Because they were in the HoP line.
+What's green, sticky and hard to get out of the walls? The CentCom intern who wanted to inspect R&D.
+How did the chemist know the mime was a traitor? Because they made sali+psycic+ acid.
+I've really enjoyed my time in security. Good pay, though picking broken teeth out of your fists does get old.
+Remember to take a handful of floor pills at the start of your shift to get your organs a good spit shining.
+The only thing with a shorter halflife than Ian is a tider in cargo.
+I don't understand the dislike of monkeys. I think they're great, though the gristle gets stuck in my teeth.

@@ -1,0 +1,1 @@
+cluwne_mask, cluwne_under, cluwne_apron, brute_mask, brute_apron sprites done by MrBagHead

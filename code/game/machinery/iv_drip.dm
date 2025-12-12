@@ -27,6 +27,8 @@
 	anchored = FALSE
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	use_power = NO_POWER_USE
+	interaction_flags_mouse_drop = NEED_HANDS
+
 	///What are we sticking our needle in?
 	var/mob/attached
 	///Are we donating or injecting?
@@ -125,9 +127,11 @@
 
 	return data
 
-/obj/machinery/iv_drip/ui_act(action, params)
-	if(..())
-		return TRUE
+/obj/machinery/iv_drip/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if(.)
+		return
+
 	switch(action)
 		if("changeMode")
 			toggle_mode()
@@ -148,13 +152,6 @@
 		return
 	transfer_rate = round(clamp(new_rate, MIN_IV_TRANSFER_RATE, MAX_IV_TRANSFER_RATE), IV_TRANSFER_RATE_STEP)
 	update_appearance(UPDATE_ICON)
-
-/// Toggles transfer rate between min and max rate
-/obj/machinery/iv_drip/proc/toggle_transfer_rate()
-	if(transfer_rate > MIN_IV_TRANSFER_RATE)
-		set_transfer_rate(MIN_IV_TRANSFER_RATE)
-	else
-		set_transfer_rate(MAX_IV_TRANSFER_RATE)
 
 /obj/machinery/iv_drip/update_icon_state()
 	if(transfer_rate > 0 && attached)
@@ -184,57 +181,51 @@
 		filling.color = mix_color_from_reagents(container_reagents.reagent_list)
 		. += filling
 
-/obj/machinery/iv_drip/MouseDrop(atom/target)
-	. = ..()
-	if(!Adjacent(target) || !usr.can_perform_action(src))
-		return
-	if(!isliving(usr))
-		to_chat(usr, span_warning("You can't do that!"))
+/obj/machinery/iv_drip/mouse_drop_dragged(atom/target, mob/user)
+	if(!isliving(user))
+		to_chat(user, span_warning("You can't do that!"))
 		return
 	if(!get_reagents())
-		to_chat(usr, span_warning("There's nothing attached to the IV drip!"))
+		to_chat(user, span_warning("There's nothing attached to the IV drip!"))
 		return
-	if(!target.is_injectable(usr))
-		to_chat(usr, span_warning("Can't inject into this!"))
+	if(!target.is_injectable(user))
+		to_chat(user, span_warning("Can't inject into this!"))
 		return
 	if(attached)
 		visible_message(span_warning("[attached] is detached from [src]."))
 		attached = null
 		update_appearance(UPDATE_ICON)
-	usr.visible_message(span_warning("[usr] attaches [src] to [target]."), span_notice("You attach [src] to [target]."))
-	attach_iv(target, usr)
+	user.visible_message(span_warning("[user] attaches [src] to [target]."), span_notice("You attach [src] to [target]."))
+	attach_iv(target, user)
 
-/obj/machinery/iv_drip/attackby(obj/item/W, mob/user, params)
+/obj/machinery/iv_drip/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(use_internal_storage)
 		return ..()
 
-	if(is_type_in_typecache(W, drip_containers) || IS_EDIBLE(W))
+	if(is_type_in_typecache(attacking_item, drip_containers) || IS_EDIBLE(attacking_item))
 		if(reagent_container)
 			to_chat(user, span_warning("[reagent_container] is already loaded on [src]!"))
 			return
-		if(!user.transferItemToLoc(W, src))
+		if(!user.transferItemToLoc(attacking_item, src))
 			return
-		reagent_container = W
-		to_chat(user, span_notice("You attach [W] to [src]."))
-		user.log_message("attached a [W] to [src] at [AREACOORD(src)] containing ([reagent_container.reagents.get_reagent_log_string()])", LOG_ATTACK)
+		reagent_container = attacking_item
+		to_chat(user, span_notice("You attach [attacking_item] to [src]."))
+		user.log_message("attached a [attacking_item] to [src] at [AREACOORD(src)] containing ([reagent_container.reagents.get_reagent_log_string()])", LOG_ATTACK)
 		add_fingerprint(user)
 		update_appearance(UPDATE_ICON)
 		return
 	else
 		return ..()
 
-/// Checks whether the IV drip transfer rate can be modified with AltClick
-/obj/machinery/iv_drip/proc/can_use_alt_click(mob/user)
-	if(!can_interact(user))
-		return FALSE
-	if(istype(src, /obj/machinery/iv_drip/plumbing)) // AltClick is used for rotation there
-		return FALSE
-	return TRUE
-
-/obj/machinery/iv_drip/AltClick(mob/user)
-	if(!can_use_alt_click(user))
-		return ..()
-	toggle_transfer_rate()
+/obj/machinery/iv_drip/click_alt(mob/user)
+	if(transfer_rate > MIN_IV_TRANSFER_RATE)
+		balloon_alert(user, "flow minimized")
+		set_transfer_rate(MIN_IV_TRANSFER_RATE)
+	else
+		balloon_alert(user, "flow maximized")
+		set_transfer_rate(MAX_IV_TRANSFER_RATE)
+	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/iv_drip/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -251,8 +242,9 @@
 			to_chat(attached, span_userdanger("The IV drip needle is ripped out of you, leaving an open bleeding wound!"))
 			var/list/arm_zones = shuffle(list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM))
 			var/obj/item/bodypart/chosen_limb = attached_mob.get_bodypart(arm_zones[1]) || attached_mob.get_bodypart(arm_zones[2]) || attached_mob.get_bodypart(BODY_ZONE_CHEST)
-			chosen_limb.receive_damage(3)
-			attached_mob.cause_wound_of_type_and_severity(WOUND_PIERCE, chosen_limb, WOUND_SEVERITY_MODERATE, wound_source = "IV needle")
+			if(!QDELETED(chosen_limb))
+				chosen_limb.receive_damage(3)
+				attached_mob.cause_wound_of_type_and_severity(WOUND_PIERCE, chosen_limb, WOUND_SEVERITY_MODERATE, wound_source = "IV needle")
 		else
 			visible_message(span_warning("[attached] is detached from [src]."))
 		detach_iv()
@@ -441,7 +433,7 @@
 /obj/machinery/iv_drip/plumbing/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /atom/movable/screen/alert/iv_connected
 	name = "IV Connected"

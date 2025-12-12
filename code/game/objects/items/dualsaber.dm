@@ -152,6 +152,9 @@
 
 /obj/item/dualsaber/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(HAS_TRAIT(src, TRAIT_WIELDED))
+		//Dswords, like eswords, have reduced chances of blocking tackles, body throws, or leaps.
+		if(attack_type == LEAP_ATTACK)
+			final_block_chance = 25
 		return ..()
 	return 0
 
@@ -194,8 +197,8 @@
 /obj/item/dualsaber/purple
 	possible_colors = list("purple")
 
-/obj/item/dualsaber/attackby(obj/item/W, mob/user, params)
-	if(W.tool_behaviour == TOOL_MULTITOOL)
+/obj/item/dualsaber/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(attacking_item.tool_behaviour == TOOL_MULTITOOL)
 		if(!hacked)
 			hacked = TRUE
 			to_chat(user, span_warning("2XRNBW_ENGAGE"))

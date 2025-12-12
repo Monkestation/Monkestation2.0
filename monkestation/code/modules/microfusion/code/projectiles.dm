@@ -16,7 +16,7 @@
 /obj/projectile/beam/laser/microfusion
 	name = "microfusion laser"
 	icon = 'monkestation/code/modules/microfusion/icons/projectiles.dmi'
-	damage = 25
+	damage = 22
 
 /obj/projectile/beam/microfusion_disabler
 	name = "microfusion disabler laser"
@@ -91,7 +91,7 @@
 	color = COLOR_VIVID_YELLOW
 	light_color = COLOR_VIVID_YELLOW
 	damage_type = STAMINA
-	damage = 25
+	damage = 22
 	armor_flag = ENERGY
 	hitsound = 'sound/misc/slip.ogg'
 	impact_type = /obj/effect/projectile/impact/disabler

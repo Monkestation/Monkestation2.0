@@ -6,7 +6,7 @@
 	desc = "Based off old TerraGov harness kits, this magnetic harness automatically attaches dropped guns back to the wearer."
 	icon_state = "mag_harness"
 	complexity = 2
-	use_power_cost = DEFAULT_CHARGE_DRAIN
+	use_energy_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/magnetic_harness)
 	/// Time before we activate the magnet.
 	var/magnet_delay = 0.8 SECONDS
@@ -51,7 +51,7 @@
 		return
 	playsound(src, 'sound/items/modsuit/magnetic_harness.ogg', 50, TRUE)
 	balloon_alert(mod.wearer, "[item] reattached")
-	drain_power(use_power_cost)
+	drain_power(use_energy_cost)
 
 ///Pepper Shoulders - When hit, reacts with a spray of pepper spray around the user.
 /obj/item/mod/module/pepper_shoulders
@@ -60,17 +60,17 @@
 	icon_state = "pepper_shoulder"
 	module_type = MODULE_USABLE
 	complexity = 1
-	use_power_cost = DEFAULT_CHARGE_DRAIN
+	use_energy_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/pepper_shoulders)
 	cooldown_time = 5 SECONDS
 	overlay_state_inactive = "module_pepper"
 	overlay_state_use = "module_pepper_used"
 
 /obj/item/mod/module/pepper_shoulders/on_suit_activation()
-	RegisterSignal(mod.wearer, COMSIG_HUMAN_CHECK_SHIELDS, PROC_REF(on_check_shields))
+	RegisterSignal(mod.wearer, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(on_check_block))
 
 /obj/item/mod/module/pepper_shoulders/on_suit_deactivation(deleting = FALSE)
-	UnregisterSignal(mod.wearer, COMSIG_HUMAN_CHECK_SHIELDS)
+	UnregisterSignal(mod.wearer, COMSIG_LIVING_CHECK_BLOCK)
 
 /obj/item/mod/module/pepper_shoulders/on_use()
 	. = ..()
@@ -84,12 +84,12 @@
 	smoke.start(log = TRUE)
 	QDEL_NULL(capsaicin_holder) // Reagents have a ref to their holder which has a ref to them. No leaks please.
 
-/obj/item/mod/module/pepper_shoulders/proc/on_check_shields()
+/obj/item/mod/module/pepper_shoulders/proc/on_check_block()
 	SIGNAL_HANDLER
 
 	if(!COOLDOWN_FINISHED(src, cooldown_timer))
 		return
-	if(!check_power(use_power_cost))
+	if(!check_power(use_energy_cost))
 		return
 	mod.wearer.visible_message(span_warning("[src] reacts to the attack with a smoke of pepper spray!"), span_notice("Your [src] releases a cloud of pepper spray!"))
 	on_use()
@@ -152,7 +152,7 @@
 	icon_state = "megaphone"
 	module_type = MODULE_TOGGLE
 	complexity = 1
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 0.5
 	incompatible_modules = list(/obj/item/mod/module/megaphone)
 	cooldown_time = 0.5 SECONDS
 	/// List of spans we add to the speaker.
@@ -174,7 +174,7 @@
 	SIGNAL_HANDLER
 
 	speech_args[SPEECH_SPANS] |= voicespan
-	drain_power(use_power_cost)
+	drain_power(use_energy_cost)
 
 ///Criminal Capture - Generates hardlight bags you can put people in and sinch.
 /obj/item/mod/module/criminalcapture
@@ -187,7 +187,7 @@
 	icon_state = "criminal_capture"
 	module_type = MODULE_ACTIVE
 	complexity = 2
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 0.5
 	incompatible_modules = list(/obj/item/mod/module/criminalcapture)
 	cooldown_time = 0.5 SECONDS
 	/// Time to capture a prisoner.
@@ -322,7 +322,7 @@
 	/// Effect image on projectiles.
 	var/image/projectile_effect
 	/// The dampening field
-	var/datum/proximity_monitor/advanced/projectile_dampener/dampening_field
+	var/datum/proximity_monitor/advanced/bubble/projectile_dampener/dampening_field
 
 /obj/item/mod/module/projectile_dampener/Initialize(mapload)
 	. = ..()
@@ -335,28 +335,12 @@
 	if(istype(dampening_field))
 		QDEL_NULL(dampening_field)
 	dampening_field = new(mod.wearer, field_radius, TRUE, src)
-	RegisterSignal(dampening_field, COMSIG_DAMPENER_CAPTURE, PROC_REF(dampen_projectile))
-	RegisterSignal(dampening_field, COMSIG_DAMPENER_RELEASE, PROC_REF(release_projectile))
 
 /obj/item/mod/module/projectile_dampener/on_deactivation(display_message, deleting = FALSE)
 	. = ..()
 	if(!.)
 		return
 	QDEL_NULL(dampening_field)
-
-/obj/item/mod/module/projectile_dampener/proc/dampen_projectile(datum/source, obj/projectile/projectile)
-	SIGNAL_HANDLER
-
-	projectile.damage *= damage_multiplier
-	projectile.speed *= speed_multiplier
-	projectile.add_overlay(projectile_effect)
-
-/obj/item/mod/module/projectile_dampener/proc/release_projectile(datum/source, obj/projectile/projectile)
-	SIGNAL_HANDLER
-
-	projectile.damage /= damage_multiplier
-	projectile.speed /= speed_multiplier
-	projectile.cut_overlay(projectile_effect)
 
 ///Active Sonar - Displays a hud circle on the turf of any living creatures in the given radius
 /obj/item/mod/module/active_sonar
@@ -365,7 +349,7 @@
 		Its loud ping is much harder to hide in an indoor station than in the outdoor operations it was designed for."
 	icon_state = "active_sonar"
 	module_type = MODULE_USABLE
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 4
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 4
 	complexity = 2
 	incompatible_modules = list(/obj/item/mod/module/active_sonar)
 	cooldown_time = 25 SECONDS

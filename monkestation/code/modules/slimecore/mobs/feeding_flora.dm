@@ -42,6 +42,7 @@
 	ai_controller = /datum/ai_controller/basic_controller/cockroach
 	health = 40
 	maxHealth = 40
+	basic_mob_flags = DEL_ON_DEATH
 
 /mob/living/basic/xenofauna/diyaab
 	name = "diyaab"

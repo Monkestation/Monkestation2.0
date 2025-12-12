@@ -28,9 +28,6 @@
 	/// The job ID of the part currently being processed. This is used for ordering list items for the client UI.
 	var/top_job_id = 0
 
-	/// Reference to all materials used in the creation of the item being_built.
-	var/list/build_materials
-
 	/// Part currently stored in the Exofab.
 	var/obj/item/stored_part
 
@@ -52,15 +49,97 @@
 	/// All designs in the techweb that can be fabricated by this machine, since the last update.
 	var/list/datum/design/cached_designs
 
+	//monkestation edit start
+	/// Controls whether or not the more dangerous designs have been unlocked by a head's id manually, rather than alert level unlocks
+	var/authorization_override = FALSE
+	/// Tracks whether the station is in full danger mode to unlock combat mechs
+	var/red_alert = FALSE
+	/// ID card of the person using the machine for the purpose of tracking access
+	var/obj/item/card/id/id_card = new()
+	/// Combined boolean value of red alert, auth override, and the users access for the sake of smaller if statements. if this is true, combat parts are available
+	var/combat_parts_allowed = FALSE
+	/// List of categories that all contains combat parts, everything in the category will be classified as combat parts
+	var/static/list/combat_categories = list(
+		RND_CATEGORY_MECHFAB_DURAND,
+		RND_CATEGORY_MECHFAB_HONK,
+		RND_CATEGORY_MECHFAB_PHAZON,
+		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV,
+		RND_SUBCATEGORY_MECHFAB_EQUIPMENT_WEAPONS,
+		RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_COMBAT,
+		)
+	// list of categories that isn't going to be combat parts
+	var/static/list/non_combat_categories = list(
+		RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+		RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MINING,
+		RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MODULES,
+		RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC,
+	)
+
+/obj/machinery/mecha_part_fabricator/emagged
+	obj_flags = parent_type::obj_flags | EMAGGED
+	authorization_override = TRUE
+
 /obj/machinery/mecha_part_fabricator/Initialize(mapload)
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !stored_research)
 		connect_techweb(SSresearch.science_tech)
-	rmat = AddComponent(/datum/component/remote_materials, "mechfab", mapload && link_on_init, mat_container_flags=BREAKDOWN_FLAGS_LATHE)
+	rmat = AddComponent(/datum/component/remote_materials, mapload && link_on_init)
 	cached_designs = list()
-	RefreshParts() //Recalculating local material sizes if the fab isn't linked
+	RefreshParts() // Recalculating local material sizes if the fab isn't linked
 	if(stored_research)
 		update_menu_tech()
 	return ..()
+
+/obj/machinery/mecha_part_fabricator/Destroy()
+	QDEL_NULL(id_card)
+	return ..()
+
+/obj/machinery/mecha_part_fabricator/attackby(obj/item/object, mob/living/user, params)
+	var/obj/item/card/id/card = object.GetID()
+	if(card)
+		if(obj_flags & EMAGGED)
+			to_chat(user, span_warning("The authentification slot spits sparks at you and the display reads scrambled text!"))
+			do_sparks(1, FALSE, src)
+			authorization_override = TRUE // just in case it wasn't already for some reason. keycard reader is busted.
+			return
+		if((ACCESS_COMMAND in card.access))
+			if(!authorization_override)
+				authorization_override = TRUE
+				to_chat(user, span_warning("You override the safety protocols on the [src], removing access restrictions from this terminal."))
+			else
+				authorization_override = FALSE
+				to_chat(user, span_notice("You reengage the safety protocols on the [src], restoring access restrictions to this terminal."))
+			update_static_data(user)
+		return
+	return ..()
+
+/// Updates the various authorization checks used to determine if combat parts are available to the current user
+/obj/machinery/mecha_part_fabricator/proc/check_auth_changes(mob/user)
+	red_alert = (SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED)
+	if(combat_parts_allowed != (authorization_override || red_alert || head_or_sillicon(user)))
+		combat_parts_allowed = (authorization_override || red_alert || head_or_sillicon(user))
+		update_static_data(user)
+
+/// made as a lazy check to allow silicons full access always
+/obj/machinery/mecha_part_fabricator/proc/head_or_sillicon(mob/user)
+	if(!issilicon(user))
+		if(isliving(user))
+			var/mob/living/living_user = user
+			id_card = living_user.get_idcard(hand_first = TRUE)
+			if(!id_card)
+				return FALSE
+			return (ACCESS_COMMAND in id_card.access)
+	return issilicon(user)
+
+
+/obj/machinery/mecha_part_fabricator/emag_act(mob/user)
+	if(obj_flags & EMAGGED)
+		to_chat(user, span_warning("[src] has no functional safeties to emag."))
+		return
+	do_sparks(1, FALSE, src)
+	to_chat(user, span_notice("You short out [src]'s safeties."))
+	authorization_override = TRUE
+	obj_flags |= EMAGGED
+	update_static_data_for_all_viewers()
 
 /obj/machinery/mecha_part_fabricator/proc/connect_techweb(datum/techweb/new_techweb)
 	if(stored_research)
@@ -92,7 +171,7 @@
 	//maximum stocking amount (default 300000, 600000 at T4)
 	for(var/datum/stock_part/matter_bin/matter_bin in component_parts)
 		T += matter_bin.tier
-	rmat.set_local_size(((100*SHEET_MATERIAL_AMOUNT) + (T * (25*SHEET_MATERIAL_AMOUNT))))
+	rmat.set_local_size(((100 * SHEET_MATERIAL_AMOUNT) + (T * (25 * SHEET_MATERIAL_AMOUNT))))
 
 	//resources adjustment coefficient (1 -> 0.85 -> 0.7 -> 0.55)
 	T = 1.15
@@ -123,14 +202,12 @@
 	if(panel_open)
 		. += span_notice("Alt-click to rotate the output direction.")
 
-/obj/machinery/mecha_part_fabricator/AltClick(mob/user)
-	. = ..()
-	if(!user.can_perform_action(src))
-		return
-	if(panel_open)
-		dir = turn(dir, -90)
-		balloon_alert(user, "rotated to [dir2text(dir)].")
-		return TRUE
+/obj/machinery/mecha_part_fabricator/click_alt(mob/living/user)
+	if(!panel_open)
+		return CLICK_ACTION_BLOCKING
+	dir = turn(dir, -90)
+	balloon_alert(user, "rotated to [dir2text(dir)].")
+	return CLICK_ACTION_SUCCESS
 
 /**
  * Updates the `final_sets` and `buildable_parts` for the current mecha fabricator.
@@ -176,34 +253,6 @@
 	SStgui.update_uis(src) // monkestation edit: try to ensure UI always updates
 
 /**
- * Calculates resource/material costs for printing an item based on the machine's resource coefficient.
- *
- * Returns a list of k,v resources with their amounts.
- * * D - Design datum to calculate the modified resource cost of.
- */
-/obj/machinery/mecha_part_fabricator/proc/get_resources_w_coeff(datum/design/D)
-	var/list/resources = list()
-	for(var/R in D.materials)
-		var/datum/material/M = R
-		resources[M] = get_resource_cost_w_coeff(D, M)
-	return resources
-
-/**
- * Checks if the Exofab has enough resources to print a given item.
- *
- * Returns FALSE if the design has no reagents used in its construction (?) or if there are insufficient resources.
- * Returns TRUE if there are sufficient resources to print the item.
- * * D - Design datum to calculate the modified resource cost of.
- */
-/obj/machinery/mecha_part_fabricator/proc/check_resources(datum/design/D)
-	if(length(D.reagents_list)) // No reagents storage - no reagent designs.
-		return FALSE
-	var/datum/component/material_container/materials = rmat.mat_container
-	if(materials.has_materials(get_resources_w_coeff(D)))
-		return TRUE
-	return FALSE
-
-/**
  * Attempts to build the next item in the build queue.
  *
  * Returns FALSE if either there are no more parts to build or the next part is not buildable.
@@ -230,7 +279,7 @@
  * * verbose - Whether the machine should use say() procs. Set to FALSE to disable the machine saying reasons for failure to build.
  */
 /obj/machinery/mecha_part_fabricator/proc/build_part(datum/design/D, verbose = TRUE)
-	if(!D)
+	if(!D || length(D.reagents_list))
 		return FALSE
 
 	var/datum/component/material_container/materials = rmat.mat_container
@@ -242,20 +291,16 @@
 		if(verbose)
 			say("Mineral access is on hold, please contact the quartermaster.")
 		return FALSE
-	if(!check_resources(D))
+	if(!materials.has_materials(D.materials, component_coeff))
 		if(verbose)
 			say("Not enough resources. Processing stopped.")
 		return FALSE
 
-	build_materials = get_resources_w_coeff(D)
-
-	materials.use_materials(build_materials)
+	rmat.use_materials(D.materials, component_coeff, 1, "built", "[D.name]")
 	being_built = D
 	build_finish = world.time + get_construction_time_w_coeff(initial(D.construction_time))
 	build_start = world.time
 	desc = "It's building \a [D.name]."
-
-	rmat.silo_log(src, "built", -1, "[D.name]", build_materials)
 
 	return TRUE
 
@@ -344,17 +389,6 @@
 	return TRUE
 
 /**
- * Calculates the coefficient-modified resource cost of a single material component of a design's recipe.
- *
- * Returns coefficient-modified resource cost for the given material component.
- * * D - Design datum to pull the resource cost from.
- * * resource - Material datum reference to the resource to calculate the cost of.
- * * roundto - Rounding value for round() proc
- */
-/obj/machinery/mecha_part_fabricator/proc/get_resource_cost_w_coeff(datum/design/D, datum/material/resource, roundto = 1)
-	return round(D.materials[resource]*component_coeff, roundto)
-
-/**
  * Calculates the coefficient-modified build time of a design.
  *
  * Returns coefficient-modified build time of a given design.
@@ -377,20 +411,22 @@
 		ui.open()
 
 /obj/machinery/mecha_part_fabricator/ui_static_data(mob/user)
-	var/list/data = list()
+	var/list/data = rmat.mat_container.ui_static_data()
+
 	var/list/designs = list()
 
 	var/datum/asset/spritesheet_batched/research_designs/spritesheet = get_asset_datum(/datum/asset/spritesheet_batched/research_designs)
 	var/size32x32 = "[spritesheet.name]32x32"
 
 	for(var/datum/design/design in cached_designs)
-		var/list/cost = list()
+		var/is_combat_design = weapon_lock_check(design)
 
-		for(var/datum/material/material in design.materials)
-			cost[material.name] = get_resource_cost_w_coeff(design, material)
+		var/cost = list()
+		var/list/materials = design.materials
+		for(var/datum/material/mat in materials)
+			cost[mat.name] = OPTIMAL_COST(materials[mat] * component_coeff)
 
 		var/icon_size = spritesheet.icon_size_id(design.id)
-
 		designs[design.id] = list(
 			"name" = design.name,
 			"desc" = design.get_description(),
@@ -398,17 +434,43 @@
 			"id" = design.id,
 			"categories" = design.category,
 			"icon" = "[icon_size == size32x32 ? "" : "[icon_size] "][design.id]",
-			"constructionTime" = get_construction_time_w_coeff(design.construction_time)
+			"constructionTime" = get_construction_time_w_coeff(design.construction_time),
+			"craftable" = !is_combat_design
 		)
 
 	data["designs"] = designs
 
 	return data
 
+/*
+Essentially, For all categories in the design node, check if there is a banned string (from banned_categories).
+If it is, and it isn't just something supported by combat mechs like auto repair droid,
+skip them. Returns the is_combat_design variable
+*/
+/obj/machinery/mecha_part_fabricator/proc/weapon_lock_check(datum/design/design)
+	var/is_combat_design = FALSE
+	for(var/categories in design.category) //may allah forgive me for this insolence upon nature
+		for(var/banned_categories in combat_categories) //(okay this was way worse, I cleaned it as best I could)
+			if(findtext(categories, banned_categories)) //for I have sinned
+				is_combat_design = TRUE
+		for(var/unbanned_categories in non_combat_categories)
+			if(findtext(categories, unbanned_categories))
+				is_combat_design = FALSE
+
+	//they can have a tiny bit of non-lethal weapons. as a treat
+	if(design.special_design_flags & WHITELISTED_DESIGN)
+		is_combat_design = FALSE
+	if((design.special_design_flags & BLUE_ALERT_DESIGN) && SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_BLUE)
+		is_combat_design = FALSE
+
+	return is_combat_design
+
 /obj/machinery/mecha_part_fabricator/ui_data(mob/user)
 	var/list/data = list()
+	check_auth_changes(user)
 
-	data["materials"] = rmat.mat_container?.ui_data()
+
+	data["materials"] = rmat.mat_container.ui_data()
 	data["queue"] = list()
 	data["processing"] = process_queue
 
@@ -432,9 +494,17 @@
 			"timeLeft" = get_construction_time_w_coeff(design.construction_time) / 10
 		))
 
+	//monkestation edit start
+	data["authorization"] = authorization_override
+	data["alert_level"] = SSsecurity_level.get_current_level_as_number()
+	data["combat_parts_allowed"] = combat_parts_allowed
+	data["emagged"] = (obj_flags & EMAGGED)
+	data["silicon_user"] = issilicon(user)
+	//monkestation edit end
+
 	return data
 
-/obj/machinery/mecha_part_fabricator/ui_act(action, list/params)
+/obj/machinery/mecha_part_fabricator/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 
 	if(.)
@@ -460,6 +530,10 @@
 					continue
 
 				var/datum/design/design = SSresearch.techweb_design_by_id(design_id)
+
+				if(weapon_lock_check(design) && !combat_parts_allowed)
+					balloon_alert(usr, "unauthorized!")
+					continue
 
 				if(!(design.build_type & MECHFAB) || design.id != design_id)
 					continue
@@ -521,10 +595,6 @@
 		if("remove_mat")
 			var/datum/material/material = locate(params["ref"])
 			var/amount = text2num(params["amount"])
-
-			if (!amount)
-				return
-
 			// SAFETY: eject_sheets checks for valid mats
 			rmat.eject_sheets(material, amount)
 

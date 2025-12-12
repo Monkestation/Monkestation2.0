@@ -55,7 +55,7 @@
 	var/dchatmsg = "<span style='color: [user.chat_color];'><b>[user]</b></span> [msg]"
 
 	var/tmp_sound = get_sound(user)
-	if(tmp_sound && (!only_forced_audio || !intentional) && !TIMER_COOLDOWN_CHECK(user, type))
+	if(tmp_sound && (!only_forced_audio || !intentional) && TIMER_COOLDOWN_FINISHED(user, type))
 		TIMER_COOLDOWN_START(user, type, audio_cooldown)
 		playsound(user, tmp_sound, 50, vary)
 

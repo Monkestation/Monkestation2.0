@@ -622,3 +622,11 @@
 	worn_icon = 'icons/mob/clothing/head/costume.dmi'
 	body_parts_covered = HEAD
 	flags_inv = HIDEHAIR
+
+/obj/item/clothing/suit/costume/dio
+	name = "flamboyant jacket"
+	desc = "It exudes a menancing aura."
+	icon_state = "dio_jacket"
+	inhand_icon_state = null
+	body_parts_covered = CHEST|ARMS
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON

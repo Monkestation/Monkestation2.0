@@ -54,6 +54,13 @@ SUBSYSTEM_DEF(ticker)
 	/// What is going to be reported to other stations at end of round?
 	var/news_report
 
+	///The status of the NT Rep, updated when one joins or the round ends.
+	var/nanotrasen_rep_status = NT_REP_STATUS_DOESNT_EXIST
+	///The score, out of 5, that the NT rep has given the station. 0 if they died.
+	var/nanotrasen_rep_score = 0
+	///A comment the rep has given, if any.
+	var/nanotrasen_rep_comments
+
 
 	var/roundend_check_paused = FALSE
 
@@ -75,7 +82,7 @@ SUBSYSTEM_DEF(ticker)
 	var/reboot_timer = null
 
 	///add bitflags to this that should be rewarded monkecoins, example: DEPARTMENT_BITFLAG_SECURITY
-	var/list/bitflags_to_reward = list(DEPARTMENT_BITFLAG_SECURITY,)
+	var/list/bitflags_to_reward = list(DEPARTMENT_BITFLAG_SECURITY, DEPARTMENT_BITFLAG_SILICON)
 	///add jobs to this that should get rewarded monkecoins, example: JOB_SECURITY_OFFICER
 	var/list/jobs_to_reward = list(JOB_JANITOR,)
 
@@ -351,7 +358,8 @@ SUBSYSTEM_DEF(ticker)
 	set waitfor = FALSE
 	if(!CONFIG_GET(flag/disable_storyteller))
 		SSgamemode.current_storyteller.round_started = TRUE
-		SSgamemode.current_storyteller.tick(STORYTELLER_WAIT_TIME * 0.1) // we want this asap
+		if(!SSgamemode.halted_storyteller)
+			SSgamemode.current_storyteller.tick(STORYTELLER_WAIT_TIME * 0.1) // we want this asap
 	mode.post_setup()
 	addtimer(CALLBACK(src, PROC_REF(fade_all_splashes)), 1 SECONDS) // extra second to make SURE all antags are setup
 
@@ -386,6 +394,8 @@ SUBSYSTEM_DEF(ticker)
 			to_chat(iter_human, span_notice("You will gain [round(iter_human.hardcore_survival_score) * 2] hardcore random points if you greentext this round!"))
 		else
 			to_chat(iter_human, span_notice("You will gain [round(iter_human.hardcore_survival_score)] hardcore random points if you survive this round!"))
+
+	SStitle.update_init_text()
 
 //These callbacks will fire after roundstart key transfer
 /datum/controller/subsystem/ticker/proc/OnRoundstart(datum/callback/cb)
@@ -719,7 +729,7 @@ SUBSYSTEM_DEF(ticker)
 		if(STATION_NUKED)
 			// There was a blob on board, guess it was nuked to stop it
 			if(length(GLOB.overminds))
-				for(var/mob/camera/blob/overmind as anything in GLOB.overminds)
+				for(var/mob/eye/blob/overmind as anything in GLOB.overminds)
 					if(overmind.max_count < overmind.announcement_size)
 						continue
 

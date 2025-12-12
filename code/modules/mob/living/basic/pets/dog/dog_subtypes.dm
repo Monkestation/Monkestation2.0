@@ -37,6 +37,17 @@
 	collar_icon_state = "bullterrier"
 	held_state = "bullterrier"
 
+/mob/living/basic/pet/dog/dobermann
+	name = "\improper dobermann"
+	desc = "A larger breed of dog."
+	real_name = "dobermnann"
+	icon = 'icons/mob/simple/pets.dmi'
+	icon_state = "dobber"
+	icon_living = "dobber"
+	icon_dead = "dobbydead"
+	butcher_results = list(/obj/item/food/meat/slab/corgi = 3) // Would feel redundant to add more new dog meats.
+	gold_core_spawnable = FRIENDLY_SPAWN
+
 /mob/living/basic/pet/dog/breaddog //Most of the code originates from Cak
 	name = "Kobun"
 	real_name = "Kobun"

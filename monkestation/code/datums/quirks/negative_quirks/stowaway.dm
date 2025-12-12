@@ -54,8 +54,8 @@
 		else
 			icon_state = "counterfeit" //in case you somehow repair it to 3+
 
-/obj/item/card/id/fake_card/AltClick(mob/living/user)
-	return //no accounts on fake cards
+/obj/item/card/id/fake_card/click_alt(mob/living/user)
+	return CLICK_ACTION_BLOCKING //no accounts on fake cards
 
 /obj/item/card/id/fake_card/examine(mob/user)
 	. = ..()

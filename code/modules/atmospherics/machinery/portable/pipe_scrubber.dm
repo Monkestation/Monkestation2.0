@@ -54,9 +54,8 @@
 		secondary_tank_contents
 	)
 
-/obj/machinery/portable_atmospherics/pipe_scrubber/AltClick(mob/living/user)
-	. = ..()
-	return
+/obj/machinery/portable_atmospherics/pipe_scrubber/click_alt(mob/living/user)
+	return CLICK_ACTION_BLOCKING
 
 /obj/machinery/portable_atmospherics/pipe_scrubber/replace_tank(mob/living/user, close_valve, obj/item/tank/new_tank)
 	return FALSE
@@ -155,7 +154,7 @@
 	data["pressureLimitTank"] = pressure_limit
 	return data
 
-/obj/machinery/portable_atmospherics/pipe_scrubber/ui_act(action, params)
+/obj/machinery/portable_atmospherics/pipe_scrubber/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

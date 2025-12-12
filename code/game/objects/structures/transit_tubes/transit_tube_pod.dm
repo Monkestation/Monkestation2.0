@@ -27,10 +27,10 @@
 	icon_state = contents.len ? occupied_icon_state : initial(icon_state)
 	return ..()
 
-/obj/structure/transit_tube_pod/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_CROWBAR)
+/obj/structure/transit_tube_pod/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(attacking_item.tool_behaviour == TOOL_CROWBAR)
 		if(!moving)
-			I.play_tool_sound(src)
+			attacking_item.play_tool_sound(src)
 			if(contents.len)
 				user.visible_message(span_notice("[user] empties \the [src]."), span_notice("You empty \the [src]."))
 				empty_pod()

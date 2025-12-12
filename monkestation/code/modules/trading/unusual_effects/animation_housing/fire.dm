@@ -33,7 +33,3 @@
 	animate_holder.set_parent_copy(2, "pixel_y")
 	animate_holder.set_parent_copy(2, "pixel_x", FALSE)
 
-
-/obj/item/debug_fire/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/particle_spewer/fire)

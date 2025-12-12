@@ -62,7 +62,6 @@ GLOBAL_LIST_INIT(redeemed_codes, list())
 	message_admins("[usr] has just redeemed the code: [code], for [path]")
 	remove_code(code)
 
-
 /proc/remove_code(code)
 	var/json_file = file(CODE_STORAGE_PATH)
 

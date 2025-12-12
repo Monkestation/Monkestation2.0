@@ -62,12 +62,14 @@ GLOBAL_LIST_EMPTY(polarization_controllers)
 		return
 
 	if(should_be_opaque)
+		ADD_TRAIT(managed_window, TRAIT_WINDOW_POLARIZED, REF(src))
 		non_polarized_color = managed_window.color
 		animate(managed_window, alpha = 255, color = polarized_color, time = polarization_process_duration)
 		addtimer(CALLBACK(managed_window, TYPE_PROC_REF(/atom, set_opacity), TRUE), polarization_process_duration) // So that is changes opacity mid-way through the animation, hopefully.
 	else
 		animate(managed_window, alpha = initial(managed_window.alpha), color = non_polarized_color, time = polarization_process_duration)
 		managed_window.set_opacity(FALSE) // So that is changes opacity mid-way through the animation, hopefully.
+		REMOVE_TRAIT(managed_window, TRAIT_WINDOW_POLARIZED, REF(src))
 
 
 
@@ -126,7 +128,7 @@ GLOBAL_LIST_EMPTY(polarization_controllers)
 
 	remove_polarization_controller(source, user, tool)
 
-	return COMPONENT_BLOCK_TOOL_ATTACK
+	return ITEM_INTERACT_BLOCKING
 
 
 /**

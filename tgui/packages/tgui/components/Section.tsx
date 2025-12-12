@@ -20,7 +20,7 @@ export type SectionProps = BoxProps & {
   /** @deprecated This property no longer works, please remove it. */
   level?: never;
   /** @deprecated Please use `scrollable` property */
-  overflowY?: never;
+  overflowY?: string;
   /** @member Allows external control of scrolling. */
   scrollableRef?: RefObject<HTMLDivElement>;
   /** @member Callback function for the `scroll` event */

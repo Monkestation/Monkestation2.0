@@ -20,7 +20,7 @@
 		/datum/stock_part/capacitor,
 	)
 	///power cell we draw power from
-	var/obj/item/stock_parts/cell/power_cell
+	var/obj/item/stock_parts/power_store/cell/power_cell
 	///stock parts for this chair
 	var/list/component_parts = list()
 
@@ -81,28 +81,28 @@
 	user.put_in_hands(power_cell)
 	power_cell = null
 
-/obj/vehicle/ridden/wheelchair/motorized/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_SCREWDRIVER)
-		I.play_tool_sound(src)
+/obj/vehicle/ridden/wheelchair/motorized/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(attacking_item.tool_behaviour == TOOL_SCREWDRIVER)
+		attacking_item.play_tool_sound(src)
 		panel_open = !panel_open
 		user.visible_message(span_notice("[user] [panel_open ? "opens" : "closes"] the maintenance panel on [src]."), span_notice("You [panel_open ? "open" : "close"] the maintenance panel."))
 		return
 	if(!panel_open)
 		return ..()
 
-	if(istype(I, /obj/item/stock_parts/cell))
+	if(istype(attacking_item, /obj/item/stock_parts/power_store/cell))
 		if(power_cell)
 			to_chat(user, span_warning("There is a power cell already installed."))
 		else
-			I.forceMove(src)
-			power_cell = I
-			to_chat(user, span_notice("You install the [I]."))
+			attacking_item.forceMove(src)
+			power_cell = attacking_item
+			to_chat(user, span_notice("You install the [attacking_item]."))
 		refresh_parts()
 		return
-	if(!istype(I, /obj/item/stock_parts))
+	if(!istype(attacking_item, /obj/item/stock_parts))
 		return ..()
 
-	var/datum/stock_part/newstockpart = GLOB.stock_part_datums_per_object[I.type]
+	var/datum/stock_part/newstockpart = GLOB.stock_part_datums_per_object[attacking_item.type]
 	if(isnull(newstockpart))
 		CRASH("No corresponding datum/stock_part for [newstockpart.type]")
 	for(var/datum/stock_part/oldstockpart in component_parts)
@@ -114,8 +114,8 @@
 		if(istype(newstockpart, type_to_check) && istype(oldstockpart, type_to_check))
 			if(newstockpart.tier > oldstockpart.tier)
 				// delete the part in the users hand and add the datum part to the component_list
-				I.moveToNullspace()
-				qdel(I)
+				attacking_item.moveToNullspace()
+				qdel(attacking_item)
 				component_parts += newstockpart
 				// create an new instance of the old datum stock part physical type & put it in the users hand
 				var/obj/item/stock_parts/part = new oldstockpart.physical_object_type

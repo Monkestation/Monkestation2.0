@@ -14,6 +14,7 @@ if too much trash on ground bingles roll
 	hud_icon = 'monkestation/code/modules/veth_misc_items/bingle/icons/bingle_hud.dmi'
 	show_to_ghosts = TRUE
 	antag_flags = FLAG_ANTAG_CAP_TEAM
+	antag_count_points = 3
 	var/static/datum/team/bingles/dont_bungle_the_bingle
 	var/obj/structure/bingle_hole/pit_check
 
@@ -28,6 +29,24 @@ if too much trash on ground bingles roll
 	owner.set_assigned_role(SSjob.GetJobType(/datum/job/bingle))
 	dont_bungle_the_bingle.add_member(owner)
 	return ..()
+
+/datum/antagonist/bingle/antag_token(datum/mind/hosts_mind, mob/spender)
+	var/spender_key = spender.key
+	if(!spender_key)
+		CRASH("bingle antag token spender([spender]) had no key")
+	var/turf/spawn_loc = find_safe_turf_in_maintenance()//Used for the Drop Pod type of spawn for maints only
+	if(isnull(spawn_loc))
+		message_admins("Failed to find valid spawn location for [ADMIN_LOOKUPFLW(spender)], who spent a bingle antag token")
+		CRASH("Failed to find valid spawn location for bingle antag token")
+	if(isliving(spender) && hosts_mind)
+		hosts_mind.current.unequip_everything()
+		new /obj/effect/holy(hosts_mind.current.loc)
+		QDEL_IN(hosts_mind.current, 1 SECOND)
+	var/mob/living/basic/bingle/lord/bungle = new(spawn_loc)
+	bungle.PossessByPlayer(spender_key)
+	if(isobserver(spender))
+		qdel(spender)
+	message_admins("[ADMIN_LOOKUPFLW(bungle)] has been made into a bingle by using an antag token.")
 
 /datum/antagonist/bingle/greet()
 	. = ..()
@@ -61,12 +80,13 @@ if too much trash on ground bingles roll
 	return TRUE
 
 /datum/action/cooldown/bingle/spawn_hole/proc/spawn_hole(turf/selected_turf)
-    var/datum/antagonist/bingle/bingle_datum = IS_BINGLE(owner)
-    if(!selected_turf)
-        to_chat(owner, span_notice("No selected turf found!"))
-        return
-    var/obj/structure/bingle_hole/hole = new(selected_turf)
-    bingle_datum.pit_check = hole
-    // Register the team in the pit
-    hole.bingle_team = bingle_datum.get_team()
-    Remove(owner)
+	var/datum/antagonist/bingle/bingle_datum = IS_BINGLE(owner)
+	if(!selected_turf)
+		to_chat(owner, span_notice("No selected turf found!"))
+		return
+	var/obj/structure/bingle_hole/hole = new(selected_turf)
+	bingle_datum.pit_check = hole
+	// Register the team in the pit
+	hole.bingle_team = bingle_datum.get_team()
+	astype(owner, /mob/living/basic/bingle)?.set_linked_pit(hole) // link the bingle to this binghole
+	Remove(owner)

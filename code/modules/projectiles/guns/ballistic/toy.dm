@@ -52,6 +52,9 @@
 	if(chambered && !chambered.loaded_projectile)
 		qdel(chambered)
 
+/obj/item/gun/ballistic/shotgun/toy/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_DONK)
+
 /obj/item/gun/ballistic/shotgun/toy/unrestricted
 	pin = /obj/item/firing_pin
 
@@ -83,6 +86,9 @@
 	clumsy_check = FALSE
 	gun_flags = TOY_FIREARM_OVERLAY | NOT_A_REAL_GUN
 
+/obj/item/gun/ballistic/automatic/c20r/toy/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_DONK)
+
 /obj/item/gun/ballistic/automatic/c20r/toy/unrestricted //Use this for actual toys
 	pin = /obj/item/firing_pin
 	accepted_magazine_type = /obj/item/ammo_box/magazine/toy/smgm45
@@ -107,3 +113,7 @@
 
 /obj/item/gun/ballistic/automatic/l6_saw/toy/unrestricted/riot
 	accepted_magazine_type = /obj/item/ammo_box/magazine/toy/m762/riot
+
+/obj/item/gun/ballistic/automatic/l6_saw/toy/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_DONK)
+

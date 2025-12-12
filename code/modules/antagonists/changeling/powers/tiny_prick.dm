@@ -68,11 +68,14 @@
 	desc = "We silently sting an organism, injecting a retrovirus that forces them to transform."
 	helptext = "The victim will transform much like a changeling would. \
 		For complex humanoids, the transformation only lasts 8 minutes, but the duration is paused while the victim is dead or in stasis. \
+		Mutadone can be used to reduce the duration. \
 		For more simple humanoids, such as monkeys, the transformation is permanent. \
 		Does not provide a warning to others. Mutations will not be transferred." // monkestation edit
 	button_icon_state = "sting_transform"
 	chemical_cost = 33 // Low enough that you can sting only two people in quick succession
 	dna_cost = 2
+	req_absorbs = 1
+	weird = TRUE
 	/// A reference to our active profile, which we grab DNA from
 	VAR_FINAL/datum/changeling_profile/selected_dna
 	/// Duration of the sting
@@ -113,7 +116,8 @@
 		|| HAS_TRAIT(target, TRAIT_HUSK) \
 		|| HAS_TRAIT(target, TRAIT_BADDNA) \
 		|| HAS_TRAIT(target, TRAIT_NO_TRANSFORMATION_STING) \
-		|| (HAS_TRAIT(target, TRAIT_NO_DNA_COPY) && !ismonkey(target))) // sure, go ahead, make a monk-clone
+		|| HAS_TRAIT(target, TRAIT_SPECIESLOCK) \
+		|| (HAS_TRAIT(target, TRAIT_NO_DNA_COPY) && !ismonkeybasic(target))) // sure, go ahead, make a monk-clone
 		user.balloon_alert(user, "incompatible DNA!")
 		return FALSE
 	if(target.has_status_effect(/datum/status_effect/temporary_transformation/trans_sting))
@@ -124,7 +128,7 @@
 /datum/action/changeling/sting/transformation/sting_action(mob/living/user, mob/living/target)
 	var/final_duration = sting_duration
 	var/final_message = span_notice("We transform [target] into [selected_dna.dna.real_name].")
-	if(ismonkey(target))
+	if(ismonkeybasic(target))
 		final_duration = INFINITY
 		final_message = span_warning("Our genes cry out as we transform the lesser form of [target] into [selected_dna.dna.real_name] permanently!")
 
@@ -167,7 +171,7 @@
 		to_chat(user, span_warning("[held] is stuck to [target.p_their()] hand, you cannot grow a false armblade over it!"))
 		return
 	..()
-	if(ismonkey(target))
+	if(ismonkeybasic(target))
 		to_chat(user, span_notice("Our genes cry out as we sting [target.name]!"))
 
 	var/obj/item/melee/arm_blade/false/blade = new(target,1)
@@ -228,6 +232,7 @@
 	button_icon_state = "sting_blind"
 	chemical_cost = 25
 	dna_cost = 1
+	weird = TRUE
 
 /datum/action/changeling/sting/blind/sting_action(mob/user, mob/living/carbon/target)
 	var/obj/item/organ/internal/eyes/eyes = target.get_organ_slot(ORGAN_SLOT_EYES)

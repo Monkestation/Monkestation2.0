@@ -143,7 +143,7 @@
 	removed.temperature = max(removed.temperature + temperature_change, 1)
 
 /obj/machinery/atmospherics/components/binary/circulator/process_atmos()
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 
 /obj/machinery/atmospherics/components/binary/circulator/update_icon_state()
 	if(!is_operational)
@@ -268,7 +268,7 @@
 		generator.cold_circ = null
 	else
 		generator.hot_circ = null
-	generator.update_appearance()
+	generator.update_appearance(UPDATE_ICON)
 	generator = null
 
 /obj/machinery/atmospherics/components/binary/circulator/set_piping_layer(new_layer)

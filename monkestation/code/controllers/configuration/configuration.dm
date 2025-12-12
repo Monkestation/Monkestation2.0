@@ -37,7 +37,7 @@
 	if (!length(config.lobby_notices)) return FALSE
 	var/final_notices = ""
 	var/do_final_top_separator = FALSE
-	for (var/notice as anything in config.lobby_notices)
+	for (var/notice in config.lobby_notices)
 		var/do_separator = FALSE
 		if (islist(notice))
 			var/list/_notice = notice

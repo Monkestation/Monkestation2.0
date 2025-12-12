@@ -13,6 +13,12 @@
 	var/voteweight = 1
 	var/votable = FALSE
 
+	///A URL linking to a place for people to send feedback about this map.
+	var/feedback_link
+
+	/// The URL given by config directing you to the webmap.
+	var/mapping_url
+
 	// Config actually from the JSON - should default to Meta
 	var/map_name = "MetaStation"
 	var/map_path = "map_files/MetaStation"
@@ -34,7 +40,8 @@
 		"cargo" = "cargo_box",
 		"ferry" = "ferry_fancy",
 		"whiteship" = "whiteship_meta",
-		"emergency" = "emergency_meta")
+		"emergency" = "emergency_meta",
+	)
 
 	/// Dictionary of job sub-typepath to template changes dictionary
 	var/job_changes = list()
@@ -44,8 +51,11 @@
 	/// List of unit tests that are skipped when running this map
 	var/list/skipped_tests
 
+	/// List of station traits that cannot be rolled on this map.
+	var/list/banned_station_traits
+
 	//List of particle_weather types for this map
-	var/particle_weathers = list() //Monkestation addition
+	var/list/particle_weathers = list() //Monkestation addition
 
 /**
  * Proc that simply loads the default map config, which should always be functional.
@@ -64,7 +74,7 @@
  * Returns the config for the map to load.
  */
 /proc/load_map_config(filename = null, directory = null, error_if_missing = TRUE)
-	var/datum/map_config/config = load_default_map_config()
+	var/datum/map_config/configuring_map = load_default_map_config()
 
 	if(filename) // If none is specified, then go to look for next_map.json, for map rotation purposes.
 
@@ -72,7 +82,7 @@
 		if(directory)
 			if(!(directory in MAP_DIRECTORY_WHITELIST))
 				log_world("map directory not in whitelist: [directory] for map [filename]")
-				return config
+				return configuring_map
 		else
 			directory = MAP_DIRECTORY_MAPS
 
@@ -81,10 +91,10 @@
 		filename = PATH_TO_NEXT_MAP_JSON
 
 
-	if (!config.LoadConfig(filename, error_if_missing))
-		qdel(config)
+	if (!configuring_map.LoadConfig(filename, error_if_missing))
+		qdel(configuring_map)
 		return load_default_map_config()
-	return config
+	return configuring_map
 
 
 #define CHECK_EXISTS(X) if(!istext(json[X])) { log_world("[##X] missing from json!"); return; }
@@ -223,8 +233,15 @@
 		LAZYADD(skipped_tests, path_real)
 #endif
 
+	for(var/path_as_text in json["banned_station_traits"])
+		var/path_real = text2path(path_as_text)
+		if(!ispath(path_real, /datum/station_trait))
+			stack_trace("Invalid path in mapping config for banned station trait: \[[path_as_text]\]")
+			continue
+		LAZYADD(banned_station_traits, path_real)
+
 	defaulted = FALSE
-	return TRUE
+	return json
 #undef CHECK_EXISTS
 
 /datum/map_config/proc/GetFullMapPaths()

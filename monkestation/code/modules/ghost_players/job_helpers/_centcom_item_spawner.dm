@@ -42,7 +42,7 @@
 
 ///build our items to spawn, override this to generate items_to_spawn, call parent at the END of your override
 /obj/structure/centcom_item_spawner/proc/build_items_to_spawn()
-	for(var/type as anything in blacklisted_types)
+	for(var/type in blacklisted_types)
 		blacklisted_items += typesof(type)
 
 	for(var/category in items_to_spawn)

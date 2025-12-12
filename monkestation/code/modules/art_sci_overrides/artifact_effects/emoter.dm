@@ -1,8 +1,8 @@
 /datum/artifact_effect/emotegen
 	weight = ARTIFACT_UNCOMMON
-	type_name = "Emote Forcefield Effect"
-	activation_message = "springs to life and starts emitting a forcefield!"
-	deactivation_message = "shuts down, its forcefields shutting down with it."
+	type_name = "Emote Field Effect"
+	activation_message = "springs to life and starts emitting a strange energy!"
+	deactivation_message = "shuts down, its strange energy dissipating."
 	valid_activators = list(
 		/datum/artifact_activator/touch/carbon,
 		/datum/artifact_activator/touch/silicon,
@@ -11,8 +11,11 @@
 
 	research_value = TECHWEB_DISCOUNT_MINOR
 
-	var/cooldown_time //cooldown AFTER the shield lowers
+	/// activation cooldown AFTER the artifact deactivates
+	var/cooldown_time
+	/// Radius of the effect
 	var/radius
+	/// how long our effect lasts
 	var/shield_time
 	var/list/all_emotes = list(
 		"flip",
@@ -50,18 +53,15 @@
 		our_artifact.artifact_deactivate(TRUE)
 		return
 	addtimer(CALLBACK(our_artifact, TYPE_PROC_REF(/datum/component/artifact, artifact_deactivate)), shield_time)
-	COOLDOWN_START(src,cooldown,shield_time + cooldown_time)
+	COOLDOWN_START(src, cooldown, shield_time + cooldown_time)
 
 /datum/artifact_effect/emotegen/effect_process()
 	var/current_emote = pick(picked_emotes)
 
 	our_artifact.holder.anchored = TRUE
 	var/turf/our_turf = get_turf(our_artifact.holder)
-	for(var/turf/open/floor in range(radius,our_artifact.holder))
-		if(floor == our_turf)
-			continue
-		for(var/mob/living/living in floor)
-			living.emote(current_emote, intentional = FALSE)
+	for(var/mob/living/living in orange(radius, our_turf))
+		living.emote(current_emote, intentional = FALSE)
 
 /datum/artifact_effect/emotegen/effect_deactivate()
 	our_artifact.holder.anchored = FALSE

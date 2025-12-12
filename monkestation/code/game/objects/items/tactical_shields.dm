@@ -101,7 +101,7 @@
 
 	AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
 
-/obj/item/broken_shield/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/broken_shield/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/stack/sheet/mineral/titanium))
 		var/datum/crafting_recipe/recipe_to_use = /datum/crafting_recipe/tutel
 		user.balloon_alert(user, "repairing shield...")

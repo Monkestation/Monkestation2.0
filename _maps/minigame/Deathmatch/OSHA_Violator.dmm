@@ -1,0 +1,2168 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ac" = (
+/obj/structure/closet/crate/medical,
+/turf/open/space/basic,
+/area/template_noop)
+"ae" = (
+/obj/effect/mob_spawn/corpse/human/cargo_tech,
+/turf/open/space/basic,
+/area/template_noop)
+"ai" = (
+/turf/closed/indestructible/reinforced,
+/area/deathmatch/fullbright)
+"aE" = (
+/turf/closed/indestructible/fakedoor,
+/area/deathmatch/fullbright)
+"bl" = (
+/turf/closed/indestructible/fakeglass,
+/area/deathmatch/fullbright)
+"bW" = (
+/obj/structure/closet/secure_closet/engineering_welding,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"cA" = (
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"cR" = (
+/obj/machinery/field/generator/starts_on,
+/obj/effect/turf_decal/bot,
+/obj/structure/cable,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"do" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"dt" = (
+/obj/machinery/light/no_nightlight/directional/north,
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/field/generator/starts_on,
+/obj/structure/cable,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"dy" = (
+/obj/structure/sign/poster/official/random/directional/north,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"er" = (
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/turf/closed/indestructible/reinforced,
+/area/deathmatch/fullbright)
+"fH" = (
+/obj/machinery/light/no_nightlight/directional/east,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"fN" = (
+/obj/structure/sign/directions/engineering,
+/turf/closed/indestructible/reinforced,
+/area/deathmatch/fullbright)
+"gd" = (
+/obj/machinery/power/energy_accumulator/grounding_rod/anchored,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"go" = (
+/obj/machinery/power/energy_accumulator/grounding_rod/anchored,
+/obj/machinery/light/red/directional/east,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"gC" = (
+/obj/machinery/power/emitter/energycannon,
+/obj/effect/turf_decal/bot,
+/obj/structure/cable,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"gG" = (
+/obj/structure/cable,
+/obj/structure/extinguisher_cabinet/directional/west,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"gN" = (
+/obj/structure/cable,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"gU" = (
+/obj/structure/cable,
+/obj/machinery/conveyor/auto/inverted{
+	dir = 5
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"hj" = (
+/obj/machinery/conveyor/auto{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"hR" = (
+/obj/structure/cable,
+/obj/machinery/conveyor/auto/inverted{
+	dir = 6
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"hU" = (
+/obj/machinery/light/no_nightlight/directional/east,
+/obj/structure/cable,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"ig" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/delivery,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"iE" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/loading_area,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"je" = (
+/turf/open/space/basic,
+/area/template_noop)
+"jn" = (
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/deathmatch/fullbright)
+"jC" = (
+/obj/structure/cable,
+/obj/structure/sign/poster/official/random/directional/east,
+/obj/effect/landmark/deathmatch_player_spawn,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"kh" = (
+/obj/structure/closet/secure_closet/engineering_electrical,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"kB" = (
+/obj/effect/landmark/deathmatch_player_spawn,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"kP" = (
+/obj/machinery/conveyor/auto,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"lu" = (
+/obj/machinery/conveyor/auto{
+	dir = 8
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"ly" = (
+/obj/machinery/conveyor/auto/inverted{
+	dir = 6
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"lU" = (
+/obj/machinery/conveyor/auto{
+	dir = 1
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"mg" = (
+/obj/effect/turf_decal/delivery,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"mj" = (
+/obj/structure/reagent_dispensers/fueltank,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"mw" = (
+/obj/machinery/conveyor/auto{
+	dir = 8
+	},
+/obj/structure/closet,
+/obj/item/soap/nanotrasen,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"mK" = (
+/obj/effect/landmark/deathmatch_player_spawn,
+/obj/machinery/conveyor/auto/inverted{
+	dir = 6
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"mO" = (
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/deathmatch/fullbright)
+"np" = (
+/obj/structure/reflector/double/mapping{
+	dir = 6
+	},
+/obj/effect/turf_decal/bot/left,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"nV" = (
+/obj/item/stack/cable_coil,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"or" = (
+/obj/machinery/conveyor/auto,
+/obj/structure/closet/firecloset,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"oT" = (
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"pe" = (
+/obj/machinery/conveyor/auto{
+	dir = 1
+	},
+/obj/item/clothing/glasses/meson/engine/tray,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"pf" = (
+/obj/structure/reflector/single/mapping{
+	dir = 10
+	},
+/obj/effect/turf_decal/bot/left,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"pO" = (
+/obj/structure/table/reinforced,
+/obj/item/assembly/prox_sensor,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"qn" = (
+/obj/structure/reflector/single/mapping{
+	dir = 6
+	},
+/obj/effect/turf_decal/bot/left,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"qo" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/caution/stand_clear,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"rz" = (
+/obj/machinery/power/emitter/energycannon{
+	dir = 8
+	},
+/obj/effect/turf_decal/bot,
+/obj/structure/cable,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"sa" = (
+/turf/cordon,
+/area/template_noop)
+"sb" = (
+/obj/structure/frame/machine/secured,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"sp" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"sx" = (
+/obj/item/clothing/suit/hazardvest,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"sP" = (
+/obj/item/stack/rods/fifty,
+/obj/structure/rack,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"sX" = (
+/obj/machinery/conveyor/auto,
+/obj/item/stack/sheet/cardboard,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"sZ" = (
+/obj/structure/cable,
+/obj/effect/landmark/deathmatch_player_spawn,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"ta" = (
+/obj/structure/table/reinforced,
+/obj/item/clothing/head/utility/welding,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"tc" = (
+/obj/machinery/light/red/directional/west,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"th" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"tT" = (
+/obj/structure/disposalpipe/trunk{
+	dir = 2
+	},
+/obj/structure/disposaloutlet{
+	dir = 1
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"tU" = (
+/obj/item/storage/toolbox/drone{
+	pixel_y = 5
+	},
+/obj/item/storage/toolbox/electrical,
+/obj/structure/rack,
+/obj/item/crowbar,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"ub" = (
+/obj/machinery/conveyor/auto{
+	dir = 1
+	},
+/obj/machinery/light/no_nightlight/directional/west,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"uv" = (
+/obj/structure/table/reinforced,
+/obj/item/weldingtool/largetank,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"uY" = (
+/obj/structure/closet/crate/engineering,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"vD" = (
+/obj/machinery/power/energy_accumulator/tesla_coil/anchored,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"vG" = (
+/obj/item/tank/internals/plasma/full,
+/obj/structure/rack,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"vK" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"vT" = (
+/obj/effect/turf_decal/stripes/corner,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"wb" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"wy" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"wI" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"wK" = (
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"wL" = (
+/obj/machinery/conveyor/auto,
+/obj/item/shard,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"xa" = (
+/obj/machinery/conveyor/auto,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"xg" = (
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/indestructible/plating,
+/area/deathmatch/fullbright)
+"xj" = (
+/obj/machinery/conveyor/auto{
+	dir = 1
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"xs" = (
+/obj/machinery/conveyor/auto{
+	dir = 1
+	},
+/obj/item/crowbar/red,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"xF" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"xN" = (
+/obj/structure/rack,
+/obj/item/wrench,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"xW" = (
+/obj/structure/reflector/single/mapping{
+	dir = 9
+	},
+/obj/effect/turf_decal/bot/left,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"xY" = (
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"yj" = (
+/obj/machinery/conveyor/auto{
+	dir = 1
+	},
+/obj/structure/closet,
+/obj/item/toy/crayon/spraycan,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"yo" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"ys" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/closed/indestructible/reinforced,
+/area/deathmatch/fullbright)
+"yB" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"yW" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"yX" = (
+/obj/structure/reflector/single/mapping{
+	dir = 5
+	},
+/obj/effect/turf_decal/bot/left,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"yY" = (
+/obj/structure/reflector/single/mapping{
+	dir = 9
+	},
+/obj/effect/turf_decal/bot/left,
+/obj/structure/disposalpipe/segment{
+	dir = 1
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"zb" = (
+/obj/structure/table/wood/fancy/black,
+/obj/item/hemostat/supermatter,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"zj" = (
+/obj/machinery/disposal/delivery_chute,
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"zl" = (
+/obj/machinery/button/door/directional/north{
+	id = "deathmatch_shutter_1";
+	name = "Water Vapour Shutter"
+	},
+/obj/structure/table/reinforced,
+/obj/item/clothing/glasses/meson/engine/tray,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"zw" = (
+/obj/item/kirbyplants,
+/obj/machinery/light/no_nightlight/directional/north,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"zL" = (
+/obj/structure/rack,
+/obj/item/extinguisher/mini,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"Aa" = (
+/obj/effect/turf_decal/box,
+/obj/effect/turf_decal/caution/stand_clear,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"Am" = (
+/obj/machinery/door/airlock/engineering/glass{
+	name = "Supermatter Room"
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"Ax" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"AF" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"AZ" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"Bf" = (
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/turf/open/floor/plating,
+/area/deathmatch/fullbright)
+"Bv" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/field/generator/starts_on,
+/obj/structure/cable,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"CC" = (
+/obj/machinery/vending/engineering,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"CH" = (
+/obj/structure/reflector/single/mapping{
+	dir = 5
+	},
+/obj/effect/turf_decal/bot/left,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"CI" = (
+/obj/structure/disposalpipe/segment{
+	dir = 1
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"CR" = (
+/obj/machinery/conveyor/auto,
+/obj/structure/closet/crate,
+/obj/item/toy/spinningtoy,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"DY" = (
+/obj/structure/cable,
+/obj/machinery/power/rtg/advanced{
+	power_gen = 50000
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"Ea" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/cable,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"Eb" = (
+/obj/structure/table/wood/fancy/black,
+/obj/item/nuke_core_container/supermatter,
+/obj/machinery/light/no_nightlight/directional/west,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"Ec" = (
+/obj/machinery/door/poddoor/shutters/indestructible{
+	id = "deathmatch_shutter_2"
+	},
+/obj/effect/turf_decal/caution/stand_clear,
+/obj/effect/turf_decal/bot,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"Em" = (
+/obj/structure/chair/comfy/black,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"EY" = (
+/obj/machinery/door/airlock/engineering/glass{
+	name = "Control Room"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"Fd" = (
+/obj/structure/reflector/box/mapping{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/bot,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"Fv" = (
+/obj/machinery/power/supermatter_crystal/hugbox,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"FM" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"FV" = (
+/obj/structure/cable,
+/obj/machinery/light/no_nightlight/directional/east,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"Gq" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/light/no_nightlight/directional/west,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"Gx" = (
+/obj/machinery/conveyor/auto,
+/obj/structure/cable,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"Gz" = (
+/obj/machinery/conveyor/auto,
+/obj/item/multitool,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"GB" = (
+/obj/machinery/conveyor/auto{
+	dir = 1
+	},
+/obj/item/tank/internals/oxygen,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"GH" = (
+/obj/structure/reflector/single/mapping{
+	dir = 6
+	},
+/obj/effect/turf_decal/bot/right,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"GP" = (
+/obj/structure/reflector/single/mapping{
+	dir = 10
+	},
+/obj/effect/turf_decal/bot/right,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"GT" = (
+/obj/structure/cable,
+/obj/item/clothing/suit/hazardvest,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"GV" = (
+/obj/structure/cable,
+/turf/closed/indestructible/reinforced,
+/area/deathmatch/fullbright)
+"Hn" = (
+/obj/structure/table/wood/fancy/black,
+/obj/item/scalpel/supermatter,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"HL" = (
+/obj/item/clothing/gloves/color/yellow{
+	desc = "This is it. The only reason of your existence. Grab it, put them on and enjoy your newfound godhood!"
+	},
+/obj/structure/rack,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"HP" = (
+/obj/machinery/computer/operating{
+	desc = "You start to get the feeling this is the wrong operating console....";
+	dir = 1
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"HY" = (
+/obj/structure/reflector/single/mapping{
+	dir = 9
+	},
+/obj/effect/turf_decal/bot/right,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"Js" = (
+/obj/structure/table/reinforced,
+/obj/item/reagent_containers/pill/patch/aiuri,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"JF" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"Kd" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"KY" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"LK" = (
+/obj/structure/reflector/single/mapping{
+	dir = 10
+	},
+/obj/effect/turf_decal/bot/right,
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"Mm" = (
+/obj/machinery/conveyor/auto{
+	dir = 8
+	},
+/obj/item/clothing/suit/armor/vest,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"Mp" = (
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/turf/closed/indestructible/reinforced,
+/area/deathmatch/fullbright)
+"Mu" = (
+/obj/structure/cable,
+/obj/structure/sign/poster/official/random/directional/west,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"My" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"MC" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"MP" = (
+/obj/structure/cable,
+/obj/machinery/power/floodlight,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"MV" = (
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/obj/structure/disposaloutlet,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"NJ" = (
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/obj/machinery/disposal/delivery_chute,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"NY" = (
+/obj/machinery/power/emitter/energycannon{
+	dir = 1
+	},
+/obj/effect/turf_decal/bot,
+/obj/structure/cable,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"OL" = (
+/obj/machinery/conveyor/auto/inverted{
+	dir = 5
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"Pg" = (
+/obj/machinery/field/generator/starts_on,
+/obj/machinery/light/no_nightlight/directional/north,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"Pu" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"Px" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"QA" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"QG" = (
+/obj/structure/rack,
+/obj/item/reagent_containers/cup/bucket,
+/obj/item/pen,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"QQ" = (
+/obj/machinery/door/poddoor/shutters/indestructible{
+	id = "deathmatch_shutter_1"
+	},
+/obj/effect/turf_decal/caution/stand_clear,
+/obj/effect/turf_decal/bot,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"Rj" = (
+/obj/machinery/portable_atmospherics/canister/water_vapor{
+	desc = "You monster."
+	},
+/obj/machinery/button/door/directional/east{
+	id = "deathmatch_shutter_2";
+	name = "Supermatter Sampling Shutter"
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"Rk" = (
+/obj/effect/mob_spawn/corpse/human/assistant,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"Rv" = (
+/obj/structure/table/reinforced,
+/obj/item/weldingtool/mini,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"RF" = (
+/obj/machinery/conveyor/auto{
+	dir = 1
+	},
+/obj/structure/closet/crate,
+/obj/item/stack/medical/suture{
+	amount = 6
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"Sc" = (
+/obj/structure/reflector/double/mapping{
+	dir = 5
+	},
+/obj/effect/turf_decal/bot/right,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"Sh" = (
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/turf/open/indestructible/plating,
+/area/deathmatch/fullbright)
+"Si" = (
+/obj/item/clothing/head/utility/welding,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"SR" = (
+/obj/machinery/conveyor/auto,
+/obj/item/tank/internals/oxygen,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"SW" = (
+/obj/machinery/conveyor/auto{
+	dir = 1
+	},
+/obj/structure/closet/cardboard,
+/obj/item/dualsaber/toy,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"Tu" = (
+/obj/structure/table/reinforced,
+/obj/item/bodypart/arm/left/robot,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"TO" = (
+/obj/structure/reflector/single/mapping{
+	dir = 5
+	},
+/obj/effect/turf_decal/bot/right,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"TY" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/loading_area{
+	dir = 4
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"Ue" = (
+/obj/structure/table/reinforced,
+/obj/item/clothing/mask/gas/welding/up,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"Uu" = (
+/obj/machinery/conveyor/auto{
+	dir = 1
+	},
+/obj/structure/closet,
+/obj/item/pizzabox/meat{
+	desc = "In honor of those who fell during the infamous Pizza Riot."
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"UI" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/field/generator/starts_on,
+/obj/structure/cable,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"Vr" = (
+/obj/machinery/conveyor/auto/inverted{
+	dir = 9
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"Vu" = (
+/obj/machinery/conveyor/auto{
+	dir = 4
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"VC" = (
+/obj/machinery/conveyor/auto/inverted{
+	dir = 10
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"VG" = (
+/obj/item/wrench,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"WI" = (
+/obj/effect/landmark/deathmatch_player_spawn,
+/obj/machinery/conveyor/auto/inverted{
+	dir = 9
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"Xp" = (
+/obj/structure/cable,
+/obj/structure/extinguisher_cabinet/directional/west,
+/obj/item/clothing/suit/armor/vest,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"XU" = (
+/obj/structure/cable,
+/obj/machinery/conveyor/auto/inverted{
+	dir = 9
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"Yn" = (
+/obj/machinery/conveyor/auto{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"Yz" = (
+/obj/machinery/conveyor/auto{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/item/clothing/glasses/meson/engine/tray,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"YA" = (
+/obj/structure/cable,
+/turf/closed/indestructible/fakeglass,
+/area/deathmatch/fullbright)
+"YJ" = (
+/obj/structure/cable,
+/obj/machinery/conveyor/auto/inverted{
+	dir = 10
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"YU" = (
+/obj/structure/cable,
+/obj/structure/extinguisher_cabinet/directional/east,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"YY" = (
+/obj/machinery/light/no_nightlight/directional/south,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/field/generator/starts_on,
+/obj/structure/cable,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"Zi" = (
+/obj/structure/sign/poster/official/random/directional/south,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"Zr" = (
+/obj/item/storage/backpack/duffelbag/syndie/med/medicalbundle,
+/turf/open/space/basic,
+/area/template_noop)
+"Zz" = (
+/obj/machinery/power/singularity_beacon/syndicate,
+/turf/open/space/basic,
+/area/template_noop)
+"ZD" = (
+/obj/item/storage/toolbox/syndicate,
+/turf/open/space/basic,
+/area/template_noop)
+
+(1,1,1) = {"
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+"}
+(2,1,1) = {"
+sa
+je
+je
+je
+je
+je
+je
+je
+je
+je
+ai
+ai
+ai
+ai
+ai
+je
+je
+je
+je
+je
+je
+je
+je
+je
+sa
+"}
+(3,1,1) = {"
+sa
+je
+ai
+ai
+fN
+ai
+ai
+ai
+ai
+ai
+ai
+zb
+Eb
+Hn
+ai
+ai
+ai
+ai
+je
+je
+je
+je
+je
+je
+sa
+"}
+(4,1,1) = {"
+sa
+je
+ai
+bW
+cA
+cA
+cA
+cA
+tc
+cA
+aE
+cA
+cA
+cA
+aE
+cA
+cA
+aE
+je
+je
+je
+je
+je
+je
+sa
+"}
+(5,1,1) = {"
+sa
+je
+ai
+cA
+cA
+sb
+cA
+sb
+cA
+cA
+er
+zj
+cA
+cA
+ai
+cA
+cA
+aE
+je
+je
+je
+je
+je
+je
+sa
+"}
+(6,1,1) = {"
+sa
+je
+aE
+cA
+sb
+sb
+sb
+sb
+cA
+uY
+ys
+ai
+Ec
+ai
+ai
+cA
+cA
+ai
+je
+je
+je
+je
+je
+je
+sa
+"}
+(7,1,1) = {"
+sa
+je
+aE
+cA
+cA
+cA
+cA
+sb
+cA
+vD
+ys
+zl
+cA
+HL
+ai
+cA
+Rk
+ai
+ai
+ai
+ai
+ai
+ai
+je
+sa
+"}
+(8,1,1) = {"
+sa
+je
+ai
+cA
+gd
+cA
+cA
+cA
+cA
+vD
+ys
+zw
+Em
+HP
+ai
+Pg
+cA
+cA
+cA
+cA
+cA
+cA
+aE
+je
+sa
+"}
+(9,1,1) = {"
+sa
+je
+ai
+cA
+go
+kh
+kh
+bW
+cA
+vG
+ys
+zL
+cA
+Js
+ai
+vG
+cA
+bW
+kh
+kh
+cA
+cA
+aE
+je
+sa
+"}
+(10,1,1) = {"
+sa
+je
+ai
+aE
+ai
+bl
+bl
+bl
+aE
+bl
+ys
+bl
+EY
+bl
+ai
+bl
+aE
+bl
+bl
+bl
+ai
+aE
+ai
+je
+sa
+"}
+(11,1,1) = {"
+sa
+je
+ai
+cR
+ai
+gN
+gN
+sp
+th
+vK
+wK
+gN
+gN
+gN
+Mu
+sp
+th
+vK
+gN
+gN
+ai
+cR
+ai
+je
+sa
+"}
+(12,1,1) = {"
+sa
+je
+ai
+YA
+ai
+gN
+cA
+np
+cA
+vT
+yB
+Aa
+Fd
+Aa
+My
+Pu
+cA
+Sc
+cA
+gN
+ai
+YA
+ai
+je
+sa
+"}
+(13,1,1) = {"
+sa
+je
+ai
+Ea
+gG
+gN
+cA
+cA
+tT
+wb
+mO
+Am
+oT
+Am
+Bf
+Px
+cA
+cA
+nV
+gN
+Xp
+yo
+ai
+je
+sa
+"}
+(14,1,1) = {"
+sa
+je
+ai
+do
+gN
+kB
+cA
+sx
+cA
+wy
+mO
+Ax
+th
+JF
+Bf
+Px
+cA
+cA
+cA
+kB
+gN
+Px
+ai
+je
+sa
+"}
+(15,1,1) = {"
+sa
+je
+ai
+dt
+gN
+cA
+np
+cA
+cA
+wy
+mO
+AF
+Fv
+Kd
+Bf
+Px
+cA
+cA
+Sc
+cA
+gN
+YY
+ai
+je
+sa
+"}
+(16,1,1) = {"
+sa
+je
+ai
+do
+gN
+cA
+cA
+cA
+cA
+wy
+mO
+AZ
+FM
+KY
+Bf
+Px
+cA
+Si
+cA
+cA
+gN
+Px
+ai
+je
+sa
+"}
+(17,1,1) = {"
+sa
+je
+ai
+do
+gN
+cA
+nV
+cA
+cA
+wy
+mO
+Bf
+jn
+Bf
+Bf
+Px
+cA
+cA
+cA
+cA
+gN
+Px
+ai
+je
+sa
+"}
+(18,1,1) = {"
+sa
+je
+ai
+dy
+gN
+kB
+cA
+sP
+tU
+wI
+yW
+MC
+Gq
+MC
+MC
+QA
+tU
+sP
+cA
+cA
+gN
+Px
+ai
+je
+sa
+"}
+(19,1,1) = {"
+sa
+je
+bl
+do
+gN
+gN
+gN
+gN
+gN
+wK
+wK
+gN
+sZ
+gN
+gN
+gN
+gN
+gN
+TY
+TY
+gN
+Px
+bl
+je
+sa
+"}
+(20,1,1) = {"
+sa
+je
+bl
+do
+gU
+kP
+or
+kP
+kP
+wL
+xa
+kP
+Gx
+kP
+kP
+kP
+kP
+SR
+kP
+kP
+XU
+Px
+bl
+Zr
+sa
+"}
+(21,1,1) = {"
+sa
+je
+bl
+do
+hj
+OL
+kP
+sX
+kP
+xa
+xa
+kP
+Gz
+kP
+kP
+kP
+kP
+kP
+kP
+Vr
+Yn
+Px
+bl
+Zz
+sa
+"}
+(22,1,1) = {"
+sa
+je
+bl
+Bv
+hj
+lu
+Sh
+Sh
+Sh
+xg
+xg
+Sh
+Sh
+Sh
+Sh
+Sh
+Sh
+Sh
+Sh
+Vu
+Yn
+UI
+bl
+je
+sa
+"}
+(23,1,1) = {"
+sa
+je
+bl
+do
+hj
+ly
+pe
+lU
+ub
+xj
+xj
+lU
+GB
+lU
+lU
+lU
+ub
+SW
+lU
+VC
+Yz
+Px
+bl
+je
+sa
+"}
+(24,1,1) = {"
+sa
+je
+bl
+do
+hR
+lU
+lU
+lU
+lU
+xs
+xj
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+lU
+YJ
+Px
+bl
+ZD
+sa
+"}
+(25,1,1) = {"
+sa
+ac
+bl
+do
+ig
+mg
+pf
+cA
+cA
+xF
+yX
+CC
+kB
+GH
+cA
+cA
+cA
+cA
+HY
+VG
+gN
+Px
+bl
+je
+sa
+"}
+(26,1,1) = {"
+sa
+ae
+ai
+do
+gN
+cA
+cA
+pf
+cA
+xF
+xF
+CH
+GH
+cA
+cA
+cA
+cA
+HY
+cA
+cA
+gN
+Px
+ai
+je
+sa
+"}
+(27,1,1) = {"
+sa
+je
+ai
+do
+gN
+gN
+gN
+sZ
+gN
+wK
+wK
+gN
+gN
+gN
+gN
+gN
+gN
+sZ
+gN
+gN
+gN
+Zi
+ai
+je
+sa
+"}
+(28,1,1) = {"
+sa
+je
+ai
+do
+gN
+mj
+pO
+ta
+uv
+xN
+xF
+cA
+cA
+cA
+MP
+QG
+Rv
+Tu
+Ue
+mj
+gN
+Px
+ai
+je
+sa
+"}
+(29,1,1) = {"
+sa
+je
+ai
+dt
+gN
+cA
+cA
+cA
+cA
+xF
+xY
+CI
+CI
+CI
+MV
+cA
+nV
+cA
+cA
+cA
+gN
+YY
+ai
+je
+sa
+"}
+(30,1,1) = {"
+sa
+je
+ai
+do
+gN
+OL
+kP
+kP
+kP
+xa
+kP
+CR
+kP
+kP
+kP
+or
+kP
+kP
+kP
+WI
+gN
+Px
+ai
+je
+sa
+"}
+(31,1,1) = {"
+sa
+je
+ai
+do
+iE
+mw
+qn
+cA
+cA
+xY
+yY
+CI
+CI
+LK
+cA
+cA
+cA
+cA
+TO
+Vu
+ig
+Px
+ai
+je
+sa
+"}
+(32,1,1) = {"
+sa
+je
+ai
+do
+iE
+Mm
+cA
+qn
+cA
+cA
+cA
+xW
+GP
+xF
+cA
+cA
+cA
+TO
+cA
+Vu
+ig
+Px
+ai
+je
+sa
+"}
+(33,1,1) = {"
+sa
+je
+ai
+do
+gN
+mK
+lU
+lU
+lU
+yj
+lU
+lU
+lU
+xj
+lU
+lU
+RF
+lU
+Uu
+VC
+gN
+Px
+ai
+je
+sa
+"}
+(34,1,1) = {"
+sa
+je
+ai
+do
+YU
+gN
+qo
+qo
+FV
+gN
+gN
+jC
+GT
+wK
+gN
+gN
+FV
+qo
+qo
+gN
+YU
+Px
+ai
+je
+sa
+"}
+(35,1,1) = {"
+sa
+je
+ai
+bl
+ai
+ai
+Bf
+Bf
+ai
+ai
+ai
+ai
+GV
+ys
+ai
+QQ
+ai
+Bf
+Bf
+ai
+ai
+bl
+ai
+je
+sa
+"}
+(36,1,1) = {"
+sa
+je
+ai
+cR
+NY
+ai
+rz
+rz
+ai
+gN
+DY
+DY
+gN
+Mp
+NJ
+Rj
+ai
+rz
+rz
+ai
+gC
+cR
+ai
+je
+sa
+"}
+(37,1,1) = {"
+sa
+je
+aE
+cA
+gN
+ai
+ai
+GV
+ai
+gN
+cA
+cA
+gN
+ai
+ai
+ai
+ai
+GV
+ai
+ai
+gN
+cA
+aE
+je
+sa
+"}
+(38,1,1) = {"
+sa
+je
+ai
+fH
+gN
+gN
+gN
+hU
+gN
+gN
+cA
+cA
+hU
+gN
+gN
+gN
+gN
+hU
+gN
+gN
+gN
+fH
+ai
+je
+sa
+"}
+(39,1,1) = {"
+sa
+je
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+je
+sa
+"}
+(40,1,1) = {"
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+"}

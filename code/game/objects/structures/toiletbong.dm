@@ -11,6 +11,7 @@
 
 /obj/structure/toiletbong/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/simple_rotation, AfterRotation = CALLBACK(src, PROC_REF(post_rotation)))
 	create_storage()
 	atom_storage.attack_hand_interact = FALSE
 	atom_storage.set_holdable(list(/obj/item/food/))
@@ -65,14 +66,12 @@
 		update_icon()
 
 /obj/structure/toiletbong/wrench_act(mob/living/user, obj/item/tool)
-	tool.play_tool_sound(src)
-	if(anchored)
-		to_chat(user, span_notice("You begin unsecuring the [src]."))
-		anchored = FALSE
-	else
-		to_chat(user, span_notice("You secure the [src] to the floor."))
-		anchored = TRUE
-	return TRUE
+	default_unfasten_wrench(user, tool)
+	return ITEM_INTERACT_SUCCESS
+
+///Called in the simple rotation's post_rotation callback, playing a sound cue to players.
+/obj/structure/toiletbong/proc/post_rotation(mob/user, degrees)
+	playsound(src, 'sound/items/deconstruct.ogg', 50)
 
 /obj/structure/toiletbong/crowbar_act(mob/living/user, obj/item/tool)
 	if(anchored)
@@ -88,13 +87,6 @@
 	qdel(src)
 	return TRUE
 
-/obj/structure/toiletbong/AltClick(mob/living/user)
-	if(anchored)
-		return ..()
-	setDir(turn(dir,90))
-	playsound(src, 'sound/items/deconstruct.ogg', 50)
-	return
-
 /obj/structure/toiletbong/emag_act(mob/user, obj/item/card/emag/emag_card)
 	playsound(src, 'sound/effects/fish_splash.ogg', 50)
 	user.balloon_alert(user, "whoops!")
@@ -107,7 +99,7 @@
 		return TRUE
 	return FALSE
 
-/obj/structure/toiletbong/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/card/emag))
+/obj/structure/toiletbong/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/card/emag))
 		return
 	. = ..()

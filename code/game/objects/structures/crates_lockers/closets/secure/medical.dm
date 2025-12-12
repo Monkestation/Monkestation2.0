@@ -89,8 +89,8 @@
 	new /obj/item/circuitboard/machine/techfab/department/medical(src)
 	new /obj/item/storage/photo_album/cmo(src)
 	new /obj/item/storage/lockbox/medal/med(src)
-//	new /obj/item/extrapolator(src) //MONKESTATION EDIT: extrapolators are not useful! missed this single case! -Dexee, 04/13/24
-
+	new /obj/item/extrapolator(src) //MONKESTATION EDIT:
+	
 /obj/structure/closet/secure_closet/chief_medical/populate_contents_immediate()
 	. = ..()
 

@@ -205,7 +205,7 @@
 
 	if(sacrifice.mind)
 		sac_department_flag |= sacrifice.mind.assigned_role?.departments_bitflags
-	if(istype(sacrifice, /mob/living/carbon/human) && sacrifice.last_mind) // If mob even has a last mind. Oozling issue.
+	if(istype(sacrifice, /mob/living/carbon/human) && sacrifice.last_mind) // If mob even has a last mind. Oozeling issue.
 		sac_department_flag |= sacrifice.last_mind.assigned_role?.departments_bitflags
 
 	if(sac_department_flag & DEPARTMENT_BITFLAG_COMMAND)

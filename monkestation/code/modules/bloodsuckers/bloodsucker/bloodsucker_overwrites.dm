@@ -4,13 +4,6 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/datum/reagent/blood/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message=TRUE, touch_protection=0)
-	var/datum/antagonist/bloodsucker/bloodsuckerdatum = IS_BLOODSUCKER(exposed_mob)
-	if(!bloodsuckerdatum)
-		return ..()
-	bloodsuckerdatum.bloodsucker_blood_volume = min(bloodsuckerdatum.bloodsucker_blood_volume + round(reac_volume, 0.1), BLOOD_VOLUME_MAXIMUM)
-
-
 /mob/living/carbon/transfer_blood_to(atom/movable/AM, amount, forced)
 	. = ..()
 
@@ -38,18 +31,6 @@
 	if(IS_BLOODSUCKER(src) && HAS_TRAIT(src, TRAIT_MASQUERADE))
 		return
 	return ..()
-
-// Used to keep track of how much Blood we've drank so far
-/mob/living/get_status_tab_items()
-	. = ..()
-	if(!mind)
-		return ..()
-	var/datum/antagonist/bloodsucker/bloodsuckerdatum = mind.has_antag_datum(/datum/antagonist/bloodsucker)
-	if(bloodsuckerdatum)
-		. += ""
-		. += "Blood Drank: [bloodsuckerdatum.total_blood_drank]"
-		. += "Maximum blood: [bloodsuckerdatum.max_blood_volume]"
-		. += "Blood Thickening: [bloodsuckerdatum.blood_level_gain] / [bloodsuckerdatum.get_level_cost()]"
 
 /datum/outfit/bloodsucker_outfit
 	name = "Bloodsucker outfit (Preview only)"

@@ -61,9 +61,9 @@
 		. += span_notice("The wire panel is [open_panel ? "opened" : "closed"]. The display reads:")
 		. += "[readout()]"
 
-/obj/item/taperecorder/AltClick(mob/user)
-	. = ..()
+/obj/item/taperecorder/click_alt(mob/user)
 	play()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/taperecorder/proc/update_available_icons()
 	icons_available = list()
@@ -86,11 +86,11 @@
 	else
 		soundloop.start()
 
-/obj/item/taperecorder/attackby(obj/item/I, mob/user, params)
-	if(!mytape && istype(I, /obj/item/tape))
-		if(!user.transferItemToLoc(I,src))
+/obj/item/taperecorder/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(!mytape && istype(attacking_item, /obj/item/tape))
+		if(!user.transferItemToLoc(attacking_item,src))
 			return
-		mytape = I
+		mytape = attacking_item
 		balloon_alert(user, "inserted [mytape]")
 		playsound(src, 'sound/items/taperecorder/taperecorder_close.ogg', 50, FALSE)
 		update_appearance()

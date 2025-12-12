@@ -160,7 +160,7 @@
 	return ..()
 
 /datum/martial_art/the_sleeping_carp/harm_act(mob/living/attacker, mob/living/defender)
-	if(attacker.grab_state == snap_grab_state \
+	if(attacker.grab_state >= snap_grab_state \
 		&& attacker.zone_selected == BODY_ZONE_HEAD \
 		&& attacker.pulling == defender \
 		&& defender.stat != DEAD \
@@ -377,6 +377,35 @@
 	if(!HAS_TRAIT(src, TRAIT_WIELDED))
 		return ..()
 	return FALSE
+
+/obj/item/clothing/gloves/the_sleeping_carp
+	name = "carp gloves"
+	desc = "This gloves are capable of making people use The Sleeping Carp."
+	icon_state = "black"
+	greyscale_colors = "#000000"
+	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
+	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
+	resistance_flags = NONE
+	var/datum/martial_art/the_sleeping_carp/style
+
+/obj/item/clothing/gloves/the_sleeping_carp/Initialize(mapload)
+	. = ..()
+	style = new()
+	style.allow_temp_override = FALSE
+
+/obj/item/clothing/gloves/the_sleeping_carp/Destroy()
+	QDEL_NULL(style)
+	return ..()
+
+/obj/item/clothing/gloves/the_sleeping_carp/equipped(mob/user, slot)
+	. = ..()
+	if(slot & ITEM_SLOT_GLOVES)
+		style.teach(user, TRUE)
+
+/obj/item/clothing/gloves/the_sleeping_carp/dropped(mob/user)
+	. = ..()
+	if(!isnull(style))
+		style.remove(user)
 
 #undef STRONG_PUNCH_COMBO
 #undef LAUNCH_KICK_COMBO

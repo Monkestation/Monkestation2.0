@@ -92,11 +92,12 @@ GLOBAL_PROTECT(AdminProcCallHandler)
 	usr = lastusr
 	handler.remove_caller(user)
 
-ADMIN_VERB(advanced_proc_call, R_DEBUG, FALSE, "Advanced ProcCall", "Call a proc on any datum in the server.", ADMIN_CATEGORY_DEBUG)
+#define NEEDED_PROC_CALL_RIGHT R_ADVANCEDCALL
+ADMIN_VERB(advanced_proc_call, NEEDED_PROC_CALL_RIGHT, FALSE, "Advanced ProcCall", "Call a proc on any datum in the server.", ADMIN_CATEGORY_DEBUG)
 	user.callproc_blocking()
 
 /client/proc/callproc_blocking(list/get_retval)
-	if(!check_rights(R_ADMIN))
+	if(!check_rights(NEEDED_PROC_CALL_RIGHT))
 		return
 
 	var/datum/target
@@ -163,6 +164,8 @@ ADMIN_VERB(advanced_proc_call, R_DEBUG, FALSE, "Advanced ProcCall", "Call a proc
 	. = get_callproc_returnval(returnval, procname)
 	if(.)
 		to_chat(usr, ., confidential = TRUE)
+
+#undef NEEDED_PROC_CALL_RIGHT
 
 GLOBAL_VAR(AdminProcCaller)
 GLOBAL_PROTECT(AdminProcCaller)

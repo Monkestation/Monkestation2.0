@@ -47,7 +47,6 @@ export const XpMenu = (props) => {
     'Nuclear Operative',
     'Paradox Clone',
     'Revenant',
-    'Sentient Disease',
     'Slaughter Demon',
     'Space Dragon',
     'Space Ninja',

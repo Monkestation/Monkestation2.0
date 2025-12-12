@@ -65,7 +65,7 @@
 	var/message = "This will start reporting an issue, gathering some information from the server and your client, before submitting it to github."
 	if(GLOB.revdata.testmerge.len)
 		message += "<br>The following experimental changes are active and may be the cause of any new or sudden issues:<br>"
-		message += GLOB.revdata.GetTestMergeInfo(FALSE)
+		message += GLOB.revdata.GetTestMergeInfo(header = FALSE, hide_silent = FALSE)
 	// We still use tgalert here because some people were concerned that if someone wanted to report that tgui wasn't working
 	// then the report issue button being tgui-based would be problematic.
 	if(tgalert(src, message, "Report Issue","Yes","No")!="Yes")
@@ -96,7 +96,7 @@
 		local_template = replacetext(local_template, "## Testmerges:\n", "## Testmerges:\n[all_tms_joined]")
 
 	//Collect client info:
-	var/issue_title = input(src, "Please give the issue a title:","Issue Title") as text|null
+	var/issue_title = input(src, "Please give the issue a title, you will be given another textbox to describe it in detail.","Issue Title") as text|null
 	if(!issue_title)
 		return //Consider it aborted
 	var/user_description = input(src, "Please describe the issue you are reporting:","Issue Body") as message|null

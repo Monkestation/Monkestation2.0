@@ -28,8 +28,8 @@
 	. = ..()
 	AddElement(/datum/element/openspace_item_click_handler)
 
-/obj/item/holosign_creator/handle_openspace_click(turf/target, mob/user, proximity_flag, click_parameters)
-	afterattack(target, user, proximity_flag, click_parameters)
+/obj/item/holosign_creator/handle_openspace_click(turf/target, mob/user, click_parameters)
+	interact_with_atom(target, user, click_parameters)
 
 /obj/item/holosign_creator/examine(mob/user)
 	. = ..()
@@ -37,36 +37,39 @@
 		return
 	. += span_notice("It is currently maintaining <b>[length(signs)]/[max_signs]</b> projections.")
 
-/obj/item/holosign_creator/afterattack(atom/target, mob/user, proximity_flag)
-	. = ..()
-	if(!proximity_flag || !check_allowed_items(target, not_inside = TRUE))
-		return
-	. |= AFTERATTACK_PROCESSED_ITEM
-	var/turf/target_turf = get_turf(target)
+/obj/item/holosign_creator/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!check_allowed_items(interacting_with, not_inside = TRUE))
+		return NONE
+
+	var/turf/target_turf = get_turf(interacting_with)
 	var/obj/structure/holosign/target_holosign = locate(holosign_type) in target_turf
+
 	if(target_holosign)
-		qdel(target_holosign)
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(target_turf.is_blocked_turf(TRUE, ignore_atoms = projectable_through, type_list = TRUE)) //can't put holograms on a tile that has dense stuff
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(holocreator_busy)
-		to_chat(user, span_notice("[src] is busy creating a hologram."))
-		return
+		balloon_alert(user, "busy making a hologram!")
+		return ITEM_INTERACT_BLOCKING
 	if(LAZYLEN(signs) >= max_signs)
 		balloon_alert(user, "max capacity!")
-		return
-	playsound(loc, 'sound/machines/click.ogg', 20, TRUE)
+		return ITEM_INTERACT_BLOCKING
+
+	playsound(src, 'sound/machines/click.ogg', 20, TRUE)
+
 	if(creation_time)
 		holocreator_busy = TRUE
-		if(!do_after(user, creation_time, target = target))
+		if(!do_after(user, creation_time, target = interacting_with))
 			holocreator_busy = FALSE
-			return
+			return ITEM_INTERACT_BLOCKING
 		holocreator_busy = FALSE
 		if(LAZYLEN(signs) >= max_signs)
-			return
+			return ITEM_INTERACT_BLOCKING
 		if(target_turf.is_blocked_turf(TRUE, ignore_atoms = projectable_through, type_list = TRUE)) //don't try to sneak dense stuff on our tile during the wait.
-			return
-	create_holosign(target, user)
+			return ITEM_INTERACT_BLOCKING
+
+	target_holosign = create_holosign(interacting_with, user)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/holosign_creator/attack(mob/living/carbon/human/M, mob/user)
 	return
@@ -80,22 +83,21 @@
 
 /obj/item/holosign_creator/attack_self(mob/user)
 	if(LAZYLEN(signs))
-		for(var/H in signs)
-			qdel(H)
+		for(var/obj/structure/holosign/hologram as anything in signs)
+			qdel(hologram)
 		balloon_alert(user, "holograms cleared")
 
 /obj/item/holosign_creator/Destroy()
 	. = ..()
 	if(LAZYLEN(signs))
-		for(var/H in signs)
-			qdel(H)
-
+		for(var/obj/structure/holosign/hologram as anything in signs)
+			qdel(hologram)
 
 /obj/item/holosign_creator/janibarrier
 	name = "custodial holobarrier projector"
 	desc = "A holographic projector that creates hard light wet floor barriers."
 	holosign_type = /obj/structure/holosign/barrier/wetsign
-	creation_time = 20
+	creation_time = 2 SECONDS
 	max_signs = 12
 
 /obj/item/holosign_creator/security
@@ -106,13 +108,36 @@
 	creation_time = 2 SECONDS
 	max_signs = 6
 
-/obj/item/holosign_creator/security/afterattack(atom/target, mob/user)
-	var/obj/structure/holosign/barrier/barrier
-	if(target.type == holosign_type)
-		barrier = target
-		if(barrier.openable)
-			barrier.open(user)
-	return ..()
+/obj/item/holosign_creator/security/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!iscarbon(interacting_with))
+		return ..()
+	var/mob/living/carbon/human = interacting_with
+	if(human.handcuffed) // is our target already handcuffed?
+		user.balloon_alert(user, "already cuffed")
+		return ITEM_INTERACT_BLOCKING
+	if(!human.canBeHandcuffed()) // does he actually have arms?
+		user.balloon_alert(user, "needs two hands")
+		return ITEM_INTERACT_BLOCKING
+	if(DOING_INTERACTION_WITH_TARGET(user, human))
+		return ITEM_INTERACT_BLOCKING
+	log_combat(user, human, "attempted to handcuff")
+	playsound(src, 'sound/weapons/cablecuff.ogg', 30, TRUE, -2)
+	human.visible_message(span_danger("[user] begins restraining [human] with [src]!"), \
+	span_userdanger("[user] begins shaping a holographic field around your hands!"))
+	if(!do_after(user, 4.5 SECONDS, human, extra_checks = CALLBACK(src, PROC_REF(can_handcuff), user))) // he is up for grabs, so lets handcuff them
+		return ITEM_INTERACT_BLOCKING
+	human.set_handcuffed(new /obj/item/restraints/handcuffs/holographic/used(human))
+	human.update_handcuffed()
+	to_chat(user, span_notice("You restrain [human]."))
+	log_combat(user, human, "handcuffed")
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/holosign_creator/security/proc/can_handcuff(mob/living/carbon/victim)
+	if(QDELETED(victim))
+		return FALSE
+	if(victim.handcuffed || victim.num_hands < 2)
+		return FALSE
+	return TRUE
 
 /obj/item/holosign_creator/engineering
 	name = "engineering holobarrier projector"
@@ -121,15 +146,6 @@
 	holosign_type = /obj/structure/holosign/barrier/engineering
 	creation_time = 2 SECONDS
 	max_signs = 6
-
-/obj/item/holosign_creator/engineering/afterattack(atom/target, mob/user)
-	var/obj/structure/holosign/barrier/engineering/barrier
-	if(target.type == holosign_type)
-		barrier = target
-		if(barrier.openable)
-			barrier.open(user)
-	return ..()
-
 
 /obj/item/holosign_creator/atmos
 	name = "ATMOS holofan projector"
@@ -143,6 +159,7 @@
 		/obj/structure/mineral_door,
 		/obj/structure/window,
 		/obj/structure/grille,
+		/obj/structure/window_sill,
 	)
 	/// Clearview holograms don't catch clicks and are more transparent
 	var/clearview = FALSE
@@ -153,11 +170,11 @@
 	. = ..()
 	register_context()
 
-/obj/item/holosign_creator/atmos/afterattack(atom/target, mob/user, proximity_flag)
+/obj/item/holosign_creator/atmos/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()
-	if(!.)
+	if(!(. & ITEM_INTERACT_SUCCESS))
 		return
-	var/obj/machinery/door/firedoor/firelock = locate() in get_turf(target)
+	var/obj/machinery/door/firedoor/firelock = locate() in get_turf(interacting_with)
 	firelock?.open()
 
 /obj/item/holosign_creator/atmos/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -200,13 +217,13 @@
 	desc = "A holographic projector that creates PENLITE holobarriers. Useful during quarantines since they halt those with malicious diseases."
 	icon_state = "signmaker_med"
 	holosign_type = /obj/structure/holosign/barrier/medical
-	creation_time = 30
+	creation_time = 3 SECONDS
 	max_signs = 3
 
 /obj/item/holosign_creator/cyborg
 	name = "Energy Barrier Projector"
 	desc = "A holographic projector that creates fragile energy fields."
-	creation_time = 15
+	creation_time = 1.5 SECONDS
 	max_signs = 9
 	holosign_type = /obj/structure/holosign/barrier/cyborg
 	var/shock = 0

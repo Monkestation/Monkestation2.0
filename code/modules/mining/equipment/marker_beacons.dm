@@ -59,16 +59,13 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sort_list(list(
 		var/obj/structure/marker_beacon/M = new(user.loc, picked_color)
 		transfer_fingerprints_to(M)
 
-/obj/item/stack/marker_beacon/AltClick(mob/living/user)
-	if(!istype(user) || !user.can_perform_action(src))
-		return
+/obj/item/stack/marker_beacon/click_alt(mob/living/user)
 	var/input_color = tgui_input_list(user, "Choose a color", "Beacon Color", GLOB.marker_beacon_colors)
-	if(isnull(input_color))
-		return
-	if(!istype(user) || !user.can_perform_action(src))
-		return
+	if(isnull(input_color) || !user.can_perform_action(src))
+		return CLICK_ACTION_BLOCKING
 	picked_color = input_color
 	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/structure/marker_beacon
 	name = "marker beacon"
@@ -138,36 +135,31 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sort_list(list(
 /obj/structure/marker_beacon/attack_tk(mob/user)
 	return
 
-/obj/structure/marker_beacon/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/stack/marker_beacon))
-		var/obj/item/stack/marker_beacon/M = I
+/obj/structure/marker_beacon/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/stack/marker_beacon))
+		var/obj/item/stack/marker_beacon/M = attacking_item
 		to_chat(user, span_notice("You start picking [src] up..."))
 		if(do_after(user, remove_speed, target = src) && M.amount + 1 <= M.max_amount)
 			M.add(1)
 			playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 			qdel(src)
 			return
-	if(istype(I, /obj/item/light_eater))
+	if(istype(attacking_item, /obj/item/light_eater))
 		var/obj/effect/decal/cleanable/ash/A = new /obj/effect/decal/cleanable/ash(drop_location())
 		A.desc += "\nLooks like this used to be \a [src] some time ago."
-		visible_message(span_danger("[src] is disintegrated by [I]!"))
+		visible_message(span_danger("[src] is disintegrated by [attacking_item]!"))
 		playsound(src, 'sound/items/welder.ogg', 50, TRUE)
 		qdel(src)
 		return
 	return ..()
 
-/obj/structure/marker_beacon/AltClick(mob/living/user)
-	..()
-	if(!istype(user) || !user.can_perform_action(src))
-		return
+/obj/structure/marker_beacon/click_alt(mob/living/user)
 	var/input_color = tgui_input_list(user, "Choose a color", "Beacon Color", GLOB.marker_beacon_colors)
-	if(isnull(input_color))
-		return
-	if(!istype(user) || !user.can_perform_action(src))
-		return
+	if(isnull(input_color) || !user.can_perform_action(src))
+		return CLICK_ACTION_BLOCKING
 	picked_color = input_color
 	update_appearance()
-
+	return CLICK_ACTION_SUCCESS
 
 /* Preset marker beacon types, for mapping */
 // Set the icon_state here to make it clear for mappers.

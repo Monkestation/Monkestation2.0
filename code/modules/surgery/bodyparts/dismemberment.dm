@@ -152,12 +152,12 @@
 				for(var/obj/item/organ/lmbimplant in limborgans)
 					lmbimplant.forceMove(drop_loc)
 					if(istype(lmbimplant, /obj/item/organ/internal/eyes)) // The eye slot is going to be some type of eyes right?
-						if(lmbimplant.type == /obj/item/organ/internal/eyes) // but we don't want to to drop oozlings natural eyes. Do the proper species check for eyes.
+						if(lmbimplant.type == /obj/item/organ/internal/eyes) // but we don't want to to drop oozelings natural eyes. Do the proper species check for eyes.
 							qdel(lmbimplant)
 							continue
 						var/obj/item/bodypart/head/oozeling/oozhead = src
 						oozhead.eyes = null // Need this otherwise qdel on head deletes the eyes.
-					if(istype(lmbimplant, /obj/item/organ/internal/brain)) // Go figure rare interactions give humans oozling heads. This stops rr's for head dismemeberment.
+					if(istype(lmbimplant, /obj/item/organ/internal/brain)) // Go figure rare interactions give humans oozeling heads. This stops rr's for head dismemeberment.
 						var/obj/item/bodypart/head/oozeling/oozhead = src
 						oozhead.brain = null // Similar to eyes
 					to_chat(phantom_owner, span_notice("Something small falls out the [src]."))
@@ -209,6 +209,9 @@
 
 	for (var/datum/wound/iterated_wound as anything in wounds)
 		base_chance += iterated_wound.get_dismember_chance_bonus(base_chance)
+
+	if (body_zone == BODY_ZONE_CHEST)
+		base_chance = base_chance * WOUND_DISEMBOWEL_MODIFIER
 
 	if(prob(base_chance))
 		var/datum/wound/loss/dismembering = new
@@ -275,7 +278,7 @@
 	if(arm_owner.hud_used)
 		var/atom/movable/screen/inventory/hand/associated_hand = arm_owner.hud_used.hand_slots["[held_index]"]
 		associated_hand?.update_appearance()
-	if(arm_owner.gloves)
+	if(arm_owner.num_hands == 0)
 		arm_owner.dropItemToGround(arm_owner.gloves, TRUE, violent = violent)
 	arm_owner.update_worn_gloves() //to remove the bloody hands overlay
 
@@ -388,7 +391,7 @@
 		// we have to remove the wound from the limb wound list first, so that we can reapply it fresh with the new person
 		// otherwise the wound thinks it's trying to replace an existing wound of the same type (itself) and fails/deletes itself
 		LAZYREMOVE(wounds, wound)
-		wound.apply_wound(src, TRUE)
+		wound.apply_wound(src, TRUE, wound_source = wound.wound_source)
 
 	for(var/datum/scar/scar as anything in scars)
 		if(scar in new_limb_owner.all_scars) // prevent double scars from happening for whatever reason

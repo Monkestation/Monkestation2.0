@@ -59,7 +59,7 @@
 	if(!user.Adjacent(source))
 		return
 	source.balloon_alert(user, "clicked primary button")
-	playsound(source, get_sfx(SFX_TERMINAL_TYPE), 25, FALSE)
+	playsound(source, SFX_TERMINAL_TYPE, 25, FALSE)
 	entity.set_output(user)
 	signal.set_output(COMPONENT_SIGNAL)
 
@@ -71,7 +71,7 @@
 	if(!user.Adjacent(source))
 		return
 	source.balloon_alert(user, "clicked alternate button")
-	playsound(source, get_sfx(SFX_TERMINAL_TYPE), 25, FALSE)
+	playsound(source, SFX_TERMINAL_TYPE, 25, FALSE)
 	entity.set_output(user)
 	alt.set_output(COMPONENT_SIGNAL)
 
@@ -80,9 +80,12 @@
  */
 /obj/item/circuit_component/controller/proc/send_right_signal(atom/source, mob/user)
 	SIGNAL_HANDLER
-	if(!user.Adjacent(source))
+
+	if(!user.can_perform_action(source))
 		return
+
 	source.balloon_alert(user, "clicked extra button")
-	playsound(source, get_sfx(SFX_TERMINAL_TYPE), 25, FALSE)
+	playsound(source, SFX_TERMINAL_TYPE, 25, FALSE)
 	entity.set_output(user)
 	right.set_output(COMPONENT_SIGNAL)
+	return CLICK_ACTION_SUCCESS

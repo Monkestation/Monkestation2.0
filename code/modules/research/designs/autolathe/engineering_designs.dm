@@ -76,7 +76,7 @@
 	id = "miniature_power_cell"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/glass =SMALL_MATERIAL_AMOUNT*0.2)
-	build_path = /obj/item/stock_parts/cell/emergency_light
+	build_path = /obj/item/stock_parts/power_store/cell/emergency_light
 	category = list(
 		RND_CATEGORY_INITIAL,
 		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_LIGHTING,
@@ -392,3 +392,27 @@
 		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MOUNTS,
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+
+
+/datum/design/marker_beacon
+	name = "Marker Beacon (x30)"
+	id = "marker_beacon"
+	build_type = PROTOLATHE | AUTOLATHE | AWAY_LATHE
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT*5,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT*3,
+		/datum/material/plastic = SHEET_MATERIAL_AMOUNT*3,
+	)
+	build_path = /obj/item/stack/marker_beacon/thirty
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_CARGO,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_CARGO
+ 
+/datum/design/nifsoft_hud/meson
+	name = "Meson HUD NIFSoft"
+	desc = "A NIFSoft datadisk containing the Meson HUD NIFsoft."
+	id = "nifsoft_hud_meson"
+	build_path = /obj/item/disk/nifsoft_uploader/meson_hud
+	departmental_flags = DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_ENGINEERING

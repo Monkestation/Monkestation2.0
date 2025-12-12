@@ -325,7 +325,7 @@
 	new /obj/item/card/id/advanced/chameleon(src)
 
 /datum/opposing_force_equipment/clothing_magic/narsian
-	name = "Nar'Sien Prophet"
+	name = "Nar'Sian Prophet"
 	description = "An overshadowed cult following, whom incidentally thrive best in the dark."
 	item_type = /obj/item/storage/backpack/satchel/leather/narsian
 

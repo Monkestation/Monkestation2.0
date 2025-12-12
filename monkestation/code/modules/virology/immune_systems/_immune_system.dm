@@ -17,6 +17,7 @@
 		ANTIGEN_X	= 0,
 		ANTIGEN_Y	= 0,
 		ANTIGEN_Z	= 0,
+		ANTIGEN_IG 	= 0,
 		)
 
 /datum/immune_system/Destroy(force)
@@ -126,11 +127,10 @@
 						tally += 1
 					else
 						tally += 2//if we're sleeping in a bed, we get up to 4
-			else if(istype(host.loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
+			else if(istype(host.loc, /obj/machinery/cryo_cell))
 				tally += 2.5
 
 			tally *= boost
-
 			if (antibodies[A] < threshold)
 				antibodies[A] = min(antibodies[A] + tally, threshold)//no overshooting here
 			else
@@ -151,7 +151,7 @@
 						tally += 1
 					else
 						tally += 2//if we're sleeping in a bed, we get up to 5.5
-			else if(istype(host.loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
+			else if(istype(host.loc, /obj/machinery/cryo_cell))
 				tally += 3.5
 
 			if(!HAS_TRAIT(host, TRAIT_NOHUNGER))
@@ -168,7 +168,6 @@
 						EMPTY_BLOCK_GUARD
 
 			tally *= boost
-
 			if (antibodies[A] < 69)
 				antibodies[A] = min(antibodies[A] + tally * strength, 70)
 			else

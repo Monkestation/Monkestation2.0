@@ -11,7 +11,7 @@
 	supervisors = SUPERVISOR_CAPTAIN
 	req_admin_notify = 1
 	minimal_player_age = 14
-	exp_requirements = 600
+	exp_requirements = 1200
 	exp_required_type = EXP_TYPE_CREW
 	exp_required_type_department = EXP_TYPE_SECURITY
 	exp_granted_type = EXP_TYPE_CREW
@@ -37,7 +37,7 @@
 	job_flags = STATION_JOB_FLAGS | JOB_BOLD_SELECT_TEXT | JOB_CANNOT_OPEN_SLOTS
 
 	voice_of_god_power = 1.4 //Command staff has authority
-
+	antag_capacity_points = 5 //HOS, so very high antag cap contribution
 
 /datum/job/head_of_security/get_captaincy_announcement(mob/living/captain)
 	return "Due to staffing shortages, newly promoted Acting Captain [captain.real_name] on deck!"
@@ -60,7 +60,7 @@
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
 	gloves = /obj/item/clothing/gloves/color/black/security
 	head = /obj/item/clothing/head/hats/hos/beret
-	shoes = /obj/item/clothing/shoes/jackboots/sec
+	shoes = /obj/item/clothing/shoes/jackboots/sec/hos
 	l_pocket = /obj/item/assembly/flash/handheld
 	r_pocket = 	/obj/item/restraints/handcuffs
 

@@ -77,14 +77,14 @@
 	)
 	armor_type = /datum/armor/hardsuit/juggernaut
 	hardsuit_helmet = /obj/item/clothing/head/helmet/space/hardsuit/juggernaut
-	cell = /obj/item/stock_parts/cell/super
+	cell = /obj/item/stock_parts/power_store/cell/super
 	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	light_outer_range = 5
 	light_power = 1
 	light_on = FALSE
 	light_color = LIGHT_COLOR_GREEN
 	actions_types = list(/datum/action/item_action/toggle_spacesuit, /datum/action/item_action/toggle_suit_flashlight)
-	slowdown = 2
+	slowdown = 1.5
 	strip_delay = 70
 
 /obj/item/clothing/suit/space/hardsuit/juggernaut/Initialize(mapload)

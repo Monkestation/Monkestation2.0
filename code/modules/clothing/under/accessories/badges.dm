@@ -170,6 +170,10 @@
 	else
 		display = span_notice("The dogtag is all scratched up.")
 
+/obj/item/clothing/accessory/dogtag/borg_ready
+	name = "Pre-Approved Cyborg Cantidate dogtag"
+	display = "This employee has been screened for negative mental traits to an acceptable level of accuracy, and is approved for the NT Cyborg program as an alternative to medical resuscitation."
+
 /*
 /// Reskins for the pride pin accessory, mapped by display name to icon state
 GLOBAL_LIST_INIT(pride_pin_reskins, list(
@@ -188,19 +192,21 @@ GLOBAL_LIST_INIT(pride_pin_reskins, list(
 	name = "pride pin"
 	desc = "A Nanotrasen Diversity & Inclusion Center-sponsored holographic pin to show off your pride, reminding the crew of their unwavering commitment to equity, diversity, and inclusion!"
 	icon_state = "pride"
-	obj_flags = UNIQUE_RENAME
-	infinite_reskin = TRUE
+	item_flags = UNIQUE_RENAME | INFINITE_RESKIN
 
 /obj/item/clothing/accessory/pride/Initialize(mapload)
-	. = ..()
 	unique_reskin = GLOB.pride_pin_reskins
-
-/obj/item/clothing/accessory/pride/reskin_obj(mob/M)
 	. = ..()
-	post_reskin(M)
 
-/obj/item/clothing/accessory/pride/post_reskin(mob/our_mob)
-	for(var/pride_name as anything in GLOB.pride_pin_reskins)
+/obj/item/clothing/accessory/pride/setup_reskinning()
+	if(!check_setup_reskinning())
+		return
+
+	// We already register context regardless in Initialize.
+	RegisterSignal(src, COMSIG_CLICK_ALT, PROC_REF(on_click_alt_reskin))
+
+/obj/item/clothing/accessory/pride/post_reskin()
+	for(var/pride_name in GLOB.pride_pin_reskins)
 		if(GLOB.pride_pin_reskins[pride_name] == icon_state)
 			name = "[lowertext(pride_name)] pin"
 			return
@@ -244,19 +250,19 @@ GLOBAL_LIST_INIT(pride_pin_reskins, list(
 	if(!press_name)
 		press_name = tgui_input_text(user, "For what organization you work?", "Press Name", "Nanotrasen", MAX_CHARTER_LEN)
 
-/obj/item/clothing/accessory/press_badge/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(!isliving(target) || !proximity_flag)
-		return
+/obj/item/clothing/accessory/press_badge/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!isliving(interacting_with))
+		return NONE
 
-	var/mob/living/interacting_living = target
+	var/mob/living/interacting_living = interacting_with
 	if(user.istate & ISTATE_HARM)
 		playsound(interacting_living, 'sound/weapons/throw.ogg', 30)
 		examine(interacting_living)
-		to_chat(interacting_living, span_userdanger("[user] shoves the [src] up your face!"))
-		user.visible_message(span_warning("[user] have shoved a [src] into [interacting_living] face."))
+		to_chat(interacting_living, span_userdanger("[user] shoves [src] up your face!"))
+		user.visible_message(span_warning("[user] have shoved [src] into [interacting_living] face."))
 	else
 		playsound(interacting_living, 'sound/weapons/throwsoft.ogg', 20)
 		examine(interacting_living)
-		to_chat(interacting_living, span_boldwarning("[user] shows the [src] to you."))
-		user.visible_message(span_notice("[user] shows a [src] to [interacting_living]."))
+		to_chat(interacting_living, span_boldwarning("[user] shows [src] to you."))
+		user.visible_message(span_notice("[user] shows [src] to [interacting_living]."))
+	return ITEM_INTERACT_SUCCESS

@@ -292,7 +292,7 @@ Burning extracts:
 	var/datum/action/cooldown/spell/shapeshift/slime_form/transform = new(user.mind || user)
 	transform.remove_on_restore = TRUE
 	transform.Grant(user)
-	//transform.cast(user) // monkestation removal: embrace the choice (it was broken anyway for whatever reason)
+	transform.Activate(user)
 	return ..()
 
 /obj/item/slimecross/burning/lightpink

@@ -27,7 +27,7 @@
 	explanation_text = "Praise"
 
 /datum/objective/evil_clone/fake_cult/New()
-	var/god = pick(list("Rat'var", "Nar'sie")) //So clones with different gods will fight eachother.
+	var/god = pick(list("Ratvar", "Nar'sie")) //So clones with different gods will fight eachother.
 	explanation_text+=" [god]! They haven't answered your prayers yet, but surely if you pray enough and make elaborate enough rituals they will inevitably come. Make sure no heretical religions prosper."
 
 /datum/objective/evil_clone/territorial

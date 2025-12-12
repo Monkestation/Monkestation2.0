@@ -69,36 +69,36 @@ extra range addition
 			'monkestation/sound/effects/hl2/footstep/combinewood2.ogg',
 			'monkestation/sound/effects/hl2/footstep/combinewood3.ogg',
 			'monkestation/sound/effects/hl2/footstep/combinewood4.ogg',
-			'monkestation/sound/effects/hl2/footstep/combinewood5.ogg'), 20, 0),
+			'monkestation/sound/effects/hl2/footstep/combinewood5.ogg'), 40, 0),
 		FOOTSTEP_FLOOR = list(list(
 			'monkestation/sound/effects/hl2/footstep/combine1.ogg',
 			'monkestation/sound/effects/hl2/footstep/combine2.ogg',
 			'monkestation/sound/effects/hl2/footstep/combine3.ogg',
 			'monkestation/sound/effects/hl2/footstep/combine4.ogg',
-			'monkestation/sound/effects/hl2/footstep/combine5.ogg'), 20, -1),
+			'monkestation/sound/effects/hl2/footstep/combine5.ogg'), 30, -1),
 		FOOTSTEP_PLATING = list(list(
 			'monkestation/sound/effects/hl2/footstep/combinemetal1.ogg',
 			'monkestation/sound/effects/hl2/footstep/combinemetal2.ogg',
 			'monkestation/sound/effects/hl2/footstep/combinemetal3.ogg',
 			'monkestation/sound/effects/hl2/footstep/combinemetal4.ogg',
-			'monkestation/sound/effects/hl2/footstep/combinemetal5.ogg'), 20, 1),
+			'monkestation/sound/effects/hl2/footstep/combinemetal5.ogg'), 30, 1),
 		FOOTSTEP_CARPET = list(list(
 			'monkestation/sound/effects/hl2/footstep/combinedirt1.ogg',
 			'monkestation/sound/effects/hl2/footstep/combinedirt2.ogg',
 			'monkestation/sound/effects/hl2/footstep/combinedirt3.ogg',
 			'monkestation/sound/effects/hl2/footstep/combinedirt4.ogg',
-			'monkestation/sound/effects/hl2/footstep/combinedirt5.ogg'), 20, -1),
+			'monkestation/sound/effects/hl2/footstep/combinedirt5.ogg'), 30, -1),
 		FOOTSTEP_SAND = list(list(
 			'monkestation/sound/effects/hl2/footstep/combinedirt1.ogg',
 			'monkestation/sound/effects/hl2/footstep/combinedirt2.ogg',
 			'monkestation/sound/effects/hl2/footstep/combinedirt3.ogg',
 			'monkestation/sound/effects/hl2/footstep/combinedirt4.ogg',
-			'monkestation/sound/effects/hl2/footstep/combinedirt5.ogg'), 20, 0),
+			'monkestation/sound/effects/hl2/footstep/combinedirt5.ogg'), 30, 0),
 		FOOTSTEP_GRASS = list(list(
 			'monkestation/sound/effects/hl2/footstep/combinedirt1.ogg',
 			'monkestation/sound/effects/hl2/footstep/combinedirt2.ogg',
 			'monkestation/sound/effects/hl2/footstep/combinedirt3.ogg',
-			'monkestation/sound/effects/hl2/footstep/combinedirt4.ogg'), 20, 0),
+			'monkestation/sound/effects/hl2/footstep/combinedirt4.ogg'), 30, 0),
 		FOOTSTEP_WATER = list(list(
 			'sound/effects/footstep/water1.ogg',
 			'sound/effects/footstep/water2.ogg',
@@ -115,7 +115,7 @@ extra range addition
 			'monkestation/sound/effects/hl2/footstep/combinemetalwalkway2.ogg',
 			'monkestation/sound/effects/hl2/footstep/combinemetalwalkway3.ogg',
 			'monkestation/sound/effects/hl2/footstep/combinemetalwalkway4.ogg',
-			'monkestation/sound/effects/hl2/footstep/combinemetalwalkway5.ogg'), 20, 1),
+			'monkestation/sound/effects/hl2/footstep/combinemetalwalkway5.ogg'), 40, 1),
 		FOOTSTEP_BALL = list(list(
 			'monkestation/sound/effects/ballpit.ogg'), 100, 0),
 		)
@@ -312,6 +312,66 @@ extra range addition
 			'monkestation/sound/effects/artifacts/orchestral/hit16.ogg',
 			'monkestation/sound/effects/artifacts/orchestral/hit17.ogg',
 			'monkestation/sound/effects/artifacts/orchestral/hit18.ogg'), 100, 0),
+		FOOTSTEP_BALL = list(list(
+			'monkestation/sound/effects/ballpit.ogg'), 100, 0),
+		)
+
+///here comes da big stompy hos oh noes
+/datum/component/shoesteps/hosboots
+	custom_sounds = list(
+		FOOTSTEP_WOOD = list(list(
+			'monkestation/sound/effects/bigboot/bigboot1.ogg',
+			'monkestation/sound/effects/bigboot/bigboot2.ogg',
+			'monkestation/sound/effects/bigboot/bigboot3.ogg',
+			'monkestation/sound/effects/bigboot/bigboot4.ogg',
+			'monkestation/sound/effects/bigboot/bigboot5.ogg',), 40, 2),
+		FOOTSTEP_FLOOR = list(list(
+			'monkestation/sound/effects/bigboot/bigboot1.ogg',
+			'monkestation/sound/effects/bigboot/bigboot2.ogg',
+			'monkestation/sound/effects/bigboot/bigboot3.ogg',
+			'monkestation/sound/effects/bigboot/bigboot4.ogg',
+			'monkestation/sound/effects/bigboot/bigboot5.ogg',), 40, 2),
+		FOOTSTEP_PLATING = list(list(
+			'monkestation/sound/effects/bigboot/bigboot1.ogg',
+			'monkestation/sound/effects/bigboot/bigboot2.ogg',
+			'monkestation/sound/effects/bigboot/bigboot3.ogg',
+			'monkestation/sound/effects/bigboot/bigboot4.ogg',
+			'monkestation/sound/effects/bigboot/bigboot5.ogg',), 40, 2),
+		FOOTSTEP_CARPET = list(list(
+			'monkestation/sound/effects/bigboot/bigboot1.ogg',
+			'monkestation/sound/effects/bigboot/bigboot2.ogg',
+			'monkestation/sound/effects/bigboot/bigboot3.ogg',
+			'monkestation/sound/effects/bigboot/bigboot4.ogg',
+			'monkestation/sound/effects/bigboot/bigboot5.ogg',), 40, 2),
+		FOOTSTEP_SAND = list(list(
+			'monkestation/sound/effects/bigboot/bigboot1.ogg',
+			'monkestation/sound/effects/bigboot/bigboot2.ogg',
+			'monkestation/sound/effects/bigboot/bigboot3.ogg',
+			'monkestation/sound/effects/bigboot/bigboot4.ogg',
+			'monkestation/sound/effects/bigboot/bigboot5.ogg',), 40, 2),
+		FOOTSTEP_GRASS = list(list(
+			'monkestation/sound/effects/bigboot/bigboot1.ogg',
+			'monkestation/sound/effects/bigboot/bigboot2.ogg',
+			'monkestation/sound/effects/bigboot/bigboot3.ogg',
+			'monkestation/sound/effects/bigboot/bigboot4.ogg',
+			'monkestation/sound/effects/bigboot/bigboot5.ogg',), 40, 2),
+		FOOTSTEP_WATER = list(list(
+			'sound/effects/footstep/water1.ogg',
+			'sound/effects/footstep/water2.ogg',
+			'sound/effects/footstep/water3.ogg',
+			'sound/effects/footstep/water4.ogg'), 100, 1),
+		FOOTSTEP_LAVA = list(list(
+			'sound/effects/footstep/lava1.ogg',
+			'sound/effects/footstep/lava2.ogg',
+			'sound/effects/footstep/lava3.ogg'), 100, 0),
+		FOOTSTEP_MEAT = list(list(
+			'sound/effects/meatslap.ogg'), 100, 0),
+		FOOTSTEP_CATWALK = list(list(
+			'monkestation/sound/effects/bigboot/bigboot1.ogg',
+			'monkestation/sound/effects/bigboot/bigboot2.ogg',
+			'monkestation/sound/effects/bigboot/bigboot3.ogg',
+			'monkestation/sound/effects/bigboot/bigboot4.ogg',
+			'monkestation/sound/effects/bigboot/bigboot5.ogg',), 40, 2),
 		FOOTSTEP_BALL = list(list(
 			'monkestation/sound/effects/ballpit.ogg'), 100, 0),
 		)

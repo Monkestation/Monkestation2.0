@@ -379,7 +379,7 @@
 	pixel_x = -9;
 	pixel_y = -4
 	},
-/obj/item/stock_parts/cell/lead{
+/obj/item/stock_parts/power_store/cell/lead{
 	pixel_y = -8;
 	pixel_x = 2
 	},
@@ -900,10 +900,8 @@
 /area/shuttle/pirate)
 "yN" = (
 /obj/effect/turf_decal/bot,
-/obj/machinery/power/smes/engineering{
-	charge = 1e+006
-	},
 /obj/structure/cable,
+/obj/machinery/power/smes/ship,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "yP" = (

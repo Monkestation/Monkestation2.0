@@ -219,3 +219,23 @@
 		//Used exclusively for the jaundice yourself monkecoin shop purchase
 		if("simpsons_yellow")
 			. = "#F5CD30"
+
+/proc/body_zone_as_plaintext(body_zone)
+	switch (body_zone)
+		if (BODY_ZONE_L_ARM)
+			return "left arm"
+		if (BODY_ZONE_R_ARM)
+			return "right arm"
+		if (BODY_ZONE_L_LEG)
+			return "left leg"
+		if (BODY_ZONE_R_LEG)
+			return "right leg"
+		if (BODY_ZONE_PRECISE_L_HAND)
+			return "left hand"
+		if (BODY_ZONE_PRECISE_R_HAND)
+			return "right hand"
+		if (BODY_ZONE_PRECISE_L_FOOT)
+			return "left foot"
+		if (BODY_ZONE_PRECISE_R_FOOT)
+			return "right foot"
+	return body_zone

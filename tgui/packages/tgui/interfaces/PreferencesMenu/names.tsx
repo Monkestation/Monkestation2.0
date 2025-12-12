@@ -54,12 +54,7 @@ export const MultiNameInput = (props: {
         }
 
         return (
-          <Modal
-            style={{
-              margin: '0 auto',
-              width: '40%',
-            }}
-          >
+          <Modal ml={20}>
             <TrackOutsideClicks onOutsideClick={props.handleClose}>
               <Section
                 buttons={
@@ -104,7 +99,7 @@ export const MultiNameInput = (props: {
                                   event.stopPropagation();
                                 }}
                               >
-                                <FitText maxFontSize={12} maxWidth={130}>
+                                <FitText maxFontSize={12} maxWidth={90}>
                                   {props.names[key]}
                                 </FitText>
                               </Button>
@@ -225,7 +220,7 @@ export const NameInput = (props: {
                 <Button
                   as="span"
                   tooltip="Alternate Names"
-                  tooltipPosition="bottom"
+                  tooltipPosition="right"
                   style={{
                     background: 'rgba(0, 0, 0, 0.7)',
                     position: 'absolute',

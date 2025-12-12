@@ -22,6 +22,8 @@
 	var/convert_damage = TRUE
 	/// If convert damage is true, the damage type we deal when converting damage back and forth
 	var/convert_damage_type = BRUTE
+	/// If TRUE, the mob will keep the name of the caster.
+	var/keep_name = FALSE
 
 	/// Our chosen type.
 	var/mob/living/shapeshift_type
@@ -153,6 +155,10 @@
 	// Make sure it's castable even in their new form.
 	pre_shift_requirements = spell_requirements
 	spell_requirements &= ~(SPELL_REQUIRES_HUMAN|SPELL_REQUIRES_WIZARD_GARB)
+
+	if(keep_name)
+		new_shape.real_name = caster.real_name
+		new_shape.name = caster.real_name
 
 	return new_shape
 

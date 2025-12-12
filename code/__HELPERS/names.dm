@@ -22,6 +22,12 @@
 /proc/moth_name()
 	return "[pick(GLOB.moth_first)] [pick(GLOB.moth_last)]"
 
+/proc/nightmare_name()
+	return "[pick(GLOB.nightmare_names)]"
+
+/proc/darkspawn_name()
+	return "[pick(GLOB.nightmare_names)]"
+
 GLOBAL_VAR(command_name)
 /proc/command_name()
 	if (GLOB.command_name)

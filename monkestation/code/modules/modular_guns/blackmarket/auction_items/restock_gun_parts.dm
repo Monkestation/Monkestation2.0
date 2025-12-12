@@ -77,3 +77,23 @@
 	price_max = CARGO_CRATE_VALUE * 2.75
 	stock_max = 3
 	availability_prob = 70
+
+/datum/market_item/ammo/mag_9mm
+	name = "9mm magazine"
+	desc = "A 9mm magazine for the makarov"
+	item = /obj/item/ammo_box/magazine/m9mm
+
+	price_min = CARGO_CRATE_VALUE * 1.5
+	price_max = CARGO_CRATE_VALUE * 2.5
+	stock_max = 5
+	availability_prob = 70
+
+/datum/market_item/ammo/mag_9mm_hp
+	name = "9mm HP magazine"
+	desc = "A 9mm hollowpoint magazine for the makarov"
+	item = /obj/item/ammo_box/magazine/m9mm/hp
+
+	price_min = CARGO_CRATE_VALUE * 1.5
+	price_max = CARGO_CRATE_VALUE * 3.5
+	stock_max = 3
+	availability_prob = 70

@@ -63,7 +63,7 @@
 /datum/antagonist/cortical_borer/hivemind
 	name = "Hivemind Cortical Borer"
 	roundend_category = "cortical borers"
-	borer_mob_type = /mob/living/basic/cortical_borer
+	borer_mob_type = /mob/living/basic/cortical_borer/empowered
 
 	/// The team of borers
 	var/datum/team/cortical_borers/borers
@@ -125,7 +125,8 @@
 		if(ability.sugar_restricted)
 			ability_data["ability_explanation"] += "-We cannot use this ability when our host is under the effect of a highly dangerous chemical known as \"sugar\". "
 */
-		ability_data["ability_icon"] = initial(ability.button_icon_state)
+		ability_data["ability_icon"] = initial(ability.button_icon)
+		ability_data["ability_icon_state"] = initial(ability.button_icon_state)
 
 		data["ability"] += list(ability_data)
 
@@ -135,3 +136,8 @@
 	return list(
 		get_asset_datum(/datum/asset/simple/borer_icons),
 	)
+
+
+// Lets the borers see who is a willing host
+/datum/antagonist/cortical_borer/apply_innate_effects(mob/living/mob_override)
+	add_team_hud(mob_override || owner.current)

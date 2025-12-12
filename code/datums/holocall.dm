@@ -1,4 +1,4 @@
-/mob/camera/ai_eye/remote/holo/setLoc(turf/destination, force_update = FALSE)
+/mob/eye/ai_eye/remote/holo/setLoc(turf/destination, force_update = FALSE)
 	// If we're moving outside the space of our projector, then just... don't
 	var/obj/machinery/holopad/H = origin
 	if(!H?.move_hologram(eye_user, destination))
@@ -24,7 +24,7 @@
 	var/list/dialed_holopads
 
 	///user's eye, once connected
-	var/mob/camera/ai_eye/remote/holo/eye
+	var/mob/eye/ai_eye/remote/holo/eye
 	///user's hologram, once connected
 	var/obj/effect/overlay/holo_pad_hologram/hologram
 	///hangup action
@@ -238,9 +238,9 @@
 	QDEL_NULL(record)
 	return ..()
 
-/obj/item/disk/holodisk/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/disk/holodisk))
-		var/obj/item/disk/holodisk/holodiskOriginal = W
+/obj/item/disk/holodisk/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/disk/holodisk))
+		var/obj/item/disk/holodisk/holodiskOriginal = attacking_item
 		if (holodiskOriginal.record)
 			if (!record)
 				record = new

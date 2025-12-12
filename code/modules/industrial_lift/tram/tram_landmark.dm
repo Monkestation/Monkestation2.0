@@ -19,21 +19,9 @@ GLOBAL_LIST_EMPTY(tram_landmarks)
 	LAZYREMOVEASSOC(GLOB.tram_landmarks, specific_lift_id, src)
 	return ..()
 
-
-/obj/effect/landmark/tram/tramstation/west
-	name = "West Wing"
-	platform_code = TRAMSTATION_WEST
-	tgui_icons = list("Arrivals" = "plane-arrival", "Command" = "bullhorn", "Security" = "gavel")
-
-/obj/effect/landmark/tram/tramstation/central
-	name = "Central Wing"
-	platform_code = TRAMSTATION_CENTRAL
-	tgui_icons = list("Service" = "cocktail", "Medical" = "plus", "Engineering" = "wrench")
-
-/obj/effect/landmark/tram/tramstation/east
-	name = "East Wing"
-	platform_code = TRAMSTATION_EAST
-	tgui_icons = list("Departures" = "plane-departure", "Cargo" = "box", "Science" = "flask")
+/obj/effect/landmark/tram/nav
+	name = "tram nav beacon"
+	invisibility = INVISIBILITY_MAXIMUM // nav aids can't be abstract since they stay with the tram
 
 /**
  * lift_id landmarks. used to map in specific_lift_id to trams. when the trams lift_master encounters one on a trams tile
@@ -42,6 +30,38 @@ GLOBAL_LIST_EMPTY(tram_landmarks)
 /obj/effect/landmark/lift_id
 	name = "lift id setter"
 	icon_state = "lift_id"
-
-	///what specific id we give to the tram we're placed on, should explicitely set this if its a subtype, or weird things might happen
+	///what specific id we give to the tram we're placed on, should explicitly set this if its a subtype, or weird things might happen
 	var/specific_lift_id = MAIN_STATION_TRAM
+
+//tramstation
+
+/obj/effect/landmark/tram/nav/tramstation/main
+	name = MAIN_STATION_TRAM
+	specific_lift_id = TRAM_NAV_BEACONS
+	dir = WEST
+
+/obj/effect/landmark/tram/platform/tramstation/west
+	name = "West Wing"
+	platform_code = TRAMSTATION_WEST
+	tgui_icons = list("Arrivals" = "plane-arrival", "Command" = "bullhorn", "Security" = "gavel")
+
+/obj/effect/landmark/tram/platform/tramstation/central
+	name = "Central Wing"
+	platform_code = TRAMSTATION_CENTRAL
+	tgui_icons = list("Service" = "cocktail", "Medical" = "plus", "Engineering" = "wrench")
+
+/obj/effect/landmark/tram/platform/tramstation/east
+	name = "East Wing"
+	platform_code = TRAMSTATION_EAST
+	tgui_icons = list("Departures" = "plane-departure", "Cargo" = "box", "Science" = "flask")
+
+//map-agnostic landmarks
+
+/obj/effect/landmark/tram/nav/immovable_rod
+	name = "DESTINATION/NOT/FOUND"
+	specific_lift_id = IMMOVABLE_ROD_DESTINATIONS
+
+/obj/effect/landmark/tram/nav/hilbert
+	name = HILBERT_TRAM
+	specific_lift_id = TRAM_NAV_BEACONS
+	dir = WEST

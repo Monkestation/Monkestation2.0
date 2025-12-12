@@ -75,7 +75,7 @@
 
 
 /datum/status_effect/wish_granters_gift/on_remove()
-	owner.revive(ADMIN_HEAL_ALL)
+	owner.revive(ADMIN_HEAL_ALL, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 	owner.visible_message(span_warning("[owner] appears to wake from the dead, having healed all wounds!"), span_notice("You have regenerated."))
 
 
@@ -251,7 +251,7 @@
 	med_hud.hide_from(owner)
 
 /datum/status_effect/hippocratic_oath/get_examine_text()
-	return span_notice("[owner.p_they(TRUE)] seem[owner.p_s()] to have an aura of healing and helpfulness about [owner.p_them()].")
+	return span_notice("[owner.p_they(TRUE)] to have an aura of healing and helpfulness about [owner.p_them()].")
 
 /datum/status_effect/hippocratic_oath/tick()
 	if(owner.stat == DEAD)
@@ -342,11 +342,11 @@
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = /atom/movable/screen/alert/status_effect/regenerative_core
 	show_duration = TRUE
+	processing_speed = STATUS_EFFECT_PRIORITY
 
 /datum/status_effect/regenerative_core/on_apply()
 	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, STATUS_EFFECT_TRAIT)
-	owner.adjustBruteLoss(-25)
-	owner.adjustFireLoss(-25)
+	owner.heal_overall_damage(brute = 25, burn = 25, updating_health = FALSE) // fully_heal always calls updatehealth anyways
 	owner.fully_heal(HEAL_CC_STATUS|HEAL_TEMP)
 	return TRUE
 
@@ -424,21 +424,27 @@
 	status_type = STATUS_EFFECT_REPLACE
 	show_duration = TRUE
 	alert_type = null
+	//negative speeds up, positive slows down. -1 is default speedup
+	var/slowdown = -1
 
-/datum/status_effect/speed_boost/on_creation(mob/living/new_owner, set_duration)
+/datum/status_effect/speed_boost/on_creation(mob/living/new_owner, set_duration, multiplier)
+	if(multiplier)
+		slowdown = multiplier
 	if(isnum(set_duration))
 		duration = set_duration
 	. = ..()
 
 /datum/status_effect/speed_boost/on_apply()
-	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_speed_boost, update = TRUE)
+	var/datum/movespeed_modifier/status_speed_boost/newboost = new /datum/movespeed_modifier/status_speed_boost
+	newboost.multiplicative_slowdown = slowdown
+	owner.add_movespeed_modifier(newboost, update = TRUE)
 	return ..()
 
 /datum/status_effect/speed_boost/on_remove()
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_speed_boost, update = TRUE)
 
 /datum/movespeed_modifier/status_speed_boost
-	multiplicative_slowdown = -1
+	multiplicative_slowdown = 0
 
 ///this buff provides a max health buff and a heal.
 /datum/status_effect/limited_buff/health_buff
@@ -560,3 +566,31 @@
 
 /datum/status_effect/jump_jet/on_remove()
 	owner.RemoveElement(/datum/element/forced_gravity, 0)
+
+/datum/status_effect/time_dilation //used by darkspawn; greatly increases action times etc
+	id = "time_dilation"
+	duration = 60 SECONDS
+	alert_type = /atom/movable/screen/alert/status_effect/time_dilation
+
+/datum/status_effect/time_dilation/get_examine_text()
+	return span_notice("[owner.p_they(TRUE)] seem[owner.p_s()] is moving jerkily and unpredictably!")
+
+/datum/status_effect/time_dilation/on_apply()
+	owner.add_movespeed_modifier(/datum/movespeed_modifier/time_dilation)
+	owner.next_move_modifier *= 0.5 // For the duration of this you move and attack faster
+	owner.ignore_slowdown(id)
+	return TRUE
+
+/datum/status_effect/time_dilation/on_remove()
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/time_dilation)
+	owner.next_move_modifier *= 2
+	owner.unignore_slowdown(id)
+
+/atom/movable/screen/alert/status_effect/time_dilation
+	name = "Time Dilation"
+	desc = "Your actions are twice as fast, and the delay between them is halved."
+	icon = 'icons/mob/actions/actions_darkspawn.dmi'
+	icon_state = "time_dilation"
+
+/datum/movespeed_modifier/time_dilation
+	multiplicative_slowdown = -0.5

@@ -1143,7 +1143,7 @@
 	drinker.remove_status_effect(/datum/status_effect/drowsiness)
 	drinker.AdjustSleeping(-40 * REM * seconds_per_tick)
 	drinker.adjust_bodytemperature(COLD_DRINK * REM * seconds_per_tick, min_temp = drinker.standard_body_temperature)
-	if(SPT_PROB(10, seconds_per_tick))
+	if(SPT_PROB(30, seconds_per_tick))
 		drinker.emote(pick("jump", "scream", "burp"))
 	return ..()
 

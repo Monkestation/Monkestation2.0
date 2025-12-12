@@ -4,6 +4,8 @@
 
 #define JOB_NANOTRASEN_REPRESENTATIVE "Nanotrasen Representative"
 
+#define JOB_BLUESHIELD "Blueshield"
+
 #define JOB_LATEJOIN_BARBER "Barber"
 
 #define JOB_LATEJOIN_EXPLORER "Explorer"

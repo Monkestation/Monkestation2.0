@@ -5,6 +5,8 @@
 #define RADIO_EXTENSION "department specific"
 #define RADIO_KEY "department specific key"
 #define LANGUAGE_EXTENSION "language specific"
+/// Message mod which contains a list of bonus "mutual understanding" to allow arbitrary understanding of any speech
+#define LANGUAGE_MUTUAL_BONUS "language mutual bonus"
 
 //Message modes. Each one defines a radio channel, more or less.
 //if you use ! as a mode key for some ungodly reason, change the first character for ion_num() so get_message_mode() doesn't freak out with state law prompts - shiz.
@@ -60,6 +62,12 @@
 
 #define MODE_CUSTOM_SAY_ERASE_INPUT "erase_input"
 
+#define MODE_BLOODLING "bloodling"
+
+#define MODE_DARKSPAWN "mindlink"
+#define MODE_KEY_DARKSPAWN  "w"
+#define MODE_TOKEN_DARKSPAWN  ":w"
+
 //Spans. Robot speech, italics, etc. Applied in compose_message().
 #define SPAN_ROBOT "robot"
 #define SPAN_YELL "yell"
@@ -75,6 +83,7 @@
 #define SPAN_SOAPBOX "soapbox"
 #define SPAN_BOLD "bold"
 #define SPAN_HYPNOPHRASE "hypnophrase"
+#define SPAN_PROGENITOR "progenitor"
 
 //bitflag #defines for return value of the radio() proc.
 #define ITALICS (1<<0)
@@ -102,6 +111,7 @@
 #define MAX_BROADCAST_LEN 512
 #define MAX_CHARTER_LEN 80
 #define MAX_PLAQUE_LEN 144
+#define MAX_LABEL_LEN 64
 
 // Audio/Visual Flags. Used to determine what sense are required to notice a message.
 #define MSG_VISUAL (1<<0)

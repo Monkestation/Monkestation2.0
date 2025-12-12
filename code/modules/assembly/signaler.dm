@@ -96,7 +96,7 @@
 	switch(action)
 		if("signal")
 			if(cooldown_length > 0)
-				if(TIMER_COOLDOWN_CHECK(src, COOLDOWN_SIGNALLER_SEND))
+				if(TIMER_COOLDOWN_RUNNING(src, COOLDOWN_SIGNALLER_SEND))
 					balloon_alert(ui.user, "recharging!")
 					return
 				TIMER_COOLDOWN_START(src, COOLDOWN_SIGNALLER_SEND, cooldown_length)
@@ -120,9 +120,9 @@
 
 	update_appearance()
 
-/obj/item/assembly/signaler/attackby(obj/item/W, mob/user, params)
-	if(issignaler(W))
-		var/obj/item/assembly/signaler/signaler2 = W
+/obj/item/assembly/signaler/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(issignaler(attacking_item))
+		var/obj/item/assembly/signaler/signaler2 = attacking_item
 		if(secured && signaler2.secured)
 			code = signaler2.code
 			set_frequency(signaler2.frequency)
@@ -135,7 +135,7 @@
 		return
 	if(!ishuman(user))
 		return
-	if(TIMER_COOLDOWN_CHECK(src, COOLDOWN_SIGNALLER_SEND))
+	if(TIMER_COOLDOWN_RUNNING(src, COOLDOWN_SIGNALLER_SEND))
 		balloon_alert(user, "still recharging...")
 		return
 	TIMER_COOLDOWN_START(src, COOLDOWN_SIGNALLER_SEND, 1 SECONDS)
@@ -182,7 +182,7 @@
 
 /obj/item/assembly/signaler/cyborg
 
-/obj/item/assembly/signaler/cyborg/attackby(obj/item/W, mob/user, params)
+/obj/item/assembly/signaler/cyborg/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	return
 /obj/item/assembly/signaler/cyborg/screwdriver_act(mob/living/user, obj/item/I)
 	return
@@ -193,7 +193,7 @@
 /obj/item/assembly/signaler/internal/ui_state(mob/user)
 	return GLOB.inventory_state
 
-/obj/item/assembly/signaler/internal/attackby(obj/item/W, mob/user, params)
+/obj/item/assembly/signaler/internal/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	return
 
 /obj/item/assembly/signaler/internal/screwdriver_act(mob/living/user, obj/item/I)
