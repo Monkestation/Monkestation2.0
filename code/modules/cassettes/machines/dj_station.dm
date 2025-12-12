@@ -283,6 +283,9 @@ GLOBAL_DATUM(dj_booth, /obj/machinery/dj_station)
 			if(switching_tracks)
 				balloon_alert(user, "already switching tracks!")
 				return
+			if(broadcasting)
+				balloon_alert(user, "stop the current track first!")
+				return
 			var/index = params["index"]
 			if(!isnum(index))
 				CRASH("tried to pass non-number index ([index]) to set_track??? this is prolly a bug.")
