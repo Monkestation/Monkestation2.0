@@ -19161,23 +19161,23 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/cargo)
 "bSL" = (
-/obj/item/device/walkman{
+/obj/item/walkman{
 	pixel_y = 7;
 	pixel_x = -8
 	},
-/obj/item/device/walkman{
+/obj/item/walkman{
 	pixel_y = 7;
 	pixel_x = -8
 	},
-/obj/item/device/walkman{
+/obj/item/walkman{
 	pixel_y = 7;
 	pixel_x = -8
 	},
-/obj/item/device/walkman{
+/obj/item/walkman{
 	pixel_y = 7;
 	pixel_x = -8
 	},
-/obj/item/device/walkman{
+/obj/item/walkman{
 	pixel_y = 7;
 	pixel_x = -8
 	},
@@ -19185,7 +19185,7 @@
 	pixel_y = 8
 	},
 /obj/structure/table/wood,
-/obj/item/device/walkman{
+/obj/item/walkman{
 	pixel_y = 7;
 	pixel_x = -8
 	},
@@ -45785,7 +45785,7 @@
 /area/station/science/ordnance/storage)
 "ktz" = (
 /obj/structure/table/wood,
-/obj/machinery/cassette/adv_cassette_deck{
+/obj/machinery/cassette/cassette_deck{
 	pixel_y = 8
 	},
 /turf/open/floor/wood,
@@ -75146,7 +75146,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
 "vDu" = (
-/obj/machinery/cassette/mailbox,
+/obj/machinery/cassette_postbox,
 /turf/open/floor/wood,
 /area/station/service/library)
 "vDU" = (

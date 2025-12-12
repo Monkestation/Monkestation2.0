@@ -26251,7 +26251,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
-/obj/machinery/cassette/mailbox,
+/obj/machinery/cassette_postbox,
 /turf/open/floor/iron,
 /area/station/service/library)
 "ixA" = (
@@ -30473,19 +30473,19 @@
 	dir = 8
 	},
 /obj/structure/cassette_rack/prefilled,
-/obj/item/device/walkman{
+/obj/item/walkman{
 	pixel_y = 7;
 	pixel_x = -8
 	},
-/obj/item/device/walkman{
+/obj/item/walkman{
 	pixel_y = 7;
 	pixel_x = -8
 	},
-/obj/item/device/walkman{
+/obj/item/walkman{
 	pixel_y = 7;
 	pixel_x = -8
 	},
-/obj/item/device/walkman{
+/obj/item/walkman{
 	pixel_y = 7;
 	pixel_x = -8
 	},
@@ -41096,7 +41096,7 @@
 	dir = 1
 	},
 /obj/structure/table/wood,
-/obj/machinery/cassette/adv_cassette_deck{
+/obj/machinery/cassette/cassette_deck{
 	pixel_y = 8
 	},
 /turf/open/floor/iron,
@@ -42988,27 +42988,27 @@
 	dir = 1
 	},
 /obj/structure/table/wood,
-/obj/item/device/walkman{
+/obj/item/walkman{
 	pixel_y = 4;
 	pixel_x = -6
 	},
-/obj/item/device/walkman{
+/obj/item/walkman{
 	pixel_y = 4;
 	pixel_x = -6
 	},
-/obj/item/device/walkman{
+/obj/item/walkman{
 	pixel_y = 4;
 	pixel_x = -6
 	},
-/obj/item/device/cassette_tape/blank{
+/obj/item/cassette_tape/blank{
 	pixel_y = 3;
 	pixel_x = 5
 	},
-/obj/item/device/cassette_tape/blank{
+/obj/item/cassette_tape/blank{
 	pixel_y = 3;
 	pixel_x = 5
 	},
-/obj/item/device/cassette_tape/blank{
+/obj/item/cassette_tape/blank{
 	pixel_y = 3;
 	pixel_x = 5
 	},
@@ -50222,7 +50222,7 @@
 /obj/effect/turf_decal/siding/thinplating_new{
 	dir = 8
 	},
-/obj/machinery/cassette/adv_cassette_deck,
+/obj/machinery/cassette/cassette_deck,
 /turf/open/floor/iron/vaporwave,
 /area/station/service/library)
 "pZV" = (

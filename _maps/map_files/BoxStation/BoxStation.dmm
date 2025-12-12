@@ -19216,39 +19216,39 @@
 	pixel_y = 2;
 	pixel_x = 9
 	},
-/obj/item/device/walkman{
+/obj/item/walkman{
 	pixel_y = 7;
 	pixel_x = -8
 	},
-/obj/item/device/walkman{
+/obj/item/walkman{
 	pixel_y = 7;
 	pixel_x = -8
 	},
-/obj/item/device/walkman{
+/obj/item/walkman{
 	pixel_y = 7;
 	pixel_x = -8
 	},
-/obj/item/device/walkman{
+/obj/item/walkman{
 	pixel_y = 7;
 	pixel_x = -8
 	},
-/obj/item/device/walkman{
+/obj/item/walkman{
 	pixel_y = 7;
 	pixel_x = -8
 	},
-/obj/item/device/walkman{
+/obj/item/walkman{
 	pixel_y = 7;
 	pixel_x = -8
 	},
-/obj/item/device/walkman{
+/obj/item/walkman{
 	pixel_y = 7;
 	pixel_x = -8
 	},
-/obj/item/device/walkman{
+/obj/item/walkman{
 	pixel_y = 7;
 	pixel_x = -8
 	},
-/obj/item/device/walkman{
+/obj/item/walkman{
 	pixel_y = 7;
 	pixel_x = -8
 	},
@@ -24131,7 +24131,7 @@
 /area/station/command/bridge)
 "hIW" = (
 /obj/structure/table/wood,
-/obj/machinery/cassette/adv_cassette_deck{
+/obj/machinery/cassette/cassette_deck{
 	pixel_y = 8
 	},
 /turf/open/floor/iron/vaporwave,
@@ -30574,7 +30574,7 @@
 /area/station/cargo/lobby)
 "jPq" = (
 /obj/structure/extinguisher_cabinet/directional/north,
-/obj/machinery/cassette/mailbox,
+/obj/machinery/cassette_postbox,
 /turf/open/floor/wood,
 /area/station/service/library/lounge)
 "jPt" = (

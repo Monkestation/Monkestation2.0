@@ -2,7 +2,7 @@
 	name = "Walkman Single-pack"
 	desc = "5 Walkmen is too much for the average man on the average occasion. Solution: 1 Singular Walkman. Contains 1 Walkman."
 	cost = PAYCHECK_CREW * 3
-	contains = list(/obj/item/device/walkman)
+	contains = list(/obj/item/walkman)
 
 /datum/supply_pack/goody/cassette
 	name = "Cassette Mini-Pack"

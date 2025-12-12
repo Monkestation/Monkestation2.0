@@ -2886,7 +2886,7 @@
 /area/station/command/heads_quarters/hos)
 "akV" = (
 /obj/structure/table/wood/fancy,
-/obj/machinery/cassette/adv_cassette_deck{
+/obj/machinery/cassette/cassette_deck{
 	pixel_y = 8
 	},
 /turf/open/floor/carpet,
@@ -28388,7 +28388,7 @@
 /turf/open/floor/iron/dark,
 /area/station/service/library)
 "cyR" = (
-/obj/machinery/cassette/mailbox,
+/obj/machinery/cassette_postbox,
 /turf/open/floor/iron/dark,
 /area/station/service/library)
 "cyS" = (
@@ -50879,31 +50879,31 @@
 	pixel_y = 8
 	},
 /obj/structure/table/wood/fancy/red,
-/obj/item/device/walkman{
+/obj/item/walkman{
 	pixel_y = 7;
 	pixel_x = -8
 	},
-/obj/item/device/walkman{
+/obj/item/walkman{
 	pixel_y = 7;
 	pixel_x = -8
 	},
-/obj/item/device/walkman{
+/obj/item/walkman{
 	pixel_y = 7;
 	pixel_x = -8
 	},
-/obj/item/device/walkman{
+/obj/item/walkman{
 	pixel_y = 7;
 	pixel_x = -8
 	},
-/obj/item/device/walkman{
+/obj/item/walkman{
 	pixel_y = 7;
 	pixel_x = -8
 	},
-/obj/item/device/walkman{
+/obj/item/walkman{
 	pixel_y = 7;
 	pixel_x = -8
 	},
-/obj/item/device/walkman{
+/obj/item/walkman{
 	pixel_y = 7;
 	pixel_x = -8
 	},

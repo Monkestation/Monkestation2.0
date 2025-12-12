@@ -1,5 +1,5 @@
 #warn TODO: advanced cassette deck
-/obj/machinery/cassette/adv_cassette_deck
+/obj/machinery/cassette_deck
 	name = "Advanced Cassette Deck"
 	desc = "A more advanced less portable Cassette Deck. Useful for recording songs from our generation, or customizing the style of your cassettes."
 	icon ='icons/obj/cassettes/adv_cassette_deck.dmi'
@@ -11,17 +11,17 @@
 	///Selection used to remove songs
 	var/selection
 
-/obj/machinery/cassette/adv_cassette_deck/Initialize(mapload)
+/obj/machinery/cassette_deck/Initialize(mapload)
 	. = ..()
 	//REGISTER_REQUIRED_MAP_ITEM(1, INFINITY)
 	return INITIALIZE_HINT_QDEL
 
-/obj/machinery/cassette/adv_cassette_deck/wrench_act(mob/living/user, obj/item/wrench)
+/obj/machinery/cassette_deck/wrench_act(mob/living/user, obj/item/wrench)
 	..()
 	default_unfasten_wrench(user, wrench, 15)
 	return TRUE
 
-/obj/machinery/cassette/adv_cassette_deck/attackby(obj/item/cassette, mob/user)
+/obj/machinery/cassette_deck/attackby(obj/item/cassette, mob/user)
 	if(!istype(cassette, /obj/item/cassette_tape))
 		return ..()
 	if(!tape)
@@ -31,19 +31,19 @@
 	else
 		to_chat(user,"Remove a tape first!")
 
-/obj/machinery/cassette/adv_cassette_deck/proc/insert_tape(obj/item/cassette_tape/CTape)
+/obj/machinery/cassette_deck/proc/insert_tape(obj/item/cassette_tape/CTape)
 	if(tape || !istype(CTape))
 		return
 	tape = CTape
 	CTape.forceMove(src)
 
-/obj/machinery/cassette/adv_cassette_deck/proc/eject_tape(mob/user)
+/obj/machinery/cassette_deck/proc/eject_tape(mob/user)
 	if(!tape)
 		return
 	user.put_in_hands(tape)
 	tape = null
 
-/obj/machinery/cassette/adv_cassette_deck/ui_status(mob/user)
+/obj/machinery/cassette_deck/ui_status(mob/user)
 	if(!anchored)
 		to_chat(user,"<span class='warning'>This device must be anchored by a wrench!</span>")
 		return UI_CLOSE
@@ -53,14 +53,14 @@
 		return UI_CLOSE
 	return ..()
 
-/obj/machinery/cassette/adv_cassette_deck/ui_interact(mob/user, datum/tgui/ui)
+/obj/machinery/cassette_deck/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "CassetteDeck", name)
 		ui.open()
 
 /*
-/obj/machinery/cassette/adv_cassette_deck/ui_data(mob/user)
+/obj/machinery/cassette_deck/ui_data(mob/user)
 	///all data for the tgui
 	var/list/data = list()
 	data["songs"] = list()
@@ -73,7 +73,7 @@
 		data["track_selected"] = selection
 	return data
 
-/obj/machinery/cassette/adv_cassette_deck/ui_act(action, list/params)
+/obj/machinery/cassette_deck/ui_act(action, list/params)
 	. = ..()
 	if(.)
 		return

@@ -59,14 +59,14 @@
 	name = "Walkman Crate"
 	desc = "In the EXTREMELY unlikely event you have run out of walkmans in the library, this crate has 5 walkman devices for listening to cassettes personally. Cassettes Sold Seperately."
 	cost = CARGO_CRATE_VALUE * 3
-	contains = list(/obj/item/device/walkman = 5)
+	contains = list(/obj/item/walkman = 5)
 	crate_name = "walkman crate"
 
 /datum/supply_pack/service/cassettedeck
 	name = "Advanced Cassette Deck Crate"
 	desc = "In the event you simply refuse to interact with the Curator at all. Contains 1 Advanced Cassette Deck and a wrench for moving it."
 	cost = CARGO_CRATE_VALUE * 5
-	contains = list(/obj/machinery/cassette/adv_cassette_deck,
+	contains = list(/obj/machinery/cassette_deck,
 					/obj/item/wrench)
 	crate_name = "cassette deck crate"
 	crate_type = /obj/structure/closet/crate/large

@@ -102470,7 +102470,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/cassette/adv_cassette_deck{
+/obj/machinery/cassette/cassette_deck{
 	pixel_y = 8
 	},
 /turf/open/floor/carpet,
@@ -123528,7 +123528,7 @@
 /turf/open/floor/wood,
 /area/station/maintenance/rus_gambling)
 "xKH" = (
-/obj/machinery/cassette/mailbox,
+/obj/machinery/cassette_postbox,
 /obj/machinery/atm/directional/north,
 /turf/open/floor/wood,
 /area/station/service/library)

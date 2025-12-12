@@ -2943,43 +2943,43 @@
 /area/station/service/hydroponics)
 "aWj" = (
 /obj/structure/table/wood,
-/obj/item/device/walkman{
+/obj/item/walkman{
 	pixel_y = 7;
 	pixel_x = -8
 	},
-/obj/item/device/walkman{
+/obj/item/walkman{
 	pixel_y = 7;
 	pixel_x = -8
 	},
-/obj/item/device/walkman{
+/obj/item/walkman{
 	pixel_y = 7;
 	pixel_x = -8
 	},
-/obj/item/device/walkman{
+/obj/item/walkman{
 	pixel_y = 7;
 	pixel_x = -8
 	},
-/obj/item/device/walkman{
+/obj/item/walkman{
 	pixel_y = 7;
 	pixel_x = -8
 	},
-/obj/item/device/walkman{
+/obj/item/walkman{
 	pixel_y = 7;
 	pixel_x = -8
 	},
-/obj/item/device/walkman{
+/obj/item/walkman{
 	pixel_y = 7;
 	pixel_x = -8
 	},
-/obj/item/device/walkman{
+/obj/item/walkman{
 	pixel_y = 7;
 	pixel_x = -8
 	},
-/obj/item/device/walkman{
+/obj/item/walkman{
 	pixel_y = 7;
 	pixel_x = -8
 	},
-/obj/machinery/cassette/adv_cassette_deck{
+/obj/machinery/cassette/cassette_deck{
 	pixel_y = 8
 	},
 /turf/open/floor/iron/vaporwave,
@@ -7631,15 +7631,15 @@
 /area/station/commons/lounge)
 "cLH" = (
 /obj/structure/table/wood,
-/obj/item/device/walkman{
+/obj/item/walkman{
 	pixel_y = 4;
 	pixel_x = -6
 	},
-/obj/item/device/walkman{
+/obj/item/walkman{
 	pixel_y = 4;
 	pixel_x = -6
 	},
-/obj/item/device/walkman{
+/obj/item/walkman{
 	pixel_y = 4;
 	pixel_x = -6
 	},
@@ -18893,7 +18893,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "gOe" = (
-/obj/machinery/cassette/mailbox,
+/obj/machinery/cassette_postbox,
 /turf/open/floor/wood,
 /area/station/service/library)
 "gOp" = (
@@ -47944,7 +47944,7 @@
 "qzS" = (
 /obj/structure/table/wood,
 /obj/machinery/newscaster/directional/west,
-/obj/machinery/cassette/adv_cassette_deck{
+/obj/machinery/cassette/cassette_deck{
 	pixel_y = 8
 	},
 /turf/open/floor/wood,

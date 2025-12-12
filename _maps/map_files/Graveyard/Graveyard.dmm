@@ -6345,43 +6345,43 @@
 /area/station/hallway/primary/upper)
 "ctu" = (
 /obj/structure/table/wood,
-/obj/item/device/walkman{
+/obj/item/walkman{
 	pixel_y = 7;
 	pixel_x = -8
 	},
-/obj/item/device/walkman{
+/obj/item/walkman{
 	pixel_y = 7;
 	pixel_x = -8
 	},
-/obj/item/device/walkman{
+/obj/item/walkman{
 	pixel_y = 7;
 	pixel_x = -8
 	},
-/obj/item/device/walkman{
+/obj/item/walkman{
 	pixel_y = 7;
 	pixel_x = -8
 	},
-/obj/item/device/walkman{
+/obj/item/walkman{
 	pixel_y = 7;
 	pixel_x = -8
 	},
-/obj/item/device/walkman{
+/obj/item/walkman{
 	pixel_y = 7;
 	pixel_x = -8
 	},
-/obj/item/device/walkman{
+/obj/item/walkman{
 	pixel_y = 7;
 	pixel_x = -8
 	},
-/obj/item/device/walkman{
+/obj/item/walkman{
 	pixel_y = 7;
 	pixel_x = -8
 	},
-/obj/item/device/walkman{
+/obj/item/walkman{
 	pixel_y = 7;
 	pixel_x = -8
 	},
-/obj/item/device/walkman{
+/obj/item/walkman{
 	pixel_y = 7;
 	pixel_x = -8
 	},
@@ -13780,7 +13780,7 @@
 /turf/open/floor/engine,
 /area/station/science/xenobiology/cell)
 "fqb" = (
-/obj/machinery/cassette/adv_cassette_deck,
+/obj/machinery/cassette/cassette_deck,
 /turf/open/floor/iron/vaporwave,
 /area/station/service/library)
 "fqx" = (
@@ -32905,7 +32905,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
 "mJK" = (
-/obj/machinery/cassette/mailbox,
+/obj/machinery/cassette_postbox,
 /obj/machinery/light/directional/east,
 /turf/open/floor/wood,
 /area/station/service/library)

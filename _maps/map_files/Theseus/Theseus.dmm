@@ -13357,7 +13357,7 @@
 /area/station/cargo/storage)
 "dXX" = (
 /obj/structure/table/wood,
-/obj/machinery/cassette/adv_cassette_deck{
+/obj/machinery/cassette/cassette_deck{
 	pixel_y = 9
 	},
 /turf/open/floor/carpet/green,
@@ -25010,7 +25010,7 @@
 /area/station/engineering/atmos/storage/gas)
 "huV" = (
 /obj/structure/table/wood,
-/obj/item/device/walkman,
+/obj/item/walkman,
 /turf/open/floor/carpet/green,
 /area/station/service/library/upper)
 "huW" = (
@@ -39008,7 +39008,7 @@
 /obj/machinery/camera/autoname/directional/north,
 /obj/effect/spawner/random/bureaucracy/folder,
 /obj/effect/spawner/random/bureaucracy/stamp,
-/obj/item/device/walkman{
+/obj/item/walkman{
 	pixel_y = 3;
 	pixel_x = 11
 	},
@@ -59506,7 +59506,7 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/storage/eva)
 "rsC" = (
-/obj/machinery/cassette/mailbox,
+/obj/machinery/cassette_postbox,
 /obj/effect/turf_decal/bot,
 /obj/structure/sign/plaques/kiddie/library{
 	pixel_x = 30
@@ -81276,7 +81276,7 @@
 "xED" = (
 /obj/structure/table/wood,
 /obj/item/taperecorder,
-/obj/item/device/walkman,
+/obj/item/walkman,
 /turf/open/floor/carpet/green,
 /area/station/service/library/upper)
 "xFd" = (
@@ -81374,7 +81374,7 @@
 /obj/structure/table/wood,
 /obj/effect/spawner/random/bureaucracy/briefcase,
 /obj/effect/spawner/random/bureaucracy/pen,
-/obj/item/device/walkman{
+/obj/item/walkman{
 	pixel_y = 3;
 	pixel_x = 11
 	},

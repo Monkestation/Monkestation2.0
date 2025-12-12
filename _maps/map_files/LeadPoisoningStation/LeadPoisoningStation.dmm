@@ -9490,7 +9490,7 @@
 /area/station/maintenance/starboard/greater)
 "eIP" = (
 /obj/structure/table/wood,
-/obj/item/device/walkman{
+/obj/item/walkman{
 	pixel_y = 4;
 	pixel_x = -6
 	},
@@ -13093,7 +13093,7 @@
 /area/station/hallway/primary/central/aft)
 "grf" = (
 /obj/structure/table/wood,
-/obj/machinery/cassette/adv_cassette_deck{
+/obj/machinery/cassette/cassette_deck{
 	pixel_y = 8
 	},
 /turf/open/floor/wood,
@@ -13129,7 +13129,7 @@
 /area/station/hallway/primary/central)
 "grO" = (
 /obj/structure/table/wood,
-/obj/item/device/walkman{
+/obj/item/walkman{
 	pixel_y = 7;
 	pixel_x = -8
 	},
@@ -20773,7 +20773,7 @@
 /obj/structure/sign/painting/library{
 	pixel_y = 32
 	},
-/obj/machinery/cassette/mailbox,
+/obj/machinery/cassette_postbox,
 /turf/open/floor/wood,
 /area/station/service/library)
 "jVR" = (
@@ -42874,7 +42874,7 @@
 /area/station/cargo/storage)
 "uvq" = (
 /obj/structure/table/wood,
-/obj/machinery/cassette/adv_cassette_deck,
+/obj/machinery/cassette/cassette_deck,
 /obj/item/cassette_tape/random,
 /obj/item/cassette_tape/random,
 /obj/item/cassette_tape/random,

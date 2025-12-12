@@ -1,6 +1,6 @@
 #define sound_to(target, sound) target << (sound)
 #define NEXT_SONG_USE_TIMER (5 SECONDS)
-/obj/item/device/walkman
+/obj/item/walkman
 	name = "walkman"
 	desc = "A cassette player that first hit the market over 200 years ago. Crazy how these never went out of style. Alt-click removes the Cassette. Ctrl-click changes to the next song"
 	icon = 'icons/obj/cassettes/walkman.dmi'
@@ -36,17 +36,17 @@
 	///cooldown used by the next song to stop overlapping sounds between url based songs and normal ones
 	COOLDOWN_DECLARE(next_song_use)
 
-/obj/item/device/walkman/Initialize(mapload)
+/obj/item/walkman/Initialize(mapload)
 	..()
 	return INITIALIZE_HINT_QDEL // just for now
 
 /*
-/obj/item/device/walkman/Initialize(mapload)
+/obj/item/walkman/Initialize(mapload)
 	. = ..()
 	design = rand(1, 5)
 	update_icon()
 
-/obj/item/device/walkman/Destroy()
+/obj/item/walkman/Destroy()
 	QDEL_NULL(tape)
 	break_sound()
 	current_song = null
@@ -55,7 +55,7 @@
 	STOP_PROCESSING(SSprocessing, src)
 	. = ..()
 
-/obj/item/device/walkman/attackby(obj/item/cassette, mob/user)
+/obj/item/walkman/attackby(obj/item/cassette, mob/user)
 	if(!istype(cassette, /obj/item/cassette_tape))
 		return
 	if(!tape)
@@ -65,7 +65,7 @@
 	else
 		to_chat(user,("Remove the other tape first!"))
 
-/obj/item/device/walkman/attack_self(mob/user)
+/obj/item/walkman/attack_self(mob/user)
 	..()
 
 	if(!current_listener)
@@ -83,20 +83,20 @@
 		to_chat(user,("There's no tape to play"))
 	playsound(src,'sound/machines/click.ogg',20,1)
 
-/obj/item/device/walkman/click_alt(mob/user)
+/obj/item/walkman/click_alt(mob/user)
 	if(!tape)
 		return CLICK_ACTION_BLOCKING
 	eject_tape(user)
 	return CLICK_ACTION_SUCCESS
 
-/obj/item/device/walkman/item_ctrl_click(mob/user)
+/obj/item/walkman/item_ctrl_click(mob/user)
 	if(!tape)
 		return CLICK_ACTION_BLOCKING
 	next_song(user)
 	return CLICK_ACTION_SUCCESS
 
 ///This is called when sound needs to be broken ie you die or lose access to it
-/obj/item/device/walkman/proc/break_sound()
+/obj/item/walkman/proc/break_sound()
 	if(link_play)
 		listener.tgui_panel?.stop_music()
 		GLOB.youtube_exempt["walkman"] -= listener
@@ -114,7 +114,7 @@
  *Arguments: mob/user -> the current user of the walkman
  * sound/noise -> the sound that is being directed to the user
  */
-/obj/item/device/walkman/proc/update_song(sound/noise, mob/user, flags = SOUND_UPDATE)
+/obj/item/walkman/proc/update_song(sound/noise, mob/user, flags = SOUND_UPDATE)
 	if(!istype(user) || !istype(noise)) return
 	if(HAS_TRAIT(user, TRAIT_DEAF))
 		flags |= SOUND_MUTE
@@ -126,7 +126,7 @@
 /*Called when music is paused by the user
  *Arguments: mob/user -> the current user of the walkman
  */
-/obj/item/device/walkman/proc/pause(mob/user)
+/obj/item/walkman/proc/pause(mob/user)
 	if(!current_song && !link_play)
 		return
 	paused = TRUE
@@ -137,7 +137,7 @@
 		listener.tgui_panel?.stop_music()
 
 ///Handles the actual playing of the sound to the current_listener
-/obj/item/device/walkman/proc/play()
+/obj/item/walkman/proc/play()
 	if(!current_song)
 		if(current_playlist.len > 0)
 			if(is_http_protocol(current_playlist[pl_index]))
@@ -232,7 +232,7 @@
 /*Called when
  *Arguments: obj/item/cassette_tape/CT -> the cassette in question that you are inserting into the walkman
  */
-/obj/item/device/walkman/proc/insert_tape(obj/item/cassette_tape/CTape)
+/obj/item/walkman/proc/insert_tape(obj/item/cassette_tape/CTape)
 	if(tape || !istype(CTape))
 		return
 
@@ -251,7 +251,7 @@
 /*Called when you eject a tape
  *Arguments: mob/user -> the current user of the walkman
  */
-/obj/item/device/walkman/proc/eject_tape(mob/user)
+/obj/item/walkman/proc/eject_tape(mob/user)
 	if(!tape)
 		return
 
@@ -272,7 +272,7 @@
 /*Called when you need to go to next song either when it naturally ends or when user changes song manually
  *Arguments: mob/user -> the current user of the walkman
  */
-/obj/item/device/walkman/proc/next_song(mob/user)
+/obj/item/walkman/proc/next_song(mob/user)
 	if(current_playlist.len == 0 || !COOLDOWN_FINISHED(src, next_song_use))
 		return
 	COOLDOWN_START(src, next_song_use, NEXT_SONG_USE_TIMER)
@@ -295,7 +295,7 @@
 
 
 
-/obj/item/device/walkman/update_icon()
+/obj/item/walkman/update_icon()
 	..()
 	overlays.Cut()
 	if(design)
@@ -311,7 +311,7 @@
 		var/mob/living/carbon/human/player = loc
 		player.regenerate_icons()
 
-/obj/item/device/walkman/process(seconds_per_tick)
+/obj/item/walkman/process(seconds_per_tick)
 	time_left--
 	if(time_left <= 0)
 		next_song(current_listener)
@@ -332,7 +332,7 @@
 	if(!HAS_TRAIT(current_listener, TRAIT_DEAF) && current_song && current_song.status & SOUND_MUTE)
 		update_song(current_song, current_listener)
 
-/obj/item/device/walkman/verb/change_volume()
+/obj/item/walkman/verb/change_volume()
 	set name = "Change Walkman volume"
 	set category = "Object"
 	set src in usr
@@ -352,7 +352,7 @@
 /* Called when you need to restart a song
  * Arguments: mob/user -> the user that has triggered the reset
  */
-/obj/item/device/walkman/proc/restart_song(mob/user)
+/obj/item/walkman/proc/restart_song(mob/user)
 	if(!current_song)
 		return
 
@@ -379,7 +379,7 @@
 
 /datum/action/item_action/walkman/play_pause/Trigger(trigger_flags)
 	if(target)
-		var/obj/item/device/walkman/WM = target
+		var/obj/item/walkman/WM = target
 		WM.attack_self(owner)
 
 /datum/action/item_action/walkman/next_song
@@ -392,7 +392,7 @@
 /*
 /datum/action/item_action/walkman/next_song/Trigger(trigger_flags)
 	if(target)
-		var/obj/item/device/walkman/walkM = target
+		var/obj/item/walkman/walkM = target
 		walkM.next_song(owner)
 */
 
@@ -406,7 +406,7 @@
 /*
 /datum/action/item_action/walkman/restart_song/Trigger(trigger_flags)
 	if(target)
-		var/obj/item/device/walkman/walkM = target
+		var/obj/item/walkman/walkM = target
 		walkM.restart_song(owner)
 
 */

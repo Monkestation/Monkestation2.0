@@ -1,5 +1,5 @@
 #warn TODO: cassette submission postbox
-/obj/machinery/cassette/mailbox
+/obj/machinery/cassette_postbox
 	name = "Space Board of Music Postbox"
 	desc = "Has a slit specifically to fit cassettes into it."
 
@@ -11,13 +11,13 @@
 	anchored = TRUE
 	density = TRUE
 
-/obj/machinery/cassette/mailbox/Initialize(mapload)
+/obj/machinery/cassette_postbox/Initialize(mapload)
 	..()
 	// REGISTER_REQUIRED_MAP_ITEM(1, INFINITY)
 	return INITIALIZE_HINT_QDEL
 
 /*
-/obj/machinery/cassette/mailbox/attackby(obj/item/weapon, mob/user, params)
+/obj/machinery/cassette_postbox/attackby(obj/item/weapon, mob/user, params)
 	if(!istype(weapon, /obj/item/cassette_tape) || !user.client)
 		return
 

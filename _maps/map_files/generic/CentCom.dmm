@@ -11957,7 +11957,7 @@
 	dir = 6
 	},
 /obj/structure/table/wood,
-/obj/machinery/cassette/adv_cassette_deck,
+/obj/machinery/cassette/cassette_deck,
 /turf/open/floor/wood/parquet,
 /area/centcom/central_command_areas/arcade)
 "aFR" = (
@@ -14729,7 +14729,7 @@
 	dir = 4
 	},
 /obj/machinery/light/directional/east,
-/obj/machinery/cassette/mailbox,
+/obj/machinery/cassette_postbox,
 /turf/open/floor/wood/parquet,
 /area/centcom/central_command_areas/arcade)
 "aNp" = (
@@ -21721,7 +21721,7 @@
 /area/centcom/central_command_areas/prison)
 "eFL" = (
 /obj/structure/table/reinforced/plastitaniumglass,
-/obj/machinery/cassette/adv_cassette_deck,
+/obj/machinery/cassette/cassette_deck,
 /obj/item/storage/fancy/rollingpapers{
 	pixel_x = -16;
 	pixel_y = 3
@@ -24498,7 +24498,7 @@
 	dir = 10
 	},
 /obj/structure/table/wood,
-/obj/machinery/cassette/adv_cassette_deck,
+/obj/machinery/cassette/cassette_deck,
 /turf/open/floor/wood/parquet,
 /area/centcom/central_command_areas/arcade)
 "iUK" = (
@@ -29810,19 +29810,19 @@
 "sgA" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/table/wood,
-/obj/item/device/walkman{
+/obj/item/walkman{
 	pixel_y = 7;
 	pixel_x = -8
 	},
-/obj/item/device/walkman{
+/obj/item/walkman{
 	pixel_y = 7;
 	pixel_x = -8
 	},
-/obj/item/device/walkman{
+/obj/item/walkman{
 	pixel_y = 7;
 	pixel_x = -8
 	},
-/obj/item/device/walkman{
+/obj/item/walkman{
 	pixel_y = 7;
 	pixel_x = -8
 	},

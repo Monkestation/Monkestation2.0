@@ -2047,7 +2047,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "ud" = (
-/obj/machinery/cassette/adv_cassette_deck,
+/obj/machinery/cassette/cassette_deck,
 /obj/structure/table/wood,
 /turf/open/floor/plating,
 /area/station/commons/storage/primary)
@@ -2391,10 +2391,10 @@
 /area/station/medical/chemistry)
 "JN" = (
 /obj/machinery/light/directional/west,
-/obj/item/device/walkman,
-/obj/item/device/walkman,
-/obj/item/device/walkman,
-/obj/item/device/walkman,
+/obj/item/walkman,
+/obj/item/walkman,
+/obj/item/walkman,
+/obj/item/walkman,
 /obj/structure/table/wood,
 /turf/open/floor/plating,
 /area/station/commons/storage/primary)
