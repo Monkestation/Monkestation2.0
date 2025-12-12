@@ -30961,6 +30961,13 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
+"lZr" = (
+/obj/effect/turf_decal/tile/dark_red/half,
+/obj/vehicle/ridden/battering_ram{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/textured_edge,
+/area/station/ai_monitored/security/armory)
 "lZx" = (
 /obj/effect/spawner/random/trash/mopbucket,
 /turf/open/floor/plating,
@@ -181166,7 +181173,7 @@ pPP
 cAX
 bMN
 cAX
-bWB
+lZr
 ikR
 eBO
 xXu

@@ -6790,6 +6790,10 @@
 	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/engineering/atmos/upper)
+"cbh" = (
+/obj/vehicle/ridden/battering_ram,
+/turf/open/floor/iron/dark/diagonal,
+/area/station/ai_monitored/security/armory)
 "cbx" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
@@ -13470,7 +13474,6 @@
 /area/station/maintenance/department/science/xenobiology)
 "dYP" = (
 /obj/structure/flora/bush/fullgrass/style_random,
-/obj/machinery/growing/tray,
 /obj/item/radio/intercom/prison/directional/west,
 /turf/open/misc/dirt/planet,
 /area/station/security/prison)
@@ -64551,6 +64554,7 @@
 /obj/structure/flora/rock/pile/style_2,
 /obj/structure/flora/rock/pile,
 /obj/structure/flora/bush/sparsegrass/style_random,
+/obj/machinery/growing/tray,
 /turf/open/misc/dirt/planet,
 /area/station/security/prison)
 "sYg" = (
@@ -121244,7 +121248,7 @@ bQR
 tbm
 bND
 kPN
-mtx
+sau
 sau
 utS
 mVZ
@@ -121502,8 +121506,8 @@ tRY
 vCx
 tRY
 sau
-sau
 ctc
+cbh
 bIn
 sWQ
 jDU
