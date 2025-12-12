@@ -64,7 +64,7 @@
 	or on a manual toggle, activates servos around the full body to ensure the user stays upright, come stun or death, the user remains vertical."
 	active_traits = list(TRAIT_FORCED_STANDING)
 	icon_state = "bulwark"
-	complexity = 3 // it is inside every part of your suit, so
+	complexity = 2 // it is inside every part of your suit, so // People wanted cheaper aurafarming.
 	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.4
 	slowdown_active = 0.3
 	incompatible_modules = list(/obj/item/mod/module/magboot/corpse_exoskeleton) // ok so the only reason to NOT repurpose magboots is that theyll conflict with this mod, oh well, sorry CE!
