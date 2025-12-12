@@ -19013,6 +19013,25 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/rd)
+"bAt" = (
+/obj/machinery/door/firedoor,
+/obj/structure/table/reinforced,
+/obj/item/paper_bin{
+	pixel_x = -2;
+	pixel_y = 6
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 1;
+	id = "rdgene";
+	name = "Genetics Lab Shutters"
+	},
+/obj/machinery/door/window/left/directional/west{
+	dir = 1;
+	name = "Genetics Desk";
+	req_access = list("genetics")
+	},
+/turf/open/floor/plating,
+/area/station/science/genetics)
 "bAu" = (
 /obj/machinery/firealarm/directional/east,
 /obj/machinery/vending/wardrobe/gene_wardrobe,
@@ -30770,14 +30789,6 @@
 /obj/effect/landmark/generic_maintenance_landmark,
 /turf/open/floor/plating,
 /area/station/maintenance/department/cargo)
-"enL" = (
-/obj/machinery/door/airlock{
-	name = "Garden"
-	},
-/obj/machinery/door/firedoor,
-/obj/structure/cable,
-/turf/open/floor/iron/dark,
-/area/station/service/chapel/monastery)
 "eoo" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -36916,25 +36927,6 @@
 /obj/effect/landmark/start/cargo_technician,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
-"jIT" = (
-/obj/machinery/door/firedoor,
-/obj/structure/table/reinforced,
-/obj/item/paper_bin{
-	pixel_x = -2;
-	pixel_y = 6
-	},
-/obj/machinery/door/poddoor/shutters/preopen{
-	dir = 1;
-	id = "rdgene";
-	name = "Genetics Lab Shutters"
-	},
-/obj/machinery/door/window/left/directional/west{
-	dir = 1;
-	name = "Genetics Desk";
-	req_access = list("genetics")
-	},
-/turf/open/floor/plating,
-/area/station/science/genetics)
 "jIU" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
@@ -38123,13 +38115,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
-"kEh" = (
-/obj/machinery/dj_station{
-	pixel_y = 12
-	},
-/obj/structure/table/wood/fancy/red,
-/turf/open/floor/iron/dark,
-/area/station/service/library)
 "kEM" = (
 /obj/structure/sign/directions/evac{
 	dir = 1;
@@ -47937,6 +47922,13 @@
 /obj/effect/landmark/start/prisoner,
 /turf/open/floor/iron,
 /area/station/security/prison/safe)
+"sKV" = (
+/obj/machinery/dj_station{
+	pixel_y = 12
+	},
+/obj/structure/table/wood/fancy/red,
+/turf/open/floor/iron/dark,
+/area/station/service/library)
 "sLg" = (
 /obj/machinery/conveyor_switch/oneway{
 	dir = 8;
@@ -51526,6 +51518,15 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden/layer4,
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/warden)
+"vrA" = (
+/obj/machinery/door/airlock{
+	name = "Garden"
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/cable,
+/obj/effect/landmark/navigate_destination/garden,
+/turf/open/floor/iron/dark,
+/area/station/service/chapel/monastery)
 "vrX" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -69130,7 +69131,7 @@ bWV
 cgG
 cgG
 bWV
-enL
+vrA
 bWV
 cgG
 cgG
@@ -71221,7 +71222,7 @@ xBB
 cAu
 xBB
 cAK
-kEh
+sKV
 cyU
 aaa
 aaa
@@ -91184,7 +91185,7 @@ buu
 bvB
 vvn
 ydb
-jIT
+bAt
 bDI
 bCM
 bDI

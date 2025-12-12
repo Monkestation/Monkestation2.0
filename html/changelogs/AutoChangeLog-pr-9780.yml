@@ -1,0 +1,11 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - map: "Removed the pits from Oshan."
+  - map: "Removed the access requirements to Oshan's blacksmithing room - you could just enter it from maints anyways..."
+  - map: "Added a public garden to Oshan."
+  - map: "Oshan's chemistry now starts with a bigger cell."
+  - map: "Oshan's maints now have more space heaters."
+  - map: "Oshan's maints now have directional unrestricted access (as in, you can go through doors that go towards the nearest public exit from maints), so hopefully you can't get trapped in maints nearly as easily."
+  - map: "Added a public cassette deck to Oshan's library."
+  - qol: "All maps now have a \"Public Garden\" navigate landmark."

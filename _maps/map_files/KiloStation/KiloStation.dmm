@@ -689,6 +689,49 @@
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/maintenance/port/aft)
+"agL" = (
+/obj/structure/table,
+/obj/item/clipboard,
+/obj/item/folder/yellow,
+/obj/item/computer_disk/quartermaster,
+/obj/item/computer_disk/quartermaster,
+/obj/item/computer_disk/quartermaster,
+/obj/item/pen/fountain,
+/obj/item/stamp{
+	pixel_x = 8;
+	pixel_y = 2
+	},
+/obj/item/stamp/denied{
+	pixel_x = 8;
+	pixel_y = 6
+	},
+/obj/item/stamp/qm{
+	pixel_x = 8;
+	pixel_y = 10
+	},
+/obj/item/paper_bin{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/pen,
+/obj/item/lighter{
+	pixel_x = 11;
+	pixel_y = -7
+	},
+/obj/item/clothing/mask/cigarette/cigar{
+	pixel_x = 8;
+	pixel_y = 4
+	},
+/obj/item/clothing/mask/cigarette/cigar{
+	pixel_x = 10;
+	pixel_y = -1
+	},
+/obj/item/flashlight/lamp/green{
+	pixel_x = -5;
+	pixel_y = 7
+	},
+/turf/open/floor/carpet/orange,
+/area/station/cargo/quartermaster)
 "ahf" = (
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible,
 /obj/machinery/meter,
@@ -12406,13 +12449,6 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/exit/departure_lounge)
-"dSB" = (
-/obj/machinery/door/airlock/public/glass{
-	name = "Garden"
-	},
-/obj/machinery/door/firedoor,
-/turf/open/floor/iron/dark,
-/area/station/service/hydroponics/garden)
 "dSG" = (
 /obj/structure/table,
 /obj/item/paper_bin{
@@ -22454,6 +22490,14 @@
 	dir = 1
 	},
 /area/station/service/chapel/monastery)
+"hdj" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Garden"
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/landmark/navigate_destination/garden,
+/turf/open/floor/iron/dark,
+/area/station/service/hydroponics/garden)
 "hdo" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
@@ -33518,14 +33562,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/bar)
-"kqZ" = (
-/obj/structure/table,
-/obj/item/modular_computer/laptop,
-/obj/item/toy/figure/qm{
-	pixel_x = -17
-	},
-/turf/open/floor/carpet/orange,
-/area/station/cargo/quartermaster)
 "krc" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -33620,6 +33656,17 @@
 	},
 /turf/open/floor/engine/telecomms,
 /area/station/tcommsat/server)
+"krT" = (
+/obj/machinery/dj_station{
+	pixel_y = 12
+	},
+/obj/structure/table/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/machinery/digital_clock/directional/south,
+/turf/open/floor/iron/vaporwave,
+/area/station/service/library)
 "krY" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -50408,6 +50455,14 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/construction/mining/aux_base)
+"pLX" = (
+/obj/structure/table,
+/obj/item/modular_computer/laptop,
+/obj/item/toy/figure/qm{
+	pixel_x = -17
+	},
+/turf/open/floor/carpet/orange,
+/area/station/cargo/quartermaster)
 "pMR" = (
 /obj/structure/table/optable,
 /obj/machinery/button/crematorium/indestructible{
@@ -54953,22 +55008,6 @@
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/maintenance/solars/starboard/fore)
-"rip" = (
-/obj/effect/turf_decal/bot,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/requests_console/directional/north{
-	department = "Quartermaster's Desk";
-	name = "Quartermaster's Requests Console";
-	supplies_requestable = 1;
-	can_send_announcements = 1
-	},
-/obj/structure/extinguisher_cabinet/directional/north{
-	pixel_x = 32
-	},
-/obj/effect/turf_decal/tile/neutral/half/contrasted,
-/obj/machinery/modular_computer/preset/id,
-/turf/open/floor/iron/dark,
-/area/station/cargo/quartermaster)
 "riB" = (
 /obj/machinery/computer/shuttle/labor{
 	dir = 1
@@ -58465,6 +58504,22 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/station/cargo/office)
+"snG" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/requests_console/directional/north{
+	department = "Quartermaster's Desk";
+	name = "Quartermaster's Requests Console";
+	supplies_requestable = 1;
+	can_send_announcements = 1
+	},
+/obj/structure/extinguisher_cabinet/directional/north{
+	pixel_x = 32
+	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
+/obj/machinery/modular_computer/preset/id,
+/turf/open/floor/iron/dark,
+/area/station/cargo/quartermaster)
 "snK" = (
 /turf/closed/wall,
 /area/station/smithing)
@@ -59718,49 +59773,6 @@
 /obj/effect/turf_decal/tile/purple/half/contrasted,
 /turf/open/floor/iron/dark/textured,
 /area/station/maintenance/starboard)
-"sJc" = (
-/obj/structure/table,
-/obj/item/clipboard,
-/obj/item/folder/yellow,
-/obj/item/computer_disk/quartermaster,
-/obj/item/computer_disk/quartermaster,
-/obj/item/computer_disk/quartermaster,
-/obj/item/pen/fountain,
-/obj/item/stamp{
-	pixel_x = 8;
-	pixel_y = 2
-	},
-/obj/item/stamp/denied{
-	pixel_x = 8;
-	pixel_y = 6
-	},
-/obj/item/stamp/qm{
-	pixel_x = 8;
-	pixel_y = 10
-	},
-/obj/item/paper_bin{
-	pixel_x = -4;
-	pixel_y = 4
-	},
-/obj/item/pen,
-/obj/item/lighter{
-	pixel_x = 11;
-	pixel_y = -7
-	},
-/obj/item/clothing/mask/cigarette/cigar{
-	pixel_x = 8;
-	pixel_y = 4
-	},
-/obj/item/clothing/mask/cigarette/cigar{
-	pixel_x = 10;
-	pixel_y = -1
-	},
-/obj/item/flashlight/lamp/green{
-	pixel_x = -5;
-	pixel_y = 7
-	},
-/turf/open/floor/carpet/orange,
-/area/station/cargo/quartermaster)
 "sJd" = (
 /obj/item/storage/fancy/cigarettes/cigars{
 	pixel_x = 2;
@@ -62589,17 +62601,6 @@
 	},
 /turf/open/floor/carpet/red,
 /area/station/command/heads_quarters/hos)
-"tEo" = (
-/obj/machinery/dj_station{
-	pixel_y = 12
-	},
-/obj/structure/table/wood,
-/obj/effect/turf_decal/siding/wood{
-	dir = 6
-	},
-/obj/machinery/digital_clock/directional/south,
-/turf/open/floor/iron/vaporwave,
-/area/station/service/library)
 "tEp" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/filingcabinet/chestdrawer,
@@ -103511,7 +103512,7 @@ olv
 vGs
 aTb
 ciW
-dSB
+hdj
 mlC
 ffi
 veW
@@ -103528,7 +103529,7 @@ lbO
 lbO
 lbO
 dcf
-tEo
+krT
 lbO
 fWu
 eVO
@@ -116893,7 +116894,7 @@ rZV
 rZV
 svY
 jms
-sJc
+agL
 vhX
 dMo
 bWu
@@ -117148,9 +117149,9 @@ wPB
 wCY
 wtt
 rZV
-rip
+snG
 cSU
-kqZ
+pLX
 oeZ
 dMo
 lea
