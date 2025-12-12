@@ -13,51 +13,94 @@
 
 /obj/machinery/cassette_deck/Initialize(mapload)
 	. = ..()
-	//REGISTER_REQUIRED_MAP_ITEM(1, INFINITY)
+	// REGISTER_REQUIRED_MAP_ITEM(1, INFINITY)
 	return INITIALIZE_HINT_QDEL
 
-/obj/machinery/cassette_deck/wrench_act(mob/living/user, obj/item/wrench)
-	..()
-	default_unfasten_wrench(user, wrench, 15)
-	return TRUE
+/obj/machinery/cassette_deck/Destroy()
+	if(!QDELETED(tape))
+		tape.forceMove(drop_location())
+	tape = null
+	return ..()
 
-/obj/machinery/cassette_deck/attackby(obj/item/cassette, mob/user)
-	if(!istype(cassette, /obj/item/cassette_tape))
-		return ..()
-	if(!tape)
-		insert_tape(cassette)
-		playsound(src,'sound/weapons/handcuffs.ogg',20,1)
-		to_chat(user,"You insert \the [cassette] into \the [src]")
-	else
-		to_chat(user,"Remove a tape first!")
+/obj/machinery/cassette_deck/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool)
+	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/cassette_deck/proc/insert_tape(obj/item/cassette_tape/CTape)
-	if(tape || !istype(CTape))
-		return
-	tape = CTape
-	CTape.forceMove(src)
+/obj/machinery/cassette_deck/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/cassette_tape))
+		return NONE
+	if(tape)
+		balloon_alert(user, "remove the current tape!")
+		return ITEM_INTERACT_BLOCKING
+	if(!user.transferItemToLoc(tool, src))
+		balloon_alert(user, "failed to insert tape!")
+		return ITEM_INTERACT_BLOCKING
+	playsound(src, 'sound/weapons/handcuffs.ogg', vol = 20, vary = TRUE, mixer_channel = CHANNEL_MACHINERY)
+	balloon_alert(user, "tape inserted")
+	update_static_data_for_all_viewers()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/cassette_deck/proc/eject_tape(mob/user)
 	if(!tape)
 		return
-	user.put_in_hands(tape)
+	tape.forceMove(drop_location())
+	user?.put_in_hands(tape)
 	tape = null
-
-/obj/machinery/cassette_deck/ui_status(mob/user)
-	if(!anchored)
-		to_chat(user,"<span class='warning'>This device must be anchored by a wrench!</span>")
-		return UI_CLOSE
-	if(!allowed(user) && !isobserver(user))
-		to_chat(user,"<span class='warning'>Error: Access Denied.</span>")
-		user.playsound_local(src, 'sound/misc/compiler-failure.ogg', 25, TRUE)
-		return UI_CLOSE
-	return ..()
+	update_static_data_for_all_viewers()
 
 /obj/machinery/cassette_deck/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "CassetteDeck", name)
+		ui.set_autoupdate(FALSE)
 		ui.open()
+
+/obj/machinery/cassette_deck/ui_static_data(mob/user)
+	. = list(
+		"cassette" = null,
+		"icons" = assoc_to_keys(GLOB.cassette_icons),
+	)
+	var/datum/cassette/cassette = tape?.cassette_data
+	if(cassette)
+		var/datum/cassette_side/side = tape.get_current_side()
+		.["cassette"] = list(
+			"name" = html_decode(cassette.name),
+			"desc" = html_decode(cassette.desc),
+			"author" = cassette.author?.name,
+			"design" = side?.design || /datum/cassette_side::design,
+			"songs" = list(),
+		)
+		for(var/datum/cassette_song/song as anything in side?.songs)
+			.["cassette"]["songs"] += list(list(
+				"name" = song.name,
+				"url" = song.url,
+				"length" = song.duration * 1 SECONDS, // convert to deciseconds
+				"artist" = song.artist,
+				"album" = song.album,
+			))
+
+/obj/machinery/cassette_deck/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if(.)
+		return
+	var/mob/user = ui.user
+	var/datum/cassette_side/side = tape?.get_current_side()
+	if(!side)
+		balloon_alert(user, "no tape inserted!")
+		return
+	switch(action)
+		if("remove")
+			. = TRUE
+			var/index = params["index"]
+			if(!isnum(index))
+				CRASH("tried to pass non-number index ([index]) to remove??? this is prolly a bug.")
+			index++
+			if(index > length(side.songs))
+				CRASH("tried to remove track [index] from tape while there were only [length(side.songs)] songs???")
+			side.songs.Cut(index, index + 1)
+			balloon_alert(user, "removed track")
+			update_static_data_for_all_viewers()
 
 /*
 /obj/machinery/cassette_deck/ui_data(mob/user)

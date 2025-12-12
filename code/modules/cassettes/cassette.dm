@@ -1,3 +1,18 @@
+GLOBAL_LIST_INIT(cassette_icons, list(
+	"Blank Cassette" = "cassette_flip",
+	"Blue Sticker" = "cassette_gray",
+	"Green Sticker" = "cassette_green",
+	"Orange Sticker" = "cassette_orange",
+	"Pink Stripped Sticker" = "cassette_pink_stripe",
+	"Purple Sticker" = "cassette_purple",
+	"Rainbow Sticker" = "cassette_rainbow",
+	"Red and Black Sticker" = "cassette_red_black",
+	"Red Stripped Sticker" = "cassette_red_stripe",
+	"Camo Sticker" = "cassette_camo",
+	"Rising Sun Sticker" = "cassette_rising_sun",
+	"Ocean Sticker" = "cassette_ocean",
+	"Aesthetic Sticker" = "cassette_aesthetic",
+))
 
 /obj/item/cassette_tape
 	name = "blank cassette tape"
