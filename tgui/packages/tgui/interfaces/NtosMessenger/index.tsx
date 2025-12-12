@@ -221,7 +221,7 @@ const ContactsScreen = (props: any) => {
                       }
                       icon="volume-up"
                       fluid
-                    ></Button>
+                    />
                   </Stack.Item>
                 </Stack>
               </Stack.Item>
