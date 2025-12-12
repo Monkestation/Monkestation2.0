@@ -886,7 +886,8 @@
 	if (!disassembled)
 		physical.visible_message(span_notice("\The [src] breaks apart!"))
 	new /obj/item/stack/sheet/iron(droploc, steel_sheet_cost * (disassembled ? 1 : 0.5))
-	relay_qdel()
+	relay_qdel() // Needed for /obj/item/modular_computer/processor/relay_qdel()
+	qdel(src)
 
 // Ejects the inserted intellicard, if one exists. Used when the computer is deconstructed.
 /obj/item/modular_computer/proc/eject_aicard()
