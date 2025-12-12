@@ -215,6 +215,9 @@
 	///limb flags for the specific limb
 	var/limb_flags
 
+	///if its a robotic limb how vulnerable to EMPs is it
+	var/emp_multiplier = 1
+
 /obj/item/bodypart/apply_fantasy_bonuses(bonus)
 	. = ..()
 	unarmed_damage_low = modify_fantasy_variable("unarmed_damage_low", unarmed_damage_low, bonus, minimum = 1)
@@ -1369,6 +1372,9 @@
 		time_needed *= 2
 		brute_damage *= 2
 		burn_damage *= 2
+	time_needed *= emp_multiplier
+	brute_damage *= emp_multiplier
+	burn_damage *= emp_multiplier
 
 	receive_damage(brute_damage, burn_damage)
 	do_sparks(number = 1, cardinal_only = FALSE, source = owner)
