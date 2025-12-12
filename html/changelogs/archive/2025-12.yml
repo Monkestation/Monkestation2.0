@@ -174,3 +174,20 @@
   - balance: Wasteland weapons Slab Grenade launcher, Duster Revolver, Slayer shotgun,
       Fenrir Auto Shotgun, Hellhound LMG have had their damage to non-fauna decreased
       by 2-3.
+2025-12-12:
+  Lawlolawl:
+  - bugfix: Fixed the blue alert announcement, which should state that probable cause
+      is required for security searches.
+  - bugfix: Fixed pda disassembly iron duping.
+  - bugfix: Fixed portable chem mixer UI not updating with stored beaker reagents
+  SirNightKnight:
+  - balance: reduces the chance of dangerous unrestricted fluid anomalies occuring
+  Tractor-Maam:
+  - rscadd: Added the Magazine Shuffler to the Black Market and a contraband cargo
+      crate.
+  - balance: The Roulette Firing Pin has been changed entirely, Shoot yourself as
+      many times as you like, but shoot anywhere else only once! until the next person
+      fires, of course.
+  - rscadd: Added the Shotgun Roulette Starter Kit contraband cargo crate.
+  - rscadd: Added the Roulette Shotgun/pin to the Black Market.
+  - image: added the Magazine Shuffler sprite by Cannibal Hunter
