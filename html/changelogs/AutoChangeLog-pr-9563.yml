@@ -1,4 +1,0 @@
-author: "Veth-s"
-delete-after: True
-changes:
-  - qol: "Wirechem Remote Factory Outputs now automagically output patches/pills/bottles to the tile their on, up to a maximum of 10, like chemical presses from pipechem."
