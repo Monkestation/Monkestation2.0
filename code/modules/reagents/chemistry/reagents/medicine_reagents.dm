@@ -1126,6 +1126,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	affected_biotype = MOB_ORGANIC | MOB_MINERAL | MOB_PLANT // no healing ghosts
 	affected_respiration_type = ALL
+	var/healing = 1.5 // MONKESTATION ADDITION
 
 /datum/reagent/medicine/regen_jelly/expose_mob(mob/living/exposed_mob, reac_volume)
 	. = ..()
@@ -1137,12 +1138,26 @@
 	exposed_human.set_haircolor(color, update = TRUE)
 
 /datum/reagent/medicine/regen_jelly/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+// MONKESTATION EDIT START -- Changes the healing value to be adjustable like omnizine
+/*
 	affected_mob.adjustBruteLoss(-1.5 * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
 	affected_mob.adjustFireLoss(-1.5 * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
 	affected_mob.adjustOxyLoss(-1.5 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 	affected_mob.adjustToxLoss(-1.5 * REM * seconds_per_tick, FALSE, TRUE, affected_biotype) //heals TOXINLOVERs
+*/
+	affected_mob.adjustBruteLoss(-healing * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
+	affected_mob.adjustFireLoss(-healing * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
+	affected_mob.adjustOxyLoss(-healing * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+	affected_mob.adjustToxLoss(-healing * REM * seconds_per_tick, FALSE, TRUE, affected_biotype) //heals TOXINLOVERs
+// MONKESTATION EDIT END
 	..()
 	. = TRUE
+
+/datum/reagent/medicine/regen_jelly/weakened // MONKESTATION ADDITION -- Oozeling safe medipens
+	name = "Weakened Regenerative Jelly"
+	description = "Artificially weakened regenerative slime jelly that regenerates tissues slower, but lasts longer with the same volume."
+	healing = 0.5 // Same as omnizine, but still heals toxin-lovers
+	metabolization_rate = 0.125 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/syndicate_nanites //Used exclusively by Syndicate medical cyborgs
 	name = "Restorative Nanites"
