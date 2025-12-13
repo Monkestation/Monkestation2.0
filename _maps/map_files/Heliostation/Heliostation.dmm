@@ -4064,7 +4064,6 @@
 /turf/open/floor/iron,
 /area/station/security/office)
 "awN" = (
-/obj/structure/rack,
 /obj/item/storage/box/teargas{
 	pixel_x = -2
 	},
@@ -4072,8 +4071,18 @@
 	pixel_x = 4;
 	pixel_y = -2
 	},
-/obj/item/gun/grenadelauncher,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/rack,
+/obj/item/grenade/barrier{
+	pixel_x = -3;
+	pixel_y = 1
+	},
+/obj/item/grenade/barrier,
+/obj/item/grenade/barrier{
+	pixel_x = 3;
+	pixel_y = -1
+	},
+/obj/item/gun/grenadelauncher,
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory)
 "awO" = (
@@ -42384,21 +42393,17 @@
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "jfg" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/rack,
-/obj/item/grenade/barrier{
-	pixel_x = -3;
-	pixel_y = 1
+/obj/item/shield/riot{
+	pixel_x = -5;
+	pixel_y = 2
 	},
-/obj/item/grenade/barrier,
-/obj/item/grenade/barrier{
-	pixel_x = 3;
-	pixel_y = -1
-	},
-/obj/item/grenade/barrier{
-	pixel_x = 6;
+/obj/item/shield/riot,
+/obj/item/shield/riot{
+	pixel_x = 5;
 	pixel_y = -2
 	},
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory)
 "jfu" = (
@@ -71517,16 +71522,19 @@
 /area/station/maintenance/department/science/xenobiology)
 "ugQ" = (
 /obj/structure/rack,
-/obj/item/shield/riot{
-	pixel_x = -5;
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/gun/energy/laser/heavylaser{
+	pixel_x = -1;
+	pixel_y = -4
+	},
+/obj/item/gun/energy/laser/heavylaser{
+	pixel_x = 1;
+	pixel_y = -1
+	},
+/obj/item/gun/energy/laser/heavylaser{
+	pixel_x = 3;
 	pixel_y = 2
 	},
-/obj/item/shield/riot,
-/obj/item/shield/riot{
-	pixel_x = 5;
-	pixel_y = -2
-	},
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory)
 "uhg" = (

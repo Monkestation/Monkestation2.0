@@ -4509,9 +4509,6 @@
 	},
 /obj/item/ammo_box/advanced/s12gauge/buckshot,
 /obj/item/ammo_box/advanced/s12gauge/buckshot,
-/obj/structure/window/reinforced/spawner/directional/north{
-	layer = 2.9
-	},
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory)
 "bsb" = (
@@ -8030,9 +8027,9 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "cqW" = (
-/obj/vehicle/ridden/secway,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red/half/contrasted,
+/obj/machinery/recharge_station,
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory/upper)
 "crf" = (
@@ -57734,9 +57731,24 @@
 /turf/open/floor/iron/dark,
 /area/station/science/genetics)
 "rGh" = (
-/obj/machinery/recharge_station,
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 1
+	},
+/obj/structure/window/reinforced/spawner/directional/north{
+	layer = 2.9
+	},
+/obj/structure/rack,
+/obj/item/gun/energy/laser/heavylaser{
+	pixel_x = 0;
+	pixel_y = 3
+	},
+/obj/item/gun/energy/laser/heavylaser{
+	pixel_x = 2;
+	pixel_y = -2
+	},
+/obj/item/gun/energy/laser/heavylaser{
+	pixel_x = 4;
+	pixel_y = -7
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory)
@@ -63877,6 +63889,7 @@
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 8
 	},
+/obj/vehicle/ridden/secway,
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory/upper)
 "tDN" = (

@@ -172,7 +172,7 @@
 	suppressor_x_offset = 7
 	suppressor_y_offset = 0
 
-	fire_delay = 0.3 SECONDS
+	fire_delay = 0.4 SECONDS
 
 /obj/item/gun/ballistic/automatic/pistol/sol/give_manufacturer_examine()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_TRAPPISTE)
@@ -205,10 +205,14 @@
 // Sol pistol evil gun
 
 /obj/item/gun/ballistic/automatic/pistol/sol/evil
-	desc = "The standard issue service pistol of SolFed's various military branches. Comes with attached light. This one is painted tacticool black."
+	desc = "The standard issue service pistol of SolFed's various military branches. Comes with attached light. This one is painted tacticool black and has a slightly longer barrel."
 
 	icon_state = "wespe_evil"
 	pin = /obj/item/firing_pin/implant/pindicate
+	projectile_damage_multiplier = 2
+	fire_delay = 0.5 SECONDS
+	recoil = 1.5
+	wield_recoil = 0.75
 
 /obj/item/gun/ballistic/automatic/pistol/sol/evil/no_mag
 	spawnwithmagazine = FALSE
@@ -236,7 +240,7 @@
 	suppressor_x_offset = 8
 	suppressor_y_offset = 0
 
-	fire_delay = 1 SECONDS
+	fire_delay = 0.8 SECONDS
 
 	recoil = 3
 	wield_recoil = 1
@@ -289,8 +293,9 @@
 	casing_ejector = FALSE
 	empty_indicator = FALSE
 	bolt_type = BOLT_TYPE_OPEN
-	fire_delay = 0.1 SECONDS
+	fire_delay = 0.2 SECONDS
 	spread = 15
+	projectile_damage_multiplier = 0.7
 
 /obj/item/gun/ballistic/automatic/pistol/plasma_thrower/Initialize(mapload)
 	. = ..()
@@ -344,7 +349,7 @@
 	fire_delay = 0.6 SECONDS
 	spread = 2.5
 
-	projectile_damage_multiplier = 3 // 30 damage a shot
+	projectile_damage_multiplier = 2.5 // 25 damage a shot
 	projectile_wound_bonus = 10 // +55 of the base projectile, burn baby burn
 
 /obj/item/gun/ballistic/automatic/pistol/plasma_marksman/give_manufacturer_examine()
@@ -438,6 +443,7 @@
 	lefthand_file = 'monkestation/code/modules/security/icons/guns_lefthand.dmi'
 	righthand_file = 'monkestation/code/modules/security/icons/guns_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
+	fire_delay = 0.5 SECONDS
 	accepted_magazine_type = /obj/item/ammo_box/magazine/m35
 	can_suppress = FALSE
 	fire_sound = 'monkestation/code/modules/security/sound/paco/paco_shot.ogg'

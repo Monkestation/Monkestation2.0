@@ -239,7 +239,8 @@ GLOBAL_LIST_INIT(security_vest_allowed, list(
 	/obj/item/flashlight,
 	/obj/item/gun/ballistic,
 	/obj/item/gun/energy,
-	/obj/item/gun/microfusion, //monkestation edit
+	/obj/item/gun/microfusion,
+	/obj/item/shield/riot,
 	/obj/item/knife/combat,
 	/obj/item/melee/baton,
 	/obj/item/reagent_containers/spray/pepper,

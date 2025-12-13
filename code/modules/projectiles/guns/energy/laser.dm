@@ -1,11 +1,11 @@
 /obj/item/gun/energy/laser
 	name = "\improper Allstar SC-1 laser carbine"
-	desc = "A basic energy-based laser carbine that fires concentrated beams of light which pass through glass and thin metal."
+	desc = "A compact energy-based laser carbine that fires concentrated beams of light which pass through glass and burn flesh."
 	icon_state = "laser"
 	inhand_icon_state = "laser"
-	w_class = WEIGHT_CLASS_BULKY
+	w_class = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT)
-	ammo_type = list(/obj/item/ammo_casing/energy/lasergun)
+	ammo_type = list(/obj/item/ammo_casing/energy/lasergun/sidearm)
 	ammo_x_offset = 1
 	shaded_charge = 1
 
@@ -24,6 +24,30 @@
 	fire_sound_volume = 90
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/lasrifle)
 
+/obj/item/gun/energy/laser/heavylaser
+	name = "\improper Allstar SR-1 laser rifle"
+	desc = "A hefty energy-based laser rifle that fires beams which quickly punch through thin metal. It is fitted with an expanded powersupply."
+	icon_state = "heavylaser"
+	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+	inhand_icon_state = null
+	worn_icon_state = null
+	worn_icon_state = "shotgun"
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/heavylaser)
+	w_class = WEIGHT_CLASS_BULKY
+	weapon_weight = WEAPON_HEAVY
+	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_SUITSTORE
+	cell_type = /obj/item/stock_parts/power_store/cell/quickcharge
+
+/obj/item/gun/energy/laser/heavylaser/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/automatic_fire, 0.5 SECONDS, allow_akimbo = FALSE)
+
+/obj/item/stock_parts/power_store/cell/quickcharge
+	name = "Fast-charging energy cell"
+	maxcharge = STANDARD_CELL_CHARGE * 3
+	chargerate =  STANDARD_CELL_RATE
+
 /obj/item/gun/energy/laser/practice
 	name = "practice laser gun"
 	desc = "A modified version of the basic laser gun, this one fires less concentrated energy bolts designed for target practice."
@@ -33,10 +57,12 @@
 	gun_flags = NOT_A_REAL_GUN
 
 /obj/item/gun/energy/laser/carbine
-	name = "\improper Allstar SC-1A laser auto-carbine"
-	desc = "An basic energy-based laser auto-carbine that rapidly fires weakened, concentrated beams of light which pass through glass and thin metal."
+	name = "\improper Allstar SC-1AL laser auto-carbine"
+	desc = "A bulky energy-based laser auto-carbine that rapidly fires low-frequency beams of light which pass through glass and armour composite."
 	icon_state = "laser_carbine"
 	ammo_type = list(/obj/item/ammo_casing/energy/lasergun/carbine)
+	cell_type = /obj/item/stock_parts/power_store/cell/e_gun // 1.5 * STANDARD_CELL_CHARGE, 40 shots total
+	w_class = WEIGHT_CLASS_BULKY
 
 /obj/item/gun/energy/laser/carbine/Initialize(mapload)
 	. = ..()
