@@ -130,6 +130,12 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE  // The Animatronics were made to entertain afterall...
 
+/datum/design/module/mod_corpse
+	name = "Corpse Exoskeleton Module"
+	id = "mod_corpse"
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 2.5, /datum/material/titanium =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT * 1.5)
+	build_path = /obj/item/mod/module/magboot/corpse_exoskeleton
+
 /datum/design/module/mod_rave
 	name = "Rave Module"
 	id = "mod_rave"
