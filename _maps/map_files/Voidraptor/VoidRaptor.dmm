@@ -2277,6 +2277,22 @@
 "aFY" = (
 /turf/closed/wall,
 /area/station/engineering/atmos/storage/gas)
+"aGb" = (
+/obj/machinery/door/firedoor,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/siding/green/corner,
+/obj/effect/turf_decal/siding/green/corner{
+	dir = 8
+	},
+/obj/machinery/door/airlock/hydroponics/glass{
+	name = "Garden"
+	},
+/obj/structure/disposalpipe/segment,
+/obj/effect/landmark/navigate_destination/garden,
+/turf/open/floor/iron/dark/textured_large,
+/area/station/service/hydroponics/garden)
 "aGg" = (
 /obj/machinery/griddle,
 /turf/open/floor/iron/kitchen,
@@ -9964,22 +9980,6 @@
 /obj/structure/sign/warning/secure_area,
 /turf/closed/wall/r_wall,
 /area/station/maintenance/aft/greater)
-"cYI" = (
-/obj/structure/table/wood,
-/obj/item/radio/intercom/directional/east,
-/obj/machinery/light/warm/directional/east,
-/obj/effect/turf_decal/siding/thinplating/dark{
-	dir = 4
-	},
-/obj/item/radio/radio_mic{
-	pixel_y = 7
-	},
-/obj/item/device/cassette_tape/friday{
-	pixel_y = -6;
-	pixel_x = -8
-	},
-/turf/open/floor/cult,
-/area/station/service/library)
 "cYN" = (
 /obj/structure/chair/sofa/corp/right{
 	dir = 8;
@@ -13721,7 +13721,7 @@
 /obj/effect/turf_decal/siding/wood/end{
 	dir = 1
 	},
-/obj/machinery/cassette/mailbox,
+/obj/machinery/cassette_postbox,
 /turf/open/floor/wood/large,
 /area/station/service/library)
 "dXZ" = (
@@ -25323,6 +25323,16 @@
 /obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/tcommsat/computer)
+"hjv" = (
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 10
+	},
+/obj/machinery/dj_station{
+	pixel_y = 7
+	},
+/obj/structure/table/wood,
+/turf/open/floor/cult,
+/area/station/service/library)
 "hjy" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -40126,16 +40136,6 @@
 /obj/machinery/atmospherics/miner/oxygen,
 /turf/open/floor/engine/o2,
 /area/station/engineering/atmos)
-"liZ" = (
-/obj/effect/turf_decal/siding/thinplating/dark{
-	dir = 10
-	},
-/obj/machinery/cassette/dj_station{
-	pixel_y = 7
-	},
-/obj/structure/table/wood,
-/turf/open/floor/cult,
-/area/station/service/library)
 "lje" = (
 /obj/structure/table/wood/fancy/green,
 /obj/effect/turf_decal/siding/wood{
@@ -44650,7 +44650,7 @@
 	},
 /obj/machinery/firealarm/directional/west,
 /obj/machinery/light/warm/directional/west,
-/obj/machinery/cassette/adv_cassette_deck{
+/obj/machinery/cassette_deck{
 	pixel_y = 8
 	},
 /turf/open/floor/wood/large,
@@ -52848,7 +52848,7 @@
 	},
 /obj/machinery/requests_console/auto_name/directional/north,
 /obj/structure/window/spawner/directional/west,
-/obj/machinery/cassette/adv_cassette_deck{
+/obj/machinery/cassette_deck{
 	pixel_y = 8
 	},
 /turf/open/floor/carpet,
@@ -62024,22 +62024,6 @@
 /obj/structure/extinguisher_cabinet/directional/east,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/command/bridge)
-"rjI" = (
-/obj/machinery/door/firedoor,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/siding/green/corner,
-/obj/effect/turf_decal/siding/green/corner{
-	dir = 8
-	},
-/obj/machinery/door/airlock/hydroponics/glass{
-	name = "Garden"
-	},
-/obj/structure/disposalpipe/segment,
-/obj/effect/landmark/navigate_destination/garden,
-/turf/open/floor/iron/dark/textured_large,
-/area/station/service/hydroponics/garden)
 "rjP" = (
 /obj/structure/table/reinforced,
 /obj/item/crowbar{
@@ -65869,6 +65853,22 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/maintenance/department/engine/atmos)
+"sqL" = (
+/obj/structure/table/wood,
+/obj/item/radio/intercom/directional/east,
+/obj/machinery/light/warm/directional/east,
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 4
+	},
+/obj/item/radio/radio_mic{
+	pixel_y = 7
+	},
+/obj/item/cassette_tape/friday{
+	pixel_y = -6;
+	pixel_x = -8
+	},
+/turf/open/floor/cult,
+/area/station/service/library)
 "sqQ" = (
 /obj/machinery/power/solar{
 	id = "aftport";
@@ -124749,7 +124749,7 @@ grQ
 fLp
 rjf
 ryF
-liZ
+hjv
 uuO
 sSJ
 mOm
@@ -125262,7 +125262,7 @@ jzQ
 nQl
 fLp
 dWg
-cYI
+sqL
 vZM
 uuO
 rCr
@@ -126783,7 +126783,7 @@ olv
 vyj
 bjs
 lZS
-rjI
+aGb
 xzq
 oYj
 nyC

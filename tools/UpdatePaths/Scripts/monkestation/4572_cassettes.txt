@@ -1,0 +1,5 @@
+/obj/item/device/cassette_tape/@SUBTYPES : /obj/item/cassette_tape/@SUBTYPES{@OLD}
+/obj/item/device/walkman : /obj/item/walkman{@OLD}
+/obj/machinery/cassette/adv_cassette_deck : /obj/machinery/cassette_deck{@OLD}
+/obj/machinery/cassette/dj_station : /obj/machinery/dj_station{@OLD}
+/obj/machinery/cassette/mailbox : /obj/machinery/cassette_postbox{@OLD}

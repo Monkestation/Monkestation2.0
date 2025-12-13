@@ -1,5 +1,9 @@
 import { Stack, Icon, Dimmer } from '../../components';
 
+type LoadingScreenProps = {
+  CustomText?: string;
+  CustomIcon?: string;
+};
 /** Spinner that represents loading states.
  *
  * @usage
@@ -18,14 +22,19 @@ import { Stack, Icon, Dimmer } from '../../components';
  * )
  * ```
  */
-export const LoadingScreen = (props) => {
+export const LoadingScreen = (props: LoadingScreenProps) => {
   return (
     <Dimmer>
       <Stack align="center" fill justify="center" vertical>
         <Stack.Item>
-          <Icon color="blue" name="toolbox" spin size={4} />
+          <Icon
+            color="blue"
+            name={props.CustomIcon || 'toolbox'}
+            spin
+            size={4}
+          />
         </Stack.Item>
-        <Stack.Item>Please wait...</Stack.Item>
+        <Stack.Item>{props.CustomText || 'Please wait...'}</Stack.Item>
       </Stack>
     </Dimmer>
   );

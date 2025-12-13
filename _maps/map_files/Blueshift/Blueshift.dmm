@@ -33836,24 +33836,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/station/maintenance/clown_chamber)
-"gyX" = (
-/obj/structure/table/wood,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/newscaster/directional/south,
-/obj/machinery/cassette/dj_station{
-	pixel_y = 12
-	},
-/turf/open/floor/iron/dark,
-/area/station/service/library/private)
 "gzb" = (
 /obj/structure/table,
 /obj/item/clothing/under/rank/prisoner/skirt{
@@ -44346,6 +44328,24 @@
 	},
 /turf/open/floor/wood,
 /area/station/hallway/primary/port)
+"iCz" = (
+/obj/structure/table/wood,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/newscaster/directional/south,
+/obj/machinery/dj_station{
+	pixel_y = 12
+	},
+/turf/open/floor/iron/dark,
+/area/station/service/library/private)
 "iCD" = (
 /obj/structure/railing,
 /obj/structure/rack,
@@ -46115,14 +46115,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
-"iWe" = (
-/obj/effect/turf_decal/siding/wood,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/landmark/navigate_destination/garden,
-/turf/open/floor/wood,
-/area/station/service/hydroponics/garden)
 "iWi" = (
 /obj/structure/frame/computer{
 	dir = 1
@@ -102478,7 +102470,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/cassette/adv_cassette_deck{
+/obj/machinery/cassette_deck{
 	pixel_y = 8
 	},
 /turf/open/floor/carpet,
@@ -111453,6 +111445,14 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/common/laser_tag)
+"vvO" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/landmark/navigate_destination/garden,
+/turf/open/floor/wood,
+/area/station/service/hydroponics/garden)
 "vvP" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -123528,7 +123528,7 @@
 /turf/open/floor/wood,
 /area/station/maintenance/rus_gambling)
 "xKH" = (
-/obj/machinery/cassette/mailbox,
+/obj/machinery/cassette_postbox,
 /obj/machinery/atm/directional/north,
 /turf/open/floor/wood,
 /area/station/service/library)
@@ -149893,7 +149893,7 @@ nHR
 dKz
 rJZ
 rJZ
-iWe
+vvO
 sci
 qbj
 edY
@@ -152739,7 +152739,7 @@ oHU
 qlY
 sJE
 jzJ
-gyX
+iCz
 qlY
 tbS
 oMk
