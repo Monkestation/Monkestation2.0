@@ -589,6 +589,8 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, FALSE, "Controller Overview
 			AttemptProfileDump(CONFIG_GET(number/drift_profile_delay))
 		olddrift = newdrift
 
+		update_glide_compensation()
+
 		if (init_stage != init_stage_completed)
 			return MC_LOOP_RTN_NEWSTAGES
 		if (processing <= 0)
