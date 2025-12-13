@@ -161,4 +161,8 @@
 #define TRAIT_LIGHT_SLEEPER "light_sleeper"
 /// Makes a mob throw guns instead of shooting them, works with TRAIT_NOGUNS
 #define TRAIT_THROW_GUNS "throw_guns"
+
+/// Makes you able to bloodcrawl with your items
+#define TRAIT_BLOODCRAWL_WITH_ITEMS "bloodcrawl_with_items"
+
 // END TRAIT DEFINES

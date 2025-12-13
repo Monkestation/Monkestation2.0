@@ -14,6 +14,16 @@
 #define ANTI_DROP_IMPLANT_TRAIT "antidrop_implant"
 /// Traits given to glued items.
 #define GLUED_ITEM_TRAIT "glued-item"
+/// Traits given by the syndie bullcharge and gauntlet bullcharge spells
+#define YEET_TRAIT "yeet_trait"
+/// Traits source for badmin stones
+#define BLUESPACE_STONE_TRAIT "bluespace_stone_trait"
+#define SYNDIE_STONE_TRAIT "syndie_stone_trait"
+#define SUPERMATTER_STONE_TRAIT "supermatter_stone_trait"
+#define LAG_STONE_TRAIT "lag_stone_trait"
+#define GHOST_STONE_TRAIT "ghost_stone_trait"
+/// Traits source for the badmin gauntlet
+#define GAUNTLET_TRAIT "gauntlet_trait"
 /// Trait source for the stargazer.
 #define STARGAZER_TRAIT "stargazer"
 /// Trait source for the vanguard scripture

@@ -332,6 +332,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 			user.dna.update_ui_block(DNA_FACIAL_HAIR_COLOR_BLOCK)
 	user.update_body_parts()
 
+/obj/structure/mirror/magic/attack_hand(mob/user)
+	if(locate(/obj/item/badmin_gauntlet) in user)
+		to_chat(user, span_notice("The badmin gauntlet interferes with the magic mirror. It won't work."))
+		return
+	return ..()
+
 /obj/structure/mirror/magic/lesser/Initialize(mapload)
 	// Roundstart species don't have a flag, so it has to be set on Initialize.
 	selectable_races = get_selectable_species().Copy()
