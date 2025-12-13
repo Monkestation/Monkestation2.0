@@ -96,7 +96,7 @@
 	new /obj/item/clothing/gloves/color/black(src)
 	new /obj/item/clothing/shoes/laceup(src)
 	new /obj/item/clothing/under/costume/playbunny/centcom(src)
-	new /obj/item/clothing/suit/jacket/tailcoat/centcom(src)
+	new /obj/item/clothing/suit/jacket/tailcoat/centcom/ntrep(src)
 	new /obj/item/clothing/shoes/heels/centcom(src)
 	new /obj/item/clothing/head/playbunnyears/centcom(src)
 	new /obj/item/clothing/neck/tie/bunnytie/centcom/tied(src)
