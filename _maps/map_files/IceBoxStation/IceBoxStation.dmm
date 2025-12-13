@@ -43771,7 +43771,7 @@
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted{
 	dir = 1
 	},
-/obj/machinery/modular_computer/preset/id,
+/obj/machinery/modular_computer/preset/quartermaster,
 /turf/open/floor/iron,
 /area/station/cargo/quartermaster)
 "nuI" = (

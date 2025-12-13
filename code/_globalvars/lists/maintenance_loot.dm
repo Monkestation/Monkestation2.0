@@ -111,6 +111,7 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 		/obj/item/storage/backpack = 1,
 		/obj/item/storage/belt/fannypack = 1,
 		/obj/item/storage/wallet/random = 1,
+		/obj/item/clothing/accessory/badge = 1,
 		) = 1,
 
 	list(//construction and crafting

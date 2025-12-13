@@ -40,4 +40,5 @@
 	uniform = /obj/item/clothing/under/rank/cargo/bitrunner
 	belt = /obj/item/modular_computer/pda/bitrunner
 	ears = /obj/item/radio/headset/headset_cargo
+	accessory = /obj/item/clothing/accessory/badge/cargo
 */

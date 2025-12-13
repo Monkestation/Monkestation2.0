@@ -1084,9 +1084,12 @@
 	worn_icon = 'monkestation/icons/donator/mob/clothing/eyes.dmi'
 
 //Donation reward for Konstyantyn
-/obj/item/clothing/accessory/badge/holo/jade
+/obj/item/clothing/accessory/badge/jade
 	name = "jade holobadge"
 	desc = "A strangely green holobadge. 'Lieutenant Uriah' is stamped onto it, above the letters JS."
+	access_required = null
+	badge_string = "Lieutenant"
+
 	icon = 'monkestation/icons/donator/obj/custom.dmi'
 	worn_icon = 'monkestation/icons/donator/mob/clothing/custom_w.dmi'
 	icon_state = "greenbadge"

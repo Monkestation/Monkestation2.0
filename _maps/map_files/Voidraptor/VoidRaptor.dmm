@@ -81535,7 +81535,7 @@
 	},
 /obj/machinery/status_display/ai/directional/south,
 /obj/effect/turf_decal/bot,
-/obj/machinery/modular_computer/preset/id{
+/obj/machinery/modular_computer/preset/quartermaster{
 	dir = 1
 	},
 /turf/open/floor/iron/dark/textured_large,

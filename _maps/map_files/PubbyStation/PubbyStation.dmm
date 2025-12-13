@@ -150,7 +150,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/drone_bay)
 "aaJ" = (
-/obj/machinery/modular_computer/preset/id{
+/obj/machinery/modular_computer/preset/quartermaster{
 	dir = 8
 	},
 /turf/open/floor/wood,

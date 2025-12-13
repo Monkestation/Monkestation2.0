@@ -13093,7 +13093,7 @@
 /area/station/service/library)
 "grs" = (
 /obj/effect/turf_decal/siding/wood,
-/obj/machinery/modular_computer/preset/id{
+/obj/machinery/modular_computer/preset/quartermaster{
 	dir = 4
 	},
 /turf/open/floor/carpet,

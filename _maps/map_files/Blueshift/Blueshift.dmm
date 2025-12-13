@@ -15499,9 +15499,6 @@
 /obj/structure/table/reinforced,
 /obj/item/clipboard,
 /obj/item/toy/figure/warden,
-/obj/item/clothing/accessory/badge/holo/warden{
-	pixel_x = 13
-	},
 /obj/structure/railing{
 	dir = 1
 	},
@@ -38010,7 +38007,7 @@
 /obj/effect/turf_decal/siding/brown{
 	dir = 1
 	},
-/obj/machinery/modular_computer/preset/id{
+/obj/machinery/modular_computer/preset/quartermaster{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
@@ -77792,10 +77789,6 @@
 /obj/machinery/keycard_auth{
 	pixel_x = 15
 	},
-/obj/item/clothing/accessory/badge/holo/hos{
-	pixel_x = -7;
-	pixel_y = 9
-	},
 /obj/item/stamp/granted{
 	pixel_y = 4;
 	pixel_x = 5
@@ -103697,7 +103690,6 @@
 "tYx" = (
 /obj/structure/table/wood,
 /obj/item/book/manual/wiki/detective,
-/obj/item/clothing/accessory/badge/holo/detective,
 /obj/machinery/requests_console/directional/east{
 	department = "Detective's Office";
 	name = "Detective's Requests Console"
@@ -121764,7 +121756,6 @@
 	pixel_x = -9;
 	pixel_y = 10
 	},
-/obj/item/clothing/accessory/badge/holo/detective,
 /obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
 	pixel_x = 5;
 	pixel_y = 4
