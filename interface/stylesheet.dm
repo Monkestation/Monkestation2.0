@@ -155,6 +155,20 @@ h1.alert, h2.alert		{color: #000000;}
 		100%	{color: #3bb5d3;}
 }
 
+.blinking_red			{color: #420000;	font-weight: bold;	animation: blinking_red_color 1500ms infinite;	animation-direction: alternate;}
+	@keyframes blinking_red_color {
+		0%   { color: #420000; }
+		50% { color: #ff0000; }
+		100%   { color: #420000; }
+}
+
+.blinking_blue			{color: #00283a;	font-weight: bold;	animation: blinking_blue_color 1500ms infinite;	animation-direction: alternate;}
+	@keyframes blinking_blue_color {
+		0%   { color: #00283a; }
+		50% { color: #215cff; }
+		100%   { color: #00283a; }
+}
+
 .phobia			{color: #dd0000;	font-weight: bold;	animation: phobia 750ms infinite;}
 	@keyframes phobia {
 		0%		{color: #0d0d0d;}
