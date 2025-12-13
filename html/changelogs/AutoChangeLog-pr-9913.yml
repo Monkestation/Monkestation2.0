@@ -1,0 +1,4 @@
+author: "flleeppyy"
+delete-after: True
+changes:
+  - code_imp: "redo plx_getloadoutrewards topic"

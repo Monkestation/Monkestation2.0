@@ -161,7 +161,7 @@
 	/// How much generic bleedstacks we have on this bodypart
 	var/generic_bleedstacks
 	/// If we have a gauze wrapping currently applied (not including splints)
-	var/obj/item/stack/current_gauze
+	var/obj/item/stack/medical/gauze/current_gauze
 	/// If something is currently grasping this bodypart and trying to staunch bleeding (see [/obj/item/hand_item/self_grasp])
 	var/obj/item/hand_item/self_grasp/grasped_by
 
@@ -265,6 +265,9 @@
 		external_organs = list()
 	QDEL_LIST_ASSOC_VAL(feature_offsets)
 
+	if(current_gauze)
+		remove_gauze()
+
 	return ..()
 
 /obj/item/bodypart/forceMove(atom/destination) //Please. Never forcemove a limb if its's actually in use. This is only for borgs.
@@ -362,6 +365,28 @@
 	if(current_gauze)
 		check_list += span_notice("\t There is some <a href='byond://?src=[REF(examiner)];gauze_limb=[REF(src)]'>[current_gauze.name]</a> wrapped around your [name].")
 
+/// Gets overlays to apply to the mob when damaged.
+/obj/item/bodypart/proc/get_bodypart_damage_state()
+	if(!dmg_overlay_type)
+		return
+
+	var/list/overlays
+	if(brutestate)
+		var/mutable_appearance/brute_overlay = mutable_appearance(
+			icon = 'icons/mob/effects/dam_mob.dmi',
+			icon_state = "[dmg_overlay_type]_[body_zone]_[brutestate]0",
+			layer = -DAMAGE_LAYER,
+		)
+		brute_overlay.color = damage_color
+		LAZYADD(overlays, brute_overlay)
+	if(burnstate)
+		var/mutable_appearance/burn_overlay = mutable_appearance(
+			icon = 'icons/mob/effects/dam_mob.dmi',
+			icon_state = "[dmg_overlay_type]_[body_zone]_0[burnstate]",
+			layer = -DAMAGE_LAYER,
+		)
+		LAZYADD(overlays, burn_overlay)
+	return overlays
 
 /obj/item/bodypart/blob_act()
 	receive_damage(max_damage, wound_bonus = CANT_WOUND)
@@ -464,18 +489,6 @@
 //Return TRUE to get whatever mob this is in to update health.
 /obj/item/bodypart/proc/on_life(seconds_per_tick, times_fired)
 	SHOULD_CALL_PARENT(TRUE)
-
-	// Limbs heal 1 damage per tick from the corresponding brute/burn kit passively
-	if(limb_flags & LIMB_KITTED_BRUTE)
-		if(brute_dam <= 0)
-			limb_flags &= ~LIMB_KITTED_BRUTE
-		else
-			heal_damage(1, 0)
-	if(limb_flags & LIMB_KITTED_BURN)
-		if(burn_dam <= 0)
-			limb_flags &= ~LIMB_KITTED_BURN
-		else
-			heal_damage(0, 1)
 
 /**
  * #receive_damage
@@ -597,11 +610,13 @@
 	if(can_inflict <= 0)
 		return FALSE
 	if(brute)
-		limb_flags &= ~LIMB_KITTED_BRUTE
 		set_brute_dam(brute_dam + brute)
 	if(burn)
-		limb_flags &= ~LIMB_KITTED_BURN
 		set_burn_dam(burn_dam + burn)
+
+	// gauze on the limb will be knocked off based on damage taken
+	if(!forced) //probaby got hit by something
+		check_gauze_removal(burn, brute)
 
 	if(owner)
 		if(can_be_disabled)
@@ -928,8 +943,9 @@
 /obj/item/bodypart/proc/update_bodypart_damage_state()
 	SHOULD_CALL_PARENT(TRUE)
 
-	var/tbrute = round( (brute_dam/max_damage)*3, 1 )
-	var/tburn = round( (burn_dam/max_damage)*3, 1 )
+	var/tbrute = clamp(round((brute_dam/max_damage)*4, 1), 0, 3)
+	var/tburn = clamp(round((burn_dam/max_damage)*4, 1), 0, 3)
+
 	if((tbrute != brutestate) || (tburn != burnstate))
 		brutestate = tbrute
 		burnstate = tburn
