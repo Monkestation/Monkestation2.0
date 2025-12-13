@@ -118,7 +118,13 @@
 	require_comms_key = TRUE
 
 /datum/world_topic/plx_getloadoutrewards/Run(list/input)
-	return subtypesof(/datum/store_item) - typesof(/datum/store_item/roundstart)
+	var/list/typelist = list()
+	for(var/datum/store_item/store_item as anything in subtypesof(/datum/store_item) - typesof(/datum/store_item/roundstart))
+		if(!store_item::name || !store_item::item_path)
+			continue
+		typelist += store_item
+
+	return typelist
 
 /datum/world_topic/plx_getunusualitems
 	keyword = "PLX_getunusualitems"
