@@ -24714,6 +24714,12 @@
 /obj/structure/flora/bush/flowers_yw/style_3,
 /turf/open/misc/grass,
 /area/centcom)
+"jsJ" = (
+/obj/machinery/holopad/secure/hacked{
+	layer = 2.6
+	},
+/turf/open/floor/catwalk_floor/iron_smooth,
+/area/cruiser_dock)
 "jth" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
@@ -26682,6 +26688,13 @@
 	},
 /turf/open/floor/plastic,
 /area/centcom/central_command_areas/admin)
+"mSk" = (
+/obj/effect/turf_decal/siding/red{
+	dir = 4
+	},
+/obj/machinery/holopad/secure/hacked,
+/turf/open/floor/iron/dark/textured_large,
+/area/centcom/syndicate_mothership/control)
 "mTh" = (
 /obj/structure/sign{
 	name = "wall";
@@ -30110,6 +30123,10 @@
 	},
 /turf/open/floor/iron/white/diagonal,
 /area/centcom/central_command_areas/kitchen)
+"sNe" = (
+/obj/machinery/holopad/secure/hacked,
+/turf/open/floor/mineral/plastitanium/red,
+/area/centcom/syndicate_mothership/control)
 "sNI" = (
 /obj/item/food/grown/banana/bunch,
 /turf/open/floor/mineral/bananium,
@@ -31496,6 +31513,16 @@
 	dir = 8
 	},
 /area/centcom/central_command_areas/evacuation)
+"vpg" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/hidden/layer5,
+/obj/machinery/holopad/secure/hacked{
+	layer = 2.6
+	},
+/turf/open/floor/catwalk_floor/iron_smooth,
+/area/centcom/syndicate_mothership/control)
 "vrG" = (
 /obj/effect/turf_decal/tile/dark/opposingcorners,
 /obj/structure/railing/wood{
@@ -37112,7 +37139,7 @@ aku
 aku
 aku
 aQr
-axU
+sNe
 aoa
 aNw
 azL
@@ -40189,7 +40216,7 @@ aVK
 aVK
 aIY
 aFr
-anS
+vpg
 anS
 anS
 aYh
@@ -48679,7 +48706,7 @@ aVK
 aVK
 aDm
 aBV
-aBV
+mSk
 aBV
 aSG
 aSr
@@ -85776,7 +85803,7 @@ bnQ
 bBh
 bBh
 jce
-iDX
+jsJ
 rXO
 eAb
 iDX
