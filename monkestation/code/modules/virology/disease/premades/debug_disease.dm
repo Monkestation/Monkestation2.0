@@ -5,7 +5,7 @@
 	category = DISEASE_DEBUG
 
 	symptoms = list(
-		new /datum/symptom/robotic_adaptation,
+		new /datum/symptom/coma,
 	)
 	spread_flags = DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_SKIN | DISEASE_SPREAD_CONTACT_FLUIDS | DISEASE_SPREAD_AIRBORNE
 	strength = 100
@@ -13,6 +13,7 @@
 
 	infectionchance = 100
 	infectionchance_base = 100
+	can_kill = list()
 
 /datum/disease/acute/premade/disease_debug/after_add()
 	. = ..()
@@ -21,10 +22,10 @@
 
 /obj/item/reagent_containers/hypospray/medipen/tuberculosiscure/debug
 	name = "Debug Vaccine autoinjector"
-	desc = "An autoinjector to cure Debug disease, which is otherwise incurable. Has a two use system for yourself, and someone else. Inject when infected."
-	volume = 20
+	desc = "An autoinjector to cure the Debug disease, which is otherwise incurable. Has 10 uses. Inject when infected."
+	volume = 100
 	amount_per_transfer_from_this = 10
-	list_reagents = list(/datum/reagent/vaccine/debug = 20)
+	list_reagents = list(/datum/reagent/vaccine/debug = 100)
 
 /datum/reagent/vaccine/debug
 	name = "Vaccine (Debug)"
