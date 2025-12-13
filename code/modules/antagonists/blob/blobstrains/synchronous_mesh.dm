@@ -22,7 +22,7 @@
 				C.take_damage(damage/damagesplit, CLONE, 0, 0)
 		return damage / damagesplit
 	else
-		return damage * 1.25
+		return damage * 1.2
 
 /datum/reagent/blob/synchronous_mesh
 	name = "Synchronous Mesh"
