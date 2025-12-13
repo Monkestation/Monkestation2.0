@@ -17,7 +17,7 @@
 	var/where_accessory //! where the accessory spawned
 	var/obj/item/accessory_type //! If this is null, an accessory won't be spawned.
 	var/drug_flavour_text = "Better hope you don't run out..."
-	var/process_interval = 30 SECONDS //! how frequently the quirk processes
+	var/process_interval = 120 SECONDS //! how frequently the quirk processes (This was set at 30 seconds, which caused you to hit high withdrawal WAY TOO QUICKLY)
 	COOLDOWN_DECLARE(next_process) //! ticker for processing
 
 /datum/quirk/item_quirk/junkie/add_unique(client/client_source)
