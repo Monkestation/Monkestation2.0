@@ -252,11 +252,11 @@
 	if(!(power_flags & BP_AM_COSTLESS_UNCONSCIOUS) && owner.stat != CONSCIOUS)
 		var/constant_bloodcost = get_blood_cost(constant = TRUE)
 		if(bloodsuckerdatum_power)
-			bloodsuckerdatum_power.AddBloodVolume(-constant_bloodcost)
+			bloodsuckerdatum_power.AddBloodVolume(-constant_bloodcost*seconds_per_tick)
 		else
 			var/mob/living/living_owner = owner
 			if(!HAS_TRAIT(living_owner, TRAIT_NOBLOOD))
-				living_owner.blood_volume -= constant_bloodcost
+				living_owner.blood_volume -= constant_bloodcost*seconds_per_tick
 	return TRUE
 
 /// Checks to make sure this power can stay active
