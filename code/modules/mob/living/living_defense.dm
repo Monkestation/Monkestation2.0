@@ -102,6 +102,12 @@
 	// on [/atom/proc/bullet_act] where it's just to pass it to the projectile's on_hit().
 	var/armor_check = min(ARMOR_MAX_BLOCK, check_projectile_armor(def_zone, hitting_projectile, is_silent = TRUE))
 
+	var/stamina_armor_check = armor_check
+
+	//If we hit a limb with stamina damage, we check the armor on the chest instead, to prevent cheesing armor by targeting limbs to stamcrit.
+	if (def_zone != BODY_ZONE_CHEST && def_zone != BODY_ZONE_HEAD)
+		stamina_armor_check = min(ARMOR_MAX_BLOCK, check_projectile_armor(BODY_ZONE_CHEST, hitting_projectile, is_silent = TRUE))
+
 	var/damage_done = apply_damage(
 		damage = hitting_projectile.damage,
 		damagetype = hitting_projectile.damage_type,
@@ -117,7 +123,7 @@
 			damage = hitting_projectile.stamina,
 			damagetype = STAMINA,
 			def_zone = def_zone,
-			blocked = armor_check,
+			blocked = stamina_armor_check,
 			attack_direction = hitting_projectile.dir,
 		)
 	if(hitting_projectile.pain)
@@ -149,7 +155,6 @@
 		eyeblur = hitting_projectile.eyeblur,
 		drowsy = hitting_projectile.drowsy,
 		blocked = armor_check,
-		stamina = hitting_projectile.stamina,
 		jitter = (mob_biotypes & MOB_ROBOTIC) ? 0 SECONDS : hitting_projectile.jitter, // Cyborgs can jitter but not from being shot
 		paralyze = hitting_projectile.paralyze + extra_paralyze,
 		immobilize = hitting_projectile.immobilize,

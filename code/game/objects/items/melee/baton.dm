@@ -26,7 +26,7 @@
 	/// The length of the knockdown applied to the user on clumsy_check()
 	var/clumsy_knockdown_time = 18 SECONDS
 	/// How much stamina damage we deal on a successful hit against a living, non-cyborg mob.
-	var/stamina_damage = 95 //3 hit stam crit from full, but they most likely wont be due to running a bit
+	var/stamina_damage = 45 //1 hit to cause loss of sprint - 2 hits to slow - 3 hits to stam crit
 	/// Chance of causing force_say() when stunning a human mob
 	var/force_say_chance = 33
 	/// Can we stun cyborgs?
@@ -202,12 +202,15 @@
 		additional_effects_cyborg(target, user)
 	else
 		if(!trait_check)
-			target.stamina.adjust(-stamina_damage)
-		else
-			var/stamina_to_min = (target.stamina.maximum * 0.29)
-			target.stamina.adjust_to(-stamina_damage, stamina_to_min)
-		if(!trait_check)
+			target.stamina.adjust(-stamina_damage) //Intentionally armor piercing!
 			target.Knockdown((isnull(stun_override) ? knockdown_time : stun_override))
+
+			if(ishuman(target))
+				if (!target.has_movespeed_modifier(/datum/movespeed_modifier/shove))
+					target.add_movespeed_modifier(/datum/movespeed_modifier/shove)
+				addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living/carbon, clear_shove_slowdown)), SHOVE_SLOWDOWN_LENGTH, TIMER_UNIQUE | TIMER_OVERRIDE)
+		else
+			target.stamina.adjust(-stamina_damage * 0.5)
 		additional_effects_non_cyborg(target, user)
 	return TRUE
 
@@ -316,6 +319,8 @@
 	bare_wound_bonus = 5
 	clumsy_knockdown_time = 15 SECONDS
 	active = FALSE
+	cooldown = (2 SECONDS)
+	stamina_damage = 55 //2 hit stamcrit if the hits are landed quickly
 
 	/// The sound effecte played when our baton is extended.
 	var/on_sound = 'sound/weapons/batonextend.ogg'
@@ -340,7 +345,7 @@
 //monkestation edit start
 /obj/item/melee/baton/telescopic/additional_effects_non_cyborg(mob/living/target, mob/living/user)
 	. = ..()
-	target.Disorient(6 SECONDS, 5, paralyze = 3 SECONDS, stack_status = FALSE)
+	target.Disorient(6 SECONDS, 0, stack_status = FALSE)
 //monkestation edit end
 
 /obj/item/melee/baton/telescopic/suicide_act(mob/living/user)
@@ -425,10 +430,10 @@
 	armor_type = /datum/armor/baton_security
 	throwforce = 7
 	force_say_chance = 50
-	stamina_damage = 100 //monke edit
+	stamina_damage = 45
+	cooldown = (1.3 SECONDS)
 	knockdown_time = 5 SECONDS
 	clumsy_knockdown_time = 15 SECONDS
-	cooldown = 1 SECONDS //monke edit, enjoy your games, seccies
 	on_stun_sound = 'sound/weapons/egloves.ogg'
 	on_stun_volume = 50
 	active = FALSE
@@ -641,7 +646,7 @@
  * After a period of time, we then check to see what stun duration we give.
  */
 /obj/item/melee/baton/security/additional_effects_non_cyborg(mob/living/target, mob/living/user)
-	target.Disorient(6 SECONDS, 5, paralyze = 10 SECONDS, stack_status = FALSE)
+	target.Disorient(6 SECONDS, 0, stack_status = FALSE)
 
 	SEND_SIGNAL(target, COMSIG_LIVING_MINOR_SHOCK)
 

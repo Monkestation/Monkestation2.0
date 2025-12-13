@@ -72,7 +72,7 @@
 	owner.remove_filter(id)
 
 /datum/status_effect/realignment/tick(seconds_between_ticks, times_fired)
-	owner.stamina.adjust(15, TRUE)
+	owner.stamina.adjust(8, TRUE)
 	owner.AdjustAllImmobility(-0.5 SECONDS)
 
 /atom/movable/screen/alert/status_effect/realignment

@@ -38,7 +38,7 @@
 	icon = 'monkestation/icons/obj/guns/40mm_grenade.dmi'
 	icon_state = "40mmRUBBER_projectile"
 	damage = 20
-	stamina = 250 //BONK
+	stamina = 125 //BONK
 	paralyze = 5 SECONDS
 	wound_bonus = 30
 	weak_against_armour = TRUE
@@ -185,7 +185,7 @@
 /obj/projectile/bullet/c980grenade
 	name = ".980 Tydhouer practice grenade"
 	damage = 20
-	stamina = 30
+	stamina = 15
 	range = 14
 	speed = 2 // Higher means slower, y'all
 	sharpness = NONE

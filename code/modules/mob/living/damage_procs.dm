@@ -97,7 +97,7 @@
 		if(CLONE)
 			damage_dealt = -1 *  adjustCloneLoss(damage_amount, forced = forced)
 		if(STAMINA)
-			damage_dealt = -1 * stamina?.adjust(-damage)
+			damage_dealt = -1 * stamina?.adjust(-damage_amount)
 		if(PAIN)
 			if(pain_controller)
 				var/pre_pain = pain_controller.get_average_pain()
@@ -248,8 +248,7 @@
 		stutter = 0 SECONDS, // Ditto
 		eyeblur = 0 SECONDS,
 		drowsy = 0 SECONDS,
-		blocked = 0, // This one's not an effect, don't be confused - it's block chance
-		stamina = 0, // This one's a damage type, and not an effect
+		blocked = 0, // This one's not an effect, don't be confused - it's the % of the other effects to be blocked by armor
 		jitter = 0 SECONDS,
 		paralyze = 0,
 		immobilize = 0,
@@ -268,10 +267,6 @@
 		apply_effect(paralyze, EFFECT_PARALYZE, blocked)
 	if(immobilize)
 		apply_effect(immobilize, EFFECT_IMMOBILIZE, blocked)
-
-	//if(stamina) //monkestation removal
-	//	apply_damage(stamina, STAMINA, null, blocked) //IF THIS ISN'T AN EFFECT AND IS A DAMAGE TYPE WHY IS IT HERE?
-
 	if(drowsy)
 		adjust_drowsiness(drowsy)
 	if(eyeblur)
@@ -503,9 +498,6 @@
 
 /mob/living/proc/pre_stamina_change(diff as num, forced)
 	return diff
-
-/mob/living/proc/setStaminaLoss(amount, updating_stamina = TRUE, forced = FALSE, required_biotype)
-	return
 
 /**
  * heal ONE external organ, organ gets randomly selected from damaged ones.

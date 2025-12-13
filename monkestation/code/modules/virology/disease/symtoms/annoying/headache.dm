@@ -26,7 +26,7 @@
 			COOLDOWN_START(src, effect_cooldown, rand(10 SECONDS, 30 SECONDS))
 		else
 			to_chat(mob, span_warning("[pick("Your head hurts a lot.", "Your head pounds incessantly.")]"))
-			mob.stamina.adjust(-50)
+			mob.stamina.adjust(-25)
 	else
 		if(prob(base_message_chance))
 			to_chat(mob, span_warning("[pick("Your head hurts.", "Your head pounds.")]"))

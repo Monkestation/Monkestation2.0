@@ -206,7 +206,7 @@
 				var/obj/item/bodypart/ouchie = L.get_bodypart(pick(GLOB.arm_zones))
 				if(ouchie)
 					ouchie.receive_damage(brute = 10)
-				L.stamina.adjust(-40)
+				L.stamina.adjust(-20)
 				L.Paralyze(10)
 
 ///checking to make sure we're still on the person we're supposed to be, for lacing do_after's

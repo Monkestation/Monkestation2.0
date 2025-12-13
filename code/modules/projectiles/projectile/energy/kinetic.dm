@@ -167,7 +167,7 @@
 	eyeblur = 69
 	drowsy = 69 SECONDS
 	jitter = 69 SECONDS
-	stamina = 69 SECONDS
+	stamina = 69
 	stutter = 69 SECONDS
 	slur = 69 SECONDS
 
