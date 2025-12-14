@@ -150,19 +150,19 @@
  * when you don't know what damage type you're healing exactly.
  */
 /mob/living/proc/heal_damage_type(heal_amount = 0, damagetype = BRUTE)
-	heal_amount = abs(heal_amount) * -1
+	heal_amount = abs(heal_amount)
 
 	switch(damagetype)
 		if(BRUTE)
-			return adjustBruteLoss(heal_amount)
+			return adjustBruteLoss(-heal_amount)
 		if(BURN)
-			return adjustFireLoss(heal_amount)
+			return adjustFireLoss(-heal_amount)
 		if(TOX)
-			return adjustToxLoss(heal_amount, forced = TRUE) // monkestation edit: we're gonna assume anything using this proc intends to do true healing, so, let's not kill oozelings
+			return adjustToxLoss(-heal_amount, forced = TRUE) // monkestation edit: we're gonna assume anything using this proc intends to do true healing, so, let's not kill oozelings
 		if(OXY)
-			return adjustOxyLoss(heal_amount)
+			return adjustOxyLoss(-heal_amount)
 		if(CLONE)
-			return adjustCloneLoss(heal_amount)
+			return adjustCloneLoss(-heal_amount)
 		if(STAMINA)
 			return stamina.adjust(heal_amount)
 
