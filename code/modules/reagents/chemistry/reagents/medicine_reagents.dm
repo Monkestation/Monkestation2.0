@@ -1055,17 +1055,14 @@
 	ph = 8.7
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 	addiction_types = list(/datum/addiction/stimulants = 4) //0.8 per 2 seconds
-	metabolized_traits = list(TRAIT_BATON_RESISTANCE, TRAIT_ANALGESIA, TRAIT_CANT_STAMCRIT)
+	metabolized_traits = list(TRAIT_BATON_RESISTANCE, TRAIT_ANALGESIA)
 
 /datum/reagent/medicine/stimulants/on_mob_metabolize(mob/living/affected_mob)
 	..()
-	if(HAS_TRAIT(affected_mob, TRAIT_INCAPACITATED))
-		affected_mob.exit_stamina_stun()
 	affected_mob.add_movespeed_modifier(/datum/movespeed_modifier/reagent/stimulants)
 
 /datum/reagent/medicine/stimulants/on_mob_end_metabolize(mob/living/affected_mob)
 	affected_mob.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/stimulants)
-	REMOVE_TRAIT(affected_mob, TRAIT_BATON_RESISTANCE, type)
 	..()
 
 /datum/reagent/medicine/stimulants/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
@@ -1075,7 +1072,7 @@
 		affected_mob.adjustBruteLoss(-1 * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
 		affected_mob.adjustFireLoss(-1 * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
 	affected_mob.AdjustAllImmobility(-60  * REM * seconds_per_tick)
-	affected_mob.stamina.adjust(5 * REM * seconds_per_tick, TRUE)
+	affected_mob.stamina.adjust(12 * REM * seconds_per_tick, TRUE)
 	..()
 	. = TRUE
 
@@ -1274,7 +1271,7 @@
 	metabolizer.set_jitter_if_lower(20 SECONDS * REM * seconds_per_tick)
 	metabolizer.set_dizzy_if_lower(20 SECONDS * REM * seconds_per_tick)
 	return TRUE
-MONKESTATION REMOVAL END */
+MONKESTATION REMOVAL END
 
 /datum/reagent/medicine/changelingadrenaline/on_mob_metabolize(mob/living/affected_mob)
 	. = ..()
@@ -1290,6 +1287,8 @@ MONKESTATION REMOVAL END */
 	metabolizer.adjustToxLoss(1 * REM * seconds_per_tick, FALSE)
 	..()
 	return TRUE
+
+*/
 
 /datum/reagent/medicine/changelinghaste
 	name = "Changeling Haste"
