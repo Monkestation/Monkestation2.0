@@ -249,6 +249,7 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 	var/list/reduced_chance_items = list(
 		// Security reasons
 		/obj/item/card/id/advanced/centcom,
+		/obj/item/construction/rcd/combat/admin,
 	)
 	for(var/reduced_chance_item in reduced_chance_items)
 		if(prob(50))
