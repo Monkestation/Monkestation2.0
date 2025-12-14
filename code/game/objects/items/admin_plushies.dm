@@ -209,7 +209,6 @@
 	squeak_override = list('monkestation/sound/items/gabnoise.ogg' = 1)
 	gender = FEMALE
 	append_note = FALSE
-	var/static/plushckey = "glyphee"
 	pet_message = "Gabbie swears!"
 
 /datum/loadout_item/plushies/gabbie
