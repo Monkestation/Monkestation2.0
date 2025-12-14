@@ -219,13 +219,17 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 
 	// Boring items that will get blocked during the week of christmas.
 	var/list/boring_items = list(
+		/obj/item/ammo_casing,
 		/obj/item/circuit_component,
 		/obj/item/electronics,
 		/obj/item/mcobject,
 		/obj/item/paper,
+		/obj/item/pipe,
 		/obj/item/reagent_containers,
 		/obj/item/stack/cable_coil,
+		/obj/item/stack/medical,
 		/obj/item/stack/pipe_cleaner_coil,
+		/obj/item/stack/rods,
 		/obj/item/stack/tile,
 		/obj/item/storage/pill_bottle,
 		/obj/item/trash,
@@ -238,6 +242,8 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 		for(var/blocked_item in boring_items)
 			// Block the item listed, and any subtypes too.
 			. -= typesof(blocked_item)
+		// remove anything that's just available in loadout
+		. -= assoc_to_keys(GLOB.all_loadout_datums)
 
 	// List of items with a reduced chance to spawn
 	var/list/reduced_chance_items = list(
