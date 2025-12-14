@@ -1,0 +1,5 @@
+author: "Uristthedorf"
+delete-after: True
+changes:
+  - qol: "Instead of powerzones limiting clone pod/computer linking, it is now based off distance."
+  - bugfix: "Clonepods can now be linked to cloning computers again."

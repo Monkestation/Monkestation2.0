@@ -305,7 +305,7 @@
 
 	var/list/scanned_designs = list()
 
-	var/cost_per_component = 1000
+	var/cost_per_component = SHEET_MATERIAL_AMOUNT / 10
 
 	var/efficiency_coeff = 1
 
