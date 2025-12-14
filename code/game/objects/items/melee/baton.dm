@@ -786,7 +786,7 @@
 	var/caught = hit_atom.hitby(src, skipcatch = FALSE, hitpush = FALSE, throwingdatum = throwingdatum)
 	var/mob/thrown_by = thrownby?.resolve()
 	if(isliving(hit_atom) && !iscyborg(hit_atom) && !caught && prob(throw_stun_chance))//if they are a living creature and they didn't catch it
-		finalize_baton_attack(hit_atom, thrown_by, in_attack_chain = FALSE)
+		finalize_baton_attack(hit_atom, thrown_by, in_attack_chain = TRUE)
 
 /obj/item/melee/baton/security/boomerang/loaded //Same as above, comes with a cell.
 	preload_cell_type = /obj/item/stock_parts/power_store/cell/high
