@@ -89,7 +89,7 @@
 	if(!mod.wearer || active || !autotrigger)
 		return
 	var/health_scan = mod.wearer.health
-	if(health_scan > HEALTH_THRESHOLD_CRIT)
+	if(health_scan > mod.wearer.crit_threshold)
 		return
 	dead_reckoning() // we beefed, turn it on.
 
