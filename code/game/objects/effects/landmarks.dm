@@ -677,6 +677,9 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 /obj/effect/landmark/navigate_destination/minisat_access_chapel_library
 	location = "Chapel and Library MiniSat Access"
 
+/obj/effect/landmark/navigate_destination/garden
+	location = "Public Garden"
+
 //Service
 /obj/effect/landmark/navigate_destination/kitchen
 	location = "Kitchen"

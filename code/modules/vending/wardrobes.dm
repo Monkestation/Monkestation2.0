@@ -122,6 +122,7 @@
 		/obj/item/clothing/head/beret/medical/paramedic = 4,
 		/obj/item/clothing/head/soft/paramedic = 4,
 		/obj/item/clothing/shoes/sneakers/blue = 4,
+		/obj/item/clothing/shoes/workboots/black = 4,
 		/obj/item/clothing/suit/apron/surgical = 4,
 		/obj/item/clothing/mask/surgical = 4,
 	)

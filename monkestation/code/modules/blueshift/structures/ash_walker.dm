@@ -1100,6 +1100,9 @@
 	icon = 'monkestation/icons/obj/vending.dmi'
 	icon_state = "ashclothvendor"
 	icon_deny = "necrocrate"
+	use_power = NO_POWER_USE
+	initial_language_holder = /datum/language_holder/ashwalker
+	vend_reply = "Glory to the Necropolis."
 
 	products = list( //Relatively normal to have, I GUESS
 		/obj/item/clothing/under/costume/gladiator/ash_walker/tribal = 15,
@@ -1116,7 +1119,7 @@
 		/obj/item/clothing/shoes/jackboots/ashwalker/legate = 12,
 		/obj/item/clothing/shoes/wraps/ashwalker/mundanewraps = 15,
 		/obj/item/clothing/shoes/wraps/ashwalker = 10,
-		/obj/item/clothing/shoes/wraps/ashwalker/tribalwraps = 2,,
+		/obj/item/clothing/shoes/wraps/ashwalker/tribalwraps = 2,
 		/obj/item/clothing/head/shamanash = 3,
 		/obj/item/clothing/neck/cloak/tribalmantle = 2,
 		/obj/item/clothing/gloves/military/claw = 5,

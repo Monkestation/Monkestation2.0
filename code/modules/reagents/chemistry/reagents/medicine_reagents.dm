@@ -1008,6 +1008,9 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/mutadone/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	var/datum/status_effect/temporary_transformation/trans_sting/sting_effect = affected_mob.has_status_effect(/datum/status_effect/temporary_transformation/trans_sting)
+	if(sting_effect && sting_effect.duration != STATUS_EFFECT_PERMANENT)
+		sting_effect.duration -= 10 SECONDS * REM * seconds_per_tick
 	affected_mob.remove_status_effect(/datum/status_effect/jitter)
 	if(affected_mob.has_dna())
 		affected_mob.dna.remove_mutation_group(affected_mob.dna.mutations - affected_mob.dna.get_mutation(/datum/mutation/race), GLOB.standard_mutation_sources)
