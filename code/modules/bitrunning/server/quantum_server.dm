@@ -51,7 +51,10 @@
 	var/broadcasting = FALSE
 	/// Cooldown between being able to toggle broadcasting
 	COOLDOWN_DECLARE(broadcast_toggle_cd)
-
+	/// Determines what bitrunning network of domains we can access.
+	var/bitrunning_network = BITRUNNER_DOMAIN_DEFAULT
+	/// Determines our ID for what bitrunning machinery we're linked to.
+	var/bitrunning_id = "DEFAULT"
 
 /obj/machinery/quantum_server/Initialize(mapload)
 	. = ..()

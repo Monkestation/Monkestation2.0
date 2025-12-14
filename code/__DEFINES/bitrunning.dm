@@ -18,3 +18,8 @@
 #define BITRUNNER_DIFFICULTY_MEDIUM 2
 /// Red with skull
 #define BITRUNNER_DIFFICULTY_HIGH 3
+
+/// Default bitrunning domains, shows up in Cargo.
+#define BITRUNNER_DOMAIN_DEFAULT "gibson"
+/// Security bitrunning domains, shows up in the Torment Nexus.
+#define BITRUNNER_DOMAIN_TUTORIAL "tutorial"
