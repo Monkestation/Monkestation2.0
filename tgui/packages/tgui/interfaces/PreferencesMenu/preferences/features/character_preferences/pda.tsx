@@ -38,10 +38,12 @@ const FeaturePdaDropdownInput = (
 
   const handleBackward = () => {
     props.handleSetValue(choices[prevIndex]);
+    props.act('play_ringtone_sound');
   };
 
   const handleForward = () => {
     props.handleSetValue(choices[nextIndex]);
+    props.act('play_ringtone_sound');
   };
 
   return (
