@@ -292,3 +292,26 @@
 	mob_height = dna?.species?.update_species_heights(src) || base_mob_height
 	if(old_height != mob_height)
 		regenerate_icons()
+
+/// Returns an alist containing a "backup" of this human's current underwear, undershirt, and socks, plus their colors.
+/// Basically this is copy_clothing_prefs except it returns an alist instead of copying it to another human.
+/mob/living/carbon/human/proc/backup_clothing_prefs() as /alist
+	return alist(
+		"underwear" = underwear,
+		"underwear_color" = underwear_color,
+		"undershirt" = undershirt,
+		"socks" = socks,
+		"socks_color" = socks_color,
+		"jumpsuit_style" = jumpsuit_style,
+	)
+
+/// Restores the clothing prefs from an alist returned by backup_clothing_prefs()
+/mob/living/carbon/human/proc/restore_clothing_prefs(alist/backup)
+	if(length(backup) != 6)
+		CRASH("Invalid clothing backup alist passed, expected 6 entries!")
+	underwear = backup["underwear"]
+	underwear_color = backup["underwear_color"]
+	undershirt = backup["undershirt"]
+	socks = backup["socks"]
+	socks_color = backup["socks_color"]
+	jumpsuit_style = backup["jumpsuit_style"]
