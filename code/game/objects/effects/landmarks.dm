@@ -306,6 +306,22 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	GLOB.commando_nukeop_leader_start += loc
 	return INITIALIZE_HINT_QDEL
 
+/obj/effect/landmark/start/thanos
+	name = "thanos start"
+
+/obj/effect/landmark/start/thanos/Initialize(mapload)
+	..()
+	GLOB.thanos_start += loc
+	return INITIALIZE_HINT_QDEL
+
+/obj/effect/landmark/start/thanos_portal
+	name = "thanos portal"
+
+/obj/effect/landmark/start/thanos_portal/Initialize(mapload)
+	..()
+	GLOB.thanos_portal += loc
+	return INITIALIZE_HINT_QDEL
+
 // Must be immediate because players will
 // join before SSatom initializes everything.
 INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)

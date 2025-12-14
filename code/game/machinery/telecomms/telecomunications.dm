@@ -177,3 +177,9 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 
 /obj/machinery/telecomms/proc/de_emp()
 	set_machine_stat(machine_stat & ~EMPED)
+
+/obj/machinery/telecomms/ui_interact(mob/user)
+	if(isganymede(user))
+		to_chat(user, span_warning("Your enormous hands can't possibly fiddle with that!"))
+		return
+	return ..()

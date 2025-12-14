@@ -20,6 +20,8 @@
 	var/datum/mind/owner
 	/// A list to all spellbook entries within
 	var/list/entries = list()
+	/// Prevents the badmin gauntlet from being bought if anything else has
+	var/gauntlet_flag = FALSE
 
 /obj/item/spellbook/Initialize(mapload)
 	. = ..()
@@ -120,6 +122,18 @@
 		to_chat(user, span_notice("On second thought, maybe summoning a demon is a bad idea. You refund your points."))
 		uses += demon_entry.cost
 		demon_entry.times--
+		qdel(O)
+
+	else if(istype(O, /obj/item/badmin_gauntlet))
+		var/obj/item/badmin_gauntlet/badmin_gauntlet = O
+		if(badmin_gauntlet.locked_on)
+			to_chat(user, span_notice("You've put the gauntlet on already. No turning back now."))
+			return
+		to_chat(user, span_notice("On second thought, wiping out half the universe is possibly a bad idea. You refund your points."))
+		uses += 10
+		for(var/datum/spellbook_entry/item/badmin_gauntlet/badmin_gauntlet_entry in entries)
+			if(!isnull(badmin_gauntlet_entry.limit))
+				badmin_gauntlet_entry.limit++
 		qdel(O)
 
 	return ..()
@@ -230,6 +244,7 @@
 
 	to_buy.times++
 	uses -= to_buy.cost
+	gauntlet_flag = TRUE
 	return TRUE
 
 /// Purchases a wizard loadout [loadout] for [wizard].

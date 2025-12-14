@@ -153,6 +153,10 @@
 
 	var/area/destination_area = destination_turf.loc
 	if (is_centcom_level(destination_turf.z))
+		//Monkestation Edit Begin
+		if(!isliving(atom_to_check) && istype(destination_area, /area/centcom/thanos_farm))
+			return FALSE
+		//Monkestation Edit End
 		if (is_type_in_typecache(destination_area, disallowed_centcom_areas))
 			return FALSE
 		return TRUE
