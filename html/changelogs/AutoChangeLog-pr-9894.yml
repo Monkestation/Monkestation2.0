@@ -1,0 +1,7 @@
+author: "Tractor-Maam"
+delete-after: True
+changes:
+  - rscadd: "Blank Shells for roulette are now spent beanbags."
+  - map: "Oshan now contains a jukebox and waiver in its roulette room."
+  - map: "Oshan and Kilos roulette rooms now contain magazine shufflers."
+  - spellcheck: "Updated the text on the General Release of Liability."
