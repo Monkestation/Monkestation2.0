@@ -330,17 +330,12 @@
 
 /obj/machinery/clonepod/multitool_act(mob/living/user, obj/item/multitool/multi)
 	. = NONE
-	if(!(occupant || mess))
-		return
-
 	if(!istype(multi.buffer, /obj/machinery/computer/cloning))
 		multi.set_buffer(src)
 		to_chat(user, "<font color = #666633>-% Successfully stored [REF(multi.buffer)] [multi.buffer] in buffer %-</font color>")
 		return ITEM_INTERACT_SUCCESS
-
-	if(get_area(multi.buffer) != get_area(src))
-		to_chat(user, "<font color = #666633>-% Cannot link machines across power zones. Buffer cleared %-</font color>")
-		multi.set_buffer(null)
+	if(get_dist(src, multi.buffer) > 16)
+		to_chat(user, "<font color = #666633>-% Cannot link machines that far away. %-</font color>")
 		return ITEM_INTERACT_BLOCKING
 
 	to_chat(user, "<font color = #666633>-% Successfully linked [multi.buffer] with [src] %-</font color>")

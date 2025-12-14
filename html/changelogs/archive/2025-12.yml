@@ -187,6 +187,11 @@
       you can't get trapped in maints nearly as easily.
   - map: Added a public cassette deck to Oshan's library.
   - qol: All maps now have a "Public Garden" navigate landmark.
+  - bugfix: Fixed BCI keyboards and thought listeners html encoding text input.
+  - bugfix: Fixed BCI keyboards and thought listeners sending a signal if you don't
+      actually type anything in.
+  - bugfix: The wiremod module duplicator no longer uses 100 times more glass than
+      it should.
   Lawlolawl:
   - bugfix: Fixed the blue alert announcement, which should state that probable cause
       is required for security searches.
@@ -245,3 +250,7 @@
   - rscadd: Added the Shotgun Roulette Starter Kit contraband cargo crate.
   - rscadd: Added the Roulette Shotgun/pin to the Black Market.
   - image: added the Magazine Shuffler sprite by Cannibal Hunter
+2025-12-13:
+  Veth-s:
+  - qol: Wirechem Remote Factory Outputs now automagically output patches/pills/bottles
+      to the tile their on, up to a maximum of 10, like chemical presses from pipechem.
