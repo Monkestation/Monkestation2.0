@@ -254,3 +254,19 @@
   Veth-s:
   - qol: Wirechem Remote Factory Outputs now automagically output patches/pills/bottles
       to the tile their on, up to a maximum of 10, like chemical presses from pipechem.
+2025-12-14:
+  Lawlolawl:
+  - rscdel: Removed anti-grief warning for servant golems on spawn, as they follow
+      the will of their creators. Non-antag creators are still liable for bwoinking
+      if you use your golems for mischief! Warnings still remain for free golems.
+  Tractor-Maam:
+  - rscadd: Blank Shells for roulette are now spent beanbags.
+  - map: Oshan now contains a jukebox and waiver in its roulette room.
+  - map: Oshan and Kilos roulette rooms now contain magazine shufflers.
+  - spellcheck: Updated the text on the General Release of Liability.
+  Uristthedorf:
+  - qol: Instead of powerzones limiting clone pod/computer linking, it is now based
+      off distance.
+  - bugfix: Clonepods can now be linked to cloning computers again.
+  flleeppyy:
+  - code_imp: redo plx_getloadoutrewards topic
