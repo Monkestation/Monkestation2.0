@@ -61,6 +61,8 @@
 #define PDA_RINGTONE_MAUS "Maus"
 #define PDA_RINGTONE_MEOW1 "Meow 1"
 #define PDA_RINGTONE_MEOW2 "Meow 2"
+#define PDA_RINGTONE_MEOW3 "Meow 3"
+#define PDA_RINGTONE_MEOW4 "Meow 4"
 #define PDA_RINGTONE_MEOW_ELECTRIC "Meow (Electric)"
 #define PDA_RINGTONE_MORSE "Morse"
 #define PDA_RINGTONE_JINGLE "Mysterious Jingle"
@@ -97,6 +99,8 @@ GLOBAL_LIST_INIT(pda_ringtone_sounds, list(
 	PDA_RINGTONE_MAUS = 'sound/machines/pda_ringtones/maus.ogg',
 	PDA_RINGTONE_MEOW1 = 'sound/machines/pda_ringtones/meow1.ogg',
 	PDA_RINGTONE_MEOW2 = 'sound/machines/pda_ringtones/meow2.ogg',
+	PDA_RINGTONE_MEOW3 = 'sound/machines/pda_ringtones/meow3.ogg',
+	PDA_RINGTONE_MEOW4 = 'sound/machines/pda_ringtones/meow4.ogg',
 	PDA_RINGTONE_MEOW_ELECTRIC = 'sound/machines/pda_ringtones/meow_electric.ogg',
 	PDA_RINGTONE_MORSE = 'sound/machines/pda_ringtones/morse.ogg',
 	PDA_RINGTONE_JINGLE = 'sound/machines/pda_ringtones/jingle.ogg',
