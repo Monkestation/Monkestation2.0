@@ -171,7 +171,7 @@
 	var/turf/open/turf = get_turf(get_step(src, NORTH))
 	if(!isopenturf(turf))
 		return
-	balloon_alert(user, "You drain the lubricant tank.")
+	balloon_alert(user, "you drain the lubricant tank.")
 	turf.add_liquid_from_reagents(reagents)
 	reagents.remove_all(reagent_buffer)
 

@@ -26,7 +26,7 @@
 				owner.balloon_alert(owner, "cannot function with sugar in host")
 				return
 			// we have a host with sugar and our host is dead. Amazing fuckup
-			owner.balloon_alert(owner, "Struggling to leave")
+			owner.balloon_alert(owner, "struggling to leave")
 			to_chat(cortical_owner, span_userdanger("We struggle to leave our host, barelly able to due to the sugar in their blood no longer moving, this will take time..."))
 			StartCooldown(30 SECONDS) // stay in place now
 			sleep(30 SECONDS)

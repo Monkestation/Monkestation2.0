@@ -54,7 +54,7 @@
 	if(cast_on == owner)
 		return FALSE
 	if(!iscarbon(cast_on)) //im just gonna make this only work on carbon mobs
-		cast_on.balloon_alert(owner, "Can only be cast on advanced life forms!")
+		cast_on.balloon_alert(owner, "can only be cast on advanced life forms!")
 		return FALSE
 	return TRUE
 
