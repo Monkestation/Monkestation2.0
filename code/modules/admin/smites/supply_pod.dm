@@ -19,4 +19,3 @@
 	plaunch.temp_pod.effectStun = TRUE
 
 #undef SUPPLY_POD_FIRE_RANGE
-#undef SUPPLY_POD_FIRE_RANG
