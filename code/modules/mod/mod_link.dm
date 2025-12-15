@@ -233,24 +233,24 @@ GLOBAL_LIST_INIT(scryer_auto_link_freqs, zebra_typecacheof(list(
 	mod_link?.end_call()
 
 /obj/item/clothing/neck/link_scryer/attack_self(mob/user, modifiers)
-	var/new_label = reject_bad_text(tgui_input_text(user, "Change the visible name", "Set Name", label, MAX_NAME_LEN))
-	if(!new_label)
-		balloon_alert(user, "invalid name!")
-		return
-	label = new_label
-	balloon_alert(user, "name set")
-	update_name()
-
-	var/question = tgui_alert(user, "Would you like to set a new ringtone? Current: [ringtone]", "Ringtone", list("Yes", "No"))
-	if(question != "Yes")
-		return
-
-	var/new_ringtone = tgui_input_list(user, "Choose a ringtone", "Ringtone", GLOB.call_ringtones)
-	if(!new_ringtone)
-		return
-
-	set_ringtone(new_ringtone)
-	to_chat(user, span_notice("Ringtone '[ringtone]' selected."))
+	var/choice = tgui_alert(user, "What would you like to do?", "MODlink Options", list("Set Name", "Set Ringtone", "Cancel"))
+	switch(choice)
+		if("Set Name")
+			var/new_label = reject_bad_text(tgui_input_text(user, "Change the visible name", "Set Name", label, MAX_NAME_LEN))
+			if(!new_label)
+				balloon_alert(user, "invalid name!")
+				return
+			label = new_label
+			balloon_alert(user, "name set")
+			update_name()
+		if("Set Ringtone")
+			var/new_ringtone = tgui_input_list(user, "Choose a ringtone", "Ringtone", GLOB.call_ringtones)
+			if(!new_ringtone)
+				return
+			set_ringtone(new_ringtone)
+			to_chat(user, span_notice("Ringtone '[ringtone]' selected."))
+		if("Cancel")
+			return
 
 /obj/item/clothing/neck/link_scryer/process(seconds_per_tick)
 	if(!mod_link.link_call)
