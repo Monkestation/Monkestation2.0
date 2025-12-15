@@ -289,3 +289,5 @@
 			return "Silicon Emotes"
 		if(CHANNEL_VOICES)
 			return "Voices"
+		if(CHANNEL_RINGTONES)
+			return "Ringtones (Modlinks/PDA)"

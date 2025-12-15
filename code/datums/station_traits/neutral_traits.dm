@@ -357,6 +357,9 @@
 	var/obj/item/clothing/neck/link_scryer/loaded/new_scryer = new(spawned)
 	new_scryer.label = spawned.name
 	new_scryer.update_name()
+	var/ringtone = player_client.prefs.read_preference(/datum/preference/choiced/call_ringtone)
+	if(ringtone)
+		new_scryer.set_ringtone(ringtone)
 
 	spawned.equip_to_slot_or_del(new_scryer, ITEM_SLOT_NECK, initial = FALSE)
 

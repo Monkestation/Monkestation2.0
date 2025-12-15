@@ -530,9 +530,9 @@
 			sound_to_play = selected_sound
 	// Monkestation Addition END
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_PDA_GLITCHED))
-		playsound(src, pick('sound/machines/twobeep_voice1.ogg', 'sound/machines/twobeep_voice2.ogg'), 50, TRUE)
+		playsound(src, pick('sound/machines/twobeep_voice1.ogg', 'sound/machines/twobeep_voice2.ogg'), 50, TRUE, mixer_channel = CHANNEL_RINGTONES)
 	else
-		playsound(src, sound_to_play, 50, TRUE) // Monkestation change
+		playsound(src, sound_to_play, 50, TRUE, mixer_channel = CHANNEL_RINGTONES) // Monkestation change
 	ringtone = "*[ringtone]*"
 	audible_message(ringtone)
 	for(var/mob/living/alertee in balloon_alertees)

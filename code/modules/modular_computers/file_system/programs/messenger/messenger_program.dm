@@ -333,7 +333,7 @@
 			// Plays a preview of the sound selected
 			var/mob/living/usr_mob = usr
 			if(in_range(computer, usr_mob))
-				playsound(computer, GLOB.pda_ringtone_sounds[new_sound], 30, TRUE)
+				playsound(computer, GLOB.pda_ringtone_sounds[new_sound], 30, TRUE, mixer_channel = CHANNEL_RINGTONES)
 
 			return TRUE
 		// Monkestation Addition END
