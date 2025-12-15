@@ -50,6 +50,8 @@
 #define PDA_RINGTONE_BELL "Bell"
 #define PDA_RINGTONE_BEEP "Beep"
 #define PDA_RINGTONE_BUZZ "BUZZ"
+#define PDA_RINGTONE_BYONDPAGER "BYOND Pager"
+#define PDA_RINGTONE_BYONDPAGERDOWN "BYOND Pager Down"
 #define PDA_RINGTONE_BIKEHORN "Bikehorn"
 #define PDA_RINGTONE_CHIME "Chime"
 #define PDA_RINGTONE_CHORD1 "Chord 1"
@@ -89,6 +91,8 @@ GLOBAL_LIST_INIT(pda_ringtone_sounds, list(
 	PDA_RINGTONE_BEEP = 'sound/machines/pda_ringtones/terminal_success.ogg',
 	PDA_RINGTONE_BELL = 'sound/machines/pda_ringtones/bell.ogg',
 	PDA_RINGTONE_BIKEHORN = 'sound/machines/pda_ringtones/bikehorn.ogg',
+	PDA_RINGTONE_BYONDPAGER = 'sound/machines/pda_ringtones/byond_pager.ogg',
+	PDA_RINGTONE_BYONDPAGERDOWN = 'sound/machines/pda_ringtones/byond_pager_down.ogg',
 	PDA_RINGTONE_CHIME = 'sound/machines/pda_ringtones/chime.ogg',
 	PDA_RINGTONE_CHORD1 = 'sound/machines/pda_ringtones/chord1.ogg',
 	PDA_RINGTONE_CHORD2 = 'sound/machines/pda_ringtones/chord2.ogg',
