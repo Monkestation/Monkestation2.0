@@ -150,6 +150,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
 	SSpoints_of_interest.make_point_of_interest(src)
 	add_traits(list(TRAIT_HEAR_THROUGH_DARKNESS, TRAIT_CAN_HEAR_MUSIC), INNATE_TRAIT)
+	on_can_hear_music_trait_gain(src)
 
 /mob/dead/observer/get_photo_description(obj/item/camera/camera)
 	if(!invisibility || camera.see_ghosts)
