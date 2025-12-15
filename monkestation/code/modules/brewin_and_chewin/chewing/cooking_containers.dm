@@ -165,7 +165,7 @@
 	set desc = "Removes items from the container, excluding reagents."
 	do_empty(usr)
 
-/obj/item/reagent_containers/cooking_container/proc/do_empty(mob/user, var/atom/target = null, var/reagent_clear = TRUE)
+/obj/item/reagent_containers/cooking_container/proc/do_empty(mob/user, atom/target = null, reagent_clear = TRUE)
 	#ifdef CHEWIN_DEBUG
 	logger.Log(LOG_CATEGORY_DEBUG"cooking_container/do_empty() called!")
 	#endif
