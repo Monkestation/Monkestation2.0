@@ -2,7 +2,7 @@
 	name = "Breathless"
 	desc = "You either have no need to breathe, or recycle your own air supply. You won't be able to do CPR properly."
 	icon = FA_ICON_LUNGS
-	value = 8
+	value = 10
 	mob_trait = TRAIT_NOBREATH
 	gain_text = span_notice("You don't feel the need to breathe.")
 	lose_text = span_danger("You feel the need to breathe again.")
