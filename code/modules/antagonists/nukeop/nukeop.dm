@@ -89,8 +89,8 @@
 	var/mob/living/datum_owner = owner.current
 	to_chat(datum_owner, "<b>Code Phrases</b>: [span_blue(jointext(GLOB.syndicate_code_phrase, ", "))]")
 	to_chat(datum_owner, "<b>Code Responses</b>: [span_red("[jointext(GLOB.syndicate_code_response, ", ")]")]")
-	datum_owner.AddComponent(/datum/component/codeword_hearing, GLOB.syndicate_code_phrase_regex, "blinking_blue", src)
-	datum_owner.AddComponent(/datum/component/codeword_hearing, GLOB.syndicate_code_response_regex, "blinking_red", src)
+	datum_owner.AddComponent(/datum/component/codeword_hearing, GLOB.syndicate_code_phrase_regex, "blue", src)
+	datum_owner.AddComponent(/datum/component/codeword_hearing, GLOB.syndicate_code_response_regex, "red", src)
 	datum_owner.add_mob_memory(/datum/memory/key/codewords)
 	datum_owner.add_mob_memory(/datum/memory/key/codewords/responses)
 	memorize_code()

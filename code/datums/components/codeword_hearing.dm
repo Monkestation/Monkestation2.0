@@ -45,6 +45,7 @@
 	if(!owner.can_hear() || !owner.has_language(hearing_args[HEARING_LANGUAGE]))
 		return
 
+	hearing_args[HEARING_SPANS] |= SPAN_COPPERPLATE
 	var/message = hearing_args[HEARING_RAW_MESSAGE]
 	message = replace_regex.Replace(message, "<span class='[span_class]'>$1</span>")
 	hearing_args[HEARING_RAW_MESSAGE] = message

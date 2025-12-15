@@ -787,6 +787,10 @@ h2.alert {
   font-family: 'Papyrus', cursive, sans-serif;
 }
 
+.copperplate {
+  font-family: copperplate;
+}
+
 .robot {
   font-family: 'Courier New', cursive, sans-serif;
 }
@@ -876,46 +880,6 @@ h2.alert {
 
   100% {
     color: #3bb5d3;
-  }
-}
-
-.blinking_red {
-  color: #420000;
-  font-weight: bold;
-  animation: blinking_red_color 1500ms infinite;
-}
-
-@keyframes blinking_red_color {
-  0% {
-    color: #420000;
-  }
-
-  50% {
-    color: #ff0000;
-  }
-
-  100% {
-    color: #420000;
-  }
-}
-
-.blinking_blue {
-  color: #00283a;
-  font-weight: bold;
-  animation: blinking_blue_color 1500ms infinite;
-}
-
-@keyframes blinking_blue_color {
-  0% {
-    color: #00283a;
-  }
-
-  50% {
-    color: #215cff;
-  }
-
-  100% {
-    color: #00283a;
   }
 }
 
