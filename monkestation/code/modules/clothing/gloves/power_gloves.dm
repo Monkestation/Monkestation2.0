@@ -5,8 +5,8 @@
 	var/datum/action/cooldown/spell/pointed/glove_zap/zap = new
 
 /obj/item/clothing/gloves/color/yellow/power_gloves/Destroy()
-    QDEL_NULL(zap)
-    return ..()
+	QDEL_NULL(zap)
+	return ..()
 
 /datum/armor/power_gloves
 	acid = 50

@@ -154,12 +154,12 @@
 	zone = BODY_ZONE_L_ARM
 
 /obj/item/organ/internal/cyberimp/arm/item_set/mining_drill/right_arm //You know the drill.
-    zone = BODY_ZONE_R_ARM
-    slot = ORGAN_SLOT_RIGHT_ARM_AUG
+	zone = BODY_ZONE_R_ARM
+	slot = ORGAN_SLOT_RIGHT_ARM_AUG
 
 /obj/item/organ/internal/cyberimp/arm/item_set/mining_drill/left_arm
-    zone = BODY_ZONE_L_ARM
-    slot = ORGAN_SLOT_LEFT_ARM_AUG
+	zone = BODY_ZONE_L_ARM
+	slot = ORGAN_SLOT_LEFT_ARM_AUG
 
 /datum/bodypart_overlay/simple/steel_drill
 	icon = 'monkestation/code/modules/cybernetics/icons/implants_onmob.dmi'
