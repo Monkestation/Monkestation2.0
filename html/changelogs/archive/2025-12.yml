@@ -296,3 +296,13 @@
       quirk, reducing how quickly you go through withdrawal stages.
   flleeppyy:
   - code_imp: redo plx_getloadoutrewards topic
+2025-12-15:
+  Absolucy:
+  - bugfix: Fixed changes to your mutations/genes being mirrored to/from any clones
+      of you.
+  - bugfix: Fixed Veil of Many Faces and stabilized green extract not properly restoring
+      your mutant colors, undershirt, underwear, and socks when restoring your original
+      identity.
+  grungussuss, JupiterJaeden:
+  - qol: Windoors now stay open for 8 seconds instead of 5.
+  - qol: Secure windoors now stay open for 5 seconds instead of 2.
