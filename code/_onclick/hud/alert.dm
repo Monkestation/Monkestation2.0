@@ -97,9 +97,6 @@
 		client.screen -= alert
 	qdel(alert)
 
-/mob/proc/get_alert(category)
-	return alerts[category]
-
 // Proc to check for an alert
 /mob/proc/has_alert(category)
 	return !isnull(alerts[category])
