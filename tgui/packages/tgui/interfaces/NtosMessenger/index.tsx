@@ -205,8 +205,8 @@ const ContactsScreen = (props: any) => {
                 />
               </Stack.Item>
               <Stack.Item grow>
-                <Stack fill>
-                  <Stack.Item>
+                <Stack>
+                  <Stack.Item grow>
                     <Dropdown
                       width="100%"
                       selected={data.ringtone_sound}
@@ -214,13 +214,22 @@ const ContactsScreen = (props: any) => {
                       onSelected={(value) =>
                         act('PDA_soundSet', { sound: value })
                       }
+                      maxHeight="1.7em"
+                      dropdownBoxStyle={{
+                        maxHeight: '65vh',
+                        // if i set the height, it makes the entire fucking box transparent and fucks up the text.
+                        // GOD FUCKING DAMMIT
+                        backgroundColor: 'black',
+                        color: 'white',
+                      }}
                     />
+                  </Stack.Item>
+                  <Stack.Item>
                     <Button
                       onClick={() =>
                         act('PDA_soundSet', { sound: data.ringtone_sound })
                       }
                       icon="volume-up"
-                      fluid
                     />
                   </Stack.Item>
                 </Stack>

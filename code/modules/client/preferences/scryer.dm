@@ -66,7 +66,6 @@ GLOBAL_LIST_INIT(call_ringtones, list(
 
 /datum/preference_middleware/call_ringtone/proc/stop_call_ringtone_sound(list/params, mob/user)
 	SEND_SOUND(usr, sound(null, channel = CHANNEL_RINGTONES, repeat = 0, wait = 0))
-	// user.playsound_local(null, sound(null), channel = CHANNEL_RINGTONES, mixer_channel = CHANNEL_RINGTONES)
 
 /datum/preference/choiced/call_ringtone/init_possible_values()
 	return GLOB.call_ringtones
