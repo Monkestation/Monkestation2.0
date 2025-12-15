@@ -99,7 +99,7 @@
 	M.adjustToxLoss(-heal_amt)
 
 	if(M.getBruteLoss_nonProsthetic() > 0 || M.getFireLoss_nonProsthetic() > 0)
-		M.heal_overall_damage(brute = heal_amt, burn = heal_amt, required_bodytype = BODYTYPE_ORGANIC)
+		M.heal_overall_damage(brute = heal_amt, burn = heal_amt)
 		if(prob(5))
 			to_chat(M, span_notice("The pain from your wounds fades rapidly."))
 	return TRUE
