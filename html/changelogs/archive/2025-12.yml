@@ -254,3 +254,55 @@
   Veth-s:
   - qol: Wirechem Remote Factory Outputs now automagically output patches/pills/bottles
       to the tile their on, up to a maximum of 10, like chemical presses from pipechem.
+2025-12-14:
+  Absolucy:
+  - map: Added "hacked" holopads to most syndicate/pirate bases and ships, allowing
+      them to call the station if they so desire.
+  Absolucy, SmArtKar:
+  - qol: Integrated circuit modules now can be linked to component printers.
+  - bugfix: Fixed BCIs sending messages twice and circuit laser pointers sometimes
+      failing to work.
+  Beeper-Skeeper:
+  - rscadd: The entire Centcomm Bunny suit outfit is now available in the NT Rep's
+      clothing bag. Tailcoat is a different subtype with a different armor value than
+      the normal one as well, as in not better than the other options.
+  Cmpwarrior:
+  - rscadd: 'Adds a new AI core design based on "Steve" from PvZ: GW2'
+  - rscadd: 'Adds a new AI core design based on TEC from Paper Mario: TTYD'
+  - rscadd: Adds a new AI core design based on TheDukeOfOOK from- okay I think you
+      get the point
+  Glyphee:
+  - rscadd: new sfx for my plush and a new sprite
+  Lawlolawl:
+  - rscdel: Removed anti-grief warning for servant golems on spawn, as they follow
+      the will of their creators. Non-antag creators are still liable for bwoinking
+      if you use your golems for mischief! Warnings still remain for free golems.
+  SirNightKnight:
+  - rscdel: removed random assistant colors, assistants will always be the same color
+      or palette during the colored assistants station trait.
+  Tractor-Maam:
+  - rscadd: Blank Shells for roulette are now spent beanbags.
+  - map: Oshan now contains a jukebox and waiver in its roulette room.
+  - map: Oshan and Kilos roulette rooms now contain magazine shufflers.
+  - spellcheck: Updated the text on the General Release of Liability.
+  - rscadd: Added the MOD Corpse Exoskeleton Module.
+  - code_imp: changed the MOD AI forced standing trait cause.
+  Uristthedorf:
+  - qol: Instead of powerzones limiting clone pod/computer linking, it is now based
+      off distance.
+  - bugfix: Clonepods can now be linked to cloning computers again.
+  Veth-s:
+  - balance: Changed the process time from 30 seconds to 4 minutes for the Junkie
+      quirk, reducing how quickly you go through withdrawal stages.
+  flleeppyy:
+  - code_imp: redo plx_getloadoutrewards topic
+2025-12-15:
+  Absolucy:
+  - bugfix: Fixed changes to your mutations/genes being mirrored to/from any clones
+      of you.
+  - bugfix: Fixed Veil of Many Faces and stabilized green extract not properly restoring
+      your mutant colors, undershirt, underwear, and socks when restoring your original
+      identity.
+  grungussuss, JupiterJaeden:
+  - qol: Windoors now stay open for 8 seconds instead of 5.
+  - qol: Secure windoors now stay open for 5 seconds instead of 2.
