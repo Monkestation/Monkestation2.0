@@ -582,7 +582,9 @@ GLOBAL_LIST_INIT(scryer_auto_link_freqs, zebra_typecacheof(list(
 				target_link.soundloop.stop()
 				var/mob/living/target_mob = target_link.get_user_callback.Invoke()
 				if(target_mob)
-					target_mob.get_alert("[REF(calling_link)]_modlink")?.end_message = "call cancelled!"
+					var/atom/movable/screen/alert/modlink_call/alert = target_mob.get_alert("[REF(calling_link)]_modlink")
+					if(alert)
+						alert.end_message = "call cancelled!"
 					target_mob.clear_alert("[REF(calling_link)]_modlink")
 			calling_link.attempting_target = null
 		return

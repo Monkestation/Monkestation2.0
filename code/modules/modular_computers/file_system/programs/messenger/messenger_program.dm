@@ -27,6 +27,8 @@
 	COOLDOWN_DECLARE(last_text)
 	/// even more wisdom from PDA.dm - "no everyone spamming" (prevents people from spamming the same message over and over)
 	COOLDOWN_DECLARE(last_text_everyone)
+	/// Cooldown for changing ringtone sound
+	COOLDOWN_DECLARE(ringtone_set_cooldown)
 	/// Whether or not we're in a mime PDA.
 	var/mime_mode = FALSE
 	/// Whether this app can send messages to all.
@@ -332,8 +334,9 @@
 
 			// Plays a preview of the sound selected
 			var/mob/living/usr_mob = usr
-			if(in_range(computer, usr_mob))
-				playsound(computer, GLOB.pda_ringtone_sounds[new_sound], 30, TRUE, mixer_channel = CHANNEL_RINGTONES)
+			if(in_range(computer, usr_mob) && COOLDOWN_FINISHED(src, ringtone_set_cooldown))
+				playsound(computer, GLOB.pda_ringtone_sounds[new_sound], 30, TRUE, mixer_channel = CHANNEL_RINGTONES, extrarange = - 4)
+				COOLDOWN_START(src, ringtone_set_cooldown, 1 SECOND)
 
 			return TRUE
 		// Monkestation Addition END
