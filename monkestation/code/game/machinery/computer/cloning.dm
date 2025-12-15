@@ -623,3 +623,5 @@
 	records += R
 	log_cloning("[M ? key_name(M) : "Autoprocess"] added the [body_only ? "body-only " : ""]record of [key_name(mob_occupant)] to [src] at [AREACOORD(src)].")
 	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50)
+
+#undef AUTOCLONING_MINIMAL_LEVEL

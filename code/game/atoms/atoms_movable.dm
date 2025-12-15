@@ -118,6 +118,9 @@
 	///can we grab this object?
 	var/cant_grab = FALSE
 
+	/// If TRUE, then this will be affected by things such as the "Bot Language Matrix Malfunction" station trait.
+	var/can_language_malfunction = TRUE
+
 /mutable_appearance/emissive_blocker
 
 /mutable_appearance/emissive_blocker/New()

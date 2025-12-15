@@ -190,3 +190,5 @@
 		R.add_fingerprint(user)
 		qdel(src)
 	building = FALSE
+
+#undef DEFAULT_SHELF_CAPACITY

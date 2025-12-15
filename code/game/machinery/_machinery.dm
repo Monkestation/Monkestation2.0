@@ -175,8 +175,6 @@
 	///extra reward for special shipbreaking components
 	var/extra_reward = list()
 
-	/// If TRUE, then this will be affected by things such as the "Bot Language Matrix Malfunction" station trait.
-	var/can_language_malfunction = TRUE
 
 /datum/armor/obj_machinery
 	melee = 25
