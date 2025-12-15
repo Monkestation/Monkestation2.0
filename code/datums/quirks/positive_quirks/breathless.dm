@@ -1,4 +1,4 @@
-/datum/quirk/self_respiration
+/datum/quirk/breathless
 	name = "Breathless"
 	desc = "You either have no need to breathe, or recycle your own air supply. You won't be able to do CPR properly."
 	icon = FA_ICON_LUNGS
