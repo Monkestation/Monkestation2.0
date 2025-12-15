@@ -30244,19 +30244,30 @@
 /turf/open/floor/iron/dark,
 /area/station/tcommsat/computer)
 "fOw" = (
-/obj/structure/table/reinforced,
 /obj/effect/turf_decal/trimline/red/line{
 	dir = 4
 	},
 /obj/effect/turf_decal/trimline/red/line{
 	dir = 8
 	},
-/obj/item/storage/toolbox/electrical{
-	pixel_y = 7
-	},
-/obj/item/storage/toolbox/mechanical,
-/obj/item/crowbar/large,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/rack{
+	pixel_x = 0;
+	pixel_y = 0
+	},
+/obj/effect/turf_decal/delivery,
+/obj/item/gun/energy/laser/heavylaser{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/gun/energy/laser/heavylaser{
+	pixel_x = 0;
+	pixel_y = 0
+	},
+/obj/item/gun/energy/laser/heavylaser{
+	pixel_x = 3;
+	pixel_y = 3
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory)
 "fOy" = (
@@ -56546,6 +56557,10 @@
 	},
 /obj/effect/turf_decal/trimline/red/end{
 	dir = 1
+	},
+/obj/item/screwdriver{
+	pixel_x = 0;
+	pixel_y = 11
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory)
@@ -103822,6 +103837,12 @@
 /area/station/engineering/atmos)
 "tZD" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/structure/table/reinforced,
+/obj/item/storage/toolbox/electrical{
+	pixel_y = 7
+	},
+/obj/item/storage/toolbox/mechanical,
+/obj/item/crowbar/large,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/ai_monitored/security/armory)
 "tZU" = (

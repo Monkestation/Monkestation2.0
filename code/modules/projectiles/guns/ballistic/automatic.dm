@@ -325,13 +325,17 @@
 	can_bayonet = FALSE
 	suppressor_x_offset = 9
 	burst_size = 2
-	fire_delay = 0.5 SECONDS
+	fire_delay = 0.2 SECONDS
 	actions_types = list()
 	spread = 14.5
 	// Hope you didn't need to see anytime soon
 	recoil = 2
 	wield_recoil = 1
 	projectile_wound_bonus = -5
+
+/obj/item/gun/ballistic/automatic/xhihao_smg/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/automatic_fire, 1 SECONDS)
 
 /obj/item/gun/ballistic/automatic/xhihao_smg/give_manufacturer_examine()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_XHIHAO)
@@ -432,8 +436,12 @@
 	can_bayonet = FALSE
 	suppressor_x_offset = 11
 	burst_size = 2
-	fire_delay = 0.35 SECONDS
+	fire_delay = 0.2 SECONDS
 	spread = 7.5
+
+/obj/item/gun/ballistic/automatic/sol_smg/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/automatic_fire, 0.6 SECONDS)
 
 /obj/item/gun/ballistic/automatic/sol_smg/give_manufacturer_examine()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_CARWO)
@@ -463,8 +471,9 @@
 	icon_state = "sindano_evil"
 	inhand_icon_state = "sindano_evil"
 	spread = 5
-	projectile_wound_bonus = 5
-	projectile_damage_multiplier = 1.25
+	projectile_wound_bonus = 10
+	fire_delay = 0.1 SECONDS
+	burst_size = 3
 	pin = /obj/item/firing_pin/implant/pindicate
 
 /obj/item/gun/ballistic/automatic/sol_smg/evil/no_mag
@@ -548,9 +557,9 @@
 	burst_size = 3
 	fire_delay = 1
 
-/obj/item/gun/ballistic/automatic/sol_rifle ///The standard rifle rifle, it just works
+/obj/item/gun/ballistic/automatic/sol_rifle ///The standard rifle rifle, it just works. Same DPS as basic lasers, larger mags, lower wounding
 	name = "\improper Carwo-Cawil Battle Rifle"
-	desc = "A heavy battle rifle firing .40 Sol. Commonly seen in the hands of SolFed military types. Accepts any standard SolFed rifle magazine."
+	desc = "A light battle rifle firing .40 Sol. Commonly seen in the hands of SolFed military types. Accepts any standard SolFed rifle magazine."
 	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/carwo_defense_systems/guns48x.dmi'
 	icon_state = "infanterie"
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/company_and_or_faction_based/carwo_defense_systems/guns_worn.dmi'
@@ -575,7 +584,7 @@
 	fire_delay = 0.4 SECONDS
 	actions_types = list()
 	spread = 7.5
-	projectile_wound_bonus = -10
+	projectile_wound_bonus = -20
 
 /obj/item/gun/ballistic/automatic/sol_rifle/Initialize(mapload)
 	. = ..()
@@ -611,7 +620,7 @@
 	spawnwithmagazine = FALSE
 
 /obj/item/gun/ballistic/automatic/sol_rifle/evil
-	desc = "A heavy battle rifle, this one seems to be painted tacticool black. Accepts any standard SolFed rifle magazine."
+	desc = "A light battle rifle, this one seems to be painted tacticool black. Accepts any standard SolFed rifle magazine."
 
 	icon_state = "infanterie_evil"
 	worn_icon_state = "infanterie_evil"
@@ -838,7 +847,6 @@
 	fire_delay = 0.8 SECONDS
 	spread = 0
 	projectile_damage_multiplier = 1.75
-	projectile_wound_bonus = 0
 
 /obj/item/gun/ballistic/automatic/sol_rifle/marksman/Initialize(mapload)
 	. = ..()
@@ -888,11 +896,11 @@
 	suppressor_y_offset = 0
 	can_bayonet = FALSE
 	burst_size = 1
-	fire_delay = 1.2 SECONDS
+	fire_delay = 1 SECONDS
 	actions_types = list()
 	recoil = 1.5
 	wield_recoil = 0.5
-	spread = 2.5
+	spread = 1
 
 /obj/item/gun/ballistic/automatic/lanca/Initialize(mapload)
 	. = ..()

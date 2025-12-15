@@ -125,13 +125,13 @@
 	name =".60 Strela bullet"
 	icon_state = "gaussphase"
 	speed = 0.4
-	damage = 50
+	damage = 40
 	armour_penetration = 80
 	wound_bonus = 10
 	bare_wound_bonus = 10
-	demolition_mod = 1.8
+	demolition_mod = 3
 	/// How much damage we add to things that are weak to this bullet
-	var/anti_materiel_damage_addition = 30
+	var/anti_materiel_damage_addition = 40
 
 /obj/projectile/bullet/p60strela/Initialize(mapload)
 	. = ..()

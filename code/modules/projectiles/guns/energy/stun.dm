@@ -42,6 +42,7 @@
 	icon_state = "advtaser"
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/disabler)
 	ammo_x_offset = 2
+	spread = 0
 
 //MONKESTATION EDIT START
 /obj/item/gun/energy/e_gun/advtaser/evil
@@ -61,6 +62,7 @@
 	desc = "An integrated hybrid taser that draws directly from a cyborg's power cell. The weapon contains a limiter to prevent the cyborg's power cell from overheating."
 	can_charge = FALSE
 	use_cyborg_cell = TRUE
+	spread = 0
 
 /obj/item/gun/energy/e_gun/advtaser/cyborg/add_seclight_point()
 	return
@@ -98,7 +100,7 @@
 
 /obj/item/gun/energy/disabler/smg/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/automatic_fire, 0.15 SECONDS, allow_akimbo = FALSE)
+	AddComponent(/datum/component/automatic_fire, 0.2 SECONDS, allow_akimbo = FALSE)
 
 /obj/item/gun/energy/disabler/add_seclight_point()
 	AddComponent(\

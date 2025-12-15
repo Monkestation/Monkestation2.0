@@ -183,8 +183,8 @@
 //.980 riot grenades
 
 /obj/projectile/bullet/c980grenade
-	name = ".980 Tydhouer practice grenade"
-	damage = 20
+	name = ".980 Tydhouer flashbang grenade"
+	damage = 10
 	stamina = 30
 	range = 14
 	speed = 2 // Higher means slower, y'all
@@ -195,14 +195,32 @@
 	fuse_activation(target)
 	return BULLET_ACT_HIT
 
+/obj/projectile/bullet/c980grenade/proc/valid_turf(turf1, turf2)
+	for(var/turf/line_turf in get_line(turf1, turf2))
+		if(line_turf.is_blocked_turf(exclude_mobs = TRUE, source_atom = src))
+			return FALSE
+	return TRUE
+
 /obj/projectile/bullet/c980grenade/on_range()
 	fuse_activation(get_turf(src))
 	return ..()
 
 /// Generic proc that is called when the projectile should 'detonate', being either on impact or when the range runs out
 /obj/projectile/bullet/c980grenade/proc/fuse_activation(atom/target)
-	playsound(src, 'monkestation/code/modules/blueshift/sounds/grenade_burst.ogg', 50, TRUE, -3)
-	do_sparks(3, FALSE, src)
+	playsound(src, 'sound/weapons/flashbang.ogg', 100, TRUE, 8, 0.9)
+	explosion(target, flash_range = 1, adminlog = FALSE, explosion_cause = src)
+	do_sparks(rand(3, 5), FALSE, src)
+
+	var/turf/our_turf = get_turf(src)
+
+	for(var/turf/nearby_turf as anything in circle_range_turfs(src, 3))
+		if(valid_turf(our_turf, nearby_turf))
+			if(prob(50))
+				do_sparks(rand(1, 9), FALSE, nearby_turf)
+			for(var/mob/living/stunned_living in nearby_turf.contents)
+				stunned_living.Paralyze(1 SECONDS)
+				stunned_living.Knockdown(3 SECONDS)
+				stunned_living.soundbang_act(1, 200, 10, 15)
 
 
 /obj/projectile/bullet/c980grenade/smoke
@@ -232,14 +250,14 @@
 
 /obj/item/grenade/c980payload
 	shrapnel_type = /obj/projectile/bullet/shrapnel/short_range
-	shrapnel_radius = 2
+	shrapnel_radius = 3
 	ex_dev = 0
 	ex_heavy = 0
 	ex_light = 0
 	ex_flame = 0
 
 /obj/projectile/bullet/shrapnel/short_range
-	range = 2
+	range = 3
 
 
 /obj/projectile/bullet/c980grenade/shrapnel/phosphor

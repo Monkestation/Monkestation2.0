@@ -104,6 +104,8 @@
 	desc = "A shield adept at blocking blunt objects from connecting with the torso of the shield wielder."
 	icon_state = "riot"
 	inhand_icon_state = "riot"
+	worn_icon = 'icons/mob/clothing/back.dmi'
+	worn_icon_state = "riot"
 	custom_materials = list(/datum/material/glass= SHEET_MATERIAL_AMOUNT * 3.75, /datum/material/iron= HALF_SHEET_MATERIAL_AMOUNT)
 	transparent = TRUE
 	max_integrity = 75
@@ -134,6 +136,8 @@
 	desc = "A shield with a built in, high intensity light capable of blinding and disorienting suspects. Takes regular handheld flashes as bulbs."
 	icon_state = "flashshield"
 	inhand_icon_state = "flashshield"
+	worn_icon = 'icons/mob/clothing/back.dmi'
+	worn_icon_state = "flashshield"
 	var/obj/item/assembly/flash/handheld/embedded_flash = /obj/item/assembly/flash/handheld
 
 /obj/item/shield/riot/flash/Initialize(mapload)
