@@ -77,7 +77,7 @@
 	icon_state = "clownass"
 	sound_effect = list('sound/items/party_horn.ogg', 'sound/items/bikehorn.ogg')
 
-/obj/item/organ/internal/butt/clown/Initialize()
+/obj/item/organ/internal/butt/clown/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/slippery, 40)
 
@@ -132,7 +132,7 @@
 	icon = 'monkestation/icons/obj/butts.dmi'
 	icon_state = "ass"
 
-/obj/effect/immovablerod/butt/Initialize()
+/obj/effect/immovablerod/butt/Initialize(mapload)
 	. = ..()
 	src.SpinAnimation(5, -1)
 

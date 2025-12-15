@@ -60,7 +60,7 @@
 	fair_market_price = 5 // He nodded, because he knew I was right. Then he swiped his credit card to pay me for arresting him.
 	payment_department = ACCOUNT_MED
 
-/obj/machinery/clonepod/Initialize()
+/obj/machinery/clonepod/Initialize(mapload)
 	. = ..()
 
 	countdown = new(src)

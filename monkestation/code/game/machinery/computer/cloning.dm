@@ -34,7 +34,7 @@
 
 	light_color = LIGHT_COLOR_BLUE
 
-/obj/machinery/computer/cloning/Initialize()
+/obj/machinery/computer/cloning/Initialize(mapload)
 	. = ..()
 	updatemodules(TRUE)
 	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF) // So when an experimental cloner gets emped, it's cloning console doesn't break nullifying the threat.

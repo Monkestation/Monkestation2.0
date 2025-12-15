@@ -28,7 +28,7 @@
 	var/list/grill_data = list("High"=0 , "Medium" = 0, "Low"=0) //Record of what grill-cooking has been done on this food.
 	var/list/oven_data = list("High"=0 , "Medium" = 0, "Low"=0) //Record of what oven-cooking has been done on this food.
 
-/obj/item/reagent_containers/cooking_container/Initialize()
+/obj/item/reagent_containers/cooking_container/Initialize(mapload)
 	.=..()
 	appearance_flags |= KEEP_TOGETHER
 	RegisterSignal(src, COMSIG_STOVE_PROCESS, PROC_REF(process_stovetop))

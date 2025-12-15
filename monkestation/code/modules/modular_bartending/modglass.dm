@@ -60,7 +60,7 @@ GLOBAL_LIST_EMPTY(glass_variants)
 	rim = RIM_LARGE
 	variants = LARGE_VARIANTS
 
-/obj/item/reagent_containers/cup/glass/modglass/Initialize()
+/obj/item/reagent_containers/cup/glass/modglass/Initialize(mapload)
 	. = ..()
 	if(variants)
 		glass_skins = glass_variants_list()
