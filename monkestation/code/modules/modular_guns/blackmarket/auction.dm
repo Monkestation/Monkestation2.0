@@ -165,3 +165,5 @@
 	var/top_bidder
 	///the weight this item has to appear high = more likely to be picked
 	var/auction_weight = 10
+
+#undef AUCTION_TIME

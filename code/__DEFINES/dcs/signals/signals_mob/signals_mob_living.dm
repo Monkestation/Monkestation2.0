@@ -249,3 +249,5 @@
 
 /// From /obj/item/proc/attack_atom: (mob/living/attacker, atom/attacked, list/modifiers)
 #define COMSIG_LIVING_ATTACK_ATOM "living_attack_atom"
+
+#define COMSIG_LIVING_BINGLE_EVOLVE "living_bingle_evolve"
