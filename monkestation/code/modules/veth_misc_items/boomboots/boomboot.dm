@@ -13,7 +13,8 @@
 	var/waddle
 	slot_flags = ITEM_SLOT_FEET
 	body_parts_covered = FEET
-/obj/item/clothing/shoes/magboots/boomboots/Initialize()
+
+/obj/item/clothing/shoes/magboots/boomboots/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/squeak, list('monkestation/sound/misc/Boomboot1.ogg'=1), 50)
 	create_storage(storage_type = /datum/storage/pockets/shoes/clown)
