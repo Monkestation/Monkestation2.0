@@ -2,10 +2,8 @@ import { sortStrings } from 'common/collections';
 import { Button, Stack } from '../../../../../components';
 import {
   Feature,
-  FeatureChoiced,
   FeatureChoicedServerData,
   FeatureDropdownInput,
-  FeatureShortTextInput,
   FeatureValueProps,
 } from '../base';
 

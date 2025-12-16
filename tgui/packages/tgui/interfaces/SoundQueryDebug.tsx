@@ -51,13 +51,13 @@ export const SoundQueryDebug = () => {
     activeChannels.add(s.channel);
   }
 
-  function clearCache() {
+  const clearCache = () => {
     for (const ch in nextCache) {
       if (!activeChannels.has(Number(ch))) {
         delete nextCache[ch];
       }
     }
-  }
+  };
 
   if (!persistMissing) {
     clearCache();
