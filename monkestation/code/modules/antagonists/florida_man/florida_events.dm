@@ -88,7 +88,7 @@
 	pixel_x = -32
 	pixel_y = 0
 
-/obj/effect/holy/Initialize()
+/obj/effect/holy/Initialize(mapload)
 	playsound(src,'monkestation/sound/misc/adminspawn.ogg',50,1)
 	QDEL_IN(src, 20)
 	. = ..()
