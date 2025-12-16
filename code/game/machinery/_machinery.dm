@@ -175,6 +175,7 @@
 	///extra reward for special shipbreaking components
 	var/extra_reward = list()
 
+
 /datum/armor/obj_machinery
 	melee = 25
 	bullet = 10
