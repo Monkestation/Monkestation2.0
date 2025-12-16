@@ -2053,10 +2053,6 @@
 /obj/item/storage/box/debugbox/tools,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
-"sN" = (
-/obj/machinery/holopad,
-/turf/open/floor/iron,
-/area/station/hallway/secondary/entry)
 "sU" = (
 /obj/machinery/power/smes{
 	charge = 5e+006
@@ -2233,6 +2229,10 @@
 /obj/machinery/computer/quantum_console,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
+"AD" = (
+/obj/machinery/holopad,
+/turf/open/floor/engine,
+/area/station/hallway/secondary/entry)
 "AP" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 8
@@ -2569,6 +2569,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 8
 	},
+/turf/open/floor/iron,
+/area/station/hallway/secondary/entry)
+"Qq" = (
+/obj/item/disk/holodisk/snowdin/overrun,
+/obj/machinery/holopad/tutorial,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "Qr" = (
@@ -4984,7 +4989,7 @@ dY
 eh
 gu
 LW
-lc
+AD
 lc
 lc
 lc
@@ -5815,7 +5820,7 @@ eh
 eV
 eh
 eh
-sN
+Qq
 eh
 eh
 eV
