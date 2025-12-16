@@ -10,6 +10,7 @@
 	var/obj/item/cassette_tape/tape
 	///Selection used to remove songs
 	var/selection
+	var/adding_song = FALSE
 
 /obj/machinery/cassette_deck/Initialize(mapload)
 	. = ..()
@@ -43,21 +44,61 @@
 
 /obj/machinery/cassette_deck/proc/eject_tape(mob/user)
 	if(!tape)
+		balloon_alert(user, "no tape inserted!")
+		return
+	if(adding_song)
+		balloon_alert(user, "wait until done adding track!")
 		return
 	tape.forceMove(drop_location())
 	user?.put_in_hands(tape)
 	tape = null
 	SStgui.update_uis(src)
 
+/*
 /obj/machinery/cassette_deck/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "CassetteDeck", name)
 		ui.set_autoupdate(FALSE)
 		ui.open()
+*/
+
+/obj/machinery/cassette_deck/proc/add_song(mob/user, url)
+	if(!url)
+		return FALSE
+	if(adding_song)
+		balloon_alert(user, "already adding track!")
+		return FALSE
+	var/datum/cassette_side/side = tape?.get_current_side()
+	if(!side)
+		balloon_alert(user, "no tape inserted!")
+		return FALSE
+	if(length(side.songs) >= MAX_SONGS_PER_CASSETTE_SIDE)
+		balloon_alert(user, "tape side is full!")
+		return FALSE
+	if(!is_http_protocol(url))
+		balloon_alert(user, "invalid URL!")
+		return FALSE
+	adding_song = TRUE
+	SStgui.update_uis(src)
+	var/list/metadata = SSfloxy.fetch_media_metadata(url)
+	adding_song = FALSE
+	if(!metadata)
+		balloon_alert(user, "failed to fetch music metadata!")
+		SStgui.update_uis(src)
+		return FALSE
+	var/datum/cassette_song/song = new(metadata["title"], metadata["url"], metadata["duration"], metadata["artist"], metadata["album"])
+	balloon_alert(user, "track added!")
+	to_chat(user, span_notice("Added new track \"[metadata["title"]]\" to [tape]"))
+	side.songs += song
+	SStgui.update_uis(src)
+	return TRUE
 
 /obj/machinery/cassette_deck/ui_data(mob/user)
-	. = list("cassette" = null)
+	. = list(
+		"cassette" = null,
+		"adding_song" = adding_song,
+	)
 	var/datum/cassette/cassette = tape?.cassette_data
 	if(cassette)
 		var/datum/cassette_side/side = tape.get_current_side()
@@ -78,7 +119,7 @@
 			))
 
 /obj/machinery/cassette_deck/ui_static_data(mob/user)
-	return list("icons" = assoc_to_keys(GLOB.cassette_icons))
+	return list("icons" = GLOB.cassette_icons)
 
 /obj/machinery/cassette_deck/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
@@ -101,6 +142,9 @@
 			side.songs.Cut(index, index + 1)
 			balloon_alert(user, "removed track")
 			SStgui.update_uis(src)
+		if("add")
+			add_song(params["url"])
+			return TRUE
 
 /*
 /obj/machinery/cassette_deck/ui_data(mob/user)
