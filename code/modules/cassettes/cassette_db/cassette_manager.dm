@@ -53,7 +53,7 @@ SUBSYSTEM_DEF(cassettes)
 		CRASH("Cassette file [cassette_file] had invalid JSON!")
 	var/list/cassette_json = json_decode(cassette_file_data)
 	var/datum/cassette/cassette_data = new
-	cassette_data.import_old_format(cassette_json)
+	cassette_data.import(cassette_json)
 	cassette_data.id = id
 	return cassette_data
 
@@ -81,8 +81,8 @@ SUBSYSTEM_DEF(cassettes)
 	cassette.status = status
 	cassette.author.name = author_name
 	cassette.author.ckey = author_ckey
-	cassette.front.import_from_db(front)
-	cassette.back.import_from_db(back)
+	cassette.front.import(front)
+	cassette.back.import(back)
 	return cassette
 
 /// Returns an associative list of id to cassette datums, of all existing saved cassettes.
@@ -112,8 +112,8 @@ SUBSYSTEM_DEF(cassettes)
 		cassette.status = status
 		cassette.author.name = author_name
 		cassette.author.ckey = author_ckey
-		cassette.front.import_from_db(front)
-		cassette.back.import_from_db(back)
+		cassette.front.import(front)
+		cassette.back.import(back)
 
 		cassettes[id] = cassette
 	qdel(query_cassettes)
@@ -195,8 +195,8 @@ SUBSYSTEM_DEF(cassettes)
 			"status" = cassette.status,
 			"author_name" = cassette.author.name,
 			"author_ckey" = ckey(cassette.author.ckey),
-			"front" = cassette.front.export_for_db(),
-			"back" = cassette.back.export_for_db(),
+			"front" = cassette.front.export(),
+			"back" = cassette.back.export(),
 		))
 	if(!length(sql_cassettes))
 		return

@@ -27,8 +27,8 @@
 	QDEL_NULL(back)
 	return ..()
 
-/// Imports cassette date from the old format.
-/datum/cassette/proc/import_old_format(list/data)
+/// Imports cassette data from JSON/list.
+/datum/cassette/proc/import(list/data)
 	name = data["name"]
 	desc = data["desc"]
 	if("status" in data)
@@ -53,42 +53,28 @@
 			side.songs += new /datum/cassette_song(track["title"], track["url"], track["duration"], track["artist"], track["album"])
 
 /// Exports cassette date in the old format.
-/datum/cassette/proc/export_old_format() as /list
+/datum/cassette/proc/export() as /list
 	. = list(
+		"id" = id,
 		"name" = name,
 		"desc" = desc,
-		"side1_icon" = /datum/cassette_side::design,
-		"side2_icon" = /datum/cassette_side::design,
-		"author_name" = author.name,
-		"author_ckey" = ckey(author.ckey),
-		"approved" = status == CASSETTE_STATUS_APPROVED,
 		"status" = status,
+		"author_name" = author.name,
+		"author_ckey" = author.ckey,
 		"songs" = list(
-			"side1" = list(),
-			"side2" = list(),
-		),
-		"song_names" = list(
 			"side1" = list(),
 			"side2" = list(),
 		),
 	)
 	for(var/i in 1 to 2)
 		var/datum/cassette_side/side = get_side(i % 2) // side2 = 0, side1 = 1
-		var/side_name = "side[i]"
-		var/list/names = list()
-		var/list/urls = list()
-		.["[side_name]_icon"] = side.design
-		for(var/datum/cassette_song/song as anything in side.songs)
-			names += song.name
-			urls += song.url
-		.["song_names"][side_name] = names
-		.["songs"][side_name] = urls
+		.["songs"]["side[i]"] = side.export()
 
 /// Saves the cassette to the data folder, in JSON format.
 /datum/cassette/proc/save_to_file()
 	if(!id)
 		CRASH("Attempted to save cassette without an ID to disk")
-	rustg_file_write(json_encode(export_old_format(), JSON_PRETTY_PRINT), CASSETTE_FILE(id))
+	rustg_file_write(json_encode(export(), JSON_PRETTY_PRINT), CASSETTE_FILE(id))
 
 /// Saves the cassette to the database.
 /// Returns TRUE if successful, FALSE otherwise.
@@ -118,8 +104,8 @@
 		"status" = status,
 		"author_name" = author.name,
 		"author_name" = ckey(author.ckey),
-		"front" = json_encode(front.export_for_db()),
-		"back" = json_encode(back.export_for_db()),
+		"front" = json_encode(front.export()),
+		"back" = json_encode(back.export()),
 	))
 	if(!query_save_cassette.warn_execute())
 		qdel(query_save_cassette)
@@ -153,7 +139,7 @@
 	var/list/datum/cassette_song/songs = list()
 
 /// Imports data for this cassette side to the JSON format used by the database.
-/datum/cassette_side/proc/import_from_db(list/data)
+/datum/cassette_side/proc/import(list/data)
 	design = data["design"]
 	for(var/list/song_data as anything in data["tracks"])
 		var/datum/cassette_song/song = new
@@ -161,10 +147,10 @@
 		songs += song
 
 /// Exports data from this cassette side in the JSON format used by the database.
-/datum/cassette_side/proc/export_for_db()
+/datum/cassette_side/proc/export()
 	. = list("design" = design, "tracks" = list())
 	for(var/datum/cassette_song/song as anything in songs)
-		.["songs"] += list(song.export())
+		.["tracks"] += list(song.export())
 
 /datum/cassette_side/Destroy(force)
 	QDEL_LIST(songs)
