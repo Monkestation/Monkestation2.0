@@ -1,5 +1,3 @@
-#define SHORTS_PANTS_SHIRTS_DIGIFILE 'monkestation/code/modules/blueshift/icons/mob/clothing/under/shorts_pants_shirts_digi.dmi'
-
 /obj/item/clothing/under/pants
 	worn_icon_digitigrade = SHORTS_PANTS_SHIRTS_DIGIFILE
 

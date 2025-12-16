@@ -361,3 +361,5 @@
 		return ITEM_SLOT_LEGCUFFED
 
 	return ..()
+
+#undef BLACKBOX_FEEDBACK_NUM

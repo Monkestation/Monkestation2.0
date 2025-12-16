@@ -506,11 +506,11 @@
 		return NONE
 	var/mob/living/guy_we_are_stabbing = interacting_with
 	if(!(guy_we_are_stabbing.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD|MOB_ROBOTIC)) || issilicon(guy_we_are_stabbing))
-		guy_we_are_stabbing.balloon_alert(user, "Incompatible")
+		guy_we_are_stabbing.balloon_alert(user, "incompatible")
 		return ITEM_INTERACT_BLOCKING
 	var/datum/component/nanites/nanos = user.GetComponent(/datum/component/nanites)
 	if(nanos.nanite_volume < (200 + nanos.safety_threshold))
-		guy_we_are_stabbing.balloon_alert(user, "Not enough nanites")
+		guy_we_are_stabbing.balloon_alert(user, "not enough nanites")
 		return ITEM_INTERACT_BLOCKING
 	var/none_mod = guy_we_are_stabbing.GetComponent(/datum/component/nanites) ? 1 : 3
 	guy_we_are_stabbing.visible_message(span_warning("[user] jabs [src] into [guy_we_are_stabbing], and it begins flowing into [guy_we_are_stabbing.p_their()] skin!"), ignored_mobs=list(user,guy_we_are_stabbing))

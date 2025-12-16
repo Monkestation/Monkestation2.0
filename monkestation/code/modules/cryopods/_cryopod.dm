@@ -6,12 +6,12 @@
 #define AHELP_FIRST_MESSAGE "Please adminhelp before leaving the round, even if there are no administrators online!"
 
 /*
- * Cryogenic refrigeration unit. Basically a despawner.
- * Stealing a lot of concepts/code from sleepers due to massive laziness.
- * The despawn tick will only fire if it's been more than time_till_despawned ticks
- * since time_entered, which is world.time when the occupant moves in.
- * ~ Zuhayr
- */
+* Cryogenic refrigeration unit. Basically a despawner.
+* Stealing a lot of concepts/code from sleepers due to massive laziness.
+* The despawn tick will only fire if it's been more than time_till_despawned ticks
+* since time_entered, which is world.time when the occupant moves in.
+* ~ Zuhayr
+*/
 GLOBAL_LIST_EMPTY(cryopod_computers)
 
 GLOBAL_LIST_EMPTY(ghost_records)
@@ -494,9 +494,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 
 /// It's time to kill GLOB
 /**
- * Reset religion to its default state so the new chaplain becomes high priest and can change the sect, armor, weapon type, etc
- * Also handles the selection of a holy successor from existing crew if multiple chaplains are on station.
- */
+	* Reset religion to its default state so the new chaplain becomes high priest and can change the sect, armor, weapon type, etc
+	* Also handles the selection of a holy successor from existing crew if multiple chaplains are on station.
+	*/
 /obj/machinery/cryopod/proc/reset_religion()
 
 	// remember what the previous sect and favor values were so they can be restored if the same one gets chosen
@@ -504,7 +504,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 		GLOB.prev_favor = GLOB.religious_sect.favor
 		GLOB.prev_sect_type = GLOB.religious_sect.type
 
- // set the altar references to the old religious_sect to null
+// set the altar references to the old religious_sect to null
 	for(var/obj/structure/altar_of_gods/altar in GLOB.chaplain_altars)
 		var/datum/component/religious_tool/religious_tool = altar.GetComponent(/datum/component/religious_tool)
 		if(religious_tool)
@@ -527,10 +527,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 	GLOB.current_highpriest = chosen_successor ? WEAKREF(chosen_successor) : null // if a successor is already on the station then pick the first in line
 
 /**
- * Chooses a valid holy successor from GLOB.holy_successor weakref list and sets things up for them to be the new high priest
- *
- * Returns the chosen holy successor, or null if no valid successor
- */
+	* Chooses a valid holy successor from GLOB.holy_successor weakref list and sets things up for them to be the new high priest
+	*
+	* Returns the chosen holy successor, or null if no valid successor
+	*/
 /obj/machinery/cryopod/proc/pick_holy_successor()
 	for(var/datum/weakref/successor as anything in GLOB.holy_successors)
 		var/mob/living/carbon/human/actual_successor = successor.resolve()
@@ -555,10 +555,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 	return null
 
 /**
- * Create a list of the holy successors mobs from GLOB.holy_successors weakref list
- *
- * Returns the list of valid holy successors
- */
+	* Create a list of the holy successors mobs from GLOB.holy_successors weakref list
+	*
+	* Returns the list of valid holy successors
+	*/
 /obj/machinery/cryopod/proc/list_holy_successors()
 	var/list/holy_successors = list()
 	for(var/datum/weakref/successor as anything in GLOB.holy_successors)
@@ -732,11 +732,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/cryopod/prison, 18)
 	return
 
 /**
- * Returns the the alt name for this spawner, which is 'outfit.name'.
- *
- * For when you might want to use that for things instead of the name var.
- * example: the DS2 spawners, which have a number of different types of spawner with the same name.
- */
+	* Returns the the alt name for this spawner, which is 'outfit.name'.
+	*
+	* For when you might want to use that for things instead of the name var.
+	* example: the DS2 spawners, which have a number of different types of spawner with the same name.
+	*/
 /obj/effect/mob_spawn/ghost_role/get_alt_name()
 	if(use_outfit_name)
 		return initial(outfit.name)

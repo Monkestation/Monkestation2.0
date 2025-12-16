@@ -1,5 +1,5 @@
 //like orange but only checks north/south/east/west for one step
-/proc/cardinalrange(var/center)
+/proc/cardinalrange(center)
 	var/list/things = list()
 	for(var/direction in GLOB.cardinals)
 		var/turf/Turf = get_step(center, direction)
@@ -30,7 +30,7 @@
 	var/dirs = 0
 
 
-/obj/machinery/am_shielding/Initialize()
+/obj/machinery/am_shielding/Initialize(mapload)
 	. = ..()
 	addtimer(CALLBACK(src, PROC_REF(controllerscan)), 10)
 
