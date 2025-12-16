@@ -94,6 +94,12 @@
 	SStgui.update_uis(src)
 	return TRUE
 
+
+/obj/machinery/cassette_deck/ui_assets(mob/user)
+	return list(
+		get_asset_datum(/datum/asset/spritesheet_batched/cassettes),
+	)
+
 /obj/machinery/cassette_deck/ui_data(mob/user)
 	. = list(
 		"cassette" = null,
