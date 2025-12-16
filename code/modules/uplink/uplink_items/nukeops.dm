@@ -620,6 +620,12 @@
 	item = /obj/vehicle/sealed/mecha/marauder/mauler/loaded
 	cost = 140
 
+/datum/uplink_item/support/sentinel
+	name = "Sentinel Exosuit"
+	desc = "A Superheavy Seige walker fitted with a giant cannon in a turret, great for annihalating stations."
+	item = /obj/vehicle/sealed/mecha/sentinel/syntinel
+	cost = 175
+
 /datum/uplink_item/support/devitt
 	name = "Devitt Mk3 Light Tank"
 	desc = "An ancient tank found in the wearhouse, comes prepared with a cannon and machinegun. REQUIRES TWO CREWMEMBERS TO OPPERATE EFFECTIVELY."

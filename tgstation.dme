@@ -6142,6 +6142,7 @@
 #include "code\modules\vehicles\mecha\combat\phazon.dm"
 #include "code\modules\vehicles\mecha\combat\reticence.dm"
 #include "code\modules\vehicles\mecha\combat\savannah_ivanov.dm"
+#include "code\modules\vehicles\mecha\combat\sentinel.dm"
 #include "code\modules\vehicles\mecha\combat\trash_tank.dm"
 #include "code\modules\vehicles\mecha\combat\vendozer.dm"
 #include "code\modules\vehicles\mecha\equipment\mecha_equipment.dm"
