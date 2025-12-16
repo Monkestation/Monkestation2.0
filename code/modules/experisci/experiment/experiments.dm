@@ -65,7 +65,7 @@
 	name = "Low-Yield Explosives"
 	description = "Low-yield explosives may prove useful for our asset protection teams. Capture a small explosion with a Doppler Array and publish the data in a paper."
 	gain = list(10,15,20)
-	target_amount = list(5,10,20)
+	target_amount = list(10,20,40)
 	experiment_proper = TRUE
 	sanitized_misc = FALSE
 	sanitized_reactions = FALSE
@@ -75,7 +75,7 @@
 	name = "High-Yield Explosives"
 	description =  "Several reactions react very energetically and can be utilized for bigger explosives. Capture any tank explosion with a Doppler Array and publish the data in a paper. Any gas reaction is allowed."
 	gain = list(10,50,100)
-	target_amount = list(50,100,300)
+	target_amount = list(750,1500,3000)
 	experiment_proper = TRUE
 	sanitized_misc = FALSE
 	sanitized_reactions = FALSE
@@ -95,7 +95,7 @@
 	name = "Noblium Explosives"
 	description = "The formation of Hyper-Noblium is very energetic and can be harnessed for explosives. Capture any tank explosion with a Doppler Array and publish the data in a paper. Only Hyper-Noblium Condensation is allowed."
 	gain = list(15,60,120)
-	target_amount = list(50,100,300)
+	target_amount = list(150,300,600)
 	experiment_proper = TRUE
 	sanitized_misc = TRUE
 	sanitized_reactions = TRUE
