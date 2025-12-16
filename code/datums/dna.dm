@@ -115,11 +115,14 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	new_dna.unique_features = unique_features
 	new_dna.human_blood_type = human_blood_type
 	new_dna.features = features.Copy()
-	new_dna.color_palettes = color_palettes.Copy()
+	new_dna.color_palettes = list()
+	for(var/palette_type, value in color_palettes)
+		var/datum/color_palette/palette = value
+		new_dna.color_palettes[palette_type] = palette.make_copy()
 	new_dna.real_name = real_name
 	new_dna.temporary_mutations = temporary_mutations.Copy()
-	new_dna.mutation_index = mutation_index
-	new_dna.default_mutation_genes = default_mutation_genes
+	new_dna.mutation_index = mutation_index.Copy()
+	new_dna.default_mutation_genes = default_mutation_genes.Copy()
 
 	//if the new DNA has a holder, transform them immediately, otherwise save it
 	if(new_dna.holder)

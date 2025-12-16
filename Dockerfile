@@ -15,6 +15,7 @@ RUN apt-get install -y --no-install-recommends \
         curl \
         unzip \
         make \
+        libcurl4:i386 \
         libstdc++6:i386
 
 COPY dependencies.sh .
