@@ -1050,6 +1050,10 @@
 		antimagic_color = LIGHT_COLOR_DARK_BLUE
 		playsound(src, 'sound/magic/magic_block_mind.ogg', 50, TRUE)
 
+	if(ishuman(src))
+		var/mob/living/carbon/human/human = src
+		human.apply_height_filters(antimagic_effect)
+
 	mob_light(range = 2, color = antimagic_color, duration = 5 SECONDS)
 	add_overlay(antimagic_effect)
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, cut_overlay), antimagic_effect), 5 SECONDS)
