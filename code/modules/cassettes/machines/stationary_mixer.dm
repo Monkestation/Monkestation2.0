@@ -112,6 +112,7 @@
 		.["cassette"] = list(
 			"name" = html_decode(cassette.name),
 			"desc" = html_decode(cassette.desc),
+			"status" = cassette.status,
 			"author" = cassette.author?.name,
 			"design" = side?.design || /datum/cassette_side::design,
 			"songs" = list(),
