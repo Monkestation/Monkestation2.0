@@ -33,7 +33,7 @@ GLOBAL_LIST_EMPTY(custom_fermentation_recipes)
 
 
 
-/obj/structure/fermentation_keg/Initialize()
+/obj/structure/fermentation_keg/Initialize(mapload)
 	. = ..()
 	create_reagents(240, OPENCONTAINER | NO_REACT) //on agv it should be 120u for water then rest can be other needed chemicals
 	recipe_crop_stocks = list()

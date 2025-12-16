@@ -57,7 +57,7 @@
 	name = "thermite"
 	desc = "Looks hot."
 	icon = 'icons/effects/fire.dmi'
-	icon_state = "2" //what?
+	icon_state = "medium" //what?
 	anchored = TRUE
 	opacity = TRUE
 	density = TRUE

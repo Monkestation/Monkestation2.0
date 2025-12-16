@@ -142,7 +142,7 @@
 /datum/action/cooldown/bloodsucker/proc/can_use(mob/living/carbon/user, trigger_flags)
 	if(QDELETED(owner))
 		return FALSE
-	if(!isliving(user))
+	if(!isliving(user) || isbrain(user))
 		return FALSE
 	// Torpor?
 	if((check_flags & BP_CANT_USE_IN_TORPOR) && bloodsuckerdatum_power?.is_in_torpor())
@@ -166,7 +166,7 @@
 		return FALSE
 	// Silver cuffed?
 	if(!(check_flags & BP_ALLOW_WHILE_SILVER_CUFFED) && user.has_status_effect(/datum/status_effect/silver_cuffed))
-		user.balloon_alert(user, "The silver cuffs on your wrists prevent you from using your powers!")
+		user.balloon_alert(user, "the silver cuffs on your wrists prevent you from using your powers!")
 		return FALSE
 	var/bloodcost = get_blood_cost()
 	var/constant_bloodcost = get_blood_cost(constant = TRUE)

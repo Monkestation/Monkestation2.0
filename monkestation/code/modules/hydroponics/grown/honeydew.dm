@@ -29,7 +29,7 @@
 /obj/item/food/grown/honeydew/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/honeydewslice, 6, 20, screentip_verb = "Slice")
 
-/obj/item/food/grown/honeydew/Initialize()
+/obj/item/food/grown/honeydew/Initialize(mapload)
 	. = ..()
 	// Used to check if they are wearing a horsemask
 	RegisterSignal(src, COMSIG_FOOD_EATEN, PROC_REF(check_horse_mask))

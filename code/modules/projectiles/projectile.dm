@@ -346,7 +346,7 @@
 
 	if(blocked != 100) // not completely blocked
 		var/obj/item/bodypart/hit_bodypart = living_target.get_bodypart(def_zone)
-		if(faction_check(living_target.faction, FACTION_MINING || FACTION_BOSS))
+		if(faction_check(living_target.faction, list(FACTION_MINING, FACTION_BOSS)))
 			damage *= fauna_mod
 		if (damage)
 			if (living_target.blood_volume && damage_type == BRUTE && (isnull(hit_bodypart) || hit_bodypart.can_bleed()))
@@ -1110,7 +1110,8 @@
 	cleanup_beam_segments()
 	if(trajectory)
 		QDEL_NULL(trajectory)
-	return ..()
+	. = ..()
+	impacted?.len = 0
 
 /obj/projectile/proc/cleanup_beam_segments()
 	QDEL_LIST_ASSOC(beam_segments)

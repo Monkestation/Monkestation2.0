@@ -262,6 +262,8 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	victim.visible_message(span_warning("[victim]'s body completely dissolves, collapsing outwards!"), span_notice("Your body completely dissolves, collapsing outwards!"), span_notice("You hear liquid splattering."))
 	var/turf/death_turf = get_turf(victim)
 	var/mob/living/basic/mining/legion/legionbody = astype(victim.loc)
+	if(legionbody)
+		ADD_TRAIT(src, TRAIT_NO_ORGAN_DECAY, REF(legionbody))
 
 	for(var/datum/quirk/quirk in victim.quirks) // Store certain quirks safe to transfer between bodies.
 		if(!is_type_in_typecache(quirk, saved_quirks) || is_type_in_typecache(quirk, skip_quirks))
@@ -465,13 +467,13 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	brainmob?.mind?.grab_ghost()
 	if(isnull(mind))
 		if(isnull(brainmob))
-			user?.balloon_alert(user, "This brain is not a viable candidate for repair!")
+			user?.balloon_alert(user, "this brain is not a viable candidate for repair!")
 			return null
 		if(isnull(brainmob.stored_dna))
-			user?.balloon_alert(user, "This brain does not contain any dna!")
+			user?.balloon_alert(user, "this brain does not contain any dna!")
 			return null
 		if(isnull(brainmob.client))
-			user?.balloon_alert(user, "This brain does not contain a mind!")
+			user?.balloon_alert(user, "this brain does not contain a mind!")
 			return null
 	var/mob/living/carbon/human/new_body = new /mob/living/carbon/human(drop_location())
 

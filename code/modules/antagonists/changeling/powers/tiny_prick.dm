@@ -68,11 +68,13 @@
 	desc = "We silently sting an organism, injecting a retrovirus that forces them to transform."
 	helptext = "The victim will transform much like a changeling would. \
 		For complex humanoids, the transformation only lasts 8 minutes, but the duration is paused while the victim is dead or in stasis. \
+		Mutadone can be used to reduce the duration. \
 		For more simple humanoids, such as monkeys, the transformation is permanent. \
 		Does not provide a warning to others. Mutations will not be transferred." // monkestation edit
 	button_icon_state = "sting_transform"
 	chemical_cost = 33 // Low enough that you can sting only two people in quick succession
 	dna_cost = 2
+	req_absorbs = 1
 	weird = TRUE
 	/// A reference to our active profile, which we grab DNA from
 	VAR_FINAL/datum/changeling_profile/selected_dna
@@ -114,6 +116,7 @@
 		|| HAS_TRAIT(target, TRAIT_HUSK) \
 		|| HAS_TRAIT(target, TRAIT_BADDNA) \
 		|| HAS_TRAIT(target, TRAIT_NO_TRANSFORMATION_STING) \
+		|| HAS_TRAIT(target, TRAIT_SPECIESLOCK) \
 		|| (HAS_TRAIT(target, TRAIT_NO_DNA_COPY) && !ismonkeybasic(target))) // sure, go ahead, make a monk-clone
 		user.balloon_alert(user, "incompatible DNA!")
 		return FALSE

@@ -118,6 +118,9 @@
 	///can we grab this object?
 	var/cant_grab = FALSE
 
+	/// If TRUE, then this will be affected by things such as the "Bot Language Matrix Malfunction" station trait.
+	var/can_language_malfunction = TRUE
+
 	/// The weight for A* pathfinding added to turfs this atom is on.
 	var/astar_weight
 
@@ -1628,6 +1631,8 @@
  * - They are on the escape shuttle
  */
 /atom/movable/proc/randomize_language_if_on_station()
+	if(!can_language_malfunction)
+		return
 	var/turf/atom_turf = get_turf(src)
 	var/area/atom_area = get_area(src)
 

@@ -548,6 +548,7 @@
 /area/shuttle/pirate)
 "ua" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/holopad/secure/hacked,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "vz" = (
