@@ -620,7 +620,7 @@
 /**
  * A security variant of the bola.
  *
- * It's smaller and uncatchable (although still blockable), but easier to remove than a normal bola, and non-reusable.
+ * It's smaller and uncatchable (although still blockable), but easier to remove than a normal bola, slows slightly less, and non-reusable.
  */
 /obj/item/restraints/legcuffs/bola/energy
 	name = "energy bola"
