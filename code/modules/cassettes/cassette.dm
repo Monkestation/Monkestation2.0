@@ -46,9 +46,9 @@ GLOBAL_LIST_INIT(cassette_icons, list(
 
 /obj/item/cassette_tape/LateInitialize()
 	if(id)
-		cassette_data = SScassettes.load_cassette(id)
+		cassette_data = SScassettes.load_cassette(id)?.copy()
 	else if(random && length(GLOB.approved_ids))
-		cassette_data = SScassettes.load_cassette(pick(GLOB.approved_ids))
+		cassette_data = SScassettes.load_cassette(pick(GLOB.approved_ids))?.copy()
 	cassette_data ||= new
 	update_appearance(UPDATE_NAME | UPDATE_DESC | UPDATE_ICON_STATE)
 

@@ -27,6 +27,12 @@
 	QDEL_NULL(back)
 	return ..()
 
+/// Create a copy of this cassette.
+/datum/cassette/proc/copy() as /datum/cassette
+	var/datum/cassette/cassette = new
+	cassette.import(export()) // lazy
+	return cassette
+
 /// Imports cassette data from JSON/list.
 /datum/cassette/proc/import(list/data)
 	name = data["name"]
