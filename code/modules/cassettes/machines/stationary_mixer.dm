@@ -91,6 +91,7 @@
 	balloon_alert(user, "track added!")
 	to_chat(user, span_notice("Added new track \"[metadata["title"]]\" to [tape]"))
 	side.songs += song
+	tape.cassette_data.status = CASSETTE_STATUS_UNAPPROVED // reset to unapproved
 	SStgui.update_uis(src)
 	return TRUE
 
