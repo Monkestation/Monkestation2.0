@@ -3759,7 +3759,6 @@
 #include "code\modules\cassettes\dj\mob_can_hear.dm"
 #include "code\modules\cassettes\machines\cassette_rack.dm"
 #include "code\modules\cassettes\machines\dj_station.dm"
-#include "code\modules\cassettes\machines\portable_mixer.dm"
 #include "code\modules\cassettes\machines\postbox.dm"
 #include "code\modules\cassettes\machines\radio_mic.dm"
 #include "code\modules\cassettes\machines\stationary_mixer.dm"
