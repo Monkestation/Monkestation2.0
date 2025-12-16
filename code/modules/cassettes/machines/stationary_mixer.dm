@@ -38,7 +38,7 @@
 		return ITEM_INTERACT_BLOCKING
 	playsound(src, 'sound/weapons/handcuffs.ogg', vol = 20, vary = TRUE, mixer_channel = CHANNEL_MACHINERY)
 	balloon_alert(user, "tape inserted")
-	update_static_data_for_all_viewers()
+	SStgui.update_uis(src)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/cassette_deck/proc/eject_tape(mob/user)
@@ -47,7 +47,7 @@
 	tape.forceMove(drop_location())
 	user?.put_in_hands(tape)
 	tape = null
-	update_static_data_for_all_viewers()
+	SStgui.update_uis(src)
 
 /obj/machinery/cassette_deck/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -56,11 +56,8 @@
 		ui.set_autoupdate(FALSE)
 		ui.open()
 
-/obj/machinery/cassette_deck/ui_static_data(mob/user)
-	. = list(
-		"cassette" = null,
-		"icons" = assoc_to_keys(GLOB.cassette_icons),
-	)
+/obj/machinery/cassette_deck/ui_data(mob/user)
+	. = list("cassette" = null)
 	var/datum/cassette/cassette = tape?.cassette_data
 	if(cassette)
 		var/datum/cassette_side/side = tape.get_current_side()
@@ -79,6 +76,9 @@
 				"artist" = song.artist,
 				"album" = song.album,
 			))
+
+/obj/machinery/cassette_deck/ui_static_data(mob/user)
+	return list("icons" = assoc_to_keys(GLOB.cassette_icons))
 
 /obj/machinery/cassette_deck/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
@@ -100,7 +100,7 @@
 				CRASH("tried to remove track [index] from tape while there were only [length(side.songs)] songs???")
 			side.songs.Cut(index, index + 1)
 			balloon_alert(user, "removed track")
-			update_static_data_for_all_viewers()
+			SStgui.update_uis(src)
 
 /*
 /obj/machinery/cassette_deck/ui_data(mob/user)
