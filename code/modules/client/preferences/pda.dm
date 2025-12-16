@@ -67,6 +67,7 @@
 #define PDA_RINGTONE_MEOW4 "Meow 4"
 #define PDA_RINGTONE_MEOW_ELECTRIC "Meow (Electric)"
 #define PDA_RINGTONE_MORSE "Morse"
+#define PDA_RINGTONE_OHHIMARK "Oh Hi Mark"
 #define PDA_RINGTONE_JINGLE "Mysterious Jingle"
 #define PDA_RINGTONE_NORMALIZE "Normalize"
 #define PDA_RINGTONE_NOT_ALPHYS "Not Alphys"
@@ -107,6 +108,7 @@ GLOBAL_LIST_INIT(pda_ringtone_sounds, list(
 	PDA_RINGTONE_MEOW4 = 'sound/machines/pda_ringtones/meow4.ogg',
 	PDA_RINGTONE_MEOW_ELECTRIC = 'sound/machines/pda_ringtones/meow_electric.ogg',
 	PDA_RINGTONE_MORSE = 'sound/machines/pda_ringtones/morse.ogg',
+	PDA_RINGTONE_OHHIMARK = 'sound/machines/pda_ringtones/oh_hi_mark.ogg',
 	PDA_RINGTONE_JINGLE = 'sound/machines/pda_ringtones/jingle.ogg',
 	PDA_RINGTONE_BUZZ = 'sound/machines/pda_ringtones/buzz.ogg',
 	PDA_RINGTONE_NOT_ALPHYS = 'sound/machines/pda_ringtones/not_alphys.ogg',

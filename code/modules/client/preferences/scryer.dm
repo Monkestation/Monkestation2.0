@@ -8,6 +8,7 @@
 
 #define CALL_RINGTONE_ALLSTAR "All Star"
 #define CALL_RINGTONE_BIGSHOT "Big Shot"
+#define CALL_RINGTONE_BADAPPLE "Bad Apple"
 #define CALL_RINGTONE_BONETROUSLE "Bonetrousle"
 #define CALL_RINGTONE_CATS "🐈"
 #define CALL_RINGTONE_COFFEE_SHOP "Coffee Shop in Yume"
@@ -24,6 +25,7 @@
 GLOBAL_LIST_INIT(call_ringtones, list(
 	CALL_RINGTONE_ALLSTAR = list('sound/machines/call_ringtones/allstar.ogg', 14.7 SECONDS),
 	CALL_RINGTONE_BIGSHOT = list('sound/machines/call_ringtones/bigshot.ogg', 21.1 SECONDS),
+	CALL_RINGTONE_BADAPPLE = list('sound/machines/call_ringtones/bad_apple.ogg', 21.1 SECONDS),
 	CALL_RINGTONE_BONETROUSLE = list('sound/machines/call_ringtones/bonetrousle.ogg', 20 SECONDS),
 	CALL_RINGTONE_CATS = list('sound/machines/call_ringtones/cats.ogg', 28 SECONDS),
 	CALL_RINGTONE_COFFEE_SHOP = list('sound/machines/call_ringtones/coffee_shop_in_yume.ogg', 19.2 SECONDS),
