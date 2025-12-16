@@ -152,6 +152,9 @@
 		if("add")
 			add_song(params["url"])
 			return TRUE
+		if("eject")
+			eject_tape(user)
+			return TRUE
 
 /*
 /obj/machinery/cassette_deck/ui_data(mob/user)
