@@ -14289,6 +14289,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/east,
 /obj/structure/cable/layer1,
+/obj/structure/cable/layer3,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/engineering/main)
 "bpV" = (
@@ -27892,6 +27893,7 @@
 	},
 /obj/structure/extinguisher_cabinet/directional/east,
 /obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/hfr_room)
 "dya" = (
@@ -31702,6 +31704,7 @@
 	name = "Atmospherics HFR Room"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/atmos,
+/obj/structure/cable/layer3,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/engineering/atmos/hfr_room)
 "fbw" = (
@@ -35091,6 +35094,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/hfr_room)
 "gxD" = (
@@ -36457,6 +36461,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/hfr_room)
 "gZd" = (
@@ -38586,6 +38591,7 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "hKb" = (
+/obj/structure/cable/layer3,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/engineering/main)
 "hKd" = (
@@ -39445,6 +39451,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 4
 	},
+/obj/structure/cable/layer3,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/hfr_room)
 "iaR" = (
@@ -44832,6 +44839,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/atmos,
 /obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/hfr_room)
 "jZo" = (
@@ -60670,6 +60678,7 @@
 /obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/glass/fifty,
 /obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/hfr_room)
 "pZF" = (
@@ -64127,6 +64136,7 @@
 	dir = 6
 	},
 /obj/structure/sign/poster/random/directional/east,
+/obj/structure/cable/layer3,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/hfr_room)
 "rnL" = (
@@ -68110,6 +68120,7 @@
 	dir = 4
 	},
 /obj/machinery/light/directional/east,
+/obj/structure/cable/layer3,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/hfr_room)
 "sSz" = (
@@ -70195,6 +70206,7 @@
 	},
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/hfr_room)
 "tEW" = (
@@ -78312,6 +78324,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/hfr_room)
 "wNp" = (
@@ -81163,6 +81176,7 @@
 /area/station/security/prison)
 "xSs" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable/layer3,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/engineering/main)
 "xTb" = (
