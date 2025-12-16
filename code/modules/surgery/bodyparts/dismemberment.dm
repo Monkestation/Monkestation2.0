@@ -278,7 +278,7 @@
 	if(arm_owner.hud_used)
 		var/atom/movable/screen/inventory/hand/associated_hand = arm_owner.hud_used.hand_slots["[held_index]"]
 		associated_hand?.update_appearance()
-	if(arm_owner.gloves)
+	if(arm_owner.num_hands == 0)
 		arm_owner.dropItemToGround(arm_owner.gloves, TRUE, violent = violent)
 	arm_owner.update_worn_gloves() //to remove the bloody hands overlay
 
@@ -391,7 +391,7 @@
 		// we have to remove the wound from the limb wound list first, so that we can reapply it fresh with the new person
 		// otherwise the wound thinks it's trying to replace an existing wound of the same type (itself) and fails/deletes itself
 		LAZYREMOVE(wounds, wound)
-		wound.apply_wound(src, TRUE)
+		wound.apply_wound(src, TRUE, wound_source = wound.wound_source)
 
 	for(var/datum/scar/scar as anything in scars)
 		if(scar in new_limb_owner.all_scars) // prevent double scars from happening for whatever reason

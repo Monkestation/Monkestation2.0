@@ -19,7 +19,7 @@
 				new /obj/effect/pathogen_cloud/core(get_turf(src), src, airborne_viruses)
 				strength -= 40
 
-/mob/living/infect_disease(datum/disease/acute/disease, forced = FALSE, notes = "", decay = TRUE)
+/mob/living/infect_disease(datum/disease/acute/disease, forced = FALSE, notes = "", decay = TRUE, patient_zero = FALSE)
 	if(!istype(disease))
 		return FALSE
 
@@ -45,6 +45,8 @@
 		D.log += "<br />[ROUND_TIME()] Infected [key_name(src)] [notes]. Infection chance now [D.infectionchance]%"
 
 		LAZYADD(diseases, D)
+		if(patient_zero)
+			D.carrier = TRUE
 		D.affected_mob = src
 		//SSdisease.active_diseases += D
 		D.after_add()

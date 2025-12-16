@@ -46,7 +46,7 @@
 			var/damage_healed = FREE_DAMAGE_HEALED + ((affected_mob.getMaxHealth() - affected_mob.health) * 0.6)
 			if(GLOB.clock_vitality >= damage_healed)
 				GLOB.clock_vitality -= damage_healed
-				affected_mob.revive(ADMIN_HEAL_ALL)
+				affected_mob.revive(ADMIN_HEAL_ALL, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 				revived = TRUE
 
 		if(affected_mob.stat != DEAD && (!affected_mob.client || affected_mob.client.is_afk()))

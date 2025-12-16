@@ -108,6 +108,17 @@
 		RND_CATEGORY_DEFOREST_BLOOD,
 	)
 
+/datum/design/organic_bloodbag_arachnid
+	name = "S Blood Pack"
+	id = "organic_bloodbag_arachnid"
+	build_type = BIOGENERATOR
+	materials = list(/datum/material/biomass = 100)
+	build_path = /obj/item/reagent_containers/blood/spider
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_DEFOREST_BLOOD,
+	)
+
 /datum/design/organic_printer_gauze
 	name = "medical gauze"
 	id = "medical_gauze"
@@ -125,28 +136,6 @@
 	build_type = BIOGENERATOR
 	materials = list(/datum/material/biomass = 50)
 	build_path = /obj/item/stack/medical/gauze/sterilized
-	category = list(
-		RND_CATEGORY_INITIAL,
-		RND_CATEGORY_DEFOREST_MEDICAL,
-	)
-
-/datum/design/organic_bruise_pack
-	name = "Bruise Pack"
-	id = "organic_bruise_pack"
-	build_type = BIOGENERATOR
-	materials = list(/datum/material/biomass = 25)
-	build_path = /obj/item/stack/heal_pack/brute_pack
-	category = list(
-		RND_CATEGORY_INITIAL,
-		RND_CATEGORY_DEFOREST_MEDICAL,
-	)
-
-/datum/design/organic_burn_pack
-	name = "Burn Pack"
-	id = "organic_burn_pack"
-	build_type = BIOGENERATOR
-	materials = list(/datum/material/biomass = 25)
-	build_path = /obj/item/stack/heal_pack/burn_pack
 	category = list(
 		RND_CATEGORY_INITIAL,
 		RND_CATEGORY_DEFOREST_MEDICAL,

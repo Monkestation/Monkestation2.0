@@ -19,6 +19,22 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
+/obj/item/clothing/under/rank/centcom/nanotrasen_representative/turtleneck
+	name = "representative's turtleneck"
+	desc = "Comfortable and Authoritarian"
+	icon = 'monkestation/icons/obj/clothing/jobs/nanotrasen_representative_clothing_item.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/jobs/nanotrasen_representative_clothing.dmi'
+	icon_state = "rep_turtleneck"
+	can_adjust = TRUE
+
+/obj/item/clothing/under/rank/centcom/nanotrasen_representative/skirtleneck
+	name = "representative's turtleneck"
+	desc = "Comfortable and Authoritarian "
+	icon = 'monkestation/icons/obj/clothing/jobs/nanotrasen_representative_clothing_item.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/jobs/nanotrasen_representative_clothing.dmi'
+	icon_state = "rep_skirtleneck"
+	can_adjust = TRUE
+
 /obj/item/clothing/head/hats/nanotrasen_representative
 	name = "representative's hat"
 	desc = "Born to be obsessive and snotty."
@@ -70,9 +86,17 @@
 
 /obj/item/storage/bag/garment/nanotrasen_representative/PopulateContents()
 	new /obj/item/clothing/under/rank/centcom/nanotrasen_representative(src)
+	new /obj/item/clothing/under/rank/centcom/nanotrasen_representative/turtleneck(src)
 	new /obj/item/clothing/under/rank/centcom/nanotrasen_representative/skirt(src)
+	new /obj/item/clothing/under/rank/centcom/nanotrasen_representative/skirtleneck(src)
 	new /obj/item/clothing/head/hats/nanotrasen_representative(src)
+	new /obj/item/clothing/under/rank/centcom/officercasual(src)
 	new /obj/item/clothing/suit/armor/vest/nanotrasen_representative/bathrobe(src)
 	new /obj/item/clothing/suit/armor/vest/nanotrasen_representative(src)
 	new /obj/item/clothing/gloves/color/black(src)
 	new /obj/item/clothing/shoes/laceup(src)
+	new /obj/item/clothing/under/costume/playbunny/centcom(src)
+	new /obj/item/clothing/suit/jacket/tailcoat/centcom/ntrep(src)
+	new /obj/item/clothing/shoes/heels/centcom(src)
+	new /obj/item/clothing/head/playbunnyears/centcom(src)
+	new /obj/item/clothing/neck/tie/bunnytie/centcom/tied(src)

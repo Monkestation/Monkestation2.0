@@ -56,6 +56,7 @@
 	paddles = new paddle_type(src)
 	update_power()
 	RegisterSignal(paddles, COMSIG_DEFIBRILLATOR_SUCCESS, PROC_REF(on_defib_success))
+	AddElement(/datum/element/drag_pickup)
 
 /obj/item/defibrillator/loaded/Initialize(mapload) //starts with hicap
 	. = ..()
@@ -135,13 +136,6 @@
 	else if(istype(loc, /obj/machinery/defibrillator_mount))
 		ui_action_click() //checks for this are handled in defibrillator.mount.dm
 	return ..()
-
-/obj/item/defibrillator/mouse_drop_dragged(atom/over_object, mob/user, src_location, over_location, params)
-	if(ismob(loc))
-		var/mob/M = loc
-		if(istype(over_object, /atom/movable/screen/inventory/hand))
-			var/atom/movable/screen/inventory/hand/H = over_object
-			M.putItemFromInventoryInHandIfPossible(src, H.held_index)
 
 /obj/item/defibrillator/screwdriver_act(mob/living/user, obj/item/tool)
 	if(!cell || !cell_removable)

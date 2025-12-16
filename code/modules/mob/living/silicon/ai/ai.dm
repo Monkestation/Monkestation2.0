@@ -21,6 +21,7 @@
 	density = TRUE
 	status_flags = CANSTUN|CANPUSH
 	istate = ISTATE_HARM|ISTATE_BLOCKING //so we always get pushed instead of trying to swap
+	forced_interaction_mode = /datum/interaction_mode/no_interaction/nopassthrough //a nothingburger interact mode, which forces the istate above for the rest of time
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS
 	hud_type = /datum/hud/ai
 	med_hud = DATA_HUD_MEDICAL_BASIC
@@ -114,6 +115,11 @@
 
 	var/jobtitles = TRUE
 
+	///This action opens menu to modify the settings.
+	var/datum/action/innate/internal_nanite_menu/nanite_menu
+	///This action actually uses the remote.
+	var/datum/action/innate/ai/ranged/internal_nanite_remote/nanite_remote
+
 	/* ROBOT CONTROL */
 	/// UI for robot controls
 	VAR_FINAL/datum/robot_control/robot_control
@@ -185,6 +191,11 @@
 
 	deploy_action.Grant(src)
 
+	nanite_remote = new
+	nanite_menu = new(nanite_remote)
+	nanite_menu.Grant(src)
+	nanite_remote.Grant(src)
+
 	if(isturf(loc))
 		add_verb(src, list(
 			/mob/living/silicon/ai/proc/ai_network_change,
@@ -250,6 +261,8 @@
 	QDEL_NULL(aiMulti)
 	QDEL_NULL(alert_control)
 	QDEL_NULL(ai_tracking_tool)
+	QDEL_NULL(nanite_menu)
+	QDEL_NULL(nanite_remote)
 	malfhack = null
 	current = null
 	bot_ref = null
@@ -280,6 +293,11 @@
 	else
 		var/preferred_icon = input ? input : C.prefs.read_preference(/datum/preference/choiced/ai_core_display)
 		icon_state = resolve_ai_icon(preferred_icon)
+
+/mob/living/silicon/ai/create_modularInterface()
+	if(!modularInterface)
+		modularInterface = new /obj/item/modular_computer/pda/silicon/ai(src)
+	return ..()
 
 /// Apply an AI's hologram preference
 /mob/living/silicon/ai/proc/apply_pref_hologram_display(client/player_client)
@@ -951,7 +969,7 @@
 	var/hrefpart = "<a href='byond://?src=[REF(src)];track=[html_encode(namepart)]'>"
 	var/jobpart = "Unknown"
 
-	if(!HAS_TRAIT(speaker, TRAIT_UNKNOWN)) //don't fetch the speaker's job in case they have something that conseals their identity completely
+	if(!(HAS_TRAIT(speaker, TRAIT_UNKNOWN) || HAS_TRAIT(src, TRAIT_ANONYMOUS))) //don't fetch the speaker's job in case they have something that conseals their identity completely
 		if (isliving(speaker))
 			var/mob/living/living_speaker = speaker
 			if(living_speaker.job)
@@ -1042,7 +1060,7 @@
 	// I am so sorry
 	SEND_SIGNAL(src, COMSIG_MOB_RESET_PERSPECTIVE)
 
-/mob/living/silicon/ai/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
+/mob/living/silicon/ai/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE, revival_policy = POLICY_REVIVAL)
 	. = ..()
 	if(!.) //successfully ressuscitated from death
 		return

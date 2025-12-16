@@ -22,7 +22,7 @@
 		- You will not appear as Pale when examined. Anything further than Pale, however, will not be hidden.\n\
 		At the end of a Masquerade, you will re-gain your Vampiric abilities, as well as lose any Disease & Gene you might have."
 	power_flags = BP_AM_TOGGLE | BP_AM_STATIC_COOLDOWN | BP_AM_COSTLESS_UNCONSCIOUS
-	check_flags = BP_CANT_USE_IN_FRENZY | BP_CANT_USE_DURING_SOL | BP_ALLOW_WHILE_SILVER_CUFFED
+	check_flags = BP_CANT_USE_IN_FRENZY | BP_ALLOW_WHILE_SILVER_CUFFED
 	purchase_flags = BLOODSUCKER_CAN_BUY | BLOODSUCKER_DEFAULT_POWER
 	bloodcost = 10
 	cooldown_time = 5 SECONDS
@@ -44,9 +44,6 @@
 	// Handle organs
 	var/obj/item/organ/internal/heart/vampheart = user.get_organ_slot(ORGAN_SLOT_HEART)
 	vampheart?.beating = TRUE
-	var/obj/item/organ/internal/eyes/eyes = user.get_organ_slot(ORGAN_SLOT_EYES)
-	if(eyes)
-		eyes.flash_protect = initial(eyes.flash_protect)
 
 	RegisterSignal(user, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_change))
 
@@ -68,9 +65,6 @@
 	// Handle organs
 	var/obj/item/organ/internal/heart/vampheart = user.get_organ_slot(ORGAN_SLOT_HEART)
 	vampheart?.beating = FALSE
-	var/obj/item/organ/internal/eyes/eyes = user.get_organ_slot(ORGAN_SLOT_EYES)
-	if(eyes)
-		eyes.flash_protect = max(initial(eyes.flash_protect) - 1, FLASH_PROTECTION_SENSITIVE)
 
 	UnregisterSignal(user, COMSIG_MOB_STATCHANGE)
 

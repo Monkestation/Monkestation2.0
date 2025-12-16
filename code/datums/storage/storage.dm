@@ -760,11 +760,15 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	SIGNAL_HANDLER
 
 	if(ismecha(user.loc) || user.incapacitated() || !user.canUseStorage())
-		return
+		return NONE
 
 	if(istype(over_object, /atom/movable/screen/inventory/hand))
 		if(real_location.loc != user || !user.can_perform_action(parent, FORBID_TELEKINESIS_REACH | ALLOW_RESTING))
-			return
+			return NONE
+		if(isitem(parent))
+			var/obj/item/item_parent = parent
+			if(!item_parent.can_mob_unequip(user))
+				return COMPONENT_CANCEL_MOUSEDROP_ONTO
 
 		var/atom/movable/screen/inventory/hand/hand = over_object
 		user.putItemFromInventoryInHandIfPossible(parent, hand.held_index)
@@ -773,27 +777,27 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	if(ismob(over_object))
 		if(over_object != user || !user.can_perform_action(parent, FORBID_TELEKINESIS_REACH | ALLOW_RESTING))
-			return
+			return NONE
 
 		parent.add_fingerprint(user)
 		INVOKE_ASYNC(src, PROC_REF(open_storage), user)
 		return COMPONENT_CANCEL_MOUSEDROP_ONTO
 
 	if(istype(over_object, /atom/movable/screen))
-		return
+		return NONE
 
 	if(!user.can_perform_action(over_object, FORBID_TELEKINESIS_REACH))
-		return
+		return NONE
 
 	parent.add_fingerprint(user)
 
 	var/atom/dump_loc = over_object.get_dumping_location()
 	if(isnull(dump_loc))
-		return
+		return NONE
 
 	/// Don't dump *onto* objects in the same storage as ourselves
 	if (over_object.loc == parent.loc && !isnull(parent.loc.atom_storage) && isnull(over_object.atom_storage))
-		return
+		return NONE
 
 	INVOKE_ASYNC(src, PROC_REF(dump_content_at), over_object, dump_loc, user)
 	return COMPONENT_CANCEL_MOUSEDROP_ONTO
@@ -1185,6 +1189,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 ///Assign a new value to the locked variable. If it's higher than NOT_LOCKED, close the UIs and update the appearance of the parent.
 /datum/storage/proc/set_locked(new_locked)
 	if(locked == new_locked)
+		parent.update_appearance() // exists cases where icon still changes
 		return
 	locked = new_locked
 	if(new_locked > STORAGE_NOT_LOCKED)

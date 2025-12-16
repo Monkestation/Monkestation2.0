@@ -235,14 +235,7 @@
 	metabolization_rate = 0.1 * REAGENTS_METABOLISM
 	ph = 8.1
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/reagent/medicine/spaceacillin/on_mob_metabolize(mob/living/L)
-	. = ..()
-	ADD_TRAIT(L, TRAIT_VIRUS_RESISTANCE, type)
-
-/datum/reagent/medicine/spaceacillin/on_mob_end_metabolize(mob/living/L)
-	. = ..()
-	REMOVE_TRAIT(L, TRAIT_VIRUS_RESISTANCE, type)
+	metabolized_traits = list(TRAIT_VIRUS_RESISTANCE)
 
 //Goon Chems. Ported mainly from Goonstation. Easily mixable (or not so easily) and provide a variety of effects.
 
@@ -1015,6 +1008,9 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/mutadone/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	var/datum/status_effect/temporary_transformation/trans_sting/sting_effect = affected_mob.has_status_effect(/datum/status_effect/temporary_transformation/trans_sting)
+	if(sting_effect && sting_effect.duration != STATUS_EFFECT_PERMANENT)
+		sting_effect.duration -= 10 SECONDS * REM * seconds_per_tick
 	affected_mob.remove_status_effect(/datum/status_effect/jitter)
 	if(affected_mob.has_dna())
 		affected_mob.dna.remove_mutation_group(affected_mob.dna.mutations - affected_mob.dna.get_mutation(/datum/mutation/race), GLOB.standard_mutation_sources)

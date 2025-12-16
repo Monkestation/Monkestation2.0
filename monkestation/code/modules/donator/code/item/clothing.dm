@@ -904,6 +904,7 @@
 	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
 	icon_state = "invicible_mask"
 	inhand_icon_state = null
+	slot_flags = ITEM_SLOT_MASK | ITEM_SLOT_HEAD
 	flags_inv = HIDEFACE|HIDEEYES
 
 /obj/item/clothing/gloves/fingerless/invicible_invisible
@@ -919,3 +920,27 @@
 	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
 	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
 	icon_state = "invicible_boots"
+
+/obj/item/clothing/mask/mrbaghead
+	name = "Mr Bag Head's Paper Sack"
+	desc = "A brown paper sack painted with a red face. You also notice the signature 'MrBagHead' inside the bag."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "mrbagheadsack"
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+
+/obj/item/clothing/suit/monkey_jacket
+	name = "Monkey Varsity Jacket"
+	desc = "Dark grey varsity jacket with a monkey face on the back!"
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "monkey_jacket"
+	worn_icon_state = "monkey_jacket"
+
+/obj/item/clothing/head/hats/bananotrasen_super_hat
+	name = "bananotrasen super hat"
+	desc = "The standard-issue cap of the... Head of Bananas. <span class='small'>That can't be right???</span> For showing the monkeys who's in charge???"
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "bananotrasen_super_hat"
+	worn_icon_state = "bananotrasen_super_hat"

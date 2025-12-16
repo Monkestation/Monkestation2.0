@@ -104,21 +104,50 @@
 	to_chat(owner, span_velvet("You extinguish all lights."))
 
 /datum/action/cooldown/spell/aoe/extinguish/cast_on_thing_in_aoe(atom/victim, atom/caster)
-	if(isturf(victim)) //no turf hitting
+	if(isopenturf(victim)) // extinguish the air
+		var/turf/open/victim_turf = victim
+		if(victim_turf.blocks_air)
+			return
+		for(var/obj/effect/hotspot/hotspot in victim_turf)
+			qdel(hotspot)
+		var/datum/gas_mixture/turf_air = victim_turf.air
+		if(turf_air)
+			// set temperature to "normal" if its hot
+			if(turf_air.temperature > T20C)
+				turf_air.temperature = T20C
+			// remove flammable gases in general
+			for(var/gas_type in list(/datum/gas/plasma, /datum/gas/tritium, /datum/gas/hydrogen, /datum/gas/freon))
+				turf_air.assert_gas(gas_type)
+				turf_air.gases[gas_type][MOLES] = 0
+			turf_air.garbage_collect()
+			victim_turf.air_update_turf(FALSE, FALSE)
 		return
-	if(!seen_things)
-		return
-	if(!(victim in seen_things))//no putting out on the other side of walls
+	if(!seen_things || !(victim in seen_things))//no putting out on the other side of walls
 		return
 	if(ishuman(victim))//put out any
 		var/mob/living/carbon/human/target = victim
 		if(target.can_block_magic(antimagic_flags, charge_cost = 1))
 			return
 		target.extinguish_mob()
-	if(isobj(victim))//put out any items too
+		if(target.bodytemperature > target.standard_body_temperature)
+			target.bodytemperature = target.standard_body_temperature
+	else if(istype(victim, /obj/structure/glowshroom))
+		var/obj/structure/glowshroom/glowshroom = victim
+		var/datum/plant_gene/trait/glow/glow_trait = locate() in glowshroom.myseed?.genes
+		if(glow_trait && !istype(glow_trait, /datum/plant_gene/trait/glow/shadow))
+			glowshroom.myseed.genes -= glow_trait
+			qdel(glow_trait)
+			glowshroom.set_light(0)
+	else if(isobj(victim))//put out any items too
 		var/obj/target = victim
 		target.extinguish()
-	SEND_SIGNAL(bopper, COMSIG_ITEM_AFTERATTACK, victim, owner, TRUE) //just use a light eater attack on everyone
+	// extinguish owner as well
+	if(isliving(owner))
+		var/mob/living/living_owner = owner
+		living_owner.extinguish_mob()
+		if(living_owner.bodytemperature > living_owner.standard_body_temperature)
+			living_owner.bodytemperature = living_owner.standard_body_temperature
+	SEND_SIGNAL(bopper, COMSIG_LIGHT_EATER_EAT, victim, bopper, TRUE)
 
 /obj/item/darkspawn_extinguish
 	name = "extinguish"

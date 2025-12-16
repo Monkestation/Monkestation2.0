@@ -11,7 +11,7 @@
 	supervisors = SUPERVISOR_CAPTAIN
 	req_admin_notify = 1
 	minimal_player_age = 7
-	exp_requirements = 300
+	exp_requirements = 1200
 	exp_required_type = EXP_TYPE_CREW
 	exp_required_type_department = EXP_TYPE_MEDICAL
 	exp_granted_type = EXP_TYPE_CREW
@@ -43,7 +43,7 @@
 	job_flags = STATION_JOB_FLAGS | JOB_BOLD_SELECT_TEXT | JOB_CANNOT_OPEN_SLOTS
 
 	voice_of_god_power = 1.4 //Command staff has authority
-
+	antag_capacity_points = 2
 
 /datum/job/chief_medical_officer/get_captaincy_announcement(mob/living/captain)
 	return "Due to staffing shortages, newly promoted Acting Captain [captain.real_name] on deck!"
@@ -57,7 +57,7 @@
 	id_trim = /datum/id_trim/job/chief_medical_officer
 	uniform = /obj/item/clothing/under/rank/medical/chief_medical_officer/turtleneck
 	suit = /obj/item/clothing/suit/toggle/labcoat/cmo
-	suit_store = /obj/item/flashlight/pen/paramedic
+	suit_store = /obj/item/flashlight/pen
 	backpack_contents = list(
 		/obj/item/melee/baton/telescopic = 1,
 		)
@@ -90,5 +90,5 @@
 	head = null
 	uniform = /obj/item/clothing/under/rank/medical/chief_medical_officer
 	mask = /obj/item/clothing/mask/breath/medical
-	r_pocket = /obj/item/flashlight/pen/paramedic
+	r_pocket = /obj/item/flashlight/pen
 	internals_slot = ITEM_SLOT_SUITSTORE

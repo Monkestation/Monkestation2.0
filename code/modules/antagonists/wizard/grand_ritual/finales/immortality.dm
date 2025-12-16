@@ -206,7 +206,7 @@
 			dead_mind.grab_ghost(force = TRUE)
 		else
 			dead_mind.transfer_to(corpse, force_key_move = TRUE)
-	corpse.revive(HEAL_ALL) // The signal is sent even if they weren't actually dead
+	corpse.revive(HEAL_ALL, revival_policy = POLICY_ANTAGONISTIC_REVIVAL) // The signal is sent even if they weren't actually dead
 
 /// Remove our stored corpse back to the living world
 /obj/effect/spectre_of_resurrection/proc/on_corpse_revived()

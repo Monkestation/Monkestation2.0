@@ -94,10 +94,15 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
  * * message_type - the type of log the message is(ATTACK, SAY, etc)
  * * color - color of the log text
  * * log_globally - boolean checking whether or not we write this log to the log file
+ * * game_finish_added - var for checking if the message has had the game state finish message added if the game is finished
  */
-/atom/proc/log_message(message, message_type, color = null, log_globally = TRUE)
+/atom/proc/log_message(message, message_type, color = null, log_globally = TRUE, game_finish_added = FALSE)
 	if(!log_globally)
 		return
+
+	if(SSticker.current_state == GAME_STATE_FINISHED && !log_globally && !game_finish_added)
+		color = "yellow"
+		message += " <SMALL><B>!!!GAME STATE FINISHED!!!</B></SMALL>"
 
 	var/log_text = "[key_name(src)] [message] [loc_name(src)]"
 	switch(message_type)
@@ -244,6 +249,13 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 
 /proc/key_name_admin(whom, include_name = TRUE)
 	return key_name(whom, TRUE, include_name)
+
+/proc/key_name_and_tag(whom, include_link = null, include_name = TRUE)
+	var/tag = "!tagless!" // whom can be null in key_name() so lets set this as a safety
+	if(isatom(whom))
+		var/atom/subject = whom
+		tag = subject.tag
+	return "[key_name(whom, include_link, include_name)] ([tag])"
 
 /proc/loc_name(atom/A)
 	if(!istype(A))

@@ -310,14 +310,14 @@ monkestation end */
 		if("events")
 			if(!is_funmin)
 				return
-			if(SSevents.wizardmode)
+			if(SSgamemode.wizardmode)
 				switch(tgui_alert(usr,"What would you like to do?",,list("Intensify Summon Events","Turn Off Summon Events","Nothing")))
 					if("Intensify Summon Events")
 						summon_events(holder)
 						SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Summon Events", "Intensify"))
 					if("Turn Off Summon Events")
-						SSevents.toggleWizardmode()
-						SSevents.resetFrequency()
+						SSgamemode.toggleWizardmode()
+						SSgamemode.event_frequency_multiplier = initial(SSgamemode.event_frequency_multiplier)
 						SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Summon Events", "Disable"))
 			else
 				if(tgui_alert(usr,"Do you want to toggle summon events on?",,list("Yes","No")) == "Yes")

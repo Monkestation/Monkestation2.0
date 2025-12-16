@@ -17,7 +17,7 @@
 	allow_overflow = FALSE
 
 	departments_list = list(
-		 /datum/job_department/spring,
+		/datum/job_department/spring,
 		)
 
 	family_heirlooms = list(/obj/item/food/egg) // My child

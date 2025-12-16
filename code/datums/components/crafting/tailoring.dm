@@ -402,3 +402,15 @@
 /datum/crafting_recipe/balloon_vest/check_requirements(mob/user, list/collected_requirements)
 	return HAS_TRAIT(user, TRAIT_BALLOON_SUTRA)
 
+/datum/crafting_recipe/voiceconcealer
+	name = "Voice Obfuscator Gas Mask"
+	result = /obj/item/clothing/mask/gas/voiceconcealer
+	reqs = list(
+		/obj/item/clothing/mask/gas = 1,
+		/obj/item/assembly/voice = 1,
+		/obj/item/stack/cable_coil = 5,
+		/obj/item/stack/sheet/plastic = 1,
+	)
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	time = 8 SECONDS
+	category = CAT_CLOTHING

@@ -239,9 +239,9 @@
 
 /datum/component/darkspawn_class/admin/update_owner_overlay(atom/source, list/overlays)
 	if(!hsv)
-		hsv = RGBtoHSV(rgb(255, 0, 0))
+		hsv = rgb2hsv(rgb(255, 0, 0))
 	hsv = RotateHue(hsv, (world.time - last_colour) * 15)
 	last_colour = world.time
-	class_color = HSVtoRGB(hsv) //rainbow
+	class_color = hsv2rgb(hsv) //rainbow
 	addtimer(CALLBACK(owner, TYPE_PROC_REF(/atom, update_appearance), UPDATE_OVERLAYS), 1 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE) //regularly refresh the overlays
 	return ..()

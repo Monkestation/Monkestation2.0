@@ -1,20 +1,21 @@
 #define FEED_NOTICE_RANGE 5
-#define FEED_DEFAULT_TIMER (10 SECONDS)
+
+///The default timer for feed at power level 1 (i.e. bloodsucker rank 0, before they have spent their first free level)
+#define FEED_DEFAULT_TIMER (4 SECONDS)
 
 /datum/action/cooldown/bloodsucker/feed
 	name = "Feed"
 	desc = "Feed blood off of a living creature."
 	button_icon_state = "power_feed"
 	power_explanation = "Feed:\n\
-		Activate Feed while next to someone and you will begin to feed blood off of them.\n\
+		Activate Feed while grabbing someone and you will begin to feed blood off of them.\n\
 		The time needed before you start feeding speeds up the higher level you are.\n\
 		Feeding off of someone while you have them aggressively grabbed will put them to sleep.\n\
 		While feeding, you can't speak, as your mouth is covered.\n\
-		Feeding while nearby (2 tiles away from) a mortal who is unaware of Bloodsuckers' existence, will cause a Masquerade Infraction\n\
+		Feeding while nearby a mortal will cause a Masquerade Infraction\n\
 		If you get too many Masquerade Infractions, you will break the Masquerade.\n\
 		If you are in desperate need of blood, mice can be fed off of, at a cost.\n\
-		You can drink more blood than your capacity, doing so increases your health regeneration and gives some minor instant healing.\n\
-		However, healing whilst above blood capacity cost more blood and your blood loss over time is drastically increased."
+		You can drink more blood than your capacity, doing so gives some minor instant healing, and can still be used to level up."
 	power_flags = BP_AM_TOGGLE | BP_AM_STATIC_COOLDOWN
 	check_flags = BP_CANT_USE_IN_TORPOR | BP_CANT_USE_WHILE_STAKED | BP_CANT_USE_WHILE_INCAPACITATED | BP_CANT_USE_WHILE_UNCONSCIOUS
 	purchase_flags = BLOODSUCKER_CAN_BUY | BLOODSUCKER_DEFAULT_POWER
@@ -31,10 +32,13 @@
 	/// Whether we were in frenzy or not when we started feeding.
 	var/started_frenzied = FALSE
 	///Are we feeding with passive grab or not?
-	var/silent_feed = TRUE
+	var/passive_feed = TRUE
 	///Have we notified you already that you are at maximum blood?
 	var/notified_overfeeding = FALSE
 	var/datum/looping_sound/zucc/soundloop
+
+	///Reference to the visual icon of the feed power.
+	var/atom/movable/flick_visual/icon_ref
 
 /datum/action/cooldown/bloodsucker/feed/can_use(mob/living/carbon/user, trigger_flags)
 	. = ..()
@@ -51,11 +55,15 @@
 	return TRUE
 
 /datum/action/cooldown/bloodsucker/feed/ContinueActive(mob/living/user, mob/living/target)
-	if(QDELETED(user) || QDELETED(target))
+	if(QDELETED(target))
 		return FALSE
 	if(!user.Adjacent(target))
 		return FALSE
-	return TRUE
+	if(user.pulling != target)
+		if (!target.pulledby)
+			passive_feed = TRUE //If we let them go, don't rip our fangs out of their throat. Otherwise if someone else grabbed them, we let it rip out.
+		return FALSE
+	return ..()
 
 /datum/action/cooldown/bloodsucker/feed/DeactivatePower()
 	var/mob/living/user = owner
@@ -69,6 +77,8 @@
 			user.add_mood_event("drankkilled", /datum/mood_event/drankkilled)
 			bloodsuckerdatum_power.AddHumanityLost(10)
 
+	owner.remove_power_icon_animation(icon_ref)
+	icon_ref = null
 	target_ref = null
 	started_alive = TRUE
 	started_frenzied = FALSE
@@ -92,16 +102,21 @@
 		DeactivatePower()
 		feed_target.death()
 		return
-	var/feed_timer = clamp(round(FEED_DEFAULT_TIMER / (1.25 * (level_current || 1))), 1, FEED_DEFAULT_TIMER)
+
+	var/feed_timer
 	if(bloodsuckerdatum_power.frenzied)
 		feed_timer = 2 SECONDS
 		started_frenzied = TRUE
+	else
+		feed_timer = clamp(floor((FEED_DEFAULT_TIMER + 0.5 SECONDS) - (0.5 SECONDS * level_current)), 2 SECONDS, FEED_DEFAULT_TIMER)
 
-	owner.balloon_alert(owner, "feeding off [feed_target]...")
+	//Everyone around us can tell we are using feed.
+	playsound(owner.loc, 'sound/machines/chime.ogg', 50, FALSE, SHORT_RANGE_SOUND_EXTRARANGE, ignore_walls = FALSE)
+	icon_ref = owner.do_power_icon_animation("power_feed")
+
 	started_alive = (feed_target.stat < HARD_CRIT)
 	to_chat(feed_target, span_userdanger("[owner] begins slipping [owner.p_their()] fangs into you!"))
 	if(!do_after(owner, feed_timer, feed_target, NONE, TRUE, hidden = TRUE))
-		owner.balloon_alert(owner, "feed stopped")
 		DeactivatePower()
 		return
 	if(owner.pulling == feed_target && owner.grab_state >= GRAB_AGGRESSIVE)
@@ -112,14 +127,13 @@
 		owner.visible_message(
 			span_warning("[owner] closes [owner.p_their()] mouth around [feed_target]'s neck!"),
 			span_warning("You sink your fangs into [feed_target]'s neck."))
-		silent_feed = FALSE //no more mr nice guy
+		passive_feed = FALSE //no more mr nice guy
 	else
-		// Only people who AREN'T the target will notice this action.
 		var/dead_message = feed_target.stat != DEAD ? " <i>[feed_target.p_They()] look[feed_target.p_s()] dazed, and will not remember this.</i>" : ""
 		owner.visible_message(
 			span_notice("[owner] puts [feed_target]'s wrist up to [owner.p_their()] mouth."), \
 			span_notice("You slip your fangs into [feed_target]'s wrist.[dead_message]"), \
-			vision_distance = FEED_NOTICE_RANGE, ignored_mobs = feed_target)
+			vision_distance = FEED_NOTICE_RANGE)
 
 	//check if we were seen
 	var/noticed = FALSE
@@ -174,7 +188,7 @@
 		DeactivatePower()
 		return PROCESS_KILL
 	if(!ContinueActive(user, feed_target))
-		if(!silent_feed)
+		if(!passive_feed)
 			user.visible_message(
 				span_warning("[user] is ripped from [feed_target]'s throat. [feed_target.p_their(TRUE)] blood sprays everywhere!"),
 				span_warning("Your teeth are ripped from [feed_target]'s throat. [feed_target.p_their(TRUE)] blood sprays everywhere!"))
@@ -246,27 +260,6 @@
 			return FALSE
 		target_ref = WEAKREF(owner.pulling)
 		return TRUE
-
-	var/list/close_living_mobs = list()
-	var/list/close_dead_mobs = list()
-	for(var/mob/living/near_targets in oview(1, owner))
-		if(!owner.Adjacent(near_targets))
-			continue
-		if(near_targets.stat < DEAD)
-			close_living_mobs |= near_targets
-		else
-			close_dead_mobs |= near_targets
-	//Check living first
-	for(var/mob/living/suckers in close_living_mobs)
-		if(can_feed_from(suckers))
-			target_ref = WEAKREF(suckers)
-			return TRUE
-	//If not, check dead
-	for(var/mob/living/suckers in close_dead_mobs)
-		if(can_feed_from(suckers))
-			target_ref = WEAKREF(suckers)
-			return TRUE
-	//No one to suck blood from.
 	return FALSE
 
 /datum/action/cooldown/bloodsucker/feed/proc/can_feed_from(mob/living/target, give_warnings = FALSE)
@@ -281,17 +274,13 @@
 		return FALSE
 
 	var/mob/living/carbon/human/target_user = target
-	if(!(target_user.dna?.species) || !(target_user.mob_biotypes & MOB_ORGANIC))
+	if(!(target_user.dna?.species) || !(target_user.mob_biotypes & MOB_ORGANIC) || HAS_TRAIT(target, TRAIT_NOBLOOD))
 		if(give_warnings)
 			owner.balloon_alert(owner, "no blood!")
 		return FALSE
 	if(!target_user.can_inject(owner, BODY_ZONE_HEAD, INJECT_CHECK_PENETRATE_THICK))
 		if(give_warnings)
 			owner.balloon_alert(owner, "suit too thick!")
-		return FALSE
-	if(bloodsuckerdatum_power.my_clan?.blood_drink_type == BLOODSUCKER_DRINK_SNOBBY && QDELETED(target_user.mind) && !bloodsuckerdatum_power.frenzied)
-		if(give_warnings)
-			owner.balloon_alert(owner, "cant drink from mindless!")
 		return FALSE
 	return TRUE
 

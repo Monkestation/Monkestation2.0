@@ -243,7 +243,7 @@
 	time = 10 SECONDS
 	machinery = list(/obj/machinery/vending/tool  = CRAFTING_MACHINERY_CONSUME,/obj/machinery/vending/wardrobe/sec_wardrobe = CRAFTING_MACHINERY_CONSUME)
 	reqs = list(
-		/obj/item/stack/sheet/mineral/wood = 15,
+		/obj/item/stack/sheet/mineral/wood = 10,
 		/obj/item/stack/sheet/iron = 10,
 		/obj/item/pipe = 6,
 		/obj/item/stack/cable_coil = 30,
@@ -258,7 +258,7 @@
 	time = 10 SECONDS
 	machinery = list(/obj/machinery/vending/cola = CRAFTING_MACHINERY_CONSUME)
 	reqs = list(
-		/obj/item/stack/sheet/mineral/wood = 20,
+		/obj/item/stack/sheet/mineral/wood = 10,
 		/obj/item/stack/sheet/plasteel = 5,
 		/obj/item/pipe = 6,
 		/obj/item/stack/cable_coil = 30,
@@ -291,7 +291,7 @@
 	time = 10 SECONDS
 	machinery = list(/obj/machinery/vending/snack = CRAFTING_MACHINERY_CONSUME)
 	reqs = list(
-		/obj/item/stack/sheet/mineral/wood = 30,
+		/obj/item/stack/sheet/mineral/wood = 10,
 		/obj/item/stack/sheet/iron = 10,
 		/obj/item/stack/cable_coil = 15,
 		/obj/item/extinguisher = 2,
@@ -308,7 +308,7 @@
 	time = 30 SECONDS
 	machinery = list(/obj/machinery/power/turbine/inlet_compressor/constructed  = CRAFTING_MACHINERY_CONSUME, /obj/machinery/power/turbine/core_rotor/constructed  = CRAFTING_MACHINERY_CONSUME, /obj/machinery/power/turbine/turbine_outlet/constructed = CRAFTING_MACHINERY_CONSUME)
 	reqs = list(
-		/obj/item/stack/sheet/mineral/wood = 30,
+		/obj/item/stack/sheet/mineral/wood = 10,
 		/obj/item/tank/internals/oxygen = 10,
 		/obj/item/stack/sheet/plasteel = 20,
 		/obj/item/stack/cable_coil = 60,
@@ -325,7 +325,7 @@
 	result = /obj/item/mecha_parts/part/vendozer_ck
 	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WIRECUTTER, TOOL_WRENCH, TOOL_CROWBAR)
 	time = 30 SECONDS
-	machinery = list(/obj/machinery/computer/security  = CRAFTING_MACHINERY_CONSUME, /obj/machinery/oven  = CRAFTING_MACHINERY_CONSUME)
+	machinery = list(/obj/machinery/computer/security  = CRAFTING_MACHINERY_CONSUME)
 	reqs = list(
 		/obj/item/stack/sheet/mineral/wood = 10,
 		/obj/item/clothing/mask/gas = 3,

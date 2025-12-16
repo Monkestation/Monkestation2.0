@@ -145,7 +145,7 @@
 	var/swap_failed = FALSE
 	if(!temp_cell) //if we're not holding a cell
 		swap_failed = TRUE
-	if(!user.transferItemToLoc(temp_cell, chest))
+	else if(!user.transferItemToLoc(temp_cell, chest))
 		swap_failed = TRUE
 		to_chat(user, span_warning("[temp_cell] is stuck to your hand, you can't put it in [src]!"))
 

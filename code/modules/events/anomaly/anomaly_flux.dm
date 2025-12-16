@@ -8,12 +8,12 @@
 	description = "This anomaly shocks and explodes."
 	min_wizard_trigger_potency = 1
 	max_wizard_trigger_potency = 4
+	station_ztrait_blocked = ZTRAIT_OSHAN
 
 /datum/round_event/anomaly/anomaly_flux
 	start_when = ANOMALY_START_DANGEROUS_TIME
 	announce_when = ANOMALY_ANNOUNCE_DANGEROUS_TIME
 	anomaly_path = /obj/effect/anomaly/flux
-	oshan_blocked = TRUE
 
 /datum/round_event/anomaly/anomaly_flux/announce(fake)
 	if(isnull(impact_area))

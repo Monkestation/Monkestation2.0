@@ -268,6 +268,9 @@
 	selected_creature = choosing_creature
 
 /obj/item/vacuum_nozzle/proc/select_spawned_mob(mob/user)
+	if(!pack.linked)
+		user.balloon_alert(user, "needs to be linked to biomass recycler!")
+		return
 	var/list/items = list()
 	var/list/item_names = list()
 

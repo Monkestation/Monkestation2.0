@@ -46,6 +46,14 @@
 		/datum/round_event_control/antagonist/solo/bloodsucker/roundstart = 6,
 		/datum/round_event_control/antagonist/solo/heretic/roundstart = 1,
 	)
+	var/static/allow_3_person_teams
+
+/datum/round_event_control/antagonist/solo/brother/get_antag_amount()
+	if(isnull(allow_3_person_teams))
+		allow_3_person_teams = prob(10) // 3-brother teams only happen around 10% of the time
+	. = ..()
+	if(!allow_3_person_teams)
+		return FLOOR(., 2)
 
 /datum/round_event/antagonist/solo/brother/start()
 	if(length(setup_minds) < 2) // if we somehow only got one BB chosen, despite the fact we asked for 2, fuck it, they just get to be a traitor, and we'll throw the storyteller a bone

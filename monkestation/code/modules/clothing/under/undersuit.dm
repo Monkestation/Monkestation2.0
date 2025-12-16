@@ -53,6 +53,7 @@
 	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
 	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
 	icon_state = "shrine_priestess"
+	body_parts_covered = CHEST|ARMS|GROIN|LEGS
 
 /obj/item/clothing/under/syndicate/skirt/maid
 	name = "tactical maid outfit"

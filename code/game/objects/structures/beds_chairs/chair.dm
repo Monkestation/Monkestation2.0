@@ -464,6 +464,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	STOP_PROCESSING(SSfastprocess, src)
 	. = ..()
 
+/obj/structure/chair/bronze/MakeRotate() // we have our own rotation handler
+	return
+
 /obj/structure/chair/bronze/process()
 	setDir(turn(dir,-90))
 	playsound(src, 'sound/effects/servostep.ogg', 50, FALSE)

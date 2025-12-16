@@ -272,7 +272,7 @@
 		add_jobxp_chance(user.client, 1, JOB_BOTANIST, 20)
 
 	if(plant_yield >= yield_linearity_breakpoint)
-		harvest_amount = qp_sigmoid(yield_linearity_breakpoint, maximum_harvest_amount, plant_yield)
+		harvest_amount = floor(qp_sigmoid(yield_linearity_breakpoint, maximum_harvest_amount, plant_yield))
 		if(!seedless)
 			maximum_seed_production = floor(harvest_amount * seed_harvest_ratio)
 
@@ -314,6 +314,8 @@
 		harvest_counter++
 		if(istype(item_grown))
 			product_name = item_grown.seed.plantname
+	if(!product_name)
+		product_name = plantname
 	user.log_message("harvested [harvest_amount] of [product_name] (with [seed_counter] seeds)", LOG_GAME)
 	if(harvest_amount >= 1)
 		SSblackbox.record_feedback("tally", "food_harvested", harvest_amount, product_name)

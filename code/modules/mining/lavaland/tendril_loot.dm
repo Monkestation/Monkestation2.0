@@ -5,33 +5,44 @@
 	name = "KA Mod Disk"
 	desc = "A design disc containing the design for a unique kinetic accelerator modkit. It's compatible with a research console."
 	icon_state = "datadisk1"
-	var/modkit_design = /datum/design/unique_modkit
+	var/list/modkit_design = list()
 
 /obj/item/disk/design_disk/modkit_disc/Initialize(mapload)
 	. = ..()
-	blueprints += new modkit_design
+	for(var/design in modkit_design)
+		blueprints += new design
+
+/obj/item/disk/design_disk/modkit_disc/blood_drunk_group
+	name = "Bloodied Mod Disk"
+	modkit_design = list(
+		/datum/design/unique_modkit/offensive_turf_aoe,
+		/datum/design/unique_modkit/rapid_repeater,
+		/datum/design/unique_modkit/resonator_blast,
+		/datum/design/unique_modkit/bounty,
+	)
 
 /obj/item/disk/design_disk/modkit_disc/mob_and_turf_aoe
 	name = "Offensive Mining Explosion Mod Disk"
-	modkit_design = /datum/design/unique_modkit/offensive_turf_aoe
+	modkit_design = list(/datum/design/unique_modkit/offensive_turf_aoe)
 
 /obj/item/disk/design_disk/modkit_disc/rapid_repeater
 	name = "Rapid Repeater Mod Disk"
-	modkit_design = /datum/design/unique_modkit/rapid_repeater
+	modkit_design = list(/datum/design/unique_modkit/rapid_repeater)
 
 /obj/item/disk/design_disk/modkit_disc/resonator_blast
 	name = "Resonator Blast Mod Disk"
-	modkit_design = /datum/design/unique_modkit/resonator_blast
+	modkit_design = list(/datum/design/unique_modkit/resonator_blast)
 
 /obj/item/disk/design_disk/modkit_disc/bounty
 	name = "Death Syphon Mod Disk"
-	modkit_design = /datum/design/unique_modkit/bounty
+	modkit_design = list(/datum/design/unique_modkit/bounty)
 
 /datum/design/unique_modkit
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_PKA_MODS,
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MINING,
 	)
-	build_type = PROTOLATHE
+	build_type = PROTOLATHE | MECHFAB
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO
 
 /datum/design/unique_modkit/offensive_turf_aoe
@@ -820,7 +831,7 @@
 	icon_state = "godeye"
 	inhand_icon_state = null
 	vision_flags = SEE_TURFS
-	clothing_traits = list(TRAIT_MADNESS_IMMUNE)
+	clothing_traits = list(TRAIT_MADNESS_IMMUNE, TRAIT_NEARSIGHTED_CORRECTED)
 	// Blue, light blue
 	color_cutoffs = list(15, 30, 40)
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
@@ -900,7 +911,7 @@
 	scan_pinpointer.scan_target = living_scanned
 
 	to_chat(living_scanned, span_warning("You briefly see a flash of [living_owner]'s face before being knocked off-balance by an unseen force!"))
-	living_scanned.add_filter("scan", 2, list("type" = "outline", "color" = COLOR_RED, "size" = 1))
+	living_scanned.add_filter("scan", 2, list("type" = "outline", "color" = COLOR_YELLOW, "size" = 1))
 	addtimer(CALLBACK(living_scanned, TYPE_PROC_REF(/datum, remove_filter), "scan"), 30 SECONDS)
 
 	owner.playsound_local(get_turf(owner), 'sound/magic/smoke.ogg', 50, TRUE)
@@ -988,7 +999,13 @@
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | FREEZE_PROOF
+	/// The attack force when used agains tfauna.
+	var/fauna_force = 50
+	/// The block chance for attacks from fauna.
+	var/fauna_block_chance = 75
+	/// If the katana is current "shattered."
 	var/shattered = FALSE
+	/// If the katana has drew blood or not.
 	var/drew_blood = FALSE
 	var/static/list/combo_list = list(
 		ATTACK_STRIKE = list(COMBO_STEPS = list(LEFT_ATTACK, LEFT_ATTACK, RIGHT_ATTACK), COMBO_PROC = PROC_REF(strike)),
@@ -1012,6 +1029,7 @@
 
 /obj/item/cursed_katana/examine(mob/user)
 	. = ..()
+	. += span_info("It is far more effective at both fighting and defending against fauna.")
 	. += drew_blood ? span_nicegreen("It's sated... for now.") : span_danger("It will not be sated until it tastes blood.")
 
 /obj/item/cursed_katana/dropped(mob/user)
@@ -1020,15 +1038,26 @@
 		qdel(src)
 
 /obj/item/cursed_katana/attack(mob/living/target, mob/user, click_parameters)
+	var/old_force = force
 	if(target.stat < DEAD && target != user)
 		drew_blood = TRUE
 		if(ismining(target))
 			user.changeNext_move(CLICK_CD_RAPID)
-	return ..()
+			force = fauna_force
+	. = ..()
+	force = old_force
 
 /obj/item/cursed_katana/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(attack_type == PROJECTILE_ATTACK)
-		final_block_chance = 0 //Don't bring a sword to a gunfight
+	if(isliving(hitby))
+		var/mob/living/living_hitby = hitby
+		if(ismining(living_hitby))
+			final_block_chance = fauna_block_chance
+	else if(attack_type == PROJECTILE_ATTACK)
+		var/mob/living/living_firer = astype(astype(hitby, /obj/projectile)?.firer, /mob/living)
+		if(living_firer && ismining(living_firer))
+			final_block_chance = fauna_block_chance
+		else
+			final_block_chance = 0 //Don't bring a sword to a gunfight
 	return ..()
 
 /obj/item/cursed_katana/proc/can_combo_attack(mob/user, mob/living/target)

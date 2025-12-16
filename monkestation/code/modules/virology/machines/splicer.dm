@@ -45,6 +45,7 @@
 		visible_message(span_notice("[user] swipes \the [disk] against \the [src]."),
 						span_notice("You swipe \the [disk] against \the [src], copying the data into the machine's buffer."))
 		memorybank = disk.effect
+		analysed = disk.analyzed
 		var/image/disk_icon = image(icon, src, "splicer_disk")
 		flick_overlay_global(disk_icon, GLOB.clients, 2 SECONDS)
 		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_icon)), 2, TIMER_OVERRIDE | TIMER_UNIQUE)
@@ -125,7 +126,8 @@
 			flick_overlay_global(print, GLOB.clients, 2 SECONDS)
 			var/obj/item/disk/disease/d = new /obj/item/disk/disease(src)
 			if(analysed)
-				d.name = "\improper [memorybank.name] GNA disk (Stage: [memorybank.stage])"
+				d.name = "\improper [memorybank.name] GNA disk"
+				d.analyzed = TRUE
 			else
 				d.name = "unknown GNA disk (Stage: [memorybank.stage])"
 			d.effect = memorybank

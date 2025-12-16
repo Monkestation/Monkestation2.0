@@ -94,6 +94,7 @@
 		message_admins("[ADMIN_LOOKUPFLW(selected_mobs)] was selected by the [name] ruleset, but couldn't be made into a Bloodsucker.")
 		return FALSE
 	bloodsuckerdatum.bloodsucker_level_unspent = rand(2,3)
+	bloodsuckerdatum.sol_levels_remaining -= bloodsuckerdatum.bloodsucker_level_unspent - 1 //Bloodsuckers usually get 1 free level at roundstart, so we dont count that
 	message_admins("[ADMIN_LOOKUPFLW(selected_mobs)] was selected by the [name] ruleset and has been made into a midround Bloodsucker.")
 	log_game("DYNAMIC: [key_name(selected_mobs)] was selected by the [name] ruleset and has been made into a midround Bloodsucker.")
 	return TRUE

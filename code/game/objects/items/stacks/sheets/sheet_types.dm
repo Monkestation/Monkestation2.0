@@ -79,6 +79,9 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	new/datum/stack_recipe("unfinished canister frame", /obj/structure/canister_frame/machine/unfinished_canister_frame, 5, time = 0.8 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_ATMOSPHERIC), \
 	null, \
 	new/datum/stack_recipe("floor tile", /obj/item/stack/tile/iron/base, 1, 4, 20, category = CAT_TILES), \
+	new/datum/stack_recipe("lowered pool tile", /obj/item/stack/tile/lowered/iron/pool, 1, 4, 20, category = CAT_TILES), \
+	new/datum/stack_recipe("lowered tile", /obj/item/stack/tile/lowered/iron, 1, 4, 20, category = CAT_TILES), \
+	new/datum/stack_recipe("raised tile", /obj/item/stack/tile/elevated, 1, 4, 20, category = CAT_TILES), \
 	new/datum/stack_recipe("iron rod", /obj/item/stack/rods, 1, 2, 60, category = CAT_MISC), \
 	null, \
 	new/datum/stack_recipe("wall girders (anchored)", /obj/structure/girder, 2, time = 4 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, trait_booster = TRAIT_QUICK_BUILD, trait_modifier = 0.75, category = CAT_STRUCTURE), \
@@ -667,10 +670,8 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 
 /obj/item/stack/sheet/cardboard/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()
-	if (interacting_with != user)
-		return ITEM_INTERACT_BLOCKING
 	if(!is_species(interacting_with, /datum/species/golem/cardboard))
-		return ITEM_INTERACT_BLOCKING
+		return NONE
 	var/mob/living/carbon/human/human = user
 	var/datum/species/golem/cardboard/golem = human.dna.species
 	if(golem.last_creation + golem.brother_creation_cooldown > world.time) //no cheesing dork

@@ -286,3 +286,8 @@
 	required_reagents = list(/datum/reagent/consumable/grapejuice = 5)
 	required_catalysts = list(/datum/reagent/consumable/enzyme = 5)
 	mix_message = "The smell of the mixture reminds you of how you lost access to the country club..."
+
+/datum/chemical_reaction/food/mayonnaise
+	results = list(/datum/reagent/consumable/mayonnaise = 11)
+	required_reagents = list(/datum/reagent/consumable/eggyolk = 2, /datum/reagent/consumable/eggwhite = 4, /datum/reagent/consumable/cooking_oil = 5)
+	mix_message = "The ingredients mix together to form a thick creamy mayonnaise"

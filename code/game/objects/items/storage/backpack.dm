@@ -45,7 +45,7 @@
 	var/obj/item/storage/backpack/back_item = user.get_item_by_slot(ITEM_SLOT_BACK)
 	var/obj/item/storage/backpack/belt_item = user.get_item_by_slot(ITEM_SLOT_BELT)
 	if(istype(back_item) && istype(belt_item))
-		user.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/belt_satchel, min(back_item.satchel_movespeed_modifier, belt_item.satchel_movespeed_modifier))
+		user.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/belt_satchel, TRUE, min(back_item.satchel_movespeed_modifier, belt_item.satchel_movespeed_modifier))
 	else
 		user.update_movespeed()
 /*
@@ -135,7 +135,7 @@
 	desc = "It's useful for both carrying extra gear and proudly declaring your insanity."
 	icon_state = "backpack-cult"
 	inhand_icon_state = "backpack"
-	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
+	alternate_worn_layer = (HEAD_LAYER-0.5)
 
 /obj/item/storage/backpack/clown
 	name = "Giggles von Honkerton"
@@ -166,6 +166,7 @@
 	desc = "It's a very robust backpack."
 	icon_state = "backpack-security"
 	inhand_icon_state = "securitypack"
+	alternate_worn_layer = (HEAD_LAYER-0.5)
 
 /obj/item/storage/backpack/captain
 	name = "captain's backpack"
@@ -217,7 +218,7 @@
 	icon_state = "ert_plain"
 	inhand_icon_state = "securitypack"
 	resistance_flags = FIRE_PROOF
-	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
+	alternate_worn_layer = (HEAD_LAYER-0.5)
 
 /obj/item/storage/backpack/ert/Initialize(mapload)
 	. = ..()

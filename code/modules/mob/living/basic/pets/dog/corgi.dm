@@ -398,7 +398,7 @@
 		Write_Memory(TRUE)
 	return ..()
 
-/mob/living/basic/pet/dog/corgi/ian/revive(full_heal_flags, excess_healing, force_grab_ghost)
+/mob/living/basic/pet/dog/corgi/ian/revive(full_heal_flags, excess_healing, force_grab_ghost, revival_policy)
 	. = ..()
 	if (!.)
 		return

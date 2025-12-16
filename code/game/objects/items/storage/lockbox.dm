@@ -59,6 +59,9 @@
 	return ITEM_INTERACT_BLOCKING
 
 /obj/item/storage/lockbox/proc/can_unlock(mob/living/user, obj/item/card/id/id_card, silent = FALSE)
+	if (broken) // emagged
+		balloon_alert(user, "broken!")
+		return FALSE
 	if(check_access(id_card))
 		return TRUE
 	if(!silent)
@@ -82,6 +85,7 @@
 
 /obj/item/storage/lockbox/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(!broken)
+		open = TRUE
 		broken = TRUE
 		atom_storage.set_locked(STORAGE_NOT_LOCKED)
 		balloon_alert(user, "lock destroyed")
@@ -131,9 +135,6 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	req_access = list(ACCESS_CAPTAIN)
-	icon_locked = "medalbox+l"
-	icon_closed = "medalbox"
-	icon_broken = "medalbox+b"
 
 /obj/item/storage/lockbox/medal/Initialize(mapload)
 	. = ..()
@@ -144,14 +145,34 @@
 
 /obj/item/storage/lockbox/medal/examine(mob/user)
 	. = ..()
-	if(!atom_storage.locked)
-		. += span_notice("Alt-click to [open ? "close":"open"] it.")
+	. += span_notice("Use in hand to [open ? "close it":"open it in order to access contents"].")
 
-/obj/item/storage/lockbox/medal/click_alt(mob/user)
-	if(!atom_storage.locked)
-		open = !open
-		update_appearance()
-	return CLICK_ACTION_SUCCESS
+/obj/item/storage/lockbox/medal/attack_self(mob/user, modifiers)
+	// . = ..()
+	if (atom_storage?.locked < STORAGE_FULLY_LOCKED) // not fully locked
+		if (open)
+			open = FALSE
+			atom_storage.set_locked(STORAGE_SOFT_LOCKED)
+		else
+			open = TRUE
+			atom_storage.set_locked(STORAGE_NOT_LOCKED)
+	return
+
+/obj/item/storage/lockbox/medal/tool_act(mob/living/user, obj/item/tool, list/modifiers)
+	var/obj/item/card/card = tool.GetID()
+	if(isnull(card))
+		return ..()
+
+	if(can_unlock(user, card))
+		if (!open) // Addition: can only relock if lid closed
+			if (atom_storage?.locked > STORAGE_SOFT_LOCKED)
+				// lid is closed, so still soft locked
+				atom_storage.set_locked(STORAGE_SOFT_LOCKED)
+			else
+				atom_storage.set_locked(STORAGE_FULLY_LOCKED)
+			return ITEM_INTERACT_SUCCESS
+		balloon_alert(user, "close lid!")
+	return ITEM_INTERACT_BLOCKING
 
 /obj/item/storage/lockbox/medal/PopulateContents()
 	new /obj/item/clothing/accessory/medal/gold/captain(src)
@@ -165,16 +186,17 @@
 		new /obj/item/clothing/accessory/medal/conduct(src)
 
 /obj/item/storage/lockbox/medal/update_icon_state()
-	if(atom_storage?.locked)
+	. = ..()
+	if(atom_storage?.locked > STORAGE_SOFT_LOCKED)
 		icon_state = "medalbox+l"
-		return ..()
+		return
 
 	icon_state = "medalbox"
 	if(open)
 		icon_state += "open"
 	if(broken)
 		icon_state += "+b"
-	return ..()
+	return
 
 /obj/item/storage/lockbox/medal/update_overlays()
 	. = ..()
