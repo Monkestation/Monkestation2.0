@@ -603,6 +603,8 @@
 	if(is_blind() && !(override_blindness_check || affect_silicon))
 		return FALSE
 
+	apply_status_effect(/datum/status_effect/currently_flashed, length)
+
 	// this forces any kind of flash (namely normal and static) to use a black screen for photosensitive players
 	// it absolutely isn't an ideal solution since sudden flashes to black can apparently still trigger epilepsy, but byond apparently doesn't let you freeze screens
 	// and this is apparently at least less likely to trigger issues than a full white/static flash

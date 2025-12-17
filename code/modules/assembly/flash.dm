@@ -124,6 +124,15 @@
 /obj/item/assembly/flash/proc/flash_end()
 	set_light_on(FALSE)
 
+///Status effect used to track if the user is currently blinded from a flash, to prevent quick chaining into stamcrit.
+/datum/status_effect/currently_flashed
+	id = "currently_flashed"
+	alert_type = null
+
+/datum/status_effect/currently_flashed/on_creation(mob/living/new_owner, length = 2.5 SECONDS)
+	src.duration = length
+	return ..()
+
 /**
  * Handles actual flashing part of the attack
  *
@@ -168,7 +177,7 @@
 		ADD_TRAIT(flashed, TRAIT_CONVERSION_FLASHED, TRAIT_GENERIC)
 
 	if(targeted)
-		if(flashed.flash_act(1, 1))
+		if(!flashed.has_status_effect(/datum/status_effect/currently_flashed) && flashed.flash_act(1, 1))
 			flashed.set_confusion_if_lower(confusion_duration * CONFUSION_STACK_MAX_MULTIPLIER)
 			visible_message(span_danger("[user] blinds [flashed] with the flash!"), span_userdanger("[user] blinds you with the flash!"))
 			if (deviation == DEVIATION_PARTIAL)
