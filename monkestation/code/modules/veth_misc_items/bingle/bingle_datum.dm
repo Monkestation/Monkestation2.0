@@ -1,4 +1,3 @@
-#define BINGLE_EVOLVE "bingle evolve"
 /* to add:
 if too much trash on ground bingles roll
 

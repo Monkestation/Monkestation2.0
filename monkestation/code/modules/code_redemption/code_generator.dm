@@ -1,6 +1,3 @@
-#define CODE_STORAGE_PATH "data/generated_codes.json"
-#define CODE_METADATA_PATH "data/code_metadata.json"
-
 GLOBAL_LIST_INIT(stored_codes, list())
 GLOBAL_LIST_INIT(code_metadata, list()) // Stores expiry times, use counts, and redeemer tracking
 
