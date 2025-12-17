@@ -1997,6 +1997,7 @@
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/firelock_frame,
 /turf/open/floor/plating/icemoon,
 /area/ruin/space/ancientstation/charlie/hall)
 "kL" = (
@@ -2641,6 +2642,7 @@
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/barricade/wooden,
+/obj/structure/firelock_frame,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/delta/hall)
 "oc" = (
