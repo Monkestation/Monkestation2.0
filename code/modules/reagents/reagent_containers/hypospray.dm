@@ -319,7 +319,7 @@
 
 /obj/item/reagent_containers/hypospray/medipen/survival/luxury/oozeling //oozeling safe version of the luxury pen!
 	name = "luxury slime medipen"
-	desc = "Cutting edge bluespace technology allowed Nanotrasen to compact 70u of volume into a single medipen. Contains rare and powerful chemicals used by slime-like crew to aid in exploration of very hard enviroments. WARNING: DO NOT MIX WITH EPINEPHRINE OR ATROPINE NOR INJECT INTO NON-SLIME CREW."
+	desc = "Cutting edge bluespace technology allowed Nanotrasen to compact 70u of volume into a single medipen. Contains rare and powerful chemicals used by slime-like crew to aid in exploration of very hard environments. WARNING: DO NOT MIX WITH EPINEPHRINE OR ATROPINE NOR INJECT INTO NON-SLIME CREW."
 	icon_state = "luxpen"
 	inhand_icon_state = "atropen"
 	base_icon_state = "luxpen"
