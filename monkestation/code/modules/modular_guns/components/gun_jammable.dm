@@ -31,20 +31,20 @@
 	SIGNAL_HANDLER
 
 	if(jammed)
-		user.balloon_alert(user, "Gun is jammed!")
+		user.balloon_alert(user, "gun is jammed!")
 		playsound(source, source.dry_fire_sound, 30, TRUE)
 		return COMPONENT_CANCEL_GUN_FIRE
 
 	if(jamming_prob && prob(jamming_prob) && COOLDOWN_FINISHED(src, jam_cooldown))
 		jammed = TRUE
-		user.balloon_alert(user, "Gun has jammed!")
+		user.balloon_alert(user, "gun has jammed!")
 		playsound(source, source.dry_fire_sound, 30, TRUE)
 		return COMPONENT_CANCEL_GUN_FIRE
 
 /datum/component/gun_jammable/proc/try_clear_jam(obj/item/gun/ballistic/source, mob/user)
 	if(jammed && do_after(user, jam_use_time, parent))
 		COOLDOWN_START(src, jam_cooldown, jam_time)
-		user.balloon_alert(user, "Gun jam has been cleared!")
+		user.balloon_alert(user, "gun jam has been cleared!")
 		jammed = FALSE
 
 /datum/component/gun_jammable/proc/handle_stat_gain(atom/source, obj/item/attachment/attached)
