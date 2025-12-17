@@ -154,7 +154,7 @@
 
 /// Exports data from this cassette side in the JSON format used by the database.
 /datum/cassette_side/proc/export()
-	. = list("design" = design, "tracks" = list())
+	. = list("icon" = design, "tracks" = list())
 	for(var/datum/cassette_song/song as anything in songs)
 		.["tracks"] += list(song.export())
 
