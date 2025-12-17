@@ -8,21 +8,21 @@
 
 /datum/action/cooldown/bloodling/give_life/PreActivate(atom/target)
 	if(get_dist(usr, target) > 1)
-		owner.balloon_alert(owner, "Too Far!")
+		owner.balloon_alert(owner, "too Far!")
 		return FALSE
 
 	if(!ismob(target))
-		owner.balloon_alert(owner, "Only works on mobs!")
+		owner.balloon_alert(owner, "only works on mobs!")
 		return FALSE
 
 	var/mob/living/mob_target = target
 
 	if(!istype(target, /mob/living/basic/bloodling/minion))
-		owner.balloon_alert(owner, "Must target one of our own flesh minions!")
+		owner.balloon_alert(owner, "must target one of our own flesh minions!")
 		return FALSE
 
 	if(mob_target.mind && !mob_target.stat == DEAD)
-		owner.balloon_alert(owner, "Only works on non-sentient alive mobs!")
+		owner.balloon_alert(owner, "only works on non-sentient alive mobs!")
 		return FALSE
 	..()
 
@@ -30,7 +30,7 @@
 
 	var/mob/living/target_mob = target
 	if(target_mob.ckey) //only works on animals that aren't player controlled
-		target_mob.balloon_alert(target_mob, "Already sentient!")
+		target_mob.balloon_alert(target_mob, "already sentient!")
 		return FALSE
 	..()
 	target_mob.balloon_alert(target_mob, "giving sentience to flesh...")

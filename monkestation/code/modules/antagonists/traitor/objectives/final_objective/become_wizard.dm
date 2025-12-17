@@ -58,17 +58,17 @@
 /obj/item/traitor_spraycan/enchanted/try_draw_new_rune(mob/living/user, turf/target_turf)
 	for(var/turf/nearby_turf as anything in RANGE_TURFS(1, target_turf))
 		if(isindestructiblewall(nearby_turf) || is_type_in_typecache(nearby_turf, no_draw_turfs))
-			user.balloon_alert(user, "Invalid floor!")
+			user.balloon_alert(user, "invalid floor!")
 			return
 
 	draw_rune(user, target_turf)
 
 /obj/item/traitor_spraycan/enchanted/draw_rune(mob/living/user, turf/target_turf)
 	drawing_rune = TRUE
-	target_turf.balloon_alert(user, "Drawing rune...")
+	target_turf.balloon_alert(user, "drawing rune...")
 	var/obj/effect/temp_visual/wizard_rune/traitor_drawing/draw_effect = new(target_turf)
 	if(!do_after(user, 4 SECONDS, target_turf))
-		target_turf.balloon_alert(user, "Interrupted!")
+		target_turf.balloon_alert(user, "interrupted!")
 		drawing_rune = FALSE
 		qdel(draw_effect)
 		new /obj/effect/temp_visual/wizard_rune/failed(target_turf)
@@ -90,7 +90,7 @@
 	if(evaporated_obstacles)
 		playsound(target_turf, 'sound/magic/blind.ogg', 100, TRUE)
 
-	target_turf.balloon_alert(user, "Rune created.")
+	target_turf.balloon_alert(user, "rune created.")
 	var/obj/effect/grand_rune/traitor/new_rune = new(target_turf)
 	new_rune.owning_mind = WEAKREF(owning_mind?.resolve())
 	expended = TRUE
@@ -116,10 +116,10 @@
 /obj/effect/grand_rune/traitor/on_invocation_complete(mob/living/user)
 	is_in_use = FALSE
 	if(!user.mind) // oh wait, thats a monkey invoking us. Ew
-		user.balloon_alert(user, "You are not real, silly!")
+		user.balloon_alert(user, "you are not real, silly!")
 		return
 	if(user.mind.has_antag_datum(/datum/antagonist/wizard)) // why are you like this?
-		user.balloon_alert(user, "Can't be more powerfull!")
+		user.balloon_alert(user, "can't be more powerfull!")
 		return
 
 	playsound(src,'sound/magic/staff_change.ogg', 75, TRUE)

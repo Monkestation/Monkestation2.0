@@ -443,7 +443,6 @@ GLOBAL_LIST_EMPTY(siren_objects)
 					continue
 				affected_human.playsound_local('monkestation/code/modules/outdoors/sound/effects/radiostatic.ogg', affected_human.loc, 25, FALSE, mixer_channel = CHANNEL_MACHINERY)
 				affected_human.play_screen_text("<span class='langchat' style=font-size:16pt;text-align:center valign='top'><u>Weather Alert:</u></span><br>" + message["human"], /atom/movable/screen/text/screen_text/command_order, rgb(103, 214, 146))
-    return FALSE
 
 /datum/looping_sound/dust_storm
 	mid_sounds = 'monkestation/code/modules/outdoors/sound/weather/dust/weather_dust.ogg'
@@ -496,11 +495,11 @@ GLOBAL_LIST_EMPTY(siren_objects)
 	var/message = "BLA BLA BLA"
 	var/sound = 'monkestation/code/modules/outdoors/sound/effects/weather_warning.ogg'
 
-/obj/machinery/siren/proc/siren_warning(var/msg = "WARNING, bla bla bla bluh.", var/sound_ch = 'monkestation/code/modules/outdoors/sound/effects/weather_warning.ogg')
+/obj/machinery/siren/proc/siren_warning(msg = "WARNING, bla bla bla bluh.", sound_ch = 'monkestation/code/modules/outdoors/sound/effects/weather_warning.ogg')
 	playsound(loc, sound_ch, 50, 0, mixer_channel = CHANNEL_MACHINERY)
 	visible_message(span_danger("[src] makes a signal. [msg]."))
 
-/obj/machinery/siren/proc/siren_warning_start(var/msg, var/sound_ch = 'monkestation/code/modules/outdoors/sound/effects/weather_warning.ogg')
+/obj/machinery/siren/proc/siren_warning_start(msg, sound_ch = 'monkestation/code/modules/outdoors/sound/effects/weather_warning.ogg')
 	if(!msg)
 		return
 	message = msg
