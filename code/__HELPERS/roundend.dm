@@ -320,7 +320,7 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 
 	// monkestation start: token backups, monkecoin rewards, challenges, and roundend webhook
 	save_tokens()
-	// refund_cassette()
+	refund_cassette()
 	distribute_rewards(rewards)
 	sleep(5 SECONDS)
 	ready_for_reboot = TRUE

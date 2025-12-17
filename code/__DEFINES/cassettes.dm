@@ -13,6 +13,8 @@
 #define CASSETTE_STATUS_REVIEWING 1
 /// This cassette has been approved.
 #define CASSETTE_STATUS_APPROVED 2
+/// This cassette has been denied.
+#define CASSETTE_STATUS_DENIED 3
 
 /// The maximum amount of songs one side of a cassette tape can hold.
 #define MAX_SONGS_PER_CASSETTE_SIDE 7

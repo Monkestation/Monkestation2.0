@@ -1,4 +1,3 @@
-#warn TODO: cassette submission postbox
 /obj/machinery/cassette_postbox
 	name = "Space Board of Music Postbox"
 	desc = "Has a slit specifically to fit cassettes into it."
@@ -12,57 +11,51 @@
 	density = TRUE
 
 /obj/machinery/cassette_postbox/Initialize(mapload)
-	..()
-	// REGISTER_REQUIRED_MAP_ITEM(1, INFINITY)
-	return INITIALIZE_HINT_QDEL
+	. = ..()
+	REGISTER_REQUIRED_MAP_ITEM(1, INFINITY)
 
-/*
-/obj/machinery/cassette_postbox/attackby(obj/item/weapon, mob/user, params)
-	if(!istype(weapon, /obj/item/cassette_tape) || !user.client)
+/obj/machinery/cassette_postbox/item_interaction(mob/living/user, obj/item/cassette_tape/tape, list/modifiers)
+	if(!istype(tape, /obj/item/cassette_tape) || !user.client)
+		return NONE
+
+	if(tape.cassette_data.status == CASSETTE_STATUS_APPROVED)
+		to_chat(user, span_notice("This tape is already approved!"))
+		return ITEM_INTERACT_BLOCKING
+
+	if(!length(tape.cassette_data?.front?.songs) && !length(tape.cassette_data?.back?.songs))
+		to_chat(user, span_notice("This tape is blank!"))
 		return
-
-	var/obj/item/cassette_tape/attacked_tape = weapon
 
 	var/list/admin_count = get_admin_counts(R_FUN)
 	if(!length(admin_count["present"]))
 		to_chat(user, span_notice("The postbox refuses your cassette, it seems the Space Board is out for lunch."))
-		return
+		return ITEM_INTERACT_BLOCKING
 
-	if(attacked_tape.name == "A blank cassette")
+	if(!tape.cassette_data.name)
 		to_chat(user, span_notice("Please name your tape before submitting it, you can't change this later!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 
-	if(attacked_tape.cassette_desc_string == "Generic Desc")
+	if(!tape.cassette_data.desc)
 		to_chat(user, span_notice("Please add a description to your tape before submitting it, you can't change this later!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 
-	var/list/side1 = attacked_tape.songs["side1"]
-	var/list/side2 = attacked_tape.songs["side2"]
-
-	if(!length(side1) && !length(side2))
-		to_chat(user, span_notice("Please add some songs to your tape before submitting it, you can't change this later!"))
-		return
-
-	if(attacked_tape.approved_tape)
-		to_chat(user, span_notice("This tape has already been approved by the Board, it would be a waste of money to send it in again."))
-		return
 	var/choice = tgui_alert(user, "Are you sure? This costs 5k Monkecoins", "Mailbox", list("Yes", "No"))
 	if(choice != "Yes")
-		return
+		return ITEM_INTERACT_BLOCKING
 
-	// are you sure
 	var/secondchoice = tgui_alert(user, "Please make sure to Adminhelp and check for any available admins that can review your cassette before submitting, you will not be refunded if it is denied. If an admin does not review your cassette, and you are connected at the end of the round, you may be refunded.", "Mailbox", list("Acknowledge", "Cancel"))
 	if(secondchoice != "Acknowledge")
-		return
-	///these two parts here should be commented out for local testing without a db
-	if(user.client.prefs.metacoins < 5000)
-		to_chat(user, span_notice("Sorry, you don't have enough Monkecoins to submit a cassette for review."))
-		return
+		return ITEM_INTERACT_BLOCKING
 
-	if(!user.client.prefs.adjust_metacoins(user.client.ckey, -5000, "Submitted a mixtape", donator_multiplier = FALSE))
-		return
-	/// this is where it ends
-	attacked_tape.moveToNullspace()
-	submit_cassette_for_review(attacked_tape, user)
-	return TRUE
-*/
+#ifndef TESTING
+	///these two parts here should be commented out for local testing without a db
+	if(user.client.prefs?.metacoins < 5000)
+		to_chat(user, span_notice("Sorry, you don't have enough Monkecoins to submit a cassette for review."))
+		return ITEM_INTERACT_BLOCKING
+
+	if(!user.client.prefs?.adjust_metacoins(user.client.ckey, -5000, "Submitted a mixtape", donator_multiplier = FALSE))
+		return ITEM_INTERACT_BLOCKING
+#endif
+
+	submit_cassette_for_review(user, tape)
+	return ITEM_INTERACT_SUCCESS

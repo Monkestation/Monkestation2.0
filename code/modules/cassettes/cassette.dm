@@ -108,7 +108,8 @@ GLOBAL_LIST_INIT(cassette_icons, list(
 			if(!newcassettename)
 				to_chat(user, span_warning("That name is invalid."))
 				return ITEM_INTERACT_BLOCKING
-			name = "[lowertext(newcassettename)]"
+			cassette_data.name = newcassettename
+			update_appearance(UPDATE_NAME)
 			return ITEM_INTERACT_SUCCESS
 		if("Cassette Description")
 			///the description we are giving the cassette

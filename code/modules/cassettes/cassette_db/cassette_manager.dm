@@ -148,9 +148,9 @@ SUBSYSTEM_DEF(cassettes)
 			if(!rustg_file_exists(CASSETTE_FILE(id)))
 				continue
 			ids += id
-	for(var/id in cassettes)
-		var/datum/cassette/cassette = cassettes[id]
-		if(cassette.status == CASSETTE_STATUS_UNAPPROVED)
+	for(var/id, value in cassettes)
+		var/datum/cassette/cassette = value
+		if(cassette.status != CASSETTE_STATUS_APPROVED)
 			ids -= id
 		else
 			ids |= id
