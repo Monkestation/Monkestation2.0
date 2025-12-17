@@ -12,7 +12,7 @@
 	check_flags = BP_CANT_USE_IN_TORPOR | BP_CANT_USE_IN_FRENZY | BP_CANT_USE_WHILE_UNCONSCIOUS
 	purchase_flags = BLOODSUCKER_CAN_BUY | VASSAL_CAN_BUY
 	bloodcost = 5
-	constant_bloodcost = 0.2
+	constant_bloodcost = 1
 	cooldown_time = 10 SECONDS
 
 /datum/action/cooldown/bloodsucker/cloak/ActivatePower(trigger_flags)

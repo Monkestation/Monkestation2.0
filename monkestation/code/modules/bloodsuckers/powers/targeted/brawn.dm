@@ -1,14 +1,14 @@
 /datum/action/cooldown/bloodsucker/targeted/brawn
 	name = "Brawn"
-	desc = "Deal terrible damage with your bare hands or knock those grabbing you to the floor. Higher levels allow you to snap restraints or break closets."
+	desc = "Deal terrible damage with your bare hands, snap restraints, or knock those grabbing you to the floor."
 	button_icon_state = "power_strength"
 	power_explanation = "Brawn:\n\
-		Click any person to bash into them or knock a grabber down. Only one of these can be done per use.\n\
+		Click any person to bash into them, snap restraints, or knock a grabber down. Only one of these can be done per use.\n\
+		You can break normal handcuffs and straightjackets, but not silver handcuffs or bolas.\n\
 		Punching a Cyborg will heavily EMP them in addition to deal damage.\n\
-		At level 2, you get the ability to break any restraints on you (except silver handcuffs, but including bolas).\n\
+		Higher levels will increase the damage and knockdown when punching someone.\n\
 		At level 3, you get the ability to break closets open, additionally can both break restraints AND knock a grabber down in the same use.\n\
-		At level 5, you get the ability to break even silver handcuffs.\n\
-		Higher levels will also increase the damage and knockdown when punching someone."
+		At level 5, you get the ability to break even silver handcuffs. Use wisely - security is unlikely to try and capture you alive again after the first time!"
 	power_flags = BP_AM_TOGGLE
 	check_flags = BP_CANT_USE_IN_TORPOR|BP_CANT_USE_IN_FRENZY|BP_CANT_USE_WHILE_INCAPACITATED|BP_CANT_USE_WHILE_UNCONSCIOUS
 	purchase_flags = BLOODSUCKER_CAN_BUY|VASSAL_CAN_BUY
@@ -24,18 +24,17 @@
 	if (level_current >= 5)
 		check_flags |= BP_ALLOW_WHILE_SILVER_CUFFED
 
-/datum/action/cooldown/bloodsucker/targeted/brawn/can_use(mob/living/carbon/user, trigger_flags)
-	if (user.handcuffed && !check_level(2, "break restraints"))
-		return FALSE
-	return ..()
-
 /datum/action/cooldown/bloodsucker/targeted/brawn/ActivatePower(trigger_flags)
 	// Did we break out of our handcuffs?
 	if(break_restraints())
+		//If we're at or above level 3, try and knock grabber down as well.
+		if (level_current >= 3)
+			escape_puller()
+
 		power_activated_sucessfully()
 		return FALSE
-	// Did we knock a grabber down? We can only do this while not also breaking restraints if strong enough.
-	if(level_current >= 3 && escape_puller())
+	// Did we knock a grabber down?
+	else if (escape_puller())
 		power_activated_sucessfully()
 		return FALSE
 	// Did neither, now we can PUNCH.
@@ -60,31 +59,27 @@
 		addtimer(CALLBACK(src, PROC_REF(break_closet), user, closet), 1)
 		used = TRUE
 
-	// Remove both Handcuffs & Legcuffs
+	// Remove Handcuffs
 	var/obj/cuffs = user.get_item_by_slot(ITEM_SLOT_HANDCUFFED)
-	var/obj/legcuffs = user.get_item_by_slot(ITEM_SLOT_LEGCUFFED)
-	if(!used && (istype(cuffs) || istype(legcuffs)))
-		if (check_level(2, "break restraints"))
-			user.visible_message(
-				span_warning("[user] discards [user.p_their()] restraints like it's nothing!"),
-				span_warning("We break through our restraints!"),
-			)
-			user.clear_cuffs(cuffs, TRUE)
-			user.clear_cuffs(legcuffs, TRUE)
-			used = TRUE
+	if(!used && istype(cuffs))
+		user.visible_message(
+			span_warning("[user] discards [user.p_their()] restraints like it's nothing!"),
+			span_warning("We break through our restraints!"),
+		)
+		user.clear_cuffs(cuffs, TRUE)
+		used = TRUE
 
 	// Remove Straightjackets
 	if(user.wear_suit?.breakouttime && !used)
-		if (check_level(2, "break restraints"))
-			var/obj/item/clothing/suit/straightjacket = user.get_item_by_slot(ITEM_SLOT_OCLOTHING)
-			user.visible_message(
-				span_warning("[user] rips straight through [user.p_their()] [straightjacket]!"),
-				span_warning("We tear through our [straightjacket]!"),
-			)
-			user.temporarilyRemoveItemFromInventory(straightjacket, force = TRUE)
-			if(straightjacket && user.wear_suit == straightjacket)
-				qdel(straightjacket)
-			used = TRUE
+		var/obj/item/clothing/suit/straightjacket = user.get_item_by_slot(ITEM_SLOT_OCLOTHING)
+		user.visible_message(
+			span_warning("[user] rips straight through [user.p_their()] [straightjacket]!"),
+			span_warning("We tear through our [straightjacket]!"),
+		)
+		user.temporarilyRemoveItemFromInventory(straightjacket, force = TRUE)
+		if(straightjacket && user.wear_suit == straightjacket)
+			qdel(straightjacket)
+		used = TRUE
 
 	// Did we end up using our ability? If so, play the sound effect and return TRUE
 	if(used)

@@ -116,6 +116,11 @@
 	if (length(status_examines))
 		. += status_examines
 
+	//Nosferatu examine
+	var/datum/antagonist/bloodsucker/bloodsucker_datum = mind?.has_antag_datum(/datum/antagonist/bloodsucker)
+	if (bloodsucker_datum?.my_clan?.name == CLAN_NOSFERATU)
+		. += span_warning("[t_He] seem[p_s()] inhuman - a twisted abomination, some kind of creature of the night...")
+
 	var/appears_dead = FALSE
 	var/just_sleeping = FALSE
 

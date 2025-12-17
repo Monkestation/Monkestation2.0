@@ -1,6 +1,6 @@
 #define BLOODSUCKER_MAX_BLOOD_DEFAULT 600
 #define BLOODSUCKER_MAX_BLOOD_INCREASE_ON_RANKUP 80
-#define BLOODSUCKER_REGEN_INCREASE_ON_RANKUP 0.25
+#define BLOODSUCKER_REGEN_INCREASE_ON_RANKUP 0.1
 #define BLOODSUCKER_UNARMED_DMG_INCREASE_ON_RANKUP 0.5
 
 /datum/antagonist/bloodsucker
@@ -506,7 +506,9 @@
 	// Claim a Lair Objective
 	objectives += new /datum/objective/bloodsucker/lair(null, owner)
 	// Escape Objective
-	objectives += new /datum/objective/escape(null)
+	var/datum/objective/escape/escape_objective = new
+	escape_objective.owner = owner
+	objectives += escape_objective
 
 	// Conversion objective.
 	// Most likely to just be "have X living vassals", but can also be "vassalize command" or "vassalize X members of Y department"

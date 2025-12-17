@@ -29,7 +29,6 @@
 	target_range = 5
 	mesmerize_delay = 4 SECONDS
 	blind_at_level = 3
-	requires_facing_target = FALSE
 	blocked_by_glasses = FALSE
 	/// Data huds to show while the power is active
 	var/list/datahuds = list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC_ADVANCED)
@@ -50,7 +49,7 @@
 /datum/action/cooldown/bloodsucker/targeted/mesmerize/dominate/get_power_explanation_extended()
 	. = list()
 	. += "Click any person to, after [DisplayTimeText(mesmerize_delay)], stun them for [DisplayTimeText(get_power_time())]."
-	. += "Casting [src] will completely immobilize, and blind them for the next [DisplayTimeText(get_power_time())], and will also mute them for [DisplayTimeText(get_power_time())]."
+	. += "Casting [src] will completely immobilize, and blind them for the next [DisplayTimeText(get_power_time())], and will also mute them for [DisplayTimeText(get_mute_time())]."
 	. += "While this ability is active, you will be able to see additional information about everyone in the room."
 	. += "At level [DOMINATE_XRAY_LEVEL], you will gain X-Ray vision while this ability is active."
 	. += "At level [DOMINATE_VASSALIZE_LEVEL], while adjacent to the target, if your target is in critical condition or dead, they will instead be turned into a temporary Vassal. This will cost [TEMP_VASSALIZE_COST] blood."
@@ -86,7 +85,7 @@
 	. = ..()
 
 /datum/action/cooldown/bloodsucker/targeted/mesmerize/dominate/ActivatePower(atom/target)
-	..()
+	. = ..()
 	if(level_current >= DOMINATE_XRAY_LEVEL)
 		ADD_TRAIT(owner, TRAIT_XRAY_VISION, DOMINATE_TRAIT)
 	for(var/hudtype in datahuds)
@@ -175,6 +174,12 @@
 	INVOKE_ASYNC(vassal_datum, TYPE_PROC_REF(/datum, ui_interact), target) // make sure they see the vassal popup!!
 	power_activated_sucessfully(cost_override = TEMP_VASSALIZE_COST, cooldown_override = get_vassalize_cooldown())
 	to_chat(user, span_warning("We revive [target]!"))
+
+	//Remove mindshield if they have one
+	for(var/obj/item/implant/implant as anything in target.implants)
+		if(istype(implant, /obj/item/implant/mindshield) && implant.removed(target, silent = TRUE))
+			qdel(implant)
+
 	var/living_time = get_vassal_duration()
 	log_combat(owner, target, "tremere mindslaved", addition = "Revived and converted [target] into a temporary tremere vassal for [DisplayTimeText(living_time)].")
 	if(level_current <= DOMINATE_NON_MUTE_VASSALIZE_LEVEL)
