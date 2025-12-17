@@ -1,3 +1,6 @@
+/// How much flavor text gets displayed before cutting off.
+#define EXAMINE_FLAVOR_MAX_DISPLAYED 65
+
 /// -- Extension of examine, examine_more, and flavortext code. --
 /mob
 	/// Last time a client was connected to this mob.
