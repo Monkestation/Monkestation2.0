@@ -13,7 +13,7 @@
 
 	command_report_sounds = list('monkestation/sound/ai/vethbirthday/commandreport/chenCommandreport1.ogg',
 								'monkestation/sound/ai/vethbirthday/commandreport/chenCommandreport2.ogg',
-								'monkestation/sound/ai/vethbirthday/commandreport/abCentcomMessage.ogg')
+								'monkestation/sound/ai/vethbirthday/commandreport/abCentcom_Message.ogg')
 
 	event_sounds = list(ANNOUNCER_AIMALF = 'monkestation/sound/ai/vethbirthday/sneakyAimalf.ogg',
 						ANNOUNCER_ALIENS = 'monkestation/sound/ai/vethbirthday/abAliens.ogg',

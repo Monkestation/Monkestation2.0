@@ -786,7 +786,7 @@ generate/load female uniform sprites matching all previously decided variables
 	var/mob/living/carbon/human/wearer = loc
 
 	var/mutable_appearance/standing
-	if(female_uniform)																				//MONKESTATION EDIT (below) - Dimorphic lizards
+	if(female_uniform) //MONKESTATION EDIT (below) - Dimorphic lizards
 		var/is_reptile = istype(wearer) && !!(wearer.mob_biotypes & MOB_REPTILE)
 		standing = wear_female_version(t_state, file2use, layer2use, female_uniform, greyscale_colors, is_reptile) //should layer2use be in sync with the adjusted value below? needs testing - shiz
 	if(!standing)
