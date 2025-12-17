@@ -167,7 +167,7 @@
 	desc = "A completely randomized and wacky box of long balloons, harvested straight from balloon farms on the clown planet."
 	illustration = "balloon"
 
-/obj/item/storage/box/lights/Initialize(mapload)
+/obj/item/storage/box/balloons/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 24
 	atom_storage.set_holdable(list(/obj/item/toy/balloon/long))
