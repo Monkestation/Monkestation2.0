@@ -61,7 +61,7 @@ SUBSYSTEM_DEF(cassettes)
 /datum/controller/subsystem/cassettes/proc/load_cassette_from_db_raw(id) as /datum/cassette
 	if(!SSdbcore.Connect() || !id)
 		return
-	var/datum/db_query/query_cassette = SSdbcore.NewQuery("SELECT name, desc, status, author_name, author_ckey, front, back FROM [format_table_name("cassettes")] WHERE id = :id", list("id" = id))
+	var/datum/db_query/query_cassette = SSdbcore.NewQuery("SELECT `name`, `desc`, `status`, `author_name`, `author_ckey`, `front`, `back` FROM [format_table_name("cassettes")] WHERE `id` = :id", list("id" = id))
 	if(!query_cassette.Execute() || !query_cassette.NextRow())
 		qdel(query_cassette)
 		return
@@ -91,10 +91,11 @@ SUBSYSTEM_DEF(cassettes)
 	. = FALSE
 	if(!SSdbcore.Connect())
 		CRASH("Failed to connect to database")
-	var/datum/db_query/query_cassettes = SSdbcore.NewQuery("SELECT id, name, desc, status, author_name, author_ckey, front, back FROM [format_table_name("cassettes")]")
+	var/datum/db_query/query_cassettes = SSdbcore.NewQuery("SELECT `id`, `name`, `desc`, `status`, `author_name`, `author_ckey`, `front`, `back` FROM [format_table_name("cassettes")]")
 	if(!query_cassettes.Execute())
 		qdel(query_cassettes)
 		CRASH("Failed to load cassettes from database")
+	var/loaded = 0
 	while(query_cassettes.NextRow())
 		var/id = query_cassettes.item[1]
 		var/name = query_cassettes.item[2]
@@ -116,7 +117,9 @@ SUBSYSTEM_DEF(cassettes)
 		cassette.back.import(back)
 
 		cassettes[id] = cassette
+		loaded++
 	qdel(query_cassettes)
+	log_music("Loaded [loaded] cassettes from the database!")
 	return TRUE
 
 /// Returns an associative list of id to cassette datums, of all existing saved cassettes.
@@ -176,28 +179,3 @@ SUBSYSTEM_DEF(cassettes)
 	var/list/cassettes = filtered_cassettes(status, user_ckey, id_blacklist)
 	for(var/i in 1 to min(amount, length(cassettes)))
 		. += pick_n_take(cassettes)
-
-/datum/controller/subsystem/cassettes/proc/migrate_json_cassettes_to_db()
-	if(!SSdbcore.Connect())
-		CRASH("Cannot migrate JSON cassettes to the database if we can't even connect to the database!")
-	var/list/old_cassettes = cassettes.Copy()
-	cassettes.Cut()
-	if(!load_all_cassettes_from_json())
-		cassettes = old_cassettes
-		CRASH("Failed to load cassettes from JSON")
-	var/list/sql_cassettes = list()
-	for(var/id in cassettes)
-		var/datum/cassette/cassette = cassettes[id]
-		sql_cassettes += list(list(
-			"id" = id,
-			"name" = cassette.name,
-			"desc" = cassette.desc,
-			"status" = cassette.status,
-			"author_name" = cassette.author.name,
-			"author_ckey" = ckey(cassette.author.ckey),
-			"front" = cassette.front.export(),
-			"back" = cassette.back.export(),
-		))
-	if(!length(sql_cassettes))
-		return
-	SSdbcore.MassInsert(format_table_name("cassettes"), sql_cassettes, duplicate_key = TRUE, warn = TRUE)

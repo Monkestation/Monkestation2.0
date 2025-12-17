@@ -748,8 +748,8 @@ CREATE TABLE `overwatch_whitelist` (
 DROP TABLE IF EXISTS `cassettes`;
 CREATE TABLE `cassettes` (
 	`id` VARCHAR(255) NOT NULL PRIMARY KEY,
-	`name` VARCHAR(42) NOT NULL,
-	`desc` VARCHAR(144) NOT NULL,
+	`name` VARCHAR(80) NOT NULL,
+	`desc` VARCHAR(200) NOT NULL,
 	`status` TINYINT UNSIGNED NOT NULL,
 	`author_name` VARCHAR(42) NOT NULL,
 	`author_ckey` VARCHAR(30) NOT NULL,
