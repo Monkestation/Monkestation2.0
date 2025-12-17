@@ -146,7 +146,7 @@
 
 /// Imports data for this cassette side to the JSON format used by the database.
 /datum/cassette_side/proc/import(list/data)
-	design = data["design"]
+	design = data["icon"]
 	for(var/list/song_data as anything in data["tracks"])
 		var/datum/cassette_song/song = new
 		song.import(song_data)
