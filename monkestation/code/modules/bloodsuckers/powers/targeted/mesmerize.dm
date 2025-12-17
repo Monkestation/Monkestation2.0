@@ -36,7 +36,8 @@
 /datum/action/cooldown/bloodsucker/targeted/mesmerize/get_power_explanation_extended()
 	. = list()
 	. += "Click any player to attempt to mesmerize them. If successful, will stun and mute the victim."
-	. += "The victim will realize they are being mesmerized, and can escape the effect if they get out of range in time."
+	. += "The victim will realize they are being mesmerized, but will be muted for the duration of the glare."
+	. += "They can escape the effect if they get out of range in time."
 	if(blocked_by_glasses)
 		. += "[src] requires you to not be wearing glasses."
 	. += "Obviously, both parties need to not be blind."
@@ -135,9 +136,12 @@
 		power_activated_sucessfully() // PAY COST! BEGIN COOLDOWN!
 		return
 
+	mute_target(mesmerized_target, modified_delay)
+
 	if(!do_after(user, modified_delay, mesmerized_target, IGNORE_USER_LOC_CHANGE | IGNORE_TARGET_LOC_CHANGE, TRUE, extra_checks = CALLBACK(src, PROC_REF(ContinueActive), user, mesmerized_target), hidden = TRUE))
 		StartCooldown(cooldown_time * 0.5)
 		DeactivatePower()
+		unmute_target(mesmerized_target)
 		return
 	// Can't quite time it here, but oh well
 	if(IS_MONSTERHUNTER(mesmerized_target))
@@ -148,13 +152,12 @@
 		owner.balloon_alert(owner, "[mesmerized_target] is already in a hypnotic gaze.")
 		return
 	owner.balloon_alert(owner, "successfully mesmerized [mesmerized_target].")
-	mute_target(mesmerized_target)
 	mesmerize_effects(user, mesmerized_target)
 	power_activated_sucessfully() // PAY COST! BEGIN COOLDOWN!
 
 /datum/action/cooldown/bloodsucker/targeted/mesmerize/proc/mesmerize_effects(mob/living/user, mob/living/mesmerized_target)
 	var/power_time = get_power_time()
-	mute_target(mesmerized_target)
+	mute_target(mesmerized_target, power_time)
 	mesmerized_target.Immobilize(power_time)
 	mesmerized_target.next_move = world.time + power_time // <--- Use direct change instead. We want an unmodified delay to their next move // mesmerized_target.changeNext_move(power_time) // check click.dm
 	ADD_TRAIT(mesmerized_target, TRAIT_NO_TRANSFORM, MESMERIZE_TRAIT) // <--- Fuck it. We tried using next_move, but they could STILL resist. We're just doing a hard freeze.
@@ -163,17 +166,18 @@
 /datum/action/cooldown/bloodsucker/targeted/mesmerize/proc/get_power_time()
 	return 9 SECONDS + level_current * 1 SECONDS
 
-/datum/action/cooldown/bloodsucker/targeted/mesmerize/proc/get_mute_time()
-	return get_power_time()
-
 /datum/action/cooldown/bloodsucker/targeted/mesmerize/proc/blind_target(mob/living/mesmerized_target)
 	if(!blind_at_level && level_current < blind_at_level)
 		return
 	mesmerized_target.become_blind(MESMERIZE_TRAIT)
 
-/datum/action/cooldown/bloodsucker/targeted/mesmerize/proc/mute_target(mob/living/mesmerized_target)
-	mesmerized_target.set_silence_if_lower(get_mute_time())
-	mesmerized_target.set_emote_mute_if_lower(get_mute_time())
+/datum/action/cooldown/bloodsucker/targeted/mesmerize/proc/mute_target(mob/living/mesmerized_target, duration)
+	mesmerized_target.set_silence_if_lower(duration)
+	mesmerized_target.set_emote_mute_if_lower(duration)
+
+/datum/action/cooldown/bloodsucker/targeted/mesmerize/proc/unmute_target(mob/living/mesmerized_target)
+	mesmerized_target.set_silence(0)
+	mesmerized_target.set_emote_mute(0)
 
 /datum/action/cooldown/bloodsucker/targeted/mesmerize/DeactivatePower(deactivate_flags)
 	. = ..()
