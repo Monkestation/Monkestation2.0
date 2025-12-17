@@ -61,6 +61,7 @@
 	cost = CARGO_CRATE_VALUE * 3
 	contains = list(/obj/item/walkman = 5)
 	crate_name = "walkman crate"
+*/
 
 /datum/supply_pack/service/cassettedeck
 	name = "Advanced Cassette Deck Crate"
@@ -70,4 +71,3 @@
 					/obj/item/wrench)
 	crate_name = "cassette deck crate"
 	crate_type = /obj/structure/closet/crate/large
-*/

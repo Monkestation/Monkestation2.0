@@ -195,3 +195,6 @@
 		"artist" = artist,
 		"album" = album,
 	)
+
+/datum/cassette_song/proc/operator""()
+	return "[name || "Untitled Song"]"
