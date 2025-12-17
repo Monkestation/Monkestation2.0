@@ -118,6 +118,9 @@
 	///can we grab this object?
 	var/cant_grab = FALSE
 
+	/// If TRUE, then this will be affected by things such as the "Bot Language Matrix Malfunction" station trait.
+	var/can_language_malfunction = TRUE
+
 /mutable_appearance/emissive_blocker
 
 /mutable_appearance/emissive_blocker/New()
@@ -854,9 +857,6 @@
 	if (!moving_diagonally && client_mobs_in_contents)
 		update_parallax_contents()
 
-#ifndef DISABLE_DEMOS
-	SSdemo.mark_dirty(src) //Monkestation Edit: REPLAYS
-#endif
 	SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, old_loc, movement_dir, forced, old_locs, momentum_change)
 
 	if(old_loc)
@@ -1615,6 +1615,8 @@
  * - They are on the escape shuttle
  */
 /atom/movable/proc/randomize_language_if_on_station()
+	if(!can_language_malfunction)
+		return
 	var/turf/atom_turf = get_turf(src)
 	var/area/atom_area = get_area(src)
 

@@ -141,28 +141,6 @@
 		RND_CATEGORY_DEFOREST_MEDICAL,
 	)
 
-/datum/design/organic_bruise_pack
-	name = "Bruise Pack"
-	id = "organic_bruise_pack"
-	build_type = BIOGENERATOR
-	materials = list(/datum/material/biomass = 25)
-	build_path = /obj/item/stack/heal_pack/brute_pack
-	category = list(
-		RND_CATEGORY_INITIAL,
-		RND_CATEGORY_DEFOREST_MEDICAL,
-	)
-
-/datum/design/organic_burn_pack
-	name = "Burn Pack"
-	id = "organic_burn_pack"
-	build_type = BIOGENERATOR
-	materials = list(/datum/material/biomass = 25)
-	build_path = /obj/item/stack/heal_pack/burn_pack
-	category = list(
-		RND_CATEGORY_INITIAL,
-		RND_CATEGORY_DEFOREST_MEDICAL,
-	)
-
 /datum/design/organic_printer_amollin_pill
 	name = "Amollin Painkiller"
 	id = "organic_printer_amollin_pill"

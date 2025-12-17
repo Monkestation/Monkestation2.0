@@ -36,7 +36,7 @@ GROUP, TOOL, ITEM for reading whereas hand is just GROUP, ITEM. Prioritizes hand
 		if(!listed.required_to_fire)
 			continue
 		if(!listed.stored)
-			user.balloon_alert(user, "Missing Essential Attachments!")
+			user.balloon_alert(user, "missing Essential Attachments!")
 			return COMPONENT_CANCEL_GUN_FIRE
 
 /datum/component/weapon_attachments/proc/attempt_attach(obj/item/gun/source, mob/living/user, atom/target, obj/item/attachment/attacher)
@@ -134,7 +134,7 @@ GROUP, TOOL, ITEM for reading whereas hand is just GROUP, ITEM. Prioritizes hand
 			continue
 		listed.stored = null
 	choice.forceMove(get_turf(user))
-	user.balloon_alert(user, "Successfully removed [choice.name].")
+	user.balloon_alert(user, "successfully removed [choice.name].")
 
 	SEND_SIGNAL(parent, COMSIG_ATTACHMENT_DETACHED, choice)
 
