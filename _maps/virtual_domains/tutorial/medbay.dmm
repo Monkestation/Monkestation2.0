@@ -573,6 +573,15 @@
 	dir = 1
 	},
 /area/space)
+"gP" = (
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 1
+	},
+/turf/open/floor/iron/white,
+/area/space)
 "gX" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/airlock/glass_large,
@@ -605,6 +614,12 @@
 	id = "shutters_arrivals_west"
 	},
 /turf/open/floor/plating,
+/area/space)
+"ho" = (
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
 /area/space)
 "hq" = (
 /obj/effect/turf_decal/trimline/dark_blue/filled/line{
@@ -1009,6 +1024,12 @@
 /obj/structure/sign/poster/contraband/rush_propaganda/directional/north,
 /turf/open/floor/carpet/grimey,
 /area/space)
+"le" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/table,
+/obj/machinery/mentor_machine,
+/turf/open/floor/iron,
+/area/space)
 "li" = (
 /obj/effect/mapping_helpers/airlock/access/all/security,
 /obj/machinery/door/airlock/maintenance_hatch,
@@ -1230,6 +1251,16 @@
 	pixel_y = -11
 	},
 /turf/open/floor/carpet/grimey,
+/area/space)
+"nM" = (
+/obj/item/storage/box/ingredients/american,
+/obj/item/storage/box/ingredients/american,
+/obj/item/storage/box/ingredients/american,
+/obj/effect/turf_decal/bot,
+/obj/structure/closet/secure_closet/freezer/fridge{
+	locked = 0
+	},
+/turf/open/floor/iron/freezer,
 /area/space)
 "nO" = (
 /obj/structure/bodycontainer/morgue,
@@ -1513,6 +1544,15 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
+/area/space)
+"qH" = (
+/obj/structure/closet/secure_closet/freezer/meat/open,
+/obj/item/food/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron/freezer,
 /area/space)
 "qN" = (
 /obj/machinery/holopad,
@@ -2502,6 +2542,11 @@
 	},
 /turf/open/floor/iron/dark,
 /area/space)
+"Ar" = (
+/obj/structure/kitchenspike,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron/freezer,
+/area/space)
 "As" = (
 /obj/effect/turf_decal/trimline/dark_blue/filled/corner,
 /obj/effect/turf_decal/trimline/dark_blue/filled/corner{
@@ -2544,6 +2589,9 @@
 /area/space)
 "AE" = (
 /obj/effect/turf_decal/siding/thinplating_new/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 1
 	},
 /turf/open/floor/iron/white,
@@ -3413,6 +3461,15 @@
 	},
 /turf/open/floor/iron,
 /area/space)
+"IG" = (
+/obj/structure/closet/secure_closet/freezer/meat/open,
+/obj/item/food/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
+/obj/effect/turf_decal/bot/left,
+/turf/open/floor/iron/freezer,
+/area/space)
 "II" = (
 /obj/effect/turf_decal/trimline/dark_blue/line,
 /obj/machinery/light/directional/north,
@@ -3603,6 +3660,15 @@
 /obj/structure/flora/bush/flowers_pp/style_random,
 /turf/open/misc/grass/jungle,
 /area/space)
+"LI" = (
+/obj/item/reagent_containers/condiment/flour,
+/obj/item/reagent_containers/condiment/flour,
+/obj/effect/turf_decal/bot,
+/obj/structure/closet/secure_closet/freezer/fridge{
+	locked = 0
+	},
+/turf/open/floor/iron/freezer,
+/area/space)
 "LS" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/siding/blue/corner{
@@ -3656,6 +3722,19 @@
 "Md" = (
 /obj/structure/flora/bush/fullgrass/style_3,
 /turf/open/misc/grass/jungle,
+/area/space)
+"Mf" = (
+/obj/item/reagent_containers/condiment/soymilk,
+/obj/item/reagent_containers/condiment/milk,
+/obj/item/reagent_containers/condiment/milk,
+/obj/item/storage/fancy/egg_box,
+/obj/item/storage/fancy/egg_box,
+/obj/effect/turf_decal/bot,
+/obj/item/storage/fancy/egg_box,
+/obj/structure/closet/secure_closet/freezer/fridge{
+	locked = 0
+	},
+/turf/open/floor/iron/freezer,
 /area/space)
 "Mi" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
@@ -4022,6 +4101,9 @@
 /obj/effect/turf_decal/siding/thinplating_new{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
+	dir = 1
+	},
 /turf/open/floor/iron/white,
 /area/space)
 "Pc" = (
@@ -4238,6 +4320,15 @@
 	pixel_x = 4
 	},
 /turf/open/floor/iron,
+/area/space)
+"Rg" = (
+/obj/structure/closet/secure_closet/freezer/meat/open,
+/obj/effect/turf_decal/bot,
+/obj/item/food/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
+/turf/open/floor/iron/freezer,
 /area/space)
 "Rh" = (
 /obj/structure/closet/crate/bin,
@@ -4475,6 +4566,10 @@
 /obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/white,
 /area/space)
+"TF" = (
+/obj/effect/turf_decal/tile/yellow,
+/turf/open/floor/iron/white,
+/area/space)
 "TJ" = (
 /obj/machinery/door/airlock/medical/glass{
 	name = "Care Unit"
@@ -4617,6 +4712,15 @@
 	},
 /turf/open/floor/iron,
 /area/space)
+"Wb" = (
+/obj/structure/chair/office/light{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/space)
 "Wi" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/atmospherics/components/unary/portables_connector{
@@ -4625,6 +4729,15 @@
 /obj/effect/turf_decal/box,
 /obj/machinery/portable_atmospherics/canister/anesthetic_mix,
 /turf/open/space/basic,
+/area/space)
+"Wm" = (
+/obj/structure/closet/secure_closet/freezer/meat/open,
+/obj/item/food/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
+/obj/effect/turf_decal/bot/right,
+/turf/open/floor/iron/freezer,
 /area/space)
 "Wn" = (
 /obj/effect/turf_decal/tile/dark/fourcorners,
@@ -4805,6 +4918,12 @@
 /turf/open/floor/iron/dark/textured_half{
 	dir = 1
 	},
+/area/space)
+"Yx" = (
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
 /area/space)
 "Yy" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -6632,8 +6751,8 @@ fF
 fF
 fF
 tp
-tm
-tm
+LI
+Mf
 tm
 tp
 rs
@@ -6764,8 +6883,8 @@ fF
 fF
 fF
 tp
-tm
-tm
+nM
+nM
 tm
 tp
 rs
@@ -6896,8 +7015,8 @@ fF
 fF
 fF
 tp
-tm
-tm
+LI
+Mf
 tm
 Iz
 qg
@@ -6979,7 +7098,7 @@ ax
 ax
 Zd
 Pd
-zq
+le
 Rw
 lj
 PK
@@ -7028,7 +7147,7 @@ fF
 fF
 fF
 tp
-tm
+Wm
 tm
 tm
 Iz
@@ -7094,7 +7213,7 @@ fF
 fF
 fF
 tp
-tm
+qH
 tm
 tm
 tp
@@ -7160,9 +7279,9 @@ fF
 fF
 fF
 tp
+qH
 tm
-tm
-tm
+Ar
 tp
 Gw
 tz
@@ -7226,9 +7345,9 @@ fF
 fF
 fF
 tp
+Ar
 tm
-tm
-tm
+Rg
 tp
 Gw
 xn
@@ -7292,9 +7411,9 @@ fF
 fF
 fF
 tp
+Ar
 tm
-tm
-tm
+IG
 tp
 jd
 tz
@@ -7826,9 +7945,9 @@ RD
 tp
 CR
 Pb
-Pz
-Hd
-Hd
+Wb
+Zp
+yc
 ly
 KQ
 uK
@@ -7891,10 +8010,10 @@ DX
 RD
 tp
 CR
-Pb
+gP
 Hd
 Hd
-Hd
+yc
 dy
 qN
 fj
@@ -7957,14 +8076,14 @@ DX
 RD
 tp
 br
-Pb
+gP
 Hd
 Hd
-Hd
-Hd
-Hd
-Hd
-Hd
+Yx
+Zp
+Zp
+Zp
+Zp
 tp
 kS
 PM
@@ -8023,7 +8142,7 @@ DX
 RD
 tp
 br
-Pb
+gP
 cj
 Hd
 FE
@@ -8092,11 +8211,11 @@ nP
 AE
 Hd
 Hd
-Hd
-Hd
-Hd
-Hd
-Hd
+TF
+mV
+mV
+mV
+mV
 tp
 kS
 bW
@@ -8155,10 +8274,10 @@ DX
 RD
 tp
 dB
-Hd
-Hd
-Hd
-Hd
+VB
+mV
+ho
+yc
 ac
 cA
 yW
@@ -8223,8 +8342,8 @@ tp
 gz
 fJ
 fJ
-Hd
-Hd
+JC
+ya
 iQ
 KQ
 qu

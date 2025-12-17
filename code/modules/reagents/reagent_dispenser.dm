@@ -457,7 +457,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/uraniumvirusf
 	name = "unstable uranium gel dispenser"
 	desc = "A dispenser of unstable uranium gel."
 	icon_state = "virus_food"
-	reagent_id = /datum/reagent/toxin/plasma/uraniumvirusfood/unstable
+	reagent_id =/datum/reagent/uranium/uraniumvirusfood/unstable
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/uraniumvirusfoodunstable, 30)
 
