@@ -654,10 +654,12 @@
 	harmful = TRUE
 	projectile = /obj/projectile/bullet/rocket/sentinelshell
 	equip_cooldown = 12 SECONDS
-	projectiles = 40
-	projectiles_cache = 40
+	projectiles = 20
+	projectiles_cache = 0
 	projectiles_cache_max = 40
 	projectiles_per_shot = 2
+	variance = 10
+	randomspread = 3
 	projectile_delay = 0.1 SECONDS
 	ammo_type = MECHA_AMMO_SENTINEL
 	mech_flags = EXOSUIT_MODULE_SENTINEL
