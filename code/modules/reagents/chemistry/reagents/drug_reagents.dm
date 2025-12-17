@@ -716,7 +716,7 @@
 
 	invisible_man.update_body()
 	invisible_man.remove_from_all_data_huds()
-	invisible_man.sound_environment_override = SOUND_ENVIROMENT_PHASED
+	invisible_man.sound_environment_override = SOUND_ENVIRONMENT_PHASED
 
 /datum/reagent/drug/saturnx/on_mob_end_metabolize(mob/living/carbon/invisible_man)
 	. = ..()

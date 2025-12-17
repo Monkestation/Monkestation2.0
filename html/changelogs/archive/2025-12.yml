@@ -306,3 +306,16 @@
   grungussuss, JupiterJaeden:
   - qol: Windoors now stay open for 8 seconds instead of 5.
   - qol: Secure windoors now stay open for 5 seconds instead of 2.
+2025-12-17:
+  Lawlolawl:
+  - bugfix: Fixed lights not being able to be placed back into box of replacement
+      lights.
+  - bugfix: Fixed space heater deconstruction generating power cells, as well as improvised
+      chem heater deconstruction generating cable coils.
+  Loiosh42:
+  - map: Oshan armoury now standardized
+  Uristthedorf:
+  - rscdel: Removes horned mutation and extra versions of colorblind mutation.
+  flleeppyy:
+  - rscdel: Removed replays/demos
+  - code_imp: Demodularized hydroponics, flavor_text, floorsigns, and food_and_drinks
