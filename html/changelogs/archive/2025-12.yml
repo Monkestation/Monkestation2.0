@@ -320,6 +320,8 @@
   - rscdel: Removed replays/demos
   - code_imp: Demodularized hydroponics, flavor_text, floorsigns, and food_and_drinks
 2025-12-18:
+  Absolucy:
+  - rscdel: Bloodsuckers can no longer choose the Nosferatu clan.
   BingusSS13:
   - map: Replaced the backup power cell on Charlie Station with a mega cell.
   - map: The northern transit tube on Ice Box Charlie Station now has firelock frames
@@ -337,6 +339,25 @@
       switch cases
   - code_imp: busted necropolis chests now roll what loot they are going to spawn
       on initialize, making admins able to rig them and allowing for easier debugging
+  JohnFulpWillard:
+  - rscadd: Cargo union badges.
+  - rscdel: Security badges (except the Detective).
+  - rscadd: Detective's badge gets flashier the more experienced you are at Detective.
+  - rscadd: The QM now has an official list of all Union personnel that they can add
+      to/remove at all times.
+  - rscadd: Borgs can now wear Union badges.
+  - bugfix: Badges automatically sync to your character on round-join.
+  - qol: Badges (including the Lawyers') now points to itself rather than send an
+      easy-to-miss message in chat. It also uses balloon alerts.
+  JupiterJaeden:
+  - bugfix: You can now correctly remove contractor batons from the contractor baton
+      holster module with a wrench (as the in-game text implies).
+  - bugfix: Contractor batons added to the contractor baton holster module now correctly
+      have no-drop applied.
+  Killermankey:
+  - rscadd: Sentinel Siege Walker
+  - bugfix: a singular letter missing from the ignifist stopping it from using the
+      correct rocket.
   Lawlolawl:
   - bugfix: Fixed chemnades losing labels during assembly/disassembly steps. In general,
       hand labeler labels should have their label added to the end of an item's new
@@ -347,3 +368,10 @@
   - balance: maulers come with a melee armor module installed along with a projectile
       armor module.
   - balance: projectile armor gives 15 more bullet resistance instead of 10.
+  Uristthedorf:
+  - refactor: Actions will no longer by default apply a melee cooldown equal to action
+      cooldown.
+  - bugfix: Fixed various abilities causing melee jank, most noticeably venus man
+      eaters
+  notghosti:
+  - bugfix: Dormant disease no longer shows on a health analyzer scan
