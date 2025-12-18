@@ -25,10 +25,11 @@
 
 	var/datum/nanite_program/current_program	//The nanite program currently in the programming (middle) section.
 
-/obj/machinery/computer/nanite_cloud_controller/Initialize()
+/obj/machinery/computer/nanite_cloud_controller/Initialize(mapload)
 	. = ..()
 	become_hearing_sensitive(trait_source = ROUNDSTART_TRAIT)
 	linked_techweb = SSresearch.science_tech
+	AddComponent(/datum/component/gps, "Nanite Synchronization Signal")
 
 /obj/machinery/computer/nanite_cloud_controller/Destroy()
 	QDEL_LIST(cloud_backups) //rip backups

@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - rscdel: "Bloodsuckers can no longer choose the Nosferatu clan."

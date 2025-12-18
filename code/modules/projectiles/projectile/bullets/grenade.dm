@@ -288,8 +288,9 @@
 	desc = "OH SHIT!!!"
 	icon = 'icons/obj/weapons/guns/projectiles.dmi'
 	icon_state = "bolter"
-	damage = 100
+	damage = 50
 	range = 25
+	fauna_mod = 2
 
 /obj/projectile/bullet/a40mm/kinetic/payload(atom/target)
 	var/obj/item/grenade/shrapnel_maker = new /obj/item/grenade/kineticshrapnel(drop_location())
@@ -312,13 +313,14 @@
 /obj/projectile/bullet/shrapnel/kinetic
 	name = "Kinetic Shrapnel Hunk"
 	range = 5
-	damage = 75
+	damage = 25
 	weak_against_armour = TRUE
 	dismemberment = 0
 	ricochets_max = 0
 	ricochet_chance = 0
 	ricochet_incidence_leeway = 0
 	ricochet_decay_chance = 0
+	fauna_mod = 3
 
 /obj/projectile/bullet/shrapnel/kinetic/on_hit(atom/target, Firer, blocked = 0, pierce_hit) //its not meant to tear through walls like a plasma cutter, but will still at least bust down a wall if it hits one.
 	if(ismineralturf(target))

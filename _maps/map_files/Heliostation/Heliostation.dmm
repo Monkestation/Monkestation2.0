@@ -63744,6 +63744,18 @@
 /obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
+"rht" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/public/glass{
+	name = "Garden"
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green,
+/obj/effect/landmark/navigate_destination/garden,
+/turf/open/floor/iron,
+/area/station/service/hydroponics/garden)
 "rhv" = (
 /obj/structure/sign/nanotrasen{
 	pixel_y = 32
@@ -116890,7 +116902,7 @@ bmM
 bom
 kQG
 pGs
-bIH
+rht
 vxy
 bwl
 bwl

@@ -211,3 +211,5 @@
 	master = vampire
 	new_owner.add_antag_datum(src)
 	to_chat(choice, span_notice("Through divine intervention, you've gained a new vassal!"))
+
+#undef VASSAL_SCAN_MIN_DISTANCE
