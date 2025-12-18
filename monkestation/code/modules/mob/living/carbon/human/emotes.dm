@@ -56,21 +56,20 @@
 
 	//BIBLEFART/
 	//This goes above all else because it's an instagib.
-	for(var/obj/item/book/bible/Holy in Location)
-		if(Holy)
-			var/mob/living/carbon/human/Person = user //We know they are human already, it was in the emote check.
-			var/turf/T = get_step(get_step(Person, NORTH), NORTH)
-			T.Beam(Person, icon_state="lightning[rand(1,12)]", time = 15)
-			Person.Paralyze(15)
-			to_chat(Person, "<span class='warning'>[Person] attempts to fart on the [Holy], uh oh.<span>")
-			playsound(user,'sound/magic/lightningshock.ogg', 50, 1)
-			playsound(user,	'monkestation/sound/misc/dagothgod.ogg', 80)
-			Person.electrocution_animation(15)
-			spawn(15)
-				to_chat(Person,"<span class='ratvar'>What a grand and intoxicating innocence. Perish.</span>")
-				Person.gib()
-				dyn_explosion(Location, 1, 0)
-			return
+	for(var/obj/item/book/bible/Holy as anything in Location)
+		var/mob/living/carbon/human/Person = user //We know they are human already, it was in the emote check.
+		var/turf/T = get_step(get_step(Person, NORTH), NORTH)
+		T.Beam(Person, icon_state="lightning[rand(1,12)]", time = 15)
+		Person.Paralyze(15)
+		to_chat(Person, "<span class='warning'>[Person] attempts to fart on the [Holy], uh oh.<span>")
+		playsound(user,'sound/magic/lightningshock.ogg', 50, 1)
+		playsound(user,	'monkestation/sound/misc/dagothgod.ogg', 80)
+		Person.electrocution_animation(15)
+		spawn(15)
+			to_chat(Person,"<span class='ratvar'>What a grand and intoxicating innocence. Perish.</span>")
+			Person.gib()
+			dyn_explosion(Location, 1, 0)
+		return
 
 	playsound(ass_holder, "monkestation/sound/effects/superfart.ogg", 100, FALSE, pressure_affected = FALSE, mixer_channel = CHANNEL_PRUDE)
 	spawn(8)

@@ -1,5 +1,5 @@
 //for making masks
-/obj/item/clothing/suit/armor/secduster/Initialize()
+/obj/item/clothing/suit/armor/secduster/Initialize(mapload)
 	MakeMask()
 	. = ..()
 

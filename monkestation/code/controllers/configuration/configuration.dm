@@ -8,18 +8,18 @@
 // JSON example of how lobby_notices.json works.
 
 [
-  "this notice will show in both the chatbox, and tgui. will do HTML like the others but using classes that are used in the chatbox will not show in tgui as they are separate",
-  {
-    "TGUI_SAFE": "This shows in tgui! <span style='font-size: 110%'>you can also use html! but not the classes used the chatbox, as said above</span>",
-    "CHATBOX_SAFE": "This shows in tgui! <span class='bold red'>(with special formatting!)</span>."
-  },
-  {
-    "TGUI_SAFE": [
-      "this is the first line",
-      "this is the second line. notice how this object doesn't have a chatbox_safe?",
-      "that means it'll only show in Tgui"
-    ]
-  }
+	"this notice will show in both the chatbox, and tgui. will do HTML like the others but using classes that are used in the chatbox will not show in tgui as they are separate",
+	{
+		"TGUI_SAFE": "This shows in tgui! <span style='font-size: 110%'>you can also use html! but not the classes used the chatbox, as said above</span>",
+		"CHATBOX_SAFE": "This shows in tgui! <span class='bold red'>(with special formatting!)</span>."
+	},
+	{
+		"TGUI_SAFE": [
+			"this is the first line",
+			"this is the second line. notice how this object doesn't have a chatbox_safe?",
+			"that means it'll only show in Tgui"
+		]
+	}
 ]
 
 */
@@ -61,10 +61,10 @@
 /*
 /proc/compare_dates(year1, month1, day1, year2, month2, day2)
 		// TRUE if date1 >= date2, FALSE if date1 < date2
-    var/comparable_date1 = year1 * 10000 + month1 * 100 + day1
-    var/comparable_date2 = year2 * 10000 + month2 * 100 + day2
+		var/comparable_date1 = year1 * 10000 + month1 * 100 + day1
+		var/comparable_date2 = year2 * 10000 + month2 * 100 + day2
 
-    return comparable_date1 >= comparable_date2
+		return comparable_date1 >= comparable_date2
 */
 
 /*  in some other proc

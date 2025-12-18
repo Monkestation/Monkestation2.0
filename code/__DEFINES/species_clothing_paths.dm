@@ -18,3 +18,6 @@
 #define SNOUTED_MASK_FILE 'monkestation/icons/mob/species/misc/mask_muzzled.dmi'
 ///The dmi containing snouted variation helmets
 #define SNOUTED_HEAD_FILE 'monkestation/icons/mob/species/misc/head_muzzled.dmi'
+
+///The dmi for digitigrade shorts/pants/shirts (blueshift clothing)
+#define SHORTS_PANTS_SHIRTS_DIGIFILE 'monkestation/code/modules/blueshift/icons/mob/clothing/under/shorts_pants_shirts_digi.dmi'
