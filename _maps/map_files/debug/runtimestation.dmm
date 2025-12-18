@@ -2572,7 +2572,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "Qq" = (
-/obj/item/disk/holodisk/snowdin/overrun,
 /obj/machinery/holopad/tutorial,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
@@ -2836,6 +2835,8 @@
 "Zd" = (
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
+/obj/item/stock_parts/power_store/cell/infinite,
+/obj/effect/mapping_helpers/apc/unlocked,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "ZD" = (

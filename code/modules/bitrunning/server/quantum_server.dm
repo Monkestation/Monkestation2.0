@@ -77,6 +77,7 @@
 
 	// This further gets sorted in the client by cost so it's random and grouped
 	available_domains = shuffle(subtypesof(/datum/lazy_template/virtual_domain))
+	LAZYREMOVE(available_domains, /datum/lazy_template/virtual_domain/tutorial) //TODO: make this less shit
 
 /obj/machinery/quantum_server/Destroy(force)
 	. = ..()

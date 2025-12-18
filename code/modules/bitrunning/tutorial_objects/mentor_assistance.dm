@@ -1,4 +1,4 @@
-/datum/outfit/allmightyjanitor
+/datum/outfit/allmightyjanitor //I know "CLEAN IT UP JANNIE, THEY DO IT FOR FREE!" gag is for admins but whatever
 	name = "Mentor Janitor"
 	back = /obj/item/storage/backpack
 	shoes = /obj/item/clothing/shoes/sneakers/black
@@ -10,6 +10,7 @@
 
 /datum/id_trim/mentorjanitor
 	assignment = "All-Mighty All-Knowing Janitor"
+	department_color = COLOR_CENTCOM_BLUE
 
 /obj/machinery/mentor_machine
 	name = "Mentor Asssistance Button"
@@ -36,7 +37,7 @@
 	if(is_mentor(user))
 		spawn_a_jannie(user)
 
-/obj/machinery/mentor_machine/proc/poll_a_jannie(mob/living/requester) //I know "CLEAN IT UP JANNIE, THEY DO IT FOR FREE!" gag is for admins but whatever
+/obj/machinery/mentor_machine/proc/poll_a_jannie(mob/living/requester)
 	//polling
 	var/mob/dead/observer/candidate = SSpolling.poll_mentor_ghost_candidates(question = "Would you like to assist [requester.name] in finishing a tutorial domain?", poll_time = 15 SECONDS, alert_pic = src, amount_to_pick = 1)
 
