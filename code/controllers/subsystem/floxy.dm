@@ -147,7 +147,7 @@ SUBSYSTEM_DEF(floxy)
 	log_floxy("Deleted media ID: [id]")
 	return TRUE
 
-/datum/controller/subsystem/floxy/proc/fetch_media_metadata(url) as /list
+/datum/controller/subsystem/floxy/proc/fetch_media_metadata(url, clean_title = FALSE) as /list
 	if(!url)
 		CRASH("No URL passed to SSfloxy.fetch_media_metadata")
 	if(!is_http_protocol(url))
@@ -155,7 +155,10 @@ SUBSYSTEM_DEF(floxy)
 	if(cached_metadata[url])
 		return cached_metadata[url]
 	renew_if_needed()
-	var/list/metadata = http_basicasync("api/ytdlp?url=[url_encode(url)]", method = RUSTG_HTTP_METHOD_GET, timeout = 15 SECONDS)
+	var/list/params = list()
+	if(!clean_title)
+		params["dontCleanTitle"] = "true"
+	var/list/metadata = http_basicasync("api/ytdlp?url=[url_encode(url)]?[list2params(params)]", method = RUSTG_HTTP_METHOD_GET, timeout = 15 SECONDS)
 	if(metadata)
 		cached_metadata[url] = metadata
 		return metadata
@@ -169,8 +172,8 @@ SUBSYSTEM_DEF(floxy)
 		return list("id" = id, "status" = FLOXY_STATUS_PENDING)
 	return null
 
-/datum/controller/subsystem/floxy/proc/download_and_wait(url, profile = "ogg-opus", ttl, timeout, discard_failed = FALSE)
-	var/list/queue_info = queue_media(url, profile, ttl)
+/datum/controller/subsystem/floxy/proc/download_and_wait(url, profile = "ogg-opus", ttl, clean_title = FALSE, timeout, discard_failed = FALSE)
+	var/list/queue_info = queue_media(url, profile, ttl, clean_title)
 	var/id = queue_info?["id"]
 	if(!id)
 		return null
