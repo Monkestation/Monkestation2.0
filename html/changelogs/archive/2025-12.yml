@@ -306,3 +306,44 @@
   grungussuss, JupiterJaeden:
   - qol: Windoors now stay open for 8 seconds instead of 5.
   - qol: Secure windoors now stay open for 5 seconds instead of 2.
+2025-12-17:
+  Lawlolawl:
+  - bugfix: Fixed lights not being able to be placed back into box of replacement
+      lights.
+  - bugfix: Fixed space heater deconstruction generating power cells, as well as improvised
+      chem heater deconstruction generating cable coils.
+  Loiosh42:
+  - map: Oshan armoury now standardized
+  Uristthedorf:
+  - rscdel: Removes horned mutation and extra versions of colorblind mutation.
+  flleeppyy:
+  - rscdel: Removed replays/demos
+  - code_imp: Demodularized hydroponics, flavor_text, floorsigns, and food_and_drinks
+2025-12-18:
+  BingusSS13:
+  - map: Replaced the backup power cell on Charlie Station with a mega cell.
+  - map: The northern transit tube on Ice Box Charlie Station now has firelock frames
+      instead of actual firelocks.
+  - map: Added an inactive camera to the thermoelectric generator room on Ice Box
+      Charlie Station.
+  Gboster-0:
+  - balance: oozeling luxury medipens now don't heal more than luxury medipens* (they
+      heal a tiny bit more blood+toxin)
+  - balance: icebox portals now give out crates requiring skeleton keys to open
+  - balance: removed meathooks from both lavaland tendrils and icebox portals
+  - balance: mind-transfer potions, adamantine extracts, clown hulks and ship in a
+      bottle from icebox portals
+  - code_imp: tendril/icebox portals now use a proper lootspawner instead of direct
+      switch cases
+  - code_imp: busted necropolis chests now roll what loot they are going to spawn
+      on initialize, making admins able to rig them and allowing for easier debugging
+  Lawlolawl:
+  - bugfix: Fixed chemnades losing labels during assembly/disassembly steps. In general,
+      hand labeler labels should have their label added to the end of an item's new
+      name every time it is updated.
+  SirNightKnight:
+  - balance: crew mechs have two slots.
+  - balance: mech armor cannot be stacked with the same type.
+  - balance: maulers come with a melee armor module installed along with a projectile
+      armor module.
+  - balance: projectile armor gives 15 more bullet resistance instead of 10.

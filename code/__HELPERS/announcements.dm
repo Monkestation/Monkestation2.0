@@ -48,10 +48,6 @@
 		announcement_strings += span_major_announcement_text(text)
 		var/finalized_announcement = create_announcement_div(jointext(announcement_strings, ""), color_override)
 
-#ifndef DISABLE_DEMOS
-		SSdemo.write_chat_global(finalized_announcement)
-#endif
-
 		if(islist(players))
 			for(var/mob/target in players)
 				to_chat(target, finalized_announcement)
