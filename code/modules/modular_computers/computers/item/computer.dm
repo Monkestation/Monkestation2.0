@@ -106,6 +106,9 @@
 	/// Allow people with chunky fingers to use?
 	var/allow_chunky = FALSE
 
+	/// Monkestation Addition. Do we force ethernet connection.
+	var/ethernet_forced = FALSE
+
 	///The amount of paper currently stored in the PDA
 	var/stored_paper = 10
 	///The max amount of paper that can be held at once.
@@ -657,6 +660,9 @@
 	if(hardware_flag & PROGRAM_CONSOLE)
 		return NTNET_ETHERNET_SIGNAL
 
+	if(ethernet_forced) //Monkestation Addition - Add a check for forced ethernet
+		return NTNET_ETHERNET_SIGNAL
+
 	// NTNet is down and we are not connected via wired connection. No signal.
 	if(!find_functional_ntnet_relay())
 		return NTNET_NO_SIGNAL
@@ -905,7 +911,8 @@
 	if (!disassembled)
 		physical.visible_message(span_notice("\The [src] breaks apart!"))
 	new /obj/item/stack/sheet/iron(droploc, steel_sheet_cost * (disassembled ? 1 : 0.5))
-	relay_qdel()
+	relay_qdel() // Needed for /obj/item/modular_computer/processor/relay_qdel()
+	qdel(src)
 
 // Ejects the inserted intellicard, if one exists. Used when the computer is deconstructed.
 /obj/item/modular_computer/proc/eject_aicard()

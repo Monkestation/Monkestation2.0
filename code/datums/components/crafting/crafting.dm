@@ -610,6 +610,9 @@
 			stack_trace("Invalid reaction found in recipe code! ([recipe.reaction])")
 	else if(!isnull(recipe.reaction))
 		stack_trace("Invalid reaction found in recipe code! ([recipe.reaction])")
+	else if(mode && !data["steps"]) // For cooking recipes, if it's a simple craft with no reaction steps required
+		data["steps"] = list()
+		data["steps"] += "No further reaction needed, and can be crafted from separate reagent containers and ingredients."
 
 	return data
 

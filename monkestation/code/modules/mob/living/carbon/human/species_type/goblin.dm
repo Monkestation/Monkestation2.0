@@ -35,7 +35,7 @@
 	)
 
 /mob/living/carbon/human/species/goblin
-    race = /datum/species/goblin
+	race = /datum/species/goblin
 
 /datum/species/goblin/get_species_description()
 	return "A species of short humanoids. Hailing from Gatosh, they live in cities built on the crumbling remains of the previous civilization, or travel nomadically through the desert that covers most of the planet."

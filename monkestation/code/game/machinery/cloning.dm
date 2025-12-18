@@ -60,7 +60,7 @@
 	fair_market_price = 5 // He nodded, because he knew I was right. Then he swiped his credit card to pay me for arresting him.
 	payment_department = ACCOUNT_MED
 
-/obj/machinery/clonepod/Initialize()
+/obj/machinery/clonepod/Initialize(mapload)
 	. = ..()
 
 	countdown = new(src)
@@ -284,7 +284,7 @@
 		else if(mob_occupant && mob_occupant.cloneloss > (100 - heal_level))
 			mob_occupant.Unconscious(80)
 			var/dmg_mult = CONFIG_GET(number/damage_multiplier)
-			 //Slowly get that clone healed and finished.
+			//Slowly get that clone healed and finished.
 			mob_occupant.adjustCloneLoss(-((speed_coeff / 2) * dmg_mult))
 			var/progress = CLONE_INITIAL_DAMAGE - mob_occupant.getCloneLoss()
 			// To avoid the default cloner making incomplete clones
@@ -330,17 +330,12 @@
 
 /obj/machinery/clonepod/multitool_act(mob/living/user, obj/item/multitool/multi)
 	. = NONE
-	if(!(occupant || mess))
-		return
-
 	if(!istype(multi.buffer, /obj/machinery/computer/cloning))
 		multi.set_buffer(src)
 		to_chat(user, "<font color = #666633>-% Successfully stored [REF(multi.buffer)] [multi.buffer] in buffer %-</font color>")
 		return ITEM_INTERACT_SUCCESS
-
-	if(get_area(multi.buffer) != get_area(src))
-		to_chat(user, "<font color = #666633>-% Cannot link machines across power zones. Buffer cleared %-</font color>")
-		multi.set_buffer(null)
+	if(get_dist(src, multi.buffer) > 16)
+		to_chat(user, "<font color = #666633>-% Cannot link machines that far away. %-</font color>")
 		return ITEM_INTERACT_BLOCKING
 
 	to_chat(user, "<font color = #666633>-% Successfully linked [multi.buffer] with [src] %-</font color>")

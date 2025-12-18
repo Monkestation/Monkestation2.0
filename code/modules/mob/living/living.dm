@@ -1081,7 +1081,7 @@
 			TH.update_appearance()
 
 /mob/living/carbon/human/makeTrail(turf/target_turf, turf/start, direction)
-	if(!is_bleeding())
+	if(!bleedDragAmount()) //why ruin the floors if we arent actually bleeding
 		return
 	return ..()
 

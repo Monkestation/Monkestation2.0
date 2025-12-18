@@ -59,7 +59,7 @@ SUBSYSTEM_DEF(media_tracks)
 			// how did we end up here?
 			log_runtime("Failed to read tracks from [filename], is not object or array.")
 
-/datum/controller/subsystem/media_tracks/proc/process_track(var/list/entry, var/filename)
+/datum/controller/subsystem/media_tracks/proc/process_track(list/entry, filename)
 	// Critical problems that will prevent the track from working
 	if(!istext(entry["url"]))
 		log_runtime("Jukebox entry in [filename]: bad or missing 'url'. Tracks must have a URL.")
