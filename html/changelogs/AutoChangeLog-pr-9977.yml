@@ -1,0 +1,6 @@
+author: "BingusSS13"
+delete-after: True
+changes:
+  - map: "Replaced the backup power cell on Charlie Station with a mega cell."
+  - map: "The northern transit tube on Ice Box Charlie Station now has firelock frames instead of actual firelocks."
+  - map: "Added an inactive camera to the thermoelectric generator room on Ice Box Charlie Station."

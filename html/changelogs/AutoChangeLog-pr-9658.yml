@@ -1,0 +1,9 @@
+author: "Gboster-0"
+delete-after: True
+changes:
+  - balance: "oozeling luxury medipens now don't heal more than luxury medipens* (they heal a tiny bit more blood+toxin)"
+  - balance: "icebox portals now give out crates requiring skeleton keys to open"
+  - balance: "removed meathooks from both lavaland tendrils and icebox portals"
+  - balance: "mind-transfer potions, adamantine extracts, clown hulks and ship in a bottle from icebox portals"
+  - code_imp: "tendril/icebox portals now use a proper lootspawner instead of direct switch cases"
+  - code_imp: "busted necropolis chests now roll what loot they are going to spawn on initialize, making admins able to rig them and allowing for easier debugging"

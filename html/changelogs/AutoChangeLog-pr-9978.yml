@@ -1,0 +1,4 @@
+author: "Lawlolawl"
+delete-after: True
+changes:
+  - bugfix: "Fixed chemnades losing labels during assembly/disassembly steps. In general, hand labeler labels should have their label added to the end of an item's new name every time it is updated."
