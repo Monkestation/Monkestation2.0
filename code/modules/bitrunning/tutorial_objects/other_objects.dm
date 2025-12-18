@@ -35,5 +35,7 @@
 /obj/machinery/netpod/tutorial_solo
 	bitrunning_id = "tutorial_solo"
 
-/area/virtual_domain/powered/nonfullbright
-	static_lighting = TRUE
+/area/virtual_domain/powered_lighting
+	name = "Virtual Domain Ruins"
+	icon_state = "bit_ruin"
+	requires_power = FALSE
