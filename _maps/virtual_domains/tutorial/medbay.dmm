@@ -4464,7 +4464,7 @@
 "Ry" = (
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/structure/chair/stool/directional/west{
-	layer = 2]
+	layer = 2
 	},
 /obj/effect/turf_decal/tile/neutral/opposingcorners{
 	dir = 1
