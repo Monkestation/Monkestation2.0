@@ -1,8 +1,3 @@
-#define BLOODSUCKER_MAX_BLOOD_DEFAULT 600
-#define BLOODSUCKER_MAX_BLOOD_INCREASE_ON_RANKUP 80
-#define BLOODSUCKER_REGEN_INCREASE_ON_RANKUP 0.25
-#define BLOODSUCKER_UNARMED_DMG_INCREASE_ON_RANKUP 0.5
-
 /datum/antagonist/bloodsucker
 	name = "\improper Bloodsucker"
 	show_in_antagpanel = TRUE
@@ -17,6 +12,7 @@
 	ui_name = "AntagInfoBloodsucker"
 	preview_outfit = /datum/outfit/bloodsucker_outfit
 	stinger_sound = 'monkestation/sound/bloodsuckers/BloodsuckerAlert.ogg'
+	can_assign_self_objectives = TRUE
 	/// How much blood we have, starting off at default blood levels.
 	var/bloodsucker_blood_volume = BLOOD_VOLUME_NORMAL
 	/// How much blood we can have at once, increases per level.

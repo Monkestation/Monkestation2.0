@@ -122,7 +122,7 @@
 			bong.armour_penetration = 10
 			bong.evolved = TRUE
 
-		SEND_SIGNAL(bong, BINGLE_EVOLVE)
+		SEND_SIGNAL(bong, COMSIG_LIVING_BINGLE_EVOLVE)
 
 /obj/structure/bingle_hole/proc/swallow_mob(mob/living/victim)
 	if(!isliving(victim))

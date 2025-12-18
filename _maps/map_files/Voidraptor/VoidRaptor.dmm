@@ -62040,6 +62040,7 @@
 	name = "Garden"
 	},
 /obj/structure/disposalpipe/segment,
+/obj/effect/landmark/navigate_destination/garden,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/service/hydroponics/garden)
 "rjP" = (

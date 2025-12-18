@@ -6,12 +6,12 @@
 #define AHELP_FIRST_MESSAGE "Please adminhelp before leaving the round, even if there are no administrators online!"
 
 /*
- * Cryogenic refrigeration unit. Basically a despawner.
- * Stealing a lot of concepts/code from sleepers due to massive laziness.
- * The despawn tick will only fire if it's been more than time_till_despawned ticks
- * since time_entered, which is world.time when the occupant moves in.
- * ~ Zuhayr
- */
+* Cryogenic refrigeration unit. Basically a despawner.
+* Stealing a lot of concepts/code from sleepers due to massive laziness.
+* The despawn tick will only fire if it's been more than time_till_despawned ticks
+* since time_entered, which is world.time when the occupant moves in.
+* ~ Zuhayr
+*/
 GLOBAL_LIST_EMPTY(cryopod_computers)
 
 GLOBAL_LIST_EMPTY(ghost_records)
@@ -176,6 +176,30 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 	/// The rank (job title) of the mob that entered the cryopod, if it was a human. "N/A" by default.
 	var/stored_rank = "N/A"
 
+	/// Quirks that roll unique effects or gives items to each new body should be saved between bodies.
+	var/static/list/saved_quirks = typecacheof(list(
+		/datum/quirk/item_quirk/family_heirloom,
+		/datum/quirk/item_quirk/nearsighted,
+		/datum/quirk/item_quirk/photographer,
+		/datum/quirk/item_quirk/pride_pin,
+		/datum/quirk/item_quirk/bald,
+		/datum/quirk/item_quirk/clown_enjoyer,
+		/datum/quirk/item_quirk/mime_fan,
+		/datum/quirk/item_quirk/musician,
+		/datum/quirk/item_quirk/poster_boy,
+		/datum/quirk/item_quirk/tagger,
+		/datum/quirk/item_quirk/signer,
+		/datum/quirk/phobia,
+		/datum/quirk/indebted,
+		/datum/quirk/item_quirk/allergic,
+		/datum/quirk/item_quirk/brainproblems,
+		/datum/quirk/item_quirk/junkie,
+	))
+	/// Quirks that should just be completely skipped.
+	var/static/list/skip_quirks = typecacheof(list(
+		/datum/quirk/stowaway,
+	))
+
 
 /obj/machinery/cryopod/quiet
 	quiet = TRUE
@@ -209,7 +233,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 		COOLDOWN_START(src, last_no_computer_message, 5 MINUTES)
 		log_admin("Cryopod in [get_area(src)] could not find control computer!")
 		message_admins("Cryopod in [get_area(src)] could not find control computer!")
-		last_no_computer_message = world.time
 
 	return control_computer_weakref != null
 
@@ -227,7 +250,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 			if(mob_occupant.mind)
 				stored_rank = mob_occupant.mind.assigned_role.title
 				if(isnull(stored_ckey))
-					stored_ckey = mob_occupant.mind.key // if mob does not have a ckey and was placed in cryo by someone else, we can get the key this way
+					stored_ckey = ckey(mob_occupant.mind.key) // if mob does not have a ckey and was placed in cryo by someone else, we can get the key this way
 
 		var/mob/living/carbon/human/human_occupant = astype(occupant)
 		if(human_occupant?.mind)
@@ -344,6 +367,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 	var/datum/record/locked/lockfile = mob_occupant.mind?.lockfile
 	var/announce_rank = crewfile?.rank
 
+	var/list/stored_quirks = list()
+	for(var/datum/quirk/quirk in human_occupant?.quirks) // Store certain quirks safe to transfer between bodies.
+		if(!is_type_in_typecache(quirk, saved_quirks) || is_type_in_typecache(quirk, skip_quirks))
+			continue
+		quirk.remove_from_current_holder(quirk_transfer = TRUE)
+		stored_quirks |= quirk
+
 	var/obj/machinery/computer/cryopod/control_computer = control_computer_weakref?.resolve()
 	if(!control_computer)
 		control_computer_weakref = null
@@ -355,7 +385,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 			"ckey" = stored_ckey,
 			"entered_time" = world.time,
 			"crewfile" = crewfile,
-			"lockfile" = lockfile
+			"lockfile" = lockfile,
+			"stored_quirks" = stored_quirks,
+			"joined_as_crew" = HAS_MIND_TRAIT(mob_occupant, TRAIT_JOINED_AS_CREW),
 		))
 
 	// Make an announcement and log the person entering storage. If set to quiet, does not make an announcement.
@@ -364,8 +396,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 
 	visible_message(span_notice("[src] hums and hisses as it moves [mob_occupant.real_name] into storage."))
 
-	if(human_occupant)
-		human_occupant.save_persistent_scars(target_ckey = human_occupant.ckey || stored_ckey)
+	human_occupant?.save_persistent_scars(target_ckey = human_occupant.ckey || stored_ckey)
 
 	mob_occupant.ghostize(can_reenter_corpse = FALSE)
 	ADD_TRAIT(mob_occupant, TRAIT_NO_TRANSFORM, REF(src))
@@ -420,9 +451,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 		if(target.ckey != listed["ckey"])
 			continue
 
+#ifndef TESTING
 		if(world.time < (listed["entered_time"] + 15 MINUTES))
 			to_chat(target, span_notice("You need to wait atleast 15 minutes before you can return from cryosleep."))
 			return
+#endif
 
 		var/mob/living/carbon/human/newmob = target.change_mob_type( /mob/living/carbon/human , get_turf(src), null, TRUE)
 		for(var/obj/item/listed_item as anything in listed["items"])
@@ -439,6 +472,21 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 		if(lockfile)
 			newmob.mind?.lockfile ||= lockfile
 
+		var/list/stored_quirks = listed["stored_quirks"]
+		if(stored_quirks)
+			for(var/datum/quirk/quirk in stored_quirks)
+				quirk.add_to_holder(newmob, quirk_transfer = TRUE) // Return their old quirk to them.
+			stored_quirks.Cut()
+
+		if(newmob.client)
+			SSquirks.AssignQuirks(newmob, newmob.client, blacklist = assoc_to_keys(skip_quirks)) // Still need to copy over the rest of their quirks.
+
+		if(listed["joined_as_crew"])
+			if(newmob.mind)
+				ADD_TRAIT(newmob.mind, TRAIT_JOINED_AS_CREW, CREW_JOIN_TRAIT)
+			else
+				ADD_TRAIT(newmob, TRAIT_JOINED_AS_CREW, CREW_JOIN_TRAIT)
+			GLOB.joined_player_list |= newmob.ckey
 
 		listed["ckey"] = null //incase we fuck up down below
 		control_computer.frozen_crew -= list(listed)
@@ -446,18 +494,21 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 
 /// It's time to kill GLOB
 /**
- * Reset religion to its default state so the new chaplain becomes high priest and can change the sect, armor, weapon type, etc
- * Also handles the selection of a holy successor from existing crew if multiple chaplains are on station.
- */
+	* Reset religion to its default state so the new chaplain becomes high priest and can change the sect, armor, weapon type, etc
+	* Also handles the selection of a holy successor from existing crew if multiple chaplains are on station.
+	*/
 /obj/machinery/cryopod/proc/reset_religion()
 
 	// remember what the previous sect and favor values were so they can be restored if the same one gets chosen
-	GLOB.prev_favor = GLOB.religious_sect.favor
-	GLOB.prev_sect_type = GLOB.religious_sect.type
+	if(GLOB.religious_sect)
+		GLOB.prev_favor = GLOB.religious_sect.favor
+		GLOB.prev_sect_type = GLOB.religious_sect.type
 
- // set the altar references to the old religious_sect to null
+// set the altar references to the old religious_sect to null
 	for(var/obj/structure/altar_of_gods/altar in GLOB.chaplain_altars)
-		altar.GetComponent(/datum/component/religious_tool).easy_access_sect = null
+		var/datum/component/religious_tool/religious_tool = altar.GetComponent(/datum/component/religious_tool)
+		if(religious_tool)
+			religious_tool.easy_access_sect = null
 		altar.sect_to_altar = null
 
 	QDEL_NULL(GLOB.religious_sect) // queue for removal but also set it to null, in case a new chaplain joins before it can be deleted
@@ -476,10 +527,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 	GLOB.current_highpriest = chosen_successor ? WEAKREF(chosen_successor) : null // if a successor is already on the station then pick the first in line
 
 /**
- * Chooses a valid holy successor from GLOB.holy_successor weakref list and sets things up for them to be the new high priest
- *
- * Returns the chosen holy successor, or null if no valid successor
- */
+	* Chooses a valid holy successor from GLOB.holy_successor weakref list and sets things up for them to be the new high priest
+	*
+	* Returns the chosen holy successor, or null if no valid successor
+	*/
 /obj/machinery/cryopod/proc/pick_holy_successor()
 	for(var/datum/weakref/successor as anything in GLOB.holy_successors)
 		var/mob/living/carbon/human/actual_successor = successor.resolve()
@@ -504,14 +555,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 	return null
 
 /**
- * Create a list of the holy successors mobs from GLOB.holy_successors weakref list
- *
- * Returns the list of valid holy successors
- */
+	* Create a list of the holy successors mobs from GLOB.holy_successors weakref list
+	*
+	* Returns the list of valid holy successors
+	*/
 /obj/machinery/cryopod/proc/list_holy_successors()
 	var/list/holy_successors = list()
 	for(var/datum/weakref/successor as anything in GLOB.holy_successors)
-		var/mob/living/carbon/human/actual_successor = successor.resolve()
+		var/mob/living/carbon/human/actual_successor = successor?.resolve()
 		if(!actual_successor)
 			GLOB.holy_successors -= successor
 			continue
@@ -681,11 +732,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/cryopod/prison, 18)
 	return
 
 /**
- * Returns the the alt name for this spawner, which is 'outfit.name'.
- *
- * For when you might want to use that for things instead of the name var.
- * example: the DS2 spawners, which have a number of different types of spawner with the same name.
- */
+	* Returns the the alt name for this spawner, which is 'outfit.name'.
+	*
+	* For when you might want to use that for things instead of the name var.
+	* example: the DS2 spawners, which have a number of different types of spawner with the same name.
+	*/
 /obj/effect/mob_spawn/ghost_role/get_alt_name()
 	if(use_outfit_name)
 		return initial(outfit.name)

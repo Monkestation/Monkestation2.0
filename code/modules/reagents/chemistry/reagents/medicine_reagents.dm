@@ -235,14 +235,7 @@
 	metabolization_rate = 0.1 * REAGENTS_METABOLISM
 	ph = 8.1
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/reagent/medicine/spaceacillin/on_mob_metabolize(mob/living/L)
-	. = ..()
-	ADD_TRAIT(L, TRAIT_VIRUS_RESISTANCE, type)
-
-/datum/reagent/medicine/spaceacillin/on_mob_end_metabolize(mob/living/L)
-	. = ..()
-	REMOVE_TRAIT(L, TRAIT_VIRUS_RESISTANCE, type)
+	metabolized_traits = list(TRAIT_VIRUS_RESISTANCE)
 
 //Goon Chems. Ported mainly from Goonstation. Easily mixable (or not so easily) and provide a variety of effects.
 
@@ -1015,6 +1008,9 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/mutadone/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	var/datum/status_effect/temporary_transformation/trans_sting/sting_effect = affected_mob.has_status_effect(/datum/status_effect/temporary_transformation/trans_sting)
+	if(sting_effect && sting_effect.duration != STATUS_EFFECT_PERMANENT)
+		sting_effect.duration -= 10 SECONDS * REM * seconds_per_tick
 	affected_mob.remove_status_effect(/datum/status_effect/jitter)
 	if(affected_mob.has_dna())
 		affected_mob.dna.remove_mutation_group(affected_mob.dna.mutations - affected_mob.dna.get_mutation(/datum/mutation/race), GLOB.standard_mutation_sources)
@@ -1130,6 +1126,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	affected_biotype = MOB_ORGANIC | MOB_MINERAL | MOB_PLANT // no healing ghosts
 	affected_respiration_type = ALL
+	var/healing = 1.5 // MONKESTATION ADDITION
 
 /datum/reagent/medicine/regen_jelly/expose_mob(mob/living/exposed_mob, reac_volume)
 	. = ..()
@@ -1141,12 +1138,26 @@
 	exposed_human.set_haircolor(color, update = TRUE)
 
 /datum/reagent/medicine/regen_jelly/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+// MONKESTATION EDIT START -- Changes the healing value to be adjustable like omnizine
+/*
 	affected_mob.adjustBruteLoss(-1.5 * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
 	affected_mob.adjustFireLoss(-1.5 * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
 	affected_mob.adjustOxyLoss(-1.5 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 	affected_mob.adjustToxLoss(-1.5 * REM * seconds_per_tick, FALSE, TRUE, affected_biotype) //heals TOXINLOVERs
+*/
+	affected_mob.adjustBruteLoss(-healing * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
+	affected_mob.adjustFireLoss(-healing * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
+	affected_mob.adjustOxyLoss(-healing * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+	affected_mob.adjustToxLoss(-healing * REM * seconds_per_tick, FALSE, TRUE, affected_biotype) //heals TOXINLOVERs
+// MONKESTATION EDIT END
 	..()
 	. = TRUE
+
+/datum/reagent/medicine/regen_jelly/weakened // MONKESTATION ADDITION -- Oozeling safe medipens
+	name = "Weakened Regenerative Jelly"
+	description = "Artificially weakened regenerative slime jelly that regenerates tissues slower, but lasts longer with the same volume."
+	healing = 0.5 // Same as omnizine, but still heals toxin-lovers
+	metabolization_rate = 0.125 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/syndicate_nanites //Used exclusively by Syndicate medical cyborgs
 	name = "Restorative Nanites"

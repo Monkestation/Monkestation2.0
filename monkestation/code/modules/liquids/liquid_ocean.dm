@@ -52,7 +52,7 @@ GLOBAL_LIST_EMPTY(initalized_ocean_areas)
 	baseturfs = /turf/open/openspace/ocean
 	var/replacement_turf = /turf/open/floor/plating/ocean
 
-/turf/open/openspace/ocean/Initialize()
+/turf/open/openspace/ocean/Initialize(mapload)
 	. = ..()
 	ChangeTurf(replacement_turf, null, CHANGETURF_IGNORE_AIR)
 
@@ -103,7 +103,7 @@ GLOBAL_LIST_EMPTY(initalized_ocean_areas)
 	/// do we build a catwalk or plating with rods
 	var/catwalk = FALSE
 
-/turf/open/floor/plating/ocean/Initialize()
+/turf/open/floor/plating/ocean/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_ATOM_ENTERED, PROC_REF(movable_entered))
 	RegisterSignal(src, COMSIG_TURF_MOB_FALL, PROC_REF(mob_fall))
@@ -321,8 +321,15 @@ GLOBAL_LIST_EMPTY(initalized_ocean_areas)
 	SIGNAL_HANDLER
 
 	var/turf/T = source
-	if(isobserver(AM))
+	if(isobserver(AM) || iseyemob(AM) || iseffect(AM))
 		return //ghosts, camera eyes, etc. don't make water splashy splashy
+	if(isliving(AM))
+		var/mob/living/arrived = AM
+		if(arrived.incorporeal_move)
+			return
+
+		if(!arrived.has_status_effect(/datum/status_effect/ocean_affected))
+			arrived.apply_status_effect(/datum/status_effect/ocean_affected)
 	if(prob(30))
 		var/sound_to_play = pick(list(
 			'monkestation/sound/effects/water_wade1.ogg',
@@ -331,10 +338,6 @@ GLOBAL_LIST_EMPTY(initalized_ocean_areas)
 			'monkestation/sound/effects/water_wade4.ogg'
 			))
 		playsound(T, sound_to_play, 50, 0)
-	if(isliving(AM))
-		var/mob/living/arrived = AM
-		if(!arrived.has_status_effect(/datum/status_effect/ocean_affected))
-			arrived.apply_status_effect(/datum/status_effect/ocean_affected)
 
 	SEND_SIGNAL(AM, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WASH)
 
@@ -347,7 +350,7 @@ GLOBAL_LIST_EMPTY(the_lever)
 	var/moving = FALSE
 
 
-/turf/open/floor/plating/ocean/false_movement/Initialize()
+/turf/open/floor/plating/ocean/false_movement/Initialize(mapload)
 	. = ..()
 	GLOB.scrollable_turfs += src
 	var/obj/machinery/movement_lever/lever = locate() in GLOB.the_lever

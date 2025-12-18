@@ -9669,6 +9669,7 @@
 	name = "Public Garden"
 	},
 /obj/structure/disposalpipe/segment,
+/obj/effect/landmark/navigate_destination/garden,
 /turf/open/floor/iron/textured,
 /area/station/service/hydroponics/garden)
 "cOa" = (

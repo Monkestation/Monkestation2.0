@@ -9,7 +9,7 @@
 
 	var/mob/living/mob = target
 	if(get_dist(usr, target) > 1)
-		owner.balloon_alert(owner, "Too Far!")
+		owner.balloon_alert(owner, "too Far!")
 		return FALSE
 	if(!iscarbon(mob))
 		owner.balloon_alert(owner, "only works on carbons!")
