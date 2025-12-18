@@ -20330,6 +20330,10 @@
 	dir = 8
 	},
 /area/centcom/central_command_areas/evacuation)
+"cmj" = (
+/obj/machinery/netpod/tutorial_solo,
+/turf/open/floor/iron/dark/textured,
+/area/centcom/central_command_areas/hall)
 "cmN" = (
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood/parquet,
@@ -21741,10 +21745,6 @@
 	},
 /turf/open/floor/iron/smooth_large,
 /area/cruiser_dock)
-"eIB" = (
-/obj/machinery/quantum_server/tutorial_solo,
-/turf/open/floor/iron/dark/textured,
-/area/centcom/central_command_areas/hall)
 "eIT" = (
 /obj/structure/table/wood/fancy,
 /obj/item/storage/box/coffeepack,
@@ -25275,6 +25275,28 @@
 /obj/machinery/light/floor/has_bulb,
 /turf/open/floor/fakespace,
 /area/centcom/central_command_areas/adminroom)
+"kmr" = (
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "o";
+	pixel_y = 3;
+	pixel_x = 24
+	},
+/obj/effect/decal/cleanable/crayon/l{
+	pixel_x = 13;
+	pixel_y = 2
+	},
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "o";
+	pixel_y = 3;
+	pixel_x = 3
+	},
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "s";
+	pixel_y = 3;
+	pixel_x = -8
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/centcom/central_command_areas/hall)
 "kmv" = (
 /obj/structure/wrestling_corner{
 	dir = 1;
@@ -26588,10 +26610,6 @@
 	},
 /turf/open/floor/iron/white/textured,
 /area/centcom/central_command_areas/admin)
-"mLM" = (
-/obj/machinery/computer/quantum_console/tutorial_solo,
-/turf/open/floor/iron/dark/textured,
-/area/centcom/central_command_areas/hall)
 "mLV" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 1;
@@ -28148,6 +28166,9 @@
 /obj/item/storage/box/tiziran_meats,
 /turf/open/floor/iron/dark/textured_large,
 /area/cruiser_dock)
+"pxi" = (
+/turf/open/floor/iron/dark/textured,
+/area/centcom/central_command_areas/hall)
 "pyP" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 10
@@ -30239,9 +30260,6 @@
 /obj/machinery/light/floor/has_bulb,
 /turf/open/floor/carpet/purple,
 /area/centcom/central_command_areas/adminroom)
-"taX" = (
-/turf/open/floor/iron/dark/textured,
-/area/centcom/central_command_areas/hall)
 "tbq" = (
 /obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 10
@@ -30992,6 +31010,10 @@
 /obj/effect/decal/cleanable/garbage,
 /turf/open/misc/asteroid,
 /area/centcom/syndicate_mothership/firebase_trident)
+"upc" = (
+/obj/machinery/quantum_server/tutorial_solo,
+/turf/open/floor/iron/dark/textured,
+/area/centcom/central_command_areas/hall)
 "upN" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 9
@@ -31217,6 +31239,29 @@
 "uPq" = (
 /obj/machinery/computer/quantum_console/tutorial_coop,
 /turf/open/floor/iron/dark/textured,
+/area/centcom/central_command_areas/hall)
+"uPx" = (
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "p";
+	pixel_y = 3;
+	pixel_x = 17
+	},
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "o";
+	pixel_y = 3;
+	pixel_x = -8
+	},
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "c";
+	pixel_y = 3;
+	pixel_x = -20
+	},
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "o";
+	pixel_y = 3;
+	pixel_x = 5
+	},
+/turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/hall)
 "uPO" = (
 /obj/effect/spawner/random/trash/garbage,
@@ -31636,6 +31681,10 @@
 	},
 /turf/open/floor/iron/dark/corner,
 /area/centcom/central_command_areas/prison)
+"vzB" = (
+/obj/machinery/computer/quantum_console/tutorial_solo,
+/turf/open/floor/iron/dark/textured,
+/area/centcom/central_command_areas/hall)
 "vAz" = (
 /obj/effect/turf_decal/box/corners{
 	dir = 4
@@ -32037,10 +32086,6 @@
 /obj/structure/fermenting_barrel,
 /turf/open/floor/fakespace,
 /area/centcom/central_command_areas/adminroom)
-"wdl" = (
-/obj/machinery/netpod/tutorial_solo,
-/turf/open/floor/iron/dark/textured,
-/area/centcom/central_command_areas/hall)
 "wdp" = (
 /obj/effect/turf_decal/plaque{
 	icon_state = "L14"
@@ -80226,7 +80271,7 @@ aaa
 apG
 bKI
 uPq
-dRd
+aqK
 dRd
 dRd
 acg
@@ -80482,8 +80527,8 @@ aaa
 aaa
 apG
 isK
-taX
-dRd
+pxi
+uPx
 dRd
 dRd
 acg
@@ -80739,8 +80784,8 @@ aaa
 aaa
 apG
 isK
-taX
-dRd
+pxi
+aqK
 dRd
 dRd
 acg
@@ -81509,9 +81554,9 @@ aaa
 aaa
 aaa
 apG
-wdl
-taX
-dRd
+cmj
+pxi
+kmr
 dRd
 dRd
 acg
@@ -81766,9 +81811,9 @@ aaa
 aaa
 aaa
 apG
-eIB
-mLM
-dRd
+upc
+vzB
+aqK
 dRd
 dRd
 acg

@@ -8,3 +8,4 @@
 	map_name = "medbay"
 	safehouse_path = /datum/map_template/safehouse/den
 	announce_to_ghosts = TRUE
+	reward_points = 0

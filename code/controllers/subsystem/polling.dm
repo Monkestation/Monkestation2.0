@@ -388,31 +388,7 @@ SUBSYSTEM_DEF(polling)
 	for(var/mob/ghost in GLOB.player_list)
 		if(!isobserver(ghost))
 			continue
-		//if(is_mentor(ghost)) //REMEMBER TO UNCOMMENT THIS
+		if(is_mentor(ghost)) //REMEMBER TO UNCOMMENT THIS
 		candidates += ghost
 
 	return poll_candidates(question, role, check_jobban, poll_time, ignore_category, flash_window, candidates, alert_pic, jump_target, role_name_text, custom_response_messages, start_signed_up, amount_to_pick, chat_text_border_icon, announce_chosen, show_candidate_amount)
-
-
-/datum/controller/subsystem/polling/proc/poll_mentor_ghost_for_mobs(
-	mob/mob_to_be_picked,
-	question,
-	role,
-	check_jobban,
-	poll_time = 30 SECONDS,
-	ignore_category = null,
-	flash_window = TRUE,
-	alert_pic,
-	jump_target,
-	role_name_text,
-	list/custom_response_messages,
-	start_signed_up = FALSE,
-	amount_to_pick = 0,
-	chat_text_border_icon,
-	announce_chosen = TRUE,
-	show_candidate_amount = TRUE
-)
-	var/list/list_of_picked_candidates = poll_mentor_ghost_candidates(question, role, check_jobban, poll_time, ignore_category, flash_window, alert_pic, jump_target, role_name_text, custom_response_messages, start_signed_up, amount_to_pick, chat_text_border_icon, announce_chosen, show_candidate_amount)
-	if(!mob_to_be_picked || QDELETED(mob_to_be_picked) || !mob_to_be_picked.loc)
-		return list()
-	return list_of_picked_candidates
