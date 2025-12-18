@@ -86,6 +86,8 @@ GLOBAL_LIST_INIT(cassette_icons, list(
 			. += span_warning("It seems this tape is still being reviewed by the Space Board of Music.")
 		if(CASSETTE_STATUS_APPROVED)
 			. += span_info("This cassette has been approved by the Space Board of Music, and can be played for the whole station with the Cassette Player.")
+		if(CASSETTE_STATUS_DENIED)
+			. += span_warning("This cassette has been denied by the Space Board of Music! Perhaps make some changes and re-submit it?")
 		else
 			stack_trace("Unknown status [cassette_data.status] for cassette [cassette_data.name] ([cassette_data.id])")
 
