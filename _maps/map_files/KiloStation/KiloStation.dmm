@@ -1913,19 +1913,6 @@
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/station/engineering/shipbreaker_hut)
-"aBX" = (
-/obj/structure/table/wood,
-/obj/effect/turf_decal/siding/wood,
-/obj/structure/cassette_rack/prefilled{
-	pixel_y = 8
-	},
-/obj/item/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/machinery/newscaster/directional/south,
-/turf/open/floor/iron/vaporwave,
-/area/station/service/library)
 "aCE" = (
 /obj/machinery/atmospherics/components/tank/air{
 	dir = 8;
@@ -2137,6 +2124,49 @@
 /mob/living/carbon/human/species/monkey,
 /turf/open/floor/grass,
 /area/station/medical/pathology)
+"aGb" = (
+/obj/structure/table/wood,
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/cassette_rack/prefilled,
+/turf/open/floor/iron/dark,
+/area/station/service/library)
 "aGn" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
@@ -9099,6 +9129,20 @@
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating/lowpressure,
 /area/space/nearstation)
+"cOd" = (
+/obj/structure/rack,
+/obj/item/gun/ballistic/shotgun/buckshotroulette,
+/obj/item/paper/carbon_copy{
+	name = "General Release of Liability";
+	default_raw_text = "<font color='black'><center><font size='6'>GENERAL RELEASE<BR>OF LIABILITY</font></center><hr><font size='1'>This General Release ('Release') is made on 22 day of January, 2565 between REDACTED at REDACTED ('Releasor') and REDACTED at REDACTED ('Releasee').<br><br>1. Releasor and anyone claiming on Releasor's behalf releases and forever discharges Releasees and its affiliates, successors, officers, employees, representatives, partners, agents and anyone claiming through them (collectively, the 'Released Parties') in their individual and/or corporate capacities from any and all claims, liabilities, obligations, promises, agreements, disputes, demands, damages, causes of action of any nature and kind, known or unknown, which Releasor has or ever had or may in the future have against Releasees or any of the Released Parties arising out of or relating to: the termination of a contractual relationship between the Releasor and the Releasee ('Claims').<br><br>2. In exchange for the release of Claims, Releasee will provide Releasor a payment in the amount of $10,000.00. In consideration of such payment, Releasor agrees to accept the payment as full and complete settlement and satisfaction of any present and prospective claims.<br><br>3. This Release shall not be in any way construed as an admission by the Releasee that it has acted wrongfully with respect to Releasor or any other preson, that it admits liability or responsibility at any time for any purpose, or that Releasor has any rights whatsoever against the Releasee.<br><br>4. This Release shall be binding upon the parties and their respective heirs, administrators, personal representatives, executors, successors and assigns. Releasor has the authority to release the Claims and has not assigned or transferred any Claims to any other party. The provisions of this Release are severable. If any provision is held to be invalid or unenforceable, it shall not affect the validity or enforceability of any other provision. This Release constitutes the entire agreement between the parties and supersedes any and all prior oral or written agreements or understandings between the parties concerning the subject matter of this Release. This Release may not be altered, amended or modified, except by a written document signed by both parties. The terms of this Release shall be governed by and construed in accordance with the laws of the NanoTrasen legal airspace.</font><br><br><font size='3'>ENTER NAME</font><br></font>"
+	},
+/obj/structure/rack,
+/obj/effect/turf_decal/trimline/dark/filled/line{
+	dir = 10
+	},
+/obj/item/magazine_shuffler,
+/turf/open/floor/iron/dark/textured_large,
+/area/station/service/abandoned_gambling_den)
 "cOp" = (
 /obj/structure/sign/warning/docking,
 /turf/closed/wall/rust,
@@ -16295,6 +16339,17 @@
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/maintenance/port/aft)
+"ffV" = (
+/obj/structure/sign/painting/library{
+	pixel_x = 32
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/machinery/cassette_postbox,
+/turf/open/floor/iron/dark,
+/area/station/service/library)
 "ffY" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/landmark/event_spawn,
@@ -19956,17 +20011,6 @@
 /obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/ai_monitored/turret_protected/ai)
-"gkS" = (
-/obj/machinery/dj_station{
-	pixel_y = 12
-	},
-/obj/structure/table/wood,
-/obj/effect/turf_decal/siding/wood{
-	dir = 6
-	},
-/obj/machinery/digital_clock/directional/south,
-/turf/open/floor/iron/vaporwave,
-/area/station/service/library)
 "gkW" = (
 /obj/effect/turf_decal/tile/purple,
 /obj/structure/disposalpipe/segment{
@@ -28848,17 +28892,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/lab)
-"iQf" = (
-/obj/structure/sign/painting/library{
-	pixel_x = 32
-	},
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral/opposingcorners,
-/obj/machinery/cassette_postbox,
-/turf/open/floor/iron/dark,
-/area/station/service/library)
 "iQn" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -35925,6 +35958,19 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/station/medical/treatment_center)
+"ldM" = (
+/obj/structure/table/wood,
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/cassette_rack/prefilled{
+	pixel_y = 8
+	},
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/machinery/newscaster/directional/south,
+/turf/open/floor/iron/vaporwave,
+/area/station/service/library)
 "lea" = (
 /obj/machinery/rnd/production/techfab/department/cargo,
 /obj/effect/turf_decal/bot,
@@ -40588,11 +40634,6 @@
 "mDD" = (
 /turf/closed/wall/rust,
 /area/station/cargo/warehouse)
-"mDI" = (
-/obj/structure/table/wood,
-/obj/machinery/cassette_deck,
-/turf/open/floor/wood/tile,
-/area/station/service/library)
 "mDK" = (
 /obj/machinery/vending/wardrobe/chap_wardrobe,
 /obj/structure/sign/poster/official/bless_this_spess/directional/north,
@@ -43264,49 +43305,6 @@
 	luminosity = 2
 	},
 /area/station/engineering/storage/tech)
-"nwk" = (
-/obj/structure/table/wood,
-/obj/item/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/window/reinforced/spawner/directional/north,
-/obj/structure/cassette_rack/prefilled,
-/turf/open/floor/iron/dark,
-/area/station/service/library)
 "nwp" = (
 /obj/structure/table,
 /obj/item/paper_bin{
@@ -45991,6 +45989,22 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
+"orf" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/requests_console/directional/north{
+	department = "Quartermaster's Desk";
+	name = "Quartermaster's Requests Console";
+	supplies_requestable = 1;
+	can_send_announcements = 1
+	},
+/obj/structure/extinguisher_cabinet/directional/north{
+	pixel_x = 32
+	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted,
+/obj/machinery/modular_computer/preset/quartermaster,
+/turf/open/floor/iron/dark,
+/area/station/cargo/quartermaster)
 "ork" = (
 /obj/structure/toilet,
 /obj/machinery/light/small/directional/north,
@@ -48322,6 +48336,11 @@
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
+"peG" = (
+/obj/structure/table/wood,
+/obj/machinery/cassette_deck,
+/turf/open/floor/wood/tile,
+/area/station/service/library)
 "peJ" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -57471,6 +57490,17 @@
 	},
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
+"rXe" = (
+/obj/machinery/dj_station{
+	pixel_y = 12
+	},
+/obj/structure/table/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/machinery/digital_clock/directional/south,
+/turf/open/floor/iron/vaporwave,
+/area/station/service/library)
 "rXz" = (
 /obj/machinery/suit_storage_unit/standard_unit,
 /obj/machinery/light/small/directional/east,
@@ -58491,22 +58521,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/station/cargo/office)
-"snG" = (
-/obj/effect/turf_decal/bot,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/requests_console/directional/north{
-	department = "Quartermaster's Desk";
-	name = "Quartermaster's Requests Console";
-	supplies_requestable = 1;
-	can_send_announcements = 1
-	},
-/obj/structure/extinguisher_cabinet/directional/north{
-	pixel_x = 32
-	},
-/obj/effect/turf_decal/tile/neutral/half/contrasted,
-/obj/machinery/modular_computer/preset/id,
-/turf/open/floor/iron/dark,
-/area/station/cargo/quartermaster)
 "snK" = (
 /turf/closed/wall,
 /area/station/smithing)
@@ -62263,20 +62277,6 @@
 /obj/effect/spawner/random/trash/garbage,
 /turf/open/floor/glass,
 /area/station/maintenance/abandon_cafeteria)
-"txK" = (
-/obj/structure/rack,
-/obj/item/gun/ballistic/shotgun/buckshotroulette,
-/obj/item/paper/carbon_copy{
-	name = "General Release of Liability";
-	default_raw_text = "<font color='black'><center><font size='6'>GENERAL RELEASE<BR>OF LIABILITY</font></center><hr><font size='1'>This General Release ('Release') is made on 22 day of January, 2565 between REDACTED at REDACTED ('Releasor') and REDACTED at REDACTED ('Releasee').<br><br>1. Releasor and anyone claiming on Releasor's behalf releases and forever discharges Releasees and its affiliates, successors, officers, employees, representatives, partners, agents and anyone claiming through them (collectively, the 'Released Parties') in their individual and/or corporate capacities from any and all claims, liabilities, obligations, promises, agreements, disputes, demands, damages, causes of action of any nature and kind, known or unknown, which Releasor has or ever had or may in the future have against Releasees or any of the Released Parties arising out of or relating to: the termination of a contractual relationship between the Releasor and the Releasee ('Claims').<br><br>2. In exchange for the release of Claims, Releasee will provide Releasor a payment in the amount of $10,000.00. In consideration of such payment, Releasor agrees to accept the payment as full and complete settlement and satisfaction of any present and prospective claims.<br><br>3. This Release shall not be in any way construed as an admission by the Releasee that it has acted wrongfully with respect to Releasor or any other preson, that it admits liability or responsibility at any time for any purpose, or that Releasor has any rights whatsoever against the Releasee.<br><br>4. This Release shall be binding upon the parties and their respective heirs, administrators, personal representatives, executors, successors and assigns. Releasor has the authority to release the Claims and has not assigned or transferred any Claims to any other party. The provisions of this Release are severable. If any provision is held to be invalid or unenforceable, it shall not affect the validity or enforceability of any other provision. This Release constitutes the entire agreement between the parties and supersedes any and all prior oral or written agreements or understandings between the parties concerning the subject matter of this Release. This Release may not be altered, amended or modified, except by a written document signed by both parties. The terms of this Release shall be governed by and construed in accordance with the laws of the NanoTrasen legal airspace.</font><br><br><font size='3'>ENTER NAME</font><br></font>"
-	},
-/obj/structure/rack,
-/obj/effect/turf_decal/trimline/dark/filled/line{
-	dir = 10
-	},
-/obj/item/magazine_shuffler,
-/turf/open/floor/iron/dark/textured_large,
-/area/station/service/abandoned_gambling_den)
 "tya" = (
 /obj/effect/decal/cleanable/blood/gibs/limb,
 /obj/effect/decal/cleanable/blood/old,
@@ -102236,7 +102236,7 @@ gBx
 igl
 cyv
 uiN
-mDI
+peG
 eOl
 oJV
 rzr
@@ -102496,7 +102496,7 @@ wqF
 usV
 aPR
 gnN
-iQf
+ffV
 sun
 xZX
 oTt
@@ -103007,7 +103007,7 @@ sLb
 lbO
 jcN
 oKV
-nwk
+aGb
 oTT
 fcs
 lbO
@@ -103273,7 +103273,7 @@ lQS
 nXV
 lBa
 hMe
-aBX
+ldM
 drL
 dAU
 mkB
@@ -103530,7 +103530,7 @@ lbO
 lbO
 lbO
 dcf
-gkS
+rXe
 lbO
 fWu
 eVO
@@ -109905,7 +109905,7 @@ acm
 xjD
 oRs
 qOW
-txK
+cOd
 mzc
 vuV
 izu
@@ -117150,7 +117150,7 @@ wPB
 wCY
 wtt
 rZV
-snG
+orf
 cSU
 pLX
 oeZ

@@ -19160,37 +19160,6 @@
 /obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/station/maintenance/department/cargo)
-"bSL" = (
-/obj/item/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/structure/cassette_rack/prefilled{
-	pixel_y = 8
-	},
-/obj/structure/table/wood,
-/obj/item/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/turf/open/floor/wood,
-/area/station/service/library/private)
 "bSM" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -30382,6 +30351,23 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/office)
+"eAP" = (
+/obj/machinery/keycard_auth/directional/south,
+/obj/machinery/camera/directional/south{
+	c_tag = "Cargo - Quartermaster Office";
+	network = list("ss13","cargo")
+	},
+/obj/machinery/requests_console/directional/west{
+	department = "Quartermaster's Desk";
+	name = "Quartermaster RC"
+	},
+/obj/effect/mapping_helpers/requests_console/announcement,
+/obj/effect/mapping_helpers/requests_console/supplies,
+/obj/machinery/modular_computer/preset/quartermaster{
+	dir = 4
+	},
+/turf/open/floor/carpet/red,
+/area/station/cargo/quartermaster)
 "eAR" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
@@ -31281,14 +31267,6 @@
 /obj/effect/turf_decal/tile/brown/fourcorners,
 /turf/open/floor/iron,
 /area/station/cargo/office)
-"eRu" = (
-/obj/machinery/airalarm/directional/north,
-/obj/machinery/dj_station{
-	pixel_y = 12
-	},
-/obj/structure/table/wood,
-/turf/open/floor/carpet/green,
-/area/station/service/library/private)
 "eRw" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/clothing/costume,
@@ -33413,6 +33391,13 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron/dark/textured_edge,
 /area/station/science/ordnance/storage)
+"fNX" = (
+/obj/structure/table/wood,
+/obj/machinery/cassette_deck{
+	pixel_y = 8
+	},
+/turf/open/floor/wood,
+/area/station/service/library/private)
 "fNY" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -40490,6 +40475,14 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/science/research)
+"iuZ" = (
+/obj/machinery/airalarm/directional/north,
+/obj/machinery/dj_station{
+	pixel_y = 12
+	},
+/obj/structure/table/wood,
+/turf/open/floor/carpet/green,
+/area/station/service/library/private)
 "ivf" = (
 /obj/structure/sign/plaques/kiddie/perfect_drone{
 	pixel_y = 32
@@ -45783,13 +45776,6 @@
 	},
 /turf/open/floor/iron/dark/textured_edge,
 /area/station/science/ordnance/storage)
-"ktz" = (
-/obj/structure/table/wood,
-/obj/machinery/cassette_deck{
-	pixel_y = 8
-	},
-/turf/open/floor/wood,
-/area/station/service/library/private)
 "ktA" = (
 /obj/machinery/space_heater,
 /obj/structure/sign/poster/contraband/random/directional/east,
@@ -59183,23 +59169,37 @@
 	},
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai)
-"puJ" = (
-/obj/machinery/modular_computer/preset/id{
-	dir = 4
+"puS" = (
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
 	},
-/obj/machinery/keycard_auth/directional/south,
-/obj/machinery/camera/directional/south{
-	c_tag = "Cargo - Quartermaster Office";
-	network = list("ss13","cargo")
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
 	},
-/obj/machinery/requests_console/directional/west{
-	department = "Quartermaster's Desk";
-	name = "Quartermaster RC"
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
 	},
-/obj/effect/mapping_helpers/requests_console/announcement,
-/obj/effect/mapping_helpers/requests_console/supplies,
-/turf/open/floor/carpet/red,
-/area/station/cargo/quartermaster)
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/structure/cassette_rack/prefilled{
+	pixel_y = 8
+	},
+/obj/structure/table/wood,
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/turf/open/floor/wood,
+/area/station/service/library/private)
 "puT" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -63744,6 +63744,18 @@
 /obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
+"rht" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/public/glass{
+	name = "Garden"
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green,
+/obj/effect/landmark/navigate_destination/garden,
+/turf/open/floor/iron,
+/area/station/service/hydroponics/garden)
 "rhv" = (
 /obj/structure/sign/nanotrasen{
 	pixel_y = 32
@@ -65982,6 +65994,10 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
+"sbQ" = (
+/obj/machinery/cassette_postbox,
+/turf/open/floor/wood,
+/area/station/service/library)
 "scg" = (
 /obj/effect/spawner/random/structure/steam_vent,
 /obj/structure/cable,
@@ -69933,18 +69949,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/station/cargo/lobby)
-"tAJ" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/public/glass{
-	name = "Garden"
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/green,
-/obj/effect/landmark/navigate_destination/garden,
-/turf/open/floor/iron,
-/area/station/service/hydroponics/garden)
 "tAP" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -75145,10 +75149,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
-"vDu" = (
-/obj/machinery/cassette_postbox,
-/turf/open/floor/wood,
-/area/station/service/library)
 "vDU" = (
 /obj/machinery/camera/motion/directional/west{
 	c_tag = "Command - Outer Bridge E";
@@ -116902,7 +116902,7 @@ bmM
 bom
 kQG
 pGs
-tAJ
+rht
 vxy
 bwl
 bwl
@@ -117205,7 +117205,7 @@ tpF
 ijH
 cwM
 cyc
-puJ
+eAP
 tpF
 xMy
 cld
@@ -119736,7 +119736,7 @@ cGU
 bwl
 eHp
 bxm
-vDu
+sbQ
 byN
 xIR
 bBY
@@ -120004,9 +120004,9 @@ bJr
 byN
 mFG
 bxo
-eRu
+iuZ
 eXb
-ktz
+fNX
 bJp
 bVo
 jJX
@@ -120263,7 +120263,7 @@ eQL
 bxo
 bRR
 bRR
-bSL
+puS
 bJp
 uwK
 jJX

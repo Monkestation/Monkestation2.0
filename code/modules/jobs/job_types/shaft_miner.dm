@@ -54,6 +54,7 @@
 
 	box = /obj/item/storage/box/survival/mining
 	chameleon_extras = /obj/item/gun/energy/recharge/kinetic_accelerator
+	accessory = /obj/item/clothing/accessory/badge/cargo
 
 /datum/outfit/job/miner/equipped
 	name = "Shaft Miner (Equipment)"
