@@ -93,7 +93,7 @@
 	DELAY 100
 	"}
 
-/obj/item/disk/holodisk/tutorial/medbay/pharma
+/obj/item/disk/holodisk/tutorial/medbay/virology
 	name = "Medical Centre Simulation Pathological Suite"
 	preset_image_type = /datum/preset_holoimage/virologist
 	preset_record_text = {"

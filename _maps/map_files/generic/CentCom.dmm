@@ -20029,6 +20029,10 @@
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership/firebase_trident)
+"bKI" = (
+/obj/machinery/quantum_server/tutorial_coop,
+/turf/open/floor/iron/dark/textured,
+/area/centcom/central_command_areas/hall)
 "bKY" = (
 /obj/effect/turf_decal/box/corners{
 	dir = 1
@@ -21284,6 +21288,9 @@
 	},
 /turf/open/floor/plastic,
 /area/centcom/central_command_areas/admin)
+"dRd" = (
+/turf/open/floor/iron/vaporwave,
+/area/centcom/central_command_areas/hall)
 "dRe" = (
 /obj/structure/chair/sofa/middle/maroon,
 /turf/open/floor/carpet/neon/simple/green/nodots,
@@ -21734,6 +21741,10 @@
 	},
 /turf/open/floor/iron/smooth_large,
 /area/cruiser_dock)
+"eIB" = (
+/obj/machinery/quantum_server/tutorial_solo,
+/turf/open/floor/iron/dark/textured,
+/area/centcom/central_command_areas/hall)
 "eIT" = (
 /obj/structure/table/wood/fancy,
 /obj/item/storage/box/coffeepack,
@@ -24109,6 +24120,10 @@
 /obj/effect/mapping_helpers/airlock/access/any/admin/general,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/admin)
+"isK" = (
+/obj/machinery/netpod/tutorial_coop,
+/turf/open/floor/iron/dark/textured,
+/area/centcom/central_command_areas/hall)
 "itR" = (
 /obj/machinery/plumbing/ooze_compressor,
 /turf/open/floor/engine,
@@ -26573,6 +26588,10 @@
 	},
 /turf/open/floor/iron/white/textured,
 /area/centcom/central_command_areas/admin)
+"mLM" = (
+/obj/machinery/computer/quantum_console/tutorial_solo,
+/turf/open/floor/iron/dark/textured,
+/area/centcom/central_command_areas/hall)
 "mLV" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 1;
@@ -30220,6 +30239,9 @@
 /obj/machinery/light/floor/has_bulb,
 /turf/open/floor/carpet/purple,
 /area/centcom/central_command_areas/adminroom)
+"taX" = (
+/turf/open/floor/iron/dark/textured,
+/area/centcom/central_command_areas/hall)
 "tbq" = (
 /obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 10
@@ -31192,6 +31214,10 @@
 /obj/effect/mapping_helpers/airlock/access/any/admin/captain,
 /turf/open/floor/iron/dark/smooth_large,
 /area/centcom/central_command_areas/admin)
+"uPq" = (
+/obj/machinery/computer/quantum_console/tutorial_coop,
+/turf/open/floor/iron/dark/textured,
+/area/centcom/central_command_areas/hall)
 "uPO" = (
 /obj/effect/spawner/random/trash/garbage,
 /obj/effect/spawner/random/trash/cigbutt,
@@ -32011,6 +32037,10 @@
 /obj/structure/fermenting_barrel,
 /turf/open/floor/fakespace,
 /area/centcom/central_command_areas/adminroom)
+"wdl" = (
+/obj/machinery/netpod/tutorial_solo,
+/turf/open/floor/iron/dark/textured,
+/area/centcom/central_command_areas/hall)
 "wdp" = (
 /obj/effect/turf_decal/plaque{
 	icon_state = "L14"
@@ -79936,12 +79966,12 @@ aaa
 aaa
 aaa
 aaa
-aaa
 apG
 apG
 apG
-apG
-apG
+dRd
+dRd
+dRd
 acg
 abM
 abM
@@ -80193,12 +80223,12 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+apG
+bKI
+uPq
+dRd
+dRd
+dRd
 acg
 skO
 voH
@@ -80450,12 +80480,12 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+apG
+isK
+taX
+dRd
+dRd
+dRd
 acg
 dki
 hdA
@@ -80707,12 +80737,12 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+apG
+isK
+taX
+dRd
+dRd
+dRd
 acg
 dki
 hdA
@@ -80964,12 +80994,12 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+apG
+dRd
+dRd
+dRd
+dRd
+dRd
 acg
 rLi
 tEv
@@ -81221,12 +81251,12 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+apG
+dRd
+dRd
+dRd
+dRd
+dRd
 acg
 veh
 iCr
@@ -81478,12 +81508,12 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+apG
+wdl
+taX
+dRd
+dRd
+dRd
 acg
 bCf
 saC
@@ -81735,12 +81765,12 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+apG
+eIB
+mLM
+dRd
+dRd
+dRd
 acg
 ode
 mCP
@@ -81992,12 +82022,12 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+apG
+apG
+apG
+apG
+apG
+apG
 acg
 ydt
 gyJ
