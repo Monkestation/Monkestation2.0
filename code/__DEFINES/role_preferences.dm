@@ -35,6 +35,7 @@
 #define ROLE_BLOB "Blob"
 #define ROLE_BLOB_INFECTION "Blob Infection"
 #define ROLE_CHANGELING_MIDROUND "Changeling (Midround)"
+#define ROLE_FORBIDDENCALLING "Forbidden Calling"
 #define ROLE_FUGITIVE "Fugitive"
 #define ROLE_LONE_OPERATIVE "Lone Operative"
 #define ROLE_MALF_MIDROUND "Malf AI (Midround)"
@@ -186,6 +187,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_CORTICAL_BORER = 0,  // Module ID: CORTICAL_BORERS
 	ROLE_DRIFTING_CONTRACTOR = 0,
 	ROLE_VAMPIRICACCIDENT = 0,
+	ROLE_FORBIDDENCALLING = 0,
 	ROLE_MONSTERHUNTER = 0,
 	ROLE_SLASHER = 0,
 	ROLE_FLORIDA_MAN = 0,

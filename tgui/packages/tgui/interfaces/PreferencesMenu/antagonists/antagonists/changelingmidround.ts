@@ -4,11 +4,12 @@ import { CHANGELING_MECHANICAL_DESCRIPTION } from './changeling';
 
 const ChangelingMidround: Antagonist = {
   key: 'changelingmidround',
-  name: 'Space Changeling',
+  name: 'Changeling (Midround) / \nSpace Changeling',
   description: [
     multiline`
-    A midround changeling does not recieve a crew identity, instead arriving
-    from space. This will be more difficult than being a round-start changeling!
+    As crew, you were infected by a trace amount of organic matter, awakening
+    newfound abilities. / A space changeling does not recieve a crew identity,
+    instead arriving via a meteor. Infiltrate the station!
     `,
     CHANGELING_MECHANICAL_DESCRIPTION,
   ],

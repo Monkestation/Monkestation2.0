@@ -33,5 +33,6 @@
 	earliest_start = 0
 
 /datum/round_event_control/antagonist/solo/heretic/midround
+	antag_flag = ROLE_FORBIDDENCALLING
 	name = "Forbidden Calling (Heretics)"
 	prompted_picking = TRUE
