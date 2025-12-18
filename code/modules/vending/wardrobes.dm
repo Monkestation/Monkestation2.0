@@ -468,7 +468,7 @@
 		/obj/item/clothing/under/rank/civilian/lawyer/black/skirt = 1,
 		/obj/item/clothing/shoes/laceup = 2,
 		/obj/item/clothing/shoes/heels = 2, //MONKESTATION ADDITION
-		/obj/item/clothing/accessory/lawyers_badge = 2,
+		/obj/item/clothing/accessory/badge/lawyer = 2,
 		/obj/item/radio/headset/headset_srv = 2,
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/law_wardrobe

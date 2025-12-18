@@ -6,8 +6,6 @@ GLOBAL_PROTECT(round_id)
 /// The directory in which ALL log files should be stored
 GLOBAL_VAR(log_directory)
 GLOBAL_PROTECT(log_directory)
-GLOBAL_VAR(demo_directory)
-GLOBAL_PROTECT(demo_directory)
 
 #define DECLARE_LOG_NAMED(log_var_name, log_file_name, start)\
 GLOBAL_VAR(##log_var_name);\
@@ -77,10 +75,6 @@ GLOBAL_PROTECT(investigate_signaler)
 GLOBAL_LIST_EMPTY(lawchanges)
 GLOBAL_PROTECT(lawchanges)
 
-//Monkestation Edit: REPLAYS
-GLOBAL_VAR(demo_log)
-GLOBAL_PROTECT(demo_log)
-//Monkestation Edit: REPLAYS
 
 #undef DECLARE_LOG
 #undef DECLARE_LOG_NAMED
