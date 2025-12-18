@@ -95,7 +95,7 @@ GLOBAL_LIST_INIT(cassette_icons, list(
 		. += span_info("Mixed by [span_name(cassette_data.author.name)]")
 
 /obj/item/cassette_tape/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if(!istype(tool, /obj/item/pen))
+	if(!IS_WRITING_UTENSIL(tool))
 		return NONE
 	var/choice = tgui_input_list(user, "What would you like to change?", items = list("Cassette Name", "Cassette Description", "Cancel"))
 	switch(choice)
