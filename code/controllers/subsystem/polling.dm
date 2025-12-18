@@ -389,6 +389,6 @@ SUBSYSTEM_DEF(polling)
 		if(!isobserver(ghost))
 			continue
 		if(is_mentor(ghost)) //REMEMBER TO UNCOMMENT THIS
-		candidates += ghost
+			candidates += ghost
 
 	return poll_candidates(question, role, check_jobban, poll_time, ignore_category, flash_window, candidates, alert_pic, jump_target, role_name_text, custom_response_messages, start_signed_up, amount_to_pick, chat_text_border_icon, announce_chosen, show_candidate_amount)
