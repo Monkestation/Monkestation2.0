@@ -5221,6 +5221,12 @@
 /obj/structure/table/glass,
 /obj/item/clothing/gloves/latex,
 /obj/item/clothing/neck/stethoscope,
+/obj/item/storage/box/tube{
+	pixel_x = -6
+	},
+/obj/item/storage/box/tube{
+	pixel_x = 10
+	},
 /turf/open/floor/iron,
 /area/virtual_domain/powered_lighting)
 "Zw" = (
