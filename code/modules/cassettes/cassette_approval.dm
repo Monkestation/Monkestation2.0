@@ -63,7 +63,7 @@ GLOBAL_ALIST_EMPTY(cassette_reviews)
 	return list("cassette" = cassette_data.export())
 
 /datum/cassette_review/ui_state(mob/user)
-	return ADMIN_STATE(R_FUN)
+	return ADMIN_STATE(R_ADMIN)
 
 /datum/cassette_review/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
@@ -125,14 +125,14 @@ GLOBAL_ALIST_EMPTY(cassette_reviews)
 
 #undef ADMIN_OPEN_REVIEW
 
-ADMIN_VERB(cassette_reviews, R_FUN, FALSE, "Cassette Reviews", "Review submitted cassettes", ADMIN_CATEGORY_GAME)
+ADMIN_VERB(cassette_reviews, R_ADMIN, FALSE, "Cassette Reviews", "Review submitted cassettes", ADMIN_CATEGORY_GAME)
 	if(!length(GLOB.cassette_reviews))
 		to_chat(user, span_warning("No cassettes are currently pending for review!"), type = MESSAGE_TYPE_ADMINLOG)
 		return
 	var/list/options = list()
 	for(var/_id, review in GLOB.cassette_reviews)
 		options += review
-	var/datum/cassette_review/review = tgui_input_list(user, "Which cassette review would you like to open?", "Cassette Reviews", options, ui_state = ADMIN_STATE(R_FUN))
+	var/datum/cassette_review/review = tgui_input_list(user, "Which cassette review would you like to open?", "Cassette Reviews", options, ui_state = ADMIN_STATE(R_ADMIN))
 	if(!review)
 		return
 	review.ui_interact(user.mob)
