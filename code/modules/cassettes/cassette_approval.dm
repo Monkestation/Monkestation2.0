@@ -60,7 +60,10 @@ GLOBAL_ALIST_EMPTY(cassette_reviews)
 		ui.open()
 
 /datum/cassette_review/ui_static_data(mob/user)
-	return list("cassette" = cassette_data.export())
+	return list(
+		"cassette" = cassette_data.export(),
+		"can_approve" = check_rights_for(user.client, R_FUN),
+	)
 
 /datum/cassette_review/ui_state(mob/user)
 	return ADMIN_STATE(R_ADMIN)
@@ -68,6 +71,8 @@ GLOBAL_ALIST_EMPTY(cassette_reviews)
 /datum/cassette_review/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
+		return
+	if(!check_rights(R_FUN))
 		return
 	var/mob/user = ui.user
 	switch(action)

@@ -1,3 +1,4 @@
+import { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
 import { Section, Button, Stack, Collapsible, Box } from '../components';
 import { Window } from '../layouts';
@@ -37,12 +38,13 @@ type Cassette = {
 
 type Data = {
   cassette: Cassette;
+  can_approve: BooleanLike;
 };
 
 export const CassetteReview = () => {
   const {
     act,
-    data: { cassette },
+    data: { cassette, can_approve },
   } = useBackend<Data>();
 
   return (
@@ -105,14 +107,20 @@ export const CassetteReview = () => {
             </Section>
           </Stack.Item>
           <Stack.Item align="center">
-            <Stack>
-              <Stack.Item>
-                <Button onClick={() => act('approve')}>Approve</Button>
-              </Stack.Item>
-              <Stack.Item>
-                <Button onClick={() => act('deny')}>Deny</Button>
-              </Stack.Item>
-            </Stack>
+            {can_approve ? (
+              <Stack>
+                <Stack.Item>
+                  <Button onClick={() => act('approve')}>Approve</Button>
+                </Stack.Item>
+                <Stack.Item>
+                  <Button onClick={() => act('deny')}>Deny</Button>
+                </Stack.Item>
+              </Stack>
+            ) : (
+              <Button disabled>
+                Not enough permissions to approve/deny cassettes.
+              </Button>
+            )}
           </Stack.Item>
         </Stack>
       </Window.Content>
