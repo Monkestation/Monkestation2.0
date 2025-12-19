@@ -415,3 +415,33 @@
 	qdel(src)
 	return TRUE
 
+// you can pass a mob OR mind to this
+/proc/is_monster_hunter_prey(victim)
+	var/static/list/antag_datums_to_check
+	if(!antag_datums_to_check)
+		antag_datums_to_check = typecacheof(list(
+			/datum/antagonist/bloodsucker,
+			/datum/antagonist/changeling,
+			/datum/antagonist/heretic,
+			/datum/antagonist/heretic_monster,
+			/datum/antagonist/teratoma, // as they're associated with changelings
+			/datum/antagonist/vassal,
+		))
+
+	var/datum/mind/victim_mind = get_mind(victim, include_last = TRUE)
+	if(!istype(victim_mind))
+		return FALSE
+	for(var/datum/antagonist/antag as anything in victim_mind.antag_datums)
+		if(is_type_in_typecache(antag, antag_datums_to_check))
+			return TRUE
+	return FALSE
+
+/proc/get_all_monster_hunter_prey(include_dead = FALSE)
+	. = list()
+	var/list/prey = list()
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_MONSTER_HUNTER_QUERY, prey)
+	for(var/datum/mind/monster as anything in prey)
+		var/mob/living/current = monster.current
+		if(QDELETED(current) || (!include_dead && current.stat == DEAD))
+			continue
+		. += monster

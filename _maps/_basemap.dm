@@ -13,7 +13,11 @@
 		#include "map_files\IceBoxStation\IceBoxStation.dmm"
 		#include "map_files\tramstation\tramstation.dmm"
 		#include "map_files\HelioStation\HelioStation.dmm"
+<<<<<<< HEAD
 		#include "map_files\LoopStation\LoopStation.dmm"
+=======
+		#include "map_files\Oshan\Oshan.dmm"
+>>>>>>> 90c79d9532e7e0d3e4ab91f25b23609c8d1bd391
 
 		#ifdef CIBUILDING
 			#include "templates.dm"

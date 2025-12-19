@@ -58,7 +58,7 @@
 	..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/camera/autoname/LateInitialize()
+/obj/machinery/camera/autoname/LateInitialize(mapload_arg)
 	. = ..()
 
 	var/static/list/autonames_in_areas = list()

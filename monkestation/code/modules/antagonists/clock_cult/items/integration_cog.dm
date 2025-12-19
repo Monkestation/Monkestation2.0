@@ -22,7 +22,7 @@
 		if(!do_after(user, 5 SECONDS, target = cogger_apc, hidden = TRUE))
 			return
 
-		balloon_alert(user, "APC cut open")
+		balloon_alert(user, "aPC cut open")
 		cogger_apc.panel_open = TRUE
 		cogger_apc.update_appearance()
 		return

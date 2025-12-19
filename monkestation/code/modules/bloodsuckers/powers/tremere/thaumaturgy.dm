@@ -265,7 +265,7 @@
 	icon = 'monkestation/icons/bloodsuckers/vamp_obj.dmi'
 	icon_state = "blood_shield"
 	lefthand_file = 'monkestation/icons/bloodsuckers/bloodsucker_lefthand.dmi'
-	righthand_file = 'monkestation/icons/bloodsuckers/bloodsucker_lefthand.dmi'
+	righthand_file = 'monkestation/icons/bloodsuckers/bloodsucker_righthand.dmi'
 	block_chance = BLOOD_SHIELD_BLOCK_CHANCE
 
 /obj/item/shield/bloodsucker/Initialize(mapload)

@@ -30,7 +30,7 @@
 		log_mapping("More than one arrivals docking_port placed on map! Ignoring duplicates.")
 	SSshuttle.arrivals = src
 
-/obj/docking_port/mobile/arrivals/LateInitialize()
+/obj/docking_port/mobile/arrivals/LateInitialize(mapload_arg)
 	areas = list()
 
 	var/list/new_latejoin = list()

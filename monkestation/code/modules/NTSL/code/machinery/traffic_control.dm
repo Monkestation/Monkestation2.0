@@ -46,7 +46,7 @@
 		unlimited_range = TRUE
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/computer/telecomms/traffic/LateInitialize()
+/obj/machinery/computer/telecomms/traffic/LateInitialize(mapload_arg)
 	. = ..()
 	refresh_servers()
 	for(var/obj/machinery/telecomms/server/new_server in servers)

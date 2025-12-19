@@ -10,7 +10,7 @@
 	var/current_ticks_cooldown = 0
 	var/mutable_appearance/overlay
 
-/obj/item/organ/internal/cyberimp/leg/chemplant/Initialize()
+/obj/item/organ/internal/cyberimp/leg/chemplant/Initialize(mapload)
 	. = ..()
 
 /obj/item/organ/internal/cyberimp/leg/chemplant/on_life()

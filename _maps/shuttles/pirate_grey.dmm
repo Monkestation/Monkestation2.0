@@ -220,6 +220,7 @@
 /area/shuttle/pirate)
 "ie" = (
 /obj/structure/cable,
+/obj/machinery/holopad/secure/hacked,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "it" = (

@@ -42,7 +42,7 @@
 			/* hud_owner = */ null,
 			/* escape_menu = */ src,
 			/* button_text = */ "Redeem Code",
-			/* offset = */ list(-221, 28),
+			/* offset = */ list(-221, 30),
 			/* font_size = */ 24,
 			/* on_click_callback = */ CALLBACK(src, PROC_REF(start_redeem)),
 		)

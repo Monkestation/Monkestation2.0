@@ -76,8 +76,8 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 /obj/machinery/computer/department_orders/ui_static_data(mob/user)
 	var/list/data = list()
 	var/list/supply_data = list() //each item in this needs to be a Category
-	for(var/pack_key in SSshuttle.supply_packs)
-		var/datum/supply_pack/pack = SSshuttle.supply_packs[pack_key]
+	for(var/_pack_key, value in SSshuttle.supply_packs)
+		var/datum/supply_pack/pack = value
 		//skip groups we do not offer
 		if(!(pack.group in dep_groups))
 			continue
@@ -94,7 +94,7 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 			)
 			supply_data += list(target_group)
 		//skip packs we should not show, even if we should show the group
-		if((pack.hidden && !(obj_flags & EMAGGED)) || (pack.special && !pack.special_enabled) || pack.drop_pod_only || pack.goody)
+		if((pack.hidden && !(obj_flags & EMAGGED)) || !pack.available() || pack.drop_pod_only || pack.goody)
 			continue
 		//finally the pack data itself
 		target_group["packs"] += list(list(
@@ -144,7 +144,7 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 	if(!pack)
 		say("Something went wrong!")
 		CRASH("requested supply pack id \"[id]\" not found!")
-	if((pack.hidden && !(obj_flags & EMAGGED)) || (pack.special && !pack.special_enabled) || pack.drop_pod_only || pack.goody)
+	if((pack.hidden && !(obj_flags & EMAGGED)) || !pack.available() || pack.drop_pod_only || pack.goody)
 		return
 	var/name = "*None Provided*"
 	var/rank = "*None Provided*"
@@ -163,7 +163,24 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 		if(GLOB.areas_by_type[delivery_area_type])
 			chosen_delivery_area = delivery_area_type
 			break
-	department_order = new(pack, name, rank, ckey, "", null, chosen_delivery_area, null)
+
+	if(SSshuttle.supply.get_order_count(pack) == OVER_ORDER_LIMIT)
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+		say("ERROR: No more then [CARGO_MAX_ORDER] of any pack may be ordered at once!")
+		return
+
+	department_order = new(
+		pack = pack,
+		orderer = name,
+		orderer_rank = rank,
+		orderer_ckey = ckey,
+		reason = "Departmental Order",
+		paying_account = null,
+		department_destination = chosen_delivery_area,
+		coupon = null,
+		manifest_can_fail = FALSE,
+	)
+
 	SSshuttle.shopping_list += department_order
 	if(!already_signalled)
 		RegisterSignal(SSshuttle, COMSIG_SUPPLY_SHUTTLE_BUY, PROC_REF(finalize_department_order))

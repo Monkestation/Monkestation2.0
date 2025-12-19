@@ -66,4 +66,5 @@
 #define MECHA_AMMO_LIGHTTANKMG "12.7x70mm malone"
 #define MECHA_AMMO_ATR "20x160mm"
 #define MECHA_AMMO_FLAME "Flames"
+#define MECHA_AMMO_SENTINEL "Sentinel Cannon Shell"
 //monke edit end

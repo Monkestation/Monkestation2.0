@@ -225,8 +225,9 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 
 			if(greentexted)
 				var/score = round(human_mob.hardcore_survival_score * 2)
-				player_client.give_award(/datum/award/score/hardcore_random, human_mob, score)
+				player_client?.give_award(/datum/award/score/hardcore_random, human_mob, score)
 				log_admin("[player_client] gained [score] hardcore random points, including greentext bonus!")
+				player_client?.prefs.adjust_metacoins(player_client.ckey, 500, "hardcore random greentext")
 				return
 
 	if(considered_escaped(human_mob.mind))
@@ -988,7 +989,8 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 		parts += "<span class='infoplain'>Total Achievements Earned: <B>[length(GLOB.achievements_unlocked)]!</B></span><BR>"
 		parts += "<ul class='playerlist'>"
 		for(var/datum/achievement_report/cheevo_report in GLOB.achievements_unlocked)
-			parts += "<BR>[cheevo_report.winner_key] was <b>[cheevo_report.winner]</b>, who earned the [span_greentext("'[cheevo_report.cheevo]'")] achievement at [cheevo_report.award_location]!<BR>"
+			var/show_key = GLOB.roundend_hidden_ckeys[cheevo_report.winner_key]
+			parts += "<BR>[show_key ? "[cheevo_report.winner_key] was " : ""]<b>[cheevo_report.winner]</b>, who earned the [span_greentext("'[cheevo_report.cheevo]'")] achievement at [cheevo_report.award_location]!<BR>"
 		parts += "</ul>"
 		return "<div class='panel greenborder'><ul>[parts.Join()]</ul></div>"
 

@@ -92,6 +92,7 @@ GLOBAL_DATUM_INIT(objective_machine_handler, /datum/objective_target_machine_han
 		JOB_QUARTERMASTER = /obj/machinery/rnd/production/techfab/department/cargo,
 		JOB_RESEARCH_DIRECTOR = /obj/machinery/rnd/production/protolathe/department/science,
 		JOB_SHAFT_MINER = /obj/machinery/mineral/ore_redemption,
+		JOB_QUARTERMASTER = /obj/machinery/rnd/production/techfab/department/cargo,
 	)
 
 	/// Bonus reward to grant if you booby trap successfully

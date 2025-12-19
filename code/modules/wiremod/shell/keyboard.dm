@@ -48,9 +48,10 @@
 		to_chat(user, span_warning("You start mashing keys at random!"))
 		return
 
-	var/message = tgui_input_text(user, "Input your text", "Keyboard")
-	entity.set_output(user)
-	output.set_output(message)
-	signal.set_output(COMPONENT_SIGNAL)
+	var/message = trimtext(tgui_input_text(user, "Input your text", "Keyboard", encode = FALSE))
+	if(length(message))
+		entity.set_output(user)
+		output.set_output(message)
+		signal.set_output(COMPONENT_SIGNAL)
 
 

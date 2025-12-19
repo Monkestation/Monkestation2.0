@@ -77,7 +77,7 @@
 	icon_state = "clownass"
 	sound_effect = list('sound/items/party_horn.ogg', 'sound/items/bikehorn.ogg')
 
-/obj/item/organ/internal/butt/clown/Initialize()
+/obj/item/organ/internal/butt/clown/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/slippery, 40)
 
@@ -132,7 +132,7 @@
 	icon = 'monkestation/icons/obj/butts.dmi'
 	icon_state = "ass"
 
-/obj/effect/immovablerod/butt/Initialize()
+/obj/effect/immovablerod/butt/Initialize(mapload)
 	. = ..()
 	src.SpinAnimation(5, -1)
 
@@ -161,21 +161,20 @@
 
 	//BIBLEFART
 	//This goes above all else because it's an instagib.
-	for(var/obj/item/book/bible/Holy in Location)
-		if(Holy)
-			cooling_down = TRUE
-			var/turf/T = get_step(get_step(Person, NORTH), NORTH)
-			T.Beam(Person, icon_state="lightning[rand(1,12)]", time = 15)
-			Person.Paralyze(15)
-			Person.visible_message("<span class='warning'>[Person] attempts to fart on the [Holy], uh oh.<span>","<span class='ratvar'>What a grand and intoxicating innocence. Perish.</span>")
-			playsound(user,'sound/magic/lightningshock.ogg', 50, 1)
-			playsound(user,	'monkestation/sound/misc/dagothgod.ogg', 80)
-			Person.electrocution_animation(15)
-			spawn(15)
-				Person.gib()
-				dyn_explosion(Location, 1, 0)
-				cooling_down = FALSE
-			return
+	for(var/obj/item/book/bible/Holy as anything in Location)
+		cooling_down = TRUE
+		var/turf/T = get_step(get_step(Person, NORTH), NORTH)
+		T.Beam(Person, icon_state="lightning[rand(1,12)]", time = 15)
+		Person.Paralyze(15)
+		Person.visible_message("<span class='warning'>[Person] attempts to fart on the [Holy], uh oh.<span>","<span class='ratvar'>What a grand and intoxicating innocence. Perish.</span>")
+		playsound(user,'sound/magic/lightningshock.ogg', 50, 1)
+		playsound(user,	'monkestation/sound/misc/dagothgod.ogg', 80)
+		Person.electrocution_animation(15)
+		spawn(15)
+			Person.gib()
+			dyn_explosion(Location, 1, 0)
+			cooling_down = FALSE
+		return
 
 	//EMOTE MESSAGE/MOB TARGETED FARTS
 	var/hit_target = FALSE

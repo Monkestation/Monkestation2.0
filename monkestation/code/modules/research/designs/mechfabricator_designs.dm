@@ -9,6 +9,17 @@
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ALL
 	)
 
+/datum/design/cyborg_remote
+	name = "Cyborg Nanite Remote"
+	id = "cyborg_remote"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/nanite_remote
+	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT*7.5, /datum/material/glass =SHEET_MATERIAL_AMOUNT*7.5)
+	construction_time = 80
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_PEACEKEEPER
+	)
+
 //IPC Parts//
 
 /datum/design/ipc_part_head
@@ -118,6 +129,12 @@
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_SERVICE
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE  // The Animatronics were made to entertain afterall...
+
+/datum/design/module/mod_corpse
+	name = "Corpse Exoskeleton Module"
+	id = "mod_corpse"
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 2.5, /datum/material/titanium =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT * 1.5)
+	build_path = /obj/item/mod/module/magboot/corpse_exoskeleton
 
 /datum/design/module/mod_rave
 	name = "Rave Module"

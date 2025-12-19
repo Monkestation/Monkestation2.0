@@ -143,9 +143,9 @@
 	name = "Bone Greaves"
 	result = /obj/item/clothing/shoes/bone_greaves
 	reqs = list(
-   		/obj/item/stack/sheet/bone = 2,
-   		/obj/item/stack/sheet/sinew = 1,
-    )
+		/obj/item/stack/sheet/bone = 2,
+		/obj/item/stack/sheet/sinew = 1,
+	)
 	category = CAT_CLOTHING
 
 /obj/item/clothing/gloves/military/ashwalk

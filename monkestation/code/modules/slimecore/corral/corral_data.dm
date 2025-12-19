@@ -15,15 +15,18 @@
 	var/max_capacity = 20
 
 /datum/corral_data/proc/setup_pen()
+	var/list/edge_turfs = list()
+	for(var/obj/thing as anything in corral_corners | corral_connectors)
+		edge_turfs |= get_turf(thing)
+
+	max_capacity = max(CEILING(length(corral_turfs - edge_turfs) * 2, 5), initial(max_capacity))
+
 	for(var/turf/turf as anything in corral_turfs)
 		turf.air_update_turf(update = TRUE, remove = FALSE)
 		RegisterSignal(turf, COMSIG_ATOM_ENTERED, PROC_REF(check_entered))
 		RegisterSignal(turf, COMSIG_ATOM_EXITED, PROC_REF(check_exited))
 
-		for(var/mob/living/basic/slime/slime as anything in turf.contents)
-			if(!istype(slime))
-				continue
-
+		for(var/mob/living/basic/slime/slime in turf.contents)
 			if(length(managed_slimes) >= max_capacity)
 				slime.death()
 				slime.visible_message(span_warning("[slime] dies from being crowded in with so many other slimes!"))
@@ -37,7 +40,12 @@
 	for(var/obj/machinery/corral_corner/corner as anything in corral_corners)
 		RegisterSignal(corner, COMSIG_QDELETING, PROC_REF(start_break))
 
+/datum/corral_data/New()
+	. = ..()
+	START_PROCESSING(SSxenobio, src)
+
 /datum/corral_data/Destroy(force)
+	STOP_PROCESSING(SSxenobio, src)
 	QDEL_LIST(corral_connectors)
 	for(var/turf/turf as anything in corral_turfs)
 		if(!QDELETED(turf))
@@ -57,8 +65,19 @@
 
 	. = ..()
 
+/datum/corral_data/process(seconds_per_tick)
+	for(var/datum/corral_upgrade/upgrade as anything in corral_upgrades)
+		upgrade.process(seconds_per_tick)
+	for(var/turf/turf as anything in corral_turfs)
+		for(var/mob/living/carbon/human/monke in turf)
+			if(!ismonkeybasic(monke) || monke.stat != DEAD || monke.ckey || monke.mind || monke.pulledby)
+				continue
+			if((monke.timeofdeath + (5 MINUTES)) <= world.time)
+				monke.visible_message(span_warning("[monke] is automatically dissolved by the slime corral."))
+				monke.dust(just_ash = TRUE, drop_items = TRUE)
+
 /datum/corral_data/proc/check_entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
-	if(!istype(arrived, /mob/living/basic/slime))
+	if(!isslime(arrived))
 		return
 
 	if(isliving(arrived))

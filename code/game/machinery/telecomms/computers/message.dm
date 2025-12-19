@@ -71,7 +71,7 @@
 	GLOB.telecomms_list += src
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/computer/message_monitor/LateInitialize()
+/obj/machinery/computer/message_monitor/LateInitialize(mapload_arg)
 	//Is the server isn't linked to a server, and there's a server available, default it to the first one in the list.
 	if(!linkedServer)
 		for(var/obj/machinery/telecomms/message_server/message_server in GLOB.telecomms_list)
@@ -289,7 +289,7 @@
 	add_overlay("paper_words")
 	update_appearance()
 
-/obj/item/paper/monitorkey/LateInitialize()
+/obj/item/paper/monitorkey/LateInitialize(mapload_arg)
 	for (var/obj/machinery/telecomms/message_server/preset/server in GLOB.telecomms_list)
 		if (server.decryptkey)
 			print(server)

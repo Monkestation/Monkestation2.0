@@ -86,8 +86,6 @@
 	var/malfhack = FALSE //New var for my changes to AI malf. --NeoFite
 	///Reference to our ai hacker
 	var/mob/living/silicon/ai/malfai = null //See above --NeoFite
-	///Counter for displaying the hacked overlay to mobs within view
-	var/hacked_flicker_counter = 0
 	///State of the electronics inside (missing, installed, secured)
 	var/has_electronics = APC_ELECTRONICS_MISSING
 	///used for the Blackout malf module
@@ -142,8 +140,6 @@
 	var/no_charge = FALSE
 	/// Used for apc helper called full_charge to make apc's charge at 100% meter.
 	var/full_charge = FALSE
-	///When did the apc generate last malf ai processing time.
-	COOLDOWN_DECLARE(malf_ai_pt_generation)
 	armor_type = /datum/armor/power_apc
 
 /datum/armor/power_apc
@@ -534,15 +530,6 @@
 		force_update = TRUE
 		return
 
-	if((obj_flags & EMAGGED) || malfai)
-		hacked_flicker_counter = hacked_flicker_counter - 1
-		if(hacked_flicker_counter <= 0)
-			flicker_hacked_icon()
-
-	if(malfai && COOLDOWN_FINISHED(src, malf_ai_pt_generation) && cell.use(60 KILO JOULES) > 0 && malfai.malf_picker.processing_time < MALF_MAX_PP) // Over time generation of malf points for the ai controlling it, costs a bit of power
-		COOLDOWN_START(src, malf_ai_pt_generation, 30 SECONDS)
-		malfai.malf_picker.processing_time += 1
-
 	//dont use any power from that channel if we shut that power channel off
 	if(operating)
 		lastused_light = APC_CHANNEL_IS_ON(lighting) ? area.energy_usage[AREA_USAGE_LIGHT] + area.energy_usage[AREA_USAGE_STATIC_LIGHT] : 0
@@ -609,7 +596,7 @@
 
 		//clock cult stuff
 		if(integration_cog && SSthe_ark.clock_power < SSthe_ark.max_clock_power)
-			var/power_delta = clamp(cell.charge - 70, 0, 700)
+			var/power_delta = clamp(cell.charge - 70, 350, 700)
 			SSthe_ark.adjust_clock_power(power_delta / 70, TRUE)
 
 	else // no cell, switch everything off

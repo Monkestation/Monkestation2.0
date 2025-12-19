@@ -84,6 +84,9 @@ Possible to do for anyone motivated enough:
 	var/ringing = FALSE
 	var/offset = FALSE
 	var/on_network = TRUE
+	/// If set, only other holopads with the same "key" will be able to start a call with this holopad.
+	/// However, they can still START outgoing calls to key-less holopads.
+	var/key
 	/// For pads in secure areas; do not allow forced connecting
 	var/secure = FALSE
 	/// If we are currently calling another holopad
@@ -119,6 +122,7 @@ Possible to do for anyone motivated enough:
 	name = "hacked holopad"
 	desc = "It's a floor-mounted device for projecting holographic images. This one will refuse to auto-connect incoming calls."
 	req_access = list(ACCESS_SYNDICATE)
+	key = "syndicate"
 
 /obj/machinery/holopad/tutorial
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -334,10 +338,11 @@ Possible to do for anyone motivated enough:
 				return
 			if(usr.loc == loc)
 				var/list/callnames = list()
-				for(var/I in holopads)
-					var/area/A = get_area(I)
-					if(A)
-						LAZYADD(callnames[A], I)
+				for(var/obj/machinery/holopad/holopad as anything in holopads)
+					var/area/holopad_area = get_area(holopad)
+					if(!holopad_area || !can_call_to(holopad))
+						continue
+					LAZYADD(callnames[holopad_area], holopad)
 				callnames -= get_area(src)
 				var/result = tgui_input_list(usr, "Choose an area to call", "Holocall", sort_names(callnames))
 				if(isnull(result))
@@ -647,14 +652,20 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	SetLightsAndPower()
 	return TRUE
 
+/obj/machinery/holopad/proc/can_call_to(obj/machinery/holopad/other)
+	if(QDELETED(other))
+		return FALSE
+	if(other.key && key != other.key)
+		return FALSE
+	return TRUE
+
 //Try to transfer hologram to another pad that can project on T
 /obj/machinery/holopad/proc/transfer_to_nearby_pad(turf/T, datum/holo_owner)
 	var/obj/effect/overlay/holo_pad_hologram/h = masters[holo_owner]
 	if(!h || h.HC) //Holocalls can't change source.
 		return FALSE
-	for(var/pad in holopads)
-		var/obj/machinery/holopad/another = pad
-		if(another == src)
+	for(var/obj/machinery/holopad/another as anything in holopads)
+		if(another == src || !can_call_to(another))
 			continue
 		if(another.validate_location(T))
 			unset_holo(holo_owner)

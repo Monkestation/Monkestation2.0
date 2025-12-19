@@ -137,6 +137,10 @@
 
 	// 1 damage per second
 	if(light_amount >= SHADOW_SPECIES_DIM_LIGHT) //if there's enough light, start dying
+		var/datum/antagonist/darkspawn/darkspawn = IS_DARKSPAWN(owner)
+		if(darkspawn)
+			if(HAS_TRAIT(darkspawn, TRAIT_DARKSPAWN_LIGHTRES) || HAS_TRAIT(darkspawn, TRAIT_DARKSPAWN_CREEP))
+				return
 		owner.take_overall_damage(brute = delta_time, burn = delta_time, required_bodytype = BODYTYPE_ORGANIC)
 	else //heal in the dark
 		owner.heal_overall_damage(brute = delta_time, burn = delta_time, required_bodytype = BODYTYPE_ORGANIC)

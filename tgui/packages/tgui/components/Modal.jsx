@@ -11,7 +11,7 @@ import { Dimmer } from './Dimmer';
 export const Modal = (props) => {
   const { className, children, ...rest } = props;
   return (
-    <Dimmer>
+    <Dimmer className="Modal__dimmer">
       <div
         className={classes(['Modal', className, computeBoxClassName(rest)])}
         {...computeBoxProps(rest)}

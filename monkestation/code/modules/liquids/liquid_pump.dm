@@ -19,7 +19,7 @@
 	/// How fast does the pump work, in flat values. Flat values on top of percentages to help processing
 	var/pump_speed_flat = 20
 
-/obj/structure/liquid_pump/Initialize()
+/obj/structure/liquid_pump/Initialize(mapload)
 	. = ..()
 	create_reagents(max_volume)
 

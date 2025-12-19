@@ -133,17 +133,7 @@ c f 1
 /* Documenting a couple of potentially useful color matrices here to inspire ideas
 // Greyscale - indentical to saturation @ 0
 list(LUMA_R,LUMA_R,LUMA_R,0, LUMA_G,LUMA_G,LUMA_G,0, LUMA_B,LUMA_B,LUMA_B,0, 0,0,0,1, 0,0,0,0)
-
-// Color inversion
-list(-1,0,0,0, 0,-1,0,0, 0,0,-1,0, 0,0,0,1, 1,1,1,0)
-
-// Sepiatone
-list(0.393,0.349,0.272,0, 0.769,0.686,0.534,0, 0.189,0.168,0.131,0, 0,0,0,1, 0,0,0,0)
 */
-
-//Does nothing
-/proc/color_matrix_identity()
-	return list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0,0,0,0)
 
 //Adds/subtracts overall lightness
 //0 is identity, 1 makes everything white, -1 makes everything black
@@ -198,9 +188,9 @@ round(cos_inv_third+sqrt3_sin, 0.001), round(cos_inv_third-sqrt3_sin, 0.001), ro
 //Returns a matrix addition of A with B
 /proc/color_matrix_add(list/A, list/B)
 	if(!istype(A) || !istype(B))
-		return color_matrix_identity()
+		return COLOR_MATRIX_IDENTITY
 	if(A.len != 20 || B.len != 20)
-		return color_matrix_identity()
+		return COLOR_MATRIX_IDENTITY
 	var/list/output = list()
 	output.len = 20
 	for(var/value in 1 to 20)
@@ -210,9 +200,9 @@ round(cos_inv_third+sqrt3_sin, 0.001), round(cos_inv_third-sqrt3_sin, 0.001), ro
 //Returns a matrix multiplication of A with B
 /proc/color_matrix_multiply(list/A, list/B)
 	if(!istype(A) || !istype(B))
-		return color_matrix_identity()
+		return COLOR_MATRIX_IDENTITY
 	if(A.len != 20 || B.len != 20)
-		return color_matrix_identity()
+		return COLOR_MATRIX_IDENTITY
 	var/list/output = list()
 	output.len = 20
 	var/x = 1
@@ -227,18 +217,18 @@ round(cos_inv_third+sqrt3_sin, 0.001), round(cos_inv_third-sqrt3_sin, 0.001), ro
 ///Converts RGB shorthands into RGBA matrices complete of constants rows (ergo a 20 keys list in byond).
 /proc/color_to_full_rgba_matrix(color)
 	if(istext(color))
-		var/list/L = ReadRGB(color)
+		var/list/L = rgb2num(color)
 		if(!L)
 			CRASH("Invalid/unsupported color format argument in color_to_full_rgba_matrix()")
 		return list(L[1]/255,0,0,0, 0,L[2]/255,0,0, 0,0,L[3]/255,0, 0,0,0,L.len>3?L[4]/255:1, 0,0,0,0)
 	else if(!islist(color)) //invalid format
-		return color_matrix_identity()
+		return COLOR_MATRIX_IDENTITY
 	var/list/L = color
 	switch(L.len)
 		if(3 to 5) // row-by-row hexadecimals
 			. = list()
 			for(var/a in 1 to L.len)
-				var/list/rgb = ReadRGB(L[a])
+				var/list/rgb = rgb2num(L[a])
 				for(var/b in rgb)
 					. += b/255
 				if(length(rgb) % 4) // RGB has no alpha instruction

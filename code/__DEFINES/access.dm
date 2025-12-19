@@ -593,7 +593,6 @@
 	/obj/item/modular_computer/pda/warden = list(REGION_SECURITY), \
 	/obj/item/modular_computer/pda/janitor = list(REGION_GENERAL), \
 	/obj/item/modular_computer/pda/science = list(REGION_RESEARCH), \
-	/obj/item/modular_computer/pda/heads/quartermaster = list(REGION_COMMAND), \
 	/obj/item/modular_computer/pda/heads/hop = list(REGION_COMMAND), \
 	/obj/item/modular_computer/pda/heads/hos = list(REGION_COMMAND), \
 	/obj/item/modular_computer/pda/heads/cmo = list(REGION_COMMAND), \

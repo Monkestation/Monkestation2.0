@@ -84,6 +84,7 @@
 	build_all_button_icons(UPDATE_BUTTON_ICON)
 	if(do_after(cam_user, 5 SECONDS, target = target_loc, extra_checks = CALLBACK(src, PROC_REF(warping_check))))
 		try_servant_warp(cam_user, target_loc)
+		astype(owner.remote_control, /mob/eye/ai_eye/remote)?.origin.remove_eye_control(owner)
 
 	button_icon_state = "warp_down"
 	build_all_button_icons(UPDATE_BUTTON_ICON)

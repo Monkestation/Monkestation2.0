@@ -670,10 +670,8 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 
 /obj/item/stack/sheet/cardboard/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()
-	if (interacting_with != user)
-		return ITEM_INTERACT_BLOCKING
 	if(!is_species(interacting_with, /datum/species/golem/cardboard))
-		return ITEM_INTERACT_BLOCKING
+		return NONE
 	var/mob/living/carbon/human/human = user
 	var/datum/species/golem/cardboard/golem = human.dna.species
 	if(golem.last_creation + golem.brother_creation_cooldown > world.time) //no cheesing dork

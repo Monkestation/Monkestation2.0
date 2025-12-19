@@ -90,6 +90,7 @@
 	else if(isturf(target))
 		impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser/wall
 
+
 /obj/projectile/beam/laser/musket
 	name = "low-power laser"
 	icon_state = "laser_musket"

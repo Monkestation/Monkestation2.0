@@ -5,33 +5,44 @@
 	name = "KA Mod Disk"
 	desc = "A design disc containing the design for a unique kinetic accelerator modkit. It's compatible with a research console."
 	icon_state = "datadisk1"
-	var/modkit_design = /datum/design/unique_modkit
+	var/list/modkit_design = list()
 
 /obj/item/disk/design_disk/modkit_disc/Initialize(mapload)
 	. = ..()
-	blueprints += new modkit_design
+	for(var/design in modkit_design)
+		blueprints += new design
+
+/obj/item/disk/design_disk/modkit_disc/blood_drunk_group
+	name = "Bloodied Mod Disk"
+	modkit_design = list(
+		/datum/design/unique_modkit/offensive_turf_aoe,
+		/datum/design/unique_modkit/rapid_repeater,
+		/datum/design/unique_modkit/resonator_blast,
+		/datum/design/unique_modkit/bounty,
+	)
 
 /obj/item/disk/design_disk/modkit_disc/mob_and_turf_aoe
 	name = "Offensive Mining Explosion Mod Disk"
-	modkit_design = /datum/design/unique_modkit/offensive_turf_aoe
+	modkit_design = list(/datum/design/unique_modkit/offensive_turf_aoe)
 
 /obj/item/disk/design_disk/modkit_disc/rapid_repeater
 	name = "Rapid Repeater Mod Disk"
-	modkit_design = /datum/design/unique_modkit/rapid_repeater
+	modkit_design = list(/datum/design/unique_modkit/rapid_repeater)
 
 /obj/item/disk/design_disk/modkit_disc/resonator_blast
 	name = "Resonator Blast Mod Disk"
-	modkit_design = /datum/design/unique_modkit/resonator_blast
+	modkit_design = list(/datum/design/unique_modkit/resonator_blast)
 
 /obj/item/disk/design_disk/modkit_disc/bounty
 	name = "Death Syphon Mod Disk"
-	modkit_design = /datum/design/unique_modkit/bounty
+	modkit_design = list(/datum/design/unique_modkit/bounty)
 
 /datum/design/unique_modkit
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_PKA_MODS,
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MINING,
 	)
-	build_type = PROTOLATHE
+	build_type = PROTOLATHE | MECHFAB
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO
 
 /datum/design/unique_modkit/offensive_turf_aoe
@@ -820,7 +831,7 @@
 	icon_state = "godeye"
 	inhand_icon_state = null
 	vision_flags = SEE_TURFS
-	clothing_traits = list(TRAIT_MADNESS_IMMUNE)
+	clothing_traits = list(TRAIT_MADNESS_IMMUNE, TRAIT_NEARSIGHTED_CORRECTED)
 	// Blue, light blue
 	color_cutoffs = list(15, 30, 40)
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
@@ -900,7 +911,7 @@
 	scan_pinpointer.scan_target = living_scanned
 
 	to_chat(living_scanned, span_warning("You briefly see a flash of [living_owner]'s face before being knocked off-balance by an unseen force!"))
-	living_scanned.add_filter("scan", 2, list("type" = "outline", "color" = COLOR_RED, "size" = 1))
+	living_scanned.add_filter("scan", 2, list("type" = "outline", "color" = COLOR_YELLOW, "size" = 1))
 	addtimer(CALLBACK(living_scanned, TYPE_PROC_REF(/datum, remove_filter), "scan"), 30 SECONDS)
 
 	owner.playsound_local(get_turf(owner), 'sound/magic/smoke.ogg', 50, TRUE)

@@ -1,5 +1,9 @@
 /obj/item/clothing/shoes/stomper
 	name = "stomper boots"
+	desc = "A repurposed set of magboots with its electromagnets replaced by powerful springs fitted into the suit's boots, allowing users to \
+		jump much higher than normal outdoors for the purposes of portable hotspot movement. \
+		Long ago these used to bounce you whilst you walked reducing your movement potential, \
+		however after countless complains from engineering staff and months of development it was fixed."
 	icon_state = "stompers0"
 	base_icon_state = "stompers"
 	armor_type = /datum/armor/shoes_magboots

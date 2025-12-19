@@ -11,11 +11,15 @@
 	///if the cassette is flipped, for playing second list of songs
 	var/flipped = FALSE
 	///list of songs each side has to play
-	var/list/songs = list("side1" = list(),
-						  "side2" = list())
+	var/list/songs = list(
+		"side1" = list(),
+		"side2" = list()
+	)
 	///list of each songs name in the order they appear
-	var/list/song_names = list("side1" = list(),
-						 	   "side2" = list())
+	var/list/song_names = list(
+		"side1" = list(),
+		"side2" = list()
+	)
 	///the id of the cassette
 	var/id
 	///the ckey of the cassette author

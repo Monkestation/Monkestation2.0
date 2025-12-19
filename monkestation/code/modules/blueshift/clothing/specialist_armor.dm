@@ -302,6 +302,7 @@
 		combine in such a way that bullets lose much of their armor penetrating energy before any damage can be done, rather than penetrate into it."
 	icon = 'monkestation/code/modules/blueshift/icons/specialist_armor/armor.dmi'
 	icon_state = "enclosed_standard"
+	base_icon_state = "enclosed_standard"
 	worn_icon = 'monkestation/code/modules/blueshift/icons/specialist_armor/armor_worn.dmi'
 	inhand_icon_state = "helmet"
 	armor_type = /datum/armor/armor_sf_hardened
@@ -342,6 +343,7 @@
 		combine in such a way that bullets lose much of their armor penetrating energy before any damage can be done, rather than penetrate into it. \
 		This one has a red stripe down the front."
 	icon_state = "enclosed_emt"
+	base_icon_state = "enclosed_emt"
 
 /obj/item/clothing/head/helmet/toggleable/sf_hardened/emt2
 	name = "'Extractor' enclosed helmet"
@@ -349,3 +351,4 @@
 		combine in such a way that bullets lose much of their armor penetrating energy before any damage can be done, rather than penetrate into it. \
 		This one has a red cross on the front."
 	icon_state = "enclosed_emt2"
+	base_icon_state = "enclosed_emt2"

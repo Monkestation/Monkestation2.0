@@ -258,6 +258,9 @@
 		return FALSE
 	if(SEND_SIGNAL(src, COMSIG_LIVING_GRAB, target) & (COMPONENT_CANCEL_ATTACK_CHAIN|COMPONENT_SKIP_ATTACK))
 		return FALSE
+	if(mind && mind?.martial_art)
+		// Apply general martial arts (human on mob, mob on human, mob on mob)
+		src.apply_martial_art(target, null)
 	if(ishuman(target)) // MONKE EDIT: only humans can block it seems like
 		var/mob/living/carbon/human/human_target = target
 		if(human_target.check_block()) // MONKE EDIT: No args for block check // src, 0, "[src]'s grab", UNARMED_ATTACK

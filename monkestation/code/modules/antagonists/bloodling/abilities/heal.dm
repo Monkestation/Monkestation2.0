@@ -9,15 +9,15 @@
 	var/mob/living/target_mob = target
 
 	if(get_dist(usr, target) > 1)
-		owner.balloon_alert(owner, "Too Far!")
+		owner.balloon_alert(owner, "too Far!")
 		return FALSE
 
 	if(!ismob(target_mob))
-		owner.balloon_alert(owner, "Must target living being!")
+		owner.balloon_alert(owner, "must target living being!")
 		return FALSE
 
 	if(!IS_BLOODLING_OR_THRALL(target_mob))
-		owner.balloon_alert(owner, "Only works on your thralls!")
+		owner.balloon_alert(owner, "only works on your thralls!")
 		return FALSE
 	. = ..()
 	return

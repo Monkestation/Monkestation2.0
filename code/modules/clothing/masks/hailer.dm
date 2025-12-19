@@ -45,6 +45,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 /obj/item/clothing/mask/gas/sechailer
 	name = "security gas mask"
 	desc = "A standard issue Security gas mask with integrated 'Compli-o-nator 3000' device. Plays over a dozen pre-recorded compliance phrases designed to get scumbags to stand still whilst you tase them. Do not tamper with the device."
+	desc_controls = "CTRL-Click to toggle automatically hailing pointed targets."
 	actions_types = list(/datum/action/item_action/halt, /datum/action/item_action/adjust)
 	icon_state = "sechailer"
 	inhand_icon_state = "sechailer"
@@ -70,6 +71,20 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	var/recent_uses = 0
 	///Whether the hailer is emagged or not
 	var/safety = TRUE
+	///Wheter the hailer will hail pointed targets
+	var/auto_hail = TRUE
+
+/obj/item/clothing/mask/gas/sechailer/item_ctrl_click(mob/user)
+	var/mob/living/carbon/human/wearer = get(loc, /mob/living)
+	if(!istype(wearer))
+		return CLICK_ACTION_BLOCKING
+	auto_hail = !auto_hail
+	balloon_alert(user, "auto-hail toggled [auto_hail ? "on" : "off"]")
+	return CLICK_ACTION_SUCCESS
+
+/obj/item/clothing/mask/gas/sechailer/examine(mob/user)
+	. = ..()
+	. += span_notice("The hailer will [auto_hail ? "" : "not "]automatically hail pointed targets.")
 
 /obj/item/clothing/mask/gas/sechailer/plasmaman
 	starting_filter_type = /obj/item/gas_filter/plasmaman
@@ -197,10 +212,11 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 
 /obj/item/clothing/mask/gas/sechailer/proc/point_handler(mob/pointing_mob, mob/pointed_at)
 	SIGNAL_HANDLER
+	if(!auto_hail)
+		return
 
 	if(!COOLDOWN_FINISHED(src, hailer_cooldown))
 		return
-
 
 	if(!isliving(pointed_at))
 		return

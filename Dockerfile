@@ -15,6 +15,7 @@ RUN apt-get install -y --no-install-recommends \
         curl \
         unzip \
         make \
+        libcurl4:i386 \
         libstdc++6:i386
 
 COPY dependencies.sh .
@@ -59,7 +60,7 @@ RUN apt-get install -y --no-install-recommends \
         gcc-multilib \
         git \
     && git init \
-    && git remote add origin https://github.com/tgstation/rust-g
+    && git remote add origin "https://github.com/${RUST_G_REPO}"
 
 COPY dependencies.sh .
 

@@ -6,6 +6,7 @@
 	var/speed_multiplier = 1
 	var/datum/crafting_recipe/chosen_recipe
 	var/crafting = FALSE
+	var/datum/crafting_recipe/current_craft_recipe // The recipe currently being crafted
 
 	var/static/list/legal_crafting_recipes = list()
 	var/list/crafting_inventory = list()
@@ -203,11 +204,14 @@
 	if(crafting)
 		return
 	crafting = TRUE
+	current_craft_recipe = chosen_recipe // Store the recipe we're actually crafting
 
-	if(!machine_do_after_visable(src, chosen_recipe.time * speed_multiplier * 3))
+	if(!machine_do_after_visable(src, current_craft_recipe.time * speed_multiplier * 3))
+		crafting = FALSE
+		current_craft_recipe = null
 		return
 
-	var/list/requirements = chosen_recipe.reqs
+	var/list/requirements = current_craft_recipe.reqs
 	var/list/parts = list()
 
 	for(var/obj/item/req as anything in requirements)
@@ -219,7 +223,7 @@
 				if(stack.amount == requirements[stack.merge_type])
 					var/failed = TRUE
 					crafting_inventory -= item
-					for(var/obj/item/part as anything in chosen_recipe.parts)
+					for(var/obj/item/part as anything in current_craft_recipe.parts)
 						if(!istype(item, part))
 							continue
 						parts += item
@@ -227,7 +231,7 @@
 					if(failed)
 						qdel(item)
 				else if(stack.amount > requirements[item.type])
-					for(var/obj/item/part as anything in chosen_recipe.parts)
+					for(var/obj/item/part as anything in current_craft_recipe.parts)
 						if(!istype(item, part))
 							continue
 						var/obj/item/stack/new_stack = new item
@@ -237,7 +241,7 @@
 			else
 				var/failed = TRUE
 				crafting_inventory -= item
-				for(var/obj/item/part as anything in chosen_recipe.parts)
+				for(var/obj/item/part as anything in current_craft_recipe.parts)
 					if(!istype(item, part))
 						continue
 					parts += item
@@ -247,19 +251,20 @@
 					qdel(item)
 
 	var/atom/movable/I
-	if(ispath(chosen_recipe.result, /obj/item/stack))
-		I = new chosen_recipe.result(src, chosen_recipe.result_amount || 1)
+	if(ispath(current_craft_recipe.result, /obj/item/stack))
+		I = new current_craft_recipe.result(src, current_craft_recipe.result_amount || 1)
 		I.forceMove(drop_location())
 	else
-		I = new chosen_recipe.result (src)
+		I = new current_craft_recipe.result (src)
 		I.forceMove(drop_location())
-		if(I.atom_storage && chosen_recipe.delete_contents)
+		if(I.atom_storage && current_craft_recipe.delete_contents)
 			for(var/obj/item/thing in I)
 				qdel(thing)
-	I.CheckParts(parts, chosen_recipe)
+	I.CheckParts(parts, current_craft_recipe)
 	I.forceMove(drop_location())
 
 	crafting = FALSE
+	current_craft_recipe = null
 	check_recipe_state()
 
 

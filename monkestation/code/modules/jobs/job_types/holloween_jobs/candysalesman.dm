@@ -17,8 +17,8 @@
 	allow_overflow = FALSE
 
 	departments_list = list(
-		 /datum/job_department/spooktober,
-		)
+		/datum/job_department/spooktober,
+	)
 
 	family_heirlooms = list(/obj/item/cane)
 

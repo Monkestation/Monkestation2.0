@@ -201,6 +201,7 @@
 	dir = 10
 	},
 /obj/structure/cable,
+/obj/machinery/holopad/secure/hacked,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/bridge)
 "ax" = (
@@ -515,6 +516,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
+/obj/machinery/holopad/secure/hacked,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/eva)
 "bl" = (

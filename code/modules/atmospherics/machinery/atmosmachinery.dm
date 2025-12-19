@@ -77,7 +77,7 @@
 	fire = 100
 	acid = 70
 
-/obj/machinery/atmospherics/LateInitialize()
+/obj/machinery/atmospherics/LateInitialize(mapload_arg)
 	. = ..()
 	update_name()
 
@@ -150,8 +150,20 @@
 /obj/machinery/atmospherics/proc/destroy_network()
 	return
 
+/**
+ * Turns the machine on/off
+ * Arguments
+ *
+ * * active - the state of the machine
+ */
 /obj/machinery/atmospherics/proc/set_on(active)
+	SHOULD_CALL_PARENT(TRUE)
+
+	if(active == on)
+		return
+
 	on = active
+	update_appearance(UPDATE_ICON)
 	SEND_SIGNAL(src, COMSIG_ATMOS_MACHINE_SET_ON, on)
 
 /// This should only be called by SSair as part of the rebuild queue.
@@ -447,7 +459,7 @@
  * Called by wrench_act() before deconstruct()
  * Arguments:
  * * mob_user - the mob doing the act
- * * pressures - it can be passed on from wrench_act(), it's the pressure difference between the enviroment pressure and the pipe internal pressure
+ * * pressures - it can be passed on from wrench_act(), it's the pressure difference between the environment pressure and the pipe internal pressure
  */
 /obj/machinery/atmospherics/proc/unsafe_pressure_release(mob/user, pressures = null)
 	if(!user)

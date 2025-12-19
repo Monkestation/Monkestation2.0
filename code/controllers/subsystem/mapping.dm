@@ -265,22 +265,27 @@ SUBSYSTEM_DEF(mapping)
 /datum/controller/subsystem/mapping/proc/setup_ruins()
 	// Generate mining ruins
 	var/list/lava_ruins = levels_by_trait(ZTRAIT_LAVA_RUINS)
-	if (lava_ruins.len)
+	if (length(lava_ruins))
 		seedRuins(lava_ruins, CONFIG_GET(number/lavaland_budget), list(/area/lavaland/surface/outdoors/unexplored), themed_ruins[ZTRAIT_LAVA_RUINS], clear_below = TRUE)
 
 	var/list/ice_ruins = levels_by_trait(ZTRAIT_ICE_RUINS)
-	if (ice_ruins.len)
+	if (length(ice_ruins))
 		// needs to be whitelisted for underground too so place_below ruins work
 		seedRuins(ice_ruins, CONFIG_GET(number/icemoon_budget), list(/area/icemoon/surface/outdoors/unexplored, /area/icemoon/underground/unexplored), themed_ruins[ZTRAIT_ICE_RUINS], clear_below = TRUE)
 
 	var/list/ice_ruins_underground = levels_by_trait(ZTRAIT_ICE_RUINS_UNDERGROUND)
-	if (ice_ruins_underground.len)
+	if (length(ice_ruins_underground))
 		seedRuins(ice_ruins_underground, CONFIG_GET(number/icemoon_budget), list(/area/icemoon/underground/unexplored), themed_ruins[ZTRAIT_ICE_RUINS_UNDERGROUND], clear_below = TRUE, mineral_budget = 21)
 
 	// Generate deep space ruins
 	var/list/space_ruins = levels_by_trait(ZTRAIT_SPACE_RUINS)
-	if (space_ruins.len)
+	if (length(space_ruins))
 		seedRuins(space_ruins, CONFIG_GET(number/space_budget), list(/area/space), themed_ruins[ZTRAIT_SPACE_RUINS], mineral_budget = 0)
+
+	// Generate oshan ruins
+	var/list/oshan_ruins = levels_by_trait(ZTRAIT_OSHAN_MINING)
+	if (length(oshan_ruins))
+		seedRuins(oshan_ruins, CONFIG_GET(number/oshan_budget), list(/area/ocean/generated, /area/ocean/dark), themed_ruins[ZTRAIT_OSHAN_MINING], clear_below = TRUE)
 
 /// Sets up rivers, and things that behave like rivers. So lava/plasma rivers, and chasms
 /// It is important that this happens AFTER generating mineral walls and such, since we rely on them for river logic

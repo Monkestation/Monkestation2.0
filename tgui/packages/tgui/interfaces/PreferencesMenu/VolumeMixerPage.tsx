@@ -10,7 +10,7 @@ export const VolumeMixerPage = () => {
     <Section title="Volume Mixers" height="100%" overflow="auto">
       <Flex align="start" direction="row" wrap>
         {channels.map((channel) => (
-          <Flex.Item key={channel.num} width={30} style={{ margin: '5px' }}>
+          <Flex.Item key={channel.num} width={28} style={{ margin: '5px' }}>
             <VolumeSlider channel={channel} />
           </Flex.Item>
         ))}

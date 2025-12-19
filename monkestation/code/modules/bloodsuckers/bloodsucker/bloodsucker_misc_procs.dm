@@ -64,7 +64,7 @@
 	if(!owner?.current)
 		return
 	bloodsucker_level_unspent++
-	owner.current.balloon_alert(owner.current, "You have grown more ancient!")
+	owner.current.balloon_alert(owner.current, "you have grown more ancient!")
 	if(!my_clan)
 		to_chat(owner.current, span_notice("You have gained a rank. Join a Clan to spend it."))
 		return

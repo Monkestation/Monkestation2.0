@@ -268,6 +268,9 @@
 		return
 
 	var/obj/item/colored_item = item.item_path
+	if(isnull(preferences.loadout_list) || !preferences.loadout_list[colored_item])
+		to_chat(user, span_warning("You need [item.name] equipped to recolor it!"))
+		return
 
 	var/list/allowed_configs = list()
 	if(initial(colored_item.greyscale_config))
@@ -285,7 +288,7 @@
 
 	menu = new(
 		src,
-		usr,
+		user,
 		allowed_configs,
 		CALLBACK(src, PROC_REF(set_slot_greyscale), colored_item),
 		starting_icon_state = initial(colored_item.icon_state),
@@ -293,7 +296,7 @@
 		starting_colors = slot_starting_colors,
 	)
 	RegisterSignal(menu, COMSIG_PREQDELETED, TYPE_PROC_REF(/datum/preference_middleware/loadout, cleanup_greyscale_menu))
-	menu.ui_interact(usr)
+	menu.ui_interact(user)
 
 /// A proc to make sure our menu gets null'd properly when it's deleted.
 /// If we delete the greyscale menu from the greyscale datum, we don't null it correctly here, it harddels.
@@ -316,10 +319,11 @@
 		preferences.loadout_list[path][INFO_GREYSCALE] = colors.Join("")
 		preferences.character_preview_view?.update_body()
 
-/datum/preference_middleware/loadout/proc/clear_all_items()
+/datum/preference_middleware/loadout/proc/clear_all_items(list/params, mob/user)
 	LAZYNULL(preferences.loadout_list)
 	preferences.special_loadout_list["unusual"] = list()
 	preferences.character_preview_view.update_body()
+	SStgui.update_user_uis(user)
 
 /datum/preference_middleware/loadout/proc/ckey_explain(list/params, mob/user)
 	to_chat(preferences.parent, boxed_message(span_green("This item is restricted to your ckey only. Thank you!")))

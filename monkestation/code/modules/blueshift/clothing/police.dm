@@ -31,7 +31,7 @@
 	icon_state = "cloak_police"
 
 // Just some extra police equipment
-/obj/item/clothing/neck/cloak/colonial/nri_police/Initialize()
+/obj/item/clothing/neck/cloak/colonial/nri_police/Initialize(mapload)
 	allowed += list(
 		/obj/item/restraints/handcuffs,
 		/obj/item/ammo_box,

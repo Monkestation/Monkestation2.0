@@ -70,9 +70,6 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 /// Yes I know this is a stupid flag, no you can't take him from me
 #define DECAL_INIT_UPDATE_EXPERIENCED_1 (1<<20)
 
-/// This atom should never be marked in demos/replays. (monkestation addition)
-#define DEMO_IGNORE_1 (1<<21)
-
 // Update flags for [/atom/proc/update_appearance]
 /// Update the atom's name
 #define UPDATE_NAME (1<<0)
@@ -137,7 +134,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define UNIQUE_AREA (1<<8)
 /// If people are allowed to suicide in it. Mostly for OOC stuff like minigames
 #define BLOCK_SUICIDE (1<<9)
-/// Can the Xenobio management console transverse this area by default?
+/// If set, this area will be innately traversable by Xenobiology camera consoles.
 #define XENOBIOLOGY_COMPATIBLE (1<<10)
 /// If Abductors are unable to teleport in with their observation console
 #define ABDUCTOR_PROOF (1<<11)

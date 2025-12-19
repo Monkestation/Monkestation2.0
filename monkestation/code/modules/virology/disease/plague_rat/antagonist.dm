@@ -7,6 +7,7 @@
 	show_to_ghosts = TRUE
 
 	antag_hud_name = "plaguerat"
+	antag_count_points = 2
 
 	var/static/datum/team/plague_rat/rats_rats_we_are_the_rats
 	var/disease_id

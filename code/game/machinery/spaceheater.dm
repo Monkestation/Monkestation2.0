@@ -74,11 +74,14 @@
 
 /obj/machinery/space_heater/Destroy()
 	SSair.stop_processing_machine(src)
-	return..()
+	return ..()
 
 /obj/machinery/space_heater/on_construction()
 	set_panel_open(TRUE)
+	src.contents -= cell // heater starts with a cell for Initialize(), we remove it for constructed heaters
 	cell = null
+	QDEL_NULL(cell)
+
 
 /obj/machinery/space_heater/on_deconstruction()
 	if(cell)
@@ -131,12 +134,12 @@
 			update_appearance()
 		return
 
-	var/datum/gas_mixture/enviroment = local_turf.return_air()
+	var/datum/gas_mixture/environment = local_turf.return_air()
 
 	var/new_mode = HEATER_MODE_STANDBY
-	if(set_mode != HEATER_MODE_COOL && enviroment.temperature < target_temperature - temperature_tolerance)
+	if(set_mode != HEATER_MODE_COOL && environment.temperature < target_temperature - temperature_tolerance)
 		new_mode = HEATER_MODE_HEAT
-	else if(set_mode != HEATER_MODE_HEAT && enviroment.temperature > target_temperature + temperature_tolerance)
+	else if(set_mode != HEATER_MODE_HEAT && environment.temperature > target_temperature + temperature_tolerance)
 		new_mode = HEATER_MODE_COOL
 
 	if(mode != new_mode)
@@ -147,7 +150,7 @@
 		return
 
 	var/list/turfs = (local_turf.atmos_adjacent_turfs || list()) + local_turf
-	var/required_energy = abs(enviroment.temperature - target_temperature) * enviroment.heat_capacity()
+	var/required_energy = abs(environment.temperature - target_temperature) * environment.heat_capacity()
 	required_energy = min(required_energy, heating_energy, (cell.charge * efficiency) / length(turfs))
 	if(required_energy < 1)
 		return
@@ -249,8 +252,8 @@
 	var/turf/local_turf = get_turf(loc)
 	var/current_temperature
 	if(istype(local_turf))
-		var/datum/gas_mixture/enviroment = local_turf.return_air()
-		current_temperature = enviroment.temperature
+		var/datum/gas_mixture/environment = local_turf.return_air()
+		current_temperature = environment.temperature
 	else if(isturf(local_turf))
 		current_temperature = local_turf.temperature
 	if(isnull(current_temperature))
@@ -418,7 +421,6 @@
 		beaker?.forceMove(drop_location())
 		beaker = null
 	var/static/bonus_junk = list(
-		/obj/item/stack/cable_coil = 2,
 		/obj/item/stack/sheet/glass = 2,
 		/obj/item/stack/sheet/iron = 2,
 		/obj/item/thermometer = 1

@@ -49,7 +49,7 @@
 		return
 	my_turf.liquids.liquid_group.remove_any(my_turf.liquids, drain_flat + (drain_percent * my_turf.liquids.liquid_group.total_reagent_volume))
 
-/obj/structure/drain/Initialize()
+/obj/structure/drain/Initialize(mapload)
 	. = ..()
 	if(!isturf(loc))
 		stack_trace("Drain structure initialized not on a turf")

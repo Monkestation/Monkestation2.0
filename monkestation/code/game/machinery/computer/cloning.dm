@@ -34,7 +34,7 @@
 
 	light_color = LIGHT_COLOR_BLUE
 
-/obj/machinery/computer/cloning/Initialize()
+/obj/machinery/computer/cloning/Initialize(mapload)
 	. = ..()
 	updatemodules(TRUE)
 	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF) // So when an experimental cloner gets emped, it's cloning console doesn't break nullifying the threat.
@@ -249,7 +249,7 @@
 				dat += "<h4>[active_record.fields["name"]][body_only ? " - BODY-ONLY" : ""]</h4>"
 				dat += "Scan ID [active_record.fields["id"]] \
 					[!body_only ? "<a href='byond://?src=[REF(src)];clone=[active_record.fields["id"]]'>Clone</a>" : "" ]\
-				 	<a href='byond://?src=[REF(src)];clone=[active_record.fields["id"]];empty=TRUE'>Empty Clone</a><br>"
+					<a href='byond://?src=[REF(src)];clone=[active_record.fields["id"]];empty=TRUE'>Empty Clone</a><br>"
 
 				dat += "<b>Unique Identifier:</b><br /><span class='highlight'>[active_record.fields["UI"]]</span><br>"
 				dat += "<b>Structural Enzymes:</b><br /><span class='highlight'>"
@@ -623,3 +623,5 @@
 	records += R
 	log_cloning("[M ? key_name(M) : "Autoprocess"] added the [body_only ? "body-only " : ""]record of [key_name(mob_occupant)] to [src] at [AREACOORD(src)].")
 	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50)
+
+#undef AUTOCLONING_MINIMAL_LEVEL

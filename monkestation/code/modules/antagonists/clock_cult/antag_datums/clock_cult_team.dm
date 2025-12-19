@@ -68,7 +68,7 @@ GLOBAL_DATUM(main_clock_cult, /datum/team/clock_cult)
 ///check how many human members we have and anything that goes with that
 /datum/team/clock_cult/proc/check_member_count()
 	check_member_distribution()
-	max_human_servants = round(max((get_active_player_count() / 8), max_human_servants))
+	max_human_servants = round(max((get_active_player_count() / 7) + 1, max_human_servants))
 	var/human_servant_count = length(human_servants)
 	var/main_message = "The Ark will be torn open if [max_human_servants - human_servant_count] more minds are converted to the faith of Ratvar\
 						[SSthe_ark.charged_anchoring_crystals >= ANCHORING_CRYSTALS_TO_SUMMON ? "." : " and \

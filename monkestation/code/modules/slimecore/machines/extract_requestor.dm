@@ -24,7 +24,7 @@
 			name_to_path |= list("[extract::name]" = extract)
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/slime_extract_requestor/LateInitialize()
+/obj/machinery/slime_extract_requestor/LateInitialize(mapload_arg)
 	if(GLOB.default_slime_market)
 		console = GLOB.default_slime_market
 		console.request_pad = src

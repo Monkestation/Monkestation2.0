@@ -1,9 +1,10 @@
 #define SHIFTING_PARENT 1
 #define SHIFTING_ITEMS 2
+#define TILTING_PARENT 3
 
 /datum/component/pixel_shift
 	dupe_mode = COMPONENT_DUPE_UNIQUE
-	//what type of shifting parent is doing, or if they aren't shifting at all
+	//whether or not parent is shifting
 	var/shifting = FALSE
 	//the maximum amount we/an item can move
 	var/maximum_pixel_shift = 16
@@ -13,6 +14,10 @@
 	var/passthroughable = NONE
 	//Amount of shifting necessary to make the parent passthroughable
 	var/passthrough_threshold = 8
+	//how tilted the parent is
+	var/how_tilted
+	//the maximum amount of tilt parent can achieve
+	var/maximum_tilt = 45
 
 /datum/component/pixel_shift/Initialize(...)
 	. = ..()
@@ -24,14 +29,19 @@
 	RegisterSignal(parent, COMSIG_KB_LIVING_ITEM_PIXEL_SHIFT_UP, PROC_REF(item_pixel_shift_up))
 	RegisterSignal(parent, COMSIG_KB_LIVING_PIXEL_SHIFT_DOWN, PROC_REF(pixel_shift_down))
 	RegisterSignal(parent, COMSIG_KB_LIVING_PIXEL_SHIFT_UP, PROC_REF(pixel_shift_up))
+	RegisterSignal(parent, COMSIG_KB_LIVING_PIXEL_TILT_DOWN, PROC_REF(pixel_tilt_down))
+	RegisterSignal(parent, COMSIG_KB_LIVING_PIXEL_TILT_UP, PROC_REF(pixel_tilt_up))
 	RegisterSignals(parent, list(COMSIG_LIVING_RESET_PULL_OFFSETS, COMSIG_LIVING_SET_PULL_OFFSET, COMSIG_MOVABLE_MOVED), PROC_REF(unpixel_shift))
 	RegisterSignal(parent, COMSIG_MOB_CLIENT_PRE_LIVING_MOVE, PROC_REF(pre_move_check))
 	RegisterSignal(parent, COMSIG_LIVING_CAN_ALLOW_THROUGH, PROC_REF(check_passable))
+	RegisterSignal(parent, COMSIG_LIVING_RESTING, PROC_REF(check_passable))
 
 /datum/component/pixel_shift/UnregisterFromParent()
 	UnregisterSignal(parent, list(
 		COMSIG_KB_LIVING_ITEM_PIXEL_SHIFT_DOWN,
 		COMSIG_KB_LIVING_ITEM_PIXEL_SHIFT_UP,
+		COMSIG_KB_LIVING_PIXEL_TILT_DOWN,
+		COMSIG_KB_LIVING_PIXEL_TILT_UP,
 		COMSIG_KB_LIVING_PIXEL_SHIFT_DOWN,
 		COMSIG_KB_LIVING_PIXEL_SHIFT_UP,
 		COMSIG_MOB_CLIENT_PRE_LIVING_MOVE,
@@ -47,6 +57,17 @@
 	if(shifting)
 		pixel_shift(source, direct)
 		return COMSIG_MOB_CLIENT_BLOCK_PRE_LIVING_MOVE
+
+//procs for tilting parent
+
+/datum/component/pixel_shift/proc/pixel_tilt_down()
+	SIGNAL_HANDLER
+	shifting = TILTING_PARENT
+	return COMSIG_KB_ACTIVATED
+
+/datum/component/pixel_shift/proc/pixel_tilt_up()
+	SIGNAL_HANDLER
+	shifting = FALSE
 
 //Procs for shifting items
 
@@ -84,6 +105,7 @@
 		var/mob/living/owner = parent
 		owner.pixel_x = owner.body_position_pixel_x_offset + owner.base_pixel_x
 		owner.pixel_y = owner.body_position_pixel_y_offset + owner.base_pixel_y
+		owner.transform = turn(owner.transform, -how_tilted)
 	qdel(src)
 
 /// In-turf pixel movement which can allow things to pass through if the threshold is met.
@@ -126,6 +148,18 @@
 				if(WEST)
 					if(owner.pixel_x >= -maximum_pixel_shift + owner.base_pixel_x)
 						owner.pixel_x--
+						is_shifted = TRUE
+		if(TILTING_PARENT)
+			switch(direct)
+				if(EAST)
+					if(how_tilted <= maximum_tilt)
+						owner.transform = turn(owner.transform, 1)
+						how_tilted++
+						is_shifted = TRUE
+				if(WEST)
+					if(how_tilted >= -maximum_tilt)
+						owner.transform = turn(owner.transform, -1)
+						how_tilted--
 						is_shifted = TRUE
 
 	// Yes, I know this sets it to true for everything if more than one is matched.

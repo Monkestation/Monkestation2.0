@@ -151,7 +151,7 @@
 	if(!is_operational)
 		return
 	if(!nodes[1])
-		on = FALSE
+		set_on(FALSE)
 	if(!on || welded)
 		return
 	var/turf/open/us = loc
@@ -216,7 +216,7 @@
 		else
 			user.visible_message(span_notice("[user] unwelded the vent."), span_notice("You unweld the vent."), span_hear("You hear welding."))
 			welded = FALSE
-		update_appearance()
+		update_appearance(UPDATE_ICON)
 		pipe_vision_img = image(src, loc, dir = dir)
 		SET_PLANE_EXPLICIT(pipe_vision_img, ABOVE_HUD_PLANE, src)
 		investigate_log("was [welded ? "welded shut" : "unwelded"] by [key_name(user)]", INVESTIGATE_ATMOS)
@@ -243,7 +243,7 @@
 		return
 	user.visible_message(span_warning("[user] furiously claws at [src]!"), span_notice("You manage to clear away the stuff blocking the vent."), span_hear("You hear loud scraping noises."))
 	welded = FALSE
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 	pipe_vision_img = image(src, loc, dir = dir)
 	SET_PLANE_EXPLICIT(pipe_vision_img, ABOVE_HUD_PLANE, src)
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 100, TRUE)

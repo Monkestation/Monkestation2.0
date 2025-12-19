@@ -18,8 +18,8 @@
 
 
 	departments_list = list(
-		 /datum/job_department/spring,
-		)
+		/datum/job_department/spring,
+	)
 
 	family_heirlooms = list(/obj/item/toy/minimeteor)
 

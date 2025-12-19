@@ -8,10 +8,10 @@
 	roundend_category = "vassals"
 	antagpanel_category = "Bloodsucker"
 	job_rank = ROLE_BLOODSUCKER
-	antag_flags = parent_type::antag_flags | FLAG_ANTAG_CAP_IGNORE
 	antag_hud_name = "vassal"
 	show_in_roundend = FALSE
 	hud_icon = 'monkestation/icons/bloodsuckers/bloodsucker_icons.dmi'
+	antag_count_points = 2
 
 	/// The Master Bloodsucker's antag datum.
 	var/datum/antagonist/bloodsucker/master
@@ -82,7 +82,7 @@
 /// This is called when the antagonist is successfully mindshielded.
 /datum/antagonist/vassal/on_mindshield(mob/implanter, mob/living/mob_override)
 	var/mob/living/target = mob_override || owner.current
-	target.log_message("has been deconverted from Vassalization by [implanter]!", LOG_ATTACK, color="#960000")
+	target.log_message("has been deconverted from Vassalization by [key_name(implanter)]!", LOG_ATTACK, color="#960000")
 	owner.remove_antag_datum(/datum/antagonist/vassal)
 	return COMPONENT_MINDSHIELD_DECONVERTED
 
@@ -104,7 +104,7 @@
 		master.special_vassals[special_type] |= src
 	master.vassals |= src
 	owner.enslave_mind_to_creator(master.owner.current)
-	owner.current.log_message("has been vassalized by [master.owner.current]!", LOG_ATTACK, color="#960000")
+	owner.current.log_message("has been vassalized by [key_name(master.owner)]!", LOG_ATTACK, color="#960000")
 	/// Give Recuperate Power
 	BuyPower(new /datum/action/cooldown/bloodsucker/recuperate)
 	/// Give Objectives
@@ -211,3 +211,5 @@
 	master = vampire
 	new_owner.add_antag_datum(src)
 	to_chat(choice, span_notice("Through divine intervention, you've gained a new vassal!"))
+
+#undef VASSAL_SCAN_MIN_DISTANCE

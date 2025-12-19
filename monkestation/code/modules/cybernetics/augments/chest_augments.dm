@@ -337,7 +337,7 @@
 	owner.emote("gasp")
 	owner.set_jitter_if_lower(200 SECONDS)
 	SEND_SIGNAL(owner, COMSIG_LIVING_MINOR_SHOCK)
-	log_game("[owner] been revived by [src]")
+	log_game("[key_name(owner)] been revived by [src]")
 
 
 /obj/item/organ/internal/cyberimp/chest/reviver/emp_act(severity)
@@ -512,7 +512,7 @@
 	var/turf/target = get_edge_target_turf(owner, owner.dir)
 	var/obj/O = new projectile(owner.loc)
 	playsound(owner, fire_sound, 50, TRUE)
-	log_message("Launched a [O.name] from [owner], targeting [target].", LOG_ATTACK)
+	log_message("Launched a [O.name] from [key_name(owner)], targeting [key_name(target)].", LOG_ATTACK)
 
 	if(harmful)
 		O.throwforce = 35

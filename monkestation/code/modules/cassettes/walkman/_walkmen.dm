@@ -43,7 +43,7 @@ GLOBAL_LIST_INIT(youtube_exempt, list(
 	///cooldown used by the next song to stop overlapping sounds between url based songs and normal ones
 	COOLDOWN_DECLARE(next_song_use)
 
-/obj/item/device/walkman/Initialize()
+/obj/item/device/walkman/Initialize(mapload)
 	. = ..()
 	design = rand(1, 5)
 	update_icon()

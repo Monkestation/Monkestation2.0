@@ -14,7 +14,7 @@
 
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/computer/quantum_console/LateInitialize()
+/obj/machinery/computer/quantum_console/LateInitialize(mapload_arg)
 	. = ..()
 
 	if(isnull(server_ref?.resolve()))

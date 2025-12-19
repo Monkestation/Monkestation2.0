@@ -29,7 +29,7 @@
 		force_no_gravity = TRUE
 	return INITIALIZE_HINT_LATELOAD
 
-/turf/open/openspace/LateInitialize()
+/turf/open/openspace/LateInitialize(mapload_arg)
 	. = ..()
 	AddElement(/datum/element/turf_z_transparency)
 

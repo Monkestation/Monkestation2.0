@@ -211,7 +211,7 @@
 		reset.desc = "This is where \the [name] will respawn in a game of CTF"
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/item/ctf_flag/LateInitialize()
+/obj/item/ctf_flag/LateInitialize(mapload_arg)
 	. = ..()
 	ctf_game = GLOB.ctf_games[game_id] //Flags don't create ctf games by themselves since you can get ctf flags from christmas trees.
 

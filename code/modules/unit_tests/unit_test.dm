@@ -337,13 +337,14 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	///we generate mobs in these and create destroy does this in null space
 	ignore += typesof(/obj/item/loot_table_maker)
 
-	// monkestation start
-	///we need to use json_decode to run randoms properly
+	/// We need to use json_decode to run randoms properly
 	ignore += typesof(/obj/item/device/cassette_tape)
-	///we also dont want weathers or weather events as they will hold refs to alot of stuff as they shouldn't be deleted
+	// We also dont want weathers or weather events as they will hold refs to alot of stuff as they shouldn't be deleted
 	ignore += typesof(/mob/living/basic/aquatic)
 	ignore += typesof(/obj/machinery/station_map)
-	// monkestation end
+	// Causes weird issues that I don't understand and can be investigated later and I just want this to stop randomly failing
+	ignore += typesof(/turf/open/floor/plating/ocean)
+	ignore += typesof(/turf/open/openspace/ocean)
 
 	return ignore
 

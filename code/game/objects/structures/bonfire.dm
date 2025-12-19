@@ -17,19 +17,14 @@
 	anchored = TRUE
 	buckle_lying = 0
 	pass_flags_self = PASSTABLE | LETPASSTHROW
-	///is the bonfire lit?
+	/// is the bonfire lit?
 	var/burning = FALSE
-	///icon for the bonfire while on. for a softer more burning embers icon, use "bonfire_warm"
+	/// icon for the bonfire while on. for a softer more burning embers icon, use "bonfire_warm"
 	var/burn_icon = "bonfire_on_fire"
-	///if the bonfire has a grill attached
+	/// if the bonfire has a grill attached
 	var/grill = FALSE
-
-/obj/structure/bonfire/dense
-	density = TRUE
-
-/obj/structure/bonfire/prelit/Initialize(mapload)
-	. = ..()
-	start_burning()
+	/// the looping sound effect that is played while burning
+	var/datum/looping_sound/burning/burning_loop
 
 /obj/structure/bonfire/Initialize(mapload)
 	. = ..()
@@ -38,13 +33,19 @@
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, PROC_REF(on_light_eater))
+	burning_loop = new(src)
 
 //fire isn't one light source, it's several constantly appearing and disappearing... or something
 /obj/structure/bonfire/proc/on_light_eater(atom/source, datum/light_eater)
 	SIGNAL_HANDLER
 	if(burning)
-		visible_message("The roaring fire of \the [src] refuses to fade.")
+		visible_message(span_warning("The roaring fire of \the [src] refuses to fade."))
 	return COMPONENT_BLOCK_LIGHT_EATER
+
+/obj/structure/bonfire/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	QDEL_NULL(burning_loop)
+	. = ..()
 
 /obj/structure/bonfire/attackby(obj/item/used_item, mob/living/user, params)
 	if(istype(used_item, /obj/item/stack/rods) && !can_buckle && !grill)
@@ -85,7 +86,6 @@
 		else
 			return ..()
 
-
 /obj/structure/bonfire/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
@@ -115,6 +115,8 @@
 /obj/structure/bonfire/proc/start_burning()
 	if(burning || !check_oxygen())
 		return
+
+	burning_loop.start()
 	icon_state = burn_icon
 	burning = TRUE
 	set_light(6)
@@ -176,6 +178,8 @@
 	. = ..()
 	if(!burning)
 		return
+
+	burning_loop.stop()
 	icon_state = "bonfire"
 	burning = FALSE
 	set_light(0)
@@ -189,5 +193,12 @@
 /obj/structure/bonfire/unbuckle_mob(mob/living/buckled_mob, force = FALSE, can_fall = TRUE)
 	if(..())
 		buckled_mob.pixel_y -= 13
+
+/obj/structure/bonfire/dense
+	density = TRUE
+
+/obj/structure/bonfire/prelit/Initialize(mapload)
+	. = ..()
+	start_burning()
 
 #undef BONFIRE_FIRE_STACK_STRENGTH

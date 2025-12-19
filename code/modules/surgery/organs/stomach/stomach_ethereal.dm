@@ -61,10 +61,10 @@
 		return
 	var/mob/living/carbon/human/human = owner
 	if(!repairs)
-		adjust_charge(amount / 3.5)
+		adjust_charge(amount / 80)
 		return
-	if(owner.blood_volume < BLOOD_VOLUME_NORMAL - amount / 3.5)
-		adjust_charge(amount / 3.5)
+	if(owner.blood_volume < BLOOD_VOLUME_NORMAL - amount / 80)
+		adjust_charge(amount / 80)
 		return
 	if(owner.blood_volume > 700) //prevents reduction of charge of overcharged ethereals
 		return

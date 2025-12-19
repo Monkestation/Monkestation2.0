@@ -41,7 +41,7 @@
 	. = ..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/lift_indicator/LateInitialize()
+/obj/machinery/lift_indicator/LateInitialize(mapload_arg)
 	. = ..()
 
 	for(var/datum/lift_master/possible_match as anything in GLOB.active_lifts_by_type[BASIC_LIFT_ID])

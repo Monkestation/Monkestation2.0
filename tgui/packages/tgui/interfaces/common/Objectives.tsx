@@ -1,4 +1,5 @@
 import { BooleanLike } from 'common/react';
+import { decodeHtmlEntities } from 'common/string';
 import { InfernoNode } from 'inferno';
 import { useBackend } from '../../backend';
 import { Button, Stack } from '../../components';
@@ -47,7 +48,7 @@ export const ObjectivePrintout = (props: ObjectivePrintoutProps) => {
           objectives.map((objective) => (
             <Stack.Item fontSize={objectiveTextSize} key={objective.count}>
               {objectivePrefix || '#'}
-              {objective.count}: {objective.explanation}
+              {objective.count}: {decodeHtmlEntities(objective.explanation)}
             </Stack.Item>
           ))}
       </Stack.Item>

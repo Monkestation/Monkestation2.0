@@ -112,7 +112,6 @@
 #include "component_tests.dm"
 #include "connect_loc.dm"
 #include "container_sanity.dm"
-#include "crayons.dm"
 #include "create_and_destroy.dm"
 #include "dcs_get_id_from_elements.dm"
 #include "designs.dm"

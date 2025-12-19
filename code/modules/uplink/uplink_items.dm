@@ -96,6 +96,9 @@
 	/// Uses the purchase log, so items purchased that are not visible in the purchase log will not count towards this.
 	/// However, they won't be purchasable afterwards.
 	var/lock_other_purchases = FALSE
+	/// Whether this item prevents secondary objectives from being taken.
+	/// In addition, if any secondary objectives have been taken or completed, this item will not be available for purchase.
+	var/lock_secondary_objectives = FALSE
 
 /datum/uplink_item/New()
 	. = ..()
@@ -138,6 +141,8 @@
 		uplink_handler.purchase_log.LogPurchase(A, src, cost)
 	if(lock_other_purchases)
 		uplink_handler.shop_locked = TRUE
+	if(lock_secondary_objectives)
+		uplink_handler.disable_secondary_objectives()
 
 /// Spawns an item in the world
 /datum/uplink_item/proc/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)

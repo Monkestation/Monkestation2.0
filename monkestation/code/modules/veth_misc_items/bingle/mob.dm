@@ -47,7 +47,7 @@
 
 /mob/living/basic/bingle/Initialize(mapload, obj/structure/bingle_hole/origin_pit)
 	. = ..()
-	RegisterSignal(src, BINGLE_EVOLVE, PROC_REF(evolve))
+	RegisterSignal(src, COMSIG_LIVING_BINGLE_EVOLVE, PROC_REF(evolve))
 	add_traits(bingle_traits, INNATE_TRAIT)
 	set_linked_pit(origin_pit)
 

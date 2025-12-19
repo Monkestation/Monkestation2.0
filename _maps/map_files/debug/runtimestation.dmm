@@ -2521,6 +2521,13 @@
 "Tt" = (
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
+"Tz" = (
+/obj/machinery/computer/cryopod/directional/east,
+/obj/machinery/cryopod{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/station/commons/storage/primary)
 "TV" = (
 /obj/machinery/door/airlock,
 /obj/structure/cable,
@@ -8334,7 +8341,7 @@ gg
 ez
 dB
 dl
-dl
+Tz
 dl
 dx
 dE

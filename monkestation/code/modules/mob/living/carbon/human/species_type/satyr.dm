@@ -32,7 +32,7 @@
 	return "Mythical goat-people. The clacking of hooves and smell of beer follow them around."
 
 /mob/living/carbon/human/species/satyr
-    race = /datum/species/satyr
+	race = /datum/species/satyr
 
 /datum/species/satyr/create_pref_unique_perks()
 	var/list/to_add = list()

@@ -13,7 +13,7 @@
 /obj/item/reagent_containers/spray/chemsprayer/magical/attack_self(mob/user)
 	cycle_chems() //does this even need to be a proc
 	. = ..()
-	balloon_alert(user, "You change the reagent to [english_list(reagents.reagent_list)].")
+	balloon_alert(user, "you change the reagent to [english_list(reagents.reagent_list)].")
 	return
 
 /obj/item/reagent_containers/spray/chemsprayer/magical/examine()

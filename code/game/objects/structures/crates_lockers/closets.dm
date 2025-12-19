@@ -149,7 +149,7 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 			return
 	update_appearance()
 
-/obj/structure/closet/LateInitialize()
+/obj/structure/closet/LateInitialize(mapload_arg)
 	. = ..()
 	if(!opened)
 		take_contents()

@@ -35,8 +35,6 @@
 	var/holds_mining_points = FALSE
 	/// Mining points held by the machine for miners.
 	var/points_held = 0
-	///our export side
-	var/export_side = EAST
 	///do we allow boulders
 	var/allows_boulders = TRUE
 	var/next_allowed_process = 0
@@ -49,7 +47,7 @@
 		silo_materials = AddComponent(/datum/component/remote_materials, "bouldertech", mapload, force_connect = TRUE)
 	AddComponent(/datum/component/simple_rotation)
 
-/obj/machinery/bouldertech/LateInitialize()
+/obj/machinery/bouldertech/LateInitialize(mapload_arg)
 	. = ..()
 	if(!holds_minerals)
 		return
@@ -203,6 +201,8 @@
 	. = ..()
 	if(holds_mining_points)
 		. += span_notice("The machine reads that it has [span_bold("[points_held] mining points")] stored. Swipe an ID to claim them.")
+	if(dir)
+		. += span_notice("The machine export vent is facing <b>[dir2text(dir)]</b>")
 	if(panel_open)
 		. += span_warning("The maintenance panel is open.")
 

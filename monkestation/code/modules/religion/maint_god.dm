@@ -1,5 +1,5 @@
 /datum/religion_sect/maintenance
-    rites_list = list(/datum/religion_rites/maint_adaptation, /datum/religion_rites/shadowascension, /datum/religion_rites/maint_loot, /datum/religion_rites/adapted_food, /datum/religion_rites/weapon_granter, /datum/religion_rites/ritual_totem)
+	rites_list = list(/datum/religion_rites/maint_adaptation, /datum/religion_rites/shadowascension, /datum/religion_rites/maint_loot, /datum/religion_rites/adapted_food, /datum/religion_rites/weapon_granter, /datum/religion_rites/ritual_totem)
 
 /datum/religion_rites/weapon_granter
 	name = "Maintenance Knowledge"
@@ -83,5 +83,15 @@
 		var/lootspawn = pick_weight(GLOB.good_maintenance_loot)
 		while(islist(lootspawn))
 			lootspawn = pick_weight(lootspawn)
+		// if we get the anything gift, reroll the gift.
+		//var/attempts = 0 (Theoretical infinite loop. Probably don't need to worry about this?)
+		while(lootspawn == /obj/item/a_gift/anything/wiz_name)// && attempts < 20)
+			lootspawn = pick_weight(GLOB.good_maintenance_loot)
+			while(islist(lootspawn))
+				lootspawn = pick_weight(lootspawn)
+			//attempts += 1
+	//	if(lootspawn == /obj/item/a_gift/anything/wiz_name)
+	//		continue
+
 		new lootspawn(altar_turf)
 	return TRUE

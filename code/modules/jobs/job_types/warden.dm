@@ -41,6 +41,7 @@
 	)
 	rpg_title = "Jailor"
 	job_flags = STATION_JOB_FLAGS | JOB_BOLD_SELECT_TEXT
+	antag_capacity_points = 3
 
 /datum/outfit/job/warden
 	name = "Warden"

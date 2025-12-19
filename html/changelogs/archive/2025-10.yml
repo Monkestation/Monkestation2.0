@@ -784,3 +784,193 @@
   - map: Brig cells on thesues is now connected to holding monitors, and thus will
       unlock
   - spellcheck: Inisimin is now spelt invisimin
+2025-10-25:
+  Absolucy:
+  - bugfix: Fixed unwelding loafers deleting them.
+  - bugfix: Oozeling cores can now properly be staked.
+  JohnFulpWillard:
+  - bugfix: Character settings' alternate names menu now looks properly.
+  - bugfix: You can now always change your operative name rather than having an empty
+      box if nukies is disabled in your prefs.
+  - qol: Character settings menu is now slightly less wide.
+  JupiterJaeden:
+  - qol: Updates the citationinator to print a way more official-looking ticket, as
+      well as moving it to the default section of the SecTech vendor and reducing
+      its price.
+  notghosti:
+  - balance: Updates all subtypes of `/obj/item/clothing/under/dress` clothing cover
+      flags to be more to what one would expect
+2025-10-26:
+  EatsTheGrapes:
+  - bugfix: Added checks to prevent infinite plant growth and harvesting loops in
+      hydroponics.
+  - balance: Implemented a short cooldown and growth clamp to prevent reagent-based
+      runaway loops.
+  - code_imp: Cleaned up process logic indentation and ensured growth resets properly
+      after harvest.
+  ThatGuy-GEWP:
+  - bugfix: LOOC's Default is now i
+  - bugfix: Rest's Default is now U again
+  - balance: Pixel-shift's Default has been moved from B to N
+  notghosti:
+  - map: Theseus fore hallway has had it south side split into aft hallway
+  - map: Reconnects drone bay to power network on thesues
+  - map: Gives AI sat Foyer a APC on thesues
+  - map: Fixes thesues satelitte power net
+2025-10-27:
+  Absolucy:
+  - bugfix: The Glass Jaw quirk now properly works again.
+  - bugfix: Bronze chairs now spin automatically once more.
+  - image: (Capsandi) New BSA impact animation.
+  - admin: (TheVekter) Made logging for BSA targeting and firing easier to find for
+      admins.
+  - qol: Trying to pour plasma on a DNR oozeling core will just tell you that their
+      soul has departed.
+  Snack-Max:
+  - rscadd: Added new May Rain hairstyle
+  call me evil McDonalds cause I'm hatin it:
+  - bugfix: IPCs autorevive when they heal tox and oxy damage too.
+2025-10-28:
+  Absolucy:
+  - bugfix: Storytellers should now be the only thing firing events, rather than the
+      legacy Events subsystem.
+  - bugfix: Fixed bloodsucker sucking not properly transfering reagents.
+  - bugfix: Fixed windows built on window sills being "finished" despite being unanchored.
+  Greenpoison:
+  - map: added/modified atmos map content for EVERY map currently in the pool.
+  JohnFulpWillard:
+  - qol: Plasmamen won't ignite with only one hand as long as they have gloves on.
+  SirNightKnight:
+  - bugfix: fixed neck strangling not strangling the victim.
+  - rscdel: removed lung popping from breathing in not enough mols.
+  SirNightKnight, SmartKar, panvxv, grungussuss:
+  - bugfix: fixed riot helmets not hiding hair.
+  - bugfix: fixed helmets not rendering ear slots correctly.
+  - bugfix: fixed the sec backpack's antenna being covered.
+  - bugfix: fixed modskin applicators not working.
+  - sound: added helmet handling sounds.
+  - image: resprited security helmets to be more consistent and so it's easier to
+      tell when a seclite is attached.
+  - image: added a purely stylish face shield to bulletproof helmets  to better diffrentiate
+      them.
+  - qol: you can now attech seclites to riot helmets.
+  - rscadd: you can toggle sec helmet visors with alt-click.
+  - rscadd: you can now toggle the chinstrap on nanotrasen swat and security helmets
+      with ctrl-click.
+  Tractor-Maam:
+  - rscadd: The AI will always receive their lawset on roundstart/login.
+  - spellcheck: fixed a typo in admin logging for admin spawned birthdays.
+  Trobby:
+  - bugfix: Shift right click now counts as a right click rather than a shift click.
+      Rejoice, right click for context menu enjoyers!
+  - qol: Cyborgs can now do right click inhand actions on their module items (like
+      decreasing the transfer amount on beakers)
+  - qol: Telekinesis users can now right click their TK grab inhand to do a right
+      click inhand action on the grabbed item
+  - rscadd: Intents now fully emulate ctrl clicking on grab intent and right clicking
+      on disarm intent
+  - rscadd: When using intents, you can now use right click to shove people while
+      not specifically on disarm intent
+  - rscadd: Grab intent and disarm intent are now considered combat intents (equivalent
+      to having combat mode turned on), blocking people from passing through you
+  - bugfix: Indirectly fixed certain martial arts (combos and attacks) not registering
+      while on grab intent or disarm intent. If you use intents and don't want to
+      use your martial art when shoving or grabbing, stay on help intent!
+  - bugfix: Fixed grabs not registering your martial arts when using ctrl clicks,
+      including combos
+  - bugfix: Fixed AI secretly having combat mode
+  - rscdel: You can no longer scope in when telekinetically using a gun with a scope
+  - code_imp: A lot of things now listen to what your interaction mode says rather
+      than checking your raw mouse input. This should not be super noticable, but
+      things might break anyways...
+  Uristthedorf:
+  - rscadd: Oozelings can eat without a head
+  - balance: Oozelings can now be decapitated as easily as they lose limbs.
+  notghosti:
+  - rscadd: Mining cyborgs are given a organ storage bag for monster cores.
+  - rscadd: Mining cyborgs are given a crude knife onto their PKA so they can gut
+      fauna
+  - rscadd: Cyborgs can now interact with tendrils, elite fauna, vents, and necropolis's
+      door.
+  - bugfix: Baton inspects should reflect accurate number of hits to stun
+  - rscadd: New mining and engineering cyborg upgrade. Night vision Meson goggles.
+  - qol: Whenever a PKA upgrade becomes assessable in the cargo lathe, it becomes
+      assessable in robotics for miner cyborgs.
+  - qol: Blood drunk miner learned basic computer literacy hygiene during a sober
+      period, and carries one floppy disk rather than 4.
+  - code_imp: '"KA Mod Disk"''s have been swapped from a single research design to
+      support a list of research designs.'
+  - balance: Cyborg PKA's now have a capacity akin to regular PKA's, (80 -> 100)
+  - rscadd: Ported new medkit and medibot sprites from TG
+  - refactor: Refactored the medibot code to work more simliar to tg for the medibot
+  - rscadd: Carrier status is functional again for pathology, meaning the carrier/patient
+      0 no longer suffers from the effects of the disease! (Making them a useful cure
+      source)
+  - bugfix: Viral bonding serves a purpose, turning the infected into a carrier.
+  - bugfix: Known GNA disks being inserted into a disease splicer will no longer tell
+      you unknown GNA disk.
+  - bugfix: More uniform GNa disk names.
+  - bugfix: Medical huds now update on disease cure so a bird will no longer have
+      to slap themselfs.
+  - balance: Helpful symptoms now only trigger on the associated virus stage akin
+      to any other severity, rather than always.
+  wraith-54321:
+  - refactor: Antagonist cap is now based on a point system instead of pure integer
+      count
+  - balance: Player made clockwork doors now drain passive power when placed next
+      to each other
+2025-10-29:
+  JohnFulpWillard:
+  - qol: You can close the minimap by opening the Escape menu.
+2025-10-30:
+  Absolucy:
+  - bugfix: Fixed some mining fauna, i.e demonic watchers or lavaland elites, not
+      being considered "mining mobs" for the cursed katana and such.
+  - bugfix: Slimeperson splitting (and some other things) now properly copy the voice
+      of the original.
+  - map: All maps should have a chance to have a loafer somewhere in maints now.
+  - bugfix: Fixed the admin plane debugger.
+  - balance: Darkspawn Extinguish will now remove the Bioluminescence gene from glowshrooms.
+  JohnFulpWillard:
+  - bugfix: Spraycans work again.
+  LemonInTheDark, Ghommie, SmartKar, 13spacemen, JohnFulpWillard:
+  - rscadd: You can now draw an outline of corpses using crayon/chalk.
+  - qol: You can now draw 4 things on a tile at once using crayon/chalk.
+  SirNightKnight:
+  - qol: added a toggle for automatically hailing pointed targets with sechailers.
+  - bugfix: fixes toggleable import helmet sprites not working properly
+  Snack-Max:
+  - rscadd: Added new Centcom Turtleneck
+  TheColorCyan:
+  - rscadd: (JohnFulpWillard) autopsy surgery and scanner
+  - balance: ' (JohnFulpWillard) Dissected bodies now have faster surgery speed.'
+  - qol: (necromanceranne) Autopsies have become the surgery needed to complete the
+      dissection experiments. As a result, the dissection surgery has been removed
+      as it is now redundant.
+  Tractor-Maam:
+  - spellcheck: fixed a typo in the NV Meson cyborg upgrade.
+  - spellcheck: updated the description of the NV Meson cyborg upgrade to not use
+      the advanced mop description.
+  - balance: The BSA can only fire once every 5 seconds.
+  - bugfix: cyborgs dont get a law update when the AI exits their shell anymore.
+  notghosti:
+  - balance: Unique AI weight 0 -> 5
+  - rscadd: Node drones are now ash storm immune
+  - sound: Cyborg PKA melees now have a blade sound effect attached.
+  - code_imp: Removes the redundant flickering proc
+  - balance: Undoes the major stealth buff to malfunctioning ai that passively gives
+      points to the malfunctioning ai
+2025-10-31:
+  Absolucy, SirNightKnight:
+  - rscadd: Added the MOD Stomper Module, the modsuit version of stomper boots.
+  SirNightKnight:
+  - balance: damage deflection is taken into account before thrown damage ramp up.
+  eukalipdus:
+  - balance: Plasmamen's helmet works to seal you for internals.
+  notghosti:
+  - rscdel: Removed the swarmer and goat achievements which are impossible to get
+      as their associated mobs do not exist
+  - rscadd: Singularity generators are now immune to being zapped. Enjoy your 100
+      tesla death cube I suppose
+  wraith-54321:
+  - balance: Default projectile falloff is now 0

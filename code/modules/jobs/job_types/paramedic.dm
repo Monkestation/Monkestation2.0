@@ -46,7 +46,7 @@
 	id_trim = /datum/id_trim/job/paramedic
 	uniform = /obj/item/clothing/under/rank/medical/paramedic
 	suit = /obj/item/clothing/suit/toggle/labcoat/paramedic
-	suit_store = /obj/item/flashlight/pen/paramedic
+	suit_store = /obj/item/flashlight/pen
 	backpack_contents = list(
 		/obj/item/emergency_bed = 1,
 		)
@@ -54,7 +54,7 @@
 	ears = /obj/item/radio/headset/headset_med
 	head = /obj/item/clothing/head/soft/paramedic
 	gloves = /obj/item/clothing/gloves/latex/nitrile
-	shoes = /obj/item/clothing/shoes/sneakers/blue
+	shoes = /obj/item/clothing/shoes/workboots/black
 	l_pocket = /obj/item/modular_computer/pda/medical/paramedic
 	r_pocket = /obj/item/gps/medical
 

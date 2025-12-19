@@ -24,6 +24,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		list("Ageusia", "Vegetarian", "Deviant Tastes", "Gamer"),
 		list("Ananas Affinity", "Ananas Aversion", "Gamer"),
 		list("Alcohol Tolerance", "Light Drinker"),
+		list("Drunken Resilience", "Light Drinker"),
 		list("Clown Enjoyer", "Mime Fan"),
 		list("Bad Touch", "Friendly"),
 		list("Extrovert", "Introvert"),
@@ -54,6 +55,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		list("Deaf", "Hard Of Hearing"),
 		list("Paraplegic", "Hemiplegic", "Monoplegic"),
 		list("Prosthetic Limb", "Monoplegic"),
+		list("Cyborg Pre-screened dogtag", "Unborgable")
 		//MONKESTATION ADDITION END
 	)
 

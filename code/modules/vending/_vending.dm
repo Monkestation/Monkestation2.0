@@ -1122,15 +1122,15 @@
 
 	var/list/categories = list()
 
-	data["product_records"] = collect_records_for_static_data(product_records, categories)
-	data["coin_records"] = collect_records_for_static_data(coin_records, categories, premium = TRUE)
-	data["hidden_records"] = collect_records_for_static_data(hidden_records, categories, premium = TRUE)
+	data["product_records"] = collect_records_for_static_data(product_records, categories, user)
+	data["coin_records"] = collect_records_for_static_data(coin_records, categories, user, premium = TRUE)
+	data["hidden_records"] = collect_records_for_static_data(hidden_records, categories, user, premium = TRUE)
 
 	data["categories"] = categories
 
 	return data
 
-/obj/machinery/vending/proc/collect_records_for_static_data(list/records, list/categories, premium)
+/obj/machinery/vending/proc/collect_records_for_static_data(list/records, list/categories, mob/user, premium)
 	var/static/list/default_category = list(
 		"name" = "Products",
 		"icon" = "cart-shopping",
@@ -1139,6 +1139,8 @@
 	var/list/out_records = list()
 
 	for (var/datum/data/vending_product/record as anything in records)
+		if(!issilicon(user) && !allow_purchase(user, record.product_path))
+			continue
 		var/list/static_record = list(
 			path = replacetext(replacetext("[record.product_path]", "/obj/item/", ""), "/", "-"),
 			name = record.name,
@@ -1211,6 +1213,10 @@
 			. = vend(params)
 		if("select_colors")
 			. = select_colors(params)
+
+/// Check if the list of given access is allowed to purchase the given product
+/obj/machinery/vending/proc/allow_purchase(mob/living/user, product_path)
+	return TRUE
 
 /obj/machinery/vending/proc/can_vend(user, silent=FALSE)
 	. = FALSE

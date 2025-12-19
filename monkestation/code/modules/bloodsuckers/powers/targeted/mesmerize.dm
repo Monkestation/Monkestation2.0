@@ -143,7 +143,7 @@
 	else
 		to_chat(mesmerized_target, span_warning("[user]'s eyes look into yours, and [span_hypnophrase("you feel your mind slipping away")]..."))
 
-	perform_indicators(mesmerized_target, mesmerize_delay)
+	perform_indicators(mesmerized_target, modified_delay)
 
 	if(issilicon(mesmerized_target))
 		var/mob/living/silicon/mesmerized = mesmerized_target
@@ -154,7 +154,7 @@
 	// slow them down during the mesmerize
 	mute_target(mesmerized_target)
 
-	if(!do_after(user, mesmerize_delay, mesmerized_target, IGNORE_USER_LOC_CHANGE | IGNORE_TARGET_LOC_CHANGE, TRUE, extra_checks = CALLBACK(src, PROC_REF(ContinueActive), user, mesmerized_target), hidden = TRUE))
+	if(!do_after(user, modified_delay, mesmerized_target, IGNORE_USER_LOC_CHANGE | IGNORE_TARGET_LOC_CHANGE, TRUE, extra_checks = CALLBACK(src, PROC_REF(ContinueActive), user, mesmerized_target), hidden = TRUE))
 		StartCooldown(cooldown_time * 0.5)
 		DeactivatePower()
 		return

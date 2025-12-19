@@ -211,6 +211,8 @@
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_TRAITOR_OBJECTIVE_COMPLETED, src)
 	save_objective()
 	handler.on_update() // Trigger an update to the UI
+	var/datum/antagonist/traitor/tator = handler.owner?.has_antag_datum(/datum/antagonist/traitor)
+	tator?.antag_count_points += 1 //would like to make this better in the future but this is just for proof of concept
 
 /// Called by player input, do not call directly. Validates whether the objective is finished and pays out the handler if it is.
 /datum/traitor_objective/proc/finish_objective(mob/user)

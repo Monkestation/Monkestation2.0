@@ -191,13 +191,11 @@
 		this_plane["outgoing_filters"] = list()
 		// We're gonna collect a list of filters, partly because they're useful info
 		// But also because they can be used as connections, and we need to support that
-		for(var/filter_id in plane.filter_data)
-			var/list/filter = plane.filter_data[filter_id]
+		for(var/list/filter in plane.filter_data)
 			if(!filter["render_source"])
 				continue
 			var/list/filter_info = filter.Copy()
 			filter_info["target_ref"] = string_plane
-			filter_info["name"] = filter_id
 			filter_queue += list(filter_info)
 
 		plane_info[plane_string] = this_plane

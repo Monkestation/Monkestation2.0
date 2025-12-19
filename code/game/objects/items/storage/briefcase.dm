@@ -22,6 +22,7 @@
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
 	atom_storage.max_total_storage = 21
+	AddElement(/datum/element/uncompressed_storage)
 
 /obj/item/storage/briefcase/PopulateContents()
 	new /obj/item/pen(src)

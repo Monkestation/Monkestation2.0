@@ -1,6 +1,7 @@
 /datum/disease/acute/premade/disease_debug
 	name = "Debug Virus"
 	form = "Infective code"
+	origin = "Rogue Code"
 	category = DISEASE_DEBUG
 
 	symptoms = list(
@@ -13,7 +14,7 @@
 	infectionchance = 100
 	infectionchance_base = 100
 
-/datum/disease/acute/premade/fungal_tb/after_add()
+/datum/disease/acute/premade/disease_debug/after_add()
 	. = ..()
 	antigen = null
 	stage = 4

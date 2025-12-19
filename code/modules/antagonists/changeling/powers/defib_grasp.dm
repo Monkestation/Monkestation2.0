@@ -46,6 +46,9 @@
 	playsound(defib, 'sound/machines/defib_success.ogg', 50, FALSE) // I guess
 	defib.shock_pulling(30, changeling)
 
+	var/datum/antagonist/changeling/changeling_datum = changeling.mind?.has_antag_datum(/datum/antagonist/changeling)
+	changeling_datum.used_weird_power = TRUE
+
 /// Removes the arms of the defibber if they're a carbon, and stuns them for a bit.
 /// If they're a cyborg, they'll just get stunned instead.
 /datum/action/changeling/defib_grasp/proc/remove_arms(mob/living/carbon/changeling, mob/living/defibber, obj/item/shockpaddles/defib)

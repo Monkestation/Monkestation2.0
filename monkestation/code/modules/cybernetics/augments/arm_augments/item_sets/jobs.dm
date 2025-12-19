@@ -90,7 +90,6 @@
 /obj/item/organ/internal/cyberimp/arm/item_set/janitor/emag_act()
 	if(obj_flags & EMAGGED)
 		return FALSE
-	for(var/datum/weakref/created_item in items_list)
 	to_chat(usr, span_notice("You unlock [src]'s integrated deluxe cleaning supplies!"))
 	items_list += WEAKREF(new /obj/item/soap/syndie(src)) //We add not replace.
 	items_list += WEAKREF(new /obj/item/reagent_containers/spray/cyborg_lube(src))

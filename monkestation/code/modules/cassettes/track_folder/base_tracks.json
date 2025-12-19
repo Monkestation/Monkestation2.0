@@ -3565,6 +3565,16 @@
 		"jukebox": true
 	},
 	{
+        "url": "https://files.catbox.moe/fwvdul.mp3",
+        "title": "Less Impossible",
+        "duration": 1800,
+        "artist": "Jordan Quill and Elluvion",
+        "genre": "Electronic",
+        "secret": false,
+        "lobby": false,
+       "jukebox": true
+    },
+    {
 		"url": "https://files.catbox.moe/i8gml0.mp3",
 		"title": "Scarborough Fair",
 		"duration": 2020,

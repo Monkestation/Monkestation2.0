@@ -129,7 +129,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 	..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/item/assembly/control/ticket_machine/LateInitialize()
+/obj/item/assembly/control/ticket_machine/LateInitialize(mapload_arg)
 	find_machine()
 
 /// Locate the ticket machine to which we're linked by our ID

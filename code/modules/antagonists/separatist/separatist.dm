@@ -87,6 +87,7 @@
 	show_name_in_check_antagonists = TRUE
 	suicide_cry = "FOR THE MOTHERLAND!!"
 	ui_name = "AntagInfoSeparatist"
+	count_against_dynamic_roll_chance = FALSE
 	///team datum
 	var/datum/team/nation/nation
 	///background color of the ui

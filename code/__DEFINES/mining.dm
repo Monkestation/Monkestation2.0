@@ -17,6 +17,14 @@
 /// Small vents, giving small boulders.
 #define SMALL_VENT_TYPE "small"
 
+// Timers for the ore vents to perform wave defense.
+/// Duration for wave defense for a small vent.
+#define WAVE_DURATION_SMALL 60 SECONDS
+/// Duration for wave defense for a medium vent.
+#define WAVE_DURATION_MEDIUM 90 SECONDS
+/// Duration for wave defense for a large vent.
+#define WAVE_DURATION_LARGE 150 SECONDS
+
 /// Proximity to a vent that a wall ore needs to be for 5 ore to be mined.
 #define VENT_PROX_VERY_HIGH 3
 /// Proximity to a vent that a wall ore needs to be for 4 ore to be mined.

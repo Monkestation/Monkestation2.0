@@ -6,7 +6,7 @@
 /obj/item/stock_parts/power_store/cell
 	name = "power cell"
 	desc = "A rechargeable electrochemical power cell."
-	icon = 'icons/obj/machines/cell_charger.dmi'
+	icon = 'icons/obj/power.dmi'
 	icon_state = "cell"
 	inhand_icon_state = "cell"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
@@ -84,10 +84,6 @@
 	maxcharge = STANDARD_CELL_CHARGE * 0.5
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.4)
 
-/obj/item/stock_parts/power_store/cell/crap/Initialize(mapload)
-	AddElement(/datum/element/update_icon_blocker)
-	return ..()
-
 /obj/item/stock_parts/power_store/cell/crap/empty
 	empty = TRUE
 
@@ -98,10 +94,6 @@
 	maxcharge = STANDARD_CELL_CHARGE * 2.5
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.5)
 	chargerate = STANDARD_CELL_RATE * 0.5
-
-/obj/item/stock_parts/power_store/cell/upgraded/Initialize(mapload)
-	AddElement(/datum/element/update_icon_blocker)
-	return ..()
 
 /obj/item/stock_parts/power_store/cell/upgraded/plus
 	name = "upgraded power cell+"

@@ -354,7 +354,7 @@
 
 	return ..()
 
-/obj/machinery/door/airlock/external/LateInitialize()
+/obj/machinery/door/airlock/external/LateInitialize(mapload_arg)
 	. = ..()
 	if(space_dir)
 		unres_sides |= space_dir

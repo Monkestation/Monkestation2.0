@@ -42,6 +42,7 @@ type UplinkItem = {
   progression_minimum: number;
   cost_override_string: string;
   lock_other_purchases: BooleanLike;
+  lock_secondary_objectives: BooleanLike;
   ref?: string;
 };
 
@@ -246,6 +247,14 @@ export class Uplink extends Component<{}, UplinkState> {
                 Taking this item will lock you from further purchasing from the
                 marketplace. Additionally, if you have already purchased an
                 item, you will not be able to purchase this.
+              </NoticeBox>
+            )) ||
+              null}
+            {(item.lock_secondary_objectives && (
+              <NoticeBox mt={1}>
+                Taking this item will lock you from completing any secondary
+                objectives. Additionally, if you have already completed any
+                secondary objectives, you will not be able to purchase this.
               </NoticeBox>
             )) ||
               null}

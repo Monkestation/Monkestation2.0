@@ -243,7 +243,7 @@
 	var/t_is = p_are()
 	//This checks to see if the body is revivable
 	var/client_like = client || HAS_TRAIT(src, TRAIT_MIND_TEMPORARILY_GONE)
-	if(client_like || !get_organ_by_type(/obj/item/organ/internal/brain) || ghost?.can_reenter_corpse)
+	if((client_like || !get_organ_by_type(/obj/item/organ/internal/brain) || ghost?.can_reenter_corpse) && !HAS_TRAIT(src, TRAIT_DEFIB_BLACKLISTED))
 		return span_deadsay("[t_He] [t_is] limp and unresponsive; there are no signs of life...")
 	else
 		return span_deadsay("[t_He] [t_is] limp and unresponsive; there are no signs of life and [t_his] soul has departed...")
@@ -292,3 +292,26 @@
 	mob_height = dna?.species?.update_species_heights(src) || base_mob_height
 	if(old_height != mob_height)
 		regenerate_icons()
+
+/// Returns an alist containing a "backup" of this human's current underwear, undershirt, and socks, plus their colors.
+/// Basically this is copy_clothing_prefs except it returns an alist instead of copying it to another human.
+/mob/living/carbon/human/proc/backup_clothing_prefs() as /alist
+	return alist(
+		"underwear" = underwear,
+		"underwear_color" = underwear_color,
+		"undershirt" = undershirt,
+		"socks" = socks,
+		"socks_color" = socks_color,
+		"jumpsuit_style" = jumpsuit_style,
+	)
+
+/// Restores the clothing prefs from an alist returned by backup_clothing_prefs()
+/mob/living/carbon/human/proc/restore_clothing_prefs(alist/backup)
+	if(length(backup) != 6)
+		CRASH("Invalid clothing backup alist passed, expected 6 entries!")
+	underwear = backup["underwear"]
+	underwear_color = backup["underwear_color"]
+	undershirt = backup["undershirt"]
+	socks = backup["socks"]
+	socks_color = backup["socks_color"]
+	jumpsuit_style = backup["jumpsuit_style"]

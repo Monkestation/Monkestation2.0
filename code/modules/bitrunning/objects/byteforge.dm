@@ -14,7 +14,7 @@
 
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/byteforge/LateInitialize()
+/obj/machinery/byteforge/LateInitialize(mapload_arg)
 	. = ..()
 
 	byteforge_particles = mutable_appearance(initial(icon), "on_particles", ABOVE_MOB_LAYER)

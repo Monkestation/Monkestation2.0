@@ -141,5 +141,5 @@
 		return FALSE
 
 	if(GLOB.clock_ark && get_dist(our_turf, get_turf(GLOB.clock_ark)) <= ARK_TURF_DESTRUCTION_BLOCK_RANGE)
-		balloon_alert(user, "A near by energy source is interfering \the [src]!")
+		balloon_alert(user, "a near by energy source is interfering \the [src]!")
 		return FALSE

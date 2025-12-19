@@ -105,6 +105,7 @@
 		/mob/living/simple_animal/hostile/feraltabby,
 		/mob/living/simple_animal/hostile/illusion/khan_warrior,
 		/mob/living/simple_animal/hostile/megafauna/wendigo/monkestation_override,
+		/mob/living/simple_animal/hostile/megafauna/wendigo/noportal,
 		/mob/living/simple_animal/hostile/syndicat,
 		/mob/living/simple_animal/hostile/syndicat/super,
 		/mob/living/simple_animal/pet/cat/breadcat/super,

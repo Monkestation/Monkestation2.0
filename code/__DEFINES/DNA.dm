@@ -146,6 +146,7 @@
 #define ORGAN_SLOT_LEFT_LEG_AUG "l_leg_device"
 #define ORGAN_SLOT_SPINAL "spinal_implant"
 #define ORGAN_SLOT_BRAIN_NIF "nif"
+#define ORGAN_SLOT_GLAND "silk_gland"
 
 /// Organ slot external
 #define ORGAN_SLOT_EXTERNAL_TAIL "tail"
@@ -160,6 +161,7 @@
 #define ORGAN_SLOT_EXTERNAL_ANIME_HEAD "anime_head"
 #define ORGAN_SLOT_EXTERNAL_ANIME_CHEST "anime_chest"
 #define ORGAN_SLOT_EXTERNAL_ANIME_BOTTOM "anime_bottom"
+#define ORGAN_SLOT_EXTERNAL_ANIME_HALO "anime_halo"
 #define ORGAN_SLOT_EXTERNAL_FLORAN_LEAVES "floran_leaves"
 #define ORGAN_SLOT_EXTERNAL_FLUFF "fluff"
 #define ORGAN_SLOT_EXTERNAL_FEATHERS "feathers"
@@ -229,7 +231,8 @@ GLOBAL_LIST_INIT(organ_process_order, list(
 	ORGAN_SLOT_XENO_RESINSPINNER,
 	ORGAN_SLOT_XENO_ACIDGLAND,
 	ORGAN_SLOT_XENO_NEUROTOXINGLAND,
-	ORGAN_SLOT_XENO_EGGSAC,))
+	ORGAN_SLOT_XENO_EGGSAC,
+	ORGAN_SLOT_GLAND,))
 
 //Defines for Golem Species IDs
 #define SPECIES_GOLEM "golem"
