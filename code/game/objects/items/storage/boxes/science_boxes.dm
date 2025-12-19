@@ -73,7 +73,7 @@
 	desc = "Contains a variety of basic stock parts."
 
 /obj/item/storage/box/stockparts/basic/PopulateContents()
-	var/static/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/stock_parts/capacitor = 3,
 		/obj/item/stock_parts/manipulator = 3,
 		/obj/item/stock_parts/matter_bin = 3,
@@ -88,7 +88,7 @@
 	icon_state = "syndiebox"
 
 /obj/item/storage/box/stockparts/deluxe/PopulateContents()
-	var/static/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/stock_parts/capacitor/quadratic = 3,
 		/obj/item/stock_parts/scanning_module/triphasic = 3,
 		/obj/item/stock_parts/manipulator/femto = 3,
@@ -113,7 +113,7 @@
 	icon_state = "syndiebox"
 
 /obj/item/storage/box/stabilized/PopulateContents()
-	var/static/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/slimecross/stabilized/adamantine=1,
 		/obj/item/slimecross/stabilized/black=1,
 		/obj/item/slimecross/stabilized/blue=1,
