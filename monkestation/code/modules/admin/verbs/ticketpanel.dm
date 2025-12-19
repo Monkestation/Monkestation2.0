@@ -236,8 +236,5 @@
 		if("Notes")
 			browse_messages(target_ckey = ticket.initiator_ckey)
 			return
-		if("Replay")
-			usr.client << link("[CONFIG_GET(string/replay_link)]?roundid=[GLOB.round_id]&password=[CONFIG_GET(string/replay_password)]#[world.time]") //opens current round at current time
-			return
 
 	return FALSE
