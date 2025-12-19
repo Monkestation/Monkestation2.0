@@ -35,6 +35,8 @@
 
 /// Imports cassette data from JSON/list.
 /datum/cassette/proc/import(list/data)
+	if("id" in data)
+		id = data["id"]
 	name = data["name"]
 	desc = data["desc"]
 	if("status" in data)
