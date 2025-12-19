@@ -82,7 +82,10 @@
 /datum/cassette/proc/save_to_file()
 	if(!id)
 		CRASH("Attempted to save cassette without an ID to disk")
+	log_music("Saving cassette [id] to [CASSETTE_FILE(id)]")
 	rustg_file_write(json_encode(export(), JSON_PRETTY_PRINT), CASSETTE_FILE(id))
+	if(!rustg_file_exists(CASSETTE_FILE(id)))
+		CRASH("okay wtf we failed to save cassette [id], check folder permissions!!")
 
 /// Saves the cassette to the database.
 /// Returns TRUE if successful, FALSE otherwise.

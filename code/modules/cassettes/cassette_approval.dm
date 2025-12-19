@@ -81,7 +81,7 @@ GLOBAL_ALIST_EMPTY(cassette_reviews)
 			action_taken = TRUE
 			cassette_data.id = "[random_string(16, GLOB.hex_characters)]_[submitter_ckey]"
 			cassette_data.status = CASSETTE_STATUS_APPROVED
-			rustg_file_write(json_encode(cassette_data.export(), JSON_PRETTY_PRINT), CASSETTE_FILE(cassette_data.id))
+			cassette_data.save_to_file()
 			SScassettes.cassettes[cassette_data.id] = cassette_data
 			tape.cassette_data = cassette_data.copy()
 			SScassettes.save_ids_json()
