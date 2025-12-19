@@ -54,3 +54,5 @@
 	description = "These cybernetic eyes will give you thermal vision."
 	item_type = /obj/item/autosurgeon/syndicate/thermal_eyes
 	cost = 5
+
+#undef OPS_SUBCATEGORY_IMPLANTS

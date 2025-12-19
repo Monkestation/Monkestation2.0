@@ -1,4 +1,3 @@
-#define SKIRTS_DRESSES_DIGIFILE 'monkestation/code/modules/blueshift/icons/mob/clothing/under/skirts_dresses_digi.dmi'
 
 /obj/item/clothing/under/dress
 	body_parts_covered = CHEST|GROIN	//For reference

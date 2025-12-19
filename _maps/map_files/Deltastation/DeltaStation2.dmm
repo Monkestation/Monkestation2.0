@@ -69073,7 +69073,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/effect/landmark/navigate_destination,
+/obj/effect/landmark/navigate_destination/garden,
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "qnJ" = (
@@ -80297,7 +80297,7 @@
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 4
 	},
-/obj/machinery/modular_computer/preset/id{
+/obj/machinery/modular_computer/preset/quartermaster{
 	dir = 8
 	},
 /turf/open/floor/iron,

@@ -28,7 +28,7 @@
 	var/option = tgui_alert(user, "Becoming the Eminence is not an easy task, be sure you will be able to lead the servants. \
 								   If you choose to do so, your old form with be destroyed.", "Who shall control the Eminence?", list("Yourself", "A ghost", "Cancel"))
 	if(vote_active)
-		balloon_alert(user, "A vote has already been called, if you would like to object you can interact with the spire again.")
+		balloon_alert(user, "a vote has already been called, if you would like to object you can interact with the spire again.")
 		return
 
 	if(option == "Yourself")
