@@ -46,7 +46,8 @@
 	if(QDELETED(my_turf.liquids) || QDELETED(my_turf.liquids.liquid_group))
 		processing = FALSE
 		return PROCESS_KILL
-	my_turf.liquids.liquid_group.remove_any(my_turf.liquids, (drain_flat + (drain_percent * my_turf.liquids.liquid_group.total_reagent_volume)) * DELTA_WORLD_TIME(SSobj))
+	var/drain_amt = round(drain_flat + (drain_percent * my_turf.liquids.liquid_group.total_reagent_volume), CHEMICAL_VOLUME_ROUNDING)
+	my_turf.liquids.liquid_group.remove_any(my_turf.liquids, min(drain_amt * DELTA_WORLD_TIME(SSobj), my_turf.liquids.liquid_group.total_reagent_volume))
 
 /obj/structure/drain/Initialize(mapload)
 	. = ..()
