@@ -1,9 +1,9 @@
 /datum/job/prisoner
 	title = JOB_PRISONER
-	description = "Keep yourself occupied in permabrig."
+	description = "Keep yourself occupied in permabrig. (Note: not an antagonist role by default.)"
 	department_head = list("The Security Team")
 	faction = FACTION_STATION
-	total_positions = 5
+	total_positions = 2
 	spawn_positions = 5
 	supervisors = "the security team"
 	exp_granted_type = EXP_TYPE_CREW
@@ -53,7 +53,8 @@
 	target_record?.crimes += past_crime
 	target_record.recreate_manifest_photos(add_height_chart = TRUE)
 	monkestation end */
-	to_chat(crewmember, span_warning("You are imprisoned for \"[crime_name]\"."))
+	to_chat(crewmember, span_warning("You are imprisoned for \"[crime_name]\". \
+			Remember, you are not an antagonist unless explicitly assigned or converted to be one."))
 	crewmember.add_mob_memory(/datum/memory/key/permabrig_crimes, crimes = crime_name)
 
 /datum/outfit/job/prisoner
