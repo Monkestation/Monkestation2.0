@@ -159,6 +159,10 @@ GLOBAL_LIST_INIT(pride_pin_reskins, list(
 	"Transgender Pride" = "pride_trans",
 	"Intersex Pride" = "pride_intersex",
 	"Lesbian Pride" = "pride_lesbian",
+	"Gay Pride" = "pride_mlm",
+	"Genderfluid Pride" = "pride_genderfluid",
+	"Genderqueer Pride" = "pride_genderqueer",
+	"Aromantic Pride" = "pride_aromantic",
 ))
 
 /obj/item/clothing/accessory/pride
