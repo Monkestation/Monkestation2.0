@@ -1647,11 +1647,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
-"gs" = (
-/obj/structure/cable,
-/obj/machinery/power/rtg/debug,
-/turf/open/floor/plating,
-/area/station/bitrunning/den)
 "gu" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
@@ -1748,28 +1743,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
-"hk" = (
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "o";
-	pixel_y = 3;
-	pixel_x = 24
-	},
-/obj/effect/decal/cleanable/crayon/l{
-	pixel_x = 13;
-	pixel_y = 2
-	},
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "o";
-	pixel_y = 3;
-	pixel_x = 3
-	},
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "s";
-	pixel_y = 3;
-	pixel_x = -8
-	},
-/turf/open/floor/iron/dark/herringbone,
-/area/station/bitrunning/den)
 "hD" = (
 /obj/structure/closet/secure_closet/chemical/heisenberg{
 	locked = 0
@@ -1890,13 +1863,6 @@
 /obj/machinery/chem_mass_spec,
 /turf/open/floor/iron,
 /area/station/medical/chemistry)
-"mJ" = (
-/obj/machinery/computer/quantum_console/tutorial_solo,
-/turf/open/floor/iron/dark/textured,
-/area/station/bitrunning/den)
-"mP" = (
-/turf/open/floor/iron/dark/textured,
-/area/station/bitrunning/den)
 "mU" = (
 /obj/machinery/door/airlock,
 /obj/structure/cable,
@@ -2011,10 +1977,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
-"rB" = (
-/obj/machinery/netpod/tutorial_coop,
-/turf/open/floor/iron/dark/textured,
-/area/station/bitrunning/den)
 "rK" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -2172,8 +2134,8 @@
 /turf/closed/wall/r_wall,
 /area/station/science/explab)
 "yl" = (
-/obj/machinery/netpod/tutorial_solo,
-/turf/open/floor/iron/dark/textured,
+/obj/machinery/quantum_server,
+/turf/open/floor/iron,
 /area/station/bitrunning/den)
 "yA" = (
 /obj/docking_port/stationary/laborcamp_home{
@@ -2187,9 +2149,6 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
-"yI" = (
-/turf/open/floor/iron/dark/herringbone,
-/area/station/bitrunning/den)
 "yK" = (
 /obj/structure/fans/tiny/invisible,
 /obj/effect/turf_decal/stripes/line{
@@ -2236,11 +2195,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/command/bridge)
-"By" = (
-/obj/machinery/quantum_server,
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/station/bitrunning/den)
 "BD" = (
 /obj/structure/closet/secure_closet/chief_medical{
 	locked = 0
@@ -2297,8 +2251,8 @@
 /turf/open/floor/iron/dark,
 /area/station/science/explab)
 "Dy" = (
-/obj/machinery/quantum_server/tutorial_solo,
-/turf/open/floor/iron/dark/textured,
+/obj/structure/cable,
+/turf/open/floor/iron,
 /area/station/bitrunning/den)
 "DW" = (
 /obj/machinery/computer/dna_console{
@@ -2358,14 +2312,6 @@
 /obj/item/storage/box/beakers,
 /turf/open/floor/iron,
 /area/station/medical/chemistry)
-"Fe" = (
-/obj/machinery/quantum_server/tutorial_coop,
-/turf/open/floor/iron/dark/textured,
-/area/station/bitrunning/den)
-"Fi" = (
-/obj/machinery/computer/quantum_console/tutorial_coop,
-/turf/open/floor/iron/dark/textured,
-/area/station/bitrunning/den)
 "FS" = (
 /obj/item/debug/human_spawner,
 /turf/open/floor/plating,
@@ -2551,29 +2497,6 @@
 /obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron,
 /area/station/command/bridge)
-"RN" = (
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "p";
-	pixel_y = 3;
-	pixel_x = 17
-	},
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "o";
-	pixel_y = 3;
-	pixel_x = -8
-	},
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "c";
-	pixel_y = 3;
-	pixel_x = -20
-	},
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "o";
-	pixel_y = 3;
-	pixel_x = 5
-	},
-/turf/open/floor/iron/dark/herringbone,
-/area/station/bitrunning/den)
 "RW" = (
 /turf/open/floor/iron,
 /area/station/bitrunning/den)
@@ -2598,6 +2521,13 @@
 "Tt" = (
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
+"Tz" = (
+/obj/machinery/computer/cryopod/directional/east,
+/obj/machinery/cryopod{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/station/commons/storage/primary)
 "TV" = (
 /obj/machinery/door/airlock,
 /obj/structure/cable,
@@ -2871,15 +2801,15 @@ aa
 aa
 aa
 aa
-pl
-pl
-pl
-pl
-pl
-pl
-pl
-pl
-pl
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -2963,15 +2893,15 @@ aa
 aa
 aa
 aa
-pl
-Fe
-Fi
-yI
-RW
-yl
-mP
-hk
-pl
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -3055,15 +2985,15 @@ aa
 aa
 aa
 aa
-pl
-rB
-mP
-RN
-RW
-Dy
-mJ
-yI
-pl
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -3147,15 +3077,15 @@ aa
 aa
 aa
 aa
-pl
-rB
-mP
-yI
-RW
-RW
-RW
-RW
-pl
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -3239,14 +3169,14 @@ aa
 aa
 aa
 aa
+aa
+aa
+aa
 pl
-Lq
-Lq
-RW
-RW
-RW
-RW
-RW
+pl
+pl
+pl
+pl
 pl
 aa
 aa
@@ -3331,12 +3261,12 @@ aa
 aa
 aa
 aa
+aa
+aa
+aa
 pl
 Lq
-ip
-RW
-RW
-RW
+Lq
 RW
 nk
 pl
@@ -3423,12 +3353,12 @@ aa
 aa
 aa
 aa
+aa
+aa
+aa
 pl
-gs
 Lq
-RW
-RW
-RW
+ip
 RW
 nk
 pl
@@ -3515,11 +3445,11 @@ aa
 aa
 aa
 aa
+aa
+aa
+aa
 pl
-By
-RW
-RW
-RW
+yl
 RW
 su
 nk
@@ -3607,12 +3537,12 @@ aa
 aa
 aa
 aa
+aa
+aa
+aa
 pl
 er
-RW
-RW
-RW
-RW
+Dy
 lT
 tB
 pl
@@ -8411,7 +8341,7 @@ gg
 ez
 dB
 dl
-dl
+Tz
 dl
 dx
 dE
