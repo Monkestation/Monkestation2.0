@@ -1,0 +1,5 @@
+author: "JupiterJaeden"
+delete-after: True
+changes:
+  - qol: "Adds a HOS bowman headset to the HOS locker."
+  - rscdel: "Removes the random paco magazine from the HOS locker."
