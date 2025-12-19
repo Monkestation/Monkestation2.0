@@ -58518,7 +58518,7 @@
 	pixel_x = 32
 	},
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
-/obj/machinery/modular_computer/preset/id,
+/obj/machinery/modular_computer/preset/quartermaster,
 /turf/open/floor/iron/dark,
 /area/station/cargo/quartermaster)
 "snK" = (

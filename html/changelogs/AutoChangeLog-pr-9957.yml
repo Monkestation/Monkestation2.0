@@ -1,0 +1,8 @@
+author: "JupiterJaeden"
+delete-after: True
+changes:
+  - bugfix: "Energy bolas can hit prone targets correctly and no longer leave random energy snare garbage behind."
+  - code_imp: "Energy bolas are no longer janky as fuck and now just work basically like a regular bola."
+  - balance: "Energy bolas have had their slowdown slightly nerfed."
+  - balance: "DRAGnet snares deploy in 0.5s from hitting the ground instead of 1s."
+  - balance: "Stabilized red extracts no longer protect you from legcuff-type slowdowns- this includes bolas, bear traps, and their subtypes."
