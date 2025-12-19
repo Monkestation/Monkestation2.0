@@ -122,6 +122,8 @@
 	var/turf/exclude = src.avoid
 	var/datum/can_pass_info/can_pass_info = src.pass_info
 	var/check_z_levels = src.check_z_levels
+	var/atom/movable/our_movable
+
 	while (requester && length(open) && !path)
 		// Pop from end (highest priority in reverse sorted list)
 		src.cur = open[length(open)]
@@ -162,9 +164,12 @@
 			var/turf/T = get_step(cur_turf, dir_to_check)
 
 			if(isopenspaceturf(cur_turf))
-				var/turf/turf_below = GET_TURF_BELOW(cur_turf)
-				if(turf_below)
-					T = turf_below
+				if(isnull(our_movable))
+					our_movable = can_pass_info.caller_ref?.resolve() || FALSE
+				if(our_movable && our_movable.can_z_move(DOWN, cur_turf, null, ZMOVE_FALL_FLAGS)) // don't use ?. as this can be false if it fails to resolve for some reason
+					var/turf/turf_below = GET_TURF_BELOW(cur_turf)
+					if(turf_below)
+						T = turf_below
 			else
 				var/obj/structure/stairs/stairs = locate() in cur_turf
 				if(stairs?.isTerminator() && stairs.dir == dir_to_check)
