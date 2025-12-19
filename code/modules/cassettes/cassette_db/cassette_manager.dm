@@ -154,7 +154,7 @@ SUBSYSTEM_DEF(cassettes)
 			ids -= id
 		else
 			ids |= id
-	rustg_file_write(ids, CASSETTE_ID_FILE)
+	rustg_file_write(json_encode(ids), CASSETTE_ID_FILE)
 
 /// Returns all the cassettes that match the given arguments.
 /datum/controller/subsystem/cassettes/proc/filtered_cassettes(status, user_ckey, list/id_blacklist) as /list
