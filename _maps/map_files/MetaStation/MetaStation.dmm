@@ -67038,6 +67038,13 @@
 "xjh" = (
 /turf/closed/wall,
 /area/station/security/checkpoint/customs)
+"xjk" = (
+/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/engineering/atmos/pumproom)
 "xjm" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple/layer2{
 	dir = 10
@@ -69014,6 +69021,9 @@
 	name = "Distro Staging to Distro"
 	},
 /obj/effect/turf_decal/tile/purple/fourcorners,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos/pumproom)
 "xVD" = (
@@ -114020,7 +114030,7 @@ bDq
 rRR
 qcd
 eQJ
-cMd
+xjk
 cMd
 nCQ
 gJm
