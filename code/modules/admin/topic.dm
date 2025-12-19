@@ -1768,7 +1768,7 @@
 
 
 	else if(href_list["open_music_review"])
-		if(!check_rights(R_FUN))
+		if(!check_rights(R_ADMIN))
 			return
 		var/id = text2num(href_list["open_music_review"])
 		var/datum/cassette_review/cassette_review = GLOB.cassette_reviews[id]
