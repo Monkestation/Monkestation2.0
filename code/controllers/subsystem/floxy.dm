@@ -155,10 +155,10 @@ SUBSYSTEM_DEF(floxy)
 	if(cached_metadata[url])
 		return cached_metadata[url]
 	renew_if_needed()
-	var/list/params = list()
+	var/list/params = list("url" = url)
 	if(!clean_title)
 		params["dontCleanTitle"] = "true"
-	var/list/metadata = http_basicasync("api/ytdlp?url=[url_encode(url)]?[list2params(params)]", method = RUSTG_HTTP_METHOD_GET, timeout = 15 SECONDS)
+	var/list/metadata = http_basicasync("api/ytdlp?[list2params(params)]", method = RUSTG_HTTP_METHOD_GET, timeout = 15 SECONDS)
 	if(metadata)
 		cached_metadata[url] = metadata
 		return metadata
