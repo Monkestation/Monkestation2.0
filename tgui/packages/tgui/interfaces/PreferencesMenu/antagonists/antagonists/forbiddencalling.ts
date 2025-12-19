@@ -1,10 +1,6 @@
 import { Antagonist, Category } from '../base';
 import { multiline } from 'common/string';
-
-export const HERETIC_MECHANICAL_DESCRIPTION = multiline`
-      Find hidden influences and sacrifice crew members to gain magical
-      powers and ascend as one of several paths.
-   `;
+import { HERETIC_MECHANICAL_DESCRIPTION } from './heretic';
 
 const ForbiddenCalling: Antagonist = {
   key: 'forbiddencalling',
