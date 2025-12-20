@@ -173,7 +173,7 @@
 	id = "earmuffs"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5)
-	build_path = /obj/item/clothing/ears/earmuffs
+	build_path = /obj/item/clothing/head/earmuffs
 	category = list(
 		RND_CATEGORY_INITIAL,
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_ENGINEERING,
@@ -409,7 +409,7 @@
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_CARGO,
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO
- 
+
 /datum/design/nifsoft_hud/meson
 	name = "Meson HUD NIFSoft"
 	desc = "A NIFSoft datadisk containing the Meson HUD NIFsoft."

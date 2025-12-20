@@ -21161,8 +21161,8 @@
 	pixel_y = -3
 	},
 /obj/item/gun/energy/laser/practice,
-/obj/item/clothing/ears/earmuffs,
-/obj/item/clothing/ears/earmuffs,
+/obj/item/clothing/head/earmuffs,
+/obj/item/clothing/head/earmuffs,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/directional/south,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -23480,8 +23480,8 @@
 /obj/item/clothing/suit/jacket/straight_jacket,
 /obj/item/clothing/mask/muzzle,
 /obj/item/clothing/mask/muzzle,
-/obj/item/clothing/ears/earmuffs,
-/obj/item/clothing/ears/earmuffs,
+/obj/item/clothing/head/earmuffs,
+/obj/item/clothing/head/earmuffs,
 /obj/item/clothing/glasses/blindfold,
 /obj/item/clothing/glasses/blindfold,
 /obj/machinery/door/window/right/directional/north{

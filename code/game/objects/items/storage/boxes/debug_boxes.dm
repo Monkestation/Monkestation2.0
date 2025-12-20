@@ -63,7 +63,7 @@
 		/obj/item/storage/box/debugbox/guns=1,
 		/obj/item/uplink/debug=1,
 		/obj/item/uplink/nuclear/debug=1,
-		/obj/item/clothing/ears/earmuffs/debug = 1,
+		/obj/item/clothing/head/earmuffs/debug = 1,
 		)
 	generate_items_inside(items_inside,src)
 

@@ -9342,7 +9342,7 @@
 "dBv" = (
 /obj/structure/rack,
 /obj/item/clothing/under/color/blue,
-/obj/item/clothing/ears/earmuffs,
+/obj/item/clothing/head/earmuffs,
 /obj/item/clothing/neck/tie/blue,
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
@@ -32159,7 +32159,7 @@
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/item/clothing/ears/earmuffs{
+/obj/item/clothing/head/earmuffs{
 	pixel_y = 7
 	},
 /turf/open/floor/iron,
@@ -37015,7 +37015,7 @@
 "onL" = (
 /obj/structure/rack,
 /obj/item/clothing/under/color/red,
-/obj/item/clothing/ears/earmuffs,
+/obj/item/clothing/head/earmuffs,
 /obj/item/clothing/neck/tie/red,
 /obj/item/clothing/head/soft/red,
 /turf/open/floor/iron,
@@ -42927,11 +42927,11 @@
 /obj/item/stack/cable_coil,
 /obj/item/electronics/airlock,
 /obj/item/electronics/airlock,
-/obj/item/clothing/ears/earmuffs{
+/obj/item/clothing/head/earmuffs{
 	pixel_x = -3;
 	pixel_y = -2
 	},
-/obj/item/clothing/ears/earmuffs{
+/obj/item/clothing/head/earmuffs{
 	pixel_x = -5;
 	pixel_y = 6
 	},
@@ -56153,10 +56153,10 @@
 	pixel_y = 3
 	},
 /obj/item/clothing/glasses/blindfold,
-/obj/item/clothing/ears/earmuffs{
+/obj/item/clothing/head/earmuffs{
 	pixel_y = 3
 	},
-/obj/item/clothing/ears/earmuffs,
+/obj/item/clothing/head/earmuffs,
 /obj/item/clothing/glasses/eyepatch,
 /obj/item/clothing/suit/jacket/straight_jacket,
 /obj/structure/window/spawner/directional/south,

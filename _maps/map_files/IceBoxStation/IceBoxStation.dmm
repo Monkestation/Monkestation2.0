@@ -40574,7 +40574,7 @@
 	pixel_y = -3
 	},
 /obj/item/gun/energy/laser/practice,
-/obj/item/clothing/ears/earmuffs,
+/obj/item/clothing/head/earmuffs,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/range)
 "mye" = (
@@ -55759,11 +55759,11 @@
 /area/station/command/teleporter)
 "rai" = (
 /obj/structure/table,
-/obj/item/clothing/ears/earmuffs{
+/obj/item/clothing/head/earmuffs{
 	pixel_x = -8;
 	pixel_y = 11
 	},
-/obj/item/clothing/ears/earmuffs{
+/obj/item/clothing/head/earmuffs{
 	pixel_x = -8;
 	pixel_y = 6
 	},
@@ -67049,7 +67049,7 @@
 /obj/item/airlock_painter,
 /obj/item/electronics/airlock,
 /obj/item/electronics/airlock,
-/obj/item/clothing/ears/earmuffs{
+/obj/item/clothing/head/earmuffs{
 	pixel_x = -3;
 	pixel_y = -2
 	},

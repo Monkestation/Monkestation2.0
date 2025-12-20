@@ -1229,7 +1229,7 @@
 /area/station/hallway/primary/central/fore)
 "atL" = (
 /obj/item/clothing/under/color/blue,
-/obj/item/clothing/ears/earmuffs,
+/obj/item/clothing/head/earmuffs,
 /obj/structure/closet/lasertag/blue,
 /obj/item/clothing/under/color/blue,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
@@ -2302,11 +2302,11 @@
 "aKa" = (
 /obj/effect/turf_decal/tile/dark_blue/half,
 /obj/structure/table/reinforced,
-/obj/item/clothing/ears/earmuffs{
+/obj/item/clothing/head/earmuffs{
 	pixel_y = 7;
 	pixel_x = 7
 	},
-/obj/item/clothing/ears/earmuffs{
+/obj/item/clothing/head/earmuffs{
 	pixel_y = 3;
 	pixel_x = 7
 	},
@@ -16543,7 +16543,7 @@
 /area/station/science/server)
 "eSq" = (
 /obj/item/clothing/under/color/red,
-/obj/item/clothing/ears/earmuffs,
+/obj/item/clothing/head/earmuffs,
 /obj/structure/closet/lasertag/red,
 /obj/item/clothing/under/color/red,
 /obj/effect/turf_decal/tile/dark_red/half/contrasted{

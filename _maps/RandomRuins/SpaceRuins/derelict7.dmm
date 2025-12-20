@@ -73,7 +73,7 @@
 "gK" = (
 /obj/structure/closet/cabinet,
 /obj/item/storage/pill_bottle/happy,
-/obj/item/clothing/ears/earmuffs,
+/obj/item/clothing/head/earmuffs,
 /turf/open/floor/wood/airless,
 /area/ruin/space/has_grav)
 "gX" = (

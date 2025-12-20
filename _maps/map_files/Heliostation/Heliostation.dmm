@@ -13570,8 +13570,8 @@
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "bnw" = (
-/obj/item/clothing/ears/earmuffs,
-/obj/item/clothing/ears/earmuffs{
+/obj/item/clothing/head/earmuffs,
+/obj/item/clothing/head/earmuffs{
 	pixel_x = -3;
 	pixel_y = -2
 	},
@@ -52814,11 +52814,11 @@
 "nfs" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/table/reinforced,
-/obj/item/clothing/ears/earmuffs{
+/obj/item/clothing/head/earmuffs{
 	pixel_x = -2;
 	pixel_y = 6
 	},
-/obj/item/clothing/ears/earmuffs{
+/obj/item/clothing/head/earmuffs{
 	pixel_x = 4;
 	pixel_y = 4
 	},
@@ -59934,7 +59934,7 @@
 /obj/structure/table/reinforced,
 /obj/item/clothing/suit/jacket/straight_jacket,
 /obj/item/clothing/glasses/blindfold,
-/obj/item/clothing/ears/earmuffs,
+/obj/item/clothing/head/earmuffs,
 /obj/item/clothing/mask/muzzle,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 8

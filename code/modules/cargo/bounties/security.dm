@@ -30,7 +30,7 @@
 	name = "Earmuffs"
 	description = "Central Command is getting tired of your station's messages. They've ordered that you ship some earmuffs to lessen the annoyance."
 	reward = CARGO_CRATE_VALUE * 2
-	wanted_types = list(/obj/item/clothing/ears/earmuffs = TRUE)
+	wanted_types = list(/obj/item/clothing/head/earmuffs = TRUE)
 
 /datum/bounty/item/security/handcuffs
 	name = "Handcuffs"

@@ -24252,7 +24252,7 @@
 /obj/structure/table,
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /obj/item/folder/yellow,
-/obj/item/clothing/ears/earmuffs{
+/obj/item/clothing/head/earmuffs{
 	pixel_x = -3;
 	pixel_y = -2
 	},
@@ -48698,10 +48698,10 @@
 /area/station/service/chapel)
 "ogt" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/ears/earmuffs{
+/obj/item/clothing/head/earmuffs{
 	pixel_y = 7
 	},
-/obj/item/clothing/ears/earmuffs{
+/obj/item/clothing/head/earmuffs{
 	pixel_x = 6;
 	pixel_y = 3
 	},
@@ -64768,8 +64768,8 @@
 	},
 /obj/item/clothing/glasses/blindfold,
 /obj/item/clothing/glasses/blindfold,
-/obj/item/clothing/ears/earmuffs,
-/obj/item/clothing/ears/earmuffs,
+/obj/item/clothing/head/earmuffs,
+/obj/item/clothing/head/earmuffs,
 /obj/effect/turf_decal/siding/white{
 	dir = 8
 	},

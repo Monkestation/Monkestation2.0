@@ -55609,8 +55609,8 @@
 /area/station/security/office)
 "rIZ" = (
 /obj/structure/table/wood,
-/obj/item/clothing/ears/earmuffs,
-/obj/item/clothing/ears/earmuffs{
+/obj/item/clothing/head/earmuffs,
+/obj/item/clothing/head/earmuffs{
 	pixel_x = 5;
 	pixel_y = 3
 	},
@@ -71466,8 +71466,8 @@
 /obj/structure/table/reinforced,
 /obj/item/clothing/suit/jacket/straight_jacket,
 /obj/item/clothing/glasses/eyepatch,
-/obj/item/clothing/ears/earmuffs,
-/obj/item/clothing/ears/earmuffs,
+/obj/item/clothing/head/earmuffs,
+/obj/item/clothing/head/earmuffs,
 /obj/item/clothing/glasses/blindfold,
 /obj/item/clothing/glasses/blindfold,
 /obj/machinery/door/window/right/directional/south{

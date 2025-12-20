@@ -63,7 +63,7 @@
 	new /obj/item/radio/headset/headset_srvmed(src)
 	new /obj/item/clipboard(src)
 	new /obj/item/clothing/suit/jacket/straight_jacket(src)
-	new /obj/item/clothing/ears/earmuffs(src)
+	new /obj/item/clothing/head/earmuffs(src)
 	new /obj/item/clothing/mask/muzzle(src)
 	new /obj/item/clothing/glasses/blindfold(src)
 
@@ -90,7 +90,7 @@
 	new /obj/item/storage/photo_album/cmo(src)
 	new /obj/item/storage/lockbox/medal/med(src)
 	new /obj/item/extrapolator(src) //MONKESTATION EDIT:
-	
+
 /obj/structure/closet/secure_closet/chief_medical/populate_contents_immediate()
 	. = ..()
 

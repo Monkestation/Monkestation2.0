@@ -192,7 +192,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		) = 8,
 
 	list(//equipment
-		/obj/item/clothing/ears/earmuffs = 1,
+		/obj/item/clothing/head/earmuffs = 1,
 		/obj/item/clothing/glasses/hud/diagnostic = 1,
 		/obj/item/clothing/glasses/hud/health = 1,
 		/obj/item/clothing/glasses/salesman = 1,

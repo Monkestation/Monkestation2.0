@@ -3945,7 +3945,7 @@
 /area/station/security/brig)
 "aoR" = (
 /obj/item/book/manual/wiki/security_space_law,
-/obj/item/clothing/ears/earmuffs,
+/obj/item/clothing/head/earmuffs,
 /obj/item/clothing/glasses/sunglasses,
 /obj/structure/table/reinforced,
 /obj/structure/cable,
@@ -20405,7 +20405,7 @@
 	pixel_x = -8;
 	pixel_y = 4
 	},
-/obj/item/clothing/ears/earmuffs,
+/obj/item/clothing/head/earmuffs,
 /obj/structure/table/glass,
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 1
@@ -29347,7 +29347,7 @@
 "dci" = (
 /obj/structure/rack,
 /obj/item/gun/energy/laser/practice,
-/obj/item/clothing/ears/earmuffs,
+/obj/item/clothing/head/earmuffs,
 /obj/item/radio/intercom/directional/west,
 /turf/open/floor/plating,
 /area/station/security/range)
