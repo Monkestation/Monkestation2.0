@@ -16,7 +16,7 @@
 	mob.pass_flags |= PASSTABLE
 	activated = TRUE
 
-/datum/symptom/mommi_shrink/deactivate(mob/living/mob)
+/datum/symptom/mommi_shrink/deactivate(mob/living/mob, datum/disease/acute/disease, safe = FALSE)
 	if(!activated)
 		return
 	to_chat(mob, "<span class = 'warning'>You feel like an adult again.</span>")

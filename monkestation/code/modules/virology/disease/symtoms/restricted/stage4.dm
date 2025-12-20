@@ -61,7 +61,7 @@
 			return FALSE
 	multiplier_tweak(0.1)
 
-/datum/symptom/heart_failure/deactivate(mob/living/carbon/affected_mob, datum/disease/acute/disease)
+/datum/symptom/heart_failure/deactivate(mob/living/carbon/affected_mob, datum/disease/acute/disease, safe = FALSE)
 	. = ..()
 	if(final_timer)
 		deltimer(final_timer)

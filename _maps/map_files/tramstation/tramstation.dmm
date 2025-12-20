@@ -75881,7 +75881,7 @@
 	dir = 8
 	},
 /obj/structure/sign/calendar/directional/west,
-/obj/machinery/modular_computer/preset/id{
+/obj/machinery/modular_computer/preset/quartermaster{
 	dir = 4
 	},
 /turf/open/floor/iron,
