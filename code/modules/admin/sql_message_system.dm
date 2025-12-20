@@ -60,7 +60,7 @@
 				var/current_year = text2num(time2text(current_time, "YYYY"))
 				var/current_day = min(text2num(time2text(current_time, "DD")), 28) // too lazy to account properly for leap years or whatever so let's just ensure that's never an issue
 
-				var/new_month = current_month + months
+				var/new_month = current_month + 6
 				var/new_year = current_year
 				if(new_month > 12)
 					new_month -= 12
