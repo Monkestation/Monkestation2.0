@@ -271,14 +271,14 @@
 
 /obj/item/organ/internal/cyberimp/arm/cooler/on_life()
 	. = ..()
-	var/amt = BODYTEMP_NORMAL - owner.standard_body_temperature
-	if(amt == 0)
-		return
-	owner.add_homeostasis_level(type, amt, 0.25 KELVIN)
+	if(owner.bodytemperature > (owner.standard_body_temperature + 2 KELVIN))
+		owner.add_homeostasis_level(REF(src), owner.standard_body_temperature, 0.25 KELVIN)
+	else
+		owner.remove_homeostasis_level(REF(src))
 
 /obj/item/organ/internal/cyberimp/arm/cooler/Remove(mob/living/carbon/M, special)
 	. = ..()
-	owner.remove_homeostasis_level(type)
+	owner.remove_homeostasis_level(REF(src))
 
 /obj/item/organ/internal/cyberimp/arm/heater
 	name = "sub-dermal heater implant"
@@ -290,13 +290,13 @@
 
 /obj/item/organ/internal/cyberimp/arm/heater/on_life()
 	. = ..()
-	var/amt = BODYTEMP_NORMAL - owner.standard_body_temperature
-	if(amt == 0)
-		return
-	owner.add_homeostasis_level(type, amt, 0.25 KELVIN)
+	if(owner.bodytemperature < (owner.standard_body_temperature - 2 KELVIN))
+		owner.add_homeostasis_level(REF(src), owner.standard_body_temperature, 0.25 KELVIN)
+	else
+		owner.remove_homeostasis_level(REF(src))
 
 /obj/item/organ/internal/cyberimp/arm/heater/Remove(mob/living/carbon/M, special)
 	. = ..()
-	owner.remove_homeostasis_level(type)
+	owner.remove_homeostasis_level(REF(src))
 
 #undef DOAFTER_SOURCE_STRONGARM_INTERACTION
