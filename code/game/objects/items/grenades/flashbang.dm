@@ -35,7 +35,7 @@
 	var/distance = max(0, get_dist(get_turf(src), turf))
 
 //Flash
-	if(living_mob.flash_act(affect_silicon = 1))
+	if(!living_mob.has_status_effect(/datum/status_effect/currently_flashed) && living_mob.flash_act(affect_silicon = 1))
 		living_mob.Paralyze(max(20/max(1, distance), 5))
 		living_mob.Knockdown(max(200/max(1, distance), 60))
 
