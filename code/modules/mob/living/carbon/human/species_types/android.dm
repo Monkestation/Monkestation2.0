@@ -60,6 +60,16 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/robot/android,
 	)
 
+/datum/species/android/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
+	. = ..()
+	// horrible hack, bc for some reason, setting the species_language_holder to synthetic/silicon REFUSES to grant partial languages, prolly due to singleton init order BS that I am NOT interested in debugging ~Lucy
+	for(var/lang in GLOB.uncommon_roundstart_languages)
+		C.grant_partial_language(lang, 66, LANGUAGE_SPECIES)
+
+/datum/species/android/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
+	. = ..()
+	for(var/lang in GLOB.uncommon_roundstart_languages)
+		C.remove_partial_language(lang, LANGUAGE_SPECIES)
 
 //Taken from TGstation
 /datum/species/android/get_species_description()

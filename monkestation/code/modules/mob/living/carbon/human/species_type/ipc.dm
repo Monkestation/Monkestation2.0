@@ -41,7 +41,7 @@
 
 	payday_modifier = 1.0 // Matches the rest of the pay penalties the non-human crew have
 
-	species_language_holder = /datum/language_holder/synthetic/silicon
+	species_language_holder = /datum/language_holder/synthetic
 
 	mutantbrain = /obj/item/organ/internal/brain/synth
 	mutantstomach = /obj/item/organ/internal/stomach/synth
@@ -108,6 +108,10 @@
 	RegisterSignal(C.reagents, COMSIG_REAGENTS_ADD_REAGENT, PROC_REF(will_it_blend))
 	RegisterSignal(C, COMSIG_HUMAN_ON_HANDLE_BLOOD, PROC_REF(blood_handled))
 
+	// horrible hack, bc for some reason, setting the species_language_holder to synthetic/silicon REFUSES to grant partial languages, prolly due to singleton init order BS that I am NOT interested in debugging ~Lucy
+	for(var/lang in GLOB.uncommon_roundstart_languages)
+		C.grant_partial_language(lang, 66, LANGUAGE_SPECIES)
+
 /datum/species/ipc/proc/blood_handled(mob/living/carbon/human/slime, seconds_per_tick, times_fired)
 	SIGNAL_HANDLER
 
@@ -158,6 +162,8 @@
 	. = ..()
 	UnregisterSignal(target, list(COMSIG_ATOM_EMAG_ACT, COMSIG_LIVING_DEATH))
 	change_screen?.Remove(target)
+	for(var/lang in GLOB.uncommon_roundstart_languages)
+		target.remove_partial_language(lang, LANGUAGE_SPECIES)
 
 /datum/species/ipc/proc/handle_speech(datum/source, list/speech_args)
 	speech_args[SPEECH_SPANS] |= SPAN_ROBOT //beep
