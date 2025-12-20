@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Admin full heals will no longer trigger the backlash from longevity syndrome being cured."

@@ -375,3 +375,41 @@
       eaters
   notghosti:
   - bugfix: Dormant disease no longer shows on a health analyzer scan
+2025-12-19:
+  Absolucy:
+  - bugfix: Admin full heals will no longer trigger the backlash from longevity syndrome
+      being cured.
+  JohnFulpWillard:
+  - qol: The chat bar now scrolls as you type.
+  JupiterJaeden:
+  - rscadd: "Adds a new security status for sechuds - \u2018Search\u2019. Beepsky\
+      \ treats it like any other non-innocent status, but not like arrest. Credit\
+      \ to paradise station for the sprite."
+  - rscadd: Perma prisoners now start the round set to incarcerated. This includes
+      prisoners with the jailbird quirk (who no longer start set to paroled if they
+      are a prisoner).
+  - rscadd: "The \u2018discharged\u2019 security status text on the records console\
+      \ now implies that someone has been released, rather than acquitted."
+  - qol: Changes some of the colors on security statuses on the security records console
+      to be more consistent with their sechud colors.
+  - qol: Changes the color of the suspected security hud to be teal, to prevent conflict
+      with the orange incarcerated & search statuses.
+  - qol: As a regular member of security, you can now invalidate crimes on the records
+      console which you have authored yourself. (requires HOS/warden access normally).
+  - bugfix: You can now correctly edit the description on crimes in the records console.
+  - bugfix: You can now correctly invalidate citations, just like other crimes.
+  - bugfix: Both roundstart and latejoin perma prisoners now correctly have their
+      flavor crimes added to their security records.
+  - bugfix: Energy bolas can hit prone targets correctly and no longer leave random
+      energy snare garbage behind.
+  - code_imp: Energy bolas are no longer janky as fuck and now just work basically
+      like a regular bola.
+  - balance: Energy bolas have had their slowdown slightly nerfed.
+  - balance: DRAGnet snares deploy in 0.5s from hitting the ground instead of 1s.
+  - balance: Stabilized red extracts no longer protect you from legcuff-type slowdowns-
+      this includes bolas, bear traps, and their subtypes.
+  - qol: Adds a HOS bowman headset to the HOS locker.
+  - rscdel: Removes the random paco magazine from the HOS locker.
+  TheColorCyan:
+  - bugfix: brings back pride pins that were accidentally removed, you can be gay
+      once again
