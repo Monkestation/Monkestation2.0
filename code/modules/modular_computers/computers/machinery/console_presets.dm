@@ -53,6 +53,17 @@
 		/datum/computer_file/program/crew_manifest,
 	)
 
+/obj/machinery/modular_computer/preset/quartermaster
+	name = "quartermaster's identification console"
+	desc = "A stationary computer. This one comes preloaded with cargo and identification modification programs."
+	starting_programs = list(
+		/datum/computer_file/program/chatclient,
+		/datum/computer_file/program/card_mod,
+		/datum/computer_file/program/job_management,
+		/datum/computer_file/program/crew_manifest,
+		/datum/computer_file/program/cargo_union,
+	)
+
 /obj/machinery/modular_computer/preset/representative
 	name = "nanotrasen representative console"
 	desc = "A stationary computer. This one comes preloaded with command programs."

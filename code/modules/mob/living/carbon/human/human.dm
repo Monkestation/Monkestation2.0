@@ -409,6 +409,8 @@
 					threatcount += 2
 				if(WANTED_PAROLE)
 					threatcount += 2
+				if(WANTED_SEARCH)
+					threatcount += 2
 
 	if(istype(head, /obj/item/clothing/head/hats/tophat/syndicate))
 		threatcount += 2
