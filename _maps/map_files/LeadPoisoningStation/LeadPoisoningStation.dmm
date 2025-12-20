@@ -49291,15 +49291,15 @@
 /area/station/maintenance/port/central)
 "xAJ" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/head/earmuffs{
+/obj/item/clothing/ears/earmuffs{
 	pixel_x = 6;
 	pixel_y = 3
 	},
-/obj/item/clothing/head/earmuffs{
+/obj/item/clothing/ears/earmuffs{
 	pixel_x = 6;
 	pixel_y = 3
 	},
-/obj/item/clothing/head/earmuffs{
+/obj/item/clothing/ears/earmuffs{
 	pixel_x = -3;
 	pixel_y = -2
 	},

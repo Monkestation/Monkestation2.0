@@ -135,7 +135,7 @@
 /obj/machinery/light/small/dim/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/clothing/under/syndicate/nova/overalls,
-/obj/item/clothing/head/earmuffs,
+/obj/item/clothing/ears/earmuffs,
 /obj/item/clothing/head/helmet/swat/ds{
 	name = "syndicate blast helmet"
 	},

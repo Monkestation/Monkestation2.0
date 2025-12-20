@@ -18057,7 +18057,7 @@
 /obj/item/flashlight{
 	pixel_y = 12
 	},
-/obj/item/clothing/head/earmuffs{
+/obj/item/clothing/ears/earmuffs{
 	pixel_x = -3;
 	pixel_y = -3
 	},
@@ -19513,7 +19513,7 @@
 /obj/structure/closet/secure_closet/warden,
 /obj/item/clothing/mask/gas/sechailer,
 /obj/item/key/security,
-/obj/item/clothing/head/earmuffs{
+/obj/item/clothing/ears/earmuffs{
 	pixel_x = -3;
 	pixel_y = -5
 	},

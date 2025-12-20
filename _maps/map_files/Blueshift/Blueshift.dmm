@@ -30283,7 +30283,7 @@
 "fOE" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/table/reinforced,
-/obj/item/clothing/head/earmuffs{
+/obj/item/clothing/ears/earmuffs{
 	pixel_y = 7
 	},
 /obj/effect/turf_decal/stripes,
@@ -38540,7 +38540,7 @@
 "hvH" = (
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/table/reinforced,
-/obj/item/clothing/head/earmuffs{
+/obj/item/clothing/ears/earmuffs{
 	pixel_y = 7
 	},
 /obj/item/clothing/glasses/sunglasses{
@@ -60846,7 +60846,7 @@
 /area/station/command/heads_quarters/nt_rep)
 "lKw" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/head/earmuffs{
+/obj/item/clothing/ears/earmuffs{
 	pixel_y = 7
 	},
 /obj/item/gun/energy/laser/practice,
@@ -95295,10 +95295,10 @@
 /obj/item/clothing/mask/muzzle,
 /obj/item/clothing/mask/muzzle,
 /obj/item/clothing/mask/muzzle,
-/obj/item/clothing/head/earmuffs,
-/obj/item/clothing/head/earmuffs,
-/obj/item/clothing/head/earmuffs,
-/obj/item/clothing/head/earmuffs,
+/obj/item/clothing/ears/earmuffs,
+/obj/item/clothing/ears/earmuffs,
+/obj/item/clothing/ears/earmuffs,
+/obj/item/clothing/ears/earmuffs,
 /obj/machinery/camera/directional/east{
 	c_tag = "Medbay - Psych Ward Airlock";
 	name = "medbay camera";

@@ -5960,11 +5960,11 @@
 /area/centcom/central_command_areas/ferry)
 "apS" = (
 /obj/structure/rack,
-/obj/item/clothing/head/earmuffs{
+/obj/item/clothing/ears/earmuffs{
 	pixel_x = 6;
 	pixel_y = 3
 	},
-/obj/item/clothing/head/earmuffs{
+/obj/item/clothing/ears/earmuffs{
 	pixel_y = 7
 	},
 /turf/open/indestructible/dark,

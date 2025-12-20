@@ -3884,8 +3884,8 @@
 /area/shuttle/sbc_starfury)
 "nk" = (
 /obj/structure/table,
-/obj/item/clothing/head/earmuffs,
-/obj/item/clothing/head/earmuffs{
+/obj/item/clothing/ears/earmuffs,
+/obj/item/clothing/ears/earmuffs{
 	pixel_x = 3;
 	pixel_y = -3
 	},
@@ -4268,8 +4268,8 @@
 /area/shuttle/sbc_starfury)
 "wc" = (
 /obj/structure/rack,
-/obj/item/clothing/head/earmuffs,
-/obj/item/clothing/head/earmuffs{
+/obj/item/clothing/ears/earmuffs,
+/obj/item/clothing/ears/earmuffs{
 	pixel_x = 3;
 	pixel_y = -3
 	},

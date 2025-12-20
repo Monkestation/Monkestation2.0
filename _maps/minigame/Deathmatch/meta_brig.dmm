@@ -2911,7 +2911,7 @@
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/item/clothing/head/earmuffs{
+/obj/item/clothing/ears/earmuffs{
 	pixel_y = 7
 	},
 /obj/machinery/light/small/directional/south,

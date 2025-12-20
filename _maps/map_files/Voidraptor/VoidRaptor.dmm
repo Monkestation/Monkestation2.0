@@ -9897,14 +9897,14 @@
 "cYc" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet,
-/obj/item/clothing/head/earmuffs{
+/obj/item/clothing/ears/earmuffs{
 	pixel_y = 7
 	},
-/obj/item/clothing/head/earmuffs{
+/obj/item/clothing/ears/earmuffs{
 	pixel_x = -3;
 	pixel_y = -2
 	},
-/obj/item/clothing/head/earmuffs{
+/obj/item/clothing/ears/earmuffs{
 	pixel_x = 6;
 	pixel_y = 3
 	},
@@ -16390,7 +16390,7 @@
 /area/station/hallway/primary/central/fore)
 "eIn" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/head/earmuffs{
+/obj/item/clothing/ears/earmuffs{
 	pixel_y = 7
 	},
 /obj/item/gun/energy/laser/practice,
@@ -35782,7 +35782,7 @@
 /area/station/engineering/atmos)
 "kbb" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/head/earmuffs{
+/obj/item/clothing/ears/earmuffs{
 	pixel_y = 7
 	},
 /obj/item/gun/energy/laser/practice,
@@ -80393,8 +80393,8 @@
 /obj/structure/window/spawner/directional/west,
 /obj/item/clothing/suit/jacket/straight_jacket,
 /obj/item/clothing/suit/jacket/straight_jacket,
-/obj/item/clothing/head/earmuffs,
-/obj/item/clothing/head/earmuffs,
+/obj/item/clothing/ears/earmuffs,
+/obj/item/clothing/ears/earmuffs,
 /obj/item/clothing/glasses/blindfold,
 /obj/item/clothing/glasses/blindfold,
 /obj/item/clothing/mask/muzzle,
@@ -83834,7 +83834,7 @@
 /area/station/commons/vacant_room/office)
 "xmN" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/head/earmuffs{
+/obj/item/clothing/ears/earmuffs{
 	pixel_y = 7
 	},
 /obj/item/clothing/glasses/sunglasses{

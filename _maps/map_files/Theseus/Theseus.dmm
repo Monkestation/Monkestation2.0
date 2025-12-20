@@ -4469,7 +4469,7 @@
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/item/clothing/head/earmuffs{
+/obj/item/clothing/ears/earmuffs{
 	pixel_y = 7
 	},
 /obj/machinery/light/small/directional/south,
@@ -12403,8 +12403,8 @@
 /obj/structure/rack/shelf,
 /obj/item/clothing/suit/jacket/straight_jacket,
 /obj/item/clothing/suit/jacket/straight_jacket,
-/obj/item/clothing/head/earmuffs,
-/obj/item/clothing/head/earmuffs,
+/obj/item/clothing/ears/earmuffs,
+/obj/item/clothing/ears/earmuffs,
 /obj/item/clothing/mask/muzzle,
 /obj/item/clothing/mask/muzzle,
 /obj/item/clothing/glasses/blindfold,
@@ -35764,7 +35764,7 @@
 	pixel_x = -3;
 	pixel_y = -2
 	},
-/obj/item/clothing/head/earmuffs{
+/obj/item/clothing/ears/earmuffs{
 	pixel_x = 2;
 	pixel_y = 3
 	},
@@ -53535,11 +53535,11 @@
 /obj/item/electronics/airlock,
 /obj/item/electronics/airlock,
 /obj/item/stack/sheet/glass/fifty,
-/obj/item/clothing/head/earmuffs{
+/obj/item/clothing/ears/earmuffs{
 	pixel_x = -3;
 	pixel_y = -2
 	},
-/obj/item/clothing/head/earmuffs{
+/obj/item/clothing/ears/earmuffs{
 	pixel_x = -5;
 	pixel_y = 6
 	},

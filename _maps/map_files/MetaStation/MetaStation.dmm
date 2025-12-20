@@ -13918,7 +13918,7 @@
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/item/clothing/head/earmuffs{
+/obj/item/clothing/ears/earmuffs{
 	pixel_y = 7
 	},
 /obj/machinery/light/small/directional/south,
@@ -38416,7 +38416,7 @@
 /obj/machinery/light/directional/south,
 /obj/structure/rack,
 /obj/item/clothing/under/color/blue,
-/obj/item/clothing/head/earmuffs,
+/obj/item/clothing/ears/earmuffs,
 /obj/item/clothing/neck/tie/blue,
 /obj/structure/sign/poster/official/random/directional/south,
 /turf/open/floor/iron/dark,
@@ -44049,7 +44049,7 @@
 "piM" = (
 /obj/structure/rack,
 /obj/item/clothing/under/color/red,
-/obj/item/clothing/head/earmuffs,
+/obj/item/clothing/ears/earmuffs,
 /obj/item/clothing/neck/tie/red,
 /obj/item/clothing/head/soft/red,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -50878,11 +50878,11 @@
 /obj/item/stack/cable_coil,
 /obj/item/electronics/airlock,
 /obj/item/electronics/airlock,
-/obj/item/clothing/head/earmuffs{
+/obj/item/clothing/ears/earmuffs{
 	pixel_x = -3;
 	pixel_y = -2
 	},
-/obj/item/clothing/head/earmuffs{
+/obj/item/clothing/ears/earmuffs{
 	pixel_x = -5;
 	pixel_y = 6
 	},
@@ -70143,10 +70143,10 @@
 	pixel_y = 3
 	},
 /obj/item/clothing/glasses/blindfold,
-/obj/item/clothing/head/earmuffs{
+/obj/item/clothing/ears/earmuffs{
 	pixel_y = 3
 	},
-/obj/item/clothing/head/earmuffs,
+/obj/item/clothing/ears/earmuffs,
 /obj/item/clothing/glasses/eyepatch,
 /obj/item/clothing/suit/jacket/straight_jacket,
 /turf/open/floor/iron/dark,

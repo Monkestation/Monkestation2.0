@@ -1943,7 +1943,7 @@
 "gY" = (
 /obj/structure/table/wood,
 /obj/item/clothing/suit/hooded/wintercoat/hydro,
-/obj/item/clothing/head/earmuffs,
+/obj/item/clothing/ears/earmuffs,
 /obj/item/clothing/head/utility/hardhat,
 /turf/open/floor/wood/freezing,
 /area/awaymission/cabin/lumbermill)
