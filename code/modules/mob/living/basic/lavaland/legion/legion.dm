@@ -93,9 +93,9 @@
 		consumed.fully_heal(HEAL_DAMAGE)
 	consumed.apply_status_effect(/datum/status_effect/grouped/stasis, STASIS_LEGION_EATEN)
 	RegisterSignal(consumed, COMSIG_LIVING_REVIVE, PROC_REF(on_consumed_revive))
+	consumed.forceMove(src)
 	if(!isoozeling(consumed))
 		RegisterSignal(consumed, COMSIG_MOVABLE_MOVED, PROC_REF(on_consumed_move))
-	consumed.forceMove(src)
 	ai_controller?.set_blackboard_key(BB_LEGION_CORPSE, consumed)
 	ai_controller?.set_blackboard_key(BB_LEGION_RECENT_LINES, consumed.copy_recent_speech(line_chance = 80))
 	stored_mob = consumed
