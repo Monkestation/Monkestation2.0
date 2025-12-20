@@ -8,56 +8,48 @@
 	medical_record_text = "Patient demonstrates extreme respiratory tolerance: survives low partial pressures of required gases."
 	mail_goodies = list(/obj/item/storage/box/survival)
 
-	var/list/originals = list() // "oxygen" -> orig_safe_oxygen_min, etc.
+	var/obj/item/organ/internal/lungs/last_lungs // Track to detect swaps
 
-/datum/quirk/breathless/add()
-	var/mob/living/carbon/human/H = parent
-	RegisterSignal(H, COMSIG_MOB_LOGIN, .proc/on_login) // Handles cloning/surgery mid-round
-	apply_freedom(H)
+/datum/quirk/breathless/add(mob/living/carbon/human/quirk_holder)
+	RegisterSignal(quirk_holder, COMSIG_LIVING_LIFE, .proc/on_life)
+	on_life(quirk_holder) // Initial apply
 
-/datum/quirk/breathless/remove()
-	var/mob/living/carbon/human/H = parent
-	UnregisterSignal(H, COMSIG_MOB_LOGIN)
-	restore_originals(H)
+/datum/quirk/breathless/remove(mob/living/carbon/human/quirk_holder)
+	UnregisterSignal(quirk_holder, COMSIG_LIVING_LIFE)
+	restore_originals(quirk_holder)
 
-/datum/quirk/breathless/proc/apply_freedom(mob/living/carbon/human/H)
+/datum/quirk/breathless/proc/on_life(mob/living/carbon/human/H)
+	SIGNAL_HANDLER
 	if(!H)
 		return
-	var/obj/item/organ/internal/lungs/L = H.getorganslot(ORGAN_SLOT_LUNGS)
+	var/obj/item/organ/internal/lungs/L = H.get_organ_slot(ORGAN_SLOT_LUNGS)
+	if(!L || L == last_lungs)
+		return // No change
+	last_lungs = L
+	apply_freedom(L, H)
+
+/datum/quirk/breathless/proc/apply_freedom(obj/item/organ/internal/lungs/L, mob/living/carbon/human/H)
 	if(!L)
-		return // No lungs? (rare, e.g., lungless status) - skip
-
-	// Backup (only once per quirk life)
-	if(!length(originals))
-		originals["oxygen"] = L.safe_oxygen_min
-		originals["nitrogen"] = L.safe_nitro_min
-		originals["plasma"] = L.safe_plasma_min
-
-	// Zero mins
+		return
+	// Zero any >0 mins
 	if(L.safe_oxygen_min > 0)
 		L.safe_oxygen_min = 0
 	if(L.safe_nitro_min > 0)
 		L.safe_nitro_min = 0
 	if(L.safe_plasma_min > 0)
 		L.safe_plasma_min = 0
-
-	// Reset mob failure flag + clear alerts
+	// Reset mob failure + alerts
 	H.failed_last_breath = FALSE
 	H.clear_alert(list(ALERT_NOT_ENOUGH_OXYGEN, ALERT_NOT_ENOUGH_NITRO, ALERT_NOT_ENOUGH_PLASMA))
 
 /datum/quirk/breathless/proc/restore_originals(mob/living/carbon/human/H)
-	if(!H || !length(originals))
+	if(!H)
 		return
-	var/obj/item/organ/internal/lungs/L = H.getorganslot(ORGAN_SLOT_LUNGS)
+	var/obj/item/organ/internal/lungs/L = H.get_organ_slot(ORGAN_SLOT_LUNGS)
 	if(!L)
 		return
-
-	L.safe_oxygen_min = originals["oxygen"] || initial(L.safe_oxygen_min)
-	L.safe_nitro_min = originals["nitrogen"] || initial(L.safe_nitro_min)
-	L.safe_plasma_min = originals["plasma"] || initial(L.safe_plasma_min)
-
-	// No need to reset alerts here - normal breathing will handle
-
-/datum/quirk/breathless/proc/on_login(mob/living/carbon/human/H)
-	SIGNAL_HANDLER
-	apply_freedom(H) // Re-apply on login (cloning, mind transfer, etc.)
+	// Restore to subtype defaults (handles plasmaman/lavaland etc.)
+	L.safe_oxygen_min = initial(L.safe_oxygen_min)
+	L.safe_nitro_min = initial(L.safe_nitro_min)
+	L.safe_plasma_min = initial(L.safe_plasma_min)
+	last_lungs = null
