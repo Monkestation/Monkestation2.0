@@ -18,7 +18,7 @@
 	UnregisterSignal(quirk_holder, COMSIG_LIVING_LIFE)
 	restore_originals(quirk_holder)
 
-/datum/quirk/breathless/proc/on_life(mob/living/carbon/human/H)
+/datum/quirk/breathless/proc/on_life(mob/living/carbon/human/H, seconds_per_tick, times_fired)
 	SIGNAL_HANDLER
 	if(!H)
 		return
@@ -38,6 +38,8 @@
 		L.safe_nitro_min = 0
 	if(L.safe_plasma_min > 0)
 		L.safe_plasma_min = 0
+	// Critical: Add TRAIT_SPACEBREATHING to ignore low total moles check in check_breath()
+	ADD_TRAIT(H, TRAIT_SPACEBREATHING, QUIRK_TRAIT)
 	// Reset mob failure + alerts
 	H.failed_last_breath = FALSE
 	H.clear_alert(list(ALERT_NOT_ENOUGH_OXYGEN, ALERT_NOT_ENOUGH_NITRO, ALERT_NOT_ENOUGH_PLASMA))
@@ -48,8 +50,10 @@
 	var/obj/item/organ/internal/lungs/L = H.get_organ_slot(ORGAN_SLOT_LUNGS)
 	if(!L)
 		return
-	// Restore to subtype defaults (handles plasmaman/lavaland etc.)
+	// Restore to subtype defaults
 	L.safe_oxygen_min = initial(L.safe_oxygen_min)
 	L.safe_nitro_min = initial(L.safe_nitro_min)
 	L.safe_plasma_min = initial(L.safe_plasma_min)
+	// Remove trait
+	REMOVE_TRAIT(H, TRAIT_SPACEBREATHING, QUIRK_TRAIT)
 	last_lungs = null
