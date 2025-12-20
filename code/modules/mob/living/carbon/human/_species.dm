@@ -576,6 +576,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		C.grant_language(language, SPOKEN_LANGUAGE, LANGUAGE_SPECIES)
 	for(var/language in gaining_holder.blocked_languages)
 		C.add_blocked_language(language, LANGUAGE_SPECIES)
+	for(var/language, amount in gaining_holder.best_mutual_languages)
+		C.grant_partial_language(language, amount, LANGUAGE_SPECIES)
 
 	SEND_SIGNAL(C, COMSIG_SPECIES_GAIN, src, old_species)
 
@@ -629,7 +631,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	C.maxHealth = C.maxHealth / maxhealthmod
 
-		// Removes all languages previously associated with [LANGUAGE_SPECIES], gaining our new species will add new ones back
+	// Removes all languages previously associated with [LANGUAGE_SPECIES], gaining our new species will add new ones back
 	var/datum/language_holder/losing_holder = GLOB.prototype_language_holders[species_language_holder]
 	for(var/language in losing_holder.understood_languages)
 		C.remove_language(language, UNDERSTOOD_LANGUAGE, LANGUAGE_SPECIES)
@@ -637,6 +639,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		C.remove_language(language, SPOKEN_LANGUAGE, LANGUAGE_SPECIES)
 	for(var/language in losing_holder.blocked_languages)
 		C.remove_blocked_language(language, LANGUAGE_SPECIES)
+	for(var/language, amount in losing_holder.best_mutual_languages)
+		C.remove_partial_language(language, amount, LANGUAGE_SPECIES)
 
 	SEND_SIGNAL(C, COMSIG_SPECIES_LOSS, src)
 
