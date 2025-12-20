@@ -1,4 +1,3 @@
-import { linkEvent } from 'react';
 import { Button } from 'tgui/components';
 import { createRenderer } from 'tgui/renderer';
 import type { InfernoNode } from 'react';
@@ -17,13 +16,6 @@ export const SingleButtonWithCallback = () => {
   render(node);
 };
 
-export const SingleButtonWithLinkEvent = () => {
-  const node = (
-    <Button onClick={linkEvent(null, handleClick)}>Hello world!</Button>
-  );
-  render(node);
-};
-
 export const ListOfButtons = () => {
   const nodes: InfernoNode[] = [];
   for (let i = 0; i < 100; i++) {
@@ -38,19 +30,6 @@ export const ListOfButtonsWithCallback = () => {
   for (let i = 0; i < 100; i++) {
     const node = (
       <Button key={i} onClick={() => undefined}>
-        Hello world! {i}
-      </Button>
-    );
-    nodes.push(node);
-  }
-  render(<div>{nodes}</div>);
-};
-
-export const ListOfButtonsWithLinkEvent = () => {
-  const nodes: InfernoNode[] = [];
-  for (let i = 0; i < 100; i++) {
-    const node = (
-      <Button key={i} onClick={linkEvent(null, handleClick)}>
         Hello world! {i}
       </Button>
     );
