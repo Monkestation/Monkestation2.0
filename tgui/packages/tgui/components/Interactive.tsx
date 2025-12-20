@@ -13,7 +13,7 @@
  */
 
 import { clamp } from 'common/math';
-import { Component, InfernoNode, createRef, RefObject } from 'inferno';
+import { Component, InfernoNode, createRef, RefObject } from 'react';
 
 export interface Interaction {
   left: number;

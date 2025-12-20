@@ -10,7 +10,7 @@ import {
   Dropdown,
 } from '../components';
 import { Window } from '../layouts';
-import { Component } from 'inferno';
+import { Component } from 'react';
 import { fetchRetry } from '../http';
 import { resolveAsset } from '../assets';
 import { formatTime } from '../format';

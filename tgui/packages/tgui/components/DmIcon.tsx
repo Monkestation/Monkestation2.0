@@ -1,4 +1,4 @@
-import { Component, InfernoNode } from 'inferno';
+import { Component, InfernoNode } from 'react';
 import { resolveAsset } from '../assets';
 import { fetchRetry } from '../http';
 import { BoxProps } from './Box';

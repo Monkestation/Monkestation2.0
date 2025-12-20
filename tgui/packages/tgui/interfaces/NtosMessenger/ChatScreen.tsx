@@ -8,7 +8,7 @@ import {
   Tooltip,
   Icon,
 } from '../../components';
-import { Component, RefObject, createRef, Inferno } from 'inferno';
+import { Component, RefObject, createRef, Inferno } from 'react';
 import { NtMessage, NtMessenger, NtPicture } from './types';
 import { BooleanLike } from 'common/react';
 import { useBackend } from '../../backend';

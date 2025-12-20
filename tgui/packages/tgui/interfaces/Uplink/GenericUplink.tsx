@@ -1,5 +1,5 @@
 import { BooleanLike } from 'common/react';
-import { InfernoNode } from 'inferno';
+import { InfernoNode } from 'react';
 
 import { useBackend, useLocalState, useSharedState } from '../../backend';
 import {

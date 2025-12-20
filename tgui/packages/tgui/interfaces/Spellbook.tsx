@@ -14,7 +14,7 @@ import {
   Stack,
 } from '../components';
 import { Window } from '../layouts';
-import { InfernoNode } from 'inferno';
+import { InfernoNode } from 'react';
 
 enum SpellCategory {
   Offensive = 'Offensive',

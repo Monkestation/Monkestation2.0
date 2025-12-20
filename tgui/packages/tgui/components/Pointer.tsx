@@ -13,7 +13,7 @@
  */
 
 import { classes } from 'common/react';
-import { InfernoNode } from 'inferno';
+import { InfernoNode } from 'react';
 
 interface PointerProps {
   className?: string;

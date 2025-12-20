@@ -1,6 +1,6 @@
 import { BooleanLike } from 'common/react';
 import { decodeHtmlEntities } from 'common/string';
-import { InfernoNode } from 'inferno';
+import { InfernoNode } from 'react';
 import { useBackend } from '../../backend';
 import { Button, Stack } from '../../components';
 

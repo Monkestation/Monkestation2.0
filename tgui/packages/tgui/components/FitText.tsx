@@ -1,5 +1,5 @@
-import { Component, createRef, RefObject } from 'inferno';
-import type { Inferno } from 'inferno';
+import { Component, createRef, RefObject } from 'react';
+import type { Inferno } from 'react';
 
 const DEFAULT_ACCEPTABLE_DIFFERENCE = 5;
 

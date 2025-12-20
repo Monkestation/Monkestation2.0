@@ -1,7 +1,7 @@
 import { useBackend, useLocalState } from '../backend';
 import { Section, Collapsible, Button, Tabs, Flex } from '../components';
 import { Window } from '../layouts';
-import { Fragment } from 'inferno';
+import { Fragment } from 'react';
 
 export const TicketListPanel = (props) => {
   const { act, data } = useBackend();

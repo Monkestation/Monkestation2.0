@@ -1,4 +1,4 @@
-import { Component, createRef } from 'inferno';
+import { Component,  createRef } from 'react';
 import hljs from 'highlight.js/lib/core';
 import lua from 'highlight.js/lib/languages/lua';
 import { useBackend, useLocalState } from '../../backend';

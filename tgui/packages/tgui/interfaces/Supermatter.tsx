@@ -2,7 +2,7 @@ import { filter, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { toFixed } from 'common/math';
 import { BooleanLike } from 'common/react';
-import { InfernoNode } from 'inferno';
+import { InfernoNode } from 'react';
 import { useBackend, useLocalState } from '../backend';
 import {
   Box,

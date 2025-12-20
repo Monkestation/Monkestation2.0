@@ -1,6 +1,6 @@
 import { createPopper, VirtualElement } from '@popperjs/core';
 import { classes } from 'common/react';
-import { Component, findDOMFromVNode, InfernoNode, render } from 'inferno';
+import { Component, findDOMFromVNode, InfernoNode, render } from 'react';
 import { Box, BoxProps } from './Box';
 import { Button } from './Button';
 import { Icon } from './Icon';

@@ -1,4 +1,4 @@
-import { InfernoNode } from 'inferno';
+import { InfernoNode } from 'react';
 import { Button } from '../../components';
 import { useBackend } from '../../backend';
 import { PreferencesMenuData } from './data';

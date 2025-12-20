@@ -1,6 +1,6 @@
 import { range } from 'common/collections';
 import { BooleanLike } from 'common/react';
-import { Inferno } from 'inferno';
+import { Inferno } from 'react';
 import { useBackend } from '../backend';
 import { Box, Button, FitText, Stack } from '../components';
 import { Window } from '../layouts';

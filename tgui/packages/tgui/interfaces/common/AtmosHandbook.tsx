@@ -1,4 +1,4 @@
-import { InfernoNode } from 'inferno';
+import { InfernoNode } from 'react';
 import { useBackend, useLocalState } from '../../backend';
 import {
   Box,

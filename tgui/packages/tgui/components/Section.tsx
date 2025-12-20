@@ -5,7 +5,7 @@
  */
 
 import { BoxProps, computeBoxClassName, computeBoxProps } from './Box';
-import { Component, InfernoNode, RefObject, createRef } from 'inferno';
+import { Component, InfernoNode, RefObject, createRef } from 'react';
 import { addScrollableNode, removeScrollableNode } from '../events';
 import { canRender, classes } from 'common/react';
 

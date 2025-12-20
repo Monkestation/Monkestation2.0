@@ -1,5 +1,5 @@
 import { BooleanLike, classes } from 'common/react';
-import { Component } from 'inferno';
+import { Component } from 'react';
 
 import {
   Box,
@@ -18,7 +18,7 @@ import {
   Rank,
 } from './calculateDangerLevel';
 import { ObjectiveState } from './constants';
-import type { InfernoNode } from 'inferno';
+import type { InfernoNode } from 'react';
 
 export type Objective = {
   id: number;

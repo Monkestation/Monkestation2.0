@@ -1,5 +1,5 @@
 import { binaryInsertWith, sortBy } from 'common/collections';
-import { InfernoNode } from 'inferno';
+import { InfernoNode } from 'react';
 import { useBackend } from '../../backend';
 import { Box, Flex, Tooltip } from '../../components';
 import { PreferencesMenuData } from './data';

@@ -1,6 +1,6 @@
 import { useBackend } from '../../backend';
 import { Input, InfinitePlane, Stack, Box, Button } from '../../components';
-import { Component } from 'inferno';
+import { Component } from 'react';
 import { Window } from '../../layouts';
 import { resolveAsset } from '../../assets';
 import { CircuitInfo } from './CircuitInfo';

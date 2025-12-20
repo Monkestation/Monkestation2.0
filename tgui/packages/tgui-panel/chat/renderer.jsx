@@ -19,7 +19,7 @@ import {
   MESSAGE_TYPE_INTERNAL,
   MESSAGE_TYPE_UNKNOWN,
 } from './constants';
-import { render } from 'inferno';
+import { render } from 'react';
 import { canPageAcceptType, createMessage, isSameMessage } from './model';
 import { highlightNode, linkifyNode } from './replaceInTextNode';
 import { Tooltip } from '../../tgui/components';

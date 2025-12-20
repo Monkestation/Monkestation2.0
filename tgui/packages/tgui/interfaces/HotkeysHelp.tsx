@@ -1,7 +1,7 @@
 import { useBackend } from '../backend';
 import { Box, Section, Table, Tooltip } from '../components';
 import { Window } from '../layouts';
-import type { InfernoNode } from 'inferno';
+import type { InfernoNode } from 'react';
 
 type BindingInfo = {
   name: string;

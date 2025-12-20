@@ -1,7 +1,7 @@
-import { linkEvent } from 'inferno';
+import { linkEvent } from 'react';
 import { Button } from 'tgui/components';
 import { createRenderer } from 'tgui/renderer';
-import type { InfernoNode } from 'inferno';
+import type { InfernoNode } from 'react';
 
 const render = createRenderer();
 

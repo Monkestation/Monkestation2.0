@@ -31,7 +31,7 @@ import {
 import { filterMap, sortBy } from 'common/collections';
 import { useRandomToggleState } from './useRandomToggleState';
 import { createSearch } from 'common/string';
-import { InfernoNode } from 'inferno';
+import { InfernoNode } from 'react';
 
 const CLOTHING_CELL_SIZE = 64;
 const CLOTHING_SIDEBAR_ROWS = 10;

@@ -2,7 +2,7 @@ import { useBackend, useLocalState } from '../backend';
 import { Box, LabeledList, Stack, Tabs, Tooltip } from '../components';
 import { Window } from '../layouts';
 import { getDangerLevel } from './Uplink/calculateDangerLevel';
-import type { InfernoNode } from 'inferno';
+import type { InfernoNode } from 'react';
 
 type Objective = {
   name: string;

@@ -9,7 +9,7 @@ import {
 } from '../base';
 import { Box, Dropdown, Flex } from '../../../../../components';
 import { classes } from 'common/react';
-import { InfernoNode } from 'inferno';
+import { InfernoNode } from 'react';
 import { binaryInsertWith } from 'common/collections';
 import { useBackend } from '../../../../../backend';
 import { PreferencesMenuData } from '../../../data';

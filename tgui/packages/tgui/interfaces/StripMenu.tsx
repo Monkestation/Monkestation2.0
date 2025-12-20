@@ -4,7 +4,7 @@ import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
 import { Box, Button, Icon, Stack } from '../components';
 import { Window } from '../layouts';
-import type { InfernoNode } from 'inferno';
+import type { InfernoNode } from 'react';
 
 const ROWS = 5;
 const COLUMNS = 6;

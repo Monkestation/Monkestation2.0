@@ -1,5 +1,5 @@
 import { BooleanLike } from 'common/react';
-import { Component, Fragment } from 'inferno';
+import { Component, Fragment } from 'react';
 
 import { resolveAsset } from '../../assets';
 import { useBackend } from '../../backend';

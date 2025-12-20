@@ -1,4 +1,4 @@
-import { Inferno } from 'inferno';
+import { Inferno } from 'react';
 import { Box } from './Box';
 
 // The cost of flexibility and prettiness.

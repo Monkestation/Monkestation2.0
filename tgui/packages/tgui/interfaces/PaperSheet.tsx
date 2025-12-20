@@ -8,7 +8,7 @@ import { Box, Button, Flex, Section, TextArea } from '../components';
 import { Window } from '../layouts';
 import { sanitizeText } from '../sanitize';
 import { marked } from 'marked';
-import { Component, createRef, RefObject, Inferno } from 'inferno';
+import { Component, createRef, RefObject, Inferno } from 'react';
 import { clamp } from 'common/math';
 
 const Z_INDEX_STAMP = 1;

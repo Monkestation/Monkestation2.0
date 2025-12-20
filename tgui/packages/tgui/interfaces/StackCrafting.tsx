@@ -13,7 +13,7 @@ import {
 import { Window } from '../layouts';
 import { clamp } from 'common/math';
 import { flow } from 'common/fp';
-import type { InfernoNode } from 'inferno';
+import type { InfernoNode } from 'react';
 
 type Recipe = {
   ref: unknown | null;

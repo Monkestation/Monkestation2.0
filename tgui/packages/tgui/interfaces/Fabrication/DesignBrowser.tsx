@@ -1,6 +1,6 @@
 import { sortBy } from 'common/collections';
 import { classes } from 'common/react';
-import { InfernoNode } from 'inferno';
+import { InfernoNode } from 'react';
 import { useSharedState } from '../../backend';
 import { Stack, Section, Icon, Dimmer } from '../../components';
 import { Design, MaterialMap } from './Types';

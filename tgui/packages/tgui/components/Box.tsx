@@ -5,7 +5,7 @@
  */
 
 import { BooleanLike, classes, pureComponentHooks } from 'common/react';
-import { Inferno, createVNode, InfernoNode } from 'inferno';
+import { Inferno, createVNode, InfernoNode } from 'react';
 import { ChildFlags, VNodeFlags } from 'inferno-vnode-flags';
 import { CSS_COLORS } from '../constants';
 

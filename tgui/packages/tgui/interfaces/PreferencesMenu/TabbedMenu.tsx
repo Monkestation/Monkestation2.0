@@ -1,4 +1,4 @@
-import { Component, createRef, InfernoNode, RefObject } from 'inferno';
+import { Component, createRef, InfernoNode, RefObject } from 'react';
 import { Button, Section, Stack } from '../../components';
 import { Flex, FlexProps } from '../../components/Flex';
 

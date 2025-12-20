@@ -14,7 +14,7 @@ import {
 import { sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { classes, shallowDiffers } from 'common/react';
-import { Component, createRef, RefObject } from 'inferno';
+import { Component, createRef, RefObject } from 'react';
 import { Window } from '../layouts';
 import { resolveAsset } from '../assets';
 import { MOUSE_BUTTON_LEFT, noop } from './IntegratedCircuit/constants';

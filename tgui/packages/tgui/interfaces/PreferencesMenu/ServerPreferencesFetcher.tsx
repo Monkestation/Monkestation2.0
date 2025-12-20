@@ -1,5 +1,5 @@
-import { Component } from 'inferno';
-import type { InfernoNode } from 'inferno';
+import { Component } from 'react';
+import type { InfernoNode } from 'react';
 import { loadedMappings, resolveAsset } from '../../assets';
 import { fetchRetry } from '../../http';
 import { ServerData } from './data';

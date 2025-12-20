@@ -5,7 +5,7 @@
  */
 
 import { classes, pureComponentHooks } from 'common/react';
-import { InfernoNode } from 'inferno';
+import { InfernoNode } from 'react';
 import { BoxProps, computeBoxClassName, computeBoxProps } from './Box';
 
 const FA_OUTLINE_REGEX = /-o$/;

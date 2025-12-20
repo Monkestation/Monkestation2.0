@@ -1,4 +1,4 @@
-import type { Inferno } from 'inferno';
+import type { Inferno } from 'react';
 import { Box, Icon, Stack, Tooltip } from '../../components';
 import { PreferencesMenuData, Quirk } from './data';
 import { useBackend } from '../../backend';
