@@ -147,6 +147,9 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 			//kills only the debug uplink from the gifts.
 			/obj/item/mod/control/pre_equipped/chrono,
 
+			// causes too many issues
+			/obj/structure/sign/painting/eldritch,
+
 			//A list of every debug item I could find. I compiled a list of every item in the possible gifts list
 			//and ran a keyword search through the list. Hopefully, this grabbed most, if not all, of the items.
 			//There are PROBABLY repeats from the list above but it shouldn't matter.
