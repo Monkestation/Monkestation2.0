@@ -99,7 +99,7 @@
 		/obj/item/stack/medical/suture = 2,
 		/obj/item/stack/medical/mesh = 2,
 		/obj/item/reagent_containers/hypospray/medipen = 1,
-		/obj/item/healthanalyzer/simple = 1,
+		/obj/item/reagent_containers/hypospray/medipen/morphine = 1,
 	)
 	generate_items_inside(items_inside,src)
 
@@ -187,7 +187,7 @@
 		/obj/item/reagent_containers/pill/patch/aiuri = 3,
 		/obj/item/reagent_containers/spray/hercuri = 1,
 		/obj/item/reagent_containers/hypospray/medipen/oxandrolone = 1,
-		/obj/item/reagent_containers/hypospray/medipen = 1)
+		/obj/item/reagent_containers/hypospray/medipen/burn_painkiller = 1)
 	generate_items_inside(items_inside,src)
 
 /obj/item/storage/medkit/toxin
@@ -262,7 +262,7 @@
 		/obj/item/stack/medical/gauze = 1,
 		/obj/item/storage/pill_bottle/probital = 1,
 		/obj/item/reagent_containers/hypospray/medipen/salacid = 1,
-		/obj/item/healthanalyzer/simple = 1,
+		/obj/item/reagent_containers/hypospray/medipen/brute_painkiller = 1,
 		)
 	generate_items_inside(items_inside,src)
 
