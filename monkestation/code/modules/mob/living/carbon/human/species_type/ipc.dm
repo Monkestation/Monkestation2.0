@@ -41,7 +41,7 @@
 
 	payday_modifier = 1.0 // Matches the rest of the pay penalties the non-human crew have
 
-	species_language_holder = /datum/language_holder/synthetic
+	species_language_holder = /datum/language_holder/synthetic/silicon
 
 	mutantbrain = /obj/item/organ/internal/brain/synth
 	mutantstomach = /obj/item/organ/internal/stomach/synth
