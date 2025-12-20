@@ -3872,7 +3872,6 @@
 #include "code\modules\clothing\head\costume.dm"
 #include "code\modules\clothing\head\crown.dm"
 #include "code\modules\clothing\head\detective_fedora.dm"
-#include "code\modules\clothing\head\earmuffs.dm"
 #include "code\modules\clothing\head\fedora.dm"
 #include "code\modules\clothing\head\frenchberet.dm"
 #include "code\modules\clothing\head\garlands.dm"
