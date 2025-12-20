@@ -39,7 +39,7 @@
 
 /obj/machinery/mentor_machine/proc/poll_a_jannie(mob/living/requester)
 	//polling
-	var/mob/dead/observer/candidate = SSpolling.poll_mentor_ghost_candidates(question = "Would you like to assist [requester.name] in finishing a tutorial domain?", poll_time = 15 SECONDS, alert_pic = src, amount_to_pick = 1)
+	var/mob/dead/observer/candidate = SSpolling.poll_mentor_ghost_candidates(question = "MENTOR ONLY GHOST ROLE: Would you like to assist [requester.name] in finishing a tutorial domain?", poll_time = 15 SECONDS, alert_pic = src, amount_to_pick = 1)
 
 	if(candidate)
 		spawn_a_jannie(candidate)

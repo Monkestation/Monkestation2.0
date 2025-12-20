@@ -1,7 +1,7 @@
-// This spell exists mainly for debugging purposes, and also to show how casting works
+// This spell exists so that mentors can exit out of tutorials seamlessly
 /datum/action/cooldown/spell/self_destruct
 	name = "Self Destruct"
-	desc = "Bathes your body in a red white hot sun, dusting it immediately."
+	desc = "Bathes your body in the heat of a dozen supernovas, dusting it immediately."
 
 	sound = 'sound/magic/wandodeath.ogg'
 	school = SCHOOL_FORBIDDEN
@@ -17,4 +17,5 @@
 	. = ..()
 	new /obj/effect/decal/remains/human(cast_on.loc)
 	cast_on.ghostize()
+	Remove(owner)
 	qdel(cast_on)
