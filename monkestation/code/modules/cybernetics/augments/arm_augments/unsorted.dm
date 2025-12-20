@@ -276,9 +276,9 @@
 	else
 		owner.remove_homeostasis_level(REF(src))
 
-/obj/item/organ/internal/cyberimp/arm/cooler/Remove(mob/living/carbon/M, special)
+/obj/item/organ/internal/cyberimp/arm/cooler/Remove(mob/living/carbon/organ_owner, special)
 	. = ..()
-	owner.remove_homeostasis_level(REF(src))
+	organ_owner?.remove_homeostasis_level(REF(src))
 
 /obj/item/organ/internal/cyberimp/arm/heater
 	name = "sub-dermal heater implant"
@@ -295,8 +295,8 @@
 	else
 		owner.remove_homeostasis_level(REF(src))
 
-/obj/item/organ/internal/cyberimp/arm/heater/Remove(mob/living/carbon/M, special)
+/obj/item/organ/internal/cyberimp/arm/heater/Remove(mob/living/carbon/organ_owner, special)
 	. = ..()
-	owner.remove_homeostasis_level(REF(src))
+	organ_owner.remove_homeostasis_level(REF(src))
 
 #undef DOAFTER_SOURCE_STRONGARM_INTERACTION
