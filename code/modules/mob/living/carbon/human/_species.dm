@@ -639,8 +639,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		C.remove_language(language, SPOKEN_LANGUAGE, LANGUAGE_SPECIES)
 	for(var/language in losing_holder.blocked_languages)
 		C.remove_blocked_language(language, LANGUAGE_SPECIES)
-	for(var/language, amount in losing_holder.best_mutual_languages)
-		C.remove_partial_language(language, amount, LANGUAGE_SPECIES)
+	for(var/language in losing_holder.best_mutual_languages)
+		C.remove_partial_language(language, LANGUAGE_SPECIES)
 
 	SEND_SIGNAL(C, COMSIG_SPECIES_LOSS, src)
 
