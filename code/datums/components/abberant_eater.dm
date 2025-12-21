@@ -27,7 +27,7 @@
 
 	switch(nerd.nutrition)
 		if(NUTRITION_LEVEL_FAT to INFINITY)
-			nerd.visible_message("<span class='notice'>[nerd] forces [nerd.p_them()]self to eat \the [weapon].</span>", "<span class='notice'>You force yourself to eat \the [weapon].</span>")
+			nerd.visible_message(span_notice("[nerd] forces [nerd.p_them()]self to eat \the [weapon]"), span_notice("You force yourself to eat \the [weapon]"))
 		if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_FAT)
 			nerd.visible_message("<span class='notice'>[nerd] [eatverb]s \the [weapon]].</span>", "<span class='notice'>You [eatverb] \the [weapon].</span>")
 		if(0 to NUTRITION_LEVEL_STARVING)
