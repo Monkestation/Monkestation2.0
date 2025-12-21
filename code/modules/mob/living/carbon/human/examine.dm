@@ -493,6 +493,8 @@
 
 	SEND_SIGNAL(src, COMSIG_ATOM_EXAMINE, user, .)
 
+	. += late_examine(user)
+
 /**
  * Shows any and all examine text related to any status effects the user has.
  */
