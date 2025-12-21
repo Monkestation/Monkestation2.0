@@ -486,3 +486,9 @@
 	return TRUE
 
 #undef BASE_DISCONNECT_DAMAGE
+
+/obj/machinery/netpod/tutorial_coop
+	bitrunning_id = "tutorial_coop"
+
+/obj/machinery/netpod/tutorial_solo
+	bitrunning_id = "tutorial_solo"

@@ -166,3 +166,10 @@
 
 	servo_bonus = servo_rating
 
+/obj/machinery/quantum_server/tutorial_coop
+	bitrunning_id = "tutorial_coop"
+	bitrunning_network = BITRUNNER_DOMAIN_TUTORIAL
+
+/obj/machinery/quantum_server/tutorial_solo
+	bitrunning_id = "tutorial_solo"
+	bitrunning_network = BITRUNNER_DOMAIN_TUTORIAL

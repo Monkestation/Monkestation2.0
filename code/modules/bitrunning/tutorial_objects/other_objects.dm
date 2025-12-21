@@ -13,29 +13,3 @@
 	playsound(src, 'sound/lavaland/cursed_slot_machine_jackpot.ogg', 50)
 	visible_message(span_notice("[user] has completed the tutorial!"))
 	players_that_completed += user.ckey
-
-/obj/machinery/quantum_server/tutorial_coop
-	bitrunning_id = "tutorial_coop"
-	bitrunning_network = BITRUNNER_DOMAIN_TUTORIAL
-
-/obj/machinery/quantum_server/tutorial_solo
-	bitrunning_id = "tutorial_solo"
-	bitrunning_network = BITRUNNER_DOMAIN_TUTORIAL
-
-/obj/machinery/computer/quantum_console/tutorial_coop
-	bitrunning_id = "tutorial_coop"
-
-/obj/machinery/computer/quantum_console/tutorial_solo
-	bitrunning_id = "tutorial_solo"
-
-/obj/machinery/netpod/tutorial_coop
-	bitrunning_id = "tutorial_coop"
-
-
-/obj/machinery/netpod/tutorial_solo
-	bitrunning_id = "tutorial_solo"
-
-/area/virtual_domain/powered_lighting
-	name = "Virtual Domain Ruins"
-	icon_state = "bit_ruin"
-	requires_power = FALSE

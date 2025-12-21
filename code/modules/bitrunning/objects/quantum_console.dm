@@ -107,3 +107,9 @@
 		if(nearby_server && nearby_server.bitrunning_id == bitrunning_id)
 			server_ref = WEAKREF(nearby_server)
 			return nearby_server
+
+/obj/machinery/computer/quantum_console/tutorial_coop
+	bitrunning_id = "tutorial_coop"
+
+/obj/machinery/computer/quantum_console/tutorial_solo
+	bitrunning_id = "tutorial_solo"
