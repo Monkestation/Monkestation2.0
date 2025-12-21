@@ -360,8 +360,8 @@
 		air_contents.react(src)
 		pressure = air_contents.return_pressure()
 
-		log_atmos("[type] exploded with a power of [power] and a mix of ", air_contents)
 		var/range = (pressure-TANK_FRAGMENT_PRESSURE)/TANK_FRAGMENT_SCALE
+		log_atmos("[type] exploded with a range of [range] and a mix of ", air_contents)
 		explosion(src, round(range*0.25), round(range*0.5), round(range), round(range*1.5))
 	return ..()
 
