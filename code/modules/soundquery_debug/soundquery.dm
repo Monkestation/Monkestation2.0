@@ -45,26 +45,22 @@ ADMIN_VERB(cmd_soundquery_debug, R_SERVER|R_DEBUG, FALSE, "Sound Mixer Debug", "
 		return TRUE
 	if(action == "select_client")
 		var/ckey = params["ckey"]
-		for(var/client/C)
-			if(C.ckey == ckey)
-				selected_client = C
-				return TRUE
+		if(ckey in GLOB.directory)
+			selected_client = GLOB.directory[ckey]
+			return TRUE
 	return FALSE
 
 /datum/soundquery_debug/proc/get_clients()
-	var/list/L = list()
-	for(var/client/C)
-		L += list(list(
-			"ckey" = C.ckey,
-			"key" = C.key,
-			"name" = C.mob?.real_name || C.ckey,
+	. = list()
+	for(var/client/client as anything in GLOB.clients)
+		. += list(list(
+			"ckey" = client.ckey,
+			"key" = client.key,
+			"name" = client.mob?.real_name || client.ckey,
 		))
-	return L
 
-/datum/soundquery_debug/ui_status(mob/user, datum/ui_state/state)
-	if(!user.client?.holder?.check_for_rights(R_SERVER|R_DEBUG))
-		return UI_CLOSE
-	return UI_INTERACTIVE
+/datum/soundquery_debug/ui_state(mob/user)
+	return ADMIN_STATE(R_SERVER|R_DEBUG)
 
 /datum/soundquery_debug/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

@@ -231,12 +231,10 @@
 	if(new_ringtone && (new_ringtone != MESSENGER_RINGTONE_DEFAULT))
 		update_ringtone(new_ringtone)
 
-	// Monkestation Addition START
 	var/new_sound = owner_client.prefs.read_preference(/datum/preference/choiced/pda_ringtone_sound)
 	if(new_sound)
 		update_ringtone_sound(new_sound)
-	// Monkestation Addition END
-
+		
 	var/new_theme = owner_client.prefs.read_preference(/datum/preference/choiced/pda_theme)
 	if(new_theme)
 		device_theme = GLOB.pda_name_to_theme[new_theme]

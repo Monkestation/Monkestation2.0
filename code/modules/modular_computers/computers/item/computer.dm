@@ -527,7 +527,7 @@
 	// Get the messenger app's new sound settings || Monkestation Addition START
 	var/sound_to_play = 'sound/machines/twobeep_high.ogg' //defaults to the original
 	var/datum/computer_file/program/messenger/messenger = locate() in stored_files
-	if(messenger && messenger.ringtone_sound)
+	if(messenger?.ringtone_sound)
 		var/selected_sound = GLOB.pda_ringtone_sounds[messenger.ringtone_sound]
 		if(selected_sound)
 			sound_to_play = selected_sound
