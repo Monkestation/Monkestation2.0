@@ -444,7 +444,7 @@
 	icon_state = "miningbigiron"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/govmining
 	recoil = 4
-	weild_recoil = 2
+	wield_recoil = 2
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/revolver_heavy.ogg'
 	load_sound = 'sound/weapons/gun/revolver/load_bullet.ogg'
 	eject_sound = 'sound/weapons/gun/revolver/empty.ogg'

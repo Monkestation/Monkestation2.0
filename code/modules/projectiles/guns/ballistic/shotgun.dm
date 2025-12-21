@@ -562,7 +562,7 @@
 	icon_state = "protokshotgunauto"
 	slot_flags = ITEM_SLOT_BACK
 	recoil = 1.8
-	weild_recoil = 1
+	wield_recoil = 1
 	burst_size = 1
 	fire_delay = 0
 	base_pixel_x = -2
@@ -593,7 +593,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	recoil = 5
-	weild_recoil = 3
+	wield_recoil = 3
 	force = 15
 	inhand_x_dimension = 32
 	inhand_y_dimension = 32

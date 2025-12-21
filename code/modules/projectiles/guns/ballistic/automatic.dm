@@ -1011,7 +1011,7 @@
 	icon_state = "pksmg"
 	burst_size = 2
 	recoil = 2
-	weild_recoil = 1.2
+	wield_recoil = 1.2
 	spread = 2.3
 	actions_types = list()
 	mag_display = TRUE
@@ -1048,7 +1048,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
 	recoil = 2.8
-	weild_recoil = 1.6
+	wield_recoil = 1.6
 	burst_size = 3
 	mag_display = FALSE
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/kineticlmg

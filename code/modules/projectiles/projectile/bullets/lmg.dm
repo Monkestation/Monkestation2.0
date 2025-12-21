@@ -220,7 +220,7 @@
 	damage = 4 //somehow does less damage than the SMG, uh... dont ask why?
 	armour_ignorance = 0
 	icon_state = "gaussweak"
-	fauna_mod = 2.5 // asks for a 1/10th of a clip to down normal humans
+	fauna_mod = 3 // asks for 25 hits for an unarmored spessman to horizontal
 
 /obj/projectile/bullet/a762/kinetic/on_hit(atom/target, Firer, blocked = 0, pierce_hit) //its not meant to tear through walls like a plasma cutter, but will still at least bust down a wall if it hits one.
 	if(ismineralturf(target))
