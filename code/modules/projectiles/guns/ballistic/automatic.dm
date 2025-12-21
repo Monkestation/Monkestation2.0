@@ -1010,6 +1010,9 @@
 	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "pksmg"
 	burst_size = 2
+	recoil = 2
+	weild_recoil = 1.2
+	spread = 2.3
 	actions_types = list()
 	mag_display = TRUE
 	empty_indicator = TRUE
@@ -1044,12 +1047,14 @@
 	worn_icon_state = "kineticlmg"
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
+	recoil = 2.8
+	weild_recoil = 1.6
 	burst_size = 3
 	mag_display = FALSE
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/kineticlmg
 	weapon_weight = WEAPON_HEAVY
 	internal_magazine = TRUE
-	spread = 3
+	spread = 4
 	fire_delay = 1
 	pin = /obj/item/firing_pin/wastes
 	fire_sound = 'sound/weapons/gun/hmg/hmg.ogg'

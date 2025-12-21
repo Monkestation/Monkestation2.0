@@ -217,7 +217,7 @@
 
 /obj/projectile/bullet/a762/kinetic
 	name = "kinetic 7.62 projectile"
-	damage = 6 //somehow does less damage than the SMG, uh... dont ask why?
+	damage = 4 //somehow does less damage than the SMG, uh... dont ask why?
 	armour_ignorance = 0
 	icon_state = "gaussweak"
 	fauna_mod = 2.5 // asks for a 1/10th of a clip to down normal humans
