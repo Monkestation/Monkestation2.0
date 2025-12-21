@@ -112,7 +112,7 @@ const createStackAugmentor =
   };
 
 /**
- * Store provider for Inferno apps.
+ * Store provider for React apps.
  */
 export class StoreProvider extends Component<StoreProviderProps> {
   getChildContext() {

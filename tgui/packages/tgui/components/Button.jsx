@@ -45,7 +45,7 @@ export const Button = (props) => {
       `Lowercase 'onclick' is not supported on Button and lowercase` +
         ` prop names are discouraged in general. Please use a camelCase` +
         `'onClick' instead and read: ` +
-        `https://infernojs.org/docs/guides/event-handling`,
+        `https://react.dev/learn/responding-to-events`,
     );
   }
   rest.onClick = (e) => {
