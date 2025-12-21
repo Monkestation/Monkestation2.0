@@ -193,6 +193,10 @@
 	if(!is_http_protocol(url))
 		balloon_alert(user, "invalid URL!")
 		return FALSE
+	if(findtext(url, "spotify.com") || findtext(url, "music.apple.com") || findtext(url, "deezer.com") || findtext(url, "tidal.com"))
+		balloon_alert(user, "unsupported service!")
+		to_chat(user, span_warning("This URL is unsupported. Try a YouTube, Bandcamp, or Soundcloud URL."))
+		return FALSE
 	busy = TRUE
 	SStgui.update_uis(src)
 	var/list/metadata = SSfloxy.fetch_media_metadata(url)
