@@ -1,10 +1,12 @@
 import { createPopper, VirtualElement } from '@popperjs/core';
 import { classes } from 'common/react';
-import { Component, findDOMFromVNode, ReactNode, render } from 'react';
+import { Component, ReactNode } from 'react';
 import { Box, BoxProps } from './Box';
 import { Button } from './Button';
 import { Icon } from './Icon';
 import { Stack } from './Stack';
+// eslint-disable-next-line react/no-deprecated
+import { findDOMNode, render } from 'react-dom';
 
 export interface DropdownEntry {
   displayText: string | number | ReactNode;
@@ -82,7 +84,8 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
   };
 
   getDOMNode() {
-    return findDOMFromVNode(this.$LI, true);
+    // eslint-disable-next-line react/no-find-dom-node
+    return findDOMNode(this) as Element;
   }
 
   componentDidMount() {

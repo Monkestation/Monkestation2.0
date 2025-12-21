@@ -54,7 +54,7 @@ const EPSILON = 10e-4;
  * An animated number label. Shows a number, formatted with an optionally
  * provided function, and animates it towards its target value.
  */
-export class AnimatedNumber extends Component<AnimatedNumberProps> {
+export class AnimatedNumber extends Component<AnimatedNumberProps, {}> {
   /**
    * The inner `<span/>` being updated sixty times per second.
    */

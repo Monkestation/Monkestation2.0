@@ -1,7 +1,6 @@
 import { sortBy, sortStrings } from 'common/collections';
 import { BooleanLike, classes } from 'common/react';
-import { ComponentType, createComponentVNode, ReactNode } from 'react';
-import { VNodeFlags } from 'inferno-vnode-flags';
+import { ComponentType, createElement, ReactNode } from 'react';
 import { sendAct, useBackend, useLocalState } from '../../../../backend';
 import {
   Box,
@@ -387,19 +386,15 @@ export const FeatureValueInput = (props: {
   return (
     <ServerPreferencesFetcher
       render={(serverData) => {
-        return createComponentVNode(
-          VNodeFlags.ComponentUnknown,
-          feature.component,
-          {
-            act: props.act,
-            featureId: props.featureId,
-            serverData: serverData && serverData[props.featureId],
-            shrink: props.shrink,
+        return createElement(feature.component, {
+          act: props.act,
+          featureId: props.featureId,
+          serverData: serverData && serverData[props.featureId],
+          shrink: props.shrink,
 
-            handleSetValue: changeValue,
-            value: predictedValue,
-          },
-        );
+          handleSetValue: changeValue,
+          value: predictedValue,
+        });
       }}
     />
   );
@@ -473,19 +468,19 @@ export const StandardizedPalette = (props: {
     ? props.value && safeHex(props.value)
     : props.value;
   return (
-    <Flex style={{ alignItems: 'baseline', 'max-width': maxWidth }}>
+    <Flex style={{ alignItems: 'baseline', maxWidth: maxWidth }}>
       <Flex.Item
         shrink
         style={{
           borderRadius: '0.16em',
-          'max-width': maxWidth,
+          maxWidth: maxWidth,
           paddingBottom: '-5px',
         }}
         className="section-background"
         backgroundColor={backgroundColor}
         p={0.5}
       >
-        <Flex style={{ 'flex-wrap': 'wrap', 'max-width': maxWidth }}>
+        <Flex style={{ 'flex-wrap': 'wrap', maxWidth: maxWidth }}>
           {choices.map((choice) => (
             <Flex.Item key={choice} ml={0}>
               <Tooltip

@@ -243,7 +243,7 @@ const CategoryViewer = (props: CategoryViewerProps) => {
                 >
                   <Stack vertical fill>
                     <Stack.Item>
-                      <p fontFamily="Courier">{entry.message}</p>
+                      <p style={{ fontFamily: 'Courier' }}>{entry.message}</p>
                     </Stack.Item>
                     <Stack.Item>
                       {entry.semver && (

@@ -167,7 +167,7 @@ export const DiscordVerification = (props, context) => {
               <Box mt={1}>
                 <img
                   src={resolveAsset('dverify_image1.png')}
-                  style={{ 'max-width': '100%' }}
+                  style={{ maxWidth: '100%' }}
                 />
               </Box>
             </LabeledList.Item>
@@ -177,7 +177,7 @@ export const DiscordVerification = (props, context) => {
               <Box mt={1}>
                 <img
                   src={resolveAsset('dverify_image2.png')}
-                  style={{ 'max-width': '100%' }}
+                  style={{ maxWidth: '100%' }}
                 />
               </Box>
             </LabeledList.Item>
@@ -189,7 +189,7 @@ export const DiscordVerification = (props, context) => {
               <Box mt={1}>
                 <img
                   src={resolveAsset('dverify_image3.png')}
-                  style={{ 'max-width': '100%' }}
+                  style={{ maxWidth: '100%' }}
                 />
               </Box>
             </LabeledList.Item>
@@ -200,7 +200,7 @@ export const DiscordVerification = (props, context) => {
               <Box mt={1}>
                 <img
                   src={resolveAsset('dverify_image4.png')}
-                  style={{ 'max-width': '100%' }}
+                  style={{ maxWidth: '100%' }}
                 />
               </Box>
             </LabeledList.Item>

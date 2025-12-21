@@ -49,9 +49,9 @@ export const EditableText = (props: Props) => {
           as="span"
           color={!text ? 'grey' : color || 'white'}
           style={{
-            'text-decoration': 'underline',
-            'text-decoration-color': 'white',
-            'text-decoration-thickness': '1px',
+            textDecoration: 'underline',
+            'textDecoration-color': 'white',
+            'textDecoration-thickness': '1px',
             'text-underline-offset': '1px',
           }}
           onClick={() => setEditing(true)}

@@ -1,6 +1,5 @@
 import { range } from 'common/collections';
 import { BooleanLike } from 'common/react';
-import { Inferno } from 'react';
 import { useBackend } from '../backend';
 import { Box, Button, FitText, Stack } from '../components';
 import { Window } from '../layouts';
@@ -23,9 +22,10 @@ type PuzzgridData = {
   wrong_group_select_cooldown: BooleanLike;
 };
 
-const PuzzgridButton: Inferno.SFC<{
+const PuzzgridButton: React.FC<{
   // In the future, this would be the TypeScript props of the button
   [key: string]: unknown;
+  children: React.ReactNode;
 }> = (props) => {
   return (
     <Button
@@ -36,7 +36,7 @@ const PuzzgridButton: Inferno.SFC<{
 
         textAlign: 'center',
         verticalAlign: 'middle',
-        'white-space': 'normal',
+        whiteSpace: 'normal',
       }}
       {...props}
     >
@@ -109,7 +109,7 @@ export const Puzzgrid = (props) => {
           <Box
             color="red"
             style={{
-              'text-shadow': '1px 1px 1px #222',
+              textShadow: '1px 1px 1px #222',
               fontSize: '30px',
               position: 'absolute',
               top: 0,
@@ -125,7 +125,7 @@ export const Puzzgrid = (props) => {
         {data.time_left && (
           <Box
             style={{
-              'text-shadow': '1px 1px 1px #222',
+              textShadow: '1px 1px 1px #222',
               textAlign: 'right',
               fontSize: '15px',
               pointerEvents: 'none',

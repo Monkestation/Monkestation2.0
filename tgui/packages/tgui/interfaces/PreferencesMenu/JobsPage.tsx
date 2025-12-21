@@ -1,6 +1,6 @@
 import { sortBy } from 'common/collections';
 import { classes } from 'common/react';
-import { ReactNode, Inferno } from 'react';
+import { ReactNode } from 'react';
 import { useBackend } from '../../backend';
 import { Box, Button, Dropdown, Stack, Tooltip } from '../../components';
 import {
@@ -271,7 +271,10 @@ const JobRow = (props: { className?: string; job: Job; name: string }) => {
   );
 };
 
-const Department: Inferno.SFC<{ department: string }> = (props) => {
+const Department: React.FC<{
+  department: string;
+  children?: React.ReactNode;
+}> = (props) => {
   const { children, department: name } = props;
   const className = `PreferencesMenu__Jobs__departments--${name}`;
 

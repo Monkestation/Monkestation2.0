@@ -30,7 +30,7 @@ export const computeFlexProps = (props: FlexProps) => {
   return computeBoxProps({
     style: {
       ...rest.style,
-      'flex-direction': direction,
+      flexDirection: direction,
       'flex-wrap': wrap === true ? 'wrap' : wrap,
       alignItems: align,
       'justify-content': justify,

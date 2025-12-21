@@ -125,7 +125,7 @@ const AntagSelection = (props: { antagonists: Antagonist[]; name: string }) => {
                   style={{
                     fontWeight: 'bold',
                     marginTop: 'auto',
-                    'max-width': '100px',
+                    maxWidth: '100px',
                     textAlign: 'center',
                   }}
                 >

@@ -19,12 +19,13 @@ import {
   MESSAGE_TYPE_INTERNAL,
   MESSAGE_TYPE_UNKNOWN,
 } from './constants';
-import { createRoot } from 'react';
 import { canPageAcceptType, createMessage, isSameMessage } from './model';
 import { highlightNode, linkifyNode } from './replaceInTextNode';
 import { Tooltip } from '../../tgui/components';
 import { selectSettings } from '../settings/selectors';
 import { globalStore } from 'tgui/backend';
+// eslint-disable-next-line react/no-deprecated
+import { render } from 'react-dom';
 
 const logger = createLogger('chatRenderer');
 
@@ -454,9 +455,8 @@ class ChatRenderer {
           }
           const Element = TGUI_CHAT_COMPONENTS[targetName];
 
-          const reactRoot = createRoot(childNode);
           /* eslint-disable react/no-danger */
-          reactRoot.render(
+          render(
             <Element {...outputProps}>
               <span dangerouslySetInnerHTML={oldHtml} />
             </Element>,

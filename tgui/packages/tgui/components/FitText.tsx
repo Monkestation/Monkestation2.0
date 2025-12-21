@@ -1,5 +1,4 @@
 import { Component, createRef, RefObject } from 'react';
-import type { Inferno } from 'react';
 
 const DEFAULT_ACCEPTABLE_DIFFERENCE = 5;
 
@@ -8,7 +7,8 @@ export class FitText extends Component<
     acceptableDifference?: number;
     maxWidth: number;
     maxFontSize: number;
-    native?: Inferno.HTMLAttributes<HTMLDivElement>;
+    native?: React.HTMLAttributes<HTMLDivElement>;
+    children: React.ReactNode;
   },
   {
     fontSize: number;
@@ -19,8 +19,8 @@ export class FitText extends Component<
     fontSize: 0,
   };
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.resize = this.resize.bind(this);
 

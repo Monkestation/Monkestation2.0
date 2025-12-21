@@ -93,7 +93,7 @@ export class Section extends Component<SectionProps> {
         <div className="Section__rest">
           <div
             ref={this.scrollableRef}
-            onScroll={onScroll}
+            onScroll={onScroll as any}
             className="Section__content"
           >
             {children}

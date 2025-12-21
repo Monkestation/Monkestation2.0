@@ -4,7 +4,6 @@ import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
 import { Box, Button, Icon, Stack } from '../components';
 import { Window } from '../layouts';
-import type { ReactNode } from 'react';
 
 const ROWS = 5;
 const COLUMNS = 6;
@@ -17,10 +16,7 @@ const getGridSpotKey = (spot: [number, number]): GridSpotKey => {
   return `${spot[0]}/${spot[1]}`;
 };
 
-const CornerText = (props: {
-  align: 'left' | 'right';
-  children: string;
-}): ReactNode => {
+const CornerText = (props: { align: 'left' | 'right'; children: string }) => {
   const { align, children } = props;
 
   return (
@@ -29,7 +25,7 @@ const CornerText = (props: {
         position: 'relative',
         left: align === 'left' ? '2px' : '-2px',
         textAlign: align,
-        'text-shadow': '1px 1px 1px #555',
+        textShadow: '1px 1px 1px #555',
       }}
     >
       {children}
@@ -80,7 +76,7 @@ const SLOTS: Record<
     displayName: string;
     gridSpot: GridSpotKey;
     image?: string;
-    additionalComponent?: ReactNode;
+    additionalComponent?: JSX.Element;
   }
 > = {
   eyes: {

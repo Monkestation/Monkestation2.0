@@ -1,11 +1,17 @@
 import './styles/main.scss';
-import { render } from 'react';
 
 import { TguiSay } from './TguiSay';
+import { createRoot, Root } from 'react-dom/client';
+
+let reactRoot: Root | null = null;
 
 document.onreadystatechange = function () {
   if (document.readyState !== 'complete') return;
 
-  const root = document.getElementById('react-root');
-  render(<TguiSay />, root);
+  if (!reactRoot) {
+    const root = document.getElementById('react-root');
+    reactRoot = createRoot(root!);
+  }
+
+  reactRoot?.render(<TguiSay />);
 };

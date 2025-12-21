@@ -11,8 +11,8 @@ type KeyListenerProps = Partial<{
 export class KeyListener extends Component<KeyListenerProps> {
   dispose: () => void;
 
-  constructor() {
-    super();
+  constructor(props: KeyListenerProps) {
+    super(props);
 
     this.dispose = listenForKeyEvents((key) => {
       if (this.props.onKey) {

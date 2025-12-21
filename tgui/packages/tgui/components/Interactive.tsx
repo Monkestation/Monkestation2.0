@@ -13,7 +13,13 @@
  */
 
 import { clamp } from 'common/math';
-import { Component, ReactNode, createRef, RefObject } from 'react';
+import {
+  Component,
+  ReactNode,
+  createRef,
+  RefObject,
+  PropsWithChildren,
+} from 'react';
 
 export interface Interaction {
   left: number;
@@ -51,28 +57,30 @@ const getRelativePosition = (
 export interface InteractiveProps {
   onMove: (interaction: Interaction) => void;
   onKey: (offset: Interaction) => void;
-  children: ReactNode[];
+  children: ReactNode;
   style?: any;
 }
 
-export class Interactive extends Component {
+export class Interactive extends Component<
+  PropsWithChildren<InteractiveProps>
+> {
   containerRef: RefObject<HTMLDivElement>;
   props: InteractiveProps;
 
   constructor(props: InteractiveProps) {
-    super();
+    super(props);
     this.props = props;
     this.containerRef = createRef();
   }
 
-  handleMoveStart = (event: MouseEvent) => {
+  handleMoveStart = (event: React.MouseEvent) => {
     const el = this.containerRef?.current;
     if (!el) return;
 
     // Prevent text selection
     event.preventDefault();
     el.focus();
-    this.props.onMove(getRelativePosition(el, event));
+    this.props.onMove(getRelativePosition(el, event.nativeEvent));
     this.toggleDocumentEvents(true);
   };
 
@@ -98,7 +106,7 @@ export class Interactive extends Component {
     this.toggleDocumentEvents(false);
   };
 
-  handleKeyDown = (event: KeyboardEvent) => {
+  handleKeyDown = (event: React.KeyboardEvent) => {
     const keyCode = event.which || event.keyCode;
 
     // Ignore all keys except arrow ones
@@ -122,7 +130,7 @@ export class Interactive extends Component {
     const toggleEvent = state
       ? parentWindow.addEventListener
       : parentWindow.removeEventListener;
-    toggleEvent('mousemove', this.handleMove);
+    toggleEvent('mousemove', this.handleMove as any);
     toggleEvent('mouseup', this.handleMoveEnd);
   }
 

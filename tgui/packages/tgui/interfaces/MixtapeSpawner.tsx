@@ -62,17 +62,13 @@ export const MixtapeSpawner = (props) => {
                     Character: {selected_cassette.creator_name}
                   </Stack.Item>
                   <Stack.Item>
-                    <span style={{ 'text-decoration': 'underline' }}>
-                      Side 1:
-                    </span>
+                    <span style={{ textDecoration: 'underline' }}>Side 1:</span>
                   </Stack.Item>
                   {selected_cassette.song_names.side1.map((songs) => (
                     <Stack.Item key={songs}>{songs}</Stack.Item>
                   ))}
                   <Stack.Item>
-                    <span style={{ 'text-decoration': 'underline' }}>
-                      Side 2:
-                    </span>
+                    <span style={{ textDecoration: 'underline' }}>Side 2:</span>
                   </Stack.Item>
                   {selected_cassette.song_names.side2.map((songs) => (
                     <Stack.Item key={songs}>{songs}</Stack.Item>

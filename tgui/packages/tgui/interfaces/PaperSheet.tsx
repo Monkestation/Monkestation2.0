@@ -8,7 +8,7 @@ import { Box, Button, Flex, Section, TextArea } from '../components';
 import { Window } from '../layouts';
 import { sanitizeText } from '../sanitize';
 import { marked } from 'marked';
-import { Component, createRef, RefObject, Inferno } from 'react';
+import { Component, createRef, RefObject } from 'react';
 import { clamp } from 'common/math';
 
 const Z_INDEX_STAMP = 1;
@@ -245,7 +245,7 @@ class PaperSheetStamper extends Component<PaperSheetStamperProps> {
 }
 
 // Creates a full stamp div to render the given stamp to the preview.
-export const Stamp = (props): Inferno.HTMLAttributes<HTMLDivElement> => {
+export const Stamp = (props) => {
   const { activeStamp, sprite, x, y, rotation, opacity, yOffset = 0 } = props;
   const stamp_transform = {
     left: x + 'px',
@@ -946,7 +946,7 @@ export class PreviewView extends Component<PreviewViewProps> {
     }
 
     const textHTML = {
-      __html: `<span class='paper-text'>${previewText}</span>`,
+      __html: `<span className='paper-text'>${previewText}</span>`,
     };
 
     const { scrollableRef, handleOnScroll } = this.props;

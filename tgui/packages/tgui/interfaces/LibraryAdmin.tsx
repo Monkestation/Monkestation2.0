@@ -456,7 +456,7 @@ const ModifyPage = (props) => {
             <Table.Cell
               className="LibraryAdmin_RecordCell"
               style={{
-                'white-space': 'pre-wrap',
+                whiteSpace: 'pre-wrap',
               }}
             >
               {entry.reason}

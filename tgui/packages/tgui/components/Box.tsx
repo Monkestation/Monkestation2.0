@@ -5,9 +5,10 @@
  */
 
 import { BooleanLike, classes } from 'common/react';
-import { Inferno, createVNode, ReactNode } from 'react';
-import { ChildFlags, VNodeFlags } from 'inferno-vnode-flags';
+import { createElement, ReactNode } from 'react';
+
 import { CSS_COLORS } from '../constants';
+import { logger } from '../logging';
 
 export type BoxProps = {
   [key: string]: any;
@@ -59,21 +60,25 @@ export type BoxProps = {
   fillPositionedParent?: boolean;
 };
 
+// Don't you dare put this elsewhere
+type DangerDoNotUse = {
+  dangerouslySetInnerHTML?: {
+    __html: any;
+  };
+};
+
 /**
  * Coverts our rem-like spacing unit into a CSS unit.
  */
-export const unit = (value: unknown): string | undefined => {
+export const unit = (value: unknown) => {
   if (typeof value === 'string') {
     // Transparently convert pixels into rem units
-    if (value.endsWith('px') && !Byond.IS_LTE_IE8) {
+    if (value.endsWith('px')) {
       return parseFloat(value) / 12 + 'rem';
     }
     return value;
   }
   if (typeof value === 'number') {
-    if (Byond.IS_LTE_IE8) {
-      return value * 12 + 'px';
-    }
     return value + 'rem';
   }
 };
@@ -81,7 +86,7 @@ export const unit = (value: unknown): string | undefined => {
 /**
  * Same as `unit`, but half the size for integers numbers.
  */
-export const halfUnit = (value: unknown): string | undefined => {
+export const halfUnit = (value: unknown) => {
   if (typeof value === 'string') {
     return unit(value);
   }
@@ -93,7 +98,7 @@ export const halfUnit = (value: unknown): string | undefined => {
 const isColorCode = (str: unknown) => !isColorClass(str);
 
 const isColorClass = (str: unknown): boolean => {
-  return typeof str === 'string' && CSS_COLORS.includes(str);
+  return typeof str === 'string' && CSS_COLORS.includes(str as any);
 };
 
 const mapRawPropTo = (attrName) => (style, value) => {
@@ -128,24 +133,30 @@ const mapColorPropTo = (attrName) => (style, value) => {
   }
 };
 
-const styleMapperByPropName = {
-  // Direct mapping
-  position: mapRawPropTo('position'),
-  overflow: mapRawPropTo('overflow'),
-  overflowX: mapRawPropTo('overflow-x'),
-  overflowY: mapRawPropTo('overflow-y'),
-  top: mapUnitPropTo('top', unit),
+// String / number props
+const stringStyleMap = {
+  align: mapRawPropTo('textAlign'),
   bottom: mapUnitPropTo('bottom', unit),
-  left: mapUnitPropTo('left', unit),
-  right: mapUnitPropTo('right', unit),
-  width: mapUnitPropTo('width', unit),
-  minWidth: mapUnitPropTo('minWidth', unit),
-  maxWidth: mapUnitPropTo('max-width', unit),
-  height: mapUnitPropTo('height', unit),
-  minHeight: mapUnitPropTo('min-height', unit),
-  maxHeight: mapUnitPropTo('max-height', unit),
-  fontSize: mapUnitPropTo('fontSize', unit),
   fontFamily: mapRawPropTo('fontFamily'),
+  fontSize: mapUnitPropTo('fontSize', unit),
+  fontWeight: mapRawPropTo('fontWeight'),
+  height: mapUnitPropTo('height', unit),
+  left: mapUnitPropTo('left', unit),
+  maxHeight: mapUnitPropTo('maxHeight', unit),
+  maxWidth: mapUnitPropTo('maxWidth', unit),
+  minHeight: mapUnitPropTo('minHeight', unit),
+  minWidth: mapUnitPropTo('minWidth', unit),
+  opacity: mapRawPropTo('opacity'),
+  overflow: mapRawPropTo('overflow'),
+  overflowX: mapRawPropTo('overflowX'),
+  overflowY: mapRawPropTo('overflowY'),
+  position: mapRawPropTo('position'),
+  right: mapUnitPropTo('right', unit),
+  textAlign: mapRawPropTo('textAlign'),
+  top: mapUnitPropTo('top', unit),
+  verticalAlign: mapRawPropTo('verticalAlign'),
+  width: mapUnitPropTo('width', unit),
+
   lineHeight: (style, value) => {
     if (typeof value === 'number') {
       style['lineHeight'] = value;
@@ -153,46 +164,41 @@ const styleMapperByPropName = {
       style['lineHeight'] = unit(value);
     }
   },
-  opacity: mapRawPropTo('opacity'),
-  textAlign: mapRawPropTo('textAlign'),
-  verticalAlign: mapRawPropTo('verticalAlign'),
-  // Boolean props
-  inline: mapBooleanPropTo('display', 'inline-block'),
-  bold: mapBooleanPropTo('fontWeight', 'bold'),
-  italic: mapBooleanPropTo('fontStyle', 'italic'),
-  nowrap: mapBooleanPropTo('white-space', 'nowrap'),
-  preserveWhitespace: mapBooleanPropTo('white-space', 'pre-wrap'),
   // Margin
   m: mapDirectionalUnitPropTo('margin', halfUnit, [
-    'top',
-    'bottom',
-    'left',
-    'right',
+    'Top',
+    'Bottom',
+    'Left',
+    'Right',
   ]),
-  mx: mapDirectionalUnitPropTo('margin', halfUnit, ['left', 'right']),
-  my: mapDirectionalUnitPropTo('margin', halfUnit, ['top', 'bottom']),
-  mt: mapUnitPropTo('marginTop', halfUnit),
   mb: mapUnitPropTo('marginBottom', halfUnit),
   ml: mapUnitPropTo('marginLeft', halfUnit),
   mr: mapUnitPropTo('marginRight', halfUnit),
+  mt: mapUnitPropTo('marginTop', halfUnit),
+  mx: mapDirectionalUnitPropTo('margin', halfUnit, ['Left', 'Right']),
+  my: mapDirectionalUnitPropTo('margin', halfUnit, ['Top', 'Bottom']),
   // Padding
   p: mapDirectionalUnitPropTo('padding', halfUnit, [
-    'top',
-    'bottom',
-    'left',
-    'right',
+    'Top',
+    'Bottom',
+    'Left',
+    'Right',
   ]),
-  px: mapDirectionalUnitPropTo('padding', halfUnit, ['left', 'right']),
-  py: mapDirectionalUnitPropTo('padding', halfUnit, ['top', 'bottom']),
-  pt: mapUnitPropTo('paddingTop', halfUnit),
   pb: mapUnitPropTo('paddingBottom', halfUnit),
   pl: mapUnitPropTo('paddingLeft', halfUnit),
   pr: mapUnitPropTo('paddingRight', halfUnit),
+  pt: mapUnitPropTo('paddingTop', halfUnit),
+  px: mapDirectionalUnitPropTo('padding', halfUnit, ['Left', 'Right']),
+  py: mapDirectionalUnitPropTo('padding', halfUnit, ['Top', 'Bottom']),
   // Color props
   color: mapColorPropTo('color'),
   textColor: mapColorPropTo('color'),
   backgroundColor: mapColorPropTo('backgroundColor'),
-  // Utility props
+} as const;
+
+// Boolean props
+const booleanStyleMap = {
+  bold: mapBooleanPropTo('fontWeight', 'bold'),
   fillPositionedParent: (style, value) => {
     if (value) {
       style['position'] = 'absolute';
@@ -202,44 +208,37 @@ const styleMapperByPropName = {
       style['right'] = 0;
     }
   },
-};
+  inline: mapBooleanPropTo('display', 'inline-block'),
+  italic: mapBooleanPropTo('fontStyle', 'italic'),
+  nowrap: mapBooleanPropTo('whiteSpace', 'nowrap'),
+  preserveWhitespace: mapBooleanPropTo('whiteSpace', 'pre-wrap'),
+} as const;
 
-export const computeBoxProps = (props: BoxProps) => {
-  const computedProps: Inferno.HTMLAttributes<any> = {};
-  const computedStyles = {};
+export const computeBoxProps = (props) => {
+  const computedProps: Record<string, any> = {};
+  const computedStyles: Record<string, string | number> = {};
+
   // Compute props
   for (let propName of Object.keys(props)) {
     if (propName === 'style') {
       continue;
     }
-    // IE8: onclick workaround
-    if (Byond.IS_LTE_IE8 && propName === 'onClick') {
-      computedProps.onclick = props[propName];
-      continue;
-    }
+
     const propValue = props[propName];
-    const mapPropToStyle = styleMapperByPropName[propName];
+
+    const mapPropToStyle =
+      stringStyleMap[propName] || booleanStyleMap[propName];
+
     if (mapPropToStyle) {
       mapPropToStyle(computedStyles, propValue);
     } else {
       computedProps[propName] = propValue;
     }
   }
-  // Concatenate styles
-  let style = '';
-  for (let attrName of Object.keys(computedStyles)) {
-    const attrValue = computedStyles[attrName];
-    style += attrName + ':' + attrValue + ';';
-  }
-  if (props.style) {
-    for (let attrName of Object.keys(props.style)) {
-      const attrValue = props.style[attrName];
-      style += attrName + ':' + attrValue + ';';
-    }
-  }
-  if (style.length > 0) {
-    computedProps.style = style;
-  }
+
+  // Merge computed styles and any directly provided styles
+  computedProps.style = { ...computedStyles, ...props.style };
+
   return computedProps;
 };
 
@@ -252,25 +251,28 @@ export const computeBoxClassName = (props: BoxProps) => {
   ]);
 };
 
-export const Box = (props: BoxProps) => {
+export const Box = (props: BoxProps & DangerDoNotUse) => {
   const { as = 'div', className, children, ...rest } = props;
-  // Render props
-  if (typeof children === 'function') {
-    return children(computeBoxProps(props));
-  }
-  const computedClassName =
-    typeof className === 'string'
-      ? className + ' ' + computeBoxClassName(rest)
-      : computeBoxClassName(rest);
+
+  // Compute class name and styles
+  const computedClassName = className
+    ? `${className} ${computeBoxClassName(rest)}`
+    : computeBoxClassName(rest);
   const computedProps = computeBoxProps(rest);
-  // Render a wrapper element
-  return createVNode(
-    VNodeFlags.HtmlElement,
-    as,
-    computedClassName,
+
+  if (as === 'img') {
+    logger.error(
+      'Box component cannot be used as an image. Use Image component instead.',
+    );
+  }
+
+  // Render the component
+  return createElement(
+    typeof as === 'string' ? as : 'div',
+    {
+      ...computedProps,
+      className: computedClassName,
+    },
     children,
-    ChildFlags.UnknownChildren,
-    computedProps,
-    undefined,
   );
 };

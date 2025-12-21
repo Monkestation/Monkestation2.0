@@ -16,7 +16,7 @@ plugins:
   - unused-imports
 settings:
   react:
-    version: '19.2.3'
+    version: '18.3.27'
 rules:
   ## Possible Errors
   ## ----------------------------------------

@@ -128,7 +128,7 @@ class PaintCanvas extends Component<PaintCanvasProps> {
     return { x, y };
   }
 
-  handleStartDrawing(event: MouseEvent) {
+  handleStartDrawing(event: React.MouseEvent) {
     if (
       !this.props.editable ||
       this.props.drawing_color === undefined ||
@@ -140,7 +140,7 @@ class PaintCanvas extends Component<PaintCanvasProps> {
     this.modifiedElements = [];
     this.drawing = true;
     this.drawing_color = this.props.drawing_color;
-    const coords = this.eventToCoords(event);
+    const coords = this.eventToCoords(event.nativeEvent);
     this.drawPoint(coords.x, coords.y, this.drawing_color);
   }
 
@@ -158,15 +158,15 @@ class PaintCanvas extends Component<PaintCanvasProps> {
     }
   }
 
-  handleDrawing(event: MouseEvent) {
+  handleDrawing(event: React.MouseEvent) {
     if (!this.drawing) {
       return;
     }
-    const coords = this.eventToCoords(event);
+    const coords = this.eventToCoords(event.nativeEvent);
     this.drawPoint(coords.x, coords.y, this.drawing_color);
   }
 
-  handleEndDrawing(event: MouseEvent) {
+  handleEndDrawing(event: React.MouseEvent) {
     if (!this.drawing) {
       return;
     }
@@ -178,12 +178,12 @@ class PaintCanvas extends Component<PaintCanvasProps> {
     }
   }
 
-  handleDropper(event: MouseEvent) {
+  handleDropper(event: React.MouseEvent) {
     event.preventDefault();
     if (!this.props.has_palette) {
       return;
     }
-    const coords = this.eventToCoords(event);
+    const coords = this.eventToCoords(event.nativeEvent);
     this.onCanvasDropper(coords.x + 1, coords.y + 1); // 1-based index dm side
   }
 

@@ -8,7 +8,7 @@ import {
   Tooltip,
   Icon,
 } from '../../components';
-import { Component, RefObject, createRef, Inferno } from 'react';
+import { Component, RefObject, createRef } from 'react';
 import { NtMessage, NtMessenger, NtPicture } from './types';
 import { BooleanLike } from 'common/react';
 import { useBackend } from '../../backend';
@@ -174,7 +174,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
     } = this.props;
     const { message, canSend, previewingImage, selectingPhoto } = this.state;
 
-    let filteredMessages: Element[] = [];
+    let filteredMessages: JSX.Element[] = [];
 
     for (let index = 0; index < messages.length; index++) {
       const message = messages[index];
@@ -205,7 +205,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
       );
     }
 
-    let sendingBar: Element;
+    let sendingBar: React.JSX.Element;
 
     if (!canReply) {
       sendingBar = (
@@ -433,7 +433,7 @@ const ChatMessage = (props: ChatMessageProps) => {
   );
 };
 
-const ChatDivider: Inferno.SFC<{ mt: number }> = (props) => {
+const ChatDivider: React.FC<{ mt: number }> = (props) => {
   return (
     <Box className="UnreadDivider" m={0} mt={props.mt}>
       <div />

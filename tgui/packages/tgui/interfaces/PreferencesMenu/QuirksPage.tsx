@@ -1,4 +1,3 @@
-import type { Inferno } from 'react';
 import { Box, Icon, Stack, Tooltip } from '../../components';
 import { PreferencesMenuData, Quirk } from './data';
 import { useBackend } from '../../backend';
@@ -44,7 +43,7 @@ const QuirkList = (props: {
                 align="center"
                 style={{
                   minWidth: '15%',
-                  'max-width': '15%',
+                  maxWidth: '15%',
                   textAlign: 'center',
                 }}
               >
@@ -122,7 +121,7 @@ const QuirkList = (props: {
   );
 };
 
-const StatDisplay: Inferno.StatelessComponent<{}> = (props) => {
+const StatDisplay: React.FC<{ children: React.ReactNode }> = (props) => {
   return (
     <Box
       backgroundColor="#eee"

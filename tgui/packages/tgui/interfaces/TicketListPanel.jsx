@@ -213,7 +213,9 @@ export const TicketSummary = (props) => {
       <br />
       Admin: {ticket.admin_key ? ticket.admin_key : 'UNCLAIMED'}
       <br />
-      <span class="color-bad">{!ticket.has_client ? 'DISCONNECTED' : ''}</span>
+      <span className="color-bad">
+        {!ticket.has_client ? 'DISCONNECTED' : ''}
+      </span>
       <Section level="2">
         {buttons.map((button_row, i) => (
           <Flex direction="row" key={i}>

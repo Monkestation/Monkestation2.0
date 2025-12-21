@@ -9,7 +9,6 @@ import {
 } from '../components';
 import { Window } from '../layouts';
 import { Color } from 'common/color';
-import { Inferno } from 'react';
 import { JOB2ICON } from './common/JobToIcon';
 import { deepMerge } from 'common/collections';
 import { BooleanLike } from 'common/react';
@@ -41,7 +40,7 @@ type Data = {
   notices: LobbyNoticesType;
 };
 
-export const JobEntry: Inferno.SFC<{
+export const JobEntry: React.FC<{
   jobName: string;
   job: Job;
   department: Department;
@@ -89,7 +88,7 @@ export const JobEntry: Inferno.SFC<{
         {job.command ? <b>{jobName}</b> : jobName}
         <span
           style={{
-            'white-space': 'nowrap',
+            whiteSpace: 'nowrap',
             position: 'absolute',
             right: '0.5em',
           }}
@@ -154,7 +153,7 @@ export const JobSelection = (props) => {
                         <span
                           style={{
                             fontSize: '1rem',
-                            'white-space': 'nowrap',
+                            whiteSpace: 'nowrap',
                             position: 'absolute',
                             right: '1em',
                             color: Color.fromHex(entry.color)

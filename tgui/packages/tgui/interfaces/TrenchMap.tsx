@@ -164,7 +164,7 @@ const YouAreHere = (_props) => {
   } = useBackend<Data>();
 
   if (!x || !y) {
-    return;
+    return null;
   }
 
   const RADIUS = 1;

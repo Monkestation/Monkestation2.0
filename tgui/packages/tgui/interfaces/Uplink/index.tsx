@@ -366,7 +366,7 @@ export class Uplink extends Component<{}, UplinkState> {
                           <Tabs.Tab
                             style={{
                               overflow: 'hidden',
-                              'white-space': 'nowrap',
+                              whiteSpace: 'nowrap',
                               'text-overflow': 'ellipsis',
                             }}
                             icon="star"
@@ -380,7 +380,7 @@ export class Uplink extends Component<{}, UplinkState> {
                           <Tabs.Tab
                             style={{
                               overflow: 'hidden',
-                              'white-space': 'nowrap',
+                              whiteSpace: 'nowrap',
                               'text-overflow': 'ellipsis',
                             }}
                             icon="star-half-stroke"
@@ -394,7 +394,7 @@ export class Uplink extends Component<{}, UplinkState> {
                           <Tabs.Tab
                             style={{
                               overflow: 'hidden',
-                              'white-space': 'nowrap',
+                              whiteSpace: 'nowrap',
                               'text-overflow': 'ellipsis',
                             }}
                             icon="dollar-sign"
@@ -407,7 +407,7 @@ export class Uplink extends Component<{}, UplinkState> {
                         <Tabs.Tab
                           style={{
                             overflow: 'hidden',
-                            'white-space': 'nowrap',
+                            whiteSpace: 'nowrap',
                             'text-overflow': 'ellipsis',
                           }}
                           icon="store"

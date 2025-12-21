@@ -96,7 +96,7 @@ export const ModulesPane = (props) => {
                   <Stack.Item
                     lineHeight="32px"
                     style={{
-                      'text-transform': 'capitalize',
+                      textTransform: 'capitalize',
                       overflow: 'hidden',
                       'text-overflow': 'ellipsis',
                     }}
@@ -128,7 +128,7 @@ export const ModulesPane = (props) => {
                   <Stack.Item
                     lineHeight="32px"
                     style={{
-                      'text-transform': 'capitalize',
+                      textTransform: 'capitalize',
                       overflow: 'hidden',
                       'text-overflow': 'ellipsis',
                     }}
@@ -160,7 +160,7 @@ export const ModuleDetails = (props) => {
           <Stack.Item>
             <Stack>
               <Stack.Item grow>
-                <h2 style={{ 'text-transform': 'capitalize' }}>{name}</h2>
+                <h2 style={{ textTransform: 'capitalize' }}>{name}</h2>
                 <Box italic opacity={0.5}>
                   {moduleSlotLabel(slot)}
                 </Box>
@@ -810,7 +810,7 @@ const SnowflakeOrebox = (props) => {
             <Stack.Item
               lineHeight="24px"
               style={{
-                'text-transform': 'capitalize',
+                textTransform: 'capitalize',
                 overflow: 'hidden',
                 'text-overflow': 'ellipsis',
               }}
@@ -853,7 +853,7 @@ const SnowflakeCargo = (props) => {
                 })
               }
               style={{
-                'text-transform': 'capitalize',
+                textTransform: 'capitalize',
               }}
             >
               {item.name}

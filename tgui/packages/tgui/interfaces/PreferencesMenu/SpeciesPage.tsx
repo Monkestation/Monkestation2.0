@@ -173,7 +173,7 @@ const SpeciesPerk = (props: { className: string; perk: Perk }) => {
         </Box>
       }
     >
-      <Box class={className} width="32px" height="32px">
+      <Box className={className} width="32px" height="32px">
         <Icon
           name={perk.ui_icon}
           size={1.5}

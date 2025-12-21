@@ -327,8 +327,8 @@ const arrayRemove = function (arr: any, value) {
 };
 
 export class PlaneMasterDebug extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.handlePortClick = this.handlePortClick.bind(this);
   }
 
@@ -570,8 +570,8 @@ class Port extends Component<PortProps> {
   // But it's how it was being done in circuit code, so eh
   iconRef: RefObject<SVGCircleElement> | RefObject<HTMLSpanElement> | any;
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.iconRef = createRef();
     this.handlePortMouseDown = this.handlePortMouseDown.bind(this);
   }

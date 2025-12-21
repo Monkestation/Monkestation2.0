@@ -59,7 +59,7 @@ export const GenericUplink = (props: GenericUplinkProps) => {
                   lineHeight={2}
                   style={{
                     overflow: 'hidden',
-                    'white-space': 'nowrap',
+                    whiteSpace: 'nowrap',
                     'text-overflow': 'ellipsis',
                     textAlign: 'center',
                   }}
@@ -190,7 +190,7 @@ const ItemList = (props: ItemListProps) => {
                         lineHeight="36px"
                         style={{
                           overflow: 'hidden',
-                          'white-space': 'nowrap',
+                          whiteSpace: 'nowrap',
                           'text-overflow': 'ellipsis',
                         }}
                       >

@@ -378,7 +378,7 @@ const ObjectiveBox = (props: ObjectiveBoxProps) => {
         <Stack.Item
           style={{
             'text-overflow': 'ellipsis',
-            'white-space': 'nowrap',
+            whiteSpace: 'nowrap',
             overflow: 'hidden',
           }}
         >
@@ -406,7 +406,7 @@ const ObjectiveBox = (props: ObjectiveBoxProps) => {
               (objective.progression_reward[1] / sizeLimit) * window.innerWidth
             }px`}
             style={{
-              'white-space': 'nowrap',
+              whiteSpace: 'nowrap',
             }}
           >
             {objective.progression_reward[0] / 600}
@@ -421,7 +421,7 @@ const ObjectiveBox = (props: ObjectiveBoxProps) => {
             backgroundColor="red"
             width={`${objective.telecrystal_reward[1] * 10}px`}
             style={{
-              'white-space': 'nowrap',
+              whiteSpace: 'nowrap',
             }}
           >
             {objective.telecrystal_reward[0]}

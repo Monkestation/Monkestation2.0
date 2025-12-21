@@ -1,6 +1,6 @@
 import { Channel, ChannelIterator } from './ChannelIterator';
 import { ChatHistory } from './ChatHistory';
-import { Component, createRef, InfernoKeyboardEvent, RefObject } from 'react';
+import { Component, createRef, RefObject } from 'react';
 import { LINE_LENGTHS, RADIO_PREFIXES, WINDOW_SIZES } from './constants';
 import { byondMessages } from './timers';
 import { dragStartHandler } from 'tgui/drag';
@@ -138,13 +138,13 @@ export class TguiSay extends Component<{}, State> {
     this.setSize(typed?.length);
   }
 
-  handleButtonClick(event: MouseEvent): void {
+  handleButtonClick(event: React.MouseEvent<HTMLButtonElement>): void {
     this.isDragging = true;
 
     setTimeout(() => {
       // So the button doesn't jump around accidentally
       if (this.isDragging) {
-        dragStartHandler(event);
+        dragStartHandler(event.nativeEvent);
       }
     }, 50);
   }
@@ -262,7 +262,7 @@ export class TguiSay extends Component<{}, State> {
     this.setValue(typed.slice(3));
   }
 
-  handleKeyDown(event: InfernoKeyboardEvent<HTMLTextAreaElement>) {
+  handleKeyDown(event: React.KeyboardEvent<HTMLTextAreaElement>) {
     switch (event.key) {
       case KEY.Up:
       case KEY.Down:
@@ -356,19 +356,15 @@ export class TguiSay extends Component<{}, State> {
       this.channelIterator.current();
 
     return (
-      <div
-        className={`window window-${theme} window-${this.state.size}`}
-        $HasKeyedChildren
-      >
+      <div className={`window window-${theme} window-${this.state.size}`}>
         <Dragzone position="top" theme={theme} />
-        <div className="center" $HasKeyedChildren>
+        <div className="center">
           <Dragzone position="left" theme={theme} />
           <div
             className="input"
             style={{
               zoom: this.scale ? '' : `${100 / window.devicePixelRatio}%`,
             }}
-            $HasKeyedChildren
           >
             <button
               className={`button button-${theme}`}
@@ -405,7 +401,7 @@ const Dragzone = ({ theme, position }: { theme: string; position: string }) => {
   return (
     <div
       className={`dragzone-${location} dragzone-${position} dragzone-${theme}`}
-      onmousedown={dragStartHandler}
+      onMouseDown={(evt) => dragStartHandler(evt.nativeEvent)}
     />
   );
 };

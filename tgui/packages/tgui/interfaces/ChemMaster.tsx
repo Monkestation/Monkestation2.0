@@ -271,7 +271,7 @@ const ChemMasterContent = (props) => {
             <Box
               lineHeight={1.9}
               style={{
-                'text-shadow': '1px 1px 0 black',
+                textShadow: '1px 1px 0 black',
               }}
             >
               {`Printing ${printingProgress} out of ${printingTotal}`}
@@ -434,7 +434,7 @@ const AnalysisResults = (props) => {
         <LabeledList.Item label="Purity">
           <Box
             style={{
-              'text-transform': 'capitalize',
+              textTransform: 'capitalize',
             }}
             color={purityLevel}
           >
@@ -470,7 +470,7 @@ const GroupTitle = ({ title }) => {
       </Stack.Item>
       <Stack.Item
         style={{
-          'text-transform': 'capitalize',
+          textTransform: 'capitalize',
         }}
         color={'gray'}
       >

@@ -26,7 +26,7 @@ export const ATM = (props) => {
             <Stack.Item>
               <Box>
                 Current Monkecoin Balance: {meta_balance}{' '}
-                <i class="fa-solid fa-coins" />
+                <i className="fa-solid fa-coins" />
               </Box>
             </Stack.Item>
             <Stack.Item>

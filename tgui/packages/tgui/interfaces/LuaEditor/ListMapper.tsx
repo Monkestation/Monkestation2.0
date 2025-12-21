@@ -1,4 +1,5 @@
 import { BooleanLike } from 'common/react';
+import { isValidElement } from 'react';
 
 import { useBackend } from '../../backend';
 import {
@@ -13,7 +14,6 @@ import { BoxProps } from '../../components/Box';
 import { logger } from '../../logging';
 import { CallInfo, LuaEditorModal, Variant, VariantList } from './types';
 import { ListElement, ListPath } from './types';
-import { isValidElement } from 'inferno-compat';
 
 const mapListVariantsInner = (value: any, variant: Variant) => {
   if (Array.isArray(variant)) {

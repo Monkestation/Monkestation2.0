@@ -374,7 +374,7 @@ const SuitStatusSection = (props) => {
               bad: [-Infinity, 0.3],
             }}
             style={{
-              'text-shadow': '1px 1px 0 black',
+              textShadow: '1px 1px 0 black',
             }}
           >
             {!core_name
@@ -461,7 +461,7 @@ const HardwareSection = (props) => {
   const { control, helmet, chestplate, gauntlets, boots } = data;
   const { ai_name, core_name } = data.suit_status;
   return (
-    <Section title="Hardware" style={{ 'text-transform': 'capitalize' }}>
+    <Section title="Hardware" style={{ textTransform: 'capitalize' }}>
       <LabeledList>
         <LabeledList.Item label="AI Assistant">
           {ai_name || 'No AI Detected'}

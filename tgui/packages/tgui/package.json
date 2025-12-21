@@ -12,13 +12,13 @@
 		"highlight.js": "^11.9.0",
 		"js-yaml": "^4.1.0",
 		"marked": "^4.2.12",
-		"react": "^19.2.3",
-		"react-dom": "^19.2.3",
+		"react": "^18.0.0",
+		"react-dom": "^18.0.0",
 		"tgui-dev-server": "workspace:*",
 		"tgui-polyfill": "workspace:*"
 	},
 	"devDependencies": {
-		"@types/react": "^19",
-		"@types/react-dom": "^19"
+		"@types/react": "^18.0.0",
+		"@types/react-dom": "^18.0.0"
 	}
 }

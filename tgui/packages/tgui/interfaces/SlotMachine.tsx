@@ -41,7 +41,7 @@ const SlotsReel = (props: SlotsReelProps) => {
     <div
       style={{
         display: 'inline-flex',
-        'flex-direction': 'column',
+        flexDirection: 'column',
       }}
     >
       {reel.map((slot, i) => (
@@ -123,7 +123,7 @@ export const SlotMachine = (props) => {
           <hr />
           <Section
             style={{
-              'flex-direction': 'row',
+              flexDirection: 'row',
               display: 'flex',
               'justify-content': 'center',
             }}

@@ -44,7 +44,7 @@ export const OutfitManager = (props) => {
                     shrink={1}
                     style={{
                       overflow: 'hidden',
-                      'white-space': 'nowrap',
+                      whiteSpace: 'nowrap',
                       'text-overflow': 'ellipsis',
                     }}
                   >
@@ -52,7 +52,7 @@ export const OutfitManager = (props) => {
                       fluid
                       style={{
                         overflow: 'hidden',
-                        'white-space': 'nowrap',
+                        whiteSpace: 'nowrap',
                         'text-overflow': 'ellipsis',
                       }}
                       content={outfit.name}
