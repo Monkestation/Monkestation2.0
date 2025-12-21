@@ -143,12 +143,18 @@
 	proj_pass_rate = 20
 	armor_type = /datum/armor/barricade_security
 
+	light_inner_range = 0.5
+	light_outer_range = 1 // luminosity when locked
+	light_color = COLOR_MAROON
+	light_system = OVERLAY_LIGHT
+
 	var/deploy_time = 5 SECONDS //monkestation edit
 	var/deploy_message = TRUE
-	//monkestation edit: var for setting density
 	var/locked = FALSE
+	/// prevents toggling the lock before the deploy time is done
+	var/deploy_lock = FALSE
+	var/lock_broken = FALSE
 	pass_same_type = FALSE
-
 
 /datum/armor/barricade_security
 	melee = 10
@@ -160,16 +166,40 @@
 
 /obj/structure/barricade/security/Initialize(mapload)
 	. = ..()
+	deploy_lock = TRUE
 	addtimer(CALLBACK(src, PROC_REF(deploy)), deploy_time)
+	update_appearance(UPDATE_OVERLAYS)
+	register_context()
+
+/obj/structure/barricade/security/examine(mob/user)
+	. = ..()
+	if(lock_broken)
+		. += span_warning("Its control panel is smoking slightly.")
+
+/obj/structure/barricade/security/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
+	if(ACCESS_SECURITY in user.get_access())
+		context[SCREENTIP_CONTEXT_RMB] = locked ? "Unlock" : "Lock"
+		return CONTEXTUAL_SCREENTIP_SET
+
+/obj/structure/barricade/security/update_overlays()
+	. = ..()
+	if(locked)
+		. += emissive_appearance(icon, "barrier1-e", src, alpha = src.alpha)
 
 /obj/structure/barricade/security/proc/deploy()
-	toggle_lock() //monkestation edit
+	toggle_lock(force = TRUE)
 	set_anchored(TRUE)
 	if(deploy_message)
 		visible_message(span_warning("[src] deploys!"))
+	deploy_lock = FALSE
 
-//MONKESTATION EDIT START
-/obj/structure/barricade/security/proc/toggle_lock(mob/living/user)
+/obj/structure/barricade/security/proc/toggle_lock(mob/living/user, force = FALSE)
+	if(deploy_lock && !force)
+		return
+	if(lock_broken)
+		balloon_alert(user, "controls fried!")
+		return
 	if(!locked)
 		set_density(TRUE)
 		icon_state = "barrier1"
@@ -180,8 +210,8 @@
 		icon_state = "barrier0"
 		locked = FALSE
 		playsound(src, 'sound/machines/boltsdown.ogg', 45)
+	update_appearance(UPDATE_ICON)
 	balloon_alert(user, "barrier [locked ? "locked" : "unlocked"]")
-	update_appearance()
 
 /obj/structure/barricade/security/attackby(obj/item/tool, mob/living/user, params)
 	if(tool.GetID())
@@ -195,9 +225,6 @@
 
 /obj/structure/barricade/security/attack_hand_secondary(mob/living/user, list/modifiers)
 	. = ..()
-	if(.)
-		return
-
 	if(ACCESS_SECURITY in user.get_access())
 		toggle_lock(user)
 	else
@@ -215,11 +242,18 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/barricade/security/emp_act(severity)
-	toggle_lock()
+	toggle_lock(force = TRUE)
+	if(severity == EMP_HEAVY)
+		lock_broken = TRUE
+		do_sparks(rand(1,3), FALSE, src)
 
-/obj/structure/barricade/security/emag_act()
-	toggle_lock()
-//MONKESTATION EDIT STOP
+/obj/structure/barricade/security/emag_act(mob/user)
+	if(!lock_broken)
+		toggle_lock(force = TRUE)
+		lock_broken = TRUE
+		balloon_alert(user, "controls overloaded!")
+		obj_flags |= EMAGGED
+		do_sparks(rand(1,3), FALSE, src)
 
 /obj/item/grenade/barrier
 	name = "barrier grenade"
@@ -232,7 +266,7 @@
 
 /obj/item/grenade/barrier/examine(mob/user)
 	. = ..()
-	. += span_notice("Current Mode: [mode].  Alt-click to toggle modes.")
+	. += span_notice("Current Mode: [capitalize(mode)].  Alt-click to toggle modes.")
 
 /obj/item/grenade/barrier/Initialize(mapload)
 	. = ..()
@@ -240,7 +274,9 @@
 
 /obj/item/grenade/barrier/update_overlays()
 	. = ..()
-	. += emissive_appearance(icon, "[icon_state]-[mode]", src, alpha = src.alpha)
+	. += mutable_appearance(icon, "wallbang-[mode]")
+	. += emissive_appearance(icon, "wallbang-[mode]", src, alpha = src.alpha)
+
 
 /obj/item/grenade/barrier/click_alt(mob/living/carbon/user)
 	toggle_mode(user)

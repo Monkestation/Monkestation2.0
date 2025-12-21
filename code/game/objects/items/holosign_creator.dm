@@ -71,6 +71,17 @@
 	target_holosign = create_holosign(interacting_with, user)
 	return ITEM_INTERACT_SUCCESS
 
+/obj/item/holosign_creator/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!check_allowed_items(interacting_with, not_inside = TRUE))
+		return NONE
+
+	var/turf/target_turf = get_turf(interacting_with)
+	var/obj/structure/holosign/target_holosign = locate(holosign_type) in target_turf
+	if(target_holosign)
+		qdel(target_holosign)
+		balloon_alert(user, "hologram cleared")
+	return ITEM_INTERACT_SUCCESS
+
 /obj/item/holosign_creator/attack(mob/living/carbon/human/M, mob/user)
 	return
 
