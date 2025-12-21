@@ -18,3 +18,5 @@
 
 /// The maximum amount of songs one side of a cassette tape can hold.
 #define MAX_SONGS_PER_CASSETTE_SIDE 7
+
+#define PLAY_CASSETTE_SOUND(sfx) playsound(src, ##sfx, vol = 90, vary = FALSE, mixer_channel = CHANNEL_MACHINERY)

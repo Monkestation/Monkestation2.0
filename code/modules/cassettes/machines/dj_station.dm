@@ -1,5 +1,3 @@
-#define PLAY_CASSETTE_SOUND(sfx) playsound(src, ##sfx, vol = 90, vary = FALSE, mixer_channel = CHANNEL_MACHINERY)
-
 GLOBAL_DATUM(dj_booth, /obj/machinery/dj_station)
 
 /obj/machinery/dj_station
@@ -400,7 +398,7 @@ GLOBAL_DATUM(dj_booth, /obj/machinery/dj_station)
 	if(GLOB.dj_booth != src || !broadcasting || !music_endpoint || !playing)
 		return
 	for(var/mob/listener as anything in GLOB.music_listeners)
-		if(QDELETED(listener) || !listener.client?.fully_created || !listener.client?.prefs?.read_preference(/datum/preference/toggle/hear_music))
+		if(QDELETED(listener) || !listener.client?.fully_created || HAS_TRAIT(listener, TRAIT_LISTENING_TO_WALKMAN) || !listener.client?.prefs?.read_preference(/datum/preference/toggle/hear_music))
 			continue
 		listener.client?.tgui_panel?.play_music(music_endpoint, playing_extra_data)
 
@@ -408,7 +406,7 @@ GLOBAL_DATUM(dj_booth, /obj/machinery/dj_station)
 	if(GLOB.dj_booth != src)
 		return
 	for(var/mob/listener as anything in GLOB.music_listeners)
-		if(QDELETED(listener))
+		if(QDELETED(listener) || HAS_TRAIT(listener, TRAIT_LISTENING_TO_WALKMAN))
 			continue
 		listener.client?.tgui_panel?.stop_music()
 
@@ -419,7 +417,7 @@ GLOBAL_DATUM(dj_booth, /obj/machinery/dj_station)
 /obj/machinery/dj_station/proc/play_for_listener(mob/listener)
 	if(GLOB.dj_booth != src || !broadcasting || !music_endpoint || !playing)
 		return
-	if(QDELETED(listener) || !HAS_TRAIT(listener, TRAIT_CAN_HEAR_MUSIC) || !listener.client?.prefs?.read_preference(/datum/preference/toggle/hear_music))
+	if(QDELETED(listener) || !HAS_TRAIT(listener, TRAIT_CAN_HEAR_MUSIC) || HAS_TRAIT(listener, TRAIT_LISTENING_TO_WALKMAN) || !listener.client?.prefs?.read_preference(/datum/preference/toggle/hear_music))
 		return
 	var/list/extra_data = playing_extra_data.Copy()
 	var/start = floor((REALTIMEOFDAY - song_start_time) / 10)
@@ -432,7 +430,7 @@ GLOBAL_DATUM(dj_booth, /obj/machinery/dj_station)
 	if(GLOB.dj_booth != src)
 		return
 	RegisterSignal(listener, COMSIG_TGUI_PANEL_READY, PROC_REF(on_listener_ready))
-	if(!broadcasting || !playing || !music_endpoint || !listener.client?.prefs?.read_preference(/datum/preference/toggle/hear_music))
+	if(!broadcasting || !playing || !music_endpoint || HAS_TRAIT(listener, TRAIT_LISTENING_TO_WALKMAN) || !listener.client?.prefs?.read_preference(/datum/preference/toggle/hear_music))
 		return
 	var/list/extra_data = playing_extra_data.Copy()
 	var/start = floor((REALTIMEOFDAY - song_start_time) / 10)
@@ -445,5 +443,3 @@ GLOBAL_DATUM(dj_booth, /obj/machinery/dj_station)
 	UnregisterSignal(listener, COMSIG_TGUI_PANEL_READY)
 	if(GLOB.dj_booth == src)
 		listener.client?.tgui_panel?.stop_music()
-
-#undef PLAY_CASSETTE_SOUND

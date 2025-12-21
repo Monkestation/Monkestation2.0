@@ -54,14 +54,12 @@
 	contains = list(/obj/item/cassette_tape/blank = 10)
 	crate_name = "cassette crate"
 
-/*
 /datum/supply_pack/service/walkmen
 	name = "Walkman Crate"
 	desc = "In the EXTREMELY unlikely event you have run out of walkmans in the library, this crate has 5 walkman devices for listening to cassettes personally. Cassettes Sold Seperately."
 	cost = CARGO_CRATE_VALUE * 3
 	contains = list(/obj/item/walkman = 5)
 	crate_name = "walkman crate"
-*/
 
 /datum/supply_pack/service/cassettedeck
 	name = "Advanced Cassette Deck Crate"

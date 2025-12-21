@@ -1,363 +1,230 @@
-#define sound_to(target, sound) target << (sound)
-#define NEXT_SONG_USE_TIMER (5 SECONDS)
+
+
 /obj/item/walkman
 	name = "walkman"
 	desc = "A cassette player that first hit the market over 200 years ago. Crazy how these never went out of style. Alt-click removes the Cassette. Ctrl-click changes to the next song"
 	icon = 'icons/obj/cassettes/walkman.dmi'
 	icon_state = "walkman"
 	w_class = WEIGHT_CLASS_SMALL
-	actions_types = list(/datum/action/item_action/walkman/play_pause,/datum/action/item_action/walkman/next_song,/datum/action/item_action/walkman/restart_song)
-	///the cassette tape object
-	var/obj/item/cassette_tape/tape
-	///if the walkman is paused or not
-	var/paused = TRUE
-	///songs inside the current playlist
-	var/list/current_playlist = list()
-	///names of the songs inside the current playlist
-	var/list/current_songnames = list()
-	///Current song being played
-	var/sound/current_song
-	///Who's using the walkman
-	var/mob/current_listener
-	///Client of the listener
-	var/client/listener
-	///where in the playlist you are
-	var/pl_index = 1
-	///volume the walkman starts at
-	var/volume = 25
-	/// What kind of walkman design style to use
+	item_flags = NOBLUDGEON
+	custom_price = PAYCHECK_CREW * 6 // walkman crate is a better deal
+	custom_premium_price = PAYCHECK_CREW * 6
+	actions_types = list(/datum/action/item_action/walkman/play_pause, /datum/action/item_action/walkman/next_song, /datum/action/item_action/walkman/restart_song)
+	/// The currently inserted cassette, if any.
+	var/obj/item/cassette_tape/inserted_tape
+	/// The song currently selected if any.
+	var/datum/cassette_song/current_song
+	/// Is a song currently playing?
+	var/playing = FALSE
+	/// Extra metadata sent to the tgui panel.
+	var/list/playing_extra_data
+	/// The direct URL endpoint of the song being played.
+	var/music_endpoint
+	/// The REALTIMEOFDAY that the current song was started.
+	var/song_start_time
+	/// What kind of walkman design style to use.
 	var/design = 1
-	///Is the current song a link? We handle those different
-	var/link_play = FALSE
-	///time left in current link song, used for a variety of things. One it lets us sync the next song up, two it lets us find out where to resume
-	var/time_left = 0
-	///current_song_duration
-	var/current_song_duration = 0
-	///cooldown used by the next song to stop overlapping sounds between url based songs and normal ones
-	COOLDOWN_DECLARE(next_song_use)
+	/// Are we busy fetching a song?
+	var/busy = FALSE
+	/// The mob currently listening
+	var/mob/living/current_listener
 
-/obj/item/walkman/Initialize(mapload)
-	..()
-	return INITIALIZE_HINT_QDEL // just for now
-
-/*
 /obj/item/walkman/Initialize(mapload)
 	. = ..()
 	design = rand(1, 5)
-	update_icon()
+	update_appearance(UPDATE_OVERLAYS)
 
-/obj/item/walkman/Destroy()
-	QDEL_NULL(tape)
-	break_sound()
-	current_song = null
-	current_listener = null
-	listener = null
-	STOP_PROCESSING(SSprocessing, src)
-	. = ..()
+/obj/item/walkman/Destroy(force)
+	stop_listening()
+	if(!QDELETED(inserted_tape))
+		inserted_tape.forceMove(drop_location())
+	inserted_tape = null
+	return ..()
 
-/obj/item/walkman/attackby(obj/item/cassette, mob/user)
-	if(!istype(cassette, /obj/item/cassette_tape))
+/obj/item/walkman/ui_action_click(mob/user, actiontype)
+	if(busy)
+		user.balloon_alert(user, "walkman busy!")
 		return
-	if(!tape)
-		insert_tape(cassette)
-		playsound(src,'sound/weapons/handcuffs.ogg',20,1)
-		to_chat(user,("You insert \the [cassette] into \the [src]"))
-	else
-		to_chat(user,("Remove the other tape first!"))
-
-/obj/item/walkman/attack_self(mob/user)
-	..()
-
-	if(!current_listener)
-		current_listener = user
-		listener = current_listener.client
-	if(istype(tape))
-		if(paused)
-			play()
-			to_chat(user,("You press [src]'s 'play' button"))
+	if(!inserted_tape)
+		user.balloon_alert(user, "no tape inserted!")
+		return
+	if(istype(actiontype, /datum/action/item_action/walkman/next_song))
+		next_song(user)
+	else if(istype(actiontype, /datum/action/item_action/walkman/restart_song))
+		if(playing)
+			song_start_time = REALTIMEOFDAY
+			play_for_listener(user)
+			user.balloon_alert(user, "song restarted")
 		else
-			pause()
-			to_chat(user,("You pause [src]"))
-		update_icon()
+			user.balloon_alert(user, "no song playing!")
 	else
-		to_chat(user,("There's no tape to play"))
-	playsound(src,'sound/machines/click.ogg',20,1)
+		return ..()
 
-/obj/item/walkman/click_alt(mob/user)
-	if(!tape)
+/obj/item/walkman/attack_self(mob/user, modifiers)
+	if(busy)
+		user.balloon_alert(user, "walkman busy!")
+		return
+	if(!inserted_tape)
+		user.balloon_alert(user, "no tape inserted!")
+		return
+	if(playing)
+		stop_listening(user)
+		user.balloon_alert(user, "stopped song")
+	else if(music_endpoint)
+		playing = TRUE
+		start_listening(user)
+		user.balloon_alert(user, "played song")
+	else
+		user.balloon_alert(user, "no track loaded!")
+
+/obj/item/walkman/update_overlays()
+	. = ..()
+	. += "+[design]"
+	if(inserted_tape)
+		if(playing && music_endpoint)
+			. += "+playing"
+	else
+		. += "+empty"
+
+/obj/item/walkman/item_interaction(mob/living/user, obj/item/cassette_tape/tape, list/modifiers)
+	if(!istype(tape, /obj/item/cassette_tape))
+		return NONE
+	if(busy)
+		user.balloon_alert(user, "walkman busy!")
+		return ITEM_INTERACT_BLOCKING
+	if(inserted_tape)
+		user.balloon_alert(user, "already a tape inserted!")
+		return ITEM_INTERACT_BLOCKING
+	if(busy)
+		user.balloon_alert(user, "walkman busy!")
 		return CLICK_ACTION_BLOCKING
-	eject_tape(user)
-	return CLICK_ACTION_SUCCESS
+	if(!user.transferItemToLoc(tape, src))
+		user.balloon_alert(user, "failed to insert tape!")
+		return ITEM_INTERACT_BLOCKING
+	inserted_tape = tape
+	user.balloon_alert(user, "inserted tape")
+	update_appearance(UPDATE_OVERLAYS)
+	// preemptively queue the first song
+	var/list/songs = inserted_tape.get_current_side()?.songs
+	if(length(songs) > 0)
+		var/datum/cassette_song/first_song = songs[1]
+		SSfloxy.queue_media(first_song.url)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/walkman/item_ctrl_click(mob/user)
-	if(!tape)
+	if(!can_interact(user))
+		return NONE
+	if(!inserted_tape)
+		user.balloon_alert(user, "no tape inserted!")
 		return CLICK_ACTION_BLOCKING
-	next_song(user)
+	if(busy)
+		user.balloon_alert(user, "walkman busy!")
+		return CLICK_ACTION_BLOCKING
+	stop_listening()
+	inserted_tape.forceMove(drop_location())
+	user.put_in_hands(inserted_tape)
+	user.balloon_alert(user, "ejected tape")
+	inserted_tape = null
+	update_appearance(UPDATE_OVERLAYS)
 	return CLICK_ACTION_SUCCESS
 
-///This is called when sound needs to be broken ie you die or lose access to it
-/obj/item/walkman/proc/break_sound()
-	if(link_play)
-		listener.tgui_panel?.stop_music()
-		GLOB.youtube_exempt["walkman"] -= listener
-		if(GLOB.dj_booth && GLOB.dj_broadcast)
-			var/obj/machinery/dj_station/dj = GLOB.dj_booth
-			if(iscarbon(current_listener))
-				dj.check_solo_broadcast(current_listener)
-		return
-	var/sound/break_sound = sound(null, 0, 0, CHANNEL_WALKMAN)
-	break_sound.priority = 255
-	update_song(break_sound, current_listener, 0)
-
-
-/*Called when songs are updated ie volume change
- *Arguments: mob/user -> the current user of the walkman
- * sound/noise -> the sound that is being directed to the user
- */
-/obj/item/walkman/proc/update_song(sound/noise, mob/user, flags = SOUND_UPDATE)
-	if(!istype(user) || !istype(noise)) return
-	if(HAS_TRAIT(user, TRAIT_DEAF))
-		flags |= SOUND_MUTE
-	noise.status = flags
-	noise.volume = src.volume
-	noise.channel = CHANNEL_WALKMAN
-	sound_to(user,noise)
-
-/*Called when music is paused by the user
- *Arguments: mob/user -> the current user of the walkman
- */
-/obj/item/walkman/proc/pause(mob/user)
-	if(!current_song && !link_play)
-		return
-	paused = TRUE
-	STOP_PROCESSING(SSprocessing, src)
-	if(!link_play)
-		update_song(current_song,current_listener, SOUND_PAUSED | SOUND_UPDATE)
-	else
-		listener.tgui_panel?.stop_music()
-
-///Handles the actual playing of the sound to the current_listener
-/obj/item/walkman/proc/play()
-	if(!current_song)
-		if(current_playlist.len > 0)
-			if(is_http_protocol(current_playlist[pl_index]))
-				///invoking youtube-dl
-				var/ytdl = CONFIG_GET(string/invoke_youtubedl)
-				///the input for ytdl handled by the song list
-				var/web_sound_input
-				///the url for youtube-dl
-				var/web_sound_url = ""
-				///all extra data from the youtube-dl really want the name
-				var/list/music_extra_data = list()
-				web_sound_input = trim(current_playlist[pl_index])
-				if(!(web_sound_input in GLOB.parsed_audio))
-					///scrubbing the input before putting it in the shell
-					var/shell_scrubbed_input = shell_url_scrub(web_sound_input)
-					///putting it in the shell
-					var/list/output = world.shelleo("[ytdl] --geo-bypass --format \"bestaudio\[ext=mp3]/best\[ext=mp4]\[height <= 360]/bestaudio\[ext=m4a]/bestaudio\[ext=aac]\" --dump-single-json --no-playlist --extractor-args \"youtube:lang=en\" -- \"[shell_scrubbed_input]\"")
-					///any errors
-					var/errorlevel = output[SHELLEO_ERRORLEVEL]
-					///the standard output
-					var/stdout = output[SHELLEO_STDOUT]
-					if(!errorlevel)
-						///list for all the output data to go to
-						var/list/data
-						try
-							data = json_decode(stdout)
-						catch(var/exception/error) ///catch errors here
-							to_chat(src, "<span class='boldwarning'>Youtube-dl JSON parsing FAILED:</span>", confidential = TRUE)
-							to_chat(src, "<span class='warning'>[error]: [stdout]</span>", confidential = TRUE)
-							return
-
-						if (data["url"])
-							web_sound_url = data["url"]
-							music_extra_data["start"] = data["start_time"]
-							music_extra_data["end"] = data["end_time"]
-							music_extra_data["link"] = data["webpage_url"]
-							music_extra_data["title"] = data["title"]
-							if(music_extra_data["start"])
-								time_left = data["duration"] - music_extra_data["start"]
-							else
-								time_left = data["duration"]
-
-							current_song_duration = data["duration"]
-
-						GLOB.parsed_audio["[web_sound_input]"] = data
-					GLOB.youtube_exempt["walkman"] |= listener
-					listener.tgui_panel?.play_music(web_sound_url, music_extra_data)
-					START_PROCESSING(SSprocessing, src)
-					link_play = TRUE
-					paused = FALSE
-					return
-				else
-					var/list/data = GLOB.parsed_audio["[web_sound_input]"]
-					web_sound_url = data["url"]
-					music_extra_data["start"] = data["start_time"]
-					music_extra_data["end"] = data["end_time"]
-					music_extra_data["link"] = data["webpage_url"]
-					music_extra_data["title"] = data["title"]
-					if(time_left <= 0)
-						if(music_extra_data["start"])
-							time_left = data["duration"] - music_extra_data["start"]
-						else
-							time_left = data["duration"]
-
-					current_song_duration = data["duration"]
-					music_extra_data["duration"] = data["duration"]
-
-					if(time_left > 0)
-						music_extra_data["start"] = music_extra_data["duration"] - time_left
-
-					GLOB.youtube_exempt["walkman"] |= listener
-					listener.tgui_panel?.play_music(web_sound_url, music_extra_data)
-					START_PROCESSING(SSprocessing, src)
-					link_play = TRUE
-					paused = FALSE
-					return
-
-			else
-				current_song = sound(current_playlist[pl_index], 0, 0, CHANNEL_WALKMAN, volume)
-				current_song.status = SOUND_STREAM
-		else
-			return
-	paused = FALSE
-	if(current_song.status & SOUND_PAUSED)
-		update_song(current_song,current_listener)
-	else
-		update_song(current_song,current_listener,0)
-
-	update_song(current_song,current_listener)
-
-
-/*Called when
- *Arguments: obj/item/cassette_tape/CT -> the cassette in question that you are inserting into the walkman
- */
-/obj/item/walkman/proc/insert_tape(obj/item/cassette_tape/CTape)
-	if(tape || !istype(CTape))
-		return
-
-	tape = CTape
-	CTape.forceMove(src)
-
-	update_icon()
-	paused = TRUE
-	pl_index = 1
-	if(tape.songs["side1"] && tape.songs["side2"])
-		var/list/list = tape.songs["[tape.flipped ? "side2" : "side1"]"]
-		for(var/song in list)
-			current_playlist += song
-			current_songnames += list[song]
-
-/*Called when you eject a tape
- *Arguments: mob/user -> the current user of the walkman
- */
-/obj/item/walkman/proc/eject_tape(mob/user)
-	if(!tape)
-		return
-
-	break_sound()
-
-	current_song = null
-	current_playlist.Cut()
-	current_songnames.Cut()
-	user.put_in_hands(tape)
-	pause()
-	tape = null
-	time_left = 0
-	current_song_duration = 0
-	update_icon()
-	STOP_PROCESSING(SSprocessing, src)
-	playsound(src,'sound/weapons/handcuffs.ogg',20,1)
-
-/*Called when you need to go to next song either when it naturally ends or when user changes song manually
- *Arguments: mob/user -> the current user of the walkman
- */
-/obj/item/walkman/proc/next_song(mob/user)
-	if(current_playlist.len == 0 || !COOLDOWN_FINISHED(src, next_song_use))
-		return
-	COOLDOWN_START(src, next_song_use, NEXT_SONG_USE_TIMER)
-
-	time_left = 0
-	current_song_duration = 0
-
-	break_sound()
-
-	pl_index = pl_index + 1 <= current_playlist.len ? (pl_index += 1) : 1
-	link_play = is_http_protocol(current_playlist[pl_index])
-
-
-	if(!link_play)
-		current_song = sound(current_playlist[pl_index], 0, 0, CHANNEL_WALKMAN, volume)
-		current_song.status = SOUND_STREAM
-	else
-		current_song = null
-	play()
-
-
-
-/obj/item/walkman/update_icon()
-	..()
-	overlays.Cut()
-	if(design)
-		overlays += "+[design]"
-	if(tape)
-		if(!paused)
-			overlays += "+playing"
-	else
-		overlays += "+empty"
-
-	if(ishuman(loc))
-		///current human used to get location
-		var/mob/living/carbon/human/player = loc
-		player.regenerate_icons()
-
 /obj/item/walkman/process(seconds_per_tick)
-	time_left--
-	if(time_left <= 0)
-		next_song(current_listener)
+	if(!playing || !current_song?.duration || !song_start_time)
+		return PROCESS_KILL
+	if(REALTIMEOFDAY > (song_start_time + (current_song.duration * 1 SECONDS)))
+		PLAY_CASSETTE_SOUND(SFX_DJSTATION_STOP)
+		stop_listening()
 
-	if(!(src in current_listener.get_all_contents()) || current_listener.stat & DEAD)
-		if(current_song)
-			current_song = null
-		break_sound()
-		paused = TRUE
-		current_listener = null
-		listener = null
-		update_icon()
-		STOP_PROCESSING(SSprocessing, src)
+/obj/item/walkman/proc/start_listening(mob/living/listener)
+	if(!playing || !current_song || !music_endpoint || QDELETED(listener))
 		return
+	if(current_listener)
+		stop_listening()
 
-	if(HAS_TRAIT(current_listener, TRAIT_DEAF) && current_song && !(current_song.status & SOUND_MUTE))
-		update_song(current_song, current_listener)
-	if(!HAS_TRAIT(current_listener, TRAIT_DEAF) && current_song && current_song.status & SOUND_MUTE)
-		update_song(current_song, current_listener)
+	current_listener = listener
+	RegisterSignal(current_listener, COMSIG_QDELETING, PROC_REF(stop_listening))
+	RegisterSignal(current_listener, COMSIG_TGUI_PANEL_READY, PROC_REF(play_for_listener))
+	ADD_TRAIT(current_listener, TRAIT_LISTENING_TO_WALKMAN, REF(src))
 
-/obj/item/walkman/verb/change_volume()
-	set name = "Change Walkman volume"
-	set category = "Object"
-	set src in usr
+	song_start_time = REALTIMEOFDAY
+	play_for_listener(current_listener)
+	update_appearance(UPDATE_OVERLAYS)
 
-	if(!current_song) return
-
-	var/tmp = input(usr,"Change the volume (0 - 100)","Volume") as num|null
-	if(tmp == null)
+/obj/item/walkman/proc/stop_listening()
+	current_song = null
+	playing = FALSE
+	playing_extra_data = null
+	music_endpoint = null
+	song_start_time = 0
+	STOP_PROCESSING(SSprocessing, src)
+	update_appearance(UPDATE_OVERLAYS)
+	if(!current_listener)
 		return
-	if(tmp > 100)
-		tmp = 100
-	if(tmp < 0)
-		tmp = 0
-	volume = tmp
-	update_song(current_song, current_listener)
+	UnregisterSignal(current_listener, list(COMSIG_QDELETING, COMSIG_TGUI_PANEL_READY))
+	current_listener.client?.tgui_panel?.stop_music()
+	REMOVE_TRAIT(current_listener, TRAIT_LISTENING_TO_WALKMAN, REF(src))
+	current_listener = null
 
-/* Called when you need to restart a song
- * Arguments: mob/user -> the user that has triggered the reset
- */
-/obj/item/walkman/proc/restart_song(mob/user)
-	if(!current_song)
+/obj/item/walkman/proc/play_for_listener(mob/living/listener)
+	if(!music_endpoint || !current_song || QDELETED(listener))
 		return
+	var/list/extra_data = playing_extra_data.Copy()
+	var/start = floor((REALTIMEOFDAY - song_start_time) / 10)
+	if(start > 0)
+		extra_data["start"] = start
+	playing = TRUE
+	listener.client?.tgui_panel?.play_music(music_endpoint, extra_data)
+	START_PROCESSING(SSobj, src)
 
-	update_song(current_song, current_listener, 0)
-*/
+/obj/item/walkman/dropped(mob/user, silent)
+	. = ..()
+	stop_listening()
+
+/obj/item/walkman/proc/next_song(mob/user)
+	if(!inserted_tape)
+		user.balloon_alert(user, "no tape inserted!")
+		return
+	var/datum/cassette_side/side = inserted_tape.get_current_side()
+	var/song_amt = length(side?.songs)
+	if(!song_amt)
+		user.balloon_alert(user, "no tracks to play!")
+		return
+	var/new_idx = WRAP_UP(current_song ? side.songs.Find(current_song) : 0, song_amt)
+	var/datum/cassette_song/new_track = side.songs[new_idx]
+	busy = TRUE
+	var/list/info = SSfloxy.download_and_wait(new_track.url, timeout = 30 SECONDS, discard_failed = TRUE)
+	busy = FALSE
+	if(!info || info["status"] == FLOXY_STATUS_FAILED)
+		user.balloon_alert(user, "failed to select track #[new_idx]")
+		return
+	current_song = new_track
+	if(length(info["endpoints"]))
+		music_endpoint = info["endpoints"][1]
+	else
+		log_floxy("Floxy did not return a music endpoint for [new_track.url]")
+		stack_trace("Floxy did not return a music endpoint for [new_track.url]")
+		balloon_alert(user, "the loader mechanism malfunctioned!")
+		return
+	var/list/metadata = info["metadata"]
+	if(metadata)
+		if(metadata["title"])
+			current_song.name = metadata["title"]
+		if(metadata["artist"])
+			current_song.artist = metadata["artist"]
+		if(metadata["album"])
+			current_song.album = metadata["album"]
+		if(current_song.duration <= 0 && metadata["duration"])
+			current_song.duration = metadata["duration"]
+	playing_extra_data = list(
+		"title" = current_song.name,
+		"link" = current_song.url,
+		"artist" = current_song.artist,
+		"album" = current_song.album,
+	)
+	if(current_song.duration > 0)
+		playing_extra_data["duration"] = DisplayTimeText(current_song.duration * 1 SECONDS)
+	user.balloon_alert(user, "track #[new_idx] selected")
+	to_chat(user, span_notice("Selected track <b>\"[current_song.name]\"</b>."))
 
 /*
 	ACTION BUTTONS
@@ -367,49 +234,14 @@
 	button_icon = 'icons/obj/cassettes/walkman.dmi'
 	background_icon_state = "bg_tech_blue"
 
-/datum/action/item_action/walkman/New()
-	.=..()
-
 /datum/action/item_action/walkman/play_pause
+	name = "Play/Pause"
 	button_icon_state = "walkman_playpause"
 
-/datum/action/item_action/walkman/play_pause/New()
-	..()
-	name = "Play/Pause"
-
-/datum/action/item_action/walkman/play_pause/Trigger(trigger_flags)
-	if(target)
-		var/obj/item/walkman/WM = target
-		WM.attack_self(owner)
-
 /datum/action/item_action/walkman/next_song
+	name = "Next song"
 	button_icon_state = "walkman_next"
 
-/datum/action/item_action/walkman/next_song/New()
-	..()
-	name = "Next song"
-
-/*
-/datum/action/item_action/walkman/next_song/Trigger(trigger_flags)
-	if(target)
-		var/obj/item/walkman/walkM = target
-		walkM.next_song(owner)
-*/
-
 /datum/action/item_action/walkman/restart_song
-	button_icon_state = "walkman_restart"
-
-/datum/action/item_action/walkman/restart_song/New()
-	..()
 	name = "Restart song"
-
-/*
-/datum/action/item_action/walkman/restart_song/Trigger(trigger_flags)
-	if(target)
-		var/obj/item/walkman/walkM = target
-		walkM.restart_song(owner)
-
-*/
-
-#undef sound_to
-#undef NEXT_SONG_USE_TIMER
+	button_icon_state = "walkman_restart"
