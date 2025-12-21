@@ -2,7 +2,7 @@
 
 /obj/item/walkman
 	name = "walkman"
-	desc = "A cassette player that first hit the market over 200 years ago. Crazy how these never went out of style. Alt-click removes the Cassette. Ctrl-click changes to the next song"
+	desc = "A cassette player that first hit the market over 200 years ago. Crazy how these never went out of style."
 	icon = 'icons/obj/cassettes/walkman.dmi'
 	icon_state = "walkman"
 	w_class = WEIGHT_CLASS_SMALL
@@ -32,6 +32,7 @@
 /obj/item/walkman/Initialize(mapload)
 	. = ..()
 	design = rand(1, 5)
+	register_context()
 	update_appearance(UPDATE_OVERLAYS)
 
 /obj/item/walkman/Destroy(force)
@@ -40,6 +41,25 @@
 		inserted_tape.forceMove(drop_location())
 	inserted_tape = null
 	return ..()
+
+/obj/item/walkman/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = NONE
+	if(inserted_tape)
+		context[SCREENTIP_CONTEXT_CTRL_LMB] = "Eject Tape"
+		return CONTEXTUAL_SCREENTIP_SET
+	else if(istype(held_item, /obj/item/cassette_tape))
+		context[SCREENTIP_CONTEXT_LMB] = "Insert Tape"
+		return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/walkman/examine(mob/user)
+	. = ..()
+	if(inserted_tape)
+		. += span_info("The \"<b>[inserted_tape.cassette_data.name]</b>\" cassette is inserted.")
+		if(current_song)
+			. += span_info("The track \"<b>[current_song.name]</b>\" is [playing ? "playing" : "selected"].")
+		. += span_info("<b>Ctrl-Click</b> to eject the tape.")
+	else
+		. += span_info("No tape is inserted.")
 
 /obj/item/walkman/ui_action_click(mob/user, actiontype)
 	if(busy)
