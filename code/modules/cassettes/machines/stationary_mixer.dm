@@ -199,6 +199,7 @@
 	busy = FALSE
 	if(!metadata)
 		balloon_alert(user, "failed to fetch music metadata!")
+		to_chat(user, span_warning("Failed to fetch music metadata. Are you trying to use an unsupported service (i.e Spotify)? Try a YouTube, Bandcamp, or Soundcloud URL if so."))
 		SStgui.update_uis(src)
 		return FALSE
 	var/datum/cassette_song/song = new(metadata["title"], metadata["url"], metadata["duration"], metadata["artist"], metadata["album"])
