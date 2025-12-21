@@ -119,6 +119,10 @@ GLOBAL_DATUM(dj_booth, /obj/machinery/dj_station)
 	if(is_ejecting)
 		balloon_alert(user, "already inserting/ejecting")
 		return ITEM_INTERACT_BLOCKING
+	if(broadcasting)
+		balloon_alert(user, "stop the current track first!")
+		return FALSE
+
 	is_ejecting = TRUE
 
 	var/obj/item/cassette_tape/old_tape = inserted_tape
