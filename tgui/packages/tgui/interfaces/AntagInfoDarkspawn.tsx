@@ -461,7 +461,7 @@ const KnowledgePreview = (props) => {
                   background:
                     'radial-gradient(circle, rgb(114, 100, 255) 0%, rgb(33, 0, 127) 100%);',
                   '-ms-interpolation-mode': 'nearest-neighbor',
-                  'image-rendering': 'pixelated',
+                  imageRendering: 'pixelated',
                 }}
               />
             </Stack.Item>
@@ -510,7 +510,7 @@ const ClassSelection = (props) => {
       style={{
         alignItems: 'center',
         height: '100%',
-        'justify-content': 'center',
+        justifyContent: 'center',
       }}
     >
       {classData.map((darkspawnclass) => (

@@ -217,7 +217,7 @@ const MassSpectroscopy = (props) => {
   return (
     <>
       <Box position="absolute" x="200" transform="translate(30,30)">
-        <svg background-size="200px" width="200" height="400">
+        <svg backgroundSize="200px" width="200" height="400">
           <text
             x="0"
             y="250"

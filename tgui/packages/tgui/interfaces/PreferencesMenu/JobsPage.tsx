@@ -115,7 +115,7 @@ const PriorityButtons = (props: {
       style={{
         alignItems: 'center',
         height: '100%',
-        'justify-content': 'flex-end',
+        justifyContent: 'flex-end',
         paddingLeft: '0.3em',
       }}
     >

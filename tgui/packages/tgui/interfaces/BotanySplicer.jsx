@@ -58,7 +58,7 @@ export const InsertedSeedOne = (props) => {
                   src={`data:image/jpeg;base64,${node.image}`}
                   style={{
                     verticalAlign: 'middle',
-                    'horizontal-align': 'middle',
+                    horizontalAlign: 'middle',
                   }}
                 />
               </Table.Cell>
@@ -127,7 +127,7 @@ export const InsertedSeedOneInfusion = (props) => {
                   src={`data:image/jpeg;base64,${node.image}`}
                   style={{
                     verticalAlign: 'middle',
-                    'horizontal-align': 'middle',
+                    horizontalAlign: 'middle',
                   }}
                 />
               </Table.Cell>
@@ -212,7 +212,7 @@ export const InsertedSeedTwo = (props) => {
                   src={`data:image/jpeg;base64,${node.image}`}
                   style={{
                     verticalAlign: 'middle',
-                    'horizontal-align': 'middle',
+                    horizontalAlign: 'middle',
                   }}
                 />
               </Table.Cell>

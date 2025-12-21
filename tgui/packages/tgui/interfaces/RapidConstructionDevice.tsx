@@ -140,7 +140,7 @@ const DesignSection = (props) => {
                   ? 'scale(0.7)'
                   : 'scale(1.0)',
               '-ms-interpolation-mode': 'nearest-neighbor',
-              'image-rendering': 'pixelated',
+              imageRendering: 'pixelated',
             }}
           />
           <span>{capitalizeAll(design.title)}</span>

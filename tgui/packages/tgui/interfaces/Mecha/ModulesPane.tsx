@@ -58,7 +58,7 @@ export const ModulesPane = (props) => {
     <Section
       title="Equipment"
       fill
-      style={{ 'overflow-y': 'auto' }}
+      style={{ overflowY: 'auto' }}
       buttons={
         <Button
           icon={!weapons_safety ? 'triangle-exclamation' : 'helmet-safety'}
@@ -98,7 +98,7 @@ export const ModulesPane = (props) => {
                     style={{
                       textTransform: 'capitalize',
                       overflow: 'hidden',
-                      'text-overflow': 'ellipsis',
+                      textOverflow: 'ellipsis',
                     }}
                   >
                     {`${moduleSlotLabel(module.slot)} Slot`}
@@ -130,7 +130,7 @@ export const ModulesPane = (props) => {
                     style={{
                       textTransform: 'capitalize',
                       overflow: 'hidden',
-                      'text-overflow': 'ellipsis',
+                      textOverflow: 'ellipsis',
                     }}
                   >
                     {module.name}
@@ -812,7 +812,7 @@ const SnowflakeOrebox = (props) => {
               style={{
                 textTransform: 'capitalize',
                 overflow: 'hidden',
-                'text-overflow': 'ellipsis',
+                textOverflow: 'ellipsis',
               }}
             >
               {`${contents[item].amount}x ${contents[item].name}`}

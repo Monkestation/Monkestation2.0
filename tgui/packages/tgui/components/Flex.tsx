@@ -31,9 +31,9 @@ export const computeFlexProps = (props: FlexProps) => {
     style: {
       ...rest.style,
       flexDirection: direction,
-      'flex-wrap': wrap === true ? 'wrap' : wrap,
+      flexWrap: wrap === true ? 'wrap' : wrap,
       alignItems: align,
-      'justify-content': justify,
+      justifyContent: justify,
     },
     ...rest,
   });
@@ -88,11 +88,11 @@ export const computeFlexItemProps = (props: FlexItemProps) => {
   return computeBoxProps({
     style: {
       ...style,
-      'flex-grow': grow !== undefined && Number(grow),
-      'flex-shrink': shrink !== undefined && Number(shrink),
-      'flex-basis': unit(computedBasis),
+      flexGrow: grow !== undefined && Number(grow),
+      flexShrink: shrink !== undefined && Number(shrink),
+      flexBasis: unit(computedBasis),
       order: order,
-      'align-self': align,
+      alignSelf: align,
     },
     ...rest,
   });

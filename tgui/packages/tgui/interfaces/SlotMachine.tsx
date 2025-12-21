@@ -89,7 +89,7 @@ export const SlotMachine = (props) => {
       <Window.Content>
         <Section
           title="Slots!"
-          style={{ 'justify-content': 'center', textAlign: 'center' }}
+          style={{ justifyContent: 'center', textAlign: 'center' }}
         >
           <Section style={{ textAlign: 'left' }}>
             <p>
@@ -125,7 +125,7 @@ export const SlotMachine = (props) => {
             style={{
               flexDirection: 'row',
               display: 'flex',
-              'justify-content': 'center',
+              justifyContent: 'center',
             }}
           >
             {state.map((reel, i) => {

@@ -124,9 +124,9 @@ const EditableText = (props: Props) => {
           color={!text ? 'grey' : color || 'white'}
           style={{
             textDecoration: 'underline',
-            'textDecoration-color': 'white',
-            'textDecoration-thickness': '1px',
-            'text-underline-offset': '1px',
+            textDecorationColor: 'white',
+            textDecorationThickness: '1px',
+            textUnderlineOffset: '1px',
           }}
           onClick={() => setEditing(true)}
         >

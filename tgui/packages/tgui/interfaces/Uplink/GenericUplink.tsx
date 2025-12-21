@@ -60,7 +60,7 @@ export const GenericUplink = (props: GenericUplinkProps) => {
                   style={{
                     overflow: 'hidden',
                     whiteSpace: 'nowrap',
-                    'text-overflow': 'ellipsis',
+                    textOverflow: 'ellipsis',
                     textAlign: 'center',
                   }}
                   onClick={() => act('buy_raw_tc')}
@@ -191,7 +191,7 @@ const ItemList = (props: ItemListProps) => {
                         style={{
                           overflow: 'hidden',
                           whiteSpace: 'nowrap',
-                          'text-overflow': 'ellipsis',
+                          textOverflow: 'ellipsis',
                         }}
                       >
                         {item.name}

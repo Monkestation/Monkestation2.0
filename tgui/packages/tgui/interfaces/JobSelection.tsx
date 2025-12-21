@@ -138,7 +138,7 @@ export const JobSelection = (props) => {
               />
             </>
           }
-          titleStyle={{ 'min-height': '3.4em' }}
+          titleStyle={{ minHeight: '3.4em' }}
         >
           <Box wrap="wrap" style={{ columns: '20em' }}>
             {Object.entries(departments).map((departmentEntry) => {
@@ -170,10 +170,10 @@ export const JobSelection = (props) => {
                     style={{
                       backgroundColor: entry.color,
                       marginBottom: '1em',
-                      'break-inside': 'avoid-column',
+                      breakInside: 'avoid-column',
                     }}
                     titleStyle={{
-                      'borderBottom-color': Color.fromHex(entry.color)
+                      borderBottomColor: Color.fromHex(entry.color)
                         .darken(50)
                         .toString(),
                     }}

@@ -49,7 +49,7 @@ const TilePreview = (props) => {
             'scale(1.5) translate(9.5%, 9.5%) ' +
             (ROTATION_MAP[selected_direction] || ''),
           '-ms-interpolation-mode': 'nearest-neighbor',
-          'image-rendering': 'pixelated',
+          imageRendering: 'pixelated',
         }}
       />
     </Section>
@@ -148,7 +148,7 @@ const TileDesignSection = (props) => {
             style={{
               transform: 'scale(1.2) translate(9.5%, 9.5%)',
               '-ms-interpolation-mode': 'nearest-neighbor',
-              'image-rendering': 'pixelated',
+              imageRendering: 'pixelated',
             }}
           />
           <span>{capitalizeAll(recipe.name)}</span>

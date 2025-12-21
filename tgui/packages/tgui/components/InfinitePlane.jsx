@@ -149,9 +149,9 @@ export class InfinitePlane extends Component {
             height: '100%',
             width: '100%',
             backgroundImage: `url("${backgroundImage}")`,
-            'background-position': `${finalLeft}px ${finalTop}px`,
-            'background-repeat': 'repeat',
-            'background-size': `${zoom * imageWidth}px`,
+            backgroundPosition: `${finalLeft}px ${finalTop}px`,
+            backgroundRepeat: 'repeat',
+            backgroundSize: `${zoom * imageWidth}px`,
           }}
         />
         <div
@@ -160,7 +160,7 @@ export class InfinitePlane extends Component {
           style={{
             position: 'fixed',
             transform: `translate(${finalLeft}px, ${finalTop}px) scale(${zoom})`,
-            'transform-origin': 'top left',
+            transformOrigin: 'top left',
             height: '100%',
             width: '100%',
           }}

@@ -480,7 +480,7 @@ export const StandardizedPalette = (props: {
         backgroundColor={backgroundColor}
         p={0.5}
       >
-        <Flex style={{ 'flex-wrap': 'wrap', maxWidth: maxWidth }}>
+        <Flex style={{ flexWrap: 'wrap', maxWidth: maxWidth }}>
           {choices.map((choice) => (
             <Flex.Item key={choice} ml={0}>
               <Tooltip

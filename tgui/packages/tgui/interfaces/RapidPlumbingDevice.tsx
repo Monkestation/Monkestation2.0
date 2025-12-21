@@ -73,7 +73,7 @@ const PlumbingTypeSection = (props) => {
             style={{
               transform: 'scale(1.5) translate(9.5%, 9.5%)',
               '-ms-interpolation-mode': 'nearest-neighbor',
-              'image-rendering': 'pixelated',
+              imageRendering: 'pixelated',
             }}
           />
           <span>{capitalizeAll(recipe.name)}</span>
@@ -115,7 +115,7 @@ const LayerIconSection = (props) => {
       style={{
         transform: 'scale(2)',
         '-ms-interpolation-mode': 'nearest-neighbor',
-        'image-rendering': 'pixelated',
+        imageRendering: 'pixelated',
       }}
     />
   );

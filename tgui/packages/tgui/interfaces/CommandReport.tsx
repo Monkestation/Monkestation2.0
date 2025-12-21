@@ -156,7 +156,7 @@ const AnnouncementSound = (props) => {
         {`
       #announcement-sound-container div:last-child {
         width: 100%;
-        flex-grow: true;
+        flexGrow: true;
       }
     `}
       </style>

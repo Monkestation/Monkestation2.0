@@ -120,7 +120,7 @@ export const Machining = (props, context) => {
               pr={1}
               pt={1}
               mr={-1}
-              style={{ 'overflow-y': 'auto' }}
+              style={{ overflowY: 'auto' }}
             >
               <MainRecipeScreen tab={activeTab} searchText={searchText} />
             </Box>

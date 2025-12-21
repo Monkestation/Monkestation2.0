@@ -45,7 +45,7 @@ export const OutfitManager = (props) => {
                     style={{
                       overflow: 'hidden',
                       whiteSpace: 'nowrap',
-                      'text-overflow': 'ellipsis',
+                      textOverflow: 'ellipsis',
                     }}
                   >
                     <Button
@@ -53,7 +53,7 @@ export const OutfitManager = (props) => {
                       style={{
                         overflow: 'hidden',
                         whiteSpace: 'nowrap',
-                        'text-overflow': 'ellipsis',
+                        textOverflow: 'ellipsis',
                       }}
                       content={outfit.name}
                       onClick={() => act('edit', { outfit: outfit.ref })}

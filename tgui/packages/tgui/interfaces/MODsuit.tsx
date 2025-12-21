@@ -609,8 +609,8 @@ const UserStatusSection = (props) => {
           <LabeledList.Item label="Fingerprints">
             <Box
               style={{
-                'word-break': 'break-all',
-                'word-wrap': 'break-word',
+                wordBreak: 'break-all',
+                wordWrap: 'break-word',
               }}
             >
               {active ? dna_unique_identity : '???'}
@@ -621,8 +621,8 @@ const UserStatusSection = (props) => {
           <LabeledList.Item label="Enzymes">
             <Box
               style={{
-                'word-break': 'break-all',
-                'word-wrap': 'break-word',
+                wordBreak: 'break-all',
+                wordWrap: 'break-word',
               }}
             >
               {active ? dna_unique_enzymes : '???'}

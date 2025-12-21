@@ -31,7 +31,7 @@ export type MaterialCostSequenceProps = {
   align?: string;
 
   /**
-   * The `justify-content` flex property provided to the generated list.
+   * The `justifyContent` flex property provided to the generated list.
    */
   justify?: string;
 

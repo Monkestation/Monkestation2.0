@@ -18,7 +18,7 @@ export const OutfitEditor = (props) => {
           src={`data:image/jpeg;base64,${dummy64}`}
           style={{
             '-ms-interpolation-mode': 'nearest-neighbor',
-            'image-rendering': 'pixelated',
+            imageRendering: 'pixelated',
           }}
         />
         <Section
@@ -30,7 +30,7 @@ export const OutfitEditor = (props) => {
                 style={{
                   overflow: 'hidden',
                   whiteSpace: 'nowrap',
-                  'text-overflow': 'ellipsis',
+                  textOverflow: 'ellipsis',
                 }}
               >
                 <Button
@@ -147,7 +147,7 @@ const OutfitSlot = (props) => {
               title={currItem?.desc}
               style={{
                 '-ms-interpolation-mode': 'nearest-neighbor',
-                'image-rendering': 'pixelated',
+                imageRendering: 'pixelated',
               }}
             />
             <Icon
@@ -165,7 +165,7 @@ const OutfitSlot = (props) => {
         style={{
           overflow: 'hidden',
           whiteSpace: 'nowrap',
-          'text-overflow': 'ellipsis',
+          textOverflow: 'ellipsis',
         }}
         title={currItem?.path}
       >

@@ -222,7 +222,7 @@ const PreviewDisplay = (props) => {
                 mx="10%"
                 style={{
                   '-ms-interpolation-mode': 'nearest-neighbor',
-                  'image-rendering': 'pixelated',
+                  imageRendering: 'pixelated',
                 }}
               />
             </Table.Cell>
@@ -235,7 +235,7 @@ const PreviewDisplay = (props) => {
                   size={5}
                   style={{
                     '-ms-interpolation-mode': 'nearest-neighbor',
-                    'image-rendering': 'pixelated',
+                    imageRendering: 'pixelated',
                   }}
                 />
               </Box>
@@ -290,7 +290,7 @@ const SingleSprite = (props) => {
       width="100%"
       style={{
         '-ms-interpolation-mode': 'nearest-neighbor',
-        'image-rendering': 'pixelated',
+        imageRendering: 'pixelated',
       }}
     />
   );

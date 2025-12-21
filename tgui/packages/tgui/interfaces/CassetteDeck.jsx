@@ -24,7 +24,7 @@ export const CassetteDeck = (props) => {
           <LabeledList>
             <LabeledList.Item label="Track Selected">
               <Dropdown
-                overflow-y="scroll"
+                overflowY="scroll"
                 width="240px"
                 options={songs.map((song) => song)}
                 disabled={active}

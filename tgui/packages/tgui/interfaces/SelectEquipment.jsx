@@ -101,7 +101,7 @@ export const SelectEquipment = (props) => {
                     height="100%"
                     style={{
                       '-ms-interpolation-mode': 'nearest-neighbor',
-                      'image-rendering': 'pixelated',
+                      imageRendering: 'pixelated',
                     }}
                   />
                 </Section>
@@ -206,7 +206,7 @@ const CurrentlySelectedDisplay = (props) => {
           style={{
             overflow: 'hidden',
             whiteSpace: 'nowrap',
-            'text-overflow': 'ellipsis',
+            textOverflow: 'ellipsis',
           }}
         >
           {entry?.name}

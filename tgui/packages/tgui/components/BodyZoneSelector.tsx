@@ -113,7 +113,7 @@ export class BodyZoneSelector extends Component<
           }}
           style={{
             '-ms-interpolation-mode': 'nearest-neighbor',
-            'image-rendering': 'pixelated',
+            imageRendering: 'pixelated',
             position: 'absolute',
             width: `${32 * scale}px`,
             height: `${32 * scale}px`,
@@ -126,7 +126,7 @@ export class BodyZoneSelector extends Component<
             src={resolveAsset(`body_zones.${selectedZone}.png`)}
             style={{
               '-ms-interpolation-mode': 'nearest-neighbor',
-              'image-rendering': 'pixelated',
+              imageRendering: 'pixelated',
               pointerEvents: 'none',
               position: 'absolute',
               width: `${32 * scale}px`,
@@ -141,7 +141,7 @@ export class BodyZoneSelector extends Component<
             src={resolveAsset(`body_zones.${hoverZone}.png`)}
             style={{
               '-ms-interpolation-mode': 'nearest-neighbor',
-              'image-rendering': 'pixelated',
+              imageRendering: 'pixelated',
               opacity: 0.5,
               pointerEvents: 'none',
               position: 'absolute',

@@ -93,7 +93,7 @@ const VendingImage = (props) => {
         width="96px"
         style={{
           '-ms-interpolation-mode': 'nearest-neighbor',
-          'image-rendering': 'pixelated',
+          imageRendering: 'pixelated',
           verticalAlign: 'middle',
         }}
       />

@@ -367,7 +367,7 @@ export class Uplink extends Component<{}, UplinkState> {
                             style={{
                               overflow: 'hidden',
                               whiteSpace: 'nowrap',
-                              'text-overflow': 'ellipsis',
+                              textOverflow: 'ellipsis',
                             }}
                             icon="star"
                             selected={currentTab === 0}
@@ -381,7 +381,7 @@ export class Uplink extends Component<{}, UplinkState> {
                             style={{
                               overflow: 'hidden',
                               whiteSpace: 'nowrap',
-                              'text-overflow': 'ellipsis',
+                              textOverflow: 'ellipsis',
                             }}
                             icon="star-half-stroke"
                             selected={currentTab === 1}
@@ -395,7 +395,7 @@ export class Uplink extends Component<{}, UplinkState> {
                             style={{
                               overflow: 'hidden',
                               whiteSpace: 'nowrap',
-                              'text-overflow': 'ellipsis',
+                              textOverflow: 'ellipsis',
                             }}
                             icon="dollar-sign"
                             selected={currentTab === 2}
@@ -408,7 +408,7 @@ export class Uplink extends Component<{}, UplinkState> {
                           style={{
                             overflow: 'hidden',
                             whiteSpace: 'nowrap',
-                            'text-overflow': 'ellipsis',
+                            textOverflow: 'ellipsis',
                           }}
                           icon="store"
                           selected={currentTab === 3 || !has_objectives}

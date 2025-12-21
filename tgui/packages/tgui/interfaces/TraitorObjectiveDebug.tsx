@@ -377,7 +377,7 @@ const ObjectiveBox = (props: ObjectiveBoxProps) => {
       <Stack vertical width="100%">
         <Stack.Item
           style={{
-            'text-overflow': 'ellipsis',
+            textOverflow: 'ellipsis',
             whiteSpace: 'nowrap',
             overflow: 'hidden',
           }}

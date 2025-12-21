@@ -130,7 +130,7 @@ const ShowpieceImage = (props) => {
         width="96px"
         style={{
           '-ms-interpolation-mode': 'nearest-neighbor',
-          'image-rendering': 'pixelated',
+          imageRendering: 'pixelated',
         }}
       />
     </Section>

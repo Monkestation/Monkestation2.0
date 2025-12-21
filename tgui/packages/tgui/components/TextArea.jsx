@@ -6,7 +6,7 @@
  */
 
 import { classes } from 'common/react';
-import { Component,  createRef } from 'react';
+import { Component, createRef } from 'react';
 import { Box } from './Box';
 import { toInputValue } from './Input';
 import { KEY_ENTER, KEY_ESCAPE, KEY_TAB } from 'common/keycodes';
@@ -200,7 +200,7 @@ export class TextArea extends Component {
         {...rest}
         style={{
           ...rest.style,
-          'min-height': resize && rest.height ? rest.height : '',
+          minHeight: resize && rest.height ? rest.height : '',
           height: resize && rest.height ? 'max-content' : rest.height,
         }}
       >
@@ -239,7 +239,7 @@ export class TextArea extends Component {
             color: displayedValue ? 'rgba(0, 0, 0, 0)' : 'inherit',
             resize: resize,
             position: resize !== 'none' && 'relative',
-            'min-height':
+            minHeight:
               resize !== 'none' ? rest?.height || 'inherit' : 'inherit',
             height: resize !== 'none' ? 'max-content' : 'inherit',
           }}
