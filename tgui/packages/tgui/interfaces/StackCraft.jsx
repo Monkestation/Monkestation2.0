@@ -23,7 +23,7 @@ export const StackCraft = () => {
   );
 };
 
-const Recipes = (props, context) => {
+const Recipes = (props) => {
   const { data } = useBackend();
   const { amount, recipes } = data;
   const [searchText, setSearchText] = useLocalState('searchText', '');
@@ -125,7 +125,7 @@ const calculateMultiplier = (recipe, amount) => {
   return Math.floor(amount / recipe.required_amount);
 };
 
-const Multipliers = (props, context) => {
+const Multipliers = (props) => {
   const { act } = useBackend(context);
 
   const { recipe, max_possible_multiplier } = props;
@@ -176,7 +176,7 @@ const Multipliers = (props, context) => {
   return <>{finalResult.map((x) => x)}</>;
 };
 
-const RecipeListBox = (props, context) => {
+const RecipeListBox = (props) => {
   const { recipes } = props;
 
   return Object.entries(recipes).map((entry) => {
@@ -204,7 +204,7 @@ const RecipeListBox = (props, context) => {
   });
 };
 
-const RecipeBox = (props, context) => {
+const RecipeBox = (props) => {
   const { act, data } = useBackend(context);
   const { amount } = data;
   const { title, recipe } = props;

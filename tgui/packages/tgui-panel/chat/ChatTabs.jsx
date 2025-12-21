@@ -4,7 +4,7 @@
  * @license MIT
  */
 
-import { useDispatch, useSelector } from 'common/redux';
+import { useDispatch, useSelector } from 'tgui/backend';
 import { Box, Tabs, Flex, Button } from 'tgui/components';
 import { changeChatPage, addChatPage } from './actions';
 import { selectChatPages, selectCurrentChatPage } from './selectors';
@@ -25,10 +25,10 @@ const UnreadCountWidget = ({ value }) => (
   </Box>
 );
 
-export const ChatTabs = (props, context) => {
-  const pages = useSelector(context, selectChatPages);
-  const currentPage = useSelector(context, selectCurrentChatPage);
-  const dispatch = useDispatch(context);
+export const ChatTabs = (props) => {
+  const pages = useSelector(selectChatPages);
+  const currentPage = useSelector(selectCurrentChatPage);
+  const dispatch = useDispatch();
   return (
     <Flex align="center">
       <Flex.Item>
