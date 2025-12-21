@@ -7,11 +7,11 @@ import {
   FeatureToggle,
   FeatureValueProps,
 } from '../base';
-import { Box, Dropdown, Flex } from '../../../../../components';
+import { Box, Dropdown, Flex } from 'tgui/components';
 import { classes } from 'common/react';
 import { ReactNode } from 'react';
 import { binaryInsertWith } from 'common/collections';
-import { useBackend } from '../../../../../backend';
+import { useBackend } from 'tgui/backend';
 import { PreferencesMenuData } from '../../../data';
 
 export const ghost_accs: FeatureChoiced = {
@@ -33,7 +33,7 @@ const GhostFormInput = (
 
   const serverData = props.serverData;
   if (!serverData) {
-    return;
+    return null;
   }
 
   const displayNames = serverData.display_names;

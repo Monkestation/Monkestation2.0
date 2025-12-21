@@ -1,5 +1,5 @@
 import { BooleanLike } from 'common/react';
-import { isValidElement } from 'react';
+import { isValidElement, ReactNode } from 'react';
 
 import { useBackend } from '../../backend';
 import {
@@ -133,7 +133,7 @@ export const ListMapper = (props: ListMapperProps) => {
   }
 
   const ThingNode = (
-    thing: any,
+    thing: ReactNode,
     path: ListPath,
     canCall: BooleanLike,
     overrideProps?: ListMapperProps,
