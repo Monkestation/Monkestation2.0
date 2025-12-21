@@ -93,7 +93,7 @@
 			if(user.is_holding(src))
 				randdir = pick(GLOB.alldirs)
 				user.Move(get_step(user, randdir),randdir)
-				user.emote("spin")
+				user.emote("spin", prevent_attack = FALSE)
 				if (i == 3 && myhead)
 					myhead.drop_limb()
 				sleep(0.3 SECONDS)
