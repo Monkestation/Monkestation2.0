@@ -349,7 +349,7 @@
 	icon = 'icons/obj/weapons/guns/ammo.dmi'
 	caliber = KINETIC_20G
 	pellets = 5
-	variance = 7 //very tight spread
+	variance = 14
 	projectile_type = /obj/projectile/bullet/hydrakinetic
 
 

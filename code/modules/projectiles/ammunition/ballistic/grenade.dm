@@ -95,7 +95,8 @@
 
 /obj/item/ammo_casing/a40mm/fire_casing(atom/target, mob/living/user, params, distro, quiet, zone_override, spread, atom/fired_from)
 	var/obj/item/gun/ballistic/shotgun/china_lake/firing_launcher = fired_from
-	if(istype(firing_launcher))
+	var/obj/item/gun/ballistic/revolver/grenadelauncher/kinetic/other_firing_launcher = fired_from //Yes I know, but the launchers have totally different typepaths. I'll change it to a variable setup later.
+	if(istype(firing_launcher) || istype(other_firing_launcher))
 		loaded_projectile.range = firing_launcher.target_range
 	. = ..()
 

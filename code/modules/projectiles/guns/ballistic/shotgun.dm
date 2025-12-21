@@ -578,6 +578,14 @@
 	show_bolt_icon = FALSE
 	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
 	pb_knockback = 0
+	recoil = 1.8
+	wield_recoil = 0.75
+
+/obj/item/gun/ballistic/shotgun/autoshotgun/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/automatic_fire, 0.4 SECONDS)
+
+
 
 
 /obj/item/gun/ballistic/shotgun/doublebarrel/kinetic

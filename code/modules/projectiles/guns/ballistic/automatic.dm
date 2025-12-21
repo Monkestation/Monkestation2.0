@@ -1018,6 +1018,8 @@
 	bolt_type = BOLT_TYPE_LOCKING
 	show_bolt_icon = FALSE
 	fire_sound = 'sound/weapons/kenetic_accel.ogg'
+	recoil = 1.5
+	wield_recoil = 0.5
 
 //FLASHLIGHTTTTTT
 /obj/item/gun/ballistic/automatic/proto/pksmg/add_seclight_point()
