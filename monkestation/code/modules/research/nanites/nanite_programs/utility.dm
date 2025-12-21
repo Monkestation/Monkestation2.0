@@ -80,16 +80,16 @@
 	if (!istype(turf))
 		return
 
-	var/datum/gas_mixture/enviroment = turf.return_air()
-	if (host_mob.bodytemperature < enviroment.temperature) // sadly our bitcoin mining operations just aren't cool enough
+	var/datum/gas_mixture/environment = turf.return_air()
+	if (host_mob.bodytemperature < environment.temperature) // sadly our bitcoin mining operations just aren't cool enough
 		return
 
-	var/difference = host_mob.bodytemperature - enviroment.temperature
-	var/heat_capacity = enviroment.heat_capacity()
+	var/difference = host_mob.bodytemperature - environment.temperature
+	var/heat_capacity = environment.heat_capacity()
 	var/required_energy = difference * heat_capacity
 	var/delta_temperature = min(required_energy, research_speed * 500) / heat_capacity
 
-	enviroment.temperature += delta_temperature
+	environment.temperature += delta_temperature
 	turf.air_update_turf()
 
 /datum/nanite_program/research/enable_passive_effect()

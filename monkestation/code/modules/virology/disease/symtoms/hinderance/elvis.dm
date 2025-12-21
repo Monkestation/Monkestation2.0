@@ -48,7 +48,7 @@
 				victim.set_facial_hairstyle("Sideburns (Elvis)", update = FALSE)
 				victim.set_facial_haircolor("#242424", update = TRUE)
 
-/datum/symptom/elvis/deactivate(mob/living/carbon/mob)
+/datum/symptom/elvis/deactivate(mob/living/carbon/mob, datum/disease/acute/disease, safe = FALSE)
 	if(ismouse(mob))
 		return
 	/*

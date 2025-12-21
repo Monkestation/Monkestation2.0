@@ -62,6 +62,8 @@
 #define SUPPLY_PACK_NOT_DISCOUNTABLE null
 
 GLOBAL_LIST_EMPTY(supplypod_loading_bays)
+///List of people part of the Cargo Union, by default all Cargo personnel but the QM can add more.
+GLOBAL_LIST_EMPTY(cargo_union_employees)
 
 GLOBAL_LIST_INIT(podstyles, list(\
 	list(POD_SHAPE_NORML, "pod",         TRUE, "default", "yellow",   RUBBLE_NORMAL, "supply pod",     "A Nanotrasen supply drop pod."),\

@@ -370,6 +370,8 @@ Security HUDs! Basic mode shows only the job.
 			holder.icon_state = "hudparolled"
 		if(WANTED_DISCHARGED)
 			holder.icon_state = "huddischarged"
+		if(WANTED_SEARCH)
+			holder.icon_state = "hudsearch"
 
 	set_hud_image_active(WANTED_HUD)
 

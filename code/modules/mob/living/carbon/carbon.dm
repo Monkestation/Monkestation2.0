@@ -866,12 +866,12 @@
 	if(heal_flags & HEAL_NEGATIVE_DISEASES)
 		for(var/datum/disease/disease as anything in diseases)
 			if(disease.severity != DISEASE_SEVERITY_POSITIVE)
-				disease.cure(FALSE)
+				disease.cure(add_resistance = FALSE, target = src, safe = TRUE)
 
 	if(heal_flags & HEAL_POSTIVE_DISEASES)
 		for(var/datum/disease/disease as anything in diseases)
 			if(disease.severity == DISEASE_SEVERITY_POSITIVE)
-				disease.cure(FALSE)
+				disease.cure(add_resistance = FALSE, target = src, safe = TRUE)
 
 	if(heal_flags & HEAL_WOUNDS)
 		for(var/datum/wound/wound as anything in all_wounds)

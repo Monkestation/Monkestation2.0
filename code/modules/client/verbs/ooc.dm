@@ -89,10 +89,6 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 		var/datum/asset/spritesheet_batched/chat/sheet = get_asset_datum(/datum/asset/spritesheet_batched/chat)
 		keyname = "[sheet.icon_tag("twitch")][keyname]"
 
-#ifndef DISABLE_DEMOS
-	SSdemo.write_chat_global(GLOB.OOC_COLOR ? span_oocplain("<font color='[GLOB.OOC_COLOR]'><b>[span_prefix("OOC:")] <EM>[keyname]:</EM> <span class='message linkify'>[msg]</span></b></font>") : span_ooc(span_prefix("OOC:</span> <EM>[keyname]:</EM> <span class='message linkify'>[msg]")))
-#endif
-
 	// pronouns
 	var/pronouns = prefs.read_preference(/datum/preference/text/ooc_pronouns)
 

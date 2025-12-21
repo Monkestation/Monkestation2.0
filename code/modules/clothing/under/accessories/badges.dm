@@ -1,29 +1,4 @@
 // Badges, pins, and other very small items that slot onto a shirt.
-/obj/item/clothing/accessory/lawyers_badge
-	name = "attorney's badge"
-	desc = "Fills you with the conviction of JUSTICE. Lawyers tend to want to show it to everyone they meet."
-	icon_state = "lawyerbadge"
-
-/obj/item/clothing/accessory/lawyers_badge/interact(mob/user)
-	. = ..()
-	if(prob(1))
-		user.say("The testimony contradicts the evidence!", forced = "[src]")
-	user.visible_message(span_notice("[user] shows [user.p_their()] attorney's badge."), span_notice("You show your attorney's badge."))
-
-/obj/item/clothing/accessory/lawyers_badge/accessory_equipped(obj/item/clothing/under/clothes, mob/living/user)
-	RegisterSignal(user, COMSIG_LIVING_SLAM_TABLE, PROC_REF(table_slam))
-	user.bubble_icon = "lawyer"
-
-/obj/item/clothing/accessory/lawyers_badge/accessory_dropped(obj/item/clothing/under/clothes, mob/living/user)
-	UnregisterSignal(user, COMSIG_LIVING_SLAM_TABLE)
-	user.bubble_icon = initial(user.bubble_icon)
-
-/obj/item/clothing/accessory/lawyers_badge/proc/table_slam(mob/living/source, obj/structure/table/the_table)
-	SIGNAL_HANDLER
-
-	ASYNC
-		source.say("Objection!!", spans = list(SPAN_YELL), forced = "[src]")
-
 /obj/item/clothing/accessory/clown_enjoyer_pin
 	name = "\improper Clown Pin"
 	desc = "A pin to show off your appreciation for clowns and clowning!"
@@ -174,7 +149,6 @@
 	name = "Pre-Approved Cyborg Cantidate dogtag"
 	display = "This employee has been screened for negative mental traits to an acceptable level of accuracy, and is approved for the NT Cyborg program as an alternative to medical resuscitation."
 
-/*
 /// Reskins for the pride pin accessory, mapped by display name to icon state
 GLOBAL_LIST_INIT(pride_pin_reskins, list(
 	"Rainbow Pride" = "pride",
@@ -185,8 +159,11 @@ GLOBAL_LIST_INIT(pride_pin_reskins, list(
 	"Transgender Pride" = "pride_trans",
 	"Intersex Pride" = "pride_intersex",
 	"Lesbian Pride" = "pride_lesbian",
+	"Gay Pride" = "pride_mlm",
+	"Genderfluid Pride" = "pride_genderfluid",
+	"Genderqueer Pride" = "pride_genderqueer",
+	"Aromantic Pride" = "pride_aromantic",
 ))
-*/
 
 /obj/item/clothing/accessory/pride
 	name = "pride pin"
