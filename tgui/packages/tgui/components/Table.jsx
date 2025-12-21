@@ -4,7 +4,7 @@
  * @license MIT
  */
 
-import { classes, pureComponentHooks } from 'common/react';
+import { classes } from 'common/react';
 import { computeBoxClassName, computeBoxProps } from './Box';
 
 export const Table = (props) => {
