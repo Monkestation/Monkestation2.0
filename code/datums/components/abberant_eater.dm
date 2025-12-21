@@ -31,7 +31,7 @@
 		if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_FAT)
 			nerd.visible_message("<span class='notice'>[nerd] [eatverb]s \the [weapon]].</span>", "<span class='notice'>You [eatverb] \the [weapon].</span>")
 		if(0 to NUTRITION_LEVEL_STARVING)
-			nerd.visible_message("<span class='notice'>[nerd] hungrily [eatverb]s \the [weapon], gobbling it down!</span>", "<span class='notice'>You hungrily [eatverb] \the [weapon], gobbling it down!</span>")
+			nerd.visible_message(span_notice("[nerd] hungrily [eatverb]s \the [weapon], gobbling it down!"), span_notice("You hungrily [eatverb] \the [weapon], gobbling it down!"))
 			nerd.changeNext_move(CLICK_CD_MELEE * 0.5)
 	qdel(weapon)
 	playsound(nerd.loc,'sound/items/eatfood.ogg', rand(10,50), TRUE)
