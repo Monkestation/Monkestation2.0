@@ -266,7 +266,7 @@
 
 /obj/item/grenade/barrier/examine(mob/user)
 	. = ..()
-	. += span_notice("Current Mode: [capitalize(mode)].  Alt-click to toggle modes.")
+	. += span_notice("Current Mode: [capitalize(mode)].  Alt-click to switch the current mode.")
 
 /obj/item/grenade/barrier/Initialize(mapload)
 	. = ..()
