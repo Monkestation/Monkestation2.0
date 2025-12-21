@@ -54,8 +54,8 @@ GLOBAL_LIST_INIT(call_ringtones, list(
 /datum/preference_middleware/call_ringtone/proc/play_call_ringtone_sound(list/params, mob/user)
 	if(!COOLDOWN_FINISHED(src, ringtone_cooldown))
 		return
-	usr.playsound_local(
-		get_turf(usr),
+	user.playsound_local(
+		get_turf(user),
 		sound_to_use = sound(GLOB.call_ringtones[preferences.read_preference(/datum/preference/choiced/call_ringtone)][CALL_RINGTONE_I_SOUNDFILE]),
 		vol = 90,
 		vary = FALSE,
@@ -67,7 +67,7 @@ GLOBAL_LIST_INIT(call_ringtones, list(
 	COOLDOWN_START(src, ringtone_cooldown, 0.5 SECONDS)
 
 /datum/preference_middleware/call_ringtone/proc/stop_call_ringtone_sound(list/params, mob/user)
-	SEND_SOUND(usr, sound(null, channel = CHANNEL_RINGTONES, repeat = 0, wait = 0))
+	SEND_SOUND(user, sound(null, channel = CHANNEL_RINGTONES, repeat = 0, wait = 0))
 
 /datum/preference/choiced/call_ringtone/init_possible_values()
 	return GLOB.call_ringtones

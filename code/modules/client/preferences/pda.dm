@@ -136,7 +136,7 @@ GLOBAL_LIST_INIT(pda_ringtone_sounds, list(
 /datum/preference_middleware/pda_ringtone_sound/proc/play_ringtone_sound(list/params, mob/user)
 	if(!COOLDOWN_FINISHED(src, ringtone_cooldown))
 		return TRUE
-	usr.playsound_local(get_turf(usr), GLOB.pda_ringtone_sounds[preferences.read_preference(/datum/preference/choiced/pda_ringtone_sound)], 90, TRUE, null, 7, pressure_affected = FALSE, use_reverb = FALSE, mixer_channel = CHANNEL_MACHINERY)
+	user.playsound_local(get_turf(user), GLOB.pda_ringtone_sounds[preferences.read_preference(/datum/preference/choiced/pda_ringtone_sound)], 90, TRUE, null, 7, pressure_affected = FALSE, use_reverb = FALSE, mixer_channel = CHANNEL_MACHINERY)
 	COOLDOWN_START(src, ringtone_cooldown, 0.5 SECONDS)
 	return TRUE
 

@@ -2,6 +2,7 @@ ADMIN_VERB(cmd_soundquery_debug, R_SERVER|R_DEBUG, FALSE, "Sound Mixer Debug", "
 	var/datum/soundquery_debug/tgui = new(user)
 	tgui.ui_interact(user.mob)
 
+
 /datum/soundquery_debug
 	var/client/selected_client
 	var/list/results = list()
@@ -10,6 +11,9 @@ ADMIN_VERB(cmd_soundquery_debug, R_SERVER|R_DEBUG, FALSE, "Sound Mixer Debug", "
 	selected_client = user
 	START_PROCESSING(SSfastprocess, src)
 	return ..()
+
+/datum/soundquery_debug/ui_close(mob/user)
+	qdel(src)
 
 /datum/soundquery_debug/Destroy(force)
 	STOP_PROCESSING(SSfastprocess, src)
