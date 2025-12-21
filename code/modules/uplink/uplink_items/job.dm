@@ -199,6 +199,16 @@
 	restricted_roles = list("Shaft Miner")
 	surplus = 20
 
+/datum/uplink_item/role_restricted/jdj
+	name = " .950 JDJ 'Thor' Kinetic Rifle"
+	desc = "A giant rifle, we're sure a drake couldn't withstand 1 hit from it, so you only get 1 bullet."
+	progression_minimum = 30 MINUTES
+	item = /obj/item/storage/box/kinetic/minerjdj/bigcase
+	cost = 18 //you want a free boss kill? Better fucking pay up.
+	limited_stock = 1 // just to be sure.
+	restricted_roles = list("Shaft Miner")
+	surplus = 10
+
 /datum/uplink_item/role_restricted/mimery
 	name = "Guide to Advanced Mimery Series"
 	desc = "The classical two part series on how to further hone your mime skills. Upon studying the series, the user should be able to make 3x1 invisible walls, and shoot bullets out of their fingers. \
