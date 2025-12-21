@@ -1055,3 +1055,8 @@
 	fire_delay = 1
 	pin = /obj/item/firing_pin/wastes
 	fire_sound = 'sound/weapons/gun/hmg/hmg.ogg'
+
+/obj/item/gun/ballistic/automatic/proto/pksmg/kineticlmg/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/automatic_fire, 0.4 SECONDS)
+
