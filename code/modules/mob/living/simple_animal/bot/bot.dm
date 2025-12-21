@@ -223,7 +223,7 @@
 		to_chat(src, span_warning("You feel yourself fade as your personality matrix is reset!"))
 		ghostize(can_reenter_corpse = FALSE)
 		playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
-		speak("Personally matrix reset!")
+		speak("Personality matrix reset!")
 		key = null
 
 /// Returns true if this mob can be controlled
