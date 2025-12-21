@@ -30,7 +30,7 @@
 		/obj/item/clothing/head/hats/security_peaked_cap/blue = 3, //monkestation edit
 		/obj/item/clothing/mask/bandana/striped/security = 3,
 		/obj/item/clothing/mask/balaclava = 3, //monkestation edit
-		/obj/item/clothing/mask/russian_balaclava = 3, //monkestation edit
+		/obj/item/clothing/mask/thermal_balaclava = 3, //monkestation edit
 		/obj/item/clothing/under/rank/security/officer/skirt = 3,
 		/obj/item/clothing/under/rank/security/officer/grey = 3,
 		/obj/item/clothing/under/rank/security/officer/tactical = 3, //monkestation edit

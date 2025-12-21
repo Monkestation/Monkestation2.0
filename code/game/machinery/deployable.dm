@@ -169,7 +169,7 @@
 		visible_message(span_warning("[src] deploys!"))
 
 //MONKESTATION EDIT START
-/obj/structure/barricade/security/proc/toggle_lock()
+/obj/structure/barricade/security/proc/toggle_lock(mob/living/user)
 	if(!locked)
 		set_density(TRUE)
 		icon_state = "barrier1"
@@ -180,18 +180,28 @@
 		icon_state = "barrier0"
 		locked = FALSE
 		playsound(src, 'sound/machines/boltsdown.ogg', 45)
+	balloon_alert(user, "barrier [locked ? "locked" : "unlocked"]")
 	update_appearance()
 
 /obj/structure/barricade/security/attackby(obj/item/tool, mob/living/user, params)
-	if(isidcard(tool))
-		var/obj/item/card/id/id_card = tool
+	if(tool.GetID())
+		var/obj/item/card/id/id_card = tool.GetID()
 		if((ACCESS_SECURITY in id_card.GetAccess()))
-			toggle_lock()
-			balloon_alert(user, "barrier [locked ? "locked" : "unlocked"]")
+			toggle_lock(user)
 		else
 			balloon_alert(user, "no access!")
 	else
 		return ..()
+
+/obj/structure/barricade/security/attack_hand_secondary(mob/living/user, list/modifiers)
+	. = ..()
+	if(.)
+		return
+
+	if(ACCESS_SECURITY in user.get_access())
+		toggle_lock(user)
+	else
+		balloon_alert(user, "no access!")
 
 /obj/structure/barricade/security/wrench_act(mob/living/user, obj/item/tool, params)
 	if(locked)
@@ -222,7 +232,15 @@
 
 /obj/item/grenade/barrier/examine(mob/user)
 	. = ..()
-	. += span_notice("Alt-click to toggle modes.")
+	. += span_notice("Current Mode: [mode].  Alt-click to toggle modes.")
+
+/obj/item/grenade/barrier/Initialize(mapload)
+	. = ..()
+	update_appearance(UPDATE_OVERLAYS)
+
+/obj/item/grenade/barrier/update_overlays()
+	. = ..()
+	. += emissive_appearance(icon, "[icon_state]-[mode]", src, alpha = src.alpha)
 
 /obj/item/grenade/barrier/click_alt(mob/living/carbon/user)
 	toggle_mode(user)
@@ -236,8 +254,9 @@
 			mode = HORIZONTAL
 		if(HORIZONTAL)
 			mode = SINGLE
-
+	playsound(src, 'sound/machines/click.ogg', 50)
 	to_chat(user, span_notice("[src] is now in [mode] mode."))
+	update_appearance(UPDATE_OVERLAYS)
 
 /obj/item/grenade/barrier/detonate(mob/living/lanced_by)
 	. = ..()

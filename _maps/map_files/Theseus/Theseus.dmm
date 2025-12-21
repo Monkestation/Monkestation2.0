@@ -43600,7 +43600,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/weather/dirt,
 /obj/item/clothing/suit/costume/soviet,
-/obj/item/clothing/mask/russian_balaclava,
+/obj/item/clothing/mask/thermal_balaclava,
 /obj/item/clothing/shoes/russian,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)

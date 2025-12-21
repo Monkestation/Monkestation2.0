@@ -43887,10 +43887,10 @@
 /area/station/science/research)
 "ixA" = (
 /obj/structure/table,
-/obj/item/clothing/mask/russian_balaclava{
+/obj/item/clothing/mask/thermal_balaclava{
 	pixel_y = 7
 	},
-/obj/item/clothing/mask/russian_balaclava,
+/obj/item/clothing/mask/thermal_balaclava,
 /turf/open/floor/plating,
 /area/station/maintenance/fore/upper)
 "ixC" = (
