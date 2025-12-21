@@ -154,7 +154,7 @@
 /obj/projectile/bullet/govmining
 	name = ".45-70 Gov Kinetic Bullet"
 	damage = 25
-	fauna_mod = 3 //four shots to kill a goliath
+	fauna_mod = 2 //six shots to kill a goliath
 
 /obj/projectile/bullet/govmining/on_hit(atom/target, Firer, blocked = 0, pierce_hit) //its not meant to tear through walls like a plasma cutter, but will still at least bust down a wall if it hits one.
 	if(ismineralturf(target))
