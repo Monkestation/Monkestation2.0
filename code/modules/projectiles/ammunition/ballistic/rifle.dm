@@ -127,12 +127,3 @@
 	advanced_print_req = TRUE
 
 
-///Mining heavy rifle
-
-/obj/item/ammo_casing/minerjdj
-	name = ".950 JDJ kinetic casing"
-	desc = "A monster of a round for the 'Thor' Rifle, weighing over half a pound and capable of generating over 50,000 Joules of force. You might assume almost nothing could survive a round like this... but..."
-	icon_state = ".950"
-	caliber = CALIBER_MINER_950
-	projectile_type = /obj/projectile/plasma/minerjdj
-
