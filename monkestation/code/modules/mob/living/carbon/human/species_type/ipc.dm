@@ -106,9 +106,11 @@
 		change_screen.Grant(C)
 
 	RegisterSignal(C, COMSIG_ATOM_EMAG_ACT, PROC_REF(on_emag_act))
+	RegisterSignal(C, COMSIG_ATOM_ATTACKBY, PROC_REF(yomch))
 	RegisterSignal(C, COMSIG_LIVING_DEATH, PROC_REF(bsod_death)) // screen displays bsod on death, if they have one
 	RegisterSignal(C.reagents, COMSIG_REAGENTS_ADD_REAGENT, PROC_REF(will_it_blend))
 	RegisterSignal(C, COMSIG_HUMAN_ON_HANDLE_BLOOD, PROC_REF(blood_handled))
+	C.AddComponent(/datum/component/abberant_eater, extra_foods = list(/obj/item/disk, /obj/item/computer_disk), excluding_subtypes = FALSE, nutritional_value =100)
 
 /datum/species/ipc/proc/blood_handled(mob/living/carbon/human/slime, seconds_per_tick, times_fired)
 	SIGNAL_HANDLER
