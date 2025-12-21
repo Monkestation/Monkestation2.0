@@ -121,7 +121,7 @@ GLOBAL_DATUM(dj_booth, /obj/machinery/dj_station)
 		return ITEM_INTERACT_BLOCKING
 	if(broadcasting)
 		balloon_alert(user, "stop the current track first!")
-		return FALSE
+		return ITEM_INTERACT_BLOCKING
 
 	is_ejecting = TRUE
 
