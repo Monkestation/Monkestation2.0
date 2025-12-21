@@ -1,0 +1,4 @@
+author: "Infernal-0"
+delete-after: True
+changes:
+  - rscadd: "Painkillers are now in medkits again. Rejoice."
