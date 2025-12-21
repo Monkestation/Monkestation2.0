@@ -31,7 +31,7 @@ import {
 import { filterMap, sortBy } from 'common/collections';
 import { useRandomToggleState } from './useRandomToggleState';
 import { createSearch } from 'common/string';
-import { InfernoNode } from 'react';
+import { ReactNode } from 'react';
 
 const CLOTHING_CELL_SIZE = 64;
 const CLOTHING_SIDEBAR_ROWS = 10;
@@ -164,10 +164,10 @@ const ChoicedSelection = (props: {
               <Stack.Item grow>
                 <Box
                   style={{
-                    'border-bottom': '1px solid #888',
-                    'font-weight': 'bold',
-                    'font-size': '14px',
-                    'text-align': 'center',
+                    borderBottom: '1px solid #888',
+                    fontWeight: 'bold',
+                    fontSize: '14px',
+                    textAlign: 'center',
                   }}
                 >
                   Select {props.name}
@@ -263,10 +263,10 @@ const ChoicedSelection = (props: {
                     <Box
                       pb={0.25}
                       style={{
-                        'border-bottom': '1px solid rgba(255, 255, 255, 0.1)',
-                        'font-weight': 'bold',
-                        'font-size': '14px',
-                        'text-align': 'center',
+                        borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+                        fontWeight: 'bold',
+                        fontSize: '14px',
+                        textAlign: 'center',
                       }}
                     >
                       Select {features[feature].name}
@@ -484,7 +484,7 @@ const PreferenceList = (props: {
   act: typeof sendAct;
   preferences: Record<string, unknown>;
   randomizations: Record<string, RandomSetting>;
-  children?: InfernoNode;
+  children?: ReactNode;
 }) => {
   return (
     <Stack.Item

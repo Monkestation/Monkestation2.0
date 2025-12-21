@@ -393,7 +393,7 @@ const Authorization = (props, context) => {
         {'User: '}
         <span
           style={!combat_parts_allowed ? 'color:#ff0000' : 'color:#00ff00'}
-          font-style:bold
+          fontStyle:bold
         >
           {!combat_parts_allowed
             ? 'Unauthorized'

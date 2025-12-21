@@ -56,7 +56,7 @@ export const JobEntry: Inferno.SFC<{
       fluid
       style={{
         // Try not to think too hard about this one.
-        'background-color': job.unavailable_reason
+        backgroundColor: job.unavailable_reason
           ? '#949494' // Grey background
           : job.prioritized
             ? '#16fc0f' // Bright green background
@@ -64,14 +64,14 @@ export const JobEntry: Inferno.SFC<{
         color: job.unavailable_reason
           ? '#616161' // Dark grey font
           : Color.fromHex(department.color).darken(90).toString(),
-        'font-size': '1.1rem',
+        fontSize: '1.1rem',
         cursor: job.unavailable_reason ? 'initial' : 'pointer',
       }}
       tooltip={
         job.unavailable_reason ||
         (job.prioritized ? (
           <>
-            <p style={{ 'margin-top': '0px' }}>
+            <p style={{ marginTop: '0px' }}>
               <b>The HoP wants more people in this job!</b>
             </p>
             {job.description}
@@ -153,7 +153,7 @@ export const JobSelection = (props) => {
                         {departmentName}
                         <span
                           style={{
-                            'font-size': '1rem',
+                            fontSize: '1rem',
                             'white-space': 'nowrap',
                             position: 'absolute',
                             right: '1em',
@@ -169,12 +169,12 @@ export const JobSelection = (props) => {
                       </>
                     }
                     style={{
-                      'background-color': entry.color,
-                      'margin-bottom': '1em',
+                      backgroundColor: entry.color,
+                      marginBottom: '1em',
                       'break-inside': 'avoid-column',
                     }}
                     titleStyle={{
-                      'border-bottom-color': Color.fromHex(entry.color)
+                      'borderBottom-color': Color.fromHex(entry.color)
                         .darken(50)
                         .toString(),
                     }}

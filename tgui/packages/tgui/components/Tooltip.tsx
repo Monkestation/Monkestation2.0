@@ -1,10 +1,10 @@
 import { createPopper, Placement, VirtualElement } from '@popperjs/core';
 import { Component, findDOMFromVNode, render } from 'react';
-import type { InfernoNode } from 'react';
+import type { ReactNode } from 'react';
 
 type TooltipProps = {
-  children?: InfernoNode;
-  content: InfernoNode;
+  children?: ReactNode;
+  content: ReactNode;
   position?: Placement;
 };
 

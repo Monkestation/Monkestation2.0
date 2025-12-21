@@ -46,8 +46,8 @@ export const ProgressBar = (props) => {
     // Otherwise, set styles directly.
     // prettier-ignore
     outerProps.style = (outerProps.style || "")
-      + `border-color: ${effectiveColor};`;
-    fillStyles['background-color'] = effectiveColor;
+      + `borderColor: ${effectiveColor};`;
+    fillStyles['backgroundColor'] = effectiveColor;
   }
 
   return (
@@ -62,5 +62,3 @@ export const ProgressBar = (props) => {
     </div>
   );
 };
-
-ProgressBar.defaultHooks = pureComponentHooks;

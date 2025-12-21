@@ -115,10 +115,7 @@ export const TicketPanel = (props) => {
       >
         <Window.Content scrollable>
           <Section title={data.initiator_key_name + ': ' + data.name}>
-            <span
-              class="Section__titleText"
-              style={{ 'font-weight': 'normal' }}
-            >
+            <span class="Section__titleText" style={{ fontWeight: 'normal' }}>
               Assigned Admin: <b>{data.admin || 'Unassigned'}</b>
               <br />
               <span class={data.is_resolved ? 'color-good' : 'color-bad'}>

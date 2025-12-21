@@ -221,7 +221,7 @@ const Item = (props: Props) => {
         <span
           className={classes(['design32x32', id])}
           style={{
-            'vertical-align': 'middle',
+            verticalAlign: 'middle',
           }}
         />{' '}
         <b>{name}</b>

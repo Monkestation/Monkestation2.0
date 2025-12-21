@@ -4,8 +4,8 @@
  * @license MIT
  */
 
-import { BooleanLike, classes, pureComponentHooks } from 'common/react';
-import { Inferno, createVNode, InfernoNode } from 'react';
+import { BooleanLike, classes } from 'common/react';
+import { Inferno, createVNode, ReactNode } from 'react';
 import { ChildFlags, VNodeFlags } from 'inferno-vnode-flags';
 import { CSS_COLORS } from '../constants';
 
@@ -13,7 +13,7 @@ export type BoxProps = {
   [key: string]: any;
   as?: string;
   className?: string | BooleanLike;
-  children?: InfernoNode;
+  children?: ReactNode;
   position?: string | BooleanLike;
   overflow?: string | BooleanLike;
   overflowX?: string | BooleanLike;
@@ -139,27 +139,27 @@ const styleMapperByPropName = {
   left: mapUnitPropTo('left', unit),
   right: mapUnitPropTo('right', unit),
   width: mapUnitPropTo('width', unit),
-  minWidth: mapUnitPropTo('min-width', unit),
+  minWidth: mapUnitPropTo('minWidth', unit),
   maxWidth: mapUnitPropTo('max-width', unit),
   height: mapUnitPropTo('height', unit),
   minHeight: mapUnitPropTo('min-height', unit),
   maxHeight: mapUnitPropTo('max-height', unit),
-  fontSize: mapUnitPropTo('font-size', unit),
-  fontFamily: mapRawPropTo('font-family'),
+  fontSize: mapUnitPropTo('fontSize', unit),
+  fontFamily: mapRawPropTo('fontFamily'),
   lineHeight: (style, value) => {
     if (typeof value === 'number') {
-      style['line-height'] = value;
+      style['lineHeight'] = value;
     } else if (typeof value === 'string') {
-      style['line-height'] = unit(value);
+      style['lineHeight'] = unit(value);
     }
   },
   opacity: mapRawPropTo('opacity'),
-  textAlign: mapRawPropTo('text-align'),
-  verticalAlign: mapRawPropTo('vertical-align'),
+  textAlign: mapRawPropTo('textAlign'),
+  verticalAlign: mapRawPropTo('verticalAlign'),
   // Boolean props
   inline: mapBooleanPropTo('display', 'inline-block'),
-  bold: mapBooleanPropTo('font-weight', 'bold'),
-  italic: mapBooleanPropTo('font-style', 'italic'),
+  bold: mapBooleanPropTo('fontWeight', 'bold'),
+  italic: mapBooleanPropTo('fontStyle', 'italic'),
   nowrap: mapBooleanPropTo('white-space', 'nowrap'),
   preserveWhitespace: mapBooleanPropTo('white-space', 'pre-wrap'),
   // Margin
@@ -171,10 +171,10 @@ const styleMapperByPropName = {
   ]),
   mx: mapDirectionalUnitPropTo('margin', halfUnit, ['left', 'right']),
   my: mapDirectionalUnitPropTo('margin', halfUnit, ['top', 'bottom']),
-  mt: mapUnitPropTo('margin-top', halfUnit),
-  mb: mapUnitPropTo('margin-bottom', halfUnit),
-  ml: mapUnitPropTo('margin-left', halfUnit),
-  mr: mapUnitPropTo('margin-right', halfUnit),
+  mt: mapUnitPropTo('marginTop', halfUnit),
+  mb: mapUnitPropTo('marginBottom', halfUnit),
+  ml: mapUnitPropTo('marginLeft', halfUnit),
+  mr: mapUnitPropTo('marginRight', halfUnit),
   // Padding
   p: mapDirectionalUnitPropTo('padding', halfUnit, [
     'top',
@@ -184,14 +184,14 @@ const styleMapperByPropName = {
   ]),
   px: mapDirectionalUnitPropTo('padding', halfUnit, ['left', 'right']),
   py: mapDirectionalUnitPropTo('padding', halfUnit, ['top', 'bottom']),
-  pt: mapUnitPropTo('padding-top', halfUnit),
-  pb: mapUnitPropTo('padding-bottom', halfUnit),
-  pl: mapUnitPropTo('padding-left', halfUnit),
-  pr: mapUnitPropTo('padding-right', halfUnit),
+  pt: mapUnitPropTo('paddingTop', halfUnit),
+  pb: mapUnitPropTo('paddingBottom', halfUnit),
+  pl: mapUnitPropTo('paddingLeft', halfUnit),
+  pr: mapUnitPropTo('paddingRight', halfUnit),
   // Color props
   color: mapColorPropTo('color'),
   textColor: mapColorPropTo('color'),
-  backgroundColor: mapColorPropTo('background-color'),
+  backgroundColor: mapColorPropTo('backgroundColor'),
   // Utility props
   fillPositionedParent: (style, value) => {
     if (value) {
@@ -274,5 +274,3 @@ export const Box = (props: BoxProps) => {
     undefined,
   );
 };
-
-Box.defaultHooks = pureComponentHooks;

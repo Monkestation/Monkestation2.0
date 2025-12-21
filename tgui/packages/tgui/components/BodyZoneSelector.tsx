@@ -1,4 +1,4 @@
-import { Component,  createRef } from 'react';
+import { Component, createRef } from 'react';
 import { resolveAsset } from '../assets';
 import { Box } from './Box';
 
@@ -127,7 +127,7 @@ export class BodyZoneSelector extends Component<
             style={{
               '-ms-interpolation-mode': 'nearest-neighbor',
               'image-rendering': 'pixelated',
-              'pointer-events': 'none',
+              pointerEvents: 'none',
               position: 'absolute',
               width: `${32 * scale}px`,
               height: `${32 * scale}px`,
@@ -143,7 +143,7 @@ export class BodyZoneSelector extends Component<
               '-ms-interpolation-mode': 'nearest-neighbor',
               'image-rendering': 'pixelated',
               opacity: 0.5,
-              'pointer-events': 'none',
+              pointerEvents: 'none',
               position: 'absolute',
               width: `${32 * scale}px`,
               height: `${32 * scale}px`,

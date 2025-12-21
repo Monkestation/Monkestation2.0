@@ -5443,7 +5443,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"inferno-vnode-flags@npm:8.2.2, inferno-vnode-flags@npm:^8.2.1":
+"inferno-vnode-flags@npm:8.2.2":
   version: 8.2.2
   resolution: "inferno-vnode-flags@npm:8.2.2"
   checksum: 10c0/707dd0245ae2c79e394f22a6f58d2e8c01d16325ab350bcaf54e6778a6be4aaa7d0d6346ac2da2d01a75497a628cf4deac1a89b2a797fac844a76a90e3b3be92
@@ -9556,16 +9556,17 @@ __metadata:
   dependencies:
     "@popperjs/core": "npm:^2.11.8"
     "@types/marked": "npm:^4.0.8"
+    "@types/react": "npm:^19"
+    "@types/react-dom": "npm:^19"
     common: "workspace:*"
     csstype: "npm:^3.1.1"
     dateformat: "npm:^4.6.2"
     dompurify: "npm:^2.4.4"
     highlight.js: "npm:^11.9.0"
-    inferno: "npm:^8.2.1"
-    inferno-compat: "npm:^8.2.1"
-    inferno-vnode-flags: "npm:^8.2.1"
     js-yaml: "npm:^4.1.0"
     marked: "npm:^4.2.12"
+    react: "npm:^19.2.3"
+    react-dom: "npm:^19.2.3"
     tgui-dev-server: "workspace:*"
     tgui-polyfill: "workspace:*"
   languageName: unknown

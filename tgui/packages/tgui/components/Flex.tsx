@@ -4,7 +4,7 @@
  * @license MIT
  */
 
-import { BooleanLike, classes, pureComponentHooks } from 'common/react';
+import { BooleanLike, classes } from 'common/react';
 import { BoxProps, computeBoxClassName, computeBoxProps, unit } from './Box';
 
 export type FlexProps = BoxProps & {
@@ -32,7 +32,7 @@ export const computeFlexProps = (props: FlexProps) => {
       ...rest.style,
       'flex-direction': direction,
       'flex-wrap': wrap === true ? 'wrap' : wrap,
-      'align-items': align,
+      alignItems: align,
       'justify-content': justify,
     },
     ...rest,
@@ -48,8 +48,6 @@ export const Flex = (props) => {
     />
   );
 };
-
-Flex.defaultHooks = pureComponentHooks;
 
 export type FlexItemProps = BoxProps & {
   grow?: number;
@@ -110,7 +108,5 @@ const FlexItem = (props) => {
     />
   );
 };
-
-FlexItem.defaultHooks = pureComponentHooks;
 
 Flex.Item = FlexItem;

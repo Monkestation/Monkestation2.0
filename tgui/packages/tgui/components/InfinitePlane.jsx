@@ -148,7 +148,7 @@ export class InfinitePlane extends Component {
             position: 'fixed',
             height: '100%',
             width: '100%',
-            'background-image': `url("${backgroundImage}")`,
+            backgroundImage: `url("${backgroundImage}")`,
             'background-position': `${finalLeft}px ${finalTop}px`,
             'background-repeat': 'repeat',
             'background-size': `${zoom * imageWidth}px`,

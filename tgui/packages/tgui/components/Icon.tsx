@@ -4,8 +4,8 @@
  * @license MIT
  */
 
-import { classes, pureComponentHooks } from 'common/react';
-import { InfernoNode } from 'react';
+import { classes } from 'common/react';
+import { ReactNode } from 'react';
 import { BoxProps, computeBoxClassName, computeBoxProps } from './Box';
 
 const FA_OUTLINE_REGEX = /-o$/;
@@ -29,7 +29,7 @@ export const Icon = (props: IconProps) => {
     if (!style) {
       style = {};
     }
-    style['font-size'] = size * 100 + '%';
+    style['fontSize'] = size * 100 + '%';
   }
   if (rotation) {
     if (!style) {
@@ -73,10 +73,8 @@ export const Icon = (props: IconProps) => {
   );
 };
 
-Icon.defaultHooks = pureComponentHooks;
-
 type IconStackUnique = {
-  children: InfernoNode;
+  children: ReactNode;
   className?: string;
 };
 

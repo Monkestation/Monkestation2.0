@@ -5,7 +5,7 @@
  */
 
 import { classes } from 'common/react';
-import { Component, createRef, InfernoNode, RefObject } from 'react';
+import { Component, createRef, ReactNode, RefObject } from 'react';
 import { Box } from './Box';
 import { logger } from '../logging';
 import { Icon } from './Icon';
@@ -129,7 +129,7 @@ type MenuBarItemProps = {
   entry: string;
   children: any;
   openWidth: string;
-  display: InfernoNode;
+  display: ReactNode;
   setOpenMenuBar: (entry: string | null) => void;
   openMenuBar: string | null;
   setOpenOnHover: (flag: boolean) => void;

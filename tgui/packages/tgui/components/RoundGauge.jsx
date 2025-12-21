@@ -73,7 +73,7 @@ export const RoundGauge = (props) => {
         ])}
         {...computeBoxProps({
           style: {
-            'font-size': size + 'em',
+            fontSize: size + 'em',
             ...style,
           },
           ...rest,

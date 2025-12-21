@@ -89,7 +89,7 @@ export const Knob = (props) => {
             ])}
             {...computeBoxProps({
               style: {
-                'font-size': size + 'em',
+                fontSize: size + 'em',
                 ...style,
               },
               ...rest,

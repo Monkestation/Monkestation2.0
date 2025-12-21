@@ -10,8 +10,8 @@ import { DEFAULT_COMPONENT_MENU_LIMIT } from './constants';
 let fetchServerData;
 
 export class ComponentMenu extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       selectedTab: 'All',
       currentLimit: DEFAULT_COMPONENT_MENU_LIMIT,

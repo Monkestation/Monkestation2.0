@@ -80,7 +80,7 @@ export class FitText extends Component<
       <span
         ref={this.ref}
         style={{
-          'font-size': `${this.state.fontSize}px`,
+          fontSize: `${this.state.fontSize}px`,
           ...(typeof this.props.native?.style === 'object' &&
             this.props.native.style),
         }}

@@ -180,7 +180,7 @@ const SpeciesPerk = (props: { className: string; perk: Perk }) => {
           ml={0}
           mt={1}
           style={{
-            'text-align': 'center',
+            textAlign: 'center',
             height: '100%',
             width: '100%',
           }}

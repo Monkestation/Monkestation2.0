@@ -194,7 +194,7 @@ export const SeedExtractor = (props) => {
               seeds.map((item) => (
                 <Table.Row
                   key={item.key}
-                  style={{ 'border-top': '2px solid #222' }}
+                  style={{ borderTop: '2px solid #222' }}
                 >
                   <Table.Cell collapsing>
                     <DmIcon

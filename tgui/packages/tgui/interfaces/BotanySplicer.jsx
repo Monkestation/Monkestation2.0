@@ -57,7 +57,7 @@ export const InsertedSeedOne = (props) => {
                 <img
                   src={`data:image/jpeg;base64,${node.image}`}
                   style={{
-                    'vertical-align': 'middle',
+                    verticalAlign: 'middle',
                     'horizontal-align': 'middle',
                   }}
                 />
@@ -126,7 +126,7 @@ export const InsertedSeedOneInfusion = (props) => {
                 <img
                   src={`data:image/jpeg;base64,${node.image}`}
                   style={{
-                    'vertical-align': 'middle',
+                    verticalAlign: 'middle',
                     'horizontal-align': 'middle',
                   }}
                 />
@@ -211,7 +211,7 @@ export const InsertedSeedTwo = (props) => {
                 <img
                   src={`data:image/jpeg;base64,${node.image}`}
                   style={{
-                    'vertical-align': 'middle',
+                    verticalAlign: 'middle',
                     'horizontal-align': 'middle',
                   }}
                 />

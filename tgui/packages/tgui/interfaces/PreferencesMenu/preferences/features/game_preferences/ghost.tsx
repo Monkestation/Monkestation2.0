@@ -9,7 +9,7 @@ import {
 } from '../base';
 import { Box, Dropdown, Flex } from '../../../../../components';
 import { classes } from 'common/react';
-import { InfernoNode } from 'react';
+import { ReactNode } from 'react';
 import { binaryInsertWith } from 'common/collections';
 import { useBackend } from '../../../../../backend';
 import { PreferencesMenuData } from '../../../data';
@@ -22,7 +22,7 @@ export const ghost_accs: FeatureChoiced = {
 };
 
 const insertGhostForm = binaryInsertWith<{
-  displayText: InfernoNode;
+  displayText: ReactNode;
   value: string;
 }>(({ value }) => value);
 
@@ -43,7 +43,7 @@ const GhostFormInput = (
 
   const displayTexts = {};
   let options: {
-    displayText: InfernoNode;
+    displayText: ReactNode;
     value: string;
   }[] = [];
 

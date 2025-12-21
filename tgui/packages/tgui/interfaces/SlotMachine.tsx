@@ -55,7 +55,7 @@ const SlotsTile = (props: SlotsTileProps) => {
   return (
     <div
       style={{
-        'text-align': 'center',
+        textAlign: 'center',
         padding: '1rem',
         margin: '0.5rem',
         display: 'inline-block',
@@ -89,9 +89,9 @@ export const SlotMachine = (props) => {
       <Window.Content>
         <Section
           title="Slots!"
-          style={{ 'justify-content': 'center', 'text-align': 'center' }}
+          style={{ 'justify-content': 'center', textAlign: 'center' }}
         >
-          <Section style={{ 'text-align': 'left' }}>
+          <Section style={{ textAlign: 'left' }}>
             <p>
               Only <b>{cost}</b> credit{pluralS(cost)} for a chance to win big!
             </p>

@@ -13,7 +13,7 @@ import {
 import { Window } from '../layouts';
 import { clamp } from 'common/math';
 import { flow } from 'common/fp';
-import type { InfernoNode } from 'react';
+import type { ReactNode } from 'react';
 
 type Recipe = {
   ref: unknown | null;
@@ -179,7 +179,7 @@ const Multipliers = (props: MultiplierProps) => {
 
   const multipliers = [5, 10, 25];
 
-  const finalResult: InfernoNode[] = [];
+  const finalResult: ReactNode[] = [];
 
   for (const multiplier of multipliers) {
     if (maxM >= multiplier) {

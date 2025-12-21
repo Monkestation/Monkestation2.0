@@ -136,8 +136,6 @@ export const ImageButton = (props) => {
   );
 };
 
-ImageButton.defaultHooks = pureComponentHooks;
-
 /**
  * That's VERY fucking expensive thing!
  * Use it only in places, where it really needed.

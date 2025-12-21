@@ -284,7 +284,7 @@ const ProductImage = (props) => {
         <img
           src={`data:image/jpeg;base64,${product.img}`}
           style={{
-            'vertical-align': 'middle',
+            verticalAlign: 'middle',
           }}
         />
       ) : product.icon && product.icon_state ? (
@@ -297,7 +297,7 @@ const ProductImage = (props) => {
         <span
           className={classes(['vending32x32', product.path])}
           style={{
-            'vertical-align': 'middle',
+            verticalAlign: 'middle',
           }}
         />
       )}

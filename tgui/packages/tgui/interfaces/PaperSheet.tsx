@@ -252,7 +252,7 @@ export const Stamp = (props): Inferno.HTMLAttributes<HTMLDivElement> => {
     top: y + yOffset + 'px',
     transform: 'rotate(' + rotation + 'deg)',
     opacity: opacity || 1.0,
-    'z-index': activeStamp ? Z_INDEX_STAMP_PREVIEW : Z_INDEX_STAMP,
+    zIndex: activeStamp ? Z_INDEX_STAMP_PREVIEW : Z_INDEX_STAMP,
   };
 
   return (
@@ -669,8 +669,8 @@ export class PreviewView extends Component<PreviewViewProps> {
     color: string,
     bold: boolean = false,
   ): string => {
-    return `<span style="color:${color};font-family:${font};${
-      bold ? 'font-weight: bold;' : ''
+    return `<span style="color:${color};fontFamily:${font};${
+      bold ? 'fontWeight: bold;' : ''
     }">${text}</span>`;
   };
 

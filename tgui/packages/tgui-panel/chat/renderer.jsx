@@ -63,7 +63,7 @@ const findNearestScrollableParent = (startingNode) => {
 const createHighlightNode = (text, color) => {
   const node = document.createElement('span');
   node.className = 'Chat__highlight';
-  node.setAttribute('style', 'background-color:' + color);
+  node.setAttribute('style', 'backgroundColor:' + color);
   node.textContent = text;
   return node;
 };
@@ -645,7 +645,7 @@ class ChatRenderer {
         }
       }
     }
-    cssText += 'body, html { background-color: #141414 }\n';
+    cssText += 'body, html { backgroundColor: #141414 }\n';
     // Compile chat log as HTML text
     let messagesHtml = '';
     for (let message of this.visibleMessages) {

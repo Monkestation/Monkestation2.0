@@ -43,7 +43,7 @@ export const NtosRadarContent = (props) => {
       </Stack.Item>
       <Stack.Item
         style={{
-          'background-image':
+          backgroundImage:
             'url("' + resolveAsset('ntosradarbackground.png') + '")',
           'background-position': 'center',
           'background-repeat': 'no-repeat',

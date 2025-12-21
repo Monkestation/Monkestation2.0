@@ -26,7 +26,7 @@ export type MaterialCostSequenceProps = {
   amount?: number;
 
   /**
-   * The `align-items` flex property provided to the generated list.
+   * The `alignItems` flex property provided to the generated list.
    */
   align?: string;
 

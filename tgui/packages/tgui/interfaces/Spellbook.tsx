@@ -14,7 +14,7 @@ import {
   Stack,
 } from '../components';
 import { Window } from '../layouts';
-import { InfernoNode } from 'react';
+import { ReactNode } from 'react';
 
 enum SpellCategory {
   Offensive = 'Offensive',
@@ -60,7 +60,7 @@ type Data = {
 type TabType = {
   title: string;
   blurb?: string;
-  component?: () => InfernoNode;
+  component?: () => ReactNode;
   locked?: boolean;
   scrollable?: boolean;
 };

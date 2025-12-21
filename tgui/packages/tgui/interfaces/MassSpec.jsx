@@ -223,11 +223,11 @@ const MassSpectroscopy = (props) => {
             y="250"
             text-anchor="middle"
             fill="white"
-            font-size="16"
+            fontSize="16"
             transform="translate(0,0) scale(0.8 0.8)"
           >
             {/* x axis*/}
-            <tspan x="250" y="318" font-weight="bold" font-size="1.4em">
+            <tspan x="250" y="318" fontWeight="bold" fontSize="1.4em">
               Mass (g)
             </tspan>
             <tspan x="0" y="283">
@@ -272,9 +272,9 @@ const MassSpectroscopy = (props) => {
             text-anchor="middle"
             transform="translate(430,100) rotate(90) scale(0.8 0.8)"
             fill="white"
-            font-size="16"
+            fontSize="16"
           >
-            <tspan font-weight="bold" font-size="1.4em">
+            <tspan fontWeight="bold" fontSize="1.4em">
               Absorbance (AU)
             </tspan>
           </text>

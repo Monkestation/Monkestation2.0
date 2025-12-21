@@ -1,13 +1,13 @@
 import { createPopper, VirtualElement } from '@popperjs/core';
 import { classes } from 'common/react';
-import { Component, findDOMFromVNode, InfernoNode, render } from 'react';
+import { Component, findDOMFromVNode, ReactNode, render } from 'react';
 import { Box, BoxProps } from './Box';
 import { Button } from './Button';
 import { Icon } from './Icon';
 import { Stack } from './Stack';
 
 export interface DropdownEntry {
-  displayText: string | number | InfernoNode;
+  displayText: string | number | ReactNode;
   value: string | number | Enumerator;
 }
 
@@ -21,7 +21,7 @@ type DropdownUniqueProps = {
   over?: boolean;
   color?: string;
   nochevron?: boolean;
-  displayText?: string | number | InfernoNode;
+  displayText?: string | number | ReactNode;
   onClick?: (event) => void;
   // you freaks really are just doing anything with this shit
   selected?: any;
@@ -349,7 +349,7 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
             {nochevron || (
               <span
                 className="Dropdown__arrow-button"
-                style={{ 'line-height': displayHeight }}
+                style={{ lineHeight: displayHeight }}
               >
                 <Icon name={adjustedOpen ? 'chevron-up' : 'chevron-down'} />
               </span>
@@ -366,7 +366,7 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
                     ml="0.25em"
                     style={{
                       display: 'inline-block',
-                      'line-height': displayHeight || 'unset',
+                      lineHeight: displayHeight || 'unset',
                     }}
                     name="chevron-left"
                   />
@@ -390,7 +390,7 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
                     ml="0.25em"
                     style={{
                       display: 'inline-block',
-                      'line-height': displayHeight || 'unset',
+                      lineHeight: displayHeight || 'unset',
                     }}
                     name="chevron-right"
                   />

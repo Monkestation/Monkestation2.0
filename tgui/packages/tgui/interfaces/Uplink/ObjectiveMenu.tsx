@@ -18,7 +18,7 @@ import {
   Rank,
 } from './calculateDangerLevel';
 import { ObjectiveState } from './constants';
-import type { InfernoNode } from 'react';
+import type { ReactNode } from 'react';
 
 export type Objective = {
   id: number;
@@ -274,7 +274,7 @@ export class ObjectiveMenu extends Component<
             left={`${objectiveX - 180}px`}
             top={`${objectiveY}px`}
             style={{
-              'pointer-events': 'none',
+              pointerEvents: 'none',
             }}
           >
             {ObjectiveFunction(draggingObjective, false)}
@@ -353,7 +353,7 @@ type ObjectiveElementProps = {
   telecrystalReward: number;
   progressionReward: number;
   contractorRep?: number;
-  uiButtons?: InfernoNode;
+  uiButtons?: ReactNode;
   objectiveState?: ObjectiveState;
   originalProgression: number;
   telecrystalPenalty: number;
@@ -464,9 +464,9 @@ export const ObjectiveElement = (props: ObjectiveElementProps) => {
                   <Box
                     style={{
                       border: '2px solid rgba(0, 0, 0, 0.5)',
-                      'border-left': 'none',
-                      'border-right': 'none',
-                      'border-bottom': objectiveFinished ? 'none' : undefined,
+                      borderLeft: 'none',
+                      borderRight: 'none',
+                      borderBottom: objectiveFinished ? 'none' : undefined,
                     }}
                     className={dangerLevel.gradient}
                     py={0.5}
@@ -528,10 +528,10 @@ export const ObjectiveElement = (props: ObjectiveElementProps) => {
                     inline
                     className={dangerLevel.gradient}
                     style={{
-                      'border-radius': '0',
+                      borderRadius: '0',
                       border: '2px solid rgba(0, 0, 0, 0.5)',
-                      'border-left': 'none',
-                      'border-right': 'none',
+                      borderLeft: 'none',
+                      borderRight: 'none',
                     }}
                     position="relative"
                     width="100%"

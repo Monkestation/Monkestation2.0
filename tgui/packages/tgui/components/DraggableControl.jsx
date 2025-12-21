@@ -6,7 +6,7 @@
 
 import { clamp } from 'common/math';
 import { pureComponentHooks } from 'common/react';
-import { Component,  createRef } from 'react';
+import { Component, createRef } from 'react';
 import { AnimatedNumber } from './AnimatedNumber';
 
 const DEFAULT_UPDATE_RATE = 400;
@@ -54,7 +54,7 @@ export class DraggableControl extends Component {
       if (editing) {
         return;
       }
-      document.body.style['pointer-events'] = 'none';
+      document.body.style['pointerEvents'] = 'none';
       this.ref = e.target;
       this.setState({
         dragging: false,
@@ -116,7 +116,7 @@ export class DraggableControl extends Component {
     this.handleDragEnd = (e) => {
       const { onChange, onDrag } = this.props;
       const { dragging, value, internalValue } = this.state;
-      document.body.style['pointer-events'] = 'auto';
+      document.body.style['pointerEvents'] = 'auto';
       clearTimeout(this.timer);
       clearInterval(this.dragInterval);
       this.setState({
@@ -196,8 +196,8 @@ export class DraggableControl extends Component {
         style={{
           display: !editing ? 'none' : undefined,
           height: height,
-          'line-height': lineHeight,
-          'font-size': fontSize,
+          lineHeight: lineHeight,
+          fontSize: fontSize,
         }}
         onBlur={(e) => {
           if (!editing) {
@@ -276,7 +276,6 @@ export class DraggableControl extends Component {
   }
 }
 
-DraggableControl.defaultHooks = pureComponentHooks;
 DraggableControl.defaultProps = {
   minValue: -Infinity,
   maxValue: +Infinity,

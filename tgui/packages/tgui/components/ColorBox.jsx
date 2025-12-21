@@ -28,5 +28,3 @@ export const ColorBox = (props) => {
     </div>
   );
 };
-
-ColorBox.defaultHooks = pureComponentHooks;

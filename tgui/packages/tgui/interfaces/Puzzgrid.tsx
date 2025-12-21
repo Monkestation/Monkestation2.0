@@ -34,8 +34,8 @@ const PuzzgridButton: Inferno.SFC<{
         width: '100%',
         height: '100%',
 
-        'text-align': 'center',
-        'vertical-align': 'middle',
+        textAlign: 'center',
+        verticalAlign: 'middle',
         'white-space': 'normal',
       }}
       {...props}
@@ -110,7 +110,7 @@ export const Puzzgrid = (props) => {
             color="red"
             style={{
               'text-shadow': '1px 1px 1px #222',
-              'font-size': '30px',
+              fontSize: '30px',
               position: 'absolute',
               top: 0,
               left: '10px',
@@ -126,9 +126,9 @@ export const Puzzgrid = (props) => {
           <Box
             style={{
               'text-shadow': '1px 1px 1px #222',
-              'text-align': 'right',
-              'font-size': '15px',
-              'pointer-events': 'none',
+              textAlign: 'right',
+              fontSize: '15px',
+              pointerEvents: 'none',
               position: 'absolute',
               top: 0,
               right: '10px',

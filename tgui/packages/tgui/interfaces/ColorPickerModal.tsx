@@ -30,7 +30,7 @@ import {
 } from 'common/color';
 import { Interaction, Interactive } from 'tgui/components/Interactive';
 import { classes } from 'common/react';
-import { Component, FocusEvent, FormEvent, InfernoNode } from 'react';
+import { Component, FocusEvent, FormEvent, ReactNode } from 'react';
 import { logger } from 'tgui/logging';
 import { InputButtons } from './common/InputButtons';
 
@@ -341,7 +341,7 @@ interface HexColorInputProps
 /** Adds "#" symbol to the beginning of the string */
 const prefix = (value: string) => '#' + value;
 
-export const HexColorInput = (props: HexColorInputProps): InfernoNode => {
+export const HexColorInput = (props: HexColorInputProps): ReactNode => {
   const { prefixed, alpha, color, fluid, onChange, ...rest } = props;
 
   /** Escapes all non-hexadecimal characters including "#" */
@@ -452,7 +452,7 @@ const SaturationValue = ({ hsva, onChange }) => {
   };
 
   const containerStyle = {
-    'background-color': hsvaToHslString({ h: hsva.h, s: 100, v: 100, a: 1 }),
+    backgroundColor: hsvaToHslString({ h: hsva.h, s: 100, v: 100, a: 1 }),
   };
 
   return (

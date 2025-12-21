@@ -188,7 +188,7 @@ const CrewTab = (props: { sensor: CrewSensor }) => {
           <span
             style={{
               color: jobToColor(sensor.ijob),
-              ...(jobIsHead(sensor.ijob) && { 'font-weight': 'bold' }),
+              ...(jobIsHead(sensor.ijob) && { fontWeight: 'bold' }),
             }}
           >
             {sensor.name} ({sensor.assignment})

@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import type { InfernoNode } from 'react';
+import type { ReactNode } from 'react';
 import { loadedMappings, resolveAsset } from '../../assets';
 import { fetchRetry } from '../../http';
 import { ServerData } from './data';
@@ -11,7 +11,7 @@ let lastError: any = null;
 
 export class ServerPreferencesFetcher extends Component<
   {
-    render: (serverData: ServerData | undefined) => InfernoNode;
+    render: (serverData: ServerData | undefined) => ReactNode;
   },
   {
     serverData?: ServerData;
@@ -61,8 +61,8 @@ export class ServerPreferencesFetcher extends Component<
         fontSize="30px"
         textAlign="center"
         style={{
-          'background-color': 'rgba(0, 0, 0, 0.75)',
-          'font-weight': 'bold',
+          backgroundColor: 'rgba(0, 0, 0, 0.75)',
+          fontWeight: 'bold',
         }}
       >
         Error: Unable to fetch preferences clientside data.

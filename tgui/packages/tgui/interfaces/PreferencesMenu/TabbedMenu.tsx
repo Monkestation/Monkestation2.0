@@ -1,11 +1,11 @@
-import { Component, createRef, InfernoNode, RefObject } from 'react';
+import { Component, createRef, ReactNode, RefObject } from 'react';
 import { Button, Section, Stack } from '../../components';
 import { Flex, FlexProps } from '../../components/Flex';
 
 type TabbedMenuProps = {
-  categoryEntries: [string, InfernoNode][];
+  categoryEntries: [string, ReactNode][];
   contentProps?: FlexProps;
-  extra?: InfernoNode;
+  extra?: ReactNode;
   name: string;
 };
 
