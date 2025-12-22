@@ -564,7 +564,7 @@
 
 /datum/reagent/medicine/c2/penthrite/overdose_process(mob/living/carbon/human/H, seconds_per_tick, times_fired)
 	REMOVE_TRAIT(H, TRAIT_STABLEHEART, type)
-	H.stamina.adjust(-5 * REM * seconds_per_tick)
+	H.stamina.adjust(-10 * REM * seconds_per_tick)
 	H.adjustOrganLoss(ORGAN_SLOT_HEART, 10 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
 	H.set_heartattack(TRUE)
 
