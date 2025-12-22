@@ -20,7 +20,7 @@
 		return FALSE
 
 	var/can_we_eat = excluding_subtypes ? is_type_in_typecache(weapon, extra_foods) : is_type_in_list(weapon, extra_foods)
-	if(!can_we_eat || is_type_in_list(weapon, blacklist))
+	if(!can_we_eat || is_type_in_list(weapon, blacklist) || (weapon.resistance_flags & INDESTRUCTIBLE))
 		return FALSE
 
 	var/eatverb = pick("bite","chew","nibble","gnaw","gobble","chomp")
