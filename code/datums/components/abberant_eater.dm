@@ -24,7 +24,7 @@
 		return FALSE
 
 	var/eatverb = pick("bite","chew","nibble","gnaw","gobble","chomp")
-	nerd.nutrition += nutritional_value
+	nerd.adjust_nutrition(nutritional_value)
 
 	switch(nerd.nutrition)
 		if(NUTRITION_LEVEL_FAT to INFINITY)
