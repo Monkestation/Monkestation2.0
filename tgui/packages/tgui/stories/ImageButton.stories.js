@@ -56,7 +56,7 @@ const Story = (props) => {
 
   const [itemIconSize, setItemIconSize] = useLocalState('itemIconSize', 2);
 
-  const [imageSize, setImageSize] = useLocalState(context, 'imageSize', 64);
+  const [imageSize, setImageSize] = useLocalState('imageSize', 64);
 
   const toggleVertical1 = () => {
     setVertical1(!vertical1);

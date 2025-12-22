@@ -107,7 +107,7 @@ class MenuBarButton extends Component<MenuBarDropdownProps> {
           ])}
           {...rest}
           onClick={disabled ? undefined : onClick}
-          onmouseover={onMouseOver}
+          onMouseOver={onMouseOver}
         >
           <span className="MenuBar__MenuBarButton-text">{display}</span>
         </Box>

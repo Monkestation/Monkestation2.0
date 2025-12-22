@@ -117,15 +117,15 @@ export class Window extends Component {
           <>
             <div
               className="Window__resizeHandle__e"
-              onMousedown={resizeStartHandler(1, 0)}
+              onMouseDown={resizeStartHandler(1, 0)}
             />
             <div
               className="Window__resizeHandle__s"
-              onMousedown={resizeStartHandler(0, 1)}
+              onMouseDown={resizeStartHandler(0, 1)}
             />
             <div
               className="Window__resizeHandle__se"
-              onMousedown={resizeStartHandler(1, 1)}
+              onMouseDown={resizeStartHandler(1, 1)}
             />
           </>
         )}
@@ -194,7 +194,7 @@ const TitleBar = (props) => {
       )}
       <div
         className="TitleBar__dragZone"
-        onMousedown={(e) => fancy && onDragStart(e)}
+        onMouseDown={(e) => fancy && onDragStart(e)}
       />
       <div className="TitleBar__title">
         {finalTitle}
@@ -214,7 +214,7 @@ const TitleBar = (props) => {
           // IE8: Synthetic onClick event doesn't work on IE8.
           // IE8: Use a plain character instead of a unicode symbol.
           // eslint-disable-next-line react/no-unknown-property
-          onclick={onClose}
+          onClick={onClose}
         >
           {Byond.IS_LTE_IE8 ? 'x' : '×'}
         </div>

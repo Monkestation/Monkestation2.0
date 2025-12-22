@@ -28,14 +28,6 @@ export const setGlobalStore = (store) => {
   globalStore = store;
 };
 
-export const useDispatch = () => {
-  return globalStore.dispatch;
-};
-
-export const useSelector = (selector: (state: any) => any) => {
-  return selector(globalStore?.getState());
-};
-
 export const backendUpdate = createAction('backend/update');
 export const backendSetSharedState = createAction('backend/setSharedState');
 export const backendSuspendStart = createAction('backend/suspendStart');
