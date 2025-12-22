@@ -284,9 +284,11 @@
 	w_class = WEIGHT_CLASS_BULKY
 	weapon_weight = WEAPON_HEAVY
 	pin = /obj/item/firing_pin/wastes
+	recoil = 2
+	wield_recoil = 1
 	var/target_range = 10
 	var/minimum_target_range = 3
-	var/maximum_target_range = 30
+	var/maximum_target_range = 25
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/kinetic/examine(mob/user)
 	. = ..()

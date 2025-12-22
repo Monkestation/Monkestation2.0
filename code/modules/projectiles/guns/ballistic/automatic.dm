@@ -1003,7 +1003,7 @@
 //Proto Kinetic SMG, used by miners as part of what ill call "Gun Mining"
 //Not actually a PKA, but styled to be like one
 
-/obj/item/gun/ballistic/automatic/proto/pksmg
+/obj/item/gun/ballistic/automatic/pksmg
 	name = "proto-kinetic 'Rapier' smg"
 	desc = "Using partial ballistic technology and kinetic acceleration, the Mining Research department has managed to make the kinetic accelerator full auto. \
 	While the technology is promising, it is held back by certain factors, specifically limited ammo and no mod capacity, but that shouldn't be an issue with its performance."
@@ -1018,8 +1018,13 @@
 	bolt_type = BOLT_TYPE_LOCKING
 	show_bolt_icon = FALSE
 	fire_sound = 'sound/weapons/kenetic_accel.ogg'
-	recoil = 1.5
-	wield_recoil = 0.5
+	recoil = 2
+	wield_recoil = 1.2
+	spread = 2.3
+
+/obj/item/gun/ballistic/automatic/pksmg/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/automatic_fire, 0.2 SECONDS)
 
 //FLASHLIGHTTTTTT
 /obj/item/gun/ballistic/automatic/proto/pksmg/add_seclight_point()
@@ -1031,12 +1036,11 @@
 
 
 // KINETIC L6 SAW (LMG dubbed the 'Hellhound')
-/obj/item/gun/ballistic/automatic/proto/pksmg/kineticlmg
+/obj/item/gun/ballistic/automatic/pksmg/kineticlmg
 	name = "Kinetic 'Hellhound' LMG"
 	desc = "Using parts from confiscated weapons, the Mining Research team has thrown together \
 	A beast of a weapon. Using Proto Kinetic Acceleration technology as per usual, the 'Hellhound' \
 	is a LMG chambered in kinetic 7.62 with a incredibly high fire rate, for when you need a beast \
-	to kill a beast. Has a fixed unremovable 100 round magazine with a special loading port on the outside, allowing you to \
 	to kill a beast. Has a fixed unremovable 150 round magazine with a special loading port on the outside, forcing you to \
 	top off and reload using stripper clips."
 	icon = 'icons/obj/weapons/guns/wide_guns.dmi'
@@ -1051,12 +1055,17 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/kineticlmg
 	weapon_weight = WEAPON_HEAVY
 	internal_magazine = TRUE
-	spread = 3
+	recoil = 3
+	wield_recoil = 1.5
+	recoil_backtime_multiplier = 0.5
+	recoil_deviation = 25
+	spread = 5
 	fire_delay = 1
 	pin = /obj/item/firing_pin/wastes
 	fire_sound = 'sound/weapons/gun/hmg/hmg.ogg'
 
-/obj/item/gun/ballistic/automatic/proto/pksmg/kineticlmg/Initialize(mapload)
+
+/obj/item/gun/ballistic/automatic/pksmg/kineticlmg/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/automatic_fire, 0.4 SECONDS)
 
