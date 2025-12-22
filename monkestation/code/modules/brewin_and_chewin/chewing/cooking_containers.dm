@@ -344,8 +344,11 @@
 	return TRUE
 
 /obj/item/reagent_containers/cooking_container/deep_basket/no_step_checks(obj/item/item, mob/living/user)
-	if(user && !user.transferItemToLoc(item, src))
-		return TRUE
+	if(user && isitem(item))
+		if(!user.transferItemToLoc(item, src))
+			return TRUE
+	else
+		item.forceMove(src)
 	qdel(tracker)
 	update_icon()
 	return FALSE
