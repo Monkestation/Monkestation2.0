@@ -645,7 +645,7 @@ class ChatRenderer {
         }
       }
     }
-    cssText += 'body, html { backgroundColor: #141414 }\n';
+    cssText += 'body, html { background-color: #141414 }\n';
     // Compile chat log as HTML text
     let messagesHtml = '';
     for (let message of this.visibleMessages) {
