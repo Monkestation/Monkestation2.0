@@ -286,6 +286,7 @@
 
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
 	heretic_datum.knowledge_points += knowledge_to_gain
+	SStgui.update_uis(heretic_datum)
 
 	// Aaand now we delete it
 	after_drain(user)

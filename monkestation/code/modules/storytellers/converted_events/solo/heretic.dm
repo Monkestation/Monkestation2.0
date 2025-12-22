@@ -39,7 +39,6 @@
 
 /datum/round_event/antagonist/solo/heretic/add_datum_to_mind(datum/mind/antag_mind)
 	var/datum/antagonist/heretic/new_heretic = antag_mind.add_antag_datum(antag_datum)
-	antag_mind.current.visible_message(span_boldwarning("I charges!"))
 
 	// Heretics passively gain influence over time.
 	// As a consequence, latejoin heretics start out at a massive
@@ -49,4 +48,5 @@
 	// BUT let's not give smugglers a million points on arrival.
 	// Limit it to four missed passive gain cycles (4 points).
 	new_heretic.knowledge_points = min(new_heretic.knowledge_points, 5)
-	new_heretic.knowledge_points += 5 /// <<<<<REMOVE!!
+
+	SStgui.update_uis(new_heretic)
