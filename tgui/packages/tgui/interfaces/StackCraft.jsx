@@ -126,7 +126,7 @@ const calculateMultiplier = (recipe, amount) => {
 };
 
 const Multipliers = (props) => {
-  const { act } = useBackend(context);
+  const { act } = useBackend();
 
   const { recipe, max_possible_multiplier } = props;
 
@@ -205,7 +205,7 @@ const RecipeListBox = (props) => {
 };
 
 const RecipeBox = (props) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend();
   const { amount } = data;
   const { title, recipe } = props;
   const { result_amount, required_amount, max_result_amount, ref, image } =

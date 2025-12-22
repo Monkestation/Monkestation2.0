@@ -85,10 +85,8 @@ export const SettingsPanel = (props) => {
 };
 
 export const SettingsGeneral = (props) => {
-  const { theme, fontFamily, coloredNames, fontSize, lineHeight } = useSelector(
-    context,
-    selectSettings,
-  );
+  const { theme, fontFamily, coloredNames, fontSize, lineHeight } =
+    useSelector(selectSettings);
   const dispatch = useDispatch();
   const [freeFont, setFreeFont] = useLocalState('freeFont', false);
   const [editingPanes, setEditingPanes] = useLocalState('freeFont', false);
@@ -565,10 +563,8 @@ const LinkedToChat = () => (
 );
 
 const SettingsStatPanel = (props) => {
-  const { statLinked, statFontSize, statTabsStyle } = useSelector(
-    context,
-    selectSettings,
-  );
+  const { statLinked, statFontSize, statTabsStyle } =
+    useSelector(selectSettings);
   const dispatch = useDispatch();
 
   return (
