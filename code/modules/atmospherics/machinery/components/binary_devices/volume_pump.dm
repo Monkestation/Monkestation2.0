@@ -117,7 +117,7 @@
 	. = ..()
 	. += span_notice("Its pressure limits could be [overclocked ? "en" : "dis"]abled with a <b>multitool</b>.")
 	if(overclocked)
-		. += "Its warning light is on[on ? " and it's spewing gas!" : "."]"
+		. += span_warning("Its warning light is on[on ? " and it's spewing gas!" : "."]")
 
 /obj/machinery/atmospherics/components/binary/volume_pump/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
