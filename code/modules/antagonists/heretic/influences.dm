@@ -126,7 +126,7 @@
 
 /obj/effect/visible_heretic_influence/Initialize(mapload)
 	. = ..()
-	// monke edit: make influences only show up after a minute or so, and disappear after about 10 minutes
+	SetInvisibility(INVISIBILITY_ABSTRACT, id = type)
 	addtimer(CALLBACK(src, PROC_REF(show_presence)), 1 MINUTES)
 	QDEL_IN(src, 10 MINUTES)
 
@@ -138,6 +138,7 @@
  * Makes the influence fade in after 15 seconds.
  */
 /obj/effect/visible_heretic_influence/proc/show_presence()
+	RemoveInvisibility(type)
 	animate(src, alpha = 255, time = 15 SECONDS)
 
 /obj/effect/visible_heretic_influence/attack_hand(mob/living/user, list/modifiers)
