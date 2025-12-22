@@ -1623,9 +1623,10 @@
 	var/list/data = list()
 	var/list/memories = list()
 
-	for(var/memory_key in user?.mind.memories)
-		var/datum/memory/memory = user.mind.memories[memory_key]
-		memories += list(list("name" = memory.name, "quality" = memory.story_value))
+	for(var/memory_key, memory_value in user?.mind.memories)
+		var/datum/memory/memory = memory_value
+		if(memory)
+			memories += list(list("name" = memory.name, "quality" = memory.story_value))
 
 	data["memories"] = memories
 	return data

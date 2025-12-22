@@ -94,8 +94,8 @@
 	RETURN_TYPE(/datum/memory)
 	var/list/choice_list = list()
 
-	for(var/key in memories)
-		var/datum/memory/memory_iter = memories[key]
+	for(var/key, value in memories)
+		var/datum/memory/memory_iter = value
 		if(memory_iter.memory_flags & (MEMORY_FLAG_ALREADY_USED|MEMORY_NO_STORY)) //Can't use memories multiple times
 			continue
 		choice_list[memory_iter.name] = memory_iter
@@ -122,6 +122,6 @@
 /// Quick copies aren't full copies - just basic copies containing necessities.
 /// They cannot be used in stories.
 /datum/mind/proc/quick_copy_all_memories(datum/mind/new_memorizer)
-	for(var/memory_path in memories)
-		var/datum/memory/prime_memory = memories[memory_path]
+	for(var/memory_path, memory_value in memories)
+		var/datum/memory/prime_memory = memory_value
 		new_memorizer.memories[memory_path] = prime_memory.quick_copy_memory(new_memorizer)
