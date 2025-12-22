@@ -413,3 +413,89 @@
   TheColorCyan:
   - bugfix: brings back pride pins that were accidentally removed, you can be gay
       once again
+2025-12-21:
+  Infernal-0:
+  - rscadd: Painkillers are now in medkits again. Rejoice.
+2025-12-22:
+  Absolucy:
+  - rscdel: You can no longer get those annoying heretic paintings from gifts.
+  - bugfix: Fixed getting certain buggy items from christmas gifts that would require
+      an admin to fix you.
+  - bugfix: Plasma Fixation no longer kills oozelings... why did something that healed
+      from breathing plasma hurt people who could already heal from breathing plasma
+      anyways?
+  - bugfix: Fixed Curse of Madness having a long delay between sending your message
+      and actually giving feedback and taking your points.
+  - bugfix: Fixed ghost-controlled plushie spawners in maints loot having a weird
+      delay when spawning.
+  - bugfix: Hopefully fixed weird things happening when you pour plasma on an oozeling
+      core that's in your pocket.
+  - bugfix: Fixed being able to produce infinite xenobio extracts with zero cost by
+      activating an ooze compressor's repeat while it was compressing.
+  - bugfix: '"Plant Calling Card" secondary objectives will no longer select targets
+      who wouldn''t leave a body behind for one reason or another.'
+  - bugfix: Actually fixed oozeling limb dismemberment saying that it was shattered
+      through the last "error" holding it together.
+  - bugfix: Fixed buying something in the pre-round store not actually giving you
+      what you bought.
+  - bugfix: Fixed borers sometimes spawning on Charlie Station on Icebox.
+  - bugfix: Fixed cyborgs being able to put their tools into deep fryer baskets.
+  - bugfix: Ghost critters will no longer be turned into constructs by Nar'Sie.
+  - bugfix: Possibly fixed weird situations involving getting legioned while falling
+      into a chasm.
+  - bugfix: Fixed subdermal heaters/coolers potentially freezing/burning their owner
+      to death.
+  - bugfix: Returning from cryo should now restore skillchips.
+  - bugfix: Fixed being able to use autosurgeons on non-carbons, which just deleted
+      the implant.
+  - bugfix: Fixed flavor text not showing up on examine.
+  - bugfix: Fixed double-html encodes in custom admin votes.
+  - bugfix: Fixed turning off the "Enable Jukebox Music" prefs not stopping ongoing
+      jukebox music.
+  - bugfix: Fixed harvested heretic influences showing up on right click before they
+      actually start to fade in.
+  - bugfix: Fixed the Experimentation Lab on Oshan not having its APC properly wired
+      to power.
+  - bugfix: Fixed the alt-click selection on the xenobio vaccum pack not working unless
+      you clicked on something directly next to you.
+  - bugfix: Fixed some assorted minor runtime errors.
+  - bugfix: (SmArtKar) Fixed fire sound runtimes caused by incorrect arguments.
+  - admin: (Melbert) You can now set someone's TC to 0.
+  - admin: (Melbert) Removing Traitor from automatically removes the uplink from them.
+  - admin: (Melbert) Removing Uplink from someone no longer wipes ALL of their memories.
+  - qol: Modlink calls now also use the caller's voice pack.
+  - balance: '"Disable Telecomms" and "Trigger Stationwide Blackout" can no longer
+      be discounted in the traitor uplink.'
+  Absolucy, Melbert:
+  - bugfix: Patch exploit allowing nigh-infinite heretic points
+  Infernal-0:
+  - image: Nukes a misplaced stripe on the medical MODsuits
+  Lawlolawl:
+  - bugfix: Added heretic midround antag pref.
+  - image: Shifted borer and plague rat preview icons to show their full sprite properly.
+  - qol: 'Preferences settings: Separated spaceling and midround ling antag prefs.'
+  - qol: 'Preferences settings: Separated crew midround antag prefs and ghost role
+      antag prefs as a whole.'
+  SirNightKnight:
+  - rscadd: phrases with spoken codewords cause the whole sentence to be marked in
+      copperplate font to better differentiate from other colored text.
+  - rscdel: removed some terms (russians, mexicans, indians, and illegal immigrants)
+      from the ion law mad lib pool.
+  - bugfix: updated the ion law mad lib pool with recent species and job additions.
+  - bugfix: ion laws are based off crewsimov instead of asimov.
+  - rscadd: thermal balaclavas can be worn on your neck slot
+  - code_imp: renamed the item path for the thermal balaclava to make more sense.
+  - code_imp: cleaned up some code relating to face visibility.
+  - qol: security barriers (deployable ones from grenades) can be right clicked or
+      swiped with your ID/PDA to unlock them if you have security access.
+  - balance: emagging sec barriers fries their controls permanently, heavy emps will
+      achieve the same effect.
+  - balance: sec barriers glow in the dark.
+  - balance: increased the amount of sec barrier grenades you get in sec barrier cargo
+      crates to 6 but kept the unit price (100 credits per barrier grenade).
+  - balance: you get 3 sec barrier grenades from the sec utility voucher option. up
+      from 2.
+  - bugfix: fixed some cover flags for the eva and voidsuit space helmet.
+  - qol: ' right clicking a holosign barrier with it''s projector deletes it.'
+  - code_imp: moved some holosign/projector interactions to the holosign projector
+      itself.

@@ -380,7 +380,7 @@ const QueueList = (props: QueueListProps) => {
   );
 };
 
-const Authorization = (props, context) => {
+const Authorization = (props) => {
   const { data } = useBackend<ExosuitFabricatorData>();
   const auth_override = data.authorization;
   const alert_level = data.alert_level;

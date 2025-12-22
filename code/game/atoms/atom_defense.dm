@@ -6,7 +6,10 @@
 	if(QDELETED(src))
 		CRASH("[src] taking damage after deletion")
 	if(atom_integrity <= 0)
-		CRASH("[src] taking damage while having <= 0 integrity")
+		if(!isclothing(src))
+			CRASH("[src] taking damage while having <= 0 integrity")
+		else
+			return
 	if(sound_effect)
 		play_attack_sound(damage_amount, damage_type, damage_flag)
 	if(resistance_flags & INDESTRUCTIBLE)

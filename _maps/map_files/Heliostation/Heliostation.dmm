@@ -36900,7 +36900,7 @@
 "hgM" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/structure/sign/poster/contraband/soviet_propaganda/directional/north,
-/obj/item/clothing/mask/russian_balaclava,
+/obj/item/clothing/mask/thermal_balaclava,
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/xenobiology)
 "hgO" = (

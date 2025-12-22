@@ -201,6 +201,7 @@
 	set_items = list(
 		/obj/item/grenade/barrier,
 		/obj/item/grenade/barrier,
+		/obj/item/grenade/barrier,
 		)
 
 /datum/voucher_set/security/utility/webbing
@@ -285,7 +286,7 @@
 
 /obj/item/storage/box/security_kit/nightwatch/PopulateContents()
 	new /obj/item/clothing/head/soft/sec(src)
-	new /obj/item/clothing/mask/russian_balaclava(src)
+	new /obj/item/clothing/mask/thermal_balaclava(src)
 	new /obj/item/clothing/suit/hooded/wintercoat/security(src)
 	new /obj/item/clothing/gloves/color/black(src)
 	new /obj/item/radio/off(src)

@@ -83,7 +83,7 @@ GLOBAL_LIST_INIT(pre_round_items, init_pre_round_items())
 	if(!ispath(store_item_type, /datum/store_item))
 		message_admins("[usr] attempted an href exploit - tried to buy pre-round item [store_item_type], which isn't a /datum/store_item")
 		CRASH("Attempted an href exploit - tried to buy pre-round item [store_item_type], which isn't a /datum/store_item")
-	var/datum/store_item/store_item = locate() in GLOB.pre_round_items
+	var/datum/store_item/store_item = locate(store_item_type) in GLOB.pre_round_items
 	if(isnull(store_item))
 		CRASH("[store_item_type] wasn't in GLOB.pre_round_items")
 	bought_item = store_item

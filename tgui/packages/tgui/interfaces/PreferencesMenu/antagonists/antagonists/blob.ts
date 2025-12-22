@@ -12,7 +12,7 @@ const Blob: Antagonist = {
   key: 'blob',
   name: 'Blob',
   description: [BLOB_MECHANICAL_DESCRIPTION],
-  category: Category.Midround,
+  category: Category.Ghost,
 };
 
 export default Blob;
