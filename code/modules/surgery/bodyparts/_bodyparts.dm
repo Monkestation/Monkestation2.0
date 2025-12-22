@@ -248,6 +248,9 @@
 	refresh_bleed_rate()
 
 /obj/item/bodypart/Destroy()
+	if(current_gauze)
+		remove_gauze()
+
 	if(owner)
 		owner.remove_bodypart(src)
 		set_owner(null)
@@ -264,9 +267,6 @@
 
 		external_organs = list()
 	QDEL_LIST_ASSOC_VAL(feature_offsets)
-
-	if(current_gauze)
-		remove_gauze()
 
 	return ..()
 

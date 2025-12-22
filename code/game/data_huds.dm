@@ -398,6 +398,8 @@ Diagnostic HUDs!
 
 /mob/living/proc/hud_set_nanite_indicator()
 	var/image/holder = hud_list[NANITE_HUD]
+	if(!holder) // can happen if NANITE_HUD isn't in hud_possible
+		return
 	holder.pixel_z = get_cached_height() - world.icon_size
 	holder.icon_state = null
 	if(HAS_TRAIT(src, TRAIT_NANITE_MONITORING))
