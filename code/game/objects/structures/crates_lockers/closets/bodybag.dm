@@ -14,7 +14,7 @@
 	delivery_icon = null //unwrappable
 	anchorable = FALSE
 	cutting_tool = null // Bodybags are not deconstructed by cutting
-	drag_slowdown = 0
+	drag_slowdown = 0.5
 	has_closed_overlay = FALSE
 	can_install_electronics = FALSE
 	paint_jobs = null
@@ -78,6 +78,11 @@
 /obj/structure/closet/body_bag/after_close(mob/living/user)
 	. = ..()
 	set_density(FALSE)
+	drag_slowdown = 1
+
+/obj/structure/closet/body_bag/after_open(mob/living/user)
+	. = ..()
+	drag_slowdown = 0.5
 
 /obj/structure/closet/body_bag/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
