@@ -2560,7 +2560,6 @@
 "aTR" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/holopad,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/engine,
 /area/station/science/explab)
@@ -40244,7 +40243,6 @@
 "mTE" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/science/explab)
 "mTI" = (
@@ -71866,6 +71864,7 @@
 	dir = 6
 	},
 /obj/effect/artifact_spawner,
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/science/explab)
 "wTW" = (

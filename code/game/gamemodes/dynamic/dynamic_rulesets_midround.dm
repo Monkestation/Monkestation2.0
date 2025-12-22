@@ -1041,4 +1041,6 @@
 	// Limit it to four missed passive gain cycles (4 points).
 	new_heretic.knowledge_points = min(new_heretic.knowledge_points, 5)
 
+	SStgui.update_uis(new_heretic)
+
 	return TRUE

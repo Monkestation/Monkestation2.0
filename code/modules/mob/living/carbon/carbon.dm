@@ -1253,7 +1253,7 @@
 			QDEL_NULL(phantom_wound)
 
 /mob/living/carbon/is_face_visible()
-	return !(wear_mask?.flags_inv & HIDEFACE) && !(head?.flags_inv & HIDEFACE)
+	return !((wear_mask?.flags_inv & HIDEFACE) || (head?.flags_inv & HIDEFACE) || (wear_neck?.flags_inv & HIDEFACE))
 
 /// Returns whether or not the carbon should be able to be shocked
 /mob/living/carbon/proc/should_electrocute(power_source)

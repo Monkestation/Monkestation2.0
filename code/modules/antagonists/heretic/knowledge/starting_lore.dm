@@ -332,6 +332,8 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 		if(QDELETED(user) || QDELETED(heretic_datum))
 			return FALSE
 
+	SStgui.update_uis(heretic_datum)
+
 	to_chat(user, span_danger(span_big("Your ambition is ravaged, but something powerful remains in its wake...")))
 	var/drain_message = pick(strings(HERETIC_INFLUENCE_FILE, "drain_message"))
 	to_chat(user, span_hypnophrase(span_big("[drain_message]")))
