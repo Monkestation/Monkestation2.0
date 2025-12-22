@@ -39,7 +39,7 @@
 
 /obj/machinery/mentor_machine/proc/poll_a_jannie(mob/living/requester)
 	//polling
-	var/mob/dead/observer/candidate = SSpolling.poll_mentor_ghost_candidates(question = "MENTOR ONLY GHOST ROLE: Would you like to assist [requester.name] in finishing a tutorial domain?", poll_time = 15 SECONDS, alert_pic = src, amount_to_pick = 1)
+	var/mob/dead/observer/candidate = SSpolling.poll_mentor_ghost_candidates(question = "MENTOR ONLY GHOST ROLE: Would you like to assist [requester.name] in finishing a tutorial domain? THIS WILL UNLINK YOU WITH ORIGINAL BODY", poll_time = 15 SECONDS, alert_pic = src, amount_to_pick = 1)
 
 	if(candidate)
 		spawn_a_jannie(candidate)
@@ -47,8 +47,17 @@
 /obj/machinery/mentor_machine/proc/spawn_a_jannie(mob/candidate)
 	var/mob/living/carbon/human/mentor = new /mob/living/carbon/human(get_turf(loc), src)
 	mentor.key = candidate.key
-	mentor.real_name = mentor.key
-	mentor.name = mentor.real_name
+
+	if(isobserver(candidate))
+		var/mob/dead/observer/observer = candidate
+		mentor.real_name = observer.real_name
+		mentor.name = observer.name
+		mentor.hairstyle = observer.hairstyle
+		mentor.facial_hairstyle = observer.facial_hairstyle
+		mentor.hair_color = observer.hair_color
+		mentor.facial_hair_color = observer.facial_hair_color
+		mentor.update_body(is_creating = TRUE)
+
 
 	var/datum/action/cooldown/spell/self_destruct/new_spell = new /datum/action/cooldown/spell/self_destruct(mentor.mind || mentor)
 	new_spell.Grant(mentor)
