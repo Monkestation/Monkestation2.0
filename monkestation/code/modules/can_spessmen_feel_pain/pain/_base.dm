@@ -39,6 +39,7 @@
 #endif
 
 /datum/pain/New(mob/living/carbon/human/new_parent)
+	qdel(src) // temporary measure to disable pain - snk 12/21/2025
 	if(!iscarbon(new_parent) || istype(new_parent, /mob/living/carbon/human/dummy))
 		qdel(src) // If we're not a carbon, or a dummy, delete us
 		return null
