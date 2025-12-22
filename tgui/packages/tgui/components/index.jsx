@@ -30,7 +30,7 @@ export { Interactive } from './Interactive';
 export { Input } from './Input';
 export { KeyListener } from './KeyListener';
 export { Knob } from './Knob';
-export { LabeledControls } from './LabeledControls';
+export { default as LabeledControls } from './LabeledControls';
 export { LabeledList } from './LabeledList';
 export { MenuBar } from './MenuBar';
 export { Modal } from './Modal';

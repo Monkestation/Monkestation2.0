@@ -60,8 +60,8 @@ export class Window extends Component {
   updateGeometry() {
     const { config } = useBackend();
     const options = {
-      size: DEFAULT_SIZE,
       ...config.window,
+      size: config.window.size || DEFAULT_SIZE,
     };
     if (this.props.width && this.props.height) {
       options.size = [this.props.width, this.props.height];
@@ -216,7 +216,7 @@ const TitleBar = (props) => {
           // eslint-disable-next-line react/no-unknown-property
           onClick={onClose}
         >
-          {Byond.IS_LTE_IE8 ? 'x' : '×'}
+          ×
         </div>
       )}
     </div>

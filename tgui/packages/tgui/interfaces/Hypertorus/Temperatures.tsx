@@ -65,12 +65,7 @@ const BarLabel = (props) => {
           <Box align="center" color="red">
             Empty
           </Box>
-          <Box
-            className="hypertorus__unselectable"
-            {...(Byond.IS_LTE_IE8 ? { style: { unselectable: true } } : {})}
-          >
-            &nbsp;
-          </Box>
+          <Box className="hypertorus__unselectable">&nbsp;</Box>
         </>
       )}
     </>

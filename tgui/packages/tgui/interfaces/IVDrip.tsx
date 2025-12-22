@@ -114,7 +114,7 @@ export const IVDrip = (props) => {
             )}
             <LabeledList.Item
               label="Direction"
-              color={!mode && 'bad'}
+              color={mode ? undefined : 'bad'}
               buttons={
                 <Button
                   my={1}

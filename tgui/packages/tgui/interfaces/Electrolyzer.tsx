@@ -39,7 +39,10 @@ export const Electrolyzer = (props) => {
           }
         >
           <LabeledList>
-            <LabeledList.Item label="Cell" color={!hasPowercell && 'bad'}>
+            <LabeledList.Item
+              label="Cell"
+              color={hasPowercell ? undefined : 'bad'}
+            >
               {(hasPowercell && (
                 <ProgressBar
                   value={powerLevel / 100}

@@ -33,11 +33,12 @@ import { MAX_PERSISTED_MESSAGES, MESSAGE_SAVE_INTERVAL } from './constants';
 import { createMessage, serializeMessage } from './model';
 import { chatRenderer } from './renderer';
 import { selectChat, selectCurrentChatPage } from './selectors';
+import { Store } from 'common/redux';
 
 // List of blacklisted tags
 const FORBID_TAGS = ['a', 'iframe', 'link', 'video'];
 
-const saveChatToStorage = async (store) => {
+const saveChatToStorage = async (store: Store) => {
   const state = selectChat(store.getState());
   const fromIndex = Math.max(
     0,
@@ -50,7 +51,7 @@ const saveChatToStorage = async (store) => {
   storage.set('chat-messages', messages);
 };
 
-const loadChatFromStorage = async (store) => {
+const loadChatFromStorage = async (store: Store) => {
   const [state, messages] = await Promise.all([
     storage.get('chat-state'),
     storage.get('chat-messages'),
@@ -61,7 +62,7 @@ const loadChatFromStorage = async (store) => {
     return;
   }
   if (messages) {
-    for (let message of messages) {
+    for (const message of messages) {
       if (message.html) {
         message.html = DOMPurify.sanitize(message.html, {
           FORBID_TAGS,
@@ -81,11 +82,11 @@ const loadChatFromStorage = async (store) => {
   store.dispatch(loadChat(state));
 };
 
-export const chatMiddleware = (store) => {
+export const chatMiddleware = (store: Store) => {
   let initialized = false;
   let loaded = false;
-  const sequences = [];
-  const sequences_requested = [];
+  const sequences: number[] = [];
+  const sequences_requested: number[] = [];
   chatRenderer.events.on('batchProcessed', (countByType) => {
     // Use this flag to workaround unread messages caused by
     // loading them from storage. Side effect of that, is that
@@ -116,29 +117,28 @@ export const chatMiddleware = (store) => {
         return;
       }
 
-      const sequence = payload_obj.sequence;
+      const sequence: number = payload_obj.sequence;
       if (sequences.includes(sequence)) {
         return;
       }
 
       const sequence_count = sequences.length;
-      seq_check: if (sequence_count > 0) {
+      if (sequence_count > 0) {
         if (sequences_requested.includes(sequence)) {
           sequences_requested.splice(sequences_requested.indexOf(sequence), 1);
           // if we are receiving a message we requested, we can stop reliability checks
-          break seq_check;
-        }
-
-        // cannot do reliability if we don't have any messages
-        const expected_sequence = sequences[sequence_count - 1] + 1;
-        if (sequence !== expected_sequence) {
-          for (
-            let requesting = expected_sequence;
-            requesting < sequence;
-            requesting++
-          ) {
-            sequences_requested.push(requesting);
-            Byond.sendMessage('chat/resend', requesting);
+        } else {
+          // cannot do reliability if we don't have any messages
+          const expected_sequence = sequences[sequence_count - 1] + 1;
+          if (sequence !== expected_sequence) {
+            for (
+              let requesting = expected_sequence;
+              requesting < sequence;
+              requesting++
+            ) {
+              sequences_requested.push(requesting);
+              Byond.sendMessage('chat/resend', requesting);
+            }
           }
         }
       }
