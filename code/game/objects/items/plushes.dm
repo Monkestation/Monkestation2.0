@@ -1101,12 +1101,6 @@
 	desc = "The plushie increases the speed at which all actions are performed by 10% when held"
 	processes = TRUE
 
-/datum/plush_trait/gabbie/process_trigger(seconds_per_tick, obj/item/toy/plush/plush)
-	if(iscarbon(plush.loc))
-		var/mob/living/carbon/nerd = plush.loc
-
-
-
 /datum/plush_trait/puce
 	name = "Pucetrifying"
 	desc = "releases a wave of... Puce? what the fuck is puce?"
@@ -1127,13 +1121,11 @@
 	desc = "releases waves of putrifacting energies."
 	processes = TRUE
 
+/datum/plush_trait/colorful
+	name = "Colorful"
+	desc = "makes the plushie cute colors."
+	processes = TRUE
 
-	for(var/obj/item/food/grown/crop in range(2 * multiplier,mob))
-		crop.visible_message(span_warning("\The [crop] rots at an alarming rate!"))
-		new /obj/item/food/badrecipe(get_turf(crop))
-		qdel(crop)
-		if(prob(30 / multiplier))
-			break
 
 /obj/item/paper/fluff/plushmagic
 	name = "An Abridged Collection Of Notes On Thaumatextilics And The Manipulation Of The Primordial Cotton - 2512"
@@ -1209,19 +1201,18 @@ RABBITS DONT JUST GROW INSIDE OF PEOPLES ASSES YOU KNOW
 <br> we are so fucked were SO FUCKED we are making goddamn HOMOUNCULI WE HAVE UNIRONICALLY DISCOVERED THE PHILOSOPHER'S STONE THROUGH MANIPULATION OF THE PRIMA MATERIA AND INSTEAD OF ANYTHING PRODUCTIVE WE ARE USING IT TO MAKE PEOPLE OUT OF PLUSH TOYS
 DOES MY FUCKING ID READ "ALCHEMIST" side note the alchemy division is fucking WEIRD who the hell runs that place i have seen people in there drinking weird liquids and then somehow VOMITING PRECIOUS METALS how the hell does that even work what are they DOING down there
 <br> I SWEAR ON A MULTITUDE OF GODS THAT THE FUCKINGPLUSHIES ARE HAUNTING ME I CAN <b> HEAR THEM IN MY EYES</b>
-<br> What the fuck have we done. NO really seriously what the fuck have we done WHAT HAVE WE DONE    we are fucked    we are all going to go to hell i'm telling you.
-<br> Theres a fiftyfifty chance here i end up dead and half of the possible deaths are self inflicted
+<br> What the fuck have we done. NO really seriously    what the fuck have we done WHA T HAVE WE DONE    we are fucked    we are all going to go to hell i'm telling you.
+<br>
 Jay, if you're reading this, you're a great friend, i really genuinely do respect you, but also FUCK YOU for getting me into this bullshit I AM GOING TO LOSE MY MIND OVER HERE
-and THE FUNNIEST PART? THEYRE GIVING ME ANTIPSYCHOTICS     ILL TELL YOU WHATS HAPPENING   NOTHING THEYRE NOT HELPING GOOD FUCKING RIDDANCE TO ME I GUESS I SWEAR I AM <b>GOING<\b> TO FUCKING STAB MYSELF AT THIS POINT
-. and like come on man if i have to kill myself ill have to like prep a fucking speech or some shit thats a pain in the ass and im gonna feel even SHITTIER THAN I ALREADY DO and like i suck at public speaking my suicide note
-is gonna look like it was made by an <s>ametuer<\s> amateur film student and im gonna be fuckin cringing at my own last words as a ghost EXCEPT I WONT BECAUSE WE ARE ALL DEFININELY GOING TO HELL FOR THIS SHIT
+and THE FUNNIEST PART? THEYRE GIVING ME ANTIPSYCHOTICS     ILL TELL YOU WHATS HAPPENING   NOTHING THEYRE NOT HELPING GOOD FUCKING RIDDANCE TO ME
+i feel even SHITTIER THAN I ALREADY DO and like i suck at public speaking i am going to be cringing at my last words as a ghost EXCEPT I WONT BECAUSE WE ARE ALL DEFININELY GOING TO HELL FOR THIS SHIT
 <br>
 <br>
 <br>
 <br>
 <br>
 <br>\[the following, in stark contrast to the rest of the page, is written in beautifully precise cursive\]
-<br>To each and every one of my dear colleagues in the Thaumatextilics division, go fuck yourself, marry yourself, divorce yourself, and get forced to pay yourself child support.
+<br>To each and every one of my dear colleagues in the Thaumatextilics division, fuck you.
 <br>
 <br>Sincerely, Zach
 "}

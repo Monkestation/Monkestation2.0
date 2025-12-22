@@ -869,6 +869,9 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 		return Impersonation.examine(user)
 	return ..()
 
+/obj/effect/overlay/holo_pad_hologram/proc/emote(text)
+	Impersonation.emote(text)
+
 /obj/effect/overlay/holoray
 	name = "holoray"
 	icon = 'icons/effects/96x96.dmi'

@@ -599,6 +599,14 @@
 		SOUND sparks
 	"}
 
+/datum/outfit/dr_zachary
+	name = "Zachary Faust"
+	id_trim = /datum/id_trim/job/scientist
+	uniform = /obj/item/clothing/under/rank/rnd/scientist
+	belt = /obj/item/modular_computer/pda/science
+	shoes = /obj/item/clothing/shoes/sneakers
+	glasses = /obj/item/clothing/glasses/regular
+
 /obj/item/disk/holodisk/suicide_note
 	name = "17-12-2515: 'I Was.'"
 	desc = "A non-descript holodisk. There's a piece of masking tape attached to the housing. Written on it, in shakey handwritten print, is a date and two words: 'I Was.'"
@@ -607,7 +615,7 @@
 		NAME Human Man
 		SOUND PING
 		DELAY 20
-		EMOTE sighs, clenches his hands, then relaxes. He has the face of a man who died and forgot to fall over
+		EMOTE sighs, clenches his hands, then relaxes. He has the face of a man who died and forgot to fall over.
 		DELAY 20
 		SAY I was Doctor Zachary Marshall Faust of The Spinward Institute for Applied Esoterica.
 		NAME Zachary Faust
@@ -668,7 +676,7 @@
 		DELAY 20
 		SAY I was told it was probably plasma exposure.
 		DELAY 20
-		SAY I was given some neurine IVs and some anti-psychotic pills. 
+		SAY I was given some neurine IVs and some anti-psychotic pills.
 		DELAY 20
 		SAY I was definitely not suffering from plasma exposure.
 		DELAY 20
