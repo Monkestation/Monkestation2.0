@@ -834,12 +834,72 @@
 	log_game("[key_name(obsessed)] was made Obsessed by the midround ruleset.")
 	return TRUE
 
+//////////////////////////////////////////////
+//                                          //
+//           MIDROUND CHANGELINGS           //
+//                                          //
+//////////////////////////////////////////////
+
+/datum/dynamic_ruleset/midround/from_living/changeling
+	name = "Genome Awakening"
+	midround_ruleset_style = MIDROUND_RULESET_STYLE_LIGHT
+	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
+	antag_datum = /datum/antagonist/changeling
+	antag_flag = ROLE_GENOMEAWAKENING
+	antag_flag_override = ROLE_CHANGELING
+	protected_roles = list(
+		JOB_CAPTAIN,
+		JOB_HEAD_OF_PERSONNEL,
+		JOB_CHIEF_ENGINEER,
+		JOB_CHIEF_MEDICAL_OFFICER,
+		JOB_RESEARCH_DIRECTOR,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_SECURITY,
+		JOB_PRISONER,
+		JOB_SECURITY_OFFICER,
+		JOB_WARDEN,
+		JOB_SECURITY_ASSISTANT,
+	)
+	restricted_roles = list(
+		JOB_AI,
+		JOB_CYBORG,
+	)
+	required_candidates = 1
+	weight = 3
+	cost = 16
+	scaling_cost = 10
+
+	minimum_players = 20
+
+	requirements = list(70,70,60,50,40,20,20,10,10,10)
+	antag_cap = list("denominator" = 29)
+
+/datum/dynamic_ruleset/roundstart/changeling/pre_execute(population)
+	. = ..()
+	var/num_changelings = get_antag_cap(population) * (scaled_times + 1)
+	for (var/i = 1 to num_changelings)
+		if(candidates.len <= 0)
+			break
+		var/mob/M = pick_n_take(candidates)
+		assigned += M.mind
+		M.mind.restricted_roles = restricted_roles
+		M.mind.special_role = ROLE_CHANGELING
+		GLOB.pre_setup_antags += M.mind
+	return TRUE
+
+/datum/dynamic_ruleset/roundstart/changeling/execute()
+	for(var/datum/mind/changeling in assigned)
+		var/datum/antagonist/changeling/new_antag = new antag_datum()
+		changeling.add_antag_datum(new_antag)
+		GLOB.pre_setup_antags -= changeling
+	return TRUE
+
 /// Midround Space Changeling Ruleset (From Ghosts)
-/datum/dynamic_ruleset/midround/from_ghosts/changeling_midround
+/datum/dynamic_ruleset/midround/from_ghosts/changeling_space
 	name = "Space Changeling"
 	midround_ruleset_style = MIDROUND_RULESET_STYLE_LIGHT
 	antag_datum = /datum/antagonist/changeling/space
-	antag_flag = ROLE_CHANGELING_MIDROUND
+	antag_flag = ROLE_CHANGELING_SPACE
 	antag_flag_override = ROLE_CHANGELING
 	required_type = /mob/dead/observer
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
@@ -849,7 +909,7 @@
 	minimum_players = 15
 	repeatable = TRUE
 
-/datum/dynamic_ruleset/midround/from_ghosts/changeling_midround/generate_ruleset_body(mob/applicant)
+/datum/dynamic_ruleset/midround/from_ghosts/changeling_space/generate_ruleset_body(mob/applicant)
 	var/body = generate_changeling_meteor(applicant)
 	message_admins("[ADMIN_LOOKUPFLW(body)] has been made into a space changeling by the midround ruleset.")
 	log_dynamic("[key_name(body)] was spawned as a space changeling by the midround ruleset.")
@@ -926,3 +986,59 @@
 
 #undef MALF_ION_PROB
 #undef REPLACE_LAW_WITH_ION_PROB
+
+//////////////////////////////////////////////
+//                                          //
+//             MIDROUND HERETIC             //
+//                                          //
+//////////////////////////////////////////////
+
+/datum/dynamic_ruleset/midround/from_living/heretic
+	name = "Forbidden Calling"
+	midround_ruleset_style = MIDROUND_RULESET_STYLE_LIGHT
+	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
+	antag_datum = /datum/antagonist/heretic
+	antag_flag = ROLE_FORBIDDENCALLING
+	antag_flag_override = ROLE_HERETIC
+	protected_roles = list(
+		JOB_CAPTAIN,
+		JOB_HEAD_OF_PERSONNEL,
+		JOB_CHIEF_ENGINEER,
+		JOB_CHIEF_MEDICAL_OFFICER,
+		JOB_RESEARCH_DIRECTOR,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_PERSONNEL,
+		JOB_HEAD_OF_SECURITY,
+		JOB_PRISONER,
+		JOB_SECURITY_OFFICER,
+		JOB_SECURITY_ASSISTANT,
+		JOB_WARDEN,
+	)
+	restricted_roles = list(
+		JOB_AI,
+		JOB_CYBORG,
+	)
+	required_candidates = 1
+	weight = 8
+	cost = 6
+	requirements = list(101,101,50,10,10,10,10,10,10,10)
+	repeatable = TRUE
+
+	minimum_players = 25
+
+/datum/dynamic_ruleset/midround/from_living/heretic/execute()
+	var/mob/picked_mob = pick(candidates)
+	assigned += picked_mob.mind
+	picked_mob.mind.special_role = antag_flag
+	var/datum/antagonist/heretic/new_heretic = picked_mob.mind.add_antag_datum(antag_datum)
+
+	// Heretics passively gain influence over time.
+	// As a consequence, latejoin heretics start out at a massive
+	// disadvantage if the round's been going on for a while.
+	// Let's give them some influence points when they arrive.
+	new_heretic.knowledge_points += round((world.time - SSticker.round_start_time) / new_heretic.passive_gain_timer)
+	// BUT let's not give smugglers a million points on arrival.
+	// Limit it to four missed passive gain cycles (4 points).
+	new_heretic.knowledge_points = min(new_heretic.knowledge_points, 5)
+
+	return TRUE

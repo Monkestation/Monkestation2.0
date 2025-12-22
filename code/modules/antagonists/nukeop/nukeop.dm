@@ -184,6 +184,13 @@
 	message_admins("[key_name_admin(admin)] has nuke op'ed [key_name_admin(new_owner)].")
 	log_admin("[key_name(admin)] has nuke op'ed [key_name(new_owner)].")
 
+/datum/antagonist/nukeop/remove_innate_effects(mob/living/mob_override)
+	. = ..()
+	var/mob/living/silicon/ai/datum_owner = mob_override || owner.current
+
+	for(var/datum/component/codeword_hearing/component as anything in datum_owner.GetComponents(/datum/component/codeword_hearing))
+		component.delete_if_from_source(src)
+
 /datum/antagonist/nukeop/get_admin_commands()
 	. = ..()
 	.["Send to base"] = CALLBACK(src, PROC_REF(admin_send_to_base))

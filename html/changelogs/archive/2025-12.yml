@@ -413,3 +413,28 @@
   TheColorCyan:
   - bugfix: brings back pride pins that were accidentally removed, you can be gay
       once again
+2025-12-21:
+  Infernal-0:
+  - rscadd: Painkillers are now in medkits again. Rejoice.
+2025-12-22:
+  Absolucy:
+  - rscdel: You can no longer get those annoying heretic paintings from gifts.
+  - bugfix: Fixed getting certain buggy items from christmas gifts that would require
+      an admin to fix you.
+  Absolucy, Melbert:
+  - bugfix: Patch exploit allowing nigh-infinite heretic points
+  Infernal-0:
+  - image: Nukes a misplaced stripe on the medical MODsuits
+  Lawlolawl:
+  - bugfix: Added heretic midround antag pref.
+  - image: Shifted borer and plague rat preview icons to show their full sprite properly.
+  - qol: 'Preferences settings: Separated spaceling and midround ling antag prefs.'
+  - qol: 'Preferences settings: Separated crew midround antag prefs and ghost role
+      antag prefs as a whole.'
+  SirNightKnight:
+  - rscadd: phrases with spoken codewords cause the whole sentence to be marked in
+      copperplate font to better differentiate from other colored text.
+  - rscdel: removed some terms (russians, mexicans, indians, and illegal immigrants)
+      from the ion law mad lib pool.
+  - bugfix: updated the ion law mad lib pool with recent species and job additions.
+  - bugfix: ion laws are based off crewsimov instead of asimov.

@@ -24,7 +24,7 @@ interface DiscordVerificationData {
   };
 }
 
-export const DiscordVerification = (props, context) => {
+export const DiscordVerification = (props) => {
   const { data } = useBackend<DiscordVerificationData>();
   const { verification_code, discord_invite } = data;
 
