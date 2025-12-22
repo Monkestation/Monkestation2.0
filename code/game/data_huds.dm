@@ -398,7 +398,7 @@ Diagnostic HUDs!
 
 /mob/living/proc/hud_set_nanite_indicator()
 	var/image/holder = hud_list[NANITE_HUD]
-	holder.pixel_y = get_cached_height() - world.icon_size
+	holder.pixel_z = get_cached_height() - world.icon_size
 	holder.icon_state = null
 	if(HAS_TRAIT(src, TRAIT_NANITE_MONITORING))
 		holder.icon_state = "nanite_ping"
