@@ -150,7 +150,7 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 			/obj/item/mod/control/pre_equipped/chrono,
 
 			// causes too many issues
-			/obj/structure/sign/painting/eldritch,
+			/obj/item/wallframe/painting/eldritch,
 
 			// abstract items that shouldn't be gotten anyways
 			/obj/item/clothing/head/chameleon/drone,
