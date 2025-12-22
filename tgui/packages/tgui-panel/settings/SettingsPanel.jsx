@@ -7,7 +7,7 @@
 import { toFixed } from 'common/math';
 import { capitalize } from 'common/string';
 import { useLocalState } from 'tgui/backend';
-import { useDispatch, useSelector } from 'common/redux';
+import { useDispatch, useSelector } from 'tgui/backend';
 import {
   Box,
   Button,
@@ -47,9 +47,9 @@ import { importChatSettings } from './settingsImExport';
 import { reconnectWebsocket, disconnectWebsocket } from '../websocket';
 import { chatRenderer } from '../chat/renderer';
 
-export const SettingsPanel = (props, context) => {
-  const activeTab = useSelector(context, selectActiveTab);
-  const dispatch = useDispatch(context);
+export const SettingsPanel = (props) => {
+  const activeTab = useSelector(selectActiveTab);
+  const dispatch = useDispatch();
   return (
     <Stack fill>
       <Stack.Item>
@@ -84,12 +84,10 @@ export const SettingsPanel = (props, context) => {
   );
 };
 
-export const SettingsGeneral = (props, context) => {
-  const { theme, fontFamily, coloredNames, fontSize, lineHeight } = useSelector(
-    context,
-    selectSettings,
-  );
-  const dispatch = useDispatch(context);
+export const SettingsGeneral = (props) => {
+  const { theme, fontFamily, coloredNames, fontSize, lineHeight } =
+    useSelector(selectSettings);
+  const dispatch = useDispatch();
   const [freeFont, setFreeFont] = useLocalState('freeFont', false);
   const [editingPanes, setEditingPanes] = useLocalState('freeFont', false);
 
@@ -280,9 +278,9 @@ export const SettingsGeneral = (props, context) => {
   );
 };
 
-const TextHighlightSettings = (props, context) => {
-  const highlightSettings = useSelector(context, selectHighlightSettings);
-  const dispatch = useDispatch(context);
+const TextHighlightSettings = (props) => {
+  const highlightSettings = useSelector(selectHighlightSettings);
+  const dispatch = useDispatch();
   return (
     <Section fill scrollable height="250px">
       <Stack vertical>
@@ -326,10 +324,10 @@ const TextHighlightSettings = (props, context) => {
   );
 };
 
-const TextHighlightSetting = (props, context) => {
+const TextHighlightSetting = (props) => {
   const { id, ...rest } = props;
-  const highlightSettingById = useSelector(context, selectHighlightSettingById);
-  const dispatch = useDispatch(context);
+  const highlightSettingById = useSelector(selectHighlightSettingById);
+  const dispatch = useDispatch();
   const {
     enabled,
     highlightColor,
@@ -451,10 +449,10 @@ const TextHighlightSetting = (props, context) => {
   );
 };
 
-const ExperimentalSettings = (props, context) => {
+const ExperimentalSettings = (props) => {
   const { websocketEnabled, websocketServer, scrollTrackingTolerance } =
-    useSelector(context, selectSettings);
-  const dispatch = useDispatch(context);
+    useSelector(selectSettings);
+  const dispatch = useDispatch();
 
   return (
     <Section>
@@ -564,12 +562,10 @@ const LinkedToChat = () => (
   <NoticeBox color="red">Unlink Stat Panel from chat!</NoticeBox>
 );
 
-const SettingsStatPanel = (props, context) => {
-  const { statLinked, statFontSize, statTabsStyle } = useSelector(
-    context,
-    selectSettings,
-  );
-  const dispatch = useDispatch(context);
+const SettingsStatPanel = (props) => {
+  const { statLinked, statFontSize, statTabsStyle } =
+    useSelector(selectSettings);
+  const dispatch = useDispatch();
 
   return (
     <Section fill>
