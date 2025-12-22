@@ -209,7 +209,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 	..()
 	REGISTER_REQUIRED_MAP_ITEM(1, INFINITY)
 	if(!quiet)
-		GLOB.valid_cryopods += src
+		if(istype(get_area(loc), /area/station/common)) // if it's public cryopods, put those FIRST in the list
+			GLOB.valid_cryopods.Insert(1, src)
+		else
+			GLOB.valid_cryopods += src
 	return INITIALIZE_HINT_LATELOAD //Gotta populate the cryopod computer GLOB first
 
 /obj/machinery/cryopod/LateInitialize(mapload_arg)
