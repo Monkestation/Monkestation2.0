@@ -321,7 +321,7 @@
 	if(user.istate & ISTATE_HARM)
 		togglelock(user)
 	else
-		..() //Return the rest of the attack chain, which is to fold the device
+		return ..() //Return the rest of the attack chain, which is to fold the device
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/closet/body_bag/environmental/prisoner/togglelock(mob/living/user, silent)
