@@ -306,3 +306,135 @@
   grungussuss, JupiterJaeden:
   - qol: Windoors now stay open for 8 seconds instead of 5.
   - qol: Secure windoors now stay open for 5 seconds instead of 2.
+2025-12-17:
+  Lawlolawl:
+  - bugfix: Fixed lights not being able to be placed back into box of replacement
+      lights.
+  - bugfix: Fixed space heater deconstruction generating power cells, as well as improvised
+      chem heater deconstruction generating cable coils.
+  Loiosh42:
+  - map: Oshan armoury now standardized
+  Uristthedorf:
+  - rscdel: Removes horned mutation and extra versions of colorblind mutation.
+  flleeppyy:
+  - rscdel: Removed replays/demos
+  - code_imp: Demodularized hydroponics, flavor_text, floorsigns, and food_and_drinks
+2025-12-18:
+  Absolucy:
+  - rscdel: Bloodsuckers can no longer choose the Nosferatu clan.
+  BingusSS13:
+  - map: Replaced the backup power cell on Charlie Station with a mega cell.
+  - map: The northern transit tube on Ice Box Charlie Station now has firelock frames
+      instead of actual firelocks.
+  - map: Added an inactive camera to the thermoelectric generator room on Ice Box
+      Charlie Station.
+  Gboster-0:
+  - balance: oozeling luxury medipens now don't heal more than luxury medipens* (they
+      heal a tiny bit more blood+toxin)
+  - balance: icebox portals now give out crates requiring skeleton keys to open
+  - balance: removed meathooks from both lavaland tendrils and icebox portals
+  - balance: mind-transfer potions, adamantine extracts, clown hulks and ship in a
+      bottle from icebox portals
+  - code_imp: tendril/icebox portals now use a proper lootspawner instead of direct
+      switch cases
+  - code_imp: busted necropolis chests now roll what loot they are going to spawn
+      on initialize, making admins able to rig them and allowing for easier debugging
+  JohnFulpWillard:
+  - rscadd: Cargo union badges.
+  - rscdel: Security badges (except the Detective).
+  - rscadd: Detective's badge gets flashier the more experienced you are at Detective.
+  - rscadd: The QM now has an official list of all Union personnel that they can add
+      to/remove at all times.
+  - rscadd: Borgs can now wear Union badges.
+  - bugfix: Badges automatically sync to your character on round-join.
+  - qol: Badges (including the Lawyers') now points to itself rather than send an
+      easy-to-miss message in chat. It also uses balloon alerts.
+  JupiterJaeden:
+  - bugfix: You can now correctly remove contractor batons from the contractor baton
+      holster module with a wrench (as the in-game text implies).
+  - bugfix: Contractor batons added to the contractor baton holster module now correctly
+      have no-drop applied.
+  Killermankey:
+  - rscadd: Sentinel Siege Walker
+  - bugfix: a singular letter missing from the ignifist stopping it from using the
+      correct rocket.
+  Lawlolawl:
+  - bugfix: Fixed chemnades losing labels during assembly/disassembly steps. In general,
+      hand labeler labels should have their label added to the end of an item's new
+      name every time it is updated.
+  SirNightKnight:
+  - balance: crew mechs have two slots.
+  - balance: mech armor cannot be stacked with the same type.
+  - balance: maulers come with a melee armor module installed along with a projectile
+      armor module.
+  - balance: projectile armor gives 15 more bullet resistance instead of 10.
+  Uristthedorf:
+  - refactor: Actions will no longer by default apply a melee cooldown equal to action
+      cooldown.
+  - bugfix: Fixed various abilities causing melee jank, most noticeably venus man
+      eaters
+  notghosti:
+  - bugfix: Dormant disease no longer shows on a health analyzer scan
+2025-12-19:
+  Absolucy:
+  - bugfix: Admin full heals will no longer trigger the backlash from longevity syndrome
+      being cured.
+  JohnFulpWillard:
+  - qol: The chat bar now scrolls as you type.
+  JupiterJaeden:
+  - rscadd: "Adds a new security status for sechuds - \u2018Search\u2019. Beepsky\
+      \ treats it like any other non-innocent status, but not like arrest. Credit\
+      \ to paradise station for the sprite."
+  - rscadd: Perma prisoners now start the round set to incarcerated. This includes
+      prisoners with the jailbird quirk (who no longer start set to paroled if they
+      are a prisoner).
+  - rscadd: "The \u2018discharged\u2019 security status text on the records console\
+      \ now implies that someone has been released, rather than acquitted."
+  - qol: Changes some of the colors on security statuses on the security records console
+      to be more consistent with their sechud colors.
+  - qol: Changes the color of the suspected security hud to be teal, to prevent conflict
+      with the orange incarcerated & search statuses.
+  - qol: As a regular member of security, you can now invalidate crimes on the records
+      console which you have authored yourself. (requires HOS/warden access normally).
+  - bugfix: You can now correctly edit the description on crimes in the records console.
+  - bugfix: You can now correctly invalidate citations, just like other crimes.
+  - bugfix: Both roundstart and latejoin perma prisoners now correctly have their
+      flavor crimes added to their security records.
+  - bugfix: Energy bolas can hit prone targets correctly and no longer leave random
+      energy snare garbage behind.
+  - code_imp: Energy bolas are no longer janky as fuck and now just work basically
+      like a regular bola.
+  - balance: Energy bolas have had their slowdown slightly nerfed.
+  - balance: DRAGnet snares deploy in 0.5s from hitting the ground instead of 1s.
+  - balance: Stabilized red extracts no longer protect you from legcuff-type slowdowns-
+      this includes bolas, bear traps, and their subtypes.
+  - qol: Adds a HOS bowman headset to the HOS locker.
+  - rscdel: Removes the random paco magazine from the HOS locker.
+  TheColorCyan:
+  - bugfix: brings back pride pins that were accidentally removed, you can be gay
+      once again
+2025-12-21:
+  Infernal-0:
+  - rscadd: Painkillers are now in medkits again. Rejoice.
+2025-12-22:
+  Absolucy:
+  - rscdel: You can no longer get those annoying heretic paintings from gifts.
+  - bugfix: Fixed getting certain buggy items from christmas gifts that would require
+      an admin to fix you.
+  Absolucy, Melbert:
+  - bugfix: Patch exploit allowing nigh-infinite heretic points
+  Infernal-0:
+  - image: Nukes a misplaced stripe on the medical MODsuits
+  Lawlolawl:
+  - bugfix: Added heretic midround antag pref.
+  - image: Shifted borer and plague rat preview icons to show their full sprite properly.
+  - qol: 'Preferences settings: Separated spaceling and midround ling antag prefs.'
+  - qol: 'Preferences settings: Separated crew midround antag prefs and ghost role
+      antag prefs as a whole.'
+  SirNightKnight:
+  - rscadd: phrases with spoken codewords cause the whole sentence to be marked in
+      copperplate font to better differentiate from other colored text.
+  - rscdel: removed some terms (russians, mexicans, indians, and illegal immigrants)
+      from the ion law mad lib pool.
+  - bugfix: updated the ion law mad lib pool with recent species and job additions.
+  - bugfix: ion laws are based off crewsimov instead of asimov.

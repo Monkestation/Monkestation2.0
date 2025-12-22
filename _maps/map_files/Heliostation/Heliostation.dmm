@@ -59184,9 +59184,6 @@
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai)
 "puJ" = (
-/obj/machinery/modular_computer/preset/id{
-	dir = 4
-	},
 /obj/machinery/keycard_auth/directional/south,
 /obj/machinery/camera/directional/south{
 	c_tag = "Cargo - Quartermaster Office";
@@ -59198,6 +59195,9 @@
 	},
 /obj/effect/mapping_helpers/requests_console/announcement,
 /obj/effect/mapping_helpers/requests_console/supplies,
+/obj/machinery/modular_computer/preset/quartermaster{
+	dir = 4
+	},
 /turf/open/floor/carpet/red,
 /area/station/cargo/quartermaster)
 "puT" = (

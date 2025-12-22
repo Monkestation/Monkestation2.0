@@ -758,6 +758,10 @@ em {
   font-family: 'Papyrus', cursive, sans-serif;
 }
 
+.copperplate {
+  font-family: copperplate;
+}
+
 .robot {
   font-family: 'Courier New', cursive, sans-serif;
 }
@@ -856,12 +860,6 @@ em {
   100% {
     color: #7adbf3;
   }
-}
-
-.phobia {
-  color: #dd0000;
-  font-weight: bold;
-  animation: phobia 750ms infinite;
 }
 
 @keyframes phobia {

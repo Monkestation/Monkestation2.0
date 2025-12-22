@@ -58,7 +58,11 @@
 	return ..()
 
 /datum/antagonist/cortical_borer/get_preview_icon()
-	return finish_preview_icon(icon('monkestation/code/modules/antagonists/borers/icons/animal.dmi', "brainslug"))
+	var/icon/preview = icon('monkestation/code/modules/antagonists/borers/icons/animal.dmi', "brainslug")
+	preview.Scale(115, 115)
+	preview.Shift(WEST, 8)
+	preview.Crop(1, 1, ANTAGONIST_PREVIEW_ICON_SIZE, ANTAGONIST_PREVIEW_ICON_SIZE)
+	return preview
 
 /datum/antagonist/cortical_borer/hivemind
 	name = "Hivemind Cortical Borer"

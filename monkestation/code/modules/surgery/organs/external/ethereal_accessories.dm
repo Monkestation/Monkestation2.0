@@ -1,6 +1,6 @@
 /obj/item/organ/external/ethereal_horns
 	name = "ethereal horns"
-	desc = "These seemingly decorative horns are actually sensory organs, albiet somewhat vegistal ones in their current enviroment, for detecting nearby electromagnetic fields. They are also extremely sensitive, a fact that which whatever poor ethereal you took these from is probably heavily aware of."
+	desc = "These seemingly decorative horns are actually sensory organs, albiet somewhat vegistal ones in their current environment, for detecting nearby electromagnetic fields. They are also extremely sensitive, a fact that which whatever poor ethereal you took these from is probably heavily aware of."
 	icon_state = "ethereal_horns"
 	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
 

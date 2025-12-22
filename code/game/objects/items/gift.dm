@@ -158,7 +158,7 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 /proc/initialize_possible_gifts()
 	. = subtypesof(/obj/item)
 	for(var/obj/item/item_type as anything in .)
-		if(!item_type::icon_state || !item_type::inhand_icon_state || (item_type::item_flags & ABSTRACT))
+		if(!item_type::icon_state || !item_type::inhand_icon_state || (item_type::item_flags & (ABSTRACT | DROPDEL)))
 			. -= item_type
 
 	// List of items we want to block the anything-gift from spawning. Reasons for blocking
@@ -186,6 +186,14 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 		/obj/item/uplink/nuclear/debug,
 		//kills only the debug uplink from the gifts.
 		/obj/item/mod/control/pre_equipped/chrono,
+
+		// causes too many issues
+		/obj/structure/sign/painting/eldritch,
+
+		// abstract items that shouldn't be gotten anyways
+		/obj/item/clothing/head/chameleon/drone,
+		/obj/item/clothing/mask/chameleon/drone,
+		/obj/item/clothing/neck/necklace/ashwalker/cursed,
 
 		//A list of every debug item I could find. I compiled a list of every item in the possible gifts list
 		//and ran a keyword search through the list. Hopefully, this grabbed most, if not all, of the items.

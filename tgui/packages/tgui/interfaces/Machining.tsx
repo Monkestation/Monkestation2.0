@@ -47,7 +47,7 @@ type Data = {
   atom_data: String[];
 };
 
-export const Machining = (props, context) => {
+export const Machining = (props) => {
   const [activeTab, setActiveTab] = useLocalState(
     'machiningTab',
     TAB_LIST[0].key,
@@ -169,7 +169,7 @@ export const Machining = (props, context) => {
   );
 };
 
-const MainRecipeScreen = (props, context) => {
+const MainRecipeScreen = (props) => {
   const { act, data } = useBackend<Data>();
   const { tab, searchText } = props;
   const { recipes, atom_data, busy } = data;

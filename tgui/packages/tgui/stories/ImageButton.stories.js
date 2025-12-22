@@ -38,7 +38,7 @@ const COLORS_SPECTRUM = [
 
 const COLORS_STATES = ['good', 'average', 'bad', 'black', 'white'];
 
-const Story = (props, context) => {
+const Story = (props) => {
   const [disabled, setDisabled] = useLocalState('disabled', false);
   const [onClick, setOnClick] = useLocalState('onClick', true);
   const [vertical1, setVertical1] = useLocalState('vertical1', true);

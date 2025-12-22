@@ -98,7 +98,7 @@
 	species = "geranium"
 	plantname = "Geranium Plants"
 	product = /obj/item/food/grown/poppy/geranium
-	possible_mutations = list(/datum/hydroponics/plant_mutation/fraxinella) //monkestation edit
+	possible_mutations = list(/datum/hydroponics/plant_mutation/fraxinella)
 
 /obj/item/food/grown/poppy/geranium
 	seed = /obj/item/seeds/poppy/geranium
