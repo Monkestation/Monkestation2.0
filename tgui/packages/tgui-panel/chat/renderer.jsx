@@ -46,25 +46,10 @@ export const TGUI_CHAT_ATTRIBUTES_TO_PROPS = {
   content: 'content',
 };
 
-const findNearestScrollableParent = (startingNode) => {
-  const body = document.body;
-  let node = startingNode;
-  while (node && node !== body) {
-    // This definitely has a vertical scrollbar, because it reduces
-    // scrollWidth of the element. Might not work if element uses
-    // overflow: hidden.
-    if (node.scrollWidth < node.offsetWidth) {
-      return node;
-    }
-    node = node.parentNode;
-  }
-  return window;
-};
-
 const createHighlightNode = (text, color) => {
   const node = document.createElement('span');
   node.className = 'Chat__highlight';
-  node.setAttribute('style', 'backgroundColor:' + color);
+  node.setAttribute('style', 'background-color:' + color);
   node.textContent = text;
   return node;
 };
@@ -357,8 +342,8 @@ class ChatRenderer {
     // Find scrollable parent
     if (this.rootNode) {
       if (!this.scrollNode || this.scrollNode.scrollHeight === undefined) {
-        this.scrollNode = findNearestScrollableParent(this.rootNode);
-        this.scrollNode.addEventListener('scroll', this.handleScroll);
+        this.scrollNode = document.getElementById('chat-pane');
+        this.scrollNode?.addEventListener('scroll', this.handleScroll);
         logger.debug(`reset scrollNode to ${this.scrollNode}`);
       }
     }
