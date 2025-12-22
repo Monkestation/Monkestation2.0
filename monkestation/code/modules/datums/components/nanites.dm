@@ -253,7 +253,7 @@
 	var/image/holder = host_mob.hud_list[DIAG_NANITE_FULL_HUD]
 	if(!holder) // what
 		return
-	holder.pixel_y = host_mob.get_cached_height() - world.icon_size
+	holder.pixel_z = host_mob.get_cached_height() - world.icon_size
 	holder.icon_state = null
 	if(remove || stealth)
 		return //bye icon
