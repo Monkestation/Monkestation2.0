@@ -12,6 +12,18 @@
 	duration = 3 MINUTES // Given a default duration so no one gets to hold onto this buff forever by accident.
 	tick_interval = 1 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/unholy_determination
+	/// List of traits to give to the owner.
+	var/static/list/traits_to_give = list(
+		TRAIT_ANTICONVULSANT,
+		TRAIT_COAGULATING,
+		TRAIT_FEARLESS,
+		TRAIT_NOCRITDAMAGE,
+		TRAIT_NOSOFTCRIT,
+		TRAIT_SLEEPIMMUNE,
+		TRAIT_STABLEHEART,
+		TRAIT_STABLELIVER,
+		TRAIT_TUMOR_SUPPRESSED,
+	)
 
 /datum/status_effect/unholy_determination/on_creation(mob/living/new_owner, set_duration)
 	if(isnum(set_duration))
@@ -19,12 +31,12 @@
 	return ..()
 
 /datum/status_effect/unholy_determination/on_apply()
-	owner.add_traits(list(TRAIT_COAGULATING, TRAIT_NOCRITDAMAGE, TRAIT_NOSOFTCRIT), TRAIT_STATUS_EFFECT(id))
+	owner.add_traits(traits_to_give, TRAIT_STATUS_EFFECT(id))
 	owner.add_homeostasis_level(id, owner.standard_body_temperature, 10 KELVIN)
 	return TRUE
 
 /datum/status_effect/unholy_determination/on_remove()
-	owner.remove_traits(list(TRAIT_COAGULATING, TRAIT_NOCRITDAMAGE, TRAIT_NOSOFTCRIT), TRAIT_STATUS_EFFECT(id))
+	owner.remove_traits(traits_to_give, TRAIT_STATUS_EFFECT(id))
 	owner.remove_homeostasis_level(id)
 
 /datum/status_effect/unholy_determination/tick()
@@ -61,10 +73,13 @@
 	owner.adjust_fire_stacks(-1)
 	owner.losebreath = max(owner.losebreath - 0.5, 0)
 
-	owner.adjustToxLoss(-amount, FALSE, TRUE)
-	owner.adjustOxyLoss(-amount, FALSE)
-	owner.adjustBruteLoss(-amount, FALSE)
-	owner.adjustFireLoss(-amount)
+	var/needs_update = FALSE
+	needs_update += owner.adjustToxLoss(-amount, updating_health = FALSE, forced = TRUE)
+	needs_update += owner.adjustOxyLoss(-amount, updating_health = FALSE)
+	needs_update += owner.adjustBruteLoss(-amount, updating_health = FALSE)
+	needs_update += owner.adjustFireLoss(-amount, updating_health = FALSE)
+	if(needs_update)
+		owner.updatehealth()
 
 /*
  * Slow and stop any blood loss the owner's experiencing.

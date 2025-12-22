@@ -161,7 +161,7 @@
 
 	//BIBLEFART
 	//This goes above all else because it's an instagib.
-	for(var/obj/item/book/bible/Holy as anything in Location)
+	for(var/obj/item/book/bible/Holy in Location)
 		cooling_down = TRUE
 		var/turf/T = get_step(get_step(Person, NORTH), NORTH)
 		T.Beam(Person, icon_state="lightning[rand(1,12)]", time = 15)

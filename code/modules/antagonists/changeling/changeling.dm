@@ -1019,8 +1019,8 @@
 	var/list/data = list()
 	var/list/memories = list()
 
-	for(var/memory_key in stolen_memories)
-		memories += list(list("name" = memory_key, "story" = stolen_memories[memory_key]))
+	for(var/memory_key, memory_value in stolen_memories)
+		memories += list(list("name" = memory_key, "story" = memory_value))
 
 	data["memories"] = memories
 	data["true_name"] = changelingID
