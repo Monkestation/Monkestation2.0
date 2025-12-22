@@ -67,15 +67,6 @@ const createReconnectedNode = () => {
   return node;
 };
 
-// Removes job formatting
-const stripColoredNames = (inputHtml) => {
-  const spanRegex = new RegExp(
-    '(<span[\\w| |\t|=]*[\'|"][\\w| ]*)(?:job__[a-z]+)([\'|"]>)',
-    'gi',
-  );
-  return inputHtml.replace(spanRegex, '$1$2');
-};
-
 const handleImageError = (e) => {
   setTimeout(() => {
     /** @type {HTMLImageElement} */
