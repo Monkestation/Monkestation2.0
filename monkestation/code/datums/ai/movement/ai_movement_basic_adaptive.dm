@@ -13,7 +13,7 @@
 /datum/ai_movement/jps/adaptive/post_move(datum/move_loop/source, succeeded)
 	. = ..()
 	var/datum/move_loop/has_target/jps/loop = source
-	if (length(loop.movement_path))
+	if (length(loop.movement_path) || QDELETED(controller) || QDELETED(controller.pawn))
 		return
 	var/datum/ai_controller/controller = source.extra_info
 	if (loop.target in view(6, controller.pawn))
