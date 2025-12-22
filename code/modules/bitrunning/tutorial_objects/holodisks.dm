@@ -102,7 +102,7 @@
 	DELAY 30
 	SAY	First thing first, you gotta make sure to wear proper biological protection, don't want a death virus to go out to the public can we?
 	DELAY 40
-	SAY This segment is pretty hard, you should refer to a book regarding this book and try to make a disease with a sneezing symptom.
+	SAY This segment is pretty hard, you should refer to the book next to me regarding my specialty and try to make a disease with a sneezing symptom.
 	DELAY 15
 	SAY That's all from me... Sorry if i'm not of much help. toodles!
 	DELAY 100
