@@ -63,6 +63,11 @@
 	icon_state = "syndimaid"
 	can_adjust = FALSE
 
+/obj/item/clothing/under/syndicate/skirt/maid/Initialize(mapload)
+	. = ..()
+	var/obj/item/clothing/accessory/maidapron/syndicate/A = new (src)
+	attach_accessory(A)
+
 /obj/item/clothing/under/wonka
 	name = "wonky suit"
 	desc = "Come with me, and you'll be, in a world of OSHA violations!"

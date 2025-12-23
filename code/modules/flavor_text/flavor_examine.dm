@@ -1,3 +1,6 @@
+/// How much flavor text gets displayed before cutting off.
+#define EXAMINE_FLAVOR_MAX_DISPLAYED 65
+
 /// -- Extension of examine, examine_more, and flavortext code. --
 /mob
 	/// Last time a client was connected to this mob.
@@ -6,6 +9,10 @@
 /mob/Logout()
 	. = ..()
 	last_connection_time = world.time
+
+/mob/living/examine(mob/user)
+	. = ..()
+	. += late_examine(user)
 
 /**
  *	Flavor text and Personal Records On Examine INS AND OUTS (implementation by mrmelbert from MapleStation)
@@ -24,21 +31,6 @@
  *	Bonus: If you are not connected to the server and someone examines you...
  *	an AFK timer is shown to the examiner, which displays how long you have been disconnected for.
  */
-
-// Carbon and human examine don't call parent
-// so we need to replicate this across all three
-// Really I should be using the signal but at least this guarantees order
-/mob/living/examine(mob/user)
-	. = ..()
-	. += late_examine(user)
-
-/mob/living/carbon/examine(mob/user)
-	. = ..()
-	. += late_examine(user)
-
-/mob/living/carbon/human/examine(mob/user)
-	. = ..()
-	. += late_examine(user)
 
 /// Mob level examining that happens after the main beef of examine is done
 /mob/living/proc/late_examine(mob/user)
