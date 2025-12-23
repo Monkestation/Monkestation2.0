@@ -209,7 +209,7 @@ GLOBAL_LIST_INIT(loadout_necks, generate_loadout_items(/datum/loadout_item/neck)
 
 /datum/loadout_item/neck/modlink/post_equip_item(datum/preferences/preference_source, mob/living/carbon/human/equipper)
 	. = ..()
-	var/obj/item/clothing/neck/link_scryer/scryer = locate(item_path) in equipper.get_equipped_items()
+	var/obj/item/clothing/neck/link_scryer/scryer = locate(item_path) in equipper.get_all_gear()
 	if(!scryer)
 		return
 	scryer.set_ringtone(preference_source.read_preference(/datum/preference/choiced/call_ringtone))
