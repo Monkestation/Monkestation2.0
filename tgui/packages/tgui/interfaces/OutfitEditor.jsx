@@ -17,7 +17,6 @@ export const OutfitEditor = (props) => {
           py={3}
           src={`data:image/jpeg;base64,${dummy64}`}
           style={{
-            '-ms-interpolation-mode': 'nearest-neighbor',
             imageRendering: 'pixelated',
           }}
         />
@@ -146,7 +145,6 @@ const OutfitSlot = (props) => {
               src={`data:image/jpeg;base64,${currItem?.sprite}`}
               title={currItem?.desc}
               style={{
-                '-ms-interpolation-mode': 'nearest-neighbor',
                 imageRendering: 'pixelated',
               }}
             />

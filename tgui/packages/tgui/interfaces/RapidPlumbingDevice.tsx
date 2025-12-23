@@ -72,7 +72,6 @@ const PlumbingTypeSection = (props) => {
             className={classes(['plumbing-tgui32x32', recipe.icon])}
             style={{
               transform: 'scale(1.5) translate(9.5%, 9.5%)',
-              '-ms-interpolation-mode': 'nearest-neighbor',
               imageRendering: 'pixelated',
             }}
           />
@@ -114,7 +113,7 @@ const LayerIconSection = (props) => {
       className={classes(['plumbing-tgui32x32', layer_icon])}
       style={{
         transform: 'scale(2)',
-        '-ms-interpolation-mode': 'nearest-neighbor',
+
         imageRendering: 'pixelated',
       }}
     />

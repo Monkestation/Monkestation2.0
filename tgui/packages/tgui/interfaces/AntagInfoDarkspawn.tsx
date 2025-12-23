@@ -318,7 +318,7 @@ const ResearchInfo = (props) => {
             </Stack.Item>
 
             <Stack.Item grow={1}>
-              <Stack fill fluid direction="column">
+              <Stack fill direction="column">
                 <Stack.Item>
                   <KnowledgePreview />
                 </Stack.Item>
@@ -460,7 +460,6 @@ const KnowledgePreview = (props) => {
                 style={{
                   background:
                     'radial-gradient(circle, rgb(114, 100, 255) 0%, rgb(33, 0, 127) 100%);',
-                  '-ms-interpolation-mode': 'nearest-neighbor',
                   imageRendering: 'pixelated',
                 }}
               />

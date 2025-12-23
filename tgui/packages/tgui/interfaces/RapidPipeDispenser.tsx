@@ -280,7 +280,6 @@ const PreviewSelect = (props) => {
             ])}
             style={{
               transform: 'scale(1.5) translate(9.5%, 9.5%)',
-              '-ms-interpolation-mode': 'nearest-neighbor',
               imageRendering: 'pixelated',
             }}
           />

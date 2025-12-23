@@ -139,7 +139,6 @@ const DesignSection = (props) => {
                 design.icon === 'catwalk0'
                   ? 'scale(0.7)'
                   : 'scale(1.0)',
-              '-ms-interpolation-mode': 'nearest-neighbor',
               imageRendering: 'pixelated',
             }}
           />

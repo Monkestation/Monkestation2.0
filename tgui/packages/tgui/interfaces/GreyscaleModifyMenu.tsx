@@ -221,7 +221,6 @@ const PreviewDisplay = (props) => {
                 width="75%"
                 mx="10%"
                 style={{
-                  '-ms-interpolation-mode': 'nearest-neighbor',
                   imageRendering: 'pixelated',
                 }}
               />
@@ -234,7 +233,6 @@ const PreviewDisplay = (props) => {
                   ml="25%"
                   size={5}
                   style={{
-                    '-ms-interpolation-mode': 'nearest-neighbor',
                     imageRendering: 'pixelated',
                   }}
                 />
@@ -289,7 +287,6 @@ const SingleSprite = (props) => {
       src={source}
       width="100%"
       style={{
-        '-ms-interpolation-mode': 'nearest-neighbor',
         imageRendering: 'pixelated',
       }}
     />

@@ -47,7 +47,6 @@ export const NtosEmojipedia = (props) => {
               m={0}
               title={emoji.name}
               style={{
-                '-ms-interpolation-mode': 'nearest-neighbor',
                 imageRendering: 'pixelated',
               }}
               onClick={() => {
