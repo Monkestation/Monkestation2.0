@@ -30,9 +30,13 @@
 /datum/computer_file/program/cargo_union/ui_data(mob/user)
 	var/list/data = list()
 	if(inserted_badge)
-		data["inserted_badge"] = inserted_badge.name
+		data["badge_name"] = inserted_badge.name
+		data["badge_icon"] = inserted_badge.icon
+		data["badge_icon_state"] = inserted_badge.icon_state
 	else
-		data["inserted_badge"] = null
+		data["badge_name"] = null
+		data["badge_icon"] = null
+		data["badge_icon_state"] = null
 	data["union_members"] = GLOB.cargo_union_employees
 	return data
 
@@ -52,6 +56,9 @@
 				union_leader = FALSE
 			else
 				union_leader = TRUE
+
+			if(!user.Adjacent(computer))
+				return TRUE
 
 			for(var/member in GLOB.cargo_union_employees)
 				if(member[CARGO_UNION_NAME] == member_name)
@@ -90,7 +97,7 @@
 					continue
 				if(member[CARGO_UNION_POSITION]) //printing a golden badge requires access (aka QM level, ID or Badge)
 					if(!can_run(user, downloading = TRUE))
-						to_chat(user, span_notice("Printing golden badges requires elevated access!"))
+						computer.balloon_alert(user, "elevated access necessary!")
 						return TRUE
 				print_new_badge(user, lost_badge_member)
 				break
@@ -119,22 +126,20 @@
 		return FALSE
 
 	if(inserted_badge)
-		to_chat(user, span_notice("You swap \the [attacking_item] into \the [computer.name] for \the [inserted_badge]."))
+		computer.balloon_alert(user, "swapped badges")
 		try_eject(user)
 	else
-		to_chat(user, span_notice("You insert \the [attacking_item] into \the [computer.name]."))
+		computer.balloon_alert(user, "badge inserted")
 	attacking_item.forceMove(computer)
 	inserted_badge = attacking_item
 	return TRUE
 
 /datum/computer_file/program/cargo_union/try_eject(mob/living/user, forced = FALSE)
 	if(!inserted_badge)
-		if(user)
-			to_chat(user, span_warning("There is no card in \the [computer.name]."))
 		return FALSE
 
 	if(user && computer.Adjacent(user))
-		to_chat(user, span_notice("You remove [inserted_badge] from [computer.name]."))
+		computer.balloon_alert(user, "badge removed")
 		user.put_in_hands(inserted_badge)
 	else
 		inserted_badge.forceMove(computer.drop_location())

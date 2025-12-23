@@ -89,7 +89,9 @@
 ///Sets the badge's identity to the name and description given to us.
 /obj/item/clothing/accessory/badge/proc/set_identity(mob/living/named_mob)
 	if(!ismob(named_mob))
-		named_mob = findname(named_mob)
+		var/found_name = findname(named_mob)
+		if(found_name)
+			named_mob = found_name
 
 	//now is this a real mob we have, or just a random name we inserted?
 	if(ismob(named_mob))

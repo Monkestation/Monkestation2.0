@@ -1,10 +1,12 @@
 import type { BooleanLike } from 'common/react';
-import { Button, Section, Stack } from '../components';
+import { Button, Section, DmIcon, Stack } from '../components';
 import { NtosWindow } from '../layouts';
 import { useBackend } from '../backend';
 
 type Data = {
-  inserted_badge: string;
+  badge_name: string;
+  badge_icon: string;
+  badge_icon_state: string;
   union_members: UnionData[];
 };
 
@@ -15,7 +17,7 @@ type UnionData = {
 
 export const NtosCargoUnion = () => {
   const { act, data } = useBackend<Data>();
-  const { inserted_badge, union_members = [] } = data;
+  const { badge_name, badge_icon, badge_icon_state, union_members = [] } = data;
   return (
     <NtosWindow width={500} height={600}>
       <NtosWindow.Content scrollable>
@@ -26,20 +28,32 @@ export const NtosCargoUnion = () => {
               <Button
                 icon="recycle"
                 content="Recycle"
-                disabled={!inserted_badge}
+                disabled={!badge_name}
                 onClick={() => act('recycle_badge')}
                 tooltip="Recycle the badge, permanently destroying it."
               />
               <Button
                 icon="eject"
                 content="Eject"
-                disabled={!inserted_badge}
+                disabled={!badge_name}
                 onClick={() => act('eject_badge')}
               />
             </>
           }
         >
-          {inserted_badge}
+          <Stack>
+            <Stack.Item>
+              {!!badge_icon && (
+                <DmIcon
+                  icon={badge_icon}
+                  icon_state={badge_icon_state}
+                  height={'24px'}
+                  width={'24px'}
+                />
+              )}
+            </Stack.Item>
+            <Stack.Item my={1}>{badge_name}</Stack.Item>
+          </Stack>
         </Section>
         <Section
           title="Union Personnel"
