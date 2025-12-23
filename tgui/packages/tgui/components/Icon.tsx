@@ -29,7 +29,7 @@ export const Icon = (props: IconProps) => {
     if (!style) {
       style = {};
     }
-    style['font-size'] = size * 100 + '%';
+    style['fontSize'] = size * 100 + '%';
   }
   if (rotation) {
     if (!style) {
