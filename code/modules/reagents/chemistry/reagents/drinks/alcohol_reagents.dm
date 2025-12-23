@@ -1564,10 +1564,14 @@
 /datum/reagent/consumable/ethanol/quintuple_sec/on_mob_metabolize(mob/living/carbon/user)
 	. = ..()
 
-	user.stamina.regen_rate += 2 * REM
+	var/obj/item/organ/internal/liver/liver = user.get_organ_slot(ORGAN_SLOT_LIVER)
+	if(liver && HAS_TRAIT(liver, TRAIT_LAW_ENFORCEMENT_METABOLISM))
+		user.stamina.regen_rate += 2 * REM
 
 /datum/reagent/consumable/ethanol/quintuple_sec/on_mob_end_metabolize(mob/living/carbon/user)
-	user.stamina.regen_rate -= 2 * REM
+	var/obj/item/organ/internal/liver/liver = user.get_organ_slot(ORGAN_SLOT_LIVER)
+	if(liver && HAS_TRAIT(liver, TRAIT_LAW_ENFORCEMENT_METABOLISM))
+		user.stamina.regen_rate -= 2 * REM
 
 	return ..()
 
