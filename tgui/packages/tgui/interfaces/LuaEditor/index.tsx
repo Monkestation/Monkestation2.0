@@ -33,7 +33,7 @@ interface LuaEditorState {
 }
 
 export class LuaEditor extends Component<{}, LuaEditorState> {
-  private sectionRef = createRef<Section>();
+  private sectionRef = createRef<typeof Section>();
   private fileInputRef = createRef<HTMLInputElement>();
 
   state: LuaEditorState = {
