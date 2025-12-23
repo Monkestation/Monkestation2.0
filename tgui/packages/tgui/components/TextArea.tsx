@@ -59,7 +59,7 @@ export function TextArea(props: Props) {
     maxLength,
     monospace,
     onBlur,
-    onChange,
+    onInput,
     onEnter,
     onEscape,
     onKeyDown,
@@ -85,11 +85,11 @@ export function TextArea(props: Props) {
     const value = event.currentTarget.value;
     setInnerValue(value);
 
-    if (!onChange) return;
+    if (!onInput) return;
     if (expensive) {
-      textareaDebounce(() => onChange(event, value));
+      textareaDebounce(() => onInput(event, value));
     } else {
-      onChange(event, value);
+      onInput(event, value);
     }
   }
 
@@ -122,10 +122,7 @@ export function TextArea(props: Props) {
         `${value.substring(0, selectionStart)}\t${value.substring(selectionEnd)}`,
       );
       event.currentTarget.selectionEnd = selectionStart + 1;
-      onChange?.(
-        event as unknown as React.ChangeEvent<HTMLTextAreaElement>,
-        event.currentTarget.value,
-      );
+      onInput?.(event as any, event.currentTarget.value);
       return;
     }
 
@@ -143,10 +140,7 @@ export function TextArea(props: Props) {
         getMarkupString(value, markupString, selectionStart, selectionEnd),
       );
       event.currentTarget.selectionEnd = selectionEnd + markupString.length * 2;
-      onChange?.(
-        event as unknown as React.ChangeEvent<HTMLTextAreaElement>,
-        event.currentTarget.value,
-      );
+      onInput?.(event as any, event.currentTarget.value);
       return;
     }
   }

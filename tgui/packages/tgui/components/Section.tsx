@@ -5,7 +5,14 @@
  */
 
 import { BoxProps, computeBoxClassName, computeBoxProps } from './Box';
-import { ReactNode, RefObject, useEffect, useRef } from 'react';
+import {
+  forwardRef,
+  ReactNode,
+  RefObject,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+} from 'react';
 import { addScrollableNode, removeScrollableNode } from '../events';
 import { canRender, classes } from 'common/react';
 
@@ -72,7 +79,7 @@ type Props = Partial<{
  * - [View documentation on tgui core](https://tgstation.github.io/tgui-core/?path=/docs/components-section--docs)
  * - [View inherited Box props](https://tgstation.github.io/tgui-core/?path=/docs/components-box--docs)
  */
-export function Section(props: Props) {
+export const Section = forwardRef<HTMLDivElement, Props>((props, ref) => {
   const {
     buttons,
     children,
@@ -83,7 +90,6 @@ export function Section(props: Props) {
     flexGrow,
     noTopPadding,
     onScroll,
-    ref,
     scrollable,
     scrollableHorizontal,
     stretchContents,
@@ -93,8 +99,8 @@ export function Section(props: Props) {
 
   const hasTitle = canRender(title) || canRender(buttons);
 
-  const ourRef = useRef<HTMLDivElement>(null);
-  const nodeRef = ref ?? ourRef;
+  const nodeRef = useRef<HTMLDivElement>(null);
+  useImperativeHandle(ref, () => nodeRef.current as HTMLDivElement);
 
   useEffect(() => {
     // Doesn't use early returns here as we're in useEffect
@@ -149,4 +155,4 @@ export function Section(props: Props) {
       </div>
     </div>
   );
-}
+});
