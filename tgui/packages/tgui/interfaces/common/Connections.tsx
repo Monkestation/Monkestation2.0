@@ -87,7 +87,7 @@ export const Connections = (props: {
             key={index}
             d={path}
             fill="transparent"
-            stroke-width={lineWidth}
+            strokeWidth={lineWidth}
           />
         );
       })}

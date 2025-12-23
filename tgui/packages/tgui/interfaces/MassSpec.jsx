@@ -307,7 +307,7 @@ const MassSpectroscopy = (props) => {
               x2={502}
               y2={264}
               stroke={'white'}
-              stroke-width={3}
+              strokeWidth={3}
             />
             <line
               x1={501}
@@ -315,7 +315,7 @@ const MassSpectroscopy = (props) => {
               x2={501}
               y2={0}
               stroke={'white'}
-              stroke-width={3}
+              strokeWidth={3}
             />
           </g>
         </svg>
