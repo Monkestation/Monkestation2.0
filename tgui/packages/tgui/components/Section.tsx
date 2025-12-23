@@ -5,12 +5,7 @@
  */
 
 import { BoxProps, computeBoxClassName, computeBoxProps } from './Box';
-import {
-  ReactNode,
-  RefObject,
-  useEffect,
-  useRef,
-} from 'react';
+import { ReactNode, RefObject, useEffect, useRef } from 'react';
 import { addScrollableNode, removeScrollableNode } from '../events';
 import { canRender, classes } from 'common/react';
 
@@ -147,8 +142,7 @@ export function Section(props: Props) {
           onScroll={onScroll}
           // For posterity: the forwarded ref needs to be here specifically
           // to actually let things interact with the scrolling.
-          // @ts-expect-error you know what, shut up. im sure youll function just fine.
-          ref={nodeRef}
+          ref={nodeRef as React.RefObject<HTMLInputElement>}
         >
           {children}
         </div>

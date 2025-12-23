@@ -14,56 +14,106 @@ import { Window } from '../layouts';
 
 // NTSLTextArea component start
 // This is literally just TextArea but without ENTER updating anything, for NTSL
-import { KEY_ESCAPE, KEY_TAB } from 'common/keycodes';
-import { toInputValue } from '../components/Input';
+import { useEffect, useRef, useState } from 'react';
 
-class NTSLTextArea extends TextArea {
-  constructor(props) {
-    super(props);
-    super(this.textareaRef);
-    super(this.state);
-    const { dontUseTabForIndent = false } = props;
-    this.handleKeyDown = (e) => {
-      const { editing } = this.state;
-      const { onInput, onKey } = this.props;
-      if (e.keyCode === KEY_ESCAPE) {
-        if (this.props.onEscape) {
-          this.props.onEscape(e);
-        }
-        this.setEditing(false);
-        if (this.props.selfClear) {
-          e.target.value = '';
-        } else {
-          e.target.value = toInputValue(this.props.value);
-          e.target.blur();
-        }
-        return;
+type NTSLTextAreaProps = {
+  value: string;
+  act: (action: string, payload: any) => void;
+  dontUseTabForIndent?: boolean;
+  selfClear?: boolean;
+  onEscape?: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
+  noborder?: boolean;
+  scrollbar?: boolean;
+  width?: string;
+  height?: string;
+};
+
+const debounce = (fn: Function, delay: number) => {
+  let timer: NodeJS.Timeout;
+  return (...args: any[]) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => fn(...args), delay);
+  };
+};
+
+const debouncedSave = useRef(
+  debounce(
+    (value: string) => useBackend().act('save_code', { saved_code: value }),
+    300,
+  ),
+).current;
+
+const NTSLTextArea = ({
+  value,
+  act,
+  dontUseTabForIndent = false,
+  selfClear,
+  onEscape,
+  noborder,
+  scrollbar,
+  width,
+  height,
+}: NTSLTextAreaProps) => {
+  const [editing, setEditing] = useState(false);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const [localValue, setLocalValue] = useState(value);
+
+  useEffect(() => {
+    setLocalValue(value);
+  }, [value]);
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Escape') {
+      if (onEscape) onEscape(e);
+      setEditing(false);
+      if (selfClear && textareaRef.current) {
+        textareaRef.current.value = '';
+        setLocalValue('');
+      } else if (textareaRef.current) {
+        textareaRef.current.value = value;
+        setLocalValue(value);
+        textareaRef.current.blur();
       }
-      if (!editing) {
-        this.setEditing(true);
-      }
-      // Custom key handler
-      if (onKey) {
-        onKey(e, e.target.value);
-      }
-      if (!dontUseTabForIndent) {
-        const keyCode = e.keyCode || e.which;
-        if (keyCode === KEY_TAB) {
-          e.preventDefault();
-          const { value, selectionStart, selectionEnd } = e.target;
-          e.target.value =
-            value.substring(0, selectionStart) +
-            '\t' +
-            value.substring(selectionEnd);
-          e.target.selectionEnd = selectionStart + 1;
-          if (onInput) {
-            onInput(e, e.target.value);
-          }
-        }
-      }
-    };
-  }
-}
+      return;
+    }
+
+    if (!editing) setEditing(true);
+
+    if (!dontUseTabForIndent && e.key === 'Tab' && textareaRef.current) {
+      e.preventDefault();
+      const target = textareaRef.current;
+      const { selectionStart, selectionEnd, value } = target;
+      const newValue =
+        value.substring(0, selectionStart) +
+        '\t' +
+        value.substring(selectionEnd);
+      target.value = newValue;
+      target.selectionEnd = selectionStart + 1;
+      setLocalValue(newValue);
+
+      debouncedSave(target.value);
+    }
+  };
+
+  const handleInput = (e: React.FormEvent<HTMLTextAreaElement>) => {
+    const target = e.currentTarget;
+    setLocalValue(target.value);
+    debouncedSave(target.value);
+  };
+
+  return (
+    <TextArea
+      ref={textareaRef}
+      value={localValue}
+      onKeyDown={handleKeyDown}
+      onInput={handleInput}
+      noborder={noborder}
+      scrollbar={scrollbar}
+      width={width}
+      height={height}
+    />
+  );
+};
 
 // NTSLTextArea component end
 
@@ -117,11 +167,7 @@ const ScriptEditor = (props) => {
           value={stored_code}
           width="100%"
           height="100%"
-          onChange={(_, value) =>
-            act('save_code', {
-              saved_code: value,
-            })
-          }
+          act={act}
         />
       ) : (
         <Section width="100%" height="100%">
