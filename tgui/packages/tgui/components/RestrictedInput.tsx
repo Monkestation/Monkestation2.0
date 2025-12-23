@@ -122,9 +122,9 @@ export function RestrictedInput(props: Props) {
   ) {
     if (!inputFn) return;
     if (expensive) {
-      inputDebounce(() => inputFn(event as any, newValue));
+      inputDebounce(() => inputFn(event, newValue));
     } else {
-      inputFn(event as any, newValue);
+      inputFn(event, newValue);
     }
   }
 
