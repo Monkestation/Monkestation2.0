@@ -104,7 +104,7 @@ ADMIN_VERB(secrets, R_NONE, FALSE, "Secrets", "Abuse harder than you ever have b
 					if(!length(living.diseases))
 						continue
 					for(var/datum/disease/acute/disease as anything in living.diseases)
-						disease.cure(target = living)
+						disease.cure(target = living, safe = TRUE)
 
 		if("list_bombers")
 			holder.holder.list_bombers()

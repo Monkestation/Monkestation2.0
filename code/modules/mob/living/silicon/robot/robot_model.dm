@@ -45,8 +45,10 @@
 	var/allow_riding = TRUE
 	///Whether the borg can stuff itself into disposals
 	var/canDispose = FALSE
-	///The y offset of  the hat put on
+	///The y offset of the hat worn on our head.
 	var/hat_offset = -3
+	///The y offset of the badge we're decorated with.
+	var/badge_offset = -3
 	///The x offsets of a person riding the borg
 	var/list/ride_offset_x = list("north" = 0, "south" = 0, "east" = -6, "west" = 6)
 	///The y offsets of a person riding the borg
@@ -275,6 +277,8 @@
 			special_light_key = details[SKIN_LIGHT_KEY]
 		if(!isnull(details[SKIN_HAT_OFFSET]))
 			hat_offset = details[SKIN_HAT_OFFSET]
+		if(!isnull(details[SKIN_BADGE_OFFSET]))
+			badge_offset = details[SKIN_BADGE_OFFSET]
 		if(!isnull(details[SKIN_TRAITS]))
 			model_traits += details[SKIN_TRAITS]
 	for(var/i in old_model.added_modules)
@@ -286,6 +290,8 @@
 	var/mob/living/silicon/robot/cyborg = loc
 	if(cyborg.hat)
 		cyborg.hat.forceMove(drop_location())
+	if(cyborg.worn_badge)
+		cyborg.worn_badge.forceMove(drop_location())
 
 	cyborg.cut_overlays()
 	cyborg.setDir(SOUTH)
@@ -359,6 +365,7 @@
 	model_select_icon = "service"
 	cyborg_base_icon = "clown"
 	hat_offset = -2
+	badge_offset = -2
 
 /obj/item/robot_model/clown/respawn_consumable(mob/living/silicon/robot/cyborg, coeff = 1)
 	. = ..()
@@ -403,6 +410,7 @@
 	model_select_icon = "engineer"
 	model_traits = list(TRAIT_NEGATES_GRAVITY)
 	hat_offset = -4
+	badge_offset = -4
 
 /obj/item/robot_model/janitor
 	name = "Janitor"
@@ -430,6 +438,7 @@
 	cyborg_base_icon = "janitor"
 	model_select_icon = "janitor"
 	hat_offset = -5
+	badge_offset = -2
 	/// Weakref to the wash toggle action we own
 	var/datum/weakref/wash_toggle_ref
 
@@ -699,6 +708,7 @@
 	model_select_icon = "medical"
 	model_traits = list(TRAIT_PUSHIMMUNE)
 	hat_offset = 3
+	badge_offset = 0
 	borg_skins = list(
 		"Machinified Doctor" = list(SKIN_ICON_STATE = "medical"),
 		"Qualified Doctor" = list(SKIN_ICON_STATE = "qualified_doctor"),
@@ -728,9 +738,10 @@
 	cyborg_base_icon = "miner"
 	model_select_icon = "miner"
 	hat_offset = 0
+	badge_offset = -2
 	borg_skins = list(
 		"Asteroid Miner" = list(SKIN_ICON_STATE = "minerOLD"),
-		"Spider Miner" = list(SKIN_ICON_STATE = "spidermin"),
+		"Spider Miner" = list(SKIN_ICON_STATE = "spidermin", SKIN_BADGE_OFFSET = -8),
 		"Lavaland Miner" = list(SKIN_ICON_STATE = "miner"),
 	)
 	var/obj/item/t_scanner/adv_mining_scanner/cyborg/mining_scanner //built in memes. //fuck you
@@ -763,6 +774,7 @@
 	model_select_icon = "standard"
 	model_traits = list(TRAIT_PUSHIMMUNE)
 	hat_offset = -2
+	badge_offset = -2
 
 /obj/item/robot_model/peacekeeper/do_transform_animation()
 	..()
@@ -787,6 +799,7 @@
 	model_select_icon = "security"
 	model_traits = list(TRAIT_PUSHIMMUNE)
 	hat_offset = 3
+	badge_offset = -3
 
 /obj/item/robot_model/security/do_transform_animation()
 	..()
@@ -857,7 +870,13 @@
 		"Kent" = list(SKIN_ICON_STATE = "kent", SKIN_LIGHT_KEY = "medical", SKIN_HAT_OFFSET = 3),
 		"Tophat" = list(SKIN_ICON_STATE = "tophat", SKIN_LIGHT_KEY = NONE, SKIN_HAT_OFFSET = INFINITY),
 		"Waitress" = list(SKIN_ICON_STATE = "service_f"),
-		"Kerfus" = list(SKIN_ICON_STATE = "kerfus_service", SKIN_LIGHT_KEY = NONE, SKIN_ICON = CYBORG_ICON_CARGO, SKIN_TRAITS = list(TRAIT_CAT)),
+		"Kerfus" = list(
+			SKIN_ICON_STATE = "kerfus_service",
+			SKIN_LIGHT_KEY = NONE,
+			SKIN_ICON = CYBORG_ICON_CARGO,
+			SKIN_TRAITS = list(TRAIT_CAT),
+			SKIN_BADGE_OFFSET = -6,
+		),
 	)
 
 /obj/item/robot_model/service/respawn_consumable(mob/living/silicon/robot/cyborg, coeff = 1)
@@ -902,6 +921,7 @@
 	model_select_icon = "malf"
 	model_traits = list(TRAIT_PUSHIMMUNE)
 	hat_offset = 3
+	badge_offset = -3
 
 /obj/item/robot_model/syndicate/rebuild_modules()
 	..()
@@ -973,6 +993,7 @@
 	model_select_icon = "malf"
 	model_traits = list(TRAIT_PUSHIMMUNE, TRAIT_NEGATES_GRAVITY)
 	hat_offset = -4
+	badge_offset = -4
 	canDispose = TRUE
 
 /obj/item/robot_model/syndicate/kiltborg
@@ -984,6 +1005,7 @@
 	model_select_icon = "kilt"
 	cyborg_base_icon = "kilt"
 	hat_offset = -2
+	badge_offset = -2
 	breakable_modules = FALSE
 	locked_transform = FALSE //GO GO QUICKLY AND SLAUGHTER THEM ALL
 
@@ -1036,9 +1058,15 @@
 	model_select_icon = "service"
 	special_light_key = "centcomborg"
 	hat_offset = 3
+	badge_offset = -3
 	borg_skins = list(
 		"Standard" = list(SKIN_ICON_STATE = "centcomborg"),
-		"Kerfus" = list(SKIN_ICON_STATE = "kerfus_centcom", SKIN_LIGHT_KEY = NONE, SKIN_TRAITS = list(TRAIT_CAT)),
+		"Kerfus" = list(
+			SKIN_ICON_STATE = "kerfus_centcom",
+			SKIN_LIGHT_KEY = NONE,
+			SKIN_TRAITS = list(TRAIT_CAT),
+			SKIN_BADGE_OFFSET = -6,
+		),
 	)
 
 /obj/item/robot_model/centcom/respawn_consumable(mob/living/silicon/robot/cyborg, coeff = 1)

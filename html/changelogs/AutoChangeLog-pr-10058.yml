@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - rscadd: "Added a new \"Default Scryer Label\" character preference, which will set the default label of a MODlink scryer if you spawn with one, either via loadout or the station trait."
