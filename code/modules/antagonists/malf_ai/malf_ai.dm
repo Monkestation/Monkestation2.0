@@ -118,7 +118,7 @@
 		datum_owner.hack_software = TRUE
 
 	datum_owner.AddComponent(/datum/component/codeword_hearing, GLOB.syndicate_code_phrase_regex, "blue", src)
-	datum_owner.AddComponent(/datum/component/codeword_hearing, GLOB.syndicate_code_response_regex, "red", src)
+	datum_owner.AddComponent(/datum/component/codeword_hearing, GLOB.syndicate_code_response_regex, "orange", src)
 
 /datum/antagonist/malf_ai/remove_innate_effects(mob/living/mob_override)
 	. = ..()
@@ -140,7 +140,7 @@
 	var/responses = jointext(GLOB.syndicate_code_response, ", ")
 
 	antag_memory += "<b>Code Phrase</b>: [span_blue("[phrases]")]<br>"
-	antag_memory += "<b>Code Response</b>: [span_red("[responses]")]<br>"
+	antag_memory += "<b>Code Response</b>: [span_orange("[responses]")]<br>"
 
 /datum/antagonist/malf_ai/proc/add_law_zero()
 	var/mob/living/silicon/ai/malf_ai = owner.current

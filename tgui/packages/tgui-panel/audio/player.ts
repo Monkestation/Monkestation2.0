@@ -44,6 +44,10 @@ export class AudioPlayer {
     audio.volume = this.volume;
     audio.playbackRate = this.options.pitch || 1;
 
+    if (this.options.start) {
+      audio.currentTime = this.options.start;
+    }
+
     logger.log('playing', url, options);
 
     audio.addEventListener('ended', () => {

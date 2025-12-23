@@ -207,6 +207,12 @@ export const AntagsPage = () => {
           antagonists={antagsByCategory.get(Category.Midround)!}
         />
       </Stack.Item>
+      <Stack.Item>
+        <AntagSelection
+          name="Ghost"
+          antagonists={antagsByCategory.get(Category.Ghost)!}
+        />
+      </Stack.Item>
     </Stack>
   );
 };

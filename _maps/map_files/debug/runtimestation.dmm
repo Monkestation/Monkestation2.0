@@ -2046,6 +2046,11 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
+"ud" = (
+/obj/machinery/cassette_deck,
+/obj/structure/table/wood,
+/turf/open/floor/plating,
+/area/station/commons/storage/primary)
 "uf" = (
 /obj/structure/fans/tiny/invisible,
 /obj/effect/turf_decal/stripes/line{
@@ -2126,6 +2131,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
+"wK" = (
+/obj/machinery/computer/cryopod/directional/east,
+/obj/machinery/cryopod{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/station/commons/storage/primary)
 "wM" = (
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -2166,6 +2178,11 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
+"zX" = (
+/obj/structure/cassette_rack/prefilled,
+/obj/structure/table/wood,
+/turf/open/floor/plating,
+/area/station/commons/storage/primary)
 "AP" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 8
@@ -2263,6 +2280,11 @@
 	},
 /turf/open/floor/iron/white/corner,
 /area/station/medical/medbay)
+"DZ" = (
+/obj/machinery/dj_station,
+/obj/structure/table/wood,
+/turf/open/floor/plating,
+/area/station/commons/storage/primary)
 "Em" = (
 /obj/machinery/airalarm/directional/west,
 /obj/effect/mapping_helpers/airalarm/unlocked,
@@ -2367,6 +2389,15 @@
 	},
 /turf/open/floor/iron,
 /area/station/medical/chemistry)
+"JN" = (
+/obj/machinery/light/directional/west,
+/obj/item/walkman,
+/obj/item/walkman,
+/obj/item/walkman,
+/obj/item/walkman,
+/obj/structure/table/wood,
+/turf/open/floor/plating,
+/area/station/commons/storage/primary)
 "Kx" = (
 /obj/structure/table,
 /obj/item/analyzer,
@@ -2521,13 +2552,6 @@
 "Tt" = (
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
-"Tz" = (
-/obj/machinery/computer/cryopod/directional/east,
-/obj/machinery/cryopod{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/station/commons/storage/primary)
 "TV" = (
 /obj/machinery/door/airlock,
 /obj/structure/cable,
@@ -2603,6 +2627,13 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/engineering/main)
+"WY" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/cassette_postbox,
+/turf/open/floor/iron,
+/area/station/commons/storage/primary)
 "Xg" = (
 /obj/machinery/light/directional/east,
 /obj/machinery/vending/syndichem{
@@ -7236,11 +7267,11 @@ dl
 GS
 dE
 dB
-dl
-dl
-dl
-dp
-dE
+ud
+DZ
+zX
+JN
+WY
 cS
 Tt
 bL
@@ -8341,7 +8372,7 @@ gg
 ez
 dB
 dl
-Tz
+wK
 dl
 dx
 dE

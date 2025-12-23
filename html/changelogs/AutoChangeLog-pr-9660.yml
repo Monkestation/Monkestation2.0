@@ -1,0 +1,5 @@
+author: "Absolucy, Flleeppyy"
+delete-after: True
+changes:
+  - refactor: "Rewrote large chunks of cassette / cassette player code."
+  - rscadd: "The cassette player now has an actual UI!"

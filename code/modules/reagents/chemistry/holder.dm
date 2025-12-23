@@ -1563,7 +1563,7 @@ monkestation end */
 
 	for(var/reagent_type in external_list)
 		var/list/qualities = external_list[reagent_type]
-		data += "[reagent_type] ([round(qualities[REAGENT_TRANSFER_AMOUNT], 0.1)]u, [qualities[REAGENT_PURITY]] purity)"
+		data += "[reagent_type] ([round(qualities[REAGENT_TRANSFER_AMOUNT], 0.1)]u)"
 
 	return english_list(data)
 
@@ -1580,7 +1580,7 @@ monkestation end */
 	var/list/data = list()
 
 	for(var/datum/reagent/reagent as anything in reagent_list)
-		data += "[reagent.type] ([round(reagent.volume, 0.1)]u, [reagent.purity] purity)"
+		data += "[reagent.type] ([round(reagent.volume, 0.1)]u)"
 
 	return english_list(data)
 
