@@ -191,6 +191,7 @@
 	set_items = list(
 		/obj/item/grenade/barrier,
 		/obj/item/grenade/barrier,
+		/obj/item/grenade/barrier,
 		)
 
 /datum/voucher_set/security/utility/webbing
@@ -275,7 +276,7 @@
 
 /obj/item/storage/box/security_kit/nightwatch/PopulateContents()
 	new /obj/item/clothing/head/soft/sec(src)
-	new /obj/item/clothing/mask/russian_balaclava(src)
+	new /obj/item/clothing/mask/thermal_balaclava(src)
 	new /obj/item/clothing/suit/hooded/wintercoat/security(src)
 	new /obj/item/clothing/gloves/color/black(src)
 	new /obj/item/radio/off(src)
@@ -333,7 +334,7 @@
 
 /datum/voucher_set/security/assistant/buddy_cop
 	name = "Buddy Cop Kit"
-	description = "Pair up with a security officer and learn the basics of security."
+	description = "Pair up with a security officer and help them in their day to day duties."
 	icon = 'monkestation/icons/obj/clothing/hats.dmi'
 	icon_state = "helmet"
 	set_items = list(

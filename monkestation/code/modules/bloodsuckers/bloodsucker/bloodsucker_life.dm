@@ -344,5 +344,3 @@
 /datum/antagonist/bloodsucker/proc/oozeling_revive(obj/item/organ/internal/brain/slime/oozeling_core)
 	var/mob/living/carbon/human/new_body = oozeling_core.rebuild_body(nugget = FALSE, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 	heal_vampire_organs(new_body)
-
-#undef BLOODSUCKER_PASSIVE_BLOOD_DRAIN

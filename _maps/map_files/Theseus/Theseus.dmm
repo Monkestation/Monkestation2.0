@@ -12612,7 +12612,6 @@
 /obj/structure/closet/secure_closet/warden,
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/obj/item/clothing/accessory/badge/holo/warden,
 /obj/machinery/newscaster/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/security/warden)
@@ -43600,7 +43599,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/weather/dirt,
 /obj/item/clothing/suit/costume/soviet,
-/obj/item/clothing/mask/russian_balaclava,
+/obj/item/clothing/mask/thermal_balaclava,
 /obj/item/clothing/shoes/russian,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
@@ -65173,9 +65172,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/effect/landmark/navigate_destination,
 /obj/machinery/duct,
 /obj/structure/disposalpipe/segment,
+/obj/effect/landmark/navigate_destination/garden,
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "tan" = (
@@ -68634,7 +68633,7 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "tWo" = (
-/obj/machinery/modular_computer/preset/id,
+/obj/machinery/modular_computer/preset/quartermaster,
 /turf/open/floor/wood,
 /area/station/cargo/quartermaster)
 "tWp" = (

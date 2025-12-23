@@ -38,30 +38,32 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 	if((M.mind && HAS_TRAIT(M.mind, TRAIT_PRESENT_VISION)) || isobserver(M))
 		. += span_notice("It contains \a [initial(contains_type.name)].")
 
-/obj/item/a_gift/attack_self(mob/M)
-	if(M.mind && HAS_TRAIT(M.mind, TRAIT_CANNOT_OPEN_PRESENTS))
-		to_chat(M, span_warning("You're supposed to be spreading gifts, not opening them yourself!"))
+/obj/item/a_gift/attack_self(mob/user)
+	if(user.mind && HAS_TRAIT(user.mind, TRAIT_CANNOT_OPEN_PRESENTS))
+		to_chat(user, span_warning("You're supposed to be spreading gifts, not opening them yourself!"))
 		return
 
 	qdel(src)
 
 	var/gift_name = contains_type::name
 	if(ispath(contains_type, /obj/item))
-		var/atom/I = new contains_type(get_turf(M))
-		if (!QDELETED(I)) //might contain something like metal rods that might merge with a stack on the ground
-			M.put_in_hands(I)
-			I.add_fingerprint(M)
-			I.AddComponent(/datum/component/gift_item, M) // monkestation edit: gift item info component
-			gift_name = I
+		var/atom/gift = new contains_type(get_turf(user))
+		if (!QDELETED(gift)) //might contain something like metal rods that might merge with a stack on the ground
+			user.put_in_hands(gift)
+			gift.add_fingerprint(user)
+			gift.AddComponent(/datum/component/gift_item, user) // monkestation edit: gift item info component
+			for(var/obj/item/thing in gift.get_all_contents())
+				thing.AddComponent(/datum/component/gift_item, user)
+			gift_name = gift
 		else
-			M.visible_message(span_danger("Oh no! The present that [M] opened had nothing inside it!"))
+			user.visible_message(span_danger("Oh no! The present that [user] opened had nothing inside it!"))
 			return
 	else
-		new contains_type(M.drop_location(), M)
-	M.visible_message(span_notice("[M] unwraps \the [src], finding \a [gift_name] inside!"))
-	M.investigate_log("has unwrapped a present containing [gift_name] ([contains_type]).", INVESTIGATE_PRESENTS)
+		new contains_type(user.drop_location(), user)
+	user.visible_message(span_notice("[user] unwraps \the [src], finding \a [gift_name] inside!"))
+	user.investigate_log("has unwrapped a present containing [gift_name] ([contains_type]).", INVESTIGATE_PRESENTS)
 	if(notify_admins)
-		message_admins("[ADMIN_LOOKUPFLW(M)] unwrapped a present containing <b>[gift_name]</b> <small>([contains_type])</small>")
+		message_admins("[ADMIN_LOOKUPFLW(user)] unwrapped a present containing <b>[gift_name]</b> <small>([contains_type])</small>")
 
 /obj/item/a_gift/proc/get_gift_type()
 	var/gift_type_list = list(/obj/item/sord,
@@ -119,9 +121,8 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 		var/list/gift_types_list = subtypesof(/obj/item)
 		for(var/V in gift_types_list)
 			var/obj/item/I = V
-			if((!initial(I.icon_state)) || (!initial(I.inhand_icon_state)) || (initial(I.item_flags) & ABSTRACT))
+			if((!initial(I.icon_state)) || (!initial(I.inhand_icon_state)) || (initial(I.item_flags) & (ABSTRACT | DROPDEL)))
 				gift_types_list -= V
-		//MONKESTATION EDIT START
 		// List of items we want to block the anything-gift from spawning. Reasons for blocking
 		// these vary, but usually come down to keeping the server (and game clients) stable.
 		//
@@ -148,6 +149,14 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 			//kills only the debug uplink from the gifts.
 			/obj/item/mod/control/pre_equipped/chrono,
 
+			// causes too many issues
+			/obj/item/wallframe/painting/eldritch,
+
+			// abstract items that shouldn't be gotten anyways
+			/obj/item/clothing/head/chameleon/drone,
+			/obj/item/clothing/mask/chameleon/drone,
+			/obj/item/clothing/neck/necklace/ashwalker/cursed,
+
 			//A list of every debug item I could find. I compiled a list of every item in the possible gifts list
 			//and ran a keyword search through the list. Hopefully, this grabbed most, if not all, of the items.
 			//There are PROBABLY repeats from the list above but it shouldn't matter.
@@ -173,10 +182,20 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 			/obj/item/camera/spooky/badmin,
 			/obj/item/storage/box/fish_debug,
 			)
+
 		for(var/blocked_item in blocked_items)
 			// Block the item listed, and any subtypes too.
 			gift_types_list -= typesof(blocked_item)
-		//MONKESTATION EDIT END
+
+		/// List of items with a reduced chance to spawn
+		var/list/reduced_chance_items = list(
+			// Security reasons
+			/obj/item/card/id/advanced/centcom,
+		)
+		for(var/reduced_chance_item in reduced_chance_items)
+			if(prob(50))
+				gift_types_list -= typesof(reduced_chance_item)
+
 		GLOB.possible_gifts = gift_types_list
 	var/gift_type = pick(GLOB.possible_gifts)
 

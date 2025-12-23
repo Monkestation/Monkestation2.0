@@ -467,14 +467,19 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	brainmob?.mind?.grab_ghost()
 	if(isnull(mind))
 		if(isnull(brainmob))
-			user?.balloon_alert(user, "This brain is not a viable candidate for repair!")
+			user?.balloon_alert(user, "this brain is not a viable candidate for repair!")
 			return null
 		if(isnull(brainmob.stored_dna))
-			user?.balloon_alert(user, "This brain does not contain any dna!")
+			user?.balloon_alert(user, "this brain does not contain any dna!")
 			return null
 		if(isnull(brainmob.client))
-			user?.balloon_alert(user, "This brain does not contain a mind!")
+			user?.balloon_alert(user, "this brain does not contain a mind!")
 			return null
+
+	if(ismob(loc))
+		var/mob/holder = loc
+		holder.dropItemToGround(src, force = TRUE, silent = TRUE)
+
 	var/mob/living/carbon/human/new_body = new /mob/living/carbon/human(drop_location())
 
 	rebuilt = TRUE

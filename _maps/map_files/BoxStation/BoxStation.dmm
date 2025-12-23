@@ -15600,7 +15600,7 @@
 /turf/open/floor/plating/airless,
 /area/station/engineering/shipbreaker_hut)
 "fbw" = (
-/obj/machinery/modular_computer/preset/id{
+/obj/machinery/modular_computer/preset/quartermaster{
 	dir = 8
 	},
 /turf/open/floor/wood,
@@ -33842,11 +33842,9 @@
 /obj/machinery/door/airlock/public/glass{
 	name = "Garden"
 	},
-/obj/effect/landmark/navigate_destination{
-	location = "Garden"
-	},
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
+/obj/effect/landmark/navigate_destination/garden,
 /turf/open/floor/iron/dark/textured,
 /area/station/service/hydroponics/garden)
 "kTq" = (

@@ -212,7 +212,7 @@
 		return
 
 	if(target_human.hairstyle == "Bald" && target_human.facial_hairstyle == "Shaved")
-		balloon_alert(user, "What hair? They have none!")
+		balloon_alert(user, "what hair? They have none!")
 		return
 
 	if(user.zone_selected != BODY_ZONE_HEAD)
@@ -225,7 +225,7 @@
 
 	if(selected_part == "Hair")
 		if(!target_human.hairstyle == "Bald" && target_human.head)
-			balloon_alert(user, "They have no hair to cut!")
+			balloon_alert(user, "they have no hair to cut!")
 			return
 
 		var/hair_id = tgui_input_list(user, "Please select what hairstyle you'd like to sculpt!", "Select masterpiece", GLOB.hairstyles_list)
@@ -245,7 +245,7 @@
 			new /obj/effect/decal/cleanable/hair(get_turf(src))
 	else
 		if(!target_human.facial_hairstyle == "Shaved" && target_human.wear_mask)
-			balloon_alert(user, "They have no facial hair to cut!")
+			balloon_alert(user, "they have no facial hair to cut!")
 			return
 
 		var/facial_hair_id = tgui_input_list(user, "Please select what facial hairstyle you'd like to sculpt!", "Select masterpiece", GLOB.facial_hairstyles_list)
@@ -366,7 +366,7 @@
 	else
 		mode = COLOR_MODE_SPECIFIC
 
-	balloon_alert(user, "Set to [mode]!")
+	balloon_alert(user, "set to [mode]!")
 
 /obj/item/fur_dyer/attack(mob/living/M, mob/living/user, params)
 	if(!ishuman(M))

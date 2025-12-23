@@ -9669,6 +9669,7 @@
 	name = "Public Garden"
 	},
 /obj/structure/disposalpipe/segment,
+/obj/effect/landmark/navigate_destination/garden,
 /turf/open/floor/iron/textured,
 /area/station/service/hydroponics/garden)
 "cOa" = (
@@ -43770,7 +43771,7 @@
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted{
 	dir = 1
 	},
-/obj/machinery/modular_computer/preset/id,
+/obj/machinery/modular_computer/preset/quartermaster,
 /turf/open/floor/iron,
 /area/station/cargo/quartermaster)
 "nuI" = (

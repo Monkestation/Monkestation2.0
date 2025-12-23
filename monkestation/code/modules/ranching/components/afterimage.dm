@@ -88,7 +88,6 @@
 /obj/effect/after_image
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	anchored = TRUE
-	flags_1 = parent_type::flags_1 | DEMO_IGNORE_1
 	var/finalized_alpha = 100
 	var/active = FALSE
 	var/last_appearance_ref

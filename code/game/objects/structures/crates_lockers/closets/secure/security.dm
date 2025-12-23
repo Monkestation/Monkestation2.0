@@ -60,6 +60,7 @@
 	new /obj/item/card/id/departmental_budget/sec(src)
 	new /obj/item/computer_disk/command/hos(src)
 	new /obj/item/radio/headset/heads/hos(src)
+	new /obj/item/radio/headset/heads/hos/alt(src)
 	new /obj/item/storage/bag/garment/hos(src)
 	new /obj/item/storage/lockbox/medal/sec(src)
 	new /obj/item/megaphone/sec(src)
@@ -70,7 +71,6 @@
 	new /obj/item/storage/belt/security/full(src)
 	new /obj/item/circuitboard/machine/techfab/department/security(src)
 	new /obj/item/storage/photo_album/hos(src)
-	new /obj/item/ammo_box/magazine/m35(src) //monkestation edit: paco sec
 	new /obj/item/bodycam_upgrade(src) //monkestation edit: Security Liability Act
 
 /obj/structure/closet/secure_closet/hos/populate_contents_immediate()
@@ -116,7 +116,7 @@
 	new /obj/item/radio/headset/headset_sec/alt(src)
 	new /obj/item/clothing/glasses/hud/security/sunglasses(src)
 	new /obj/item/flashlight/seclite(src)
-	new /obj/item/clothing/mask/russian_balaclava(src) //monkestation edit
+	new /obj/item/clothing/mask/thermal_balaclava(src) //monkestation edit
 	new /obj/item/bodycam_upgrade(src) //monkestation edit: Security Liability Act
 
 /obj/structure/closet/secure_closet/security/sec

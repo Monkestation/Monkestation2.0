@@ -158,6 +158,7 @@ GLOBAL_LIST_INIT(scryer_auto_link_freqs, zebra_typecacheof(list(
 		return
 	var/old_name = mod_link.visual.name
 	mod_link.visual.name = speaker.GetVoice()
+	mod_link.visual.copy_voice_from(speaker)
 	mod_link.visual.say(raw_message, sanitize = FALSE, language = message_language, message_range = 2)
 	mod_link.visual.name = old_name
 

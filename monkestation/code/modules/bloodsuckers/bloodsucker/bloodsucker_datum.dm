@@ -1,8 +1,3 @@
-#define BLOODSUCKER_MAX_BLOOD_DEFAULT 600
-#define BLOODSUCKER_MAX_BLOOD_INCREASE_ON_RANKUP 80
-#define BLOODSUCKER_REGEN_INCREASE_ON_RANKUP 0.25
-#define BLOODSUCKER_UNARMED_DMG_INCREASE_ON_RANKUP 0.5
-
 /datum/antagonist/bloodsucker
 	name = "\improper Bloodsucker"
 	show_in_antagpanel = TRUE
