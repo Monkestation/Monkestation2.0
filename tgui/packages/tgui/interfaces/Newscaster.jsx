@@ -56,7 +56,7 @@ export const Newscaster = (props) => {
               Newscaster
             </Tabs.Tab>
             <Tabs.Tab
-              Color="Blue"
+              color="Blue"
               selected={screenmode === BOUNTYBOARD_SCREEN}
               onClick={() => setScreenmode(BOUNTYBOARD_SCREEN)}
             >
@@ -156,11 +156,12 @@ const NewscasterChannelCreation = (props) => {
         <Stack.Item>
           <Box>
             <Button
-              onClick={() =>
+              onClick={() => {
+                console.log('clicked');
                 act('createChannel', {
                   lockedmode: lockedmode,
-                })
-              }
+                });
+              }}
             >
               Submit Channel
             </Button>
@@ -290,7 +291,7 @@ const NewscasterWantedScreen = (props) => {
             </LabeledList.Item>
             <LabeledList.Item label="Criminal Activity">
               <Button
-                nowrap={false}
+                nowrap
                 disabled={!security_mode}
                 icon="pen"
                 onClick={() => act('setCrimeData')}
@@ -466,12 +467,12 @@ const NewscasterChannelSelector = (props) => {
   return (
     <Section minHeight="100%" width={`${window.innerWidth - 410}px`}>
       <Tabs vertical>
-        {wanted.map((activeWanted) => (
+        {wanted.map((activeWanted, idx) => (
           <Tabs.Tab
             pt={0.75}
             pb={0.75}
             mr={1}
-            key={activeWanted.index}
+            key={idx}
             icon={activeWanted.active ? 'skull-crossbones' : null}
             textColor={activeWanted.active ? 'red' : 'grey'}
             onClick={() => act('toggleWanted')}
@@ -479,9 +480,9 @@ const NewscasterChannelSelector = (props) => {
             Wanted Issue
           </Tabs.Tab>
         ))}
-        {channels.map((channel) => (
+        {channels.map((channel, idx) => (
           <Tabs.Tab
-            key={channel.index}
+            key={idx}
             pt={0.75}
             pb={0.75}
             mr={1}
@@ -552,10 +553,10 @@ const NewscasterChannelMessages = (props) => {
   );
   return (
     <Section>
-      {visibleMessages.map((message) => {
+      {visibleMessages.map((message, idx) => {
         return (
           <Section
-            key={message.index}
+            key={idx}
             textColor="white"
             title={
               <i>

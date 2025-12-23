@@ -279,6 +279,7 @@ export type BooleanStyleMap = Partial<{
   nowrap: boolean;
   /** Preserves line-breaks and spacing in text. */
   preserveWhitespace: boolean;
+  wrap: boolean;
 }>;
 
 // Boolean props
@@ -296,6 +297,7 @@ export const booleanStyleMap: Record<keyof BooleanStyleMap, any> = {
   inline: mapBooleanPropTo('display', 'inline-block'),
   italic: mapBooleanPropTo('fontStyle', 'italic'),
   nowrap: mapBooleanPropTo('whiteSpace', 'nowrap'),
+  wrap: mapBooleanPropTo('whiteSpace', 'normal'),
   preserveWhitespace: mapBooleanPropTo('whiteSpace', 'pre-wrap'),
 };
 
