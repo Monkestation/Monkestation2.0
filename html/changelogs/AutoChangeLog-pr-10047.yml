@@ -1,4 +1,0 @@
-author: "SirNightKnight"
-delete-after: True
-changes:
-  - bugfix: "codeword responses are orange instead of red. removed the copperplate font being applied to phrases containing codewords."

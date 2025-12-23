@@ -104,12 +104,12 @@
 	if(!length(GLOB.cassette_reviews))
 		return
 
-	for(var/id in GLOB.cassette_reviews)
-		var/datum/cassette_review/review = GLOB.cassette_reviews[id]
+	for(var/_id, value in GLOB.cassette_reviews)
+		var/datum/cassette_review/review = value
 		if(!review || review.action_taken) // Skip if review doesn't exist or already handled (denied / approved)
 			continue
 
-		var/ownerckey = review.submitted_ckey // ckey of who made the cassette.
+		var/ownerckey = review.submitter_ckey // ckey of who made the cassette.
 		if(!ownerckey)
 			continue
 
@@ -119,11 +119,11 @@
 			var/adjusted = client?.prefs?.adjust_metacoins(
 				client?.ckey,
 				amount = 5000,
-				reason = "No action taken on cassette:\[[review.submitted_tape.name]\] before round end",
+				reason = "No action taken on cassette:\[[review.cassette_data.name]\] before round end",
 				announces = TRUE,
 				donator_multiplier = FALSE,
 			)
 			if(!adjusted)
-				message_admins("Balance not adjusted for Cassette:[review.submitted_tape.name], Balance for [client]; Previous:[prev_bal], Expected:[prev_bal + 5000], Current:[client?.prefs?.metacoins]. Issue logged.")
-				log_admin("Balance not adjusted for Cassette:[review.submitted_tape.name], Balance for [client]; Previous:[prev_bal], Expected:[prev_bal + 5000], Current:[client?.prefs?.metacoins].")
+				message_admins("Balance not adjusted for Cassette:[review.cassette_data.name], Balance for [client]; Previous:[prev_bal], Expected:[prev_bal + 5000], Current:[client?.prefs?.metacoins]. Issue logged.")
+				log_admin("Balance not adjusted for Cassette:[review.cassette_data.name], Balance for [client]; Previous:[prev_bal], Expected:[prev_bal + 5000], Current:[client?.prefs?.metacoins].")
 			qdel(review)

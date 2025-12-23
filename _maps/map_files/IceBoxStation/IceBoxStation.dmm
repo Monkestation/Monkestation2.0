@@ -15158,46 +15158,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/medical/pathology)
-"ezF" = (
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/structure/table/wood,
-/turf/open/floor/glass,
-/area/station/service/library)
 "ezJ" = (
 /obj/machinery/light/directional/east,
 /turf/open/floor/glass/reinforced,
@@ -21552,13 +21512,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
-"gBr" = (
-/obj/structure/table/wood,
-/obj/machinery/cassette/dj_station{
-	pixel_y = 12
-	},
-/turf/open/floor/glass,
-/area/station/service/library)
 "gBs" = (
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/siding/wood{
@@ -34031,6 +33984,13 @@
 "ktU" = (
 /turf/open/floor/carpet,
 /area/station/command/meeting_room)
+"kul" = (
+/obj/structure/table/wood,
+/obj/machinery/dj_station{
+	pixel_y = 12
+	},
+/turf/open/floor/glass,
+/area/station/service/library)
 "kum" = (
 /turf/closed/wall/ice,
 /area/station/service/hydroponics/chicken)
@@ -43745,35 +43705,12 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/security/prison/visit)
-"nuw" = (
-/obj/effect/turf_decal/siding/wood/corner{
-	dir = 4
-	},
-/obj/machinery/light/small/directional/east,
-/obj/machinery/firealarm/directional/east,
-/obj/machinery/cassette/mailbox,
-/turf/open/floor/wood,
-/area/station/service/library)
 "nuA" = (
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/nestbox,
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics/chicken)
-"nuH" = (
-/obj/machinery/requests_console/directional/west{
-	assistance_requestable = 1;
-	department = "Quartermaster's Desk";
-	name = "Quartermaster's Desk Requests Console";
-	supplies_requestable = 1;
-	can_send_announcements = 1
-	},
-/obj/effect/turf_decal/tile/brown/anticorner/contrasted{
-	dir = 1
-	},
-/obj/machinery/modular_computer/preset/quartermaster,
-/turf/open/floor/iron,
-/area/station/cargo/quartermaster)
 "nuI" = (
 /obj/machinery/door/window/left/directional/west{
 	req_one_access = list("bar", "kitchen");
@@ -46103,6 +46040,15 @@
 /obj/machinery/holopad/secure,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain)
+"obD" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/obj/machinery/light/small/directional/east,
+/obj/machinery/firealarm/directional/east,
+/obj/machinery/cassette_postbox,
+/turf/open/floor/wood,
+/area/station/service/library)
 "obG" = (
 /obj/effect/turf_decal/trimline/blue/corner{
 	dir = 8
@@ -49384,6 +49330,46 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
+"pcb" = (
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/structure/table/wood,
+/turf/open/floor/glass,
+/area/station/service/library)
 "pcg" = (
 /obj/machinery/computer/apc_control{
 	dir = 4
@@ -69038,6 +69024,13 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
+"vkC" = (
+/obj/structure/table/wood,
+/obj/machinery/cassette_deck{
+	pixel_y = 9
+	},
+/turf/open/floor/glass,
+/area/station/service/library)
 "vkD" = (
 /obj/effect/turf_decal/trimline/blue/filled/warning{
 	dir = 1
@@ -71846,13 +71839,6 @@
 	},
 /turf/open/floor/iron/smooth_edge,
 /area/station/command/heads_quarters/rd)
-"wgh" = (
-/obj/structure/table/wood,
-/obj/machinery/cassette/adv_cassette_deck{
-	pixel_y = 9
-	},
-/turf/open/floor/glass,
-/area/station/service/library)
 "wgk" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/maintenance,
@@ -78542,6 +78528,20 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
+"yed" = (
+/obj/machinery/requests_console/directional/west{
+	assistance_requestable = 1;
+	department = "Quartermaster's Desk";
+	name = "Quartermaster's Desk Requests Console";
+	supplies_requestable = 1;
+	can_send_announcements = 1
+	},
+/obj/effect/turf_decal/tile/brown/anticorner/contrasted{
+	dir = 1
+	},
+/obj/machinery/modular_computer/preset/quartermaster,
+/turf/open/floor/iron,
+/area/station/cargo/quartermaster)
 "yef" = (
 /obj/structure/ore_vent/starter_resources{
 	icon_state = "ore_vent_ice_active"
@@ -230716,7 +230716,7 @@ gbl
 tKI
 vGM
 tKI
-nuH
+yed
 nUO
 qpp
 dsf
@@ -255131,7 +255131,7 @@ tyv
 oGS
 cHh
 cHh
-nuw
+obD
 hUD
 lso
 cYE
@@ -255893,7 +255893,7 @@ prg
 kVE
 rGn
 iQQ
-gBr
+kul
 oKE
 dbj
 hUD
@@ -256407,8 +256407,8 @@ hUD
 hUD
 hUD
 hUD
-wgh
-ezF
+vkC
+pcb
 qWd
 hUD
 gEE
