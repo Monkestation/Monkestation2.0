@@ -3,6 +3,33 @@ const path = require("path");
 const { parse } = require("@babel/parser");
 const traverse = require("@babel/traverse").default;
 
+// function scanFile(file) {
+//   const code = fs.readFileSync(file, "utf8");
+
+//   const ast = parse(code, {
+//     sourceType: "module",
+//     plugins: ["jsx", "typescript"],
+//   });
+
+//   traverse(ast, {
+//     JSXOpeningElement(p) {
+//       const n = p.node;
+//       if (n.name.type !== "JSXIdentifier") return;
+//       if (n.name.name !== "Section") return;
+
+//       const hasRef = n.attributes.some(
+//         (a) => a.type === "JSXAttribute" && a.name.name === "ref",
+//       );
+
+//       if (hasRef) {
+//         const loc = n.loc?.start;
+//         console.log(`${file}:${loc?.line ?? "?"}`);
+//       }
+//     },
+//   });
+// }
+
+// check for if elements A or B have both attributes named onInput and onChange.
 function scanFile(file) {
   const code = fs.readFileSync(file, "utf8");
 
@@ -14,16 +41,26 @@ function scanFile(file) {
   traverse(ast, {
     JSXOpeningElement(p) {
       const n = p.node;
+
       if (n.name.type !== "JSXIdentifier") return;
-      if (n.name.name !== "Section") return;
+      if (n.name.name !== "Input" && n.name.name !== "TextArea") return;
 
-      const hasRef = n.attributes.some(
-        (a) => a.type === "JSXAttribute" && a.name.name === "ref",
-      );
+      let hasOnInput = false;
+      let hasOnChange = false;
 
-      if (hasRef) {
+      for (const attr of n.attributes) {
+        if (attr.type !== "JSXAttribute") continue;
+        if (attr.name.name === "oninput") hasOnInput = true;
+        if (attr.name.name === "onInput") hasOnInput = true;
+        if (attr.name.name === "onChange") hasOnChange = true;
+        if (attr.name.name === "onchange") hasOnChange = true;
+      }
+
+      if (hasOnInput && hasOnChange) {
         const loc = n.loc?.start;
-        console.log(`${file}:${loc?.line ?? "?"}`);
+        console.log(
+          `${file}:${loc?.line ?? "?"} <${n.name.name}> has both onInput and onChange`,
+        );
       }
     },
   });
