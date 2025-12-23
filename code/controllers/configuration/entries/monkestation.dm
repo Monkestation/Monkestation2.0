@@ -16,7 +16,7 @@
 /datum/config_entry/string/roundend_webhook_name
 
 /datum/config_entry/string/roundend_webhook_description
-	default = @"[Join Server!](http://play.monkestation.com:7420)"
+	default = @"[Join Server!](http://play.monkestation.com:3121)"
 	protection = CONFIG_ENTRY_LOCKED
 
 /datum/config_entry/string/roundend_webhook_content

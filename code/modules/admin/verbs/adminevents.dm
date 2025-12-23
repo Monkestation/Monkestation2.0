@@ -1,11 +1,19 @@
 // Admin Tab - Event Verbs
 
 ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_subtle_message, R_ADMIN, FALSE, "Subtle Message", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/target in world)
+	if(QDELETED(target))
+		to_chat(user, span_boldwarning("That player doesnt exist anymore!"))
+		return
+
 	message_admins("[key_name_admin(user)] has started answering [ADMIN_LOOKUPFLW(target)]'s prayer.")
 	var/msg = input(user, "Message:", "Subtle PM to [target.key]") as text | null
 
 	if(!msg)
 		message_admins("[key_name_admin(user)] decided not to answer [ADMIN_LOOKUPFLW(target)]'s prayer")
+		return
+
+	if(QDELETED(target))
+		to_chat(user, span_boldwarning("That player doesnt exist anymore!"))
 		return
 
 	target.balloon_alert(target, "you hear a voice")

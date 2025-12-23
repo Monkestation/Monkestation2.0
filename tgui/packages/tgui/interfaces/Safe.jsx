@@ -50,7 +50,7 @@ const Dialer = (properties) => {
         disabled={open || (right && !locked) || broken}
         icon={'arrow-' + (right ? 'right' : 'left')}
         content={(right ? 'Right' : 'Left') + ' ' + amount}
-        iconPosition={right ? 'right' : 'left'}
+        iconRight={right}
         onClick={() =>
           act(!right ? 'turnright' : 'turnleft', {
             num: amount,

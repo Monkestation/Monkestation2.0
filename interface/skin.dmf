@@ -63,6 +63,11 @@ menu "menu"
 		command = "fix-chat"
 		category = "&Help"
 		saved-params = "is-checked"
+	elem
+		name = "Stop All Sounds"
+		command = "stop-sounds"
+		category = "&Help"
+		saved-params = "is-checked"
 
 
 window "mainwindow"

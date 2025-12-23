@@ -37,14 +37,13 @@ export const OverviewSection = (props) => {
           </Button>
           <Button.Input
             currentValue={(rolling_length / 10).toString()}
-            onCommit={(e, value) => {
+            onCommit={(value) => {
               act('set_rolling_length', {
                 rolling_length: value,
               });
             }}
-          >
-            Average: {rolling_length / 10} Second(s)
-          </Button.Input>
+            value={`Average: ${rolling_length / 10} Second(s)`}
+          />
         </>
       }
     >

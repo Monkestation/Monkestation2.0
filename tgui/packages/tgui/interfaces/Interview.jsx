@@ -62,6 +62,17 @@ export const Interview = (props) => {
       canClose={is_admin || status === 'interview_approved'}
     >
       <Window.Content scrollable>
+        {!!is_admin && (
+          <NoticeBox danger>
+            ADMINS! Please cross-reference CIDs and IPs from the Player Panel,
+            via Grafana, as well as checking their IP for VPN/Proxy status via a
+            reputable proxy checker such as{' '}
+            <a href="https://ipinfo.io">ipinfo.io</a>,{' '}
+            <a href="https://proxycheck.io/">proxycheck.io</a>,{' '}
+            <a href="https://www.ipqualityscore.com">ipqualityscore.com</a> or
+            similar!{' '}
+          </NoticeBox>
+        )}
         {(!read_only && (
           <Section title="Welcome!">
             <p>{linkify_text(welcome_message)}</p>
@@ -83,6 +94,17 @@ export const Interview = (props) => {
                     content="Admin PM"
                     enabled={connected}
                     onClick={() => act('adminpm')}
+                  />
+                  <Button
+                    content="PP"
+                    enabled={connected}
+                    // im OLD!
+                    onClick={() => act('pp_old')}
+                  />
+                  <Button
+                    content="PP (Veth)"
+                    enabled={connected}
+                    onClick={() => act('pp')}
                   />
                   <Button
                     content="Approve"

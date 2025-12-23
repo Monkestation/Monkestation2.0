@@ -289,7 +289,7 @@ const AutolatheRecipe = (props: AutolatheRecipeProps) => {
           content={`[Max: ${maxmult}]`}
           color={'transparent'}
           maxValue={maxmult}
-          onCommit={(_e, value: string) =>
+          onCommit={(value: string) =>
             act('make', {
               id: design.id,
               multiplier: value,

@@ -4,17 +4,46 @@
  * @license MIT
  */
 
+import { Placement } from '@popperjs/core';
 import { KEY_ENTER, KEY_ESCAPE, KEY_SPACE } from 'common/keycodes';
-import { classes, pureComponentHooks } from 'common/react';
-import { Component, createRef } from 'inferno';
+import { BooleanLike, classes, pureComponentHooks } from 'common/react';
+import {
+  ChangeEvent,
+  Component,
+  createRef,
+  FocusEvent,
+  InfernoKeyboardEvent,
+  InfernoMouseEvent,
+  InfernoNode,
+  RefObject,
+} from 'inferno';
 import { createLogger } from '../logging';
-import { Box, computeBoxClassName, computeBoxProps } from './Box';
+import { Box, BoxProps, computeBoxClassName, computeBoxProps } from './Box';
 import { Icon } from './Icon';
 import { Tooltip } from './Tooltip';
 
 const logger = createLogger('Button');
 
-export const Button = (props) => {
+export type Props = {
+  captureKeys?: boolean;
+  fluid?: boolean;
+  icon?: any;
+  iconRotation?: number;
+  iconSpin?: BooleanLike;
+  iconColor?: any;
+  iconRight?: boolean;
+  disabled?: BooleanLike;
+  selected?: BooleanLike;
+  tooltip?: InfernoNode;
+  tooltipPosition?: Placement;
+  ellipsis?: boolean;
+  compact?: boolean;
+  circular?: boolean;
+  onClick?: (e: any) => void;
+  verticalAlignContent?: string;
+} & BoxProps;
+
+export const Button = (props: Props) => {
   const {
     className,
     fluid,
@@ -22,10 +51,10 @@ export const Button = (props) => {
     iconRotation,
     iconSpin,
     iconColor,
-    iconPosition,
     color,
     disabled,
     selected,
+    iconRight,
     tooltip,
     tooltipPosition,
     ellipsis,
@@ -33,30 +62,13 @@ export const Button = (props) => {
     circular,
     content,
     children,
-    onclick,
     onClick,
     verticalAlignContent,
     ...rest
   } = props;
   const hasContent = !!(content || children);
-  // A warning about the lowercase onclick
-  if (onclick) {
-    logger.warn(
-      `Lowercase 'onclick' is not supported on Button and lowercase` +
-        ` prop names are discouraged in general. Please use a camelCase` +
-        `'onClick' instead and read: ` +
-        `https://infernojs.org/docs/guides/event-handling`,
-    );
-  }
-  rest.onClick = (e) => {
-    if (!disabled && onClick) {
-      onClick(e);
-    }
-  };
-  // IE8: Use "unselectable" because "user-select" doesn't work.
-  if (Byond.IS_LTE_IE8) {
-    rest.unselectable = true;
-  }
+  const toDisplay: InfernoNode = content || children;
+
   let buttonContent = (
     <div
       className={classes([
@@ -68,7 +80,7 @@ export const Button = (props) => {
         ellipsis && 'Button--ellipsis',
         circular && 'Button--circular',
         compact && 'Button--compact',
-        iconPosition && 'Button--iconPosition--' + iconPosition,
+        iconRight && 'Button--iconPosition--right',
         verticalAlignContent && 'Button--flex',
         verticalAlignContent && fluid && 'Button--flex--fluid',
         verticalAlignContent &&
@@ -79,13 +91,18 @@ export const Button = (props) => {
         className,
         computeBoxClassName(rest),
       ])}
-      tabIndex={!disabled && '0'}
+      tabIndex={disabled ? undefined : 0}
+      onClick={(e) => {
+        if (!disabled && onClick) {
+          onClick(e);
+        }
+      }}
       onKeyDown={(e) => {
-        if (props.captureKeys === false) {
+        if (!props.captureKeys) {
           return;
         }
-        const keyCode = window.event ? e.which : e.keyCode;
-        // Simulate a click when pressing space or enter.
+        const keyCode = e.keyCode;
+        // Simulate a click when pressing space or enter.z
         if (keyCode === KEY_SPACE || keyCode === KEY_ENTER) {
           e.preventDefault();
           if (!disabled && onClick) {
@@ -102,7 +119,7 @@ export const Button = (props) => {
       {...computeBoxProps(rest)}
     >
       <div className="Button__content">
-        {icon && iconPosition !== 'right' && (
+        {icon && !iconRight && (
           <Icon
             name={icon}
             color={iconColor}
@@ -110,9 +127,8 @@ export const Button = (props) => {
             spin={iconSpin}
           />
         )}
-        {content}
-        {children}
-        {icon && iconPosition === 'right' && (
+        {toDisplay}
+        {icon && iconRight && (
           <Icon
             name={icon}
             color={iconColor}
@@ -137,7 +153,12 @@ export const Button = (props) => {
 
 Button.defaultHooks = pureComponentHooks;
 
-export const ButtonCheckbox = (props) => {
+type CheckProps = Partial<{
+  checked: BooleanLike;
+}> &
+  Props;
+
+export const ButtonCheckbox = (props: CheckProps) => {
   const { checked, ...rest } = props;
   return (
     <Button
@@ -151,20 +172,27 @@ export const ButtonCheckbox = (props) => {
 
 Button.Checkbox = ButtonCheckbox;
 
-export class ButtonConfirm extends Component {
-  constructor() {
-    super();
-    this.state = {
-      clickedOnce: false,
-    };
-    this.handleClick = () => {
-      if (this.state.clickedOnce) {
-        this.setClickedOnce(false);
-      }
-    };
+type ConfirmProps = {
+  confirmContent?: string;
+  confirmColor?: string;
+  confirmIcon?: string;
+} & Props;
+export class ButtonConfirm extends Component<ConfirmProps> {
+  state = {
+    clickedOnce: false,
+  };
+
+  handleClick(event: InfernoMouseEvent<HTMLDivElement>): void {
+    if (!this.state.clickedOnce) {
+      this.setClickedOnce(true);
+      return;
+    }
+
+    this.props.onClick?.(event);
+    this.setClickedOnce(false);
   }
 
-  setClickedOnce(clickedOnce) {
+  setClickedOnce(clickedOnce: boolean) {
     this.setState({
       clickedOnce,
     });
@@ -180,6 +208,7 @@ export class ButtonConfirm extends Component {
       confirmContent = 'Confirm?',
       confirmColor = 'bad',
       confirmIcon,
+      ellipsis = true,
       icon,
       color,
       content,
@@ -188,35 +217,47 @@ export class ButtonConfirm extends Component {
     } = this.props;
     return (
       <Button
-        content={this.state.clickedOnce ? confirmContent : content}
+        // content={this.state.clickedOnce ? confirmContent : content}
         icon={this.state.clickedOnce ? confirmIcon : icon}
         color={this.state.clickedOnce ? confirmColor : color}
-        onClick={() =>
-          this.state.clickedOnce ? onClick() : this.setClickedOnce(true)
-        }
+        onClick={this.handleClick}
         {...rest}
-      />
+      >
+        {this.state.clickedOnce ? confirmContent : this.props.children}
+      </Button>
     );
   }
 }
 
 Button.Confirm = ButtonConfirm;
 
-export class ButtonInput extends Component {
-  constructor() {
-    super();
-    this.inputRef = createRef();
-    this.state = {
-      inInput: false,
-    };
-  }
+type InputProps = Partial<{
+  /** Text to display on the button exclusively. If left blank, displays the value */
+  buttonText: string;
+  /** Use the value prop. This is done to be uniform with other inputs. */
+  children: never;
+  /** Max length of the input */
+  maxLength: number;
+  /** Action on outside click or enter key */
+  onCommit: (value: string) => void;
+  /** Reference to the inner input */
+  ref?: RefObject<HTMLInputElement>;
+  /** The value of the input */
+  value: string;
+}> &
+  Props;
 
-  setInInput(inInput) {
+export class ButtonInput extends Component<InputProps> {
+  state = {
+    inInput: false,
+  };
+
+  setInInput(inInput: boolean) {
     this.setState({
       inInput,
     });
-    if (this.inputRef) {
-      const input = this.inputRef.current;
+    if (this.props.ref?.current) {
+      const input = this.props.ref.current;
       if (inInput) {
         input.value = this.props.currentValue || '';
         try {
@@ -227,18 +268,20 @@ export class ButtonInput extends Component {
     }
   }
 
-  commitResult(e) {
-    if (this.inputRef) {
-      const input = this.inputRef.current;
+  commitResult(
+    e: FocusEvent<HTMLInputElement> | InfernoKeyboardEvent<HTMLInputElement>,
+  ) {
+    if (this.props.ref && this.props.ref.current) {
+      const input = this.props.ref.current;
       const hasValue = input.value !== '';
       if (hasValue) {
-        this.props.onCommit(e, input.value);
+        this.props.onCommit?.(input.value);
         return;
       } else {
         if (!this.props.defaultValue) {
           return;
         }
-        this.props.onCommit(e, this.props.defaultValue);
+        this.props.onCommit?.(this.props.defaultValue);
       }
     }
   }
@@ -271,7 +314,7 @@ export class ButtonInput extends Component {
         {icon && <Icon name={icon} rotation={iconRotation} spin={iconSpin} />}
         <div>{content}</div>
         <input
-          ref={this.inputRef}
+          ref={this.props.ref}
           className="NumberInput__input"
           style={{
             display: !this.state.inInput ? 'none' : undefined,
@@ -312,17 +355,21 @@ export class ButtonInput extends Component {
 
 Button.Input = ButtonInput;
 
-export class ButtonFile extends Component {
-  constructor() {
-    super();
-    this.inputRef = createRef();
-  }
+type FileProps = {
+  accept: string;
+  multiple?: boolean;
+  onSelectFiles: (files: string | string[]) => void;
+} & Props;
 
-  async read(files) {
+export class ButtonFile extends Component<FileProps> {
+  inputRef = createRef<HTMLInputElement>();
+
+  async read(files: FileList): Promise<string[]> {
     const promises = Array.from(files).map((file) => {
-      let reader = new FileReader();
-      return new Promise((resolve) => {
-        reader.onload = () => resolve(reader.result);
+      const reader = new FileReader();
+
+      return new Promise<string>((resolve) => {
+        reader.onload = () => resolve(reader.result as string);
         reader.readAsText(file);
       });
     });
@@ -330,33 +377,27 @@ export class ButtonFile extends Component {
     return await Promise.all(promises);
   }
 
+  async handleChange(event: ChangeEvent<HTMLInputElement>): Promise<void> {
+    const files = event.target.files;
+    if (files?.length) {
+      const readFiles = await this.read(files);
+      this.props.onSelectFiles(this.props.multiple ? readFiles : readFiles[0]);
+    }
+  }
+
   render() {
     const { onSelectFiles, accept, multiple, ...rest } = this.props;
-    const filePicker = (
-      <input
-        hidden
-        type="file"
-        ref={this.inputRef}
-        accept={accept}
-        multiple={multiple}
-        onChange={async () => {
-          const files = this.inputRef.current.files;
-          if (files.length) {
-            const readFiles = await this.read(files);
-            onSelectFiles(multiple ? readFiles : readFiles[0]);
-          }
-        }}
-      />
-    );
     return (
       <>
-        <Button
-          {...rest}
-          onClick={() => {
-            this.inputRef.current.click();
-          }}
+        <Button {...rest} onClick={() => this.inputRef.current?.click()} />
+        <input
+          hidden
+          type="file"
+          ref={this.inputRef}
+          accept={accept}
+          multiple={multiple}
+          onChange={this.handleChange}
         />
-        {filePicker}
       </>
     );
   }

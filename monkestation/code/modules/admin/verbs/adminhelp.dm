@@ -2,12 +2,12 @@
 	var/handling_admin_ckey
 	var/list/_interactions = list()
 
-/datum/admin_help/proc/Administer(announce = FALSE)
+/datum/admin_help/proc/Claim(announce = FALSE)
 	if(!usr.client)
 		return FALSE
 	if(handling_admin_ckey)
 		if(handling_admin_ckey == usr.ckey)
-			to_chat(usr, "This ticket is already yours.")
+			to_chat(usr, span_notice("This ticket is already yours."))
 			return FALSE
 		if(tgui_alert(usr, "This ticket has already been claimed by [handling_admin_ckey], are you sure you wish to continue?", "Confirm", list("Yes", "No")) != "Yes")
 			return FALSE
@@ -24,14 +24,38 @@
 			html = span_notice("[key_name(usr, TRUE, FALSE)] has taken your ticket and will respond shortly."),
 			confidential = TRUE)
 
+/datum/admin_help/proc/Unclaim(announce = FALSE)
+	if(!usr.client)
+		return FALSE
+	if(!handling_admin_ckey)
+		to_chat(usr, span_notice("This ticket is not claimed."))
+		return
+	var/msg = "[usr.ckey]/([usr]) has unclaimed [TicketHref("ticket #[id]")]"
+	if(handling_admin_ckey != usr.ckey)
+		if(tgui_alert(usr, "This ticket has already been claimed by [handling_admin_ckey], are you sure you wish to unclaim on their behalf?", "Confirm", list("Yes", "No")) != "Yes")
+			return FALSE
+		msg += " on behalf of [handling_admin_ckey]"
+	msg += "."
+
+	handling_admin_ckey = null
+
+	message_admins(msg)
+	log_admin_private(msg)
+
+	if(announce && initiator)
+		to_chat(initiator,
+			type = MESSAGE_TYPE_ADMINPM,
+			html = span_notice("The claimant admin of your ticket has been revoked, a new admin will claim it shortly."),
+			confidential = TRUE)
+
 /datum/admin_help/Close(key_name = key_name_admin(usr), silent = FALSE)
 	if(!handling_admin_ckey)
-		Administer(FALSE)
+		Claim(FALSE)
 	. = ..()
 
 /datum/admin_help/Resolve(key_name = key_name_admin(usr), silent = FALSE)
 	if(!handling_admin_ckey)
-		Administer(FALSE)
+		Claim(FALSE)
 	. = ..()
 
 /datum/ticket_log

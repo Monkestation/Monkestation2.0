@@ -100,7 +100,7 @@ export const EntryGradient = (props: EntryGradientProps) => {
   const { act, data } = useBackend<ParticleUIData>();
   const [desc, setdesc] = useLocalState('desc', '');
   const { name, var_name, gradient } = props;
-  const isLooping = gradient?.find((x) => x === 'loop');
+  const isLooping = gradient?.some((x) => x === 'loop');
   const space_type = gradient?.includes('space')
     ? Object.keys(SpaceToNum).find(
         (space) => SpaceToNum[space] === gradient['space'],

@@ -689,6 +689,7 @@
 	VV_DROPDOWN_OPTION(VV_HK_MOD_MUTATIONS, "Add/Remove Mutation")
 	VV_DROPDOWN_OPTION(VV_HK_MOD_QUIRKS, "Add/Remove Quirks")
 	VV_DROPDOWN_OPTION(VV_HK_SET_SPECIES, "Set Species")
+	VV_DROPDOWN_OPTION(VV_HK_REISSUE_RSID, "Reissue roundstart ID")
 
 /mob/living/carbon/human/vv_do_topic(list/href_list)
 	. = ..()
@@ -750,6 +751,35 @@
 			var/newtype = GLOB.species_list[result]
 			admin_ticket_log("[key_name(usr)] has modified the bodyparts of [src] to [result]") // MONKESTATION EDIT - tgui tickets
 			set_species(newtype)
+	if(href_list[VV_HK_REISSUE_RSID])
+		if(!check_rights(R_SPAWN))
+			return
+		if(!(mind.assigned_role.job_flags & JOB_CREW_MEMBER))
+			to_chat(usr, span_warning("This mob is not a crew member!"))
+			return
+		if(!mind.assigned_role.outfit)
+			to_chat(usr, span_warning("This mob has no outfit in their assigned role!"))
+			return
+		var/obj/item/card/id/advanced/card = new mind.assigned_role.outfit.id
+		SSid_access.apply_trim_to_card(card, mind.assigned_role.outfit.id_trim)
+
+		card.registered_name = real_name
+
+		if(age)
+			card.registered_age = age
+
+		card.update_label()
+		card.update_icon()
+
+		var/datum/bank_account/account = SSeconomy.bank_accounts_by_id["[account_id]"]
+
+		if(account && account.account_id == account_id)
+			card.registered_account = account
+			account.bank_cards += card
+
+		sec_hud_set_ID()
+
+		put_in_hands(card)
 
 /mob/living/carbon/human/limb_attack_self()
 	var/obj/item/bodypart/arm = hand_bodyparts[active_hand_index]

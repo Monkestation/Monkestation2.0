@@ -9,17 +9,17 @@ const path = require('path');
 const ExtractCssPlugin = require('mini-css-extract-plugin');
 const { createBabelConfig } = require('./babel.config.js');
 
-const createStats = (verbose) => ({
+const createStats = (verbose, extraVerbose = false) => ({
   assets: verbose,
   builtAt: verbose,
-  cached: false,
-  children: false,
-  chunks: false,
+  cached: extraVerbose,
+  children: extraVerbose,
+  chunks: extraVerbose,
   colors: true,
   entrypoints: true,
-  hash: false,
-  modules: false,
-  performance: false,
+  hash: extraVerbose,
+  modules: extraVerbose,
+  performance: extraVerbose,
   timings: verbose,
   version: verbose,
 });
@@ -27,6 +27,9 @@ const createStats = (verbose) => ({
 module.exports = (env = {}, argv) => {
   const mode = argv.mode || 'production';
   const bench = env.TGUI_BENCH;
+  /**
+   * @type {import('webpack').Configuration}
+   */
   const config = {
     mode: mode === 'production' ? 'production' : 'development',
     context: path.resolve(__dirname),
@@ -83,6 +86,15 @@ module.exports = (env = {}, argv) => {
           ],
         },
         {
+          test: /\.css$/,
+          include: [/node_modules\/monaco-editor/],
+          use: ['style-loader', 'css-loader'],
+        },
+        {
+          test: /\.ttf$/,
+          type: 'asset/resource',
+        },
+        {
           test: /\.(png|jpg|svg)$/,
           use: [
             {
@@ -109,7 +121,10 @@ module.exports = (env = {}, argv) => {
         config: [__filename],
       },
     },
-    stats: createStats(true),
+    stats: createStats(
+      true,
+      ['1', 'true', 'yes'].includes(process.env.WEBPACK_VERBOSE?.toLowerCase),
+    ),
     plugins: [
       new webpack.EnvironmentPlugin({
         NODE_ENV: env.NODE_ENV || mode,
@@ -122,6 +137,14 @@ module.exports = (env = {}, argv) => {
       }),
     ],
   };
+
+  if (process.env.WEBPACK_PROGRESS) {
+    config.plugins.push(
+      new webpack.ProgressPlugin((percentage, message, ...args) => {
+        console.info(`${(percentage * 100).toFixed(0)}%`, message, ...args);
+      }),
+    );
+  }
 
   if (bench) {
     config.entry = {

@@ -5,7 +5,7 @@
  */
 
 import { BooleanLike, classes, pureComponentHooks } from 'common/react';
-import { Inferno, createVNode, InfernoNode } from 'inferno';
+import { Inferno, createVNode, InfernoNode, RefObject, Ref } from 'inferno';
 import { ChildFlags, VNodeFlags } from 'inferno-vnode-flags';
 import { CSS_COLORS } from '../constants';
 
@@ -57,6 +57,7 @@ export type BoxProps = {
   textColor?: string | BooleanLike;
   backgroundColor?: string | BooleanLike;
   fillPositionedParent?: boolean;
+  ref?: RefObject<any> | Ref<any>;
 };
 
 /**
@@ -212,11 +213,6 @@ export const computeBoxProps = (props: BoxProps) => {
     if (propName === 'style') {
       continue;
     }
-    // IE8: onclick workaround
-    if (Byond.IS_LTE_IE8 && propName === 'onClick') {
-      computedProps.onclick = props[propName];
-      continue;
-    }
     const propValue = props[propName];
     const mapPropToStyle = styleMapperByPropName[propName];
     if (mapPropToStyle) {
@@ -264,7 +260,7 @@ export const Box = (props: BoxProps) => {
       : computeBoxClassName(rest);
   const computedProps = computeBoxProps(rest);
   // Render a wrapper element
-  return createVNode(
+  const vnode = createVNode(
     VNodeFlags.HtmlElement,
     as,
     computedClassName,
@@ -272,7 +268,13 @@ export const Box = (props: BoxProps) => {
     ChildFlags.UnknownChildren,
     computedProps,
     undefined,
+    typeof props.ref === 'function' ? props.ref : undefined,
   );
+
+  if (typeof props.ref !== 'function') {
+    vnode.ref = props.ref;
+  }
+  return vnode;
 };
 
 Box.defaultHooks = pureComponentHooks;

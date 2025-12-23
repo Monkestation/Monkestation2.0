@@ -7,69 +7,65 @@ import {
   Section,
   Stack,
   Tabs,
-  TextArea,
 } from '../components';
+import { AceEditor } from '../components/Ace/Editor';
 import { RADIO_CHANNELS } from '../constants';
 import { Window } from '../layouts';
 
 // NTSLTextArea component start
 // This is literally just TextArea but without ENTER updating anything, for NTSL
-import { KEY_ESCAPE, KEY_TAB } from 'common/keycodes';
-import { toInputValue } from '../components/Input';
 
-class NTSLTextArea extends TextArea {
-  constructor(props) {
-    super(props);
-    super(this.textareaRef);
-    super(this.state);
-    const { dontUseTabForIndent = false } = props;
-    this.handleKeyDown = (e) => {
-      const { editing } = this.state;
-      const { onInput, onKey } = this.props;
-      if (e.keyCode === KEY_ESCAPE) {
-        if (this.props.onEscape) {
-          this.props.onEscape(e);
-        }
-        this.setEditing(false);
-        if (this.props.selfClear) {
-          e.target.value = '';
-        } else {
-          e.target.value = toInputValue(this.props.value);
-          e.target.blur();
-        }
-        return;
-      }
-      if (!editing) {
-        this.setEditing(true);
-      }
-      // Custom key handler
-      if (onKey) {
-        onKey(e, e.target.value);
-      }
-      if (!dontUseTabForIndent) {
-        const keyCode = e.keyCode || e.which;
-        if (keyCode === KEY_TAB) {
-          e.preventDefault();
-          const { value, selectionStart, selectionEnd } = e.target;
-          e.target.value =
-            value.substring(0, selectionStart) +
-            '\t' +
-            value.substring(selectionEnd);
-          e.target.selectionEnd = selectionStart + 1;
-          if (onInput) {
-            onInput(e, e.target.value);
-          }
-        }
-      }
-    };
-  }
-}
+// class NTSLTextArea extends TextArea {
+//   constructor(props) {
+//     super(props);
+//     const { dontUseTabForIndent = false } = props;
+//     this.handleKeyDown = (e) => {
+//       const { editing } = this.state;
+//       const { onInput, onKey } = this.props;
+//       if (e.keyCode === KEY_ESCAPE) {
+//         if (this.props.onEscape) {
+//           this.props.onEscape(e);
+//         }
+//         this.setEditing(false);
+//         if (this.props.selfClear) {
+//           e.target.value = '';
+//         } else {
+//           e.target.value = toInputValue(this.props.value);
+//           e.target.blur();
+//         }
+//         return;
+//       }
+//       if (!editing) {
+//         this.setEditing(true);
+//       }
+//       // Custom key handler
+//       if (onKey) {
+//         onKey(e, e.target.value);
+//       }
+//       if (!dontUseTabForIndent) {
+//         const keyCode = e.keyCode || e.which;
+//         if (keyCode === KEY_TAB) {
+//           e.preventDefault();
+//           const { value, selectionStart, selectionEnd } = e.target;
+//           e.target.value =
+//             value.substring(0, selectionStart) +
+//             '\t' +
+//             value.substring(selectionEnd);
+//           e.target.selectionEnd = selectionStart + 1;
+//           if (onInput) {
+//             onInput(e, e.target.value);
+//           }
+//         }
+//       }
+//     };
+//   }
+// }
 
 // NTSLTextArea component end
 
 type Data = {
-  admin_view: Boolean;
-  emagged: Boolean;
+  admin_view: boolean;
+  emagged: boolean;
   stored_code: string;
   user_name: string;
   network: string;
@@ -79,7 +75,7 @@ type Data = {
 };
 
 type Server_Data = {
-  run_code: Boolean;
+  run_code: boolean;
   server: string;
   server_name: string;
 };
@@ -110,24 +106,18 @@ const ScriptEditor = (props) => {
   const { stored_code, user_name } = data;
   return (
     <Box width="100%" height="100%">
-      {user_name ? (
-        <NTSLTextArea
-          noborder
-          scrollbar
-          value={stored_code}
-          width="100%"
-          height="100%"
-          onChange={(_, value) =>
-            act('save_code', {
-              saved_code: value,
-            })
-          }
-        />
-      ) : (
-        <Section width="100%" height="100%">
-          {stored_code}
-        </Section>
-      )}
+      <AceEditor
+        value={stored_code}
+        language="ntsl"
+        width="100%"
+        height="100%"
+        onChange={(value) =>
+          act('save_code', {
+            saved_code: value,
+          })
+        }
+        readOnly={!user_name}
+      />
     </Box>
   );
 };

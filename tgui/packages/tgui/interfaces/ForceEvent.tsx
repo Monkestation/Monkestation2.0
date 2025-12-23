@@ -154,7 +154,7 @@ export const EventSection = (props) => {
                     }
                     fluid
                     icon={event.has_customization ? 'gear' : undefined}
-                    iconPosition="right"
+                    iconRight
                     onClick={() =>
                       act('forceevent', {
                         type: event.type,

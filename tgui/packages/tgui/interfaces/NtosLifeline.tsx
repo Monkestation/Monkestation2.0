@@ -127,10 +127,10 @@ const NtosLifelineContent = () => {
                 setSearchQuery((e.target as HTMLTextAreaElement).value)
               }
             />
-            <Button selected="True" onClick={cycleSortBy}>
+            <Button selected onClick={cycleSortBy}>
               {SORT_NAMES[sortBy]}
             </Button>
-            <Button selected="True" onClick={() => setSortAsc(!sortAsc)}>
+            <Button selected onClick={() => setSortAsc(!sortAsc)}>
               <Icon
                 style={{ marginLeft: '2px' }}
                 name={sortAsc ? 'chevron-up' : 'chevron-down'}

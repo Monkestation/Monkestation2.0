@@ -371,7 +371,7 @@ export class LuaEditor extends Component<{}, LuaEditorState> {
                                 tooltip="Delete All Logs"
                                 icon="trash-alt"
                                 confirmIcon="trash-alt"
-                                confirmContent={null}
+                                confirmContent={undefined}
                                 onClick={() => act('nukeLog')}
                               />
                             </Box>

@@ -7,7 +7,7 @@
 	var/datum/discord_embed/embed = new()
 
 	embed.title = "Status"
-	embed.description = @"[Join Server!](http://play.monkestation.com:7420)"
+	embed.description = @"[Join Server!](http://play.monkestation.com:3121)"
 	embed.author = "Round Controller"
 
 	var/player_count = "**Total**: [length(GLOB.clients)]"

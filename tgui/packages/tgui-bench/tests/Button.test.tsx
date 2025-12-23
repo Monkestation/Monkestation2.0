@@ -19,7 +19,13 @@ export const SingleButtonWithCallback = () => {
 
 export const SingleButtonWithLinkEvent = () => {
   const node = (
-    <Button onClick={linkEvent(null, handleClick)}>Hello world!</Button>
+    <Button
+      onClick={(e) => {
+        linkEvent(null, handleClick);
+      }}
+    >
+      Hello world!
+    </Button>
   );
   render(node);
 };
@@ -50,7 +56,7 @@ export const ListOfButtonsWithLinkEvent = () => {
   const nodes: InfernoNode[] = [];
   for (let i = 0; i < 100; i++) {
     const node = (
-      <Button key={i} onClick={linkEvent(null, handleClick)}>
+      <Button key={i} onClick={() => linkEvent(null, handleClick)}>
         Hello world! {i}
       </Button>
     );

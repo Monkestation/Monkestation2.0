@@ -128,3 +128,12 @@ ADMIN_VERB(send_mob, R_ADMIN, FALSE, "Send Mob", "Teleport the specified mob to 
 	else
 		to_chat(user, "Failed to move mob to a valid location.", confidential = TRUE)
 	BLACKBOX_LOG_ADMIN_VERB("Send Mob")
+
+ADMIN_VERB_AND_CONTEXT_MENU(get_atom, FALSE, FALSE, "Get", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, atom/movable/the_atom in world)
+	var/turf/turf = get_turf(user)
+	if(!get_turf || QDELETED(the_atom))
+		return
+	the_atom.forceMove(get_turf(user))
+
+ADMIN_VERB_AND_CONTEXT_MENU(get_atom, FALSE, FALSE, "Jump To", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, atom/target as turf in world)
+	user.forceMove(target)

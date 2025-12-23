@@ -112,10 +112,11 @@
 		for(var/obj/machinery/telecomms/server/server as anything in servers)
 			server.rawcode = "def process_signal(sig){ return sig;" // bare minimum
 		compiler_output.Cut()
+		storedcode = ""
 		compiler_output = compile_all(usr)
 		var/message = "[key_name_admin(usr)] has completelly cleared the NTSL console of code and re-compiled as an admin, this should only be done in severe rule infractions."
 		message_admins(message)
-		logger.Log(LOG_NTSL, "[key_name(src)] [message] [loc_name(src)]")
+		usr.log_message("[key_name(src)] [message] [loc_name(src)]", LOG_NTSL)
 		access_log += "\[[get_timestamp()]\] ERR !NTSL REMOTELLY CLEARED BY NANOTRASEN STAFF!"
 		return TRUE
 	if(.)
