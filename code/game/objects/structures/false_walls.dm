@@ -108,13 +108,6 @@
 
 /obj/structure/falsewall/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
-	var/turf/loc_turf = get_turf(src)
-	if(loc_turf.density)
-		to_chat(user, span_warning("[src] is blocked!"))
-		return ITEM_INTERACT_SUCCESS
-	if(!isfloorturf(loc_turf))
-		to_chat(user, span_warning("[src] bolts must be tightened on the floor!"))
-		return ITEM_INTERACT_SUCCESS
 	user.visible_message(span_notice("[user] tightens some bolts on the wall."), span_notice("You tighten the bolts on the wall."))
 	bolting_back_down = TRUE
 	qdel(src)
