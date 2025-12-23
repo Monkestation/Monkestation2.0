@@ -40,7 +40,7 @@ function TableRow(props: RowProps) {
         'Table__row',
         header && 'Table__row--header',
         className,
-        computeBoxClassName<HTMLTable.RowElement>(props),
+        computeBoxClassName(props),
       ])}
       {...computeBoxProps(rest)}
     />
@@ -70,7 +70,7 @@ function TableCell(props: CellProps) {
         collapsing && 'Table__cell--collapsing',
         header && 'Table__cell--header',
         className,
-        computeBoxClassName<HTMLTable.CellElement>(props),
+        computeBoxClassName(props),
       ])}
       colSpan={colSpan}
       {...computeBoxProps(rest)}
