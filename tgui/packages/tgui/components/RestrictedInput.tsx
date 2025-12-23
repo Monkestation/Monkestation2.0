@@ -223,7 +223,7 @@ export function RestrictedInput(props: Props) {
       max={maxValue}
       min={minValue}
       onBlur={onBlurHandler}
-      onChange={onChangeHandler}
+      onInput={onChangeHandler}
       onKeyDown={onKeyDownHandler}
       ref={inputRef}
       spellCheck={false}
