@@ -8,6 +8,7 @@ import {
   TextArea,
   Dimmer,
   Divider,
+  Dropdown,
 } from '../../components';
 import { useBackend, useLocalState } from '../../backend';
 import { createSearch } from 'common/string';
@@ -34,6 +35,8 @@ type NtosMessengerData = {
   on_spam_cooldown: BooleanLike;
   virus_attach: BooleanLike;
   sending_virus: BooleanLike;
+  ringtone_sound: string;
+  available_sounds: string[];
 };
 
 export const NtosMessenger = (props) => {
@@ -165,43 +168,95 @@ const ContactsScreen = (props: any) => {
               Bringing you spy-proof communications since 2467.
             </Box>
             <Divider hidden />
-            <Box>
-              <Button
-                icon="bell"
-                disabled={!alert_able}
-                content={
-                  alert_able && !alert_silenced ? 'Ringer: On' : 'Ringer: Off'
-                }
-                onClick={() => act('PDA_toggleAlerts')}
-              />
-              <Button
-                icon="address-card"
-                content={
-                  sending_and_receiving
-                    ? 'Send / Receive: On'
-                    : 'Send / Receive: Off'
-                }
-                onClick={() => act('PDA_toggleSendingAndReceiving')}
-              />
-              <Button
-                icon="bell"
-                content="Set Ringtone"
-                onClick={() => act('PDA_ringSet')}
-              />
-              <Button
-                icon="sort"
-                content={`Sort by: ${sort_by_job ? 'Job' : 'Name'}`}
-                onClick={() => act('PDA_changeSortStyle')}
-              />
-              {!!virus_attach && (
+            {/* First row of buttons */}
+            <Stack fill mt={1} mb={1}>
+              <Stack.Item grow>
                 <Button
-                  icon="bug"
-                  color="bad"
-                  content={`Attach Virus: ${sending_virus ? 'Yes' : 'No'}`}
-                  onClick={() => act('PDA_toggleVirus')}
+                  fluid
+                  icon="bell"
+                  disabled={!alert_able}
+                  content={
+                    alert_able && !alert_silenced ? 'Ringer: On' : 'Ringer: Off'
+                  }
+                  onClick={() => act('PDA_toggleAlerts')}
                 />
+              </Stack.Item>
+              <Stack.Item grow>
+                <Button
+                  fluid
+                  icon="address-card"
+                  content={
+                    sending_and_receiving
+                      ? 'Send / Receive: On'
+                      : 'Send / Receive: Off'
+                  }
+                  onClick={() => act('PDA_toggleSendingAndReceiving')}
+                />
+              </Stack.Item>
+            </Stack>
+            {/* Second row - ringtone controls */}
+            <Stack fill>
+              <Stack.Item grow>
+                <Button
+                  fluid
+                  icon="bell"
+                  content="Set Ringtone"
+                  onClick={() => act('PDA_ringSet')}
+                />
+              </Stack.Item>
+              <Stack.Item grow>
+                <Stack>
+                  <Stack.Item grow>
+                    <Dropdown
+                      width="100%"
+                      selected={data.ringtone_sound}
+                      options={data.available_sounds || []}
+                      onSelected={(value) =>
+                        act('PDA_soundSet', { sound: value })
+                      }
+                      maxHeight="1.7em"
+                      dropdownBoxStyle={{
+                        maxHeight: '65vh',
+                        // if i set the height, it makes the entire fucking box transparent and fucks up the text.
+                        // GOD FUCKING DAMMIT
+                        backgroundColor: 'black',
+                        color: 'white',
+                      }}
+                    />
+                  </Stack.Item>
+                  <Stack.Item>
+                    <Button
+                      onClick={() =>
+                        act('PDA_soundSet', { sound: data.ringtone_sound })
+                      }
+                      icon="volume-up"
+                    />
+                  </Stack.Item>
+                </Stack>
+              </Stack.Item>
+            </Stack>
+            {/* Third row */}
+            <Stack fill mt={1} mb={1}>
+              <Stack.Item grow>
+                <Button
+                  fluid
+                  icon="sort"
+                  content={`Sort by: ${sort_by_job ? 'Job' : 'Name'}`}
+                  onClick={() => act('PDA_changeSortStyle')}
+                />
+              </Stack.Item>
+              {!!virus_attach && (
+                <Stack.Item grow>
+                  <Button
+                    fluid
+                    icon="bug"
+                    color="bad"
+                    content={`Attach Virus: ${sending_virus ? 'Yes' : 'No'}`}
+                    onClick={() => act('PDA_toggleVirus')}
+                  />
+                </Stack.Item>
               )}
-            </Box>
+            </Stack>
           </Stack>
           <Divider hidden />
           <Stack justify="space-between">

@@ -116,7 +116,7 @@
 	new /obj/item/radio/headset/headset_sec/alt(src)
 	new /obj/item/clothing/glasses/hud/security/sunglasses(src)
 	new /obj/item/flashlight/seclite(src)
-	new /obj/item/clothing/mask/russian_balaclava(src) //monkestation edit
+	new /obj/item/clothing/mask/thermal_balaclava(src) //monkestation edit
 	new /obj/item/bodycam_upgrade(src) //monkestation edit: Security Liability Act
 
 /obj/structure/closet/secure_closet/security/sec

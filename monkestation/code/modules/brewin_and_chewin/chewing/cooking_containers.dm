@@ -117,7 +117,7 @@
 	. = FALSE
 	switch(tracker.process_item_wrap(I, user))
 		if(CHEWIN_NO_STEPS)
-			if(no_step_checks(I)) //literally fryers
+			if(no_step_checks(I, user)) //literally fryers
 				if(send_message)
 					to_chat(user, span_warning("It doesn't seem like you can create a meal from that. Yet."))
 				if(lower_quality_on_fail)
@@ -340,11 +340,15 @@
 	removal_penalty = 5
 	appliancetype = DF_BASKET
 
-/obj/item/reagent_containers/cooking_container/proc/no_step_checks(obj/item/item)
+/obj/item/reagent_containers/cooking_container/proc/no_step_checks(obj/item/item, mob/living/user)
 	return TRUE
 
-/obj/item/reagent_containers/cooking_container/deep_basket/no_step_checks(obj/item/item)
-	item.forceMove(src)
+/obj/item/reagent_containers/cooking_container/deep_basket/no_step_checks(obj/item/item, mob/living/user)
+	if(user && isitem(item))
+		if(!user.transferItemToLoc(item, src))
+			return TRUE
+	else
+		item.forceMove(src)
 	qdel(tracker)
 	update_icon()
 	return FALSE

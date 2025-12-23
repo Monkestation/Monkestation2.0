@@ -384,6 +384,17 @@
 	sec_hud_set_security_status()
 	..()
 
+/mob/living/carbon/human/update_worn_neck(obj/item/worn_neck_item)
+	. = ..()
+	if(!worn_neck_item)
+		return
+	if((worn_neck_item.flags_inv & (HIDEHAIR|HIDEFACIALHAIR)) || (initial(worn_neck_item.flags_inv) & (HIDEHAIR|HIDEFACIALHAIR)))
+		update_body_parts()
+	if(worn_neck_item.flags_inv & HIDEEYES)
+		update_worn_glasses()
+	sec_hud_set_security_status()
+
+
 /mob/living/carbon/human/head_update(obj/item/I, forced)
 	if((I.flags_inv & (HIDEHAIR|HIDEFACIALHAIR)) || forced)
 		update_body_parts()

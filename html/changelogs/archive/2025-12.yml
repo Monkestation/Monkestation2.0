@@ -375,3 +375,153 @@
       eaters
   notghosti:
   - bugfix: Dormant disease no longer shows on a health analyzer scan
+2025-12-19:
+  Absolucy:
+  - bugfix: Admin full heals will no longer trigger the backlash from longevity syndrome
+      being cured.
+  JohnFulpWillard:
+  - qol: The chat bar now scrolls as you type.
+  JupiterJaeden:
+  - rscadd: "Adds a new security status for sechuds - \u2018Search\u2019. Beepsky\
+      \ treats it like any other non-innocent status, but not like arrest. Credit\
+      \ to paradise station for the sprite."
+  - rscadd: Perma prisoners now start the round set to incarcerated. This includes
+      prisoners with the jailbird quirk (who no longer start set to paroled if they
+      are a prisoner).
+  - rscadd: "The \u2018discharged\u2019 security status text on the records console\
+      \ now implies that someone has been released, rather than acquitted."
+  - qol: Changes some of the colors on security statuses on the security records console
+      to be more consistent with their sechud colors.
+  - qol: Changes the color of the suspected security hud to be teal, to prevent conflict
+      with the orange incarcerated & search statuses.
+  - qol: As a regular member of security, you can now invalidate crimes on the records
+      console which you have authored yourself. (requires HOS/warden access normally).
+  - bugfix: You can now correctly edit the description on crimes in the records console.
+  - bugfix: You can now correctly invalidate citations, just like other crimes.
+  - bugfix: Both roundstart and latejoin perma prisoners now correctly have their
+      flavor crimes added to their security records.
+  - bugfix: Energy bolas can hit prone targets correctly and no longer leave random
+      energy snare garbage behind.
+  - code_imp: Energy bolas are no longer janky as fuck and now just work basically
+      like a regular bola.
+  - balance: Energy bolas have had their slowdown slightly nerfed.
+  - balance: DRAGnet snares deploy in 0.5s from hitting the ground instead of 1s.
+  - balance: Stabilized red extracts no longer protect you from legcuff-type slowdowns-
+      this includes bolas, bear traps, and their subtypes.
+  - qol: Adds a HOS bowman headset to the HOS locker.
+  - rscdel: Removes the random paco magazine from the HOS locker.
+  TheColorCyan:
+  - bugfix: brings back pride pins that were accidentally removed, you can be gay
+      once again
+2025-12-21:
+  Infernal-0:
+  - rscadd: Painkillers are now in medkits again. Rejoice.
+2025-12-22:
+  Absolucy:
+  - rscdel: You can no longer get those annoying heretic paintings from gifts.
+  - bugfix: Fixed getting certain buggy items from christmas gifts that would require
+      an admin to fix you.
+  - bugfix: Plasma Fixation no longer kills oozelings... why did something that healed
+      from breathing plasma hurt people who could already heal from breathing plasma
+      anyways?
+  - bugfix: Fixed Curse of Madness having a long delay between sending your message
+      and actually giving feedback and taking your points.
+  - bugfix: Fixed ghost-controlled plushie spawners in maints loot having a weird
+      delay when spawning.
+  - bugfix: Hopefully fixed weird things happening when you pour plasma on an oozeling
+      core that's in your pocket.
+  - bugfix: Fixed being able to produce infinite xenobio extracts with zero cost by
+      activating an ooze compressor's repeat while it was compressing.
+  - bugfix: '"Plant Calling Card" secondary objectives will no longer select targets
+      who wouldn''t leave a body behind for one reason or another.'
+  - bugfix: Actually fixed oozeling limb dismemberment saying that it was shattered
+      through the last "error" holding it together.
+  - bugfix: Fixed buying something in the pre-round store not actually giving you
+      what you bought.
+  - bugfix: Fixed borers sometimes spawning on Charlie Station on Icebox.
+  - bugfix: Fixed cyborgs being able to put their tools into deep fryer baskets.
+  - bugfix: Ghost critters will no longer be turned into constructs by Nar'Sie.
+  - bugfix: Possibly fixed weird situations involving getting legioned while falling
+      into a chasm.
+  - bugfix: Fixed subdermal heaters/coolers potentially freezing/burning their owner
+      to death.
+  - bugfix: Returning from cryo should now restore skillchips.
+  - bugfix: Fixed being able to use autosurgeons on non-carbons, which just deleted
+      the implant.
+  - bugfix: Fixed flavor text not showing up on examine.
+  - bugfix: Fixed double-html encodes in custom admin votes.
+  - bugfix: Fixed turning off the "Enable Jukebox Music" prefs not stopping ongoing
+      jukebox music.
+  - bugfix: Fixed harvested heretic influences showing up on right click before they
+      actually start to fade in.
+  - bugfix: Fixed the Experimentation Lab on Oshan not having its APC properly wired
+      to power.
+  - bugfix: Fixed the alt-click selection on the xenobio vaccum pack not working unless
+      you clicked on something directly next to you.
+  - bugfix: Fixed some assorted minor runtime errors.
+  - bugfix: (SmArtKar) Fixed fire sound runtimes caused by incorrect arguments.
+  - admin: (Melbert) You can now set someone's TC to 0.
+  - admin: (Melbert) Removing Traitor from automatically removes the uplink from them.
+  - admin: (Melbert) Removing Uplink from someone no longer wipes ALL of their memories.
+  - qol: Modlink calls now also use the caller's voice pack.
+  - balance: '"Disable Telecomms" and "Trigger Stationwide Blackout" can no longer
+      be discounted in the traitor uplink.'
+  Absolucy, Melbert:
+  - bugfix: Patch exploit allowing nigh-infinite heretic points
+  Infernal-0:
+  - image: Nukes a misplaced stripe on the medical MODsuits
+  Lawlolawl:
+  - bugfix: Added heretic midround antag pref.
+  - image: Shifted borer and plague rat preview icons to show their full sprite properly.
+  - qol: 'Preferences settings: Separated spaceling and midround ling antag prefs.'
+  - qol: 'Preferences settings: Separated crew midround antag prefs and ghost role
+      antag prefs as a whole.'
+  SirNightKnight:
+  - rscadd: phrases with spoken codewords cause the whole sentence to be marked in
+      copperplate font to better differentiate from other colored text.
+  - rscdel: removed some terms (russians, mexicans, indians, and illegal immigrants)
+      from the ion law mad lib pool.
+  - bugfix: updated the ion law mad lib pool with recent species and job additions.
+  - bugfix: ion laws are based off crewsimov instead of asimov.
+  - rscadd: thermal balaclavas can be worn on your neck slot
+  - code_imp: renamed the item path for the thermal balaclava to make more sense.
+  - code_imp: cleaned up some code relating to face visibility.
+  - qol: security barriers (deployable ones from grenades) can be right clicked or
+      swiped with your ID/PDA to unlock them if you have security access.
+  - balance: emagging sec barriers fries their controls permanently, heavy emps will
+      achieve the same effect.
+  - balance: sec barriers glow in the dark.
+  - balance: increased the amount of sec barrier grenades you get in sec barrier cargo
+      crates to 6 but kept the unit price (100 credits per barrier grenade).
+  - balance: you get 3 sec barrier grenades from the sec utility voucher option. up
+      from 2.
+  - bugfix: fixed some cover flags for the eva and voidsuit space helmet.
+  - qol: ' right clicking a holosign barrier with it''s projector deletes it.'
+  - code_imp: moved some holosign/projector interactions to the holosign projector
+      itself.
+2025-12-23:
+  Absolucy:
+  - rscadd: Added a new "Default Scryer Label" character preference, which will set
+      the default label of a MODlink scryer if you spawn with one, either via loadout
+      or the station trait.
+  - bugfix: Fixed the Tin Man and Prosthetic Organ quirks being copied to oozelings
+      when they revive.
+  - bugfix: Fixed the Default Scryer Label option not applying if you spawn with a
+      case.
+  Absolucy, Flleeppyy:
+  - refactor: Rewrote large chunks of cassette / cassette player code.
+  - rscadd: The cassette player now has an actual UI!
+  SirNightKnight:
+  - bugfix: codeword responses are orange instead of red. removed the copperplate
+      font being applied to phrases containing codewords.
+  Veth-s:
+  - rscadd: You can now choose your PDA's ringtone sound from a list.
+  - rscadd: Many new sounds have been added for ringtones (Chen/Flleeppyy)
+  - rscadd: Modlink scryers now have call ringtones
+  - rscadd: Sound Debug Mixer verb
+  - code_imp: PDA ringtone sounds are now on their own channel
+  notghosti:
+  - rscadd: Assault operatives now spawn with a survival box
+  - qol: Prisoner body bags can now be folded up
+  - bugfix: Syndicate prisoner body bags will now use the proper sprite
+  - code_imp: Assault operatives now have a properly named datum file.
