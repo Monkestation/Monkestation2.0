@@ -139,11 +139,13 @@ const Multipliers = (props) => {
 
   const finalResult = [];
 
-  for (const multiplier of multipliers) {
+  for (let i = 0; i < multipliers.length; i++) {
+    const multiplier = multipliers[i];
     if (max_available_multiplier >= multiplier) {
       finalResult.push(
-        <ImageButton.Item
+        <div
           bold
+          key={i}
           fontSize={0.85}
           width={'32px'}
           content={multiplier * recipe.result_amount + 'x'}
@@ -160,7 +162,7 @@ const Multipliers = (props) => {
 
   if (multipliers.indexOf(max_available_multiplier) === -1) {
     finalResult.push(
-      <ImageButton.Item
+      <div
         width={'32px'}
         content={max_available_multiplier * recipe.result_amount + 'x'}
         onClick={() =>

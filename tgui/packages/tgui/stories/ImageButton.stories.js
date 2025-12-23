@@ -180,7 +180,7 @@ const Story = (props) => {
             onClick={onClick ? () => 'false' : ''}
           >
             {!vertical3 && (
-              <ImageButton.Item
+              <ImageButton
                 bold
                 width={'64px'}
                 selected={disabled}

@@ -9,6 +9,7 @@ import {
 } from '../../components';
 import { Component } from 'react';
 import { shallowDiffers } from 'common/react';
+import { multiline } from 'common/string';
 
 export class VariableMenu extends Component {
   constructor() {

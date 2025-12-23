@@ -11,6 +11,7 @@ import {
 } from '../components';
 import { Window } from '../layouts';
 import { round, toFixed } from 'common/math';
+import { multiline } from 'common/string';
 
 export const ChemReactionChamber = (props) => {
   const { act, data } = useBackend();
