@@ -498,7 +498,7 @@ export const StandardizedPalette = (props: {
                   ])}
                   onClick={
                     disabled
-                      ? null
+                      ? undefined
                       : () => onSetValue(hex_values ? safeHex(choice) : choice)
                   }
                   width="16px"

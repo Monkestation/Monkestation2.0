@@ -58,9 +58,9 @@ export const ServerControl = (props) => {
               <Table.Row header>
                 <Table.Cell>Research Servers</Table.Cell>
               </Table.Row>
-              {servers.map((server) => (
+              {servers.map((server, idx) => (
                 <>
-                  <Table.Row header key={server} className="candystripe" />
+                  <Table.Row header key={idx} className="candystripe" />
                   <Table.Cell> {server.server_name}</Table.Cell>
                   <Button
                     mt={1}
@@ -91,9 +91,9 @@ export const ServerControl = (props) => {
               <Table.Row header>
                 <Table.Cell>Research Consoles</Table.Cell>
               </Table.Row>
-              {consoles.map((console) => (
+              {consoles.map((console, idx) => (
                 <>
-                  <Table.Row header key={console} className="candystripe" />
+                  <Table.Row header key={idx} className="candystripe" />
                   <Table.Cell>
                     {' '}
                     {console.console_name} - Location:{' '}

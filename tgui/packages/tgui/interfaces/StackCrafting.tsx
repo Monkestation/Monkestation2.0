@@ -163,7 +163,7 @@ const RecipeListBox = (props: RecipeListProps) => {
                 borderTop: 'none',
                 borderRadius: '0 0 0.33em 0.33em',
               }}
-            ></Collapsible>
+             />
           );
         } else {
           return <RecipeBox key={title} title={title} recipe={recipe} />;

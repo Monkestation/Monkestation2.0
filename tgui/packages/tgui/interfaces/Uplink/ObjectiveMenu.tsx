@@ -120,7 +120,7 @@ export class ObjectiveMenu extends Component<
     });
   }
 
-  handleObjectiveAdded(event: MouseEvent) {
+  handleObjectiveAdded() {
     const { draggingObjective } = this.state as ObjectiveMenuState;
     if (!draggingObjective) {
       return;
