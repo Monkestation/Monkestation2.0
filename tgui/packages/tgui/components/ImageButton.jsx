@@ -53,7 +53,7 @@ export const ImageButton = (props) => {
         className,
         computeBoxClassName(rest),
       ])}
-      tabIndex={!disabled && '0'}
+      tabIndex={disabled ? undefined : 0}
       {...computeBoxProps(rest)}
     >
       <div className={classes(['ImageButton__image'])}>
@@ -182,7 +182,7 @@ export const ImageButtonItem = (props) => {
           className,
           computeBoxClassName(rest),
         ])}
-        tabIndex={!disabled && '0'}
+        tabIndex={disabled ? undefined : 0}
         {...computeBoxProps(rest)}
       >
         <div

@@ -75,7 +75,7 @@ export const Button = (props) => {
         className,
         computeBoxClassName(rest),
       ])}
-      tabIndex={!disabled && '0'}
+      tabIndex={disabled ? undefined : 0}
       onKeyDown={(e) => {
         if (props.captureKeys === false) {
           return;
