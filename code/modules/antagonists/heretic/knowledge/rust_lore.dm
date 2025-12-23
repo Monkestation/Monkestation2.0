@@ -316,6 +316,7 @@
 	needs_update += source.adjustOxyLoss(-4 * delta_time, updating_health = FALSE)
 	if(needs_update)
 		source.updatehealth()
+	source.stamina.adjust(20 * delta_time)
 
 /**
  * #Rust spread datum
