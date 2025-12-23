@@ -48,4 +48,4 @@
 	l_hand = /obj/item/clipboard
 
 	chameleon_extras = /obj/item/stamp/qm
-	accessory = /obj/item/clothing/accessory/badge/quartermaster
+	accessory = /obj/item/clothing/accessory/badge/cargo/quartermaster

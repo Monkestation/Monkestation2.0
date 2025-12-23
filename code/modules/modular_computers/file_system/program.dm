@@ -120,9 +120,8 @@
  * loud is a bool deciding if this proc should use to_chats
  * access_to_check is an access level that will be checked against the ID
  * downloading: Boolean on whether it's downloading the app or not. If it is, it will check download_access instead of run_access.
- * access can contain a list of access numbers to check against. If access is not empty, it will be used istead of checking any inserted ID.
  */
-/datum/computer_file/program/proc/can_run(mob/user, loud = FALSE, access_to_check, downloading = FALSE, list/access)
+/datum/computer_file/program/proc/can_run(mob/user, loud = FALSE, access_to_check, downloading = FALSE)
 	if(user)
 		if(issilicon(user) && !ispAI(user))
 			return TRUE
@@ -140,19 +139,14 @@
 	if(!length(access_to_check)) // No access requirements, allow it.
 		return TRUE
 
-	if(!length(access))
-		var/obj/item/card/id/accesscard
-		if(computer)
-			accesscard = computer.computer_id_slot?.GetID()
-
-		if(!accesscard)
-			if(loud && user)
-				to_chat(user, span_danger("\The [computer] flashes an \"RFID Error - Unable to scan ID\" warning."))
-			return FALSE
-		access = accesscard.GetAccess()
+	var/list/found_access = computer?.GetAccess()
+	if(!found_access)
+		if(loud && user)
+			to_chat(user, span_danger("\The [computer] flashes an \"RFID Error - Unable to scan ID\" warning."))
+		return FALSE
 
 	for(var/singular_access in access_to_check)
-		if(singular_access in access) //For loop checks every individual access entry in the access list. If the user's ID has access to any entry, then we're good.
+		if(singular_access in found_access) //For loop checks every individual access entry in the access list. If the user's ID has access to any entry, then we're good.
 			return TRUE
 
 	if(loud && user)
