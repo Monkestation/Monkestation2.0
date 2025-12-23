@@ -282,3 +282,9 @@
 	icon_state = "aerostatic_suit"
 	inhand_icon_state = null
 	can_adjust = FALSE
+
+/obj/item/clothing/under/rank/security/utility
+	name = "security utility uniform"
+	desc = "A utility uniform worn by Lopland-certified Security officers."
+	icon_state = "util_sec"
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION

@@ -738,7 +738,7 @@ GLOBAL_LIST_INIT(loadout_miscunders, generate_loadout_items(/datum/loadout_item/
 
 /datum/loadout_item/under/jumpsuit/utility_sec
 	name = "Security Utility Uniform"
-	item_path = /obj/item/clothing/under/rank/security/nova/utility
+	item_path = /obj/item/clothing/under/rank/security/utility
 	restricted_roles = list(JOB_SECURITY_OFFICER, JOB_DETECTIVE, JOB_WARDEN, JOB_BRIG_PHYSICIAN, JOB_SECURITY_ASSISTANT, JOB_HEAD_OF_SECURITY) //i dunno about the blueshield, they're a weird combo of sec and command, thats why they arent in the loadout pr im making
 	requires_purchase = FALSE
 

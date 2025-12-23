@@ -7248,7 +7248,6 @@
 #include "monkestation\code\modules\blueshift\clothing\nova_job_heads.dm"
 #include "monkestation\code\modules\blueshift\clothing\nova_misc.dm"
 #include "monkestation\code\modules\blueshift\clothing\nova_neck.dm"
-#include "monkestation\code\modules\blueshift\clothing\nova_security.dm"
 #include "monkestation\code\modules\blueshift\clothing\nova_shoes.dm"
 #include "monkestation\code\modules\blueshift\clothing\nova_shorts.dm"
 #include "monkestation\code\modules\blueshift\clothing\nova_skirts.dm"
