@@ -1382,6 +1382,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Demolition modifier when hitting this object is inverted (ie, 1 / demolition)
 #define TRAIT_INVERTED_DEMOLITION "demolition_inverted"
 
+/// This mob can hear the music from the DJ station.
+#define TRAIT_CAN_HEAR_MUSIC "can_hear_radio"
+/// This mob is currently listening to a walkman.
+#define TRAIT_LISTENING_TO_WALKMAN "listening_to_walkman"
 // /datum/mind + /mob/living
 /// Prevents the user from casting spells using sign language. Works on both /datum/mind and /mob/living.
 #define TRAIT_CANT_SIGN_SPELLS "cant_sign_spells"

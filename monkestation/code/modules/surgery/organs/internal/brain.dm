@@ -88,11 +88,14 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	))
 	/// Quirks that should just be completely skipped.
 	var/static/list/skip_quirks = typecacheof(list(
+		/datum/quirk/cybernetics_quirk,
 		/datum/quirk/drg_callout, // skillchips are in the brain anyways
+		/datum/quirk/item_quirk/food_allergic,
 		/datum/quirk/prosthetic_limb,
+		/datum/quirk/prosthetic_organ,
 		/datum/quirk/quadruple_amputee,
 		/datum/quirk/stowaway,
-		/datum/quirk/cybernetics_quirk,
+		/datum/quirk/tin_man,
 	))
 
 	var/rebuilt = TRUE
