@@ -397,7 +397,7 @@ const NewscasterChannelBox = (props) => {
             </Section>
           ) : (
             <Section fill scrollable>
-              <BlockQuote italic fontSize={1.2} wrap>
+              <BlockQuote italic fontSize={1.2}>
                 {decodeHtmlEntities(channelDesc)}
               </BlockQuote>
             </Section>
