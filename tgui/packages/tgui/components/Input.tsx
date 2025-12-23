@@ -1,7 +1,7 @@
 import { KEY, isEscape } from 'common/keys';
 import { classes } from 'common/react';
 import { debounce } from 'es-toolkit';
-import { RefObject, useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { BoxProps, computeBoxProps, computeBoxClassName, Box } from './Box';
 
 export type BaseInputProps<TElement = HTMLInputElement> = Partial<{
@@ -90,12 +90,7 @@ export type TextInputProps<TElement = HTMLInputElement> = Partial<{
 }> &
   BaseInputProps<TElement>;
 
-type Props = Partial<{
-  /** Ref of the input element */
-  ref: RefObject<HTMLInputElement | null>;
-}> &
-  BaseInputProps &
-  TextInputProps;
+type Props = BaseInputProps & TextInputProps;
 
 // Prevent input parent change event from being called too often
 const inputDebounce = debounce((onInput: () => void) => onInput(), 250);
@@ -124,20 +119,18 @@ export function Input(props: Props) {
     onEscape,
     onKeyDown,
     placeholder,
-    ref,
     selfClear,
     spellcheck = false,
     value,
     ...rest
   } = props;
 
-  const ourRef = useRef<HTMLInputElement>(null);
-  const inputRef = ref ?? ourRef;
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const [innerValue, setInnerValue] = useState(value ?? '');
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>): void {
-    const value = (event.target as HTMLInputElement).value;
+    const value = event.target.value;
     setInnerValue(value);
     if (expensive) {
       inputDebounce(() => onInput?.(event, value));
@@ -151,18 +144,18 @@ export function Input(props: Props) {
 
     if (event.key === KEY.Enter) {
       event.preventDefault();
-      onEnter?.(event, (event.target as HTMLInputElement).value);
+      onEnter?.(event, event.currentTarget.value);
       if (selfClear) {
         setInnerValue('');
       }
-      (event.target as HTMLInputElement).blur();
+      event.currentTarget.blur();
       return;
     }
 
     if (isEscape(event.key)) {
       event.preventDefault();
-      onEscape?.(event, (event.target as HTMLInputElement).value);
-      (event.target as HTMLInputElement).blur();
+      onEscape?.(event, event.currentTarget.value);
+      event.currentTarget.blur();
     }
   }
 
@@ -211,10 +204,10 @@ export function Input(props: Props) {
         disabled={disabled}
         maxLength={maxLength}
         onBlur={() => onBlur?.(innerValue)}
-        onInput={handleChange}
+        onChange={handleChange}
         onKeyDown={handleKeyDown}
         placeholder={placeholder}
-        ref={inputRef as React.RefObject<HTMLInputElement>}
+        ref={inputRef}
         spellCheck={spellcheck}
         type="text"
         value={innerValue}
