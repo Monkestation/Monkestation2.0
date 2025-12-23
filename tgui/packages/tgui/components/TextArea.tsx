@@ -13,6 +13,11 @@ import { debounce } from 'es-toolkit';
 import { TextInputProps } from './Input';
 
 type Props = Partial<{
+  /**
+   * Disables 'enter' functionality so the textarea does not submit on
+   * enter key press
+   */
+  disableEnter: boolean;
   /** Don't use tab for indent */
   dontUseTabForIndent: boolean;
   /** Ref to the textarea element. */
@@ -53,6 +58,7 @@ export function TextArea(props: Props) {
     autoSelect,
     className,
     disabled,
+    disableEnter,
     dontUseTabForIndent,
     expensive,
     fluid,
@@ -100,7 +106,7 @@ export function TextArea(props: Props) {
     onKeyDown?.(event);
 
     // Enter
-    if (event.key === KEY.Enter && !event.shiftKey) {
+    if (!disableEnter && event.key === KEY.Enter && !event.shiftKey) {
       event.preventDefault();
       onEnter?.(event, event.currentTarget.value);
       if (selfClear) {

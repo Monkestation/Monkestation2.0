@@ -1,4 +1,4 @@
-import { useBackend, useLocalState } from '../backend';
+import { sendAct, useBackend, useLocalState } from '../backend';
 import {
   Box,
   Button,
@@ -11,7 +11,6 @@ import {
 } from '../components';
 import { RADIO_CHANNELS } from '../constants';
 import { Window } from '../layouts';
-import { useEffect, useRef, useState } from 'react';
 
 // NTSLTextArea component start
 // This is literally just TextArea but without ENTER updating anything, for NTSL
@@ -36,12 +35,10 @@ const debounce = (fn: Function, delay: number) => {
   };
 };
 
-const debouncedSave = useRef(
-  debounce(
-    (value: string) => useBackend().act('save_code', { saved_code: value }),
-    300,
-  ),
-).current;
+const debouncedSave = debounce(
+  (value: string) => sendAct('save_code', { saved_code: value }),
+  300,
+);
 
 // NTSLTextArea component end
 
@@ -86,10 +83,17 @@ export const NTSLCoding = (props) => {
 const ScriptEditor = (props) => {
   const { act, data } = useBackend<Data>();
   const { stored_code, user_name } = data;
+
   return (
     <Box width="100%" height="100%">
       {user_name ? (
-        'The editor is broken and does not work, this will be updated in a future PR, with an actual editor.'
+        <TextArea
+          fluid
+          value={stored_code}
+          onChange={(e, val) => debouncedSave(val)}
+          height="100%"
+          disableEnter
+        />
       ) : (
         <Section width="100%" height="100%">
           {stored_code}
