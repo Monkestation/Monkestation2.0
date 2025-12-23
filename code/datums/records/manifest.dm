@@ -103,7 +103,7 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 	//if you're cargo, and not a boss, you're part of the Union.
 	if((person.mind?.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_CARGO) && !(person.mind?.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND))
 		GLOB.cargo_union_employees += list(list(
-			CARGO_UNION_POSITION = !!(person.mind?.assigned_role.title == JOB_QUARTERMASTER),
+			CARGO_UNION_LEADER = !!(person.mind?.assigned_role.title == JOB_QUARTERMASTER),
 			CARGO_UNION_NAME = person.real_name,
 		))
 

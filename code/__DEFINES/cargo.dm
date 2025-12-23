@@ -88,4 +88,4 @@ GLOBAL_LIST_INIT(podstyles, list(\
 //The order is: Shape, Base, Door, Decal, Glow Color, Rubble Type, Name, Description
 
 #define CARGO_UNION_NAME "name"
-#define CARGO_UNION_POSITION "leader"
+#define CARGO_UNION_LEADER "leader"

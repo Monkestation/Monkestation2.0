@@ -66,7 +66,7 @@
 					return TRUE
 
 			GLOB.cargo_union_employees += list(list(
-				CARGO_UNION_POSITION = union_leader,
+				CARGO_UNION_LEADER = union_leader,
 				CARGO_UNION_NAME = member_name,
 			))
 			print_new_badge(user, member_name, cooldown_affected = FALSE)
@@ -95,7 +95,7 @@
 			for(var/member in GLOB.cargo_union_employees)
 				if(member[CARGO_UNION_NAME] != lost_badge_member)
 					continue
-				if(member[CARGO_UNION_POSITION]) //printing a golden badge requires access (aka QM level, ID or Badge)
+				if(member[CARGO_UNION_LEADER]) //printing a golden badge requires access (aka QM level, ID or Badge)
 					if(!can_run(user, downloading = TRUE))
 						computer.balloon_alert(user, "elevated access necessary!")
 						return TRUE
@@ -163,7 +163,7 @@
 	for(var/member in GLOB.cargo_union_employees)
 		if(member[CARGO_UNION_NAME] != member_name)
 			continue
-		if(member[CARGO_UNION_POSITION])
+		if(member[CARGO_UNION_LEADER])
 			new_cargo_badge = new /obj/item/clothing/accessory/badge/cargo/quartermaster(computer.drop_location())
 		else
 			new_cargo_badge = new /obj/item/clothing/accessory/badge/cargo(computer.drop_location())
