@@ -56,6 +56,7 @@
 		return
 
 	opening = TRUE
+	update_appearance()
 	if(!density)
 		var/srcturf = get_turf(src)
 		for(var/mob/living/obstacle in srcturf) //Stop people from using this as a shield
@@ -63,7 +64,6 @@
 			return
 	else
 		real_wall.ScrapeAway() //Remove the real wall when we start to open
-	update_appearance()
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/structure/falsewall, toggle_open)), 0.5 SECONDS)
 
 /obj/structure/falsewall/proc/toggle_open()
