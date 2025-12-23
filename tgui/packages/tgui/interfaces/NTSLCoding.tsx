@@ -11,10 +11,10 @@ import {
 } from '../components';
 import { RADIO_CHANNELS } from '../constants';
 import { Window } from '../layouts';
+import { useEffect, useRef, useState } from 'react';
 
 // NTSLTextArea component start
 // This is literally just TextArea but without ENTER updating anything, for NTSL
-import { useEffect, useRef, useState } from 'react';
 
 type NTSLTextAreaProps = {
   value: string;
@@ -42,78 +42,6 @@ const debouncedSave = useRef(
     300,
   ),
 ).current;
-
-const NTSLTextArea = ({
-  value,
-  act,
-  dontUseTabForIndent = false,
-  selfClear,
-  onEscape,
-  noborder,
-  scrollbar,
-  width,
-  height,
-}: NTSLTextAreaProps) => {
-  const [editing, setEditing] = useState(false);
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const [localValue, setLocalValue] = useState(value);
-
-  useEffect(() => {
-    setLocalValue(value);
-  }, [value]);
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === 'Escape') {
-      if (onEscape) onEscape(e);
-      setEditing(false);
-      if (selfClear && textareaRef.current) {
-        textareaRef.current.value = '';
-        setLocalValue('');
-      } else if (textareaRef.current) {
-        textareaRef.current.value = value;
-        setLocalValue(value);
-        textareaRef.current.blur();
-      }
-      return;
-    }
-
-    if (!editing) setEditing(true);
-
-    if (!dontUseTabForIndent && e.key === 'Tab' && textareaRef.current) {
-      e.preventDefault();
-      const target = textareaRef.current;
-      const { selectionStart, selectionEnd, value } = target;
-      const newValue =
-        value.substring(0, selectionStart) +
-        '\t' +
-        value.substring(selectionEnd);
-      target.value = newValue;
-      target.selectionEnd = selectionStart + 1;
-      setLocalValue(newValue);
-
-      debouncedSave(target.value);
-    }
-  };
-
-  const handleInput = (e: React.FormEvent<HTMLTextAreaElement>) => {
-    const target = e.currentTarget;
-    setLocalValue(target.value);
-    debouncedSave(target.value);
-  };
-
-  return (
-    <TextArea
-      ref={textareaRef}
-      value={localValue}
-      onKeyDown={handleKeyDown}
-      onInput={handleInput}
-      noborder={noborder}
-      scrollbar={scrollbar}
-      width={width}
-      height={height}
-    />
-  );
-};
 
 // NTSLTextArea component end
 
@@ -161,14 +89,7 @@ const ScriptEditor = (props) => {
   return (
     <Box width="100%" height="100%">
       {user_name ? (
-        <NTSLTextArea
-          noborder
-          scrollbar
-          value={stored_code}
-          width="100%"
-          height="100%"
-          act={act}
-        />
+        'The editor is broken and does not work, this will be updated in a future PR, with an actual editor.'
       ) : (
         <Section width="100%" height="100%">
           {stored_code}
