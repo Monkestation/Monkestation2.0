@@ -36,6 +36,8 @@ export type TextInputProps<TElement = HTMLInputElement> = Partial<{
   maxLength: number;
   /** Fires each time focus leaves the input, including if Esc or Enter are pressed */
   onBlur: (value: string) => void;
+  /** We're using onInput here. This should be changed later to just onchange! */
+  onChange: (event: React.ChangeEvent<TElement>, value: string) => void;
   /** Fires each time the input has been changed */
   onInput: (event: React.ChangeEvent<TElement>, value: string) => void;
   /** Fires once the enter key is pressed */
@@ -114,6 +116,7 @@ export function Input(props: Props) {
     maxLength,
     monospace,
     onBlur,
+    onChange,
     onInput,
     onEnter,
     onEscape,
@@ -125,6 +128,8 @@ export function Input(props: Props) {
     ...rest
   } = props;
 
+  const inputFn = onInput ?? onChange ?? undefined;
+
   const inputRef = useRef<HTMLInputElement>(null);
 
   const [innerValue, setInnerValue] = useState(value ?? '');
@@ -133,9 +138,9 @@ export function Input(props: Props) {
     const value = event.target.value;
     setInnerValue(value);
     if (expensive) {
-      inputDebounce(() => onInput?.(event, value));
+      inputDebounce(() => inputFn?.(event, value));
     } else {
-      onInput?.(event, value);
+      inputFn?.(event, value);
     }
   }
 
