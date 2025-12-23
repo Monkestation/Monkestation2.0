@@ -181,17 +181,14 @@
 			flashed.set_confusion_if_lower(confusion_duration * CONFUSION_STACK_MAX_MULTIPLIER)
 			visible_message(span_danger("[user] blinds [flashed] with the flash!"), span_userdanger("[user] blinds you with the flash!"))
 			if (deviation == DEVIATION_PARTIAL)
-				flashed.stamina.adjust(-rand(40, 60))
+				flashed.stamina.adjust(-55)
 			else if (deviation == DEVIATION_NONE)
 				flashed.stamina.adjust(-80)
 
-			var/knockdown_duration = 2 SECONDS
-			if(ishuman(flashed))
-				var/mob/living/carbon/human/flashed_human = flashed
-				if(ismoth(flashed_human))
-					knockdown_duration = 6 SECONDS
-			flashed.Knockdown(knockdown_duration)
-			flashed.Disorient(7 SECONDS, 0)
+			if (!flashed.has_movespeed_modifier(/datum/movespeed_modifier/shove))
+				flashed.add_movespeed_modifier(/datum/movespeed_modifier/shove)
+				addtimer(CALLBACK(flashed, TYPE_PROC_REF(/mob/living/carbon, clear_shove_slowdown)), SHOVE_SLOWDOWN_LENGTH, TIMER_UNIQUE | TIMER_OVERRIDE)
+				flashed.Disorient(SHOVE_SLOWDOWN_LENGTH, 0)
 			SEND_SIGNAL(user, COMSIG_MOB_SUCCESSFUL_FLASHED_CARBON, flashed, src, deviation)
 		else if(user)
 			visible_message(span_warning("[user] fails to blind [flashed] with the flash!"), span_danger("[user] fails to blind you with the flash!"))

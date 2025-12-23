@@ -74,7 +74,7 @@
 	if(!isliving(target))
 		return ..()
 	var/mob/living/mob_target = target
-	mob_target.Disorient(6 SECONDS, 0, stack_status = FALSE)
+	mob_target.Disorient(3 SECONDS, 0, stack_status = FALSE)
 	mob_target.stamina?.adjust(-32)
 	SEND_SIGNAL(target, COMSIG_LIVING_MINOR_SHOCK)
 	return ..()

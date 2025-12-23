@@ -209,6 +209,7 @@
 				if (!target.has_movespeed_modifier(/datum/movespeed_modifier/shove))
 					target.add_movespeed_modifier(/datum/movespeed_modifier/shove)
 				addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living/carbon, clear_shove_slowdown)), SHOVE_SLOWDOWN_LENGTH, TIMER_UNIQUE | TIMER_OVERRIDE)
+				target.Disorient(SHOVE_SLOWDOWN_LENGTH, 0, stack_status = FALSE)
 		else
 			target.stamina.adjust(-stamina_damage * 0.5)
 		additional_effects_non_cyborg(target, user)
@@ -341,12 +342,6 @@
 		attack_verb_simple_on = list("smack", "strike", "crack", "beat"), \
 	)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
-
-//monkestation edit start
-/obj/item/melee/baton/telescopic/additional_effects_non_cyborg(mob/living/target, mob/living/user)
-	. = ..()
-	target.Disorient(6 SECONDS, 0, stack_status = FALSE)
-//monkestation edit end
 
 /obj/item/melee/baton/telescopic/suicide_act(mob/living/user)
 	var/mob/living/carbon/human/human_user = user
@@ -646,9 +641,8 @@
  * After a period of time, we then check to see what stun duration we give.
  */
 /obj/item/melee/baton/security/additional_effects_non_cyborg(mob/living/target, mob/living/user)
-	target.Disorient(6 SECONDS, 0, stack_status = FALSE)
-
 	SEND_SIGNAL(target, COMSIG_LIVING_MINOR_SHOCK)
+	return ..()
 
 /obj/item/melee/baton/security/get_wait_description()
 	return span_danger("The baton is still charging!")
