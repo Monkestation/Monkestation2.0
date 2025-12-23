@@ -8,9 +8,9 @@ import { Window } from '../layouts';
 type NumberInputData = {
   init_value: number;
   large_buttons: boolean;
-  max_value: number | null;
+  max_value: number;
   message: string;
-  min_value: number | null;
+  min_value: number;
   timeout: number;
   title: string;
   round_value: boolean;
@@ -89,13 +89,13 @@ const InputArea = (props) => {
         <RestrictedInput
           autoFocus
           autoSelect
-          fluid
           allowFloats={!round_value}
           minValue={min_value}
           maxValue={max_value}
           onChange={(_, value) => onChange(value)}
           onEnter={(_, value) => act('submit', { entry: value })}
           value={input}
+          width="100%"
         />
       </Stack.Item>
       <Stack.Item>
