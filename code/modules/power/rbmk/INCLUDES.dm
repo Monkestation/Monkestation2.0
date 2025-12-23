@@ -6,7 +6,7 @@
 #include "reactor/rbmk_process.dm"
 #include "reactor/rbmk_meltdown.dm"
 #include "reactor/rbmk_integrity.dm"
-#include "reactor/rbmk_stability.dm"
+#include "reactor/rbmk_void_coefficient.dm"
 #include "reactor/rbmk_visuals.dm"
 #include "reactor/rbmk_atmos.dm"
 // Fuel rods live in ./rods/

@@ -1,54 +1,53 @@
-/************************************************************
- * Plasma Moderator Rod
- * - Amplifies reactor thermal feedback instead of producing heat directly.
- * - Never depletes; scales dynamically with the core’s activity.
- ************************************************************/
+/*************************************************************
+ * PLASMA MODERATOR ROD
+ * - Does NOT produce heat or radiation.
+ * - Slightly boosts reactor flux via flux_multiplier.
+ * - Effectively infinite fuel.
+ *************************************************************/
 
 /// Plasma Moderator Rod
 /obj/item/rbmk/fuel_rod/plasma
-	name = "Plasma Moderator Rod"
-	desc = "A glowing purple rod that supercharges the reactor's heat transfer and amplifies instability if not cooled properly."
-	icon = 'icons/obj/fuel_rod.dmi'
-	icon_state = "plasma"
+    name = "Plasma Moderator Rod"
+    desc = "A moderator rod infused with stabilized plasma. Boosts flux but produces no heat or radiation."
+    icon = 'icons/obj/fuel_rod.dmi'
+    icon_state = "plasma"
 
-	// Infinite life, pure amplifier
-	fuel_amount = INFINITY
-	base_heat_output = 0
-	base_flux_output = 0
-	base_radiation_output = 0
-	depletion_rate = 0
-	reactivity_sensitivity = 0.004
+    // Visual, depleted state (never depletes but required for parent behavior)
+    depleted_icon_state = "plasma_empty"
+    depleted_description = "An inert plasma rod. Its energy has fully dissipated."
 
-	rod_type = "plasma"
-	rod_color = "purple"
+    // Identification
+    rod_type = "plasma"
+    rod_color = "purple"
 
-	// Amplifier multipliers
-	thermal_multiplier = 1.3
-	flux_multiplier = 1.15
-	radiation_multiplier = 1.0
-	active = TRUE
+    // Fuel system — effectively infinite
+    fuel_amount = 1e30
+    fuel_consumption = 0
+
+    // Plasma rods do not generate direct reactivity
+    reactivity = 0
+
+    // Stabilizing behavior / multipliers
+    flux_multiplier = 1.10        // +10% flux boost
+    thermal_multiplier = 1.0
+    radiation_multiplier = 1.0
+
+    // Plasma rods are always active
+    active = TRUE
 
 
-/************************************************************
- * Plasma rods override process_rod with feedback amplification
- ************************************************************/
+/*************************************************************
+ * Plasma Rod Output Logic
+ * - Does NOT burn fuel.
+ * - Does NOT produce reactivity, heat, or radiation.
+ * - Only flux multiplier affects the core.
+ *************************************************************/
 
-/// Plasma rods never deplete; they enhance core feedback behavior
-/obj/item/rbmk/fuel_rod/plasma/process_rod(var/reactor_temperature = RBMK_AMBIENT_TEMP, var/reactor_flux = 0, var/core_feedback_factor = 1.0)
-	// Plasma rods always remain active
-	var/reactivity_factor = 1 + ((reactor_temperature / 2000) * reactivity_sensitivity) + (reactor_flux * 0.002)
-	reactivity_factor = clamp(reactivity_factor, 1.0, 2.5)
-
-	// Amplifies reactor’s current state
-	var/thermal_amplify = thermal_multiplier * reactivity_factor
-	var/flux_amplify = flux_multiplier * (1 + (reactor_flux / 500))
-	var/radiation_bonus = (reactor_temperature > 5000) ? (reactor_temperature / 10000) : 0
-
-	// Plasma rods enhance the system instead of producing stand-alone output
-	return list(
-		"heat" = base_heat_output + (reactor_temperature * 0.001 * thermal_amplify),
-		"flux" = base_flux_output + (reactor_flux * 0.05 * flux_amplify),
-		"radiation" = base_radiation_output + radiation_bonus,
-		"thermal_mult" = thermal_amplify,
-		"flux_mult" = flux_amplify
-	)
+/// Plasma rods provide modifiers but no direct output
+/obj/item/rbmk/fuel_rod/plasma/process_rod()
+    return list(
+        "flux" = 0,
+        "radiation" = 0,
+        "thermal_mult" = thermal_multiplier,
+        "flux_mult" = flux_multiplier
+    )

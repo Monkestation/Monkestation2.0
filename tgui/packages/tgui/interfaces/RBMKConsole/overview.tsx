@@ -1,15 +1,14 @@
-import { useBackend } from 'tgui/backend';
-import { Section, Flex, ProgressBar, LabeledControls } from 'tgui/components';
-import { RoundGauge } from 'tgui/components/RoundGauge';
+import { useBackend } from '../backend';
+import { Section, Flex, ProgressBar, LabeledControls } from '../components';
+import { RoundGauge } from '../components/RoundGauge';
+
 
 export const RBMKOverview = () => {
   const { data } = useBackend<any>();
 
+  /* ---- Core Telemetry ---- */
   const temperature = Number(data?.temperature ?? 0);
   const maxTemp = Number(data?.max_temp ?? 20000);
-
-  const instability = Number(data?.instability ?? 0);
-  const maxInstability = Number(data?.max_instability ?? 500);
 
   const radiation = Number(data?.radiation ?? 0);
   const maxRadiation = Number(data?.max_radiation ?? 500);
@@ -17,14 +16,20 @@ export const RBMKOverview = () => {
   const flux = Number(data?.flux ?? 0);
   const maxFlux = Number(data?.max_flux ?? 500);
 
+  const voidCoefficient = Number(data?.void_coefficient ?? 0);
+
   const integrity = Number(data?.integrity ?? 0);
   const maxIntegrity = Math.max(1, Number(data?.max_integrity ?? 100));
-  const pct = Math.max(0, Math.min(100, Math.round((integrity / maxIntegrity) * 100)));
+  const pct = Math.max(
+    0,
+    Math.min(100, Math.round((integrity / maxIntegrity) * 100))
+  );
 
   return (
     <Flex direction="column" gap={1}>
       <Section title="Reactor Parameters">
         <LabeledControls justify="space-around" wrap>
+
           {/* Temperature */}
           <LabeledControls.Item label="Temperature">
             <RoundGauge
@@ -32,7 +37,7 @@ export const RBMKOverview = () => {
               value={temperature}
               minValue={0}
               maxValue={maxTemp}
-              format={(v) => `${v} K`}
+              format={(v) => `${v.toFixed(0)} K`}
               ranges={{
                 good: [0, maxTemp * 0.3],
                 yellow: [maxTemp * 0.3, maxTemp * 0.7],
@@ -41,18 +46,18 @@ export const RBMKOverview = () => {
             />
           </LabeledControls.Item>
 
-          {/* Instability */}
-          <LabeledControls.Item label="Instability">
+          {/* Void Coefficient */}
+          <LabeledControls.Item label="Void Coefficient">
             <RoundGauge
               size={2}
-              value={instability}
-              minValue={0}
-              maxValue={maxInstability}
-              format={(v) => `${v.toFixed(0)}`}
+              value={voidCoefficient}
+              minValue={-0.5}
+              maxValue={0.6}
+              format={(v) => v.toFixed(3)}
               ranges={{
-                good: [0, maxInstability * 0.4],
-                yellow: [maxInstability * 0.7, maxInstability * 0.85],
-                bad: [maxInstability * 0.85, maxInstability],
+                good: [-0.5, 0],
+                yellow: [0, 0.3],
+                bad: [0.3, 0.6],
               }}
             />
           </LabeledControls.Item>
@@ -64,7 +69,7 @@ export const RBMKOverview = () => {
               value={radiation}
               minValue={0}
               maxValue={maxRadiation}
-              format={(v) => `${v} mSv`}
+              format={(v) => `${v.toFixed(1)} mSv`}
               ranges={{
                 good: [0, maxRadiation * 0.4],
                 yellow: [maxRadiation * 0.4, maxRadiation * 0.7],
@@ -80,7 +85,7 @@ export const RBMKOverview = () => {
               value={flux}
               minValue={0}
               maxValue={maxFlux}
-              format={(v) => `${v.toFixed(0)}`}
+              format={(v) => v.toFixed(0)}
               ranges={{
                 good: [0, maxFlux * 0.5],
                 yellow: [maxFlux * 0.5, maxFlux * 0.8],
@@ -88,10 +93,11 @@ export const RBMKOverview = () => {
               }}
             />
           </LabeledControls.Item>
+
         </LabeledControls>
       </Section>
 
-      {/* Integrity Bar */}
+      {/* Integrity */}
       <Section title="Reactor Integrity">
         <ProgressBar
           value={pct}

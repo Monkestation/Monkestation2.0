@@ -1,16 +1,14 @@
 /*************************************************************
- * RBMK Reactor Console (Monke TG-Style Final Revision, Cleaned)
- * - Handles reactor monitoring and limited control
- * - Visuals handled strictly via icon_state
- * - Fully clickable 3×1 bounds layout
- * - Clean variable naming for maintainability
+ * RBMK Reactor Console (2025 Linear RBMK Final Version)
+ * Medium clarity variable naming — no single letter vars.
  *************************************************************/
+
 
 /*************************************************************
- * Console Core Definition
+ * Console Definition
  *************************************************************/
 
-/// Primary control console
+/// RBMK control console
 /obj/machinery/computer/rbmk_console
     name = "RBMK Reactor Console"
     desc = "A console used to monitor and control an RBMK nuclear reactor."
@@ -19,7 +17,6 @@
     density = TRUE
     anchored = TRUE
 
-    // --- Bounds-based 3×1 layout ---
     bound_width = 96
     bound_height = 32
     bound_x = -32
@@ -33,11 +30,12 @@
     var/obj/machinery/rbmk/reactor/linked_reactor = null
 
 
+
 /*************************************************************
  * Initialization / Cleanup
  *************************************************************/
 
-/// Initialize console
+/// Startup
 /obj/machinery/computer/rbmk_console/Initialize(mapload)
     . = ..()
     auto_link()
@@ -49,72 +47,81 @@
     return ..()
 
 
+
 /*************************************************************
- * Linking & Visuals
+ * Reactor Linking & Console Visual State
  *************************************************************/
 
-/// Automatically link to nearest reactor in range
+/// Automatically link to nearest RBMK reactor
 /obj/machinery/computer/rbmk_console/proc/auto_link()
     linked_reactor = null
-    var/shortest_distance = 999
+    var/shortest_distance_found = 999
 
-    for (var/obj/machinery/rbmk/reactor/reactorCandidate in range(7, src))
-        var/distance = get_dist(src, reactorCandidate)
-        if (distance < shortest_distance)
-            linked_reactor = reactorCandidate
-            shortest_distance = distance
+    for (var/obj/machinery/rbmk/reactor/R in range(7, src))
+        var/current_distance = get_dist(src, R)
+        if (current_distance < shortest_distance_found)
+            shortest_distance_found = current_distance
+            linked_reactor = R
 
     update_icon()
 
-/// Update visuals based on reactor integrity
+/// Update console icon appearance based on reactor integrity
 /obj/machinery/computer/rbmk_console/update_icon()
     . = ..()
+
     if (!linked_reactor)
         icon_state = "reactorcontrol-1"
         return
 
-    var/currentIntegrity = linked_reactor.reactor_integrity
-    var/maxIntegrity = linked_reactor.max_reactor_integrity
+    var/integrity_value = linked_reactor.reactor_integrity
+    var/max_integrity_value = linked_reactor.max_reactor_integrity
 
-    if (currentIntegrity >= (maxIntegrity * 0.7))
+    if (integrity_value >= max_integrity_value * 0.7)
         icon_state = "reactorcontrol-1"
-    else if (currentIntegrity >= (maxIntegrity * 0.4))
+    else if (integrity_value >= max_integrity_value * 0.4)
         icon_state = "reactorcontrol-2"
     else
         icon_state = "reactorcontrol-3"
 
 
+
 /*************************************************************
- * TGUI / UI Layer
+ * UI / TGUI Framework
  *************************************************************/
 
-/// Use global physical state
+/// physical-only UI state
 /obj/machinery/computer/rbmk_console/ui_state(mob/user)
     return GLOB.physical_state
 
-/obj/machinery/computer/rbmk_console/ui_status(mob/user)
-    return ..()
-
+/// Open TGUI
 /obj/machinery/computer/rbmk_console/ui_interact(mob/user, datum/tgui/ui)
     . = ..()
     if (.) return .
+
     ui = SStgui.try_update_ui(user, src, ui)
     if (!ui)
         ui = new(user, src, "RBMKConsole", name)
         ui.open()
+
     return ui
 
 
+
 /*************************************************************
- * UI Data Export (Clean 2-decimal Output)
+ * Helper Utilities
  *************************************************************/
 
-/// Round helper for 2-decimal precision
-/proc/rbmk_round2(x)
-    return round(x, 0.01)
+/// round to 0.01 precision
+/proc/rbmk_round2(number_value)
+    return round(number_value, 0.01)
 
 
-/// Main console → UI payload
+
+/*************************************************************
+ * UI DATA EXPORT (Telemetry)
+ *************************************************************/
+
+/// Export reactor telemetry to TGUI
 /obj/machinery/computer/rbmk_console/ui_data(mob/user)
     var/list/data = list()
 
@@ -122,176 +129,154 @@
         data["status"] = "No reactor linked"
         return data
 
-    // --- Primary telemetry (rounded to 2 decimals) ---
-    data["control_rods"]   = rbmk_round2(linked_reactor.control_rod_depth)
-    data["running"]        = linked_reactor.running
-    data["temperature"]    = rbmk_round2(linked_reactor.temperature)
-    data["instability"]    = rbmk_round2(linked_reactor.instability)
-    data["radiation"]      = rbmk_round2(linked_reactor.radiation)
-    data["flux"]           = rbmk_round2(linked_reactor.flux)
-    data["integrity"]      = rbmk_round2(linked_reactor.reactor_integrity)
-    data["max_integrity"]  = linked_reactor.max_reactor_integrity
+    data["control_rods"]     = rbmk_round2(linked_reactor.control_rod_depth)
+    data["max_control_rod"]  = RBMK_CONTROL_ROD_MAX
+    data["running"]          = linked_reactor.running
+    data["scrammed"]         = linked_reactor.scrammed
+    data["temperature"]      = rbmk_round2(linked_reactor.temperature)
+    data["radiation"]        = rbmk_round2(linked_reactor.radiation)
+    data["flux"]             = rbmk_round2(linked_reactor.flux)
+    data["void_coefficient"] = rbmk_round2(linked_reactor.void_coefficient)
+    data["integrity"]        = rbmk_round2(linked_reactor.reactor_integrity)
+    data["max_integrity"]    = linked_reactor.max_reactor_integrity
 
-    // --- History data ---
+    /* ---- Coolant / Valves ---- */
+    data["inlet_open"]  = linked_reactor.inlet_open
+    data["outlet_open"] = linked_reactor.outlet_open
+
+    data["inlet_rate"] = linked_reactor.inlet_rate
+    data["inlet_min"]  = RBMK_INLET_RATE_MIN
+    data["inlet_max"]  = RBMK_INLET_RATE_MAX
+
+    data["outlet_target_pressure"] = linked_reactor.outlet_target_pressure
+    data["outlet_pressure_max"]    = RBMK_OUTLET_PRESSURE_MAX
+
+    data["inlet_pressure"]  = linked_reactor.pressure
+    data["outlet_pressure"] = linked_reactor.pressure
+
     data["pressure"] = list()
-    for (var/p in linked_reactor.coolant_pressure_history)
-        data["pressure"] += rbmk_round2(p)
+    for (var/pressure_value in linked_reactor.coolant_pressure_history)
+        data["pressure"] += rbmk_round2(pressure_value)
 
-    data["moderator"] = list()
-    for (var/m in linked_reactor.moderator_history)
-        data["moderator"] += rbmk_round2(m)
-
-    /*************************************************************
-     * Rod Data
-     *************************************************************/
+    /* ---- Rod Inventory ---- */
     var/list/rods_list = list()
 
-    for (var/slotIndex = 1, slotIndex <= linked_reactor.max_normal_slots, slotIndex++)
-        var/obj/item/rbmk/fuel_rod/normalRod = (slotIndex <= length(linked_reactor.normal_slots)) ? linked_reactor.normal_slots[slotIndex] : null
+    for (var/slot_index = 1, slot_index <= linked_reactor.max_normal_slots, slot_index++)
+        var/obj/item/rbmk/fuel_rod/rod_reference = null
+        if (slot_index <= length(linked_reactor.normal_slots))
+            rod_reference = linked_reactor.normal_slots[slot_index]
+
         rods_list += list(list(
-            "type" = normalRod ? normalRod.name : "Empty",
-            "color" = normalRod ? normalRod.rod_color : "grey",
-            "depleted" = (normalRod && !normalRod.active),
-            "slot_kind" = "normal",
-            "slot_index" = slotIndex
+            "type"       = rod_reference ? rod_reference.name : "Empty",
+            "color"      = rod_reference ? rod_reference.rod_color : "grey",
+            "depleted"   = rod_reference && !rod_reference.active,
+            "slot_kind"  = "normal",
+            "slot_index" = slot_index
         ))
 
-    for (var/specialIndex = 1, specialIndex <= linked_reactor.max_special_slots, specialIndex++)
-        var/obj/item/rbmk/fuel_rod/specialRod = (specialIndex <= length(linked_reactor.special_slots)) ? linked_reactor.special_slots[specialIndex] : null
+    for (var/special_index = 1, special_index <= linked_reactor.max_special_slots, special_index++)
+        var/obj/item/rbmk/fuel_rod/special_rod_reference = null
+        if (special_index <= length(linked_reactor.special_slots))
+            special_rod_reference = linked_reactor.special_slots[special_index]
+
         rods_list += list(list(
-            "type" = specialRod ? specialRod.name : "Empty",
-            "color" = specialRod ? specialRod.rod_color : "grey",
-            "depleted" = (specialRod && !specialRod.active),
-            "slot_kind" = "special",
-            "slot_index" = specialIndex
+            "type"       = special_rod_reference ? special_rod_reference.name : "Empty",
+            "color"      = special_rod_reference ? special_rod_reference.rod_color : "grey",
+            "depleted"   = special_rod_reference && !special_rod_reference.active,
+            "slot_kind"  = "special",
+            "slot_index" = special_index
         ))
 
     data["rods"] = rods_list
-
-    /*************************************************************
-     * Coolant & Pressure Data
-     *************************************************************/
-    data["inlet_open"]  = linked_reactor.inlet_open
-    data["outlet_open"] = linked_reactor.outlet_open
-    data["inlet_rate"]  = rbmk_round2(linked_reactor.inlet_rate)
-    data["inlet_min"]   = RBMK_INLET_RATE_MIN
-    data["inlet_max"]   = RBMK_INLET_RATE_MAX
-    data["outlet_target_pressure"] = rbmk_round2(linked_reactor.outlet_target_pressure)
-    data["outlet_pressure_max"]    = RBMK_OUTLET_PRESSURE_MAX
-    data["pressure_now"]           = rbmk_round2(linked_reactor.pressure)
-
-    /*************************************************************
-     * Gas Composition Snapshot (2 decimals)
-     *************************************************************/
-    var/list/gas_comp = list()
-    if (linked_reactor.coolant_internal)
-        var/datum/gas_mixture/mix = linked_reactor.coolant_internal
-        var/total_moles = mix.total_moles()
-
-        if (total_moles > 0)
-            for (var/gas_path in mix.gases)
-                var/moles = mix.gases[gas_path][MOLES]
-                var/percent = rbmk_round2((moles / total_moles) * 100)
-                var/datum/gas/gasType = new gas_path()
-                gas_comp[gasType.id] = list(
-                    "percent" = percent
-                )
-
-    data["gas_composition"] = gas_comp
-
     return data
 
 
+
 /*************************************************************
- * UI Actions
+ * UI ACTIONS
  *************************************************************/
 
-/// Handle UI input actions
+/// Handle UI actions
 /obj/machinery/computer/rbmk_console/ui_act(action, params)
     . = ..()
-    if (.) return .
+    if (.)
+        return .
 
     if (!linked_reactor)
         if (action == "rescan")
             auto_link()
             return TRUE
-        return
+        return FALSE
 
-    switch(action)
 
-        if ("scram")
-            linked_reactor.control_rod_depth = RBMK_CONTROL_ROD_MAX
-            linked_reactor.running = FALSE
-            visible_message(span_danger("[name]: Emergency SCRAM! All control rods fully inserted!"))
-            linked_reactor.update_linked_consoles()
-            return TRUE
+    /* ---- Control Rods ---- */
 
-        if ("rod_up")
-            linked_reactor.control_rod_depth = max(linked_reactor.control_rod_depth - 5, 0)
-            if (linked_reactor.control_rod_depth < RBMK_CONTROL_ROD_MAX)
-                linked_reactor.running = TRUE
-            linked_reactor.update_linked_consoles()
-            return TRUE
+    if (action == "rod_up")
+        linked_reactor.control_rod_depth = max(linked_reactor.control_rod_depth - 5, 0)
+        linked_reactor.running = TRUE
+        linked_reactor.update_linked_consoles()
+        return TRUE
 
-        if ("rod_down")
-            linked_reactor.control_rod_depth = min(linked_reactor.control_rod_depth + 5, RBMK_CONTROL_ROD_MAX)
-            if (linked_reactor.control_rod_depth < RBMK_CONTROL_ROD_MAX)
-                linked_reactor.running = TRUE
-            linked_reactor.update_linked_consoles()
-            return TRUE
+    if (action == "rod_down")
+        linked_reactor.control_rod_depth = min(
+            linked_reactor.control_rod_depth + 5,
+            RBMK_CONTROL_ROD_MAX
+        )
+        linked_reactor.running = TRUE
+        linked_reactor.update_linked_consoles()
+        return TRUE
 
-        if ("set_rods")
-            var/desiredDepth = clamp(text2num(params["depth"]), 0, RBMK_CONTROL_ROD_MAX)
-            linked_reactor.control_rod_depth = desiredDepth
-            if (linked_reactor.control_rod_depth < RBMK_CONTROL_ROD_MAX)
-                linked_reactor.running = TRUE
-            linked_reactor.update_linked_consoles()
-            return TRUE
+    if (action == "set_rods")
+        var/requested_depth = clamp(
+            text2num(params["depth"]),
+            0,
+            RBMK_CONTROL_ROD_MAX
+        )
+        linked_reactor.control_rod_depth = requested_depth
+        linked_reactor.running = (requested_depth < RBMK_CONTROL_ROD_MAX)
+        linked_reactor.update_linked_consoles()
+        return TRUE
 
-        if ("remove_rod")
-            var/slotKind = params?["kind"]
-            var/slotIndex = clamp(text2num(params?["index"]), 1, 1000)
-            var/obj/item/rbmk/fuel_rod/rodToEject = null
+    if (action == "scram")
+        linked_reactor.force_scram()
+        return TRUE
 
-            if (slotKind == "normal" && slotIndex <= length(linked_reactor.normal_slots))
-                rodToEject = linked_reactor.normal_slots[slotIndex]
-                if (rodToEject)
-                    linked_reactor.normal_slots.Cut(slotIndex, slotIndex + 1)
-                    rodToEject.loc = get_turf(linked_reactor)
-                    visible_message(span_notice("[name]: Ejected [rodToEject.name] from normal slot #[slotIndex]!"))
 
-            else if (slotKind == "special" && slotIndex <= length(linked_reactor.special_slots))
-                rodToEject = linked_reactor.special_slots[slotIndex]
-                if (rodToEject)
-                    linked_reactor.special_slots.Cut(slotIndex, slotIndex + 1)
-                    rodToEject.loc = get_turf(linked_reactor)
-                    visible_message(span_notice("[name]: Ejected [rodToEject.name] from special slot #[slotIndex]!"))
+    /* ---- Coolant Controls ---- */
 
-            linked_reactor.update_linked_consoles()
-            return TRUE
+    if (action == "toggle_inlet")
+        linked_reactor.inlet_open = !linked_reactor.inlet_open
+        linked_reactor.update_linked_consoles()
+        return TRUE
 
-        if ("set_inlet_rate")
-            var/newRate = clamp(text2num(params["rate"]), RBMK_INLET_RATE_MIN, RBMK_INLET_RATE_MAX)
-            linked_reactor.set_inlet_rate(newRate)
-            linked_reactor.update_linked_consoles()
-            return TRUE
+    if (action == "set_inlet_rate")
+        linked_reactor.inlet_rate = clamp(
+            text2num(params["rate"]),
+            RBMK_INLET_RATE_MIN,
+            RBMK_INLET_RATE_MAX
+        )
+        linked_reactor.update_linked_consoles()
+        return TRUE
 
-        if ("set_outlet_pressure")
-            var/newPressure = clamp(text2num(params["pressure"]), 0, RBMK_OUTLET_PRESSURE_MAX)
-            linked_reactor.set_outlet_pressure(newPressure)
-            linked_reactor.update_linked_consoles()
-            return TRUE
+    if (action == "toggle_outlet")
+        linked_reactor.outlet_open = !linked_reactor.outlet_open
+        linked_reactor.update_linked_consoles()
+        return TRUE
 
-        if ("toggle_inlet")
-            linked_reactor.toggle_inlet()
-            return TRUE
+    if (action == "set_outlet_pressure")
+        linked_reactor.outlet_target_pressure = clamp(
+            text2num(params["pressure"]),
+            0,
+            RBMK_OUTLET_PRESSURE_MAX
+        )
+        linked_reactor.update_linked_consoles()
+        return TRUE
 
-        if ("toggle_outlet")
-            linked_reactor.toggle_outlet()
-            return TRUE
 
-        if ("rescan")
-            auto_link()
-            return TRUE
+    /* ---- Utility ---- */
+
+    if (action == "rescan")
+        auto_link()
+        return TRUE
 
     return FALSE
