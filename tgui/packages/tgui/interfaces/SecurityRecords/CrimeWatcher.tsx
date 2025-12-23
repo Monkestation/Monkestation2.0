@@ -254,7 +254,6 @@ const CrimeAuthor = (props) => {
         Details
         <TextArea
           fluid
-          height={4}
           maxLength={1025}
           multiline
           onChange={(_, value) => setCrimeDetails(value)}
