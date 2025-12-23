@@ -57,6 +57,7 @@ GLOBAL_PROTECT(href_token)
 			QDEL_IN(src, 0)
 			CRASH("Admin proc call creation of admin datum")
 		return
+
 	if(!ckey)
 		QDEL_IN(src, 0)
 		CRASH("Admin datum created without a ckey")
@@ -84,7 +85,7 @@ GLOBAL_PROTECT(href_token)
 		message_admins("[key_name_admin(usr)][msg]")
 		log_admin("[key_name(usr)][msg]")
 		return QDEL_HINT_LETMELIVE
-	. = ..()
+	return ..()
 
 /datum/admins/proc/activate()
 	if(IsAdminAdvancedProcCall())

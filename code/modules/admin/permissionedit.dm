@@ -457,24 +457,35 @@ ADMIN_VERB(edit_admin_permissions, R_PERMISSIONS, FALSE, "Permissions Panel", "E
 #undef RANK_DONE
 
 /datum/admins/proc/change_admin_flags(admin_ckey, admin_key, datum/admins/admin_holder)
+	if(!check_rights(R_PERMISSIONS))
+		message_admins("[key_name_admin(usr)] attempted to edit admin permissions without sufficient rights.")
+		log_admin("[key_name(usr)] attempted to edit admin permissions without sufficient rights.")
+		return
+
+	if(IsAdminAdvancedProcCall())
+		to_chat(usr, "<span class='admin prefix'>Admin Edit blocked: Advanced ProcCall detected.</span>", confidential = TRUE)
+		return
+
+	var/old_flags = admin_holder.rank_flags()
 	var/new_flags = input_bitfield(
 		usr,
 		"Admin rights<br>This will affect only the current admin [admin_key]",
 		"admin_flags",
-		admin_holder.rank_flags(),
+		old_flags,
 		350,
 		590,
 		allowed_edit_list = usr.client.holder.can_edit_rights_flags(),
 	)
 
-	admin_holder.disassociate()
+	if(isnull(new_flags) || old_flags == new_flags)
+		return
 
-	if (findtext(admin_holder.rank_names(), "([admin_ckey])"))
+	admin_holder.disassociate()
+	if(findtext(admin_holder.rank_names(), "([admin_ckey])"))
 		var/datum/admin_rank/rank = admin_holder.ranks[1]
 		rank.rights = new_flags
 		rank.include_rights = new_flags
 		rank.exclude_rights = NONE
-		rank.can_edit_rights = rank.can_edit_rights
 	else
 		// Not a modified subrank, need to duplicate the admin_rank datum to prevent modifying others too.
 		var/datum/admin_rank/new_admin_rank = new(

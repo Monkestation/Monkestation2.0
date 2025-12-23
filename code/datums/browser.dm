@@ -330,13 +330,13 @@
 		return
 	var/list/pickerlist = list()
 	for (var/i in GLOB.bitfields[bitfield])
-		var/can_edit = 1
+		var/can_edit = TRUE
 		if(!isnull(allowed_edit_list) && !(allowed_edit_list & GLOB.bitfields[bitfield][i]))
-			can_edit = 0
+			can_edit = FALSE
 		if (current_value & GLOB.bitfields[bitfield][i])
-			pickerlist += list(list("checked" = 1, "value" = GLOB.bitfields[bitfield][i], "name" = i, "allowed_edit" = can_edit))
+			pickerlist += list(list("checked" = TRUE, "value" = GLOB.bitfields[bitfield][i], "name" = i, "allowed_edit" = can_edit))
 		else
-			pickerlist += list(list("checked" = 0, "value" = GLOB.bitfields[bitfield][i], "name" = i, "allowed_edit" = can_edit))
+			pickerlist += list(list("checked" = FALSE, "value" = GLOB.bitfields[bitfield][i], "name" = i, "allowed_edit" = can_edit))
 	var/list/result = presentpicker(User, "", title, Button1="Save", Button2 = "Cancel", Timeout=FALSE, values = pickerlist, width = nwidth, height = nheight, slidecolor = nslidecolor)
 	if (islist(result))
 		if (result["button"] == 2) // If the user pressed the cancel button
