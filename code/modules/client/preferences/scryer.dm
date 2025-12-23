@@ -18,6 +18,7 @@
 #define CALL_RINGTONE_LANCER "Lancer."
 #define CALL_RINGTONE_SPIDER_DANCE "Spider Dance"
 #define CALL_RINGTONE_STYAOS "Six Trillion Years and Overnight Story"
+#define CALL_RINGTONE_THIRD_SANCTUARY "Third Sanctuary"
 #define CALL_RINGTONE_YUMENO "YU.ME.NO"
 
 
@@ -35,6 +36,7 @@ GLOBAL_LIST_INIT(call_ringtones, list(
 	CALL_RINGTONE_LANCER = list('sound/machines/call_ringtones/lancer.ogg', 20.3 SECONDS),
 	CALL_RINGTONE_SPIDER_DANCE = list('sound/machines/call_ringtones/spider_dance.ogg', 16.1 SECONDS),
 	CALL_RINGTONE_STYAOS = list('sound/machines/call_ringtones/trillion_years_overnight_story.ogg', 11.9 SECONDS),
+	CALL_RINGTONE_THIRD_SANCTUARY = list('sound/machines/call_ringtones/third_sanctuary.ogg', 12.7 SECONDS),
 	CALL_RINGTONE_YUMENO = list('sound/machines/call_ringtones/yu_me_no.ogg', 28.2 SECONDS),
 ))
 
