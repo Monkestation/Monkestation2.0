@@ -123,9 +123,7 @@ const NtosLifelineContent = () => {
             <Input
               placeholder="Search for name..."
               style={{ flex: 1 }}
-              onInput={(e: { target: HTMLTextAreaElement }) =>
-                setSearchQuery((e.target as HTMLTextAreaElement).value)
-              }
+              onInput={(e, value) => setSearchQuery(e.target.value)}
             />
             <Button selected="True" onClick={cycleSortBy}>
               {SORT_NAMES[sortBy]}

@@ -1,4 +1,3 @@
-import { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
 import { Button, ProgressBar, Section } from '../components';
 import { Window } from '../layouts';

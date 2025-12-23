@@ -14,7 +14,7 @@ export type BaseInputProps<TElement = HTMLInputElement> = Partial<{
   /** Disables the input. Outlined in gray */
   disabled: boolean;
   /**
-   * Whether to debounce the onChange event.
+   * Whether to debounce the onInput event.
    *
    * Do this if it's performing expensive ops on each input, like filtering or
    * sending the value immediate to Byond (via act).
@@ -37,7 +37,7 @@ export type TextInputProps<TElement = HTMLInputElement> = Partial<{
   /** Fires each time focus leaves the input, including if Esc or Enter are pressed */
   onBlur: (value: string) => void;
   /** Fires each time the input has been changed */
-  onChange: (event: React.ChangeEvent<TElement>, value: string) => void;
+  onInput: (event: React.ChangeEvent<TElement>, value: string) => void;
   /** Fires once the enter key is pressed */
   onEnter: (event: React.KeyboardEvent<TElement>, value: string) => void;
   /** Fires once the escape key is pressed */
@@ -64,7 +64,7 @@ export type TextInputProps<TElement = HTMLInputElement> = Partial<{
    *    </Button>
    *    <Input
    *      value={value}
-   *      onChange={setValue} />
+   *      onInput={setValue} />
    *    <Button onClick={() => setValue('')}>
    *      Clear
    *    </Button>
@@ -98,7 +98,7 @@ type Props = Partial<{
   TextInputProps;
 
 // Prevent input parent change event from being called too often
-const inputDebounce = debounce((onChange: () => void) => onChange(), 250);
+const inputDebounce = debounce((onInput: () => void) => onInput(), 250);
 
 /**
  * ## Input
@@ -119,7 +119,7 @@ export function Input(props: Props) {
     maxLength,
     monospace,
     onBlur,
-    onChange,
+    onInput,
     onEnter,
     onEscape,
     onKeyDown,
@@ -137,12 +137,12 @@ export function Input(props: Props) {
   const [innerValue, setInnerValue] = useState(value ?? '');
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>): void {
-    const value = event.currentTarget.value;
+    const value = (event.target as HTMLInputElement).value;
     setInnerValue(value);
     if (expensive) {
-      inputDebounce(() => onChange?.(event, value));
+      inputDebounce(() => onInput?.(event, value));
     } else {
-      onChange?.(event, value);
+      onInput?.(event, value);
     }
   }
 
@@ -151,18 +151,18 @@ export function Input(props: Props) {
 
     if (event.key === KEY.Enter) {
       event.preventDefault();
-      onEnter?.(event, event.currentTarget.value);
+      onEnter?.(event, (event.target as HTMLInputElement).value);
       if (selfClear) {
         setInnerValue('');
       }
-      event.currentTarget.blur();
+      (event.target as HTMLInputElement).blur();
       return;
     }
 
     if (isEscape(event.key)) {
       event.preventDefault();
-      onEscape?.(event, event.currentTarget.value);
-      event.currentTarget.blur();
+      onEscape?.(event, (event.target as HTMLInputElement).value);
+      (event.target as HTMLInputElement).blur();
     }
   }
 
@@ -193,16 +193,6 @@ export function Input(props: Props) {
     }
   }, [value]);
 
-  const boxProps = computeBoxProps(rest);
-  const clsx = classes([
-    'Input',
-    disabled && 'Input--disabled',
-    fluid && 'Input--fluid',
-    monospace && 'Input--monospace',
-    computeBoxClassName<HTMLInputElement>(rest),
-    className,
-  ]);
-
   return (
     <Box
       className={classes([
@@ -210,6 +200,7 @@ export function Input(props: Props) {
         disabled && 'Input--disabled',
         fluid && 'Input--fluid',
         monospace && 'Input--monospace',
+        computeBoxClassName<HTMLInputElement>(rest),
         className,
       ])}
       {...computeBoxProps(rest)}
@@ -220,7 +211,7 @@ export function Input(props: Props) {
         disabled={disabled}
         maxLength={maxLength}
         onBlur={() => onBlur?.(innerValue)}
-        onChange={handleChange}
+        onInput={handleChange}
         onKeyDown={handleKeyDown}
         placeholder={placeholder}
         ref={inputRef as React.RefObject<HTMLInputElement>}
