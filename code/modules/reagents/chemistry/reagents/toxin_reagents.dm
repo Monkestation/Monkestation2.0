@@ -285,7 +285,7 @@
 			affected_mob.adjust_drowsiness(2 SECONDS * REM * seconds_per_tick)
 			affected_mob.adjust_slurring(6 SECONDS * REM * seconds_per_tick)
 		if(5 to 8)
-			affected_mob.stamina.adjust(-20 * REM * seconds_per_tick, 0)
+			affected_mob.stamina.adjust(-40 * REM * seconds_per_tick, 0)
 		if(9 to INFINITY)
 			if(affected_mob.stat != DEAD)
 				affected_mob.fakedeath(type)
@@ -807,7 +807,7 @@
 /datum/reagent/toxin/sodium_thiopental/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	if(current_cycle >= 10)
 		affected_mob.Sleeping(40 * REM * seconds_per_tick)
-	affected_mob.stamina.adjust(-5 * REM * seconds_per_tick, 0)
+	affected_mob.stamina.adjust(-10 * REM * seconds_per_tick, 0)
 	..()
 	return TRUE
 
@@ -1124,7 +1124,7 @@
 	return ..()
 
 /datum/reagent/toxin/bonehurtingjuice/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	affected_mob.stamina.adjust(-3.75 * REM * seconds_per_tick, 0)
+	affected_mob.stamina.adjust(-7.5 * REM * seconds_per_tick, 0)
 	if(SPT_PROB(10, seconds_per_tick))
 		switch(rand(1, 3))
 			if(1)

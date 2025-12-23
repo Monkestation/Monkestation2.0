@@ -538,15 +538,19 @@
 	inverse_chem = /datum/reagent/inverse/corazargh
 	inverse_chem_val = 0.4
 	metabolized_traits = list(TRAIT_BATON_RESISTANCE)
+	var/purity_normalization_on_metabolize = 1
 
 /datum/reagent/medicine/ephedrine/on_mob_metabolize(mob/living/affected_mob)
-	..()
+	. = ..()
 	affected_mob.add_movespeed_modifier(/datum/movespeed_modifier/reagent/ephedrine)
+	purity_normalization_on_metabolize = normalise_creation_purity()
+	affected_mob.stamina.regen_rate += 1 * REM * purity_normalization_on_metabolize
 
 /datum/reagent/medicine/ephedrine/on_mob_end_metabolize(mob/living/affected_mob)
 	affected_mob.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/ephedrine)
 	REMOVE_TRAIT(affected_mob, TRAIT_BATON_RESISTANCE, type)
-	..()
+	affected_mob.stamina.regen_rate -= 1 * REM * purity_normalization_on_metabolize
+	return ..()
 
 /datum/reagent/medicine/ephedrine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	if(SPT_PROB(10 * (1-creation_purity), seconds_per_tick) && iscarbon(affected_mob))
@@ -556,7 +560,6 @@
 			affected_mob.set_jitter_if_lower(20 SECONDS)
 
 	affected_mob.AdjustAllImmobility(-20 * REM * seconds_per_tick * normalise_creation_purity())
-	affected_mob.stamina.adjust(0.5 * REM * seconds_per_tick * normalise_creation_purity(), TRUE)
 	..()
 	return TRUE
 
@@ -781,6 +784,16 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	metabolized_traits = list(TRAIT_NOCRITDAMAGE)
 
+/datum/reagent/medicine/epinephrine/on_mob_metabolize(mob/living/carbon/user)
+	. = ..()
+
+	user.stamina.regen_rate += 0.5 * REM
+
+/datum/reagent/medicine/epinephrine/on_mob_end_metabolize(mob/living/carbon/user)
+	user.stamina.regen_rate -= 0.5 * REM
+
+	return ..()
+
 /datum/reagent/medicine/epinephrine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = TRUE
 	if(holder.has_reagent(/datum/reagent/toxin/lexorin))
@@ -802,14 +815,13 @@
 			affected_mob.losebreath -= 2 * REM * seconds_per_tick
 	if(affected_mob.losebreath < 0)
 		affected_mob.losebreath = 0
-	affected_mob.stamina.adjust(0.25 * REM * seconds_per_tick, TRUE)
 	if(SPT_PROB(10, seconds_per_tick))
 		affected_mob.AdjustAllImmobility(-20)
 	..()
 
 /datum/reagent/medicine/epinephrine/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
 	if(SPT_PROB(18, REM * seconds_per_tick))
-		affected_mob.stamina.adjust(-1.25)
+		affected_mob.stamina.adjust(-2.5)
 		affected_mob.adjustToxLoss(1, FALSE, required_biotype = affected_biotype)
 		var/obj/item/organ/internal/lungs/affected_lungs = affected_mob.get_organ_slot(ORGAN_SLOT_LUNGS)
 		var/our_respiration_type = affected_lungs ? affected_lungs.respiration_type : affected_mob.mob_respiration_type
@@ -1078,7 +1090,7 @@
 
 /datum/reagent/medicine/stimulants/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
 	if(SPT_PROB(18, seconds_per_tick))
-		affected_mob.stamina.adjust(-1.25, FALSE)
+		affected_mob.stamina.adjust(-2.5, FALSE)
 		affected_mob.adjustToxLoss(1, FALSE, required_biotype = affected_biotype)
 		affected_mob.losebreath++
 		. = TRUE
@@ -1265,7 +1277,7 @@
 
 	if(SPT_PROB(10, seconds_per_tick))
 		affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1, 50, required_organ_flag = affected_organ_flags)
-	affected_mob.stamina.adjust(-1.25 * REM * seconds_per_tick, FALSE)
+	affected_mob.stamina.adjust(-2.5 * REM * seconds_per_tick, FALSE)
 	..()
 	return TRUE
 
@@ -1379,7 +1391,7 @@ MONKESTATION REMOVAL END
 	if(!overdosed) // We do not want any effects on OD
 		overdose_threshold = overdose_threshold + ((rand(-10, 10) / 10) * REM * seconds_per_tick) // for extra fun
 		metabolizer.AdjustAllImmobility(-5 * REM * seconds_per_tick)
-		metabolizer.stamina.adjust(0.25 * REM * seconds_per_tick, FALSE)
+		metabolizer.stamina.adjust(0.5 * REM * seconds_per_tick, FALSE)
 		metabolizer.set_jitter_if_lower(1 SECONDS * REM * seconds_per_tick)
 		metabolization_rate = 0.005 * REAGENTS_METABOLISM * rand(5, 20) // randomizes metabolism between 0.02 and 0.08 per second
 		. = TRUE

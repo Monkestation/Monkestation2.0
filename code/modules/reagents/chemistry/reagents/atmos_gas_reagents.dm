@@ -82,10 +82,10 @@
 
 /datum/reagent/nitrium_high_metabolization/on_mob_metabolize(mob/living/carbon/breather)
 	. = ..()
-	breather.stamina.regen_rate += 1
+	breather.stamina.regen_rate += 2 * REM
 
 /datum/reagent/nitrium_high_metabolization/on_mob_end_metabolize(mob/living/carbon/breather)
-	breather.stamina.regen_rate -= 1
+	breather.stamina.regen_rate -= 2 * REM
 	return ..()
 
 /datum/reagent/nitrium_high_metabolization/on_mob_life(mob/living/carbon/breather, seconds_per_tick, times_fired)
