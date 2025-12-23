@@ -4,7 +4,7 @@ import { Button, ProgressBar, Section } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
-  health: BooleanLike;
+  health: number;
 };
 
 export const ShipbreakerConsole = (props) => {

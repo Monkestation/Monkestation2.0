@@ -2,7 +2,7 @@ import { KEY, isEscape } from 'common/keys';
 import { classes } from 'common/react';
 import { debounce } from 'es-toolkit';
 import { RefObject, useRef, useState, useEffect } from 'react';
-import { BoxProps, computeBoxProps, computeBoxClassName } from './Box';
+import { BoxProps, computeBoxProps, computeBoxClassName, Box } from './Box';
 
 export type BaseInputProps<TElement = HTMLInputElement> = Partial<{
   /** Automatically focuses the input on mount */
@@ -204,20 +204,31 @@ export function Input(props: Props) {
   ]);
 
   return (
-    <input
-      {...boxProps}
-      autoComplete="off"
-      className={clsx}
-      disabled={disabled}
-      maxLength={maxLength}
-      onBlur={() => onBlur?.(innerValue)}
-      onChange={handleChange}
-      onKeyDown={handleKeyDown}
-      placeholder={placeholder}
-      ref={inputRef as React.RefObject<HTMLInputElement>}
-      spellCheck={spellcheck}
-      type="text"
-      value={innerValue}
-    />
+    <Box
+      className={classes([
+        'Input',
+        disabled && 'Input--disabled',
+        fluid && 'Input--fluid',
+        monospace && 'Input--monospace',
+        className,
+      ])}
+      {...computeBoxProps(rest)}
+    >
+      <div className="Input__baseline">.</div>
+      <input
+        autoComplete="off"
+        disabled={disabled}
+        maxLength={maxLength}
+        onBlur={() => onBlur?.(innerValue)}
+        onChange={handleChange}
+        onKeyDown={handleKeyDown}
+        placeholder={placeholder}
+        ref={inputRef as React.RefObject<HTMLInputElement>}
+        spellCheck={spellcheck}
+        type="text"
+        value={innerValue}
+        className="Input__input"
+      />
+    </Box>
   );
 }

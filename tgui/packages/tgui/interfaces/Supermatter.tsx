@@ -342,7 +342,7 @@ export const SupermatterContent = (props: SupermatterProps) => {
                     minValue={0}
                     maxValue={1}
                   >
-                    {toFixed(amount * 100, 2) + '%'}
+                    {`${toFixed(amount * 100, 2)}%`}
                   </ProgressBar>
                 }
                 detail={
