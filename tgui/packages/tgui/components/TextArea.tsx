@@ -59,6 +59,7 @@ export function TextArea(props: Props) {
     maxLength,
     monospace,
     onBlur,
+    onChange,
     onInput,
     onEnter,
     onEscape,
@@ -75,6 +76,8 @@ export function TextArea(props: Props) {
   const ourRef = useRef<HTMLTextAreaElement>(null);
   const textareaRef = ref ?? ourRef;
 
+  const inputFn = onInput ?? onChange ?? undefined;
+
   const [innerValue, setInnerValue] = useState(value ?? '');
 
   function handleBlur(_event: React.FocusEvent<HTMLTextAreaElement>) {
@@ -85,11 +88,11 @@ export function TextArea(props: Props) {
     const value = event.currentTarget.value;
     setInnerValue(value);
 
-    if (!onInput) return;
+    if (!inputFn) return;
     if (expensive) {
-      textareaDebounce(() => onInput(event, value));
+      textareaDebounce(() => inputFn(event, value));
     } else {
-      onInput(event, value);
+      inputFn(event, value);
     }
   }
 
