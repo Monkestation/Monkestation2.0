@@ -1,92 +1,41 @@
-/**
- * @file
- * @copyright 2020 Aleksej Komarov
- * @license MIT
- */
-
-import { BooleanLike, classes } from 'common/react';
-import { createElement, ReactNode } from 'react';
-
+/* eslint-disable func-style */
+import {
+  createElement,
+  CSSProperties,
+  DOMAttributes,
+  HTMLAttributes,
+  ReactNode,
+} from 'react';
 import { CSS_COLORS } from '../constants';
-import { logger } from '../logging';
+import { type BooleanLike, classes } from 'common/react';
 
-export type BoxProps = {
-  [key: string]: any;
-  as?: string;
-  className?: string | BooleanLike;
-  children?: ReactNode;
-  position?: string | BooleanLike;
-  overflow?: string | BooleanLike;
-  overflowX?: string | BooleanLike;
-  overflowY?: string | BooleanLike;
-  top?: string | BooleanLike;
-  bottom?: string | BooleanLike;
-  left?: string | BooleanLike;
-  right?: string | BooleanLike;
-  width?: string | BooleanLike;
-  minWidth?: string | BooleanLike;
-  maxWidth?: string | BooleanLike;
-  height?: string | BooleanLike;
-  minHeight?: string | BooleanLike;
-  maxHeight?: string | BooleanLike;
-  fontSize?: string | BooleanLike;
-  fontFamily?: string;
-  lineHeight?: string | BooleanLike;
-  opacity?: number;
-  textAlign?: string | BooleanLike;
-  verticalAlign?: string | BooleanLike;
-  inline?: BooleanLike;
-  bold?: BooleanLike;
-  italic?: BooleanLike;
-  nowrap?: BooleanLike;
-  preserveWhitespace?: BooleanLike;
-  m?: string | BooleanLike;
-  mx?: string | BooleanLike;
-  my?: string | BooleanLike;
-  mt?: string | BooleanLike;
-  mb?: string | BooleanLike;
-  ml?: string | BooleanLike;
-  mr?: string | BooleanLike;
-  p?: string | BooleanLike;
-  px?: string | BooleanLike;
-  py?: string | BooleanLike;
-  pt?: string | BooleanLike;
-  pb?: string | BooleanLike;
-  pl?: string | BooleanLike;
-  pr?: string | BooleanLike;
-  color?: string | BooleanLike;
-  textColor?: string | BooleanLike;
-  backgroundColor?: string | BooleanLike;
-  fillPositionedParent?: boolean;
-};
+type UnitMapper = (value: unknown) => string | undefined;
 
-// Don't you dare put this elsewhere
-type DangerDoNotUse = {
-  dangerouslySetInnerHTML?: {
-    __html: any;
-  };
-};
+// Do you get it? Are you feeling it now mr krabs?
+type StyleCourier = (
+  ...args: any[]
+) => (style: CSSProperties, value: unknown) => void;
 
 /**
  * Coverts our rem-like spacing unit into a CSS unit.
  */
-export const unit = (value: unknown) => {
+export const unit: UnitMapper = (value) => {
   if (typeof value === 'string') {
     // Transparently convert pixels into rem units
     if (value.endsWith('px')) {
-      return parseFloat(value) / 12 + 'rem';
+      return `${Number.parseFloat(value) / 12}rem`;
     }
     return value;
   }
   if (typeof value === 'number') {
-    return value + 'rem';
+    return `${value}rem`;
   }
 };
 
 /**
  * Same as `unit`, but half the size for integers numbers.
  */
-export const halfUnit = (value: unknown) => {
+export const halfUnit: UnitMapper = (value) => {
   if (typeof value === 'string') {
     return unit(value);
   }
@@ -95,73 +44,183 @@ export const halfUnit = (value: unknown) => {
   }
 };
 
-const isColorCode = (str: unknown) => !isColorClass(str);
+function isColorCode(str: unknown): boolean {
+  return !isColorClass(str);
+}
 
-const isColorClass = (str: unknown): boolean => {
+function isColorClass(str: unknown): boolean {
   return typeof str === 'string' && CSS_COLORS.includes(str as any);
-};
+}
 
-const mapRawPropTo = (attrName) => (style, value) => {
+const mapRawPropTo: StyleCourier = (attrName: string) => (style, value) => {
   if (typeof value === 'number' || typeof value === 'string') {
     style[attrName] = value;
   }
 };
 
-const mapUnitPropTo = (attrName, unit) => (style, value) => {
-  if (typeof value === 'number' || typeof value === 'string') {
-    style[attrName] = unit(value);
-  }
-};
-
-const mapBooleanPropTo = (attrName, attrValue) => (style, value) => {
-  if (value) {
-    style[attrName] = attrValue;
-  }
-};
-
-const mapDirectionalUnitPropTo = (attrName, unit, dirs) => (style, value) => {
-  if (typeof value === 'number' || typeof value === 'string') {
-    for (let i = 0; i < dirs.length; i++) {
-      style[attrName + '-' + dirs[i]] = unit(value);
+const mapUnitPropTo: StyleCourier =
+  (attrName: string, unitMapper: UnitMapper) => (style, value) => {
+    if (typeof value === 'number' || typeof value === 'string') {
+      style[attrName] = unitMapper(value);
     }
-  }
-};
+  };
 
-const mapColorPropTo = (attrName) => (style, value) => {
+const mapBooleanPropTo: StyleCourier =
+  (attrName: string, attrValue: unknown) => (style, value) => {
+    if (value) {
+      style[attrName] = attrValue;
+    }
+  };
+
+const mapDirectionalUnitPropTo: StyleCourier =
+  (attrName: string, unitMapper: UnitMapper, dirs: string[]) =>
+  (style, value) => {
+    if (typeof value === 'number' || typeof value === 'string') {
+      for (let i = 0; i < dirs.length; i++) {
+        style[attrName + dirs[i]] = unitMapper(value);
+      }
+    }
+  };
+
+const mapColorPropTo: StyleCourier = (attrName: string) => (style, value) => {
   if (isColorCode(value)) {
     style[attrName] = value;
   }
 };
 
+export type StringStyleMap = Partial<{
+  // Alignment
+
+  /** Align text inside the box. */
+  align: string | BooleanLike;
+  /** A direct mapping to `position` CSS property. */
+  position: string | BooleanLike;
+  /** Vertical align property. */
+  verticalAlign: string | BooleanLike;
+
+  // Color props
+
+  /** Sets background color. */
+  backgroundColor: string | BooleanLike;
+  /** Applies an atomic `color-<name>` class to the element. */
+  color: string | BooleanLike;
+  /** Opacity, from 0 to 1. */
+  opacity: string | BooleanLike;
+  /** Sets text color. */
+  textColor: string | BooleanLike;
+
+  // Margin
+
+  /** Margin on all sides. */
+  m: string | BooleanLike;
+  /** Bottom margin. */
+  mb: string | BooleanLike;
+  /** Left margin. */
+  ml: string | BooleanLike;
+  /** Right margin. */
+  mr: string | BooleanLike;
+  /** Top margin. */
+  mt: string | BooleanLike;
+  /** Horizontal margin. */
+  mx: string | BooleanLike;
+  /** Vertical margin. */
+  my: string | BooleanLike;
+
+  /** Bottom margin. */
+  bottom: string | BooleanLike;
+  /** Left margin. */
+  left: string | BooleanLike;
+  /** Right margin. */
+  right: string | BooleanLike;
+  /** Top margin. */
+  top: string | BooleanLike;
+
+  // Gap
+
+  /** Gap on all sides. */
+  g: string | BooleanLike;
+  /** Row gap. */
+  gr: string | BooleanLike;
+  /** Column gap. */
+  gc: string | BooleanLike;
+
+  // Overflow
+
+  /** Overflow property. */
+  overflow: string | BooleanLike;
+  /** Overflow-X property. */
+  overflowX: string | BooleanLike;
+  /** Overflow-Y property. */
+  overflowY: string | BooleanLike;
+
+  // Padding
+
+  /** Padding on all sides. */
+  p: string | BooleanLike;
+  /** Bottom padding. */
+  pb: string | BooleanLike;
+  /** Left padding. */
+  pl: string | BooleanLike;
+  /** Right padding. */
+  pr: string | BooleanLike;
+  /** Top padding. */
+  pt: string | BooleanLike;
+  /** Horizontal padding. */
+  px: string | BooleanLike;
+  /** Vertical padding. */
+  py: string | BooleanLike;
+
+  // Size
+
+  /** Box height. */
+  height: string | BooleanLike;
+  /** Box maximum height. */
+  maxHeight: string | BooleanLike;
+  /** Box maximum width. */
+  maxWidth: string | BooleanLike;
+  /** Box minimum height. */
+  minHeight: string | BooleanLike;
+  /** Box minimum width. */
+  minWidth: string | BooleanLike;
+  /** Box width. */
+  width: string | BooleanLike;
+
+  // Text
+
+  /** Font family. */
+  fontFamily: string | BooleanLike;
+  /** Font size. */
+  fontSize: string | BooleanLike;
+  /** Font weight. */
+  fontWeight: string | BooleanLike;
+  /** Directly affects the height of text lines. Useful for adjusting button height. */
+  lineHeight: string | BooleanLike;
+  /** Align text inside the box. */
+  textAlign: string | BooleanLike;
+}>;
+
 // String / number props
-const stringStyleMap = {
+export const stringStyleMap: Record<keyof StringStyleMap, any> = {
   align: mapRawPropTo('textAlign'),
+  backgroundColor: mapColorPropTo('backgroundColor'),
   bottom: mapUnitPropTo('bottom', unit),
+  // Color props
+  color: mapColorPropTo('color'),
   fontFamily: mapRawPropTo('fontFamily'),
   fontSize: mapUnitPropTo('fontSize', unit),
   fontWeight: mapRawPropTo('fontWeight'),
+  // Gap
+  g: mapUnitPropTo('gap', halfUnit),
+  gc: mapUnitPropTo('columnGap', halfUnit),
+  gr: mapUnitPropTo('rowGap', halfUnit),
   height: mapUnitPropTo('height', unit),
   left: mapUnitPropTo('left', unit),
-  maxHeight: mapUnitPropTo('maxHeight', unit),
-  maxWidth: mapUnitPropTo('maxWidth', unit),
-  minHeight: mapUnitPropTo('minHeight', unit),
-  minWidth: mapUnitPropTo('minWidth', unit),
-  opacity: mapRawPropTo('opacity'),
-  overflow: mapRawPropTo('overflow'),
-  overflowX: mapRawPropTo('overflowX'),
-  overflowY: mapRawPropTo('overflowY'),
-  position: mapRawPropTo('position'),
-  right: mapUnitPropTo('right', unit),
-  textAlign: mapRawPropTo('textAlign'),
-  top: mapUnitPropTo('top', unit),
-  verticalAlign: mapRawPropTo('verticalAlign'),
-  width: mapUnitPropTo('width', unit),
 
   lineHeight: (style, value) => {
     if (typeof value === 'number') {
-      style['lineHeight'] = value;
+      style.lineHeight = value;
     } else if (typeof value === 'string') {
-      style['lineHeight'] = unit(value);
+      style.lineHeight = unit(value);
     }
   },
   // Margin
@@ -171,12 +230,20 @@ const stringStyleMap = {
     'Left',
     'Right',
   ]),
+  maxHeight: mapUnitPropTo('maxHeight', unit),
+  maxWidth: mapUnitPropTo('maxWidth', unit),
   mb: mapUnitPropTo('marginBottom', halfUnit),
+  minHeight: mapUnitPropTo('minHeight', unit),
+  minWidth: mapUnitPropTo('minWidth', unit),
   ml: mapUnitPropTo('marginLeft', halfUnit),
   mr: mapUnitPropTo('marginRight', halfUnit),
   mt: mapUnitPropTo('marginTop', halfUnit),
   mx: mapDirectionalUnitPropTo('margin', halfUnit, ['Left', 'Right']),
   my: mapDirectionalUnitPropTo('margin', halfUnit, ['Top', 'Bottom']),
+  opacity: mapRawPropTo('opacity'),
+  overflow: mapRawPropTo('overflow'),
+  overflowX: mapRawPropTo('overflowX'),
+  overflowY: mapRawPropTo('overflowY'),
   // Padding
   p: mapDirectionalUnitPropTo('padding', halfUnit, [
     'Top',
@@ -186,40 +253,58 @@ const stringStyleMap = {
   ]),
   pb: mapUnitPropTo('paddingBottom', halfUnit),
   pl: mapUnitPropTo('paddingLeft', halfUnit),
+  position: mapRawPropTo('position'),
   pr: mapUnitPropTo('paddingRight', halfUnit),
   pt: mapUnitPropTo('paddingTop', halfUnit),
   px: mapDirectionalUnitPropTo('padding', halfUnit, ['Left', 'Right']),
   py: mapDirectionalUnitPropTo('padding', halfUnit, ['Top', 'Bottom']),
-  // Color props
-  color: mapColorPropTo('color'),
+  right: mapUnitPropTo('right', unit),
+  textAlign: mapRawPropTo('textAlign'),
   textColor: mapColorPropTo('color'),
-  backgroundColor: mapColorPropTo('backgroundColor'),
-} as const;
+  top: mapUnitPropTo('top', unit),
+  verticalAlign: mapRawPropTo('verticalAlign'),
+  width: mapUnitPropTo('width', unit),
+};
+
+export type BooleanStyleMap = Partial<{
+  /** Make text bold. */
+  bold: boolean;
+  /** Fill positioned parent. */
+  fillPositionedParent: boolean;
+  /** Forces the `Box` to appear as an `inline-block`. */
+  inline: boolean;
+  /** Make text italic. */
+  italic: boolean;
+  /** Stops text from wrapping. */
+  nowrap: boolean;
+  /** Preserves line-breaks and spacing in text. */
+  preserveWhitespace: boolean;
+}>;
 
 // Boolean props
-const booleanStyleMap = {
+export const booleanStyleMap: Record<keyof BooleanStyleMap, any> = {
   bold: mapBooleanPropTo('fontWeight', 'bold'),
-  fillPositionedParent: (style, value) => {
+  fillPositionedParent: (style: CSSProperties, value: unknown) => {
     if (value) {
-      style['position'] = 'absolute';
-      style['top'] = 0;
-      style['bottom'] = 0;
-      style['left'] = 0;
-      style['right'] = 0;
+      style.position = 'absolute';
+      style.top = 0;
+      style.bottom = 0;
+      style.left = 0;
+      style.right = 0;
     }
   },
   inline: mapBooleanPropTo('display', 'inline-block'),
   italic: mapBooleanPropTo('fontStyle', 'italic'),
   nowrap: mapBooleanPropTo('whiteSpace', 'nowrap'),
   preserveWhitespace: mapBooleanPropTo('whiteSpace', 'pre-wrap'),
-} as const;
+};
 
-export const computeBoxProps = (props) => {
+export function computeBoxProps(props): Record<string, any> {
   const computedProps: Record<string, any> = {};
   const computedStyles: Record<string, string | number> = {};
 
   // Compute props
-  for (let propName of Object.keys(props)) {
+  for (const propName in props) {
     if (propName === 'style') {
       continue;
     }
@@ -240,39 +325,156 @@ export const computeBoxProps = (props) => {
   computedProps.style = { ...computedStyles, ...props.style };
 
   return computedProps;
-};
+}
 
-export const computeBoxClassName = (props: BoxProps) => {
+export function computeBoxClassName<TElement = HTMLDivElement>(
+  props: BoxProps<TElement>,
+): string {
   const color = props.textColor || props.color;
-  const backgroundColor = props.backgroundColor;
+  const { backgroundColor } = props;
+
   return classes([
-    isColorClass(color) && 'color-' + color,
-    isColorClass(backgroundColor) && 'color-bg-' + backgroundColor,
+    isColorClass(color) && `color-${color}`,
+    isColorClass(backgroundColor) && `color-bg-${backgroundColor}`,
   ]);
+}
+
+/** Short list of accepted DOM event handlers */
+export const eventHandlers = [
+  'onClick',
+  'onContextMenu',
+  'onDoubleClick',
+  'onKeyDown',
+  'onKeyUp',
+  'onMouseDown',
+  'onMouseLeave',
+  'onMouseMove',
+  'onMouseOver',
+  'onMouseUp',
+  'onScroll',
+  'onWheel',
+  'onDrag',
+  'onDragEnd',
+  'onDragEnter',
+  'onDragExit',
+  'onDragLeave',
+  'onDragOver',
+  'onDragStart',
+  'onDrop',
+] as const;
+
+export type EventHandlers<TElement = HTMLDivElement> = Pick<
+  DOMAttributes<TElement>,
+  (typeof eventHandlers)[number]
+>;
+
+export type BoxInternalProps = Partial<{
+  /**
+   * The component used for the root node.
+   * @default <div>
+   */
+  as: string;
+  /** The content of the component. */
+  children: ReactNode;
+  /** Class name to pass into the component. */
+  className: string | BooleanLike;
+  /** The unique id of the component. */
+  id: string;
+  /** The inline style of the component. */
+  style: CSSProperties;
+}>;
+
+type LiftedHTMLAttributes<TElement> = {
+  /** Whether this element is draggable.
+   * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Global_attributes/draggable
+   */
+  draggable?: HTMLAttributes<TElement>['draggable'];
 };
 
-export const Box = (props: BoxProps & DangerDoNotUse) => {
+// You may wonder why we don't just use ComponentProps<typeof Box> here.
+// This is because I'm trying to isolate DangerDoNotUse from the rest of the props.
+// While you still can technically use ComponentProps, it won't throw an error if someone uses dangerouslySet.
+export interface BoxProps<TElement = HTMLDivElement>
+  extends BoxInternalProps,
+    BooleanStyleMap,
+    StringStyleMap,
+    LiftedHTMLAttributes<TElement>,
+    EventHandlers<TElement>,
+    Record<string, any> {} // HACK: Just ignore bad props for now
+
+// Don't you dare put this elsewhere
+type DangerDoNotUse = {
+  dangerouslySetInnerHTML?: {
+    __html: any;
+  };
+};
+
+/**
+ * ## Box
+ *
+ * The Box component serves as a wrapper component for most of the CSS utility
+ * needs. It creates a new DOM element, a `<div>` by default that can be changed
+ * with the `as` property. Let's say you want to use a `<span>` instead:
+ *
+ * Example:
+ *
+ * ```tsx
+ * <Box as="span" m={1}>
+ *   <Button />
+ * </Box>
+ * ```
+ *
+ * This works great when the changes can be isolated to a new DOM element.
+ * For instance, you can change the margin this way.
+ *
+ * However, sometimes you have to target the underlying DOM element.
+ * For instance, you want to change the text color of the button. The Button
+ * component defines its own color. CSS inheritance doesn't help.
+ *
+ * To workaround this problem, the Box children accept a render props function.
+ * This way, `Button` can pull out the `className` generated by the `Box`.
+ *
+ * Example:
+ *
+ * ```tsx
+ * <Box color="primary">{(props) => <Button {...props} />}</Box>
+ * ```
+ *
+ * ## Box Units
+ *
+ * `Box` units, like width, height and margins can be defined in two ways:
+ *
+ * - By plain numbers
+ *   - 1 unit equals `1rem` for width, height and positioning properties.
+ *   - 1 unit equals `0.5rem` for margins and paddings.
+ * - By strings with proper CSS units
+ *   - For example: `100px`, `2em`, `1rem`, `100%`, etc.
+ *
+ * If you need more precision, you can always use fractional numbers.
+ *
+ * Default font size (`1rem`) is equal to `12px`.
+ *
+ * - [View documentation on tgui core](https://tgstation.github.io/tgui-core/?path=/docs/components-box--docs)
+ */
+export function Box<TElement = HTMLDivElement>(
+  props: BoxProps<TElement> & DangerDoNotUse,
+) {
   const { as = 'div', className, children, ...rest } = props;
 
-  // Compute class name and styles
   const computedClassName = className
-    ? `${className} ${computeBoxClassName(rest)}`
-    : computeBoxClassName(rest);
-  const computedProps = computeBoxProps(rest);
+    ? `${className} ${computeBoxClassName<TElement>(rest)}`
+    : computeBoxClassName<TElement>(rest);
 
-  if (as === 'img') {
-    logger.error(
-      'Box component cannot be used as an image. Use Image component instead.',
-    );
-  }
+  const computedProps = computeBoxProps({
+    ...rest,
+  });
 
-  // Render the component
   return createElement(
-    typeof as === 'string' ? as : 'div',
+    as,
     {
       ...computedProps,
       className: computedClassName,
     },
     children,
   );
-};
+}

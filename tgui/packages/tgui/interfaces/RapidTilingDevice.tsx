@@ -48,7 +48,6 @@ const TilePreview = (props) => {
           transform:
             'scale(1.5) translate(9.5%, 9.5%) ' +
             (ROTATION_MAP[selected_direction] || ''),
-          '-ms-interpolation-mode': 'nearest-neighbor',
           imageRendering: 'pixelated',
         }}
       />
@@ -147,7 +146,7 @@ const TileDesignSection = (props) => {
             className={classes(['rtd32x32', recipe.icon])}
             style={{
               transform: 'scale(1.2) translate(9.5%, 9.5%)',
-              '-ms-interpolation-mode': 'nearest-neighbor',
+
               imageRendering: 'pixelated',
             }}
           />
