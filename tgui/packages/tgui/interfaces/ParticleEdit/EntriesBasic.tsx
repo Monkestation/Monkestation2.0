@@ -156,7 +156,7 @@ export const EntryGradient = (props: EntryGradientProps) => {
                 <Input
                   key={index}
                   maxWidth={'70px'}
-                  value={entry}
+                  value={entry.toString()}
                   onChange={(e, value) =>
                     act('edit', {
                       var: var_name,

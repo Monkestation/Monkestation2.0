@@ -104,7 +104,7 @@ export const AirLockMainSection = (props) => {
           <Input
             fluid
             maxLength={30}
-            value={passedCycleId}
+            value={passedCycleId.toString()}
             onChange={(e, value) =>
               act('passedCycleId', {
                 passedCycleId: value,

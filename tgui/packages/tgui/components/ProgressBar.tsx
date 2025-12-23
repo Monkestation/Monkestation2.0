@@ -1,9 +1,8 @@
-import { CSS_COLORS } from '../constants';
-import { clamp01, keyOfMatchingRange, scale } from 'common/math';
+import { scale, keyOfMatchingRange, clamp01 } from 'common/math';
 import { classes } from 'common/react';
-import { computeBoxClassName, computeBoxProps } from './Box';
-import type { CSSProperties, PropsWithChildren } from 'react';
-import type { BoxProps } from './Box';
+import { PropsWithChildren, CSSProperties } from 'react';
+import { CSS_COLORS } from '../constants';
+import { BoxProps, computeBoxProps, computeBoxClassName } from './Box';
 
 type Props = {
   /**
