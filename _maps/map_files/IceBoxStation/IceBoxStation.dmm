@@ -16150,7 +16150,7 @@
 "eOz" = (
 /obj/structure/table,
 /obj/item/razor,
-/obj/item/storage/backpack/duffelbag/sec/surgery,
+/obj/item/storage/backpack/duffelbag/secmed/surgery,
 /turf/open/floor/plating/icemoon,
 /area/station/security/execution/education)
 "eOK" = (

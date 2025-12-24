@@ -34298,7 +34298,7 @@
 /area/station/maintenance/department/science/upper)
 "gDi" = (
 /obj/structure/table,
-/obj/item/storage/backpack/duffelbag/sec/surgery{
+/obj/item/storage/backpack/duffelbag/secmed/surgery{
 	pixel_y = 5
 	},
 /obj/item/clothing/mask/balaclava,

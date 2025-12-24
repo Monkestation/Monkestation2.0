@@ -14927,11 +14927,11 @@
 /area/centcom/central_command_areas/medical)
 "aNS" = (
 /obj/structure/table/reinforced/titaniumglass,
-/obj/item/storage/toolbox/brig_physician{
+/obj/item/storage/toolbox/repair{
 	pixel_x = 0;
 	pixel_y = 8
 	},
-/obj/item/storage/toolbox/brig_physician,
+/obj/item/storage/toolbox/repair,
 /turf/open/floor/circuit,
 /area/centcom/central_command_areas/medical)
 "aNT" = (
@@ -16440,8 +16440,8 @@
 /area/centcom/central_command_areas/evacuation/ship)
 "aRU" = (
 /obj/structure/table/reinforced/titaniumglass,
-/obj/item/storage/backpack/duffelbag/brig_physician/surgery,
-/obj/item/storage/backpack/duffelbag/brig_physician/surgery{
+/obj/item/storage/backpack/duffelbag/secmed/surgery,
+/obj/item/storage/backpack/duffelbag/secmed/surgery{
 	pixel_x = 0;
 	pixel_y = 8
 	},

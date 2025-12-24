@@ -45572,7 +45572,7 @@
 /area/station/command/heads_quarters/hop)
 "niS" = (
 /obj/structure/table/glass,
-/obj/item/storage/backpack/duffelbag/sec/surgery{
+/obj/item/storage/backpack/duffelbag/secmed/surgery{
 	pixel_y = 5
 	},
 /obj/item/clothing/mask/balaclava,

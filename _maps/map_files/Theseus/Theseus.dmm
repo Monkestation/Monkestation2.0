@@ -33777,7 +33777,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
-/obj/item/storage/backpack/duffelbag/sec/surgery{
+/obj/item/storage/backpack/duffelbag/secmed/surgery{
 	pixel_y = 12;
 	pixel_x = 5
 	},

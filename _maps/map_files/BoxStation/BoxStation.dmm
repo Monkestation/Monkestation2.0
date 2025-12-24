@@ -38821,7 +38821,7 @@
 /obj/machinery/airalarm/directional/north,
 /obj/effect/mapping_helpers/airalarm/all_access,
 /obj/structure/table,
-/obj/item/storage/backpack/duffelbag/sec/surgery{
+/obj/item/storage/backpack/duffelbag/secmed/surgery{
 	pixel_y = 5
 	},
 /obj/item/clothing/mask/balaclava,

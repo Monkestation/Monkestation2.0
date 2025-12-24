@@ -55108,7 +55108,7 @@
 /area/station/science/genetics)
 "nTK" = (
 /obj/structure/table/reinforced,
-/obj/item/storage/backpack/duffelbag/sec/surgery{
+/obj/item/storage/backpack/duffelbag/secmed/surgery{
 	pixel_y = 5
 	},
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{

@@ -13402,7 +13402,7 @@
 	pixel_y = 8
 	},
 /obj/item/clothing/mask/balaclava,
-/obj/item/storage/backpack/duffelbag/sec/surgery,
+/obj/item/storage/backpack/duffelbag/secmed/surgery,
 /obj/item/reagent_containers/syringe{
 	pixel_y = -5
 	},

@@ -7503,7 +7503,7 @@
 /obj/item/reagent_containers/cup/bottle/facid{
 	pixel_x = 7
 	},
-/obj/item/storage/backpack/duffelbag/sec/surgery{
+/obj/item/storage/backpack/duffelbag/secmed/surgery{
 	pixel_y = 5
 	},
 /obj/machinery/airalarm/directional/west,
