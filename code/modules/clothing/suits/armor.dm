@@ -302,8 +302,6 @@
 	inhand_icon_state = "armor"
 	armor_type = /datum/armor/armor_secjacket
 	body_parts_covered = CHEST|GROIN|ARMS
-	cold_protection = CHEST|GROIN|ARMS|HANDS
-	heat_protection = CHEST|GROIN|ARMS|HANDS
 	resistance_flags = FLAMMABLE
 	dog_fashion = null
 
