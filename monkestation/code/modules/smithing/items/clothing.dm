@@ -171,9 +171,7 @@
 	body_parts_covered = FEET
 	slot_flags = ITEM_SLOT_FEET
 	base_name = "shoes"
-/* TODO: Sprite needed
 	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
 
 /obj/item/clothing/smithed_clothes/shoes/generate_digitigrade_icons(icon/base_icon, greyscale_colors)
-	return icon(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/digitigrade, greyscale_colors), "smithed_shoes")
-*/
+	return icon(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/digitigrade, greyscale_colors), "smithed_shoes_worn")
