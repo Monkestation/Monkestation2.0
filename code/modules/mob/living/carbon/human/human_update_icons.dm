@@ -344,7 +344,11 @@ There are several things that need to be remembered:
 
 		CHECK_SHOULDNT_RENDER(worn_item, ITEM_SLOT_FEET) // monkestation edit: combine TRAIT_ALWAYS_RENDER + TRAIT_NO_WORN_ICON + obscure check into a single define
 
+		var/handled_by_bodytype = TRUE
 		var/icon_file = DEFAULT_SHOES_FILE
+
+		if((dna?.species.bodytype & BODYTYPE_DIGITIGRADE) && (shoes.supports_variations_flags & CLOTHING_DIGITIGRADE_VARIATION))
+			icon_file = DIGITIGRADE_SHOES_FILE
 
 		var/mutant_override = FALSE
 		if(dna.species.bodytype & BODYTYPE_CUSTOM)
@@ -353,7 +357,15 @@ There are several things that need to be remembered:
 				icon_file = species_icon_file
 				mutant_override = TRUE
 
-		var/mutable_appearance/shoes_overlay = shoes.build_worn_icon(default_layer = SHOES_LAYER, default_icon_file = icon_file, override_file = mutant_override ? icon_file : null)
+		if(!icon_exists(icon_file, RESOLVE_ICON_STATE(shoes)))
+			icon_file = DEFAULT_SHOES_FILE
+			handled_by_bodytype = FALSE
+
+		var/mutable_appearance/shoes_overlay = shoes.build_worn_icon(
+			default_layer = SHOES_LAYER,
+			default_icon_file = icon_file,
+			override_file = (mutant_override || handled_by_bodytype) ? icon_file : null,
+		)
 		if(!shoes_overlay)
 			return
 

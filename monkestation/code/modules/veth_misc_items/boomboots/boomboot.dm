@@ -8,9 +8,10 @@
 	inhand_icon_state = "clown_shoes"
 	slowdown = SHOES_SLOWDOWN + 1
 	actions_types = list(/datum/action/item_action/toggle)
-	var/enabled_waddle = TRUE
 	slot_flags = ITEM_SLOT_FEET
 	body_parts_covered = FEET
+	supports_variations_flags = CLOTHING_NO_VARIATION
+	var/enabled_waddle = TRUE
 
 /obj/item/clothing/shoes/magboots/boomboots/Initialize(mapload)
 	. = ..()

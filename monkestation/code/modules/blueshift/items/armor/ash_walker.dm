@@ -135,12 +135,7 @@
 	worn_icon = 'monkestation/code/modules/blueshift/icons/feet.dmi'
 	icon_state = "bone_greaves"
 	armor_type = /datum/armor/bone_greaves
-/* TODO: Sprite needed
-	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
-
-/obj/item/clothing/shoes/bone_greaves/generate_digitigrade_icons(icon/base_icon, greyscale_colors)
-	return icon(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/digitigrade, greyscale_colors), "greaves")
-*/
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /datum/crafting_recipe/ash_recipe/bone_greaves
 	name = "Bone Greaves"
