@@ -66,7 +66,7 @@
 	tackle_stam_cost = 30
 	base_knockdown = 1.25 SECONDS
 	tackle_range = 5
-	skill_mod = 2
+	skill_mod = 3.5
 
 
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
