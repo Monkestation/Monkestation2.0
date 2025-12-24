@@ -17,6 +17,7 @@ import {
 } from '../components';
 import { Window } from '../layouts';
 import { Food } from './PreferencesMenu/data';
+import React from 'react';
 
 const TYPE_ICONS = {
   'Can Make': 'utensils',
@@ -839,7 +840,7 @@ const RecipeContent = ({ item, craftable, busy, mode, diet }) => {
     return group !== null;
   };
 
-  const groupedSteps: JSX.Element[] = [];
+  const groupedSteps: React.JSX.Element[] = [];
   const groupStack: StepGroup[] = [];
   let currentGroup: StepGroup | null = null;
   let groupKey = 0;

@@ -20,6 +20,7 @@ import {
   Divider,
   DmIcon,
   DraggableControl,
+  Dropdown,
   FitText,
   Flex,
   Icon,
@@ -63,6 +64,7 @@ export {
   Divider,
   DmIcon,
   DraggableControl,
+  Dropdown,
   FitText,
   Flex,
   Icon,
@@ -90,7 +92,6 @@ export {
   TrackOutsideClicks,
 };
 
-export { Dropdown } from './Dropdown';
 export { Grid } from './Grid';
 export { Knob } from './Knob';
 export { Input } from './Input';

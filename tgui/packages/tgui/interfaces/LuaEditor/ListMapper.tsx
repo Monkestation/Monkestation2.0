@@ -133,7 +133,7 @@ export const ListMapper = (props: ListMapperProps) => {
   }
 
   const ThingNode = (
-    thing: ReactNode,
+    thing: ReactNode, // There is NO way this is correct
     path: ListPath,
     canCall: BooleanLike,
     overrideProps?: ListMapperProps,
@@ -157,7 +157,10 @@ export const ListMapper = (props: ListMapperProps) => {
             <Button
               tooltip="Click to VV"
               onClick={vvAct && (() => vvAct(path))}
-              {...thing.props}
+              {
+                // @ts-ignore Someone should really rewrite this whole thing
+                ...thing.props
+              }
             />
           );
         case 'function':
@@ -174,7 +177,10 @@ export const ListMapper = (props: ListMapperProps) => {
                   });
                   setModal('call');
                 }}
-                {...thing.props}
+                {
+                  // @ts-ignore
+                  ...thing.props
+                }
               />
             );
           } else if (thing === null) {

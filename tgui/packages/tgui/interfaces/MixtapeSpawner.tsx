@@ -60,7 +60,7 @@ const CassetteInfo = (props: { cassette: Cassette }) => {
             <Stack.Item>Author ckey: {cassette.author.ckey}</Stack.Item>
             <Stack.Item>Author character: {cassette.author.name}</Stack.Item>
             {cassette.sides.map((side, idx) => (
-              <Stack.Item key={idx} fill>
+              <Stack.Item key={idx}>
                 <Collapsible
                   title={idx === 0 ? 'Side A' : 'Side B'}
                   color="transparent"
@@ -148,7 +148,7 @@ export const MixtapeSpawner = (_props) => {
                   </Stack.Item>
                   <Stack.Item>
                     <Dropdown
-                      displayText={searchType.valueOf()}
+                      selected={searchType.valueOf()}
                       options={Object.values(SearchType) as string[]}
                       onSelected={(value) => setSearchType(value)}
                     />
@@ -161,8 +161,6 @@ export const MixtapeSpawner = (_props) => {
                     {filteredCassettes.map((cassette) => (
                       <Tabs.Tab
                         key={cassette.id}
-                        fluid
-                        ellipsis
                         color="transparent"
                         selected={cassette.id === selected_cassette?.id}
                         onClick={() => setSelectedCassette(cassette)}

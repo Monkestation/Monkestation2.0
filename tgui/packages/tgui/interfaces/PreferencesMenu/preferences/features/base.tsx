@@ -139,7 +139,7 @@ export const createDropdownInput = <T extends string | number = string>(
   return (props: FeatureValueProps<T>) => {
     return (
       <Dropdown
-        displayText={choices[props.value]}
+        selected={choices[props.value] as string}
         onSelected={props.handleSetValue}
         width="100%"
         options={sortChoices(Object.entries(choices)).map(

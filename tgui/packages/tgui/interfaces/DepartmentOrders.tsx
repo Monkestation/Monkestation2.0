@@ -125,9 +125,9 @@ const DepartmentCatalog = (props) => {
     <Stack vertical fill>
       <Stack.Item>
         <Tabs textAlign="center" fluid>
-          {supplies.map((cat) => (
+          {supplies.map((cat, idx) => (
             <Tabs.Tab
-              key={cat}
+              key={idx}
               selected={tabCategory === cat}
               onClick={() => setTabCategory(cat)}
             >

@@ -870,7 +870,7 @@ const ExodroneConsoleContent = (props) => {
   return (
     <Stack fill vertical>
       <Stack.Item grow>
-        <Stack vertical fill grow={2}>
+        <Stack vertical fill>
           <Stack.Item grow>
             <Stack fill>
               <Stack.Item>

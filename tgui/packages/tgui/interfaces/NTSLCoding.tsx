@@ -93,7 +93,6 @@ const ScriptEditor = (props) => {
           value={stored_code}
           onChange={(e, val) => debouncedSave(val)}
           height="100%"
-          disableEnter
         />
       ) : (
         <Section width="100%" height="100%">

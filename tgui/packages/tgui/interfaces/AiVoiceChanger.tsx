@@ -29,7 +29,7 @@ export const AiVoiceChanger = (props) => {
           </LabeledList.Item>
           <LabeledList.Item label="Accent">
             <Dropdown
-              selected={''}
+              selected={''} // The backend doesn't actually send what's selected :)
               options={voices}
               onSelected={(value) =>
                 act('look', {

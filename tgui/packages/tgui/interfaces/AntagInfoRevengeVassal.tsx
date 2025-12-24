@@ -100,7 +100,6 @@ const PowerSection = (props: any) => {
       <Stack>
         <Stack.Item grow>
           <Dropdown
-            displayText={selectedPower.power_name}
             selected={selectedPower.power_name}
             width="100%"
             options={power.map((powers) => powers.power_name)}

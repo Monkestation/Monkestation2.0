@@ -1,6 +1,6 @@
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { Box, Stack, Button, Section, Flex } from '../components';
+import { Box, Stack, Button, Section, Flex, Image } from '../components';
 
 type Quality = {
   name: string;
@@ -28,8 +28,7 @@ const FishingRodSlot = (props: FishingSlotProps) => {
   const { act } = useBackend();
 
   const icon_wrapper = (icon) => (
-    <Box
-      as="img"
+    <Image
       width="64px" // todo come up with some way to scale this sanely
       height="64px"
       src={`data:image/jpeg;base64,${icon}`}

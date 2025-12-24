@@ -216,13 +216,6 @@ const ContactsScreen = (props: any) => {
                         act('PDA_soundSet', { sound: value })
                       }
                       maxHeight="1.7em"
-                      dropdownBoxStyle={{
-                        maxHeight: '65vh',
-                        // if i set the height, it makes the entire fucking box transparent and fucks up the text.
-                        // GOD FUCKING DAMMIT
-                        backgroundColor: 'black',
-                        color: 'white',
-                      }}
                     />
                   </Stack.Item>
                   <Stack.Item>
