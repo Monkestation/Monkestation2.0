@@ -30,7 +30,6 @@
 
 
 	item_flags = IMMUTABLE_SLOW
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 	clothing_traits = list(TRAIT_SNOWSTORM_IMMUNE)
 
 /obj/item/clothing/gloves/mod
@@ -58,4 +57,3 @@
 	item_flags = IMMUTABLE_SLOW
 	item_flags = IGNORE_DIGITIGRADE
 	can_be_tied = FALSE
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION

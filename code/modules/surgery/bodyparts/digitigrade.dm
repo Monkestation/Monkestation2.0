@@ -3,12 +3,12 @@
 		return ..()
 	. = ..()
 	for(var/mutable_appearance/appearance in .)
-		apply_digitigrade_filters(appearance, owner, bodytype)
+		apply_digitigrade_filters(appearance, owner)
 	return .
 
 
-/obj/item/proc/apply_digitigrade_filters(mutable_appearance/appearance, mob/living/carbon/wearer = loc, bodytype)
-	if(!istype(wearer) || !(bodytype & BODYTYPE_DIGITIGRADE))
+/obj/item/proc/apply_digitigrade_filters(mutable_appearance/appearance, mob/living/carbon/wearer = loc)
+	if(!istype(wearer) || !(wearer.dna.species.bodytype & BODYTYPE_DIGITIGRADE))
 		return
 
 	var/static/list/icon/masks_and_shading

@@ -1,8 +1,3 @@
-/obj/item/clothing/under/pants
-
-/obj/item/clothing/under/shorts
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION //That's right, TG, I have icons for ALL of these!! Mwahahaha!!!!
-
 /obj/item/clothing/under/pants/nova
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/under/shorts_pants_shirts.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/shorts_pants_shirts.dmi'
@@ -15,6 +10,7 @@
 	greyscale_config_worn = null
 	greyscale_colors = null
 	flags_1 = NONE
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION //That's right, TG, I have icons for ALL of these!! Mwahahaha!!!! //stick to your own buddy (moved away from shorts type)
 
 //TG's files separate this into Shorts.dmi and Pants.dmi. We wont have as many, so both go into here.
 

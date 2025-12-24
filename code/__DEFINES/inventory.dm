@@ -93,7 +93,7 @@
 ///hides mutant/moth wings, does not apply to functional wings
 #define HIDEMUTWINGS (1<<13)
 ///hides belts and riggings
-//#define HIDEBELT (1<<14)
+#define HIDEBELT (1<<14)
 ///hides antennae
 #define HIDEANTENNAE (1<<15)
 
