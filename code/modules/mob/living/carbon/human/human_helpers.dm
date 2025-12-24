@@ -252,6 +252,7 @@
 	destination.underwear_color = underwear_color
 	destination.undershirt = undershirt
 	destination.socks = socks
+	destination.socks_color = socks_color //MONKESTATION EDIT
 	destination.jumpsuit_style = jumpsuit_style
 
 
@@ -298,6 +299,7 @@
 		"underwear_color" = underwear_color,
 		"undershirt" = undershirt,
 		"socks" = socks,
+		"socks_color" = socks_color,
 		"jumpsuit_style" = jumpsuit_style,
 	)
 
@@ -309,4 +311,5 @@
 	underwear_color = backup["underwear_color"]
 	undershirt = backup["undershirt"]
 	socks = backup["socks"]
+	socks_color = backup["socks_color"]
 	jumpsuit_style = backup["jumpsuit_style"]

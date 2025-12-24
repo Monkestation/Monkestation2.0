@@ -29,7 +29,10 @@
 	name = "black shoes"
 	desc = "A pair of black shoes."
 	custom_price = PAYCHECK_CREW
+
+
 	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT
+
 	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
 
 /obj/item/clothing/shoes/sneakers/brown
