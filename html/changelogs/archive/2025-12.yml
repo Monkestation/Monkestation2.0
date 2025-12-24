@@ -525,3 +525,6 @@
   - qol: Prisoner body bags can now be folded up
   - bugfix: Syndicate prisoner body bags will now use the proper sprite
   - code_imp: Assault operatives now have a properly named datum file.
+2025-12-24:
+  Gboster-0:
+  - bugfix: macrobombs are no longer instant, this was broken for 3 months.
