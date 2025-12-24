@@ -11,6 +11,7 @@ import {
   Stack,
   Tabs,
   Dropdown,
+  Image,
 } from '../components';
 import { Window } from '../layouts';
 
@@ -94,8 +95,7 @@ export const SelectEquipment = (props) => {
               </Stack.Item>
               <Stack.Item grow={1}>
                 <Section fill title={name} textAlign="center">
-                  <Box
-                    as="img"
+                  <Image
                     m={0}
                     src={`data:image/jpeg;base64,${icon64}`}
                     height="100%"
