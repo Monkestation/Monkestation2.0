@@ -23,7 +23,7 @@
 			return
 	return ..()
 
-/datum/disease/acute/premade/heart_failure/cure(add_resistance, mob/living/carbon/target)
+/datum/disease/acute/premade/heart_failure/cure(add_resistance, mob/living/carbon/target, safe = FALSE)
 	if(iscarbon(target))
 		target.set_heartattack(FALSE)
 	return ..()

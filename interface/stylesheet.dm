@@ -133,6 +133,7 @@ h1.alert, h2.alert		{color: #000000;}
 
 .sans					{font-family: "Comic Sans MS", cursive, sans-serif;}
 .papyrus				{font-family: "Papyrus", cursive, sans-serif;}
+.copperplate			{font-family: copperplate;}
 .robot					{font-family: "Courier New", cursive, sans-serif;}
 
 .command_headset		{font-weight: bold;	font-size: 3;}
@@ -154,6 +155,7 @@ h1.alert, h2.alert		{color: #000000;}
 		75%		{color: #410194;}
 		100%	{color: #3bb5d3;}
 }
+
 
 .phobia			{color: #dd0000;	font-weight: bold;	animation: phobia 750ms infinite;}
 	@keyframes phobia {

@@ -1,0 +1,4 @@
+author: "Gboster-0"
+delete-after: True
+changes:
+  - bugfix: "macrobombs are no longer instant, this was broken for 3 months."

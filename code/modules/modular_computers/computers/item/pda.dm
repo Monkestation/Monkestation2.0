@@ -231,6 +231,10 @@
 	if(new_ringtone && (new_ringtone != MESSENGER_RINGTONE_DEFAULT))
 		update_ringtone(new_ringtone)
 
+	var/new_sound = owner_client.prefs.read_preference(/datum/preference/choiced/pda_ringtone_sound)
+	if(new_sound)
+		update_ringtone_sound(new_sound)
+		
 	var/new_theme = owner_client.prefs.read_preference(/datum/preference/choiced/pda_theme)
 	if(new_theme)
 		device_theme = GLOB.pda_name_to_theme[new_theme]
@@ -242,6 +246,14 @@
 	var/datum/computer_file/program/messenger/messenger_app = locate() in stored_files
 	if(messenger_app)
 		messenger_app.ringtone = new_ringtone
+
+/// A simple proc to set the ringtone sound || Monkestation Addition
+/obj/item/modular_computer/pda/proc/update_ringtone_sound(new_sound)
+	if(!istext(new_sound) || !(new_sound in GLOB.pda_ringtone_sounds))
+		return
+	var/datum/computer_file/program/messenger/messenger_app = locate() in stored_files
+	if(messenger_app)
+		messenger_app.ringtone_sound = new_sound
 
 /**
  * Nuclear PDA

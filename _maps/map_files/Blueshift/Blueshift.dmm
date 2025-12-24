@@ -15499,9 +15499,6 @@
 /obj/structure/table/reinforced,
 /obj/item/clipboard,
 /obj/item/toy/figure/warden,
-/obj/item/clothing/accessory/badge/holo/warden{
-	pixel_x = 13
-	},
 /obj/structure/railing{
 	dir = 1
 	},
@@ -17256,6 +17253,19 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/station/common/wrestling/arena)
+"dmB" = (
+/obj/structure/table/wood,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/cassette_deck{
+	pixel_y = 8
+	},
+/turf/open/floor/carpet,
+/area/station/service/library)
 "dmC" = (
 /obj/structure/railing{
 	dir = 8
@@ -33836,24 +33846,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/station/maintenance/clown_chamber)
-"gyX" = (
-/obj/structure/table/wood,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/newscaster/directional/south,
-/obj/machinery/cassette/dj_station{
-	pixel_y = 12
-	},
-/turf/open/floor/iron/dark,
-/area/station/service/library/private)
 "gzb" = (
 /obj/structure/table,
 /obj/item/clothing/under/rank/prisoner/skirt{
@@ -34754,6 +34746,14 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/maintenance/department/security/greater)
+"gHS" = (
+/obj/structure/table,
+/obj/item/clothing/mask/thermal_balaclava{
+	pixel_y = 7
+	},
+/obj/item/clothing/mask/thermal_balaclava,
+/turf/open/floor/plating,
+/area/station/maintenance/fore/upper)
 "gHT" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -38010,7 +38010,7 @@
 /obj/effect/turf_decal/siding/brown{
 	dir = 1
 	},
-/obj/machinery/modular_computer/preset/id{
+/obj/machinery/modular_computer/preset/quartermaster{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
@@ -43885,14 +43885,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/white,
 /area/station/science/research)
-"ixA" = (
-/obj/structure/table,
-/obj/item/clothing/mask/russian_balaclava{
-	pixel_y = 7
-	},
-/obj/item/clothing/mask/russian_balaclava,
-/turf/open/floor/plating,
-/area/station/maintenance/fore/upper)
 "ixC" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -66117,6 +66109,24 @@
 /obj/machinery/suit_storage_unit/open,
 /turf/open/floor/iron/dark,
 /area/station/security/lockers)
+"mMD" = (
+/obj/structure/table/wood,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/newscaster/directional/south,
+/obj/machinery/dj_station{
+	pixel_y = 12
+	},
+/turf/open/floor/iron/dark,
+/area/station/service/library/private)
 "mME" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/navbeacon{
@@ -77791,10 +77801,6 @@
 /obj/item/pen/red,
 /obj/machinery/keycard_auth{
 	pixel_x = 15
-	},
-/obj/item/clothing/accessory/badge/holo/hos{
-	pixel_x = -7;
-	pixel_y = 9
 	},
 /obj/item/stamp/granted{
 	pixel_y = 4;
@@ -102470,19 +102476,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/iron/dark,
 /area/station/security/interrogation)
-"tME" = (
-/obj/structure/table/wood,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/cassette/adv_cassette_deck{
-	pixel_y = 8
-	},
-/turf/open/floor/carpet,
-/area/station/service/library)
 "tMF" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes{
@@ -103697,7 +103690,6 @@
 "tYx" = (
 /obj/structure/table/wood,
 /obj/item/book/manual/wiki/detective,
-/obj/item/clothing/accessory/badge/holo/detective,
 /obj/machinery/requests_console/directional/east{
 	department = "Detective's Office";
 	name = "Detective's Requests Console"
@@ -107093,6 +107085,11 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
+"uES" = (
+/obj/machinery/cassette_postbox,
+/obj/machinery/atm/directional/north,
+/turf/open/floor/wood,
+/area/station/service/library)
 "uEV" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -121767,7 +121764,6 @@
 	pixel_x = -9;
 	pixel_y = 10
 	},
-/obj/item/clothing/accessory/badge/holo/detective,
 /obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
 	pixel_x = 5;
 	pixel_y = 4
@@ -123530,11 +123526,6 @@
 /obj/structure/cable,
 /turf/open/floor/wood,
 /area/station/maintenance/rus_gambling)
-"xKH" = (
-/obj/machinery/cassette/mailbox,
-/obj/machinery/atm/directional/north,
-/turf/open/floor/wood,
-/area/station/service/library)
 "xKK" = (
 /obj/effect/turf_decal/stripes{
 	dir = 5
@@ -152742,7 +152733,7 @@ oHU
 qlY
 sJE
 jzJ
-gyX
+mMD
 qlY
 tbS
 oMk
@@ -153258,7 +153249,7 @@ xmR
 noU
 mQH
 qlY
-xKH
+uES
 gZm
 tKi
 uAi
@@ -154540,7 +154531,7 @@ imH
 uif
 svR
 vku
-tME
+dmB
 bwE
 rhA
 sME
@@ -234633,7 +234624,7 @@ fKg
 bMt
 biU
 ndG
-ixA
+gHS
 hJH
 frO
 pcy

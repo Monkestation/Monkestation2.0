@@ -16954,6 +16954,13 @@
 /obj/machinery/light/cold/directional/north,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
+"eXT" = (
+/obj/structure/sign/painting/library{
+	pixel_x = 32
+	},
+/obj/machinery/cassette_postbox,
+/turf/open/floor/carpet/green,
+/area/station/service/library/lounge)
 "eXY" = (
 /obj/structure/railing{
 	dir = 1
@@ -34894,6 +34901,23 @@
 /obj/structure/frame/machine/secured,
 /turf/open/floor/iron/dark/small,
 /area/station/science/research)
+"kng" = (
+/obj/item/toy/figure/curator{
+	pixel_y = 29
+	},
+/obj/item/reagent_containers/cup/glass/trophy{
+	desc = "Coming to the competition already covered in 'Ectoplasm' definitely helped.";
+	name = "Ghosthunting 1st prize";
+	pixel_x = 8;
+	pixel_y = 36
+	},
+/obj/machinery/firealarm/directional/west,
+/obj/structure/table/wood,
+/obj/machinery/dj_station{
+	pixel_y = 12
+	},
+/turf/open/floor/cult,
+/area/station/service/library/private)
 "kno" = (
 /obj/structure/table,
 /obj/effect/turf_decal/tile/dark/full,
@@ -47343,13 +47367,6 @@
 "nQh" = (
 /turf/closed/wall,
 /area/station/hallway/secondary/command)
-"nQw" = (
-/obj/structure/sign/painting/library{
-	pixel_x = 32
-	},
-/obj/machinery/cassette/mailbox,
-/turf/open/floor/carpet/green,
-/area/station/service/library/lounge)
 "nQA" = (
 /turf/open/floor/plating,
 /area/station/maintenance/port/lesser)
@@ -54007,6 +54024,23 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/entry)
+"pSB" = (
+/obj/structure/table/wood,
+/obj/item/folder{
+	pixel_x = -10;
+	pixel_y = 4
+	},
+/obj/item/laser_pointer,
+/obj/machinery/door/window/left/directional/south{
+	name = "Desk Access";
+	req_access = list("library")
+	},
+/obj/machinery/airalarm/directional/west,
+/obj/machinery/cassette_deck{
+	pixel_y = 5
+	},
+/turf/open/floor/carpet/green,
+/area/station/service/library/lounge)
 "pSE" = (
 /obj/effect/mapping_helpers/airlock/access/any/service/kitchen,
 /obj/machinery/door/airlock/maintenance_hatch{
@@ -54970,18 +55004,6 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/upper)
-"qeT" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 8
-	},
-/obj/machinery/requests_console/auto_name/directional/west,
-/obj/effect/mapping_helpers/requests_console/information,
-/obj/effect/mapping_helpers/requests_console/assistance,
-/obj/machinery/modular_computer/preset/id{
-	dir = 4
-	},
-/turf/open/floor/wood,
-/area/station/cargo/quartermaster)
 "qeV" = (
 /obj/structure/table,
 /obj/item/reagent_containers/cup/glass/drinkingglass{
@@ -59763,6 +59785,24 @@
 "rEx" = (
 /turf/closed/wall/r_wall,
 /area/station/security/checkpoint/customs)
+"rEF" = (
+/obj/structure/table/wood,
+/obj/structure/sign/painting/library{
+	pixel_x = -32
+	},
+/obj/item/flashlight/lamp/green{
+	pixel_y = 15;
+	pixel_x = 6
+	},
+/obj/item/pai_card{
+	pixel_y = 3;
+	pixel_x = -6
+	},
+/obj/machinery/cassette_deck{
+	pixel_y = 5
+	},
+/turf/open/floor/wood,
+/area/station/service/library/lounge)
 "rEI" = (
 /obj/structure/chair/sofa/bench/left{
 	dir = 1
@@ -62119,24 +62159,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/customs)
-"snD" = (
-/obj/structure/table/wood,
-/obj/structure/sign/painting/library{
-	pixel_x = -32
-	},
-/obj/item/flashlight/lamp/green{
-	pixel_y = 15;
-	pixel_x = 6
-	},
-/obj/item/pai_card{
-	pixel_y = 3;
-	pixel_x = -6
-	},
-/obj/machinery/cassette/adv_cassette_deck{
-	pixel_y = 5
-	},
-/turf/open/floor/wood,
-/area/station/service/library/lounge)
 "snL" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/yellow{
@@ -62572,6 +62594,18 @@
 	},
 /turf/open/floor/iron/dark/side,
 /area/station/command/heads_quarters/ce)
+"svl" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/machinery/requests_console/auto_name/directional/west,
+/obj/effect/mapping_helpers/requests_console/information,
+/obj/effect/mapping_helpers/requests_console/assistance,
+/obj/machinery/modular_computer/preset/quartermaster{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/station/cargo/quartermaster)
 "svn" = (
 /obj/machinery/holopad,
 /obj/effect/turf_decal/tile/yellow{
@@ -74854,23 +74888,6 @@
 	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/engineering/storage/tcomms)
-"vYt" = (
-/obj/structure/table/wood,
-/obj/item/folder{
-	pixel_x = -10;
-	pixel_y = 4
-	},
-/obj/item/laser_pointer,
-/obj/machinery/door/window/left/directional/south{
-	name = "Desk Access";
-	req_access = list("library")
-	},
-/obj/machinery/airalarm/directional/west,
-/obj/machinery/cassette/adv_cassette_deck{
-	pixel_y = 5
-	},
-/turf/open/floor/carpet/green,
-/area/station/service/library/lounge)
 "vYH" = (
 /obj/effect/spawner/random/structure/closet_maintenance,
 /turf/open/floor/plating,
@@ -75447,23 +75464,6 @@
 /obj/effect/turf_decal/tile/dark/diagonal_edge,
 /turf/open/floor/iron/dark/diagonal,
 /area/station/security/execution/education)
-"whc" = (
-/obj/item/toy/figure/curator{
-	pixel_y = 29
-	},
-/obj/item/reagent_containers/cup/glass/trophy{
-	desc = "Coming to the competition already covered in 'Ectoplasm' definitely helped.";
-	name = "Ghosthunting 1st prize";
-	pixel_x = 8;
-	pixel_y = 36
-	},
-/obj/machinery/firealarm/directional/west,
-/obj/structure/table/wood,
-/obj/machinery/cassette/dj_station{
-	pixel_y = 12
-	},
-/turf/open/floor/cult,
-/area/station/service/library/private)
 "whe" = (
 /obj/effect/turf_decal/tile/green/opposingcorners,
 /obj/effect/turf_decal/tile/blue{
@@ -110493,7 +110493,7 @@ neZ
 eDb
 kHn
 nRh
-whc
+kng
 bSz
 plk
 bCk
@@ -111266,7 +111266,7 @@ nRh
 thJ
 rzN
 vHR
-vYt
+pSB
 luC
 lZY
 nDP
@@ -111786,7 +111786,7 @@ trL
 hms
 tkG
 iqc
-snD
+rEF
 jXd
 fXL
 eqq
@@ -113586,7 +113586,7 @@ fXL
 fXL
 qha
 wze
-nQw
+eXT
 fXL
 uWq
 bgt
@@ -170644,7 +170644,7 @@ bkh
 fRo
 vTK
 nMm
-qeT
+svl
 mmk
 cuA
 pcp
