@@ -271,7 +271,7 @@
 	default_reagent_types = HACKED_MEDICAL_REAGENTS
 
 /obj/item/reagent_containers/borghypo/paramedic
-	name = "Emergency paramedic hypospray"
+	name = "emergency paramedic hypospray"
 	desc = "A cut-down version of the cyborg's chemical synthesizer and injection system for paramedics able to fit into implants."
 	possible_transfer_amounts = list(1, 5)
 	max_volume_per_reagent = 5
