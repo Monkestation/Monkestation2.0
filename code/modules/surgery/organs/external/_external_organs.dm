@@ -14,8 +14,6 @@
 	var/preference
 	///With what DNA block do we mutate in mutate_feature() ? For genetics
 	var/dna_block
-	///Does this organ have any bodytypes to pass to it's ownerlimb?
-	var/external_bodytypes = NONE
 
 	///The overlay datum that actually draws stuff on the limb
 	var/datum/bodypart_overlay/mutant/bodypart_overlay
