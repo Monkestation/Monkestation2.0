@@ -47,7 +47,7 @@ const MessageDisplay = (props: { message: RequestMessage }) => {
         }
       >
         {message.priority === RequestPriority.HIGH && (
-          <NoticeBox warning>High Priority</NoticeBox>
+          <NoticeBox>High Priority</NoticeBox>
         )}
         {message.priority === RequestPriority.EXTREME && (
           <NoticeBox bad>!!!Extreme Priority!!!</NoticeBox>
