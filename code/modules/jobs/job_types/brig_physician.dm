@@ -64,7 +64,6 @@
 	box = /obj/item/storage/box/survival/medical
 	chameleon_extras = /obj/item/gun/syringe
 	skillchips = list(/obj/item/skillchip/entrails_reader)
-	implants = list(/obj/item/implant/mindshield)
 
 /datum/outfit/plasmaman/brig_physician
 	name = "Brig Physician Plasmaman"
