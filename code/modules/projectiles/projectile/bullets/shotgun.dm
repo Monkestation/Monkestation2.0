@@ -46,7 +46,7 @@
 	name = "beanbag slug"
 	icon_state = "pellet"
 	damage = 5 //10 to 5 monkestation edit
-	stamina = 60
+	stamina = 55
 	wound_bonus = 20
 	sharpness = NONE
 	embedding = null
