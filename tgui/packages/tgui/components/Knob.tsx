@@ -6,13 +6,18 @@ type Shim = Omit<ComponentProps<typeof TGUIKnob>, 'onDrag'> & {
 };
 
 export function Knob(props: Shim) {
+  const inputFn = props.onChange ?? props.onDrag ?? undefined;
+
+  function handleChange(event: Event, value: number) {
+    inputFn?.(event, value);
+  }
+
   return (
     <TGUIKnob
       {...props}
       onDrag={undefined}
-      onChange={(event, val) => {
-        props.onDrag?.(event, val);
-      }}
+      onChange={handleChange}
+      tickWhileDragging={!!props.onDrag}
     />
   );
 }
