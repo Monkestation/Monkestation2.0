@@ -290,7 +290,6 @@
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/suits.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/suit.dmi'
 	icon_state = "ensuit"
-	supports_variations_flags = NONE
 
 /obj/item/clothing/suit/trenchbrown
 	name = "brown trenchcoat"

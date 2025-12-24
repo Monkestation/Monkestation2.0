@@ -20,7 +20,6 @@
 	name = "head of personnel's naval jumpsuit"
 	desc = "A pale green naval suit and a rank badge denoting the Personnel Officer. Target, maximum firepower."
 	icon_state = "imphop"
-	supports_variations_flags = NONE
 
 /obj/item/clothing/under/rank/civilian/head_of_personnel/nova/parade
 	name = "head of personnel's male formal uniform"
