@@ -165,7 +165,7 @@
 /datum/world_topic/plx_gettwitchevents/Run(list/input)
 	. = list()
 	for (var/datum/twitch_event/event_path as anything in subtypesof(/datum/twitch_event))
-		.[event_path::event_name] = event_path
+		.[event_path::event_name] = event_path::id_tag
 
 /datum/world_topic/plx_getbasicplayerdetails
 	keyword = "PLX_getbasicplayerdetails"

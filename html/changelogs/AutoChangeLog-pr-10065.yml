@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Fixed the Tin Man and Prosthetic Organ quirks being copied to oozelings when they revive."

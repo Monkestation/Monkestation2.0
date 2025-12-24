@@ -209,11 +209,12 @@ GLOBAL_LIST_INIT(loadout_necks, generate_loadout_items(/datum/loadout_item/neck)
 
 /datum/loadout_item/neck/modlink/post_equip_item(datum/preferences/preference_source, mob/living/carbon/human/equipper)
 	. = ..()
-	var/label = preference_source?.read_preference(/datum/preference/text/default_scryer_label)
-	if(!label)
+	var/obj/item/clothing/neck/link_scryer/scryer = locate(item_path) in equipper.get_all_gear()
+	if(!scryer)
 		return
-	var/obj/item/clothing/neck/link_scryer/scryer = locate(item_path) in equipper.get_equipped_items()
-	if(scryer)
+	scryer.set_ringtone(preference_source.read_preference(/datum/preference/choiced/call_ringtone))
+	var/label = preference_source?.read_preference(/datum/preference/text/default_scryer_label)
+	if(label)
 		scryer.label = label
 		scryer.update_name()
 
