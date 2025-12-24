@@ -179,7 +179,7 @@ GENERAL_PROTECT_DATUM(/datum/controller/protected_list_manager)
 
 /datum/protected_list_holder/Destroy(force)
 	if(IsAdminAdvancedProcCall())
-		var/msg = UNLINT(" has tried to call [src].Destroy()!") //the grep catches this as an actual Destroy() call
+		var/msg = " has tried to call Destroy() on [src]!"
 		message_admins("[key_name_admin(usr)][msg]")
 		log_admin("[key_name(usr)][msg]")
 		return QDEL_HINT_LETMELIVE
