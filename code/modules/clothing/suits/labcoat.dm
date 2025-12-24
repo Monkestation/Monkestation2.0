@@ -118,3 +118,20 @@
 	name = "medical labcoat"
 	desc = "A suit that protects against minor chemical spills. Has a light blue stripe on the shoulder."
 	icon_state = "labcoat_med"
+
+/obj/item/clothing/suit/toggle/labcoat/secmed
+	name = "security medical labcoat"
+	desc = "A suit that protects against minor chemical spills. Has a red stripe on the shoulder."
+	icon_state = "labcoat_secmed"
+
+/obj/item/clothing/suit/toggle/labcoat/secmed/old
+	name = "grey security medical labcoat"
+	desc = "A formerly retired labcoat pattern now brought back for those working the medical profession in the security apparatus."
+	icon_state = "labcoat_secmed"
+
+/obj/item/clothing/suit/toggle/labcoat/secmed/alt
+	name = "security medical jacket"
+	desc = "A red jacket with reflective stripes for security medical personnel."
+	icon_state = "labcoat_secmed_alt"
+	inhand_icon_state = null
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON

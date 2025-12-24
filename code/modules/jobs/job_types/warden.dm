@@ -58,7 +58,7 @@
 	ears = /obj/item/radio/headset/headset_sec/alt
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
 	gloves = /obj/item/clothing/gloves/color/black/security
-	head = /obj/item/clothing/head/hats/warden/red
+	head = /obj/item/clothing/head/hats/warden
 	shoes = /obj/item/clothing/shoes/jackboots/sec
 	l_pocket = /obj/item/assembly/flash/handheld
 	r_pocket = /obj/item/restraints/handcuffs

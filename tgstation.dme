@@ -6662,7 +6662,6 @@
 #include "monkestation\code\game\objects\items\storage\fancy.dm"
 #include "monkestation\code\game\objects\items\storage\garment.dm"
 #include "monkestation\code\game\objects\items\storage\medkit.dm"
-#include "monkestation\code\game\objects\items\storage\toolbox.dm"
 #include "monkestation\code\game\objects\items\storage\uplink_kits.dm"
 #include "monkestation\code\game\objects\items\storage\boxes\boxes.dm"
 #include "monkestation\code\game\objects\items\storage\boxes\security_boxes.dm"
