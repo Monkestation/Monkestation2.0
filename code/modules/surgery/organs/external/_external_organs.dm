@@ -10,6 +10,13 @@
 	organ_flags = ORGAN_ORGANIC | ORGAN_EDIBLE
 	visual = TRUE
 
+	/// The savefile_key of the preference this relates to. Used for the preferences UI.
+	var/preference
+	///With what DNA block do we mutate in mutate_feature() ? For genetics
+	var/dna_block
+	///Does this organ have any bodytypes to pass to it's ownerlimb?
+	var/external_bodytypes = NONE
+
 	///The overlay datum that actually draws stuff on the limb
 	var/datum/bodypart_overlay/mutant/bodypart_overlay
 	///Reference to the limb we're inside of
@@ -237,15 +244,9 @@
 	desc = "Take a closer look at that snout!"
 	icon_state = "snout"
 
-	organ_flags = ORGAN_UNREMOVABLE | ORGAN_EDIBLE
-	visual = TRUE
-	cosmetic_only = TRUE
-
 	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_EXTERNAL_SNOUT
-	layers = list(BODY_ADJ_LAYER)
 
-	feature_key = "snout"
 	preference = "feature_lizard_snout"
 	external_bodytypes = BODYTYPE_SNOUTED
 

@@ -1,8 +1,6 @@
 /obj/item/clothing/under/pants
-	worn_icon_digitigrade = SHORTS_PANTS_SHIRTS_DIGIFILE
 
 /obj/item/clothing/under/shorts
-	worn_icon_digitigrade = SHORTS_PANTS_SHIRTS_DIGIFILE
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION //That's right, TG, I have icons for ALL of these!! Mwahahaha!!!!
 
 /obj/item/clothing/under/pants/nova
@@ -15,7 +13,6 @@
 	//Need to reset all these so our custom stuff can choose independently to be greyscale or not. TG putting these on the basetype was kinda gross.
 	greyscale_config = null
 	greyscale_config_worn = null
-	greyscale_config_worn_digitigrade =  null
 	greyscale_colors = null
 	flags_1 = NONE
 
@@ -31,7 +28,6 @@
 	icon_state = "jeans_ripped"
 	greyscale_config = /datum/greyscale_config/jeans_ripped //These configs are defined in the GAGS module for now; the icons and item will remain in these files.
 	greyscale_config_worn = /datum/greyscale_config/jeans_ripped/worn
-	greyscale_config_worn_digitigrade =  /datum/greyscale_config/jeans_ripped/worn/digi
 	greyscale_colors = "#787878#723E0E#4D7EAC"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
@@ -41,7 +37,6 @@
 	icon_state = "yoga_pants"
 	greyscale_config = /datum/greyscale_config/yoga_pants //These configs are defined in the GAGS module for now; the icons and item will remain in these files.
 	greyscale_config_worn = /datum/greyscale_config/yoga_pants/worn
-	greyscale_config_worn_digitigrade =  /datum/greyscale_config/yoga_pants/worn/digi
 	greyscale_colors = "#3d3d3d" //Having all the configs for a single color feels wrong. This is wrong.
 	flags_1 = IS_PLAYER_COLORABLE_1
 
@@ -61,7 +56,6 @@
 	icon_state = "shorts_ripped"
 	greyscale_config = /datum/greyscale_config/shorts_ripped //These configs are defined in the GAGS module for now; the icons and item will remain in these files.
 	greyscale_config_worn = /datum/greyscale_config/shorts_ripped/worn
-	greyscale_config_worn_digitigrade =  /datum/greyscale_config/shorts_ripped/worn/digi
 	greyscale_colors = "#787878#723E0E#202020"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
@@ -71,7 +65,6 @@
 	icon_state = "shortershorts"
 	greyscale_config = /datum/greyscale_config/shortershorts
 	greyscale_config_worn = /datum/greyscale_config/shortershorts/worn
-	greyscale_config_worn_digitigrade =  /datum/greyscale_config/shortershorts/worn/digi
 	greyscale_colors = "#787878#723E0E#202020"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
@@ -86,7 +79,6 @@
 	icon_state = "kilt"
 	greyscale_config = /datum/greyscale_config/kilt
 	greyscale_config_worn = /datum/greyscale_config/kilt/worn
-	greyscale_config_worn_digitigrade =  /datum/greyscale_config/kilt/worn/digi
 	greyscale_colors = "#FFFFFF#365736#d9e6e5"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	flags_1 = IS_PLAYER_COLORABLE_1
@@ -99,7 +91,6 @@
 	icon_state = "buttondown_vicvest"
 	greyscale_config = /datum/greyscale_config/buttondown_vicvest
 	greyscale_config_worn = /datum/greyscale_config/buttondown_vicvest/worn
-	greyscale_config_worn_digitigrade =  /datum/greyscale_config/buttondown_vicvest/worn/digi
 	greyscale_colors = "#8b2c2c#222227#222227#fbc056"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	flags_1 = IS_PLAYER_COLORABLE_1
@@ -109,24 +100,18 @@
 */
 
 /obj/item/clothing/under/shorts
-	greyscale_config_worn_digitigrade =  /datum/greyscale_config/shorts/worn/digi
 
 /obj/item/clothing/under/shorts/jeanshorts
-	greyscale_config_worn_digitigrade =  /datum/greyscale_config/jeanshorts/worn/digi
 
 /*
 *	Pants that were previously using nonmodular edits to add their greyscale data, pulled from code/modules/clothing/under/pants.dm
 */
 
 /obj/item/clothing/under/pants/slacks
-	greyscale_config_worn_digitigrade =  /datum/greyscale_config/slacks/worn/digi
 
 /obj/item/clothing/under/pants/jeans
-	greyscale_config_worn_digitigrade =  /datum/greyscale_config/jeans/worn/digi
-
 /obj/item/clothing/under/pants/camo
 	greyscale_config = /datum/greyscale_config/camo_pants
 	greyscale_config_worn = /datum/greyscale_config/camo_pants/worn
-	greyscale_config_worn_digitigrade =  /datum/greyscale_config/camo_pants/worn/digi
 	greyscale_colors = "#69704C#6E5B4C#343741"
 	flags_1 = IS_PLAYER_COLORABLE_1

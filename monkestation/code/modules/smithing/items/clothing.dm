@@ -148,7 +148,6 @@
 	clothing_flags = SNUG_FIT | PLASMAMAN_HELMET_EXEMPT
 	flags_cover = HEADCOVERSEYES
 	flags_inv = HIDEHAIR
-	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
 	slot_flags = ITEM_SLOT_HEAD
 
 	base_name = "helmet"

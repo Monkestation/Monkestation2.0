@@ -160,13 +160,12 @@
 	if(adjusted == ALT_STYLE)
 		adjust_to_normal()
 
-/*	 MONKESTATION EDIT
 	if((supports_variations_flags & CLOTHING_DIGITIGRADE_VARIATION) && ishuman(user))
 		var/mob/living/carbon/human/wearer = user
 		if(wearer.dna.species.bodytype & BODYTYPE_DIGITIGRADE)
 			adjusted = DIGITIGRADE_STYLE
 			update_appearance()
-*/
+
 /obj/item/clothing/under/equipped(mob/living/user, slot)
 	..()
 	if((slot & ITEM_SLOT_ICLOTHING) && freshly_laundered)
@@ -287,7 +286,7 @@
 
 /obj/item/clothing/under/examine(mob/user)
 	. = ..()
-	if(can_adjust)
+	if(can_adjust && adjusted != DIGITIGRADE_STYLE)
 		. += "Alt-click on [src] to wear it [adjusted == ALT_STYLE ? "normally" : "casually"]."
 	if(has_sensor == BROKEN_SENSORS)
 		. += "Its sensors appear to be shorted out. You could repair it with some cabling."
@@ -419,10 +418,9 @@
 /// Returns the new state
 /obj/item/clothing/under/proc/toggle_jumpsuit_adjust()
 	switch(adjusted)
-/* MONKESTATION EDIT
 		if(DIGITIGRADE_STYLE)
 			return
-*/
+
 		if(NORMAL_STYLE)
 			adjust_to_alt()
 

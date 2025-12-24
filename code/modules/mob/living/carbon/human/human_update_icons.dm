@@ -116,11 +116,7 @@ There are several things that need to be remembered:
 		var/woman
 		//BEGIN SPECIES HANDLING
 		if((dna?.species.bodytype & BODYTYPE_DIGITIGRADE) && (uniform.supports_variations_flags & CLOTHING_DIGITIGRADE_VARIATION))
-			icon_file = uniform.worn_icon_digitigrade || DIGITIGRADE_UNIFORM_FILE
-			if(!(icon_exists(icon_file, RESOLVE_ICON_STATE(uniform)))) //if the digitigrade icon doesn't exist
-				var/species_icon_file = dna.species.generate_custom_worn_icon(LOADOUT_ITEM_UNIFORM, uniform)
-				if(species_icon_file)
-					icon_file = species_icon_file
+			icon_file = DIGITIGRADE_UNIFORM_FILE
 		//Female sprites have lower priority than digitigrade sprites - MONKESTATION EDIT - ALL WOMEN DESERVE REPRESENTATION
 		if(dna.species.visual_gender & dna.species.sexes && (dna.species.bodytype & BODYTYPE_HUMANOID) && physique == FEMALE && !(uniform.female_sprite_flags & NO_FEMALE_UNIFORM)) //Agggggggghhhhh
 			woman = TRUE
@@ -136,7 +132,7 @@ There are several things that need to be remembered:
 			isinhands = FALSE,
 			female_uniform = woman ? uniform.female_sprite_flags : null,
 			override_state = target_overlay,
-			override_file = handled_by_bodytype ? icon_file : null
+			override_file = handled_by_bodytype ? icon_file : null,
 		)
 
 		var/obj/item/bodypart/chest/my_chest = get_bodypart(BODY_ZONE_CHEST)
@@ -350,24 +346,11 @@ There are several things that need to be remembered:
 		var/icon_file = DEFAULT_SHOES_FILE
 
 		var/mutant_override = FALSE
-		if((dna.species.bodytype & BODYTYPE_DIGITIGRADE) && (worn_item.supports_variations_flags & CLOTHING_DIGITIGRADE_VARIATION))
-			var/obj/item/bodypart/leg/leg = src.get_bodypart(BODY_ZONE_L_LEG)
-			if(leg.limb_id == leg.digitigrade_id) //make sure our legs are visually digitigrade
-				icon_file = shoes.worn_icon_digitigrade || DIGITIGRADE_SHOES_FILE
-				if(!(icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item)))) //if the digitigrade icon doesn't exist
-					var/species_icon_file = dna.species.generate_custom_worn_icon(LOADOUT_ITEM_SHOES, shoes)
-					if(species_icon_file)
-						icon_file = species_icon_file
-				mutant_override = TRUE
-		else if(dna.species.bodytype & BODYTYPE_CUSTOM)
+		if(dna.species.bodytype & BODYTYPE_CUSTOM)
 			var/species_icon_file = dna.species.generate_custom_worn_icon(LOADOUT_ITEM_SHOES, shoes)
 			if(species_icon_file)
 				icon_file = species_icon_file
 				mutant_override = TRUE
-
-		if(!(icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item))))
-			mutant_override = FALSE
-			icon_file = DEFAULT_SHOES_FILE
 
 		var/mutable_appearance/shoes_overlay = shoes.build_worn_icon(default_layer = SHOES_LAYER, default_icon_file = icon_file, override_file = mutant_override ? icon_file : null)
 		if(!shoes_overlay)
@@ -425,21 +408,11 @@ There are several things that need to be remembered:
 		var/icon_file = 'icons/mob/clothing/head/default.dmi'
 
 		var/mutant_override = FALSE
-
-		if(dna.species.bodytype & BODYTYPE_SNOUTED)
-			if(worn_item.supports_variations_flags & CLOTHING_SNOUTED_VARIATION)
-				if((icon_exists(head.worn_icon_snouted || SNOUTED_HEAD_FILE, RESOLVE_ICON_STATE(worn_item)))) //make sure the icon we're about to switch to exists
-					icon_file = head.worn_icon_snouted || SNOUTED_HEAD_FILE
-					mutant_override = TRUE
-		else if(dna.species.bodytype & BODYTYPE_CUSTOM)
+		if(dna.species.bodytype & BODYTYPE_CUSTOM)
 			var/species_icon_file = dna.species.generate_custom_worn_icon(LOADOUT_ITEM_HEAD, head)
 			if(species_icon_file)
 				icon_file = species_icon_file
 				mutant_override = TRUE
-
-		if(!(icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item))))
-			mutant_override = FALSE
-			icon_file = 'icons/mob/clothing/head/default.dmi'
 
 		var/mutable_appearance/head_overlay = head.build_worn_icon(default_layer = HEAD_LAYER, default_icon_file = icon_file, override_file = mutant_override ? icon_file : null)
 		if(!mutant_override)
@@ -493,22 +466,13 @@ There are several things that need to be remembered:
 		var/icon_file = DEFAULT_SUIT_FILE
 
 		var/mutant_override = FALSE
-		if((dna?.species.bodytype & BODYTYPE_DIGITIGRADE) && (wear_suit.supports_variations_flags & CLOTHING_DIGITIGRADE_VARIATION))
-			icon_file = wear_suit.worn_icon_digitigrade || DIGITIGRADE_SUIT_FILE
-			mutant_override = TRUE
-		else if(dna.species.bodytype & BODYTYPE_CUSTOM)
+		if(dna.species.bodytype & BODYTYPE_CUSTOM)
 			var/species_icon_file = dna.species.generate_custom_worn_icon(LOADOUT_ITEM_SUIT, wear_suit)
 			if(species_icon_file)
 				icon_file = species_icon_file
 				mutant_override = TRUE
 
-		if(!(icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item))))
-			mutant_override = FALSE
-			icon_file = DEFAULT_SUIT_FILE
-
 		var/mutable_appearance/suit_overlay = wear_suit.build_worn_icon(default_layer = SUIT_LAYER, default_icon_file = icon_file, override_file = mutant_override ? icon_file : null)
-		if(!suit_overlay)
-			return
 		if(!mutant_override)
 			var/obj/item/bodypart/chest/my_chest = get_bodypart(BODY_ZONE_CHEST)
 			my_chest?.worn_suit_offset?.apply_offset(suit_overlay)
@@ -560,19 +524,11 @@ There are several things that need to be remembered:
 		var/icon_file = 'icons/mob/clothing/mask.dmi'
 
 		var/mutant_override = FALSE
-		if(dna.species.bodytype & BODYTYPE_SNOUTED)
-			if(worn_item.supports_variations_flags & CLOTHING_SNOUTED_VARIATION)
-				icon_file = wear_mask.worn_icon_snouted || SNOUTED_MASK_FILE
-				mutant_override = TRUE
-		else if(dna.species.bodytype & BODYTYPE_CUSTOM)
+		if(dna.species.bodytype & BODYTYPE_CUSTOM)
 			var/species_icon_file = dna.species.generate_custom_worn_icon(LOADOUT_ITEM_MASK, wear_mask)
 			if(species_icon_file)
 				icon_file = species_icon_file
 				mutant_override = TRUE
-
-		if(!(icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item))))
-			icon_file = 'icons/mob/clothing/mask.dmi'
-			mutant_override = FALSE
 
 		var/mutable_appearance/mask_overlay = wear_mask.build_worn_icon(default_layer = FACEMASK_LAYER, default_icon_file = icon_file, override_file = mutant_override ? icon_file : null)
 		if(!mutant_override)

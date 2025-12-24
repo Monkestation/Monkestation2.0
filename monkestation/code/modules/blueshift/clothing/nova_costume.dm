@@ -1,8 +1,6 @@
 /obj/item/clothing/under/costume
-	worn_icon_digitigrade = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/costume_digi.dmi'
 
 /obj/item/clothing/under/costume/russian_officer
-	worn_icon_digitigrade = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/security_digi.dmi'
 
 /obj/item/clothing/under/costume/nova
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/under/costume.dmi'
@@ -24,7 +22,6 @@
 	desc = "A decker jumpsuit with neon blue coloring."
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/under/costume.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/costume.dmi'
-	worn_icon_digitigrade = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/costume_digi.dmi'
 	icon_state = "decking_jumpsuit"
 	can_adjust = FALSE
 
@@ -55,7 +52,6 @@
 	greyscale_colors = "#2b2b2b"
 	greyscale_config = /datum/greyscale_config/qipao
 	greyscale_config_worn = /datum/greyscale_config/qipao/worn
-	greyscale_config_worn_digitigrade =  /datum/greyscale_config/qipao/worn/digi
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 
@@ -63,7 +59,6 @@
 	greyscale_colors = "#2b2b2b#ffce5b"
 	greyscale_config = /datum/greyscale_config/qipao_customtrim
 	greyscale_config_worn = /datum/greyscale_config/qipao_customtrim/worn
-	greyscale_config_worn_digitigrade =  /datum/greyscale_config/qipao_customtrim/worn/digi
 
 /obj/item/clothing/under/costume/nova/cheongsam
 	name = "cheongsam"
@@ -74,7 +69,6 @@
 	greyscale_colors = "#2b2b2b#353535"
 	greyscale_config = /datum/greyscale_config/cheongsam
 	greyscale_config_worn = /datum/greyscale_config/cheongsam/worn
-	greyscale_config_worn_digitigrade =  /datum/greyscale_config/cheongsam/worn/digi
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 
@@ -82,7 +76,6 @@
 	greyscale_colors = "#2b2b2b#ffce5b#353535"
 	greyscale_config = /datum/greyscale_config/cheongsam_customtrim
 	greyscale_config_worn = /datum/greyscale_config/cheongsam_customtrim/worn
-	greyscale_config_worn_digitigrade =  /datum/greyscale_config/cheongsam_customtrim/worn/digi
 
 /obj/item/clothing/under/costume/nova/yukata
 	name = "yukata"
@@ -92,7 +85,6 @@
 	greyscale_colors = "#2b2b2b#666666"
 	greyscale_config = /datum/greyscale_config/yukata
 	greyscale_config_worn = /datum/greyscale_config/yukata/worn
-	greyscale_config_worn_digitigrade =  /datum/greyscale_config/yukata/worn/digi
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 
@@ -120,7 +112,6 @@
 	greyscale_colors = "#cc0f0f#c4c2c2"
 	greyscale_config = /datum/greyscale_config/chrimbo
 	greyscale_config_worn = /datum/greyscale_config/chrimbo/worn
-	greyscale_config_worn_digitigrade =  /datum/greyscale_config/chrimbo/worn/digi
 	body_parts_covered = CHEST|GROIN|ARMS
 	flags_1 = IS_PLAYER_COLORABLE_1
 
@@ -132,15 +123,12 @@
 *	TREK CLOTHES
 */
 /obj/item/clothing/under/trek/command
-	greyscale_config_worn_digitigrade =  /datum/greyscale_config/trek/worn/digi
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/under/trek/engsec
-	greyscale_config_worn_digitigrade =  /datum/greyscale_config/trek/worn/digi
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/under/trek/medsci
-	greyscale_config_worn_digitigrade =  /datum/greyscale_config/trek/worn/digi
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 //Cyberpunk PI Costume - Sprites from Eris, slightly modified

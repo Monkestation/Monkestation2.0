@@ -1,5 +1,4 @@
 /obj/item/clothing/under/rank/security
-	worn_icon_digitigrade = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/security_digi.dmi'
 
 /obj/item/clothing/under/rank/security/nova
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/under/security.dmi'
@@ -429,7 +428,6 @@
 	desc = "A black and white striped jumpsuit, like something out of a movie."
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/under/costume.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/costume.dmi'
-	worn_icon_digitigrade = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/costume_digi.dmi'
 	icon_state = "prisonerclassic"
 	greyscale_colors = null
 	greyscale_config = null

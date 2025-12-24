@@ -3,7 +3,6 @@
 #define RESKIN_SYNDIE "Syndicate Red"
 
 /obj/item/clothing/under/syndicate
-	worn_icon_digitigrade = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/syndicate_digi.dmi'
 
 /obj/item/clothing/under/syndicate/nova
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/under/syndicate.dmi'
@@ -270,7 +269,6 @@
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/head/helmet.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/head/helmet.dmi'
 	icon_state = "swat_ds"
-	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
 
 /obj/item/clothing/head/beret/sec/syndicate
 	name = "brig officer's beret"

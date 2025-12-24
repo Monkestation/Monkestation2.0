@@ -2,7 +2,6 @@
 //MISC FILES = UNSORTED FILES. EVEN TG HATES THIS ONE.
 
 /obj/item/clothing/under/misc
-	worn_icon_digitigrade = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/misc_digi.dmi'
 
 /obj/item/clothing/under/misc/nova
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/under/misc.dmi'
@@ -63,7 +62,6 @@
 /obj/item/clothing/suit/toggle/trackjacket
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/suits.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/suit.dmi'
-	worn_icon_digitigrade = 'monkestation/code/modules/blueshift/icons/mob/clothing/suit.dmi'
 	name = "track jacket"
 	desc = "A black jacket with blue stripes for the athletic. It is also popular among russian delinquents."
 	icon_state = "trackjacket"

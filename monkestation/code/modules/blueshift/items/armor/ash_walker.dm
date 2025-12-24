@@ -134,7 +134,6 @@
 	desc = "For when you're expecting to step on spiky things. Offers modest protection to your feet."
 	icon = 'monkestation/code/modules/blueshift/icons/shoes.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/feet.dmi'
-	worn_icon_digitigrade = 'monkestation/code/modules/blueshift/icons/feet_digi.dmi'
 	icon_state = "bone_greaves"
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 	armor_type = /datum/armor/bone_greaves
@@ -218,7 +217,6 @@
 /obj/item/clothing/shoes/wraps/ashwalker/tribalwraps
 	icon = 'monkestation/code/modules/blueshift/icons/shoes.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/feet.dmi'
-	worn_icon_digitigrade = 'monkestation/code/modules/blueshift/icons/feet_digi.dmi'
 	name = "ornate leg wraps"
 	desc = "An ornate set of leg wraps commonly worn by a shaman or chieftain."
 	icon_state = "tribalcuffs"
@@ -227,7 +225,6 @@
 /obj/item/clothing/shoes/wraps/ashwalker/mundanewraps
 	icon = 'monkestation/code/modules/blueshift/icons/shoes.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/feet.dmi'
-	worn_icon_digitigrade = 'monkestation/code/modules/blueshift/icons/feet_digi.dmi'
 	name = "tribal leg wraps"
 	desc = "A mundane set of leg wraps often worn by tribal villagers."
 	icon_state = "mundanecuffs"
