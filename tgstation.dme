@@ -8085,8 +8085,6 @@
 #include "monkestation\code\modules\mob\dead\new_player\sprite_accessories\ipc_screens.dm"
 #include "monkestation\code\modules\mob\dead\new_player\sprite_accessories\multi_part.dm"
 #include "monkestation\code\modules\mob\dead\new_player\sprite_accessories\oni_accessories.dm"
-#include "monkestation\code\modules\mob\dead\new_player\sprite_accessories\sock_color.dm"
-#include "monkestation\code\modules\mob\dead\new_player\sprite_accessories\underwear.dm"
 #include "monkestation\code\modules\mob\living\emote.dm"
 #include "monkestation\code\modules\mob\living\init_signals.dm"
 #include "monkestation\code\modules\mob\living\living.dm"

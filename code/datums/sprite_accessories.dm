@@ -1605,12 +1605,11 @@
 /datum/sprite_accessory/socks/bee_knee
 	name = "Knee-high (Bee)"
 	icon_state = "bee_knee"
-/*
-MONKESTATION EDIT
+
 /datum/sprite_accessory/socks/black_knee
 	name = "Knee-high (Black)"
 	icon_state = "black_knee"
-*/
+
 /datum/sprite_accessory/socks/commie_knee
 	name = "Knee-High (Commie)"
 	icon_state = "commie_knee"
@@ -1643,17 +1642,13 @@ MONKESTATION EDIT
 	name = "Knee-high (White)"
 	icon_state = "white_knee"
 
-
 /datum/sprite_accessory/socks/fishnet_knee
 	name = "Knee-high (Fishnet)"
 	icon_state = "fishnet_knee"
 
-/*
-MONKESTATION EDIT
 /datum/sprite_accessory/socks/black_norm
 	name = "Normal (Black)"
 	icon_state = "black_norm"
-*/
 
 /datum/sprite_accessory/socks/white_norm
 	name = "Normal (White)"
@@ -1662,12 +1657,11 @@ MONKESTATION EDIT
 /datum/sprite_accessory/socks/pantyhose
 	name = "Pantyhose"
 	icon_state = "pantyhose"
-/*
-MONKESTATION EDIT
+
 /datum/sprite_accessory/socks/black_short
 	name = "Short (Black)"
 	icon_state = "black_short"
-*/
+
 /datum/sprite_accessory/socks/white_short
 	name = "Short (White)"
 	icon_state = "white_short"
@@ -1715,11 +1709,11 @@ MONKESTATION EDIT
 /datum/sprite_accessory/socks/bee_thigh
 	name = "Thigh-high (Bee)"
 	icon_state = "bee_thigh"
-/*
+
 /datum/sprite_accessory/socks/black_thigh
 	name = "Thigh-high (Black)"
 	icon_state = "black_thigh"
-*/
+
 /datum/sprite_accessory/socks/commie_thigh
 	name = "Thigh-high (Commie)"
 	icon_state = "commie_thigh"
