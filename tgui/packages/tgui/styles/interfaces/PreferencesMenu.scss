@@ -7,8 +7,8 @@ $department_map: (
   'Assistant': var(--color-gray),
   'Captain': colors.fg(var(--color-blue)),
   'Cargo': var(--color-brown),
-  'Central': hsl(118.08, 100%, 75.49%)
-    //only the first word matters, apparently.
+  'Central': hsl(118.08, 100%, 75.49%),
+  //only the first word matters, apparently.
   'Civilian': var(--color-gray),
   'Command': var(--color-yellow),
   'Security': var(--color-red),
