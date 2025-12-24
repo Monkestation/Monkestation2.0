@@ -64,7 +64,7 @@ export const LoadoutManager = (props) => {
 
   return (
     <Stack height={`${CLOTHING_SIDEBAR_ROWS * CLOTHING_CELL_SIZE}px`}>
-      <Stack.Item fill>
+      <Stack.Item>
         <Stack vertical fill>
           <Stack.Item>
             <Stack>

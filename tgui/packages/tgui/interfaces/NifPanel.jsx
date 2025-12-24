@@ -31,7 +31,6 @@ export const NifPanel = (props) => {
       title={'Nanite Implant Framework'}
       width={500}
       height={400}
-      resizable
       theme={current_theme}
     >
       <Window.Content scrollable>

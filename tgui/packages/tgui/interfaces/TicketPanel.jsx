@@ -111,7 +111,6 @@ export const TicketPanel = (props) => {
         title="Ticket Viewer"
         width={700}
         height={700}
-        resizable
       >
         <Window.Content scrollable>
           <Section title={data.initiator_key_name + ': ' + data.name}>
@@ -163,7 +162,7 @@ export const TicketPanel = (props) => {
     );
   }
   return (
-    <Window title="Ticket Viewer" width={700} height={700} resizable>
+    <Window title="Ticket Viewer" width={700} height={700}>
       <Window.Content scrollable>
         <TicketMessages title={data.name} ticket={data} />
       </Window.Content>
