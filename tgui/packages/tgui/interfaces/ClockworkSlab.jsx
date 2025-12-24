@@ -76,7 +76,7 @@ export const ClockworkSlab = (props) => {
 
 const ClockworkHelp = (props) => {
   return (
-    <Fragment>
+    <>
       <Collapsible title="Where To Start" color="average" open={1}>
         <Section>
           After a long and destructive war, Rat&#39;Var has been imprisoned
@@ -198,7 +198,7 @@ const ClockworkHelp = (props) => {
           <br />
         </Section>
       </Collapsible>
-    </Fragment>
+    </>
   );
 };
 
