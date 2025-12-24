@@ -151,7 +151,7 @@ ADMIN_VERB(edit_admin_permissions, R_PERMISSIONS, FALSE, "Permissions Panel", "E
 			to_chat(usr, "<span class='admin prefix'>Editing the rank of this admin is blocked by server configuration.</span>", confidential = TRUE)
 			return
 	if(!CONFIG_GET(flag/admin_legacy_system) && CONFIG_GET(flag/protect_legacy_ranks) && task == "permissions")
-		if((D.ranks & GLOB.protected_ranks).len > 0)
+		if((D.get_ranks() & GLOB.protected_ranks).len > 0)
 			to_chat(usr, "<span class='admin prefix'>Editing the flags of this rank is blocked by server configuration.</span>", confidential = TRUE)
 			return
 	if(CONFIG_GET(flag/load_legacy_ranks_only) && (task == "add" || task == "rank" || task == "permissions"))
@@ -443,7 +443,7 @@ ADMIN_VERB(edit_admin_permissions, R_PERMISSIONS, FALSE, "Permissions Panel", "E
 		qdel(query_change_rank_log)
 	if(D) //they were previously an admin
 		D.disassociate() //existing admin needs to be disassociated
-		D.ranks = new_ranks //set the admin_rank as our rank
+		D.update_ranks(new_ranks) //set the admin_rank as our rank
 		D.bypass_2fa = TRUE // Another admin has cleared us
 		var/client/C = GLOB.directory[admin_ckey]
 		D.associate(C)
@@ -475,6 +475,7 @@ ADMIN_VERB(edit_admin_permissions, R_PERMISSIONS, FALSE, "Permissions Panel", "E
 		350,
 		590,
 		allowed_edit_list = usr.client.holder.can_edit_rights_flags(),
+		picked_from = admin_flags_bitfield.Value()
 	)
 
 	if(isnull(new_flags) || old_flags == new_flags)
@@ -482,7 +483,7 @@ ADMIN_VERB(edit_admin_permissions, R_PERMISSIONS, FALSE, "Permissions Panel", "E
 
 	admin_holder.disassociate()
 	if(findtext(admin_holder.rank_names(), "([admin_ckey])"))
-		var/datum/admin_rank/rank = admin_holder.ranks[1]
+		var/datum/admin_rank/rank = admin_holder.get_ranks()[1]
 		rank.rights = new_flags
 		rank.include_rights = new_flags
 		rank.exclude_rights = NONE
@@ -498,7 +499,7 @@ ADMIN_VERB(edit_admin_permissions, R_PERMISSIONS, FALSE, "Permissions Panel", "E
 			/* init_edit_rights = */ admin_holder.can_edit_rights_flags(),
 		)
 
-		admin_holder.ranks = list(new_admin_rank)
+		admin_holder.update_ranks(list(new_admin_rank))
 
 	var/log = "[key_name(usr)] has updated the admin rights of [admin_ckey] into [rights2text(new_flags)]"
 	message_admins(log)

@@ -2,7 +2,8 @@
 ///Thus, the protected list manager.
 ///It provides a way to protect a list from outside interference(such as admin meddling)
 ///Please note this system is built for security over speed, so it should only be used if ABSOLUTELY NECESSARY.
-/datum/controller/protected_list_manager //(not that you would want to anyway)
+///This is the manager singleton, if you want to create a new protected list then do `new /datum/protected_list_holder(list_value, list_owner)`
+/datum/controller/protected_list_manager
 	///Have we initialized
 	var/initialized = FALSE
 
@@ -212,6 +213,7 @@ GENERAL_PROTECT_DATUM(/datum/controller/protected_list_manager)
 	update_value(null)
 	return ..()
 
+///Return the a copy of our assigned list
 /datum/protected_list_holder/proc/Value() as /list
 	if(IsAdminAdvancedProcCall())
 		var/msg = " has tried to call [src].Value()!"
@@ -223,6 +225,7 @@ GENERAL_PROTECT_DATUM(/datum/controller/protected_list_manager)
 		CRASH("[src].Value() called by something([caller.src]) not its owener([owner])")
 	return manager.read_list(src)
 
+///Update the value of our assigned list
 /datum/protected_list_holder/proc/update_value(list/new_value)
 	if(IsAdminAdvancedProcCall())
 		var/msg = " has tried to call [src].update_value()!"

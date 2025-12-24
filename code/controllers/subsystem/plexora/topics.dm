@@ -249,7 +249,7 @@
 		var/datum/admins/ckeyadatum = GLOB.admin_datums[ckey]
 		returning["admin_datum"] = list(
 			"name" = ckeyadatum.name,
-			"ranks" = ckeyadatum.ranks,
+			"ranks" = ckeyadatum.get_ranks(),
 			"fakekey" = ckeyadatum.fakekey,
 			"deadmined" = ckeyadatum.deadmined,
 			"bypass_2fa" = ckeyadatum.bypass_2fa,
