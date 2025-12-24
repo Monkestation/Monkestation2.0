@@ -1,9 +1,0 @@
-author: "notghosti"
-delete-after: True
-changes:
-  - balance: "Regen coma now has a max strength of 6."
-  - balance: "Regen com now gives no crit damage at 4."
-  - balance: "Regeneration Coma takes 20 seconds to un-coma someone once ending."
-  - balance: "Regeneration coma now suffers from a 40 cooldown after proccing."
-  - balance: "This is signified by a yawn"
-  - code_imp: "Some touchups to the debug disease and it's autoinjector. Non influence on game play"
