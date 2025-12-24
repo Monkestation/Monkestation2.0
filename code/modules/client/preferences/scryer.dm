@@ -20,6 +20,9 @@
 #define CALL_RINGTONE_STYAOS "Six Trillion Years and Overnight Story"
 #define CALL_RINGTONE_THIRD_SANCTUARY "Third Sanctuary"
 #define CALL_RINGTONE_YUMENO "YU.ME.NO"
+#define CALL_RINGTONE_ULTIMATUM "Grinchs Ultimatum"
+#define CALL_RINGTONE_TENNABOARD "Mike, the Board Please!"
+#define CALL_RINGTONE_BADPIGGIES "🥚🐖🛻"
 
 
 // (soundfile, soundlength)
@@ -38,6 +41,9 @@ GLOBAL_LIST_INIT(call_ringtones, list(
 	CALL_RINGTONE_STYAOS = list('sound/machines/call_ringtones/trillion_years_overnight_story.ogg', 11.9 SECONDS),
 	CALL_RINGTONE_THIRD_SANCTUARY = list('sound/machines/call_ringtones/third_sanctuary.ogg', 12.7 SECONDS),
 	CALL_RINGTONE_YUMENO = list('sound/machines/call_ringtones/yu_me_no.ogg', 28.2 SECONDS),
+	CALL_RINGTONE_ULTIMATUM = list('sound/machines/call_ringtones/grinch_ultimatum.ogg', 30 SECONDS),
+	CALL_RINGTONE_TENNABOARD = list('sound/machines/call_ringtones/TennaBoardIntro.ogg', 21 SECONDS),
+	CALL_RINGTONE_BADPIGGIES = list('sound/machines/call_ringtones/BadPiggies.ogg', 27.7 SECONDS)
 ))
 
 
