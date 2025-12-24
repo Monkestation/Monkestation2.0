@@ -1,7 +1,0 @@
-author: "notghosti"
-delete-after: True
-changes:
-  - rscadd: "Assault operatives now spawn with a survival box"
-  - qol: "Prisoner body bags can now be folded up"
-  - bugfix: "Syndicate prisoner body bags will now use the proper sprite"
-  - code_imp: "Assault operatives now have a properly named datum file."
