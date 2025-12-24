@@ -9,6 +9,7 @@
 	greyscale_config = null
 	greyscale_config_worn = null
 	greyscale_colors = null
+	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
 	flags_1 = NONE
 
 //TG's files separate this into Shorts.dmi and Pants.dmi. We wont have as many, so both go into here.
@@ -90,20 +91,8 @@
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /*
-*	Shorts that were previously using nonmodular edits to add their greyscale data, pulled from code/modules/clothing/under/shorts.dm
-*/
-
-/obj/item/clothing/under/shorts
-
-/obj/item/clothing/under/shorts/jeanshorts
-
-/*
 *	Pants that were previously using nonmodular edits to add their greyscale data, pulled from code/modules/clothing/under/pants.dm
 */
-
-/obj/item/clothing/under/pants/slacks
-
-/obj/item/clothing/under/pants/jeans
 /obj/item/clothing/under/pants/camo
 	greyscale_config = /datum/greyscale_config/camo_pants
 	greyscale_config_worn = /datum/greyscale_config/camo_pants/worn
