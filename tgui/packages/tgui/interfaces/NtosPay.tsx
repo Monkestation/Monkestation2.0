@@ -111,7 +111,7 @@ const TransferSection = (props) => {
               width="83px"
               minValue={1}
               maxValue={money}
-              onChange={(_, value) => (money_to_send = value)}
+              onChange={(value) => (money_to_send = value)}
               value={1}
             />
           </Tooltip>

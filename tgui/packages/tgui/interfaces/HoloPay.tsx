@@ -237,7 +237,7 @@ const SetupDisplay = (props) => {
             <RestrictedInput
               fluid
               maxValue={max_fee}
-              onChange={(_, value) => act('fee', { amount: value })}
+              onChange={(value) => act('fee', { amount: value })}
               value={force_fee}
             />
           </Tooltip>

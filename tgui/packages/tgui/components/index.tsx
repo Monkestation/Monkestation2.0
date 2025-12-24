@@ -37,6 +37,7 @@ import {
   Pointer,
   Popper,
   ProgressBar,
+  RestrictedInput,
   RoundGauge,
   Section,
   Stack,
@@ -81,6 +82,7 @@ export {
   Pointer,
   Popper,
   ProgressBar,
+  RestrictedInput,
   RoundGauge,
   Section,
   Stack,
@@ -96,6 +98,5 @@ export { Grid } from './Grid';
 export { Knob } from './Knob';
 export { Input } from './Input';
 export { NumberInput } from './NumberInput';
-export { RestrictedInput } from './RestrictedInput';
 export { Slider } from './Slider';
 export { TextArea } from './TextArea';

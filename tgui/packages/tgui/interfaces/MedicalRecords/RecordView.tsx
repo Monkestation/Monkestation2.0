@@ -52,12 +52,7 @@ export const MedicalRecordView = (props) => {
   const major_disabilities_array = getQuirkStrings(major_disabilities);
   const quirk_notes_array = getQuirkStrings(quirk_notes);
 
-  function onChangeHandler(
-    _event:
-      | React.KeyboardEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLInputElement>,
-    value: number,
-  ) {
+  function onChangeHandler(value: number) {
     act('edit_field', {
       field: 'age',
       ref: crew_ref,
