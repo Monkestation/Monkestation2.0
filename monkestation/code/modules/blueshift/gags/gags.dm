@@ -485,12 +485,6 @@
 	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/flannel/flannel_worn.json'
 
 
-// ARMOR
-
-//Helmet pairs with the above suit
-/datum/greyscale_config/heck_helmet/worn/snouted
-	icon_file = 'monkestation/code/modules/blueshift/icons/mob/clothing/head/helmet_muzzled.dmi'
-
 // Bathrobes
 
 /datum/greyscale_config/bathrobe

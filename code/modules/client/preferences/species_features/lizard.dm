@@ -100,6 +100,13 @@
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 	relevant_mutant_bodypart = "legs"
 
+/datum/preference/choiced/lizard_legs/is_accessible(datum/preferences/preferences)
+	if (!..(preferences))
+		return FALSE
+
+	var/datum/species/species_type = preferences.read_preference(/datum/preference/choiced/species)
+	return (species_type::digitigrade_customization == DIGITIGRADE_OPTIONAL)
+
 /datum/preference/choiced/lizard_legs/init_possible_values()
 	return assoc_to_keys_features(GLOB.legs_list)
 

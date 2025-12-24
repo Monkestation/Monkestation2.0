@@ -1307,11 +1307,12 @@
 	name = "silver jeans"
 	desc = "A pair of jeans for those with a commanding presence. Made of shining, silver denim, it's interwoven with a special alloy that provides extra protection and style."
 	icon = 'monkestation/icons/donator/obj/clothing/uniform.dmi'
-	worn_icon = 'monkestation/icons/donator/mob/clothing/uniform_digi.dmi'
+	worn_icon = 'monkestation/icons/donator/mob/clothing/suit.dmi'
 	lefthand_file = 'monkestation/icons/donator/mob/inhands/donator_left.dmi'
 	righthand_file = 'monkestation/icons/donator/mob/inhands/donator_right.dmi'
 	icon_state = "lt3_jeans"
 	inhand_icon_state = "lt3_jeans"
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /obj/item/clothing/gloves/skyy
 	name = "charcoal fingerless gloves"
