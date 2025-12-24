@@ -28,6 +28,7 @@ type DropdownUniqueProps = {
   onSelected?: (selected: any) => void;
   buttons?: boolean;
   displayHeight?: string;
+  dropdownBoxStyle?: BoxProps;
 };
 
 export type DropdownProps = BoxProps & DropdownUniqueProps;
@@ -114,15 +115,17 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
     renderedMenu.style.opacity = '1';
     renderedMenu.style.pointerEvents = 'auto';
 
+    if (this.props.dropdownBoxStyle) {
+      Object.assign(renderedMenu.style, this.props.dropdownBoxStyle);
+    }
+
     // ie hack
     // ie has this bizarre behavior where focus just silently fails if the
     // element being targeted "isn't ready"
     // 400 is probably way too high, but the lack of hotloading is testing my
     // patience on tuning it
     // I'm beyond giving a shit at this point it fucking works whatever
-    setTimeout(() => {
-      Dropdown.renderedMenu?.focus();
-    }, 400);
+    Dropdown.renderedMenu?.focus();
     this.renderMenuContent();
   }
 

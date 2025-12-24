@@ -113,6 +113,18 @@
 	projectile = /obj/projectile/beam/laser/heavylaser
 	fire_sound = 'sound/weapons/lasercannonfire.ogg'
 
+/obj/item/mecha_parts/mecha_equipment/weapon/energy/laser/sentinellascannon
+	equip_cooldown = 50
+	name = "\improper Sentinel Laser Cannon"
+	desc = "A massive turbolaser mounted in a turret."
+	icon_state = "sentinel_cannon_laser"
+	energy_drain = 300
+	projectile = /obj/projectile/bullet/rocket/sentinellaser
+	projectiles_per_shot = 2
+	projectile_delay = 0.1 SECONDS
+	fire_sound = 'sound/weapons/marauder.ogg'
+	mech_flags = EXOSUIT_MODULE_SENTINEL
+
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/ion
 	equip_cooldown = 20
 	name = "\improper MKIV ion heavy cannon"
@@ -634,6 +646,23 @@
 	ammo_type = MECHA_AMMO_LIGHTTANK
 	mech_flags = EXOSUIT_MODULE_TANK
 
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/sentinelcannon
+	name = "Sentinel Cannon"
+	desc = "A large artillery cannon affixed in a turret."
+	icon_state = "sentinel_cannon"
+	fire_sound = 'sound/weapons/gun/general/lighttankgun.ogg'
+	harmful = TRUE
+	projectile = /obj/projectile/bullet/rocket/sentinelshell
+	equip_cooldown = 12 SECONDS
+	projectiles = 20
+	projectiles_cache = 0
+	projectiles_cache_max = 40
+	projectiles_per_shot = 2
+	variance = 10
+	randomspread = 3
+	projectile_delay = 0.1 SECONDS
+	ammo_type = MECHA_AMMO_SENTINEL
+	mech_flags = EXOSUIT_MODULE_SENTINEL
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lighttankmg
 	name = "12.7mm Malone Mk.1 Ratcatcher"

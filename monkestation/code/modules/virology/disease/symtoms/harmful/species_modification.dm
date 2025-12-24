@@ -18,7 +18,7 @@
 		return
 	victim.set_species(new_species)
 
-/datum/symptom/species/deactivate(mob/living/carbon/mob)
+/datum/symptom/species/deactivate(mob/living/carbon/mob, datum/disease/acute/disease, safe = FALSE)
 	var/mob/living/carbon/human/victim = mob
 	if(!ishuman(victim))
 		return

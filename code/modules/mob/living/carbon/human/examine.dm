@@ -498,6 +498,8 @@
 
 	SEND_SIGNAL(src, COMSIG_ATOM_EXAMINE, user, .)
 
+	. += late_examine(user)
+
 /**
  * Shows any and all examine text related to any status effects the user has.
  */
@@ -518,7 +520,7 @@
 
 /mob/living/carbon/human/examine_more(mob/user)
 	. = ..()
-	if ((wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE)))
+	if(!is_face_visible())
 		return
 	var/age_text
 	switch(age)

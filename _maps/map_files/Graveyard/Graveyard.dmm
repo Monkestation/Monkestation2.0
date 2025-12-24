@@ -6343,51 +6343,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/upper)
-"ctu" = (
-/obj/structure/table/wood,
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/machinery/light/directional/south,
-/turf/open/floor/iron/vaporwave,
-/area/station/service/library)
 "cty" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 1
@@ -10646,6 +10601,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/science/ordnance)
+"eaK" = (
+/obj/machinery/cassette_deck,
+/turf/open/floor/iron/vaporwave,
+/area/station/service/library)
 "eaP" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
@@ -13754,10 +13713,6 @@
 /obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/science/xenobiology/cell)
-"fqb" = (
-/obj/machinery/cassette/adv_cassette_deck,
-/turf/open/floor/iron/vaporwave,
-/area/station/service/library)
 "fqx" = (
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/plating,
@@ -22659,6 +22614,51 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
+"iOy" = (
+/obj/structure/table/wood,
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron/vaporwave,
+/area/station/service/library)
 "iOz" = (
 /obj/effect/turf_decal/tile/purple/half/contrasted,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -24374,11 +24374,6 @@
 	},
 /turf/open/floor/carpet/purple,
 /area/station/science/research)
-"jyB" = (
-/obj/machinery/light/directional/north,
-/obj/machinery/modular_computer/preset/id,
-/turf/open/floor/carpet/red,
-/area/station/cargo/quartermaster)
 "jyF" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -25032,6 +25027,11 @@
 /obj/effect/turf_decal/tile/brown/half/contrasted,
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
+"jKY" = (
+/obj/machinery/light/directional/north,
+/obj/machinery/modular_computer/preset/quartermaster,
+/turf/open/floor/carpet/red,
+/area/station/cargo/quartermaster)
 "jLi" = (
 /obj/machinery/camera/directional/east{
 	c_tag = "Prison Yard";
@@ -32870,11 +32870,6 @@
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
-"mJK" = (
-/obj/machinery/cassette/mailbox,
-/obj/machinery/light/directional/east,
-/turf/open/floor/wood,
-/area/station/service/library)
 "mJP" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -37863,6 +37858,11 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
+"oCO" = (
+/obj/machinery/cassette_postbox,
+/obj/machinery/light/directional/east,
+/turf/open/floor/wood,
+/area/station/service/library)
 "oCS" = (
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/supply)
@@ -40565,6 +40565,13 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
+"pIC" = (
+/obj/structure/table/wood,
+/obj/machinery/dj_station{
+	pixel_y = 12
+	},
+/turf/open/floor/iron/vaporwave,
+/area/station/service/library)
 "pID" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -41399,13 +41406,6 @@
 /mob/living/basic/pet/dog/bullterrier/walter,
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
-"qbW" = (
-/obj/structure/table/wood,
-/obj/machinery/cassette/dj_station{
-	pixel_y = 12
-	},
-/turf/open/floor/iron/vaporwave,
-/area/station/service/library)
 "qcz" = (
 /obj/machinery/growing/tray,
 /obj/machinery/camera/autoname/directional/south,
@@ -146307,7 +146307,7 @@ uMt
 vNc
 fGQ
 lkC
-jyB
+jKY
 lGn
 fTW
 hhJ
@@ -168150,7 +168150,7 @@ nEp
 eVJ
 jwu
 tav
-ctu
+iOy
 bMB
 qzU
 iBf
@@ -168661,10 +168661,10 @@ kzl
 quA
 jrD
 bMB
-qbW
+pIC
 iyc
 thN
-fqb
+eaK
 bMB
 qzU
 iBf
@@ -169171,7 +169171,7 @@ lXv
 quA
 sFV
 quA
-mJK
+oCO
 aXQ
 xjJ
 bMB

@@ -3280,6 +3280,19 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/command/storage/eva)
+"aVI" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/machinery/camera/directional/south{
+	c_tag = "Cargo - Quartermaster's Office";
+	name = "cargo camera"
+	},
+/obj/machinery/status_display/ai/directional/south,
+/obj/effect/turf_decal/bot,
+/obj/machinery/modular_computer/preset/quartermaster{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/textured_large,
+/area/station/cargo/quartermaster)
 "aVN" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -6559,6 +6572,26 @@
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood,
 /area/station/service/library/abandoned)
+"bWx" = (
+/obj/structure/table/wood,
+/obj/item/storage/dice{
+	pixel_x = 15
+	},
+/obj/effect/spawner/random/bureaucracy/briefcase{
+	pixel_x = -1;
+	spawn_loot_count = 2;
+	spawn_random_offset = 1
+	},
+/obj/item/laser_pointer{
+	pixel_x = 20
+	},
+/obj/machinery/requests_console/auto_name/directional/north,
+/obj/structure/window/spawner/directional/west,
+/obj/machinery/cassette_deck{
+	pixel_y = 8
+	},
+/turf/open/floor/carpet,
+/area/station/service/library)
 "bWK" = (
 /obj/machinery/ai_slipper{
 	uses = 10
@@ -9964,22 +9997,6 @@
 /obj/structure/sign/warning/secure_area,
 /turf/closed/wall/r_wall,
 /area/station/maintenance/aft/greater)
-"cYI" = (
-/obj/structure/table/wood,
-/obj/item/radio/intercom/directional/east,
-/obj/machinery/light/warm/directional/east,
-/obj/effect/turf_decal/siding/thinplating/dark{
-	dir = 4
-	},
-/obj/item/radio/radio_mic{
-	pixel_y = 7
-	},
-/obj/item/device/cassette_tape/friday{
-	pixel_y = -6;
-	pixel_x = -8
-	},
-/turf/open/floor/cult,
-/area/station/service/library)
 "cYN" = (
 /obj/structure/chair/sofa/corp/right{
 	dir = 8;
@@ -13717,13 +13734,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/maintenance/starboard/aft)
-"dXY" = (
-/obj/effect/turf_decal/siding/wood/end{
-	dir = 1
-	},
-/obj/machinery/cassette/mailbox,
-/turf/open/floor/wood/large,
-/area/station/service/library)
 "dXZ" = (
 /obj/effect/turf_decal/trimline/red/filled/line,
 /obj/structure/table,
@@ -33127,6 +33137,16 @@
 "jpR" = (
 /turf/closed/wall,
 /area/station/service/hydroponics/chicken)
+"jpV" = (
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 10
+	},
+/obj/machinery/dj_station{
+	pixel_y = 7
+	},
+/obj/structure/table/wood,
+/turf/open/floor/cult,
+/area/station/service/library)
 "jpW" = (
 /obj/structure/toilet{
 	pixel_y = 8
@@ -40126,16 +40146,6 @@
 /obj/machinery/atmospherics/miner/oxygen,
 /turf/open/floor/engine/o2,
 /area/station/engineering/atmos)
-"liZ" = (
-/obj/effect/turf_decal/siding/thinplating/dark{
-	dir = 10
-	},
-/obj/machinery/cassette/dj_station{
-	pixel_y = 7
-	},
-/obj/structure/table/wood,
-/turf/open/floor/cult,
-/area/station/service/library)
 "lje" = (
 /obj/structure/table/wood/fancy/green,
 /obj/effect/turf_decal/siding/wood{
@@ -44643,18 +44653,6 @@
 	},
 /turf/open/floor/iron/white/textured_edge,
 /area/station/science/research)
-"mwB" = (
-/obj/structure/table/wood,
-/obj/effect/turf_decal/siding/wood/end{
-	dir = 8
-	},
-/obj/machinery/firealarm/directional/west,
-/obj/machinery/light/warm/directional/west,
-/obj/machinery/cassette/adv_cassette_deck{
-	pixel_y = 8
-	},
-/turf/open/floor/wood/large,
-/area/station/service/library)
 "mwP" = (
 /obj/structure/closet/emcloset/wall{
 	pixel_y = 32
@@ -51385,6 +51383,13 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/maintenance/department/crew_quarters/bar)
+"oqP" = (
+/obj/effect/turf_decal/siding/wood/end{
+	dir = 1
+	},
+/obj/machinery/cassette_postbox,
+/turf/open/floor/wood/large,
+/area/station/service/library)
 "ore" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
@@ -52833,26 +52838,6 @@
 	dir = 8
 	},
 /area/station/maintenance/disposal/incinerator)
-"oMn" = (
-/obj/structure/table/wood,
-/obj/item/storage/dice{
-	pixel_x = 15
-	},
-/obj/effect/spawner/random/bureaucracy/briefcase{
-	pixel_x = -1;
-	spawn_loot_count = 2;
-	spawn_random_offset = 1
-	},
-/obj/item/laser_pointer{
-	pixel_x = 20
-	},
-/obj/machinery/requests_console/auto_name/directional/north,
-/obj/structure/window/spawner/directional/west,
-/obj/machinery/cassette/adv_cassette_deck{
-	pixel_y = 8
-	},
-/turf/open/floor/carpet,
-/area/station/service/library)
 "oMs" = (
 /turf/closed/wall/r_wall,
 /area/station/science/xenobiology)
@@ -54072,6 +54057,18 @@
 /obj/structure/sign/warning/cold_temp,
 /turf/closed/wall,
 /area/station/medical/coldroom)
+"pcF" = (
+/obj/structure/table/wood,
+/obj/effect/turf_decal/siding/wood/end{
+	dir = 8
+	},
+/obj/machinery/firealarm/directional/west,
+/obj/machinery/light/warm/directional/west,
+/obj/machinery/cassette_deck{
+	pixel_y = 8
+	},
+/turf/open/floor/wood/large,
+/area/station/service/library)
 "pcI" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
@@ -56661,6 +56658,22 @@
 /obj/item/stack/sheet/iron,
 /turf/open/floor/iron/textured,
 /area/station/maintenance/department/science/ordnance_maint)
+"pMy" = (
+/obj/structure/table/wood,
+/obj/item/radio/intercom/directional/east,
+/obj/machinery/light/warm/directional/east,
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 4
+	},
+/obj/item/radio/radio_mic{
+	pixel_y = 7
+	},
+/obj/item/cassette_tape/friday{
+	pixel_y = -6;
+	pixel_x = -8
+	},
+/turf/open/floor/cult,
+/area/station/service/library)
 "pMA" = (
 /obj/structure/chair/sofa/right/brown{
 	dir = 4
@@ -81527,19 +81540,6 @@
 /obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron/stairs/medium,
 /area/station/hallway/secondary/command)
-"wBo" = (
-/obj/effect/turf_decal/siding/wood,
-/obj/machinery/camera/directional/south{
-	c_tag = "Cargo - Quartermaster's Office";
-	name = "cargo camera"
-	},
-/obj/machinery/status_display/ai/directional/south,
-/obj/effect/turf_decal/bot,
-/obj/machinery/modular_computer/preset/id{
-	dir = 1
-	},
-/turf/open/floor/iron/dark/textured_large,
-/area/station/cargo/quartermaster)
 "wBy" = (
 /obj/effect/spawner/random/entertainment/arcade,
 /obj/structure/sign/poster/contraband/random/directional/north,
@@ -121923,7 +121923,7 @@ fFi
 utK
 bPq
 bPq
-mwB
+pcF
 fiy
 uOv
 iZJ
@@ -122179,7 +122179,7 @@ cOx
 oSy
 bPq
 bPq
-dXY
+oqP
 chq
 ibN
 dld
@@ -123719,7 +123719,7 @@ eri
 hio
 kDF
 fLp
-oMn
+bWx
 inc
 rCD
 gFF
@@ -124749,7 +124749,7 @@ grQ
 fLp
 rjf
 ryF
-liZ
+jpV
 uuO
 sSJ
 mOm
@@ -125262,7 +125262,7 @@ jzQ
 nQl
 fLp
 dWg
-cYI
+pMy
 vZM
 uuO
 rCr
@@ -127093,7 +127093,7 @@ cPV
 eSq
 qnt
 cgC
-wBo
+aVI
 nAt
 urc
 lWY
