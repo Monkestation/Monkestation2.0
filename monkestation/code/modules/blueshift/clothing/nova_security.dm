@@ -18,12 +18,10 @@
 	name = "security utility uniform"
 	desc = "A utility uniform worn by Lopland-certified Security officers."
 	icon_state = "util_sec"
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 
 /obj/item/clothing/under/rank/security/nova/utility/redsec
 	desc = "A utility uniform worn by trained Security officers."
 	icon_state = "util_sec_old"
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 	can_adjust = FALSE
 
 /obj/item/clothing/under/rank/security/nova/utility/redsec/syndicate
@@ -45,7 +43,6 @@
 	icon_state = "workpants_blue"
 	body_parts_covered = GROIN|LEGS
 	can_adjust = FALSE
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 	female_sprite_flags = FEMALE_UNIFORM_NO_BREASTS
 	item_flags = INFINITE_RESKIN
 	unique_reskin = list(
@@ -88,7 +85,6 @@
 	desc = "Turtleneck sweater commonly worn by Peacekeepers, attached with pants."
 	icon_state = "jumpsuit_blue"
 	can_adjust = TRUE
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 
 /obj/item/clothing/under/rank/security/peacekeeper/plain_skirt

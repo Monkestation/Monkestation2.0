@@ -137,7 +137,6 @@
 	desc = "A utility uniform worn by Medical doctors."
 	icon_state = "util_med"
 	can_adjust = TRUE
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 
 /obj/item/clothing/under/rank/medical/doctor/utility/syndicate
 	armor_type = /datum/armor/clothing_under/utility_syndicate

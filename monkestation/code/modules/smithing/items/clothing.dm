@@ -170,6 +170,5 @@
 
 	body_parts_covered = FEET
 	slot_flags = ITEM_SLOT_FEET
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 
 	base_name = "shoes"

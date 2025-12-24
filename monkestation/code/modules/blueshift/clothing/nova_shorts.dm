@@ -10,7 +10,6 @@
 	greyscale_config_worn = null
 	greyscale_colors = null
 	flags_1 = NONE
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION //That's right, TG, I have icons for ALL of these!! Mwahahaha!!!! //stick to your own buddy (moved away from shorts type)
 
 //TG's files separate this into Shorts.dmi and Pants.dmi. We wont have as many, so both go into here.
 
@@ -79,7 +78,6 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	flags_1 = IS_PLAYER_COLORABLE_1
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 
 /obj/item/clothing/under/pants/nova/vicvest //there's no way I'm typing out a path called double_breasted 10 times over, too complex and everyone will be scared of it
 	name = "buttondown shirt with double-breasted vest"

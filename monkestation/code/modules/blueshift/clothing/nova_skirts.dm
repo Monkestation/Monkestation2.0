@@ -37,7 +37,6 @@
 	icon_state = "striped_skirt"
 	body_parts_covered = CHEST|GROIN|LEGS
 	can_adjust = TRUE
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 	greyscale_config = null
 	greyscale_config_worn = null
 	greyscale_colors = null
@@ -48,7 +47,6 @@
 	icon_state = "red_skirt"
 	body_parts_covered = CHEST|GROIN|LEGS
 	can_adjust = TRUE
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 	greyscale_config = null
 	greyscale_config_worn = null
 	greyscale_colors = null
@@ -59,7 +57,6 @@
 	icon_state = "black_skirt"
 	body_parts_covered = CHEST|GROIN|LEGS
 	can_adjust = TRUE
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 	greyscale_config = null
 	greyscale_config_worn = null
 	greyscale_colors = null
@@ -82,7 +79,6 @@
 	desc = "Technically, is there much difference between these and jorts? It's just one big hole instead of two. Does that make this a jirt?"
 	icon_state = "jean_skirt"
 	female_sprite_flags = NO_FEMALE_UNIFORM
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 	greyscale_config = /datum/greyscale_config/jean_skirt
 	greyscale_config_worn = /datum/greyscale_config/jean_skirt/worn
 	greyscale_colors = "#787878#723E0E#4D7EAC"
@@ -187,4 +183,3 @@
 	icon_state = "jute"
 	body_parts_covered = CHEST|GROIN|LEGS
 	can_adjust = TRUE
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
