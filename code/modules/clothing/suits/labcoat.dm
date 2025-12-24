@@ -127,7 +127,7 @@
 /obj/item/clothing/suit/toggle/labcoat/secmed/old
 	name = "grey security medical labcoat"
 	desc = "A formerly retired labcoat pattern now brought back for those working the medical profession in the security apparatus."
-	icon_state = "labcoat_secmed"
+	icon_state = "labcoat_secmed_old"
 
 /obj/item/clothing/suit/toggle/labcoat/secmed/alt
 	name = "security medical jacket"

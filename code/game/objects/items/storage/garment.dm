@@ -173,6 +173,6 @@
 	new /obj/item/clothing/head/utility/surgerycap/sec(src)
 	new /obj/item/clothing/suit/toggle/labcoat/secmed(src)
 	new /obj/item/clothing/suit/toggle/labcoat/secmed/old(src)
-	new /obj/item/clothing/suit/toggle/labcoat/secmed/jacket(src)
+	new /obj/item/clothing/suit/toggle/labcoat/secmed/alt(src)
 	new /obj/item/clothing/shoes/sneakers/secred(src)
 	new /obj/item/clothing/gloves/latex/nitrile(src)

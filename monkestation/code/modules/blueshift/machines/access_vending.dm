@@ -175,7 +175,6 @@
 		/obj/item/clothing/head/hats/imperial/hos = 1,
 		/obj/item/clothing/under/rank/security/head_of_security/alt = 1,
 		/obj/item/clothing/under/rank/security/head_of_security/alt/skirt = 1,
-		/obj/item/clothing/under/rank/security/head_of_security/nova/imperial = 1,
 		/obj/item/clothing/suit/jacket/hos/blue = 1,
 		/obj/item/clothing/under/rank/security/head_of_security/parade = 1,
 		/obj/item/clothing/suit/armor/hos/hos_formal = 1,
