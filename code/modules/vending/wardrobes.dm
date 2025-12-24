@@ -56,6 +56,7 @@
 			"products" = list(
 				/obj/item/clothing/suit/hooded/wintercoat/security = 3,
 				/obj/item/clothing/suit/armor/vest/blueshirt = 3,
+				/obj/item/clothing/suit/armor/vest/secjacket = 3,
 			),
 		),
 		list(
