@@ -139,7 +139,6 @@
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/uniform.dmi'
 	icon_state = "cyberpunksleek"
 	body_parts_covered = CHEST|ARMS|GROIN|LEGS
-	supports_variations_flags = NONE
 	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/cybersleek/long

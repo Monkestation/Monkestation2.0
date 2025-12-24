@@ -457,10 +457,6 @@
 	name = "Face Scarf (Worn)"
 	icon_file = 'monkestation/code/modules/blueshift/gags/icons/neck/face_scarf/face_scarf_worn.dmi'
 
-/datum/greyscale_config/face_scarf/worn/muzzled
-	name = "Face Scarf (Worn, Muzzled)"
-	icon_file = 'monkestation/code/modules/blueshift/gags/icons/neck/face_scarf/face_scarf_worn_muzzled.dmi'
-
 /*
 *	SUITS
 */
