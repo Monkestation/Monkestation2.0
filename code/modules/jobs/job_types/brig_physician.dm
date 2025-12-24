@@ -47,20 +47,19 @@
 	jobtype = /datum/job/brig_physician
 
 	id_trim = /datum/id_trim/job/brig_physician
-	uniform = /obj/item/clothing/under/rank/security/scrubs/sec
-	suit = /obj/item/clothing/suit/toggle/labcoat/brig_physician
+	uniform = /obj/item/clothing/under/rank/security/medical
+	suit = /obj/item/clothing/suit/toggle/labcoat/secmed
 	suit_store = /obj/item/flashlight/pen
 	belt = /obj/item/modular_computer/pda/security/brig_physician
 	ears = /obj/item/radio/headset/headset_secmed
-	head = /obj/item/clothing/head/utility/surgerycap/sec
-	shoes = /obj/item/clothing/shoes/sneakers/secred
+	glasses = /obj/item/clothing/glasses/hud/health
+	shoes = /obj/item/clothing/shoes/sneakers/white
 	l_hand = /obj/item/storage/medkit/surgery
 	r_hand = /obj/item/security_voucher/brig_physician
 
-
-	backpack = /obj/item/storage/backpack/brig_physician
-	satchel = /obj/item/storage/backpack/satchel/brig_physician
-	duffelbag = /obj/item/storage/backpack/duffelbag/brig_physician
+	backpack = /obj/item/storage/backpack/secmed
+	satchel = /obj/item/storage/backpack/satchel/secmed
+	duffelbag = /obj/item/storage/backpack/duffelbag/secmed
 
 	box = /obj/item/storage/box/survival/medical
 	chameleon_extras = /obj/item/gun/syringe
@@ -70,7 +69,7 @@
 /datum/outfit/plasmaman/brig_physician
 	name = "Brig Physician Plasmaman"
 
-	uniform = /obj/item/clothing/under/plasmaman/brig_physician
-	gloves = /obj/item/clothing/gloves/color/plasmaman/brig_physician
-	head = /obj/item/clothing/head/helmet/space/plasmaman/brig_physician
+	uniform = /obj/item/clothing/under/plasmaman/secmed
+	gloves = /obj/item/clothing/gloves/color/plasmaman/secmed
+	head = /obj/item/clothing/head/helmet/space/plasmaman/secmed
 
