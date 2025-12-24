@@ -109,7 +109,12 @@ export const StoreManager = (props) => {
                         />
                       </Table.Cell>
                       <Table.Cell style={{ textAlign: 'right' }}>
-                        <Box display="flex" justifyContent="flex-end">
+                        <Box
+                          style={{
+                            display: 'flex',
+                            justifyContent: 'flex-end',
+                          }}
+                        >
                           <Button
                             icon="fa-solid fa-coins"
                             backgroundColor="transparent"
@@ -119,7 +124,12 @@ export const StoreManager = (props) => {
                         </Box>
                       </Table.Cell>
                       <Table.Cell style={{ textAlign: 'right' }}>
-                        <Box display="flex" justifyContent="flex-end">
+                        <Box
+                          style={{
+                            display: 'flex',
+                            justifyContent: 'flex-end',
+                          }}
+                        >
                           <Button.Confirm
                             content={
                               owned_items.includes(item.path)

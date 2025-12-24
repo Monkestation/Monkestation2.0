@@ -327,7 +327,6 @@ export const BeakerPanel = (props) => {
                         width="150px"
                         options={['Normal']}
                         selected={grenadeData.grenadeType}
-                        value={grenadeData.grenadeType}
                         onSelected={(value) =>
                           setGrenadeData({
                             ...grenadeData,

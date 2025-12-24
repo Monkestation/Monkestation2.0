@@ -228,7 +228,7 @@ const ReportText = (props) => {
             <Button.Checkbox
               fluid
               width="100%"
-              checked={announce_contents}
+              checked={!!announce_contents}
               onClick={() => act('toggle_announce')}
             >
               Announce Contents
@@ -250,7 +250,7 @@ const ReportText = (props) => {
             <Button.Checkbox
               fluid
               width="100%"
-              checked={print_report || !announce_contents}
+              checked={!!print_report || !announce_contents}
               disabled={!announce_contents}
               onClick={() => act('toggle_printing')}
               tooltip={

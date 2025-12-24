@@ -17,7 +17,7 @@ type CircuitSignalHandlerState = {
   signal_id: string;
   responseList: Response[];
   parameterList: Parameter[];
-  global: Boolean;
+  global: boolean;
 };
 
 type CircuitSignalHandlerData = {
@@ -193,7 +193,7 @@ export class CircuitSignalHandler extends Component<
 type EntryProps = {
   onRemove: (e: React.MouseEvent<any>) => any;
   onEnter: (e: React.MouseEvent<any>, value: string) => any;
-  onSetOption?: (type: string) => any;
+  onSetOption?: (type: string) => void;
   name: string;
   current_option: string;
   options?: string[];
@@ -228,7 +228,7 @@ const Entry = (props: EntryProps) => {
             <Dropdown
               displayText={current_option}
               options={options}
-              onSelected={onSetOption}
+              onSelected={() => onSetOption?.(current_option)}
             />
           )) || (
             <Box textAlign="center" py="2px" px={2}>

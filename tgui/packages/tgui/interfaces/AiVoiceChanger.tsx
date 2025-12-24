@@ -29,6 +29,7 @@ export const AiVoiceChanger = (props) => {
           </LabeledList.Item>
           <LabeledList.Item label="Accent">
             <Dropdown
+              selected={''}
               options={voices}
               onSelected={(value) =>
                 act('look', {
@@ -39,7 +40,7 @@ export const AiVoiceChanger = (props) => {
           </LabeledList.Item>
           <LabeledList.Item label="Verb">
             <Input
-              default={say_verb}
+              placeholder={say_verb}
               onChange={(e, value) =>
                 act('verb', {
                   verb: value,
@@ -57,7 +58,7 @@ export const AiVoiceChanger = (props) => {
           </LabeledList.Item>
           <LabeledList.Item label="Fake name">
             <Input
-              default={name}
+              placeholder={name}
               onChange={(e, value) =>
                 act('name', {
                   name: value,

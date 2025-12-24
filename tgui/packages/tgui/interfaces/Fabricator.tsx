@@ -132,18 +132,15 @@ const CustomPrint = (props: CustomPrintProps) => {
       ])}
     >
       <Button.Input
-        content={`[Max: ${maxMult}]`}
+        buttonText={`[Max: ${maxMult}]`}
         color={'transparent'}
-        maxValue={maxMult}
-        onCommit={(_e, value: string) =>
+        onCommit={(value: string) =>
           act('build', {
             ref: design.id,
             amount: value,
           })
         }
-      >
-        [Max: {maxMult}]
-      </Button.Input>
+      />
     </div>
   );
 };

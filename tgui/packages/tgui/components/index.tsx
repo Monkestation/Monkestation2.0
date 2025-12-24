@@ -20,7 +20,6 @@ import {
   Divider,
   DmIcon,
   DraggableControl,
-  Dropdown,
   FitText,
   Flex,
   Icon,
@@ -29,7 +28,6 @@ import {
   InfinitePlane,
   Interactive,
   KeyListener,
-  Knob,
   LabeledControls,
   LabeledList,
   MenuBar,
@@ -40,7 +38,6 @@ import {
   ProgressBar,
   RoundGauge,
   Section,
-  Slider,
   Stack,
   StyleableSection,
   Table,
@@ -66,7 +63,6 @@ export {
   Divider,
   DmIcon,
   DraggableControl,
-  Dropdown,
   FitText,
   Flex,
   Icon,
@@ -75,7 +71,6 @@ export {
   InfinitePlane,
   Interactive,
   KeyListener,
-  Knob,
   LabeledControls,
   LabeledList,
   MenuBar,
@@ -86,7 +81,6 @@ export {
   ProgressBar,
   RoundGauge,
   Section,
-  Slider,
   Stack,
   StyleableSection,
   Table,
@@ -96,8 +90,11 @@ export {
   TrackOutsideClicks,
 };
 
+export { Dropdown } from './Dropdown';
 export { Grid } from './Grid';
+export { Knob } from './Knob';
 export { Input } from './Input';
 export { NumberInput } from './NumberInput';
 export { RestrictedInput } from './RestrictedInput';
+export { Slider } from './Slider';
 export { TextArea } from './TextArea';

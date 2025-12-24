@@ -115,7 +115,6 @@ export const PreferencesMenu = () => {
       {window === PreferencesCurrentWindow.Character ? (
         <Stack.Item>
           <Button
-            wrap
             align="center"
             fontSize="1em"
             fluid
@@ -135,7 +134,7 @@ export const PreferencesMenu = () => {
   return (
     <Window title="Preferences" width={1215} height={850} theme="generic">
       <Window.Content>
-        <Stack horizontal height="100%">
+        <Stack height="100%">
           <Stack.Item>
             <Section height="100%" title="Preferences">
               {settingsCatergories}

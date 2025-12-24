@@ -73,7 +73,7 @@ export const SeedExtractor = (props) => {
         <Section>
           <Table>
             <Table.Row header>
-              <Table.Cell colspan="3" px={1} py={2}>
+              <Table.Cell colSpan={3} px={1} py={2}>
                 <Input
                   autoFocus
                   placeholder={'Search...'}
@@ -256,7 +256,7 @@ export const SeedExtractor = (props) => {
                     py={0.5}
                     px={1}
                     collapsing
-                    colspan="2"
+                    colSpan={2}
                     textAlign="right"
                   >
                     {action ? (

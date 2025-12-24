@@ -15,7 +15,6 @@ export const ShipbreakerConsole = (props) => {
       <Window.Content scrollable>
         <Section title="Ship Health">
           <ProgressBar
-            title="Health"
             value={health}
             maxValue={100}
             ranges={{

@@ -113,9 +113,9 @@ const PlantTabs = (props) => {
   const [selectedPlant, setSelectedPlant] = useLocalState('plant', plants[0]);
   return (
     <Tabs vertical overflowY="auto">
-      {plants.map((plant) => (
+      {plants.map((plant, idx) => (
         <Tabs.Tab
-          key={plant}
+          key={idx}
           selected={plant === selectedPlant}
           onClick={() => setSelectedPlant(plant)}
         >

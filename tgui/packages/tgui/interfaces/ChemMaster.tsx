@@ -341,7 +341,6 @@ const ReagentEntry = (props) => {
         />
         <Button
           icon="ellipsis-h"
-          title="Custom amount"
           disabled={isPrinting}
           onClick={() =>
             act('transfer', {
@@ -353,7 +352,6 @@ const ReagentEntry = (props) => {
         />
         <Button
           icon="question"
-          title="Analyze"
           onClick={() =>
             act('analyze', {
               reagentRef: chemical.ref,

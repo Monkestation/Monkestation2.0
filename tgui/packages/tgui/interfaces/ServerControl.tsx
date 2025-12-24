@@ -54,7 +54,7 @@ export const ServerControl = (props) => {
           </NoticeBox>
         ) : (
           <Section>
-            <Table cellpadding="3" textAlign="center">
+            <Table textAlign="center">
               <Table.Row header>
                 <Table.Cell>Research Servers</Table.Cell>
               </Table.Row>
@@ -87,7 +87,7 @@ export const ServerControl = (props) => {
           </NoticeBox>
         ) : (
           <Section align="right">
-            <Table cellpadding="3" textAlign="center">
+            <Table textAlign="center">
               <Table.Row header>
                 <Table.Cell>Research Consoles</Table.Cell>
               </Table.Row>

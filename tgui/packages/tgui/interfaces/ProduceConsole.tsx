@@ -373,7 +373,7 @@ export const ProduceConsole = (props) => {
               <Stack.Item grow>
                 Currently available balance: {points || 0}
               </Stack.Item>
-              <Stack.Item textAlign="right" fill>
+              <Stack.Item textAlign="right">
                 <Button
                   ml={65}
                   mt={-4}

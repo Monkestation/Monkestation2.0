@@ -139,7 +139,6 @@ export const createDropdownInput = <T extends string | number = string>(
   return (props: FeatureValueProps<T>) => {
     return (
       <Dropdown
-        selected={props.value}
         displayText={choices[props.value]}
         onSelected={props.handleSetValue}
         width="100%"
@@ -193,8 +192,6 @@ export const StandardizedDropdown = (props: {
       buttons={buttons}
       selected={value}
       onSelected={onSetValue}
-      clipSelectedText={false}
-      displayHeight={displayHeight}
       width="100%"
       displayText={value ? displayNames[value] : ''}
       options={choices.map((choice) => {

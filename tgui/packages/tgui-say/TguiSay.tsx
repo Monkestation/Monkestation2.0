@@ -36,7 +36,7 @@ export class TguiSay extends Component<{}, State> {
   private channelIterator: ChannelIterator;
   private chatHistory: ChatHistory;
   private currentPrefix: keyof typeof RADIO_PREFIXES | null;
-  private innerRef: RefObject<HTMLTextAreaElement>;
+  private innerRef: RefObject<HTMLTextAreaElement | null>;
   private lightMode: boolean;
   private maxLength: number;
   private messages: typeof byondMessages;

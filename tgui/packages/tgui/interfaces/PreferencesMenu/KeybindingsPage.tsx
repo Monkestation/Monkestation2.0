@@ -437,70 +437,75 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
           onKeyDown={this.handleKeyDown}
           onKeyUp={this.handleKeyUp}
         />
+        <Stack vertical fill>
+          <Stack.Item grow>
+            <TabbedMenu
+              categoryEntries={keybindingEntries.map(
+                ([category, keybindings]) => {
+                  return [
+                    category,
+                    <Stack key={category} vertical fill>
+                      {sortKeybindings(Object.entries(keybindings)).map(
+                        ([keybindingId, keybinding]) => {
+                          const keys =
+                            this.state.selectedKeybindings![keybindingId] || [];
 
-        <TabbedMenu
-          name="Keybindings"
-          extra={
-            <Button.Confirm
-              content="Reset all keybindings"
-              onClick={() => act('reset_all_keybinds')}
-            />
-          }
-          categoryEntries={keybindingEntries.map(([category, keybindings]) => {
-            return [
-              category,
-              <Stack key={category} vertical fill>
-                {sortKeybindings(Object.entries(keybindings)).map(
-                  ([keybindingId, keybinding]) => {
-                    const keys =
-                      this.state.selectedKeybindings![keybindingId] || [];
-
-                    const name = (
-                      <Stack.Item basis="40%" maxWidth="230px">
-                        <KeybindingName keybinding={keybinding} />
-                      </Stack.Item>
-                    );
-
-                    return (
-                      <Stack.Item key={keybindingId}>
-                        <Stack fill>
-                          {name}
-
-                          {range(0, 3).map((key) => (
-                            <Stack.Item
-                              key={key}
-                              grow
-                              basis="10%"
-                              maxWidth="75px"
-                            >
-                              <KeybindingButton
-                                boundKeys={boundKeys}
-                                keybindingName={keybinding.name}
-                                currentHotkey={keys[key]}
-                                typingHotkey={this.getTypingHotkey(
-                                  keybindingId,
-                                  key,
-                                )}
-                                onClick={this.getKeybindingOnClick(
-                                  keybindingId,
-                                  key,
-                                )}
-                              />
+                          const name = (
+                            <Stack.Item basis="40%" maxWidth="230px">
+                              <KeybindingName keybinding={keybinding} />
                             </Stack.Item>
-                          ))}
+                          );
 
-                          <Stack.Item shrink>
-                            <ResetToDefaultButton keybindingId={keybindingId} />
-                          </Stack.Item>
-                        </Stack>
-                      </Stack.Item>
-                    );
-                  },
-                )}
-              </Stack>,
-            ];
-          })}
-        />
+                          return (
+                            <Stack.Item key={keybindingId}>
+                              <Stack fill>
+                                {name}
+
+                                {range(0, 3).map((key) => (
+                                  <Stack.Item
+                                    key={key}
+                                    grow
+                                    basis="10%"
+                                    maxWidth="75px"
+                                  >
+                                    <KeybindingButton
+                                      boundKeys={boundKeys}
+                                      keybindingName={keybinding.name}
+                                      currentHotkey={keys[key]}
+                                      typingHotkey={this.getTypingHotkey(
+                                        keybindingId,
+                                        key,
+                                      )}
+                                      onClick={this.getKeybindingOnClick(
+                                        keybindingId,
+                                        key,
+                                      )}
+                                    />
+                                  </Stack.Item>
+                                ))}
+
+                                <Stack.Item shrink>
+                                  <ResetToDefaultButton
+                                    keybindingId={keybindingId}
+                                  />
+                                </Stack.Item>
+                              </Stack>
+                            </Stack.Item>
+                          );
+                        },
+                      )}
+                    </Stack>,
+                  ];
+                },
+              )} 
+            />
+          </Stack.Item>
+          <Stack.Item align="center">
+            <Button.Confirm onClick={() => act('reset_all_keybinds')}>
+              Reset all keybindings
+            </Button.Confirm>
+          </Stack.Item>
+        </Stack>
       </>
     );
   }

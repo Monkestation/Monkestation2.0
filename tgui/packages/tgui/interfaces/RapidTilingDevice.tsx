@@ -59,7 +59,7 @@ const DirectionSelect = (props) => {
   const { act, data } = useBackend<Data>();
   const { tile_dirs = [], selected_direction } = data;
   return (
-    <Section fill vertical>
+    <Section fill>
       <Stack vertical>
         {tile_dirs.map((dir) => (
           <Stack.Item key={dir}>
@@ -110,7 +110,6 @@ const TileDesignSection = (props) => {
       <Tabs>
         {categories.map((category) => (
           <Tabs.Tab
-            fluid
             key={category.category_name}
             selected={category.category_name === categoryName}
             onClick={() => setCategoryName(category.category_name)}
@@ -123,7 +122,6 @@ const TileDesignSection = (props) => {
         <Button
           key={i + 1}
           fluid
-          ellipsis
           color="transparent"
           selected={
             recipe.name === selected_recipe &&
@@ -146,7 +144,6 @@ const TileDesignSection = (props) => {
             className={classes(['rtd32x32', recipe.icon])}
             style={{
               transform: 'scale(1.2) translate(9.5%, 9.5%)',
-
               imageRendering: 'pixelated',
             }}
           />

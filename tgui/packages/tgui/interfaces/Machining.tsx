@@ -114,8 +114,6 @@ export const Machining = (props) => {
           </Stack.Item>
           <Stack.Item grow my={'16px'}>
             <Box
-              scrollable
-              fill
               height={'100%'}
               pr={1}
               pt={1}

@@ -375,11 +375,11 @@ const MenuTabs = (props) => {
   return (
     <Section>
       <Tabs>
-        {categories.map((category) => (
+        {categories.map((category, idx) => (
           <Tabs.Tab
             width="100%"
             fontSize="16px"
-            key={category}
+            key={idx}
             selected={category === selectedCategory}
             onClick={() => {
               setSelectedCategory(category);
@@ -396,7 +396,6 @@ const MenuTabs = (props) => {
             <Tabs.Tab
               fontSize="16px"
               key={knowledge}
-              Autofocus
               selected={psiWeb.path === selectedKnowledgePath}
               onClick={() => setSelectedKnowledgePath(psiWeb.path)}
             >
@@ -440,7 +439,6 @@ const KnowledgePreview = (props) => {
       >
         <Stack
           fill
-          fluid
           vertical
           justify="flex-start"
           fontSize="16px"
@@ -479,7 +477,7 @@ const KnowledgePreview = (props) => {
     );
   } else {
     return (
-      <Section overflow-wrap="break-word" fill fluid>
+      <Section overflow-wrap="break-word" fill>
         <Stack
           vertical
           fontSize="16px"

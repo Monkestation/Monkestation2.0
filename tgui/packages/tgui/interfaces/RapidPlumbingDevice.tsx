@@ -43,7 +43,6 @@ const PlumbingTypeSection = (props) => {
       <Tabs>
         {categories.map((category) => (
           <Tabs.Tab
-            fluid
             key={category.cat_name}
             selected={category.cat_name === shownCategory.cat_name}
             onClick={() => setCategoryName(category.cat_name)}
@@ -56,7 +55,6 @@ const PlumbingTypeSection = (props) => {
         <Button
           key={recipe.index}
           fluid
-          ellipsis
           color="transparent"
           selected={recipe.name === selected_recipe}
           onClick={() =>

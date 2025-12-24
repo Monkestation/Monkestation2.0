@@ -58,7 +58,7 @@ const FeatureSliderInput = (
       minValue={props.serverData.minimum}
       maxValue={props.serverData.maximum}
       step={props.serverData.step}
-      value={props.value}
+      value={props.value || props.serverData.minimum}
     />
   );
 };
