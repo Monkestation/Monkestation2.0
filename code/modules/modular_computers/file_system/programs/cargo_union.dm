@@ -33,10 +33,12 @@
 		data["badge_name"] = inserted_badge.name
 		data["badge_icon"] = inserted_badge.icon
 		data["badge_icon_state"] = inserted_badge.icon_state
+		data["badge_leader"] = !!(ACCESS_UNION_LEADER in inserted_badge.access)
 	else
 		data["badge_name"] = null
 		data["badge_icon"] = null
 		data["badge_icon_state"] = null
+		data["badge_leader"] = FALSE
 	data["union_members"] = GLOB.cargo_union_employees
 	return data
 

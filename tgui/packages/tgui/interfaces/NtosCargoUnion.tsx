@@ -7,6 +7,7 @@ type Data = {
   badge_name: string;
   badge_icon: string;
   badge_icon_state: string;
+  badge_leader: BooleanLike;
   union_members: UnionData[];
 };
 
@@ -25,13 +26,23 @@ export const NtosCargoUnion = () => {
           title="Inserted Badge"
           buttons={
             <>
-              <Button
-                icon="recycle"
-                content="Recycle"
-                disabled={!badge_name}
-                onClick={() => act('recycle_badge')}
-                tooltip="Recycle the badge, permanently destroying it."
-              />
+              {badge_leader ? (
+                <Button.Confirm
+                  icon="recycle"
+                  content="Recycle"
+                  disabled={!badge_name}
+                  onClick={() => act('recycle_badge')}
+                  tooltip="Recycle the badge, permanently destroying it."
+                />
+              ) : (
+                <Button
+                  icon="recycle"
+                  content="Recycle"
+                  disabled={!badge_name}
+                  onClick={() => act('recycle_badge')}
+                  tooltip="Recycle the badge, permanently destroying it."
+                />
+              )}
               <Button
                 icon="eject"
                 content="Eject"
