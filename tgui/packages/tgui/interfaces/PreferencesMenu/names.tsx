@@ -30,10 +30,6 @@ export const MultiNameInput = (props: {
   handleUpdateName: (nameType: string, value: string) => void;
   names: Record<string, string>;
 }) => {
-  const [currentlyEditingName, setCurrentlyEditingName] = useLocalState<
-    string | null
-  >('currentlyEditingName', null);
-
   return (
     <ServerPreferencesFetcher
       render={(data) => {
@@ -69,50 +65,21 @@ export const MultiNameInput = (props: {
                     ([_, names], index, collection) => (
                       <>
                         {names.map(({ key, name }) => {
-                          let content;
-
-                          if (currentlyEditingName === key) {
-                            const updateName = (event, value) => {
-                              props.handleUpdateName(key, value);
-
-                              setCurrentlyEditingName(null);
-                            };
-
-                            content = (
-                              <Input
-                                autoSelect
-                                onEnter={updateName}
-                                onChange={updateName}
-                                onEscape={() => {
-                                  setCurrentlyEditingName(null);
-                                }}
-                                value={props.names[key]}
-                              />
-                            );
-                          } else {
-                            content = (
-                              <Button
-                                width="100%"
-                                onClick={(event) => {
-                                  setCurrentlyEditingName(key);
-                                  event.cancelBubble = true;
-                                  event.stopPropagation();
-                                }}
-                              >
-                                <FitText maxFontSize={12} maxWidth={90}>
-                                  {props.names[key]}
-                                </FitText>
-                              </Button>
-                            );
-                          }
-
                           return (
                             <LabeledList.Item
                               key={key}
                               label={name.explanation}
                             >
                               <Stack fill>
-                                <Stack.Item grow>{content}</Stack.Item>
+                                <Stack.Item grow>
+                                  <Button.Input
+                                    fluid
+                                    onCommit={(value) =>
+                                      props.handleUpdateName(key, value)
+                                    }
+                                    value={props.names[key]}
+                                  />
+                                </Stack.Item>
 
                                 {!!name.can_randomize && (
                                   <Stack.Item>
