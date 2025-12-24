@@ -2,7 +2,6 @@ import { Component } from 'react';
 import {
   Box,
   Button,
-  KeyListener,
   Stack,
   Tooltip,
   TrackOutsideClicks,
@@ -15,6 +14,7 @@ import { KeyEvent } from '../../events';
 import { TabbedMenu } from './TabbedMenu';
 import { fetchRetry } from '../../http';
 import { isEscape, KEY } from 'common/keys';
+import { KeyListener } from '../../components/KeyListener';
 
 type Keybinding = {
   name: string;
@@ -116,7 +116,7 @@ const moveToBottom = (entries: [string, unknown][], findCategory: string) => {
 
 class KeybindingButton extends Component<{
   currentHotkey?: string;
-  onClick?: () => void;
+  handleClick?: () => void;
   typingHotkey?: string;
   boundKeys: Record<string, string[]>;
   keybindingName: string;
@@ -129,8 +129,13 @@ class KeybindingButton extends Component<{
   }
 
   render() {
-    const { currentHotkey, onClick, typingHotkey, boundKeys, keybindingName } =
-      this.props;
+    const {
+      currentHotkey,
+      handleClick,
+      typingHotkey,
+      boundKeys,
+      keybindingName,
+    } = this.props;
 
     let warningMessage: undefined | string;
     if (currentHotkey && boundKeys[currentHotkey].length > 1) {
@@ -144,9 +149,9 @@ class KeybindingButton extends Component<{
         fluid
         textAlign="center"
         captureKeys={typingHotkey === undefined}
-        onClick={(event) => {
-          event.stopPropagation();
-          onClick?.();
+        onClick={(evt) => {
+          evt.stopPropagation();
+          handleClick?.();
         }}
         selected={typingHotkey !== undefined}
         color={warningMessage ? 'red' : null}
@@ -163,10 +168,10 @@ class KeybindingButton extends Component<{
       );
     }
 
-    if (typingHotkey && onClick) {
+    if (typingHotkey && handleClick) {
       return (
         // onClick will cancel it
-        <TrackOutsideClicks onOutsideClick={onClick}>
+        <TrackOutsideClicks onOutsideClick={handleClick}>
           {child}
         </TrackOutsideClicks>
       );
@@ -299,6 +304,7 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
 
   handleKeyDown(keyEvent: KeyEvent) {
     const event = keyEvent.event;
+    console.log('here');
     const rebindingHotkey = this.state.rebindingHotkey;
 
     if (!rebindingHotkey) {
@@ -461,28 +467,31 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
                               <Stack fill>
                                 {name}
 
-                                {range(0, 3).map((key) => (
-                                  <Stack.Item
-                                    key={key}
-                                    grow
-                                    basis="10%"
-                                    maxWidth="75px"
-                                  >
-                                    <KeybindingButton
-                                      boundKeys={boundKeys}
-                                      keybindingName={keybinding.name}
-                                      currentHotkey={keys[key]}
-                                      typingHotkey={this.getTypingHotkey(
-                                        keybindingId,
-                                        key,
-                                      )}
-                                      onClick={this.getKeybindingOnClick(
-                                        keybindingId,
-                                        key,
-                                      )}
-                                    />
-                                  </Stack.Item>
-                                ))}
+                                {range(0, 3).map((key) => {
+                                  const hotkey = this.getTypingHotkey(
+                                    keybindingId,
+                                    key,
+                                  );
+                                  return (
+                                    <Stack.Item
+                                      key={key}
+                                      grow
+                                      basis="10%"
+                                      maxWidth="75px"
+                                    >
+                                      <KeybindingButton
+                                        boundKeys={boundKeys}
+                                        keybindingName={keybinding.name}
+                                        currentHotkey={keys[key]}
+                                        typingHotkey={hotkey}
+                                        handleClick={this.getKeybindingOnClick(
+                                          keybindingId,
+                                          key,
+                                        )}
+                                      />
+                                    </Stack.Item>
+                                  );
+                                })}
 
                                 <Stack.Item shrink>
                                   <ResetToDefaultButton

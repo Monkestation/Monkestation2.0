@@ -28,7 +28,6 @@ import {
   ImageButton,
   InfinitePlane,
   Interactive,
-  KeyListener,
   LabeledControls,
   LabeledList,
   MenuBar,
@@ -73,7 +72,6 @@ export {
   ImageButton,
   InfinitePlane,
   Interactive,
-  KeyListener,
   LabeledControls,
   LabeledList,
   MenuBar,
@@ -97,6 +95,7 @@ export {
 export { Grid } from './Grid';
 export { Knob } from './Knob';
 export { Input } from './Input';
+export { KeyListener } from './KeyListener';
 export { NumberInput } from './NumberInput';
 export { Slider } from './Slider';
 export { TextArea } from './TextArea';

@@ -1,24 +1,24 @@
-@use 'sass:color';
-
-$generic: #484455;
-$accent: #4f56a5;
-$accent-2: #ffbf00;
-
 .theme-generic-yellow:root {
+  /* Theme-local base tokens (CSS vars, not SCSS vars) */
+  --generic: #484455;
+  --accent: #4f56a5;
+  --accent-2: #ffbf00;
+  --border-color: #7b86ff;
+
   // Base
-  --color-primary: $accent;
-  --color-bg: color.scale($generic, $lightness: -45%);
+  --color-primary: var(--accent);
+  --color-bg: color-mix(in srgb, var(--generic) 55%, black);
 
   // Components
-  --button-color-default: $accent;
+  --button-color-default: var(--accent);
   --button-color-transparent: rgba(227, 240, 255, 0.75);
-  --button-background-selected: $accent-2;
-  --progress-bar-fill: $accent;
+  --button-background-selected: var(--accent-2);
+  --progress-bar-fill: var(--accent);
   --progress-bar-background: rgba(0, 0, 0, 0.5);
-  --input-border-color: #7b86ff;
+  --input-border-color: var(--border-color);
 
   // TitleBar
-  --titlebar-background: color.scale($generic, $lightness: -50%);
+  --titlebar-background: color-mix(in srgb, var(--generic) 50%, black);
 
   // Layouts
   .Layout__content {

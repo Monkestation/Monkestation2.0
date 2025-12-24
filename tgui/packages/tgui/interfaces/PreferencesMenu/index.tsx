@@ -72,6 +72,8 @@ export const PreferencesMenu = () => {
         >
           Characters
         </PageButton>
+      </Stack.Item>
+      <Stack.Item>
         <Button
           align="center"
           fontSize="1em"
