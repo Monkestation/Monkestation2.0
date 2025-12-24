@@ -185,9 +185,9 @@ GENERAL_PROTECT_DATUM(/datum/controller/protected_list_manager)
 		return QDEL_HINT_LETMELIVE
 
 	//this is dumb and bad and should just be a recursive call but opendream cant compile it as a recursive so we need to do this instead
-	var/callee/our_caller = caller
-	if(owner && our_caller.caller.src != owner)
-		stack_trace("protected_list_holder qdeleted by something([our_caller.caller.src]) not its owner([owner])")
+	var/callee/our_caller = caller.caller
+	if(owner && our_caller.src != owner)
+		stack_trace("protected_list_holder qdeleted by something([our_caller.src]) not its owner([owner])")
 		return QDEL_HINT_LETMELIVE
 	update_value(null)
 	return ..()
