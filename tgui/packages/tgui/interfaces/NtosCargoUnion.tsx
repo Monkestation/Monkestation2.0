@@ -18,7 +18,13 @@ type UnionData = {
 
 export const NtosCargoUnion = () => {
   const { act, data } = useBackend<Data>();
-  const { badge_name, badge_icon, badge_icon_state, union_members = [] } = data;
+  const {
+    badge_name,
+    badge_icon,
+    badge_icon_state,
+    badge_leader,
+    union_members = [],
+  } = data;
   return (
     <NtosWindow width={500} height={600}>
       <NtosWindow.Content scrollable>
