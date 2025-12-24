@@ -60,7 +60,7 @@ export const PreferencesMenu = () => {
       exhaustiveCheck(window);
   }
 
-  const settingsCatergories = (
+  const settingsCategories = (
     <Stack vertical width="115px">
       <Stack.Item>
         <PageButton
@@ -136,10 +136,10 @@ export const PreferencesMenu = () => {
   return (
     <Window title="Preferences" width={1215} height={850} theme="generic">
       <Window.Content>
-        <Stack height="100%">
+        <Stack fill>
           <Stack.Item>
-            <Section height="100%" title="Preferences">
-              {settingsCatergories}
+            <Section fill title="Preferences">
+              {settingsCategories}
             </Section>
           </Stack.Item>
           <Stack.Divider />

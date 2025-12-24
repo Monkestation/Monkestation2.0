@@ -23,8 +23,7 @@ const QuirkList = (props: {
   onClick: (quirkName: string, quirk: Quirk) => void;
 }) => {
   return (
-    // Stack is not used here for a variety of IE flex bugs
-    <Box className="PreferencesMenu__Quirks__QuirkList">
+    <Stack vertical g={0}>
       {props.quirks.map(([quirkKey, quirk]) => {
         const className = 'PreferencesMenu__Quirks__QuirkList__quirk';
 
@@ -116,7 +115,7 @@ const QuirkList = (props: {
           return child;
         }
       })}
-    </Box>
+    </Stack>
   );
 };
 
@@ -230,7 +229,7 @@ export const QuirksPage = (props) => {
         };
 
         return (
-          <Stack align="center" fill>
+          <Stack fill>
             <Stack.Item basis="50%">
               <Stack vertical fill align="center">
                 <Stack.Item>
@@ -249,7 +248,7 @@ export const QuirksPage = (props) => {
                   </Box>
                 </Stack.Item>
 
-                <Stack.Item grow width="100%">
+                <Stack.Item grow overflowY="auto">
                   <QuirkList
                     onClick={(quirkName, quirk) => {
                       if (getReasonToNotAdd(quirkName) !== undefined) {
@@ -298,7 +297,7 @@ export const QuirksPage = (props) => {
                   </Box>
                 </Stack.Item>
 
-                <Stack.Item grow width="100%">
+                <Stack.Item grow overflowY="auto">
                   <QuirkList
                     onClick={(quirkName, quirk) => {
                       if (getReasonToNotRemove(quirkName) !== undefined) {
