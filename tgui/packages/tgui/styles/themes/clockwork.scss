@@ -1,34 +1,42 @@
 @use 'sass:color';
 
 .theme-clockwork:root {
+  // Palette
+  --clockwork-gold: #b18b25;
+  --clockwork-gold-bright: #cfba47;
+  --clockwork-bronze: #896b19;
+  --clockwork-brown: #5f380e;
+  --clockwork-ivory: #d6ca85;
+  --clockwork-shadow-soft: rgba(0, 0, 0, 0.1);
+
   // Base
-  --color-primary: #b18b25;
-  --color-good: #cfba47;
-  --color-average: #896b19;
-  --color-bad: #5f380e;
-  --color-base: #5f380e;
-  --color-base-start: #b18b25;
-  --color-base-end: #5f380e;
-  --color-secondary: #5f380e;
+  --color-primary: var(--clockwork-gold);
+  --color-good: var(--clockwork-gold-bright);
+  --color-average: var(--clockwork-bronze);
+  --color-bad: var(--clockwork-brown);
+  --color-base: var(--clockwork-brown);
+  --color-base-start: var(--clockwork-gold);
+  --color-base-end: var(--clockwork-brown);
+  --color-secondary: var(--clockwork-brown);
 
   // Components
-  --button-background-default: #b18b25;
+  --button-background-default: var(--clockwork-gold);
   --button-background-disabled: #665c3c;
-  --button-background-selected: #cfba47;
+  --button-background-selected: var(--clockwork-gold-bright);
   --button-background-caution: #ffae42;
   --button-background-danger: #ffff00;
   --tooltip-background: #2d1400;
-  --section-separator-color: #d6ca85;
-  --divider-color: #d6ca85;
+  --section-separator-color: var(--clockwork-ivory);
+  --divider-color: var(--clockwork-ivory);
   --progress-bar-background: rgba(0, 0, 0, 0.5);
-  --input-color: #b18b25;
-  --input-background: #cfba47;
+  --input-color: var(--clockwork-gold);
+  --input-background: var(--clockwork-gold-bright);
 
   // TitleBar
-  --titlebar-background: #5f380e;
-  --titlebar-shadow-color: rgba(0, 0, 0, 0.1);
-  --titlebar-shadow-core: rgba(0, 0, 0, 0.1);
-  --titlebar-text: #cfba47;
+  --titlebar-background: var(--clockwork-brown);
+  --titlebar-shadow-color: var(--clockwork-shadow-soft);
+  --titlebar-shadow-core: var(--clockwork-shadow-soft);
+  --titlebar-text: var(--clockwork-gold-bright);
 
   // Layouts
   .Layout__content {
