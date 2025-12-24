@@ -7,7 +7,6 @@ import {
   LabeledList,
   Popper,
   Stack,
-  TrackOutsideClicks,
   FitText,
   Input,
   Icon,
@@ -390,25 +389,20 @@ const MainFeature = (props: {
 
   return (
     <Popper
-      options={{
-        placement: 'bottom-start',
-      }}
-      popperContent={
-        isOpen && (
-          <TrackOutsideClicks onOutsideClick={handleCloseInternal}>
-            <ChoicedSelection
-              name={catalog.name}
-              catalog={catalog}
-              selected={currentValue}
-              supplementalFeatures={supplementalFeatures} // Pass array of features
-              supplementalValues={supplementalValues} // Pass array of values
-              onClose={handleCloseInternal}
-              onSelect={handleSelect}
-              searchText={searchText}
-              setSearchText={setSearchText}
-            />
-          </TrackOutsideClicks>
-        )
+      isOpen={isOpen}
+      placement="bottom-start"
+      content={
+        <ChoicedSelection
+          name={catalog.name}
+          catalog={catalog}
+          selected={currentValue}
+          supplementalFeatures={supplementalFeatures} // Pass array of features
+          supplementalValues={supplementalValues} // Pass array of values
+          onClose={handleCloseInternal}
+          onSelect={handleSelect}
+          searchText={searchText}
+          setSearchText={setSearchText}
+        />
       }
     >
       <Button

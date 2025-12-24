@@ -1,8 +1,8 @@
-import { type ComponentProps, useRef } from 'react';
+import { type ComponentProps, ReactNode, useRef } from 'react';
 import { Button, type Flex, Input, Section, Stack } from 'tgui-core/components';
 
 type TabbedMenuProps = {
-  categoryEntries: [string, React.JSX.Element][];
+  categoryEntries: [string, ReactNode[]][] | [string, React.JSX.Element][];
   contentProps?: ComponentProps<typeof Flex>;
   searchText?: string;
   setSearchText?: (text: string) => void;

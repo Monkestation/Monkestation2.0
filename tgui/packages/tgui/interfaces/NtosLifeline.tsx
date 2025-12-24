@@ -125,10 +125,8 @@ const NtosLifelineContent = () => {
               style={{ flex: 1 }}
               onInput={(e, value) => setSearchQuery(value)}
             />
-            <Button selected="True" onClick={cycleSortBy}>
-              {SORT_NAMES[sortBy]}
-            </Button>
-            <Button selected="True" onClick={() => setSortAsc(!sortAsc)}>
+            <Button onClick={cycleSortBy}>{SORT_NAMES[sortBy]}</Button>
+            <Button onClick={() => setSortAsc(!sortAsc)}>
               <Icon
                 style={{ marginLeft: '2px' }}
                 name={sortAsc ? 'chevron-up' : 'chevron-down'}
@@ -160,7 +158,6 @@ const CrewTab = (props: { sensor: CrewSensor }) => {
   return (
     <Tabs.Tab
       className="candystripe"
-      label="name"
       selected={selected}
       onClick={() => {
         act('select', {

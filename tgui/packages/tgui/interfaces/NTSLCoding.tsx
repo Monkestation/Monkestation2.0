@@ -1,3 +1,4 @@
+import { BooleanLike } from 'common/react';
 import { sendAct, useBackend, useLocalState } from '../backend';
 import {
   Box,
@@ -43,8 +44,8 @@ const debouncedSave = debounce(
 // NTSLTextArea component end
 
 type Data = {
-  admin_view: Boolean;
-  emagged: Boolean;
+  admin_view: BooleanLike;
+  emagged: BooleanLike;
   stored_code: string;
   user_name: string;
   network: string;
@@ -54,7 +55,7 @@ type Data = {
 };
 
 type Server_Data = {
-  run_code: Boolean;
+  run_code: BooleanLike;
   server: string;
   server_name: string;
 };

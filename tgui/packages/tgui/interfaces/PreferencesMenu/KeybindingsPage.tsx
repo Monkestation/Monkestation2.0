@@ -497,7 +497,7 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
                     </Stack>,
                   ];
                 },
-              )} 
+              )}
             />
           </Stack.Item>
           <Stack.Item align="center">

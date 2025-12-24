@@ -91,7 +91,7 @@ export const GamePreferencesPage = (props) => {
     );
   }
 
-  const gamePreferenceEntries: [string, ReactNode][] = sortByName(
+  const gamePreferenceEntries: [string, ReactNode[]][] = sortByName(
     Object.entries(gamePreferences),
   ).map(([category, preferences]) => {
     return [category, preferences.map((entry) => entry.children)];
@@ -99,7 +99,6 @@ export const GamePreferencesPage = (props) => {
 
   return (
     <TabbedMenu
-      name="Settings"
       categoryEntries={gamePreferenceEntries}
       contentProps={{
         fontSize: 1.5,
