@@ -3,7 +3,6 @@
 	"name": "tgui",
 	"version": "5.0.0",
 	"dependencies": {
-		"@popperjs/core": "^2.11.8",
 		"@types/marked": "^4.0.8",
 		"common": "workspace:*",
 		"csstype": "^3.1.1",
@@ -13,12 +12,13 @@
 		"highlight.js": "^11.9.0",
 		"js-yaml": "^4.1.0",
 		"marked": "^4.2.12",
-		"react": "^18.3.1",
-		"react-dom": "^18.3.1",
+		"react": "^19.2.3",
+		"react-dom": "^19.2.3",
+		"tgui-core": "^5.6.0",
 		"tgui-dev-server": "workspace:*"
 	},
 	"devDependencies": {
-		"@types/react": "^18.0.0",
-		"@types/react-dom": "^18.0.0"
+		"@types/react": "^19.2.7",
+		"@types/react-dom": "^19.2.3"
 	}
 }

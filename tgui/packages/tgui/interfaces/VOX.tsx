@@ -66,7 +66,6 @@ const TextAreaSection = (props) => {
       <Stack vertical fill>
         <Stack.Item height="100%">
           <TextArea
-            scrollbar
             height="100%"
             value={message}
             onInput={(_, value) => setMessage(value)}
@@ -146,6 +145,7 @@ const AnnouncementTab = () => {
       <Box align="center">Selected Voice</Box>
       <Dropdown
         width="100%"
+        selected={current_voice}
         displayText={current_voice}
         options={voice_names}
         onSelected={(voice) => act('set_voice', { voice })}

@@ -4,7 +4,7 @@ import { BooleanLike } from 'common/react';
 import { Component } from 'react';
 import { useBackend } from '../backend';
 import { Button, KeyListener, Section, Stack } from '../components';
-import { BodyZone, BodyZoneSelector } from '../components/BodyZoneSelector';
+import { BodyZone, BodyZoneSelector } from './common/BodyZoneSelector';
 import { Window } from '../layouts';
 
 type Surgery = {

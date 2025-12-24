@@ -214,7 +214,6 @@ export const Scrubber = (props: ScrubberProps) => {
                 key={filter.gas_id}
                 icon={filter.enabled ? 'check-square-o' : 'square-o'}
                 content={getGasLabel(filter.gas_id, filter.gas_name)}
-                title={filter.gas_name}
                 selected={filter.enabled}
                 onClick={() =>
                   act('toggle_filter', {

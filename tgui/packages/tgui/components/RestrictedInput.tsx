@@ -1,7 +1,7 @@
 import { isEscape, KEY } from 'common/keys';
 import { classes } from 'common/react';
 import { debounce } from 'common/timer';
-import { computeBoxClassName, computeBoxProps } from './Box';
+import { computeBoxClassName, computeBoxProps } from 'tgui-core/ui';
 import { useEffect, useRef, useState } from 'react';
 import type { BaseInputProps } from './Input';
 

@@ -362,8 +362,8 @@ type ObjectiveElementProps = {
   finalObjective: BooleanLike;
   canAbort: BooleanLike;
 
-  handleCompletion?: (event: MouseEvent) => void;
-  handleAbort?: (event: MouseEvent) => void;
+  handleCompletion?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  handleAbort?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 };
 
 export const ObjectiveElement = (props: ObjectiveElementProps) => {
@@ -431,7 +431,7 @@ export const ObjectiveElement = (props: ObjectiveElementProps) => {
                   icon="trash"
                   color="transparent"
                   tooltip="Abort Objective"
-                  onClick={handleAbort}
+                  onClick={(evt) => handleAbort?.(evt)}
                 />
               </Stack.Item>
             )}
@@ -551,7 +551,7 @@ export const ObjectiveElement = (props: ObjectiveElementProps) => {
                       top={0}
                     />
                     <Button
-                      onClick={handleCompletion}
+                      onClick={(evt) => handleCompletion?.(evt)}
                       color={objectiveFailed ? 'bad' : 'good'}
                       style={{
                         border: '1px solid rgba(0, 0, 0, 0.65)',

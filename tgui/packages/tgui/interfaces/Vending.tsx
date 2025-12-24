@@ -392,7 +392,7 @@ const CategorySelector = (props: {
 
   return (
     <Section>
-      <Stack grow>
+      <Stack fill>
         <Stack.Item>
           {Object.entries(categories).map(([name, category]) => (
             <Button

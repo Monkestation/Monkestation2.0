@@ -1,7 +1,6 @@
 import { toTitleCase } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
 import { Flex, Tabs, Stack, DmIcon, Icon } from '../components';
-import { Direction } from '../components/DmIcon';
 import { Window } from '../layouts';
 
 type Chicken = {
@@ -27,6 +26,17 @@ type Chicken = {
   icon: string;
   icon_suffix: string;
 };
+
+enum Direction {
+  NORTH = 1,
+  SOUTH = 2,
+  EAST = 4,
+  WEST = 8,
+  NORTHEAST = NORTH | EAST,
+  NORTHWEST = NORTH | WEST,
+  SOUTHEAST = SOUTH | EAST,
+  SOUTHWEST = SOUTH | WEST,
+}
 
 type Data = {
   chickens: Chicken[];

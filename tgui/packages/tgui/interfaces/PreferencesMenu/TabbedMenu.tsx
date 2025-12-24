@@ -1,10 +1,15 @@
-import { Component, createRef, ReactNode, RefObject } from 'react';
-import { Button, Section, Stack } from '../../components';
-import { Flex, FlexProps } from '../../components/Flex';
+import {
+  Component,
+  ComponentProps,
+  createRef,
+  ReactNode,
+  RefObject,
+} from 'react';
+import { Button, Section, Stack, Flex } from '../../components';
 
 type TabbedMenuProps = {
   categoryEntries: [string, ReactNode][];
-  contentProps?: FlexProps;
+  contentProps?: ComponentProps<typeof Flex>;
   extra?: ReactNode;
   name: string;
 };

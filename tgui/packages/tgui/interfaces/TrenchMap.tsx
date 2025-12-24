@@ -1,6 +1,6 @@
 import { Window } from '../layouts';
 import { useBackend } from '../backend';
-import { Flex, Box } from '../components';
+import { Flex, Box, Image } from '../components';
 import { resolveAsset } from '../assets';
 import { BooleanLike } from 'common/react';
 
@@ -25,7 +25,7 @@ export const TrenchMap = (_props) => {
     <Window width={510} height={600}>
       <HotspotRender />
       <YouAreHere />
-      <Box as="img" src={resolveAsset(map_image)} />
+      <Image src={resolveAsset(map_image)} />
       <MapInfo />
     </Window>
   );

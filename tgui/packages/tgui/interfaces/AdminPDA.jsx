@@ -1,6 +1,5 @@
-import { Section, Dropdown, Input, Box, TextArea } from '../components';
+import { Section, Dropdown, Input, Box, Button, TextArea } from '../components';
 import { useBackend, useLocalState } from '../backend';
-import { Button } from '../components/Button';
 import { Window } from '../layouts';
 
 export const AdminPDA = (props) => {

@@ -7,7 +7,7 @@
 
 import { classes } from 'common/react';
 import React, { RefObject, useEffect, useRef, useState } from 'react';
-import { computeBoxClassName, computeBoxProps } from './Box';
+import { computeBoxClassName, computeBoxProps } from 'tgui-core/ui';
 import { KEY, isEscape } from 'common/keys';
 import { debounce } from 'es-toolkit';
 import { TextInputProps } from './Input';

@@ -1,8 +1,9 @@
 import { KEY, isEscape } from 'common/keys';
 import { classes } from 'common/react';
 import { debounce } from 'es-toolkit';
-import { useRef, useState, useEffect } from 'react';
-import { BoxProps, computeBoxProps, computeBoxClassName, Box } from './Box';
+import { useRef, useState, useEffect, ComponentProps } from 'react';
+import { computeBoxClassName, computeBoxProps } from 'tgui-core/ui';
+import { Box } from 'tgui-core/components';
 
 export type BaseInputProps<TElement = HTMLInputElement> = Partial<{
   /** Automatically focuses the input on mount */
@@ -29,7 +30,7 @@ export type BaseInputProps<TElement = HTMLInputElement> = Partial<{
   /** Allows to toggle on spellcheck on inputs */
   spellcheck: boolean;
 }> &
-  BoxProps<TElement>;
+  ComponentProps<typeof Box<TElement>>;
 
 export type TextInputProps<TElement = HTMLInputElement> = Partial<{
   /** The maximum length of the input value */
