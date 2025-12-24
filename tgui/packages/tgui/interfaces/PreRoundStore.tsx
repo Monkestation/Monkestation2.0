@@ -72,7 +72,7 @@ export const PreRoundStore = (_props) => {
   } = useBackend<Data>();
 
   return (
-    <Window resizable title="Pre Round Shop" width={450} height={700}>
+    <Window title="Pre Round Shop" width={450} height={700}>
       <Window.Content scrollable>
         <Section>
           <LobbyNotices notices={notices} />

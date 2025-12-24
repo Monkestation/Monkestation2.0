@@ -12,7 +12,7 @@ import { Window } from '../layouts';
 
 type Data = {
   mapRef: string;
-  currentColor: string[];
+  currentColor: number[];
 };
 
 const PREFIXES = ['r', 'g', 'b', 'a', 'c'] as const;

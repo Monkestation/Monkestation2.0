@@ -240,7 +240,7 @@ export const DjStation = () => {
   const currentSong = getSong(data.current_song, cassette);
 
   return (
-    <Window title="DJ Station" width={1000} height={650} resizable>
+    <Window title="DJ Station" width={1000} height={650}>
       <Window.Content>
         {!!data.switching_tracks && (
           <LoadingScreen CustomIcon="spinner" CustomText="Selecting track..." />

@@ -52,7 +52,7 @@ export const FloatGenerator = (props: FloatGeneratorProps) => {
           <Stack.Item>
             <NumberInput
               animated
-              value={float}
+              value={float || 0.0}
               onDrag={(e, value) =>
                 act('edit', {
                   var: var_name,
@@ -177,7 +177,7 @@ export const EntryGeneratorNumbersList = (
           <Stack.Item>
             <NumberInput
               animated
-              value={input}
+              value={input || 0}
               onDrag={(e, value) =>
                 act('edit', {
                   var: var_name,

@@ -13,6 +13,7 @@ import { JOB2ICON } from './common/JobToIcon';
 import { deepMerge } from 'common/collections';
 import { BooleanLike } from 'common/react';
 import { LobbyNotices, LobbyNoticesType } from './common/LobbyNotices';
+import { useEffect } from 'react';
 
 type Job = {
   unavailable_reason: string | null;
@@ -84,7 +85,7 @@ export const JobEntry: React.FC<{
       }}
     >
       <>
-        {jobIcon && <Icon name={jobIcon} />}
+        {jobIcon && <Icon name={jobIcon} mr={1} />}
         {job.command ? <b>{jobName}</b> : jobName}
         <span
           style={{
@@ -110,14 +111,15 @@ export const JobSelection = (props) => {
     data.departments_static,
   );
 
+  // Send a heartbeat back to DM to let it know the window is alive and well
+  useEffect(() => {
+    act('ui_mounted_with_no_bluescreen');
+  }, []);
+
   return (
     <Window
       width={1012}
       height={data.shuttle_status ? 690 : 666 /* Hahahahahaha */}
-      onComponentDidMount={() => {
-        // Send a heartbeat back to DM to let it know the window is alive and well
-        act('ui_mounted_with_no_bluescreen');
-      }}
     >
       <Window.Content scrollable>
         <LobbyNotices notices={data.notices} />

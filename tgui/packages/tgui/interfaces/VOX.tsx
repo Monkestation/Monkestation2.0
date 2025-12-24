@@ -42,7 +42,7 @@ export class VOX extends Component {
 
   render() {
     return (
-      <Window title="VOX Announcement" fixed width={700} height={300}>
+      <Window title="VOX Announcement" width={700} height={300}>
         <Window.Content>
           <Stack fill>
             <Stack.Item width="100%">
