@@ -64,9 +64,7 @@ const AuthenticationNoticeBox = (props) => {
   const { authentication_data, is_admin_ghost_ai } = data;
   return (
     (!authentication_data.announcement_authenticated && !is_admin_ghost_ai && (
-      <NoticeBox warning>
-        {'Swipe your card to authenticate yourself'}
-      </NoticeBox>
+      <NoticeBox>{'Swipe your card to authenticate yourself'}</NoticeBox>
     )) || <NoticeBox info>{'Succesfully authenticated'}</NoticeBox>
   );
 };
