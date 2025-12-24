@@ -25584,7 +25584,6 @@
 /obj/effect/turf_decal/trimline/blue/filled/warning,
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/any/medical/general,
-/obj/effect/mapping_helpers/airlock/access/any/security/brig_physician,
 /turf/open/floor/iron/dark,
 /area/station/medical/medbay/central)
 "ijl" = (
@@ -36017,7 +36016,6 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/any/medical/general,
-/obj/effect/mapping_helpers/airlock/access/any/security/brig_physician,
 /turf/open/floor/iron/dark,
 /area/station/medical/medbay/central)
 "lzJ" = (
@@ -36731,7 +36729,6 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/any/medical/general,
-/obj/effect/mapping_helpers/airlock/access/any/security/brig_physician,
 /turf/open/floor/iron/dark,
 /area/station/medical/medbay/central)
 "lJA" = (
@@ -75632,7 +75629,6 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/any/medical/general,
-/obj/effect/mapping_helpers/airlock/access/any/security/brig_physician,
 /turf/open/floor/iron/dark,
 /area/station/medical/medbay/central)
 "ybz" = (
