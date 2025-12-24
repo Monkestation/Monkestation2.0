@@ -100,7 +100,7 @@ function TreePage(props: TreeProps) {
     <Section
       fill
       scrollable
-      title={`${backend.config.interface.name ?? 'TGUI'} data`}
+      title={`${backend.config.interface ?? 'TGUI'} data`}
     >
       <div style={{ border: 'thin solid var(--color-base)' }}>
         <JSONTree data={inView} theme={tgui16} />
