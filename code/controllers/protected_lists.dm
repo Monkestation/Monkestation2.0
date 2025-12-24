@@ -100,30 +100,7 @@
 		return
 	return !!protected_lists[key]
 
-/*/datum/controller/protected_list_manager/proc/grab_list(datum/protected_list_holder/key, list/list_ref) as /list
-	if(IsAdminAdvancedProcCall())
-		var/msg = " has tried to call grab_list() on the protected list manager!"
-		message_admins("[key_name_admin(usr)][msg]")
-		log_admin("[key_name(usr)][msg], [key.owner]")
-		return
-
-	var/static/list/protected_lists
-	if(list_ref)
-		if(caller.src != src)
-			CRASH("[src].read_list() called by [caller]([caller.src]) with a set list_ref")
-		protected_lists = list_ref
-		return
-
-	if(caller.name != NAMEOF(/datum/protected_list_holder, update_value)) //a true access should only be called from a list holder trying to update its list value
-		CRASH()
-	if(!key)
-		CRASH("[src].grab_list() called without a list_ref or key([key])")
-	var/list/returned_list = protected_lists[key]
-	if(!returned_list)
-		CRASH("[src].grab_list() called with an invalid key([key])")
-	return returned_list.Copy()
-
-///The proc we store our lists within
+/*///The proc we store our lists within
 /datum/controller/protected_list_manager/proc/storage_loop(list/passed_list)
 	if(IsAdminAdvancedProcCall())
 		var/msg = " has tried to call storage_loop() on the protected list manager!"
