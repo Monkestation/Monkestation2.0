@@ -186,6 +186,15 @@
 	if(new_bodypart)
 		new_bodypart.update_limb(is_creating = TRUE)
 
+///Makes sure that the owner's bodytype flags match the flags of all of it's parts.
+/mob/living/carbon/proc/synchronize_bodytypes()
+	var/all_limb_flags
+	for(var/obj/item/bodypart/limb as anything in carbon_owner.bodyparts)
+		for(var/obj/item/organ/external/ext_organ as anything in limb.external_organs)
+			all_limb_flags |= ext_organ.external_bodytypes
+		all_limb_flags |= limb.bodytype
+
+	carbon_owner.dna.species.bodytype = all_limb_flags
 
 /proc/skintone2hex(skin_tone)
 	. = 0

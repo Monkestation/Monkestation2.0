@@ -516,13 +516,13 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	C.mob_biotypes = inherent_biotypes
 	C.mob_respiration_type = inherent_respiration_type
+	C.butcher_results = knife_butcher_results?.Copy()
 	C.standard_body_temperature = src.bodytemp_normal
 	C.bodytemperature = src.bodytemp_normal
 	C.bodytemp_heat_damage_limit = src.bodytemp_heat_damage_limit
 	C.bodytemp_cold_damage_limit = src.bodytemp_cold_damage_limit
 	C.temperature_normalization_speed = src.temperature_normalization_speed
 	C.temperature_homeostasis_speed = src.temperature_homeostasis_speed
-	C.butcher_results = knife_butcher_results?.Copy()
 
 	C.physiology?.cold_mod *= coldmod
 	C.physiology?.heat_mod *= heatmod
@@ -592,6 +592,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
  */
 /datum/species/proc/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	SHOULD_CALL_PARENT(TRUE)
+	C.butcher_results = null
 	if(C.dna.species.exotic_bloodtype)
 		C.dna.human_blood_type = random_human_blood_type()
 	for(var/X in inherent_traits)
