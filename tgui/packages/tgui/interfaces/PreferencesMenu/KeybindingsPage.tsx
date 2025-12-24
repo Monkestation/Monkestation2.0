@@ -304,7 +304,6 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
 
   handleKeyDown(keyEvent: KeyEvent) {
     const event = keyEvent.event;
-    console.log('here');
     const rebindingHotkey = this.state.rebindingHotkey;
 
     if (!rebindingHotkey) {

@@ -382,7 +382,6 @@ export const NtosNotepad = (props) => {
     'originalText',
     note,
   );
-  console.log(note);
   const [text, setText] = useLocalState<string>('text', note);
   const [statuses, setStatuses] = useLocalState<Statuses>('statuses', {
     line: 0,

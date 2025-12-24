@@ -157,7 +157,6 @@ const NewscasterChannelCreation = (props) => {
           <Box>
             <Button
               onClick={() => {
-                console.log('clicked');
                 act('createChannel', {
                   lockedmode: lockedmode,
                 });
