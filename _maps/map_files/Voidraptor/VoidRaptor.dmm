@@ -42623,7 +42623,7 @@
 /obj/machinery/camera/directional/north{
 	c_tag = "Security - Medbay"
 	},
-/obj/structure/closet/secure_closet/brig_physician,
+/obj/structure/closet/secure_closet/secmed,
 /obj/item/clothing/suit/jacket/straight_jacket,
 /turf/open/floor/iron/white/textured_edge{
 	dir = 4

@@ -39098,7 +39098,7 @@
 /area/station/medical/surgery/theatre)
 "mAZ" = (
 /obj/effect/turf_decal/tile/red/opposingcorners,
-/obj/structure/closet/secure_closet/brig_physician,
+/obj/structure/closet/secure_closet/secmed,
 /obj/structure/cable,
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/medical)

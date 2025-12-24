@@ -16765,7 +16765,7 @@
 /area/station/engineering/atmos/hfr_room)
 "iaR" = (
 /obj/effect/turf_decal/tile/blue/diagonal_centre,
-/obj/structure/closet/secure_closet/brig_physician,
+/obj/structure/closet/secure_closet/secmed,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark/diagonal,
 /area/station/security/medical)

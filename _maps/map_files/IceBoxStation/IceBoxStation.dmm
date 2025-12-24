@@ -47341,7 +47341,7 @@
 /turf/closed/wall/r_wall,
 /area/station/hallway/secondary/exit/departure_lounge)
 "ovq" = (
-/obj/structure/closet/secure_closet/brig_physician,
+/obj/structure/closet/secure_closet/secmed,
 /obj/item/clothing/suit/jacket/straight_jacket,
 /turf/open/floor/iron/white/textured,
 /area/station/security/medical)

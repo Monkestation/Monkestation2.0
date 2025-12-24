@@ -1654,7 +1654,7 @@
 	},
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
-/obj/structure/closet/secure_closet/brig_physician,
+/obj/structure/closet/secure_closet/secmed,
 /turf/open/floor/iron/freezer,
 /area/station/security/medical)
 "ahQ" = (

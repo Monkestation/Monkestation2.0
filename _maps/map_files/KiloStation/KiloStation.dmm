@@ -54408,7 +54408,7 @@
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 1
 	},
-/obj/structure/closet/secure_closet/brig_physician,
+/obj/structure/closet/secure_closet/secmed,
 /obj/item/clothing/suit/jacket/straight_jacket,
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/medical)

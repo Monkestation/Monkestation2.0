@@ -7246,7 +7246,7 @@
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/ce)
 "cJp" = (
-/obj/structure/closet/secure_closet/brig_physician,
+/obj/structure/closet/secure_closet/secmed,
 /obj/item/clothing/suit/jacket/straight_jacket,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	color = "#DE3A3A";

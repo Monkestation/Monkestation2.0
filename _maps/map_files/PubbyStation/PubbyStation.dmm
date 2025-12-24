@@ -2771,7 +2771,7 @@
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 4
 	},
-/obj/structure/closet/secure_closet/brig_physician,
+/obj/structure/closet/secure_closet/secmed,
 /turf/open/floor/iron/white,
 /area/station/security/medical)
 "akI" = (

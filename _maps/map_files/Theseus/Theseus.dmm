@@ -41107,7 +41107,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "lXk" = (
-/obj/structure/closet/secure_closet/brig_physician,
+/obj/structure/closet/secure_closet/secmed,
 /obj/item/clothing/suit/jacket/straight_jacket,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
