@@ -8,7 +8,7 @@
 		"isolatedModules": false,
 		"jsx": "preserve",
 		"lib": ["DOM", "DOM.Iterable", "ESNext", "ScriptHost"],
-		"module": "ESNext",
+		"module": "esnext",
 		"moduleResolution": "bundler",
 		"noEmit": true,
 		"resolveJsonModule": true,
