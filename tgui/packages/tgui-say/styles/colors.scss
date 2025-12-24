@@ -20,6 +20,8 @@ $_channel_map: (
   'Med': hsl(202, 83.6%, 64.1%),
   'OOC': hsl(47.9, 100%, 40%),
   'Ent': hsl(176.1, 20%, 45.1%),
+  'LOOC': hsl(60, 95%, 60.6%),
+  'Mentor': hsl(300, 100%, 50%),
   'Radio': hsl(132.8, 74.4%, 45.9%),
   'Say': hsl(213.6, 37.9%, 74.1%),
   'Sci': hsl(271.6, 91.7%, 76.5%),
@@ -27,6 +29,8 @@ $_channel_map: (
   'Supp': hsl(33.7, 44.9%, 49.8%),
   'Svc': hsl(88.1, 60.6%, 40.8%),
   'Synd': hsl(359.1, 31.8%, 42.5%),
+  'Uncom': hsl(196.8, 26.8%, 58.2%),
+  'Dark': hsl(245.4, 100%, 69.6%),
 );
 
 $channel_keys: map.keys($_channel_map) !default;
