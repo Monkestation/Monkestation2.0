@@ -1,12 +1,12 @@
 /* This comment bypasses grep checks */ /var/__aneri
 
-#if !defined(SPACEMAN_DMM) && !defined(OPENDREAM)
+#ifndef OPENDREAM
 /* This comment also bypasses grep checks */ /var/alist/__aneri_calls = alist()
 #endif
 
 #define ANERI (world.system_type == MS_WINDOWS ? "aneri.dll" : (__aneri ||= __detect_auxtools("aneri")))
 
-#if !defined(SPACEMAN_DMM) && !defined(OPENDREAM)
+#ifndef OPENDREAM
 #define ANERI_CALL(name) call_ext(__aneri_calls[#name] ||= load_ext(ANERI, "byond:" + #name))
 #else
 #define ANERI_CALL(name) call_ext(ANERI, "byond:" + #name)
@@ -48,7 +48,7 @@
 #define aneri_rmdir(path) ANERI_CALL(rmdir)(path)
 
 // aneri-logger
-#if !defined(OPENDREAM) && !defined(SPACEMAN_DMM)
+#ifndef OPENDREAM
 /proc/aneri_log_write(path, message, format) // just for profiling purposes
 	var/static/__loaded
 	return call_ext(__loaded ||= load_ext(ANERI, "byond:log_write"))(path, message, format)
