@@ -5,7 +5,6 @@
 	"dependencies": {
 		"common": "workspace:*",
 		"inferno": "^8.2.1",
-		"tgui": "workspace:*",
-		"tgui-polyfill": "workspace:*"
+		"tgui": "workspace:*"
 	}
 }

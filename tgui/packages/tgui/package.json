@@ -8,14 +8,13 @@
 		"common": "workspace:*",
 		"csstype": "^3.1.1",
 		"dateformat": "^4.6.2",
-		"dompurify": "^2.4.4",
+		"dompurify": "^3.3.1",
 		"highlight.js": "^11.9.0",
 		"inferno": "^8.2.1",
 		"inferno-compat": "^8.2.1",
 		"inferno-vnode-flags": "^8.2.1",
 		"js-yaml": "^4.1.0",
 		"marked": "^4.2.12",
-		"tgui-dev-server": "workspace:*",
-		"tgui-polyfill": "workspace:*"
+		"tgui-dev-server": "workspace:*"
 	}
 }
