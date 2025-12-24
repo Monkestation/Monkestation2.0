@@ -194,6 +194,7 @@
 			all_limb_flags |= ext_organ.external_bodytypes
 		all_limb_flags |= limb.bodytype
 	bodytype = all_limb_flags
+	dna?.species.bodytype = all_limb_flags
 
 /proc/skintone2hex(skin_tone)
 	. = 0

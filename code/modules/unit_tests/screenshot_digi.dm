@@ -29,7 +29,7 @@
 
 	// screenshot test of holding an EVA suit
 	// should show the autogen'd legs once more
-	suit.attempt_pickup(dummy, skip_grav = TRUE)
+	suit.attempt_pickup(dummy)
 	TEST_ASSERT((suit in dummy.held_items), "Dummy (Ashwalker) should be holding the EVA suit!")
 	finished_icon = icon(finished_icon)
 	finished_icon.Insert(getFlatIcon(dummy, no_anim = TRUE), dir = SOUTH, frame = 4)
