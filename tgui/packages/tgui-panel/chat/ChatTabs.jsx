@@ -5,7 +5,7 @@
  */
 
 import { useDispatch, useSelector } from 'tgui/backend';
-import { Box, Tabs, Flex, Button } from 'tgui/components';
+import { Box, Tabs, Button, Stack } from 'tgui/components';
 import { changeChatPage, addChatPage } from './actions';
 import { selectChatPages, selectCurrentChatPage } from './selectors';
 import { openChatSettings } from '../settings/actions';
@@ -19,9 +19,9 @@ export const ChatTabs = (props) => {
   const currentPage = useSelector(selectCurrentChatPage);
   const dispatch = useDispatch();
   return (
-    <Flex align="center">
-      <Flex.Item>
-        <Tabs textAlign="center">
+    <Stack align="center">
+      <Stack.Item>
+        <Tabs scrollable textAlign="center">
           {pages.map((page) => (
             <Tabs.Tab
               key={page.id}
@@ -41,8 +41,8 @@ export const ChatTabs = (props) => {
             </Tabs.Tab>
           ))}
         </Tabs>
-      </Flex.Item>
-      <Flex.Item ml={1}>
+      </Stack.Item>
+      <Stack.Item ml={1}>
         <Button
           color="transparent"
           icon="plus"
@@ -51,7 +51,7 @@ export const ChatTabs = (props) => {
             dispatch(openChatSettings());
           }}
         />
-      </Flex.Item>
-    </Flex>
+      </Stack.Item>
+    </Stack>
   );
 };
