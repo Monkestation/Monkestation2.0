@@ -43,6 +43,7 @@ GLOBAL_DATUM(current_eminence, /mob/living/eminence) //set to the current eminen
 	AddElement(/datum/element/simple_flying)
 	internal_radio = new /obj/item/radio/borg/eminence(src)
 	ADD_TRAIT(src, TRAIT_GODMODE, INNATE_TRAIT)
+	grant_all_languages() //this is appearently an issue, im too lazy to figure it out so im just gonna do this
 
 /mob/living/eminence/Destroy()
 	if(GLOB.current_eminence == src)
@@ -168,7 +169,7 @@ GLOBAL_DATUM(current_eminence, /mob/living/eminence) //set to the current eminen
 		to_chat(user, span_warning("The panel is open and preventing you from accessing the [src]!"))
 		return
 
-	use_power(5)
+	use_energy(5)
 	icon_state = "[skin]1"
 
 	if(device)

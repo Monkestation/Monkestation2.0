@@ -1300,8 +1300,9 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/ethanol/fetching_fizz/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
-	for(var/obj/item/stack/ore/O in orange(3, drinker))
-		step_towards(O, get_turf(drinker))
+	var/turf/drinker_turf = get_turf(drinker)
+	for(var/obj/item/stack/ore/ore in orange(3, drinker))
+		step_towards(ore, drinker_turf)
 	return ..()
 
 //Another reference. Heals those in critical condition extremely quickly.

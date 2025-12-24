@@ -106,6 +106,8 @@
 	var/list/book_titles_read
 	/// Variable that lets the event picker see if someones getting chosen or not
 	var/picking = FALSE
+	/// If this mind has set DNR or not.
+	var/dnr = FALSE
 
 /datum/mind/New(_key)
 	key = _key
@@ -202,9 +204,8 @@
 	QDEL_NULL(antag_hud)
 	new_character.mind = src //and associate our new body with ourself
 	antag_hud = new_character.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/antagonist_hud, "combo_hud", src)
-	for(var/a in antag_datums) //Makes sure all antag datums effects are applied in the new body
-		var/datum/antagonist/A = a
-		A.on_body_transfer(old_current, current)
+	for(var/datum/antagonist/antag as anything in antag_datums) //Makes sure all antag datums effects are applied in the new body
+		antag.on_body_transfer(old_current, current)
 	if(iscarbon(new_character))
 		var/mob/living/carbon/C = new_character
 		C.last_mind = src
@@ -220,6 +221,9 @@
 	SEND_SIGNAL(current, COMSIG_MOB_MIND_TRANSFERRED_INTO)
 	if(!isnull(old_current))
 		SEND_SIGNAL(old_current, COMSIG_MOB_MIND_TRANSFERRED_OUT_OF, current)
+
+	for(var/datum/antagonist/antag as anything in antag_datums)
+		antag.after_body_transfer(old_current, current)
 
 //I cannot trust you fucks to do this properly
 /datum/mind/proc/set_original_character(new_original_character)
@@ -456,15 +460,20 @@
 					current.dropItemToGround(W, TRUE) //The TRUE forces all items to drop, since this is an admin undress.
 			if("takeuplink")
 				take_uplink()
-				wipe_memory()//Remove any memory they may have had.
+				wipe_memory_type(/datum/memory/key/traitor_uplink/implant)
 				log_admin("[key_name(usr)] removed [current]'s uplink.")
 			if("crystals")
 				if(check_rights(R_FUN))
 					var/datum/component/uplink/U = find_syndicate_uplink()
 					if(U)
-						var/crystals = input("Amount of telecrystals for [key]","Syndicate uplink", U.uplink_handler.telecrystals) as null | num
-						if(!isnull(crystals))
-							U.uplink_handler.telecrystals = crystals
+						var/crystals = tgui_input_number(
+							user = usr,
+							message = "Amount of telecrystals for [key]",
+							title = "Syndicate uplink",
+							default = U.uplink_handler.telecrystals,
+						)
+						if(isnum(crystals))
+							U.set_telecrystals(crystals)
 							message_admins("[key_name_admin(usr)] changed [current]'s telecrystal count to [crystals].")
 							log_admin("[key_name(usr)] changed [current]'s telecrystal count to [crystals].")
 			if("progression")

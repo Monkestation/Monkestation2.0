@@ -102,6 +102,7 @@
 	smoothing_groups = SMOOTH_GROUP_AIRLOCK
 
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_OPEN
+	interaction_flags_click = ALLOW_SILICON_REACH
 	blocks_emissive = EMISSIVE_BLOCK_NONE // Custom emissive blocker. We don't want the normal behavior.
 
 	///The type of door frame to drop during deconstruction
@@ -154,6 +155,9 @@
 	/// Used for papers and photos pinned to the airlock
 	var/note_overlay_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
 
+	/// Airlock pump that overrides airlock controlls when set up for cycling
+	var/obj/machinery/atmospherics/components/unary/airlock_pump/cycle_pump
+
 	var/cyclelinkeddir = 0
 	var/obj/machinery/door/airlock/cyclelinkedairlock
 	var/shuttledocked = 0
@@ -185,8 +189,8 @@
 		damage_deflection = AIRLOCK_DAMAGE_DEFLECTION_R
 
 	prepare_huds()
-	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
-		diag_hud.add_atom_to_hud(src)
+	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC_BASIC]
+	diag_hud.add_atom_to_hud(src)
 
 	diag_hud_set_electrified()
 
@@ -305,8 +309,8 @@
 			D.removeMe(src)
 	QDEL_NULL(note)
 	QDEL_NULL(seal)
-	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
-		diag_hud.remove_atom_from_hud(src)
+	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC_BASIC]
+	diag_hud.remove_atom_from_hud(src)
 	return ..()
 
 /obj/machinery/door/airlock/handle_atom_del(atom/A)
@@ -516,9 +520,6 @@
 			icon_state = ""
 		if(AIRLOCK_DENY, AIRLOCK_OPENING, AIRLOCK_CLOSING, AIRLOCK_EMAG)
 			icon_state = "nonexistenticonstate" //MADNESS
-#ifndef DISABLE_DEMOS
-	SSdemo.mark_dirty(src) //Monkestation Edit: REPLAYS
-#endif
 
 /* monkestation edit
 /obj/machinery/door/airlock/update_overlays()
@@ -1292,6 +1293,10 @@
 		INVOKE_ASYNC(src, density ? PROC_REF(open) : PROC_REF(close), BYPASS_DOOR_CHECKS)
 
 /obj/machinery/door/airlock/open(forced = DEFAULT_DOOR_CHECKS)
+	if(cycle_pump && !operating && !welded && !seal && locked && density)
+		cycle_pump.airlock_act(src)
+		return FALSE // The rest will be handled by the pump
+
 	if( operating || welded || locked || seal )
 		return FALSE
 
@@ -1349,14 +1354,14 @@
 		if(DEFAULT_DOOR_CHECKS) // Regular behavior.
 			if(!hasPower() || wires.is_cut(WIRE_OPEN) || (obj_flags & EMAGGED))
 				return FALSE
-			use_power(50)
+			use_energy(50)
 			playsound(src, doorOpen, 30, TRUE, mixer_channel = CHANNEL_MACHINERY)
 			return TRUE
 
 		if(FORCING_DOOR_CHECKS) // Only one check.
 			if(obj_flags & EMAGGED)
 				return FALSE
-			use_power(50)
+			use_energy(50 JOULES)
 			playsound(src, doorOpen, 30, TRUE)
 			return TRUE
 
@@ -1440,7 +1445,7 @@
 		if(DEFAULT_DOOR_CHECKS to FORCING_DOOR_CHECKS)
 			if(obj_flags & EMAGGED)
 				return FALSE
-			use_power(50)
+			use_energy(50)
 			playsound(src, doorClose, 30, TRUE, mixer_channel = CHANNEL_MACHINERY)
 			return TRUE
 
@@ -1521,9 +1526,9 @@
 		return
 	if(!density) //Already open
 		return ..()
+	if((user.istate & ISTATE_HARM))
+		return ..()
 	if(locked || welded || seal) //Extremely generic, as aliens only understand the basics of how airlocks work.
-		if((user.istate & ISTATE_HARM))
-			return ..()
 		to_chat(user, span_warning("[src] refuses to budge!"))
 		return
 	add_fingerprint(user)
@@ -1611,7 +1616,7 @@
 	assembly.update_name()
 	assembly.update_appearance()
 
-/obj/machinery/door/airlock/deconstruct(disassembled = TRUE, mob/user)
+/obj/machinery/door/airlock/deconstruct(disassembled = TRUE, mob/user, should_del = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		var/obj/structure/door_assembly/A
 		if(assemblytype)
@@ -1642,7 +1647,8 @@
 				ae = electronics
 				electronics = null
 				ae.forceMove(drop_location())
-	qdel(src)
+	if(should_del)
+		qdel(src)
 
 /obj/machinery/door/airlock/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
@@ -1694,9 +1700,9 @@
 
 	var/list/power = list()
 	power["main"] = remaining_main_outage() ? 0 : 2 // boolean
-	power["main_timeleft"] = remaining_main_outage()
+	power["main_timeleft"] = round(remaining_main_outage() / 10)
 	power["backup"] = remaining_backup_outage() ? 0 : 2 // boolean
-	power["backup_timeleft"] = remaining_backup_outage()
+	power["backup_timeleft"] = round(remaining_backup_outage() / 10)
 	data["power"] = power
 
 	data["shock"] = secondsElectrified == MACHINE_NOT_ELECTRIFIED ? 2 : 0
@@ -1725,7 +1731,7 @@
 	data["wires"] = wire
 	return data
 
-/obj/machinery/door/airlock/ui_act(action, params)
+/obj/machinery/door/airlock/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -1734,14 +1740,14 @@
 		return
 	switch(action)
 		if("disrupt-main")
-			if(remaining_main_outage())
+			if(!main_power_timer)
 				loseMainPower()
 				update_appearance()
 			else
 				to_chat(usr, span_warning("Main power is already offline."))
 			. = TRUE
 		if("disrupt-backup")
-			if(remaining_backup_outage())
+			if(!backup_power_time)
 				loseBackupPower()
 				update_appearance()
 			else
@@ -1839,6 +1845,17 @@
 		close()
 	else
 		open()
+
+/obj/machinery/door/airlock/proc/set_cycle_pump(obj/machinery/atmospherics/components/unary/airlock_pump/pump)
+	RegisterSignal(pump, COMSIG_QDELETING, PROC_REF(unset_cycle_pump))
+	cycle_pump = pump
+
+/obj/machinery/door/airlock/proc/unset_cycle_pump()
+	SIGNAL_HANDLER
+	if(locked)
+		unbolt()
+		say("Link broken, unbolting.")
+	cycle_pump = null
 
 /**
  * Generates the airlock's wire layout based on the current area the airlock resides in.

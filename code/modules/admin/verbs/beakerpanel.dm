@@ -39,8 +39,16 @@
 	return reagent_list
 
 /proc/beakersforbeakers()
+	var/emptycontainers = list(/obj/item/reagent_containers/cup/beaker,
+		/obj/item/reagent_containers/cup/beaker/large,
+		/obj/item/reagent_containers/cup/beaker/plastic,
+		/obj/item/reagent_containers/cup/beaker/meta,
+		/obj/item/reagent_containers/cup/beaker/noreact,
+		/obj/item/reagent_containers/cup/beaker/bluespace,
+		/obj/item/reagent_containers/cup/glass/drinkingglass)
+
 	var/list/container_list = list()
-	for(var/container_type in subtypesof(/obj/item/reagent_containers))
+	for(var/container_type in emptycontainers)
 		var/obj/item/reagent_containers/C = container_type
 		var/container_name = initial(C.name)
 		var/container_volume = initial(C.volume)

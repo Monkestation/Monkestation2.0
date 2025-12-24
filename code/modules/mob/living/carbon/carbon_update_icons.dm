@@ -96,6 +96,10 @@
 	if(same_z_layer)
 		return
 	update_z_overlays(GET_TURF_PLANE_OFFSET(new_turf), TRUE)
+	// horrible hacky "fix" for mesons weirdness on multi-z maps, forgive me for this ~Absolucy
+	if(client && (sight & SEE_TURFS) && length(SSmapping.multiz_levels))
+		set_sight(NONE)
+		update_sight()
 
 /mob/living/carbon/proc/refresh_loop(iter_cnt, rebuild = FALSE)
 	for(var/i in 1 to iter_cnt)
@@ -335,8 +339,11 @@
 		if(!LAZYLEN(part_overlays))
 			continue
 
-		damage_overlay = mutable_appearance(layer = -DAMAGE_LAYER, appearance_flags = KEEP_TOGETHER)
-		damage_overlay.overlays += part_overlays
+		if(isnull(damage_overlay))
+			damage_overlay = mutable_appearance(layer = -DAMAGE_LAYER, appearance_flags = KEEP_TOGETHER)
+
+		for(var/overlay in part_overlays)
+			damage_overlay.add_overlay(overlay)
 
 	if(isnull(damage_overlay))
 		return
@@ -358,6 +365,29 @@
 
 	overlays_standing[WOUND_LAYER] = wound_overlay
 	apply_overlay(WOUND_LAYER)
+
+/mob/living/carbon/proc/update_bandage_overlays()
+	remove_overlay(BANDAGE_LAYER)
+
+	var/mutable_appearance/bandage_overlay
+	for(var/obj/item/bodypart/iter_part as anything in bodyparts)
+		if(isnull(bandage_overlay))
+			bandage_overlay = mutable_appearance(layer = -BANDAGE_LAYER, appearance_flags = KEEP_TOGETHER)
+
+		if(iter_part.current_gauze)
+			var/mutable_appearance/limb_bandage_overlay = iter_part.current_gauze.build_worn_icon(
+			default_layer = -BANDAGE_LAYER, // proc inverts it for us
+			override_file = 'icons/mob/effects/bandage.dmi',
+			override_state = iter_part.current_gauze.worn_icon_state, // future todo : icon states for dirty bandages as well
+		)
+			limb_bandage_overlay.color = iter_part.current_gauze.overlay_color
+			bandage_overlay.add_overlay(limb_bandage_overlay)
+
+	if(isnull(bandage_overlay))
+		return
+
+	overlays_standing[BANDAGE_LAYER] = bandage_overlay
+	apply_overlay(BANDAGE_LAYER)
 
 /mob/living/carbon/update_worn_mask()
 	remove_overlay(FACEMASK_LAYER)
@@ -560,6 +590,7 @@
 /obj/item/bodypart/proc/generate_husk_key()
 	RETURN_TYPE(/list)
 	. = list()
+	. += "[limb_id]-"
 	. += "[husk_type]"
 	. += "-husk"
 	. += "-[body_zone]"

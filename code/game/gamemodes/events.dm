@@ -52,7 +52,7 @@
 	for(var/obj/machinery/power/smes/S as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/smes))
 		if(!is_station_level(S.z))
 			continue
-		S.charge = S.capacity
+		S.adjust_charge(INFINITY)
 		S.output_level = S.output_level_max
 		S.output_attempt = TRUE
 		S.update_appearance()
@@ -82,7 +82,7 @@
 	for(var/obj/machinery/power/smes/S as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/smes))
 		if(!is_station_level(S.z))
 			continue
-		S.charge = S.capacity
+		S.adjust_charge(INFINITY)
 		S.output_level = S.output_level_max
 		S.output_attempt = TRUE
 		S.update_appearance()

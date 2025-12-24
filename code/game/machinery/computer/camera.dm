@@ -60,7 +60,7 @@
 		// Turn on the console
 		if(length(concurrent_users) == 1 && is_living)
 			playsound(src, 'sound/machines/terminal_on.ogg', 25, FALSE)
-			use_power(active_power_usage)
+			use_energy(active_power_usage)
 		// Open UI
 		ui = new(user, src, "CameraConsole", name)
 		ui.open()
@@ -91,7 +91,7 @@
 	data["cameras"] = GLOB.cameranet.get_available_cameras_data(network)
 	return data
 
-/obj/machinery/computer/security/ui_act(action, params)
+/obj/machinery/computer/security/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -176,7 +176,6 @@
 		active_camera = null
 		last_camera_turf = null
 		playsound(src, 'sound/machines/terminal_off.ogg', 25, FALSE)
-		use_power(0)
 
 /atom/movable/screen/map_view/camera
 	/// All the plane masters that need to be applied.

@@ -70,21 +70,16 @@
 
 /datum/ai_behavior/find_and_set/in_list/clean_targets
 	action_cooldown = 3 SECONDS
-	/// Whether to also consider anything with TRAIT_TRASH_ITEM (monkestation addition)
+	/// Whether to also consider anything with TRAIT_TRASH_ITEM
 	var/check_trash_trait = FALSE
 	/// Minimum distance to the target before path returns. Corresponds to the "mintargetdist" arg of get_path_to.
 	var/min_target_distance = null
 
 /datum/ai_behavior/find_and_set/in_list/clean_targets/search_tactic(datum/ai_controller/controller, locate_paths, search_range)
-	var/list/found = oview(search_range, controller.pawn) // monkestation edit: don't pre-filter with typecache, so we can check for TRAIT_TRASH_ITEM
 	var/list/ignore_list = controller.blackboard[BB_TEMPORARY_IGNORE_LIST]
-	for(var/atom/found_item as anything in found)
-		// monkestation start: check for TRAIT_TRASH_ITEM
-		if(QDELETED(found_item))
-			continue
+	for(var/atom/movable/found_item in oview(search_range, controller.pawn))
 		if(!is_type_in_typecache(found_item, locate_paths) && (!check_trash_trait || !HAS_TRAIT(found_item, TRAIT_TRASH_ITEM)))
 			continue
-		// monkestation end
 		if(LAZYACCESS(ignore_list, REF(found_item)))
 			continue
 		var/list/path = get_path_to(controller.pawn, found_item, max_distance = BOT_CLEAN_PATH_LIMIT, mintargetdist = min_target_distance, access = controller.get_access())

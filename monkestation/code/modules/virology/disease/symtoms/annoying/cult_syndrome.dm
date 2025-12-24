@@ -18,7 +18,7 @@
 	mob.whisper("...[pick(rune_words_rune)]...")
 
 	var/list/turf_list = list()
-	for(var/turf/T in spiral_block(get_turf(mob), 40))
+	for(var/turf/T in spiral_block(get_turf(mob), 10))
 		if(locate(/obj/structure/grille) in T.contents)
 			continue
 		if(istype(get_area(T), /area/station/service/chapel))
@@ -54,7 +54,7 @@
 							C.images -= rune_holder
 
 
-/datum/symptom/cult_hallucination/proc/AnimateFakeRune(var/image/rune)
+/datum/symptom/cult_hallucination/proc/AnimateFakeRune(image/rune)
 	animate(rune, color = list(1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,0,0,0,0), time = 10, loop = -1)//1
 	animate(color = list(1.125,0.06,0,0,0,1.125,0.06,0,0.06,0,1.125,0,0,0,0,1,0,0,0,0), time = 2)//2
 	animate(color = list(1.25,0.12,0,0,0,1.25,0.12,0,0.12,0,1.25,0,0,0,0,1,0,0,0,0), time = 2)//3

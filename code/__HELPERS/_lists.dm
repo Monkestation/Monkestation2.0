@@ -192,6 +192,7 @@
 	} while(FALSE)
 
 #define SORT_FIRST_INDEX(list) (list[1])
+#define SORT_PRIORITY_INDEX(list) (list["priority"])
 #define SORT_COMPARE_DIRECTLY(thing) (thing)
 #define SORT_VAR_NO_TYPE(varname) var/varname
 /****
@@ -740,8 +741,6 @@
 			continue
 		return target
 	return null
-
-
 
 /// Returns datum/data/record
 /proc/find_record_old(field, value, list/L)

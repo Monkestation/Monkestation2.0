@@ -6,8 +6,8 @@ GLOBAL_LIST(spesstv_viewers)
 	filename = "spesstv"
 	filedesc = "Spess.tv"
 	extended_desc = "This program allows users to tune into public streams."
-	transfer_access = list()
-	usage_flags = PROGRAM_ALL
+	download_access = list()
+	can_run_on_flags = PROGRAM_ALL
 	size = 0
 	program_icon = FA_ICON_VIDEO
 	alert_able = TRUE

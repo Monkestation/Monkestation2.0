@@ -150,7 +150,7 @@ effective or pretty fucking useless.
 	data["cooldown"] = DisplayTimeText(get_cooldown())
 	return data
 
-/obj/item/healthanalyzer/rad_laser/ui_act(action, params)
+/obj/item/healthanalyzer/rad_laser/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -691,7 +691,7 @@ effective or pretty fucking useless.
 		return
 	icon_state = "missile_targeter_0"
 
-/obj/item/missile_targeter/AltClick(mob/living/user)
+/obj/item/missile_targeter/click_alt(mob/living/user)
 	if(!(check_usability(user)))
 		return
 	if(!designated_target)

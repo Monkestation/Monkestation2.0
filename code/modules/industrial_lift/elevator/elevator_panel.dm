@@ -73,7 +73,7 @@
 	// And non-mapload panels link in Initialize
 	link_with_lift(log_error = FALSE)
 
-/obj/machinery/elevator_control_panel/LateInitialize()
+/obj/machinery/elevator_control_panel/LateInitialize(mapload_arg)
 	. = ..()
 	// If we weren't maploaded, we probably already linked (or tried to link) in Initialize().
 	if(!maploaded)
@@ -304,7 +304,7 @@
 
 	return data
 
-/obj/machinery/elevator_control_panel/ui_act(action, list/params)
+/obj/machinery/elevator_control_panel/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

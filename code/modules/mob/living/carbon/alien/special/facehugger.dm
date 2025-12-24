@@ -185,15 +185,16 @@
 	if(!sterile && !neutered)
 		//ensure we detach once we no longer need to be attached
 		attached++
-		addtimer(CALLBACK(src, PROC_REF(detach)), MAX_IMPREGNATION_TIME)
+		addtimer(CALLBACK(src, PROC_REF(detach), M), MAX_IMPREGNATION_TIME)
 		M.take_bodypart_damage(strength,0) //done here so that humans in helmets take damage
 		M.Unconscious(MAX_IMPREGNATION_TIME/0.3) //something like 25 ticks = 20 seconds with the default settings
 	GoIdle() //so it doesn't jump the people that tear it off
 
 	addtimer(CALLBACK(src, PROC_REF(Impregnate), M), rand(MIN_IMPREGNATION_TIME, MAX_IMPREGNATION_TIME))
 
-/obj/item/clothing/mask/facehugger/proc/detach()
+/obj/item/clothing/mask/facehugger/proc/detach(mob/living/victim)
 	attached = 0
+	victim.dropItemToGround(src)
 
 /obj/item/clothing/mask/facehugger/proc/Impregnate(mob/living/target)
 	if(!target || target.stat == DEAD) //was taken off or something
@@ -255,6 +256,14 @@
 	stat = DEAD
 
 	visible_message(span_danger("[src] curls up into a ball!"))
+
+/obj/item/clothing/mask/facehugger/can_mob_unequip(mob/user)
+	if(!real || sterile || stat == DEAD || user.get_organ_by_type(/obj/item/organ/internal/body_egg/alien_embryo))
+		return ..()
+	if(user.get_item_by_slot(slot_flags) == src)
+		to_chat(user, span_userdanger("[src] is latched on too tight! Get help or wait for it to let go!"))
+		return FALSE
+	return ..()
 
 /proc/CanHug(mob/living/M)
 	if(!istype(M))

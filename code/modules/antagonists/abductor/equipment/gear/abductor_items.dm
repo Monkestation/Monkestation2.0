@@ -131,12 +131,11 @@
 		radio_off_mob(human_target)
 
 /obj/item/abductor/silencer/proc/radio_off_mob(mob/living/carbon/human/target)
-	var/list/all_items = target.get_all_contents()
-
-	for(var/obj/item/radio/radio in all_items)
-		radio.set_listening(FALSE)
-		if(!istype(radio, /obj/item/radio/headset))
-			radio.set_broadcasting(FALSE) //goddamned headset hacks
+	var/list/target_contents = target.get_all_contents() + target
+	for (var/obj/item/radio/radio in target_contents)
+		radio.set_broadcasting(FALSE)
+	for (var/obj/item/bodycam_upgrade/bodycamera in target_contents)
+		bodycamera.turn_off()
 
 /obj/item/abductor/mind_device
 	name = "mental interface device"
@@ -283,8 +282,8 @@
 <br>
 Congratulations! You are now trained for invasive xenobiology research!"}
 
-/obj/item/paper/guides/antag/abductor/AltClick()
-	return //otherwise it would fold into a paperplane.
+/obj/item/paper/guides/antag/abductor/click_alt(mob/living/user, obj/item/I)
+	return CLICK_ACTION_BLOCKING //otherwise it would fold into a paperplane.
 
 /obj/item/melee/baton/abductor
 	name = "advanced baton"
@@ -378,6 +377,8 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 			target.set_stutter_if_lower(16 SECONDS)
 			SEND_SIGNAL(target, COMSIG_LIVING_MINOR_SHOCK)
 			target.Paralyze(knockdown_time * (HAS_TRAIT(target, TRAIT_BATON_RESISTANCE) ? 0.1 : 1))
+			ADD_TRAIT(target, TRAIT_SOFTSPOKEN, type)
+			addtimer(TRAIT_CALLBACK_REMOVE(target, TRAIT_SOFTSPOKEN, type), 14 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 		if(BATON_SLEEP)
 			SleepAttack(target,user)
 		if(BATON_CUFF)
@@ -406,7 +407,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 			return
 		target.visible_message(span_danger("[user] paralyzes [target] with [src]!"), \
 		span_userdanger("You suddenly feel very drowsy!"))
-		target.Paralyze(sleep_time)
+		target.SetParalyzed(sleep_time)
 		log_combat(user, target, "paralyzed")
 	else
 		if(target.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0))

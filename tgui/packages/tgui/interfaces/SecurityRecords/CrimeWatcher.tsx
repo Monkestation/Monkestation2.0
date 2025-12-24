@@ -153,7 +153,7 @@ const CrimeDisplay = ({ item }: { item: Crime }) => {
             </Button>
             <Button.Confirm
               content="Invalidate"
-              disabled={!higher_access || !valid}
+              disabled={!valid || (!higher_access && author !== current_user)}
               icon="ban"
               onClick={() =>
                 act('invalidate_crime', {

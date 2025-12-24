@@ -54,6 +54,7 @@ type Testmerge = {
 };
 
 type ChangelogData = {
+  discord_url?: string;
   dates: string[];
   testmerges?: Testmerge[];
 };
@@ -79,6 +80,7 @@ const ChangeRow = (props: { kind: string; content: string }) => {
 };
 
 const Header = (props: { dropdown: any }) => {
+  const { data } = useBackend<ChangelogData>();
   return (
     <Section>
       <h1>Monkestation</h1>
@@ -98,10 +100,12 @@ const Header = (props: { dropdown: any }) => {
         </a>
         .
       </p>
-      <p>
-        {'You can also join our discord '}
-        <a href="https://discord.gg/monkestation">here</a>.
-      </p>
+      {!!data?.discord_url && (
+        <p>
+          {'You can also join our discord '}
+          <a href={data.discord_url}>here</a>.
+        </p>
+      )}
       {props.dropdown}
     </Section>
   );
@@ -344,7 +348,7 @@ export class Changelog extends Component {
               window.scrollTo(
                 0,
                 document.body.scrollHeight ||
-                  document.documentElement.scrollHeight,
+                document.documentElement.scrollHeight,
               );
               return this.getData(dates[index]);
             }}
@@ -363,7 +367,7 @@ export class Changelog extends Component {
               window.scrollTo(
                 0,
                 document.body.scrollHeight ||
-                  document.documentElement.scrollHeight,
+                document.documentElement.scrollHeight,
               );
               return this.getData(dates[index]);
             }}
@@ -385,7 +389,7 @@ export class Changelog extends Component {
               window.scrollTo(
                 0,
                 document.body.scrollHeight ||
-                  document.documentElement.scrollHeight,
+                document.documentElement.scrollHeight,
               );
               return this.getData(dates[index]);
             }}

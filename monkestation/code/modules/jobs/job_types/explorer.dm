@@ -6,7 +6,7 @@
 	faction = FACTION_STATION
 	total_positions = 6
 	spawn_positions = 6
-	supervisors = SUPERVISOR_QM
+	supervisors = SUPERVISOR_QM_HOP
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "EXPLORER"
 
@@ -67,6 +67,7 @@
 
 	box = /obj/item/storage/box/survival/mining
 	chameleon_extras = /obj/item/gun/energy/recharge/kinetic_accelerator
+	accessory = /obj/item/clothing/accessory/badge/cargo
 
 /obj/item/storage/box/emergency_eva/explorer
 	name = "boxed explorer's EVA kit"

@@ -74,8 +74,8 @@ handles linking back and forth.
 	if (silo)
 		silo.ore_connected_machines -= src
 		silo.holds -= src
-		silo.updateUsrDialog()
 		silo = null
+		UnregisterSignal(parent, COMSIG_ATOM_ATTACKBY)
 	mat_container = null
 	return ..()
 
@@ -84,23 +84,9 @@ handles linking back and forth.
 
 	silo = null
 
-	var/static/list/allowed_mats = list(
-		/datum/material/iron,
-		/datum/material/glass,
-		/datum/material/silver,
-		/datum/material/gold,
-		/datum/material/diamond,
-		/datum/material/plasma,
-		/datum/material/uranium,
-		/datum/material/bananium,
-		/datum/material/titanium,
-		/datum/material/bluespace,
-		/datum/material/plastic,
-	)
-
 	mat_container = parent.AddComponent( \
 		/datum/component/material_container, \
-		allowed_mats, \
+		SSmaterials.materials_by_category[MAT_CATEGORY_SILO], \
 		local_size, \
 		mat_container_flags, \
 		container_signals = mat_container_signals, \
@@ -118,6 +104,12 @@ handles linking back and forth.
 	else
 		silo.holds -= src
 
+/**
+ * Sets the storage size for local materials when not linked with silo
+ * Arguments
+ *
+ * * size - the new size for local storage. measured in SHEET_MATERIAL_SIZE units
+ */
 /datum/component/remote_materials/proc/set_local_size(size)
 	local_size = size
 	if (!silo && mat_container)
@@ -135,6 +127,7 @@ handles linking back and forth.
 	silo.ore_connected_machines -= src
 	silo = null
 	mat_container = null
+	UnregisterSignal(parent, COMSIG_ATOM_ATTACKBY)
 	if (allow_standalone)
 		_MakeLocal()
 
@@ -166,7 +159,8 @@ handles linking back and forth.
 		var/obj/machinery/ore_silo/new_silo = M.buffer
 		var/datum/component/material_container/new_container = new_silo.GetComponent(/datum/component/material_container)
 		if (silo)
-			silo.disconnect_receptacle(src, parent)
+			silo.ore_connected_machines -= src
+			silo.holds -= src
 		else if (mat_container)
 			//transfer all mats to silo. whatever cannot be transfered is dumped out as sheets
 			if(mat_container.total_amount())
@@ -177,7 +171,9 @@ handles linking back and forth.
 					new_container.materials[mat] += mat_amount
 					mat_container.materials[mat] = 0
 			qdel(mat_container)
-		new_silo.connect_receptacle(src, parent)
+		silo = new_silo
+		silo.ore_connected_machines += src
+		mat_container = new_container
 		if(!(mat_container_flags & MATCONTAINER_NO_INSERT))
 			RegisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_item_insert))
 			RegisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION_SECONDARY, PROC_REF(on_secondary_insert))
@@ -257,8 +253,8 @@ handles linking back and forth.
  * name- For logging only. the design you are trying to build e.g. matter bin, etc.
  * user_data - in the form rendered by ID_DATA(user), for material logging and (if this component is connected to a silo), permission checking
  */
-/datum/component/remote_materials/proc/use_materials(list/mats, coefficient = 1, multiplier = 1, action = "build", name = "design", alist/user_data)
-	if(!can_use_resource(user_data = user_data))
+/datum/component/remote_materials/proc/use_materials(list/mats, coefficient = 1, multiplier = 1, action = "build", name = "design")
+	if(!can_use_resource())
 		return 0
 
 	var/amount_consumed = mat_container.use_materials(mats, coefficient, multiplier)
@@ -289,6 +285,7 @@ handles linking back and forth.
 		drop_target = movable_parent.drop_location()
 
 	return mat_container.retrieve_sheets(eject_amount, material_ref, target = drop_target, context = parent, user_data = user_data)
+
 
 /**
  * Insert an item into the mat container, helper proc to insert items with the correct context

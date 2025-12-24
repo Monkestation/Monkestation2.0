@@ -103,7 +103,9 @@ SUBSYSTEM_DEF(particle_weather)
 				COOLDOWN_START(src, next_weather_start, rand(-3000, 3000) + initial(next_hit.weather_duration_upper) / 5)
 				break
 
-	if(QDELETED(running_eclipse_weather))
+	var/should_bother_with_eclipse = length(SSmapping.levels_by_trait(ZTRAIT_ECLIPSE))
+
+	if(should_bother_with_eclipse && QDELETED(running_eclipse_weather))
 		if(next_hit_eclipse && COOLDOWN_FINISHED(src, next_weather_start_eclipse))
 			run_weather(next_hit_eclipse, eclipse = TRUE)
 		else if(!next_hit_eclipse && length(eligible_eclipse_weathers))
@@ -122,7 +124,7 @@ SUBSYSTEM_DEF(particle_weather)
 		if(weather_special_effect)
 			SEND_GLOBAL_SIGNAL(COMSIG_GLOB_WEATHER_EFFECT, weather_special_effect)
 
-	if(!QDELETED(running_eclipse_weather))
+	if(should_bother_with_eclipse && !QDELETED(running_eclipse_weather))
 		running_eclipse_weather.tick()
 
 		if(weather_special_effect_eclipse)
@@ -131,7 +133,8 @@ SUBSYSTEM_DEF(particle_weather)
 /datum/controller/subsystem/particle_weather/proc/disable()
 	flags |= SS_NO_FIRE
 	enabled = FALSE
-	stop_weather()
+	stop_weather("Default")
+	stop_weather("Eclipse")
 
 /datum/controller/subsystem/particle_weather/proc/run_weather(datum/particle_weather/weather_datum_type, force = FALSE, eclipse = FALSE)
 	if(!enabled)

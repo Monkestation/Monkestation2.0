@@ -106,6 +106,7 @@
 		/datum/computer_file/program/scipaper_program,
 	)
 
+/* //Monkestation edit - QM is not part of command.
 /obj/item/modular_computer/pda/heads/quartermaster
 	name = "quartermaster PDA"
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
@@ -121,6 +122,7 @@
 		/datum/computer_file/program/shipping,
 		/datum/computer_file/program/robocontrol,
 	)
+*/
 
 /**
  * Security
@@ -389,6 +391,7 @@
 	starting_programs = list(
 		/datum/computer_file/program/emojipedia,
 		/datum/computer_file/program/newscaster,
+		/datum/computer_file/program/portrait_printer,
 	)
 
 /* monkestation removal: don't force ringer off by default

@@ -196,7 +196,7 @@
 
 /obj/effect/energy_snare/Initialize(mapload)
 	. = ..()
-	addtimer(CALLBACK(src, PROC_REF(deploy)), 1 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(deploy)), 0.5 SECONDS)
 
 /obj/effect/energy_snare/proc/deploy()
 	new /obj/item/restraints/legcuffs/beartrap/energy(get_turf(loc))

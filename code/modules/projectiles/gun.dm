@@ -1,5 +1,4 @@
 
-#define DUALWIELD_PENALTY_EXTRA_MULTIPLIER 1.4
 #define FIRING_PIN_REMOVAL_DELAY 50
 
 /obj/item/gun
@@ -324,7 +323,7 @@
 		return ITEM_INTERACT_SKIP_TO_ATTACK // Gun bash / bayonet attack
 
 	if(!isliving(interacting_with))
-		return ITEM_INTERACT_SKIP_TO_ATTACK
+		return ..()
 
 	var/datum/component/gunpoint/gunpoint_component = user.GetComponent(/datum/component/gunpoint)
 	if (gunpoint_component)
@@ -348,6 +347,10 @@
 //Just exists to stop it running ranged interact primary, and for other stuff to work based off of it
 
 /obj/item/gun/proc/try_fire_gun(atom/target, mob/living/user, params)
+	if(HAS_TRAIT(user, TRAIT_THROW_GUNS))
+		super_throw = TRUE
+		user.throw_item(target)
+		return TRUE
 	return fire_gun(target, user, user.Adjacent(target), params)
 
 /obj/item/gun/proc/fire_gun(atom/target, mob/living/user, flag, params)
@@ -698,4 +701,3 @@
 	return
 
 #undef FIRING_PIN_REMOVAL_DELAY
-#undef DUALWIELD_PENALTY_EXTRA_MULTIPLIER

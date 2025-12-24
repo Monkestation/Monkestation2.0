@@ -48,6 +48,7 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/riot
 	sawn_desc = "Come with me if you want to live."
 	can_be_sawn_off = TRUE
+	pbk_gentle = TRUE
 
 /obj/item/gun/ballistic/shotgun/riot/give_manufacturer_examine()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_NANOTRASEN)
@@ -120,7 +121,7 @@
 	inhand_icon_state = "renoster_evil"
 	projectile_wound_bonus = 15
 	pin = /obj/item/firing_pin/implant/pindicate
-
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/riot/evil
 /obj/item/gun/ballistic/shotgun/riot/sol/evil/unrestricted
 	pin = /obj/item/firing_pin
 
@@ -168,6 +169,7 @@
 	semi_auto = TRUE
 	projectile_damage_multiplier = 1.2
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/tube
+	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING
 	/// If defined, the secondary tube is this type, if you want different shell loads
 	var/alt_accepted_magazine_type
 	/// If TRUE, we're drawing from the alternate_magazine
@@ -210,10 +212,9 @@
 	else
 		balloon_alert(user, "switched to tube A")
 
-/obj/item/gun/ballistic/shotgun/automatic/dual_tube/AltClick(mob/living/user)
-	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
-		return
+/obj/item/gun/ballistic/shotgun/automatic/dual_tube/click_alt(mob/living/user)
 	rack()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube/give_manufacturer_examine()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_NANOTRASEN)
@@ -252,6 +253,7 @@
 	var/secondary_magazine_type
 	///the secondary magazine
 	var/obj/item/ammo_box/magazine/secondary_magazine
+	pbk_gentle = FALSE
 
 /obj/item/gun/ballistic/shotgun/bulldog/Initialize(mapload)
 	. = ..()
@@ -321,7 +323,7 @@
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/gun/ballistic/shotgun/bulldog/alt_click_secondary(mob/user)
+/obj/item/gun/ballistic/shotgun/bulldog/click_alt_secondary(mob/user)
 	if(secondary_magazine)
 		var/obj/item/ammo_box/magazine/old_mag = secondary_magazine
 		secondary_magazine = null
@@ -384,11 +386,13 @@
 	bolt_type = BOLT_TYPE_NO_BOLT
 	can_be_sawn_off = TRUE
 	pb_knockback = 3 // it's a super shotgun!
+	pbk_gentle = FALSE
 
-/obj/item/gun/ballistic/shotgun/doublebarrel/AltClick(mob/user)
-	. = ..()
-	if(unique_reskin && !current_skin && user.can_perform_action(src, NEED_DEXTERITY))
-		reskin_obj(user)
+/obj/item/gun/ballistic/shotgun/doublebarrel/click_alt(mob/living/user)
+	if(!unique_reskin || current_skin)
+		return CLICK_ACTION_BLOCKING
+	reskin_obj(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/gun/ballistic/shotgun/doublebarrel/sawoff(mob/user)
 	. = ..()
@@ -482,17 +486,18 @@
 
 /obj/item/gun/ballistic/shotgun/buckshotroulette
 	name = "Buckshot roulette shotgun"
-	desc = "Relic of ancient times, this shotgun seems to have an unremovable firing pin with a label that mocks poor people. Aim at your mouth, IT knows..."
+	desc = "Relic of ancient times, this shotgun seems to have an unremovable firing pin. Aim at your mouth, IT knows..."
 	icon_state = "riotshotgun"
 	inhand_icon_state = "shotgun"
 	fire_delay = 8
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/buckshotroulette
 	sawn_desc = "This one doesn't fix itself."
 	can_be_sawn_off = TRUE
-	pin = /obj/item/firing_pin/permit_pin/buckshotroulette
+	pin = /obj/item/firing_pin/buckshotroulette/unremovable //you arent getting a 10 round shotgun for free.
 
-/obj/item/firing_pin/permit_pin/buckshotroulette //no cheating allowed
-	pin_removable = FALSE
+/obj/item/gun/ballistic/shotgun/buckshotroulette/Initialize(mapload)
+	. = ..()
+	pin.gun_insert(null, src) //this is stupid. why isnt it called, when it SPAWNS IN THE GUN. . .
 
 
 //god fucking bless brazil

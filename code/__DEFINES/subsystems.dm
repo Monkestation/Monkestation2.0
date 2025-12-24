@@ -11,7 +11,7 @@
  *
  * make sure you add an update to the schema_version stable in the db changelog
  */
-#define DB_MAJOR_VERSION 5
+#define DB_MAJOR_VERSION 6
 
 /**
  * DB minor schema version
@@ -20,7 +20,7 @@
  *
  * make sure you add an update to the schema_version stable in the db changelog
  */
-#define DB_MINOR_VERSION 28 // monkestation edit: we've added plenty of our own tables to the db
+#define DB_MINOR_VERSION 0 // monkestation edit: we've added plenty of our own tables to the db
 
 
 //! ## Timing subsystem
@@ -145,6 +145,7 @@
 #define INIT_ORDER_DISCORD 78
 #define INIT_ORDER_PLEXORA 77 // monkestation addition
 #define INIT_ORDER_ACHIEVEMENTS 76 // monkestation edit: 77 -> 76 for plexora
+#define INIT_ORDER_FLOXY 75 // should initialize relatively early, so admins can start playing music if they want to. also needs to initialize before cassettes anyways
 #define INIT_ORDER_STATION 74 //This is high priority because it manipulates a lot of the subsystems that will initialize after it.
 #define INIT_ORDER_QUIRKS 73
 #define INIT_ORDER_REAGENTS 72 //HAS to be before mapping and assets - both create objects, which creates reagents, which relies on lists made in this subsystem
@@ -166,6 +167,7 @@
 #define INIT_ORDER_RESTAURANT 34
 #define INIT_ORDER_POLLUTION 32
 #define INIT_ORDER_FLUIDS 32 // Needs to be above atoms, as some atoms may want to start fluids/gases on init
+#define INIT_ORDER_CASSETTES 31 // monkestation addition: cassettes initialize before atoms, so that cassette stuff can be used in Initialize()
 #define INIT_ORDER_ATOMS 30
 #define INIT_ORDER_ARMAMENTS 27
 #define INIT_ORDER_LANGUAGE 25
@@ -183,7 +185,6 @@
 #define INIT_ORDER_ICON_SMOOTHING -7
 #define INIT_ORDER_OVERLAY -8
 #define INIT_ORDER_XKEYSCORE -10
-#define INIT_ORDER_STICKY_BAN -10
 #define INIT_ORDER_LIGHTING -20
 #define INIT_ORDER_STARLIGHT -21
 #define INIT_ORDER_OUTDOOR_EFFECTS -22
@@ -192,7 +193,6 @@
 #define INIT_ORDER_PATH -50
 #define INIT_ORDER_EXPLOSIONS -69
 #define INIT_ORDER_CREDITS -93
-#define INIT_ORDER_REPLAYS -94
 #define INIT_ORDER_HOTSPOTS -95 ///only called on oshan so just call it near the end.
 #define INIT_ORDER_TWITCH -96
 #define INIT_ORDER_STATPANELS -97
@@ -214,6 +214,7 @@
 #define FIRE_PRIORITY_GARBAGE 15
 #define FIRE_PRIORITY_DATABASE 16
 #define FIRE_PRIORITY_POLLUTION 18
+#define FIRE_PRIORITY_LIQUID_TURFS 19
 #define FIRE_PRIORITY_WET_FLOORS 20
 #define FIRE_PRIORITY_AIR 20
 #define FIRE_PRIORITY_NPC 20
@@ -238,6 +239,7 @@
 #define FIRE_PRIORITY_PARALLAX 65
 #define FIRE_PRIORITY_INSTRUMENTS 80
 #define FIRE_PRIORITY_FLUIDS 80
+#define FIRE_PRIORITY_PROJECTILES 85
 #define FIRE_PRIORITY_PRIORITY_EFFECTS 90
 #define FIRE_PRIORITY_STAMINA 95
 #define FIRE_PRIORITY_MOBS 100
@@ -266,6 +268,11 @@
 #define RUNLEVEL_POSTGAME 8
 
 #define RUNLEVELS_DEFAULT (RUNLEVEL_SETUP | RUNLEVEL_GAME | RUNLEVEL_POSTGAME)
+
+//Hibernation states
+#define SS_NOT_HIBERNATING 0
+#define SS_WAKING_UP 1
+#define SS_IS_HIBERNATING 2
 
 //SSticker.current_state values
 /// Game is loading
@@ -316,6 +323,16 @@
 #define SSEXPLOSIONS_TURFS 2
 #define SSEXPLOSIONS_THROWS 3
 
+// Machines subsystem subtasks.
+#define SSMACHINES_MACHINES_EARLY 1
+#define SSMACHINES_APCS_EARLY 2
+#define SSMACHINES_APCS_ENVIRONMENT 3
+#define SSMACHINES_APCS_LIGHTS 4
+#define SSMACHINES_APCS_EQUIPMENT 5
+#define SSMACHINES_APCS_LATE 6
+#define SSMACHINES_MACHINES 7
+#define SSMACHINES_MACHINES_LATE 8
+
 // Wardrobe subsystem tasks
 #define SSWARDROBE_STOCK 1
 #define SSWARDROBE_INSPECT 2
@@ -342,8 +359,11 @@
 #define SSMOBS_DT (SSmobs.wait/10)
 #define SSOBJ_DT (SSobj.wait/10)
 
-// The change in the world's time from the subsystem's last fire in seconds.
+/// The change in the world's time from the subsystem's last fire in seconds.
 #define DELTA_WORLD_TIME(ss) ((world.time - ss.last_fire) * 0.1)
+
+/// Same as DELTA_WORLD_TIME but we ignore time spent hibernating
+#define DELTA_WORLD_TIME_WITHOUT_HIBERNATION(ss) ss.hibernation_state ? ss.wait : DELTA_WORLD_TIME(ss)
 
 /// The timer key used to know how long subsystem initialization takes
 #define SS_INIT_TIMER_KEY "ss_init"
@@ -373,3 +393,13 @@
 #define SSLIQUIDS_RUN_TYPE_OCEAN 6
 #define SSLIQUIDS_RUN_TYPE_TEMPERATURE 7
 #define SSLIQUIDS_RUN_TYPE_CACHED_EDGES 8
+
+///The default state, no NT Representative ever spawned in.
+#define NT_REP_STATUS_DOESNT_EXIST 0
+///The state we enter once an NT Rep spawns in, we only check roundend for survival.
+#define NT_REP_STATUS_DIED 1
+///The state we enter on roundend if at least one NT Rep survived.
+#define NT_REP_STATUS_SURVIVED 2
+
+///The max amount of stars/score the NT rep can give
+#define MAX_NT_REP_SCORE 5

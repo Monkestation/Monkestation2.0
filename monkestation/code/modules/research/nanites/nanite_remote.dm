@@ -19,21 +19,24 @@
 	var/code = 0
 	var/relay_code = 0
 	var/current_program_name = "Program"
+	/// Affects whether you can lock it, and use local mode.
+	var/silicon = FALSE
 
 /obj/item/nanite_remote/examine(mob/user)
 	. = ..()
 	if(locked)
 		. += span_notice("Alt-click to unlock.")
 
-/obj/item/nanite_remote/AltClick(mob/user)
-	. = ..()
-	if(locked)
-		if(allowed(user))
-			to_chat(user, span_notice("You unlock [src]."))
-			locked = FALSE
-			update_appearance()
-		else
-			to_chat(user, span_warning("Access denied."))
+/obj/item/nanite_remote/click_alt(mob/living/user)
+	if(!locked)
+		return CLICK_ACTION_BLOCKING
+	if(!allowed(user))
+		to_chat(user, span_warning("Access denied."))
+		return CLICK_ACTION_BLOCKING
+	to_chat(user, span_notice("You unlock [src]."))
+	locked = FALSE
+	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/nanite_remote/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
@@ -102,6 +105,7 @@
 	data["locked"] = locked
 	data["saved_settings"] = saved_settings
 	data["program_name"] = current_program_name
+	data["silicon"] = silicon
 	return data
 
 /obj/item/nanite_remote/ui_act(action, params)
@@ -168,7 +172,7 @@
 			mode = params["mode"]
 			. = TRUE
 		if("lock")
-			if(!(obj_flags & EMAGGED))
+			if(!(obj_flags & EMAGGED) && !silicon)
 				locked = TRUE
 				update_appearance()
 			. = TRUE
@@ -236,6 +240,9 @@
 				return
 			comm_message = new_message
 			. = TRUE
+
+/obj/item/nanite_remote/cyborg
+	silicon = TRUE
 
 #undef REMOTE_MODE_OFF
 #undef REMOTE_MODE_SELF

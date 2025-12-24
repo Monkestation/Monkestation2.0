@@ -36,6 +36,8 @@
 #define BINGLE_PIT_TRAIT "bingle_pit"
 #define VENDING_MACHINE_TRAIT "vending_machine"
 
+///A trait given by a held item
+#define HELD_ITEM_TRAIT "held-item-trait"
 #define ABSTRACT_ITEM_TRAIT "abstract-item"
 /// A trait given by any status effect
 #define STATUS_EFFECT_TRAIT "status-effect"
@@ -290,3 +292,6 @@
 
 /// Trait added by style component
 #define STYLE_TRAIT "style"
+
+/// Trait added by battle royale
+#define BATTLE_ROYALE_TRAIT "battle_royale"

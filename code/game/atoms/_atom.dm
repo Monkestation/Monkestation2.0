@@ -105,6 +105,11 @@
 	var/base_pixel_x = 0
 	///Default pixel y shifting for the atom's icon.
 	var/base_pixel_y = 0
+	// Use SET_BASE_VISUAL_PIXEL(x, y) to set these in typepath definitions, it'll handle pixel_w and z for you
+	///Default pixel w shifting for the atom's icon.
+	var/base_pixel_w = 0
+	///Default pixel z shifting for the atom's icon.
+	var/base_pixel_z = 0
 	///Used for changing icon states for different base sprites.
 	var/base_icon_state
 
@@ -148,6 +153,11 @@
 	/// Whether ghosts can see screentips on it
 	var/ghost_screentips = FALSE
 
+	/// Flags to check for in can_perform_action. Used in alt-click checks
+	var/interaction_flags_click = NONE
+	/// Flags to check for in can_perform_action for mouse drag & drop checks. To bypass checks see interaction_flags_atom mouse drop flags
+	var/interaction_flags_mouse_drop = NONE
+
 /**
  * Called when an atom is created in byond (built in engine proc)
  *
@@ -168,12 +178,6 @@
 		if(SSatoms.InitAtom(src, FALSE, args))
 			//we were deleted
 			return
-#ifndef DISABLE_DEMOS
-		// monkestation start: replays
-		if(!(flags_1 & DEMO_IGNORE_1))
-			SSdemo.mark_new(src)
-		// monkestation end
-#endif
 
 /**
  * The primary method that objects are setup in SS13 with
@@ -261,7 +265,7 @@
  * that all atoms will actually exist in the "WORLD" at this time and that all their Intialization
  * code has been run
  */
-/atom/proc/LateInitialize()
+/atom/proc/LateInitialize(mapload_arg)
 	set waitfor = FALSE
 /**
  * Top level of the destroy chain for most atoms

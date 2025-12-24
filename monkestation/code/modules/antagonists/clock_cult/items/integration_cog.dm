@@ -19,17 +19,17 @@
 	if(!cogger_apc.panel_open)
 		//Cut open the panel
 		balloon_alert(user, "cutting open APC...")
-		if(!do_after(user, 5 SECONDS, target = cogger_apc))
+		if(!do_after(user, 5 SECONDS, target = cogger_apc, hidden = TRUE))
 			return
 
-		balloon_alert(user, "APC cut open")
+		balloon_alert(user, "aPC cut open")
 		cogger_apc.panel_open = TRUE
 		cogger_apc.update_appearance()
 		return
 
 	//Insert the cog
 	balloon_alert(user, "inserting [src]...")
-	if(!do_after(user, 4 SECONDS, target = cogger_apc))
+	if(!do_after(user, 4 SECONDS, target = cogger_apc, hidden = TRUE))
 		balloon_alert(user, "failed to insert [src]!")
 		return
 

@@ -1,11 +1,5 @@
 //Blocks an attempt to connect before even creating our client datum thing.
 
-//How many new ckey matches before we revert the stickyban to it's roundstart state
-//These are exclusive, so once it goes over one of these numbers, it reverts the ban
-#define STICKYBAN_MAX_MATCHES 15
-#define STICKYBAN_MAX_EXISTING_USER_MATCHES 3 //ie, users who were connected before the ban triggered
-#define STICKYBAN_MAX_ADMIN_MATCHES 1
-
 /world/IsBanned(key, address, computer_id, type, real_bans_only=FALSE)
 	debug_world_log("isbanned(): '[args.Join("', '")]'")
 	if (!key || (!real_bans_only && (!address || !computer_id)))
@@ -96,6 +90,61 @@
 				message_admins(msg)
 				return list("reason"="popcap", "desc"= "\nReason: [CONFIG_GET(string/extreme_popcap_message)]")
 
+	//Discord verification checking. This won't be used under normal circumstances, but was ported just in case
+	if (!real_bans_only && !.)
+		if (SSplexora.enabled && CONFIG_GET(flag/require_discord_verification))
+			var/required_roleid = CONFIG_GET(string/plexora_verification_required_roleid)
+			var/list/plexora_poll_result = SSplexora.poll_ckey_for_verification(ckey, required_roleid)
+			var/datum/discord_details/discord_details = new /datum/discord_details(
+				plexora_poll_result["discord_id"],
+				plexora_poll_result["discord_username"],
+				plexora_poll_result["discord_displayname"],
+				plexora_poll_result["polling_response"],
+			)
+			var/has_requiredrole = plexora_poll_result["has_requiredrole"]
+			if (has_requiredrole)
+				discord_details.has_requiredrole = has_requiredrole
+
+			var/log
+			switch(plexora_poll_result["polling_response"])
+				if (PLEXORA_DOWN)
+					log = "Denied entry: Plexora is down. Failed verification for [ckey]"
+					message_admins("[log] - Ping @flleeppyy on the Discord if issue persists.")
+					log_access(log)
+					return list("reason"="internalerror", "desc"="\nInternal server error - Plexora is down. Please try again in a few moments. If issue issue persists, ping @flleeppyy on the Discord.")
+				if (PLEXORA_CKEYPOLL_FAILED)
+					stack_trace("Ckey polling failed for [ckey]. [json_encode(plexora_poll_result)]")
+					log = "Denied entry: Ckey polling failed for [key_name_admin(ckey)]. Check runtimes"
+					log_access(log)
+					message_admins(log)
+					return list("reason"="internalerror", "desc"="\nInternal server error - Plexora failed to poll your ckey. Please try again in a few moments. If issue issue persists, ping @flleeppyy on the Discord.")
+				if (PLEXORA_CKEYPOLL_NOTLINKED, PLEXORA_CKEYPOLL_RECORDNOTVALID)
+					var/one_time_token = SSplexora.get_or_generate_one_time_token_for_ckey(ckey)
+					log_access("Denied entry: [ckey] does not have a valid link record.")
+					return list("reason"="linking", "desc"="\nYour Discord account is not linked to BYOND, this is required to join.\nYour verification code is: [one_time_token] - Use this in conjunction with the /verifydiscord command in the Discord server to link your account, then try again.")
+				if (PLEXORA_CKEYPOLL_LINKED_ABSENT, PLEXORA_CKEYPOLL_LINKED_DELETED)
+					log = "Denied entry: [ckey]'s linked Discord account is either deleted, or not present in the Discord. ([plexora_poll_result["discord_id"]] - [plexora_poll_result["discord_username"]])"
+					log_access(log)
+					message_admins(log)
+					return list("reason"="linkingabsent", "desc"="\nYour current linked Discord account is not present in the Discord server! Please rejoin before you can play.\nIf your previous Discord account has been deleted, or lost, please open a ticket in the Discord.",)
+				if (PLEXORA_CKEYPOLL_LINKED_BANNED)
+					log = "Denied entry: [ckey] is banned from the Discord. ([plexora_poll_result["discord_id"]] - [plexora_poll_result["discord_username"]])"
+					log_access(log)
+					message_admins(log)
+					return list("reason"="linkingbanned", "desc"="\nYou are banned from the server.")
+				if (PLEXORA_CKEYPOLL_LINKED_ALLOWEDWHITELIST)
+					log_access("Allowed entry: [ckey] is in allowed_ckeys.txt")
+
+			if (!has_requiredrole)
+				log = "Denied entry: [ckey] has a valid Discord link record, but lacks the required role ([plexora_poll_result["requiredrole_name"]] - [required_roleid])"
+				log_access(log)
+				message_admins(log)
+				return list("reason"="linkingrolerror", "desc"="\nYour Discord is properly linked, but you lack the required role ([plexora_poll_result["requiredrole_name"]] - [required_roleid]). Please make a ticket in the Discord.")
+
+			log_access("Allowed entry: [ckey] has a valid link record [has_requiredrole ? "(and has the required role)" : ""] - ID: [plexora_poll_result["discord_id"]] Username: [plexora_poll_result["discord_username"]]")
+		else if (CONFIG_GET(flag/require_discord_verification))
+			return list("reason"="internalerror", "desc"="\nInternal server error - Discord Verification is required but Plexora is not enabled! This is a config issue, please alert the sysadmins.")
+
 	if(CONFIG_GET(flag/sql_enabled))
 		if(!SSdbcore.Connect())
 			var/msg = "Ban database connection failure. Key [ckey] not checked"
@@ -127,151 +176,6 @@
 				[expires]"}
 				log_suspicious_login("Failed Login: [ckey] [computer_id] [address] - Banned (#[i["id"]])")
 				return list("reason"="Banned","desc"="[desc]")
-	if (admin)
-		if (GLOB.directory[ckey])
-			return
 
-		//oh boy, so basically, because of a bug in byond, sometimes stickyban matches don't trigger here, so we can't exempt admins.
-		// Whitelisting the ckey with the byond whitelist field doesn't work.
-		// So we instead have to remove every stickyban than later re-add them.
-		if (!length(GLOB.stickybanadminexemptions))
-			for (var/banned_ckey in world.GetConfig("ban"))
-				GLOB.stickybanadmintexts[banned_ckey] = world.GetConfig("ban", banned_ckey)
-				world.SetConfig("ban", banned_ckey, null)
-		if (!SSstickyban.initialized)
-			return
-		GLOB.stickybanadminexemptions[ckey] = world.time
-		stoplag() // sleep a byond tick
-		GLOB.stickbanadminexemptiontimerid = addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(restore_stickybans)), 5 SECONDS, TIMER_STOPPABLE|TIMER_UNIQUE|TIMER_OVERRIDE)
-		return
+	. = ..() //default pager ban stuff
 
-	var/list/ban = ..() //default pager ban stuff
-
-	if (ban)
-		if (!admin)
-			. = ban
-		if (real_bans_only)
-			return
-		var/bannedckey = "ERROR"
-		if (ban["ckey"])
-			bannedckey = ban["ckey"]
-
-		var/newmatch = FALSE
-		var/list/cachedban = SSstickyban.cache[bannedckey]
-		//rogue ban in the process of being reverted.
-		if (cachedban && (cachedban["reverting"] || cachedban["timeout"]))
-			world.SetConfig("ban", bannedckey, null)
-			return null
-
-		if (cachedban && ckey != bannedckey)
-			newmatch = TRUE
-			if (cachedban["keys"])
-				if (cachedban["keys"][ckey])
-					newmatch = FALSE
-			if (cachedban["matches_this_round"][ckey])
-				newmatch = FALSE
-
-		if (newmatch && cachedban)
-			var/list/newmatches = cachedban["matches_this_round"]
-			var/list/pendingmatches = cachedban["matches_this_round"]
-			var/list/newmatches_connected = cachedban["existing_user_matches_this_round"]
-			var/list/newmatches_admin = cachedban["admin_matches_this_round"]
-
-			if (C)
-				newmatches_connected[ckey] = ckey
-				newmatches_connected = cachedban["existing_user_matches_this_round"]
-				pendingmatches[ckey] = ckey
-				sleep(STICKYBAN_ROGUE_CHECK_TIME)
-				pendingmatches -= ckey
-			if (admin)
-				newmatches_admin[ckey] = ckey
-
-			if (cachedban["reverting"] || cachedban["timeout"])
-				return null
-
-			newmatches[ckey] = ckey
-
-
-			if (\
-				newmatches.len+pendingmatches.len > STICKYBAN_MAX_MATCHES || \
-				newmatches_connected.len > STICKYBAN_MAX_EXISTING_USER_MATCHES || \
-				newmatches_admin.len > STICKYBAN_MAX_ADMIN_MATCHES \
-			)
-
-				var/action
-				if (ban["fromdb"])
-					cachedban["timeout"] = TRUE
-					action = "putting it on timeout for the remainder of the round"
-				else
-					cachedban["reverting"] = TRUE
-					action = "reverting to its roundstart state"
-
-				world.SetConfig("ban", bannedckey, null)
-
-				//we always report this
-				log_game("Stickyban on [bannedckey] detected as rogue, [action]")
-				message_admins("Stickyban on [bannedckey] detected as rogue, [action]")
-				//do not convert to timer.
-				spawn (5)
-					world.SetConfig("ban", bannedckey, null)
-					sleep(1 TICKS)
-					world.SetConfig("ban", bannedckey, null)
-					if (!ban["fromdb"])
-						cachedban = cachedban.Copy() //so old references to the list still see the ban as reverting
-						cachedban["matches_this_round"] = list()
-						cachedban["existing_user_matches_this_round"] = list()
-						cachedban["admin_matches_this_round"] = list()
-						cachedban -= "reverting"
-						SSstickyban.cache[bannedckey] = cachedban
-						world.SetConfig("ban", bannedckey, list2stickyban(cachedban))
-				return null
-
-		if (ban["fromdb"])
-			if(SSdbcore.Connect())
-				INVOKE_ASYNC(SSdbcore, TYPE_PROC_REF(/datum/controller/subsystem/dbcore, QuerySelect), list(
-					SSdbcore.NewQuery(
-						"INSERT INTO [format_table_name("stickyban_matched_ckey")] (matched_ckey, stickyban) VALUES (:ckey, :bannedckey) ON DUPLICATE KEY UPDATE last_matched = now()",
-						list("ckey" = ckey, "bannedckey" = bannedckey)
-					),
-					SSdbcore.NewQuery(
-						"INSERT INTO [format_table_name("stickyban_matched_ip")] (matched_ip, stickyban) VALUES (INET_ATON(:address), :bannedckey) ON DUPLICATE KEY UPDATE last_matched = now()",
-						list("address" = address, "bannedckey" = bannedckey)
-					),
-					SSdbcore.NewQuery(
-						"INSERT INTO [format_table_name("stickyban_matched_cid")] (matched_cid, stickyban) VALUES (:computer_id, :bannedckey) ON DUPLICATE KEY UPDATE last_matched = now()",
-						list("computer_id" = computer_id, "bannedckey" = bannedckey)
-					)
-				), FALSE, TRUE)
-
-
-		//byond will not trigger isbanned() for "global" host bans,
-		//ie, ones where the "apply to this game only" checkbox is not checked (defaults to not checked)
-		//So it's safe to let admins walk thru host/sticky bans here
-		if (admin)
-			log_admin("The admin [ckey] has been allowed to bypass a matching host/sticky ban on [bannedckey]")
-			if (message)
-				message_admins(span_adminnotice("The admin [ckey] has been allowed to bypass a matching host/sticky ban on [bannedckey]"))
-				addclientmessage(ckey,span_adminnotice("You have been allowed to bypass a matching host/sticky ban on [bannedckey]"))
-			return null
-
-		if (C) //user is already connected!.
-			to_chat(C, span_redtext("You are about to get disconnected for matching a sticky ban after you connected. If this turns out to be the ban evasion detection system going haywire, we will automatically detect this and revert the matches. if you feel that this is the case, please wait EXACTLY 6 seconds then reconnect using file -> reconnect to see if the match was automatically reversed."), confidential = TRUE)
-
-		var/desc = "\nReason:(StickyBan) You, or another user of this computer or connection ([bannedckey]) is banned from playing here. The ban reason is:\n[ban["message"]]\nThis ban was applied by [ban["admin"]]\nThis is a BanEvasion Detection System ban, if you think this ban is a mistake, please wait EXACTLY 6 seconds, then try again before filing an appeal.\n"
-		. = list("reason" = "Stickyban", "desc" = desc)
-		log_suspicious_login("Failed Login: [ckey] [computer_id] [address] - StickyBanned [ban["message"]] Target Username: [bannedckey] Placed by [ban["admin"]]")
-
-	return .
-
-/proc/restore_stickybans()
-	for (var/banned_ckey in GLOB.stickybanadmintexts)
-		world.SetConfig("ban", banned_ckey, GLOB.stickybanadmintexts[banned_ckey])
-	GLOB.stickybanadminexemptions = list()
-	GLOB.stickybanadmintexts = list()
-	if (GLOB.stickbanadminexemptiontimerid)
-		deltimer(GLOB.stickbanadminexemptiontimerid)
-	GLOB.stickbanadminexemptiontimerid = null
-
-#undef STICKYBAN_MAX_MATCHES
-#undef STICKYBAN_MAX_EXISTING_USER_MATCHES
-#undef STICKYBAN_MAX_ADMIN_MATCHES

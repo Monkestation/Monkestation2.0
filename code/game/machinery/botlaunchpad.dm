@@ -25,7 +25,7 @@
 	if(!panel_open)
 		return ITEM_INTERACT_SKIP_TO_ATTACK
 	multitool.set_buffer(src)
-	to_chat(user, span_notice("You save the data in the [multitool.name]'s buffer."))
+	balloon_alert(user, "saved to multitool buffer")
 	return ITEM_INTERACT_SUCCESS
 
 
@@ -51,7 +51,6 @@
 		"style" = STYLE_SEETHROUGH,
 		"reverse_dropoff_coords" = list(reverse_turf.x, reverse_turf.y, reverse_turf.z)
 	))
-	use_power(active_power_usage)
 
 /obj/machinery/botpad/proc/recall(mob/living/user)
 	var/atom/our_bot = launched_bot?.resolve()

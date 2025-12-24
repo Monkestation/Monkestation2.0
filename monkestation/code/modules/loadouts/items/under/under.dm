@@ -226,6 +226,11 @@ GLOBAL_LIST_INIT(loadout_miscunders, generate_loadout_items(/datum/loadout_item/
 	name = "Blue PJs"
 	item_path = /obj/item/clothing/under/misc/pj/blue
 
+/datum/loadout_item/under/miscellaneous/jester
+	name = "Jester Suit"
+	item_path = /obj/item/clothing/under/rank/civilian/clown/jester
+	restricted_roles = list(JOB_CLOWN)
+	requires_purchase = FALSE
 
 /datum/loadout_item/under/miscellaneous/maidcostume
 	name = "Maid Costume"
@@ -914,6 +919,18 @@ GLOBAL_LIST_INIT(loadout_miscunders, generate_loadout_items(/datum/loadout_item/
 	name = "Yukata"
 	item_path = /obj/item/clothing/under/costume/nova/yukata
 
+/datum/loadout_item/under/miscellaneous/yukata_black //BUYABLE
+	name = "Black Yukata"
+	item_path = /obj/item/clothing/under/costume/yukata
+
+/datum/loadout_item/under/miscellaneous/yukata_green //BUYABLE
+	name = "Green Yukata"
+	item_path = /obj/item/clothing/under/costume/yukata/green
+
+/datum/loadout_item/under/miscellaneous/yukata_white //BUYABLE
+	name = "White Yukata"
+	item_path = /obj/item/clothing/under/costume/yukata/white
+
 /datum/loadout_item/under/miscellaneous/qipao_black //BUYABLE
 	name = "Qipao"
 	item_path = /obj/item/clothing/under/costume/nova/qipao
@@ -933,6 +950,18 @@ GLOBAL_LIST_INIT(loadout_miscunders, generate_loadout_items(/datum/loadout_item/
 /datum/loadout_item/under/miscellaneous/kimono //BUYABLE
 	name = "Fancy Kimono"
 	item_path =  /obj/item/clothing/under/costume/skyrat/kimono
+
+/datum/loadout_item/under/miscellaneous/kimono_black //BUYABLE
+	name = "Black Kimono"
+	item_path =  /obj/item/clothing/under/costume/kimono
+
+/datum/loadout_item/under/miscellaneous/kimono_red //BUYABLE
+	name = "Red Kimono"
+	item_path =  /obj/item/clothing/under/costume/kimono/red
+
+/datum/loadout_item/under/miscellaneous/kimono_purple //BUYABLE
+	name = "Purple Kimono"
+	item_path =  /obj/item/clothing/under/costume/kimono/purple
 
 /datum/loadout_item/under/miscellaneous/chaps //BUYABLE
 	name = "Black Chaps"
@@ -1006,6 +1035,18 @@ GLOBAL_LIST_INIT(loadout_miscunders, generate_loadout_items(/datum/loadout_item/
 /datum/loadout_item/under/miscellaneous/qm_skirtle
 	name = "Quartermaster's Skirtleneck"
 	item_path = /obj/item/clothing/under/rank/cargo/qm/nova/turtleneck/skirt
+	restricted_roles = list(JOB_QUARTERMASTER)
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/miscellaneous/qm_turtle
+	name = "Quartermaster's Turtleneck"
+	item_path = /obj/item/clothing/under/rank/cargo/qm/nova/turtleneck
+	restricted_roles = list(JOB_QUARTERMASTER)
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/miscellaneous/qm_casual
+	name = "Quartermaster's Casualwear"
+	item_path = /obj/item/clothing/under/rank/cargo/qm/nova/casual
 	restricted_roles = list(JOB_QUARTERMASTER)
 	requires_purchase = FALSE
 

@@ -98,7 +98,7 @@
 	 */
 	var/max_volume_per_reagent = 30
 	/// Cell cost for charging a reagent
-	var/charge_cost = 50
+	var/charge_cost = 0.05 * STANDARD_CELL_CHARGE
 	/// Counts up to the next time we charge
 	var/charge_timer = 0
 	/// Time it takes for shots to recharge (in seconds)
@@ -194,13 +194,12 @@
 
 /obj/item/reagent_containers/borghypo/ui_data(mob/user)
 	var/list/available_reagents = list()
-	for(var/datum/reagent/reagent in stored_reagents.reagent_list)
-		if(reagent)
-			available_reagents.Add(list(list(
-				"name" = reagent.name,
-				"volume" = round(reagent.volume, 0.01) - 1,
-				"description" = reagent.description,
-			))) // list in a list because Byond merges the first list...
+	for(var/datum/reagent/reagent as anything in stored_reagents.reagent_list)
+		available_reagents.Add(list(list(
+			"name" = reagent.name,
+			"volume" = round(reagent.volume, 0.01) - 1,
+			"description" = reagent.description,
+		))) // list in a list because Byond merges the first list...
 
 	var/data = list()
 	data["theme"] = tgui_theme
@@ -212,7 +211,7 @@
 /obj/item/reagent_containers/borghypo/attack_self(mob/user)
 	ui_interact(user)
 
-/obj/item/reagent_containers/borghypo/ui_act(action, params)
+/obj/item/reagent_containers/borghypo/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -235,11 +234,9 @@
 	. += "Currently loaded: [selected_reagent ? "[selected_reagent]. [selected_reagent.description]" : "nothing."]"
 	. += span_notice("<i>Alt+Click</i> to change transfer amount. Currently set to [amount_per_transfer_from_this]u.")
 
-/obj/item/reagent_containers/borghypo/AltClick(mob/living/user)
-	. = ..()
-	if(user.stat == DEAD || user != loc)
-		return //IF YOU CAN HEAR ME SET MY TRANSFER AMOUNT TO 1
+/obj/item/reagent_containers/borghypo/click_alt(mob/living/user)
 	change_transfer_amount(user)
+	return CLICK_ACTION_SUCCESS
 
 /// Default Medborg Hypospray
 /obj/item/reagent_containers/borghypo/medical
@@ -299,7 +296,7 @@
 		Also metabolizes potassium iodide for radiation poisoning, inacusiate for ear damage and morphine for offense."
 	icon_state = "borghypo_s"
 	tgui_theme = "syndicate"
-	charge_cost = 20
+	charge_cost = 0.02 * STANDARD_CELL_CHARGE
 	recharge_time = 2
 	default_reagent_types = BASE_SYNDICATE_REAGENTS
 	bypass_protection = TRUE
@@ -312,7 +309,7 @@
 	icon_state = "shaker"
 	possible_transfer_amounts = list(5,10,20)
 	// Lots of reagents all regenerating at once, so the charge cost is lower. They also regenerate faster.
-	charge_cost = 20
+	charge_cost = 0.02 * STANDARD_CELL_CHARGE
 	recharge_time = 3
 	dispensed_temperature = WATER_MATTERSTATE_CHANGE_TEMP //Water stays wet, ice stays ice
 	default_reagent_types = BASE_SERVICE_REAGENTS
@@ -382,7 +379,7 @@
 	icon_state = "flour"
 	possible_transfer_amounts = list(5,10,20,1)
 	// Lots of reagents all regenerating at once, so the charge cost is lower. They also regenerate faster.
-	charge_cost = 40 //Costs double the power of the borgshaker due to synthesizing solids
+	charge_cost = 0.04 * STANDARD_CELL_CHARGE //Costs double the power of the borgshaker due to synthesizing solids
 	recharge_time = 6 //Double the recharge time too, for the same reason.
 	dispensed_temperature = WATER_MATTERSTATE_CHANGE_TEMP
 	default_reagent_types = HACKED_SERVICE_REAGENTS
@@ -395,13 +392,12 @@
 
 /obj/item/reagent_containers/borghypo/condiment_synthesizer/ui_data(mob/user)
 	var/list/condiments = list()
-	for(var/datum/reagent/reagent in stored_reagents.reagent_list)
-		if(reagent)
-			condiments.Add(list(list(
-				"name" = reagent.name,
-				"volume" = round(reagent.volume, 0.01) - 1,
-				"description" = reagent.description,
-			))) // list in a list because Byond merges the first list...
+	for(var/datum/reagent/reagent as anything in stored_reagents.reagent_list)
+		condiments.Add(list(list(
+			"name" = reagent.name,
+			"volume" = round(reagent.volume, 0.01) - 1,
+			"description" = reagent.description,
+		))) // list in a list because Byond merges the first list...
 
 	var/data = list()
 	data["theme"] = tgui_theme
@@ -446,7 +442,7 @@
 
 /obj/item/reagent_containers/borghypo/borgshaker/centcom
 	max_volume_per_reagent = 50
-	charge_cost = 5
+	charge_cost = 0.05 * STANDARD_CELL_CHARGE
 	recharge_time = 1
 
 /obj/item/reagent_containers/borghypo/borgshaker/centcom/Initialize(mapload)

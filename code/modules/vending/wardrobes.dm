@@ -30,7 +30,7 @@
 		/obj/item/clothing/head/hats/security_peaked_cap/blue = 3, //monkestation edit
 		/obj/item/clothing/mask/bandana/striped/security = 3,
 		/obj/item/clothing/mask/balaclava = 3, //monkestation edit
-		/obj/item/clothing/mask/russian_balaclava = 3, //monkestation edit
+		/obj/item/clothing/mask/thermal_balaclava = 3, //monkestation edit
 		/obj/item/clothing/under/rank/security/officer/skirt = 3,
 		/obj/item/clothing/under/rank/security/officer/grey = 3,
 		/obj/item/clothing/under/rank/security/officer/tactical = 3, //monkestation edit
@@ -122,6 +122,7 @@
 		/obj/item/clothing/head/beret/medical/paramedic = 4,
 		/obj/item/clothing/head/soft/paramedic = 4,
 		/obj/item/clothing/shoes/sneakers/blue = 4,
+		/obj/item/clothing/shoes/workboots/black = 4,
 		/obj/item/clothing/suit/apron/surgical = 4,
 		/obj/item/clothing/mask/surgical = 4,
 	)
@@ -467,7 +468,7 @@
 		/obj/item/clothing/under/rank/civilian/lawyer/black/skirt = 1,
 		/obj/item/clothing/shoes/laceup = 2,
 		/obj/item/clothing/shoes/heels = 2, //MONKESTATION ADDITION
-		/obj/item/clothing/accessory/lawyers_badge = 2,
+		/obj/item/clothing/accessory/badge/lawyer = 2,
 		/obj/item/radio/headset/headset_srv = 2,
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/law_wardrobe

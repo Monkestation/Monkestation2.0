@@ -80,12 +80,12 @@ Slimecrossing Items
 	new /obj/effect/timestop(get_turf(target), 2, 50, list(user))
 
 //Hypercharged slime cell - Charged Yellow
-/obj/item/stock_parts/cell/emproof/slime/hypercharged // monke edit: make hypercharged slime cells EMP-proof, by changing their parent from cell/high to cell/emproof
+/obj/item/stock_parts/power_store/cell/emproof/slime/hypercharged // monke edit: make hypercharged slime cells EMP-proof, by changing their parent from cell/high to cell/emproof
 	name = "hypercharged slime core"
 	desc = "A charged yellow slime extract, infused with plasma. It almost hurts to touch. Its organic nature makes it immune to EMPs."
 	rating = 7
-	maxcharge = 50000
-	chargerate = 2500
+	maxcharge = STANDARD_CELL_CHARGE * 50
+	chargerate = STANDARD_CELL_RATE * 0.25
 
 //Barrier cube - Chilling Grey
 /obj/item/barriercube

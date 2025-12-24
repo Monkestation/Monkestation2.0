@@ -1,9 +1,18 @@
 import { map, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { clamp } from 'common/math';
+import { createSearch } from 'common/string';
 import { vecLength, vecSubtract } from 'common/vector';
-import { useBackend } from '../backend';
-import { Box, Button, Icon, LabeledList, Section, Table } from '../components';
+import { useBackend, useLocalState } from '../backend';
+import {
+  Box,
+  Button,
+  Icon,
+  LabeledList,
+  Section,
+  Table,
+  Input,
+} from '../components';
 import { Window } from '../layouts';
 
 const coordsToVec = (coords) => map(parseFloat)(coords.split(', '));
@@ -11,6 +20,8 @@ const coordsToVec = (coords) => map(parseFloat)(coords.split(', '));
 export const Gps = (props) => {
   const { act, data } = useBackend();
   const { currentArea, currentCoords, globalmode, power, tag, updating } = data;
+  const [searchName, setSearchName] = useLocalState('searchName', '');
+  const searchByName = createSearch(searchName, (gps) => gps.entrytag);
   const signals = flow([
     map((signal, index) => {
       // Calculate distance to the target. BYOND distance is capped to 127,
@@ -78,14 +89,24 @@ export const Gps = (props) => {
                 {currentArea} ({currentCoords})
               </Box>
             </Section>
-            <Section title="Detected Signals">
+            <Section
+              title="Detected Signals"
+              buttons={
+                <Input
+                  placeholder="Search by name..."
+                  width="200px"
+                  value={searchName}
+                  onInput={(_, value) => setSearchName(value)}
+                />
+              }
+            >
               <Table>
                 <Table.Row bold>
                   <Table.Cell content="Name" />
                   <Table.Cell collapsing content="Direction" />
                   <Table.Cell collapsing content="Coordinates" />
                 </Table.Row>
-                {signals.map((signal) => (
+                {signals.filter(searchByName).map((signal) => (
                   <Table.Row
                     key={signal.entrytag + signal.coords + signal.index}
                     className="candystripe"

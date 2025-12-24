@@ -110,3 +110,8 @@
 	#define MOVABLE_SAY_QUOTE_MESSAGE_MODS 3
 
 #define COMSIG_MOB_CI_TOGGLED "mob_ci_toggled"
+
+/// Called when the atom is dropped into a chasm: (turf/chasm)
+#define COMSIG_MOVABLE_CHASM_DROPPED "movable_chasm_dropped"
+	/// Stop it from actually dropping into the chasm
+	#define COMPONENT_NO_CHASM_DROP (1<<0)

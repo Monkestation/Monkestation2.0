@@ -161,6 +161,13 @@
 	if(alt_icons)
 		AddElement(/datum/element/update_icon_updates_onmob)
 
+/obj/item/gun/ballistic/setup_reskinning()
+	if(!check_setup_reskinning())
+		return
+
+	// We already register context in Initialize.
+	RegisterSignal(src, COMSIG_CLICK_ALT, PROC_REF(on_click_alt_reskin))
+
 /obj/item/gun/ballistic/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
 	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Toggle Bracing"
@@ -462,30 +469,31 @@
 
 ///Installs a new suppressor, assumes that the suppressor is already in the contents of src
 /obj/item/gun/ballistic/proc/install_suppressor(obj/item/suppressor/S)
-	//suppressed = S
-	//w_class += S.w_class //so pistols do not fit in pockets when suppressed (We actually want this and had horrible code to override this code)
+	suppressed = S
+	update_weight_class(w_class + S.w_class) //so pistols do not fit in pockets when suppressed
 	update_appearance()
 
 /obj/item/gun/ballistic/clear_suppressor()
 	if(!can_unsuppress)
 		return
-	//if(isitem(suppressed))
-	//	var/obj/item/I = suppressed
-	//	w_class -= I.w_class
+	if(isitem(suppressed))
+		var/obj/item/I = suppressed
+		update_weight_class(w_class - I.w_class)
 	return ..()
 
-/obj/item/gun/ballistic/AltClick(mob/user)
-	if (unique_reskin && !current_skin && user.can_perform_action(src, NEED_DEXTERITY))
+/obj/item/gun/ballistic/click_alt(mob/user)
+	if(unique_reskin && !current_skin)
 		reskin_obj(user)
-		return
-	if(loc == user)
-		if(suppressed && can_unsuppress)
-			var/obj/item/suppressor/S = suppressed
-			if(!user.is_holding(src))
-				return ..()
-			balloon_alert(user, "[S.name] removed")
-			user.put_in_hands(S)
-			clear_suppressor()
+		return CLICK_ACTION_SUCCESS
+	if(!suppressed || !can_unsuppress)
+		return CLICK_ACTION_BLOCKING
+	var/obj/item/suppressor/S = suppressed
+	if(!user.is_holding(src))
+		return CLICK_ACTION_BLOCKING
+	balloon_alert(user, "[S.name] removed")
+	user.put_in_hands(S)
+	clear_suppressor()
+	return CLICK_ACTION_SUCCESS
 
 ///Prefire empty checks for the bolt drop
 /obj/item/gun/ballistic/proc/prefire_empty_checks()

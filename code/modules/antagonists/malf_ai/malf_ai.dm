@@ -11,6 +11,8 @@
 	can_assign_self_objectives = TRUE
 	default_custom_objective = "Make sure your precious crew are incapable of ever, ever leaving you."
 	stinger_sound = 'sound/ambience/antag/malf.ogg'
+	antag_flags = parent_type::antag_flags | FLAG_ANTAG_CAP_IGNORE_HUMANITY
+	antag_count_points = 15 //might want to make this higher
 	///the name of the antag flavor this traitor has.
 	var/employer
 	///assoc list of strings set up after employer is given
@@ -116,7 +118,7 @@
 		datum_owner.hack_software = TRUE
 
 	datum_owner.AddComponent(/datum/component/codeword_hearing, GLOB.syndicate_code_phrase_regex, "blue", src)
-	datum_owner.AddComponent(/datum/component/codeword_hearing, GLOB.syndicate_code_response_regex, "red", src)
+	datum_owner.AddComponent(/datum/component/codeword_hearing, GLOB.syndicate_code_response_regex, "orange", src)
 
 /datum/antagonist/malf_ai/remove_innate_effects(mob/living/mob_override)
 	. = ..()
@@ -138,7 +140,7 @@
 	var/responses = jointext(GLOB.syndicate_code_response, ", ")
 
 	antag_memory += "<b>Code Phrase</b>: [span_blue("[phrases]")]<br>"
-	antag_memory += "<b>Code Response</b>: [span_red("[responses]")]<br>"
+	antag_memory += "<b>Code Response</b>: [span_orange("[responses]")]<br>"
 
 /datum/antagonist/malf_ai/proc/add_law_zero()
 	var/mob/living/silicon/ai/malf_ai = owner.current
@@ -206,7 +208,7 @@
 
 	return data
 
-/datum/antagonist/malf_ai/ui_act(action, list/params)
+/datum/antagonist/malf_ai/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

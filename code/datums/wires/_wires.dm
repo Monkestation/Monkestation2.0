@@ -266,7 +266,7 @@
 		return TRUE
 
 	// Station blueprints do that too, but only if the wires are not randomized.
-	if(user.is_holding_item_of_type(/obj/item/areaeditor/blueprints) && !randomize)
+	if(user.is_holding_item_of_type(/obj/item/blueprints) && !randomize)
 		return TRUE
 /*
 	if(revealed_wires)
@@ -319,7 +319,7 @@
 	data["proper_name"] = (proper_name != "Unknown") ? proper_name : null
 	return data
 
-/datum/wires/ui_act(action, params)
+/datum/wires/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(. || !interactable(usr))
 		return

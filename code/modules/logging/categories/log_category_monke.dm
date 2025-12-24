@@ -12,12 +12,6 @@
 
 /datum/config_entry/flag/log_mechcomp
 
-/datum/log_category/music
-	category = LOG_CATEGORY_MUSIC
-	config_flag = /datum/config_entry/flag/log_music
-
-/datum/config_entry/flag/log_music
-
 /datum/log_category/meta
 	category = LOG_CATEGORY_META
 	config_flag = /datum/config_entry/flag/log_meta
@@ -47,3 +41,9 @@
 /datum/log_category/storyteller
 	category = LOG_CATEGORY_STORYTELLER
 	config_flag = /datum/config_entry/flag/log_storyteller
+
+/datum/log_category/hotspots
+	category = LOG_CATEGORY_HOTSPOTS
+	config_flag = /datum/config_entry/flag/log_hotspots
+
+/datum/config_entry/flag/log_hotspots

@@ -281,7 +281,7 @@
 
 /obj/item/flashlight/pen
 	name = "penlight"
-	desc = "A pen-sized light, used by medical staff. It can also be used to create a hologram to alert people of incoming medical assistance."
+	desc = "A high-powered UV penlight intended to help stave off infection in the field on serious burned patients. Probably really bad to look into. It can also be used to create a hologram to alert people of incoming medical assistance."
 	dir = EAST
 	icon_state = "penlight"
 	inhand_icon_state = ""
@@ -290,6 +290,10 @@
 	flags_1 = CONDUCT_1
 	light_outer_range = 2
 	COOLDOWN_DECLARE(holosign_cooldown)
+	/// How much sanitization to apply to the burn wound
+	var/uv_power = 1 // see: [/datum/wound/burn/flesh/proc/uv()]
+	/// Are we curring sanitizing with UV
+	var/uv_ing = FALSE
 
 /obj/item/flashlight/pen/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!COOLDOWN_FINISHED(src, holosign_cooldown))
@@ -306,18 +310,6 @@
 	new /obj/effect/temp_visual/medical_holosign(target_turf, user) //produce a holographic glow
 	COOLDOWN_START(src, holosign_cooldown, 10 SECONDS)
 	return ITEM_INTERACT_SUCCESS
-
-// see: [/datum/wound/burn/flesh/proc/uv()]
-/obj/item/flashlight/pen/paramedic
-	name = "paramedic penlight"
-	desc = "A high-powered UV penlight intended to help stave off infection in the field on serious burned patients. Probably really bad to look into."
-	icon_state = "penlight_surgical"
-	/// Our current UV cooldown
-	COOLDOWN_DECLARE(uv_cooldown)
-	/// How long between UV fryings
-	var/uv_cooldown_length = 30 SECONDS
-	/// How much sanitization to apply to the burn wound
-	var/uv_power = 1
 
 /obj/effect/temp_visual/medical_holosign
 	name = "medical holosign"
@@ -506,7 +498,8 @@
 /obj/item/flashlight/flare/proc/on_light_eater(atom/source, datum/light_eater)
 	SIGNAL_HANDLER
 	if(light_on)
-		visible_message("The enduring flickering of \the [src] refuses to fade.")
+		new trash_type(loc)
+		qdel(src)
 	return COMPONENT_BLOCK_LIGHT_EATER
 
 /obj/item/flashlight/flare/candle
@@ -624,6 +617,8 @@
 
 /obj/item/flashlight/flare/candle/process(seconds_per_tick)
 	. = ..()
+	if(QDELETED(src))
+		return
 
 	if(scented_type)
 		var/turf/my_turf = get_turf(src)

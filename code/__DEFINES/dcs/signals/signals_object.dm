@@ -9,6 +9,8 @@
 #define COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH "obj_default_unfasten_wrench"
 ///from base of /turf/proc/levelupdate(). (intact) true to hide and false to unhide
 #define COMSIG_OBJ_HIDE "obj_hide"
+/// from /obj/obj_reskin: (mob/user, skin)
+#define COMSIG_OBJ_RESKIN "obj_reskin"
 
 // /obj/machinery signals
 
@@ -61,9 +63,9 @@
 #define COMSIG_SUPERMATTER_DELAM_ALARM "sm_delam_alarm"
 
 
-// /obj/machinery/atmospherics/components/unary/cryo_cell signals
+// /obj/machinery/cryo_cell signals
 
-/// from /obj/machinery/atmospherics/components/unary/cryo_cell/set_on(bool): (on)
+/// from /obj/machinery/cryo_cell/set_on(bool): (on)
 #define COMSIG_CRYO_SET_ON "cryo_set_on"
 
 /// from /obj/proc/unfreeze()
@@ -178,11 +180,16 @@
 ///sent to targets during the process_hit proc of projectiles
 #define COMSIG_PROJECTILE_PREHIT "com_proj_prehit"
 	#define PROJECTILE_INTERRUPT_HIT (1<<0)
+///from /obj/projectile/pixel_move(): ()
+#define COMSIG_PROJECTILE_PIXEL_STEP "projectile_pixel_step"
+///sent to self during the process_hit proc of projectiles
+#define COMSIG_PROJECTILE_SELF_PREHIT "com_proj_prehit"
 ///from the base of /obj/projectile/Range(): ()
 #define COMSIG_PROJECTILE_RANGE "projectile_range"
 ///from the base of /obj/projectile/on_range(): ()
 #define COMSIG_PROJECTILE_RANGE_OUT "projectile_range_out"
-
+///from the base of /obj/projectile/process(): ()
+#define COMSIG_PROJECTILE_BEFORE_MOVE "projectile_before_move"
 ///sent to targets during the process_hit proc of projectiles
 #define COMSIG_PELLET_CLOUD_INIT "pellet_cloud_init"
 

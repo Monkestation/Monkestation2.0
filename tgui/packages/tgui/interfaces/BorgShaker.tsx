@@ -15,7 +15,6 @@ type BorgShakerContext = {
 type Reagent = {
   name: string;
   volume: number;
-  description: string;
 };
 
 enum ContainerPreference {

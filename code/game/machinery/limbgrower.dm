@@ -7,6 +7,7 @@
 	icon_state = "limbgrower_idleoff"
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/limbgrower
+	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_REQUIRES_ANCHORED
 
 	/// The category of limbs we're browing in our UI.
 	var/selected_category = SPECIES_HUMAN
@@ -149,7 +150,7 @@
 	if((user.istate & ISTATE_HARM)) //so we can hit the machine
 		return ..()
 
-/obj/machinery/limbgrower/ui_act(action, list/params)
+/obj/machinery/limbgrower/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -184,7 +185,7 @@
 				power = max(active_power_usage, (power + consumed_reagents_list[reagent_id]))
 
 			busy = TRUE
-			use_power(power)
+			use_energy(power)
 			flick("limbgrower_fill", src)
 			icon_state = "limbgrower_idleon"
 			var/temp_category = params["active_tab"]

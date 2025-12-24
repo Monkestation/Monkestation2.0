@@ -167,7 +167,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/mod/control/pre_equipped/responsory/generic
-	applied_cell = /obj/item/stock_parts/cell/bluespace
+	applied_cell = /obj/item/stock_parts/power_store/cell/bluespace
 	applied_modules = list(
 		/obj/item/mod/module/storage/large_capacity,
 		/obj/item/mod/module/welding,

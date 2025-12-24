@@ -8,6 +8,7 @@
 	show_to_ghosts = TRUE
 	suicide_cry = "FOR THE MOTHERSHIP!!" // They can't even talk but y'know
 	antag_flags = parent_type::antag_flags | FLAG_ANTAG_CAP_TEAM // monkestation addition
+	antag_count_points = 5 //half of default as they spawn as a pair
 	var/datum/team/abductor_team/team
 	var/sub_role
 	var/outfit

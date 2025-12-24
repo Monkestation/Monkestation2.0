@@ -34,7 +34,7 @@
 	SIGNAL_HANDLER
 	connected_mechpad = null
 
-/obj/machinery/computer/mechpad/LateInitialize()
+/obj/machinery/computer/mechpad/LateInitialize(mapload_arg)
 	for(var/obj/machinery/mechpad/pad in GLOB.mechpad_list)
 		if(pad == connected_mechpad)
 			continue
@@ -199,7 +199,7 @@
 			data["mechonly"] = current_pad.mech_only
 	return data
 
-/obj/machinery/computer/mechpad/ui_act(action, params)
+/obj/machinery/computer/mechpad/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

@@ -22,7 +22,6 @@
 	verb_ask = "demands"
 	verb_exclaim = "roars"
 	verb_yell = "bellows"
-	force_threshold = 10
 	pressure_resistance = 50
 	mob_size = MOB_SIZE_LARGE
 	hud_type = /datum/hud/living/blobbernaut
@@ -32,6 +31,7 @@
 /mob/living/basic/blob_minion/blobbernaut/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BLOBBERNAUT, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+	AddElement(/datum/element/damage_threshold, 10)
 
 /mob/living/basic/blob_minion/blobbernaut/death(gibbed)
 	flick("blobbernaut_death", src)
@@ -92,7 +92,7 @@
 	to_chat(src, span_infoplain("The <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font> reagent [blobstrain.shortdesc ? "[blobstrain.shortdesc]" : "[blobstrain.description]"]"))
 
 /// Set our attack damage based on blob's properties
-/mob/living/basic/blob_minion/blobbernaut/minion/on_strain_updated(mob/camera/blob/overmind, datum/blobstrain/new_strain)
+/mob/living/basic/blob_minion/blobbernaut/minion/on_strain_updated(mob/eye/blob/overmind, datum/blobstrain/new_strain)
 	if (isnull(overmind))
 		melee_damage_lower = initial(melee_damage_lower)
 		melee_damage_upper = initial(melee_damage_upper)

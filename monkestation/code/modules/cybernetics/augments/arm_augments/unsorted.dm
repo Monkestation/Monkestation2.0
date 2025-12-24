@@ -106,7 +106,7 @@
 
 	if(ishuman(target))
 		var/mob/living/carbon/human/human_target = target
-		if(human_target.check_shields(source, punch_damage, "[source]'s' [picked_hit_type]"))
+		if(human_target.check_block(source, punch_damage, "[source]'s' [picked_hit_type]"))
 			source.do_attack_animation(target)
 			playsound(living_target.loc, 'sound/weapons/punchmiss.ogg', 25, TRUE, -1)
 			log_combat(source, target, "attempted to [picked_hit_type]", "muscle implant")
@@ -271,14 +271,14 @@
 
 /obj/item/organ/internal/cyberimp/arm/cooler/on_life()
 	. = ..()
-	var/amt = BODYTEMP_NORMAL - owner.standard_body_temperature
-	if(amt == 0)
-		return
-	owner.add_homeostasis_level(type, amt, 0.25 KELVIN)
+	if(owner.bodytemperature > (owner.standard_body_temperature + 2 KELVIN))
+		owner.add_homeostasis_level(REF(src), owner.standard_body_temperature, 0.25 KELVIN)
+	else
+		owner.remove_homeostasis_level(REF(src))
 
-/obj/item/organ/internal/cyberimp/arm/cooler/Remove(mob/living/carbon/M, special)
+/obj/item/organ/internal/cyberimp/arm/cooler/Remove(mob/living/carbon/organ_owner, special)
 	. = ..()
-	owner.remove_homeostasis_level(type)
+	organ_owner?.remove_homeostasis_level(REF(src))
 
 /obj/item/organ/internal/cyberimp/arm/heater
 	name = "sub-dermal heater implant"
@@ -290,13 +290,13 @@
 
 /obj/item/organ/internal/cyberimp/arm/heater/on_life()
 	. = ..()
-	var/amt = BODYTEMP_NORMAL - owner.standard_body_temperature
-	if(amt == 0)
-		return
-	owner.add_homeostasis_level(type, amt, 0.25 KELVIN)
+	if(owner.bodytemperature < (owner.standard_body_temperature - 2 KELVIN))
+		owner.add_homeostasis_level(REF(src), owner.standard_body_temperature, 0.25 KELVIN)
+	else
+		owner.remove_homeostasis_level(REF(src))
 
-/obj/item/organ/internal/cyberimp/arm/heater/Remove(mob/living/carbon/M, special)
+/obj/item/organ/internal/cyberimp/arm/heater/Remove(mob/living/carbon/organ_owner, special)
 	. = ..()
-	owner.remove_homeostasis_level(type)
+	organ_owner.remove_homeostasis_level(REF(src))
 
 #undef DOAFTER_SOURCE_STRONGARM_INTERACTION

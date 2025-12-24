@@ -121,7 +121,7 @@
 	/// The person able to see this tear.
 	var/mob/living/carbon/seer
 
-/obj/effect/client_image_holder/phobetor/Initialize()
+/obj/effect/client_image_holder/phobetor/Initialize(mapload)
 	. = ..()
 	created_on = world.time
 
@@ -146,7 +146,7 @@
 			continue
 		if(HAS_MIND_TRAIT(nearby_viewers, TRAIT_BLOODSUCKER_ALIGNED) || HAS_MIND_TRAIT(nearby_viewers, TRAIT_OCCULTIST) || HAS_TRAIT(nearby_viewers, TRAIT_GHOST_CRITTER))
 			continue
-		if(nearby_viewers.has_unlimited_silicon_privilege || nearby_viewers.is_blind())
+		if(HAS_SILICON_ACCESS(nearby_viewers) || nearby_viewers.is_blind())
 			continue
 		return TRUE
 	return FALSE

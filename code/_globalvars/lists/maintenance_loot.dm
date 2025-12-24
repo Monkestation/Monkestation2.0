@@ -111,6 +111,7 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 		/obj/item/storage/backpack = 1,
 		/obj/item/storage/belt/fannypack = 1,
 		/obj/item/storage/wallet/random = 1,
+		/obj/item/clothing/accessory/badge = 1,
 		) = 1,
 
 	list(//construction and crafting
@@ -119,7 +120,7 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 		/obj/item/stack/rods/twentyfive = 1,
 		/obj/item/stack/sheet/iron/twenty = 1,
 		/obj/item/stack/sheet/mineral/plasma = 1,
-		/obj/item/stock_parts/cell = 1,
+		/obj/item/stock_parts/power_store/cell = 1,
 
 		//assemblies
 		/obj/item/assembly/health = 1,
@@ -143,7 +144,7 @@ monkestation end */
 		/obj/item/reagent_containers/cup/rag = 1,
 		/obj/item/reagent_containers/hypospray/medipen/pumpup = 2,
 		/obj/item/reagent_containers/syringe = 1,
-		/obj/item/stock_parts/cell/lead = 1,
+		/obj/item/stock_parts/power_store/cell/lead = 1,
 		/obj/item/storage/box/matches = 1,
 		/obj/item/storage/fancy/cigarettes/dromedaryco = 1,
 		) = 1,
@@ -210,7 +211,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 //monkestation edit start
 	list(//artifacts
 		/obj/effect/artifact_spawner = 6,
-		//Sorry Lucy, I stole your gifts. ~MCP.
+		/obj/item/a_gift/anything/wiz_name = 4,
 		/obj/item/implanter/dust = 3,
 		/obj/item/vending_refill/sovietsoda = 3,
 		/obj/item/vending_refill/donksnackvendor = 3,
@@ -227,7 +228,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/seeds/kronkus = 1,
 		/obj/item/seeds/odious_puffball = 1,
 		/obj/item/stack/sheet/mineral/wood/fifty = 1,
-		/obj/item/stock_parts/cell/high = 1,
+		/obj/item/stock_parts/power_store/cell/high = 1,
 		/obj/item/storage/box/clown = 1,
 		/obj/item/weaponcrafting/receiver = 1,
 		/obj/item/book/granter/crafting_recipe/death_sandwich = 1,
@@ -404,7 +405,6 @@ GLOBAL_LIST_INIT(oddity_loot, list(//oddity: strange or crazy items
 		*/ // MONKESTATION EDIT END
 		/obj/item/toy/cards/deck/tarot/haunted = 1,
 		/obj/item/organ/internal/butt/atomic = 1,
-		/obj/item/a_gift/anything/wiz_name = 1, //Here's your
 	))
 
 

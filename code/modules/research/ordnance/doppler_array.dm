@@ -250,9 +250,6 @@
 	SIGNAL_HANDLER
 	set_light_on(!(machine_stat & NOPOWER))
 
-/obj/machinery/doppler_array/AltClick(mob/user)
-	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
-
 /obj/machinery/doppler_array/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -292,7 +289,7 @@
 		data["records"] += list(record_data)
 	return data
 
-/obj/machinery/doppler_array/ui_act(action, list/params)
+/obj/machinery/doppler_array/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

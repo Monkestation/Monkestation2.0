@@ -83,7 +83,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 
 	var/shielding_powered = FALSE
 
-	var/obj/item/stock_parts/cell/internal_cell
+	var/obj/item/stock_parts/power_store/cell/internal_cell
 
 	var/cell_container_opened = FALSE
 
@@ -105,7 +105,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	. = ..()
 
 	if(mapload)
-		internal_cell = new /obj/item/stock_parts/cell/high(src)
+		internal_cell = new /obj/item/stock_parts/power_store/cell/high(src)
 
 	create_gas()
 
@@ -418,8 +418,8 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	qdel(src)
 
 /obj/machinery/portable_atmospherics/canister/attackby(obj/item/item, mob/user, params)
-	if(istype(item, /obj/item/stock_parts/cell))
-		var/obj/item/stock_parts/cell/active_cell = item
+	if(istype(item, /obj/item/stock_parts/power_store/cell))
+		var/obj/item/stock_parts/power_store/cell/active_cell = item
 		if(!cell_container_opened)
 			balloon_alert(user, "open the hatch first")
 			return
@@ -524,7 +524,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		var/power_factor = round(log(10, max(our_pressure - pressure_limit, 1)) + log(10, max(our_temperature - temp_limit, 1)))
 		var/power_consumed = power_factor * 250 * seconds_per_tick
 		if(powered(AREA_USAGE_EQUIP, ignore_use_power = TRUE))
-			use_power(power_consumed, AREA_USAGE_EQUIP)
+			use_energy(power_consumed, AREA_USAGE_EQUIP)
 			protected_contents = TRUE
 		else if(internal_cell?.use(power_consumed * 0.025))
 			protected_contents = TRUE
@@ -633,7 +633,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		"cellCharge" = internal_cell?.percent()
 	)
 
-/obj/machinery/portable_atmospherics/canister/ui_act(action, params)
+/obj/machinery/portable_atmospherics/canister/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

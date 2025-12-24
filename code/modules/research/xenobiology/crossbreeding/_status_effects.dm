@@ -571,11 +571,11 @@
 		return ..()
 	cooldown = max_cooldown
 	var/list/batteries = list()
-	for(var/obj/item/stock_parts/cell/C in owner.get_all_contents())
+	for(var/obj/item/stock_parts/power_store/cell/C in owner.get_all_contents())
 		if(C.charge < C.maxcharge)
 			batteries += C
 	if(batteries.len)
-		var/obj/item/stock_parts/cell/ToCharge = pick(batteries)
+		var/obj/item/stock_parts/power_store/cell/ToCharge = pick(batteries)
 		ToCharge.charge += min(ToCharge.maxcharge - ToCharge.charge, ToCharge.maxcharge/10) //10% of the cell, or to maximum.
 		to_chat(owner, span_notice("[linked_extract] discharges some energy into a device you have."))
 	return ..()
@@ -753,6 +753,7 @@
 		var/mob/living/carbon/carbon_owner = owner
 		var/mob/living/carbon/carbon_clone = clone
 		carbon_clone.real_name = carbon_owner.real_name
+		carbon_clone.copy_voice_from(carbon_owner)
 		carbon_owner.dna.copy_dna(carbon_clone.dna, COPY_DNA_SE|COPY_DNA_SPECIES)
 		carbon_clone.updateappearance(mutcolor_update = TRUE)
 
@@ -806,14 +807,16 @@
 	id = "stabilizedgreen"
 	colour = "green"
 	var/datum/dna/originalDNA
-	var/originalname
+	var/original_name
+	var/alist/original_clothing_prefs
 
 /datum/status_effect/stabilized/green/on_apply()
 	to_chat(owner, span_warning("You feel different..."))
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
 		originalDNA = new H.dna.type
-		originalname = H.real_name
+		original_name = H.real_name
+		original_clothing_prefs = H.backup_clothing_prefs()
 		H.dna.copy_dna(originalDNA, COPY_DNA_SE|COPY_DNA_SPECIES)
 		randomize_human(H)
 	return ..()
@@ -830,7 +833,8 @@
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human = owner
 		originalDNA.copy_dna(human.dna, COPY_DNA_SE|COPY_DNA_SPECIES|COPY_DNA_MUTATIONS)
-		human.real_name = originalname
+		human.real_name = original_name
+		human.restore_clothing_prefs(original_clothing_prefs)
 		human.updateappearance(mutcolor_update = TRUE)
 	originalDNA = null
 

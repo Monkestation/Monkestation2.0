@@ -86,7 +86,7 @@ Assistant
 		H.update_worn_undersuit()
 
 /proc/get_configured_colored_assistant_type()
-	return CONFIG_GET(flag/grey_assistants) ? /datum/colored_assistant/grey : /datum/colored_assistant/random
+	return CONFIG_GET(flag/grey_assistants) ? /datum/colored_assistant/grey : /datum/colored_assistant/solid
 
 /// Defines a style of jumpsuit/jumpskirt for assistants.
 /// Jumpsuit and jumpskirt lists should match in colors, as they are used interchangably.
@@ -97,10 +97,6 @@ Assistant
 /datum/colored_assistant/grey
 	jumpsuits = list(/obj/item/clothing/under/color/grey)
 	jumpskirts = list(/obj/item/clothing/under/color/jumpskirt/grey)
-
-/datum/colored_assistant/random
-	jumpsuits = list(/obj/item/clothing/under/color/random)
-	jumpskirts = list(/obj/item/clothing/under/color/jumpskirt/random)
 
 /datum/colored_assistant/christmas
 	jumpsuits = list(

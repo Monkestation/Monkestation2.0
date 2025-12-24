@@ -94,7 +94,6 @@ const CrewTableEntry = (props) => {
     burndam,
     brutedam,
     area,
-    can_track,
   } = sensor_data;
 
   return (
@@ -159,7 +158,6 @@ const CrewTableEntry = (props) => {
         <Table.Cell collapsing>
           <Button
             content="Track"
-            disabled={!can_track}
             onClick={() =>
               act('select_person', {
                 name: name,

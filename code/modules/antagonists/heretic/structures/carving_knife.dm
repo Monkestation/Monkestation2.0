@@ -108,7 +108,7 @@
 
 	target_turf.balloon_alert(user, "carving [picked_choice]...")
 	user.playsound_local(target_turf, 'sound/items/sheath.ogg', 50, TRUE)
-	if(!do_after(user, 5 SECONDS, target = target_turf))
+	if(!do_after(user, 5 SECONDS, target = target_turf, hidden = TRUE))
 		target_turf.balloon_alert(user, "interrupted!")
 		return
 
@@ -174,7 +174,7 @@
 
 /obj/structure/trap/eldritch/on_trap_entered(datum/source, atom/movable/entering_atom)
 	if(!isliving(entering_atom))
-		return ..()
+		return
 	var/mob/living/living_mob = entering_atom
 	if(WEAKREF(living_mob) == owner)
 		return

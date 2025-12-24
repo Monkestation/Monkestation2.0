@@ -21,11 +21,6 @@
 	//Used for upgrading this into R-Plating
 	var/upgradable = TRUE
 
-	/// If true, will allow tiles to replace us if the tile [wants to] [/obj/item/stack/tile/var/replace_plating].
-	/// And if our baseturfs are compatible.
-	/// See [/obj/item/stack/tile/proc/place_tile].
-	var/allow_replacement = TRUE
-
 /turf/open/floor/plating/broken_states()
 	return list("damaged1", "damaged2", "damaged4")
 
@@ -221,7 +216,6 @@
 	heat_capacity = INFINITY
 
 	baseturfs = /turf/open/floor/plating
-	allow_replacement = FALSE
 	rcd_proof = TRUE
 	upgradable = FALSE
 

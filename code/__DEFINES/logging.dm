@@ -117,6 +117,7 @@
 #define LOG_CATEGORY_TELECOMMS "telecomms"
 #define LOG_CATEGORY_TOOL "tool"
 #define LOG_CATEGORY_VIRUS "virus"
+#define LOG_CATEGORY_FLOXY "floxy"
 #define LOG_CATEGORY_MECHCOMP "mechcomp"
 #define LOG_CATEGORY_NTSL "ntsl" // MONKESTATION ADDITION: NTSL
 #define LOG_CATEGORY_CLONING "cloning"
@@ -125,6 +126,7 @@
 #define LOG_CATEGORY_ARTIFACT "artifact"
 #define LOG_CATEGORY_BLACKMARKET "blackmarket"
 #define LOG_CATEGORY_ANTAG_REP "antag-rep"
+#define LOG_CATEGORY_HOTSPOTS "hotspots"
 
 // Admin categories
 #define LOG_CATEGORY_ADMIN "admin"

@@ -31,6 +31,15 @@
 	disabled = TRUE, \
 	)
 
+/obj/item/mecha_parts/mecha_equipment/drill/do_after_checks(atom/target)
+	// Gotta be close to the target
+	if(!loc.Adjacent(target))
+		return FALSE
+	// Check if we can still use the equipment & use power for every iteration of do after
+	if(!action_checks(target))
+		return FALSE
+	return ..()
+
 /obj/item/mecha_parts/mecha_equipment/drill/action(mob/source, atom/target, list/modifiers)
 	// Check if we can even use the equipment to begin with.
 	if(!action_checks(target))
@@ -57,6 +66,9 @@
 		log_message("Started drilling [target]", LOG_MECHA)
 		// Drilling a turf is a one-and-done procedure.
 		if(isturf(target))
+			// Check if we can even use the equipment to begin with.
+			if(!action_checks(target))
+				return
 			var/turf/T = target
 			T.drill_act(src, source)
 			return ..()
@@ -179,6 +191,26 @@
 		return
 	scanning_time = world.time + equip_cooldown
 	mineral_scan_pulse(get_turf(src))
+
+/obj/item/mecha_parts/mecha_equipment/drill/makeshift
+	name = "Makeshift exosuit drill"
+	desc = "Cobbled together from likely stolen parts, this drill is nowhere near as effective as the real deal."
+	equip_cooldown = 60 //Its slow as shit
+	force = 10 //Its not very strong
+	mech_flags = EXOSUIT_MODULE_MAKESHIFT
+	drill_level = DRILL_BASIC
+	drill_delay = 15
+
+/obj/item/mecha_parts/mecha_equipment/drill/giantdrill
+	name = "Giant drill"
+	icon_state = "mecha_giantdrill"
+	desc = "what looks to be a drill atleast the size of you, tears through anything like butter."
+	equip_cooldown = 1 SECONDS // it is not slow as shit
+	force = 15 // force low or it 1 taps.
+	mech_flags = EXOSUIT_MODULE_DRILL
+	drill_level = DRILL_HARDENED
+	drill_delay = 1.2
+	toolspeed = 0.7
 
 #undef DRILL_BASIC
 #undef DRILL_HARDENED

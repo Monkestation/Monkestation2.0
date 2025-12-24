@@ -119,7 +119,7 @@ GLOBAL_LIST_INIT(scan_conditions,init_scan_conditions())
 	. = ..()
 	.["all_bands"] = GLOB.exoscanner_bands
 
-/obj/machinery/computer/exoscanner_control/ui_act(action, list/params)
+/obj/machinery/computer/exoscanner_control/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -183,7 +183,7 @@ GLOBAL_LIST_INIT(scan_conditions,init_scan_conditions())
 	..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/computer/exoscanner_control/LateInitialize()
+/obj/machinery/computer/exoscanner_control/LateInitialize(mapload_arg)
 	. = ..()
 	AddComponent(/datum/component/experiment_handler, \
 		allowed_experiments = list(/datum/experiment/exploration_scan), \
@@ -194,7 +194,7 @@ GLOBAL_LIST_INIT(scan_conditions,init_scan_conditions())
 	name = "Scanner array"
 	icon = 'icons/obj/exploration.dmi'
 	icon_state = "scanner_off"
-	desc = "Sophisticated scanning array. Easily influenced by enviroment."
+	desc = "Sophisticated scanning array. Easily influenced by environment."
 
 /obj/machinery/exoscanner/Initialize(mapload)
 	. = ..()

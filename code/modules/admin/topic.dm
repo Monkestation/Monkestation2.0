@@ -36,9 +36,6 @@
 	else if(href_list["ahelp_tickets"])
 		GLOB.ahelp_tickets.BrowseTickets(text2num(href_list["ahelp_tickets"]))
 
-	else if(href_list["stickyban"])
-		stickyban(href_list["stickyban"],href_list)
-
 	else if(href_list["getplaytimewindow"])
 		if(!check_rights(R_ADMIN))
 			return
@@ -748,12 +745,16 @@
 		usr.client.selectedPlayerCkey = target_mob.ckey
 		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/vuap_personal, target_mob)
 
-	else if(href_list["adminopendemo"])
-		usr.client << link("http://viewer.monkestation.com/?roundid=[GLOB.round_id]&password=[CONFIG_GET(string/replay_password)]#[world.time]") //opens current round at current time
-
 	else if(href_list["adminplayerobservefollow"])
 		if(!isobserver(usr) && !check_rights(R_ADMIN))
 			return
+
+		if(href_list["stealth"])
+			if(!check_rights(R_STEALTH, TRUE))
+				return
+			if (!usr.client.holder.fakekey)
+				to_chat(usr, span_warning("You have been automatically stealthed via STLTH-FLW as [span_bold(usr.ckey)]"))
+				usr.client.enable_stealth_mode(usr.ckey, "STLTH-FLW")
 
 		usr.client?.admin_follow(locate(href_list["adminplayerobservefollow"]))
 	else if(href_list["admingetmovable"])
@@ -1765,14 +1766,16 @@
 		log_admin("[user_client]'s [token_holder.in_queue] token has been rejected by [owner].")
 		token_holder.reject_antag_token()
 
+
 	else if(href_list["open_music_review"])
 		if(!check_rights(R_ADMIN))
 			return
-		var/id = href_list["open_music_review"]
-		var/datum/cassette_review/cassette_review = fetch_review(id)
-		if(!istype(cassette_review))
-			return
-		cassette_review.ui_interact(usr)
+		var/id = text2num(href_list["open_music_review"])
+		var/datum/cassette_review/cassette_review = GLOB.cassette_reviews[id]
+		if(cassette_review)
+			cassette_review.ui_interact(usr)
+		else
+			to_chat(usr, span_warning("Cassette review not found!"), type = MESSAGE_TYPE_ADMINLOG, confidential = TRUE)
 
 	else if(href_list["approve_token_event"])
 		if(!check_rights(R_ADMIN))

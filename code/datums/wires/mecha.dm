@@ -64,12 +64,37 @@
 			if(!mend)
 				mecha.toggle_overclock(FALSE)
 
-/datum/wires/mecha/ui_act(action, params)
+/datum/wires/mecha/proc/try_attack(mob/living/target)
+	var/obj/vehicle/sealed/mecha/mecha = holder
+	if(mecha.occupant_amount()) //no powergamers sorry
+		return
+	var/list/obj/item/mecha_parts/mecha_equipment/armaments = list()
+	if(!isnull(mecha.equip_by_category[MECHA_R_ARM]))
+		armaments += mecha.equip_by_category[MECHA_R_ARM]
+	if(!isnull(mecha.equip_by_category[MECHA_L_ARM]))
+		armaments += mecha.equip_by_category[MECHA_L_ARM]
+	var/obj/item/mecha_parts/mecha_equipment/armament = length(armaments) ? pick(armaments) : null //null makes a melee attack
+	if(isnull(target))
+		target = locate() in view(length(armaments) ? 5 : 1, mecha)
+		if(isnull(target)) // still no target
+			return
+
+	var/disabled = mecha.equipment_disabled
+	if(!isnull(armament) && armament.range & MECHA_RANGED)
+		mecha.equipment_disabled = FALSE // honestly just avoid this wire
+		INVOKE_ASYNC(armament, TYPE_PROC_REF(/obj/item/mecha_parts/mecha_equipment, action), mecha, target)
+		mecha.equipment_disabled = disabled
+		return
+	if(mecha.Adjacent(target) && !TIMER_COOLDOWN_RUNNING(mecha, COOLDOWN_MECHA_MELEE_ATTACK) && target.mech_melee_attack(mecha))
+		TIMER_COOLDOWN_START(mecha, COOLDOWN_MECHA_MELEE_ATTACK, mecha.melee_cooldown)
+
+/datum/wires/mecha/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
+	var/mob/user = ui.user
 	var/obj/vehicle/sealed/mecha/mecha = holder
-	if(!issilicon(usr) && mecha.internal_damage & MECHA_INT_SHORT_CIRCUIT && mecha.shock(usr))
+	if(!HAS_SILICON_ACCESS(user) && mecha.internal_damage & MECHA_INT_SHORT_CIRCUIT && mecha.shock(usr))
 		return FALSE
 
 /datum/wires/mecha/can_reveal_wires(mob/user)

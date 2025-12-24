@@ -17,7 +17,7 @@
 	do_disease_transformation(mob, new_form)
 
 /*
-/datum/symptom/transformation/deactivate(mob/living/carbon/mob)
+/datum/symptom/transformation/deactivate(mob/living/carbon/mob, datum/disease/acute/disease, safe = FALSE)
 	do_disease_transformation(mob, old_form)
 	to_chat(mob, span_notice("You feel like yourself again!"))
 */
@@ -32,7 +32,7 @@
 			return
 		ADD_TRAIT(affected_mob, TRAIT_NO_TRANSFORM, REF(src))
 		if(iscarbon(affected_mob))
-			for(var/obj/item/W in affected_mob.get_equipped_items(include_pockets = TRUE))
+			for(var/obj/item/W in affected_mob.get_equipped_items(INCLUDE_POCKETS))
 				affected_mob.dropItemToGround(W)
 			for(var/obj/item/I in affected_mob.held_items)
 				affected_mob.dropItemToGround(I)

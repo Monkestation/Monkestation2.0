@@ -49,7 +49,7 @@
 
 	return data
 
-/datum/language_menu/ui_act(action, params)
+/datum/language_menu/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

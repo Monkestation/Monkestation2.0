@@ -8,13 +8,13 @@
 	reagent_flags = OPENCONTAINER
 	fill_icon_state = "maunafilling"
 	fill_icon_thresholds = list(25)
-	var/obj/item/stock_parts/cell/cell
+	var/obj/item/stock_parts/power_store/cell/cell
 	var/open = FALSE
 	var/on = FALSE
 
 /obj/item/reagent_containers/cup/maunamug/Initialize(mapload, vol)
 	. = ..()
-	cell = new /obj/item/stock_parts/cell(src)
+	cell = new /obj/item/stock_parts/power_store/cell(src)
 
 /obj/item/reagent_containers/cup/maunamug/get_cell()
 	return cell
@@ -50,13 +50,14 @@
 	STOP_PROCESSING(SSobj, src)
 	. = ..()
 
-/obj/item/reagent_containers/cup/maunamug/CtrlClick(mob/living/user)
+/obj/item/reagent_containers/cup/maunamug/item_ctrl_click(mob/user)
 	if(on)
 		change_power_status(FALSE)
 	else
 		if(!cell || cell.charge <= 0)
 			return FALSE //No power, so don't turn on
 		change_power_status(TRUE)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/reagent_containers/cup/maunamug/proc/change_power_status(status)
 	on = status
@@ -74,7 +75,7 @@
 
 /obj/item/reagent_containers/cup/maunamug/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	add_fingerprint(user)
-	if(!istype(attacking_item, /obj/item/stock_parts/cell))
+	if(!istype(attacking_item, /obj/item/stock_parts/power_store/cell))
 		return ..()
 	if(!open)
 		to_chat(user, span_warning("The battery case must be open to insert a power cell!"))

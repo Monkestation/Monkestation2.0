@@ -30,7 +30,7 @@
 		return
 
 	for(var/mob/living/living_mob in viewers(INTERDICTION_LENS_RANGE, src))
-		if(!IS_CLOCK(living_mob) && use_power(POWER_PER_PERSON))
+		if(!IS_CLOCK(living_mob) && use_energy(POWER_PER_PERSON))
 			living_mob.apply_status_effect(STATUS_EFFECT_INTERDICTION)
 
 	for(var/obj/vehicle/sealed/mecha/mech in range(INTERDICTION_LENS_RANGE, src))
@@ -42,7 +42,7 @@
 			clock_pilot = TRUE
 			break
 
-		if(clock_pilot || !use_power(POWER_PER_PERSON))
+		if(clock_pilot || !use_energy(POWER_PER_PERSON))
 			continue
 
 		mech.emp_act(EMP_HEAVY)
@@ -64,7 +64,7 @@
 
 /obj/structure/destructible/clockwork/gear_base/powered/interdiction_lens/free
 
-/obj/structure/destructible/clockwork/gear_base/powered/interdiction_lens/free/use_power(amount)
+/obj/structure/destructible/clockwork/gear_base/powered/interdiction_lens/free/use_energy(amount)
 	return TRUE
 
 //Dampening field

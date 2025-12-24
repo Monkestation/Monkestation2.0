@@ -1082,11 +1082,14 @@
 	return TRUE
 
 /obj/machinery/vending/interact(mob/user)
+	if (!Adjacent(user))
+		return ..()
+
 	if(seconds_electrified && !(machine_stat & NOPOWER))
 		if(shock(user, 100))
 			return
 
-	if(tilted && !user.buckled && !isAdminGhostAI(user))
+	if(tilted && !user.buckled)
 		to_chat(user, span_notice("You begin righting [src]."))
 		if(do_after(user, 5 SECONDS, target=src))
 			untilt(user)
@@ -1119,15 +1122,15 @@
 
 	var/list/categories = list()
 
-	data["product_records"] = collect_records_for_static_data(product_records, categories)
-	data["coin_records"] = collect_records_for_static_data(coin_records, categories, premium = TRUE)
-	data["hidden_records"] = collect_records_for_static_data(hidden_records, categories, premium = TRUE)
+	data["product_records"] = collect_records_for_static_data(product_records, categories, user)
+	data["coin_records"] = collect_records_for_static_data(coin_records, categories, user, premium = TRUE)
+	data["hidden_records"] = collect_records_for_static_data(hidden_records, categories, user, premium = TRUE)
 
 	data["categories"] = categories
 
 	return data
 
-/obj/machinery/vending/proc/collect_records_for_static_data(list/records, list/categories, premium)
+/obj/machinery/vending/proc/collect_records_for_static_data(list/records, list/categories, mob/user, premium)
 	var/static/list/default_category = list(
 		"name" = "Products",
 		"icon" = "cart-shopping",
@@ -1136,6 +1139,8 @@
 	var/list/out_records = list()
 
 	for (var/datum/data/vending_product/record as anything in records)
+		if(!issilicon(user) && !allow_purchase(user, record.product_path))
+			continue
 		var/list/static_record = list(
 			path = replacetext(replacetext("[record.product_path]", "/obj/item/", ""), "/", "-"),
 			name = record.name,
@@ -1199,7 +1204,7 @@
 
 	.["extended_inventory"] = extended_inventory
 
-/obj/machinery/vending/ui_act(action, params)
+/obj/machinery/vending/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -1208,6 +1213,10 @@
 			. = vend(params)
 		if("select_colors")
 			. = select_colors(params)
+
+/// Check if the list of given access is allowed to purchase the given product
+/obj/machinery/vending/proc/allow_purchase(mob/living/user, product_path)
+	return TRUE
 
 /obj/machinery/vending/proc/can_vend(user, silent=FALSE)
 	. = FALSE
@@ -1338,7 +1347,7 @@
 		purchase_message_cooldown = world.time + 5 SECONDS
 		//This is not the best practice, but it's safe enough here since the chances of two people using a machine with the same ref in 5 seconds is fuck low
 		last_shopper = REF(usr)
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 	if(icon_vend) //Show the vending animation if needed
 		flick(icon_vend,src)
 	playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
@@ -1571,7 +1580,7 @@
 			)
 			.["vending_machine_input"] += list(data)
 
-/obj/machinery/vending/custom/ui_act(action, params)
+/obj/machinery/vending/custom/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -1657,7 +1666,7 @@
 			last_shopper = REF(usr)
 	/// Remove the item
 	loaded_items--
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 	vending_machine_input[choice] = max(vending_machine_input[choice] - 1, 0)
 	if(user.CanReach(src) && user.put_in_hands(dispensed_item))
 		to_chat(user, span_notice("You take [dispensed_item.name] out of the slot."))

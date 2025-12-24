@@ -163,6 +163,9 @@
 	))
 
 /obj/item/circuit_component/bci_core/input_received(datum/port/input/port)
+	if (!COMPONENT_TRIGGERED_BY(send_message_signal, port))
+		return
+
 	var/sent_message = trim(message.value)
 	if (!sent_message)
 		return
@@ -267,7 +270,7 @@
 	return ..()
 
 /datum/action/innate/bci_charge_action/Trigger(trigger_flags)
-	var/obj/item/stock_parts/cell/cell = circuit_component.parent.cell
+	var/obj/item/stock_parts/power_store/cell/cell = circuit_component.parent.cell
 
 	if (isnull(cell))
 		to_chat(owner, span_boldwarning("[circuit_component.parent] has no power cell."))
@@ -280,7 +283,7 @@
 
 /datum/action/innate/bci_charge_action/update_button_status(atom/movable/screen/movable/action_button/button, force = FALSE)
 	. = ..()
-	var/obj/item/stock_parts/cell/cell = circuit_component.parent.cell
+	var/obj/item/stock_parts/power_store/cell/cell = circuit_component.parent.cell
 	button.maptext = cell ? MAPTEXT("[cell.percent()]%") : ""
 
 /obj/machinery/bci_implanter

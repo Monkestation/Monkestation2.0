@@ -510,7 +510,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	party_debris = null
 	return ..()
 
-/obj/effect/landmark/start/hangover/LateInitialize()
+/obj/effect/landmark/start/hangover/LateInitialize(mapload_arg)
 	. = ..()
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_BIRTHDAY))
 		party_debris += new /obj/effect/decal/cleanable/confetti(get_turf(src)) //a birthday celebration can also be a hangover
@@ -564,21 +564,14 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 		return
 
 /obj/effect/landmark/start/hangover/JoinPlayerHere(mob/joining_mob, buckle)
-	. = ..()
-	make_hungover(joining_mob)
-
-/obj/effect/landmark/start/hangover/closet
-	name = "hangover spawn closet"
-	icon_state = "hangover_spawn_closet"
-
-/obj/effect/landmark/start/hangover/closet/JoinPlayerHere(mob/joining_mob, buckle)
-	make_hungover(joining_mob)
+	var/mob/created_joining_mob = ..()
+	make_hungover(created_joining_mob)
 	for(var/obj/structure/closet/closet in contents)
 		if(closet.opened)
 			continue
-		joining_mob.forceMove(closet)
-		return
-	return ..() //Call parent as fallback
+		created_joining_mob.forceMove(closet)
+		return created_joining_mob
+	return created_joining_mob
 
 //Landmark that creates destinations for the navigate verb to path to
 /obj/effect/landmark/navigate_destination
@@ -590,7 +583,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	. = ..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/effect/landmark/navigate_destination/LateInitialize()
+/obj/effect/landmark/navigate_destination/LateInitialize(mapload_arg)
 	. = ..()
 	if(!location)
 		var/obj/machinery/door/airlock/A = locate(/obj/machinery/door/airlock) in loc
@@ -683,6 +676,9 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 
 /obj/effect/landmark/navigate_destination/minisat_access_chapel_library
 	location = "Chapel and Library MiniSat Access"
+
+/obj/effect/landmark/navigate_destination/garden
+	location = "Public Garden"
 
 //Service
 /obj/effect/landmark/navigate_destination/kitchen

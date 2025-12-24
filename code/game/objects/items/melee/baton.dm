@@ -64,7 +64,7 @@
 	. = ..()
 	// Adding an extra break for the sake of presentation
 	if(stamina_damage != 0)
-		offensive_notes = "It takes [span_warning("[CEILING(100 / stamina_damage, 1)] stunning hit\s")] to stun an enemy."
+		offensive_notes = "It takes [span_warning("[CEILING(STAMINA_MAX  / stamina_damage, 1)] stunning hit\s")] to stun an enemy."
 
 	register_item_context()
 
@@ -171,13 +171,10 @@
 		target.visible_message(desc["visible"], desc["local"])
 
 /obj/item/melee/baton/proc/check_parried(mob/living/carbon/human/human_target, mob/living/user)
-	if(!ishuman(human_target))
-		return
-	if (human_target.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK))
+	if (human_target.check_block(src, 0, "[user]'s [name]", MELEE_ATTACK))
 		playsound(human_target, 'sound/weapons/genhit.ogg', 50, TRUE)
 		return TRUE
-	if(check_martial_counter(human_target, user))
-		return TRUE
+	return FALSE
 
 /obj/item/melee/baton/proc/finalize_baton_attack(mob/living/target, mob/living/user, modifiers, in_attack_chain = TRUE)
 	if(!in_attack_chain)
@@ -288,7 +285,7 @@
 		user.apply_damage(stamina_damage, STAMINA)
 		additional_effects_non_cyborg(user, user) // user is the target here
 
-	user.apply_damage(2*force, BRUTE, BODY_ZONE_HEAD)
+	user.apply_damage(2*force, BRUTE, BODY_ZONE_HEAD, attacking_item = src)
 
 	log_combat(user, user, "accidentally stun attacked [user.p_them()]self due to their clumsiness", src)
 
@@ -443,9 +440,9 @@
 	var/self_knockdown_time = 1 SECONDS
 
 	var/throw_stun_chance = 35
-	var/obj/item/stock_parts/cell/cell
+	var/obj/item/stock_parts/power_store/cell/cell
 	var/preload_cell_type //if not empty the baton starts with this type of cell
-	var/cell_hit_cost = 1000
+	var/cell_hit_cost = STANDARD_CELL_CHARGE
 	var/can_remove_cell = TRUE
 	var/convertible = TRUE //if it can be converted with a conversion kit
 
@@ -457,7 +454,7 @@
 /obj/item/melee/baton/security/Initialize(mapload)
 	. = ..()
 	if(preload_cell_type)
-		if(!ispath(preload_cell_type, /obj/item/stock_parts/cell))
+		if(!ispath(preload_cell_type, /obj/item/stock_parts/power_store/cell))
 			log_mapping("[src] at [AREACOORD(src)] had an invalid preload_cell_type: [preload_cell_type].")
 		else
 			cell = new preload_cell_type(src)
@@ -561,8 +558,8 @@
 	return TRUE
 
 /obj/item/melee/baton/security/attackby(obj/item/item, mob/user, params)
-	if(istype(item, /obj/item/stock_parts/cell))
-		var/obj/item/stock_parts/cell/active_cell = item
+	if(istype(item, /obj/item/stock_parts/power_store/cell))
+		var/obj/item/stock_parts/power_store/cell/active_cell = item
 		if(cell)
 			to_chat(user, span_warning("[src] already has a cell!"))
 		else
@@ -665,7 +662,7 @@
 
 /obj/item/melee/baton/security/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
-	if(active && prob(throw_stun_chance) && isliving(hit_atom))
+	if(!. && active && prob(throw_stun_chance) && isliving(hit_atom))
 		finalize_baton_attack(hit_atom, thrownby?.resolve(), in_attack_chain = FALSE)
 
 /obj/item/melee/baton/security/emp_act(severity)
@@ -689,7 +686,7 @@
 	update_appearance()
 
 /obj/item/melee/baton/security/loaded //this one starts with a cell pre-installed.
-	preload_cell_type = /obj/item/stock_parts/cell/high
+	preload_cell_type = /obj/item/stock_parts/power_store/cell/high
 
 //Makeshift stun baton. Replacement for stun gloves.
 /obj/item/melee/baton/security/cattleprod
@@ -787,7 +784,7 @@
 		finalize_baton_attack(hit_atom, thrown_by, in_attack_chain = FALSE)
 
 /obj/item/melee/baton/security/boomerang/loaded //Same as above, comes with a cell.
-	preload_cell_type = /obj/item/stock_parts/cell/high
+	preload_cell_type = /obj/item/stock_parts/power_store/cell/high
 
 /obj/item/melee/baton/security/cattleprod/teleprod
 	name = "teleprod"

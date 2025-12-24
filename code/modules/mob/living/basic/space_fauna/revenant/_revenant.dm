@@ -95,7 +95,7 @@
 /mob/living/basic/revenant/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/simple_flying)
-	add_traits(list(TRAIT_SPACEWALK, TRAIT_SIXTHSENSE, TRAIT_FREE_HYPERSPACE_MOVEMENT), INNATE_TRAIT)
+	add_traits(list(TRAIT_SPACEWALK, TRAIT_SIXTHSENSE, TRAIT_FREE_HYPERSPACE_MOVEMENT, TRAIT_CAN_HEAR_MUSIC), INNATE_TRAIT)
 
 	for(var/ability in abilities)
 		var/datum/action/spell = new ability(src)
@@ -152,6 +152,10 @@
 	update_appearance(UPDATE_ICON)
 	update_health_hud()
 
+/mob/living/basic/revenant/AltClickOn(atom/target)
+	if(CAN_I_SEE(target))
+		client.loot_panel.open(get_turf(target))
+
 /mob/living/basic/revenant/get_status_tab_items()
 	. = ..()
 	. += "Current Essence: [essence >= max_essence ? essence : "[essence] / [max_essence]"] E"
@@ -194,7 +198,7 @@
 		ShiftClickOn(A)
 		return
 	if(LAZYACCESS(modifiers, ALT_CLICK))
-		A.AltClick(src)
+		base_click_alt(A)
 		return
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		ranged_secondary_attack(A, modifiers)

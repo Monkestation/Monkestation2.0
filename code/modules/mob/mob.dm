@@ -766,12 +766,12 @@
 	if(ismecha(loc))
 		return
 
-	if(incapacitated())
+	if(incapacitated(IGNORE_SOFTCRIT))
 		return
 
-	var/obj/item/I = get_active_held_item()
-	if(I)
-		I.attack_self(src)
+	var/obj/item/held_item = get_active_held_item()
+	if(held_item)
+		held_item.attack_self(src)
 		update_held_items()
 		return
 
@@ -842,6 +842,7 @@
 	set hidden = TRUE
 	set category = null
 	return
+
 /**
  * Topic call back for any mob
  *
@@ -854,20 +855,6 @@
 		var/t1 = text("window=[href_list["mach_close"]]")
 		unset_machine()
 		src << browse(null, t1)
-
-/**
- * Controls if a mouse drop succeeds (return null if it doesnt)
- */
-/mob/MouseDrop(mob/M)
-	. = ..()
-	if(M != usr)
-		return
-	if(usr == src)
-		return
-	if(!Adjacent(usr))
-		return
-	if(isAI(M))
-		return
 
 ///Is the mob muzzled (default false)
 /mob/proc/is_muzzled()
@@ -1063,6 +1050,10 @@
 		antimagic_color = LIGHT_COLOR_DARK_BLUE
 		playsound(src, 'sound/magic/magic_block_mind.ogg', 50, TRUE)
 
+	if(ishuman(src))
+		var/mob/living/carbon/human/human = src
+		human.apply_height_filters(antimagic_effect)
+
 	mob_light(range = 2, color = antimagic_color, duration = 5 SECONDS)
 	add_overlay(antimagic_effect)
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, cut_overlay), antimagic_effect), 5 SECONDS)
@@ -1135,6 +1126,13 @@
  * * FORBID_TELEKINESIS_REACH - If telekinesis is forbidden to perform action from a distance (ex. canisters are blacklisted from telekinesis manipulation)
  * * ALLOW_SILICON_REACH - If silicons are allowed to perform action from a distance (silicons can operate airlocks from far away)
  * * ALLOW_RESTING - If resting on the floor is allowed to perform action ()
+ * * ALLOW_VENTCRAWL - Mobs with ventcrawl traits can alt-click this to vent
+ * * BYPASS_ADJACENCY - The target does not have to be adjacent
+ * * SILENT_ADJACENCY - Adjacency is required but errors are not printed
+* * NOT_INSIDE_TARGET - The target maybe adjacent but the mob should not be inside the target
+ *
+ * silence_adjacency: Sometimes we want to use this proc to check interaction without allowing it to throw errors for base case adjacency
+ * Alt click uses this, as otherwise you can detect what is interactable from a distance via the error message
 **/
 /mob/proc/can_perform_action(atom/movable/target, action_bitflags)
 	return
@@ -1625,9 +1623,10 @@
 	var/list/data = list()
 	var/list/memories = list()
 
-	for(var/memory_key in user?.mind.memories)
-		var/datum/memory/memory = user.mind.memories[memory_key]
-		memories += list(list("name" = memory.name, "quality" = memory.story_value))
+	for(var/memory_key, memory_value in user?.mind.memories)
+		var/datum/memory/memory = memory_value
+		if(memory)
+			memories += list(list("name" = memory.name, "quality" = memory.story_value))
 
 	data["memories"] = memories
 	return data

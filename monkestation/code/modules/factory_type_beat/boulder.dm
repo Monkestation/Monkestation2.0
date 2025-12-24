@@ -80,6 +80,8 @@
 		return
 	if(HAS_TRAIT(user, TRAIT_BOULDER_BREAKER))
 		manual_process(null, user, INATE_BOULDER_SPEED_MULTIPLIER)
+		for(var/obj/item/boulder/rock in view(1, get_turf(user)))
+			rock.manual_process(null, user, INATE_BOULDER_SPEED_MULTIPLIER)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/boulder/CanAllowThrough(atom/movable/mover, border_dir)
@@ -91,9 +93,13 @@
 	. = ..()
 	if(HAS_TRAIT(user, TRAIT_BOULDER_BREAKER) || HAS_TRAIT(weapon, TRAIT_BOULDER_BREAKER))
 		manual_process(weapon, user, INATE_BOULDER_SPEED_MULTIPLIER)
+		for(var/obj/item/boulder/rock in view(1, get_turf(user)))
+			rock.manual_process(weapon, user, INATE_BOULDER_SPEED_MULTIPLIER)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(weapon.tool_behaviour == TOOL_MINING)
 		manual_process(weapon, user)
+		for(var/obj/item/boulder/rock in view(1, get_turf(user)))
+			rock.manual_process(weapon, user)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	return ..()
 

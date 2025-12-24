@@ -52,7 +52,7 @@
 		/obj/item/flatpacked_machine/airlock_kit_manual,
 		/obj/item/wallframe/apc,
 		/obj/item/electronics/apc,
-		/obj/item/stock_parts/cell/high,
+		/obj/item/stock_parts/power_store/cell/high,
 	)
 	crate_name = "colonization kit crate"
 
@@ -119,7 +119,7 @@
 	new /obj/item/flatpacked_machine/airlock_kit_manual(src)
 	new /obj/item/wallframe/apc(src)
 	new /obj/item/electronics/apc(src)
-	new /obj/item/stock_parts/cell/high(src)
+	new /obj/item/stock_parts/power_store/cell/high(src)
 	new /obj/item/wallframe/frontier_medstation(src)
 	new /obj/item/screwdriver/omni_drill(src)
 	new /obj/item/multitool(src)

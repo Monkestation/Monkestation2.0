@@ -60,6 +60,8 @@
 /mob/living/carbon/human/Destroy()
 	QDEL_NULL(physiology)
 	GLOB.human_list -= src
+	GLOB.suit_sensors_list -= src
+	GLOB.nanite_sensors_list -= src
 
 	if (mob_mood)
 		QDEL_NULL(mob_mood)
@@ -406,6 +408,8 @@
 				if(WANTED_SUSPECT)
 					threatcount += 2
 				if(WANTED_PAROLE)
+					threatcount += 2
+				if(WANTED_SEARCH)
 					threatcount += 2
 
 	if(istype(head, /obj/item/clothing/head/hats/tophat/syndicate))
@@ -965,6 +969,12 @@
 
 /mob/living/carbon/human/species/oozeling
 	race = /datum/species/oozeling
+
+/mob/living/carbon/human/species/oozeling/Initialize(mapload)
+	. = ..()
+	// stupid snowflake code to ensure oozelings will always start at least fed, so they don't have to IMMEDIATELY eat to avoid melting
+	if(nutrition < NUTRITION_LEVEL_FED)
+		set_nutrition(rand(NUTRITION_LEVEL_FED, NUTRITION_LEVEL_START_MAX))
 
 /mob/living/carbon/human/species/oozeling/stargazer
 	race = /datum/species/oozeling/stargazer

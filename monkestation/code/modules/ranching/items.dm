@@ -25,10 +25,10 @@
 
 	chicken_scan(user, scanned_chicken)
 
-/obj/item/chicken_scanner/AltClick(mob/user)
-	. = ..()
+/obj/item/chicken_scanner/click_alt(mob/living/user)
 	scan_mode = !scan_mode
 	to_chat(user, "<span class='info'>Switched to Stat Mode</span>")
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/chicken_scanner/proc/chicken_scan(mob/living/carbon/human/user, mob/living/basic/chicken/scanned_chicken)
 	if(scan_mode)
@@ -121,7 +121,10 @@
 	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/chicken_scanner
-	category = list("initial","Tools","Tool Designs")
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_BOTANY,
+	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
 /obj/machinery/feed_machine
@@ -132,8 +135,8 @@
 	icon_state = "feed_producer"
 
 	use_power = IDLE_POWER_USE
-	idle_power_usage = 5
-	active_power_usage = 100
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.05
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.1
 	max_integrity = 300
 
 	circuit = /obj/item/circuitboard/machine/feed_machine
@@ -177,15 +180,14 @@
 			return
 		if(beaker)
 			beaker.forceMove(drop_location())
-			if(user && Adjacent(user) && !issiliconoradminghost(user))
+			if(user && Adjacent(user) && !HAS_SILICON_ACCESS(user))
 				user.put_in_hands(beaker)
 		beaker = attacked_reagent_container
 		return
 
-/obj/machinery/feed_machine/AltClick(mob/user)
-	. = ..()
+/obj/machinery/feed_machine/click_alt(mob/living/user)
 	if(length(held_foods) == 0)
-		return
+		return CLICK_ACTION_BLOCKING
 	var/obj/item/chicken_feed/produced_feed = new(src.loc)
 	produced_feed.placements_left *= food_inserted
 
@@ -203,13 +205,14 @@
 
 		beaker.forceMove(drop_location())
 		beaker.reagents.remove_all(1000)
-		if(user && Adjacent(user) && !issiliconoradminghost(user))
+		if(user && Adjacent(user) && !HAS_SILICON_ACCESS(user))
 			user.put_in_hands(beaker)
 		beaker = null
 
 	first_food = null
 	held_foods = list()
 	food_inserted = 0
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/chicken_feed
 	name = "chicken feed"
@@ -290,8 +293,8 @@
 	name = "Incubator"
 	desc = "For most eggs this can force them to hatch, that is unless a fresh mutation."
 	use_power = IDLE_POWER_USE
-	idle_power_usage = 2
-	active_power_usage = 500
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.02
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.5
 
 	max_integrity = 300
 	circuit = /obj/item/circuitboard/machine/egg_incubator

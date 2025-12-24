@@ -29,8 +29,8 @@
 		var/light_amount = min(1, mob_turf.get_lumcount()) - 0.5
 		if(light_amount > SHADOW_SPECIES_DIM_LIGHT)
 			return FALSE
-  return TRUE
-  
+	return TRUE
+
 /datum/symptom/darkness/proc/Heal(mob/living/carbon/victim, actual_power)
 	var/old_health = victim.health
 	victim.heal_overall_damage(brute = actual_power * 2, burn = actual_power, required_bodytype = BODYTYPE_ORGANIC)

@@ -1,12 +1,13 @@
 /datum/action/changeling/darkness_adaptation
 	name = "Darkness Adaptation"
 	desc = "Our skin pigmentation and eyes rapidly change to suit the darkness. Requires 10 available chemicals and slightly slows down chemical regeneration." // monkestation edit
-	helptext = "Makes us translucent. Works best in dark enviroments and garments. Makes our eyes more sensitive to flashes." // monkestation edit
+	helptext = "Makes us translucent. Works best in dark environments and garments. Makes our eyes more sensitive to flashes." // monkestation edit
 	button_icon_state = "darkness_adaptation"
 	dna_cost = 2
 	chemical_cost = 10
 
 	req_human = TRUE
+	weird = TRUE
 	//// is ability active (we are invisible)?
 	var/is_active = FALSE
 	/// How much we slow chemical regeneration while active, in chems per second
