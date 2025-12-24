@@ -8,22 +8,15 @@
 
 @use '~tgui-core/styles';
 
-@use '~tgui/styles/colors.scss';
-@use '~tgui/styles/base.scss' with (
-  $color-bg: #202020,
-  $color-bg-section: color.adjust(#202020, $lightness: -5%),
-  $color-bg-grad-spread: 0%
-);
-
 // Core styles
 @include meta.load-css('~tgui/styles/reset.scss');
 
 // Atomic classes
-@include meta.load-css('~tgui/styles/atomic/candystripe.scss');
-@include meta.load-css('~tgui/styles/atomic/color.scss');
-@include meta.load-css('~tgui/styles/atomic/debug-layout.scss');
-@include meta.load-css('~tgui/styles/atomic/outline.scss');
-@include meta.load-css('~tgui/styles/atomic/text.scss');
+@include meta.load-css('~tgui-core/styles/atomic/candystripe.scss');
+@include meta.load-css('~tgui-core/styles/atomic/color.scss');
+@include meta.load-css('~tgui-core/styles/atomic/debug-layout.scss');
+@include meta.load-css('~tgui-core/styles/atomic/outline.scss');
+@include meta.load-css('~tgui-core/styles/atomic/text.scss');
 
 // Components specific to tgui-panel
 @include meta.load-css('./components/Chat.scss');
@@ -32,7 +25,6 @@
 
 // Layouts
 @include meta.load-css('~tgui/styles/layouts/Layout.scss');
-// @include meta.load-css('~tgui/styles/layouts/TitleBar.scss');
 @include meta.load-css('~tgui/styles/layouts/Window.scss');
 
 // tgchat styles

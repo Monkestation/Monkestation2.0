@@ -10,6 +10,7 @@
 
 // Core styles
 @include meta.load-css('./reset.scss');
+@include meta.load-css('./css-variables.scss');
 
 // Tgui core bulk imports
 @include meta.load-css('~tgui-core/styles/all-atomic.scss');

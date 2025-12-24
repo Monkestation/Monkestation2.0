@@ -1,11 +1,10 @@
-import './styles/main.scss';
+import { createRoot, type Root } from 'react-dom/client';
 
 import { TguiSay } from './TguiSay';
-import { createRoot, Root } from 'react-dom/client';
 
 let reactRoot: Root | null = null;
 
-document.onreadystatechange = function () {
+document.onreadystatechange = () => {
   if (document.readyState !== 'complete') return;
 
   if (!reactRoot) {
@@ -13,5 +12,5 @@ document.onreadystatechange = function () {
     reactRoot = createRoot(root!);
   }
 
-  reactRoot?.render(<TguiSay />);
+  reactRoot.render(<TguiSay />);
 };

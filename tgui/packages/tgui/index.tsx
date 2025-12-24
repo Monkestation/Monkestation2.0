@@ -6,7 +6,6 @@
 
 // Themes
 import './styles/main.scss';
-import './styles/themes/cardtable.scss';
 // MONKESTATION ADDITION START
 import './styles/themes/clockwork.scss';
 import './styles/themes/admintickets.scss';

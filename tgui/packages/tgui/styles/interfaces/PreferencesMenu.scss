@@ -1,7 +1,6 @@
 @use 'sass:color';
 @use 'sass:map';
-@use '../components/Button.scss';
-@use '../colors.scss';
+@use '../legacy-colors.scss' as colors;
 
 $department_map: (
   'Assistant': colors.$grey,
