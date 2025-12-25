@@ -104,7 +104,7 @@ GLOBAL_PROTECT(href_token)
 		message_admins("[key_name_admin(usr)][msg]")
 		log_admin("[key_name(usr)][msg]")
 		return QDEL_HINT_LETMELIVE
-	qdel(ranks)
+	QDEL_NULL(ranks)
 	QDEL_NULL(path_debug)
 	marked_datum = null
 	filteriffic = null
