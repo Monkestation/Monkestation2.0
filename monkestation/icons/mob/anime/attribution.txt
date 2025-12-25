@@ -1,2 +1,5 @@
 Halo sprites - https://github.com/Citadel-Station-13/Citadel-Station-13-RP/blob/master/icons/clothing/accessories/halo_projector.dmi
 Golden ring, Neon ring and Grease monke halo - https://github.com/LettuceWarlock
+Double cat tail - https://github.com/Citadel-Station-13/Citadel-Station-13/pull/11219
+Big cat tail - https://github.com/Skyrat-SS13/Skyrat13/pull/618
+Leopard tail - https://github.com/NovaSector/NovaSector/commit/e353fe79bdf0406cd77bc648f7b9b39bf0374f42

@@ -525,3 +525,79 @@
   - qol: Prisoner body bags can now be folded up
   - bugfix: Syndicate prisoner body bags will now use the proper sprite
   - code_imp: Assault operatives now have a properly named datum file.
+2025-12-24:
+  Absolucy:
+  - balance: From the winter equinox to the day after Christmas, christmas presents
+      are more likely to have something fun, and not like, a floor tile or something.
+  Absolucy, SirNightKnight:
+  - image: 'The ThinkTronic MechComp Dispenser now has its own unique sprite!
+
+      /:cl
+
+      ## Pre-Merge Checklist
+
+      - [x] You tested this on a local server.
+
+      - [x] This code did not runtime during testing.
+
+      - [x] You documented all of your changes.'
+  Chelxox:
+  - rscadd: 'Added three new felinid tails: leopard, double and big.'
+  Gboster-0:
+  - bugfix: macrobombs are no longer instant, this was broken for 3 months.
+  Infernal-0:
+  - qol: The CMO's unique rescue MODsuit now comes with a jetpack, patient transport,
+      defibrillator and thread ripper module.
+  JupiterJaeden:
+  - bugfix: Vampires escape on shuttle objective now actually calculates correctly
+      instead of always greentexting (oops).
+  - bugfix: Vampires passive blood drain and health regeneration is now correctly
+      adjusted for seconds per tick, which should make it more consistent across rounds.
+  - bugfix: Vampires can now no longer go below 0 blood when dying from frenzy (or
+      ever).
+  - bugfix: "Vampires \u2018constant blood cost\u2019 for certain abilities now actually\
+      \ works and drains blood constantly."
+  - bugfix: Fixes an exploit with fortitude that would allow for infinitely reducing
+      your brute & stamina modifiers. Credit to Ice-Type for bringing it to my attention.
+  - bugfix: Fixes a bug with brawn that would cause your click intercept to be set
+      for the full duration of the power cooldown when you used it to snap cuffs,
+      leaving you unable to click on anything for a while.
+  - bugfix: "Brawn now correctly allows you to snap handcuffs and knock the person\
+      \ grabbing you down at the same time, when it\u2019s supposed to."
+  - bugfix: Fixes a bug where vampires would not enter torpor when they should while
+      teleporting to their coffin using vanishing act if the coffin was already closed.
+  - balance: Vampires feed a little slower when using the giant plastic straw than
+      before.
+  - balance: "Nosferatu vampires now actually have an obvious tell when they are examined,\
+      \ as their clan text implies: \u201CThey appear slouched over and grotesque\
+      \ - a twisted abomination, like some shameless creature of the night\u2026\u201D"
+  - balance: Vampires have had their passive health regen per level rate increase
+      nerfed (the base regen + regen from current blood level is unchanged).
+  - balance: 'Fortitude has been substantially changed: It is now once again unlimited
+      duration, but no longer provides total stun immunity past level 4 (instead providing
+      additional baton resistance at levels 4+), and has also had its brute and stamina
+      resistance reduced: it starts at 20% rather than 40%, increases 5% per level
+      instead of 10%, and is capped at 50% rather than 70%.'
+  - balance: The (now functional) constant blood cost of fortitude has been increased
+      from 0.2 to 3, but the activation cost has been dropped to 10 from 30.
+  - balance: Brawn no longer allows you to break legcuffs at any level. Handcuff breaking
+      is still at level 2, lockers at level 3, and silver cuffs at level 5.
+  - balance: Brawn now always knock grabbers down, break out of closets, and snap
+      restraints in the same use (assuming you have a high enough level for each feature).
+      Which should make it more useful for escaping arrests or lockering.
+  - balance: Mesmerize no longer mutes the target for the full duration regardless
+      of if the glare succeeds or fails - but will still mute for the duration of
+      the glare itself.
+  - balance: "Tremere\u2019s dominate ability will now remove mindshields when used\
+      \ to vassalize someone."
+  - bugfix: Evil clones once again have glowing red eyes like they are supposed to.
+  SirNightKnight:
+  - sound: gave the salute emote a sound effect.
+  notghosti:
+  - balance: Regen coma now has a max strength of 6.
+  - balance: Regen com now gives no crit damage at 4.
+  - balance: Regeneration Coma takes 20 seconds to un-coma someone once ending.
+  - balance: Regeneration coma now suffers from a 40 cooldown after proccing.
+  - balance: This is signified by a yawn
+  - code_imp: Some touchups to the debug disease and it's autoinjector. Non influence
+      on game play
