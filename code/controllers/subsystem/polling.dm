@@ -385,9 +385,7 @@ SUBSYSTEM_DEF(polling)
 	if(!(GLOB.ghost_role_flags & GHOSTROLE_STATION_SENTIENCE))
 		return candidates
 
-	for(var/mob/ghost in GLOB.player_list)
-		if(!isobserver(ghost))
-			continue
+	for(var/mob/dead/observer/ghost in GLOB.player_list)
 		if(is_mentor(ghost)) //REMEMBER TO UNCOMMENT THIS
 			candidates += ghost
 
