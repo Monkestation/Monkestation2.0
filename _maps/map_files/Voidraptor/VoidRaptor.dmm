@@ -2120,6 +2120,7 @@
 /obj/structure/reflector/single/anchored{
 	dir = 5
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/supermatter/room)
 "aEE" = (
@@ -11229,6 +11230,7 @@
 /obj/structure/reflector/single/anchored{
 	dir = 9
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/supermatter/room)
 "dqJ" = (
@@ -21096,6 +21098,7 @@
 /area/station/maintenance/department/medical/morgue)
 "gcY" = (
 /obj/structure/girder,
+/obj/structure/cable,
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/supermatter/room)
 "gdk" = (
