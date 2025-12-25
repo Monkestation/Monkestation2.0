@@ -318,6 +318,20 @@
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
+
+/obj/item/clothing/under/rank/prisoner/syndicate
+	name = "syndicate prisoner jumpsuit"
+	desc = "A crimson red jumpsuit worn by syndicate captives. Its sensors have been shorted out."
+	greyscale_colors = "#992300"
+	has_sensor = FALSE
+
+/obj/item/clothing/under/rank/prisoner/skirt/syndicate
+	name = "syndicate prisoner jumpskirt"
+	desc = "A crimson red jumpskirt worn by syndicate captives. Its sensors have been shorted out."
+	greyscale_colors = "#992300"
+	has_sensor = FALSE
+	supports_variations_flags = NONE
+
 /*
  *Spacepol
  */
