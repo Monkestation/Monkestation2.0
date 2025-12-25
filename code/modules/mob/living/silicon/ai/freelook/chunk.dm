@@ -187,5 +187,5 @@
 
 GLOBAL_VAR_INIT(block_camera_updates, FALSE)
 
-ADMIN_VERB(pause_camera_updates, R_ADMIN, "Toggle Camera Updates", "Stop security cameras from updating, meaning what they see now is what they will see forever.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(pause_camera_updates, R_ADMIN, FALSE, "Toggle Camera Updates", "Stop security cameras from updating, meaning what they see now is what they will see forever.", ADMIN_CATEGORY_DEBUG)
 	GLOB.block_camera_updates = !GLOB.block_camera_updates
