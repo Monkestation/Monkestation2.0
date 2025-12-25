@@ -5349,11 +5349,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/service/abandoned_gambling_den)
-"ble" = (
-/obj/structure/table/wood,
-/obj/machinery/cassette/adv_cassette_deck,
-/turf/open/floor/iron/vaporwave,
-/area/station/service/library/printer)
 "bli" = (
 /turf/closed/wall/r_wall,
 /area/station/service/chapel/storage)
@@ -23689,13 +23684,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
-"fBf" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/cassette/mailbox,
-/turf/open/floor/iron/dark,
-/area/station/service/library)
 "fBk" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
@@ -52171,6 +52159,11 @@
 	},
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai_upload)
+"mlo" = (
+/obj/structure/table/wood,
+/obj/machinery/cassette_deck,
+/turf/open/floor/iron/vaporwave,
+/area/station/service/library/printer)
 "mlt" = (
 /obj/effect/landmark/start/hangover,
 /obj/effect/turf_decal/siding/wood{
@@ -53437,6 +53430,13 @@
 /obj/machinery/status_display/ai/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/medical/chemistry)
+"mBb" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/cassette_postbox,
+/turf/open/floor/iron/dark,
+/area/station/service/library)
 "mBd" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -58205,13 +58205,6 @@
 /obj/item/storage/dice,
 /turf/open/floor/wood,
 /area/station/security/prison/rec)
-"nIY" = (
-/obj/machinery/cassette/dj_station{
-	pixel_y = 12
-	},
-/obj/structure/table/wood,
-/turf/open/floor/iron/vaporwave,
-/area/station/service/library/printer)
 "nJb" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 8
@@ -58463,46 +58456,6 @@
 	dir = 8
 	},
 /area/station/hallway/secondary/entry)
-"nMG" = (
-/obj/structure/table/wood,
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/turf/open/floor/iron/vaporwave,
-/area/station/service/library/printer)
 "nMN" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible/layer4{
 	dir = 4
@@ -80290,18 +80243,6 @@
 /obj/item/storage/belt/utility,
 /turf/open/floor/plating,
 /area/station/science/research/abandoned)
-"sWD" = (
-/obj/machinery/light_switch/directional/east{
-	pixel_x = 22
-	},
-/obj/effect/turf_decal/tile/brown/half/contrasted{
-	dir = 4
-	},
-/obj/machinery/modular_computer/preset/quartermaster{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/station/cargo/quartermaster)
 "sWI" = (
 /obj/machinery/camera/directional/east{
 	c_tag = "Central Hallway - Starboard";
@@ -96991,6 +96932,18 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/carpet/black,
 /area/station/security/prison/mess)
+"wVD" = (
+/obj/machinery/light_switch/directional/east{
+	pixel_x = 22
+	},
+/obj/effect/turf_decal/tile/brown/half/contrasted{
+	dir = 4
+	},
+/obj/machinery/modular_computer/preset/quartermaster{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/cargo/quartermaster)
 "wVJ" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -98658,6 +98611,53 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/engineering/main)
+"xri" = (
+/obj/structure/table/wood,
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/turf/open/floor/iron/vaporwave,
+/area/station/service/library/printer)
+"xrl" = (
+/obj/machinery/dj_station{
+	pixel_y = 12
+	},
+/obj/structure/table/wood,
+/turf/open/floor/iron/vaporwave,
+/area/station/service/library/printer)
 "xrr" = (
 /turf/closed/wall/r_wall,
 /area/station/maintenance/solars/starboard/fore)
@@ -149038,7 +149038,7 @@ ljS
 aPo
 bdF
 wob
-sWD
+wVD
 sNp
 tgX
 aad
@@ -149354,7 +149354,7 @@ bge
 wVR
 fPA
 mXh
-fBf
+mBb
 nHY
 nbd
 nHY
@@ -150117,7 +150117,7 @@ tcb
 oaB
 cXv
 dfZ
-nIY
+xrl
 szh
 szh
 guf
@@ -150632,8 +150632,8 @@ mgX
 kbQ
 dfZ
 tTM
-nMG
-ble
+xri
+mlo
 dfZ
 pru
 qaE

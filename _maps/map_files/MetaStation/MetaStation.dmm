@@ -2941,49 +2941,6 @@
 /obj/effect/landmark/start/botanist,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
-"aWj" = (
-/obj/structure/table/wood,
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/machinery/cassette/adv_cassette_deck{
-	pixel_y = 8
-	},
-/turf/open/floor/iron/vaporwave,
-/area/station/service/library/private)
 "aWl" = (
 /obj/effect/spawner/random/structure/grille,
 /turf/open/floor/plating/airless,
@@ -7591,6 +7548,10 @@
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/iron,
 /area/station/commons/locker)
+"cLh" = (
+/obj/machinery/cassette_postbox,
+/turf/open/floor/wood,
+/area/station/service/library)
 "cLj" = (
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -18849,10 +18810,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
-"gOe" = (
-/obj/machinery/cassette/mailbox,
-/turf/open/floor/wood,
-/area/station/service/library)
 "gOp" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -21223,12 +21180,6 @@
 /obj/machinery/power/apc/auto_name/directional/south,
 /turf/open/floor/iron,
 /area/station/commons/locker)
-"hAx" = (
-/obj/machinery/modular_computer/preset/quartermaster{
-	dir = 1
-	},
-/turf/open/floor/wood,
-/area/station/cargo/quartermaster)
 "hAE" = (
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/dark/telecomms,
@@ -21741,6 +21692,13 @@
 /obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/aisat/exterior)
+"hLI" = (
+/obj/structure/table/wood,
+/obj/machinery/dj_station{
+	pixel_y = 12
+	},
+/turf/open/floor/iron/vaporwave,
+/area/station/service/library/private)
 "hLJ" = (
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /obj/effect/turf_decal/stripes/line,
@@ -26061,13 +26019,6 @@
 /obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
-"jfa" = (
-/obj/structure/table/wood,
-/obj/machinery/cassette/dj_station{
-	pixel_y = 12
-	},
-/turf/open/floor/iron/vaporwave,
-/area/station/service/library/private)
 "jff" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
@@ -30118,6 +30069,49 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
+"kwS" = (
+/obj/structure/table/wood,
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/machinery/cassette_deck{
+	pixel_y = 8
+	},
+/turf/open/floor/iron/vaporwave,
+/area/station/service/library/private)
 "kwX" = (
 /obj/structure/table/wood,
 /obj/item/storage/crayons,
@@ -34189,6 +34183,14 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
+"lRD" = (
+/obj/structure/table/wood,
+/obj/machinery/newscaster/directional/west,
+/obj/machinery/cassette_deck{
+	pixel_y = 8
+	},
+/turf/open/floor/wood,
+/area/station/service/library)
 "lRG" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -43356,6 +43358,34 @@
 	},
 /turf/open/floor/wood,
 /area/station/service/bar/backroom)
+"oWI" = (
+/obj/structure/table/wood,
+/obj/item/walkman{
+	pixel_y = 4;
+	pixel_x = -6
+	},
+/obj/item/walkman{
+	pixel_y = 4;
+	pixel_x = -6
+	},
+/obj/item/walkman{
+	pixel_y = 4;
+	pixel_x = -6
+	},
+/obj/item/cassette_tape/blank{
+	pixel_y = 3;
+	pixel_x = 5
+	},
+/obj/item/cassette_tape/blank{
+	pixel_y = 3;
+	pixel_x = 5
+	},
+/obj/item/cassette_tape/blank{
+	pixel_y = 3;
+	pixel_x = 5
+	},
+/turf/open/floor/wood,
+/area/station/service/library)
 "oWT" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command{
@@ -47913,14 +47943,6 @@
 /obj/machinery/meter,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
-"qzS" = (
-/obj/structure/table/wood,
-/obj/machinery/newscaster/directional/west,
-/obj/machinery/cassette/adv_cassette_deck{
-	pixel_y = 8
-	},
-/turf/open/floor/wood,
-/area/station/service/library)
 "qAc" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -51320,34 +51342,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
-"rIa" = (
-/obj/structure/table/wood,
-/obj/item/device/walkman{
-	pixel_y = 4;
-	pixel_x = -6
-	},
-/obj/item/device/walkman{
-	pixel_y = 4;
-	pixel_x = -6
-	},
-/obj/item/device/walkman{
-	pixel_y = 4;
-	pixel_x = -6
-	},
-/obj/item/device/cassette_tape/blank{
-	pixel_y = 3;
-	pixel_x = 5
-	},
-/obj/item/device/cassette_tape/blank{
-	pixel_y = 3;
-	pixel_x = 5
-	},
-/obj/item/device/cassette_tape/blank{
-	pixel_y = 3;
-	pixel_x = 5
-	},
-/turf/open/floor/wood,
-/area/station/service/library)
 "rIh" = (
 /obj/machinery/light/directional/east,
 /obj/effect/turf_decal/tile/neutral{
@@ -51972,6 +51966,12 @@
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/wood,
 /area/station/service/library)
+"rSv" = (
+/obj/machinery/modular_computer/preset/quartermaster{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/station/cargo/quartermaster)
 "rTg" = (
 /obj/structure/table,
 /obj/item/stock_parts/micro_laser,
@@ -88587,7 +88587,7 @@ bor
 iLV
 csh
 lud
-hAx
+rSv
 kQP
 ifI
 qzC
@@ -89365,8 +89365,8 @@ sly
 nxF
 sVY
 cyk
-qzS
-rIa
+lRD
+oWI
 ahD
 wki
 jIY
@@ -90918,7 +90918,7 @@ wcL
 yfT
 klf
 tdI
-jfa
+hLI
 mda
 mda
 knK
@@ -91178,7 +91178,7 @@ tdI
 ils
 ymh
 mda
-aWj
+kwS
 tdI
 sQY
 nPt
@@ -91936,7 +91936,7 @@ iOc
 sVY
 vKt
 mfj
-gOe
+cLh
 mjr
 cWr
 ecO

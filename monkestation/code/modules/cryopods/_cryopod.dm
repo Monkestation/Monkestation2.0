@@ -197,6 +197,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 	))
 	/// Quirks that should just be completely skipped.
 	var/static/list/skip_quirks = typecacheof(list(
+		/datum/quirk/drg_callout, // skillchips will be readded on their own
 		/datum/quirk/stowaway,
 	))
 
@@ -208,7 +209,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 	..()
 	REGISTER_REQUIRED_MAP_ITEM(1, INFINITY)
 	if(!quiet)
-		GLOB.valid_cryopods += src
+		if(istype(get_area(loc), /area/station/common)) // if it's public cryopods, put those FIRST in the list
+			GLOB.valid_cryopods.Insert(1, src)
+		else
+			GLOB.valid_cryopods += src
 	return INITIALIZE_HINT_LATELOAD //Gotta populate the cryopod computer GLOB first
 
 /obj/machinery/cryopod/LateInitialize(mapload_arg)
@@ -374,6 +378,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 		quirk.remove_from_current_holder(quirk_transfer = TRUE)
 		stored_quirks |= quirk
 
+	var/list/skillchips
+
+	if(iscarbon(mob_occupant))
+		var/mob/living/carbon/carbon_occupant = mob_occupant
+		skillchips = carbon_occupant.clone_skillchip_list()
+
 	var/obj/machinery/computer/cryopod/control_computer = control_computer_weakref?.resolve()
 	if(!control_computer)
 		control_computer_weakref = null
@@ -388,6 +398,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 			"lockfile" = lockfile,
 			"stored_quirks" = stored_quirks,
 			"joined_as_crew" = HAS_MIND_TRAIT(mob_occupant, TRAIT_JOINED_AS_CREW),
+			"skillchips" = skillchips,
 		))
 
 	// Make an announcement and log the person entering storage. If set to quiet, does not make an announcement.
@@ -487,6 +498,31 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 			else
 				ADD_TRAIT(newmob, TRAIT_JOINED_AS_CREW, CREW_JOIN_TRAIT)
 			GLOB.joined_player_list |= newmob.ckey
+
+		for(var/chip in listed["skillchips"])
+			var/chip_type = chip["type"]
+			if(!ispath(chip_type, /obj/item/skillchip))
+				stack_trace("Tried to implant with non-skillchip type [chip_type]")
+				continue
+
+			var/obj/item/skillchip/skillchip = new chip_type(newmob)
+
+			// Try force-implanting and activating. If it doesn't work, there's nothing much we can do. There may be some
+			// incompatibility out of our hands
+			var/implant_msg = newmob.implant_skillchip(skillchip, TRUE)
+			if(implant_msg)
+				// Hopefully recording the error message will help debug it.
+				stack_trace("Failure to implant with skillchip [skillchip]. Error msg: [implant_msg]")
+				qdel(skillchip)
+				continue
+
+			// Time to set the metadata. This includes trying to activate the chip.
+			var/set_meta_msg = skillchip.set_metadata(chip)
+
+			if(set_meta_msg)
+				// Hopefully recording the error message will help debug it.
+				stack_trace("Failure to activate skillchip [skillchip] using [chip] metadata. Error msg: [set_meta_msg]")
+				continue
 
 		listed["ckey"] = null //incase we fuck up down below
 		control_computer.frozen_crew -= list(listed)

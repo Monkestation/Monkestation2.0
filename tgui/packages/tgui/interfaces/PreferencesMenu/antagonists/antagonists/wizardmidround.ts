@@ -8,7 +8,7 @@ const WizardMidround: Antagonist = {
     'A form of wizard that is offered to ghosts in the middle of the shift.',
     WIZARD_MECHANICAL_DESCRIPTION,
   ],
-  category: Category.Midround,
+  category: Category.Ghost,
 };
 
 export default WizardMidround;

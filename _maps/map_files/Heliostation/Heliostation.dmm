@@ -19160,37 +19160,6 @@
 /obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/station/maintenance/department/cargo)
-"bSL" = (
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/structure/cassette_rack/prefilled{
-	pixel_y = 8
-	},
-/obj/structure/table/wood,
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/turf/open/floor/wood,
-/area/station/service/library/private)
 "bSM" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -36897,12 +36866,6 @@
 /obj/effect/mapping_helpers/airlock/access/any/engineering/external,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
-"hgM" = (
-/obj/effect/mapping_helpers/broken_floor,
-/obj/structure/sign/poster/contraband/soviet_propaganda/directional/north,
-/obj/item/clothing/mask/russian_balaclava,
-/turf/open/floor/plating,
-/area/station/maintenance/department/science/xenobiology)
 "hgO" = (
 /obj/effect/turf_decal/trimline/purple/line{
 	dir = 4
@@ -37016,6 +36979,13 @@
 /obj/structure/cable,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai_upload)
+"hjx" = (
+/obj/structure/table/wood,
+/obj/machinery/cassette_deck{
+	pixel_y = 8
+	},
+/turf/open/floor/wood,
+/area/station/service/library/private)
 "hka" = (
 /obj/structure/closet/secure_closet/security,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
@@ -39369,14 +39339,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/maintenance/solars/starboard/fore)
-"iao" = (
-/obj/machinery/airalarm/directional/north,
-/obj/machinery/cassette/dj_station{
-	pixel_y = 12
-	},
-/obj/structure/table/wood,
-/turf/open/floor/carpet/green,
-/area/station/service/library/private)
 "iar" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -43211,6 +43173,37 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/testlab)
+"juk" = (
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/structure/cassette_rack/prefilled{
+	pixel_y = 8
+	},
+/obj/structure/table/wood,
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/turf/open/floor/wood,
+/area/station/service/library/private)
 "jul" = (
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
@@ -43229,6 +43222,12 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
+"juw" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/structure/sign/poster/contraband/soviet_propaganda/directional/north,
+/obj/item/clothing/mask/thermal_balaclava,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/xenobiology)
 "jux" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Space Bridge Access"
@@ -44273,6 +44272,10 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/aft/lesser)
+"jQc" = (
+/obj/machinery/cassette_postbox,
+/turf/open/floor/wood,
+/area/station/service/library)
 "jQe" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -45783,13 +45786,6 @@
 	},
 /turf/open/floor/iron/dark/textured_edge,
 /area/station/science/ordnance/storage)
-"ktz" = (
-/obj/structure/table/wood,
-/obj/machinery/cassette/adv_cassette_deck{
-	pixel_y = 8
-	},
-/turf/open/floor/wood,
-/area/station/service/library/private)
 "ktA" = (
 /obj/machinery/space_heater,
 /obj/structure/sign/poster/contraband/random/directional/east,
@@ -72128,6 +72124,14 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
+"urT" = (
+/obj/machinery/airalarm/directional/north,
+/obj/machinery/dj_station{
+	pixel_y = 12
+	},
+/obj/structure/table/wood,
+/turf/open/floor/carpet/green,
+/area/station/service/library/private)
 "urY" = (
 /obj/effect/spawner/structure/window/reinforced/tinted,
 /turf/open/floor/plating,
@@ -75145,10 +75149,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
-"vDu" = (
-/obj/machinery/cassette/mailbox,
-/turf/open/floor/wood,
-/area/station/service/library)
 "vDU" = (
 /obj/machinery/camera/motion/directional/west{
 	c_tag = "Command - Outer Bridge E";
@@ -119736,7 +119736,7 @@ cGU
 bwl
 eHp
 bxm
-vDu
+jQc
 byN
 xIR
 bBY
@@ -120004,9 +120004,9 @@ bJr
 byN
 mFG
 bxo
-iao
+urT
 eXb
-ktz
+hjx
 bJp
 bVo
 jJX
@@ -120263,7 +120263,7 @@ eQL
 bxo
 bRR
 bRR
-bSL
+juk
 bJp
 uwK
 jJX
@@ -129805,7 +129805,7 @@ cVH
 dNU
 cGw
 xaK
-hgM
+juw
 iqY
 ckj
 oLK

@@ -116,6 +116,11 @@
 	if (length(status_examines))
 		. += status_examines
 
+	//Nosferatu examine
+	var/datum/antagonist/bloodsucker/bloodsucker_datum = mind?.has_antag_datum(/datum/antagonist/bloodsucker)
+	if (bloodsucker_datum?.my_clan?.name == CLAN_NOSFERATU)
+		. += span_warning("[t_He] appear[p_s()] slouched over and grotesque - a twisted abomination, like some shameless creature of the night...")
+
 	var/appears_dead = FALSE
 	var/just_sleeping = FALSE
 
@@ -493,6 +498,8 @@
 
 	SEND_SIGNAL(src, COMSIG_ATOM_EXAMINE, user, .)
 
+	. += late_examine(user)
+
 /**
  * Shows any and all examine text related to any status effects the user has.
  */
@@ -513,7 +520,7 @@
 
 /mob/living/carbon/human/examine_more(mob/user)
 	. = ..()
-	if ((wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE)))
+	if(!is_face_visible())
 		return
 	var/age_text
 	switch(age)
