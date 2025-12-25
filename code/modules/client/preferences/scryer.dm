@@ -23,7 +23,7 @@
 #define CALL_RINGTONE_ULTIMATUM "Grinchs Ultimatum"
 #define CALL_RINGTONE_TENNABOARD "Mike, the Board Please!"
 #define CALL_RINGTONE_BADPIGGIES "🥚🐖🛻"
-#define CALL_RINGTONE_DOOMGATE "At Doom's Gate"
+#define CALL_RINGTONE_DOOMGATE "At Dooms Gate"
 #define CALL_RINGTONE_OKIEDOKIE "Okie Dokie!"
 #define CALL_RINGTONE_TEACHFISH "To Teach a Fish to Man"
 #define CALL_RINGTONE_RUNNINGOUT "Running Out Time"
