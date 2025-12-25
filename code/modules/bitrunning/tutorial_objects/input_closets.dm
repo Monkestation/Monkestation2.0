@@ -13,7 +13,7 @@
 	. = ..()
 	var/input_succeded
 	if(user.ckey in players_that_completed)
-		to_chat(src, span_warning("You have already completed this tutorial!"))
+		to_chat(user, span_warning("You have already completed this tutorial!"))
 		return
 
 	for(var/obj/item/stuff in contents)

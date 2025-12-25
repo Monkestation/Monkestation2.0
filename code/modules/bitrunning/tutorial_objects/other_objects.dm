@@ -6,7 +6,7 @@
 /obj/item/autopsy_scanner/tutorial/scan_cadaver(mob/living/carbon/human/user, mob/living/carbon/scanned)
 	. = ..()
 	if(user.ckey in players_that_completed)
-		to_chat(src, span_warning("You have already completed this tutorial!"))
+		to_chat(user, span_warning("You have already completed this tutorial!"))
 		return
 
 	reward_tutorial_completion(user, TUTORIAL_REWARD_LOW)

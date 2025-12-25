@@ -332,8 +332,6 @@
 		return server
 
 	for(var/obj/machinery/quantum_server/possible_server in oview(4, src))
-		if(isnull(possible_server))
-			continue
 		if(possible_server.bitrunning_id == bitrunning_id)
 			server = possible_server
 			server_ref = WEAKREF(server)
