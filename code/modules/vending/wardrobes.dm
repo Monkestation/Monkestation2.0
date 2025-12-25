@@ -72,6 +72,7 @@
 			"name" = "Footwear",
 			"icon" = "socks",
 			"products" = list(
+				/obj/item/clothing/shoes/jackboots = 3,
 				/obj/item/clothing/shoes/jackboots/sec = 3,
 				/obj/item/clothing/shoes/sneakers/secred = 3,
 			),
