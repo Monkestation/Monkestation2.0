@@ -29,6 +29,8 @@
 /obj/item/clothing/head/helmet/space/plasmaman/signal_tech
 	name = "signal technician plasma envirosuit helmet"
 	desc = "A space-worthy helmet specially designed for signal technician plasmamen, the usual purple stripes being replaced by a unique bright green."
+	icon = 'monkestation/icons/obj/clothing/plasmaman_head.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/plasmaman_head.dmi'
 	icon_state = "signal_tech_envirohelm"
 	inhand_icon_state = null
 	armor_type = /datum/armor/plasmaman_engineering
@@ -36,6 +38,8 @@
 /obj/item/clothing/under/plasmaman/engineering/signal_tech
 	name = "signal technician plasma envirosuit"
 	desc = "An air-tight suit designed to be used by plasmamen employed as signal technicians, the usual purple stripes being replaced by a unique bright green. It protects the user from fire and acid damage."
+	icon = 'monkestation/icons/obj/clothing/plasmaman.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/plasmaman.dmi'
 	icon_state = "signal_tech_envirosuit"
 
 // Signal Technician end
