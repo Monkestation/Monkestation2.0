@@ -62,47 +62,40 @@
 	damage = 10
 	ricochets_max = 0 //it's a MISSILE
 
+/obj/projectile/bullet/SRN_rocket/can_hit_target(atom/target, direct_target, ignore_loc, cross_failed)
+	if(astype(target, /obj/energy_ball)?.miniball)
+		return FALSE
+	return ..()
+
 /obj/projectile/bullet/SRN_rocket/on_hit(atom/target, blocked = 0, pierce_hit)
-	..()
-	if(ishuman(target))
-		var/mob/living/carbon/human/M = target
-		playsound(src.loc, "pierce", 100, 1)
-		M.oxyloss = 5
-		to_chat(M, "<span class='alert'>You are struck by a spatial nullifier! Thankfully it didn't affect you... much.</span>")
-		M.emote("scream")
-	else
-		playsound(src.loc, "sparks", 100, 1)
-	return BULLET_ACT_HIT
-
-/obj/projectile/bullet/SRN_rocket/Impact(atom/A)
+	if(astype(target, /obj/energy_ball)?.miniball)
+		return BULLET_ACT_FORCE_PIERCE
 	. = ..()
-	if(istype(A, /obj/singularity))
+	if(. != BULLET_ACT_HIT)
+		return
+	if(ishuman(target))
+		var/mob/living/carbon/human/target_human = target
+		playsound(src.loc, 'sound/weapons/pierce.ogg', vol = 100, vary = TRUE)
+		target_human.adjustOxyLoss(5)
+		to_chat(target_human, span_alert("You are struck by a spatial nullifier! Thankfully it didn't affect you... much."))
+		target_human.emote("scream")
+	else
+		playsound(src.loc, SFX_SPARKS, vol = 100, vary = TRUE)
+
+/obj/projectile/bullet/SRN_rocket/Impact(atom/impacted)
+	. = ..()
+	if(istype(impacted, /obj/singularity) || istype(impacted, /obj/energy_ball))
 		var/mob/living/user = firer
 		user.client.give_award(/datum/award/achievement/misc/singularity_buster, user)
 		user.emote("scream")
 
 		for(var/mob/player as anything in GLOB.player_list)
 			SEND_SOUND(player, sound('sound/magic/charge.ogg', volume = player.client.prefs.channel_volume["[CHANNEL_SOUND_EFFECTS]"]))
-			to_chat(player, "<span class='boldannounce'>You feel reality distort for a moment...</span>")
+			to_chat(player, span_boldannounce("You feel reality distort for a moment..."))
 			shake_camera(player, 15, 3)
 
-		new/obj/spatial_rift(A.loc)
-		qdel(A)
-
-	if(istype(A, /obj/energy_ball))
-		var/mob/living/user = firer
-		user.client.give_award(/datum/award/achievement/misc/singularity_buster, user)
-		user.emote("scream")
-
-		for(var/mob/player as anything in GLOB.player_list)
-			SEND_SOUND(player, sound('sound/magic/charge.ogg', volume = player.client.prefs.channel_volume["[CHANNEL_SOUND_EFFECTS]"]))
-			to_chat(player, "<span class='boldannounce'>You feel reality distort for a moment...</span>")
-			shake_camera(player, 15, 3)
-
-		new/obj/spatial_rift(A.loc)
-		qdel(A)
-
-	return
+		new /obj/spatial_rift(impacted.loc)
+		qdel(impacted)
 
 
 /datum/award/achievement/misc/singularity_buster
