@@ -19,6 +19,8 @@
 /obj/item/clothing/under/plasmaman/plasma_bun
 	name = "plasmabunny envirosuit"
 	desc = "A plasmaman envirosuit designed for bunny themed waiters, it appears to just be a normal envirosuit with a bunnysuit on top of it"
+	icon = 'monkestation/icons/obj/clothing/plasmaman.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/plasmaman.dmi'
 	icon_state = "plasmabunny_envirosuit"
 	can_adjust = TRUE
 
