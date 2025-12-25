@@ -1,6 +1,6 @@
 import { Window } from '../layouts';
 import { useBackend } from '../backend';
-import { Box, Button, Stack, Section } from '../components';
+import { Box, Button, Icon, Stack, Section } from '../components';
 
 export const ATM = (props) => {
   const { act, data } = useBackend();
@@ -25,8 +25,7 @@ export const ATM = (props) => {
             </Stack.Item>
             <Stack.Item>
               <Box>
-                Current Monkecoin Balance: {meta_balance}{' '}
-                <i className="fa-solid fa-coins" />
+                Current Monkecoin Balance: {meta_balance} <Icon name="coins" />
               </Box>
             </Stack.Item>
             <Stack.Item>
