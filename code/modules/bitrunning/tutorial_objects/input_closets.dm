@@ -61,10 +61,9 @@
 		return FALSE
 
 	var/obj/item/reagent_containers/container = stuff
-	if(container.reagents)
-		for(var/datum/reagent/chemical in container.reagents.reagent_list)
-			if(istype(chemical, /datum/reagent/medicine/c2/multiver) && (chemical.volume >= 30))
-				return TRUE
+	for(var/datum/reagent/chemical in container.reagents?.reagent_list)
+		if(istype(chemical, /datum/reagent/medicine/c2/multiver) && (chemical.volume >= 30))
+			return TRUE
 
 	return FALSE
 
@@ -77,10 +76,8 @@
 		return FALSE
 
 	var/obj/item/weapon/virusdish/virus_dish = stuff
-	if(virus_dish.contained_virus)
-		for(var/datum/disease/virus in virus_dish.contained_virus.symptoms)
-			if(istype(virus, /datum/symptom/sneeze))
-				return TRUE
+	if(locate(/datum/symptom/sneeze) in virus_dish.contained_virus?.symptoms)
+		return TRUE
 
 	return FALSE
 

@@ -24,10 +24,7 @@
 /obj/machinery/mentor_machine/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	var/choice = tgui_input_list(user, "Would you like to request assistance of mentor to assist you in completing this tutorial?", "Mentor Request", list("Yes", "No"))
-	if(isnull(choice))
-		return
-	if(choice == "No")
-		return
+	if(choice != "Yes")
 
 	poll_a_jannie(user)
 	//poll and spawn mentor here
@@ -46,7 +43,7 @@
 
 /obj/machinery/mentor_machine/proc/spawn_a_jannie(mob/candidate)
 	var/mob/living/carbon/human/mentor = new /mob/living/carbon/human(get_turf(loc), src)
-	mentor.key = candidate.key
+	mentor.PossessByPlayer(candidate.key)
 
 	if(isobserver(candidate))
 		var/mob/dead/observer/observer = candidate
