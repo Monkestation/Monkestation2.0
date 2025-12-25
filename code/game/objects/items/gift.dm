@@ -21,8 +21,12 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 	var/atom/contains_type
 	var/notify_admins = FALSE
 
+	var/static/datum/rng/rng
+
 /obj/item/a_gift/Initialize(mapload)
 	. = ..()
+	if(isnull(rng))
+		rng = new
 	pixel_x = rand(-10,10)
 	pixel_y = rand(-10,10)
 	icon_state = "giftdeliverypackage[rand(1,5)]"
@@ -104,7 +108,7 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 	gift_type_list += subtypesof(/obj/item/clothing/head/collectable)
 	gift_type_list += subtypesof(/obj/item/toy) - (((typesof(/obj/item/toy/cards) - /obj/item/toy/cards/deck) + /obj/item/toy/figure + /obj/item/toy/ammo)) //All toys, except for abstract types and syndicate cards.
 
-	var/gift_type = pick(gift_type_list)
+	var/gift_type = rng.pick_from(gift_type_list)
 
 	return gift_type
 
@@ -117,7 +121,7 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 /obj/item/a_gift/anything/get_gift_type()
 	if(!length(GLOB.possible_gifts))
 		GLOB.possible_gifts = initialize_possible_gifts()
-	var/gift_type = pick(GLOB.possible_gifts)
+	var/gift_type = rng.pick_from(GLOB.possible_gifts)
 
 	return gift_type
 
@@ -152,7 +156,7 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 		/obj/item/skeleton_potion,
 		/obj/item/bad_luck
 		)
-	var/gift_type = pick(gift_type_list)
+	var/gift_type = rng.pick_from(gift_type_list)
 	return gift_type
 
 /proc/initialize_possible_gifts()
