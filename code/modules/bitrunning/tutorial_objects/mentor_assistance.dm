@@ -21,10 +21,15 @@
 	resistance_flags = INDESTRUCTIBLE
 	var/datum/action/cooldown/spell/self_destruct/suicide_spell
 
+/obj/machinery/mentor_machine/Destroy()
+	. = ..()
+	QDEL_NULL(suicide_spell)
+
 /obj/machinery/mentor_machine/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	var/choice = tgui_input_list(user, "Would you like to request assistance of mentor to assist you in completing this tutorial?", "Mentor Request", list("Yes", "No"))
 	if(choice != "Yes")
+		return
 
 	poll_a_jannie(user)
 	//poll and spawn mentor here
