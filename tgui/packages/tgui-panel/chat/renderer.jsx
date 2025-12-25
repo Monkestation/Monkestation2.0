@@ -25,7 +25,6 @@ import { highlightNode, linkifyNode } from './replaceInTextNode';
 import { Tooltip } from '../../tgui/components';
 import { selectSettings } from '../settings/selectors';
 import { globalStore } from 'tgui/backend';
-// eslint-disable-next-line react/no-deprecated
 import { classes } from 'common/react';
 
 const logger = createLogger('chatRenderer');
@@ -429,15 +428,12 @@ class ChatRenderer {
 
           const reactRoot = createRoot(childNode);
           /* eslint-disable react/no-danger */
-          // biome-ignore-start lint/security/noDangerouslySetInnerHtml: ignore
           reactRoot.render(
             <Element {...outputProps}>
               <span dangerouslySetInnerHTML={oldHtml} />
             </Element>,
-            childNode,
           );
           /* eslint-enable react/no-danger */
-          // biome-ignore-end lint/security/noDangerouslySetInnerHtml: ignore
         }
 
         // Highlight text

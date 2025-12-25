@@ -108,7 +108,10 @@ export function TguiSay() {
     isDragging.current = false;
     const currentPosition = [window.screenX, window.screenY];
 
-    if (JSON.stringify(position.current) !== JSON.stringify(currentPosition)) {
+    if (
+      position.current[0] !== currentPosition[0] ||
+      position.current[1] !== currentPosition[1]
+    ) {
       position.current = currentPosition;
       return;
     }

@@ -191,7 +191,7 @@ export const FaxMainPanel = (props) => {
                   minValue={0}
                   maxValue={360}
                   animated={false}
-                  onDrag={(_, v) => setStampAngle(v)}
+                  onChange={(_, v) => setStampAngle(v)}
                 />
               </Box>
             </Box>

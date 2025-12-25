@@ -9,15 +9,16 @@ type Data = {
   say_verb: string;
   loud: BooleanLike;
   name: string;
+  selected: string;
 };
 
 export const AiVoiceChanger = (props) => {
   const { act, data } = useBackend<Data>();
-  const { loud, name, on, say_verb, voices } = data;
+  const { loud, name, on, say_verb, voices, selected } = data;
 
   return (
     <Window title="Voice changer settings" width={400} height={200}>
-      <Section>
+      <Section fill>
         <LabeledList>
           <LabeledList.Item label="Power">
             <Button
@@ -29,7 +30,7 @@ export const AiVoiceChanger = (props) => {
           </LabeledList.Item>
           <LabeledList.Item label="Accent">
             <Dropdown
-              selected={''} // The backend doesn't actually send what's selected :)
+              selected={selected}
               options={voices}
               onSelected={(value) =>
                 act('look', {

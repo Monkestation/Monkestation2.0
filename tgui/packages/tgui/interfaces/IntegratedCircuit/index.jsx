@@ -574,7 +574,7 @@ export class IntegratedCircuit extends Component {
               style={{
                 borderRadius: '0px 32px 0px 0px',
                 backgroundColor: 'rgba(0, 0, 0, 0.3)',
-                '-ms-user-select': 'none',
+                userSelect: 'none',
               }}
               unselectable="on"
             >
@@ -611,7 +611,7 @@ export class IntegratedCircuit extends Component {
               width="300px"
               style={{
                 backgroundColor: 'rgba(0, 0, 0, 0.3)',
-                '-ms-user-select': 'none',
+                userSelect: 'none',
               }}
               unselectable="on"
             >

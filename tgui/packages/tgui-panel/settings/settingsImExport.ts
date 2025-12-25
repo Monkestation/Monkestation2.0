@@ -1,4 +1,4 @@
-import { Dispatch } from 'common/redux';
+import type { Dispatch } from 'common/redux';
 import type { Page } from '../chat/types';
 import { importSettings } from './actions';
 
