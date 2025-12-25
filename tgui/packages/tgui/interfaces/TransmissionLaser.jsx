@@ -22,7 +22,7 @@ export const TransmissionLaser = (props) => {
   const { data } = useBackend();
   const { total_earnings, name = 'Power Transmission Laser' } = data;
   return (
-    <Window title="Power Transmission Laser" width="310" height="485">
+    <Window title="Power Transmission Laser" width={310} height={485}>
       <Window.Content>
         <Status />
         <InputControls />

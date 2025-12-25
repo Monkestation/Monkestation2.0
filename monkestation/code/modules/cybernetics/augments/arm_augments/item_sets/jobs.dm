@@ -126,7 +126,7 @@
 	items_to_create = list(
 		/obj/item/emergency_bed/silicon,
 		/obj/item/sensor_device,
-		/obj/item/gun/medbeam
+		/obj/item/reagent_containers/borghypo/paramedic,
 	)
 
 /obj/item/organ/internal/cyberimp/arm/item_set/atmospherics

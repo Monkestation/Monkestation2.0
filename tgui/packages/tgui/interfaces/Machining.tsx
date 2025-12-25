@@ -58,7 +58,7 @@ export const Machining = (props) => {
   const { busy, craftable, recipes, auto_dispense, auto_build } = data;
 
   return (
-    <Window resizable width={900} height={700}>
+    <Window width={900} height={700}>
       <Window.Content>
         <Stack fill>
           <Stack.Item width={'200px'}>
