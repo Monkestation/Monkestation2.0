@@ -24,7 +24,7 @@
 #define CALL_RINGTONE_TENNABOARD "Mike, the Board Please!"
 #define CALL_RINGTONE_BADPIGGIES "🥚🐖🛻"
 #define CALL_RINGTONE_DOOMGATE "At Dooms Gate"
-#define CALL_RINGTONE_OKIEDOKIE "Okie Dokie!"
+//#define CALL_RINGTONE_OKIEDOKIE "Okie Dokie!" ((Because we dont want nintendo to SOMEHOW get angry at this shit))
 #define CALL_RINGTONE_TEACHFISH "To Teach a Fish to Man"
 #define CALL_RINGTONE_RUNNINGOUT "Running Out Time"
 #define CALL_RINGTONE_MEGALO "☠️" //er er er er
@@ -52,7 +52,6 @@ GLOBAL_LIST_INIT(call_ringtones, list(
 	CALL_RINGTONE_TENNABOARD = list('sound/machines/call_ringtones/TennaBoardIntro.ogg', 21 SECONDS),
 	CALL_RINGTONE_BADPIGGIES = list('sound/machines/call_ringtones/BadPiggies.ogg', 27.7 SECONDS),
 	CALL_RINGTONE_DOOMSGATE = list('sound/machines/call_ringtones/AtDoomsGate.ogg', 26.2 SECONDS),
-	CALL_RINGTONE_OKIEDOKIE = list('sound/machines/call_ringtones/OkieDokieM&L.ogg',25.3 SECONDS),
 	CALL_RINGTONE_TEACHFISH = list('sound/machines/call_ringtones/TeachAFishToMan.ogg', 26.8 SECONDS),
 	CALL_RINGTONE_RUNNINGOUT = list('sound/machines/call_ringtones/RunningOut.ogg', 14.8 SECONDS),
 	CALL_RINGTONE_MEGALO = list('sound/machines/call_ringtones/megalovania.ogg', 16.8 SECONDS),
