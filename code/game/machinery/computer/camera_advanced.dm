@@ -127,7 +127,7 @@
 
 	user.client.view_size.unsupress()
 
-	playsound(src, 'sound/machines/terminal/terminal_off.ogg', 25, FALSE)
+	playsound(src, 'sound/machines/terminal_off.ogg', 25, FALSE)
 
 /obj/machinery/computer/camera_advanced/on_set_is_operational(old_value)
 	if(!is_operational)
@@ -226,7 +226,7 @@
 
 	var/list/cameras_by_tag = origin.camnet.get_available_camera_by_tag_list(origin.networks, origin.z_lock)
 
-	playsound(origin, 'sound/machines/terminal/terminal_prompt.ogg', 25, FALSE)
+	playsound(origin, 'sound/machines/terminal_prompt.ogg', 25, FALSE)
 	var/camera = tgui_input_list(usr, "Camera to view", "Cameras", cameras_by_tag)
 	if(isnull(camera))
 		return
@@ -235,10 +235,10 @@
 
 	var/obj/machinery/camera/chosen_camera = cameras_by_tag[camera]
 	if(isnull(chosen_camera))
-		playsound(origin, 'sound/machines/terminal/terminal_prompt_deny.ogg', 25, FALSE)
+		playsound(origin, 'sound/machines/terminal_prompt_deny.ogg', 25, FALSE)
 		return
 
-	playsound(origin, 'sound/machines/terminal/terminal_prompt_confirm.ogg', 25, FALSE)
+	playsound(origin, 'sound/machines/terminal_prompt_confirm.ogg', 25, FALSE)
 	remote_eye.setLoc(get_turf(chosen_camera))
 	owner.overlay_fullscreen("flash", /atom/movable/screen/fullscreen/flash/static)
 	owner.clear_fullscreen("flash", 3) //Shorter flash than normal since it's an ~~advanced~~ console!
