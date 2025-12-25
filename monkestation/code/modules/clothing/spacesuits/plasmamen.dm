@@ -13,6 +13,7 @@
 /obj/item/clothing/head/helmet/space/plasmaman/bunny_ears
 	name = "bunny eared plasma envirosuit helmet"
 	desc = "An envirohelmet designed for plasmaman bunny themed waiters, it has a pair of bunny ears welded onto the helmet."
+	icon = 'monkestation/icons/obj/clothing/plasmaman_head.dmi'
 	worn_icon = 'monkestation/icons/mob/clothing/head_32x48.dmi'
 	icon_state = "bunny_envirohelm"
 
