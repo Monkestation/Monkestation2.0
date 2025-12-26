@@ -3,6 +3,7 @@ SUBSYSTEM_DEF(cameras)
 	name = "Cameras"
 	flags = SS_BACKGROUND
 	priority = FIRE_PRIORITY_CAMERAS
+	init_order = INIT_ORDER_CAMERAS
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 	wait = 2 MINUTES
 	/*dependencies = list(

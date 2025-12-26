@@ -8,7 +8,7 @@
 	///The camera object used to gather information for the camera net
 	var/obj/machinery/camera/bodcam
 
-/datum/component/internal_cam/Initialize(list/networks = list("ss13"))
+/datum/component/internal_cam/Initialize(list/networks = list(CAMERANET_NETWORK_SS13))
 	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -35,12 +35,10 @@
 	bodcam.built_in = null
 	UnregisterSignal(parent, COMSIG_MOVABLE_MOVED)
 
-///Changes the camera net used by the interal camera, currently only used for the darkspawn cameranet
-/datum/component/internal_cam/proc/change_cameranet(datum/cameranet/newnet)
-	bodcam.change_camnet(newnet)
+/datum/component/internal_cam/proc/set_network(list/network)
+	bodcam.network = islist(network) ? network.Copy() : (lowertext(network))
 
 ///Updates the camera net, telling it that the camera has moved
 /datum/component/internal_cam/proc/update_cam()
 	SIGNAL_HANDLER
-	bodcam.camnet.updatePortableCamera(bodcam, INTERNAL_CAMERA_BUFFER)
-
+	SScameras.update_portable_camera(bodcam, INTERNAL_CAMERA_BUFFER)

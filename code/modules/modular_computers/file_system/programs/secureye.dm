@@ -122,8 +122,8 @@
 	switch(action)
 		if("switch_camera")
 			var/obj/machinery/camera/active_camera = camera_ref?.resolve()
-			if(!spying && active_camera)
-				active_camera.on_stop_watching(src)
+			/* if(!spying && active_camera)
+				active_camera.on_stop_watching(src) */
 
 			if(!spying)
 				playsound(computer, SFX_TERMINAL_TYPE, 25, FALSE)

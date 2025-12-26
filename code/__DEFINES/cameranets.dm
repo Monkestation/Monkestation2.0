@@ -27,3 +27,4 @@
 #define CAMERANET_NETWORK_INTERROGATION "interrogation"
 #define CAMERANET_NETWORK_ABDUCTOR "abductor"
 #define CAMERANET_NETWORK_CURATOR "curator"
+#define CAMERANET_NETWORK_DARKSPAWN "darkspawn"

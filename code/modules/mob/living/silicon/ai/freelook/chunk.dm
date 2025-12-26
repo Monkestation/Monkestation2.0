@@ -18,7 +18,6 @@
 	var/list/seenby = list()
 	///images currently in use on obscured turfs.
 	var/list/active_static_images = list()
-	var/datum/cameranet/camnet
 
 	var/x = 0
 	var/y = 0
@@ -167,10 +166,9 @@
 
 
 /// Create a new camera chunk, since the chunks are made as they are needed.
-/datum/camerachunk/New(x, y, lower_z, cameranet)
+/datum/camerachunk/New(x, y, lower_z)
 	x = GET_CHUNK_COORD(x)
 	y = GET_CHUNK_COORD(y)
-	camnet = cameranet
 
 	src.x = x
 	src.y = y
@@ -181,11 +179,11 @@
 	for(var/z_level in lower_z to upper_z)
 		var/list/local_cameras = list()
 		for(var/obj/machinery/camera/camera in urange(CHUNK_SIZE, locate(x + (CHUNK_SIZE / 2), y + (CHUNK_SIZE / 2), z_level)))
-			if(camera.can_use() && (!camnet.networks || LAZYLEN(camera.network & camnet.networks)))
+			if(camera.can_use())
 				local_cameras += camera
 
 		for(var/mob/living/silicon/sillycone in urange(CHUNK_SIZE, locate(x + (CHUNK_SIZE / 2), y + (CHUNK_SIZE / 2), z_level)))
-			if(sillycone.builtInCamera?.can_use() && (!camnet.networks || LAZYLEN(sillycone.builtInCamera.network & camnet.networks)))
+			if(sillycone.builtInCamera?.can_use())
 				local_cameras += sillycone.builtInCamera
 
 		for(var/obj/vehicle/sealed/mecha/mech in urange(CHUNK_SIZE, locate(x + (CHUNK_SIZE / 2), y + (CHUNK_SIZE / 2), z_level)))

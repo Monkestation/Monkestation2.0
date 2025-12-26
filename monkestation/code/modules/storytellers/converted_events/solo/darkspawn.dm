@@ -55,7 +55,6 @@
 	if(!dark_team)
 		dark_team = new()
 		dark_team.update_objectives()
-	GLOB.thrallnet.name = "Thrall net"
 
 /datum/round_event/antagonist/solo/darkspawn/start()
 	. = ..()

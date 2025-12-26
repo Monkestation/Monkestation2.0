@@ -95,8 +95,6 @@
 	var/alarm_delay = 30 // Don't forget, there's another 3 seconds in queueAlarm()
 
 	//OTHER
-	///used to track what camera network we are on
-	var/datum/cameranet/camnet
 	var/special_camera = FALSE
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera, 0)
@@ -137,15 +135,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/old, 0)
 			update_appearance()
 
 	alarm_manager = new(src)
-
-/obj/machinery/camera/proc/change_camnet(datum/cameranet/newnet)
-	if(!istype(newnet))
-		return
-	camnet.cameras -= src
-	camnet.removeCamera(src)
-	camnet = newnet
-	camnet.cameras += src
-	camnet.addCamera(src)
 
 /obj/machinery/camera/Destroy(force)
 	if(can_use())
