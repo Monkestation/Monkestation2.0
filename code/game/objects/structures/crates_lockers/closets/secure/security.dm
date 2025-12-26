@@ -348,7 +348,7 @@
 /obj/structure/closet/secure_closet/secmed
 	name = "security medical locker"
 	icon_state = "secmed"
-	req_access = list(ACCESS_PERMABRIG)
+	req_access = list(ACCESS_SECURITY)
 
 /obj/structure/closet/secure_closet/secmed/PopulateContents()
 	..()
