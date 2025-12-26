@@ -17,8 +17,9 @@
 	if(current_lungs)
 		ADD_TRAIT(current_lungs, TRAIT_SPACEBREATHING, QUIRK_TRAIT)
 
-	// Listen for future lung insertions (surgery, etc.)
-	RegisterSignal(quirk_holder, COMSIG_ORGAN_INSERTED, PROC_REF(on_organ_inserted))
+	// Listen for both insertion and removal to handle replacements properly
+	RegisterSignal(quirk_holder, COMSIG_CARBON_GAIN_ORGAN, PROC_REF(on_gain_organ))
+	RegisterSignal(quirk_holder, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(on_lose_organ))
 
 /datum/quirk/breathless/remove()
 	var/mob/living/carbon/carbon_holder = quirk_holder
@@ -29,12 +30,20 @@
 	if(current_lungs)
 		REMOVE_TRAIT(current_lungs, TRAIT_SPACEBREATHING, QUIRK_TRAIT)
 
-	UnregisterSignal(quirk_holder, COMSIG_ORGAN_INSERTED)
+	UnregisterSignal(quirk_holder, list(COMSIG_CARBON_GAIN_ORGAN, COMSIG_CARBON_LOSE_ORGAN))
 
-/datum/quirk/breathless/proc/on_organ_inserted(mob/living/carbon/source, obj/item/organ/new_organ, special)
+/datum/quirk/breathless/proc/on_gain_organ(mob/living/carbon/source, obj/item/organ/new_organ, special)
 	SIGNAL_HANDLER
 
 	if(!istype(new_organ, /obj/item/organ/internal/lungs))
 		return
 
 	ADD_TRAIT(new_organ, TRAIT_SPACEBREATHING, QUIRK_TRAIT)
+
+/datum/quirk/breathless/proc/on_lose_organ(mob/living/carbon/source, obj/item/organ/old_organ, special)
+	SIGNAL_HANDLER
+
+	if(!istype(old_organ, /obj/item/organ/internal/lungs))
+		return
+
+	REMOVE_TRAIT(old_organ, TRAIT_SPACEBREATHING, QUIRK_TRAIT)
