@@ -145,7 +145,7 @@
 			"installed" = !!computer.find_file_by_name(programs.filename),
 			"compatible" = check_compatibility(programs),
 			"size" = programs.size,
-			"access" = programs.can_run(user, downloading = TRUE),
+			"access" = programs.can_run(user, downloading = TRUE, computer_access = computer),
 			"verifiedsource" = !!(programs.program_flags & PROGRAM_ON_NTNET_STORE),
 		))
 
