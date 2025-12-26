@@ -275,6 +275,8 @@
 	icon_state = "emt"
 	inhand_icon_state = "security"
 	worn_icon_state = "emt"
+
+/obj/item/storage/belt/medical/paramedic
 	preload = TRUE
 
 /obj/item/storage/belt/medical/paramedic/full/PopulateContents()
@@ -303,6 +305,8 @@
 	icon_state = "secmed"
 	inhand_icon_state = "security"
 	worn_icon_state = "secmed"
+
+/obj/item/storage/belt/medical/secmed/full
 	preload = TRUE
 
 /obj/item/storage/belt/medical/secmed/full/PopulateContents()
@@ -317,7 +321,7 @@
 
 /obj/item/storage/belt/medical/full/secmed/full/get_types_to_preload()
 	var/list/to_preload = list() //Yes this is a pain. Yes this is the point
-	to_preload += /obj/item/sensor_device
+	to_preload += /obj/item/sensor_device/brigdoc
 	to_preload += /obj/item/stack/medical/gauze/twelve
 	to_preload += /obj/item/stack/medical/bone_gel
 	to_preload += /obj/item/stack/sticky_tape/surgical
