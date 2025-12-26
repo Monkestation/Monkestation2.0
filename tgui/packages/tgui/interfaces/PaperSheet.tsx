@@ -667,8 +667,8 @@ export class PreviewView extends Component<PreviewViewProps> {
     color: string,
     bold: boolean = false,
   ): string => {
-    return `<span style="color:${color};fontFamily:${font};${
-      bold ? 'fontWeight: bold;' : ''
+    return `<span style="color:${color};font-family:${font};${
+      bold ? 'font-weight: bold;' : ''
     }">${text}</span>`;
   };
 
