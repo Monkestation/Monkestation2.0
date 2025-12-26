@@ -1,7 +1,6 @@
 import { useBackend, useLocalState } from '../backend';
 import { Section, Collapsible, Button, Tabs, Flex } from '../components';
 import { Window } from '../layouts';
-import { Fragment } from 'react';
 
 export const TicketListPanel = (props) => {
   const { act, data } = useBackend();
@@ -51,7 +50,7 @@ export const TicketListView = (props) => {
   };
 
   return (
-    <Fragment>
+    <>
       <Collapsible
         className="ticket_section"
         color={open_count === 0 ? 'default' : 'red'}
@@ -109,7 +108,7 @@ export const TicketListView = (props) => {
             />
           ))}
       </Collapsible>
-    </Fragment>
+    </>
   );
 };
 
