@@ -642,7 +642,7 @@ GLOBAL_LIST_INIT(loadout_miscunders, generate_loadout_items(/datum/loadout_item/
 
 /datum/loadout_item/under/jumpsuit/security_dress
 	name = "Security Battle Dress"
-	item_path = /obj/item/clothing/under/rank/security/peacekeeper/dress
+	item_path = /obj/item/clothing/under/rank/security/officer/dress
 	restricted_roles = list(JOB_SECURITY_OFFICER, JOB_BRIG_PHYSICIAN, JOB_SECURITY_ASSISTANT, JOB_WARDEN, JOB_HEAD_OF_SECURITY)
 	requires_purchase = FALSE
 
