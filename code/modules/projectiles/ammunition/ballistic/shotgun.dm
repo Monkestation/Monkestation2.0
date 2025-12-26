@@ -119,7 +119,7 @@
 	icon_state = "rshell"
 	projectile_type = /obj/projectile/bullet/pellet/shotgun_rubbershot
 	pellets = 6 //monkestation edit
-	variance = 25 // 6 pellets for 15 stam and 1 damage each
+	variance = 25 // 6 pellets for 10 stam and 2 damage each
 	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*2)
 
 
