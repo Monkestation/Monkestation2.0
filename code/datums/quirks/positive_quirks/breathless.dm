@@ -1,11 +1,11 @@
 /datum/quirk/breathless
 	name = "Breathless"
-	desc = "You can survive indefinitely without breathable air, recycling your own supply as needed. Toxins, temperature extremes, and irritants can still affect you."
+	desc = "You don't depend on any gases to breathe, too bad you can't hold your breath forever though. Toxins, irritants, and other airborne effects can still affect you."
 	icon = FA_ICON_WIND
 	value = 10
-	gain_text = span_notice("You don't feel the need to breathe.")
-	lose_text = span_danger("You feel the need to breathe again.")
-	medical_record_text = "Patient demonstrates extreme respiratory tolerance: survives low partial pressures of required gases."
+	gain_text = span_notice("You can breathe easily.")
+	lose_text = span_danger("Your breathing feels like it's back to normal.")
+	medical_record_text = "Patient demonstrates ability to survive without measurable levels of necessary gasses."
 	mail_goodies = list(/obj/item/storage/box/survival)
 
 /datum/quirk/breathless/add()
