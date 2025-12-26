@@ -108,7 +108,7 @@ const CategoryBar = (props: CategoryBarProps) => {
         />
       }
     >
-      <Stack scrollableHorizontal>
+      <Stack>
         {/** these are not in stack items to have them directly next to eachother */}
         <Button
           textAlign="left"

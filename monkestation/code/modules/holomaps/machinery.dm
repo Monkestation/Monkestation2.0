@@ -315,7 +315,7 @@
 
 	/*
 	var/list/air_alarms = list()
-	for(var/obj/machinery/airalarm/air_alarm in GLOB.machines)
+	for(var/obj/machinery/airalarm/air_alarm as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/airalarm))
 		var/area/alarms = get_area(air_alarm)
 		if(air_alarm?.z == current_z_level && alarms?.atmosalm) //Altered it to fire_alam since we don't have an area variable on air_alarms
 			var/image/alarm_icon = image('monkestation/code/modules/holomaps/icons/8x8.dmi', "atmos_marker")
