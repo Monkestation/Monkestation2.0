@@ -53,12 +53,12 @@
 	ears = /obj/item/radio/headset/headset_secmed
 	shoes = /obj/item/clothing/shoes/workboots/black
 	belt = /obj/item/storage/belt/medical/secmed/full
+	glasses = /obj/item/clothing/glasses/hud/health
 	head = /obj/item/clothing/head/soft/sec/medical
 	gloves = /obj/item/clothing/gloves/latex/nitrile
 	l_pocket = /obj/item/assembly/flash/handheld
 	r_pocket = /obj/item/restraints/handcuffs/cable/zipties
 	l_hand = /obj/item/storage/medkit/surgery
-	r_hand = /obj/item/security_voucher/brig_physician
 
 	backpack = /obj/item/storage/backpack/secmed
 	satchel = /obj/item/storage/backpack/satchel/secmed

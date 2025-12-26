@@ -594,6 +594,9 @@
 	icon_state = "duffel-secmed"
 	inhand_icon_state = "duffel-secmed"
 
+/obj/item/storage/backpack/duffelbag/secmed/surgery
+	desc = "A large duffel bag for holding extra supplies, now in security grey! - this one has a material inlay with space for various sharp-looking tools."
+
 /obj/item/storage/backpack/duffelbag/secmed/surgery/PopulateContents()
 	new /obj/item/scalpel(src)
 	new /obj/item/hemostat(src)

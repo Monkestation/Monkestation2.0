@@ -379,7 +379,7 @@
 	new /obj/item/storage/backpack/satchel(src)
 
 /obj/item/storage/toolbox/repair
-	name = "repair toolbox"
+	name = "robotic repair toolbox"
 	desc = "Capable of robusting and repairing any troublesome robots after the fact."
 	icon_state = "toolbox-secmed"
 	inhand_icon_state = "toolbox-secmed"

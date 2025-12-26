@@ -159,20 +159,3 @@
 	new /obj/item/clothing/mask/gas(src)
 	new /obj/item/clothing/neck/cloak/qm(src)
 	new /obj/item/clothing/shoes/sneakers/brown(src)
-
-/obj/item/storage/bag/garment/brig_physician
-	name = "brig physician's garment bag"
-	desc = "A bag for storing extra clothes and shoes. This one belongs to the brig physician."
-
-/obj/item/storage/bag/garment/brig_physician/PopulateContents()
-	new /obj/item/clothing/under/rank/security/medical(src)
-	new /obj/item/clothing/under/rank/security/medical/skirt(src)
-	new /obj/item/clothing/under/rank/security/medical/grey(src)
-	new /obj/item/clothing/under/rank/security/medical/grey/skirt(src)
-	new /obj/item/clothing/under/rank/security/medical/scrubs(src)
-	new /obj/item/clothing/head/utility/surgerycap/sec(src)
-	new /obj/item/clothing/suit/toggle/labcoat/secmed(src)
-	new /obj/item/clothing/suit/toggle/labcoat/secmed/old(src)
-	new /obj/item/clothing/suit/toggle/labcoat/secmed/alt(src)
-	new /obj/item/clothing/shoes/sneakers/secred(src)
-	new /obj/item/clothing/gloves/latex/nitrile(src)

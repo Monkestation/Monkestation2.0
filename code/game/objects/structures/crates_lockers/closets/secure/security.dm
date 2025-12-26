@@ -348,15 +348,14 @@
 /obj/structure/closet/secure_closet/secmed
 	name = "security medical locker"
 	icon_state = "secmed"
-	req_access = list(ACCESS_BRIG)
+	req_access = list(ACCESS_PERMABRIG)
 
 /obj/structure/closet/secure_closet/secmed/PopulateContents()
 	..()
 	new /obj/item/flashlight/seclite(src)
-	new /obj/item/storage/bag/garment/brig_physician(src)
 	new /obj/item/storage/backpack/duffelbag/secmed/surgery(src)
 	new /obj/item/defibrillator/loaded(src)
-	new /obj/item/clothing/glasses/hud/health(src)
+	new /obj/item/sensor_device/security(src)
 	new /obj/item/reagent_containers/blood/universal(src)
 	new /obj/item/reagent_containers/blood/universal(src)
 	new /obj/item/storage/toolbox/repair (src)

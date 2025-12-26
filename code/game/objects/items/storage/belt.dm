@@ -276,7 +276,7 @@
 	inhand_icon_state = "security"
 	worn_icon_state = "emt"
 
-/obj/item/storage/belt/medical/paramedic
+/obj/item/storage/belt/medical/paramedic/full
 	preload = TRUE
 
 /obj/item/storage/belt/medical/paramedic/full/PopulateContents()
@@ -310,7 +310,7 @@
 	preload = TRUE
 
 /obj/item/storage/belt/medical/secmed/full/PopulateContents()
-	SSwardrobe.provide_type(/obj/item/sensor_device/brigdoc, src)
+	SSwardrobe.provide_type(/obj/item/sensor_device/security, src)
 	SSwardrobe.provide_type(/obj/item/stack/medical/gauze/twelve, src)
 	SSwardrobe.provide_type(/obj/item/stack/medical/bone_gel, src)
 	SSwardrobe.provide_type(/obj/item/stack/sticky_tape/surgical, src)
@@ -321,7 +321,7 @@
 
 /obj/item/storage/belt/medical/secmed/full/get_types_to_preload()
 	var/list/to_preload = list() //Yes this is a pain. Yes this is the point
-	to_preload += /obj/item/sensor_device/brigdoc
+	to_preload += /obj/item/sensor_device/security
 	to_preload += /obj/item/stack/medical/gauze/twelve
 	to_preload += /obj/item/stack/medical/bone_gel
 	to_preload += /obj/item/stack/sticky_tape/surgical
