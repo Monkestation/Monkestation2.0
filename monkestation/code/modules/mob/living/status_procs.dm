@@ -8,23 +8,9 @@
  * * knockdown : duration to knock src down
  * * stun : duration to stun src
  * * paralyze : duration to paralyze src
- * * overstam : If TRUE, stamina_amount will be able to deal stamina damage over the waekened threshold, allowing it to also stamina stun.
  * * stack_status : Should the given status value(s) stack ontop of existing status values?
  */
-/mob/living/proc/Disorient(amount, stamina_amount, ignore_canstun, knockdown, stun, paralyze, overstam, stack_status = FALSE)
-	var/protection_amt = 0
-	///placeholder
-	var/disorient_multiplier = 1 - (protection_amt/100)
-	var/stamina_multiplier = LERP(disorient_multiplier, 1, 0.25)
-
-	var/stam2deal = stamina_amount * stamina_multiplier
-
-	//You can never be stam-stunned w/o overstam
-	if (!overstam && stamina.current > 0 && (stamina.current - stam2deal <= 0))
-		stamina.adjust_to(-stam2deal, 1)
-	else
-		stamina.adjust(-stam2deal)
-
+/mob/living/proc/Disorient(amount, ignore_canstun, knockdown, stun, paralyze, stack_status = FALSE)
 	if(!HAS_TRAIT(src, TRAIT_CANT_STAMCRIT))
 		if(knockdown)
 			if(stack_status)
@@ -50,8 +36,6 @@
 		existing.knockdown += knockdown
 		existing.paralyze += paralyze
 		existing.stun += stun
-
-
 	return
 
 

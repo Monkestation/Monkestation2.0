@@ -138,6 +138,6 @@
 	icon = 'monkestation/code/modules/security/icons/paco_ammo.dmi'
 	icon_state = "rubber_bullet"
 	damage = 4
-	stamina = 25
+	stamina = 24
 	sharpness = NONE
 	embedding = null
