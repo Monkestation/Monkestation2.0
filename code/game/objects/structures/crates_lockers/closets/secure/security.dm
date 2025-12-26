@@ -356,6 +356,7 @@
 	new /obj/item/storage/bag/garment/brig_physician(src)
 	new /obj/item/storage/backpack/duffelbag/secmed/surgery(src)
 	new /obj/item/defibrillator/loaded(src)
+	new /obj/item/clothing/glasses/hud/health(src)
 	new /obj/item/reagent_containers/blood/universal(src)
 	new /obj/item/reagent_containers/blood/universal(src)
 	new /obj/item/storage/toolbox/repair (src)

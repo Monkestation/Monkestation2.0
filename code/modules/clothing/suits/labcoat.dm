@@ -131,7 +131,8 @@
 
 /obj/item/clothing/suit/toggle/labcoat/secmed/alt
 	name = "security medical jacket"
-	desc = "A red jacket with reflective stripes for security medical personnel."
+	desc = "A red lightly armored jacket with reflective stripes for security medical personnel."
 	icon_state = "labcoat_secmed_alt"
 	inhand_icon_state = null
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	armor_type = /datum/armor/armor_secjacket
