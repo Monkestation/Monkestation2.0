@@ -19,6 +19,7 @@
 		JOB_SECURITY_OFFICER,
 		JOB_WARDEN,
 		JOB_CHAPLAIN,
+		JOB_BRIG_PHYSICIAN,
 	)
 	required_enemies = 5
 	weight = 2

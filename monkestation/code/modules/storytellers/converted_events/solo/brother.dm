@@ -26,6 +26,7 @@
 		JOB_SECURITY_OFFICER,
 		JOB_SECURITY_ASSISTANT,
 		JOB_WARDEN,
+		JOB_BRIG_PHYSICIAN,
 		JOB_BRIDGE_ASSISTANT,
 	)
 	restricted_roles = list(
@@ -39,6 +40,7 @@
 		JOB_WARDEN,
 		JOB_SECURITY_OFFICER,
 		JOB_SECURITY_ASSISTANT,
+		JOB_BRIG_PHYSICIAN,
 	)
 	extra_spawned_events = list(
 		/datum/round_event_control/antagonist/solo/traitor/roundstart = 8,
