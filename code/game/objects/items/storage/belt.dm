@@ -319,7 +319,7 @@
 	SSwardrobe.provide_type(/obj/item/reagent_containers/cup/bottle/formaldehyde, src)
 	update_appearance()
 
-/obj/item/storage/belt/medical/full/secmed/full/get_types_to_preload()
+/obj/item/storage/belt/medical/secmed/full/get_types_to_preload()
 	var/list/to_preload = list() //Yes this is a pain. Yes this is the point
 	to_preload += /obj/item/sensor_device/brigdoc
 	to_preload += /obj/item/stack/medical/gauze/twelve
