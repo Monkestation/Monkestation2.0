@@ -511,3 +511,127 @@
 		'sound/items/handling/helmet/visor_up1.ogg',
 		'sound/items/handling/helmet/visor_up2.ogg',
 	)
+
+/datum/sound_effect/djstation/opentakeout
+	key = SFX_DJSTATION_OPENTAKEOUT
+	file_paths = list(
+		'sound/machines/djstation/machine_open_takeout1.ogg',
+		'sound/machines/djstation/machine_open_takeout2.ogg',
+		'sound/machines/djstation/machine_open_takeout3.ogg',
+		'sound/machines/djstation/machine_open_takeout4.ogg',
+		'sound/machines/djstation/machine_open_takeout5.ogg',
+		'sound/machines/djstation/machine_open_takeout6.ogg',
+	)
+/datum/sound_effect/djstation/putinandclose
+	key = SFX_DJSTATION_PUTINANDCLOSE
+
+	file_paths = list(
+		'sound/machines/djstation/machine_put_in_and_close1.ogg',
+		'sound/machines/djstation/machine_put_in_and_close2.ogg',
+		'sound/machines/djstation/machine_put_in_and_close3.ogg',
+		'sound/machines/djstation/machine_put_in_and_close4.ogg',
+		'sound/machines/djstation/machine_put_in_and_close5.ogg',
+		'sound/machines/djstation/machine_put_in_and_close6.ogg',
+	)
+/datum/sound_effect/djstation/openputinandclose
+	key = SFX_DJSTATION_OPENPUTINANDCLOSE
+	file_paths = list(
+		'sound/machines/djstation/machine_open_put_in_andclose1.ogg',
+		'sound/machines/djstation/machine_open_put_in_andclose2.ogg',
+		'sound/machines/djstation/machine_open_put_in_andclose3.ogg',
+		'sound/machines/djstation/machine_open_put_in_andclose4.ogg',
+		'sound/machines/djstation/machine_open_put_in_andclose5.ogg',
+				)
+/datum/sound_effect/djstation/opentakeoutandclose
+	key = SFX_DJSTATION_OPENTAKEOUTANDCLOSE
+	file_paths = list(
+		'sound/machines/djstation/machine_open_takeout_andclose1.ogg',
+		'sound/machines/djstation/machine_open_takeout_andclose2.ogg',
+		'sound/machines/djstation/machine_open_takeout_andclose3.ogg',
+		'sound/machines/djstation/machine_open_takeout_andclose4.ogg',
+				)
+/datum/sound_effect/djstation/play
+	key = SFX_DJSTATION_PLAY
+	file_paths = list(
+		'sound/machines/djstation/machine_play1.ogg',
+		'sound/machines/djstation/machine_play2.ogg',
+		'sound/machines/djstation/machine_play3.ogg',
+		'sound/machines/djstation/machine_play4.ogg',
+		'sound/machines/djstation/machine_play5.ogg',
+		'sound/machines/djstation/machine_play6.ogg',
+	)
+/datum/sound_effect/djstation/stop
+	key = SFX_DJSTATION_STOP
+	file_paths = list(
+		'sound/machines/djstation/machine_stop1.ogg',
+		'sound/machines/djstation/machine_stop2.ogg',
+		'sound/machines/djstation/machine_stop3.ogg',
+	)
+/datum/sound_effect/djstation/trackswitch
+	key = SFX_DJSTATION_TRACKSWITCH
+	file_paths = list(
+		'sound/machines/djstation/machine_track_switch1.ogg',
+		'sound/machines/djstation/machine_track_switch2.ogg',
+		'sound/machines/djstation/machine_track_switch3.ogg',
+		'sound/machines/djstation/machine_track_switch4.ogg',
+		'sound/machines/djstation/machine_track_switch5.ogg',
+	)
+
+// cassette noises
+/datum/sound_effect/cassettes/put_in
+	key = SFX_CASSETTE_PUT_IN
+	file_paths = list(
+		'sound/machines/djstation/tape_put_in1.ogg',
+		'sound/machines/djstation/tape_put_in2.ogg',
+		'sound/machines/djstation/tape_put_in3.ogg',
+		'sound/machines/djstation/tape_put_in4.ogg',
+		'sound/machines/djstation/tape_put_in5.ogg',
+		'sound/machines/djstation/tape_put_in6.ogg',
+	)
+/datum/sound_effect/cassettes/take_out
+	key = SFX_CASSETTE_TAKE_OUT
+	file_paths = list(
+		'sound/machines/djstation/tape_take_out1.ogg',
+		'sound/machines/djstation/tape_take_out2.ogg',
+		'sound/machines/djstation/tape_take_out3.ogg',
+		'sound/machines/djstation/tape_take_out4.ogg',
+		'sound/machines/djstation/tape_take_out5.ogg',
+		'sound/machines/djstation/tape_take_out6.ogg',
+	)
+/datum/sound_effect/cassettes/dump
+	key = SFX_CASSETTE_DUMP
+	file_paths = list(
+		'sound/machines/djstation/tape_dump1.ogg',
+		'sound/machines/djstation/tape_dump2.ogg',
+		'sound/machines/djstation/tape_dump3.ogg',
+		'sound/machines/djstation/tape_dump4.ogg',
+		'sound/machines/djstation/tape_dump5.ogg',
+		'sound/machines/djstation/tape_dump6.ogg',
+		'sound/machines/djstation/tape_dump7.ogg',
+		'sound/machines/djstation/tape_dump8.ogg',
+		'sound/machines/djstation/tape_dump9.ogg',
+		'sound/machines/djstation/tape_dump10.ogg',
+	)
+/datum/sound_effect/cassettes/asmr
+	key = SFX_CASSETTE_ASMR
+	file_paths = list(
+		'sound/machines/djstation/tape_asmr1.ogg',
+		'sound/machines/djstation/tape_asmr2.ogg',
+		'sound/machines/djstation/tape_asmr3.ogg',
+		'sound/machines/djstation/tape_asmr4.ogg',
+		'sound/machines/djstation/tape_asmr5.ogg',
+		'sound/machines/djstation/tape_asmr6.ogg',
+		'sound/machines/djstation/tape_asmr7.ogg',
+		'sound/machines/djstation/tape_asmr8.ogg',
+		'sound/machines/djstation/tape_asmr9.ogg',
+		'sound/machines/djstation/tape_asmr10.ogg',
+		'sound/machines/djstation/tape_asmr11.ogg',
+		'sound/machines/djstation/tape_asmr12.ogg',
+		'sound/machines/djstation/tape_asmr13.ogg',
+		'sound/machines/djstation/tape_asmr14.ogg',
+		'sound/machines/djstation/tape_asmr15.ogg',
+		'sound/machines/djstation/tape_asmr16.ogg',
+		'sound/machines/djstation/tape_asmr17.ogg',
+		'sound/machines/djstation/tape_asmr18.ogg',
+		'sound/machines/djstation/tape_asmr19.ogg',
+	)

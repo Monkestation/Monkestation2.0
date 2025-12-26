@@ -73,6 +73,10 @@
 		to_chat(user, span_alert("[src] has already been used. The tools are dull and won't reactivate."))
 		return
 
+	if(!iscarbon(target))
+		to_chat(user, span_alert("[target] cannot be implanted."))
+		return
+
 	if(implant_time)
 		user.visible_message( "[user] prepares to use [src] on [target].", "You begin to prepare to use [src] on [target].")
 		if(!do_after(user, (8 SECONDS * surgery_speed), target))

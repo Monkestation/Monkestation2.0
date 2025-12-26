@@ -17,7 +17,7 @@ const Slasher: Antagonist = {
     Give the station something to fear.
     `,
   ],
-  category: Category.Midround,
+  category: Category.Ghost,
 };
 
 export default Slasher;

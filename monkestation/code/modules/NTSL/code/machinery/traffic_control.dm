@@ -39,7 +39,6 @@
 
 /obj/machinery/computer/telecomms/traffic/Initialize(mapload)
 	..()
-	GLOB.traffic_comps += src
 	if(length(GLOB.pretty_filter_items) == 0)
 		setup_pretty_filter()
 	if(mapload)
@@ -53,7 +52,6 @@
 		new_server.autoruncode = TRUE
 
 /obj/machinery/computer/telecomms/traffic/Destroy()
-	GLOB.traffic_comps -= src
 	servers = null
 	if(!isnull(inserted_id))
 		inserted_id.forceMove(drop_location())
@@ -178,7 +176,7 @@
 
 /obj/machinery/computer/telecomms/traffic/proc/refresh_servers()
 	servers.Cut()
-	for(var/obj/machinery/telecomms/server/new_server as anything in GLOB.tcomms_servers)
+	for(var/obj/machinery/telecomms/server/new_server as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/telecomms/server))
 		if(new_server.network != network)
 			continue
 		if(!unlimited_range && get_dist(src, new_server) > 15)

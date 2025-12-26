@@ -19,7 +19,7 @@ const FloridaMan: Antagonist = {
     Who gets to boss Florida Man around anyways?
     `,
   ],
-  category: Category.Midround,
+  category: Category.Ghost,
 };
 
 export default FloridaMan;

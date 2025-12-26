@@ -1281,7 +1281,7 @@
 		if(!check_rights(R_ADMIN))
 			return
 		var/code = random_nukecode()
-		for(var/obj/machinery/nuclearbomb/selfdestruct/SD in GLOB.nuke_list)
+		for(var/obj/machinery/nuclearbomb/selfdestruct/SD as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/nuclearbomb/selfdestruct))
 			SD.r_code = code
 		message_admins("[key_name_admin(usr)] has set the self-destruct \
 			code to \"[code]\".")
@@ -1766,14 +1766,16 @@
 		log_admin("[user_client]'s [token_holder.in_queue] token has been rejected by [owner].")
 		token_holder.reject_antag_token()
 
+
 	else if(href_list["open_music_review"])
 		if(!check_rights(R_ADMIN))
 			return
-		var/id = href_list["open_music_review"]
-		var/datum/cassette_review/cassette_review = fetch_review(id)
-		if(!istype(cassette_review))
-			return
-		cassette_review.ui_interact(usr)
+		var/id = text2num(href_list["open_music_review"])
+		var/datum/cassette_review/cassette_review = GLOB.cassette_reviews[id]
+		if(cassette_review)
+			cassette_review.ui_interact(usr)
+		else
+			to_chat(usr, span_warning("Cassette review not found!"), type = MESSAGE_TYPE_ADMINLOG, confidential = TRUE)
 
 	else if(href_list["approve_token_event"])
 		if(!check_rights(R_ADMIN))

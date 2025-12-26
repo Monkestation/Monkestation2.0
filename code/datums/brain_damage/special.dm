@@ -452,7 +452,7 @@ monkestation end */
 
 /datum/brain_trauma/special/primal_instincts/on_lose(silent)
 	. = ..()
-	if(QDELING(owner))
+	if(QDELETED(owner))
 		return
 
 	QDEL_NULL(owner.ai_controller)

@@ -1,6 +1,11 @@
 /* eslint-disable */
 
 (function () {
+  // Inferno needs Int32Array, and it is not covered by core-js.
+  if (!window.Int32Array) {
+    window.Int32Array = Array;
+  }
+
   // Utility functions
   var hasOwn = Object.prototype.hasOwnProperty;
 

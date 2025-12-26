@@ -70,7 +70,7 @@ export const MODpaint = (props) => {
     <Window width={600} height={365}>
       <Window.Content>
         <Stack fill>
-          <Stack.Item fill width="30%">
+          <Stack.Item width="30%">
             {[0, 1, 2].map((row) => (
               <Section
                 key={row}

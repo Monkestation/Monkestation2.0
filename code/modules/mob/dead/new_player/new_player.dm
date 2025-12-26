@@ -318,12 +318,6 @@
 		humanc.load_persistent_scars()
 		SSpersistence.load_modular_persistence(humanc.get_organ_slot(ORGAN_SLOT_BRAIN))
 
-		//monkestation edit start
-		if(GLOB.dj_booth)
-			var/obj/machinery/cassette/dj_station/dj = GLOB.dj_booth
-			dj.add_new_player(humanc)
-		//monkestation edit end
-
 		if(GLOB.curse_of_madness_triggered)
 			give_madness(humanc, GLOB.curse_of_madness_triggered)
 
