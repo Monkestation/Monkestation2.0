@@ -29,7 +29,7 @@ export const ATM = () => {
     <Window
       title="Automated Teller Machine"
       width={360}
-      height={!!flash_sale_present ? 500 : 420}
+      height={flash_sale_present ? 500 : 420}
     >
       <Window.Content>
         <Stack vertical fill>
