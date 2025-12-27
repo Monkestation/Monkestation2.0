@@ -172,7 +172,8 @@ SUBSYSTEM_DEF(cameras)
 			if(choice == REMOVE_CAMERA)
 				// Remove the camera.
 				chunk.cameras[chunk_turf.z] -= center_or_camera
-				chunk.processing_cameras[chunk_turf.z] -= center_or_camera
+				if(chunk.processing_cameras[chunk_turf.z])
+					chunk.processing_cameras[chunk_turf.z] -= center_or_camera
 			if(choice == ADD_CAMERA)
 				// You can't have the same camera in the list twice.
 				chunk.cameras[chunk_turf.z] |= center_or_camera
