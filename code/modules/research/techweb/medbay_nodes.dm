@@ -16,7 +16,6 @@
 		"genescanner",
 		"healthanalyzer",
 		"scanning_pad",
-		"vitals_monitor_advanced",
 		"antibodyscanner",
 		"med_spray_bottle",
 		"medical_kiosk",
@@ -44,6 +43,7 @@
 	design_ids = list(
 		"autopsyscanner",
 		"crewpinpointer",
+		"vitals_monitor_advanced",
 		"defibrillator_compact",
 		"harvester",
 		"healthanalyzer_advanced",
