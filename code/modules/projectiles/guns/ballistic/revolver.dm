@@ -447,6 +447,8 @@
 	load_sound = 'sound/weapons/gun/revolver/load_bullet.ogg'
 	eject_sound = 'sound/weapons/gun/revolver/empty.ogg'
 	fire_sound_volume = 100
+	recoil = 4
+	wield_recoil = 2
 	dry_fire_sound = 'sound/weapons/gun/revolver/dry_fire.ogg'
 	pin = /obj/item/firing_pin/wastes
 

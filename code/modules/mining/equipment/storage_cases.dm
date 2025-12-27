@@ -274,7 +274,7 @@
 	atom_storage.max_total_storage = 4
 
 /obj/item/storage/box/pksmg/PopulateContents()
-		new /obj/item/gun/ballistic/automatic/proto/pksmg(src)
+		new /obj/item/gun/ballistic/automatic/pksmg(src)
 		new /obj/item/ammo_box/magazine/pksmgmag(src)
 		new /obj/item/ammo_box/magazine/pksmgmag(src)
 		new /obj/item/ammo_box/magazine/pksmgmag(src)
@@ -325,7 +325,7 @@
 
 /obj/item/storage/box/kinetic/kineticlmg/bigcase/PopulateContents() //populate
 
-		new /obj/item/gun/ballistic/automatic/proto/pksmg/kineticlmg (src)
+		new /obj/item/gun/ballistic/automatic/pksmg/kineticlmg (src)
 		new /obj/item/storage/box/kinetic/kineticlmg (src)
 
 
