@@ -52231,7 +52231,6 @@
 	name = "Permabrig Access"
 	},
 /obj/machinery/door/firedoor,
-/obj/effect/mapping_helpers/airlock/access/any/security/permabrig,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/prison)
 "mSK" = (
@@ -61378,7 +61377,6 @@
 	name = "Permabrig Access"
 	},
 /obj/machinery/door/firedoor,
-/obj/effect/mapping_helpers/airlock/access/any/security/permabrig,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/prison)
 "qoh" = (
