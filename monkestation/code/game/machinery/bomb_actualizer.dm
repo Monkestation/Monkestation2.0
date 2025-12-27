@@ -215,7 +215,7 @@
 		var/flame = 0
 		var/flash = 0
 		var/turf/location = get_turf(src)
-		var/actualizer_multiplier = 0.5
+		var/actualizer_multiplier = 0.05 ///1200 internal radius is required for maximum range - by Yog scaled bombs this would be a 3600 radius bomb which is possible but requires some work
 		var/capped_heavy
 		var/capped_medium
 		var/capped_light
