@@ -1,3 +1,4 @@
+import { BooleanLike } from 'common/react';
 import { ComponentProps } from 'react';
 import { Button as TGUIButton } from 'tgui-core/components';
 
@@ -8,7 +9,7 @@ export const Button = (props: ComponentProps<typeof TGUIButton>) => {
 type CheckboxPropsShim = ComponentProps<(typeof TGUIButton)['Checkbox']> &
   Partial<{
     transparent: boolean;
-    checked: boolean;
+    checked: BooleanLike;
   }>;
 
 Button.Checkbox = ({ checked, ...rest }: CheckboxPropsShim) => {

@@ -320,9 +320,8 @@ export const StandardizedChoiceButtons = (props: {
       }}
     >
       {choices.map((choice) => (
-        <Stack.Item>
+        <Stack.Item key={choice}>
           <Button
-            key={choice}
             selected={choice === value}
             disabled={disabled}
             onClick={() => onSetValue(choice)}
