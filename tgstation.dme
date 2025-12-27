@@ -6158,6 +6158,7 @@
 #include "code\modules\vehicles\_vehicle.dm"
 #include "code\modules\vehicles\artillery.dm"
 #include "code\modules\vehicles\atv.dm"
+#include "code\modules\vehicles\battering_ram.dm"
 #include "code\modules\vehicles\bicycle.dm"
 #include "code\modules\vehicles\hoverdog.dm"
 #include "code\modules\vehicles\kingschariot.dm"
