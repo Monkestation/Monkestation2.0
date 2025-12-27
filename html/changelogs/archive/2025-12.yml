@@ -624,6 +624,13 @@
   - balance: Ling's chitin armor ability cost increased from 1 dna point to 2.
   - balance: Ling's armblade ability cost decreased from 2 dna points to 1.
 2025-12-27:
+  Absolucy:
+  - bugfix: Fixed not being able to revive existing vassals with Tremere's Dominate
+      if you were currently at your vassal cap.
+  - map: Added a proper SMES for the SM emitters on Void Raptor.
   Shoddd:
   - balance: empath now cost 4 points instead of 2
   - balance: empath can now see quirks on examine
+  Veth-s:
+  - rscadd: A new token statpanel for admins, to help improve token responses.
+  - admin: A noise will now play if a token is going to timeout in one minute.

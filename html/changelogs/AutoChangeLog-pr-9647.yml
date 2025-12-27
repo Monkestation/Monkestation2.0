@@ -1,5 +1,0 @@
-author: "Veth-s"
-delete-after: True
-changes:
-  - rscadd: "A new token statpanel for admins, to help improve token responses."
-  - admin: "A noise will now play if a token is going to timeout in one minute."

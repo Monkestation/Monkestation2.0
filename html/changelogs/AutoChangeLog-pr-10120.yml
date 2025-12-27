@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Fixed not being able to revive existing vassals with Tremere's Dominate if you were currently at your vassal cap."
