@@ -9,7 +9,7 @@
 	mail_goodies = list(/obj/item/taperecorder, /obj/item/clothing/head/frenchberet, /obj/item/clothing/mask/fakemoustache/italian)
 
 /datum/quirk/polyglot/add(client/client_source)
-	for(var/language in GLOB.roundstart_languages)
+	for(var/language in GLOB.uncommon_roundstart_languages)
 		quirk_holder.grant_language(language, source = LANGUAGE_QUIRK)
 
 /datum/quirk/polyglot/remove()
