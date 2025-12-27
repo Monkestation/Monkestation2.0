@@ -138,12 +138,12 @@ export const PreferencesMenu = () => {
       <Window.Content>
         <Stack fill>
           <Stack.Item>
-            <Section fill title="Preferences">
-              {settingsCategories}
-            </Section>
+            <Section fill>{settingsCategories}</Section>
           </Stack.Item>
           <Stack.Divider />
-          <Stack.Item grow>{pageContents}</Stack.Item>
+          <Stack.Item grow width="85rem">
+            {pageContents}
+          </Stack.Item>
         </Stack>
       </Window.Content>
     </Window>
