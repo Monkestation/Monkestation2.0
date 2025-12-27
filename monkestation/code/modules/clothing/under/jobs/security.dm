@@ -6,6 +6,15 @@
 	icon_state = "security_tactical"
 	inhand_icon_state = null
 	alt_covers_chest = TRUE
-	
+
 /obj/item/clothing/under/rank/security/officer/tactical/blue
 	icon_state = "security_tactical_blue"
+
+/obj/item/clothing/under/rank/security/officer/dress
+	name = "security battle dress"
+	desc = "A security-issued battle dress: a piece of wear designed for both formal occasions and combat situations."
+	icon = 'monkestation/icons/obj/clothing/security.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/security.dmi'
+	icon_state = "security_dress"
+	inhand_icon_state = null
+	alt_covers_chest = FALSE

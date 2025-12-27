@@ -35,6 +35,7 @@
 		/obj/item/clothing/under/rank/security/officer/grey = 3,
 		/obj/item/clothing/under/rank/security/officer/tactical = 3, //monkestation edit
 		/obj/item/clothing/under/rank/security/officer/tactical/blue = 3, //monkestation edit
+		/obj/item/clothing/under/rank/security/officer/dress = 3, //monkestation edit
 		/obj/item/clothing/shoes/sneakers/secred = 3, //Monkestation edit
 		/obj/item/clothing/under/pants/slacks = 3,
 		/obj/item/clothing/under/rank/security/officer/blueshirt = 3,
