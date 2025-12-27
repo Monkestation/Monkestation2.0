@@ -710,6 +710,11 @@
 	if (alert_able && should_ring)
 		computer.ring(ringtone, list(receiver_mob))
 
+	addtimer(CALLBACK(src, PROC_REF(deferred_ui_update)), 0)
+
+	/datum/computer_file/program/messenger/proc/deferred_ui_update()
+	if(QDELETED(src) || QDELETED(computer))
+		return
 	SStgui.update_uis(computer)
 	update_pictures_for_all()
 
