@@ -10,7 +10,7 @@ GLOBAL_PROTECT(href_token)
 #define RESULT_2FA_ID 2
 
 /datum/admins
-	var/list/datum/admin_rank/ranks
+	var/datum/protected_list_holder/ranks
 
 	var/target
 	var/name = "nobody's admin datum (no rank)" //Makes for better runtimes
@@ -47,8 +47,26 @@ GLOBAL_PROTECT(href_token)
 	var/list/tagged_datums
 
 	var/given_profiling = FALSE
+	///The bitfield of admin flags
+	var/static/datum/protected_list_holder/admin_flags_bitfield = new(list(
+	"ADMIN" = R_ADMIN,
+	"AUTOLOGIN" = R_AUTOADMIN,
+	"BAN" = R_BAN,
+	"BUILDMODE" = R_BUILD,
+	"DBRANKS" = R_DBRANKS,
+	"DEBUG" = R_DEBUG,
+	"FUN" = R_FUN,
+	"PERMISSIONS" = R_PERMISSIONS,
+	"POLL" = R_POLL,
+	"POSSESS" = R_POSSESS,
+	"SERVER" = R_SERVER,
+	"SOUNDS" = R_SOUND,
+	"SPAWN" = R_SPAWN,
+	"STEALTH" = R_STEALTH,
+	"VAREDIT" = R_VAREDIT,
+))
 
-/datum/admins/New(list/datum/admin_rank/ranks, ckey, force_active = FALSE, protected)
+/datum/admins/New(list/ranks, ckey, force_active = FALSE, protected)
 	if(IsAdminAdvancedProcCall())
 		var/msg = " has tried to elevate permissions!"
 		message_admins("[key_name_admin(usr)][msg]")
@@ -57,6 +75,7 @@ GLOBAL_PROTECT(href_token)
 			QDEL_IN(src, 0)
 			CRASH("Admin proc call creation of admin datum")
 		return
+
 	if(!ckey)
 		QDEL_IN(src, 0)
 		CRASH("Admin datum created without a ckey")
@@ -65,7 +84,7 @@ GLOBAL_PROTECT(href_token)
 		CRASH("Admin datum created with invalid ranks: [ranks] ([json_encode(ranks)])")
 	target = ckey
 	name = "[ckey]'s admin datum ([join_admin_ranks(ranks)])"
-	src.ranks = ranks
+	src.ranks = new /datum/protected_list_holder(ranks, src)
 	admin_signature = "Nanotrasen Officer #[rand(0,9)][rand(0,9)][rand(0,9)]"
 	href_token = GenerateToken()
 	//only admins with +ADMIN start admined
@@ -84,7 +103,15 @@ GLOBAL_PROTECT(href_token)
 		message_admins("[key_name_admin(usr)][msg]")
 		log_admin("[key_name(usr)][msg]")
 		return QDEL_HINT_LETMELIVE
-	. = ..()
+	qdel(ranks)
+	marked_datum = null
+	filteriffic = null
+	particle_test = null
+	color_test = null
+	plane_debug = null
+	library_manager = null
+	tagged_datums = null
+	return ..()
 
 /datum/admins/proc/activate()
 	if(IsAdminAdvancedProcCall())
@@ -384,15 +411,33 @@ GLOBAL_PROTECT(href_token)
 			confidential = TRUE,
 		)
 
+/// Return our rank list
+/datum/admins/proc/get_ranks() as /list
+	if(IsAdminAdvancedProcCall())
+		var/msg = " has tried to call get_ranks() on an admin datum!"
+		message_admins("[key_name_admin(usr)][msg]")
+		log_admin("[key_name(usr)][msg]")
+		return
+	return ranks?.Value()
+
+/// Update our ranks
+/datum/admins/proc/update_ranks(list/new_value)
+	if(IsAdminAdvancedProcCall())
+		var/msg = " has tried to call upate_ranks() on an admin datum!"
+		message_admins("[key_name_admin(usr)][msg]")
+		log_admin("[key_name(usr)][msg]")
+		return
+	ranks?.update_value(new_value)
+
 /// Get the rank name of the admin
 /datum/admins/proc/rank_names()
-	return join_admin_ranks(ranks)
+	return join_admin_ranks(get_ranks())
 
 /// Get the rank flags of the admin
 /datum/admins/proc/rank_flags()
 	var/combined_flags = NONE
 
-	for (var/datum/admin_rank/rank as anything in ranks)
+	for (var/datum/admin_rank/rank as anything in get_ranks())
 		combined_flags |= rank.rights
 
 	return combined_flags
@@ -401,7 +446,7 @@ GLOBAL_PROTECT(href_token)
 /datum/admins/proc/can_edit_rights_flags()
 	var/combined_flags = NONE
 
-	for (var/datum/admin_rank/rank as anything in ranks)
+	for (var/datum/admin_rank/rank as anything in get_ranks())
 		combined_flags |= rank.can_edit_rights
 
 	return combined_flags

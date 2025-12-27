@@ -457,7 +457,7 @@
 /obj/item/nuke_recaller/attack_self(mob/user)
 	if(!(check_usability(user)))
 		return
-	var/obj/machinery/nuclearbomb/commando/nuke = locate() in GLOB.nuke_list
+	var/obj/machinery/nuclearbomb/commando/nuke = locate() in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/nuclearbomb/commando)
 	if(nuke)
 		var/obj/structure/closet/supplypod/nuke_relocation/new_pod = new()
 		new /obj/effect/pod_landingzone(get_turf(nuke), new_pod)

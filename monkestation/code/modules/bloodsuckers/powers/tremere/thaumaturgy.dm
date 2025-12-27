@@ -79,10 +79,9 @@
 	. += "The cooldown increases by [DisplayTimeText(THAUMATURGY_COOLDOWN_PER_CHARGE)] per charge used, and each blast costs [THAUMATURGY_BLOOD_COST_PER_CHARGE] blood."
 
 /datum/action/cooldown/bloodsucker/targeted/tremere/thaumaturgy/ActivatePower(mob/target)
-	..()
+	. = ..()
 	charges = get_max_charges()
 	toggle_blood_shield(TRUE)
-	return TRUE
 
 /datum/action/cooldown/bloodsucker/targeted/tremere/thaumaturgy/proc/toggle_blood_shield(toggle)
 	if(level_current < THAUMATURGY_SHIELD_LEVEL)

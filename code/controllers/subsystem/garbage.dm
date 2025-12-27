@@ -372,10 +372,10 @@ SUBSYSTEM_DEF(garbage)
 		found_type = "list"
 		delable = TRUE
 
-	if(isnum(to_delete))
+	else if(isnum(to_delete))
 		found_type = "number"
 
-	if(ispath(to_delete))
+	else if(ispath(to_delete))
 		found_type = "typepath"
 
 	if(delable)
