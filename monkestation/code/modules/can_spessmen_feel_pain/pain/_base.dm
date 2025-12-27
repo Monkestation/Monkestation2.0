@@ -39,30 +39,29 @@
 #endif
 
 /datum/pain/New(mob/living/carbon/human/new_parent)
-	if(!iscarbon(new_parent) || istype(new_parent, /mob/living/carbon/human/dummy))
-		qdel(src) // If we're not a carbon, or a dummy, delete us
-		return null
+	qdel(src) // temporary measure to disable pain - snk 12/21/2025
+	return null
 
-	parent = new_parent
+// 	parent = new_parent
 
-	body_zones = list()
-	for(var/obj/item/bodypart/parent_bodypart as anything in parent.bodyparts)
-		add_bodypart(parent, parent_bodypart, TRUE)
+// 	body_zones = list()
+// 	for(var/obj/item/bodypart/parent_bodypart as anything in parent.bodyparts)
+// 		add_bodypart(parent, parent_bodypart, TRUE)
 
-	if(!length(body_zones))
-		stack_trace("Pain datum failed to find any body_zones to track!")
-		qdel(src) // If we have no bodyparts, delete us
-		return
+// 	if(!length(body_zones))
+// 		stack_trace("Pain datum failed to find any body_zones to track!")
+// 		qdel(src) // If we have no bodyparts, delete us
+// 		return
 
-	register_pain_signals()
-	base_pain_decay = natural_pain_decay
+// 	register_pain_signals()
+// 	base_pain_decay = natural_pain_decay
 
-	addtimer(CALLBACK(src, PROC_REF(start_pain_processing), 1))
+// 	addtimer(CALLBACK(src, PROC_REF(start_pain_processing), 1))
 
-#ifdef TESTING
-	if(new_parent.z && !is_station_level(new_parent.z))
-		print_debug_messages = FALSE
-#endif
+// #ifdef TESTING
+// 	if(new_parent.z && !is_station_level(new_parent.z))
+// 		print_debug_messages = FALSE
+// #endif
 
 /datum/pain/Destroy()
 	body_zones = null
