@@ -76,7 +76,6 @@
 	AddElement(/datum/element/blocks_explosives)
 	. = ..()
 	set_init_door_layer()
-	update_freelook_sight()
 	air_update_turf(TRUE, TRUE)
 	register_context()
 	if(elevator_mode)
@@ -137,7 +136,6 @@
 		layer = initial(layer)
 
 /obj/machinery/door/Destroy()
-	update_freelook_sight()
 	if(elevator_mode)
 		GLOB.elevator_doors -= src
 	if(spark_system)
@@ -408,17 +406,16 @@
 	operating = TRUE
 	use_energy(active_power_usage)
 	do_animate("opening")
-	set_opacity(0)
+	set_opacity(FALSE)
 	SLEEP_NOT_DEL(0.5 SECONDS)
 	set_density(FALSE)
 	flags_1 &= ~PREVENT_CLICK_UNDER_1
 	SLEEP_NOT_DEL(0.5 SECONDS)
 	layer = initial(layer)
 	update_appearance()
-	set_opacity(0)
+	set_opacity(FALSE)
 	operating = FALSE
 	air_update_turf(TRUE, FALSE)
-	update_freelook_sight()
 	if(autoclose)
 		autoclose_in(DOOR_CLOSE_WAIT)
 	SEND_SIGNAL(src, COMSIG_ATOM_DOOR_OPEN)
@@ -466,10 +463,9 @@
 	SLEEP_NOT_DEL(0.5 SECONDS)
 	update_appearance()
 	if(visible && !glass)
-		set_opacity(1)
+		set_opacity(TRUE)
 	operating = FALSE
 	air_update_turf(TRUE, TRUE)
-	update_freelook_sight()
 
 	if(!can_crush)
 		return TRUE
@@ -527,12 +523,6 @@
 
 /obj/machinery/door/proc/hasPower()
 	return !(machine_stat & NOPOWER)
-
-/obj/machinery/door/proc/update_freelook_sight()
-	if(!glass && GLOB.cameranet)
-		GLOB.cameranet.updateVisibility(src, 0)
-	if(!glass && GLOB.thrallnet)
-		GLOB.thrallnet.updateVisibility(src, 0)
 
 /obj/machinery/door/block_superconductivity() // All non-glass airlocks block heat, this is intended.
 	if(opacity || heat_proof)

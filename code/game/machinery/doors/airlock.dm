@@ -1332,8 +1332,7 @@
 	operating = TRUE
 	update_icon(ALL, AIRLOCK_OPENING, TRUE)
 	sleep(0.1 SECONDS)
-	set_opacity(0)
-	update_freelook_sight()
+	set_opacity(FALSE)
 	sleep(0.4 SECONDS)
 	set_density(FALSE)
 	flags_1 &= ~PREVENT_CLICK_UNDER_1
@@ -1430,8 +1429,7 @@
 	if(dangerous_close)
 		crush()
 	if(visible && !glass)
-		set_opacity(1)
-	update_freelook_sight()
+		set_opacity(TRUE)
 	sleep(0.1 SECONDS)
 	update_icon(ALL, AIRLOCK_CLOSED, 1)
 	operating = FALSE
