@@ -1,6 +1,6 @@
 import { classes } from 'common/react';
 import { useBackend } from '../backend';
-import { Component, Fragment } from 'inferno';
+import { Component, Fragment } from 'react';
 import {
   Box,
   Button,
@@ -259,8 +259,8 @@ export class Changelog extends Component {
   };
   dateChoices: string[];
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       data: 'Loading changelog data...',
       selectedDate: '',
@@ -348,7 +348,7 @@ export class Changelog extends Component {
               window.scrollTo(
                 0,
                 document.body.scrollHeight ||
-                document.documentElement.scrollHeight,
+                  document.documentElement.scrollHeight,
               );
               return this.getData(dates[index]);
             }}
@@ -367,7 +367,7 @@ export class Changelog extends Component {
               window.scrollTo(
                 0,
                 document.body.scrollHeight ||
-                document.documentElement.scrollHeight,
+                  document.documentElement.scrollHeight,
               );
               return this.getData(dates[index]);
             }}
@@ -389,7 +389,7 @@ export class Changelog extends Component {
               window.scrollTo(
                 0,
                 document.body.scrollHeight ||
-                document.documentElement.scrollHeight,
+                  document.documentElement.scrollHeight,
               );
               return this.getData(dates[index]);
             }}

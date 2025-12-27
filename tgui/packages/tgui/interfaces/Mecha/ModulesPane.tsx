@@ -58,7 +58,7 @@ export const ModulesPane = (props) => {
     <Section
       title="Equipment"
       fill
-      style={{ 'overflow-y': 'auto' }}
+      style={{ overflowY: 'auto' }}
       buttons={
         <Button
           icon={!weapons_safety ? 'triangle-exclamation' : 'helmet-safety'}
@@ -96,9 +96,9 @@ export const ModulesPane = (props) => {
                   <Stack.Item
                     lineHeight="32px"
                     style={{
-                      'text-transform': 'capitalize',
+                      textTransform: 'capitalize',
                       overflow: 'hidden',
-                      'text-overflow': 'ellipsis',
+                      textOverflow: 'ellipsis',
                     }}
                   >
                     {`${moduleSlotLabel(module.slot)} Slot`}
@@ -128,9 +128,9 @@ export const ModulesPane = (props) => {
                   <Stack.Item
                     lineHeight="32px"
                     style={{
-                      'text-transform': 'capitalize',
+                      textTransform: 'capitalize',
                       overflow: 'hidden',
-                      'text-overflow': 'ellipsis',
+                      textOverflow: 'ellipsis',
                     }}
                   >
                     {module.name}
@@ -160,7 +160,7 @@ export const ModuleDetails = (props) => {
           <Stack.Item>
             <Stack>
               <Stack.Item grow>
-                <h2 style={{ 'text-transform': 'capitalize' }}>{name}</h2>
+                <h2 style={{ textTransform: 'capitalize' }}>{name}</h2>
                 <Box italic opacity={0.5}>
                   {moduleSlotLabel(slot)}
                 </Box>
@@ -309,7 +309,7 @@ const MECHA_SNOWFLAKE_ID_WEAPON_BALLISTIC = 'ballistic_weapon_snowflake';
 const MECHA_SNOWFLAKE_ID_GENERATOR = 'generator_snowflake';
 const MECHA_SNOWFLAKE_ID_RCD = 'rcd_snowflake';
 
-export const ModuleDetailsExtra = (props: { module: MechModule }, context) => {
+export const ModuleDetailsExtra = (props: { module: MechModule }) => {
   const module = props.module;
   switch (module.snowflake.snowflake_id) {
     case MECHA_SNOWFLAKE_ID_WEAPON_BALLISTIC:
@@ -540,7 +540,7 @@ const SnowflakeRadio = (props) => {
       </LabeledList.Item>
       <LabeledList.Item label="Frequency">
         <NumberInput
-          animate
+          animated
           unit="kHz"
           step={0.2}
           stepPixelSize={10}
@@ -733,7 +733,7 @@ const SnowflakeAirTank = (props) => {
             minValue={tank_pump_pressure_min}
             maxValue={tank_pump_pressure_max}
             step={10}
-            format={(value) => Math.round(value)}
+            format={(value) => Math.round(value)?.toString()}
             onChange={(e, value) =>
               act('equip_act', {
                 ref: ref,
@@ -810,9 +810,9 @@ const SnowflakeOrebox = (props) => {
             <Stack.Item
               lineHeight="24px"
               style={{
-                'text-transform': 'capitalize',
+                textTransform: 'capitalize',
                 overflow: 'hidden',
-                'text-overflow': 'ellipsis',
+                textOverflow: 'ellipsis',
               }}
             >
               {`${contents[item].amount}x ${contents[item].name}`}
@@ -853,7 +853,7 @@ const SnowflakeCargo = (props) => {
                 })
               }
               style={{
-                'text-transform': 'capitalize',
+                textTransform: 'capitalize',
               }}
             >
               {item.name}

@@ -106,7 +106,6 @@ const CrewTab = (props: { record: SecurityRecord }) => {
   return (
     <Tabs.Tab
       className="candystripe"
-      label={record.name}
       onClick={() => selectRecord(record)}
       selected={isSelected}
     >

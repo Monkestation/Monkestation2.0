@@ -49,7 +49,6 @@ export const ModularShieldGen = (props) => {
               color={recovering ? 'red' : 'white'}
             >
               <ProgressBar
-                title="Shield Strength"
                 value={current_strength}
                 maxValue={max_strength}
                 ranges={{
@@ -63,7 +62,6 @@ export const ModularShieldGen = (props) => {
             </Section>
             <Section title="Regeneration and Radius">
               <ProgressBar
-                title="Regeneration rate"
                 value={current_regeneration}
                 maxValue={max_regeneration}
                 ranges={{
@@ -76,7 +74,6 @@ export const ModularShieldGen = (props) => {
               </ProgressBar>
               <Section>
                 <ProgressBar
-                  title="Shield radius"
                   value={current_radius}
                   maxValue={max_radius}
                   ranges={{
@@ -95,7 +92,7 @@ export const ModularShieldGen = (props) => {
               <LabeledList>
                 <LabeledList.Item label="Set Radius">
                   <NumberInput
-                    disabled={active}
+                    disabled={!!active}
                     fluid
                     value={current_radius}
                     minValue={3}
@@ -121,7 +118,7 @@ export const ModularShieldGen = (props) => {
               <LabeledList>
                 <LabeledList.Item label="Toggle Power">
                   <Button
-                    bold={1}
+                    bold
                     disabled={recovering || initiating_field}
                     selected={active}
                     content={active ? 'On' : 'Off'}

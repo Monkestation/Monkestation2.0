@@ -281,7 +281,6 @@ export const VethPlayerPanel = (_props) => {
                         placeholder="Search by name, old name, job, or ckey"
                         value={searchTerm}
                         onInput={(_, value) => setSearchTerm(value)}
-                        rows={1}
                         height="2rem"
                         width="500px"
                         className="VethPlayerPanel__search"

@@ -14,7 +14,7 @@ import {
   Stack,
 } from '../components';
 import { Window } from '../layouts';
-import { InfernoNode } from 'inferno';
+import { ReactNode } from 'react';
 
 enum SpellCategory {
   Offensive = 'Offensive',
@@ -60,7 +60,7 @@ type Data = {
 type TabType = {
   title: string;
   blurb?: string;
-  component?: () => InfernoNode;
+  component?: () => ReactNode;
   locked?: boolean;
   scrollable?: boolean;
 };
@@ -760,7 +760,6 @@ export const Spellbook = (props) => {
                   <Input
                     width={15}
                     placeholder="Search for a spell..."
-                    icon="search"
                     onInput={(e, val) => setSpellSearch(val)}
                   />
                 </Stack.Item>

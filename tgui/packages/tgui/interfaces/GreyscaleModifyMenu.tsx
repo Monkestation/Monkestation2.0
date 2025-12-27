@@ -6,6 +6,7 @@ import {
   Flex,
   Stack,
   Icon,
+  Image,
   Input,
   LabeledList,
   Section,
@@ -214,28 +215,25 @@ const PreviewDisplay = (props) => {
           </Table.Cell>
           {data.sprites?.finished ? (
             <Table.Cell>
-              <Box
-                as="img"
+              <Image
                 src={data.sprites.finished}
                 m={0}
                 width="75%"
                 mx="10%"
                 style={{
-                  '-ms-interpolation-mode': 'nearest-neighbor',
-                  'image-rendering': 'pixelated',
+                  imageRendering: 'pixelated',
                 }}
               />
             </Table.Cell>
           ) : (
             <Table.Cell>
-              <Box grow>
+              <Box>
                 <Icon
                   name="image"
                   ml="25%"
                   size={5}
                   style={{
-                    '-ms-interpolation-mode': 'nearest-neighbor',
-                    'image-rendering': 'pixelated',
+                    imageRendering: 'pixelated',
                   }}
                 />
               </Box>
@@ -284,13 +282,11 @@ const PreviewDisplay = (props) => {
 const SingleSprite = (props) => {
   const { source } = props;
   return (
-    <Box
-      as="img"
+    <Image
       src={source}
       width="100%"
       style={{
-        '-ms-interpolation-mode': 'nearest-neighbor',
-        'image-rendering': 'pixelated',
+        imageRendering: 'pixelated',
       }}
     />
   );

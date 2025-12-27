@@ -1,5 +1,5 @@
 import { Stack, Box } from '../../components';
-import { Component, createRef } from 'inferno';
+import { Component, createRef } from 'react';
 import { DisplayName } from './DisplayName';
 import { classes } from 'common/react';
 import { noop } from './constants';

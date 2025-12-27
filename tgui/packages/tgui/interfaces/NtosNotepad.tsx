@@ -6,10 +6,16 @@
 
 import { NtosWindow } from '../layouts';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Section, TextArea, MenuBar, Divider } from '../components';
-import { Component, createRef, RefObject } from 'inferno';
+import {
+  Box,
+  Section,
+  TextArea,
+  MenuBar,
+  Divider,
+  Dialog,
+} from '../components';
+import { Component, createRef, RefObject } from 'react';
 import { createLogger } from '../logging';
-import { Dialog, UnsavedChangesDialog } from '../components/Dialog';
 
 const logger = createLogger('NtosNotepad');
 
@@ -28,7 +34,7 @@ const PartiallyUnderlined = (props: PartiallyUnderlinedProps) => {
   return (
     <>
       {start}
-      <span style={{ 'text-decoration': 'underline' }}>{underlined}</span>
+      <span style={{ textDecoration: 'underline' }}>{underlined}</span>
       {end}
     </>
   );
@@ -245,7 +251,7 @@ interface NotePadTextAreaProps {
 }
 
 class NotePadTextArea extends Component<NotePadTextAreaProps> {
-  innerRef: RefObject<HTMLTextAreaElement>;
+  innerRef: RefObject<HTMLTextAreaElement | null>;
 
   constructor(props) {
     super(props);
@@ -307,11 +313,9 @@ class NotePadTextArea extends Component<NotePadTextAreaProps> {
 
     return (
       <TextArea
-        innerRef={this.innerRef}
+        ref={this.innerRef}
         onInput={(_, value) => setText(value)}
         className={'NtosNotepad__textarea'}
-        scroll
-        nowrap={!wordWrap}
         value={text}
       />
     );
@@ -347,7 +351,7 @@ const AboutDialog = (props: AboutDialogProps) => {
           <span
             style={{
               padding: '3rem 1rem 0.5rem 2rem',
-              'max-width': '35rem',
+              maxWidth: '35rem',
             }}
           >
             This product is licensed under the NT Corporation Terms to:
@@ -378,7 +382,6 @@ export const NtosNotepad = (props) => {
     'originalText',
     note,
   );
-  console.log(note);
   const [text, setText] = useLocalState<string>('text', note);
   const [statuses, setStatuses] = useLocalState<Statuses>('statuses', {
     line: 0,
@@ -489,12 +492,16 @@ export const NtosNotepad = (props) => {
         </Box>
       </NtosWindow.Content>
       {activeDialog === Dialogs.UNSAVED_CHANGES && (
-        <UnsavedChangesDialog
-          documentName={documentName}
-          onSave={handleSave}
-          onClose={handleCloseDialog}
-          onDiscard={noSave}
-        />
+        <Dialog title="Notepad" onClose={handleCloseDialog}>
+          <div className="Dialog__body">
+            Do you want to save changes to {documentName}?
+          </div>
+          <div className="Dialog__footer">
+            <Dialog.Button onClick={handleSave}>Save</Dialog.Button>
+            <Dialog.Button onClick={noSave}>Don&apos;t Save</Dialog.Button>
+            <Dialog.Button onClick={handleCloseDialog}>Cancel</Dialog.Button>
+          </div>
+        </Dialog>
       )}
       {activeDialog === Dialogs.ABOUT && (
         <AboutDialog close={handleCloseDialog} clientName={config.user.name} />

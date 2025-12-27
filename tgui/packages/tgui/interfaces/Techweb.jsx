@@ -671,10 +671,10 @@ const TechNode = (props) => {
           className="Techweb__NodeExperimentsRequired"
           title="Required Experiments"
         >
-          {required_experiments.map((k) => {
+          {required_experiments.map((k, idx) => {
             const thisExp = experiments[k];
             if (thisExp === null || thisExp === undefined) {
-              return <LockedExperiment />;
+              return <LockedExperiment key={idx} />;
             }
             return <Experiment key={thisExp} exp={thisExp} />;
           })}
@@ -685,10 +685,10 @@ const TechNode = (props) => {
           className="TechwebNodeExperimentsRequired"
           title="Discount-Eligible Experiments"
         >
-          {Object.keys(discount_experiments).map((k) => {
+          {Object.keys(discount_experiments).map((k, idx) => {
             const thisExp = experiments[k];
             if (thisExp === null || thisExp === undefined) {
-              return <LockedExperiment />;
+              return <LockedExperiment key={idx} />;
             }
             return (
               <Experiment key={thisExp} exp={thisExp}>

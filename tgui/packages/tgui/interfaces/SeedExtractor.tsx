@@ -73,7 +73,7 @@ export const SeedExtractor = (props) => {
         <Section>
           <Table>
             <Table.Row header>
-              <Table.Cell colspan="3" px={1} py={2}>
+              <Table.Cell colSpan={3} px={1} py={2}>
                 <Input
                   autoFocus
                   placeholder={'Search...'}
@@ -194,7 +194,7 @@ export const SeedExtractor = (props) => {
               seeds.map((item) => (
                 <Table.Row
                   key={item.key}
-                  style={{ 'border-top': '2px solid #222' }}
+                  style={{ borderTop: '2px solid #222' }}
                 >
                   <Table.Cell collapsing>
                     <DmIcon
@@ -256,7 +256,7 @@ export const SeedExtractor = (props) => {
                     py={0.5}
                     px={1}
                     collapsing
-                    colspan="2"
+                    colSpan={2}
                     textAlign="right"
                   >
                     {action ? (
@@ -316,7 +316,7 @@ const Level = (props) => {
     >
       <span
         style={{
-          'text-shadow': '1px 1px 0 black',
+          textShadow: '1px 1px 0 black',
         }}
       >
         {props.value}

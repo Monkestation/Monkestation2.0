@@ -1,4 +1,4 @@
-import { Fragment } from 'inferno';
+import { Fragment } from 'react';
 import { useBackend, useLocalState } from '../backend';
 import {
   Icon,
@@ -12,7 +12,6 @@ import {
   Collapsible,
 } from '../components';
 import { Window } from '../layouts';
-import { TableRow } from '../components/Table';
 
 const brassColor = '#DFC69C';
 const tinkerCache = '#B5FD9D';
@@ -77,7 +76,7 @@ export const ClockworkSlab = (props) => {
 
 const ClockworkHelp = (props) => {
   return (
-    <Fragment>
+    <>
       <Collapsible title="Where To Start" color="average" open={1}>
         <Section>
           After a long and destructive war, Rat&#39;Var has been imprisoned
@@ -199,7 +198,7 @@ const ClockworkHelp = (props) => {
           <br />
         </Section>
       </Collapsible>
-    </Fragment>
+    </>
   );
 };
 
@@ -212,7 +211,7 @@ const ClockworkSpellList = (props) => {
       {scriptures.map((script) =>
         script.type === selectedTab ? (
           <Fragment key={script}>
-            <TableRow>
+            <Table.Row>
               <Table.Cell bold>{script.name}</Table.Cell>
               <Table.Cell collapsing textAlign="right">
                 <Button
@@ -232,8 +231,8 @@ const ClockworkSpellList = (props) => {
                   }
                 />
               </Table.Cell>
-            </TableRow>
-            <TableRow>
+            </Table.Row>
+            <Table.Row>
               <Table.Cell>{script.desc}</Table.Cell>
               <Table.Cell collapsing textAlign="right">
                 <Button
@@ -247,7 +246,7 @@ const ClockworkSpellList = (props) => {
                   }
                 />
               </Table.Cell>
-            </TableRow>
+            </Table.Row>
             <Table.Cell>
               <Divider />
             </Table.Cell>

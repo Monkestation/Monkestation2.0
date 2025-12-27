@@ -1,6 +1,6 @@
 import { Window } from '../layouts';
 import { useBackend } from '../backend';
-import { Flex, Box } from '../components';
+import { Flex, Box, Image } from '../components';
 import { resolveAsset } from '../assets';
 import { BooleanLike } from 'common/react';
 
@@ -25,7 +25,7 @@ export const TrenchMap = (_props) => {
     <Window width={510} height={600}>
       <HotspotRender />
       <YouAreHere />
-      <Box as="img" src={resolveAsset(map_image)} />
+      <Image src={resolveAsset(map_image)} />
       <MapInfo />
     </Window>
   );
@@ -44,7 +44,7 @@ const MapInfo = (_props) => {
               width: '15px',
               clear: 'both',
               border: '1px solid black',
-              'background-color': '#0000FF',
+              backgroundColor: '#0000FF',
             }}
           />
           Trench Wall
@@ -59,7 +59,7 @@ const MapInfo = (_props) => {
               width: '15px',
               clear: 'both',
               border: '1px solid black',
-              'background-color': '#00FF95',
+              backgroundColor: '#00FF95',
             }}
           />
           Station
@@ -74,7 +74,7 @@ const MapInfo = (_props) => {
               width: '15px',
               clear: 'both',
               border: '1px solid black',
-              'background-color': '#FF0000',
+              backgroundColor: '#FF0000',
             }}
           />
           Locked Hotspot
@@ -89,7 +89,7 @@ const MapInfo = (_props) => {
               width: '15px',
               clear: 'both',
               border: '1px solid black',
-              'background-color': '#FF7878',
+              backgroundColor: '#FF7878',
             }}
           />
           Moving Hotspot
@@ -104,7 +104,7 @@ const MapInfo = (_props) => {
               width: '15px',
               clear: 'both',
               border: '1px solid black',
-              'background-color': '#008800',
+              backgroundColor: '#008800',
             }}
           />
           You Are Here
@@ -119,7 +119,7 @@ const MapInfo = (_props) => {
               width: '15px',
               clear: 'both',
               border: '1px solid black',
-              'background-color': '#49A0C2',
+              backgroundColor: '#49A0C2',
             }}
           />
           Other
@@ -148,8 +148,8 @@ const HotspotRender = (_props) => {
                 ? 'rgba(255, 120, 120, 0.6)'
                 : 'rgba(255, 0, 0, 0.8)'
             }`,
-            'margin-left': `-${hotspot.radius * 2}px`,
-            'margin-bottom': `-${hotspot.radius * 2}px`,
+            marginLeft: `-${hotspot.radius * 2}px`,
+            marginBottom: `-${hotspot.radius * 2}px`,
             position: 'absolute',
           }}
         />
@@ -164,7 +164,7 @@ const YouAreHere = (_props) => {
   } = useBackend<Data>();
 
   if (!x || !y) {
-    return;
+    return null;
   }
 
   const RADIUS = 1;
@@ -178,8 +178,8 @@ const YouAreHere = (_props) => {
           width: `${RADIUS * 4 + 2}px`,
           height: `${RADIUS * 4 + 2}px`,
           background: 'rgb(0, 136, 0)',
-          'margin-left': `-${RADIUS * 2}px`,
-          'margin-bottom': `-${RADIUS * 2}px`,
+          marginLeft: `-${RADIUS * 2}px`,
+          marginBottom: `-${RADIUS * 2}px`,
           position: 'absolute',
         }}
       />

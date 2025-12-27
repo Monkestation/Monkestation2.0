@@ -11,6 +11,7 @@ import {
   Stack,
   Tabs,
   Dropdown,
+  Image,
 } from '../components';
 import { Window } from '../layouts';
 
@@ -94,14 +95,12 @@ export const SelectEquipment = (props) => {
               </Stack.Item>
               <Stack.Item grow={1}>
                 <Section fill title={name} textAlign="center">
-                  <Box
-                    as="img"
+                  <Image
                     m={0}
                     src={`data:image/jpeg;base64,${icon64}`}
                     height="100%"
                     style={{
-                      '-ms-interpolation-mode': 'nearest-neighbor',
-                      'image-rendering': 'pixelated',
+                      imageRendering: 'pixelated',
                     }}
                   />
                 </Section>
@@ -205,8 +204,8 @@ const CurrentlySelectedDisplay = (props) => {
           title={entry?.path}
           style={{
             overflow: 'hidden',
-            'white-space': 'nowrap',
-            'text-overflow': 'ellipsis',
+            whiteSpace: 'nowrap',
+            textOverflow: 'ellipsis',
           }}
         >
           {entry?.name}

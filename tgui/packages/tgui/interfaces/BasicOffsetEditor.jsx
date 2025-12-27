@@ -1,4 +1,4 @@
-import { Fragment } from 'inferno';
+import { Fragment } from 'react';
 import { useBackend } from '../backend';
 import { Box, Button, Flex, Icon, Section, Slider } from '../components';
 import { Window } from '../layouts';

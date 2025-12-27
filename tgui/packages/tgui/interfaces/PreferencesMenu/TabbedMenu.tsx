@@ -1,101 +1,85 @@
-import { Component, createRef, InfernoNode, RefObject } from 'inferno';
-import { Button, Section, Stack } from '../../components';
-import { Flex, FlexProps } from '../../components/Flex';
+import { type ComponentProps, ReactNode, useRef } from 'react';
+import { Button, type Flex, Input, Section, Stack } from 'tgui-core/components';
 
 type TabbedMenuProps = {
-  categoryEntries: [string, InfernoNode][];
-  contentProps?: FlexProps;
-  extra?: InfernoNode;
-  name: string;
+  categoryEntries: [string, ReactNode[]][] | [string, React.JSX.Element][];
+  contentProps?: ComponentProps<typeof Flex>;
+  searchText?: string;
+  setSearchText?: (text: string) => void;
 };
 
-export class TabbedMenu extends Component<TabbedMenuProps> {
-  categoryRefs: Record<string, RefObject<HTMLDivElement>> = {};
-  sectionRef: RefObject<HTMLDivElement> = createRef();
+export function TabbedMenu(props: TabbedMenuProps) {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const categoryRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
-  getCategoryRef(category: string): RefObject<HTMLDivElement> {
-    if (!this.categoryRefs[category]) {
-      this.categoryRefs[category] = createRef();
-    }
+  return (
+    <Stack vertical fill>
+      <Stack.Item>
+        <Stack fill px={5}>
+          {props.categoryEntries.map(([category, children]) => (
+            <Stack.Item key={category} grow basis="content">
+              <Button
+                align="center"
+                fontSize="1.2em"
+                fluid
+                onClick={() => {
+                  const offsetTop = categoryRefs.current[category]?.offsetTop;
+                  if (offsetTop === undefined) {
+                    return;
+                  }
 
-    return this.categoryRefs[category];
-  }
+                  const currentSection = sectionRef.current;
+                  if (!currentSection) {
+                    return;
+                  }
 
-  render() {
-    const pageContents = (
-      <Stack vertical>
-        {this.props.categoryEntries.map(([category, children]) => {
-          return (
-            <Stack.Item key={category} innerRef={this.getCategoryRef(category)}>
-              <Section fill title={category}>
-                {children}
-              </Section>
+                  currentSection.scrollTop = offsetTop;
+                }}
+              >
+                {category}
+              </Button>
             </Stack.Item>
-          );
-        })}
-      </Stack>
-    );
-
-    return (
-      <Stack horizontal height="100%">
-        <Stack.Item>
-          <Section height="100%" title={this.props.name}>
-            <Stack vertical width="150px">
-              {this.props.categoryEntries.map(([category]) => {
-                return (
-                  <Stack.Item key={category} grow basis="content">
-                    <Button
-                      align="center"
-                      fontSize="1.2em"
-                      fluid
-                      onClick={() => {
-                        const offsetTop =
-                          this.categoryRefs[category].current?.offsetTop;
-
-                        if (offsetTop === undefined) {
-                          return;
-                        }
-
-                        const currentSection = this.sectionRef.current;
-
-                        if (!currentSection) {
-                          return;
-                        }
-
-                        currentSection.scrollTop = offsetTop;
-                      }}
-                    >
-                      {category}
-                    </Button>
-                  </Stack.Item>
-                );
-              })}
-              {this.props.extra !== null ? (
-                <>
-                  <Stack.Divider />
-                  <Stack.Item>{this.props.extra}</Stack.Item>
-                </>
-              ) : (
-                <Flex />
-              )}
-            </Stack>
-          </Section>
+          ))}
+        </Stack>
+      </Stack.Item>
+      {!!props.setSearchText && (
+        <Stack.Item px={2} pl={5} pr={5}>
+          <Input
+            fluid
+            height="2em"
+            fontSize="1.2em"
+            placeholder="Search..."
+            value={props.searchText}
+            // eslint-disable-next-line react/jsx-handler-names
+            onChange={props.setSearchText}
+          />
         </Stack.Item>
-        <Stack.Divider />
-        <Stack.Item
-          grow
-          innerRef={this.sectionRef}
-          overflowY="scroll"
-          {...{
-            ...this.props.contentProps,
+      )}
 
-            // Otherwise, TypeScript complains about invalid prop
-            className: undefined,
-          }}
-        >
-          {pageContents}
-        </Stack.Item>
-      </Stack>
-    );
-  }
+      <Stack.Item
+        grow
+        ref={sectionRef}
+        position="relative"
+        overflowY="scroll"
+        {...props.contentProps}
+      >
+        <Stack vertical fill px={2}>
+          {props.categoryEntries.map(([category, children]) => {
+            return (
+              <div
+                key={category}
+                ref={(ref) => {
+                  categoryRefs.current[category] = ref;
+                }}
+              >
+                <Section fill title={category}>
+                  {children}
+                </Section>
+              </div>
+            );
+          })}
+        </Stack>
+      </Stack.Item>
+    </Stack>
+  );
 }

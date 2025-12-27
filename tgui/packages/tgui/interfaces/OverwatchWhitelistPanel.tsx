@@ -109,7 +109,7 @@ export const OverwatchWhitelistPanel = (props) => {
                 );
               })}
             </Stack>
-          )) || <NoticeBox fluid> No whitelist entries to display. </NoticeBox>}
+          )) || <NoticeBox> No whitelist entries to display. </NoticeBox>}
         </Section>
       </Window.Content>
     </Window>

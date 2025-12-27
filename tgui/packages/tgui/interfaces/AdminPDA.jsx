@@ -1,6 +1,5 @@
-import { Section, Dropdown, Input, Box, TextArea } from '../components';
+import { Section, Dropdown, Input, Box, Button, TextArea } from '../components';
 import { useBackend, useLocalState } from '../backend';
-import { Button } from '../components/Button';
 import { Window } from '../layouts';
 
 export const AdminPDA = (props) => {
@@ -124,6 +123,7 @@ const MessageInput = (props) => {
         <TextArea
           placeholder="Type the message you want to send..."
           height="200px"
+          width="100%"
           mb={1}
           onInput={(e, value) => {
             setMessageText(value);

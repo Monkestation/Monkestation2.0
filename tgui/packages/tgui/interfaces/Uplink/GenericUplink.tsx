@@ -1,5 +1,5 @@
 import { BooleanLike } from 'common/react';
-import { InfernoNode } from 'inferno';
+import { ReactNode } from 'react';
 
 import { useBackend, useLocalState, useSharedState } from '../../backend';
 import {
@@ -16,7 +16,7 @@ import {
 } from '../../components';
 
 type GenericUplinkProps = {
-  currency?: string | InfernoNode;
+  currency?: string | ReactNode;
   categories: string[];
   items: Item[];
   handleBuy: (item: Item) => void;
@@ -59,9 +59,9 @@ export const GenericUplink = (props: GenericUplinkProps) => {
                   lineHeight={2}
                   style={{
                     overflow: 'hidden',
-                    'white-space': 'nowrap',
-                    'text-overflow': 'ellipsis',
-                    'text-align': 'center',
+                    whiteSpace: 'nowrap',
+                    textOverflow: 'ellipsis',
+                    textAlign: 'center',
                   }}
                   onClick={() => act('buy_raw_tc')}
                 >
@@ -137,8 +137,8 @@ export type Item = {
   icon: string;
   icon_state: string;
   category: string;
-  cost: InfernoNode | string;
-  desc: InfernoNode | string;
+  cost: ReactNode | string;
+  desc: ReactNode | string;
   disabled: BooleanLike;
   is_locked: BooleanLike;
 };
@@ -190,8 +190,8 @@ const ItemList = (props: ItemListProps) => {
                         lineHeight="36px"
                         style={{
                           overflow: 'hidden',
-                          'white-space': 'nowrap',
-                          'text-overflow': 'ellipsis',
+                          whiteSpace: 'nowrap',
+                          textOverflow: 'ellipsis',
                         }}
                       >
                         {item.name}

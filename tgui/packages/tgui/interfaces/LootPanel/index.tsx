@@ -1,6 +1,6 @@
 import { SearchItem } from './types';
 import { BooleanLike } from 'common/react';
-import { Component } from 'inferno';
+import { Component } from 'react';
 import { useBackend } from '../../backend';
 import { clamp } from 'common/math';
 import { Stack, Section, Button, Input } from '../../components';

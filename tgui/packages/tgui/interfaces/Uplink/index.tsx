@@ -1,5 +1,5 @@
 import { BooleanLike } from 'common/react';
-import { Component, Fragment } from 'inferno';
+import { Component, Fragment } from 'react';
 
 import { resolveAsset } from '../../assets';
 import { useBackend } from '../../backend';
@@ -366,8 +366,8 @@ export class Uplink extends Component<{}, UplinkState> {
                           <Tabs.Tab
                             style={{
                               overflow: 'hidden',
-                              'white-space': 'nowrap',
-                              'text-overflow': 'ellipsis',
+                              whiteSpace: 'nowrap',
+                              textOverflow: 'ellipsis',
                             }}
                             icon="star"
                             selected={currentTab === 0}
@@ -380,8 +380,8 @@ export class Uplink extends Component<{}, UplinkState> {
                           <Tabs.Tab
                             style={{
                               overflow: 'hidden',
-                              'white-space': 'nowrap',
-                              'text-overflow': 'ellipsis',
+                              whiteSpace: 'nowrap',
+                              textOverflow: 'ellipsis',
                             }}
                             icon="star-half-stroke"
                             selected={currentTab === 1}
@@ -394,8 +394,8 @@ export class Uplink extends Component<{}, UplinkState> {
                           <Tabs.Tab
                             style={{
                               overflow: 'hidden',
-                              'white-space': 'nowrap',
-                              'text-overflow': 'ellipsis',
+                              whiteSpace: 'nowrap',
+                              textOverflow: 'ellipsis',
                             }}
                             icon="dollar-sign"
                             selected={currentTab === 2}
@@ -407,8 +407,8 @@ export class Uplink extends Component<{}, UplinkState> {
                         <Tabs.Tab
                           style={{
                             overflow: 'hidden',
-                            'white-space': 'nowrap',
-                            'text-overflow': 'ellipsis',
+                            whiteSpace: 'nowrap',
+                            textOverflow: 'ellipsis',
                           }}
                           icon="store"
                           selected={currentTab === 3 || !has_objectives}

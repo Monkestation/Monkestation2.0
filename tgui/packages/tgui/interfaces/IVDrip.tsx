@@ -114,7 +114,7 @@ export const IVDrip = (props) => {
             )}
             <LabeledList.Item
               label="Direction"
-              color={!mode && 'bad'}
+              color={mode ? undefined : 'bad'}
               buttons={
                 <Button
                   my={1}
@@ -162,7 +162,7 @@ export const IVDrip = (props) => {
                 >
                   <span
                     style={{
-                      'text-shadow': '1px 1px 0 black',
+                      textShadow: '1px 1px 0 black',
                     }}
                   >
                     {`${containerCurrentVolume} of ${containerMaxVolume} units`}

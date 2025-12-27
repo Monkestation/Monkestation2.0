@@ -166,7 +166,6 @@ const AbilitySection = (props: any) => {
         <Stack.Item grow>
           <Stack vertical>
             <Dropdown
-              displayText={selectedAbility.ability_name}
               selected={selectedAbility.ability_name}
               width="100%"
               options={ability.map((abilities) => abilities.ability_name)}

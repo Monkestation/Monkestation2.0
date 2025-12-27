@@ -254,10 +254,7 @@ const Queue = (props: QueueProps) => {
             />
           </Section>
         </Stack.Item>
-        <Stack.Item
-          grow
-          style={{ 'overflow-y': 'auto', 'overflow-x': 'hidden' }}
-        >
+        <Stack.Item grow style={{ overflowY: 'auto', overflowX: 'hidden' }}>
           <Section fill>
             <QueueList
               availableMaterials={availableMaterials}
@@ -388,12 +385,14 @@ const Authorization = (props) => {
   const emagged = data.emagged;
 
   return (
-    <Section width="420px" style={{ 'white-space': 'pre-wrap' }}>
+    <Section width="420px" style={{ whiteSpace: 'pre-wrap' }}>
       <b>
         {'User: '}
         <span
-          style={!combat_parts_allowed ? 'color:#ff0000' : 'color:#00ff00'}
-          font-style:bold
+          style={{
+            color: !combat_parts_allowed ? '#ff0000' : '#00ff00',
+            fontWeight: 'bold',
+          }}
         >
           {!combat_parts_allowed
             ? 'Unauthorized'

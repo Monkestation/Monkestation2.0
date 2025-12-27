@@ -173,14 +173,14 @@ const SpeciesPerk = (props: { className: string; perk: Perk }) => {
         </Box>
       }
     >
-      <Box class={className} width="32px" height="32px">
+      <Box className={className} width="32px" height="32px">
         <Icon
           name={perk.ui_icon}
           size={1.5}
           ml={0}
           mt={1}
           style={{
-            'text-align': 'center',
+            textAlign: 'center',
             height: '100%',
             width: '100%',
           }}
@@ -207,7 +207,7 @@ const SpeciesPerks = (props: { perks: Species['perks'] }) => {
         </Stack>
       </Stack.Item>
 
-      <Stack grow>
+      <Stack>
         {neutral.map((perk) => {
           return (
             <Stack.Item key={perk.name}>
@@ -293,55 +293,49 @@ const SpeciesPageInner = (props: {
           </Stack.Item>
 
           <Stack.Item grow>
-            <Box fill>
-              <Box>
-                <Stack fill>
-                  <Stack.Item width="70%">
-                    <Section
-                      title={currentSpecies.name}
-                      buttons={
-                        // NOHUNGER species have no diet (diet = null),
-                        // so we have nothing to show
-                        currentSpecies.diet && (
-                          <Diet diet={currentSpecies.diet} />
-                        )
-                      }
-                    >
-                      <Section title="Description">
-                        {currentSpecies.desc}
-                      </Section>
+            <Box>
+              <Stack fill>
+                <Stack.Item width="70%">
+                  <Section
+                    title={currentSpecies.name}
+                    buttons={
+                      // NOHUNGER species have no diet (diet = null),
+                      // so we have nothing to show
+                      currentSpecies.diet && <Diet diet={currentSpecies.diet} />
+                    }
+                  >
+                    <Section title="Description">{currentSpecies.desc}</Section>
 
-                      <Section title="Features">
-                        <SpeciesPerks perks={currentSpecies.perks} />
-                      </Section>
+                    <Section title="Features">
+                      <SpeciesPerks perks={currentSpecies.perks} />
                     </Section>
-                  </Stack.Item>
+                  </Section>
+                </Stack.Item>
 
-                  <Stack.Item width="30%">
-                    <CharacterPreview
-                      id={data.character_preview_view}
-                      height="100%"
-                    />
-                  </Stack.Item>
-                </Stack>
-              </Box>
-              <Box mt={1}>
-                <Section title="Lore">
-                  <BlockQuote>
-                    {currentSpecies.lore.map((text, index) => (
-                      <Box key={index} maxWidth="100%">
-                        {text}
-                        {index !== currentSpecies.lore.length - 1 && (
-                          <>
-                            <br />
-                            <br />
-                          </>
-                        )}
-                      </Box>
-                    ))}
-                  </BlockQuote>
-                </Section>
-              </Box>
+                <Stack.Item width="30%">
+                  <CharacterPreview
+                    id={data.character_preview_view}
+                    height="100%"
+                  />
+                </Stack.Item>
+              </Stack>
+            </Box>
+            <Box mt={1}>
+              <Section title="Lore">
+                <BlockQuote>
+                  {currentSpecies.lore.map((text, index) => (
+                    <Box key={index} maxWidth="100%">
+                      {text}
+                      {index !== currentSpecies.lore.length - 1 && (
+                        <>
+                          <br />
+                          <br />
+                        </>
+                      )}
+                    </Box>
+                  ))}
+                </BlockQuote>
+              </Section>
             </Box>
           </Stack.Item>
         </Stack>

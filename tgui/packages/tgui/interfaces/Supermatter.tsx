@@ -2,7 +2,7 @@ import { filter, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { toFixed } from 'common/math';
 import { BooleanLike } from 'common/react';
-import { InfernoNode } from 'inferno';
+import { ReactNode } from 'react';
 import { useBackend, useLocalState } from '../backend';
 import {
   Box,
@@ -29,7 +29,7 @@ type SMGasMetadata = {
 };
 
 type SupermatterProps = {
-  sectionButton?: InfernoNode;
+  sectionButton?: ReactNode;
   uid: number;
   area_name: string;
   integrity: number;
@@ -52,8 +52,8 @@ type SupermatterProps = {
 // LabeledList but stack and with a chevron dropdown.
 type SupermatterEntryProps = {
   title: string;
-  content: InfernoNode;
-  detail?: InfernoNode;
+  content: ReactNode;
+  detail?: ReactNode;
   alwaysShowChevron?: boolean;
 };
 const SupermatterEntry = (props: SupermatterEntryProps) => {
@@ -342,7 +342,7 @@ export const SupermatterContent = (props: SupermatterProps) => {
                     minValue={0}
                     maxValue={1}
                   >
-                    {toFixed(amount * 100, 2) + '%'}
+                    {`${toFixed(amount * 100, 2)}%`}
                   </ProgressBar>
                 }
                 detail={

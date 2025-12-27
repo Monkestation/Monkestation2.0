@@ -271,7 +271,7 @@ const ChemMasterContent = (props) => {
             <Box
               lineHeight={1.9}
               style={{
-                'text-shadow': '1px 1px 0 black',
+                textShadow: '1px 1px 0 black',
               }}
             >
               {`Printing ${printingProgress} out of ${printingTotal}`}
@@ -341,7 +341,6 @@ const ReagentEntry = (props) => {
         />
         <Button
           icon="ellipsis-h"
-          title="Custom amount"
           disabled={isPrinting}
           onClick={() =>
             act('transfer', {
@@ -353,7 +352,6 @@ const ReagentEntry = (props) => {
         />
         <Button
           icon="question"
-          title="Analyze"
           onClick={() =>
             act('analyze', {
               reagentRef: chemical.ref,
@@ -434,7 +432,7 @@ const AnalysisResults = (props) => {
         <LabeledList.Item label="Purity">
           <Box
             style={{
-              'text-transform': 'capitalize',
+              textTransform: 'capitalize',
             }}
             color={purityLevel}
           >
@@ -470,7 +468,7 @@ const GroupTitle = ({ title }) => {
       </Stack.Item>
       <Stack.Item
         style={{
-          'text-transform': 'capitalize',
+          textTransform: 'capitalize',
         }}
         color={'gray'}
       >

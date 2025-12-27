@@ -108,7 +108,7 @@ export const LoadoutManager = (props) => {
         <Stack fill vertical>
           <Stack.Item>
             <Section title="Loadout Categories" align="center">
-              <Tabs style={{ 'flex-wrap': 'wrap' }}>
+              <Tabs style={{ flexWrap: 'wrap' }}>
                 {loadout_tabs.map((curTab) => (
                   <Tabs.Tab
                     key={curTab.name}

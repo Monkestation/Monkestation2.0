@@ -115,7 +115,6 @@ export const NtosNtRepContent = (props) => {
         <Stack direction="column" align="stretch" fill>
           <Stack.Item mb={1} grow>
             <TextArea
-              scrollbar
               height="100%"
               placeholder="Leave your review/thoughts/comments..."
               maxLength={max_length}

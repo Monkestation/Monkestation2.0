@@ -11,7 +11,7 @@ import {
 import { formatTime } from '../format';
 import { Window } from '../layouts';
 import { getThumbnailUrl } from '../../common/other';
-import { Component } from 'inferno';
+import { Component } from 'react';
 import { BooleanLike } from 'common/react';
 import { LoadingScreen } from './common/LoadingToolbox';
 
@@ -187,11 +187,7 @@ class Controls extends Component<{ data: Data }> {
         <Stack.Item>
           {thumbnailUrl && (
             <Box mt={2} textAlign="center">
-              <Image
-                src={thumbnailUrl}
-                alt="Track thumbnail"
-                style={{ maxWidth: '50%' }}
-              />
+              <Image src={thumbnailUrl} style={{ maxWidth: '50%' }} />
             </Box>
           )}
         </Stack.Item>
@@ -249,7 +245,7 @@ export const DjStation = () => {
         {!!data.switching_tracks && (
           <LoadingScreen CustomIcon="spinner" CustomText="Selecting track..." />
         )}
-        <Stack horizontal fill>
+        <Stack fill>
           <Stack.Item grow={1}>
             <Stack vertical fill>
               <Section
