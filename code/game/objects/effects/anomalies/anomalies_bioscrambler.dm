@@ -112,3 +112,9 @@
 	color = COLOR_FULL_TONER_BLACK
 	duration = 12 SECONDS
 	amount_to_scale = 12
+
+//DNDagger
+/obj/effect/temp_visual/circle_wave/dndagger
+	duration = 5 SECONDS
+	color = COLOR_GOLD
+	amount_to_scale = 4
