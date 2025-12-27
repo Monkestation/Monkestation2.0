@@ -124,6 +124,10 @@
 	desc = "A suit that protects against minor chemical spills. Has a red stripe on the shoulder."
 	icon_state = "labcoat_secmed"
 
+/obj/item/clothing/suit/toggle/labcoat/secmed/Initialize(mapload)
+	. = ..()
+	allowed |= GLOB.security_vest_allowed
+
 /obj/item/clothing/suit/toggle/labcoat/secmed/old
 	name = "grey security medical labcoat"
 	desc = "A formerly retired labcoat pattern now brought back for those working the medical profession in the security apparatus."
