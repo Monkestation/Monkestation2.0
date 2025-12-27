@@ -12,7 +12,7 @@
 #define BEYBLADE_CONFUSION_LIMIT (40 SECONDS)
 
 //The code execution of the emote datum is located at code/datums/emotes.dm
-/mob/proc/emote(act, m_type = null, message = null, intentional = FALSE, force_silence = FALSE)
+/mob/proc/emote(act, m_type = null, message = null, intentional = FALSE, force_silence = FALSE, prevent_attack = TRUE)
 	var/param = message
 	var/custom_param = findchar(act, " ")
 	if(custom_param)
@@ -41,6 +41,15 @@
 		if(P.run_emote(src, param, m_type, intentional))
 			SEND_SIGNAL(src, COMSIG_MOB_EMOTE, P, act, m_type, message, intentional)
 			SEND_SIGNAL(src, COMSIG_MOB_EMOTED(P.key))
+
+			// prevent_attack flag: nerfs use of emotes to abuse moving hitbox/sprite in combat
+			// exceptions: desword attacks (handled in dance_flip()), kiss, slap, shoesteal
+			if (prevent_attack && !(act in list("kiss", "slap", "shoesteal")))
+				// prevents attacking, but not attack_hand such as bladebreaking, synditeleporter, spin inverter use etc.
+				src.changeNext_move(CLICK_CD_MELEE) // higher CD than ranged
+				// handle guns which are full auto, they bypass the regular click CD
+				// SEND_SIGNAL(src, COMSIG_CLIENT_MOUSEUP) // TBD:FIX to stop fullauto firing
+				// OTHER INTERACTIONS: pepperspray *cry, smoking *cough
 			return TRUE
 	if(intentional && !silenced && !force_silence)
 		to_chat(src, span_notice("Unusable emote '[act]'. Say *help for a list."))

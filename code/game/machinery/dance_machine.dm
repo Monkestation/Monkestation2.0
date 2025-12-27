@@ -338,7 +338,7 @@
 
 /mob/proc/dance_flip()
 	if(dir == WEST)
-		emote("flip")
+		emote("flip", prevent_attack = FALSE)
 
 /obj/machinery/dance_machine/disco/proc/dance3(mob/living/M)
 	var/matrix/initial_matrix = matrix(M.transform)
