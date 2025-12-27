@@ -111,7 +111,7 @@
 /obj/projectile/bullet/c585trappiste/incapacitator
 	name = ".585 Trappiste flathead bullet"
 	damage = 9
-	stamina = 17.5
+	stamina = 30
 	wound_bonus = -20
 	weak_against_armour = TRUE
 	shrapnel_type = null
