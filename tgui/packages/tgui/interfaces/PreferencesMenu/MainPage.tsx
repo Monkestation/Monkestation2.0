@@ -480,7 +480,6 @@ const PreferenceList = (props: {
 }) => {
   return (
     <Stack.Item
-      basis="50%"
       grow
       style={{
         background: 'rgba(0, 0, 0, 0.5)',
@@ -655,7 +654,7 @@ export const MainPage = (props: { openSpecies: () => void }) => {
             )}
 
             <Stack height={`${CLOTHING_SIDEBAR_ROWS * CLOTHING_CELL_SIZE}px`}>
-              <Stack.Item>
+              <Stack.Item grow>
                 <Stack vertical fill>
                   <Stack.Item>
                     <CharacterControls
@@ -688,11 +687,6 @@ export const MainPage = (props: { openSpecies: () => void }) => {
 
                   <Stack.Item position="relative">
                     <NameInput
-                      name={data.character_preferences.names[data.name_to_use]}
-                      handleUpdateName={createSetPreference(
-                        act,
-                        data.name_to_use,
-                      )}
                       openMultiNameInput={() => {
                         setMultiNameInputOpen(true);
                       }}
@@ -701,7 +695,7 @@ export const MainPage = (props: { openSpecies: () => void }) => {
                 </Stack>
               </Stack.Item>
 
-              <Stack.Item width={`${CLOTHING_CELL_SIZE * 2 + 15}px`}>
+              <Stack.Item grow>
                 <Stack height="100%" vertical wrap>
                   {mainFeatures.map(([clothingKey, clothing]) => {
                     const catalog =
@@ -739,7 +733,7 @@ export const MainPage = (props: { openSpecies: () => void }) => {
                 </Stack>
               </Stack.Item>
 
-              <Stack.Item grow basis={0}>
+              <Stack.Item grow={3}>
                 <Stack vertical fill>
                   <PreferenceList
                     act={act}
