@@ -275,6 +275,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/old, 0)
 	user.switchCamera(src)
 
 /obj/machinery/camera/proc/setViewRange(num = 7)
+	if(num > MAX_CAMERA_RANGE)
+		CRASH("Attempted to set camera view range to something ([num]) greater then we support ([MAX_CAMERA_RANGE]).\
+			This would break chunk updating. If you really need to do this, update MAX_CAMERA_RANGE")
 	src.view_range = num
 	SScameras.update_visibility(src)
 
@@ -432,10 +435,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/old, 0)
 		// Haha datum var access KILL ME
 		for(var/turf/seen as anything in see)
 			if(check_lower)
-				var/turf/below = GET_TURF_BELOW(seen)
+				var/turf/below = seen
 				while(below && istransparentturf(below))
-					see += RANGE_TURFS(1, below)
 					below = GET_TURF_BELOW(below)
+					see += RANGE_TURFS(1, below)
 			if(check_higher)
 				var/turf/above = GET_TURF_ABOVE(seen)
 				while(above && istransparentturf(above))
