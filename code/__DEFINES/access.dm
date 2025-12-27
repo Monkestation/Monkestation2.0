@@ -55,8 +55,6 @@
 #define ACCESS_HOS "hos"
 /// Access for the detective to get into their office, the medical data console, and some other detective-related stuff.
 #define ACCESS_DETECTIVE "detective"
-/// Access for the brig physician to get basic access to medical tools, but not all encompassing access to medical under normal manning.
-#define ACCESS_BRIG_PHYSICIAN "brig_physician" /// MONKESTATION EDIT
 
 /// Engineering General Access, grants access to the standard parts of engineering (as well as the Supermatter and related equipment).
 #define ACCESS_ENGINEERING "engineering"
@@ -336,7 +334,6 @@
 	ACCESS_VIROLOGY, \
 	ACCESS_WEAPONS, \
 	ACCESS_XENOBIOLOGY, \
-	ACCESS_BRIG_PHYSICIAN, \
 )  // monkestation edit: add permabrig-only access.  also added brig physician
 
 /// Command staff/secure accesses, think bridge/armoury, ai_upload, notably access to modify ID cards themselves. Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_COMMAND)
@@ -466,7 +463,6 @@
 	ACCESS_PSYCHOLOGY, \
 	ACCESS_SURGERY, \
 	ACCESS_VIROLOGY, \
-	ACCESS_BRIG_PHYSICIAN, \
 )
 //MONKESTATION ADDITION: Added brig physcian access to above
 

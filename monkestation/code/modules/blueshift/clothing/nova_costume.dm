@@ -1,7 +1,3 @@
-/obj/item/clothing/under/costume
-
-/obj/item/clothing/under/costume/russian_officer
-
 /obj/item/clothing/under/costume/nova
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/under/costume.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/costume.dmi'

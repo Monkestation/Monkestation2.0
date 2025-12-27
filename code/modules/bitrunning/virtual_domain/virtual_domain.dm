@@ -39,6 +39,8 @@
 	var/test_only = FALSE
 	/// The safehouse to load into the map
 	var/datum/map_template/safehouse/safehouse_path = /datum/map_template/safehouse/den
+	/// What bitrunning network does this domain show up on? Used to split between tutorial and normal bitrunning.
+	var/bitrunning_network = BITRUNNER_DOMAIN_DEFAULT
 
 	/**
 	 * Modularity

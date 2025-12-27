@@ -76,7 +76,7 @@ export const CassetteReview = () => {
                 </Stack.Item>
                 {[cassette.songs.side1, cassette.songs.side2].map(
                   (side, idx) => (
-                    <Stack.Item key={idx} fill>
+                    <Stack.Item key={idx}>
                       <Collapsible
                         title={idx === 0 ? 'Side A' : 'Side B'}
                         color="transparent"
