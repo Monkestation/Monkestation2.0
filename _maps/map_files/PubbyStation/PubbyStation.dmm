@@ -4152,7 +4152,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/brigdoor/left/directional/north{
 	name = "Armory Desk";
-	req_access = d
+	req_access = list("armory")
 	},
 /obj/machinery/door/window/left/directional/south{
 	name = "Reception Desk";
