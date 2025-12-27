@@ -6274,7 +6274,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/right/directional/north{
 	name = "Brig Desk";
-	req_access = sss
+	req_access = list("brig_entrance")
 	},
 /obj/machinery/door/poddoor/preopen{
 	id = "Secure Gate";
