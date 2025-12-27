@@ -600,4 +600,15 @@
 /datum/status_effect/silver_cuffed
 	id = "silver cuffed"
 	alert_type = null
+	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
 	remove_on_fullheal = TRUE
+
+/datum/status_effect/silver_cuffed/on_apply()
+	if(!iscarbon(owner))
+		return FALSE
+	return TRUE
+
+/datum/status_effect/silver_cuffed/tick(seconds_between_ticks)
+	var/mob/living/carbon/carbon_owner = owner
+	if(!istype(carbon_owner.handcuffed, /obj/item/restraints/handcuffs/silver))
+		qdel(src)
