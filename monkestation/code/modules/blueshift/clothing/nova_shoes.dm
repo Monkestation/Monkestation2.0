@@ -41,7 +41,6 @@
 	icon_state = "heels"
 	greyscale_config = /datum/greyscale_config/heels
 	greyscale_config_worn = /datum/greyscale_config/heels/worn
-	greyscale_config_worn_digitigrade = /datum/greyscale_config/heels/worn/digi
 	greyscale_colors = "#FFFFFF"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
@@ -58,7 +57,6 @@
 	greyscale_colors = "#FFFFFF"
 	greyscale_config = /datum/greyscale_config/fancyheels
 	greyscale_config_worn = /datum/greyscale_config/fancyheels/worn
-	greyscale_config_worn_digitigrade = /datum/greyscale_config/fancyheels/worn/digi
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/shoes/fancy_heels/Initialize(mapload)
@@ -109,7 +107,6 @@
 	icon_state = "clothwrap"
 	greyscale_config = /datum/greyscale_config/clothwraps
 	greyscale_config_worn = /datum/greyscale_config/clothwraps/worn
-	greyscale_config_worn_digitigrade = /datum/greyscale_config/clothwraps/worn/digi
 	greyscale_colors = "#FFFFFF"
 	body_parts_covered = FALSE
 	flags_1 = IS_PLAYER_COLORABLE_1
@@ -120,7 +117,6 @@
 	icon_state = "legwrap"
 	greyscale_config = /datum/greyscale_config/legwraps
 	greyscale_config_worn = /datum/greyscale_config/legwraps/worn
-	greyscale_config_worn_digitigrade = /datum/greyscale_config/legwraps/worn/digi
 	greyscale_colors = "#FFFFFF"
 	body_parts_covered = FALSE
 	flags_1 = IS_PLAYER_COLORABLE_1
@@ -153,7 +149,6 @@
 	greyscale_colors = "#cc0f0f#c4c2c2"
 	greyscale_config = /datum/greyscale_config/boots/christmasboots
 	greyscale_config_worn = /datum/greyscale_config/boots/christmasboots/worn
-	greyscale_config_worn_digitigrade = /datum/greyscale_config/boots/christmasboots/worn/digi
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/shoes/winterboots/christmas/green
@@ -192,7 +187,6 @@
 	greyscale_colors = "#383631"
 	greyscale_config = /datum/greyscale_config/sandals
 	greyscale_config_worn = /datum/greyscale_config/sandals/worn
-	greyscale_config_worn_digitigrade = /datum/greyscale_config/sandals/worn/digi
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/shoes/jackboots/recolorable
@@ -202,7 +196,6 @@
 	greyscale_colors = "#383631"
 	greyscale_config = /datum/greyscale_config/boots
 	greyscale_config_worn = /datum/greyscale_config/boots/worn
-	greyscale_config_worn_digitigrade = /datum/greyscale_config/boots/worn/digi
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/shoes/wraps/cloth
@@ -211,7 +204,6 @@
 	icon_state = "clothwrap"
 	greyscale_config = /datum/greyscale_config/clothwraps
 	greyscale_config_worn = /datum/greyscale_config/clothwraps/worn
-	greyscale_config_worn_digitigrade = /datum/greyscale_config/clothwraps/worn/digi
 	greyscale_colors = "#FFFFFF"
 	body_parts_covered = FALSE
 	flags_1 = IS_PLAYER_COLORABLE_1

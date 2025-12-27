@@ -118,7 +118,6 @@
 	icon_state = "undersuit_greyscale"
 	greyscale_config = /datum/greyscale_config/cin_surplus_undersuit/object
 	greyscale_config_worn = /datum/greyscale_config/cin_surplus_undersuit
-	greyscale_config_worn_digitigrade = /datum/greyscale_config/cin_surplus_undersuit/digi
 	greyscale_colors = "#bbbbc9#bbbbc9#34343a"
 
 /obj/item/clothing/under/syndicate/rus_army/cin_surplus/desert

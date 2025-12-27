@@ -4,7 +4,6 @@
 	inhand_icon_state = "dg_suit"
 	icon = 'monkestation/icons/obj/clothing/jobs/nanotrasen_representative_clothing_item.dmi'
 	worn_icon = 'monkestation/icons/mob/clothing/jobs/nanotrasen_representative_clothing.dmi'
-	worn_icon_digitigrade = 'monkestation/icons/mob/clothing/jobs/nanotrasen_representative_clothing-digi.dmi'
 	icon_state = "representative_jumpsuit"
 	can_adjust = FALSE
 
