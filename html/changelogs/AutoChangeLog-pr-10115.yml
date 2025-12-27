@@ -1,5 +1,0 @@
-author: "Shoddd"
-delete-after: True
-changes:
-  - balance: "empath now cost 4 points instead of 2"
-  - balance: "empath can now see quirks on examine"

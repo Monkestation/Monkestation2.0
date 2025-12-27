@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - map: "Added a proper SMES for the SM emitters on Void Raptor."
