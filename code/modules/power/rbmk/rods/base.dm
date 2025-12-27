@@ -1,17 +1,14 @@
 /*************************************************************
- * RBMK FUEL ROD BASE (2025 Revision)
+ * RBMK FUEL ROD BASE (2025 CANONICAL)
  * -----------------------------------------------------------
- * Rod variables:
- *   - fuel_amount
- *   - fuel_consumption
- *   - reactivity
- *   - flux_multiplier
- *   - radiation_multiplier
- *   - thermal_multiplier
- *   - active (rod inserted & producing output)
+ * CONTRACT:
+ * - Rods are authoritative over:
+ *     • fuel burn
+ *     • activation/deactivation
+ *     • per-rod output
  *
- * Rods do *not* handle temperature or void coeff.
- * Reactor converts reactivity → flux → heat → VC → flux.
+ * - Reactor integrates:
+ *     Rods → Flux → Heat → Void Coefficient → Flux
  *************************************************************/
 
 
@@ -20,6 +17,9 @@
     desc = "A generic fuel rod designed for RBMK reactors."
     icon = 'icons/obj/fuel_rod.dmi'
     icon_state = "rod_generic"
+    layer = OBJ_LAYER + 0.02
+    plane = GAME_PLANE
+
 
     // Identification
     var/rod_type = "generic"
@@ -45,13 +45,14 @@
 
 /*************************************************************
  * PROCESS FUNCTION
- * Reactor handles all temperature/VC feedback.
- * Rods output only flux & radiation.
+ * Rods do NOT care about temperature or void coefficient.
+ * They output raw physical quantities only.
  *************************************************************/
 
 /// Process this rod for a single tick
 /obj/item/rbmk/fuel_rod/proc/process_rod()
-    // Rod empty → deactivated
+
+    // Spent rod → inert forever
     if (fuel_amount <= 0)
         if (active)
             active = FALSE
@@ -60,17 +61,20 @@
 
         return list(
             "flux" = 0,
-            "radiation" = 0
+            "radiation" = 0,
+            "heat" = 0
         )
 
-    // Burn fuel
+    // Burn fuel (authoritative)
     fuel_amount = max(0, fuel_amount - fuel_consumption)
 
-    // Output characteristics
+    // Per-rod output
     var/rod_flux_output = reactivity * flux_multiplier
     var/rod_radiation_output = reactivity * radiation_multiplier
+    var/rod_heat_output = reactivity * thermal_multiplier
 
     return list(
         "flux" = rod_flux_output,
-        "radiation" = rod_radiation_output
+        "radiation" = rod_radiation_output,
+        "heat" = rod_heat_output
     )

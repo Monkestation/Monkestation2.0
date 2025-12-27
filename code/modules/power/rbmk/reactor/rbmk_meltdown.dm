@@ -98,7 +98,6 @@
     log_game("[src] MELTDOWN triggered: [reason]")
 
     // Stop all ticking
-    decay_heat = 0
     STOP_PROCESSING(SSmachines, src)
 
 

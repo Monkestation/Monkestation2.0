@@ -1,6 +1,6 @@
-import { useBackend, useLocalState } from 'tgui/backend';
-import { Window } from 'tgui/layouts';
-import { Tabs, Flex, Button } from 'tgui/components';
+import { useBackend, useLocalState } from '../../backend';
+import { Window } from '../../layouts';
+import { Tabs, Flex, Button } from '../../components';
 
 import RBMKOverview from './overview';
 import RBMKControls from './controls';

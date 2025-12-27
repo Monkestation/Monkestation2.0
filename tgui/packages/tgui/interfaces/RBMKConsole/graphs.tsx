@@ -1,7 +1,7 @@
-import { useBackend } from 'tgui/backend';
-import { Section, Flex, ProgressBar } from 'tgui/components';
-import { Chart } from 'tgui/components';
-import { getGasFromPath } from 'tgui/constants';
+import { useBackend } from '../../backend';
+import { Section, Flex, ProgressBar } from '../../components';
+import { Chart } from '../../components';
+import { getGasFromPath } from '../../constants';
 
 interface GasInfo {
   percent: number;

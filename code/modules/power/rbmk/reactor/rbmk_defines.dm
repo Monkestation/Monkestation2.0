@@ -1,17 +1,12 @@
 /*************************************************************
  * RBMK Reactor Defines (2025 Final Linear-Core Revision)
  * ---------------------------------------------------------
- * Supports:
- *   - Reactivity → Flux → Temperature feedback loop
- *   - Linear Void Coefficient (VC)
- *   - Tritium as optional byproduct
- *   - Structural integrity damage thresholds
- *   - Coolant pressure / gas behavior
- *
- * Removed:
- *   - Instability
- *   - Poisoning
- *   - Complicated synergy curves
+ * FIXED BASELINE:
+ * - Reactivity is mathematically viable
+ * - Flux can accumulate
+ * - Heat can overcome coolant
+ * - Void coefficient engages before meltdown
+ * - No instability, no poisoning
  *************************************************************/
 
 
@@ -20,58 +15,59 @@
  *************************************************************/
 
 #define RBMK_AMBIENT_TEMP               293      // 20°C environment
-#define RBMK_TEMP_STRESS_THRESHOLD      1500     // damage begins here
-#define RBMK_TEMP_CRITICAL              6000     // meltdown region
-#define RBMK_MAX_TEMP                   12000    // hard meltdown limit
+#define RBMK_TEMP_STRESS_THRESHOLD      1500
+#define RBMK_TEMP_CRITICAL              6000
+#define RBMK_MAX_TEMP                   10000
 
-// Visual temperature bands (used by rbmk_visuals.dm)
+// Visual bands
 #define RBMK_TEMP_OFF                   RBMK_AMBIENT_TEMP
 #define RBMK_TEMP_RUNNING               700
 #define RBMK_TEMP_HOT                   1500
 #define RBMK_TEMP_VERYHOT               3000
 #define RBMK_TEMP_OVERHEAT              RBMK_TEMP_CRITICAL
+#define RBMK_TEMP_MELTDOWN              7500
 
 
 /*************************************************************
- * Void Coefficient (Linear VC System)
+ * Void Coefficient (Linear, ACTIVE)
  *************************************************************/
 
-#define RBMK_VC_TEMP_COEFF              0.00002  // VC grows with temp
-#define RBMK_VC_MAX                     3.0      // hard cap
+#define RBMK_VC_TEMP_COEFF              0.00008   // was 0.00002 (too weak)
+#define RBMK_VC_MAX                     3.0
 
 
 /*************************************************************
- * Flux / Radiation / Heat Constants
+ * Flux / Radiation / Heat (CRITICAL FIXES)
  *************************************************************/
 
-#define RBMK_FLUX_GAIN                  0.02     // reactivity → flux
-#define RBMK_TEMP_GAIN_PER_TICK         0.015    // reactivity → temp
-#define RBMK_HEAT_SCALING               0.0025   // coolant absorption scaling
+#define RBMK_FLUX_GAIN                  0.25      // was 0.02 (non-viable)
+#define RBMK_TEMP_GAIN_PER_TICK         0.06      // usable temp gain
+#define RBMK_HEAT_SCALING               0.05      // was 0.0025 (killed heat)
 
-#define RBMK_FLUX_DECAY                 0.18     // natural flux loss
-#define RBMK_RADIATION_DECAY            0.18     // natural radiation loss
+#define RBMK_FLUX_DECAY                 0.05      // was 0.18 (dominant sink)
+#define RBMK_RADIATION_DECAY            0.12
 
-#define RBMK_RADIATION_FLUX_MULT        0.10     // flux → radiation
-#define RBMK_RADIATION_TEMP_MULT        0.00035  // temp → radiation
+#define RBMK_RADIATION_FLUX_MULT        0.10
+#define RBMK_RADIATION_TEMP_MULT        0.00035
 
-#define RBMK_FLUX_STRESS_THRESHOLD      250      // integrity starts taking flux damage
-#define RBMK_FLUX_HIGH_THRESHOLD        600      // high-flux zone
+#define RBMK_FLUX_STRESS_THRESHOLD      250
+#define RBMK_FLUX_HIGH_THRESHOLD        600
 
 
 /*************************************************************
- * Integrity / Damage Overlay Thresholds
+ * Integrity / Damage Overlays
  *************************************************************/
 
 #define RBMK_MAX_INTEGRITY              100
 
-#define RBMK_DAMAGE_OVERLAY_1           90       // light damage
+#define RBMK_DAMAGE_OVERLAY_1           90
 #define RBMK_DAMAGE_OVERLAY_2           70
 #define RBMK_DAMAGE_OVERLAY_3           50
-#define RBMK_DAMAGE_OVERLAY_4           25       // heavy damage
+#define RBMK_DAMAGE_OVERLAY_4           25
 
 
 /*************************************************************
- * Control Rod & Repair Constants
+ * Control Rods / Repair
  *************************************************************/
 
 #define RBMK_CONTROL_ROD_MAX            100
@@ -102,11 +98,11 @@
  * Tritium (Optional Byproduct)
  *************************************************************/
 
-#define RBMK_TRITIUM_RATE               0.00045  // flux → tritium moles
+#define RBMK_TRITIUM_RATE               0.00045
 
 
 /*************************************************************
- * Meltdown Messaging / Explosion Behavior
+ * Meltdown Behavior
  *************************************************************/
 
 #define RBMK_MELTDOWN_PREFIX            "⚠ RBMK MELTDOWN"
@@ -127,7 +123,7 @@
 
 
 /*************************************************************
- * Global Reactor Caps
+ * Global Caps
  *************************************************************/
 
 #define RBMK_MAX_RADIATION              700

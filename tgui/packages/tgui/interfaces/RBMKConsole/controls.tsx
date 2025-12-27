@@ -1,4 +1,4 @@
-import { useBackend } from 'tgui/backend';
+import { useBackend } from '../../backend';
 import {
   Section,
   Button,
@@ -9,7 +9,7 @@ import {
   Knob,
   ProgressBar,
   Flex,
-} from 'tgui/components';
+} from '../../components';
 
 export const RBMKControls = () => {
   const { data, act } = useBackend<any>();

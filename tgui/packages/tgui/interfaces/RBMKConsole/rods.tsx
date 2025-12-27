@@ -1,5 +1,5 @@
-import { useBackend } from 'tgui/backend';
-import { Section, Table, Button, LabeledList, Box } from 'tgui/components';
+import { useBackend } from '../../backend';
+import { Section, Table, Button, LabeledList, Box } from '../../components';
 
 export const RBMKRods = () => {
   const { data, act } = useBackend<any>();

@@ -1,6 +1,11 @@
-import { useBackend } from '../backend';
-import { Section, Flex, ProgressBar, LabeledControls } from '../components';
-import { RoundGauge } from '../components/RoundGauge';
+import { useBackend } from '../../backend';
+import {
+  Section,
+  Flex,
+  ProgressBar,
+  LabeledControls,
+  RoundGauge,
+} from '../../components';
 
 
 export const RBMKOverview = () => {
