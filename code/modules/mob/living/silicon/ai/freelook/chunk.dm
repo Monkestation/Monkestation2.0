@@ -29,7 +29,7 @@
 	/// Are we currently being updated by the cameras subsystem?
 	var/currently_updating = FALSE
 	/// Alist of cameras that need to be processed. For use in yielding when being lazyupdated by the cameras subsystem
-	var/alist/processing_cameras = list()
+	var/alist/processing_cameras = alist()
 	/// List of newly visible turfs that are currently being generated. For use in lazyupdating.
 	var/list/processing_visible_turfs = list()
 
