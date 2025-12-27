@@ -1,8 +1,9 @@
 /obj/projectile/energy/net
 	name = "energy netting"
 	icon_state = "e_netting"
-	damage = 10
+	damage = 0
 	damage_type = STAMINA
+	stamina = 7
 	hitsound = 'sound/weapons/taserhit.ogg'
 	range = 10
 

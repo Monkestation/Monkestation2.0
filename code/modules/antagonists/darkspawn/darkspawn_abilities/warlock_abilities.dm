@@ -443,7 +443,7 @@
 			var/mob/living/carbon/M = target
 			M.adjust_silence(10 SECONDS)
 	else //Distant glare
-		var/loss = max(120 - (distance * 10), 0)
+		var/loss = max(60 - (distance * 10), 0)
 		target.stamina.adjust(-loss)
 		target.adjust_stutter(loss)
 		to_chat(target, span_userdanger("A purple light flashes through your mind, and exhaustion floods your body..."))

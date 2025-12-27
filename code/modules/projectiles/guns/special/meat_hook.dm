@@ -37,7 +37,7 @@
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	pass_flags = PASSTABLE
 	damage = 20
-	stamina = 20
+	stamina = 10
 	armour_penetration = 60
 	damage_type = BRUTE
 	hitsound = 'sound/effects/splat.ogg'
@@ -83,7 +83,7 @@
 
 /obj/projectile/hook/bounty
 	damage = 0
-	stamina = 40
+	stamina = 20
 
 /// non-damaging version for contractor MODsuits
 /obj/item/gun/magic/hook/contractor
@@ -100,7 +100,7 @@
 /obj/projectile/hook/contractor
 	icon_state = "contractor_hook"
 	damage = 0
-	stamina = 30
+	stamina = 15
 	chain_iconstate = "contractor_chain"
 
 /obj/item/gun/magic/hook/contractor/process_fire(atom/target, mob/living/user, message, params, zone_override, bonus_spread)

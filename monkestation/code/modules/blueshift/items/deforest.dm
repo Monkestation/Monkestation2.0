@@ -1,4 +1,4 @@
-#define INSTANT_WOUND_HEAL_STAMINA_DAMAGE 80
+#define INSTANT_WOUND_HEAL_STAMINA_DAMAGE 40
 #define INSTANT_WOUND_HEAL_LIMB_DAMAGE 25
 
 /obj/item/stack/medical/wound_recovery

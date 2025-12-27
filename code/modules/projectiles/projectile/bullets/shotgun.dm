@@ -46,7 +46,7 @@
 	name = "beanbag slug"
 	icon_state = "pellet"
 	damage = 5 //10 to 5 monkestation edit
-	stamina = 75 //monkestation edit
+	stamina = 55
 	wound_bonus = 20
 	sharpness = NONE
 	embedding = null
@@ -78,7 +78,7 @@
 /obj/projectile/bullet/pellet/shotgun_rubbershot ///6 pellets
 	name = "rubber shot pellet"
 	damage = 2 //monkestation edit 3 to 2
-	stamina = 15 //monkestation edit
+	stamina = 10
 	sharpness = NONE
 	embedding = null
 	tile_dropoff_s = 0 //monkestation edit
@@ -92,8 +92,6 @@
 	ricochet_incidence_leeway = 75
 	/// Subtracted from the ricochet chance for each tile traveled
 	var/tile_dropoff_ricochet = 4
-	debilitating = TRUE
-	debilitate_mult = 1
 
 /obj/projectile/bullet/pellet/shotgun_rubbershot/Range()
 	if(ricochet_chance > 0)
@@ -198,7 +196,7 @@
 /obj/projectile/bullet/pellet/shotgun_incapacitate ///20 pellets
 	name = "incapacitating pellet"
 	damage = 1
-	stamina = 12 //monkestation edit
+	stamina = 6
 	tile_dropoff_s = 3 //monkestation edit spitting distance
 	embedding = null
 
@@ -207,7 +205,7 @@
 	icon = 'monkestation/code/modules/blueshift/icons/projectiles.dmi'
 	icon_state = "hornet"
 	damage = 4
-	stamina = 15
+	stamina = 7.5
 	wound_bonus = -5
 	bare_wound_bonus = 5
 	wound_falloff_tile = 0
@@ -225,7 +223,7 @@
 	icon = 'monkestation/code/modules/blueshift/icons/projectiles.dmi'
 	icon_state = "stardust"
 	damage = 2
-	stamina = 7
+	stamina = 3.5
 	wound_bonus = 0
 	bare_wound_bonus = 0
 	stutter = 3 SECONDS

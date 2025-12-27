@@ -57,7 +57,7 @@
 /obj/projectile/bullet/c35sol/incapacitator // .35 Sol's equivalent to a rubber bullet
 	name = ".35 Sol Short incapacitator bullet"
 	damage = 5
-	stamina = 30
+	stamina = 15
 	wound_bonus = -40
 	bare_wound_bonus = -20
 	weak_against_armour = TRUE
@@ -111,7 +111,7 @@
 /obj/projectile/bullet/c585trappiste/incapacitator
 	name = ".585 Trappiste flathead bullet"
 	damage = 9
-	stamina = 35
+	stamina = 30
 	wound_bonus = -20
 	weak_against_armour = TRUE
 	shrapnel_type = null
@@ -138,6 +138,6 @@
 	icon = 'monkestation/code/modules/security/icons/paco_ammo.dmi'
 	icon_state = "rubber_bullet"
 	damage = 4
-	stamina = 50 // Turns out 35 stamina damage is not good enough.
+	stamina = 24
 	sharpness = NONE
 	embedding = null

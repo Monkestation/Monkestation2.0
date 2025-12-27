@@ -170,7 +170,7 @@
 
 /obj/projectile/bullet/hair_tie/syndicate
 	damage = 10 //getting hit with this one fucking sucks
-	stamina = 30
+	stamina = 15
 	eyeblur = 2 SECONDS
 	jitter = 8 SECONDS
 

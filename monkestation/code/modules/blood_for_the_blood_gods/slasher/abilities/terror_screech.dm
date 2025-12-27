@@ -33,31 +33,31 @@
 
 		if(stage >= 1)
 			human_resolved.Shake(duration = 7.5 SECONDS)
-			human_resolved.stamina.adjust(-80)
+			human_resolved.stamina.adjust(-40)
 			human_resolved.SetParalyzed(2 SECONDS)
 			addtimer(CALLBACK(src, PROC_REF(remove_overlay), human_resolved), 7.5 SECONDS)
 
 		if(stage >= 2)
 			human_resolved.Shake(duration = 10 SECONDS)
-			human_resolved.stamina.adjust(-100)
+			human_resolved.stamina.adjust(-50)
 			human_resolved.SetParalyzed(2.5 SECONDS)
 			addtimer(CALLBACK(src, PROC_REF(remove_overlay), human_resolved), 5 SECONDS)
 
 		if(stage >= 3)
 			human_resolved.Shake(duration = 12.5 SECONDS)
-			human_resolved.stamina.adjust(-120)
+			human_resolved.stamina.adjust(-60)
 			human_resolved.SetParalyzed(3 SECONDS)
 			addtimer(CALLBACK(src, PROC_REF(remove_overlay), human_resolved), 5 SECONDS)
 
 		if(stage >= 4)
 			human_resolved.Shake(duration = 15 SECONDS)
-			human_resolved.stamina.adjust(-140)
+			human_resolved.stamina.adjust(-70)
 			human_resolved.SetParalyzed(4 SECONDS)
 			addtimer(CALLBACK(src, PROC_REF(remove_overlay), human_resolved), 5 SECONDS)
 
 		else
 			human_resolved.Shake(duration = 5 SECONDS)
-			human_resolved.stamina.adjust(-60)
+			human_resolved.stamina.adjust(-30)
 			human_resolved.SetParalyzed(1.5 SECONDS)
 			addtimer(CALLBACK(src, PROC_REF(remove_overlay), human_resolved), 5 SECONDS)
 

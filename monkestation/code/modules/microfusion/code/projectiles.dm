@@ -18,6 +18,7 @@
 	icon = 'monkestation/code/modules/microfusion/icons/projectiles.dmi'
 	damage = 22
 
+//Currently unused - needs to have stamina dmg re-balanced if it's ever added in
 /obj/projectile/beam/microfusion_disabler
 	name = "microfusion disabler laser"
 	icon = 'monkestation/code/modules/microfusion/icons/projectiles.dmi'

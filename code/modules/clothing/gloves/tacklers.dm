@@ -11,7 +11,7 @@
 	/// For storing our tackler datum so we can remove it after
 	var/datum/component/tackler
 	/// See: [/datum/component/tackler/var/stamina_cost]
-	var/tackle_stam_cost = 25
+	var/tackle_stam_cost = 13
 	/// See: [/datum/component/tackler/var/base_knockdown]
 	var/base_knockdown = 1 SECONDS
 	/// See: [/datum/component/tackler/var/range]
@@ -49,7 +49,7 @@
 	icon_state = "tackledolphin"
 	inhand_icon_state = null
 
-	tackle_stam_cost = 15
+	tackle_stam_cost = 10
 	base_knockdown = 0.5 SECONDS
 	tackle_range = 5
 	tackle_speed = 2
@@ -63,7 +63,7 @@
 	inhand_icon_state = "greyscale_gloves"
 	greyscale_colors = "#2f2e31"
 
-	tackle_stam_cost = 30
+	tackle_stam_cost = 15
 	base_knockdown = 1.25 SECONDS
 	tackle_range = 5
 	skill_mod = 2
@@ -89,7 +89,7 @@
 	icon_state = "tacklerocket"
 	inhand_icon_state = null
 
-	tackle_stam_cost = 50
+	tackle_stam_cost = 25
 	base_knockdown = 2 SECONDS
 	tackle_range = 10
 	min_distance = 7
@@ -102,7 +102,7 @@
 	icon_state = "fingerless"
 	inhand_icon_state = null
 
-	tackle_stam_cost = 30
+	tackle_stam_cost = 15
 	base_knockdown = 1.75 SECONDS
 	min_distance = 2
 	skill_mod = -1
