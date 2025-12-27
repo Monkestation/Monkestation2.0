@@ -219,6 +219,7 @@ const ReportText = (props) => {
       <TextArea
         height="200px"
         mb={1}
+        width="100%"
         onInput={(_, value) => setCommandReport(value)}
         value={commandReport}
       />

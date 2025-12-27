@@ -1,9 +1,14 @@
 .Techweb__NodeProgress {
   margin-bottom: var(--space-xl);
+  gap: var(--space-ml);
 }
 
 .Techweb__DesignIcon {
   margin: 0 var(--space-s);
+}
+
+.Button.Techweb__DesignIcon:last-child {
+  margin-bottom: 2px;
 }
 
 .Techweb__OverviewNodes {

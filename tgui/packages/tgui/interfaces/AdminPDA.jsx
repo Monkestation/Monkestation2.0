@@ -123,6 +123,7 @@ const MessageInput = (props) => {
         <TextArea
           placeholder="Type the message you want to send..."
           height="200px"
+          width="100%"
           mb={1}
           onInput={(e, value) => {
             setMessageText(value);

@@ -165,12 +165,12 @@ const ContactsScreen = (props: any) => {
               <Icon name="address-card" mr={1} />
               SpaceMessenger V6.5.3
             </Box>
-            <Box italic opacity={0.3} mt={1}>
+            <Box italic opacity={0.3} mt={0.5}>
               Bringing you spy-proof communications since 2467.
             </Box>
             <Divider hidden />
             {/* First row of buttons */}
-            <Stack fill mt={1} mb={1}>
+            <Stack fill mt={0.5} mb={0.5}>
               <Stack.Item grow>
                 <Button
                   fluid
@@ -230,7 +230,7 @@ const ContactsScreen = (props: any) => {
               </Stack.Item>
             </Stack>
             {/* Third row */}
-            <Stack fill mt={1} mb={1}>
+            <Stack fill mt={0.5} mb={0.5}>
               <Stack.Item grow>
                 <Button
                   fluid
@@ -252,10 +252,9 @@ const ContactsScreen = (props: any) => {
               )}
             </Stack>
           </Stack>
-          <Divider hidden />
           <Stack justify="space-between">
             <Box m={0.5}>
-              <Icon name="magnifying-glass" mr={1} />
+              <Icon name="magnifying-glass" mr={0.5} />
               Search For User
             </Box>
             <Input
@@ -377,6 +376,7 @@ const SendToAllSection = (props) => {
         <TextArea
           height={6}
           value={message}
+          width="100%"
           placeholder="Send message to everyone..."
           onInput={(_: any, v: string) => setmessage(v)}
         />

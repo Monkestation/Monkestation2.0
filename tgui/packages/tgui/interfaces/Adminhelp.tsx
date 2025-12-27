@@ -41,6 +41,7 @@ export const Adminhelp = (props) => {
             <TextArea
               autoFocus
               height="100%"
+              width="100%"
               value={ahelpMessage}
               placeholder="Admin help"
               onChange={(e, value) => setAhelpMessage(value)}

@@ -20,6 +20,7 @@
 @include meta.load-css('./components/SearchItem.scss');
 @include meta.load-css('./components/NoticeBox.scss');
 @include meta.load-css('./components/Button.scss');
+@include meta.load-css('./components/Stack.scss');
 
 // Interfaces
 @include meta.load-css('./interfaces/AlertModal.scss');

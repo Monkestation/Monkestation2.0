@@ -386,6 +386,7 @@ export class PrimaryView extends Component {
                   fontFamily={useFont}
                   bold={useBold}
                   height={'100%'}
+                  width={'100'}
                   backgroundColor={paper_color}
                   onInput={(e, text) => {
                     setTextAreaText(text);

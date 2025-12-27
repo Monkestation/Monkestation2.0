@@ -267,6 +267,7 @@ export const OpposingForceTab = (props) => {
       <Stack.Item>
         <Section
           title="Objectives"
+          p="0.2em"
           buttons={
             <Button
               icon="plus"
@@ -501,6 +502,7 @@ export const OpposingForceObjectives = (props) => {
                     <TextArea
                       disabled={!can_edit}
                       height="85px"
+                      width="100%"
                       value={selectedObjective.justification}
                       maxLength={1000}
                       onChange={(e, value) =>
