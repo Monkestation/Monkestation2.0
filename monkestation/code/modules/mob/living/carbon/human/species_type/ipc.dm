@@ -82,6 +82,10 @@
 	var/blending
 	/// When emagged, IPC's will spew ion laws and this value increases. Every law costs 1 point, if this is 0 laws stop being spoken.
 	var/forced_speech = 0
+	///their fone
+	var/obj/item/modular_computer/pda/ipc/myfone
+	///their fone action
+	var/datum/action/innate/use_fone/use_fone
 
 /datum/species/ipc/get_species_description()
 	return "Integrated Positronic Chassis - or IPC for short - are a race of sentient and unbound humanoid robots."
@@ -102,6 +106,10 @@
 	if(ishuman(C) && !change_screen)
 		change_screen = new
 		change_screen.Grant(C)
+	if(ishuman(C) && !use_fone)
+		use_fone = new
+		use_fone.Grant(C)
+
 
 	RegisterSignal(C, COMSIG_ATOM_EMAG_ACT, PROC_REF(on_emag_act))
 	RegisterSignal(C, COMSIG_LIVING_DEATH, PROC_REF(bsod_death)) // screen displays bsod on death, if they have one
@@ -150,7 +158,7 @@
 /datum/species/ipc/proc/bsod_death(mob/living/carbon/human/transformer, screen_name = "BSOD")
 	if(!transformer.get_bodypart(BODY_ZONE_HEAD))
 		return
-	saved_screen = change_screen // remember the old screen in case of revival
+	saved_screen = transformer.dna.features["ipc_screen"] // remember the old screen in case of revival
 	switch_to_screen(transformer, screen_name)
 	addtimer(CALLBACK(src, PROC_REF(switch_to_screen), transformer, "Blank"), 5 SECONDS)
 
@@ -445,3 +453,28 @@
 		ipc.adjust_drunk_effect(sqrt(chem.volume) * booze_power * ALCOHOL_RATE * REM * seconds_per_tick)
 		ipc.mind.add_addiction_points(/datum/addiction/alcohol, chem.synthetic_boozepwr/5)
 	return ..()
+
+/datum/species/ipc/proc/create_myfone(mob/living/carbon/human/thisgoober)
+	if(!myfone)
+		myfone = new /obj/item/modular_computer/pda/ipc(thisgoober)
+	myfone.layer = ABOVE_HUD_PLANE
+	SET_PLANE_EXPLICIT(myfone, ABOVE_HUD_PLANE, thisgoober)
+	myfone.imprint_id(thisgoober.name, "")
+	myfone.goober = thisgoober
+
+/datum/action/innate/use_fone
+	name = "Activate Internal Computer"
+	check_flags = AB_CHECK_CONSCIOUS
+	button_icon = 'icons/obj/modular_pda.dmi'
+	button_icon_state = "tablet-silicon"
+
+/datum/action/innate/use_fone/Activate()
+	if(!ishuman(owner))
+		return FALSE
+	var/mob/living/carbon/human/ourguy = owner
+	var/datum/species/ipc/myspecies = ourguy.dna.species
+	if(!istype(myspecies))
+		return FALSE
+	if(!myspecies.myfone)
+		myspecies.create_myfone(ourguy)
+	myspecies.myfone?.interact(ourguy)
