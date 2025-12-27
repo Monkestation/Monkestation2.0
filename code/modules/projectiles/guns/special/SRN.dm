@@ -61,42 +61,43 @@
 	hitsound = "sound/effects/meteorimpact.ogg"
 	damage = 10
 	ricochets_max = 0 //it's a MISSILE
-
-/obj/projectile/bullet/SRN_rocket/can_hit_target(atom/target, direct_target, ignore_loc, cross_failed)
-	if(astype(target, /obj/energy_ball)?.miniball)
-		return FALSE
-	return ..()
+	pass_flags = PASSTABLE | PASSGRILLE
 
 /obj/projectile/bullet/SRN_rocket/on_hit(atom/target, blocked = 0, pierce_hit)
-	if(astype(target, /obj/energy_ball)?.miniball)
-		return BULLET_ACT_FORCE_PIERCE
-	. = ..()
-	if(. != BULLET_ACT_HIT)
-		return
 	if(ishuman(target))
 		var/mob/living/carbon/human/target_human = target
 		playsound(src.loc, 'sound/weapons/pierce.ogg', vol = 100, vary = TRUE)
 		target_human.adjustOxyLoss(5)
 		to_chat(target_human, span_alert("You are struck by a spatial nullifier! Thankfully it didn't affect you... much."))
-		target_human.emote("scream")
+		INVOKE_ASYNC(target_human, TYPE_PROC_REF(/mob, emote), "scream")
 	else
 		playsound(src.loc, SFX_SPARKS, vol = 100, vary = TRUE)
+	return ..()
 
 /obj/projectile/bullet/SRN_rocket/Impact(atom/impacted)
 	. = ..()
-	if(istype(impacted, /obj/singularity) || istype(impacted, /obj/energy_ball))
-		var/mob/living/user = firer
-		user.client.give_award(/datum/award/achievement/misc/singularity_buster, user)
-		user.emote("scream")
 
-		for(var/mob/player as anything in GLOB.player_list)
-			SEND_SOUND(player, sound('sound/magic/charge.ogg', volume = player.client.prefs.channel_volume["[CHANNEL_SOUND_EFFECTS]"]))
-			to_chat(player, span_boldannounce("You feel reality distort for a moment..."))
-			shake_camera(player, 15, 3)
+	if(istype(impacted, /obj/singularity))
+		nullify(firer, impacted)
+	else if(istype(impacted, /obj/energy_ball))
+		var/obj/energy_ball/ball = impacted
+		if(istype(ball.orbiting?.parent, /obj/energy_ball))
+			nullify(firer, ball.orbiting.parent)
+		else
+			nullify(firer, ball)
 
-		new /obj/spatial_rift(impacted.loc)
-		qdel(impacted)
+/obj/projectile/bullet/SRN_rocket/proc/nullify(mob/living/hero, atom/impacted)
+	if(isliving(hero))
+		hero.client?.give_award(/datum/award/achievement/misc/singularity_buster, hero)
+		INVOKE_ASYNC(hero, TYPE_PROC_REF(/mob, emote), "scream")
 
+	for(var/mob/player as anything in GLOB.player_list)
+		player.playsound_local(null, 'sound/magic/charge.ogg', vol = 100, vary = FALSE, pressure_affected = FALSE, mixer_channel = CHANNEL_SOUND_EFFECTS)
+		to_chat(player, span_boldannounce("You feel reality distort for a moment..."))
+		shake_camera(player, 1.5 SECONDS, 3)
+
+	new /obj/spatial_rift(impacted.loc)
+	qdel(impacted)
 
 /datum/award/achievement/misc/singularity_buster
 	name = "Scrungularity"
