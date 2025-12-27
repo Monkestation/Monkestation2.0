@@ -3822,6 +3822,15 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 6
 	},
+/obj/structure/rack,
+/obj/item/reagent_containers/cup/bottle/multiver,
+/obj/item/reagent_containers/cup/bottle/epinephrine,
+/obj/item/reagent_containers/syringe,
+/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/regular{
+	pixel_x = 3;
+	pixel_y = 3
+	},
 /turf/open/floor/iron/white,
 /area/station/security/medical)
 "awY" = (
@@ -4200,16 +4209,7 @@
 	dir = 1
 	},
 /obj/machinery/airalarm/directional/north,
-/obj/structure/rack,
-/obj/item/storage/medkit/regular{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/storage/medkit/regular,
-/obj/item/storage/box/bodybags,
-/obj/item/reagent_containers/syringe,
-/obj/item/reagent_containers/cup/bottle/epinephrine,
-/obj/item/reagent_containers/cup/bottle/multiver,
+/obj/machinery/computer/records/medical,
 /turf/open/floor/iron/white,
 /area/station/security/medical)
 "aBo" = (
@@ -4505,6 +4505,7 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 5
 	},
+/obj/structure/closet/crate/freezer/surplus_limbs,
 /turf/open/floor/iron/white,
 /area/station/security/medical)
 "aDn" = (
@@ -10957,6 +10958,8 @@
 	icon_state = "fan_tiny";
 	name = "shower drain"
 	},
+/obj/item/reagent_containers/blood,
+/obj/machinery/iv_drip,
 /turf/open/floor/iron/white/textured,
 /area/station/security/medical)
 "coz" = (
@@ -21747,12 +21750,23 @@
 /turf/open/floor/engine/n2,
 /area/station/engineering/atmos)
 "fKm" = (
-/obj/structure/table/reinforced/rglass,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
 	},
 /obj/machinery/light/directional/west,
-/obj/machinery/computer/records/medical/laptop,
+/obj/structure/table/reinforced/rglass,
+/obj/item/emergency_bed{
+	pixel_x = 5;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/spray/cleaner{
+	pixel_x = -5;
+	pixel_y = -1
+	},
+/obj/item/storage/box/bodybags{
+	pixel_x = -8;
+	pixel_y = 16
+	},
 /turf/open/floor/iron/white,
 /area/station/security/medical)
 "fKx" = (
@@ -35554,6 +35568,7 @@
 /obj/item/radio/intercom/directional/west,
 /obj/item/clothing/gloves/latex,
 /obj/item/clothing/neck/stethoscope,
+/obj/item/clothing/mask/surgical,
 /turf/open/floor/iron/white,
 /area/station/security/medical)
 "kcT" = (
@@ -49094,7 +49109,6 @@
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "one" = (
-/obj/structure/table/reinforced/rglass,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
 	},
@@ -49104,8 +49118,7 @@
 	dir = 10;
 	network = list("ss13","Security")
 	},
-/obj/item/reagent_containers/spray/cleaner,
-/obj/item/emergency_bed,
+/obj/structure/bodycontainer/morgue,
 /turf/open/floor/iron/white,
 /area/station/security/medical)
 "onf" = (
@@ -61952,7 +61965,6 @@
 	dir = 6
 	},
 /obj/structure/closet/secure_closet/secmed,
-/obj/item/clothing/suit/jacket/straight_jacket,
 /turf/open/floor/iron/dark,
 /area/station/security/medical)
 "sne" = (
@@ -75268,8 +75280,7 @@
 	},
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
-/obj/machinery/iv_drip,
-/obj/item/reagent_containers/blood,
+/obj/machinery/stasis,
 /turf/open/floor/iron/white,
 /area/station/security/medical)
 "wkC" = (

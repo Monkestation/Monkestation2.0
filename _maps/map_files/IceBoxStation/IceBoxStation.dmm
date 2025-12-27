@@ -7979,8 +7979,8 @@
 /turf/open/floor/plating,
 /area/station/engineering/storage/tech)
 "cpW" = (
-/obj/structure/closet/secure_closet/secmed,
-/obj/item/clothing/suit/jacket/straight_jacket,
+/obj/machinery/stasis,
+/obj/machinery/vending/wallmed/directional/west,
 /turf/open/floor/iron/white/textured,
 /area/station/security/medical)
 "cpY" = (
@@ -12652,14 +12652,15 @@
 /turf/open/floor/iron,
 /area/station/tcommsat/computer)
 "dKk" = (
-/obj/item/storage/medkit/regular{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/storage/medkit/regular,
 /obj/structure/table/reinforced/rglass,
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/machinery/firealarm/directional/east,
+/obj/item/emergency_bed,
+/obj/item/clothing/neck/stethoscope,
+/obj/item/reagent_containers/cup/bottle/epinephrine,
+/obj/item/reagent_containers/cup/bottle/multiver,
+/obj/item/reagent_containers/syringe,
+/obj/item/storage/box/bodybags,
 /turf/open/floor/iron/white/textured,
 /area/station/security/medical)
 "dKl" = (
@@ -14751,6 +14752,7 @@
 /area/station/cargo/storage)
 "erV" = (
 /obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/closet/crate/freezer/surplus_limbs,
 /turf/open/floor/iron/white/textured,
 /area/station/security/medical)
 "erY" = (
@@ -22922,6 +22924,8 @@
 	icon_state = "fan_tiny";
 	name = "shower drain"
 	},
+/obj/item/reagent_containers/blood,
+/obj/machinery/iv_drip,
 /turf/open/floor/iron/white/textured,
 /area/station/security/medical)
 "gXe" = (
@@ -23077,7 +23081,8 @@
 /turf/open/floor/grass,
 /area/station/medical/pathology)
 "gZd" = (
-/obj/machinery/computer/operating,
+/obj/structure/closet/secure_closet/secmed,
+/obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron/white/textured,
 /area/station/security/medical)
 "gZj" = (
@@ -24117,6 +24122,11 @@
 	},
 /area/station/commons/storage/art)
 "hqw" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/obj/structure/chair/office/light,
+/obj/effect/landmark/start/brig_physician,
 /turf/open/floor/iron/white/textured,
 /area/station/security/medical)
 "hqx" = (
@@ -26909,7 +26919,12 @@
 "imQ" = (
 /obj/item/radio/intercom/directional/north,
 /obj/machinery/light/directional/north,
-/obj/structure/table/optable,
+/obj/structure/rack,
+/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/regular{
+	pixel_x = 0;
+	pixel_y = 6
+	},
 /turf/open/floor/iron/white/textured,
 /area/station/security/medical)
 "imU" = (
@@ -32248,17 +32263,11 @@
 /turf/open/floor/plating,
 /area/station/science/genetics)
 "jTH" = (
-/obj/item/storage/box/bodybags,
 /obj/structure/extinguisher_cabinet/directional/west,
-/obj/item/reagent_containers/syringe{
-	name = "steel point"
-	},
-/obj/item/reagent_containers/cup/bottle/multiver,
-/obj/item/reagent_containers/cup/bottle/epinephrine,
-/obj/structure/table/reinforced/rglass,
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/item/emergency_bed,
-/obj/item/clothing/neck/stethoscope,
+/obj/machinery/computer/records/medical{
+	dir = 4
+	},
 /turf/open/floor/iron/white/textured,
 /area/station/security/medical)
 "jTM" = (
@@ -34411,9 +34420,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
-/obj/effect/landmark/event_spawn,
-/obj/structure/chair/office,
-/obj/effect/landmark/start/brig_physician,
 /obj/machinery/duct,
 /turf/open/floor/iron/white/textured,
 /area/station/security/medical)
@@ -52221,6 +52227,10 @@
 "pTY" = (
 /turf/open/floor/iron/white/side,
 /area/station/science/explab)
+"pUf" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plating,
+/area/station/maintenance/fore)
 "pUn" = (
 /obj/structure/sink/directional/west,
 /obj/effect/turf_decal/stripes/line{
@@ -60275,10 +60285,8 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
 "svV" = (
-/obj/machinery/airalarm/directional/east,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 1
-	},
+/obj/structure/table/optable,
+/obj/machinery/defibrillator_mount/directional/east,
 /turf/open/floor/iron/white/textured,
 /area/station/security/medical)
 "swc" = (
@@ -71030,8 +71038,9 @@
 "vSh" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
-/obj/structure/table/reinforced/rglass,
-/obj/machinery/computer/records/medical/laptop,
+/obj/structure/bodycontainer/morgue{
+	dir = 2
+	},
 /turf/open/floor/iron/white/textured,
 /area/station/security/medical)
 "vSi" = (
@@ -71237,10 +71246,10 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
 "vWd" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/item/reagent_containers/blood,
-/obj/machinery/iv_drip,
+/obj/machinery/computer/operating{
+	dir = 8
+	},
+/obj/item/radio/intercom/chapel/directional/east,
 /turf/open/floor/iron/white/textured,
 /area/station/security/medical)
 "vWe" = (
@@ -240433,7 +240442,7 @@ bln
 lSu
 bUx
 xmO
-deY
+pUf
 bUx
 gZd
 vWd

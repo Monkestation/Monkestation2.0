@@ -5277,12 +5277,12 @@
 /obj/structure/chair/office{
 	dir = 4
 	},
-/obj/effect/landmark/start/brig_physician,
 /obj/machinery/requests_console/auto_name/directional/south,
 /obj/effect/turf_decal/tile/neutral/half,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
+/obj/effect/landmark/start/brig_physician,
 /turf/open/floor/iron/dark,
 /area/station/security/medical)
 "bEt" = (
@@ -13245,7 +13245,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
-/obj/effect/landmark/start/brig_physician,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/security/medical)
 "dWj" = (
@@ -22276,6 +22275,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
+/obj/machinery/duct,
 /turf/open/floor/iron/white/textured,
 /area/station/security/medical)
 "gGO" = (
@@ -34836,13 +34836,11 @@
 /turf/open/floor/carpet,
 /area/station/service/chapel)
 "kmv" = (
-/obj/machinery/computer/records/medical/laptop{
-	dir = 8;
-	pixel_y = 1
-	},
-/obj/structure/table/reinforced/rglass,
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/window/reinforced/spawner/directional/north,
+/obj/machinery/computer/records/medical{
+	dir = 8
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/medical)
 "kmC" = (
@@ -37966,7 +37964,7 @@
 /obj/machinery/camera/autoname/directional/south,
 /obj/structure/cable,
 /obj/structure/extinguisher_cabinet/directional/south,
-/obj/effect/landmark/start/brig_physician,
+/obj/structure/closet/crate/freezer/surplus_limbs,
 /turf/open/floor/iron/white/textured,
 /area/station/security/medical)
 "lcE" = (
@@ -40543,10 +40541,6 @@
 "lNg" = (
 /obj/structure/table/reinforced/rglass,
 /obj/item/reagent_containers/spray/cleaner{
-	pixel_x = -3;
-	pixel_y = 2
-	},
-/obj/item/reagent_containers/spray/cleaner{
 	pixel_x = 5;
 	pixel_y = -1
 	},
@@ -40554,6 +40548,9 @@
 /obj/item/clothing/gloves/latex,
 /obj/item/storage/box/bodybags,
 /obj/effect/turf_decal/tile/neutral/half,
+/obj/item/clothing/neck/stethoscope,
+/obj/item/clothing/mask/surgical,
+/obj/item/radio/intercom/chapel/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/security/medical)
 "lNl" = (
@@ -43042,18 +43039,28 @@
 /area/station/cargo/storage)
 "mAY" = (
 /obj/structure/table/reinforced/rglass,
-/obj/item/reagent_containers/syringe,
+/obj/item/reagent_containers/syringe{
+	pixel_x = 3;
+	pixel_y = -7
+	},
 /obj/item/storage/medkit/regular{
 	pixel_y = 11;
 	pixel_x = -8
 	},
 /obj/item/reagent_containers/cup/bottle/epinephrine{
-	pixel_x = 5;
-	pixel_y = 5
+	pixel_x = 8;
+	pixel_y = 13
 	},
-/obj/item/healthanalyzer,
 /obj/effect/turf_decal/tile/neutral/half,
 /obj/effect/turf_decal/trimline/dark_red/end,
+/obj/item/storage/medkit/regular{
+	pixel_y = 1;
+	pixel_x = -15
+	},
+/obj/item/reagent_containers/cup/bottle/multiver{
+	pixel_x = 3;
+	pixel_y = 5
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/medical)
 "mBf" = (
@@ -44991,8 +44998,6 @@
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "neT" = (
-/obj/machinery/iv_drip,
-/obj/item/reagent_containers/blood,
 /obj/effect/turf_decal/tile/neutral/half{
 	dir = 1
 	},
@@ -45002,6 +45007,7 @@
 	pixel_x = 8;
 	pixel_y = 28
 	},
+/obj/machinery/stasis,
 /turf/open/floor/iron/dark,
 /area/station/security/medical)
 "neU" = (
@@ -47616,6 +47622,7 @@
 /obj/structure/bodycontainer/morgue,
 /obj/machinery/light/small/dim/directional/west,
 /obj/structure/cable,
+/obj/machinery/duct,
 /turf/open/floor/iron/white/textured,
 /area/station/security/medical)
 "nUd" = (
@@ -61885,13 +61892,11 @@
 /area/station/maintenance/solars/starboard/fore)
 "sbt" = (
 /obj/structure/closet/secure_closet/secmed,
-/obj/item/clothing/suit/jacket/straight_jacket,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
-/obj/item/storage/backpack/deforest_surgical/stocked,
 /turf/open/floor/iron/white/textured,
 /area/station/security/medical)
 "sbA" = (
@@ -69276,6 +69281,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/holopad,
 /obj/structure/cable,
+/obj/machinery/duct,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/security/medical)
 "uhc" = (
@@ -75384,7 +75390,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical)
 "vSV" = (
-/obj/machinery/shower/directional/east,
 /obj/effect/turf_decal/stripes/end{
 	dir = 4
 	},
@@ -75395,7 +75400,9 @@
 	name = "shower drain"
 	},
 /obj/machinery/airalarm/directional/west,
-/obj/item/radio/intercom/directional/north,
+/obj/machinery/iv_drip,
+/obj/item/reagent_containers/blood,
+/obj/machinery/shower/directional/south,
 /turf/open/floor/iron/white/textured,
 /area/station/security/medical)
 "vSX" = (
