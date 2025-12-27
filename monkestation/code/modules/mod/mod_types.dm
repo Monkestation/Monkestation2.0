@@ -51,6 +51,7 @@
 
 		/obj/item/mod/module/health_analyzer,
 		/obj/item/mod/module/injector,
+		/obj/item/mod/module/flashlight,
 	)
 
 /obj/item/mod/control/pre_equipped/security

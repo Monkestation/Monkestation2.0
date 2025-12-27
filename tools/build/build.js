@@ -232,11 +232,6 @@ export const TguiPrettierTarget = new Juke.Target({
   executes: () => yarn('tgui:prettier'),
 });
 
-export const TguiSonarTarget = new Juke.Target({
-  dependsOn: [YarnTarget],
-  executes: () => yarn('tgui:sonar'),
-});
-
 export const TguiTscTarget = new Juke.Target({
   dependsOn: [YarnTarget],
   executes: () => yarn('tgui:tsc'),
@@ -260,11 +255,6 @@ export const TguiDevTarget = new Juke.Target({
 export const TguiAnalyzeTarget = new Juke.Target({
   dependsOn: [YarnTarget],
   executes: () => yarn('tgui:analyze'),
-});
-
-export const TguiBenchTarget = new Juke.Target({
-  dependsOn: [YarnTarget],
-  executes: () => yarn('tgui:bench'),
 });
 
 export const TestTarget = new Juke.Target({

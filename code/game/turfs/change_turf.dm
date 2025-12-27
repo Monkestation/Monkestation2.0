@@ -90,7 +90,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	var/old_explosive_resistance = explosive_resistance - get_explosive_block()
 	var/old_lattice_underneath = lattice_underneath
 	var/old_liquids
-	if(isgroundlessturf(path))
+	if(isgroundlessturf(path) || ispath(path, /turf/closed))
 		QDEL_NULL(liquids)
 	else
 		old_liquids = liquids

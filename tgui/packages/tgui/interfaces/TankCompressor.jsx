@@ -124,7 +124,7 @@ const TankCompressorControls = (props) => {
         >
           {!pressure && <Modal>{'No Pressure Detected'}</Modal>}
           {usingLastData && (
-            <NoticeBox warning>
+            <NoticeBox>
               {'Tank destroyed. Displaying last recorded data.'}
             </NoticeBox>
           )}

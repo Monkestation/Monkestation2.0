@@ -12,7 +12,6 @@
 * since time_entered, which is world.time when the occupant moves in.
 * ~ Zuhayr
 */
-GLOBAL_LIST_EMPTY(cryopod_computers)
 
 GLOBAL_LIST_EMPTY(ghost_records)
 
@@ -51,12 +50,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 
 /obj/machinery/computer/cryopod/Initialize(mapload)
 	. = ..()
-	GLOB.cryopod_computers += src
 	radio = new radio(src)
 	radio.lossless = TRUE
 
 /obj/machinery/computer/cryopod/Destroy()
-	GLOB.cryopod_computers -= src
 	QDEL_NULL(radio)
 	return ..()
 
@@ -226,8 +223,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 	return ..()
 
 /obj/machinery/cryopod/proc/find_control_computer(urgent = FALSE)
-	for(var/cryo_console in GLOB.cryopod_computers)
-		var/obj/machinery/computer/cryopod/console = cryo_console
+	for(var/obj/machinery/computer/cryopod/console as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/computer/cryopod))
 		if(get_area(console) == get_area(src))
 			control_computer_weakref = WEAKREF(console)
 			break
@@ -759,9 +755,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/cryopod/prison, 18)
 /obj/effect/mob_spawn/ghost_role/proc/find_control_computer()
 	if(!computer_area)
 		return
-	for(var/cryo_console in GLOB.cryopod_computers)
-		var/obj/machinery/computer/cryopod/console = cryo_console
-		var/area/area = get_area(cryo_console) // Define moment
+	for(var/obj/machinery/computer/cryopod/console as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/computer/cryopod))
+		var/area/area = get_area(console) // Define moment
 		if(area.type == computer_area)
 			return console
 
