@@ -35666,7 +35666,6 @@
 	pixel_x = -15;
 	pixel_y = 15
 	},
-/obj/structure/table/reinforced/rglass,
 /obj/item/clothing/neck/stethoscope,
 /turf/open/floor/iron/white,
 /area/station/security/medical)
@@ -48161,10 +48160,6 @@
 /obj/item/reagent_containers/cup/bottle/epinephrine{
 	pixel_x = -10;
 	pixel_y = 8
-	},
-/obj/structure/table/reinforced/rglass{
-	pixel_x = 0;
-	pixel_y = 0
 	},
 /obj/item/reagent_containers/cup/bottle/multiver{
 	pixel_x = -11;

@@ -1916,9 +1916,6 @@
 	id = "Prison Gate";
 	name = "Prison Lockdown Door"
 	},
-/obj/machinery/door/airlock/medical/glass{
-	name = "Infirmary"
-	},
 /obj/effect/mapping_helpers/airlock/access/any/security/permabrig,
 /turf/open/floor/iron/freezer,
 /area/station/security/medical)

@@ -72829,7 +72829,6 @@
 	pixel_x = -9;
 	pixel_y = 2
 	},
-/obj/structure/table/reinforced/rglass,
 /obj/item/clothing/mask/surgical,
 /obj/machinery/vending/wallmed/directional/north,
 /obj/item/clothing/neck/stethoscope,
