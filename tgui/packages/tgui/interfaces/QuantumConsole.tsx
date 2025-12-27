@@ -122,7 +122,7 @@ const AccessView = (props) => {
       <Stack.Item grow>
         <Section
           buttons={
-            <>
+            <Stack align="center">
               <Button
                 disabled={
                   !ready || occupants > 0 || points < 1 || !!generated_domain
@@ -138,7 +138,7 @@ const AccessView = (props) => {
                 <Icon color="pink" name="star" mr={1} />
                 {points}
               </Tooltip>
-            </>
+            </Stack>
           }
           fill
           scrollable
