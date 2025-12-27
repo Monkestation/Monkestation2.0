@@ -137,14 +137,12 @@ export const recallWindowGeometry = async (
 
   if (!Byond.TRIDENT) {
     if (!options.scale) {
-      // @ts-expect-error
       document.body.style.zoom = `${100 / window.devicePixelRatio}%`;
       document.documentElement.style.setProperty(
         '--scaling-amount',
         window.devicePixelRatio.toString(),
       );
     } else {
-      // @ts-expect-error
       document.body.style.zoom = '';
       document.documentElement.style.setProperty('--scaling-amount', null);
     }

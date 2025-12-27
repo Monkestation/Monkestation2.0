@@ -11,7 +11,6 @@
 		/obj/item/pen/red = 5,
 		/obj/item/flashlight/pen = 5,
 		/obj/item/pen/fourcolor = 2,
-		/obj/item/flashlight/pen/paramedic = 2,
 		/obj/item/pen/fountain = 1,
 	)
 

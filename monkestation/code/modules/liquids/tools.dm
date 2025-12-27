@@ -32,9 +32,18 @@ ADMIN_VERB(remove_liquid, R_FUN, FALSE, "Remove Liquids", "Removes a chosen liqu
 
 	var/range = input(user, "Enter range:", "Range selection", 2) as num
 
+	var/old_can_fire = SSliquids.can_fire
+	SSliquids.can_fire = FALSE
+	if(SSliquids.state == SS_RUNNING)
+		SSliquids.pause()
+		sleep(world.tick_lag)
 	for(var/obj/effect/abstract/liquid_turf/liquid in range(range, epicenter))
-		liquid.liquid_group.remove_any(liquid, liquid.liquid_group.reagents_per_turf)
+		if(QDELETED(liquid))
+			continue
+		if(!QDELETED(liquid.liquid_group))
+			liquid.liquid_group.remove_any(liquid, liquid.liquid_group.reagents_per_turf)
 		qdel(liquid)
+	SSliquids.can_fire = old_can_fire
 
 	message_admins("[key_name_admin(user)] removed liquids with range [range] in [epicenter.loc.name]")
 	log_game("[key_name_admin(user)] removed liquids with range [range] in [epicenter.loc.name]")

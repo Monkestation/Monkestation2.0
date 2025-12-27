@@ -31,5 +31,6 @@ export type Antagonist = {
 export enum Category {
   Roundstart,
   Midround,
+  Ghost,
 //  Latejoin,
 }

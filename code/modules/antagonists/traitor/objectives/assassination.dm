@@ -101,6 +101,47 @@
 		maximum_objectives = maximum_objectives_in_period \
 	)
 
+/datum/traitor_objective/target_player/assassinate/proc/can_target(datum/mind/possible_target)
+	if(!ishuman(possible_target.current))
+		return FALSE
+	if(possible_target.current.stat == DEAD)
+		return FALSE
+	var/datum/antagonist/traitor/traitor = possible_target.has_antag_datum(/datum/antagonist/traitor)
+	if(traitor && traitor.uplink_handler.telecrystals >= 0)
+		return FALSE
+	var/target_area = get_area(possible_target.current)
+	if(!HAS_TRAIT(SSstation, STATION_TRAIT_LATE_ARRIVALS) && istype(target_area, /area/shuttle/arrival))
+		return FALSE
+	//removes heads of staff from being targets from non heads of staff assassinations, and vice versa
+	if(heads_of_staff)
+		if(!(possible_target.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND))
+			return FALSE
+	else
+		if((possible_target.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND))
+			return FALSE
+	return TRUE
+
+// we want to ensure that "place calling card" objectives are never generated for anyone who won't leave behind a proper dead body for you to put the calling card on anyways
+/datum/traitor_objective/target_player/assassinate/calling_card/can_target(datum/mind/possible_target)
+	. = ..()
+	if(!.)
+		return FALSE
+	var/mob/living/carbon/human/human_target = possible_target.current
+	// we cannot plant calling cards on oozeling cores.
+	if(is_oozeling_core(human_target.get_organ_slot(ORGAN_SLOT_BRAIN)))
+		return FALSE
+	// stand users will dust on death
+	if(length(human_target.get_all_linked_holoparasites()))
+		return FALSE
+	// if they have a memento mori... yup, they'll dust on death.
+	var/obj/item/clothing/neck/necklace/memento_mori/mori = human_target.get_item_by_slot(ITEM_SLOT_NECK)
+	if(istype(mori) && mori.active_owner == human_target)
+		return FALSE
+	// microbomb or self-immolation implant? yeah you get the point.
+	for(var/implant in human_target.implants)
+		if(istype(implant, /obj/item/implant/explosive) || istype(implant, /obj/item/implant/dust))
+			return FALSE
+
 /datum/traitor_objective/target_player/assassinate/generate_objective(datum/mind/generating_for, list/possible_duplicates)
 
 	var/list/already_targeting = list() //List of minds we're already targeting. The possible_duplicates is a list of objectives, so let's not mix things
@@ -122,25 +163,10 @@
 	for(var/datum/mind/possible_target as anything in get_crewmember_minds())
 		if(possible_target in already_targeting)
 			continue
-		var/target_area = get_area(possible_target.current)
 		if(possible_target == generating_for)
 			continue
-		if(!ishuman(possible_target.current))
+		if(!can_target(possible_target))
 			continue
-		if(possible_target.current.stat == DEAD)
-			continue
-		var/datum/antagonist/traitor/traitor = possible_target.has_antag_datum(/datum/antagonist/traitor)
-		if(traitor && traitor.uplink_handler.telecrystals >= 0)
-			continue
-		if(!HAS_TRAIT(SSstation, STATION_TRAIT_LATE_ARRIVALS) && istype(target_area, /area/shuttle/arrival))
-			continue
-		//removes heads of staff from being targets from non heads of staff assassinations, and vice versa
-		if(heads_of_staff)
-			if(!(possible_target.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND))
-				continue
-		else
-			if((possible_target.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND))
-				continue
 		possible_targets += possible_target
 	for(var/datum/traitor_objective/target_player/objective as anything in possible_duplicates)
 		possible_targets -= objective.target

@@ -31,7 +31,7 @@
 	var/datum/station_holomap/holomap_datum
 	var/bonus_parts = /obj/item/stock_parts/micro_laser
 
-/obj/machinery/station_map/Initialize()
+/obj/machinery/station_map/Initialize(mapload)
 	. = ..()
 	if(!current_z_level)
 		current_z_level = loc.z
@@ -315,7 +315,7 @@
 
 	/*
 	var/list/air_alarms = list()
-	for(var/obj/machinery/airalarm/air_alarm in GLOB.machines)
+	for(var/obj/machinery/airalarm/air_alarm as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/airalarm))
 		var/area/alarms = get_area(air_alarm)
 		if(air_alarm?.z == current_z_level && alarms?.atmosalm) //Altered it to fire_alam since we don't have an area variable on air_alarms
 			var/image/alarm_icon = image('monkestation/code/modules/holomaps/icons/8x8.dmi', "atmos_marker")
@@ -419,7 +419,7 @@
 	name = "recon holomap"
 	desc = "A virtual map of the target station."
 
-/obj/machinery/station_map/syndicate/Initialize()
+/obj/machinery/station_map/syndicate/Initialize(mapload)
 	. = ..()
 	var/tracked_z_level = SSmapping.levels_by_trait(ZTRAIT_STATION)[1]
 	current_z_level = tracked_z_level

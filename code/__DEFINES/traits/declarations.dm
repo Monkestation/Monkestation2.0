@@ -1376,9 +1376,16 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Can either be applied to the attacker or an individual limb.
 #define TRAIT_BORG_PUNCHER "borg_puncher"
 
+/// Prevents observers from being able to observe (seeing their UI and such)
+#define TRAIT_NO_OBSERVE "no_observe"
+
 /// Demolition modifier when hitting this object is inverted (ie, 1 / demolition)
 #define TRAIT_INVERTED_DEMOLITION "demolition_inverted"
 
+/// This mob can hear the music from the DJ station.
+#define TRAIT_CAN_HEAR_MUSIC "can_hear_radio"
+/// This mob is currently listening to a walkman.
+#define TRAIT_LISTENING_TO_WALKMAN "listening_to_walkman"
 // /datum/mind + /mob/living
 /// Prevents the user from casting spells using sign language. Works on both /datum/mind and /mob/living.
 #define TRAIT_CANT_SIGN_SPELLS "cant_sign_spells"

@@ -43,7 +43,7 @@
 ///Build our storm rings
 /datum/royale_storm_controller/proc/build_rings()
 	safe_areas = list()
-	for(var/z_level as anything in SSmapping.levels_by_trait(ZTRAIT_STATION))
+	for(var/z_level in SSmapping.levels_by_trait(ZTRAIT_STATION))
 		var/turf/center_turf = locate(round(world.maxx * 0.5, 1), round(world.maxy * 0.5, 1), z_level)
 		for(var/turf/consumed_turf as anything in GLOB.station_turfs)
 			if(consumed_turf.z != z_level)
