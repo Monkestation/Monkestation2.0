@@ -59,6 +59,7 @@
 				/obj/item/clothing/suit/armor/vest/blueshirt = 2,
 				/obj/item/clothing/suit/armor/vest/secjacket = 3,
 				/obj/item/clothing/suit/jacket/officer/blue = 3,
+				/obj/item/clothing/suit/armor/vest/buoyantrigvest = 3,
 			),
 		),
 		list(
