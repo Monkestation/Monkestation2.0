@@ -406,7 +406,7 @@
 	)
 
 /obj/item/surgical_processor/cmo // Include the weaker surgeries in the given research unless we have mutiple surgeries showing up.
-	desc = "A handheld version of the surgical processor module, functioning as what is effectively serverlinked surgical drapes.\
+	desc = "A handheld version of the surgical processor module, functioning as what is effectively advanced surgical drapes.\
 		Use on an operating computer to download the surgeries on it.\
 			<center><b>These are your surgical drapes.</center></b>"
 	loaded_surgeries = list(
