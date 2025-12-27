@@ -314,17 +314,24 @@ export const StandardizedChoiceButtons = (props: {
 }) => {
   const { choices, disabled, displayNames, onSetValue, value } = props;
   return (
-    <>
+    <Stack
+      style={{
+        gap: '0.3em',
+      }}
+    >
       {choices.map((choice) => (
-        <Button
-          key={choice}
-          content={displayNames[choice]}
-          selected={choice === value}
-          disabled={disabled}
-          onClick={() => onSetValue(choice)}
-        />
+        <Stack.Item>
+          <Button
+            key={choice}
+            selected={choice === value}
+            disabled={disabled}
+            onClick={() => onSetValue(choice)}
+          >
+            {displayNames[choice]}
+          </Button>
+        </Stack.Item>
       ))}
-    </>
+    </Stack>
   );
 };
 

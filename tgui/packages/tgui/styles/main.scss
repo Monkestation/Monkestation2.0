@@ -18,6 +18,7 @@
 
 @include meta.load-css('./components/ColorSelectBox.scss');
 @include meta.load-css('./components/SearchItem.scss');
+@include meta.load-css('./components/NoticeBox.scss');
 
 // Interfaces
 @include meta.load-css('./interfaces/AlertModal.scss');

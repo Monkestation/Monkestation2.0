@@ -436,6 +436,9 @@ const TextHighlightSetting = (props) => {
         resize="vertical"
         value={highlightText}
         placeholder="Put words to highlight here. Separate terms with commas, i.e. (term1, term2, term3)"
+        style={{
+          width: '100%',
+        }}
         onChange={(e, value) =>
           dispatch(
             updateHighlightSetting({

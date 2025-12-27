@@ -10,7 +10,6 @@ import {
   Blink,
   BlockQuote,
   Box,
-  Button,
   ByondUi,
   Chart,
   Collapsible,
@@ -54,7 +53,6 @@ export {
   Blink,
   BlockQuote,
   Box,
-  Button,
   ByondUi,
   Chart,
   Collapsible,
@@ -99,3 +97,4 @@ export { KeyListener } from './KeyListener';
 export { NumberInput } from './NumberInput';
 export { Slider } from './Slider';
 export { TextArea } from './TextArea';
+export { Button } from './Button';
