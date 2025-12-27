@@ -59813,14 +59813,13 @@
 "tcs" = (
 /obj/structure/table,
 /obj/item/storage/box/bodybags{
-	pixel_x = -11;
+	pixel_x = -8;
 	pixel_y = 11
 	},
 /obj/item/clothing/mask/breath/muzzle{
 	pixel_x = 7;
 	pixel_y = 6
 	},
-/obj/structure/table,
 /obj/item/emergency_bed,
 /obj/item/clothing/neck/stethoscope,
 /obj/item/clothing/gloves/latex,
