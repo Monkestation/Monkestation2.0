@@ -252,3 +252,5 @@ rust_g64.dll
 
 #ableton sound analysis files
 *.asd
+
+!libaneri.so
