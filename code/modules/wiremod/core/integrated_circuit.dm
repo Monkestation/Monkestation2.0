@@ -93,7 +93,6 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 		/obj/item/circuit_component/chem/input,
 		/obj/item/circuit_component/chem/output,
 		/obj/item/circuit_component/chem/splitter,
-		/obj/item/integrated_circuit/chemical,
 	)
 
 /obj/item/integrated_circuit/Initialize(mapload)
