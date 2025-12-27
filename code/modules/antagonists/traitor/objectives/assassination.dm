@@ -41,13 +41,13 @@
 /datum/traitor_objective/target_player/assassinate/calling_card
 	name = "Assassinate %TARGET% the %JOB TITLE%, and plant a calling card"
 	description = "Kill your target and plant a calling card in the pockets of your victim. If your calling card gets destroyed before you are able to plant it, this objective will fail."
-	progression_reward = 2 MINUTES
+	progression_reward = 10 MINUTES
 	telecrystal_reward = list(2, 4)
 
 	var/obj/item/paper/calling_card/card
 
 /datum/traitor_objective/target_player/assassinate/calling_card/heads_of_staff
-	progression_reward = 4 MINUTES
+	progression_reward = 15 MINUTES
 	telecrystal_reward = list(2, 3)
 
 	heads_of_staff = TRUE
