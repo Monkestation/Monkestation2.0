@@ -11797,7 +11797,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 4
 	},
-/obj/machinery/vending/wardrobe/cargo_wardrobe,
+/obj/machinery/vending/access/wardrobe_cargo,
 /obj/effect/turf_decal/bot,
 /obj/item/toy/figure/cargotech{
 	pixel_y = 18

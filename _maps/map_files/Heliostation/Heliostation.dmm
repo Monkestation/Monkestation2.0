@@ -58280,7 +58280,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 1
 	},
-/obj/machinery/vending/wardrobe/cargo_wardrobe,
+/obj/machinery/vending/access/wardrobe_cargo,
 /obj/machinery/light/directional/north,
 /obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron,

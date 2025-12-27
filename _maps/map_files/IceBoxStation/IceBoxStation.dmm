@@ -60268,7 +60268,7 @@
 /obj/machinery/camera/directional/north{
 	c_tag = "Cargo Bay North"
 	},
-/obj/machinery/vending/wardrobe/cargo_wardrobe,
+/obj/machinery/vending/access/wardrobe_cargo,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "svO" = (
@@ -68563,7 +68563,7 @@
 /turf/open/floor/carpet/grimey,
 /area/station/security/prison/work)
 "veh" = (
-/obj/machinery/vending/wardrobe/cargo_wardrobe,
+/obj/machinery/vending/access/wardrobe_cargo,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "vek" = (

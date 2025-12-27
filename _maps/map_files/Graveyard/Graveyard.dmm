@@ -17599,7 +17599,7 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "gRh" = (
-/obj/machinery/vending/wardrobe/cargo_wardrobe,
+/obj/machinery/vending/access/wardrobe_cargo,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},

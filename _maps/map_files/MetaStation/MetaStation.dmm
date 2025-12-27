@@ -44877,7 +44877,7 @@
 /turf/open/floor/plating,
 /area/station/medical/abandoned)
 "pyv" = (
-/obj/machinery/vending/wardrobe/cargo_wardrobe,
+/obj/machinery/vending/access/wardrobe_cargo,
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 8
 	},
