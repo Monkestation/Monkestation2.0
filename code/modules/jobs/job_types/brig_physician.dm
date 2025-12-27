@@ -19,7 +19,7 @@
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SEC
 
-	liver_traits = list(TRAIT_MEDICAL_METABOLISM)
+	liver_traits = list(TRAIT_MEDICAL_METABOLISM, TRAIT_LAW_ENFORCEMENT_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_BRIG_PHYSICIAN
 	bounty_types = CIV_JOB_MED
@@ -63,6 +63,11 @@
 	backpack = /obj/item/storage/backpack/secmed
 	satchel = /obj/item/storage/backpack/satchel/secmed
 	duffelbag = /obj/item/storage/backpack/duffelbag/secmed
+
+	backpack_contents = list(
+		/obj/item/modular_computer/pda/security/brig_physician = 1,
+		/obj/item/emergency_bed = 1,
+		)
 
 	box = /obj/item/storage/box/survival/medical
 	chameleon_extras = /obj/item/gun/syringe
