@@ -12,7 +12,6 @@
 /obj/item/clothing/under/rank/security
 	icon = 'icons/obj/clothing/under/security.dmi'
 	worn_icon = 'icons/mob/clothing/under/security.dmi'
-	worn_icon_digitigrade = 'icons/mob/clothing/under/security_digi.dmi'
 	armor_type = /datum/armor/rank_security
 	strip_delay = 50
 	sensor_mode = SENSOR_COORDS
