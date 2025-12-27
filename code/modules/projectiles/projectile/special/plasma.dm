@@ -39,6 +39,37 @@
 	range = 7
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 
+/obj/projectile/plasma/kineticshotgun //subtype of plasma instead of kinetic so it can punch through mineable turf. Cant be used off of lavaland or off the wastes of icemoon anyways so...
+	name = "magnum kinetic projectile"
+	icon_state = "cryoshot"
+	damage_type = BRUTE
+	damage = 5.46875  //totals 175 damage letting them reach the breakpoint for watcher HP so it one shots them
+	fauna_mod = 4
+	range = 6
+	dismemberment = 0
+	projectile_piercing = PASSMOB
+	impact_effect_type = /obj/effect/temp_visual/kinetic_blast
+	mine_range = 1
+	tracer_type = ""
+	muzzle_type = ""
+	impact_type = ""
+
+/obj/projectile/plasma/kineticshotgun/sniperslug // long range but cant hit the oneshot breakpoint of a watcher and does not penetrate targets
+	name = ".50 BMG kinetic"
+	speed = 0.4
+	damage = 45
+	fauna_mod = 2
+	range = 12
+	icon_state = "gaussstrong"
+	projectile_piercing = NONE
+
+/obj/projectile/plasma/kineticshotgun/rockbreaker // for breaking rocks
+	name = "kinetic rockbreaker"
+	speed = 1 //slower than average
+	damage = 2
+	range = 13
+	icon_state = "guardian"
+	projectile_piercing = NONE
 
 /obj/projectile/plasma/minerjdj //is plasma because wall cutting
 	name = ".950 JDJ Kinetic solid brass projectile"
@@ -56,36 +87,4 @@
 	mine_range = 1
 	projectile_piercing = PASSMOB
 
-
-/obj/projectile/plasma/kineticshotgun //subtype of plasma instead of kinetic so it can punch through mineable turf. Cant be used off of lavaland or off the wastes of icemoon anyways so...
-	name = "magnum kinetic projectile"
-	icon_state = "cryoshot"
-	damage_type = BRUTE
-	damage = 17.5  //totals 175 damage letting them reach the breakpoint for watcher HP so it one shots them
-	fauna_mod = 2
-	range = 7
-	dismemberment = 0
-	projectile_piercing = PASSMOB
-	impact_effect_type = /obj/effect/temp_visual/kinetic_blast
-	mine_range = 1
-	tracer_type = ""
-	muzzle_type = ""
-	impact_type = ""
-
-/obj/projectile/plasma/kineticshotgun/sniperslug // long range but cant hit the oneshot breakpoint of a watcher and does not penetrate targets
-	name = ".50 BMG kinetic"
-	speed = 0.4
-	damage = 75
-	fauna_mod = 2
-	range = 10
-	icon_state = "gaussstrong"
-	projectile_piercing = NONE
-
-/obj/projectile/plasma/kineticshotgun/rockbreaker // for breaking rocks
-	name = "kinetic rockbreaker"
-	speed = 1 //slower than average
-	damage = 2
-	range = 13
-	icon_state = "guardian"
-	projectile_piercing = NONE
 
