@@ -200,7 +200,7 @@ ADMIN_VERB_AND_CONTEXT_MENU(debug_variables, R_NONE, FALSE, "View Variables", "V
 				}
 
 				lastFilter = filter;
-				document.cookie = `\[refid]\[cookieoffset]search=${encodeURIComponent(filter)}`;
+				document.cookie = `[refid][cookieoffset]search=${encodeURIComponent(filter)}`;
 			}
 
 			function debounce(fn, delay) {
