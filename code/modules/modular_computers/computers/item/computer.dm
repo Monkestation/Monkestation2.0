@@ -208,6 +208,10 @@
 		update_appearance(UPDATE_ICON)
 		return CLICK_ACTION_SUCCESS
 
+	for(var/datum/computer_file/files as anything in stored_files)
+		if(files.try_eject(user))
+			return CLICK_ACTION_SUCCESS
+
 	return CLICK_ACTION_BLOCKING
 
 /* MONKE EDIT: Secondary ID not implemented
@@ -223,9 +227,12 @@
 
 // Gets IDs/access levels from card slot. Would be useful when/if PDAs would become modular PCs. //guess what
 /obj/item/modular_computer/GetAccess()
+	var/list/access = list()
 	if(computer_id_slot)
-		return computer_id_slot.GetAccess()
-	return ..()
+		access |= computer_id_slot?.GetAccess()
+	for(var/datum/computer_file/app_access as anything in stored_files)
+		access |= app_access.get_access()
+	return access + ..()
 
 /obj/item/modular_computer/GetID()
 	RETURN_TYPE(/obj/item/card/id)
@@ -902,7 +909,7 @@
 /obj/item/modular_computer/deconstruct(disassembled = TRUE)
 	var/atom/droploc = drop_location()
 	remove_pai()
-	eject_aicard()
+	eject_file_contents()
 	internal_cell?.forceMove(droploc)
 	computer_id_slot?.forceMove(droploc)
 	//stored_id?.forceMove(droploc)
@@ -915,10 +922,9 @@
 	qdel(src)
 
 // Ejects the inserted intellicard, if one exists. Used when the computer is deconstructed.
-/obj/item/modular_computer/proc/eject_aicard()
-	var/datum/computer_file/program/ai_restorer/program = locate() in stored_files
-	if (program)
-		return program.try_eject(forced = TRUE)
+/obj/item/modular_computer/proc/eject_file_contents()
+	for(var/datum/computer_file/files as anything in stored_files)
+		files.try_eject(forced = TRUE)
 	return FALSE
 
 // Used by processor to relay qdel() to machinery type.

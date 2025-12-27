@@ -120,16 +120,18 @@
  * loud is a bool deciding if this proc should use to_chats
  * access_to_check is an access level that will be checked against the ID
  * downloading: Boolean on whether it's downloading the app or not. If it is, it will check download_access instead of run_access.
- * access can contain a list of access numbers to check against. If access is not empty, it will be used istead of checking any inserted ID.
+ * computer_access: Used to check programs that isn't on this computer, we'll use this arg instead of our computer.
  */
-/datum/computer_file/program/proc/can_run(mob/user, loud = FALSE, access_to_check, downloading = FALSE, list/access)
+/datum/computer_file/program/proc/can_run(mob/user, loud = FALSE, access_to_check, downloading = FALSE, obj/item/modular_computer/computer_access)
+	if(isnull(computer_access))
+		computer_access = computer
 	if(user)
 		if(issilicon(user) && !ispAI(user))
 			return TRUE
 		if(isAdminGhostAI(user))
 			return TRUE
 
-	if(computer && (computer.obj_flags & EMAGGED) && (program_flags & PROGRAM_ON_SYNDINET_STORE || !downloading)) //emagged can run anything on syndinet, and can bypass execution locks, but not download.
+	if(computer_access && (computer_access.obj_flags & EMAGGED) && (program_flags & PROGRAM_ON_SYNDINET_STORE || !downloading)) //emagged can run anything on syndinet, and can bypass execution locks, but not download.
 		return TRUE
 
 	if(!access_to_check)
@@ -140,23 +142,18 @@
 	if(!length(access_to_check)) // No access requirements, allow it.
 		return TRUE
 
-	if(!length(access))
-		var/obj/item/card/id/accesscard
-		if(computer)
-			accesscard = computer.computer_id_slot?.GetID()
-
-		if(!accesscard)
-			if(loud && user)
-				to_chat(user, span_danger("\The [computer] flashes an \"RFID Error - Unable to scan ID\" warning."))
-			return FALSE
-		access = accesscard.GetAccess()
+	var/list/found_access = computer_access?.GetAccess()
+	if(!found_access)
+		if(loud && user)
+			to_chat(user, span_danger("\The [computer_access] flashes an \"RFID Error - Unable to scan ID\" warning."))
+		return FALSE
 
 	for(var/singular_access in access_to_check)
-		if(singular_access in access) //For loop checks every individual access entry in the access list. If the user's ID has access to any entry, then we're good.
+		if(singular_access in found_access) //For loop checks every individual access entry in the access list. If the user's ID has access to any entry, then we're good.
 			return TRUE
 
 	if(loud && user)
-		to_chat(user, span_danger("\The [computer] flashes an \"Access Denied\" warning."))
+		to_chat(user, span_danger("\The [computer_access] flashes an \"Access Denied\" warning."))
 	return FALSE
 
 /**
