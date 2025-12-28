@@ -103,7 +103,6 @@
 				/obj/item/clothing/suit/toggle/labcoat/secmed/old = 2,
 				/obj/item/clothing/suit/toggle/labcoat/secmed/alt = 2,
 				/obj/item/clothing/head/soft/sec/medical = 2,
-				/obj/item/clothing/shoes/workboots/black = 2,
 				/obj/item/clothing/shoes/sneakers/white = 2,
 				/obj/item/storage/backpack/secmed = 1,
 				/obj/item/storage/backpack/satchel/secmed = 1,

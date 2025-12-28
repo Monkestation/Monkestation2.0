@@ -187,6 +187,9 @@
 /// Special Ops. Captain's display case, Marauder and Seraph mechs.
 #define ACCESS_CENT_SPECOPS 188 ///Remind me to separate to captain, centcom, and syndicate mech access later -SonofSpace
 
+#define ACCESS_UNION "Union"
+#define ACCESS_UNION_LEADER "Union Leader"
+
 /// - - - ANTAGONIST - - -
 /// SYNDICATE
 #define ACCESS_SYNDICATE "syndicate"

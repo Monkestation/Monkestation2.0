@@ -115028,19 +115028,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/fore)
-"wdP" = (
-/obj/structure/closet/secure_closet/security/sec,
-/obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/red/line{
-	dir = 4
-	},
-/obj/machinery/stasis,
-/turf/open/floor/iron/dark/side{
-	dir = 8
-	},
-/area/station/security/lockers)
 "wdS" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -155022,7 +155009,7 @@ fom
 csH
 eGB
 aAF
-wdP
+wdo
 vIn
 wdo
 aAF
