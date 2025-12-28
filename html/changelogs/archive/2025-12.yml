@@ -623,3 +623,25 @@
       flashbangs, and pepperspray.
   - balance: Ling's chitin armor ability cost increased from 1 dna point to 2.
   - balance: Ling's armblade ability cost decreased from 2 dna points to 1.
+2025-12-27:
+  Absolucy:
+  - bugfix: Fixed not being able to revive existing vassals with Tremere's Dominate
+      if you were currently at your vassal cap.
+  - map: Added a proper SMES for the SM emitters on Void Raptor.
+  - bugfix: Fixed a rare bug where bloodsuckers could be permanently stuck as being
+      considered "silver cuffed".
+  - bugfix: Healium crystals now properly update turf atmos
+  Shoddd:
+  - balance: empath now cost 4 points instead of 2
+  - balance: empath can now see quirks on examine
+  Singul0:
+  - rscadd: Added tutorial simulation virtual reality! It is accessed over at centcom.
+      Players with low playtime can gain monkecoins for completing tutorials (thank
+      you for not blowing up [PHARMACY/ENGINE] in regular rounds)
+  - code_imp: Adds multiple bitrunning networks functionality
+  Tractor-Maam:
+  - balance: Vital Displays are available to print as a design roundstart. Advanced
+      displays are still untouched under Advanced Biotech.
+  Veth-s:
+  - rscadd: A new token statpanel for admins, to help improve token responses.
+  - admin: A noise will now play if a token is going to timeout in one minute.

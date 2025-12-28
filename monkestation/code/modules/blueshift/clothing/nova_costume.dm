@@ -1,9 +1,6 @@
 /obj/item/clothing/under/costume
 	worn_icon_digitigrade = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/costume_digi.dmi'
 
-/obj/item/clothing/under/costume/russian_officer
-	worn_icon_digitigrade = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/security_digi.dmi'
-
 /obj/item/clothing/under/costume/nova
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/under/costume.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/costume.dmi'
