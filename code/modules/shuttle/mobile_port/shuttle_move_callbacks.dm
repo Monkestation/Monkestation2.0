@@ -96,6 +96,11 @@ All ShuttleMove procs go here
 
 /////////////////////////////////////////////////////////////////////////////////////
 
+// Return the move_move (based on the old), without any side effects.
+// This is for checking what would be moved if src is on a shuttle being moved.
+/atom/movable/proc/hypotheticalShuttleMove(rotation, move_mode, obj/docking_port/mobile/moving_dock)
+	return move_mode
+
 // Called on every atom in shuttle turf contents before anything has been moved
 // returns the new move_mode (based on the old)
 // WARNING: Do not leave turf contents in beforeShuttleMove or dock() will runtime
@@ -146,16 +151,19 @@ All ShuttleMove procs go here
 	return MOVE_AREA
 
 // Called on areas to move their turf between areas
-/area/proc/onShuttleMove(turf/oldT, turf/newT, area/underlying_old_area)
+/area/proc/onShuttleMove(turf/oldT, turf/newT, obj/docking_port/mobile/shuttle, area/fallback_area)
 	if(newT == oldT) // In case of in place shuttle rotation shenanigans.
 		return TRUE
 
-	oldT.change_area(src, underlying_old_area)
+	var/area/underlying_area = shuttle.underlying_areas_by_turf[oldT]
+	oldT.change_area(src, underlying_area || fallback_area)
+	shuttle.underlying_areas_by_turf -= oldT
 	//The old turf has now been given back to the area that turf originaly belonged to
 
 	var/area/old_dest_area = newT.loc
 	parallax_movedir = old_dest_area.parallax_movedir
 	newT.change_area(old_dest_area, src)
+	shuttle.underlying_areas_by_turf[newT] = old_dest_area
 	return TRUE
 
 // Called on areas after everything has been moved
@@ -221,6 +229,11 @@ All ShuttleMove procs go here
 					// To fix this we're lying, that external pressure is nominal
 					INVOKE_ASYNC(cycle_pump, TYPE_PROC_REF(/obj/machinery/atmospherics/components/unary/airlock_pump, on_dock_request), ONE_ATMOSPHERE)
 					break
+
+/obj/machinery/camera/hypotheticalShuttleMove(rotation, move_mode, obj/docking_port/mobile/moving_dock)
+	. = ..()
+	if(. & MOVE_AREA)
+		. |= MOVE_CONTENTS
 
 /obj/machinery/camera/beforeShuttleMove(turf/newT, rotation, move_mode, obj/docking_port/mobile/moving_dock)
 	. = ..()
@@ -328,7 +341,17 @@ All ShuttleMove procs go here
 
 /************************************Structure move procs************************************/
 
+/obj/structure/grille/hypotheticalShuttleMove(rotation, move_mode, obj/docking_port/mobile/moving_dock)
+	. = ..()
+	if(. & MOVE_AREA)
+		. |= MOVE_CONTENTS
+
 /obj/structure/grille/beforeShuttleMove(turf/newT, rotation, move_mode, obj/docking_port/mobile/moving_dock)
+	. = ..()
+	if(. & MOVE_AREA)
+		. |= MOVE_CONTENTS
+
+/obj/structure/lattice/hypotheticalShuttleMove(rotation, move_mode, obj/docking_port/mobile/moving_dock)
 	. = ..()
 	if(. & MOVE_AREA)
 		. |= MOVE_CONTENTS
@@ -346,6 +369,11 @@ All ShuttleMove procs go here
 	. = ..()
 	Connect_cable(TRUE)
 	propagate_if_no_network()
+
+/obj/machinery/power/shuttle_engine/hypotheticalShuttleMove(move_mode)
+	. = ..()
+	if(. & MOVE_AREA)
+		. |= MOVE_CONTENTS
 
 /obj/machinery/power/shuttle_engine/beforeShuttleMove(turf/newT, rotation, move_mode, obj/docking_port/mobile/moving_dock)
 	. = ..()
@@ -369,6 +397,11 @@ All ShuttleMove procs go here
 	return ..()
 
 /************************************Misc move procs************************************/
+
+/obj/docking_port/mobile/hypotheticalShuttleMove(rotation, move_mode, obj/docking_port/mobile/moving_dock)
+	. = ..()
+	if(moving_dock == src)
+		. |= MOVE_CONTENTS
 
 /obj/docking_port/mobile/beforeShuttleMove(turf/newT, rotation, move_mode, obj/docking_port/mobile/moving_dock)
 	. = ..()

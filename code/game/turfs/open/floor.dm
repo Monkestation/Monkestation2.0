@@ -278,7 +278,7 @@
 			if(girder)
 				return girder.rcd_act(user, the_rcd, passed_mode)
 
-			PlaceOnTop(/turf/closed/wall)
+			place_on_top(/turf/closed/wall)
 			return TRUE
 		if(RCD_REFLECTOR)
 			if(locate(/obj/structure/reflector) in src)

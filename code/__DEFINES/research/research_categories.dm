@@ -53,6 +53,7 @@
 #define RND_SUBCATEGORY_COMPUTER_RESEARCH "/Research Consoles"
 #define RND_SUBCATEGORY_COMPUTER_ENGINEERING "/Engineering & Atmospherics Consoles"
 #define RND_SUBCATEGORY_COMPUTER_CARGO "/Cargo Consoles"
+#define RND_SUBCATEGORY_COMPUTER_SHUTTLE "/Shuttle Consoles"
 
 #define RND_CATEGORY_MACHINE "/Machine Boards"
 #define RND_SUBCATEGORY_MACHINE_ATMOS "/Atmospherics Machines"

@@ -79,7 +79,7 @@
 	if(!use(1))
 		return
 
-	target_plating = target_plating.PlaceOnTop(placed_turf_path, flags = CHANGETURF_INHERIT_AIR) //Has a refactor, if line altered then delete comment assuming refactor is complete.
+	target_plating = target_plating.place_on_top(placed_turf_path, flags = CHANGETURF_INHERIT_AIR) //Has a refactor, if line altered then delete comment assuming refactor is complete.
 	target_plating.setDir(turf_dir)
 	playsound(target_plating, 'sound/weapons/genhit.ogg', 50, TRUE)
 	return target_plating

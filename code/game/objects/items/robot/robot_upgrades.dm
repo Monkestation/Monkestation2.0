@@ -750,6 +750,33 @@
 	if (BR)
 		R.model.remove_module(BR, TRUE)
 
+/obj/item/borg/upgrade/shuttle_blueprints
+	name = "Engineering Cyborg Shuttle Blueprint Database"
+	desc = "An upgrade to the engineering model cyborg allowing for the construction and expansion of shuttles."
+	icon_state = "module_engineer"
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/engineering, /obj/item/robot_model/saboteur)
+	model_flags = BORG_MODEL_ENGINEERING
+
+/obj/item/borg/upgrade/shuttle_blueprints/action(mob/living/silicon/robot/borger, user = usr)
+	. = ..()
+	if(.)
+		var/obj/item/shuttle_blueprints/borg/bprint = locate() in borger
+		if(bprint)
+			to_chat(user, span_warning("This unit is already equipped with a shuttle blueprint database module!"))
+			return FALSE
+
+		bprint = new(borger.model)
+		borger.model.basic_modules += bprint
+		borger.model.add_module(bprint, FALSE, TRUE)
+
+/obj/item/borg/upgrade/shuttle_blueprints/deactivate(mob/living/silicon/robot/borger, user = usr)
+	. = ..()
+	if (.)
+		var/obj/item/shuttle_blueprints/borg/bprint = locate() in borger.model
+		if (bprint)
+			borger.model.remove_module(bprint, TRUE)
+
 ///This isn't an upgrade or part of the same path, but I'm gonna just stick it here because it's a tool used on cyborgs.
 //A reusable tool that can bring borgs back to life. They gotta be repaired first, though.
 /obj/item/borg_restart_board

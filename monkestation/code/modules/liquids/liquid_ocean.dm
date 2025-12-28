@@ -150,7 +150,7 @@ GLOBAL_LIST_EMPTY(initalized_ocean_areas)
 	switch(passed_mode)
 		if(RCD_FLOORWALL)
 			to_chat(user, span_notice("You build a floor."))
-			PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+			place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 			return TRUE
 		if(RCD_CATWALK)
 			to_chat(user, span_notice("You build a catwalk."))
@@ -181,7 +181,7 @@ GLOBAL_LIST_EMPTY(initalized_ocean_areas)
 		else
 			to_chat(user, span_notice("You reinforce \the [src]."))
 			playsound(src, 'sound/items/deconstruct.ogg', 80, TRUE)
-			PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+			place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 
 	else if(istype(C, /obj/item/trench_ladder_kit) && catwalk && is_safe())
 		to_chat(user, span_notice("You begin constructing a ladder..."))
