@@ -761,11 +761,17 @@
   - code_imp: TRAIT_BATON_RESISTANCE now prevents you from taking baton stagger as
       well as halving the stamina damage taken, but no longer outright prevents you
       from stamcritting from batons (and beepsky).
+  - bugfix: Patches an oversight allowing you to bypass baton stun cooldown by switching
+      to a new baton.
   Lawlolawl:
   - balance: Disabled wastes pins on Oshan station Z, completely (even far away from
       station exterior).
   - bugfix: Allowed shooting of wastes pin weapons around the exterior of the Oshan
       mining base (previously blocked shooting when too close).
+  SirNightKnight:
+  - bugfix: removed a misplaced stasis unit on Blueshift.
+  - rscadd: added back the brig physician garment bag.
+  - bugfix: Unknowns will not appear on the security or specialized crew monitor.
   SirNightKnight, Dr Diasyl:
   - image: 'New Security clothing: Security High-Vis jacket!'
   - code_imp: demodularized most Brig Physician code.
@@ -817,3 +823,5 @@
   Tractor-Maam:
   - spellcheck: At Dooms Gate is shown instead of CALL_RINGTONE_DOOMSGATE for scryer
       ringtones
+  Uristthedorf:
+  - bugfix: Wall mounted medstation has healing items again.
