@@ -16,7 +16,7 @@ type ExosuitDesign = Design & {
 type ExosuitFabricatorData = FabricatorData & {
   processing: BooleanLike;
   authorization: BooleanLike;
-  alert_level: Number;
+  alert_level: number;
   combat_parts_allowed: BooleanLike;
   emagged: BooleanLike;
   silicon_user: BooleanLike;

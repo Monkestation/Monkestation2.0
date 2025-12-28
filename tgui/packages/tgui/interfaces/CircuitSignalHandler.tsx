@@ -17,7 +17,7 @@ type CircuitSignalHandlerState = {
   signal_id: string;
   responseList: Response[];
   parameterList: Parameter[];
-  global: Boolean;
+  global: boolean;
 };
 
 type CircuitSignalHandlerData = {
