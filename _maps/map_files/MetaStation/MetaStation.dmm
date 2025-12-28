@@ -9648,9 +9648,6 @@
 /obj/machinery/power/port_gen/pacman/pre_loaded,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
-"dAJ" = (
-/turf/closed/wall,
-/area/space)
 "dBV" = (
 /obj/docking_port/stationary/escape_pod{
 	dir = 4
@@ -112052,7 +112049,7 @@ vgA
 eqV
 wbP
 xVt
-lAu
+aaa
 rrt
 lMJ
 ghL
@@ -112310,7 +112307,7 @@ eqV
 wbP
 kFu
 lMJ
-lAu
+aaa
 lMJ
 ghL
 aaf
@@ -114627,8 +114624,8 @@ ghL
 ghL
 ghL
 rrt
-lAu
-lAu
+aaa
+aaa
 lMJ
 wrc
 oyj
@@ -114878,7 +114875,7 @@ cyW
 ccL
 diz
 fIA
-lAu
+aaa
 lMJ
 lMJ
 lMJ
@@ -115141,8 +115138,8 @@ uwQ
 uwQ
 uwQ
 rrt
-lAu
-lAu
+aaa
+aaa
 lMJ
 hbK
 uhs
@@ -116424,7 +116421,7 @@ lMJ
 lMJ
 lMJ
 lMJ
-lAu
+aaa
 rrt
 aox
 aox
@@ -116683,8 +116680,8 @@ csZ
 fKc
 vwL
 uwQ
-lAu
-lAu
+aaa
+aaa
 lMJ
 hbK
 oyj
@@ -117197,8 +117194,8 @@ jFR
 hbS
 jFR
 dfq
-lAu
-lAu
+aaa
+aaa
 lMJ
 wrc
 oyj
@@ -117714,7 +117711,7 @@ jvl
 uwQ
 rrt
 aaa
-dAJ
+hbK
 hbK
 oyj
 xiL
@@ -117738,7 +117735,7 @@ jgq
 xiL
 lmn
 hbK
-dAJ
+hbK
 aaa
 lMJ
 aaa
