@@ -338,7 +338,7 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	ignore += typesof(/obj/item/loot_table_maker)
 
 	/// We need to use json_decode to run randoms properly
-	ignore += typesof(/obj/item/device/cassette_tape)
+	ignore += typesof(/obj/item/cassette_tape)
 	// We also dont want weathers or weather events as they will hold refs to alot of stuff as they shouldn't be deleted
 	ignore += typesof(/mob/living/basic/aquatic)
 	ignore += typesof(/obj/machinery/station_map)

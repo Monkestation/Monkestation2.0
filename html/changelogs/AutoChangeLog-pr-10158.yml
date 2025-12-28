@@ -1,0 +1,4 @@
+author: "JupiterJaeden"
+delete-after: True
+changes:
+  - bugfix: "Patches an oversight allowing you to bypass baton stun cooldown by switching to a new baton."

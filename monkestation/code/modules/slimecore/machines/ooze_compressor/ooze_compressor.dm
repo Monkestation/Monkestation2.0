@@ -225,11 +225,18 @@
 		reagents.clear_reagents()
 
 /obj/machinery/plumbing/ooze_compressor/click_ctrl(mob/user)
-	if(anchored && can_interact(user))
-		repeat_recipe = !repeat_recipe
-		balloon_alert_to_viewers("[repeat_recipe ? "enabled" : "disabled"] repeating")
-		visible_message(span_notice("[user] presses a button turning the repeat recipe system [repeat_recipe ? span_green("on") : span_red("off")]"))
-	return ..()
+	if(!can_interact(user))
+		return CLICK_ACTION_BLOCKING
+	if(!anchored)
+		balloon_alert(user, "unanchored!")
+		return CLICK_ACTION_BLOCKING
+	if(!repeat_recipe && compressing) // janky fix for a bug
+		balloon_alert(user, "busy compressing!")
+		return CLICK_ACTION_BLOCKING
+	repeat_recipe = !repeat_recipe
+	balloon_alert_to_viewers("[repeat_recipe ? "enabled" : "disabled"] repeating")
+	visible_message(span_notice("[user] presses a button turning the repeat recipe system [repeat_recipe ? span_green("on") : span_red("off")]"))
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/plumbing/ooze_compressor/proc/change_recipe(mob/user, cross_breed = FALSE)
 	var/choice

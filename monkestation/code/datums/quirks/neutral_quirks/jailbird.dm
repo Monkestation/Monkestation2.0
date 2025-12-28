@@ -30,5 +30,7 @@
 		return
 	var/datum/crime/new_crime = new(name = crime_name, details = crime, author = "Nanotrasen Bounty Department")
 	jailbird_record.crimes += new_crime
-	jailbird_record.wanted_status = WANTED_PAROLE
+	//Roundstart/latejoin perma prisoners do not get set to parole, they keep their status
+	if (jailbird_record.wanted_status != WANTED_PRISONER)
+		jailbird_record.wanted_status = WANTED_PAROLE
 	jailbird.sec_hud_set_security_status()

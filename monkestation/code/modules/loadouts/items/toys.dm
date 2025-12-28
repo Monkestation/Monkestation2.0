@@ -121,7 +121,7 @@ GLOBAL_LIST_INIT(loadout_toys, generate_loadout_items(/datum/loadout_item/toys))
 
 /datum/loadout_item/toys/walkman
 	name = "Walkman"
-	item_path = /obj/item/device/walkman
+	item_path = /obj/item/walkman
 
 /datum/loadout_item/toys/monkey_pen
 	name = "Monkey Pen"

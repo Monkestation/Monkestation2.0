@@ -16,7 +16,7 @@ type ExosuitDesign = Design & {
 type ExosuitFabricatorData = FabricatorData & {
   processing: BooleanLike;
   authorization: BooleanLike;
-  alert_level: Number;
+  alert_level: number;
   combat_parts_allowed: BooleanLike;
   emagged: BooleanLike;
   silicon_user: BooleanLike;
@@ -380,7 +380,7 @@ const QueueList = (props: QueueListProps) => {
   );
 };
 
-const Authorization = (props, context) => {
+const Authorization = (props) => {
   const { data } = useBackend<ExosuitFabricatorData>();
   const auth_override = data.authorization;
   const alert_level = data.alert_level;

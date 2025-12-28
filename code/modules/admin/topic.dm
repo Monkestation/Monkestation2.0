@@ -1281,7 +1281,7 @@
 		if(!check_rights(R_ADMIN))
 			return
 		var/code = random_nukecode()
-		for(var/obj/machinery/nuclearbomb/selfdestruct/SD in GLOB.nuke_list)
+		for(var/obj/machinery/nuclearbomb/selfdestruct/SD as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/nuclearbomb/selfdestruct))
 			SD.r_code = code
 		message_admins("[key_name_admin(usr)] has set the self-destruct \
 			code to \"[code]\".")
@@ -1766,14 +1766,16 @@
 		log_admin("[user_client]'s [token_holder.in_queue] token has been rejected by [owner].")
 		token_holder.reject_antag_token()
 
+
 	else if(href_list["open_music_review"])
 		if(!check_rights(R_ADMIN))
 			return
-		var/id = href_list["open_music_review"]
-		var/datum/cassette_review/cassette_review = fetch_review(id)
-		if(!istype(cassette_review))
-			return
-		cassette_review.ui_interact(usr)
+		var/id = text2num(href_list["open_music_review"])
+		var/datum/cassette_review/cassette_review = GLOB.cassette_reviews[id]
+		if(cassette_review)
+			cassette_review.ui_interact(usr)
+		else
+			to_chat(usr, span_warning("Cassette review not found!"), type = MESSAGE_TYPE_ADMINLOG, confidential = TRUE)
 
 	else if(href_list["approve_token_event"])
 		if(!check_rights(R_ADMIN))
@@ -1803,3 +1805,25 @@
 		log_admin("[user_client]'s [token_holder.queued_token_event.event_name] event token has been rejected by [owner].")
 		token_holder.reject_token_event()
 //monkestation edit end
+// Token Panel Addition START
+	else if(href_list["token_manager"])
+		SStoken_manager.ui_interact(usr)
+		return
+	else if(href_list["token_action"])
+		switch(href_list["token_action"])
+			if("accepted")
+				to_chat(usr, span_admin("Tokens accepted this round: [SStoken_manager.accepted_count]"))
+			if("pending")
+				// Show pending requests
+				var/list/pending = SStoken_manager.get_pending_requests_for_panel()
+				if(!length(pending))
+					to_chat(usr, span_admin("No pending token requests."))
+				else
+					for(var/list/request in pending)
+						to_chat(usr, span_admin("[request["requester"]] - [request["type"]]: [request["details"]]"))
+			if("rejected")
+				to_chat(usr, span_admin("Tokens rejected this round: [SStoken_manager.rejected_count]"))
+			if("timed_out")
+				to_chat(usr, span_admin("Tokens timed out this round: [SStoken_manager.timed_out_count]"))
+		return
+// Token Panel Addition END

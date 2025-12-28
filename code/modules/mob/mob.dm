@@ -1050,6 +1050,10 @@
 		antimagic_color = LIGHT_COLOR_DARK_BLUE
 		playsound(src, 'sound/magic/magic_block_mind.ogg', 50, TRUE)
 
+	if(ishuman(src))
+		var/mob/living/carbon/human/human = src
+		human.apply_height_filters(antimagic_effect)
+
 	mob_light(range = 2, color = antimagic_color, duration = 5 SECONDS)
 	add_overlay(antimagic_effect)
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, cut_overlay), antimagic_effect), 5 SECONDS)
@@ -1619,9 +1623,10 @@
 	var/list/data = list()
 	var/list/memories = list()
 
-	for(var/memory_key in user?.mind.memories)
-		var/datum/memory/memory = user.mind.memories[memory_key]
-		memories += list(list("name" = memory.name, "quality" = memory.story_value))
+	for(var/memory_key, memory_value in user?.mind.memories)
+		var/datum/memory/memory = memory_value
+		if(memory)
+			memories += list(list("name" = memory.name, "quality" = memory.story_value))
 
 	data["memories"] = memories
 	return data

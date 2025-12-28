@@ -184,3 +184,9 @@
 	name = "cyborg boots"
 	desc = "Shoes for a cyborg costume."
 	greyscale_colors = "#4e4e4e#4e4e4e"
+
+/obj/item/clothing/shoes/sneakers/secred
+	name = "security red sneakers"
+	desc = "A nice set of sneakers in security red. These even have the custom fabric used by medical white! Sweet!"
+	armor_type = /datum/armor/sneakers_white
+	greyscale_colors = "#a52f29#918f8c"
