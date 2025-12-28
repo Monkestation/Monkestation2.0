@@ -37,7 +37,7 @@
 
 	src.shell_flags = shell_flags || src.shell_flags
 	src.capacity = capacity || src.capacity
-	src.blacklisted_integrated_circuits = blacklisted_integrated_circuits
+	src.blacklisted_integrated_circuits = typecacheof(blacklisted_integrated_circuits)
 	set_unremovable_circuit_components(unremovable_circuit_components)
 
 	if(starting_circuit)
