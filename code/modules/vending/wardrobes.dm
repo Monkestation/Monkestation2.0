@@ -48,7 +48,7 @@
 				/obj/item/clothing/under/rank/security/officer/tactical/blue = 3,
 				/obj/item/clothing/under/rank/security/officer/blueshirt = 2,
 				/obj/item/clothing/under/rank/security/officer/formal = 3,
-        /obj/item/clothing/under/rank/security/officer/dress = 3,
+        		/obj/item/clothing/under/rank/security/officer/dress = 3,
 				/obj/item/clothing/under/rank/security/utility = 3,
 			),
 		),
