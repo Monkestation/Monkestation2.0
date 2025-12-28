@@ -162,8 +162,10 @@
 /datum/reagent/medicine/stimulants
 	pain_modifier = 0.5
 
+/* This changeling ability was moved to being a status effect instead.
 /datum/reagent/medicine/changelingadrenaline
 	pain_modifier = 0.5
+*/
 
 // Diphenhydrame helps against disgust slightly
 /datum/reagent/medicine/diphenhydramine/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
