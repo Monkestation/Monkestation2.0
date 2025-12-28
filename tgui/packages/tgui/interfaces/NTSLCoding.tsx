@@ -68,8 +68,8 @@ class NTSLTextArea extends TextArea {
 // NTSLTextArea component end
 
 type Data = {
-  admin_view: Boolean;
-  emagged: Boolean;
+  admin_view: boolean;
+  emagged: boolean;
   stored_code: string;
   user_name: string;
   network: string;
@@ -79,7 +79,7 @@ type Data = {
 };
 
 type Server_Data = {
-  run_code: Boolean;
+  run_code: boolean;
   server: string;
   server_name: string;
 };

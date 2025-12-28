@@ -248,6 +248,9 @@
 	refresh_bleed_rate()
 
 /obj/item/bodypart/Destroy()
+	if(current_gauze)
+		remove_gauze()
+
 	if(owner)
 		owner.remove_bodypart(src)
 		set_owner(null)
@@ -264,9 +267,6 @@
 
 		external_organs = list()
 	QDEL_LIST_ASSOC_VAL(feature_offsets)
-
-	if(current_gauze)
-		remove_gauze()
 
 	return ..()
 
@@ -1381,23 +1381,23 @@
 
 /// Returns the generic description of our BIO_EXTERNAL feature(s), prioritizing certain ones over others. Returns error on failure.
 /obj/item/bodypart/proc/get_external_description()
+	if (biological_state == BIO_INORGANIC)
+		return "membrane"
 	if (biological_state & BIO_FLESH)
 		return "flesh"
 	if (biological_state & BIO_WIRED)
 		return "wiring"
-	if (biological_state & BIO_INORGANIC)
-		return "membrane"
 
 	return "error"
 
 /// Returns the generic description of our BIO_INTERNAL feature(s), prioritizing certain ones over others. Returns error on failure.
 /obj/item/bodypart/proc/get_internal_description()
+	if (biological_state == BIO_INORGANIC)
+		return "membrane"
 	if (biological_state & BIO_BONE)
 		return "bone"
 	if (biological_state & BIO_METAL)
 		return "metal"
-	if (biological_state & BIO_INORGANIC)
-		return "membrane"
 
 	return "error"
 

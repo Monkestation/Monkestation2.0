@@ -26,9 +26,9 @@
 	expected_types += /obj/item/stamp/qm
 	expected_types += /obj/item/radio/radio_mic
 	expected_types += /obj/machinery/atm
-	expected_types += /obj/machinery/cassette/adv_cassette_deck
-	expected_types += /obj/machinery/cassette/dj_station
-	expected_types += /obj/machinery/cassette/mailbox
+	expected_types += /obj/machinery/cassette_deck
+	expected_types += /obj/machinery/dj_station
+	expected_types += /obj/machinery/cassette_postbox
 	expected_types += /obj/machinery/cryopod
 	expected_types += /obj/machinery/station_map/engineering
 	expected_types += /obj/structure/cassette_rack/prefilled

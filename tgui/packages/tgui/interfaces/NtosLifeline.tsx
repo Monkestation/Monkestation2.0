@@ -162,7 +162,6 @@ const CrewTab = (props: { sensor: CrewSensor }) => {
   return (
     <Tabs.Tab
       className="candystripe"
-      label="name"
       selected={selected}
       onClick={() => {
         act('select', {

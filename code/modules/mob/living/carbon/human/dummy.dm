@@ -40,6 +40,12 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 /mob/living/carbon/human/dummy/med_hud_set_status()
 	return
 
+/mob/living/carbon/human/dummy/on_can_hear_music_trait_gain(datum/source)
+	return
+
+/mob/living/carbon/human/dummy/on_can_hear_music_trait_loss(datum/source)
+	return
+
 /*
 	MONKESTATION EDIT START
 	This causes a problem with tall players as some of their overlays will go outside of the 32x32 range which the mob's icon is restricted to

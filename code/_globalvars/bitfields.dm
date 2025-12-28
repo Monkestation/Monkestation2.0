@@ -16,24 +16,6 @@ GLOBAL_LIST_INIT(bitfields, generate_bitfields())
 		bitfields[bitfield.variable] = bitfield.flags
 	return bitfields
 
-DEFINE_BITFIELD(admin_flags, list(
-	"ADMIN" = R_ADMIN,
-	"AUTOLOGIN" = R_AUTOADMIN,
-	"BAN" = R_BAN,
-	"BUILDMODE" = R_BUILD,
-	"DBRANKS" = R_DBRANKS,
-	"DEBUG" = R_DEBUG,
-	"FUN" = R_FUN,
-	"PERMISSIONS" = R_PERMISSIONS,
-	"POLL" = R_POLL,
-	"POSSESS" = R_POSSESS,
-	"SERVER" = R_SERVER,
-	"SOUNDS" = R_SOUND,
-	"SPAWN" = R_SPAWN,
-	"STEALTH" = R_STEALTH,
-	"VAREDIT" = R_VAREDIT,
-))
-
 DEFINE_BITFIELD(appearance_flags, list(
 	"KEEP_APART" = KEEP_APART,
 	"KEEP_TOGETHER" = KEEP_TOGETHER,
