@@ -710,13 +710,9 @@
 	if (alert_able && should_ring)
 		computer.ring(ringtone, list(receiver_mob))
 
-	addtimer(CALLBACK(src, PROC_REF(deferred_ui_update)), 0)
-
-	/datum/computer_file/program/messenger/proc/deferred_ui_update()
-	if(QDELETED(src) || QDELETED(computer))
-		return
-	SStgui.update_uis(computer)
-	update_pictures_for_all()
+	if(computer.active_program == src)
+		SStgui.update_uis(computer)
+		update_pictures_for_all()
 
 /// topic call that answers to people pressing "(Reply)" in chat
 /datum/computer_file/program/messenger/Topic(href, href_list)
