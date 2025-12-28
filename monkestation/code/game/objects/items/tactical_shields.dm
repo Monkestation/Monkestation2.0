@@ -48,7 +48,7 @@
 /obj/item/ammo_box/tacshield/tutel/pre_attack(atom/target, mob/living/user)
 	if(DOING_INTERACTION(user, "doafter_reloading"))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
-	if(length(stored_ammo) == 0)
+	if(length(stored_ammo) == 0 && !istype(target, /obj/item/ammo_casing))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 	if(istype(target, /obj/item/gun/ballistic))
 		var/obj/item/gun/ballistic/gun = target
@@ -61,7 +61,7 @@
 				return COMPONENT_CANCEL_ATTACK_CHAIN
 		var/reload_delay = 1.5 SECOND
 		if(istype(gun, /obj/item/gun/ballistic/revolver/shotgun_revolver))
-			reload_delay = 0.25 SECOND
+			reload_delay = 0.1 SECOND
 		to_chat(user, span_notice("You start unloading a shell from the [src]..."))
 		old_ammo_count = length(stored_ammo)
 		if(!do_after(user, reload_delay, src, timed_action_flags = IGNORE_USER_LOC_CHANGE, interaction_key = "doafter_reloading"))

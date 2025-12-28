@@ -451,7 +451,7 @@
 /obj/item/ammo_box/advanced/s12gauge/pre_attack(atom/target, mob/living/user)
 	if(DOING_INTERACTION(user, "doafter_reloading"))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
-	if(length(stored_ammo) == 0)
+	if(length(stored_ammo) == 0 && !istype(target, /obj/item/ammo_casing))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 	if(istype(target, /obj/item/gun/ballistic))
 		var/obj/item/gun/ballistic/gun = target
