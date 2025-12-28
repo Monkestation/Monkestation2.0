@@ -296,7 +296,7 @@
 
 
 /obj/item/clothing/suit/armor/vest/secjacket
-	name = "security jacket"
+	name = "high-visibility security jacket"
 	desc = "A red jacket in red Security colors. It has hi-vis stripes all over it."
 	icon_state = "secjacket"
 	inhand_icon_state = "armor"
