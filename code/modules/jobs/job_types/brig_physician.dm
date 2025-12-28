@@ -19,7 +19,7 @@
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SEC
 
-	liver_traits = list(TRAIT_MEDICAL_METABOLISM)
+	liver_traits = list(TRAIT_MEDICAL_METABOLISM, TRAIT_LAW_ENFORCEMENT_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_BRIG_PHYSICIAN
 	bounty_types = CIV_JOB_MED
@@ -34,9 +34,8 @@
 		/obj/item/scalpel/advanced = 6,
 		/obj/item/retractor/advanced = 6,
 		/obj/item/cautery/advanced = 6,
-		/obj/item/reagent_containers/cup/bottle/formaldehyde = 6,
-		/obj/effect/spawner/random/medical/organs = 5,
-		/obj/effect/spawner/random/medical/memeorgans = 1
+		/obj/item/reagent_containers/cup/bottle/formaldehyde = 10,
+		/obj/item/clothing/glasses/hud/health/sunglasses = 6,
 	)
 	rpg_title = "Chirurgeon"
 	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
@@ -47,20 +46,28 @@
 	jobtype = /datum/job/brig_physician
 
 	id_trim = /datum/id_trim/job/brig_physician
-	uniform = /obj/item/clothing/under/rank/security/scrubs/sec
-	suit = /obj/item/clothing/suit/toggle/labcoat/brig_physician
+	uniform = /obj/item/clothing/under/rank/security/medical/grey
+	suit = /obj/item/clothing/suit/toggle/labcoat/secmed/alt
 	suit_store = /obj/item/flashlight/pen
 	belt = /obj/item/modular_computer/pda/security/brig_physician
 	ears = /obj/item/radio/headset/headset_secmed
-	head = /obj/item/clothing/head/utility/surgerycap/sec
-	shoes = /obj/item/clothing/shoes/sneakers/secred
+	shoes = /obj/item/clothing/shoes/jackboots
+	belt = /obj/item/storage/belt/medical/secmed/full
+	glasses = /obj/item/clothing/glasses/hud/health
+	head = /obj/item/clothing/head/soft/sec/medical
+	gloves = /obj/item/clothing/gloves/latex/nitrile
+	l_pocket = /obj/item/assembly/flash/handheld
+	r_pocket = /obj/item/restraints/handcuffs/cable/zipties
 	l_hand = /obj/item/storage/medkit/surgery
-	r_hand = /obj/item/security_voucher/brig_physician
 
+	backpack = /obj/item/storage/backpack/secmed
+	satchel = /obj/item/storage/backpack/satchel/secmed
+	duffelbag = /obj/item/storage/backpack/duffelbag/secmed
 
-	backpack = /obj/item/storage/backpack/brig_physician
-	satchel = /obj/item/storage/backpack/satchel/brig_physician
-	duffelbag = /obj/item/storage/backpack/duffelbag/brig_physician
+	backpack_contents = list(
+		/obj/item/modular_computer/pda/security/brig_physician = 1,
+		/obj/item/emergency_bed = 1,
+		)
 
 	box = /obj/item/storage/box/survival/medical
 	chameleon_extras = /obj/item/gun/syringe
@@ -70,7 +77,7 @@
 /datum/outfit/plasmaman/brig_physician
 	name = "Brig Physician Plasmaman"
 
-	uniform = /obj/item/clothing/under/plasmaman/brig_physician
-	gloves = /obj/item/clothing/gloves/color/plasmaman/brig_physician
-	head = /obj/item/clothing/head/helmet/space/plasmaman/brig_physician
+	uniform = /obj/item/clothing/under/plasmaman/secmed
+	gloves = /obj/item/clothing/gloves/color/plasmaman/secmed
+	head = /obj/item/clothing/head/helmet/space/plasmaman/secmed
 

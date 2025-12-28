@@ -76,14 +76,14 @@
 		if(SPT_PROB(1.5 * stage, seconds_between_ticks))
 			to_chat(owner, span_revennotice("You suddenly feel [pick("sick and tired", "disoriented", "tired and confused", "nauseated", "faint", "dizzy")]..."))
 			owner.adjust_confusion(4 SECONDS)
-			owner.stamina.adjust(-21 * seconds_between_ticks)
+			owner.stamina.adjust(-10.5 * seconds_between_ticks)
 			new /obj/effect/temp_visual/revenant(owner.loc)
 		if(stagedamage < stage)
 			stagedamage++
 			owner.adjustToxLoss(1 * stage * seconds_between_ticks) //should, normally, do about 30 toxin damage.
 			new /obj/effect/temp_visual/revenant(owner.loc)
 		if(SPT_PROB(25, seconds_between_ticks))
-			owner.stamina.adjust(-(stage * 2) * seconds_between_ticks)
+			owner.stamina.adjust(-(stage) * seconds_between_ticks)
 
 	switch(stage)
 		if(2)
@@ -100,7 +100,7 @@
 				finalstage = TRUE
 				ADD_TRAIT(owner, TRAIT_SOFTSPOKEN, TRAIT_STATUS_EFFECT(id))
 				to_chat(owner, span_revenbignotice("You feel like [pick("nothing's worth it anymore", "nobody ever needed your help", "nothing you did mattered", "everything you tried to do was worthless")]."))
-				owner.stamina.adjust(-22.5 * seconds_between_ticks, forced = TRUE)
+				owner.stamina.adjust(-11.25 * seconds_between_ticks, forced = TRUE)
 				new /obj/effect/temp_visual/revenant(owner.loc)
 				if(ishuman(owner))
 					var/mob/living/carbon/human/human = owner
