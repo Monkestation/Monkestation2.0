@@ -81,6 +81,12 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest,
 	)
 
+	///If this species is given digitigrade, these bodyparts will be replacing bodypart_overrides.
+	var/list/bodypart_digitigrade_overrides = list(
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/right/digitigrade,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/left/digitigrade,
+	)
+
 	///List of external organs to generate like horns, frills, wings, etc. list(typepath of organ = "Round Beautiful BDSM Snout"). Still WIP
 	var/list/external_organs = list()
 
@@ -1816,8 +1822,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	//Note for future: Potentionally add a new C.dna.species() to build a template species for more accurate limb replacement
 
 	if((new_species.digitigrade_customization == DIGITIGRADE_OPTIONAL && target.dna.features["legs"] == DIGITIGRADE_LEGS) || new_species.digitigrade_customization == DIGITIGRADE_FORCED)
-		new_species.bodypart_overrides[BODY_ZONE_R_LEG] = /obj/item/bodypart/leg/right/digitigrade
-		new_species.bodypart_overrides[BODY_ZONE_L_LEG] = /obj/item/bodypart/leg/left/digitigrade
+		new_species.bodypart_overrides[BODY_ZONE_R_LEG] = new_species.bodypart_digitigrade_overrides[BODY_ZONE_R_LEG]
+		new_species.bodypart_overrides[BODY_ZONE_L_LEG] = new_species.bodypart_digitigrade_overrides[BODY_ZONE_L_LEG]
 
 	for(var/obj/item/bodypart/old_part as anything in target.bodyparts)
 		if((old_part.change_exempt_flags & BP_BLOCK_CHANGE_SPECIES) || (old_part.bodypart_flags & BODYPART_IMPLANTED))
