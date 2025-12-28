@@ -19,7 +19,7 @@
 	var/mob/living/basic/cortical_borer/neutered/cortical_owner = owner
 
 	if(HAS_TRAIT(cortical_owner.human_host, TRAIT_BORER_DISSECTION))
-		owner.balloon_alert(owner, "Host has already been dissected.")
+		owner.balloon_alert(owner, "host has already been dissected.")
 	var/obj/item/organ/internal/brain/victim_brain = cortical_owner.human_host.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(victim_brain)
 		cortical_owner.human_host.adjustOrganLoss(ORGAN_SLOT_BRAIN, 25 * cortical_owner.host_harm_multiplier, maximum = BRAIN_DAMAGE_SEVERE)

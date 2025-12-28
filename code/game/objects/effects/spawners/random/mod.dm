@@ -7,6 +7,7 @@
 	name = "maint MOD module spawner"
 	loot = list(
 		/obj/item/mod/module/springlock = 2,
+		/obj/item/mod/module/magboot/corpse_exoskeleton = 2,
 		/obj/item/mod/module/visor/rave = 2,
 		/obj/item/mod/module/tanner = 1,
 		/obj/item/mod/module/balloon = 1,

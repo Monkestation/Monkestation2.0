@@ -231,10 +231,12 @@
 		"plumbing_rcd",
 		"plumbing_rcd_service",
 		"plumbing_rcd_sci",
+		"plumbing_rcd_engi",
 		"portable_chem_mixer",
 		"retractor",
 		"scalpel",
 		"stethoscope",
+		"penlight",
 		"surgical_drapes",
 		"surgical_tape",
 		"surgicaldrill",
@@ -248,5 +250,6 @@
 		"synth_stomach",
 		"synth_ears",
 		"synth_heart",
-		"cybernetic_spleen"
+		"cybernetic_spleen",
+		"vitals_monitor",
 	)

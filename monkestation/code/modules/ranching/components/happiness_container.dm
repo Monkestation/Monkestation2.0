@@ -12,14 +12,14 @@
 	///the foods we dislike
 	var/list/disliked_foods = list()
 	///the food_types we dislike
-	var/list/disliked_food_types = list()
+	var/alist/disliked_food_types = alist()
 	///this is our thresholds where we do a callback at unhappy
 	var/list/unhappy_callbacks = list()
 
 	///our applied_visual
 	var/mutable_appearance/applied_visual
 
-/datum/component/happiness_container/Initialize(maxiumum_life_happiness = -1, liked_reagents = list(), disliked_reagents = list(), liked_foods = list(), disliked_foods = list(), disliked_food_types = list(), unhappy_callbacks = list())
+/datum/component/happiness_container/Initialize(maxiumum_life_happiness = -1, liked_reagents = list(), disliked_reagents = list(), liked_foods = list(), disliked_foods = list(), disliked_food_types = alist(), unhappy_callbacks = list())
 	. = ..()
 	src.maxiumum_life_happiness = maxiumum_life_happiness
 	src.liked_reagents = liked_reagents
@@ -89,9 +89,9 @@
 /datum/component/happiness_container/proc/ate_type(atom/ate)
 	if(istype(ate, /obj/item/food))
 		var/obj/item/food/food = ate
-		for(var/food_type in disliked_food_types)
+		for(var/food_type, value in disliked_food_types)
 			if(food_type & initial(food.foodtypes))
-				adjust_happiness(parent, disliked_food_types[food_type])
+				adjust_happiness(parent, value)
 	if(ate in liked_foods)
 		adjust_happiness(parent, liked_foods[ate.type])
 	if(ate in disliked_foods)

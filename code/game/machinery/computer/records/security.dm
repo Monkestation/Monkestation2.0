@@ -160,7 +160,7 @@
 			return TRUE
 
 		if("delete_record")
-			investigate_log("[user] deleted record: \"[target]\".", INVESTIGATE_RECORDS)
+			investigate_log("[key_name(user)] deleted record: \"[target]\".", INVESTIGATE_RECORDS)
 			qdel(target)
 			return TRUE
 
@@ -178,7 +178,7 @@
 
 		if("set_note")
 			var/note = strip_html_full(params["note"], MAX_MESSAGE_LEN)
-			investigate_log("[user] has changed the security note of record: \"[target]\" from \"[target.security_note]\" to \"[note]\".", INVESTIGATE_RECORDS)
+			investigate_log("[key_name(user)] has changed the security note of record: \"[target]\" from \"[target.security_note]\" to \"[note]\".", INVESTIGATE_RECORDS)
 			target.security_note = note
 			return TRUE
 
@@ -248,8 +248,8 @@
 		editing_crime.name = strip_html_full(params["name"], MAX_CRIME_NAME_LEN)
 		return TRUE
 
-	if(params["details"] && length(params["description"]) > 2 && params["name"] != editing_crime.name)
-		editing_crime.details = strip_html_full(params["details"], MAX_MESSAGE_LEN)
+	if(params["description"] && length(params["description"]) > 2 && params["name"] != editing_crime.name)
+		editing_crime.details = strip_html_full(params["description"], MAX_MESSAGE_LEN)
 		return TRUE
 
 	return FALSE
@@ -280,10 +280,11 @@
 
 /// Voids crimes, or sets someone to discharged if they have none left.
 /obj/machinery/computer/records/security/proc/invalidate_crime(mob/user, datum/record/crew/target, list/params)
-	if(!has_armory_access(user))
-		return FALSE
-	var/datum/crime/to_void = locate(params["crime_ref"]) in target.crimes
+	var/datum/crime/to_void = locate(params["crime_ref"]) in (target.crimes + target.citations)
 	if(!to_void)
+		return FALSE
+
+	if (user != to_void.author && !has_armory_access(user))
 		return FALSE
 
 	to_void.valid = FALSE

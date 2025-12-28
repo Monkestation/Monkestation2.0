@@ -43,8 +43,10 @@
 /turf/closed/wall/clockwork/deconstruction_hints(mob/user)
 	switch(d_state)
 		if(INTACT)
-			return IS_CLOCK(user) ? span_notice("You see a way to unwind the gears with a <i>wrench</i>.") : span_notice("You have no idea how this works! \
-																											 You think you see a small cog that could be <i>cut</i> loose.")
+			if(IS_CLOCK(user))
+				return span_notice("You see a way to unwind the gears with a <i>wrench</i>.")
+			else
+				return span_notice("You have no idea how this works! You think you see a small cog that could be <i>cut</i> loose.")
 		if(COVER_COG_REMOVED)
 			return span_notice("The outer cog has been <i>cut</i> loose, and some inner transmission cogs secured by <b>screws</b> are visable.")
 		if(TRANSMISSION_COGS_REMOVED)

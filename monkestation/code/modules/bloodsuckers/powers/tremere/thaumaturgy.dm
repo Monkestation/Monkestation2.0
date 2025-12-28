@@ -79,10 +79,9 @@
 	. += "The cooldown increases by [DisplayTimeText(THAUMATURGY_COOLDOWN_PER_CHARGE)] per charge used, and each blast costs [THAUMATURGY_BLOOD_COST_PER_CHARGE] blood."
 
 /datum/action/cooldown/bloodsucker/targeted/tremere/thaumaturgy/ActivatePower(mob/target)
-	..()
+	. = ..()
 	charges = get_max_charges()
 	toggle_blood_shield(TRUE)
-	return TRUE
 
 /datum/action/cooldown/bloodsucker/targeted/tremere/thaumaturgy/proc/toggle_blood_shield(toggle)
 	if(level_current < THAUMATURGY_SHIELD_LEVEL)
@@ -265,7 +264,7 @@
 	icon = 'monkestation/icons/bloodsuckers/vamp_obj.dmi'
 	icon_state = "blood_shield"
 	lefthand_file = 'monkestation/icons/bloodsuckers/bloodsucker_lefthand.dmi'
-	righthand_file = 'monkestation/icons/bloodsuckers/bloodsucker_lefthand.dmi'
+	righthand_file = 'monkestation/icons/bloodsuckers/bloodsucker_righthand.dmi'
 	block_chance = BLOOD_SHIELD_BLOCK_CHANCE
 
 /obj/item/shield/bloodsucker/Initialize(mapload)

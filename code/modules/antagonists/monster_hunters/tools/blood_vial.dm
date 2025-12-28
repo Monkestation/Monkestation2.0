@@ -91,7 +91,7 @@
 		needs_update += owner.adjustToxLoss(-1 * seconds_between_ticks, updating_health = FALSE, forced = TRUE)
 		needs_update += owner.adjustOxyLoss(-1 * seconds_between_ticks, updating_health = FALSE)
 	owner.AdjustAllImmobility((-6 SECONDS) * seconds_between_ticks)
-	owner.stamina.adjust(7 * seconds_between_ticks, forced = TRUE)
+	owner.stamina.adjust(3.5 * seconds_between_ticks, forced = TRUE)
 	if(needs_update)
 		owner.updatehealth()
 

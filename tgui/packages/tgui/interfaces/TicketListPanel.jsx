@@ -16,7 +16,6 @@ export const TicketListPanel = (props) => {
       title="Admin Ticket Viewer"
       width={520}
       height={700}
-      resizable
     >
       <Window.Content scrollable>
         <Tabs>

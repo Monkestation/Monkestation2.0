@@ -126,7 +126,7 @@ export const ExperimentConfigure = (props) => {
   // `scrollable` and `fill` attributes were added. When porting to react, see if the UI still works
   // when removing them.
   return (
-    <Window resizable width={600} height={735}>
+    <Window width={600} height={735}>
       <Window.Content>
         <Flex direction="column" height="100%">
           <Flex.Item mb={1}>

@@ -72,7 +72,7 @@ ADMIN_VERB(secrets, R_NONE, FALSE, "Secrets", "Abuse harder than you ever have b
 		if("maint_access_engiebrig")
 			if(!is_debugger)
 				return
-			for(var/obj/machinery/door/airlock/maintenance/doors in GLOB.airlocks)
+			for(var/obj/machinery/door/airlock/maintenance/doors as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/airlock/maintenance))
 				if ((ACCESS_MAINT_TUNNELS in doors.req_access) || (ACCESS_MAINT_TUNNELS in doors.req_one_access))
 					doors.req_access = list()
 					doors.req_one_access = list(ACCESS_BRIG, ACCESS_ENGINEERING)
@@ -80,7 +80,7 @@ ADMIN_VERB(secrets, R_NONE, FALSE, "Secrets", "Abuse harder than you ever have b
 		if("maint_access_brig")
 			if(!is_debugger)
 				return
-			for(var/obj/machinery/door/airlock/maintenance/doors in GLOB.airlocks)
+			for(var/obj/machinery/door/airlock/maintenance/doors as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/airlock/maintenance))
 				if ((ACCESS_MAINT_TUNNELS in doors.req_access) || (ACCESS_MAINT_TUNNELS in doors.req_one_access))
 					doors.req_access = list(ACCESS_BRIG)
 					doors.req_one_access = list()
@@ -104,7 +104,7 @@ ADMIN_VERB(secrets, R_NONE, FALSE, "Secrets", "Abuse harder than you ever have b
 					if(!length(living.diseases))
 						continue
 					for(var/datum/disease/acute/disease as anything in living.diseases)
-						disease.cure(target = living)
+						disease.cure(target = living, safe = TRUE)
 
 		if("list_bombers")
 			holder.holder.list_bombers()
@@ -328,7 +328,7 @@ monkestation end */
 			if(!is_funmin)
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Egalitarian Station"))
-			for(var/obj/machinery/door/airlock/W in GLOB.airlocks)
+			for(var/obj/machinery/door/airlock/W as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/airlock))
 				if(is_station_level(W.z) && !istype(get_area(W), /area/station/command) && !istype(get_area(W), /area/station/commons) && !istype(get_area(W), /area/station/service) && !istype(get_area(W), /area/station/command/heads_quarters) && !istype(get_area(W), /area/station/security/prison))
 					W.req_access = list()
 			message_admins("[key_name_admin(holder)] activated Egalitarian Station mode")

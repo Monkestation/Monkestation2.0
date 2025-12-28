@@ -1,5 +1,5 @@
 //like orange but only checks north/south/east/west for one step
-/proc/cardinalrange(var/center)
+/proc/cardinalrange(center)
 	var/list/things = list()
 	for(var/direction in GLOB.cardinals)
 		var/turf/Turf = get_step(center, direction)
@@ -30,7 +30,7 @@
 	var/dirs = 0
 
 
-/obj/machinery/am_shielding/Initialize()
+/obj/machinery/am_shielding/Initialize(mapload)
 	. = ..()
 	addtimer(CALLBACK(src, PROC_REF(controllerscan)), 10)
 
@@ -60,7 +60,6 @@
 			break
 
 	if(!control_unit) //No other guys nearby look for a control unit
-		for(var/direction in GLOB.cardinals)
 		for(var/obj/machinery/power/am_control_unit/AMC in cardinalrange(src))
 			if(AMC.add_shielding(src))
 				break
@@ -189,7 +188,6 @@
 
 /obj/machinery/am_shielding/proc/setup_core()
 	processing = TRUE
-	GLOB.machines |= src
 	START_PROCESSING(SSmachines, src)
 	if(!control_unit)
 		return

@@ -450,10 +450,26 @@ Turf and target are separate in case you want to teleport some distance from a t
 	. = list()
 	if(!islist(z_levels))
 		z_levels = list(z_levels)
-	var/datum/noise_generator/noise = new
 	for(var/z in z_levels)
-		var/list/points = noise.poisson_disk_sampling(1, world.maxx, 1, world.maxy, radius)
+		var/list/points = poisson_noise(world.maxx, world.maxy, radius)
 		for(var/list/point as anything in points)
 			var/turf/turf = locate(point[1], point[2], z)
 			if(turf)
 				. += turf
+
+/proc/noise_turfs_station_equal_weight(radius, list/area_blacklist_typecache)
+	var/list/filtered_points = list()
+	var/list/station_areas = GLOB.the_station_areas
+	for(var/z in SSmapping.levels_by_trait(ZTRAIT_STATION))
+		var/list/points = poisson_noise(world.maxx, world.maxy, radius)
+		for(var/list/point as anything in points)
+			var/turf/turf = locate(point[1], point[2], z)
+			if(!turf)
+				continue
+			var/area/turf_area = get_area(turf)
+			if(!turf_area || !(turf_area.type in station_areas) || !(turf_area.area_flags & VALID_TERRITORY) || (area_blacklist_typecache && is_type_in_typecache(turf_area, area_blacklist_typecache)))
+				continue
+			// we'll just assume that each department has its own wires for now
+			var/area_subtype = turf_area.airlock_wires || /datum/wires/airlock
+			LAZYADD(filtered_points[area_subtype], turf)
+	return flatten_list(filtered_points)

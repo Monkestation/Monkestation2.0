@@ -26,15 +26,14 @@ const createStats = (verbose) => ({
 
 module.exports = (env = {}, argv) => {
   const mode = argv.mode || 'production';
-  const bench = env.TGUI_BENCH;
   const config = {
     mode: mode === 'production' ? 'production' : 'development',
     context: path.resolve(__dirname),
-    target: ['web', 'es5', 'browserslist:ie 11'],
+    target: ['web', 'browserslist:edge>=123'],
     entry: {
-      tgui: ['./packages/tgui-polyfill', './packages/tgui'],
-      'tgui-panel': ['./packages/tgui-polyfill', './packages/tgui-panel'],
-      'tgui-say': ['./packages/tgui-polyfill', './packages/tgui-say'],
+      tgui: ['./packages/tgui'],
+      'tgui-panel': ['./packages/tgui-panel'],
+      'tgui-say': ['./packages/tgui-say'],
     },
     output: {
       path: argv.useTmpFolder
@@ -57,7 +56,7 @@ module.exports = (env = {}, argv) => {
             {
               loader: require.resolve('babel-loader'),
               options: createBabelConfig({
-                removeConsole: !bench,
+                removeConsole: true,
               }),
             },
           ],
@@ -123,22 +122,13 @@ module.exports = (env = {}, argv) => {
     ],
   };
 
-  if (bench) {
-    config.entry = {
-      'tgui-bench': [
-        './packages/tgui-polyfill',
-        './packages/tgui-bench/entrypoint',
-      ],
-    };
-  }
-
   // Production build specific options
   if (mode === 'production') {
     const { EsbuildPlugin } = require('esbuild-loader');
     config.optimization.minimizer = [
       new EsbuildPlugin({
-        target: 'ie11',
         css: true,
+        legalComments: 'none',
       }),
     ];
   }

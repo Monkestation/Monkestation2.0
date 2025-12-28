@@ -183,7 +183,7 @@ export const MediaJukebox = () => {
   } = useBackend<Data>();
 
   return (
-    <Window width={450} height={600} resizable>
+    <Window width={450} height={600}>
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item>

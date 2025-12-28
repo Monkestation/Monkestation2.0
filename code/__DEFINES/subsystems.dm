@@ -145,6 +145,7 @@
 #define INIT_ORDER_DISCORD 78
 #define INIT_ORDER_PLEXORA 77 // monkestation addition
 #define INIT_ORDER_ACHIEVEMENTS 76 // monkestation edit: 77 -> 76 for plexora
+#define INIT_ORDER_FLOXY 75 // should initialize relatively early, so admins can start playing music if they want to. also needs to initialize before cassettes anyways
 #define INIT_ORDER_STATION 74 //This is high priority because it manipulates a lot of the subsystems that will initialize after it.
 #define INIT_ORDER_QUIRKS 73
 #define INIT_ORDER_REAGENTS 72 //HAS to be before mapping and assets - both create objects, which creates reagents, which relies on lists made in this subsystem
@@ -166,6 +167,7 @@
 #define INIT_ORDER_RESTAURANT 34
 #define INIT_ORDER_POLLUTION 32
 #define INIT_ORDER_FLUIDS 32 // Needs to be above atoms, as some atoms may want to start fluids/gases on init
+#define INIT_ORDER_CASSETTES 31 // monkestation addition: cassettes initialize before atoms, so that cassette stuff can be used in Initialize()
 #define INIT_ORDER_ATOMS 30
 #define INIT_ORDER_ARMAMENTS 27
 #define INIT_ORDER_LANGUAGE 25
@@ -191,7 +193,6 @@
 #define INIT_ORDER_PATH -50
 #define INIT_ORDER_EXPLOSIONS -69
 #define INIT_ORDER_CREDITS -93
-#define INIT_ORDER_REPLAYS -94
 #define INIT_ORDER_HOTSPOTS -95 ///only called on oshan so just call it near the end.
 #define INIT_ORDER_TWITCH -96
 #define INIT_ORDER_STATPANELS -97

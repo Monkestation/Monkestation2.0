@@ -1,0 +1,819 @@
+2025-12-01:
+  Absolucy:
+  - rscadd: You can now shake monkey cubes to piss off the monkey inside.
+  SirNightKnight:
+  - bugfix: cleaned up some code for the worn icon check.
+  notghosti:
+  - bugfix: Spaceallin now properly applies virus_resistance trait
+  - map: Oshan atmospherics has less dead ends and is properly connected to all scrubbers
+      and vents.
+  - map: Oshan transfer centre is now connected to power.
+  - map: Oshan Ai sat ai can now see its APC.
+  - map: Oshan AI now has additional cameras in various public blind spots
+2025-12-03:
+  Absolucy:
+  - bugfix: Fixed flux and vortex anomalies being able to run on Oshan, when they
+      weren't supposed to.
+  - bugfix: Fixed some turfs (i.e ocean tiles, lava, etc) having liquid on them when
+      they shouldn't have any.
+  - code_imp: Some slight cleanups to liquid code.
+  - qol: Your own asay/msay messages will no longer be highlighted in chat.
+  Absolucy, timothymtorres, SmArtKar, mcbalaam:
+  - sound: Add burning sound loop to bonfires and fireplaces.
+  - code_imp: Improved fireplaces to only process when lit.
+  - qol: Add smoke particles to burning fireplaces.
+  - bugfix: Now trying to light a fireplace will not make you attack it.
+  EssentialTomato:
+  - bugfix: (Metekillot) Atmos machines should no longer remove labels when you adjust
+      their settings.
+  - code_imp: (SyncIt21) Atmos machines turns on/off correctly from the code perspective.
+  - bugfix: (JohnFulpWillard) Airlock pumps no longer draw massive amounts of power.
+  KittyNoodle:
+  - balance: AIs can now examine through their eye.
+  - bugfix: Dullahans can also examine through their head again.
+  Loiosh42:
+  - bugfix: Bomb actualizer now requires a radio to construct, preventing infinite
+      radio generation
+  SmArtKar:
+  - bugfix: Fixed Eldritch Pulse not working
+  Snack-Max:
+  - rscadd: Added two clothing items, Officer's Casual and Adventurer's Cap
+  SyncIt21]:
+  - bugfix: Crafting Menu Should Consistently Craft Items
+  Tractor-Maam:
+  - rscadd: Mouse cubes can now be shaken to create rats.
+  notghosti:
+  - bugfix: Anchoring crystals now apply forced toxin healing rather than regular.
+2025-12-05:
+  Absolucy:
+  - rscdel: You can no longer deep fry brains, unless they're soulless (deep fried
+      Pun Pun brain is still on the menu, don't worry).
+  - bugfix: Fixed voice of god just not working sometimes.
+  - balance: Changelings now need 1 absorb in order to obtain transformation sting.
+  - rscadd: Mutadone can be used to heavily reduce the duration of transformation
+      sting while it's in your system.
+  - balance: When a non-bloodsucker/vassal is breaking out of silver cuffs, the resist
+      will not be canceled by moving them.
+  Absolucy, Ical92, lizardqueenlexi:
+  - map: Demonic-Frost Miner's ruin has received an aesthetic refresh!
+  Absolucy, Melbert:
+  - image: The animation for being dusted now takes into account your sprite, rather
+      than being a normal nude spaceman
+  EssentialTomato:
+  - bugfix: Aux base construction console now builds selected structures instead of
+      just walls.
+  - bugfix: Aux base construction console can be restocked again.
+  - bugfix: Fixed ashwalker clothing storage being invisible.
+  Evalence0:
+  - balance: Potassium now depletes at a reasonable rate from floran's blood, instead
+      of staying forever and causing damage.
+  - bugfix: added metabolism rate to potassium for florans.
+  Gboster-0:
+  - bugfix: the robot wabbajack list is actually weighted now as it was supposed to
+      be
+  Shoddd:
+  - balance: pka pistol capacity returned to 200%
+  Tractor-Maam:
+  - rscadd: Chat Client is now a stock PDA app.
+  - balance: Chat Client is now 4GQ, down from 8GQ.
+2025-12-06:
+  Absolucy:
+  - qol: Xenobio pens now automatically dissolve dead monkeys after 5 minutes.
+  - qol: Larger xenobio pens now have a higher slime capacity.
+2025-12-07:
+  00-Steven, SirNightKnight:
+  - bugfix: Latejoiners with heterochromatic eyes no longer have the wrong fingerprint
+      in the security records.
+  - bugfix: Latejoiners actually have their quirks visible in the medical records.
+  Absolucy:
+  - admin: Microphone mechcomp components no longer spam logs with everything they
+      hear.
+  Absolucy, TheBoondock, GoblinBackwards, SmArtKar:
+  - sound: added ignition and roaring fire sound to plasma/tritium fire
+  SirNightKnight, ghost:
+  - rscadd: Paramedics are now issued black work boots as standard workwear.
+  - image: Paramedic Jackets now match in color to the rest of the Paramedic's gear.
+  - rscdel: squashed the paramedic penlight uv function into the standard penlight.
+  - rscadd: penlights are printable at medical lathes.
+  - balance: turns the penlight UV function into a repeating do after.
+  - qol: treating a burn with UV from a penlight auto-repeats.
+  flleeppyy:
+  - rscadd: Mobs can now pixel tilt, default binding is J
+  kuricityy:
+  - rscadd: Adds the ability to change prisoner ID names through right clicking ID
+      with a secoff or higher ID card.
+  notghosti:
+  - rscadd: Defib Blacklisting now shows as soulless
+2025-12-08:
+  Absolucy:
+  - bugfix: Fixed awakened dragon not properly giving the name prefix.
+  - admin: Added an admin notification for when people open christmas presents.
+  - rscadd: Nanite programmers now have a GPS signal, named "Nanite Synchronization
+      Signal".
+  - qol: Revived lavaland elites (as in, a sentient lavaland elite that is revived
+      after being defeated) can now speak.
+  Absolucy, Hatterhat:
+  - balance: The mining MODsuit's ash accretion module now fully cancels the base
+      slowdown from activating the MOD.
+  Absolucy, SmArtKar:
+  - bugfix: Mining MODsuits now can store everything that explorer suits can
+  JohnFulpWillard:
+  - balance: Bridge Assistants are no longer 'Command' personnel.
+  LassiH:
+  - balance: oozeling burn modifier is now 0.8
+  SirNightKnight:
+  - balance: removed the box of flashbangs from security voucher utilities.
+  - map: fixed a double placed genetics windoor on pubby station.
+  flleeppyy:
+  - bugfix: PLX_givecoins not properly converting number to text when not using json
+2025-12-09:
+  Absolucy:
+  - bugfix: Returning from cryo now properly restores your quirks.
+  - bugfix: Returning from cryo now properly allows you to vote on the shuttle transfer
+      vote.
+  JupiterJaeden:
+  - balance: Security assistant slots reduced from 5 to 2.
+  - balance: Minimum security officer slots increased from 5 to 6 (they can also still
+      be scaled higher with population).
+  - balance: Mundane sword-type items once again no longer block LEAP_ATTACK attack
+      types- this includes body throws, tackles, and other similar types of attacks.
+      Eswords, dswords, and their variants have 25% blocking against these types of
+      attacks. Shields, on the other hand, have a +25% chance of blocking these types
+      of attacks successfully.
+  - balance: Shields no longer have a +30% chance of blocking thrown items.
+  - balance: Tackles do not self-stun the tackler upon being successfully blocked,
+      instead applying an equal stagger to both parties.
+  - balance: When blocked, body throws do not knockdown or paralyze the victim, but
+      do still apply a short stagger.
+  - balance: Tackles now stagger you every time they are used (regardless of hitting
+      or missing), preventing tackles from being spammed in short succession.
+  SirNightKnight:
+  - balance: the drunken resilience quirk is incompatible with light drinker quirk.
+  TheColorCyan:
+  - bugfix: cog cultists are protected from cult stun spell again
+  - bugfix: mindshielded targets/target of the cult now once again partially resist
+      cult stun spell
+  - bugfix: being very drunk gives you cult stun immunity again
+  - bugfix: martial arts can once again dodge/deflect cult stun
+  flleeppyy:
+  - code_imp: moved "Join Game" button functionality to its own proc
+2025-12-11:
+  Absolucy, JohnFulpWillard:
+  - balance: Cultists using Spirit Realm to turn themselves into a ghost can no longer
+      see people's UIs.
+  KittyNoodle:
+  - rscadd: AIs now have access to notepad, emojipedia, themify, supermatter monitor,
+      wirecarp, and the chat client on their PDAs.
+  SirNightKnight:
+  - balance: reduced of chance of centcom IDs spawning in christmas gifts.
+  - bugfix: fixed incorrect toggle messages for riot helmets and justice helmets.
+  - rscadd: added the medical emergency helmet.
+  flleeppyy:
+  - code_imp: Adds error reporting to Glitchtip
+  not the ghost:
+  - balance: Wasteland weapons Slab Grenade launcher, Duster Revolver, Slayer shotgun,
+      Fenrir Auto Shotgun, Hellhound LMG have had their damage to non-fauna decreased
+      by 2-3.
+2025-12-12:
+  Absolucy:
+  - map: Removed the pits from Oshan.
+  - map: Removed the access requirements to Oshan's blacksmithing room - you could
+      just enter it from maints anyways...
+  - map: Added a public garden to Oshan.
+  - map: Oshan's chemistry now starts with a bigger cell.
+  - map: Oshan's maints now have more space heaters.
+  - map: Oshan's maints now have directional unrestricted access (as in, you can go
+      through doors that go towards the nearest public exit from maints), so hopefully
+      you can't get trapped in maints nearly as easily.
+  - map: Added a public cassette deck to Oshan's library.
+  - qol: All maps now have a "Public Garden" navigate landmark.
+  - bugfix: Fixed BCI keyboards and thought listeners html encoding text input.
+  - bugfix: Fixed BCI keyboards and thought listeners sending a signal if you don't
+      actually type anything in.
+  - bugfix: The wiremod module duplicator no longer uses 100 times more glass than
+      it should.
+  Lawlolawl:
+  - bugfix: Fixed the blue alert announcement, which should state that probable cause
+      is required for security searches.
+  - bugfix: Fixed pda disassembly iron duping.
+  - bugfix: Fixed portable chem mixer UI not updating with stored beaker reagents
+  - qol: Updated cooking recipe step for clarity when no reaction/processing needed.
+      Rice dough ingredients do NOT need to be mixed, people!
+  SirNightKnight:
+  - balance: reduces the chance of dangerous unrestricted fluid anomalies occuring
+  - bugfix: gauze works now and doesn't delete itself randomly when wounds change
+      to a different type.
+  - code_imp: changed bandage overlays to be it's own layer instead of something attached
+      to damage overlays.
+  - balance: reduced the absorption capacity of both improvised and regular gauze.
+  - qol: bandage overlays are colored corresponding to the gauze applied.
+  - balance: gauze now heals some burn and brute on first application over time. resting
+      increases the amount of healing.
+  - balance: damage will knock off bandages.
+  - code_imp: moved code out of old modules to appropriate places.
+  - balance: ' used gauze is less sanitary.'
+  - rscadd: adds plastiseal, it's basically advanced gauze. mixture of a potent regenerative
+      mesh and better gauze. heals 30 burn and 15 brute on application. it's very
+      effective for burn wounds and wounds in general. found in advanced and syndicate
+      medkits. craftable via chemistry. recipe is 10 cellulose, 10 polyphyr, 10 spaceacillin,
+      and 20 synthflesh. results in 6 plastiseal wraps.
+  - balance: patches apply a uniform 10% of the initial contained reagents each tick
+      meaning patches only last 10 seconds now.
+  - qol: patches are now flammable.
+  - bugfix: fixed a bug where only one damage overlay would appear at a time.
+  - bugfix: added a missing damage overlay for stage three brute on the left leg.
+  - balance: damage overlays appear sooner to help with clarity.
+  - bugfix: spaceacillin now helps with burn wounds as stated in wound treatment solutions,
+      slowing down the infection rate by a considerable amount for as long as it is
+      metabolized.
+  - balance: emergency medipens have more spaceacillin to help treat burns wounds
+      temporarily.
+  - rscdel: removed pain system medical items from medkits as pain isn't as prevalent
+      anymore.
+  - balance: lowered the cost of advanced medkits to 450 from 600 credits in nanomed
+      plus vendors.
+  - bugfix: fixed a runtime with fingerprints and chem explosions
+  - bugfix: black powder explodes after 1-3 seconds instead of 5-10.
+  - balance: halved the rate at which fire heats you up.
+  - code_imp: moved some fire stack code to the appropriate places.
+  - rscdel: removed bruise and burn kits (heal packs).
+  - code_imp: de-modularized gauze and chemical patch code.
+  - bugfix: bodies will only leave bloody trails if they are actually getting their
+      blood dragged out on the floor.
+  - rscadd: added space trumpet seeds to seed vendors.
+  Tractor-Maam:
+  - rscadd: Added the Magazine Shuffler to the Black Market and a contraband cargo
+      crate.
+  - balance: The Roulette Firing Pin has been changed entirely, Shoot yourself as
+      many times as you like, but shoot anywhere else only once! until the next person
+      fires, of course.
+  - rscadd: Added the Shotgun Roulette Starter Kit contraband cargo crate.
+  - rscadd: Added the Roulette Shotgun/pin to the Black Market.
+  - image: added the Magazine Shuffler sprite by Cannibal Hunter
+2025-12-13:
+  Veth-s:
+  - qol: Wirechem Remote Factory Outputs now automagically output patches/pills/bottles
+      to the tile their on, up to a maximum of 10, like chemical presses from pipechem.
+2025-12-14:
+  Absolucy:
+  - map: Added "hacked" holopads to most syndicate/pirate bases and ships, allowing
+      them to call the station if they so desire.
+  Absolucy, SmArtKar:
+  - qol: Integrated circuit modules now can be linked to component printers.
+  - bugfix: Fixed BCIs sending messages twice and circuit laser pointers sometimes
+      failing to work.
+  Beeper-Skeeper:
+  - rscadd: The entire Centcomm Bunny suit outfit is now available in the NT Rep's
+      clothing bag. Tailcoat is a different subtype with a different armor value than
+      the normal one as well, as in not better than the other options.
+  Cmpwarrior:
+  - rscadd: 'Adds a new AI core design based on "Steve" from PvZ: GW2'
+  - rscadd: 'Adds a new AI core design based on TEC from Paper Mario: TTYD'
+  - rscadd: Adds a new AI core design based on TheDukeOfOOK from- okay I think you
+      get the point
+  Glyphee:
+  - rscadd: new sfx for my plush and a new sprite
+  Lawlolawl:
+  - rscdel: Removed anti-grief warning for servant golems on spawn, as they follow
+      the will of their creators. Non-antag creators are still liable for bwoinking
+      if you use your golems for mischief! Warnings still remain for free golems.
+  SirNightKnight:
+  - rscdel: removed random assistant colors, assistants will always be the same color
+      or palette during the colored assistants station trait.
+  Tractor-Maam:
+  - rscadd: Blank Shells for roulette are now spent beanbags.
+  - map: Oshan now contains a jukebox and waiver in its roulette room.
+  - map: Oshan and Kilos roulette rooms now contain magazine shufflers.
+  - spellcheck: Updated the text on the General Release of Liability.
+  - rscadd: Added the MOD Corpse Exoskeleton Module.
+  - code_imp: changed the MOD AI forced standing trait cause.
+  Uristthedorf:
+  - qol: Instead of powerzones limiting clone pod/computer linking, it is now based
+      off distance.
+  - bugfix: Clonepods can now be linked to cloning computers again.
+  Veth-s:
+  - balance: Changed the process time from 30 seconds to 4 minutes for the Junkie
+      quirk, reducing how quickly you go through withdrawal stages.
+  flleeppyy:
+  - code_imp: redo plx_getloadoutrewards topic
+2025-12-15:
+  Absolucy:
+  - bugfix: Fixed changes to your mutations/genes being mirrored to/from any clones
+      of you.
+  - bugfix: Fixed Veil of Many Faces and stabilized green extract not properly restoring
+      your mutant colors, undershirt, underwear, and socks when restoring your original
+      identity.
+  grungussuss, JupiterJaeden:
+  - qol: Windoors now stay open for 8 seconds instead of 5.
+  - qol: Secure windoors now stay open for 5 seconds instead of 2.
+2025-12-17:
+  Lawlolawl:
+  - bugfix: Fixed lights not being able to be placed back into box of replacement
+      lights.
+  - bugfix: Fixed space heater deconstruction generating power cells, as well as improvised
+      chem heater deconstruction generating cable coils.
+  Loiosh42:
+  - map: Oshan armoury now standardized
+  Uristthedorf:
+  - rscdel: Removes horned mutation and extra versions of colorblind mutation.
+  flleeppyy:
+  - rscdel: Removed replays/demos
+  - code_imp: Demodularized hydroponics, flavor_text, floorsigns, and food_and_drinks
+2025-12-18:
+  Absolucy:
+  - rscdel: Bloodsuckers can no longer choose the Nosferatu clan.
+  BingusSS13:
+  - map: Replaced the backup power cell on Charlie Station with a mega cell.
+  - map: The northern transit tube on Ice Box Charlie Station now has firelock frames
+      instead of actual firelocks.
+  - map: Added an inactive camera to the thermoelectric generator room on Ice Box
+      Charlie Station.
+  Gboster-0:
+  - balance: oozeling luxury medipens now don't heal more than luxury medipens* (they
+      heal a tiny bit more blood+toxin)
+  - balance: icebox portals now give out crates requiring skeleton keys to open
+  - balance: removed meathooks from both lavaland tendrils and icebox portals
+  - balance: mind-transfer potions, adamantine extracts, clown hulks and ship in a
+      bottle from icebox portals
+  - code_imp: tendril/icebox portals now use a proper lootspawner instead of direct
+      switch cases
+  - code_imp: busted necropolis chests now roll what loot they are going to spawn
+      on initialize, making admins able to rig them and allowing for easier debugging
+  JohnFulpWillard:
+  - rscadd: Cargo union badges.
+  - rscdel: Security badges (except the Detective).
+  - rscadd: Detective's badge gets flashier the more experienced you are at Detective.
+  - rscadd: The QM now has an official list of all Union personnel that they can add
+      to/remove at all times.
+  - rscadd: Borgs can now wear Union badges.
+  - bugfix: Badges automatically sync to your character on round-join.
+  - qol: Badges (including the Lawyers') now points to itself rather than send an
+      easy-to-miss message in chat. It also uses balloon alerts.
+  JupiterJaeden:
+  - bugfix: You can now correctly remove contractor batons from the contractor baton
+      holster module with a wrench (as the in-game text implies).
+  - bugfix: Contractor batons added to the contractor baton holster module now correctly
+      have no-drop applied.
+  Killermankey:
+  - rscadd: Sentinel Siege Walker
+  - bugfix: a singular letter missing from the ignifist stopping it from using the
+      correct rocket.
+  Lawlolawl:
+  - bugfix: Fixed chemnades losing labels during assembly/disassembly steps. In general,
+      hand labeler labels should have their label added to the end of an item's new
+      name every time it is updated.
+  SirNightKnight:
+  - balance: crew mechs have two slots.
+  - balance: mech armor cannot be stacked with the same type.
+  - balance: maulers come with a melee armor module installed along with a projectile
+      armor module.
+  - balance: projectile armor gives 15 more bullet resistance instead of 10.
+  Uristthedorf:
+  - refactor: Actions will no longer by default apply a melee cooldown equal to action
+      cooldown.
+  - bugfix: Fixed various abilities causing melee jank, most noticeably venus man
+      eaters
+  notghosti:
+  - bugfix: Dormant disease no longer shows on a health analyzer scan
+2025-12-19:
+  Absolucy:
+  - bugfix: Admin full heals will no longer trigger the backlash from longevity syndrome
+      being cured.
+  JohnFulpWillard:
+  - qol: The chat bar now scrolls as you type.
+  JupiterJaeden:
+  - rscadd: "Adds a new security status for sechuds - \u2018Search\u2019. Beepsky\
+      \ treats it like any other non-innocent status, but not like arrest. Credit\
+      \ to paradise station for the sprite."
+  - rscadd: Perma prisoners now start the round set to incarcerated. This includes
+      prisoners with the jailbird quirk (who no longer start set to paroled if they
+      are a prisoner).
+  - rscadd: "The \u2018discharged\u2019 security status text on the records console\
+      \ now implies that someone has been released, rather than acquitted."
+  - qol: Changes some of the colors on security statuses on the security records console
+      to be more consistent with their sechud colors.
+  - qol: Changes the color of the suspected security hud to be teal, to prevent conflict
+      with the orange incarcerated & search statuses.
+  - qol: As a regular member of security, you can now invalidate crimes on the records
+      console which you have authored yourself. (requires HOS/warden access normally).
+  - bugfix: You can now correctly edit the description on crimes in the records console.
+  - bugfix: You can now correctly invalidate citations, just like other crimes.
+  - bugfix: Both roundstart and latejoin perma prisoners now correctly have their
+      flavor crimes added to their security records.
+  - bugfix: Energy bolas can hit prone targets correctly and no longer leave random
+      energy snare garbage behind.
+  - code_imp: Energy bolas are no longer janky as fuck and now just work basically
+      like a regular bola.
+  - balance: Energy bolas have had their slowdown slightly nerfed.
+  - balance: DRAGnet snares deploy in 0.5s from hitting the ground instead of 1s.
+  - balance: Stabilized red extracts no longer protect you from legcuff-type slowdowns-
+      this includes bolas, bear traps, and their subtypes.
+  - qol: Adds a HOS bowman headset to the HOS locker.
+  - rscdel: Removes the random paco magazine from the HOS locker.
+  TheColorCyan:
+  - bugfix: brings back pride pins that were accidentally removed, you can be gay
+      once again
+2025-12-21:
+  Infernal-0:
+  - rscadd: Painkillers are now in medkits again. Rejoice.
+2025-12-22:
+  Absolucy:
+  - rscdel: You can no longer get those annoying heretic paintings from gifts.
+  - bugfix: Fixed getting certain buggy items from christmas gifts that would require
+      an admin to fix you.
+  - bugfix: Plasma Fixation no longer kills oozelings... why did something that healed
+      from breathing plasma hurt people who could already heal from breathing plasma
+      anyways?
+  - bugfix: Fixed Curse of Madness having a long delay between sending your message
+      and actually giving feedback and taking your points.
+  - bugfix: Fixed ghost-controlled plushie spawners in maints loot having a weird
+      delay when spawning.
+  - bugfix: Hopefully fixed weird things happening when you pour plasma on an oozeling
+      core that's in your pocket.
+  - bugfix: Fixed being able to produce infinite xenobio extracts with zero cost by
+      activating an ooze compressor's repeat while it was compressing.
+  - bugfix: '"Plant Calling Card" secondary objectives will no longer select targets
+      who wouldn''t leave a body behind for one reason or another.'
+  - bugfix: Actually fixed oozeling limb dismemberment saying that it was shattered
+      through the last "error" holding it together.
+  - bugfix: Fixed buying something in the pre-round store not actually giving you
+      what you bought.
+  - bugfix: Fixed borers sometimes spawning on Charlie Station on Icebox.
+  - bugfix: Fixed cyborgs being able to put their tools into deep fryer baskets.
+  - bugfix: Ghost critters will no longer be turned into constructs by Nar'Sie.
+  - bugfix: Possibly fixed weird situations involving getting legioned while falling
+      into a chasm.
+  - bugfix: Fixed subdermal heaters/coolers potentially freezing/burning their owner
+      to death.
+  - bugfix: Returning from cryo should now restore skillchips.
+  - bugfix: Fixed being able to use autosurgeons on non-carbons, which just deleted
+      the implant.
+  - bugfix: Fixed flavor text not showing up on examine.
+  - bugfix: Fixed double-html encodes in custom admin votes.
+  - bugfix: Fixed turning off the "Enable Jukebox Music" prefs not stopping ongoing
+      jukebox music.
+  - bugfix: Fixed harvested heretic influences showing up on right click before they
+      actually start to fade in.
+  - bugfix: Fixed the Experimentation Lab on Oshan not having its APC properly wired
+      to power.
+  - bugfix: Fixed the alt-click selection on the xenobio vaccum pack not working unless
+      you clicked on something directly next to you.
+  - bugfix: Fixed some assorted minor runtime errors.
+  - bugfix: (SmArtKar) Fixed fire sound runtimes caused by incorrect arguments.
+  - admin: (Melbert) You can now set someone's TC to 0.
+  - admin: (Melbert) Removing Traitor from automatically removes the uplink from them.
+  - admin: (Melbert) Removing Uplink from someone no longer wipes ALL of their memories.
+  - qol: Modlink calls now also use the caller's voice pack.
+  - balance: '"Disable Telecomms" and "Trigger Stationwide Blackout" can no longer
+      be discounted in the traitor uplink.'
+  Absolucy, Melbert:
+  - bugfix: Patch exploit allowing nigh-infinite heretic points
+  Infernal-0:
+  - image: Nukes a misplaced stripe on the medical MODsuits
+  Lawlolawl:
+  - bugfix: Added heretic midround antag pref.
+  - image: Shifted borer and plague rat preview icons to show their full sprite properly.
+  - qol: 'Preferences settings: Separated spaceling and midround ling antag prefs.'
+  - qol: 'Preferences settings: Separated crew midround antag prefs and ghost role
+      antag prefs as a whole.'
+  SirNightKnight:
+  - rscadd: phrases with spoken codewords cause the whole sentence to be marked in
+      copperplate font to better differentiate from other colored text.
+  - rscdel: removed some terms (russians, mexicans, indians, and illegal immigrants)
+      from the ion law mad lib pool.
+  - bugfix: updated the ion law mad lib pool with recent species and job additions.
+  - bugfix: ion laws are based off crewsimov instead of asimov.
+  - rscadd: thermal balaclavas can be worn on your neck slot
+  - code_imp: renamed the item path for the thermal balaclava to make more sense.
+  - code_imp: cleaned up some code relating to face visibility.
+  - qol: security barriers (deployable ones from grenades) can be right clicked or
+      swiped with your ID/PDA to unlock them if you have security access.
+  - balance: emagging sec barriers fries their controls permanently, heavy emps will
+      achieve the same effect.
+  - balance: sec barriers glow in the dark.
+  - balance: increased the amount of sec barrier grenades you get in sec barrier cargo
+      crates to 6 but kept the unit price (100 credits per barrier grenade).
+  - balance: you get 3 sec barrier grenades from the sec utility voucher option. up
+      from 2.
+  - bugfix: fixed some cover flags for the eva and voidsuit space helmet.
+  - qol: ' right clicking a holosign barrier with it''s projector deletes it.'
+  - code_imp: moved some holosign/projector interactions to the holosign projector
+      itself.
+2025-12-23:
+  Absolucy:
+  - rscadd: Added a new "Default Scryer Label" character preference, which will set
+      the default label of a MODlink scryer if you spawn with one, either via loadout
+      or the station trait.
+  - bugfix: Fixed the Tin Man and Prosthetic Organ quirks being copied to oozelings
+      when they revive.
+  - bugfix: Fixed the Default Scryer Label option not applying if you spawn with a
+      case.
+  Absolucy, Flleeppyy:
+  - refactor: Rewrote large chunks of cassette / cassette player code.
+  - rscadd: The cassette player now has an actual UI!
+  SirNightKnight:
+  - bugfix: codeword responses are orange instead of red. removed the copperplate
+      font being applied to phrases containing codewords.
+  Veth-s:
+  - rscadd: You can now choose your PDA's ringtone sound from a list.
+  - rscadd: Many new sounds have been added for ringtones (Chen/Flleeppyy)
+  - rscadd: Modlink scryers now have call ringtones
+  - rscadd: Sound Debug Mixer verb
+  - code_imp: PDA ringtone sounds are now on their own channel
+  notghosti:
+  - rscadd: Assault operatives now spawn with a survival box
+  - qol: Prisoner body bags can now be folded up
+  - bugfix: Syndicate prisoner body bags will now use the proper sprite
+  - code_imp: Assault operatives now have a properly named datum file.
+2025-12-24:
+  Absolucy:
+  - balance: From the winter equinox to the day after Christmas, christmas presents
+      are more likely to have something fun, and not like, a floor tile or something.
+  Absolucy, SirNightKnight:
+  - image: 'The ThinkTronic MechComp Dispenser now has its own unique sprite!
+
+      /:cl
+
+      ## Pre-Merge Checklist
+
+      - [x] You tested this on a local server.
+
+      - [x] This code did not runtime during testing.
+
+      - [x] You documented all of your changes.'
+  Chelxox:
+  - rscadd: 'Added three new felinid tails: leopard, double and big.'
+  Gboster-0:
+  - bugfix: macrobombs are no longer instant, this was broken for 3 months.
+  Infernal-0:
+  - qol: The CMO's unique rescue MODsuit now comes with a jetpack, patient transport,
+      defibrillator and thread ripper module.
+  JupiterJaeden:
+  - bugfix: Vampires escape on shuttle objective now actually calculates correctly
+      instead of always greentexting (oops).
+  - bugfix: Vampires passive blood drain and health regeneration is now correctly
+      adjusted for seconds per tick, which should make it more consistent across rounds.
+  - bugfix: Vampires can now no longer go below 0 blood when dying from frenzy (or
+      ever).
+  - bugfix: "Vampires \u2018constant blood cost\u2019 for certain abilities now actually\
+      \ works and drains blood constantly."
+  - bugfix: Fixes an exploit with fortitude that would allow for infinitely reducing
+      your brute & stamina modifiers. Credit to Ice-Type for bringing it to my attention.
+  - bugfix: Fixes a bug with brawn that would cause your click intercept to be set
+      for the full duration of the power cooldown when you used it to snap cuffs,
+      leaving you unable to click on anything for a while.
+  - bugfix: "Brawn now correctly allows you to snap handcuffs and knock the person\
+      \ grabbing you down at the same time, when it\u2019s supposed to."
+  - bugfix: Fixes a bug where vampires would not enter torpor when they should while
+      teleporting to their coffin using vanishing act if the coffin was already closed.
+  - balance: Vampires feed a little slower when using the giant plastic straw than
+      before.
+  - balance: "Nosferatu vampires now actually have an obvious tell when they are examined,\
+      \ as their clan text implies: \u201CThey appear slouched over and grotesque\
+      \ - a twisted abomination, like some shameless creature of the night\u2026\u201D"
+  - balance: Vampires have had their passive health regen per level rate increase
+      nerfed (the base regen + regen from current blood level is unchanged).
+  - balance: 'Fortitude has been substantially changed: It is now once again unlimited
+      duration, but no longer provides total stun immunity past level 4 (instead providing
+      additional baton resistance at levels 4+), and has also had its brute and stamina
+      resistance reduced: it starts at 20% rather than 40%, increases 5% per level
+      instead of 10%, and is capped at 50% rather than 70%.'
+  - balance: The (now functional) constant blood cost of fortitude has been increased
+      from 0.2 to 3, but the activation cost has been dropped to 10 from 30.
+  - balance: Brawn no longer allows you to break legcuffs at any level. Handcuff breaking
+      is still at level 2, lockers at level 3, and silver cuffs at level 5.
+  - balance: Brawn now always knock grabbers down, break out of closets, and snap
+      restraints in the same use (assuming you have a high enough level for each feature).
+      Which should make it more useful for escaping arrests or lockering.
+  - balance: Mesmerize no longer mutes the target for the full duration regardless
+      of if the glare succeeds or fails - but will still mute for the duration of
+      the glare itself.
+  - balance: "Tremere\u2019s dominate ability will now remove mindshields when used\
+      \ to vassalize someone."
+  - bugfix: Evil clones once again have glowing red eyes like they are supposed to.
+  SirNightKnight:
+  - sound: gave the salute emote a sound effect.
+  notghosti:
+  - balance: Regen coma now has a max strength of 6.
+  - balance: Regen com now gives no crit damage at 4.
+  - balance: Regeneration Coma takes 20 seconds to un-coma someone once ending.
+  - balance: Regeneration coma now suffers from a 40 cooldown after proccing.
+  - balance: This is signified by a yawn
+  - code_imp: Some touchups to the debug disease and it's autoinjector. Non influence
+      on game play
+2025-12-25:
+  Absolucy:
+  - bugfix: Fixed building a wall over a tile with liquids on it getting liquid stuck
+      in the wall.
+  - balance: You can now behead people "normally" again, albeit they have on the ground
+      and below half health.
+  Gboster-0:
+  - balance: The paramedic arm-implant now has a piercing cyborg autoinjector with
+      epiderphine/formeldahyde instead of a medibeam
+  OliverOtter:
+  - rscadd: Added 10 new ringtones to the MOD-Link Scryers.
+  SirNightKnight:
+  - image: gave the captain's carapace more authority.
+  - image: gave the captain jumpsuit and jumpskirt a higher collar.
+  wraith-54321:
+  - refactor: added protected lists
+2025-12-26:
+  JupiterJaeden:
+  - balance: Ling's chitin armor (specifically the helmet) now protects from flashes,
+      flashbangs, and pepperspray.
+  - balance: Ling's chitin armor ability cost increased from 1 dna point to 2.
+  - balance: Ling's armblade ability cost decreased from 2 dna points to 1.
+2025-12-27:
+  Absolucy:
+  - bugfix: Fixed not being able to revive existing vassals with Tremere's Dominate
+      if you were currently at your vassal cap.
+  - map: Added a proper SMES for the SM emitters on Void Raptor.
+  - bugfix: Fixed a rare bug where bloodsuckers could be permanently stuck as being
+      considered "silver cuffed".
+  - bugfix: Healium crystals now properly update turf atmos
+  Shoddd:
+  - balance: empath now cost 4 points instead of 2
+  - balance: empath can now see quirks on examine
+  Singul0:
+  - rscadd: Added tutorial simulation virtual reality! It is accessed over at centcom.
+      Players with low playtime can gain monkecoins for completing tutorials (thank
+      you for not blowing up [PHARMACY/ENGINE] in regular rounds)
+  - code_imp: Adds multiple bitrunning networks functionality
+  Tractor-Maam:
+  - balance: Vital Displays are available to print as a design roundstart. Advanced
+      displays are still untouched under Advanced Biotech.
+  Veth-s:
+  - rscadd: A new token statpanel for admins, to help improve token responses.
+  - admin: A noise will now play if a token is going to timeout in one minute.
+2025-12-28:
+  Infernal-0:
+  - spellcheck: Updates the description for the CMOs surgical processor.
+  JohnFulpWillard:
+  - bugfix: Sandevistan implants & Sugar/Hen rushes properly display an afterimage
+      as you move around.
+  - bugfix: Helio permabrig entrance doors have had their access fixed.
+  - rscadd: Union badges hold access for union related activities (union management
+      app)
+  - rscadd: The QM can now replace their golden union badge.
+  JupiterJaeden:
+  - refactor: Stamina is now maxed at 100 instead of 250.
+  - rscdel: Removes the rng chance to stamcrit when below 20% stamina threshold -
+      you now simply go stamcrit at 0 stam damage.
+  - bugfix: Fixes several bugs related to stamina processing which caused certain
+      effects to be delayed or inconsistent, and certain values to not be updated
+      correctly when they should.
+  - bugfix: Fixes a bunch of code that was referencing the unused "staminaloss" variable
+      to instead reference the correct variable - as a result, basic/simple mobs are
+      now affected by stamina damage (they are slowed by it, although still cant stamcrit).
+  - balance: Makes space dragons (intentionally) unaffected by stamina damage.
+  - bugfix: Fixes several pieces of code using the non-functional "setStaminaLoss()"
+      function.
+  - admin: Admin heals now always remove stamcrits, instead of being functional only
+      some of the time.
+  - bugfix: Fixes energy armor so it actually works against disablers & other 'energy'
+      type projectiles - armor will now protect you from ranged stamina damage. This
+      also includes bullet armor for rubber rounds. Batons & tasers still pierce armor,
+      however. Note that if you hit an arm or leg with stamina damage, it will instead
+      check the armor on the target's chest, to prevent bypassing stamina armor by
+      targeting limbs to stamcrit.
+  - rscdel: Removes the 'exhausted' status effect from the game.
+  - rscdel: Removes the 'debilitated' status effect from the game.
+  - balance: Removes the food buffs that increased your max stamina - they are instead
+      all replaced with the food buffs that increase your natural stamina regen slightly
+      (which has also been adjusted to account for the new stamina maximum).
+  - balance: You now take gradually worsening slowdown from stamina damage. At 40,
+      you lose the ability to sprint. At 60, you start taking damage slowdown just
+      like regular damage. Like regular damage, the slowdown gets worse as your stamina
+      damage gets higher.
+  - balance: Adjust a WHOLE bunch of stamina damage/healing values to account for
+      the new max stamina. However, some values have been left unadjusted in cases
+      where it appears they were never adjusted for 250 stamina in the first place.
+      The most relevant adjustments are listed below - all numbers assume that all
+      hits are landed within 2.5 seconds of each other, so the target cannot regen.
+      The exact number of hits it takes to down someone, like before, will vary based
+      on if they are sprinting and if they are allowed to regen stamina.
+  - balance: Added a 3 second stagger to flashes (not from behind still, though),
+      identical to being shove staggered. Flashes now deal 60 stamina damage from
+      the side (2 hits to stamcrit, 3 if target can regen a little) and 80 from the
+      front (2 to stamcrit). The chance for flashes to instantly stamcrit you from
+      the front has been removed. In addition, flashes now can no longer be chained
+      on the same target while they are still blinded from the last flash - this immunity
+      lasts about 2.5s, slightly shorter than the stagger.
+  - balance: Like regular flashes, you can no longer be affected by the 'flash' component
+      of a flashbang while you are currently blinded from a previous flash (including
+      a previous flashbang).
+  - balance: Adds the flashbang box back as an option in the security utility voucher.
+  - balance: All batons now apply a short stagger (slowdown) for 3 seconds on each
+      hit, identical to being shove staggered.
+  - balance: Stun batons deal 45 stamina damage, which will prevent sprint after 1
+      hit, and stamcrit in 3. They have also had their stun cooldown increased to
+      1.3s from 1s.
+  - balance: Police batons (the wooden ones) deal 45 stamina damage, same as a stun
+      baton, but they still have a 1.5s stun cooldown.
+  - balance: Telebatons deal 55 stamina damage, which will prevent sprint in 1 hit
+      and stamcrit in 2 hits, if the hits are landed close together. They have had
+      their stun cooldown increased from 1.5s to 2s.
+  - balance: Contractor batons deal 80 stamina damage, along with the knockdown they
+      still apply.
+  - balance: E-bows deal 60 stamina damage, which will slow in 1 hit and stamcrit
+      in 2 on unarmored targets. They also still knockdown on the first hit.
+  - balance: Disablers and paco rubbers now each do 24 stamina damage, which will
+      prevent sprint in 2 shots, slow in 3 shots, and stamcrit in 5 shots on unarmored
+      targets.
+  - balance: Disabler smgs now do 11.5 stamina damage, which will prevent sprint in
+      4 shots, slow in 6 shots, and stamcrit in 9 shots on unarmored targets. They
+      have also had their capacity very slightly increased from 40 to 42.
+  - balance: Beepsky now deals 60 stamina damage, which slows in 1 hit and stamcrits
+      in 2 hits - though he does not slow you too much to be unescapeable after the
+      first hit.
+  - balance: Dragnet netting shots now do 7 stamina damage each (still with 6 projectiles,
+      so 42 per PB), which will prevent sprint in 1 PB shot, slow in 2, and stamcrit
+      in 3 shots.
+  - balance: Rubbershot shotgun shells do 6 pellets of 10 stamina damage each (so
+      60 PB), which will slow in 1 shot if every pellet lands, and stamcrit in 2 PB
+      shots.
+  - balance: Rejoice bartenders! Beanbag shotgun shells now do 55 stamina damage,
+      which will no sprint (but not slow) in 1 shot and stamcrit in 2 shots (on unarmored
+      targets).
+  - balance: The relative regen rate of stamina has been slightly nerfed.
+  - balance: The duration of stamcrit has been slightly increased from 9 to 10 seconds,
+      and after leaving stamcrit you will not be exhausted, but will have some stamina
+      damage slowdown for about 5 seconds (by default). Natural stamina regeneration
+      is still paused during stamcrit, but it is now possible to leave stamcrit early
+      if other stamina regeneration brings you back to full stamina. The length of
+      stamcrit still cannot be increased by repeated stunning.
+  - balance: The cost to sprint has been adjusted so that you can sprint for about
+      14-15 seconds before you hit the 40% no sprint threshold - about on par with
+      how long you could sprint previously before hitting exhaustion.
+  - balance: You can no longer sprint while using a jetpack. You can still sprint
+      while floating or flying with wings in 0g, however. The speed of ion jetpacks
+      (and other slow jetpack types) has been buffed to compensate.
+  - balance: You can no longer stamcrit yourself by sprinting - this was previously
+      janky and sometimes sprinting without stopping would cause you to stamcrit,
+      other times to enter exhaustion. Now you simply cannot sprint when you hit 40%
+      stamina damage, but you can still move normally. You are able to sprint again
+      once your stamina damage falls below 30%.
+  - balance: Traitor stimulants no longer make you totally immune to stamcrit (in
+      line with tg), but still give you baton resistance, higher movespeed, and stamina
+      healing every tick.
+  - code_imp: TRAIT_STUNIMMUNE now makes you immune to taking all stamina damage except
+      from sprinting.
+  - code_imp: TRAIT_BATON_RESISTANCE now prevents you from taking baton stagger as
+      well as halving the stamina damage taken, but no longer outright prevents you
+      from stamcritting from batons (and beepsky).
+  Lawlolawl:
+  - balance: Disabled wastes pins on Oshan station Z, completely (even far away from
+      station exterior).
+  - bugfix: Allowed shooting of wastes pin weapons around the exterior of the Oshan
+      mining base (previously blocked shooting when too close).
+  SirNightKnight, Dr Diasyl:
+  - image: 'New Security clothing: Security High-Vis jacket!'
+  - code_imp: demodularized most Brig Physician code.
+  - rscdel: removed all skyrat security clothing except for the security utility uniform
+  - image: adjusted the warden's campaign hat to be one pixel lower.
+  - image: fixed several offset issues and inconsistencies with security clothing.
+  - image: added several digi security uniform sprites and updated existing ones.
+  - image: added back the old Brig Physician grey labcoat as an individual item.
+  - image: added new Brig  Physician clothing. Red variants of the medical doctor
+      outfits with a security themed version of the paramedic hat and jacket.
+  - code_imp: repathed spacepol hats.
+  - image: updated the spacepol uniform with what i think is a sprite from TG but
+      i adjusted it.
+  - rscdel: removed ACCESS_BRIG_PHYSICIAN.
+  - rscadd: removed Brig Physician from accessing some officer grade security clothing
+      in the loadout store.
+  - rscadd: added the security medical belt for Brig Physician. it's a medical belt
+      but security themed.
+  - rscadd: Brig Physician gets zipties and a flash for self defence.
+  - rscadd: medical sunglasses added to the Brig Physician mail goody list.
+  - bugfix: you can craft EMT belts with leather like other belts.
+  - balance: ' renamed the Brig Physician locker to the security medical locker. Packed
+      it with one of each medkit and two universal blood bags.'
+  - balance: Brig Physician's have the same access as a Security Assistant + Medical
+      Doctor. meaning they lost locker room access along with their weapon permit.
+  - rscdel: removed brig physician vouchers, Brig Physician starts with a security
+      handheld crew monitor in their locker and belt.
+  - bugfix: the experimental tool node will notify both engineering and medical since
+      it contains surgical aswell as engineering tools.
+  - rscadd: added a tech node for handheld crew monitors thats unlocked by advanced
+      biotech.
+  - rscadd: added the warden's police hat, a darker blue recolor of their regular
+      hat. the warden outfit starts with one equipped instead of the standard red
+      warden hat.
+  - rscadd: warden starts with regular jackboots.
+  - qol: organized the secdrobe's products into subcategories.
+  - rscadd: moved costume-like security clothing into the contraband section of the
+      secdrobe.
+  - bugfix: updated some maps with permabrig access where it was missing.
+  - map: revamped all brig medbays.
+  - rscadd: replaced all security surgery tool duffel bags with security medical surgery
+      tool duffel bags.
+  - image: new handheld crew monitor sprites.
+  - code_imp: demodularized handheld crew monitor code.
+  - image: changed the sechud and trim of Brig Physician to be more similar to that
+      of a medical doctor.
+  - image: changed the interdyne sechud icons to better differentiate them from the
+      Brig Physician sechud.
+  Tractor-Maam:
+  - spellcheck: At Dooms Gate is shown instead of CALL_RINGTONE_DOOMSGATE for scryer
+      ringtones
