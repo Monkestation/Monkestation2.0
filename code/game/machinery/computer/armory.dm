@@ -159,11 +159,8 @@
 		SSsecurity_level.set_level(SEC_LEVEL_BLUE)
 		should_play_sound = FALSE
 
-	var/title
-	var/message
-
-	title = "Armory Authorization Announcement"
-	message = "Attention! The station's security force has authorized the use of the on-board armory under the following provision of Space Law: "
+	var/title = "Armory Authorization Announcement"
+	var/message = "Attention! The station's security force has authorized the use of the on-board armory under the following provision of Space Law: "
 	message += "\n\n[selected_reason].\n"
 
 	if (extra_details != initial(extra_details))
@@ -197,6 +194,16 @@
 	door_controller.activate()
 	armory_open = FALSE
 	reset_console()
+
+	var/title = "Armory De-Authorization Announcement"
+	var/message = "Attention! The immediate threats requiring use of the station's on-board armory have been neutralized. \
+	There may still be further minor threats on-board the station - refer to the station alert level or contact security for more information."
+
+	message += "\n\nAll security personnel are to return equipment to the armory desk unless otherwise authorized by command staff."
+
+	message += "\n\nStation personnel are advised to still remain vigilant, and have a secure shift."
+
+	minor_announce(message, title, TRUE, TRUE, GLOB.player_list, 'sound/misc/notice2.ogg', TRUE, "green")
 
 	balloon_alert_to_viewers("The armory has been closed.")
 	return TRUE
