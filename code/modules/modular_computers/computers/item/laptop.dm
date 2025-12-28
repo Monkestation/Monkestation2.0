@@ -33,6 +33,7 @@
 
 	if(start_open && !screen_on)
 		toggle_open()
+	AddElement(/datum/element/drag_pickup)
 
 /obj/item/modular_computer/laptop/update_icon_state()
 	if(!screen_on)
@@ -58,16 +59,6 @@
 	set src in view(1)
 
 	try_toggle_open(usr)
-
-/obj/item/modular_computer/laptop/mouse_drop_dragged(atom/over_object, mob/user, src_location, over_location, params)
-	if(over_object == user || over_object == src)
-		try_toggle_open(user)
-		return
-	if(istype(over_object, /atom/movable/screen/inventory/hand))
-		var/atom/movable/screen/inventory/hand/H = over_object
-		if(!isturf(loc))
-			return
-		user.put_in_hand(src, H.held_index)
 
 /obj/item/modular_computer/laptop/attack_hand(mob/user, list/modifiers)
 	. = ..()

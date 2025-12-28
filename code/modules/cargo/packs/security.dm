@@ -20,10 +20,12 @@
 
 /datum/supply_pack/security/armor
 	name = "Armor Crate"
-	desc = "Three vests of well-rounded, decently-protective armor."
-	cost = CARGO_CRATE_VALUE * 2
+	desc = "Three sets of well-rounded, decently-protective armor."
+	cost = CARGO_CRATE_VALUE * 4
 	access_view = ACCESS_SECURITY
-	contains = list(/obj/item/clothing/suit/armor/vest = 3)
+	contains = list(/obj/item/clothing/suit/armor/vest = 3,
+					/obj/item/clothing/head/helmet/sec = 3,
+				)
 	crate_name = "armor crate"
 
 /datum/supply_pack/security/disabler
@@ -50,13 +52,6 @@
 				)
 	crate_name = "forensics crate"
 
-/datum/supply_pack/security/helmets
-	name = "Helmets Crate"
-	desc = "Contains three standard-issue brain buckets."
-	cost = CARGO_CRATE_VALUE * 2
-	contains = list(/obj/item/clothing/head/helmet/sec = 3)
-	crate_name = "helmet crate"
-
 /datum/supply_pack/security/laser
 	name = "Lasers Crate"
 	desc = "Contains three lethal, high-energy laser guns."
@@ -67,10 +62,10 @@
 
 /datum/supply_pack/security/securitybarriers
 	name = "Security Barrier Grenades"
-	desc = "Stem the tide with four Security Barrier grenades."
+	desc = "Stem the tide with six Security Barrier grenades."
 	access_view = ACCESS_BRIG
-	contains = list(/obj/item/grenade/barrier = 4)
-	cost = CARGO_CRATE_VALUE * 2
+	contains = list(/obj/item/grenade/barrier = 6)
+	cost = CARGO_CRATE_VALUE * 3
 	crate_name = "security barriers crate"
 
 /datum/supply_pack/security/securityclothes
@@ -182,18 +177,13 @@
 
 /datum/supply_pack/security/armory/bulletarmor
 	name = "Bulletproof Armor Crate"
-	desc = "Contains three sets of bulletproof armor. Guaranteed to reduce a bullet's \
+	desc = "Contains three sets of bulletproof plates and helmets. Guaranteed to reduce a bullet's \
 		stopping power by over half."
-	cost = CARGO_CRATE_VALUE * 3
-	contains = list(/obj/item/clothing/suit/armor/bulletproof = 3)
+	cost = CARGO_CRATE_VALUE * 6
+	contains = list(/obj/item/clothing/suit/armor/bulletproof = 3,
+					/obj/item/clothing/head/helmet/alt = 3,
+				)
 	crate_name = "bulletproof armor crate"
-
-/datum/supply_pack/security/armory/bullethelmets
-	name = "Bulletproof Helmets Crate"
-	desc = "Contains three bulletproof helmets."
-	cost = CARGO_CRATE_VALUE * 3
-	contains = list(/obj/item/clothing/head/helmet/alt = 3)
-	crate_name = "bulletproof helmets crate"
 
 /datum/supply_pack/security/armory/chemimp
 	name = "Chemical Implants Crate"
@@ -307,16 +297,11 @@
 	desc = "Contains three sets of heavy body armor. Advanced padding protects \
 		against close-ranged weaponry, making melee attacks feel only half as \
 		potent to the user."
-	cost = CARGO_CRATE_VALUE * 6
-	contains = list(/obj/item/clothing/suit/armor/riot = 3)
+	cost = CARGO_CRATE_VALUE * 10
+	contains = list(/obj/item/clothing/suit/armor/riot = 3,
+					/obj/item/clothing/head/helmet/toggleable/riot = 3,
+				)
 	crate_name = "riot armor crate"
-
-/datum/supply_pack/security/armory/riothelmets
-	name = "Riot Helmets Crate"
-	desc = "Contains three riot helmets."
-	cost = CARGO_CRATE_VALUE * 4
-	contains = list(/obj/item/clothing/head/helmet/toggleable/riot = 3)
-	crate_name = "riot helmets crate"
 
 /datum/supply_pack/security/armory/riotshields
 	name = "Riot Shields Crate"

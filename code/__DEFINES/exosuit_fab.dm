@@ -8,6 +8,8 @@
 #define BORG_MODEL_MEDICAL (1<<3)
 /// Module is compatible with Engineering Cyborg model
 #define BORG_MODEL_ENGINEERING (1<<4)
+/// Module is compatible with Peacekeeper Cyborg model
+#define BORG_MODEL_PEACEKEEPER (1<<5)
 
 /// Module is compatible with Ripley Exosuit models
 #define EXOSUIT_MODULE_RIPLEY (1<<0)
@@ -42,8 +44,9 @@
 #define EXOSUIT_MODULE_TANK (1<<14)
 // Module is compatbile with drilling "mechs"
 #define EXOSUIT_MODULE_DRILL (1<<15)
+// Module is compatbile with the giant fucking walkers
+#define EXOSUIT_MODULE_SENTINEL (1<<16)
 //monkestation edit end
-
 
 /// Module is compatible with "Working" Exosuit models - Ripley and Clarke
 #define EXOSUIT_MODULE_WORKING (EXOSUIT_MODULE_RIPLEY | EXOSUIT_MODULE_CLARKE)

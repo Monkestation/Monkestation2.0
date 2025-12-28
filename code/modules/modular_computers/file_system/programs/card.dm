@@ -4,7 +4,7 @@
 	downloader_category = PROGRAM_CATEGORY_EQUIPMENT
 	program_open_overlay = "id"
 	extended_desc = "Program for programming employee ID cards to access parts of the station."
-	download_access = list(ACCESS_COMMAND)
+	download_access = list(ACCESS_COMMAND, ACCESS_QM)
 	size = 8
 	tgui_id = "NtosCard"
 	program_icon = "id-card"

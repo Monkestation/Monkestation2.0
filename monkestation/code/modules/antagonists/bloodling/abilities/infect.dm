@@ -29,12 +29,8 @@
 
 	is_infecting = TRUE
 	var/mob/living/old_body = owner
-
 	var/mob/living/carbon/human/carbon_mob = owner.pulling
-
-
 	var/infest_time = 10 SECONDS
-
 	if(HAS_TRAIT(carbon_mob, TRAIT_MINDSHIELD))
 		infest_time *= 2
 
@@ -70,7 +66,7 @@
 
 	if(carbon_mob.stat == DEAD)
 		// This cures limbs and anything, the target is made a changeling through this process anyhow
-		carbon_mob.revive(ADMIN_HEAL_ALL)
+		carbon_mob.revive(ADMIN_HEAL_ALL, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 
 	var/datum/antagonist/changeling/bloodling_thrall/thrall = carbon_mob.mind.add_antag_datum(/datum/antagonist/changeling/bloodling_thrall)
 	if(!thrall)
@@ -81,7 +77,7 @@
 
 	carbon_mob.balloon_alert(owner, "[carbon_mob] successfully infected!")
 
-	var/mob/living/basic/bloodling/proper/tier1/bloodling = new /mob/living/basic/bloodling/proper/tier1/(old_body.loc)
+	var/mob/living/basic/bloodling/proper/tier1/bloodling = new /mob/living/basic/bloodling/proper/tier1(old_body.loc)
 	owner.mind.transfer_to(bloodling)
 
 	var/datum/action/cooldown/spell/vow_of_silence/vow = locate() in bloodling.actions
@@ -90,6 +86,7 @@
 
 	old_body.gib()
 	var/datum/antagonist/bloodling_datum = IS_BLOODLING(bloodling)
+	bloodling_datum.show_to_ghosts = TRUE //pretty obvious
 	for(var/datum/objective/objective in bloodling_datum.objectives)
 		objective.update_explanation_text()
 

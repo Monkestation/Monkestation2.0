@@ -17,6 +17,7 @@
 	suicide_cry = "FOR CHAOS!!"
 	preview_outfit = /datum/outfit/teratoma
 	antag_flags = parent_type::antag_flags | FLAG_ANTAG_CAP_TEAM
+	antag_count_points = 2
 	/// The teratoma team. Used solely to combine all teratomas on the roundend report.
 	var/datum/team/teratoma/team
 	/// Cooldown for corrupting silicon laws, if someone makes the mistake of turning a teratoma into a borg or AI.

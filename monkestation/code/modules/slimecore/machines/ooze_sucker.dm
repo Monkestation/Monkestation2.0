@@ -2,8 +2,6 @@
 #define SUCKER_UPGRADE_BALANCER "balancer"
 #define SUCKER_UPGRADE_CAPACITY "capacity"
 
-GLOBAL_LIST_EMPTY_TYPED(ooze_suckers, /obj/machinery/plumbing/ooze_sucker)
-
 ///this cannablizes floor_pump code but rips specific reagents and and such just does stuff itself so it can be expanded easier in the future
 /obj/machinery/plumbing/ooze_sucker
 	name = "ooze sucker"
@@ -49,7 +47,6 @@ GLOBAL_LIST_EMPTY_TYPED(ooze_suckers, /obj/machinery/plumbing/ooze_sucker)
 
 /obj/machinery/plumbing/ooze_sucker/Initialize(mapload, bolt, layer)
 	. = ..()
-	GLOB.ooze_suckers += src
 	AddComponent(/datum/component/plumbing/simple_supply, bolt, layer)
 	return INITIALIZE_HINT_LATELOAD
 
@@ -64,10 +61,6 @@ GLOBAL_LIST_EMPTY_TYPED(ooze_suckers, /obj/machinery/plumbing/ooze_sucker)
 		linked_controller = main
 		main.linked_sucker = src
 		return
-
-/obj/machinery/plumbing/ooze_sucker/Destroy()
-	GLOB.ooze_suckers -= src
-	return ..()
 
 /obj/machinery/plumbing/ooze_sucker/examine(mob/user)
 	. = ..()
@@ -257,8 +250,11 @@ GLOBAL_LIST_EMPTY_TYPED(ooze_suckers, /obj/machinery/plumbing/ooze_sucker)
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
-	toggle_state()
-	balloon_alert_to_viewers("[turned_on ? "enabled" : "disabled"] ooze sucker")
+	if(anchored)
+		toggle_state()
+		balloon_alert_to_viewers("[turned_on ? "enabled" : "disabled"] ooze sucker")
+	else
+		balloon_alert(user, "unanchored!")
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/plumbing/ooze_sucker/multitool_act(mob/living/user, obj/item/multitool/multi)

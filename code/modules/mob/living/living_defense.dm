@@ -102,6 +102,12 @@
 	// on [/atom/proc/bullet_act] where it's just to pass it to the projectile's on_hit().
 	var/armor_check = min(ARMOR_MAX_BLOCK, check_projectile_armor(def_zone, hitting_projectile, is_silent = TRUE))
 
+	var/stamina_armor_check = armor_check
+
+	//If we hit a limb with stamina damage, we check the armor on the chest instead, to prevent cheesing armor by targeting limbs to stamcrit.
+	if (def_zone != BODY_ZONE_CHEST && def_zone != BODY_ZONE_HEAD)
+		stamina_armor_check = min(ARMOR_MAX_BLOCK, check_projectile_armor(BODY_ZONE_CHEST, hitting_projectile, is_silent = TRUE))
+
 	var/damage_done = apply_damage(
 		damage = hitting_projectile.damage,
 		damagetype = hitting_projectile.damage_type,
@@ -117,7 +123,7 @@
 			damage = hitting_projectile.stamina,
 			damagetype = STAMINA,
 			def_zone = def_zone,
-			blocked = armor_check,
+			blocked = stamina_armor_check,
 			attack_direction = hitting_projectile.dir,
 		)
 	if(hitting_projectile.pain)
@@ -149,7 +155,6 @@
 		eyeblur = hitting_projectile.eyeblur,
 		drowsy = hitting_projectile.drowsy,
 		blocked = armor_check,
-		stamina = hitting_projectile.stamina,
 		jitter = (mob_biotypes & MOB_ROBOTIC) ? 0 SECONDS : hitting_projectile.jitter, // Cyborgs can jitter but not from being shot
 		paralyze = hitting_projectile.paralyze + extra_paralyze,
 		immobilize = hitting_projectile.immobilize,
@@ -258,6 +263,9 @@
 		return FALSE
 	if(SEND_SIGNAL(src, COMSIG_LIVING_GRAB, target) & (COMPONENT_CANCEL_ATTACK_CHAIN|COMPONENT_SKIP_ATTACK))
 		return FALSE
+	if(mind && mind?.martial_art)
+		// Apply general martial arts (human on mob, mob on human, mob on mob)
+		src.apply_martial_art(target, null)
 	if(ishuman(target)) // MONKE EDIT: only humans can block it seems like
 		var/mob/living/carbon/human/human_target = target
 		if(human_target.check_block()) // MONKE EDIT: No args for block check // src, 0, "[src]'s grab", UNARMED_ATTACK
@@ -558,7 +566,7 @@
 	return 20
 
 /mob/living/narsie_act()
-	if(HAS_TRAIT(src, TRAIT_GODMODE) || QDELETED(src))
+	if(HAS_TRAIT(src, TRAIT_GODMODE) || HAS_TRAIT(src, TRAIT_GHOST_CRITTER) || QDELETED(src))
 		return
 
 	if(GLOB.cult_narsie && GLOB.cult_narsie.souls_needed[src])
@@ -595,14 +603,19 @@
 	if(is_blind() && !(override_blindness_check || affect_silicon))
 		return FALSE
 
+	apply_status_effect(/datum/status_effect/currently_flashed, length)
+
 	// this forces any kind of flash (namely normal and static) to use a black screen for photosensitive players
 	// it absolutely isn't an ideal solution since sudden flashes to black can apparently still trigger epilepsy, but byond apparently doesn't let you freeze screens
 	// and this is apparently at least less likely to trigger issues than a full white/static flash
-	if(client?.prefs?.read_preference(/datum/preference/toggle/darkened_flash))
-		type = /atom/movable/screen/fullscreen/flash/black
-
-	overlay_fullscreen("flash", type)
-	addtimer(CALLBACK(src, PROC_REF(clear_fullscreen), "flash", length), length)
+	var/flash_mode = client?.prefs?.read_preference(/datum/preference/choiced/flash_visuals)
+	if(flash_mode == "Blur")
+		apply_status_effect(/datum/status_effect/flash_blur, length)
+	else
+		if(flash_mode == "Dark")
+			type = /atom/movable/screen/fullscreen/flash/black
+		overlay_fullscreen("flash", type)
+		addtimer(CALLBACK(src, PROC_REF(clear_fullscreen), "flash", length), length)
 	SEND_SIGNAL(src, COMSIG_MOB_FLASHED, intensity, override_blindness_check, affect_silicon, visual, type, length)
 	return TRUE
 

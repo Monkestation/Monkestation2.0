@@ -36,6 +36,7 @@
 		SMALL_VENT_TYPE = 7,
 	)
 	var/wave_timer = WAVE_DURATION_SMALL
+	var/wave_timer = WAVE_DURATION_SMALL
 
 	/// What string do we use to warn the player about the excavation event?
 	var/excavation_warning = "Are you ready to excavate this ore vent?"
@@ -74,6 +75,8 @@
 	register_context()
 	if(!unique_vent)
 		SSore_generation.possible_vents += src
+	if(!unique_vent)
+		SSore_generation.possible_vents += src
 	boulder_icon_state = pick(list(
 		"boulder",
 		"rock",
@@ -83,7 +86,9 @@
 		SSore_generation.processed_vents += src
 		icon_state = icon_state_tapped
 		update_appearance(UPDATE_ICON_STATE)
-		add_overlay(mutable_appearance('monkestation/code/modules/factory_type_beat/icons/terrain.dmi', "well", ABOVE_MOB_LAYER, src, ABOVE_MOB_LAYER))
+		add_overlay(mutable_appearance('monkestation/code/modules/factory_type_beat/icons/terrain.dmi', "well", ABOVE_MOB_LAYER, src, GAME_PLANE))
+
+	RegisterSignal(src, COMSIG_SPAWNER_SPAWNED, PROC_REF(log_mob_spawned))
 	AddElement(/datum/element/give_turf_traits, string_list(list(TRAIT_NO_TERRAFORM)))
 	return ..()
 
@@ -108,6 +113,18 @@
 	scan_and_confirm(user)
 	return TRUE
 
+/obj/structure/ore_vent/attack_robot(mob/living/user)
+	. = ..()
+	if(.)
+		return TRUE
+	if(!Adjacent(user))
+		return TRUE
+	if(tapped)
+		balloon_alert_to_viewers("vent tapped!")
+		return TRUE
+	scan_and_confirm(user)
+	return TRUE
+
 /obj/structure/ore_vent/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
@@ -120,7 +137,7 @@
 	to_chat(user, span_notice("You start striking [src] with your golem's fist, attempting to dredge up a boulder..."))
 	for(var/i in 1 to 3)
 		if(do_after(user, boulder_size * 1 SECONDS, src))
-			user.apply_damage(20, STAMINA)
+			user.apply_damage(10, STAMINA)
 			playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
 	produce_boulder(TRUE)
 	visible_message(span_notice("You've successfully produced a boulder! Boy are your arms tired."))
@@ -159,7 +176,7 @@
  * This proc is called when the ore vent is initialized, in order to determine what minerals boulders it spawns can contain.
  * The materials available are determined by SSore_generation.ore_vent_minerals, which is a list of all minerals that can be contained in ore vents for a given cave generation.
  * As a result, minerals use a weighted list as seen by ore_vent_minerals_lavaland, which is then copied to ore_vent_minerals.
- * Once a material is picked from the weighted list, it's removed from ore_vent_minerals, so that it can't be picked again and provided it's own internal weight used when assigning minerals to boulders spawned by this vent.
+ * Once a material is picked from the weighted list, it's removed from ore_vent_minerals, so that it can't be picked again and provided its own internal weight used when assigning minerals to boulders spawned by this vent.
  * May also be called after the fact, as seen in SSore_generation's initialize, to add more minerals to an existing vent.
  *
  * The above applies only when spawning in at mapload, otherwise we pick randomly from ore_vent_minerals_lavaland.
@@ -233,6 +250,8 @@
  * Also gives xp and mining points to all nearby miners in equal measure.
  */
 /obj/structure/ore_vent/proc/handle_wave_conclusion()
+	SIGNAL_HANDLER
+
 	SEND_SIGNAL(src, COMSIG_SPAWNER_STOP_SPAWNING)
 	var/remaining_time = null // Support for time out failure later
 	if(!isnull(vent_timer))
@@ -243,15 +262,19 @@
 	if((!QDELETED(node) || istype(src, /obj/structure/ore_vent/boss)) && isnull(remaining_time)) ///The Node Drone has survived the wave defense long enough, and the ore vent is tapped.
 		tapped = TRUE
 		SSore_generation.processed_vents += src
+		log_game("Ore vent [key_name_and_tag(src)] was tapped")
+		SSblackbox.record_feedback("tally", "ore_vent_completed", 1, type)
 		balloon_alert_to_viewers("vent tapped!")
 		icon_state = icon_state_tapped
 		update_appearance(UPDATE_ICON_STATE)
 		UnregisterSignal(node, COMSIG_QDELETING)
+		qdel(GetComponent(/datum/component/gps))
 	else
 		visible_message(span_danger("\the [src] creaks and groans as the mining attempt fails, and the vent closes back up."))
 		icon_state = initial(icon_state)
 		update_appearance(UPDATE_ICON_STATE)
-		return FALSE //Bad end, try again.
+		node = null
+		return //Bad end, try again.
 
 	for(var/mob/living/miner in range(7, src)) //Give the miners who are near the vent points and xp.
 		var/obj/item/card/id/user_id_card = miner.get_idcard(TRUE)
@@ -263,6 +286,7 @@
 		user_id_card.registered_account.mining_points += point_reward_val
 		user_id_card.registered_account.bank_card_talk("You have been awarded [point_reward_val] mining points for your efforts.")
 	node.pre_escape() //Visually show the drone is done and flies away.
+	node = null
 	add_overlay(mutable_appearance('monkestation/code/modules/factory_type_beat/icons/terrain.dmi', "well", ABOVE_MOB_LAYER, src, GAME_PLANE))
 
 /**
@@ -318,6 +342,7 @@
 		discovered = TRUE
 		balloon_alert(user, "vent scanned!")
 		generate_description(user)
+		AddComponent(/datum/component/gps, name)
 		var/obj/item/card/id/user_id_card = user.get_idcard(TRUE)
 		if(isnull(user_id_card))
 			return
@@ -340,6 +365,10 @@
 	node.arrive(src)
 	sleep(2 SECONDS) // Let the drone actually show up.
 	RegisterSignal(node, COMSIG_QDELETING, PROC_REF(handle_wave_conclusion))
+	RegisterSignal(node, COMSIG_MOVABLE_MOVED, PROC_REF(handle_wave_conclusion))
+	addtimer(CALLBACK(node, TYPE_PROC_REF(/atom, update_appearance)), wave_timer * 0.25)
+	addtimer(CALLBACK(node, TYPE_PROC_REF(/atom, update_appearance)), wave_timer * 0.5)
+	addtimer(CALLBACK(node, TYPE_PROC_REF(/atom, update_appearance)), wave_timer * 0.75)
 	add_shared_particles(/particles/smoke/ash)
 
 	for(var/i in 1 to 5) // Clears the surroundings of the ore vent before starting wave defense.
@@ -420,6 +449,29 @@
 		COOLDOWN_START(src, manual_vent_cooldown, 10 SECONDS)
 	return new_rock
 
+/**
+ * When the ore vent cannot spawn a mob due to being blocked from all sides, we cause some MILD, MILD explosions.
+ * Explosion matches a gibtonite light explosion, as a way to clear neartby solid structures, with a high likelyhood of breaking the NODE drone.
+ */
+//obj/structure/ore_vent/proc/anti_cheese()
+//	explosion(src, heavy_impact_range = 1, light_impact_range = 3, flame_range = 0, flash_range = 0, adminlog = FALSE)
+
+/**
+ * Handle logging for mobs spawned
+ */
+/obj/structure/ore_vent/proc/log_mob_spawned(datum/source, mob/living/created)
+	SIGNAL_HANDLER
+	log_game("Ore vent [key_name_and_tag(src)] spawned the following mob: [key_name_and_tag(created)]")
+	SSblackbox.record_feedback("tally", "ore_vent_mobs_spawned", 1, created.type)
+	RegisterSignal(created, COMSIG_LIVING_DEATH, PROC_REF(log_mob_killed))
+
+/**
+ * Handle logging for mobs killed
+ */
+/obj/structure/ore_vent/proc/log_mob_killed(datum/source, mob/living/killed)
+	SIGNAL_HANDLER
+	log_game("Vent-spawned mob [key_name_and_tag(killed)] was killed")
+	SSblackbox.record_feedback("tally", "ore_vent_mobs_killed", 1, killed.type)
 //comes with the station, and is already tapped.
 /obj/structure/ore_vent/starter_resources
 	name = "active ore vent"
@@ -534,7 +586,7 @@
 			boss_string = "A giant, armored behemoth"
 		if(/mob/living/simple_animal/hostile/megafauna/demonic_frost_miner)
 			boss_string = "A bloody drillmark"
-		if(/mob/living/simple_animal/hostile/megafauna/wendigo)
+		if(/mob/living/simple_animal/hostile/megafauna/wendigo/noportal)
 			boss_string = "A chilling skull"
 	. += span_notice("[boss_string] is etched onto the side of the vent.")
 
@@ -545,15 +597,22 @@
 		var/mob/living/simple_animal/hostile/megafauna/wendigo/noportal = boss
 		noportal.make_portal = FALSE
 	RegisterSignal(boss, COMSIG_LIVING_DEATH, PROC_REF(handle_wave_conclusion))
+	SSblackbox.record_feedback("tally", "ore_vent_mobs_spawned", 1, summoned_boss)
 	vent_timer = "inf" //Basically forever
-	//boss.say(boss.summon_line) //Pull their specific summon line to say. Default is meme text so make sure that they have theirs set already.
+	//boss.say(boss.summon_line, language = /datum/language/common, forced = "summon line") //Pull their specific summon line to say. Default is meme text so make sure that they have theirs set already.
+
+/obj/structure/ore_vent/boss/handle_wave_conclusion()
+	node = new /mob/living/basic/node_drone(loc) //We're spawning the vent after the boss dies, so the player can just focus on the boss.
+	SSblackbox.record_feedback("tally", "ore_vent_mobs_killed", 1, summoned_boss)
+	COOLDOWN_RESET(src, wave_cooldown)
+	return ..()
 
 /obj/structure/ore_vent/boss/icebox
 	icon_state = "ore_vent_ice"
 	icon_state_tapped = "ore_vent_ice_active"
 	defending_mobs = list(
 		/mob/living/simple_animal/hostile/megafauna/demonic_frost_miner,
-		/mob/living/simple_animal/hostile/megafauna/wendigo,
+		/mob/living/simple_animal/hostile/megafauna/wendigo/noportal,
 		/mob/living/simple_animal/hostile/megafauna/colossus,
 	)
 

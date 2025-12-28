@@ -27,7 +27,7 @@
 	if(source_atom != src) //if we are someone else then call that attack chain else we can proceed with the usual stuff
 		return source_atom.melee_attack_chain(user, target, modifiers, attack_modifiers)
 
-	var/is_right_clicking = LAZYACCESS(modifiers, RIGHT_CLICK)
+	var/is_right_clicking = (user.istate & ISTATE_SECONDARY)
 
 	var/item_interact_result = target.base_item_interaction(user, src, modifiers)
 	if(item_interact_result & ITEM_INTERACT_SUCCESS)

@@ -469,16 +469,16 @@
 
 ///Installs a new suppressor, assumes that the suppressor is already in the contents of src
 /obj/item/gun/ballistic/proc/install_suppressor(obj/item/suppressor/S)
-	//suppressed = S
-	//w_class += S.w_class //so pistols do not fit in pockets when suppressed (We actually want this and had horrible code to override this code)
+	suppressed = S
+	update_weight_class(w_class + S.w_class) //so pistols do not fit in pockets when suppressed
 	update_appearance()
 
 /obj/item/gun/ballistic/clear_suppressor()
 	if(!can_unsuppress)
 		return
-	//if(isitem(suppressed))
-	//	var/obj/item/I = suppressed
-	//	w_class -= I.w_class
+	if(isitem(suppressed))
+		var/obj/item/I = suppressed
+		update_weight_class(w_class - I.w_class)
 	return ..()
 
 /obj/item/gun/ballistic/click_alt(mob/user)

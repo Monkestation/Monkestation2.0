@@ -117,6 +117,7 @@
 #define LOG_CATEGORY_TELECOMMS "telecomms"
 #define LOG_CATEGORY_TOOL "tool"
 #define LOG_CATEGORY_VIRUS "virus"
+#define LOG_CATEGORY_FLOXY "floxy"
 #define LOG_CATEGORY_CAVE_GENERATION "cave-generation"
 #define LOG_CATEGORY_MECHCOMP "mechcomp"
 #define LOG_CATEGORY_NTSL "ntsl" // MONKESTATION ADDITION: NTSL

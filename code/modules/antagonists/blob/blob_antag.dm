@@ -7,6 +7,8 @@
 	job_rank = ROLE_BLOB
 	ui_name = "AntagInfoBlob"
 	stinger_sound = 'sound/ambience/antag/blobalert.ogg'
+	antag_flags = parent_type::antag_flags | FLAG_ANTAG_CAP_IGNORE_HUMANITY
+	antag_count_points = 25 //round ender, very high cost
 	/// Action to release a blob infection
 	var/datum/action/innate/blobpop/pop_action
 	/// Initial points for a human blob

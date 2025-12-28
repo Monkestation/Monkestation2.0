@@ -232,12 +232,13 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	)
 
 	if(!blocker)
-		message_admins("[ADMIN_LOOKUPFLW(user)] has launched an artillery strike targeting [ADMIN_VERBOSEJMP(bullseye)].")
-		user.log_message("has launched an artillery strike targeting [AREACOORD(bullseye)].", LOG_GAME)
+		message_admins("[ADMIN_LOOKUPFLW(user)] has launched a bluespace artillery strike targeting [ADMIN_VERBOSEJMP(bullseye)].")
+		user.log_message("has launched a bluespace artillery strike targeting [AREACOORD(bullseye)].", LOG_GAME)
 		explosion(bullseye, devastation_range = ex_power, heavy_impact_range = ex_power*2, light_impact_range = ex_power*4, explosion_cause = src)
+		new /obj/effect/temp_visual/bsa_impact(bullseye)
 	else
-		message_admins("[ADMIN_LOOKUPFLW(user)] has launched an artillery strike targeting [ADMIN_VERBOSEJMP(bullseye)] but it was blocked by [blocker] at [ADMIN_VERBOSEJMP(target)].")
-		user.log_message("has launched an artillery strike targeting [AREACOORD(bullseye)] but it was blocked by [blocker] at [AREACOORD(target)].", LOG_GAME)
+		message_admins("[ADMIN_LOOKUPFLW(user)] has launched a bluespace artillery strike targeting [ADMIN_VERBOSEJMP(bullseye)] but it was blocked by [blocker] at [ADMIN_VERBOSEJMP(target)].")
+		user.log_message("has launched a bluespace artillery strike targeting [AREACOORD(bullseye)] but it was blocked by [blocker] at [AREACOORD(target)].", LOG_GAME)
 
 	complete_goal()
 
@@ -277,6 +278,8 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	var/notice
 	var/target
 	var/area_aim = FALSE //should also show areas for targeting
+	COOLDOWN_DECLARE(fire_cooldown) //the "cooldown" for firing the BSA normally is it consuming a absolutely absurd amount of power.
+	var/fire_cooldown_length = 5 SECONDS // (duration the beam exists) When this is (very easily) circumvented, then shit becomes an issue.
 
 /obj/machinery/computer/bsa_control/ui_state(mob/user)
 	return GLOB.physical_state
@@ -333,7 +336,7 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	if(isnull(options[victim]))
 		return
 	target = options[victim]
-	log_game("[key_name(user)] has aimed the artillery strike at [target].")
+	log_game("[key_name(user)] has aimed the bluespace artillery strike at [target].")
 
 
 /obj/machinery/computer/bsa_control/proc/get_target_name()
@@ -365,6 +368,10 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 		notice = "Cannon unpowered!"
 		return
 	notice = null
+	if(!COOLDOWN_FINISHED(src, fire_cooldown) && fire_cooldown_length)
+		notice = "Cannon overheated!"
+		return
+	COOLDOWN_START(src, fire_cooldown, fire_cooldown_length)
 	var/turf/target_turf = get_impact_turf()
 	cannon.fire(user, target_turf)
 

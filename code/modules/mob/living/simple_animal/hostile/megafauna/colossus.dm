@@ -201,7 +201,7 @@
 		var/mob/living/dust_mob = target
 		if(dust_mob.stat == DEAD)
 			dust_mob.investigate_log("has been dusted by a death bolt (colossus).", INVESTIGATE_DEATHS)
-			dust_mob.dust()
+			dust_mob.dust(drop_items = TRUE)
 		return
 	if(!explode_hit_objects || istype(target, /obj/vehicle/sealed))
 		return
@@ -497,7 +497,7 @@
 			if(to_revive.stat != DEAD)
 				continue
 			to_revive.set_species(/datum/species/shadow, TRUE)
-			to_revive.revive(ADMIN_HEAL_ALL, force_grab_ghost = TRUE)
+			to_revive.revive(ADMIN_HEAL_ALL, force_grab_ghost = TRUE, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 			//Free revives, but significantly limits your options for reviving except via the crystal
 			//except JK who cares about BADDNA anymore. this even heals suicides.
 			ADD_TRAIT(to_revive, TRAIT_BADDNA, MAGIC_TRAIT)

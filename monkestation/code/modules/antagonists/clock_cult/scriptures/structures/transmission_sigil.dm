@@ -3,7 +3,7 @@
 	desc = "Summons a sigil of transmission, required to power clockwork structures. Will also drain power from charged objects."
 	tip = "Power structures using this."
 	button_icon_state = "Sigil of Transmission"
-	power_cost = 50
+	power_cost = STANDARD_CELL_CHARGE * 0.05
 	invocation_time = 5 SECONDS
 	invocation_text = list("Oh great holy one...", "your energy...", "the power of the holy light!")
 	summoned_structure = /obj/structure/destructible/clockwork/sigil/transmission

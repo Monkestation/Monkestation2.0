@@ -1,6 +1,11 @@
 /* eslint-disable */
 
 (function () {
+  // Inferno needs Int32Array, and it is not covered by core-js.
+  if (!window.Int32Array) {
+    window.Int32Array = Array;
+  }
+
   // Utility functions
   var hasOwn = Object.prototype.hasOwnProperty;
 
@@ -31,6 +36,7 @@
 
   // Expose inlined metadata
   Byond.windowId = parseMetaTag('tgui:windowId');
+  Byond.storageCdn = parseMetaTag('tgui:storagecdn');
 
   // Backwards compatibility
   window.__windowId__ = Byond.windowId;

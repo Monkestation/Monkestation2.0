@@ -60,5 +60,11 @@
 /datum/log_category/silo
 	category = LOG_CATEGORY_SILO
 
+/datum/log_category/floxy
+	category = LOG_CATEGORY_FLOXY
+
+/datum/log_category/music
+	category = LOG_CATEGORY_MUSIC
+
 /datum/log_category/cave_generation
 	category = LOG_CATEGORY_CAVE_GENERATION

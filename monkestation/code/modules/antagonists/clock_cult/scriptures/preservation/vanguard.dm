@@ -9,7 +9,7 @@
 	button_icon_state = "Vanguard"
 	category = SPELLTYPE_PRESERVATION
 	cogs_required = 2
-	power_cost = 150
+	power_cost = STANDARD_CELL_CHARGE * 0.15
 
 /datum/scripture/slab/vanguard/apply_effects(atom/applied_atom)
 	return FALSE

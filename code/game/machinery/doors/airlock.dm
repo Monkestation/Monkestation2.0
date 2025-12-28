@@ -189,8 +189,8 @@
 		damage_deflection = AIRLOCK_DAMAGE_DEFLECTION_R
 
 	prepare_huds()
-	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
-		diag_hud.add_atom_to_hud(src)
+	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC_BASIC]
+	diag_hud.add_atom_to_hud(src)
 
 	diag_hud_set_electrified()
 
@@ -206,7 +206,7 @@
 		id_tag = "[port.shuttle_id]_[id_tag]"
 
 /obj/machinery/door/airlock/proc/update_other_id()
-	for(var/obj/machinery/door/airlock/Airlock in GLOB.airlocks)
+	for(var/obj/machinery/door/airlock/Airlock as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/airlock))
 		if(Airlock.closeOtherId == closeOtherId && Airlock != src)
 			if(!(Airlock in close_others))
 				close_others += Airlock
@@ -309,8 +309,8 @@
 			D.removeMe(src)
 	QDEL_NULL(note)
 	QDEL_NULL(seal)
-	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
-		diag_hud.remove_atom_from_hud(src)
+	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC_BASIC]
+	diag_hud.remove_atom_from_hud(src)
 	return ..()
 
 /obj/machinery/door/airlock/handle_atom_del(atom/A)
@@ -520,9 +520,6 @@
 			icon_state = ""
 		if(AIRLOCK_DENY, AIRLOCK_OPENING, AIRLOCK_CLOSING, AIRLOCK_EMAG)
 			icon_state = "nonexistenticonstate" //MADNESS
-#ifndef DISABLE_DEMOS
-	SSdemo.mark_dirty(src) //Monkestation Edit: REPLAYS
-#endif
 
 /* monkestation edit
 /obj/machinery/door/airlock/update_overlays()
@@ -1619,7 +1616,7 @@
 	assembly.update_name()
 	assembly.update_appearance()
 
-/obj/machinery/door/airlock/deconstruct(disassembled = TRUE, mob/user)
+/obj/machinery/door/airlock/deconstruct(disassembled = TRUE, mob/user, should_del = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		var/obj/structure/door_assembly/A
 		if(assemblytype)
@@ -1650,7 +1647,8 @@
 				ae = electronics
 				electronics = null
 				ae.forceMove(drop_location())
-	qdel(src)
+	if(should_del)
+		qdel(src)
 
 /obj/machinery/door/airlock/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
@@ -1702,9 +1700,9 @@
 
 	var/list/power = list()
 	power["main"] = remaining_main_outage() ? 0 : 2 // boolean
-	power["main_timeleft"] = remaining_main_outage()
+	power["main_timeleft"] = round(remaining_main_outage() / 10)
 	power["backup"] = remaining_backup_outage() ? 0 : 2 // boolean
-	power["backup_timeleft"] = remaining_backup_outage()
+	power["backup_timeleft"] = round(remaining_backup_outage() / 10)
 	data["power"] = power
 
 	data["shock"] = secondsElectrified == MACHINE_NOT_ELECTRIFIED ? 2 : 0
@@ -1742,14 +1740,14 @@
 		return
 	switch(action)
 		if("disrupt-main")
-			if(remaining_main_outage())
+			if(!main_power_timer)
 				loseMainPower()
 				update_appearance()
 			else
 				to_chat(usr, span_warning("Main power is already offline."))
 			. = TRUE
 		if("disrupt-backup")
-			if(remaining_backup_outage())
+			if(!backup_power_time)
 				loseBackupPower()
 				update_appearance()
 			else

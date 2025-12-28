@@ -111,7 +111,7 @@ const CrewTab = (props: { record: MedicalRecord }) => {
       onClick={() => selectRecord(record)}
       selected={selectedRecord?.crew_ref === crew_ref}
     >
-      <Box wrap>
+      <Box>
         <Icon name={JOB2ICON[rank] || 'question'} /> {name}
       </Box>
     </Tabs.Tab>

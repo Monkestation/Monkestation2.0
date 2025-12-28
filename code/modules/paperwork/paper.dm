@@ -867,3 +867,9 @@
 		to_chat(user, span_warning("You arm the incineration mechanism."))
 		armed = TRUE
 	return CLICK_ACTION_SUCCESS
+
+/obj/item/paper/selfdestruct/job_application
+	name = "Job application form"
+	desc = "You cant bear to look at it..."
+	icon_state = "paper_words"
+	armed = TRUE

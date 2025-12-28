@@ -32,9 +32,18 @@ ADMIN_VERB(remove_liquid, R_FUN, FALSE, "Remove Liquids", "Removes a chosen liqu
 
 	var/range = input(user, "Enter range:", "Range selection", 2) as num
 
+	var/old_can_fire = SSliquids.can_fire
+	SSliquids.can_fire = FALSE
+	if(SSliquids.state == SS_RUNNING)
+		SSliquids.pause()
+		sleep(world.tick_lag)
 	for(var/obj/effect/abstract/liquid_turf/liquid in range(range, epicenter))
-		liquid.liquid_group.remove_any(liquid, liquid.liquid_group.reagents_per_turf)
+		if(QDELETED(liquid))
+			continue
+		if(!QDELETED(liquid.liquid_group))
+			liquid.liquid_group.remove_any(liquid, liquid.liquid_group.reagents_per_turf)
 		qdel(liquid)
+	SSliquids.can_fire = old_can_fire
 
 	message_admins("[key_name_admin(user)] removed liquids with range [range] in [epicenter.loc.name]")
 	log_game("[key_name_admin(user)] removed liquids with range [range] in [epicenter.loc.name]")
@@ -44,6 +53,8 @@ ADMIN_VERB(change_ocean, R_FUN, FALSE, "Change Ocean Liquid", "Changes the reage
 	var/choice = tgui_input_list(user, "Choose a reagent", "Ocean Reagent", subtypesof(/datum/reagent))
 	if(!choice)
 		return
+	message_admins("[ADMIN_LOOKUPFLW(user)] changed the ocean reagent to [choice]")
+	log_admin("[key_name(user)] changed the ocean reagent to [choice]")
 	var/datum/reagent/chosen_reagent = choice
 	var/rebuilt = FALSE
 	for(var/turf/open/floor/plating/ocean/listed_ocean as anything in SSliquids.ocean_turfs)
@@ -55,3 +66,4 @@ ADMIN_VERB(change_ocean, R_FUN, FALSE, "Change Ocean Liquid", "Changes the reage
 				ocean_types.base_lighting_color = listed_ocean.static_overlay.color
 				ocean_types.update_base_lighting()
 			rebuilt = TRUE
+	BLACKBOX_LOG_ADMIN_VERB("Change Ocean Liquid")

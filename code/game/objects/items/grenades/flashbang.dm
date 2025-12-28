@@ -35,12 +35,12 @@
 	var/distance = max(0, get_dist(get_turf(src), turf))
 
 //Flash
-	if(living_mob.flash_act(affect_silicon = 1))
+	if(!living_mob.has_status_effect(/datum/status_effect/currently_flashed) && living_mob.flash_act(affect_silicon = 1))
 		living_mob.Paralyze(max(20/max(1, distance), 5))
 		living_mob.Knockdown(max(200/max(1, distance), 60))
 
 //Bang
-	if(!distance || loc == living_mob || loc == living_mob.loc) //Stop allahu akbarring rooms with this.
+	if(!distance || loc == living_mob || loc == living_mob.loc)
 		living_mob.Paralyze(20)
 		living_mob.Knockdown(200)
 		living_mob.soundbang_act(1, 200, 10, 10)

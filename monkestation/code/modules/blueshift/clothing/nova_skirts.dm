@@ -1,4 +1,3 @@
-#define SKIRTS_DRESSES_DIGIFILE 'monkestation/code/modules/blueshift/icons/mob/clothing/under/skirts_dresses_digi.dmi'
 
 /obj/item/clothing/under/dress
 	body_parts_covered = CHEST|GROIN	//For reference
@@ -16,6 +15,7 @@
 	icon_state = "long_skirt"
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/under/skirts_dresses.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/skirts_dresses.dmi'
+	body_parts_covered = GROIN|LEGS
 
 //TG's icons only have a dress.dmi, but that means its not ABC-sorted to be beside shorts_pants_shirts.dmi. So its skirts_dresses for us.
 
@@ -85,6 +85,7 @@
 	flags_1 = IS_PLAYER_COLORABLE_1
 	can_adjust = TRUE
 	alt_covers_chest = TRUE
+	body_parts_covered = CHEST|ARMS|GROIN
 
 /obj/item/clothing/under/dress/skirt/nova/jean
 	name = "jean skirt"
@@ -97,6 +98,7 @@
 	greyscale_config_worn_digitigrade =  /datum/greyscale_config/jean_skirt/worn/digi
 	greyscale_colors = "#787878#723E0E#4D7EAC"
 	flags_1 = IS_PLAYER_COLORABLE_1
+	body_parts_covered = GROIN|LEGS
 
 /obj/item/clothing/under/dress/skirt/nova/lone_skirt
 	name = "skirt"
@@ -143,6 +145,7 @@
 	greyscale_config_worn = /datum/greyscale_config/short_dress/worn
 	greyscale_colors = "#ff3636#363030"
 	flags_1 = IS_PLAYER_COLORABLE_1
+	body_parts_covered = CHEST|GROIN|LEGS
 
 /obj/item/clothing/under/dress/nova/pinktutu
 	name = "pink tutu"
@@ -153,7 +156,7 @@
 	name = "flower dress"
 	desc = "Lovely dress. Colored like the autumn leaves."
 	icon_state = "flower_dress"
-	body_parts_covered = CHEST|GROIN|LEGS
+	body_parts_covered = GROIN|LEGS
 
 /obj/item/clothing/under/dress/nova/redformal
 	name = "formal red dress"

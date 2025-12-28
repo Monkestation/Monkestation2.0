@@ -80,7 +80,7 @@
 		bug_sent = TRUE
 		var/obj/item/traitor_bug/bug = new(user.drop_location(), src)
 		user.put_in_hands(bug)
-		bug.balloon_alert(user, "The Tide virus bug materializes in your hand.")
+		bug.balloon_alert(user, "the Tide virus bug materializes in your hand.")
 		AddComponent(/datum/component/traitor_objective_register, bug, \
 				succeed_signals = list(COMSIG_TRAITOR_BUG_ACTIVATED), \
 				fail_signals = list(COMSIG_QDELETING), \

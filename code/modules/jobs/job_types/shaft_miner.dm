@@ -6,7 +6,7 @@
 	faction = FACTION_STATION
 	total_positions = 3
 	spawn_positions = 3
-	supervisors = SUPERVISOR_QM
+	supervisors = SUPERVISOR_QM_HOP
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "SHAFT_MINER"
 
@@ -54,6 +54,7 @@
 
 	box = /obj/item/storage/box/survival/mining
 	chameleon_extras = /obj/item/gun/energy/recharge/kinetic_accelerator
+	accessory = /obj/item/clothing/accessory/badge/cargo
 
 /datum/outfit/job/miner/equipped
 	name = "Shaft Miner (Equipment)"

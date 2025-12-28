@@ -10,7 +10,7 @@
 	downloader_category = PROGRAM_CATEGORY_DEVICE
 	program_open_overlay = "command"
 	extended_desc = "This program allows communication over NTNRC network"
-	size = 8
+	size = 4
 	ui_header = "ntnrc_idle.gif"
 	program_flags = PROGRAM_ON_NTNET_STORE | PROGRAM_REQUIRES_NTNET
 	tgui_id = "NtosNetChat"
@@ -101,7 +101,7 @@
 				channel?.add_client(src)
 				return TRUE
 			var/mob/living/user = usr
-			if(can_run(user, TRUE, list(ACCESS_NETWORK)))
+			if(can_run(user, loud = TRUE, access_to_check = list(ACCESS_NETWORK)))
 				for(var/datum/ntnet_conversation/channels as anything in SSmodular_computers.chat_channels)
 					channels.remove_client(src)
 				netadmin_mode = TRUE
@@ -257,7 +257,7 @@
 
 	data["username"] = username
 	data["adminmode"] = netadmin_mode
-	data["can_admin"] = can_run(user, FALSE, list(ACCESS_NETWORK))
+	data["can_admin"] = can_run(user, access_to_check = list(ACCESS_NETWORK))
 	data["authed"] = authed
 	return data
 

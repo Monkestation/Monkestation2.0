@@ -1,8 +1,8 @@
-import { CheckboxInput, FeatureToggle } from '../base';
+import { FeatureChoiced, FeatureDropdownInput } from '../base';
 
-export const context_menu_requires_shift: FeatureToggle = {
+export const context_menu_requires_shift: FeatureChoiced = {
   name: 'Context Menu On Shift Click',
   category: 'GAMEPLAY',
   description: 'Require holding shift to open the context menu.',
-  component: CheckboxInput,
+  component: FeatureDropdownInput,
 };

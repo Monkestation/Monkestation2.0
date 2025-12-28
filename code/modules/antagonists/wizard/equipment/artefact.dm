@@ -255,7 +255,7 @@
 		return
 	if(applied_species)
 		target.set_species(applied_species, icon_update=0)
-	target.revive(ADMIN_HEAL_ALL)
+	target.revive(ADMIN_HEAL_ALL, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 	spooky_scaries |= target
 	to_chat(target, span_userdanger("You have been revived by <B>[user.real_name]</B>!"))
 	to_chat(target, span_userdanger("[user.p_theyre(TRUE)] your master now, assist [user.p_them()] even if it costs you your new life!"))

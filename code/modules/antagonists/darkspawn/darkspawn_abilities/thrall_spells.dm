@@ -93,7 +93,7 @@
 	if(IS_THRALL(target))
 		owner.balloon_alert(owner, "...tia")
 		to_chat(owner, span_velvet("You revitalize your thrall [target.real_name]."))
-		target.revive(TRUE, TRUE)
+		target.revive(TRUE, TRUE, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 		target.grab_ghost()
 		return TRUE
 
@@ -382,7 +382,7 @@
 		return FALSE
 	var/mob/living/carbon/target = cast_on
 	target.grab_ghost()
-	target.revive(TRUE)
+	target.revive(TRUE, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 	target.SetAllImmobility(0, TRUE)
 	target.resting = FALSE
 	target.apply_status_effect(/datum/status_effect/speed_boost, 15 SECONDS, -0.5, type)

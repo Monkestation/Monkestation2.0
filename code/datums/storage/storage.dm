@@ -529,7 +529,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
  * @param obj/item/thing the item we're inserting
  * @param override skip feedback, only do animation check
  */
-/datum/storage/proc/item_insertion_feedback(mob/user, obj/item/thing, override = FALSE)
+/datum/storage/proc/item_insertion_feedback(mob/user, obj/item/thing, override = FALSE, sound = SFX_RUSTLE, sound_vary = TRUE)
 	if(!parent)
 		return
 
@@ -543,7 +543,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		return
 
 	if(rustle_sound)
-		playsound(parent, SFX_RUSTLE, 50, TRUE, -5)
+		playsound(parent, sound, 50, sound_vary, -5)
 
 	if(!silent_for_user)
 		to_chat(user, span_notice("You put [thing] [insert_preposition]to [parent]."))
@@ -564,7 +564,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
  * @param atom/newLoc where we're placing the item
  * @param silent if TRUE, we won't play any exit sounds
  */
-/datum/storage/proc/attempt_remove(obj/item/thing, atom/newLoc, silent = FALSE, visual_updates = TRUE)
+/datum/storage/proc/attempt_remove(obj/item/thing, atom/newLoc, silent = FALSE, visual_updates = TRUE, sound = SFX_RUSTLE, sound_vary = TRUE)
 	if(!parent)
 		return
 
@@ -578,7 +578,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		thing.forceMove(newLoc)
 
 		if(rustle_sound && !silent)
-			playsound(parent, SFX_RUSTLE, 50, TRUE, -5)
+			playsound(parent, sound, 50, sound_vary, -5)
 	else
 		thing.moveToNullspace()
 
@@ -760,11 +760,15 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	SIGNAL_HANDLER
 
 	if(ismecha(user.loc) || user.incapacitated() || !user.canUseStorage())
-		return
+		return NONE
 
 	if(istype(over_object, /atom/movable/screen/inventory/hand))
 		if(real_location.loc != user || !user.can_perform_action(parent, FORBID_TELEKINESIS_REACH | ALLOW_RESTING))
-			return
+			return NONE
+		if(isitem(parent))
+			var/obj/item/item_parent = parent
+			if(!item_parent.can_mob_unequip(user))
+				return COMPONENT_CANCEL_MOUSEDROP_ONTO
 
 		var/atom/movable/screen/inventory/hand/hand = over_object
 		user.putItemFromInventoryInHandIfPossible(parent, hand.held_index)
@@ -773,27 +777,27 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	if(ismob(over_object))
 		if(over_object != user || !user.can_perform_action(parent, FORBID_TELEKINESIS_REACH | ALLOW_RESTING))
-			return
+			return NONE
 
 		parent.add_fingerprint(user)
 		INVOKE_ASYNC(src, PROC_REF(open_storage), user)
 		return COMPONENT_CANCEL_MOUSEDROP_ONTO
 
 	if(istype(over_object, /atom/movable/screen))
-		return
+		return NONE
 
 	if(!user.can_perform_action(over_object, FORBID_TELEKINESIS_REACH))
-		return
+		return NONE
 
 	parent.add_fingerprint(user)
 
 	var/atom/dump_loc = over_object.get_dumping_location()
 	if(isnull(dump_loc))
-		return
+		return NONE
 
 	/// Don't dump *onto* objects in the same storage as ourselves
 	if (over_object.loc == parent.loc && !isnull(parent.loc.atom_storage) && isnull(over_object.atom_storage))
-		return
+		return NONE
 
 	INVOKE_ASYNC(src, PROC_REF(dump_content_at), over_object, dump_loc, user)
 	return COMPONENT_CANCEL_MOUSEDROP_ONTO
@@ -804,7 +808,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
  * @param atom/dest_object where to dump to
  * @param mob/user the user who is dumping the contents
  */
-/datum/storage/proc/dump_content_at(atom/dest_object, dump_loc, mob/user)
+/datum/storage/proc/dump_content_at(atom/dest_object, dump_loc, mob/user, sound = SFX_RUSTLE, sound_vary = TRUE)
 	if(locked)
 		user.balloon_alert(user, "closed!")
 		return
@@ -819,7 +823,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		to_chat(user, span_notice("You dump the contents of [parent] into [dest_object]."))
 
 		if(rustle_sound)
-			playsound(parent, SFX_RUSTLE, 50, TRUE, -5)
+			playsound(parent, sound, 50, sound_vary, -5)
 
 		for(var/obj/item/to_dump in real_location)
 			dest_object.atom_storage.attempt_insert(to_dump, user)
@@ -833,6 +837,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		return
 
 	remove_all(dump_loc)
+	SEND_SIGNAL(src, COMSIG_STORAGE_DUMP_ONTO_POST_TRANSFER, dest_object, user)
 
 /// Signal handler for whenever something gets mouse-dropped onto us.
 /datum/storage/proc/on_mousedropped_onto(datum/source, obj/item/dropping, mob/user)
@@ -985,7 +990,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	return open_storage_on_signal(source, user) ? CLICK_ACTION_SUCCESS : NONE
 
 /// Opens the storage to the mob, showing them the contents to their UI.
-/datum/storage/proc/open_storage(mob/to_show)
+/datum/storage/proc/open_storage(mob/to_show, sound = SFX_RUSTLE, sound_vary = TRUE)
 	if(!parent)
 		return FALSE
 
@@ -1024,7 +1029,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		animate_parent()
 
 	if(rustle_sound)
-		playsound(parent, SFX_RUSTLE, 50, TRUE, -5)
+		playsound(parent, sound, 50, sound_vary, -5)
 
 	return TRUE
 
@@ -1185,6 +1190,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 ///Assign a new value to the locked variable. If it's higher than NOT_LOCKED, close the UIs and update the appearance of the parent.
 /datum/storage/proc/set_locked(new_locked)
 	if(locked == new_locked)
+		parent.update_appearance() // exists cases where icon still changes
 		return
 	locked = new_locked
 	if(new_locked > STORAGE_NOT_LOCKED)

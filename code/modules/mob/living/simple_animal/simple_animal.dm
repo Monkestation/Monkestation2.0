@@ -196,7 +196,7 @@
 
 /mob/living/simple_animal/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()
-	if(staminaloss > 0)
+	if(stamina.loss > 0)
 		stamina.adjust(stamina_recovery * seconds_per_tick, FALSE, TRUE)
 
 /mob/living/simple_animal/Destroy()
@@ -233,7 +233,7 @@
  * Reduces the stamina loss by stamina_recovery
  */
 /mob/living/simple_animal/on_stamina_update()
-	set_varspeed(initial(speed) + (staminaloss * 0.06))
+	set_varspeed(initial(speed) + (stamina?.loss * 0.06))
 
 /mob/living/simple_animal/proc/handle_automated_action()
 	set waitfor = FALSE
@@ -458,7 +458,7 @@
 			return FALSE
 	return TRUE
 
-/mob/living/simple_animal/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
+/mob/living/simple_animal/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE, revival_policy = POLICY_REVIVAL)
 	. = ..()
 	if(!.)
 		return

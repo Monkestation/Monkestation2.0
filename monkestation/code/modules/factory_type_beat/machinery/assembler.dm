@@ -12,6 +12,7 @@
 	var/bulk_craft_storage = 1
 	var/datum/crafting_recipe/chosen_recipe
 	var/crafting = FALSE
+	var/datum/crafting_recipe/current_craft_recipe // The recipe currently being crafted
 
 	var/static/list/legal_crafting_recipes = list()
 	var/list/crafting_inventory = list()
@@ -224,11 +225,16 @@
 	if(!chosen_recipe || crafting)
 		return
 	crafting = TRUE
+	current_craft_recipe = chosen_recipe // Store the recipe we're actually crafting
 
+	if(!machine_do_after_visable(src, current_craft_recipe.time * speed_multiplier * 3))
+		crafting = FALSE
+		current_craft_recipe = null
 	if(length(get_remaining_requirements(amt)) || !machine_do_after_visable(src, chosen_recipe.time * speed_multiplier * 3))
 		crafting = FALSE
 		return
 
+	var/list/requirements = current_craft_recipe.reqs
 	var/list/requirements = chosen_recipe.reqs.Copy()
 	for(var/listed in requirements)
 		requirements[listed] *= amt
@@ -240,6 +246,19 @@
 
 			if(isstack(item) && (req in requirements))
 				var/obj/item/stack/stack = item
+				if(stack.amount == requirements[stack.merge_type])
+					var/failed = TRUE
+					crafting_inventory -= item
+					for(var/obj/item/part as anything in current_craft_recipe.parts)
+						if(!istype(item, part))
+							continue
+						parts += item
+						failed = FALSE
+					if(failed)
+						qdel(item)
+				else if(stack.amount > requirements[item.type])
+					for(var/obj/item/part as anything in current_craft_recipe.parts)
+						if(!istype(item, part))
 				if(stack.merge_type == req)
 					if(stack.is_zero_amount(TRUE)) // How this happened who knows delete it..
 						continue
@@ -285,6 +304,8 @@
 	use_energy(active_power_usage * amt)
 	RefreshParts()
 	crafting = FALSE
+	current_craft_recipe = null
+	check_recipe_state()
 
 #undef ASSEMBLER_MAX_CRAFTS
 

@@ -9,28 +9,30 @@
 	req_access = list(ACCESS_SECURITY)
 	products = list(
 		/obj/item/restraints/handcuffs = 8,
-		/obj/item/restraints/handcuffs/cable/zipties = 16, //monkestation edit 10 to 16
-		/obj/item/grenade/flashbang = 7, //monkestation edit: 4 to 7
-		/obj/item/grenade/smokebomb/security = 7, //monkestation edit
-		/obj/item/assembly/flash/handheld = 6, //monkestation edit: 5 to 6
+		/obj/item/restraints/handcuffs/cable/zipties = 16,
+		/obj/item/grenade/flashbang = 7,
+		/obj/item/grenade/smokebomb/security = 7,
+		/obj/item/assembly/flash/handheld = 6,
 		/obj/item/food/donut/plain = 12,
 		/obj/item/storage/box/evidence = 6,
 		/obj/item/flashlight/seclite = 4,
 		/obj/item/restraints/legcuffs/bola/energy = 7,
-		/obj/item/ammo_box/magazine/m35/rubber = 14, //monkestation edit: Paco sec
-		/obj/item/clothing/mask/gas/sechailer = 6, ////monkestation edit
-		/obj/item/clothing/mask/whistle = 3, //monkestation edit
-		/obj/item/bodycam_upgrade = 10, //monkestation edit: Security Liability Act
+		/obj/item/ammo_box/magazine/m35/rubber = 14,
+		/obj/item/clothing/mask/gas/sechailer = 6,
+		/obj/item/clothing/mask/whistle = 3,
+		/obj/item/citationinator = 10,
+		/obj/item/bodycam_upgrade = 10,
 	)
 	contraband = list(
 		/obj/item/clothing/glasses/sunglasses = 2,
-		/obj/item/storage/fancy/donut_box = 4, //monkestation edit 2 to 4
-		/obj/item/melee/flyswatter = 1, //monkestation edit: everytime they play a round, there are two ahelp tickets about them
+		/obj/item/storage/fancy/donut_box = 4,
+		/obj/item/melee/flyswatter = 1,
+		/obj/item/clothing/head/helmet/toggleable/justice = 2,
+		/obj/item/clothing/head/helmet/toggleable/justice/escape = 2,
 	)
 	premium = list(
 		/obj/item/storage/belt/security/webbing = 5,
 		/obj/item/coin/antagtoken = 1,
-		//monkestation removal
 		// /obj/item/clothing/head/helmet/blueshirt = 1,
 		// /obj/item/clothing/suit/armor/vest/blueshirt = 1,
 		//moved to secdrobe
@@ -39,12 +41,11 @@
 		/obj/item/grenade/stingbang = 1,
 		/obj/item/watertank/pepperspray = 2,
 		/obj/item/storage/belt/holster/energy = 4,
-		/obj/item/citationinator = 3, // monkestation edit: security assistants
-		/obj/item/holosign_creator/security = 2, //monkestation edit
-		/obj/item/modular_computer/laptop/preset/security = 3, //monkestation edit
-		/obj/item/storage/box/pinpointer_pairs = 2, //monkestation edit
-		/obj/item/dragnet_beacon = 3, //monkestation edit
-		/obj/item/implanter/mindshield = 2, //monkestation edit
+		/obj/item/holosign_creator/security = 2,
+		/obj/item/modular_computer/laptop/preset/security = 3,
+		/obj/item/storage/box/pinpointer_pairs = 2,
+		/obj/item/dragnet_beacon = 3,
+		/obj/item/implanter/mindshield = 2,
 	)
 	refill_canister = /obj/item/vending_refill/security
 	default_price = PAYCHECK_CREW
@@ -83,10 +84,6 @@
 	name = "security assistant voucher"
 	icon_state = "security_voucher_assistant"
 
-/obj/item/security_voucher/brig_physician
-	name = "security brig physician voucher"
-	icon_state = "security_voucher_brig_physician"
-
 /obj/machinery/vending/security/attackby(obj/item/weapon, mob/user, params)
 	if(istype(weapon, /obj/item/security_voucher))
 		redeem_voucher(weapon, user)
@@ -104,8 +101,6 @@
 		voucher_set = /datum/voucher_set/security/utility
 	if(istype(voucher, /obj/item/security_voucher/assistant))
 		voucher_set = /datum/voucher_set/security/assistant
-	if(istype(voucher, /obj/item/security_voucher/brig_physician))
-		voucher_set = /datum/voucher_set/security/brig_physician
 	set_types = list()
 	for(var/datum/voucher_set/static_set as anything in subtypesof(voucher_set))
 		set_types[initial(static_set.name)] = new static_set

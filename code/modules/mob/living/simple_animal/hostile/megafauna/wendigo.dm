@@ -276,9 +276,7 @@ Warning the icebox version is being overridden in monkestation/code/modules/mob/
 	if(!true_spawn)
 		return ..()
 
-	if(make_portal) //MONKESTATION EDIT
-		create_portal()
-
+	create_portal()
 	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/wendigo/proc/create_portal()
@@ -327,6 +325,9 @@ Warning the icebox version is being overridden in monkestation/code/modules/mob/
 	icon_state = "wendigo_skull"
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
+
+/mob/living/simple_animal/hostile/megafauna/wendigo/noportal/create_portal()
+	return
 
 #undef WENDIGO_ENRAGED
 #undef WENDIGO_CIRCLE_SHOTCOUNT

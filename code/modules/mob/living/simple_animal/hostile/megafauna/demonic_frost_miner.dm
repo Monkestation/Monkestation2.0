@@ -93,6 +93,9 @@ Difficulty: Extremely Hard
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/OpenFire()
 	if(client)
 		return
+	var/mob/living/living_target = target
+	if(istype(living_target) && living_target.stat == DEAD) //don't go out of our way to fire our disintegrating attacks at corpses
+		return
 
 	var/easy_attack = prob(80 - enraged * 40)
 	chosen_attack = rand(1, 3)
@@ -257,7 +260,7 @@ Difficulty: Extremely Hard
 	clone.updateappearance(mutcolor_update=1)
 	var/turf/T = find_safe_turf()
 	user.forceMove(T)
-	user.revive(ADMIN_HEAL_ALL)
+	user.revive(ADMIN_HEAL_ALL, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 	INVOKE_ASYNC(user, TYPE_PROC_REF(/mob/living/carbon, set_species), /datum/species/shadow)
 	to_chat(user, span_notice("You blink and find yourself in [get_area_name(T)]... feeling a bit darker."))
 	clone.dust()

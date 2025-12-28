@@ -17,7 +17,7 @@
 /obj/projectile/bullet/a762/enchanted
 	name = "enchanted 7.62 bullet"
 	damage = 20
-	stamina = 80
+	stamina = 40
 
 
 // 5.56mm (M-90gl Carbine)
@@ -66,7 +66,7 @@
 /obj/projectile/bullet/c40sol/fragmentation
 	name = ".40 Sol Long fragmentation bullet"
 	damage = 10
-	stamina = 30
+	stamina = 15
 	weak_against_armour = TRUE
 	sharpness = SHARP_EDGED
 	wound_bonus = -5
@@ -147,7 +147,7 @@
 /obj/projectile/bullet/strilka310/rubber
 	name = ".310 rubber bullet"
 	damage = 10
-	stamina = 55
+	stamina = 27.5
 	ricochets_max = 5
 	ricochet_incidence_leeway = 0
 	ricochet_chance = 130

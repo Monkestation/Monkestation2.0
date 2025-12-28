@@ -82,6 +82,11 @@
 		if(blocked)
 			visible_message(span_danger("[src] crashes into [victim][extra_speed ? " really hard" : ""], but [victim] blocked the worst of it!"),\
 				span_userdanger("You violently crash into [victim][extra_speed ? " extra hard" : ""], but [victim] managed to block the worst of it!"))
+
+			if(ishuman(victim) && !victim.has_movespeed_modifier(/datum/movespeed_modifier/shove))
+				victim.add_movespeed_modifier(/datum/movespeed_modifier/shove)
+				addtimer(CALLBACK(victim, TYPE_PROC_REF(/mob/living/carbon, clear_shove_slowdown)), SHOVE_SLOWDOWN_LENGTH)
+
 			log_combat(src, victim, "crashed into and was blocked by")
 			return
 		else
@@ -155,7 +160,7 @@
 		var/obj/item/restraints/cuffs = src.get_item_by_slot(ITEM_SLOT_HANDCUFFED)
 		buckle_cd = cuffs.breakouttime
 
-	visible_message(span_warning("[src] attempts to unbuckle [p_them()]self!"), 
+	visible_message(span_warning("[src] attempts to unbuckle [p_them()]self!"),
 				span_notice("You attempt to unbuckle yourself... \
 				(This will take around [DisplayTimeText(buckle_cd)] and you must stay still.)"))
 
@@ -163,7 +168,7 @@
 		if(buckled)
 			to_chat(src, span_warning("You fail to unbuckle yourself!"))
 		return
-	
+
 	if(QDELETED(src) || isnull(buckled))
 		return
 
@@ -206,10 +211,13 @@
 		return
 	cuffs.item_flags |= BEING_REMOVED
 	breakouttime = cuffs.breakouttime
+	var/timed_action_flags = IGNORE_HELD_ITEM
+	if(cuffs.breakout_while_moving)
+		timed_action_flags |= IGNORE_USER_LOC_CHANGE
 	if(!cuff_break)
 		visible_message(span_warning("[src] attempts to remove [cuffs]!"))
 		to_chat(src, span_notice("You attempt to remove [cuffs]... (This will take around [DisplayTimeText(breakouttime)] and you need to stand still.)"))
-		if(do_after(src, breakouttime, target = src, timed_action_flags = IGNORE_HELD_ITEM, hidden = TRUE))
+		if(do_after(src, breakouttime, target = src, timed_action_flags = timed_action_flags, hidden = TRUE))
 			. = clear_cuffs(cuffs, cuff_break)
 		else
 			to_chat(src, span_warning("You fail to remove [cuffs]!"))
@@ -218,7 +226,7 @@
 		breakouttime = 5 SECONDS
 		visible_message(span_warning("[src] is trying to break [cuffs]!"))
 		to_chat(src, span_notice("You attempt to break [cuffs]... (This will take around 5 seconds and you need to stand still.)"))
-		if(do_after(src, breakouttime, target = src, timed_action_flags = IGNORE_HELD_ITEM))
+		if(do_after(src, breakouttime, target = src, timed_action_flags = timed_action_flags))
 			. = clear_cuffs(cuffs, cuff_break)
 		else
 			to_chat(src, span_warning("You fail to break [cuffs]!"))
@@ -485,33 +493,34 @@
 		add_movespeed_modifier(/datum/movespeed_modifier/carbon_softcrit)
 	else
 		remove_movespeed_modifier(/datum/movespeed_modifier/carbon_softcrit)
+	if(HAS_TRAIT(src, TRAIT_REVIVES_BY_HEALING))
+		cure_husk() // If it has TRAIT_REVIVES_BY_HEALING, it probably can't be cloned. No husk cure, so we cure that here.
+		if(stat == DEAD && !HAS_TRAIT(src, TRAIT_DEFIB_BLACKLISTED) && health > 50)
+			revive(FALSE)
 	SEND_SIGNAL(src, COMSIG_LIVING_HEALTH_UPDATE)
 
 /mob/living/carbon/on_stamina_update()
 	if(!stamina)
 		return
-	var/stam = stamina.current
-	var/max = stamina.maximum
-	var/is_exhausted = HAS_TRAIT_FROM(src, TRAIT_EXHAUSTED, STAMINA)
 	var/is_stam_stunned = HAS_TRAIT_FROM(src, TRAIT_INCAPACITATED, STAMINA)
-	if((stam < max * STAMINA_EXHAUSTION_THRESHOLD_MODIFIER) && !is_exhausted)
-		ADD_TRAIT(src, TRAIT_EXHAUSTED, STAMINA)
-		ADD_TRAIT(src, TRAIT_NO_SPRINT, STAMINA)
-		add_movespeed_modifier(/datum/movespeed_modifier/exhaustion)
 
-	if((stam < max * STAMINA_STUN_THRESHOLD_MODIFIER) && !is_stam_stunned && stat <= SOFT_CRIT)
+	//Prevent us from sprinting when our stamina damage is above 40%
+	var/has_no_sprint = HAS_TRAIT_FROM(src, TRAIT_NO_SPRINT, STAMINA)
+
+	if(stamina.loss_as_percent >= 40 && !has_no_sprint)
+		ADD_TRAIT(src, TRAIT_NO_SPRINT, STAMINA)
+		to_chat(src, span_warning("You start to feel exhausted from lack of stamina..."))
+	else if (stamina.loss_as_percent <= 30 && has_no_sprint)
+		REMOVE_TRAIT(src, TRAIT_NO_SPRINT, STAMINA)
+		to_chat(src, span_notice("You feel like you can sprint again."))
+
+	if((stamina.current <= 0) && !is_stam_stunned && stat <= SOFT_CRIT)
 		stamina_stun()
 
-	if(is_exhausted && (stam > max * STAMINA_EXHAUSTION_THRESHOLD_MODIFIER_EXIT))
-		REMOVE_TRAIT(src, TRAIT_EXHAUSTED, STAMINA)
-		REMOVE_TRAIT(src, TRAIT_NO_SPRINT, STAMINA)
-		remove_movespeed_modifier(/datum/movespeed_modifier/exhaustion)
+	if(is_stam_stunned && stamina.current >= stamina.maximum)
+		exit_stamina_stun()
 
 	update_stamina_hud()
-
-/datum/movespeed_modifier/exhaustion
-	id = "exhaustion"
-	multiplicative_slowdown = STAMINA_EXHAUSTION_MOVESPEED_SLOWDOWN
 
 /mob/living/carbon/update_sight()
 	if(!client)
@@ -745,9 +754,7 @@
 	//MONKESTATION EDIT START
 	var/current_stamina = stamina.current
 
-	if(stamina.current <= (0.20 * STAMINA_MAX)) //stamina stun threshold
-		hud_used.stamina.icon_state = "stamina_dead"
-	else if(current_stamina <= (0.30 * STAMINA_MAX)) //exhaustion threshold
+	if(current_stamina <= (0.20 * STAMINA_MAX))
 		hud_used.stamina.icon_state = "stamina_crit"
 	else if(current_stamina <= (0.40 * STAMINA_MAX))
 		hud_used.stamina.icon_state = "stamina_5"
@@ -790,6 +797,8 @@
 		if(health <= HEALTH_THRESHOLD_DEAD && !HAS_TRAIT(src, TRAIT_NODEATH))
 			death()
 			return
+		if(HAS_TRAIT_FROM(src, TRAIT_DISSECTED, AUTOPSY_TRAIT))
+			REMOVE_TRAIT(src, TRAIT_DISSECTED, AUTOPSY_TRAIT)
 		if(health <= hardcrit_threshold && !HAS_TRAIT(src, TRAIT_NOHARDCRIT))
 			set_stat(HARD_CRIT)
 		else if(HAS_TRAIT(src, TRAIT_KNOCKEDOUT))
@@ -818,7 +827,7 @@
 	update_worn_handcuffs()
 	update_hud_handcuffed()
 
-/mob/living/carbon/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
+/mob/living/carbon/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE, revival_policy = POLICY_REVIVAL)
 	if(excess_healing)
 		if(dna && !HAS_TRAIT(src, TRAIT_NOBLOOD))
 			blood_volume += (excess_healing * 2) //1 excess = 10 blood
@@ -852,12 +861,12 @@
 	if(heal_flags & HEAL_NEGATIVE_DISEASES)
 		for(var/datum/disease/disease as anything in diseases)
 			if(disease.severity != DISEASE_SEVERITY_POSITIVE)
-				disease.cure(FALSE)
+				disease.cure(add_resistance = FALSE, target = src, safe = TRUE)
 
 	if(heal_flags & HEAL_POSTIVE_DISEASES)
 		for(var/datum/disease/disease as anything in diseases)
 			if(disease.severity == DISEASE_SEVERITY_POSITIVE)
-				disease.cure(FALSE)
+				disease.cure(add_resistance = FALSE, target = src, safe = TRUE)
 
 	if(heal_flags & HEAL_WOUNDS)
 		for(var/datum/wound/wound as anything in all_wounds)
@@ -1239,7 +1248,7 @@
 			QDEL_NULL(phantom_wound)
 
 /mob/living/carbon/is_face_visible()
-	return !(wear_mask?.flags_inv & HIDEFACE) && !(head?.flags_inv & HIDEFACE)
+	return !((wear_mask?.flags_inv & HIDEFACE) || (head?.flags_inv & HIDEFACE) || (wear_neck?.flags_inv & HIDEFACE))
 
 /// Returns whether or not the carbon should be able to be shocked
 /mob/living/carbon/proc/should_electrocute(power_source)

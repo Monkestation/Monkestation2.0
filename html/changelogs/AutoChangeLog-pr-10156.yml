@@ -1,0 +1,4 @@
+author: "Uristthedorf"
+delete-after: True
+changes:
+  - bugfix: "Wall mounted medstation has healing items again."

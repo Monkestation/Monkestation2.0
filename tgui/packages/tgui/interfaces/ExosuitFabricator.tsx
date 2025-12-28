@@ -8,17 +8,19 @@ import { MaterialCostSequence } from './Fabrication/MaterialCostSequence';
 import { Tooltip } from '../components';
 import { BooleanLike, classes } from 'common/react';
 
+type ExosuitDesign = Design & {
+  constructionTime: number;
+  craftable: BooleanLike;
+};
+
 type ExosuitFabricatorData = FabricatorData & {
   processing: BooleanLike;
   authorization: BooleanLike;
-  alert_level: Number;
+  alert_level: number;
   combat_parts_allowed: BooleanLike;
   emagged: BooleanLike;
   silicon_user: BooleanLike;
-};
-
-type ExosuitDesign = Design & {
-  craftable: BooleanLike;
+  designs: Record<string, ExosuitDesign>;
 };
 
 export const ExosuitFabricator = (props) => {
@@ -378,7 +380,7 @@ const QueueList = (props: QueueListProps) => {
   );
 };
 
-const Authorization = (props, context) => {
+const Authorization = (props) => {
   const { data } = useBackend<ExosuitFabricatorData>();
   const auth_override = data.authorization;
   const alert_level = data.alert_level;

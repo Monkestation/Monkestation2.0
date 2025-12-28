@@ -1,7 +1,7 @@
 /obj/item/clothing/under/dress
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	can_adjust = FALSE
-	body_parts_covered = CHEST|GROIN
+	body_parts_covered = CHEST|ARMS|GROIN
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 	icon = 'icons/obj/clothing/under/dress.dmi'
 	worn_icon = 'icons/mob/clothing/under/dress.dmi'
@@ -40,6 +40,7 @@
 	desc = "A black skirt, very fancy!"
 	icon_state = "blackskirt"
 	inhand_icon_state = "blackskirt"
+	body_parts_covered = CHEST|GROIN|ARMS
 
 /obj/item/clothing/under/dress/skirt/plaid
 	name = "plaid skirt"
@@ -52,6 +53,7 @@
 	greyscale_config = /datum/greyscale_config/plaidskirt
 	greyscale_config_worn = /datum/greyscale_config/plaidskirt_worn
 	flags_1 = IS_PLAYER_COLORABLE_1
+	body_parts_covered = CHEST|GROIN
 
 /obj/item/clothing/under/dress/skirt/turtleskirt
 	name = "turtleneck skirt"
@@ -72,6 +74,7 @@
 	greyscale_config = /datum/greyscale_config/tango
 	greyscale_config_worn = /datum/greyscale_config/tango_worn
 	flags_1 = IS_PLAYER_COLORABLE_1
+	body_parts_covered = CHEST|GROIN|LEGS
 
 /obj/item/clothing/under/dress/sundress
 	name = "sundress"
@@ -82,6 +85,7 @@
 	greyscale_config = /datum/greyscale_config/sundress
 	greyscale_config_worn = /datum/greyscale_config/sundress_worn
 	flags_1 = IS_PLAYER_COLORABLE_1
+	body_parts_covered = CHEST|GROIN
 
 //MONKESTATION ADDITIONS
 /obj/item/clothing/under/dress/ballgown
@@ -105,6 +109,7 @@
 	greyscale_config_worn = /datum/greyscale_config/wlpinafore_worn
 	greyscale_colors = "#5190c8#FFFFFF"
 	flags_1 = IS_PLAYER_COLORABLE_1
+	body_parts_covered = CHEST|GROIN|LEGS
 
 /obj/item/clothing/under/dress/ribbondress
 	name = "ribboned gown"
@@ -116,6 +121,7 @@
 	greyscale_colors = "#845FAA#D5A6F4"
 	flags_1 = IS_PLAYER_COLORABLE_1
 	flags_inv = HIDESHOES
+	body_parts_covered = CHEST|GROIN|LEGS
 
 /obj/item/clothing/under/dress/sparkle
 	name = "sparkly ribbon dress"
@@ -123,27 +129,26 @@
 	icon_state = "sparkledress"
 	inhand_icon_state = "sparkledress"
 	can_adjust = TRUE
+	alt_covers_chest = TRUE
 
 /obj/item/clothing/under/dress/white
 	name = "gaudy white dress"
 	desc = "A simple easy to wear dress for when you're in a rush but still want to look good."
 	icon_state = "whitedress"
 	inhand_icon_state = "whitedress"
-	can_adjust = FALSE
+	body_parts_covered = CHEST|GROIN|LEGS
 
 /obj/item/clothing/under/dress/angel
 	name = "lace angel dress"
 	desc = "I can be your angle or your debil."
 	icon_state = "angeldress"
 	inhand_icon_state = "angeldress"
-	can_adjust = FALSE
 
 /obj/item/clothing/under/dress/angel/alt
 	name = "lace devil dress"
 	desc = "I can be your angle or your debil."
 	icon_state = "devildress"
 	inhand_icon_state = "devildress"
-	can_adjust = FALSE
 
 /obj/item/clothing/under/dress/flowery
 	name = "perfumed light dress"
@@ -152,6 +157,7 @@
 	inhand_icon_state = "flowerydress"
 	can_adjust = FALSE
 	flags_inv = HIDESHOES
+	body_parts_covered = CHEST|GROIN|LEGS
 
 /obj/item/clothing/under/dress/starry
 	name = "starry dress"
@@ -159,6 +165,7 @@
 	icon_state = "stardress"
 	inhand_icon_state = "stardress"
 	can_adjust = FALSE
+	body_parts_covered = CHEST|GROIN|LEGS
 
 /obj/item/clothing/under/dress/gown //Miss me with subtypes I dont wanna fuck with it
 	name = "regal ball gown"
@@ -167,12 +174,14 @@
 	inhand_icon_state = null
 	can_adjust = TRUE
 	flags_inv = HIDESHOES
+	body_parts_covered = CHEST|ARMS|GROIN|LEGS
 
 /obj/item/clothing/under/dress/moonlit
 	name = "moonlit gown"
 	desc = "A luxurious gown for VERY special occasions, this gown glitters with silver sewn into the very fabric itself."
 	icon_state = "stargown"
 	inhand_icon_state = null
+	body_parts_covered = CHEST|GROIN|LEGS
 
 /obj/item/clothing/under/dress/hula
 	name = "hula skirt"
@@ -181,3 +190,4 @@
 	can_adjust = FALSE
 	icon_state = "hulaskirt"
 	inhand_icon_state = "hulaskirt"
+	body_parts_covered = GROIN|LEGS

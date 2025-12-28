@@ -257,6 +257,14 @@
 
 	visible_message(span_danger("[src] curls up into a ball!"))
 
+/obj/item/clothing/mask/facehugger/can_mob_unequip(mob/user)
+	if(!real || sterile || stat == DEAD || user.get_organ_by_type(/obj/item/organ/internal/body_egg/alien_embryo))
+		return ..()
+	if(user.get_item_by_slot(slot_flags) == src)
+		to_chat(user, span_userdanger("[src] is latched on too tight! Get help or wait for it to let go!"))
+		return FALSE
+	return ..()
+
 /proc/CanHug(mob/living/M)
 	if(!istype(M))
 		return FALSE

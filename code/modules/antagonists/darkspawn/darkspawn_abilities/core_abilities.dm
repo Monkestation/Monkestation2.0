@@ -20,7 +20,7 @@
 /datum/action/cooldown/spell/touch/devour_will
 	name = "Devour Will"
 	desc = "Creates a dark bead that can be used on a human to begin draining the lucidity and willpower from a living target, knocking them unconscious for a time.\
-			<br>Being interrupted will knock you down for a time."
+			<br>Being interrupted will knock you down for a time. Your target will be unable to move however may still act while being drained."
 	panel = "Darkspawn"
 	button_icon = 'icons/mob/actions/actions_darkspawn.dmi'
 	sound = null
@@ -185,8 +185,12 @@
 	if(target.machine_stat)
 		to_chat(owner, span_warning("[target] has lost power."))
 		return
+	if(SSshuttle.emergency_no_recall || SSshuttle.admin_emergency_no_recall)
+		to_chat(owner, span_warning("The ruse was a failure, the shuttle will arrive anyways."))
+		return
 	SSshuttle.emergency.cancel()
 	to_chat(owner, span_velvet("The ruse was a success. The shuttle is on its way back."))
+	owner.log_message("recalled the shuttle using [src]", LOG_GAME)
 	return TRUE
 
 /datum/action/cooldown/spell/touch/silver_tongue/proc/play_recall_sounds(obj/machinery/C, iterations) //neato sound effects

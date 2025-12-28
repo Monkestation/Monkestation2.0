@@ -8,9 +8,10 @@
 		return //won't work if dead
 	src.show_laws()
 
-/mob/living/silicon/ai/show_laws()
+/mob/living/silicon/ai/show_laws(bother_cyborgs = TRUE)
 	. = ..()
-	try_sync_laws() // Yes we lawsync borgs EVERY TIME WE CHECK LAWS
+	if(bother_cyborgs)
+		try_sync_laws() // Yes we lawsync borgs EVERY TIME WE CHECK LAWS //UNLESS we are logging in.
 
 /mob/living/silicon/ai/try_sync_laws()
 	for(var/mob/living/silicon/robot/borgo in connected_robots)

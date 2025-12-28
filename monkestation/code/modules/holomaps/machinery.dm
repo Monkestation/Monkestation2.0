@@ -31,14 +31,14 @@
 	var/datum/station_holomap/holomap_datum
 	var/bonus_parts = /obj/item/stock_parts/micro_laser
 
-/obj/machinery/station_map/Initialize()
+/obj/machinery/station_map/Initialize(mapload)
 	. = ..()
 	if(!current_z_level)
 		current_z_level = loc.z
 	SSholomaps.station_holomaps += src
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/station_map/LateInitialize()
+/obj/machinery/station_map/LateInitialize(mapload_arg)
 	. = ..()
 	if(SSholomaps.initialized)
 		setup_holomap()
@@ -87,7 +87,8 @@
 	holomap_datum.base_map.loc = user_hud.holomap  // Put the image on the holomap hud
 	holomap_datum.base_map.alpha = 0 // Set to transparent so we can fade in
 
-	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/check_position)
+	RegisterSignal(user, COMSIG_MOB_KEYDOWN, PROC_REF(keydown))
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(check_position))
 
 	playsound(src, 'monkestation/code/modules/holomaps/sounds/holomap_open.ogg', 125)
 	animate(holomap_datum.base_map, alpha = 255, time = 5, easing = LINEAR_EASING)
@@ -120,6 +121,12 @@
 	if((machine_stat & (NOPOWER | BROKEN)) || !anchored)
 		close_map()
 
+/obj/machinery/station_map/proc/keydown(mob/source, key)
+	SIGNAL_HANDLER
+
+	if(key == ESCAPE_KEY)
+		INVOKE_ASYNC(src, PROC_REF(close_map))
+
 /obj/machinery/station_map/proc/check_position()
 	SIGNAL_HANDLER
 
@@ -130,7 +137,7 @@
 	if(!watching_mob)
 		return
 
-	UnregisterSignal(watching_mob, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(watching_mob, list(COMSIG_MOB_KEYDOWN, COMSIG_MOVABLE_MOVED))
 	playsound(src, 'monkestation/code/modules/holomaps/sounds/holomap_close.ogg', 125)
 	icon_state = initial(icon_state)
 	if(watching_mob?.client)
@@ -308,7 +315,7 @@
 
 	/*
 	var/list/air_alarms = list()
-	for(var/obj/machinery/airalarm/air_alarm in GLOB.machines)
+	for(var/obj/machinery/airalarm/air_alarm as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/airalarm))
 		var/area/alarms = get_area(air_alarm)
 		if(air_alarm?.z == current_z_level && alarms?.atmosalm) //Altered it to fire_alam since we don't have an area variable on air_alarms
 			var/image/alarm_icon = image('monkestation/code/modules/holomaps/icons/8x8.dmi', "atmos_marker")
@@ -412,7 +419,7 @@
 	name = "recon holomap"
 	desc = "A virtual map of the target station."
 
-/obj/machinery/station_map/syndicate/Initialize()
+/obj/machinery/station_map/syndicate/Initialize(mapload)
 	. = ..()
 	var/tracked_z_level = SSmapping.levels_by_trait(ZTRAIT_STATION)[1]
 	current_z_level = tracked_z_level

@@ -77,7 +77,7 @@
  * Change regulator level -- ie. what liquid depth we are OK with, like a thermostat.
  */
 /obj/machinery/plumbing/floor_pump/proc/set_regulator(mob/living/user)
-	if(!user.can_perform_action())
+	if(!user.can_perform_action(src))
 		return
 	var/new_height = tgui_input_number(user,
 		"At what water level should the pump stop pumping from 0 to [LIQUID_HEIGHT_CONSIDER_FULL_TILE]? 0 disables.",
@@ -228,12 +228,9 @@
 	targeted_group.total_reagent_volume = targeted_group.reagents.total_volume
 	targeted_group.reagents_per_turf = targeted_group.total_reagent_volume / length(targeted_group.members)
 
-	if(!removed_turfs.len)
-		return
-	while(removed_turfs.len)
-		var/turf/picked_turf = pick(removed_turfs)
+	while(length(removed_turfs))
+		var/turf/picked_turf = pick_n_take(removed_turfs)
 		var/list/output = targeted_group.try_split(picked_turf, TRUE)
-		removed_turfs -= picked_turf
 		for(var/turf/outputted_turf in output)
 			if(outputted_turf in removed_turfs)
 				removed_turfs -= outputted_turf

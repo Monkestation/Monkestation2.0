@@ -15,9 +15,8 @@
 	icon_state = "mining_node_active"
 	icon_living = "mining_node_active"
 	icon_dead = "mining_node_active"
-
-	maxHealth = 500
-	health = 500
+	maxHealth = 300 // We adjust the max health based on the vent size in the arrive() proc.
+	health = 300
 	density = TRUE
 	pass_flags = PASSTABLE|PASSGRILLE|PASSMOB
 	mob_size = MOB_SIZE_LARGE
@@ -27,6 +26,8 @@
 	basic_mob_flags = DEL_ON_DEATH
 	move_force = MOVE_FORCE_VERY_STRONG
 	move_resist = MOVE_FORCE_VERY_STRONG
+	weather_immunities = list(TRAIT_ASHSTORM_IMMUNE)
+	bodytemp_cold_damage_limit = -1
 
 	speak_emote = list("chirps")
 	response_help_continuous = "pets"
@@ -110,6 +111,8 @@
 /mob/living/basic/node_drone/proc/arrive(obj/structure/ore_vent/parent_vent)
 	src.ai_controller?.set_ai_status(AI_STATUS_OFF) // Turns off Ai if it has one.
 	attached_vent = parent_vent
+	maxHealth = 300 + ((attached_vent.boulder_size/BOULDER_SIZE_SMALL) * 100)
+	health = maxHealth
 	flying_state = FLY_IN_STATE
 	update_appearance(UPDATE_ICON_STATE)
 	pixel_z = 400
@@ -147,8 +150,7 @@
 		attached_vent = null
 		update_appearance(UPDATE_ICON_STATE | UPDATE_OVERLAYS)
 	src.ai_controller?.set_ai_status(AI_STATUS_OFF) // Turns off Ai if it has one.
-	if(src.buckled)
-		src.buckled.unbuckle_mob(src) // Unbuckle us from whatever it is. Prevents runtimes.
+	buckled?.unbuckle_mob(src) // Unbuckle us from whatever it is. Prevents runtimes.
 	pull_force = MOVE_FORCE_VERY_STRONG // You can no longer pull it. Time to go.
 	if(!escaping)
 		escaping = TRUE

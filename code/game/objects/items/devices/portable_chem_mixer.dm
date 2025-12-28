@@ -34,6 +34,7 @@
 	))
 
 	register_context()
+	AddElement(/datum/element/drag_pickup)
 
 /obj/item/storage/portable_chem_mixer/Destroy()
 	dispensable_reagents.Cut()
@@ -175,13 +176,6 @@
 	return
 MONKESTATION REMOVAL END */
 
-/obj/item/storage/portable_chem_mixer/mouse_drop_dragged(atom/over_object)
-	if(ismob(loc))
-		var/mob/M = loc
-		if(istype(over_object, /atom/movable/screen/inventory/hand))
-			var/atom/movable/screen/inventory/hand/H = over_object
-			M.putItemFromInventoryInHandIfPossible(src, H.held_index)
-
 /obj/item/storage/portable_chem_mixer/ui_status(mob/user, datum/ui_state/state)
 	if(loc != user)
 		return UI_CLOSE
@@ -190,6 +184,7 @@ MONKESTATION REMOVAL END */
 	return ..()
 
 /obj/item/storage/portable_chem_mixer/ui_interact(mob/user, datum/tgui/ui)
+	update_contents()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "PortableChemMixer", name)

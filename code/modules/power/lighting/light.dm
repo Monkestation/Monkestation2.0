@@ -125,7 +125,7 @@
 	AddElement(/datum/element/atmos_sensitive, mapload)
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/light/LateInitialize()
+/obj/machinery/light/LateInitialize(mapload_arg)
 	. = ..()
 	switch(fitting)
 		if("tube")
@@ -745,3 +745,4 @@
 	light_type = /obj/item/light/bulb
 	fitting = "bulb"
 	fire_brightness = 2
+	power_consumption_rate = 10

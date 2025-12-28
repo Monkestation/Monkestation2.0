@@ -550,8 +550,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		C.add_traits(inherent_traits, SPECIES_TRAIT)
 
 	if(TRAIT_VIRUSIMMUNE in inherent_traits)
-		for(var/datum/disease/A in C.diseases)
-			A.cure(FALSE)
+		for(var/datum/disease/disease as anything in C.diseases)
+			disease.cure(add_resistance = FALSE, target = C, safe = TRUE)
 
 	if(TRAIT_TOXIMMUNE in inherent_traits)
 		C.setToxLoss(0, TRUE, TRUE)
@@ -776,7 +776,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 // MONKESTATION ADDITION START
 	if(mutant_bodyparts["ipc_screen"])
-		if(!source.dna.features["ipc_screen"] || source.dna.features["ipc_screen"] == "None" || (source.head && (source.head.flags_inv & HIDEFACE)) || (source.wear_mask && (source.head.flags_inv & HIDEFACE)) || !noggin)
+		if(!source.dna.features["ipc_screen"] || source.dna.features["ipc_screen"] == "None" || !source.is_face_visible() || !noggin)
 			bodyparts_to_add -= "ipc_screen"
 // MONKESTATION ADDITION END
 
@@ -840,6 +840,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 								accessory_overlay.color = source.eye_color_left
 							if(ANIME_COLOR)
 								accessory_overlay.color = source.dna.features["animecolor"]
+							if(ANIME_HALO_COLOR)
+								accessory_overlay.color = source.dna.features["animehalocolor"]
 				else
 					accessory_overlay.color = forced_colour
 			standing += accessory_overlay
@@ -968,7 +970,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if(ITEM_SLOT_OCLOTHING)
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(ITEM_SLOT_GLOVES)
-			if(H.num_hands < 2)
+			if(H.num_hands == 0)
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(ITEM_SLOT_FEET)
@@ -1342,10 +1344,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	SEND_SIGNAL(owner, COMSIG_MOB_ATTACK_HAND, owner, target, attacker_style)
 	//monkesstation edit start
 	if(owner.istate & ISTATE_SECONDARY)
-		if(istype(owner.client?.imode, /datum/interaction_mode/intents3))
-			var/datum/interaction_mode/intents3/clients_interaction = owner.client.imode
-			if(clients_interaction.intent != INTENT_DISARM)
-				return // early end because of intent type
 		. = disarm(owner, target, attacker_style)
 		if(.)
 			owner.animate_interact(target, INTERACT_DISARM)

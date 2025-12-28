@@ -151,12 +151,10 @@
 		return ..()
 	attacking_item.forceMove(src)
 
-/obj/item/clothing/shoes/sneakers/orange/allow_attack_hand_drop(mob/user)
-	if(ishuman(user))
-		var/mob/living/carbon/human/C = user
-		if(C.shoes == src && attached_cuffs)
-			to_chat(user, span_warning("You need help taking these off!"))
-			return FALSE
+/obj/item/clothing/shoes/sneakers/orange/can_mob_unequip(mob/user)
+	if(user.get_item_by_slot(slot_flags) == src && attached_cuffs)
+		to_chat(user, span_warning("You need help taking these off!"))
+		return FALSE
 	return ..()
 
 /obj/item/clothing/shoes/sneakers/orange/mouse_drop_dragged(atom/over_object, mob/user)
@@ -186,3 +184,9 @@
 	name = "cyborg boots"
 	desc = "Shoes for a cyborg costume."
 	greyscale_colors = "#4e4e4e#4e4e4e"
+
+/obj/item/clothing/shoes/sneakers/secred
+	name = "security red sneakers"
+	desc = "A nice set of sneakers in security red. These even have the custom fabric used by medical white! Sweet!"
+	armor_type = /datum/armor/sneakers_white
+	greyscale_colors = "#a52f29#918f8c"

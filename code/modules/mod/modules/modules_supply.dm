@@ -374,7 +374,7 @@
 	/// Armor values per tile.
 	var/datum/armor/armor_mod = /datum/armor/mod_ash_accretion
 	/// Speed added when you're fully covered in ash.
-	var/speed_added = 0.5
+	var/speed_added = 0.75
 	/// Speed that we actually added.
 	var/actual_speed_added = 0
 	/// Turfs that let us accrete ash.
@@ -396,6 +396,7 @@
 			/turf/open/misc/asteroid,
 			/turf/open/misc/ashplanet,
 			/turf/open/misc/dirt,
+			/turf/open/floor/plating/ocean,
 		))
 	if(!keep_turfs)
 		keep_turfs = typecacheof(list(

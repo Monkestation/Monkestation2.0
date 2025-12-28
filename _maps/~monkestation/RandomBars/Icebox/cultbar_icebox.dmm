@@ -267,7 +267,7 @@
 /area/station/commons/lounge)
 "mX" = (
 /obj/machinery/smartfridge/drinks,
-/turf/closed/wall/mineral/cult,
+/turf/open/floor/cult,
 /area/station/service/bar/backroom)
 "nv" = (
 /obj/effect/decal/cleanable/blood/tracks{
@@ -313,7 +313,6 @@
 /turf/template_noop,
 /area/template_noop)
 "qy" = (
-/obj/machinery/camera/autoname/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
@@ -881,6 +880,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/airalarm/directional/west,
+/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/cult,
 /area/station/service/bar/backroom)
 "Ra" = (
