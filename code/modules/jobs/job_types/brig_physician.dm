@@ -51,7 +51,7 @@
 	suit_store = /obj/item/flashlight/pen
 	belt = /obj/item/modular_computer/pda/security/brig_physician
 	ears = /obj/item/radio/headset/headset_secmed
-	shoes = /obj/item/clothing/shoes/workboots/black
+	shoes = /obj/item/clothing/shoes/jackboots
 	belt = /obj/item/storage/belt/medical/secmed/full
 	glasses = /obj/item/clothing/glasses/hud/health
 	head = /obj/item/clothing/head/soft/sec/medical
