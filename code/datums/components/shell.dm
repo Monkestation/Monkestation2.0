@@ -195,7 +195,7 @@
 	if(!istype(item, /obj/item/integrated_circuit))
 		return
 
-	if(item.type in blacklisted_integrated_circuits)
+	if(is_type_in_typecache(item, blacklisted_integrated_circuits))
 		source.balloon_alert(attacker, "incompatible circuit!")
 		return
 
