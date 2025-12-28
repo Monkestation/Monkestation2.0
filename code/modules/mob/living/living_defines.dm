@@ -249,8 +249,5 @@
 	/// Protection (insulation) from temperature changes, max 1
 	var/temperature_insulation = 0.15
 
-	/// Used for the global stun cooldown on batons (you can't bypass baton cooldown by switching to another baton)
-	var/baton_cooldown_check = 0
-
 	/// Whether we currently have temp alerts, minor optimization
 	VAR_PRIVATE/temp_alerts = FALSE

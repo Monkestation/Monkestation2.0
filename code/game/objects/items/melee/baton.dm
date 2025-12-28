@@ -15,6 +15,8 @@
 
 	/// Whether this baton is active or not
 	var/active = TRUE
+	/// Used interally, you don't want to modify
+	var/cooldown_check = 0
 	/// Default wait time until can stun again.
 	var/cooldown = (1.5 SECONDS)
 	/// The length of the knockdown applied to a struck living, non-cyborg mob.
@@ -141,7 +143,7 @@
 	if(!active || (user.istate & ISTATE_SECONDARY))
 		return BATON_DO_NORMAL_ATTACK
 
-	if(user.baton_cooldown_check > world.time)
+	if(cooldown_check > world.time)
 		var/wait_desc = get_wait_description()
 		if (wait_desc)
 			to_chat(user, wait_desc)
@@ -178,7 +180,7 @@
 	if(!in_attack_chain)
 		return BATON_ATTACK_DONE
 
-	user.baton_cooldown_check = world.time + cooldown
+	cooldown_check = world.time + cooldown
 	if(on_stun_sound)
 		playsound(get_turf(src), on_stun_sound, on_stun_volume, TRUE, -1)
 	if(user)
@@ -617,7 +619,7 @@
 	if(. != BATON_DO_NORMAL_ATTACK)
 		return
 	if((user.istate & ISTATE_SECONDARY))
-		if(active && user.baton_cooldown_check <= world.time && !check_parried(target, user))
+		if(active && cooldown_check <= world.time && !check_parried(target, user))
 			finalize_baton_attack(target, user, modifiers, in_attack_chain = FALSE)
 	else if(!(user.istate & ISTATE_HARM))
 		target.visible_message(span_warning("[user] prods [target] with [src]. Luckily it was off."), \
