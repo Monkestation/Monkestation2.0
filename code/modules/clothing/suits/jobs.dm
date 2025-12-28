@@ -246,7 +246,7 @@
 	body_parts_covered = CHEST|ARMS
 	toggle_noun = "zippers"
 
-// grants sec suit storage to this jacket
+// grants security suit storage to this jacket
 /obj/item/clothing/suit/toggle/jacket/officer/patched/Initialize(mapload)
 	. = ..()
 	if(!allowed)
