@@ -27,9 +27,9 @@
 	/// if the ability requires you to not have your eyes covered
 	var/blocked_by_glasses = TRUE
 	var/mesmerize_layer = ABOVE_ALL_MOB_LAYER
-	var/mesmerize_plane = ABOVE_HUD_PLANE
 	/// at this protection mesmerize will fail
 	var/max_eye_protection = 2
+
 /datum/action/cooldown/bloodsucker/targeted/mesmerize/get_power_desc_extended()
 	. += "[src] a target, locking them in place for a short time and muting them.<br>"
 
@@ -204,7 +204,6 @@
 /datum/action/cooldown/bloodsucker/targeted/mesmerize/proc/eldritch_eye(mob/target, icon_state = "eye_open", duration = 1 SECONDS)
 	var/image/image = image('icons/effects/eldritch.dmi', owner, icon_state, mesmerize_layer, pixel_x = -owner.pixel_x, pixel_y = 28) /// TODO make this disable cloak
 	image.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
-	SET_PLANE_EXPLICIT(image, mesmerize_plane, owner)
 	flick_overlay_global(image, list(owner?.client, target?.client), duration)
 
 #undef MESMERIZE_GLASSES_LEVEL
