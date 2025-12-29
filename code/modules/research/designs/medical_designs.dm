@@ -769,51 +769,27 @@
 
 /datum/design/implant_chem
 	name = "Chemical Implant Case"
-	desc = "A glass case containing a chemical implant."
+	desc = "A glass case containing an implant."
 	id = "implant_chem"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT*7)
 	build_path = /obj/item/implantcase/chem
 	category = list(
-		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_SECURITY
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_MISC
 	)
-	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY | DEPARTMENT_BITFLAG_MEDICAL
 
 /datum/design/implant_tracking
 	name = "Tracking Implant Case"
-	desc = "A glass case containing a tracking implant."
+	desc = "A glass case containing an implant."
 	id = "implant_tracking"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/implantcase/tracking
 	category = list(
-		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_SECURITY
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_MISC
 	)
-	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
-
-/datum/design/implant_bluespace
-	name = "Bluespace Grounding Implant Case"
-	desc = "A glass case containing a teleport blocker implant."
-	id = "implant_bluespace"
-	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 5, /datum/material/bluespace = SMALL_MATERIAL_AMOUNT * 3)
-	build_path = /obj/item/implantcase/teleport_blocker
-	category = list(
-		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_SECURITY
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
-
-/datum/design/implant_exile
-	name = "Exile Implant Case"
-	desc = "A glass case containing an exile implant."
-	id = "implant_exile"
-	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 5, /datum/material/titanium = SMALL_MATERIAL_AMOUNT * 3)
-	build_path = /obj/item/implantcase/exile
-	category = list(
-		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_SECURITY
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY | DEPARTMENT_BITFLAG_MEDICAL
 
 //Cybernetic organs
 

@@ -87,8 +87,6 @@
 		"c38_trac",
 		"implant_chem",
 		"implant_tracking",
-		"implant_exile",
-		"implant_bluespace",
 		"implantcase",
 		"implanter",
 		"locator",
