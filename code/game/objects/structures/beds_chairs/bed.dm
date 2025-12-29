@@ -94,7 +94,7 @@
 	icon_state = "emerg_down"
 	base_icon_state = "emerg"
 	build_stack_type = /obj/item/stack/sheet/iron
-	build_stack_amount = 2
+	build_stack_amount = 1
 	foldable_type = /obj/item/emergency_bed
 
 /obj/structure/bed/medical/Initialize(mapload)
