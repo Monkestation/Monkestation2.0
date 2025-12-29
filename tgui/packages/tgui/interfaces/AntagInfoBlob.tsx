@@ -21,7 +21,7 @@ type Data = {
 
 const BLOB_COLOR = '#556b2f';
 
-export const AntagInfoBlob = (props) => {
+export const AntagInfoBlob = () => {
   return (
     <Window width={400} height={550}>
       <Window.Content>
@@ -38,7 +38,7 @@ export const AntagInfoBlob = (props) => {
   );
 };
 
-const Overview = (props) => {
+const Overview = () => {
   const { data } = useBackend<Data>();
   const { color, description, effects, name } = data;
 
@@ -99,7 +99,7 @@ const Overview = (props) => {
   );
 };
 
-const Basics = (props) => {
+const Basics = () => {
   return (
     <Collapsible title="The Basics">
       <LabeledList>
@@ -129,7 +129,7 @@ const Basics = (props) => {
   );
 };
 
-const Minions = (props) => {
+const Minions = () => {
   return (
     <Collapsible title="Minions">
       <LabeledList>
@@ -148,7 +148,7 @@ const Minions = (props) => {
   );
 };
 
-const Structures = (props) => {
+const Structures = () => {
   return (
     <Collapsible title="Structures">
       <Box>
@@ -184,7 +184,7 @@ const Structures = (props) => {
   );
 };
 
-const ObjectiveDisplay = (props) => {
+const ObjectiveDisplay = () => {
   const { data } = useBackend<Data>();
   const { color, objectives } = data;
 

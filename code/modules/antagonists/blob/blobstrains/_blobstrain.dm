@@ -149,6 +149,10 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - /datum/blobs
 /datum/blobstrain/proc/core_process()
 	return blob_team.point_rate + point_rate_bonus
 
+///Called whenever a special tile is pulsed
+/datum/blobstrain/proc/on_special_pulsed(obj/structure/blob/special/pulsed)
+	return
+
 /datum/blobstrain/proc/on_sporedeath(mob/living/spore)
 	return
 

@@ -1,3 +1,5 @@
+///If we have this many nodes we will be announced, anti stealth blob measure
+#define NODES_TO_ANNOUNCE 3
 //Few global vars to track the blob
 GLOBAL_LIST_EMPTY(blobs) //complete list of all blob tiles made.
 GLOBAL_LIST_EMPTY(overminds)
@@ -154,7 +156,8 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		to_chat(src, span_boldnotice("You have gained another free strain re-roll."))
 		free_strain_rerolls = 1
 
-	if(antag_team?.announcement_time && (world.time >= antag_team.announcement_time || antag_team.blobs_legit >= antag_team.announcement_size) && !antag_team.has_announced)
+	if(!antag_team.has_announced && antag_team.announcement_time && \
+	(world.time>=antag_team.announcement_time||antag_team.blobs_legit>=antag_team.announcement_size||length(antag_team.all_blobs_by_type[/obj/structure/blob/special/node])>=NODES_TO_ANNOUNCE))
 		priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", ANNOUNCER_OUTBREAK5)
 		antag_team.has_announced = TRUE
 
@@ -298,3 +301,5 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	var/datum/antagonist/blob/blob = mind.has_antag_datum(/datum/antagonist/blob)
 	if(!blob)
 		mind.add_antag_datum(/datum/antagonist/blob)
+
+#undef NODES_TO_ANNOUNCE

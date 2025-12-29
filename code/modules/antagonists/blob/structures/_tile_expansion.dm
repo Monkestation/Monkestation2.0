@@ -2,9 +2,9 @@
 
 /obj/structure/blob/proc/consume_tile(mob/eye/blob/consuming)
 	for(var/atom/thing in loc)
-		if(!thing.can_blob_attack())
+		if(!thing.can_blob_attack() || HAS_TRAIT(thing, TRAIT_BLOB_ALLY))
 			continue
-		if(isliving(thing) && blob_team && !HAS_TRAIT(thing, TRAIT_BLOB_ALLY)) // Make sure to inject strain-reagents with automatic attacks when needed.
+		if(isliving(thing) && blob_team) // Make sure to inject strain-reagents with automatic attacks when needed.
 			blob_team.blobstrain.attack_living(thing, attacker = consuming)
 			continue // Don't smack them twice though
 		thing.blob_act(src)

@@ -56,10 +56,10 @@
 #define BLOB_REGULAR_HP_INIT 21 // The starting HP of a normal blob tile
 #define BLOB_REGULAR_HP_REGEN 2 // Health regenerated when pulsed by a node/core
 
-#define BLOB_STRONG_MAX_HP 150
+#define BLOB_STRONG_MAX_HP 120
 #define BLOB_STRONG_HP_REGEN 2
 
-#define BLOB_REFLECTOR_MAX_HP 150
+#define BLOB_REFLECTOR_MAX_HP 90 //might need to reduce this a bit more
 #define BLOB_REFLECTOR_HP_REGEN 2
 
 
@@ -67,7 +67,7 @@
 
 #define BLOB_EXPAND_COST 4
 #define BLOB_UPGRADE_STRONG_COST 15 // Upgrade and build costs here
-#define BLOB_UPGRADE_REFLECTOR_COST 10
+#define BLOB_UPGRADE_REFLECTOR_COST 5
 
 // Refund amounts
 

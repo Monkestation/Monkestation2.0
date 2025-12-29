@@ -47,7 +47,7 @@
 	var/list/cardinal_blobs = list()
 	var/list/diagonal_blobs = list()
 	for(var/obj/structure/blob/blob in possible_blobs)
-		(CARDINALS_BITFIELD & get_dir(blob, tile)) ? (cardinal_blobs += blob) : (diagonal_blobs += blob)
+		(get_dir(blob, tile) in GLOB.cardinals) ? (cardinal_blobs += blob) : (diagonal_blobs += blob)
 
 	var/obj/structure/blob/attacker
 	if(length(cardinal_blobs))
