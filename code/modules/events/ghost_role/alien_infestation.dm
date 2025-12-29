@@ -20,6 +20,7 @@
 		JOB_SECURITY_OFFICER,
 		JOB_WARDEN,
 		JOB_SECURITY_ASSISTANT,
+		JOB_BRIG_PHYSICIAN,
 	)
 	required_enemies = 5
 	prompted_picking = TRUE

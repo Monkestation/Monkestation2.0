@@ -41,7 +41,7 @@
 	if(HAS_TRAIT(owner, TRAIT_HAS_CRANIAL_FISSURE))
 		heal_multiplier *= 0.25
 	human_owner.AdjustAllImmobility(-20 * heal_multiplier)
-	human_owner.stamina.adjust(20 * heal_multiplier, TRUE)
+	human_owner.stamina.adjust(10 * heal_multiplier, TRUE)
 	var/needs_health_update = FALSE
 	needs_health_update += human_owner.adjustBruteLoss(-35 * heal_multiplier, updating_health = FALSE)
 	needs_health_update += human_owner.adjustFireLoss(-5 * heal_multiplier, updating_health = FALSE)

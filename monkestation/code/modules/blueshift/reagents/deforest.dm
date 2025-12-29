@@ -31,7 +31,7 @@
 	. = ..()
 	to_chat(affected_mob, span_userdanger("Your body aches with unimaginable pain!"))
 	affected_mob.adjustOrganLoss(ORGAN_SLOT_HEART,3 * REM * seconds_per_tick, 85)
-	affected_mob.stamina?.adjust(-5 * REM * seconds_per_tick, 0)
+	affected_mob.stamina?.adjust(-2.5 * REM * seconds_per_tick, 0)
 	if(prob(30))
 		INVOKE_ASYNC(affected_mob, TYPE_PROC_REF(/mob, emote), "scream")
 
@@ -153,7 +153,7 @@
 
 	our_guy.add_mood_event("tweaking", /datum/mood_event/stimulant_heavy/sundowner, name)
 
-	our_guy.stamina?.adjust(10 * REM * seconds_per_tick)
+	our_guy.stamina?.adjust(5 * REM * seconds_per_tick)
 	our_guy.AdjustSleeping(-20 * REM * seconds_per_tick)
 	our_guy.adjust_drowsiness(-5 * REM * seconds_per_tick)
 
