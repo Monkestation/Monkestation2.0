@@ -409,6 +409,8 @@
 					threatcount += 2
 				if(WANTED_PAROLE)
 					threatcount += 2
+				if(WANTED_SEARCH)
+					threatcount += 2
 
 	if(istype(head, /obj/item/clothing/head/hats/tophat/syndicate))
 		threatcount += 2
@@ -841,19 +843,28 @@
 	dna?.species.spec_updatehealth(src)
 	update_damage_movespeed()
 
+/mob/living/carbon/human/on_stamina_update()
+	. = ..()
+
+	update_damage_movespeed()
+
 /mob/living/carbon/human/proc/update_damage_movespeed()
-	var/health_deficiency = max((maxHealth - health), staminaloss)
-	if(health_deficiency >= 40)
-		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown, update = FALSE, multiplicative_slowdown = health_deficiency / 75)
-		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying, update = TRUE, multiplicative_slowdown = health_deficiency / 25)
+	var/lethal_deficiency = maxHealth - health
+	var/stamina_deficiency = stamina?.loss
+	var/highest_deficiency = max(lethal_deficiency, stamina_deficiency)
+	if(lethal_deficiency >= 40 || stamina_deficiency >= 60)
+		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown, update = FALSE, multiplicative_slowdown = highest_deficiency / 75)
+		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying, update = TRUE, multiplicative_slowdown = highest_deficiency / 25)
 	else if(LAZYACCESS(movespeed_modification, "[/datum/movespeed_modifier/damage_slowdown]"))
 		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown, update = FALSE)
 		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying, update = TRUE)
 
 /mob/living/carbon/human/pre_stamina_change(diff as num, forced)
-	if(diff < 0) //Taking damage, not healing
-		return diff * physiology.stamina_mod * physiology.temp_stamina_mod
-	return diff
+	. = ..()
+
+	if(. < 0) //Taking damage, not healing
+		. = . * physiology.stamina_mod * physiology.temp_stamina_mod
+	return
 
 /mob/living/carbon/human/get_exp_list(minutes)
 	. = ..()

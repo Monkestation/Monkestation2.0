@@ -101,7 +101,7 @@
 	for(var/mob/living/affected_mob in crystal_area)
 		if(IS_CLOCK(affected_mob))
 			affected_mob.adjustToxLoss(-2.5 * seconds_per_tick, TRUE, TRUE) //slightly better tox healing as well as better stam healing around it for servants
-			affected_mob.stamina.adjust(7.5 * seconds_per_tick, TRUE)
+			affected_mob.stamina.adjust(3.75 * seconds_per_tick, TRUE)
 			continue
 		affected_mob.adjust_silence_up_to(5 SECONDS * seconds_per_tick, 30 SECONDS)
 		affected_mob.adjust_emote_mute_up_to(5 SECONDS * seconds_per_tick, 30 SECONDS)

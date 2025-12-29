@@ -16,7 +16,7 @@ export const ATM = (props) => {
   } = data;
 
   return (
-    <Window resizable title="ATM" width={300} height={200}>
+    <Window title="ATM" width={300} height={200}>
       <Section>
         <Stack vertical fill>
           <Section>

@@ -15,7 +15,11 @@
 	var/turf/invasion
 
 /datum/antagonist/plague_rat/get_preview_icon()
-	return finish_preview_icon(icon('monkestation/code/modules/virology/icons/animal.dmi', "mouse_plague"))
+	var/icon/preview = icon('monkestation/code/modules/virology/icons/animal.dmi', "mouse_plague")
+	preview.Scale(115, 115)
+	preview.Shift(WEST, 8)
+	preview.Crop(1, 1, ANTAGONIST_PREVIEW_ICON_SIZE, ANTAGONIST_PREVIEW_ICON_SIZE)
+	return preview
 
 /datum/antagonist/plague_rat/on_gain()
 	if(!rats_rats_we_are_the_rats)

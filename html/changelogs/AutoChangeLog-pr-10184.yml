@@ -1,0 +1,6 @@
+author: "SirNightKnight"
+delete-after: True
+changes:
+  - bugfix: "fixed a check in gunpoint code."
+  - bugfix: "fixed hat stacking with flippable hats clearing the overlays."
+  - bugfix: "fixed flashpowder runtiming in cigarettes."
