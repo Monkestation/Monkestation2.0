@@ -21,7 +21,7 @@
 	if(astype(pulsed, /obj/structure/blob/special/node)?.hosting)
 		return
 
-	pulsed.update_integrity(pulsed.get_integrity() - (pulsed.health_regen - 1)) //should just set the regen to negative instead
+	pulsed.update_integrity(pulsed.get_integrity() - (pulsed.health_regen + 1)) //should just set the regen to negative instead
 
 /datum/reagent/blob/decaying_cells
 	name = "Decaying Cells"
@@ -32,7 +32,8 @@
 /datum/reagent/blob/decaying_cells/expose_mob(mob/living/exposed_mob, methods = TOUCH, reac_volume, show_message, touch_protection, mob/eye/blob/overmind)
 	. = ..()
 	reac_volume = return_mob_expose_reac_volume(exposed_mob, methods, reac_volume, show_message, touch_protection, overmind)
-	exposed_mob.apply_damage(trunc(reac_volume/5), TOX)
+	exposed_mob.apply_damage(trunc(reac_volume/5), TOX, forced = TRUE)
+	exposed_mob.reagents?.add_reagent(/datum/reagent/blob/decaying_cells, reac_volume)
 
 /datum/reagent/blob/decaying_cells/on_mob_life(mob/living/carbon/metabolizer, seconds_per_tick, times_fired)
 	. = ..()

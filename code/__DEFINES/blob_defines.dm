@@ -81,7 +81,7 @@
 #define BLOB_POWER_RELOCATE_COST 60 // Resource cost to move your core to a different node
 #define BLOB_POWER_REROLL_COST 40 // Strain reroll
 #define BLOB_POWER_REROLL_FREE_TIME (4 MINUTES) // Gain a free strain reroll every x minutes
-#define BLOB_POWER_REROLL_CHOICES 6 // Possibilities to choose from; keep in mind increasing this might fuck with the radial menu
+#define BLOB_POWER_REROLL_CHOICES 7 // Possibilities to choose from; keep in mind increasing this might fuck with the radial menu
 
 
 // Mob defines
