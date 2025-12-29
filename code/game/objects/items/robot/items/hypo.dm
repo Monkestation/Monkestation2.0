@@ -11,6 +11,8 @@
 #define PARAMEDIC_MEDICAL_REAGENTS list(\
 		/datum/reagent/medicine/epinephrine,\
 		/datum/reagent/toxin/formaldehyde\
+		/datum/reagent/medicine/c2/aiuri,\
+		/datum/reagent/medicine/c2/libital,\
 	)
 #define EXPANDED_MEDICAL_REAGENTS list(\
 		/datum/reagent/medicine/haloperidol,\
