@@ -97,7 +97,7 @@
 
 	var/should_update = M.adjustToxLoss(-heal_amt, forced = TRUE, updating_health = FALSE)
 
-	if(M.getBruteLoss > 0 || M.getFireLoss > 0)
+	if(M.getBruteLoss() > 0 || M.getFireLoss() > 0)
 		M.heal_overall_damage(brute = heal_amt, burn = heal_amt, required_bodytype = BODYTYPE_ORGANIC, updating_health = FALSE)
 		should_update = TRUE
 		if(prob(5))
