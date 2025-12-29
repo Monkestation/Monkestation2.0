@@ -21,7 +21,13 @@
 	if(astype(pulsed, /obj/structure/blob/special/node)?.hosting)
 		return
 
-	pulsed.update_integrity(pulsed.get_integrity() - (pulsed.health_regen + 1)) //should just set the regen to negative instead
+	if(COOLDOWN_FINISHED(pulsed, heal_timestamp))
+		pulsed.update_integrity(pulsed.get_integrity() - (pulsed.health_regen + 1))
+		if(pulsed.integrity_failure && pulsed.get_integrity() <= pulsed.integrity_failure * pulsed.max_integrity)
+			pulsed.atom_break()
+
+		if(pulsed.get_integrity() <= 0)
+			pulsed.atom_destruction()
 
 /datum/reagent/blob/decaying_cells
 	name = "Decaying Cells"

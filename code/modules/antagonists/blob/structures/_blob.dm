@@ -237,10 +237,10 @@
 	if(COOLDOWN_FINISHED(src, pulse_timestamp))
 		consume_tile()
 		if(COOLDOWN_FINISHED(src, heal_timestamp))
-			update_integrity(atom_integrity + health_regen)
-			COOLDOWN_START(src, heal_timestamp, 20)
+			update_integrity(min(atom_integrity + health_regen, max_integrity))
+			COOLDOWN_START(src, heal_timestamp, 2 SECONDS)
 		update_appearance()
-		COOLDOWN_START(src, pulse_timestamp, 10)
+		COOLDOWN_START(src, pulse_timestamp, 1 SECOND)
 		return TRUE //we did it, we were pulsed!
 	return FALSE //oh no we failed
 
