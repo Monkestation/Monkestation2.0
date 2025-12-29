@@ -983,9 +983,6 @@
 	add_fingerprint(user)
 
 /obj/item/card/fuzzy_license/attackby(obj/item/used, mob/living/user, params)
-	if(user.ckey != "fuzlet")
-		return
-
 	if(istype(used, /obj/item/pen) || istype(used, /obj/item/toy/crayon))
 		var/choice = input(user, "Select the license type", "License Type Selection") as null|anything in possible_types
 		if(!isnull(choice))
