@@ -1,5 +1,5 @@
 //these files are for organization and contrain procs of /mob/eye/blob
-#define BLOB_REROLL_RADIUS (BLOB_STRAIN_CHOICES * 10) //this might not scale correctly
+#define BLOB_REROLL_RADIUS 70 //this might not scale correctly
 
 /// Attempt to buy something
 /mob/eye/blob/proc/buy(cost = 15)
