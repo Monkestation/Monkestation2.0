@@ -59,7 +59,7 @@
 			var/live_ammo = gun.magazine.ammo_count(FALSE)
 			if(live_ammo >= length(gun.magazine.stored_ammo))
 				return COMPONENT_CANCEL_ATTACK_CHAIN
-		var/reload_delay = 1.5 SECOND
+		var/reload_delay = 1 SECOND
 		if(istype(gun, /obj/item/gun/ballistic/revolver/shotgun_revolver))
 			reload_delay = 0.1 SECOND
 		to_chat(user, span_notice("You start unloading a shell from the [src]..."))
