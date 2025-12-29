@@ -1,5 +1,0 @@
-author: "Lawlolawl"
-delete-after: True
-changes:
-  - balance: "Disabled wastes pins on Oshan station Z, completely (even far away from station exterior)."
-  - bugfix: "Allowed shooting of wastes pin weapons around the exterior of the Oshan mining base (previously blocked shooting when too close)."

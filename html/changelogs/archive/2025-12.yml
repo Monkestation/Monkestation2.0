@@ -645,3 +645,183 @@
   Veth-s:
   - rscadd: A new token statpanel for admins, to help improve token responses.
   - admin: A noise will now play if a token is going to timeout in one minute.
+2025-12-28:
+  Infernal-0:
+  - spellcheck: Updates the description for the CMOs surgical processor.
+  JohnFulpWillard:
+  - bugfix: Sandevistan implants & Sugar/Hen rushes properly display an afterimage
+      as you move around.
+  - bugfix: Helio permabrig entrance doors have had their access fixed.
+  - rscadd: Union badges hold access for union related activities (union management
+      app)
+  - rscadd: The QM can now replace their golden union badge.
+  JupiterJaeden:
+  - refactor: Stamina is now maxed at 100 instead of 250.
+  - rscdel: Removes the rng chance to stamcrit when below 20% stamina threshold -
+      you now simply go stamcrit at 0 stam damage.
+  - bugfix: Fixes several bugs related to stamina processing which caused certain
+      effects to be delayed or inconsistent, and certain values to not be updated
+      correctly when they should.
+  - bugfix: Fixes a bunch of code that was referencing the unused "staminaloss" variable
+      to instead reference the correct variable - as a result, basic/simple mobs are
+      now affected by stamina damage (they are slowed by it, although still cant stamcrit).
+  - balance: Makes space dragons (intentionally) unaffected by stamina damage.
+  - bugfix: Fixes several pieces of code using the non-functional "setStaminaLoss()"
+      function.
+  - admin: Admin heals now always remove stamcrits, instead of being functional only
+      some of the time.
+  - bugfix: Fixes energy armor so it actually works against disablers & other 'energy'
+      type projectiles - armor will now protect you from ranged stamina damage. This
+      also includes bullet armor for rubber rounds. Batons & tasers still pierce armor,
+      however. Note that if you hit an arm or leg with stamina damage, it will instead
+      check the armor on the target's chest, to prevent bypassing stamina armor by
+      targeting limbs to stamcrit.
+  - rscdel: Removes the 'exhausted' status effect from the game.
+  - rscdel: Removes the 'debilitated' status effect from the game.
+  - balance: Removes the food buffs that increased your max stamina - they are instead
+      all replaced with the food buffs that increase your natural stamina regen slightly
+      (which has also been adjusted to account for the new stamina maximum).
+  - balance: You now take gradually worsening slowdown from stamina damage. At 40,
+      you lose the ability to sprint. At 60, you start taking damage slowdown just
+      like regular damage. Like regular damage, the slowdown gets worse as your stamina
+      damage gets higher.
+  - balance: Adjust a WHOLE bunch of stamina damage/healing values to account for
+      the new max stamina. However, some values have been left unadjusted in cases
+      where it appears they were never adjusted for 250 stamina in the first place.
+      The most relevant adjustments are listed below - all numbers assume that all
+      hits are landed within 2.5 seconds of each other, so the target cannot regen.
+      The exact number of hits it takes to down someone, like before, will vary based
+      on if they are sprinting and if they are allowed to regen stamina.
+  - balance: Added a 3 second stagger to flashes (not from behind still, though),
+      identical to being shove staggered. Flashes now deal 60 stamina damage from
+      the side (2 hits to stamcrit, 3 if target can regen a little) and 80 from the
+      front (2 to stamcrit). The chance for flashes to instantly stamcrit you from
+      the front has been removed. In addition, flashes now can no longer be chained
+      on the same target while they are still blinded from the last flash - this immunity
+      lasts about 2.5s, slightly shorter than the stagger.
+  - balance: Like regular flashes, you can no longer be affected by the 'flash' component
+      of a flashbang while you are currently blinded from a previous flash (including
+      a previous flashbang).
+  - balance: Adds the flashbang box back as an option in the security utility voucher.
+  - balance: All batons now apply a short stagger (slowdown) for 3 seconds on each
+      hit, identical to being shove staggered.
+  - balance: Stun batons deal 45 stamina damage, which will prevent sprint after 1
+      hit, and stamcrit in 3. They have also had their stun cooldown increased to
+      1.3s from 1s.
+  - balance: Police batons (the wooden ones) deal 45 stamina damage, same as a stun
+      baton, but they still have a 1.5s stun cooldown.
+  - balance: Telebatons deal 55 stamina damage, which will prevent sprint in 1 hit
+      and stamcrit in 2 hits, if the hits are landed close together. They have had
+      their stun cooldown increased from 1.5s to 2s.
+  - balance: Contractor batons deal 80 stamina damage, along with the knockdown they
+      still apply.
+  - balance: E-bows deal 60 stamina damage, which will slow in 1 hit and stamcrit
+      in 2 on unarmored targets. They also still knockdown on the first hit.
+  - balance: Disablers and paco rubbers now each do 24 stamina damage, which will
+      prevent sprint in 2 shots, slow in 3 shots, and stamcrit in 5 shots on unarmored
+      targets.
+  - balance: Disabler smgs now do 11.5 stamina damage, which will prevent sprint in
+      4 shots, slow in 6 shots, and stamcrit in 9 shots on unarmored targets. They
+      have also had their capacity very slightly increased from 40 to 42.
+  - balance: Beepsky now deals 60 stamina damage, which slows in 1 hit and stamcrits
+      in 2 hits - though he does not slow you too much to be unescapeable after the
+      first hit.
+  - balance: Dragnet netting shots now do 7 stamina damage each (still with 6 projectiles,
+      so 42 per PB), which will prevent sprint in 1 PB shot, slow in 2, and stamcrit
+      in 3 shots.
+  - balance: Rubbershot shotgun shells do 6 pellets of 10 stamina damage each (so
+      60 PB), which will slow in 1 shot if every pellet lands, and stamcrit in 2 PB
+      shots.
+  - balance: Rejoice bartenders! Beanbag shotgun shells now do 55 stamina damage,
+      which will no sprint (but not slow) in 1 shot and stamcrit in 2 shots (on unarmored
+      targets).
+  - balance: The relative regen rate of stamina has been slightly nerfed.
+  - balance: The duration of stamcrit has been slightly increased from 9 to 10 seconds,
+      and after leaving stamcrit you will not be exhausted, but will have some stamina
+      damage slowdown for about 5 seconds (by default). Natural stamina regeneration
+      is still paused during stamcrit, but it is now possible to leave stamcrit early
+      if other stamina regeneration brings you back to full stamina. The length of
+      stamcrit still cannot be increased by repeated stunning.
+  - balance: The cost to sprint has been adjusted so that you can sprint for about
+      14-15 seconds before you hit the 40% no sprint threshold - about on par with
+      how long you could sprint previously before hitting exhaustion.
+  - balance: You can no longer sprint while using a jetpack. You can still sprint
+      while floating or flying with wings in 0g, however. The speed of ion jetpacks
+      (and other slow jetpack types) has been buffed to compensate.
+  - balance: You can no longer stamcrit yourself by sprinting - this was previously
+      janky and sometimes sprinting without stopping would cause you to stamcrit,
+      other times to enter exhaustion. Now you simply cannot sprint when you hit 40%
+      stamina damage, but you can still move normally. You are able to sprint again
+      once your stamina damage falls below 30%.
+  - balance: Traitor stimulants no longer make you totally immune to stamcrit (in
+      line with tg), but still give you baton resistance, higher movespeed, and stamina
+      healing every tick.
+  - code_imp: TRAIT_STUNIMMUNE now makes you immune to taking all stamina damage except
+      from sprinting.
+  - code_imp: TRAIT_BATON_RESISTANCE now prevents you from taking baton stagger as
+      well as halving the stamina damage taken, but no longer outright prevents you
+      from stamcritting from batons (and beepsky).
+  - bugfix: Patches an oversight allowing you to bypass baton stun cooldown by switching
+      to a new baton.
+  Lawlolawl:
+  - balance: Disabled wastes pins on Oshan station Z, completely (even far away from
+      station exterior).
+  - bugfix: Allowed shooting of wastes pin weapons around the exterior of the Oshan
+      mining base (previously blocked shooting when too close).
+  SirNightKnight:
+  - bugfix: removed a misplaced stasis unit on Blueshift.
+  - rscadd: added back the brig physician garment bag.
+  - bugfix: Unknowns will not appear on the security or specialized crew monitor.
+  SirNightKnight, Dr Diasyl:
+  - image: 'New Security clothing: Security High-Vis jacket!'
+  - code_imp: demodularized most Brig Physician code.
+  - rscdel: removed all skyrat security clothing except for the security utility uniform
+  - image: adjusted the warden's campaign hat to be one pixel lower.
+  - image: fixed several offset issues and inconsistencies with security clothing.
+  - image: added several digi security uniform sprites and updated existing ones.
+  - image: added back the old Brig Physician grey labcoat as an individual item.
+  - image: added new Brig  Physician clothing. Red variants of the medical doctor
+      outfits with a security themed version of the paramedic hat and jacket.
+  - code_imp: repathed spacepol hats.
+  - image: updated the spacepol uniform with what i think is a sprite from TG but
+      i adjusted it.
+  - rscdel: removed ACCESS_BRIG_PHYSICIAN.
+  - rscadd: removed Brig Physician from accessing some officer grade security clothing
+      in the loadout store.
+  - rscadd: added the security medical belt for Brig Physician. it's a medical belt
+      but security themed.
+  - rscadd: Brig Physician gets zipties and a flash for self defence.
+  - rscadd: medical sunglasses added to the Brig Physician mail goody list.
+  - bugfix: you can craft EMT belts with leather like other belts.
+  - balance: ' renamed the Brig Physician locker to the security medical locker. Packed
+      it with one of each medkit and two universal blood bags.'
+  - balance: Brig Physician's have the same access as a Security Assistant + Medical
+      Doctor. meaning they lost locker room access along with their weapon permit.
+  - rscdel: removed brig physician vouchers, Brig Physician starts with a security
+      handheld crew monitor in their locker and belt.
+  - bugfix: the experimental tool node will notify both engineering and medical since
+      it contains surgical aswell as engineering tools.
+  - rscadd: added a tech node for handheld crew monitors thats unlocked by advanced
+      biotech.
+  - rscadd: added the warden's police hat, a darker blue recolor of their regular
+      hat. the warden outfit starts with one equipped instead of the standard red
+      warden hat.
+  - rscadd: warden starts with regular jackboots.
+  - qol: organized the secdrobe's products into subcategories.
+  - rscadd: moved costume-like security clothing into the contraband section of the
+      secdrobe.
+  - bugfix: updated some maps with permabrig access where it was missing.
+  - map: revamped all brig medbays.
+  - rscadd: replaced all security surgery tool duffel bags with security medical surgery
+      tool duffel bags.
+  - image: new handheld crew monitor sprites.
+  - code_imp: demodularized handheld crew monitor code.
+  - image: changed the sechud and trim of Brig Physician to be more similar to that
+      of a medical doctor.
+  - image: changed the interdyne sechud icons to better differentiate them from the
+      Brig Physician sechud.
+  Tractor-Maam:
+  - spellcheck: At Dooms Gate is shown instead of CALL_RINGTONE_DOOMSGATE for scryer
+      ringtones
+  Uristthedorf:
+  - bugfix: Wall mounted medstation has healing items again.

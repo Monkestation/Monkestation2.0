@@ -53,7 +53,7 @@
 	///The department the secbot will deposit collected money into
 	var/payment_department = ACCOUNT_SEC
 
-	var/stamina_damage = 95 //3 hit stam crit from full, but they most likely wont be due to running a bit
+	var/stamina_damage = 60 //1 hit slows, 2 hit stam crits
 
 /mob/living/simple_animal/bot/secbot/beepsky
 	name = "Commander Beep O'sky"
@@ -340,7 +340,7 @@
 		if(human_target.check_block(src, 0, "\the [name]", MELEE_ATTACK))
 			return
 	if(HAS_TRAIT(current_target, TRAIT_BATON_RESISTANCE))
-		current_target.stamina.adjust_to(-stamina_damage, current_target.stamina.maximum * 0.29)
+		current_target.stamina.adjust(-stamina_damage * 0.5)
 	else
 		current_target.stamina.adjust(-stamina_damage)
 	// monkestation end

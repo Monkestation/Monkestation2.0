@@ -1,0 +1,6 @@
+author: "SirNightKnight"
+delete-after: True
+changes:
+  - bugfix: "fixed changeling tentacle disarm not working."
+  - bugfix: "fixed holding people up at gunpoint."
+  - bugfix: "cleaned up attack code for guns with right click, you will melee someone with a gun with combat mode if you are next to them."
