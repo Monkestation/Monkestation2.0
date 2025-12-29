@@ -21,7 +21,7 @@
 	if(astype(pulsed, /obj/structure/blob/special/node)?.hosting)
 		return
 
-	pulsed.update_integrity(pulsed.atom_integrity - (pulsed.health_regen - 1)) //should just set the regen to negative instead
+	pulsed.update_integrity(pulsed.get_integrity() - (pulsed.health_regen - 1)) //should just set the regen to negative instead
 
 /datum/reagent/blob/decaying_cells
 	name = "Decaying Cells"
