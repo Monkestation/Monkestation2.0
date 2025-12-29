@@ -60,6 +60,7 @@
 	damaged_desc = "A wall of twitching tendrils with a reflective glow."
 	icon_state = "blob_glow"
 	flags_ricochet = RICOCHET_SHINY
+	armor_type = /datum/armor/blob_reflector
 	receive_ricochet_chance_mod = 1
 	point_return = BLOB_REFUND_REFLECTOR_COST
 	explosion_block = 2
