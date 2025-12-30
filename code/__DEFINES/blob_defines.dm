@@ -52,14 +52,14 @@
 #define BLOB_RESOURCE_GATHER_ADDED_DELAY (0.25 SECONDS) // Every additional resource blob adds this amount to the gather delay
 #define BLOB_RESOURCE_GATHER_AMOUNT 1 // The amount of points added to the overmind
 
-#define BLOB_REGULAR_MAX_HP 25
+#define BLOB_REGULAR_MAX_HP 31
 #define BLOB_REGULAR_HP_INIT 21 // The starting HP of a normal blob tile
 #define BLOB_REGULAR_HP_REGEN 2 // Health regenerated when pulsed by a node/core
 
-#define BLOB_STRONG_MAX_HP 120
+#define BLOB_STRONG_MAX_HP 150
 #define BLOB_STRONG_HP_REGEN 2
 
-#define BLOB_REFLECTOR_MAX_HP 90 //might need to reduce this a bit more
+#define BLOB_REFLECTOR_MAX_HP 130
 #define BLOB_REFLECTOR_HP_REGEN 2
 
 

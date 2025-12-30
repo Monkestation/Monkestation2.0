@@ -16,7 +16,7 @@
 	var/resource_delay = 0
 
 	///What strain do we have
-	var/datum/blobstrain/reagent/blobstrain //might want to keep this on the blob mob, but dont think so due to minion component
+	var/datum/blobstrain/blobstrain
 	/// The amount of points gained on blobstrain.core_process()
 	var/point_rate = BLOB_BASE_POINT_RATE
 	/// The amount of health regenned on core_process

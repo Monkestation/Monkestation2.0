@@ -25,7 +25,7 @@
 	update_integrity(atom_integrity - damage_amount)
 
 	//BREAKING FIRST
-	if(integrity_failure && atom_integrity <= integrity_failure * max_integrity)
+	if(integrity_failure && atom_integrity <= integrity_failure * max_integrity) //should maybe turn these checks into a proc
 		atom_break(damage_flag)
 
 	//DESTROYING SECOND

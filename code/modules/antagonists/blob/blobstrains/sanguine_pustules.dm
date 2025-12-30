@@ -14,19 +14,6 @@
 	///How much blood we have stored
 	var/blood = 0
 
-/datum/blobstrain/reagent/sanguine_pustules/on_sporedeath(mob/living/spore)
-	var/list/core_contents = blob_team.main_overmind.blob_core?.contents
-	var/throw_count = 0
-	while(length(core_contents) && throw_count < 3)
-		var/obj/item/picked = pick(core_contents)
-		if(QDELETED(picked))
-			core_contents -= picked
-			continue
-
-		throw_count++
-		picked.forceMove(get_turf(spore))
-		picked.throw_at(get_ranged_target_turf(spore, pick(GLOB.alldirs), 6), 6, 5, spore, TRUE, FALSE)
-
 /datum/blobstrain/reagent/sanguine_pustules/expand_reaction(obj/structure/blob/expanding, obj/structure/blob/new_blob, turf/target_turf, mob/eye/blob/controller)
 	var/blood_to_gain = 0
 	for(var/obj/effect/decal/cleanable/blood/blood_decal in target_turf)
@@ -73,7 +60,7 @@
 		var/datum/blobstrain/reagent/sanguine_pustules/overmind_strain = overmind?.antag_team.blobstrain
 		if(istype(overmind_strain))
 			var/old_volume = carbon_exposed.blood_volume
-			carbon_exposed.blood_volume = max(carbon_exposed.blood_volume - trunc(reac_volume/2), 0)
+			carbon_exposed.blood_volume = max(carbon_exposed.blood_volume - trunc(reac_volume * 0.8), 0)
 			overmind_strain.adjust_blood(trunc(old_volume - carbon_exposed.blood_volume), get_turf(carbon_exposed))
 
 #undef BLOOD_PER_SPORE

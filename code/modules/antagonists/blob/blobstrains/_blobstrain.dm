@@ -163,7 +163,7 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - /datum/blobs
 	totalmessage += "!"
 	to_chat(sent_to, span_userdanger("[totalmessage]"))
 
-/datum/blobstrain/proc/attack_living(mob/living/attacked, list/nearby_blobs) // When the blob attacks people
+/datum/blobstrain/proc/attack_living(mob/living/attacked, list/nearby_blobs, mob/eye/blob/attacker) // When the blob attacks people
 	send_message(attacked)
 
 /datum/blobstrain/proc/blobbernaut_attack(mob/living/attacked, blobbernaut) // When this blob's blobbernaut attacks people
@@ -172,7 +172,12 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - /datum/blobs
 /datum/blobstrain/proc/damage_reaction(obj/structure/blob/damaged, damage, damage_type, damage_flag, coefficient = 1) //when the blob takes damage, do this
 	return coefficient*damage
 
-/datum/blobstrain/proc/death_reaction(obj/structure/blob/dying, damage_flag, coefficient = 1) //when a blob tile dies, do this
+///Called in a tiles atom_destruction()
+/datum/blobstrain/proc/death_reaction(obj/structure/blob/dying, damage_flag)
+	return
+
+///Called near the start of /obj/structure/blob/expand(), before most logic runs
+/datum/blobstrain/proc/before_expansion(obj/structure/blob/expanding, turf/target_turf)
 	return
 
 /datum/blobstrain/proc/expand_reaction(obj/structure/blob/expanding, obj/structure/blob/new_blob, turf/target_turf, mob/eye/blob/controller) //when the blob expands, do this

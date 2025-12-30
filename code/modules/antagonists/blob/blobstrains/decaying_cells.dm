@@ -11,11 +11,9 @@
 	message = "The blob makes your insides ache."
 	reagent = /datum/reagent/blob/decaying_cells
 
-/datum/blobstrain/reagent/decaying_cells/damage_reaction(obj/structure/blob/blob_tile, damage, damage_type, damage_flag)
-	//should instead just make a proc that gets called on destruction
-	if((damage_flag == MELEE || damage_flag == BULLET || damage_flag == LASER) && blob_tile.get_integrity() - damage <= 0 && istype(blob_tile, /obj/structure/blob/special))
-		blob_team.main_overmind.add_points(blob_tile.point_return)
-	return ..()
+/datum/blobstrain/reagent/decaying_cells/death_reaction(obj/structure/blob/dying, damage_flag, coefficient)
+	if(istype(dying, /obj/structure/blob/special))
+		blob_team.main_overmind?.add_points(dying.point_return)
 
 /datum/blobstrain/reagent/decaying_cells/on_special_pulsed(obj/structure/blob/special/pulsed)
 	if(astype(pulsed, /obj/structure/blob/special/node)?.hosting)

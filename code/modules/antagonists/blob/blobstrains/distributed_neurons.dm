@@ -11,11 +11,10 @@
 	message_living = ", and you feel tired"
 	reagent = /datum/reagent/blob/distributed_neurons
 
-/datum/blobstrain/reagent/distributed_neurons/damage_reaction(obj/structure/blob/blob_tile, damage, damage_type, damage_flag)
-	if((damage_flag == MELEE || damage_flag == BULLET || damage_flag == LASER) && damage <= 20 && blob_tile.get_integrity() - damage <= 0 && prob(15)) //if the cause isn't fire or a bomb, the damage is less than 21, we're going to die from that damage, 15% chance of a shitty spore.
-		blob_tile.visible_message(span_boldwarning("A spore floats free of the blob!"))
-		blob_team.create_spore(blob_tile.loc, /mob/living/basic/blob_minion/spore/minion/weak)
-	return ..()
+/datum/blobstrain/reagent/distributed_neurons/death_reaction(obj/structure/blob/dying, damage_flag, coefficient)
+	if(prob(15))
+		dying.visible_message(span_boldwarning("A spore floats free of the blob!"))
+		blob_team.create_spore(get_turf(dying), /mob/living/basic/blob_minion/spore/minion/weak)
 
 /datum/reagent/blob/distributed_neurons
 	name = "Distributed Neurons"

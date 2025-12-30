@@ -40,6 +40,8 @@
 		make_blob = FALSE
 		playsound(src.loc, 'sound/effects/splat.ogg', 50, TRUE) //Let's give some feedback that we DID try to spawn in space, since players are used to it
 
+	var/datum/blobstrain/strain = blob_team.blobstrain
+	strain.before_expansion(src, target)
 	consume_tile(controller) //hit the tile we're in, making sure there are no border objects blocking us
 	if(!target.CanPass(src, get_dir(target, src))) //is the target turf impassable
 		make_blob = FALSE
@@ -50,12 +52,12 @@
 		if(!inside.can_blob_attack())
 			continue
 		if(isliving(inside) && blob_team) // Make sure to inject strain-reagents with automatic attacks when needed.
-			blob_team.blobstrain.attack_living(inside, attacker = controller)
+			strain.attack_living(inside, attacker = controller)
 			continue // Don't smack them twice though
 		inside.blob_act(src) //also hit everything in the turf
 
 	if(make_blob) //well, can we?
-		var/obj/structure/blob/new_tile = new /obj/structure/blob/normal(src.loc, (controller?.antag_team || blob_team)) //MAYBE CHANGE THIS TO JUST SPAWN ON THE TARGET
+		var/obj/structure/blob/new_tile = new /obj/structure/blob/normal(src.loc, (controller?.antag_team || blob_team))
 		new_tile.set_density(TRUE)
 		if(target.Enter(new_tile)) //NOW we can attempt to move into the tile
 			new_tile.set_density(initial(new_tile.density))
@@ -65,7 +67,7 @@
 				new_tile.balloon_alert(controller, "off-station, won't count!")
 			new_tile.update_appearance()
 			if(new_tile.blob_team && expand_reaction)
-				blob_team.blobstrain.expand_reaction(src, new_tile, target, controller)
+				strain.expand_reaction(src, new_tile, target, controller)
 			return new_tile
 		else
 			blob_attack_animation(target, controller)

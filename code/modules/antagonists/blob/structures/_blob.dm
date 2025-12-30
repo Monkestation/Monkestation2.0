@@ -54,7 +54,7 @@
 	if(!QDELETED(src)) //Consuming our tile can in rare cases cause us to del
 		AddElement(/datum/element/swabable, CELL_LINE_TABLE_BLOB, CELL_VIRUS_TABLE_GENERIC, 2, 2)
 
-/obj/structure/blob/Destroy()
+/obj/structure/blob/Destroy(force)
 	if(atmosblock)
 		atmosblock = FALSE
 		air_update_turf(TRUE, FALSE)
@@ -253,7 +253,6 @@
 ///Update our blob_team to the passed value, returns our old team if we had one and changed team
 /obj/structure/blob/proc/set_owner(datum/team/blob/new_owner, update_visuals = TRUE)
 	if(new_owner == blob_team)
-		message_admins("4")
 		return FALSE
 
 	. = blob_team

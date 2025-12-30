@@ -25,17 +25,15 @@
 	else
 		desc = "A thick wall of lifeless tendrils."
 
-/obj/structure/blob/normal/update_icon_state()
-	icon_state = "blob[(atom_integrity <= 15) ? "_damaged" : null]"
-
-	/// - [] TODO: Move this elsewhere
+/obj/structure/blob/normal/update_integrity(new_value)
+	. = ..()
 	if(atom_integrity <= 15)
 		brute_resist = BLOB_BRUTE_RESIST
-	else if (blob_team)
-		brute_resist = BLOB_BRUTE_RESIST * 0.5
 	else
 		brute_resist = BLOB_BRUTE_RESIST * 0.5
-	return ..()
+
+/obj/structure/blob/normal/update_icon_state()
+	icon_state = "blob[(atom_integrity <= 15) ? "_damaged" : null]"
 
 /obj/structure/blob/normal/handle_ctrl_click(mob/eye/blob/overmind)
 	if(overmind.buy(BLOB_UPGRADE_STRONG_COST))

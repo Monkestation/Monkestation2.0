@@ -396,8 +396,8 @@
 		return FALSE
 	return TRUE
 
-/obj/item/blob_act(obj/structure/blob/B)
-	if(B && B.loc == loc)
+/obj/item/blob_act(obj/structure/blob/attacking_blob)
+	if(attacking_blob && attacking_blob.loc == loc)
 		atom_destruction(MELEE)
 
 /**Makes cool stuff happen when you suicide with an item
