@@ -10,7 +10,7 @@
 	actions_types = list(/datum/action/item_action/toggle)
 	slot_flags = ITEM_SLOT_FEET
 	body_parts_covered = FEET
-	supports_variations_flags = CLOTHING_NO_VARIATION
+	supports_variations_flags = NONE
 	var/enabled_waddle = TRUE
 
 /obj/item/clothing/shoes/magboots/boomboots/Initialize(mapload)

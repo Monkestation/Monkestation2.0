@@ -253,6 +253,25 @@
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/snout
 
+	/// Offset to apply to equipment worn on the mouth we give to the head.
+	var/datum/worn_feature_offset/worn_mask_offset
+
+/obj/item/organ/external/snout/add_to_limb(obj/item/bodypart/head/bodypart)
+	. = ..()
+	if(isnull(bodypart.worn_mask_offset))
+		worn_mask_offset = bodypart.worn_mask_offset = new(
+			attached_part = bodypart,
+			feature_key = OFFSET_FACEMASK,
+			offset_x = list("east" = 1, "west" = -1),
+		)
+
+/obj/item/organ/external/snout/remove_from_limb()
+	var/obj/item/bodypart/head/head_part = ownerlimb
+	if(worn_mask_offset)
+		QDEL_NULL(worn_mask_offset)
+		head_part.worn_mask_offset = null
+	return ..()
+
 /datum/bodypart_overlay/mutant/snout
 	layers = EXTERNAL_ADJACENT
 	feature_key = "snout"

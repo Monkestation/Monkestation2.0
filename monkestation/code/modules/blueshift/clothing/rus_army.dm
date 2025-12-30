@@ -152,7 +152,7 @@
 	icon = 'monkestation/code/modules/blueshift/icons/surplus_armor/surplus_armor_object.dmi'
 	icon_state = "vest_basic"
 	armor_type = /datum/armor/cin_surplus_armor
-	supports_variations_flags = CLOTHING_NO_VARIATION
+	supports_variations_flags = NONE
 
 /obj/item/clothing/suit/armor/vest/cin_surplus_vest/Initialize(mapload)
 	. = ..()
