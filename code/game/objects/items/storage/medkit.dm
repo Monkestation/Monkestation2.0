@@ -101,7 +101,7 @@
 		/obj/item/reagent_containers/hypospray/medipen = 1,
 		/obj/item/reagent_containers/hypospray/medipen/morphine = 1,
 	)
-	generate_items_inside(items_inside,src)
+	generate_items_inside(items_inside, src)
 
 /obj/item/storage/medkit/emergency
 	icon_state = "medbriefcase"
@@ -119,7 +119,7 @@
 		/obj/item/reagent_containers/hypospray/medipen/ekit = 2,
 		/obj/item/storage/pill_bottle/iron = 1,
 	)
-	generate_items_inside(items_inside,src)
+	generate_items_inside(items_inside, src)
 
 /obj/item/storage/medkit/surgery
 	name = "surgical medkit"
@@ -147,7 +147,7 @@
 		/obj/item/hemostat = 1,
 		/obj/item/cautery = 1,
 	)
-	generate_items_inside(items_inside,src)
+	generate_items_inside(items_inside, src)
 
 /obj/item/storage/medkit/ancient
 	icon_state = "oldfirstaid"
@@ -160,7 +160,7 @@
 		/obj/item/stack/medical/gauze = 1,
 		/obj/item/stack/medical/bruise_pack = 3,
 		/obj/item/stack/medical/ointment= 3)
-	generate_items_inside(items_inside,src)
+	generate_items_inside(items_inside, src)
 
 /obj/item/storage/medkit/ancient/heirloom
 	desc = "A first aid kit with the ability to heal common types of injuries. You start thinking of the good old days just by looking at it."
@@ -188,7 +188,7 @@
 		/obj/item/reagent_containers/spray/hercuri = 1,
 		/obj/item/reagent_containers/hypospray/medipen/oxandrolone = 1,
 		/obj/item/reagent_containers/hypospray/medipen/burn_painkiller = 1)
-	generate_items_inside(items_inside,src)
+	generate_items_inside(items_inside, src)
 
 /obj/item/storage/medkit/toxin
 	name = "toxin treatment kit"
@@ -214,7 +214,7 @@
 		/obj/item/reagent_containers/hypospray/medipen/penacid = 1,
 		/obj/item/healthanalyzer/simple/disease = 1,
 		)
-	generate_items_inside(items_inside,src)
+	generate_items_inside(items_inside, src)
 
 /obj/item/storage/medkit/o2
 	name = "oxygen deprivation treatment kit"
@@ -238,7 +238,7 @@
 		/obj/item/reagent_containers/hypospray/medipen/salbutamol = 1,
 		/obj/item/reagent_containers/hypospray/medipen = 1,
 		/obj/item/storage/pill_bottle/iron = 1)
-	generate_items_inside(items_inside,src)
+	generate_items_inside(items_inside, src)
 
 /obj/item/storage/medkit/brute
 	name = "brute trauma treatment kit"
@@ -264,7 +264,7 @@
 		/obj/item/reagent_containers/hypospray/medipen/salacid = 1,
 		/obj/item/reagent_containers/hypospray/medipen/brute_painkiller = 1,
 		)
-	generate_items_inside(items_inside,src)
+	generate_items_inside(items_inside, src)
 
 /obj/item/storage/medkit/advanced
 	name = "advanced first aid kit"
@@ -285,7 +285,7 @@
 		/obj/item/reagent_containers/hypospray/medipen/atropine = 2,
 		/obj/item/stack/medical/gauze/plastiseal = 1,
 		/obj/item/storage/pill_bottle/penacid = 1)
-	generate_items_inside(items_inside,src)
+	generate_items_inside(items_inside, src)
 
 /obj/item/storage/medkit/tactical
 	name = "tactical medical kit"
@@ -320,7 +320,7 @@
 		/obj/item/hemostat = 1,
 		/obj/item/cautery = 1,
 	)
-	generate_items_inside(items_inside,src)
+	generate_items_inside(items_inside, src)
 
 /// Gets what skin (icon_state) this medkit uses for a medbot
 /obj/item/storage/medkit/proc/get_medbot_skin()
@@ -355,7 +355,7 @@
 		/obj/item/reagent_containers/medigel/sterilizine = 1,
 		/obj/item/clothing/glasses/hud/health/night/science = 1,
 	)
-	generate_items_inside(items_inside,src)
+	generate_items_inside(items_inside, src)
 
 //------------------------------------------------------------------------------------------------
 // Combat Medkits. The better tactical medkits. TO-DO: Go and replace tactical medkits with these.
@@ -390,7 +390,7 @@
 		/obj/item/reagent_containers/hypospray/medipen/advanced/salbutamol = 1,
 		/obj/item/reagent_containers/hypospray/medipen/advanced/penacid = 1,
 	)
-	generate_items_inside(items_inside,src)
+	generate_items_inside(items_inside, src)
 
 /obj/item/storage/medkit/combat/surgery
 	name = "combat surgical kit"
@@ -417,7 +417,7 @@
 		/obj/item/reagent_containers/medigel/advanced = 1,
 		/obj/item/reagent_containers/hypospray/combat/anti_tox = 1,
 	)
-	generate_items_inside(items_inside,src)
+	generate_items_inside(items_inside, src)
 
 //medibot assembly
 /obj/item/storage/medkit/tool_act(mob/living/user, obj/item/tool, list/modifiers)

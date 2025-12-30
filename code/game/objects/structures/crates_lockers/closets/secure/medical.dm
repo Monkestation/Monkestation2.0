@@ -16,7 +16,7 @@
 		/obj/item/reagent_containers/cup/bottle/epinephrine= 3,
 		/obj/item/reagent_containers/cup/bottle/multiver = 3,
 		/obj/item/storage/box/rxglasses = 1)
-	generate_items_inside(items_inside,src)
+	generate_items_inside(items_inside, src)
 
 /obj/structure/closet/secure_closet/medical2
 	name = "anesthetic closet"

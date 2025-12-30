@@ -11,7 +11,7 @@
 		/obj/item/implantpad = 1,
 		/obj/item/locator = 1,
 	)
-	generate_items_inside(items_inside,src)
+	generate_items_inside(items_inside, src)
 
 /obj/item/storage/box/minertracker
 	name = "boxed miner tracking implant kit"
@@ -25,7 +25,7 @@
 		/obj/item/implantpad = 1,
 		/obj/item/locator = 1,
 	)
-	generate_items_inside(items_inside,src)
+	generate_items_inside(items_inside, src)
 
 /obj/item/storage/box/chemimp
 	name = "boxed chemical implant kit"
@@ -38,7 +38,7 @@
 		/obj/item/implanter = 1,
 		/obj/item/implantpad = 1,
 	)
-	generate_items_inside(items_inside,src)
+	generate_items_inside(items_inside, src)
 
 /obj/item/storage/box/exileimp
 	name = "boxed exile implant kit"
@@ -51,7 +51,7 @@
 		/obj/item/implanter = 1,
 		/obj/item/implantpad = 1,
 	)
-	generate_items_inside(items_inside,src)
+	generate_items_inside(items_inside, src)
 
 /obj/item/storage/box/teleport_blocker
 	name = "boxed bluespace grounding implant kit"
@@ -64,4 +64,4 @@
 		/obj/item/implanter = 1,
 		/obj/item/implantpad = 1,
 	)
-	generate_items_inside(items_inside,src)
+	generate_items_inside(items_inside, src)

@@ -65,7 +65,7 @@
 		/obj/item/uplink/nuclear/debug=1,
 		/obj/item/clothing/ears/earmuffs/debug = 1,
 		)
-	generate_items_inside(items_inside,src)
+	generate_items_inside(items_inside, src)
 
 //---- Box of gun boxes
 /obj/item/storage/box/debugbox/guns

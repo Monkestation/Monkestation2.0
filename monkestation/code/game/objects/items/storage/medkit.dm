@@ -14,7 +14,7 @@
 		/obj/item/bonesetter = 1,
 		/obj/item/blood_filter = 1,
 	)
-	generate_items_inside(items_inside,src)
+	generate_items_inside(items_inside, src)
 
 /obj/item/storage/pill_bottle/radiomagnetic_disruptor
 	name = "bottle of radiomagnetic disruptor pills"

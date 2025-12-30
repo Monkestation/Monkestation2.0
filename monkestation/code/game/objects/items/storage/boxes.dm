@@ -37,7 +37,7 @@
 		/obj/item/storage/pill_bottle/paxpsych = 1,
 		/obj/item/storage/pill_bottle/psicodine = 1,
 	)
-	generate_items_inside(items_inside,src)
+	generate_items_inside(items_inside, src)
 
 /obj/item/storage/box/nanitecontrol
 	name = "Nanite Controller Box"

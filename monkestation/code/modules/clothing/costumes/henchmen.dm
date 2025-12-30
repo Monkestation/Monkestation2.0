@@ -82,14 +82,14 @@
 		/obj/item/clothing/shoes/laceup = 1,
 		/obj/item/switchblade = 1,
 	)
-	generate_items_inside(items_inside,src)
+	generate_items_inside(items_inside, src)
 
 /obj/item/storage/backpack/duffelbag/henchmen_traitor_outfits
 /obj/item/storage/backpack/duffelbag/henchmen_traitor_outfits/PopulateContents()
 	var/list/items_inside = list(
 		/obj/item/storage/box/syndicate/henchmen_traitor_outfit = 5,
 	)
-	generate_items_inside(items_inside,src)
+	generate_items_inside(items_inside, src)
 
 /datum/uplink_item/bundles_tc/henchmen_traitor_outfits
 	name = "Henchmen Bundle"

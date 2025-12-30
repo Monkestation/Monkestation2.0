@@ -132,7 +132,7 @@
 		/obj/item/stock_parts/matter_bin = 2,
 		/obj/item/wrench = 1,
 	)
-	generate_items_inside(items_inside,src)
+	generate_items_inside(items_inside, src)
 
 /obj/item/storage/box/actionfigure
 	name = "box of action figures"

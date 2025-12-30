@@ -12,4 +12,4 @@
 		/obj/item/stack/package_wrap/small = 2,
 		/obj/item/stack/wrapping_paper/small = 1,
 	)
-	generate_items_inside(items_inside,src)
+	generate_items_inside(items_inside, src)

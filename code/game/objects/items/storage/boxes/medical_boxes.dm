@@ -83,7 +83,7 @@
 		/obj/item/dnainjector/h2m = 3,
 		/obj/item/dnainjector/m2h = 3,
 	)
-	generate_items_inside(items_inside,src)
+	generate_items_inside(items_inside, src)
 
 /obj/item/storage/box/bodybags
 	name = "body bags"
