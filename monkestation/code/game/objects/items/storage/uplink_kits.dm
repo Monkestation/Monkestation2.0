@@ -60,7 +60,7 @@
 	new /obj/item/melee/baton/telescopic/contractor_baton(src)
 
 	// You get one item from each sub list
-	var/static/list/item_list = list(
+	var/list/item_list = list(
 		KIT_ITEM_CATEGORY_SUPPORT = list(
 			/obj/item/pen/sleepy,
 			/obj/item/storage/medkit/tactical,
@@ -110,7 +110,7 @@
 
 /obj/item/storage/box/syndie_kit/contract_kit/midround/PopulateContents()
 	// You get one item from each sub list
-	var/static/list/item_list = list(
+	var/list/item_list = list(
 		KIT_ITEM_CATEGORY_SUPPORT = list(
 			/obj/item/pen/sleepy,
 			/obj/item/storage/medkit/tactical,
