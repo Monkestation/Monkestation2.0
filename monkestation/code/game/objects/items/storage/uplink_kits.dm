@@ -19,7 +19,7 @@
 	icon_state = "syndiebox"
 
 /obj/item/storage/box/syndimaid/PopulateContents()
-	var/static/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/clothing/head/maidheadband/syndicate = 1,
 		/obj/item/clothing/under/syndicate/skirt/maid = 1,
 		/obj/item/clothing/gloves/combat/maid = 1,
@@ -33,7 +33,7 @@
 	icon_state = "syndiebox"
 
 /obj/item/storage/box/syndibunny/PopulateContents()
-	var/static/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/clothing/head/playbunnyears/syndicate = 1,
 		/obj/item/clothing/under/syndicate/syndibunny = 1,
 		/obj/item/clothing/suit/jacket/tailcoat/syndicate = 1,
@@ -166,7 +166,7 @@
 	icon_state = "syndiebox"
 
 /obj/item/storage/box/clonearmy/PopulateContents()
-	var/static/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/disk/clonearmy = 1,
 		/obj/item/stack/sheet/iron = 15,
 		/obj/item/stack/sheet/glass = 4,

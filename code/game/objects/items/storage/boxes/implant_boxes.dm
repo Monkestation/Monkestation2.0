@@ -5,7 +5,7 @@
 	illustration = "implant"
 
 /obj/item/storage/box/trackimp/PopulateContents()
-	var/static/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/implantcase/tracking = 4,
 		/obj/item/implanter = 1,
 		/obj/item/implantpad = 1,
@@ -19,7 +19,7 @@
 	illustration = "implant"
 
 /obj/item/storage/box/minertracker/PopulateContents()
-	var/static/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/implantcase/tracking/miner = 3,
 		/obj/item/implanter = 1,
 		/obj/item/implantpad = 1,
@@ -33,7 +33,7 @@
 	illustration = "implant"
 
 /obj/item/storage/box/chemimp/PopulateContents()
-	var/static/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/implantcase/chem = 5,
 		/obj/item/implanter = 1,
 		/obj/item/implantpad = 1,
@@ -46,7 +46,7 @@
 	illustration = "implant"
 
 /obj/item/storage/box/exileimp/PopulateContents()
-	var/static/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/implantcase/exile = 5,
 		/obj/item/implanter = 1,
 		/obj/item/implantpad = 1,
@@ -59,7 +59,7 @@
 	illustration = "implant"
 
 /obj/item/storage/box/teleport_blocker/PopulateContents()
-	var/static/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/implantcase/teleport_blocker = 4,
 		/obj/item/implanter = 1,
 		/obj/item/implantpad = 1,

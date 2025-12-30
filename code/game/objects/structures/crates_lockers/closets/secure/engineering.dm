@@ -118,7 +118,7 @@
 
 /obj/structure/closet/secure_closet/shipbreaker/PopulateContents()
 	..()
-	var/static/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/storage/toolbox/electrical = 1,
 		/obj/item/melee/sledgehammer = 1,
 		/obj/item/weldingtool/electric/raynewelder = 1,

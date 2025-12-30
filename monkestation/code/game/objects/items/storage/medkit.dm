@@ -1,7 +1,7 @@
 /obj/item/storage/medkit/surgery/cmo/PopulateContents()
 	if(empty)
 		return
-	var/static/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/healthanalyzer/advanced = 1,
 		/obj/item/stack/medical/gauze/twelve = 1,
 		/obj/item/stack/medical/suture = 2,
