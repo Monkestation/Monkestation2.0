@@ -1269,3 +1269,242 @@ $border-width-px: $border-width * 1px;
     );
   }
 }
+
+/* Monkestation-specific stuff */
+
+.radioradio {
+  color: hsl(349.5, 100%, 87.6%) !important;
+}
+
+.copperplate {
+  font-family: copperplate;
+}
+
+.brass {
+  color: hsl(42.6, 100%, 37.3%);
+}
+
+.big_brass {
+  color: hsl(42.6, 100%, 37.3%);
+  font-size: 24px;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.clockyellow {
+  color: hsl(45.2, 80.2%, 47.5%);
+  font-weight: bold;
+  font-style: italic;
+}
+
+.clockgray {
+  color: hsl(212.7, 7.7%, 28%);
+  font-weight: bold;
+  font-style: italic;
+}
+
+.clockred {
+  color: hsl(345.8, 100%, 21.6%);
+  font-weight: bold;
+  font-style: italic;
+}
+
+.ratvar {
+  color: hsl(42.6, 100%, 37.3%);
+  font-size: 48px;
+  font-weight: bold;
+  font-style: italic;
+  animation: ratvarcolor 5000ms infinite;
+}
+
+@keyframes ratvarcolor {
+  0% {
+    color: hsl(0, 0%, 5.1%);
+  }
+  9% {
+    color: hsl(42.6, 100%, 37.3%);
+  }
+  18% {
+    color: hsl(0, 0%, 5.1%);
+  }
+  27% {
+    color: hsl(212.7, 7.7%, 28%);
+  }
+  36% {
+    color: hsl(0, 0%, 5.1%);
+  }
+  45% {
+    color: hsl(300, 89.2%, 36.3%);
+  }
+  54% {
+    color: hsl(0, 0%, 5.1%);
+  }
+  63% {
+    color: hsl(206.2, 76.5%, 50%);
+  }
+  72% {
+    color: hsl(0, 0%, 5.1%);
+  }
+  81% {
+    color: hsl(45.2, 80.2%, 47.5%);
+  }
+  90% {
+    color: hsl(0, 0%, 5.1%);
+  }
+  100% {
+    color: hsl(345.8, 100%, 21.6%);
+  }
+}
+
+.uncommonradio {
+  color: hsl(196.8, 26.8%, 58.2%);
+}
+
+.honk {
+  color: hsl(326, 100%, 72%);
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+}
+
+.looc {
+  color: hsl(47.9, 100%, 68%);
+  font-weight: bold;
+}
+
+.death_message {
+  display: block;
+  color: white;
+  text-align: center;
+  background-color: black;
+  border: 2px solid rgb(240, 62, 225);
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px 20px;
+}
+
+// blueshift ports
+.pink {
+  color: hsl(300, 100%, 50%);
+  font-weight: bold;
+}
+
+.brown {
+  color: hsl(26.5, 74.3%, 13.7%);
+  font-weight: bold;
+}
+
+.orange {
+  color: hsl(34.9, 75.2%, 41.2%);
+  font-weight: bold;
+}
+
+.yellow {
+  color: hsl(53.8, 63.8%, 47.6%);
+  font-weight: bold;
+}
+
+.cyan {
+  color: hsl(199.2, 88.5%, 47.8%);
+  font-weight: bold;
+}
+
+.kbity {
+  background: linear-gradient(
+    90deg,
+    hsl(351, 100%, 85.7%),
+    hsl(330, 100%, 70.6%),
+    hsl(302.3, 58.9%, 64.7%),
+    hsl(288.1, 58.9%, 58%),
+    hsl(351, 100%, 85.7%)
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: kbity_gradient 6s linear infinite;
+}
+
+@keyframes kbity_gradient {
+  from {
+    background-position: 0% center;
+  }
+  to {
+    background-position: 200% center;
+  }
+}
+
+// Job color stuff
+$job-colors: (
+  // Command
+  'rawcommand': hsl(223.5, 64.5%, 75.7%),
+  'bridgeassistant': hsl(223.5, 64.5%, 75.7%),
+  'captain': hsl(39.3, 75.3%, 69.8%),
+  'actingcaptain': hsl(39.3, 75.3%, 69.8%),
+  // Service
+  'rawservice': hsl(110.4, 43.1%, 74.5%),
+  'assistant': hsl(0, 0%, 80%),
+  'headofpersonnel': hsl(231, 92.2%, 64.7%),
+  'bartender': hsl(122.1, 22.2%, 75.3%),
+  'botanist': hsl(109.2, 57.4%, 69.6%),
+  'cook': hsl(135.5, 91.8%, 81%),
+  'chaplain': hsl(122.9, 21.9%, 62.4%),
+  'curator': hsl(135.7, 37.6%, 66.1%),
+  'janitor': hsl(169.9, 54.6%, 68%),
+  'lawyer': hsl(0, 34.7%, 62.2%),
+  'mime': hsl(122.4, 22.1%, 77.8%),
+  'clown': hsl(319.4, 100%, 75.7%),
+  'explorer': hsl(156.9, 51.6%, 68.4%),
+  'barber': hsl(27.7, 26.5%, 52%),
+  // Cargo
+  'rawcargo': hsl(38.5, 50%, 69.4%),
+  'quartermaster': hsl(37.9, 51.1%, 55.1%),
+  'cargotechnician': hsl(30.3, 52.4%, 63.7%),
+  'shaftminer': hsl(17.2, 44.9%, 65.1%),
+  // Engineering
+  'rawengineering': hsl(38.4, 54.7%, 73.1%),
+  'chiefengineer': hsl(47.1, 49.2%, 62.9%),
+  'stationengineer': hsl(37.6, 73.3%, 70.6%),
+  'atmospherictechnician': hsl(24.1, 50.3%, 66.1%),
+  'signaltech': hsl(24, 100%, 68.6%),
+  // Medical
+  'rawmedical': hsl(192.9, 46.8%, 72.7%),
+  'chiefmedicalofficer': hsl(189.1, 94.9%, 61.8%),
+  'medicaldoctor': hsl(193.5, 43.4%, 59.8%),
+  'paramedic': hsl(167.2, 26.6%, 65.3%),
+  'virologist': hsl(168.2, 48%, 56.3%),
+  'chemist': hsl(193.4, 43.7%, 65.9%),
+  'psychiatrist': hsl(193.8, 37.6%, 66.1%),
+  // R&D
+  'rawscience': hsl(288, 52.4%, 79.4%),
+  'researchdirector': hsl(288.1, 36.8%, 48.4%),
+  'scientist': hsl(300, 43.1%, 61.4%),
+  'roboticist': hsl(288.5, 34.6%, 58.6%),
+  'geneticist': hsl(184, 31.9%, 63.1%),
+  'xenobiologist': hsl(300, 100%, 83.7%),
+  // Security
+  'rawsecurity': hsl(0, 33.9%, 78.6%),
+  'headofsecurity': hsl(351.1, 82.8%, 56.7%),
+  'warden': hsl(356, 70.7%, 54.5%),
+  'securityofficer': hsl(0, 57.3%, 77.1%),
+  'detective': hsl(0, 34.9%, 66.3%),
+  'brigphysician': hsl(332.4, 32.2%, 54.9%),
+  'secass': hsl(0, 43.3%, 88.2%),
+  // CentCom
+  'rawcentcom': hsl(105.5, 50.3%, 61.4%),
+  'centcom': hsl(104.9, 67.1%, 51.2%),
+  'blueshield': hsl(240, 100%, 63.3%),
+  'ert': hsl(204, 100%, 56.9%),
+  // MISC - job
+  'vip': hsl(49, 69%, 65.9%),
+  'king': hsl(49, 69%, 65.9%),
+  'prisoner': hsl(23.2, 57.5%, 59.4%),
+  'syndicate': hsl(0, 24.8%, 51%),
+  'notcentcom': hsl(240.6, 76.9%, 74.5%),
+  'unassigned': hsl(30, 30.6%, 85.9%),
+  'unknown': hsl(36.9, 11.7%, 78.2%)
+);
+
+@each $job-name, $job-color in $job-colors {
+  .job__#{$job-name} {
+    color: $job-color;
+  }
+}
