@@ -771,15 +771,15 @@
 	scan_target = target
 
 /datum/antagonist/rev/proc/determine_pointer_add(mob/living/revolter)
-	if (job_rank == ROLE_REV)	// Regular revs know where the closer leader is.
+	if (job_rank == ROLE_REV)	// Regular revs know where the closest leader is.
 		revolter.apply_status_effect(/datum/status_effect/agent_pinpointer/hunt_rev_head)
 	else					// Rev heads know where command is.
 		revolter.apply_status_effect(/datum/status_effect/agent_pinpointer/hunt_command)
 
 /datum/antagonist/rev/proc/determine_pointer_remove(mob/living/revolter)
-	if (job_rank == ROLE_REV)	// Regular revs know where the closer leader is.
+	if (job_rank == ROLE_REV)
 		revolter.remove_status_effect(/datum/status_effect/agent_pinpointer/hunt_rev_head)
-	else					// Rev heads know where command is.
+	else
 		revolter.remove_status_effect(/datum/status_effect/agent_pinpointer/hunt_command)
 
 
