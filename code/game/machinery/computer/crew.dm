@@ -93,6 +93,8 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 	var/list/data_by_z = list()
 	/// Cache of last update time for each z-level
 	var/list/last_update = list()
+	/// Do we only track the vitals of the jobs listed?
+	var/jobs_only = FALSE
 	/// Map of job to ID for sorting purposes
 	var/list/jobs = list(
 		// Note that jobs divisible by 10 are considered heads of staff, and bolded
@@ -266,11 +268,16 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		// ID and id-related data
 		var/obj/item/card/id/id_card = tracked_living_mob.get_idcard(hand_first = FALSE)
 		if (id_card)
+			var/trim_assignment = id_card.get_trim_assignment()
+			if(jobs[trim_assignment] == null && jobs_only)
+				continue
 			entry["name"] = id_card.registered_name
 			entry["assignment"] = id_card.assignment
-			var/trim_assignment = id_card.get_trim_assignment()
 			if (jobs[trim_assignment] != null)
 				entry["ijob"] = jobs[trim_assignment]
+
+		else if(jobs_only)
+			continue
 
 		// MONKESTATION EDIT ADDITION START - Checking for robotic race
 		if (isipc(tracked_living_mob))
@@ -314,5 +321,57 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 				return
 			AI.ai_tracking_tool.track_name(AI, params["name"])
 
+GLOBAL_DATUM_INIT(crewmonitor_command, /datum/crewmonitor/command, new)
+
+//list of all Command/CC jobs
+/datum/crewmonitor/command
+	jobs_only = TRUE
+	jobs = list(
+		JOB_CAPTAIN = 00,
+		JOB_HEAD_OF_SECURITY = 10,
+		JOB_CHIEF_MEDICAL_OFFICER = 20,
+		JOB_RESEARCH_DIRECTOR = 30,
+		JOB_CHIEF_ENGINEER = 40,
+		JOB_HEAD_OF_PERSONNEL = 60,
+		JOB_CENTCOM_ADMIRAL = 200,
+		JOB_CENTCOM = 201,
+		JOB_CENTCOM_OFFICIAL = 210,
+		JOB_CENTCOM_COMMANDER = 211,
+		JOB_CENTCOM_BARTENDER = 212,
+		JOB_CENTCOM_CUSTODIAN = 213,
+		JOB_CENTCOM_MEDICAL_DOCTOR = 214,
+		JOB_CENTCOM_RESEARCH_OFFICER = 215,
+		JOB_ERT_COMMANDER = 220,
+		JOB_ERT_OFFICER = 221,
+		JOB_ERT_ENGINEER = 222,
+		JOB_ERT_MEDICAL_DOCTOR = 223,
+		JOB_ERT_CLOWN = 224,
+		JOB_ERT_CHAPLAIN = 225,
+		JOB_ERT_JANITOR = 226,
+		JOB_ERT_DEATHSQUAD = 227,
+		JOB_NANOTRASEN_REPRESENTATIVE = 230,
+		JOB_BLUESHIELD = 231,
+	)
+
+GLOBAL_DATUM_INIT(crewmonitor_security, /datum/crewmonitor/security, new)
+
+//list of all security jobs
+/datum/crewmonitor/security
+	jobs_only = TRUE
+	jobs = list(
+		JOB_HEAD_OF_SECURITY = 10,
+		JOB_WARDEN = 11,
+		JOB_SECURITY_OFFICER = 12,
+		JOB_SECURITY_OFFICER_MEDICAL = 13,
+		JOB_SECURITY_OFFICER_ENGINEERING = 14,
+		JOB_SECURITY_OFFICER_SCIENCE = 15,
+		JOB_SECURITY_OFFICER_SUPPLY = 16,
+		JOB_DETECTIVE = 17,
+		JOB_SECURITY_ASSISTANT = 18,
+		JOB_BRIG_PHYSICIAN = 19,
+		JOB_PRISONER = 998,
+	)
+
 #undef SENSORS_UPDATE_PERIOD
 #undef UNKNOWN_JOB_ID
+

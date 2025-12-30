@@ -23,7 +23,7 @@
 
 	var/atk_verb = pick("left hook","right hook","straight punch")
 
-	var/damage = 25
+	var/damage = 12.5
 	if(!damage)
 		playsound(defender.loc, active_arm.unarmed_miss_sound, 25, TRUE, -1)
 		defender.visible_message(span_warning("[attacker]'s [atk_verb] misses [defender]!"), \
@@ -44,7 +44,7 @@
 
 	defender.apply_damage(damage, STAMINA, affecting, armor_block)
 	log_combat(attacker_human, defender, "punched (boxing) ")
-	if(defender.stamina.loss > 235 && istype(defender.mind?.martial_art, /datum/martial_art/boxing))
+	if(defender.stamina.loss > 85 && istype(defender.mind?.martial_art, /datum/martial_art/boxing))
 		var/knockout_prob = 10 // 10% chance to win by knockout when they are around one hit from stam crit anyways
 		if((defender.stat != DEAD) && prob(knockout_prob))
 			defender.visible_message(span_danger("[attacker_human] knocks [defender] out with a haymaker!"), \

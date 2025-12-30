@@ -26,7 +26,7 @@
 		to_chat(user, span_warning("[user]'s taser jams, sputtering acid onto [user]!"))
 		target = user //get tased
 		user.apply_damage(24, BURN, spread_damage = TRUE, wound_bonus = 10)
-		user.apply_damage(150, STAMINA)
+		user.apply_damage(75, STAMINA)
 		if(prob(25))
 			user.adjust_fire_stacks(2)
 		user.ignite_mob()

@@ -435,7 +435,7 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 /datum/loadout_item/head/constable
 	name = "Constable Helmet"
 	item_path = /obj/item/clothing/head/costume/constable
-	restricted_roles = list(JOB_SECURITY_ASSISTANT, JOB_BRIG_PHYSICIAN, JOB_SECURITY_OFFICER, JOB_WARDEN, JOB_HEAD_OF_SECURITY)
+	restricted_roles = list(JOB_SECURITY_ASSISTANT, JOB_SECURITY_OFFICER, JOB_WARDEN, JOB_HEAD_OF_SECURITY)
 	requires_purchase = FALSE
 
 /// EVERYTHING NOVA RELATED
