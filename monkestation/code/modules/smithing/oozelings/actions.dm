@@ -95,7 +95,7 @@
 	user.visible_message(span_purple("[user]'s outer membrane returns to normal, [owner.p_their()] body drawing the oily coat back inside!"), span_purple("Your outer membrane returns to normal, water being dangerous to you again."))
 
 /datum/movespeed_modifier/status_effect/slime_hydrophobia
-	multiplicative_slowdown = 1.5
+	multiplicative_slowdown = 2.25 // doing this should cripple you, so only in the most dire of circumstances like theres a chemsprayer against you.
 
 /datum/status_effect/slime_hydrophobia
 	id = "slime_hydrophobia"

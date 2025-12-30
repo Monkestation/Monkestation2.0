@@ -119,7 +119,7 @@
 		return
 
 	if(wetness.stacks > DAMAGE_WATER_STACKS)
-		remove_blood_volume(slime, 2 * seconds_per_tick)
+		remove_blood_volume(slime, 2.75 * seconds_per_tick)
 		slime.balloon_alert(slime, "too wet, dry off!")
 		if(SPT_PROB(25, seconds_per_tick))
 			slime.visible_message(span_danger("[slime]'s form begins to lose cohesion, seemingly diluting with the water!"), span_warning("The water starts to dilute your body, dry it off!"))
@@ -177,7 +177,7 @@
 
 /// Multiplier for how much blood is lost when sprayed with water.
 /datum/species/oozeling/proc/water_damage_multiplier(mob/living/carbon/human/slime)
-	. = 1
+	. = 1.8
 
 	var/protection_flags = NONE
 	for(var/obj/item/clothing/worn in slime.get_equipped_items())
@@ -251,7 +251,7 @@
 		if(HAS_TRAIT(slime, TRAIT_SLIME_HYDROPHOBIA) || HAS_TRAIT(slime, TRAIT_GODMODE) || slime.blood_volume <= 0)
 			return ..()
 
-		remove_blood_volume(slime, 3 * seconds_per_tick)
+		remove_blood_volume(slime, 8 * seconds_per_tick)
 		chem.holder?.remove_reagent(chem.type, min(chem.volume * 0.22, 10))
 		if(SPT_PROB(25, seconds_per_tick))
 			to_chat(slime, span_warning("The water starts to weaken and adulterate your insides!"))
