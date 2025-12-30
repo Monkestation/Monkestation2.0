@@ -37,7 +37,7 @@
 
 	src.shell_flags = shell_flags || src.shell_flags
 	src.capacity = capacity || src.capacity
-	src.blacklisted_integrated_circuits = blacklisted_integrated_circuits
+	src.blacklisted_integrated_circuits = typecacheof(blacklisted_integrated_circuits)
 	set_unremovable_circuit_components(unremovable_circuit_components)
 
 	if(starting_circuit)
@@ -195,7 +195,7 @@
 	if(!istype(item, /obj/item/integrated_circuit))
 		return
 
-	if(item.type in blacklisted_integrated_circuits)
+	if(is_type_in_typecache(item, blacklisted_integrated_circuits))
 		source.balloon_alert(attacker, "incompatible circuit!")
 		return
 
