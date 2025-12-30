@@ -72,9 +72,7 @@
 			target.apply_damage(20, BRUTE, spread_damage = TRUE, wound_bonus = CANT_WOUND)
 		else
 			var/datum/stamina_container/stamina = target.stamina
-			stamina.adjust(-65)
-			if(stamina.is_regenerating) // resets stamina cooldown if they're regenerating
-				stamina.pause(STAMINA_REGEN_TIME)
+			stamina.adjust(-30)
 		if(effect_flags & STAFF_UPGRADE_CONFUSION)
 			target.adjust_confusion(4 SECONDS)
 

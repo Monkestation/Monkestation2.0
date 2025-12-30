@@ -54,38 +54,6 @@
 		)
 	job = /datum/job/blueshield
 
-/datum/id_trim/job/brig_physician
-	assignment = "Brig Physician"
-	trim_state = "trim_brigphysician"
-	department_color = COLOR_SECURITY_RED
-	subdepartment_color = COLOR_MEDICAL_BLUE
-	sechud_icon_state = SECHUD_BRIG_PHYSICIAN
-	minimal_access = list(
-		ACCESS_BRIG_ENTRANCE,
-		ACCESS_BRIG_PHYSICIAN,
-		ACCESS_BRIG,
-		ACCESS_COURT,
-		ACCESS_MAINT_TUNNELS,
-		ACCESS_MECH_MEDICAL,
-		ACCESS_MECH_SECURITY,
-		ACCESS_MEDICAL,
-		ACCESS_MINERAL_STOREROOM,
-		ACCESS_MORGUE,
-		ACCESS_PHARMACY,
-		ACCESS_SECURITY,
-		ACCESS_SURGERY,
-		ACCESS_WEAPONS,
-		)
-	extra_access = list(
-		ACCESS_DETECTIVE,
-		)
-	template_access = list(
-		ACCESS_CAPTAIN,
-		ACCESS_CHANGE_IDS,
-		ACCESS_HOS,
-		)
-	job = /datum/job/brig_physician
-
 /datum/id_trim/job/explorer
 	assignment = "Explorer"
 	trim_state = "trim_explorer"

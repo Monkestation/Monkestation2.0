@@ -286,6 +286,7 @@
 	icon_state = "hostanclothes"
 	inhand_icon_state = null
 	worn_icon = 'icons/mob/clothing/under/security.dmi'
+	worn_icon_digitigrade = 'icons/mob/clothing/under/security_digi.dmi'
 	alt_covers_chest = TRUE
 	armor_type = /datum/armor/costume_russian_officer
 	strip_delay = 50

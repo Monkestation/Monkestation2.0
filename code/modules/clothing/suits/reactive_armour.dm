@@ -302,7 +302,7 @@
 	owner.visible_message("<font color='red' size='3'>[owner] GOES ON THE TABLE!!!</font>")
 	owner.Knockdown(30)
 	owner.apply_damage(10, BRUTE)
-	owner.apply_damage(40, STAMINA)
+	owner.apply_damage(20, STAMINA)
 	playsound(owner, 'sound/effects/tableslam.ogg', 90, TRUE)
 	owner.add_mood_event("table", /datum/mood_event/table)
 	do_teleport(owner, get_turf(owner), tele_range, no_effects = TRUE, channel = TELEPORT_CHANNEL_BLUESPACE)

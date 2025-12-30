@@ -34,6 +34,7 @@
 		JOB_CHAPLAIN,
 		JOB_CHIEF_ENGINEER,
 		JOB_SECURITY_ASSISTANT,
+		JOB_BRIG_PHYSICIAN,
 	)
 	base_antags = 2
 	maximum_antags = 4

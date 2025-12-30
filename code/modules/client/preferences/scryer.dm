@@ -51,7 +51,7 @@ GLOBAL_LIST_INIT(call_ringtones, list(
 	CALL_RINGTONE_ULTIMATUM = list('sound/machines/call_ringtones/grinch_ultimatum.ogg', 30 SECONDS),
 	CALL_RINGTONE_TENNABOARD = list('sound/machines/call_ringtones/TennaBoardIntro.ogg', 21 SECONDS),
 	CALL_RINGTONE_BADPIGGIES = list('sound/machines/call_ringtones/BadPiggies.ogg', 27.7 SECONDS),
-	CALL_RINGTONE_DOOMSGATE = list('sound/machines/call_ringtones/AtDoomsGate.ogg', 26.2 SECONDS),
+	CALL_RINGTONE_DOOMGATE = list('sound/machines/call_ringtones/AtDoomsGate.ogg', 26.2 SECONDS),
 	CALL_RINGTONE_TEACHFISH = list('sound/machines/call_ringtones/TeachAFishToMan.ogg', 26.8 SECONDS),
 	CALL_RINGTONE_RUNNINGOUT = list('sound/machines/call_ringtones/RunningOut.ogg', 14.8 SECONDS),
 	CALL_RINGTONE_MEGALO = list('sound/machines/call_ringtones/megalovania.ogg', 16.8 SECONDS),
