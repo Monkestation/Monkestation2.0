@@ -55,6 +55,10 @@
 		return
 	atom_integrity = new_value
 	SEND_SIGNAL(src, COMSIG_ATOM_INTEGRITY_CHANGED, old_value, new_value)
+	on_integrity_update(new_value)
+
+/atom/proc/on_integrity_update(new_value)
+	return
 
 /// This mostly exists to keep atom_integrity private. Might be useful in the future.
 /atom/proc/get_integrity()

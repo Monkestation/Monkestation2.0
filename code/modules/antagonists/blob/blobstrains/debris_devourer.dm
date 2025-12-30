@@ -93,7 +93,7 @@
 	name = "Blob Debris"
 	desc = "A piece of debris created by a blob."
 	throwforce = 6
-	icon = "icons/obj/brokentiling.dmi"
+	icon = 'icons/obj/brokentiling.dmi'
 	icon_state = "singular"
 	item_flags = ABSTRACT
 

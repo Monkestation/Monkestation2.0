@@ -25,8 +25,7 @@
 	else
 		desc = "A thick wall of lifeless tendrils."
 
-/obj/structure/blob/normal/update_integrity(new_value)
-	. = ..()
+/obj/structure/blob/normal/on_integrity_update(new_value)
 	if(atom_integrity <= 15)
 		brute_resist = BLOB_BRUTE_RESIST
 	else
@@ -34,6 +33,7 @@
 
 /obj/structure/blob/normal/update_icon_state()
 	icon_state = "blob[(atom_integrity <= 15) ? "_damaged" : null]"
+	return ..()
 
 /obj/structure/blob/normal/handle_ctrl_click(mob/eye/blob/overmind)
 	if(overmind.buy(BLOB_UPGRADE_STRONG_COST))
