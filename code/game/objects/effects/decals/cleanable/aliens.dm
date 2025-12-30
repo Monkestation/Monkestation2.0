@@ -104,3 +104,12 @@
 /obj/effect/decal/cleanable/xenoblood/xtracks
 	icon_state = "xtracks"
 	random_icon_states = null
+
+/obj/effect/decal/cleanable/xenoblood/trail_holder
+	name = "trail of xeno blood"
+	desc = "Is this a relieving sight or a horrifying one? Depends on which side you're on."
+	beauty = -50
+	icon_state = null
+	random_icon_states = null
+	var/base_name = "trail of" // since base_name is a var exclusive to standard blood
+	var/list/existing_dirs = list()
