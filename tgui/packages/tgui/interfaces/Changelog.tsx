@@ -85,8 +85,8 @@ const Header = (props: { dropdown: any }) => {
   return (
     <Section>
       <NoticeBox warning>
-        Monkestation is in a feature freeze to prioritize and encourage bug
-        fixes.
+        Monkestation is currently in a feature freeze until further notice to
+        prioritize and encourage bug fixes.
       </NoticeBox>
       <h1>Monkestation</h1>
       <p>
