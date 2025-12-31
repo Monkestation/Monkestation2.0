@@ -31,9 +31,9 @@
 		var/fear_amount = (15 - get_dist(owner, human_resolved))
 		slasherdatum.increase_fear(human_resolved, fear_amount)
 
-		human_resolved.SetParalyzed((2 + (0.5 * stage)) SECONDS)
-		human_resolved.Shake(duration = (7.5 + (2.5 * stage)) SECONDS)
-		human_resolved.stamina.adjust(-40 - (10 * stage))
+		human_resolved.SetParalyzed((1.5 + (0.5 * stage)) SECONDS)
+		human_resolved.Shake(duration = (5 + (2.5 * stage)) SECONDS)
+		human_resolved.stamina.adjust(-30 - (10 * stage))
 		addtimer(CALLBACK(src, PROC_REF(remove_overlay), human_resolved), 5 SECONDS)
 
 	for(var/obj/machinery/light/light in view(7, owner))
