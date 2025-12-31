@@ -10,7 +10,7 @@ const Fugitive: Antagonist = {
     before fugitive hunters arrive and start hunting you and your friends down!
     `,
   ],
-  category: Category.Midround,
+  category: Category.Ghost,
 };
 
 export default Fugitive;

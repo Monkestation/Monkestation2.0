@@ -54,7 +54,7 @@
 /datum/species/golem/bone/handle_chemical(datum/reagent/chem, mob/living/carbon/human/H, seconds_per_tick, times_fired)
 	. = ..()
 	if(chem.type == /datum/reagent/toxin/bonehurtingjuice)
-		H.stamina.adjust(-7.5 * REM * seconds_per_tick, 0)
+		H.stamina.adjust(-4 * REM * seconds_per_tick, 0)
 		H.adjustBruteLoss(0.5 * REM * seconds_per_tick, 0)
 		if(SPT_PROB(10, seconds_per_tick))
 			switch(rand(1, 3))

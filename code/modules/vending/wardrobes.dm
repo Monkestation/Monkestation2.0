@@ -14,62 +14,125 @@
 	icon_state = "secdrobe"
 	product_ads = "Beat perps in style!;It's red so you can't see the blood!;You have the right to be fashionable!;Now you can be the fashion police you always wanted to be!"
 	vend_reply = "Thank you for using the SecDrobe!"
-	products = list(
-		/obj/item/clothing/suit/hooded/wintercoat/security = 3,
-		/obj/item/storage/backpack/security = 3,
-		/obj/item/storage/backpack/satchel/sec = 3,
-		/obj/item/storage/backpack/duffelbag/sec = 3,
-		/obj/item/clothing/under/rank/security/officer = 3,
-		/obj/item/clothing/shoes/jackboots/sec = 3,
-		/obj/item/clothing/gloves/color/black = 3,
-		/obj/item/clothing/head/beret/sec = 3,
-		/obj/item/clothing/head/soft/sec = 3,
-		/obj/item/clothing/gloves/color/black/security = 3,
-		/obj/item/clothing/head/soft/sec/blue = 3, //monkestation edit
-		/obj/item/clothing/head/hats/security_peaked_cap = 3, //monkestation edit
-		/obj/item/clothing/head/hats/security_peaked_cap/blue = 3, //monkestation edit
-		/obj/item/clothing/mask/bandana/striped/security = 3,
-		/obj/item/clothing/mask/balaclava = 3, //monkestation edit
-		/obj/item/clothing/mask/russian_balaclava = 3, //monkestation edit
-		/obj/item/clothing/under/rank/security/officer/skirt = 3,
-		/obj/item/clothing/under/rank/security/officer/grey = 3,
-		/obj/item/clothing/under/rank/security/officer/tactical = 3, //monkestation edit
-		/obj/item/clothing/under/rank/security/officer/tactical/blue = 3, //monkestation edit
-		/obj/item/clothing/shoes/sneakers/secred = 3, //Monkestation edit
-		/obj/item/clothing/under/pants/slacks = 3,
-		/obj/item/clothing/under/rank/security/officer/blueshirt = 3,
-		/obj/item/clothing/head/helmet/blueshirt = 3, //monkestation edit
-		/obj/item/clothing/suit/armor/vest/buoyantrigvest = 3, //monkestation edit
-		/obj/item/clothing/suit/armor/vest/blueshirt = 3, //monkestation edit
-		/obj/item/clothing/gloves/color/black/security/blu = 3,
-		/obj/item/clothing/suit/armor/secduster = 3,
-		/obj/item/clothing/head/helmet/hat/cowboy = 3,
-		/obj/item/clothing/head/costume/constable = 3, //monkestation edit
-		/obj/item/clothing/under/rank/security/constable = 3, //Monkestation edit
-		/obj/item/clothing/under/rank/security/brig_physician = 3, //Monkestation edit
-		/obj/item/clothing/under/rank/security/brig_physician/skirt = 3, //Monkestation edit
-		/obj/item/clothing/suit/toggle/labcoat/brig_physician = 3, //Monkestation edit
-		/obj/item/clothing/under/civilprotection_uniform = 1, //monkestation edit
-		/obj/item/clothing/shoes/civilprotection_boots = 1, //monkestation edit
-		/obj/item/clothing/gloves/civilprotection_gloves = 1, //monkestation edit
-		/obj/item/clothing/head/helmet/civilprotection_helmet = 1, //monkestation edit
-		/obj/item/clothing/suit/armor/civilprotection_vest = 1, //monkestation edit
-		/obj/item/clothing/under/guardmanuniform = 1, //monkestation edit: Guardman
-		/obj/item/clothing/head/helmet/guardmanhelmet = 1, //monkestation edit: Guardman
-		/obj/item/clothing/suit/armor/guardmanvest = 1, //monkestation edit: Guardman
+	product_categories = list(
+		list(
+			"name" = "Headwear",
+			"icon" = "hat-cowboy",
+			"products" = list(
+				/obj/item/clothing/head/beret/sec = 3,
+				/obj/item/clothing/head/soft/sec = 3,
+				/obj/item/clothing/head/soft/sec/blue = 3,
+				/obj/item/clothing/head/hats/security_peaked_cap = 3,
+				/obj/item/clothing/head/hats/security_peaked_cap/blue = 3,
+				/obj/item/clothing/mask/bandana/striped/security = 3,
+				/obj/item/clothing/head/helmet/blueshirt = 2,
+				/obj/item/clothing/head/beret/sec/navyofficer = 3,
+			),
+		),
+		list(
+			"name" = "Facewear",
+			"icon" = "mask",
+			"products" = list(
+				/obj/item/clothing/mask/balaclava = 4,
+				/obj/item/clothing/mask/thermal_balaclava = 4,
+			),
+		),
+		list(
+			"name" = "Under",
+			"icon" = "shirt",
+			"products" = list(
+				/obj/item/clothing/under/rank/security/officer = 3,
+				/obj/item/clothing/under/rank/security/officer/skirt = 3,
+				/obj/item/clothing/under/rank/security/officer/grey = 3,
+				/obj/item/clothing/under/rank/security/officer/tactical = 3,
+				/obj/item/clothing/under/rank/security/officer/tactical/blue = 3,
+				/obj/item/clothing/under/rank/security/officer/blueshirt = 2,
+				/obj/item/clothing/under/rank/security/officer/formal = 3,
+				/obj/item/clothing/under/rank/security/utility = 3,
+			),
+		),
+		list(
+			"name" = "Outerwear",
+			"icon" = "shield",
+			"products" = list(
+				/obj/item/clothing/suit/hooded/wintercoat/security = 3,
+				/obj/item/clothing/suit/armor/vest/blueshirt = 2,
+				/obj/item/clothing/suit/armor/vest/secjacket = 3,
+				/obj/item/clothing/suit/jacket/officer/blue = 3,
+				/obj/item/clothing/suit/armor/vest/buoyantrigvest = 3,
+			),
+		),
+		list(
+			"name" = "Handwear",
+			"icon" = "mitten",
+			"products" = list(
+				/obj/item/clothing/gloves/color/black = 6,
+				/obj/item/clothing/gloves/color/black/security = 4,
+				/obj/item/clothing/gloves/color/black/security/blu = 4,
+			),
+		),
+		list(
+			"name" = "Footwear",
+			"icon" = "socks",
+			"products" = list(
+				/obj/item/clothing/shoes/jackboots = 4,
+				/obj/item/clothing/shoes/jackboots/sec = 4,
+				/obj/item/clothing/shoes/sneakers/secred = 3,
+			),
+		),
+		list(
+			"name" = "Storage",
+			"icon" = "suitcase",
+			"products" = list(
+				/obj/item/storage/backpack/security = 3,
+				/obj/item/storage/backpack/satchel/sec = 3,
+				/obj/item/storage/backpack/duffelbag/sec = 3,
+			),
+		),
+		list(
+			"name" = "Medical",
+			"icon" = "suitcase-medical",
+			"products" = list(
+				/obj/item/clothing/under/rank/security/medical = 2,
+				/obj/item/clothing/under/rank/security/medical/skirt = 2,
+				/obj/item/clothing/under/rank/security/medical/grey = 2,
+				/obj/item/clothing/under/rank/security/medical/grey/skirt = 2,
+				/obj/item/clothing/under/rank/security/medical/scrubs = 2,
+				/obj/item/clothing/head/utility/surgerycap/sec = 2,
+				/obj/item/clothing/suit/toggle/labcoat/secmed = 2,
+				/obj/item/clothing/suit/toggle/labcoat/secmed/old = 2,
+				/obj/item/clothing/suit/toggle/labcoat/secmed/alt = 2,
+				/obj/item/clothing/head/soft/sec/medical = 2,
+				/obj/item/clothing/shoes/sneakers/white = 2,
+				/obj/item/storage/backpack/secmed = 1,
+				/obj/item/storage/backpack/satchel/secmed = 1,
+				/obj/item/storage/backpack/duffelbag/secmed = 1,
+			),
+		),
 	)
-	//MONKESTATION EDIT START
+
 	contraband = list(
 		/obj/item/clothing/under/color/red = 3,
 		/obj/item/clothing/shoes/sneakers/brown = 3,
 		/obj/item/clothing/head/helmet/surplus = 3,
 		/obj/item/clothing/suit/armor/surplus = 3,
+		/obj/item/clothing/head/cop_mascot = 1,
+		/obj/item/clothing/under/costume/cop_mascot = 1,
+		/obj/item/clothing/under/civilprotection_uniform = 2,
+		/obj/item/clothing/shoes/civilprotection_boots = 2,
+		/obj/item/clothing/gloves/civilprotection_gloves = 2,
+		/obj/item/clothing/head/helmet/civilprotection_helmet = 2,
+		/obj/item/clothing/suit/armor/civilprotection_vest = 2,
+		/obj/item/clothing/head/costume/constable = 3,
+		/obj/item/clothing/under/rank/security/constable = 3,
+		/obj/item/clothing/under/guardmanuniform = 1,
+		/obj/item/clothing/head/helmet/guardmanhelmet = 1,
+		/obj/item/clothing/suit/armor/guardmanvest = 1,
 	)
-	//MONKESTATION EDIT STOP
+
 	premium = list(
-		/obj/item/clothing/under/rank/security/officer/formal = 3,
-		/obj/item/clothing/suit/jacket/officer/blue = 3,
-		/obj/item/clothing/head/beret/sec/navyofficer = 3,
+		/obj/item/clothing/suit/armor/secduster = 3,
+		/obj/item/clothing/head/helmet/hat/cowboy = 3,
 		/obj/item/clothing/suit/armor/secduster/engineering = 2,
 		/obj/item/clothing/head/helmet/hat/cowboy/engineering = 2,
 		/obj/item/clothing/suit/armor/secduster/medical = 2,
@@ -78,9 +141,8 @@
 		/obj/item/clothing/head/helmet/hat/cowboy/cargo = 2,
 		/obj/item/clothing/suit/armor/secduster/science = 2,
 		/obj/item/clothing/head/helmet/hat/cowboy/science = 2,
-		/obj/item/clothing/head/cop_mascot = 1, // MONKESTATION EDIT ADDITION
-		/obj/item/clothing/under/costume/cop_mascot = 1, // MONKESTATION EDIT ADDITION
 	)
+
 	refill_canister = /obj/item/vending_refill/wardrobe/sec_wardrobe
 	payment_department = ACCOUNT_SEC
 	light_color = COLOR_MOSTLY_PURE_RED
@@ -394,7 +456,7 @@
 		/obj/item/clothing/shoes/cookflops = 2,
 		/obj/item/reagent_containers/cup/rag = 1,
 		/obj/item/clothing/suit/hooded/wintercoat = 2,
-		/obj/item/clothing/under/artisan = 2, //monkestation edit
+		/obj/item/clothing/under/artisan = 2,
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/chef_wardrobe
 	payment_department = ACCOUNT_SRV
@@ -468,7 +530,7 @@
 		/obj/item/clothing/under/rank/civilian/lawyer/black/skirt = 1,
 		/obj/item/clothing/shoes/laceup = 2,
 		/obj/item/clothing/shoes/heels = 2, //MONKESTATION ADDITION
-		/obj/item/clothing/accessory/lawyers_badge = 2,
+		/obj/item/clothing/accessory/badge/lawyer = 2,
 		/obj/item/radio/headset/headset_srv = 2,
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/law_wardrobe

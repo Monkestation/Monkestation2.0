@@ -178,12 +178,6 @@
 		if(SSatoms.InitAtom(src, FALSE, args))
 			//we were deleted
 			return
-#ifndef DISABLE_DEMOS
-		// monkestation start: replays
-		if(!(flags_1 & DEMO_IGNORE_1))
-			SSdemo.mark_new(src)
-		// monkestation end
-#endif
 
 /**
  * The primary method that objects are setup in SS13 with

@@ -49,7 +49,8 @@ $font-size: 24px;
   .book {
     display: flex;
     position: relative;
-    background-image: url('../../assets/chicken-encyclopedia-leather-texture.png'),
+    background-image:
+      url('../../assets/chicken-encyclopedia-leather-texture.png'),
       linear-gradient(to right, #8f4000, #8f4000 25%, #461f00, #8f4000 75%);
     flex-direction: row;
     border-radius: 3%;

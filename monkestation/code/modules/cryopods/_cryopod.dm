@@ -6,13 +6,12 @@
 #define AHELP_FIRST_MESSAGE "Please adminhelp before leaving the round, even if there are no administrators online!"
 
 /*
- * Cryogenic refrigeration unit. Basically a despawner.
- * Stealing a lot of concepts/code from sleepers due to massive laziness.
- * The despawn tick will only fire if it's been more than time_till_despawned ticks
- * since time_entered, which is world.time when the occupant moves in.
- * ~ Zuhayr
- */
-GLOBAL_LIST_EMPTY(cryopod_computers)
+* Cryogenic refrigeration unit. Basically a despawner.
+* Stealing a lot of concepts/code from sleepers due to massive laziness.
+* The despawn tick will only fire if it's been more than time_till_despawned ticks
+* since time_entered, which is world.time when the occupant moves in.
+* ~ Zuhayr
+*/
 
 GLOBAL_LIST_EMPTY(ghost_records)
 
@@ -51,12 +50,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 
 /obj/machinery/computer/cryopod/Initialize(mapload)
 	. = ..()
-	GLOB.cryopod_computers += src
 	radio = new radio(src)
 	radio.lossless = TRUE
 
 /obj/machinery/computer/cryopod/Destroy()
-	GLOB.cryopod_computers -= src
 	QDEL_NULL(radio)
 	return ..()
 
@@ -197,6 +194,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 	))
 	/// Quirks that should just be completely skipped.
 	var/static/list/skip_quirks = typecacheof(list(
+		/datum/quirk/drg_callout, // skillchips will be readded on their own
 		/datum/quirk/stowaway,
 	))
 
@@ -208,7 +206,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 	..()
 	REGISTER_REQUIRED_MAP_ITEM(1, INFINITY)
 	if(!quiet)
-		GLOB.valid_cryopods += src
+		if(istype(get_area(loc), /area/station/common)) // if it's public cryopods, put those FIRST in the list
+			GLOB.valid_cryopods.Insert(1, src)
+		else
+			GLOB.valid_cryopods += src
 	return INITIALIZE_HINT_LATELOAD //Gotta populate the cryopod computer GLOB first
 
 /obj/machinery/cryopod/LateInitialize(mapload_arg)
@@ -222,8 +223,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 	return ..()
 
 /obj/machinery/cryopod/proc/find_control_computer(urgent = FALSE)
-	for(var/cryo_console in GLOB.cryopod_computers)
-		var/obj/machinery/computer/cryopod/console = cryo_console
+	for(var/obj/machinery/computer/cryopod/console as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/computer/cryopod))
 		if(get_area(console) == get_area(src))
 			control_computer_weakref = WEAKREF(console)
 			break
@@ -374,6 +374,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 		quirk.remove_from_current_holder(quirk_transfer = TRUE)
 		stored_quirks |= quirk
 
+	var/list/skillchips
+
+	if(iscarbon(mob_occupant))
+		var/mob/living/carbon/carbon_occupant = mob_occupant
+		skillchips = carbon_occupant.clone_skillchip_list()
+
 	var/obj/machinery/computer/cryopod/control_computer = control_computer_weakref?.resolve()
 	if(!control_computer)
 		control_computer_weakref = null
@@ -388,6 +394,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 			"lockfile" = lockfile,
 			"stored_quirks" = stored_quirks,
 			"joined_as_crew" = HAS_MIND_TRAIT(mob_occupant, TRAIT_JOINED_AS_CREW),
+			"skillchips" = skillchips,
 		))
 
 	// Make an announcement and log the person entering storage. If set to quiet, does not make an announcement.
@@ -488,15 +495,40 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 				ADD_TRAIT(newmob, TRAIT_JOINED_AS_CREW, CREW_JOIN_TRAIT)
 			GLOB.joined_player_list |= newmob.ckey
 
+		for(var/chip in listed["skillchips"])
+			var/chip_type = chip["type"]
+			if(!ispath(chip_type, /obj/item/skillchip))
+				stack_trace("Tried to implant with non-skillchip type [chip_type]")
+				continue
+
+			var/obj/item/skillchip/skillchip = new chip_type(newmob)
+
+			// Try force-implanting and activating. If it doesn't work, there's nothing much we can do. There may be some
+			// incompatibility out of our hands
+			var/implant_msg = newmob.implant_skillchip(skillchip, TRUE)
+			if(implant_msg)
+				// Hopefully recording the error message will help debug it.
+				stack_trace("Failure to implant with skillchip [skillchip]. Error msg: [implant_msg]")
+				qdel(skillchip)
+				continue
+
+			// Time to set the metadata. This includes trying to activate the chip.
+			var/set_meta_msg = skillchip.set_metadata(chip)
+
+			if(set_meta_msg)
+				// Hopefully recording the error message will help debug it.
+				stack_trace("Failure to activate skillchip [skillchip] using [chip] metadata. Error msg: [set_meta_msg]")
+				continue
+
 		listed["ckey"] = null //incase we fuck up down below
 		control_computer.frozen_crew -= list(listed)
 		control_computer.announce("CRYO_JOIN", newmob.real_name, listed["job"])
 
 /// It's time to kill GLOB
 /**
- * Reset religion to its default state so the new chaplain becomes high priest and can change the sect, armor, weapon type, etc
- * Also handles the selection of a holy successor from existing crew if multiple chaplains are on station.
- */
+	* Reset religion to its default state so the new chaplain becomes high priest and can change the sect, armor, weapon type, etc
+	* Also handles the selection of a holy successor from existing crew if multiple chaplains are on station.
+	*/
 /obj/machinery/cryopod/proc/reset_religion()
 
 	// remember what the previous sect and favor values were so they can be restored if the same one gets chosen
@@ -504,7 +536,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 		GLOB.prev_favor = GLOB.religious_sect.favor
 		GLOB.prev_sect_type = GLOB.religious_sect.type
 
- // set the altar references to the old religious_sect to null
+// set the altar references to the old religious_sect to null
 	for(var/obj/structure/altar_of_gods/altar in GLOB.chaplain_altars)
 		var/datum/component/religious_tool/religious_tool = altar.GetComponent(/datum/component/religious_tool)
 		if(religious_tool)
@@ -527,10 +559,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 	GLOB.current_highpriest = chosen_successor ? WEAKREF(chosen_successor) : null // if a successor is already on the station then pick the first in line
 
 /**
- * Chooses a valid holy successor from GLOB.holy_successor weakref list and sets things up for them to be the new high priest
- *
- * Returns the chosen holy successor, or null if no valid successor
- */
+	* Chooses a valid holy successor from GLOB.holy_successor weakref list and sets things up for them to be the new high priest
+	*
+	* Returns the chosen holy successor, or null if no valid successor
+	*/
 /obj/machinery/cryopod/proc/pick_holy_successor()
 	for(var/datum/weakref/successor as anything in GLOB.holy_successors)
 		var/mob/living/carbon/human/actual_successor = successor.resolve()
@@ -555,10 +587,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 	return null
 
 /**
- * Create a list of the holy successors mobs from GLOB.holy_successors weakref list
- *
- * Returns the list of valid holy successors
- */
+	* Create a list of the holy successors mobs from GLOB.holy_successors weakref list
+	*
+	* Returns the list of valid holy successors
+	*/
 /obj/machinery/cryopod/proc/list_holy_successors()
 	var/list/holy_successors = list()
 	for(var/datum/weakref/successor as anything in GLOB.holy_successors)
@@ -723,20 +755,19 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/cryopod/prison, 18)
 /obj/effect/mob_spawn/ghost_role/proc/find_control_computer()
 	if(!computer_area)
 		return
-	for(var/cryo_console in GLOB.cryopod_computers)
-		var/obj/machinery/computer/cryopod/console = cryo_console
-		var/area/area = get_area(cryo_console) // Define moment
+	for(var/obj/machinery/computer/cryopod/console as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/computer/cryopod))
+		var/area/area = get_area(console) // Define moment
 		if(area.type == computer_area)
 			return console
 
 	return
 
 /**
- * Returns the the alt name for this spawner, which is 'outfit.name'.
- *
- * For when you might want to use that for things instead of the name var.
- * example: the DS2 spawners, which have a number of different types of spawner with the same name.
- */
+	* Returns the the alt name for this spawner, which is 'outfit.name'.
+	*
+	* For when you might want to use that for things instead of the name var.
+	* example: the DS2 spawners, which have a number of different types of spawner with the same name.
+	*/
 /obj/effect/mob_spawn/ghost_role/get_alt_name()
 	if(use_outfit_name)
 		return initial(outfit.name)
