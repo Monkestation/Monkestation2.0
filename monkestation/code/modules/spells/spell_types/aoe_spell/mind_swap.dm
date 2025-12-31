@@ -121,7 +121,7 @@
 	swap_mobs = list()
 	swap_ghosts = list()
 
-/datum/action/cooldown/spell/aoe/mind_swap/proc/make_fake_wizard(var/mob/living/imposter_mob) //for making the fake wizard
+/datum/action/cooldown/spell/aoe/mind_swap/proc/make_fake_wizard(mob/living/imposter_mob) //for making the fake wizard
 	var/datum/antagonist/wizard/master = owner.mind.has_antag_datum(/datum/antagonist/wizard)
 	if(!master.wiz_team)
 		master.create_wiz_team()

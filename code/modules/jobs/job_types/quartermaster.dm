@@ -1,7 +1,7 @@
 /datum/job/quartermaster
 	title = JOB_QUARTERMASTER
 	description = "Coordinate cargo technicians and shaft miners, assist with \
-		economical purchasing."
+		economical purchasing, lead the union."
 	department_head = list(JOB_HEAD_OF_PERSONNEL)
 	// head_announce = list(RADIO_CHANNEL_SUPPLY) // Monkestation Edit- QMs are not heads. No head announcement for non-heads.
 	faction = FACTION_STATION
@@ -48,3 +48,4 @@
 	l_hand = /obj/item/clipboard
 
 	chameleon_extras = /obj/item/stamp/qm
+	accessory = /obj/item/clothing/accessory/badge/cargo/quartermaster

@@ -22,7 +22,7 @@
 	area_flags = UNIQUE_AREA | NOTELEPORT
 
 /area/centcom/central_command_areas/pre_shuttle
-	name = "Centcomm Pre Shuttle"
+	name = "Centcom Pre Shuttle"
 	area_flags = UNIQUE_AREA | NOTELEPORT
 
 /area/centcom/central_command_areas/supply

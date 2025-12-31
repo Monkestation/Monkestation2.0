@@ -1,0 +1,4 @@
+author: "flleeppyy"
+delete-after: True
+changes:
+  - bugfix: "Disallow lobby lurkers from getting roundend rewards"

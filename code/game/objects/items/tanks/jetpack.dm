@@ -103,6 +103,8 @@
 	update_icon(UPDATE_ICON_STATE)
 	if(full_speed)
 		user.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)
+	else
+		user.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/halfspeed)
 	return TRUE
 
 /obj/item/tank/jetpack/proc/turn_off(mob/user)
@@ -111,6 +113,7 @@
 	update_icon(UPDATE_ICON_STATE)
 	if(user)
 		user.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)
+		user.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/halfspeed)
 
 /obj/item/tank/jetpack/proc/allow_thrust(num, use_fuel = TRUE)
 	var/mob/user = get(loc, /mob/living)

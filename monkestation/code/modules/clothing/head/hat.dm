@@ -53,7 +53,14 @@
 
 /obj/item/clothing/head/hats/fez
 	name = "Fez"
-	desc = "Made in Space Turkey."
+	desc = "Made in Space Türkiye."
 	icon = 'monkestation/icons/obj/clothing/hats.dmi'
 	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
 	icon_state = "fez"
+
+/obj/item/clothing/head/hats/adventurercap
+	name = "Adventurer's Cap"
+	desc = "What time is it?"
+	icon = 'monkestation/icons/obj/clothing/hats.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
+	icon_state = "adventurer_cap"

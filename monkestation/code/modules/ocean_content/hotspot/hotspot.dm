@@ -167,7 +167,7 @@
 			if(isliving(listed_mob))
 				var/mob/living/listed_living = listed_mob
 				listed_living.adjustBruteLoss(5)
-				listed_living.stamina?.adjust(-30)
+				listed_living.stamina?.adjust(-15)
 
 	// For future maintainers, below are the explosions that have been commented out
 	// replace once you find a reason for a random wandering point to destroy the station.

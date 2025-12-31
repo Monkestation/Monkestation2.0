@@ -141,7 +141,7 @@ export const JobSelection = (props) => {
           }
           titleStyle={{ 'min-height': '3.4em' }}
         >
-          <Box wrap="wrap" style={{ columns: '20em' }}>
+          <Box style={{ columns: '20em' }}>
             {Object.entries(departments).map((departmentEntry) => {
               const departmentName = departmentEntry[0];
               const entry = departmentEntry[1];

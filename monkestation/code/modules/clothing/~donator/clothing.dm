@@ -274,8 +274,13 @@
 	icon_state = "ihateERROR"
 	body_parts_covered = null
 	worn_icon = null
-	lefthand_file = null
-	righthand_file = null
+	inhand_icon_state = null
+	lefthand_file = 'icons/mob/inhands/clothing/gloves_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/clothing/gloves_righthand.dmi'
+
+/obj/item/clothing/gloves/ring/hypno/coffeepot/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NO_WORN_ICON, ABSTRACT_ITEM_TRAIT)
 
 /obj/item/clothing/gloves/ring/hypno/coffeepot/examine_more(mob/user)
 	. = ..()
@@ -1079,9 +1084,12 @@
 	worn_icon = 'monkestation/icons/donator/mob/clothing/eyes.dmi'
 
 //Donation reward for Konstyantyn
-/obj/item/clothing/accessory/badge/holo/jade
+/obj/item/clothing/accessory/badge/jade
 	name = "jade holobadge"
 	desc = "A strangely green holobadge. 'Lieutenant Uriah' is stamped onto it, above the letters JS."
+	access_required = null
+	badge_string = "Lieutenant"
+
 	icon = 'monkestation/icons/donator/obj/custom.dmi'
 	worn_icon = 'monkestation/icons/donator/mob/clothing/custom_w.dmi'
 	icon_state = "greenbadge"

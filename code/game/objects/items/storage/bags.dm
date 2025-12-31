@@ -347,8 +347,8 @@
 	atom_storage.set_holdable(list(
 		/obj/item/book,
 		/obj/item/spellbook,
-		/obj/item/book,
 		/obj/item/poster,
+		/obj/item/cassette_tape,
 	))
 
 /*
