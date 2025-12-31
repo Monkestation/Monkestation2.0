@@ -7,6 +7,7 @@ import {
   Collapsible,
   Dropdown,
   Icon,
+  NoticeBox,
   Section,
   Stack,
   Table,
@@ -83,6 +84,10 @@ const Header = (props: { dropdown: any }) => {
   const { data } = useBackend<ChangelogData>();
   return (
     <Section>
+      <NoticeBox warning>
+        Monkestation is in a feature freeze to prioritize and encourage bug
+        fixes.
+      </NoticeBox>
       <h1>Monkestation</h1>
       <p>
         <b>Thanks to: </b>
@@ -348,7 +353,7 @@ export class Changelog extends Component {
               window.scrollTo(
                 0,
                 document.body.scrollHeight ||
-                document.documentElement.scrollHeight,
+                  document.documentElement.scrollHeight,
               );
               return this.getData(dates[index]);
             }}
@@ -367,7 +372,7 @@ export class Changelog extends Component {
               window.scrollTo(
                 0,
                 document.body.scrollHeight ||
-                document.documentElement.scrollHeight,
+                  document.documentElement.scrollHeight,
               );
               return this.getData(dates[index]);
             }}
@@ -389,7 +394,7 @@ export class Changelog extends Component {
               window.scrollTo(
                 0,
                 document.body.scrollHeight ||
-                document.documentElement.scrollHeight,
+                  document.documentElement.scrollHeight,
               );
               return this.getData(dates[index]);
             }}
