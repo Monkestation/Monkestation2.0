@@ -242,8 +242,7 @@ const SearchBar = (props) => {
       autoFocus
       autoSelect
       fluid
-      onEnter={(event) => {
-        event.preventDefault();
+      onEnter={() => {
         act('submit', { entry: filteredItems[selected] });
       }}
       onInput={(_, value) => onSearch(value)}
