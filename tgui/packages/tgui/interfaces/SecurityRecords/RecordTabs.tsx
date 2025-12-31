@@ -110,7 +110,7 @@ const CrewTab = (props: { record: SecurityRecord }) => {
       onClick={() => selectRecord(record)}
       selected={isSelected}
     >
-      <Box bold={isSelected} color={CRIMESTATUS2COLOR[wanted_status]} wrap>
+      <Box bold={isSelected} color={CRIMESTATUS2COLOR[wanted_status]}>
         <Icon name={JOB2ICON[rank] || 'question'} /> {name}
       </Box>
     </Tabs.Tab>

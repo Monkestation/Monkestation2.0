@@ -31,7 +31,7 @@
 	. = ..()
 	to_chat(affected_mob, span_userdanger("Your body aches with unimaginable pain!"))
 	affected_mob.adjustOrganLoss(ORGAN_SLOT_HEART,3 * REM * seconds_per_tick, 85)
-	affected_mob.stamina?.adjust(-5 * REM * seconds_per_tick, 0)
+	affected_mob.stamina?.adjust(-2.5 * REM * seconds_per_tick, 0)
 	if(prob(30))
 		INVOKE_ASYNC(affected_mob, TYPE_PROC_REF(/mob, emote), "scream")
 
@@ -153,7 +153,7 @@
 
 	our_guy.add_mood_event("tweaking", /datum/mood_event/stimulant_heavy/sundowner, name)
 
-	our_guy.stamina?.adjust(10 * REM * seconds_per_tick)
+	our_guy.stamina?.adjust(5 * REM * seconds_per_tick)
 	our_guy.AdjustSleeping(-20 * REM * seconds_per_tick)
 	our_guy.adjust_drowsiness(-5 * REM * seconds_per_tick)
 
@@ -482,6 +482,13 @@
 	process_flags = ORGANIC | SYNTHETIC
 	overdose_threshold = 60 // it takes a lot, if youre really messed up you CAN hit this but its unlikely
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/dinitrogen_plasmide/on_mob_life(mob/living/carbon/our_guy, seconds_per_tick, times_fired)
+	if((our_guy.mob_biotypes & MOB_ROBOTIC))
+		var/cooling = 50 * REM * seconds_per_tick
+		our_guy.reagents?.chem_temp -= cooling
+		our_guy.adjust_bodytemperature(-1 * cooling * TEMPERATURE_DAMAGE_COEFFICIENT, min_temp = our_guy.bodytemp_cold_damage_limit + 5)
+		our_guy.adjustFireLoss(-1.5)
 
 /datum/reagent/dinitrogen_plasmide/on_mob_metabolize(mob/living/affected_mob)
 	. = ..()

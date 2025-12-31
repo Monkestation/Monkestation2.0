@@ -19,7 +19,6 @@
 /obj/effect/abstract/bloodsucker_tracker_holder
 	name = "bloodsucker tracker holder"
 	desc = span_danger("You <b>REALLY</b> shouldn't be seeing this!")
-	flags_1 = parent_type::flags_1 | DEMO_IGNORE_1
 	var/datum/component/tracking_beacon/tracking_beacon
 
 /obj/effect/abstract/bloodsucker_tracker_holder/proc/make_beacon(key)

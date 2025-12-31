@@ -275,9 +275,11 @@
 	icon_state = "emt"
 	inhand_icon_state = "security"
 	worn_icon_state = "emt"
+
+/obj/item/storage/belt/medical/paramedic/full
 	preload = TRUE
 
-/obj/item/storage/belt/medical/paramedic/PopulateContents()
+/obj/item/storage/belt/medical/paramedic/full/PopulateContents()
 	SSwardrobe.provide_type(/obj/item/sensor_device, src)
 	SSwardrobe.provide_type(/obj/item/stack/medical/gauze/twelve, src)
 	SSwardrobe.provide_type(/obj/item/stack/medical/bone_gel, src)
@@ -287,9 +289,39 @@
 	SSwardrobe.provide_type(/obj/item/reagent_containers/cup/bottle/formaldehyde, src)
 	update_appearance()
 
-/obj/item/storage/belt/medical/paramedic/get_types_to_preload()
+/obj/item/storage/belt/medical/paramedic/full/get_types_to_preload()
 	var/list/to_preload = list() //Yes this is a pain. Yes this is the point
 	to_preload += /obj/item/sensor_device
+	to_preload += /obj/item/stack/medical/gauze/twelve
+	to_preload += /obj/item/stack/medical/bone_gel
+	to_preload += /obj/item/stack/sticky_tape/surgical
+	to_preload += /obj/item/reagent_containers/syringe
+	to_preload += /obj/item/reagent_containers/cup/bottle/ammoniated_mercury
+	to_preload += /obj/item/reagent_containers/cup/bottle/formaldehyde
+	return to_preload
+
+/obj/item/storage/belt/medical/secmed
+	name = "security medical belt"
+	icon_state = "secmed"
+	inhand_icon_state = "security"
+	worn_icon_state = "secmed"
+
+/obj/item/storage/belt/medical/secmed/full
+	preload = TRUE
+
+/obj/item/storage/belt/medical/secmed/full/PopulateContents()
+	SSwardrobe.provide_type(/obj/item/sensor_device/security, src)
+	SSwardrobe.provide_type(/obj/item/stack/medical/gauze/twelve, src)
+	SSwardrobe.provide_type(/obj/item/stack/medical/bone_gel, src)
+	SSwardrobe.provide_type(/obj/item/stack/sticky_tape/surgical, src)
+	SSwardrobe.provide_type(/obj/item/reagent_containers/syringe, src)
+	SSwardrobe.provide_type(/obj/item/reagent_containers/cup/bottle/ammoniated_mercury, src)
+	SSwardrobe.provide_type(/obj/item/reagent_containers/cup/bottle/formaldehyde, src)
+	update_appearance()
+
+/obj/item/storage/belt/medical/secmed/full/get_types_to_preload()
+	var/list/to_preload = list() //Yes this is a pain. Yes this is the point
+	to_preload += /obj/item/sensor_device/security
 	to_preload += /obj/item/stack/medical/gauze/twelve
 	to_preload += /obj/item/stack/medical/bone_gel
 	to_preload += /obj/item/stack/sticky_tape/surgical

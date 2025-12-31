@@ -144,7 +144,7 @@
 	back = /obj/item/storage/backpack/ert/medical
 	backpack_contents = list(
 		/obj/item/storage/medkit/surgery = 1,
-		/obj/item/storage/belt/medical/paramedic = 1,
+		/obj/item/storage/belt/medical/paramedic/full = 1,
 		/obj/item/defibrillator/compact/loaded = 1,
 		/obj/item/emergency_bed = 1,
 	)
@@ -195,7 +195,7 @@
 	backpack_contents = list(
 		/obj/item/storage/medkit/advanced = 1,
 		/obj/item/storage/box/medipens = 1,
-		/obj/item/storage/belt/medical/paramedic = 1,
+		/obj/item/storage/belt/medical/paramedic/full = 1,
 		/obj/item/reagent_containers/hypospray/combat = 1,
 		/obj/item/pinpointer/crew = 1,
 		/obj/item/emergency_bed = 1,

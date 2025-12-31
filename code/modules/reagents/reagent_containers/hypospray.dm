@@ -309,13 +309,23 @@
 
 /obj/item/reagent_containers/hypospray/medipen/survival/luxury
 	name = "luxury medipen"
-	desc = "Cutting edge bluespace technology allowed Nanotrasen to compact 70u of volume into a single medipen. Contains rare and powerful chemicals used to aid in exploration of very hard enviroments. WARNING: DO NOT MIX WITH EPINEPHRINE OR ATROPINE."
+	desc = "Cutting edge bluespace technology allowed Nanotrasen to compact 70u of volume into a single medipen. Contains rare and powerful chemicals used to aid in exploration of very hard environments. WARNING: DO NOT MIX WITH EPINEPHRINE OR ATROPINE."
 	icon_state = "luxpen"
 	inhand_icon_state = "atropen"
 	base_icon_state = "luxpen"
 	volume = 70
 	amount_per_transfer_from_this = 70
 	list_reagents = list(/datum/reagent/medicine/salbutamol = 10, /datum/reagent/medicine/c2/penthrite = 10, /datum/reagent/medicine/oxandrolone = 10, /datum/reagent/medicine/sal_acid = 10 ,/datum/reagent/medicine/omnizine = 10 ,/datum/reagent/medicine/leporazine = 10, /datum/reagent/medicine/painkiller/hydromorphone = 10)
+
+/obj/item/reagent_containers/hypospray/medipen/survival/luxury/oozeling //oozeling safe version of the luxury pen!
+	name = "luxury slime medipen"
+	desc = "Cutting edge bluespace technology allowed Nanotrasen to compact 70u of volume into a single medipen. Contains rare and powerful chemicals used by slime-like crew to aid in exploration of very hard environments. WARNING: DO NOT MIX WITH EPINEPHRINE OR ATROPINE NOR INJECT INTO NON-SLIME CREW."
+	icon_state = "luxpen"
+	inhand_icon_state = "atropen"
+	base_icon_state = "luxpen"
+	volume = 70
+	amount_per_transfer_from_this = 70
+	list_reagents = list(/datum/reagent/medicine/salbutamol = 10, /datum/reagent/medicine/c2/penthrite = 10, /datum/reagent/medicine/oxandrolone = 10, /datum/reagent/medicine/sal_acid = 10, /datum/reagent/medicine/regen_jelly/weakened = 5, /datum/reagent/toxin = 5, /datum/reagent/medicine/leporazine = 10, /datum/reagent/medicine/painkiller/hydromorphone = 10)
 
 /obj/item/reagent_containers/hypospray/medipen/atropine
 	name = "atropine autoinjector"
@@ -426,16 +436,6 @@
 	amount_per_transfer_from_this = 20
 	volume = 20
 	list_reagents = list(/datum/reagent/consumable/ethanol/fetching_fizz = 20)
-
-/obj/item/reagent_containers/hypospray/medipen/survival/luxury/oozeling //oozeling safe version of the luxury pen!
-	name = "luxury oozeling medipen"
-	desc = "Even more cutting edge bluespace technology allowed Nanotrasen to compact 90u of volume into a single medipen. Contains rare and powerful chemicals that are also oozeling safe! Used to aid in exploration of very harsh enviroments. WARNING: DO NOT MIX WITH EPINEPHRINE OR ATROPINE. <b> EXTRA WARNING : UNSAFE FOR NON OOZELING LIFE </b>"
-	icon_state = "luxpen"
-	inhand_icon_state = "atropen"
-	base_icon_state = "luxpen"
-	volume = 90
-	amount_per_transfer_from_this = 90
-	list_reagents = list(/datum/reagent/medicine/salbutamol = 10, /datum/reagent/medicine/c2/penthrite = 10, /datum/reagent/medicine/oxandrolone = 10, /datum/reagent/medicine/sal_acid = 10 ,/datum/reagent/medicine/regen_jelly = 10 ,/datum/reagent/toxin/plasma = 10, /datum/reagent/toxin = 10,/datum/reagent/medicine/leporazine = 10, /datum/reagent/medicine/painkiller/hydromorphone = 10)
 
 /obj/item/reagent_containers/hypospray/medipen/synthcare
 	name = "Small Synthetic Care Pen"

@@ -3600,7 +3600,7 @@
 /area/awaymission/cabin/snowforest)
 "sK" = (
 /obj/item/clothing/shoes/sneakers/brown,
-/obj/item/clothing/head/hats/warden/police{
+/obj/item/clothing/head/hats/warden/spacepol{
 	desc = "I am the law!"
 	},
 /obj/structure/closet{

@@ -116,6 +116,11 @@
 	if (length(status_examines))
 		. += status_examines
 
+	//Nosferatu examine
+	var/datum/antagonist/bloodsucker/bloodsucker_datum = mind?.has_antag_datum(/datum/antagonist/bloodsucker)
+	if (bloodsucker_datum?.my_clan?.name == CLAN_NOSFERATU)
+		. += span_warning("[t_He] appear[p_s()] slouched over and grotesque - a twisted abomination, like some shameless creature of the night...")
+
 	var/appears_dead = FALSE
 	var/just_sleeping = FALSE
 
@@ -481,7 +486,7 @@
 					"<a href='byond://?src=[REF(src)];hud=s;add_citation=1;examine_time=[world.time]'>\[Add citation\]</a>",
 					"<a href='byond://?src=[REF(src)];hud=s;add_crime=1;examine_time=[world.time]'>\[Add crime\]</a>",
 					"<a href='byond://?src=[REF(src)];hud=s;add_note=1;examine_time=[world.time]'>\[Add note\]</a>"), "")
-	else if(isobserver(user))
+	else if(isobserver(user) || HAS_TRAIT(user, TRAIT_EMPATH))
 		. += span_info("<b>Traits:</b> [get_quirk_string(FALSE, CAT_QUIRK_ALL)]")
 	. += "</span>"
 
@@ -492,6 +497,8 @@
 			. += span_info("Antag Opt-in Status: <b><font color='[GLOB.antag_opt_in_colors[stringified_optin]]'>[stringified_optin]</font></b>")
 
 	SEND_SIGNAL(src, COMSIG_ATOM_EXAMINE, user, .)
+
+	. += late_examine(user)
 
 /**
  * Shows any and all examine text related to any status effects the user has.
@@ -513,7 +520,7 @@
 
 /mob/living/carbon/human/examine_more(mob/user)
 	. = ..()
-	if ((wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE)))
+	if(!is_face_visible())
 		return
 	var/age_text
 	switch(age)

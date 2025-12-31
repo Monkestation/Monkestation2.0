@@ -480,7 +480,7 @@ const KnowledgePreview = (props) => {
     );
   } else {
     return (
-      <Section overflow-wrap="break-word" fill fluid>
+      <Section overflow-wrap="break-word" fill>
         <Stack
           vertical
           fontSize="16px"

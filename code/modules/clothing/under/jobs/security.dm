@@ -1,17 +1,18 @@
 /*
  * Contains:
- * Security
+ * Security Officer
  * Detective
- * Navy uniforms
- */
-
-/*
- * Security
+ * Warden
+ * HoS
+ * Security Medical
+ * Prisoner
+ * Spacepol
  */
 
 /obj/item/clothing/under/rank/security
 	icon = 'icons/obj/clothing/under/security.dmi'
 	worn_icon = 'icons/mob/clothing/under/security.dmi'
+	worn_icon_digitigrade = 'icons/mob/clothing/under/security_digi.dmi'
 	armor_type = /datum/armor/rank_security
 	strip_delay = 50
 	sensor_mode = SENSOR_COORDS
@@ -24,8 +25,12 @@
 	acid = 30
 	wound = 10
 
+/*
+ * Security Officer
+ */
+
 /obj/item/clothing/under/rank/security/officer
-	name = "security uniform"
+	name = "security jumpsuit"
 	desc = "A tactical security jumpsuit for officers complete with Nanotrasen belt buckle."
 	icon_state = "rsecurity"
 	inhand_icon_state = "r_suit"
@@ -37,8 +42,8 @@
 	inhand_icon_state = "gy_suit"
 
 /obj/item/clothing/under/rank/security/officer/skirt
-	name = "security skirt"
-	desc = "A \"tactical\" security uniform with the legs replaced by a skirt."
+	name = "security jumpskirt"
+	desc = "A \"tactical\" security jumpsuit with the legs replaced by a skirt."
 	icon_state = "secskirt"
 	inhand_icon_state = "r_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
@@ -68,39 +73,15 @@
 	can_adjust = FALSE
 	custom_price = PAYCHECK_COMMAND
 
-
-/obj/item/clothing/under/rank/security/warden
-	name = "security suit"
-	desc = "A formal security suit for officers complete with Nanotrasen belt buckle."
-	icon_state = "rwarden"
-	inhand_icon_state = "r_suit"
-
-/obj/item/clothing/under/rank/security/warden/grey
-	name = "grey security suit"
-	desc = "A formal relic of years past before Nanotrasen decided it was cheaper to dye the suits red instead of washing out the blood."
-	icon_state = "warden"
-	inhand_icon_state = "gy_suit"
-
-/obj/item/clothing/under/rank/security/warden/skirt
-	name = "warden's suitskirt"
-	desc = "A formal security suitskirt for officers complete with Nanotrasen belt buckle."
-	icon_state = "rwarden_skirt"
-	inhand_icon_state = "r_suit"
-	body_parts_covered = CHEST|GROIN|ARMS
-	dying_key = DYE_REGISTRY_JUMPSKIRT
-	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
-
-/obj/item/clothing/under/rank/security/warden/formal
-	desc = "The insignia on this uniform tells you that this uniform belongs to the Warden."
-	name = "warden's formal uniform"
-	icon_state = "wardenblueclothes"
-	inhand_icon_state = null
-	alt_covers_chest = TRUE
+/obj/item/clothing/under/rank/security/utility
+	name = "security utility uniform"
+	desc = "A utility uniform worn by Lopland-certified Security officers."
+	icon_state = "util_sec"
 
 /*
  * Detective
  */
+
 /obj/item/clothing/under/rank/security/detective
 	name = "hard-worn suit"
 	desc = "Someone who wears this means business."
@@ -137,11 +118,59 @@
 	alt_covers_chest = TRUE
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
+/obj/item/clothing/under/rank/security/detective/disco
+	name = "superstar cop uniform"
+	desc = "Flare cut trousers and a dirty shirt that might have been classy before someone took a piss in the armpits. It's the dress of a superstar."
+	icon_state = "jamrock_suit"
+	inhand_icon_state = null
+	can_adjust = FALSE
+
+/obj/item/clothing/under/rank/security/detective/kim
+	name = "aerostatic suit"
+	desc = "A crisp and well-pressed suit; professional, comfortable and curiously authoritative."
+	icon_state = "aerostatic_suit"
+	inhand_icon_state = null
+	can_adjust = FALSE
+
+/*
+ * Warden
+ */
+
+/obj/item/clothing/under/rank/security/warden
+	name = "warden's jumpsuit"
+	desc = "A tactical security jumpsuit for the Warden of a security force, complete with Nanotrasen belt buckle."
+	icon_state = "rwarden"
+	inhand_icon_state = "r_suit"
+
+/obj/item/clothing/under/rank/security/warden/grey
+	name = "warden's grey jumpsuit"
+	desc = "A formal relic of years past before Nanotrasen decided it was cheaper to dye the suits red instead of washing out the blood."
+	icon_state = "warden"
+	inhand_icon_state = "gy_suit"
+
+/obj/item/clothing/under/rank/security/warden/skirt
+	name = "warden's jumpskirt"
+	desc = "A \"tactical\" security jumpskirt for the Warden of a security force, complete with Nanotrasen belt buckle."
+	icon_state = "rwarden_skirt"
+	inhand_icon_state = "r_suit"
+	body_parts_covered = CHEST|GROIN|ARMS
+	dying_key = DYE_REGISTRY_JUMPSKIRT
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+
+/obj/item/clothing/under/rank/security/warden/formal
+	name = "warden's formal uniform"
+	desc = "The insignia on this uniform tells you that this uniform belongs to the Warden."
+	icon_state = "wardenblueclothes"
+	inhand_icon_state = null
+	alt_covers_chest = TRUE
+
 /*
  * Head of Security
  */
+
 /obj/item/clothing/under/rank/security/head_of_security
-	name = "head of security's uniform"
+	name = "head of security's jumpsuit"
 	desc = "A security jumpsuit decorated for those few with the dedication to achieve the position of Head of Security."
 	icon_state = "rhos"
 	inhand_icon_state = "r_suit"
@@ -156,7 +185,7 @@
 	wound = 10
 
 /obj/item/clothing/under/rank/security/head_of_security/skirt
-	name = "head of security's skirt"
+	name = "head of security's jumpskirt"
 	desc = "A security jumpskirt decorated for those few with the dedication to achieve the position of Head of Security."
 	icon_state = "rhos_skirt"
 	inhand_icon_state = "r_suit"
@@ -180,7 +209,7 @@
 
 /obj/item/clothing/under/rank/security/head_of_security/alt/skirt
 	name = "head of security's turtleneck skirt"
-	desc = "A stylish alternative to the normal head of security jumpsuit, complete with a tactical skirt."
+	desc = "A stylish alternative to the normal head of security jumpskirt, complete with a tactical skirt."
 	icon_state = "hosalt_skirt"
 	inhand_icon_state = "bl_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
@@ -205,28 +234,55 @@
 	can_adjust = FALSE
 
 /obj/item/clothing/under/rank/security/head_of_security/formal
-	desc = "The insignia on this uniform tells you that this uniform belongs to the Head of Security."
 	name = "head of security's formal uniform"
+	desc = "The insignia on this uniform tells you that this uniform belongs to the Head of Security."
 	icon_state = "hosblueclothes"
 	inhand_icon_state = null
 	alt_covers_chest = TRUE
 
 /*
- *Spacepol
+ * Security Medical
  */
 
-/obj/item/clothing/under/rank/security/officer/spacepol
-	name = "police uniform"
-	desc = "Space not controlled by megacorporations, planets, or pirates is under the jurisdiction of Spacepol."
-	icon_state = "spacepol"
-	inhand_icon_state = null
-	can_adjust = FALSE
-	armor_type = /datum/armor/sec_uniform_spacepol
+/obj/item/clothing/under/rank/security/medical
+	name = "security medical jumpsuit"
+	desc = "It's made of a special fiber that gives special protection against biohazards. It has a security rank stripe on it. It has a cross on the chest denoting that the wearer is trained medical personnel."
+	icon_state = "secmed"
+	inhand_icon_state = "w_suit"
+	armor_type = /datum/armor/rank_medical
 
-/datum/armor/sec_uniform_spacepol
-	fire = 10
-	acid = 10
-	melee = 10
+/obj/item/clothing/under/rank/security/medical/skirt
+	name = "security medical jumpskirt"
+	icon_state = "secmed_skirt"
+	inhand_icon_state = "w_suit"
+	body_parts_covered = CHEST|GROIN|ARMS
+	dying_key = DYE_REGISTRY_JUMPSKIRT
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+
+/obj/item/clothing/under/rank/security/medical/scrubs
+	name = "security medical scrubs"
+	desc = "It's made of a special fiber that provides minor protection against biohazards. This one is in security red."
+	icon_state = "scrubssec"
+
+/obj/item/clothing/under/rank/security/medical/grey
+	name = "grey security medical jumpsuit"
+	desc = "A tactical relic of years past before Nanotrasen decided it was cheaper to dye the suits red instead of washing out the blood. It has a security rank stripe on it. It has a cross on the chest denoting that the wearer is trained medical personnel."
+	icon_state = "secmed_alt"
+	inhand_icon_state = "gy_suit"
+	armor_type = /datum/armor/rank_security
+
+/obj/item/clothing/under/rank/security/medical/grey/skirt
+	name = "grey security medical jumpskirt"
+	icon_state = "secmed_alt_skirt"
+	body_parts_covered = CHEST|GROIN|ARMS
+	dying_key = DYE_REGISTRY_JUMPSKIRT
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+
+/*
+ *Prisoner
+ */
 
 /obj/item/clothing/under/rank/prisoner
 	name = "prison jumpsuit"
@@ -262,23 +318,37 @@
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
-/obj/item/clothing/under/rank/security/officer/beatcop
+
+/obj/item/clothing/under/rank/prisoner/syndicate
+	name = "syndicate prisoner jumpsuit"
+	desc = "A crimson red jumpsuit worn by syndicate captives. Its sensors have been shorted out."
+	greyscale_colors = "#992300"
+	has_sensor = FALSE
+
+/obj/item/clothing/under/rank/prisoner/skirt/syndicate
+	name = "syndicate prisoner jumpskirt"
+	desc = "A crimson red jumpskirt worn by syndicate captives. Its sensors have been shorted out."
+	greyscale_colors = "#992300"
+	has_sensor = FALSE
+	supports_variations_flags = NONE
+
+/*
+ *Spacepol
+ */
+
+/obj/item/clothing/under/rank/security/officer/spacepol
 	name = "space police uniform"
-	desc = "A police uniform often found in the lines at donut shops."
+	desc = "Space not controlled by megacorporations, planets, or pirates is under the jurisdiction of Spacepol."
+	icon_state = "spacepol"
+	inhand_icon_state = null
+	can_adjust = FALSE
+	armor_type = /datum/armor/sec_uniform_spacepol
+
+/datum/armor/sec_uniform_spacepol
+	fire = 10
+	acid = 10
+	melee = 10
+
+/obj/item/clothing/under/rank/security/officer/spacepol/beatcop
 	icon_state = "spacepolice_families"
 	inhand_icon_state = null
-	can_adjust = FALSE
-
-/obj/item/clothing/under/rank/security/detective/disco
-	name = "superstar cop uniform"
-	desc = "Flare cut trousers and a dirty shirt that might have been classy before someone took a piss in the armpits. It's the dress of a superstar."
-	icon_state = "jamrock_suit"
-	inhand_icon_state = null
-	can_adjust = FALSE
-
-/obj/item/clothing/under/rank/security/detective/kim
-	name = "aerostatic suit"
-	desc = "A crisp and well-pressed suit; professional, comfortable and curiously authoritative."
-	icon_state = "aerostatic_suit"
-	inhand_icon_state = null
-	can_adjust = FALSE

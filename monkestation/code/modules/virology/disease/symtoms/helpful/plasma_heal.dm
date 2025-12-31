@@ -95,13 +95,16 @@
 		if(prob(5))
 			to_chat(M, span_notice("You feel warmer."))
 
+	var/should_update = M.adjustToxLoss(-heal_amt, forced = TRUE, updating_health = FALSE)
 
-	M.adjustToxLoss(-heal_amt)
-
-	if(M.getBruteLoss_nonProsthetic() > 0 || M.getFireLoss_nonProsthetic() > 0)
-		M.heal_overall_damage(brute = heal_amt, burn = heal_amt, required_bodytype = BODYTYPE_ORGANIC)
+	if(M.getBruteLoss() > 0 || M.getFireLoss() > 0)
+		M.heal_overall_damage(brute = heal_amt, burn = heal_amt, required_bodytype = BODYTYPE_ORGANIC, updating_health = FALSE)
+		should_update = TRUE
 		if(prob(5))
 			to_chat(M, span_notice("The pain from your wounds fades rapidly."))
+
+	if(should_update)
+		M.updatehealth()
 	return TRUE
 
 ///Plasma End

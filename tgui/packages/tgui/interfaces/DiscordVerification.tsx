@@ -24,7 +24,7 @@ interface DiscordVerificationData {
   };
 }
 
-export const DiscordVerification = (props, context) => {
+export const DiscordVerification = (props) => {
   const { data } = useBackend<DiscordVerificationData>();
   const { verification_code, discord_invite } = data;
 
@@ -65,12 +65,10 @@ export const DiscordVerification = (props, context) => {
         );
       case CkeyPollEnum.PLEXORA_CKEYPOLL_NOTLINKED:
         return (
-          <NoticeBox warning>
-            Your ckey is not linked to a Discord account.
-          </NoticeBox>
+          <NoticeBox>Your ckey is not linked to a Discord account.</NoticeBox>
         );
       case CkeyPollEnum.PLEXORA_CKEYPOLL_RECORDNOTVALID:
-        return <NoticeBox warning>The ckey record is invalid.</NoticeBox>;
+        return <NoticeBox>The ckey record is invalid.</NoticeBox>;
       case CkeyPollEnum.PLEXORA_CKEYPOLL_LINKED:
         return (
           <NoticeBox success>
@@ -80,7 +78,7 @@ export const DiscordVerification = (props, context) => {
         );
       case CkeyPollEnum.PLEXORA_CKEYPOLL_LINKED_ABSENT:
         return (
-          <NoticeBox warning>
+          <NoticeBox>
             Your linked Discord account is no longer present:{' '}
             {formatDiscordDetails(data.discord_details)}
           </NoticeBox>
