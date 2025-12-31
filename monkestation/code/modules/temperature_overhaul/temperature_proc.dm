@@ -119,7 +119,7 @@
 		return 0
 	amount = round(amount, 0.01)
 	min_temp = max(min_temp, TCMB)
-	max_temp = min(max_temp, 603.15)
+	max_temp = min(max_temp, 1033.33) // roughly crematorium temperatures (1860 Rankine)
 
 	if(bodytemperature >= min_temp && bodytemperature <= max_temp)
 		var/old_temp = bodytemperature

@@ -1,7 +1,7 @@
 /mob/living/proc/body_temperature_damage(datum/gas_mixture/environment, seconds_per_tick, times_fired)
 	if(bodytemperature > bodytemp_heat_damage_limit && !HAS_TRAIT(src, TRAIT_RESISTHEAT))
 		var/heat_diff = bodytemp_heat_damage_limit - standard_body_temperature
-		var/heat_threshold_low = bodytemp_heat_damage_limit + heat_diff * 1.25
+		var/heat_threshold_low = bodytemp_heat_damage_limit + heat_diff * 1.25    // for reference, bodytemp heat damage limit is 60C for humans, or 140F, or 330K
 		var/heat_threshold_medium = bodytemp_heat_damage_limit + heat_diff * 2
 		var/heat_threshold_high = bodytemp_heat_damage_limit + heat_diff * 4
 
