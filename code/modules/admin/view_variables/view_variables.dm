@@ -141,6 +141,14 @@ ADMIN_VERB_AND_CONTEXT_MENU(debug_variables, R_NONE, FALSE, "View Variables", "V
 	</head>
 	<body onload='selectTextField()' onkeydown='return handle_keydown()' onkeyup='handle_keyup()'>
 		<script type="text/javascript">
+		  const complete_list = \[\];
+			document.addEventListener("DOMContentLoaded", () => {
+				const vars = document.getElementById("vars");
+				if (!vars) return;
+
+				complete_list.push(...vars.children);
+			});
+
 			const filterInput = document.getElementById("filter");
 			// onload
 			function selectTextField() {
@@ -306,11 +314,6 @@ datumrefresh=[refid];[HrefToken()]'>Refresh</a>
 		<ol id='vars'>
 			[variable_html.Join()]
 		</ol>
-		<script type='text/javascript'>
-			var complete_list = \[\];
-			var lis = document.getElementById("vars").children;
-			for(var i = lis.length; i--;) complete_list\[i\] = lis\[i\];
-		</script>
 	</body>
 </html>
 "}
