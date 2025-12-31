@@ -112,7 +112,7 @@
 			open_armory(user)
 
 		if("close_armory")
-			close_armory()
+			close_armory(user)
 
 		if("reason_select")
 			selected_reason = params["reason"]
@@ -189,7 +189,7 @@
 	balloon_alert_to_viewers("The armory has been opened!")
 	return TRUE
 
-/obj/machinery/computer/armory/proc/close_armory()
+/obj/machinery/computer/armory/proc/close_armory(mob/living/user)
 	if (!is_authorized || !armory_open)
 		return FALSE
 
