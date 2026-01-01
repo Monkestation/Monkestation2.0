@@ -46,7 +46,7 @@ export const RandomizationButton = (props: {
       ]}
       iconOnly
       onSelected={setValue}
-      menuWidth="120px"
+      menuWidth="max-content"
       width="auto"
     />
   );

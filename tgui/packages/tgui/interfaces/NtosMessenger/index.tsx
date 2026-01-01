@@ -252,7 +252,7 @@ const ContactsScreen = (props: any) => {
               )}
             </Stack>
           </Stack>
-          <Stack justify="space-between" mt={0.5}>
+          <Stack justify="space-between" mt={1}>
             <Box m={0.5}>
               <Icon name="magnifying-glass" mr={0.5} />
               Search For User
