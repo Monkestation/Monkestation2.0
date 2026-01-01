@@ -24,7 +24,7 @@
 	)
 
 /datum/preference_middleware/keybindings/proc/reset_all_keybinds(list/params, mob/user)
-	if(tgui_alert(user, "Are you SURE you want to do this?", "Reset ALL keybindings", list("Yes, I'm sure", "No")) !== "Yes, I'm sure")
+	if(tgui_alert(user, "Are you SURE you want to do this?", "Reset ALL keybindings", list("Yes, I'm sure", "No")) != "Yes, I'm sure")
 		return
 
 	preferences.key_bindings = deep_copy_list(GLOB.default_hotkeys)
