@@ -33,6 +33,7 @@ export const StoreManager = (props) => {
             <Section
               title="Store Categories"
               align="center"
+              className="StoreManager__Categories__Section"
               buttons={
                 <Button
                   icon="fa-solid fa-coins"
