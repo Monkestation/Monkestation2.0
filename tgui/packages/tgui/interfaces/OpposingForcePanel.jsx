@@ -385,7 +385,7 @@ export const OpposingForceObjectives = (props) => {
                       format={(value) => round(value)}
                       minValue={0}
                       maxValue={500}
-                      onDrag={(e, value) =>
+                      onChange={(e, value) =>
                         act('set_objective_intensity', {
                           objective_ref: selectedObjective.ref,
                           new_intensity_level: value,

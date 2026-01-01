@@ -52,7 +52,8 @@ const FeatureSliderInput = (
 
   return (
     <Slider
-      onChange={(_, value: number) => {
+      tickWhileDragging
+      onChange={(_, value) => {
         props.handleSetValue(value);
       }}
       minValue={props.serverData.minimum}

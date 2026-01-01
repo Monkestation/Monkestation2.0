@@ -332,7 +332,8 @@ const MassSpectroscopy = (props) => {
           minValue={graphLowerRange}
           maxValue={centerValue}
           color={'invisible'}
-          onDrag={(e, value) =>
+          tickWhileDragging
+          onChange={(e, value) =>
             act('leftSlider', {
               value: value,
             })
@@ -351,7 +352,8 @@ const MassSpectroscopy = (props) => {
           minValue={centerValue}
           maxValue={graphUpperRange}
           color={'invisible'}
-          onDrag={(e, value) =>
+          tickWhileDragging
+          onChange={(e, value) =>
             act('rightSlider', {
               value: value,
             })
@@ -373,7 +375,8 @@ const MassSpectroscopy = (props) => {
             minValue={graphLowerRange + 1}
             maxValue={graphUpperRange - 1}
             color={'invisible'}
-            onDrag={(e, value) =>
+            tickWhileDragging
+            onChange={(e, value) =>
               act('centerSlider', {
                 value: value,
               })

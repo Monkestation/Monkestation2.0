@@ -210,6 +210,7 @@ export const SettingsGeneral = (props) => {
                 value={fontSize}
                 unit="px"
                 format={(value) => toFixed(value)}
+                tickWhileDragging
                 onChange={(e, value) =>
                   dispatch(updateSettings({ fontSize: value }))
                 }
@@ -226,7 +227,8 @@ export const SettingsGeneral = (props) => {
             maxValue={5}
             value={lineHeight}
             format={(value) => toFixed(value, 2)}
-            onDrag={(e, value) =>
+            tickWhileDragging
+            onChange={(e, value) =>
               dispatch(
                 updateSettings({
                   lineHeight: value,
@@ -544,7 +546,8 @@ const ExperimentalSettings = (props) => {
                 maxValue={64}
                 value={scrollTrackingTolerance}
                 format={(value) => toFixed(value)}
-                onDrag={(e, value) =>
+                tickWhileDragging
+                onChange={(e, value) =>
                   dispatch(
                     updateSettings({
                       scrollTrackingTolerance: value,
@@ -603,6 +606,7 @@ const SettingsStatPanel = (props) => {
                     value={statFontSize}
                     unit="px"
                     format={(value) => toFixed(value)}
+                    tickWhileDragging
                     onChange={(e, value) =>
                       dispatch(updateSettings({ statFontSize: value }))
                     }

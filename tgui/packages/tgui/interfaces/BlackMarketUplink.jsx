@@ -265,7 +265,7 @@ const AuctionMarket = (props) => {
                       }
                       width="100%"
                       color={'invisible'}
-                      onDrag={(e, value) =>
+                      onChange={(e, value) =>
                         act('set_bid', {
                           bid: value,
                         })

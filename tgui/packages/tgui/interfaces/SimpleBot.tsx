@@ -296,6 +296,7 @@ const MedbotThreshold = (props) => {
         step={5}
         unit="%"
         value={control[1]}
+        tickWhileDragging
         onChange={(_, value) => act(control[0], { threshold: value })}
       />
     </Tooltip>

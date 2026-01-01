@@ -34,6 +34,7 @@ import {
   NoticeBox,
   Pointer,
   Popper,
+  Slider,
   ProgressBar,
   RestrictedInput,
   RoundGauge,
@@ -81,6 +82,7 @@ export {
   RestrictedInput,
   RoundGauge,
   Section,
+  Slider,
   Stack,
   StyleableSection,
   Table,
@@ -95,6 +97,5 @@ export { Knob } from './Knob';
 export { Input } from './Input';
 export { KeyListener } from './KeyListener';
 export { NumberInput } from './NumberInput';
-export { Slider } from './Slider';
 export { TextArea } from './TextArea';
 export { Button } from './Button';
