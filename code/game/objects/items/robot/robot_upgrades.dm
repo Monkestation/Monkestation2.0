@@ -753,7 +753,7 @@
 /obj/item/borg/upgrade/shuttle_blueprints
 	name = "Engineering Cyborg Shuttle Blueprint Database"
 	desc = "An upgrade to the engineering model cyborg allowing for the construction and expansion of shuttles."
-	icon_state = "module_engineer"
+	icon_state = "cyborg_upgrade3"
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/engineering, /obj/item/robot_model/saboteur)
 	model_flags = BORG_MODEL_ENGINEERING
