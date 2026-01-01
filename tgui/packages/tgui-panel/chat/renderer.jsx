@@ -438,17 +438,19 @@ class ChatRenderer {
 
         // Highlight text
         if (!message.avoidHighlighting && this.highlightParsers) {
-          this.highlightParsers.map((parser) => {
-            const highlighted = highlightNode(
-              node,
-              parser.highlightRegex,
-              parser.highlightWords,
-              (text) => createHighlightNode(text, parser.highlightColor),
-            );
-            if (highlighted && parser.highlightWholeMessage) {
-              node.className += ' ChatMessage--highlighted';
-            }
-          });
+          this.highlightParsers
+            .filter((parser) => parser.enabled)
+            .map((parser) => {
+              const highlighted = highlightNode(
+                node,
+                parser.highlightRegex,
+                parser.highlightWords,
+                (text) => createHighlightNode(text, parser.highlightColor),
+              );
+              if (highlighted && parser.highlightWholeMessage) {
+                node.className += ' ChatMessage--highlighted';
+              }
+            });
         }
         // Linkify text
         const linkifyNodes = node.querySelectorAll('.linkify');

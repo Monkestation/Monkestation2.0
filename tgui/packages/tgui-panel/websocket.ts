@@ -7,8 +7,8 @@ const sendWSNotice = (message, small = false) => {
   chatRenderer.processBatch([
     {
       html: small
-        ? `<span className='adminsay'>${message}</span>`
-        : `<div className="boxed_message"><center><span className='alertwarning'>${message}</span></center></div>`,
+        ? `<span class='adminsay'>${message}</span>`
+        : `<div class="boxed_message"><center><span class='alertwarning'>${message}</span></center></div>`,
     },
   ]);
 };

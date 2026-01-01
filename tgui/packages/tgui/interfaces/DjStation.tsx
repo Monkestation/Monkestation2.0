@@ -216,6 +216,12 @@ const AvailableTracks = ({
                 icon="play"
                 selected={currentSong?.name === song.name}
                 onClick={() => act('set_track', { index: i })}
+                style={{
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                }}
+                tooltip={song.name.length > 48 ? song.name : undefined}
               >
                 {song.name}
               </Button>
