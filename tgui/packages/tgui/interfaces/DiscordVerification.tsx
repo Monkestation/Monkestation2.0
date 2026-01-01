@@ -132,7 +132,13 @@ export const DiscordVerification = (props) => {
           </Box>
         </Section>
         <Section title="Join the Discord">
-          <Button icon="paperclip" as="a" href={discord_invite} target="_blank">
+          <Button
+            icon="paperclip"
+            as="a"
+            // @ts-ignore
+            href={discord_invite}
+            target="_blank"
+          >
             Click to open in your browser
           </Button>
           <Box
@@ -165,7 +171,7 @@ export const DiscordVerification = (props) => {
               <Box mt={1}>
                 <img
                   src={resolveAsset('dverify_image1.png')}
-                  style={{ 'max-width': '100%' }}
+                  style={{ maxWidth: '100%' }}
                 />
               </Box>
             </LabeledList.Item>
@@ -175,7 +181,7 @@ export const DiscordVerification = (props) => {
               <Box mt={1}>
                 <img
                   src={resolveAsset('dverify_image2.png')}
-                  style={{ 'max-width': '100%' }}
+                  style={{ maxWidth: '100%' }}
                 />
               </Box>
             </LabeledList.Item>
@@ -187,7 +193,7 @@ export const DiscordVerification = (props) => {
               <Box mt={1}>
                 <img
                   src={resolveAsset('dverify_image3.png')}
-                  style={{ 'max-width': '100%' }}
+                  style={{ maxWidth: '100%' }}
                 />
               </Box>
             </LabeledList.Item>
@@ -198,7 +204,7 @@ export const DiscordVerification = (props) => {
               <Box mt={1}>
                 <img
                   src={resolveAsset('dverify_image4.png')}
-                  style={{ 'max-width': '100%' }}
+                  style={{ maxWidth: '100%' }}
                 />
               </Box>
             </LabeledList.Item>

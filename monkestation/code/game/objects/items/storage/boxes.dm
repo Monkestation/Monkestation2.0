@@ -30,14 +30,14 @@
 	desc = "A box full of pills bottles for various psychiartic uses"
 
 /obj/item/storage/box/pillbottles/psych_pills/PopulateContents()
-	var/static/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/storage/pill_bottle/happinesspsych = 1,
 		/obj/item/storage/pill_bottle/lsdpsych = 1,
 		/obj/item/storage/pill_bottle/mannitol = 1,
 		/obj/item/storage/pill_bottle/paxpsych = 1,
 		/obj/item/storage/pill_bottle/psicodine = 1,
 	)
-	generate_items_inside(items_inside,src)
+	generate_items_inside(items_inside, src)
 
 /obj/item/storage/box/nanitecontrol
 	name = "Nanite Controller Box"

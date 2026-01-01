@@ -1,0 +1,9 @@
+2026-01-01:
+  EatsTheGrapes:
+  - bugfix: Fixed an issue where receiving a PDA message could freeze other active
+      TGUI interfaces
+  - code_imp: Deferred PDA messenger UI updates to prevent overlapping TGUI refreshes
+  flleeppyy:
+  - bugfix: Disallow lobby lurkers from getting roundend rewards
+  grungussuss:
+  - sound: writing something now produces sound

@@ -141,14 +141,22 @@ ADMIN_VERB_AND_CONTEXT_MENU(debug_variables, R_NONE, FALSE, "View Variables", "V
 	</head>
 	<body onload='selectTextField()' onkeydown='return handle_keydown()' onkeyup='handle_keyup()'>
 		<script type="text/javascript">
+		  const complete_list = \[\];
+			document.addEventListener("DOMContentLoaded", () => {
+				const vars = document.getElementById("vars");
+				if (!vars) return;
+
+				complete_list.push(...vars.children);
+			});
+
 			// onload
 			function selectTextField() {
-				var filter_text = document.getElementById('filter');
-				filter_text.focus();
-				filter_text.select();
+				const filterInput = document.getElementById("filter");
+				filterInput.focus();
+				filterInput.select();
 				var lastsearch = getCookie("[refid][cookieoffset]search");
 				if (lastsearch) {
-					filter_text.value = lastsearch;
+					filterInput.value = lastsearch;
 					updateSearch();
 				}
 			}
@@ -164,51 +172,60 @@ ADMIN_VERB_AND_CONTEXT_MENU(debug_variables, R_NONE, FALSE, "View Variables", "V
 			}
 
 			// main search functionality
-			var last_filter = "";
-			function updateSearch() {
-				var filter = document.getElementById('filter').value.toLowerCase();
-				var vars_ol = document.getElementById("vars");
+			let lastFilter = "";
 
-				if (filter === last_filter) {
-					// An event triggered an update but nothing has changed.
-					return;
-				} else if (filter.indexOf(last_filter) === 0) {
-					// The new filter starts with the old filter, fast path by removing only.
-					var children = vars_ol.childNodes;
-					for (var i = children.length - 1; i >= 0; --i) {
-						try {
-							var li = children\[i];
-							if (li.innerText.toLowerCase().indexOf(filter) == -1) {
-								vars_ol.removeChild(li);
-							}
-						} catch(err) {}
+			const varsOl = document.getElementById("vars");
+
+			const indexedList = complete_list.map(li => ({
+				li,
+				text: li.textContent.toLowerCase(),
+			}));
+
+			function updateSearch() {
+				const filterInput = document.getElementById("filter");
+				const filter = filterInput.value.toLowerCase();
+				if (filter === lastFilter) return;
+
+				const isRefinement = filter.startsWith(lastFilter);
+				const fragment = document.createDocumentFragment();
+
+				if (isRefinement) {
+					const children = Array.from(varsOl.children);
+					for (const li of children) {
+						if (!li.textContent.toLowerCase().includes(filter)) {
+							varsOl.removeChild(li);
+						}
 					}
 				} else {
-					// Remove everything and put back what matches.
-					while (vars_ol.hasChildNodes()) {
-						vars_ol.removeChild(vars_ol.lastChild);
+					varsOl.textContent = "";
+
+					for (const item of indexedList) {
+						if (!filter || item.text.includes(filter)) {
+							fragment.appendChild(item.li);
+						}
 					}
 
-					for (var i = 0; i < complete_list.length; ++i) {
-						try {
-							var li = complete_list\[i];
-							if (!filter || li.innerText.toLowerCase().indexOf(filter) != -1) {
-								vars_ol.appendChild(li);
-							}
-						} catch(err) {}
-					}
+					varsOl.appendChild(fragment);
 				}
 
-				last_filter = filter;
-				document.cookie="[refid][cookieoffset]search="+encodeURIComponent(filter);
-
+				lastFilter = filter;
+				document.cookie = `[refid][cookieoffset]search=${encodeURIComponent(filter)}`;
 			}
 
+			function debounce(fn, delay) {
+				let t;
+				return function (...args) {
+					clearTimeout(t);
+					t = setTimeout(() => fn.apply(this, args), delay);
+				};
+			}
+			const debouncedUpdateSearch = debounce(updateSearch, 50);
+
 			// onkeydown
-			function handle_keydown() {
-				if(event.keyCode == 116) {  //F5 (to refresh properly)
+			function handle_keydown(e) {
+				if (e.key === "F5") {
 					document.getElementById("refresh_link").click();
-					event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+					e.preventDefault();
 					return false;
 				}
 				return true;
@@ -216,17 +233,17 @@ ADMIN_VERB_AND_CONTEXT_MENU(debug_variables, R_NONE, FALSE, "View Variables", "V
 
 			// onkeyup
 			function handle_keyup() {
-				updateSearch();
+				debouncedUpdateSearch();
 			}
 
 			// onchange
 			function handle_dropdown(list) {
-				var value = list.options\[list.selectedIndex].value;
-				if (value !== "") {
+				const value = list.value;
+				if (value) {
 					location.href = value;
 				}
 				list.selectedIndex = 0;
-				document.getElementById('filter').focus();
+				document.getElementById("filter").focus();
 			}
 
 			// byjax
@@ -298,11 +315,6 @@ datumrefresh=[refid];[HrefToken()]'>Refresh</a>
 		<ol id='vars'>
 			[variable_html.Join()]
 		</ol>
-		<script type='text/javascript'>
-			var complete_list = \[\];
-			var lis = document.getElementById("vars").children;
-			for(var i = lis.length; i--;) complete_list\[i\] = lis\[i\];
-		</script>
 	</body>
 </html>
 "}

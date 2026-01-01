@@ -1,6 +1,0 @@
-author: "SirNightKnight"
-delete-after: True
-changes:
-  - bugfix: "removed a misplaced stasis unit on Blueshift."
-  - rscadd: "added back the brig physician garment bag."
-  - bugfix: "Unknowns will not appear on the security or specialized crew monitor."
