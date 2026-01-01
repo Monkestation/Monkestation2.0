@@ -11,7 +11,12 @@
 	src.blacklist = blacklist
 	extra_foods = excluding_subtypes ? typecacheof(food_list, only_root_path = TRUE) : food_list
 
+/datum/component/abberant_eater/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(try_eat))
+
+/datum/component/abberant_eater/UnregisterFromParent()
+	UnregisterSignal(parent, COMSIG_ATOM_ATTACKBY)
+
 
 /datum/component/abberant_eater/proc/try_eat(mob/living/nerd, obj/item/weapon, mob/living/attacker)
 	if(nerd.istate & ISTATE_HARM)

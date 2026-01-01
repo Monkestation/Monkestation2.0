@@ -161,6 +161,7 @@
 /datum/species/ipc/on_species_loss(mob/living/carbon/target)
 	. = ..()
 	UnregisterSignal(target, list(COMSIG_ATOM_EMAG_ACT, COMSIG_LIVING_DEATH))
+	target.RemoveComponent
 	change_screen?.Remove(target)
 
 /datum/species/ipc/proc/handle_speech(datum/source, list/speech_args)
