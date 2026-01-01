@@ -150,8 +150,6 @@ $department_map: (
 
           .options {
             margin-right: var(--space-xxs);
-            background: hsla(0, 0%, 0%, 0.2);
-            height: 100%;
           }
         }
 
@@ -159,6 +157,8 @@ $department_map: (
           border: var(--border-thickness-medium)
             outset
             hsla(60, 100%, 39.2%, 1);
+          padding: 2px 0;
+          padding-bottom: 0.8em;
 
           &:first-child {
             border-top: var(--border-thickness-medium)
@@ -224,6 +224,10 @@ $department_map: (
             background-color: $color-value;
             transition: background-color var(--transition-time-fast) ease-in;
           }
+        }
+
+        .Stack {
+          gap: 0;
         }
 
         &:hover {

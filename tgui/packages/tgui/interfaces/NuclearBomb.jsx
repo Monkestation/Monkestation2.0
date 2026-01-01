@@ -65,8 +65,7 @@ export const NuclearBomb = (props) => {
                 icon="eject"
                 fontSize="24px"
                 lineHeight={1}
-                textAlign="center"
-                width="43px"
+                textAlign="left"
                 ml="6px"
                 mr="3px"
                 mt="3px"
