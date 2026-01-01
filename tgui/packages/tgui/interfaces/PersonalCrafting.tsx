@@ -449,18 +449,23 @@ export const PersonalCrafting = (props) => {
                   <Divider />
                   <Button.Checkbox
                     fluid
-                    content="Can make only"
+                    color="transparent"
                     checked={display_craftable_only}
                     onClick={() => {
                       act('toggle_recipes');
                     }}
-                  />
+                    mb="0.2em"
+                  >
+                    Can make only
+                  </Button.Checkbox>
                   <Button.Checkbox
                     fluid
-                    content="Compact list"
+                    color="transparent"
                     checked={display_compact}
                     onClick={() => act('toggle_compact')}
-                  />
+                  >
+                    Compact list
+                  </Button.Checkbox>
                 </Stack.Item>
                 {!forced_mode && (
                   <Stack.Item>
@@ -469,7 +474,6 @@ export const PersonalCrafting = (props) => {
                         <Button.Checkbox
                           fluid
                           lineHeight={2}
-                          content="Craft"
                           checked={mode === MODE.crafting}
                           icon="hammer"
                           style={{
@@ -485,13 +489,14 @@ export const PersonalCrafting = (props) => {
                             setCategory(DEFAULT_CAT_CRAFTING);
                             act('toggle_mode');
                           }}
-                        />
+                        >
+                          Craft
+                        </Button.Checkbox>
                       </Stack.Item>
                       <Stack.Item grow>
                         <Button.Checkbox
                           fluid
                           lineHeight={2}
-                          content="Cook"
                           checked={mode === MODE.cooking}
                           icon="utensils"
                           style={{
@@ -507,7 +512,9 @@ export const PersonalCrafting = (props) => {
                             setCategory(DEFAULT_CAT_COOKING);
                             act('toggle_mode');
                           }}
-                        />
+                        >
+                          Cook
+                        </Button.Checkbox>
                       </Stack.Item>
                     </Stack>
                   </Stack.Item>
@@ -770,7 +777,7 @@ const RecipeContentCompact = ({ item, craftable, busy, mode }) => {
                 <Box>
                   {!!item.tool_behaviors && (
                     <Tooltip
-                      content={'Tools: ' + item.tool_behaviors.join(', ')}
+                      content={`Tools: ${item.tool_behaviors.join(', ')}`}
                     >
                       <Icon p={1} name="screwdriver-wrench" />
                     </Tooltip>
@@ -779,7 +786,6 @@ const RecipeContentCompact = ({ item, craftable, busy, mode }) => {
                     my={0.3}
                     lineHeight={2.5}
                     align="center"
-                    content="Make"
                     disabled={!craftable || busy}
                     icon={
                       busy
@@ -794,7 +800,9 @@ const RecipeContentCompact = ({ item, craftable, busy, mode }) => {
                         recipe: item.ref,
                       })
                     }
-                  />
+                  >
+                    Make
+                  </Button>
                 </Box>
               ) : (
                 item.steps && (
@@ -1039,7 +1047,6 @@ const RecipeContent = ({ item, craftable, busy, mode, diet }) => {
                   width="104px"
                   lineHeight={2.5}
                   align="center"
-                  content="Make"
                   disabled={!craftable || busy}
                   icon={
                     busy
@@ -1054,7 +1061,9 @@ const RecipeContent = ({ item, craftable, busy, mode, diet }) => {
                       recipe: item.ref,
                     })
                   }
-                />
+                >
+                  Make
+                </Button>
               )}
               {item.nutriments > 0 && (
                 <Box color={'gray'} width={'104px'} lineHeight={1.5} mt={1}>

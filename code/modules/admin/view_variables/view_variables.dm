@@ -149,9 +149,9 @@ ADMIN_VERB_AND_CONTEXT_MENU(debug_variables, R_NONE, FALSE, "View Variables", "V
 				complete_list.push(...vars.children);
 			});
 
-			const filterInput = document.getElementById("filter");
 			// onload
 			function selectTextField() {
+				const filterInput = document.getElementById("filter");
 				filterInput.focus();
 				filterInput.select();
 				var lastsearch = getCookie("[refid][cookieoffset]search");
@@ -182,6 +182,7 @@ ADMIN_VERB_AND_CONTEXT_MENU(debug_variables, R_NONE, FALSE, "View Variables", "V
 			}));
 
 			function updateSearch() {
+				const filterInput = document.getElementById("filter");
 				const filter = filterInput.value.toLowerCase();
 				if (filter === lastFilter) return;
 
