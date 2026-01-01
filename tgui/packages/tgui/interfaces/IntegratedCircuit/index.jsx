@@ -453,7 +453,7 @@ export class IntegratedCircuit extends Component {
         width={1200}
         height={800}
         buttons={
-          <Box width="160px" position="absolute" top="5px" height="22px">
+          <Box position="relative">
             <Stack>
               <Stack.Item grow>
                 <Input
@@ -467,8 +467,6 @@ export class IntegratedCircuit extends Component {
               </Stack.Item>
               <Stack.Item basis="24px">
                 <Button
-                  position="absolute"
-                  top={0}
                   color="transparent"
                   icon="cog"
                   selected={variableMenuOpen}
@@ -481,8 +479,6 @@ export class IntegratedCircuit extends Component {
               </Stack.Item>
               <Stack.Item basis="24px">
                 <Button
-                  position="absolute"
-                  top={0}
                   color="transparent"
                   icon="plus"
                   selected={componentMenuOpen}
@@ -496,8 +492,6 @@ export class IntegratedCircuit extends Component {
               {!!is_admin && (
                 <Stack.Item>
                   <Button
-                    position="absolute"
-                    top={0}
                     color="transparent"
                     onClick={() => act('save_circuit')}
                     icon="save"
