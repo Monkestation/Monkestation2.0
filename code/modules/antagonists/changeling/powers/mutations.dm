@@ -421,7 +421,11 @@
 		return BULLET_ACT_HIT
 
 	if(LAZYACCESS(fire_modifiers, RIGHT_CLICK))
-		var/obj/item/stealing = victim.get_active_held_item()
+		var/obj/item/stealing
+		if(victim.get_active_held_item())
+			stealing = victim.get_active_held_item()
+		else
+			stealing = victim.get_inactive_held_item()
 		if(!isnull(stealing))
 			if(victim.dropItemToGround(stealing))
 				victim.visible_message(

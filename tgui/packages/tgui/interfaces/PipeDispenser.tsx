@@ -69,7 +69,6 @@ const PipeTypeSection = (props) => {
       <Tabs>
         {categories.map((category, i) => (
           <Tabs.Tab
-            fluid
             key={category.cat_name}
             icon={ICON_BY_CATEGORY_NAME[category.cat_name]}
             selected={category.cat_name === shownCategory.cat_name}
@@ -84,8 +83,6 @@ const PipeTypeSection = (props) => {
           key={recipe.pipe_index}
           fluid
           ellipsis
-          content={recipe.pipe_name}
-          title={recipe.pipe_name}
           onClick={() =>
             act('pipe_type', {
               pipe_type: recipe.pipe_index,
@@ -93,7 +90,9 @@ const PipeTypeSection = (props) => {
               category: shownCategory.cat_name,
             })
           }
-        />
+        >
+          {recipe.pipe_name}
+        </Button>
       ))}
     </Section>
   );

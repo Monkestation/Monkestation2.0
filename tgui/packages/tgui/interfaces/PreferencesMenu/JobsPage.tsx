@@ -1,6 +1,6 @@
 import { sortBy } from 'common/collections';
 import { classes } from 'common/react';
-import { InfernoNode, Inferno } from 'inferno';
+import { ReactNode } from 'react';
 import { useBackend } from '../../backend';
 import { Box, Button, Dropdown, Stack, Tooltip } from '../../components';
 import {
@@ -113,10 +113,10 @@ const PriorityButtons = (props: {
   return (
     <Stack
       style={{
-        'align-items': 'center',
+        alignItems: 'center',
         height: '100%',
-        'justify-content': 'flex-end',
-        'padding-left': '0.3em',
+        justifyContent: 'flex-end',
+        paddingLeft: '0.3em',
       }}
     >
       {isOverflow ? (
@@ -191,7 +191,7 @@ const JobRow = (props: { className?: string; job: Job; name: string }) => {
     ? data.job_alt_titles[name]
     : name;
 
-  let rightSide: InfernoNode;
+  let rightSide: ReactNode;
 
   if (experienceNeeded) {
     const { experience_type, required_playtime } = experienceNeeded;
@@ -234,7 +234,7 @@ const JobRow = (props: { className?: string; job: Job; name: string }) => {
     <Box
       className={className}
       style={{
-        'margin-top': 0,
+        marginTop: 0,
       }}
     >
       <Stack>
@@ -244,7 +244,7 @@ const JobRow = (props: { className?: string; job: Job; name: string }) => {
             className="job-name"
             width="70%"
             style={{
-              'padding-left': '0.3em',
+              paddingLeft: '0.3em',
             }}
           >
             {' '}
@@ -254,7 +254,7 @@ const JobRow = (props: { className?: string; job: Job; name: string }) => {
               <Dropdown
                 width="100%"
                 options={job.alt_titles}
-                displayText={alt_title_selected}
+                selected={alt_title_selected}
                 onSelected={(value) =>
                   act('set_job_title', { job: name, new_title: value })
                 }
@@ -271,7 +271,10 @@ const JobRow = (props: { className?: string; job: Job; name: string }) => {
   );
 };
 
-const Department: Inferno.SFC<{ department: string }> = (props) => {
+const Department: React.FC<{
+  department: string;
+  children?: React.ReactNode;
+}> = (props) => {
   const { children, department: name } = props;
   const className = `PreferencesMenu__Jobs__departments--${name}`;
 
@@ -329,7 +332,7 @@ const Department: Inferno.SFC<{ department: string }> = (props) => {
 // But in order for everything to align, I also need to add the 0.2em padding.
 // But also, we can't be aligned with names that break into multiple lines!
 const Gap = (props: { amount: number }) => {
-  // 0.2em comes from the padding-bottom in the department listing
+  // 0.2em comes from the paddingBottom in the department listing
   return <Box height={`calc(${props.amount}px + 0.2em)`} />;
 };
 
@@ -352,11 +355,15 @@ const JoblessRoleDropdown = (props) => {
     },
   ];
 
+  const selection = options?.find(
+    (option) => option.value === selected,
+  )?.displayText;
+
   return (
     <Box position="absolute" right={1} width="25%">
       <Dropdown
         width="100%"
-        selected={selected}
+        selected={selection}
         onSelected={createSetPreference(act, 'joblessrole')}
         options={options}
         displayText={
