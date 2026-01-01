@@ -13,6 +13,7 @@ import {
 } from '../components';
 import { BooleanLike } from 'common/react';
 import { LoadingScreen } from './common/LoadingToolbox';
+import { TableCell, TableRow } from '../components/Table';
 
 type Data =
   | {
@@ -102,7 +103,7 @@ const AccessView = (props) => {
   const { act, data } = useBackend<Data>();
 
   if (!isConnected(data)) {
-    return <NoticeBox>No server connected!</NoticeBox>;
+    return <NoticeBox error>No server connected!</NoticeBox>;
   }
 
   const {
@@ -122,7 +123,7 @@ const AccessView = (props) => {
       <Stack.Item grow>
         <Section
           buttons={
-            <Stack align="center">
+            <>
               <Button
                 disabled={
                   !ready || occupants > 0 || points < 1 || !!generated_domain
@@ -138,7 +139,7 @@ const AccessView = (props) => {
                 <Icon color="pink" name="star" mr={1} />
                 {points}
               </Tooltip>
-            </Stack>
+            </>
           }
           fill
           scrollable
@@ -242,15 +243,15 @@ const DomainEntry = (props: DomainEntryProps) => {
         <Stack.Divider />
         <Stack.Item grow>
           <Table>
-            <Table.Row>
+            <TableRow>
               <DisplayDetails amount={cost} color="pink" icon="star" />
-            </Table.Row>
-            <Table.Row>
+            </TableRow>
+            <TableRow>
               <DisplayDetails amount={difficulty} color="white" icon="skull" />
-            </Table.Row>
-            <Table.Row>
+            </TableRow>
+            <TableRow>
               <DisplayDetails amount={reward} color="gold" icon="coins" />
-            </Table.Row>
+            </TableRow>
           </Table>
         </Stack.Item>
       </Stack>
@@ -296,12 +297,12 @@ const AvatarDisplay = (props) => {
     >
       <Table>
         {avatars.map(({ health, name, pilot, brute, burn, tox, oxy }) => (
-          <Table.Row key={name}>
-            <Table.Cell color="label">
+          <TableRow key={name}>
+            <TableCell color="label">
               {pilot} as{' '}
               <span style={{ color: 'white' }}>&quot;{name}&quot;</span>
-            </Table.Cell>
-            <Table.Cell collapsing>
+            </TableCell>
+            <TableCell collapsing>
               <Stack>
                 {brute === 0 && burn === 0 && tox === 0 && oxy === 0 && (
                   <Stack.Item>
@@ -324,8 +325,8 @@ const AvatarDisplay = (props) => {
                   <Icon color={oxy > 50 ? 'blue' : 'gray'} name="lungs" />
                 </Stack.Item>
               </Stack>
-            </Table.Cell>
-            <Table.Cell>
+            </TableCell>
+            <TableCell>
               <ProgressBar
                 minValue={-100}
                 maxValue={100}
@@ -336,8 +337,8 @@ const AvatarDisplay = (props) => {
                 }}
                 value={health}
               />
-            </Table.Cell>
-          </Table.Row>
+            </TableCell>
+          </TableRow>
         ))}
       </Table>
     </Section>
@@ -348,28 +349,28 @@ const DisplayDetails = (props: DisplayDetailsProps) => {
   const { amount = 0, color, icon = 'star' } = props;
 
   if (amount === 0) {
-    return <Table.Cell color="label">No bandwidth</Table.Cell>;
+    return <TableCell color="label">No bandwidth</TableCell>;
   }
 
   if (typeof amount === 'string') {
-    return <Table.Cell color="label">{String(amount)}</Table.Cell>; // don't ask
+    return <TableCell color="label">{String(amount)}</TableCell>; // don't ask
   }
 
   if (amount > 4) {
     return (
-      <Table.Cell>
+      <TableCell>
         <Stack>
           <Stack.Item>{amount}</Stack.Item>
           <Stack.Item>
             <Icon color={color} name={icon} />
           </Stack.Item>
         </Stack>
-      </Table.Cell>
+      </TableCell>
     );
   }
 
   return (
-    <Table.Cell>
+    <TableCell>
       <Stack>
         {Array.from({ length: amount }, (_, index) => (
           <Stack.Item key={index}>
@@ -377,6 +378,6 @@ const DisplayDetails = (props: DisplayDetailsProps) => {
           </Stack.Item>
         ))}
       </Stack>
-    </Table.Cell>
+    </TableCell>
   );
 };

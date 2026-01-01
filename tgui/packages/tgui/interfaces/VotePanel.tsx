@@ -259,7 +259,7 @@ const ChoicesPanel = (props) => {
                   {user.singleSelection &&
                     choice.name === user.singleSelection && (
                       <Icon
-                        style={{ alignSelf: 'right' }}
+                        alignSelf="right"
                         mr={2}
                         color="green"
                         name="vote-yea"
@@ -301,7 +301,7 @@ const ChoicesPanel = (props) => {
                   {user.multiSelection &&
                   user.multiSelection[user.ckey.concat(choice.name)] === 1 ? (
                     <Icon
-                      style={{ alignSelf: 'right' }}
+                      alignSelf="right"
                       mr={2}
                       color="blue"
                       name="vote-yea"

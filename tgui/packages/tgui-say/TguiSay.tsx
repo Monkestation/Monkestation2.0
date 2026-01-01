@@ -1,15 +1,12 @@
-import './styles/main.scss';
-
-import { useEffect, useRef, useState } from 'react';
-import { dragStartHandler } from 'tgui/drag';
-import { isEscape, KEY } from 'tgui-core/keys';
-import { type BooleanLike, classes } from 'tgui-core/react';
-
-import { type Channel, ChannelIterator } from './ChannelIterator';
+import { Channel, ChannelIterator } from './ChannelIterator';
 import { ChatHistory } from './ChatHistory';
-import { LineLength, RADIO_PREFIXES, WindowSize } from './constants';
-import { getPrefix, windowClose, windowOpen, windowSet } from './helpers';
+import { Component, createRef, InfernoKeyboardEvent, RefObject } from 'inferno';
+import { LINE_LENGTHS, RADIO_PREFIXES, WINDOW_SIZES } from './constants';
 import { byondMessages } from './timers';
+import { dragStartHandler } from 'tgui/drag';
+import { windowOpen, windowClose, windowSet } from './helpers';
+import { BooleanLike } from 'common/react';
+import { isEscape, KEY } from 'common/keys';
 
 type ByondOpen = {
   channel: Channel;
@@ -21,313 +18,394 @@ type ByondProps = {
   scale: BooleanLike;
 };
 
-export function TguiSay() {
-  const innerRef = useRef<HTMLTextAreaElement>(null);
-  const channelIterator = useRef(new ChannelIterator());
-  const chatHistory = useRef(new ChatHistory());
-  const messages = useRef(byondMessages);
-  const scale = useRef(true);
-  const currentPrefix = useRef<keyof typeof RADIO_PREFIXES | null>(null);
+type State = {
+  buttonContent: string | number;
+  size: WINDOW_SIZES;
+};
 
-  // I initially wanted to make these an object or a reducer, but it's not really worth it.
-  // You lose the granulatity and add a lot of boilerplate.
-  const [buttonContent, setButtonContent] = useState('');
-  const [lightMode, setLightMode] = useState(false);
-  const [maxLength, setMaxLength] = useState(1024);
-  const [size, setSize] = useState(WindowSize.Small);
-  const [value, setValue] = useState('');
+const CHANNEL_REGEX = /^[:.]\w\s/;
 
-  const position = useRef([window.screenX, window.screenY]);
-  const isDragging = useRef(false);
+const ROWS: Record<keyof typeof WINDOW_SIZES, number> = {
+  small: 1,
+  medium: 2,
+  large: 3,
+  width: 1, // not used
+} as const;
 
-  function setCurrentPrefix(prefix: keyof typeof RADIO_PREFIXES | null): void {
-    currentPrefix.current = prefix;
+export class TguiSay extends Component<{}, State> {
+  private channelIterator: ChannelIterator;
+  private chatHistory: ChatHistory;
+  private currentPrefix: keyof typeof RADIO_PREFIXES | null;
+  private innerRef: RefObject<HTMLTextAreaElement>;
+  private lightMode: boolean;
+  private maxLength: number;
+  private messages: typeof byondMessages;
+  private scale: boolean;
+  private position: [number, number];
+  private isDragging: boolean;
+  state: State;
+
+  constructor(props: never) {
+    super(props);
+
+    this.channelIterator = new ChannelIterator();
+    this.chatHistory = new ChatHistory();
+    this.currentPrefix = null;
+    this.innerRef = createRef();
+    this.lightMode = false;
+    this.maxLength = 1024;
+    this.messages = byondMessages;
+    this.scale = true;
+    this.position = [window.screenX, window.screenY];
+    this.isDragging = false;
+    this.state = {
+      buttonContent: '',
+      size: WINDOW_SIZES.small,
+    };
+
+    this.handleArrowKeys = this.handleArrowKeys.bind(this);
+    this.handleBackspaceDelete = this.handleBackspaceDelete.bind(this);
+    this.handleButtonClick = this.handleButtonClick.bind(this);
+    this.handleButtonRelease = this.handleButtonRelease.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+    this.handleEnter = this.handleEnter.bind(this);
+    this.handleForceSay = this.handleForceSay.bind(this);
+    this.handleIncrementChannel = this.handleIncrementChannel.bind(this);
+    this.handleInput = this.handleInput.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
+    this.handleOpen = this.handleOpen.bind(this);
+    this.handleProps = this.handleProps.bind(this);
+    this.reset = this.reset.bind(this);
+    this.setSize = this.setSize.bind(this);
+    this.setValue = this.setValue.bind(this);
   }
 
-  function handleArrowKeys(direction: KEY.Up | KEY.Down): void {
-    const chat = chatHistory.current;
-    const iterator = channelIterator.current;
+  componentDidMount() {
+    Byond.subscribeTo('props', this.handleProps);
+    Byond.subscribeTo('force', this.handleForceSay);
+    Byond.subscribeTo('open', this.handleOpen);
+  }
 
-    if (direction === KEY.Up) {
-      if (chat.isAtLatest() && value) {
+  handleArrowKeys(direction: KEY.Up | KEY.Down | KEY.ArrowUp | KEY.ArrowDown) {
+    const currentValue = this.innerRef.current?.value;
+
+    if (direction === KEY.Up || direction === KEY.ArrowUp) {
+      if (this.chatHistory.isAtLatest() && currentValue) {
         // Save current message to temp history if at the most recent message
-        chat.saveTemp(value);
+        this.chatHistory.saveTemp(currentValue);
       }
       // Try to get the previous message, fall back to the current value if none
-      const prevMessage = chat.getOlderMessage();
+      const prevMessage = this.chatHistory.getOlderMessage();
 
       if (prevMessage) {
-        setButtonContent(chat.getIndex().toString());
-        setValue(prevMessage);
+        this.setState({ buttonContent: this.chatHistory.getIndex() });
+        this.setSize(prevMessage.length);
+        this.setValue(prevMessage);
       }
     } else {
-      const nextMessage = chat.getNewerMessage() || chat.getTemp() || '';
+      const nextMessage =
+        this.chatHistory.getNewerMessage() || this.chatHistory.getTemp() || '';
 
-      const newContent = chat.isAtLatest()
-        ? iterator.current()
-        : chat.getIndex().toString();
+      const buttonContent = this.chatHistory.isAtLatest()
+        ? this.channelIterator.current()
+        : this.chatHistory.getIndex();
 
-      setButtonContent(newContent);
-      setValue(nextMessage);
+      this.setState({ buttonContent });
+      this.setSize(nextMessage.length);
+      this.setValue(nextMessage);
     }
   }
 
-  function handleBackspaceDelete(): void {
-    const chat = chatHistory.current;
-    const iterator = channelIterator.current;
+  handleBackspaceDelete() {
+    const typed = this.innerRef.current?.value;
 
     // User is on a chat history message
-    if (!chat.isAtLatest()) {
-      chat.reset();
-      setButtonContent(currentPrefix.current ?? iterator.current());
-
+    if (!this.chatHistory.isAtLatest()) {
+      this.chatHistory.reset();
+      this.setState({
+        buttonContent: this.currentPrefix ?? this.channelIterator.current(),
+      });
       // Empty input, resets the channel
     } else if (
-      currentPrefix.current &&
-      iterator.isSay() &&
-      value?.length === 0
+      !!this.currentPrefix &&
+      this.channelIterator.isSay() &&
+      typed?.length === 0
     ) {
-      setCurrentPrefix(null);
-      setButtonContent(iterator.current());
+      this.currentPrefix = null;
+      this.setState({ buttonContent: this.channelIterator.current() });
     }
+
+    this.setSize(typed?.length);
   }
 
-  function handleButtonClick(event: React.MouseEvent<HTMLButtonElement>): void {
-    isDragging.current = true;
+  handleButtonClick(event: MouseEvent): void {
+    this.isDragging = true;
 
     setTimeout(() => {
       // So the button doesn't jump around accidentally
-      if (isDragging.current) {
-        dragStartHandler(event.nativeEvent);
+      if (this.isDragging) {
+        dragStartHandler(event);
       }
     }, 50);
   }
 
   // Prevents the button from changing channels if it's dragged
-  function handleButtonRelease(): void {
-    isDragging.current = false;
+  handleButtonRelease(): void {
+    this.isDragging = false;
     const currentPosition = [window.screenX, window.screenY];
 
-    if (
-      position.current[0] !== currentPosition[0] ||
-      position.current[1] !== currentPosition[1]
-    ) {
-      position.current = currentPosition;
+    if (JSON.stringify(this.position) !== JSON.stringify(currentPosition)) {
+      this.position = currentPosition as [number, number];
       return;
     }
 
-    handleIncrementChannel();
+    this.handleIncrementChannel();
   }
 
-  function handleClose(): void {
-    innerRef.current?.blur();
-    windowClose(scale.current);
+  handleClose() {
+    const current = this.innerRef.current;
 
-    setTimeout(() => {
-      chatHistory.current.reset();
-      channelIterator.current.reset();
-      unloadChat();
-    }, 25);
+    if (current) {
+      current.blur();
+    }
+
+    this.reset();
+    this.chatHistory.reset();
+    this.channelIterator.reset();
+    this.currentPrefix = null;
+    windowClose(this.scale);
   }
 
-  function handleEnter(): void {
-    const iterator = channelIterator.current;
-    const prefix = currentPrefix.current ?? '';
+  handleEnter() {
+    const prefix = this.currentPrefix ?? '';
+    const value = this.innerRef.current?.value;
 
-    if (value?.length && value.length < maxLength) {
-      chatHistory.current.add(value);
+    if (value?.length && value.length < this.maxLength) {
+      this.chatHistory.add(value);
       Byond.sendMessage('entry', {
-        channel: iterator.current(),
-        entry: iterator.isSay() ? prefix + value : value,
+        channel: this.channelIterator.current(),
+        entry: this.channelIterator.isSay() ? prefix + value : value,
       });
     }
 
-    handleClose();
+    this.handleClose();
   }
 
-  function handleForceSay(): void {
-    const iterator = channelIterator.current;
-    const currentValue = innerRef.current?.value;
-
+  handleForceSay() {
+    const currentValue = this.innerRef.current?.value;
     // Only force say if we're on a visible channel and have typed something
-    if (!currentValue || !iterator.isVisible()) return;
+    if (!currentValue || !this.channelIterator.isVisible()) return;
 
-    const prefix = currentPrefix.current ?? '';
-    const grunt = iterator.isSay() ? prefix + currentValue : currentValue;
+    const prefix = this.currentPrefix ?? '';
+    const grunt = this.channelIterator.isSay()
+      ? prefix + currentValue
+      : currentValue;
 
-    messages.current.forceSayMsg(grunt, iterator.current());
-    handleClose();
+    this.messages.forceSayMsg(grunt);
+    this.reset();
   }
 
-  function handleSaveText(): void {
-    const iterator = channelIterator.current;
-    const currentValue = innerRef.current?.value;
-
-    if (!currentValue || !iterator.isVisible()) return;
-
-    messages.current.saveText(currentValue, iterator.current());
-  }
-
-  function handleIncrementChannel(): void {
-    const iterator = channelIterator.current;
-
-    iterator.next();
-    setButtonContent(iterator.current());
-    setCurrentPrefix(null);
-    messages.current.channelIncrementMsg(iterator.isVisible());
-  }
-
-  function handleInput(event: React.FormEvent<HTMLTextAreaElement>): void {
-    const iterator = channelIterator.current;
-    let newValue = event.currentTarget.value;
-
-    const newPrefix = getPrefix(newValue) || currentPrefix.current;
-    // Handles switching prefixes
-    if (newPrefix && newPrefix !== currentPrefix.current) {
-      setButtonContent(RADIO_PREFIXES[newPrefix]);
-      setCurrentPrefix(newPrefix);
-      newValue = newValue.slice(3);
-      iterator.set('Say');
-
-      if (newPrefix === ':b ') {
-        Byond.sendMessage('thinking', { visible: false });
-      }
+  handleIncrementChannel() {
+    // Binary talk is a special case, tell byond to show thinking indicators
+    if (this.channelIterator.isSay() && this.currentPrefix === ':b ') {
+      this.messages.channelIncrementMsg(true);
     }
 
-    // Handles typing indicators
-    if (channelIterator.current.isVisible() && newPrefix !== ':b ') {
-      messages.current.typingMsg();
+    this.currentPrefix = null;
+
+    this.channelIterator.next();
+
+    // If we've looped onto a quiet channel, tell byond to hide thinking indicators
+    if (!this.channelIterator.isVisible()) {
+      this.messages.channelIncrementMsg(false);
     }
 
-    setValue(newValue);
+    this.setState({ buttonContent: this.channelIterator.current() });
   }
 
-  function handleKeyDown(
-    event: React.KeyboardEvent<HTMLTextAreaElement>,
-  ): void {
-    if (event.getModifierState('AltGraph')) return;
+  handleInput() {
+    const typed = this.innerRef.current?.value;
 
+    // If we're typing, send the message
+    if (this.channelIterator.isVisible() && this.currentPrefix !== ':b ') {
+      this.messages.typingMsg();
+    }
+
+    this.setSize(typed?.length);
+
+    // Is there a value? Is it long enough to be a prefix?
+    if (!typed || typed.length < 3) {
+      return;
+    }
+
+    if (!CHANNEL_REGEX.test(typed)) {
+      return;
+    }
+
+    // Is it a valid prefix?
+    const prefix = typed
+      .slice(0, 3)
+      ?.toLowerCase()
+      ?.replace('.', ':') as keyof typeof RADIO_PREFIXES;
+    if (!RADIO_PREFIXES[prefix] || prefix === this.currentPrefix) {
+      return;
+    }
+
+    // If we're in binary, hide the thinking indicator
+    if (prefix === ':b ') {
+      Byond.sendMessage('thinking', { visible: false });
+    }
+
+    this.channelIterator.set('Say');
+    this.currentPrefix = prefix;
+    this.setState({ buttonContent: RADIO_PREFIXES[prefix] });
+    this.setValue(typed.slice(3));
+  }
+
+  handleKeyDown(event: InfernoKeyboardEvent<HTMLTextAreaElement>) {
     switch (event.key) {
       case KEY.Up:
       case KEY.Down:
+      case KEY.ArrowUp:
+      case KEY.ArrowDown:
         event.preventDefault();
-        handleArrowKeys(event.key);
+        this.handleArrowKeys(event.key);
         break;
 
       case KEY.Delete:
       case KEY.Backspace:
-        handleBackspaceDelete();
+        this.handleBackspaceDelete();
         break;
 
       case KEY.Enter:
         event.preventDefault();
-        handleEnter();
+        this.handleEnter();
         break;
 
       case KEY.Tab:
         event.preventDefault();
-        handleIncrementChannel();
+        this.handleIncrementChannel();
         break;
 
       default:
         if (isEscape(event.key)) {
-          handleClose();
+          this.handleClose();
         }
     }
   }
 
-  function handleOpen(data: ByondOpen): void {
-    channelIterator.current.set(data.channel);
+  handleOpen = (data: ByondOpen) => {
+    const { channel } = data;
+    // Catches the case where the modal is already open
+    if (this.channelIterator.isSay()) {
+      this.channelIterator.set(channel);
+    }
+    this.setState({ buttonContent: this.channelIterator.current() });
 
-    setCurrentPrefix(null);
-    setButtonContent(channelIterator.current.current());
+    windowOpen(this.channelIterator.current(), this.scale);
 
-    windowOpen(channelIterator.current.current(), scale.current);
+    const input = this.innerRef.current;
+    setTimeout(() => {
+      input?.focus();
+    }, 1);
+  };
 
-    innerRef.current?.focus();
+  handleProps = (data: ByondProps) => {
+    const { maxLength, lightMode, scale } = data;
+    this.maxLength = maxLength;
+    this.lightMode = !!lightMode;
+    this.scale = !!scale;
+  };
+
+  reset() {
+    this.setValue('');
+    this.setSize();
+    this.setState({
+      buttonContent: this.channelIterator.current(),
+    });
   }
 
-  function handleProps(data: ByondProps): void {
-    setMaxLength(data.maxLength);
-    setLightMode(!!data.lightMode);
-    scale.current = !!data.scale;
-  }
+  setSize(length = 0) {
+    let newSize: WINDOW_SIZES;
 
-  function unloadChat(): void {
-    setCurrentPrefix(null);
-    setButtonContent(channelIterator.current.current());
-    setValue('');
-  }
-
-  /** Subscribe to Byond messages */
-  useEffect(() => {
-    Byond.subscribeTo('props', handleProps);
-    Byond.subscribeTo('force', handleForceSay);
-    Byond.subscribeTo('open', handleOpen);
-    Byond.subscribeTo('save', handleSaveText);
-  }, []);
-
-  /** Value has changed, we need to check if the size of the window is ok */
-  useEffect(() => {
-    const len = value?.length || 0;
-
-    let newSize: WindowSize;
-    if (len > LineLength.Medium) {
-      newSize = WindowSize.Large;
-    } else if (len <= LineLength.Medium && len > LineLength.Small) {
-      newSize = WindowSize.Medium;
+    if (length > LINE_LENGTHS.medium) {
+      newSize = WINDOW_SIZES.large;
+    } else if (length <= LINE_LENGTHS.medium && length > LINE_LENGTHS.small) {
+      newSize = WINDOW_SIZES.medium;
     } else {
-      newSize = WindowSize.Small;
+      newSize = WINDOW_SIZES.small;
     }
 
-    if (size !== newSize) {
-      windowSet(newSize, scale.current);
-      setSize(newSize);
+    if (this.state.size !== newSize) {
+      this.setState({ size: newSize });
+      windowSet(newSize, this.scale);
     }
-  }, [value]);
+  }
 
-  const theme =
-    (lightMode && 'lightMode') ||
-    (currentPrefix.current && RADIO_PREFIXES[currentPrefix.current]) ||
-    channelIterator.current.current();
+  setValue(value: string) {
+    const textArea = this.innerRef.current;
+    if (textArea) {
+      textArea.value = value;
+    }
+  }
+
+  render() {
+    const theme =
+      (this.lightMode && 'lightMode') ||
+      (this.currentPrefix && RADIO_PREFIXES[this.currentPrefix]) ||
+      this.channelIterator.current();
+
+    return (
+      <div
+        className={`window window-${theme} window-${this.state.size}`}
+        $HasKeyedChildren
+      >
+        <Dragzone position="top" theme={theme} />
+        <div className="center" $HasKeyedChildren>
+          <Dragzone position="left" theme={theme} />
+          <div
+            className="input"
+            style={{
+              zoom: this.scale ? '' : `${100 / window.devicePixelRatio}%`,
+            }}
+            $HasKeyedChildren
+          >
+            <button
+              className={`button button-${theme}`}
+              onMouseDown={this.handleButtonClick}
+              onMouseUp={this.handleButtonRelease}
+              type="button"
+            >
+              {this.state.buttonContent}
+            </button>
+            <textarea
+              autoCorrect="off"
+              className={`textarea textarea-${theme}`}
+              maxLength={this.maxLength}
+              onInput={this.handleInput}
+              onKeyDown={this.handleKeyDown}
+              ref={this.innerRef}
+              spellCheck={false}
+              rows={ROWS[this.state.size] || 1}
+            />
+          </div>
+          <Dragzone position="right" theme={theme} />
+        </div>
+        <Dragzone position="bottom" theme={theme} />
+      </div>
+    );
+  }
+}
+
+const Dragzone = ({ theme, position }: { theme: string; position: string }) => {
+  // Horizontal or vertical?
+  const location =
+    position === 'left' || position === 'right' ? 'vertical' : 'horizontal';
 
   return (
-    <>
-      <div
-        className={`window window-${theme} window-${size}`}
-        onMouseDown={dragStartHandler as any}
-      >
-        {!lightMode && <div className={`shine shine-${theme}`} />}
-      </div>
-      <div
-        className={classes(['content', lightMode && 'content-lightMode'])}
-        style={{
-          zoom: scale.current ? '' : `${100 / window.devicePixelRatio}%`,
-        }}
-      >
-        <button
-          className={`button button-${theme}`}
-          onMouseDown={handleButtonClick}
-          onMouseUp={handleButtonRelease}
-          type="button"
-        >
-          {buttonContent}
-        </button>
-        <textarea
-          autoCorrect="off"
-          className={classes([
-            'textarea',
-            `textarea-${theme}`,
-            value.length > LineLength.Large && 'textarea-large',
-          ])}
-          maxLength={maxLength}
-          onInput={handleInput}
-          onKeyDown={handleKeyDown}
-          ref={innerRef}
-          spellCheck={false}
-          value={value}
-        />
-      </div>
-    </>
+    <div
+      className={`dragzone-${location} dragzone-${position} dragzone-${theme}`}
+      onmousedown={dragStartHandler}
+    />
   );
-}
+};

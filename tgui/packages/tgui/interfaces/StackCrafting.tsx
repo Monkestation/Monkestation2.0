@@ -1,22 +1,23 @@
-import { clamp } from 'common/math';
-import { createSearch, toTitleCase } from 'common/string';
-import React, { ReactNode, useState } from 'react';
-import { useBackend } from '../backend';
+import { createSearch } from 'common/string';
+import { filter, map, reduce, sortBy } from 'common/collections';
+import { useBackend, useLocalState } from '../backend';
 import {
   Box,
   Button,
-  Collapsible,
   Input,
   NoticeBox,
   Section,
+  Collapsible,
   Table,
 } from '../components';
 import { Window } from '../layouts';
+import { clamp } from 'common/math';
+import { flow } from 'common/fp';
+import type { InfernoNode } from 'inferno';
 
 type Recipe = {
   ref: unknown | null;
   req_amount: number;
-  image?: string;
 
   // for multiplier buttons
   res_amount: number;
@@ -47,13 +48,15 @@ type RecipeBoxProps = {
 };
 
 // RecipeList converted via Object.entries() for filterRecipeList
-type RecipeListFilterableEntry = [string, RecipeList | Recipe];
+type RecipeListEntry = [string, RecipeList | Recipe];
+type RecipeListFilterableEntry = [string, RecipeList | Recipe | undefined];
 
 /**
  * Type guard for recipe vs recipe list
  * @param value the value to test
  * @returns type guard boolean
  */
+// eslint-disable-next-line func-style
 function isRecipeList(value: Recipe | RecipeList): value is RecipeList {
   return (value as Recipe).ref === undefined;
 }
@@ -67,38 +70,30 @@ function isRecipeList(value: Recipe | RecipeList): value is RecipeList {
 const filterRecipeList = (
   list: RecipeList,
   keyFilter: (key: string) => boolean,
-): RecipeList | undefined => {
-  const filteredList = Object.fromEntries(
-    Object.entries(list)
-      .flatMap((entry): RecipeListFilterableEntry[] => {
-        const [key, recipe] = entry;
+) => {
+  const filteredList: RecipeList = flow([
+    map((entry: RecipeListEntry): RecipeListFilterableEntry => {
+      const [key, recipe] = entry;
 
+      if (isRecipeList(recipe)) {
         // If category name matches, return the whole thing.
         if (keyFilter(key)) {
-          return [entry];
+          return entry;
         }
 
-        if (isRecipeList(recipe)) {
-          // otherwise, filter sub-entries.
-          const subEntries = filterRecipeList(recipe, keyFilter);
-          if (subEntries !== undefined) {
-            return [[key, subEntries]];
-          }
-        }
+        // otherwise, filter sub-entries.
+        return [key, filterRecipeList(recipe, keyFilter)];
+      }
 
-        return [];
-      })
-
-      // Sort items so that lists are on top and recipes underneath.
-      // Plus everything is in alphabetical order.
-      .sort(([aKey, aValue], [bKey, bValue]) =>
-        isRecipeList(aValue) !== isRecipeList(bValue)
-          ? isRecipeList(aValue)
-            ? -1
-            : 1
-          : aKey.localeCompare(bKey),
-      ),
-  );
+      return keyFilter(key) ? entry : [key, undefined];
+    }),
+    filter((entry: RecipeListFilterableEntry) => entry[1] !== undefined),
+    sortBy((entry: RecipeListEntry) => entry[0].toLowerCase()),
+    reduce((obj: RecipeList, entry: RecipeListEntry) => {
+      obj[entry[0]] = entry[1];
+      return obj;
+    }, {}),
+  ])(Object.entries(list));
 
   return Object.keys(filteredList).length ? filteredList : undefined;
 };
@@ -107,19 +102,17 @@ export const StackCrafting = (_props) => {
   const { data } = useBackend<StackCraftingProps>();
   const { amount, recipes = {} } = data;
 
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useLocalState('searchText', '');
   const testSearch = createSearch(searchText, (item: string) => item);
   const filteredRecipes = filterRecipeList(recipes, testSearch);
 
-  const height: number = clamp(96 + Object.keys(recipes).length * 37, 250, 500);
+  const height: number = clamp(94 + Object.keys(recipes).length * 26, 250, 500);
 
   return (
     <Window width={400} height={height}>
-      <Window.Content>
+      <Window.Content scrollable>
         <Section
-          fill
-          scrollable
-          title={`Amount: ${amount}`}
+          title={'Amount: ' + amount}
           buttons={
             <>
               Search
@@ -152,18 +145,11 @@ const RecipeListBox = (props: RecipeListProps) => {
         const recipe = recipes[title];
         if (isRecipeList(recipe)) {
           return (
-            <Collapsible
-              key={title}
-              title={toTitleCase(title || '')}
-              child_mt={0}
-              childStyles={{
-                padding: '0.5em',
-                backgroundColor: 'rgba(62, 97, 137, 0.15)',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
-                borderTop: 'none',
-                borderRadius: '0 0 0.33em 0.33em',
-              }}
-             />
+            <Collapsible key={title} ml={1} color="label" title={title}>
+              <Box ml={2}>
+                <RecipeListBox recipes={recipe} />
+              </Box>
+            </Collapsible>
           );
         } else {
           return <RecipeBox key={title} title={title} recipe={recipe} />;
@@ -193,61 +179,53 @@ const Multipliers = (props: MultiplierProps) => {
 
   const multipliers = [5, 10, 25];
 
-  const finalResult: ReactNode[] = [];
+  const finalResult: InfernoNode[] = [];
 
   for (const multiplier of multipliers) {
     if (maxM >= multiplier) {
       finalResult.push(
         <Button
-          bold
-          color={'transparent'}
-          fontSize={0.75}
-          width={'32px'}
+          content={multiplier * recipe.res_amount + 'x'}
           onClick={() =>
             act('make', {
               ref: recipe.ref,
-              multiplier,
+              multiplier: multiplier,
             })
           }
-        >
-          {`${multiplier * recipe.res_amount}x`}
-        </Button>,
+        />,
       );
     }
   }
 
-  if (maxM > 0 && !multipliers.includes(maxM)) {
+  if (multipliers.indexOf(maxM) === -1) {
     finalResult.push(
       <Button
-        bold
-        color={'transparent'}
-        fontSize={0.75}
-        width={'32px'}
+        content={maxM * recipe.res_amount + 'x'}
         onClick={() =>
           act('make', {
             ref: recipe.ref,
             multiplier: maxM,
           })
         }
-      >
-        {`${maxM * recipe.res_amount}x`}
-      </Button>,
+      />,
     );
   }
 
-  return <>{finalResult.filter((e) => e)}</>;
+  return <>{finalResult.map((x) => x)}</>;
 };
 
 const RecipeBox = (props: RecipeBoxProps) => {
   const { act, data } = useBackend<StackCraftingProps>();
+
   const { amount } = data;
+
   const { recipe, title } = props;
+
   const { res_amount, max_res_amount, req_amount, ref } = recipe;
 
   const resAmountLabel = res_amount > 1 ? `${res_amount}x ` : '';
   const sheetSuffix = req_amount > 1 ? 's' : '';
-  const buttonName = `${resAmountLabel}${title}`;
-  const reqSheets = `${req_amount} sheet${sheetSuffix}`;
+  const buttonName = `${resAmountLabel}${title} (${req_amount} sheet${sheetSuffix})`;
 
   const maxMultiplier = buildMultiplier(recipe, amount);
 

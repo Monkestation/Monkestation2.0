@@ -1,28 +1,26 @@
-import { useEffect, useRef, useState } from 'react';
-import { useBackend } from 'tgui/backend';
-import { Window } from 'tgui/layouts';
-import { Box, Button, Section, Stack } from 'tgui-core/components';
-import { isEscape, KEY } from 'tgui-core/keys';
-import type { BooleanLike } from 'tgui-core/react';
+import { KEY, isEscape } from 'common/keys';
+import { useBackend, useLocalState } from '../backend';
+import { Autofocus, Box, Button, Section, Stack } from '../components';
+import { Window } from '../layouts';
 import { InputButtons } from './common/InputButtons';
 import { Loader } from './common/Loader';
 
 type KeyInputData = {
   init_value: string;
-  large_buttons: BooleanLike;
+  large_buttons: boolean;
   message: string;
   timeout: number;
   title: string;
 };
 
-function isStandardKey(event: React.KeyboardEvent<HTMLDivElement>): boolean {
+const isStandardKey = (event: KeyboardEvent): boolean => {
   return (
     event.key !== KEY.Alt &&
     event.key !== KEY.Control &&
     event.key !== KEY.Shift &&
     !isEscape(event.key)
   );
-}
+};
 
 const KEY_CODE_TO_BYOND: Record<string, string> = {
   DEL: 'Delete',
@@ -40,9 +38,7 @@ const KEY_CODE_TO_BYOND: Record<string, string> = {
 
 const DOM_KEY_LOCATION_NUMPAD = 3;
 
-function formatKeyboardEvent(
-  event: React.KeyboardEvent<HTMLDivElement>,
-): string {
+const formatKeyboardEvent = (event: KeyboardEvent): string => {
   let text = '';
 
   if (event.altKey) {
@@ -67,53 +63,20 @@ function formatKeyboardEvent(
   }
 
   return text;
-}
+};
 
-export function KeyComboModal(props) {
+export const KeyComboModal = (props) => {
   const { act, data } = useBackend<KeyInputData>();
   const { init_value, large_buttons, message = '', title, timeout } = data;
-  const [input, setInput] = useState(init_value);
-  const [binding, setBinding] = useState(true);
-  const focusRef = useRef<HTMLDivElement | null>(null);
+  const [input, setInput] = useLocalState('input', init_value);
+  const [binding, setBinding] = useLocalState('binding', true);
 
-  useEffect(() => {
-    if (binding && focusRef.current) {
-      focusRef.current.focus();
-    }
-  }, [binding]);
-
-  function handleKeyDown(event: React.KeyboardEvent<HTMLDivElement>) {
-    if (!binding) {
-      if (event.key === KEY.Enter) {
-        act('submit', { entry: input });
-      }
-      if (isEscape(event.key)) {
-        act('cancel');
-      }
-      return;
-    }
-
-    event.preventDefault();
-
-    if (isStandardKey(event)) {
-      setValue(formatKeyboardEvent(event));
-      setBinding(false);
-      return;
-    }
-
-    if (isEscape(event.key)) {
-      setValue(init_value);
-      setBinding(false);
-      return;
-    }
-  }
-
-  function setValue(value: string) {
+  const setValue = (value: string) => {
     if (value === input) {
       return;
     }
     setInput(value);
-  }
+  };
 
   // Dynamically changes the window height based on the message.
   const windowHeight =
@@ -124,9 +87,33 @@ export function KeyComboModal(props) {
   return (
     <Window title={title} width={240} height={windowHeight}>
       {timeout && <Loader value={timeout} />}
-      <Window.Content onKeyDown={handleKeyDown}>
+      <Window.Content
+        onKeyDown={(event) => {
+          if (!binding) {
+            if (event.key === KEY.Enter) {
+              act('submit', { entry: input });
+            }
+            if (isEscape(event.key)) {
+              act('cancel');
+            }
+            return;
+          }
+
+          event.preventDefault();
+
+          if (isStandardKey(event)) {
+            setValue(formatKeyboardEvent(event));
+            setBinding(false);
+            return;
+          } else if (isEscape(event.key)) {
+            setValue(init_value);
+            setBinding(false);
+            return;
+          }
+        }}
+      >
         <Section fill>
-          <div ref={focusRef} tabIndex={-1} />
+          <Autofocus />
           <Stack fill vertical>
             <Stack.Item grow>
               <Box color="label">{message}</Box>
@@ -134,15 +121,16 @@ export function KeyComboModal(props) {
             <Stack.Item>
               <Button
                 disabled={binding}
-                fluid
+                content={
+                  binding && binding !== null ? 'Awaiting input...' : '' + input
+                }
+                width="100%"
                 textAlign="center"
                 onClick={() => {
                   setValue(init_value);
                   setBinding(true);
                 }}
-              >
-                {binding ? 'Awaiting input...' : `${input}`}
-              </Button>
+              />
             </Stack.Item>
             <Stack.Item>
               <InputButtons input={input} />
@@ -152,4 +140,4 @@ export function KeyComboModal(props) {
       </Window.Content>
     </Window>
   );
-}
+};

@@ -25,7 +25,7 @@ export const OpposingForcePanel = (props) => {
   return (
     <Window
       title={'Opposing Force: ' + creator_ckey}
-      width={595}
+      width={585}
       height={840}
       theme={owner_antag ? 'syndicate' : 'admin'}
     >
@@ -243,19 +243,12 @@ export const OpposingForceTab = (props) => {
       </Stack.Item>
       <Stack.Item>
         <Section title="Backstory">
-          <Box mb="0.5em">
-            Provide a description of why you want to do bad things. Include
-            specifics such as what lead upto the events that made you want to do
-            bad things, think of it as though you were your character, react
-            appropriately. If you don&apos;t have any ideas, check the
-            #player-shared-opfors channel for some. (2000 char limit)
-          </Box>
           <TextArea
             disabled={!can_edit}
             height="100px"
             value={backstory}
+            placeholder="Provide a description of why you want to do bad things. Include specifics such as what lead upto the events that made you want to do bad things, think of it as though you were your character, react appropriately. If you don't have any ideas, check the #player-shared-opfors channel for some. (2000 char limit)"
             maxLength={2000}
-            width="100%"
             onChange={(_e, value) =>
               act('set_backstory', {
                 backstory: value,
@@ -267,7 +260,6 @@ export const OpposingForceTab = (props) => {
       <Stack.Item>
         <Section
           title="Objectives"
-          p="0.2em"
           buttons={
             <Button
               icon="plus"
@@ -385,7 +377,7 @@ export const OpposingForceObjectives = (props) => {
                       format={(value) => round(value)}
                       minValue={0}
                       maxValue={500}
-                      onChange={(e, value) =>
+                      onDrag={(e, value) =>
                         act('set_objective_intensity', {
                           objective_ref: selectedObjective.ref,
                           new_intensity_level: value,
@@ -502,7 +494,6 @@ export const OpposingForceObjectives = (props) => {
                     <TextArea
                       disabled={!can_edit}
                       height="85px"
-                      width="100%"
                       value={selectedObjective.justification}
                       maxLength={1000}
                       onChange={(e, value) =>

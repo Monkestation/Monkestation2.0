@@ -1,6 +1,6 @@
 import { useBackend } from '../../backend';
 import { Input, InfinitePlane, Stack, Box, Button } from '../../components';
-import { Component } from 'react';
+import { Component } from 'inferno';
 import { Window } from '../../layouts';
 import { resolveAsset } from '../../assets';
 import { CircuitInfo } from './CircuitInfo';
@@ -453,7 +453,7 @@ export class IntegratedCircuit extends Component {
         width={1200}
         height={800}
         buttons={
-          <Box position="relative">
+          <Box width="160px" position="absolute" top="5px" height="22px">
             <Stack>
               <Stack.Item grow>
                 <Input
@@ -467,6 +467,8 @@ export class IntegratedCircuit extends Component {
               </Stack.Item>
               <Stack.Item basis="24px">
                 <Button
+                  position="absolute"
+                  top={0}
                   color="transparent"
                   icon="cog"
                   selected={variableMenuOpen}
@@ -479,6 +481,8 @@ export class IntegratedCircuit extends Component {
               </Stack.Item>
               <Stack.Item basis="24px">
                 <Button
+                  position="absolute"
+                  top={0}
                   color="transparent"
                   icon="plus"
                   selected={componentMenuOpen}
@@ -492,6 +496,8 @@ export class IntegratedCircuit extends Component {
               {!!is_admin && (
                 <Stack.Item>
                   <Button
+                    position="absolute"
+                    top={0}
                     color="transparent"
                     onClick={() => act('save_circuit')}
                     icon="save"
@@ -504,7 +510,7 @@ export class IntegratedCircuit extends Component {
       >
         <Window.Content
           style={{
-            backgroundImage: 'none',
+            'background-image': 'none',
           }}
         >
           <InfinitePlane
@@ -566,9 +572,9 @@ export class IntegratedCircuit extends Component {
               minWidth="600px"
               width="50%"
               style={{
-                borderRadius: '0px 32px 0px 0px',
-                backgroundColor: 'rgba(0, 0, 0, 0.3)',
-                userSelect: 'none',
+                'border-radius': '0px 32px 0px 0px',
+                'background-color': 'rgba(0, 0, 0, 0.3)',
+                '-ms-user-select': 'none',
               }}
               unselectable="on"
             >
@@ -591,7 +597,7 @@ export class IntegratedCircuit extends Component {
                 handleMouseDownSetter={this.onVarClickedSetter}
                 handleMouseDownGetter={this.onVarClickedGetter}
                 style={{
-                  borderRadius: '0px 32px 0px 0px',
+                  'border-radius': '0px 32px 0px 0px',
                 }}
               />
             </Box>
@@ -604,8 +610,8 @@ export class IntegratedCircuit extends Component {
               height="100%"
               width="300px"
               style={{
-                backgroundColor: 'rgba(0, 0, 0, 0.3)',
-                userSelect: 'none',
+                'background-color': 'rgba(0, 0, 0, 0.3)',
+                '-ms-user-select': 'none',
               }}
               unselectable="on"
             >

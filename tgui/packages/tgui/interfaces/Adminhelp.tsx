@@ -33,7 +33,7 @@ export const Adminhelp = (props) => {
     <Window title="Create Adminhelp" theme="admin" height={300} width={500}>
       <Window.Content
         style={{
-          backgroundImage: 'none',
+          'background-image': 'none',
         }}
       >
         <Stack vertical fill>
@@ -41,7 +41,6 @@ export const Adminhelp = (props) => {
             <TextArea
               autoFocus
               height="100%"
-              width="100%"
               value={ahelpMessage}
               placeholder="Admin help"
               onChange={(e, value) => setAhelpMessage(value)}
@@ -58,7 +57,7 @@ export const Adminhelp = (props) => {
                     fontFamily="arial"
                     backgroundColor="grey"
                     style={{
-                      fontStyle: 'normal',
+                      'font-style': 'normal',
                     }}
                   >
                     Input &apos;{confirmationText}&apos; to proceed.

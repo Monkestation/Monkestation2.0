@@ -90,7 +90,7 @@ const TransferSection = (props) => {
   return (
     <Stack>
       <Stack.Item>
-        <Section title="Transfer Money">
+        <Section vertical title="Transfer Money">
           <Box>
             <Tooltip
               content="Enter the pay token of the account you want to transfer credits to."
@@ -111,7 +111,7 @@ const TransferSection = (props) => {
               width="83px"
               minValue={1}
               maxValue={money}
-              onChange={(value) => (money_to_send = value)}
+              onChange={(_, value) => (money_to_send = value)}
               value={1}
             />
           </Tooltip>
@@ -160,9 +160,9 @@ const TransactionHistory = (props) => {
     <Section fill title="Transaction History">
       <Section fill scrollable title={<TableHeaders />}>
         <Table>
-          {transaction_list.map((log, idx) => (
+          {transaction_list.map((log) => (
             <Table.Row
-              key={idx}
+              key={log}
               className="candystripe"
               color={log.adjusted_money < 1 ? 'red' : 'green'}
             >

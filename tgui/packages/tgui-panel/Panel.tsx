@@ -32,7 +32,7 @@ export const Panel = (props) => {
         <Stack.Item>
           <Section fitted>
             <Stack mr={1} align="center">
-              <Stack.Item grow>
+              <Stack.Item grow overflowX="auto">
                 <ChatTabs />
               </Stack.Item>
               <Stack.Item>
@@ -76,7 +76,7 @@ export const Panel = (props) => {
         )}
         <Stack.Item grow>
           <Section fill fitted position="relative">
-            <Pane.Content scrollable id="chat-pane">
+            <Pane.Content scrollable>
               <ChatPanel lineHeight={settings.lineHeight} />
             </Pane.Content>
             <Notifications>

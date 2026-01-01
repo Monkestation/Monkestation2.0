@@ -1,6 +1,6 @@
 import { classes } from 'common/react';
 import { useBackend, useSharedState } from '../backend';
-import { Button, Image, Input, Section } from '../components';
+import { Box, Button, Input, Section } from '../components';
 import { NtosWindow } from '../layouts';
 
 export const NtosEmojipedia = (props) => {
@@ -40,13 +40,15 @@ export const NtosEmojipedia = (props) => {
           }
         >
           {filtered_emoji_list.map((emoji) => (
-            <Image
+            <Box
               key={emoji.name}
               className={classes(['emojipedia16x16', emoji.name])}
+              as="img"
               m={0}
               title={emoji.name}
               style={{
-                imageRendering: 'pixelated',
+                '-ms-interpolation-mode': 'nearest-neighbor',
+                'image-rendering': 'pixelated',
               }}
               onClick={() => {
                 new Promise((resolve, _) => {
@@ -61,7 +63,7 @@ export const NtosEmojipedia = (props) => {
               }}
             >
               {emoji.name}
-            </Image>
+            </Box>
           ))}
         </Section>
       </NtosWindow.Content>

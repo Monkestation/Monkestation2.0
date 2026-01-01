@@ -284,7 +284,7 @@ const ProductImage = (props) => {
         <img
           src={`data:image/jpeg;base64,${product.img}`}
           style={{
-            verticalAlign: 'middle',
+            'vertical-align': 'middle',
           }}
         />
       ) : product.icon && product.icon_state ? (
@@ -297,7 +297,7 @@ const ProductImage = (props) => {
         <span
           className={classes(['vending32x32', product.path])}
           style={{
-            verticalAlign: 'middle',
+            'vertical-align': 'middle',
           }}
         />
       )}
@@ -392,17 +392,21 @@ const CategorySelector = (props: {
 
   return (
     <Section>
-      {Object.entries(categories).map(([name, category]) => (
-        <Button
-          key={name}
-          selected={name === selectedCategory}
-          color={CATEGORY_COLORS[name]}
-          icon={category.icon}
-          onClick={() => onSelect(name)}
-        >
-          {name}
-        </Button>
-      ))}
+      <Stack grow>
+        <Stack.Item>
+          {Object.entries(categories).map(([name, category]) => (
+            <Button
+              key={name}
+              selected={name === selectedCategory}
+              color={CATEGORY_COLORS[name]}
+              icon={category.icon}
+              onClick={() => onSelect(name)}
+            >
+              {name}
+            </Button>
+          ))}
+        </Stack.Item>
+      </Stack>
     </Section>
   );
 };

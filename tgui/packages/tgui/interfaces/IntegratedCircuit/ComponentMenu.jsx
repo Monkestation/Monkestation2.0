@@ -1,5 +1,5 @@
 import { Section, Button, Dropdown, Stack, Input } from '../../components';
-import { Component } from 'react';
+import { Component } from 'inferno';
 import { shallowDiffers } from 'common/react';
 import { fetchRetry } from '../../http';
 import { resolveAsset } from '../../assets';
@@ -10,8 +10,8 @@ import { DEFAULT_COMPONENT_MENU_LIMIT } from './constants';
 let fetchServerData;
 
 export class ComponentMenu extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
       selectedTab: 'All',
       currentLimit: DEFAULT_COMPONENT_MENU_LIMIT,

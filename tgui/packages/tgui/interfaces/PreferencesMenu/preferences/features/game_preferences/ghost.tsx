@@ -7,11 +7,11 @@ import {
   FeatureToggle,
   FeatureValueProps,
 } from '../base';
-import { Box, Dropdown, Flex } from 'tgui/components';
+import { Box, Dropdown, Flex } from '../../../../../components';
 import { classes } from 'common/react';
-import { ReactNode } from 'react';
+import { InfernoNode } from 'inferno';
 import { binaryInsertWith } from 'common/collections';
-import { useBackend } from 'tgui/backend';
+import { useBackend } from '../../../../../backend';
 import { PreferencesMenuData } from '../../../data';
 
 export const ghost_accs: FeatureChoiced = {
@@ -22,7 +22,7 @@ export const ghost_accs: FeatureChoiced = {
 };
 
 const insertGhostForm = binaryInsertWith<{
-  displayText: ReactNode;
+  displayText: InfernoNode;
   value: string;
 }>(({ value }) => value);
 
@@ -33,7 +33,7 @@ const GhostFormInput = (
 
   const serverData = props.serverData;
   if (!serverData) {
-    return null;
+    return;
   }
 
   const displayNames = serverData.display_names;
@@ -43,7 +43,7 @@ const GhostFormInput = (
 
   const displayTexts = {};
   let options: {
-    displayText: ReactNode;
+    displayText: InfernoNode;
     value: string;
   }[] = [];
 

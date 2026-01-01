@@ -11,7 +11,7 @@ import {
 import { formatTime } from '../format';
 import { Window } from '../layouts';
 import { getThumbnailUrl } from '../../common/other';
-import { Component } from 'react';
+import { Component } from 'inferno';
 import { BooleanLike } from 'common/react';
 import { LoadingScreen } from './common/LoadingToolbox';
 
@@ -187,7 +187,11 @@ class Controls extends Component<{ data: Data }> {
         <Stack.Item>
           {thumbnailUrl && (
             <Box mt={2} textAlign="center">
-              <Image src={thumbnailUrl} style={{ maxWidth: '50%' }} />
+              <Image
+                src={thumbnailUrl}
+                alt="Track thumbnail"
+                style={{ maxWidth: '50%' }}
+              />
             </Box>
           )}
         </Stack.Item>
@@ -210,18 +214,12 @@ const AvailableTracks = ({
       {songs.map((song, i) => (
         <Stack.Item key={i}>
           <Stack>
-            <Stack.Item grow style={{ minWidth: 0 }}>
+            <Stack.Item grow>
               <Button
                 fluid
                 icon="play"
                 selected={currentSong?.name === song.name}
                 onClick={() => act('set_track', { index: i })}
-                style={{
-                  whiteSpace: 'nowrap!important',
-                  overflow: 'hidden!important',
-                  textOverflow: 'ellipsis!important',
-                }}
-                tooltip={song.name.length > 48 ? song.name : undefined}
               >
                 {song.name}
               </Button>
@@ -251,7 +249,7 @@ export const DjStation = () => {
         {!!data.switching_tracks && (
           <LoadingScreen CustomIcon="spinner" CustomText="Selecting track..." />
         )}
-        <Stack fill>
+        <Stack horizontal fill>
           <Stack.Item grow={1}>
             <Stack vertical fill>
               <Section

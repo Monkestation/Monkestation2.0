@@ -1,7 +1,8 @@
 .LibraryAdmin_RecordCell {
   text-align: center;
   vertical-align: middle;
-  padding: var(--space-sm) 0;
+  padding-top: 4px;
+  padding-bottom: 4px;
   white-space: nowrap;
 }
 
@@ -9,10 +10,11 @@
   text-align: center;
   font-size: 150%;
   vertical-align: middle;
-  padding: var(--space-sm) 0;
+  padding-top: 4px;
+  padding-bottom: 4px;
   white-space: nowrap;
 }
 
 .LibraryAdmin_RecordCell:nth-child(odd) {
-  background: hsla(0, 0%, 0%, 0.1);
+  background: rgba(0, 0, 0, 0.1);
 }

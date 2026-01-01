@@ -1,7 +1,7 @@
-import { Fragment } from 'react';
+import { Fragment } from 'inferno';
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
-import { Box, Button, Icon, Image, Section } from '../components';
+import { Box, Button, Icon, Section } from '../components';
 import { Window } from '../layouts';
 
 export const Safe = (properties) => {
@@ -25,7 +25,8 @@ export const Safe = (properties) => {
           {open ? (
             <Contents />
           ) : (
-            <Image
+            <Box
+              as="img"
               className="Safe__dial"
               src={resolveAsset('safe_dial.png')}
               style={{
@@ -94,7 +95,8 @@ const Contents = (properties) => {
               })
             }
           >
-            <Image
+            <Box
+              as="img"
               src={item.sprite + '.png'}
               verticalAlign="middle"
               ml="-6px"

@@ -104,7 +104,7 @@ export const OverwatchASNManager = (props) => {
                 );
               })}
             </Stack>
-          )) || <NoticeBox> No ASN Ban entries to display. </NoticeBox>}
+          )) || <NoticeBox fluid> No ASN Ban entries to display. </NoticeBox>}
         </Section>
       </Window.Content>
     </Window>

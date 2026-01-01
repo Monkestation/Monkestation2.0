@@ -6,7 +6,6 @@ import {
   NoticeBox,
   Section,
   Stack,
-  Tooltip,
 } from '../components';
 import { Window } from '../layouts';
 
@@ -102,6 +101,7 @@ const CategoryBar = (props: CategoryBarProps) => {
       scrollableHorizontal
       buttons={
         <Input
+          grow
           placeholder="Search"
           value={categorySearch}
           onChange={(_: any, value: string) => setCategorySearch(value)}
@@ -180,6 +180,8 @@ const CategoryViewer = (props: CategoryViewerProps) => {
       buttons={
         <>
           <Input
+            grow
+            fill
             placeholder="Search"
             value={search}
             onChange={(_: any, value: string) => setSearch(value)}
@@ -234,27 +236,29 @@ const CategoryViewer = (props: CategoryViewerProps) => {
 
             return (
               <Stack.Item key={entry.id}>
-                <Tooltip content={entry.timestamp}>
-                  <Collapsible title={`[${entry.id}] - ${entry.message}`}>
-                    <Stack vertical fill>
-                      <Stack.Item>
-                        <p style={{ fontFamily: 'Courier' }}>{entry.message}</p>
-                      </Stack.Item>
-                      <Stack.Item>
-                        {entry.semver && (
-                          <Stack.Item>
-                            <JsonViewer data={entry.semver} title="Semver" />
-                          </Stack.Item>
-                        )}
-                      </Stack.Item>
-                      {entry.data && (
+                <Collapsible
+                  fitted
+                  tooltip={entry.timestamp}
+                  title={`[${entry.id}] - ${entry.message}`}
+                >
+                  <Stack vertical fill>
+                    <Stack.Item>
+                      <p font-family="Courier">{entry.message}</p>
+                    </Stack.Item>
+                    <Stack.Item>
+                      {entry.semver && (
                         <Stack.Item>
-                          <JsonViewer data={entry.data} title="Data" />
+                          <JsonViewer data={entry.semver} title="Semver" />
                         </Stack.Item>
                       )}
-                    </Stack>
-                  </Collapsible>
-                </Tooltip>
+                    </Stack.Item>
+                    {entry.data && (
+                      <Stack.Item>
+                        <JsonViewer data={entry.data} title="Data" />
+                      </Stack.Item>
+                    )}
+                  </Stack>
+                </Collapsible>
               </Stack.Item>
             );
           })

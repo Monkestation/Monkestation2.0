@@ -7,57 +7,38 @@ type FpsServerData = FeatureNumericData & {
 
 const FpsInput = (props: FeatureValueProps<number, number, FpsServerData>) => {
   const { handleSetValue, serverData } = props;
-  const value = props.value!;
 
-  const recommendedValue = serverData?.recommended_fps ?? 60;
-  const recommendedLabel = `Recommended (${recommendedValue})`;
-
-  const presets = ['72', '90', '120', '144'];
-
-  let selected: string;
-  if (value === -1) {
-    selected = recommendedLabel;
-  } else if (presets.includes(String(value))) {
-    selected = String(value);
-  } else {
-    selected = 'Custom';
+  let recommened = `Recommended`;
+  if (serverData) {
+    recommened += ` (${serverData.recommended_fps})`;
   }
 
   return (
     <Stack fill>
       <Stack.Item basis="70%">
         <Dropdown
-          width="100%"
-          options={[recommendedLabel, ...presets, 'Custom']}
-          selected={selected}
-          onSelected={(opt) => {
-            if (opt === recommendedLabel) {
+          selected={props.value === -1 ? recommened : 'Custom'}
+          onSelected={(value) => {
+            if (value === recommened) {
               handleSetValue(-1);
-              return;
+            } else {
+              handleSetValue(serverData?.recommended_fps || 60);
             }
-
-            if (opt === 'Custom') {
-              handleSetValue(
-                value !== -1 && !presets.includes(String(value))
-                  ? value
-                  : recommendedValue + 1,
-              );
-              return;
-            }
-
-            handleSetValue(Number(opt));
           }}
+          width="100%"
+          options={[recommened, 'Custom']}
         />
       </Stack.Item>
 
-      <Stack.Item shrink={0}>
-        {serverData && value !== -1 && !presets.includes(value?.toString()) && (
+      <Stack.Item>
+        {serverData && props.value !== -1 && (
           <NumberInput
+            onChange={(e, value) => {
+              props.handleSetValue(value);
+            }}
             minValue={1}
             maxValue={serverData.maximum}
-            step={1}
-            value={value || recommendedValue}
-            onChange={(_, v) => handleSetValue(v)}
+            value={props.value}
           />
         )}
       </Stack.Item>

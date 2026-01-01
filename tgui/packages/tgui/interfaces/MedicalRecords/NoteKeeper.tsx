@@ -72,7 +72,7 @@ export const NoteKeeper = (props) => {
           <Box color="label" mb={1} mt={1}>
             Content:
           </Box>
-          <BlockQuote>{selectedNote.content}</BlockQuote>
+          <BlockQuote wrap>{selectedNote.content}</BlockQuote>
         </>
       )}
     </Section>
@@ -110,6 +110,7 @@ const NoteTabs = (props) => {
       {notes.map((note, index) => (
         <Tabs.Tab
           key={index}
+          label={index + 1}
           onClick={() => setNote(note)}
           selected={selectedNote?.note_ref === note.note_ref}
         >

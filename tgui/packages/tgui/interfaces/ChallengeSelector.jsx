@@ -25,7 +25,7 @@ const ItemListEntry = (props) => {
           <Box bold>{name}</Box>
         </Flex.Item>
         <Flex.Item>
-          {`Payout: ${payout}`} <i className="fa-solid fa-coins" />
+          {`Payout: ${payout}`} <i class="fa-solid fa-coins" />
         </Flex.Item>
         <Flex.Item>{`Difficulty: ${difficulty}`}</Flex.Item>
         <Flex.Item>

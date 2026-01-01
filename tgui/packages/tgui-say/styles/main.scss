@@ -2,20 +2,43 @@
 @use 'sass:color';
 @use './colors.scss';
 
-@include meta.load-css('~tgui/styles/reset');
-@include meta.load-css('./styles.scss');
+// Core styles
+@include meta.load-css('~tgui/styles/reset.scss');
+// Atomic styles
+@include meta.load-css('~tgui/styles/atomic/text.scss');
+// External styles
+@include meta.load-css('~tgui/styles/components/TextArea.scss');
+// Local styles
+@include meta.load-css('./button.scss');
+@include meta.load-css('./content.scss');
+@include meta.load-css('./dragzone.scss');
+@include meta.load-css('./textarea.scss');
+@include meta.load-css('./window.scss');
+
+@keyframes gradient {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 100% 0;
+  }
+}
 
 @each $channel, $color in colors.$channel-map {
-  $darkened: color.adjust($color, $lightness: -20%);
+  $darkened: darken($color, 20%);
 
   .button-#{$channel} {
-    border-color: color.adjust($color, $lightness: -10%);
+    border-color: darken($color, 10%);
     color: $color;
-    user-select: none;
     &:hover {
-      border-color: color.adjust($color, $lightness: 10%);
-      color: color.adjust($color, $lightness: 5%);
+      border-color: lighten($color, 10%);
+      color: lighten($color, 5%);
     }
+  }
+
+  .dragzone-#{$channel} {
+    border-color: $darkened;
   }
 
   .textarea-#{$channel} {
@@ -23,17 +46,25 @@
   }
 
   .window-#{$channel} {
-    background-color: $color;
-  }
-
-  .shine-#{$channel} {
-    background: radial-gradient(
-      circle,
-      color.adjust($color, $lightness: 5%),
-      color.adjust($color, $lightness: -15%),
-      color.adjust($color, $lightness: 15%),
-      color.adjust($color, $lightness: -15%),
-      color.adjust($color, $lightness: 5%)
-    );
+    &:after {
+      animation: gradient 10s linear infinite;
+      background: linear-gradient(
+        to right,
+        darken($color, 35%),
+        $color,
+        lighten($color, 10%),
+        $color,
+        darken($color, 35%)
+      );
+      background-position: 0% 0%;
+      background-size: 500% auto;
+      bottom: 0px;
+      content: '';
+      height: 2px;
+      left: 0px;
+      position: absolute;
+      right: 0px;
+      z-index: 999;
+    }
   }
 }

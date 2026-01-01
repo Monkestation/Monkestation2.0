@@ -1,5 +1,5 @@
 import { BooleanLike } from 'common/react';
-import { Fragment } from 'react';
+import { Fragment } from 'inferno';
 import { useBackend, useLocalState } from '../backend';
 import {
   Box,
@@ -625,7 +625,7 @@ const AirAlarmAirConditioningControls = (_props) => {
                 act('set_ac_target', { target })
               }
               unit="K"
-              step={1}
+              tooltip="Change the target temperature of the heater"
               disabled={!enabled}
             />
             <Button

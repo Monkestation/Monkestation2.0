@@ -60,7 +60,7 @@ export const PreferencesMenu = () => {
       exhaustiveCheck(window);
   }
 
-  const settingsCategories = (
+  const settingsCatergories = (
     <Stack vertical width="115px">
       <Stack.Item>
         <PageButton
@@ -72,8 +72,6 @@ export const PreferencesMenu = () => {
         >
           Characters
         </PageButton>
-      </Stack.Item>
-      <Stack.Item>
         <Button
           align="center"
           fontSize="1em"
@@ -117,6 +115,7 @@ export const PreferencesMenu = () => {
       {window === PreferencesCurrentWindow.Character ? (
         <Stack.Item>
           <Button
+            wrap
             align="center"
             fontSize="1em"
             fluid
@@ -136,14 +135,14 @@ export const PreferencesMenu = () => {
   return (
     <Window title="Preferences" width={1215} height={850} theme="generic">
       <Window.Content>
-        <Stack fill>
+        <Stack horizontal height="100%">
           <Stack.Item>
-            <Section fill>{settingsCategories}</Section>
+            <Section height="100%" title="Preferences">
+              {settingsCatergories}
+            </Section>
           </Stack.Item>
           <Stack.Divider />
-          <Stack.Item grow width="85rem">
-            {pageContents}
-          </Stack.Item>
+          <Stack.Item grow>{pageContents}</Stack.Item>
         </Stack>
       </Window.Content>
     </Window>

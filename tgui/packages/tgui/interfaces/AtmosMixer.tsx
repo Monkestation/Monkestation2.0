@@ -66,7 +66,6 @@ export const AtmosMixer = (props) => {
                 animated
                 value={node1_concentration}
                 unit="%"
-                step={1}
                 width="60px"
                 minValue={0}
                 maxValue={100}
@@ -83,7 +82,6 @@ export const AtmosMixer = (props) => {
                 animated
                 value={node2_concentration}
                 unit="%"
-                step={1}
                 width="60px"
                 minValue={0}
                 maxValue={100}

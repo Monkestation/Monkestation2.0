@@ -103,8 +103,7 @@ export const IVDrip = (props) => {
                     minValue={minTransferRate}
                     maxValue={maxTransferRate}
                     unit="units/sec."
-                    tickWhileDragging
-                    onChange={(e, value) =>
+                    onDrag={(e, value) =>
                       act('changeRate', {
                         rate: value,
                       })
@@ -115,7 +114,7 @@ export const IVDrip = (props) => {
             )}
             <LabeledList.Item
               label="Direction"
-              color={mode ? undefined : 'bad'}
+              color={!mode && 'bad'}
               buttons={
                 <Button
                   my={1}
@@ -163,7 +162,7 @@ export const IVDrip = (props) => {
                 >
                   <span
                     style={{
-                      textShadow: '1px 1px 0 black',
+                      'text-shadow': '1px 1px 0 black',
                     }}
                   >
                     {`${containerCurrentVolume} of ${containerMaxVolume} units`}

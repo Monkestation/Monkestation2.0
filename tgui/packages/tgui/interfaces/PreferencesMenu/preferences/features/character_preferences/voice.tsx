@@ -52,14 +52,13 @@ const FeatureSliderInput = (
 
   return (
     <Slider
-      tickWhileDragging
-      onChange={(_, value) => {
+      onChange={(_, value: number) => {
         props.handleSetValue(value);
       }}
       minValue={props.serverData.minimum}
       maxValue={props.serverData.maximum}
       step={props.serverData.step}
-      value={props.value || props.serverData.minimum}
+      value={props.value}
     />
   );
 };

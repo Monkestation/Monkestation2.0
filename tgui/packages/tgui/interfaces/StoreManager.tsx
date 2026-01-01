@@ -33,7 +33,6 @@ export const StoreManager = (props) => {
             <Section
               title="Store Categories"
               align="center"
-              className="StoreManager__Categories__Section"
               buttons={
                 <Button
                   icon="fa-solid fa-coins"
@@ -110,12 +109,7 @@ export const StoreManager = (props) => {
                         />
                       </Table.Cell>
                       <Table.Cell style={{ textAlign: 'right' }}>
-                        <Box
-                          style={{
-                            display: 'flex',
-                            justifyContent: 'flex-end',
-                          }}
-                        >
+                        <Box display="flex" justifyContent="flex-end">
                           <Button
                             icon="fa-solid fa-coins"
                             backgroundColor="transparent"
@@ -125,12 +119,7 @@ export const StoreManager = (props) => {
                         </Box>
                       </Table.Cell>
                       <Table.Cell style={{ textAlign: 'right' }}>
-                        <Box
-                          style={{
-                            display: 'flex',
-                            justifyContent: 'flex-end',
-                          }}
-                        >
+                        <Box display="flex" justifyContent="flex-end">
                           <Button.Confirm
                             content={
                               owned_items.includes(item.path)

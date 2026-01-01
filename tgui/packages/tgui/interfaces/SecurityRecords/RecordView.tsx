@@ -69,14 +69,6 @@ const RecordInfo = (props) => {
 
   const hasValidCrimes = !!crimes.find((crime) => !!crime.valid);
 
-  function handleChange(value: number) {
-    act('edit_field', {
-      crew_ref: crew_ref,
-      field: 'age',
-      value: value,
-    });
-  }
-
   return (
     <Stack fill vertical>
       <Stack.Item grow>
@@ -109,6 +101,7 @@ const RecordInfo = (props) => {
               {name}
             </Table.Cell>
           }
+          wrap
         >
           <LabeledList>
             <LabeledList.Item
@@ -156,8 +149,13 @@ const RecordInfo = (props) => {
               <RestrictedInput
                 minValue={min_age}
                 maxValue={max_age}
-                onEnter={handleChange}
-                onChange={handleChange}
+                onEnter={(event, value) =>
+                  act('edit_field', {
+                    crew_ref: crew_ref,
+                    field: 'age',
+                    value: value,
+                  })
+                }
                 value={age}
               />
             </LabeledList.Item>

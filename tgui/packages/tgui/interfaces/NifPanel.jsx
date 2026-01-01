@@ -13,6 +13,7 @@ import {
   Section,
   Table,
 } from '../components';
+import { TableCell, TableRow } from '../components/Table';
 import { Window } from '../layouts';
 
 export const NifPanel = (props) => {
@@ -78,8 +79,8 @@ export const NifPanel = (props) => {
                         }
                       >
                         <Table>
-                          <Table.Row>
-                            <Table.Cell>
+                          <TableRow>
+                            <TableCell>
                               <Button
                                 icon="bolt"
                                 color="yellow"
@@ -90,8 +91,8 @@ export const NifPanel = (props) => {
                                 : ' ' +
                                   (nifsoft.activation_cost / max_power) * 100 +
                                   '% per activation'}
-                            </Table.Cell>
-                            <Table.Cell>
+                            </TableCell>
+                            <TableCell>
                               <Button
                                 icon="battery-half"
                                 color="orange"
@@ -103,8 +104,8 @@ export const NifPanel = (props) => {
                                 : ' ' +
                                   (nifsoft.active_cost / max_power) * 100 +
                                   '% consumed while active'}
-                            </Table.Cell>
-                            <Table.Cell>
+                            </TableCell>
+                            <TableCell>
                               <Button
                                 icon="exclamation"
                                 color={nifsoft.active ? 'green' : 'red'}
@@ -114,8 +115,8 @@ export const NifPanel = (props) => {
                               {nifsoft.active
                                 ? ' The NIFSoft is active!'
                                 : ' The NIFSoft is inactive!'}
-                            </Table.Cell>
-                          </Table.Row>
+                            </TableCell>
+                          </TableRow>
                         </Table>
                         <br />
                         <BlockQuote preserveWhitespace>

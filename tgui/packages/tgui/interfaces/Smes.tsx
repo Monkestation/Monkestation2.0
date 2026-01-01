@@ -86,7 +86,7 @@ export const Smes = () => {
               </Box>
             </LabeledList.Item>
             <LabeledList.Item label="Target Input">
-              <Flex width="100%">
+              <Flex inline width="100%">
                 <Flex.Item>
                   <Button
                     icon="fast-backward"
@@ -116,8 +116,7 @@ export const Smes = () => {
                     step={5}
                     stepPixelSize={4}
                     format={(value) => formatPower(value * POWER_MUL, 1)}
-                    tickWhileDragging
-                    onChange={(e, value) =>
+                    onDrag={(e, value) =>
                       act('input', {
                         target: value * POWER_MUL,
                       })
@@ -174,7 +173,7 @@ export const Smes = () => {
               </Box>
             </LabeledList.Item>
             <LabeledList.Item label="Target Output">
-              <Flex width="100%">
+              <Flex inline width="100%">
                 <Flex.Item>
                   <Button
                     icon="fast-backward"
@@ -203,8 +202,7 @@ export const Smes = () => {
                     step={5}
                     stepPixelSize={4}
                     format={(value) => formatPower(value * POWER_MUL, 1)}
-                    tickWhileDragging
-                    onChange={(e, value) =>
+                    onDrag={(e, value) =>
                       act('output', {
                         target: value * POWER_MUL,
                       })

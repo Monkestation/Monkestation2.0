@@ -66,7 +66,7 @@ const Status = (props) => {
           average: [0.5, 0.8],
           bad: [-Infinity, 0.5],
         }}
-        value={max_grid_load ? output_total / max_grid_load : 0}
+        value={output_total / max_grid_load}
       />
     </Section>
   );

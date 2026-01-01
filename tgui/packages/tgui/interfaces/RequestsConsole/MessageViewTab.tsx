@@ -50,7 +50,7 @@ const MessageDisplay = (props: { message: RequestMessage }) => {
           <NoticeBox>High Priority</NoticeBox>
         )}
         {message.priority === RequestPriority.EXTREME && (
-          <NoticeBox danger>!!!Extreme Priority!!!</NoticeBox>
+          <NoticeBox bad>!!!Extreme Priority!!!</NoticeBox>
         )}
         <BlockQuote>
           {decodeHtmlEntities(message.content)}

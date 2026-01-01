@@ -65,7 +65,12 @@ const BarLabel = (props) => {
           <Box align="center" color="red">
             Empty
           </Box>
-          <Box className="hypertorus__unselectable">&nbsp;</Box>
+          <Box
+            class="hypertorus__unselectable"
+            {...(Byond.IS_LTE_IE8 ? { style: { unselectable: true } } : {})}
+          >
+            &nbsp;
+          </Box>
         </>
       )}
     </>
@@ -164,7 +169,7 @@ export const HypertorusTemperatures = (props) => {
     return (
       (!!value || force) && (
         <Box
-          className="hypertorus-temperatures__y-axis-tick-anchor"
+          class="hypertorus-temperatures__y-axis-tick-anchor"
           top={`${height - y}px`}
         >
           <Box className="hypertorus-temperatures__y-axis-tick" />

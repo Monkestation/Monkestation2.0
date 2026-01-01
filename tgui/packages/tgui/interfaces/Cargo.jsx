@@ -228,10 +228,7 @@ export const CargoCatalog = (props) => {
                     fluid
                     placeholder="Search..."
                     value={searchText}
-                    onChange={(e, value) => {
-                      if (value === undefined) {
-                        return;
-                      }
+                    onInput={(e, value) => {
                       if (value === searchText) {
                         return;
                       }
@@ -244,6 +241,13 @@ export const CargoCatalog = (props) => {
                         setActiveSupplyName(supplies[0]?.name);
                       }
                       setSearchText(value);
+                    }}
+                    onChange={(e, value) => {
+                      // Allow edge cases like the X button to work
+                      const onInput = e.target?.props?.onInput;
+                      if (onInput) {
+                        onInput(e, value);
+                      }
                     }}
                   />
                 </Stack.Item>
@@ -483,7 +487,7 @@ const CargoCart = (props) => {
             <Button
               color="green"
               style={{
-                lineHeight: '28px',
+                'line-height': '28px',
                 padding: '0 12px',
               }}
               content="Confirm the order"

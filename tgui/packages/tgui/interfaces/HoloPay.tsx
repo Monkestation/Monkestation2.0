@@ -77,7 +77,7 @@ const AccountDisplay = (props) => {
 
   return (
     <Section>
-      <Table>
+      <Table fill>
         <Table.Row>
           <Table.Cell>
             <Box color="label">
@@ -237,7 +237,7 @@ const SetupDisplay = (props) => {
             <RestrictedInput
               fluid
               maxValue={max_fee}
-              onChange={(value) => act('fee', { amount: value })}
+              onChange={(_, value) => act('fee', { amount: value })}
               value={force_fee}
             />
           </Tooltip>

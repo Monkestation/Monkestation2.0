@@ -100,6 +100,7 @@ const DesignSection = (props) => {
       <Tabs>
         {categories.map((category) => (
           <Tabs.Tab
+            fluid
             key={category.cat_name}
             selected={category.cat_name === shownCategory.cat_name}
             onClick={() => setCategoryName(category.cat_name)}
@@ -112,6 +113,7 @@ const DesignSection = (props) => {
         <Button
           key={i + 1}
           fluid
+          ellipsis
           height="31px"
           color="transparent"
           selected={
@@ -137,7 +139,8 @@ const DesignSection = (props) => {
                 design.icon === 'catwalk0'
                   ? 'scale(0.7)'
                   : 'scale(1.0)',
-              imageRendering: 'pixelated',
+              '-ms-interpolation-mode': 'nearest-neighbor',
+              'image-rendering': 'pixelated',
             }}
           />
           <span>{capitalizeAll(design.title)}</span>

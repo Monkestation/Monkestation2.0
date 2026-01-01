@@ -17,7 +17,6 @@ import {
 } from '../components';
 import { Window } from '../layouts';
 import { Food } from './PreferencesMenu/data';
-import React from 'react';
 
 const TYPE_ICONS = {
   'Can Make': 'utensils',
@@ -342,7 +341,7 @@ export const PersonalCrafting = (props) => {
                     </Tabs.Tab>
                   </Tabs>
                 </Stack.Item>
-                <Stack.Item grow m={-1} style={{ overflowY: 'auto' }}>
+                <Stack.Item grow m={-1} style={{ 'overflow-y': 'auto' }}>
                   <Box height={'100%'} p={1}>
                     <Tabs vertical>
                       {tabMode === TABS.foodtype &&
@@ -449,23 +448,18 @@ export const PersonalCrafting = (props) => {
                   <Divider />
                   <Button.Checkbox
                     fluid
-                    color="transparent"
+                    content="Can make only"
                     checked={display_craftable_only}
                     onClick={() => {
                       act('toggle_recipes');
                     }}
-                    mb="0.2em"
-                  >
-                    Can make only
-                  </Button.Checkbox>
+                  />
                   <Button.Checkbox
                     fluid
-                    color="transparent"
+                    content="Compact list"
                     checked={display_compact}
                     onClick={() => act('toggle_compact')}
-                  >
-                    Compact list
-                  </Button.Checkbox>
+                  />
                 </Stack.Item>
                 {!forced_mode && (
                   <Stack.Item>
@@ -474,6 +468,7 @@ export const PersonalCrafting = (props) => {
                         <Button.Checkbox
                           fluid
                           lineHeight={2}
+                          content="Craft"
                           checked={mode === MODE.crafting}
                           icon="hammer"
                           style={{
@@ -489,14 +484,13 @@ export const PersonalCrafting = (props) => {
                             setCategory(DEFAULT_CAT_CRAFTING);
                             act('toggle_mode');
                           }}
-                        >
-                          Craft
-                        </Button.Checkbox>
+                        />
                       </Stack.Item>
                       <Stack.Item grow>
                         <Button.Checkbox
                           fluid
                           lineHeight={2}
+                          content="Cook"
                           checked={mode === MODE.cooking}
                           icon="utensils"
                           style={{
@@ -512,9 +506,7 @@ export const PersonalCrafting = (props) => {
                             setCategory(DEFAULT_CAT_COOKING);
                             act('toggle_mode');
                           }}
-                        >
-                          Cook
-                        </Button.Checkbox>
+                        />
                       </Stack.Item>
                     </Stack>
                   </Stack.Item>
@@ -529,7 +521,7 @@ export const PersonalCrafting = (props) => {
               pr={1}
               pt={1}
               mr={-1}
-              style={{ overflowY: 'auto' }}
+              style={{ 'overflow-y': 'auto' }}
             >
               {recipes.length > 0 ? (
                 recipes
@@ -599,7 +591,7 @@ const MaterialContent = (props) => {
             mode ? 'cooking32x32' : 'crafting32x32',
             'a' + atom_id,
           ])}
-          style={{ imageRendering: 'pixelated' }}
+          style={{ 'image-rendering': 'pixelated' }}
         />
       </Stack.Item>
       <Stack.Item
@@ -607,10 +599,10 @@ const MaterialContent = (props) => {
         lineHeight="32px"
         grow
         style={{
-          textTransform: 'capitalize',
+          'text-transform': 'capitalize',
           overflow: 'hidden',
-          textOverflow: 'ellipsis',
-          whiteSpace: 'nowrap',
+          'text-overflow': 'ellipsis',
+          'white-space': 'nowrap',
         }}
       >
         {name}
@@ -646,7 +638,7 @@ const FoodtypeContent = (props) => {
       <Stack.Item width="14px" textAlign="center">
         <Icon name={TYPE_ICONS[type] || 'circle'} />
       </Stack.Item>
-      <Stack.Item grow style={{ textTransform: 'capitalize' }}>
+      <Stack.Item grow style={{ 'text-transform': 'capitalize' }}>
         {type.toLowerCase()}
       </Stack.Item>
       <Stack.Item>
@@ -706,16 +698,16 @@ const RecipeContentCompact = ({ item, craftable, busy, mode }) => {
               mode ? 'cooking32x32' : 'crafting32x32',
               'a' + item.result,
             ])}
-            style={{ imageRendering: 'pixelated' }}
+            style={{ 'image-rendering': 'pixelated' }}
           />
         </Stack.Item>
         <Stack.Item grow>
           <Stack>
             <Stack.Item grow>
-              <Box mb={0.5} bold style={{ textTransform: 'capitalize' }}>
+              <Box mb={0.5} bold style={{ 'text-transform': 'capitalize' }}>
                 {item.name}
               </Box>
-              <Box style={{ textTransform: 'capitalize' }} color={'gray'}>
+              <Box style={{ 'text-transform': 'capitalize' }} color={'gray'}>
                 {Array.isArray(item.reqs) &&
                   Object.keys(item.reqs).length > 0 &&
                   Object.keys(item.reqs)
@@ -777,7 +769,7 @@ const RecipeContentCompact = ({ item, craftable, busy, mode }) => {
                 <Box>
                   {!!item.tool_behaviors && (
                     <Tooltip
-                      content={`Tools: ${item.tool_behaviors.join(', ')}`}
+                      content={'Tools: ' + item.tool_behaviors.join(', ')}
                     >
                       <Icon p={1} name="screwdriver-wrench" />
                     </Tooltip>
@@ -786,6 +778,7 @@ const RecipeContentCompact = ({ item, craftable, busy, mode }) => {
                     my={0.3}
                     lineHeight={2.5}
                     align="center"
+                    content="Make"
                     disabled={!craftable || busy}
                     icon={
                       busy
@@ -800,9 +793,7 @@ const RecipeContentCompact = ({ item, craftable, busy, mode }) => {
                         recipe: item.ref,
                       })
                     }
-                  >
-                    Make
-                  </Button>
+                  />
                 </Box>
               ) : (
                 item.steps && (
@@ -848,7 +839,7 @@ const RecipeContent = ({ item, craftable, busy, mode, diet }) => {
     return group !== null;
   };
 
-  const groupedSteps: React.JSX.Element[] = [];
+  const groupedSteps: string[] = [];
   const groupStack: StepGroup[] = [];
   let currentGroup: StepGroup | null = null;
   let groupKey = 0;
@@ -958,7 +949,7 @@ const RecipeContent = ({ item, craftable, busy, mode, diet }) => {
               height={'32px'}
               style={{
                 transform: 'scale(2)',
-                imageRendering: 'pixelated',
+                'image-rendering': 'pixelated',
               }}
               m={'16px'}
               className={classes([
@@ -971,11 +962,11 @@ const RecipeContent = ({ item, craftable, busy, mode, diet }) => {
         <Stack.Item grow>
           <Stack>
             <Stack.Item grow>
-              <Box mb={0.5} bold style={{ textTransform: 'capitalize' }}>
+              <Box mb={0.5} bold style={{ 'text-transform': 'capitalize' }}>
                 {item.name}
               </Box>
               {item.desc && <Box color={'gray'}>{item.desc}</Box>}
-              <Box style={{ textTransform: 'capitalize' }}>
+              <Box style={{ 'text-transform': 'capitalize' }}>
                 {item.reqs && (
                   <Box>
                     <GroupTitle
@@ -1047,6 +1038,7 @@ const RecipeContent = ({ item, craftable, busy, mode, diet }) => {
                   width="104px"
                   lineHeight={2.5}
                   align="center"
+                  content="Make"
                   disabled={!craftable || busy}
                   icon={
                     busy
@@ -1061,9 +1053,7 @@ const RecipeContent = ({ item, craftable, busy, mode, diet }) => {
                       recipe: item.ref,
                     })
                   }
-                >
-                  Make
-                </Button>
+                />
               )}
               {item.nutriments > 0 && (
                 <Box color={'gray'} width={'104px'} lineHeight={1.5} mt={1}>
@@ -1106,7 +1096,7 @@ const AtomContent = ({ atom_id, amount }) => {
           mode ? 'cooking32x32' : 'crafting32x32',
           'a' + atom_id,
         ])}
-        style={{ imageRendering: 'pixelated' }}
+        style={{ 'image-rendering': 'pixelated' }}
       />
       <Box inline verticalAlign="middle">
         {name}
@@ -1125,7 +1115,7 @@ const ToolContent = ({ tool }) => {
         my={-1}
         mr={0.5}
         className={classes(['crafting32x32', tool])}
-        style={{ imageRendering: 'pixelated' }}
+        style={{ 'image-rendering': 'pixelated' }}
       />
       <Box inline verticalAlign="middle">
         {tool}

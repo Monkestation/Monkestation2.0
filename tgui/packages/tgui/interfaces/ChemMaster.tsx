@@ -10,6 +10,7 @@ import {
   Section,
   Table,
   NumberInput,
+  Tooltip,
   LabeledList,
   ColorBox,
   ProgressBar,
@@ -270,7 +271,7 @@ const ChemMasterContent = (props) => {
             <Box
               lineHeight={1.9}
               style={{
-                textShadow: '1px 1px 0 black',
+                'text-shadow': '1px 1px 0 black',
               }}
             >
               {`Printing ${printingProgress} out of ${printingTotal}`}
@@ -340,6 +341,7 @@ const ReagentEntry = (props) => {
         />
         <Button
           icon="ellipsis-h"
+          title="Custom amount"
           disabled={isPrinting}
           onClick={() =>
             act('transfer', {
@@ -351,6 +353,7 @@ const ReagentEntry = (props) => {
         />
         <Button
           icon="question"
+          title="Analyze"
           onClick={() =>
             act('analyze', {
               reagentRef: chemical.ref,
@@ -362,47 +365,42 @@ const ReagentEntry = (props) => {
   );
 };
 
-type ContainerButtonProps = {
-  container: Container;
-  category: Category;
-};
-
-const ContainerButton = (props: ContainerButtonProps) => {
-  const { container, category } = props;
-
+const ContainerButton = ({ container, category }) => {
   const { act, data } = useBackend<Data>();
   const { isPrinting, selectedContainerRef } = data;
-
   const isPillPatch = ['pills', 'patches'].includes(category.name);
   const fallback = <Icon m="18px" name="spinner" spin />;
   const fallbackPillPatch = <Icon m="10px" name="spinner" spin />;
-
   return (
-    <Button
-      overflow="hidden"
-      color={container.ref === selectedContainerRef ? 'default' : 'transparent'}
-      width={isPillPatch ? '32px' : '48px'}
-      height={isPillPatch ? '32px' : '48px'}
-      selected={container.ref === selectedContainerRef}
-      tooltip={`${capitalize(container.name)}\xa0(${container.volume}u)`}
-      disabled={isPrinting}
-      p={0}
-      onClick={() => {
-        act('selectContainer', {
-          ref: container.ref,
-        });
-      }}
+    <Tooltip
+      key={container.ref}
+      content={`${capitalize(container.name)}\xa0(${container.volume}u)`}
     >
-      <DmIcon
-        m={isPillPatch ? '-16px' : '-8px'}
-        fallback={isPillPatch ? fallbackPillPatch : fallback}
-        icon={container.icon}
-        icon_state={container.icon_state}
-        height="64px"
-        width="64px"
-      />
-    </Button>
-  );
+      <Button
+        overflow="hidden"
+        color="transparent"
+        width={isPillPatch ? '32px' : '48px'}
+        height={isPillPatch ? '32px' : '48px'}
+        selected={container.ref === selectedContainerRef}
+        disabled={isPrinting}
+        p={0}
+        onClick={() => {
+          act('selectContainer', {
+            ref: container.ref,
+          });
+        }}
+      >
+        <DmIcon
+          m={isPillPatch ? '-16px' : '-8px'}
+          fallback={isPillPatch ? fallbackPillPatch : fallback}
+          icon={container.icon}
+          icon_state={container.icon_state}
+          height="64px"
+          width="64px"
+        />
+      </Button>
+    </Tooltip>
+  ) as any;
 };
 
 const AnalysisResults = (props) => {
@@ -436,7 +434,7 @@ const AnalysisResults = (props) => {
         <LabeledList.Item label="Purity">
           <Box
             style={{
-              textTransform: 'capitalize',
+              'text-transform': 'capitalize',
             }}
             color={purityLevel}
           >
@@ -472,7 +470,7 @@ const GroupTitle = ({ title }) => {
       </Stack.Item>
       <Stack.Item
         style={{
-          textTransform: 'capitalize',
+          'text-transform': 'capitalize',
         }}
         color={'gray'}
       >

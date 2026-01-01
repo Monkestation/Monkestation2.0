@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { Component } from 'inferno';
 import { KeyEvent } from '../events';
 import { listenForKeyEvents } from '../hotkeys';
 
@@ -11,8 +11,8 @@ type KeyListenerProps = Partial<{
 export class KeyListener extends Component<KeyListenerProps> {
   dispose: () => void;
 
-  constructor(props: KeyListenerProps) {
-    super(props);
+  constructor() {
+    super();
 
     this.dispose = listenForKeyEvents((key) => {
       if (this.props.onKey) {

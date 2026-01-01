@@ -1,5 +1,4 @@
 import { BooleanLike } from 'common/react';
-import { isValidElement, ReactNode } from 'react';
 
 import { useBackend } from '../../backend';
 import {
@@ -14,6 +13,7 @@ import { BoxProps } from '../../components/Box';
 import { logger } from '../../logging';
 import { CallInfo, LuaEditorModal, Variant, VariantList } from './types';
 import { ListElement, ListPath } from './types';
+import { isValidElement } from 'inferno-compat';
 
 const mapListVariantsInner = (value: any, variant: Variant) => {
   if (Array.isArray(variant)) {
@@ -133,7 +133,7 @@ export const ListMapper = (props: ListMapperProps) => {
   }
 
   const ThingNode = (
-    thing: ReactNode, // There is NO way this is correct
+    thing: any,
     path: ListPath,
     canCall: BooleanLike,
     overrideProps?: ListMapperProps,
@@ -157,10 +157,7 @@ export const ListMapper = (props: ListMapperProps) => {
             <Button
               tooltip="Click to VV"
               onClick={vvAct && (() => vvAct(path))}
-              {
-                // @ts-ignore Someone should really rewrite this whole thing
-                ...thing.props
-              }
+              {...thing.props}
             />
           );
         case 'function':
@@ -177,10 +174,7 @@ export const ListMapper = (props: ListMapperProps) => {
                   });
                   setModal('call');
                 }}
-                {
-                  // @ts-ignore
-                  ...thing.props
-                }
+                {...thing.props}
               />
             );
           } else if (thing === null) {

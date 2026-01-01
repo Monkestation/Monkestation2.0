@@ -133,8 +133,8 @@ const SearchAndDisplay = (props) => {
           <Stack>
             <Stack.Item>
               <Input
-                value={book_id.toString()}
-                placeholder={`${book_id === null ? 'ID' : book_id}`}
+                value={book_id}
+                placeholder={book_id === null ? 'ID' : book_id}
                 width="70px"
                 onChange={(e, value) =>
                   act('set_search_id', {
@@ -456,7 +456,7 @@ const ModifyPage = (props) => {
             <Table.Cell
               className="LibraryAdmin_RecordCell"
               style={{
-                whiteSpace: 'pre-wrap',
+                'white-space': 'pre-wrap',
               }}
             >
               {entry.reason}

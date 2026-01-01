@@ -398,7 +398,7 @@ const PageMain = (props) => {
               // canBuyShuttles is a string detailing the fail reason
               // if one can be given
               tooltip={canBuyShuttles !== 1 ? canBuyShuttles : undefined}
-              tooltipPosition="top"
+              tooltipPosition="right"
               onClick={() => act('setState', { state: STATE_BUYING_SHUTTLE })}
             />
           )}

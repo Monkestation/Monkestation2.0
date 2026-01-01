@@ -123,10 +123,10 @@ const AntagSelection = (props: { antagonists: Antagonist[]; name: string }) => {
               <Stack align="center" vertical>
                 <Stack.Item
                   style={{
-                    fontWeight: 'bold',
-                    marginTop: 'auto',
-                    maxWidth: '100px',
-                    textAlign: 'center',
+                    'font-weight': 'bold',
+                    'margin-top': 'auto',
+                    'max-width': '100px',
+                    'text-align': 'center',
                   }}
                 >
                   {antagonist.name}
@@ -194,7 +194,7 @@ const AntagSelection = (props: { antagonists: Antagonist[]; name: string }) => {
 
 export const AntagsPage = () => {
   return (
-    <Stack vertical>
+    <Stack overflowY="scroll" height="660px" vertical>
       <Stack.Item>
         <AntagSelection
           name="Roundstart"

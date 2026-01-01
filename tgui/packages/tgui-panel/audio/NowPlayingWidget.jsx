@@ -35,9 +35,9 @@ export const NowPlayingWidget = (props) => {
           mx={0.5}
           grow={1}
           style={{
-            whiteSpace: 'nowrap',
+            'white-space': 'nowrap',
             overflow: 'hidden',
-            textOverflow: 'ellipsis',
+            'text-overflow': 'ellipsis',
           }}
         >
           {

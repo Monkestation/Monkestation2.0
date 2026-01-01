@@ -35,12 +35,12 @@ export const NtosMain = (props) => {
         'NtOS Main Menu'
       }
       width={400}
-      height={550}
+      height={500}
     >
       <NtosWindow.Content scrollable>
         {Boolean(
           removable_media.length ||
-          programs.some((program) => program.header_program),
+            programs.some((program) => program.header_program),
         ) && (
           <Section>
             <Stack>

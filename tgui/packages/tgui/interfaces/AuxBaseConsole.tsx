@@ -85,7 +85,7 @@ export const AuxBaseConsoleContent = (props) => {
       {!turrets.length ? (
         <NoticeBox>No connected turrets</NoticeBox>
       ) : (
-        <Table textAlign="center">
+        <Table cellpadding="3" textAlign="center">
           <Table.Row header>
             <Table.Cell>Unit</Table.Cell>
             <Table.Cell>Condition</Table.Cell>

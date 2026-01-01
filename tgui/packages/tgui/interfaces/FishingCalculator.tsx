@@ -1,6 +1,7 @@
 import { round } from 'common/math';
 import { useBackend, useLocalState } from '../backend';
 import { Button, Dropdown, Input, Stack, Table } from '../components';
+import { TableCell, TableRow } from '../components/Table';
 import { Window } from '../layouts';
 
 type FishCalculatorEntry = {
@@ -82,23 +83,23 @@ export const FishingCalculator = (props) => {
           </Stack.Item>
           <Stack.Item>
             <Table>
-              <Table.Row header>
-                <Table.Cell>Outcome</Table.Cell>
-                <Table.Cell>Weight</Table.Cell>
-                <Table.Cell>Probabilty</Table.Cell>
-                <Table.Cell>Difficulty</Table.Cell>
-                <Table.Cell>Count</Table.Cell>
-              </Table.Row>
+              <TableRow header>
+                <TableCell>Outcome</TableCell>
+                <TableCell>Weight</TableCell>
+                <TableCell>Probabilty</TableCell>
+                <TableCell>Difficulty</TableCell>
+                <TableCell>Count</TableCell>
+              </TableRow>
               {data.info?.map((result) => (
-                <Table.Row key={result.result}>
-                  <Table.Cell>{result.result}</Table.Cell>
-                  <Table.Cell>{result.weight}</Table.Cell>
-                  <Table.Cell>
+                <TableRow key={result.result}>
+                  <TableCell>{result.result}</TableCell>
+                  <TableCell>{result.weight}</TableCell>
+                  <TableCell>
                     {round((result.weight / weight_sum) * 100, 2)}%
-                  </Table.Cell>
-                  <Table.Cell>{result.difficulty}</Table.Cell>
-                  <Table.Cell>{result.count}</Table.Cell>
-                </Table.Row>
+                  </TableCell>
+                  <TableCell>{result.difficulty}</TableCell>
+                  <TableCell>{result.count}</TableCell>
+                </TableRow>
               ))}
             </Table>
           </Stack.Item>

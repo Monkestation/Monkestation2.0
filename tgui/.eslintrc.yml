@@ -2,7 +2,7 @@ root: true
 extends: prettier
 parser: '@typescript-eslint/parser'
 parserOptions:
-  ecmaVersion: latest
+  ecmaVersion: 2020
   sourceType: module
   ecmaFeatures:
     jsx: true
@@ -15,7 +15,7 @@ plugins:
   - unused-imports
 settings:
   react:
-    version: '19.2.3'
+    version: '16.10'
 rules:
   ## Possible Errors
   ## ----------------------------------------

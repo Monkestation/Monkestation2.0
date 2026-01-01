@@ -18,8 +18,7 @@ export const ArtifactZapper = (props) => {
                 stepPixelSize={25}
                 step={100}
                 unit={'Shock Strength'}
-                tickWhileDragging
-                onChange={(e, nu) => act('strength', { target: nu })}
+                onDrag={(e, nu) => act('strength', { target: nu })}
               />
             </Stack.Item>
             <Stack.Item>

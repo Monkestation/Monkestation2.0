@@ -9,11 +9,11 @@ import {
 } from '../components';
 import { Window } from '../layouts';
 import { Color } from 'common/color';
+import { Inferno } from 'inferno';
 import { JOB2ICON } from './common/JobToIcon';
 import { deepMerge } from 'common/collections';
 import { BooleanLike } from 'common/react';
 import { LobbyNotices, LobbyNoticesType } from './common/LobbyNotices';
-import { useEffect } from 'react';
 
 type Job = {
   unavailable_reason: string | null;
@@ -41,7 +41,7 @@ type Data = {
   notices: LobbyNoticesType;
 };
 
-export const JobEntry: React.FC<{
+export const JobEntry: Inferno.SFC<{
   jobName: string;
   job: Job;
   department: Department;
@@ -56,7 +56,7 @@ export const JobEntry: React.FC<{
       fluid
       style={{
         // Try not to think too hard about this one.
-        backgroundColor: job.unavailable_reason
+        'background-color': job.unavailable_reason
           ? '#949494' // Grey background
           : job.prioritized
             ? '#16fc0f' // Bright green background
@@ -64,14 +64,14 @@ export const JobEntry: React.FC<{
         color: job.unavailable_reason
           ? '#616161' // Dark grey font
           : Color.fromHex(department.color).darken(90).toString(),
-        fontSize: '1.1rem',
+        'font-size': '1.1rem',
         cursor: job.unavailable_reason ? 'initial' : 'pointer',
       }}
       tooltip={
         job.unavailable_reason ||
         (job.prioritized ? (
           <>
-            <p style={{ marginTop: '0px' }}>
+            <p style={{ 'margin-top': '0px' }}>
               <b>The HoP wants more people in this job!</b>
             </p>
             {job.description}
@@ -85,11 +85,11 @@ export const JobEntry: React.FC<{
       }}
     >
       <>
-        {jobIcon && <Icon name={jobIcon} mr={1} />}
+        {jobIcon && <Icon name={jobIcon} />}
         {job.command ? <b>{jobName}</b> : jobName}
         <span
           style={{
-            whiteSpace: 'nowrap',
+            'white-space': 'nowrap',
             position: 'absolute',
             right: '0.5em',
           }}
@@ -111,15 +111,14 @@ export const JobSelection = (props) => {
     data.departments_static,
   );
 
-  // Send a heartbeat back to DM to let it know the window is alive and well
-  useEffect(() => {
-    act('ui_mounted_with_no_bluescreen');
-  }, []);
-
   return (
     <Window
       width={1012}
       height={data.shuttle_status ? 690 : 666 /* Hahahahahaha */}
+      onComponentDidMount={() => {
+        // Send a heartbeat back to DM to let it know the window is alive and well
+        act('ui_mounted_with_no_bluescreen');
+      }}
     >
       <Window.Content scrollable>
         <LobbyNotices notices={data.notices} />
@@ -140,7 +139,7 @@ export const JobSelection = (props) => {
               />
             </>
           }
-          titleStyle={{ minHeight: '3.4em' }}
+          titleStyle={{ 'min-height': '3.4em' }}
         >
           <Box style={{ columns: '20em' }}>
             {Object.entries(departments).map((departmentEntry) => {
@@ -154,8 +153,8 @@ export const JobSelection = (props) => {
                         {departmentName}
                         <span
                           style={{
-                            fontSize: '1rem',
-                            whiteSpace: 'nowrap',
+                            'font-size': '1rem',
+                            'white-space': 'nowrap',
                             position: 'absolute',
                             right: '1em',
                             color: Color.fromHex(entry.color)
@@ -170,12 +169,12 @@ export const JobSelection = (props) => {
                       </>
                     }
                     style={{
-                      backgroundColor: entry.color,
-                      marginBottom: '1em',
-                      breakInside: 'avoid-column',
+                      'background-color': entry.color,
+                      'margin-bottom': '1em',
+                      'break-inside': 'avoid-column',
                     }}
                     titleStyle={{
-                      borderBottomColor: Color.fromHex(entry.color)
+                      'border-bottom-color': Color.fromHex(entry.color)
                         .darken(50)
                         .toString(),
                     }}

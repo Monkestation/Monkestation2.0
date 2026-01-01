@@ -39,7 +39,7 @@ export const FaxMainPanel = (props) => {
     data.stamps.unshift('None');
   }
   return (
-    <div className="faxmenu">
+    <div class="faxmenu">
       <Section
         title="Fax Menu"
         buttons={

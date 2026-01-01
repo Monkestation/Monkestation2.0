@@ -5,13 +5,13 @@
  */
 
 import { shallowDiffers } from 'common/react';
-import { Component, createRef } from 'react';
+import { Component, createRef } from 'inferno';
 import { Button } from 'tgui/components';
 import { chatRenderer } from './renderer';
 
 export class ChatPanel extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.ref = createRef();
     this.state = {
       scrollTracking: true,

@@ -7,9 +7,8 @@ import {
   Dropdown,
   Icon,
 } from '../../components';
-import { Component } from 'react';
+import { Component } from 'inferno';
 import { shallowDiffers } from 'common/react';
-import { multiline } from 'common/string';
 
 export class VariableMenu extends Component {
   constructor() {

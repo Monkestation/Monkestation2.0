@@ -147,6 +147,7 @@ export const MessageWriteTab = (props) => {
         fluid
         height={20}
         maxLength={1025}
+        multiline
         value={messageText}
         onChange={(_, value) => setMessageText(value)}
         placeholder="Type your message..."
@@ -175,6 +176,7 @@ export const MessageWriteTab = (props) => {
           </Stack.Item>
           <Stack.Item>
             <Button
+              warning
               icon="id-card"
               content={
                 authentication_data.message_verified_by || 'Not verified'
@@ -182,6 +184,7 @@ export const MessageWriteTab = (props) => {
               onClick={() => act('verify_id')}
             />
             <Button
+              warning
               icon="stamp"
               content={authentication_data.message_stamped_by || 'Not stamped'}
               onClick={() => act('stamp')}

@@ -1,13 +1,6 @@
 import { resolveAsset } from '../assets';
 import { useBackend, useLocalState } from '../backend';
-import {
-  Button,
-  Divider,
-  Dropdown,
-  Image,
-  Section,
-  Stack,
-} from '../components';
+import { Box, Button, Divider, Dropdown, Section, Stack } from '../components';
 import { Window } from '../layouts';
 import { Objective, ObjectivePrintout } from './common/Objectives';
 
@@ -100,6 +93,7 @@ const PowerSection = (props: any) => {
       <Stack>
         <Stack.Item grow>
           <Dropdown
+            displayText={selectedPower.power_name}
             selected={selectedPower.power_name}
             width="100%"
             options={power.map((powers) => powers.power_name)}
@@ -110,16 +104,17 @@ const PowerSection = (props: any) => {
             }
           />
           {selectedPower && (
-            <Image
+            <Box
               position="absolute"
               height="12rem"
+              as="img"
               src={resolveAsset(`bloodsucker.${selectedPower.power_icon}.png`)}
             />
           )}
-          <Divider vertical />
+          <Divider Vertical />
         </Stack.Item>
         <Stack.Divider />
-        <Stack.Item grow fontSize="16px">
+        <Stack.Item scrollable grow={1} fontSize="16px">
           {selectedPower && selectedPower.power_explanation}
         </Stack.Item>
       </Stack>

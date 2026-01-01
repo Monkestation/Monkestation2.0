@@ -14,7 +14,7 @@ import { setupHotReloading } from 'tgui-dev-server/link/client.cjs';
 import { setupGlobalEvents } from 'tgui/events';
 import { captureExternalLinks } from 'tgui/links';
 import { createRenderer } from 'tgui/renderer';
-import { configureStore } from 'tgui/store';
+import { configureStore, StoreProvider } from 'tgui/store';
 import { audioMiddleware, audioReducer } from './audio';
 import { chatMiddleware, chatReducer } from './chat';
 import { gameMiddleware, gameReducer } from './game';
@@ -53,7 +53,11 @@ const renderApp = createRenderer(() => {
   setGlobalStore(store);
 
   const { Panel } = require('./Panel');
-  return <Panel />;
+  return (
+    <StoreProvider store={store}>
+      <Panel />
+    </StoreProvider>
+  );
 });
 
 const setupApp = () => {

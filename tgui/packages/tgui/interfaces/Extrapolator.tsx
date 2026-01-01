@@ -35,7 +35,7 @@ export const Extrapolator = (props) => {
   return (
     <Window title="Extrapolator" width={325} height={200}>
       <Window.Content>
-        <Stack>
+        <Stack grow>
           <Stack.Item>
             <Section title="Diseases">
               <Tabs vertical>

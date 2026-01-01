@@ -1,14 +1,6 @@
 import { decodeHtmlEntities } from 'common/string';
 import { useBackend } from '../backend';
-import {
-  Icon,
-  Box,
-  Button,
-  Dimmer,
-  Section,
-  Stack,
-  Image,
-} from '../components';
+import { Icon, Box, Button, Dimmer, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 export const Trophycase = (props) => {
@@ -130,13 +122,15 @@ const ShowpieceImage = (props) => {
   const { showpiece_icon } = data;
   return showpiece_icon ? (
     <Section align="center">
-      <Image
+      <Box
+        as="img"
         m={1}
         src={`data:image/jpeg;base64,${showpiece_icon}`}
         height="96px"
         width="96px"
         style={{
-          imageRendering: 'pixelated',
+          '-ms-interpolation-mode': 'nearest-neighbor',
+          'image-rendering': 'pixelated',
         }}
       />
     </Section>

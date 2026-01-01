@@ -51,6 +51,7 @@ export const MedicalRecordView = (props) => {
           fill
           scrollable
           title={name}
+          wrap
         >
           <LabeledList>
             <LabeledList.Item label="Name">
@@ -122,10 +123,10 @@ const EditableText = (props: Props) => {
           as="span"
           color={!text ? 'grey' : color || 'white'}
           style={{
-            textDecoration: 'underline',
-            textDecorationColor: 'white',
-            textDecorationThickness: '1px',
-            textUnderlineOffset: '1px',
+            'text-decoration': 'underline',
+            'text-decoration-color': 'white',
+            'text-decoration-thickness': '1px',
+            'text-underline-offset': '1px',
           }}
           onClick={() => setEditing(true)}
         >

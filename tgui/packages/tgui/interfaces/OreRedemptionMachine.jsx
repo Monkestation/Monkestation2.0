@@ -221,7 +221,7 @@ const MaterialRow = (props) => {
           }
           color={'transparent'}
           maxValue={max_sheets}
-          onCommit={(value) => {
+          onCommit={(e, value) => {
             onRelease(value);
           }}
         />

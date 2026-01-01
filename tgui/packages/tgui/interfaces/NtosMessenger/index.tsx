@@ -18,7 +18,6 @@ import { NtosWindow } from '../../layouts';
 import { NtChat, NtMessenger, NtPicture } from './types';
 import { ChatScreen } from './ChatScreen';
 import { sortBy } from 'common/collections';
-import React from 'react';
 
 type NtosMessengerData = {
   can_spam: BooleanLike;
@@ -52,7 +51,7 @@ export const NtosMessenger = (props) => {
     sending_virus,
   } = data;
 
-  let content: React.JSX.Element;
+  let content: Element;
   if (open_chat !== null) {
     const openChat = saved_chats[open_chat];
     const temporaryRecipient = messengers[open_chat];
@@ -165,12 +164,12 @@ const ContactsScreen = (props: any) => {
               <Icon name="address-card" mr={1} />
               SpaceMessenger V6.5.3
             </Box>
-            <Box italic opacity={0.3} mt={0.5}>
+            <Box italic opacity={0.3} mt={1}>
               Bringing you spy-proof communications since 2467.
             </Box>
             <Divider hidden />
             {/* First row of buttons */}
-            <Stack fill mt={0.5}>
+            <Stack fill mt={1} mb={1}>
               <Stack.Item grow>
                 <Button
                   fluid
@@ -216,6 +215,13 @@ const ContactsScreen = (props: any) => {
                         act('PDA_soundSet', { sound: value })
                       }
                       maxHeight="1.7em"
+                      dropdownBoxStyle={{
+                        maxHeight: '65vh',
+                        // if i set the height, it makes the entire fucking box transparent and fucks up the text.
+                        // GOD FUCKING DAMMIT
+                        backgroundColor: 'black',
+                        color: 'white',
+                      }}
                     />
                   </Stack.Item>
                   <Stack.Item>
@@ -230,7 +236,7 @@ const ContactsScreen = (props: any) => {
               </Stack.Item>
             </Stack>
             {/* Third row */}
-            <Stack fill mt={0.5}>
+            <Stack fill mt={1} mb={1}>
               <Stack.Item grow>
                 <Button
                   fluid
@@ -252,9 +258,10 @@ const ContactsScreen = (props: any) => {
               )}
             </Stack>
           </Stack>
-          <Stack justify="space-between" mt={1}>
+          <Divider hidden />
+          <Stack justify="space-between">
             <Box m={0.5}>
-              <Icon name="magnifying-glass" mr={0.5} />
+              <Icon name="magnifying-glass" mr={1} />
               Search For User
             </Box>
             <Input
@@ -361,7 +368,7 @@ const SendToAllSection = (props) => {
               icon="arrow-right"
               disabled={on_spam_cooldown || message === ''}
               tooltip={on_spam_cooldown && 'Wait before sending more messages!'}
-              tooltipPosition="bottom-start"
+              tooltipPosition="auto-start"
               onClick={() => {
                 act('PDA_sendEveryone', { message: message });
                 setmessage('');
@@ -376,7 +383,6 @@ const SendToAllSection = (props) => {
         <TextArea
           height={6}
           value={message}
-          width="100%"
           placeholder="Send message to everyone..."
           onInput={(_: any, v: string) => setmessage(v)}
         />

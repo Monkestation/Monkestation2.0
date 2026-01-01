@@ -7,7 +7,7 @@
 import { decodeHtmlEntities } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
 import { Button, Input, Section, Table } from '../components';
-import { Popper } from '../components';
+import { Popper } from '../components/Popper';
 import { Window } from '../layouts';
 
 export const RequestManager = (props) => {
@@ -143,8 +143,10 @@ const FilterPanel = (props) => {
 
   return (
     <Popper
-      placement="bottom-start"
-      content={
+      options={{
+        placement: 'bottom-start',
+      }}
+      popperContent={
         <div
           className="RequestManager__filterPanel"
           style={{

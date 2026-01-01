@@ -8,6 +8,7 @@ import {
   Table,
   Tooltip,
 } from '../components';
+import { TableCell, TableRow } from '../components/Table';
 import { createSearch, decodeHtmlEntities } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
 
@@ -69,8 +70,8 @@ export const CheckboxInput = (props) => {
             <Section fill scrollable>
               <Table>
                 {toDisplay.map((item, index) => (
-                  <Table.Row className="candystripe" key={index}>
-                    <Table.Cell>
+                  <TableRow className="candystripe" key={index}>
+                    <TableCell>
                       <Button.Checkbox
                         checked={selections.includes(item)}
                         disabled={
@@ -82,8 +83,8 @@ export const CheckboxInput = (props) => {
                       >
                         {item}
                       </Button.Checkbox>
-                    </Table.Cell>
-                  </Table.Row>
+                    </TableCell>
+                  </TableRow>
                 ))}
               </Table>
             </Section>

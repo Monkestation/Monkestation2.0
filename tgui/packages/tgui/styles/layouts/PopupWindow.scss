@@ -1,6 +1,7 @@
 @use 'sass:color';
-@use '../legacy-base.scss' as base;
+@use '../base.scss';
 @use '../functions.scss' as *;
+@use './Layout.scss';
 
 .PopupWindow {
   color: base.$color-fg;
@@ -10,6 +11,16 @@
     base.$color-bg-start 0%,
     base.$color-bg-end 100%
   );
-
+  @include Layout.fancy-scrollbar(
+    base.$color-bg,
+    Layout.$scrollbar-color-multiplier
+  );
   border: 1px solid color.adjust(base.$color-bg, $lightness: 7%);
+}
+
+.PopupWindow * {
+  @include Layout.fancy-scrollbar(
+    base.$color-bg,
+    Layout.$scrollbar-color-multiplier
+  );
 }

@@ -1,3 +1,4 @@
+import type { Inferno } from 'inferno';
 import { Box, Icon, Stack, Tooltip } from '../../components';
 import { PreferencesMenuData, Quirk } from './data';
 import { useBackend } from '../../backend';
@@ -23,7 +24,8 @@ const QuirkList = (props: {
   onClick: (quirkName: string, quirk: Quirk) => void;
 }) => {
   return (
-    <Stack vertical g={0}>
+    // Stack is not used here for a variety of IE flex bugs
+    <Box className="PreferencesMenu__Quirks__QuirkList">
       {props.quirks.map(([quirkKey, quirk]) => {
         const className = 'PreferencesMenu__Quirks__QuirkList__quirk';
 
@@ -31,7 +33,8 @@ const QuirkList = (props: {
           <Box
             className={className}
             key={quirkKey}
-            style={{ userSelect: 'none', cursor: 'pointer' }}
+            role="button"
+            tabIndex="1"
             onClick={() => {
               props.onClick(quirkKey, quirk);
             }}
@@ -40,9 +43,9 @@ const QuirkList = (props: {
               <Stack.Item
                 align="center"
                 style={{
-                  minWidth: '15%',
-                  maxWidth: '15%',
-                  textAlign: 'center',
+                  'min-width': '15%',
+                  'max-width': '15%',
+                  'text-align': 'center',
                 }}
               >
                 <Icon color="#333" fontSize={3} name={quirk.icon} />
@@ -51,32 +54,32 @@ const QuirkList = (props: {
               <Stack.Item
                 align="stretch"
                 style={{
-                  borderRight: '1px solid black',
-                  marginLeft: 0,
+                  'border-right': '1px solid black',
+                  'margin-left': 0,
                 }}
               />
 
               <Stack.Item
                 grow
                 style={{
-                  marginLeft: 0,
+                  'margin-left': 0,
 
                   // Fixes an IE bug for text overflowing in Flex boxes
-                  minWidth: '0%',
+                  'min-width': '0%',
                 }}
               >
                 <Stack vertical fill>
                   <Stack.Item
                     className={`${className}--${getValueClass(quirk.value)}`}
                     style={{
-                      borderBottom: '1px solid black',
+                      'border-bottom': '1px solid black',
                       padding: '2px',
                     }}
                   >
                     <Stack
                       fill
                       style={{
-                        fontSize: '1.2em',
+                        'font-size': '1.2em',
                       }}
                     >
                       <Stack.Item grow basis="content">
@@ -93,7 +96,7 @@ const QuirkList = (props: {
                     grow
                     basis="content"
                     style={{
-                      marginTop: 0,
+                      'margin-top': 0,
                       padding: '3px',
                     }}
                   >
@@ -115,11 +118,11 @@ const QuirkList = (props: {
           return child;
         }
       })}
-    </Stack>
+    </Box>
   );
 };
 
-const StatDisplay: React.FC<{ children: React.ReactNode }> = (props) => {
+const StatDisplay: Inferno.StatelessComponent<{}> = (props) => {
   return (
     <Box
       backgroundColor="#eee"
@@ -229,7 +232,7 @@ export const QuirksPage = (props) => {
         };
 
         return (
-          <Stack fill>
+          <Stack align="center" fill>
             <Stack.Item basis="50%">
               <Stack vertical fill align="center">
                 <Stack.Item>
@@ -248,7 +251,7 @@ export const QuirksPage = (props) => {
                   </Box>
                 </Stack.Item>
 
-                <Stack.Item grow overflowY="auto">
+                <Stack.Item grow width="100%">
                   <QuirkList
                     onClick={(quirkName, quirk) => {
                       if (getReasonToNotAdd(quirkName) !== undefined) {
@@ -297,7 +300,7 @@ export const QuirksPage = (props) => {
                   </Box>
                 </Stack.Item>
 
-                <Stack.Item grow overflowY="auto">
+                <Stack.Item grow width="100%">
                   <QuirkList
                     onClick={(quirkName, quirk) => {
                       if (getReasonToNotRemove(quirkName) !== undefined) {

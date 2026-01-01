@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { Component } from 'inferno';
 import { useBackend } from '../../backend';
 
 import { Box, Button, Modal, Stack } from '../../components';

@@ -52,14 +52,6 @@ export const MedicalRecordView = (props) => {
   const major_disabilities_array = getQuirkStrings(major_disabilities);
   const quirk_notes_array = getQuirkStrings(quirk_notes);
 
-  function onChangeHandler(value: number) {
-    act('edit_field', {
-      field: 'age',
-      ref: crew_ref,
-      value: value,
-    });
-  }
-
   return (
     <Stack fill vertical>
       <Stack.Item grow>
@@ -86,6 +78,7 @@ export const MedicalRecordView = (props) => {
           fill
           scrollable
           title={name}
+          wrap
         >
           <LabeledList>
             <LabeledList.Item label="Name">
@@ -98,8 +91,13 @@ export const MedicalRecordView = (props) => {
               <RestrictedInput
                 minValue={min_age}
                 maxValue={max_age}
-                onEnter={onChangeHandler}
-                onChange={onChangeHandler}
+                onEnter={(event, value) =>
+                  act('edit_field', {
+                    field: 'age',
+                    ref: crew_ref,
+                    value: value,
+                  })
+                }
                 value={age}
               />
             </LabeledList.Item>

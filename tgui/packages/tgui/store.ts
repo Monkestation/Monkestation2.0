@@ -15,6 +15,7 @@ import {
 import { backendMiddleware, backendReducer } from './backend';
 import { debugMiddleware, debugReducer, relayMiddleware } from './debug';
 
+import { Component } from 'inferno';
 import { assetMiddleware } from './assets';
 import { createLogger } from './logging';
 import { flow } from 'common/fp';
@@ -29,6 +30,11 @@ type ConfigureStoreOptions = {
 };
 
 type StackAugmentor = (stack: string, error?: Error) => string;
+
+type StoreProviderProps = {
+  store: Store;
+  children: any;
+};
 
 const logger = createLogger('store');
 
@@ -104,3 +110,17 @@ const createStackAugmentor =
       })
     );
   };
+
+/**
+ * Store provider for Inferno apps.
+ */
+export class StoreProvider extends Component<StoreProviderProps> {
+  getChildContext() {
+    const { store } = this.props;
+    return { store };
+  }
+
+  render() {
+    return this.props.children;
+  }
+}

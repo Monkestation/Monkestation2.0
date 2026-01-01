@@ -72,7 +72,7 @@ export const AntagInfoDarkspawn = (props) => {
     <Window width={750} height={650}>
       <Window.Content
         style={{
-          backgroundImage: 'none',
+          'background-image': 'none',
           background:
             'radial-gradient(circle, rgba(9,9,24,1) 54%, rgba(10,10,31,1) 60%, rgba(21,11,46,1) 80%, rgba(24,14,47,1) 100%);',
         }}
@@ -318,7 +318,7 @@ const ResearchInfo = (props) => {
             </Stack.Item>
 
             <Stack.Item grow={1}>
-              <Stack fill direction="column">
+              <Stack fill fluid direction="column">
                 <Stack.Item>
                   <KnowledgePreview />
                 </Stack.Item>
@@ -375,11 +375,11 @@ const MenuTabs = (props) => {
   return (
     <Section>
       <Tabs>
-        {categories.map((category, idx) => (
+        {categories.map((category) => (
           <Tabs.Tab
             width="100%"
             fontSize="16px"
-            key={idx}
+            key={category}
             selected={category === selectedCategory}
             onClick={() => {
               setSelectedCategory(category);
@@ -396,6 +396,7 @@ const MenuTabs = (props) => {
             <Tabs.Tab
               fontSize="16px"
               key={knowledge}
+              Autofocus
               selected={psiWeb.path === selectedKnowledgePath}
               onClick={() => setSelectedKnowledgePath(psiWeb.path)}
             >
@@ -439,6 +440,7 @@ const KnowledgePreview = (props) => {
       >
         <Stack
           fill
+          fluid
           vertical
           justify="flex-start"
           fontSize="16px"
@@ -458,7 +460,8 @@ const KnowledgePreview = (props) => {
                 style={{
                   background:
                     'radial-gradient(circle, rgb(114, 100, 255) 0%, rgb(33, 0, 127) 100%);',
-                  imageRendering: 'pixelated',
+                  '-ms-interpolation-mode': 'nearest-neighbor',
+                  'image-rendering': 'pixelated',
                 }}
               />
             </Stack.Item>
@@ -505,9 +508,9 @@ const ClassSelection = (props) => {
       height="100%"
       width="100%"
       style={{
-        alignItems: 'center',
+        'align-items': 'center',
         height: '100%',
-        justifyContent: 'center',
+        'justify-content': 'center',
       }}
     >
       {classData.map((darkspawnclass) => (

@@ -64,8 +64,8 @@ const FileTable = (props) => {
         <Table.Cell collapsing>Type</Table.Cell>
         <Table.Cell collapsing>Size</Table.Cell>
       </Table.Row>
-      {files.map((file, idx) => (
-        <Table.Row key={idx} className="candystripe">
+      {files.map((file) => (
+        <Table.Row key={file.name} className="candystripe">
           <Table.Cell>
             {!file.undeletable ? (
               <Button.Input
@@ -73,13 +73,7 @@ const FileTable = (props) => {
                 content={file.name}
                 currentValue={file.name}
                 tooltip="Rename"
-                onCommit={(value) => onRename(file.name, value)}
-                value={file.name}
-                style={{
-                  backgroundColor: 'transparent',
-                  textDecoration: 'underline',
-                  padding: 0,
-                }}
+                onCommit={(e, value) => onRename(file.name, value)}
               />
             ) : (
               file.name

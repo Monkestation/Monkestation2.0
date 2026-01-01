@@ -57,7 +57,7 @@ export const Fabricator = (props) => {
           </Stack.Item>
         </Stack>
         {!!onHold && (
-          <Dimmer style={{ fontSize: '2em', textAlign: 'center' }}>
+          <Dimmer style={{ 'font-size': '2em', 'text-align': 'center' }}>
             Mineral access is on hold, please contact the quartermaster.
           </Dimmer>
         )}
@@ -132,15 +132,18 @@ const CustomPrint = (props: CustomPrintProps) => {
       ])}
     >
       <Button.Input
-        buttonText={`[Max: ${maxMult}]`}
+        content={`[Max: ${maxMult}]`}
         color={'transparent'}
-        onCommit={(value: string) =>
+        maxValue={maxMult}
+        onCommit={(_e, value: string) =>
           act('build', {
             ref: design.id,
             amount: value,
           })
         }
-      />
+      >
+        [Max: {maxMult}]
+      </Button.Input>
     </div>
   );
 };

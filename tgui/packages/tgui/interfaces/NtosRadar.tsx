@@ -1,7 +1,7 @@
 import { BooleanLike, classes } from 'common/react';
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
-import { Button, Icon, Image, NoticeBox, Section, Stack } from '../components';
+import { Box, Button, Icon, NoticeBox, Section, Stack } from '../components';
 import { NtosWindow } from '../layouts';
 
 type Data = {
@@ -43,10 +43,10 @@ export const NtosRadarContent = (props) => {
       </Stack.Item>
       <Stack.Item
         style={{
-          backgroundImage:
+          'background-image':
             'url("' + resolveAsset('ntosradarbackground.png') + '")',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
+          'background-position': 'center',
+          'background-repeat': 'no-repeat',
           top: '20px',
         }}
         position="relative"
@@ -125,7 +125,8 @@ const TargetDisplay = (props) => {
     );
   }
   return target.userot ? (
-    <Image
+    <Box
+      as="img"
       src={resolveAsset(target.arrowstyle)}
       position="absolute"
       top="20px"

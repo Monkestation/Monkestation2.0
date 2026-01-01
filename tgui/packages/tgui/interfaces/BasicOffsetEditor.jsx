@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Box, Button, Flex, Icon, Section, Slider } from '../components';
 import { Window } from '../layouts';
@@ -48,7 +48,6 @@ export const BasicOffsetEditor = (properties) => {
                       maxValue={100}
                       stepPixelSize={3.13}
                       value={offset.north}
-                      tickWhileDragging
                       onChange={(e, value) =>
                         act('offset', {
                           name: offset.name,
@@ -109,7 +108,6 @@ export const BasicOffsetEditor = (properties) => {
                       maxValue={100}
                       stepPixelSize={3.13}
                       value={offset.south}
-                      tickWhileDragging
                       onChange={(e, value) =>
                         act('offset', {
                           name: offset.name,
@@ -170,7 +168,6 @@ export const BasicOffsetEditor = (properties) => {
                       maxValue={100}
                       stepPixelSize={3.13}
                       value={offset.east}
-                      tickWhileDragging
                       onChange={(e, value) =>
                         act('offset', {
                           name: offset.name,
@@ -231,7 +228,6 @@ export const BasicOffsetEditor = (properties) => {
                       maxValue={100}
                       stepPixelSize={3.13}
                       value={offset.west}
-                      tickWhileDragging
                       onChange={(e, value) =>
                         act('offset', {
                           name: offset.name,

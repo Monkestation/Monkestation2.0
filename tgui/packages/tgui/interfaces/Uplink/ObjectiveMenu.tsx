@@ -1,5 +1,5 @@
 import { BooleanLike, classes } from 'common/react';
-import { Component } from 'react';
+import { Component } from 'inferno';
 
 import {
   Box,
@@ -18,7 +18,7 @@ import {
   Rank,
 } from './calculateDangerLevel';
 import { ObjectiveState } from './constants';
-import type { ReactNode } from 'react';
+import type { InfernoNode } from 'inferno';
 
 export type Objective = {
   id: number;
@@ -67,8 +67,8 @@ export class ObjectiveMenu extends Component<
   ObjectiveMenuProps,
   ObjectiveMenuState
 > {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
       draggingObjective: null,
       objectiveX: 0,
@@ -120,7 +120,7 @@ export class ObjectiveMenu extends Component<
     });
   }
 
-  handleObjectiveAdded() {
+  handleObjectiveAdded(event: MouseEvent) {
     const { draggingObjective } = this.state as ObjectiveMenuState;
     if (!draggingObjective) {
       return;
@@ -274,7 +274,7 @@ export class ObjectiveMenu extends Component<
             left={`${objectiveX - 180}px`}
             top={`${objectiveY}px`}
             style={{
-              pointerEvents: 'none',
+              'pointer-events': 'none',
             }}
           >
             {ObjectiveFunction(draggingObjective, false)}
@@ -353,7 +353,7 @@ type ObjectiveElementProps = {
   telecrystalReward: number;
   progressionReward: number;
   contractorRep?: number;
-  uiButtons?: ReactNode;
+  uiButtons?: InfernoNode;
   objectiveState?: ObjectiveState;
   originalProgression: number;
   telecrystalPenalty: number;
@@ -362,8 +362,8 @@ type ObjectiveElementProps = {
   finalObjective: BooleanLike;
   canAbort: BooleanLike;
 
-  handleCompletion?: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  handleAbort?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  handleCompletion?: (event: MouseEvent) => void;
+  handleAbort?: (event: MouseEvent) => void;
 };
 
 export const ObjectiveElement = (props: ObjectiveElementProps) => {
@@ -431,7 +431,7 @@ export const ObjectiveElement = (props: ObjectiveElementProps) => {
                   icon="trash"
                   color="transparent"
                   tooltip="Abort Objective"
-                  onClick={(evt) => handleAbort?.(evt)}
+                  onClick={handleAbort}
                 />
               </Stack.Item>
             )}
@@ -464,9 +464,9 @@ export const ObjectiveElement = (props: ObjectiveElementProps) => {
                   <Box
                     style={{
                       border: '2px solid rgba(0, 0, 0, 0.5)',
-                      borderLeft: 'none',
-                      borderRight: 'none',
-                      borderBottom: objectiveFinished ? 'none' : undefined,
+                      'border-left': 'none',
+                      'border-right': 'none',
+                      'border-bottom': objectiveFinished ? 'none' : undefined,
                     }}
                     className={dangerLevel.gradient}
                     py={0.5}
@@ -528,10 +528,10 @@ export const ObjectiveElement = (props: ObjectiveElementProps) => {
                     inline
                     className={dangerLevel.gradient}
                     style={{
-                      borderRadius: '0',
+                      'border-radius': '0',
                       border: '2px solid rgba(0, 0, 0, 0.5)',
-                      borderLeft: 'none',
-                      borderRight: 'none',
+                      'border-left': 'none',
+                      'border-right': 'none',
                     }}
                     position="relative"
                     width="100%"
@@ -551,7 +551,7 @@ export const ObjectiveElement = (props: ObjectiveElementProps) => {
                       top={0}
                     />
                     <Button
-                      onClick={(evt) => handleCompletion?.(evt)}
+                      onClick={handleCompletion}
                       color={objectiveFailed ? 'bad' : 'good'}
                       style={{
                         border: '1px solid rgba(0, 0, 0, 0.65)',

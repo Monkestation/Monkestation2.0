@@ -111,7 +111,9 @@ export const AtmosControlConsole = (props) => {
                         width="63px"
                         minValue={0}
                         maxValue={data.maxInput}
-                        step={10}
+                        // This takes an exceptionally long time to update
+                        // due to being an async signal
+                        suppressFlicker={2000}
                         onChange={(e, value) =>
                           act('adjust_input', {
                             chamber: selectedChamber.id,
@@ -154,6 +156,9 @@ export const AtmosControlConsole = (props) => {
                         minValue={0}
                         maxValue={data.maxOutput}
                         step={10}
+                        // This takes an exceptionally long time to update
+                        // due to being an async signal
+                        suppressFlicker={2000}
                         onChange={(e, value) =>
                           act('adjust_output', {
                             chamber: selectedChamber.id,

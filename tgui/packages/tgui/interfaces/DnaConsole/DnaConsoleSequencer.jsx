@@ -1,7 +1,7 @@
 import { classes } from 'common/react';
 import { resolveAsset } from '../../assets';
 import { useBackend } from '../../backend';
-import { Box, Button, Image, Section, Stack } from '../../components';
+import { Box, Button, Section, Stack } from '../../components';
 import { MutationInfo } from './MutationInfo';
 import {
   CLEAR_GENE,
@@ -20,12 +20,13 @@ const GenomeImage = (props) => {
     outline = '2px solid #22aa00';
   }
   return (
-    <Image
+    <Box
+      as="img"
       src={url}
       style={{
         width: '64px',
         margin: '2px',
-        marginLeft: '4px',
+        'margin-left': '4px',
         outline,
       }}
       onClick={onClick}
@@ -60,7 +61,7 @@ const GeneCycler = (props) => {
 
         return;
       }}
-      onContextMenu={(e) => {
+      oncontextmenu={(e) => {
         e.preventDefault();
 
         act('pulse_gene', {

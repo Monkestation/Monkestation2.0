@@ -29,6 +29,7 @@ export const ContractorMenu = (props: ContractorMenuProps) => {
             <Stack.Item key={item.name}>
               <Section
                 title={item.name + ' - ' + repInfo}
+                layer={2}
                 buttons={
                   <>
                     {stock && (

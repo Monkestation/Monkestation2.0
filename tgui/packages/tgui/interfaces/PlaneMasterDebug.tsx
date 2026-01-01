@@ -14,7 +14,7 @@ import {
 import { sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { classes, shallowDiffers } from 'common/react';
-import { Component, createRef, RefObject } from 'react';
+import { Component, createRef, RefObject } from 'inferno';
 import { Window } from '../layouts';
 import { resolveAsset } from '../assets';
 import { MOUSE_BUTTON_LEFT, noop } from './IntegratedCircuit/constants';
@@ -327,8 +327,8 @@ const arrayRemove = function (arr: any, value) {
 };
 
 export class PlaneMasterDebug extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.handlePortClick = this.handlePortClick.bind(this);
   }
 
@@ -406,7 +406,7 @@ export class PlaneMasterDebug extends Component {
       <Window width={1200} height={800} title={'Plane Debugging: ' + mob_name}>
         <Window.Content
           style={{
-            backgroundImage: 'none',
+            'background-image': 'none',
           }}
         >
           <InfinitePlane
@@ -507,7 +507,7 @@ class PlaneMaster extends Component<PlaneMasterProps> {
               ? 'ObjectComponent__Greyed_Content'
               : 'ObjectComponent__Content'
           }
-          style={{ userSelect: 'none' }}
+          unselectable="on"
           py={1}
           px={1}
         >
@@ -570,8 +570,8 @@ class Port extends Component<PortProps> {
   // But it's how it was being done in circuit code, so eh
   iconRef: RefObject<SVGCircleElement> | RefObject<HTMLSpanElement> | any;
 
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.iconRef = createRef();
     this.handlePortMouseDown = this.handlePortMouseDown.bind(this);
   }
@@ -775,7 +775,12 @@ const PlaneWindow = (props) => {
           maxValue={255}
           step={1}
           stepPixelSize={1.9}
-          tickWhileDragging
+          onDrag={(e, value) =>
+            act('set_alpha', {
+              edit: workingPlane.our_ref,
+              alpha: value,
+            })
+          }
           onChange={(e, value) =>
             act('set_alpha', {
               edit: workingPlane.our_ref,

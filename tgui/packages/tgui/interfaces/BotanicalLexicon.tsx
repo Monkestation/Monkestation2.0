@@ -37,16 +37,16 @@ export const BotanicalLexicon = () => {
       height={450}
     >
       <Window.Content>
-        <Stack className="content">
-          <Stack className="book">
-            <div className="spine" />
-            <Stack className="page">
-              <Stack.Item className="TOC">Table of Contents</Stack.Item>
-              <Stack.Item className="chicken_tab_list">
+        <Stack class="content">
+          <Stack class="book">
+            <div class="spine" />
+            <Stack class="page">
+              <Stack.Item class="TOC">Table of Contents</Stack.Item>
+              <Stack.Item class="chicken_tab_list">
                 <PlantTabs />
               </Stack.Item>
             </Stack>
-            <Stack className="page">
+            <Stack class="page">
               <PlantInfo />
             </Stack>
           </Stack>
@@ -62,12 +62,12 @@ const PlantInfo = () => {
   } = useBackend<Data>();
   const [selectedPlant] = useLocalState('plant', plants[0]);
   return (
-    <Flex className="chicken-info-container">
-      <Flex.Item className="chicken-title">
+    <Flex class="chicken-info-container">
+      <Flex.Item class="chicken-title">
         {toTitleCase(selectedPlant.name)}
       </Flex.Item>
 
-      <Flex.Item className="chicken-icon-container">
+      <Flex.Item class="chicken-icon-container">
         <Stack>
           {selectedPlant.results.map((result) => (
             <Stack.Item key={result.path}>
@@ -83,22 +83,22 @@ const PlantInfo = () => {
         </Stack>
       </Flex.Item>
 
-      <Flex.Item className="chicken-metric">
+      <Flex.Item class="chicken-metric">
         {selectedPlant.mutates_from &&
           'Mutates From:' + selectedPlant.mutates_from}
       </Flex.Item>
 
-      <Flex.Item className="chicken-metric">
+      <Flex.Item class="chicken-metric">
         {selectedPlant.desc && 'Description:' + selectedPlant.desc}
       </Flex.Item>
 
       {selectedPlant.requirements.map((stat) => (
-        <Flex.Item className="chicken-metric" key={stat.stat}>
+        <Flex.Item class="chicken-metric" key={stat.stat}>
           {stat.stat} Range: {stat.low} to {stat.high}
         </Flex.Item>
       ))}
 
-      <Flex.Item className="chicken-metric">
+      <Flex.Item class="chicken-metric">
         {selectedPlant.required_reagents &&
           'Required Infusions: ' + selectedPlant.required_reagents}
       </Flex.Item>
@@ -113,9 +113,9 @@ const PlantTabs = (props) => {
   const [selectedPlant, setSelectedPlant] = useLocalState('plant', plants[0]);
   return (
     <Tabs vertical overflowY="auto">
-      {plants.map((plant, idx) => (
+      {plants.map((plant) => (
         <Tabs.Tab
-          key={idx}
+          key={plant}
           selected={plant === selectedPlant}
           onClick={() => setSelectedPlant(plant)}
         >

@@ -132,7 +132,7 @@ const AnnouncementColor = (props) => {
     <Section title="Set announcement color" textAlign="center">
       <Dropdown
         width="100%"
-        selected={announcement_color}
+        displayText={announcement_color}
         options={announcement_colors}
         onSelected={(value) =>
           act('update_announcement_color', {
@@ -156,7 +156,7 @@ const AnnouncementSound = (props) => {
         {`
       #announcement-sound-container div:last-child {
         width: 100%;
-        flexGrow: true;
+        flex-grow: true;
       }
     `}
       </style>
@@ -172,7 +172,7 @@ const AnnouncementSound = (props) => {
         />
         <Dropdown
           width="100%"
-          selected={played_sound}
+          displayText={played_sound}
           options={announcer_sounds}
           onSelected={(value) =>
             act('set_report_sound', {
@@ -219,7 +219,6 @@ const ReportText = (props) => {
       <TextArea
         height="200px"
         mb={1}
-        width="100%"
         onInput={(_, value) => setCommandReport(value)}
         value={commandReport}
       />
@@ -229,7 +228,7 @@ const ReportText = (props) => {
             <Button.Checkbox
               fluid
               width="100%"
-              checked={!!announce_contents}
+              checked={announce_contents}
               onClick={() => act('toggle_announce')}
             >
               Announce Contents
@@ -251,7 +250,7 @@ const ReportText = (props) => {
             <Button.Checkbox
               fluid
               width="100%"
-              checked={!!print_report || !announce_contents}
+              checked={print_report || !announce_contents}
               disabled={!announce_contents}
               onClick={() => act('toggle_printing')}
               tooltip={

@@ -1,3 +1,10 @@
+@use 'sass:color';
+@use '../base';
+@use '../colors';
+@use '../functions';
+
+$background-color: base.$color-bg !default;
+
 .NtosNotepad__layout {
   display: flex;
   flex-direction: column;
@@ -8,24 +15,20 @@
   display: inline-block;
   text-align: center;
   width: 100%;
-  font-family: var(--font-family-mono);
-  font-size: 2rem;
+  font-family: Consolas, monospace;
+  font-size: base.em(26px);
 }
 
 .NtosNotepad__AboutDialog__text {
   display: flex;
   flex-direction: column;
-  font-size: 1rem;
+  font-size: base.em(12px);
 }
 
 .NtosNotepad__textarea {
-  background-color: var(--color-section);
+  background-color: base.$color-bg-section;
   height: 100%;
-  resize: none;
-  color: inherit;
-  outline: none;
-  width: 100%;
-  font-family: var(--font-family-mono);
+  overflow-y: scroll;
 }
 
 .NtosNotepad__StatusBar {
@@ -37,7 +40,7 @@
 
 .NtosNotepad__StatusBar__entry {
   display: block;
-  border-left: var(--color-thickness-tiny) solid var(--color-border-dark);
-  padding-left: var(--space-xl);
-  padding-right: var(--space-s);
+  border-left: 1px solid base.$color-bg-section;
+  padding-left: 1rem;
+  padding-right: 0.2rem;
 }

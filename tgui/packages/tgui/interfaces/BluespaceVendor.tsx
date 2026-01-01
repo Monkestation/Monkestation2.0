@@ -10,8 +10,8 @@ import {
   ProgressBar,
   Section,
   Stack,
-  Table,
 } from '../components';
+import { Table, TableCell, TableRow } from '../components/Table';
 import { getGasColor } from '../constants';
 import { Window } from '../layouts';
 
@@ -133,19 +133,19 @@ export const BluespaceVendor = (props) => {
             >
               <Table>
                 <thead>
-                  <Table.Row>
-                    <Table.Cell collapsing bold>
+                  <TableRow>
+                    <TableCell collapsing bold>
                       Gas
-                    </Table.Cell>
-                    <Table.Cell bold collapsing>
+                    </TableCell>
+                    <TableCell bold collapsing>
                       Price
-                    </Table.Cell>
-                    <Table.Cell bold>Total</Table.Cell>
-                    <Table.Cell bold collapsing textAlign="right">
+                    </TableCell>
+                    <TableCell bold>Total</TableCell>
+                    <TableCell bold collapsing textAlign="right">
                       Moles
-                    </Table.Cell>
-                    <Table.Cell bold collapsing />
-                  </Table.Row>
+                    </TableCell>
+                    <TableCell bold collapsing />
+                  </TableRow>
                 </thead>
                 <tbody>
                   {gases.map((gas, index) => (
@@ -170,25 +170,25 @@ const GasDisplay = (props: GasDisplayProps) => {
   } = props;
 
   return (
-    <Table.Row className="candystripe" height={2}>
-      <Table.Cell collapsing color="label">
+    <TableRow className="candystripe" height={2}>
+      <TableCell collapsing color="label">
         {name}
-      </Table.Cell>
-      <Table.Cell color="yellow" collapsing textAlign="right">
+      </TableCell>
+      <TableCell color="yellow" collapsing textAlign="right">
         {price} cr
-      </Table.Cell>
-      <Table.Cell>
+      </TableCell>
+      <TableCell>
         <ProgressBar
           color={getGasColor(id)}
           value={amount}
           minValue={0}
           maxValue={gasMax}
         />
-      </Table.Cell>
-      <Table.Cell collapsing color="label" textAlign="right">
+      </TableCell>
+      <TableCell collapsing color="label" textAlign="right">
         {toFixed(amount, 2)}
-      </Table.Cell>
-      <Table.Cell collapsing textAlign="center">
+      </TableCell>
+      <TableCell collapsing textAlign="center">
         {(!pumping && selected_gas !== id && (
           <Button
             icon="play"
@@ -214,7 +214,7 @@ const GasDisplay = (props: GasDisplayProps) => {
             }
           />
         )}
-      </Table.Cell>
-    </Table.Row>
+      </TableCell>
+    </TableRow>
   );
 };

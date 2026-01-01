@@ -9,6 +9,7 @@ import {
   NumberInput,
   Dropdown,
 } from '../components';
+import { ButtonCheckbox } from '../components/Button';
 
 export const AnimateHolder = (props) => {
   const { act, data } = useBackend();
@@ -56,7 +57,7 @@ const AnimateSteps = (props) => {
               return (
                 <LabeledList.Item key={name} label={name.toUpperCase()}>
                   {type === 'number' ? (
-                    <Button.Checkbox
+                    <ButtonCheckbox
                       checked={isRandom}
                       onClick={() =>
                         act('modify_rand_state', {
@@ -66,7 +67,7 @@ const AnimateSteps = (props) => {
                       }
                     >
                       RANDOM
-                    </Button.Checkbox>
+                    </ButtonCheckbox>
                   ) : null}
                   {isRandom ? (
                     <div>
@@ -129,7 +130,7 @@ const AnimateSteps = (props) => {
             })}
             <LabeledList.Item label={'Easing'}>
               {Object.entries(easings[index]).map(([key, value]) => (
-                <Button.Checkbox
+                <ButtonCheckbox
                   key={key}
                   checked={value}
                   onClick={() =>
@@ -141,7 +142,7 @@ const AnimateSteps = (props) => {
                   }
                 >
                   {key}
-                </Button.Checkbox>
+                </ButtonCheckbox>
               ))}
             </LabeledList.Item>
             <LabeledList.Item label={'Transform'}>
@@ -198,7 +199,7 @@ export const Transform = (props) => {
 
   return (
     <Section>
-      <Button.Checkbox
+      <ButtonCheckbox
         checked={isRandom}
         onClick={() =>
           act('modify_rand_state', {
@@ -208,7 +209,7 @@ export const Transform = (props) => {
         }
       >
         RANDOM
-      </Button.Checkbox>
+      </ButtonCheckbox>
       <Dropdown
         options={types}
         displayText={transformType ? returnString(transformType) : 'None'}

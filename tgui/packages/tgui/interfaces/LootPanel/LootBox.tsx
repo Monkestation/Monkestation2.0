@@ -61,7 +61,7 @@ export const LootBox = (props: Props) => {
         <Stack.Item
           lineHeight="34px"
           overflow="hidden"
-          style={{ textOverflow: 'ellipsis' }}
+          style={{ 'text-overflow': 'ellipsis' }}
         >
           {!is_blind && name}
         </Stack.Item>

@@ -1,4 +1,4 @@
-import { Dropdown } from '../../components';
+import { Dropdown, Icon } from '../../components';
 import { RandomSetting } from './data';
 
 export const RandomizationButton = (props: {
@@ -26,8 +26,8 @@ export const RandomizationButton = (props: {
     <Dropdown
       backgroundColor={color}
       {...dropdownProps}
-      icon="dice-d20"
-      selected="None"
+      clipSelectedText={false}
+      displayText={<Icon name="dice-d20" mr="-0.25em" />}
       options={[
         {
           displayText: 'Do not randomize',
@@ -44,9 +44,9 @@ export const RandomizationButton = (props: {
           value: RandomSetting.AntagOnly,
         },
       ]}
-      iconOnly
+      nochevron
       onSelected={setValue}
-      menuWidth="max-content"
+      menuWidth="120px"
       width="auto"
     />
   );

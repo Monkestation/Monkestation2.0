@@ -9,7 +9,6 @@ import {
   LabeledList,
   Table,
   Tooltip,
-  Stack,
 } from '../components';
 import { sortBy } from 'common/collections';
 
@@ -122,6 +121,10 @@ export const ExperimentConfigure = (props) => {
     }
   });
 
+  // MONKESTATION NOTE(react): (?) The experiments section was broken on 516 - specifically,
+  // something prevented the scrollbar in the experiment section from appearing, until the
+  // `scrollable` and `fill` attributes were added. When porting to react, see if the UI still works
+  // when removing them.
   return (
     <Window width={600} height={735}>
       <Window.Content>
@@ -141,7 +144,12 @@ export const ExperimentConfigure = (props) => {
           </Flex.Item>
           <Flex.Item mb={has_start_callback ? 1 : 0} grow={1}>
             {techwebs.some((e) => e.selected) && (
-              <Section title="Experiments" scrollable fill>
+              <Section
+                title="Experiments"
+                className="ExperimentConfigure__ExperimentsContainer"
+                scrollable // MONKESTATION ADDITION: See note(react) above
+                fill // MONKESTATION ADDITION: See note(react) above
+              >
                 <Flex.Item mb={1}>
                   {(experiments.length &&
                     always_active &&
@@ -194,24 +202,22 @@ export const Experiment = (props) => {
             : act('select_experiment', { ref: ref })
         }
         backgroundColor={selected ? 'good' : '#40628a'}
-        bold
-        style={{ borderRadius: 0 }}
+        className="ExperimentConfigure__ExperimentName"
       >
-        <Stack align="center" justify="space-between">
-          <Stack.Item color="white">{name}</Stack.Item>
-          <Stack.Item color="rgba(255, 255, 255, 0.5)">
-            <Stack>
-              <Stack.Item grow>{tag}</Stack.Item>
-              <Stack.Item>
-                <Tooltip content={performance_hint} position="bottom-start">
-                  <Icon name="question-circle" mx={0.5} />
-                </Tooltip>
-              </Stack.Item>
-            </Stack>
-          </Stack.Item>
-        </Stack>
+        <Flex align="center" justify="space-between">
+          <Flex.Item color={'white'}>{name}</Flex.Item>
+          <Flex.Item color={'rgba(255, 255, 255, 0.5)'}>
+            <Box className="ExperimentConfigure__TagContainer">
+              {tag}
+              <Tooltip content={performance_hint} position="bottom-start">
+                <Icon name="question-circle" mx={0.5} />
+                <Box className="ExperimentConfigure__PerformanceHint" />
+              </Tooltip>
+            </Box>
+          </Flex.Item>
+        </Flex>
       </Button>
-      <Box className="ExperimentConfigure__ExperimentContent">
+      <Box className={'ExperimentConfigure__ExperimentContent'}>
         <Box mb={1}>{description}</Box>
         {props.children}
         <ExperimentStages>{progress}</ExperimentStages>

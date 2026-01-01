@@ -77,8 +77,8 @@ const ApprenticeSelection = (props) => {
               <img
                 src={resolveAsset(assetName)}
                 style={{
-                  borderStyle: 'solid',
-                  borderColor: '#7e90a7',
+                  'border-style': 'solid',
+                  'border-color': '#7e90a7',
                 }}
               />
             </Stack.Item>

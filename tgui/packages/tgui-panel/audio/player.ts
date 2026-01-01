@@ -71,7 +71,11 @@ export class AudioPlayer {
       });
     }
 
-    audio.play()?.catch((error) => logger.log('playback error', error));
+    if (!Byond.TRIDENT) {
+      audio.play()?.catch((error) => logger.log('playback error', error));
+    } else {
+      audio.play();
+    }
 
     this.onPlaySubscribers.forEach((subscriber) => subscriber());
   }
