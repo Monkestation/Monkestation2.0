@@ -153,7 +153,7 @@ export const NameInput = (props: { openMultiNameInput: () => void }) => {
           </Stack.Item>
         </Stack>
       </Stack.Item>
-      <Stack.Item>
+      <Stack.Item position="absolute" right="-26px" top="2px">
         {/* We only know other names when the server tells us */}
         <ServerPreferencesFetcher
           render={(data) =>
