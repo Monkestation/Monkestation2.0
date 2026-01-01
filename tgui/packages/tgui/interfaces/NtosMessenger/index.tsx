@@ -170,7 +170,7 @@ const ContactsScreen = (props: any) => {
             </Box>
             <Divider hidden />
             {/* First row of buttons */}
-            <Stack fill mt={0.5} mb={0.5}>
+            <Stack fill mt={0.5}>
               <Stack.Item grow>
                 <Button
                   fluid
@@ -230,7 +230,7 @@ const ContactsScreen = (props: any) => {
               </Stack.Item>
             </Stack>
             {/* Third row */}
-            <Stack fill mt={0.5} mb={0.5}>
+            <Stack fill mt={0.5}>
               <Stack.Item grow>
                 <Button
                   fluid
@@ -252,7 +252,7 @@ const ContactsScreen = (props: any) => {
               )}
             </Stack>
           </Stack>
-          <Stack justify="space-between">
+          <Stack justify="space-between" mt={0.5}>
             <Box m={0.5}>
               <Icon name="magnifying-glass" mr={0.5} />
               Search For User

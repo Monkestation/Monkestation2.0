@@ -2,6 +2,8 @@
 @use '../colors';
 
 [class^='NoticeBox--color--'],
-[class*=' NoticeBox--color--'] {
+[class*=' NoticeBox--color--'],
+[class^='NoticeBox--type--'],
+[class*=' NoticeBox--type--'] {
   --notice-box-color: #fff;
 }

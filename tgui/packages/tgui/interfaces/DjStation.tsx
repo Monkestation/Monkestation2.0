@@ -210,16 +210,16 @@ const AvailableTracks = ({
       {songs.map((song, i) => (
         <Stack.Item key={i}>
           <Stack>
-            <Stack.Item grow>
+            <Stack.Item grow style={{ minWidth: 0 }}>
               <Button
                 fluid
                 icon="play"
                 selected={currentSong?.name === song.name}
                 onClick={() => act('set_track', { index: i })}
                 style={{
-                  whiteSpace: 'nowrap',
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap!important',
+                  overflow: 'hidden!important',
+                  textOverflow: 'ellipsis!important',
                 }}
                 tooltip={song.name.length > 48 ? song.name : undefined}
               >
