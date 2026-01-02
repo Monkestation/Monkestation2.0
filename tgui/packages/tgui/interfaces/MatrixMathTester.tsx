@@ -9,9 +9,8 @@ const MatrixMathTesterInput = (props: { value: number; varName: string }) => {
     <NumberInput
       value={props.value}
       step={0.005}
-      infinity
       format={(value) => toFixed(value, 3)}
-      width={'100%'}
+      width="100%"
       onChange={(value) =>
         act('change_var', { var_name: props.varName, var_value: value })
       }
@@ -65,7 +64,7 @@ export const MatrixMathTester = (props) => {
                 <MatrixMathTesterInput value={matrix_d} varName="d" />
               </Table.Cell>
               <Table.Cell>
-                <Input disabled placeholder="0 (fixed value)" width={'100%'} />
+                <Input disabled placeholder="0 (fixed value)" width="100%" />
               </Table.Cell>
             </Table.Row>
             <Table.Row>
@@ -76,7 +75,7 @@ export const MatrixMathTester = (props) => {
                 <MatrixMathTesterInput value={matrix_e} varName="e" />
               </Table.Cell>
               <Table.Cell>
-                <Input disabled placeholder="0 (fixed value)" width={'100%'} />
+                <Input disabled placeholder="0 (fixed value)" width="100%" />
               </Table.Cell>
             </Table.Row>
             <Table.Row>
@@ -87,7 +86,7 @@ export const MatrixMathTester = (props) => {
                 <MatrixMathTesterInput value={matrix_f} varName="f" />
               </Table.Cell>
               <Table.Cell>
-                <Input disabled placeholder="1 (fixed value)" width={'100%'} />
+                <Input disabled placeholder="1 (fixed value)" width="100%" />
               </Table.Cell>
             </Table.Row>
           </Table>
@@ -101,7 +100,7 @@ export const MatrixMathTester = (props) => {
               <Table.Cell>
                 <Button
                   icon={'up-right-and-down-left-from-center'}
-                  width={'100%'}
+                  width="100%"
                   onClick={() => act('scale', { x: scaleX, y: scaleY })}
                 >
                   Scale
@@ -111,9 +110,8 @@ export const MatrixMathTester = (props) => {
                 <NumberInput
                   value={scaleX}
                   step={0.05}
-                  infinity
                   format={(value) => toFixed(value, 2)}
-                  width={'100%'}
+                  width="100%"
                   onChange={(value) => setScaleX(value)}
                 />
               </Table.Cell>
@@ -121,9 +119,8 @@ export const MatrixMathTester = (props) => {
                 <NumberInput
                   value={scaleY}
                   step={0.05}
-                  infinity
                   format={(value) => toFixed(value, 2)}
-                  width={'100%'}
+                  width="100%"
                   onChange={(value) => setScaleY(value)}
                 />
               </Table.Cell>
@@ -132,7 +129,7 @@ export const MatrixMathTester = (props) => {
               <Table.Cell>
                 <Button
                   icon={'arrow-right'}
-                  width={'100%'}
+                  width="100%"
                   onClick={() =>
                     act('translate', { x: translateX, y: translateY })
                   }
@@ -144,9 +141,8 @@ export const MatrixMathTester = (props) => {
                 <NumberInput
                   value={translateX}
                   step={1}
-                  infinity
                   format={(value) => toFixed(value, 0)}
-                  width={'100%'}
+                  width="100%"
                   onChange={(value) => setTranslateX(value)}
                 />
               </Table.Cell>
@@ -154,9 +150,8 @@ export const MatrixMathTester = (props) => {
                 <NumberInput
                   value={translateY}
                   step={1}
-                  infinity
                   format={(value) => toFixed(value, 0)}
-                  width={'100%'}
+                  width="100%"
                   onChange={(value) => setTranslateY(value)}
                 />
               </Table.Cell>
@@ -165,7 +160,7 @@ export const MatrixMathTester = (props) => {
               <Table.Cell>
                 <Button
                   icon={'maximize'}
-                  width={'100%'}
+                  width="100%"
                   onClick={() => act('shear', { x: shearX, y: shearY })}
                 >
                   Shear
@@ -175,9 +170,8 @@ export const MatrixMathTester = (props) => {
                 <NumberInput
                   value={shearX}
                   step={0.005}
-                  infinity
                   format={(value) => toFixed(value, 3)}
-                  width={'100%'}
+                  width="100%"
                   onChange={(value) => setShearX(value)}
                 />
               </Table.Cell>
@@ -185,9 +179,8 @@ export const MatrixMathTester = (props) => {
                 <NumberInput
                   value={shearY}
                   step={0.005}
-                  infinity
                   format={(value) => toFixed(value, 3)}
-                  width={'100%'}
+                  width="100%"
                   onChange={(value) => setShearY(value)}
                 />
               </Table.Cell>
@@ -196,7 +189,7 @@ export const MatrixMathTester = (props) => {
               <Table.Cell>
                 <Button
                   icon={'rotate-right'}
-                  width={'100%'}
+                  width="100%"
                   onClick={() => act('turn', { angle: angle })}
                 >
                   Rotate
@@ -209,7 +202,7 @@ export const MatrixMathTester = (props) => {
                   maxValue={360}
                   minValue={-360}
                   format={(value) => toFixed(value, 1)}
-                  width={'100%'}
+                  width="100%"
                   onChange={(value) => setAngle(value)}
                 />
               </Table.Cell>
@@ -220,7 +213,7 @@ export const MatrixMathTester = (props) => {
                   selected={pixelated}
                   tooltip={'Pixel Enhanced Transforming'}
                   tooltipPosition={'bottom'}
-                  width={'100%'}
+                  width="100%"
                   onClick={() => act('toggle_pixel')}
                 >
                   PET

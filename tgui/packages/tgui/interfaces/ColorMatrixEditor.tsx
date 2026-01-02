@@ -45,7 +45,6 @@ export const ColorMatrixEditor = (props) => {
                                 step={0.01}
                                 width="50px"
                                 format={(value) => toFixed(value, 2)}
-                                infinity
                                 onChange={(value) => {
                                   let retColor = currentColor;
                                   retColor[row * 4 + col] = value;

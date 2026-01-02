@@ -41,7 +41,6 @@ export const EntryFloat = (props: EntryFloatProps) => {
         animated
         value={float}
         minValue={0}
-        maxValueInfinity
         step={1}
         onChange={(value) =>
           act('edit', {
@@ -68,7 +67,6 @@ export const EntryCoord = (props: EntryCoordProps) => {
       <NumberInput
         animated
         value={coord?.[0] || 0}
-        infinity
         step={1}
         onChange={(value) =>
           act('edit', {
@@ -80,7 +78,6 @@ export const EntryCoord = (props: EntryCoordProps) => {
       <NumberInput
         animated
         value={coord?.[1] || 0}
-        infinity
         step={1}
         onChange={(value) =>
           act('edit', {
@@ -93,7 +90,6 @@ export const EntryCoord = (props: EntryCoordProps) => {
         animated
         value={coord?.[2] || 0}
         step={1}
-        minValueInfinity
         maxValue={1}
         onChange={(value) =>
           act('edit', {

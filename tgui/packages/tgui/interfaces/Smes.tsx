@@ -117,7 +117,7 @@ export const Smes = () => {
                     stepPixelSize={4}
                     format={(value) => formatPower(value * POWER_MUL, 1)}
                     tickWhileDragging
-                    onChange={(value) =>
+                    onChange={(e, value) =>
                       act('input', {
                         target: value * POWER_MUL,
                       })
@@ -204,7 +204,7 @@ export const Smes = () => {
                     stepPixelSize={4}
                     format={(value) => formatPower(value * POWER_MUL, 1)}
                     tickWhileDragging
-                    onChange={(value) =>
+                    onChange={(e, value) =>
                       act('output', {
                         target: value * POWER_MUL,
                       })
