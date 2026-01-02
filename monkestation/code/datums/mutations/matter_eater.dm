@@ -56,7 +56,7 @@
 	/// Stuff matter eater cannot eat
 	var/list/blacklisted_edibles = list()
 
-	var/list/indestructible__exempt = list(
+	var/list/edibles_exempt = list(
 		/obj/machinery/power/supermatter_crystal,
 	)
 
@@ -120,7 +120,7 @@
 		owner.balloon_alert(owner, "gross")
 		return . | SPELL_CANCEL_CAST
 
-	if((cast_on.resistance_flags & INDESTRUCTIBLE) && !is_type_in_typecache(cast_on.type, typecacheof(indestructible__exempt)))
+	if(((cast_on.resistance_flags & INDESTRUCTIBLE) || HAS_TRAIT(cast_on, TRAIT_NODROP)) && !is_type_in_typecache(cast_on.type, typecacheof(edibles_exempt)))
 		owner.balloon_alert(owner, "impossible to eat!")
 		return . | SPELL_CANCEL_CAST
 
