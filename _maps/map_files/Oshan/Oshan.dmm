@@ -16131,6 +16131,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
+/obj/structure/detectiveboard/directional/west,
 /turf/open/floor/carpet/grimey,
 /area/station/security/detectives_office)
 "ffT" = (

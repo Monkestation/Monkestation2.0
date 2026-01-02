@@ -7285,9 +7285,9 @@
 /area/station/engineering/atmos/hfr_room)
 "ciS" = (
 /obj/structure/chair/office,
-/obj/item/radio/intercom/directional/west,
 /obj/machinery/light/warm/directional/west,
 /obj/effect/landmark/start/detective,
+/obj/structure/detectiveboard/directional/west,
 /turf/open/floor/wood/parquet,
 /area/station/security/detectives_office)
 "ciW" = (
@@ -53324,6 +53324,7 @@
 /obj/item/hand_labeler{
 	pixel_x = 6
 	},
+/obj/item/radio/intercom/directional/west,
 /turf/open/floor/wood/parquet,
 /area/station/security/detectives_office)
 "pGv" = (

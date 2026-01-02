@@ -19360,11 +19360,11 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
-/obj/structure/noticeboard/directional/east,
 /obj/machinery/camera/directional/east{
 	c_tag = "Detective's Office";
 	name = "detective camera"
 	},
+/obj/machinery/newscaster/directional/east,
 /turf/open/floor/wood,
 /area/station/security/detectives_office)
 "gdW" = (
@@ -57041,7 +57041,7 @@
 /area/station/ai_monitored/command/storage/satellite)
 "rRx" = (
 /obj/machinery/computer/records/medical,
-/obj/machinery/newscaster/directional/north,
+/obj/structure/detectiveboard/directional/north,
 /turf/open/floor/wood,
 /area/station/security/detectives_office)
 "rRz" = (
