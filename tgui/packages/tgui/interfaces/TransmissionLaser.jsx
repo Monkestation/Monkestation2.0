@@ -123,7 +123,7 @@ const InputControls = (props) => {
           minValue={0}
           maxValue={999}
           value={input_number}
-          onChange={(set_input) => act('set_input', { set_input })}
+          onDrag={(_e, set_input) => act('set_input', { set_input })}
         />
         <Button
           content={'W'}
@@ -237,7 +237,7 @@ const OutputControls = (props) => {
           maxValue={999}
           ranges={{ bad: [-Infinity, -1] }}
           value={output_number}
-          onChange={(set_output) => act('set_output', { set_output })}
+          onChange={(_e, set_output) => act('set_output', { set_output })}
         />
         <Button
           content={'MW'}

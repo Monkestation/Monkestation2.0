@@ -94,7 +94,7 @@ const ComboKnob = (props: ComboProps) => {
         maxValue={maxValue}
         step={step}
         stepPixelSize={1}
-        onChange={(v) => act(parameter, { [parameter]: v })}
+        onChange={(_, v) => act(parameter, { [parameter]: v })}
         {...rest}
       />
       <Button
@@ -239,8 +239,7 @@ export const HypertorusWasteRemove = (props) => {
             unit="mol/s"
             minValue={5}
             maxValue={200}
-            step={1}
-            onChange={(value) =>
+            onDrag={(e, value) =>
               act('mod_filtering_rate', {
                 mod_filtering_rate: value,
               })

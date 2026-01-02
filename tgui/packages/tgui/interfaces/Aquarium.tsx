@@ -32,7 +32,8 @@ export const Aquarium = (props) => {
           <LabeledControls>
             <LabeledControls.Item label="Temperature">
               <Knob
-                size={1.25}
+                mt={3}
+                size={1.5}
                 mb={1}
                 value={temperature}
                 unit="K"
@@ -40,7 +41,7 @@ export const Aquarium = (props) => {
                 maxValue={maxTemperature}
                 step={1}
                 stepPixelSize={1}
-                onChange={(value) =>
+                onChange={(_, value) =>
                   act('temperature', {
                     temperature: value,
                   })

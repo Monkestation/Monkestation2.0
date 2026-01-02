@@ -1155,7 +1155,7 @@ const DelayHelper = (props) => {
                 ? 'orange'
                 : 'default'
             }
-            onChange={(value) => {
+            onChange={(_e, value) => {
               act('editTiming', {
                 timer: '' + (i + 1),
                 value: Math.max(value, 0),
