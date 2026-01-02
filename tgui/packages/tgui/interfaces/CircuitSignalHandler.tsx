@@ -92,7 +92,7 @@ export class CircuitSignalHandler extends Component<
                             responseList.splice(index, 1);
                             this.setState({ parameterList });
                           }}
-                          onEnter={(e, value) => {
+                          onEnter={(value) => {
                             const param = responseList[index];
                             param.name = value;
                             this.setState({ parameterList });
@@ -141,7 +141,7 @@ export class CircuitSignalHandler extends Component<
                             param.datatype = type;
                             this.setState({ parameterList });
                           }}
-                          onEnter={(e, value) => {
+                          onEnter={(value) => {
                             const param = parameterList[index];
                             param.name = value;
                             this.setState({ parameterList });

@@ -181,7 +181,7 @@ export const NtosNetChat = (props) => {
                   fluid
                   selfClear
                   mt={1}
-                  onEnter={(e, value) =>
+                  onEnter={(value) =>
                     act('PRG_speak', {
                       message: value,
                     })
