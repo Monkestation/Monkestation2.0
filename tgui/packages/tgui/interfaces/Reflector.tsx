@@ -19,7 +19,7 @@ export const Reflector = (props) => {
   const { act, data } = useBackend<Data>();
   const { reflector_name, rotation_angle } = data;
   return (
-    <Window title={reflector_name} height={200} width={219}>
+    <Window title={reflector_name} height={215} width={235}>
       <Window.Content>
         <Stack>
           <Stack.Item>
@@ -139,13 +139,14 @@ export const Reflector = (props) => {
           <Stack>
             <Section title="Angle" textAlign="center" fill>
               <LabeledControls>
-                <LabeledControls.Item ml={0.5} label="Set rotation">
+                <LabeledControls.Item ml={1.5}>
                   <NumberInput
                     value={rotation_angle}
                     unit="degrees"
                     minValue={0}
                     maxValue={359}
                     step={1}
+                    width="100%"
                     stepPixelSize={1}
                     onDrag={(e, value) =>
                       act('rotate', {
@@ -155,7 +156,7 @@ export const Reflector = (props) => {
                   />
                 </LabeledControls.Item>
               </LabeledControls>
-              <Stack fill>
+              <Stack fill my={1}>
                 <Stack fill vertical>
                   <Stack.Item>
                     <Button

@@ -22,7 +22,7 @@ export const MultilineText = (
       height={props.box_height || '36px'}
       value={props.value}
       maxLength={props.serverData.maximum_length || 1024}
-      onChange={(_, new_value) => {
+      onChange={(new_value) => {
         props.handleSetValue(new_value);
       }}
     />

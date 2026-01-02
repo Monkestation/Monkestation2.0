@@ -26,12 +26,14 @@ import {
   Image,
   ImageButton,
   InfinitePlane,
+  Input,
   Interactive,
   LabeledControls,
   LabeledList,
   MenuBar,
   Modal,
   NoticeBox,
+  // NumberInput,
   Pointer,
   Popper,
   Slider,
@@ -43,6 +45,7 @@ import {
   StyleableSection,
   Table,
   Tabs,
+  TextArea,
   TimeDisplay,
   Tooltip,
   TrackOutsideClicks,
@@ -70,12 +73,14 @@ export {
   Image,
   ImageButton,
   InfinitePlane,
+  Input,
   Interactive,
   LabeledControls,
   LabeledList,
   MenuBar,
   Modal,
   NoticeBox,
+  // NumberInput,
   Pointer,
   Popper,
   ProgressBar,
@@ -87,14 +92,13 @@ export {
   StyleableSection,
   Table,
   Tabs,
+  TextArea,
   TimeDisplay,
   Tooltip,
   TrackOutsideClicks,
 };
 
 export { Knob } from './Knob';
-export { Input } from './Input';
 export { KeyListener } from './KeyListener';
-export { NumberInput } from './NumberInput';
-export { TextArea } from './TextArea';
 export { Button } from './Button';
+export { NumberInput } from './NumberInput';
