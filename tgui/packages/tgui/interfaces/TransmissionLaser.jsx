@@ -123,7 +123,7 @@ const InputControls = (props) => {
           minValue={0}
           maxValue={999}
           value={input_number}
-          onDrag={(_e, set_input) => act('set_input', { set_input })}
+          onChange={(_e, set_input) => act('set_input', { set_input })}
         />
         <Button
           content={'W'}
