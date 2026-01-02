@@ -92,7 +92,6 @@ export {
   TrackOutsideClicks,
 };
 
-export { Grid } from './Grid';
 export { Knob } from './Knob';
 export { Input } from './Input';
 export { KeyListener } from './KeyListener';
