@@ -202,7 +202,6 @@ type EntryProps = {
 const Entry = (props: EntryProps) => {
   const {
     onRemove,
-    onEnter,
     onSetOption,
     name,
     current_option,
@@ -217,7 +216,7 @@ const Entry = (props: EntryProps) => {
           <Input
             placeholder="Name"
             value={name}
-            onChange={(value) => onEnter(value)}
+            onChange={(value) => props.onEnter(value)}
             fluid
           />
         </Stack.Item>

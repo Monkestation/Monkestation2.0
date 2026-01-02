@@ -18,6 +18,7 @@ import {
 } from '../components';
 import { Window } from '../layouts';
 import { sanitizeText } from '../sanitize';
+import { useState } from 'react';
 
 export const LibraryConsole = (props) => {
   const { act, data } = useBackend();
@@ -893,6 +894,8 @@ export const PageSelect = (props) => {
     return null;
   }
 
+  const [inputText, setInputText] = useState('');
+
   return (
     <Stack>
       <Stack.Item>
@@ -912,11 +915,12 @@ export const PageSelect = (props) => {
       <Stack.Item>
         <Input
           placeholder={current_page + '/' + page_count}
+          value={input}
           onChange={(value) => {
             // I am so sorry
             if (value !== '') {
               call_on_change(value);
-              e.target.value = null;
+              setInputText('');
             }
           }}
         />

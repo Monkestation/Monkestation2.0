@@ -51,7 +51,7 @@ const GasSearchBar = (props: {
   activeInput: boolean;
   setActiveInput: (toggle: boolean) => void;
 }) => {
-  const { title, onChange, activeInput, setActiveInput } = props;
+  const { title, activeInput, setActiveInput } = props;
   return (
     <Flex align="center">
       <Flex.Item grow>
@@ -60,7 +60,7 @@ const GasSearchBar = (props: {
             fluid
             onChange={(value) => {
               setActiveInput(false);
-              onChange(value);
+              props.onChange(value);
             }}
           />
         ) : (

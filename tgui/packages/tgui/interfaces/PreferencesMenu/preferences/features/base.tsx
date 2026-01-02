@@ -99,7 +99,7 @@ export const TextInput = (props: FeatureValueProps<string, string>) => {
   return (
     <Input
       value={props.value}
-      onInput={(_, newValue) => props.handleSetValue(newValue)}
+      onChange={(newValue) => props.handleSetValue(newValue)}
       width="100%"
     />
   );

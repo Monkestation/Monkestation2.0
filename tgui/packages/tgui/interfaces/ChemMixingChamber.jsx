@@ -98,7 +98,7 @@ export const ChemMixingChamber = (props) => {
                         fluid
                         value=""
                         placeholder="Reagent Name"
-                        onInput={(e, value) => setReagentName(value)}
+                        onChange={(value) => setReagentName(value)}
                       />
                     </Stack.Item>
                     <Stack.Item>

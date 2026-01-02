@@ -116,6 +116,7 @@ export const NtosNtRepContent = (props) => {
           <Stack.Item mb={1} grow>
             <TextArea
               height="100%"
+              fluid
               placeholder="Leave your review/thoughts/comments..."
               maxLength={max_length}
               value={comment}

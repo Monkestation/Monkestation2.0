@@ -115,7 +115,7 @@ const AnimateSteps = (props) => {
                     <Input
                       value={step[name] !== undefined ? step[name] : ''}
                       width="90px"
-                      onInput={(e, value) =>
+                      onChange={(value) =>
                         act('modify_step', {
                           variable: name,
                           value: value,

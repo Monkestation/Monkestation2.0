@@ -314,7 +314,7 @@ class NotePadTextArea extends Component<NotePadTextAreaProps> {
     return (
       <TextArea
         ref={this.innerRef}
-        onInput={(_, value) => setText(value)}
+        onChange={(value) => setText(value)}
         className={'NtosNotepad__textarea'}
         value={text}
       />

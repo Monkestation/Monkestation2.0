@@ -169,7 +169,7 @@ const CrimeDisplay = ({ item }: { item: Crime }) => {
               fluid
               maxLength={25}
               onEscape={() => setEditing(false)}
-              onEnter={(event, value) => {
+              onEnter={(value) => {
                 setEditing(false);
                 act('edit_crime', {
                   crew_ref: crew_ref,
@@ -184,7 +184,7 @@ const CrimeDisplay = ({ item }: { item: Crime }) => {
               maxLength={1025}
               mt={1}
               onEscape={() => setEditing(false)}
-              onEnter={(event, value) => {
+              onEnter={(value) => {
                 setEditing(false);
                 act('edit_crime', {
                   crew_ref: crew_ref,

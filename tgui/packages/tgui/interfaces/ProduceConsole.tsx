@@ -109,7 +109,7 @@ const ShoppingTab = (props) => {
                 mt={0.5}
                 placeholder="Search item..."
                 value={searchItem}
-                onInput={(e, value) => {
+                onChange={(value) => {
                   setSearchItem(value);
                 }}
                 fluid

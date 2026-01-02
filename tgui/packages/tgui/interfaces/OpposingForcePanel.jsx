@@ -256,7 +256,7 @@ export const OpposingForceTab = (props) => {
             value={backstory}
             maxLength={2000}
             width="100%"
-            onChange={(_e, value) =>
+            onChange={(value) =>
               act('set_backstory', {
                 backstory: value,
               })
@@ -671,7 +671,7 @@ export const AdminChatTab = (props) => {
           placeholder="Send a message or command using '/'"
           mt={1}
           maxLength={1024}
-          onEnter={(e, value) =>
+          onEnter={(value) =>
             act('send_message', {
               message: value,
             })

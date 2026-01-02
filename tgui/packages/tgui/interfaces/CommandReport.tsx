@@ -220,7 +220,7 @@ const ReportText = (props) => {
         height="200px"
         mb={1}
         width="100%"
-        onInput={(_, value) => setCommandReport(value)}
+        onChange={(value) => setCommandReport(value)}
         value={commandReport}
       />
       <Stack vertical>
