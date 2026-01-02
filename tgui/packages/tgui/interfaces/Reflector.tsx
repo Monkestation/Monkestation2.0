@@ -140,7 +140,7 @@ export const Reflector = () => {
             <Section title="Angle" textAlign="center" fill>
               <Stack ml={1.5}>
                 <LabeledControls>
-                  <LabeledControls.Item>
+                  <LabeledControls.Item label="Rotation">
                     <NumberInput
                       value={rotation_angle}
                       unit="degrees"
