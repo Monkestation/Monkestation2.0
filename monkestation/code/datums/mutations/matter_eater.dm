@@ -56,7 +56,19 @@
 	/// Stuff matter eater cannot eat
 	var/list/blacklisted_edibles = list()
 
-/datum/action/cooldown/spell/pointed/consumption/Destroy(force)
+	var/list/indestructible__exempt = list(
+		/obj/machinery/power/supermatter_crystal,
+	)
+
+/datum/action/cooldown/spell/pointed/consumption/Grant(mob/grant_to)
+	. = ..()
+	RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(vomit_everything))
+
+/datum/action/cooldown/spell/pointed/consumption/Remove(mob/living/remove_from)
+	. = ..()
+	UnregisterSignal(owner, COMSIG_LIVING_DEATH)
+
+/datum/action/cooldown/spell/pointed/consumption/proc/vomit_everything()
 	if(owner)
 		var/turf/owner_turf = get_turf(owner)
 		owner.visible_message(span_danger("[owner] vomits what seems to be [length(consumed_objects)] things!"))
@@ -64,7 +76,11 @@
 			clean_references(object)
 			object.forceMove(get_turf(owner_turf))
 
+/datum/action/cooldown/spell/pointed/consumption/Destroy(force)
+	vomit_everything()
+
 	consumed_objects = null
+
 	return ..()
 
 /datum/action/cooldown/spell/pointed/consumption/IsAvailable(feedback = FALSE)
@@ -104,7 +120,7 @@
 		owner.balloon_alert(owner, "gross")
 		return . | SPELL_CANCEL_CAST
 
-	if(cast_on.resistance_flags & INDESTRUCTIBLE)
+	if((cast_on.resistance_flags & INDESTRUCTIBLE) && !is_type_in_typecache(cast_on.type, typecacheof(indestructible__exempt)))
 		owner.balloon_alert(owner, "impossible to eat!")
 		return . | SPELL_CANCEL_CAST
 
@@ -483,8 +499,8 @@
 
 	if(!HAS_TRAIT(hungry_boy, TRAIT_SHOCKIMMUNE))
 		hungry_boy.visible_message(span_warning("[hungry_boy]'s body flashes and burns up from inside in blazing light!"))
-		hungry_boy.investigate_log("has been dusted by a self immolation implant.", INVESTIGATE_DEATHS)
-		hungry_boy.dust(TRUE)
+		hungry_boy.investigate_log("has been dusted by attempting to eat a supermatter.", INVESTIGATE_DEATHS)
+		hungry_boy.dust(TRUE, TRUE)
 		return EAT_FAILED
 
 	hungry_boy.visible_message(span_danger("[hungry_boy] consumes [src] whole, how is that even possible?"))
