@@ -1,0 +1,4 @@
+author: "jlsnow301, JohnFulpWillard"
+delete-after: True
+changes:
+  - bugfix: "Fixed the UIs for signalers, airlock electronics/RCDs, and clockwork slabs"

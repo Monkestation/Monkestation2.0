@@ -7,3 +7,21 @@
   - bugfix: Disallow lobby lurkers from getting roundend rewards
   grungussuss:
   - sound: writing something now produces sound
+2026-01-02:
+  Ice-Type:
+  - bugfix: Bluespace RPEDs now correctly function at range
+  JohnFulpWillard:
+  - bugfix: The character preference menu should look a little more like how it used
+      to look.
+  Kmla2:
+  - bugfix: slashers terror screech shouldn't deal over 100 stamina damage on later
+      fear stages anymore
+  - bugfix: terror screech makes people shake again
+  SirNightKnight:
+  - bugfix: fixed burn treatment medical stack items sending the can't heal alert
+      when healing burn wounds.
+  Tractor-Maam:
+  - bugfix: handheld crew monitor designs no longer print the same thing.
+  jlsnow301:
+  - bugfix: Fixed a bluescreen in emojipedia
+  - bugfix: Fixed a bluescreen in comms console

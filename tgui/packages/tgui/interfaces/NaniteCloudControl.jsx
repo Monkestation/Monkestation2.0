@@ -4,7 +4,7 @@ import {
   Box,
   Button,
   Collapsible,
-  Grid,
+  Table,
   LabeledList,
   NoticeBox,
   NumberInput,
@@ -266,9 +266,9 @@ export const NaniteProgrammerContent = (props) => {
   return (
     <Section title={name} fill scrollable>
       <Section title="Info" level={2}>
-        <Grid>
-          <Grid.Column>{desc}</Grid.Column>
-          <Grid.Column size={0.7}>
+        <Table>
+          <Table.Cell>{desc}</Table.Cell>
+          <Table.Cell size={0.7}>
             <LabeledList>
               <LabeledList.Item label="Use Rate">{use_rate}</LabeledList.Item>
               {!!can_trigger && (
@@ -282,8 +282,8 @@ export const NaniteProgrammerContent = (props) => {
                 </>
               )}
             </LabeledList>
-          </Grid.Column>
-        </Grid>
+          </Table.Cell>
+        </Table>
       </Section>
       <Section
         title="Settings"
@@ -299,14 +299,14 @@ export const NaniteProgrammerContent = (props) => {
           />
         }
       >
-        <Grid>
-          <Grid.Column>
+        <Table>
+          <Table.Cell>
             <NaniteCodes />
-          </Grid.Column>
-          <Grid.Column>
+          </Table.Cell>
+          <Table.Cell>
             <NaniteDelays />
-          </Grid.Column>
-        </Grid>
+          </Table.Cell>
+        </Table>
         {!!has_extra_settings && (
           <Section title="Special" level={3}>
             <LabeledList>
@@ -360,9 +360,9 @@ export const NaniteInfoBox = (props) => {
         </Box>
       }
     >
-      <Grid>
-        <Grid.Column mr={1}>{desc}</Grid.Column>
-        <Grid.Column size={0.5}>
+      <Table>
+        <Table.Cell mr={1}>{desc}</Table.Cell>
+        <Table.Cell size={0.5}>
           <LabeledList>
             <LabeledList.Item label="Use Rate">{use_rate}</LabeledList.Item>
             {!!can_trigger && (
@@ -376,10 +376,10 @@ export const NaniteInfoBox = (props) => {
               </>
             )}
           </LabeledList>
-        </Grid.Column>
-      </Grid>
-      <Grid>
-        <Grid.Column>
+        </Table.Cell>
+      </Table>
+      <Table>
+        <Table.Cell>
           <Section title="Codes" level={3} mr={1}>
             <LabeledList>
               <LabeledList.Item label="Activation">
@@ -396,8 +396,8 @@ export const NaniteInfoBox = (props) => {
               )}
             </LabeledList>
           </Section>
-        </Grid.Column>
-        <Grid.Column>
+        </Table.Cell>
+        <Table.Cell>
           <Section title="Delays" level={3} mr={1}>
             <LabeledList>
               <LabeledList.Item label="Restart">
@@ -418,8 +418,8 @@ export const NaniteInfoBox = (props) => {
               )}
             </LabeledList>
           </Section>
-        </Grid.Column>
-      </Grid>
+        </Table.Cell>
+      </Table>
       <Section title="Extra Settings" level={3}>
         <LabeledList>
           {extra_settings.map((setting) => {

@@ -1,7 +1,7 @@
 import { classes } from 'common/react';
 
 import { useBackend } from '../backend';
-import { Box, Button, Flex, Grid, Icon } from '../components';
+import { Box, Button, Flex, Table, Icon } from '../components';
 import { Window } from '../layouts';
 
 // This ui is so many manual overrides and !important tags
@@ -17,9 +17,9 @@ export const NukeKeypad = (props) => {
   ];
   return (
     <Box width="185px">
-      <Grid width="1px">
+      <Table width="1px">
         {keypadKeys.map((keyColumn) => (
-          <Grid.Column key={keyColumn[0]}>
+          <Table.Cell key={keyColumn[0]}>
             {keyColumn.map((key) => (
               <Button
                 fluid
@@ -39,9 +39,9 @@ export const NukeKeypad = (props) => {
                 onClick={() => act('keypad', { digit: key })}
               />
             ))}
-          </Grid.Column>
+          </Table.Cell>
         ))}
-      </Grid>
+      </Table>
     </Box>
   );
 };

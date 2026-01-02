@@ -6,8 +6,8 @@ import {
   Button,
   Section,
   Table,
+  Stack,
   Divider,
-  Grid,
   ProgressBar,
   Collapsible,
 } from '../components';
@@ -296,13 +296,13 @@ const ClockworkOverview = (props) => {
 const ClockworkOverviewStat = (props) => {
   const { title, iconName, amount, maxAmount, unit, overrideText } = props;
   return (
-    <Box height="22px" fontSize="16px">
-      <Grid>
-        <Grid.Column>
+    <Section>
+      <Stack>
+        <Stack.Item>
           <Icon name={iconName} rotation={0} spin={0} />
-        </Grid.Column>
-        <Grid.Column size="2">{title}</Grid.Column>
-        <Grid.Column size="8">
+        </Stack.Item>
+        <Stack.Item grow>{title}</Stack.Item>
+        <Stack.Item grow>
           <ProgressBar
             value={amount}
             minValue={0}
@@ -315,9 +315,9 @@ const ClockworkOverviewStat = (props) => {
           >
             {overrideText ? overrideText : amount + ' ' + unit}
           </ProgressBar>
-        </Grid.Column>
-      </Grid>
-    </Box>
+        </Stack.Item>
+      </Stack>
+    </Section>
   );
 };
 
