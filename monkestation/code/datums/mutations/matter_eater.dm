@@ -53,6 +53,9 @@
 	var/list/consumed_objects = list()
 	var/currently_eating = FALSE
 
+	/// Stuff matter eater cannot eat
+	var/list/blacklisted_edibles = list()
+
 /datum/action/cooldown/spell/pointed/consumption/Destroy(force)
 	if(owner)
 		var/turf/owner_turf = get_turf(owner)
@@ -94,51 +97,30 @@
 	if(isitem(cast_on))
 		var/obj/item/item = cast_on
 		if(item.item_flags & ABSTRACT)
-			cast_on.balloon_alert(owner, "... no.")
+			owner.balloon_alert(owner, "... no.")
 			return . | SPELL_CANCEL_CAST
 
-	if(cast_on.resistance_flags & INDESTRUCTIBLE) // Gods longest if() check
-		if(!istype(cast_on, /obj/machinery/power/supermatter_crystal) && !istype(cast_on, /obj/singularity) && !istype(cast_on, /obj/narsie) && !istype(cast_on, /obj/ratvar))
-			cast_on.balloon_alert(owner, "jaw too small!")
-			to_chat(owner, span_warning("You can't seem to unhinge your jaw enough to eat [cast_on]."))
-			return . | SPELL_CANCEL_CAST
+	if(isliving(cast_on))
+		owner.balloon_alert(owner, "gross")
+		return . | SPELL_CANCEL_CAST
+
+	if(cast_on.resistance_flags & INDESTRUCTIBLE)
+		owner.balloon_alert(owner, "impossible to eat!")
+		return . | SPELL_CANCEL_CAST
+
+	if(is_type_in_typecache(cast_on.type, typecacheof(blacklisted_edibles)))
+		owner.balloon_alert(owner, "can't eat this!")
+		to_chat(owner, span_warning("You can't seem to figure out a way to eat [cast_on]."))
+		return . | SPELL_CANCEL_CAST
 
 	if(iseffect(cast_on))
-		cast_on.balloon_alert(owner, "what even is this?")
+		owner.balloon_alert(owner, "what even is this?")
 		return . | SPELL_CANCEL_CAST
 
 	if(!isturf(owner.loc))
-		cast_on.balloon_alert(owner, "can't eat here!")
+		owner.balloon_alert(owner, "can't eat here!")
 		return . | SPELL_CANCEL_CAST
 
-	if(is_type_in_typecache(cast_on, GLOB.oilfry_blacklisted_items))
-		cast_on.balloon_alert(owner, "a[pick(list(" singularity", " supermatter", "n elder god"))] looks tastier than this.")
-		return . | SPELL_CANCEL_CAST
-
-	if(ishuman(cast_on))
-		var/mob/living/carbon/human/human_target = cast_on
-		if(owner.zone_selected == BODY_ZONE_PRECISE_GROIN)
-			var/message = pick(list("... You wouldn't.", "nope.", "better not.", "not a good idea."))
-			cast_on.balloon_alert(owner, message)
-			return . | SPELL_CANCEL_CAST
-
-		if(owner.zone_selected == BODY_ZONE_CHEST)
-			cast_on.balloon_alert(owner, "too big!")
-			return . | SPELL_CANCEL_CAST
-
-		var/obj/item/bodypart/limb = human_target.get_bodypart(owner.zone_selected)
-		if(!limb)
-			cast_on.balloon_alert(owner, "nothing there!") // Is that a reference to project m-
-			return . | SPELL_CANCEL_CAST
-
-		if(owner.zone_selected == BODY_ZONE_HEAD)
-			if(owner.pulling != cast_on)
-				cast_on.balloon_alert(owner, "need grasp!")
-				return . | SPELL_CANCEL_CAST
-
-			if(owner.grab_state != GRAB_KILL)
-				cast_on.balloon_alert(owner, "grasp too loose!")
-				return . | SPELL_CANCEL_CAST
 
 	StartCooldown()
 	return . | SPELL_NO_IMMEDIATE_COOLDOWN
@@ -497,6 +479,12 @@
 	ability.start_biting_animation(src, 1 MINUTE)
 	if(!do_after(hungry_boy, 1 MINUTE, src))
 		to_chat(hungry_boy, span_danger("You were interrupted before you could eat [src]!"))
+		return EAT_FAILED
+
+	if(!HAS_TRAIT(hungry_boy, TRAIT_SHOCKIMMUNE))
+		hungry_boy.visible_message(span_warning("[hungry_boy]'s body flashes and burns up from inside in blazing light!"))
+		hungry_boy.investigate_log("has been dusted by a self immolation implant.", INVESTIGATE_DEATHS)
+		hungry_boy.dust(TRUE)
 		return EAT_FAILED
 
 	hungry_boy.visible_message(span_danger("[hungry_boy] consumes [src] whole, how is that even possible?"))
