@@ -231,6 +231,7 @@ GLOBAL_LIST_INIT(announcer_keys, list(
 #define SFX_TREE_CHOP "tree_chop"
 #define SFX_ROCK_TAP "rock_tap"
 #define SFX_MUFFLED_SPEECH "muffspeech"
+#define SFX_WRITING_PEN "writing_pen"
 
 #define SFX_BUTTON_CLICK "button_click"
 #define SFX_BUTTON_FAIL	"button_fail"

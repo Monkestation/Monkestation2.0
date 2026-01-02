@@ -223,7 +223,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		qdel(src)
 		return
 
-	if(reagents?.has_reagent(/datum/reagent/flash_powder) >= 1)
+	if(reagents?.has_reagent(/datum/reagent/flash_powder))
 		if(!isliving(loc))
 			loc.visible_message(span_hear("\The [src] burns up!"))
 			qdel(src)
@@ -242,6 +242,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		e.start(src)
 		qdel(src)
 		return
+
 
 	// Setting the puffed pollutant to cannabis if we're smoking the space drugs reagent(obtained from cannabis)
 	if(reagents.has_reagent(/datum/reagent/drug/space_drugs))

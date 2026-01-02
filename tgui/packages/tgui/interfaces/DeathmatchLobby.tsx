@@ -12,7 +12,6 @@ import {
   Section,
   Table,
 } from '../components';
-import { ButtonCheckbox } from '../components/Button';
 import { Window } from '../layouts';
 
 type PlayerLike = {
@@ -68,7 +67,7 @@ export const DeathmatchLobby = (props) => {
                 <Table.Row>
                   <Table.Cell collapsing />
                   <Table.Cell>Name</Table.Cell>
-                  <Table.Cell grow>Loadout</Table.Cell>
+                  <Table.Cell>Loadout</Table.Cell>
                   <Table.Cell collapsing>Ready</Table.Cell>
                 </Table.Row>
                 {Object.keys(data.players).map((player) => (
@@ -83,6 +82,7 @@ export const DeathmatchLobby = (props) => {
                       ) && <b>{player}</b>) || (
                         <Dropdown
                           displayText={player}
+                          selected={player}
                           options={['Kick', 'Transfer host', 'Toggle observe']}
                           onSelected={(value) =>
                             act('host', {
@@ -93,11 +93,12 @@ export const DeathmatchLobby = (props) => {
                         />
                       )}
                     </Table.Cell>
-                    <Table.Cell grow>
+                    <Table.Cell>
                       <Dropdown
                         displayText={data.players[player].loadout}
                         disabled={!(data.host || player === data.self)}
                         options={data.loadouts}
+                        selected={data.players[player].loadout}
                         onSelected={(value) =>
                           act('change_loadout', {
                             player: player,
@@ -107,7 +108,7 @@ export const DeathmatchLobby = (props) => {
                       />
                     </Table.Cell>
                     <Table.Cell collapsing>
-                      <ButtonCheckbox
+                      <Button.Checkbox
                         disabled={player !== data.self}
                         checked={data.players[player].ready}
                         onClick={() => act('ready')}
@@ -128,6 +129,7 @@ export const DeathmatchLobby = (props) => {
                         data.admin
                       ) && <b>{observer}</b>) || (
                         <Dropdown
+                          selected={observer}
                           displayText={observer}
                           options={['Kick', 'Transfer host', 'Toggle observe']}
                           onSelected={(value) =>
@@ -139,7 +141,7 @@ export const DeathmatchLobby = (props) => {
                         />
                       )}
                     </Table.Cell>
-                    <Table.Cell grow>Observing</Table.Cell>
+                    <Table.Cell>Observing</Table.Cell>
                   </Table.Row>
                 ))}
               </Table>
@@ -150,6 +152,7 @@ export const DeathmatchLobby = (props) => {
               <Box textAlign="center">
                 {(!!data.host && (
                   <Dropdown
+                    selected={data.map.name}
                     displayText={data.map.name}
                     options={data.maps}
                     onSelected={(value) =>

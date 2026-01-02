@@ -45,7 +45,7 @@
 /obj/projectile/bullet/c38/match/bouncy
 	name = ".38 Rubber bullet"
 	damage = 10
-	stamina = 40 //30 to 40 monkestation edit
+	stamina = 25
 	weak_against_armour = TRUE
 	ricochets_max = 6
 	ricochet_incidence_leeway = 0
@@ -135,7 +135,7 @@
 /obj/projectile/bullet/g45l/rubber
 	name = ".45 Long rubber bullet"
 	damage = 5
-	stamina = 35
+	stamina = 17.5
 	weak_against_armour = TRUE
 	sharpness = NONE
 	embedding = null

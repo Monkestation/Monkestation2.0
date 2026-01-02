@@ -1,0 +1,4 @@
+author: "SirNightKnight"
+delete-after: True
+changes:
+  - bugfix: "fixed burn treatment medical stack items sending the can't heal alert when healing burn wounds."

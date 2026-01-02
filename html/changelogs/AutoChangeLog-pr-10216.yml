@@ -1,0 +1,4 @@
+author: "Ice-Type"
+delete-after: True
+changes:
+  - bugfix: "Bluespace RPEDs now correctly function at range"

@@ -89,7 +89,9 @@
 ///Sets the badge's identity to the name and description given to us.
 /obj/item/clothing/accessory/badge/proc/set_identity(mob/living/named_mob)
 	if(!ismob(named_mob))
-		named_mob = findname(named_mob)
+		var/found_name = findname(named_mob)
+		if(found_name)
+			named_mob = found_name
 
 	//now is this a real mob we have, or just a random name we inserted?
 	if(ismob(named_mob))
@@ -127,12 +129,35 @@
 	desc = "A badge designating the user as part of the 'Cargo Workers Union', employee level."
 	icon_state = "cargo-silver"
 	badge_string = "Union Employee"
+	var/list/access = list(
+		ACCESS_UNION,
+	)
 
-/obj/item/clothing/accessory/badge/quartermaster
+/obj/item/clothing/accessory/badge/cargo/equipped(mob/living/user, slot)
+	. = ..()
+	if(slot & (ITEM_SLOT_ICLOTHING|ITEM_SLOT_HANDS)) //ITEM_SLOT_NECK inv doesn't call dropped so we don't need to re-register.
+		RegisterSignal(user, COMSIG_MOB_TRIED_ACCESS, PROC_REF(on_tried_access))
+
+/obj/item/clothing/accessory/badge/cargo/dropped(mob/living/user)
+	UnregisterSignal(user, COMSIG_MOB_TRIED_ACCESS)
+	return ..()
+
+/obj/item/clothing/accessory/badge/cargo/proc/on_tried_access(datum/source, obj/locked_thing)
+	SIGNAL_HANDLER
+	return locked_thing?.check_access(src) ? ACCESS_ALLOWED : NONE
+
+/obj/item/clothing/accessory/badge/cargo/GetAccess()
+	return access
+
+/obj/item/clothing/accessory/badge/cargo/quartermaster
 	name = "union president badge"
 	desc = "A badge designating the user as part of the 'Cargo Workers Union', presidential level."
 	icon_state = "cargo-gold"
 	badge_string = "Union President"
+	access = list(
+		ACCESS_UNION,
+		ACCESS_UNION_LEADER,
+	)
 
 /obj/item/clothing/accessory/badge/lawyer
 	name = "attorney's badge"
