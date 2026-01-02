@@ -138,6 +138,7 @@ export const FaxMainPanel = (props) => {
         <Box mt="5px">
           <TextArea
             placeholder="Your message here..."
+            fluid
             height="200px"
             value={rawText}
             onChange={(value) => {
@@ -191,7 +192,7 @@ export const FaxMainPanel = (props) => {
                   minValue={0}
                   maxValue={360}
                   animated={false}
-                  onChange={(v) => setStampAngle(v)}
+                  onChange={(_, value) => setStampAngle(value)}
                 />
               </Box>
             </Box>

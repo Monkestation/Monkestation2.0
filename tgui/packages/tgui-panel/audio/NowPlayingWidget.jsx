@@ -97,12 +97,12 @@ export const NowPlayingWidget = (props) => {
           value={settings.adminMusicVolume}
           step={0.0025}
           stepPixelSize={1}
-          format={(value) => toFixed(value * 100) + '%'}
-          onChange={(value) =>
+          format={(value) => `${toFixed(value * 100)}%`}
+          onChange={(e, value) => {
             settings.update({
               adminMusicVolume: value,
-            })
-          }
+            });
+          }}
         />
       </Flex.Item>
     </Flex>
