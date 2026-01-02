@@ -33,7 +33,7 @@ import {
   MenuBar,
   Modal,
   NoticeBox,
-  NumberInput,
+  // NumberInput,
   Pointer,
   Popper,
   Slider,
@@ -80,7 +80,7 @@ export {
   MenuBar,
   Modal,
   NoticeBox,
-  NumberInput,
+  // NumberInput,
   Pointer,
   Popper,
   ProgressBar,
@@ -102,3 +102,4 @@ export { Grid } from './Grid';
 export { Knob } from './Knob';
 export { KeyListener } from './KeyListener';
 export { Button } from './Button';
+export { NumberInput } from './NumberInput';
