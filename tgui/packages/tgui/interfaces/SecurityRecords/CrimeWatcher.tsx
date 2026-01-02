@@ -246,7 +246,7 @@ const CrimeAuthor = (props) => {
         <Input
           fluid
           maxLength={25}
-          onChange={(_, value) => setCrimeName(value)}
+          onChange={(value) => setCrimeName(value)}
           placeholder="Brief overview"
         />
       </Stack.Item>
@@ -255,7 +255,7 @@ const CrimeAuthor = (props) => {
         <TextArea
           fluid
           maxLength={1025}
-          onChange={(_, value) => setCrimeDetails(value)}
+          onChange={(value) => setCrimeDetails(value)}
           placeholder="Type some details..."
         />
       </Stack.Item>

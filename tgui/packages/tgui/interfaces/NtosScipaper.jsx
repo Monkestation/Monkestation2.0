@@ -54,7 +54,7 @@ const PaperPublishing = (props) => {
             <Input
               fluid
               value={title}
-              onChange={(e, value) =>
+              onChange={(value) =>
                 act('rewrite', {
                   title: value,
                 })
@@ -65,7 +65,7 @@ const PaperPublishing = (props) => {
             <Input
               fluid
               value={author}
-              onChange={(e, value) =>
+              onChange={(value) =>
                 act('rewrite', {
                   author: value,
                 })
@@ -79,7 +79,7 @@ const PaperPublishing = (props) => {
             <Input
               fluid
               value={abstract}
-              onChange={(e, value) =>
+              onChange={(value) =>
                 act('rewrite', {
                   abstract: value,
                 })

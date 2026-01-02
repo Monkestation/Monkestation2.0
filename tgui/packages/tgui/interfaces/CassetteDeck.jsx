@@ -204,7 +204,9 @@ export const CassetteDeck = (props) => {
                           >
                             {type.label}{' '}
                           </Box>{' '}
-                          <Box style={{ 'font-size': '0.6em' }}>{type.sub}</Box>{' '}
+                          <Box style={{ 'font-size': '0.6em' }}>
+                            {type.sub}
+                          </Box>{' '}
                         </Box>{' '}
                       </Box>
                     );
@@ -269,7 +271,7 @@ export const CassetteDeck = (props) => {
                               max={100}
                               step={1}
                               value={selectedAge}
-                              onChange={(e, value) => {
+                              onChange={(value) => {
                                 setSelectedAge(value);
                                 act('set_age', { age: value });
                               }}

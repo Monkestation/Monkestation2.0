@@ -69,7 +69,7 @@ const FilterFloatEntry = (props) => {
         step={0.001}
         format={(value) => toFixed(value, 4)}
         width="70px"
-        onChange={(e, value) => setStep(value)}
+        onChange={(value) => setStep(value)}
       />
     </>
   );
@@ -228,7 +228,7 @@ const FilterEntry = (props) => {
             value={priority}
             stepPixelSize={10}
             width="60px"
-            onChange={(e, value) =>
+            onChange={(value) =>
               act('change_priority', {
                 name: name,
                 new_priority: value,

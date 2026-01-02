@@ -133,7 +133,7 @@ export const NtosRobotactContent = (props) => {
                   maxValue={5}
                   minValue={1}
                   tickWhileDragging
-                  onChange={(e, value) =>
+                  onChange={(value) =>
                     act('lampIntensity', {
                       ref: value,
                     })
