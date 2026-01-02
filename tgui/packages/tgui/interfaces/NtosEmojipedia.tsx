@@ -13,7 +13,7 @@ type Data = {
   emoji_list: Emoji[];
 };
 
-export function NtosEmojipedia(props) {
+export function NtosEmojipedia() {
   const { data } = useBackend<Data>();
   const { emoji_list } = data;
   const [filter, updatefilter] = useState('');
@@ -32,7 +32,7 @@ export function NtosEmojipedia(props) {
               <Input
                 placeholder="Search by name"
                 value={filter}
-                onChange={(_, value) => updatefilter(value)}
+                onChange={(value) => updatefilter(value)}
               />
               <Button
                 tooltip="Click on an emoji to copy its tag!"
