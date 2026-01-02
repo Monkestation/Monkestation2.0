@@ -237,7 +237,7 @@ const OutputControls = (props) => {
           maxValue={999}
           ranges={{ bad: [-Infinity, -1] }}
           value={output_number}
-          onChange={(_e, set_input) => act('set_input', { set_input })}
+          onChange={(e, set_input) => act('set_input', { set_input })}
         />
         <Button
           content={'MW'}
