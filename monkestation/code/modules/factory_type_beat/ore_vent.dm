@@ -36,7 +36,6 @@
 		SMALL_VENT_TYPE = 7,
 	)
 	var/wave_timer = WAVE_DURATION_SMALL
-	var/wave_timer = WAVE_DURATION_SMALL
 
 	/// What string do we use to warn the player about the excavation event?
 	var/excavation_warning = "Are you ready to excavate this ore vent?"
@@ -604,7 +603,7 @@
 /obj/structure/ore_vent/boss/handle_wave_conclusion()
 	node = new /mob/living/basic/node_drone(loc) //We're spawning the vent after the boss dies, so the player can just focus on the boss.
 	SSblackbox.record_feedback("tally", "ore_vent_mobs_killed", 1, summoned_boss)
-	COOLDOWN_RESET(src, wave_cooldown)
+	//COOLDOWN_RESET(src, wave_cooldown)
 	return ..()
 
 /obj/structure/ore_vent/boss/icebox

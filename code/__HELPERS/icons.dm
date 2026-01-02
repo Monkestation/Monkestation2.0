@@ -321,7 +321,7 @@ world
 	// If only one color, return it directly
 	if(length(weighted_colors) == 1)
 		var/color = weighted_colors[1]
-		var/list/rgb = ReadRGB(color)
+		var/list/rgb = rgb2num(color)
 		if(length(rgb) > 3)
 			return rgb(rgb[1], rgb[2], rgb[3], rgb[4]) // Return RGBA
 		else
@@ -334,7 +334,7 @@ world
 	var/usealpha = FALSE
 	for(var/color in weighted_colors)
 		// Parse color into RGB(A) components
-		var/list/rgb = ReadRGB(color)
+		var/list/rgb = rgb2num(color)
 		var/weight = weighted_colors[color]
 
 		if(isnull(weight) || weight < 0)

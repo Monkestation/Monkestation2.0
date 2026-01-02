@@ -1,15 +1,9 @@
-#define ASSEMBLER_MAX_CRAFTS 10
-
 /obj/machinery/assembler
 	name = "assembler"
 	desc = "Produces a set recipe when given the materials, some say a small cargo technican is stuck inside making these things."
 	circuit = /obj/item/circuitboard/machine/assembler
-	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.5
-	anchored = TRUE
-	//density = TRUE
 
 	var/speed_multiplier = 1
-	var/bulk_craft_storage = 1
 	var/datum/crafting_recipe/chosen_recipe
 	var/crafting = FALSE
 	var/datum/crafting_recipe/current_craft_recipe // The recipe currently being crafted
@@ -33,31 +27,31 @@
 	if(!length(legal_crafting_recipes))
 		create_recipes()
 
-/obj/machinery/assembler/on_deconstruction(disassembled)
-	chosen_recipe = null
-	empty_machine()
+/obj/machinery/assembler/RefreshParts()
+	. = ..()
+	var/datum/stock_part/manipulator/locate_servo = locate() in component_parts
+	if(!locate_servo)
+		return
+	speed_multiplier = 1 / locate_servo.tier
+
+/obj/machinery/assembler/Destroy()
+	. = ..()
+	for(var/atom/movable/movable in crafting_inventory)
+		movable.forceMove(get_turf(src))
+		crafting_inventory -= movable
 
 /obj/machinery/assembler/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
-	if(isnull(held_item))
-		context[SCREENTIP_CONTEXT_LMB] = "Select a recipe."
-		context[SCREENTIP_CONTEXT_RMB] = "Restart crafting."
-	else if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
-		context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] Panel"
-	else if(held_item.tool_behaviour == TOOL_WRENCH)
-		context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Un" : ""]Anchor"
-	else if(panel_open && held_item.tool_behaviour == TOOL_CROWBAR)
-		context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
-
 	if(chosen_recipe)
 		var/processable = "Accepts: "
-		var/list/named_reqs = list()
+		var/comma = FALSE
 		for(var/atom/atom as anything in chosen_recipe.reqs)
-			named_reqs += initial(atom.name)
-		context[SCREENTIP_CONTEXT_MISC] = processable + english_list(named_reqs)
-	else
-		context[SCREENTIP_CONTEXT_MISC] = "No recipe selected."
-	return CONTEXTUAL_SCREENTIP_SET
+			if(comma)
+				processable += ", "
+			processable += initial(atom.name)
+			comma = !comma
+		context[SCREENTIP_CONTEXT_MISC] = processable
+		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/assembler/examine(mob/user)
 	. = ..()
@@ -66,89 +60,32 @@
 		for(var/atom/atom as anything in chosen_recipe.reqs)
 			. += span_notice("[initial(atom.name)]: [chosen_recipe.reqs[atom]]")
 
-	if(anchored)
-		. += span_notice("Its [EXAMINE_HINT("anchored")] in place.")
-	else
-		. += span_warning("It needs to be [EXAMINE_HINT("anchored")] to start operations.")
-	. += span_notice("Its maintainence panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
-	if(panel_open)
-		. += span_notice("The whole machine can be [EXAMINE_HINT("pried")] apart.")
-
 /obj/machinery/assembler/proc/create_recipes()
 	for(var/datum/crafting_recipe/recipe as anything in GLOB.crafting_recipes)
 		if(initial(recipe.non_craftable) || !initial(recipe.always_available))
 			continue
 		legal_crafting_recipes += recipe
 
-/obj/machinery/assembler/RefreshParts()
-	. = ..()
-	var/datum/stock_part/manipulator/locate_servo = locate() in component_parts
-	var/datum/stock_part/matter_bin/locate_bin = null //locate() in component_parts
-	if(!locate_servo)
-		speed_multiplier = 2 // If they somehow do this reward them with longer crafting times.
-	else
-		speed_multiplier = 1 / locate_servo.tier
-	if(!locate_bin)
-		bulk_craft_storage = 1
-
 /obj/machinery/assembler/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
-	if(modifiers["left"] == "1")
-		var/datum/crafting_recipe/choice = tgui_input_list(user, "Choose a recipe", name, legal_crafting_recipes)
-		if(!choice || (choice && chosen_recipe ==  choice))
-			return
-		chosen_recipe = choice
-		empty_machine()
-
-/obj/machinery/assembler/attackby(obj/item/attacking_item, mob/user, params)
-	. = accept_item(attacking_item)
-	if(.)
-		balloon_alert_to_viewers("accepted")
+	var/datum/crafting_recipe/choice = tgui_input_list(user, "Choose a recipe", name, legal_crafting_recipes)
+	if(!choice)
 		return
-	balloon_alert_to_viewers("cannot accept!")
-	return ..()
-
-/obj/machinery/assembler/attack_hand_secondary(mob/user, list/modifiers)
-	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-		return
-	if(!anchored)
-		balloon_alert(user, "anchor it first!")
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	balloon_alert(user, "Starting crafting process!")
-	begin_processing()
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-/obj/machinery/assembler/wrench_act(mob/living/user, obj/item/tool)
-	if(default_unfasten_wrench(user, tool, time = 1.5 SECONDS) == SUCCESSFUL_UNFASTEN)
-		if(!anchored)
-			end_processing()
-		return ITEM_INTERACT_SUCCESS
-	return
-
-/obj/machinery/assembler/screwdriver_act(mob/living/user, obj/item/tool)
-	if(default_deconstruction_screwdriver(user, initial(icon_state), initial(icon_state), tool))
-		return ITEM_INTERACT_SUCCESS
-	return
-
-/obj/machinery/assembler/crowbar_act(mob/living/user, obj/item/tool)
-	if(default_deconstruction_crowbar(tool))
-		return ITEM_INTERACT_SUCCESS
-	return
-
-/obj/machinery/assembler/proc/empty_machine()
-	dump_inventory_contents(crafting_inventory)
-	crafting_inventory.Cut()
-
-/obj/machinery/assembler/proc/on_entered(datum/source, atom/movable/atom_movable)
-	SIGNAL_HANDLER
-	INVOKE_ASYNC(src, PROC_REF(accept_item), atom_movable)
+	chosen_recipe = choice
+	for(var/atom/movable/listed as anything in crafting_inventory)
+		listed.forceMove(get_turf(src))
+		crafting_inventory -= listed
 
 /obj/machinery/assembler/CanAllowThrough(atom/movable/mover, border_dir)
-	if(!anchored || panel_open || !is_operational || (machine_stat & (BROKEN | NOPOWER)))
+	if(!anchored || !chosen_recipe)
 		return FALSE
 
-	if(!chosen_recipe || istype(mover, /mob))
+	var/failed = TRUE
+	for(var/atom/movable/movable as anything in chosen_recipe.reqs)
+		if(istype(mover, movable))
+			failed = FALSE
+			break
+	if(failed)
 		return FALSE
 
 	if(!check_item(mover))
@@ -156,73 +93,115 @@
 
 	return ..()
 
-/obj/machinery/assembler/proc/get_remaining_requirements(craft_amount = 1)
-	if(!chosen_recipe || !craft_amount)
-		return null
+/obj/machinery/assembler/proc/on_entered(datum/source, atom/movable/atom_movable)
+	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, PROC_REF(accept_item), atom_movable)
 
-	var/list/remaining_reqs = chosen_recipe.reqs.Copy()
-	for(var/listed in remaining_reqs)
-		remaining_reqs[listed] *= craft_amount
+/obj/machinery/assembler/proc/accept_item(atom/movable/atom_movable)
+	if(!chosen_recipe)
+		return
+	if(isstack(atom_movable))
+		var/obj/item/stack/stack = atom_movable
+		if(!(stack.merge_type in chosen_recipe.reqs))
+			return FALSE
+	else
+		var/failed = TRUE
+		for(var/atom/movable/movable as anything in chosen_recipe.reqs)
+			if(istype(atom_movable, movable))
+				failed = FALSE
+				break
+		if(failed)
+			return FALSE
+
+	atom_movable.forceMove(src)
+	crafting_inventory += atom_movable
+	check_recipe_state()
+
+
+/obj/machinery/assembler/can_drop_off(atom/movable/target)
+	if(!check_item(target))
+		return FALSE
+	return TRUE
+
+
+/obj/machinery/assembler/proc/check_item(atom/movable/atom_movable)
+	if(!chosen_recipe)
+		return
+	if(isstack(atom_movable))
+		var/obj/item/stack/stack = atom_movable
+		if(!(stack.merge_type in chosen_recipe.reqs))
+			return FALSE
+
+	if(!isstack(atom_movable))
+		var/failed = TRUE
+		for(var/atom/movable/movable as anything in chosen_recipe.reqs)
+			if(istype(atom_movable, movable))
+				failed = FALSE
+				break
+		if(failed)
+			return FALSE
+
+	var/list/reqs = chosen_recipe.reqs.Copy()
+	for(var/atom/movable/listed in reqs)
+		reqs[listed] *= 10 // we can queue 10 crafts of everything
 
 	for(var/atom/movable/item in crafting_inventory)
 		if(isstack(item))
 			var/obj/item/stack/stack = item
-			if(stack.merge_type in remaining_reqs)
-				remaining_reqs[stack.merge_type] -= stack.amount
-				if(remaining_reqs[stack.merge_type] <= 0)
-					remaining_reqs -= stack.merge_type
+			if(item in reqs)
+				reqs[item.type] -= stack.amount
+				if(reqs[item.type] <= 0)
+					reqs -= item.type
 		else
-			for(var/req_type in remaining_reqs)
-				if(istype(item, req_type))
-					remaining_reqs[req_type]--
-					if(remaining_reqs[req_type] <= 0)
-						remaining_reqs -= req_type
-					break // already counted dont need to look at the other req_types
+			for(var/atom/movable/movable as anything in chosen_recipe.reqs)
+				if(istype(item, movable))
+					reqs[movable]--
+					if(reqs[movable] <= 0)
+						reqs -= movable
+	if(!length(reqs))
+		return FALSE
 
-	return remaining_reqs
+	var/passed = FALSE
+	for(var/atom/movable/movable as anything in chosen_recipe.reqs)
+		if(istype(atom_movable, movable))
+			passed = TRUE
+			break
+	if(passed)
+		return TRUE
 
-/obj/machinery/assembler/proc/check_item(atom/movable/atom_movable)
+	if(isstack(atom_movable))
+		var/obj/item/stack/stack = atom_movable
+		if((stack.merge_type in reqs))
+			return TRUE
+
+	return FALSE
+
+
+/obj/machinery/assembler/proc/check_recipe_state()
 	if(!chosen_recipe)
-		return FALSE
-
-	if(isstack(atom_movable))
-		var/obj/item/stack/stack = atom_movable
-		if(!(stack.merge_type in chosen_recipe.reqs) || (stack.merge_type in chosen_recipe.blacklist))
-			return FALSE
-	else if(!is_type_in_list(atom_movable, chosen_recipe.reqs) || is_type_in_list(atom_movable, chosen_recipe.blacklist))
-		return FALSE
-
-	var/list/remaining_space = get_remaining_requirements(ASSEMBLER_MAX_CRAFTS)
-
-	// Check if the incoming item's type is still needed
-	if(isstack(atom_movable))
-		var/obj/item/stack/stack = atom_movable
-		return stack.merge_type in remaining_space
-	else
-		return is_type_in_list(atom_movable, remaining_space)
-
-/obj/machinery/assembler/proc/accept_item(atom/movable/atom_movable)
-	if(!chosen_recipe || QDELETED(atom_movable) || !check_item(atom_movable))
-		return FALSE
-
-	atom_movable.forceMove(src)
-	crafting_inventory += atom_movable
-	begin_processing()
-	return TRUE
-
-/obj/machinery/assembler/can_drop_off(atom/movable/target)
-	return check_item(target)
-
-/obj/machinery/assembler/process()
-	if(!anchored || panel_open || !is_operational || (machine_stat & (BROKEN | NOPOWER)))
 		return
-	if(!chosen_recipe)
-		end_processing()
-	if(!crafting)
-		INVOKE_ASYNC(src, PROC_REF(start_craft), bulk_craft_storage)
+	var/list/reqs = chosen_recipe.reqs.Copy()
+	if(!length(reqs))
+		return
 
-/obj/machinery/assembler/proc/start_craft(amt = 1)
-	if(!chosen_recipe || crafting)
+	for(var/atom/movable/item in crafting_inventory)
+		if(isstack(item))
+			var/obj/item/stack/stack = item
+			if(stack.merge_type in reqs)
+				reqs[stack.merge_type] -= stack.amount
+				if(reqs[stack.merge_type] <= 0)
+					reqs -= stack.merge_type
+		else
+			for(var/atom/movable/movable as anything in chosen_recipe.reqs)
+				if(istype(item, movable))
+					reqs[movable]--
+					if(reqs[movable] <= 0)
+						reqs -= movable
+	if(!length(reqs))
+		start_craft()
+
+/obj/machinery/assembler/proc/start_craft()
+	if(crafting)
 		return
 	crafting = TRUE
 	current_craft_recipe = chosen_recipe // Store the recipe we're actually crafting
@@ -230,21 +209,16 @@
 	if(!machine_do_after_visable(src, current_craft_recipe.time * speed_multiplier * 3))
 		crafting = FALSE
 		current_craft_recipe = null
-	if(length(get_remaining_requirements(amt)) || !machine_do_after_visable(src, chosen_recipe.time * speed_multiplier * 3))
-		crafting = FALSE
 		return
 
 	var/list/requirements = current_craft_recipe.reqs
-	var/list/requirements = chosen_recipe.reqs.Copy()
-	for(var/listed in requirements)
-		requirements[listed] *= amt
 	var/list/parts = list()
+
 	for(var/obj/item/req as anything in requirements)
 		for(var/obj/item/item as anything in crafting_inventory)
-			if(!length(requirements))
-				break // We already satisfied the requirements don't check other items.
-
-			if(isstack(item) && (req in requirements))
+			if(!istype(item, req))
+				continue
+			if(isstack(item))
 				var/obj/item/stack/stack = item
 				if(stack.amount == requirements[stack.merge_type])
 					var/failed = TRUE
@@ -259,55 +233,40 @@
 				else if(stack.amount > requirements[item.type])
 					for(var/obj/item/part as anything in current_craft_recipe.parts)
 						if(!istype(item, part))
-				if(stack.merge_type == req)
-					if(stack.is_zero_amount(TRUE)) // How this happened who knows delete it..
-						continue
-					else if(stack.amount <= requirements[stack.merge_type])
-						requirements[stack.merge_type] -= stack.amount
-						parts += stack
-					else if(stack.amount > requirements[stack.merge_type])
-						var/amt_used = requirements[stack.merge_type]
-						var/obj/item/stack/new_stack
-						if(stack.use(used = amt_used, check = FALSE))
-							new_stack = new stack.merge_type(src, amt_used, FALSE, stack.mats_per_unit)
-							crafting_inventory += new_stack
-							if(stack.is_zero_amount(TRUE))
-								crafting_inventory -= stack
-							requirements[stack.merge_type] -= new_stack.amount
-							parts += new_stack
-						else
 							continue
-					if(requirements[stack.merge_type] <= 0)
-						requirements -= stack.merge_type
-			else if(istype(item, req) && (req in requirements))
-				requirements[req]--
-				parts += item
-				if(requirements[req] <= 0)
-					requirements -= req
+						var/obj/item/stack/new_stack = new item
+						new_stack.amount = requirements[item.type]
+						parts += new_stack
+					stack.amount -= requirements[stack.merge_type]
+			else
+				var/failed = TRUE
+				crafting_inventory -= item
+				for(var/obj/item/part as anything in current_craft_recipe.parts)
+					if(!istype(item, part))
+						continue
+					parts += item
+					failed = FALSE
 
-	if(length(requirements))
-		crafting = FALSE
-		return
-	for(var/i in 1 to amt)
-		var/atom/movable/new_craft
-		if(ispath(chosen_recipe.result, /obj/item/stack))
-			new_craft = new chosen_recipe.result(src, chosen_recipe.result_amount || 1)
-		else
-			new_craft = new chosen_recipe.result (src)
-			if(new_craft.atom_storage && chosen_recipe.delete_contents)
-				for(var/obj/item/thing in new_craft)
-					qdel(thing)
-		//new_craft.CheckParts(parts, chosen_recipe) // Causes part dup issue. If this missing causes issues find a real solution.
-		new_craft.forceMove(drop_location())
-	crafting_inventory -= parts
-	QDEL_LIST(parts)
-	use_energy(active_power_usage * amt)
-	RefreshParts()
+				if(failed)
+					qdel(item)
+
+	var/atom/movable/I
+	if(ispath(current_craft_recipe.result, /obj/item/stack))
+		I = new current_craft_recipe.result(src, current_craft_recipe.result_amount || 1)
+		I.forceMove(drop_location())
+	else
+		I = new current_craft_recipe.result (src)
+		I.forceMove(drop_location())
+		if(I.atom_storage && current_craft_recipe.delete_contents)
+			for(var/obj/item/thing in I)
+				qdel(thing)
+	I.CheckParts(parts, current_craft_recipe)
+	I.forceMove(drop_location())
+
 	crafting = FALSE
 	current_craft_recipe = null
 	check_recipe_state()
 
-#undef ASSEMBLER_MAX_CRAFTS
 
 /datum/hover_data/assembler
 	var/obj/effect/overlay/hover/recipe_icon
@@ -318,7 +277,7 @@
 	recipe_icon = new(null)
 	recipe_icon.maptext_width = 64
 	recipe_icon.maptext_y = 32
-	recipe_icon.maptext_x = -41
+	recipe_icon.maptext_x = -4
 	recipe_icon.alpha = 125
 
 /datum/hover_data/assembler/setup_data(obj/machinery/assembler/source, mob/enterer)
