@@ -119,7 +119,7 @@ export const NtosNtRepContent = (props) => {
               placeholder="Leave your review/thoughts/comments..."
               maxLength={max_length}
               value={comment}
-              onChange={(e, value) =>
+              onChange={(value) =>
                 act('set_text', {
                   new_review: value,
                 })

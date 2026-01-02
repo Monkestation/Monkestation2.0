@@ -98,7 +98,7 @@ export const NowPlayingWidget = (props) => {
           step={0.0025}
           stepPixelSize={1}
           format={(value) => toFixed(value * 100) + '%'}
-          onDrag={(e, value) =>
+          onChange={(value) =>
             settings.update({
               adminMusicVolume: value,
             })

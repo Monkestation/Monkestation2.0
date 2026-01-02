@@ -65,7 +65,7 @@ const MessageModal = (props) => {
   const { data } = useBackend();
   const { maxMessageLength } = data;
 
-  const [input, setInput] = useLocalState(props.label, '');
+  const [input, setInput] = useState(props.label);
 
   const longEnough =
     props.minLength === undefined || input.length >= props.minLength;
@@ -84,7 +84,7 @@ const MessageModal = (props) => {
             width="80vw"
             backgroundColor="black"
             textColor="white"
-            onChange={(_, value) => {
+            onChange={(value) => {
               setInput(value.substring(0, maxMessageLength));
             }}
             value={input}

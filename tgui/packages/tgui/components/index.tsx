@@ -27,6 +27,7 @@ import {
   ImageButton,
   InfinitePlane,
   Interactive,
+  Knob,
   LabeledControls,
   LabeledList,
   MenuBar,
@@ -34,11 +35,11 @@ import {
   NoticeBox,
   Pointer,
   Popper,
-  Slider,
   ProgressBar,
   RestrictedInput,
   RoundGauge,
   Section,
+  Slider,
   Stack,
   StyleableSection,
   Table,
@@ -71,6 +72,7 @@ export {
   ImageButton,
   InfinitePlane,
   Interactive,
+  Knob,
   LabeledControls,
   LabeledList,
   MenuBar,
@@ -92,7 +94,6 @@ export {
   TrackOutsideClicks,
 };
 
-export { Knob } from './Knob';
 export { Input } from './Input';
 export { KeyListener } from './KeyListener';
 export { NumberInput } from './NumberInput';

@@ -7,7 +7,7 @@ type Shim = Omit<
 > &
   Partial<{
     onInput: (event: Event, value: string) => void;
-    onChange: (event: Event, value: string) => void;
+    onChange: (value: string) => void;
     onEnter: (event: Event, value: string) => void;
   }>;
 

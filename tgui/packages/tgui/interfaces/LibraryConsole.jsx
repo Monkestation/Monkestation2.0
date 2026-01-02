@@ -297,7 +297,7 @@ const CheckoutModal = (props) => {
           <Input
             width="160px"
             value={checkoutee}
-            onChange={(e, value) => setCheckoutee(value)}
+            onChange={(value) => setCheckoutee(value)}
           />
         </LabeledList.Item>
         <LabeledList.Item label="Loan Period">
@@ -306,7 +306,7 @@ const CheckoutModal = (props) => {
             unit=" Minutes"
             minValue={1}
             stepPixelSize={10}
-            onChange={(e, value) => setCheckoutPeriod(value)}
+            onChange={(value) => setCheckoutPeriod(value)}
           />
         </LabeledList.Item>
       </LabeledList>
@@ -410,7 +410,7 @@ export const SearchAndDisplay = (props) => {
                 placeholder={book_id === null ? 'ID' : book_id}
                 mt={0.5}
                 width="70px"
-                onChange={(e, value) =>
+                onChange={(value) =>
                   act('set_search_id', {
                     id: value,
                   })
@@ -433,7 +433,7 @@ export const SearchAndDisplay = (props) => {
                 value={title}
                 placeholder={title || 'Title'}
                 mt={0.5}
-                onChange={(e, value) =>
+                onChange={(value) =>
                   act('set_search_title', {
                     title: value,
                   })
@@ -445,7 +445,7 @@ export const SearchAndDisplay = (props) => {
                 value={author}
                 placeholder={author || 'Author'}
                 mt={0.5}
-                onChange={(e, value) =>
+                onChange={(value) =>
                   act('set_search_author', {
                     author: value,
                   })
@@ -556,7 +556,7 @@ export const Upload = (props) => {
                     placeholder={cache_title || 'Title'}
                     mt={0.5}
                     width={22}
-                    onChange={(e, value) =>
+                    onChange={(value) =>
                       act('set_cache_title', {
                         title: value,
                       })
@@ -574,7 +574,7 @@ export const Upload = (props) => {
                     value={cache_author}
                     placeholder={cache_author || 'Author'}
                     mt={0.5}
-                    onChange={(e, value) =>
+                    onChange={(value) =>
                       act('set_cache_author', {
                         author: value,
                       })
@@ -912,7 +912,7 @@ export const PageSelect = (props) => {
       <Stack.Item>
         <Input
           placeholder={current_page + '/' + page_count}
-          onChange={(e, value) => {
+          onChange={(value) => {
             // I am so sorry
             if (value !== '') {
               call_on_change(value);

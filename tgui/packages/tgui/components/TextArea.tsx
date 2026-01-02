@@ -6,7 +6,7 @@ type Shim = Omit<
   'onChange' | 'onInput' | 'onEnter'
 > &
   Partial<{
-    onChange: (event: Event, value: string) => void;
+    onChange: (value: string) => void;
     onInput: (event: Event, value: string) => void;
     onEnter: (event: Event, value: string) => void;
   }>;
@@ -18,7 +18,7 @@ export function TextArea(props: Shim) {
     if (!inputFn) return;
 
     const event = {} as Event;
-    inputFn?.(event, val);
+    inputFn?.(val);
   }
 
   function handleEnter(val: string) {

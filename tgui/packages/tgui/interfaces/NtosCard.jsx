@@ -175,7 +175,7 @@ const IdCardPage = (props) => {
                 unit="Years"
                 minValue={17}
                 maxValue={85}
-                onChange={(e, value) => {
+                onChange={(value) => {
                   act('PRG_age', {
                     id_age: value,
                   });

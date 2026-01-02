@@ -1,39 +1,67 @@
 import { NumberInput as TGUINumberInput } from 'tgui-core/components';
 import { ComponentProps } from 'react';
 
-type Shim = Omit<
+type BaseShim = Omit<
   ComponentProps<typeof TGUINumberInput>,
-  'onChange' | 'onDrag' | 'minValue' | 'maxValue' | 'step'
-> &
-  Partial<{
-    onChange: (event: Event, value: number) => void;
-    onDrag: (event: Event, value: number) => void;
-    minValue: number;
-    maxValue: number;
-    step: number;
-  }>;
+  'minValue' | 'maxValue'
+> & {
+  step?: number;
+};
+
+type MinProps =
+  | { minValue: number; minValueInfinity?: never }
+  | { minValueInfinity: true; minValue?: never };
+
+type MaxProps =
+  | { maxValue: number; maxValueInfinity?: never }
+  | { maxValueInfinity: true; maxValue?: never };
+
+type ConstrainedBounds = BaseShim & MinProps & MaxProps & { infinity?: false };
+
+type BothInfinity = BaseShim & {
+  infinity: true;
+  minValue?: never;
+  maxValue?: never;
+  minValueInfinity?: never;
+  maxValueInfinity?: never;
+};
+
+export type Shim = ConstrainedBounds | BothInfinity;
 
 export function NumberInput(props: Shim) {
-  const inputFn = props.onDrag ?? props.onChange ?? undefined;
+  const {
+    infinity,
+    minValueInfinity,
+    maxValueInfinity,
+    minValue,
+    maxValue,
+    ...rest
+  } = props as any;
+  // const test = (
+  //   <>
+  //     {/* all should error */}
+  //     <NumberInput step={1} value={1} />
+  //     <NumberInput minValue={0} value={1} step={1} />
+  //     <NumberInput minValueInfinity step={1} value={1} />
+  //     <NumberInput maxValue={1} step={1} value={1} />
 
-  const min = props.minValue ?? Number.NEGATIVE_INFINITY;
-  const max = props.maxValue ?? Number.POSITIVE_INFINITY;
-  const step = props.step ?? 1;
-
-  function onChangeHandler(value: number) {
-    if (!inputFn) return;
-    const event = new Event('change');
-    inputFn(event, value);
-  }
+  //     {/* all should pass */}
+  //     <NumberInput minValue={1} maxValue={1} step={1} value={1} />
+  //     <NumberInput minValue={1} maxValueInfinity step={1} value={1} />
+  //     <NumberInput minValueInfinity maxValue={1} step={1} value={1} />
+  //     <NumberInput infinity step={1} value={1} />
+  //   </>
+  // );
 
   return (
     <TGUINumberInput
-      {...props}
-      onDrag={undefined}
-      onChange={onChangeHandler}
-      minValue={min}
-      maxValue={max}
-      step={step}
+      {...rest}
+      minValue={
+        infinity || minValueInfinity ? Number.NEGATIVE_INFINITY : minValue
+      }
+      maxValue={
+        infinity || maxValueInfinity ? Number.POSITIVE_INFINITY : maxValue
+      }
     />
   );
 }

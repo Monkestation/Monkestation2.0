@@ -9,9 +9,10 @@ const MatrixMathTesterInput = (props: { value: number; varName: string }) => {
     <NumberInput
       value={props.value}
       step={0.005}
+      infinity
       format={(value) => toFixed(value, 3)}
       width={'100%'}
-      onChange={(e, value) =>
+      onChange={(value) =>
         act('change_var', { var_name: props.varName, var_value: value })
       }
     />
@@ -100,27 +101,30 @@ export const MatrixMathTester = (props) => {
               <Table.Cell>
                 <Button
                   icon={'up-right-and-down-left-from-center'}
-                  content={'Scale'}
                   width={'100%'}
                   onClick={() => act('scale', { x: scaleX, y: scaleY })}
-                />
+                >
+                  Scale
+                </Button>
               </Table.Cell>
               <Table.Cell>
                 <NumberInput
                   value={scaleX}
                   step={0.05}
+                  infinity
                   format={(value) => toFixed(value, 2)}
                   width={'100%'}
-                  onChange={(e, value) => setScaleX(value)}
+                  onChange={(value) => setScaleX(value)}
                 />
               </Table.Cell>
               <Table.Cell>
                 <NumberInput
                   value={scaleY}
                   step={0.05}
+                  infinity
                   format={(value) => toFixed(value, 2)}
                   width={'100%'}
-                  onChange={(e, value) => setScaleY(value)}
+                  onChange={(value) => setScaleY(value)}
                 />
               </Table.Cell>
             </Table.Row>
@@ -128,29 +132,32 @@ export const MatrixMathTester = (props) => {
               <Table.Cell>
                 <Button
                   icon={'arrow-right'}
-                  content={'Translate'}
                   width={'100%'}
                   onClick={() =>
                     act('translate', { x: translateX, y: translateY })
                   }
-                />
+                >
+                  Translate
+                </Button>
               </Table.Cell>
               <Table.Cell>
                 <NumberInput
                   value={translateX}
                   step={1}
+                  infinity
                   format={(value) => toFixed(value, 0)}
                   width={'100%'}
-                  onChange={(e, value) => setTranslateX(value)}
+                  onChange={(value) => setTranslateX(value)}
                 />
               </Table.Cell>
               <Table.Cell>
                 <NumberInput
                   value={translateY}
                   step={1}
+                  infinity
                   format={(value) => toFixed(value, 0)}
                   width={'100%'}
-                  onChange={(e, value) => setTranslateY(value)}
+                  onChange={(value) => setTranslateY(value)}
                 />
               </Table.Cell>
             </Table.Row>
@@ -158,27 +165,30 @@ export const MatrixMathTester = (props) => {
               <Table.Cell>
                 <Button
                   icon={'maximize'}
-                  content={'Shear'}
                   width={'100%'}
                   onClick={() => act('shear', { x: shearX, y: shearY })}
-                />
+                >
+                  Shear
+                </Button>
               </Table.Cell>
               <Table.Cell>
                 <NumberInput
                   value={shearX}
                   step={0.005}
+                  infinity
                   format={(value) => toFixed(value, 3)}
                   width={'100%'}
-                  onChange={(e, value) => setShearX(value)}
+                  onChange={(value) => setShearX(value)}
                 />
               </Table.Cell>
               <Table.Cell>
                 <NumberInput
                   value={shearY}
                   step={0.005}
+                  infinity
                   format={(value) => toFixed(value, 3)}
                   width={'100%'}
-                  onChange={(e, value) => setShearY(value)}
+                  onChange={(value) => setShearY(value)}
                 />
               </Table.Cell>
             </Table.Row>
@@ -186,10 +196,11 @@ export const MatrixMathTester = (props) => {
               <Table.Cell>
                 <Button
                   icon={'rotate-right'}
-                  content={'Rotate'}
                   width={'100%'}
                   onClick={() => act('turn', { angle: angle })}
-                />
+                >
+                  Rotate
+                </Button>
               </Table.Cell>
               <Table.Cell>
                 <NumberInput
@@ -199,7 +210,7 @@ export const MatrixMathTester = (props) => {
                   minValue={-360}
                   format={(value) => toFixed(value, 1)}
                   width={'100%'}
-                  onChange={(e, value) => setAngle(value)}
+                  onChange={(value) => setAngle(value)}
                 />
               </Table.Cell>
               <Table.Cell>
@@ -207,12 +218,13 @@ export const MatrixMathTester = (props) => {
                   icon={'dog'}
                   color={'bad'}
                   selected={pixelated}
-                  content={'PET'}
                   tooltip={'Pixel Enhanced Transforming'}
                   tooltipPosition={'bottom'}
                   width={'100%'}
                   onClick={() => act('toggle_pixel')}
-                />
+                >
+                  PET
+                </Button>
               </Table.Cell>
             </Table.Row>
           </Table>

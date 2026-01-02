@@ -53,7 +53,7 @@ export const FloatGenerator = (props: FloatGeneratorProps) => {
             <NumberInput
               animated
               value={float || 0.0}
-              onDrag={(e, value) =>
+              onChange={(value) =>
                 act('edit', {
                   var: var_name,
                   new_value: value,
@@ -107,7 +107,7 @@ export const FloatGeneratorColor = (props: FloatGeneratorColorProps) => {
           <Stack.Item>
             <Input
               value={float?.toString()}
-              onChange={(e, value) =>
+              onChange={(value) =>
                 act('edit', {
                   var: var_name,
                   new_value: value,
@@ -178,7 +178,7 @@ export const EntryGeneratorNumbersList = (
             <NumberInput
               animated
               value={input || 0}
-              onDrag={(e, value) =>
+              onChange={(value) =>
                 act('edit', {
                   var: var_name,
                   new_value: value,
@@ -197,7 +197,7 @@ export const EntryGeneratorNumbersList = (
             <NumberInput
               animated
               value={input[0]}
-              onDrag={(e, value) =>
+              onChange={(value) =>
                 act('edit', {
                   var: var_name,
                   new_value: [value, input![1], input![2]],
@@ -207,7 +207,7 @@ export const EntryGeneratorNumbersList = (
             <NumberInput
               animated
               value={input[1]}
-              onDrag={(e, value) =>
+              onChange={(value) =>
                 act('edit', {
                   var: var_name,
                   new_value: [input![0], value, input![2]],
@@ -218,7 +218,7 @@ export const EntryGeneratorNumbersList = (
               <NumberInput
                 animated
                 value={input[2]}
-                onDrag={(e, value) =>
+                onChange={(value) =>
                   act('edit', {
                     var: var_name,
                     new_value: [input![0], input![1], value],

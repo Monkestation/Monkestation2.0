@@ -45,7 +45,7 @@ const TrainingControls = (props) => {
           value={movespeed}
           minValue={1}
           maxValue={10}
-          onDrag={(_, value) => act('movespeed', { movespeed: value })}
+          onChange={(value) => act('movespeed', { movespeed: value })}
         />
       </LabeledControls.Item>
       <LabeledControls.Item label="Range">
@@ -57,7 +57,7 @@ const TrainingControls = (props) => {
           value={range}
           minValue={1}
           maxValue={7}
-          onDrag={(_, value) => act('range', { range: value })}
+          onChange={(value) => act('range', { range: value })}
         />
       </LabeledControls.Item>
       <Stack.Item>

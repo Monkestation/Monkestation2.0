@@ -40,7 +40,7 @@ export const Aquarium = (props) => {
                 maxValue={maxTemperature}
                 step={1}
                 stepPixelSize={1}
-                onDrag={(_, value) =>
+                onChange={(value) =>
                   act('temperature', {
                     temperature: value,
                   })
@@ -53,20 +53,22 @@ export const Aquarium = (props) => {
                   <Flex.Item key={f}>
                     <Button
                       fluid
-                      content={f}
                       selected={fluid_type === f}
                       onClick={() => act('fluid', { fluid: f })}
-                    />
+                    >
+                      {f}
+                    </Button>
                   </Flex.Item>
                 ))}
               </Flex>
             </LabeledControls.Item>
             <LabeledControls.Item label="Reproduction Prevention System">
               <Button
-                content={allow_breeding ? 'Offline' : 'Online'}
                 selected={!allow_breeding}
                 onClick={() => act('allow_breeding')}
-              />
+              >
+                {allow_breeding ? 'Offline' : 'Online'}
+              </Button>
             </LabeledControls.Item>
           </LabeledControls>
         </Section>

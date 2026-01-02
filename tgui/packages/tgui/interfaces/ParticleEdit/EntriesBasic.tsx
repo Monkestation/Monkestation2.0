@@ -1,4 +1,5 @@
-import { useBackend, useLocalState } from '../../backend';
+import { useState } from 'react';
+import { useBackend } from '../../backend';
 import {
   Box,
   Button,
@@ -27,7 +28,7 @@ import { editKeyOf, editWeightOf, setGradientSpace } from './helpers';
 
 export const EntryFloat = (props: EntryFloatProps) => {
   const { act, data } = useBackend<ParticleUIData>();
-  const [desc, setdesc] = useLocalState('desc', '');
+  const [desc, setdesc] = useState('');
   const { name, var_name, float } = props;
   return (
     <LabeledList.Item label={name}>
@@ -40,7 +41,9 @@ export const EntryFloat = (props: EntryFloatProps) => {
         animated
         value={float}
         minValue={0}
-        onDrag={(e, value) =>
+        maxValueInfinity
+        step={1}
+        onChange={(value) =>
           act('edit', {
             var: var_name,
             new_value: value,
@@ -53,7 +56,7 @@ export const EntryFloat = (props: EntryFloatProps) => {
 
 export const EntryCoord = (props: EntryCoordProps) => {
   const { act, data } = useBackend<ParticleUIData>();
-  const [desc, setdesc] = useLocalState('desc', '');
+  const [desc, setdesc] = useState('');
   const { name, var_name, coord } = props;
   return (
     <LabeledList.Item label={name}>
@@ -65,7 +68,9 @@ export const EntryCoord = (props: EntryCoordProps) => {
       <NumberInput
         animated
         value={coord?.[0] || 0}
-        onDrag={(e, value) =>
+        infinity
+        step={1}
+        onChange={(value) =>
           act('edit', {
             var: var_name,
             new_value: [value, coord?.[1], coord?.[2]],
@@ -75,7 +80,9 @@ export const EntryCoord = (props: EntryCoordProps) => {
       <NumberInput
         animated
         value={coord?.[1] || 0}
-        onDrag={(e, value) =>
+        infinity
+        step={1}
+        onChange={(value) =>
           act('edit', {
             var: var_name,
             new_value: [coord?.[0], value, coord?.[2]],
@@ -85,7 +92,10 @@ export const EntryCoord = (props: EntryCoordProps) => {
       <NumberInput
         animated
         value={coord?.[2] || 0}
-        onDrag={(e, value) =>
+        step={1}
+        minValueInfinity
+        maxValue={1}
+        onChange={(value) =>
           act('edit', {
             var: var_name,
             new_value: [coord?.[0], coord?.[1], value],
@@ -98,7 +108,7 @@ export const EntryCoord = (props: EntryCoordProps) => {
 
 export const EntryGradient = (props: EntryGradientProps) => {
   const { act, data } = useBackend<ParticleUIData>();
-  const [desc, setdesc] = useLocalState('desc', '');
+  const [desc, setdesc] = useState('');
   const { name, var_name, gradient } = props;
   const isLooping = gradient?.find((x) => x === 'loop');
   const space_type = gradient?.includes('space')
@@ -157,7 +167,7 @@ export const EntryGradient = (props: EntryGradientProps) => {
                   key={index}
                   maxWidth={'70px'}
                   value={entry.toString()}
-                  onChange={(e, value) =>
+                  onChange={(value) =>
                     act('edit', {
                       var: var_name,
                       new_value: gradient!.map((x, i) =>
@@ -199,7 +209,7 @@ export const EntryGradient = (props: EntryGradientProps) => {
 
 export const EntryTransform = (props: EntryTransformProps) => {
   const { act, data } = useBackend<ParticleUIData>();
-  const [desc, setdesc] = useLocalState('desc', '');
+  const [desc, setdesc] = useState('');
   const len = props.transform?.length ? props.transform.length : 0;
   const selected =
     len < 7
@@ -234,7 +244,8 @@ export const EntryTransform = (props: EntryTransformProps) => {
               value={value}
               minValue={0}
               maxValue={1}
-              onDrag={(e, value) =>
+              step={1}
+              onChange={(value) =>
                 act('edit', {
                   var: var_name,
                   new_value: transform!.map((x, i) =>
@@ -252,7 +263,7 @@ export const EntryTransform = (props: EntryTransformProps) => {
 
 export const EntryIcon = (props: EntryIconStateProps) => {
   const { act, data } = useBackend<ParticleUIData>();
-  const [desc, setdesc] = useLocalState('desc', '');
+  const [desc, setdesc] = useState('');
   const { name, var_name, icon_state } = props;
   return (
     <LabeledList.Item label={name}>
@@ -276,7 +287,7 @@ export const EntryIcon = (props: EntryIconStateProps) => {
                   animated
                   value={icon_state[icon_name]}
                   minValue={0}
-                  onDrag={(e, value) =>
+                  onChange={(value) =>
                     act('edit', {
                       var: var_name,
                       var_mod: P_DATA_ICON_WEIGHT,
@@ -324,7 +335,7 @@ export const EntryIcon = (props: EntryIconStateProps) => {
 
 export const EntryIconState = (props: EntryIconStateProps) => {
   const { act, data } = useBackend<ParticleUIData>();
-  const [desc, setdesc] = useLocalState('desc', '');
+  const [desc, setdesc] = useState('');
   const { name, var_name, icon_state } = props;
   const newValue =
     typeof icon_state === 'string'
@@ -349,7 +360,7 @@ export const EntryIconState = (props: EntryIconStateProps) => {
                 <Input
                   width={'70px'}
                   value={iconstate}
-                  onChange={(e, value) =>
+                  onChange={(value) =>
                     act('edit', {
                       var: var_name,
                       new_value: editKeyOf(icon_state, iconstate, value),
@@ -365,7 +376,7 @@ export const EntryIconState = (props: EntryIconStateProps) => {
                   animated
                   value={icon_state[iconstate]}
                   minValue={0}
-                  onDrag={(e, value) =>
+                  onChange={(value) =>
                     act('edit', {
                       var: var_name,
                       new_value: editWeightOf(icon_state, iconstate, value),
@@ -394,7 +405,7 @@ export const EntryIconState = (props: EntryIconStateProps) => {
           <>
             <Input
               value={icon_state ? icon_state : 'None'}
-              onChange={(e, value) =>
+              onChange={(value) =>
                 act('edit', {
                   var: var_name,
                   new_value: value,
