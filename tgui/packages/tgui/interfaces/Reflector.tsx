@@ -15,7 +15,7 @@ type Data = {
   reflector_name: string;
   rotation_angle: number;
 };
-export const Reflector = (props) => {
+export const Reflector = () => {
   const { act, data } = useBackend<Data>();
   const { reflector_name, rotation_angle } = data;
   return (
@@ -138,24 +138,26 @@ export const Reflector = (props) => {
           </Stack.Item>
           <Stack>
             <Section title="Angle" textAlign="center" fill>
-              <LabeledControls>
-                <LabeledControls.Item ml={1.5}>
-                  <NumberInput
-                    value={rotation_angle}
-                    unit="degrees"
-                    minValue={0}
-                    maxValue={359}
-                    step={1}
-                    width="100%"
-                    stepPixelSize={1}
-                    onChange={(value) =>
-                      act('rotate', {
-                        rotation_angle: value,
-                      })
-                    }
-                  />
-                </LabeledControls.Item>
-              </LabeledControls>
+              <Stack ml={1.5}>
+                <LabeledControls>
+                  <LabeledControls.Item>
+                    <NumberInput
+                      value={rotation_angle}
+                      unit="degrees"
+                      minValue={0}
+                      maxValue={359}
+                      step={1}
+                      width="100%"
+                      stepPixelSize={1}
+                      onChange={(value) =>
+                        act('rotate', {
+                          rotation_angle: value,
+                        })
+                      }
+                    />
+                  </LabeledControls.Item>
+                </LabeledControls>
+              </Stack>
               <Stack fill my={1}>
                 <Stack fill vertical>
                   <Stack.Item>
