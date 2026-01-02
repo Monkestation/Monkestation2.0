@@ -87,6 +87,7 @@
 	greyscale_config_inhand_right = null
 	greyscale_config_worn = null
 	flags_1 = NONE
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 
 /obj/item/clothing/shoes/sneakers/orange
 	name = "orange shoes"
