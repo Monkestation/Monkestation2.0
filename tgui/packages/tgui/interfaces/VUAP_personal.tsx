@@ -201,7 +201,7 @@ export const VUAP_personal = (props) => {
               <Table.Cell>
                 <Section title="Punish">
                   <Table>
-                    <Table.Cell size={6}>
+                    <Table.Cell width="6%">
                       <Button
                         fluid
                         icon="times"
@@ -224,7 +224,7 @@ export const VUAP_personal = (props) => {
                         onClick={() => handleAction('smite')}
                       />
                     </Table.Cell>
-                    <Table.Cell size={6}>
+                    <Table.Cell width="6%">
                       <Button
                         fluid
                         content="PRISON"
@@ -245,7 +245,7 @@ export const VUAP_personal = (props) => {
               <Table.Cell>
                 <Section title="Message">
                   <Table>
-                    <Table.Cell size={6}>
+                    <Table.Cell width="6%">
                       <Button
                         fluid
                         icon="comment"
@@ -265,7 +265,7 @@ export const VUAP_personal = (props) => {
                         onClick={() => handleAction('headsetmsg')}
                       />
                     </Table.Cell>
-                    <Table.Cell size={6}>
+                    <Table.Cell width="6%">
                       <Button
                         fluid
                         icon="comment-alt"
@@ -288,7 +288,7 @@ export const VUAP_personal = (props) => {
               <Table.Cell>
                 <Section title="Movement">
                   <Table>
-                    <Table.Cell size={6}>
+                    <Table.Cell width="6%">
                       <Button
                         fluid
                         icon="running"
@@ -308,7 +308,7 @@ export const VUAP_personal = (props) => {
                         onClick={() => handleAction('send')}
                       />
                     </Table.Cell>
-                    <Table.Cell size={6}>
+                    <Table.Cell width="6%">
                       <Button
                         fluid
                         icon="sign-out-alt"
@@ -335,7 +335,7 @@ export const VUAP_personal = (props) => {
               <Table.Cell>
                 <Section title="Info">
                   <Table>
-                    <Table.Cell size={6}>
+                    <Table.Cell width="6%">
                       <Button
                         fluid
                         icon="code"
@@ -355,7 +355,7 @@ export const VUAP_personal = (props) => {
                         onClick={() => handleAction('playtime')}
                       />
                     </Table.Cell>
-                    <Table.Cell size={6}>
+                    <Table.Cell width="6%">
                       <Button
                         fluid
                         icon="book"
@@ -384,7 +384,7 @@ export const VUAP_personal = (props) => {
               <Table.Cell>
                 <Section title="Transformation">
                   <Table>
-                    <Table.Cell size={6}>
+                    <Table.Cell width="6%">
                       <Button
                         fluid
                         icon="ghost"
@@ -413,7 +413,7 @@ export const VUAP_personal = (props) => {
                         onClick={() => handleAction('makemonkey')}
                       />
                     </Table.Cell>
-                    <Table.Cell size={6}>
+                    <Table.Cell width="6%">
                       <Button
                         fluid
                         icon="robot"
@@ -437,7 +437,7 @@ export const VUAP_personal = (props) => {
                 </Section>
                 <Section title="Health">
                   <Table>
-                    <Table.Cell size={6}>
+                    <Table.Cell width="6%">
                       <Button
                         fluid
                         icon="heart"
@@ -460,7 +460,7 @@ export const VUAP_personal = (props) => {
                         onClick={() => handleAction('cureAllDiseases')}
                       />
                     </Table.Cell>
-                    <Table.Cell size={6}>
+                    <Table.Cell width="6%">
                       <Button
                         fluid
                         icon="plus"
@@ -484,7 +484,7 @@ export const VUAP_personal = (props) => {
               <Table.Cell>
                 <Section title="Misc">
                   <Table>
-                    <Table.Cell size={6}>
+                    <Table.Cell width="6%">
                       <Button
                         fluid
                         icon="comment"
@@ -516,7 +516,7 @@ export const VUAP_personal = (props) => {
                         onClick={() => handleAction('spawncookie')}
                       />
                     </Table.Cell>
-                    <Table.Cell size={6}>
+                    <Table.Cell width="6%">
                       <Button
                         fluid
                         icon="star"
@@ -551,7 +551,7 @@ export const VUAP_personal = (props) => {
               <Table.Cell>
                 <Section title="Mute Controls">
                   <Table>
-                    <Table.Cell size={6}>
+                    <Table.Cell width="6%">
                       <Button.Checkbox
                         fluid
                         checked={playerData.muteStates.ic}
@@ -574,7 +574,7 @@ export const VUAP_personal = (props) => {
                         color={!playerData.muteStates.pray ? 'green' : 'red'}
                       />
                     </Table.Cell>
-                    <Table.Cell size={6}>
+                    <Table.Cell width="6%">
                       <Button.Checkbox
                         fluid
                         checked={playerData.muteStates.adminhelp}
