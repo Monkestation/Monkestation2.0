@@ -139,50 +139,44 @@ ADMIN_VERB_AND_CONTEXT_MENU(debug_variables, R_NONE, FALSE, "View Variables", "V
 		<link rel="stylesheet" type="text/css" href="[SSassets.transport.get_asset_url("view_variables.css")]">
 		[!ui_scale && window_scaling ? "<style>body {zoom: [100 / window_scaling]%;}</style>" : ""]
 	</head>
-	<body onload='selectTextField()' onkeydown='return handle_keydown()' onkeyup='handle_keyup()'>
+	<body onload='selectTextField()'>
 		<script type="text/javascript">
-		  const complete_list = \[\];
-			document.addEventListener("DOMContentLoaded", () => {
-				const vars = document.getElementById("vars");
-				if (!vars) return;
+			// this code used to be dogshit, and i broke it 5 times in the process of writing it because writing
+			// javascript code in dreammaker is actually awful. - chen
+			let varsOl = null;
+			let indexedList = [];
+			let lastFilter = "";
 
-				complete_list.push(...vars.children);
-			});
+			function getCookie(cname) {
+				const name = cname + "=";
+				const ca = document.cookie.split(";");
+				for (let c of ca) {
+					c = c.trim();
+					if (c.startsWith(name)) return c.substring(name.length);
+				}
+				return "";
+			}
 
-			// onload
 			function selectTextField() {
 				const filterInput = document.getElementById("filter");
+				if (!filterInput) return;
+
 				filterInput.focus();
 				filterInput.select();
-				var lastsearch = getCookie("[refid][cookieoffset]search");
+
+				const lastsearch = getCookie("[refid][cookieoffset]search");
 				if (lastsearch) {
 					filterInput.value = lastsearch;
 					updateSearch();
 				}
 			}
-			function getCookie(cname) {
-				var name = cname + "=";
-				var ca = document.cookie.split(';');
-				for(var i=0; i<ca.length; i++) {
-					var c = ca\[i];
-					while (c.charAt(0) == ' ') c = c.substring(1,c.length);
-					if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
-				}
-				return "";
-			}
-
-			// main search functionality
-			let lastFilter = "";
-
-			const varsOl = document.getElementById("vars");
-
-			const indexedList = complete_list.map(li => ({
-				li,
-				text: li.textContent.toLowerCase(),
-			}));
 
 			function updateSearch() {
+				if (!varsOl) return;
+
 				const filterInput = document.getElementById("filter");
+				if (!filterInput) return;
+
 				const filter = filterInput.value.toLowerCase();
 				if (filter === lastFilter) return;
 
@@ -190,21 +184,18 @@ ADMIN_VERB_AND_CONTEXT_MENU(debug_variables, R_NONE, FALSE, "View Variables", "V
 				const fragment = document.createDocumentFragment();
 
 				if (isRefinement) {
-					const children = Array.from(varsOl.children);
-					for (const li of children) {
+					for (const li of Array.from(varsOl.children)) {
 						if (!li.textContent.toLowerCase().includes(filter)) {
 							varsOl.removeChild(li);
 						}
 					}
 				} else {
 					varsOl.textContent = "";
-
 					for (const item of indexedList) {
 						if (!filter || item.text.includes(filter)) {
 							fragment.appendChild(item.li);
 						}
 					}
-
 					varsOl.appendChild(fragment);
 				}
 
@@ -219,38 +210,50 @@ ADMIN_VERB_AND_CONTEXT_MENU(debug_variables, R_NONE, FALSE, "View Variables", "V
 					t = setTimeout(() => fn.apply(this, args), delay);
 				};
 			}
+
 			const debouncedUpdateSearch = debounce(updateSearch, 50);
 
-			// onkeydown
 			function handle_keydown(e) {
 				if (e.key === "F5") {
-					document.getElementById("refresh_link").click();
+					document.getElementById("refresh_link")?.click();
 					e.preventDefault();
 					return false;
 				}
 				return true;
 			}
 
-			// onkeyup
 			function handle_keyup() {
 				debouncedUpdateSearch();
 			}
 
-			// onchange
 			function handle_dropdown(list) {
 				const value = list.value;
-				if (value) {
-					location.href = value;
-				}
+				if (value) location.href = value;
 				list.selectedIndex = 0;
-				document.getElementById("filter").focus();
+				document.getElementById("filter")?.focus();
 			}
 
-			// byjax
 			function replace_span(what) {
-				var idx = what.indexOf(':');
-				document.getElementById(what.substr(0, idx)).innerHTML = what.substr(idx + 1);
+				const idx = what.indexOf(":");
+				if (idx === -1) return;
+				const el = document.getElementById(what.slice(0, idx));
+				if (el) el.innerHTML = what.slice(idx + 1);
 			}
+
+			document.addEventListener("DOMContentLoaded", () => {
+				varsOl = document.getElementById("vars");
+				if (!varsOl) return;
+
+				indexedList = Array.from(varsOl.children).map(li => ({
+					li,
+					text: li.textContent.toLowerCase(),
+				}));
+
+				document.addEventListener("keydown", handle_keydown);
+				document.addEventListener("keyup", handle_keyup);
+
+				selectTextField();
+			});
 		</script>
 		<div align='center'>
 			<table width='100%'>

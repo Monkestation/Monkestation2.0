@@ -26,6 +26,8 @@ export const NtosSupermatter = (props) => {
         ) : (
           <Section
             title="Detected Supermatters"
+            height="100%"
+            overflowY="auto"
             buttons={
               <Button
                 icon="sync"

@@ -1,7 +1,8 @@
-import { binaryInsertWith, sortBy } from 'common/collections';
+import { binaryInsertWith } from 'common/collections';
+import { sortBy } from 'common/collections';
 import { ReactNode } from 'react';
 import { useBackend } from '../../backend';
-import { Box, Flex, Tooltip } from '../../components';
+import { Box, Stack, Tooltip } from '../../components';
 import { PreferencesMenuData } from './data';
 import features from './preferences/features';
 import { FeatureValueInput } from './preferences/features/base';
@@ -44,9 +45,9 @@ export const GamePreferencesPage = (props) => {
     }
 
     let name: ReactNode = (
-      <Flex.Item maxWidth="400px" grow={1} pr={2} basis={0} ml={2}>
+      <Stack.Item grow={1} pr={2} basis={0} ml={2}>
         {nameInner}
-      </Flex.Item>
+      </Stack.Item>
     );
 
     if (feature?.description) {
@@ -58,10 +59,10 @@ export const GamePreferencesPage = (props) => {
     }
 
     const child = (
-      <Flex align="center" key={featureId} pb={2} className="candystripe">
+      <Stack align="center" key={featureId} pb={2} className="candystripe">
         {name}
 
-        <Flex.Item grow={1} basis={0}>
+        <Stack.Item grow={1} basis={0}>
           {(feature && (
             <FeatureValueInput
               feature={feature}
@@ -74,8 +75,8 @@ export const GamePreferencesPage = (props) => {
               ...is not filled out properly!!!
             </Box>
           )}
-        </Flex.Item>
-      </Flex>
+        </Stack.Item>
+      </Stack>
     );
 
     const entry = {

@@ -5,7 +5,6 @@ import {
   Section,
   Table,
   TextArea,
-  Grid,
   Stack,
 } from '../components';
 import { BoxProps } from '../components/Box';
@@ -156,8 +155,8 @@ const PlayerRow = (props: { player: PlayerData }) => {
 const AdminHelpers = () => {
   return (
     <Section>
-      <Grid>
-        <Grid.Column>
+      <Table>
+        <Table.Cell>
           <Button
             fluid
             content="Check Players"
@@ -168,8 +167,8 @@ const AdminHelpers = () => {
             content="Game Panel"
             onClick={() => handleAction('gamePanel')}
           />
-        </Grid.Column>
-        <Grid.Column>
+        </Table.Cell>
+        <Table.Cell>
           <Button
             fluid
             content="Old PP"
@@ -185,8 +184,8 @@ const AdminHelpers = () => {
             content="Combo HUD"
             onClick={() => handleAction('comboHUD')}
           />
-        </Grid.Column>
-        <Grid.Column>
+        </Table.Cell>
+        <Table.Cell>
           <Button
             fluid
             content="Fax Panel"
@@ -202,8 +201,8 @@ const AdminHelpers = () => {
             content="Generate Code"
             onClick={() => handleAction('generateCode')}
           />
-        </Grid.Column>
-        <Grid.Column>
+        </Table.Cell>
+        <Table.Cell>
           <Button
             fluid
             content="View Opfors"
@@ -219,8 +218,8 @@ const AdminHelpers = () => {
             content="Toggle Admin AI Interact"
             onClick={() => handleAction('adminaiinteract')}
           />
-        </Grid.Column>
-      </Grid>
+        </Table.Cell>
+      </Table>
     </Section>
   );
 };

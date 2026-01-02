@@ -64,7 +64,7 @@ export const LoadoutManager = (props) => {
 
   return (
     <Stack height={`${CLOTHING_SIDEBAR_ROWS * CLOTHING_CELL_SIZE}px`}>
-      <Stack.Item>
+      <Stack.Item fill>
         <Stack vertical fill>
           <Stack.Item>
             <Stack>
@@ -82,7 +82,6 @@ export const LoadoutManager = (props) => {
                   icon="fa-solid fa-coins"
                   align="center"
                   tooltip="This is your total Monkecoin amount."
-                  tooltipPosition="top"
                 >
                   {total_coins}
                 </Button>

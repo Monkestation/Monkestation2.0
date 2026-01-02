@@ -1,5 +1,0 @@
-author: "Kmla2"
-delete-after: True
-changes:
-  - bugfix: "slashers terror screech shouldn't deal over 100 stamina damage on later fear stages anymore"
-  - bugfix: "terror screech makes people shake again"
