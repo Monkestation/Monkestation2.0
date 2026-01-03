@@ -53,6 +53,7 @@ export const FloatGenerator = (props: FloatGeneratorProps) => {
             <NumberInput
               animated
               value={float || 0.0}
+              tickWhileDragging
               onChange={(value) =>
                 act('edit', {
                   var: var_name,
@@ -178,6 +179,7 @@ export const EntryGeneratorNumbersList = (
             <NumberInput
               animated
               value={input || 0}
+              tickWhileDragging
               onChange={(value) =>
                 act('edit', {
                   var: var_name,
@@ -197,6 +199,7 @@ export const EntryGeneratorNumbersList = (
             <NumberInput
               animated
               value={input[0]}
+              tickWhileDragging
               onChange={(value) =>
                 act('edit', {
                   var: var_name,
@@ -207,6 +210,7 @@ export const EntryGeneratorNumbersList = (
             <NumberInput
               animated
               value={input[1]}
+              tickWhileDragging
               onChange={(value) =>
                 act('edit', {
                   var: var_name,
@@ -218,6 +222,7 @@ export const EntryGeneratorNumbersList = (
               <NumberInput
                 animated
                 value={input[2]}
+                tickWhileDragging
                 onChange={(value) =>
                   act('edit', {
                     var: var_name,

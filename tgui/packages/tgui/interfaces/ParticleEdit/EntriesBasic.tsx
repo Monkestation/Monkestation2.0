@@ -67,7 +67,7 @@ export const EntryCoord = (props: EntryCoordProps) => {
       <NumberInput
         animated
         value={coord?.[0] || 0}
-        step={1}
+        tickWhileDragging
         onChange={(value) =>
           act('edit', {
             var: var_name,
@@ -78,7 +78,7 @@ export const EntryCoord = (props: EntryCoordProps) => {
       <NumberInput
         animated
         value={coord?.[1] || 0}
-        step={1}
+        tickWhileDragging
         onChange={(value) =>
           act('edit', {
             var: var_name,
@@ -89,8 +89,7 @@ export const EntryCoord = (props: EntryCoordProps) => {
       <NumberInput
         animated
         value={coord?.[2] || 0}
-        step={1}
-        maxValue={1}
+        tickWhileDragging
         onChange={(value) =>
           act('edit', {
             var: var_name,
@@ -240,7 +239,7 @@ export const EntryTransform = (props: EntryTransformProps) => {
               value={value}
               minValue={0}
               maxValue={1}
-              step={1}
+              tickWhileDragging
               onChange={(value) =>
                 act('edit', {
                   var: var_name,
@@ -283,6 +282,7 @@ export const EntryIcon = (props: EntryIconStateProps) => {
                   animated
                   value={icon_state[icon_name]}
                   minValue={0}
+                  tickWhileDragging
                   onChange={(value) =>
                     act('edit', {
                       var: var_name,

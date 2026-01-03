@@ -240,6 +240,7 @@ export const HypertorusWasteRemove = () => {
             unit="mol/s"
             minValue={5}
             maxValue={200}
+            tickWhileDragging
             onChange={(value) =>
               act('mod_filtering_rate', {
                 mod_filtering_rate: value,

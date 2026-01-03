@@ -123,6 +123,7 @@ const GasList = (props: GasListProps) => {
           minValue={input_min}
           maxValue={input_max}
           step={1}
+          tickWhileDragging
           onChange={(v) => act(input_rate, { [input_rate]: v })}
         />
       </LabeledList.Item>

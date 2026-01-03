@@ -67,6 +67,7 @@ export const GeneratorListEntry = (props: GeneratorProps) => {
             animated
             value={A}
             minValue={0}
+            tickWhileDragging
             onChange={(value) =>
               act('edit', {
                 var: var_name,
@@ -80,6 +81,7 @@ export const GeneratorListEntry = (props: GeneratorProps) => {
             <NumberInput
               animated
               value={A[0]}
+              tickWhileDragging
               onChange={(value) =>
                 act('edit', {
                   var: var_name,
@@ -96,6 +98,7 @@ export const GeneratorListEntry = (props: GeneratorProps) => {
             <NumberInput
               animated
               value={A[1]}
+              tickWhileDragging
               onChange={(value) =>
                 act('edit', {
                   var: var_name,
@@ -107,6 +110,7 @@ export const GeneratorListEntry = (props: GeneratorProps) => {
             <NumberInput
               animated
               value={A[2]}
+              tickWhileDragging
               onChange={(value) =>
                 act('edit', {
                   var: var_name,
@@ -124,6 +128,7 @@ export const GeneratorListEntry = (props: GeneratorProps) => {
           <NumberInput
             animated
             value={B}
+            tickWhileDragging
             onChange={(value) =>
               act('edit', {
                 var: var_name,
@@ -137,6 +142,7 @@ export const GeneratorListEntry = (props: GeneratorProps) => {
             <NumberInput
               animated
               value={B[0]}
+              tickWhileDragging
               onChange={(value) =>
                 act('edit', {
                   var: var_name,
@@ -153,6 +159,7 @@ export const GeneratorListEntry = (props: GeneratorProps) => {
             <NumberInput
               animated
               value={B[1]}
+              tickWhileDragging
               onChange={(value) =>
                 act('edit', {
                   var: var_name,
@@ -169,6 +176,7 @@ export const GeneratorListEntry = (props: GeneratorProps) => {
             <NumberInput
               animated
               value={B[2]}
+              tickWhileDragging
               onChange={(value) =>
                 act('edit', {
                   var: var_name,

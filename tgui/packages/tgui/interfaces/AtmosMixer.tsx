@@ -71,6 +71,7 @@ export const AtmosMixer = (props) => {
                 minValue={0}
                 maxValue={100}
                 stepPixelSize={2}
+                tickWhileDragging
                 onChange={(value) =>
                   act('node1', {
                     concentration: value,
@@ -88,6 +89,7 @@ export const AtmosMixer = (props) => {
                 minValue={0}
                 maxValue={100}
                 stepPixelSize={2}
+                tickWhileDragging
                 onChange={(value) =>
                   act('node2', {
                     concentration: value,

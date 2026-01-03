@@ -548,6 +548,7 @@ const SnowflakeRadio = (props) => {
           maxValue={maxFrequency / 10}
           value={frequency / 10}
           format={(value) => toFixed(value, 1)}
+          tickWhileDragging
           onChange={(value) =>
             act('equip_act', {
               ref: ref,
