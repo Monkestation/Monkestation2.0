@@ -860,3 +860,6 @@
   throwawayuseless:
   - balance: all the basic brute and burn healing and damaging pathogen symptoms now
       work on robots and golems, assuming they were infectable to begin with.
+2025-12-31:
+  SirNightKnight:
+  - balance: medical circuits cannot be installed in brain computer interfaces.

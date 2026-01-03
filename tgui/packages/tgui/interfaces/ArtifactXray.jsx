@@ -40,7 +40,8 @@ export const ArtifactXray = (props) => {
                     stepPixelSize={35}
                     step={1}
                     unit={'Pulse Strength'}
-                    onDrag={(e, nu) => act('change_rate', { target: nu })}
+                    tickWhileDragging
+                    onChange={(e, nu) => act('change_rate', { target: nu })}
                   />
                 </Stack.Item>
                 <Stack.Item>

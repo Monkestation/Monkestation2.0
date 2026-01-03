@@ -21,10 +21,10 @@ type Category = {
 };
 
 type Data = {
-  current_volume: Number;
+  current_volume: number;
   product_name: string;
-  min_volume: Number;
-  max_volume: Number;
+  min_volume: number;
+  max_volume: number;
   packaging_category: string;
   packaging_types: Category[];
   packaging_type: string;

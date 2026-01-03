@@ -51,10 +51,12 @@ const FutureStationTraitsPage = (props) => {
       <Stack fill>
         <Stack.Item grow>
           <Dropdown
-            displayText={!selectedTrait && 'Select trait to add...'}
+            displayText={
+              !selectedTrait ? 'Select trait to add...' : selectedTrait
+            }
             onSelected={setSelectedTrait}
             options={traitNames}
-            selected={selectedTrait}
+            selected={selectedTrait || ''}
             width="100%"
           />
         </Stack.Item>
