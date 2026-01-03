@@ -208,7 +208,6 @@
 	name = "ash coated foot wraps"
 	desc = "May hurt for less than normal legs."
 	icon_state = "rag"
-	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
 
 /obj/item/clothing/shoes/wraps/ashwalker/tribalwraps
 	icon = 'monkestation/code/modules/blueshift/icons/shoes.dmi'

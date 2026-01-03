@@ -5,6 +5,18 @@
 	desc = "Ankle coverings. These ones have a golden design."
 	icon_state = "gildedcuffs"
 	body_parts_covered = FALSE
+	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
+
+// Wraps have different icons so parent doesn't fit properly.
+#define SHOE_SAMPLE_X 14
+#define SHOE_SAMPLE_Y 3
+
+/obj/item/clothing/shoes/wraps/get_general_color(icon/base_icon)
+	// just grabs the color of the middle of the left foot
+	return base_icon.GetPixel(SHOE_SAMPLE_X, SHOE_SAMPLE_Y) || ..()
+
+#undef SHOE_SAMPLE_X
+#undef SHOE_SAMPLE_Y
 
 /obj/item/clothing/shoes/wraps/silver
 	name = "silver leg wraps"
