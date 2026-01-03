@@ -1,6 +1,6 @@
 #define MAX_ADVANCES 3
 #define MIN_PAY_MOD 0.5
-#define MAX_PAY_MOD 1.5
+#define MAX_PAY_MOD 2
 
 /obj/machinery/computer/accounting
 	name = "account lookup console"
