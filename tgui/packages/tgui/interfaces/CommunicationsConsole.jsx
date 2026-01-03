@@ -84,7 +84,7 @@ const MessageModal = (props) => {
             width="80vw"
             backgroundColor="black"
             textColor="white"
-            onInput={(_, value) => {
+            onChange={(_, value) => {
               setInput(value.substring(0, maxMessageLength));
             }}
             value={input}
@@ -398,7 +398,7 @@ const PageMain = (props) => {
               // canBuyShuttles is a string detailing the fail reason
               // if one can be given
               tooltip={canBuyShuttles !== 1 ? canBuyShuttles : undefined}
-              tooltipPosition="right"
+              tooltipPosition="top"
               onClick={() => act('setState', { state: STATE_BUYING_SHUTTLE })}
             />
           )}

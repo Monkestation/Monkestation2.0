@@ -1,0 +1,5 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - bugfix: "ED209's no longer take space helmets to craft."
+  - bugfix: "Lung stirfry no longer takes cybernetic lungs to craft."

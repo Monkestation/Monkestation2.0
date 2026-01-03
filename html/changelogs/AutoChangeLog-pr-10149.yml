@@ -1,5 +1,0 @@
-author: "EatsTheGrapes"
-delete-after: True
-changes:
-  - bugfix: "Fixed an issue where receiving a PDA message could freeze other active TGUI interfaces"
-  - code_imp: "Deferred PDA messenger UI updates to prevent overlapping TGUI refreshes"

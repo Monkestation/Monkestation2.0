@@ -1,7 +1,6 @@
 import { useBackend, useLocalState } from '../backend';
 import { Section, Collapsible, Button, Tabs, Flex } from '../components';
 import { Window } from '../layouts';
-import { Fragment } from 'inferno';
 
 export const TicketListPanel = (props) => {
   const { act, data } = useBackend();
@@ -51,7 +50,7 @@ export const TicketListView = (props) => {
   };
 
   return (
-    <Fragment>
+    <>
       <Collapsible
         className="ticket_section"
         color={open_count === 0 ? 'default' : 'red'}
@@ -109,7 +108,7 @@ export const TicketListView = (props) => {
             />
           ))}
       </Collapsible>
-    </Fragment>
+    </>
   );
 };
 
@@ -212,7 +211,9 @@ export const TicketSummary = (props) => {
       <br />
       Admin: {ticket.admin_key ? ticket.admin_key : 'UNCLAIMED'}
       <br />
-      <span class="color-bad">{!ticket.has_client ? 'DISCONNECTED' : ''}</span>
+      <span className="color-bad">
+        {!ticket.has_client ? 'DISCONNECTED' : ''}
+      </span>
       <Section level="2">
         {buttons.map((button_row, i) => (
           <Flex direction="row" key={i}>

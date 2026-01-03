@@ -37,7 +37,7 @@ export const OreContainer = (props) => {
           <Stack.Item>
             <Section>
               <Input
-                autofocus
+                autoFocus
                 position="relative"
                 mt={0.5}
                 bottom="5%"
