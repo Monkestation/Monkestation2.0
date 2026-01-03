@@ -10,7 +10,7 @@
 	products = list(
 		/obj/item/restraints/handcuffs = 8,
 		/obj/item/restraints/handcuffs/cable/zipties = 16,
-		/obj/item/grenade/flashbang = 10,
+		/obj/item/grenade/flashbang = 12,
 		/obj/item/grenade/smokebomb/security = 7,
 		/obj/item/assembly/flash/handheld = 6,
 		/obj/item/food/donut/plain = 12,
@@ -33,9 +33,6 @@
 	premium = list(
 		/obj/item/storage/belt/security/webbing = 5,
 		/obj/item/coin/antagtoken = 1,
-		// /obj/item/clothing/head/helmet/blueshirt = 1,
-		// /obj/item/clothing/suit/armor/vest/blueshirt = 1,
-		//moved to secdrobe
 		/obj/item/clothing/gloves/color/black/security/blu = 1,
 		/obj/item/clothing/gloves/tackler = 5,
 		/obj/item/grenade/stingbang = 1,
