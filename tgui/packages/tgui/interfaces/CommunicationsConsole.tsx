@@ -207,13 +207,15 @@ const AlertButton = ({
 };
 
 type MessageModalProps = {
-  /** Label shown above the textarea and initial input value */
+  /** Label shown above the textarea */
   label: string;
+  /** Placeholder text for the input */
+  placeholder?: string;
 
   /** Button text for submit */
   buttonText: string;
 
-  /** Icon for submit button (tgui Button icon) */
+  /** Icon for submit button */
   icon?: string;
 
   /** Minimum required message length */
@@ -233,7 +235,7 @@ const MessageModal = (props: MessageModalProps) => {
   const { data } = useBackend<CommunicationsBaseData>();
   const { maxMessageLength } = data;
 
-  const [input, setInput] = useState(props.label);
+  const [input, setInput] = useState('');
 
   const longEnough =
     props.minLength === undefined || input.length >= props.minLength;
@@ -256,6 +258,7 @@ const MessageModal = (props: MessageModalProps) => {
               setInput(value.substring(0, maxMessageLength));
             }}
             value={input}
+            placeholder={props.placeholder}
           />
         </Flex.Item>
 
@@ -448,6 +451,8 @@ const PageMain = () => {
     },
   );
 
+  const shuttleDisabled = typeof shuttleCanEvacOrFailReason === 'string';
+
   return (
     <Box>
       {!syndicate && (
@@ -470,11 +475,7 @@ const PageMain = () => {
           )) || (
             <Button
               icon="space-shuttle"
-              disabled={
-                typeof shuttleCanEvacOrFailReason === 'string'
-                  ? true
-                  : shuttleCanEvacOrFailReason
-              }
+              disabled={shuttleDisabled}
               tooltip={
                 typeof shuttleCanEvacOrFailReason === 'string'
                   ? shuttleCanEvacOrFailReason
