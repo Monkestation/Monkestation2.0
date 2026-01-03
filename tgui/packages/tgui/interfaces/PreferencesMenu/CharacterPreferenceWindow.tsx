@@ -27,12 +27,10 @@ const CharacterProfiles = (props: {
   const { profiles } = props;
 
   return (
-    <Stack overflowX="scroll">
+    <Stack justify="center" wrap>
       {profiles.map((profile, slot) => (
-        <Stack.Item key={slot}>
+        <Stack.Item key={slot} my={0.25}>
           <Button
-            ellipsis
-            maxWidth="150px"
             selected={slot === props.activeSlot}
             onClick={() => {
               props.onClick(slot);
@@ -96,7 +94,7 @@ export const CharacterPreferenceWindow = (props) => {
           profiles={data.character_profiles}
         />
       </Stack.Item>
-
+      <Stack.Divider />
       <Stack.Item>
         <Stack fill>
           <Stack.Item grow>
@@ -156,7 +154,7 @@ export const CharacterPreferenceWindow = (props) => {
         </Stack>
       </Stack.Item>
       <Stack.Divider />
-      <Stack.Item grow overflowY="auto">
+      <Stack.Item grow overflowY="auto" overflowX="hidden">
         {pageContents}
       </Stack.Item>
     </Stack>

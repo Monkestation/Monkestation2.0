@@ -1,14 +1,14 @@
 import { sortBy } from 'common/collections';
 import { classes } from 'common/react';
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { useBackend } from '../../backend';
-import { Box, Button, Dropdown, Stack, Tooltip } from '../../components';
+import { Box, Button, Dropdown, Stack, Tooltip } from 'tgui-core/components';
 import {
   createSetPreference,
-  Job,
+  type Job,
   JoblessRole,
   JobPriority,
-  PreferencesMenuData,
+  type PreferencesMenuData,
 } from './data';
 import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';
 
@@ -184,7 +184,7 @@ const JobRow = (props: { className?: string; job: Job; name: string }) => {
   const { act } = useBackend<PreferencesMenuData>();
 
   const experienceNeeded =
-    data.job_required_experience && data.job_required_experience[name];
+    data.job_required_experience && data?.job_required_experience[name];
   const daysLeft = data.job_days_left ? data.job_days_left[name] : 0;
 
   const alt_title_selected = data.job_alt_titles[name]
@@ -263,7 +263,7 @@ const JobRow = (props: { className?: string; job: Job; name: string }) => {
           </Stack.Item>
         </Tooltip>
 
-        <Stack.Item width="40%" className="options" /* SKYRAT EDIT */>
+        <Stack.Item grow className="options">
           {rightSide}
         </Stack.Item>
       </Stack>
@@ -302,8 +302,8 @@ const Department: React.FC<{
         );
 
         return (
-          <Box>
-            <Stack vertical fill>
+          <Box className={className}>
+            <Stack vertical>
               {jobsForDepartment.map(([name, job]) => {
                 return (
                   <JobRow
@@ -332,11 +332,11 @@ const Department: React.FC<{
 // But in order for everything to align, I also need to add the 0.2em padding.
 // But also, we can't be aligned with names that break into multiple lines!
 const Gap = (props: { amount: number }) => {
-  // 0.2em comes from the paddingBottom in the department listing
+  // 0.2em comes from the padding-bottom in the department listing
   return <Box height={`calc(${props.amount}px + 0.2em)`} />;
 };
 
-const JoblessRoleDropdown = (props) => {
+const JoblessRoleDropdown = () => {
   const { act, data } = useBackend<PreferencesMenuData>();
   const selected = data.character_preferences.misc.joblessrole;
 
@@ -357,7 +357,7 @@ const JoblessRoleDropdown = (props) => {
 
   const selection = options?.find(
     (option) => option.value === selected,
-  )?.displayText;
+  )!.displayText;
 
   return (
     <Box position="absolute" right={1} width="25%">
@@ -366,11 +366,6 @@ const JoblessRoleDropdown = (props) => {
         selected={selection}
         onSelected={createSetPreference(act, 'joblessrole')}
         options={options}
-        displayText={
-          <Box pr={1}>
-            {options.find((option) => option.value === selected)!.displayText}
-          </Box>
-        }
       />
     </Box>
   );
@@ -378,66 +373,40 @@ const JoblessRoleDropdown = (props) => {
 
 export const JobsPage = () => {
   return (
-    <>
+    <Stack vertical>
       <JoblessRoleDropdown />
+      <Gap amount={22} />
+      <Stack.Item>
+        <Stack className="PreferencesMenu__Jobs">
+          <Stack.Item>
+            <Gap amount={36} />
+            <PriorityHeaders />
 
-      <Stack vertical fill>
-        <Gap amount={22} />
+            <Department department="Engineering" />
+            <Department department="Science" />
+            <Department department="Silicon" />
+            <Department department="Assistant" />
+          </Stack.Item>
 
-        <Stack.Item>
-          <Stack fill className="PreferencesMenu__Jobs">
-            <Stack.Item mr={1}>
-              <Gap amount={36} />
+          <Stack.Item>
+            <Gap amount={10} />
+            <PriorityHeaders />
 
-              <PriorityHeaders />
+            <Department department="Captain" />
+            <Department department="Service" />
+            <Department department="Cargo" />
+          </Stack.Item>
 
-              <Department department="Engineering">
-                <Gap amount={6} />
-              </Department>
+          <Stack.Item>
+            <Gap amount={36} />
+            <PriorityHeaders />
 
-              <Department department="Science">
-                <Gap amount={6} />
-              </Department>
-
-              <Department department="Silicon">
-                <Gap amount={12} />
-              </Department>
-
-              <Department department="Assistant" />
-            </Stack.Item>
-
-            <Stack.Item mr={1}>
-              <PriorityHeaders />
-
-              <Department department="Captain">
-                <Gap amount={6} />
-              </Department>
-
-              <Department department="Service">
-                <Gap amount={6} />
-              </Department>
-
-              <Department department="Cargo" />
-            </Stack.Item>
-
-            <Stack.Item>
-              <Gap amount={36} />
-
-              <PriorityHeaders />
-
-              <Department department="Security">
-                <Gap amount={6} />
-              </Department>
-
-              <Department department="Medical">
-                <Gap amount={6} />
-              </Department>
-
-              <Department department="Central Command" />
-            </Stack.Item>
-          </Stack>
-        </Stack.Item>
-      </Stack>
-    </>
+            <Department department="Security" />
+            <Department department="Medical" />
+            <Department department="Central Command" />
+          </Stack.Item>
+        </Stack>
+      </Stack.Item>
+    </Stack>
   );
 };
