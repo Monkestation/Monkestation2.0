@@ -158,6 +158,7 @@ export const websocketMiddleware = (store) => {
 
     if (type === reconnectWebsocket.type) {
       setupWebsocket();
+      sendWSNotice('Attempting to connect to websocket...', true);
       return result;
     }
 
@@ -166,7 +167,11 @@ export const websocketMiddleware = (store) => {
       clearReconnectTimer();
       safeClose(WEBSOCKET_DISABLED);
       websocket = null;
-      sendWSNotice('Websocket forcefully disconnected.', true);
+      retryCount = 0;
+      sendWSNotice(
+        'Websocket forcefully disconnected. (Retry count reset)',
+        true,
+      );
       return result;
     }
 
