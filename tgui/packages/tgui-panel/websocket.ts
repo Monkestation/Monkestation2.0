@@ -45,8 +45,7 @@ export const websocketMiddleware = (store) => {
     if (
       websocket.readyState === WebSocket.CLOSED ||
       websocket.readyState === WebSocket.CLOSING
-    )
-      return;
+    ) return;
 
     websocket.close(code, reason);
   };

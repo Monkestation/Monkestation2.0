@@ -6168,12 +6168,32 @@ __metadata:
   languageName: node
   linkType: hard
 
-"marked@npm:^4.2.12":
-  version: 4.3.0
-  resolution: "marked@npm:4.3.0"
+"marked-base-url@npm:^1.1.6":
+  version: 1.1.8
+  resolution: "marked-base-url@npm:1.1.8"
+  peerDependencies:
+    marked: ">= 4 < 18"
+  checksum: 10c0/b8009e94f23d4dfd8a5b500dc8309b2a804587636de2d56f0b85ad4ede102584c94771d05b4a04d084dfb4f71016314f2f3e58432f175c3a770cf4656af3a750
+  languageName: node
+  linkType: hard
+
+"marked-smartypants@npm:^1.1.9":
+  version: 1.1.11
+  resolution: "marked-smartypants@npm:1.1.11"
+  dependencies:
+    smartypants: "npm:^0.2.2"
+  peerDependencies:
+    marked: ">=4 <18"
+  checksum: 10c0/613e9135d59b8a096ad71da2ff1b93aa8b4fc62518659d35fa1f386aac4aca66141e2ad09c2ac88fb8109123a6b3167dae286b235e1ac6f116deffd0033a2dff
+  languageName: node
+  linkType: hard
+
+"marked@npm:^15.0.11":
+  version: 15.0.12
+  resolution: "marked@npm:15.0.12"
   bin:
     marked: bin/marked.js
-  checksum: 10c0/0013463855e31b9c88d8bb2891a611d10ef1dc79f2e3cbff1bf71ba389e04c5971298c886af0be799d7fa9aa4593b086a136062d59f1210b0480b026a8c5dc47
+  checksum: 10c0/e09da211544b787ecfb25fed07af206060bf7cd6d9de6cb123f15c496a57f83b7aabea93340aaa94dae9c94e097ae129377cad6310abc16009590972e85f4212
   languageName: node
   linkType: hard
 
@@ -7828,6 +7848,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"smartypants@npm:^0.2.2":
+  version: 0.2.2
+  resolution: "smartypants@npm:0.2.2"
+  bin:
+    smartypants: bin/smartypants.js
+    smartypantsu: bin/smartypantsu.js
+  checksum: 10c0/29b46df6acaed9ad6271624e26e055d6360c9da7f79433b7a83ebd40b50bd6b554d8f3793932f42be07e5badce889f547c89378fda77cb1f935b09a902c4527b
+  languageName: node
+  linkType: hard
+
 "snake-case@npm:^3.0.4":
   version: 3.0.4
   resolution: "snake-case@npm:3.0.4"
@@ -8468,7 +8498,9 @@ __metadata:
     es-toolkit: "npm:^1.43.0"
     highlight.js: "npm:^11.9.0"
     js-yaml: "npm:^4.1.0"
-    marked: "npm:^4.2.12"
+    marked: "npm:^15.0.11"
+    marked-base-url: "npm:^1.1.6"
+    marked-smartypants: "npm:^1.1.9"
     react: "npm:^19.2.3"
     react-dom: "npm:^19.2.3"
     react-json-tree: "npm:^0.20.0"
