@@ -277,7 +277,8 @@
 			return
 
 		name = account?.account_holder
-		if(account?.account_job)
+		//only command personnel can blow their budget on actual orders, rest can use their dep console.
+		if(account?.account_job && (account?.account_job.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND))
 			personal_department = SSeconomy.get_dep_account(account.account_job.paycheck_department)
 			if(!(personal_department.account_holder == "Cargo Budget"))
 				var/dept_choice = tgui_alert(user, "Which department are you requesting this for?", "Choose department to request from", list("Cargo Budget", "[personal_department.account_holder]"))

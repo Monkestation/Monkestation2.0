@@ -42489,7 +42489,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/station/commons/dorms)
 "qAO" = (
-/obj/machinery/computer/accounting,
+/obj/machinery/computer/accounting/hop,
 /obj/structure/cable,
 /obj/machinery/light/directional/north,
 /obj/machinery/firealarm/directional/north,

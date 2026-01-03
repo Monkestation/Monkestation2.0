@@ -1,14 +1,21 @@
 import { Box, Button, DmIcon, Stack } from 'tgui-core/components';
 import { useBackend } from '../../backend';
-import { type Data, SCREENS } from './types';
+import { SCREENS } from './types';
 
 type FakeWindowProps = {
   name: string;
   setScreenmode: (mode: SCREENS) => void;
 };
-export const FakeWindowIan = (props: FakeWindowProps) => {
-  const { data } = useBackend<Data>();
-  const { young_ian } = data;
+
+type FakeWindowPetProps = {
+  name: string;
+  setScreenmode: (mode: SCREENS) => void;
+  icon: string;
+  icon_state: string;
+};
+
+export const FakeWindowPet = (props: FakeWindowPetProps) => {
+  const { icon, icon_state } = props;
 
   return (
     <FakeWindow {...props}>
@@ -16,12 +23,13 @@ export const FakeWindowIan = (props: FakeWindowProps) => {
         width="300px"
         height="300px"
         mt={1}
-        icon="icons/mob/simple/pets.dmi"
-        icon_state={young_ian ? 'puppy' : 'corgi'}
+        icon={icon}
+        icon_state={icon_state}
       />
     </FakeWindow>
   );
 };
+
 export const FakeWindow = (
   props: FakeWindowProps & {
     children: React.ReactNode;

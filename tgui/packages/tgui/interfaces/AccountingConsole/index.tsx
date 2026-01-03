@@ -3,18 +3,30 @@ import { Button, DmIcon, Stack } from 'tgui-core/components';
 import { useBackend, useSharedState } from '../../backend';
 import { Window } from '../../layouts';
 import { AuditScreen } from './AuditScreen';
+import { UnionScreen } from './UnionScreen';
 import { FakeDesktopButton } from './FakeDesktopButton';
 import { FakeToolbarButton } from './FakeToolbarButton';
-import { FakeWindow, FakeWindowIan } from './FakeWindow';
+import { FakeWindow, FakeWindowPet } from './FakeWindow';
 import { type Data, SCREENS } from './types';
 import { UsersScreen } from './UsersScreen';
 
 export const AccountingConsole = () => {
+  return (
+    <Window width={680} height={440} theme="ntOS95">
+      <Window.Content fontFamily="Tahoma">
+        <AccountingConsoleContents />
+      </Window.Content>
+    </Window>
+  );
+};
+
+export const AccountingConsoleContents = () => {
   const { data } = useBackend<Data>();
   const {
     station_time = '00:00',
     pic_file_format = 'png',
     young_ian = false,
+    union_mode,
   } = data;
   const [screenmode, setScreenmode] = useSharedState('screen', SCREENS.none);
 
@@ -23,28 +35,28 @@ export const AccountingConsole = () => {
     : `Ian.${pic_file_format}`;
 
   return (
-    <Window width={680} height={440} theme="ntOS95">
-      <Window.Content fontFamily="Tahoma">
-        <Stack vertical fill>
-          <Stack.Item>
-            <Stack height="355px">
-              <Stack.Item width="100px">
-                <Stack mt={1} ml={2}>
-                  <Stack.Item>
-                    <Stack vertical align="center">
-                      <FakeDesktopButton
-                        name="paychecks.exe"
-                        setScreenmode={setScreenmode}
-                        ownerScreenMode={SCREENS.users}
-                      >
-                        <DmIcon
-                          width="70px"
-                          height="70px"
-                          mt={1}
-                          icon="icons/obj/card.dmi"
-                          icon_state="budgetcard"
-                        />
-                      </FakeDesktopButton>
+    <Stack vertical fill>
+      <Stack.Item>
+        <Stack height="355px">
+          <Stack.Item width="100px">
+            <Stack mt={1} ml={2}>
+              <Stack.Item>
+                <Stack vertical align="center">
+                  <FakeDesktopButton
+                    name="paychecks.exe"
+                    setScreenmode={setScreenmode}
+                    ownerScreenMode={SCREENS.users}
+                  >
+                    <DmIcon
+                      width="70px"
+                      height="70px"
+                      mt={1}
+                      icon="icons/obj/card.dmi"
+                      icon_state="budgetcard"
+                    />
+                  </FakeDesktopButton>
+                  {!union_mode ? (
+                    <>
                       <FakeDesktopButton
                         name="audit.exe"
                         setScreenmode={setScreenmode}
@@ -71,20 +83,53 @@ export const AccountingConsole = () => {
                           icon_state={young_ian ? 'puppy' : 'corgi'}
                         />
                       </FakeDesktopButton>
-                    </Stack>
-                  </Stack.Item>
+                    </>
+                  ) : (
+                    <>
+                      <FakeDesktopButton
+                        name="union.exe"
+                        setScreenmode={setScreenmode}
+                        ownerScreenMode={SCREENS.union}
+                      >
+                        <DmIcon
+                          width="70px"
+                          height="70px"
+                          mt={1}
+                          icon="monkestation/icons/obj/clothing/accessories.dmi"
+                          icon_state="cargo-silver"
+                        />
+                      </FakeDesktopButton>
+                      <FakeDesktopButton
+                        name={`Paperwork.${pic_file_format}`}
+                        setScreenmode={setScreenmode}
+                        ownerScreenMode={SCREENS.paperwork}
+                      >
+                        <DmIcon
+                          width="70px"
+                          height="70px"
+                          mt={1}
+                          icon="icons/mob/simple/pets.dmi"
+                          icon_state={'sloth'}
+                        />
+                      </FakeDesktopButton>
+                    </>
+                  )}
                 </Stack>
               </Stack.Item>
-              {screenmode === SCREENS.users && (
-                <Stack.Item grow ml={3}>
-                  <FakeWindow
-                    name="Crew Account Summary"
-                    setScreenmode={setScreenmode}
-                  >
-                    <UsersScreen />
-                  </FakeWindow>
-                </Stack.Item>
-              )}
+            </Stack>
+          </Stack.Item>
+          {screenmode === SCREENS.users && (
+            <Stack.Item grow ml={3}>
+              <FakeWindow
+                name="Crew Account Summary"
+                setScreenmode={setScreenmode}
+              >
+                <UsersScreen />
+              </FakeWindow>
+            </Stack.Item>
+          )}
+          {!union_mode ? (
+            <>
               {screenmode === SCREENS.audit && (
                 <Stack.Item grow ml={3}>
                   <FakeWindow name="Audit Log" setScreenmode={setScreenmode}>
@@ -94,43 +139,69 @@ export const AccountingConsole = () => {
               )}
               {screenmode === SCREENS.ian && (
                 <Stack.Item ml={10}>
-                  <FakeWindowIan
+                  <FakeWindowPet
                     name={ianFileName}
                     setScreenmode={setScreenmode}
+                    icon="icons/mob/simple/pets.dmi"
+                    icon_state={young_ian ? 'puppy' : 'corgi'}
                   />
                 </Stack.Item>
               )}
-            </Stack>
+            </>
+          ) : (
+            <>
+              {screenmode === SCREENS.union && (
+                <Stack.Item grow ml={3}>
+                  <FakeWindow name="Cargo Union" setScreenmode={setScreenmode}>
+                    <UnionScreen />
+                  </FakeWindow>
+                </Stack.Item>
+              )}
+              {screenmode === SCREENS.paperwork && (
+                <Stack.Item ml={10}>
+                  <FakeWindowPet
+                    name={`Paperwork.${pic_file_format}`}
+                    setScreenmode={setScreenmode}
+                    icon="icons/mob/simple/pets.dmi"
+                    icon_state={'sloth'}
+                  />
+                </Stack.Item>
+              )}
+            </>
+          )}
+        </Stack>
+      </Stack.Item>
+      <Stack.Item
+        grow
+        mt={1}
+        p={0.5}
+        ml={-1}
+        mr={-1}
+        mb={-1}
+        className="Accounting__Toolbar"
+      >
+        <Stack>
+          <Stack.Item mr={1}>
+            <Button
+              disabled
+              textColor="black"
+              icon="user"
+              p={0.75}
+              pl={1}
+              pr={1}
+              iconSize={1.25}
+            />
           </Stack.Item>
-          <Stack.Item
-            grow
-            mt={1}
-            p={0.5}
-            ml={-1}
-            mr={-1}
-            mb={-1}
-            className="Accounting__Toolbar"
-          >
-            <Stack>
-              <Stack.Item mr={1}>
-                <Button
-                  disabled
-                  textColor="black"
-                  icon="user"
-                  p={0.75}
-                  pl={1}
-                  pr={1}
-                  iconSize={1.25}
-                />
-              </Stack.Item>
-              <Stack.Item mr={1}>
-                <FakeToolbarButton
-                  name="Account Management"
-                  currentScreenMode={screenmode}
-                  setScreenmode={setScreenmode}
-                  ownerScreenMode={SCREENS.users}
-                />
-              </Stack.Item>
+          <Stack.Item mr={1}>
+            <FakeToolbarButton
+              name="Account Management"
+              currentScreenMode={screenmode}
+              setScreenmode={setScreenmode}
+              ownerScreenMode={SCREENS.users}
+            />
+          </Stack.Item>
+          {!union_mode ? (
+            <>
               <Stack.Item mr={1}>
                 <FakeToolbarButton
                   name="Audit Log"
@@ -147,16 +218,35 @@ export const AccountingConsole = () => {
                   ownerScreenMode={SCREENS.ian}
                 />
               </Stack.Item>
-              <Stack.Item grow />
-              <Stack.Item>
-                <Button p={0.75} pl={1} pr={1} disabled textColor="black">
-                  {station_time} ST
-                </Button>
+            </>
+          ) : (
+            <>
+              <Stack.Item mr={1}>
+                <FakeToolbarButton
+                  name="Cargo Union"
+                  currentScreenMode={screenmode}
+                  setScreenmode={setScreenmode}
+                  ownerScreenMode={SCREENS.union}
+                />
               </Stack.Item>
-            </Stack>
+              <Stack.Item mr={1}>
+                <FakeToolbarButton
+                  name={`Paperwork.${pic_file_format}`}
+                  currentScreenMode={screenmode}
+                  setScreenmode={setScreenmode}
+                  ownerScreenMode={SCREENS.paperwork}
+                />
+              </Stack.Item>
+            </>
+          )}
+          <Stack.Item grow />
+          <Stack.Item>
+            <Button p={0.75} pl={1} pr={1} disabled textColor="black">
+              {station_time} ST
+            </Button>
           </Stack.Item>
         </Stack>
-      </Window.Content>
-    </Window>
+      </Stack.Item>
+    </Stack>
   );
 };

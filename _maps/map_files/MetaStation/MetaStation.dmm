@@ -43473,7 +43473,7 @@
 	name = "Privacy Shutters Control";
 	req_access = list("kitchen")
 	},
-/obj/machinery/computer/accounting,
+/obj/machinery/computer/accounting/hop,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "oYd" = (

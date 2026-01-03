@@ -18869,7 +18869,7 @@
 /turf/open/floor/plating,
 /area/station/engineering/atmos)
 "fJl" = (
-/obj/machinery/computer/accounting{
+/obj/machinery/computer/accounting/hop{
 	dir = 4
 	},
 /obj/structure/cable,

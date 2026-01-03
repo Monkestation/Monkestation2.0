@@ -87818,7 +87818,7 @@
 /turf/open/floor/carpet/blue,
 /area/station/commons/vacant_room/office)
 "uNy" = (
-/obj/machinery/computer/accounting{
+/obj/machinery/computer/accounting/hop{
 	dir = 4
 	},
 /turf/open/floor/wood,

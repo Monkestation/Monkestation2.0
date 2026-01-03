@@ -13746,7 +13746,7 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/security/brig)
 "euG" = (
-/obj/machinery/computer/accounting{
+/obj/machinery/computer/accounting/hop{
 	dir = 8
 	},
 /obj/item/radio/intercom/directional/north,

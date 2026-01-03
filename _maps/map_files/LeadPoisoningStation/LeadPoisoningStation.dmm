@@ -42883,7 +42883,7 @@
 "uvK" = (
 /obj/effect/turf_decal/tile/dark_blue/diagonal_edge,
 /obj/structure/window/reinforced/spawner/directional/north,
-/obj/machinery/computer/accounting,
+/obj/machinery/computer/accounting/hop,
 /turf/open/floor/iron/diagonal,
 /area/station/command/heads_quarters/hop)
 "uvP" = (
