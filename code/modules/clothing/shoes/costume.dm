@@ -7,6 +7,7 @@
 	equip_delay_other = 100
 	armor_type = /datum/armor/shoes_roman
 	can_be_tied = FALSE
+	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
 
 /obj/item/clothing/shoes/griffin
 	name = "griffon boots"
@@ -45,6 +46,7 @@
 	icon = 'icons/obj/clothing/shoes.dmi'
 	icon_state = "clockwork_treads"
 	can_be_tied = FALSE
+	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
 
 /obj/item/clothing/shoes/bronze/Initialize(mapload)
 	. = ..()
