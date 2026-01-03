@@ -18,6 +18,7 @@ export const reconnectWebsocket = createAction('websocket/reconnect');
 export const disconnectWebsocket = createAction('websocket/disconnect');
 
 const MAX_RETRIES = 10;
+const RETRY_INTERVAL = 500; // ms
 
 // Websocket close codes
 const WEBSOCKET_DISABLED = 4555;
@@ -78,10 +79,10 @@ export const websocketMiddleware = (store) => {
         retryCount++;
         setupWebsocket();
       }
-    }, 1000);
+    }, RETRY_INTERVAL);
   };
 
-  const setupWebsocket = () => {
+  const setupWebsocket = (force = false) => {
     const { websocketEnabled, websocketServer } = selectSettings(
       store.getState(),
     );
@@ -93,7 +94,23 @@ export const websocketMiddleware = (store) => {
       return;
     }
 
-    if (websocket && websocket.readyState === WebSocket.OPEN) return;
+    if (!force && websocket && websocket.readyState === WebSocket.OPEN) {
+      return;
+    }
+
+    if (force) {
+      clearReconnectTimer();
+
+      if (websocket) {
+        manuallyClosed = true;
+        try {
+          websocket.close(WEBSOCKET_REATTEMPT, 'forced reconnect');
+        } catch {
+          /* ignore */
+        }
+        websocket = null;
+      }
+    }
 
     try {
       manuallyClosed = false;
@@ -157,7 +174,7 @@ export const websocketMiddleware = (store) => {
     }
 
     if (type === reconnectWebsocket.type) {
-      setupWebsocket();
+      setupWebsocket(true);
       sendWSNotice('Attempting to connect to websocket...', true);
       return result;
     }
