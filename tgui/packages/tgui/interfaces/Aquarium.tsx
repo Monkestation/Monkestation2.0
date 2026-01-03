@@ -41,6 +41,7 @@ export const Aquarium = (props) => {
                 maxValue={maxTemperature}
                 step={1}
                 stepPixelSize={1}
+                tickWhileDragging
                 onChange={(_, value) =>
                   act('temperature', {
                     temperature: value,

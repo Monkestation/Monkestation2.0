@@ -94,6 +94,7 @@ const ComboKnob = (props: ComboProps) => {
         maxValue={maxValue}
         step={step}
         stepPixelSize={1}
+        tickWhileDragging
         onChange={(_, v) => act(parameter, { [parameter]: v })}
         {...rest}
       />

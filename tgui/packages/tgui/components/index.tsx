@@ -34,7 +34,7 @@ import {
   MenuBar,
   Modal,
   NoticeBox,
-  // NumberInput,
+  NumberInput,
   Pointer,
   Popper,
   ProgressBar,
@@ -82,7 +82,7 @@ export {
   MenuBar,
   Modal,
   NoticeBox,
-  // NumberInput,
+  NumberInput,
   Pointer,
   Popper,
   ProgressBar,
@@ -102,4 +102,3 @@ export {
 
 export { KeyListener } from './KeyListener';
 export { Button } from './Button';
-export { NumberInput } from './NumberInput';
