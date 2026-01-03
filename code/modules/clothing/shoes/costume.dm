@@ -14,6 +14,10 @@
 	icon_state = "griffinboots"
 	inhand_icon_state = null
 	lace_time = 8 SECONDS
+	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
+
+/obj/item/clothing/shoes/griffin/generate_digitigrade_icons(icon/base_icon, greyscale_colors)
+	return icon(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/digitigrade, greyscale_colors), "galoshes") //close enough
 
 /datum/armor/shoes_roman
 	bio = 10
@@ -102,10 +106,10 @@
 	name = "vessel's boots"
 	desc = "* Boots, they appear to be a replica of the ones a legendary vessel wore while saving the world."
 	icon_state = "kris_boots"
-	inhand_icon_state = null 
+	inhand_icon_state = null
 
 /obj/item/clothing/shoes/dio
 	name = "flamboyant sabatons"
 	desc = "So pointy you could use them like knives!"
 	icon_state = "dioelfshoes"
-	inhand_icon_state = null 
+	inhand_icon_state = null

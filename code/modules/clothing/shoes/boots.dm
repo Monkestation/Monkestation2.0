@@ -189,6 +189,7 @@
 	desc = "They may have lost some of their lustre over the years, but these green lizardskin shoes fit you perfectly."
 	icon_state = "lizardskin_shoes"
 	inhand_icon_state = null
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 
 /obj/item/clothing/shoes/kim
 	name = "aerostatic boots"

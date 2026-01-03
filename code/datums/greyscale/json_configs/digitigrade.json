@@ -43,5 +43,13 @@
 			"blend_mode": "overlay",
 			"color_ids": [ 1 ]
 		}
+	],
+	"galoshes": [
+		{
+			"type": "icon_state",
+			"icon_state": "galoshes",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
 	]
 }
