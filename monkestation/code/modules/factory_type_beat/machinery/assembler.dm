@@ -100,6 +100,8 @@
 /obj/machinery/assembler/proc/accept_item(atom/movable/atom_movable)
 	if(!chosen_recipe)
 		return
+	if(!isturf(atom_movable.loc))
+		return
 	if(isstack(atom_movable))
 		var/obj/item/stack/stack = atom_movable
 		if(!(stack.merge_type in chosen_recipe.reqs))
