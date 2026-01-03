@@ -89,6 +89,8 @@
 ///Sets the badge's identity to the name and description given to us.
 /obj/item/clothing/accessory/badge/proc/set_identity(mob/living/named_mob)
 	if(!ismob(named_mob))
+		//If we used a custom name of someone that exists, use their actual
+		//name to keep capitalization consistency.
 		var/found_name = findname(named_mob)
 		if(found_name)
 			named_mob = found_name
