@@ -110,6 +110,12 @@
 	if(. & SPELL_CANCEL_CAST)
 		return
 
+	if(ismovable(cast_on))
+		var/atom/movable/movable = cast_on
+		if(movable?.bound_width > 32 || movable?.bound_height > 32)
+			owner.balloon_alert(owner, "too big!")
+			return . | SPELL_CANCEL_CAST
+
 	if(isitem(cast_on))
 		var/obj/item/item = cast_on
 		if(item.item_flags & ABSTRACT)
