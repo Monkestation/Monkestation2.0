@@ -18,8 +18,7 @@
 	var/mob/living/basic/hiding_pawn = controller.pawn
 
 	if(!istype(hiding_pawn))
-		finish_action(controller, FALSE)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	var/mob/living/living_pawn = controller.pawn
 
@@ -27,19 +26,16 @@
 	if(now_hiding)
 		// We can't hide if we can't move properly, or if we don't have any valid hiding locations.
 		if(!(living_pawn.mobility_flags & MOBILITY_MOVE) || !isturf(living_pawn.loc) || living_pawn.pulledby || !islist(controller.blackboard[BB_HIDING_CAN_HIDE_ON]))
-			finish_action(controller, FALSE)
-			return
+			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 		// We can't hide if we don't match the proper turf type we need to hide onto.
 		if(!controller.blackboard[BB_HIDING_CAN_HIDE_ON][living_pawn.loc.type])
-			finish_action(controller, FALSE)
-			return
+			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	var/hiding_status_changed = controller.blackboard[BB_HIDING_HIDDEN] != now_hiding
 
 	if(!hiding_status_changed)
-		finish_action(controller, TRUE)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 	controller.set_blackboard_key(BB_HIDING_HIDDEN, now_hiding)
 	SEND_SIGNAL(living_pawn, COMSIG_MOVABLE_TOGGLE_HIDING, now_hiding, TRUE)
@@ -54,6 +50,5 @@
 
 	controller.set_blackboard_key(BB_AGGRO_RANGE, new_vision_range)
 
-	finish_action(controller, TRUE)
-	return
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
