@@ -1,6 +1,6 @@
 import { sortBy } from 'common/collections';
 import { capitalize } from 'common/string';
-import { useBackend, useLocalState } from '../backend';
+import { useBackend } from '../backend';
 import {
   Blink,
   Box,
@@ -15,15 +15,7 @@ import {
 import { StatusDisplayControls } from './common/StatusDisplayControls';
 import { Window } from '../layouts';
 import { sanitizeText } from '../sanitize';
-import {
-  JSX,
-  JSXElementConstructor,
-  MouseEventHandler,
-  ReactElement,
-  ReactNode,
-  ReactPortal,
-  useState,
-} from 'react';
+import { JSX, useState } from 'react';
 import { BooleanLike } from 'tgui-core/react';
 
 const STATE_BUYING_SHUTTLE = 'buying_shuttle';
