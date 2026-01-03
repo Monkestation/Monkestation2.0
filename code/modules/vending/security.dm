@@ -10,7 +10,7 @@
 	products = list(
 		/obj/item/restraints/handcuffs = 8,
 		/obj/item/restraints/handcuffs/cable/zipties = 16,
-		/obj/item/grenade/flashbang = 7,
+		/obj/item/grenade/flashbang = 10,
 		/obj/item/grenade/smokebomb/security = 7,
 		/obj/item/assembly/flash/handheld = 6,
 		/obj/item/food/donut/plain = 12,
