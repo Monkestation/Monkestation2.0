@@ -177,6 +177,7 @@
 	greyscale_config = /datum/greyscale_config/laceup
 	greyscale_config_worn = /datum/greyscale_config/laceup/worn
 	flags_1 = IS_PLAYER_COLORABLE_1
+	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
 
 /obj/item/clothing/shoes/colorable_sandals
 	name = "sandals"

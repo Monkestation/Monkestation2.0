@@ -12,6 +12,7 @@
 	can_be_bloody = FALSE
 	custom_price = PAYCHECK_CREW * 3
 	can_be_tied = FALSE
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 
 /obj/item/clothing/shoes/galoshes/dry
 	name = "absorbent galoshes"
