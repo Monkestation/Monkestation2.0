@@ -4,9 +4,9 @@
 	icon_state = "sterile"
 	inhand_icon_state = "s_mask"
 	w_class = WEIGHT_CLASS_TINY
-	flags_inv = HIDEFACE|HIDESNOUT
+	flags_inv = HIDEFACE
 	flags_cover = MASKCOVERSMOUTH
-	visor_flags_inv = HIDEFACE|HIDESNOUT
+	visor_flags_inv = HIDEFACE
 	visor_flags_cover = MASKCOVERSMOUTH
 	armor_type = /datum/armor/mask_surgical
 	actions_types = list(/datum/action/item_action/adjust)
