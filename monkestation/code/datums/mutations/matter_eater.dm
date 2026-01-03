@@ -115,12 +115,15 @@
 		if(item.item_flags & ABSTRACT)
 			owner.balloon_alert(owner, "... no.")
 			return . | SPELL_CANCEL_CAST
+		if(item.item_flags & IN_STORAGE || item.item_flags & IN_INVENTORY)
+			owner.balloon_alert(owner, "in storage!")
+			return . | SPELL_CANCEL_CAST
 
 	if(isliving(cast_on))
-		owner.balloon_alert(owner, "gross")
+		owner.balloon_alert(owner, "gross!")
 		return . | SPELL_CANCEL_CAST
 
-	if(((cast_on.resistance_flags & INDESTRUCTIBLE) || HAS_TRAIT(cast_on, TRAIT_NODROP)) && !is_type_in_typecache(cast_on.type, typecacheof(edibles_exempt)))
+	if((cast_on.resistance_flags & INDESTRUCTIBLE) && !is_type_in_typecache(cast_on.type, typecacheof(edibles_exempt)))
 		owner.balloon_alert(owner, "impossible to eat!")
 		return . | SPELL_CANCEL_CAST
 
@@ -131,6 +134,10 @@
 
 	if(iseffect(cast_on))
 		owner.balloon_alert(owner, "what even is this?")
+		return . | SPELL_CANCEL_CAST
+
+	if(cast_on.loc == owner)
+		owner.balloon_alert(owner, "can't eat this!")
 		return . | SPELL_CANCEL_CAST
 
 	if(!isturf(owner.loc))
