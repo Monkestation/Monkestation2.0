@@ -43,6 +43,7 @@ type TopCassetteData = {
   cassette_icon_state: string;
   cassette_ref: string;
   purchase_count: number;
+  cassette_removed?: boolean;
 };
 
 type CassetteLibraryData = {
@@ -567,78 +568,122 @@ const TopCassettes = ({ top_cassettes }) => {
                   border: `2px solid ${getRankBorderColor(index)}`,
                   padding: '10px',
                   borderRadius: '4px',
+                  background: cassette.cassette_removed
+                    ? 'repeating-linear-gradient(45deg, rgba(139, 0, 0, 0.3), rgba(139, 0, 0, 0.3) 10px, rgba(139, 0, 0, 0.5) 10px, rgba(139, 0, 0, 0.5) 20px)'
+                    : 'none',
+                  position: 'relative',
                 }}
               >
-                <Stack vertical>
-                  <Stack.Item>
-                    <Stack>
-                      <Stack.Item>
-                        <Box
-                          width="64px"
-                          height="64px"
-                          style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                          }}
-                        >
-                          <DmIcon
-                            icon={cassette.cassette_icon}
-                            icon_state={cassette.cassette_icon_state}
+                {cassette.cassette_removed ? (
+                  <Stack vertical>
+                    <Stack.Item>
+                      <Stack align="center">
+                        <Stack.Item>
+                          <Box
                             width="64px"
                             height="64px"
-                            fallback={<Icon name="cassette-tape" size={4} />}
-                          />
-                        </Box>
-                      </Stack.Item>
-                      <Stack.Item grow>
-                        <Stack vertical>
-                          <Stack.Item>
-                            <Box fontSize="16px" bold>
-                              #{index + 1} - {cassette.cassette_name}
-                            </Box>
-                            {getRankTrophyColor(index) && (
-                              <Box mt={0.5}>
-                                <Icon
-                                  name="trophy"
-                                  size={1}
-                                  color={getRankTrophyColor(index)}
-                                />
+                            style={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                            }}
+                          >
+                            <Icon name="times" size={4} color="#8b0000" />
+                          </Box>
+                        </Stack.Item>
+                        <Stack.Item grow>
+                          <Stack vertical>
+                            <Stack.Item>
+                              <Box fontSize="14px" bold color="#ff4444" mt={1}>
+                                THIS CASSETTE ENTRY HAS BEEN REMOVED BY THE
+                                SPACE BOARD OF MUSIC
                               </Box>
-                            )}
-                          </Stack.Item>
-                          <Stack.Item>
-                            <Box>
-                              <Box as="span" bold>
-                                Author:
-                              </Box>{' '}
-                              {cassette.cassette_author}{' '}
-                              <Box as="span" fontSize="11px" color="label">
-                                (( {cassette.cassette_author_ckey} ))
+                            </Stack.Item>
+                            <Stack.Item>
+                              <Box>
+                                <Box as="span" bold>
+                                  Total Purchases:
+                                </Box>{' '}
+                                {cassette.purchase_count}
                               </Box>
-                            </Box>
-                          </Stack.Item>
-                          <Stack.Item>
-                            <Box>
-                              <Box as="span" bold>
-                                Description:
-                              </Box>{' '}
-                              {cassette.cassette_desc}
-                            </Box>
-                          </Stack.Item>
-                          <Stack.Item>
-                            <Box>
-                              <Box as="span" bold>
-                                Total Purchases:
-                              </Box>{' '}
-                              {cassette.purchase_count}
-                            </Box>
-                          </Stack.Item>
-                        </Stack>
-                      </Stack.Item>
-                    </Stack>
-                  </Stack.Item>
-                </Stack>
+                            </Stack.Item>
+                          </Stack>
+                        </Stack.Item>
+                      </Stack>
+                    </Stack.Item>
+                  </Stack>
+                ) : (
+                  <Stack vertical>
+                    <Stack.Item>
+                      <Stack>
+                        <Stack.Item>
+                          <Box
+                            width="64px"
+                            height="64px"
+                            style={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                            }}
+                          >
+                            <DmIcon
+                              icon={cassette.cassette_icon}
+                              icon_state={cassette.cassette_icon_state}
+                              width="64px"
+                              height="64px"
+                              fallback={<Icon name="cassette-tape" size={4} />}
+                            />
+                          </Box>
+                        </Stack.Item>
+                        <Stack.Item grow>
+                          <Stack vertical>
+                            <Stack.Item>
+                              <Box fontSize="16px" bold>
+                                #{index + 1} - {cassette.cassette_name}
+                              </Box>
+                              {getRankTrophyColor(index) && (
+                                <Box mt={0.5}>
+                                  <Icon
+                                    name="trophy"
+                                    size={1}
+                                    color={getRankTrophyColor(index)}
+                                  />
+                                </Box>
+                              )}
+                            </Stack.Item>
+                            <Stack.Item>
+                              <Box>
+                                <Box as="span" bold>
+                                  Author:
+                                </Box>{' '}
+                                {cassette.cassette_author}{' '}
+                                <Box as="span" fontSize="11px" color="label">
+                                  (( {cassette.cassette_author_ckey} ))
+                                </Box>
+                              </Box>
+                            </Stack.Item>
+                            <Stack.Item>
+                              <Box>
+                                <Box as="span" bold>
+                                  Description:
+                                </Box>{' '}
+                                {cassette.cassette_desc}
+                              </Box>
+                            </Stack.Item>
+                            <Stack.Item>
+                              <Box>
+                                <Box as="span" bold>
+                                  Total Purchases:
+                                </Box>{' '}
+                                {cassette.purchase_count}
+                              </Box>
+                            </Stack.Item>
+                          </Stack>
+                        </Stack.Item>
+                      </Stack>
+                    </Stack.Item>
+                  </Stack>
+                )}
               </Box>
             </Stack.Item>
           ))}

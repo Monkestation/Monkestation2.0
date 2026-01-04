@@ -215,6 +215,9 @@
 		entry["cassette_icon"] = 'icons/obj/cassettes/walkman.dmi'
 		entry["cassette_icon_state"] = icon_state
 		entry["cassette_ref"] = REF(cassette)
+	else
+		// once a cassette is removed by an admin, mark it as removed by the Space Board of Music
+		entry["cassette_removed"] = TRUE
 
 /// sorting proc for cassette purchases (descending by purchase_count) (methinks)
 /proc/cmp_cassette_purchase_count_dsc(list/a, list/b)
