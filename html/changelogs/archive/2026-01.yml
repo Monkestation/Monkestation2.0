@@ -1,0 +1,43 @@
+2026-01-01:
+  EatsTheGrapes:
+  - bugfix: Fixed an issue where receiving a PDA message could freeze other active
+      TGUI interfaces
+  - code_imp: Deferred PDA messenger UI updates to prevent overlapping TGUI refreshes
+  flleeppyy:
+  - bugfix: Disallow lobby lurkers from getting roundend rewards
+  grungussuss:
+  - sound: writing something now produces sound
+2026-01-02:
+  Absolucy:
+  - bugfix: Fixed the admin VV bitfield editor not working.
+  Ice-Type:
+  - bugfix: Bluespace RPEDs now correctly function at range
+  JohnFulpWillard:
+  - bugfix: The character preference menu should look a little more like how it used
+      to look.
+  - bugfix: Bloodsucker's antag pref menu blood is red again.
+  - bugfix: Heliostation's weight machines are now visible.
+  - spellcheck: '"Out floorbot" -> "Our floorbot"'
+  - bugfix: NT Representative can no longer roll bloodling.
+  - bugfix: NT CIMS is scrollable if you have enough supermatters.
+  Kmla2:
+  - bugfix: slashers terror screech shouldn't deal over 100 stamina damage on later
+      fear stages anymore
+  - bugfix: terror screech makes people shake again
+  SirNightKnight:
+  - bugfix: fixed burn treatment medical stack items sending the can't heal alert
+      when healing burn wounds.
+  SyncIt21, JohnFulpWillard:
+  - bugfix: The PDA camera app now works.
+  Tractor-Maam:
+  - bugfix: handheld crew monitor designs no longer print the same thing.
+  flleeppyy:
+  - bugfix: VV search
+  jlsnow301:
+  - bugfix: Fixed a bluescreen in emojipedia
+  - bugfix: Fixed a bluescreen in comms console
+  jlsnow301, JohnFulpWillard:
+  - bugfix: Fixed the UIs for signalers, airlock electronics/RCDs, and clockwork slabs
+2026-01-03:
+  Absolucy:
+  - bugfix: Ckeys with pronouns in OOC are now properly underlined again.

@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - bugfix: "Plasmamen don't take toxin damage from plasma."

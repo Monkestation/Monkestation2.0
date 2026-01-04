@@ -6,7 +6,7 @@
 
 /datum/bounty/item/bot/floorbot
 	name = "Floorbot"
-	description = "Out last floorbot went haywire and removed all our floors. So we need another floorbot to replace the priors issues."
+	description = "Our last floorbot went haywire and removed all our floors. So we need another floorbot to replace the priors issues."
 	reward = CARGO_CRATE_VALUE * 3
 	wanted_types = list(/mob/living/simple_animal/bot/floorbot = TRUE)
 
