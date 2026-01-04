@@ -87,7 +87,7 @@ const Controls = (props) => {
             minValue={0}
             maxValue={250}
             stepPixelSize={1}
-            step={1}
+            tickWhileDragging
             onChange={(value) =>
               act('gas_input', {
                 gas_input: value,

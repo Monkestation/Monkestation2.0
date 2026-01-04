@@ -156,6 +156,7 @@ export const ChemReactionChamber = (props) => {
                         step={1}
                         stepPixelSize={3}
                         width="39px"
+                        tickWhileDragging
                         onChange={(value) =>
                           act('acidic', {
                             target: value,
@@ -171,6 +172,7 @@ export const ChemReactionChamber = (props) => {
                         step={1}
                         stepPixelSize={3}
                         width="39px"
+                        tickWhileDragging
                         onChange={(value) =>
                           act('alkaline', {
                             target: value,
@@ -203,6 +205,7 @@ export const ChemReactionChamber = (props) => {
                         step={1}
                         stepPixelSize={3}
                         width="39px"
+                        tickWhileDragging
                         onChange={(value) => setReagentQuantity(value)}
                       />
                       <Box inline mr={1} />

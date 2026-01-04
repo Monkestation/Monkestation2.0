@@ -103,6 +103,7 @@ export const Canister = (props) => {
                       maxValue={maxReleasePressure}
                       step={5}
                       stepPixelSize={1}
+                      tickWhileDragging
                       onChange={(_e, value) =>
                         act('pressure', {
                           pressure: value,

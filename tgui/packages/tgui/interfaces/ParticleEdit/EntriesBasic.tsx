@@ -41,7 +41,7 @@ export const EntryFloat = (props: EntryFloatProps) => {
         animated
         value={float}
         minValue={0}
-        step={1}
+        tickWhileDragging
         onChange={(value) =>
           act('edit', {
             var: var_name,

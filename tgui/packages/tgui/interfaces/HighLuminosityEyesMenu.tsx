@@ -83,6 +83,7 @@ const RangeDisplay = (props) => {
         value={range}
         minValue={0}
         maxValue={5}
+        tickWhileDragging
         onChange={(value) =>
           act('set_range', {
             new_range: value,

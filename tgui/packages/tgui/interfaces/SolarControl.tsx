@@ -158,6 +158,7 @@ export const SolarControl = (props) => {
                   minValue={-360}
                   maxValue={+720}
                   value={azimuth_current}
+                  tickWhileDragging
                   onChange={(value) => act('azimuth', { value })}
                 />
               )}
@@ -174,6 +175,7 @@ export const SolarControl = (props) => {
                     const sign = Math.sign(rate) > 0 ? '+' : '-';
                     return sign + Math.abs(rate);
                   }}
+                  tickWhileDragging
                   onChange={(value) => act('azimuth_rate', { value })}
                 />
               )}

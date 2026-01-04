@@ -41,6 +41,7 @@ export const ChemMixingChamber = (props) => {
                       value={round(targetTemp)}
                       minValue={0}
                       maxValue={1000}
+                      tickWhileDragging
                       onChange={(value) =>
                         act('temperature', {
                           target: value,
@@ -109,6 +110,7 @@ export const ChemMixingChamber = (props) => {
                         step={1}
                         stepPixelSize={3}
                         width="39px"
+                        tickWhileDragging
                         onChange={(value) => setReagentQuantity(value)}
                       />
                       <Box inline mr={1} />

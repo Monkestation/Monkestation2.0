@@ -148,6 +148,7 @@ export const Reflector = () => {
                     step={1}
                     width="100%"
                     stepPixelSize={1}
+                    tickWhileDragging
                     onChange={(value) =>
                       act('rotate', {
                         rotation_angle: value,

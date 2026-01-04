@@ -1155,6 +1155,7 @@ const DelayHelper = (props) => {
                 ? 'orange'
                 : 'default'
             }
+            tickWhileDragging
             onChange={(_e, value) => {
               act('editTiming', {
                 timer: '' + (i + 1),

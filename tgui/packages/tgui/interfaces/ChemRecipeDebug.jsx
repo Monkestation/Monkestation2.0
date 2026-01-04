@@ -84,6 +84,7 @@ export const ChemRecipeDebug = (props) => {
                 value={round(targetTemp)}
                 minValue={0}
                 maxValue={1000}
+                tickWhileDragging
                 onChange={(value) =>
                   act('temperature', {
                     target: value,
@@ -112,6 +113,7 @@ export const ChemRecipeDebug = (props) => {
                 value={round(targetVol)}
                 minValue={1}
                 maxValue={200}
+                tickWhileDragging
                 onChange={(value) =>
                   act('vol', {
                     target: value,
@@ -128,6 +130,7 @@ export const ChemRecipeDebug = (props) => {
                 value={targatpH}
                 minValue={0}
                 maxValue={14}
+                tickWhileDragging
                 onChange={(value) =>
                   act('pH', {
                     target: value,
@@ -196,6 +199,7 @@ export const ChemRecipeDebug = (props) => {
                       value={entry.var}
                       minValue={-9999}
                       maxValue={9999}
+                      tickWhileDragging
                       onChange={(value) =>
                         act('updateVar', {
                           type: entry.name,

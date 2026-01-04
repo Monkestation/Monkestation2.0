@@ -470,6 +470,7 @@ const RecipeLibrary = (props) => {
             value={page}
             minValue={1}
             maxValue={pageIndexMax}
+            tickWhileDragging
             onChange={(value) => setPage(value)}
           />
           <Button

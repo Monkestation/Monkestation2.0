@@ -122,7 +122,6 @@ const GasList = (props: GasListProps) => {
           unit="mol/s"
           minValue={input_min}
           maxValue={input_max}
-          step={1}
           tickWhileDragging
           onChange={(v) => act(input_rate, { [input_rate]: v })}
         />

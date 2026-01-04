@@ -26,6 +26,7 @@ const FilterIntegerEntry = (props) => {
       maxValue={500}
       stepPixelSize={5}
       width="39px"
+      tickWhileDragging
       onChange={(value) =>
         act('modify_filter_value', {
           name: filterName,
@@ -52,6 +53,7 @@ const FilterFloatEntry = (props) => {
         step={step}
         format={(value) => toFixed(value, numberOfDecimalDigits(step))}
         width="80px"
+        tickWhileDragging
         onChange={(value) =>
           act('transition_filter_value', {
             name: filterName,

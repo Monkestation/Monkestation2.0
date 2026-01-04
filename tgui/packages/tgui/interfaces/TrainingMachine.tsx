@@ -45,6 +45,7 @@ const TrainingControls = (props) => {
           value={movespeed}
           minValue={1}
           maxValue={10}
+          tickWhileDragging
           onChange={(_, value) => act('movespeed', { movespeed: value })}
         />
       </LabeledControls.Item>
@@ -57,6 +58,7 @@ const TrainingControls = (props) => {
           value={range}
           minValue={1}
           maxValue={7}
+          tickWhileDragging
           onChange={(_, value) => act('range', { range: value })}
         />
       </LabeledControls.Item>

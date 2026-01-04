@@ -43,6 +43,7 @@ export const Electropack = (props) => {
                 value={frequency / 10}
                 format={(value) => toFixed(value, 1)}
                 width="80px"
+                tickWhileDragging
                 onChange={(value) =>
                   act('freq', {
                     freq: value,
@@ -72,6 +73,7 @@ export const Electropack = (props) => {
                 maxValue={100}
                 value={code}
                 width="80px"
+                tickWhileDragging
                 onChange={(value) =>
                   act('code', {
                     code: value,

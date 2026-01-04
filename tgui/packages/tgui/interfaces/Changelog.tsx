@@ -15,7 +15,7 @@ import { Window } from '../layouts';
 import { resolveAsset } from '../assets';
 import dateformat from 'dateformat';
 import yaml from 'js-yaml';
-import { LobbyNotices, LobbyNoticesType } from './common/LobbyNotices';
+import { LobbyNoticesType } from './common/LobbyNotices';
 
 const icons = {
   bugfix: { icon: 'bug', color: 'green' },
