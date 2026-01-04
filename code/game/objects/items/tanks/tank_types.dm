@@ -273,11 +273,12 @@
 	force = 10
 	dog_fashion = /datum/dog_fashion/back
 
-
 /obj/item/tank/internals/nitrogen/populate_gas()
 	air_contents.assert_gas(/datum/gas/nitrogen)
 	air_contents.gases[/datum/gas/nitrogen][MOLES] = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 
+/obj/item/tank/internals/nitrogen/empty/populate_gas()
+	return
 /*
  * Emergency Nitrogen
  */

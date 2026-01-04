@@ -200,6 +200,41 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_CARGO
 
+/datum/design/emergency_nitrogen
+	name = "Emergency Nitrogen Tank"
+	id = "emergency_nitrogen"
+	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5)
+	build_path = /obj/item/tank/internals/emergency_nitrogen/empty
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_GAS_TANKS,
+	)
+
+/datum/design/emergency_nitrogen_engi
+	name = "Extended-Capacity Emergency Nitrogen Tank"
+	id = "emergency_nitrogen_engi"
+	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*7.5)
+	build_path = /obj/item/tank/internals/emergency_nitrogen/engi/empty
+	category = list(
+		RND_CATEGORY_HACKED,
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_GAS_TANKS,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_CARGO
+
+/datum/design/nitrogen_tank
+	name = "Nitrogen Tank"
+	id = "nitrogen_tank"
+	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT)
+	build_path = /obj/item/tank/internals/nitrogen/empty
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_GAS_TANKS,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_CARGO
+
 /datum/design/plasmaman_tank_belt
 	name = "Plasmaman Belt Tank"
 	id = "plasmaman_tank_belt"
