@@ -15,6 +15,7 @@ import { Window } from '../layouts';
 import { resolveAsset } from '../assets';
 import dateformat from 'dateformat';
 import yaml from 'js-yaml';
+import { LobbyNotices, LobbyNoticesType } from './common/LobbyNotices';
 
 const icons = {
   bugfix: { icon: 'bug', color: 'green' },
@@ -57,6 +58,7 @@ type ChangelogData = {
   discord_url?: string;
   dates: string[];
   testmerges?: Testmerge[];
+  notices: LobbyNoticesType;
 };
 
 const ChangeRow = (props: { kind: string; content: string }) => {
@@ -83,6 +85,7 @@ const Header = (props: { dropdown: any }) => {
   const { data } = useBackend<ChangelogData>();
   return (
     <Section>
+      <LobbyNotices notices={data.notices} />
       <h1>Monkestation</h1>
       <p>
         <b>Thanks to: </b>
