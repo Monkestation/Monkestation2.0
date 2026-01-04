@@ -72,6 +72,8 @@
 	if(!choice)
 		return
 	chosen_recipe = choice
+	if(crafting)
+		return
 	for(var/atom/movable/listed as anything in crafting_inventory)
 		listed.forceMove(get_turf(src))
 		crafting_inventory -= listed
@@ -264,6 +266,11 @@
 				qdel(thing)
 	I.CheckParts(parts, current_craft_recipe)
 	I.forceMove(drop_location())
+
+	if(current_craft_recipe != chosen_recipe)
+		for(var/atom/movable/listed as anything in crafting_inventory)
+			listed.forceMove(get_turf(src))
+			crafting_inventory -= listed
 
 	crafting = FALSE
 	current_craft_recipe = null
