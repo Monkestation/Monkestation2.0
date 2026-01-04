@@ -63247,7 +63247,7 @@
 "vRz" = (
 /obj/structure/sign/departments/chemistry/directional/east,
 /obj/machinery/camera/directional/east{
-	c_tag = "Medbay Main Hallway - Virology Junction";
+	c_tag = "Medbay Main Hallway - Pathology Junction";
 	network = list("ss13","medbay")
 	},
 /turf/open/floor/iron/white,
