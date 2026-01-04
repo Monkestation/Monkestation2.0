@@ -85,7 +85,6 @@ const Header = (props: { dropdown: any }) => {
   const { data } = useBackend<ChangelogData>();
   return (
     <Section>
-      <LobbyNotices notices={data.notices} />
       <h1>Monkestation</h1>
       <p>
         <b>Thanks to: </b>
