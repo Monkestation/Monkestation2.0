@@ -204,6 +204,23 @@
 	if(!length(reqs))
 		start_craft()
 
+/obj/machinery/assembler/proc/consume_stack(obj/item/Type, amount)
+	var left = amount
+	for(var/obj/item/item as anything in crafting_inventory)
+		if(isstack(item) && istype(item, Type))
+			var/obj/item/stack/stack = item
+			if(stack.amount == left)
+				crafting_inventory -= item
+				qdel(item)
+				break
+			else if(stack.amount > left)
+				stack.amount -= left
+				break
+			else if(stack.amount < left)
+				left -= stack.amount
+				crafting_inventory -= item
+				qdel(item)
+
 /obj/machinery/assembler/proc/start_craft()
 	if(crafting)
 		return
@@ -219,30 +236,20 @@
 	var/list/parts = list()
 
 	for(var/obj/item/req as anything in requirements)
-		for(var/obj/item/item as anything in crafting_inventory)
-			if(!istype(item, req))
-				continue
-			if(isstack(item))
-				var/obj/item/stack/stack = item
-				if(stack.amount == requirements[stack.merge_type])
-					var/failed = TRUE
-					crafting_inventory -= item
-					for(var/obj/item/part as anything in current_craft_recipe.parts)
-						if(!istype(item, part))
-							continue
-						parts += item
-						failed = FALSE
-					if(failed)
-						qdel(item)
-				else if(stack.amount > requirements[item.type])
-					for(var/obj/item/part as anything in current_craft_recipe.parts)
-						if(!istype(item, part))
-							continue
-						var/obj/item/stack/new_stack = new item
-						new_stack.amount = requirements[item.type]
-						parts += new_stack
-					stack.amount -= requirements[stack.merge_type]
-			else
+		if(ispath(req, /obj/item/stack))
+			for(var/obj/item/part as anything in current_craft_recipe.parts)
+				if(!istype(req, part))
+					continue
+				var/obj/item/stack/new_stack = new req.type
+				new_stack.amount = current_craft_recipe.parts[part]
+				parts += new_stack
+			consume_stack(req, requirements[req])
+			continue
+		else
+			var left = requirements[req]
+			for(var/obj/item/item as anything in crafting_inventory)
+				if(!istype(item, req))
+					continue
 				var/failed = TRUE
 				crafting_inventory -= item
 				for(var/obj/item/part as anything in current_craft_recipe.parts)
@@ -253,6 +260,9 @@
 
 				if(failed)
 					qdel(item)
+				left -= 1
+				if(left <= 0)
+					break
 
 	var/atom/movable/I
 	if(ispath(current_craft_recipe.result, /obj/item/stack))
