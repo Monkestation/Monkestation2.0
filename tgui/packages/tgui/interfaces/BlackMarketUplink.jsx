@@ -265,7 +265,7 @@ const AuctionMarket = (props) => {
                       }
                       width="100%"
                       color={'invisible'}
-                      onChange={(value) =>
+                      onChange={(_, value) =>
                         act('set_bid', {
                           bid: value,
                         })

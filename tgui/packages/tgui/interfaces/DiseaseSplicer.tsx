@@ -99,7 +99,7 @@ export function DiseaseSplicer(props) {
                 step={1}
                 stepPixelSize={50}
                 value={target_slot}
-                onChange={(e, stage) => act('target_slot', { stage })}
+                onChange={(_, stage) => act('target_slot', { stage })}
               >
                 {target_slot}
               </Slider>
