@@ -17615,11 +17615,11 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "grb" = (
-/obj/item/tank/internals/oxygen/red{
+/obj/item/tank/internals/oxygen/yellow{
 	pixel_x = -4;
 	pixel_y = -1
 	},
-/obj/item/tank/internals/oxygen/red{
+/obj/item/tank/internals/oxygen/yellow{
 	pixel_x = 4;
 	pixel_y = -1
 	},

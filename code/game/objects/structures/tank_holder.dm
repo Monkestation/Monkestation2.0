@@ -121,10 +121,6 @@
 	icon_state = "holder_oxygen_f"
 	tank = /obj/item/tank/internals/oxygen/yellow
 
-/obj/structure/tank_holder/oxygen/red
-	icon_state = "holder_oxygen_fr"
-	tank = /obj/item/tank/internals/oxygen/red
-
 /obj/structure/tank_holder/emergency_oxygen
 	icon_state = "holder_emergency"
 	tank = /obj/item/tank/internals/emergency_oxygen

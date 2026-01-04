@@ -456,6 +456,18 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_CARGO
 
+/datum/design/yellow_oxygen_tank
+	name = "Yellow Oxygen Tank"
+	desc = "An empty yellow oxygen tank."
+	id = "yellow_oxygen_tank"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT)
+	build_path = /obj/item/tank/internals/oxygen/yellow/empty
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_GAS_TANKS
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+
 /datum/design/plasma_tank
 	name = "Plasma Tank"
 	desc = "An empty oxygen tank."

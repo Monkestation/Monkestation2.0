@@ -33,6 +33,7 @@
 		"microwave_engineering",
 		"nano_mani",
 		"oxygen_tank",
+		"yellow_oxygen_tank",
 		"pacman",
 		"plasma_tank",
 		"plasmaman_tank_belt",

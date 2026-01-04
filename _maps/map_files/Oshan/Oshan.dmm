@@ -51530,7 +51530,7 @@
 "qtQ" = (
 /obj/structure/table/reinforced,
 /obj/item/radio/intercom/directional/south,
-/obj/item/tank/internals/oxygen/red,
+/obj/item/tank/internals/oxygen/yellow,
 /obj/item/clothing/mask/gas,
 /obj/item/stack/cable_coil{
 	pixel_x = 3;
