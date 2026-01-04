@@ -38751,6 +38751,10 @@
 	pixel_y = 3;
 	pixel_x = 5
 	},
+/obj/item/walkman{
+	pixel_y = 4;
+	pixel_x = -6
+	},
 /turf/open/floor/wood,
 /area/station/service/library)
 "szn" = (
@@ -43263,11 +43267,7 @@
 /turf/open/floor/iron/diagonal,
 /area/station/medical/medbay/lobby)
 "uFt" = (
-/obj/structure/table/wood,
-/obj/item/walkman{
-	pixel_y = 4;
-	pixel_x = -6
-	},
+/obj/machinery/cassette_library,
 /turf/open/floor/wood,
 /area/station/service/library)
 "uFw" = (

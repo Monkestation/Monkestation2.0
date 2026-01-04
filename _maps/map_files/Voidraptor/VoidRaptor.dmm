@@ -47158,7 +47158,6 @@
 /turf/open/floor/iron/textured,
 /area/station/engineering/atmos)
 "nhJ" = (
-/obj/structure/table/wood,
 /obj/structure/sign/painting/library{
 	pixel_y = 32
 	},
@@ -47171,12 +47170,7 @@
 	dir = 9;
 	name = "library camera"
 	},
-/obj/item/newspaper,
-/obj/item/newspaper{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/clothing/glasses/regular,
+/obj/machinery/cassette_library,
 /turf/open/floor/wood/tile,
 /area/station/service/library)
 "nhR" = (

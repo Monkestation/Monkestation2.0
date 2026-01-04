@@ -74103,6 +74103,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
+/obj/machinery/cassette_library,
 /turf/open/floor/wood,
 /area/station/service/library)
 "wNO" = (

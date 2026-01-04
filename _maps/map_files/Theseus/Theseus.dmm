@@ -80819,9 +80819,9 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "xwz" = (
-/obj/structure/reagent_dispensers/water_cooler,
 /obj/effect/turf_decal/bot,
 /obj/structure/cable,
+/obj/machinery/cassette_library,
 /turf/open/floor/wood,
 /area/station/service/library)
 "xwE" = (

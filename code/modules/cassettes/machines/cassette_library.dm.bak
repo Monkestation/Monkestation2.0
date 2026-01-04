@@ -13,9 +13,6 @@
 	var/cassette_cost = 100
 	var/busy = FALSE
 
-	// purchase history tracking
-	var/list/purchase_history = list() // all purchases made from this terminal
-
 /obj/machinery/cassette_library/Initialize(mapload)
 	. = ..()
 	register_context()
@@ -24,10 +21,6 @@
 /obj/machinery/cassette_library/update_appearance(updates=ALL)
 	. = ..()
 	set_light(powered() ? 1.5 : 0)
-
-/obj/machinery/cassette_library/update_icon_state()
-	icon_state = "[initial(icon_state)][powered() ? null : "-off"]"
-	return ..()
 
 /obj/machinery/cassette_library/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -112,21 +105,6 @@
 	data["cassette_cost"] = cassette_cost
 	data["busy"] = busy
 
-	// get user's ID for personal history filtering
-	var/user_id = null
-	if(isliving(user))
-		var/mob/living/living_user = user
-		var/obj/item/card/id/id_card = living_user.get_idcard(TRUE)
-		if(id_card)
-			user_id = id_card.registered_name
-	data["user_id"] = user_id
-
-	// send purchase history
-	data["purchase_history"] = purchase_history
-
-	// get most bought for the TOP CASSETTES tab
-	data["top_cassettes"] = get_top_cassettes(20)
-
 	var/list/cassette_list = list()
 	var/list/approved_cassettes = SScassettes.filtered_cassettes(status = CASSETTE_STATUS_APPROVED)
 	var/list/sorted_cassettes = list()
@@ -177,76 +155,17 @@
 				balloon_alert(usr, "cassette not found!")
 				return TRUE
 
-			return process_purchase(selected_cassette, usr)
+			stored_credits -= cassette_cost
 
-		if("repurchase_cassette")
-			var/cassette_name = params["cassette_name"]
-			if(!cassette_name)
-				return FALSE
+			busy = TRUE
+			balloon_alert(usr, "printing cassette...")
+			playsound(src, 'sound/machines/terminal_processing.ogg', 50, TRUE)
 
-			if(busy)
-				balloon_alert(usr, "busy!")
-				return TRUE
+			addtimer(CALLBACK(src, PROC_REF(finish_printing), selected_cassette, usr), 2 SECONDS)
 
-			// do you have enough creds to make this purchase, my kind sir?
-			if(stored_credits < cassette_cost)
-				balloon_alert(usr, "insufficient credits!")
-				to_chat(usr, span_warning("You need [cassette_cost] credits to purchase a cassette. You have [stored_credits] credits."))
-				return TRUE
-
-			// find the cassette by name in approved cassettes
-			var/list/approved_cassettes = SScassettes.filtered_cassettes(status = CASSETTE_STATUS_APPROVED)
-			var/datum/cassette/selected_cassette = null
-			for(var/datum/cassette/cassette as anything in approved_cassettes)
-				if(cassette.name == cassette_name)
-					selected_cassette = cassette
-					break
-
-			if(!selected_cassette)
-				balloon_alert(usr, "cassette not found!")
-				return TRUE
-
-			return process_purchase(selected_cassette, usr)
+			return TRUE
 
 	return FALSE
-
-/obj/machinery/cassette_library/proc/process_purchase(datum/cassette/selected_cassette, mob/user)
-	stored_credits -= cassette_cost
-
-	// record purchase in history
-	var/buyer_name = "Unknown"
-	if(isliving(user))
-		var/mob/living/living_user = user
-		var/obj/item/card/id/id_card = living_user.get_idcard(TRUE)
-		if(id_card)
-			buyer_name = id_card.registered_name
-
-	var/icon_state = selected_cassette.front?.design || "cassette_flip"
-	var/list/purchase_record = list(
-		"buyer" = buyer_name,
-		"cassette_name" = selected_cassette.name,
-		"cassette_author" = selected_cassette.author.name,
-		"cassette_author_ckey" = selected_cassette.author.ckey,
-		"cassette_icon" = 'icons/obj/cassettes/walkman.dmi',
-		"cassette_icon_state" = icon_state,
-		"cassette_ref" = REF(selected_cassette),
-		"time" = world.time
-	)
-	purchase_history += list(purchase_record)
-
-	// record purchase for top cassettes tracking (only counts first purchase per user)
-	var/buyer_ckey = null
-	if(user && user.ckey)
-		buyer_ckey = user.ckey
-		record_cassette_purchase(selected_cassette.id, selected_cassette.name, buyer_ckey)
-
-	busy = TRUE
-	balloon_alert(user, "printing cassette...")
-	playsound(src, 'sound/machines/terminal_processing.ogg', 50, TRUE)
-
-	addtimer(CALLBACK(src, PROC_REF(finish_printing), selected_cassette, user), 2 SECONDS)
-
-	return TRUE
 
 /obj/machinery/cassette_library/proc/finish_printing(datum/cassette/cassette, mob/user)
 	busy = FALSE

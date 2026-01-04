@@ -3769,6 +3769,8 @@
 #include "code\modules\cassettes\cassette_db\cassette_datum.dm"
 #include "code\modules\cassettes\cassette_db\cassette_manager.dm"
 #include "code\modules\cassettes\dj\mob_can_hear.dm"
+#include "code\modules\cassettes\machines\cassette_purchase_tracker.dm"
+#include "code\modules\cassettes\machines\cassette_library.dm"
 #include "code\modules\cassettes\machines\cassette_rack.dm"
 #include "code\modules\cassettes\machines\dj_station.dm"
 #include "code\modules\cassettes\machines\postbox.dm"

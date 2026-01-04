@@ -28330,13 +28330,7 @@
 /turf/open/floor/iron/dark,
 /area/station/service/library)
 "cyT" = (
-/obj/structure/table/wood,
-/obj/item/paper_bin{
-	layer = 2.9;
-	pixel_x = -2;
-	pixel_y = 4
-	},
-/obj/item/pen,
+/obj/machinery/cassette_library,
 /turf/open/floor/iron/dark,
 /area/station/service/library)
 "cyU" = (
@@ -69687,7 +69681,7 @@ nAF
 aCq
 cAK
 czH
-fYY
+cyT
 eBZ
 cyU
 aaa
@@ -72249,7 +72243,7 @@ aaa
 aaa
 aaa
 cjp
-cyT
+fYY
 cAK
 cyZ
 cAK
