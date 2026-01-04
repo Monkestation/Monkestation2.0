@@ -1,4 +1,3 @@
-import { classes } from 'common/react';
 import { useBackend, useLocalState } from '../backend';
 import {
   Box,
@@ -8,7 +7,6 @@ import {
   Input,
   Section,
   Stack,
-  Table,
   Tabs,
 } from '../components';
 import { Window } from '../layouts';
