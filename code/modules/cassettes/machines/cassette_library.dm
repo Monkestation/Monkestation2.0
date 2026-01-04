@@ -1,3 +1,6 @@
+/// Global list tracking how many times each ckey has bought their own cassettes this round
+GLOBAL_LIST_EMPTY(self_cassette_purchases)
+
 /obj/machinery/cassette_library
 	name = "Cassette Library Terminal"
 	desc = "A terminal that sells cassettes approved by the Space Board of Music."
@@ -239,6 +242,18 @@
 	if(user && user.ckey)
 		buyer_ckey = user.ckey
 		record_cassette_purchase(selected_cassette.id, selected_cassette.name, buyer_ckey)
+
+		// check if user is buying their own cassette
+		if(ckey(buyer_ckey) == ckey(selected_cassette.author.ckey))
+			if(!GLOB.self_cassette_purchases[buyer_ckey])
+				GLOB.self_cassette_purchases[buyer_ckey] = 0
+			GLOB.self_cassette_purchases[buyer_ckey]++
+
+			var/purchase_count = GLOB.self_cassette_purchases[buyer_ckey]
+			if(purchase_count == 2)
+				message_admins("[key_name_admin(user)] has bought their own cassette tape twice! Although manipulating the rankings is very unlikely, looking into it may be necessary if user is actively attempting to mess with the filters.")
+			else if(purchase_count >= 5)
+				message_admins("[key_name_admin(user)] might be attempting to mess with the cassette rankings. They've purchased their own cassette five or more times!")
 
 	busy = TRUE
 	balloon_alert(user, "printing cassette...")
