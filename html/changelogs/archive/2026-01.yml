@@ -41,3 +41,22 @@
 2026-01-03:
   Absolucy:
   - bugfix: Ckeys with pronouns in OOC are now properly underlined again.
+2026-01-04:
+  Absolucy:
+  - bugfix: Fixed an exploit related to teleporting dummy humans where they should
+      not be.
+  JohnFulpWillard:
+  - bugfix: Gary won't teleport into you anymore.
+  - bugfix: ED209's no longer take space helmets to craft.
+  - bugfix: Lung stirfry no longer takes cybernetic lungs to craft.
+  - bugfix: Plasmamen don't take toxin damage from plasma.
+  MrMelbert:
+  - bugfix: AIs can now take pictures again.
+  SirNightKnight:
+  - balance: removed the box of flashbangs as an option from security utility vouchers.
+  flleeppyy:
+  - bugfix: VV .... AGAIN... GOD.. DAMMIT
+  - rscadd: Improved the issue report dialog to include the servers master commit
+  - rscadd: Added button to runtime viewer to use monkestation ss13 json log viewer
+  - admin: add stealth follow to FLW buttons
+  - code_imp: add new CI linter to check for unescaped brackets

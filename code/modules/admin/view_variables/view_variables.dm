@@ -144,7 +144,7 @@ ADMIN_VERB_AND_CONTEXT_MENU(debug_variables, R_NONE, FALSE, "View Variables", "V
 			// this code used to be dogshit, and i broke it 5 times in the process of writing it because writing
 			// javascript code in dreammaker is actually awful. - chen
 			let varsOl = null;
-			let indexedList = [];
+			let indexedList = \[];
 			let lastFilter = "";
 
 			function getCookie(cname) {
