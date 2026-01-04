@@ -415,7 +415,7 @@
 				break
 			// check for xenomorph blood type or oil
 			var/datum/blood_type/blood = GLOB.blood_types[blood_type_value]
-			if(blood && (blood.type == /datum/blood_type/xenomorph || ispath(blood.type, /datum/blood_type/xenomorph) || blood.type == /datum/blood_type/oil || ispath(blood.type, /datum/blood_type/oil)))
+			if(istype(blood, /datum/blood_type/xenomorph) || istype(blood, /datum/blood_type/oil))
 				is_special_blood = TRUE
 				break
 
@@ -438,7 +438,7 @@
 				return
 			// check for xenomorph blood type
 			var/datum/blood_type/blood = GLOB.blood_types[blood_type_value]
-			if(blood && (blood.type == /datum/blood_type/xenomorph || ispath(blood.type, /datum/blood_type/xenomorph)))
+			if(istype(blood, /datum/blood_type/xenomorph))
 				color = get_blood_dna_color()
 				return
 	return ..()
@@ -472,10 +472,10 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 				continue
 
 			// check blood type by its actual type path
-			if(blood.type == /datum/blood_type/xenomorph || ispath(blood.type, /datum/blood_type/xenomorph))
+			if(istype(blood, /datum/blood_type/xenomorph))
 				blood_state = BLOOD_STATE_XENO
 				break
-			else if(blood.type == /datum/blood_type/oil || ispath(blood.type, /datum/blood_type/oil))
+			else if(istype(blood, /datum/blood_type/oil))
 				blood_state = BLOOD_STATE_OIL
 				break
 

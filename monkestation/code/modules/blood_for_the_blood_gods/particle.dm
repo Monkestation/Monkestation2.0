@@ -48,6 +48,8 @@
 		return
 
 	// xenoblood splatter check
+	// note: xenomorphs don't have actual DNA datums, but get_blood_dna_list() still returns list("UNKNOWN DNA" = blood.type)
+	// so yeah, blood_dna will be populated for xenomorphs
 	var/list/blood_dna = GET_ATOM_BLOOD_DNA(src)
 	var/is_xenoblood = FALSE
 	if(blood_dna)
@@ -57,7 +59,7 @@
 				is_xenoblood = TRUE
 				break
 			var/datum/blood_type/blood = GLOB.blood_types[blood_type_value]
-			if(blood && (blood.type == /datum/blood_type/xenomorph || ispath(blood.type, /datum/blood_type/xenomorph)))
+			if(istype(blood, /datum/blood_type/xenomorph))
 				is_xenoblood = TRUE
 				break
 

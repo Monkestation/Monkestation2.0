@@ -105,11 +105,15 @@
 	icon_state = "xtracks"
 	random_icon_states = null
 
+/// holder decal for xenomorph blood trails that accumulates directional overlays as the alien moves while bleeding
+/// prevents duplicate trail overlays and tracks which directions already have trails applied (max of 16 different directional combinations)
 /obj/effect/decal/cleanable/xenoblood/trail_holder
 	name = "trail of xeno blood"
 	desc = "Is this a relieving sight or a horrifying one? Depends on which side you're on."
 	beauty = -50
 	icon_state = null
 	random_icon_states = null
-	var/base_name = "trail of" // since base_name is a var exclusive to standard blood
+	/// the base name prefix for the trail, mimicking the base_name var from standard blood trails
+	var/base_name = "trail of"
+	/// list of direction flags for trail overlays already applied to this turf (maximum 16 entries)
 	var/list/existing_dirs = list()
