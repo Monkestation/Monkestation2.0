@@ -10433,7 +10433,6 @@
 /obj/effect/turf_decal/trimline/dark_green/corner{
 	dir = 4
 	},
-/obj/machinery/camera/autoname/directional/south,
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/pathology)
 "dOw" = (
@@ -44245,10 +44244,6 @@
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/maintenance/solars/starboard/aft)
 "pmP" = (
-/obj/machinery/camera/directional/east{
-	c_tag = "Virology Airlock";
-	network = list("ss13","medbay")
-	},
 /obj/structure/sink/directional/west,
 /obj/effect/turf_decal/trimline/dark_green/line{
 	dir = 6
@@ -45822,6 +45817,10 @@
 /obj/item/radio/intercom/directional/east,
 /obj/effect/turf_decal/trimline/dark_green/line{
 	dir = 5
+	},
+/obj/machinery/camera/directional/east{
+	c_tag = "Virology Airlock";
+	network = list("ss13","medbay")
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/pathology)
@@ -50082,6 +50081,7 @@
 /obj/effect/turf_decal/trimline/dark_green/line{
 	dir = 6
 	},
+/obj/machinery/camera/directional/south,
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/pathology)
 "rmF" = (
@@ -50582,7 +50582,6 @@
 /obj/effect/turf_decal/trimline/dark_green/line{
 	dir = 4
 	},
-/obj/machinery/camera/autoname/directional/south,
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
 /turf/open/floor/iron/dark/textured,
@@ -51179,7 +51178,7 @@
 /obj/structure/table/glass,
 /obj/item/reagent_containers/cup/beaker,
 /obj/item/reagent_containers/dropper,
-/obj/machinery/camera/autoname/directional/west,
+/obj/machinery/camera/directional/south,
 /turf/open/floor/iron/white/diagonal,
 /area/station/medical/pathology/isolation)
 "rEO" = (

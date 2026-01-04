@@ -29,8 +29,8 @@
 							/area/station/science/research/abandoned, /area/station/asteroid, /area/station/command/secure_bunker,
 							/area/station/cargo/power_station, /area/station/engineering/power_station, /area/station/science/power_station,
 							/area/station/science/power_station, /area/station/security/power_station, /area/station/service/power_station,
-							/area/station/medical/aslyum, /area/station/medical/virology/isolation, /area/graveyard/tunnels, /area/graveyard/bunker,
-							/area/ruin/space/ancientstation,
+							/area/station/medical/aslyum, /area/graveyard/tunnels, /area/graveyard/bunker, /area/ruin/space/ancientstation,
+							// /area/new_protected_area,
 						)
 	target_trait = ZTRAIT_STATION
 
