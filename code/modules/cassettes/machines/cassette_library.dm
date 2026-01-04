@@ -244,7 +244,7 @@ GLOBAL_LIST_EMPTY(self_cassette_purchases)
 		record_cassette_purchase(selected_cassette.id, selected_cassette.name, buyer_ckey)
 
 		// check if user is buying their own cassette
-		if(ckey(buyer_ckey) == ckey(selected_cassette.author.ckey))
+		if(buyer_ckey == ckey(selected_cassette.author.ckey))
 			if(!GLOB.self_cassette_purchases[buyer_ckey])
 				GLOB.self_cassette_purchases[buyer_ckey] = 0
 			GLOB.self_cassette_purchases[buyer_ckey]++

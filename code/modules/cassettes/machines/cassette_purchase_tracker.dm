@@ -142,18 +142,7 @@
 	qdel(query_top)
 
 	for(var/entry in results)
-		if(!islist(entry))
-			continue
-		var/cassette_id = entry["cassette_id"]
-		var/datum/cassette/cassette = SScassettes.load_cassette(cassette_id)
-		if(cassette)
-			var/icon_state = cassette.front?.design || "cassette_flip"
-			entry["cassette_author"] = cassette.author.name
-			entry["cassette_author_ckey"] = cassette.author.ckey
-			entry["cassette_desc"] = cassette.desc
-			entry["cassette_icon"] = 'icons/obj/cassettes/walkman.dmi'
-			entry["cassette_icon_state"] = icon_state
-			entry["cassette_ref"] = REF(cassette)
+		enrich_cassette_entry(entry)
 
 	return results
 
@@ -209,20 +198,23 @@
 		results.len = limit
 
 	for(var/entry in results)
-		if(!islist(entry))
-			continue
-		var/cassette_id = entry["cassette_id"]
-		var/datum/cassette/cassette = SScassettes.load_cassette(cassette_id)
-		if(cassette)
-			var/icon_state = cassette.front?.design || "cassette_flip"
-			entry["cassette_author"] = cassette.author.name
-			entry["cassette_author_ckey"] = cassette.author.ckey
-			entry["cassette_desc"] = cassette.desc
-			entry["cassette_icon"] = 'icons/obj/cassettes/walkman.dmi'
-			entry["cassette_icon_state"] = icon_state
-			entry["cassette_ref"] = REF(cassette)
+		enrich_cassette_entry(entry)
 
 	return results
+
+/proc/enrich_cassette_entry(list/entry)
+	if(!islist(entry))
+		return
+	var/cassette_id = entry["cassette_id"]
+	var/datum/cassette/cassette = SScassettes.load_cassette(cassette_id)
+	if(cassette)
+		var/icon_state = cassette.front?.design || "cassette_flip"
+		entry["cassette_author"] = cassette.author.name
+		entry["cassette_author_ckey"] = cassette.author.ckey
+		entry["cassette_desc"] = cassette.desc
+		entry["cassette_icon"] = 'icons/obj/cassettes/walkman.dmi'
+		entry["cassette_icon_state"] = icon_state
+		entry["cassette_ref"] = REF(cassette)
 
 /// sorting proc for cassette purchases (descending by purchase_count) (methinks)
 /proc/cmp_cassette_purchase_count_dsc(list/a, list/b)
