@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Ckeys with pronouns in OOC are now properly underlined again."
