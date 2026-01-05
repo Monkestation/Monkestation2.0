@@ -11,10 +11,6 @@ GLOBAL_VAR_INIT(use_new_glide, TRUE)
 
 #define GLIDE_SIZE_MULTI (GLOB.use_new_glide ? GLOB.glide_size_multiplier : GLOB.old_glide_size_multiplier)
 
-#define ICON_SIZE_ALL 32
-#define ICON_SIZE_X 32
-#define ICON_SIZE_Y 32
-
 ///Broken down, here's what this does:
 /// divides the world icon_size (32) by delay divided by ticklag to get the number of pixels something should be moving each tick.
 /// The division result is given a min value of 1 to prevent obscenely slow glide sizes from being set
