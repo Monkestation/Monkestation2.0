@@ -71,7 +71,7 @@
 			to_chat(slime, span_danger("You feel drained!"))
 
 	if(slime.blood_volume >= BLOOD_VOLUME_OKAY)
-		slime.apply_status_effect(/datum/status_effect/fire_handler/wet_stacks/oozeling, 2)
+		slime.adjust_wet_stacks(2, /datum/status_effect/fire_handler/wet_stacks/oozeling)
 
 	if(slime.blood_volume < BLOOD_VOLUME_BAD)
 		Cannibalize_Body(slime)

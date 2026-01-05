@@ -113,15 +113,20 @@
 
 /// Handles slimes losing blood from having wet stacks.
 /datum/species/oozeling/proc/spec_slime_wetness(mob/living/carbon/human/slime, seconds_per_tick)
-	var/datum/status_effect/fire_handler/wet_stacks/wetness = locate() in slime.status_effects
-	if(wetness?.type != /datum/status_effect/fire_handler/wet_stacks)
+	var/datum/status_effect/fire_handler/wet_stacks/wetness
+	for(var/datum/status_effect/fire_handler/wet_stacks/possible_wetness in slime.status_effects)
+		if(possible_wetness?.type != /datum/status_effect/fire_handler/wet_stacks)
+			continue
+		wetness = possible_wetness
+
+	if(!wetness)
 		return
 
 	if(water_damage_multiplier(slime) <= 0)
 		return
 
 	if(wetness.stacks >= DAMAGE_WATER_STACKS)
-		remove_blood_volume(slime, 2 * seconds_per_tick)
+		remove_blood_volume(slime, 5 * seconds_per_tick)
 		slime.balloon_alert(slime, "too wet, dry off!")
 		if(SPT_PROB(25, seconds_per_tick))
 			slime.visible_message(span_danger("[slime]'s form begins to lose cohesion, seemingly diluting with the water!"), span_warning("The water starts to dilute your body, dry it off!"))
@@ -273,7 +278,7 @@
 			if(!quiet_if_protected)
 				to_chat(slime, span_warning("The water fails to penetrate your thick clothing!"))
 			return FALSE
-	remove_blood_volume(slime, 60 * water_multiplier)
+	remove_blood_volume(slime, 50 * water_multiplier)
 	if(COOLDOWN_FINISHED(src, water_alert_cooldown))
 		slime.visible_message(
 			span_warning("[slime]'s form melts away from the water!"),
@@ -295,15 +300,15 @@
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
-			SPECIES_PERK_ICON = "burn",
-			SPECIES_PERK_NAME = "Incombustible",
-			SPECIES_PERK_DESC = "[plural_form] cannot be set aflame.",
+			SPECIES_PERK_ICON = "wind",
+			SPECIES_PERK_NAME = "Nitrogen Breathing",
+			SPECIES_PERK_DESC = "[plural_form] must breathe nitrogen to survive. You receive a tank when you arrive.",
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "shield-alt",
 			SPECIES_PERK_NAME = "Fire Resilience",
-			SPECIES_PERK_DESC = "[plural_form] are resilient to flames, and burn damage.",
+			SPECIES_PERK_DESC = "[plural_form] have an outer membrane that is semi-resistant to flames, and burn damage. Water and prolonged flame exposure will errode this membrane.",
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
@@ -316,12 +321,6 @@
 			SPECIES_PERK_ICON = "hand",
 			SPECIES_PERK_NAME = "Limb Manipulation",
 			SPECIES_PERK_DESC = "[plural_form] are able to consume and regrow their limbs at will, if they have enough blood to do so.",
-		),
-		list(
-			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
-			SPECIES_PERK_ICON = "wind",
-			SPECIES_PERK_NAME = "Anaerobic Lineage",
-			SPECIES_PERK_DESC = "[plural_form] don't require much oxygen to live."
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
