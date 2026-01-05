@@ -250,10 +250,10 @@ GLOBAL_LIST_EMPTY(self_cassette_purchases)
 			GLOB.self_cassette_purchases[buyer_ckey]++
 
 			var/purchase_count = GLOB.self_cassette_purchases[buyer_ckey]
-			if(purchase_count == 2)
-				message_admins("[key_name_admin(user)] has bought their own cassette tape twice! Although manipulating the rankings is very unlikely, looking into it may be necessary if user is actively attempting to mess with the filters.")
-			else if(purchase_count >= 5)
-				message_admins("[key_name_admin(user)] might be attempting to mess with the cassette rankings. They've purchased their own cassette five or more times!")
+			if(purchase_count == 5)
+				message_admins("[key_name_admin(user)] has bought their own cassette tape five times! Although manipulating the rankings is very unlikely, looking into it may be necessary if user is actively attempting to mess with the filters.")
+			else if(purchase_count == 10)
+				message_admins("[key_name_admin(user)] might be attempting to mess with the cassette rankings. They've purchased their own cassette ten times!")
 
 	busy = TRUE
 	balloon_alert(user, "printing cassette...")
