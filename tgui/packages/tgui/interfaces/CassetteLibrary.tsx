@@ -242,7 +242,8 @@ export const CassetteLibrary = (props) => {
                                       <Tooltip content={cassette.author_ckey}>
                                         <span
                                           style={{
-                                            'border-bottom': '1px dotted',
+                                            'text-decoration':
+                                              'underline dotted',
                                             cursor: 'help',
                                           }}
                                         >
@@ -420,7 +421,7 @@ const PersonalHistory = (props) => {
                           <Tooltip content={purchase.cassette_author_ckey}>
                             <span
                               style={{
-                                'border-bottom': '1px dotted',
+                                'text-decoration': 'underline dotted',
                                 cursor: 'help',
                               }}
                             >
@@ -532,7 +533,7 @@ const GeneralHistory = (props) => {
                           <Tooltip content={purchase.cassette_author_ckey}>
                             <span
                               style={{
-                                'border-bottom': '1px dotted',
+                                'text-decoration': 'underline dotted',
                                 cursor: 'help',
                               }}
                             >
@@ -676,7 +677,7 @@ const TopCassettes = ({ top_cassettes }) => {
                                 >
                                   <span
                                     style={{
-                                      'border-bottom': '1px dotted',
+                                      'text-decoration': 'underline dotted',
                                       cursor: 'help',
                                     }}
                                   >
