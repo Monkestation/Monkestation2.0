@@ -242,8 +242,8 @@ export const CassetteLibrary = (props) => {
                                       <Tooltip content={cassette.author_ckey}>
                                         <span
                                           style={{
-                                            'text-decoration':
-                                              'underline dotted',
+                                            'text-decoration-line': 'underline',
+                                            'text-decoration-style': 'dotted',
                                             cursor: 'help',
                                           }}
                                         >
@@ -421,7 +421,8 @@ const PersonalHistory = (props) => {
                           <Tooltip content={purchase.cassette_author_ckey}>
                             <span
                               style={{
-                                'text-decoration': 'underline dotted',
+                                'text-decoration-line': 'underline',
+                                'text-decoration-style': 'dotted',
                                 cursor: 'help',
                               }}
                             >
@@ -533,7 +534,8 @@ const GeneralHistory = (props) => {
                           <Tooltip content={purchase.cassette_author_ckey}>
                             <span
                               style={{
-                                'text-decoration': 'underline dotted',
+                                'text-decoration-line': 'underline',
+                                'text-decoration-style': 'dotted',
                                 cursor: 'help',
                               }}
                             >
@@ -677,7 +679,8 @@ const TopCassettes = ({ top_cassettes }) => {
                                 >
                                   <span
                                     style={{
-                                      'text-decoration': 'underline dotted',
+                                      'text-decoration-line': 'underline',
+                                      'text-decoration-style': 'dotted',
                                       cursor: 'help',
                                     }}
                                   >
