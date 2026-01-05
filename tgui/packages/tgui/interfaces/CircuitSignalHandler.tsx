@@ -1,4 +1,4 @@
-import { Component } from 'inferno';
+import React, { Component } from 'react';
 import { useBackend } from '../backend';
 import { Box, Stack, Section, Input, Button, Dropdown } from '../components';
 import { Window } from '../layouts';
@@ -191,9 +191,9 @@ export class CircuitSignalHandler extends Component<
 }
 
 type EntryProps = {
-  onRemove: (e: MouseEvent) => any;
-  onEnter: (e: MouseEvent, value: string) => any;
-  onSetOption?: (type: string) => any;
+  onRemove: (e: React.MouseEvent<any>) => any;
+  onEnter: (e: React.MouseEvent<any>, value: string) => any;
+  onSetOption?: (type: string) => void;
   name: string;
   current_option: string;
   options?: string[];
@@ -214,14 +214,21 @@ const Entry = (props: EntryProps) => {
     <Stack.Item {...rest}>
       <Stack>
         <Stack.Item grow>
-          <Input placeholder="Name" value={name} onChange={onEnter} fluid />
+          <Input
+            placeholder="Name"
+            value={name}
+            onChange={(e, value) =>
+              onEnter(e as unknown as React.MouseEvent, value)
+            }
+            fluid
+          />
         </Stack.Item>
         <Stack.Item>
           {(options.length && (
             <Dropdown
-              displayText={current_option}
+              selected={current_option}
               options={options}
-              onSelected={onSetOption}
+              onSelected={() => onSetOption?.(current_option)}
             />
           )) || (
             <Box textAlign="center" py="2px" px={2}>

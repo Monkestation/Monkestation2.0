@@ -8,7 +8,7 @@ import { Box, Button, Flex, Section, TextArea } from '../components';
 import { Window } from '../layouts';
 import { sanitizeText } from '../sanitize';
 import { marked } from 'marked';
-import { Component, createRef, RefObject, Inferno } from 'inferno';
+import { Component, createRef, RefObject } from 'react';
 import { clamp } from 'common/math';
 
 const Z_INDEX_STAMP = 1;
@@ -73,7 +73,7 @@ type PaperSheetStamperState = {
 };
 
 type PaperSheetStamperProps = {
-  scrollableRef: RefObject<HTMLDivElement>;
+  scrollableRef: RefObject<HTMLDivElement | null>;
 };
 
 type FieldCreationReturn = {
@@ -95,7 +95,7 @@ enum InteractionType {
 }
 
 type PreviewViewProps = {
-  scrollableRef: RefObject<HTMLDivElement>;
+  scrollableRef: RefObject<HTMLDivElement | null>;
   handleOnScroll: (this: GlobalEventHandlers, ev: Event) => any;
   textArea: string;
 };
@@ -115,7 +115,7 @@ const fieldRegex: RegExp = /\[((?:_+))\]/gi;
 class PaperSheetStamper extends Component<PaperSheetStamperProps> {
   style: null;
   state: PaperSheetStamperState = { x: 0, y: 0, rotation: 0, yOffset: 0 };
-  scrollableRef: RefObject<HTMLDivElement>;
+  scrollableRef: RefObject<HTMLDivElement | null>;
 
   constructor(props) {
     super(props);
@@ -245,14 +245,14 @@ class PaperSheetStamper extends Component<PaperSheetStamperProps> {
 }
 
 // Creates a full stamp div to render the given stamp to the preview.
-export const Stamp = (props): Inferno.HTMLAttributes<HTMLDivElement> => {
+export const Stamp = (props) => {
   const { activeStamp, sprite, x, y, rotation, opacity, yOffset = 0 } = props;
   const stamp_transform = {
     left: x + 'px',
     top: y + yOffset + 'px',
     transform: 'rotate(' + rotation + 'deg)',
     opacity: opacity || 1.0,
-    'z-index': activeStamp ? Z_INDEX_STAMP_PREVIEW : Z_INDEX_STAMP,
+    zIndex: activeStamp ? Z_INDEX_STAMP_PREVIEW : Z_INDEX_STAMP,
   };
 
   return (
@@ -269,7 +269,7 @@ export class PrimaryView extends Component {
   // Reference that gets passed to the <Section> holding the main preview.
   // Eventually gets filled with a reference to the section's scroll bar
   // funtionality.
-  scrollableRef: RefObject<HTMLDivElement>;
+  scrollableRef: RefObject<HTMLDivElement | null>;
 
   // The last recorded distance the scrollbar was from the bottom.
   // Used to implement "text scrolls up instead of down" behaviour.
@@ -381,13 +381,12 @@ export class PrimaryView extends Component {
                 }
               >
                 <TextArea
-                  scrollbar
-                  noborder
                   value={textAreaText}
                   textColor={useColor}
                   fontFamily={useFont}
                   bold={useBold}
                   height={'100%'}
+                  width={'100%'}
                   backgroundColor={paper_color}
                   onInput={(e, text) => {
                     setTextAreaText(text);
@@ -946,7 +945,7 @@ export class PreviewView extends Component<PreviewViewProps> {
     }
 
     const textHTML = {
-      __html: `<span class='paper-text'>${previewText}</span>`,
+      __html: `<span className='paper-text'>${previewText}</span>`,
     };
 
     const { scrollableRef, handleOnScroll } = this.props;
@@ -956,8 +955,8 @@ export class PreviewView extends Component<PreviewViewProps> {
         fill
         fitted
         scrollable
-        scrollableRef={scrollableRef}
-        onScroll={handleOnScroll}
+        ref={scrollableRef}
+        onScroll={handleOnScroll as any}
       >
         <Box
           fillPositionedParent
