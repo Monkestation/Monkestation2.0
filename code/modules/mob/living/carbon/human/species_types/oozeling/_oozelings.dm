@@ -273,7 +273,7 @@
 			if(!quiet_if_protected)
 				to_chat(slime, span_warning("The water fails to penetrate your thick clothing!"))
 			return FALSE
-	remove_blood_volume(slime, 30 * water_multiplier)
+	remove_blood_volume(slime, 60 * water_multiplier)
 	if(COOLDOWN_FINISHED(src, water_alert_cooldown))
 		slime.visible_message(
 			span_warning("[slime]'s form melts away from the water!"),
