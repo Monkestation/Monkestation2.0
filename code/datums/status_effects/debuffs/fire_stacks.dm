@@ -284,7 +284,7 @@
 /datum/status_effect/fire_handler/wet_stacks
 	id = "wet_stacks"
 
-	enemy_types = list(/datum/status_effect/fire_handler/fire_stacks)
+	enemy_types = list(/datum/status_effect/fire_handler/fire_stacks, /datum/status_effect/fire_handler/wet_stacks/oozeling)
 	stack_modifier = -1
 
 /datum/status_effect/fire_handler/wet_stacks/on_apply()
@@ -299,3 +299,24 @@
 	adjust_stacks(-0.5 * seconds_between_ticks)
 	if(stacks <= 0)
 		qdel(src)
+
+/datum/status_effect/fire_handler/wet_stacks/oozeling
+	id = "oozeling_wet_stacks"
+
+/datum/status_effect/fire_handler/wet_stacks/oozeling/on_apply()
+	. = ..()
+	var/color
+	if(isoozeling(owner))
+		var/mob/living/carbon/human/oozie = owner
+		var/datum/color_palette/generic_colors/colors = oozie.dna.color_palettes[/datum/color_palette/generic_colors]
+		color = colors.mutant_color
+	else
+		color = COLOR_LIME
+
+	var/obj/effect/abstract/shared_particle_holder/oozeling_droplets = owner.add_shared_particles(/particles/droplets/slime, "oozeling_droplets_[owner.name]", pool_size = 1)
+
+	oozeling_droplets.color = color
+
+/datum/status_effect/fire_handler/oozeling/wet_stacks/on_remove()
+	. = ..()
+	owner.remove_shared_particles(/particles/droplets/slime)

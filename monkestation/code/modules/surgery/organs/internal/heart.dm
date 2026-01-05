@@ -70,6 +70,9 @@
 		if(SPT_PROB(2.5, seconds_per_tick))
 			to_chat(slime, span_danger("You feel drained!"))
 
+	if(slime.blood_volume >= BLOOD_VOLUME_OKAY)
+		slime.apply_status_effect(/datum/status_effect/fire_handler/wet_stacks/oozeling, 1)
+
 	if(slime.blood_volume < BLOOD_VOLUME_BAD)
 		Cannibalize_Body(slime)
 

@@ -62,60 +62,6 @@
 /datum/status_effect/slime_washing/get_examine_text()
 	return span_notice("[owner.p_Their()] outer layer is pulling in grime, filth sinking inside of their body and vanishing.")
 
-///////
-/// HYDROPHOBIA SPELL
-/// Makes it so that slimes are waterproof, but slower, and they don't regenerate.
-
-/datum/action/cooldown/slime_hydrophobia
-	name = "Toggle Hydrophobia"
-	desc = "Develop an oily layer on your outer membrane, repelling water at the cost of lower viscosity."
-	button_icon = 'icons/mob/actions/actions_items.dmi'
-	button_icon_state = "nanite_shield"
-	cooldown_time = 1 MINUTES
-
-/datum/action/cooldown/slime_hydrophobia/Remove(mob/living/remove_from) // If we lose the spell make sure to remove its effects
-	. = ..()
-	remove_from.remove_status_effect(/datum/status_effect/slime_hydrophobia)
-
-/datum/action/cooldown/slime_hydrophobia/Activate()
-	. = ..()
-	var/mob/living/carbon/human/user = owner
-	if(!ishuman(user))
-		CRASH("Non-human somehow had [name] action")
-
-	if(user.has_status_effect(/datum/status_effect/slime_hydrophobia))
-		slime_hydrophobia_deactivate(user)
-		return
-
-	user.apply_status_effect(/datum/status_effect/slime_hydrophobia)
-	user.visible_message(span_purple("[user]'s outer membrane starts to ooze out an oily coating, [owner.p_their()] body becoming more viscous!"), span_purple("Your outer membrane starts to ooze out an oily coating, protecting you from water but making your body more viscous."))
-
-/datum/action/cooldown/slime_hydrophobia/proc/slime_hydrophobia_deactivate(mob/living/carbon/human/user)
-	user.remove_status_effect(/datum/status_effect/slime_hydrophobia)
-	user.visible_message(span_purple("[user]'s outer membrane returns to normal, [owner.p_their()] body drawing the oily coat back inside!"), span_purple("Your outer membrane returns to normal, water being dangerous to you again."))
-
-/datum/movespeed_modifier/status_effect/slime_hydrophobia
-	multiplicative_slowdown = 1.5
-
-/datum/status_effect/slime_hydrophobia
-	id = "slime_hydrophobia"
-	tick_interval = STATUS_EFFECT_NO_TICK
-	status_type = STATUS_EFFECT_UNIQUE
-	alert_type = null
-
-/datum/status_effect/slime_hydrophobia/on_apply()
-	. = ..()
-	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/slime_hydrophobia, update = TRUE)
-	ADD_TRAIT(owner, TRAIT_SLIME_HYDROPHOBIA, TRAIT_STATUS_EFFECT(id))
-
-/datum/status_effect/slime_hydrophobia/on_remove()
-	. = ..()
-	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/slime_hydrophobia, update = TRUE)
-	REMOVE_TRAIT(owner, TRAIT_SLIME_HYDROPHOBIA, TRAIT_STATUS_EFFECT(id))
-
-/datum/status_effect/slime_hydrophobia/get_examine_text()
-	return span_notice("[owner.p_They()] [owner.p_are()] oozing out an oily coating onto [owner.p_their()] outer membrane, water rolling right off.")
-
 /**
 	* Toggle Death Signal simply adds and removes the trait required for slimepeople to transmit a GPS signal upon core ejection.
 	*/

@@ -22,11 +22,12 @@
 	inherent_traits = list(
 		TRAIT_MUTANT_COLORS,
 		TRAIT_EASYDISMEMBER,
-		TRAIT_NOFIRE,
 		TRAIT_SPLEENLESS_METABOLISM,
 		TRAIT_FOOD_ABSORPTION,
 	)
 
+	inherent_respiration_type = RESPIRATION_N2
+	breathid = "n2"
 	meat = /obj/item/food/meat/slab/human/mutant/slime
 	exotic_bloodtype = /datum/blood_type/slime
 	inert_mutation = /datum/mutation/acid_touch
@@ -48,7 +49,6 @@
 	/// Typepaths of the default oozeling actions to give.
 	var/static/list/default_actions = list(
 		/datum/action/cooldown/slime_washing,
-		/datum/action/cooldown/slime_hydrophobia,
 		/datum/action/innate/core_signal,
 	)
 	/// Typepaths of extra actions to give to all oozelings.
@@ -109,20 +109,23 @@
 		return
 	if(!HAS_TRAIT(slime, TRAIT_NOHUNGER) && slime.nutrition <= NUTRITION_LEVEL_HUNGRY && !IS_BLOODSUCKER(slime)) // bloodsuckers have snowflake nutrition handling
 		spec_slime_hunger(slime, seconds_per_tick)
-	if(!HAS_TRAIT(slime, TRAIT_SLIME_HYDROPHOBIA))
-		spec_slime_wetness(slime, seconds_per_tick)
+	spec_slime_wetness(slime, seconds_per_tick)
 
 /// Handles slimes losing blood from having wet stacks.
 /datum/species/oozeling/proc/spec_slime_wetness(mob/living/carbon/human/slime, seconds_per_tick)
-	var/datum/status_effect/fire_handler/wet_stacks/wetness = locate() in slime.status_effects // locate should be slightly faster in theory, as this has no subtypes hopefully, so we don't need to check ids
-	if(!wetness)
+	var/datum/status_effect/fire_handler/wet_stacks/wetness = locate() in slime.status_effects
+	if(wetness?.type != /datum/status_effect/fire_handler/wet_stacks)
 		return
 
-	if(wetness.stacks > DAMAGE_WATER_STACKS)
+	if(water_damage_multiplier(slime) <= 0)
+		return
+
+	if(wetness.stacks >= DAMAGE_WATER_STACKS)
 		remove_blood_volume(slime, 2 * seconds_per_tick)
 		slime.balloon_alert(slime, "too wet, dry off!")
 		if(SPT_PROB(25, seconds_per_tick))
 			slime.visible_message(span_danger("[slime]'s form begins to lose cohesion, seemingly diluting with the water!"), span_warning("The water starts to dilute your body, dry it off!"))
+
 	else if(wetness.stacks > REGEN_WATER_STACKS && SPT_PROB(25, seconds_per_tick)) //Used for old healing system. Maybe use later? For now increase loss for being soaked.
 		to_chat(slime, span_warning("You can't pull your body together, it is dripping wet!"))
 		remove_blood_volume(slime, seconds_per_tick)
@@ -234,7 +237,7 @@
 	)
 	if(chem.type == /datum/reagent/toxin/plasma || chem.type == /datum/reagent/toxin/hot_ice)
 		if(slime.getBruteLoss() || slime.getFireLoss())
-			if(!HAS_TRAIT(slime, TRAIT_SLIME_HYDROPHOBIA) && slime.get_skin_temperature() > slime.bodytemp_cold_damage_limit)
+			if(slime.get_skin_temperature() > slime.bodytemp_cold_damage_limit)
 				slime.heal_ordered_damage(HEALTH_HEALED * REM * seconds_per_tick, list(BRUTE, BURN))
 				slime.reagents.remove_reagent(chem.type, min(chem.volume * 0.22, 10))
 			else
@@ -248,7 +251,7 @@
 			to_chat(slime, span_purple("Your body's thirst for plasma is quenched, your inner and outer membrane using it to regenerate."))
 
 	else if(chem.type == /datum/reagent/water)
-		if(HAS_TRAIT(slime, TRAIT_SLIME_HYDROPHOBIA) || HAS_TRAIT(slime, TRAIT_GODMODE) || slime.blood_volume <= 0)
+		if(HAS_TRAIT(slime, TRAIT_GODMODE) || slime.blood_volume <= 0)
 			return ..()
 
 		remove_blood_volume(slime, 3 * seconds_per_tick)
@@ -270,10 +273,6 @@
 			if(!quiet_if_protected)
 				to_chat(slime, span_warning("The water fails to penetrate your thick clothing!"))
 			return FALSE
-	if(HAS_TRAIT(slime, TRAIT_SLIME_HYDROPHOBIA))
-		if(!quiet_if_protected)
-			to_chat(slime, span_warning("Water splashes against your oily membrane and rolls right off your body!"))
-		return FALSE
 	remove_blood_volume(slime, 30 * water_multiplier)
 	if(COOLDOWN_FINISHED(src, water_alert_cooldown))
 		slime.visible_message(

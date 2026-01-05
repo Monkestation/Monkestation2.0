@@ -947,7 +947,10 @@
 
 /obj/item/organ/internal/lungs/slime
 	name = "vacuole"
-	desc = "A large organelle designed to store oxygen and other important gasses."
+	desc = "A large organelle designed to store nitrogen and other important gasses."
+
+	zone = BODY_ZONE_CHEST
+	organ_flags = ORGAN_UNREMOVABLE
 
 	safe_oxygen_min = 0 //We don't breathe this
 	safe_nitro_min = 4 // We breathe nitrogen.
