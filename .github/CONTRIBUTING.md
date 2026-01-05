@@ -1,18 +1,25 @@
 # CONTRIBUTING
 
-1. [Reporting Issues](#reporting-issues)
-2. [Introduction](#introduction)
-3. [Getting Started](#getting-started)
-4. [Meet the Team](#meet-the-team)
-   1. [Headcoder](#headcoder)
-   2. [Maintainers](#maintainers)
-   3. [Issue Managers](#issue-managers)
-5. [Development Guides](#development-guides)
-6. [Pull Request Process](#pull-request-process)
-7. [Good Boy Points](#good-boy-points)
-8. [Porting features/sprites/sounds/tools from other codebases](#porting-featuresspritessoundstools-from-other-codebases)
-9. [Banned content](#banned-content)
-10. [A word on Git](#a-word-on-git)
+- [CONTRIBUTING](#contributing)
+	- [Reporting Issues](#reporting-issues)
+	- [Introduction](#introduction)
+	- [Getting Started](#getting-started)
+	- [Meet the Team](#meet-the-team)
+		- [Headcoder](#headcoder)
+		- [Maintainers](#maintainers)
+		- [Issue Managers](#issue-managers)
+	- [Development Guides](#development-guides)
+			- [Writing readable code](#writing-readable-code)
+			- [Writing sane code](#writing-sane-code)
+			- [Writing understandable code](#writing-understandable-code)
+			- [Misc](#misc)
+	- [Pull Request Process](#pull-request-process)
+	- [Justifying Your Changes](#justifying-your-changes)
+	- [Good Boy Points](#good-boy-points)
+	- [Porting features/sprites/sounds/tools from other codebases](#porting-featuresspritessoundstools-from-other-codebases)
+	- [Banned content](#banned-content)
+	- [A word on Git](#a-word-on-git)
+	- [Using the Maintainer Role Ping in Discord](#using-the-maintainer-role-ping-in-discord)
 
 ## Reporting Issues
 
@@ -120,6 +127,8 @@ Things you **CAN'T** do:
 - [Splitting up pull requests, aka atomization](./guides/ATOMIZATION.md)
 - [UI Development](../tgui/README.md)
 - [Visual Effects and Systems](./guides/VISUALS.md)
+- [Tick Order](/.github/guides/TICK_ORDER.md)
+- [Smooth Visuals](/.github/guides/SMOOTHNESS.md)
 
 ## Pull Request Process
 
