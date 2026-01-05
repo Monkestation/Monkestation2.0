@@ -328,6 +328,7 @@
 	id = "oozeling_wet_stacks"
 	enemy_types = list(/datum/status_effect/fire_handler/fire_stacks, /datum/status_effect/fire_handler/wet_stacks)
 	special_particles = TRUE
+	stack_modifier = -2
 
 /datum/status_effect/fire_handler/wet_stacks/oozeling/on_apply()
 	. = ..()
