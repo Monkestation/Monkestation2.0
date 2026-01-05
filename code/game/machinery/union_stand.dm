@@ -6,6 +6,7 @@
 	base_icon_state = "holographic_sign"
 
 	req_one_access = list(ACCESS_UNION, ACCESS_UNION_LEADER)
+	density = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.1
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION
@@ -29,5 +30,14 @@
 	return ..()
 
 /obj/machinery/union_stand/ui_interact(mob/user, datum/tgui/ui)
+	return union_stand_for.ui_interact(user, ui, src)
+
+/obj/machinery/union_stand/ui_data(mob/user)
+	return union_stand_for.ui_data(user)
+
+/obj/machinery/union_stand/ui_static_data(mob/user)
+	return union_stand_for.ui_data(user)
+
+/obj/machinery/union_stand/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	union_stand_for.ui_interact(user, source = src)
+	return union_stand_for.ui_act(action, params, ui, state)
