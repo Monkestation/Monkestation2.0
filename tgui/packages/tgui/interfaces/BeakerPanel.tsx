@@ -227,6 +227,7 @@ export const BeakerPanel = (props) => {
                     width="80px"
                     value={reagent.amount}
                     minValue={0}
+                    maxValue={1000}
                     step={1}
                     stepPixelSize={10}
                     onChange={(e, value) => {
@@ -327,7 +328,6 @@ export const BeakerPanel = (props) => {
                         width="150px"
                         options={['Normal']}
                         selected={grenadeData.grenadeType}
-                        value={grenadeData.grenadeType}
                         onSelected={(value) =>
                           setGrenadeData({
                             ...grenadeData,
@@ -339,8 +339,10 @@ export const BeakerPanel = (props) => {
                     <LabeledList.Item label="Timer (seconds)">
                       <NumberInput
                         width="75px"
-                        placeholder="Enter seconds"
-                        minValue={1}
+                        step={0.1}
+                        minValue={10}
+                        maxValue={10.0}
+                        unit="seconds"
                         value={grenadeData.grenadeTimer}
                         onChange={(e, value) =>
                           setGrenadeData({

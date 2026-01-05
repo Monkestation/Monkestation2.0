@@ -132,6 +132,7 @@ export const NtosRobotactContent = (props) => {
                   stepPixelSize={25}
                   maxValue={5}
                   minValue={1}
+                  tickWhileDragging
                   onChange={(e, value) =>
                     act('lampIntensity', {
                       ref: value,

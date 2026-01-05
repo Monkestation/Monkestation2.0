@@ -8,14 +8,14 @@
 		"isolatedModules": false,
 		"jsx": "preserve",
 		"lib": ["DOM", "DOM.Iterable", "ESNext", "ScriptHost"],
-		"module": "ESNext",
-		"moduleResolution": "Node",
+		"module": "esnext",
+		"moduleResolution": "bundler",
 		"noEmit": true,
 		"resolveJsonModule": true,
 		"skipLibCheck": true,
 		"strict": false,
 		"strictNullChecks": true,
-		"target": "ES5"
+		"target": "esnext"
 	},
 	"include": ["./*.d.ts", "./packages"]
 }

@@ -983,9 +983,6 @@
 	add_fingerprint(user)
 
 /obj/item/card/fuzzy_license/attackby(obj/item/used, mob/living/user, params)
-	if(user.ckey != "fuzlet")
-		return
-
 	if(istype(used, /obj/item/pen) || istype(used, /obj/item/toy/crayon))
 		var/choice = input(user, "Select the license type", "License Type Selection") as null|anything in possible_types
 		if(!isnull(choice))
@@ -1084,9 +1081,12 @@
 	worn_icon = 'monkestation/icons/donator/mob/clothing/eyes.dmi'
 
 //Donation reward for Konstyantyn
-/obj/item/clothing/accessory/badge/holo/jade
+/obj/item/clothing/accessory/badge/jade
 	name = "jade holobadge"
 	desc = "A strangely green holobadge. 'Lieutenant Uriah' is stamped onto it, above the letters JS."
+	access_required = null
+	badge_string = "Lieutenant"
+
 	icon = 'monkestation/icons/donator/obj/custom.dmi'
 	worn_icon = 'monkestation/icons/donator/mob/clothing/custom_w.dmi'
 	icon_state = "greenbadge"

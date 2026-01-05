@@ -133,8 +133,8 @@ const SearchAndDisplay = (props) => {
           <Stack>
             <Stack.Item>
               <Input
-                value={book_id}
-                placeholder={book_id === null ? 'ID' : book_id}
+                value={book_id.toString()}
+                placeholder={`${book_id === null ? 'ID' : book_id}`}
                 width="70px"
                 onChange={(e, value) =>
                   act('set_search_id', {
@@ -344,7 +344,7 @@ const ModifyPage = (props) => {
 
   return (
     <Window.Content scrollable>
-      <NoticeBox warning>
+      <NoticeBox>
         Heads Up! We do not allow you to fully delete books in game
         <br />
         What you&apos;re doing here is a &quot;don&apos;t show this to
@@ -456,7 +456,7 @@ const ModifyPage = (props) => {
             <Table.Cell
               className="LibraryAdmin_RecordCell"
               style={{
-                'white-space': 'pre-wrap',
+                whiteSpace: 'pre-wrap',
               }}
             >
               {entry.reason}

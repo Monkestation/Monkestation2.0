@@ -16,6 +16,7 @@ import {
   Pointer,
   NumberInput,
   Tooltip,
+  Interactive,
 } from '../components';
 import { Window } from '../layouts';
 import { clamp } from 'common/math';
@@ -28,11 +29,11 @@ import {
   rgbaToHsva,
   validHex,
 } from 'common/color';
-import { Interaction, Interactive } from 'tgui/components/Interactive';
 import { classes } from 'common/react';
-import { Component, FocusEvent, FormEvent, InfernoNode } from 'inferno';
+import { Component, FocusEvent, FormEvent, useRef } from 'react';
 import { logger } from 'tgui/logging';
 import { InputButtons } from './common/InputButtons';
+import { Interaction } from 'tgui-core/components';
 
 type ColorPickerData = {
   autofocus: boolean;
@@ -330,8 +331,10 @@ const TextSetter = ({
  * SOFTWARE.
  */
 
-interface HexColorInputProps
-  extends Omit<ColorInputBaseProps, 'escape' | 'validate'> {
+interface HexColorInputProps extends Omit<
+  ColorInputBaseProps,
+  'escape' | 'validate'
+> {
   /** Enables `#` prefix displaying */
   prefixed?: boolean;
   /** Allows `#rgba` and `#rrggbbaa` color formats */
@@ -341,7 +344,7 @@ interface HexColorInputProps
 /** Adds "#" symbol to the beginning of the string */
 const prefix = (value: string) => '#' + value;
 
-export const HexColorInput = (props: HexColorInputProps): InfernoNode => {
+export const HexColorInput = (props: HexColorInputProps) => {
   const { prefixed, alpha, color, fluid, onChange, ...rest } = props;
 
   /** Escapes all non-hexadecimal characters including "#" */
@@ -381,7 +384,7 @@ export class ColorInput extends Component {
   state: { localValue: string };
 
   constructor(props: ColorInputBaseProps) {
-    super();
+    super(props);
     this.props = props;
     this.state = { localValue: this.props.escape(this.props.color) };
   }
@@ -452,12 +455,14 @@ const SaturationValue = ({ hsva, onChange }) => {
   };
 
   const containerStyle = {
-    'background-color': hsvaToHslString({ h: hsva.h, s: 100, v: 100, a: 1 }),
+    backgroundColor: hsvaToHslString({ h: hsva.h, s: 100, v: 100, a: 1 }),
   };
+  const containerRef = useRef<HTMLDivElement>(null);
 
   return (
     <div className="react-colorful__saturation_value" style={containerStyle}>
       <Interactive
+        containerRef={containerRef}
         onMove={handleMove}
         onKey={handleKey}
         aria-label="Color"
@@ -497,10 +502,12 @@ const Hue = ({
   };
 
   const nodeClassName = classes(['react-colorful__hue', className]);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   return (
     <div className={nodeClassName}>
       <Interactive
+        containerRef={containerRef}
         onMove={handleMove}
         onKey={handleKey}
         aria-label="Hue"
@@ -539,6 +546,7 @@ const Saturation = ({
   };
 
   const nodeClassName = classes(['react-colorful__saturation', className]);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   return (
     <div className={nodeClassName}>
@@ -551,6 +559,7 @@ const Saturation = ({
             a: 1,
           })}, ${hsvaToHslString({ h: color.h, s: 100, v: color.v, a: 1 })})`,
         }}
+        containerRef={containerRef}
         onMove={handleMove}
         onKey={handleKey}
         aria-label="Saturation"
@@ -588,6 +597,7 @@ const Value = ({
   };
 
   const nodeClassName = classes(['react-colorful__value', className]);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   return (
     <div className={nodeClassName}>
@@ -600,6 +610,7 @@ const Value = ({
             a: 1,
           })}, ${hsvaToHslString({ h: color.h, s: color.s, v: 100, a: 1 })})`,
         }}
+        containerRef={containerRef}
         onMove={handleMove}
         onKey={handleKey}
         aria-label="Value"
@@ -644,6 +655,7 @@ const RGBSlider = ({
   };
 
   const nodeClassName = classes([`react-colorful__${target}`, className]);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   let selected =
     target === 'r'
@@ -655,6 +667,7 @@ const RGBSlider = ({
   return (
     <div className={nodeClassName}>
       <Interactive
+        containerRef={containerRef}
         onMove={handleMove}
         onKey={handleKey}
         aria-valuenow={rgb[target]}

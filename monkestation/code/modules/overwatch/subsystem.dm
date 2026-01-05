@@ -439,7 +439,7 @@ SUBSYSTEM_DEF(overwatch)
 		return
 	if(response.status_code != 200)
 		return
-	if(response.body == "[]")
+	if(response.body == "\[]")
 		return
 	var/active_ban_count = 0
 	bans = json_decode(response.body)

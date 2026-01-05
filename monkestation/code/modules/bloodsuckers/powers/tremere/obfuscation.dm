@@ -79,7 +79,7 @@
 	return TRUE
 
 /datum/action/cooldown/bloodsucker/targeted/tremere/obfuscation/ActivatePower(trigger_flags)
-	..()
+	. = ..()
 	revealed = FALSE
 	owner.AddElement(/datum/element/relay_attackers)
 	RegisterSignal(owner, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))

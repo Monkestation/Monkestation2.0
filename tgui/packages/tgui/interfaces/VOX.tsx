@@ -10,7 +10,7 @@ import {
   Dropdown,
 } from '../components';
 import { Window } from '../layouts';
-import { Component } from 'inferno';
+import { Component } from 'react';
 import { fetchRetry } from '../http';
 import { resolveAsset } from '../assets';
 import { formatTime } from '../format';
@@ -42,7 +42,7 @@ export class VOX extends Component {
 
   render() {
     return (
-      <Window title="VOX Announcement" fixed width={700} height={300}>
+      <Window title="VOX Announcement" width={700} height={300}>
         <Window.Content>
           <Stack fill>
             <Stack.Item width="100%">
@@ -66,8 +66,8 @@ const TextAreaSection = (props) => {
       <Stack vertical fill>
         <Stack.Item height="100%">
           <TextArea
-            scrollbar
             height="100%"
+            width="100%"
             value={message}
             onInput={(_, value) => setMessage(value)}
           />
@@ -146,6 +146,7 @@ const AnnouncementTab = () => {
       <Box align="center">Selected Voice</Box>
       <Dropdown
         width="100%"
+        selected={current_voice}
         displayText={current_voice}
         options={voice_names}
         onSelected={(voice) => act('set_voice', { voice })}
