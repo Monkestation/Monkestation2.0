@@ -27,6 +27,13 @@
 	if(!length(legal_crafting_recipes))
 		create_recipes()
 
+/obj/machinery/assembler/proc/empty_crafting_inventory()
+	for(var/atom/movable/listed as anything in crafting_inventory)
+		if(QDELETED(listed))
+			continue
+		listed.forceMove(get_turf(src))
+		crafting_inventory -= listed
+
 /obj/machinery/assembler/RefreshParts()
 	. = ..()
 	var/datum/stock_part/manipulator/locate_servo = locate() in component_parts
@@ -36,9 +43,7 @@
 
 /obj/machinery/assembler/Destroy()
 	. = ..()
-	for(var/atom/movable/movable in crafting_inventory)
-		movable.forceMove(get_turf(src))
-		crafting_inventory -= movable
+	empty_crafting_inventory()
 
 /obj/machinery/assembler/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -74,9 +79,7 @@
 	chosen_recipe = choice
 	if(crafting)
 		return
-	for(var/atom/movable/listed as anything in crafting_inventory)
-		listed.forceMove(get_turf(src))
-		crafting_inventory -= listed
+	empty_crafting_inventory()
 
 /obj/machinery/assembler/CanAllowThrough(atom/movable/mover, border_dir)
 	if(!anchored || !chosen_recipe)
@@ -278,9 +281,7 @@
 	I.forceMove(drop_location())
 
 	if(current_craft_recipe != chosen_recipe)
-		for(var/atom/movable/listed as anything in crafting_inventory)
-			listed.forceMove(get_turf(src))
-			crafting_inventory -= listed
+		empty_crafting_inventory()
 
 	crafting = FALSE
 	current_craft_recipe = null
