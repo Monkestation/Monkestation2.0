@@ -45,7 +45,7 @@
 		status = data["approved"] ? CASSETTE_STATUS_APPROVED : CASSETTE_STATUS_UNAPPROVED
 
 	author.name = data["author_name"]
-	author.ckey = ckey(data["author_ckey"])
+	author.ckey = data["author_ckey"]
 
 	for(var/side_name, side_data in data["songs"])
 		var/datum/cassette_side/side
@@ -114,7 +114,7 @@
 		"desc" = desc,
 		"status" = status,
 		"author_name" = author.name,
-		"author_name" = ckey(author.ckey),
+		"author_ckey" = author.ckey,
 		"front" = json_encode(front.export()),
 		"back" = json_encode(back.export()),
 	))

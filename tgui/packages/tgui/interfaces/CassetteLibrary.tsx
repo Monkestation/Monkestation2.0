@@ -8,6 +8,7 @@ import {
   Section,
   Stack,
   Tabs,
+  Tooltip,
 } from '../components';
 import { Window } from '../layouts';
 
@@ -238,14 +239,16 @@ export const CassetteLibrary = (props) => {
                                       <Box as="span" bold>
                                         Author:
                                       </Box>{' '}
-                                      {cassette.author_name}{' '}
-                                      <Box
-                                        as="span"
-                                        fontSize="11px"
-                                        color="label"
-                                      >
-                                        (( {cassette.author_ckey} ))
-                                      </Box>
+                                      <Tooltip content={cassette.author_ckey}>
+                                        <span
+                                          style={{
+                                            'border-bottom': '1px dotted',
+                                            cursor: 'help',
+                                          }}
+                                        >
+                                          {cassette.author_name}
+                                        </span>
+                                      </Tooltip>
                                     </Box>
                                   </Stack.Item>
                                   <Stack.Item>
@@ -414,10 +417,16 @@ const PersonalHistory = (props) => {
                           <Box as="span" bold>
                             Author:
                           </Box>{' '}
-                          {purchase.cassette_author}{' '}
-                          <Box as="span" fontSize="11px" color="label">
-                            (( {purchase.cassette_author_ckey} ))
-                          </Box>
+                          <Tooltip content={purchase.cassette_author_ckey}>
+                            <span
+                              style={{
+                                'border-bottom': '1px dotted',
+                                cursor: 'help',
+                              }}
+                            >
+                              {purchase.cassette_author}
+                            </span>
+                          </Tooltip>
                         </Box>
                       </Stack.Item>
                       <Stack.Item>
@@ -520,10 +529,16 @@ const GeneralHistory = (props) => {
                           <Box as="span" bold>
                             Author:
                           </Box>{' '}
-                          {purchase.cassette_author}{' '}
-                          <Box as="span" fontSize="11px" color="label">
-                            (( {purchase.cassette_author_ckey} ))
-                          </Box>
+                          <Tooltip content={purchase.cassette_author_ckey}>
+                            <span
+                              style={{
+                                'border-bottom': '1px dotted',
+                                cursor: 'help',
+                              }}
+                            >
+                              {purchase.cassette_author}
+                            </span>
+                          </Tooltip>
                         </Box>
                       </Stack.Item>
                     </Stack>
@@ -656,10 +671,18 @@ const TopCassettes = ({ top_cassettes }) => {
                                 <Box as="span" bold>
                                   Author:
                                 </Box>{' '}
-                                {cassette.cassette_author}{' '}
-                                <Box as="span" fontSize="11px" color="label">
-                                  (( {cassette.cassette_author_ckey} ))
-                                </Box>
+                                <Tooltip
+                                  content={cassette.cassette_author_ckey}
+                                >
+                                  <span
+                                    style={{
+                                      'border-bottom': '1px dotted',
+                                      cursor: 'help',
+                                    }}
+                                  >
+                                    {cassette.cassette_author}
+                                  </span>
+                                </Tooltip>
                               </Box>
                             </Stack.Item>
                             <Stack.Item>
