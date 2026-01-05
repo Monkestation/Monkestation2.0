@@ -329,6 +329,15 @@
 
 	return extra_overlays
 
+/obj/item/circuitboard/machine/union_stand
+	name = "Union Stand"
+	build_path = /obj/machinery/union_stand
+	req_components = list(
+		/obj/item/stock_parts/matter_bin = 1,
+		/obj/item/stock_parts/manipulator = 1,
+		/obj/item/stock_parts/micro_laser = 2,
+	)
+
 /obj/item/circuitboard/machine/station_map
 	name = "Station Map"
 	build_path = /obj/machinery/station_map/directional/north

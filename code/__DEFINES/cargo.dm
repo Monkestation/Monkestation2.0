@@ -84,7 +84,3 @@ GLOBAL_LIST_INIT(podstyles, list(\
 //Monkestation Edit: Two new drop pods, the beater car and the washing machine
 //Nearby reference because nobody else did this:
 //The order is: Shape, Base, Door, Decal, Glow Color, Rubble Type, Name, Description
-
-#define CARGO_UNION_NAME "name"
-#define CARGO_UNION_LEADER "leader"
-#define CARGO_UNION_BANK "bank"

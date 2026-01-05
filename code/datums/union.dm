@@ -1,20 +1,38 @@
 GLOBAL_DATUM_INIT(cargo_union, /datum/union, new)
 GLOBAL_LIST_INIT(union_demands, list())
 
+#define TIME_BETWEEN_DEMANDS (10 MINUTES)
+#define TIME_TO_VOTE (TIME_BETWEEN_DEMANDS / 4)
+///The time Command has to stop a demand.
+#define COMMAND_DELAY (3 MINUTES)
+
 /datum/union
 	///Name of the Union.
 	var/name = "Cargo Union"
 	///The budget the Union has control over, and pays their staff with.
 	var/union_budget = ACCOUNT_CAR
+	///The radio channel to announce union-wide stuff.
+	var/radio_channel_used = RADIO_CHANNEL_SUPPLY
+
 	///Assoc List of people part of the Cargo Union, by default all Cargo personnel but the QM can add more.
 	///stored as: list(CARGO_UNION_LEADER = boolean, CARGO_UNION_NAME = string, CARGO_UNION_BANK, /datum/bank_account)
 	var/list/union_employees = list()
 
 	///List of all demands this Union can make.
-	var/datum/union_demand/possible_demands = list()
-
+	var/list/datum/union_demand/possible_demands = list()
 	///List of all demands this Union has successfully done.
-	var/datum/union_demand/successful_demands = list()
+	var/list/datum/union_demand/successful_demands = list()
+
+	///Delay between union demand votings.
+	COOLDOWN_DECLARE(union_demand_delay)
+	///Stored time left to end the vote, different from delay of demanding union stuff.
+	var/voting_timer
+	///Amount of people that have voted yes for the current demand, resets between uses.
+	var/list/votes_yes = list()
+	///Amount of people that have voted no for the current demand, resets between uses.
+	var/list/votes_no = list()
+	///The demand the union is currently voting on.
+	var/datum/union_demand/demand_voting_on
 
 /datum/union/New()
 	. = ..()
@@ -30,13 +48,66 @@ GLOBAL_LIST_INIT(union_demands, list())
 	union_employees.Cut()
 	return ..()
 
-///Called when paydays are issued, Union personnel will get it later.
+///Called when paydays are issued, Union personnel will also get paid by their Union.
+///We also take the cost of any enacted demand here, from both the Union and Command.
 /datum/union/proc/handle_payday()
 	for(var/member in GLOB.cargo_union.union_employees)
 		var/datum/bank_account/bank_account = member[CARGO_UNION_BANK]
 		if(isnull(bank_account))
 			continue
 		bank_account.payday(1, skippable = TRUE, event = "Union pay", budget_used = union_budget)
+
+	var/datum/bank_account/union_account = SSeconomy.get_dep_account(union_budget)
+	var/datum/bank_account/command_account = SSeconomy.get_dep_account(ACCOUNT_CMD)
+	for(var/datum/union_demand/demand_cost as anything in successful_demands)
+		union_account.adjust_money(-demand_cost.cost)
+		command_account.adjust_money(-demand_cost.cost)
+
+///Returns how many people are part of the Union.
+/datum/union/proc/get_union_count()
+	return length(union_employees)
+
+///Called when a demand is succesfully voted to go into effect.
+/datum/union/proc/on_demand_success(datum/union_demand/demanding)
+	if(!(src in possible_demands))
+		stack_trace("[name] just tried to enact [demanding.name], but it's not in their list of possible demands!")
+		return FALSE
+	make_union_announcement(src, announce_mode = ANNOUNCE_CREW)
+	possible_demands -= src
+	addtimer(CALLBACK(src, PROC_REF(implement_demand), demanding), COMMAND_DELAY)
+
+///Called after the delay to implement a demand, if Command did nothing to stop it, putting it into effect and taking cost.
+/datum/union/proc/implement_demand(datum/union_demand/demanding)
+	make_union_announcement(demanding, announce_mode = ANNOUNCE_INTO_EFFECT)
+	successful_demands += src
+	demanding.implement_demand(src)
+
+///Called when a demand fails to get voted on to go into effect.
+/datum/union/proc/on_demand_failure(datum/union_demand/demanding)
+	make_union_announcement(src, announce_mode = ANNOUNCE_FAILURE)
+
+///Depending on announce_mode, we will announce to the Union or Crew the several stages of a Union Demand.
+/datum/union/proc/make_union_announcement(datum/union_demand/demand_being_made, announce_mode)
+	switch(announce_mode)
+		if(ANNOUNCE_START_VOTE)
+			var/obj/machinery/announcement_system/system_announcement = pick(GLOB.announcement_systems)
+			system_announcement.announce(AUTO_ANNOUNCE_UNION, demand_being_made.union_description, channels = list(radio_channel_used))
+		if(ANNOUNCE_CREW)
+			priority_announce(
+				text = demand_being_made.station_description,
+				title = name,
+				has_important_message = TRUE,
+			)
+		if(ANNOUNCE_INTO_EFFECT)
+			var/obj/machinery/announcement_system/system_announcement = pick(GLOB.announcement_systems)
+			system_announcement.announce(AUTO_ANNOUNCE_UNION, "[demand_being_made.name] is now in full effect.", channels = list(radio_channel_used))
+		if(ANNOUNCE_DEADLOCK)
+			var/obj/machinery/announcement_system/system_announcement = pick(GLOB.announcement_systems)
+			system_announcement.announce(AUTO_ANNOUNCE_UNION, "[demand_being_made.name] is now in full effect.", channels = list(radio_channel_used))
+		if(ANNOUNCE_FAILURE)
+			var/obj/machinery/announcement_system/system_announcement = pick(GLOB.announcement_systems)
+			system_announcement.announce(AUTO_ANNOUNCE_UNION, "[demand_being_made.name] has failed to get enough votes.", channels = list(radio_channel_used))
+	return TRUE
 
 /datum/union/proc/add_member(member_name, union_leader, datum/bank_account/bank_account_details)
 	union_employees += list(list(
@@ -53,31 +124,96 @@ GLOBAL_LIST_INIT(union_demands, list())
 		return TRUE
 	return FALSE
 
-/**
- * Union Demands
- * Datum storing what demands a Union can ask for, their requirements, and the effects they have on the round.
- */
-/datum/union_demand
-	///Name of the demand
-	var/name = "Demand"
-	///The description of the demand given to Union personnel.
-	var/union_description = "We deserve our fair share, right?"
-	///The description of the demand given to the whole station when the demand is being made.
-	var/station_description = "The Cargo Union is making this demand."
-	///Which department is eligible to demand this. Support for non-cargo unions don't exist yet, so this is pointless lol.
-	var/department_eligible = ACCOUNT_CAR
+/datum/union/ui_interact(mob/user, datum/tgui/ui, obj/machinery/union_stand/source)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, source || src, "UnionStand")
+		ui.open()
 
-/datum/union_demand/proc/can_demand()
+/datum/union/ui_data(mob/user)
+	var/list/data = list()
+
+	//vote stuff, only appears when something is voted for.
+	if(demand_voting_on)
+		data["voting"] = demand_voting_on.name
+		data["votes_yes"] = length(votes_yes)
+		data["votes_no"] = length(votes_no)
+		data["time_left"] = DisplayTimeText(timeleft(voting_timer), 1)
+
+	//list of all demands, only used in times of non-voting.
+	data["possible_demands"] = list()
+	for(var/datum/union_demand/demands as anything in possible_demands)
+		data["possible_demands"] += list(list(
+			"name" = demands.name,
+			"desc" = demands.union_description,
+			"cost" = demands.cost,
+			"ref" = REF(demands),
+		))
+	//list of completed demands
+	data["completed_demands"] = list()
+	for(var/datum/union_demand/demands as anything in successful_demands)
+		data["completed_demands"] += list(list(
+			"name" = demands.name,
+			"cost" = demands.cost,
+			"ref" = REF(demands),
+		))
+
+	return data
+
+/datum/union/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	var/mob/user = ui.user
+	var/obj/machinery/host = ui.src_object
+	switch(action)
+		if("trigger_vote")
+			var/datum/union_demand/vote_for = locate(params["selected_demand"]) in possible_demands
+			if(isnull(vote_for))
+				return TRUE
+			if(!COOLDOWN_FINISHED(src, union_demand_delay))
+				host.balloon_alert(user, "on cooldown for [DisplayTimeText(COOLDOWN_TIMELEFT(src, union_demand_delay))]!")
+				return TRUE
+			trigger_vote(vote_for)
+			return TRUE
+		if("vote_yes")
+			if(isnull(demand_voting_on))
+				return TRUE
+			if(user in votes_yes)
+				host.balloon_alert(user, "already voted!")
+				return TRUE
+			if(user in votes_no)
+				votes_no -= user
+			votes_yes += user
+			return TRUE
+		if("vote_no")
+			if(isnull(demand_voting_on))
+				return TRUE
+			if(user in votes_no)
+				host.balloon_alert(user, "already voted!")
+				return TRUE
+			if(user in votes_yes)
+				votes_yes -= user
+			votes_no += user
+			return TRUE
+
+/datum/union/proc/trigger_vote(datum/union_demand/vote_for)
+	COOLDOWN_START(src, union_demand_delay, TIME_BETWEEN_DEMANDS)
+	demand_voting_on = vote_for
+	make_union_announcement(vote_for, announce_mode = ANNOUNCE_START_VOTE)
+	voting_timer = addtimer(CALLBACK(src, PROC_REF(stop_vote)), TIME_TO_VOTE)
+
+/datum/union/proc/stop_vote()
+	if(length(votes_yes) > length(votes_no))
+		on_demand_success(demand_voting_on)
+	else
+		on_demand_failure(demand_voting_on)
+		COOLDOWN_RESET(src, union_demand_delay)
+
+	demand_voting_on = null
+	voting_timer = null
+	votes_yes.Cut()
+	votes_no.Cut()
 	return TRUE
 
-/datum/union_demand/proc/on_demand()
-
-/datum/union_demand/vendor_stock
-	name = "Vendor Stock Automatic Reporting"
-	union_description = "The Union has noticed the vending machines on the station have been getting refilled in a very \
-		inefficient manner and the Union has been getting the blame for this inefficiency. \
-		As part of our new wave of agreements, we're purchasing new tracking software for vending machines \
-		that will automatically report their stock and send it for Cargo's easy viewing. \
-		Did you know vendors pay for refilled stock?"
-	station_description = "The Cargo Union has voted for a new demand, all vending machines will be equipped \
-		with surveyance software that will be reported back to Cargo so they can ensure all vendors are properly stocked."
+#undef TIME_BETWEEN_DEMANDS
+#undef TIME_TO_VOTE
+#undef COMMAND_DELAY

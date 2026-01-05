@@ -137,6 +137,7 @@
 		"holosignatmos",
 		"holosignrestaurant",
 		"holosignbar",
+		"union_stand",
 		"inducer",
 		"tray_goggles",
 		"holopad",
