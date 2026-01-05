@@ -58,5 +58,5 @@ GLOBAL_VAR_INIT(last_prime_storage_index, 1)
 			GLOB.last_prime_canidate = _prime_canidate; \
 		} else { \
 			CONSUME_UNTIL(target_usage) \
-		 } \
+		} \
 	} while(FALSE)
