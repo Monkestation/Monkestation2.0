@@ -1,4 +1,5 @@
 /datum/round_event_control/antagonist/solo/changeling
+	maximum_antags = 5
 	antag_flag = ROLE_CHANGELING
 	tags = list(TAG_COMBAT, TAG_ALIEN, TAG_CREW_ANTAG)
 	antag_datum = /datum/antagonist/changeling
@@ -30,12 +31,13 @@
 	event_icon_state = "changeling"
 
 /datum/round_event_control/antagonist/solo/changeling/roundstart
+	denominator = 20
 	name = "Changelings"
 	roundstart = TRUE
 	earliest_start = 0
-	maximum_antags = 1
 
 /datum/round_event_control/antagonist/solo/changeling/midround
+	denominator = 27
 	name = "Genome Awakening (Changelings)"
 	antag_flag = ROLE_GENOMEAWAKENING
 	prompted_picking = TRUE

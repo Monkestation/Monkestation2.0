@@ -1,4 +1,5 @@
 /datum/round_event_control/antagonist/solo/bloodsucker
+	maximum_antags = 5
 	antag_flag = ROLE_BLOODSUCKER
 	tags = list(TAG_COMBAT, TAG_MAGICAL, TAG_CREW_ANTAG, TAG_SPOOKY)
 	antag_datum = /datum/antagonist/bloodsucker
@@ -25,20 +26,22 @@
 	)
 	min_players = 20
 	weight = 8
-	maximum_antags = 2
 	event_icon_state = "vampires"
 
 /datum/round_event_control/antagonist/solo/bloodsucker/roundstart
+	denominator = 19 //Lower to account for latejoiners.
 	name = "Bloodsuckers"
 	roundstart = TRUE
 	earliest_start = 0 SECONDS
 
 /datum/round_event_control/antagonist/solo/bloodsucker/midround
 	typepath = /datum/round_event/antagonist/solo/bloodsucker
+	denominator = 27
 	antag_flag = ROLE_VAMPIRICACCIDENT
 	name = "Vampiric Accident"
 	prompted_picking = TRUE
 	max_occurrences = 1
+	weight = 10
 
 /datum/round_event/antagonist/solo/bloodsucker/add_datum_to_mind(datum/mind/antag_mind)
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = antag_mind.make_bloodsucker()

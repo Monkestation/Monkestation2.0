@@ -1,4 +1,5 @@
 /datum/round_event_control/antagonist/solo/traitor
+	maximum_antags = 5
 	antag_flag = ROLE_SYNDICATE_INFILTRATOR
 	tags = list(TAG_COMBAT, TAG_CREW_ANTAG, TAG_MUNDANE)
 	antag_datum = /datum/antagonist/traitor/infiltrator
@@ -27,6 +28,7 @@
 
 /datum/round_event_control/antagonist/solo/traitor/roundstart
 	name = "Traitors"
+	denominator = 19
 	antag_flag = ROLE_TRAITOR
 	antag_datum = /datum/antagonist/traitor
 	roundstart = TRUE
@@ -34,6 +36,8 @@
 
 /datum/round_event_control/antagonist/solo/traitor/midround
 	name = "Sleeper Agents (Traitors)"
+	denominator = 24
 	antag_flag = ROLE_SLEEPER_AGENT
 	antag_datum = /datum/antagonist/traitor/infiltrator/sleeper_agent
 	prompted_picking = TRUE
+	weight = 20

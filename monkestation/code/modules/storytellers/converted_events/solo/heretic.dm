@@ -1,4 +1,6 @@
 /datum/round_event_control/antagonist/solo/heretic
+	base_antags = 2 //make em compete for rifts
+	maximum_antags = 5
 	antag_flag = ROLE_HERETIC
 	tags = list(TAG_COMBAT, TAG_SPOOKY, TAG_MAGICAL, TAG_CREW_ANTAG)
 	antag_datum = /datum/antagonist/heretic
@@ -28,14 +30,17 @@
 	min_players = 20
 
 /datum/round_event_control/antagonist/solo/heretic/roundstart
+	denominator = 30 // higher to compensate for the 2 heretic minimum
 	name = "Heretics"
 	roundstart = TRUE
 	earliest_start = 0
 
 /datum/round_event_control/antagonist/solo/heretic/midround
+	denominator = 30
 	antag_flag = ROLE_FORBIDDENCALLING
 	name = "Forbidden Calling (Heretics)"
 	prompted_picking = TRUE
+	weight = 4
 
 /datum/round_event/antagonist/solo/heretic/add_datum_to_mind(datum/mind/antag_mind)
 	var/datum/antagonist/heretic/new_heretic = antag_mind.add_antag_datum(antag_datum)

@@ -3,7 +3,7 @@
 /datum/round_event_control/revenant
 	name = "Spawn Revenant" // Did you mean 'griefghost'?
 	typepath = /datum/round_event/ghost_role/revenant
-	weight = 7
+	weight = 6
 	max_occurrences = 1
 	min_players = 5
 	//dynamic_should_hijack = TRUE
