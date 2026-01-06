@@ -1,0 +1,4 @@
+author: "Lawlolawl"
+delete-after: True
+changes:
+  - bugfix: "Fixed Oshan engi lobby missing construction access. Parameds, engisec and RD can finally open the door."

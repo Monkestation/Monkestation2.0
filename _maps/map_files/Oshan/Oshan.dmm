@@ -8626,7 +8626,6 @@
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engineering Lobby"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /obj/effect/turf_decal/trimline/yellow/filled/warning{
 	dir = 8
 	},
@@ -8640,6 +8639,8 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "engie"
 	},
+/obj/effect/mapping_helpers/airlock/access/any/engineering/construction,
+/obj/effect/mapping_helpers/airlock/access/any/engineering/general,
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/lobby)
 "cQP" = (
@@ -48079,7 +48080,6 @@
 	dir = 4;
 	invisibility = 101
 	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /obj/effect/turf_decal/trimline/yellow/filled/warning{
 	dir = 8
 	},
@@ -48097,6 +48097,8 @@
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engineering Lobby"
 	},
+/obj/effect/mapping_helpers/airlock/access/any/engineering/construction,
+/obj/effect/mapping_helpers/airlock/access/any/engineering/general,
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/lobby)
 "poN" = (
