@@ -8,7 +8,7 @@ export const BarDrone = () => {
     <Window title="Bar Drone Information" width={600} height={522}>
       {/* MONKESTATION EDIT END */}
       <Section title="">
-        <Box color="red" fontSize="18px" margin="5px 0">
+        <Box color="red" fontSize="18px" style={{ margin: '5px 0' }}>
           <b>
             {/* MONKESTATION EDIT START */}
             {/* DO NOT INTERFERE WITH THE ROUND AS A DRONE OR YOU WILL BE DRONE
@@ -18,7 +18,7 @@ export const BarDrone = () => {
             {/* MONKESTATION EDIT END */}
           </b>
         </Box>
-        <Box fontSize="14px" margin="5px 0" color="#ffffff">
+        <Box fontSize="14px" style={{ margin: '5px 0' }} color="#ffffff">
           {/* MONKESTATION EDIT START */}
           {/* Drones are a ghost role that are allowed to fix the station and build
           things. Interfering with the round as a drone is against the rules. */}
@@ -27,7 +27,7 @@ export const BarDrone = () => {
           guidelines are against the rules.
           {/* MONKESTATION EDIT END */}
         </Box>
-        <Box fontSize="14px" color="#ffffff" margin="5px 0">
+        <Box fontSize="14px" style={{ margin: '5px 0' }} color="#ffffff">
           Actions that constitute interference include, but are not limited to:
         </Box>
         <LabeledList>
@@ -77,7 +77,7 @@ export const BarDrone = () => {
             </Box>
           </LabeledList.Item>
         </LabeledList>
-        <Box fontSize="14px" margin="10px 0" color="#ffffff">
+        <Box fontSize="14px" style={{ margin: '10px 0' }} color="#ffffff">
           <b>Guidelines for Bar Drones:</b>
         </Box>
         <LabeledList>
@@ -106,14 +106,17 @@ export const BarDrone = () => {
           </LabeledList.Item>
           {/* MONKESTATION EDIT END */}
         </LabeledList>
-        <Box color="red" fontSize="14px" margin="10px 0">
+        <Box color="red" fontSize="14px" style={{ margin: '10px 0' }}>
           These rules are at admin discretion and will be heavily enforced.
         </Box>
         <Box
           color="red"
           fontSize="14px"
-          margin="10px 0"
-          textDecoration="underline, bold"
+          style={{
+            margin: '10px 0',
+            textDecoration: 'underline',
+            fontWeight: 'bold',
+          }}
         >
           <b>
             {/* MONKESTATION EDIT START */}
@@ -123,10 +126,10 @@ export const BarDrone = () => {
             {/* MONKESTATION EDIT END */}
           </b>
         </Box>
-        <Box fontSize="14px" color="#ffffff" margin="5px 0">
+        <Box fontSize="14px" color="#ffffff" style={{ margin: '5px 0' }}>
           Prefix your message with <b>:b</b> to speak in Drone Chat.
         </Box>
-        <Box fontSize="14px" color="#ffffff" margin="5px 0">
+        <Box fontSize="14px" color="#ffffff" style={{ margin: '5px 0' }}>
           Drone Rules and more info can be found at our wiki{' '}
           <a href="https://wiki.monkestation.com/en/jobs/non-human/drone">
             HERE

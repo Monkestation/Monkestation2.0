@@ -64,7 +64,7 @@ export const EntryCoord = (props: EntryCoordProps) => {
       />
       <NumberInput
         animated
-        value={coord?.[0]}
+        value={coord?.[0] || 0}
         onDrag={(e, value) =>
           act('edit', {
             var: var_name,
@@ -74,7 +74,7 @@ export const EntryCoord = (props: EntryCoordProps) => {
       />
       <NumberInput
         animated
-        value={coord?.[1]}
+        value={coord?.[1] || 0}
         onDrag={(e, value) =>
           act('edit', {
             var: var_name,
@@ -84,7 +84,7 @@ export const EntryCoord = (props: EntryCoordProps) => {
       />
       <NumberInput
         animated
-        value={coord?.[2]}
+        value={coord?.[2] || 0}
         onDrag={(e, value) =>
           act('edit', {
             var: var_name,
@@ -120,7 +120,7 @@ export const EntryGradient = (props: EntryGradientProps) => {
           <Button
             tooltip={'Loop'}
             icon={'sync'}
-            selected={isLooping}
+            selected={!!isLooping}
             onClick={() =>
               act('edit', {
                 var: var_name,
@@ -156,7 +156,7 @@ export const EntryGradient = (props: EntryGradientProps) => {
                 <Input
                   key={index}
                   maxWidth={'70px'}
-                  value={entry}
+                  value={entry.toString()}
                   onChange={(e, value) =>
                     act('edit', {
                       var: var_name,

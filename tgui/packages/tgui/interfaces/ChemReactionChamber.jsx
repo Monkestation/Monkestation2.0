@@ -11,6 +11,7 @@ import {
 } from '../components';
 import { Window } from '../layouts';
 import { round, toFixed } from 'common/math';
+import { multiline } from 'common/string';
 
 export const ChemReactionChamber = (props) => {
   const { act, data } = useBackend();
@@ -42,11 +43,12 @@ export const ChemReactionChamber = (props) => {
                   <Stack.Item mt={0.3}>{'Target:'}</Stack.Item>
                   <Stack.Item>
                     <NumberInput
+                      tickWhileDragging
                       width="65px"
                       unit="K"
                       step={10}
                       stepPixelSize={3}
-                      value={round(targetTemp)}
+                      value={round(targetTemp, 0.1)}
                       minValue={0}
                       maxValue={1000}
                       onDrag={(e, value) =>
