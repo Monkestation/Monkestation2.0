@@ -1,5 +1,6 @@
+import { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
-import { Box, Button, Section, Stack } from '../components';
+import { Box, Button, Divider, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -7,7 +8,8 @@ type Data = {
   voting_desc: string;
   votes_yes: number;
   votes_no: number;
-  time_left: string;
+  voting_time_left: string;
+  voting: BooleanLike;
   locked_for: string;
   possible_demands: DemandsData[];
   completed_demands: DemandsData[];
@@ -27,7 +29,8 @@ export const UnionStand = () => {
     voting_desc,
     votes_yes,
     votes_no,
-    time_left,
+    voting_time_left,
+    voting,
     locked_for,
     possible_demands = [],
     completed_demands = [],
@@ -35,7 +38,7 @@ export const UnionStand = () => {
   return (
     <Window theme="neutral" title="Union Demands" width={400} height={500}>
       <Window.Content overflowY="auto">
-        {voting_name ? (
+        {!locked_for && voting ? (
           <Section
             fill
             title="Voting"
@@ -45,7 +48,7 @@ export const UnionStand = () => {
                 tooltip={'Time left until voting closes.'}
                 textAlign="right"
               >
-                {time_left}
+                {voting_time_left}
               </Button>
             }
           >
@@ -72,8 +75,22 @@ export const UnionStand = () => {
           </Section>
         ) : (
           <>
-            {!locked_for ? (
-              <Section>Union demands on cooldown for {}</Section>
+            {locked_for !== null ? (
+              <Section>
+                <Stack vertical>
+                  <Stack.Item>
+                    Union demands on cooldown for {locked_for}.
+                  </Stack.Item>
+                  {voting_name && (
+                    <>
+                      <Divider />
+                      <Stack.Item>
+                        {voting_name} going into effect...
+                      </Stack.Item>
+                    </>
+                  )}
+                </Stack>
+              </Section>
             ) : (
               <Section
                 title="Available Union Demands"
@@ -125,12 +142,24 @@ export const UnionStand = () => {
               </Section>
             )}
             <Section title="Completed Demands">
-              <Stack>
+              <Stack vertical>
                 {completed_demands.length ? (
                   <Stack.Item>
                     {completed_demands.map((demand) => (
                       <Section title={demand.name} key={demand.ref}>
-                        <Stack.Item>{demand.desc}</Stack.Item>
+                        <Stack.Item fontSize="110%" ml={-0.5}>
+                          <Button
+                            compact
+                            color="transparent"
+                            tooltip={
+                              'This will be charged every pay cycle to the Union and Command budgets.'
+                            }
+                            style={{ textDecoration: 'underline' }}
+                          >
+                            Cost:
+                          </Button>
+                          {demand.cost}cr per cycle.
+                        </Stack.Item>
                       </Section>
                     ))}
                   </Stack.Item>

@@ -146,17 +146,17 @@ ADMIN_VERB(union_manager, R_ADMIN, FALSE, "Cargo Union Manager", "View the Cargo
 /datum/union/ui_data(mob/user)
 	var/list/data = list()
 
-	var/on_cooldown = COOLDOWN_FINISHED(src, union_demand_delay)
-	//vote stuff, only appears when something is voted for.
-	if(demand_voting_on && on_cooldown)
+	data["locked_for"] = COOLDOWN_FINISHED(src, union_demand_delay) ? null : DisplayTimeText(COOLDOWN_TIMELEFT(src, union_demand_delay))
+	if(demand_voting_on)
 		data["voting_name"] = demand_voting_on.name
 		data["voting_desc"] = demand_voting_on.union_description
-		data["votes_yes"] = length(votes_yes)
-		data["votes_no"] = length(votes_no)
-		data["time_left"] = DisplayTimeText(timeleft(voting_timer), 1)
+	data["votes_yes"] = length(votes_yes)
+	data["votes_no"] = length(votes_no)
+	if(timeleft(voting_timer) > 0)
+		data["voting"] = TRUE
+		data["voting_time_left"] = DisplayTimeText(timeleft(voting_timer), 1)
 	else
-		data["voting_name"] = null
-		data["locked_for"] = on_cooldown ? null : DisplayTimeText(COOLDOWN_TIMELEFT(src, union_demand_delay))
+		data["voting"] = FALSE
 
 	//list of all demands, only used in times of non-voting.
 	data["possible_demands"] = list()
@@ -172,6 +172,7 @@ ADMIN_VERB(union_manager, R_ADMIN, FALSE, "Cargo Union Manager", "View the Cargo
 	for(var/datum/union_demand/demands as anything in successful_demands)
 		data["completed_demands"] += list(list(
 			"name" = demands.name,
+			"desc" = demands.union_description,
 			"cost" = demands.cost,
 			"ref" = REF(demands),
 		))
