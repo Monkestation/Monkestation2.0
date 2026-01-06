@@ -25,8 +25,8 @@
 
 		var/list/name_tracker = list()
 		for (var/item in contents)
-			name_tracker[item["name"]]++
-		for (var/name in name_tracker)
-			var/count = name_tracker[name]
-			TEST_ASSERT(count >= 1, "Duplicate loadout item name found: [name] appears [count] times in tab [tab["name"]]")
+			if(item["name"] in name_tracker)
+				TEST_FAIL("Duplicate loadout name found in the same tab: [item["name"]]")
+			name_tracker += item["name"]
+
 	qdel(loadout_instance)
