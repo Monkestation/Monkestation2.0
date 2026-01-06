@@ -22,11 +22,9 @@
 			continue
 
 		TEST_ASSERT(istype(contents, /list), "Contents of a loadout tab ([tab["name"]]) is not a valid list")
-		world.log << json_encode(tab["contents"])
 
 		var/list/name_tracker = list()
 		for (var/item in contents)
-			if(item["name"] in name_tracker)
 			name_tracker[item["name"]]++
 		for (var/name in name_tracker)
 			var/count = name_tracker[name]
