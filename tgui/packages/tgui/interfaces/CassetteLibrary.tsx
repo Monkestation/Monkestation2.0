@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useBackend } from '../backend';
 import {
   Box,
@@ -69,20 +69,41 @@ export const CassetteLibrary = (props) => {
     top_cassettes,
   } = data;
 
-  const [searchQuery, setSearchQuery] = useState('');
-  const [activeTab, setActiveTab] = useState('search');
-  const [historyTab, setHistoryTab] = useState('personal');
+  enum MainTab {
+    Search = 'search',
+    History = 'history',
+    Ranking = 'ranking',
+  }
+  enum HistoryTab {
+    Personal = 'personal',
+    General = 'general',
+  }
 
-  const filteredCassettes = cassettes.filter((cassette) => {
-    if (!searchQuery) return true;
+  const [searchQuery, setSearchQuery] = useState('');
+  const [activeTab, setActiveTab] = useState<MainTab>(MainTab.Search);
+  const [historyTab, setHistoryTab] = useState<HistoryTab>(HistoryTab.Personal);
+
+  const lowerCassettes = useMemo(() => {
+    return cassettes.map((cassette) => ({
+      ...cassette,
+      _lcName: cassette.name.toLowerCase(),
+      _lcAuthorName: cassette.author_name.toLowerCase(),
+      _lcAuthorCkey: cassette.author_ckey.toLowerCase(),
+      _lcDesc: cassette.desc.toLowerCase(),
+    }));
+  }, [cassettes]);
+
+  const filteredCassettes = useMemo(() => {
+    if (!searchQuery) return lowerCassettes;
     const query = searchQuery.toLowerCase();
-    return (
-      cassette.name.toLowerCase().includes(query) ||
-      cassette.author_name.toLowerCase().includes(query) ||
-      cassette.author_ckey.toLowerCase().includes(query) ||
-      cassette.desc.toLowerCase().includes(query)
+    return lowerCassettes.filter(
+      (cassette) =>
+        cassette._lcName.includes(query) ||
+        cassette._lcAuthorName.includes(query) ||
+        cassette._lcAuthorCkey.includes(query) ||
+        cassette._lcDesc.includes(query),
     );
-  });
+  }, [lowerCassettes, searchQuery]);
 
   // if no search is active, show the latest 20 approved cassettes
   const displayedCassettes = searchQuery
@@ -133,29 +154,29 @@ export const CassetteLibrary = (props) => {
           <Stack.Item>
             <Tabs>
               <Tabs.Tab
-                selected={activeTab === 'search'}
-                onClick={() => setActiveTab('search')}
+                selected={activeTab === MainTab.Search}
+                onClick={() => setActiveTab(MainTab.Search)}
               >
                 Search
               </Tabs.Tab>
               <Tabs.Tab
-                selected={activeTab === 'history'}
-                onClick={() => setActiveTab('history')}
+                selected={activeTab === MainTab.History}
+                onClick={() => setActiveTab(MainTab.History)}
               >
                 Purchase History
               </Tabs.Tab>
               <Tabs.Tab
-                selected={activeTab === 'top'}
-                onClick={() => setActiveTab('top')}
+                selected={activeTab === MainTab.Ranking}
+                onClick={() => setActiveTab(MainTab.Ranking)}
                 color="yellow"
                 icon="trophy"
               >
-                TOP CASSETTES
+                Ranking
               </Tabs.Tab>
             </Tabs>
           </Stack.Item>
 
-          {activeTab === 'search' ? (
+          {activeTab === MainTab.Search ? (
             <>
               <Stack.Item>
                 <Section title="Search Cassettes">
@@ -209,17 +230,22 @@ export const CassetteLibrary = (props) => {
                             <Stack>
                               <Stack.Item>
                                 <Box
-                                  width="64px"
-                                  height="64px"
+                                  width="68px"
+                                  height="68px"
                                   style={{
                                     display: 'flex',
                                     alignItems: 'center',
                                     justifyContent: 'center',
+                                    lineHeight: 0,
+                                    overflow: 'hidden',
                                   }}
                                 >
                                   <DmIcon
                                     icon={cassette.icon}
                                     icon_state={cassette.icon_state}
+                                    width="68px"
+                                    height="68px"
+                                    style={{ verticalAlign: 'middle' }}
                                     fallback={
                                       <Icon name="cassette-tape" size={3} />
                                     }
@@ -290,19 +316,19 @@ export const CassetteLibrary = (props) => {
                 </Section>
               </Stack.Item>
             </>
-          ) : activeTab === 'history' ? (
+          ) : activeTab === MainTab.History ? (
             <>
               <Stack.Item>
                 <Tabs>
                   <Tabs.Tab
-                    selected={historyTab === 'personal'}
-                    onClick={() => setHistoryTab('personal')}
+                    selected={historyTab === HistoryTab.Personal}
+                    onClick={() => setHistoryTab(HistoryTab.Personal)}
                   >
                     Personal History
                   </Tabs.Tab>
                   <Tabs.Tab
-                    selected={historyTab === 'general'}
-                    onClick={() => setHistoryTab('general')}
+                    selected={historyTab === HistoryTab.General}
+                    onClick={() => setHistoryTab(HistoryTab.General)}
                   >
                     General History
                   </Tabs.Tab>
@@ -310,7 +336,7 @@ export const CassetteLibrary = (props) => {
               </Stack.Item>
 
               <Stack.Item grow>
-                {historyTab === 'personal' ? (
+                {historyTab === HistoryTab.Personal ? (
                   <PersonalHistory
                     act={act}
                     purchase_history={purchase_history}
@@ -391,17 +417,22 @@ const PersonalHistory = (props) => {
                 <Stack>
                   <Stack.Item>
                     <Box
-                      width="64px"
-                      height="64px"
+                      width="68px"
+                      height="68px"
                       style={{
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
+                        lineHeight: 0,
+                        overflow: 'hidden',
                       }}
                     >
                       <DmIcon
                         icon={purchase.cassette_icon}
                         icon_state={purchase.cassette_icon_state}
+                        width="68px"
+                        height="68px"
+                        style={{ verticalAlign: 'middle' }}
                         fallback={<Icon name="cassette-tape" size={3} />}
                       />
                     </Box>
@@ -494,17 +525,22 @@ const GeneralHistory = (props) => {
                 <Stack>
                   <Stack.Item>
                     <Box
-                      width="32px"
-                      height="32px"
+                      width="38px"
+                      height="38px"
                       style={{
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
+                        lineHeight: 0,
+                        overflow: 'hidden',
                       }}
                     >
                       <DmIcon
                         icon={purchase.cassette_icon}
                         icon_state={purchase.cassette_icon_state}
+                        width="38px"
+                        height="38px"
+                        style={{ verticalAlign: 'middle' }}
                         fallback={<Icon name="cassette-tape" size={2} />}
                       />
                     </Box>
@@ -638,19 +674,22 @@ const TopCassettes = ({ top_cassettes }) => {
                       <Stack>
                         <Stack.Item>
                           <Box
-                            width="64px"
-                            height="64px"
+                            width="68px"
+                            height="68px"
                             style={{
                               display: 'flex',
                               alignItems: 'center',
                               justifyContent: 'center',
+                              lineHeight: 0,
+                              overflow: 'hidden',
                             }}
                           >
                             <DmIcon
                               icon={cassette.cassette_icon}
                               icon_state={cassette.cassette_icon_state}
-                              width="64px"
-                              height="64px"
+                              width="68px"
+                              height="68px"
+                              style={{ verticalAlign: 'middle' }}
                               fallback={<Icon name="cassette-tape" size={4} />}
                             />
                           </Box>
