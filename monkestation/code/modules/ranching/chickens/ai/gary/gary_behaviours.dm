@@ -203,7 +203,7 @@
 		if(pawn.fading_leap_up())
 			if(controller.blackboard[BB_TRAVEL_DESTINATION])
 				var/atom/movable/target = controller.blackboard[BB_TRAVEL_DESTINATION]
-				pawn.forceMove(target)
+				pawn.forceMove(get_turf(target))
 				pawn.fading_leap_down()
 			else
 				var/list/turf_coords = controller.blackboard[BB_GARY_HIDEOUT]

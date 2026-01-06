@@ -38,3 +38,38 @@
   - bugfix: Fixed a bluescreen in comms console
   jlsnow301, JohnFulpWillard:
   - bugfix: Fixed the UIs for signalers, airlock electronics/RCDs, and clockwork slabs
+2026-01-03:
+  Absolucy:
+  - bugfix: Ckeys with pronouns in OOC are now properly underlined again.
+2026-01-04:
+  Absolucy:
+  - bugfix: Fixed an exploit related to teleporting dummy humans where they should
+      not be.
+  JohnFulpWillard:
+  - bugfix: Gary won't teleport into you anymore.
+  - bugfix: ED209's no longer take space helmets to craft.
+  - bugfix: Lung stirfry no longer takes cybernetic lungs to craft.
+  - bugfix: Plasmamen don't take toxin damage from plasma.
+  MrMelbert:
+  - bugfix: AIs can now take pictures again.
+  SirNightKnight:
+  - balance: removed the box of flashbangs as an option from security utility vouchers.
+  flleeppyy:
+  - bugfix: VV .... AGAIN... GOD.. DAMMIT
+  - rscadd: Improved the issue report dialog to include the servers master commit
+  - rscadd: Added button to runtime viewer to use monkestation ss13 json log viewer
+  - admin: add stealth follow to FLW buttons
+  - code_imp: add new CI linter to check for unescaped brackets
+2026-01-05:
+  Lawlolawl:
+  - bugfix: Fixed Theseus engi lobby airlocks missing construction access. 3 insuls
+      have been shifted to the smes room so they are harder for tiders to take.
+2026-01-06:
+  iliyaxox:
+  - bugfix: 'Fixed all instances of footprints returning as blood-red footprints:
+      now mob will leave oil and xenoblood footprints when stepping on oil pools and
+      xenoblood gibs, respectively.'
+  - bugfix: Living carbon xenomorphs now bleed xenoblood instead of bleeding standard
+      red blood, and will generate xenomorph remains when gibbed.
+  - bugfix: Clothes will be stained with xenoblood when interacting with xenomorphs,
+      instead of standard red blood.
