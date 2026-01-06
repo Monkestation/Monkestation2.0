@@ -11,6 +11,8 @@
 	var/station_description = "The Cargo Union is making this demand."
 	///Which department is eligible to demand this. Support for non-cargo unions don't exist yet, so this is pointless lol.
 	var/department_eligible = ACCOUNT_CAR
+	///Boolean on whether this Union demand is 'active' when the Union doesn't exist.
+	var/active_without_union = FALSE
 	///How many credits will be charged to the Union & Command budgets per pay cycle while this is active.
 	var/cost = 200
 
@@ -78,3 +80,4 @@
 		any company willing to trade and associate with any corporation, as such a new Company Imports page is being \
 		set up on the Cargo consoles."
 	cost = 100 //this should be a no-brainer generally.
+	active_without_union = TRUE

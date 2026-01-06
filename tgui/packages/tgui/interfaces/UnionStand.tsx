@@ -4,6 +4,7 @@ import { Box, Dimmer, Button, Divider, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
+  union_active: BooleanLike;
   admin_mode: BooleanLike;
   voting_name: string;
   voting_desc: string;
@@ -26,6 +27,7 @@ type DemandsData = {
 export const UnionStand = () => {
   const { act, data } = useBackend<Data>();
   const {
+    union_active,
     admin_mode,
     voting_name,
     voting_desc,
@@ -37,6 +39,15 @@ export const UnionStand = () => {
     possible_demands = [],
     completed_demands = [],
   } = data;
+  if (!union_active && !admin_mode) {
+    return (
+      <Window theme="neutral" title="Union Demands" width={400} height={500}>
+        <Window.Content overflowY="auto">
+          <Box>The Union is currently disabled.</Box>
+        </Window.Content>
+      </Window>
+    );
+  }
   return (
     <Window
       theme={admin_mode ? 'admin' : 'neutral'}
@@ -45,6 +56,20 @@ export const UnionStand = () => {
       height={500}
     >
       <Window.Content overflowY="auto">
+        {!!admin_mode && (
+          <Section title="Admin tools">
+            <Box my={0.5}>
+              There are admin tools all over the page (usually indicated by
+              tooltips), these are just general buttons.
+            </Box>
+            <Button.Confirm
+              color={union_active ? 'bad' : 'good'}
+              onClick={() => act('toggle_union')}
+            >
+              {union_active ? 'Disable Union' : 'Enable Union'}
+            </Button.Confirm>
+          </Section>
+        )}
         {!locked_for && voting ? (
           <Section
             fill

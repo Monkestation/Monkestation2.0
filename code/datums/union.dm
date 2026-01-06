@@ -6,6 +6,13 @@ ADMIN_VERB(union_manager, R_ADMIN, FALSE, "Cargo Union Manager", "View the Cargo
 ///The time Command has to stop a demand.
 #define COMMAND_DELAY (3 MINUTES)
 
+//TODO:
+//Add deadlocks
+//Finish adding all the union demands
+//Add custom css for union stand
+//disable-able cargo union via admin or station trait
+//^ have 'default' things that work without unions (like miner sensors)
+
 /datum/union
 	///Name of the Union.
 	var/name = "Cargo Union"
@@ -13,6 +20,8 @@ ADMIN_VERB(union_manager, R_ADMIN, FALSE, "Cargo Union Manager", "View the Cargo
 	var/union_budget = ACCOUNT_CAR
 	///The radio channel to announce union-wide stuff.
 	var/radio_channel_used = RADIO_CHANNEL_SUPPLY
+	///Boolean on whether the Union is active.
+	var/union_active = TRUE
 
 	///Assoc List of people part of the Cargo Union, by default all Cargo personnel but the QM can add more.
 	///stored as: list(CARGO_UNION_LEADER = boolean, CARGO_UNION_NAME = string, CARGO_UNION_BANK, /datum/bank_account)
@@ -77,6 +86,9 @@ ADMIN_VERB(union_manager, R_ADMIN, FALSE, "Cargo Union Manager", "View the Cargo
 	return length(union_employees)
 
 /datum/union/proc/demand_is_implemented(datum/union_demand/demand_type)
+	if(!union_active)
+		var/datum/union_demand/demand = GLOB.union_demands[demand_type]
+		return demand.active_without_union
 	return GLOB.union_demands[demand_type] in successful_demands
 
 ///Called when a demand is succesfully voted to go into effect.
@@ -156,6 +168,7 @@ ADMIN_VERB(union_manager, R_ADMIN, FALSE, "Cargo Union Manager", "View the Cargo
 /datum/union/ui_data(mob/user)
 	var/list/data = list()
 
+	data["union_active"] = union_active
 	data["admin_mode"] = check_rights_for(user.client, R_ADMIN)
 	data["locked_for"] = COOLDOWN_FINISHED(src, union_demand_delay) ? null : DisplayTimeText(COOLDOWN_TIMELEFT(src, union_demand_delay))
 	if(demand_voting_on)
@@ -199,6 +212,9 @@ ADMIN_VERB(union_manager, R_ADMIN, FALSE, "Cargo Union Manager", "View the Cargo
 	if(istype(host) && !host.allowed(user)) //admin panel always works.
 		host.balloon_alert(user, "no access!")
 		return TRUE
+	if(!union_active && !check_rights_for(user.client, R_ADMIN))
+		host.balloon_alert(user, "union not active!")
+		return TRUE
 	switch(action)
 		if("trigger_vote")
 			var/datum/union_demand/vote_for = locate(params["selected_demand"]) in possible_demands
@@ -237,10 +253,17 @@ ADMIN_VERB(union_manager, R_ADMIN, FALSE, "Cargo Union Manager", "View the Cargo
 			if(isnull(removed_demand))
 				return TRUE
 			unimplement_demand(removed_demand)
+			return TRUE
 		if("reset_cooldown")
 			if(!check_rights_for(user.client, R_ADMIN))
 				return TRUE
 			COOLDOWN_RESET(src, union_demand_delay)
+			return TRUE
+		if("toggle_union")
+			if(!check_rights_for(user.client, R_ADMIN))
+				return TRUE
+			union_active = !union_active
+			return TRUE
 
 /datum/union/proc/trigger_vote(datum/union_demand/vote_for)
 	demand_voting_on = vote_for
