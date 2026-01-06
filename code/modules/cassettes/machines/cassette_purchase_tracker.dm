@@ -80,9 +80,7 @@
 
 	// check if this buyer has already purchased this cassette
 	if(buyer_ckey)
-		for(var/purchase in purchases)
-			if(!islist(purchase))
-				continue
+		for(var/list/purchase in purchases)
 			if(purchase["cassette_id"] == cassette_id && purchase["buyer_ckey"] == buyer_ckey)
 				return FALSE // already purchased, don't record again
 
@@ -163,9 +161,7 @@
 	var/list/cassette_counts = list()
 	var/list/cassette_names = list()
 
-	for(var/purchase in purchases)
-		if(!islist(purchase))
-			continue
+	for(var/list/purchase in purchases)
 		var/cassette_id = purchase["cassette_id"]
 		var/cassette_name = purchase["cassette_name"]
 		var/buyer_ckey = purchase["buyer_ckey"]

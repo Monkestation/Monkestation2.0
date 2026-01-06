@@ -6,7 +6,6 @@ GLOBAL_LIST_EMPTY(self_cassette_purchases)
 	desc = "A terminal that sells cassettes approved by the Space Board of Music."
 	icon = 'icons/obj/cassettes/cassette_library.dmi'
 	icon_state = "cassette_library"
-	max_integrity = 100000 // the Space Board of Music invests big in its assets
 	density = TRUE
 	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE
@@ -21,6 +20,7 @@ GLOBAL_LIST_EMPTY(self_cassette_purchases)
 
 /obj/machinery/cassette_library/Initialize(mapload)
 	. = ..()
+	base_icon_state = icon_state
 	register_context()
 	set_light(l_outer_range = 1.5, l_power = 1, l_color = "#BEF1BE")
 
@@ -29,7 +29,7 @@ GLOBAL_LIST_EMPTY(self_cassette_purchases)
 	set_light(powered() ? 1.5 : 0)
 
 /obj/machinery/cassette_library/update_icon_state()
-	icon_state = "[initial(icon_state)][powered() ? null : "-off"]"
+	icon_state = "[base_icon_state][powered() ? null : "-off"]"
 	return ..()
 
 /obj/machinery/cassette_library/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -97,10 +97,6 @@ GLOBAL_LIST_EMPTY(self_cassette_purchases)
 	if(.)
 		return
 
-	// its unpowered, dude
-	if(machine_stat & NOPOWER)
-		return
-
 	ui_interact(user)
 
 /obj/machinery/cassette_library/ui_interact(mob/user, datum/tgui/ui)
@@ -108,6 +104,31 @@ GLOBAL_LIST_EMPTY(self_cassette_purchases)
 	if(!ui)
 		ui = new(user, src, "CassetteLibrary", name)
 		ui.open()
+
+/obj/machinery/cassette_library/ui_static_data(mob/user)
+	var/list/data = list()
+
+	var/list/cassette_list = list()
+	var/list/approved_cassettes = SScassettes.filtered_cassettes(status = CASSETTE_STATUS_APPROVED)
+
+	for(var/datum/cassette/cassette as anything in approved_cassettes)
+		var/icon_state = cassette.front?.design || "cassette_flip"
+		cassette_list += list(list(
+			"id" = cassette.id,
+			"name" = cassette.name,
+			"desc" = cassette.desc,
+			"author_name" = cassette.author.name,
+			"author_ckey" = cassette.author.ckey,
+			"icon" = 'icons/obj/cassettes/walkman.dmi',
+			"icon_state" = icon_state
+		))
+
+	data["cassettes"] = cassette_list
+
+	// get most bought for the TOP CASSETTES tab
+	data["top_cassettes"] = get_top_cassettes(20)
+
+	return data
 
 /obj/machinery/cassette_library/ui_data(mob/user)
 	var/list/data = list()
@@ -127,31 +148,6 @@ GLOBAL_LIST_EMPTY(self_cassette_purchases)
 	// send purchase history
 	data["purchase_history"] = purchase_history
 
-	// get most bought for the TOP CASSETTES tab
-	data["top_cassettes"] = get_top_cassettes(20)
-
-	var/list/cassette_list = list()
-	var/list/approved_cassettes = SScassettes.filtered_cassettes(status = CASSETTE_STATUS_APPROVED)
-	var/list/sorted_cassettes = list()
-	for(var/datum/cassette/cassette as anything in approved_cassettes)
-		sorted_cassettes += cassette
-
-	sorted_cassettes = sortTim(sorted_cassettes, GLOBAL_PROC_REF(cmp_cassette_id_dsc))
-
-	for(var/datum/cassette/cassette as anything in sorted_cassettes)
-		var/icon_state = cassette.front?.design || "cassette_flip"
-		cassette_list += list(list(
-			"id" = cassette.id,
-			"name" = cassette.name,
-			"desc" = cassette.desc,
-			"author_name" = cassette.author.name,
-			"author_ckey" = cassette.author.ckey,
-			"icon" = 'icons/obj/cassettes/walkman.dmi',
-			"icon_state" = icon_state,
-			"ref" = REF(cassette)
-		))
-
-	data["cassettes"] = cassette_list
 	return data
 
 /obj/machinery/cassette_library/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -161,26 +157,26 @@ GLOBAL_LIST_EMPTY(self_cassette_purchases)
 
 	switch(action)
 		if("purchase_cassette")
-			var/cassette_ref = params["cassette_ref"]
-			if(!cassette_ref)
+			var/cassette_id = params["cassette_id"]
+			if(!cassette_id)
 				return FALSE
 
 			if(busy)
-				balloon_alert(usr, "busy!")
+				balloon_alert(ui.user, "busy!")
 				return TRUE
 
 			// do you have enough creds to make this purchase, my kind sir?
 			if(stored_credits < cassette_cost)
-				balloon_alert(usr, "insufficient credits!")
-				to_chat(usr, span_warning("You need [cassette_cost] credits to purchase a cassette. You have [stored_credits] credits."))
+				balloon_alert(ui.user, "insufficient credits!")
+				to_chat(ui.user, span_warning("You need [cassette_cost] credits to purchase a cassette. You have [stored_credits] credits."))
 				return TRUE
 
-			var/datum/cassette/selected_cassette = locate(cassette_ref)
+			var/datum/cassette/selected_cassette = SScassettes.cassettes[cassette_id]
 			if(!selected_cassette || selected_cassette.status != CASSETTE_STATUS_APPROVED)
-				balloon_alert(usr, "cassette not found!")
+				balloon_alert(ui.user, "cassette not found!")
 				return TRUE
 
-			return process_purchase(selected_cassette, usr)
+			return process_purchase(selected_cassette, ui.user)
 
 		if("repurchase_cassette")
 			var/cassette_name = params["cassette_name"]
@@ -188,13 +184,13 @@ GLOBAL_LIST_EMPTY(self_cassette_purchases)
 				return FALSE
 
 			if(busy)
-				balloon_alert(usr, "busy!")
+				balloon_alert(ui.user, "busy!")
 				return TRUE
 
 			// do you have enough creds to make this purchase, my kind sir?
 			if(stored_credits < cassette_cost)
-				balloon_alert(usr, "insufficient credits!")
-				to_chat(usr, span_warning("You need [cassette_cost] credits to purchase a cassette. You have [stored_credits] credits."))
+				balloon_alert(ui.user, "insufficient credits!")
+				to_chat(ui.user, span_warning("You need [cassette_cost] credits to purchase a cassette. You have [stored_credits] credits."))
 				return TRUE
 
 			// find the cassette by name in approved cassettes
@@ -206,10 +202,10 @@ GLOBAL_LIST_EMPTY(self_cassette_purchases)
 					break
 
 			if(!selected_cassette)
-				balloon_alert(usr, "cassette not found!")
+				balloon_alert(ui.user, "cassette not found!")
 				return TRUE
 
-			return process_purchase(selected_cassette, usr)
+			return process_purchase(selected_cassette, ui.user)
 
 	return FALSE
 
@@ -227,19 +223,19 @@ GLOBAL_LIST_EMPTY(self_cassette_purchases)
 	var/icon_state = selected_cassette.front?.design || "cassette_flip"
 	var/list/purchase_record = list(
 		"buyer" = buyer_name,
+		"cassette_id" = selected_cassette.id,
 		"cassette_name" = selected_cassette.name,
 		"cassette_author" = selected_cassette.author.name,
 		"cassette_author_ckey" = selected_cassette.author.ckey,
 		"cassette_icon" = 'icons/obj/cassettes/walkman.dmi',
 		"cassette_icon_state" = icon_state,
-		"cassette_ref" = REF(selected_cassette),
 		"time" = world.time
 	)
 	purchase_history += list(purchase_record)
 
 	// record purchase for top cassettes tracking (only counts first purchase per user)
 	var/buyer_ckey = null
-	if(user && user.ckey)
+	if(user?.ckey)
 		buyer_ckey = user.ckey
 		record_cassette_purchase(selected_cassette.id, selected_cassette.name, buyer_ckey)
 
@@ -272,7 +268,7 @@ GLOBAL_LIST_EMPTY(self_cassette_purchases)
 	balloon_alert(user, "cassette printed!")
 
 	// try to put in user's hands if they're still nearby. if not, cassette will be dropped on top of the terminal
-	if(user && isliving(user) && user.Adjacent(src))
+	if(isliving(user) && user.Adjacent(src))
 		var/mob/living/living_user = user
 		living_user.put_in_hands(new_tape)
 

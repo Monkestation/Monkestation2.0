@@ -20,17 +20,16 @@ type CassetteData = {
   author_ckey: string;
   icon: string;
   icon_state: string;
-  ref: string;
 };
 
 type PurchaseRecord = {
   buyer: string;
+  cassette_id: string;
   cassette_name: string;
   cassette_author: string;
   cassette_author_ckey: string;
   cassette_icon: string;
   cassette_icon_state: string;
-  cassette_ref: string;
   time: number;
 };
 
@@ -198,7 +197,7 @@ export const CassetteLibrary = (props) => {
                   ) : (
                     <Stack vertical>
                       {displayedCassettes.map((cassette) => (
-                        <Stack.Item key={cassette.ref}>
+                        <Stack.Item key={cassette.id}>
                           <Box
                             style={{
                               border: '1px solid rgba(255, 255, 255, 0.2)',
@@ -269,7 +268,7 @@ export const CassetteLibrary = (props) => {
                                       }
                                       onClick={() =>
                                         act('purchase_cassette', {
-                                          cassette_ref: cassette.ref,
+                                          cassette_id: cassette.id,
                                         })
                                       }
                                       tooltip={
@@ -443,7 +442,7 @@ const PersonalHistory = (props) => {
                           disabled={busy || stored_credits < cassette_cost}
                           onClick={() =>
                             act('purchase_cassette', {
-                              cassette_ref: purchase.cassette_ref,
+                              cassette_id: purchase.cassette_id,
                             })
                           }
                           tooltip={
