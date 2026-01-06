@@ -205,7 +205,7 @@
 	id = "emergency_nitrogen"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5)
-	build_path = /obj/item/tank/internals/emergency_nitrogen/empty
+	build_path = /obj/item/tank/internals/emergency_oxygen/emergency_nitrogen/empty
 	category = list(
 		RND_CATEGORY_INITIAL,
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_GAS_TANKS,
@@ -216,7 +216,7 @@
 	id = "emergency_nitrogen_engi"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*7.5)
-	build_path = /obj/item/tank/internals/emergency_nitrogen/engi/empty
+	build_path = /obj/item/tank/internals/emergency_oxygen/emergency_nitrogen/engi/empty
 	category = list(
 		RND_CATEGORY_HACKED,
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_GAS_TANKS,

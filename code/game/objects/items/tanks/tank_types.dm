@@ -282,31 +282,24 @@
 /*
  * Emergency Nitrogen
  */
-/obj/item/tank/internals/emergency_nitrogen
+/obj/item/tank/internals/emergency_oxygen/emergency_nitrogen
 	name = "emergency nitrogen tank"
 	desc = "Used for emergencies. Contains very little nitrogen, so try to conserve it until you actually need it."
 	icon_state = "emergency_nitrogen"
 	inhand_icon_state = "emergency_nitrogen_tank"
 	worn_icon_state = "emergency_nitrogen"
 	tank_holder_icon_state = "holder_emergency_nitrogen"
-	worn_icon = null
-	flags_1 = CONDUCT_1
-	slot_flags = ITEM_SLOT_BELT
-	w_class = WEIGHT_CLASS_SMALL
-	force = 4
-	distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE
-	volume = 3
 
 
-/obj/item/tank/internals/emergency_nitrogen/populate_gas()
+/obj/item/tank/internals/emergency_oxygen/emergency_nitrogen/populate_gas()
 	air_contents.assert_gas(/datum/gas/nitrogen)
 	air_contents.gases[/datum/gas/nitrogen][MOLES] = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 
 
-/obj/item/tank/internals/emergency_nitrogen/empty/populate_gas()
+/obj/item/tank/internals/emergency_oxygen/emergency_nitrogen/empty/populate_gas()
 	return
 
-/obj/item/tank/internals/emergency_nitrogen/engi
+/obj/item/tank/internals/emergency_oxygen/emergency_nitrogen/engi
 	name = "extended-capacity emergency nitrogen tank"
 	icon_state = "emergency_nitrogen_engi"
 	inhand_icon_state = "emergency_nitrogen_engi_tank"
@@ -315,5 +308,5 @@
 	worn_icon = null
 	volume = 6 // should last 24 minutes if full
 
-/obj/item/tank/internals/emergency_nitrogen/engi/empty/populate_gas()
+/obj/item/tank/internals/emergency_oxygen/emergency_nitrogen/engi/empty/populate_gas()
 	return

@@ -47,7 +47,7 @@
 		return new /obj/item/tank/internals/plasmaman/belt(src)
 
 	if(isoozeling(loc))
-		return new /obj/item/tank/internals/emergency_nitrogen(src)
+		return new /obj/item/tank/internals/emergency_oxygen/emergency_nitrogen(src)
 
 	return new internal_type(src)
 
@@ -91,7 +91,7 @@
 		return new /obj/item/tank/internals/plasmaman/belt(src)
 
 	if(isoozeling(loc))
-		return new /obj/item/tank/internals/emergency_nitrogen/engi(src)
+		return new /obj/item/tank/internals/emergency_oxygen/emergency_nitrogen/engi(src)
 
 	return new internal_type(src)
 
@@ -114,7 +114,7 @@
 		return new /obj/item/tank/internals/plasmaman/belt(src)
 
 	if(isoozeling(loc))
-		return new /obj/item/tank/internals/emergency_nitrogen/engi(src)
+		return new /obj/item/tank/internals/emergency_oxygen/emergency_nitrogen/engi(src)
 
 	return new internal_type(src)
 

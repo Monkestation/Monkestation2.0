@@ -360,7 +360,7 @@
 		if(enemy_effect.stacks <= 0)
 			qdel(enemy_effect)
 
-	if(owner.stat == DEAD)
+	if(owner.stat == DEAD || !isoozeling(owner))
 		adjust_stacks(-0.5 * seconds_between_ticks)
 	if(stacks <= 0)
 		qdel(src)
