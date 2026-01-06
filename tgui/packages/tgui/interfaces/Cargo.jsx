@@ -350,6 +350,7 @@ const CargoRequests = (props) => {
               <Table.Cell width="25%">
                 <i>{request.reason}</i>
               </Table.Cell>
+              <Table.Cell collapsing>{request.account}</Table.Cell>
               <Table.Cell collapsing textAlign="right">
                 {formatMoney(request.cost)} cr
               </Table.Cell>
