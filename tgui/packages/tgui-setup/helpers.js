@@ -29,6 +29,9 @@
     return content;
   };
 
+  Error.stackTraceLimit = 50;
+
+
   // BYOND API object
   // ------------------------------------------------------
 
@@ -395,7 +398,6 @@
 // ------------------------------------------------------
 
 window.onerror = function (msg, url, line, col, error) {
-  Error.stackTraceLimit = 50;
   window.onerror.errorCount = (window.onerror.errorCount || 0) + 1;
   // Proper stacktrace
   var stack = error && error.stack;
