@@ -1,4 +1,5 @@
-import { useBackend, useLocalState } from '../backend';
+import { useState } from 'react';
+import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -68,9 +69,9 @@ export const CassetteLibrary = (props) => {
     top_cassettes,
   } = data;
 
-  const [searchQuery, setSearchQuery] = useLocalState('searchQuery', '');
-  const [activeTab, setActiveTab] = useLocalState('activeTab', 'search');
-  const [historyTab, setHistoryTab] = useLocalState('historyTab', 'personal');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [activeTab, setActiveTab] = useState('search');
+  const [historyTab, setHistoryTab] = useState('personal');
 
   const filteredCassettes = cassettes.filter((cassette) => {
     if (!searchQuery) return true;
@@ -116,9 +117,8 @@ export const CassetteLibrary = (props) => {
                         mr={1}
                         style={{ lineHeight: '10px' }}
                       >
-                        Space Board
-                        <br />
-                        of Music
+                        <Box>Space Board</Box>
+                        <Box>of Music</Box>
                       </Box>
                     </Stack.Item>
                     <Stack.Item>
@@ -239,15 +239,16 @@ export const CassetteLibrary = (props) => {
                                         Author:
                                       </Box>{' '}
                                       <Tooltip content={cassette.author_ckey}>
-                                        <span
+                                        <Box
+                                          as="span"
                                           style={{
-                                            'text-decoration-line': 'underline',
-                                            'text-decoration-style': 'dotted',
+                                            textDecorationLine: 'underline',
+                                            textDecorationStyle: 'dotted',
                                             cursor: 'help',
                                           }}
                                         >
                                           {cassette.author_name}
-                                        </span>
+                                        </Box>
                                       </Tooltip>
                                     </Box>
                                   </Stack.Item>
@@ -418,15 +419,16 @@ const PersonalHistory = (props) => {
                             Author:
                           </Box>{' '}
                           <Tooltip content={purchase.cassette_author_ckey}>
-                            <span
+                            <Box
+                              as="span"
                               style={{
-                                'text-decoration-line': 'underline',
-                                'text-decoration-style': 'dotted',
+                                textDecorationLine: 'underline',
+                                textDecorationStyle: 'dotted',
                                 cursor: 'help',
                               }}
                             >
                               {purchase.cassette_author}
-                            </span>
+                            </Box>
                           </Tooltip>
                         </Box>
                       </Stack.Item>
@@ -531,15 +533,16 @@ const GeneralHistory = (props) => {
                             Author:
                           </Box>{' '}
                           <Tooltip content={purchase.cassette_author_ckey}>
-                            <span
+                            <Box
+                              as="span"
                               style={{
-                                'text-decoration-line': 'underline',
-                                'text-decoration-style': 'dotted',
+                                textDecorationLine: 'underline',
+                                textDecorationStyle: 'dotted',
                                 cursor: 'help',
                               }}
                             >
                               {purchase.cassette_author}
-                            </span>
+                            </Box>
                           </Tooltip>
                         </Box>
                       </Stack.Item>
@@ -676,15 +679,16 @@ const TopCassettes = ({ top_cassettes }) => {
                                 <Tooltip
                                   content={cassette.cassette_author_ckey}
                                 >
-                                  <span
+                                  <Box
+                                    as="span"
                                     style={{
-                                      'text-decoration-line': 'underline',
-                                      'text-decoration-style': 'dotted',
+                                      textDecorationLine: 'underline',
+                                      textDecorationStyle: 'dotted',
                                       cursor: 'help',
                                     }}
                                   >
                                     {cassette.cassette_author}
-                                  </span>
+                                  </Box>
                                 </Tooltip>
                               </Box>
                             </Stack.Item>
