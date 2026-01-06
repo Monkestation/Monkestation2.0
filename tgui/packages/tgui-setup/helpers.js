@@ -383,7 +383,7 @@
             return file.close();
           });
         })
-        .catch(function () {});
+        .catch(function () { });
     }
   };
 
@@ -395,6 +395,7 @@
 // ------------------------------------------------------
 
 window.onerror = function (msg, url, line, col, error) {
+  Error.stackTraceLimit = 50;
   window.onerror.errorCount = (window.onerror.errorCount || 0) + 1;
   // Proper stacktrace
   var stack = error && error.stack;
@@ -448,7 +449,7 @@ window.onerror = function (msg, url, line, col, error) {
   }
   // Short-circuit further updates
   if (Byond.strictMode) {
-    window.update = function () {};
+    window.update = function () { };
     window.update.queue = [];
   }
   // Prevent default action
@@ -528,7 +529,7 @@ window.replaceHtml = function (inline_html) {
   document.body.insertAdjacentHTML(
     'afterbegin',
     '<!-- tgui:inline-html-start -->' +
-      inline_html +
-      '<!-- tgui:inline-html-end -->'
+    inline_html +
+    '<!-- tgui:inline-html-end -->'
   );
 };
