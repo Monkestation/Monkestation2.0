@@ -47,16 +47,21 @@ SUBSYSTEM_DEF(modular_computers)
 		if(PROGRAM_ON_NTNET_STORE)
 			program.program_flags |= PROGRAM_ON_NTNET_STORE
 			available_station_software.Add(program)
+			add_log("[program.filename] added to the store.")
 		if(PROGRAM_ON_SYNDINET_STORE)
 			program.program_flags |= PROGRAM_ON_SYNDINET_STORE
 			available_antag_software.Add(program)
 
 ///Removes program_removed from the given store, and if it is no longer in any store, deletes it.
 /datum/controller/subsystem/modular_computers/proc/remove_program(datum/computer_file/program/program_removed, store = PROGRAM_ON_NTNET_STORE)
+	program_removed = find_ntnet_file_by_name(program_removed)
+	if(isnull(program_removed))
+		return
 	switch(store)
 		if(PROGRAM_ON_NTNET_STORE)
 			program_removed.program_flags &= ~PROGRAM_ON_NTNET_STORE
 			available_station_software.Remove(program_removed)
+			add_log("[program_removed.filename] removed from the store.")
 		if(PROGRAM_ON_SYNDINET_STORE)
 			program_removed.program_flags &= ~PROGRAM_ON_SYNDINET_STORE
 			available_antag_software.Remove(program_removed)

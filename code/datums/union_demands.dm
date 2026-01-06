@@ -27,17 +27,25 @@
 	union_description = "The Union has noticed the vending machines on the station have been getting refilled in a very \
 		inefficient manner and the Union has been getting the blame for this inefficiency. \
 		As part of our new wave of agreements, we're purchasing new tracking software for vending machines \
-		that will automatically report their stock and send it for Cargo's easy viewing. \
+		that will automatically report their stock and send it for Cargo's easy viewing through the department's \
+		chatroom console, however it will also be made available to download from the NTNet store to your PDA. \
 		Did you know vendors pay for refilled stock?"
 	station_description = "The Cargo Union has voted for a new demand, all vending machines will be equipped \
-		with surveyance software that will be reported back to Cargo so they can ensure all vendors are properly stocked."
+		with surveyance software that will be reported back to Cargo so they can ensure all vendors are properly stocked. \
+		This new software will be paid jointly with Command."
 
 /datum/union_demand/vendor_stock/implement_demand(datum/union/union_demanding)
 	. = ..()
 	SSmodular_computers.add_program(/datum/computer_file/program/restock_tracker, store = PROGRAM_ON_NTNET_STORE)
+	for(var/obj/machinery/modular_computer/cargochat_console as anything in SSmachines.get_machines_by_type(/obj/machinery/modular_computer/preset/cargochat/cargo))
+		cargochat_console.cpu.store_file(new /datum/computer_file/program/restock_tracker)
 
 /datum/union_demand/vendor_stock/unimplement_demand(datum/union/union_demanding)
 	SSmodular_computers.remove_program(/datum/computer_file/program/restock_tracker, store = PROGRAM_ON_NTNET_STORE)
+	for(var/obj/machinery/modular_computer/cargochat_console as anything in SSmachines.get_machines_by_type(/obj/machinery/modular_computer/preset/cargochat/cargo))
+		var/datum/computer_file/program/restock_tracker/deleted_app = locate() in cargochat_console.cpu.stored_files
+		if(deleted_app)
+			cargochat_console.cpu.remove_file(deleted_app)
 	return ..()
 
 /datum/union_demand/cargo_console_lock
