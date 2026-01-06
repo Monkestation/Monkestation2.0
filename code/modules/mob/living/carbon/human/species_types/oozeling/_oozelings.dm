@@ -111,13 +111,25 @@
 		spec_slime_hunger(slime, seconds_per_tick)
 	spec_slime_wetness(slime, seconds_per_tick)
 
+/// Checks if the oozeling is hydrophobic due to having 10 oozeling wet stacks.
+/datum/species/oozeling/proc/is_slime_hydrophobic(mob/living/carbon/human/slime)
+	if(!slime)
+		return FALSE
+
+	var/datum/status_effect/fire_handler/wet_stacks/oozeling/slime_wetness = slime.has_status_effect(/datum/status_effect/fire_handler/wet_stacks/oozeling)
+
+	if(!slime_wetness)
+		return FALSE
+
+	if(slime_wetness.stacks >= 10)
+		slime.adjust_wet_stacks(-5, /datum/status_effect/fire_handler/wet_stacks/oozeling)
+		return TRUE
+
+	return FALSE
+
 /// Handles slimes losing blood from having wet stacks.
 /datum/species/oozeling/proc/spec_slime_wetness(mob/living/carbon/human/slime, seconds_per_tick)
-	var/datum/status_effect/fire_handler/wet_stacks/wetness
-	for(var/datum/status_effect/fire_handler/wet_stacks/possible_wetness in slime.status_effects)
-		if(possible_wetness?.type != /datum/status_effect/fire_handler/wet_stacks)
-			continue
-		wetness = possible_wetness
+	var/datum/status_effect/fire_handler/wet_stacks/wetness = slime.has_status_effect(/datum/status_effect/fire_handler/wet_stacks)
 
 	if(!wetness)
 		return
@@ -259,11 +271,10 @@
 		if(HAS_TRAIT(slime, TRAIT_GODMODE) || slime.blood_volume <= 0)
 			return ..()
 
-		remove_blood_volume(slime, 3 * seconds_per_tick)
+		remove_blood_volume(slime, 5 * seconds_per_tick)
 		chem.holder?.remove_reagent(chem.type, min(chem.volume * 0.22, 10))
 		if(SPT_PROB(25, seconds_per_tick))
 			to_chat(slime, span_warning("The water starts to weaken and adulterate your insides!"))
-
 		return TRUE
 
 	return ..()
@@ -278,6 +289,10 @@
 			if(!quiet_if_protected)
 				to_chat(slime, span_warning("The water fails to penetrate your thick clothing!"))
 			return FALSE
+	if(is_slime_hydrophobic(slime))
+		if(!quiet_if_protected)
+			to_chat(slime, span_warning("Water splashes against your oily membrane and rolls right off your body!"))
+		return FALSE
 	remove_blood_volume(slime, 50 * water_multiplier)
 	if(COOLDOWN_FINISHED(src, water_alert_cooldown))
 		slime.visible_message(
