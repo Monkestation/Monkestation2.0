@@ -1,0 +1,5 @@
+author: "EssentialTomato"
+delete-after: True
+changes:
+  - bugfix: "(timothymtorres) Fix gravity not updating for mobs when teleporting, wormhole jaunters, wizard spells, tile creation/destruction, mech entry/ejection and other methods."
+  - bugfix: "Modified floors around gravity generator now update their gravity properly."
