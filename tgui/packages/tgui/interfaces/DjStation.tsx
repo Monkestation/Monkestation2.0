@@ -11,7 +11,7 @@ import {
 import { formatTime } from '../format';
 import { Window } from '../layouts';
 import { getThumbnailUrl } from '../../common/other';
-import { Component, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { BooleanLike } from 'common/react';
 import { LoadingScreen } from './common/LoadingToolbox';
 
