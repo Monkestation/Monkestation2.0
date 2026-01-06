@@ -1720,6 +1720,7 @@
 #include "code\datums\proximity_monitor\fields\gravity.dm"
 #include "code\datums\proximity_monitor\fields\space_protection.dm"
 #include "code\datums\proximity_monitor\fields\timestop.dm"
+#include "code\datums\proximity_monitor\fields\turret_tracking.dm"
 #include "code\datums\proximity_monitor\fields\void_storm.dm"
 #include "code\datums\proximity_monitor\fields\projectile_dampener\projectile_dampener.dm"
 #include "code\datums\proximity_monitor\fields\projectile_dampener\projectile_dampener_effects.dm"
