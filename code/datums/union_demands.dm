@@ -16,11 +16,11 @@
 
 ///Called when a demand is successfully implemented.
 /datum/union_demand/proc/implement_demand(datum/union/union_demanding)
-	return
+	SHOULD_CALL_PARENT(TRUE)
 
 ///Called when a demand is unimplemented, this is currently admin-only.
 /datum/union_demand/proc/unimplement_demand(datum/union/union_demanding)
-	return
+	SHOULD_CALL_PARENT(TRUE)
 
 /datum/union_demand/vendor_stock
 	name = "Vendor Stock Automatic Reporting"
@@ -33,6 +33,12 @@
 		with surveyance software that will be reported back to Cargo so they can ensure all vendors are properly stocked."
 
 /datum/union_demand/vendor_stock/implement_demand(datum/union/union_demanding)
+	. = ..()
+	SSmodular_computers.add_program(/datum/computer_file/program/restock_tracker, store = PROGRAM_ON_NTNET_STORE)
+
+/datum/union_demand/vendor_stock/unimplement_demand(datum/union/union_demanding)
+	SSmodular_computers.remove_program(/datum/computer_file/program/restock_tracker, store = PROGRAM_ON_NTNET_STORE)
+	return ..()
 
 /datum/union_demand/cargo_console_lock
 	name = "Access-locked Cargo Console"
@@ -45,12 +51,14 @@
 		Any thieves, please feel free to use legal alternatives such as the requests console."
 
 /datum/union_demand/cargo_console_lock/implement_demand(datum/union/union_demanding)
+	. = ..()
 	for(var/obj/machinery/computer/cargo/cargo_consoles as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/computer/cargo))
 		cargo_consoles.req_access = list(ACCESS_CARGO)
 
 /datum/union_demand/cargo_console_lock/unimplement_demand(datum/union/union_demanding)
 	for(var/obj/machinery/computer/cargo/cargo_consoles as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/computer/cargo))
 		cargo_consoles.req_access = initial(cargo_consoles.req_access)
+	return ..()
 
 /datum/union_demand/trade_freedom
 	name = "Freedom of Association and Trade"

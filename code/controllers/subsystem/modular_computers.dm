@@ -40,6 +40,29 @@ SUBSYSTEM_DEF(modular_computers)
 		if(prog.program_flags & PROGRAM_ON_SYNDINET_STORE)
 			available_antag_software.Add(prog)
 
+///Creates a program given a specific typepath and adds it to the given store arg.
+/datum/controller/subsystem/modular_computers/proc/add_program(datum/computer_file/program/program_type, store = PROGRAM_ON_NTNET_STORE)
+	var/datum/computer_file/program/program = new program_type
+	switch(store)
+		if(PROGRAM_ON_NTNET_STORE)
+			program.program_flags |= PROGRAM_ON_NTNET_STORE
+			available_station_software.Add(program)
+		if(PROGRAM_ON_SYNDINET_STORE)
+			program.program_flags |= PROGRAM_ON_SYNDINET_STORE
+			available_antag_software.Add(program)
+
+///Removes program_removed from the given store, and if it is no longer in any store, deletes it.
+/datum/controller/subsystem/modular_computers/proc/remove_program(datum/computer_file/program/program_removed, store = PROGRAM_ON_NTNET_STORE)
+	switch(store)
+		if(PROGRAM_ON_NTNET_STORE)
+			program_removed.program_flags &= ~PROGRAM_ON_NTNET_STORE
+			available_station_software.Remove(program_removed)
+		if(PROGRAM_ON_SYNDINET_STORE)
+			program_removed.program_flags &= ~PROGRAM_ON_SYNDINET_STORE
+			available_antag_software.Remove(program_removed)
+	if(!(program_removed in available_station_software + available_antag_software))
+		qdel(program_removed)
+
 ///Attempts to find a new file through searching the available stores with its name.
 /datum/controller/subsystem/modular_computers/proc/find_ntnet_file_by_name(filename)
 	for(var/datum/computer_file/program/programs as anything in available_station_software + available_antag_software)
