@@ -172,7 +172,7 @@ GLOBAL_LIST_EMPTY(self_cassette_purchases)
 				return TRUE
 
 			var/datum/cassette/selected_cassette = SScassettes.cassettes[cassette_id]
-			if(!selected_cassette || selected_cassette.status != CASSETTE_STATUS_APPROVED)
+			if(selected_cassette?.status != CASSETTE_STATUS_APPROVED)
 				balloon_alert(ui.user, "cassette not found!")
 				return TRUE
 
