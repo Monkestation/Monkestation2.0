@@ -1,9 +1,10 @@
 import { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
-import { Box, Button, Divider, Section, Stack } from '../components';
+import { Box, Dimmer, Button, Divider, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
+  admin_mode: BooleanLike;
   voting_name: string;
   voting_desc: string;
   votes_yes: number;
@@ -25,6 +26,7 @@ type DemandsData = {
 export const UnionStand = () => {
   const { act, data } = useBackend<Data>();
   const {
+    admin_mode,
     voting_name,
     voting_desc,
     votes_yes,
@@ -36,7 +38,12 @@ export const UnionStand = () => {
     completed_demands = [],
   } = data;
   return (
-    <Window theme="neutral" title="Union Demands" width={400} height={500}>
+    <Window
+      theme={admin_mode ? 'admin' : 'neutral'}
+      title="Union Demands"
+      width={400}
+      height={500}
+    >
       <Window.Content overflowY="auto">
         {!locked_for && voting ? (
           <Section
@@ -75,78 +82,116 @@ export const UnionStand = () => {
           </Section>
         ) : (
           <>
-            {locked_for !== null ? (
-              <Section>
-                <Stack vertical>
-                  <Stack.Item>
-                    Union demands on cooldown for {locked_for}.
-                  </Stack.Item>
-                  {voting_name && (
-                    <>
-                      <Divider />
-                      <Stack.Item>
-                        {voting_name} going into effect...
-                      </Stack.Item>
-                    </>
-                  )}
-                </Stack>
-              </Section>
-            ) : (
-              <Section
-                title="Available Union Demands"
-                buttons={
-                  <Button
-                    icon="question"
-                    tooltip={
-                      'Select something from the list of available demands, and it will be put to a vote on whether the Union will demand it from the Station. A simple majority must vote yes rather than no in order to go through, abstains are not counted.'
-                    }
-                  />
-                }
+            {locked_for !== null && (
+              <Dimmer
+                style={{
+                  backgroundImage: 'warning',
+                }}
               >
-                <Stack>
-                  <Stack.Item>
-                    {possible_demands.map((demand) => (
-                      <Section
-                        title={demand.name}
-                        key={demand.ref}
-                        buttons={
-                          <Button.Confirm
-                            onClick={() =>
-                              act('trigger_vote', {
-                                selected_demand: demand.ref,
-                              })
-                            }
-                          >
-                            Demand
-                          </Button.Confirm>
-                        }
+                <Section
+                  position="relative"
+                  backgroundColor="red"
+                  title="Available Union Demands"
+                  buttons={
+                    !!admin_mode && (
+                      <Button.Confirm
+                        tooltip={'This is available to you as an Admin.'}
+                        onClick={() => act('reset_cooldown')}
                       >
-                        <Stack.Item>{demand.desc}</Stack.Item>
-                        <Stack.Item fontSize="110%" ml={-0.5}>
-                          <Button
-                            compact
-                            color="transparent"
-                            tooltip={
-                              'This will be charged every pay cycle to the Union and Command budgets.'
-                            }
-                            style={{ textDecoration: 'underline' }}
-                          >
-                            Cost:
-                          </Button>
-                          {demand.cost}cr per cycle.
+                        Reset Cooldown
+                      </Button.Confirm>
+                    )
+                  }
+                >
+                  <Stack vertical>
+                    <Stack.Item>
+                      Union demands on cooldown for {locked_for}.
+                    </Stack.Item>
+                    {voting_name && (
+                      <>
+                        <Divider />
+                        <Stack.Item>
+                          {voting_name} going into effect...
                         </Stack.Item>
-                      </Section>
-                    ))}
-                  </Stack.Item>
-                </Stack>
-              </Section>
+                      </>
+                    )}
+                  </Stack>
+                </Section>
+              </Dimmer>
             )}
+            <Section
+              title="Available Union Demands"
+              buttons={
+                <Button
+                  icon="question"
+                  tooltip={
+                    'Select something from the list of available demands, and it will be put to a vote on whether the Union will demand it from the Station. A simple majority must vote yes rather than no in order to go through, abstains are not counted.'
+                  }
+                />
+              }
+            >
+              <Stack>
+                <Stack.Item>
+                  {possible_demands.map((demand) => (
+                    <Section
+                      title={demand.name}
+                      key={demand.ref}
+                      buttons={
+                        <Button.Confirm
+                          onClick={() =>
+                            act('trigger_vote', {
+                              selected_demand: demand.ref,
+                            })
+                          }
+                        >
+                          Demand
+                        </Button.Confirm>
+                      }
+                    >
+                      <Stack.Item>{demand.desc}</Stack.Item>
+                      <Stack.Item fontSize="110%" ml={-0.5}>
+                        <Button
+                          compact
+                          color="transparent"
+                          tooltip={
+                            'This will be charged every pay cycle to the Union and Command budgets.'
+                          }
+                          style={{ textDecoration: 'underline' }}
+                        >
+                          Cost:
+                        </Button>
+                        {demand.cost}cr per cycle.
+                      </Stack.Item>
+                    </Section>
+                  ))}
+                </Stack.Item>
+              </Stack>
+            </Section>
             <Section title="Completed Demands">
               <Stack vertical>
                 {completed_demands.length ? (
                   <Stack.Item>
                     {completed_demands.map((demand) => (
-                      <Section title={demand.name} key={demand.ref}>
+                      <Section
+                        title={demand.name}
+                        key={demand.ref}
+                        buttons={
+                          !!admin_mode && (
+                            <Button.Confirm
+                              tooltip={
+                                'Immediately reverts this demand. This is only available to you as an Admin.'
+                              }
+                              onClick={() =>
+                                act('remove_demand', {
+                                  selected_demand: demand.ref,
+                                })
+                              }
+                            >
+                              Remove Demand
+                            </Button.Confirm>
+                          )
+                        }
+                      >
                         <Stack.Item fontSize="110%" ml={-0.5}>
                           <Button
                             compact

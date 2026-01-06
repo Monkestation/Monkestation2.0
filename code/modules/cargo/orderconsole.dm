@@ -43,6 +43,8 @@
 /obj/machinery/computer/cargo/Initialize(mapload)
 	. = ..()
 	radio = new /obj/item/radio/headset/headset_cargo(src)
+	if(GLOB.cargo_union.demand_is_implemented(/datum/union_demand/cargo_console_lock))
+		req_access = list(ACCESS_CARGO)
 
 /obj/machinery/computer/cargo/Destroy()
 	QDEL_NULL(radio)
@@ -86,6 +88,11 @@
 	. = ..()
 	circuit.configure_machine(src)
 
+/obj/machinery/computer/cargo/allowed(mob/accessor)
+	if(obj_flags & EMAGGED)
+		return TRUE
+	return ..()
+
 /obj/machinery/computer/cargo/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -100,6 +107,7 @@
 	var/datum/bank_account/bank = SSeconomy.get_dep_account(cargo_account)
 	if(bank)
 		data["points"] = bank.account_balance
+	data["company_imports_available"] = GLOB.cargo_union.demand_is_implemented(/datum/union_demand/trade_freedom)
 	data["grocery"] = SSshuttle.chef_groceries.len
 	data["away"] = SSshuttle.supply.getDockedId() == docking_away
 	data["self_paid"] = self_paid
@@ -226,6 +234,9 @@
 /obj/machinery/computer/cargo/proc/add_item(mob/user, id, amount = 1)
 	if(is_express)
 		return
+	if(!requestonly && !allowed(user))
+		say("ERROR: Access not found.")
+		return TRUE
 	id = text2path(id) || id
 	var/datum/supply_pack/pack = SSshuttle.supply_packs[id]
 	if(!istype(pack))
@@ -364,10 +375,14 @@
 	if(.)
 		return
 
+	var/mob/user = ui.user
 	switch(action)
 		if("send")
+			if(!allowed(user))
+				say("ERROR: Access not found.")
+				return TRUE
 			if(currently_sending)
-				say("ERROR: This console lacks permission to call or send the Shuttle")
+				say("ERROR: This console lacks permission to call or send the Shuttle.")
 				return
 			if(!SSshuttle.supply.canMove())
 				say(safety_warning)
@@ -379,7 +394,7 @@
 			if(SSshuttle.supply.getDockedId() == docking_home)
 				SSshuttle.moveShuttle(cargo_shuttle, docking_away, TRUE)
 				say("The supply shuttle is departing.")
-				ui.user.investigate_log("sent the supply shuttle away.", INVESTIGATE_CARGO)
+				user.investigate_log("sent the supply shuttle away.", INVESTIGATE_CARGO)
 			else
 				//create the paper from the SSshuttle.shopping_list
 				if(length(SSshuttle.shopping_list))
@@ -404,12 +419,15 @@
 					requisition_paper.color = "#9ef5ff"
 					requisition_paper.update_appearance()
 
-				ui.user.investigate_log("called the supply shuttle.", INVESTIGATE_CARGO)
+				user.investigate_log("called the supply shuttle.", INVESTIGATE_CARGO)
 				say("The supply shuttle has been called and will arrive in [SSshuttle.supply.timeLeft(600)] minute\s.")
 				SSshuttle.moveShuttle(cargo_shuttle, docking_home, TRUE)
 
 			return TRUE
 		if("loan")
+			if(!allowed(user))
+				say("ERROR: Access not found.")
+				return TRUE
 			if(!SSshuttle.shuttle_loan)
 				return
 			if(SSshuttle.supply_blocked)
@@ -424,17 +442,20 @@
 			else
 				SSshuttle.shuttle_loan.loan_shuttle()
 				say("The supply shuttle has been loaned to CentCom.")
-				ui.user.investigate_log("accepted a shuttle loan event.", INVESTIGATE_CARGO)
-				ui.user.log_message("accepted a shuttle loan event.", LOG_GAME)
+				user.investigate_log("accepted a shuttle loan event.", INVESTIGATE_CARGO)
+				user.log_message("accepted a shuttle loan event.", LOG_GAME)
 				. = TRUE
 		if("add")
-			return add_item(ui.user, params["id"])
+			return add_item(user, params["id"])
 		if("add_by_name")
 			var/supply_pack_id = name_to_id(params["order_name"])
 			if(!supply_pack_id)
 				return
-			return add_item(ui.user, supply_pack_id)
+			return add_item(user, supply_pack_id)
 		if("remove")
+			if(!allowed(user))
+				say("ERROR: Access not found.")
+				return TRUE
 			var/order_name = params["order_name"]
 			//try removing at least one item with the specified name. An order may not be removed if it was from the department
 			for(var/datum/supply_order/order in SSshuttle.shopping_list)
@@ -445,6 +466,9 @@
 
 			return TRUE
 		if("modify")
+			if(!allowed(user))
+				say("ERROR: Access not found.")
+				return TRUE
 			var/order_name = params["order_name"]
 
 			//clear out all orders with the above mentioned order_name name to make space for the new amount
@@ -461,8 +485,11 @@
 			var/supply_pack_id = name_to_id(order_name) //map order name to supply pack id for adding
 			if(!supply_pack_id)
 				return
-			return add_item(ui.user, supply_pack_id, amount)
+			return add_item(user, supply_pack_id, amount)
 		if("clear")
+			if(!allowed(user))
+				say("ERROR: Access not found.")
+				return TRUE
 			//create copy of list else we will get runtimes when iterating & removing items on the same list SSshuttle.shopping_list
 			var/list/shopping_cart = SSshuttle.shopping_list.Copy()
 			for(var/datum/supply_order/cancelled_order in shopping_cart)
@@ -470,6 +497,9 @@
 					continue //don't cancel other department's orders or orders that can't be cancelled
 				remove_item(cancelled_order.id) //remove & properly refund any coupons attached with this order
 		if("approve")
+			if(!allowed(user))
+				say("ERROR: Access not found.")
+				return TRUE
 			var/id = text2num(params["id"])
 			for(var/datum/supply_order/SO in SSshuttle.request_list)
 				if(SO.id == id)
@@ -478,6 +508,9 @@
 					. = TRUE
 					break
 		if("deny")
+			if(!allowed(user))
+				say("ERROR: Access not found.")
+				return TRUE
 			var/id = text2num(params["id"])
 			for(var/datum/supply_order/SO in SSshuttle.request_list)
 				if(SO.id == id)
@@ -485,6 +518,9 @@
 					. = TRUE
 					break
 		if("denyall")
+			if(!allowed(user))
+				say("ERROR: Access not found.")
+				return TRUE
 			SSshuttle.request_list.Cut()
 			. = TRUE
 		if("toggleprivate")
@@ -494,9 +530,7 @@
 		post_signal(cargo_shuttle)
 
 /obj/machinery/computer/cargo/proc/post_signal(command)
-
 	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
-
 	if(!frequency)
 		return
 

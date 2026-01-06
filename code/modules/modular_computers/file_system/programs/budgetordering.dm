@@ -116,6 +116,7 @@
 		))
 
 	//Data regarding the User's capability to buy things.
+	data["company_imports_available"] = GLOB.cargo_union.demand_is_implemented(/datum/union_demand/trade_freedom)
 	data["away"] = SSshuttle.supply.getDockedId() == docking_away
 	data["self_paid"] = self_paid
 	data["docked"] = SSshuttle.supply.mode == SHUTTLE_IDLE
@@ -261,7 +262,8 @@
 				if(isnull(reason) || ..())
 					return
 
-			if(id_card_customer?.registered_account?.account_job && !self_paid) //Find a budget to pull from
+			//only command personnel can blow their budget on actual orders, rest can use their dep console.
+			if(id_card_customer?.registered_account?.account_job && (id_card_customer?.registered_account?.account_job?.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)&& !self_paid)
 				personal_department = SSeconomy.get_dep_account(id_card_customer.registered_account.account_job.paycheck_department)
 				if(!(personal_department.account_holder == "Cargo Budget"))
 					var/dept_choice = tgui_alert(user, "Which department are you requesting this for?", "Choose request department", list("Cargo Budget", "[personal_department.account_holder]"))
@@ -332,6 +334,8 @@
 			self_paid = !self_paid
 			. = TRUE
 		if("company_import_window")
+			if(!(GLOB.cargo_union.demand_is_implemented(/datum/union_demand/trade_freedom)))
+				return
 			var/datum/component/armament/company_imports/gun_comp = computer.GetComponent(/datum/component/armament/company_imports)
 			if(!gun_comp)
 				computer.AddComponent(/datum/component/armament/company_imports, subtypesof(/datum/armament_entry/company_import), 0)

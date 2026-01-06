@@ -18,6 +18,10 @@
 /datum/union_demand/proc/implement_demand(datum/union/union_demanding)
 	return
 
+///Called when a demand is unimplemented, this is currently admin-only.
+/datum/union_demand/proc/unimplement_demand(datum/union/union_demanding)
+	return
+
 /datum/union_demand/vendor_stock
 	name = "Vendor Stock Automatic Reporting"
 	union_description = "The Union has noticed the vending machines on the station have been getting refilled in a very \
@@ -31,7 +35,7 @@
 /datum/union_demand/vendor_stock/implement_demand(datum/union/union_demanding)
 
 /datum/union_demand/cargo_console_lock
-	name = "Access-locked Cargo console"
+	name = "Access-locked Cargo Console"
 	union_description = "The Union has noticed an uptick in people illegally gaining access to the Cargo console \
 		and putting in orders using Cargo's budget without going through the request system. \
 		In our recent round of demands, we've put a clause that will lock all cargo consoles to require Cargo access \
@@ -41,3 +45,20 @@
 		Any thieves, please feel free to use legal alternatives such as the requests console."
 
 /datum/union_demand/cargo_console_lock/implement_demand(datum/union/union_demanding)
+	for(var/obj/machinery/computer/cargo/cargo_consoles as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/computer/cargo))
+		cargo_consoles.req_access = list(ACCESS_CARGO)
+
+/datum/union_demand/cargo_console_lock/unimplement_demand(datum/union/union_demanding)
+	for(var/obj/machinery/computer/cargo/cargo_consoles as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/computer/cargo))
+		cargo_consoles.req_access = initial(cargo_consoles.req_access)
+
+/datum/union_demand/trade_freedom
+	name = "Freedom of Association and Trade"
+	union_description = "The Union feels the company is inefficient and intentionally sabotaging Cargo trades \
+		by cutting crucial lines, knowing they are the only source of Cargo. \
+		As the only ones able to provide this service to the station, why should we not simply open up our \
+		trading outpost to other companies, and force Nanotrasen to compete?"
+	station_description = "The Cargo Union has voted to open up the Cargo bay's shipping lanes to \
+		any company willing to trade and associate with any corporation, as such a new Company Imports page is being \
+		set up on the Cargo consoles."
+	cost = 100 //this should be a no-brainer generally.

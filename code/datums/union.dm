@@ -39,19 +39,21 @@ ADMIN_VERB(union_manager, R_ADMIN, FALSE, "Cargo Union Manager", "View the Cargo
 /datum/union/New()
 	. = ..()
 	RegisterSignal(SSeconomy, COMSIG_PAYDAYS_ISSUED, PROC_REF(handle_payday))
-	for(var/datum/union_demand/demands as anything in subtypesof(/datum/union_demand))
-		if(demands::department_eligible != union_budget)
+	for(var/datum/union_demand/demand as anything in GLOB.union_demands)
+		if(demand::department_eligible != union_budget)
 			continue
-		possible_demands |= new demands()
+		possible_demands |= GLOB.union_demands[demand]
 
 /datum/union/Destroy(force)
-	deltimer(voting_timer)
-	voting_timer = null
-	deltimer(implement_delay_timer)
-	implement_delay_timer = null
-	QDEL_LIST(possible_demands)
-	QDEL_LIST(successful_demands)
+	possible_demands.Cut()
+	successful_demands.Cut()
 	union_employees.Cut()
+	if(voting_timer)
+		deltimer(voting_timer)
+		voting_timer = null
+	if(implement_delay_timer)
+		deltimer(implement_delay_timer)
+		implement_delay_timer = null
 	demand_voting_on = null
 	return ..()
 
@@ -74,6 +76,9 @@ ADMIN_VERB(union_manager, R_ADMIN, FALSE, "Cargo Union Manager", "View the Cargo
 /datum/union/proc/get_union_count()
 	return length(union_employees)
 
+/datum/union/proc/demand_is_implemented(datum/union_demand/demand_type)
+	return GLOB.union_demands[demand_type] in successful_demands
+
 ///Called when a demand is succesfully voted to go into effect.
 /datum/union/proc/on_demand_success()
 	if(!(demand_voting_on in possible_demands))
@@ -90,6 +95,11 @@ ADMIN_VERB(union_manager, R_ADMIN, FALSE, "Cargo Union Manager", "View the Cargo
 	successful_demands += demand_voting_on
 	demand_voting_on.implement_demand(src)
 	demand_voting_on = null
+
+/datum/union/proc/unimplement_demand(datum/union_demand/removed_demand)
+	successful_demands -= removed_demand
+	possible_demands += removed_demand
+	removed_demand.unimplement_demand(src)
 
 ///Called when a demand fails to get voted on to go into effect.
 /datum/union/proc/on_demand_failure()
@@ -146,13 +156,14 @@ ADMIN_VERB(union_manager, R_ADMIN, FALSE, "Cargo Union Manager", "View the Cargo
 /datum/union/ui_data(mob/user)
 	var/list/data = list()
 
+	data["admin_mode"] = check_rights_for(user.client, R_ADMIN)
 	data["locked_for"] = COOLDOWN_FINISHED(src, union_demand_delay) ? null : DisplayTimeText(COOLDOWN_TIMELEFT(src, union_demand_delay))
 	if(demand_voting_on)
 		data["voting_name"] = demand_voting_on.name
 		data["voting_desc"] = demand_voting_on.union_description
 	data["votes_yes"] = length(votes_yes)
 	data["votes_no"] = length(votes_no)
-	if(timeleft(voting_timer) > 0)
+	if(voting_timer)
 		data["voting"] = TRUE
 		data["voting_time_left"] = DisplayTimeText(timeleft(voting_timer), 1)
 	else
@@ -218,14 +229,28 @@ ADMIN_VERB(union_manager, R_ADMIN, FALSE, "Cargo Union Manager", "View the Cargo
 				votes_yes -= user
 			votes_no += user
 			return TRUE
+		//admin buttons
+		if("remove_demand")
+			if(!check_rights_for(user.client, R_ADMIN))
+				return TRUE
+			var/datum/union_demand/removed_demand = locate(params["selected_demand"]) in successful_demands
+			if(isnull(removed_demand))
+				return TRUE
+			unimplement_demand(removed_demand)
+		if("reset_cooldown")
+			if(!check_rights_for(user.client, R_ADMIN))
+				return TRUE
+			COOLDOWN_RESET(src, union_demand_delay)
 
 /datum/union/proc/trigger_vote(datum/union_demand/vote_for)
 	demand_voting_on = vote_for
 	votes_yes.Cut()
 	votes_no.Cut()
+	voting_timer = addtimer(CALLBACK(src, PROC_REF(stop_vote)), TIME_TO_VOTE, TIMER_STOPPABLE)
 
 	make_union_announcement(vote_for, announce_mode = ANNOUNCE_START_VOTE)
-	voting_timer = addtimer(CALLBACK(src, PROC_REF(stop_vote)), TIME_TO_VOTE, TIMER_STOPPABLE)
+	for(var/obj/machinery/union_stand/stand as anything in SSmachines.get_machines_by_type(/obj/machinery/union_stand))
+		stand.update_appearance()
 
 /datum/union/proc/stop_vote()
 	if(length(votes_yes) > length(votes_no))
@@ -235,6 +260,9 @@ ADMIN_VERB(union_manager, R_ADMIN, FALSE, "Cargo Union Manager", "View the Cargo
 
 	votes_yes.Cut()
 	votes_no.Cut()
+	voting_timer = null
+	for(var/obj/machinery/union_stand/stand as anything in SSmachines.get_machines_by_type(/obj/machinery/union_stand))
+		stand.update_appearance()
 	return TRUE
 
 #undef TIME_BETWEEN_DEMANDS
