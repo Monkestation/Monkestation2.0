@@ -63,7 +63,7 @@
 	// not using LAZYREMOVE so we can just do LAZYLEN once
 	tracking -= thing
 	if(!LAZYLEN(tracking))
-		tracking = null
+		LAZYNULL(tracking)
 		var/obj/machinery/porta_turret/turret = host
 		turret.check_should_process()
 		testing("interesting thing [thing] ([AREACOORD(thing)]) no longer being tracked by [turret] ([AREACOORD(turret)])")
