@@ -41,16 +41,30 @@ export const UnionStand = () => {
   } = data;
   if (!union_active && !admin_mode) {
     return (
-      <Window theme="neutral" title="Union Demands" width={400} height={500}>
+      <Window theme="CargoUnion" title="Union Demands" width={350} height={170}>
         <Window.Content overflowY="auto">
-          <Box>The Union is currently disabled.</Box>
+          <Section>
+            <Stack vertical fill>
+              <Stack.Item textAlign="center" textColor="yellow">
+                <Box fontSize="250%">Cargo Workers Union</Box>
+              </Stack.Item>
+              <Divider />
+              <Stack.Item>
+                <Box>
+                  Thank you for your interest in the Cargo Workers Union (CWU).
+                  We deeply appreciate your membership fees. More information is
+                  soon to come.
+                </Box>
+              </Stack.Item>
+            </Stack>
+          </Section>
         </Window.Content>
       </Window>
     );
   }
   return (
     <Window
-      theme={admin_mode ? 'admin' : 'neutral'}
+      theme={admin_mode ? 'admin' : 'CargoUnion'}
       title="Union Demands"
       width={400}
       height={500}
@@ -60,7 +74,9 @@ export const UnionStand = () => {
           <Section title="Admin tools">
             <Box my={0.5}>
               There are admin tools all over the page (usually indicated by
-              tooltips), these are just general buttons.
+              tooltips), these are just general buttons. As a player, running
+              the Deadmin verb will allow you to see the default player
+              perspective of the panel.
             </Box>
             <Button.Confirm
               color={union_active ? 'bad' : 'good'}
