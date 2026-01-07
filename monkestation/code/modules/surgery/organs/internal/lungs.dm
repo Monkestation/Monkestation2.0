@@ -10,6 +10,14 @@
 	organ_flags = ORGAN_UNREMOVABLE
 	safe_oxygen_min = 4 //We don't need much oxygen to subsist.
 
+/obj/item/organ/internal/lungs/slime/Initialize(mapload)
+	. = ..()
+	add_gas_reaction(/datum/gas/water_vapor, while_present = PROC_REF(melt_lungs))
+
+/obj/item/organ/internal/lungs/slime/proc/melt_lungs(mob/living/carbon/breather, datum/gas_mixture/breath, h2o_pp, old_h2o_pp)
+	if(prob(20))
+		breather.emote("cough")
+
 /obj/item/organ/internal/lungs/slime/on_life(seconds_per_tick, times_fired)
 	. = ..()
 	operated = FALSE
