@@ -2,7 +2,7 @@
 	id = "chilled_core"
 	status_type = STATUS_EFFECT_REFRESH //Custom code
 	alert_type = /atom/movable/screen/alert/status_effect/chilled_core
-	duration = 10 SECONDS
+	duration = 3 SECONDS
 	tick_interval = 1 SECONDS
 	on_remove_on_mob_delete = TRUE
 	remove_on_fullheal = TRUE
