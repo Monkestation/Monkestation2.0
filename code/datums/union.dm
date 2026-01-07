@@ -9,8 +9,6 @@ ADMIN_VERB(union_manager, R_ADMIN, FALSE, "Cargo Union Manager", "View the Cargo
 //TODO:
 //Add deadlocks
 //Finish adding all the union demands
-//Add custom css for union stand
-//disable-able cargo union via admin or station trait
 //^ have 'default' things that work without unions (like miner sensors)
 
 /datum/union
