@@ -123,6 +123,7 @@ const Controls = () => {
             bad: [0, 25],
           }}
           format={(val) => round(val, 1) + '%'}
+          tickWhileDragging
           onChange={(e, volume) => act('set_volume', { volume })}
         />
       </LabeledList.Item>
@@ -183,7 +184,7 @@ export const MediaJukebox = () => {
   } = useBackend<Data>();
 
   return (
-    <Window width={450} height={600} resizable>
+    <Window width={450} height={600}>
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item>

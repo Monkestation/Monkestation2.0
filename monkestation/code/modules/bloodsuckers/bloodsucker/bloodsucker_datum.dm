@@ -1,8 +1,3 @@
-#define BLOODSUCKER_MAX_BLOOD_DEFAULT 600
-#define BLOODSUCKER_MAX_BLOOD_INCREASE_ON_RANKUP 80
-#define BLOODSUCKER_REGEN_INCREASE_ON_RANKUP 0.25
-#define BLOODSUCKER_UNARMED_DMG_INCREASE_ON_RANKUP 0.5
-
 /datum/antagonist/bloodsucker
 	name = "\improper Bloodsucker"
 	show_in_antagpanel = TRUE
@@ -17,6 +12,7 @@
 	ui_name = "AntagInfoBloodsucker"
 	preview_outfit = /datum/outfit/bloodsucker_outfit
 	stinger_sound = 'monkestation/sound/bloodsuckers/BloodsuckerAlert.ogg'
+	can_assign_self_objectives = TRUE
 	/// How much blood we have, starting off at default blood levels.
 	var/bloodsucker_blood_volume = BLOOD_VOLUME_NORMAL
 	/// How much blood we can have at once, increases per level.
@@ -200,7 +196,7 @@
 	handle_clown_mutation(current_mob, removing = FALSE)
 	current_mob.remove_language(/datum/language/vampiric, source = LANGUAGE_BLOODSUCKER)
 
-	cleanup_tracker()
+	cleanup_beacon()
 	cleanup_limbs(current_mob)
 
 	if(current_mob.hud_used)
@@ -334,7 +330,9 @@
 /datum/antagonist/bloodsucker/get_preview_icon()
 
 	var/icon/final_icon = render_preview_outfit(/datum/outfit/bloodsucker_outfit)
-	final_icon.Blend(icon('icons/effects/blood.dmi', "uniformblood"), ICON_OVERLAY)
+	var/icon/blood_icon = icon('icons/effects/blood.dmi', "suitblood")
+	blood_icon.Blend(BLOOD_COLOR_RED, ICON_MULTIPLY)
+	final_icon.Blend(blood_icon, ICON_OVERLAY)
 
 	return finish_preview_icon(final_icon)
 
@@ -505,7 +503,9 @@
 	// Claim a Lair Objective
 	objectives += new /datum/objective/bloodsucker/lair(null, owner)
 	// Escape Objective
-	objectives += new /datum/objective/escape(null)
+	var/datum/objective/escape/escape_objective = new
+	escape_objective.owner = owner
+	objectives += escape_objective
 
 	// Conversion objective.
 	// Most likely to just be "have X living vassals", but can also be "vassalize command" or "vassalize X members of Y department"
@@ -602,4 +602,15 @@
 /datum/status_effect/silver_cuffed
 	id = "silver cuffed"
 	alert_type = null
+	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
 	remove_on_fullheal = TRUE
+
+/datum/status_effect/silver_cuffed/on_apply()
+	if(!iscarbon(owner))
+		return FALSE
+	return TRUE
+
+/datum/status_effect/silver_cuffed/tick(seconds_between_ticks)
+	var/mob/living/carbon/carbon_owner = owner
+	if(!istype(carbon_owner.handcuffed, /obj/item/restraints/handcuffs/silver))
+		qdel(src)

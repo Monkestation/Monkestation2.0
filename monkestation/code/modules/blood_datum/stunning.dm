@@ -134,7 +134,7 @@
 	owner.set_stutter_if_lower(10 SECONDS)
 	owner.set_jitter_if_lower(20 SECONDS)
 	owner.cause_pain(BODY_ZONES_ALL, 2 * seconds_between_ticks, BURN)
-	owner.apply_damage(120 * seconds_between_ticks * (owner.pain_controller?.pain_modifier || 1), STAMINA)
+	owner.apply_damage(60 * seconds_between_ticks * (owner.pain_controller?.pain_modifier || 1), STAMINA)
 	if(owner.stat <= SOFT_CRIT)
 		owner.do_jitter_animation(INFINITY) // maximum POWER
 
@@ -237,7 +237,7 @@
 		span_warning("[disruptor] gets tangled in the electrodes!"),
 		span_warning("You get tangled in the electrodes!"),
 	)
-	disruptor.apply_damage(90, STAMINA)
+	disruptor.apply_damage(45, STAMINA)
 	disruptor.Knockdown(5 SECONDS)
 	disruptor.adjust_jitter_up_to(10 SECONDS, 30 SECONDS)
 	qdel(src)

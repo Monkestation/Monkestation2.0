@@ -1,4 +1,4 @@
-import { InfernoNode } from 'inferno';
+import { ReactNode } from 'react';
 import { Button } from '../../components';
 import { useBackend } from '../../backend';
 import { PreferencesMenuData } from './data';
@@ -9,7 +9,7 @@ export const PageButton = <P extends unknown>(props: {
   otherActivePages?: P[];
 
   setPage: (page: P) => void;
-  children?: InfernoNode;
+  children?: ReactNode;
 }) => {
   const { act } = useBackend<PreferencesMenuData>();
   const pageIsActive =

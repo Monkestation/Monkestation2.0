@@ -15,7 +15,6 @@ import {
   Tooltip,
   Icon,
 } from '../components';
-import { TableCell, TableRow } from '../components/Table';
 import { NtosWindow } from '../layouts';
 
 export const NtosScipaper = (props) => {
@@ -195,7 +194,7 @@ const PaperPublishing = (props) => {
               <Icon size={1.15} name="info-circle" />
             </Tooltip>
             {' Cooperation: '}
-            <BlockQuote>{gains[coopIndex - 1]}</BlockQuote>
+            <BlockQuote>{gains[coopIndex]}</BlockQuote>
           </Stack.Item>
           <Stack.Item grow>
             <Tooltip
@@ -205,7 +204,7 @@ const PaperPublishing = (props) => {
               <Icon size={1.15} name="info-circle" />
             </Tooltip>
             {' Funding: '}
-            <BlockQuote>{gains[fundingIndex - 1]}</BlockQuote>
+            <BlockQuote>{gains[fundingIndex]}</BlockQuote>
           </Stack.Item>
         </Stack>
         <br />
@@ -246,10 +245,10 @@ const PaperBrowser = (props) => {
             <LabeledList.Item label="Yield">
               <LabeledList>
                 <LabeledList.Item label="Cooperation">
-                  {paper['gains'][coopIndex - 1]}
+                  {paper['gains'][coopIndex]}
                 </LabeledList.Item>
                 <LabeledList.Item label="Funding">
-                  {paper['gains'][fundingIndex - 1]}
+                  {paper['gains'][fundingIndex]}
                 </LabeledList.Item>
               </LabeledList>
             </LabeledList.Item>
@@ -309,10 +308,10 @@ const PartnersBrowser = (props) => {
             {relations[partner.path]}
           </LabeledList.Item>
           <LabeledList.Item label="Cooperation Bonus">
-            {partner.multipliers[coopIndex - 1] + 'x'}
+            {partner.multipliers[coopIndex] + 'x'}
           </LabeledList.Item>
           <LabeledList.Item label="Funding Bonus">
-            {partner.multipliers[fundingIndex - 1] + 'x'}
+            {partner.multipliers[fundingIndex] + 'x'}
           </LabeledList.Item>
           <LabeledList.Item label="Accepted Experiments">
             {partner.acceptedExperiments.map((experiment_name) => (
@@ -322,13 +321,13 @@ const PartnersBrowser = (props) => {
           <LabeledList.Item label="Technology Sharing">
             <Table>
               {partner.boostedNodes.map((node) => (
-                <TableRow key={node.id}>
-                  <TableCell>
+                <Table.Row key={node.id}>
+                  <Table.Cell>
                     {visibleNodes.includes(node.id)
                       ? node.name
                       : 'Unknown Technology'}
-                  </TableCell>
-                  <TableCell>
+                  </Table.Cell>
+                  <Table.Cell>
                     <Button
                       fluid
                       tooltipPosition="left"
@@ -345,8 +344,8 @@ const PartnersBrowser = (props) => {
                         })
                       }
                     />
-                  </TableCell>
-                </TableRow>
+                  </Table.Cell>
+                </Table.Row>
               ))}
             </Table>
           </LabeledList.Item>

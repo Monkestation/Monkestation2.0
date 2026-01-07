@@ -85,6 +85,9 @@
 				),
 			),
 		))
+		if(client)
+			SEND_SIGNAL(client, COMSIG_TGUI_PANEL_READY)
+			SEND_SIGNAL(client?.mob, COMSIG_TGUI_PANEL_READY)
 		return TRUE
 	if(type == "audio/setAdminMusicVolume")
 		client.admin_music_volume = payload["volume"]

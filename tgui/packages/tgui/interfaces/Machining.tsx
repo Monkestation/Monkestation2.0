@@ -47,7 +47,7 @@ type Data = {
   atom_data: String[];
 };
 
-export const Machining = (props, context) => {
+export const Machining = (props) => {
   const [activeTab, setActiveTab] = useLocalState(
     'machiningTab',
     TAB_LIST[0].key,
@@ -58,7 +58,7 @@ export const Machining = (props, context) => {
   const { busy, craftable, recipes, auto_dispense, auto_build } = data;
 
   return (
-    <Window resizable width={900} height={700}>
+    <Window width={900} height={700}>
       <Window.Content>
         <Stack fill>
           <Stack.Item width={'200px'}>
@@ -114,13 +114,11 @@ export const Machining = (props, context) => {
           </Stack.Item>
           <Stack.Item grow my={'16px'}>
             <Box
-              scrollable
-              fill
               height={'100%'}
               pr={1}
               pt={1}
               mr={-1}
-              style={{ 'overflow-y': 'auto' }}
+              style={{ overflowY: 'auto' }}
             >
               <MainRecipeScreen tab={activeTab} searchText={searchText} />
             </Box>
@@ -130,8 +128,8 @@ export const Machining = (props, context) => {
       {busy ? (
         <Dimmer
           style={{
-            'font-size': '2em',
-            'text-align': 'center',
+            fontSize: '2em',
+            textAlign: 'center',
           }}
         >
           <Icon
@@ -169,7 +167,7 @@ export const Machining = (props, context) => {
   );
 };
 
-const MainRecipeScreen = (props, context) => {
+const MainRecipeScreen = (props) => {
   const { act, data } = useBackend<Data>();
   const { tab, searchText } = props;
   const { recipes, atom_data, busy } = data;

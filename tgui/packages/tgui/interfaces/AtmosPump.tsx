@@ -32,6 +32,7 @@ export const AtmosPump = (props) => {
               <LabeledList.Item label="Transfer Rate">
                 <NumberInput
                   animated
+                  step={10}
                   value={rate}
                   width="63px"
                   unit="L/s"

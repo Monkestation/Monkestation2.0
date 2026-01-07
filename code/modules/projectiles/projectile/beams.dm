@@ -90,30 +90,29 @@
 	else if(isturf(target))
 		impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser/wall
 
+
 /obj/projectile/beam/laser/musket
 	name = "low-power laser"
 	icon_state = "laser_musket"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/purple_laser
 	damage = 28
-	stamina = 35
+	stamina = 17.5
 	light_color = COLOR_STRONG_VIOLET
 	weak_against_armour = TRUE
 
 /obj/projectile/beam/laser/musket/prime
 	name = "mid-power laser"
 	damage = 45
-	stamina = 20
+	stamina = 10
 	weak_against_armour = FALSE
 
 /obj/projectile/beam/laser/musket/syndicate
 	name = "resonant laser"
 	damage = 30
-	stamina = 65
+	stamina = 32.5
 	weak_against_armour = FALSE
 	armour_penetration = 45 //less powerful than armor piercing rounds
 	wound_bonus = 10
-	debilitating = TRUE
-	debilitate_mult = 2
 
 /obj/projectile/beam/weak
 	damage = 15
@@ -150,7 +149,7 @@
 	icon_state = "omnilaser"
 	damage = 0
 	damage_type = STAMINA
-	stamina = 35
+	stamina = 24
 	paralyze_timer = 5 SECONDS
 	armor_flag = ENERGY
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
@@ -158,23 +157,18 @@
 	tracer_type = /obj/effect/projectile/tracer/disabler
 	muzzle_type = /obj/effect/projectile/muzzle/disabler
 	impact_type = /obj/effect/projectile/impact/disabler
-	debilitating = TRUE
-	debilitate_mult = 3
 
 /obj/projectile/beam/disabler/weak
-	stamina = 15
-	debilitate_mult = 0.5
+	stamina = 11.5
 
 /obj/projectile/beam/disabler/smoothbore
 	name = "unfocused disabler beam"
 	weak_against_armour = TRUE
-	debilitate_mult = 2
 
 /obj/projectile/beam/disabler/smoothbore/prime
 	name = "focused disabler beam"
 	weak_against_armour = FALSE
-	stamina = 65 // MONKESTATION EDIT ORG: 30
-	debilitate_mult = 3.5 // MONKESTATION ADDITION
+	stamina = 30
 
 /obj/projectile/beam/pulse
 	name = "pulse"
@@ -257,7 +251,7 @@
 		var/mob/living/carbon/human/M = target
 		if(istype(M.wear_suit))
 			if(M.wear_suit.type in suit_types)
-				M.stamina.adjust(-34)
+				M.stamina.adjust(-17)
 
 /obj/projectile/beam/lasertag/redtag
 	icon_state = "laser"

@@ -6343,51 +6343,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/upper)
-"ctu" = (
-/obj/structure/table/wood,
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/item/device/walkman{
-	pixel_y = 7;
-	pixel_x = -8
-	},
-/obj/machinery/light/directional/south,
-/turf/open/floor/iron/vaporwave,
-/area/station/service/library)
 "cty" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 1
@@ -7245,15 +7200,6 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/ce)
-"cJp" = (
-/obj/structure/closet/secure_closet/brig_physician,
-/obj/item/clothing/suit/jacket/straight_jacket,
-/obj/effect/turf_decal/trimline/red/filled/line{
-	color = "#DE3A3A";
-	dir = 5
-	},
-/turf/open/floor/iron/white,
-/area/station/security/medical)
 "cJu" = (
 /obj/structure/toilet{
 	dir = 8
@@ -12669,6 +12615,11 @@
 /obj/item/stack/cable_coil/five,
 /turf/open/floor/iron,
 /area/station/commons/vacant_room/commissary)
+"eSj" = (
+/obj/machinery/cassette_postbox,
+/obj/machinery/light/directional/east,
+/turf/open/floor/wood,
+/area/station/service/library)
 "eSq" = (
 /turf/closed/wall/r_wall,
 /area/station/science/genetics)
@@ -13754,10 +13705,6 @@
 /obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/science/xenobiology/cell)
-"fqb" = (
-/obj/machinery/cassette/adv_cassette_deck,
-/turf/open/floor/iron/vaporwave,
-/area/station/service/library)
 "fqx" = (
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/plating,
@@ -21796,6 +21743,51 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/commons/dorms)
+"iuV" = (
+/obj/structure/table/wood,
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron/vaporwave,
+/area/station/service/library)
 "iuZ" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
@@ -22791,6 +22783,10 @@
 /obj/effect/landmark/start/shaft_miner,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
+"iQR" = (
+/obj/machinery/cassette_deck,
+/turf/open/floor/iron/vaporwave,
+/area/station/service/library)
 "iRs" = (
 /obj/effect/mob_spawn/corpse/human/assistant,
 /turf/open/misc/asteroid,
@@ -24376,7 +24372,7 @@
 /area/station/science/research)
 "jyB" = (
 /obj/machinery/light/directional/north,
-/obj/machinery/modular_computer/preset/id,
+/obj/machinery/modular_computer/preset/quartermaster,
 /turf/open/floor/carpet/red,
 /area/station/cargo/quartermaster)
 "jyF" = (
@@ -29675,19 +29671,6 @@
 	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain)
-"lAi" = (
-/obj/effect/turf_decal/tile/dark_red/fourcorners,
-/obj/machinery/door/airlock/medical/glass{
-	id_tag = "MedbayFoyer";
-	name = "Brig Medical"
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/firedoor,
-/obj/effect/mapping_helpers/airlock/access/any/security/brig_physician,
-/obj/structure/cable,
-/turf/open/floor/iron/white,
-/area/station/security/medical)
 "lAl" = (
 /mob/living/carbon/human/species/monkey,
 /obj/machinery/light/directional/south,
@@ -30759,20 +30742,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
-"lWH" = (
-/obj/effect/turf_decal/tile/dark_red/fourcorners,
-/obj/machinery/door/airlock/medical/glass{
-	id_tag = "MedbayFoyer";
-	name = "Brig Medical"
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/machinery/door/firedoor,
-/obj/effect/mapping_helpers/airlock/access/any/security/brig_physician,
-/obj/effect/mapping_helpers/airlock/access/any/security/general,
-/turf/open/floor/iron/white,
-/area/station/security/medical)
 "lWJ" = (
 /obj/structure/gravestone/one,
 /obj/effect/turf_decal/weather/dirt,
@@ -32870,11 +32839,6 @@
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
-"mJK" = (
-/obj/machinery/cassette/mailbox,
-/obj/machinery/light/directional/east,
-/turf/open/floor/wood,
-/area/station/service/library)
 "mJP" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -41399,13 +41363,6 @@
 /mob/living/basic/pet/dog/bullterrier/walter,
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
-"qbW" = (
-/obj/structure/table/wood,
-/obj/machinery/cassette/dj_station{
-	pixel_y = 12
-	},
-/turf/open/floor/iron/vaporwave,
-/area/station/service/library)
 "qcz" = (
 /obj/machinery/growing/tray,
 /obj/machinery/camera/autoname/directional/south,
@@ -47596,6 +47553,15 @@
 	},
 /turf/open/floor/iron,
 /area/station/service/janitor)
+"sCg" = (
+/obj/structure/closet/secure_closet/secmed,
+/obj/item/clothing/suit/jacket/straight_jacket,
+/obj/effect/turf_decal/trimline/red/filled/line{
+	color = "#DE3A3A";
+	dir = 5
+	},
+/turf/open/floor/iron/white,
+/area/station/security/medical)
 "sCs" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
@@ -49822,6 +49788,18 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
+"tvl" = (
+/obj/effect/turf_decal/tile/dark_red/fourcorners,
+/obj/machinery/door/airlock/medical/glass{
+	id_tag = "MedbayFoyer";
+	name = "Brig Medical"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/firedoor,
+/obj/structure/cable,
+/turf/open/floor/iron/white,
+/area/station/security/medical)
 "tvt" = (
 /obj/structure/closet/secure_closet/chemical,
 /obj/machinery/light/directional/west,
@@ -59913,6 +59891,13 @@
 /obj/effect/spawner/random/engineering/flashlight,
 /turf/open/floor/iron,
 /area/station/security/office)
+"xos" = (
+/obj/structure/table/wood,
+/obj/machinery/dj_station{
+	pixel_y = 12
+	},
+/turf/open/floor/iron/vaporwave,
+/area/station/service/library)
 "xou" = (
 /obj/machinery/conveyor{
 	dir = 1;
@@ -62085,6 +62070,19 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
+"ydR" = (
+/obj/effect/turf_decal/tile/dark_red/fourcorners,
+/obj/machinery/door/airlock/medical/glass{
+	id_tag = "MedbayFoyer";
+	name = "Brig Medical"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/any/security/general,
+/turf/open/floor/iron/white,
+/area/station/security/medical)
 "yea" = (
 /obj/machinery/camera/autoname/directional/west,
 /obj/effect/landmark/start/hangover,
@@ -168150,7 +168148,7 @@ nEp
 eVJ
 jwu
 tav
-ctu
+iuV
 bMB
 qzU
 iBf
@@ -168661,10 +168659,10 @@ kzl
 quA
 jrD
 bMB
-qbW
+xos
 iyc
 thN
-fqb
+iQR
 bMB
 qzU
 iBf
@@ -169171,7 +169169,7 @@ lXv
 quA
 sFV
 quA
-mJK
+eSj
 aXQ
 xjJ
 bMB
@@ -175528,7 +175526,7 @@ eiN
 bqK
 oPY
 ayC
-lAi
+tvl
 hRj
 vpG
 qzr
@@ -176038,7 +176036,7 @@ whe
 wAF
 sCu
 qRe
-cJp
+sCg
 nmy
 uxl
 gVu
@@ -176296,7 +176294,7 @@ rbY
 rJc
 qRe
 wXE
-lWH
+ydR
 wXE
 wXE
 qRe

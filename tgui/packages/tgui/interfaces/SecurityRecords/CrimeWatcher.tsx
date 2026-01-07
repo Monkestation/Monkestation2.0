@@ -153,7 +153,7 @@ const CrimeDisplay = ({ item }: { item: Crime }) => {
             </Button>
             <Button.Confirm
               content="Invalidate"
-              disabled={!higher_access || !valid}
+              disabled={!valid || (!higher_access && author !== current_user)}
               icon="ban"
               onClick={() =>
                 act('invalidate_crime', {
@@ -254,9 +254,7 @@ const CrimeAuthor = (props) => {
         Details
         <TextArea
           fluid
-          height={4}
           maxLength={1025}
-          multiline
           onChange={(_, value) => setCrimeDetails(value)}
           placeholder="Type some details..."
         />
@@ -264,7 +262,7 @@ const CrimeAuthor = (props) => {
       <Stack.Item color="label">
         Fine (leave blank to arrest)
         <RestrictedInput
-          onChange={(_, value) => setCrimeFine(value)}
+          onChange={(value) => setCrimeFine(value)}
           fluid
           maxValue={1000}
         />

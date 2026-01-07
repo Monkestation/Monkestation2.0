@@ -42,7 +42,7 @@ export const HoloPay = (props) => {
   };
 
   return (
-    <Window height="300" width="250" title="Holo Pay">
+    <Window height={300} width={250} title="Holo Pay">
       <Window.Content>
         {!owner ? (
           <NoticeBox>Error! Swipe an ID first.</NoticeBox>
@@ -77,7 +77,7 @@ const AccountDisplay = (props) => {
 
   return (
     <Section>
-      <Table fill>
+      <Table>
         <Table.Row>
           <Table.Cell>
             <Box color="label">
@@ -237,7 +237,7 @@ const SetupDisplay = (props) => {
             <RestrictedInput
               fluid
               maxValue={max_fee}
-              onChange={(_, value) => act('fee', { amount: value })}
+              onChange={(value) => act('fee', { amount: value })}
               value={force_fee}
             />
           </Tooltip>

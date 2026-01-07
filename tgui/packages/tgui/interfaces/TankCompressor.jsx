@@ -124,7 +124,7 @@ const TankCompressorControls = (props) => {
         >
           {!pressure && <Modal>{'No Pressure Detected'}</Modal>}
           {usingLastData && (
-            <NoticeBox warning>
+            <NoticeBox>
               {'Tank destroyed. Displaying last recorded data.'}
             </NoticeBox>
           )}
@@ -201,7 +201,8 @@ const TankCompressorControls = (props) => {
                 stepPixelSize={12.5}
                 step={0.5}
                 unit="L/S"
-                onDrag={(e, new_rate) =>
+                tickWhileDragging
+                onChange={(e, new_rate) =>
                   act('change_rate', { target: new_rate })
                 }
               />

@@ -36,7 +36,7 @@ export const ProcCallMenu = (props) => {
   return (
     <Window width={500} height={400}>
       <Window.Content scrollable>
-        <Stack grow height="100%">
+        <Stack height="100%">
           <Stack.Item>
             <Section fill title="Options">
               <Stack vertical width="180px">
@@ -44,7 +44,7 @@ export const ProcCallMenu = (props) => {
                 <Stack.Item>
                   <Dropdown
                     width="100%"
-                    displayText={expected_output}
+                    selected={expected_output}
                     options={possible_types}
                     color={expected_output_color}
                     onSelected={(value) =>
@@ -138,7 +138,7 @@ const PortEntry = (props) => {
         </Stack.Item>
         <Stack.Item>
           <Dropdown
-            displayText={datatype}
+            selected={datatype}
             options={datatypeOptions}
             onSelected={onSetType}
             color={color}

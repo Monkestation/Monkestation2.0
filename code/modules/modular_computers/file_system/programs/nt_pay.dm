@@ -29,6 +29,8 @@
 				return to_chat(usr, span_notice("You need to specify how much you're sending."))
 			if(token == current_user.pay_token)
 				return to_chat(usr, span_notice("You can't send credits to yourself."))
+			if(IS_DEPARTMENTAL_ACCOUNT(current_user))
+				return to_chat(usr, span_notice("The app is unable to withdraw from that card."))
 
 			for(var/account in SSeconomy.bank_accounts_by_id)
 				var/datum/bank_account/acc = SSeconomy.bank_accounts_by_id[account]

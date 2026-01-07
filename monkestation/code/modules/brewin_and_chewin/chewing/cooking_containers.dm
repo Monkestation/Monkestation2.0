@@ -28,7 +28,7 @@
 	var/list/grill_data = list("High"=0 , "Medium" = 0, "Low"=0) //Record of what grill-cooking has been done on this food.
 	var/list/oven_data = list("High"=0 , "Medium" = 0, "Low"=0) //Record of what oven-cooking has been done on this food.
 
-/obj/item/reagent_containers/cooking_container/Initialize()
+/obj/item/reagent_containers/cooking_container/Initialize(mapload)
 	.=..()
 	appearance_flags |= KEEP_TOGETHER
 	RegisterSignal(src, COMSIG_STOVE_PROCESS, PROC_REF(process_stovetop))
@@ -117,7 +117,7 @@
 	. = FALSE
 	switch(tracker.process_item_wrap(I, user))
 		if(CHEWIN_NO_STEPS)
-			if(no_step_checks(I)) //literally fryers
+			if(no_step_checks(I, user)) //literally fryers
 				if(send_message)
 					to_chat(user, span_warning("It doesn't seem like you can create a meal from that. Yet."))
 				if(lower_quality_on_fail)
@@ -165,7 +165,7 @@
 	set desc = "Removes items from the container, excluding reagents."
 	do_empty(usr)
 
-/obj/item/reagent_containers/cooking_container/proc/do_empty(mob/user, var/atom/target = null, var/reagent_clear = TRUE)
+/obj/item/reagent_containers/cooking_container/proc/do_empty(mob/user, atom/target = null, reagent_clear = TRUE)
 	#ifdef CHEWIN_DEBUG
 	logger.Log(LOG_CATEGORY_DEBUG"cooking_container/do_empty() called!")
 	#endif
@@ -340,11 +340,15 @@
 	removal_penalty = 5
 	appliancetype = DF_BASKET
 
-/obj/item/reagent_containers/cooking_container/proc/no_step_checks(obj/item/item)
+/obj/item/reagent_containers/cooking_container/proc/no_step_checks(obj/item/item, mob/living/user)
 	return TRUE
 
-/obj/item/reagent_containers/cooking_container/deep_basket/no_step_checks(obj/item/item)
-	item.forceMove(src)
+/obj/item/reagent_containers/cooking_container/deep_basket/no_step_checks(obj/item/item, mob/living/user)
+	if(user && isitem(item))
+		if(!user.transferItemToLoc(item, src))
+			return TRUE
+	else
+		item.forceMove(src)
 	qdel(tracker)
 	update_icon()
 	return FALSE

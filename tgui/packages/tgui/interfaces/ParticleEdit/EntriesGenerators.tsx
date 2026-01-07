@@ -52,7 +52,7 @@ export const FloatGenerator = (props: FloatGeneratorProps) => {
           <Stack.Item>
             <NumberInput
               animated
-              value={float}
+              value={float || 0.0}
               onDrag={(e, value) =>
                 act('edit', {
                   var: var_name,
@@ -106,8 +106,7 @@ export const FloatGeneratorColor = (props: FloatGeneratorColorProps) => {
         {!Array.isArray(float) ? (
           <Stack.Item>
             <Input
-              animated
-              value={float}
+              value={float?.toString()}
               onChange={(e, value) =>
                 act('edit', {
                   var: var_name,
@@ -178,7 +177,7 @@ export const EntryGeneratorNumbersList = (
           <Stack.Item>
             <NumberInput
               animated
-              value={input}
+              value={input || 0}
               onDrag={(e, value) =>
                 act('edit', {
                   var: var_name,

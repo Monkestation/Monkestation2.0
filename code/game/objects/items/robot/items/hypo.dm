@@ -8,6 +8,10 @@
 		/datum/reagent/medicine/salglu_solution,\
 		/datum/reagent/medicine/antipathogenic/spaceacillin\
 	)
+#define PARAMEDIC_MEDICAL_REAGENTS list(\
+		/datum/reagent/medicine/epinephrine,\
+		/datum/reagent/toxin/formaldehyde\
+	)
 #define EXPANDED_MEDICAL_REAGENTS list(\
 		/datum/reagent/medicine/haloperidol,\
 		/datum/reagent/medicine/inacusiate,\
@@ -194,13 +198,12 @@
 
 /obj/item/reagent_containers/borghypo/ui_data(mob/user)
 	var/list/available_reagents = list()
-	for(var/datum/reagent/reagent in stored_reagents.reagent_list)
-		if(reagent)
-			available_reagents.Add(list(list(
-				"name" = reagent.name,
-				"volume" = round(reagent.volume, 0.01) - 1,
-				"description" = reagent.description,
-			))) // list in a list because Byond merges the first list...
+	for(var/datum/reagent/reagent as anything in stored_reagents.reagent_list)
+		available_reagents.Add(list(list(
+			"name" = reagent.name,
+			"volume" = round(reagent.volume, 0.01) - 1,
+			"description" = reagent.description,
+		))) // list in a list because Byond merges the first list...
 
 	var/data = list()
 	data["theme"] = tgui_theme
@@ -266,6 +269,20 @@
 	icon_state = "borghypo_s"
 	tgui_theme = "syndicate"
 	default_reagent_types = HACKED_MEDICAL_REAGENTS
+
+/obj/item/reagent_containers/borghypo/paramedic
+	name = "emergency paramedic hypospray"
+	desc = "A cut-down version of the cyborg's chemical synthesizer and injection system for paramedics able to fit into implants."
+	possible_transfer_amounts = list(1, 5)
+	max_volume_per_reagent = 5
+	default_reagent_types = PARAMEDIC_MEDICAL_REAGENTS
+	bypass_protection = TRUE
+
+/obj/item/reagent_containers/borghypo/paramedic/regenerate_reagents(list/reagents_to_regen)
+	for(var/reagent in reagents_to_regen)
+		var/datum/reagent/reagent_to_regen = reagent
+		if(!stored_reagents.has_reagent(reagent_to_regen, max_volume_per_reagent))
+			stored_reagents.add_reagent(reagent_to_regen, 1, reagtemp = dispensed_temperature, no_react = TRUE)
 
 /// Peacekeeper hypospray
 /obj/item/reagent_containers/borghypo/peace
@@ -393,13 +410,12 @@
 
 /obj/item/reagent_containers/borghypo/condiment_synthesizer/ui_data(mob/user)
 	var/list/condiments = list()
-	for(var/datum/reagent/reagent in stored_reagents.reagent_list)
-		if(reagent)
-			condiments.Add(list(list(
-				"name" = reagent.name,
-				"volume" = round(reagent.volume, 0.01) - 1,
-				"description" = reagent.description,
-			))) // list in a list because Byond merges the first list...
+	for(var/datum/reagent/reagent as anything in stored_reagents.reagent_list)
+		condiments.Add(list(list(
+			"name" = reagent.name,
+			"volume" = round(reagent.volume, 0.01) - 1,
+			"description" = reagent.description,
+		))) // list in a list because Byond merges the first list...
 
 	var/data = list()
 	data["theme"] = tgui_theme

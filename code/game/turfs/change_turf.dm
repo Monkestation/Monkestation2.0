@@ -89,7 +89,11 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	// We get just the bits of explosive_resistance that aren't the turf
 	var/old_explosive_resistance = explosive_resistance - get_explosive_block()
 	var/old_lattice_underneath = lattice_underneath
-	var/old_liquids = liquids
+	var/old_liquids
+	if(isgroundlessturf(path) || ispath(path, /turf/closed))
+		QDEL_NULL(liquids)
+	else
+		old_liquids = liquids
 
 	var/old_bp = blueprint_data
 	blueprint_data = null
@@ -201,9 +205,10 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		QUEUE_SMOOTH_NEIGHBORS(src)
 		QUEUE_SMOOTH(src)
 
-#ifndef DISABLE_DEMOS
-	SSdemo.marked_turfs?[new_turf] = TRUE // Monkestation Edit: REPLAYS
-#endif
+	// we need to update gravity for any mob on a tile that is being created or destroyed
+	for(var/mob/living/target in new_turf.contents)
+		target.refresh_gravity()
+
 	return new_turf
 
 /turf/open/ChangeTurf(path, list/new_baseturfs, flags) //Resist the temptation to make this default to keeping air.

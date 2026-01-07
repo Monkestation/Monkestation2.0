@@ -1,4 +1,5 @@
-import { useBackend, useLocalState } from '../backend';
+import { BooleanLike } from 'common/react';
+import { sendAct, useBackend, useLocalState } from '../backend';
 import {
   Box,
   Button,
@@ -14,62 +15,37 @@ import { Window } from '../layouts';
 
 // NTSLTextArea component start
 // This is literally just TextArea but without ENTER updating anything, for NTSL
-import { KEY_ESCAPE, KEY_TAB } from 'common/keycodes';
-import { toInputValue } from '../components/Input';
 
-class NTSLTextArea extends TextArea {
-  constructor(props) {
-    super(props);
-    super(this.textareaRef);
-    super(this.state);
-    const { dontUseTabForIndent = false } = props;
-    this.handleKeyDown = (e) => {
-      const { editing } = this.state;
-      const { onInput, onKey } = this.props;
-      if (e.keyCode === KEY_ESCAPE) {
-        if (this.props.onEscape) {
-          this.props.onEscape(e);
-        }
-        this.setEditing(false);
-        if (this.props.selfClear) {
-          e.target.value = '';
-        } else {
-          e.target.value = toInputValue(this.props.value);
-          e.target.blur();
-        }
-        return;
-      }
-      if (!editing) {
-        this.setEditing(true);
-      }
-      // Custom key handler
-      if (onKey) {
-        onKey(e, e.target.value);
-      }
-      if (!dontUseTabForIndent) {
-        const keyCode = e.keyCode || e.which;
-        if (keyCode === KEY_TAB) {
-          e.preventDefault();
-          const { value, selectionStart, selectionEnd } = e.target;
-          e.target.value =
-            value.substring(0, selectionStart) +
-            '\t' +
-            value.substring(selectionEnd);
-          e.target.selectionEnd = selectionStart + 1;
-          if (onInput) {
-            onInput(e, e.target.value);
-          }
-        }
-      }
-    };
-  }
-}
+type NTSLTextAreaProps = {
+  value: string;
+  act: (action: string, payload: any) => void;
+  dontUseTabForIndent?: boolean;
+  selfClear?: boolean;
+  onEscape?: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
+  noborder?: boolean;
+  scrollbar?: boolean;
+  width?: string;
+  height?: string;
+};
+
+const debounce = (fn: Function, delay: number) => {
+  let timer: NodeJS.Timeout;
+  return (...args: any[]) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => fn(...args), delay);
+  };
+};
+
+const debouncedSave = debounce(
+  (value: string) => sendAct('save_code', { saved_code: value }),
+  300,
+);
 
 // NTSLTextArea component end
 
 type Data = {
-  admin_view: Boolean;
-  emagged: Boolean;
+  admin_view: BooleanLike;
+  emagged: BooleanLike;
   stored_code: string;
   user_name: string;
   network: string;
@@ -79,7 +55,7 @@ type Data = {
 };
 
 type Server_Data = {
-  run_code: Boolean;
+  run_code: BooleanLike;
   server: string;
   server_name: string;
 };
@@ -108,20 +84,15 @@ export const NTSLCoding = (props) => {
 const ScriptEditor = (props) => {
   const { act, data } = useBackend<Data>();
   const { stored_code, user_name } = data;
+
   return (
     <Box width="100%" height="100%">
       {user_name ? (
-        <NTSLTextArea
-          noborder
-          scrollbar
+        <TextArea
+          fluid
           value={stored_code}
-          width="100%"
+          onChange={(e, val) => debouncedSave(val)}
           height="100%"
-          onChange={(_, value) =>
-            act('save_code', {
-              saved_code: value,
-            })
-          }
         />
       ) : (
         <Section width="100%" height="100%">

@@ -5,20 +5,23 @@
 		var/mob/potential_mobs = whom
 		chosen_client = potential_mobs.client
 	else if(istext(whom))
-		chosen_client = GLOB.directory[whom]
+		chosen_client = GLOB.directory[ckey(whom)]
 	else if(istype(whom, /client))
 		chosen_client = whom
 	if(chosen_client?.prefs.muted & MUTE_ADMINHELP)
 		to_chat(src,
 			type = MESSAGE_TYPE_MODCHAT,
 			html = "<span class='danger'>Error: MentorPM: You are muted from Mentorhelps. (muted).</span>",
+			avoid_highlighting = TRUE,
 			confidential = TRUE)
 		return
 	if(!chosen_client)
 		if(findtext(whom, "Discord"))
 			to_chat(src,
 				type = MESSAGE_TYPE_MODCHAT,
-				html = span_warning("Unfortunately, replying to Discord mentor replys are disabled because the mentor ticket system lacks functionality that Plexora needs.")
+				html = span_warning("Unfortunately, replying to Discord mentor replys are disabled because the mentor ticket system lacks functionality that Plexora needs."),
+				avoid_highlighting = TRUE,
+				confidential = TRUE
 			)
 			return
 		mentorhelp(msg)
@@ -36,6 +39,7 @@
 				to_chat(src,
 					type = MESSAGE_TYPE_MODCHAT,
 					html = "<font color='red'>Error: Mentor-PM: Client not found.</font>",
+					avoid_highlighting = TRUE,
 					confidential = TRUE)
 			else
 				/// Mentor we are replying to has vanished, Mentorhelp instead
@@ -67,6 +71,7 @@
 			to_chat(src,
 				type = MESSAGE_TYPE_MODCHAT,
 				html = "<font color='green'>Mentor PM to-<b>[key_name_mentor(chosen_client, chosen_client, TRUE, FALSE)]</b>: <span class='message linkify'>[msg]</span></font>",
+				avoid_highlighting = TRUE,
 				confidential = TRUE)
 		else
 			/// Sender is a Non-Mentor
@@ -77,6 +82,7 @@
 			to_chat(src,
 				type = MESSAGE_TYPE_MODCHAT,
 				html = "<font color='green'>Mentor PM to-<b>[key_name_mentor(chosen_client, chosen_client, TRUE, FALSE)]</b>: <span class='message linkify'>[msg]</span></font>",
+				avoid_highlighting = TRUE,
 				confidential = TRUE)
 			var/datum/request/request = chosen_requests[chosen_requests_len]
 			SSplexora.mticket_pm(request, src.mob, chosen_client.mob, msg)
@@ -87,6 +93,7 @@
 			to_chat(src,
 				type = MESSAGE_TYPE_MODCHAT,
 				html = "<font color='green'>Mentor PM to-<b>[key_name_mentor(chosen_client, chosen_client, TRUE, FALSE)]</b>: <span class='message linkify'>[msg]</span></font>",
+				avoid_highlighting = TRUE,
 				confidential = TRUE)
 			var/datum/request/request = chosen_requests[chosen_requests_len]
 			SSplexora.mticket_pm(request, src.mob, chosen_client.mob, html_decode(msg))

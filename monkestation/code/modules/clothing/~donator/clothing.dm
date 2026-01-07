@@ -270,6 +270,25 @@
 	name = "hypnodemon's ring"
 	desc = "A pallid, softly desaturated-looking gold ring that doesn't look like it belongs. It's hard to put one's finger on why it feels at odds with the world around it - the shine coming off it looks like it could be a mismatch with the lighting in the room, or it could be that it seems to glint and twinkle occasionally when there's no obvious reason for it to - though only when you're not really looking."
 	spans = list("hypnophrase")
+	icon = 'monkestation/code/modules/donator/icons/obj/misc.dmi'
+	icon_state = "ihateERROR"
+	body_parts_covered = null
+	worn_icon = null
+	inhand_icon_state = null
+	lefthand_file = 'icons/mob/inhands/clothing/gloves_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/clothing/gloves_righthand.dmi'
+
+/obj/item/clothing/gloves/ring/hypno/coffeepot/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NO_WORN_ICON, ABSTRACT_ITEM_TRAIT)
+
+/obj/item/clothing/gloves/ring/hypno/coffeepot/examine_more(mob/user)
+	. = ..()
+	. += "...you stare deeply into the ring... [span_hypnophrase("<i>you witness transcendental apparitions beyond your mortal comprehension...</i>")] [span_extremelybig(span_red("<b>ERROR</b>"))]"
+	if(ishuman(user))
+		var/mob/living/carbon/human/human_user = user
+		human_user.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10, 190)
+		human_user.add_mood_event("error_insanity", /datum/mood_event/gates_of_mansus)
 
 /datum/action/item_action/hypno_whisper
 	name = "Hypnotic Whisper"
@@ -964,9 +983,6 @@
 	add_fingerprint(user)
 
 /obj/item/card/fuzzy_license/attackby(obj/item/used, mob/living/user, params)
-	if(user.ckey != "fuzlet")
-		return
-
 	if(istype(used, /obj/item/pen) || istype(used, /obj/item/toy/crayon))
 		var/choice = input(user, "Select the license type", "License Type Selection") as null|anything in possible_types
 		if(!isnull(choice))
@@ -1065,9 +1081,12 @@
 	worn_icon = 'monkestation/icons/donator/mob/clothing/eyes.dmi'
 
 //Donation reward for Konstyantyn
-/obj/item/clothing/accessory/badge/holo/jade
+/obj/item/clothing/accessory/badge/jade
 	name = "jade holobadge"
 	desc = "A strangely green holobadge. 'Lieutenant Uriah' is stamped onto it, above the letters JS."
+	access_required = null
+	badge_string = "Lieutenant"
+
 	icon = 'monkestation/icons/donator/obj/custom.dmi'
 	worn_icon = 'monkestation/icons/donator/mob/clothing/custom_w.dmi'
 	icon_state = "greenbadge"
