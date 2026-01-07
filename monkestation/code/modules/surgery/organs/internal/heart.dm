@@ -157,7 +157,7 @@
  */
 /datum/action/innate/retract_limb
 	name = "Retract Limb"
-	check_flags = AB_CHECK_CONSCIOUS
+	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
 	button_icon_state = "retract_limb"
 	button_icon = SLIME_ACTIONS_ICON_FILE
 	background_icon_state = "bg_alien"
@@ -193,6 +193,9 @@
 		return
 	var/obj/item/bodypart/selected_limb = show_radial_menu(user, user, retractable_limbs)
 	if(isnull(selected_limb))
+		return
+	if(!do_after(user, 2 SECONDS))
+		to_chat(user, span_notice("Your focus was interrupted!"))
 		return
 	for(var/obj/item/organ/internal/organ in user.get_organs_for_zone(selected_limb.body_zone))
 		organ.Remove(user)
