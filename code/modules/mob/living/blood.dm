@@ -301,7 +301,7 @@
 	/*if(check_holidays(APRIL_FOOLS) && is_clown_job(mind?.assigned_role))
 		return /datum/blood_type/clown*/
 	if(src.get_organ_by_type(/obj/item/organ/internal/heart))
-		var/organ/internal/heart/the_heart = src.get_organ_by_type(/obj/item/organ/internal/heart)
+		var/obj/item/organ/internal/heart/the_heart = src.get_organ_by_type(/obj/item/organ/internal/heart)
 		if(the_heart.heart_bloodtype)
 			return the_heart.heart_bloodtype
 	if(dna.species.exotic_bloodtype)
