@@ -82,3 +82,40 @@
 		set up on the Cargo consoles."
 	cost = 100 //this should be a no-brainer generally.
 	active_without_union = TRUE
+
+/datum/union_demand/independent_access
+	name = "Dockyard Lockdown"
+	union_description = "The Union feels the station oversteps their boundaries when entering the Cargo Bay, \
+		from Paramedics to Blueshields, anyone feels like they have the right to just waltz into a department that isn't theirs. \
+		Locking down the department to Union access personnel only seems like a sensible decision, plus it keeps that \
+		Head of Personnel out."
+	station_description = "The Cargo Union has voted to restrict the Bay to Union personnel only. \
+		The cost of updating these access-locked doors to read badges have been delegated to Command."
+	cost = 300 //hopefully get them a little more pissed.
+
+/datum/union_demand/independent_access/implement_demand(datum/union/union_demanding)
+	. = ..()
+	for(var/obj/machinery/door/airlock/airlock as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/airlock))
+		if(ACCESS_CARGO in airlock.req_one_access)
+			airlock.req_one_access -= ACCESS_CARGO
+			airlock.req_one_access += ACCESS_UNION
+		if(ACCESS_CARGO in airlock.req_access)
+			airlock.req_access -= ACCESS_CARGO
+			airlock.req_access += ACCESS_UNION
+
+		if(ACCESS_QM in airlock.req_one_access)
+			airlock.req_one_access -= ACCESS_QM
+			airlock.req_one_access += ACCESS_UNION_LEADER
+		if(ACCESS_QM in airlock.req_access)
+			airlock.req_access -= ACCESS_QM
+			airlock.req_access += ACCESS_UNION_LEADER
+
+/datum/union_demand/independent_access/unimplement_demand(datum/union/union_demanding)
+	for(var/obj/machinery/door/airlock/airlock as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/airlock))
+		if(ACCESS_CARGO in airlock.req_one_access)
+			airlock.req_one_access += ACCESS_CARGO
+			airlock.req_one_access -= ACCESS_UNION
+		if(ACCESS_CARGO in airlock.req_access)
+			airlock.req_access += ACCESS_CARGO
+			airlock.req_access -= ACCESS_UNION
+	return ..()

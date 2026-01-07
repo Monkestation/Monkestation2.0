@@ -19,13 +19,19 @@
 
 	///What union we're a union stand for.
 	var/datum/union/union_stand_for
+	/// Holder for signboard maptext
+	var/obj/effect/abstract/signboard_holder/text_holder
 
 /obj/machinery/union_stand/Initialize(mapload)
 	. = ..()
 	union_stand_for = GLOB.cargo_union
+	text_holder = new(src)
+	vis_contents += text_holder
 
 /obj/machinery/union_stand/Destroy()
 	union_stand_for = null
+	vis_contents -= text_holder
+	QDEL_NULL(text_holder)
 	return ..()
 
 /obj/machinery/union_stand/update_icon_state()
@@ -36,10 +42,25 @@
 
 /obj/machinery/union_stand/update_appearance(updates)
 	. = ..()
-	if(union_stand_for.voting_timer)
-		maptext = MAPTEXT_GRAND9K("<span style='text-align: center; line-height: 1'>VOTE FOR: [union_stand_for.demand_voting_on.name]</span>")
-	else
-		maptext = null
+	if(!union_stand_for.voting_timer)
+		text_holder.maptext = null
+		return
+	var/bwidth = src.bound_width || world.icon_size
+	var/bheight = src.bound_height || world.icon_size
+	var/text_html = MAPTEXT_GRAND9K("<span style='text-align: center; line-height: 1'>VOTE FOR: [union_stand_for.demand_voting_on.name]</span>")
+	SET_PLANE_EXPLICIT(text_holder, GAME_PLANE_UPPER_FOV_HIDDEN, src)
+	text_holder.layer = ABOVE_ALL_MOB_LAYER
+	text_holder.alpha = 192
+	text_holder.maptext = text_html
+	text_holder.maptext_x = (SIGNBOARD_WIDTH - bwidth) * -0.5
+	text_holder.maptext_y = bheight
+	text_holder.maptext_width = SIGNBOARD_WIDTH
+	text_holder.maptext_height = SIGNBOARD_HEIGHT
+
+/obj/machinery/union_stand/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	if(!same_z_layer)
+		SET_PLANE_EXPLICIT(text_holder, GAME_PLANE_UPPER_FOV_HIDDEN, src)
+	return ..()
 
 /obj/machinery/union_stand/ui_interact(mob/user, datum/tgui/ui)
 	return union_stand_for.ui_interact(user, ui, src)
