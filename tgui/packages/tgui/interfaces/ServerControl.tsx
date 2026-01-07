@@ -46,7 +46,7 @@ export const ServerControl = (props) => {
     );
   }
   return (
-    <Window width={575} height={400} scrollable fill>
+    <Window width={575} height={400}>
       <Window.Content scrollable>
         {!servers ? (
           <NoticeBox mt={2} info>
@@ -54,13 +54,13 @@ export const ServerControl = (props) => {
           </NoticeBox>
         ) : (
           <Section>
-            <Table cellpadding="3" textAlign="center">
+            <Table textAlign="center">
               <Table.Row header>
                 <Table.Cell>Research Servers</Table.Cell>
               </Table.Row>
-              {servers.map((server) => (
+              {servers.map((server, idx) => (
                 <>
-                  <Table.Row header key={server} className="candystripe" />
+                  <Table.Row header key={idx} className="candystripe" />
                   <Table.Cell> {server.server_name}</Table.Cell>
                   <Button
                     mt={1}
@@ -87,13 +87,13 @@ export const ServerControl = (props) => {
           </NoticeBox>
         ) : (
           <Section align="right">
-            <Table cellpadding="3" textAlign="center">
+            <Table textAlign="center">
               <Table.Row header>
                 <Table.Cell>Research Consoles</Table.Cell>
               </Table.Row>
-              {consoles.map((console) => (
+              {consoles.map((console, idx) => (
                 <>
-                  <Table.Row header key={console} className="candystripe" />
+                  <Table.Row header key={idx} className="candystripe" />
                   <Table.Cell>
                     {' '}
                     {console.console_name} - Location:{' '}

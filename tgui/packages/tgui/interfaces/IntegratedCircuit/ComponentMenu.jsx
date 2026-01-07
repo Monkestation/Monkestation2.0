@@ -1,5 +1,5 @@
 import { Section, Button, Dropdown, Stack, Input } from '../../components';
-import { Component } from 'inferno';
+import { Component } from 'react';
 import { shallowDiffers } from 'common/react';
 import { fetchRetry } from '../../http';
 import { resolveAsset } from '../../assets';
@@ -10,8 +10,8 @@ import { DEFAULT_COMPONENT_MENU_LIMIT } from './constants';
 let fetchServerData;
 
 export class ComponentMenu extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       selectedTab: 'All',
       currentLimit: DEFAULT_COMPONENT_MENU_LIMIT,
@@ -123,7 +123,7 @@ export class ComponentMenu extends Component {
               placeholder="Search.."
               value={currentSearch}
               fluid
-              onInput={(e, val) =>
+              onChange={(val) =>
                 this.setState({
                   currentSearch: val,
                   selectedTab: 'All',

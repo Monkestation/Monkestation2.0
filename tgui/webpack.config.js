@@ -7,7 +7,6 @@
 const webpack = require('webpack');
 const path = require('path');
 const ExtractCssPlugin = require('mini-css-extract-plugin');
-const { createBabelConfig } = require('./babel.config.js');
 
 const createStats = (verbose) => ({
   assets: verbose,
@@ -25,7 +24,10 @@ const createStats = (verbose) => ({
 });
 
 module.exports = (env = {}, argv) => {
-  const mode = argv.mode || 'production';
+  // const mode = argv.mode || 'production';
+  // Temporary
+  const mode = "development";
+  env.NODE_ENV = "development";
   const config = {
     mode: mode === 'production' ? 'production' : 'development',
     context: path.resolve(__dirname),
@@ -52,12 +54,10 @@ module.exports = (env = {}, argv) => {
       rules: [
         {
           test: /\.(js|jsx|cjs|ts|tsx)$/,
+          exclude: /node_modules[\\/]core-js/,
           use: [
             {
-              loader: require.resolve('babel-loader'),
-              options: createBabelConfig({
-                removeConsole: true,
-              }),
+              loader: require.resolve('swc-loader'),
             },
           ],
         },

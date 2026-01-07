@@ -3,7 +3,7 @@ import {
   Box,
   Button,
   Collapsible,
-  Grid,
+  Table,
   LabeledList,
   NoticeBox,
   NumberInput,
@@ -84,8 +84,8 @@ export const NaniteChamberControlContent = (props) => {
               />
             }
           >
-            <Grid>
-              <Grid.Column>
+            <Table>
+              <Table.Cell>
                 <LabeledList>
                   <LabeledList.Item label="Nanite Volume">
                     {nanite_volume}
@@ -94,8 +94,8 @@ export const NaniteChamberControlContent = (props) => {
                     {regen_rate}
                   </LabeledList.Item>
                 </LabeledList>
-              </Grid.Column>
-              <Grid.Column>
+              </Table.Cell>
+              <Table.Cell>
                 <LabeledList>
                   <LabeledList.Item label="Safety Threshold">
                     <NumberInput
@@ -103,7 +103,7 @@ export const NaniteChamberControlContent = (props) => {
                       minValue={0}
                       maxValue={500}
                       width="39px"
-                      onChange={(e, value) =>
+                      onChange={(value) =>
                         act('set_safety', {
                           value: value,
                         })
@@ -118,7 +118,7 @@ export const NaniteChamberControlContent = (props) => {
                       step={1}
                       stepPixelSize={3}
                       width="39px"
-                      onChange={(e, value) =>
+                      onChange={(value) =>
                         act('set_cloud', {
                           value: value,
                         })
@@ -126,8 +126,8 @@ export const NaniteChamberControlContent = (props) => {
                     />
                   </LabeledList.Item>
                 </LabeledList>
-              </Grid.Column>
-            </Grid>
+              </Table.Cell>
+            </Table>
           </Section>
           <Section title="Programs" level={2}>
             {mob_programs.map((program) => {
@@ -136,10 +136,10 @@ export const NaniteChamberControlContent = (props) => {
               return (
                 <Collapsible key={program.name} title={program.name}>
                   <Section>
-                    <Grid>
-                      <Grid.Column>{program.desc}</Grid.Column>
+                    <Table>
+                      <Table.Cell>{program.desc}</Table.Cell>
                       {scan_level >= 2 && (
-                        <Grid.Column size={0.6}>
+                        <Table.Cell size={0.6}>
                           <LabeledList>
                             <LabeledList.Item label="Activation Status">
                               <Box color={program.activated ? 'good' : 'bad'}>
@@ -150,13 +150,13 @@ export const NaniteChamberControlContent = (props) => {
                               {program.use_rate}/s
                             </LabeledList.Item>
                           </LabeledList>
-                        </Grid.Column>
+                        </Table.Cell>
                       )}
-                    </Grid>
+                    </Table>
                     {scan_level >= 2 && (
-                      <Grid>
+                      <Table>
                         {!!program.can_trigger && (
-                          <Grid.Column>
+                          <Table.Cell>
                             <Section title="Triggers" level={2}>
                               <LabeledList>
                                 <LabeledList.Item label="Trigger Cost">
@@ -177,12 +177,12 @@ export const NaniteChamberControlContent = (props) => {
                                 )}
                               </LabeledList>
                             </Section>
-                          </Grid.Column>
+                          </Table.Cell>
                         )}
                         {!!(
                           program.timer_restart || program.timer_shutdown
                         ) && (
-                          <Grid.Column>
+                          <Table.Cell>
                             <Section>
                               <LabeledList>
                                 {/* I mean, bruh, this indentation level
@@ -199,9 +199,9 @@ export const NaniteChamberControlContent = (props) => {
                                 )}
                               </LabeledList>
                             </Section>
-                          </Grid.Column>
+                          </Table.Cell>
                         )}
-                      </Grid>
+                      </Table>
                     )}
                     {scan_level >= 3 && !!program.has_extra_settings && (
                       <Section title="Extra Settings" level={2}>
@@ -218,8 +218,8 @@ export const NaniteChamberControlContent = (props) => {
                       </Section>
                     )}
                     {scan_level >= 4 && (
-                      <Grid>
-                        <Grid.Column>
+                      <Table>
+                        <Table.Cell>
                           <Section title="Codes" level={2}>
                             <LabeledList>
                               {!!program.activation_code && (
@@ -245,17 +245,17 @@ export const NaniteChamberControlContent = (props) => {
                                 )}
                             </LabeledList>
                           </Section>
-                        </Grid.Column>
+                        </Table.Cell>
                         {program.has_rules && (
-                          <Grid.Column>
+                          <Table.Cell>
                             <Section title="Rules" level={2}>
                               {rules.map((rule) => (
                                 <Box key={rule.display}>{rule.display}</Box>
                               ))}
                             </Section>
-                          </Grid.Column>
+                          </Table.Cell>
                         )}
-                      </Grid>
+                      </Table>
                     )}
                   </Section>
                 </Collapsible>

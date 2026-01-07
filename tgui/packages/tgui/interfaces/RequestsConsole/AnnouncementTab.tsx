@@ -12,10 +12,9 @@ export const AnnouncementTab = (props) => {
         <TextArea
           fluid
           maxLength={1025}
-          multiline
           height="100%"
           value={messageText}
-          onChange={(_, value) => setMessageText(value)}
+          onChange={(value) => setMessageText(value)}
           placeholder="Type your announcement..."
         />
       </Stack.Item>

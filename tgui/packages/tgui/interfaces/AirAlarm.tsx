@@ -1,5 +1,5 @@
 import { BooleanLike } from 'common/react';
-import { Fragment } from 'inferno';
+import { Fragment } from 'react';
 import { useBackend, useLocalState } from '../backend';
 import {
   Box,
@@ -413,7 +413,7 @@ const EditingModal = (props: EditingModalProps) => {
         ) : (
           <>
             <NumberInput
-              onChange={(e, value) =>
+              onChange={(value) =>
                 act('set_threshold', {
                   threshold: id,
                   threshold_type: type,
@@ -621,11 +621,9 @@ const AirAlarmAirConditioningControls = (_props) => {
               value={target}
               minValue={min}
               maxValue={max}
-              onChange={(_e, target: number) =>
-                act('set_ac_target', { target })
-              }
+              onChange={(target: number) => act('set_ac_target', { target })}
               unit="K"
-              tooltip="Change the target temperature of the heater"
+              step={1}
               disabled={!enabled}
             />
             <Button

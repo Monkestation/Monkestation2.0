@@ -115,12 +115,12 @@ export const TicketPanel = (props) => {
         <Window.Content scrollable>
           <Section title={data.initiator_key_name + ': ' + data.name}>
             <span
-              class="Section__titleText"
-              style={{ 'font-weight': 'normal' }}
+              className="Section__titleText"
+              style={{ fontWeight: 'normal' }}
             >
               Assigned Admin: <b>{data.admin || 'Unassigned'}</b>
               <br />
-              <span class={data.is_resolved ? 'color-good' : 'color-bad'}>
+              <span className={data.is_resolved ? 'color-good' : 'color-bad'}>
                 Is{data.is_resolved ? '' : ' not'} resolved
               </span>
               <br />
@@ -190,19 +190,15 @@ export const TicketMessages = (props) => {
       <TextArea
         fluid
         placeholder="Message to send"
-        selfclear
+        selfClear
         value={message}
         className="replybox"
         resize="vertical"
-        onChange={(e, value) => {
-          if (e.keyCode === KEY_ENTER) {
-            setMessage('');
-            e.target.value = message;
-            act('send_message', { message: value });
-          } else {
-            setMessage(value);
-          }
+        onEnter={(val) => {
+          act('send_message', { message: val });
+          setMessage('');
         }}
+        onChange={(value) => setMessage(value)}
       />
       <Button
         mt="5px"
