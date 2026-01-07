@@ -43,6 +43,8 @@ ADMIN_VERB(union_reset, R_ADMIN, FALSE, "Reset Cargo Demands", "Removes all Carg
 	COOLDOWN_DECLARE(union_demand_delay)
 	///Stored time left to end the vote, different from delay of demanding union stuff.
 	var/voting_timer
+	///In a deadlock, this is the saved time left to give afterwards.
+	var/saved_time
 	///Stored time left until the successful demand goes into effect, this is the time Command has to react.
 	var/implement_delay_timer
 	///Amount of people that have voted yes for the current demand, resets between uses.
@@ -107,13 +109,13 @@ ADMIN_VERB(union_reset, R_ADMIN, FALSE, "Reset Cargo Demands", "Removes all Carg
 		stack_trace("[name] just tried to enact [demand_voting_on.name], but it's not in their list of possible demands!")
 		return FALSE
 	COOLDOWN_START(src, union_demand_delay, TIME_BETWEEN_DEMANDS)
-	make_union_announcement(demand_voting_on, announce_mode = ANNOUNCE_CREW)
+	make_union_announcement(announce_mode = ANNOUNCE_CREW)
 	possible_demands -= demand_voting_on
 	implement_delay_timer = addtimer(CALLBACK(src, PROC_REF(implement_demand)), COMMAND_DELAY, TIMER_STOPPABLE)
 
 ///Called after the delay to implement a demand, if Command did nothing to stop it, putting it into effect and taking cost.
 /datum/union/proc/implement_demand()
-	make_union_announcement(demand_voting_on, announce_mode = ANNOUNCE_INTO_EFFECT)
+	make_union_announcement(announce_mode = ANNOUNCE_INTO_EFFECT)
 	successful_demands += demand_voting_on
 	demand_voting_on.implement_demand(src)
 	demand_voting_on = null
@@ -125,13 +127,14 @@ ADMIN_VERB(union_reset, R_ADMIN, FALSE, "Reset Cargo Demands", "Removes all Carg
 
 ///Called when a demand fails to get voted on to go into effect.
 /datum/union/proc/on_demand_failure()
-	make_union_announcement(demand_voting_on, announce_mode = ANNOUNCE_FAILURE)
+	make_union_announcement(announce_mode = ANNOUNCE_FAILURE)
+	demand_voting_on = null
 
 ///Depending on announce_mode, we will announce to the Union or Crew the several stages of a Union Demand.
 /datum/union/proc/make_union_announcement(announce_mode)
+	var/obj/machinery/announcement_system/system_announcement = pick(GLOB.announcement_systems)
 	switch(announce_mode)
 		if(ANNOUNCE_START_VOTE)
-			var/obj/machinery/announcement_system/system_announcement = pick(GLOB.announcement_systems)
 			system_announcement.announce(AUTO_ANNOUNCE_UNION, "A vote for [demand_voting_on.name] has started. Please remember check the Union board to vote!", channels = list(radio_channel_used))
 		if(ANNOUNCE_CREW)
 			priority_announce(
@@ -140,13 +143,14 @@ ADMIN_VERB(union_reset, R_ADMIN, FALSE, "Reset Cargo Demands", "Removes all Carg
 				has_important_message = TRUE,
 			)
 		if(ANNOUNCE_INTO_EFFECT)
-			var/obj/machinery/announcement_system/system_announcement = pick(GLOB.announcement_systems)
 			system_announcement.announce(AUTO_ANNOUNCE_UNION, "[demand_voting_on.name] is now in full effect.", channels = list(radio_channel_used))
 		if(ANNOUNCE_DEADLOCK)
-			var/obj/machinery/announcement_system/system_announcement = pick(GLOB.announcement_systems)
 			system_announcement.announce(AUTO_ANNOUNCE_UNION, "[demand_voting_on.name] is under deadlock. Please speak with Command on how proceedings may go.", channels = list(radio_channel_used))
+		if(ANNOUNCE_DEADLOCK_END)
+			system_announcement.announce(AUTO_ANNOUNCE_UNION, "[demand_voting_on.name] has been let go by Command. Please standby as it comes into effect.", channels = list(radio_channel_used))
+		if(ANNOUNCE_DEADLOCK_COMMAND_WIN)
+			system_announcement.announce(AUTO_ANNOUNCE_UNION, "[demand_voting_on.name] has been abandoned due to ongoing works by Command.", channels = list(radio_channel_used))
 		if(ANNOUNCE_FAILURE)
-			var/obj/machinery/announcement_system/system_announcement = pick(GLOB.announcement_systems)
 			system_announcement.announce(AUTO_ANNOUNCE_UNION, "[demand_voting_on.name] has failed to get enough votes.", channels = list(radio_channel_used))
 	return TRUE
 
@@ -165,6 +169,28 @@ ADMIN_VERB(union_reset, R_ADMIN, FALSE, "Reset Cargo Demands", "Removes all Carg
 		return TRUE
 	return FALSE
 
+/datum/union/proc/start_deadlock()
+	freeze_time()
+	make_union_announcement(announce_mode =ANNOUNCE_DEADLOCK)
+
+/datum/union/proc/end_deadlock(union_won = FALSE)
+	if(union_won)
+		make_union_announcement(announce_mode =ANNOUNCE_DEADLOCK_END)
+		unfreeze_time()
+	else
+		make_union_announcement(announce_mode = ANNOUNCE_DEADLOCK_COMMAND_WIN)
+		demand_voting_on = null
+		saved_time = null
+
+/datum/union/proc/freeze_time()
+	saved_time = timeleft(implement_delay_timer)
+	deltimer(implement_delay_timer)
+	implement_delay_timer = null
+
+/datum/union/proc/unfreeze_time()
+	implement_delay_timer = addtimer(CALLBACK(src, PROC_REF(implement_demand)), saved_time, TIMER_STOPPABLE)
+	saved_time = null
+
 /datum/union/ui_interact(mob/user, datum/tgui/ui, obj/machinery/union_stand/source)
 	ui = SStgui.try_update_ui(user, source || src, ui)
 	if(!ui)
@@ -181,9 +207,9 @@ ADMIN_VERB(union_reset, R_ADMIN, FALSE, "Reset Cargo Demands", "Removes all Carg
 	data["union_active"] = union_active
 	data["admin_mode"] = check_rights_for(user.client, R_ADMIN)
 	data["locked_for"] = COOLDOWN_FINISHED(src, union_demand_delay) ? null : DisplayTimeText(COOLDOWN_TIMELEFT(src, union_demand_delay))
-	if(demand_voting_on)
-		data["voting_name"] = demand_voting_on.name
-		data["voting_desc"] = demand_voting_on.union_description
+	data["deadlocked"] = !isnull(saved_time)
+	data["voting_name"] = demand_voting_on?.name || null
+	data["voting_desc"] = demand_voting_on?.union_description || null
 	data["votes_yes"] = length(votes_yes)
 	data["votes_no"] = length(votes_no)
 	if(voting_timer)
@@ -212,6 +238,10 @@ ADMIN_VERB(union_reset, R_ADMIN, FALSE, "Reset Cargo Demands", "Removes all Carg
 		))
 
 	return data
+
+#define ANNOUNCE_FREEZE "Announce"
+#define SILENT_FREEZE "Silent"
+#define BUST_IMPLEMENTATION "Bust Implementation"
 
 /datum/union/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
@@ -258,6 +288,10 @@ ADMIN_VERB(union_reset, R_ADMIN, FALSE, "Reset Cargo Demands", "Removes all Carg
 				votes_yes -= user
 			votes_no += user
 			return TRUE
+		if("abandon_demand")
+			if(isnull(demand_voting_on))
+				return
+			end_deadlock(union_won = FALSE)
 		//admin buttons
 		if("remove_demand")
 			if(!check_rights_for(user.client, R_ADMIN))
@@ -282,6 +316,37 @@ ADMIN_VERB(union_reset, R_ADMIN, FALSE, "Reset Cargo Demands", "Removes all Carg
 				return TRUE
 			stop_vote()
 			return TRUE
+		if("freeze_timers")
+			if(!check_rights_for(user.client, R_ADMIN))
+				return TRUE
+			var/list/choices = list(ANNOUNCE_FREEZE, SILENT_FREEZE, BUST_IMPLEMENTATION)
+			var/choice = tgui_input_list(user, "Announce to the Union that implementation timer has been frozen? (this will give the same message as if Command did it)", "Freeze Timers", choices)
+			if(isnull(choice))
+				return TRUE
+			switch(choice)
+				if(ANNOUNCE_FREEZE)
+					if(saved_time)
+						end_deadlock(union_won = TRUE)
+					else
+						if(isnull(implement_delay_timer))
+							return TRUE
+						start_deadlock()
+				if(SILENT_FREEZE)
+					if(saved_time)
+						unfreeze_time()
+					else
+						if(isnull(implement_delay_timer))
+							return TRUE
+						freeze_time()
+				if(BUST_IMPLEMENTATION)
+					if(isnull(demand_voting_on))
+						return
+					end_deadlock(union_won = FALSE)
+			return TRUE
+
+#undef ANNOUNCE_FREEZE
+#undef SILENT_FREEZE
+#undef BUST_IMPLEMENTATION
 
 /datum/union/proc/trigger_vote(datum/union_demand/vote_for)
 	demand_voting_on = vote_for
@@ -289,7 +354,7 @@ ADMIN_VERB(union_reset, R_ADMIN, FALSE, "Reset Cargo Demands", "Removes all Carg
 	votes_no.Cut()
 	voting_timer = addtimer(CALLBACK(src, PROC_REF(stop_vote)), TIME_TO_VOTE, TIMER_STOPPABLE)
 
-	make_union_announcement(vote_for, announce_mode = ANNOUNCE_START_VOTE)
+	make_union_announcement(announce_mode = ANNOUNCE_START_VOTE)
 	for(var/obj/machinery/union_stand/stand as anything in SSmachines.get_machines_by_type(/obj/machinery/union_stand))
 		stand.update_appearance()
 

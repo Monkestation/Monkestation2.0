@@ -5,6 +5,7 @@ import { Window } from '../layouts';
 
 type Data = {
   union_active: BooleanLike;
+  deadlocked: BooleanLike;
   admin_mode: BooleanLike;
   voting_name: string;
   voting_desc: string;
@@ -24,11 +25,50 @@ type DemandsData = {
   ref: string;
 };
 
+const ImplementationFreeze = () => {
+  const { act, data } = useBackend<Data>();
+  const { admin_mode, deadlocked } = data;
+  return (
+    !!admin_mode && (
+      <Button.Confirm
+        tooltip={
+          deadlocked
+            ? 'Unfreezes'
+            : 'Freezes' +
+              'implementation timer of the current demand. Command can also do this action through the Communications console.'
+        }
+        onClick={() => act('freeze_timers')}
+      >
+        {deadlocked ? 'Unfreeze' : 'Freeze'} implementation
+      </Button.Confirm>
+    )
+  );
+};
+
+const DeadlockNotice = () => {
+  const { act, data } = useBackend<Data>();
+  const { voting_name, deadlocked } = data;
+  return (
+    !!deadlocked && (
+      <Section title="Deadlocked" textColor="yellow">
+        <Box my={0.5}>
+          {voting_name} is currently under Deadlock. No more Union activity may
+          proceed until this has been dealt with.
+        </Box>
+        <Button.Confirm onClick={() => act('abandon_demand')}>
+          Abandon Demand
+        </Button.Confirm>
+      </Section>
+    )
+  );
+};
+
 export const UnionStand = () => {
   const { act, data } = useBackend<Data>();
   const {
     union_active,
     admin_mode,
+    deadlocked,
     voting_name,
     voting_desc,
     votes_yes,
@@ -77,8 +117,10 @@ export const UnionStand = () => {
             >
               {union_active ? 'Disable Union' : 'Enable Union'}
             </Button.Confirm>
+            <ImplementationFreeze />
           </Section>
         )}
+        <DeadlockNotice />
         {!locked_for && voting ? (
           <Section
             fill
@@ -138,12 +180,15 @@ export const UnionStand = () => {
                   title="Demands on Hold"
                   buttons={
                     !!admin_mode && (
-                      <Button.Confirm
-                        tooltip={'This is available to you as an Admin.'}
-                        onClick={() => act('reset_cooldown')}
-                      >
-                        Reset Cooldown
-                      </Button.Confirm>
+                      <>
+                        <Button.Confirm
+                          tooltip={'This is available to you as an Admin.'}
+                          onClick={() => act('reset_cooldown')}
+                        >
+                          Reset Cooldown
+                        </Button.Confirm>
+                        <ImplementationFreeze />
+                      </>
                     )
                   }
                 >
@@ -154,9 +199,13 @@ export const UnionStand = () => {
                     {voting_name && (
                       <>
                         <Divider />
-                        <Stack.Item>
-                          {voting_name} going into effect...
-                        </Stack.Item>
+                        {deadlocked ? (
+                          <DeadlockNotice />
+                        ) : (
+                          <Stack.Item>
+                            {voting_name} going into effect...
+                          </Stack.Item>
+                        )}
                       </>
                     )}
                   </Stack>
