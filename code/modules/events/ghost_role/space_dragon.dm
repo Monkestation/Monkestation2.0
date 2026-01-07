@@ -1,7 +1,7 @@
 /datum/round_event_control/space_dragon
 	name = "Spawn Space Dragon"
 	typepath = /datum/round_event/ghost_role/space_dragon
-	weight = 6
+	weight = 7
 	max_occurrences = 1
 	min_players = 30 //monke edit: 20 to 30
 	earliest_start = 60 MINUTES //monke edit: 20 to 60
