@@ -37741,7 +37741,7 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/door/window/brigdoor/left/directional/south{
 	name = "Infirmiry";
-	req_access = list("brig")
+	req_access = list("security")
 	},
 /obj/machinery/duct,
 /turf/open/floor/iron/white/textured_edge{

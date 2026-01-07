@@ -5446,8 +5446,8 @@
 /obj/item/reagent_containers/blood/ethereal,
 /obj/item/reagent_containers/blood/slime,
 /obj/item/reagent_containers/blood/slime,
-/obj/item/reagent_containers/blood/universal,
-/obj/item/reagent_containers/blood/universal,
+/obj/item/reagent_containers/chem_pack/saline,
+/obj/item/reagent_containers/chem_pack/saline,
 /obj/item/reagent_containers/blood/podperson,
 /obj/item/reagent_containers/blood/podperson,
 /obj/effect/turf_decal/bot,
@@ -12204,7 +12204,7 @@
 /area/station/engineering/supermatter/room)
 "dGH" = (
 /obj/structure/table/reinforced/rglass,
-/obj/item/reagent_containers/blood/universal,
+/obj/item/reagent_containers/chem_pack/saline,
 /turf/open/floor/iron/dark,
 /area/station/medical/treatment_center)
 "dGL" = (
@@ -47642,7 +47642,7 @@
 "nUI" = (
 /obj/structure/sign/departments/exam_room/directional/east,
 /obj/machinery/iv_drip,
-/obj/item/reagent_containers/blood/universal,
+/obj/item/reagent_containers/chem_pack/saline,
 /turf/open/floor/iron/freezer,
 /area/station/maintenance/port/lesser)
 "nUQ" = (
