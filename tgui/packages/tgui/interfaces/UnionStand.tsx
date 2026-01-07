@@ -35,7 +35,7 @@ const ImplementationFreeze = () => {
           deadlocked
             ? 'Unfreezes'
             : 'Freezes' +
-              'implementation timer of the current demand. Command can also do this action through the Communications console.'
+              ' implementation timer of the current demand. Command can also do this action through the Communications console.'
         }
         onClick={() => act('freeze_timers')}
       >

@@ -120,6 +120,33 @@
 			airlock.req_access -= ACCESS_UNION
 	return ..()
 
+/datum/union_demand/better_bounties
+	name = "Better bounty Payouts"
+	union_description = "The Union has noticed that the price of bounties have not kept up with inflation. \
+		Fixing this would require Nanotrasen increase the per-bounty profit, which is not something they are too keen \
+		on accepting."
+	station_description = "New negotiations with the Cargo Union is bringing better payouts for Cargo bounties, \
+		which will be paid by Command personnel. This follows a wave of unprecedent-highs in inflation that bounty output \
+		has not kept up with."
+	cost = 300
+
+/datum/union_demand/better_bounties/implement_demand(datum/union/union_demanding)
+	. = ..()
+	SSeconomy.bounty_modifier *= 1.2
+
+/datum/union_demand/better_bounties/unimplement_demand(datum/union/union_demanding)
+	SSeconomy.bounty_modifier /= 1.2
+	return ..()
+
+/*
+/datum/union_demand/locked_vendors
+	name = "Access-locked Vendors"
+	union_description = "The Union has noticed people trying to dress up as Cargo personnel \
+		to work under the table for cheaper. This scabbing must end, Cargo vendors have now been locked to Cargo access."
+	station_description = "The Cargo Union has implemented a new policy, adding access locks to their workplace vending machines."
+	cost = 50 //really this doesn't do much tbh.
+*/
+
 /datum/union_demand/bear_arms
 	name = "Right to Bear Arms"
 	union_description = "The Union's trust in the Private Security force to protect Cargo and its shipping lines has eroded. \

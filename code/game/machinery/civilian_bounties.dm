@@ -97,7 +97,7 @@
 	else
 		status_report = "No applicable targets found. Aborting."
 		stop_sending()
-	if(curr_bounty.can_claim())
+	if(curr_bounty.claim())
 		//Pay for the bounty with the ID's department funds.
 		status_report += "Bounty completed! Please give your bounty cube to cargo for your automated payout shortly."
 		inserted_scan_id.registered_account.reset_bounty()
@@ -270,6 +270,9 @@
 /obj/item/bounty_cube/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NO_BARCODES, INNATE_TRAIT) // Don't allow anyone to override our pricetag component with a barcode
+	if(GLOB.cargo_union.demand_is_implemented(/datum/union_demand/better_bounties))
+		holder_cut += 0.2
+
 	radio = new(src)
 	radio.keyslot = new radio_key
 	radio.set_listening(FALSE)
@@ -333,6 +336,7 @@
 	name = "\improper [bounty_value] cr [name]"
 	desc += " The sales tag indicates it was <i>[bounty_holder] ([bounty_holder_job])</i>'s reward for completing the <i>[bounty_name]</i> bounty."
 	AddComponent(/datum/component/pricetag, holder_id.registered_account, holder_cut, FALSE)
+	command_budget.adjust_money(-price_without_reward)
 	AddComponent(/datum/component/gps, "[src]")
 	START_PROCESSING(SSobj, src)
 	COOLDOWN_START(src, next_nag_time, nag_cooldown)
