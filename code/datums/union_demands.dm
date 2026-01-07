@@ -125,10 +125,10 @@
 	union_description = "The Union has noticed that the price of bounties have not kept up with inflation. \
 		Fixing this would require Nanotrasen increase the per-bounty profit, which is not something they are too keen \
 		on accepting."
-	station_description = "New negotiations with the Cargo Union is bringing better payouts for Cargo bounties, \
-		which will be paid by Command personnel. This follows a wave of unprecedent-highs in inflation that bounty output \
-		has not kept up with."
-	cost = 300
+	station_description = "Following a wave of unprecedented inflation, the Cargo Union has demanded that \
+		civilian bounties start keeping up with the rates of inflation, increasing payout per bounty. \
+		Central Command delegates the payouts for these bounties to Command personnel."
+	cost = 100 //command pays this per bounty, so let's keep this cheap.
 
 /datum/union_demand/better_bounties/implement_demand(datum/union/union_demanding)
 	. = ..()

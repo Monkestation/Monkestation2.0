@@ -111,6 +111,12 @@ export const UnionStand = () => {
               There are admin tools all over the page (usually indicated by
               tooltips), these are just general buttons.
             </Box>
+            <Box my={0.5}>
+              Just as a note, NT is meant to delegate Union handling to Command
+              as much as possible, both responsibilities and consequences. Keep
+              this in mind if you choose to interact with the Union on the Admin
+              side.
+            </Box>
             <Button.Confirm
               color={union_active ? 'bad' : 'good'}
               onClick={() => act('toggle_union')}
