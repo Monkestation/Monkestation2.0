@@ -184,7 +184,7 @@ export const CassetteLibrary = (props) => {
                     fluid
                     placeholder="Search by name, author, or description..."
                     value={searchQuery}
-                    onInput={(e, value) => setSearchQuery(value)}
+                    onChange={(value) => setSearchQuery(value)}
                     autoFocus
                   />
                   {searchQuery && (
