@@ -31,10 +31,17 @@
 	event_icon_state = "changeling"
 
 /datum/round_event_control/antagonist/solo/changeling/roundstart
-	denominator = 20
+	denominator = 22
 	name = "Changelings"
 	roundstart = TRUE
 	earliest_start = 0
+	extra_spawned_events = list(
+	/datum/round_event_control/antagonist/solo/traitor/extra = 20,
+    /datum/round_event_control/antagonist/solo/changeling/extra = 30,
+    /datum/round_event_control/antagonist/solo/bloodsucker/extra = 15,
+    /datum/round_event_control/antagonist/solo/heretic/extra = 10,
+	null = 25
+	)
 
 /datum/round_event_control/antagonist/solo/changeling/midround
 	denominator = 27
@@ -42,3 +49,12 @@
 	antag_flag = ROLE_GENOMEAWAKENING
 	prompted_picking = TRUE
 	max_occurrences = 2
+/datum/round_event_control/antagonist/solo/changeling/extra
+	name = "Extra Changelings"
+	base_antags = 0
+	denominator = 20
+	antag_flag = ROLE_CHANGELING
+	antag_datum = /datum/antagonist/changeling
+	weight = 0 //shouldnt be spawned by storyteller
+	maximum_antags = 3
+	min_players = 20

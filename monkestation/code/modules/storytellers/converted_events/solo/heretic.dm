@@ -34,6 +34,13 @@
 	name = "Heretics"
 	roundstart = TRUE
 	earliest_start = 0
+	extra_spawned_events = list(
+	/datum/round_event_control/antagonist/solo/traitor/extra = 20,
+    /datum/round_event_control/antagonist/solo/changeling/extra = 10,
+    /datum/round_event_control/antagonist/solo/bloodsucker/extra = 15,
+    /datum/round_event_control/antagonist/solo/heretic/extra = 30,
+	null = 25
+	)
 
 /datum/round_event_control/antagonist/solo/heretic/midround
 	denominator = 30
@@ -41,6 +48,15 @@
 	name = "Forbidden Calling (Heretics)"
 	prompted_picking = TRUE
 	weight = 4
+/datum/round_event_control/antagonist/solo/heretic/extra
+	base_antags = 0
+	name = "Extra Heretics"
+	denominator = 20
+	maximum_antags = 3
+	antag_flag = ROLE_HERETIC
+	antag_datum = /datum/antagonist/heretic
+	earliest_start = 0 SECONDS
+	weight = 0 // shouldnt be spawned by storyteller
 
 /datum/round_event/antagonist/solo/heretic/add_datum_to_mind(datum/mind/antag_mind)
 	var/datum/antagonist/heretic/new_heretic = antag_mind.add_antag_datum(antag_datum)
