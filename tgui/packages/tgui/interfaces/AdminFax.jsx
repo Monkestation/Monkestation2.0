@@ -92,7 +92,7 @@ export const FaxMainPanel = (props) => {
             placeholder="Paper name..."
             value={paperName}
             width="100%"
-            onChange={(_, v) => setPaperName(v)}
+            onChange={(v) => setPaperName(v)}
           />
           <Button
             icon="n"
@@ -119,7 +119,7 @@ export const FaxMainPanel = (props) => {
               tooltip="Name what be user in fax history"
               value={fromWho}
               width="100%"
-              onChange={(_, v) => setFromWho(v)}
+              onChange={(v) => setFromWho(v)}
             />
           </Tooltip>
           <Button
@@ -138,9 +138,10 @@ export const FaxMainPanel = (props) => {
         <Box mt="5px">
           <TextArea
             placeholder="Your message here..."
+            fluid
             height="200px"
             value={rawText}
-            onInput={(e, value) => {
+            onChange={(value) => {
               setRawText(value);
             }}
           />
@@ -169,7 +170,7 @@ export const FaxMainPanel = (props) => {
                   minValue={0}
                   maxValue={300}
                   value={stampCoordX}
-                  onChange={(_, v) => setStampCoordX(v)}
+                  onChange={(v) => setStampCoordX(v)}
                 />
               </h4>
 
@@ -179,7 +180,7 @@ export const FaxMainPanel = (props) => {
                   width="45px"
                   minValue={0}
                   value={stampCoordY}
-                  onChange={(_, v) => setStampCoordY(v)}
+                  onChange={(v) => setStampCoordY(v)}
                 />
               </h4>
 
@@ -191,7 +192,7 @@ export const FaxMainPanel = (props) => {
                   minValue={0}
                   maxValue={360}
                   animated={false}
-                  onChange={(_, v) => setStampAngle(v)}
+                  onChange={(_, value) => setStampAngle(value)}
                 />
               </Box>
             </Box>
