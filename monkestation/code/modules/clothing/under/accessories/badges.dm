@@ -135,15 +135,36 @@
 		ACCESS_UNION,
 	)
 
-/obj/item/clothing/accessory/badge/cargo/equipped(mob/living/user, slot)
+/obj/item/clothing/accessory/badge/cargo/Initialize(mapload)
+	. = ..()
+	GLOB.cargo_union.printed_badges += src
+
+/obj/item/clothing/accessory/badge/cargo/Destroy()
+	GLOB.cargo_union.printed_badges -= src
+	return ..()
+
+/obj/item/clothing/accessory/badge/cargo/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
 	if(slot & (ITEM_SLOT_ICLOTHING|ITEM_SLOT_HANDS)) //ITEM_SLOT_NECK inv doesn't call dropped so we don't need to re-register.
 		RegisterSignal(user, COMSIG_MOB_TRIED_ACCESS, PROC_REF(on_tried_access))
+		RegisterSignal(user, COMSIG_WEAPONS_CHECK, PROC_REF(on_weapons_check))
+		if(ishuman(user))
+			user.sec_hud_set_ID()
 
-/obj/item/clothing/accessory/badge/cargo/dropped(mob/living/user)
-	UnregisterSignal(user, COMSIG_MOB_TRIED_ACCESS)
+/obj/item/clothing/accessory/badge/cargo/dropped(mob/living/carbon/human/user)
+	UnregisterSignal(user, list(COMSIG_MOB_TRIED_ACCESS, COMSIG_WEAPONS_CHECK))
+	if(ishuman(user))
+		user.sec_hud_set_ID()
 	return ..()
 
+///Called when we're getting threat accessed to see if we have a weapons permit.
+/obj/item/clothing/accessory/badge/cargo/proc/on_weapons_check(mob/living/carbon/human/source)
+	SIGNAL_HANDLER
+	if(ACCESS_WEAPONS in access)
+		return COMPONENT_WEAPON_HAS_PERMIT
+	return NONE
+
+///Called when we're being used to see if we have access to open locked_thing.
 /obj/item/clothing/accessory/badge/cargo/proc/on_tried_access(datum/source, obj/locked_thing)
 	SIGNAL_HANDLER
 	return locked_thing?.check_access(src) ? ACCESS_ALLOWED : NONE

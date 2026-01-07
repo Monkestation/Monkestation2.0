@@ -64,7 +64,7 @@ export const UnionStand = () => {
   }
   return (
     <Window theme="UnionStand" title="Union Demands" width={400} height={500}>
-      <Window.Content overflowY="auto">
+      <Window.Content overflowY={locked_for !== null ? 'hidden' : 'auto'}>
         {!!admin_mode && (
           <Section title="Admin tools">
             <Box my={0.5}>
@@ -94,6 +94,16 @@ export const UnionStand = () => {
             }
           >
             <Stack fill vertical>
+              {!!admin_mode && (
+                <Button
+                  tooltip={
+                    'Automatically ends the voting period and will instate if enough voted yes.'
+                  }
+                  onClick={() => act('end_vote')}
+                >
+                  End Voting (Auto-results)
+                </Button>
+              )}
               <Stack.Item fontSize="150%" textAlign="center">
                 {voting_name}
               </Stack.Item>
@@ -125,7 +135,7 @@ export const UnionStand = () => {
                 <Section
                   position="relative"
                   backgroundColor="red"
-                  title="Available Union Demands"
+                  title="Demands on Hold"
                   buttons={
                     !!admin_mode && (
                       <Button.Confirm

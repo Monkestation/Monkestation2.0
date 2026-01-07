@@ -1,6 +1,13 @@
 ADMIN_VERB(union_manager, R_ADMIN, FALSE, "Cargo Union Manager", "View the Cargo Union panel.", ADMIN_CATEGORY_GAME)
 	GLOB.cargo_union.ui_interact(user.mob)
 
+ADMIN_VERB(union_reset, R_ADMIN, FALSE, "Reset Cargo Demands", "Removes all Cargo demands and rebuilds the list.", ADMIN_CATEGORY_DEBUG)
+	QDEL_NULL(GLOB.cargo_union.possible_demands)
+	for(var/datum/union_demand/demand as anything in GLOB.cargo_union.successful_demands)
+		demand.unimplement_demand(GLOB.cargo_union)
+	QDEL_NULL(GLOB.cargo_union.successful_demands)
+	GLOB.cargo_union.setup_demands()
+
 #define TIME_BETWEEN_DEMANDS (10 MINUTES)
 #define TIME_TO_VOTE (TIME_BETWEEN_DEMANDS / 4)
 ///The time Command has to stop a demand.
@@ -24,6 +31,8 @@ ADMIN_VERB(union_manager, R_ADMIN, FALSE, "Cargo Union Manager", "View the Cargo
 	///Assoc List of people part of the Cargo Union, by default all Cargo personnel but the QM can add more.
 	///stored as: list(CARGO_UNION_LEADER = boolean, CARGO_UNION_NAME = string, CARGO_UNION_BANK, /datum/bank_account)
 	var/list/union_employees = list()
+	///List of all printed badges.
+	var/list/obj/item/clothing/accessory/badge/cargo/printed_badges = list()
 
 	///List of all demands this Union can make.
 	var/list/datum/union_demand/possible_demands = list()
@@ -46,6 +55,9 @@ ADMIN_VERB(union_manager, R_ADMIN, FALSE, "Cargo Union Manager", "View the Cargo
 /datum/union/New()
 	. = ..()
 	RegisterSignal(SSeconomy, COMSIG_PAYDAYS_ISSUED, PROC_REF(handle_payday))
+	setup_demands()
+
+/datum/union/proc/setup_demands()
 	for(var/datum/union_demand/demand as anything in GLOB.union_demands)
 		if(demand::department_eligible != union_budget)
 			continue
@@ -207,7 +219,7 @@ ADMIN_VERB(union_manager, R_ADMIN, FALSE, "Cargo Union Manager", "View the Cargo
 		return .
 	var/mob/user = ui.user
 	var/obj/machinery/host = ui.src_object
-	if(istype(host) && !host.allowed(user)) //admin panel always works.
+	if(istype(host) && !host.allowed(user))
 		host.balloon_alert(user, "no access!")
 		return TRUE
 	if(!union_active && !check_rights_for(user.client, R_ADMIN))
@@ -220,6 +232,9 @@ ADMIN_VERB(union_manager, R_ADMIN, FALSE, "Cargo Union Manager", "View the Cargo
 				return TRUE
 			if(!COOLDOWN_FINISHED(src, union_demand_delay))
 				host.balloon_alert(user, "on cooldown for [DisplayTimeText(COOLDOWN_TIMELEFT(src, union_demand_delay))]!")
+				return TRUE
+			if(demand_voting_on)
+				host.balloon_alert(user, "still implementing [demand_voting_on.name]!")
 				return TRUE
 			trigger_vote(vote_for)
 			return TRUE
@@ -262,6 +277,11 @@ ADMIN_VERB(union_manager, R_ADMIN, FALSE, "Cargo Union Manager", "View the Cargo
 				return TRUE
 			union_active = !union_active
 			return TRUE
+		if("end_vote")
+			if(!check_rights_for(user.client, R_ADMIN))
+				return TRUE
+			stop_vote()
+			return TRUE
 
 /datum/union/proc/trigger_vote(datum/union_demand/vote_for)
 	demand_voting_on = vote_for
@@ -281,6 +301,8 @@ ADMIN_VERB(union_manager, R_ADMIN, FALSE, "Cargo Union Manager", "View the Cargo
 
 	votes_yes.Cut()
 	votes_no.Cut()
+	if(voting_timer)
+		deltimer(voting_timer)
 	voting_timer = null
 	for(var/obj/machinery/union_stand/stand as anything in SSmachines.get_machines_by_type(/obj/machinery/union_stand))
 		stand.update_appearance()

@@ -119,3 +119,30 @@
 			airlock.req_access += ACCESS_CARGO
 			airlock.req_access -= ACCESS_UNION
 	return ..()
+
+/datum/union_demand/bear_arms
+	name = "Right to Bear Arms"
+	union_description = "The Union's trust in the Private Security force to protect Cargo and its shipping lines has eroded. \
+		New Union demands are simple, the right to bear arms. This will grant every Union badge the right to equip and wield weapons \
+		of any caliber. The only security that can be granted to the Union is the one given to itself. \
+		This does not include access to open/order any crates that would require Weapons access, only the right to bear them."
+	station_description = "The Cargo Union has decided that they are taking Cargo security in their own hands, \
+		starting off with the decision to arm themselves. Regrettably, weapons access is being installed on all \
+		Union badges."
+	cost = 500 //Are you really willing to pay for this, QM?
+
+/datum/union_demand/bear_arms/implement_demand(datum/union/union_demanding)
+	. = ..()
+	for(var/obj/item/clothing/accessory/badge/cargo/cargo_badge as anything in union_demanding.printed_badges)
+		cargo_badge.access += ACCESS_WEAPONS
+		var/mob/living/carbon/human/worn_by = recursive_loc_check(cargo_badge, /mob/living/carbon/human)
+		if(worn_by)
+			worn_by.sec_hud_set_ID()
+
+/datum/union_demand/bear_arms/unimplement_demand(datum/union/union_demanding)
+	for(var/obj/item/clothing/accessory/badge/cargo/cargo_badge as anything in union_demanding.printed_badges)
+		cargo_badge.access -= ACCESS_WEAPONS
+		var/mob/living/carbon/human/worn_by = recursive_loc_check(cargo_badge, /mob/living/carbon/human)
+		if(worn_by)
+			worn_by.sec_hud_set_ID()
+	return ..()
