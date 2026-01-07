@@ -51,7 +51,7 @@
 /datum/round_event_control/antagonist/solo/traitor/extra
 	name = "Extra Traitors"
 	base_antags = 0
-	denominator = 14
+	denominator = 20
 	maximum_antags = 3
 	antag_flag = ROLE_TRAITOR
 	antag_datum = /datum/antagonist/traitor
