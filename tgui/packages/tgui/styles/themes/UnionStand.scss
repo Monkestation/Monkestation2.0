@@ -1,0 +1,21 @@
+.theme-UnionStand:root {
+  // Base
+  --color-base: hsl(197.14, 6.67%, 20.59%);
+  --color-primary: hsl(166.44, 74.68%, 53.53%);
+  --color-action: hsl(155.23, 60.89%, 35.1%);
+  --base-gradient-spread: 6;
+
+  // Components
+  --button-color-transparent: var(--color-action);
+  --tooltip-background-lightness: 33;
+
+  .Layout__content {
+    background-image: url('../../assets/bg-cargo.svg');
+    background-size: cover;
+    background-size: 60%;
+
+    border-style: double;
+    border-color: hsl(166.44, 74.68%, 53.53%);
+    border-radius: 5px;
+  }
+}
