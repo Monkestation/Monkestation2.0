@@ -36,6 +36,7 @@
 	station_description = "The Cargo Union has voted for a new demand, all vending machines will be equipped \
 		with surveyance software that will be reported back to Cargo so they can ensure all vendors are properly stocked. \
 		This new software will be paid jointly with Command."
+	active_without_union = TRUE
 
 /datum/union_demand/vendor_stock/implement_demand(datum/union/union_demanding)
 	. = ..()
@@ -138,7 +139,7 @@
 	SSeconomy.bounty_modifier /= 1.2
 	return ..()
 
-/*
+/* //requires cargo-access locked vendor PR to be merged
 /datum/union_demand/locked_vendors
 	name = "Access-locked Vendors"
 	union_description = "The Union has noticed people trying to dress up as Cargo personnel \
@@ -146,6 +147,15 @@
 	station_description = "The Cargo Union has implemented a new policy, adding access locks to their workplace vending machines."
 	cost = 50 //really this doesn't do much tbh.
 */
+
+/datum/union_demand/automatic_mail
+	name = "Automatic Mail Tokens"
+	union_description =  "Recent technological advancements have shown that mail no longer needs tokens to prove \
+		it has been delivered. Although this technology is rather expensive on this large of a scale, \
+		we can automatically track when mail has been opened, and instantly send the profits back to Cargo."
+	station_description = "As part of recent negotiations, the Cargo Union has started implementing tracking devices \
+		in people's mail. This will remove the need to utilize mail tokens. Hope you don't have anything important in there."
+	cost = 300
 
 /datum/union_demand/bear_arms
 	name = "Right to Bear Arms"

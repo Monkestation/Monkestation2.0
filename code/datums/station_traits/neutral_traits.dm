@@ -21,10 +21,14 @@
 	trait_type = STATION_TRAIT_NEUTRAL
 	weight = 2
 	show_in_report = TRUE
-	report_message = "Nanotrasen's clever union busting tactics has ensured the Cargo Union will remain purely as a figurehead without power."
+	report_message = "Nanotrasen's clever union busting tactics has ensured the Cargo Union will remain purely as a \
+		figurehead without power."
 
 /datum/station_trait/busted_union/on_round_start()
 	GLOB.cargo_union.union_active = FALSE
+	for(var/datum/union_demand/default_demands as anything in GLOB.cargo_union.possible_demands)
+		if(default_demands.active_without_union)
+			default_demands.implement_demand(GLOB.cargo_union)
 	for(var/obj/machinery/union_stand/stands as anything in SSmachines.get_machines_by_type(/obj/machinery/union_stand))
 		qdel(stands)
 
