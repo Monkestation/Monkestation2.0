@@ -159,7 +159,7 @@
 
 /datum/antagonist/ert/generic/medical/blue
 	name = "Code Blue Medical Response Officer"
-	outfit = /datum/outfit/centcom/ert/generic/medical
+	outfit = /datum/outfit/centcom/ert/generic/medical/blue
 
 /datum/outfit/centcom/ert/generic/medical/blue
 	name = "Code Blue Medical Response Officer"
