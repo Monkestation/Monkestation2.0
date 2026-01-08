@@ -40,6 +40,8 @@
 		data["badge_icon_state"] = null
 		data["badge_leader"] = FALSE
 	data["union_members"] = GLOB.cargo_union_employees
+	data["on_cooldown"] = !COOLDOWN_FINISHED(src, time_between_printing)
+	data["seconds_left"] = DisplayTimeText(COOLDOWN_TIMELEFT(src, time_between_printing), 1)
 	return data
 
 /datum/computer_file/program/cargo_union/ui_act(action, params, datum/tgui/ui)
@@ -97,7 +99,9 @@
 			for(var/member in GLOB.cargo_union_employees)
 				if(member[CARGO_UNION_NAME] != lost_badge_member)
 					continue
-				if(member[CARGO_UNION_LEADER]) //printing a golden badge requires access (aka QM level, ID or Badge)
+				//printing a golden badge requires access (aka QM level, ID or Badge)
+				//this is why we care for ID AND badge in this app.
+				if(member[CARGO_UNION_LEADER])
 					if(!can_run(user, downloading = TRUE))
 						computer.balloon_alert(user, "elevated access necessary!")
 						return TRUE

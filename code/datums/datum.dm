@@ -416,13 +416,13 @@
  * * easing - easing arg of the BYOND animate() proc.
  * * loop - loop arg of the BYOND animate() proc.
  */
-/datum/proc/transition_filter(name, list/new_params, time, easing, loop)
+/datum/proc/transition_filter(name, list/new_params, time, easing, loop, flags)
 	var/filter = get_filter(name)
 	if (!filter)
 		return
 	// This can get injected by the filter procs, we want to support them so bye byeeeee
 	new_params -= "type"
-	animate(filter, new_params, time = time, easing = easing, loop = loop)
+	animate(filter, new_params, time = time, easing = easing, loop = loop, flags = flags)
 	modify_filter(name, new_params)
 
 /** Keeps the steps in the correct order.
@@ -473,6 +473,12 @@
 	ASSERT(isatom(src) || isimage(src))
 	var/atom/atom_cast = src // filters only work with images or atoms.
 	return atom_cast.filters[name]
+
+/// Returns filter data associated with the passed key
+/datum/proc/get_filter_data(name)
+	for (var/list/filter_info as anything in filter_data)
+		if (filter_info["name"] == name)
+			return filter_info.Copy()
 
 /// Removes the passed filter, or multiple filters, if supplied with a list.
 /datum/proc/remove_filter(name_or_names, update = TRUE)

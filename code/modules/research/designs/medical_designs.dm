@@ -196,7 +196,7 @@
 		/datum/material/uranium = HALF_SHEET_MATERIAL_AMOUNT,
 		/datum/material/diamond = HALF_SHEET_MATERIAL_AMOUNT,
 		/datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT,)
-	build_path = /obj/item/sensor_device
+	build_path = /obj/item/sensor_device/security
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_MEDICAL + RND_SUBCATEGORY_EQUIPMENT_SECURITY
 	)
@@ -214,7 +214,7 @@
 		/datum/material/uranium = HALF_SHEET_MATERIAL_AMOUNT,
 		/datum/material/diamond = HALF_SHEET_MATERIAL_AMOUNT,
 		/datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT,)
-	build_path = /obj/item/sensor_device
+	build_path = /obj/item/sensor_device/command
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_MEDICAL + RND_SUBCATEGORY_EQUIPMENT_SECURITY
 	)

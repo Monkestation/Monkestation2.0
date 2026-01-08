@@ -690,7 +690,7 @@
 /obj/item/storage/medkit/civil_defense/stocked
 
 /obj/item/storage/medkit/civil_defense/stocked/PopulateContents()
-	var/static/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/reagent_containers/hypospray/medipen/deforest/meridine = 1,
 		/obj/item/reagent_containers/hypospray/medipen/deforest/halobinin = 1,
 		/obj/item/reagent_containers/hypospray/medipen/deforest/lipital = 1,
@@ -734,7 +734,7 @@
 /obj/item/storage/medkit/civil_defense/comfort/stocked
 
 /obj/item/storage/medkit/civil_defense/comfort/stocked/PopulateContents()
-	var/static/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/reagent_containers/hypospray/medipen/deforest/psifinil = 3,
 		/obj/item/storage/pill_bottle/prescription_stimulant = 1,
 	)
@@ -758,7 +758,7 @@
 /obj/item/storage/medkit/frontier/stocked
 
 /obj/item/storage/medkit/frontier/stocked/PopulateContents()
-	var/static/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/reagent_containers/hypospray/medipen/deforest/meridine = 1,
 		/obj/item/reagent_containers/hypospray/medipen/deforest/morpital = 1,
 		/obj/item/stack/medical/ointment = 1,
@@ -767,7 +767,7 @@
 		/obj/item/stack/medical/gauze/sterilized = 1,
 		/obj/item/storage/pill_bottle/painkiller = 1,
 	)
-	generate_items_inside(items_inside,src)
+	generate_items_inside(items_inside, src)
 
 // Pre-packed combat surgeon medkit, with items for fixing more specific injuries and wounds
 /obj/item/storage/medkit/combat_surgeon
@@ -790,7 +790,7 @@
 /obj/item/storage/medkit/combat_surgeon/stocked
 
 /obj/item/storage/medkit/combat_surgeon/stocked/PopulateContents()
-	var/static/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/bonesetter = 1,
 		/obj/item/hemostat = 1,
 		/obj/item/cautery = 1,
@@ -799,7 +799,7 @@
 		/obj/item/stack/medical/gauze/sterilized = 1,
 		/obj/item/healthanalyzer/simple = 1,
 	)
-	generate_items_inside(items_inside,src)
+	generate_items_inside(items_inside, src)
 
 // Big medical kit that can be worn like a bag, holds a LOT of medical items but slows you down slightly
 /obj/item/storage/backpack/deforest_medkit
@@ -863,7 +863,7 @@
 /obj/item/storage/backpack/deforest_medkit/stocked
 
 /obj/item/storage/backpack/deforest_medkit/stocked/PopulateContents()
-	var/static/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/reagent_containers/hypospray/medipen/deforest/morpital = 1,
 		/obj/item/reagent_containers/hypospray/medipen/deforest/lepoturi = 1,
 		/obj/item/reagent_containers/hypospray/medipen/deforest/lipital = 1,
@@ -883,7 +883,7 @@
 		/obj/item/storage/pill_bottle/painkiller = 1,
 		/obj/item/healthanalyzer/simple = 1,
 	)
-	generate_items_inside(items_inside,src)
+	generate_items_inside(items_inside, src)
 
 
 // Big surgical kit that can be worn like a bag, holds 14 normal items (more than what a backpack can do!) but slows you down slightly
@@ -964,7 +964,7 @@
 /obj/item/storage/backpack/deforest_surgical/stocked
 
 /obj/item/storage/backpack/deforest_surgical/stocked/PopulateContents()
-	var/static/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/scalpel = 1,
 		/obj/item/hemostat = 1,
 		/obj/item/retractor = 1,
@@ -980,7 +980,7 @@
 		/obj/item/stack/sticky_tape/surgical = 1,
 		/obj/item/stack/medical/bone_gel = 1,
 	)
-	generate_items_inside(items_inside,src)
+	generate_items_inside(items_inside, src)
 
 // Pre-packed medkit for healing synths and repairing their wounds rapidly in the field
 /obj/item/storage/medkit/robotic_repair
@@ -1020,7 +1020,7 @@
 /obj/item/storage/medkit/robotic_repair/stocked
 
 /obj/item/storage/medkit/robotic_repair/stocked/PopulateContents()
-	var/static/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/stack/medical/gauze = 1,
 		/obj/item/stack/cable_coil/five = 3,
 		/obj/item/reagent_containers/hypospray/medipen/synthcare = 2,
@@ -1028,7 +1028,7 @@
 		/obj/item/reagent_containers/hypospray/medipen/deforest/coagulants = 1, // Coagulants help electrical damage
 		/obj/item/healthanalyzer/simple = 1,
 	)
-	generate_items_inside(items_inside,src)
+	generate_items_inside(items_inside, src)
 
 /obj/item/storage/medkit/robotic_repair/preemo
 	name = "premium robotic repair equipment kit"
@@ -1045,7 +1045,7 @@
 /obj/item/storage/medkit/robotic_repair/preemo/stocked
 
 /obj/item/storage/medkit/robotic_repair/preemo/stocked/PopulateContents()
-	var/static/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/stack/medical/gauze/twelve = 1,
 		/obj/item/stack/cable_coil/industrial = 1,
 		/obj/item/reagent_containers/hypospray/medipen/synthcare = 4,
@@ -1055,7 +1055,7 @@
 		/obj/item/healthanalyzer/simple = 1,
 		/obj/item/reagent_containers/blood/oil = 1,
 	)
-	generate_items_inside(items_inside,src)
+	generate_items_inside(items_inside, src)
 
 /obj/machinery/biogenerator/medstation
 	name = "wall med-station"

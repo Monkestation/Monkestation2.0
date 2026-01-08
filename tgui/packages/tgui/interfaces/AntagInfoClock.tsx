@@ -25,7 +25,7 @@ export const AntagInfoClock = (props) => {
             </Stack.Item>
             <Stack.Item>
               <ObjectivePrintout
-                titleMessage={'To serve Rat&#39;var you must:'}
+                titleMessage={"To serve Rat'var you must"}
                 objectives={objectives}
               />
             </Stack.Item>

@@ -41,7 +41,7 @@
 		else
 			icon_state = "[soft_type][soft_suffix]"
 			to_chat(user, span_notice("You flip the hat back in normal position."))
-		update_icon()
+		update_appearance(UPDATE_ICON)
 		usr.update_worn_head() //so our mob-overlays update
 
 /obj/item/clothing/head/soft/examine(mob/user)
