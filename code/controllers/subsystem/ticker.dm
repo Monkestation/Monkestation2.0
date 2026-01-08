@@ -730,7 +730,7 @@ SUBSYSTEM_DEF(ticker)
 			// There was a blob on board, guess it was nuked to stop it
 			if(length(GLOB.overminds))
 				for(var/mob/eye/blob/overmind as anything in GLOB.overminds)
-					if(overmind.max_count < overmind.announcement_size)
+					if(!overmind.antag_team || overmind.antag_team.highest_tile_count < overmind.antag_team.announcement_size)
 						continue
 
 					news_message = "[decoded_station_name] is currently undergoing decontanimation after a controlled \
