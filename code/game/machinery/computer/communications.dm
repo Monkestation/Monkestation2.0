@@ -584,6 +584,7 @@
 				data["canBuyShuttles"] = can_buy_shuttles(user)
 				data["canMakeAnnouncement"] = FALSE
 				data["canMessageAssociates"] = FALSE
+				data["union_active"] = GLOB.cargo_union.union_active
 				data["canRecallShuttles"] = !issilicon(user)
 				data["canRequestNuke"] = FALSE
 				data["canSendToSectors"] = FALSE

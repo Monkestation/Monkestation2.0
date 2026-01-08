@@ -1,6 +1,6 @@
 import type { BooleanLike } from 'common/react';
-import { Button, Section, DmIcon, Stack } from '../../components';
 import { useBackend } from '../../backend';
+import { Button, DmIcon, Section, Stack } from '../../components';
 
 type Data = {
   badge_name: string;
@@ -8,6 +8,8 @@ type Data = {
   badge_icon_state: string;
   badge_leader: BooleanLike;
   union_members: UnionData[];
+  on_cooldown: BooleanLike;
+  seconds_left: string;
 };
 
 type UnionData = {
@@ -23,6 +25,8 @@ export const UnionScreen = () => {
     badge_icon_state,
     badge_leader,
     union_members = [],
+    on_cooldown,
+    seconds_left,
   } = data;
   return (
     <>
@@ -97,8 +101,13 @@ export const UnionScreen = () => {
             </Stack.Item>
             <Stack.Item textAlign="right">
               <Button
+                disabled={on_cooldown}
                 onClick={() => act('print_badge', { member_name: member.name })}
-                tooltip="Will print a new ID in their name, printer has a cooldown."
+                tooltip={
+                  on_cooldown
+                    ? 'On cooldown for ' + seconds_left + '.'
+                    : 'Will print a new ID in their name, printer has a cooldown.'
+                }
               >
                 Replace Badge
               </Button>

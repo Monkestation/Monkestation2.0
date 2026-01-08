@@ -1,23 +1,23 @@
 import { sortBy } from 'common/collections';
 import { capitalize } from 'common/string';
+import { type JSX, useState } from 'react';
+import type { BooleanLike } from 'tgui-core/react';
 import { useBackend } from '../backend';
 import {
   Blink,
   Box,
   Button,
-  Stack,
   Dimmer,
   Flex,
   Icon,
   Modal,
   Section,
+  Stack,
   TextArea,
 } from '../components';
-import { StatusDisplayControls } from './common/StatusDisplayControls';
 import { Window } from '../layouts';
 import { sanitizeText } from '../sanitize';
-import { JSX, useState } from 'react';
-import { BooleanLike } from 'tgui-core/react';
+import { StatusDisplayControls } from './common/StatusDisplayControls';
 
 const STATE_BUYING_SHUTTLE = 'buying_shuttle';
 const STATE_CHANGING_STATUS = 'changing_status';
@@ -60,7 +60,8 @@ export type CommunicationsPage =
   | typeof STATE_MAIN
   | typeof STATE_MESSAGES
   | typeof STATE_BUYING_SHUTTLE
-  | typeof STATE_CHANGING_STATUS;
+  | typeof STATE_CHANGING_STATUS
+  | typeof STATE_UNION;
 
 /* ---------------- STATE_MAIN ---------------- */
 
@@ -86,6 +87,8 @@ export type CommunicationsMainData<Page = typeof STATE_MAIN> =
 
     aprilFools: BooleanLike;
 
+    union_active: BooleanLike;
+
     alertLevel: string;
     alertLevelTick?: number;
 
@@ -110,6 +113,25 @@ export type CommunicationsMessage = {
 export type CommunicationsMessagesData = CommunicationsAuthedData & {
   page: typeof STATE_MESSAGES;
   messages: CommunicationsMessage[];
+};
+
+/* ---------------- STATE_UNION ---------------- */
+
+export type CommunicationsUnionData = CommunicationsAuthedData & {
+  page: typeof STATE_UNION;
+  deadlocked: BooleanLike;
+  already_deadlocked: BooleanLike;
+  voting_name: string;
+  voting_desc: string;
+  time_until_implementation: string;
+  completed_demands: DemandsData[];
+};
+
+type DemandsData = {
+  name: string;
+  desc: string;
+  cost: number;
+  ref: string;
 };
 
 /* ---------------- STATE_BUYING_SHUTTLE ---------------- */
@@ -146,7 +168,8 @@ export type CommunicationsData =
   | CommunicationsMainData
   | CommunicationsMessagesData
   | CommunicationsBuyingShuttleData
-  | CommunicationsChangingStatusData;
+  | CommunicationsChangingStatusData
+  | CommunicationsUnionData;
 
 type AlertLevelConfirmState =
   | { open: false }
@@ -405,7 +428,7 @@ const PageChangingStatus = () => {
 };
 
 const PageUnion = () => {
-  const { act, data } = useBackend<CommunicationsMainData>();
+  const { act, data } = useBackend<CommunicationsUnionData>();
   const {
     deadlocked,
     voting_name,
@@ -495,6 +518,7 @@ const PageMain = () => {
     alertLevel,
     alertLevelTick,
     aprilFools,
+    union_active,
     callShuttleReasonMinLength,
     canBuyShuttles,
     canMakeAnnouncement,
@@ -635,11 +659,13 @@ const PageMain = () => {
             onClick={() => act('setState', { state: STATE_MESSAGES })}
           />
 
-          <Button
-            icon="box-open"
-            content="Cargo Union Demands"
-            onClick={() => act('setState', { state: STATE_UNION })}
-          />
+          {!!union_active && (
+            <Button
+              icon="box-open"
+              content="Cargo Union Demands"
+              onClick={() => act('setState', { state: STATE_UNION })}
+            />
+          )}
 
           {canBuyShuttles !== 0 && (
             <Button
@@ -838,7 +864,7 @@ const PageMessages = (props) => {
   const messageElements: JSX.Element[] = [];
 
   for (const [messageIndex, message] of Object.entries(messages)) {
-    let answers: JSX.Element | null =
+    const answers: JSX.Element | null =
       message.possibleAnswers.length > 0 ? (
         <Box mt={1}>
           {message.possibleAnswers.map((answer, answerIndex) => (
