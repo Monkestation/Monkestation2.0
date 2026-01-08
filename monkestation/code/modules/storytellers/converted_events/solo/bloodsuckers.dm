@@ -52,7 +52,7 @@
 /datum/round_event_control/antagonist/solo/bloodsucker/extra
 	name = "Extra Bloodsuckers"
 	base_antags = 0
-	denominator = 20
+	denominator = 22
 	maximum_antags = 3
 	antag_flag = ROLE_BLOODSUCKER
 	antag_datum = /datum/antagonist/bloodsucker
