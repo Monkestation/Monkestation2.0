@@ -61,10 +61,10 @@
 	/// Percent chance that this vent will produce an artifact boulder.
 	var/artifact_chance = 0
 	/**
- 	 * Timer id or time left to prevent the wave defense from being started multiple times.
+	 * Timer id or time left to prevent the wave defense from being started multiple times.
 	 * vent_timer will be null, a timer id, "tr=<time remaining>" or "starting" if that somehow happens.
 	 * "inf" for infinite duration, for boss fights or special vent tapping requirements.
- 	 */
+	 */
 	var/vent_timer = null
 	COOLDOWN_DECLARE(manual_vent_cooldown)
 

@@ -12,9 +12,9 @@
 	var/crystal_inside = FALSE
 
 /obj/machinery/bouldertech/flatpack/chemical_injector/Initialize(mapload)
-	 . = ..()
-	 create_reagents(MAXIMUM_CONTAINER_SIZE, TRANSPARENT)
-	 AddComponent(/datum/component/plumbing/chemical_injector_brine)
+	. = ..()
+	create_reagents(MAXIMUM_CONTAINER_SIZE, TRANSPARENT)
+	AddComponent(/datum/component/plumbing/chemical_injector_brine)
 
 /obj/machinery/bouldertech/flatpack/chemical_injector/update_icon_state()
 	. = ..()
