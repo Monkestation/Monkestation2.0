@@ -25,7 +25,7 @@
 */
 
 	// position this to the left if you're in the lobby, else it overlaps with the server buttons
-	if(isnewplayer(hud_owner.mymob))
+	if(isnewplayer(hud_owner?.mymob))
 		screen_loc = ui_votehud_left
 
 	RegisterSignal(SSvote, COMSIG_VOTE_STARTED, PROC_REF(show))
@@ -71,6 +71,8 @@
 	for(var/index in 1 to latest_vote_length)
 		var/choice = choices[index]
 		var/atom/movable/screen/mapvote_button/button = new(src, hud, choice)
+		if(vote.has_desc)
+			button.desc = vote.return_desc(choice)
 		button.pixel_y = index * -ICON_SIZE_Y
 		RegisterSignal(button, COMSIG_VOTE_CHOICE_SELECTED, PROC_REF(handle_vote_click))
 		buttons += button
@@ -138,6 +140,14 @@
 
 /atom/movable/screen/mapvote_button/Click(location, control, params)
 	SEND_SIGNAL(src, COMSIG_VOTE_CHOICE_SELECTED, usr, src, choice)
+
+/atom/movable/screen/mapvote_button/MouseEntered(location, control, params)
+	. = ..()
+	if(desc)
+		openToolTip(usr, src, params, content = desc)
+
+/atom/movable/screen/mapvote_button/MouseExited()
+	closeToolTip(usr)
 
 /atom/movable/screen/mapvote_button/exit
 	name = "voting button"
