@@ -303,6 +303,10 @@
 	real_wall = our_turf.PlaceOnTop(walltype) //Place the real wall where the false wall is
 	real_wall.set_custom_materials(custom_materials)
 
+/obj/structure/falsewall/material/set_custom_materials(list/materials, multiplier)
+	. = ..()
+	real_wall?.set_custom_materials(custom_materials)
+
 /obj/structure/falsewall/material/update_icon(updates)
 	. = ..()
 	for(var/datum/material/mat in custom_materials)
