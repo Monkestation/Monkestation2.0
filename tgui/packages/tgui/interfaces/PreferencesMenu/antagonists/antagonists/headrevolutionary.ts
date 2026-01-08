@@ -1,4 +1,3 @@
-/* Monkestation edit :Revolution is currently disabled besides admin intervention
 import { Antagonist, Category } from '../base';
 import { multiline } from 'common/string';
 
@@ -15,4 +14,3 @@ const HeadRevolutionary: Antagonist = {
 };
 
 export default HeadRevolutionary;
-*/

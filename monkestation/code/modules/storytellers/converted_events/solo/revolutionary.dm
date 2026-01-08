@@ -40,8 +40,8 @@
 	min_players = 35
 	roundstart = TRUE
 	earliest_start = 0 SECONDS
-	weight = 0
-	max_occurrences = 0
+	weight = 5 //Return of the king
+	max_occurrences = 1
 	event_icon_state = "revolution"
 
 /datum/antagonist/rev/head/event_trigger
@@ -79,3 +79,15 @@
 
 	finished = winner
 	end()
+
+/datum/round_event/antagonist/solo/revolutionary/start()
+	. = ..()
+	addtimer(CALLBACK(src, PROC_REF(spawn_pointers)), 1 HOURS)
+
+/datum/round_event/antagonist/solo/revolutionary/proc/spawn_pointers()
+	var/comm_turf
+	var/list/comms = SSmachines.get_machines_by_type(/obj/machinery/computer/communications)
+	for (var/obj/machinery/computer/communications/comm in comms)
+		comm_turf = get_turf(comm)
+		new /obj/item/pinpointer/revhead(comm_turf)
+	priority_announce("An unauthorized unionization attempt has been detected, revolt detection tools have been dispensed at communications consoles.", "Unionization Report", SSstation.announcer.get_rand_report_sound())
