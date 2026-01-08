@@ -66,7 +66,7 @@ export class CircuitSignalHandler extends Component<
                     placeholder="Signal ID"
                     value={signal_id}
                     fluid
-                    onChange={(e, value) => this.setState({ signal_id: value })}
+                    onChange={(value) => this.setState({ signal_id: value })}
                   />
                 </Stack.Item>
                 <Stack.Item>
@@ -92,7 +92,7 @@ export class CircuitSignalHandler extends Component<
                             responseList.splice(index, 1);
                             this.setState({ parameterList });
                           }}
-                          onEnter={(e, value) => {
+                          onEnter={(value) => {
                             const param = responseList[index];
                             param.name = value;
                             this.setState({ parameterList });
@@ -141,7 +141,7 @@ export class CircuitSignalHandler extends Component<
                             param.datatype = type;
                             this.setState({ parameterList });
                           }}
-                          onEnter={(e, value) => {
+                          onEnter={(value) => {
                             const param = parameterList[index];
                             param.name = value;
                             this.setState({ parameterList });
@@ -191,8 +191,8 @@ export class CircuitSignalHandler extends Component<
 }
 
 type EntryProps = {
-  onRemove: (e: React.MouseEvent<any>) => any;
-  onEnter: (e: React.MouseEvent<any>, value: string) => any;
+  onRemove: () => any;
+  onEnter: (value: string) => any;
   onSetOption?: (type: string) => void;
   name: string;
   current_option: string;
@@ -202,7 +202,6 @@ type EntryProps = {
 const Entry = (props: EntryProps) => {
   const {
     onRemove,
-    onEnter,
     onSetOption,
     name,
     current_option,
@@ -217,9 +216,7 @@ const Entry = (props: EntryProps) => {
           <Input
             placeholder="Name"
             value={name}
-            onChange={(e, value) =>
-              onEnter(e as unknown as React.MouseEvent, value)
-            }
+            onChange={(value) => props.onEnter(value)}
             fluid
           />
         </Stack.Item>

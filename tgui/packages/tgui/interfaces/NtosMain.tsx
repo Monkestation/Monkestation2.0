@@ -1,15 +1,17 @@
-import { useBackend } from '../backend';
-import { Button, ColorBox, Stack, Section, Table } from '../components';
-import { NtosWindow } from '../layouts';
+import { Button, ColorBox, Section, Stack, Table } from 'tgui-core/components';
 
-export const alert_relevancies = {
-  ALERT_RELEVANCY_SAFE: 0,
-  ALERT_RELEVANCY_WARN: 1,
-  ALERT_RELEVANCY_PERTINENT: 2,
-};
+import { useBackend } from '../backend';
+import { NtosWindow } from '../layouts';
+import type { NTOSData } from '../layouts/NtosWindow';
+
+export enum alert_relevancies {
+  ALERT_RELEVANCY_SAFE,
+  ALERT_RELEVANCY_WARN,
+  ALERT_RELEVANCY_PERTINENT,
+}
 
 export const NtosMain = (props) => {
-  const { act, data } = useBackend();
+  const { act, data } = useBackend<NTOSData>();
   const {
     alert_style,
     alert_color,
@@ -21,13 +23,14 @@ export const NtosMain = (props) => {
     light_on,
     comp_light_color,
     removable_media = [],
-    login = [],
-    proposed_login = [],
+    login,
+    proposed_login,
     pai,
   } = data;
   const filtered_programs = programs.filter(
     (program) => program.header_program,
   );
+
   return (
     <NtosWindow
       title={
@@ -35,7 +38,8 @@ export const NtosMain = (props) => {
         'NtOS Main Menu'
       }
       width={400}
-      height={550}
+      height={500}
+      z
     >
       <NtosWindow.Content scrollable>
         {Boolean(
@@ -45,7 +49,7 @@ export const NtosMain = (props) => {
           <Section>
             <Stack>
               {filtered_programs.map((app) => (
-                <Stack.Item key={filtered_programs}>
+                <Stack.Item key={app.name}>
                   <Button
                     content={app.desc}
                     icon={app.icon}
@@ -115,7 +119,7 @@ export const NtosMain = (props) => {
               <Button
                 icon="eject"
                 content="Eject ID"
-                disabled={!proposed_login.IDName}
+                disabled={!proposed_login.IDInserted}
                 onClick={() => act('PC_Eject_Disk', { name: 'ID' })}
               />
               {!!show_imprint && (
@@ -139,9 +143,7 @@ export const NtosMain = (props) => {
               {show_imprint
                 ? login.IDName +
                   ' ' +
-                  (proposed_login.IDName
-                    ? '(' + proposed_login.IDName + ')'
-                    : '')
+                  (proposed_login.IDName ? `(${proposed_login.IDName})` : '')
                 : (proposed_login.IDName ?? '')}
             </Table.Row>
             <Table.Row>
@@ -149,7 +151,7 @@ export const NtosMain = (props) => {
               {show_imprint
                 ? login.IDJob +
                   ' ' +
-                  (proposed_login.IDJob ? '(' + proposed_login.IDJob + ')' : '')
+                  (proposed_login.IDJob ? `(${proposed_login.IDJob})` : '')
                 : (proposed_login.IDJob ?? '')}
             </Table.Row>
           </Table>
@@ -197,7 +199,7 @@ export const NtosMain = (props) => {
 };
 
 const ProgramsTable = (props) => {
-  const { act, data } = useBackend();
+  const { act, data } = useBackend<NTOSData>();
   const { programs = [] } = data;
   // add the program filename to this list to have it excluded from the main menu program list table
   const filtered_programs = programs.filter(

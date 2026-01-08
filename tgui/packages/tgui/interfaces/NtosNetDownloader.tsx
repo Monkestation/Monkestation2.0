@@ -1,24 +1,54 @@
-import { scale, toFixed } from 'common/math';
-import { useBackend, useLocalState } from '../backend';
+import { sortBy } from 'es-toolkit';
+import { filter } from 'es-toolkit/compat';
+import { useState } from 'react';
 import {
   Box,
   Button,
-  Stack,
   Icon,
+  Input,
   LabeledList,
   NoticeBox,
   ProgressBar,
   Section,
+  Stack,
   Tabs,
-} from '../components';
-import { flow } from 'common/fp';
-import { filter, sortBy } from 'common/collections';
+} from 'tgui-core/components';
+import { scale, toFixed } from 'tgui-core/math';
+import type { BooleanLike } from 'tgui-core/react';
+import { createSearch } from 'tgui-core/string';
+
+import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
 
+type Data = {
+  disk_size: number;
+  disk_used: number;
+  downloadcompletion: number;
+  downloading: BooleanLike;
+  downloadname: string;
+  downloadsize: number;
+  error: string;
+  emagged: BooleanLike;
+  categories: string[];
+  programs: ProgramData[];
+};
+
+type ProgramData = {
+  icon: string;
+  filename: string;
+  filedesc: string;
+  fileinfo: string;
+  category: string;
+  installed: BooleanLike;
+  compatible: BooleanLike;
+  size: number;
+  access: BooleanLike;
+  verifiedsource: BooleanLike;
+};
+
 export const NtosNetDownloader = (props) => {
-  const { act, data } = useBackend();
+  const { act, data } = useBackend<Data>();
   const {
-    PC_device_theme,
     disk_size,
     disk_used,
     downloadcompletion,
@@ -27,34 +57,38 @@ export const NtosNetDownloader = (props) => {
     downloadsize,
     error,
     emagged,
-    categories,
-    programs,
+    categories = [],
+    programs = [],
   } = data;
-  const all_categories = ['All'].concat(categories);
+  const all_categories = categories;
   const downloadpercentage = toFixed(
     scale(downloadcompletion, 0, downloadsize) * 100,
   );
-  const [selectedCategory, setSelectedCategory] = useLocalState(
-    'category',
-    all_categories[0],
+  const [selectedCategory, setSelectedCategory] = useState(categories[0]);
+  const [searchItem, setSearchItem] = useState('');
+  const search = createSearch<ProgramData>(
+    searchItem,
+    (program) => program.filedesc,
   );
-  const items = flow([
-    // This filters the list to only contain programs with category
-    selectedCategory !== all_categories[0] &&
-      filter((program) => program.category === selectedCategory),
+  let items =
+    searchItem.length > 0
+      ? // If we have a query, search everything for it.
+        filter(programs, search)
+      : // Otherwise, show respective programs for the category.
+        filter(programs, (program) => program.category === selectedCategory);
+  // This sorts all programs in the lists by name and compatibility
+  items = sortBy(items, [
+    (program: ProgramData) => !program.compatible,
+    (program: ProgramData) => program.filedesc,
+  ]);
+  if (!emagged) {
     // This filters the list to only contain verified programs
-    !emagged &&
-      PC_device_theme !== 'syndicate' &&
-      filter((program) => program.verifiedsource === 1),
-    // This sorts all programs in the lists by name and compatibility
-    sortBy(
-      (program) => -program.compatible,
-      (program) => program.filedesc,
-    ),
-  ])(programs);
+    items = filter(items, (program) => program.verifiedsource === 1);
+  }
   const disk_free_space = downloading
-    ? disk_size - toFixed(disk_used + downloadcompletion)
+    ? disk_size - Number(toFixed(disk_used + downloadcompletion))
     : disk_size - disk_used;
+
   return (
     <NtosWindow width={600} height={600}>
       <NtosWindow.Content scrollable>
@@ -102,10 +136,20 @@ export const NtosNetDownloader = (props) => {
             </LabeledList.Item>
           </LabeledList>
         </Section>
+        <Section>
+          <Input
+            autoFocus
+            height="23px"
+            placeholder="Search program name..."
+            fluid
+            value={searchItem}
+            onChange={setSearchItem}
+          />
+        </Section>
         <Stack>
           <Stack.Item minWidth="105px" shrink={0} basis={0}>
             <Tabs vertical>
-              {all_categories.map((category) => (
+              {categories.map((category) => (
                 <Tabs.Tab
                   key={category}
                   selected={category === selectedCategory}
@@ -129,20 +173,20 @@ export const NtosNetDownloader = (props) => {
 
 const Program = (props) => {
   const { program } = props;
-  const { act, data } = useBackend();
+  const { act, data } = useBackend<Data>();
   const {
-    PC_device_theme,
     disk_size,
     disk_used,
     downloading,
     downloadname,
     downloadcompletion,
+    emagged,
   } = data;
   const disk_free = disk_size - disk_used;
   return (
     <Section>
       <Stack align="baseline">
-        <Stack.Item grow={1} blod>
+        <Stack.Item grow bold>
           <Icon name={program.icon} mr={1} />
           {program.filedesc}
         </Stack.Item>
@@ -210,7 +254,7 @@ const Program = (props) => {
       <Box mt={1} italic color="label">
         {program.fileinfo}
       </Box>
-      {!program.verifiedsource && PC_device_theme !== 'syndicate' && (
+      {!program.verifiedsource && (
         <NoticeBox mt={1} mb={0} danger fontSize="12px">
           Unverified source. Please note that Nanotrasen does not recommend
           download and usage of software from non-official servers.

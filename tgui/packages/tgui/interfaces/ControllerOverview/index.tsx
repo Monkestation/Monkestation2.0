@@ -72,7 +72,7 @@ export const ControllerContent = (props) => {
               <Stack fill vertical>
                 <Stack.Item height="50%">
                   <Input
-                    onInput={(e, value) =>
+                    onChange={(value) =>
                       dispatch({ type: FilterAction.Query, payload: value })
                     }
                     placeholder="By name"

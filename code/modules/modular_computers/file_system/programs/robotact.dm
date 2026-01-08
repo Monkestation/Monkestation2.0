@@ -5,7 +5,7 @@
 	extended_desc = "A built-in app for cyborg self-management and diagnostics."
 	ui_header = "robotact.gif" //DEBUG -- new icon before PR
 	program_open_overlay = "command"
-	program_flags = NONE
+	program_flags = PROGRAM_HEADER
 	undeletable = TRUE
 	can_run_on_flags = PROGRAM_PDA
 	size = 5
@@ -37,6 +37,8 @@
 	data["name"] = cyborg.name
 	data["designation"] = cyborg.model
 	data["masterAI"] = cyborg.connected_ai //Master AI
+	data["MasterAI_connected"] = !!cyborg.connected_ai //Need a bool for this on the other side
+	data["masterAI_online"] = (cyborg.connected_ai?.stat == CONSCIOUS)
 
 	var/charge = 0
 	var/maxcharge = 1
@@ -55,7 +57,33 @@
 	data["thrustersInstalled"] = cyborg.ionpulse //If we have a thruster uprade
 	data["thrustersStatus"] = "[cyborg.ionpulse_on?"ACTIVE":"DISABLED"]" //Feedback for thruster status
 	data["selfDestructAble"] = (cyborg.emagged || istype(cyborg, /mob/living/silicon/robot/model/syndicate))
+	data["cyborg_groups"] = list()
+	if(data["masterAI_online"] || (!data["MasterAI_connected"] && cyborg.scrambledcodes)) //If a borg isn't connected, we can just skip this all
+		var/list/borggroup = list() //temporary list for holding groups of borgs
+		for(var/mob/living/silicon/robot/other_borg in GLOB.silicon_mobs)
+			if(!evaluate_borg(cyborg,other_borg))
+				continue
 
+			var/shell = FALSE
+			if(other_borg.shell && !other_borg.ckey)
+				shell = TRUE
+
+			var/list/cyborg_data = list(
+				"otherBorgName" = other_borg.name,
+				"integ" = round((other_borg.health + 100) / 2), //mob heath is -100 to 100, we want to scale that to 0 - 100
+				"locked_down" = other_borg.lockcharge,
+				"status" = other_borg.stat,
+				"shell_discon" = shell,
+				"charge" = other_borg.cell ? round(other_borg.cell.percent()) : null,
+				"module" = other_borg.model ? "[other_borg.model.name]" : "None",
+				"ref" = REF(other_borg)
+			)
+			borggroup += list(cyborg_data)
+			if(length(borggroup) == 4) //grouping borgs in packs of four, since I can't do it later in js
+				data["cyborg_groups"] += list(borggroup)
+				borggroup = list()
+		if(length(borggroup)) //and any remainders
+			data["cyborg_groups"] += list(borggroup)
 	//Cover, TRUE for locked
 	data["cover"] = "[cyborg.locked? "LOCKED":"UNLOCKED"]"
 	//Ability to move. FAULT if lockdown wire is cut, DISABLED if borg locked, ENABLED otherwise
@@ -70,6 +98,21 @@
 	data["wireLaw"] = "[cyborg.wires.is_cut(WIRE_LAWSYNC)?"FAULT":"NOMINAL"]"
 
 	return data
+
+/**
+ * Checks if we should see a specific cyborg on our "network". Arguments are our borg, and another borg
+ *
+ * Intended to allow borgs with the same AI to see eachother, syndicate borgs (scrambledcodes) with no AI to see eachother
+ *  and not-syndicate borgs with no AI to see no one. Syndicate borgs connected to an AI will no longer see other syndicate
+ *  borgs except ones also slaved to the same AI.
+ */
+/datum/computer_file/program/robotact/proc/evaluate_borg(mob/living/silicon/robot/this_borg, mob/living/silicon/robot/other_borg)
+	if(this_borg.connected_ai != other_borg.connected_ai)
+		return FALSE
+	if(this_borg.scrambledcodes && other_borg.scrambledcodes)
+		return TRUE
+	if(this_borg.connected_ai)
+		return TRUE
 
 /datum/computer_file/program/robotact/ui_static_data(mob/user)
 	var/list/data = list()

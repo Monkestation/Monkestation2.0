@@ -15,6 +15,7 @@ import { Window } from '../layouts';
 import { resolveAsset } from '../assets';
 import dateformat from 'dateformat';
 import yaml from 'js-yaml';
+import { LobbyNoticesType } from './common/LobbyNotices';
 
 const icons = {
   bugfix: { icon: 'bug', color: 'green' },
@@ -57,6 +58,7 @@ type ChangelogData = {
   discord_url?: string;
   dates: string[];
   testmerges?: Testmerge[];
+  notices: LobbyNoticesType;
 };
 
 const ChangeRow = (props: { kind: string; content: string }) => {

@@ -230,7 +230,7 @@ export const BeakerPanel = (props) => {
                     maxValue={1000}
                     step={1}
                     stepPixelSize={10}
-                    onChange={(e, value) => {
+                    onChange={(value) => {
                       if (value === 0) {
                         removeReagentfromContainer(containerNum, index);
                       } else {
@@ -286,7 +286,7 @@ export const BeakerPanel = (props) => {
           <Input
             placeholder="Search reagents..."
             value={safeReagentSearch}
-            onChange={(e, value) => handleSearchChange(containerNum, value)}
+            onChange={(value) => handleSearchChange(containerNum, value)}
             mb={1}
           />
           <Section fill scrollable height="200px">
@@ -344,7 +344,7 @@ export const BeakerPanel = (props) => {
                         maxValue={10.0}
                         unit="seconds"
                         value={grenadeData.grenadeTimer}
-                        onChange={(e, value) =>
+                        onChange={(value) =>
                           setGrenadeData({
                             ...grenadeData,
                             grenadeTimer: value,
