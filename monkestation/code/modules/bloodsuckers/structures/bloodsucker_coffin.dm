@@ -38,6 +38,10 @@
 			/datum/crafting_recipe/meatcoffin,
 		))
 		owner.current.balloon_alert(owner.current, "new recipes learned!")
+
+	if(!(locate(/datum/action/cooldown/bloodsucker/gohome) in powers))
+		BuyPower(new /datum/action/cooldown/bloodsucker/gohome)
+
 	to_chat(owner, span_userdanger("You have claimed the [claimed] as your place of immortal rest! Your lair is now [bloodsucker_lair_area]."))
 	to_chat(owner, span_announce("Bloodsucker Tip: Find new lair recipes in the Structures tab of the <i>Crafting Menu</i>, including the <i>Persuasion Rack</i> for converting crew into Vassals."))
 	return TRUE
@@ -57,7 +61,7 @@
 	. = ..()
 	if(user == resident)
 		. += span_cult("This is your Claimed Coffin.")
-		. += span_cult("Rest in it while injured to enter Torpor. Entering it with unspent Ranks will allow you to spend one.")
+		. += span_cult("Rest in it while injured to enter Torpor. Entering it with unspent Ranks will allow you to spend them.")
 		. += span_cult("Alt-Click while inside the Coffin to Lock/Unlock.")
 		. += span_cult("Alt-Click while outside of your Coffin to Unclaim it, unwrenching it and all your other structures as a result.")
 
@@ -206,6 +210,8 @@
 	if(bloodsuckerdatum?.coffin == src)
 		bloodsuckerdatum.coffin = null
 		bloodsuckerdatum.bloodsucker_lair_area = null
+		for(var/datum/action/cooldown/bloodsucker/gohome/power in bloodsuckerdatum.powers)
+			bloodsuckerdatum.RemovePower(power)
 	for(var/obj/structure/bloodsucker/bloodsucker_structure in get_area(src))
 		if(bloodsucker_structure.owner == resident)
 			bloodsucker_structure.unbolt()
@@ -250,10 +256,11 @@
 		if(!bloodsuckerdatum.my_clan)
 			to_chat(user, span_notice("You must enter a Clan to rank up."))
 		else if(!bloodsuckerdatum.frenzied)
-			if(bloodsuckerdatum.bloodsucker_level_unspent < 1)
+			if (bloodsuckerdatum.bloodsucker_level_unspent > 0)
+				bloodsuckerdatum.SpendRank()
+			if (bloodsuckerdatum.bloodsucker_level_unspent < 1)
 				bloodsuckerdatum.blood_level_gain()
-			bloodsuckerdatum.SpendRank()
-		// You're in a Coffin, everything else is done, you're likely here to heal. Let's offer them the oppertunity to do so.
+		// You're in a Coffin, everything else is done, you're likely here to heal. Let's offer them the opportunity to do so.
 		bloodsuckerdatum.check_begin_torpor()
 	return TRUE
 

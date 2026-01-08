@@ -49,8 +49,34 @@ const hairPresets = {
   '#ee8888': 'Faded Pink',
 };
 
+const haloPresets = {
+  '#ff0000': 'Vibrant Red',
+  '#aa0000': 'Simply Red',
+  '#ff7700': 'Vibrant Orange',
+  '#ffff00': 'Vibrant Yellow',
+  '#aa9900': 'Simply Yellow',
+  '#00ff00': 'Vibrant Green',
+  '#00aa00': 'Simply Green',
+  '#00ccaa': 'Turqouise',
+  '#00ffff': 'Vibrant Cyan',
+  '#00aaaa': 'Simply Cyan',
+  '#229988': 'Teal',
+  '#0000ff': 'Vibrant Blue',
+  '#0000aa': 'Simply Blue',
+  '#6600ff': 'Vibrant Indigo',
+  '#9922ff': 'Purple',
+  '#8800ff': 'Violet',
+  '#550088': 'Deep Purple',
+  '#ff00ff': 'Vibrant Magenta',
+  '#aa00aa': 'Simply Magenta',
+  '#ff0066': 'Raspberry',
+  '#ff2288': 'Hot Pink',
+  '#ff99bb': 'Pink',
+  '#ee8888': 'Faded Pink',
+};
+
 export const feature_animecolor: Feature<string> = {
-  name: 'Anime Color',
+  name: 'Anime Implant Color',
   small_supplemental: false,
   predictable: false,
   component: (props: FeatureValueProps<string>) => {
@@ -60,6 +86,30 @@ export const feature_animecolor: Feature<string> = {
       <StandardizedPalette
         choices={Object.keys(hairPresets)}
         displayNames={hairPresets}
+        onSetValue={handleSetValue}
+        value={value}
+        hex_values
+        allow_custom
+        featureId={featureId}
+        act={act}
+        maxWidth="385px"
+        includeHex
+      />
+    );
+  },
+};
+
+export const feature_animehalocolor: Feature<string> = {
+  name: 'Anime Halo Color',
+  small_supplemental: false,
+  predictable: false,
+  component: (props: FeatureValueProps<string>) => {
+    const { handleSetValue, value, featureId, act } = props;
+
+    return (
+      <StandardizedPalette
+        choices={Object.keys(haloPresets)}
+        displayNames={haloPresets}
         onSetValue={handleSetValue}
         value={value}
         hex_values

@@ -169,7 +169,7 @@
 	helptext = "We may retract our armblade in the same manner as we form it. Cannot be used while in lesser form."
 	button_icon_state = "armblade"
 	chemical_cost = 20
-	dna_cost = 2
+	dna_cost = 1
 	req_human = TRUE
 	weapon_type = /obj/item/melee/arm_blade
 	weapon_name_simple = "blade"
@@ -261,6 +261,7 @@
 	weapon_type = /obj/item/gun/magic/tentacle
 	weapon_name_simple = "tentacle"
 	silent = TRUE
+	weird = TRUE
 
 /obj/item/gun/magic/tentacle
 	name = "tentacle"
@@ -364,7 +365,7 @@
 		for(var/obj/item/I in H.held_items)
 			if(I.get_sharpness())
 				C.visible_message(span_danger("[H] impales [C] with [H.p_their()] [I.name]!"), span_userdanger("[H] impales you with [H.p_their()] [I.name]!"))
-				C.apply_damage(I.force, BRUTE, BODY_ZONE_CHEST)
+				C.apply_damage(I.force, BRUTE, BODY_ZONE_CHEST, attacking_item = I)
 				H.do_item_attack_animation(C, used_item = I)
 				H.add_mob_blood(C)
 				playsound(get_turf(H),I.hitsound,75,TRUE)
@@ -420,7 +421,11 @@
 		return BULLET_ACT_HIT
 
 	if(LAZYACCESS(fire_modifiers, RIGHT_CLICK))
-		var/obj/item/stealing = victim.get_active_held_item()
+		var/obj/item/stealing
+		if(victim.get_active_held_item())
+			stealing = victim.get_active_held_item()
+		else
+			stealing = victim.get_inactive_held_item()
 		if(!isnull(stealing))
 			if(victim.dropItemToGround(stealing))
 				victim.visible_message(
@@ -469,6 +474,7 @@
 	chemical_cost = 20
 	dna_cost = 1
 	req_human = TRUE
+	weird = TRUE
 
 	weapon_type = /obj/item/shield/changeling
 	weapon_name_simple = "shield"
@@ -517,13 +523,14 @@
 \***************************************/
 /datum/action/changeling/suit/armor
 	name = "Chitinous Armor"
-	desc = "We turn our skin into tough chitin to protect us from damage. Costs 20 chemicals."
+	desc = "We turn our skin into tough chitin to protect us from damage, as well as pepperspray and flashbangs. Costs 20 chemicals."
 	helptext = "Upkeep of the armor requires a low expenditure of chemicals. The armor provides decent protection against brute force and energy weapons. Cannot be used in lesser form."
 	button_icon_state = "chitinous_armor"
 	chemical_cost = 20
-	dna_cost = 1
+	dna_cost = 2
 	req_human = TRUE
 	recharge_slowdown = 0.125
+	weird = TRUE
 
 	suit_type = /obj/item/clothing/suit/armor/changeling
 	helmet_type = /obj/item/clothing/head/helmet/changeling
@@ -561,13 +568,19 @@
 
 /obj/item/clothing/head/helmet/changeling
 	name = "chitinous mass"
-	desc = "A tough, hard covering of black chitin with transparent chitin in front."
+	desc = "A tough, hard covering of black chitin with transparent chitin in front. It will shield you from the effects of pepperspray and flashbangs."
 	icon_state = "lingarmorhelmet"
 	inhand_icon_state = null
 	item_flags = DROPDEL
 	armor_type = /datum/armor/helmet_changeling
 	flags_inv = HIDEEARS|HIDEHAIR|HIDEEYES|HIDEFACIALHAIR|HIDEFACE|HIDESNOUT
+	flags_cover = PEPPERPROOF
+	flash_protect = FLASH_PROTECTION_WELDER
 	resistance_flags = FLAMMABLE //MONKESTATION ADDITION
+
+/obj/item/clothing/head/helmet/changeling/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_HEAD))
 
 /datum/armor/helmet_changeling
 	melee = 40

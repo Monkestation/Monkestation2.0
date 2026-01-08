@@ -15,8 +15,6 @@
 // Genetics end
 /// Monkeys are friendly/neutral to this mob by defaulot.
 #define TRAIT_MONKEYFRIEND 	"monkeyfriend"
-/// User's stamina is over the STAMINA_EXHAUSTION_THRESHOLD.
-#define TRAIT_EXHAUSTED "exhausted"
 /// User is sprinting, full speed ahead.
 #define TRAIT_SPRINTING "sprinting"
 ///Slows the user, with additional effects based on the source.

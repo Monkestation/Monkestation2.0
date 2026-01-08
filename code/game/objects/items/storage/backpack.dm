@@ -45,7 +45,7 @@
 	var/obj/item/storage/backpack/back_item = user.get_item_by_slot(ITEM_SLOT_BACK)
 	var/obj/item/storage/backpack/belt_item = user.get_item_by_slot(ITEM_SLOT_BELT)
 	if(istype(back_item) && istype(belt_item))
-		user.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/belt_satchel, min(back_item.satchel_movespeed_modifier, belt_item.satchel_movespeed_modifier))
+		user.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/belt_satchel, TRUE, min(back_item.satchel_movespeed_modifier, belt_item.satchel_movespeed_modifier))
 	else
 		user.update_movespeed()
 /*
@@ -135,7 +135,7 @@
 	desc = "It's useful for both carrying extra gear and proudly declaring your insanity."
 	icon_state = "backpack-cult"
 	inhand_icon_state = "backpack"
-	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
+	alternate_worn_layer = (HEAD_LAYER-0.5)
 
 /obj/item/storage/backpack/clown
 	name = "Giggles von Honkerton"
@@ -166,6 +166,13 @@
 	desc = "It's a very robust backpack."
 	icon_state = "backpack-security"
 	inhand_icon_state = "securitypack"
+	alternate_worn_layer = (HEAD_LAYER-0.5)
+
+/obj/item/storage/backpack/secmed
+	name = "security medical backpack"
+	desc = "A security-grade backpack, now in security grey!"
+	icon_state = "backpack-secmed"
+	inhand_icon_state = "backpack-secmed"
 
 /obj/item/storage/backpack/captain
 	name = "captain's backpack"
@@ -217,7 +224,7 @@
 	icon_state = "ert_plain"
 	inhand_icon_state = "securitypack"
 	resistance_flags = FIRE_PROOF
-	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
+	alternate_worn_layer = (HEAD_LAYER-0.5)
 
 /obj/item/storage/backpack/ert/Initialize(mapload)
 	. = ..()
@@ -426,6 +433,12 @@
 	icon_state = "satchel-security"
 	inhand_icon_state = "satchel-sec"
 
+/obj/item/storage/backpack/satchel/secmed
+	name = "security medical satchel"
+	desc = "A security-grade satchel, now in security grey!"
+	icon_state = "satchel-secmed"
+	inhand_icon_state = "satchel-secmed"
+
 /obj/item/storage/backpack/satchel/explorer
 	name = "explorer satchel"
 	desc = "A robust satchel for stashing your loot."
@@ -556,8 +569,6 @@
 	icon_state = "duffel-virology"
 	inhand_icon_state = "duffel-virology"
 
-
-
 /obj/item/storage/backpack/duffelbag/med/surgery/PopulateContents()
 	new /obj/item/scalpel(src)
 	new /obj/item/hemostat(src)
@@ -577,11 +588,16 @@
 	icon_state = "duffel-security"
 	inhand_icon_state = "duffel-sec"
 
-/obj/item/storage/backpack/duffelbag/sec/surgery
-	name = "surgical duffel bag"
-	desc = "A large duffel bag for holding extra supplies - this one has a material inlay with space for various sharp-looking tools."
+/obj/item/storage/backpack/duffelbag/secmed
+	name = "security medical duffelbag"
+	desc = "A large duffel bag for holding extra supplies, now in security grey!"
+	icon_state = "duffel-secmed"
+	inhand_icon_state = "duffel-secmed"
 
-/obj/item/storage/backpack/duffelbag/sec/surgery/PopulateContents()
+/obj/item/storage/backpack/duffelbag/secmed/surgery
+	desc = "A large duffel bag for holding extra supplies, now in security grey! - this one has a material inlay with space for various sharp-looking tools."
+
+/obj/item/storage/backpack/duffelbag/secmed/surgery/PopulateContents()
 	new /obj/item/scalpel(src)
 	new /obj/item/hemostat(src)
 	new /obj/item/retractor(src)

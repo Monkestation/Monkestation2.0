@@ -17,7 +17,7 @@
 			/* hud_owner = */ null,
 			/* escape_menu = */ src,
 			/* button_text = */ "Create Admin Ticket",
-			/* offset = */ list(-136, 30),
+			/* offset = */ list(-136, 28),
 			/* font_size = */ 24,
 			/* on_click_callback = */ CALLBACK(src, PROC_REF(create_ticket)),
 		)

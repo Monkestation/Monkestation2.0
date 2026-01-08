@@ -1,5 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - qol: "Flashes now apply a heavy screen blur by default, instead of rapidly brightening/darkening the screen in a way potentially dangerous to some players."
-  - qol: "If you wish to return to the old white or black screen flash tho, you can change it with the \"Screen Flash Visuals\" setting under Gameplay in Game Preferences."

@@ -131,3 +131,5 @@
 		QDEL_NULL(anomaly_core)
 	if (anchor)
 		move_chance = FALSE
+
+	contained = TRUE

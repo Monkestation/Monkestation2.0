@@ -1,6 +1,0 @@
-author: "TheColorCyan"
-delete-after: True
-changes:
-  - bugfix: "fixed restrain psi trap requiring you to step on it twice to activate"
-  - bugfix: "warlock extinguish spell now actually extinguishes lights"
-  - bugfix: "extinguish spell now also extinguishes the owner"

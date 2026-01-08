@@ -31,6 +31,8 @@ export const NaniteRemoteContent = (props) => {
     comms,
     message,
     saved_settings = [],
+    silicon,
+    AI,
   } = data;
 
   const modes = ['Off', 'Local', 'Targeted', 'Area', 'Relay'];
@@ -43,13 +45,22 @@ export const NaniteRemoteContent = (props) => {
     <>
       <Section
         title="Nanite Control"
-        buttons={
-          <Button
-            icon="lock"
-            content="Lock Interface"
-            onClick={() => act('lock')}
-          />
-        }
+        buttons={[
+          !silicon && (
+            <Button
+              icon="lock"
+              content="Lock Interface"
+              onClick={() => act('lock')}
+            />
+          ),
+          AI && (
+            <Button
+              icon="tower-broadcast"
+              content="Toggle Remote"
+              onClick={() => act('AItoggle')}
+            />
+          ),
+        ]}
       >
         <LabeledList>
           <LabeledList.Item label="Name">
@@ -57,7 +68,7 @@ export const NaniteRemoteContent = (props) => {
               value={program_name}
               maxLength={14}
               width="130px"
-              onChange={(e, value) =>
+              onChange={(value) =>
                 act('update_name', {
                   name: value,
                 })
@@ -73,7 +84,7 @@ export const NaniteRemoteContent = (props) => {
               width="47px"
               step={1}
               stepPixelSize={2}
-              onChange={(e, value) =>
+              onChange={(value) =>
                 act('set_code', {
                   code: value,
                 })
@@ -85,7 +96,7 @@ export const NaniteRemoteContent = (props) => {
               <Input
                 value={message}
                 width="270px"
-                onChange={(e, value) =>
+                onChange={(value) =>
                   act('set_message', {
                     value: value,
                   })
@@ -102,7 +113,7 @@ export const NaniteRemoteContent = (props) => {
                 width="47px"
                 step={1}
                 stepPixelSize={2}
-                onChange={(e, value) =>
+                onChange={(value) =>
                   act('set_relay_code', {
                     code: value,
                   })
@@ -111,18 +122,24 @@ export const NaniteRemoteContent = (props) => {
             </LabeledList.Item>
           )}
           <LabeledList.Item label="Signal Mode">
-            {modes.map((key) => (
-              <Button
-                key={key}
-                content={key}
-                selected={mode === key}
-                onClick={() =>
-                  act('select_mode', {
-                    mode: key,
-                  })
-                }
-              />
-            ))}
+            {modes.map((key) => {
+              if (silicon && key === 'Local') {
+                return null;
+              }
+              return (
+                <Button
+                  key={key}
+                  content={key}
+                  selected={mode === key}
+                  disabled={silicon && key === 'Local'}
+                  onClick={() =>
+                    act('select_mode', {
+                      mode: key,
+                    })
+                  }
+                />
+              );
+            })}
           </LabeledList.Item>
         </LabeledList>
       </Section>

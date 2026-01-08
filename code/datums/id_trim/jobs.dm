@@ -202,6 +202,7 @@
 		ACCESS_CAPTAIN,
 		ACCESS_CHANGE_IDS,
 		ACCESS_HOP,
+		ACCESS_QM,
 	)
 	job = /datum/job/bitrunner
 
@@ -268,12 +269,12 @@
 		ACCESS_BIT_DEN,
 		ACCESS_MINING,
 		ACCESS_MINING_STATION,
-		ACCESS_QM,
 		)
 	template_access = list(
 		ACCESS_CAPTAIN,
 		ACCESS_CHANGE_IDS,
 		ACCESS_HOP,
+		ACCESS_QM,
 		)
 	job = /datum/job/cargo_technician
 
@@ -505,6 +506,36 @@
 	if(CONFIG_GET(flag/security_has_maint_access))
 		access |= list(ACCESS_MAINT_TUNNELS)
 
+/datum/id_trim/job/brig_physician
+	assignment = "Brig Physician"
+	trim_state = "trim_medicaldoctor"
+	department_color = COLOR_SECURITY_RED
+	subdepartment_color = COLOR_MEDICAL_BLUE
+	sechud_icon_state = SECHUD_BRIG_PHYSICIAN
+	minimal_access = list(
+		ACCESS_BRIG_ENTRANCE,
+		ACCESS_PERMABRIG,
+		ACCESS_MAINT_TUNNELS,
+		ACCESS_SECURITY,
+		ACCESS_MECH_SECURITY,
+
+		ACCESS_MECH_MEDICAL,
+		ACCESS_MEDICAL,
+		ACCESS_MINERAL_STOREROOM,
+		ACCESS_MORGUE,
+		ACCESS_PHARMACY,
+		ACCESS_SURGERY,
+		)
+	extra_access = list(
+		ACCESS_DETECTIVE,
+		)
+	template_access = list(
+		ACCESS_CAPTAIN,
+		ACCESS_CHANGE_IDS,
+		ACCESS_HOS,
+		)
+	job = /datum/job/brig_physician
+
 /datum/id_trim/job/geneticist
 	assignment = "Geneticist"
 	trim_state = "trim_geneticist"
@@ -571,11 +602,13 @@
 		ACCESS_THEATRE,
 		ACCESS_WEAPONS,
 		//monkestation addition start: If the QM isn't a head, then these are part of HoP's responsibility
-		ACCESS_VAULT,
+		ACCESS_BIT_DEN,
 		ACCESS_MINING,
 		ACCESS_MINING_STATION,
 		ACCESS_MECH_MINING,
 		ACCESS_QM,
+		ACCESS_SHIPPING,
+		ACCESS_VAULT,
 		//monkestation addition end
 		)
 	minimal_wildcard_access = list(
@@ -1104,6 +1137,7 @@
 		ACCESS_CAPTAIN,
 		ACCESS_CHANGE_IDS,
 		ACCESS_HOP,
+		ACCESS_QM,
 		)
 	job = /datum/job/shaft_miner
 

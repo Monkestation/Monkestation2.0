@@ -55,7 +55,6 @@
 	desc = "A military-grade gas mask that can be connected to an air supply."
 	icon_state = "gas_mining"
 	inhand_icon_state = "explorer_gasmask"
-	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
 	visor_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	visor_flags_inv = HIDEFACIALHAIR
 	visor_flags_cover = MASKCOVERSMOUTH
@@ -315,12 +314,15 @@
 
 /obj/item/clothing/suit/hooded/cloak/godslayer/proc/on_stat_change(mob/living/carbon/user, new_stat)
 	SIGNAL_HANDLER
-	if(ISINRANGE_EX(new_stat, CONSCIOUS, DEAD))
+	if(ISINRANGE_EX(new_stat, CONSCIOUS, DEAD) && user.health <= user.crit_threshold)
 		resurrection_butterfly(user)
 
 /obj/item/clothing/suit/hooded/cloak/godslayer/proc/on_health_update(mob/living/carbon/user)
 	SIGNAL_HANDLER
-	if(user.stat != DEAD && user.health <= user.hardcrit_threshold) // so it still works if they don't have normal crit
+	if(user.stat == DEAD)
+		return
+	var/health_threshold = HAS_TRAIT(user, TRAIT_NOSOFTCRIT) ? user.hardcrit_threshold : user.crit_threshold
+	if(user.health <= health_threshold) // so it still works if they don't have normal crit
 		resurrection_butterfly(user)
 
 /obj/item/clothing/suit/hooded/cloak/godslayer/proc/resurrection_butterfly(mob/living/carbon/user)

@@ -23,6 +23,7 @@
 	prevent_roundtype_conversion = FALSE
 	show_to_ghosts = TRUE
 	antag_flags = FLAG_ANTAG_CAP_TEAM
+	antag_count_points = 4
 	var/datum/team/xeno/xeno_team
 
 /datum/antagonist/xeno/on_gain()

@@ -201,7 +201,7 @@
 		var/mob/living/dust_mob = target
 		if(dust_mob.stat == DEAD)
 			dust_mob.investigate_log("has been dusted by a death bolt (colossus).", INVESTIGATE_DEATHS)
-			dust_mob.dust()
+			dust_mob.dust(drop_items = TRUE)
 		return
 	if(!explode_hit_objects || istype(target, /obj/vehicle/sealed))
 		return

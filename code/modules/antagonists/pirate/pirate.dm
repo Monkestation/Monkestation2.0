@@ -8,6 +8,7 @@
 	suicide_cry = "FOR ME MATEYS!!"
 	hijack_speed = 2 // That is without doubt the worst pirate I have ever seen.
 	antag_flags = parent_type::antag_flags | FLAG_ANTAG_CAP_TEAM // monkestation addition
+	antag_count_points = 5 //mid level team antag
 	var/datum/team/pirate/crew
 
 /datum/antagonist/pirate/greet()
@@ -58,7 +59,7 @@
 /datum/team/pirate/proc/forge_objectives()
 	var/datum/objective/loot/getbooty = new()
 	getbooty.team = src
-	for(var/obj/machinery/computer/piratepad_control/P in GLOB.machines)
+	for(var/obj/machinery/computer/piratepad_control/P as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/computer/piratepad_control))
 		var/area/A = get_area(P)
 		if(istype(A,/area/shuttle/pirate))
 			getbooty.cargo_hold = P

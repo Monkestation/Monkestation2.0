@@ -88,6 +88,10 @@
 		else if(HAS_TRAIT(src, TRAIT_LABOURED_BREATHING))
 			losebreath += (1 / next_breath)
 
+	var/obj/item/organ/lungs = get_organ_slot(ORGAN_SLOT_LUNGS)
+	if(((pulledby?.grab_state >= GRAB_KILL) || (lungs?.organ_flags & ORGAN_FAILING)) && !HAS_TRAIT(src, TRAIT_ASSISTED_BREATHING))
+		losebreath ++  //You can't breath at all when being choked or if your lungs are failing, so you're going to miss a breath
+
 	if(losebreath < 1)
 		var/pre_sig_return = SEND_SIGNAL(src, COMSIG_CARBON_ATTEMPT_BREATHE, seconds_per_tick, times_fired)
 		if(pre_sig_return & BREATHE_BLOCK_BREATH)

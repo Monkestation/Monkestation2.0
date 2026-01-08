@@ -59,7 +59,7 @@
 	var/freeze_range = 4
 	var/rad_range = 4
 	var/rad_threshold = RAD_EXTREME_INSULATION
-	var/stamina_damage = 30
+	var/stamina_damage = 15
 	var/temp_adjust = 230
 
 /obj/item/grenade/gluon/detonate(mob/living/lanced_by)

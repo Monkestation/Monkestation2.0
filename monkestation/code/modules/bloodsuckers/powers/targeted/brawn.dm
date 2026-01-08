@@ -1,19 +1,19 @@
 /datum/action/cooldown/bloodsucker/targeted/brawn
 	name = "Brawn"
-	desc = "Snap restraints, break lockers and doors, or deal terrible damage with your bare hands."
+	desc = "Deal terrible damage with your bare hands, or knock those grabbing you to the floor. Higher levels allow you to snap restraints or break closets."
 	button_icon_state = "power_strength"
 	power_explanation = "Brawn:\n\
-		Click any person to bash into them, break any restraints on you (except silver handcuffs), or knock a grabber down. Only one of these can be done per use.\n\
+		Click any person to bash into them or knock a grabber down. Only one of these can be done per use.\n\
 		Punching a Cyborg will heavily EMP them in addition to deal damage.\n\
-		At level 3, you get the ability to break closets open, additionally can both break restraints AND knock a grabber down in the same use.\n\
-		At level 4, you get the ability to bash airlocks open, as long as they aren't bolted.\n\
-		At level 5, you get the ability to break even silver handcuffs.\n\
-		Higher levels will increase the damage and knockdown when punching someone."
+		Higher levels will increase the damage and knockdown when punching someone.\n\
+		At level 2, you gain the ability to snap handcuffs and straightjackets, which will also knock anyone grabbing you down at the same time.\n\
+		You can break normal handcuffs and straightjackets, but not silver handcuffs or bolas.\n\
+		At level 3, you get the ability to break closets open, either from inside or outside.\n\
+		At level 5, you get the ability to break even silver handcuffs. Use wisely - security is unlikely to try and capture you alive again after the first time!"
 	power_flags = BP_AM_TOGGLE
 	check_flags = BP_CANT_USE_IN_TORPOR|BP_CANT_USE_IN_FRENZY|BP_CANT_USE_WHILE_INCAPACITATED|BP_CANT_USE_WHILE_UNCONSCIOUS
 	purchase_flags = BLOODSUCKER_CAN_BUY|VASSAL_CAN_BUY
 	bloodcost = 8
-	sol_multiplier = 5
 	cooldown_time = 9 SECONDS
 	target_range = 1
 	power_activates_immediately = TRUE
@@ -22,16 +22,19 @@
 /datum/action/cooldown/bloodsucker/targeted/brawn/upgrade_power()
 	. = ..()
 
-	if (level_current == 5)
+	if (level_current >= 5)
 		check_flags |= BP_ALLOW_WHILE_SILVER_CUFFED
 
-/datum/action/cooldown/bloodsucker/targeted/brawn/ActivatePower(trigger_flags)
-	// Did we break out of our handcuffs?
-	if(break_restraints())
-		power_activated_sucessfully()
+/datum/action/cooldown/bloodsucker/targeted/brawn/can_use(mob/living/carbon/user, trigger_flags)
+	if (user.handcuffed && !check_level(2, "break restraints"))
 		return FALSE
-	// Did we knock a grabber down? We can only do this while not also breaking restraints if strong enough.
-	if(level_current >= 3 && escape_puller())
+	return ..()
+
+/datum/action/cooldown/bloodsucker/targeted/brawn/ActivatePower(trigger_flags)
+	// Did we break out of our handcuffs/locker and/or knock a grabber down?
+	var/broke_restraints = break_restraints()
+	var/escaped_puller = escape_puller()
+	if(broke_restraints || escaped_puller)
 		power_activated_sucessfully()
 		return FALSE
 	// Did neither, now we can PUNCH.
@@ -40,11 +43,32 @@
 // Look at 'biodegrade.dm' for reference
 /datum/action/cooldown/bloodsucker/targeted/brawn/proc/break_restraints()
 	var/mob/living/carbon/human/user = owner
-	///Only one form of shackles removed per use
 	var/used = FALSE
 
+	// Remove Handcuffs
+	var/obj/cuffs = user.get_item_by_slot(ITEM_SLOT_HANDCUFFED)
+	if(istype(cuffs) && level_current >= 2)
+		user.visible_message(
+			span_warning("[user] discards [user.p_their()] restraints like it's nothing!"),
+			span_warning("We break through our restraints!"),
+		)
+		user.clear_cuffs(cuffs, TRUE)
+		used = TRUE
+
+	// Remove Straightjackets
+	if(user.wear_suit?.breakouttime && level_current >=2)
+		var/obj/item/clothing/suit/straightjacket = user.get_item_by_slot(ITEM_SLOT_OCLOTHING)
+		user.visible_message(
+			span_warning("[user] rips straight through [user.p_their()] [straightjacket]!"),
+			span_warning("We tear through our [straightjacket]!"),
+		)
+		user.temporarilyRemoveItemFromInventory(straightjacket, force = TRUE)
+		if(straightjacket && user.wear_suit == straightjacket)
+			qdel(straightjacket)
+		used = TRUE
+
 	// Breaks out of lockers
-	if(istype(user.loc, /obj/structure/closet))
+	if(istype(user.loc, /obj/structure/closet) && check_level(3, "bash open closets"))
 		var/obj/structure/closet/closet = user.loc
 		if(!istype(closet))
 			return FALSE
@@ -54,30 +78,6 @@
 		)
 		to_chat(user, span_warning("We bash [closet] wide open!"))
 		addtimer(CALLBACK(src, PROC_REF(break_closet), user, closet), 1)
-		used = TRUE
-
-	// Remove both Handcuffs & Legcuffs
-	var/obj/cuffs = user.get_item_by_slot(ITEM_SLOT_HANDCUFFED)
-	var/obj/legcuffs = user.get_item_by_slot(ITEM_SLOT_LEGCUFFED)
-	if(!used && (istype(cuffs) || istype(legcuffs)))
-		user.visible_message(
-			span_warning("[user] discards their restraints like it's nothing!"),
-			span_warning("We break through our restraints!"),
-		)
-		user.clear_cuffs(cuffs, TRUE)
-		user.clear_cuffs(legcuffs, TRUE)
-		used = TRUE
-
-	// Remove Straightjackets
-	if(user.wear_suit?.breakouttime && !used)
-		var/obj/item/clothing/suit/straightjacket = user.get_item_by_slot(ITEM_SLOT_OCLOTHING)
-		user.visible_message(
-			span_warning("[user] rips straight through the [user.p_their()] [straightjacket]!"),
-			span_warning("We tear through our [straightjacket]!"),
-		)
-		user.temporarilyRemoveItemFromInventory(straightjacket, force = TRUE)
-		if(straightjacket && user.wear_suit == straightjacket)
-			qdel(straightjacket)
 		used = TRUE
 
 	// Did we end up using our ability? If so, play the sound effect and return TRUE
@@ -98,12 +98,12 @@
 	// Knock Down (if Living)
 	if(isliving(pulled_mob))
 		var/mob/living/hit_target = pulled_mob
-		hit_target.Knockdown(pull_power * 10 + 20)
+		hit_target.Knockdown(pull_power * 10 + 10)
 	// Knock Back (before Knockdown, which probably cancels pull)
 	var/send_dir = get_dir(owner, pulled_mob)
-	var/turf/turf_thrown_at = get_ranged_target_turf(pulled_mob, send_dir, pull_power)
+	var/turf/turf_thrown_at = get_ranged_target_turf(pulled_mob, send_dir, pull_power + 1)
 	owner.newtonian_move(send_dir) // Bounce back in 0 G
-	pulled_mob.throw_at(turf_thrown_at, pull_power, TRUE, owner, FALSE) // Throw distance based on grab state! Harder grabs punished more aggressively.
+	pulled_mob.throw_at(turf_thrown_at, pull_power + 1, TRUE, owner, FALSE) // Throw distance based on grab state! Harder grabs punished more aggressively.
 	// /proc/log_combat(atom/user, atom/target, what_done, atom/object=null, addition=null)
 	log_combat(owner, pulled_mob, "used Brawn power")
 	owner.visible_message(
@@ -157,22 +157,6 @@
 		target_closet.visible_message(span_danger("[target_closet] breaks open as [user] bashes it!"))
 		addtimer(CALLBACK(src, PROC_REF(break_closet), user, target_closet), 1)
 		playsound(get_turf(user), 'sound/effects/grillehit.ogg', 80, TRUE, -1)
-	// Target Type: Door
-	else if(istype(target_atom, /obj/machinery/door))
-		if(!check_level(3, "tear open doors"))
-			return
-		var/obj/machinery/door/target_airlock = target_atom
-		playsound(get_turf(user), 'sound/machines/airlock_alien_prying.ogg', 40, TRUE, -1)
-		owner.balloon_alert(owner, "you prepare to tear open [target_airlock]...")
-		if(!do_after(user, 2.5 SECONDS, target_airlock, hidden = TRUE))
-			user.balloon_alert(user, "interrupted!")
-			return FALSE
-		if(target_airlock.Adjacent(user))
-			target_airlock.visible_message(span_danger("[target_airlock] breaks open as [user] bashes it!"))
-			user.Stun(1 SECONDS)
-			user.do_attack_animation(target_airlock, ATTACK_EFFECT_SMASH)
-			playsound(get_turf(target_airlock), 'sound/effects/bang.ogg', 30, 1, -1)
-			target_airlock.open(BYPASS_DOOR_CHECKS) // open(2) is like a crowbar or jaws of life.
 
 /datum/action/cooldown/bloodsucker/targeted/brawn/proc/check_level(needed_level, action)
 	if(needed_level > level_current)
@@ -196,6 +180,9 @@
 		return FALSE
 	// Target Type: Living
 	if(isliving(target_atom))
+		if(HAS_TRAIT(owner, TRAIT_PACIFISM))
+			to_chat(owner, span_warning("You don't want to harm other living beings!"))
+			return FALSE
 		return TRUE
 	// Target Type: Door
 	else if(istype(target_atom, /obj/machinery/door))

@@ -1,4 +1,0 @@
-author: "JupiterJaeden"
-delete-after: True
-changes:
-  - balance: "Removed the RNG slip from liquid spills. Makes it so you only slip if you sprint. Does not affect the regular/guaranteed slips like sprayed water, space lube, etc."

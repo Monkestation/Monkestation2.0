@@ -18,25 +18,30 @@
 		return
 
 	var/list/modifiers = params2list(params)
+
+	if(client)
+		client.imode.update_istate(src, modifiers)
+
 	if(LAZYACCESS(modifiers, SHIFT_CLICK))
-		if(LAZYACCESS(modifiers, CTRL_CLICK))
+		if(istate & ISTATE_CONTROL)
 			CtrlShiftClickOn(A)
 			return
 		if(LAZYACCESS(modifiers, MIDDLE_CLICK))
 			ShiftMiddleClickOn(A)
 			return
-		ShiftClickOn(A)
-		return
+		if(!(istate & ISTATE_SECONDARY)) // shift right click = right click, not shift click (context menu pref compatibility)
+			ShiftClickOn(A)
+			return
 	if(LAZYACCESS(modifiers, MIDDLE_CLICK))
 		MiddleClickOn(A, params)
 		return
 	if(LAZYACCESS(modifiers, ALT_CLICK)) // alt and alt-gr (rightalt)
-		if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		if(istate & ISTATE_SECONDARY)
 			AltClickSecondaryOn(A)
 		else
 			A.borg_click_alt(src)
 		return
-	if(LAZYACCESS(modifiers, CTRL_CLICK))
+	if(istate & ISTATE_CONTROL)
 		CtrlClickOn(A)
 		return
 
@@ -49,7 +54,7 @@
 
 	//wireless interaction with an atom
 	if(!W && get_dist(src, A) <= interaction_range)
-		if(LAZYACCESS(modifiers, RIGHT_CLICK) && !module_active)
+		if(istate & ISTATE_SECONDARY && !module_active)
 			var/secondary_result = A.attack_robot_secondary(src, modifiers)
 			if(secondary_result == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || secondary_result == SECONDARY_ATTACK_CONTINUE_CHAIN)
 				return
@@ -73,7 +78,10 @@
 			return
 
 		if(W == A)
-			W.attack_self(src)
+			if(istate & ISTATE_SECONDARY)
+				W.attack_self_secondary(src, modifiers)
+			else
+				W.attack_self(src, modifiers)
 			return
 
 		// cyborgs are prohibited from using storage items so we can I think safely remove (A.loc in contents)

@@ -307,7 +307,7 @@
 /datum/replica_fabricator_output/pinion_airlock
 	name = "airlock"
 	cost = BRASS_POWER_COST * 5 // Breaking it only gets 2 but this is the exception to the rule of equivalent exchange, due to all the small parts inside
-	to_create_path = /obj/machinery/door/airlock/bronze/clock
+	to_create_path = /obj/machinery/door/airlock/bronze/clock/player_made
 	creation_delay = 10 SECONDS
 	replace_types_of = list(/obj/machinery/door)
 	replacement_mult = 1
@@ -325,7 +325,7 @@
 
 /datum/replica_fabricator_output/pinion_airlock/glass
 	name = "glass airlock"
-	to_create_path = /obj/machinery/door/airlock/bronze/clock/glass
+	to_create_path = /obj/machinery/door/airlock/bronze/clock/player_made/glass
 
 #undef BRASS_POWER_COST
 #undef REGULAR_POWER_COST

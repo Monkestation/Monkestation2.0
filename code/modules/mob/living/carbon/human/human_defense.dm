@@ -125,6 +125,13 @@
 
 	return FAILED_BLOCK
 
+/mob/living/carbon/human/grab(mob/living/target)
+	if(ishuman(target))
+		// this grab will handle human-on-human martial arts stuff
+		var/mob/living/carbon/human/Htarget = target
+		return dna.species.grab(src, Htarget, mind?.martial_art)
+	. = ..()
+
 /mob/living/carbon/human/grippedby(mob/living/user, instant = FALSE)
 	if(w_uniform)
 		w_uniform.add_fingerprint(user)
@@ -611,7 +618,7 @@
 		combined_msg += bleed_text
 
 	if(stamina.loss)
-		if(stamina.loss > 30)
+		if(stamina.current <= (0.30 * stamina.maximum))
 			combined_msg += span_info("You're completely exhausted.")
 		else
 			combined_msg += span_info("You feel fatigued.")
@@ -820,14 +827,31 @@
 		return 0
 
 	burn_clothing(seconds_per_tick, fire_handler.stacks)
+	if(HAS_TRAIT(src, TRAIT_RESISTHEAT))
+		return
+
 	if(!(sigreturn & BURNING_SKIP_PROTECTION))
 		if(get_insulation(FIRE_IMMUNITY_MAX_TEMP_PROTECT) >= 0.9)
 			return 0
 		if(get_insulation(FIRE_SUIT_MAX_TEMP_PROTECT) >= 0.9)
-			return adjust_bodytemperature(HEAT_PER_FIRE_STACK * fire_handler.stacks * seconds_per_tick, max_temp = BODYTEMP_FIRE_TEMP_SOFTCAP, use_insulation = TRUE)
+			return adjust_bodytemperature(HEAT_PER_FIRE_STACK * 0.25 * fire_handler.stacks * seconds_per_tick, max_temp = BODYTEMP_FIRE_TEMP_SOFTCAP, use_insulation = TRUE)
+
+		adjust_bodytemperature(HEAT_PER_FIRE_STACK * fire_handler.stacks * seconds_per_tick, max_temp = BODYTEMP_FIRE_TEMP_SOFTCAP, use_insulation = TRUE)
+
+		var/fire_armor = (100 - src.getarmor(null, FIRE)) * 0.01
+
+		switch(times_fired)
+			if(0 to 3)
+				apply_damage((0.20 * fire_handler.stacks * fire_armor), BURN)
+			if(4 to 6)
+				apply_damage((0.30 * fire_handler.stacks * fire_armor), BURN)
+			if(7 to 9)
+				apply_damage((0.40 * fire_handler.stacks * fire_armor), BURN)
+			if(10 to INFINITY)
+				apply_damage((0.50 * fire_handler.stacks * fire_armor), BURN)
 
 	. = ..()
-	if(. && !HAS_TRAIT(src, TRAIT_RESISTHEAT))
+	if(.)
 		add_mood_event("on_fire", /datum/mood_event/on_fire)
 		add_mob_memory(/datum/memory/was_burning)
 	return .

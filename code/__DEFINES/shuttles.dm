@@ -62,6 +62,7 @@
 #define ENGINE_COEFF_MIN 0.5
 #define ENGINE_COEFF_MAX 2
 #define ENGINE_DEFAULT_MAXSPEED_ENGINES 5
+#define ENGINES_START_TIME 100
 
 //Docking error flags
 #define DOCKING_SUCCESS 0
@@ -104,3 +105,12 @@
 #define SHUTTLE_EVENT_MISS_SHUTTLE 1 << 0
 ///spawned stuff should hit the shuttle
 #define SHUTTLE_EVENT_HIT_SHUTTLE 1 << 1
+
+// Hijack stages
+
+#define NOT_BEGUN 0
+#define STAGE_1 1
+#define STAGE_2 2
+#define STAGE_3 3
+#define STAGE_4 4
+#define HIJACKED 5

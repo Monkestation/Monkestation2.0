@@ -21,7 +21,7 @@
 	return ..()
 
 /mob/living/carbon/human/GetVoice()
-	if(HAS_TRAIT(src, TRAIT_UNKNOWN))
+	if(HAS_TRAIT(src, TRAIT_UNKNOWN) || HAS_TRAIT(src, TRAIT_ANONYMOUS))
 		return ("Unknown")
 
 	if(istype(wear_mask, /obj/item/clothing/mask/chameleon))

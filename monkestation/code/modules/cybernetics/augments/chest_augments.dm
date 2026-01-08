@@ -137,6 +137,7 @@
 	overlay.color = "#77BD5D"
 
 	RegisterSignal(owner,COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(update_owner_overlay))
+	owner.update_appearance(UPDATE_OVERLAYS)
 
 	addtimer(CALLBACK(src, PROC_REF(remove_overlay)),max_ticks_cooldown/2)
 
@@ -151,9 +152,9 @@
 		overlays += overlay
 
 /obj/item/organ/internal/cyberimp/chest/chemvat/proc/remove_overlay()
-	QDEL_NULL(overlay)
-
-	UnregisterSignal(owner,COMSIG_ATOM_UPDATE_OVERLAYS)
+	overlay = null
+	UnregisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS)
+	owner.update_appearance(UPDATE_OVERLAYS)
 
 /obj/item/organ/internal/cyberimp/chest/chemvat/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
 	. = ..()
@@ -336,7 +337,7 @@
 	owner.emote("gasp")
 	owner.set_jitter_if_lower(200 SECONDS)
 	SEND_SIGNAL(owner, COMSIG_LIVING_MINOR_SHOCK)
-	log_game("[owner] been revived by [src]")
+	log_game("[key_name(owner)] been revived by [src]")
 
 
 /obj/item/organ/internal/cyberimp/chest/reviver/emp_act(severity)
@@ -511,7 +512,7 @@
 	var/turf/target = get_edge_target_turf(owner, owner.dir)
 	var/obj/O = new projectile(owner.loc)
 	playsound(owner, fire_sound, 50, TRUE)
-	log_message("Launched a [O.name] from [owner], targeting [target].", LOG_ATTACK)
+	log_message("Launched a [O.name] from [key_name(owner)], targeting [key_name(target)].", LOG_ATTACK)
 
 	if(harmful)
 		O.throwforce = 35
@@ -565,7 +566,7 @@
 /obj/item/organ/internal/cyberimp/chest/dualwield/proc/unregister()
 	UnregisterSignal(owner, COMSIG_MOB_ITEM_ATTACK)
 
-/obj/item/organ/internal/cyberimp/chest/dualwield/proc/on_item_attack(datum/source, mob/target, mob/user, params, obj/item/weapon)
+/obj/item/organ/internal/cyberimp/chest/dualwield/proc/on_item_attack(datum/source, mob/target, mob/user, list/modifiers, list/attack_modifiers, obj/item/weapon)
 	SIGNAL_HANDLER
 
 	if(!(owner.istate & ISTATE_HARM)) // No dual wielding outside of combat mode.

@@ -1,63 +1,26 @@
-@use 'sass:color';
-@use 'sass:meta';
+.theme-generic-yellow:root {
+  // Palette
+  --generic: #484455;
+  --accent: #4f56a5;
+  --accent-2: #ffbf00;
+  --border-color: #7b86ff;
 
-$generic: #484455;
-$accent: #4f56a5;
-$accent-2: #ffbf00;
+  // Base
+  --color-primary: var(--accent);
+  --color-bg: color-mix(in srgb, var(--generic) 55%, black);
 
-@use '../colors.scss' with (
-  $fg-map-keys: (),
-  $bg-map-keys: (),
-  $primary: $accent
-);
-@use '../base.scss' with (
-  $color-bg: color.scale($generic, $lightness: -45%),
-  $border-radius: 2px
-);
-
-.theme-generic-yellow {
   // Components
-  @include meta.load-css(
-    '../components/Button.scss',
-    $with: (
-      'color-default': $accent,
-      'color-transparent-text': rgba(227, 240, 255, 0.75)
-    )
-  );
-  @include meta.load-css(
-    '../components/ColorSelectBox.scss',
-    $with: ('color-default': color.scale($generic, $lightness: -20%))
-  );
-  @include meta.load-css(
-    '../components/ProgressBar.scss',
-    $with: (
-      'color-default-fill': $accent,
-      'background-color': rgba(0, 0, 0, 0.5)
-    )
-  );
-  @include meta.load-css('../components/Section.scss');
-  @include meta.load-css(
-    '../components/ImageButton.scss',
-    $with: (
-      'color-default': darken(colors.$primary, 20%),
-      'color-disabled': #363636,
-      'color-selected': #465899
-    )
-  );
-  @include meta.load-css(
-    '../components/Input.scss',
-    $with: ('border-color': #7b86ff)
-  );
+  --button-color-default: var(--accent);
+  --button-color-transparent: rgba(227, 240, 255, 0.75);
+  --button-background-selected: var(--accent-2);
+  --progress-bar-fill: var(--accent);
+  --progress-bar-background: rgba(0, 0, 0, 0.5);
+  --input-border-color: var(--border-color);
+
+  // TitleBar
+  --titlebar-background: color-mix(in srgb, var(--generic) 50%, black);
 
   // Layouts
-  @include meta.load-css('../layouts/Layout.scss');
-  @include meta.load-css('../layouts/Window.scss');
-  @include meta.load-css(
-    '../layouts/TitleBar.scss',
-    $with: ('background-color': color.scale($generic, $lightness: -50%))
-  );
-  @include meta.load-css('../layouts/PopupWindow.scss');
-
   .Layout__content {
     background-image: url('../../assets/bg-nanotrasen.svg');
   }

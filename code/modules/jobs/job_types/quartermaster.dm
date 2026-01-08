@@ -1,7 +1,7 @@
 /datum/job/quartermaster
 	title = JOB_QUARTERMASTER
 	description = "Coordinate cargo technicians and shaft miners, assist with \
-		economical purchasing."
+		economical purchasing, lead the union."
 	department_head = list(JOB_HEAD_OF_PERSONNEL)
 	// head_announce = list(RADIO_CHANNEL_SUPPLY) // Monkestation Edit- QMs are not heads. No head announcement for non-heads.
 	faction = FACTION_STATION
@@ -17,10 +17,10 @@
 	outfit = /datum/outfit/job/quartermaster
 	plasmaman_outfit = /datum/outfit/plasmaman/cargo
 
-	paycheck = PAYCHECK_COMMAND
+	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_CAR
 
-	liver_traits = list(TRAIT_PRETENDER_ROYAL_METABOLISM) // finally upgraded
+	liver_traits = list(TRAIT_PRETENDER_ROYAL_METABOLISM) //monkestation edit - No longer upgraded :(
 
 	display_order = JOB_DISPLAY_ORDER_QUARTERMASTER
 	bounty_types = CIV_JOB_RANDOM
@@ -47,4 +47,5 @@
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	l_hand = /obj/item/clipboard
 
-	chameleon_extras = /obj/item/stamp/head/qm
+	chameleon_extras = /obj/item/stamp/qm
+	accessory = /obj/item/clothing/accessory/badge/cargo/quartermaster

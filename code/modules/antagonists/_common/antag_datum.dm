@@ -42,11 +42,13 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/count_against_dynamic_roll_chance = TRUE
 	/// The battlecry this antagonist shouts when suiciding with C4/X4.
 	var/suicide_cry = ""
+
 	//Antag panel properties
 	///This will hide adding this antag type in antag panel, use only for internal subtypes that shouldn't be added directly but still show if possessed by mind
 	var/show_in_antagpanel = TRUE
 	///Antagpanel will display these together, REQUIRED
 	var/antagpanel_category = "Uncategorized"
+
 	///Will append antagonist name in admin listings - use for categories that share more than one antag type
 	var/show_name_in_check_antagonists = FALSE
 	/// Should this antagonist be shown as antag to ghosts? Shouldn't be used for stealthy antagonists like traitors
@@ -63,6 +65,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/hardcore_random_bonus = FALSE
 	/// A path to the audio stinger that plays upon gaining this datum.
 	var/stinger_sound
+	/// How many points does this antag contribute to antag cap usage, should only be updated via set_antag_count_points()
+	var/antag_count_points = 10
 
 	//ANTAG UI
 
@@ -259,7 +263,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 		if(ui_name)
 			to_chat(owner.current, span_boldnotice("For more info, read the panel. \
 				You can always come back to it using the button in the top left."))
-			info_button.Trigger()
+			// uses a timer so it doesn't block, but still gives time for the rest of on_gain() to do its thing
+			addtimer(CALLBACK(info_button, TYPE_PROC_REF(/datum/action, Trigger)), 0.1 SECONDS)
 		var/type_policy = get_policy("[type]") // path to text
 		if(type_policy)
 			to_chat(owner.current, type_policy)
@@ -511,7 +516,7 @@ GLOBAL_LIST_EMPTY(cached_antag_previews)
 	if(QDELETED(antag_mob) || !antag_mob.key || antag_mob.stat == DEAD || antag_mob.client?.is_afk())
 		return FALSE
 	// don't count admins mucking around on centcom or whatever
-	if(istype(get_area(antag_mob), /area/centcom))
+	if(is_centcom_area(antag_mob))
 		return FALSE
 	return TRUE
 
@@ -628,5 +633,11 @@ GLOBAL_LIST_EMPTY(cached_antag_previews)
 
 	can_assign_self_objectives = FALSE
 	owner.announce_objectives()
+
+///Should be called to set antag_count_points()
+/datum/antagonist/proc/set_antag_count_points(new_value = 10, old_value = antag_count_points) //handling vars this way allows us to pass to parent
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_ANTAGONIST_COUNT_POINTS_SET, new_value, old_value)
+	antag_count_points = new_value
 
 #undef CUSTOM_OBJECTIVE_MAX_LENGTH

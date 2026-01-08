@@ -8,7 +8,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 /mob/living/carbon/human/dummy/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_GODMODE, INNATE_TRAIT)
+	add_traits(list(TRAIT_GODMODE, TRAIT_NO_TELEPORT), INNATE_TRAIT)
 
 /mob/living/carbon/human/dummy/Destroy()
 	in_use = FALSE
@@ -38,6 +38,12 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	return
 
 /mob/living/carbon/human/dummy/med_hud_set_status()
+	return
+
+/mob/living/carbon/human/dummy/on_can_hear_music_trait_gain(datum/source)
+	return
+
+/mob/living/carbon/human/dummy/on_can_hear_music_trait_loss(datum/source)
 	return
 
 /*
@@ -153,6 +159,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	target.dna.features["anime_top"] = get_consistent_feature_entry(GLOB.anime_top_list) //Monkestation Addition
 	target.dna.features["anime_middle"] = get_consistent_feature_entry(GLOB.anime_middle_list) //Monkestation Addition
 	target.dna.features["anime_bottom"] = get_consistent_feature_entry(GLOB.anime_bottom_list) //Monkestation Addition
+	target.dna.features["anime_halo"] = get_consistent_feature_entry(GLOB.anime_halo_list)
 	target.dna.features["arachnid_appendages"] = get_consistent_feature_entry(GLOB.arachnid_appendages_list) //Monkestation Addition
 	target.dna.features["arachnid_chelicerae"] = get_consistent_feature_entry(GLOB.arachnid_chelicerae_list) //Monkestation Addition
 	target.dna.features["goblin_ears"] = get_consistent_feature_entry(GLOB.goblin_ears_list) //Monkestation Addition

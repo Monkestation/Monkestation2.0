@@ -20,6 +20,7 @@
 	id = "flash_blur"
 	status_type = STATUS_EFFECT_REFRESH
 	tick_interval = STATUS_EFFECT_NO_TICK
+	processing_speed = STATUS_EFFECT_PRIORITY
 	alert_type = null
 	remove_on_fullheal = TRUE
 	on_remove_on_mob_delete = TRUE

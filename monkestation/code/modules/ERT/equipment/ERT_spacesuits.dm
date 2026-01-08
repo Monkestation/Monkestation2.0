@@ -72,6 +72,7 @@
 	max_integrity = 300
 	armor_type = /datum/armor/ert
 	resistance_flags = ACID_PROOF | FIRE_PROOF
+	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	//helmet light
 	actions_types = list(/datum/action/item_action/toggle_helmet_light)
 	light_system = OVERLAY_LIGHT_DIRECTIONAL

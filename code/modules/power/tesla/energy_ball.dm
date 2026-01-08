@@ -53,7 +53,7 @@
 		investigate_log("was created at [AREACOORD(spawned_turf)].", INVESTIGATE_ENGINE)
 
 /obj/energy_ball/Destroy()
-	if(orbiting && istype(orbiting.parent, /obj/energy_ball))
+	if(istype(orbiting?.parent, /obj/energy_ball))
 		var/obj/energy_ball/parent_energy_ball = orbiting.parent
 		parent_energy_ball.orbiting_balls -= src
 
@@ -65,28 +65,28 @@
 /obj/energy_ball/process()
 	if(orbiting)
 		energy = 0 // ensure we dont have miniballs of miniballs
-	else
-		handle_energy()
+		return
+	handle_energy()
 
-		move(4 + orbiting_balls.len * 1.5)
+	move(4 + length(orbiting_balls) * 1.5)
 
-		playsound(src.loc, 'sound/magic/lightningbolt.ogg', 100, TRUE, extrarange = 30)
+	playsound(src.loc, 'sound/magic/lightningbolt.ogg', vol = 100, vary = TRUE, extrarange = 30, falloff_exponent = 10, mixer_channel = CHANNEL_MACHINERY)
 
-		pixel_x = 0
-		pixel_y = 0
-		shocked_things.Cut(1, shocked_things.len / 1.3)
-		var/list/shocking_info = list()
-		tesla_zap(src, 3, TESLA_DEFAULT_ENERGY, shocked_targets = shocking_info)
+	pixel_x = 0
+	pixel_y = 0
+	shocked_things.Cut(1, length(shocked_things) / 1.3)
+	var/list/shocking_info = list()
+	tesla_zap(src, 3, TESLA_DEFAULT_ENERGY, shocked_targets = shocking_info)
 
-		pixel_x = -32
-		pixel_y = -32
-		for (var/ball in orbiting_balls)
-			var/range = rand(1, clamp(orbiting_balls.len, 2, 3))
-			var/list/temp_shock = list()
-			//We zap off the main ball instead of ourselves to make things looks proper
-			tesla_zap(source = src, zap_range = range, power = TESLA_MINI_ENERGY / 7 * range, shocked_targets = temp_shock)
-			shocking_info += temp_shock
-		shocked_things += shocking_info
+	pixel_x = -32
+	pixel_y = -32
+	for (var/ball in orbiting_balls)
+		var/range = rand(1, clamp(length(orbiting_balls), 2, 3))
+		var/list/temp_shock = list()
+		//We zap off the main ball instead of ourselves to make things looks proper
+		tesla_zap(source = src, zap_range = range, power = TESLA_MINI_ENERGY / 7 * range, shocked_targets = temp_shock)
+		shocking_info += temp_shock
+	shocked_things += shocking_info
 
 /obj/energy_ball/examine(mob/user)
 	. = ..()
@@ -126,9 +126,9 @@
 		energy_to_lower = energy_to_raise - 20
 		energy_to_raise = energy_to_raise * 1.25
 
-		playsound(src.loc, 'sound/magic/lightning_chargeup.ogg', 100, TRUE, extrarange = 30)
+		playsound(src.loc, 'sound/magic/lightning_chargeup.ogg', vol = 100, vary = TRUE, extrarange = 30, falloff_exponent = 10, mixer_channel = CHANNEL_MACHINERY)
 		addtimer(CALLBACK(src, PROC_REF(new_mini_ball)), 100)
-	else if(energy < energy_to_lower && orbiting_balls.len)
+	else if(energy < energy_to_lower && length(orbiting_balls))
 		energy_to_raise = energy_to_raise / 1.25
 		energy_to_lower = (energy_to_raise / 1.25) - 20
 
@@ -240,6 +240,7 @@
 		/obj/structure/cable = FALSE,
 		/obj/machinery/power/smes = FALSE,
 		/obj/item/mcobject/teleporter = FALSE,
+		/obj/machinery/the_singularitygen = FALSE,
 	))
 
 	//Ok so we are making an assumption here. We assume that view() still calculates from the center out.

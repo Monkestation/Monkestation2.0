@@ -12,7 +12,8 @@
 	suicide_cry = "FOR FREEDOM!!"
 	preview_outfit = /datum/outfit/prisoner
 	count_against_dynamic_roll_chance = FALSE
-	antag_flags = parent_type::antag_flags | FLAG_ANTAG_CAP_IGNORE
+	antag_flags = parent_type::antag_flags
+	antag_count_points = 1 //barely anything
 	var/datum/team/fugitive/fugitive_team
 	var/is_captured = FALSE
 	var/backstory = "error"

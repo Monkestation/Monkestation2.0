@@ -2,6 +2,7 @@ import { marked } from 'marked';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { sanitizeText } from '../sanitize';
+import { useEffect } from 'react';
 
 type MarkdownViewerData = {
   title: string;
@@ -28,10 +29,16 @@ type MarkdownRendererProps = {
 export const MarkdownRenderer = (props: MarkdownRendererProps) => {
   let { content, sanitize } = props;
 
-  content = marked(content);
-  if (sanitize) {
-    content = sanitizeText(content, /* advHtml = */ false);
-  }
+  useEffect(() => {
+    const getAndSetContent = async () => {
+      content = await marked(content);
+      if (sanitize) {
+        content = sanitizeText(content, /* advHtml = */ false);
+      }
+    };
+
+    getAndSetContent();
+  });
 
   // eslint-disable-next-line react/no-danger
   return <div dangerouslySetInnerHTML={{ __html: content }} />;

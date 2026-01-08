@@ -377,3 +377,18 @@
 	new /obj/item/food/grown/banana/bunch/monkeybomb(src)
 	// Somewhere to store it all.
 	new /obj/item/storage/backpack/satchel(src)
+
+/obj/item/storage/toolbox/repair
+	name = "robotic repair toolbox"
+	desc = "Capable of robusting and repairing any troublesome robots after the fact."
+	icon_state = "toolbox-secmed"
+	inhand_icon_state = "toolbox-secmed"
+
+/obj/item/storage/toolbox/repair/PopulateContents()
+	new /obj/item/screwdriver(src)
+	new /obj/item/wrench(src)
+	new /obj/item/weldingtool(src)
+	new /obj/item/crowbar(src)
+	new /obj/item/wirecutters(src)
+	new /obj/item/multitool(src)
+	new /obj/item/stack/cable_coil/industrial(src)
