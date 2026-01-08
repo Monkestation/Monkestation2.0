@@ -14,6 +14,7 @@ type Data = {
   voting_time_left: string;
   voting: BooleanLike;
   locked_for: string;
+  time_until_implementation: string;
   possible_demands: DemandsData[];
   completed_demands: DemandsData[];
 };
@@ -76,6 +77,7 @@ export const UnionStand = () => {
     voting_time_left,
     voting,
     locked_for,
+    time_until_implementation,
     possible_demands = [],
     completed_demands = [],
   } = data;
@@ -124,6 +126,15 @@ export const UnionStand = () => {
               {union_active ? 'Disable Union' : 'Enable Union'}
             </Button.Confirm>
             <ImplementationFreeze />
+            <Button.Confirm
+              color="red"
+              tooltip={
+                'Removes and reverts all demands, rebuilds the list of possible demands.'
+              }
+              onClick={() => act('reset_union')}
+            >
+              Reset Union
+            </Button.Confirm>
           </Section>
         )}
         <DeadlockNotice />
@@ -209,7 +220,8 @@ export const UnionStand = () => {
                           <DeadlockNotice />
                         ) : (
                           <Stack.Item>
-                            {voting_name} going into effect...
+                            {voting_name} going into effect in{' '}
+                            {time_until_implementation}...
                           </Stack.Item>
                         )}
                       </>

@@ -1,12 +1,5 @@
-ADMIN_VERB(union_manager, R_ADMIN, FALSE, "Cargo Union Manager", "View the Cargo Union panel.", ADMIN_CATEGORY_GAME)
+ADMIN_VERB(union_manager, R_ADMIN, FALSE, "Manage Cargo Union", "View the Cargo Union panel.", ADMIN_CATEGORY_GAME)
 	GLOB.cargo_union.ui_interact(user.mob)
-
-ADMIN_VERB(union_reset, R_ADMIN, FALSE, "Reset Cargo Demands", "Removes all Cargo demands and rebuilds the list.", ADMIN_CATEGORY_DEBUG)
-	QDEL_NULL(GLOB.cargo_union.possible_demands)
-	for(var/datum/union_demand/demand as anything in GLOB.cargo_union.successful_demands)
-		demand.unimplement_demand(GLOB.cargo_union)
-	QDEL_NULL(GLOB.cargo_union.successful_demands)
-	GLOB.cargo_union.setup_demands()
 
 #define TIME_BETWEEN_DEMANDS (10 MINUTES)
 #define TIME_TO_VOTE (TIME_BETWEEN_DEMANDS / 4)
@@ -14,10 +7,9 @@ ADMIN_VERB(union_reset, R_ADMIN, FALSE, "Reset Cargo Demands", "Removes all Carg
 #define COMMAND_DELAY (3 MINUTES)
 
 //TODO:
-// Add communications console interactions (creating deadlocks, seeing all union demands)
 // add /obj/machinery/mail_collector being spawned in when automatic mail is enacted
 // SPRITES: UnionStand.scss background should have low alpha instead of the weird color scheme. Mail collector unique sprite.
-// Finish adding all the union demands (Automatic mail tokens, Access-locked Vendors, Mining Sensors, Boulder payouts)
+// Finish adding all the union demands (Automatic mail tokens, Access-locked Vendors)
 // ABANDONING A DEMAND DURING DEADLOCK SHOULD BE FOR UNION LEADERS ONLY!!
 
 /datum/union
@@ -43,6 +35,8 @@ ADMIN_VERB(union_reset, R_ADMIN, FALSE, "Reset Cargo Demands", "Removes all Carg
 
 	///Delay between union demand votings.
 	COOLDOWN_DECLARE(union_demand_delay)
+	///How many times the current demand was in a deadlock.
+	var/times_deadlocked = 0
 	///Stored time left to end the vote, different from delay of demanding union stuff.
 	var/voting_timer
 	///In a deadlock, this is the saved time left to give afterwards.
@@ -121,6 +115,7 @@ ADMIN_VERB(union_reset, R_ADMIN, FALSE, "Reset Cargo Demands", "Removes all Carg
 	successful_demands += demand_voting_on
 	demand_voting_on.implement_demand(src)
 	demand_voting_on = null
+	times_deadlocked = 0
 
 /datum/union/proc/unimplement_demand(datum/union_demand/removed_demand)
 	successful_demands -= removed_demand
@@ -128,9 +123,11 @@ ADMIN_VERB(union_reset, R_ADMIN, FALSE, "Reset Cargo Demands", "Removes all Carg
 	removed_demand.unimplement_demand(src)
 
 ///Called when a demand fails to get voted on to go into effect.
-/datum/union/proc/on_demand_failure()
-	make_union_announcement(announce_mode = ANNOUNCE_FAILURE)
+/datum/union/proc/on_demand_failure(source = ANNOUNCE_FAILURE)
+	make_union_announcement(announce_mode = source)
 	demand_voting_on = null
+	saved_time = null
+	times_deadlocked = 0
 
 ///Depending on announce_mode, we will announce to the Union or Crew the several stages of a Union Demand.
 /datum/union/proc/make_union_announcement(announce_mode)
@@ -172,17 +169,16 @@ ADMIN_VERB(union_reset, R_ADMIN, FALSE, "Reset Cargo Demands", "Removes all Carg
 	return FALSE
 
 /datum/union/proc/start_deadlock()
+	times_deadlocked++
 	freeze_time()
-	make_union_announcement(announce_mode =ANNOUNCE_DEADLOCK)
+	make_union_announcement(announce_mode = ANNOUNCE_DEADLOCK)
 
 /datum/union/proc/end_deadlock(union_won = FALSE)
 	if(union_won)
-		make_union_announcement(announce_mode =ANNOUNCE_DEADLOCK_END)
+		make_union_announcement(announce_mode = ANNOUNCE_DEADLOCK_END)
 		unfreeze_time()
 	else
-		make_union_announcement(announce_mode = ANNOUNCE_DEADLOCK_COMMAND_WIN)
-		demand_voting_on = null
-		saved_time = null
+		on_demand_failure(ANNOUNCE_DEADLOCK_COMMAND_WIN)
 
 /datum/union/proc/freeze_time()
 	saved_time = timeleft(implement_delay_timer)
@@ -212,6 +208,10 @@ ADMIN_VERB(union_reset, R_ADMIN, FALSE, "Reset Cargo Demands", "Removes all Carg
 	data["deadlocked"] = !isnull(saved_time)
 	data["voting_name"] = demand_voting_on?.name || null
 	data["voting_desc"] = demand_voting_on?.union_description || null
+	if(isnull(implement_delay_timer))
+		data["time_until_implementation"] = null
+	else
+		data["time_until_implementation"] = DisplayTimeText(timeleft(implement_delay_timer), 1)
 	data["votes_yes"] = length(votes_yes)
 	data["votes_no"] = length(votes_no)
 	if(voting_timer)
@@ -317,6 +317,15 @@ ADMIN_VERB(union_reset, R_ADMIN, FALSE, "Reset Cargo Demands", "Removes all Carg
 			if(!check_rights_for(user.client, R_ADMIN))
 				return TRUE
 			stop_vote()
+			return TRUE
+		if("reset_union")
+			if(!check_rights_for(user.client, R_ADMIN))
+				return TRUE
+			QDEL_NULL(GLOB.cargo_union.possible_demands)
+			for(var/datum/union_demand/demand as anything in GLOB.cargo_union.successful_demands)
+				demand.unimplement_demand(GLOB.cargo_union)
+			QDEL_NULL(GLOB.cargo_union.successful_demands)
+			GLOB.cargo_union.setup_demands()
 			return TRUE
 		if("freeze_timers")
 			if(!check_rights_for(user.client, R_ADMIN))

@@ -5,6 +5,7 @@
 #define STATE_CHANGING_STATUS "changing_status"
 #define STATE_MAIN "main"
 #define STATE_MESSAGES "messages"
+#define STATE_UNION "union"
 
 // The communications computer
 /obj/machinery/computer/communications
@@ -147,7 +148,7 @@
 	return TRUE
 
 /obj/machinery/computer/communications/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
-	var/static/list/approved_states = list(STATE_BUYING_SHUTTLE, STATE_CHANGING_STATUS, STATE_MAIN, STATE_MESSAGES)
+	var/static/list/approved_states = list(STATE_BUYING_SHUTTLE, STATE_CHANGING_STATUS, STATE_MAIN, STATE_MESSAGES, STATE_UNION)
 
 	. = ..()
 	if (.)
@@ -385,6 +386,8 @@
 				return
 			if (!(params["state"] in approved_states))
 				return
+			if (state == STATE_UNION && issilicon(user))
+				return
 			if (state == STATE_BUYING_SHUTTLE && can_buy_shuttles(user) != TRUE)
 				return
 			set_state(user, params["state"])
@@ -494,6 +497,18 @@
 			SSjob.safe_code_requested = TRUE
 			SSjob.safe_code_timer_id = addtimer(CALLBACK(SSjob, TYPE_PROC_REF(/datum/controller/subsystem/job, send_spare_id_safe_code), pod_location), 120 SECONDS, TIMER_UNIQUE | TIMER_STOPPABLE)
 			minor_announce("Due to staff shortages, your station has been approved for delivery of access codes to secure the Captain's Spare ID. Delivery via drop pod at [get_area(pod_location)]. ETA 120 seconds.")
+		if("deadlock_union")
+			if(!authenticated || issilicon(user) || GLOB.cargo_union.saved_time)
+				return TRUE
+			if(GLOB.cargo_union.times_deadlocked > 0)
+				return TRUE
+			GLOB.cargo_union.start_deadlock()
+			return TRUE
+		if("undeadlock_union")
+			if(!authenticated || issilicon(user) || isnull(GLOB.cargo_union.saved_time))
+				return TRUE
+			GLOB.cargo_union.end_deadlock(union_won = TRUE)
+			return TRUE
 
 /obj/machinery/computer/communications/proc/emergency_access_cooldown(mob/user)
 	if(toggle_uses == toggle_max_uses) //you have used up free uses already, do it one more time and start a cooldown
@@ -623,7 +638,6 @@
 						data["shuttleLastCalled"] = format_text(SSshuttle.emergency_last_call_loc.name)
 			if (STATE_MESSAGES)
 				data["messages"] = list()
-
 				if (messages)
 					for (var/_message in messages)
 						var/datum/comm_message/message = _message
@@ -633,6 +647,24 @@
 							"title" = message.title,
 							"possibleAnswers" = message.possible_answers,
 						))
+			if(STATE_UNION)
+				data["deadlocked"] = !isnull(GLOB.cargo_union.saved_time)
+				data["voting_name"] = GLOB.cargo_union.demand_voting_on?.name || null
+				data["voting_desc"] = GLOB.cargo_union.demand_voting_on?.union_description || null
+				data["already_deadlocked"] = GLOB.cargo_union.times_deadlocked
+				if(isnull(GLOB.cargo_union.implement_delay_timer))
+					data["time_until_implementation"] = null
+				else
+					data["time_until_implementation"] = DisplayTimeText(timeleft(GLOB.cargo_union.implement_delay_timer), 1)
+				//list of completed demands
+				data["completed_demands"] = list()
+				for(var/datum/union_demand/demands as anything in GLOB.cargo_union.successful_demands)
+					data["completed_demands"] += list(list(
+						"name" = demands.name,
+						"desc" = demands.union_description,
+						"cost" = demands.cost,
+						"ref" = REF(demands),
+					))
 			if (STATE_BUYING_SHUTTLE)
 				var/datum/bank_account/bank_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
 				var/list/shuttles = list()
@@ -1003,3 +1035,4 @@
 #undef STATE_CHANGING_STATUS
 #undef STATE_MAIN
 #undef STATE_MESSAGES
+#undef STATE_UNION
