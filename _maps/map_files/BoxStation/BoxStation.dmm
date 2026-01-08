@@ -21551,6 +21551,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 8
 	},
+/obj/effect/landmark/cargo_mail_machine,
 /turf/open/floor/iron/dark/side{
 	dir = 8
 	},

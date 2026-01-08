@@ -163,7 +163,7 @@
 	if(length(GLOB.cargo_mail_machine_spawns))
 		turf_to_spawn = get_turf(pick(GLOB.cargo_mail_machine_spawns))
 	else
-		turf_to_spawn = pick(get_area_turfs(/area/station/cargo))
+		turf_to_spawn = pick(get_area_turfs(/area/station/cargo/storage))
 		stack_trace("GLOB.cargo_mail_machine_spawns list is empty! This needs to be mapped in!")
 
 	new /obj/machinery/mail_collector(turf_to_spawn)

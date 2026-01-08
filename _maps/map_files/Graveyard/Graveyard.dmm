@@ -8536,6 +8536,7 @@
 /area/station/security/brig)
 "dma" = (
 /obj/effect/turf_decal/box/red,
+/obj/effect/landmark/cargo_mail_machine,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "dmj" = (
@@ -14884,7 +14885,6 @@
 /obj/structure/closet/secure_closet/personal/cabinet,
 /obj/item/clothing/under/rank/security/head_of_security,
 /obj/item/clothing/under/rank/security/head_of_security/skirt,
-/obj/item/clothing/under/rank/security/head_of_security/peacekeeper,
 /obj/item/clothing/shoes/jackboots,
 /obj/item/crowbar,
 /obj/machinery/light/directional/west,

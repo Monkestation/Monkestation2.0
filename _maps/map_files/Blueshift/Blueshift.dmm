@@ -47127,6 +47127,13 @@
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plating,
 /area/station/maintenance/department/security/prison_upper)
+"jgG" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/landmark/cargo_mail_machine,
+/turf/open/floor/iron/smooth_large,
+/area/station/cargo/storage)
 "jgJ" = (
 /obj/structure/stairs/north,
 /obj/structure/railing{
@@ -165609,7 +165616,7 @@ tmY
 iYD
 hRq
 eFn
-gsY
+jgG
 oTl
 sAs
 ipg

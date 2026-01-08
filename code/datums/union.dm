@@ -7,10 +7,8 @@ ADMIN_VERB(union_manager, R_ADMIN, FALSE, "Manage Cargo Union", "View the Cargo 
 #define COMMAND_DELAY (3 MINUTES)
 
 //TODO:
-// add /obj/machinery/mail_collector being spawned in when automatic mail is enacted
 // SPRITES: UnionStand.scss background should have low alpha instead of the weird color scheme. Mail collector unique sprite.
-// Finish adding all the union demands (Automatic mail tokens, Access-locked Vendors)
-// ABANDONING A DEMAND DURING DEADLOCK SHOULD BE FOR UNION LEADERS ONLY!!
+// Finish adding all the union demands (Access-locked Vendors)
 
 /datum/union
 	///Name of the Union.
@@ -293,6 +291,14 @@ ADMIN_VERB(union_manager, R_ADMIN, FALSE, "Manage Cargo Union", "View the Cargo 
 		if("abandon_demand")
 			if(isnull(demand_voting_on))
 				return
+			//this is so bad but I can't figure out any better way.
+			if(istype(host))
+				host.req_one_access = list(ACCESS_UNION_LEADER)
+				if(istype(host) && !host.allowed(user))
+					host.req_one_access = initial(host.req_one_access)
+					host.balloon_alert(user, "union leader only!")
+					return TRUE
+				host.req_one_access = initial(host.req_one_access)
 			end_deadlock(union_won = FALSE)
 		//admin buttons
 		if("remove_demand")

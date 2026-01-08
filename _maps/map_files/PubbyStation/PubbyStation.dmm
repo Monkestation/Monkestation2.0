@@ -45228,6 +45228,10 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/engineering/lobby)
+"qzL" = (
+/obj/effect/landmark/cargo_mail_machine,
+/turf/open/floor/iron,
+/area/station/cargo/storage)
 "qzW" = (
 /obj/structure/table/wood,
 /obj/item/inspector{
@@ -101191,7 +101195,7 @@ qfa
 sZh
 cxg
 bbG
-cCB
+qzL
 mhw
 cCB
 bbG
