@@ -302,31 +302,23 @@
 		check_for_boosts()
 		//here we loop through the boulder's ores
 		var/list/rejected_mats = list()
-		var/list/accepted_mats = list()
+		//var/list/accepted_mats = list()
 		var/new_points_held = 0
 		//Maybe add MOVABLE_PHYSICS_PRECISION for less than 1 efficiency
 		//insert_item
 		for(var/datum/material/possible_mat as anything in chosen_boulder.custom_materials)
-			var/quantity = chosen_boulder.custom_materials[possible_mat]
-			if(!can_process_material(possible_mat))
-				rejected_mats[possible_mat] = quantity
+			var/quantity = chosen_boulder.custom_materials[possible_mat] * refining_efficiency
+			if(!can_process_material(possible_mat) || !silo_materials.mat_container.insert_amount_mat(quantity, possible_mat))
+				rejected_mats[possible_mat] = quantity / max(refining_efficiency, 1)
 				continue
-			accepted_mats[possible_mat] = quantity
-			chosen_boulder.custom_materials -= possible_mat
-			new_points_held = round(new_points_held + ((quantity * refining_efficiency) * possible_mat.points_per_unit * MINING_POINT_MACHINE_MULTIPLIER))
-
-		var/obj/item/boulder/disposable_boulder = new (src) // Using disposable boulder till tg#76220 fixes insert_amount_mat
-		disposable_boulder.custom_materials = accepted_mats
-		if(isnull(silo_materials) || !silo_materials.mat_container.insert_item(disposable_boulder, refining_efficiency))
-			rejected_mats = rejected_mats + accepted_mats
-			qdel(disposable_boulder)
-		else
-			points_held = points_held + new_points_held // put point total here into machine
-			qdel(disposable_boulder)
-
+			else
+				new_points_held = round(new_points_held + (quantity * possible_mat.points_per_unit * MINING_POINT_MACHINE_MULTIPLIER))
 		use_energy(active_power_usage)
+		points_held = points_held + new_points_held
+
 		//puts back materials that couldn't be processed
 		chosen_boulder.set_custom_materials(rejected_mats)
+
 		//break the boulder down if we have processed all its materials
 		if(!length(chosen_boulder.custom_materials))
 			playsound(loc, usage_sound, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
@@ -354,38 +346,29 @@
 		var/obj/item/processing/exotic = chosen_exotic
 		if(!exotic.processed_by)
 			check_for_boosts()
-			//here we loop through the boulder's ores
+			//here we loop through the exotics's ores
 			var/list/rejected_mats = list()
-			var/list/accepted_mats = list()
 			var/new_points_held = 0
 
 			for(var/datum/material/possible_mat as anything in exotic.custom_materials)
 				var/quantity = exotic.custom_materials[possible_mat]
-				if(!can_process_material(possible_mat))
+				if(!can_process_material(possible_mat) || !silo_materials.mat_container.insert_amount_mat(quantity, possible_mat))
 					rejected_mats[possible_mat] = quantity
 					continue
-				accepted_mats[possible_mat] = quantity
-				exotic.custom_materials -= possible_mat
-				new_points_held = round(new_points_held + ((quantity * refining_efficiency) * possible_mat.points_per_unit * MINING_POINT_MACHINE_MULTIPLIER))
-
-			var/obj/item/boulder/disposable_boulder = new (src) // Using disposable boulder till tg#76220 fixes insert_amount_mat
-			disposable_boulder.custom_materials = accepted_mats
-			if(isnull(silo_materials) || !silo_materials.mat_container.insert_item(disposable_boulder, refining_efficiency))
-				rejected_mats = rejected_mats + accepted_mats
-				qdel(disposable_boulder)
-			else
-				points_held = points_held + new_points_held // put point total here into machine
-				qdel(disposable_boulder)
-
+				else
+					new_points_held = round(new_points_held + (quantity * possible_mat.points_per_unit * MINING_POINT_MACHINE_MULTIPLIER))
 			use_energy(active_power_usage)
+			points_held = points_held + new_points_held
+
 			//puts back materials that couldn't be processed
 			exotic.set_custom_materials(rejected_mats)
 			exotic.set_colors() // Set new dust color
+
 			//break the exotic down if we have processed all its materials
 			if(!length(exotic.custom_materials))
 				playsound(loc, usage_sound, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 				qdel(exotic)
-				return TRUE //We've processed all the materials in the boulder, so we can just destroy it in break_apart.
+				return TRUE //We've processed all the materials in the boulder, so we can just destroy.
 			exotic.processed_by = src
 		//eject the boulder since we are done with it
 		remove_resource(exotic)
