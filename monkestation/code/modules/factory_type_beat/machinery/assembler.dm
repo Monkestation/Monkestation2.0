@@ -208,21 +208,19 @@
 		start_craft()
 
 /obj/machinery/assembler/proc/consume_stack(obj/item/Type, amount)
-	var left = amount
+	var/left = amount
 	for(var/obj/item/item as anything in crafting_inventory)
 		if(isstack(item) && istype(item, Type))
 			var/obj/item/stack/stack = item
-			if(stack.amount == left)
-				crafting_inventory -= item
-				qdel(item)
-				break
-			else if(stack.amount > left)
-				stack.amount -= left
-				break
-			else if(stack.amount < left)
+			if(left >= stack.amount)
 				left -= stack.amount
+				stack.use(stack.amount)
 				crafting_inventory -= item
-				qdel(item)
+				if(left == 0)
+					return
+			else
+				stack.use(left)
+				return
 
 /obj/machinery/assembler/proc/start_craft()
 	if(crafting)
@@ -249,7 +247,7 @@
 			consume_stack(req, requirements[req])
 			continue
 		else
-			var left = requirements[req]
+			var/left = requirements[req]
 			for(var/obj/item/item as anything in crafting_inventory)
 				if(!istype(item, req))
 					continue
