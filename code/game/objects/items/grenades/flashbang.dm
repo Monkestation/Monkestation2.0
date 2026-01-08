@@ -58,7 +58,7 @@
 			living_mob.Paralyze(5)
 			living_mob.Knockdown(30)
 		if(hit_the_deck)
-			living_mob.soundbang_act(1, max(200 / max(1, distance) * 0.1, 60), rand(0, 5))
+			living_mob.soundbang_act(1, max(200 / max(1, distance) * 0.1, 60), rand(0, 2))
 		else
 			living_mob.soundbang_act(1, max(200 / max(1, distance), 60), rand(0, 5))
 
