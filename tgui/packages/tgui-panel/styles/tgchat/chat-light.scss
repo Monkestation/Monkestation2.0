@@ -1000,6 +1000,10 @@ h2.alert {
   border-bottom: 1px dashed;
 }
 
+.tooltip_alt {
+  border-bottom: 1px dashed;
+}
+
 .fieldset_legend {
   background: hsl(0, 0%, 100%); // Chat background color
 
@@ -1259,6 +1263,16 @@ $border-width-px: $border-width * 1px;
 
 .copperplate {
   font-family: copperplate;
+}
+
+.velvet {
+  color: #21007f;
+}
+
+.progenitor {
+  color: #21007f;
+  font-weight: bold;
+  font-size: 185%;
 }
 
 .brass {

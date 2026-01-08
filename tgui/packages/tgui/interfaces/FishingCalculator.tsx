@@ -63,7 +63,7 @@ export const FishingCalculator = (props) => {
             />
             <Input
               value={bait}
-              onChange={(_, value) => setBait(value)}
+              onChange={(value) => setBait(value)}
               width="100%"
             />
             <Button

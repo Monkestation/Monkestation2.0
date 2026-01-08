@@ -9418,7 +9418,7 @@
 	name = "Cargo Bay Requests Console"
 	},
 /obj/effect/mapping_helpers/requests_console/supplies,
-/obj/machinery/vending/wardrobe/cargo_wardrobe,
+/obj/machinery/vending/access/wardrobe_cargo,
 /turf/open/floor/iron/dark/side{
 	dir = 1
 	},

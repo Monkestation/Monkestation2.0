@@ -69,7 +69,7 @@ const TextAreaSection = (props) => {
             height="100%"
             width="100%"
             value={message}
-            onInput={(_, value) => setMessage(value)}
+            onChange={(value) => setMessage(value)}
           />
         </Stack.Item>
       </Stack>

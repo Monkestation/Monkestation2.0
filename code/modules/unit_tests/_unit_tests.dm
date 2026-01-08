@@ -151,6 +151,7 @@
 #include "limbsanity.dm"
 #include "linked_xenobio_pens.dm"
 #include "load_map_security.dm"
+#include "loadout_duplicates.dm"
 #include "lootpanel.dm"
 #include "lungs.dm"
 #include "machine_disassembly.dm"

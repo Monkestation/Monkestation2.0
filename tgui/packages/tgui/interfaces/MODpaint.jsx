@@ -94,7 +94,7 @@ export const MODpaint = (props) => {
                         stepPixelSize={0.75}
                         format={(value) => `${value}%`}
                         tickWhileDragging
-                        onChange={(e, value) => {
+                        onChange={(_, value) => {
                           let retColor = currentColor;
                           retColor[row * 4 + col] = value / 100;
                           act('transition_color', { color: retColor });

@@ -8,11 +8,18 @@
   grungussuss:
   - sound: writing something now produces sound
 2026-01-02:
+  Absolucy:
+  - bugfix: Fixed the admin VV bitfield editor not working.
   Ice-Type:
   - bugfix: Bluespace RPEDs now correctly function at range
   JohnFulpWillard:
   - bugfix: The character preference menu should look a little more like how it used
       to look.
+  - bugfix: Bloodsucker's antag pref menu blood is red again.
+  - bugfix: Heliostation's weight machines are now visible.
+  - spellcheck: '"Out floorbot" -> "Our floorbot"'
+  - bugfix: NT Representative can no longer roll bloodling.
+  - bugfix: NT CIMS is scrollable if you have enough supermatters.
   Kmla2:
   - bugfix: slashers terror screech shouldn't deal over 100 stamina damage on later
       fear stages anymore
@@ -20,8 +27,76 @@
   SirNightKnight:
   - bugfix: fixed burn treatment medical stack items sending the can't heal alert
       when healing burn wounds.
+  SyncIt21, JohnFulpWillard:
+  - bugfix: The PDA camera app now works.
   Tractor-Maam:
   - bugfix: handheld crew monitor designs no longer print the same thing.
+  flleeppyy:
+  - bugfix: VV search
   jlsnow301:
   - bugfix: Fixed a bluescreen in emojipedia
   - bugfix: Fixed a bluescreen in comms console
+  jlsnow301, JohnFulpWillard:
+  - bugfix: Fixed the UIs for signalers, airlock electronics/RCDs, and clockwork slabs
+2026-01-03:
+  Absolucy:
+  - bugfix: Ckeys with pronouns in OOC are now properly underlined again.
+2026-01-04:
+  Absolucy:
+  - bugfix: Fixed an exploit related to teleporting dummy humans where they should
+      not be.
+  JohnFulpWillard:
+  - bugfix: Gary won't teleport into you anymore.
+  - bugfix: ED209's no longer take space helmets to craft.
+  - bugfix: Lung stirfry no longer takes cybernetic lungs to craft.
+  - bugfix: Plasmamen don't take toxin damage from plasma.
+  MrMelbert:
+  - bugfix: AIs can now take pictures again.
+  SirNightKnight:
+  - balance: removed the box of flashbangs as an option from security utility vouchers.
+  flleeppyy:
+  - bugfix: VV .... AGAIN... GOD.. DAMMIT
+  - rscadd: Improved the issue report dialog to include the servers master commit
+  - rscadd: Added button to runtime viewer to use monkestation ss13 json log viewer
+  - admin: add stealth follow to FLW buttons
+  - code_imp: add new CI linter to check for unescaped brackets
+2026-01-05:
+  Lawlolawl:
+  - bugfix: Fixed Theseus engi lobby airlocks missing construction access. 3 insuls
+      have been shifted to the smes room so they are harder for tiders to take.
+2026-01-06:
+  Absolucy:
+  - bugfix: Fixed C.C.M.S implants not working.
+  - qol: Added some visible messages allowing people to distinguish if an oozeling
+      manually retracted their limb, or if their limb has retracted due to low blood.
+  iliyaxox:
+  - bugfix: 'Fixed all instances of footprints returning as blood-red footprints:
+      now mob will leave oil and xenoblood footprints when stepping on oil pools and
+      xenoblood gibs, respectively.'
+  - bugfix: Living carbon xenomorphs now bleed xenoblood instead of bleeding standard
+      red blood, and will generate xenomorph remains when gibbed.
+  - bugfix: Clothes will be stained with xenoblood when interacting with xenomorphs,
+      instead of standard red blood.
+2026-01-07:
+  EssentialTomato:
+  - bugfix: (timothymtorres) Fix gravity not updating for mobs when teleporting, wormhole
+      jaunters, wizard spells, tile creation/destruction, mech entry/ejection and
+      other methods.
+  - bugfix: Modified floors around gravity generator now update their gravity properly.
+  Lawlolawl:
+  - bugfix: Fixed Oshan engi lobby missing construction access. Parameds, engisec
+      and RD can finally open the door.
+2026-01-08:
+  Absolucy:
+  - map: Added liquid barriers under the xenobio doors on Theseus.
+  SirNightKnight:
+  - bugfix: fixed ERT space suit helmets not having the right heat protection.
+  - bugfix: fixed code blue medical officers spawning with a code green outfit.
+  jlsnow301:
+  - bugfix: various TGUI interface
+  - admin: 2 new Secret panel buttons "Department Order Cooldown" and "Mass Heal Everyone"
+  - rscadd: Robotact has a new menu for showing other borgs connected to the same
+      AI as you, as well as the status of your parent AI.
+  - rscadd: Seed extractor now shows the grind/juice results and plant reagent volume,
+      for seeds
+  - code_imp: adds a new unit test to check for duplicate loadout item names.

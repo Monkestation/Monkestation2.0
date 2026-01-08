@@ -57,7 +57,7 @@ const FpsInput = (props: FeatureValueProps<number, number, FpsServerData>) => {
             maxValue={serverData.maximum}
             step={1}
             value={value || recommendedValue}
-            onChange={(_, v) => handleSetValue(v)}
+            onChange={(v) => handleSetValue(v)}
           />
         )}
       </Stack.Item>

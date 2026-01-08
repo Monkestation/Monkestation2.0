@@ -1,3 +1,4 @@
+import { BooleanLike } from 'tgui-core/react';
 import { useBackend } from '../backend';
 import {
   Button,
@@ -10,8 +11,18 @@ import {
 } from '../components';
 import { Window } from '../layouts';
 
-export const DiseaseSplicer = (props) => {
-  const { act, data } = useBackend();
+type Data = {
+  splicing: BooleanLike;
+  scanning: BooleanLike;
+  burning: BooleanLike;
+  target_slot: number;
+  dish_error: string;
+  dish_name?: string;
+  memorybank?: string;
+};
+
+export function DiseaseSplicer(props) {
+  const { act, data } = useBackend<Data>();
   const {
     splicing,
     scanning,
@@ -21,6 +32,7 @@ export const DiseaseSplicer = (props) => {
     dish_error,
     target_slot,
   } = data;
+
   return (
     <Window width={475} height={300}>
       <Window.Content>
@@ -60,9 +72,9 @@ export const DiseaseSplicer = (props) => {
           }
         >
           {!dish_error && <NoticeBox info>No Error Present</NoticeBox>}
-          {dish_error && <NoticeBox warn>ERROR: {dish_error}</NoticeBox>}
+          {!!dish_error && <NoticeBox>ERROR: {dish_error}</NoticeBox>}
           <LabeledList>
-            {memorybank && (
+            {!!memorybank && (
               <LabeledList.Item label={memorybank}>
                 <Button
                   content="Burn Effect to Disk"
@@ -70,7 +82,7 @@ export const DiseaseSplicer = (props) => {
                 />
               </LabeledList.Item>
             )}
-            {dish_name && (
+            {!!dish_name && (
               <LabeledList.Item label={dish_name}>
                 <Button
                   content="Splice Memorybank"
@@ -87,7 +99,7 @@ export const DiseaseSplicer = (props) => {
                 step={1}
                 stepPixelSize={50}
                 value={target_slot}
-                onChange={(e, stage) => act('target_slot', { stage })}
+                onChange={(_, stage) => act('target_slot', { stage })}
               >
                 {target_slot}
               </Slider>
@@ -104,4 +116,4 @@ export const DiseaseSplicer = (props) => {
       </Window.Content>
     </Window>
   );
-};
+}

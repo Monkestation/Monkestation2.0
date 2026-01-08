@@ -30195,7 +30195,7 @@
 /turf/open/floor/iron/white/telecomms,
 /area/station/tcommsat/server)
 "fOp" = (
-/obj/machinery/vending/wardrobe/cargo_wardrobe,
+/obj/machinery/vending/access/wardrobe_cargo,
 /obj/effect/turf_decal/bot,
 /obj/machinery/digital_clock/directional/north,
 /turf/open/floor/iron/dark,
