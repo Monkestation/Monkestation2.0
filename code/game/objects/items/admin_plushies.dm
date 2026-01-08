@@ -230,7 +230,7 @@
 		to_chat(user, span_warning("Gabbie chomps up the rat!"))
 		src.desc = "She still looks angry, but less hungry."
 		qdel(attacking_item)
-	else if(istype(attacking_item, /obj/item/reagent_containers/cocaine))
+	else if(istype(attacking_item, /obj/item/stack/sheet/cocaine))
 		playsound(src.loc, 'monkestation/sound/items/sniff.ogg', 50)
 		to_chat(user, span_warning("Gabbie inhales the powder!"))
 		src.desc = "She still looks angry, but more high."
