@@ -66499,7 +66499,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "pJR" = (
-/obj/machinery/vending/wardrobe/cargo_wardrobe,
+/obj/machinery/vending/access/wardrobe_cargo,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted{
 	dir = 4
@@ -93458,7 +93458,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/department/engine/atmos)
 "wfA" = (
-/obj/machinery/vending/wardrobe/cargo_wardrobe,
+/obj/machinery/vending/access/wardrobe_cargo,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 4

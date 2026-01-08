@@ -1,8 +1,0 @@
-author: "jlsnow301"
-delete-after: True
-changes:
-  - bugfix: "various TGUI interface"
-  - admin: "2 new Secret panel buttons \"Department Order Cooldown\" and \"Mass Heal Everyone\""
-  - rscadd: "Robotact has a new menu for showing other borgs connected to the same AI as you, as well as the status of your parent AI."
-  - rscadd: "Seed extractor now shows the grind/juice results and plant reagent volume, for seeds"
-  - code_imp: "adds a new unit test to check for duplicate loadout item names."
