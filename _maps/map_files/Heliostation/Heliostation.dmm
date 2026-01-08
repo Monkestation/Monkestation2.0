@@ -37591,6 +37591,7 @@
 	network = list("ss13","cargo")
 	},
 /obj/effect/turf_decal/delivery,
+/obj/effect/landmark/cargo_mail_machine,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "hsP" = (

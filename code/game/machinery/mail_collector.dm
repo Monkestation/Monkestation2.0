@@ -59,3 +59,12 @@
 	money_collected = round(money_collected - amount)
 	to_chat(user, span_notice("You claim [amount] mining points from \the [src] to [id_card]."))
 	return ITEM_INTERACT_SUCCESS
+
+//will not update by the station as it uses get_machines_by_type, not including subtypes.
+//good as a credit reward for players if you so wish.
+/obj/machinery/mail_collector/ruin
+	name = "ancient mail collector"
+
+/obj/machinery/mail_collector/ruin/Initialize(mapload)
+	. = ..()
+	money_collected = rand(200, 2000)
