@@ -3,37 +3,72 @@
  * @copyright 2021 bobbahbrown (https://github.com/bobbahbrown)
  * @license MIT
  */
+import { useState } from 'react';
+import {
+  Button,
+  Floating,
+  Input,
+  Section,
+  Stack,
+  Table,
+} from 'tgui-core/components';
+import { createSearch, decodeHtmlEntities } from 'tgui-core/string';
 
-import { decodeHtmlEntities } from 'common/string';
-import { useBackend, useLocalState } from '../backend';
-import { Button, Input, Section, Table } from '../components';
-import { Popper } from '../components';
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
+type Data = {
+  requests: Request[];
+};
+
+type Request = {
+  id: string;
+  req_type: string;
+  owner: string;
+  owner_ckey: string;
+  owner_name: string;
+  message: string;
+  additional_info: string;
+  timestamp: number;
+  timestamp_str: string;
+};
+
+const displayTypeMap = {
+  request_prayer: 'PRAYER',
+  request_centcom: 'CENTCOM',
+  request_syndicate: 'SYNDICATE',
+  request_nuke: 'NUKE CODE',
+  request_fax: 'FAX',
+  request_internet_sound: 'INTERNET SOUND',
+};
+
 export const RequestManager = (props) => {
-  const { act, data } = useBackend();
-  const { requests } = data;
-  const [filteredTypes, _] = useLocalState(
-    'filteredTypes',
+  const { act, data } = useBackend<Data>();
+  const { requests = [] } = data;
+  const [filteredTypes, setFilteredTypes] = useState(
     Object.fromEntries(
       Object.entries(displayTypeMap).map(([type, _]) => [type, true]),
     ),
   );
-  const [searchText, setSearchText] = useLocalState('searchText');
+  const [searchText, setSearchText] = useState('');
+
+  const updateFilter = (type) => {
+    const newFilter = { ...filteredTypes };
+    newFilter[type] = !newFilter[type];
+    setFilteredTypes(newFilter);
+  };
 
   // Handle filtering
   let displayedRequests = requests.filter(
     (request) => filteredTypes[request.req_type],
   );
-  if (searchText) {
-    const filterText = searchText.toLowerCase();
-    displayedRequests = displayedRequests.filter(
-      (request) =>
-        decodeHtmlEntities(request.message)
-          .toLowerCase()
-          .includes(filterText) ||
-        request.owner_name.toLowerCase().includes(filterText),
-    );
+  const search = createSearch(
+    searchText,
+    (requests: Request) =>
+      requests.owner_name + decodeHtmlEntities(requests.message),
+  );
+  if (searchText.length > 0) {
+    displayedRequests = displayedRequests.filter((request) => search(request));
   }
 
   return (
@@ -42,15 +77,22 @@ export const RequestManager = (props) => {
         <Section
           title="Requests"
           buttons={
-            <>
-              <Input
-                value={searchText}
-                onInput={(_, value) => setSearchText(value)}
-                placeholder={'Search...'}
-                mr={1}
-              />
-              <FilterPanel />
-            </>
+            <Stack>
+              <Stack.Item>
+                <Input
+                  value={searchText}
+                  onChange={setSearchText}
+                  placeholder="Search..."
+                  mr={1}
+                />
+              </Stack.Item>
+              <Stack.Item>
+                <FilterPanel
+                  typesList={filteredTypes}
+                  updateFilter={updateFilter}
+                />
+              </Stack.Item>
+            </Stack>
           }
         >
           {displayedRequests.map((request) => (
@@ -79,15 +121,6 @@ export const RequestManager = (props) => {
   );
 };
 
-const displayTypeMap = {
-  request_prayer: 'PRAYER',
-  request_centcom: 'CENTCOM',
-  request_syndicate: 'SYNDICATE',
-  request_nuke: 'NUKE CODE',
-  request_fax: 'FAX',
-  request_internet_sound: 'INTERNET SOUND',
-};
-
 const RequestType = (props) => {
   const { requestType } = props;
 
@@ -99,7 +132,7 @@ const RequestType = (props) => {
 };
 
 const RequestControls = (props) => {
-  const { act, _ } = useBackend();
+  const { act } = useBackend<Data>();
   const { request } = props;
 
   return (
@@ -120,7 +153,12 @@ const RequestControls = (props) => {
         </Button>
       )}
       {request.req_type === 'request_fax' && (
-        <Button onClick={() => act('show', { id: request.id })}>SHOW</Button>
+        <>
+          <Button onClick={() => act('show', { id: request.id })}>SHOW</Button>
+          <Button onClick={() => act('print', { id: request.id })}>
+            PRINT
+          </Button>
+        </>
       )}
       {request.req_type === 'request_internet_sound' && (
         <Button onClick={() => act('play', { id: request.id })}>PLAY</Button>
@@ -130,27 +168,16 @@ const RequestControls = (props) => {
 };
 
 const FilterPanel = (props) => {
-  const [filterVisible, setFilterVisible] = useLocalState(
-    'filterVisible',
-    false,
-  );
-  const [filteredTypes, setFilteredTypes] = useLocalState(
-    'filteredTypes',
-    Object.fromEntries(
-      Object.entries(displayTypeMap).map(([type, _]) => [type, true]),
-    ),
-  );
+  const [filterVisible, setFilterVisible] = useState(false);
+  const { typesList, updateFilter } = props;
 
   return (
-    <Popper
-      placement="bottom-start"
-      content={
-        <div
-          className="RequestManager__filterPanel"
-          style={{
-            display: filterVisible ? 'block' : 'none',
-          }}
-        >
+    <div>
+      <Floating
+        placement="bottom-end"
+        onOpenChange={setFilterVisible}
+        contentClasses="RequestManager__filterPanel"
+        content={
           <Table width="0">
             {Object.keys(displayTypeMap).map((type) => {
               return (
@@ -160,10 +187,9 @@ const FilterPanel = (props) => {
                   </Table.Cell>
                   <Table.Cell collapsing>
                     <Button.Checkbox
-                      checked={filteredTypes[type]}
+                      checked={typesList[type]}
                       onClick={() => {
-                        filteredTypes[type] = !filteredTypes[type];
-                        setFilteredTypes(filteredTypes);
+                        updateFilter(type);
                       }}
                       my={0.25}
                     />
@@ -172,12 +198,12 @@ const FilterPanel = (props) => {
               );
             })}
           </Table>
-        </div>
-      }
-    >
-      <Button icon="cog" onClick={() => setFilterVisible(!filterVisible)}>
-        Type Filter
-      </Button>
-    </Popper>
+        }
+      >
+        <Button icon="cog" selected={filterVisible}>
+          Type Filter
+        </Button>
+      </Floating>
+    </div>
   );
 };

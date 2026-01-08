@@ -26,6 +26,7 @@
 	var/regex/ymlRegex = regex(@"\.yml", "g")
 
 	data["discord_url"] = CONFIG_GET(string/discordurl)
+	data["notices"] = config.lobby_notices
 
 	for(var/archive_file in sort_list(flist("html/changelogs/archive/")))
 		var/archive_date = ymlRegex.Replace(archive_file, "")

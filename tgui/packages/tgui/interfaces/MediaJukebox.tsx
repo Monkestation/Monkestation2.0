@@ -124,7 +124,7 @@ const Controls = () => {
           }}
           format={(val) => round(val, 1) + '%'}
           tickWhileDragging
-          onChange={(e, volume) => act('set_volume', { volume })}
+          onChange={(_, volume) => act('set_volume', { volume })}
         />
       </LabeledList.Item>
     </LabeledList>

@@ -97,8 +97,8 @@ const ObservableSearch = (props) => {
           <Input
             autoFocus
             fluid
-            onEnter={(e, value) => orbitMostRelevant(value)}
-            onInput={(e, value) => setSearchQuery(value)}
+            onEnter={(value) => orbitMostRelevant(value)}
+            onChange={(value) => setSearchQuery(value)}
             placeholder="Search..."
             value={searchQuery}
           />

@@ -99,7 +99,7 @@ export const TextInput = (props: FeatureValueProps<string, string>) => {
   return (
     <Input
       value={props.value}
-      onInput={(_, newValue) => props.handleSetValue(newValue)}
+      onChange={(newValue) => props.handleSetValue(newValue)}
       width="100%"
     />
   );
@@ -351,7 +351,7 @@ export const FeatureNumberInput = (
 
   return (
     <NumberInput
-      onChange={(e, value) => {
+      onChange={(value) => {
         props.handleSetValue(value);
       }}
       minValue={props.serverData.minimum}
@@ -419,7 +419,7 @@ export const FeatureShortTextInput = (
       width="100%"
       value={props.value}
       maxLength={props.serverData.maximum_length}
-      onChange={(_, value) => props.handleSetValue(value)}
+      onChange={(value) => props.handleSetValue(value)}
     />
   );
 };
