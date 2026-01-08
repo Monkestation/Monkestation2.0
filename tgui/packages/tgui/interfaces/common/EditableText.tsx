@@ -36,7 +36,7 @@ export const EditableText = (props: Props) => {
       width="50%"
       maxLength={512}
       onEscape={() => setEditing(false)}
-      onEnter={(event, value) => {
+      onEnter={(value) => {
         setEditing(false);
         act('edit_field', { field: field, ref: target_ref, value: value });
       }}
@@ -49,10 +49,10 @@ export const EditableText = (props: Props) => {
           as="span"
           color={!text ? 'grey' : color || 'white'}
           style={{
-            'text-decoration': 'underline',
-            'text-decoration-color': 'white',
-            'text-decoration-thickness': '1px',
-            'text-underline-offset': '1px',
+            textDecoration: 'underline',
+            textDecorationColor: 'white',
+            textDecorationThickness: '1px',
+            textUnderlineOffset: '1px',
           }}
           onClick={() => setEditing(true)}
         >

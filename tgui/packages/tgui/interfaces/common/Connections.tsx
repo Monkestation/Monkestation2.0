@@ -45,8 +45,8 @@ export const Connections = (props: {
       height="100%"
       style={{
         position: 'absolute',
-        'pointer-events': 'none',
-        'z-index': zLayer,
+        pointerEvents: 'none',
+        zIndex: zLayer,
         overflow: 'visible',
       }}
     >
@@ -87,7 +87,7 @@ export const Connections = (props: {
             key={index}
             d={path}
             fill="transparent"
-            stroke-width={lineWidth}
+            strokeWidth={lineWidth}
           />
         );
       })}

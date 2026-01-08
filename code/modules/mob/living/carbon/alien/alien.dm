@@ -57,6 +57,43 @@
 		return pick (list("xltrails_1", "xltrails2"))
 	else
 		return pick (list("xttrails_1", "xttrails2"))
+
+/mob/living/carbon/alien/makeTrail(turf/target_turf, turf/start, direction)
+	if(!has_gravity() || !isturf(start) || HAS_TRAIT(src, TRAIT_NOBLOOD))
+		return
+
+	var/blood_exists = locate(/obj/effect/decal/cleanable/xenoblood/trail_holder) in start
+
+	var/trail_type = getTrail()
+	if(!trail_type)
+		return
+
+	var/brute_ratio = round(getBruteLoss() / maxHealth, 0.1)
+	if(blood_volume < max(BLOOD_VOLUME_NORMAL*(1 - brute_ratio * 0.25), 0))//don't leave trail if blood volume below a threshold
+		return
+
+	var/bleed_amount = bleedDragAmount()
+	blood_volume = max(blood_volume - bleed_amount, 0) //that depends on our brute damage.
+	var/newdir = get_dir(target_turf, start)
+	if(newdir != direction)
+		newdir = newdir | direction
+		if(newdir == (NORTH|SOUTH))
+			newdir = NORTH
+		else if(newdir == (EAST|WEST))
+			newdir = EAST
+	if((newdir in GLOB.cardinals) && (prob(50)))
+		newdir = turn(get_dir(target_turf, start), 180)
+	if(!blood_exists)
+		var/obj/effect/decal/cleanable/xenoblood/trail_holder/new_blood = new /obj/effect/decal/cleanable/xenoblood/trail_holder(start, get_static_viruses())
+		new_blood.add_mob_blood(src)
+		new_blood.update_appearance()
+
+	for(var/obj/effect/decal/cleanable/xenoblood/trail_holder/TH in start)
+		if((!(newdir in TH.existing_dirs) || trail_type == "trails_1" || trail_type == "trails_2") && TH.existing_dirs.len <= 16) //maximum amount of overlays is 16 (all light & heavy directions filled)
+			TH.existing_dirs += newdir
+			TH.add_overlay(image('icons/effects/blood.dmi', trail_type, dir = newdir))
+			TH.add_mob_blood(src)
+			TH.update_appearance()
 /*----------------------------------------
 Proc: AddInfectionImages()
 Des: Gives the client of the alien an image on each infected mob.

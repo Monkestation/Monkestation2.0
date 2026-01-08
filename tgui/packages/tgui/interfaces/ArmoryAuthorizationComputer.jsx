@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Box, Button, LabeledList, Section, Stack, Grid } from '../components';
+import { Box, Button, LabeledList, Section, Stack, Table } from '../components';
 import { EditableText } from './common/EditableText';
 import { Window } from '../layouts';
 
@@ -32,27 +32,29 @@ export const ArmoryAuthorizationComputer = (props) => {
               of Security, Warden, or Captain. Alternatively, 3 Security
               Officers can provide authorization.
             </Box>
-            <Grid>
-              <Grid.Column>
-                <Button
-                  fluid
-                  icon="exclamation-triangle"
-                  color="good"
-                  content="AUTHORIZE"
-                  disabled={is_authorized || authorizations_remaining === 0}
-                  onClick={() => act('authorize')}
-                />
-              </Grid.Column>
-              <Grid.Column>
-                <Button
-                  fluid
-                  icon="minus"
-                  color="bad"
-                  content="REPEAL"
-                  onClick={() => act('repeal')}
-                />
-              </Grid.Column>
-            </Grid>
+            <Table>
+              <Table.Row>
+                <Table.Cell>
+                  <Button
+                    fluid
+                    icon="exclamation-triangle"
+                    color="good"
+                    content="AUTHORIZE"
+                    disabled={is_authorized || authorizations_remaining === 0}
+                    onClick={() => act('authorize')}
+                  />
+                </Table.Cell>
+                <Table.Cell>
+                  <Button
+                    fluid
+                    icon="minus"
+                    color="bad"
+                    content="REPEAL"
+                    onClick={() => act('repeal')}
+                  />
+                </Table.Cell>
+              </Table.Row>
+            </Table>
             <Section
               title="Authorizations"
               level={3}
@@ -112,26 +114,28 @@ export const ArmoryAuthorizationComputer = (props) => {
                 </Stack.Item>
               </Stack>
             </Section>
-            <Grid>
-              <Grid.Column>
-                <Button
-                  fluid
-                  color="good"
-                  onClick={() => act('open_armory')}
-                  disabled={!is_authorized}
-                  content="OPEN"
-                />
-              </Grid.Column>
-              <Grid.Column>
-                <Button
-                  fluid
-                  color="bad"
-                  onClick={() => act('close_armory')}
-                  disabled={!is_authorized}
-                  content="CLOSE"
-                />
-              </Grid.Column>
-            </Grid>
+            <Table>
+              <Table.Row>
+                <Table.Cell>
+                  <Button
+                    fluid
+                    color="good"
+                    onClick={() => act('open_armory')}
+                    disabled={!is_authorized}
+                    content="OPEN"
+                  />
+                </Table.Cell>
+                <Table.Cell>
+                  <Button
+                    fluid
+                    color="bad"
+                    onClick={() => act('close_armory')}
+                    disabled={!is_authorized}
+                    content="CLOSE"
+                  />
+                </Table.Cell>
+              </Table.Row>
+            </Table>
           </Section>
         </Section>
       </Window.Content>

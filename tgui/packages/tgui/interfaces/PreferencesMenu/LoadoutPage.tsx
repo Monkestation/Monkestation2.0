@@ -64,7 +64,7 @@ export const LoadoutManager = (props) => {
 
   return (
     <Stack height={`${CLOTHING_SIDEBAR_ROWS * CLOTHING_CELL_SIZE}px`}>
-      <Stack.Item>
+      <Stack.Item fill>
         <Stack vertical fill>
           <Stack.Item>
             <Stack>
@@ -82,6 +82,7 @@ export const LoadoutManager = (props) => {
                   icon="fa-solid fa-coins"
                   align="center"
                   tooltip="This is your total Monkecoin amount."
+                  tooltipPosition="top"
                 >
                   {total_coins}
                 </Button>
@@ -108,7 +109,7 @@ export const LoadoutManager = (props) => {
         <Stack fill vertical>
           <Stack.Item>
             <Section title="Loadout Categories" align="center">
-              <Tabs style={{ 'flex-wrap': 'wrap' }}>
+              <Tabs style={{ flexWrap: 'wrap' }}>
                 {loadout_tabs.map((curTab) => (
                   <Tabs.Tab
                     key={curTab.name}

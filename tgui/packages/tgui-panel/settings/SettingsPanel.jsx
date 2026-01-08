@@ -164,7 +164,7 @@ export const SettingsGeneral = (props) => {
                 <Input
                   width={'100%'}
                   value={fontFamily}
-                  onChange={(e, value) =>
+                  onChange={(value) =>
                     dispatch(
                       updateSettings({
                         fontFamily: value,
@@ -210,7 +210,8 @@ export const SettingsGeneral = (props) => {
                 value={fontSize}
                 unit="px"
                 format={(value) => toFixed(value)}
-                onChange={(e, value) =>
+                tickWhileDragging
+                onChange={(_, value) =>
                   dispatch(updateSettings({ fontSize: value }))
                 }
               />
@@ -226,7 +227,8 @@ export const SettingsGeneral = (props) => {
             maxValue={5}
             value={lineHeight}
             format={(value) => toFixed(value, 2)}
-            onDrag={(e, value) =>
+            tickWhileDragging
+            onChange={(_, value) =>
               dispatch(
                 updateSettings({
                   lineHeight: value,
@@ -420,7 +422,7 @@ const TextHighlightSetting = (props) => {
             monospace
             placeholder="#ffffff"
             value={highlightColor}
-            onInput={(e, value) =>
+            onChange={(value) =>
               dispatch(
                 updateHighlightSetting({
                   id: id,
@@ -436,7 +438,10 @@ const TextHighlightSetting = (props) => {
         resize="vertical"
         value={highlightText}
         placeholder="Put words to highlight here. Separate terms with commas, i.e. (term1, term2, term3)"
-        onChange={(e, value) =>
+        style={{
+          width: '100%',
+        }}
+        onChange={(value) =>
           dispatch(
             updateHighlightSetting({
               id: id,
@@ -497,7 +502,7 @@ const ExperimentalSettings = (props) => {
                     width={'100%'}
                     value={websocketServer}
                     placeholder="localhost:1990"
-                    onChange={(e, value) =>
+                    onChange={(value) =>
                       dispatch(
                         updateSettings({
                           websocketServer: value,
@@ -541,7 +546,8 @@ const ExperimentalSettings = (props) => {
                 maxValue={64}
                 value={scrollTrackingTolerance}
                 format={(value) => toFixed(value)}
-                onDrag={(e, value) =>
+                tickWhileDragging
+                onChange={(_, value) =>
                   dispatch(
                     updateSettings({
                       scrollTrackingTolerance: value,
@@ -600,7 +606,8 @@ const SettingsStatPanel = (props) => {
                     value={statFontSize}
                     unit="px"
                     format={(value) => toFixed(value)}
-                    onChange={(e, value) =>
+                    tickWhileDragging
+                    onChange={(_, value) =>
                       dispatch(updateSettings({ statFontSize: value }))
                     }
                   />
