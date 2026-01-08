@@ -111,6 +111,10 @@
 			last_choice.color = null
 
 		SSvote.submit_single_vote(user, choice)
+
+		if(user.client?.prefs?.read_preference(/datum/preference/toggle/mapvote_autoclose))
+			hide()
+			return
 	else
 		if(SSvote.current_vote.choices_by_ckey[user.ckey + choice] == 1)
 			button.color = null
