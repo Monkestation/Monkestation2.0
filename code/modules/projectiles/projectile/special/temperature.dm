@@ -19,8 +19,8 @@
 	if(isliving(target))
 		var/mob/living/M = target
 		var/temp_adjust = temperature_mod_per_shot * ((100-blocked) / 100) * (temperature)
-		if(temp_adjust <= T0C && isoozeling(target))
-			M.apply_status_effect(/datum/status_effect/chilled_core)
+		if(temp_adjust < 0 || temp_adjust > 0)
+			M.apply_status_effect(/datum/status_effect/thermally_destabilized)
 
 		M.adjust_bodytemperature(temp_adjust, min, max, use_insulation = TRUE)
 
