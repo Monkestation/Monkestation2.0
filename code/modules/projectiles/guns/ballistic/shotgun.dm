@@ -433,13 +433,17 @@
 	//our hook gun!
 	var/obj/item/gun/magic/hook/bounty/hook
 
-/obj/item/gun/ballistic/shotgun/hook/Initialize()
+/obj/item/gun/ballistic/shotgun/hook/Initialize(mapload)
 	. = ..()
 	hook = new /obj/item/gun/magic/hook/bounty(src)
 
+/obj/item/gun/ballistic/shotgun/hook/Destroy()
+	QDEL_NULL(hook)
+	return ..()
+
 /obj/item/gun/ballistic/shotgun/hook/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>Right-click to shoot the hook.</span>"
+	. += span_notice("Right-click to shoot the hook.")
 
 /obj/item/gun/ballistic/shotgun/hook/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/params)
 	if(LAZYACCESS(params, RIGHT_CLICK))
