@@ -16,6 +16,7 @@ ADMIN_VERB(union_reset, R_ADMIN, FALSE, "Reset Cargo Demands", "Removes all Carg
 //TODO:
 // Add communications console interactions (creating deadlocks, seeing all union demands)
 // add /obj/machinery/mail_collector being spawned in when automatic mail is enacted
+// SPRITES: UnionStand.scss background should have low alpha instead of the weird color scheme. Mail collector unique sprite.
 // Finish adding all the union demands (Automatic mail tokens, Access-locked Vendors, Mining Sensors, Boulder payouts)
 // ABANDONING A DEMAND DURING DEADLOCK SHOULD BE FOR UNION LEADERS ONLY!!
 
