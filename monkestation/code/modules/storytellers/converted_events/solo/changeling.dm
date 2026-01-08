@@ -52,7 +52,7 @@
 /datum/round_event_control/antagonist/solo/changeling/extra
 	name = "Extra Changelings"
 	base_antags = 0
-	denominator = 20
+	denominator = 22
 	antag_flag = ROLE_CHANGELING
 	antag_datum = /datum/antagonist/changeling
 	weight = 0 //shouldnt be spawned by storyteller
