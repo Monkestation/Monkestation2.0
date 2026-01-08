@@ -4,17 +4,12 @@
  * @license MIT
  */
 
+import { useRef, useState } from 'react';
+import { Box, Dialog, Divider, MenuBar, Section } from '../components';
+
+import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
-import { useBackend, useLocalState } from '../backend';
-import {
-  Box,
-  Section,
-  TextArea,
-  MenuBar,
-  Divider,
-  Dialog,
-} from '../components';
-import { Component, createRef, RefObject } from 'react';
+import type { NTOSData } from '../layouts/NtosWindow';
 import { createLogger } from '../logging';
 
 const logger = createLogger('NtosNotepad');
@@ -77,11 +72,8 @@ const NtosNotepadMenuBar = (props: MenuBarProps) => {
     setWordWrap,
     aboutNotepadDialog,
   } = props;
-  const [openOnHover, setOpenOnHover] = useLocalState('openOnHover', false);
-  const [openMenuBar, setOpenMenuBar] = useLocalState<string | null>(
-    'openMenuBar',
-    null,
-  );
+  const [openOnHover, setOpenOnHover] = useState(false);
+  const [openMenuBar, setOpenMenuBar] = useState<string | null>(null);
   const onMenuItemClick = (value) => {
     setOpenOnHover(false);
     setOpenMenuBar(null);
@@ -202,6 +194,9 @@ const StatusBar = (props: StatusBarProps) => {
   const { statuses } = props;
   return (
     <Box className="NtosNotepad__StatusBar">
+      <Box className="NtosNotepad__StatusBar__entry" minWidth="25rem">
+        Press shift-enter to insert new line
+      </Box>
       <Box className="NtosNotepad__StatusBar__entry" minWidth="15rem">
         Ln {statuses.line}, Col {statuses.column}
       </Box>
@@ -243,93 +238,53 @@ const TEXTAREA_UPDATE_TRIGGERS = [
 ];
 
 interface NotePadTextAreaProps {
-  maintainFocus: boolean;
   text: string;
   wordWrap: boolean;
-  setText: (string) => void;
+  setText: (text: string) => void;
   setStatuses: (statuses: Statuses) => void;
 }
 
-class NotePadTextArea extends Component<NotePadTextAreaProps> {
-  innerRef: RefObject<HTMLTextAreaElement | null>;
+function NotePadTextArea(props: NotePadTextAreaProps) {
+  const { text, setText, wordWrap, setStatuses } = props;
 
-  constructor(props) {
-    super(props);
-    this.innerRef = createRef();
-  }
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
-  handleEvent(event: Event) {
+  function handleEvent(event) {
     const area = event.target as HTMLTextAreaElement;
-    this.props.setStatuses(getStatusCounts(area.value, area.selectionStart));
+    setStatuses(getStatusCounts(area.value, area.selectionStart));
   }
 
-  onblur() {
-    if (!this.innerRef.current) {
-      return;
-    }
-
-    if (this.props.maintainFocus) {
-      this.innerRef.current.focus();
-      return false;
-    }
-
-    return true;
-  }
-
-  // eslint-disable-next-line react/no-deprecated
-  componentDidMount() {
-    const textarea = this.innerRef?.current;
-    if (!textarea) {
-      logger.error(
-        'NotePadTextArea.render(): Textarea RefObject should not be null',
-      );
-      return;
-    }
-
-    // Javascript – execute when textarea caret is moved
-    // https://stackoverflow.com/a/53999418/5613731
-    TEXTAREA_UPDATE_TRIGGERS.forEach((trigger) =>
-      textarea.addEventListener(trigger, this),
-    );
-    // Slight hack: Keep selection when textarea loses focus so menubar actions can be used (i.e. cut, delete)
-    textarea.onblur = this.onblur.bind(this);
-  }
-
-  componentWillUnmount() {
-    const textarea = this.innerRef?.current;
-    if (!textarea) {
-      logger.error(
-        'NotePadTextArea.componentWillUnmount(): Textarea RefObject should not be null',
-      );
-      return;
-    }
-    TEXTAREA_UPDATE_TRIGGERS.forEach((trigger) =>
-      textarea.removeEventListener(trigger, this),
-    );
-  }
-
-  render() {
-    const { text, setText, wordWrap } = this.props;
-
-    return (
-      <TextArea
-        ref={this.innerRef}
-        onInput={(_, value) => setText(value)}
-        className={'NtosNotepad__textarea'}
-        value={text}
-      />
-    );
-  }
+  return (
+    <textarea
+      autoFocus
+      className="NtosNotepad__textarea"
+      onClick={handleEvent}
+      onMouseUp={handleEvent}
+      onChange={(event) => {
+        setText(event.currentTarget.value);
+        handleEvent(event);
+      }}
+      ref={textareaRef}
+      spellCheck={false}
+      style={{
+        whiteSpace: wordWrap ? 'normal' : 'nowrap',
+        overflow: wordWrap ? 'hidden auto' : 'scroll hidden',
+      }}
+      value={text}
+    />
+  );
 }
 
 type AboutDialogProps = {
   close: () => void;
-  clientName: string;
 };
 
 const AboutDialog = (props: AboutDialogProps) => {
-  const { close, clientName } = props;
+  const { close } = props;
+  const { data } = useBackend<NTOSData>();
+  const { show_imprint, login } = data;
   const paragraphStyle = { padding: '.5rem 1rem 0 2rem' };
+
   return (
     <Dialog title="About Notepad" onClose={close} width={'500px'}>
       <div className="Dialog__body">
@@ -356,7 +311,9 @@ const AboutDialog = (props: AboutDialogProps) => {
           >
             This product is licensed under the NT Corporation Terms to:
           </span>
-          <span style={{ padding: '0 1rem 0 4rem' }}>{clientName}</span>
+          <span style={{ padding: '0 1rem 0 4rem' }}>
+            {show_imprint ? login.IDName : 'Unknown'}
+          </span>
         </Box>
       </div>
       <div className="Dialog__footer">
@@ -372,34 +329,20 @@ type NoteData = {
 type RetryActionType = (retrying?: boolean) => void;
 
 export const NtosNotepad = (props) => {
-  const { act, data, config } = useBackend<NoteData>();
+  const { act, data } = useBackend<NoteData>();
   const { note } = data;
-  const [documentName, setDocumentName] = useLocalState<string>(
-    'documentName',
-    DEFAULT_DOCUMENT_NAME,
-  );
-  const [originalText, setOriginalText] = useLocalState<string>(
-    'originalText',
-    note,
-  );
-  const [text, setText] = useLocalState<string>('text', note);
-  const [statuses, setStatuses] = useLocalState<Statuses>('statuses', {
+  const [documentName, setDocumentName] = useState(DEFAULT_DOCUMENT_NAME);
+  const [originalText, setOriginalText] = useState(note);
+  const [text, setText] = useState(note);
+  const [statuses, setStatuses] = useState<Statuses>({
     line: 0,
     column: 0,
   });
-  const [activeDialog, setActiveDialog] = useLocalState<Dialogs>(
-    'activeDialog',
-    Dialogs.NONE,
-  );
-  const [retryAction, setRetryAction] = useLocalState<RetryActionType | null>(
-    'activeAction',
-    null,
-  );
-  const [showStatusBar, setShowStatusBar] = useLocalState<boolean>(
-    'showStatusBar',
-    true,
-  );
-  const [wordWrap, setWordWrap] = useLocalState<boolean>('wordWrap', true);
+  const [activeDialog, setActiveDialog] = useState(Dialogs.NONE);
+  const [retryAction, setRetryAction] = useState<RetryActionType | null>(null);
+  const [showStatusBar, setShowStatusBar] = useState(true);
+  const [wordWrap, setWordWrap] = useState(true);
+
   const handleCloseDialog = () => setActiveDialog(Dialogs.NONE);
   const handleSave = (newDocumentName: string = documentName) => {
     logger.log(`Saving the document as ${newDocumentName}`);
@@ -447,13 +390,6 @@ export const NtosNotepad = (props) => {
     setText('');
     setDocumentName(DEFAULT_DOCUMENT_NAME);
   };
-  const noSave = () => {
-    logger.log('Discarding unsaved changes');
-    setActiveDialog(Dialogs.NONE);
-    if (retryAction) {
-      retryAction(true);
-    }
-  };
 
   // MS Notepad displays an asterisk when there's unsaved changes
   const unsavedAsterisk = text !== originalText ? '*' : '';
@@ -481,10 +417,9 @@ export const NtosNotepad = (props) => {
           />
           <Section fill>
             <NotePadTextArea
-              maintainFocus={activeDialog === Dialogs.NONE}
               text={text}
-              wordWrap={wordWrap}
               setText={setText}
+              wordWrap={wordWrap}
               setStatuses={setStatuses}
             />
           </Section>
@@ -498,13 +433,15 @@ export const NtosNotepad = (props) => {
           </div>
           <div className="Dialog__footer">
             <Dialog.Button onClick={handleSave}>Save</Dialog.Button>
-            <Dialog.Button onClick={noSave}>Don&apos;t Save</Dialog.Button>
+            <Dialog.Button onClick={handleCloseDialog}>
+              Don&apos;t Save
+            </Dialog.Button>
             <Dialog.Button onClick={handleCloseDialog}>Cancel</Dialog.Button>
           </div>
         </Dialog>
       )}
       {activeDialog === Dialogs.ABOUT && (
-        <AboutDialog close={handleCloseDialog} clientName={config.user.name} />
+        <AboutDialog close={handleCloseDialog} />
       )}
     </NtosWindow>
   );

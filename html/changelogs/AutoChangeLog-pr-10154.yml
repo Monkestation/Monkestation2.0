@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Radiation collectors should produce the proper amount of power again. High-end singularity setups should be viable once more!"

@@ -1,0 +1,4 @@
+author: "flleeppyy"
+delete-after: True
+changes:
+  - bugfix: "seed extractor breaking hovering on reagents."
