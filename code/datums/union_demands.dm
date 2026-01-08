@@ -150,7 +150,7 @@
 
 /datum/union_demand/automatic_mail
 	name = "Automatic Mail Tokens"
-	union_description =  "Recent technological advancements have shown that mail no longer needs tokens to prove \
+	union_description = "Recent technological advancements have shown that mail no longer needs tokens to prove \
 		it has been delivered. Although this technology is rather expensive on this large of a scale, \
 		we can automatically track when mail has been opened, and instantly send the profits back to Cargo."
 	station_description = "As part of recent negotiations, the Cargo Union has started implementing tracking devices \
@@ -183,3 +183,26 @@
 		if(worn_by)
 			worn_by.sec_hud_set_ID()
 	return ..()
+
+/datum/union_demand/boulder_payouts
+	name = "Boulder Payouts"
+	union_description = "Miners mine, but miners clear boulders. Boulders don't pay out? Why not? \
+		Just because you're utilizing modern technology to do the heavy processing of the boulders, \
+		does not justify Nanotrasen taking away the pay for boulders being processed! \
+		As part of our new demands, boulder processing and refining machines will hold mining points as it \
+		processes boulders, allowing miners to get paid for their work."
+	station_description = "Recent negotiations with the Cargo Union has lead to our engineers modifying the \
+		boulder processing machines to allow the storing of mineral points for any boulder it refines. \
+		The cost of these upgrades are being delegated to the Station."
+	cost = 150
+	active_without_union = TRUE
+
+/datum/union_demand/mining_sensors
+	name = "Mining Sensors"
+	union_description = "Too many Union Miners have been getting lost due to the lack of suit sensors available on the planet. \
+		It may be expensive, but an investment in long-range antennaes, mixed with an agreement with several satellite \
+		companies, has given us a newfound accessibility of letting suit sensors planet-side be visible to the station. \
+		As a bonus, this will also remove the need for kheiral cuffs."
+	station_description = "As part of a collaboration between the RnD departments that gave us the Kheiral cuffs and NTNet, \
+		leaked technologies have been stolen and re-used to illegally modify suit sensors to work on non-station areas. \
+		Nanotrasen does not approve of the Cargo Union using these technologies for their Shaft Miners."
