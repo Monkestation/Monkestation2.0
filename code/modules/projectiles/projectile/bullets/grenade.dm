@@ -296,7 +296,7 @@
 	var/obj/item/grenade/shrapnel_maker = new /obj/item/grenade/kineticshrapnel(drop_location())
 	shrapnel_maker.detonate()
 	qdel(shrapnel_maker)
-	explosion(target, devastation_range = 0, heavy_impact_range = 0, light_impact_range = 4, flame_range = 0, flash_range = 1, adminlog = FALSE, explosion_cause = src)
+	explosion(target, devastation_range = 0, heavy_impact_range = 0, light_impact_range = 3, flame_range = 0, flash_range = 1, adminlog = FALSE, explosion_cause = src)
 
 
 /obj/item/grenade/kineticshrapnel
@@ -312,7 +312,7 @@
 
 /obj/projectile/bullet/shrapnel/kinetic
 	name = "Kinetic Shrapnel Hunk"
-	range = 5
+	range = 4
 	damage = 25
 	weak_against_armour = TRUE
 	dismemberment = 0
@@ -320,7 +320,7 @@
 	ricochet_chance = 0
 	ricochet_incidence_leeway = 0
 	ricochet_decay_chance = 0
-	fauna_mod = 3
+	fauna_mod = 2
 
 /obj/projectile/bullet/shrapnel/kinetic/on_hit(atom/target, Firer, blocked = 0, pierce_hit) //its not meant to tear through walls like a plasma cutter, but will still at least bust down a wall if it hits one.
 	if(ismineralturf(target))

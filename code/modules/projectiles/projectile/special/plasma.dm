@@ -61,7 +61,7 @@
 	name = "magnum kinetic projectile"
 	icon_state = "cryoshot"
 	damage_type = BRUTE
-	damage = 17.5  //totals 175 damage letting them reach the breakpoint for watcher HP so it one shots them
+	damage = 12  //totals 192 damage letting them reach the breakpoint for watcher HP so it one shots them
 	fauna_mod = 2
 	range = 7
 	dismemberment = 0
