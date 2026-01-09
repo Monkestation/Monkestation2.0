@@ -16,7 +16,6 @@
 
 /datum/brain_trauma/special/tenacity/on_gain()
 	. = ..()
-	owner.pain_controller?.remove_all_pain()
 	owner.add_traits(traits_to_apply, TRAUMA_TRAIT)
 
 /datum/brain_trauma/special/tenacity/on_lose()

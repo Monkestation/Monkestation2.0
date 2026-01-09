@@ -98,25 +98,6 @@
 			damage_dealt = -1 *  adjustCloneLoss(damage_amount, forced = forced)
 		if(STAMINA)
 			damage_dealt = -1 * stamina?.adjust(-damage_amount)
-		if(PAIN)
-			if(pain_controller)
-				var/pre_pain = pain_controller.get_average_pain()
-				var/pain_amount = damage_amount
-				var/chosen_zone
-				if(spread_damage || isnull(def_zone))
-					chosen_zone = BODY_ZONES_ALL
-					pain_amount /= 6
-				else if(isbodypart(def_zone))
-					var/obj/item/bodypart/actual_hit = def_zone
-					chosen_zone = actual_hit.body_zone
-				else
-					chosen_zone = check_zone(def_zone)
-
-				sharp_pain(chosen_zone, pain_amount, STAMINA, 12.5 SECONDS, 0.8)
-				damage_dealt += pre_pain - pain_controller.get_average_pain()
-				damage_dealt += stamina?.adjust(-damage_amount * 0.25, forced = forced)
-			else
-				damage_dealt = -1 * stamina.adjust(-damage_amount, forced = forced)
 		if(BRAIN)
 			damage_dealt = -1 * adjustOrganLoss(ORGAN_SLOT_BRAIN, damage_amount)
 

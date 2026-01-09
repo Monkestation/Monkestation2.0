@@ -26,8 +26,6 @@
 	if(!COOLDOWN_FINISHED(src, update_cd))
 		return
 
-	owner.adjust_pain_shock(1 * (consciousness_mod * 0.1))
-
 	COOLDOWN_START(src, update_cd, 9 SECONDS)
 
 /// Manually applying alerts, rather than using the api for it, becuase we need to apply "severity" argument

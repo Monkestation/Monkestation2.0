@@ -557,9 +557,6 @@
 	// Enough to make the mob sleep.
 		if(n2o_pp > n2o_sleep_min)
 			breather.Sleeping(min(breather.AmountSleeping() + 100, 200))
-		// And apply anesthesia if it worked
-		if(HAS_TRAIT(breather, TRAIT_KNOCKEDOUT))
-			breather.apply_status_effect(/datum/status_effect/grouped/anesthetic, /datum/gas/nitrous_oxide)
 
 /// N2O side-effects. "Too much N2O!"
 /obj/item/organ/internal/lungs/proc/safe_n2o(mob/living/carbon/breather, datum/gas_mixture/breath, old_n2o_pp)

@@ -126,18 +126,10 @@
 			blocked = stamina_armor_check,
 			attack_direction = hitting_projectile.dir,
 		)
-	if(hitting_projectile.pain)
-		apply_damage(
-			damage = hitting_projectile.pain,
-			damagetype = PAIN,
-			def_zone = def_zone,
-			// blocked = armor_check, // Batons don't factor in armor, soooo we shouldn't?
-			attack_direction = hitting_projectile.dir,
-		)
 
 	var/extra_paralyze = 0 SECONDS
 	var/extra_knockdown = 0 SECONDS
-	if(hitting_projectile.damage_type == BRUTE && !hitting_projectile.grazing && (pain_controller?.get_average_pain() > 50))
+	if(hitting_projectile.damage_type == BRUTE && !hitting_projectile.grazing)
 		if(damage_done >= 60)
 			if(!IsParalyzed() && prob(damage_done))
 				extra_paralyze += 0.8 SECONDS

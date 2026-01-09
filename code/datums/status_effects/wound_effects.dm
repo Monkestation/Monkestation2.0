@@ -38,7 +38,6 @@
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
 		human_owner.physiology.bleed_mod *= WOUND_DETERMINATION_BLEED_MOD
-		human_owner.set_pain_mod(id, 0.625) // 0.625 * 0.8 = 0.5 = numbness
 	owner.add_traits(list(TRAIT_NO_PAIN_EFFECTS, TRAIT_ABATES_SHOCK), TRAIT_STATUS_EFFECT(id))
 	if(duration >= WOUND_DETERMINATION_SEVERE)
 		owner.throw_alert(id, /atom/movable/screen/alert/determined)
@@ -51,7 +50,6 @@
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
 		human_owner.physiology.bleed_mod /= WOUND_DETERMINATION_BLEED_MOD
-		human_owner.unset_pain_mod(id)
 	owner.remove_traits(list(TRAIT_NO_PAIN_EFFECTS, TRAIT_ABATES_SHOCK), TRAIT_STATUS_EFFECT(id))
 	owner.clear_alert(id)
 	owner.apply_status_effect(/datum/status_effect/determination_crash)
@@ -145,16 +143,13 @@
 	if(SEND_SIGNAL(owner, COMSIG_CARBON_LIMPING, (next_leg || right || left)) & COMPONENT_CANCEL_LIMP)
 		return
 
-	// less limping while we have determination still
-	var/determined_mod = owner.can_feel_pain(TRUE) ? 1 : 0.5
-
 	if(next_leg == left)
-		if(prob(limp_chance_left * determined_mod))
-			owner.client.move_delay += slowdown_left * determined_mod
+		if(prob(limp_chance_left))
+			owner.client.move_delay += slowdown_left
 		next_leg = right
 	else
-		if(prob(limp_chance_right * determined_mod))
-			owner.client.move_delay += slowdown_right * determined_mod
+		if(prob(limp_chance_right))
+			owner.client.move_delay += slowdown_right
 		next_leg = left
 
 /datum/status_effect/limp/proc/update_limp()

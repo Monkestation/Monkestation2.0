@@ -236,7 +236,6 @@ GLOBAL_VAR_INIT(wonderland_apocalypse, FALSE)
 	if(vis_msg)
 		owner.visible_message(vis_msg, self_msg)
 	owner.take_overall_damage(brute = rand(5, 15))
-	owner.sharp_pain(BODY_ZONES_ALL, rand(5, 15), BRUTE, 10 SECONDS)
 	if(iscarbon(owner))
 		var/mob/living/carbon/carbon_owner = owner
 		carbon_owner.vomit(lost_nutrition = 0, blood = TRUE, stun = FALSE, distance = prob(20) + 1, message = FALSE)

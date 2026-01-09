@@ -31410,11 +31410,7 @@
 "uYW" = (
 /obj/structure/closet/cabinet,
 /obj/item/storage/box/firecrackers,
-/obj/item/storage/pill_bottle/prescription/aspirin_para_coffee,
 /obj/item/storage/pill_bottle/prescription_stimulant,
-/obj/item/storage/pill_bottle/painkillers,
-/obj/item/reagent_containers/hypospray/medipen/emergency_painkiller,
-/obj/item/reagent_containers/hypospray/medipen/emergency_painkiller,
 /obj/item/reagent_containers/hypospray/medipen/deforest/coagulants,
 /obj/item/reagent_containers/hypospray/medipen/deforest/coagulants,
 /obj/item/reagent_containers/hypospray/medipen/deforest/demoneye,

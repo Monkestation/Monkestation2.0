@@ -126,7 +126,7 @@
 	if(!prob((severity - 1) * 15))
 		return NONE
 
-	var/painless = !victim.can_feel_pain() || victim.has_status_effect(/datum/status_effect/determined)
+	var/painless = victim.has_status_effect(/datum/status_effect/determined)
 	// And you have a 70% or 50% chance to actually land the blow, respectively
 	if(prob(70 - 20 * (severity - 1)))
 		to_chat(victim, span_userdanger("The fracture in your [limb.plaintext_zone] [painless ? "jostles uncomfortably" : "shoots with pain"] as you strike [target]!"))
@@ -141,7 +141,6 @@
 	)
 	victim.Stun(0.5 SECONDS)
 	victim.apply_damage(10, BRUTE, limb)
-	victim.pain_emote(pick("wince", "grimace", "flinch"))
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /datum/wound/blunt/bone/proc/weapon_attack_with_hurt_hand(datum/source, mob/target, mob/user, params)
@@ -163,7 +162,7 @@
 	if(footstep_counter >= 8)
 		footstep_counter = 1
 
-	if((limb.current_gauze ? limb.current_gauze.splint_factor : 1) <= 0.75 || !victim.can_feel_pain())
+	if((limb.current_gauze ? limb.current_gauze.splint_factor : 1) <= 0.75)
 		return
 	if(limb.body_zone == SELECT_LEFT_OR_RIGHT(footstep_counter, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
 		return
@@ -181,15 +180,13 @@
 		return
 
 	to_chat(victim, span_danger("Your [limb.plaintext_zone] [pick("aches", "pangs", "stings")] as you take a step!"))
-	victim.sharp_pain(limb.body_zone, severity * 6, BRUTE, 10 SECONDS)
-
 
 /datum/wound/blunt/bone/proc/breath(...)
 	SIGNAL_HANDLER
 
 	if(limb.body_zone != BODY_ZONE_CHEST)
 		return NONE
-	if(!victim.can_feel_pain() || (limb.current_gauze && limb.current_gauze.splint_factor <= 0.75))
+	if(limb.current_gauze && limb.current_gauze.splint_factor <= 0.75)
 		return NONE
 	var/pain_prob = min(75, 20 * severity * (victim.body_position == LYING_DOWN ? 1.5 : 1))
 	if(!prob(pain_prob))
@@ -197,12 +194,9 @@
 	to_chat(victim, span_danger("You wince as you take a deep breath, feeling the pain in your ribs!"))
 	var/breath_prob = min(50, 15 * severity * (victim.body_position == LYING_DOWN ? 1.2 : 1))
 	if(prob(breath_prob))
-		victim.pain_emote("gasp")
 		. = BREATHE_SKIP_BREATH
 	else
-		victim.pain_emote("wince")
 		. = NONE
-	victim.sharp_pain(BODY_ZONE_CHEST, rand(5, 10), BRUTE, 10 SECONDS)
 	return .
 
 /datum/wound/blunt/bone/receive_damage(wounding_type, wounding_dmg, wound_bonus, attack_direction, damage_source)
@@ -385,11 +379,9 @@
 	if(!do_after(user, time, target=victim, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
 		return
 
-	victim.cause_pain(limb.body_zone, 25)
 	if(prob(65))
 		user.visible_message(span_danger("[user] snaps [victim]'s dislocated [limb.plaintext_zone] back into place!"), span_notice("You snap [victim]'s dislocated [limb.plaintext_zone] back into place!"), ignored_mobs=victim)
 		to_chat(victim, span_userdanger("[user] snaps your dislocated [limb.plaintext_zone] back into place!"))
-		victim.pain_emote("scream")
 		victim.apply_damage(20, BRUTE, limb, wound_bonus = CANT_WOUND)
 		qdel(src)
 	else
@@ -405,11 +397,9 @@
 	if(!do_after(user, time, target=victim, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
 		return
 
-	victim.cause_pain(limb.body_zone, 40)
 	if(prob(65))
 		user.visible_message(span_danger("[user] snaps [victim]'s dislocated [limb.plaintext_zone] with a sickening crack!"), span_danger("You snap [victim]'s dislocated [limb.plaintext_zone] with a sickening crack!"), ignored_mobs=victim)
 		to_chat(victim, span_userdanger("[user] snaps your dislocated [limb.plaintext_zone] with a sickening crack!"))
-		victim.pain_emote("scream")
 		victim.apply_damage(25, BRUTE, limb, wound_bonus = 30)
 	else
 		user.visible_message(span_danger("[user] wrenches [victim]'s dislocated [limb.plaintext_zone] around painfully!"), span_danger("You wrench [victim]'s dislocated [limb.plaintext_zone] around painfully!"), ignored_mobs=victim)
@@ -440,7 +430,6 @@
 		user.visible_message(span_danger("[user] finishes resetting [victim]'s [limb.plaintext_zone]!"), span_nicegreen("You finish resetting [victim]'s [limb.plaintext_zone]!"), ignored_mobs=victim)
 		to_chat(victim, span_userdanger("[user] resets your [limb.plaintext_zone]!"))
 
-	victim.pain_emote("scream")
 	qdel(src)
 
 /*
@@ -549,14 +538,13 @@
 		return TRUE
 
 	I.use(1)
-	victim.pain_emote("scream")
+
 	if(user != victim)
 		user.visible_message(span_notice("[user] finishes applying [I] to [victim]'s [limb.plaintext_zone], emitting a fizzing noise!"), span_notice("You finish applying [I] to [victim]'s [limb.plaintext_zone]!"), ignored_mobs=victim)
 		to_chat(victim, span_userdanger("[user] finishes applying [I] to your [limb.plaintext_zone], and you can feel the bones exploding with pain as they begin melting and reforming!"))
 	else
 		if(!HAS_TRAIT(victim, TRAIT_ANALGESIA))
-			var/painkiller_bonus = 50 * (1 - (victim.pain_controller?.pain_modifier || 1))
-			if(prob(25 + (20 * (severity - 2)) - painkiller_bonus)) // 25%/45% chance to fail self-applying with severe and critical wounds, modded by drunkenness
+			if(prob(25 + (20 * (severity - 2)) - min(victim.get_drunk_amount(), 10))) // 25%/45% chance to fail self-applying with severe and critical wounds, modded by drunkenness
 				victim.visible_message(span_danger("[victim] fails to finish applying [I] to [victim.p_their()] [limb.plaintext_zone], passing out from the pain!"), span_notice("You pass out from the pain of applying [I] to your [limb.plaintext_zone] before you can finish!"))
 				victim.AdjustUnconscious(5 SECONDS)
 				return TRUE

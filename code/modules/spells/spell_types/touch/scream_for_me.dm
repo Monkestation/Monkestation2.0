@@ -20,7 +20,6 @@
 		span_warning("The feedback mutilates [caster]'s arm!"),
 		span_userdanger("The spell bounces from [victim]'s skin back into your arm!"),
 	)
-	caster.cause_pain(BODY_ZONE_EVERYTHING, 50, BRUTE)
 	var/obj/item/bodypart/to_wound = caster.get_holding_bodypart_of_item(hand)
 	var/type_wound = pick(list(/datum/wound/slash/flesh/critical, /datum/wound/slash/flesh/severe))
 	to_wound.force_wound_upwards(type_wound)
@@ -30,7 +29,6 @@
 		return
 	var/mob/living/carbon/human/human_victim = victim
 	human_victim.emote("scream")
-	human_victim.cause_pain(BODY_ZONE_EVERYTHING, 50, BRUTE)
 	for(var/obj/item/bodypart/to_wound as anything in human_victim.bodyparts)
 		var/type_wound = pick(list(/datum/wound/slash/flesh/critical, /datum/wound/slash/flesh/severe))
 		to_wound.force_wound_upwards(type_wound)
