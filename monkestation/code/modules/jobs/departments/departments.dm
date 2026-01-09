@@ -6,10 +6,3 @@
 	display_order = 1
 	label_class = "command"
 	ui_color = COLOR_CENTCOM_GREEN
-
-/datum/job_department/late
-	department_name = DEPARTMENT_LATE
-	department_bitflags = DEPARTMENT_BITFLAG_LATE
-	display_order = 10
-	label_class = "latejoin"
-	ui_color = "#0b6b2b"

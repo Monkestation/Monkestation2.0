@@ -350,7 +350,7 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 /datum/loadout_item/head/cargo_beret
 	name = "Supply Beret"
 	item_path = /obj/item/clothing/head/beret/cargo
-	restricted_roles = list(JOB_QUARTERMASTER, JOB_CARGO_TECHNICIAN, JOB_SHAFT_MINER, JOB_LATEJOIN_EXPLORER)
+	restricted_roles = list(JOB_QUARTERMASTER, JOB_CARGO_TECHNICIAN, JOB_SHAFT_MINER, JOB_EXPLORER)
 
 /datum/loadout_item/head/beret_med
 	name = "Medical Beret"

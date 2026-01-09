@@ -21708,6 +21708,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 4
 	},
+/obj/effect/landmark/start/explorer,
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "crV" = (
@@ -31148,6 +31149,10 @@
 /obj/machinery/meter,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/pumproom)
+"eOJ" = (
+/obj/effect/landmark/start/explorer,
+/turf/open/floor/iron/dark,
+/area/station/cargo/miningoffice)
 "eOR" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -34925,6 +34930,13 @@
 /obj/machinery/iv_drip,
 /turf/open/floor/iron/white,
 /area/station/medical/virology/isolation)
+"guo" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/segment,
+/obj/effect/landmark/start/explorer,
+/turf/open/floor/iron,
+/area/station/cargo/storage)
 "guv" = (
 /obj/structure/table/reinforced,
 /obj/item/analyzer,
@@ -41214,6 +41226,7 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
+/obj/effect/landmark/start/explorer,
 /turf/open/floor/iron/dark,
 /area/station/cargo/miningoffice)
 "iIv" = (
@@ -51570,6 +51583,7 @@
 "mED" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/landmark/start/barber,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
 "mEJ" = (
@@ -68988,6 +69002,7 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
+/obj/effect/landmark/start/explorer,
 /turf/open/floor/iron/dark,
 /area/station/cargo/miningoffice)
 "tfS" = (
@@ -71901,6 +71916,7 @@
 /obj/effect/turf_decal/arrows{
 	dir = 4
 	},
+/obj/effect/landmark/start/explorer,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "umI" = (
@@ -119103,7 +119119,7 @@ ctz
 nKC
 wON
 qzE
-qzE
+guo
 qzE
 nKE
 lnF
@@ -119631,7 +119647,7 @@ tfy
 tMf
 oct
 cIX
-cJV
+eOJ
 drJ
 cJV
 cJV
