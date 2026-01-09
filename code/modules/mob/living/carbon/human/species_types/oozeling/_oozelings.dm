@@ -122,7 +122,7 @@
 		return FALSE
 
 	if(slime_wetness.stacks >= 10)
-		slime.adjust_wet_stacks(-5, /datum/status_effect/fire_handler/wet_stacks/oozeling)
+		slime.adjust_wet_stacks(-6, /datum/status_effect/fire_handler/wet_stacks/oozeling)
 		return TRUE
 
 	return FALSE
@@ -280,6 +280,10 @@
 	return ..()
 
 /datum/species/oozeling/proc/water_exposure(mob/living/carbon/human/slime, check_clothes = TRUE, quiet_if_protected = FALSE)
+	if(HAS_TRAIT(slime, TRAIT_WAS_SPRAYED))
+		return
+	ADD_TRAIT(slime, TRAIT_WAS_SPRAYED, TRAIT_GENERIC)
+	addtimer(TRAIT_CALLBACK_REMOVE(slime, TRAIT_WAS_SPRAYED, TRAIT_GENERIC), 0.5 SECOND)
 	var/water_multiplier = 1
 	// thick clothing won't protect you if you just drink or inject tho
 	if(check_clothes)

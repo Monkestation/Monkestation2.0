@@ -17,6 +17,6 @@
 	count = 6
 	icon_state = list("dot"=2)
 	spawning = 0.3
-	lifespan = 3 SECONDS
-	fade = 1 SECOND
+	lifespan = 2 SECONDS
+	fade = 0.75 SECONDS
 	gravity = list(0, -0.02)
