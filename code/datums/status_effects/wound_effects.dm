@@ -38,7 +38,7 @@
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
 		human_owner.physiology.bleed_mod *= WOUND_DETERMINATION_BLEED_MOD
-	owner.add_traits(list(TRAIT_NO_PAIN_EFFECTS, TRAIT_ABATES_SHOCK), TRAIT_STATUS_EFFECT(id))
+	owner.add_traits(list(TRAIT_ABATES_SHOCK), TRAIT_STATUS_EFFECT(id))
 	if(duration >= WOUND_DETERMINATION_SEVERE)
 		owner.throw_alert(id, /atom/movable/screen/alert/determined)
 	return TRUE
@@ -50,7 +50,7 @@
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
 		human_owner.physiology.bleed_mod /= WOUND_DETERMINATION_BLEED_MOD
-	owner.remove_traits(list(TRAIT_NO_PAIN_EFFECTS, TRAIT_ABATES_SHOCK), TRAIT_STATUS_EFFECT(id))
+	owner.remove_traits(list(TRAIT_ABATES_SHOCK), TRAIT_STATUS_EFFECT(id))
 	owner.clear_alert(id)
 	owner.apply_status_effect(/datum/status_effect/determination_crash)
 
