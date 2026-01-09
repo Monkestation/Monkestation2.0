@@ -31,5 +31,6 @@
 	. = ..()
 	invoker.remove_traits(list(TRAIT_STUNIMMUNE,
 							   TRAIT_PUSHIMMUNE,
+							   TRAIT_NOLIMBDISABLE,
 							   TRAIT_IGNOREDAMAGESLOWDOWN), VANGUARD_TRAIT)
 	to_chat(invoker, span_bolddanger("You feel the last of the energy from \the [invoking_slab] leave you.")) //smaller span here because its pretty obvious when it ends anyway
