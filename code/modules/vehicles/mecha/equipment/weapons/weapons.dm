@@ -114,7 +114,7 @@
 	fire_sound = 'sound/weapons/lasercannonfire.ogg'
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser/sentinellascannon
-	equip_cooldown = 50
+	equip_cooldown = 40
 	name = "\improper Sentinel Laser Cannon"
 	desc = "A massive turbolaser mounted in a turret."
 	icon_state = "sentinel_cannon_laser"
@@ -653,7 +653,7 @@
 	fire_sound = 'sound/weapons/gun/general/lighttankgun.ogg'
 	harmful = TRUE
 	projectile = /obj/projectile/bullet/rocket/sentinelshell
-	equip_cooldown = 12 SECONDS
+	equip_cooldown = 8 SECONDS
 	projectiles = 20
 	projectiles_cache = 0
 	projectiles_cache_max = 40
