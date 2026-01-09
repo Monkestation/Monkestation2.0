@@ -4,45 +4,28 @@
  * @license MIT
  */
 
-import { useDispatch, useSelector } from 'common/redux';
-import { Box, Tabs, Flex, Button } from 'tgui/components';
+import { useDispatch, useSelector } from 'tgui/backend';
+import { Box, Tabs, Button, Stack } from 'tgui/components';
 import { changeChatPage, addChatPage } from './actions';
 import { selectChatPages, selectCurrentChatPage } from './selectors';
 import { openChatSettings } from '../settings/actions';
 
 const UnreadCountWidget = ({ value }) => (
-  <Box
-    style={{
-      'font-size': '0.7em',
-      'border-radius': '0.25em',
-      width: '1.7em',
-      'line-height': '1.55em',
-      'background-color': 'crimson',
-      color: '#fff',
-    }}
-  >
-    {Math.min(value, 99)}
-  </Box>
+  <Box className="UnreadCount">{Math.min(value, 99)}</Box>
 );
 
-export const ChatTabs = (props, context) => {
-  const pages = useSelector(context, selectChatPages);
-  const currentPage = useSelector(context, selectCurrentChatPage);
-  const dispatch = useDispatch(context);
+export const ChatTabs = (props) => {
+  const pages = useSelector(selectChatPages);
+  const currentPage = useSelector(selectCurrentChatPage);
+  const dispatch = useDispatch();
   return (
-    <Flex align="center">
-      <Flex.Item>
-        <Tabs textAlign="center">
+    <Stack align="center">
+      <Stack.Item>
+        <Tabs scrollable textAlign="center">
           {pages.map((page) => (
             <Tabs.Tab
               key={page.id}
               selected={page === currentPage}
-              rightSlot={
-                !page.hideUnreadCount &&
-                page.unreadCount > 0 && (
-                  <UnreadCountWidget value={page.unreadCount} />
-                )
-              }
               onClick={() =>
                 dispatch(
                   changeChatPage({
@@ -52,11 +35,14 @@ export const ChatTabs = (props, context) => {
               }
             >
               {page.name}
+              {!page.hideUnreadCount && page.unreadCount > 0 && (
+                <UnreadCountWidget value={page.unreadCount} />
+              )}
             </Tabs.Tab>
           ))}
         </Tabs>
-      </Flex.Item>
-      <Flex.Item ml={1}>
+      </Stack.Item>
+      <Stack.Item ml={1}>
         <Button
           color="transparent"
           icon="plus"
@@ -65,7 +51,7 @@ export const ChatTabs = (props, context) => {
             dispatch(openChatSettings());
           }}
         />
-      </Flex.Item>
-    </Flex>
+      </Stack.Item>
+    </Stack>
   );
 };

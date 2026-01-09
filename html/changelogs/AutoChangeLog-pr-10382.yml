@@ -1,0 +1,4 @@
+author: "Ihatethisgit"
+delete-after: True
+changes:
+  - bugfix: "Non-darkspawn are not able to use the darkspawn cams console anymore."

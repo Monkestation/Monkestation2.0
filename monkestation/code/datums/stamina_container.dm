@@ -7,22 +7,22 @@
 	///How much stamina we have right now
 	var/current = 0
 	///The amount of stamina gained per second
-	var/regen_rate = 10
+	var/regen_rate = STAMINA_REGEN
 	///The difference between current and maximum stamina
 	var/loss = 0
 	var/loss_as_percent = 0
-	///Every tick, remove this much stamina
-	var/decrement = 0
-	///Are we regenerating right now?
+	///Should we be regenerating right now?
 	var/is_regenerating = TRUE
-	//unga bunga
+	///Is stamina regeneration currently paused due to cooldown?
+	var/regen_on_cooldown = FALSE
+	///Is stamina regeneration currently force stopped?
+	var/regen_force_stopped = FALSE
+	///Is this stamina container currently processing stamina regeneration? Is set to FALSE when the stamina is at maximum.
 	var/process_stamina = TRUE
 	/// Used to determine when the stamina changes, to properly run on_stamina_update on the parent.
 	VAR_PRIVATE/should_notify_parent = FALSE
 
 	///cooldowns
-	///how long until we can lose stamina again
-	COOLDOWN_DECLARE(stamina_grace_period)
 	///how long stamina is paused for
 	COOLDOWN_DECLARE(paused_stamina)
 
@@ -54,86 +54,88 @@
 	STOP_PROCESSING(SSstamina, src)
 	return ..()
 
-/datum/stamina_container/proc/update(seconds_per_tick = 1)
+/datum/stamina_container/proc/update(seconds_per_tick = 0)
 	var/last_current = current
-	if(process_stamina == TRUE)
-		if(!is_regenerating)
-			if(!COOLDOWN_FINISHED(src, paused_stamina))
-				return
-			is_regenerating = TRUE
+
+	if (current != maximum)
+		process_stamina = TRUE
+
+	if(process_stamina)
+		if(!is_regenerating && regen_on_cooldown)
+			if(COOLDOWN_FINISHED(src, paused_stamina))
+				is_regenerating = TRUE
+				regen_on_cooldown = FALSE
 
 		if(seconds_per_tick)
-			current = min(current + (regen_rate*seconds_per_tick), maximum)
-			if(decrement)
-				current = max(current + (-decrement*seconds_per_tick), 0)
+			if(is_regenerating)
+				current = min(current + (regen_rate*seconds_per_tick), maximum)
 		if(current != last_current)
 			should_notify_parent = TRUE
 		loss = maximum - current
 		loss_as_percent = loss ? (loss == maximum ? 0 : loss / maximum * 100) : 0
 
-	if(seconds_per_tick && current == maximum)
+	if(current == maximum)
 		process_stamina = FALSE
-	else if(!(current == maximum))
-		process_stamina = TRUE
 
 	if(should_notify_parent)
 		parent.on_stamina_update()
 		should_notify_parent = FALSE
 
-///Pause stamina regeneration for some period of time. Does not support doing this from multiple sources at once because I do not do that and I will add it later if I want to.
+///Pause stamina regeneration for some period of time. Will override previous cooldown if one was set. Will NOT override stop(), if stop() was used to halt stamina regen.
 /datum/stamina_container/proc/pause(time)
+	if (regen_force_stopped)
+		return
+
 	is_regenerating = FALSE
+	regen_on_cooldown = TRUE
 	COOLDOWN_START(src, paused_stamina, time)
 
 ///Stops stamina regeneration entirely until manually resumed.
 /datum/stamina_container/proc/stop()
 	is_regenerating = FALSE
+	regen_on_cooldown = FALSE
+	regen_force_stopped = TRUE
 
-///Resume stamina processing
+///Resume stamina regeneration
 /datum/stamina_container/proc/resume()
 	is_regenerating = TRUE
-
-///adjust the grace period a mob has usually used after stam crit to prevent infinite stamina locking
-/datum/stamina_container/proc/adjust_grace_period(time)
-	COOLDOWN_START(src, stamina_grace_period, time)
+	regen_on_cooldown = FALSE
+	regen_force_stopped = FALSE
 
 ///Adjust stamina by an amount.
-/datum/stamina_container/proc/adjust(amt as num, forced, base_modify = FALSE)
-	if((!amt || !COOLDOWN_FINISHED(src, stamina_grace_period)) && !forced)
-		return
+/datum/stamina_container/proc/adjust(amt as num, forced = FALSE)
 	///Our parent might want to fuck with these numbers
 	var/modify = parent.pre_stamina_change(amt, forced)
-	if(base_modify)
-		modify = amt
+
 	var/old_current = current
 	current = round(clamp(current + modify, 0, maximum), DAMAGE_PRECISION)
 	if(current != old_current)
 		should_notify_parent = TRUE
-	update()
-	if((amt < 0) && is_regenerating)
+	if(modify < 0)
 		pause(STAMINA_REGEN_TIME)
-	return amt
+	update()
+	return modify
 
 /// Revitalize the stamina to the maximum this container can have.
 /datum/stamina_container/proc/revitalize(forced = FALSE)
 	return adjust(maximum, forced)
 
-/datum/stamina_container/proc/adjust_to(amount, lowest_stamina_value, forced = FALSE)
-	if((!amount || !COOLDOWN_FINISHED(src, stamina_grace_period)) && !forced)
-		return
-
-	var/stamina_after_loss = current + amount
-	if(stamina_after_loss < lowest_stamina_value)
-		amount = current - lowest_stamina_value
+/datum/stamina_container/proc/adjust_to(amt as num, lowest_stamina_value, forced = FALSE)
+	var/modify = parent.pre_stamina_change(amt, forced)
 
 	var/old_current = current
-	current = round(clamp(current + amount, 0, maximum), DAMAGE_PRECISION)
+
+	var/stamina_after_loss = current + modify
+	if(stamina_after_loss < lowest_stamina_value)
+		current = round(clamp(lowest_stamina_value, 0, maximum), DAMAGE_PRECISION)
+	else
+		current = round(clamp(current + modify, 0, maximum), DAMAGE_PRECISION)
 	if(current != old_current)
 		should_notify_parent = TRUE
-	update()
-	if((amount < 0) && is_regenerating)
+	if(modify < 0)
 		pause(STAMINA_REGEN_TIME)
-	return amount
+	update()
+	return modify
 
 /// Signal handler for COMSIG_MOVABLE_MOVED to ensure that update_process() gets called whenever moving to/from nullspace.
 /datum/stamina_container/proc/nullspace_move_check(atom/movable/mover, atom/old_loc, dir, force)

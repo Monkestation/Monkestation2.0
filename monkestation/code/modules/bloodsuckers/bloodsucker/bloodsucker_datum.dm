@@ -330,7 +330,9 @@
 /datum/antagonist/bloodsucker/get_preview_icon()
 
 	var/icon/final_icon = render_preview_outfit(/datum/outfit/bloodsucker_outfit)
-	final_icon.Blend(icon('icons/effects/blood.dmi', "uniformblood"), ICON_OVERLAY)
+	var/icon/blood_icon = icon('icons/effects/blood.dmi', "suitblood")
+	blood_icon.Blend(BLOOD_COLOR_RED, ICON_MULTIPLY)
+	final_icon.Blend(blood_icon, ICON_OVERLAY)
 
 	return finish_preview_icon(final_icon)
 
@@ -501,7 +503,9 @@
 	// Claim a Lair Objective
 	objectives += new /datum/objective/bloodsucker/lair(null, owner)
 	// Escape Objective
-	objectives += new /datum/objective/escape(null)
+	var/datum/objective/escape/escape_objective = new
+	escape_objective.owner = owner
+	objectives += escape_objective
 
 	// Conversion objective.
 	// Most likely to just be "have X living vassals", but can also be "vassalize command" or "vassalize X members of Y department"
@@ -598,4 +602,15 @@
 /datum/status_effect/silver_cuffed
 	id = "silver cuffed"
 	alert_type = null
+	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
 	remove_on_fullheal = TRUE
+
+/datum/status_effect/silver_cuffed/on_apply()
+	if(!iscarbon(owner))
+		return FALSE
+	return TRUE
+
+/datum/status_effect/silver_cuffed/tick(seconds_between_ticks)
+	var/mob/living/carbon/carbon_owner = owner
+	if(!istype(carbon_owner.handcuffed, /obj/item/restraints/handcuffs/silver))
+		qdel(src)

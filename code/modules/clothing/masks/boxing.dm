@@ -34,13 +34,16 @@
 	desc = "Worn by robust fighters who are willing to do anything to win."
 	icon_state = "luchar"
 
-/obj/item/clothing/mask/russian_balaclava
-	name = "thermal balaclava" //monkestation edit
-	desc = "Protects your face from the cold." //monkestation edit
+/obj/item/clothing/mask/thermal_balaclava
+	name = "thermal balaclava"
+	desc = "Protects your face from the cold."
+	worn_icon = 'icons/mob/clothing/mask.dmi'
 	icon_state = "rus_balaclava"
+	worn_icon_state = "rus_balaclava"
 	inhand_icon_state = "balaclava"
+	slot_flags = ITEM_SLOT_MASK | ITEM_SLOT_NECK
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	w_class = WEIGHT_CLASS_SMALL
-	alternate_worn_layer = UNDER_SUIT_LAYER //monkestation edit
-	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT  //monkestation edit
+	alternate_worn_layer = UNDER_SUIT_LAYER
+	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT

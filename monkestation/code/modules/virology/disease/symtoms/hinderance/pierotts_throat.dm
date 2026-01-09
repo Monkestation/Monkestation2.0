@@ -44,7 +44,7 @@
 /datum/symptom/pthroat/first_activate(mob/living/carbon/mob)
 	RegisterSignal(mob, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 
-/datum/symptom/pthroat/deactivate(mob/living/carbon/mob)
+/datum/symptom/pthroat/deactivate(mob/living/carbon/mob, datum/disease/acute/disease, safe = FALSE)
 	UnregisterSignal(mob, COMSIG_MOB_SAY)
 
 /datum/symptom/pthroat/proc/handle_speech(datum/source, list/speech_args)

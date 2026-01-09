@@ -272,7 +272,6 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, FALSE, "Controller Overview
 	var/list/filtered_variables = list(
 		NAMEOF(src, name),
 		NAMEOF(src, parent_type),
-		NAMEOF(src, statclick),
 		NAMEOF(src, tag),
 		NAMEOF(src, type),
 		NAMEOF(src, vars),

@@ -72,7 +72,7 @@ export const PreRoundStore = (_props) => {
   } = useBackend<Data>();
 
   return (
-    <Window resizable title="Pre Round Shop" width={450} height={700}>
+    <Window title="Pre Round Shop" width={450} height={700}>
       <Window.Content scrollable>
         <Section>
           <LobbyNotices notices={notices} />
@@ -97,17 +97,19 @@ export const PreRoundStore = (_props) => {
               </Section>
             </Stack.Item>
             <Stack.Item>
-              {items.map((purchase) => {
-                const { name, cost, path } = purchase;
-                return (
-                  <ItemListEntry
-                    key={name}
-                    product={purchase}
-                    disabled={balance < cost}
-                    onClick={() => act('attempt_buy', { path })}
-                  />
-                );
-              })}
+              {items && items.length > 0
+                ? items.map((purchase) => {
+                    const { name, cost, path } = purchase;
+                    return (
+                      <ItemListEntry
+                        key={name}
+                        product={purchase}
+                        disabled={balance < cost}
+                        onClick={() => act('attempt_buy', { path })}
+                      />
+                    );
+                  })
+                : 'No items to display.'}
             </Stack.Item>
           </Stack>
         </Section>
