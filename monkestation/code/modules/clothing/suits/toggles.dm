@@ -9,10 +9,10 @@
 		mask = null
 	return ..()
 
-/obj/item/clothing/mask/breath/sec_bandana/Destroy()
+/obj/item/clothing/mask/breath/sec_bandana/dropped(mob/living/user)
 	if(suit)
 		suit.mask = null
-		usr.update_action_buttons()
+		user?.update_action_buttons()
 	return ..()
 
 /obj/item/clothing/suit/armor/secduster/proc/MakeMask()
