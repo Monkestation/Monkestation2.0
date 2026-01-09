@@ -7,7 +7,7 @@
 /obj/item/clothing/suit/armor/secduster/Destroy()
 	if(!QDELETED(mask))
 		mask.suit = null
-		mask = null
+	mask = null
 	return ..()
 
 /obj/item/clothing/mask/breath/sec_bandana/dropped(mob/living/user)
