@@ -361,8 +361,8 @@
 	icon_state = "shellproto"
 	icon = 'icons/obj/weapons/guns/ammo.dmi'
 	caliber = MINER_SHOTGUN
-	pellets = 5
-	variance = 30
+	pellets = 8
+	variance = 40
 	projectile_type = /obj/projectile/plasma/kineticshotgun
 
 /obj/item/ammo_casing/shotgun/kinetic/sniperslug //slugs essentially

@@ -562,6 +562,8 @@
 	worn_icon_state = "protokshotgunauto"
 	icon_state = "protokshotgunauto"
 	slot_flags = ITEM_SLOT_BACK
+	recoil = 1.8
+	wield_recoil = 1
 	burst_size = 1
 	fire_delay = 0
 	base_pixel_x = -2
@@ -591,8 +593,9 @@
 	worn_icon_state = "protokshotgun"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
-	recoil = 3
-	force = 20
+	recoil = 5
+	wield_recoil = 3
+	force = 15
 	inhand_x_dimension = 32
 	inhand_y_dimension = 32
 	armour_penetration = 0
