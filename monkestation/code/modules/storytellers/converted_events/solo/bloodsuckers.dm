@@ -34,10 +34,10 @@
 	roundstart = TRUE
 	earliest_start = 0 SECONDS
 	extra_spawned_events = list(
-	/datum/round_event_control/antagonist/solo/traitor/extra = 20,
+	/datum/round_event_control/antagonist/solo/traitor/extra = 30,
 	/datum/round_event_control/antagonist/solo/changeling/extra = 30,
-	/datum/round_event_control/antagonist/solo/bloodsucker/extra = 15,
-	/datum/round_event_control/antagonist/solo/heretic/extra = 10,
+	/datum/round_event_control/antagonist/solo/bloodsucker/extra = 5,
+	/datum/round_event_control/antagonist/solo/heretic/extra = 15,
 	null = 25
 	)
 
