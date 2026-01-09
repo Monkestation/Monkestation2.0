@@ -112,3 +112,8 @@ GLOBAL_DATUM_INIT(thrallnet, /datum/cameranet/darkspawn, new)
 /obj/machinery/camera/darkspawn/update_overlays()
 	. = ..()
 	. += emissive_appearance(icon, "[icon_state]_emissive", src)
+/obj/machinery/computer/camera_advanced/darkspawn/attack_hand(mob/user, list/modifiers)
+	. = ..()
+	if(!IS_TEAM_DARKSPAWN(user))
+		return FALSE
+	return TRUE
