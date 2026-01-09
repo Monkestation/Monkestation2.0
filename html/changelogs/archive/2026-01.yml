@@ -100,3 +100,26 @@
   - rscadd: Seed extractor now shows the grind/juice results and plant reagent volume,
       for seeds
   - code_imp: adds a new unit test to check for duplicate loadout item names.
+2026-01-09:
+  Absolucy:
+  - balance: The Security techfab can no longer print Thermal Eyes or X-ray Eyes.
+  - bugfix: Radiation collectors should produce the proper amount of power again.
+      High-end singularity setups should be viable once more!
+  - qol: The SRN rockets will no longer collide with tesla miniballls when trying
+      to shoot the tesla.
+  JohnFulpWillard:
+  - bugfix: Changing the job of one person from one job position to another won't
+      set EVERYONE ELSE of the old job's paycheck department to the new one.
+  - qol: Badges don't fall off when you roll down your shirt.
+  - bugfix: Secondary AltClick doesn't get called twice every click.
+  - balance: QM's alt clothing is now in the cargo vending machine
+  - balance: Non-Cargo personnel can't use the Cargo clothes vending machine.
+  SirNightKnight:
+  - bugfix: fixed the hook shotgun's hook attack not working.
+  - bugfix: fixed the hook shotgun's worn sprite being an error.
+  flleeppyy:
+  - bugfix: seed extractor breaking hovering on reagents.
+  tt-relay-104:
+  - bugfix: Assembler will how use proper amount of items for crafting
+  - bugfix: Fixed assembler stack exploit
+  - bugfix: Fixed assembler free craft exploit

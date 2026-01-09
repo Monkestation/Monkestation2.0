@@ -13,7 +13,7 @@
 	worn_icon = 'monkestation/icons/mob/clothing/accessories.dmi'
 	icon_state = "badge"
 	slot_flags = ITEM_SLOT_NECK
-	attachment_slot = CHEST
+	attachment_slot = NONE //can be worn while rolled down
 
 	///The access needed to change the stored name, not needed if no name is given.
 	var/access_required = ACCESS_CARGO
