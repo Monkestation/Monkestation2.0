@@ -510,10 +510,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/cell_charger_multi/wall_mounted, 29)
 	if(disassembled)
 		new repacked_type(drop_location())
 
-/obj/machinery/cell_charger_multi/wall_mounted/RefreshParts()
-	. = ..()
-	charge_rate = 900 KW // Nuh uh!
-
 // Item for creating the arc furnace or carrying it around
 
 /obj/item/wallframe/cell_charger_multi
