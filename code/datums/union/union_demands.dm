@@ -122,7 +122,7 @@
 	return ..()
 
 /datum/union_demand/better_bounties
-	name = "Better bounty Payouts"
+	name = "Better Bounty Payouts"
 	union_description = "The Union has noticed that the price of bounties have not kept up with inflation. \
 		Fixing this would require Nanotrasen increase the per-bounty profit, which is not something they are too keen \
 		on accepting."
