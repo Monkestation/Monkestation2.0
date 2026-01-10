@@ -166,19 +166,20 @@
 	. = NONE
 
 	if(panel_open)
-		multi.set_buffer(src)
+		multitool_set_buffer(multi, src)
 		balloon_alert(user, "saved to multitool buffer")
 		return ITEM_INTERACT_SUCCESS
 
-	if(!istype(multi.buffer, /obj/machinery/teleport/station) || multi.buffer == src)
+	var/datum/buffer = multitool_get_buffer(multi)
+	if(!istype(buffer, /obj/machinery/teleport/station) || buffer == src)
 		return ITEM_INTERACT_BLOCKING
 
 	if(linked_stations.len > efficiency)
 		to_chat(user, span_alert("This station can't hold more information, try to use better parts."))
 		return ITEM_INTERACT_BLOCKING
 
-	linked_stations.Add(multi.buffer)
-	multi.set_buffer(null)
+	linked_stations.Add(buffer)
+	multitool_set_buffer(multi, null)
 	balloon_alert(user, "data uploaded from buffer")
 	return ITEM_INTERACT_SUCCESS
 

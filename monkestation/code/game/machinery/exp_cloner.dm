@@ -267,18 +267,20 @@
 
 /obj/machinery/computer/prototype_cloning/multitool_act(mob/living/user, obj/item/multitool/multi)
 	. = NONE
-	if(!istype(multi.buffer, /obj/machinery/clonepod/experimental))
-		multi.set_buffer(src)
-		to_chat(user, "<font color = #666633>-% Successfully stored [REF(multi.buffer)] [multi.buffer] in buffer %-</font color>")
+
+	var/datum/buffer = multitool_get_buffer(multi)
+	if(!istype(buffer, /obj/machinery/clonepod/experimental))
+		multitool_set_buffer(multi, src)
+		to_chat(user, "<font color = #666633>-% Successfully stored [REF(buffer)] [buffer] in buffer %-</font color>")
 		return ITEM_INTERACT_SUCCESS
 
-	if(get_area(multi.buffer) != get_area(src))
+	if(get_area(buffer) != get_area(src))
 		to_chat(user, "<font color = #666633>-% Cannot link machines across power zones. Buffer cleared %-</font color>")
-		multi.set_buffer(null)
+		multitool_set_buffer(multi, null)
 		return ITEM_INTERACT_FAILURE
 
-	to_chat(user, "<font color = #666633>-% Successfully linked [multi.buffer] with [src] %-</font color>")
-	var/obj/machinery/clonepod/experimental/pod = multi.buffer
+	to_chat(user, "<font color = #666633>-% Successfully linked [buffer] with [src] %-</font color>")
+	var/obj/machinery/clonepod/experimental/pod = buffer
 	if(pod.connected)
 		pod.connected.DetachCloner(pod)
 	AttachCloner(pod)

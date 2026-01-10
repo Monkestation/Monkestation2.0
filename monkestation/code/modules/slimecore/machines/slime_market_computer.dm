@@ -54,11 +54,12 @@ GLOBAL_DATUM(default_slime_market, /obj/machinery/computer/slime_market)
 	. = NONE
 	if(!panel_open)
 		return NONE
-	if(!istype(multi.buffer, /obj/machinery/slime_extract_requestor))
-		multi.set_buffer(src)
+	var/datum/buffer = multitool_get_buffer(multi)
+	if(!istype(buffer, /obj/machinery/slime_extract_requestor))
+		multitool_set_buffer(multi, src)
 		balloon_alert(user, "saved to multitool buffer")
 		return ITEM_INTERACT_SUCCESS
-	var/obj/machinery/slime_extract_requestor/pad = multi.buffer
+	var/obj/machinery/slime_extract_requestor/pad = buffer
 	pad.console = src
 	request_pad = pad
 	to_chat(user, span_notice("You link the [pad] to the [src]."))
