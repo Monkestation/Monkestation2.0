@@ -65,7 +65,7 @@ SUBSYSTEM_DEF(modular_computers)
 		if(PROGRAM_ON_SYNDINET_STORE)
 			program_removed.program_flags &= ~PROGRAM_ON_SYNDINET_STORE
 			available_antag_software.Remove(program_removed)
-	if(!(program_removed in available_station_software + available_antag_software))
+	if(!(program_removed in available_station_software) && !(program_removed in available_antag_software))
 		qdel(program_removed)
 
 ///Attempts to find a new file through searching the available stores with its name.
