@@ -3,74 +3,43 @@
  */
 /obj/machinery/vending/access
 	name = "access-based vending machine"
-	/**
-	 * Internal variable to store our access list.
-	 * Done on `build_access_list`, where you set access_list[ACCESS] to a list of items
-	 * that access can purchase. You can also set it as `TRUE`, allowing it to buy any product
-	 * put into the products panel unless behind another access_lists.
-	 */
-	var/list/access_lists
-	/// Boolean on whether we should we auto build our product list.
-	var/auto_build_products = FALSE
+	///If set, this access is required to see non-access locked products in the vending machine.
+	var/minimum_access_to_view
+
+/obj/machinery/vending/access/Initialize(mapload)
+	. = ..()
+	var/list/inventory = list()
+	build_access_list(inventory)
+	for(var/access in inventory)
+		build_inventory(inventory[access], product_records, product_categories, start_empty = FALSE, access_needed = access)
 
 /**
  * This is where you generate the list to store what items each access grants.
  * Should be an assosciative list where the key is the access as a string and the value is the items typepath.
  * You can also set it to TRUE instead of a list to allow them to purchase anything.
  */
-/obj/machinery/vending/access/proc/build_access_list(list/access_lists)
+/obj/machinery/vending/access/proc/build_access_list(list/inventory)
 	return
 
-/obj/machinery/vending/access/Initialize(mapload)
-	var/list/_list = new
-	build_access_list(_list)
-	access_lists = _list
-	if(auto_build_products)
-		products = list()
-		for(var/access in access_lists)
-			for(var/item in (access_lists[access]))
-				if(!ispath(item))
-					continue
-				if(item in products)
-					continue
-				products[item] = auto_build_products
-	return ..()
-
-/// Check if the list of given access is allowed to purchase the given product
-/obj/machinery/vending/access/allow_purchase(mob/living/user, product_path)
-	if(obj_flags & EMAGGED || !onstation)
-		return TRUE
+/obj/machinery/vending/access/collect_records_for_static_data(list/records, list/categories, mob/living/user, premium)
+	if(isnull(minimum_access_to_view))
+		return ..()
+	//dead people can see records, i GUESS...
+	if(!istype(user))
+		return ..()
 	var/obj/item/card/id/user_id = user.get_idcard(TRUE)
-	if(isnull(user_id))
-		return FALSE
-	var/list/user_access = user_id.access
-	for(var/acc in user_access)
-		if(!((acc) in access_lists))
-			continue
-
-		if(isnum(access_lists[acc]) && access_lists[acc])
-			//You can access anything that isn't in another group, then.
-			for(var/other_acc in access_lists)
-				if(other_acc == acc)
-					continue
-				var/other_list = access_lists[other_acc]
-				if(islist(other_list) && (product_path in other_list))
-					if(!(other_acc in user_access))
-						return FALSE
-			return access_lists[acc]
-
-		if(product_path in (access_lists[acc]))
-			return TRUE
-	return FALSE
+	if(!issilicon(user) && !(obj_flags & EMAGGED) && onstation && !(minimum_access_to_view in user_id?.access))
+		records = list()
+		return ..()
+	return ..()
 
 /// Debug version to verify access checking is working and functional
 /obj/machinery/vending/access/debug
-	auto_build_products = TRUE
+	minimum_access_to_view = ACCESS_ENGINEERING
 
-/obj/machinery/vending/access/debug/build_access_list(list/access_lists)
-	access_lists[ACCESS_ENGINEERING] = TRUE
-	access_lists[ACCESS_EVA] = list(/obj/item/crowbar)
-	access_lists[ACCESS_SECURITY] = list(/obj/item/wrench, /obj/item/gun/ballistic/revolver/mateba)
+/obj/machinery/vending/access/debug/build_access_list(list/inventory)
+	inventory[ACCESS_EVA] = list(/obj/item/crowbar)
+	inventory[ACCESS_SECURITY] = list(/obj/item/wrench, /obj/item/gun/ballistic/revolver/mateba)
 
 /obj/machinery/vending/access/command
 	name = "\improper Command Outfitting Station"
@@ -80,18 +49,28 @@
 	icon_state = "commdrobe"
 	light_mask = "wardrobe-light-mask"
 	vend_reply = "Thank you for using the CommDrobe!"
-	auto_build_products = TRUE
-	payment_department = ACCOUNT_CMD
 
 	refill_canister = /obj/item/vending_refill/wardrobe/comm_wardrobe
 	payment_department = ACCOUNT_CMD
 	light_color = COLOR_COMMAND_BLUE
 
+	products = list(
+		/obj/item/clothing/head/hats/imperial = 5,
+		/obj/item/clothing/head/hats/imperial/grey = 5,
+		/obj/item/clothing/head/hats/imperial/white = 2,
+		/obj/item/clothing/head/hats/imperial/red = 5,
+		/obj/item/clothing/head/hats/imperial/helmet = 5,
+		/obj/item/clothing/under/rank/captain/nova/imperial/generic = 5,
+		/obj/item/clothing/under/rank/captain/nova/imperial/generic/grey = 5,
+		/obj/item/clothing/under/rank/captain/nova/imperial/generic/pants = 5,
+		/obj/item/clothing/under/rank/captain/nova/imperial/generic/red = 5,
+	)
+
 /obj/item/vending_refill/wardrobe/comm_wardrobe
 	machine_name = "CommDrobe"
 
-/obj/machinery/vending/access/command/build_access_list(list/access_lists)
-	access_lists[ACCESS_CAPTAIN] = list(
+/obj/machinery/vending/access/command/build_access_list(list/inventory)
+	inventory[ACCESS_CAPTAIN] = list(
 		// CAPTAIN
 		/obj/item/clothing/head/hats/caphat = 1,
 		/obj/item/clothing/head/caphat/beret = 1,
@@ -114,7 +93,7 @@
 		/obj/item/storage/backpack/duffelbag/captain = 1,
 		/obj/item/clothing/shoes/sneakers/brown = 1,
 	)
-	access_lists[ACCESS_BLUESHIELD] = list(
+	inventory[ACCESS_BLUESHIELD] = list(
 		// BLUESHIELD
 		/obj/item/clothing/head/beret/blueshield = 1,
 		/obj/item/clothing/head/beret/blueshield/navy = 1,
@@ -130,7 +109,7 @@
 		/obj/item/storage/backpack/duffelbag/blueshield = 1,
 		/obj/item/clothing/shoes/laceup = 1,
 	)
-	access_lists[ACCESS_HOP] = list( // Best head btw
+	inventory[ACCESS_HOP] = list( // Best head btw
 		/obj/item/clothing/head/hats/hopcap = 1,
 		/obj/item/clothing/head/hopcap/beret = 1,
 		/obj/item/clothing/head/hopcap/beret/alt = 1,
@@ -150,7 +129,7 @@
 		/obj/item/storage/backpack/duffelbag/head_of_personnel = 1,
 		/obj/item/clothing/shoes/sneakers/brown = 1,
 	)
-	access_lists[ACCESS_CMO] = list(
+	inventory[ACCESS_CMO] = list(
 		/obj/item/clothing/head/beret/medical/cmo = 1,
 		/obj/item/clothing/head/beret/medical/cmo/alt = 1,
 		/obj/item/clothing/head/hats/imperial/cmo = 1,
@@ -161,7 +140,7 @@
 		/obj/item/clothing/neck/mantle/cmomantle = 1,
 		/obj/item/clothing/shoes/sneakers/brown = 1,
 	)
-	access_lists[ACCESS_RD] = list(
+	inventory[ACCESS_RD] = list(
 		/obj/item/clothing/head/beret/science/rd = 1,
 		/obj/item/clothing/head/beret/science/rd/alt = 1,
 		/obj/item/clothing/under/rank/rnd/research_director = 1,
@@ -173,7 +152,7 @@
 		/obj/item/clothing/suit/toggle/labcoat = 1,
 		/obj/item/clothing/shoes/sneakers/brown = 1,
 	)
-	access_lists[ACCESS_CE] = list(
+	inventory[ACCESS_CE] = list(
 		/obj/item/clothing/head/beret/engi/ce = 1,
 		/obj/item/clothing/head/hats/imperial/ce = 1,
 		/obj/item/clothing/under/rank/engineering/chief_engineer = 1,
@@ -183,7 +162,7 @@
 		/obj/item/clothing/neck/mantle/cemantle = 1,
 		/obj/item/clothing/shoes/sneakers/brown = 1,
 	)
-	access_lists[ACCESS_HOS] = list(
+	inventory[ACCESS_HOS] = list(
 		/obj/item/clothing/head/hats/hos/cap = 1,
 		/obj/item/clothing/head/hats/hos/beret/navyhos = 1,
 		/obj/item/clothing/head/hats/imperial/hos = 1,
@@ -197,20 +176,8 @@
 		/obj/item/clothing/shoes/sneakers/brown = 1,
 	)
 
-	access_lists[ACCESS_QM] = list(
+	inventory[ACCESS_QM] = list(
 		/obj/item/radio/headset/heads/qm = 1,
-	)
-
-	access_lists[ACCESS_COMMAND] = list(
-		/obj/item/clothing/head/hats/imperial = 5,
-		/obj/item/clothing/head/hats/imperial/grey = 5,
-		/obj/item/clothing/head/hats/imperial/white = 2,
-		/obj/item/clothing/head/hats/imperial/red = 5,
-		/obj/item/clothing/head/hats/imperial/helmet = 5,
-		/obj/item/clothing/under/rank/captain/nova/imperial/generic = 5,
-		/obj/item/clothing/under/rank/captain/nova/imperial/generic/grey = 5,
-		/obj/item/clothing/under/rank/captain/nova/imperial/generic/pants = 5,
-		/obj/item/clothing/under/rank/captain/nova/imperial/generic/red = 5,
 	)
 
 /obj/machinery/vending/access/wardrobe_cargo
@@ -219,7 +186,6 @@
 	icon_state = "cargodrobe"
 	product_ads = "Upgraded Assistant Style! Pick yours today!;These shorts are comfy and easy to wear, get yours now!"
 	vend_reply = "Thank you for using the CargoDrobe!"
-	auto_build_products = TRUE
 
 	panel_type = "panel19"
 	light_mask = "wardrobe-light-mask"
@@ -251,9 +217,8 @@
 /obj/item/vending_refill/wardrobe/cargo_wardrobe
 	machine_name = "CargoDrobe"
 
-/obj/machinery/vending/access/wardrobe_cargo/build_access_list(list/access_lists)
-	access_lists[ACCESS_CARGO] = TRUE
-	access_lists[ACCESS_QM] = list(
+/obj/machinery/vending/access/wardrobe_cargo/build_access_list(list/inventory)
+	inventory[ACCESS_QM] = list(
 		/obj/item/clothing/head/beret/cargo/qm = 1,
 		/obj/item/clothing/head/beret/cargo/qm/alt = 1,
 		/obj/item/clothing/neck/cloak/qm = 1,

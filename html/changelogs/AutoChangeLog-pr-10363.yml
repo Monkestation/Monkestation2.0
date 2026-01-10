@@ -1,0 +1,6 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - balance: "Default command gear is no longer access locked."
+  - balance: "Reverts previous cargo-locking of the cargo vendor."
+  - bugfix: "Cargo vendors now have the proper products."
