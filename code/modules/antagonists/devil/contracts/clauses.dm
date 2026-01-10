@@ -242,7 +242,7 @@
 /datum/devil_clause/handy/apply(mob/living/carbon/victim, first_apply = TRUE)
 	if(!istype(victim))
 		return
-	for(var/zone as anything in zones_to_target)
+	for(var/zone in zones_to_target)
 		var/obj/item/bodypart/arm = victim.get_bodypart(zone)
 		if(!arm)
 			continue
@@ -342,7 +342,7 @@
 		return
 
 	// Already wasn't using your legs? Don't worry, we'll take them as payment then
-	for(var/zone as anything in list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
+	for(var/zone in list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
 		var/obj/item/bodypart/leggy = victim.get_bodypart(zone)
 		if(!leggy)
 			continue
