@@ -51,26 +51,26 @@
 /datum/round_event/antagonist/solo/brother/start()
 	message_admins("BBs are selected")
 	var/teams_amount = length(setup_minds)
-	var/datum/round_event_control/antagonist/solo/cast_control = control
-	antag_count = cast_control.get_antag_amount()
-	antag_flag = cast_control.antag_flag
-	antag_datum = cast_control.antag_datum
-	restricted_roles = cast_control.restricted_roles
-	prompted_picking = cast_control.prompted_picking
-	var/list/possible_candidates = cast_control.get_candidates()
-	for(var/newTeam in 1 to teams_amount)
+	var/list/target_candidates = antag_event_controller.get_candidates()
+	for(var/teamAmount in 1 to teams_amount)
 		message_admins("we are trying to make a team")
 		var/datum/team/brother_team/new_team = new
 		var/datum/mind/starting_brother = pick_n_take(setup_minds) //Picks a random brother for this new team we are making. They are added to the team later
 		var/another_brother = 1
 		while(another_brother > 0) //Adds 1 brother to the team (from anyone would could roll BB), with a 10% chance for another if we add one. keep rolling until it fails
 			another_brother = 0
-			new_team.add_member(pick_n_take(possible_candidates))
-			var/and_another = prob(10)
+			var/mob/target_player = astype(pick_n_take(target_candidates))
+			if(target_player.mind = starting_brother) // If we are trying to add the starting player in this loop. THEY ARE ADDED LATER BECAUSE MAYBE THERES NO OTHER BROTHERS
+				break
+			if(isnull(target_player)) //Skips adding brothers if we cant find someone that hasnt been picked already (will likely make a team with the other brothers, or give you heretic)
+				message_admins("tried to add an player to a bb team")
+				break
+			new_team.add_member(target_player.mind)
+			var/and_another = prob(90)
 			if(and_another)
 				another_brother = 1
 				message_admins("Another brother!!")
-		message_admins("far3")
+		message_admins("Done adding brothers, now to check if we actually got any on our team")
 		//next line is for the rare case where everyone has BB off but the 1-3 people who origionally rolled BB. or if they are all taken (like the 1/1000000000000000000 chance for a team of 20))
 		if(new_team.members.len == 0) //If a BB team is only 1 person long, we just add all the brothers without a team onto this one
 			for(var/datum/mind/unteamed_brother in setup_minds)

@@ -222,11 +222,13 @@
 	var/list/extra_spawned_events
 	// Same as above
 	var/list/preferred_events
+	// The Event Controlled for if we ever want to call its functions
+	var/datum/round_event_control/antagonist/solo/antag_event_controller
 
 /datum/round_event/antagonist/solo/New(my_processing, datum/round_event_control/event_controller)
 	. = ..()
 	if(istype(event_controller, /datum/round_event_control/antagonist/solo))
-		var/datum/round_event_control/antagonist/solo/antag_event_controller = event_controller
+		antag_event_controller = event_controller
 		if(antag_event_controller)
 			if(antag_event_controller.extra_spawned_events)
 				extra_spawned_events = fill_with_ones(antag_event_controller.extra_spawned_events)
