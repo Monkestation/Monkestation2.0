@@ -134,7 +134,6 @@
 
 /datum/antagonist/devil/proc/handle_hearing(datum/source, list/hearing_args)
 	SIGNAL_HANDLER
-	message_admins(hearing_args[HEARING_RAW_MESSAGE])
 	var/mob/speaker = hearing_args[HEARING_SPEAKER]
 	if(speaker == owner.current || !COOLDOWN_FINISHED(src, true_name_cooldown))
 		return
