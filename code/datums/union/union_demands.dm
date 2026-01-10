@@ -139,14 +139,22 @@
 	SSeconomy.bounty_modifier /= 1.2
 	return ..()
 
-/* //requires cargo-access locked vendor PR to be merged
 /datum/union_demand/locked_vendors
 	name = "Access-locked Vendors"
 	union_description = "The Union has noticed people trying to dress up as Cargo personnel \
 		to work under the table for cheaper. This scabbing must end, Cargo vendors have now been locked to Cargo access."
 	station_description = "The Cargo Union has implemented a new policy, adding access locks to their workplace vending machines."
 	cost = 50 //really this doesn't do much tbh.
-*/
+
+/datum/union_demand/locked_vendors/implement_demand(datum/union/union_demanding)
+	. = ..()
+	for(var/obj/machinery/vending/access/wardrobe_cargo/cargo_vendor as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/vending/access/wardrobe_cargo))
+		cargo_vendor.minimum_access_to_view = ACCESS_CARGO
+
+/datum/union_demand/locked_vendors/unimplement_demand(datum/union/union_demanding)
+	for(var/obj/machinery/vending/access/wardrobe_cargo/cargo_vendor as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/vending/access/wardrobe_cargo))
+		cargo_vendor.minimum_access_to_view = initial(cargo_vendor.minimum_access_to_view)
+	return ..()
 
 /datum/union_demand/automatic_mail
 	name = "Automatic Mail Tokens"
