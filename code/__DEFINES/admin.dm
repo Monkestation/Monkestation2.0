@@ -101,6 +101,9 @@
 #define AHELP_CLOSED 2
 #define AHELP_RESOLVED 3
 
+/// Time key for currently_typing on a ticket for windows that arent TGUI, guarenteed to delete themselves after not typing.
+#define CLASSIC_ADMINPM_TIME_KEY -1
+
 /// Amount of time after the round starts that the player disconnect report is issued.
 #define ROUNDSTART_LOGOUT_REPORT_TIME (10 MINUTES)
 

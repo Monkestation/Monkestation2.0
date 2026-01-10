@@ -115,7 +115,9 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	// TGUIless adminhelp
 	if(href_list["tguiless_adminhelp"])
+		current_ticket?.currently_typing[ckey] = CLASSIC_ADMINPM_TIME_KEY
 		no_tgui_adminhelp(input(src, "Enter your ahelp", "Ahelp") as null|message)
+		current_ticket?.currently_typing -= ckey
 		return
 
 	if(href_list["commandbar_typing"])

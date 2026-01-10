@@ -1,3 +1,4 @@
+
 /datum/admin_help_tickets/ui_state(mob/user)
 	return GLOB.holder_state
 
@@ -74,10 +75,18 @@
 	.["is_admin"] = is_admin
 	.["name"] = html_decode(name)
 	.["id"] = id
+	.["ourckey"] = user.ckey
 	.["admin"] = hide_key(handling_admin_ckey, is_admin)
-	.["is_resolved"] = state != AHELP_ACTIVE
+	if(is_admin)
+		.["currently_typing"] = currently_typing.Copy()
+	else
+		for(var/ckey in currently_typing)
+			if(istext(ckey) && ckey != initiator_ckey)
+				.["currently_typing"] = "Administrator"
+				break
+	.["state"] = state
 	.["initiator_key_name"] = initiator_key_name
-	.["opened_at"] = "Opened at: [gameTimestamp(wtime = opened_at)] (Approx [DisplayTimeText(world.time - opened_at)] ago)"
+	.["opened_at"] = "Opened at: [gameTimestamp(wtime = opened_at)] ([gameTimestamp(wtime = world.time - opened_at, legend = TRUE)] ago)"
 
 	var/mob/initiator_mob = initiator && initiator.mob
 	var/datum/mind/initiator_mind = initiator_mob && initiator_mob.mind
@@ -127,15 +136,34 @@
 	switch(action)
 		if("send_message")
 			var/message = trimtext(params["message"])
+			if(!length(message))
+				return
+			currently_typing -= usr.ckey
 			if(usr.client.holder)
 				usr.client.cmd_admin_pm(initiator, message)
 				return
+			if(!usr.client.holder)
+				if(!COOLDOWN_FINISHED(src, client_message_cooldown))
+					to_chat(usr, span_warning("You must wait [COOLDOWN_TIMELEFT(src, client_message_cooldown) * 0.1] seconds before sending another message."))
+					return
+				COOLDOWN_START(src, client_message_cooldown, 3 SECONDS)
 			if(usr.client.current_ticket != src)
 				to_chat(usr, span_warning("You are not able to reply to this ticket. To open a ticket, please use the adminhelp verb."))
 			if(handling_admin_ckey)
 				usr.client.cmd_admin_pm(handling_admin_ckey, message)
 			else
 				MessageNoRecipient(message)
+			return
+		if("open_ticket")
+			var/ticket_id = params["ticket_id"]
+			var/datum/admin_help/ticket_to_open = GLOB.ahelp_tickets.TicketByID(ticket_id)
+			if(!ticket_to_open)
+				to_chat(usr, span_warning("Ticket with ID [ticket_id] not found."))
+				return
+			ticket_to_open.TicketPanel()
+			return
+		if("typing")
+			currently_typing[usr.ckey] = world.time
 			return
 	return FALSE
 
@@ -211,10 +239,10 @@
 				to_chat(usr, span_notice("The mob doesn't exist anymore!"))
 				return
 
-			give_admin_popup(target, usr, message)
+			give_admin_popup(target, usr.client, message)
 			return
-		if("Administer")
-			ticket.Administer(TRUE)
+		if("Claim")
+			ticket.Claim(TRUE)
 			return
 		if("TP")
 			if(!ticket.initiator)

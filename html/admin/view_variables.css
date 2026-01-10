@@ -47,3 +47,11 @@ table.matrixbrak td.rbrak {
   border-left: none;
   border-right: solid 1px #666;
 }
+
+a {
+  color: #5bcffa
+}
+
+a:visited {
+  color: #f5abb9
+}

@@ -20,7 +20,18 @@ interface Logger {
   error: (...args: any[]) => void;
 }
 
+const LoggerEnum = {
+  [LEVEL_DEBUG]: 'debug',
+  [LEVEL_LOG]: 'log',
+  [LEVEL_INFO]: 'info',
+  [LEVEL_WARN]: 'warn',
+  [LEVEL_ERROR]: 'error',
+};
+
 const log = (level: number, namespace = 'Generic', ...args: any[]): void => {
+  // fuck you
+  console[LoggerEnum[level]](...args);
+
   // Send logs to a remote log collector
   if (process.env.NODE_ENV !== 'production') {
     sendLogEntry(level, namespace, ...args);

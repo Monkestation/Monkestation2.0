@@ -4,7 +4,7 @@ ADMIN_VERB(set_server_fps, R_DEBUG, FALSE, "Set Server FPS", "Sets game speed in
 	var/new_fps = round(input(user, "Sets game frames-per-second. Can potentially break the game (default: [cfg_fps])","FPS", world.fps) as num | null)
 
 	if(new_fps <= 0)
-		to_chat(src, span_danger("Error: set_server_fps(): Invalid world.fps value. No changes made."), confidential = TRUE)
+		to_chat(usr, span_danger("Error: set_server_fps(): Invalid world.fps value. No changes made."), confidential = TRUE)
 		return
 	if(new_fps > cfg_fps * 1.5)
 		if(tgui_alert(user, "You are setting fps to a high value:\n\t[new_fps] frames-per-second\n\tconfig.fps = [cfg_fps]","Warning!",list("Confirm","ABORT-ABORT-ABORT")) != "Confirm")

@@ -1,7 +1,7 @@
 #define MAX_ADMINBANS_PER_ADMIN 1
 #define MAX_ADMINBANS_PER_HEADMIN 3
 
-#define MAX_REASON_LENGTH 600
+#define MAX_REASON_LENGTH 1024
 
 //checks client ban cache or DB ban table if ckey is banned from one or more roles
 //doesn't return any details, use only for if statements

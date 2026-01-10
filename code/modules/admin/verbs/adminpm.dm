@@ -17,7 +17,7 @@
 ADMIN_VERB_ONLY_CONTEXT_MENU(cmd_admin_pm_context, R_NONE, FALSE, "Admin PM Mob", mob/target in world)
 	if(!ismob(target))
 		to_chat(
-			src,
+			usr,
 			type = MESSAGE_TYPE_ADMINPM,
 			html = span_danger("Error: Admin-PM-Context: Target mob is not a mob, somehow."),
 			confidential = TRUE
@@ -43,7 +43,7 @@ ADMIN_VERB(cmd_admin_pm_panel, R_NONE, FALSE, "Admin PM", "Show a list of client
 			nametag = "[real_mob_name](as [mob_name])"
 		targets["[nametag] - [client]"] = client
 
-	var/target = input(src,"To whom shall we send a message?", "Admin PM", null) as null | anything in sort_list(targets)
+	var/target = tgui_input_list(usr, "To whom shall we send a message?", "Admin PM", sort_list(targets))
 	if (isnull(target))
 		return
 	user.cmd_admin_pm(targets[target], null)
@@ -115,7 +115,11 @@ ADMIN_VERB(cmd_admin_pm_panel, R_NONE, FALSE, "Admin PM", "Show a list of client
 	else
 		request = "[request] [formatted_recipient_ckey]."
 
+	current_ticket?.currently_typing[ckey] = CLASSIC_ADMINPM_TIME_KEY
+	recipient_ticket?.currently_typing[ckey] = CLASSIC_ADMINPM_TIME_KEY
 	var/message = input(src, message_prompt, request) as message|null
+	recipient_ticket?.currently_typing -= ckey
+	current_ticket?.currently_typing -= ckey
 
 	if(recipient_ticket)
 		LAZYREMOVE(recipient_ticket.opening_responders, src)
@@ -188,6 +192,10 @@ ADMIN_VERB(cmd_admin_pm_panel, R_NONE, FALSE, "Admin PM", "Show a list of client
 	if(IsAdminAdvancedProcCall())
 		return null
 
+	current_ticket?.currently_typing -= ckey
+	if(istype(ambiguious_recipient, /client))
+		astype(ambiguious_recipient, /client)?.current_ticket?.currently_typing -= ckey
+
 	if(ambiguious_recipient == EXTERNAL_PM_USER)
 		if(!externalreplyamount) //to prevent people from spamming irc/discord
 			to_chat(src,
@@ -199,7 +207,9 @@ ADMIN_VERB(cmd_admin_pm_panel, R_NONE, FALSE, "Admin PM", "Show a list of client
 		if(existing_message)
 			msg = existing_message
 		else
+			current_ticket?.currently_typing[ckey] = CLASSIC_ADMINPM_TIME_KEY
 			msg = input(src,"Message:", "Private message to Administrator") as message|null
+			current_ticket?.currently_typing -= ckey
 
 		if(!msg)
 			to_chat(src,
@@ -248,7 +258,11 @@ ADMIN_VERB(cmd_admin_pm_panel, R_NONE, FALSE, "Admin PM", "Show a list of client
 		else
 			request = "[request] [recipient_print_key]."
 		//get message text, limit it's length.and clean/escape html
+		our_ticket?.currently_typing[ckey] = CLASSIC_ADMINPM_TIME_KEY
+		recipient?.current_ticket?.currently_typing[ckey] = CLASSIC_ADMINPM_TIME_KEY
 		msg = input(src,"Message:", request) as message|null
+		our_ticket?.currently_typing -= ckey
+		recipient?.current_ticket?.currently_typing -= ckey
 		msg = trim(msg)
 
 	if(!msg)
@@ -386,10 +400,10 @@ ADMIN_VERB(cmd_admin_pm_panel, R_NONE, FALSE, "Admin PM", "Show a list of client
 			recipient_ticket = recipient?.current_ticket
 			ticket_id = ticket?.id
 			recipient_ticket_id = recipient_ticket?.id
-			SSblackbox.LogAhelp(recipient_ticket_id, "Ticket Opened", send_message, recipient.ckey, src.ckey)
+			SSblackbox.LogAhelp(recipient_ticket_id, "Ticket Opened", send_message, recipient.ckey, our_ckey)
 		// MONKESTATION START
 		if(!recipient_ticket.handling_admin_ckey)
-			recipient_ticket.Administer(FALSE)
+			recipient_ticket.Claim(FALSE)
 		// MONKESTATION END
 
 		recipient.receive_ahelp(
@@ -401,9 +415,9 @@ ADMIN_VERB(cmd_admin_pm_panel, R_NONE, FALSE, "Admin PM", "Show a list of client
 		if (!ticket || recipient_ticket)
 			var/datum/admin_help = GLOB.ahelp_tickets.TicketByID(recipient_ticket_id)
 
-			SSplexora.aticket_pm(admin_help, raw_send_message, src.ckey) // monkestation edit: PLEXORA
+			SSplexora.aticket_pm(admin_help, raw_send_message, our_ckey) // monkestation edit: PLEXORA
 		else
-			SSplexora.aticket_pm(ticket || recipient_ticket, raw_send_message, src.ckey) // monkestation edit: PLEXORA
+			SSplexora.aticket_pm(ticket || recipient_ticket, raw_send_message, our_ckey) // monkestation edit: PLEXORA
 		// monkestation end: PLEXORA
 		to_chat(src,
 			type = MESSAGE_TYPE_ADMINPM,
@@ -486,7 +500,8 @@ ADMIN_VERB(cmd_admin_pm_panel, R_NONE, FALSE, "Admin PM", "Show a list of client
 				log_in_blackbox = FALSE)
 		// MONKESTATION EDIT END
 
-		if (ticket || recipient_ticket) SSplexora.aticket_pm(ticket || recipient_ticket, raw_send_message, src.ckey) // monkestation edit: PLEXORA
+		if (ticket || recipient_ticket)
+			SSplexora.aticket_pm(ticket || recipient_ticket, raw_send_message, our_ckey) // monkestation edit: PLEXORA
 
 		SSblackbox.LogAhelp(ticket_id, "Reply", send_message, recip_ckey, our_ckey)
 		return TRUE
