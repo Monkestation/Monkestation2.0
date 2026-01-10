@@ -43,7 +43,6 @@
 /datum/status_effect/regenerative_extract/on_remove()
 	owner.remove_traits(islist(extra_traits) ? (given_traits + extra_traits) : given_traits, TRAIT_STATUS_EFFECT(id))
 	owner.apply_status_effect(/datum/status_effect/slime_regen_cooldown, diminishing_multiplier, diminish_time)
-	owner.cause_pain(BODY_ZONE_CHEST, pain_amount, BRUTE)
 
 /datum/status_effect/regenerative_extract/tick(seconds_between_ticks, times_fired)
 	var/heal_amt = base_healing_amt * seconds_between_ticks * multiplier

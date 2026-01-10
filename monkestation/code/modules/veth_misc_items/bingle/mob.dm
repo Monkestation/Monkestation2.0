@@ -42,7 +42,6 @@
 		TRAIT_BINGLE,
 		TRAIT_CLUMSY,
 		TRAIT_DUMB,
-		TRAIT_NO_PAIN_EFFECTS,
 	)
 
 /mob/living/basic/bingle/Initialize(mapload, obj/structure/bingle_hole/origin_pit)
