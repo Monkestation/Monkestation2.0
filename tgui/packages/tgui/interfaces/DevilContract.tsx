@@ -39,13 +39,14 @@ export const DevilContract = (props) => {
             <Button
               key={index}
               color={clause.color}
-              children={clause.name}
               disabled={clause.disabled}
               tooltip={clause.desc}
               onClick={() =>
                 act('no_action', { clause: clause.ref, color: clause.color })
               }
-            />
+            >
+              {clause.name}
+            </Button>
           ))}
         </Box>
       </Window.Content>

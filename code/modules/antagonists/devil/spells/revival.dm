@@ -27,4 +27,5 @@
 		qdel(src)
 
 /datum/action/cooldown/spell/devil/revival/greater
+	name = "Greater devilish revival"
 	heal_flags = (HEAL_DAMAGE|HEAL_BODY|HEAL_AFFLICTIONS)
