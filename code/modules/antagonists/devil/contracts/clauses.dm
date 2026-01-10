@@ -213,7 +213,7 @@
 
 /datum/devil_clause/trait_giver/no_pain
 	name = "Pain"
-	prefix = "Become"
+	prefix = "Resist"
 	desc = "The signer shall feel no pain nor move slower from being near death."
 	cost = 1
 	trait = list(TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_NO_PAIN_EFFECTS, TRAIT_NO_SHOCK_BUILDUP)
