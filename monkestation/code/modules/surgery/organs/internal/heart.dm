@@ -195,7 +195,7 @@
 	if(isnull(selected_limb))
 		return
 	if(!do_after(user, 2 SECONDS))
-		to_chat(user, span_notice("Your focus was interrupted!"))
+		selected_limb.balloon_alert(user, "focus interrupted!")
 		return
 	for(var/obj/item/organ/internal/organ in user.get_organs_for_zone(selected_limb.body_zone))
 		organ.Remove(user)
