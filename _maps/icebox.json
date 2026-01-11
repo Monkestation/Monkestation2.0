@@ -39,7 +39,7 @@
 			"Linkage": null,
 			"Gravity": true,
 			"Ice Ruins": true,
-			"Weather_Snowstorm": true,
+			"weather_snow": true,
 			"Baseturf": "/turf/open/openspace/icemoon/keep_below",
 			"No Parallax": true
 		}
