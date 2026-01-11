@@ -351,6 +351,7 @@ GLOBAL_DATUM_INIT(crewmonitor_command, /datum/crewmonitor/command, new)
 		JOB_ERT_DEATHSQUAD = 227,
 		JOB_NANOTRASEN_REPRESENTATIVE = 230,
 		JOB_BLUESHIELD = 231,
+		JOB_BRIDGE_ASSISTANT = 232,
 	)
 
 GLOBAL_DATUM_INIT(crewmonitor_security, /datum/crewmonitor/security, new)
