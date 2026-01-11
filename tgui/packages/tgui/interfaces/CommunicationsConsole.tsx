@@ -1,5 +1,7 @@
 import { sortBy } from 'common/collections';
 import { capitalize } from 'common/string';
+import { type JSX, useState } from 'react';
+import type { BooleanLike } from 'tgui-core/react';
 import { useBackend } from '../backend';
 import {
   Blink,
@@ -10,18 +12,18 @@ import {
   Icon,
   Modal,
   Section,
+  Stack,
   TextArea,
 } from '../components';
-import { StatusDisplayControls } from './common/StatusDisplayControls';
 import { Window } from '../layouts';
 import { sanitizeText } from '../sanitize';
-import { JSX, useState } from 'react';
-import { BooleanLike } from 'tgui-core/react';
+import { StatusDisplayControls } from './common/StatusDisplayControls';
 
 const STATE_BUYING_SHUTTLE = 'buying_shuttle';
 const STATE_CHANGING_STATUS = 'changing_status';
 const STATE_MAIN = 'main';
 const STATE_MESSAGES = 'messages';
+const STATE_UNION = 'union';
 
 // Used for whether or not you need to swipe to confirm an alert level change
 const SWIPE_NEEDED = 'SWIPE_NEEDED';
@@ -58,7 +60,8 @@ export type CommunicationsPage =
   | typeof STATE_MAIN
   | typeof STATE_MESSAGES
   | typeof STATE_BUYING_SHUTTLE
-  | typeof STATE_CHANGING_STATUS;
+  | typeof STATE_CHANGING_STATUS
+  | typeof STATE_UNION;
 
 /* ---------------- STATE_MAIN ---------------- */
 
@@ -84,6 +87,8 @@ export type CommunicationsMainData<Page = typeof STATE_MAIN> =
 
     aprilFools: BooleanLike;
 
+    union_active: BooleanLike;
+
     alertLevel: string;
     alertLevelTick?: number;
 
@@ -108,6 +113,25 @@ export type CommunicationsMessage = {
 export type CommunicationsMessagesData = CommunicationsAuthedData & {
   page: typeof STATE_MESSAGES;
   messages: CommunicationsMessage[];
+};
+
+/* ---------------- STATE_UNION ---------------- */
+
+export type CommunicationsUnionData = CommunicationsAuthedData & {
+  page: typeof STATE_UNION;
+  deadlocked: BooleanLike;
+  already_deadlocked: BooleanLike;
+  voting_name: string;
+  voting_desc: string;
+  time_until_implementation: string;
+  completed_demands: DemandsData[];
+};
+
+type DemandsData = {
+  name: string;
+  desc: string;
+  cost: number;
+  ref: string;
 };
 
 /* ---------------- STATE_BUYING_SHUTTLE ---------------- */
@@ -144,7 +168,8 @@ export type CommunicationsData =
   | CommunicationsMainData
   | CommunicationsMessagesData
   | CommunicationsBuyingShuttleData
-  | CommunicationsChangingStatusData;
+  | CommunicationsChangingStatusData
+  | CommunicationsUnionData;
 
 type AlertLevelConfirmState =
   | { open: false }
@@ -402,12 +427,98 @@ const PageChangingStatus = () => {
   );
 };
 
+const PageUnion = () => {
+  const { act, data } = useBackend<CommunicationsUnionData>();
+  const {
+    deadlocked,
+    voting_name,
+    voting_desc,
+    time_until_implementation,
+    completed_demands = [],
+    already_deadlocked,
+  } = data;
+
+  return (
+    <Box>
+      <Section>
+        <Button
+          icon="chevron-left"
+          content="Back"
+          onClick={() => act('setState', { state: STATE_MAIN })}
+        />
+      </Section>
+
+      {voting_name && (
+        <Section title={voting_name}>
+          {deadlocked ? (
+            <Button.Confirm
+              fluid
+              icon="unlock"
+              color="good"
+              tooltip={'This will allow the demand to go through as usual.'}
+              onClick={() => act('undeadlock_union')}
+            >
+              Allow Demand
+            </Button.Confirm>
+          ) : (
+            <Box>
+              <Button.Confirm
+                fluid
+                icon="lock"
+                color="bad"
+                disabled={already_deadlocked || !time_until_implementation}
+                tooltip={
+                  already_deadlocked
+                    ? 'Already performed this action during this demand.'
+                    : 'This will freeze the implementation of the Union and prevent any more union expansion until one side gives in. Warning: May trigger strikes.'
+                }
+                onClick={() => act('deadlock_union')}
+              >
+                Deadlock Union
+              </Button.Confirm>
+            </Box>
+          )}
+          <Box>{voting_desc}</Box>
+          {time_until_implementation ? (
+            <Box>Time until implementation: {time_until_implementation}</Box>
+          ) : (
+            <Box>Not being implemented yet</Box>
+          )}
+        </Section>
+      )}
+
+      <Section title="Completed Demands">
+        <Stack vertical>
+          {completed_demands.map((demand) => (
+            <Section title={demand.name} key={demand.ref}>
+              <Stack.Item fontSize="110%" ml={-0.5}>
+                <Button
+                  compact
+                  color="transparent"
+                  tooltip={
+                    'This will be charged every pay cycle to the Union and Command budgets.'
+                  }
+                  style={{ textDecoration: 'underline' }}
+                >
+                  Cost:
+                </Button>
+                {demand.cost}cr per cycle.
+              </Stack.Item>
+            </Section>
+          ))}
+        </Stack>
+      </Section>
+    </Box>
+  );
+};
+
 const PageMain = () => {
   const { act, data } = useBackend<CommunicationsMainData>();
   const {
     alertLevel,
     alertLevelTick,
     aprilFools,
+    union_active,
     callShuttleReasonMinLength,
     canBuyShuttles,
     canMakeAnnouncement,
@@ -547,6 +658,14 @@ const PageMain = () => {
             content="Message List"
             onClick={() => act('setState', { state: STATE_MESSAGES })}
           />
+
+          {!!union_active && (
+            <Button
+              icon="box-open"
+              content="Cargo Union Demands"
+              onClick={() => act('setState', { state: STATE_UNION })}
+            />
+          )}
 
           {canBuyShuttles !== 0 && (
             <Button
@@ -745,7 +864,7 @@ const PageMessages = (props) => {
   const messageElements: JSX.Element[] = [];
 
   for (const [messageIndex, message] of Object.entries(messages)) {
-    let answers: JSX.Element | null =
+    const answers: JSX.Element | null =
       message.possibleAnswers.length > 0 ? (
         <Box mt={1}>
           {message.possibleAnswers.map((answer, answerIndex) => (
@@ -857,7 +976,8 @@ export const CommunicationsConsole = (props) => {
           ((page === STATE_BUYING_SHUTTLE && <PageBuyingShuttle />) ||
             (page === STATE_CHANGING_STATUS && <PageChangingStatus />) ||
             (page === STATE_MAIN && <PageMain />) ||
-            (page === STATE_MESSAGES && <PageMessages />) || (
+            (page === STATE_MESSAGES && <PageMessages />) ||
+            (page === STATE_UNION && <PageUnion />) || (
               <Box>Page not implemented: {page}</Box>
             ))}
       </Window.Content>

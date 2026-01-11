@@ -20938,6 +20938,14 @@
 /obj/structure/lattice,
 /turf/open/space/basic,
 /area/space/nearstation)
+"hwk" = (
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/landmark/cargo_mail_machine,
+/turf/open/floor/iron,
+/area/station/cargo/storage)
 "hwo" = (
 /obj/structure/rack,
 /obj/item/clothing/under/misc/mailman,
@@ -23319,6 +23327,11 @@
 	},
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
+"imy" = (
+/obj/structure/cable,
+/obj/machinery/firealarm/directional/east,
+/turf/open/floor/iron,
+/area/station/cargo/storage)
 "imV" = (
 /obj/structure/easel,
 /turf/open/floor/plating,
@@ -32412,7 +32425,6 @@
 /turf/open/floor/iron/white,
 /area/station/security/prison/safe)
 "lme" = (
-/obj/machinery/firealarm/directional/west,
 /obj/machinery/light/directional/west,
 /obj/item/banner/cargo/mundane,
 /obj/structure/disposalpipe/segment{
@@ -43473,7 +43485,7 @@
 	name = "Privacy Shutters Control";
 	req_access = list("kitchen")
 	},
-/obj/machinery/computer/accounting,
+/obj/machinery/computer/accounting/hop,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "oYd" = (
@@ -87351,7 +87363,7 @@ uAu
 toe
 rbL
 mmR
-mmR
+imy
 kQP
 kQP
 apZ
@@ -87606,7 +87618,7 @@ iUw
 aok
 aok
 aok
-eLb
+hwk
 cbz
 kQP
 kQP

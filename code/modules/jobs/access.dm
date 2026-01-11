@@ -38,6 +38,12 @@
 				return FALSE
 			if(onSyndieBase() && loc != accessor)
 				return FALSE
+		if((ACCESS_UNION in req_access) || (ACCESS_UNION in req_one_access))
+			if(iscyborg(accessor))
+				var/mob/living/silicon/robot/robot = accessor
+				if(check_access(robot.worn_badge))
+					return TRUE
+			return FALSE
 		return TRUE //AI can do whatever it wants
 	//If the mob is holding a valid ID, we let them in. get_active_held_item() is on the mob level, so no need to copypasta everywhere.
 	else if(check_access(accessor.get_active_held_item()) && !istype(accessor.get_active_held_item(), /obj/item/card/id/fake_card))
@@ -121,12 +127,3 @@
 
 	return id_card?.get_trim_sechud_icon_state() || SECHUD_NO_ID
 
-/// Returns the gun permit icon if the ID's access contain weapon permit
-/obj/item/proc/get_gun_permit_iconstate()
-	var/obj/item/card/id/id_card = GetID()
-
-	if(!id_card)
-		return "hudfan_no"
-	if(ACCESS_WEAPONS in id_card.GetAccess())
-		return "hud_permit"
-	return "hudfan_no"

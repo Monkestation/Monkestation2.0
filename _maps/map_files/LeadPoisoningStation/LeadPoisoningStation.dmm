@@ -3635,6 +3635,7 @@
 	dir = 4
 	},
 /obj/machinery/light/directional/east,
+/obj/effect/landmark/cargo_mail_machine,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "bSD" = (
@@ -42883,7 +42884,7 @@
 "uvK" = (
 /obj/effect/turf_decal/tile/dark_blue/diagonal_edge,
 /obj/structure/window/reinforced/spawner/directional/north,
-/obj/machinery/computer/accounting,
+/obj/machinery/computer/accounting/hop,
 /turf/open/floor/iron/diagonal,
 /area/station/command/heads_quarters/hop)
 "uvP" = (

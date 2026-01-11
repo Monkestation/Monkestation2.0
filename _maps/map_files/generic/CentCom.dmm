@@ -32617,7 +32617,7 @@
 /turf/closed/indestructible/grille,
 /area/centcom/central_command_areas/prison)
 "wXc" = (
-/obj/machinery/computer/accounting{
+/obj/machinery/computer/accounting/hop{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted{

@@ -57,15 +57,14 @@
 	AddElement(/datum/element/item_scaling, 0.75, 1)
 	if(isnull(department_colors))
 		department_colors = list(
-			ACCOUNT_CIV = COLOR_WHITE,
-			ACCOUNT_ENG = COLOR_PALE_ORANGE,
-			ACCOUNT_SCI = COLOR_PALE_PURPLE_GRAY,
-			ACCOUNT_MED = COLOR_PALE_BLUE_GRAY,
-			ACCOUNT_SRV = COLOR_PALE_GREEN_GRAY,
-			ACCOUNT_CAR = COLOR_BEIGE,
-			ACCOUNT_SEC = COLOR_PALE_RED_GRAY,
-			ACCOUNT_CMD = COLOR_BLUE_GRAY,
-			ACCOUNT_CC = COLOR_CENTCOM_GREEN,
+			/datum/job_department/engineering = COLOR_PALE_ORANGE,
+			/datum/job_department/science = COLOR_PALE_PURPLE_GRAY,
+			/datum/job_department/medical = COLOR_PALE_BLUE_GRAY,
+			/datum/job_department/service = COLOR_PALE_GREEN_GRAY,
+			/datum/job_department/cargo = COLOR_BEIGE,
+			/datum/job_department/security = COLOR_PALE_RED_GRAY,
+			/datum/job_department/command = COLOR_BLUE_GRAY,
+			/datum/job_department/central_command = COLOR_CENTCOM_GREEN,
 		)
 
 	// Icons
@@ -126,7 +125,11 @@
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
 	if(contents.len)
 		user.put_in_hands(contents[1])
-	user.put_in_hands(new /obj/item/cargo/mail_token) // MONKESTATION EDIT
+	if(GLOB.cargo_union.demand_is_implemented(/datum/union_demand/automatic_mail))
+		for(var/obj/machinery/mail_collector/collector as anything in SSmachines.get_machines_by_type(/obj/machinery/mail_collector))
+			collector.money_collected += (CARGO_CRATE_VALUE / 2)
+	else
+		user.put_in_hands(new /obj/item/cargo/mail_token) // MONKESTATION EDIT
 	playsound(loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
 	qdel(src)
 
@@ -153,9 +156,7 @@
 	var/is_mail_restricted = FALSE // certain roles and jobs (prisoner) do not receive generic gifts
 
 	if(this_job)
-		if(this_job.paycheck_department && department_colors[this_job.paycheck_department])
-			color = department_colors[this_job.paycheck_department]
-
+		color = department_colors[this_job.departments_list?[1]] || COLOR_WHITE
 		var/list/job_goodies = this_job.get_mail_goodies()
 		is_mail_restricted = this_job.exclusive_mail_goodies
 		if(LAZYLEN(job_goodies))

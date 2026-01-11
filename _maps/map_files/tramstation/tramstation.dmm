@@ -59487,7 +59487,7 @@
 /turf/closed/wall,
 /area/station/construction/mining/aux_base)
 "ruV" = (
-/obj/machinery/computer/accounting{
+/obj/machinery/computer/accounting/hop{
 	dir = 1
 	},
 /turf/open/floor/carpet,
@@ -67658,6 +67658,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 4
 	},
+/obj/effect/landmark/cargo_mail_machine,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "tZO" = (

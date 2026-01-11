@@ -301,10 +301,21 @@ Security HUDs! Basic mode shows only the job.
 //monkestation edit start
 	var/image/permit_holder = hud_list[PERMIT_HUD]
 	permit_holder.pixel_z = get_cached_height() - world.icon_size
-	var/permit_icon_state = wear_id?.get_gun_permit_iconstate()
-	if(!permit_icon_state)
+	var/permit_icon_state = has_weapons_permit()
+	if(permit_icon_state)
+		permit_icon_state = "hud_permit"
+	else
 		permit_icon_state = "hudfan_no"
 	permit_holder.icon_state = permit_icon_state
+
+/// Returns the gun permit icon if the ID's access contain weapon permit
+/mob/living/carbon/human/proc/has_weapons_permit()
+	var/obj/item/card/id/id_card = get_idcard(FALSE)
+	var/weapon_permission = SEND_SIGNAL(src, COMSIG_WEAPONS_CHECK)
+
+	if((weapon_permission & COMPONENT_WEAPON_HAS_PERMIT) || (ACCESS_WEAPONS in id_card?.GetAccess()))
+		return TRUE
+	return FALSE
 //monkestation edit end
 
 /mob/living/proc/sec_hud_set_implants()

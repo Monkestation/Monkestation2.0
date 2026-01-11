@@ -160,6 +160,8 @@
 #define AUTO_ANNOUNCE_ARRIVALS_BROKEN "ARRIVALS_BROKEN"
 ///Define for automated system announcement for researched nodes
 #define AUTO_ANNOUNCE_NODE "NODE"
+///Define for automated system announcement for union demands
+#define AUTO_ANNOUNCE_UNION "UNION"
 
 /// Blank Status Display
 #define SD_BLANK 0

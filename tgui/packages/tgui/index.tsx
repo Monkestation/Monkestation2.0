@@ -9,6 +9,7 @@ import './styles/main.scss';
 // MONKESTATION ADDITION START
 import './styles/themes/clockwork.scss';
 import './styles/themes/admintickets.scss';
+import './styles/themes/UnionStand.scss';
 // MONKESTATION ADDITION END
 
 import './styles/themes/chicken_book.scss';
