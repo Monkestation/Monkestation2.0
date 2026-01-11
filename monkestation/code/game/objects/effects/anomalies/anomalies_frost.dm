@@ -35,7 +35,7 @@
 		var/turf/searched_turfs = pick(valid_turfs)
 		if(searched_turfs)
 			if(istype(searched_turfs, /turf/open/floor/plating))
-				searched_turfs.PlaceOnTop(/turf/open/floor/iron/snowed)
+				searched_turfs.place_on_top(/turf/open/floor/iron/snowed)
 			else
 				searched_turfs.ChangeTurf(/turf/open/floor/iron/snowed)
 

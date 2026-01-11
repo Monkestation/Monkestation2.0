@@ -300,7 +300,7 @@
 
 /obj/structure/falsewall/material/place_real_wall()
 	var/turf/our_turf = get_turf(src) //Get the turf the false wall is on and temporarily store it
-	real_wall = our_turf.PlaceOnTop(walltype) //Place the real wall where the false wall is
+	real_wall = our_turf.place_on_top(walltype) //Place the real wall where the false wall is
 	real_wall.set_custom_materials(custom_materials)
 
 /obj/structure/falsewall/material/set_custom_materials(list/materials, multiplier)

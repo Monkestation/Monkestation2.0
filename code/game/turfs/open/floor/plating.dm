@@ -60,7 +60,7 @@
 				to_chat(user, span_notice("You begin reinforcing the floor..."))
 				if(do_after(user, 3 SECONDS, target = src))
 					if (R.get_amount() >= 2 && !istype(src, /turf/open/floor/engine))
-						PlaceOnTop(/turf/open/floor/engine, flags = CHANGETURF_INHERIT_AIR)
+						place_on_top(/turf/open/floor/engine, flags = CHANGETURF_INHERIT_AIR)
 						playsound(src, 'sound/items/deconstruct.ogg', 80, TRUE)
 						R.use(2)
 						to_chat(user, span_notice("You reinforce the floor."))
@@ -80,7 +80,7 @@
 				to_chat(user, span_notice("You begin insulating the floor..."))
 				if(do_after(user, 3 SECONDS, target = src))
 					if (Lorem.get_amount() >= 1 && !istype(src, /turf/open/floor/engine/insulation))
-						PlaceOnTop(/turf/open/floor/engine/insulation, flags = CHANGETURF_INHERIT_AIR)
+						place_on_top(/turf/open/floor/engine/insulation, flags = CHANGETURF_INHERIT_AIR)
 						playsound(src, 'sound/items/deconstruct.ogg', 80, TRUE)
 						Lorem.use(1)
 						to_chat(user, span_notice("You insulate the floor."))
@@ -116,7 +116,7 @@
 						return
 					sheets.use(PLATE_REINFORCE_COST)
 					playsound(src, 'sound/machines/creak.ogg', 100, vary = TRUE)
-					PlaceOnTop(/turf/open/floor/plating/reinforced)
+					place_on_top(/turf/open/floor/plating/reinforced)
 			else
 				if(!iscyborg(user))
 					balloon_alert(user, "too damaged, use a welding tool!")
