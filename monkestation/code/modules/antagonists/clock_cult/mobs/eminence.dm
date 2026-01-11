@@ -8,7 +8,6 @@ GLOBAL_DATUM(current_eminence, /mob/living/eminence) //set to the current eminen
 	icon_state = "eminence"
 	mob_biotypes = MOB_SPIRIT
 	mouse_opacity = MOUSE_OPACITY_ICON
-	move_on_shuttle = TRUE
 	invisibility = INVISIBILITY_OBSERVER
 	layer = FLY_LAYER
 	plane = ABOVE_GAME_PLANE
@@ -42,7 +41,7 @@ GLOBAL_DATUM(current_eminence, /mob/living/eminence) //set to the current eminen
 	cogs = GLOB.clock_installed_cogs
 	AddElement(/datum/element/simple_flying)
 	internal_radio = new /obj/item/radio/borg/eminence(src)
-	ADD_TRAIT(src, TRAIT_GODMODE, INNATE_TRAIT)
+	add_traits(list(TRAIT_GODMODE, TRAIT_BLOCK_SHUTTLE_MOVEMENT), INNATE_TRAIT)
 	grant_all_languages() //this is appearently an issue, im too lazy to figure it out so im just gonna do this
 
 /mob/living/eminence/Destroy()

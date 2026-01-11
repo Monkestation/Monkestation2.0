@@ -103,9 +103,7 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 
 	//for panopticon
 	if(current_mob)
-		current_mob.AddComponent(/datum/component/internal_cam, list(ROLE_DARKSPAWN))
-		var/datum/component/internal_cam/cam = current_mob.GetComponent(/datum/component/internal_cam)
-		cam?.change_cameranet(GLOB.thrallnet)
+		current_mob.AddComponent(/datum/component/internal_cam, list(CAMERANET_NETWORK_DARKSPAWN))
 
 	//divulge
 	if(darkspawn_state == DARKSPAWN_MUNDANE)

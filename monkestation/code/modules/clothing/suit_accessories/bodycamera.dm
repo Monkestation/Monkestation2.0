@@ -102,14 +102,14 @@
 		user.balloon_alert(user, "bodycamera activated")
 		playsound(loc, 'sound/machines/beep.ogg', get_clamped_volume(), TRUE, -1)
 	builtin_bodycamera.network = network //sync the network of the camera to us, the upgrade.
-	builtin_bodycamera.status = TRUE
+	builtin_bodycamera.camera_enabled = TRUE
 
 ///Turns the camera off. Will be silent if 'user' is null.
 /obj/item/bodycam_upgrade/proc/turn_off(mob/user)
 	if(user)
 		user.balloon_alert(user, "bodycamera deactivated")
 		playsound(loc, 'sound/machines/beep.ogg', get_clamped_volume(), TRUE, -1)
-	builtin_bodycamera.status = FALSE
+	builtin_bodycamera.camera_enabled = FALSE
 
 /**
  * on_emp_act
@@ -159,7 +159,7 @@
 	if(!card)
 		return
 
-	if(builtin_bodycamera?.status)
+	if(builtin_bodycamera?.camera_enabled)
 		return turn_off(user)
 	return turn_on(user, card)
 

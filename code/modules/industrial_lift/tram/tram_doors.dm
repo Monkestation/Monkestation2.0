@@ -85,7 +85,6 @@
 			operating = FALSE
 			set_density(TRUE)
 
-	update_freelook_sight()
 	return TRUE
 
 /obj/machinery/door/window/tram/right/directional/south
