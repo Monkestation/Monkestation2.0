@@ -1,4 +1,5 @@
 /datum/round_event_control/antagonist/solo/changeling
+	maximum_antags = 5
 	antag_flag = ROLE_CHANGELING
 	tags = list(TAG_COMBAT, TAG_ALIEN, TAG_CREW_ANTAG)
 	antag_datum = /datum/antagonist/changeling
@@ -30,13 +31,30 @@
 	event_icon_state = "changeling"
 
 /datum/round_event_control/antagonist/solo/changeling/roundstart
+	denominator = 22
 	name = "Changelings"
 	roundstart = TRUE
 	earliest_start = 0
-	maximum_antags = 1
+	extra_spawned_events = list(
+	/datum/round_event_control/antagonist/solo/traitor/extra = 35,
+	/datum/round_event_control/antagonist/solo/changeling/extra = 5,
+	/datum/round_event_control/antagonist/solo/bloodsucker/extra = 25,
+	/datum/round_event_control/antagonist/solo/heretic/extra = 10,
+	null = 25
+	)
 
 /datum/round_event_control/antagonist/solo/changeling/midround
+	denominator = 27
 	name = "Genome Awakening (Changelings)"
 	antag_flag = ROLE_GENOMEAWAKENING
 	prompted_picking = TRUE
 	max_occurrences = 2
+/datum/round_event_control/antagonist/solo/changeling/extra
+	name = "Extra Changelings"
+	base_antags = 0
+	denominator = 22
+	antag_flag = ROLE_CHANGELING
+	antag_datum = /datum/antagonist/changeling
+	weight = 0 //shouldnt be spawned by storyteller
+	maximum_antags = 3
+	min_players = 20
