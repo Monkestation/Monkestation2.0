@@ -96908,7 +96908,7 @@
 /turf/open/floor/iron,
 /area/station/commons/fitness)
 "sKr" = (
-/obj/structure/bookcase/manuals/engineering,
+/obj/machinery/cassette_library,
 /turf/open/floor/wood,
 /area/station/service/library)
 "sKs" = (
@@ -109454,10 +109454,7 @@
 /area/station/science/xenobiology)
 "vcz" = (
 /obj/structure/extinguisher_cabinet/directional/south,
-/obj/structure/chair/comfy/brown{
-	color = "#A46106";
-	dir = 8
-	},
+/obj/structure/bookcase/manuals/engineering,
 /turf/open/floor/wood,
 /area/station/service/library)
 "vcA" = (

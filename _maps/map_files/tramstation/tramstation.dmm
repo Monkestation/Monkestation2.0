@@ -59345,10 +59345,8 @@
 /turf/open/floor/iron/cafeteria,
 /area/station/command/heads_quarters/rd)
 "rrM" = (
-/obj/machinery/photocopier{
-	pixel_y = 3
-	},
 /obj/structure/sign/clock/directional/west,
+/obj/machinery/cassette_library,
 /turf/open/floor/wood/large,
 /area/station/service/library)
 "rsh" = (

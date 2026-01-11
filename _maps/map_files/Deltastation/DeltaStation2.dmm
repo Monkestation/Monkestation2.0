@@ -43700,10 +43700,9 @@
 /area/space/nearstation)
 "khZ" = (
 /obj/machinery/status_display/evac/directional/north,
-/obj/machinery/bookbinder,
-/obj/effect/turf_decal/bot_white,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/cassette_library,
 /turf/open/floor/iron/dark,
 /area/station/service/library)
 "kic" = (
@@ -53391,9 +53390,9 @@
 "mAd" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/status_display/ai/directional/north,
-/obj/structure/chair/sofa/middle/brown,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/chair/sofa/right/brown,
 /turf/open/floor/iron/dark,
 /area/station/service/library)
 "mAh" = (
@@ -55302,10 +55301,10 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/security)
 "mWD" = (
-/obj/structure/chair/sofa/right/brown,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/light/directional/north,
+/obj/item/kirbyplants/random,
 /turf/open/floor/iron/dark,
 /area/station/service/library)
 "mWE" = (
@@ -61562,7 +61561,6 @@
 "oAn" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/computer/security/telescreen/entertainment/directional/north,
-/obj/item/kirbyplants/random,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/camera/directional/north{
@@ -61570,6 +61568,8 @@
 	dir = 9;
 	name = "library camera"
 	},
+/obj/machinery/bookbinder,
+/obj/effect/turf_decal/bot_white,
 /turf/open/floor/iron/dark,
 /area/station/service/library)
 "oAo" = (
