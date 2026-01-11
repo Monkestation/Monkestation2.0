@@ -468,35 +468,11 @@ GLOBAL_LIST_INIT(prototype_language_holders, init_language_holder_prototypes())
 		/datum/language/common = list(LANGUAGE_ATOM),
 		/datum/language/uncommon = list(LANGUAGE_ATOM),
 		/datum/language/machine = list(LANGUAGE_ATOM),
-		/datum/language/draconic = list(LANGUAGE_ATOM),
-		/datum/language/moffic = list(LANGUAGE_ATOM),
-		/datum/language/calcic = list(LANGUAGE_ATOM),
-		/datum/language/voltaic = list(LANGUAGE_ATOM),
-		/datum/language/buzzwords = list(LANGUAGE_ATOM),
-		/datum/language/sylvan = list(LANGUAGE_ATOM),
-		/datum/language/slime = list(LANGUAGE_ATOM),
-		/datum/language/mushroom = list(LANGUAGE_ATOM),
-		/datum/language/monkey = list(LANGUAGE_ATOM),
-		/datum/language/goblin = list(LANGUAGE_ATOM),
-		/datum/language/nekomimetic = list(LANGUAGE_ATOM),
-		/datum/language/yangyu = list(LANGUAGE_ATOM),
 	)
 	spoken_languages = list(
 		/datum/language/common = list(LANGUAGE_ATOM),
 		/datum/language/uncommon = list(LANGUAGE_ATOM),
 		/datum/language/machine = list(LANGUAGE_ATOM),
-		/datum/language/draconic = list(LANGUAGE_ATOM),
-		/datum/language/moffic = list(LANGUAGE_ATOM),
-		/datum/language/calcic = list(LANGUAGE_ATOM),
-		/datum/language/voltaic = list(LANGUAGE_ATOM),
-		/datum/language/buzzwords = list(LANGUAGE_ATOM),
-		/datum/language/sylvan = list(LANGUAGE_ATOM),
-		/datum/language/slime = list(LANGUAGE_ATOM),
-		/datum/language/mushroom = list(LANGUAGE_ATOM),
-		/datum/language/monkey = list(LANGUAGE_ATOM),
-		/datum/language/goblin = list(LANGUAGE_ATOM),
-		/datum/language/nekomimetic = list(LANGUAGE_ATOM),
-		/datum/language/yangyu = list(LANGUAGE_ATOM),
 	)
 
 /datum/language_holder/moth
@@ -509,6 +485,14 @@ GLOBAL_LIST_INIT(prototype_language_holders, init_language_holder_prototypes())
 		/datum/language/uncommon = list(LANGUAGE_ATOM),
 		/datum/language/machine = list(LANGUAGE_ATOM),
 	)
+
+/// For intelligent synthetics like cyborgs and the AI, not for basic baby bots ran on a raspberry pi
+/datum/language_holder/synthetic/silicon
+
+/datum/language_holder/synthetic/silicon/New(atom/new_owner)
+	. = ..()
+	for(var/lang in GLOB.uncommon_roundstart_languages)
+		grant_partial_language(lang, 66, LANGUAGE_ATOM)
 
 /datum/language_holder/moth
 	understood_languages = list(
@@ -654,6 +638,29 @@ GLOBAL_LIST_INIT(prototype_language_holders, init_language_holder_prototypes())
 		/datum/language/beachbum = list(LANGUAGE_ATOM),
 	)
 	selected_language = /datum/language/beachbum
+
+// Vending machines are extremely well-educated
+/datum/language_holder/speaking_machine
+	understood_languages = list(
+		/datum/language/common = list(LANGUAGE_ATOM),
+		/datum/language/uncommon = list(LANGUAGE_ATOM),
+		/datum/language/machine = list(LANGUAGE_ATOM),
+		/datum/language/draconic = list(LANGUAGE_ATOM),
+		/datum/language/moffic = list(LANGUAGE_ATOM),
+		/datum/language/calcic = list(LANGUAGE_ATOM),
+		/datum/language/voltaic = list(LANGUAGE_ATOM),
+		/datum/language/nekomimetic = list(LANGUAGE_ATOM),
+	)
+	spoken_languages = list(
+		/datum/language/common = list(LANGUAGE_ATOM),
+		/datum/language/uncommon = list(LANGUAGE_ATOM),
+		/datum/language/machine = list(LANGUAGE_ATOM),
+		/datum/language/draconic = list(LANGUAGE_ATOM),
+		/datum/language/moffic = list(LANGUAGE_ATOM),
+		/datum/language/calcic = list(LANGUAGE_ATOM),
+		/datum/language/voltaic = list(LANGUAGE_ATOM),
+		/datum/language/nekomimetic = list(LANGUAGE_ATOM),
+	)
 
 /datum/language_holder/ashwalker
 	understood_languages = list(/datum/language/ashtongue = list(LANGUAGE_ATOM))

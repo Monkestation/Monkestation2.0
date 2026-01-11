@@ -17,7 +17,7 @@
 		if (language != /datum/language/common)
 			quirk_holder.remove_language(language, language_flags = SPOKEN_LANGUAGE, source = LANGUAGE_ALL)
 	if (is_human)
-		quirk_holder.grant_language(pick(GLOB.roundstart_languages), source = LANGUAGE_QUIRK)
+		quirk_holder.grant_language(pick(GLOB.uncommon_roundstart_languages), source = LANGUAGE_QUIRK)
 
 /datum/quirk/listener
 	name = "Listener"
