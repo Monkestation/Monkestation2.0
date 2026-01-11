@@ -33200,9 +33200,6 @@
 /obj/structure/sign/nanotrasen{
 	pixel_x = -32
 	},
-/obj/machinery/siren/weather{
-	dir = 4
-	},
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "kir" = (
@@ -62954,10 +62951,6 @@
 /obj/item/folder/blue,
 /turf/open/floor/wood,
 /area/station/security/courtroom)
-"tqb" = (
-/obj/machinery/siren/weather,
-/turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
 "tqk" = (
 /obj/structure/table,
 /obj/item/paper_bin{
@@ -222505,7 +222498,7 @@ gXS
 fsv
 fMJ
 rvE
-tqb
+bln
 bln
 bln
 bln
