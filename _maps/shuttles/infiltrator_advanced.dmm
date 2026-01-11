@@ -1992,12 +1992,12 @@
 	name = "universal blood storage"
 	},
 /obj/machinery/iv_drip,
-/obj/item/reagent_containers/blood/universal{
+/obj/item/reagent_containers/chem_pack/saline{
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/reagent_containers/blood/universal,
-/obj/item/reagent_containers/blood/universal{
+/obj/item/reagent_containers/chem_pack/saline,
+/obj/item/reagent_containers/chem_pack/saline{
 	pixel_x = -4;
 	pixel_y = -4
 	},
