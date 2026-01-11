@@ -125,7 +125,9 @@ GLOBAL_VAR(restart_counter)
  * All atoms in both compiled and uncompiled maps are initialized()
  */
 /world/New()
+	aneri_cleanup()
 	log_world("World loaded at [time_stamp()]!")
+	aneri_startup_log()
 
 	// From a really fucking old commit (91d7150)
 	// I wanted to move it but I think this needs to be after /world/New is called but before any sleeps?
@@ -347,6 +349,7 @@ GLOBAL_VAR(restart_counter)
 			QDEL_NULL(Tracy)
 			QDEL_NULL(Debugger)
 			SSplexora.notify_shutdown(PLEXORA_SHUTDOWN_KILLDD)
+			aneri_cleanup()
 			TgsEndProcess()
 			return ..()
 
@@ -357,6 +360,7 @@ GLOBAL_VAR(restart_counter)
 	QDEL_NULL(Tracy)
 	QDEL_NULL(Debugger)
 
+	aneri_cleanup()
 	TgsReboot() // TGS can decide to kill us right here, so it's important to do it last
 
 	..()
