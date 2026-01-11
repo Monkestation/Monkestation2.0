@@ -6,6 +6,7 @@
 	hijack_speed = 2 //You literally are here to do nothing else. Might as well be fast about it.
 	antag_hud_name = "wishgranter"
 	suicide_cry = "HAHAHAHAHA!!"
+	stinger_sound = 'sound/ambience/antag/wishgranter_gain.ogg'
 	antag_moodlet = /datum/mood_event/wishgranter
 	antag_count_points = 15 // very loud hijacker
 	/// List of traits given to the avatar's body.

@@ -40,19 +40,8 @@
 		deadchat_broadcast(span_bold(" has become the Wishgranter Avatar!"), span_name("[user.real_name]"), follow_target = user, message_type = DEADCHAT_ANNOUNCEMENT)
 
 		to_chat(user, span_warning("You have a very bad feeling about this."))
-
-		// everyone on lavaland is hearing this shit
-		SSexplosions.shake_the_room(
-			get_turf(src),
-			1,
-			far_distance = 2,
-			quake_factor = 0,
-			echo_factor = TRUE,
-			creaking = FALSE,
-			near_sound = sound('sound/magic/castsummon.ogg'),
-			far_sound = sound('sound/magic/castsummon.ogg'),
-			pressure_affected = FALSE,
-			disable_shaking = TRUE,
-		)
 		for(var/mob/player as anything in GLOB.player_list - user)
+			if(QDELETED(player) || isnewplayer(player))
+				continue
 			to_chat(player, span_danger("An ominous wave of pressure fills the air around you, as if a chaotic malignant blaze had ignited elsewhere."))
+			player.playsound_local(player, 'sound/ambience/antag/wishgranter_awaken.ogg', vol = 75, vary = FALSE, pressure_affected = FALSE)
