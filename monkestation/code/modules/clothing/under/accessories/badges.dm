@@ -170,22 +170,25 @@
 
 	///The mob we're gonna copy over when we get first examined. This is like the `virgin` var of filingcabinets,
 	///this is necessary beacuse we don't know quirks/holy role/traits on initialize.
-	var/mob/living/to_copy
+	var/datum/weakref/to_copy_ref
 
 /obj/item/clothing/accessory/badge/lawyer/Initialize(mapload)
 	. = ..()
-	to_copy = recursive_loc_check(src, /mob/living)
+	var/mob/living/person_wearing_us = recursive_loc_check(src, /mob/living)
+	if(person_wearing_us)
+		to_copy_ref = WEAKREF(person_wearing_us)
 
 /obj/item/clothing/accessory/badge/lawyer/Destroy(force)
-	to_copy = null
+	to_copy_ref = null
 	return ..()
 
 /obj/item/clothing/accessory/badge/lawyer/examine(mob/user)
-	if(isnull(to_copy))
+	if(isnull(to_copy_ref))
 		return ..()
-	if(!QDELETED(to_copy))
-		set_identity(to_copy)
-	to_copy = null
+	var/mob/living/badge_owner = to_copy_ref?.resolve()
+	if(badge_owner)
+		set_identity(badge_owner)
+	to_copy_ref = null
 	return ..()
 
 /obj/item/clothing/accessory/badge/lawyer/set_identity(mob/living/named_mob)

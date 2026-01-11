@@ -1,19 +1,19 @@
+import { deepMerge } from 'common/collections';
+import { Color } from 'common/color';
+import type { BooleanLike } from 'common/react';
+import { useEffect } from 'react';
 import { useBackend } from '../backend';
 import {
   Box,
   Button,
-  StyleableSection,
   Icon,
-  Stack,
   NoticeBox,
+  Stack,
+  StyleableSection,
 } from '../components';
 import { Window } from '../layouts';
-import { Color } from 'common/color';
 import { JOB2ICON } from './common/JobToIcon';
-import { deepMerge } from 'common/collections';
-import { BooleanLike } from 'common/react';
-import { LobbyNotices, LobbyNoticesType } from './common/LobbyNotices';
-import { useEffect } from 'react';
+import { LobbyNotices, type LobbyNoticesType } from './common/LobbyNotices';
 
 type Job = {
   unavailable_reason: string | null;
@@ -117,10 +117,7 @@ export const JobSelection = (props) => {
   }, []);
 
   return (
-    <Window
-      width={1012}
-      height={data.shuttle_status ? 690 : 666 /* Hahahahahaha */}
-    >
+    <Window width={1012} height={data.shuttle_status ? 760 : 736}>
       <Window.Content scrollable>
         <LobbyNotices notices={data.notices} />
         <StyleableSection

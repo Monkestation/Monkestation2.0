@@ -11375,6 +11375,14 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/main)
+"cvN" = (
+/obj/structure/chair{
+	dir = 4;
+	name = "Prosecution"
+	},
+/obj/effect/landmark/start/barber,
+/turf/open/floor/wood/large,
+/area/station/service/barber)
 "cvW" = (
 /obj/machinery/computer/security/qm{
 	dir = 4
@@ -13156,6 +13164,10 @@
 	dir = 8
 	},
 /area/station/command/teleporter)
+"daF" = (
+/obj/effect/landmark/start/barber,
+/turf/open/floor/iron/checker,
+/area/station/service/barber)
 "daQ" = (
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
@@ -20203,6 +20215,7 @@
 "flZ" = (
 /obj/structure/chair/sofa/corner,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/landmark/start/explorer,
 /turf/open/floor/iron,
 /area/station/cargo/miningdock/cafeteria)
 "fmk" = (
@@ -44337,6 +44350,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/landmark/start/explorer,
 /turf/open/floor/iron,
 /area/station/cargo/miningdock/cafeteria)
 "mNy" = (
@@ -45054,6 +45068,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
+/obj/effect/landmark/start/barber,
 /turf/open/floor/wood/large,
 /area/station/service/barber)
 "nav" = (
@@ -54803,6 +54818,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/landmark/start/explorer,
 /turf/open/floor/iron,
 /area/station/cargo/miningdock/cafeteria)
 "qar" = (
@@ -56372,6 +56388,7 @@
 /obj/structure/chair{
 	dir = 4
 	},
+/obj/effect/landmark/start/explorer,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "qzw" = (
@@ -116130,7 +116147,7 @@ sSU
 mGw
 bcs
 kGH
-rcU
+cvN
 rcU
 qWy
 mGw
@@ -116391,7 +116408,7 @@ eTW
 eTW
 izQ
 mGw
-gPu
+daF
 pBl
 mGw
 mjf

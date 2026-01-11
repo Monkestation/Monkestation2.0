@@ -67,15 +67,10 @@
 	ui_color = "#d46a78"
 	nation_prefixes = list("Securi", "Beepski", "Shitcuri", "Red", "Stunba", "Flashbango", "Flasha", "Stanfordi")
 
-/datum/job_department/engineering
-	department_name = DEPARTMENT_ENGINEERING
-	department_bitflags = DEPARTMENT_BITFLAG_ENGINEERING
-	department_head = /datum/job/chief_engineer
-	department_experience_type = EXP_TYPE_ENGINEERING
+
+/// Catch-all department for undefined jobs.
+/datum/job_department/undefined
 	display_order = 3
-	label_class = "engineering"
-	ui_color = "#dfb567"
-	nation_prefixes = list("Atomo", "Engino", "Power", "Teleco")
 
 
 /datum/job_department/medical
@@ -111,12 +106,23 @@
 	nation_prefixes = list("Cargo", "Guna", "Suppli", "Mule", "Crate", "Ore", "Mini", "Shaf")
 
 
+/datum/job_department/engineering
+	department_name = DEPARTMENT_ENGINEERING
+	department_bitflags = DEPARTMENT_BITFLAG_ENGINEERING
+	department_head = /datum/job/chief_engineer
+	department_experience_type = EXP_TYPE_ENGINEERING
+	display_order = 7
+	label_class = "engineering"
+	ui_color = "#dfb567"
+	nation_prefixes = list("Atomo", "Engino", "Power", "Teleco")
+
+
 /datum/job_department/service
 	department_name = DEPARTMENT_SERVICE
 	department_bitflags = DEPARTMENT_BITFLAG_SERVICE
 	department_head = /datum/job/head_of_personnel
 	department_experience_type = EXP_TYPE_SERVICE
-	display_order = 7
+	display_order = 8
 	label_class = "service"
 	ui_color = "#7cc46a"
 	nation_prefixes = list("Honka", "Boozo", "Fatu", "Danka", "Mimi", "Libra", "Jani", "Religi")
@@ -127,14 +133,14 @@
 	department_bitflags = DEPARTMENT_BITFLAG_SILICON
 	department_head = /datum/job/ai
 	department_experience_type = EXP_TYPE_SILICON
-	display_order = 8
+	display_order = 9
 	label_class = "silicon"
 	ui_color = "#5dbda0"
 
 /datum/job_department/spooktober
 	department_name = DEPARTMENT_SPOOKTOBER
 	department_bitflags = DEPARTMENT_BITFLAG_SPOOKTOBER
-	display_order = 9
+	display_order = 10
 	label_class = "spooktober"
 	ui_color = "#f05e16"
 
@@ -149,13 +155,9 @@
 /datum/job_department/summer
 	department_name = DEPARTMENT_SUMMER
 	department_bitflags = DEPARTMENT_BITFLAG_SUMMER
-	display_order = 12
+	display_order = 11
 	label_class = "summer"
 	ui_color = "#ff4901"
 
 /datum/job_department/silicon/generate_nation_name()
 	return "United Nations" //For nations ruleset specifically, because all other sources of nation creation cannot choose silicons
-
-/// Catch-all department for undefined jobs.
-/datum/job_department/undefined
-	display_order = 12

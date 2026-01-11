@@ -93,6 +93,7 @@ const ALTTITLES = {
   // Barber - scissors
   'Salon Manager': BASEICONS['Barber'],
   'Salon Technician': BASEICONS['Barber'],
+  Hairdresser: BASEICONS['Barber'],
   Stylist: BASEICONS['Barber'],
   Colorist: BASEICONS['Barber'],
   // Bartender - cocktail
@@ -141,6 +142,9 @@ const ALTTITLES = {
   Mailman: BASEICONS['Cargo Technician'],
   'Union Associate': BASEICONS['Cargo Technician'],
   'Inventory Associate': BASEICONS['Cargo Technician'],
+  // Explorer - rocket
+  Expeditionist: BASEICONS['Explorer'],
+  Scavenger: BASEICONS['Explorer'],
   // Chaplain - cross
   Priest: BASEICONS['Chaplain'],
   Preacher: BASEICONS['Chaplain'],

@@ -11327,6 +11327,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
+"edf" = (
+/obj/effect/landmark/start/explorer,
+/turf/open/floor/iron,
+/area/station/cargo/miningoffice)
 "edl" = (
 /obj/docking_port/stationary/escape_pod,
 /turf/open/space/basic,
@@ -18449,6 +18453,11 @@
 "gGy" = (
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
+"gGS" = (
+/obj/structure/cable,
+/obj/effect/landmark/start/explorer,
+/turf/open/floor/iron,
+/area/station/cargo/storage)
 "gHo" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -23875,6 +23884,7 @@
 /obj/effect/spawner/random/structure/chair_maintenance{
 	dir = 8
 	},
+/obj/effect/landmark/start/barber,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "ivB" = (
@@ -32323,6 +32333,11 @@
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
+"lli" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/landmark/start/barber,
+/turf/open/floor/plating,
+/area/station/maintenance/port)
 "llk" = (
 /obj/structure/cable,
 /obj/machinery/power/solar{
@@ -36211,6 +36226,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
+/obj/effect/landmark/start/explorer,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "mAJ" = (
@@ -49543,6 +49559,7 @@
 "raC" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/landmark/start/explorer,
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "raJ" = (
@@ -59302,6 +59319,11 @@
 "uvh" = (
 /turf/closed/wall/r_wall,
 /area/station/science/circuits)
+"uvv" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/landmark/start/explorer,
+/turf/open/floor/iron,
+/area/station/cargo/sorting)
 "uvw" = (
 /obj/machinery/status_display/supply{
 	pixel_y = 32
@@ -87334,7 +87356,7 @@ kRe
 eGR
 aFd
 nVG
-kRe
+edf
 cHQ
 hKg
 uvw
@@ -87630,7 +87652,7 @@ wfZ
 soa
 pOa
 myZ
-sXI
+lli
 sNM
 tYi
 pOa
@@ -88360,7 +88382,7 @@ muJ
 dCH
 mAy
 cLj
-kRe
+edf
 aFd
 bHm
 oor
@@ -88634,7 +88656,7 @@ lUI
 pvP
 dka
 bgx
-mmR
+gGS
 nyk
 qIK
 suJ
@@ -90949,7 +90971,7 @@ aUm
 jvv
 uvH
 lwn
-ioz
+uvv
 ioz
 mwN
 lIM
