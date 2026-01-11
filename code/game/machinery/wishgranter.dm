@@ -55,4 +55,4 @@
 			disable_shaking = TRUE,
 		)
 		for(var/mob/player as anything in GLOB.player_list)
-			to_chat(player, span_warning("Am ominous wave of pressure fills the air around you, as if a chaotic malignant blaze had ignited elsewhere."))
+			to_chat(player, span_danger("An ominous wave of pressure fills the air around you, as if a chaotic malignant blaze had ignited elsewhere."))
