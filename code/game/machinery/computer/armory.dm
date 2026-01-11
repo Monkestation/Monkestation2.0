@@ -54,7 +54,7 @@
 	var/list/data = list()
 
 	data["is_authorized"] = is_authorized
-	data["authorizations_remaining"] = max((auth_need - current_authorizations.len), 0)
+	data["authorizations_remaining"] = max((auth_need - length(current_authorizations)), 0)
 	data["selected_reason"] = selected_reason
 	data["extra_details"] = extra_details
 	data["armory_open"] = armory_open
@@ -94,7 +94,7 @@
 
 	switch(action)
 		if("authorize")
-			if (current_authorizations.len == auth_need)
+			if (length(current_authorizations) == auth_need)
 				return FALSE
 			if (ID in current_authorizations)
 				return FALSE
@@ -112,7 +112,7 @@
 			open_armory(user)
 
 		if("close_armory")
-			close_armory()
+			close_armory(user)
 
 		if("reason_select")
 			selected_reason = params["reason"]
@@ -133,7 +133,7 @@
 		if (ACCESS_ARMORY in ID.access)
 			. = TRUE
 
-	if (current_authorizations.len == auth_need)
+	if (length(current_authorizations) == auth_need)
 		. = TRUE
 
 	is_authorized = .
@@ -159,11 +159,8 @@
 		SSsecurity_level.set_level(SEC_LEVEL_BLUE)
 		should_play_sound = FALSE
 
-	var/title
-	var/message
-
-	title = "Armory Authorization Announcement"
-	message = "Attention! The station's security force has authorized the use of the on-board armory under the following provision of Space Law: "
+	var/title = "Armory Authorization Announcement"
+	var/message = "Attention! The station's security force has authorized the use of the on-board armory under the following provision of Space Law: "
 	message += "\n\n[selected_reason].\n"
 
 	if (extra_details != initial(extra_details))
@@ -172,11 +169,11 @@
 	message += "\nAuthorized by: "
 
 	var/i
-	for(i = 1, i <= current_authorizations.len, i++)
+	for(i = 1, i <= length(current_authorizations), i++)
 		var/obj/item/card/id/ID = current_authorizations[i]
 		message += "[ID.assignment] [ID.registered_name]"
 
-		if (i != current_authorizations.len)
+		if (i != length(current_authorizations))
 			message += ", "
 
 	message += "\nStation personnel are advised to stay cautious, follow lawful orders, and report all known threats."
@@ -186,17 +183,32 @@
 	door_controller.activate()
 	armory_open = TRUE
 	reset_console()
+	user.log_message("has opened the armory with reason \"[selected_reason]\"[extra_details != initial(extra_details) ? "with extra details\"[extra_details]\"" : ""]", LOG_GAME, log_globally = TRUE)
+	message_admins("[key_name_admin(usr)][ADMIN_FLW(usr)] has opened the armory with reason \"[selected_reason]\"[extra_details != initial(extra_details) ? "with extra details\"[extra_details]\"" : ""]")
 
 	balloon_alert_to_viewers("The armory has been opened!")
 	return TRUE
 
-/obj/machinery/computer/armory/proc/close_armory()
+/obj/machinery/computer/armory/proc/close_armory(mob/living/user)
 	if (!is_authorized || !armory_open)
 		return FALSE
 
 	door_controller.activate()
 	armory_open = FALSE
 	reset_console()
+
+	var/title = "Armory De-Authorization Announcement"
+	var/message = "Attention! The immediate threats requiring use of the station's on-board armory have been neutralized. \
+	There may still be further minor threats on-board the station - refer to the station alert level or contact security for more information."
+
+	message += "\n\nAll security personnel are to return equipment to the armory desk unless otherwise authorized by command staff."
+
+	message += "\n\nStation personnel are advised to still remain vigilant, and have a secure shift."
+
+	minor_announce(message, title, TRUE, TRUE, GLOB.player_list, 'sound/misc/notice2.ogg', TRUE, "green")
+
+	user.log_message("has closed the armory", LOG_GAME, log_globally = TRUE)
+	message_admins("[key_name_admin(usr)][ADMIN_FLW(usr)] has closed the armory")
 
 	balloon_alert_to_viewers("The armory has been closed.")
 	return TRUE
