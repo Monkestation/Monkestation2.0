@@ -112,6 +112,22 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	QDEL_NULL(mob_smoke)
 	how_long_have_we_been_smokin = 0 SECONDS
 
+/obj/item/clothing/mask/cigarette/examine(mob/user)
+	. = ..()
+	. += span_notice("While smoking, you can [EXAMINE_HINT("Right-Click")] to intentionally choke on it.")
+
+/obj/item/clothing/mask/cigarette/attack_hand_secondary(mob/living/carbon/user, list/modifiers)
+	if(!iscarbon(user) || !lit)
+		return SECONDARY_ATTACK_CALL_NORMAL
+	var/mob/living/carbon/smoker = user
+	if(smoker.wear_mask != src)
+		return SECONDARY_ATTACK_CALL_NORMAL
+	user.balloon_alert(user, "eating cigarette...")
+	if(!do_after(user, 2 SECONDS, src, hidden = TRUE))
+		return SECONDARY_ATTACK_CALL_NORMAL
+	on_forcesay(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
 /obj/item/clothing/mask/cigarette/proc/on_forcesay(mob/living/source)
 	SIGNAL_HANDLER
 	source.apply_status_effect(/datum/status_effect/choke, src, lit, choke_forever ? -1 : rand(25 SECONDS, choke_time_max))
