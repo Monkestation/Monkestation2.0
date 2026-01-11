@@ -235,6 +235,23 @@
 	inhand_icon_state = null
 	body_parts_covered = CHEST|ARMS
 
+/obj/item/clothing/suit/toggle/jacket/officer/patched
+	name = "patched security jacket"
+	desc = "A red security jacket with a yellow security patch on the chest and back."
+	icon = 'icons/obj/clothing/suits/jacket.dmi'
+	worn_icon = 'icons/mob/clothing/suits/jacket.dmi'
+	icon_state = "patchedsecjacket"
+	inhand_icon_state = null
+	armor_type = /datum/armor/armor_secjacket // setjacket armor present in /suits/armor
+	body_parts_covered = CHEST|ARMS
+	toggle_noun = "zippers"
+
+// grants security suit storage to this jacket
+/obj/item/clothing/suit/toggle/jacket/officer/patched/Initialize(mapload)
+	. = ..()
+	if(!allowed)
+		allowed = GLOB.security_vest_allowed
+
 /obj/item/clothing/suit/jacket/warden/blue
 	name = "warden's jacket"
 	desc = "Perfectly suited for the warden that wants to leave an impression of style on those who visit the brig."

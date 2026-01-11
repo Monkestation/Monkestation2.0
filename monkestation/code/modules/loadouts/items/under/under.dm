@@ -640,6 +640,18 @@ GLOBAL_LIST_INIT(loadout_miscunders, generate_loadout_items(/datum/loadout_item/
 	restricted_roles = list(JOB_SECURITY_OFFICER, JOB_SECURITY_ASSISTANT, JOB_WARDEN, JOB_HEAD_OF_SECURITY)
 	requires_purchase = FALSE
 
+/datum/loadout_item/under/jumpsuit/security_dress
+	name = "Security Battle Dress"
+	item_path = /obj/item/clothing/under/rank/security/officer/dress
+	restricted_roles = list(JOB_SECURITY_OFFICER, JOB_SECURITY_ASSISTANT, JOB_WARDEN, JOB_HEAD_OF_SECURITY)
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/jumpsuit/security_turtleneck
+	name = "Security Turtleneck"
+	item_path = /obj/item/clothing/under/rank/security/officer/turtleneck
+	restricted_roles = list(JOB_SECURITY_OFFICER, JOB_SECURITY_ASSISTANT, JOB_WARDEN, JOB_HEAD_OF_SECURITY)
+	requires_purchase = FALSE
+
 /datum/loadout_item/under/jumpsuit/imperial_police_uniform //BUYABLE
 	name = "Imperial Police Uniform"
 	item_path = /obj/item/clothing/under/colonial/nri_police

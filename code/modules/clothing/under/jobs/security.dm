@@ -65,6 +65,20 @@
 	inhand_icon_state = null
 	alt_covers_chest = TRUE
 
+/obj/item/clothing/under/rank/security/officer/dress
+	name = "security battle dress"
+	desc = "A security-issued battle dress: a piece of wear designed for both formal occasions and field duty."
+	icon_state = "secdress"
+	inhand_icon_state = null
+	alt_covers_chest = FALSE
+
+/obj/item/clothing/under/rank/security/officer/turtleneck
+	name = "security turtleneck"
+	desc = "A tactical turtleneck made for the most edgy of security officers."
+	icon_state = "secturtleneck"
+	inhand_icon_state = null
+	alt_covers_chest = TRUE
+
 /obj/item/clothing/under/rank/security/constable
 	name = "constable outfit"
 	desc = "A british looking outfit."
