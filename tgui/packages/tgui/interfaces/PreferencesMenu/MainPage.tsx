@@ -192,7 +192,7 @@ const ChoicedSelection = (props: {
                   }px`}
                   placeholder="Search options"
                   value={searchText}
-                  onInput={(_, value) => setSearchText(value)}
+                  onChange={(value) => setSearchText(value)}
                 />
               </Box>
             </Stack.Item>
@@ -695,7 +695,7 @@ export const MainPage = (props: { openSpecies: () => void }) => {
                 </Stack>
               </Stack.Item>
 
-              <Stack.Item>
+              <Stack.Item width={`${CLOTHING_CELL_SIZE * 2 + 15}px`}>
                 <Stack height="100%" vertical wrap>
                   {mainFeatures.map(([clothingKey, clothing]) => {
                     const catalog =

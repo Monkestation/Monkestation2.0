@@ -125,8 +125,6 @@
 		if(istate & ISTATE_CONTROL)
 			CtrlClickOn(A)
 			return
-	else if(LAZYACCESS(modifiers, ALT_CLICK)) // monke edit: ensure alt-secondary works
-		AltClickSecondaryOn(A)
 	if(LAZYACCESS(modifiers, SHIFT_CLICK))
 		if(LAZYACCESS(modifiers, MIDDLE_CLICK))
 			ShiftMiddleClickOn(A)

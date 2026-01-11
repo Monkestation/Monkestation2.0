@@ -4268,7 +4268,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
 "ayQ" = (
-/obj/structure/weightmachine,
+/obj/structure/weightmachine/stacklifter,
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "ayR" = (
@@ -58280,7 +58280,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 1
 	},
-/obj/machinery/vending/wardrobe/cargo_wardrobe,
+/obj/machinery/vending/access/wardrobe_cargo,
 /obj/machinery/light/directional/north,
 /obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron,
@@ -58740,7 +58740,7 @@
 /turf/open/floor/iron/dark/smooth_corner,
 /area/station/ai_monitored/turret_protected/ai)
 "pkx" = (
-/obj/structure/weightmachine,
+/obj/structure/weightmachine/stacklifter,
 /turf/open/misc/asteroid,
 /area/station/security/prison/rec)
 "pkB" = (

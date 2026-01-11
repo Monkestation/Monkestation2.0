@@ -1,5 +1,5 @@
 import { useBackend } from '../../backend';
-import { Box, Button, Flex, Icon, Section, Slider } from '../../components';
+import { Box, Button, Stack, Icon, Section, Slider } from '../../components';
 import { Channel, PreferencesMenuData } from './data';
 
 export const VolumeMixerPage = () => {
@@ -7,14 +7,14 @@ export const VolumeMixerPage = () => {
   const { channels } = data;
 
   return (
-    <Section title="Volume Mixers" height="100%" overflow="auto">
-      <Flex align="start" direction="row" wrap>
+    <Section title="Volume Mixers" overflow="auto">
+      <Stack align="start" direction="row" wrap>
         {channels.map((channel) => (
-          <Flex.Item key={channel.num} width={28} style={{ margin: '5px' }}>
+          <Stack.Item key={channel.num} width={28} style={{ margin: '5px' }}>
             <VolumeSlider channel={channel} />
-          </Flex.Item>
+          </Stack.Item>
         ))}
-      </Flex>
+      </Stack>
     </Section>
   );
 };
@@ -34,23 +34,23 @@ const VolumeSlider = (props: { channel: Channel }) => {
         {channel.name}
       </Box>
       <Box mt="0.5rem">
-        <Flex>
-          <Flex.Item grow="1">
+        <Stack>
+          <Stack.Item grow={1}>
             <Slider
               minValue={0}
               maxValue={100}
               stepPixelSize={3.13}
-              value={channel.volume}
               tickWhileDragging
-              onChange={(e, value) =>
+              value={channel.volume}
+              onChange={(_, value) =>
                 act('volume', {
                   channel: channel.num,
                   volume: value,
                 })
               }
             />
-          </Flex.Item>
-          <Flex.Item>
+          </Stack.Item>
+          <Stack.Item>
             <Button
               width="30px"
               color="transparent"
@@ -99,8 +99,8 @@ const VolumeSlider = (props: { channel: Channel }) => {
                 }
               />
             </Button>
-          </Flex.Item>
-        </Flex>
+          </Stack.Item>
+        </Stack>
       </Box>
     </Box>
   );

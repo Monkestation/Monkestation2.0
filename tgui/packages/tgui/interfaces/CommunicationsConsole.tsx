@@ -1,6 +1,6 @@
 import { sortBy } from 'common/collections';
 import { capitalize } from 'common/string';
-import { useBackend, useLocalState } from '../backend';
+import { useBackend } from '../backend';
 import {
   Blink,
   Box,
@@ -15,6 +15,8 @@ import {
 import { StatusDisplayControls } from './common/StatusDisplayControls';
 import { Window } from '../layouts';
 import { sanitizeText } from '../sanitize';
+import { JSX, useState } from 'react';
+import { BooleanLike } from 'tgui-core/react';
 
 const STATE_BUYING_SHUTTLE = 'buying_shuttle';
 const STATE_CHANGING_STATUS = 'changing_status';
@@ -27,15 +29,147 @@ const SWIPE_NEEDED = 'SWIPE_NEEDED';
 const EMAG_SHUTTLE_NOTICE =
   'This shuttle is deemed significantly dangerous to the crew, and is only supplied by the Syndicate.';
 
-const sortShuttles = sortBy(
+// Shared / base data always present
+export type CommunicationsBaseData = {
+  authenticated: BooleanLike;
+  emagged: BooleanLike;
+  syndicate: BooleanLike;
+  hasConnection: BooleanLike;
+
+  canRequestSafeCode: BooleanLike;
+  safeCodeDeliveryWait: number;
+  safeCodeDeliveryArea: string | null;
+
+  callShuttleReasonMinLength: number;
+  maxStatusLineLength: number;
+  maxMessageLength: number;
+  settableLevels: string[];
+};
+
+// Only present when authenticated OR silicon
+export type CommunicationsAuthedData = CommunicationsBaseData & {
+  authenticated: true;
+  canLogOut: BooleanLike;
+  page: CommunicationsPage;
+};
+
+// Page enum (matches DM states)
+export type CommunicationsPage =
+  | typeof STATE_MAIN
+  | typeof STATE_MESSAGES
+  | typeof STATE_BUYING_SHUTTLE
+  | typeof STATE_CHANGING_STATUS;
+
+/* ---------------- STATE_MAIN ---------------- */
+
+export type CommunicationsMainData<Page = typeof STATE_MAIN> =
+  CommunicationsAuthedData & {
+    page: Page;
+
+    canBuyShuttles: BooleanLike;
+    canMakeAnnouncement: BooleanLike;
+    canMessageAssociates: BooleanLike;
+    canRecallShuttles: BooleanLike;
+    canRequestNuke: BooleanLike;
+    canSendToSectors: BooleanLike;
+    canSetAlertLevel: false | 'NO_SWIPE_NEEDED' | 'SWIPE_NEEDED';
+    canToggleEmergencyAccess: BooleanLike;
+
+    importantActionReady: BooleanLike;
+
+    shuttleCalled: BooleanLike;
+    shuttleRecallable?: BooleanLike;
+    shuttleCalledPreviously?: BooleanLike;
+    shuttleLastCalled: false | string;
+
+    aprilFools: BooleanLike;
+
+    alertLevel: string;
+    alertLevelTick?: number;
+
+    authorizeName: string;
+
+    shuttleCanEvacOrFailReason: boolean | string;
+
+    emergencyAccess?: BooleanLike;
+
+    sectors?: string[];
+  };
+
+/* ---------------- STATE_MESSAGES ---------------- */
+
+export type CommunicationsMessage = {
+  answered: BooleanLike;
+  content: string;
+  title: string;
+  possibleAnswers: string[];
+};
+
+export type CommunicationsMessagesData = CommunicationsAuthedData & {
+  page: typeof STATE_MESSAGES;
+  messages: CommunicationsMessage[];
+};
+
+/* ---------------- STATE_BUYING_SHUTTLE ---------------- */
+
+export type CommunicationsShuttle = {
+  name: string;
+  description: string;
+  occupancy_limit: number;
+  creditCost: number;
+  initial_cost: number;
+  emagOnly: BooleanLike;
+  prerequisites: string[];
+  ref: string;
+};
+
+export type CommunicationsBuyingShuttleData = CommunicationsAuthedData & {
+  page: typeof STATE_BUYING_SHUTTLE;
+  budget: number;
+  shuttles: CommunicationsShuttle[];
+};
+
+/* ---------------- STATE_CHANGING_STATUS ---------------- */
+
+export type CommunicationsChangingStatusData = CommunicationsAuthedData & {
+  page: typeof STATE_CHANGING_STATUS;
+  upperText: string;
+  lowerText: string;
+};
+
+/* ---------------- UNION ---------------- */
+
+export type CommunicationsData =
+  | CommunicationsBaseData
+  | CommunicationsMainData
+  | CommunicationsMessagesData
+  | CommunicationsBuyingShuttleData
+  | CommunicationsChangingStatusData;
+
+type AlertLevelConfirmState =
+  | { open: false }
+  | {
+      open: true;
+      alertLevel: string;
+      tick?: number;
+    };
+
+const sortShuttles = sortBy<CommunicationsShuttle>(
   (shuttle) => !shuttle.emagOnly,
   (shuttle) => shuttle.initial_cost,
 );
 
-const AlertButton = (props) => {
-  const { act, data } = useBackend();
+type AlertButtonProps = {
+  alertLevel: string;
+  setAlertConfirm: (value: AlertLevelConfirmState) => void;
+};
+
+const AlertButton = ({
+  alertLevel,
+  setAlertConfirm: setShowAlertLevelConfirm,
+}: AlertButtonProps) => {
+  const { act, data } = useBackend<CommunicationsMainData>();
   const { alertLevelTick, canSetAlertLevel } = data;
-  const { alertLevel, setShowAlertLevelConfirm } = props;
 
   const thisIsCurrent = data.alertLevel === alertLevel;
 
@@ -43,29 +177,57 @@ const AlertButton = (props) => {
     <Button
       icon="exclamation-triangle"
       color={thisIsCurrent && 'good'}
-      content={capitalize(alertLevel)}
       onClick={() => {
-        if (thisIsCurrent) {
-          return;
-        }
+        if (thisIsCurrent) return;
 
-        if (canSetAlertLevel === SWIPE_NEEDED) {
-          setShowAlertLevelConfirm([alertLevel, alertLevelTick]);
+        if (canSetAlertLevel === 'SWIPE_NEEDED') {
+          setShowAlertLevelConfirm({
+            open: true,
+            alertLevel,
+            tick: alertLevelTick,
+          });
         } else {
           act('changeSecurityLevel', {
             newSecurityLevel: alertLevel,
           });
         }
       }}
-    />
+    >
+      {capitalize(alertLevel)}
+    </Button>
   );
 };
 
-const MessageModal = (props) => {
-  const { data } = useBackend();
+type MessageModalProps = {
+  /** Label shown above the textarea */
+  label: string;
+  /** Placeholder text for the input */
+  placeholder?: string;
+
+  /** Button text for submit */
+  buttonText: string;
+
+  /** Icon for submit button */
+  icon?: string;
+
+  /** Minimum required message length */
+  minLength?: number;
+
+  /** Optional notice shown under buttons */
+  notice?: string;
+
+  /** Called with the final message */
+  onSubmit: (message: string) => void;
+
+  /** Called when cancel/back is pressed */
+  onBack: () => void;
+};
+
+const MessageModal = (props: MessageModalProps) => {
+  const { data } = useBackend<CommunicationsBaseData>();
   const { maxMessageLength } = data;
 
-  const [input, setInput] = useLocalState(props.label, '');
+  const [input, setInput] = useState('');
 
   const longEnough =
     props.minLength === undefined || input.length >= props.minLength;
@@ -84,10 +246,11 @@ const MessageModal = (props) => {
             width="80vw"
             backgroundColor="black"
             textColor="white"
-            onInput={(_, value) => {
+            onChange={(value) => {
               setInput(value.substring(0, maxMessageLength));
             }}
             value={input}
+            placeholder={props.placeholder}
           />
         </Flex.Item>
 
@@ -153,17 +316,18 @@ const NoConnectionModal = () => {
   );
 };
 
-const PageBuyingShuttle = (props) => {
-  const { act, data } = useBackend();
+const PageBuyingShuttle = () => {
+  const { act, data } = useBackend<CommunicationsBuyingShuttleData>();
 
   return (
     <Box>
       <Section>
         <Button
           icon="chevron-left"
-          content="Back"
           onClick={() => act('setState', { state: STATE_MAIN })}
-        />
+        >
+          Back
+        </Button>
       </Section>
 
       <Section>
@@ -185,7 +349,6 @@ const PageBuyingShuttle = (props) => {
           key={shuttle.ref}
           buttons={
             <Button
-              content={`${shuttle.creditCost.toLocaleString()} credits`}
               color={shuttle.emagOnly ? 'red' : 'default'}
               disabled={data.budget < shuttle.creditCost}
               onClick={() =>
@@ -201,7 +364,9 @@ const PageBuyingShuttle = (props) => {
                     : undefined
               }
               tooltipPosition="left"
-            />
+            >
+              {`${shuttle.creditCost.toLocaleString()} credits`}
+            </Button>
           }
         >
           <Box>{shuttle.description}</Box>
@@ -219,7 +384,7 @@ const PageBuyingShuttle = (props) => {
   );
 };
 
-const PageChangingStatus = (props) => {
+const PageChangingStatus = () => {
   const { act } = useBackend();
 
   return (
@@ -237,8 +402,8 @@ const PageChangingStatus = (props) => {
   );
 };
 
-const PageMain = (props) => {
-  const { act, data } = useBackend();
+const PageMain = () => {
+  const { act, data } = useBackend<CommunicationsMainData>();
   const {
     alertLevel,
     alertLevelTick,
@@ -265,27 +430,20 @@ const PageMain = (props) => {
     shuttleRecallable,
   } = data;
 
-  const [callingShuttle, setCallingShuttle] = useLocalState(
-    'calling_shuttle',
-    false,
-  );
-  const [messagingAssociates, setMessagingAssociates] = useLocalState(
-    'messaging_associates',
-    false,
-  );
-  const [messagingSector, setMessagingSector] = useLocalState(
-    'messaing_sector',
-    null,
-  );
-  const [requestingNukeCodes, setRequestingNukeCodes] = useLocalState(
-    'requesting_nuke_codes',
-    false,
+  const [callingShuttle, setCallingShuttle] = useState<boolean>(false);
+  const [messagingAssociates, setMessagingAssociates] =
+    useState<boolean>(false);
+  const [messagingSector, setMessagingSector] = useState<string | null>(null);
+  const [requestingNukeCodes, setRequestingNukeCodes] =
+    useState<boolean>(false);
+
+  const [alertLevelConfirm, setAlertConfirm] = useState<AlertLevelConfirmState>(
+    {
+      open: false,
+    },
   );
 
-  const [
-    [showAlertLevelConfirm, confirmingAlertLevelTick],
-    setShowAlertLevelConfirm,
-  ] = useLocalState('showConfirmPrompt', [null, null]);
+  const shuttleDisabled = typeof shuttleCanEvacOrFailReason === 'string';
 
   return (
     <Box>
@@ -309,16 +467,17 @@ const PageMain = (props) => {
           )) || (
             <Button
               icon="space-shuttle"
-              content="Call Emergency Shuttle"
-              disabled={shuttleCanEvacOrFailReason !== 1}
+              disabled={shuttleDisabled}
               tooltip={
-                shuttleCanEvacOrFailReason !== 1
+                typeof shuttleCanEvacOrFailReason === 'string'
                   ? shuttleCanEvacOrFailReason
                   : undefined
               }
               tooltipPosition="bottom-end"
               onClick={() => setCallingShuttle(true)}
-            />
+            >
+              Call Emergency Shuttle
+            </Button>
           )}
           {!!shuttleCalledPreviously &&
             ((shuttleLastCalled && (
@@ -344,10 +503,9 @@ const PageMain = (props) => {
             <Flex.Item>
               {settableLevels.map((level) => (
                 <AlertButton
-                  alertLevel={level}
                   key={level}
-                  showAlertLevelConfirm={showAlertLevelConfirm}
-                  setShowAlertLevelConfirm={setShowAlertLevelConfirm}
+                  alertLevel={level}
+                  setAlertConfirm={setAlertConfirm}
                 />
               ))}
             </Flex.Item>
@@ -482,8 +640,8 @@ const PageMain = (props) => {
       )}
 
       {!!canSetAlertLevel &&
-        showAlertLevelConfirm &&
-        confirmingAlertLevelTick === alertLevelTick && (
+        alertLevelConfirm.open &&
+        alertLevelConfirm.tick === alertLevelTick && (
           <Modal>
             <Flex direction="column" textAlign="center" width="300px">
               <Flex.Item fontSize="16px" mb={2}>
@@ -498,27 +656,32 @@ const PageMain = (props) => {
                   fontSize="16px"
                   onClick={() =>
                     act('changeSecurityLevel', {
-                      newSecurityLevel: showAlertLevelConfirm,
+                      newSecurityLevel: alertLevelConfirm.alertLevel,
                     })
                   }
                 />
 
                 <Button
                   icon="times"
-                  content="Cancel"
                   color="bad"
                   fontSize="16px"
-                  onClick={() => setShowAlertLevelConfirm(false)}
-                />
+                  onClick={() =>
+                    setAlertConfirm({
+                      open: false,
+                    })
+                  }
+                >
+                  Cancel
+                </Button>
               </Flex.Item>
             </Flex>
           </Modal>
         )}
 
-      {!!canSendToSectors && sectors.length > 0 && (
+      {!!canSendToSectors && sectors!.length > 0 && (
         <Section title="Allied Sectors">
           <Flex direction="column">
-            {sectors.map((sectorName) => (
+            {sectors!.map((sectorName) => (
               <Flex.Item key={sectorName}>
                 <Button
                   content={`Send a message to station in ${sectorName} sector`}
@@ -528,7 +691,7 @@ const PageMain = (props) => {
               </Flex.Item>
             ))}
 
-            {sectors.length > 2 && (
+            {sectors!.length > 2 && (
               <Flex.Item>
                 <Button
                   content="Send a message to all allied stations"
@@ -541,7 +704,7 @@ const PageMain = (props) => {
         </Section>
       )}
 
-      {!!canSendToSectors && sectors.length > 0 && messagingSector && (
+      {!!canSendToSectors && sectors!.length > 0 && messagingSector && (
         <MessageModal
           label="Message to send to allied station"
           notice="Please be aware that this process is very expensive, and abuse will lead to...termination."
@@ -563,28 +726,27 @@ const PageMain = (props) => {
 };
 
 const PageMessages = (props) => {
-  const { act, data } = useBackend();
+  const { act, data } = useBackend<CommunicationsMessagesData>();
   const messages = data.messages || [];
 
-  const children = [];
+  const children: JSX.Element[] = [];
 
   children.push(
     <Section>
       <Button
         icon="chevron-left"
-        content="Back"
         onClick={() => act('setState', { state: STATE_MAIN })}
-      />
+      >
+        Back
+      </Button>
     </Section>,
   );
 
-  const messageElements = [];
+  const messageElements: JSX.Element[] = [];
 
   for (const [messageIndex, message] of Object.entries(messages)) {
-    let answers = null;
-
-    if (message.possibleAnswers.length > 0) {
-      answers = (
+    let answers: JSX.Element | null =
+      message.possibleAnswers.length > 0 ? (
         <Box mt={1}>
           {message.possibleAnswers.map((answer, answerIndex) => (
             <Button
@@ -603,8 +765,7 @@ const PageMessages = (props) => {
             />
           ))}
         </Box>
-      );
-    }
+      ) : null;
 
     const textHtml = {
       __html: sanitizeText(message.content),
@@ -617,14 +778,15 @@ const PageMessages = (props) => {
         buttons={
           <Button.Confirm
             icon="trash"
-            content="Delete"
             color="red"
             onClick={() =>
               act('deleteMessage', {
                 message: messageIndex + 1,
               })
             }
-          />
+          >
+            Delete
+          </Button.Confirm>
         }
       >
         <Box dangerouslySetInnerHTML={textHtml} />
@@ -634,13 +796,14 @@ const PageMessages = (props) => {
     );
   }
 
-  children.push(messageElements.reverse());
+  children.push(...messageElements.reverse());
 
   return children;
 };
 
 export const CommunicationsConsole = (props) => {
-  const { act, data } = useBackend();
+  const { act, data } =
+    useBackend<CommunicationsMainData<CommunicationsPage>>();
   const {
     authenticated,
     authorizeName,

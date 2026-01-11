@@ -2,14 +2,14 @@ import { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
 import { Button, Input, LabeledList, Section, Stack } from '../components';
 import { Window } from '../layouts';
-import { AccessConfig } from './common/AccessConfig';
+import { AccessConfig, type Region } from './common/AccessConfig';
 
 type Data = {
   oneAccess: BooleanLike;
   unres_direction: number;
   passedName: string;
   passedCycleId: string;
-  regions: string[];
+  regions: Region[];
   accesses: string[];
   shell: BooleanLike;
 };
@@ -111,7 +111,7 @@ export function AirLockMainSection(props) {
                 fluid
                 maxLength={30}
                 value={passedName}
-                onChange={(e, value) =>
+                onChange={(value) =>
                   act('passedName', {
                     passedName: value,
                   })
@@ -123,7 +123,7 @@ export function AirLockMainSection(props) {
                 fluid
                 maxLength={30}
                 value={passedCycleId}
-                onChange={(e, value) =>
+                onChange={(value) =>
                   act('passedCycleId', {
                     passedCycleId: value,
                   })

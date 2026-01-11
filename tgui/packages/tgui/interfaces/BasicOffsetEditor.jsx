@@ -49,7 +49,7 @@ export const BasicOffsetEditor = (properties) => {
                       stepPixelSize={3.13}
                       value={offset.north}
                       tickWhileDragging
-                      onChange={(e, value) =>
+                      onChange={(_, value) =>
                         act('offset', {
                           name: offset.name,
                           offset: value,
@@ -110,7 +110,7 @@ export const BasicOffsetEditor = (properties) => {
                       stepPixelSize={3.13}
                       value={offset.south}
                       tickWhileDragging
-                      onChange={(e, value) =>
+                      onChange={(_, value) =>
                         act('offset', {
                           name: offset.name,
                           offset: value,
@@ -171,7 +171,7 @@ export const BasicOffsetEditor = (properties) => {
                       stepPixelSize={3.13}
                       value={offset.east}
                       tickWhileDragging
-                      onChange={(e, value) =>
+                      onChange={(_, value) =>
                         act('offset', {
                           name: offset.name,
                           offset: value,
@@ -232,7 +232,7 @@ export const BasicOffsetEditor = (properties) => {
                       stepPixelSize={3.13}
                       value={offset.west}
                       tickWhileDragging
-                      onChange={(e, value) =>
+                      onChange={(_, value) =>
                         act('offset', {
                           name: offset.name,
                           offset: value,
