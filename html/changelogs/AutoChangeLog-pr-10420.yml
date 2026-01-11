@@ -1,0 +1,4 @@
+author: "SirNightKnight"
+delete-after: True
+changes:
+  - bugfix: "fixed spraycans being able to paint things in really dark colors."

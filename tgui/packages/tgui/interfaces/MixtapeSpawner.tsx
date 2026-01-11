@@ -143,7 +143,7 @@ export const MixtapeSpawner = (_props) => {
                       placeholder="Search..."
                       fluid
                       value={searchQuery}
-                      onInput={(_, value) => setSearchQuery(value)}
+                      onChange={(value) => setSearchQuery(value)}
                     />
                   </Stack.Item>
                   <Stack.Item>

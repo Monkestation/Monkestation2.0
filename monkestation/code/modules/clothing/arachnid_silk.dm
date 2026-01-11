@@ -10,4 +10,4 @@
 	icon_state = "loincloth"
 	body_parts_covered = GROIN
 	female_sprite_flags = NO_FEMALE_UNIFORM
-	supports_variations_flags = CLOTHING_NO_VARIATION
+	supports_variations_flags = NONE

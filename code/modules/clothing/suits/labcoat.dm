@@ -4,7 +4,6 @@
 	icon_state = "labcoat"
 	icon = 'icons/obj/clothing/suits/labcoat.dmi'
 	worn_icon = 'icons/mob/clothing/suits/labcoat.dmi'
-	worn_icon_digitigrade = 'icons/mob/clothing/suits/labcoat_digi.dmi'
 	inhand_icon_state = "labcoat"
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|ARMS

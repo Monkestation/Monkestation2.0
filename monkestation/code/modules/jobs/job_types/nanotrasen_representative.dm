@@ -101,7 +101,6 @@
 		/obj/item/clipboard = 1,
 	)
 	belt = /obj/item/gun/energy/laser/plasmacore
-	shoes = /obj/item/clothing/shoes/laceup
 	r_pocket = /obj/item/modular_computer/pda/heads/ntrep
 	l_hand = /obj/item/storage/secure/briefcase/cash
 	glasses = /obj/item/clothing/glasses/sunglasses

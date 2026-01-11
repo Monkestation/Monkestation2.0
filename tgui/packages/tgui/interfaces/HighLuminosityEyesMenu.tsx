@@ -49,7 +49,7 @@ const LightColorDisplay = (props) => {
         value={lightColor}
         width={6}
         maxLength={7}
-        onChange={(_, value) =>
+        onChange={(value) =>
           act('enter_color', {
             new_color: value,
             to_update: ToUpdate.LightColor,
@@ -83,7 +83,8 @@ const RangeDisplay = (props) => {
         value={range}
         minValue={0}
         maxValue={5}
-        onDrag={(e, value) =>
+        tickWhileDragging
+        onChange={(value) =>
           act('set_range', {
             new_range: value,
           })
@@ -125,7 +126,7 @@ const EyeColorDisplay = (props) => {
               value={eyeColor.left}
               width={6}
               maxLength={7}
-              onChange={(_, value) =>
+              onChange={(value) =>
                 act('enter_color', {
                   new_color: value,
                   to_update: ToUpdate.LeftEye,
@@ -153,7 +154,7 @@ const EyeColorDisplay = (props) => {
               value={eyeColor.right}
               width={6}
               maxLength={7}
-              onChange={(_, value) =>
+              onChange={(value) =>
                 act('enter_color', {
                   new_color: value,
                   to_update: ToUpdate.RightEye,

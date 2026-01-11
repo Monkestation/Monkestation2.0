@@ -112,7 +112,7 @@ export const AtmosControlConsole = (props) => {
                         minValue={0}
                         maxValue={data.maxInput}
                         step={10}
-                        onChange={(e, value) =>
+                        onChange={(value) =>
                           act('adjust_input', {
                             chamber: selectedChamber.id,
                             rate: value,
@@ -154,7 +154,7 @@ export const AtmosControlConsole = (props) => {
                         minValue={0}
                         maxValue={data.maxOutput}
                         step={10}
-                        onChange={(e, value) =>
+                        onChange={(value) =>
                           act('adjust_output', {
                             chamber: selectedChamber.id,
                             rate: value,

@@ -97,7 +97,9 @@ export const ModularShieldGen = (props) => {
                     value={current_radius}
                     minValue={3}
                     maxValue={max_radius}
-                    onChange={(e, value) =>
+                    step={1}
+                    stepPixelSize={2}
+                    onChange={(value) =>
                       act('set_radius', {
                         new_radius: value,
                       })

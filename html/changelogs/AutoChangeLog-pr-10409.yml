@@ -1,0 +1,5 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - bugfix: "Fixed minor UI issues with PDA, NT Rep's app & Locked safes."
+  - bugfix: "Bridge Assistant now shows on the command monitor."

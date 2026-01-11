@@ -202,7 +202,7 @@ const TankCompressorControls = (props) => {
                 step={0.5}
                 unit="L/S"
                 tickWhileDragging
-                onChange={(e, new_rate) =>
+                onChange={(_, new_rate) =>
                   act('change_rate', { target: new_rate })
                 }
               />
