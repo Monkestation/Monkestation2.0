@@ -71,7 +71,7 @@
 	update_tank(tank, TANK_REMOVING, user)
 	return TRUE
 
-/obj/item/melee/powerfist/interact_with_atom(atom/item_to_insert, mob/living/user, list/modifiers)
+/obj/item/melee/powerfist/item_interaction(mob/living/user, obj/item/item_to_insert, list/modifiers)
 	if(!istype(item_to_insert, /obj/item/tank/internals))
 		return ..()
 	if(tank)
