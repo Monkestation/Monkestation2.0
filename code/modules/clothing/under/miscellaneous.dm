@@ -34,6 +34,9 @@
 	icon_state = "psyche"
 	inhand_icon_state = "p_suit"
 
+/obj/item/clothing/under/misc/psyche/get_general_color(icon/base_icon)
+	return "#3f3f3f"
+
 /obj/item/clothing/under/misc/vice_officer
 	name = "vice officer's jumpsuit"
 	desc = "It's the standard issue pretty-boy outfit, as seen on Holo-Vision."

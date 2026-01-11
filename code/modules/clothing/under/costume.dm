@@ -286,7 +286,6 @@
 	icon_state = "hostanclothes"
 	inhand_icon_state = null
 	worn_icon = 'icons/mob/clothing/under/security.dmi'
-	worn_icon_digitigrade = 'icons/mob/clothing/under/security_digi.dmi'
 	alt_covers_chest = TRUE
 	armor_type = /datum/armor/costume_russian_officer
 	strip_delay = 50
@@ -410,7 +409,6 @@
 /obj/item/clothing/under/costume/susie
 	name = "Rude Jacket"
 	desc = "A replica of the black and purple jacket a legendary lizard wore while saving the world."
-	worn_icon_digitigrade = 'icons/mob/species/misc/digitigrade.dmi'
 	icon_state = "susie"
 	inhand_icon_state = null
 	can_adjust = FALSE

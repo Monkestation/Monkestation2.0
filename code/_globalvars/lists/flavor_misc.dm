@@ -197,9 +197,6 @@ GLOBAL_LIST_INIT(backpacklist, list(
 #define UPLINK_PEN "Pen" //like a real spy!
 #define UPLINK_IMPLANT "Implant"
 
-	//Auto-generated 'fallback' clothing icons
-GLOBAL_LIST_EMPTY(fallback_clothing_icons)
-
 GLOBAL_LIST_INIT(scarySounds, list(
 	'sound/effects/footstep/clownstep1.ogg',
 	'sound/effects/footstep/clownstep2.ogg',
