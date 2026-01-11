@@ -17,11 +17,10 @@ SUBSYSTEM_DEF(ai_controllers)
 	)
 	///Assoc List of all AI controllers and the Z level they are on, which we check when someone enters/leaves a Z level to turn them on/off.
 	var/list/ai_controllers_by_zlevel = list()
-	/// The tick cost of all active AI, calculated on fire.
-	var/cost_on
-	/// The tick cost of all idle AI, calculated on fire.
-	var/cost_idle
-
+	/// The average tick cost of all active AI, calculated on fire.
+	var/our_cost
+	/// The tick cost of all currently processed AI, being summed together
+	var/summing_cost
 
 /datum/controller/subsystem/ai_controllers/Initialize()
 	setup_subtrees()
@@ -31,25 +30,37 @@ SUBSYSTEM_DEF(ai_controllers)
 	var/list/active_list = ai_controllers_by_status[AI_STATUS_ON]
 	var/list/inactive_list = ai_controllers_by_status[AI_STATUS_OFF]
 	var/list/idle_list = ai_controllers_by_status[AI_STATUS_IDLE]
-	msg = "Active AIs:[length(active_list)]/[round(cost_on,1)]%|Inactive:[length(inactive_list)]|Idle:[length(idle_list)]/[round(cost_idle,1)]%"
+	msg = "Active AIs:[length(active_list)] | Inactive:[length(inactive_list)] | Idle:[length(idle_list)] | Cost:[round(our_cost,1)]%"
 	return ..()
 
 /datum/controller/subsystem/ai_controllers/fire(resumed)
-	var/timer = TICK_USAGE_REAL
-	cost_idle = MC_AVERAGE(cost_idle, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
+	if(!resumed)
+		summing_cost = 0
 
-	timer = TICK_USAGE_REAL
+	var/timer = TICK_USAGE_REAL
+	var/seconds_per_tick = wait * 0.1
 	for(var/datum/ai_controller/ai_controller as anything in ai_controllers_by_status[AI_STATUS_ON])
 		if(!COOLDOWN_FINISHED(ai_controller, failed_planning_cooldown))
+			if(MC_TICK_CHECK)
+				break
 			continue
 
 		if(!ai_controller.able_to_plan())
+			if(MC_TICK_CHECK)
+				break
 			continue
-		ai_controller.SelectBehaviors(wait * 0.1)
+		ai_controller.SelectBehaviors(seconds_per_tick)
 		if(!LAZYLEN(ai_controller.current_behaviors)) //Still no plan
 			COOLDOWN_START(ai_controller, failed_planning_cooldown, AI_FAILED_PLANNING_COOLDOWN)
 
-	cost_on = MC_AVERAGE(cost_on, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
+		if(MC_TICK_CHECK)
+			break
+
+	summing_cost += TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer)
+	if(MC_TICK_CHECK)
+		return
+
+	our_cost = MC_AVERAGE(our_cost, summing_cost)
 
 ///Creates all instances of ai_subtrees and assigns them to the ai_subtrees list.
 /datum/controller/subsystem/ai_controllers/proc/setup_subtrees()

@@ -11095,7 +11095,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/lobby)
 "aRi" = (
-/obj/machinery/vending/wardrobe/cargo_wardrobe,
+/obj/machinery/vending/access/wardrobe_cargo,
 /obj/effect/turf_decal/trimline/brown/filled/line,
 /turf/open/floor/iron,
 /area/station/cargo/office)

@@ -63,7 +63,7 @@
 		to_chat(src, span_warning("You are not currently allowed to make a bug report through this system."))
 		return
 	var/message = "This will start reporting an issue, gathering some information from the server and your client, before submitting it to github."
-	if(GLOB.revdata.testmerge.len)
+	if(length(GLOB.revdata.testmerge))
 		message += "<br>The following experimental changes are active and may be the cause of any new or sudden issues:<br>"
 		message += GLOB.revdata.GetTestMergeInfo(header = FALSE, hide_silent = FALSE)
 	// We still use tgalert here because some people were concerned that if someone wanted to report that tgui wasn't working
@@ -87,13 +87,13 @@
 		local_template = replacetext(local_template, "## Round ID:\n", "## Round ID:\n[GLOB.round_id]")
 
 	// Insert testmerges
-	if(GLOB.revdata.testmerge.len)
+	if(length(GLOB.revdata.testmerge))
 		var/list/all_tms = list()
 		for(var/entry in GLOB.revdata.testmerge)
 			var/datum/tgs_revision_information/test_merge/tm = entry
 			all_tms += "- \[[tm.title]\]([githuburl]/pull/[tm.number])"
 		var/all_tms_joined = all_tms.Join("\n") // for some reason this can't go in the []
-		local_template = replacetext(local_template, "## Testmerges:\n", "## Testmerges:\n[all_tms_joined]")
+		local_template = replacetext(local_template, "## Testmerges:\n", "## Testmerges:\nMaster commit: [GLOB.revdata.originmastercommit]\nCurrent commit: [GLOB.revdata.commit]\n[all_tms_joined]")
 
 	//Collect client info:
 	var/issue_title = input(src, "Please give the issue a title, you will be given another textbox to describe it in detail.","Issue Title") as text|null
@@ -111,7 +111,7 @@
 	Key:[ckey]\n\
 	\
 	"
-	var/issue_body = "Reporting client info: [client_info]\n\n[local_template]"
+	var/issue_body = "[client_info]\n\n[local_template]"
 	var/list/body_structure = list(
 		"title" = issue_title,
 		"body" = issue_body
