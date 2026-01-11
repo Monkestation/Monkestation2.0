@@ -123,3 +123,24 @@
   - bugfix: Assembler will how use proper amount of items for crafting
   - bugfix: Fixed assembler stack exploit
   - bugfix: Fixed assembler free craft exploit
+2026-01-10:
+  Absolucy, Rukofamicom:
+  - balance: Mesons no longer detect false walls that are closed. Open false walls
+      will still appear as an opening though.
+  - qol: The bolts on false walls are now tightened with wrenches instead of screwdrivers.
+  Ihatethisgit:
+  - bugfix: Non-darkspawn are not able to use the darkspawn cams console anymore.
+  Tractor-Maam:
+  - rscadd: Added 40 new tips to roundstart!
+2026-01-11:
+  JohnFulpWillard:
+  - balance: Default command gear is no longer access locked.
+  - balance: Reverts previous cargo-locking of the cargo vendor.
+  - bugfix: Cargo vendors now have the proper products.
+  LettuceGuardian:
+  - image: Updated the body cam sprite.
+  TheColorCyan:
+  - rscdel: shocks should no longer apply pain damage (report if it still happens)
+  - balance: burning yellow extracts apply 10 burn damage instead of pain
+  - balance: burning yellow negative effects no longer apply if the victim is shock
+      immune

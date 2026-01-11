@@ -41,6 +41,8 @@
 	var/category
 	///List of items that have been returned to the vending machine.
 	var/list/returned_products
+	///If set, this access is needed to see this vending product.
+	var/access_requirement
 
 /**
  * # vending machines
@@ -350,7 +352,7 @@
  * * categories - A list in the format of product_categories to source category from
  * * startempty - should we set vending_product record amount from the product list (so it's prefilled at roundstart)
  */
-/obj/machinery/vending/proc/build_inventory(list/productlist, list/recordlist, list/categories, start_empty = FALSE)
+/obj/machinery/vending/proc/build_inventory(list/productlist, list/recordlist, list/categories, start_empty = FALSE, access_needed)
 	default_price = round(initial(default_price) * SSeconomy.inflation_value())
 	extra_price = round(initial(extra_price) * SSeconomy.inflation_value())
 
@@ -378,6 +380,8 @@
 		R.age_restricted = initial(temp.age_restricted)
 		R.colorable = !!(initial(temp.greyscale_config) && initial(temp.greyscale_colors) && (initial(temp.flags_1) & IS_PLAYER_COLORABLE_1))
 		R.category = product_to_category[typepath]
+		if(access_needed)
+			R.access_requirement = access_needed
 		recordlist += R
 
 /obj/machinery/vending/proc/build_inventories(start_empty)
@@ -1130,7 +1134,7 @@
 
 	return data
 
-/obj/machinery/vending/proc/collect_records_for_static_data(list/records, list/categories, mob/user, premium)
+/obj/machinery/vending/proc/collect_records_for_static_data(list/records, list/categories, mob/living/user, premium)
 	var/static/list/default_category = list(
 		"name" = "Products",
 		"icon" = "cart-shopping",
@@ -1139,8 +1143,13 @@
 	var/list/out_records = list()
 
 	for (var/datum/data/vending_product/record as anything in records)
-		if(!issilicon(user) && !allow_purchase(user, record.product_path))
-			continue
+		if(record.access_requirement)
+			var/obj/item/card/id/user_id
+			if(!istype(user))
+				continue
+			user_id = user.get_idcard(TRUE)
+			if(!issilicon(user) && !(record.access_requirement in user_id?.access) && !(obj_flags & EMAGGED) && onstation)
+				continue
 		var/list/static_record = list(
 			path = replacetext(replacetext("[record.product_path]", "/obj/item/", ""), "/", "-"),
 			name = record.name,
