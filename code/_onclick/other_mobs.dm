@@ -33,6 +33,12 @@
 		to_chat(src, span_notice("You look at your arm and sigh."))
 		return
 
+	// Bandaid fix for chaplain code while attack chain refactor is being finished - NK
+	if(isliving(A))
+		var/sigreturn = SEND_SIGNAL(src, COMSIG_LIVING_EARLY_UNARMED_ATTACK, A, proximity_flag, params)
+		if(sigreturn & COMPONENT_CANCEL_ATTACK_CHAIN)
+			return TRUE
+
 	//This signal is needed to prevent gloves of the north star + hulk.
 	if(SEND_SIGNAL(src, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, A, proximity_flag) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return
