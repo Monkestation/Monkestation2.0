@@ -25,6 +25,7 @@
 	if(creator)
 		name = "inert servant golem shell"
 		prompt_name = "servant golem"
+		dont_be_a_shit = FALSE // if creator is antag, you are allowed to assist
 	if(species) //spawners list uses object name to register so this goes before ..()
 		name += " ([initial(species.prefix)])"
 		mob_species = species

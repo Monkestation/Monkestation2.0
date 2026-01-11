@@ -5,8 +5,8 @@
 	var/datum/action/cooldown/spell/pointed/glove_zap/zap = new
 
 /obj/item/clothing/gloves/color/yellow/power_gloves/Destroy()
-    QDEL_NULL(zap)
-    return ..()
+	QDEL_NULL(zap)
+	return ..()
 
 /datum/armor/power_gloves
 	acid = 50
@@ -66,11 +66,11 @@
 	var/obj/structure/cable/cable_target = owner_turf.get_cable_node() //Gets power from underfoot node
 	var/heavy_zap = 100 MW
 	if(!cable_target)
-		owner.balloon_alert(owner, "Stand on a cable!")
+		owner.balloon_alert(owner, "stand on a cable!")
 		return
 	var/surplus = cable_target.surplus()
 	if(surplus <= 1 KW)
-		owner.balloon_alert(owner, "Not enough power in the grid!")
+		owner.balloon_alert(owner, "not enough power in the grid!")
 		return
 	else
 		playsound(owner, 'monkestation/sound/weapons/powerglovestarget.ogg', 35, TRUE, -1)
@@ -78,7 +78,7 @@
 			for(var/obj/machinery/light/light in get_area(owner))
 				light.flicker(amount = rand(3, 6))
 			if(get_dist(owner, target) >= cast_range)
-				owner.balloon_alert(owner, "Target moved out of range!")
+				owner.balloon_alert(owner, "target moved out of range!")
 				return
 			else
 				var/calculated_power = surplus/20 //Calc_power, change division to balance

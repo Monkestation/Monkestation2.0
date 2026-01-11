@@ -21,7 +21,7 @@ export const SlimePenController = (_) => {
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item>
-            <Tabs style={{ 'border-radius': '5px' }}>
+            <Tabs style={{ borderRadius: '5px' }}>
               <Tabs.Tab
                 key={1}
                 selected={tabIndex === 1}
@@ -212,7 +212,7 @@ const StoreViewer = (_) => {
     <Table>
       <Collapsible title="Buyable Corral Upgrades">
         {buyable_upgrades.map((item) => (
-          <Section style={{ 'border-radius': '5px' }} mb="6px" key={item.name}>
+          <Section style={{ borderRadius: '5px' }} mb="6px" key={item.name}>
             <Stack fill>
               <Stack.Item>
                 <Box fontSize="16px">{item.name}</Box>
@@ -246,7 +246,7 @@ const StoreViewer = (_) => {
       </Section>
       <Collapsible title="Active Corral Upgrades">
         {corral_upgrades.map((item) => (
-          <Section style={{ 'border-radius': '5px' }} mb="6px" key={item.name}>
+          <Section style={{ borderRadius: '5px' }} mb="6px" key={item.name}>
             <Stack fill>
               <Stack.Item>
                 <Box fontSize="16px">{item.name}</Box>

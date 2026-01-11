@@ -161,7 +161,7 @@
 		if(!user.Adjacent(src))
 			return
 		durability--
-		user.apply_damage(4, STAMINA)
+		user.apply_damage(2, STAMINA)
 	if(durability <= 0)
 		convert_to_ore()
 		to_chat(user, span_notice("You finish working on \the [src], and it crumbles into ore."))

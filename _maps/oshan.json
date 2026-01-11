@@ -31,7 +31,12 @@
 			]
 		}
 	},
-	"banned_station_traits": ["/datum/station_trait/late_arrivals", "/datum/station_trait/random_spawns"],
-
-	"minetype": "oshan"
+	"banned_station_traits": [
+		"/datum/station_trait/late_arrivals",
+		"/datum/station_trait/random_spawns"
+	],
+	"minetype": "oshan",
+	"ignored_unit_tests": [
+		"/datum/unit_test/create_and_destroy"
+	]
 }

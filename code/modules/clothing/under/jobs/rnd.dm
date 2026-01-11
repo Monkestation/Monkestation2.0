@@ -1,7 +1,6 @@
 /obj/item/clothing/under/rank/rnd
 	icon = 'icons/obj/clothing/under/rnd.dmi'
 	worn_icon = 'icons/mob/clothing/under/rnd.dmi'
-	worn_icon_digitigrade = 'icons/mob/clothing/under/rnd_digi.dmi'
 
 /obj/item/clothing/under/rank/rnd/research_director
 	desc = "It's a suit worn by those with the know-how to achieve the position of \"Research Director\". Its fabric provides minor protection from biological contaminants."
@@ -131,7 +130,6 @@
 	name = "science utility uniform"
 	desc = "A utility uniform worn by NT-certified Science staff."
 	icon_state = "util_sci"
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 
 /obj/item/clothing/under/rank/rnd/scientist/utility/syndicate
 	desc = "A utility uniform worn by Science staff."

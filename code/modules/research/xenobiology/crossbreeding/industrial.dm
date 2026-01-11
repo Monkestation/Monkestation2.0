@@ -185,7 +185,7 @@ Industrial extracts:
 
 /obj/item/slimecross/industrial/black //What does this have to do with black slimes? No clue! Fun, though
 	colour = "black"
-	effect_desc = "Produces slime brand regenerative cigarettes."
+	effect_desc = "Produces a pack of slimey regenerative cigarettes."
 	plasmarequired = 6
 	itempath = /obj/item/storage/fancy/cigarettes/cigpack_xeno
 
