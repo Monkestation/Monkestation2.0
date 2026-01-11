@@ -22,11 +22,12 @@
 	inherent_traits = list(
 		TRAIT_MUTANT_COLORS,
 		TRAIT_EASYDISMEMBER,
-		TRAIT_NOFIRE,
 		TRAIT_SPLEENLESS_METABOLISM,
 		TRAIT_FOOD_ABSORPTION,
 	)
 
+	inherent_respiration_type = RESPIRATION_N2
+	breathid = "n2"
 	meat = /obj/item/food/meat/slab/human/mutant/slime
 	exotic_bloodtype = /datum/blood_type/slime
 	inert_mutation = /datum/mutation/acid_touch
@@ -48,7 +49,6 @@
 	/// Typepaths of the default oozeling actions to give.
 	var/static/list/default_actions = list(
 		/datum/action/cooldown/slime_washing,
-		/datum/action/cooldown/slime_hydrophobia,
 		/datum/action/innate/core_signal,
 	)
 	/// Typepaths of extra actions to give to all oozelings.
@@ -109,20 +109,40 @@
 		return
 	if(!HAS_TRAIT(slime, TRAIT_NOHUNGER) && slime.nutrition <= NUTRITION_LEVEL_HUNGRY && !IS_BLOODSUCKER(slime)) // bloodsuckers have snowflake nutrition handling
 		spec_slime_hunger(slime, seconds_per_tick)
-	if(!HAS_TRAIT(slime, TRAIT_SLIME_HYDROPHOBIA))
-		spec_slime_wetness(slime, seconds_per_tick)
+	spec_slime_wetness(slime, seconds_per_tick)
+
+/// Checks if the oozeling is hydrophobic due to having 10 oozeling wet stacks.
+/datum/species/oozeling/proc/is_slime_hydrophobic(mob/living/carbon/human/slime)
+	if(!slime)
+		return FALSE
+
+	var/datum/status_effect/fire_handler/wet_stacks/oozeling/slime_wetness = slime.has_status_effect(/datum/status_effect/fire_handler/wet_stacks/oozeling)
+
+	if(!slime_wetness)
+		return FALSE
+
+	if(slime_wetness.stacks >= 10)
+		slime.adjust_wet_stacks(-6, /datum/status_effect/fire_handler/wet_stacks/oozeling)
+		return TRUE
+
+	return FALSE
 
 /// Handles slimes losing blood from having wet stacks.
 /datum/species/oozeling/proc/spec_slime_wetness(mob/living/carbon/human/slime, seconds_per_tick)
-	var/datum/status_effect/fire_handler/wet_stacks/wetness = locate() in slime.status_effects // locate should be slightly faster in theory, as this has no subtypes hopefully, so we don't need to check ids
+	var/datum/status_effect/fire_handler/wet_stacks/wetness = slime.has_status_effect(/datum/status_effect/fire_handler/wet_stacks)
+
 	if(!wetness)
 		return
 
-	if(wetness.stacks > DAMAGE_WATER_STACKS)
-		remove_blood_volume(slime, 2 * seconds_per_tick)
+	if(water_damage_multiplier(slime) <= 0)
+		return
+
+	if(wetness.stacks >= DAMAGE_WATER_STACKS)
+		remove_blood_volume(slime, 5 * seconds_per_tick)
 		slime.balloon_alert(slime, "too wet, dry off!")
 		if(SPT_PROB(25, seconds_per_tick))
 			slime.visible_message(span_danger("[slime]'s form begins to lose cohesion, seemingly diluting with the water!"), span_warning("The water starts to dilute your body, dry it off!"))
+
 	else if(wetness.stacks > REGEN_WATER_STACKS && SPT_PROB(25, seconds_per_tick)) //Used for old healing system. Maybe use later? For now increase loss for being soaked.
 		to_chat(slime, span_warning("You can't pull your body together, it is dripping wet!"))
 		remove_blood_volume(slime, seconds_per_tick)
@@ -234,7 +254,7 @@
 	)
 	if(chem.type == /datum/reagent/toxin/plasma || chem.type == /datum/reagent/toxin/hot_ice)
 		if(slime.getBruteLoss() || slime.getFireLoss())
-			if(!HAS_TRAIT(slime, TRAIT_SLIME_HYDROPHOBIA) && slime.get_skin_temperature() > slime.bodytemp_cold_damage_limit)
+			if(slime.get_skin_temperature() > slime.bodytemp_cold_damage_limit)
 				slime.heal_ordered_damage(HEALTH_HEALED * REM * seconds_per_tick, list(BRUTE, BURN))
 				slime.reagents.remove_reagent(chem.type, min(chem.volume * 0.22, 10))
 			else
@@ -248,19 +268,22 @@
 			to_chat(slime, span_purple("Your body's thirst for plasma is quenched, your inner and outer membrane using it to regenerate."))
 
 	else if(chem.type == /datum/reagent/water)
-		if(HAS_TRAIT(slime, TRAIT_SLIME_HYDROPHOBIA) || HAS_TRAIT(slime, TRAIT_GODMODE) || slime.blood_volume <= 0)
+		if(HAS_TRAIT(slime, TRAIT_GODMODE) || slime.blood_volume <= 0)
 			return ..()
 
-		remove_blood_volume(slime, 3 * seconds_per_tick)
+		remove_blood_volume(slime, 5 * seconds_per_tick)
 		chem.holder?.remove_reagent(chem.type, min(chem.volume * 0.22, 10))
 		if(SPT_PROB(25, seconds_per_tick))
 			to_chat(slime, span_warning("The water starts to weaken and adulterate your insides!"))
-
 		return TRUE
 
 	return ..()
 
 /datum/species/oozeling/proc/water_exposure(mob/living/carbon/human/slime, check_clothes = TRUE, quiet_if_protected = FALSE)
+	if(HAS_TRAIT(slime, TRAIT_WAS_SPRAYED))
+		return
+	ADD_TRAIT(slime, TRAIT_WAS_SPRAYED, TRAIT_GENERIC)
+	addtimer(TRAIT_CALLBACK_REMOVE(slime, TRAIT_WAS_SPRAYED, TRAIT_GENERIC), 0.5 SECOND)
 	var/water_multiplier = 1
 	// thick clothing won't protect you if you just drink or inject tho
 	if(check_clothes)
@@ -270,11 +293,11 @@
 			if(!quiet_if_protected)
 				to_chat(slime, span_warning("The water fails to penetrate your thick clothing!"))
 			return FALSE
-	if(HAS_TRAIT(slime, TRAIT_SLIME_HYDROPHOBIA))
+	if(is_slime_hydrophobic(slime)) //oozeling wetness cancels out normal wetness so we just check if they are hydrophobic here
 		if(!quiet_if_protected)
 			to_chat(slime, span_warning("Water splashes against your oily membrane and rolls right off your body!"))
 		return FALSE
-	remove_blood_volume(slime, 30 * water_multiplier)
+	remove_blood_volume(slime, 50 * water_multiplier)
 	if(COOLDOWN_FINISHED(src, water_alert_cooldown))
 		slime.visible_message(
 			span_warning("[slime]'s form melts away from the water!"),
@@ -296,15 +319,15 @@
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
-			SPECIES_PERK_ICON = "burn",
-			SPECIES_PERK_NAME = "Incombustible",
-			SPECIES_PERK_DESC = "[plural_form] cannot be set aflame.",
+			SPECIES_PERK_ICON = "wind",
+			SPECIES_PERK_NAME = "Nitrogen Breathing",
+			SPECIES_PERK_DESC = "[plural_form] must breathe nitrogen to survive. You receive a tank when you arrive.",
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "shield-alt",
 			SPECIES_PERK_NAME = "Fire Resilience",
-			SPECIES_PERK_DESC = "[plural_form] are resilient to flames, and burn damage.",
+			SPECIES_PERK_DESC = "[plural_form] have an outer membrane that is semi-resistant to flames, and burn damage. Water and prolonged flame exposure will errode this membrane.",
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
@@ -317,12 +340,6 @@
 			SPECIES_PERK_ICON = "hand",
 			SPECIES_PERK_NAME = "Limb Manipulation",
 			SPECIES_PERK_DESC = "[plural_form] are able to consume and regrow their limbs at will, if they have enough blood to do so.",
-		),
-		list(
-			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
-			SPECIES_PERK_ICON = "wind",
-			SPECIES_PERK_NAME = "Anaerobic Lineage",
-			SPECIES_PERK_DESC = "[plural_form] don't require much oxygen to live."
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,

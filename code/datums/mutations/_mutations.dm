@@ -22,6 +22,8 @@
 	var/layer_used = MUTATIONS_LAYER
 	/// To restrict mutation to only certain species
 	var/list/species_allowed
+	/// To blacklist a species from a certain species
+	var/list/species_blacklist
 	/// Minimum health required to acquire the mutation
 	var/health_req
 	/// Required limbs to acquire this mutation
@@ -99,12 +101,12 @@
 /datum/mutation/proc/on_acquiring(mob/living/carbon/human/acquirer)
 	if(!acquirer || !istype(acquirer) || acquirer.stat == DEAD || (src in acquirer.dna.mutations))
 		return FALSE
-	// MONKESTATION ADDITION START -- CORTICAL_BORERS
 	if(acquirer.has_borer())
 		to_chat(acquirer, span_warning("Something inside holds dearly to your humanity!"))
 		return FALSE
-	// MONKESTATION ADDITION END
 	if(species_allowed && !species_allowed.Find(acquirer.dna.species.id))
+		return FALSE
+	if(species_blacklist && species_blacklist.Find(acquirer.dna.species.id))
 		return FALSE
 	if(health_req && acquirer.health < health_req)
 		return FALSE

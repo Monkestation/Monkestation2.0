@@ -1079,7 +1079,7 @@
 /area/shuttle/escape/brig)
 "RV" = (
 /obj/structure/rack,
-/obj/item/tank/internals/oxygen/red,
+/obj/item/tank/internals/oxygen/yellow,
 /obj/item/clothing/suit/utility/fire/firefighter,
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/head/utility/hardhat/red,

@@ -5,11 +5,6 @@
 	icon_state = "lungs-clock"
 	organ_flags = ORGAN_ROBOTIC
 
-/obj/item/organ/internal/lungs/slime
-	zone = BODY_ZONE_CHEST
-	organ_flags = ORGAN_UNREMOVABLE
-	safe_oxygen_min = 4 //We don't need much oxygen to subsist.
-
 /obj/item/organ/internal/lungs/slime/on_life(seconds_per_tick, times_fired)
 	. = ..()
 	operated = FALSE
