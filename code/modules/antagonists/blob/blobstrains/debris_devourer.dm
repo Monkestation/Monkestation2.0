@@ -42,7 +42,7 @@
 
 /datum/blobstrain/debris_devourer/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag, coefficient = 1) //when the blob takes damage, do this
 	var/obj/structure/blob/special/core/core = overmind.blob_core
-	return round(max((coefficient*damage)-min(coefficient*DEBRIS_DENSITY, 10), 0)) // reduce damage taken by items per blob, up to 10
+	return round(max((coefficient*damage)-min(coefficient*DEBRIS_DENSITY, 13), 0)) // reduce damage taken by items per blob, up to 10
 
 /datum/blobstrain/debris_devourer/examine(mob/user)
 	. = ..()
@@ -59,5 +59,6 @@
 				. += span_notice("Absorbed debris is currently reducing incoming damage by a low amount.")
 			if (8 to 10)
 				. += span_notice("Absorbed debris is currently reducing incoming damage by a medium amount.")
-
+			if (11 to 13)
+				. += span_notice("Absorbed debris is currently reducing incoming damage by a large amount.")
 #undef DEBRIS_DENSITY
