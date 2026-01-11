@@ -346,6 +346,10 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	ignore += typesof(/turf/open/floor/plating/ocean)
 	ignore += typesof(/turf/open/openspace/ocean)
 
+	// By definition needs to be created with its parent graph passed in
+	// It's fine to do this we'll get coverage from said parent graphs anyhow
+	ignore += typesof(/atom/movable/screen/graph_part)
+
 	return ignore
 
 /proc/RunUnitTests()
