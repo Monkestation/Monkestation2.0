@@ -7,7 +7,7 @@
 	antag_hud_name = "wishgranter"
 	suicide_cry = "HAHAHAHAHA!!"
 	antag_moodlet = /datum/mood_event/wishgranter
-	antag_count_points = 4 //hyjacker
+	antag_count_points = 15 // very loud hijacker
 	/// List of traits given to the avatar's body.
 	var/static/list/given_traits = list(
 		TRAIT_FEARLESS,
