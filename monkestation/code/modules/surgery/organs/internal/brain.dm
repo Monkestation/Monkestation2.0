@@ -140,6 +140,18 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 			. += span_hypnophrase("Something looks wrong with this core, you don't think plasma will fix this one, maybe there's another way?")
 		else
 			. += span_hypnophrase("You remember that <i>slowly</i> pouring a big beaker of ground plasma on it by hand, if it's non-embodied, would make it regrow one.")
+	. += span_notice("<i>You can take a closer look to see what may be inside...</i>")
+
+/obj/item/organ/internal/brain/slime/examine_more()
+	. = ..()
+	. += span_notice("You look closer through the core's hazy interior and see...")
+
+	if(length(stored_items))
+		for(var/atom/movable/item as anything in stored_items)
+			. += span_alert("[item.name]")
+		. += span_notice("floating inside.")
+	else
+		. += span_notice("...nothing of interest.")
 
 /obj/item/organ/internal/brain/slime/attack_self(mob/living/user) // Allows a player (presumably an antag) to deactivate the GPS signal on a slime core
 	if(DOING_INTERACTION_WITH_TARGET(user, src))

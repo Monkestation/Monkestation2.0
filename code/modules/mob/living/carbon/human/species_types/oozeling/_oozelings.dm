@@ -61,7 +61,8 @@
 	COOLDOWN_DECLARE(starvation_alert_cooldown)
 	/// Cooldown for balloon alerts when being melted from being dripping wet.
 	COOLDOWN_DECLARE(wet_alert_cooldown)
-
+	/// Water exposure cool down. Hopefully makes extinguiser exposure more consistent.
+	COOLDOWN_DECLARE(water_exposure_cooldown)
 
 /datum/species/oozeling/Destroy(force)
 	QDEL_LIST(actions_given)
@@ -274,6 +275,9 @@
 		if(!quiet_if_protected)
 			to_chat(slime, span_warning("Water splashes against your oily membrane and rolls right off your body!"))
 		return FALSE
+	if(!COOLDOWN_FINISHED(src, water_exposure_cooldown))
+		return FALSE
+	COOLDOWN_START(src, water_exposure_cooldown, 0.1 SECONDS)
 	remove_blood_volume(slime, 30 * water_multiplier)
 	if(COOLDOWN_FINISHED(src, water_alert_cooldown))
 		slime.visible_message(
