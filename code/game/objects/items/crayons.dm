@@ -916,7 +916,7 @@
 	//	balloon_alert(user, "[target.p_theyre()] already that color!")
 	//	return FALSE TODO: Port atom color
 
-//var/saturation_mode = SATURATION_MULTIPLY
+//	var/saturation_mode = SATURATION_MULTIPLY
 //	if (LAZYACCESS(modifiers, RIGHT_CLICK)) //we need https://github.com/tgstation/tgstation/pull/88201 for this
 //		saturation_mode = SATURATION_OVERRIDE
 
