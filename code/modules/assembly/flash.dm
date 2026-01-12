@@ -308,12 +308,50 @@
 
 /obj/item/assembly/flash/memorizer
 	name = "memorizer"
-	desc = "If you see this, you're not likely to remember it any time soon."
+	desc = "If you see this, you're not likely to remember it any time soon. Works through typical Nanotrasen-branded flash-protection."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "memorizer"
 	inhand_icon_state = "nullrod"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
+
+	///The message that will be left on the player after being memorized.
+	var/implant_message = "You don't remember anything from the last 5 minutes."
+
+/obj/item/assembly/flash/memorizer/interact_with_atom(mob/living/victim, mob/user)
+	if(issilicon(victim) || HAS_TRAIT(victim, TRAIT_MEMORIZER_PROTECTED))
+		//act as a normal flash
+		return ..()
+	victim.apply_status_effect(/datum/status_effect/trance, 10 SECONDS, TRUE)
+	victim.mind.wipe_memories_except_keys() // I was gonna...
+	to_chat(victim, span_hypnophrase(implant_message))
+	user.log_message("has memorized [victim] with [implant_message].", LOG_ATTACK)
+	victim.log_message("has been memorized with '[implant_message]' by [key_name(user)].", LOG_VICTIM, log_globally=FALSE)
+	user.log_message("memorized [key_name(victim)] with '[implant_message]'.", LOG_GAME)
+	return ..()
+
+#define FIVE_MINUTES "5 Minutes"
+#define TWENTY_MINUTES "20 Minutes"
+#define SINCE_ROUNDSTART "All Shift"
+
+/obj/item/assembly/flash/memorizer/blueshield
+	implant_message = "You don't remember anything between the start of the shift and now."
+
+/obj/item/assembly/flash/memorizer/blueshield/attack_self(mob/living/carbon/user, flag = 0, emp = 0)
+	if(holder)
+		return FALSE
+	var/memorize_time = tgui_input_list(user, "How much time should the memorizer erase from their memories?", "Memorizer", list(FIVE_MINUTES, TWENTY_MINUTES, SINCE_ROUNDSTART))
+	switch(memorize_time)
+		if(FIVE_MINUTES)
+			implant_message = "You don't remember anything from the last 5 minutes."
+		if(TWENTY_MINUTES)
+			implant_message = "You don't remember anything from the last 20 minutes."
+		if(SINCE_ROUNDSTART)
+			implant_message = "You don't remember anything between the start of the shift and now."
+
+#undef FIVE_MINUTES
+#undef TWENTY_MINUTES
+#undef SINCE_ROUNDSTART
 
 /obj/item/assembly/flash/handheld //this is now the regular pocket flashes
 

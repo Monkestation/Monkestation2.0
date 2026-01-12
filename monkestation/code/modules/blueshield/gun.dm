@@ -12,6 +12,7 @@
 		"Bogseo Submachinegun Gunset" = /obj/item/storage/toolbox/guncase/skyrat/xhihao_large_case/bogseo,
 		"Tech-9" = /obj/item/storage/toolbox/guncase/skyrat/pistol/tech_9,
 		"S.A.Y.A. Arm Defense System Cyberset" = /obj/item/storage/box/shield_blades,
+		"Memorizer Kit" = /obj/item/storage/box/memorizer_kit,
 	)
 
 	return selectable_gun_types
@@ -61,3 +62,11 @@
 /obj/item/storage/box/shield_blades/PopulateContents()
 	new /obj/item/autosurgeon/organ/shield_blade(src)
 	new /obj/item/autosurgeon/organ/shield_blade/l(src)
+
+/obj/item/storage/box/memorizer_kit
+	name = "Memorizer kit"
+	desc = "A box with... what was I reading again?"
+
+/obj/item/storage/box/memorizer_kit/PopulateContents()
+	new /obj/item/clothing/glasses/sunglasses/memorizer(src)
+	new /obj/item/assembly/flash/memorizer/blueshield(src)
