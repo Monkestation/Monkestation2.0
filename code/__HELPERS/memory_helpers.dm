@@ -120,7 +120,7 @@
 
 /// Helder to wipe the passed memory type ONLY from our list of memories
 /datum/mind/proc/wipe_memories_except_keys()
-	for(var/memmory as anything in memories)
+	for(var/memmory in memories)
 		var/datum/memory/prime_memory = memories[memmory]
 		if(prime_memory.story_value == STORY_VALUE_KEY)
 			continue
