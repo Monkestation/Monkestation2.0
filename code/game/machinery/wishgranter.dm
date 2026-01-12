@@ -41,7 +41,7 @@
 
 		to_chat(user, span_warning("You have a very bad feeling about this."))
 		for(var/mob/player as anything in GLOB.player_list - user)
-			if(QDELETED(player) || isnewplayer(player))
+			if(QDELETED(player) || isnewplayer(player) || issilicon(player))
 				continue
 			to_chat(player, span_danger("An ominous wave of pressure fills the air around you, as if a chaotic malignant blaze had ignited elsewhere."))
 			player.playsound_local(player, 'sound/ambience/antag/wishgranter_awaken.ogg', vol = 75, vary = FALSE, pressure_affected = FALSE)
