@@ -60,10 +60,10 @@
 		while(another_brother > 0) //Adds 1 brother to the team (from anyone would could roll BB), with a 10% chance for another if we add one. keep rolling until it fails
 			another_brother = 0
 			var/mob/target_player = astype(pick_n_take(target_candidates))
-			if(target_player.mind = starting_brother) // If we are trying to add the starting player in this loop. THEY ARE ADDED LATER BECAUSE MAYBE THERES NO OTHER BROTHERS
-				break
 			if(isnull(target_player)) //Skips adding brothers if we cant find someone that hasnt been picked already (will likely make a team with the other brothers, or give you heretic)
 				message_admins("tried to add an player to a bb team")
+				break
+			if(target_player.mind = starting_brother) // If we are trying to add the starting player in this loop. THEY ARE ADDED LATER BECAUSE MAYBE THERES NO OTHER BROTHERS
 				break
 			new_team.add_member(target_player.mind)
 			var/and_another = prob(90)
@@ -73,16 +73,25 @@
 		message_admins("Done adding brothers, now to check if we actually got any on our team")
 		//next line is for the rare case where everyone has BB off but the 1-3 people who origionally rolled BB. or if they are all taken (like the 1/1000000000000000000 chance for a team of 20))
 		if(new_team.members.len == 0) //If a BB team is only 1 person long, we just add all the brothers without a team onto this one
-			for(var/datum/mind/unteamed_brother in setup_minds)
+			message_admins("AAA")
+			for(var/datum/mind/unteamed_brother in setup_minds) //TODO, FIX THIS
+				message_admins("BBB")
 				if(unteamed_brother)
+					message_admins("CCC")
 					new_team.add_member(pop(setup_minds))
 			message_admins("Trying to adding all unteamed brothers to a team")
 		if(new_team.members.len == 0) //If no one is on their team still, they get heretic because all their possible brothers betrayed them. they also get their brothers as additional sac targets
 			var/datum/antagonist/heretic/heretic_datum
+			message_admins("1")
 			for(var/mob/player in GLOB.alive_player_list)
+				message_admins("2")
 				if(player.mind.has_antag_datum(/datum/antagonist/brother))
+					message_admins("3")
 					heretic_datum.add_sacrifice_target(player)
+					message_admins("4")
+				else(starting_brother.add_antag_datum(/datum/antagonist/traitor)) // Give them traitor if theres no brothers
 			starting_brother.add_antag_datum(heretic_datum)
+			message_admins("5")
 			new_team.Destroy()
 			message_admins("no brothers, heretic time")
 			return
