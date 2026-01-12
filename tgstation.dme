@@ -5992,6 +5992,7 @@
 #include "code\modules\spells\spell_types\teleport\teleport.dm"
 #include "code\modules\spells\spell_types\toggle\_toggle.dm"
 #include "code\modules\spells\spell_types\touch\_touch.dm"
+#include "code\modules\spells\spell_types\touch\cluwne_hand.dm"
 #include "code\modules\spells\spell_types\touch\duffelbag_curse.dm"
 #include "code\modules\spells\spell_types\touch\flesh_to_stone.dm"
 #include "code\modules\spells\spell_types\touch\scream_for_me.dm"

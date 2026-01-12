@@ -8,6 +8,7 @@
 	lefthand_file = 'icons/mob/inhands/clothing/hats_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing/hats_righthand.dmi'
 	flags_cover = MASKCOVERSEYES
+	item_flags = DROPDEL
 	appearance_flags = KEEP_TOGETHER
 	resistance_flags = ACID_PROOF | FIRE_PROOF | INDESTRUCTIBLE | LAVA_PROOF | UNACIDABLE
 	species_exception = list(/datum/species/golem/bananium)
@@ -51,7 +52,7 @@
 /obj/item/clothing/mask/gas/cluwne/proc/handle_speech(datum/source, list/speech_args)
 	SIGNAL_HANDLER
 
-	if(prob(75)) //spared
+	if(prob(10)) //spared
 		return
 	var/original_message = replacetext(speech_args[SPEECH_MESSAGE], regex(@"(\s+)", "g"), " ")
 	var/list/old_words = splittext(original_message, " ")
@@ -76,6 +77,7 @@
 	desc = "<i>'HENK!'</i>"
 	icon_state = "cluwne"
 	inhand_icon_state = "greenclown"
+	item_flags = DROPDEL
 	squeak_sounds = list('sound/items/bikehorn.ogg'= 4, 'sound/misc/scary_horn.ogg' = 1)
 
 /obj/item/clothing/under/rank/civilian/clown/cluwne/Initialize(mapload)
@@ -94,6 +96,7 @@
 	desc = "The insides seem awfully wet with grease and smells of something foul. Which maniac would wear this?!"
 	name = "cluwne shoes"
 	icon_state = "cluwne"
+	item_flags = DROPDEL
 	slowdown = SHOES_SLOWDOWN+1
 	has_storage = FALSE
 	sound_dampener = FALSE
