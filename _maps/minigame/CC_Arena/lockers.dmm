@@ -54,10 +54,8 @@
 /turf/open/floor/iron/freezer,
 /area/centcom/tdome/arena/actual)
 "t" = (
-/obj/structure/sign/poster/official/no_erp{
-	pixel_x = -32
-	},
 /obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/structure/sign/poster/official/no_erp/directional/west,
 /turf/open/floor/plastic,
 /area/centcom/tdome/arena/actual)
 "x" = (
@@ -90,10 +88,8 @@
 /turf/open/floor/plastic,
 /area/centcom/tdome/arena/actual)
 "H" = (
-/obj/structure/sign/poster/official/no_erp{
-	pixel_x = 32
-	},
 /obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/structure/sign/poster/official/no_erp/directional/east,
 /turf/open/floor/plastic,
 /area/centcom/tdome/arena/actual)
 "I" = (
