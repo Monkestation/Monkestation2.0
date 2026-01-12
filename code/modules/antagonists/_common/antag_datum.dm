@@ -285,7 +285,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 		antag_hud.apply_to_new_mob(owner.current)
 
 	if(remove_from_manifest)
-		owner.remove_from_manifest()
+		owner.remove_from_manifest(TRUE, TRUE)
 		ADD_TRAIT(owner, TRAIT_REMOVED_FROM_MANIFEST, REF(src))
 
 	SEND_SIGNAL(owner, COMSIG_ANTAGONIST_GAINED, src)

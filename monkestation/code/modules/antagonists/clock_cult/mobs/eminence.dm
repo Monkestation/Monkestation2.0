@@ -128,7 +128,7 @@ GLOBAL_DATUM(current_eminence, /mob/living/eminence) //set to the current eminen
 
 /mob/living/eminence_act(mob/living/eminence/user)
 	. = ..()
-	if(IS_CLOCK(src))
+	if(user != src && IS_CLOCK(src))
 		user.marked_servant = WEAKREF(src)
 		to_chat(user, "You mark [src].")
 
