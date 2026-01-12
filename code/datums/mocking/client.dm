@@ -34,6 +34,7 @@
 
 	/// client prefs
 	var/fps
+	var/tick_lag
 	var/hotkeys
 	var/tgui_say
 	var/typing_indicators
