@@ -136,6 +136,8 @@
 	UnregisterSignal(our_cluwne, COMSIG_ATOM_ATTACKBY)
 
 	if(remove_curse)
+		var/datum/action/cooldown/spell/touch/cluwne/cluwne_curse = locate(/datum/action/cooldown/spell/touch/cluwne) in our_human.actions
+		cluwne_curse.Remove(our_human)
 		qdel(src)
 
 /datum/component/cluwne/process(seconds_per_tick)
