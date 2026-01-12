@@ -34,6 +34,7 @@ export enum KEY {
   Home = 'Home',
   Insert = 'Insert',
   Left = 'Left',
+  Minus = '-',
   PageDown = 'PageDown',
   PageUp = 'PageUp',
   Right = 'Right',

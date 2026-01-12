@@ -46,8 +46,29 @@
 	else if(!isturf(loc) || QDELING(loc) || !splatter_type_floor)
 		qdel(src)
 		return
+
+	// xenoblood splatter check
+	// note: xenomorphs don't have actual DNA datums, but get_blood_dna_list() still returns list("UNKNOWN DNA" = blood.type)
+	// so yeah, blood_dna will be populated for xenomorphs
+	var/list/blood_dna = GET_ATOM_BLOOD_DNA(src)
+	var/is_xenoblood = FALSE
+	if(blood_dna)
+		for(var/dna_sample in blood_dna)
+			var/blood_type_value = blood_dna[dna_sample]
+			if(blood_type_value == "X*")
+				is_xenoblood = TRUE
+				break
+			var/datum/blood_type/blood = GLOB.blood_types[blood_type_value]
+			if(istype(blood, /datum/blood_type/xenomorph))
+				is_xenoblood = TRUE
+				break
+
 	var/obj/effect/decal/cleanable/splatter
-	if(!ispath(splatter_type_floor, /obj/effect/decal/cleanable/blood/splatter/stacking))
+	if(is_xenoblood)
+		splatter = new /obj/effect/decal/cleanable/xenoblood(loc)
+		if(blood_dna)
+			splatter.add_blood_DNA(blood_dna)
+	else if(!ispath(splatter_type_floor, /obj/effect/decal/cleanable/blood/splatter/stacking))
 		splatter = new splatter_type_floor(loc)
 		splatter.color = color
 		if(messy_splatter)
@@ -75,8 +96,7 @@
 			other_splatter.handle_merge_decal(stacker)
 			qdel(other_splatter)
 		splatter = stacker
-	var/list/blood_dna = GET_ATOM_BLOOD_DNA(src)
-	if(blood_dna)
+	if(blood_dna && !is_xenoblood)
 		splatter.add_blood_DNA(blood_dna)
 	qdel(src)
 

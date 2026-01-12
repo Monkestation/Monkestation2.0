@@ -123,14 +123,10 @@ const NtosLifelineContent = () => {
             <Input
               placeholder="Search for name..."
               style={{ flex: 1 }}
-              onInput={(e: { target: HTMLTextAreaElement }) =>
-                setSearchQuery((e.target as HTMLTextAreaElement).value)
-              }
+              onChange={(value) => setSearchQuery(value)}
             />
-            <Button selected="True" onClick={cycleSortBy}>
-              {SORT_NAMES[sortBy]}
-            </Button>
-            <Button selected="True" onClick={() => setSortAsc(!sortAsc)}>
+            <Button onClick={cycleSortBy}>{SORT_NAMES[sortBy]}</Button>
+            <Button onClick={() => setSortAsc(!sortAsc)}>
               <Icon
                 style={{ marginLeft: '2px' }}
                 name={sortAsc ? 'chevron-up' : 'chevron-down'}
@@ -162,7 +158,6 @@ const CrewTab = (props: { sensor: CrewSensor }) => {
   return (
     <Tabs.Tab
       className="candystripe"
-      label="name"
       selected={selected}
       onClick={() => {
         act('select', {
@@ -188,7 +183,7 @@ const CrewTab = (props: { sensor: CrewSensor }) => {
           <span
             style={{
               color: jobToColor(sensor.ijob),
-              ...(jobIsHead(sensor.ijob) && { 'font-weight': 'bold' }),
+              ...(jobIsHead(sensor.ijob) && { fontWeight: 'bold' }),
             }}
           >
             {sensor.name} ({sensor.assignment})

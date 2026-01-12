@@ -11,7 +11,7 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 	GLOB.disease_hivemind_users |= mob
 	RegisterSignal(mob, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 
-/datum/symptom/telepathic/deactivate(mob/living/carbon/mob)
+/datum/symptom/telepathic/deactivate(mob/living/carbon/mob, datum/disease/acute/disease, safe = FALSE)
 	GLOB.disease_hivemind_users -= mob
 	UnregisterSignal(mob, COMSIG_MOB_SAY)
 

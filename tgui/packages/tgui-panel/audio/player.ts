@@ -44,6 +44,10 @@ export class AudioPlayer {
     audio.volume = this.volume;
     audio.playbackRate = this.options.pitch || 1;
 
+    if (this.options.start) {
+      audio.currentTime = this.options.start;
+    }
+
     logger.log('playing', url, options);
 
     audio.addEventListener('ended', () => {
@@ -67,11 +71,7 @@ export class AudioPlayer {
       });
     }
 
-    if (!Byond.TRIDENT) {
-      audio.play()?.catch((error) => logger.log('playback error', error));
-    } else {
-      audio.play();
-    }
+    audio.play()?.catch((error) => logger.log('playback error', error));
 
     this.onPlaySubscribers.forEach((subscriber) => subscriber());
   }

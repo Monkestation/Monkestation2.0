@@ -566,7 +566,7 @@
 /obj/item/organ/internal/cyberimp/chest/dualwield/proc/unregister()
 	UnregisterSignal(owner, COMSIG_MOB_ITEM_ATTACK)
 
-/obj/item/organ/internal/cyberimp/chest/dualwield/proc/on_item_attack(datum/source, mob/target, mob/user, params, obj/item/weapon)
+/obj/item/organ/internal/cyberimp/chest/dualwield/proc/on_item_attack(datum/source, mob/target, mob/user, list/modifiers, list/attack_modifiers, obj/item/weapon)
 	SIGNAL_HANDLER
 
 	if(!(owner.istate & ISTATE_HARM)) // No dual wielding outside of combat mode.

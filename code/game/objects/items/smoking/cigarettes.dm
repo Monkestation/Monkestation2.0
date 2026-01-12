@@ -26,7 +26,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	light_color = LIGHT_COLOR_FIRE
 	light_system = OVERLAY_LIGHT
 	light_on = FALSE
-	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
 	throw_verb = "flick"
 	/// Whether this cigarette has been lit.
 	VAR_FINAL/lit = FALSE
@@ -224,7 +223,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		qdel(src)
 		return
 
-	if(reagents?.has_reagent(/datum/reagent/flash_powder) >= 1)
+	if(reagents?.has_reagent(/datum/reagent/flash_powder))
 		if(!isliving(loc))
 			loc.visible_message(span_hear("\The [src] burns up!"))
 			qdel(src)
@@ -243,6 +242,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		e.start(src)
 		qdel(src)
 		return
+
 
 	// Setting the puffed pollutant to cannabis if we're smoking the space drugs reagent(obtained from cannabis)
 	if(reagents.has_reagent(/datum/reagent/drug/space_drugs))
@@ -519,7 +519,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	chem_volume = 50
 	list_reagents = null
 	choke_time_max = 40 SECONDS
-	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
 
 /obj/item/clothing/mask/cigarette/rollie/Initialize(mapload)
 	name = pick(list(
@@ -671,7 +670,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	smoketime = 20 MINUTES
 	chem_volume = 60
 	list_reagents = list(/datum/reagent/drug/nicotine = 30)
-	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
 
 /obj/item/clothing/mask/cigarette/cigar/havana
 	name = "premium Havanian cigar"
@@ -682,7 +680,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	smoketime = 30 MINUTES
 	chem_volume = 75
 	list_reagents = list(/datum/reagent/drug/nicotine = 45)
-	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
 
 /obj/item/cigbutt
 	name = "cigarette butt"
@@ -715,7 +712,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	list_reagents = null
 	w_class = WEIGHT_CLASS_SMALL
 	choke_forever = TRUE
-	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
 	///name of the stuff packed inside this pipe
 	var/packeditem
 

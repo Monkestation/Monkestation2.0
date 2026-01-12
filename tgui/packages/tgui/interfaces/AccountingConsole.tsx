@@ -1,4 +1,5 @@
 import {
+  Blink,
   BlockQuote,
   Collapsible,
   LabeledList,
@@ -79,7 +80,7 @@ const UsersScreen = (props) => {
   return (
     <Section fill scrollable title="Crew Account Summary">
       {PlayerAccounts.map((account) => (
-        <Collapsible fill key={account.index} title={account.name}>
+        <Collapsible key={account.index} title={account.name}>
           <LabeledList>
             <LabeledList.Item label="Occupation">
               {account.job}
@@ -123,7 +124,9 @@ const MarketCrashing = (props) => {
   }
   return (
     <Modal textAlign="center" mr={1.5}>
-      <blink>OH GOD THE ECONOMY IS RUINED.</blink>
+      <Blink time={500} interval={500}>
+        OH GOD THE ECONOMY IS RUINED.
+      </Blink>
     </Modal>
   );
 };

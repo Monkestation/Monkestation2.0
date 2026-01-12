@@ -250,5 +250,6 @@
 		"synth_stomach",
 		"synth_ears",
 		"synth_heart",
-		"cybernetic_spleen"
+		"cybernetic_spleen",
+		"vitals_monitor",
 	)

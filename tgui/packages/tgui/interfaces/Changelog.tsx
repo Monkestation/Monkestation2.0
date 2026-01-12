@@ -1,6 +1,6 @@
 import { classes } from 'common/react';
 import { useBackend } from '../backend';
-import { Component, Fragment } from 'inferno';
+import { Component, Fragment } from 'react';
 import {
   Box,
   Button,
@@ -15,6 +15,7 @@ import { Window } from '../layouts';
 import { resolveAsset } from '../assets';
 import dateformat from 'dateformat';
 import yaml from 'js-yaml';
+import { LobbyNoticesType } from './common/LobbyNotices';
 
 const icons = {
   bugfix: { icon: 'bug', color: 'green' },
@@ -57,6 +58,7 @@ type ChangelogData = {
   discord_url?: string;
   dates: string[];
   testmerges?: Testmerge[];
+  notices: LobbyNoticesType;
 };
 
 const ChangeRow = (props: { kind: string; content: string }) => {
@@ -259,8 +261,8 @@ export class Changelog extends Component {
   };
   dateChoices: string[];
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       data: 'Loading changelog data...',
       selectedDate: '',
@@ -348,7 +350,7 @@ export class Changelog extends Component {
               window.scrollTo(
                 0,
                 document.body.scrollHeight ||
-                document.documentElement.scrollHeight,
+                  document.documentElement.scrollHeight,
               );
               return this.getData(dates[index]);
             }}
@@ -367,7 +369,7 @@ export class Changelog extends Component {
               window.scrollTo(
                 0,
                 document.body.scrollHeight ||
-                document.documentElement.scrollHeight,
+                  document.documentElement.scrollHeight,
               );
               return this.getData(dates[index]);
             }}
@@ -389,7 +391,7 @@ export class Changelog extends Component {
               window.scrollTo(
                 0,
                 document.body.scrollHeight ||
-                document.documentElement.scrollHeight,
+                  document.documentElement.scrollHeight,
               );
               return this.getData(dates[index]);
             }}

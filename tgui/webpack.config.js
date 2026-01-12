@@ -7,7 +7,6 @@
 const webpack = require('webpack');
 const path = require('path');
 const ExtractCssPlugin = require('mini-css-extract-plugin');
-const { createBabelConfig } = require('./babel.config.js');
 
 const createStats = (verbose) => ({
   assets: verbose,
@@ -25,16 +24,18 @@ const createStats = (verbose) => ({
 });
 
 module.exports = (env = {}, argv) => {
-  const mode = argv.mode || 'production';
-  const bench = env.TGUI_BENCH;
+  // const mode = argv.mode || 'production';
+  // Temporary
+  const mode = "development";
+  env.NODE_ENV = "development";
   const config = {
     mode: mode === 'production' ? 'production' : 'development',
     context: path.resolve(__dirname),
-    target: ['web', 'es5', 'browserslist:ie 11'],
+    target: ['web', 'browserslist:edge>=123'],
     entry: {
-      tgui: ['./packages/tgui-polyfill', './packages/tgui'],
-      'tgui-panel': ['./packages/tgui-polyfill', './packages/tgui-panel'],
-      'tgui-say': ['./packages/tgui-polyfill', './packages/tgui-say'],
+      tgui: ['./packages/tgui'],
+      'tgui-panel': ['./packages/tgui-panel'],
+      'tgui-say': ['./packages/tgui-say'],
     },
     output: {
       path: argv.useTmpFolder
@@ -53,12 +54,10 @@ module.exports = (env = {}, argv) => {
       rules: [
         {
           test: /\.(js|jsx|cjs|ts|tsx)$/,
+          exclude: /node_modules[\\/]core-js/,
           use: [
             {
-              loader: require.resolve('babel-loader'),
-              options: createBabelConfig({
-                removeConsole: !bench,
-              }),
+              loader: require.resolve('swc-loader'),
             },
           ],
         },
@@ -123,22 +122,13 @@ module.exports = (env = {}, argv) => {
     ],
   };
 
-  if (bench) {
-    config.entry = {
-      'tgui-bench': [
-        './packages/tgui-polyfill',
-        './packages/tgui-bench/entrypoint',
-      ],
-    };
-  }
-
   // Production build specific options
   if (mode === 'production') {
     const { EsbuildPlugin } = require('esbuild-loader');
     config.optimization.minimizer = [
       new EsbuildPlugin({
-        target: 'ie11',
         css: true,
+        legalComments: 'none',
       }),
     ];
   }

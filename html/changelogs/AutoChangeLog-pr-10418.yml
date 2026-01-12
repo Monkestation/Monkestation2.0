@@ -1,0 +1,5 @@
+author: "Tractor-Maam"
+delete-after: True
+changes:
+  - bugfix: "integrated circuit MOD action components now have icons again."
+  - bugfix: "changed the icon name of the nanite/bci/mod action icon \"five\" to actually be five, instead of fiv."

@@ -11,7 +11,7 @@ const CorticalBorer: Antagonist = {
     to make sure your species survives and thrives.
     `,
   ],
-  category: Category.Midround,
+  category: Category.Ghost,
 };
 
 export default CorticalBorer;
