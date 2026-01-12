@@ -128,6 +128,11 @@
 		return FALSE
 	return ..()
 
+/obj/machinery/computer/camera_advanced/darkspawn/can_use(mob/user)
+	if(!IS_DARKSPAWN(user))
+		return FALSE
+	return ..()
+
 /obj/machinery/computer/camera_advanced/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)

@@ -11,7 +11,6 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR|HIDEFACE|HIDESNOUT
 	resistance_flags = ACID_PROOF
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
-	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
 
 // MONKESTATION REMOVAL
 //obj/item/clothing/head/bio_hood/Initialize(mapload)

@@ -15281,7 +15281,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 6
 	},
-/obj/machinery/vending/wardrobe/cargo_wardrobe,
+/obj/machinery/vending/access/wardrobe_cargo,
 /turf/open/floor/iron/dark/textured,
 /area/station/cargo/storage)
 "eSX" = (

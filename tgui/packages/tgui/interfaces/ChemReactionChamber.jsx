@@ -51,7 +51,7 @@ export const ChemReactionChamber = (props) => {
                       value={round(targetTemp, 0.1)}
                       minValue={0}
                       maxValue={1000}
-                      onDrag={(e, value) =>
+                      onChange={(value) =>
                         act('temperature', {
                           target: value,
                         })
@@ -156,7 +156,8 @@ export const ChemReactionChamber = (props) => {
                         step={1}
                         stepPixelSize={3}
                         width="39px"
-                        onDrag={(e, value) =>
+                        tickWhileDragging
+                        onChange={(value) =>
                           act('acidic', {
                             target: value,
                           })
@@ -171,7 +172,8 @@ export const ChemReactionChamber = (props) => {
                         step={1}
                         stepPixelSize={3}
                         width="39px"
-                        onDrag={(e, value) =>
+                        tickWhileDragging
+                        onChange={(value) =>
                           act('alkaline', {
                             target: value,
                           })
@@ -203,7 +205,8 @@ export const ChemReactionChamber = (props) => {
                         step={1}
                         stepPixelSize={3}
                         width="39px"
-                        onDrag={(e, value) => setReagentQuantity(value)}
+                        tickWhileDragging
+                        onChange={(value) => setReagentQuantity(value)}
                       />
                       <Box inline mr={1} />
                     </Stack.Item>

@@ -138,7 +138,7 @@ export const BountyBoardContent = (props) => {
                 width="200px"
                 backgroundColor="black"
                 textColor="white"
-                onChange={(e, value) =>
+                onChange={(value) =>
                   act('bountyText', {
                     bountytext: value,
                   })
@@ -152,7 +152,7 @@ export const BountyBoardContent = (props) => {
                   maxValue={1000}
                   value={bountyValue}
                   width="80px"
-                  onChange={(e, value) =>
+                  onChange={(value) =>
                     act('bountyVal', {
                       bountyval: value,
                     })

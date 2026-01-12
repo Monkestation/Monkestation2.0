@@ -22,7 +22,7 @@ export const SentienceFunBalloon = (props) => {
                 <Input
                   fluid
                   value={group_name}
-                  onChange={(e, value) =>
+                  onChange={(value) =>
                     act('group_name', {
                       updated_name: value,
                     })
@@ -36,7 +36,8 @@ export const SentienceFunBalloon = (props) => {
                   minValue={1}
                   maxValue={100}
                   stepPixelSize={15}
-                  onDrag={(e, value) =>
+                  tickWhileDragging
+                  onChange={(value) =>
                     act('effect_range', {
                       updated_range: value,
                     })

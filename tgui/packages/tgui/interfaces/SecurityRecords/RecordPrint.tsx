@@ -121,7 +121,7 @@ export const RecordPrint = (props) => {
         <Stack.Item>
           <Box>Enter a Header:</Box>
           <Input
-            onChange={(event, value) => setHeader(value)}
+            onChange={(value) => setHeader(value)}
             maxLength={7}
             value={header}
           />
@@ -134,7 +134,7 @@ export const RecordPrint = (props) => {
         <Stack.Item>
           <Box>Enter an Alias:</Box>
           <Input
-            onChange={(event, value) => setAlias(value)}
+            onChange={(value) => setAlias(value)}
             maxLength={42}
             value={alias}
             width="55%"
@@ -152,7 +152,7 @@ export const RecordPrint = (props) => {
               <Input
                 fluid
                 maxLength={150}
-                onChange={(event, value) => setDescription(value)}
+                onChange={(value) => setDescription(value)}
                 value={description}
               />
             </Stack.Item>
