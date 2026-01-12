@@ -1,0 +1,4 @@
+author: "JupiterJaeden"
+delete-after: True
+changes:
+  - qol: "All of security (except the brig doc) now starts with security pens in their PDAs roundstart, which can be used to prompt a surrender from someone by clicking on them at range. They are also printable at the security lathe."

@@ -6662,6 +6662,7 @@
 	dir = 8
 	},
 /obj/item/radio/intercom/directional/west,
+/obj/effect/landmark/start/explorer,
 /turf/open/floor/iron/dark/side{
 	dir = 8
 	},
@@ -9418,7 +9419,7 @@
 	name = "Cargo Bay Requests Console"
 	},
 /obj/effect/mapping_helpers/requests_console/supplies,
-/obj/machinery/vending/wardrobe/cargo_wardrobe,
+/obj/machinery/vending/access/wardrobe_cargo,
 /turf/open/floor/iron/dark/side{
 	dir = 1
 	},
@@ -15557,6 +15558,7 @@
 	dir = 8
 	},
 /obj/machinery/duct,
+/obj/effect/landmark/start/barber,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
 "faC" = (
@@ -32742,6 +32744,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 8
 	},
+/obj/effect/landmark/start/explorer,
 /turf/open/floor/iron/dark/side{
 	dir = 8
 	},
@@ -55433,6 +55436,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/warning{
 	dir = 9
 	},
+/obj/effect/landmark/start/explorer,
 /turf/open/floor/iron/dark/side{
 	dir = 9
 	},
@@ -55755,7 +55759,7 @@
 /area/station/security/office)
 "rWp" = (
 /obj/structure/chair,
-/obj/effect/landmark/start/shaft_miner,
+/obj/effect/landmark/start/explorer,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "rWt" = (
@@ -59868,6 +59872,10 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central)
+"tpJ" = (
+/obj/effect/landmark/start/shaft_miner,
+/turf/open/floor/iron,
+/area/station/cargo/miningoffice)
 "tpO" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -75240,6 +75248,7 @@
 	},
 /obj/machinery/light/directional/west,
 /obj/structure/extinguisher_cabinet/directional/west,
+/obj/effect/landmark/start/explorer,
 /turf/open/floor/iron/dark/side{
 	dir = 8
 	},
@@ -92927,7 +92936,7 @@ bnl
 jcU
 jmy
 bZF
-jmy
+tpJ
 bqN
 rCj
 ksa

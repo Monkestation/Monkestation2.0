@@ -13,7 +13,7 @@ import { PreferencesMenuData } from './PreferencesMenu/data';
 import { Window } from '../layouts';
 import { classes } from 'common/react';
 
-export const StoreManager = (props) => {
+export const StoreManager = () => {
   const { act, data } = useBackend<PreferencesMenuData>();
   const { loadout_tabs, total_coins, owned_items } = data;
 
@@ -37,9 +37,11 @@ export const StoreManager = (props) => {
               buttons={
                 <Button
                   icon="fa-solid fa-coins"
-                  content={total_coins}
                   tooltip="This is your total Monkecoin amount."
-                />
+                  tooltipPosition="top"
+                >
+                  {total_coins}
+                </Button>
               }
             >
               <Tabs>
@@ -105,9 +107,10 @@ export const StoreManager = (props) => {
                         <Button
                           fluid
                           backgroundColor="transparent"
-                          content={item.name}
                           tooltip={item.desc}
-                        />
+                        >
+                          {item.name}
+                        </Button>
                       </Table.Cell>
                       <Table.Cell style={{ textAlign: 'right' }}>
                         <Box
@@ -119,9 +122,10 @@ export const StoreManager = (props) => {
                           <Button
                             icon="fa-solid fa-coins"
                             backgroundColor="transparent"
-                            content={item.cost}
                             tooltip="This is the cost of the item."
-                          />
+                          >
+                            {item.cost}
+                          </Button>
                         </Box>
                       </Table.Cell>
                       <Table.Cell style={{ textAlign: 'right' }}>
@@ -132,11 +136,6 @@ export const StoreManager = (props) => {
                           }}
                         >
                           <Button.Confirm
-                            content={
-                              owned_items.includes(item.path)
-                                ? 'Owned'
-                                : 'Purchase'
-                            }
                             disabled={
                               owned_items.includes(item.path) ||
                               total_coins < item.cost
@@ -146,7 +145,11 @@ export const StoreManager = (props) => {
                                 path: item.path,
                               })
                             }
-                          />
+                          >
+                            {owned_items.includes(item.path)
+                              ? 'Owned'
+                              : 'Purchase'}
+                          </Button.Confirm>
                         </Box>
                       </Table.Cell>
                     </Table.Row>

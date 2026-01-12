@@ -2639,6 +2639,10 @@
 "aAZ" = (
 /turf/open/floor/plating,
 /area/station/security/prison/upper)
+"aBc" = (
+/obj/effect/landmark/start/explorer,
+/turf/open/floor/iron,
+/area/station/cargo/sorting)
 "aBf" = (
 /turf/open/floor/plating,
 /area/station/engineering/atmos/test_chambers)
@@ -7968,6 +7972,7 @@
 "bBn" = (
 /obj/machinery/holopad,
 /obj/effect/turf_decal/box,
+/obj/effect/landmark/start/explorer,
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "bBo" = (
@@ -23366,6 +23371,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/siding/wood,
+/obj/effect/landmark/start/barber,
 /turf/open/floor/iron/white,
 /area/station/service/barber)
 "eya" = (
@@ -30195,7 +30201,7 @@
 /turf/open/floor/iron/white/telecomms,
 /area/station/tcommsat/server)
 "fOp" = (
-/obj/machinery/vending/wardrobe/cargo_wardrobe,
+/obj/machinery/vending/access/wardrobe_cargo,
 /obj/effect/turf_decal/bot,
 /obj/machinery/digital_clock/directional/north,
 /turf/open/floor/iron/dark,
@@ -54379,6 +54385,7 @@
 /turf/open/floor/iron/kitchen,
 /area/station/service/kitchen/diner)
 "kvS" = (
+/obj/effect/landmark/start/barber,
 /turf/open/floor/wood/tile,
 /area/station/service/barber)
 "kvW" = (
@@ -89010,6 +89017,7 @@
 /obj/structure/chair/comfy/black{
 	dir = 4
 	},
+/obj/effect/landmark/start/barber,
 /turf/open/floor/iron/dark,
 /area/station/service/barber)
 "rjs" = (
@@ -113853,6 +113861,7 @@
 /area/station/science/ordnance)
 "vSn" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/landmark/start/explorer,
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "vSt" = (
@@ -123248,6 +123257,12 @@
 	dir = 4
 	},
 /area/station/hallway/primary/port)
+"xHJ" = (
+/obj/effect/landmark/start/explorer,
+/turf/open/floor/iron/smooth_edge{
+	dir = 1
+	},
+/area/station/cargo/miningdock)
 "xHN" = (
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/machinery/computer/order_console/mining,
@@ -164331,7 +164346,7 @@ dlo
 xsq
 vSn
 bBn
-wLn
+aBc
 pYc
 byx
 czQ
@@ -166908,7 +166923,7 @@ wwD
 fkA
 asX
 ilS
-sdF
+xHJ
 mgL
 gXZ
 auv
@@ -167165,7 +167180,7 @@ fVT
 oTl
 uSr
 kGC
-sdF
+xHJ
 mgL
 ktY
 ktY

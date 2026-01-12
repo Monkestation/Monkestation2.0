@@ -8569,6 +8569,11 @@
 /obj/machinery/power/apc/auto_name/directional/south,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/maintenance/solars/starboard/aft)
+"cGK" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/start/explorer,
+/turf/open/floor/iron,
+/area/station/cargo/miningoffice)
 "cGP" = (
 /turf/closed/wall/r_wall,
 /area/station/service/chapel/monastery)
@@ -14638,6 +14643,7 @@
 	dir = 1
 	},
 /obj/structure/closet/emcloset/wall/directional/west,
+/obj/effect/landmark/start/explorer,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "eFR" = (
@@ -44570,7 +44576,7 @@
 "nRI" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted,
-/obj/machinery/vending/wardrobe/cargo_wardrobe,
+/obj/machinery/vending/access/wardrobe_cargo,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
 /area/station/cargo/storage)
@@ -59395,6 +59401,10 @@
 /obj/effect/turf_decal/tile/red/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/station/security/warden)
+"sDP" = (
+/obj/effect/landmark/start/explorer,
+/turf/open/floor/iron,
+/area/station/cargo/miningoffice)
 "sDQ" = (
 /obj/structure/curtain,
 /obj/structure/cable,
@@ -62256,6 +62266,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
+"tyK" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/start/explorer,
+/turf/open/floor/iron,
+/area/station/cargo/storage)
 "tzg" = (
 /obj/machinery/door/poddoor/shutters{
 	dir = 4;
@@ -62628,6 +62643,7 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/brown/half/contrasted,
 /obj/effect/turf_decal/tile/yellow,
+/obj/effect/landmark/start/explorer,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "tGg" = (
@@ -67888,6 +67904,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
+/obj/effect/landmark/start/explorer,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "vpi" = (
@@ -117933,7 +117950,7 @@ fkP
 mVG
 lKq
 pGm
-mYW
+tyK
 lJD
 hhu
 aZg
@@ -119731,8 +119748,8 @@ oLH
 kxT
 rZV
 tME
-chT
-rcp
+sDP
+cGK
 mDP
 tVt
 qAR

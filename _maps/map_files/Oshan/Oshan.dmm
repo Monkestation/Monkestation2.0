@@ -3613,6 +3613,7 @@
 /turf/open/floor/iron/dark/small,
 /area/station/maintenance/disposal/incinerator)
 "bjy" = (
+/obj/effect/landmark/start/barber,
 /turf/open/floor/iron/checker,
 /area/station/service/barber)
 "bjM" = (
@@ -8626,7 +8627,6 @@
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engineering Lobby"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /obj/effect/turf_decal/trimline/yellow/filled/warning{
 	dir = 8
 	},
@@ -8640,6 +8640,8 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "engie"
 	},
+/obj/effect/mapping_helpers/airlock/access/any/engineering/construction,
+/obj/effect/mapping_helpers/airlock/access/any/engineering/general,
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/lobby)
 "cQP" = (
@@ -15280,7 +15282,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 6
 	},
-/obj/machinery/vending/wardrobe/cargo_wardrobe,
+/obj/machinery/vending/access/wardrobe_cargo,
 /turf/open/floor/iron/dark/textured,
 /area/station/cargo/storage)
 "eSX" = (
@@ -48079,7 +48081,6 @@
 	dir = 4;
 	invisibility = 101
 	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /obj/effect/turf_decal/trimline/yellow/filled/warning{
 	dir = 8
 	},
@@ -48097,6 +48098,8 @@
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engineering Lobby"
 	},
+/obj/effect/mapping_helpers/airlock/access/any/engineering/construction,
+/obj/effect/mapping_helpers/airlock/access/any/engineering/general,
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/lobby)
 "poN" = (
@@ -52392,6 +52395,7 @@
 /obj/structure/chair/office{
 	dir = 4
 	},
+/obj/effect/landmark/start/barber,
 /turf/open/floor/iron/checker,
 /area/station/service/barber)
 "qHW" = (
