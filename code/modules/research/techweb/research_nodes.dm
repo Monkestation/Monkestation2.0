@@ -103,7 +103,7 @@
 	description = "Bluespace technology using stable and balanced procedures. Required by galactic convention for public use."
 	prereq_ids = list("base")
 	design_ids = list(
-		"spaceship_navigation_beacon",
+		"gigabeacon",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
