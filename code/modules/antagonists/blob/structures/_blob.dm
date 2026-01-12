@@ -301,6 +301,9 @@
 	return
 
 /obj/structure/blob/proc/attempt_removal(mob/eye/blob/overmind)
+	if(QDELETED(src))
+		return FALSE
+
 	if(point_return && overmind)
 		overmind.add_points(point_return)
 		to_chat(overmind, span_notice("Gained [point_return] resources from removing \the [src]."))
