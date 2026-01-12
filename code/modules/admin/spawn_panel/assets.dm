@@ -4,7 +4,7 @@
 /datum/asset/json/spawnpanel/generate()
 	var/list/data = list()
 
-	var/static/list/mapping_objects = typecacheof(list(
+	var/list/mapping_objects = typecacheof(list(
 		/obj/effect/mapping_helpers,
 		/obj/effect/landmark,
 		/obj/effect/spawner,
