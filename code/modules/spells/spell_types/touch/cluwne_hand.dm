@@ -6,7 +6,7 @@
 	button_icon_state = "cluwne"
 	sound = 'sound/misc/scary_horn.ogg'
 
-	school = SCHOOL_EVOCATION
+	spell_requirements = NONE
 	cooldown_time = 30 SECONDS
 
 	invocation = "HONK!"
