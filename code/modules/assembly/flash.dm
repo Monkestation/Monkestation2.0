@@ -334,16 +334,13 @@
 #define TWENTY_MINUTES "20 Minutes"
 #define SINCE_ROUNDSTART "All Shift"
 
-/obj/item/assembly/flash/memorizer/blueshield
-	implant_message = "You don't remember anything between the start of the shift and now."
-
 /obj/item/assembly/flash/memorizer/blueshield/attack_self(mob/living/carbon/user, flag = 0, emp = 0)
 	if(holder)
 		return FALSE
 	var/memorize_time = tgui_input_list(user, "How much time should the memorizer erase from their memories?", "Memorizer", list(FIVE_MINUTES, TWENTY_MINUTES, SINCE_ROUNDSTART))
 	switch(memorize_time)
 		if(FIVE_MINUTES)
-			implant_message = "You don't remember anything from the last 5 minutes."
+			implant_message = initial(implant_message)
 		if(TWENTY_MINUTES)
 			implant_message = "You don't remember anything from the last 20 minutes."
 		if(SINCE_ROUNDSTART)
