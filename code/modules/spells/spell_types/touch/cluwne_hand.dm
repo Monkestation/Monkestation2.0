@@ -7,7 +7,7 @@
 	sound = 'sound/misc/scary_horn.ogg'
 
 	spell_requirements = NONE
-	cooldown_time = 30 SECONDS
+	cooldown_time = 60 SECONDS
 
 	invocation = "HONK!"
 
