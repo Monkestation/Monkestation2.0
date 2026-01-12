@@ -7,7 +7,7 @@
 	sound = 'sound/misc/scary_horn.ogg'
 
 	school = SCHOOL_EVOCATION
-	cooldown_time = 10 SECONDS
+	cooldown_time = 30 SECONDS
 
 	invocation = "HONK!"
 
