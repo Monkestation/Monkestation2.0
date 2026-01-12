@@ -102,10 +102,11 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 		return
 	//if you're cargo, and not a boss, you're part of the Union.
 	if((person.mind?.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_CARGO) && !(person.mind?.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND))
-		GLOB.cargo_union_employees += list(list(
-			CARGO_UNION_LEADER = !!(person.mind?.assigned_role.title == JOB_QUARTERMASTER),
-			CARGO_UNION_NAME = person.real_name,
-		))
+		GLOB.cargo_union.add_member(
+			member_name = person.real_name,
+			union_leader = !!(person.mind?.assigned_role.title == JOB_QUARTERMASTER),
+			bank_account_details = SSeconomy.bank_accounts_by_id["[person.account_id]"],
+		)
 
 	var/assignment = person.mind.assigned_role.title
 	var/mutable_appearance/character_appearance = new(person.appearance)

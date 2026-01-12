@@ -273,6 +273,9 @@
 /obj/item/bounty_cube/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NO_BARCODES, INNATE_TRAIT) // Don't allow anyone to override our pricetag component with a barcode
+	if(GLOB.cargo_union.demand_is_implemented(/datum/union_demand/better_bounties))
+		holder_cut += 0.2
+
 	radio = new(src)
 	radio.keyslot = new radio_key
 	radio.set_listening(FALSE)
@@ -328,7 +331,7 @@
 		COOLDOWN_START(src, next_nag_time, nag_cooldown)
 
 /obj/item/bounty_cube/proc/set_up(datum/bounty/my_bounty, obj/item/card/id/holder_id)
-	bounty_value = round(my_bounty.reward)
+	bounty_value = round(my_bounty.reward) * SSeconomy.bounty_modifier
 	bounty_name = my_bounty.name
 	bounty_holder = holder_id.registered_name
 	bounty_holder_job = holder_id.assignment
@@ -336,6 +339,9 @@
 	name = "\improper [bounty_value] cr [name]"
 	desc += " The sales tag indicates it was <i>[bounty_holder] ([bounty_holder_job])</i>'s reward for completing the <i>[bounty_name]</i> bounty."
 	AddComponent(/datum/component/pricetag, holder_id.registered_account, holder_cut, FALSE)
+	var/datum/bank_account/command_budget = SSeconomy.get_dep_account(ACCOUNT_CMD)
+	if(GLOB.cargo_union.demand_is_implemented(/datum/union_demand/better_bounties) && command_budget)
+		AddComponent(/datum/component/pricetag, command_budget, -(holder_cut / 2), FALSE)
 	AddComponent(/datum/component/gps, "[src]")
 	START_PROCESSING(SSobj, src)
 	COOLDOWN_START(src, next_nag_time, nag_cooldown)

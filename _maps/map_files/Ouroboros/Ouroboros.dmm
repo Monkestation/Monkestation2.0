@@ -15798,7 +15798,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/machinery/computer/accounting{
+/obj/machinery/computer/accounting/hop{
 	dir = 8
 	},
 /obj/effect/turf_decal/box,
@@ -32576,6 +32576,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
+/obj/effect/landmark/cargo_mail_machine,
 /turf/open/floor/iron/dark,
 /area/station/cargo/storage)
 "jER" = (

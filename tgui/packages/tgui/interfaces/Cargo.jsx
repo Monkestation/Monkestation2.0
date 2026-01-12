@@ -32,7 +32,12 @@ export const Cargo = (props) => {
 export const CargoContent = (props) => {
   const { act, data } = useBackend();
   const [tab, setTab] = useSharedState('tab', 'catalog');
-  const { cart = [], requests = [], requestonly } = data;
+  const {
+    company_imports_available,
+    cart = [],
+    requests = [],
+    requestonly,
+  } = data;
   const cart_length = cart.reduce((total, entry) => total + entry.amount, 0);
   return (
     <Box>
@@ -54,13 +59,15 @@ export const CargoContent = (props) => {
           >
             Requests ({requests.length})
           </Tabs.Tab>
-          <Tabs.Tab
-            icon="clipboard-list"
-            selected={tab === 'company_import_window'}
-            onClick={() => act('company_import_window')}
-          >
-            Company Imports
-          </Tabs.Tab>
+          {!!company_imports_available && (
+            <Tabs.Tab
+              icon="clipboard-list"
+              selected={tab === 'company_import_window'}
+              onClick={() => act('company_import_window')}
+            >
+              Company Imports
+            </Tabs.Tab>
+          )}
           {!requestonly && (
             <>
               <Tabs.Tab
@@ -343,6 +350,7 @@ const CargoRequests = (props) => {
               <Table.Cell width="25%">
                 <i>{request.reason}</i>
               </Table.Cell>
+              <Table.Cell collapsing>{request.account}</Table.Cell>
               <Table.Cell collapsing textAlign="right">
                 {formatMoney(request.cost)} cr
               </Table.Cell>

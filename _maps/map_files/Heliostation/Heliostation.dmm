@@ -30536,13 +30536,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/airlock/access/all/supply/qm,
-/obj/machinery/door/airlock/command/glass{
-	name = "Quartermaster's Office"
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/machinery/door/airlock/mining/glass{
+	name = "Quartermaster's Office"
+	},
 /turf/open/floor/wood,
 /area/station/cargo/quartermaster)
 "eEo" = (
@@ -31581,7 +31581,22 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/machinery/photocopier,
+/obj/structure/table,
+/obj/item/folder/yellow{
+	pixel_x = 5
+	},
+/obj/item/folder/yellow{
+	pixel_x = 6;
+	pixel_y = 4
+	},
+/obj/item/paper_bin{
+	pixel_x = -4;
+	pixel_y = 8
+	},
+/obj/item/pen/red{
+	pixel_x = -4;
+	pixel_y = 8
+	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "eZe" = (
@@ -37576,6 +37591,7 @@
 	network = list("ss13","cargo")
 	},
 /obj/effect/turf_decal/delivery,
+/obj/effect/landmark/cargo_mail_machine,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "hsP" = (
@@ -40669,7 +40685,7 @@
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/ai_monitored/command/storage/eva)
 "iyY" = (
-/obj/machinery/computer/accounting{
+/obj/machinery/computer/accounting/hop{
 	dir = 1
 	},
 /obj/machinery/requests_console/directional/south{
@@ -54642,10 +54658,10 @@
 "nKE" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/mapping_helpers/mail_sorting/supply/cargo_bay,
 /obj/structure/disposalpipe/sorting/mail{
 	dir = 2
 	},
+/obj/effect/mapping_helpers/mail_sorting/supply/cargo_bay,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "nKG" = (
@@ -60942,22 +60958,6 @@
 /turf/open/floor/carpet/red,
 /area/station/command/heads_quarters/hop)
 "qef" = (
-/obj/structure/table,
-/obj/item/folder/yellow{
-	pixel_x = 5
-	},
-/obj/item/folder/yellow{
-	pixel_x = 6;
-	pixel_y = 4
-	},
-/obj/item/paper_bin{
-	pixel_x = -4;
-	pixel_y = 8
-	},
-/obj/item/pen/red{
-	pixel_x = -4;
-	pixel_y = 8
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -60965,6 +60965,10 @@
 /obj/machinery/camera/directional/west{
 	c_tag = "Cargo - Cargo Bay S";
 	network = list("ss13","cargo")
+	},
+/obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk{
+	dir = 4
 	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
@@ -61358,13 +61362,10 @@
 /turf/open/floor/plating,
 /area/station/maintenance/aft/lesser)
 "qod" = (
-/obj/machinery/disposal/bin,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/structure/disposalpipe/trunk{
-	dir = 4
-	},
+/obj/machinery/union_stand,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "qoe" = (
@@ -64035,6 +64036,7 @@
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line,
+/obj/machinery/photocopier,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "rlM" = (
@@ -119104,8 +119106,8 @@ nKC
 wON
 qzE
 qzE
-qzE
 nKE
+qzE
 lnF
 oos
 kGU

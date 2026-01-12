@@ -734,4 +734,17 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 
 /obj/effect/landmark/navigate_destination/virology
 	location = "Virology"
+
+/obj/effect/landmark/cargo_mail_machine
+	name = "cargo mail machine spawner"
+	icon = /obj/machinery/mail_collector::icon
+	icon_state = /obj/machinery/mail_collector::icon_state
+
+/obj/effect/landmark/cargo_mail_machine/Initialize(mapload)
+	. = ..()
+	GLOB.cargo_mail_machine_spawns += src
+
+/obj/effect/landmark/cargo_mail_machine/Destroy()
+	GLOB.cargo_mail_machine_spawns -= src
+	return ..()
 //End of monke edit

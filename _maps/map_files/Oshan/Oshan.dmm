@@ -13747,7 +13747,7 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/security/brig)
 "euG" = (
-/obj/machinery/computer/accounting{
+/obj/machinery/computer/accounting/hop{
 	dir = 8
 	},
 /obj/item/radio/intercom/directional/north,
@@ -69011,6 +69011,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/landmark/cargo_mail_machine,
 /turf/open/floor/iron/dark/textured,
 /area/station/cargo/storage)
 "vWI" = (

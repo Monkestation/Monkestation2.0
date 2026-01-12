@@ -108,7 +108,7 @@
 		balloon_alert_to_viewers("accepted")
 		START_PROCESSING(SSmachines, src)
 		return TRUE
-	if(istype(attacking_item, /obj/item/card/id) && holds_mining_points)
+	if(istype(attacking_item, /obj/item/card/id) && holds_mining_points && GLOB.cargo_union.demand_is_implemented(/datum/union_demand/boulder_payouts))
 		if(points_held <= 0)
 			balloon_alert_to_viewers("no points to claim!")
 			if(!COOLDOWN_FINISHED(src, sound_cooldown))
@@ -199,7 +199,7 @@
 
 /obj/machinery/bouldertech/examine(mob/user)
 	. = ..()
-	if(holds_mining_points)
+	if(holds_mining_points && GLOB.cargo_union.demand_is_implemented(/datum/union_demand/boulder_payouts))
 		. += span_notice("The machine reads that it has [span_bold("[points_held] mining points")] stored. Swipe an ID to claim them.")
 	if(dir)
 		. += span_notice("The machine export vent is facing <b>[dir2text(dir)]</b>")

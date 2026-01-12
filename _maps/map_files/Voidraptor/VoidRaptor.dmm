@@ -5299,6 +5299,7 @@
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment,
+/obj/effect/landmark/cargo_mail_machine,
 /turf/open/floor/iron/textured,
 /area/station/cargo/storage)
 "bAc" = (
@@ -59832,7 +59833,7 @@
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/maintenance/department/crew_quarters/bar)
 "qFR" = (
-/obj/machinery/computer/accounting{
+/obj/machinery/computer/accounting/hop{
 	dir = 4
 	},
 /obj/effect/turf_decal/siding/wood{

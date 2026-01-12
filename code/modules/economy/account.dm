@@ -11,8 +11,8 @@
 	var/bitrunning_points = 0
 	///Debt. If higher than 0, A portion of the credits is earned (or the whole debt, whichever is lower) will go toward paying it off.
 	var/account_debt = 0
-	///If there are things effecting how much income a player will get, it's reflected here 1 is standard for humans.
-	var/payday_modifier
+	///If there are things effecting how much income a player will get on a particular budget, it's reflected here 1 is standard for humans & unions.
+	var/payday_modifier = list(ACCOUNT_CAR = 1)
 	///The job datum of the account owner.
 	var/datum/job/account_job
 	///List of the physical ID card objects that are associated with this bank_account
@@ -35,11 +35,14 @@
 	var/pay_token
 	///List with a transaction history for NT pay app
 	var/list/transaction_history = list()
+	/// Assoc list of how many paychecks to skip when payday is called. paydays_to_skip[DEP_ACCOUNT] = paydays skipped
+	var/paydays_to_skip = list()
 
 /datum/bank_account/New(newname, job, modifier = 1, player_account = TRUE)
 	account_holder = newname
 	account_job = job
-	payday_modifier = modifier
+	if(account_job)
+		payday_modifier[account_job.paycheck_department] = modifier
 	add_to_accounts = player_account
 	setup_unique_account_id()
 	pay_token = uppertext("[copytext(newname, 1, 2)][copytext(newname, -1)]-[random_capital_letter()]-[rand(1111,9999)]")
@@ -144,7 +147,10 @@
 		var/reason_to = "Transfer: From [from.account_holder]"
 		var/reason_from = "Transfer: To [account_holder]"
 
-		if(IS_DEPARTMENTAL_ACCOUNT(from))
+		if(from.account_holder == ACCOUNT_CAR_NAME)
+			reason_to = "Union: Membership Fee Rebate"
+			reason_from = ""
+		else if(IS_DEPARTMENTAL_ACCOUNT(from))
 			reason_to = "Nanotrasen: Salary"
 			reason_from = ""
 
@@ -165,11 +171,24 @@
  * Arguments:
  * * amount_of_paychecks - literally the number of salaries, 1 for issuing one salary, 5 for issuing five salaries.
  * * free - issuance of free funds, if TRUE then takes funds from the void, if FALSE (default) tries to send from the department's account.
+ * * skippable - if TRUE, this proc may pay out nothing if the account has paydays_to_skip
+ * * event - the name of the event that is being processed, used for bank card messages.
  */
-/datum/bank_account/proc/payday(amount_of_paychecks, free = FALSE)
+/datum/bank_account/proc/payday(amount_of_paychecks, free = FALSE, skippable = FALSE, event = "Payday", budget_used)
 	if(!account_job)
-		return
-	var/money_to_transfer = round(account_job.paycheck * payday_modifier * amount_of_paychecks)
+		return FALSE
+	if(!budget_used)
+		budget_used = account_job.paycheck_department
+
+	if(skippable && !free)
+		while(paydays_to_skip[budget_used] > 0 && amount_of_paychecks > 0)
+			amount_of_paychecks -= 1
+			paydays_to_skip[budget_used] -= 1
+
+	if(amount_of_paychecks <= 0)
+		return FALSE
+
+	var/money_to_transfer = round(account_job.paycheck * payday_modifier[budget_used] * amount_of_paychecks)
 	if(amount_of_paychecks == 1)
 		money_to_transfer = clamp(money_to_transfer, 0, PAYCHECK_CREW) //We want to limit single, passive paychecks to regular crew income.
 	if(free)
@@ -178,17 +197,15 @@
 		SSeconomy.station_target += money_to_transfer
 		log_econ("[money_to_transfer] credits were given to [src.account_holder]'s account from income.")
 		return TRUE
-	else
-		var/datum/bank_account/department_account = SSeconomy.get_dep_account(account_job.paycheck_department)
-		if(department_account)
-			if(!transfer_money(department_account, money_to_transfer))
-				bank_card_talk("ERROR: Payday aborted, departmental funds insufficient.")
-				return FALSE
-			else
-				bank_card_talk("Payday processed, account now holds [account_balance] cr.")
-				return TRUE
-	bank_card_talk("ERROR: Payday aborted, unable to contact departmental account.")
-	return FALSE
+	var/datum/bank_account/department_account = SSeconomy.get_dep_account(budget_used)
+	if(isnull(department_account))
+		bank_card_talk("ERROR: [event] aborted, unable to contact departmental account.")
+		return FALSE
+	if(!transfer_money(department_account, money_to_transfer))
+		bank_card_talk("ERROR: [event] aborted, departmental funds insufficient.")
+		return FALSE
+	bank_card_talk("[event] processed, account now holds [account_balance]cr.")
+	return TRUE
 
 /**
  * This sends a local chat message to the owner of a bank account, on all ID cards registered to the bank_account.

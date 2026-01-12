@@ -18869,7 +18869,7 @@
 /turf/open/floor/plating,
 /area/station/engineering/atmos)
 "fJl" = (
-/obj/machinery/computer/accounting{
+/obj/machinery/computer/accounting/hop{
 	dir = 4
 	},
 /obj/structure/cable,
@@ -48033,9 +48033,8 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "oGt" = (
-/obj/machinery/light_switch/directional/west,
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
+/obj/machinery/light_switch/directional/south,
+/turf/open/floor/iron,
 /area/station/cargo/storage)
 "oGB" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -71227,6 +71226,7 @@
 /area/station/security/prison/safe)
 "vVN" = (
 /obj/machinery/light/directional/south,
+/obj/effect/landmark/cargo_mail_machine,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "vVP" = (
@@ -231258,7 +231258,7 @@ gjP
 ajw
 ajw
 ajw
-oGt
+maT
 bln
 qjQ
 cvp
@@ -231513,7 +231513,7 @@ kXr
 kXr
 kXr
 lWw
-ajw
+oGt
 qjQ
 qjQ
 qjQ
