@@ -412,7 +412,7 @@ export const ReagentTooltip = (props) => {
         </Table.Cell>
         <Table.Cell />
       </Table.Row>
-      {!!props.grind_results.length && (
+      {!!props.grind_results?.length && (
         <>
           <Table.Row>
             <Table.Cell colSpan={3} style={{ borderTop: '1px dotted gray' }} />

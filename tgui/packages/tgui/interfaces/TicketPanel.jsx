@@ -1,7 +1,6 @@
 import { useBackend, useLocalState } from '../backend';
 import { Section, Button, Box, Flex, TextArea } from '../components';
 import { Window } from '../layouts';
-import { KEY_ENTER } from 'common/keycodes';
 import { decodeHtmlEntities } from 'common/string';
 
 export const TicketPanel = (props) => {

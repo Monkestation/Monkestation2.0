@@ -1,0 +1,5 @@
+author: "Tractor-Maam"
+delete-after: True
+changes:
+  - bugfix: "Barbers can now reset their alt titles."
+  - bugfix: "Explorers can now reset their alt titles."
