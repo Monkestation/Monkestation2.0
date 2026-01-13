@@ -30,6 +30,7 @@
 
 /datum/round_event_control/antagonist/solo/bloodsucker/roundstart
 	denominator = 22 //Lower to account for latejoiners.
+	weight = 6
 	name = "Bloodsuckers"
 	roundstart = TRUE
 	earliest_start = 0 SECONDS
@@ -48,7 +49,7 @@
 	name = "Vampiric Accident"
 	prompted_picking = TRUE
 	max_occurrences = 1
-	weight = 10
+	weight = 6
 /datum/round_event_control/antagonist/solo/bloodsucker/extra
 	name = "Extra Bloodsuckers"
 	base_antags = 0
