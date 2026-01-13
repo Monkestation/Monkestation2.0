@@ -6458,7 +6458,6 @@
 #include "monkestation\code\datums\brain_damage\phobia.dm"
 #include "monkestation\code\datums\brain_damage\severe.dm"
 #include "monkestation\code\datums\brain_damage\special.dm"
-#include "monkestation\code\datums\changelog\changelog.dm"
 #include "monkestation\code\datums\components\basic_inhands.dm"
 #include "monkestation\code\datums\components\carbon_sprint.dm"
 #include "monkestation\code\datums\components\charge_adjuster.dm"
