@@ -26,7 +26,7 @@
 		JOB_CYBORG,
 	)
 	min_players = 20
-	weight = 10
+	weight = 11
 	shared_occurence_type = SHARED_CHANGELING
 	event_icon_state = "changeling"
 
