@@ -3613,6 +3613,7 @@
 /turf/open/floor/iron/dark/small,
 /area/station/maintenance/disposal/incinerator)
 "bjy" = (
+/obj/effect/landmark/start/barber,
 /turf/open/floor/iron/checker,
 /area/station/service/barber)
 "bjM" = (
@@ -52394,6 +52395,7 @@
 /obj/structure/chair/office{
 	dir = 4
 	},
+/obj/effect/landmark/start/barber,
 /turf/open/floor/iron/checker,
 /area/station/service/barber)
 "qHW" = (
