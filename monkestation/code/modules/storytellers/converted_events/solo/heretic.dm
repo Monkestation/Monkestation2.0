@@ -26,7 +26,7 @@
 		JOB_AI,
 		JOB_CYBORG,
 	)
-	weight = 2
+	weight = 3
 	min_players = 20
 
 /datum/round_event_control/antagonist/solo/heretic/roundstart
@@ -47,7 +47,7 @@
 	antag_flag = ROLE_FORBIDDENCALLING
 	name = "Forbidden Calling (Heretics)"
 	prompted_picking = TRUE
-	weight = 4
+	weight = 6
 /datum/round_event_control/antagonist/solo/heretic/extra
 	base_antags = 0
 	name = "Extra Heretics"
