@@ -68,5 +68,4 @@
 	desc = "A box with... what was I reading again?"
 
 /obj/item/storage/box/memorizer_kit/PopulateContents()
-	new /obj/item/clothing/glasses/sunglasses/memorizer(src)
 	new /obj/item/assembly/flash/memorizer/blueshield(src)
