@@ -28,7 +28,6 @@
 
 /obj/item/bodypart/leg/left/ornithid
 	limb_id = SPECIES_ORNITHID
-	digitigrade_id = SPECIES_ORNITHID
 	icon_greyscale = 'monkestation/code/modules/the_bird_inside_of_me/icons/ornithid_parts_greyscale.dmi'
 	bodytype = BODYTYPE_ORGANIC | BODYTYPE_DIGITIGRADE
 	bodypart_traits = list(TRAIT_HARD_SOLES, TRAIT_NON_IMPORTANT_SHOE_BLOCK)
@@ -42,7 +41,6 @@
 
 /obj/item/bodypart/leg/right/ornithid
 	limb_id = SPECIES_ORNITHID
-	digitigrade_id = SPECIES_ORNITHID
 	icon_greyscale = 'monkestation/code/modules/the_bird_inside_of_me/icons/ornithid_parts_greyscale.dmi'
 	bodytype = BODYTYPE_ORGANIC | BODYTYPE_DIGITIGRADE
 	bodypart_traits = list(TRAIT_HARD_SOLES, TRAIT_NON_IMPORTANT_SHOE_BLOCK)

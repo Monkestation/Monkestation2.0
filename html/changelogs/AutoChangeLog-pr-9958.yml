@@ -1,0 +1,6 @@
+author: "wonderinghost"
+delete-after: True
+changes:
+  - map: "added/modified map content"
+  - map: "Blueshift PTL Now on the Left Instead of Right (fills right side with storage)"
+  - map: "Atmos Has Powerline to PTL (look for blue wires)"

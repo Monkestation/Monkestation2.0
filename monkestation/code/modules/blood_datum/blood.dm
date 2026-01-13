@@ -322,6 +322,35 @@ PROCESSING_SUBSYSTEM_DEF(blood_drying)
 	color = "#96bb00"
 	reagent_type = /datum/reagent/toxin/acid
 
+/// makes it so xenomorphs (aliens) actually bleed xenoblood instead of human blood. is this garbage code? maybe. does it work? lol yea methinks
+/datum/blood_type/xenomorph/make_blood_splatter(mob/living/bleeding, turf/blood_turf, drip)
+	if(HAS_TRAIT(bleeding, TRAIT_NOBLOOD))
+		return
+	if(isgroundlessturf(blood_turf))
+		blood_turf = GET_TURF_BELOW(blood_turf)
+	if(isnull(blood_turf) || isclosedturf(blood_turf))
+		return
+
+	if(drip)
+		var/obj/effect/decal/cleanable/xenoblood/drop = locate() in blood_turf
+		if(isnull(drop))
+			drop = new(blood_turf, bleeding.get_static_viruses())
+			if(!QDELETED(drop))
+				drop.transfer_mob_blood_dna(bleeding)
+			return drop
+		else
+			drop.transfer_mob_blood_dna(bleeding)
+			return drop
+
+	var/obj/effect/decal/cleanable/xenoblood/splatter = locate() in blood_turf
+	if(isnull(splatter))
+		splatter = new(blood_turf, bleeding.get_static_viruses())
+		if(!QDELETED(splatter))
+			splatter.transfer_mob_blood_dna(bleeding)
+	else
+		splatter.transfer_mob_blood_dna(bleeding)
+	return splatter
+
 /// For simplemob blood, which also largely don't actually use blood
 /datum/blood_type/animal
 	name = "Y-"

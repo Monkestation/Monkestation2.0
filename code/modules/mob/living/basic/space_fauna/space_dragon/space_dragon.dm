@@ -46,6 +46,7 @@
 	death_sound = 'sound/creatures/space_dragon_roar.ogg'
 	death_message = "screeches in agony as it collapses to the floor, its life extinguished."
 	butcher_results = list(/obj/item/stack/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/bone = 30)
+	uses_stamina = FALSE
 
 	/// The colour of the space dragon
 	var/chosen_colour
@@ -112,6 +113,10 @@
 		return
 	add_atom_colour(chosen_colour, FIXED_COLOUR_PRIORITY)
 	update_appearance(UPDATE_OVERLAYS)
+
+///Space dragons are immune to stamina damage.
+/mob/living/basic/space_dragon/pre_stamina_change(diff, forced)
+	return 0
 
 /mob/living/basic/space_dragon/update_icon_state()
 	. = ..()

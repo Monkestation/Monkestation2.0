@@ -415,6 +415,7 @@
 	name = "hook modified sawn-off shotgun"
 	desc = "Range isn't an issue when you can bring your victim to you."
 	icon_state = "hookshotgun"
+	worn_icon_state = "gun"
 	inhand_icon_state = "hookshotgun"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
@@ -444,9 +445,9 @@
 	. = ..()
 	. += span_notice("Right-click to shoot the hook.")
 
-/obj/item/gun/ballistic/shotgun/hook/try_fire_gun(atom/target, mob/living/user, params)
-	if(LAZYACCESS(params2list(params), RIGHT_CLICK))
-		return hook.try_fire_gun(target, user, params)
+/obj/item/gun/ballistic/shotgun/hook/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/params)
+	if(LAZYACCESS(params, RIGHT_CLICK))
+		return hook.try_fire_gun(interacting_with, user, params)
 	return ..()
 
 // A shotgun, but tis a revolver (Blueshift again)

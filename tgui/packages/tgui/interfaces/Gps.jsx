@@ -96,7 +96,7 @@ export const Gps = (props) => {
                   placeholder="Search by name..."
                   width="200px"
                   value={searchName}
-                  onInput={(_, value) => setSearchName(value)}
+                  onChange={(value) => setSearchName(value)}
                 />
               }
             >

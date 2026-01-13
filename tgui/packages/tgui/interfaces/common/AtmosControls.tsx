@@ -110,7 +110,7 @@ export const Vent = (props: VentProps) => {
               minValue={0}
               step={10}
               maxValue={5066}
-              onChange={(e, value) =>
+              onChange={(value) =>
                 act('set_internal_pressure', {
                   ref: refID,
                   value,
@@ -138,7 +138,7 @@ export const Vent = (props: VentProps) => {
               minValue={0}
               step={10}
               maxValue={5066}
-              onChange={(e, value) =>
+              onChange={(value) =>
                 act('set_external_pressure', {
                   ref: refID,
                   value,
@@ -186,7 +186,7 @@ export const Scrubber = (props: ScrubberProps) => {
         <LabeledList.Item label="Mode">
           <Button
             icon={scrubbing ? 'filter' : 'sign-in-alt'}
-            color={scrubbing || 'danger'}
+            color={!scrubbing && 'danger'}
             content={scrubbing ? 'Scrubbing' : 'Siphoning'}
             onClick={() =>
               act('scrubbing', {
@@ -214,7 +214,6 @@ export const Scrubber = (props: ScrubberProps) => {
                 key={filter.gas_id}
                 icon={filter.enabled ? 'check-square-o' : 'square-o'}
                 content={getGasLabel(filter.gas_id, filter.gas_name)}
-                title={filter.gas_name}
                 selected={filter.enabled}
                 onClick={() =>
                   act('toggle_filter', {

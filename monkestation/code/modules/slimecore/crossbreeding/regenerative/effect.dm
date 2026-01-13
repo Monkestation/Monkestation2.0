@@ -65,7 +65,6 @@
 
 /datum/status_effect/regenerative_extract/proc/heal_damage(heal_amt)
 	owner.heal_overall_damage(brute = heal_amt, burn = heal_amt, updating_health = FALSE)
-	owner.stamina?.adjust(-heal_amt, forced = TRUE)
 	owner.adjustOxyLoss(-heal_amt, updating_health = FALSE)
 	owner.adjustToxLoss(-heal_amt, updating_health = FALSE, forced = TRUE)
 	owner.adjustCloneLoss(-heal_amt, updating_health = FALSE)

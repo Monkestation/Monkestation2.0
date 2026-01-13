@@ -503,7 +503,7 @@
 	living_target.apply_status_effect(/datum/status_effect/surrender_timed)
 	to_chat(living_target, span_userdanger("[user] requests your immediate surrender! You are given 30 seconds to comply!"))
 	new /obj/effect/temp_visual/security_holosign(target_turf, user) //produce a holographic glow
-	COOLDOWN_START(src, holosign_cooldown, 30 SECONDS)
+	COOLDOWN_START(src, holosign_cooldown, 5 SECONDS)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/effect/temp_visual/security_holosign
