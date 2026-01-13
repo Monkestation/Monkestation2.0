@@ -144,3 +144,58 @@
   - balance: burning yellow extracts apply 10 burn damage instead of pain
   - balance: burning yellow negative effects no longer apply if the victim is shock
       immune
+2026-01-12:
+  JohnFulpWillard:
+  - rscadd: Barbers and Explorers are now roundstart jobs when available. 1 Barber,
+      3 Explorers + 3 Latejoin Explorers.
+  - bugfix: Barbers are now considered part of Service, and Explorers are now considered
+      part of Cargo.
+  - rscadd: Explorers are no longer eligible as antagonist targets, as they are nigh
+      impossible to track down.
+  - rscdel: Barbers are no longer available on Kilo, Graveyard, IceBox & Pubby (due
+      to the lack of an office or equipment).
+  - bugfix: Fixed minor UI issues with PDA, NT Rep's app & Locked safes.
+  - bugfix: Bridge Assistant now shows on the command monitor.
+  - refactor: Digitigrade lizard/satyr clothing no longer uses a separate icon for
+      each individual piece of clothing, which was essentially doubling the resources
+      you need to download to log in. Now it uses masking to change clothes to fit
+      lizards when being equipped, which does mean there's a quality drop, but in
+      exchange new clothes don't need to be sprited twice, any piece of clothing that
+      does not have a lizard alt made will still fit digi lizards/satyrs (unless specifically
+      excluded), and respriting clothes won't leave lizard alts using the old version.
+  - refactor: Digitigrade shoes have been reworked to be based off of templates &
+      masking, which further cuts on rsc size. This comes at the cost of plenty of
+      shoes no longer fitting lizards, however these new shoes don't need to be constantly
+      updated when a new shoe is added/removed/resprited (which is currently the reason
+      why many shoes don't work for lizards atm)
+  - bugfix: Smithed boots fit lizards better now.
+  - bugfix: Dry galoshes are no longer invisible on lizards.
+  JupiterJaeden:
+  - balance: Commando operatives now start with syndicate microbomb implants, like
+      normal nuclear operatives.
+  - balance: Disarming/destroying the commando operative nuke still automatically
+      calls the shuttle, but the shuttle is now recallable if command so desires.
+  SirNightKnight:
+  - bugfix: fixed item interactions with the powerfist not working.
+  - bugfix: fixed nuclear operatives getting Nanotrasen contracts.
+  - bugfix: fixed spraycans being able to paint things in really dark colors.
+  Tractor-Maam:
+  - bugfix: integrated circuit MOD action components now have icons again.
+  - bugfix: changed the icon name of the nanite/bci/mod action icon "five" to actually
+      be five, instead of fiv.
+2026-01-13:
+  Absolucy:
+  - bugfix: Fixed willing borer host messages being white instead of big and purple.
+  - bugfix: Fixed some languages (most notably Shadowtongue) missing their icons.
+  - image: The Mushroom language now has an icon.
+  JohnFulpWillard:
+  - bugfix: Jailbird no longer breaks your memories.
+  JupiterJaeden:
+  - qol: All of security (except the brig doc) now starts with security pens in their
+      PDAs roundstart, which can be used to prompt a surrender from someone by clicking
+      on them at range. They are also printable at the security lathe.
+  Lawlolawl:
+  - qol: Made gulag point generation more intuitive (buffs mining for rare minerals)
+  - rscadd: Added surgical tools to Heliostation morgue.
+  SirNightKnight:
+  - balance: lessened the explosion effect of oil extracts.
