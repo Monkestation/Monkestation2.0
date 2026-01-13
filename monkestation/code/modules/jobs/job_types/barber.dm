@@ -30,7 +30,7 @@
 	)
 
 	alt_titles = list(
-		"Barber"
+		"Barber",
 		"Stylist",
 		"Colorist",
 		"Hairdresser",
