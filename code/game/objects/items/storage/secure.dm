@@ -3,7 +3,6 @@
  * Reimplements it only slightly to use existing storage functionality.
  *
  * Contains:
- * Secure Briefcase
  * Wall Safe
  */
 
@@ -115,27 +114,6 @@
 				attack_self(M)
 			return
 	return
-
-///Syndie variant of Secure Briefcase. Contains space cash, slightly more robust.
-/obj/item/storage/briefcase/secure/syndie
-	force = 15
-
-/obj/item/storage/briefcase/secure/syndie/PopulateContents()
-	..()
-	for(var/iterator in 1 to 5)
-		new /obj/item/stack/spacecash/c1000(src)
-
-/// A briefcase that contains various sought-after spoils
-/obj/item/storage/briefcase/secure/riches
-
-/obj/item/storage/briefcase/secure/riches/PopulateContents()
-	new /obj/item/clothing/suit/armor/vest(src)
-	new /obj/item/gun/ballistic/automatic/pistol(src)
-	new /obj/item/suppressor(src)
-	new /obj/item/melee/baton/telescopic(src)
-	new /obj/item/clothing/mask/balaclava(src)
-	new /obj/item/bodybag(src)
-	new /obj/item/soap/nanotrasen(src)
 
 ///Secure Safe
 /obj/item/storage/secure/safe
