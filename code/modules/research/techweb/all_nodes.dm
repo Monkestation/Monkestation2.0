@@ -117,6 +117,7 @@
 		"shotgun_slug",
 		"sec_Islug",
 		"sec_rshot",
+		"sec_pen",
 		"servingtray",
 		"shaker",
 		"shot_glass",

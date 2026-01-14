@@ -1,0 +1,8 @@
+author: "SirNightKnight"
+delete-after: True
+changes:
+  - map: "gave all pirate shuttles except the Dutchman inducers and a super capacity SMES."
+  - bugfix: "fixed the wirecutter icon for the spess knife not showing."
+  - bugfix: "re-added cargo candle pack crates?"
+  - bugfix: "fixed every mob being able to strangle a human."
+  - qol: "cyborgs can move pulled items by clicking on an open turf next to them."
