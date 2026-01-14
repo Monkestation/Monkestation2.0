@@ -186,6 +186,7 @@ export const CassetteLibrary = (props) => {
                     value={searchQuery}
                     onChange={(value) => setSearchQuery(value)}
                     autoFocus
+                    expensive
                   />
                   {searchQuery && (
                     <Box mt={1} color="label">
