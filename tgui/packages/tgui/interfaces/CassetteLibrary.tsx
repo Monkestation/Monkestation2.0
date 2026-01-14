@@ -171,7 +171,7 @@ export const CassetteLibrary = (props) => {
                 color="yellow"
                 icon="trophy"
               >
-                Ranking
+                TOP CASSETTES
               </Tabs.Tab>
             </Tabs>
           </Stack.Item>

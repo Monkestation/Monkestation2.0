@@ -115,8 +115,8 @@ GLOBAL_LIST_EMPTY(self_cassette_purchases)
 		var/icon_state = cassette.front?.design || "cassette_flip"
 		cassette_list += list(list(
 			"id" = cassette.id,
-			"name" = cassette.name,
-			"desc" = cassette.desc,
+			"name" = html_decode(cassette.name),
+			"desc" = html_decode(cassette.desc),
 			"author_name" = cassette.author.name,
 			"author_ckey" = cassette.author.ckey,
 			"icon" = 'icons/obj/cassettes/walkman.dmi',
