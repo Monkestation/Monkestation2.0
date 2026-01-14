@@ -117,7 +117,7 @@ export const JobSelection = (props) => {
   }, []);
 
   return (
-    <Window width={1012} height={data.shuttle_status ? 760 : 736}>
+    <Window width={1212} height={data.shuttle_status ? 840 : 816}>
       <Window.Content scrollable>
         <LobbyNotices notices={data.notices} />
         <StyleableSection
@@ -137,14 +137,14 @@ export const JobSelection = (props) => {
               />
             </>
           }
-          titleStyle={{ minHeight: '3.4em' }}
+          titleStyle={{ minHeight: '2.5em' }}
         >
           <Box style={{ columns: '20em' }}>
             {Object.entries(departments).map((departmentEntry) => {
               const departmentName = departmentEntry[0];
               const entry = departmentEntry[1];
               return (
-                <Box key={departmentName} minWidth="30%">
+                <Box key={departmentName}>
                   <StyleableSection
                     title={
                       <>
@@ -180,7 +180,7 @@ export const JobSelection = (props) => {
                       color: Color.fromHex(entry.color).darken(80).toString(),
                     }}
                   >
-                    <Stack vertical>
+                    <Stack vertical fill>
                       {Object.entries(entry.jobs).map((job) => (
                         <Stack.Item key={job[0]}>
                           <JobEntry

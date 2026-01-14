@@ -199,3 +199,30 @@
   - rscadd: Added surgical tools to Heliostation morgue.
   SirNightKnight:
   - balance: lessened the explosion effect of oil extracts.
+2026-01-14:
+  JohnFulpWillard:
+  - bugfix: The list of jobs should all fit in the latejoin menu now.
+  - qol: Research console's search bar is longer.
+  - bugfix: Explorers won't be progtot objectives.
+  - bugfix: anarchids now have the right sprite when a creampie is thrown at their
+      face.
+  Lawlolawl:
+  - bugfix: Fixed TK teleporting bags and equipment.
+  SirNightKnight:
+  - balance: matter eater cannot eat living, indestructible (one exception), or objects
+      bigger than 32 by 32.
+  - bugfix: matter eater cannot eat items in storage, inventory, or that are located
+      inside you.
+  - balance: dying with matter eater makes you vomit all your contents.
+  SirNightKnight, Jacquerel:
+  - balance: Foam now passes through tables, grilles, computers, and several other
+      dense structures. You can still escape foam by mantling onto tables and such.
+  Tractor-Maam:
+  - bugfix: Barbers can now reset their alt titles.
+  - bugfix: Explorers can now reset their alt titles.
+  flleeppyy:
+  - bugfix: PDAs should ring now
+  wonderinghost:
+  - map: added/modified map content
+  - map: Blueshift PTL Now on the Left Instead of Right (fills right side with storage)
+  - map: Atmos Has Powerline to PTL (look for blue wires)
