@@ -53,7 +53,7 @@
 /obj/item/organ/internal/alien/plasmavessel/on_life(seconds_per_tick, times_fired)
 	if(owner.on_fire)
 		return
-	var/delta_time = DELTA_WORLD_TIME(SSmobs)
+	var/delta_time = DELTA_WORLD_TIME(SScarbons)
 	//Instantly healing to max health in a single tick would be silly. If it takes 8 seconds to fire, then something's fucked.
 	var/delta_time_capped = min(delta_time, 8)
 	//If there are alien weeds on the ground then heal if needed or give some plasma
@@ -196,7 +196,7 @@
 
 /obj/item/organ/internal/stomach/alien/on_life(seconds_per_tick, times_fired)
 	. = ..()
-	if(!owner || SSmobs.times_fired % 3 != 0)
+	if(!owner || SScarbons.times_fired % 3 != 0)
 		return
 	// Digest the stuff in our stomach, just a bit
 	var/static/list/digestable_cache = typecacheof(list(/mob/living, /obj/item/food, /obj/item/reagent_containers))

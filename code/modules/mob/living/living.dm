@@ -13,6 +13,11 @@
 	diag_hud.add_atom_to_hud(src)
 	faction += "[REF(src)]"
 	GLOB.mob_living_list += src
+	var/datum/controller/subsystem/mobs/subsystem = SSmobs
+	if(life_subsystem_type)
+		subsystem = locate(life_subsystem_type) in Master.subsystems
+	START_PROCESSING(subsystem, src)
+
 	SSpoints_of_interest.make_point_of_interest(src)
 	update_fov()
 	gravity_setup()
@@ -42,6 +47,10 @@
 
 	remove_from_all_data_huds()
 	GLOB.mob_living_list -= src
+	var/datum/controller/subsystem/mobs/subsystem = SSmobs
+	if(life_subsystem_type)
+		subsystem = locate(life_subsystem_type) in Master.subsystems
+	STOP_PROCESSING(subsystem, src)
 	GLOB.infected_contact_mobs -= src
 	if(imaginary_group)
 		imaginary_group -= src
