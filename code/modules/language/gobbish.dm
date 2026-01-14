@@ -8,4 +8,3 @@
 
 	default_priority = 90
 	icon_state = "goblin"
-	icon = 'monkestation/icons/misc/language.dmi'

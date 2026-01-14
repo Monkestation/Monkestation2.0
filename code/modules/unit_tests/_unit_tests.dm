@@ -144,6 +144,7 @@
 #include "json_savefile_importing.dm"
 #include "keybinding_init.dm"
 #include "knockoff_component.dm"
+#include "language_icons.dm"
 #include "language_key_conflicts.dm"
 #include "language_transfer.dm"
 #include "leash.dm"

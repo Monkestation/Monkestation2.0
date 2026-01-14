@@ -1,0 +1,4 @@
+author: "notghosti"
+delete-after: True
+changes:
+  - bugfix: "Desiccation no longer tells you it can be fixed via cloning"

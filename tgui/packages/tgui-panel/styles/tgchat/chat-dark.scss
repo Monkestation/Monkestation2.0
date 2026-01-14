@@ -669,6 +669,12 @@ em {
   color: hsl(272.2, 58.7%, 58.2%);
 }
 
+.purplelarge {
+  color: hsl(272.2, 58.7%, 58.2%);
+  font-weight: bold;
+  font-size: 185%;
+}
+
 .holoparasite {
   color: hsl(257.1, 12.4%, 55.7%);
 }
@@ -1293,11 +1299,11 @@ $border-width-px: $border-width * 1px;
 }
 
 .velvet {
-  color: #7264ff;
+  color: hsl(245.4, 100%, 69.6%);
 }
 
 .progenitor {
-  color: #7264ff;
+  color: hsl(245.4, 100%, 69.6%);
   font-weight: bold;
   font-size: 185%;
 }
