@@ -25,6 +25,9 @@
 	else if(is_special_character(user))
 		to_chat(user, span_boldnotice("Even to a heart as dark as yours, you know nothing good will come of this. Something instinctual makes you pull away."))
 
+	else if(user.mind?.assigned_role?.departments_bitflags & (DEPARTMENT_BITFLAG_SECURITY | DEPARTMENT_BITFLAG_COMMAND | DEPARTMENT_CENTRAL_COMMAND))
+		to_chat(user, span_boldnotice("You can't bring yourself to touch the Wish Granter..."))
+
 	else if (!insisting)
 		to_chat(user, span_boldnotice("Your first touch makes the Wish Granter stir, listening to you. Are you really sure you want to do this?"))
 		insisting++
