@@ -33,7 +33,7 @@ export const Adminhelp = (props) => {
     <Window title="Create Adminhelp" theme="admin" height={300} width={500}>
       <Window.Content
         style={{
-          'background-image': 'none',
+          backgroundImage: 'none',
         }}
       >
         <Stack vertical fill>
@@ -41,9 +41,10 @@ export const Adminhelp = (props) => {
             <TextArea
               autoFocus
               height="100%"
+              width="100%"
               value={ahelpMessage}
               placeholder="Admin help"
-              onChange={(e, value) => setAhelpMessage(value)}
+              onChange={(value) => setAhelpMessage(value)}
             />
           </Stack.Item>
           {urgentAhelpEnabled && adminCount <= 0 && (
@@ -57,7 +58,7 @@ export const Adminhelp = (props) => {
                     fontFamily="arial"
                     backgroundColor="grey"
                     style={{
-                      'font-style': 'normal',
+                      fontStyle: 'normal',
                     }}
                   >
                     Input &apos;{confirmationText}&apos; to proceed.
@@ -65,7 +66,7 @@ export const Adminhelp = (props) => {
                       placeholder="Confirmation Prompt"
                       autoFocus
                       fluid
-                      onChange={(e, value) => {
+                      onChange={(value) => {
                         if (value === confirmationText) {
                           setRequestForAdmin(true);
                         }

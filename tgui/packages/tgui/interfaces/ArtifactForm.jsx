@@ -17,7 +17,7 @@ export const ArtifactForm = (props) => {
   } = data;
   return (
     <Window width={480} height={600} title={'Analysis Form'} theme={'paper'}>
-      <Window.Content>
+      <Window.Content overflowY="auto">
         <Section title="Origin">
           {allorigins.map((key) => (
             <Button
@@ -25,6 +25,7 @@ export const ArtifactForm = (props) => {
               icon={chosenorigin === key ? 'check-square-o' : 'square-o'}
               content={key}
               selected={chosenorigin === key}
+              textColor="black"
               onClick={() =>
                 act('origin', {
                   origin: key,
@@ -40,6 +41,7 @@ export const ArtifactForm = (props) => {
               icon={chosenfault === thing ? 'check-square-o' : 'square-o'}
               content={thing}
               selected={chosenfault === thing}
+              textColor="black"
               onClick={() =>
                 act('fault', {
                   fault: thing,
@@ -55,6 +57,7 @@ export const ArtifactForm = (props) => {
               icon={chosentype.includes(x) ? 'check-square-o' : 'square-o'}
               content={x}
               selected={chosentype.includes(x)}
+              textColor="black"
               onClick={() =>
                 act('type', {
                   type: x,
@@ -72,6 +75,7 @@ export const ArtifactForm = (props) => {
               }
               content={trig}
               selected={chosentriggers.includes(trig)}
+              textColor="black"
               onClick={() =>
                 act('trigger', {
                   trigger: trig,

@@ -66,7 +66,7 @@ export const Machining = (props) => {
               autoFocus
               placeholder={'Search in ' + recipes.length + ' designs...'}
               value={searchText}
-              onInput={(e, value) => {
+              onChange={(value) => {
                 setSearchText(value);
               }}
               mb={2}
@@ -114,13 +114,11 @@ export const Machining = (props) => {
           </Stack.Item>
           <Stack.Item grow my={'16px'}>
             <Box
-              scrollable
-              fill
               height={'100%'}
               pr={1}
               pt={1}
               mr={-1}
-              style={{ 'overflow-y': 'auto' }}
+              style={{ overflowY: 'auto' }}
             >
               <MainRecipeScreen tab={activeTab} searchText={searchText} />
             </Box>
@@ -130,8 +128,8 @@ export const Machining = (props) => {
       {busy ? (
         <Dimmer
           style={{
-            'font-size': '2em',
-            'text-align': 'center',
+            fontSize: '2em',
+            textAlign: 'center',
           }}
         >
           <Icon

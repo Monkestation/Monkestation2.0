@@ -143,7 +143,7 @@
 	if(!active || (user.istate & ISTATE_SECONDARY))
 		return BATON_DO_NORMAL_ATTACK
 
-	if(cooldown_check > world.time)
+	if(cooldown_check > world.time || HAS_TRAIT_FROM(target, TRAIT_IWASBATONED, REF(user)))
 		var/wait_desc = get_wait_description()
 		if (wait_desc)
 			to_chat(user, wait_desc)
@@ -257,6 +257,9 @@
 /obj/item/melee/baton/proc/set_batoned(mob/living/target, mob/living/user, cooldown)
 	if(!cooldown)
 		return
+	var/user_ref = REF(user) // avoids harddels.
+	ADD_TRAIT(target, TRAIT_IWASBATONED, user_ref)
+	addtimer(TRAIT_CALLBACK_REMOVE(target, TRAIT_IWASBATONED, user_ref), cooldown)
 
 /obj/item/melee/baton/proc/clumsy_check(mob/living/user, mob/living/intented_target)
 	if(!active || !HAS_TRAIT(user, TRAIT_CLUMSY) || prob(50))

@@ -15,27 +15,27 @@ import {
 import { Window } from '../layouts';
 
 const panelStyle = {
-  'background-color': '#2e2e2e',
+  backgroundColor: '#2e2e2e',
   border: '2px solid #555',
-  'box-shadow': '0 0 10px #000000a0',
+  boxShadow: '0 0 10px #000000a0',
   padding: '0.75em',
 };
 
 const moduleStyle = {
   border: '1px solid #1a1a1a',
-  'background-color': '#3a3a3a',
+  backgroundColor: '#3a3a3a',
   padding: '0.5em',
-  'margin-bottom': '0.75em',
-  'box-shadow': 'inset 1px 1px 3px #000000c0',
-  'border-radius': '3px',
+  marginBottom: '0.75em',
+  boxShadow: 'inset 1px 1px 3px #000000c0',
+  borderRadius: '3px',
 };
 
 const controlLabelStyle = {
-  'font-size': '0.7em',
-  'text-align': 'center',
+  fontSize: '0.7em',
+  textAlign: 'center',
   color: '#cccccc',
-  'margin-top': '0.2em',
-  'font-weight': 'normal',
+  marginTop: '0.2em',
+  fontWeight: 'normal',
 };
 
 const KnobControl = ({
@@ -59,18 +59,18 @@ const KnobControl = ({
       style={{
         width: '38px',
         height: '38px',
-        'border-radius': '50%',
-        'background-color': '#777777',
+        borderRadius: '50%',
+        backgroundColor: '#777777',
         border: '1px solid #aaaaaa',
-        'box-shadow': 'inset 0 0 5px #000000',
+        boxShadow: 'inset 0 0 5px #000000',
       }}
     />
     <Box style={controlLabelStyle}>{label}</Box>{' '}
     <Box
       style={{
-        'font-size': '0.8em',
-        'margin-top': '0.2em',
-        'background-color': '#000',
+        fontSize: '0.8em',
+        marginTop: '0.2em',
+        backgroundColor: '#000',
         color: '#00ff44',
         padding: '0 4px',
         border: '1px solid #1a1a1a',
@@ -97,12 +97,12 @@ const ActionButton = ({
     className={className}
     style={{
       ...style,
-      'font-size': '0.75em',
+      fontSize: '0.75em',
       padding: '0.3em 0.6em',
       border: selected ? '2px solid #00aaff' : '1px solid #555',
-      'background-color': selected ? '#004d80' : '#444',
+      backgroundColor: selected ? '#004d80' : '#444',
       color: selected ? 'white' : '#cccccc',
-      'box-shadow': selected ? '0 0 5px #00aaff' : 'none',
+      boxShadow: selected ? '0 0 5px #00aaff' : 'none',
     }}
   />
 );
@@ -155,7 +155,7 @@ export const CassetteDeck = (props) => {
           <Stack.Item
             basis="30%"
             grow
-            style={{ 'padding-right': '1em', 'border-right': '1px solid #555' }}
+            style={{ paddingRight: '1em', borderRight: '1px solid #555' }}
           >
             {' '}
             <Stack>
@@ -165,9 +165,9 @@ export const CassetteDeck = (props) => {
                 <Box
                   className="Layout--stack-vertical Layout--stack--center"
                   style={{
-                    'padding-top': '0.5em',
-                    'background-color': '#1a1a1a',
-                    'border-radius': '3px',
+                    paddingTop: '0.5em',
+                    backgroundColor: '#1a1a1a',
+                    borderRadius: '3px',
                   }}
                 >
                   {' '}
@@ -179,12 +179,12 @@ export const CassetteDeck = (props) => {
                         style={{
                           padding: '0.3em 0.5em',
                           width: '90%',
-                          'margin-bottom': '5px',
-                          'background-color': isSelected ? '#004d80' : '#444',
+                          marginBottom: '5px',
+                          backgroundColor: isSelected ? '#004d80' : '#444',
                           border: isSelected
                             ? '1px solid #00aaff'
                             : '1px solid #2e2e2e',
-                          'border-radius': '2px',
+                          borderRadius: '2px',
                         }}
                         onClick={() =>
                           act('set_design', { design: type.value })
@@ -198,13 +198,15 @@ export const CassetteDeck = (props) => {
                           {' '}
                           <Box
                             style={{
-                              'font-size': '0.8em',
-                              'font-weight': 'bold',
+                              fontSize: '0.8em',
+                              fontWeight: 'bold',
                             }}
                           >
                             {type.label}{' '}
                           </Box>{' '}
-                          <Box style={{ 'font-size': '0.6em' }}>{type.sub}</Box>{' '}
+                          <Box style={{ fontSize: '0.6em' }}>
+                            {type.sub}
+                          </Box>{' '}
                         </Box>{' '}
                       </Box>
                     );
@@ -217,11 +219,11 @@ export const CassetteDeck = (props) => {
                   style={{
                     border: '2px solid #555',
                     height: '150px',
-                    'background-color': '#000',
+                    backgroundColor: '#000',
                     padding: '5px',
-                    'margin-top': '0.5em',
-                    'margin-left': '0.5em',
-                    'box-shadow': 'inset 0 0 5px #00aaff40',
+                    marginTop: '0.5em',
+                    marginLeft: '0.5em',
+                    boxShadow: 'inset 0 0 5px #00aaff40',
                   }}
                 >
                   {' '}
@@ -238,8 +240,8 @@ export const CassetteDeck = (props) => {
                 <Box
                   style={{
                     ...moduleStyle,
-                    'margin-left': '0.5em',
-                    'margin-top': '0.75em',
+                    marginLeft: '0.5em',
+                    marginTop: '0.75em',
                   }}
                 >
                   {' '}
@@ -345,7 +347,7 @@ export const CassetteDeck = (props) => {
           <Stack.Item
             basis="40%"
             grow
-            style={{ padding: '0 1em', 'border-right': '1px solid #555' }}
+            style={{ padding: '0 1em', borderRight: '1px solid #555' }}
           >
             {' '}
             <Box style={moduleStyle}>
@@ -477,7 +479,7 @@ export const CassetteDeck = (props) => {
               </Section>{' '}
             </Box>{' '}
           </Stack.Item>{' '}
-          <Stack.Item basis="30%" style={{ 'padding-left': '1em' }}>
+          <Stack.Item basis="30%" style={{ paddingLeft: '1em' }}>
             {' '}
             <Stack justify="space-around">
               {' '}
@@ -546,7 +548,7 @@ export const CassetteDeck = (props) => {
                       content={'ON / OFF'}
                       selected={data.nr_comp_on}
                       onClick={() => act('toggle_nr_comp')}
-                      style={{ width: '100%', 'margin-top': '0.5em' }}
+                      style={{ width: '100%', marginTop: '0.5em' }}
                     />{' '}
                   </Section>{' '}
                 </Box>{' '}
@@ -554,9 +556,9 @@ export const CassetteDeck = (props) => {
             </Stack>{' '}
             <hr
               style={{
-                'border-top': '1px solid #555',
-                'margin-top': '0.5em',
-                'margin-bottom': '0.5em',
+                borderTop: '1px solid #555',
+                marginTop: '0.5em',
+                marginBottom: '0.5em',
               }}
             />{' '}
             <Box style={moduleStyle}>
@@ -608,7 +610,7 @@ export const CassetteDeck = (props) => {
               content={'EJECT CARTRIDGE'}
               onClick={() => act('eject')}
               className="mt-2 Button--orange"
-              style={{ width: '100%', 'font-weight': 'bold', padding: '0.5em' }}
+              style={{ width: '100%', fontWeight: 'bold', padding: '0.5em' }}
             />{' '}
           </Stack.Item>{' '}
         </Stack>{' '}
