@@ -225,6 +225,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	. = ..()
 	if(.)
 		return
+	if(!Adjacent(user))
+		return
 	user.Move_Pulled(src)
 
 /// Call to move a turf from its current area to a new one
