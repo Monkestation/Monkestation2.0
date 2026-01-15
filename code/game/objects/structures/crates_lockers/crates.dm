@@ -68,13 +68,28 @@
 
 /obj/structure/closet/crate/Destroy()
 	. = ..()
-	QDEL_NULL(manifest)
+	if(manifest)
+		QDEL_NULL(manifest)
 
-/obj/structure/closet/crate/deconstruct(disassembled)
-	. = ..()
-	if(!QDELETED(manifest))
-		manifest.forceMove(drop_location(src))
-		manifest = null
+/obj/structure/closet/crate/deconstruct(disassembled = TRUE)
+	if (!(flags_1 & NODECONSTRUCT_1))
+		if(ispath(material_drop) && material_drop_amount)
+			new material_drop(loc, material_drop_amount)
+		if (secure)
+			var/obj/item/electronics/airlock/electronics = new(drop_location())
+			if(length(req_one_access))
+				electronics.one_access = TRUE
+				electronics.accesses = req_one_access
+			else
+				electronics.accesses = req_access
+		if(card_reader_installed)
+			new /obj/item/stock_parts/card_reader(drop_location())
+		if(manifest)
+			manifest.forceMove(drop_location(src))
+			manifest = null
+	dump_contents()
+	qdel(src)
+
 
 /obj/structure/closet/crate/examine(mob/user)
 	. = ..()
