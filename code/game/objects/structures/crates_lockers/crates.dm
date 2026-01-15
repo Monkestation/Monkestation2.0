@@ -185,7 +185,7 @@
 		return
 	if(istype(tool, /obj/item/paper) && !manifest)
 		to_chat(user, span_notice("You begin attaching [tool] to [src]..."))
-		if(!do_after(user, 2 SECONDS, target=src))
+		if(!do_after(user, 1 SECOND, target=src))
 			return ITEM_INTERACT_BLOCKING
 		attach_manifest(tool, user)
 		return ITEM_INTERACT_BLOCKING
@@ -194,9 +194,31 @@
 	if(!manifest)
 		return
 	to_chat(user, span_notice("You begin cutting [manifest] off of [src]..."))
-	if(!do_after(user, 2 SECONDS, target=src))
+	if(!do_after(user, 1 SECOND, target=src))
 		return ITEM_INTERACT_BLOCKING
 	tear_manifest(user)
+	return ITEM_INTERACT_BLOCKING
+
+/obj/structure/closet/crate/item_interaction_secondary(mob/living/user, obj/item/attacking_item, list/modifiers)
+	. = ..()
+	if(!manifest)
+		return
+
+	var/list/writing_stats = attacking_item.get_writing_implement_details()
+
+	if(!length(writing_stats))
+		return
+	if(writing_stats["interaction_mode"] != MODE_STAMPING)
+		return
+	if(!user.can_read(manifest) || user.is_blind())
+		return
+
+	manifest.add_stamp(writing_stats["stamp_class"], rand(1, 300), rand(1, 400), stamp_icon_state = writing_stats["stamp_icon_state"])
+	user.visible_message(
+		span_notice("[user] quickly stamps [manifest] with [attacking_item] without looking."),
+		span_notice("You quickly stamp [manifest] with [attacking_item] without looking."),
+	)
+	playsound(src, 'sound/items/handling/standard_stamp.ogg', 50, vary = TRUE)
 	return ITEM_INTERACT_BLOCKING
 
 ///Removes the supply manifest from the closet
@@ -217,7 +239,7 @@
 		manifest = null
 		return
 	if(user)
-		to_chat(user, span_notice("You cut the [manifest] off of [src]."))
+		to_chat(user, span_notice("You remove the [manifest] from [src]."))
 	playsound(src, 'sound/items/poster_ripped.ogg', 75, TRUE)
 
 	manifest.forceMove(drop_location(src))
