@@ -1,17 +1,15 @@
-/datum/export/cash
-	cost = 1
+/datum/export/cash/spacecash
+	k_elasticity = 0
 	unit_name = "bills"
 	export_types = list(/obj/item/stack/spacecash)
 
-/datum/export/cash/get_cost(obj/O)
-	var/obj/item/stack/spacecash/C = O
-	return C.amount * C.value
+/datum/export/cash/spacecash/get_amount(obj/item/stack/spacecash/cash)
+	return cash.amount * cash.value
 
-/datum/export/holochip
-	cost = 1
+/datum/export/cash/holochip
+	k_elasticity = 0
 	unit_name = "holochip"
 	export_types = list(/obj/item/holochip)
 
-/datum/export/holochip/get_cost(atom/movable/AM)
-	var/obj/item/holochip/H = AM
-	return H.credits
+/datum/export/cash/holochip/get_cost(obj/item/holochip/holo)
+	return holo.credits
