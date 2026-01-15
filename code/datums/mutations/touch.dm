@@ -154,6 +154,10 @@
 
 /datum/action/cooldown/spell/touch/lay_on_hands/cast_on_hand_hit(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/mendicant)
 
+	if(issilicon(victim))
+		mendicant.balloon_alert(mendicant, "inorganic!")
+		return FALSE
+
 	var/mob/living/hurtguy = victim
 
 	heal_multiplier = initial(heal_multiplier) * power_coefficient
