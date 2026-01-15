@@ -3,9 +3,9 @@
 	unit_name = "bills"
 	export_types = list(/obj/item/stack/spacecash)
 
-/datum/export/cash/get_amount(obj/O)
+/datum/export/cash/get_cost(obj/O)
 	var/obj/item/stack/spacecash/C = O
-	return ..() * C.amount * C.value
+	return C.amount * C.value
 
 /datum/export/holochip
 	cost = 1
