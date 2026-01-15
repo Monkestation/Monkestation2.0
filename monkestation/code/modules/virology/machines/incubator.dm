@@ -39,7 +39,8 @@
 		if(isnull(dish_datum))
 			continue
 
-		dish_datum.dish?.forceMove(drop_location())
+		if(!QDELETED(dish_datum.dish))
+			dish_datum.dish.forceMove(drop_location())
 		dish_data[i] = null
 	return ..()
 
