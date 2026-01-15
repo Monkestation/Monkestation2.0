@@ -119,7 +119,7 @@ export const NtosMain = (props) => {
               <Button
                 icon="eject"
                 content="Eject ID"
-                disabled={!proposed_login.IDInserted}
+                disabled={!proposed_login.IDName}
                 onClick={() => act('PC_Eject_Disk', { name: 'ID' })}
               />
               {!!show_imprint && (
