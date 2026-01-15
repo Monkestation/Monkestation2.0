@@ -270,9 +270,7 @@
 		held_force = held_item.force
 
 	increase_fear(attacked_mob, held_force / 3)
-
-	for(var/i = 1 to (held_force / 3))
-		attacked_mob.blood_particles(2, max_deviation = rand(-120, 120), min_pixel_z = rand(-4, 12), max_pixel_z = rand(-4, 12))
+	attacked_mob.blood_particles(5, max_deviation = rand(-120, 120), min_pixel_z = rand(-4, 12), max_pixel_z = rand(-4, 12))
 
 /datum/antagonist/slasher/proc/item_pickup(datum/input_source, obj/item/source)
 	SIGNAL_HANDLER

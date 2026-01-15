@@ -15,7 +15,6 @@
 		"nza","est","sti","ra","pral","tsu","ago","esch","chi","kys","praz",
 		"froz","etz","tzil",
 		"t'","k'","t'","k'","th'","tz'"
-		)
+	)
 
 	icon_state = "bloodsucker"
-	icon = 'monkestation/icons/bloodsuckers/vampiric.dmi'
