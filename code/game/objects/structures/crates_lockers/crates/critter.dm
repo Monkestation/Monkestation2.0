@@ -44,8 +44,11 @@
 		return
 
 	. += "crittercrate_door"
+
 	if(manifest)
-		. += "manifest"
+		var/mutable_appearance/manifest_overlay = mutable_appearance(icon, "manifest")
+		manifest_overlay.color = manifest?.color
+		. += manifest_overlay
 
 /obj/structure/closet/crate/critter/return_air()
 	if(tank)

@@ -141,7 +141,7 @@
 	manifest_text += "Contents: <br/>"
 	manifest_text += "<ul>"
 	var/container_contents = list() // Associative list with the format (item_name = nº of occurrences, ...)
-	for(var/obj/item/stuff in container.contents - manifest_paper)
+	for(var/atom/stuff in container.contents - manifest_paper)
 		if(isstack(stuff))
 			var/obj/item/stack/thing = stuff
 			container_contents[thing.singular_name] += thing.amount
@@ -178,7 +178,7 @@
 	if(istype(container, /obj/structure/closet/crate))
 		var/obj/structure/closet/crate/crate = container
 		crate.manifest = manifest_paper
-		crate.update_appearance()
+		crate.update_appearance(UPDATE_ICON)
 
 	return manifest_paper
 
