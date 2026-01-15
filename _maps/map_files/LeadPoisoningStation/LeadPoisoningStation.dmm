@@ -22490,7 +22490,7 @@
 /obj/structure/table/wood,
 /obj/item/camera/detective,
 /obj/item/restraints/handcuffs,
-/obj/item/storage/secure/briefcase{
+/obj/item/storage/briefcase/secure{
 	pixel_x = 2;
 	pixel_y = -2
 	},
@@ -29676,7 +29676,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/structure/table/wood,
-/obj/item/storage/secure/briefcase{
+/obj/item/storage/briefcase/secure{
 	pixel_x = 2;
 	pixel_y = -2
 	},

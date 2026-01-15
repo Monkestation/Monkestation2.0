@@ -7324,7 +7324,6 @@
 #include "monkestation\code\modules\blueshift\helpers\request_consoles.dm"
 #include "monkestation\code\modules\blueshift\items\ash_walker.dm"
 #include "monkestation\code\modules\blueshift\items\barber.dm"
-#include "monkestation\code\modules\blueshift\items\briefcase.dm"
 #include "monkestation\code\modules\blueshift\items\capacitor.dm"
 #include "monkestation\code\modules\blueshift\items\conversion_kit.dm"
 #include "monkestation\code\modules\blueshift\items\deforest.dm"

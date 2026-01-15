@@ -1,0 +1,4 @@
+author: "SirNightKnight"
+delete-after: True
+changes:
+  - qol: "morgue tray soul alarms don't ignore bad DNA mobs."

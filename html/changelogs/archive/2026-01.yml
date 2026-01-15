@@ -200,6 +200,10 @@
   SirNightKnight:
   - balance: lessened the explosion effect of oil extracts.
 2026-01-14:
+  Absolucy:
+  - bugfix: Slightly optimized some blood-related code.
+  - qol: Slashers no longer spawn a morbillion blood particles (they still spawn SOME)
+      each hit, hopefully avoiding grinding the server to a halt.
   JohnFulpWillard:
   - bugfix: The list of jobs should all fit in the latejoin menu now.
   - qol: Research console's search bar is longer.
@@ -214,14 +218,24 @@
   - bugfix: matter eater cannot eat items in storage, inventory, or that are located
       inside you.
   - balance: dying with matter eater makes you vomit all your contents.
+  - map: gave all pirate shuttles except the Dutchman inducers and a super capacity
+      SMES.
+  - bugfix: fixed the wirecutter icon for the spess knife not showing.
+  - bugfix: re-added cargo candle pack crates?
+  - bugfix: fixed every mob being able to strangle a human.
+  - qol: cyborgs can move pulled items by clicking on an open turf next to them.
+  - code_imp: replaced all secure briefcase with briefcase secure
   SirNightKnight, Jacquerel:
   - balance: Foam now passes through tables, grilles, computers, and several other
       dense structures. You can still escape foam by mantling onto tables and such.
   Tractor-Maam:
   - bugfix: Barbers can now reset their alt titles.
   - bugfix: Explorers can now reset their alt titles.
+  - bugfix: RoboTact for cyborgs now prints their name again.
   flleeppyy:
   - bugfix: PDAs should ring now
+  notghosti:
+  - bugfix: Desiccation no longer tells you it can be fixed via cloning
   wonderinghost:
   - map: added/modified map content
   - map: Blueshift PTL Now on the Left Instead of Right (fills right side with storage)

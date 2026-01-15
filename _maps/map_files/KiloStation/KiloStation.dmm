@@ -7244,7 +7244,7 @@
 /area/station/engineering/hallway)
 "cjq" = (
 /obj/structure/table/reinforced,
-/obj/item/storage/secure/briefcase{
+/obj/item/storage/briefcase/secure{
 	pixel_y = 6
 	},
 /obj/item/radio{
@@ -39658,7 +39658,7 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/storage/secure/briefcase,
+/obj/item/storage/briefcase/secure,
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
@@ -46349,7 +46349,7 @@
 /area/station/service/library)
 "otO" = (
 /obj/structure/table,
-/obj/item/storage/secure/briefcase,
+/obj/item/storage/briefcase/secure,
 /obj/item/taperecorder,
 /obj/structure/sign/warning/electric_shock/directional/south,
 /turf/open/floor/iron/dark,
@@ -53631,7 +53631,7 @@
 /obj/machinery/firealarm/directional/west,
 /obj/machinery/newscaster/directional/south,
 /obj/item/stack/package_wrap,
-/obj/item/storage/secure/briefcase{
+/obj/item/storage/briefcase/secure{
 	pixel_y = 4
 	},
 /obj/item/hand_labeler,
@@ -56189,7 +56189,7 @@
 /area/station/service/chapel)
 "rxt" = (
 /obj/structure/table/wood,
-/obj/item/storage/secure/briefcase{
+/obj/item/storage/briefcase/secure{
 	pixel_x = 5;
 	pixel_y = 5
 	},
@@ -68031,7 +68031,7 @@
 	specialfunctions = 4
 	},
 /obj/structure/table/wood,
-/obj/item/storage/secure/briefcase{
+/obj/item/storage/briefcase/secure{
 	pixel_y = 4
 	},
 /obj/item/radio{
@@ -73921,7 +73921,7 @@
 	dir = 4
 	},
 /obj/structure/table/glass,
-/obj/item/storage/secure/briefcase{
+/obj/item/storage/briefcase/secure{
 	pixel_x = 3;
 	pixel_y = 5
 	},
