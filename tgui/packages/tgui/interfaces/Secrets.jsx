@@ -94,7 +94,7 @@ const HelpfulTab = (props) => {
               lineHeight={lineHeightNormal}
               width={buttonWidthNormal}
               content="Lobotomize Poly"
-              onClick={() => act('lobotimize_the_bird')}
+              onClick={() => act('lobotomize_the_bird')}
             />
           </Stack.Item>
           <Stack.Item>

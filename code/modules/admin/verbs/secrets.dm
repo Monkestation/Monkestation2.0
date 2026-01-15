@@ -633,7 +633,7 @@ monkestation end */
 			message_admins("[key_name_admin(holder)] healed everyone.")
 			log_admin("[key_name(holder)] healed everyone.")
 
-		if("lobotimize_the_bird")
+		if("lobotomize_the_bird")
 			var/choice = tgui_alert(usr, "Would you like to lobotomize Poly? This will kill them, and clear ALL saved phrases!", "i have to water the shitbird wait a minute", list("Yes", "No"))
 			if(choice != "Yes")
 				return
