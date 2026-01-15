@@ -100,5 +100,5 @@ export {
   TrackOutsideClicks,
 };
 
-export { KeyListener } from './KeyListener';
 export { Button } from './Button';
+export { KeyListener } from './KeyListener';

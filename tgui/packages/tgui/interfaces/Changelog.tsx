@@ -1,6 +1,5 @@
 import { classes } from 'common/react';
-import { useBackend } from '../backend';
-import { Component, Fragment } from 'react';
+import { Fragment, useEffect, useMemo, useState } from 'react';
 import {
   Box,
   Button,
@@ -10,11 +9,13 @@ import {
   Section,
   Stack,
   Table,
-} from '../components';
-import { Window } from '../layouts';
-import { resolveAsset } from '../assets';
+} from 'tgui-core/components';
 import dateformat from 'dateformat';
 import yaml from 'js-yaml';
+
+import { Window } from '../layouts';
+import { resolveAsset } from '../assets';
+import { useBackend } from '../backend';
 import { LobbyNoticesType } from './common/LobbyNotices';
 
 const icons = {
@@ -57,7 +58,7 @@ type Testmerge = {
 type ChangelogData = {
   discord_url?: string;
   dates: string[];
-  testmerges?: Testmerge[];
+  testmerges: Testmerge[];
   notices: LobbyNoticesType;
 };
 
@@ -205,7 +206,7 @@ const Testmerges = (_props) => {
   const {
     data: { testmerges },
   } = useBackend<ChangelogData>();
-  if (!testmerges?.length) {
+  if (testmerges.length < 1) {
     return null;
   }
   return (
@@ -253,45 +254,26 @@ const Testmerges = (_props) => {
   );
 };
 
-export class Changelog extends Component {
-  state: {
-    selectedDate: string;
-    selectedIndex: number;
-    data: string | object;
-  };
-  dateChoices: string[];
+export const Changelog = (_props) => {
+  const {
+    act,
+    data: { dates, testmerges },
+  } = useBackend<ChangelogData>();
+  const [selectedDate, setSelectedDate] = useState<string>('');
+  const [selectedIndex, setSelectedIndex] = useState<number>(0);
+  const [data, setData] = useState('Loading changelog data...');
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: 'Loading changelog data...',
-      selectedDate: '',
-      selectedIndex: 0,
-    };
-    this.dateChoices = [];
-  }
+  const sortedDates = useMemo(() => dates.toSorted().toReversed(), [dates]);
+  const dateChoices = useMemo(
+    () => sortedDates.map((date) => dateformat(date, 'mmmm yyyy', true)),
+    [sortedDates],
+  );
 
-  setData(data: string | object) {
-    this.setState({ data });
-  }
-
-  setSelectedDate(selectedDate: string) {
-    this.setState({ selectedDate });
-  }
-
-  setSelectedIndex(selectedIndex: number) {
-    this.setState({ selectedIndex });
-  }
-
-  getData = (date: string, attemptNumber = 1) => {
-    const { act } = useBackend();
-    const self = this;
+  const getData = (date: string, attemptNumber = 1) => {
     const maxAttempts = 6;
 
     if (attemptNumber > maxAttempts) {
-      return this.setData(
-        'Failed to load data after ' + maxAttempts + ' attempts',
-      );
+      return setData('Failed to load data after ' + maxAttempts + ' attempts');
     }
 
     act('get_month', { date });
@@ -303,154 +285,137 @@ export class Changelog extends Component {
       if (errorRegex.test(result)) {
         const timeout = 50 + attemptNumber * 50;
 
-        self.setData('Loading changelog data' + '.'.repeat(attemptNumber + 3));
+        setData('Loading changelog data' + '.'.repeat(attemptNumber + 3));
         setTimeout(() => {
-          self.getData(date, attemptNumber + 1);
+          getData(date, attemptNumber + 1);
         }, timeout);
       } else {
-        self.setData(yaml.load(result, { schema: yaml.CORE_SCHEMA }));
+        setData(yaml.load(result, { schema: yaml.CORE_SCHEMA }));
       }
     });
   };
 
-  componentDidMount() {
-    const {
-      data: { dates = [] },
-    } = useBackend<ChangelogData>();
+  useEffect(() => {
+    setSelectedDate(dateChoices[0]);
+    getData(sortedDates[0]);
+  }, []);
 
-    if (dates) {
-      dates.forEach((date) =>
-        this.dateChoices.push(dateformat(date, 'mmmm yyyy', true)),
-      );
-      this.setSelectedDate(this.dateChoices[0]);
-      this.getData(dates[0]);
-    }
-  }
+  const dateDropdown = dateChoices.length > 0 && (
+    <Stack mb={1}>
+      <Stack.Item>
+        <Button
+          className="Changelog__Button"
+          disabled={selectedIndex === 0}
+          icon={'chevron-left'}
+          onClick={() => {
+            const index = selectedIndex - 1;
 
-  render() {
-    const { data, selectedDate, selectedIndex } = this.state;
-    const {
-      data: { dates, testmerges },
-    } = useBackend<ChangelogData>();
-    const { dateChoices } = this;
+            setData('Loading changelog data...');
+            setSelectedIndex(index);
+            setSelectedDate(dateChoices[index]);
+            window.scrollTo(
+              0,
+              document.body.scrollHeight ||
+                document.documentElement.scrollHeight,
+            );
+            return getData(sortedDates[index]);
+          }}
+        />
+      </Stack.Item>
+      <Stack.Item>
+        <Dropdown
+          displayText={selectedDate}
+          options={dateChoices}
+          onSelected={(value) => {
+            const index = dateChoices.indexOf(value);
 
-    const dateDropdown = dateChoices.length > 0 && (
-      <Stack mb={1}>
-        <Stack.Item>
-          <Button
-            className="Changelog__Button"
-            disabled={selectedIndex === 0}
-            icon={'chevron-left'}
-            onClick={() => {
-              const index = selectedIndex - 1;
+            setData('Loading changelog data...');
+            setSelectedIndex(index);
+            setSelectedDate(value);
+            window.scrollTo(
+              0,
+              document.body.scrollHeight ||
+                document.documentElement.scrollHeight,
+            );
+            return getData(sortedDates[index]);
+          }}
+          selected={selectedDate}
+          width={'150px'}
+        />
+      </Stack.Item>
+      <Stack.Item>
+        <Button
+          className="Changelog__Button"
+          disabled={selectedIndex === dateChoices.length - 1}
+          icon={'chevron-right'}
+          onClick={() => {
+            const index = selectedIndex + 1;
 
-              this.setData('Loading changelog data...');
-              this.setSelectedIndex(index);
-              this.setSelectedDate(dateChoices[index]);
-              window.scrollTo(
-                0,
-                document.body.scrollHeight ||
-                  document.documentElement.scrollHeight,
-              );
-              return this.getData(dates[index]);
-            }}
-          />
-        </Stack.Item>
-        <Stack.Item>
-          <Dropdown
-            displayText={selectedDate}
-            options={dateChoices}
-            onSelected={(value) => {
-              const index = dateChoices.indexOf(value);
+            setData('Loading changelog data...');
+            setSelectedIndex(index);
+            setSelectedDate(dateChoices[index]);
+            window.scrollTo(
+              0,
+              document.body.scrollHeight ||
+                document.documentElement.scrollHeight,
+            );
+            return getData(sortedDates[index]);
+          }}
+        />
+      </Stack.Item>
+    </Stack>
+  );
 
-              this.setData('Loading changelog data...');
-              this.setSelectedIndex(index);
-              this.setSelectedDate(value);
-              window.scrollTo(
-                0,
-                document.body.scrollHeight ||
-                  document.documentElement.scrollHeight,
-              );
-              return this.getData(dates[index]);
-            }}
-            selected={selectedDate}
-            width={'150px'}
-          />
-        </Stack.Item>
-        <Stack.Item>
-          <Button
-            className="Changelog__Button"
-            disabled={selectedIndex === dateChoices.length - 1}
-            icon={'chevron-right'}
-            onClick={() => {
-              const index = selectedIndex + 1;
+  const changes =
+    typeof data === 'object' &&
+    Object.keys(data).length > 0 &&
+    Object.entries(data as ChangelogEntry)
+      .reverse()
+      .map(([date, authors]) => (
+        <Section key={date} title={dateformat(date, 'd mmmm yyyy', true)}>
+          <Box ml={3}>
+            {Object.entries(authors).map(([name, changes]) => (
+              <Fragment key={name}>
+                <h4>{name} changed:</h4>
+                <Box ml={3}>
+                  <Table>
+                    {changes.map((change) => {
+                      const changeType = Object.keys(change)[0];
+                      return (
+                        <ChangeRow
+                          key={changeType + change[changeType]}
+                          kind={changeType}
+                          content={change[changeType]}
+                        />
+                      );
+                    })}
+                  </Table>
+                </Box>
+              </Fragment>
+            ))}
+          </Box>
+        </Section>
+      ));
 
-              this.setData('Loading changelog data...');
-              this.setSelectedIndex(index);
-              this.setSelectedDate(dateChoices[index]);
-              window.scrollTo(
-                0,
-                document.body.scrollHeight ||
-                  document.documentElement.scrollHeight,
-              );
-              return this.getData(dates[index]);
-            }}
-          />
-        </Stack.Item>
-      </Stack>
-    );
-
-    const changes =
-      typeof data === 'object' &&
-      Object.keys(data).length > 0 &&
-      Object.entries(data as ChangelogEntry)
-        .reverse()
-        .map(([date, authors]) => (
-          <Section key={date} title={dateformat(date, 'd mmmm yyyy', true)}>
-            <Box ml={3}>
-              {Object.entries(authors).map(([name, changes]) => (
-                <Fragment key={name}>
-                  <h4>{name} changed:</h4>
-                  <Box ml={3}>
-                    <Table>
-                      {changes.map((change) => {
-                        const changeType = Object.keys(change)[0];
-                        return (
-                          <ChangeRow
-                            key={changeType + change[changeType]}
-                            kind={changeType}
-                            content={change[changeType]}
-                          />
-                        );
-                      })}
-                    </Table>
-                  </Box>
-                </Fragment>
-              ))}
-            </Box>
-          </Section>
-        ));
-
-    return (
-      <Window
-        title="Changelog"
-        width={testmerges?.length ? 1000 : 675}
-        height={650}
-      >
-        <Window.Content scrollable>
-          <Header dropdown={dateDropdown} />
-          <Stack>
-            <Stack.Item grow>{changes}</Stack.Item>
-            {!!testmerges?.length && (
-              <Stack.Item width="50%">
-                <Testmerges />
-              </Stack.Item>
-            )}
-          </Stack>
-          {typeof data === 'string' && <p>{data}</p>}
-          <Footer dropdown={dateDropdown} />
-        </Window.Content>
-      </Window>
-    );
-  }
-}
+  return (
+    <Window
+      title="Changelog"
+      width={testmerges.length > 0 ? 1000 : 675}
+      height={650}
+    >
+      <Window.Content scrollable>
+        <Header dropdown={dateDropdown} />
+        <Stack>
+          <Stack.Item grow>{changes}</Stack.Item>
+          {testmerges.length > 0 && (
+            <Stack.Item width="50%">
+              <Testmerges />
+            </Stack.Item>
+          )}
+        </Stack>
+        {typeof data === 'string' && <p>{data}</p>}
+        <Footer dropdown={dateDropdown} />
+      </Window.Content>
+    </Window>
+  );
+};

@@ -542,11 +542,11 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "CP" = (
-/obj/machinery/power/smes/engineering{
-	charge = 1e+006
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/bot,
+/obj/machinery/power/smes/super/full,
+/obj/machinery/power/smes/super/full,
+/obj/item/inducer,
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "CW" = (

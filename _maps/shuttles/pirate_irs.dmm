@@ -262,9 +262,6 @@
 /obj/effect/turf_decal/siding/thinplating_new/corner{
 	dir = 4
 	},
-/obj/structure/railing/corner{
-	dir = 4
-	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/machinery/firealarm/directional/north,
 /turf/open/floor/pod/dark,
@@ -716,9 +713,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/caution/stand_clear/white,
-/obj/structure/railing/corner{
-	dir = 1
-	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer2,
@@ -901,7 +895,8 @@
 "yN" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/cable,
-/obj/machinery/power/smes/ship,
+/obj/machinery/power/smes/super/full,
+/obj/item/inducer,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "yP" = (
@@ -1241,9 +1236,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/caution/stand_clear/white,
-/obj/structure/railing/corner{
-	dir = 4
-	},
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "IE" = (
@@ -1713,9 +1705,6 @@
 /area/shuttle/pirate)
 "SG" = (
 /obj/effect/turf_decal/siding/thinplating_new/corner{
-	dir = 1
-	},
-/obj/structure/railing/corner{
 	dir = 1
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
