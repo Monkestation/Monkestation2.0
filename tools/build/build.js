@@ -7,8 +7,6 @@
  */
 
 import fs from 'node:fs';
-import { get } from 'http';
-import { env } from 'process';
 import Juke from './juke/index.js';
 import { DreamDaemon, DreamMaker, NamedVersionFile } from './lib/byond.js';
 import { bun } from './lib/bun.js';
@@ -171,7 +169,6 @@ export const BunTarget = new Juke.Target({
 export const TgFontTarget = new Juke.Target({
   dependsOn: [BunTarget],
   inputs: [
-    'tgui/.yarn/install-target',
     'tgui/packages/tgfont/**/*.+(js|cjs|svg)',
     'tgui/packages/tgfont/package.json',
   ],
@@ -191,8 +188,7 @@ export const TgFontTarget = new Juke.Target({
 export const TguiTarget = new Juke.Target({
   dependsOn: [BunTarget],
   inputs: [
-    'tgui/.yarn/install-target',
-    'tgui/webpack.config.js',
+    'tgui/rspack.config.ts',
     'tgui/**/package.json',
     'tgui/packages/**/*.+(js|cjs|ts|tsx|scss)',
   ],
