@@ -67,13 +67,14 @@
 	AddComponent(/datum/component/soapbox)
 
 /obj/structure/closet/crate/Destroy()
+	. = ..()
 	QDEL_NULL(manifest)
-	return ..()
 
 /obj/structure/closet/crate/deconstruct(disassembled)
 	. = ..()
 	if(!QDELETED(manifest))
 		manifest.forceMove(drop_location(src))
+		manifest = null
 
 /obj/structure/closet/crate/examine(mob/user)
 	. = ..()
