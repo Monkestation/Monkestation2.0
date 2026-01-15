@@ -14,6 +14,7 @@
 	var/order_cost = 0
 	var/order_id = 0
 	var/errors = 0
+	color = COLOR_LIGHT_ORANGE
 
 /obj/item/paper/requisition
 //	can_become_message_in_bottle = FALSE //A lot of these are spawned each round, they'd only dilute the pool and make it boring.
@@ -176,7 +177,7 @@
 
 	if(istype(container, /obj/structure/closet/crate))
 		var/obj/structure/closet/crate/crate = container
-		crate.manifest = WEAKREF(manifest_paper)
+		crate.manifest = manifest_paper
 		crate.update_appearance()
 
 	return manifest_paper
