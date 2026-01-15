@@ -91,7 +91,7 @@ const ScriptEditor = (props) => {
         <TextArea
           fluid
           value={stored_code}
-          onChange={debouncedSave}
+          onBlur={debouncedSave}
           height="100%"
         />
       ) : (
