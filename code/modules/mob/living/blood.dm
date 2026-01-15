@@ -270,7 +270,7 @@
 */
 
 /// Returns the blood datum of the mob
-/mob/living/proc/get_blood_type() as /datum/bloodtype
+/mob/living/proc/get_blood_type() as /datum/blood_type
 	if(src.get_blood_type_path())
 		return GLOB.blood_types[src.get_blood_type_path()]
 
