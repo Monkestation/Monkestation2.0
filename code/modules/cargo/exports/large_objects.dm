@@ -5,7 +5,6 @@
 	export_types = list(/obj/structure/closet/crate)
 	exclude_types = list(
 		/obj/structure/closet/crate/large,
-		/obj/structure/closet/crate/mail,
 		/obj/structure/closet/crate/wooden,
 		/datum/export/large/crate/coffin,
 		)
@@ -26,15 +25,9 @@
 	export_types = list(/obj/structure/ore_box)
 
 /datum/export/large/crate/wooden
-	cost = CARGO_CRATE_VALUE/2
+	cost = CARGO_CRATE_VALUE * 0.75 //150
 	unit_name = "wooden crate"
 	export_types = list(/obj/structure/closet/crate/wooden)
-	exclude_types = list()
-
-/datum/export/large/crate/mail
-	cost = CARGO_CRATE_VALUE/2
-	unit_name = "maile crate"
-	export_types = list(/obj/structure/closet/crate/mail)
 	exclude_types = list()
 
 /datum/export/large/crate/coffin
