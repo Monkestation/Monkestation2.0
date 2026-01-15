@@ -201,6 +201,7 @@
 
 	cleanup_beacon()
 	cleanup_limbs(current_mob)
+	current_mob.update_sight()
 
 	if(current_mob.hud_used)
 		var/datum/hud/hud_used = current_mob.hud_used
