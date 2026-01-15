@@ -1,3 +1,5 @@
+import { describe, expect, it } from 'bun:test';
+
 import { range, zip } from './collections';
 
 // Type assertions, these will lint if the types are wrong.
