@@ -6,6 +6,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		/obj/effect/portal,
 		/obj/effect/rune,
 		/obj/item/beacon,
+		/obj/item/card/id,
 		/obj/item/disk/nuclear,
 		/obj/item/gps,
 		/obj/item/hilbertshotel,
