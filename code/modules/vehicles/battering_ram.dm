@@ -33,14 +33,19 @@
 	. = ..()
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/red_key)
 
+/obj/vehicle/ridden/battering_ram/Destroy(force)
+	undo_shift_callback = null
+	return ..()
+
 /obj/vehicle/ridden/battering_ram/Bump(atom/bumped)
 	. = ..()
 	if(!istype(bumped, /obj/machinery/door))
 		return
-	var/list/current_occupants = return_occupants()
+	var/list/current_occupants = return_occupants().Copy()
 	for(var/mob/living/current_occupant as anything in current_occupants)
 		if(isnull(current_occupant.ckey))
 			return
+
 	var/mob/living/driver = return_drivers()[1]
 	if(length(current_occupants) < max_occupants)
 		driver.balloon_alert(driver, "needs second person!")
@@ -84,7 +89,10 @@
 		after_assembly.deconstruct(TRUE)
 
 /obj/vehicle/ridden/battering_ram/proc/occupants_are_same(list/compared_occupants)
-	return return_occupants() == compared_occupants
+	var/list/current_occupants = return_occupants()
+	if(length(current_occupants) < 2)
+		return FALSE
+	return (current_occupants[1] == compared_occupants[1] && current_occupants[2] == compared_occupants[2])
 
 /obj/vehicle/ridden/battering_ram/proc/move_away_from_door(atom/door_moving_away_from, list/current_occupants)
 	var/list/things_to_move = list(src) + current_occupants
@@ -116,6 +124,7 @@
 			moved.pixel_y = moved.pixel_y + y_amount
 		if(x_amount)
 			moved.pixel_x = moved.pixel_x + x_amount
+	undo_shift_callback = null
 
 #undef TIME_BETWEEN_HITS
 #undef ANIMATION_DURATION
