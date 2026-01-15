@@ -189,9 +189,9 @@
 			return ITEM_INTERACT_BLOCKING
 		attach_manifest(tool, user)
 		return ITEM_INTERACT_BLOCKING
-	if(!(tool.get_sharpness() == SHARP_EDGED))
-		return
 	if(!manifest)
+		return
+	if(!(tool.get_sharpness() == SHARP_EDGED))
 		return
 	to_chat(user, span_notice("You begin cutting [manifest] off of [src]..."))
 	if(!do_after(user, 1 SECOND, target=src))
