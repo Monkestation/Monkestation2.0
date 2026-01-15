@@ -24,7 +24,10 @@ const createStats = (verbose) => ({
 });
 
 module.exports = (env = {}, argv) => {
-  const mode = argv.mode || 'production';
+  // const mode = argv.mode || 'production';
+  // Temporary
+  const mode = "development";
+  env.NODE_ENV = "development";
   const config = {
     mode: mode === 'production' ? 'production' : 'development',
     context: path.resolve(__dirname),

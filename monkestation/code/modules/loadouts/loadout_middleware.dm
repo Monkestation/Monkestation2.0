@@ -12,8 +12,10 @@
 	)
 
 /datum/preference_middleware/loadout/get_ui_static_data()
+	#ifndef UNIT_TESTS
 	if (preferences.current_window != PREFERENCE_WINDOW_CHARACTERS)
 		return list()
+	#endif
 	// [name] is the name of the tab that contains all the corresponding contents.
 	// [title] is the name at the top of the list of corresponding contents.
 	// [contents] is a formatted list of all the possible items for that slot.
@@ -154,6 +156,7 @@
 		if(QDELETED(preferences) || QDELETED(preferences.parent))
 			return
 
+		#ifndef UNIT_TESTS
 		if(!isnull(item.ckeywhitelist)) //These checks are also performed in the backend.
 			if(!(preferences.parent_ckey in item.ckeywhitelist) && !is_admin(preferences.parent))
 				formatted_list.len--
@@ -181,7 +184,7 @@
 		if(item.requires_purchase && !(item.item_path in preferences.inventory))
 			formatted_list.len--
 			continue
-
+		#endif
 		var/atom/loadout_atom = item.item_path
 
 		var/list/formatted_item = list()

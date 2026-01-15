@@ -104,7 +104,7 @@ export const IVDrip = (props) => {
                     maxValue={maxTransferRate}
                     unit="units/sec."
                     tickWhileDragging
-                    onChange={(e, value) =>
+                    onChange={(_, value) =>
                       act('changeRate', {
                         rate: value,
                       })

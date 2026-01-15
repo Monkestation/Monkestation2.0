@@ -91,7 +91,7 @@ const ScriptEditor = (props) => {
         <TextArea
           fluid
           value={stored_code}
-          onChange={(e, val) => debouncedSave(val)}
+          onBlur={debouncedSave}
           height="100%"
         />
       ) : (
@@ -210,7 +210,7 @@ const ServerList = (props) => {
         <Input
           mb={1}
           value={network}
-          onChange={(_, value) =>
+          onChange={(value) =>
             act('set_network', {
               new_network: value,
             })

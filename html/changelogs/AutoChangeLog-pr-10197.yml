@@ -1,6 +1,0 @@
-author: "iliyaxox"
-delete-after: True
-changes:
-  - bugfix: "Fixed all instances of footprints returning as blood-red footprints: now mob will leave oil and xenoblood footprints when stepping on oil pools and xenoblood gibs, respectively."
-  - bugfix: "Living carbon xenomorphs now bleed xenoblood instead of bleeding standard red blood, and will generate xenomorph remains when gibbed."
-  - bugfix: "Clothes will be stained with xenoblood when interacting with xenomorphs, instead of standard red blood."

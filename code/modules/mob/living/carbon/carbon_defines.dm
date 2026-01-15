@@ -12,6 +12,7 @@
 	mobility_flags = MOBILITY_FLAGS_CARBON_DEFAULT
 	blocks_emissive = EMISSIVE_BLOCK_NONE
 	living_flags = ALWAYS_DEATHGASP
+	max_grab = GRAB_KILL
 	///List of [/obj/item/organ]s in the mob. They don't go in the contents for some reason I don't want to know.
 	var/list/obj/item/organ/organs = list()
 	///Same as [above][/mob/living/carbon/var/organs], but stores "slot ID" - "organ" pairs for easy access.
@@ -110,7 +111,7 @@
 	/// Stores the result of our last known top_offset generation for optimisation purposes when drawing limb icons.
 	var/last_top_offset
 
-	/// A bitfield of "bodytypes", updated by /obj/item/bodypart/proc/synchronize_bodytypes()
+	/// A bitfield of "bodytypes", updated by /mob/living/carbon/proc/synchronize_bodytypes()
 	var/bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC
 
 	var/is_leaning = FALSE

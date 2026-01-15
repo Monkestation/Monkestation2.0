@@ -256,7 +256,7 @@ export const OpposingForceTab = (props) => {
             value={backstory}
             maxLength={2000}
             width="100%"
-            onChange={(_e, value) =>
+            onChange={(value) =>
               act('set_backstory', {
                 backstory: value,
               })
@@ -361,7 +361,7 @@ export const OpposingForceObjectives = (props) => {
                       placeholder="blank objective"
                       value={selectedObjective.title}
                       maxLength={64}
-                      onChange={(e, value) =>
+                      onChange={(value) =>
                         act('set_objective_title', {
                           objective_ref: selectedObjective.ref,
                           title: value,
@@ -385,7 +385,7 @@ export const OpposingForceObjectives = (props) => {
                       format={(value) => round(value)}
                       minValue={0}
                       maxValue={500}
-                      onChange={(e, value) =>
+                      onChange={(_, value) =>
                         act('set_objective_intensity', {
                           objective_ref: selectedObjective.ref,
                           new_intensity_level: value,
@@ -478,7 +478,7 @@ export const OpposingForceObjectives = (props) => {
                       height="85px"
                       maxLength={1000}
                       value={selectedObjective.description}
-                      onChange={(e, value) =>
+                      onChange={(value) =>
                         act('set_objective_description', {
                           objective_ref: selectedObjective.ref,
                           new_desciprtion: value,
@@ -505,7 +505,7 @@ export const OpposingForceObjectives = (props) => {
                       width="100%"
                       value={selectedObjective.justification}
                       maxLength={1000}
-                      onChange={(e, value) =>
+                      onChange={(value) =>
                         act('set_objective_justification', {
                           objective_ref: selectedObjective.ref,
                           new_justification: value,
@@ -558,7 +558,7 @@ export const EquipmentTab = (props) => {
                           value={equipment.count}
                           minValue={1}
                           maxValue={5}
-                          onChange={(e, value) =>
+                          onChange={(value) =>
                             act('set_equipment_count', {
                               selected_equipment_ref: equipment.ref,
                               new_equipment_count: value,
@@ -595,7 +595,7 @@ export const EquipmentTab = (props) => {
                   placeholder="Reason for item"
                   value={equipment.reason}
                   maxLength={1000}
-                  onChange={(e, value) =>
+                  onChange={(value) =>
                     act('set_equipment_reason', {
                       selected_equipment_ref: equipment.ref,
                       new_equipment_reason: value,
@@ -671,7 +671,7 @@ export const AdminChatTab = (props) => {
           placeholder="Send a message or command using '/'"
           mt={1}
           maxLength={1024}
-          onEnter={(e, value) =>
+          onEnter={(value) =>
             act('send_message', {
               message: value,
             })

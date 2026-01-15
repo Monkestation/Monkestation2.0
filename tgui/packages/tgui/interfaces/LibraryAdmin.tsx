@@ -136,7 +136,7 @@ const SearchAndDisplay = (props) => {
                 value={book_id.toString()}
                 placeholder={`${book_id === null ? 'ID' : book_id}`}
                 width="70px"
-                onChange={(e, value) =>
+                onChange={(value) =>
                   act('set_search_id', {
                     id: value,
                   })
@@ -159,7 +159,7 @@ const SearchAndDisplay = (props) => {
                 value={title}
                 placeholder={title || 'Title'}
                 mt={0.5}
-                onChange={(e, value) =>
+                onChange={(value) =>
                   act('set_search_title', {
                     title: value,
                   })
@@ -171,7 +171,7 @@ const SearchAndDisplay = (props) => {
                 value={author}
                 placeholder={author || 'Author'}
                 mt={0.5}
-                onChange={(e, value) =>
+                onChange={(value) =>
                   act('set_search_author', {
                     author: value,
                   })
@@ -183,7 +183,7 @@ const SearchAndDisplay = (props) => {
                 value={author_ckey}
                 placeholder={author_ckey || 'Ckey'}
                 mt={0.5}
-                onChange={(e, value) =>
+                onChange={(value) =>
                   act('set_search_ckey', {
                     ckey: value,
                   })
@@ -385,7 +385,7 @@ const ModifyPage = (props) => {
         width="100%"
         backgroundColor="black"
         textColor="white"
-        onChange={(e, value) => setReason(value)}
+        onChange={(value) => setReason(value)}
       />
       <Stack justify="center" align="center" pt={1} pb={1}>
         <Stack.Item>

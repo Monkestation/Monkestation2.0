@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - image: "Opening/closing normal and reinforced false walls now has a proper animation."
