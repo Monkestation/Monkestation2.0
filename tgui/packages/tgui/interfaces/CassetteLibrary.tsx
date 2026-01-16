@@ -4,6 +4,7 @@ import {
   Box,
   Button,
   DmIcon,
+  Dropdown,
   Icon,
   Input,
   Section,
@@ -59,6 +60,14 @@ type CassetteLibraryData = {
   top_cassettes: TopCassetteData[];
 };
 
+const SortOptions: { displayText: string; value: keyof CassetteData }[] = [
+  { displayText: 'Name', value: 'name' },
+  { displayText: 'Author', value: 'author_name' },
+  { displayText: 'Author (Ckey)', value: 'author_ckey' },
+  { displayText: 'Description', value: 'desc' },
+  { displayText: 'Date', value: 'approved_time' },
+];
+
 export const CassetteLibrary = (props) => {
   const { act, data } = useBackend<CassetteLibraryData>();
   const {
@@ -85,6 +94,9 @@ export const CassetteLibrary = (props) => {
   const [activeTab, setActiveTab] = useState<MainTab>(MainTab.Search);
   const [historyTab, setHistoryTab] = useState<HistoryTab>(HistoryTab.Personal);
 
+  const [sortBy, setSortBy] = useState<keyof CassetteData>('approved_time');
+  const [sortDir, setSortDir] = useState<'asc' | 'desc'>('desc');
+
   const lowerCassettes = useMemo(() => {
     return cassettes.map((cassette) => ({
       ...cassette,
@@ -92,38 +104,61 @@ export const CassetteLibrary = (props) => {
       _lcAuthorName: cassette.author_name.toLowerCase(),
       _lcAuthorCkey: cassette.author_ckey.toLowerCase(),
       _lcDesc: cassette.desc.toLowerCase(),
-      submitted_time: new Date(
-        Number.parseFloat(cassette.submitted_time),
-      ).getTime(),
+      // prefer approved time over submitted time if possible
+      // cause of how our cassette data was originally
       approved_time: cassette.approved_time
         ? new Date(Number.parseFloat(cassette.approved_time)).getTime()
-        : null,
+        : cassette.submitted_time
+          ? new Date(Number.parseFloat(cassette.submitted_time)).getTime()
+          : 0,
     }));
   }, [cassettes]);
 
   const filteredCassettes = useMemo(() => {
-    if (!searchQuery) {
-      return lowerCassettes.sort((a, b) => {
-        const timeA = a.approved_time || a.submitted_time;
-        const timeB = b.approved_time || b.submitted_time;
-        return timeB - timeA;
-      });
-    }
-    const query = searchQuery.toLowerCase();
-    return lowerCassettes
-      .filter(
+    let result = [...lowerCassettes];
+
+    // filter
+    if (searchQuery && searchQuery.trim().length >= 2) {
+      const query = searchQuery.toLowerCase();
+      result = result.filter(
         (cassette) =>
           cassette._lcName.includes(query) ||
           cassette._lcAuthorName.includes(query) ||
           cassette._lcAuthorCkey.includes(query) ||
           cassette._lcDesc.includes(query),
-      )
-      .sort((a, b) => {
-        const timeA = a.approved_time || a.submitted_time;
-        const timeB = b.approved_time || b.submitted_time;
-        return timeB - timeA;
-      });
-  }, [lowerCassettes, searchQuery]);
+      );
+    }
+
+    // sort
+    return result.sort((a, b) => {
+      let valA, valB;
+
+      switch (sortBy) {
+        case 'name':
+          valA = a._lcName;
+          valB = b._lcName;
+          break;
+        case 'author_name':
+          valA = a._lcAuthorName;
+          valB = b._lcAuthorName;
+          break;
+        case 'desc':
+          valA = a._lcDesc;
+          valB = b._lcDesc;
+          break;
+        case 'approved_time':
+        default:
+          valA = a.approved_time || a.submitted_time;
+          valB = b.approved_time || b.submitted_time;
+          break;
+      }
+
+      if (valA === valB) return 0;
+
+      const comparison = valA > valB ? 1 : -1;
+      return sortDir === 'asc' ? comparison : -comparison;
+    });
+  }, [lowerCassettes, searchQuery, sortBy, sortDir]);
 
   // if no search is active, show the latest 20 approved cassettes
   const displayedCassettes = searchQuery
@@ -131,7 +166,7 @@ export const CassetteLibrary = (props) => {
     : filteredCassettes.slice(0, 20);
 
   return (
-    <Window title="Cassette Library" width={700} height={600}>
+    <Window title="Cassette Library" width={650} height={950}>
       <Window.Content scrollable>
         <Stack fill vertical>
           <Stack.Item>
@@ -200,20 +235,50 @@ export const CassetteLibrary = (props) => {
             <>
               <Stack.Item>
                 <Section title="Search Cassettes">
-                  <Input
-                    fluid
-                    placeholder="Search by name, author, or description..."
-                    value={searchQuery}
-                    onChange={(value) => setSearchQuery(value)}
-                    autoFocus
-                    expensive
-                  />
-                  {searchQuery && (
-                    <Box mt={1} color="label">
-                      Found {filteredCassettes.length} cassette
-                      {filteredCassettes.length !== 1 ? 's' : ''}
-                    </Box>
-                  )}
+                  <Stack>
+                    <Stack.Item grow>
+                      <Input
+                        fluid
+                        placeholder="Search..."
+                        value={searchQuery}
+                        onChange={(value) => setSearchQuery(value)}
+                        expensive
+                      />
+                    </Stack.Item>
+                    <Stack.Item>
+                      <Stack align="center">
+                        <Stack.Item>
+                          <Dropdown
+                            selected={sortBy}
+                            options={SortOptions}
+                            displayText={(() => {
+                              const option = SortOptions.find(
+                                (opt) => opt.value === sortBy,
+                              );
+                              return `Sort by: ${
+                                option ? option.displayText : (sortBy as string)
+                              }`;
+                            })()}
+                            onSelected={(value) => setSortBy(value)}
+                          />
+                        </Stack.Item>
+                        <Stack.Item>
+                          <Button
+                            icon={
+                              sortDir === 'asc'
+                                ? 'sort-amount-up'
+                                : 'sort-amount-down'
+                            }
+                            onClick={() =>
+                              setSortDir(sortDir === 'asc' ? 'desc' : 'asc')
+                            }
+                          >
+                            {sortDir.toUpperCase()}
+                          </Button>
+                        </Stack.Item>
+                      </Stack>
+                    </Stack.Item>
+                  </Stack>
                 </Section>
               </Stack.Item>
 
