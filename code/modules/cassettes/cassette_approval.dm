@@ -96,7 +96,8 @@ GLOBAL_ALIST_EMPTY(cassette_reviews)
 			. = TRUE
 			action_taken = TRUE
 			cassette_data.status = CASSETTE_STATUS_DENIED
-			cassette_data.deleted_by = user.ckey
+			cassette_data.deleted_ckey = user.ckey
+			cassette_data.deleted_time = rustg_unix_timestamp()
 			tape.cassette_data = cassette_data.copy()
 			log_admin("[key_name(user)] has DENIED [submitter_ckey]'s submitted tape \"[cassette_data.name]\" ([cassette_data.id])")
 			message_admins("[key_name(user)] has DENIED [submitter_ckey]'s submitted tape \"[cassette_data.name]\" ([cassette_data.id])")
