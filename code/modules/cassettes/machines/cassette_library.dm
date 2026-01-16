@@ -119,6 +119,8 @@ GLOBAL_LIST_EMPTY(self_cassette_purchases)
 			"desc" = html_decode(cassette.desc),
 			"author_name" = cassette.author.name,
 			"author_ckey" = cassette.author.ckey,
+			"submitted_time" = cassette.submitted_time,
+			"approved_time" = cassette.approved_time,
 			"icon" = 'icons/obj/cassettes/walkman.dmi',
 			"icon_state" = icon_state
 		))
