@@ -460,7 +460,7 @@
 	*/
 	visible_message(span_notice("\The [src] prints a growth dish."))
 	balloon_alert_to_viewers("growth dish printed")
-	addtimer(CALLBACK(src, PROC_REF(finish_print_dish), disease), 1 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(finish_print_dish), disease.Copy()), 1 SECONDS)
 
 /obj/machinery/disease2/centrifuge/proc/finish_print_dish(datum/disease/acute/disease)
 	var/obj/item/weapon/virusdish/dish = new(drop_location())
@@ -468,7 +468,7 @@
 		balloon_alert_to_viewers("activating virus sample")
 		disease.disease_flags &= ~DISEASE_DORMANT
 		disease.randomize_spread()
-	dish.contained_virus = disease.Copy()
+	dish.contained_virus = disease
 	dish.contained_virus.infectionchance = dish.contained_virus.infectionchance_base
 	dish.update_appearance()
 	dish.name = "growth dish (Unknown [dish.contained_virus.form])"
