@@ -18,13 +18,10 @@ In any query remember to add a prefix to the table names if you use one.
 
 ---
 
-Version 6.1 6 January 2026, by
-Add `cassette
+Version 6.1 6 January 2026, by iliyaxox
+Add `cassette_purchases` table
 
 ```sql
---
--- Table structure for table `cassette_purchases`
---
 CREATE TABLE `cassette_purchases` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `cassette_id` VARCHAR(32) NOT NULL,
@@ -341,7 +338,7 @@ CREATE TABLE `text_adventures` (
 	`adventure_data` LONGTEXT NOT NULL,
 	`uploader` VARCHAR(32) NOT NULL,
 	`timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	`approved` TINYINT(1) NOT NULL DEFAULT FALSE,
+	`approved` TINYINT NOT NULL DEFAULT FALSE,
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
 ```

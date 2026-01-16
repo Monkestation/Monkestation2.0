@@ -295,7 +295,6 @@ CREATE TABLE IF NOT EXISTS `cassette_purchases` (
   KEY `idx_purchase_date` (`purchase_date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
 -- Table structure for table `messages`
 --
 
