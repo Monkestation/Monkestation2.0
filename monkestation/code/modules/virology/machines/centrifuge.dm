@@ -150,8 +150,8 @@
 				. += mutable_appearance(icon, "centrifuge_special_update")
 				special = CENTRIFUGE_LIGHTSPECIAL_ON
 			if (CENTRIFUGE_LIGHTSPECIAL_ON)
-				. += emissive_appearance(icon, "centrifuge_special", src)
-				. += mutable_appearance(icon, "centrifuge_special_e")
+				. += emissive_appearance(icon, "centrifuge_special_e", src)
+				. += mutable_appearance(icon, "centrifuge_special")
 
 	for (var/i = 1 to length(tubes))
 		var/obj/item/reagent_containers/cup/tube/tube = tubes[i]
