@@ -6,6 +6,12 @@
 
 	var/obj/item/reagent_containers/cup/tube/container = null
 
+/obj/machinery/computer/curer/Destroy()
+	if(!QDELETED(container))
+		container.forceMove(drop_location())
+	container = null
+	return ..()
+
 /obj/machinery/computer/curer/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/reagent_containers/cup/tube))
 		if(!container && tool.forceMove(src))

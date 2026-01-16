@@ -1,13 +1,17 @@
 /obj/machinery/disease2/isolator
 	name = "Pathogenic Isolator"
 	desc = "Takes a syringe of blood, and isolates the pathogens inside into a dish."
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	icon = 'monkestation/code/modules/virology/icons/virology.dmi'
 	icon_state = "isolator"
 	var/datum/disease/acute/isolated_disease = null
 	var/isolating = 0
 	var/beaker = null
+
+/obj/machinery/disease2/isolator/Destroy()
+	isolated_disease = null
+	return ..()
 
 /obj/machinery/disease2/isolator/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!istype(tool, /obj/item/reagent_containers/syringe))

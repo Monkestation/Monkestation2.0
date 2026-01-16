@@ -24,6 +24,13 @@
 	///the slot we are set to grab from
 	var/target_slot = 1
 
+/obj/machinery/computer/diseasesplicer/Destroy()
+	if(!QDELETED(dish))
+		dish.forceMove(drop_location())
+	dish = null
+	memorybank = null
+	return ..()
+
 /obj/machinery/computer/diseasesplicer/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(isvirusdish(tool))
 		if(dish)
