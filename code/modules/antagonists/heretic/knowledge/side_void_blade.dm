@@ -46,6 +46,20 @@
 		selected_atoms += body
 		return TRUE
 
+	var/obj/item/organ/internal/brain/slime/slime_core = locate() in atoms
+	if(slime_core)
+		if(!slime_core.mind)
+			to_chat(user, span_hierophant_warning("[slime_core] is mindless and cannot be made into a ghoul."))
+		else if(!slime_core.brainmob?.client && !slime_core.brainmob?.get_ghost(ghosts_with_clients = TRUE))
+			to_chat(user, span_hierophant_warning("[slime_core] is soulless and cannot be made into a ghoul."))
+		else
+			var/mob/living/carbon/human/new_slime_body = slime_core.rebuild_body(nugget = FALSE, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
+			if(!QDELETED(new_slime_body))
+				// ELSE THE CORE GETS DELETED AND WEIRD SHIT HAPPENS
+				atoms -= slime_core
+				selected_atoms += new_slime_body
+				return TRUE
+
 	loc.balloon_alert(user, "ritual failed, no valid body!")
 	return FALSE
 
