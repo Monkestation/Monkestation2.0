@@ -32,7 +32,7 @@
 
 	var/datum/objective/master_obj = new()
 	master_obj.owner = owner
-	master_obj.explanation_text = "Assist your master, [master.name || master.current?.real_name || master.current?.name]"
+	master_obj.explanation_text = "Assist your master, [master.name || master.current?.real_name || master.current?.name]."
 	master_obj.completed = TRUE
 
 	objectives += master_obj
