@@ -160,7 +160,7 @@
 		. += mutable_appearance(icon, "centrifuge_vial[i][on ? "_moving" : ""]")
 		if(tube.reagents.total_volume)
 			var/mutable_appearance/filling = mutable_appearance(icon, "centrifuge_vial[i]_filling[on ? "_moving" : ""]")
-			filling.icon += mix_color_from_reagents(tube.reagents.reagent_list)
+			filling.color = mix_color_from_reagents(tube.reagents.reagent_list)
 			. += filling
 
 /obj/machinery/disease2/centrifuge/on_set_machine_stat(old_value)
