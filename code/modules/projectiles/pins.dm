@@ -440,6 +440,7 @@
 		/area/station/cargo/sorting,
 		/area/station/cargo/quartermaster,
 		/area/station/cargo/lobby,
+		/area/station/cargo/drone_bay,
 		)
 
 //Checks to see if the user in cargo or it's warehouse
