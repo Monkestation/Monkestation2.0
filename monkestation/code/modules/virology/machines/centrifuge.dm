@@ -41,10 +41,24 @@
 
 	var/special = CENTRIFUGE_LIGHTSPECIAL_OFF
 
-/obj/machinery/disease2/centrifuge/New()
+/obj/machinery/disease2/centrifuge/Initialize(mapload)
 	. = ..()
-
 	RefreshParts()
+
+/obj/machinery/disease2/centrifuge/Destroy()
+	for (var/i = 1 to length(tubes))
+		var/obj/item/reagent_containers/cup/tube/tube = tubes[i]
+		tube?.forceMove(drop_location())
+	tubes = list(null,null,null,null)
+	tube_valid = list(0,0,0,0)
+	tube_task = list(
+		list(0,0,0,0,0,),
+		list(0,0,0,0,0,),
+		list(0,0,0,0,0,),
+		list(0,0,0,0,0,),
+		)
+	special = CENTRIFUGE_LIGHTSPECIAL_OFF
+	return ..()
 
 /obj/machinery/disease2/centrifuge/RefreshParts()
 	. = ..()
@@ -120,7 +134,7 @@
 	. = ..()
 	if(is_operational)
 		if(on)
-			. += emissive_appearance(icon,"centrifuge-emisisve", src)
+			. += emissive_appearance(icon, "centrifuge-emisisve", src)
 			var/mutable_appearance/centrifuge_glow = emissive_appearance(icon, "centrifuge_glow_e", src)
 			centrifuge_glow.blend_mode = BLEND_ADD
 			. += centrifuge_glow
@@ -134,7 +148,7 @@
 				. += mutable_appearance(icon, "centrifuge_special_update")
 				special = CENTRIFUGE_LIGHTSPECIAL_ON
 			if (CENTRIFUGE_LIGHTSPECIAL_ON)
-				. += emissive_appearance(icon ,"centrifuge_special", src)
+				. += emissive_appearance(icon, "centrifuge_special", src)
 				. += mutable_appearance(icon, "centrifuge_special_e")
 
 	for (var/i = 1 to length(tubes))
@@ -188,7 +202,7 @@
 			for(var/datum/reagent/blood in tube.reagents.reagent_list)
 				if(length(blood.data) && blood.data["viruses"])
 					var/list/blood_diseases = blood.data["viruses"]
-					if (blood_diseases && blood_diseases.len > 0)
+					if (length(blood_diseases) > 0)
 						dat += "<A href='byond://?src=\ref[src];ejectvial=[slot]'>[tube.name] (pathogen detected)</a> <A href='byond://?src=\ref[src];isolate=[slot]'>ISOLATE TO DISH</a> [valid ? "<A href='byond://?src=\ref[src];synthvaccine=[slot]'>SYNTHESIZE VACCINE</a>" : "(not enough antibodies for a vaccine)"]"
 					else
 						dat += "<A href='byond://?src=\ref[src];ejectvial=[slot]'>[tube.name] (no pathogen detected)</a> [valid ? "<A href='byond://?src=\ref[src];synthvaccine=[slot]'>SYNTHESIZE VACCINE</a>" : "(not enough antibodies for a vaccine)"]"
@@ -381,7 +395,7 @@
 	for(var/datum/reagent/blood in tube.reagents.reagent_list)
 		if (blood && length(blood.data) && ("viruses" in blood.data))
 			var/list/blood_viruses = blood.data["viruses"]
-			if (istype(blood_viruses) && blood_viruses.len > 0)
+			if (islist(blood_viruses) && length(blood_viruses) > 0)
 				var/list/pathogen_list = list()
 				for (var/datum/disease/acute/D as anything  in blood_viruses)
 					if(!istype(D))
@@ -413,7 +427,7 @@
 	for(var/datum/reagent/blood in tube.reagents.reagent_list)
 		if (blood && length(blood.data) &&("immunity" in blood.data))
 			var/list/immune_system = blood.data["immunity"]
-			if (istype(immune_system) && immune_system.len > 0)
+			if (islist(immune_system) && length(immune_system) > 0)
 				if (immune_system[1] < 1)
 					to_chat(user,span_warning("Impossible to acquire antibodies from this blood sample. It seems that it came from a donor with a poor immune system, either due to recent cloning or a radium overload.") )
 					return result
@@ -431,7 +445,7 @@
 						else
 							antibody_choices["[antibody] (Expected Duration: one minute)"] = antibody
 
-				if (antibody_choices.len <= 0)
+				if (length(antibody_choices) <= 0)
 					to_chat(user,span_warning("Impossible to create a vaccine from this blood sample. Antibody levels too low. Minimal level = 30%. The higher the concentration, the faster the vaccine is synthesized.") )
 					return result
 
@@ -472,21 +486,6 @@
 	dish.contained_virus.infectionchance = dish.contained_virus.infectionchance_base
 	dish.update_appearance()
 	dish.name = "growth dish (Unknown [dish.contained_virus.form])"
-
-/obj/machinery/disease2/centrifuge/Destroy()
-	for (var/i = 1 to length(tubes))
-		var/obj/item/reagent_containers/cup/tube/tube = tubes[i]
-		tube?.forceMove(drop_location())
-	tubes = list(null,null,null,null)
-	tube_valid = list(0,0,0,0)
-	tube_task = list(
-		list(0,0,0,0,0,),
-		list(0,0,0,0,0,),
-		list(0,0,0,0,0,),
-		list(0,0,0,0,0,),
-		)
-	special = CENTRIFUGE_LIGHTSPECIAL_OFF
-	return ..()
 
 /obj/machinery/disease2/centrifuge/fullupgrade
 	circuit = /obj/item/circuitboard/machine/centrifuge/fullupgrade
