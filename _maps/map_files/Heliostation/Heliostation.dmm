@@ -62346,14 +62346,6 @@
 /obj/effect/landmark/navigate_destination/chapel,
 /turf/open/floor/carpet,
 /area/station/service/chapel)
-"qFw" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "hopqueue";
-	name = "HoP Queue Shutters"
-	},
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/station/hallway/secondary/command)
 "qFQ" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/light/small/directional/east,
@@ -118788,7 +118780,7 @@ wld
 rpX
 nGr
 fRz
-qFw
+oAm
 koK
 cOl
 nvp
