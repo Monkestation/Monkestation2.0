@@ -206,9 +206,8 @@
 			playsound(src, 'sound/machines/click.ogg', vol = 50, vary = TRUE, mixer_channel = CHANNEL_MACHINERY)
 			dish_datum.dish.forceMove(drop_location())
 			dish_data[i] = null
+			update_appearance(UPDATE_OVERLAYS)
 			sleep(0.1 SECONDS)
-
-		update_appearance(UPDATE_OVERLAYS)
 
 	if(.)
 		return

@@ -7,6 +7,8 @@
 	name = "isolation centrifuge"
 	desc = "Used to isolate pathogen and antibodies in blood. Make sure to keep the tubes balanced when spinning for optimal efficiency."
 	icon = 'monkestation/code/modules/virology/icons/virology.dmi'
+
+	base_icon_state = "centrifuge"
 	icon_state = "centrifuge"
 	density = TRUE
 	anchored = TRUE
@@ -52,32 +54,32 @@
 	base_efficiency = 1 + upgrade_efficiency * (manipcount-2)
 
 /obj/machinery/disease2/centrifuge/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/reagent_containers/cup/tube))
+		return NONE
+
 	if(machine_stat & (BROKEN))
 		to_chat(user, span_warning("\The [src] is broken. Some components will have to be replaced before it can work again.") )
 		return NONE
 
-	if(!istype(tool, /obj/item/reagent_containers/cup/tube))
-		return NONE
-
 	special = CENTRIFUGE_LIGHTSPECIAL_OFF
 	if(on)
-		to_chat(user,span_warning("You cannot add or remove tubes while the centrifuge is active. Turn it Off first.") )
+		to_chat(user,span_warning("You cannot add or remove tubes while the centrifuge is active. Turn it off first."))
 		return ITEM_INTERACT_BLOCKING
 	var/obj/item/reagent_containers/cup/tube/inserting_tube = tool
 	for(var/to_insert in 1 to length(tubes))
-		if(tubes[to_insert] != null)
+		if(!isnull(tubes[to_insert]))
 			continue
+		if(!user.transferItemToLoc(inserting_tube, src))
+			return
 		tubes[to_insert] = inserting_tube
 		tube_valid[to_insert] = tube_has_antibodies(inserting_tube)
 		visible_message(span_notice("\The [user] adds \the [inserting_tube] to \the [src]."),span_notice("You add \the [inserting_tube] to \the [src]."))
-		playsound(loc, 'sound/machines/click.ogg', 50, 1)
-		user.transferItemToLoc(inserting_tube, loc)
-		inserting_tube.forceMove(src)
-		update_appearance()
+		playsound(src, 'sound/machines/click.ogg', vol = 50, vary = TRUE, mixer_channel = CHANNEL_MACHINERY)
+		update_appearance(UPDATE_OVERLAYS)
 		updateUsrDialog()
 		return ITEM_INTERACT_SUCCESS
 
-	to_chat(user,span_warning("There is no room for more tubes.") )
+	to_chat(user, span_warning("There is no room for more tubes."))
 	return ITEM_INTERACT_BLOCKING
 
 /obj/machinery/disease2/centrifuge/proc/tube_has_antibodies(obj/item/reagent_containers/cup/tube/tube)
@@ -85,64 +87,69 @@
 		return FALSE
 
 	for(var/datum/reagent/blood in tube.reagents.reagent_list)
-		if (blood && length(blood.data) && ("immunity" in blood.data))
+		if (length(blood?.data) && ("immunity" in blood.data))
 			var/list/immune_system = blood.data["immunity"]
-			if (istype(immune_system) && immune_system.len > 0)
+			if (islist(immune_system) && length(immune_system) > 0)
 				var/list/antibodies = immune_system[2]
 				for (var/antibody in antibodies)
 					if (antibodies[antibody] >= 30)
 						return TRUE
 
 //Also handles luminosity
-/obj/machinery/disease2/centrifuge/update_icon()
-	. = ..()
-	icon_state = "centrifuge"
-
-	if (machine_stat & (NOPOWER))
-		icon_state = "centrifuge0"
-
-	if (machine_stat & (BROKEN))
-		icon_state = "centrifugeb"
-
-	if(machine_stat & (BROKEN|NOPOWER))
-		set_light(0)
+/obj/machinery/disease2/centrifuge/update_icon_state()
+	if (machine_stat & NOPOWER)
+		icon_state = "[base_icon_state]0"
+	else if (machine_stat & BROKEN)
+		icon_state = "[base_icon_state]b"
+	else if(on)
+		icon_state = "[base_icon_state]_moving"
 	else
-		if (on)
-			icon_state = "centrifuge_moving"
-			set_light(2,2)
-		else
-			set_light(2,1)
+		icon_state = base_icon_state
+	return ..()
+
+/obj/machinery/disease2/centrifuge/update_appearance(updates)
+	. = ..()
+	if(!is_operational)
+		set_light(0)
+	else if(on)
+		set_light(2, 2)
+	else
+		set_light(2, 1)
 
 /obj/machinery/disease2/centrifuge/update_overlays()
 	. = ..()
-	if(!(machine_stat & (BROKEN|NOPOWER)))
+	if(is_operational)
 		if(on)
-			var/mutable_appearance/centrifuge_light = emissive_appearance(icon,"centrifuge-emisisve",src)
-			.+= centrifuge_light
-			var/mutable_appearance/centrifuge_glow = emissive_appearance(icon,"centrifuge_glow",src)
+			. += emissive_appearance(icon,"centrifuge-emisisve", src)
+			var/mutable_appearance/centrifuge_glow = emissive_appearance(icon, "centrifuge_glow_e", src)
 			centrifuge_glow.blend_mode = BLEND_ADD
-			.+= centrifuge_glow
-			var/mutable_appearance/centrifuge_glow_n = mutable_appearance(icon,"centrifuge_glow",src)
-			centrifuge_glow.blend_mode = BLEND_ADD
-			.+= centrifuge_glow_n
+			. += centrifuge_glow
+
+			var/mutable_appearance/centrifuge_glow_n = mutable_appearance(icon, "centrifuge_glow")
+			. += centrifuge_glow_n
 
 		switch (special)
 			if (CENTRIFUGE_LIGHTSPECIAL_BLINKING)
-				.+= emissive_appearance(icon,"centrifuge_special_update",src)
-				.+= mutable_appearance(icon,"centrifuge_special_update",src)
+				. += emissive_appearance(icon, "centrifuge_special_update_e", src)
+				. += mutable_appearance(icon, "centrifuge_special_update")
 				special = CENTRIFUGE_LIGHTSPECIAL_ON
 			if (CENTRIFUGE_LIGHTSPECIAL_ON)
-				.+= emissive_appearance(icon,"centrifuge_special",src)
-				.+= mutable_appearance(icon,"centrifuge_special_update",src)
+				. += emissive_appearance(icon ,"centrifuge_special", src)
+				. += mutable_appearance(icon, "centrifuge_special_e")
 
-	for (var/i = 1 to tubes.len)
-		if(tubes[i])
-			var/obj/item/reagent_containers/cup/tube/tube = tubes[i]
-			.+= mutable_appearance(icon, "centrifuge_vial[i][on ? "_moving" : ""]",src)
-			if(tube.reagents.total_volume)
-				var/mutable_appearance/filling = mutable_appearance(icon, "centrifuge_vial[i]_filling[on ? "_moving" : ""]",src)
-				filling.icon += mix_color_from_reagents(tube.reagents.reagent_list)
-				.+= filling
+	for (var/i = 1 to length(tubes))
+		var/obj/item/reagent_containers/cup/tube/tube = tubes[i]
+		if(!tube)
+			continue
+		. += mutable_appearance(icon, "centrifuge_vial[i][on ? "_moving" : ""]")
+		if(tube.reagents.total_volume)
+			var/mutable_appearance/filling = mutable_appearance(icon, "centrifuge_vial[i]_filling[on ? "_moving" : ""]")
+			filling.icon += mix_color_from_reagents(tube.reagents.reagent_list)
+			. += filling
+
+/obj/machinery/disease2/centrifuge/on_set_machine_stat(old_value)
+	. = ..()
+	update_appearance(UPDATE_ICON_STATE | UPDATE_OVERLAYS)
 
 /obj/machinery/disease2/centrifuge/proc/add_tube_dat(obj/item/reagent_containers/cup/tube/tube, list/tube_task = list(0,0,0,0,0), slot = 1)
 	var/dat = ""
@@ -195,16 +202,17 @@
 
 	if(machine_stat & (NOPOWER))
 		to_chat(user, span_notice("Deprived of power, \the [src] is unresponsive.") )
-		for (var/i = 1 to tubes.len)
-			if(tubes[i])
-				var/obj/item/reagent_containers/cup/tube/tube = tubes[i]
-				playsound(loc, 'sound/machines/click.ogg', 50, 1)
-				tube.forceMove(loc)
-				tubes[i] = null
-				tube_valid[i] = 0
-				tube_task[i] = list(0,0,0,0,0)
-				update_appearance()
-				sleep(1)
+		for(var/i = 1 to length(tubes))
+			var/obj/item/reagent_containers/cup/tube/tube = tubes[i]
+			if(!tube)
+				continue
+			playsound(src, 'sound/machines/click.ogg', vol = 50, vary = TRUE, mixer_channel = CHANNEL_MACHINERY)
+			tube.forceMove(drop_location())
+			tubes[i] = null
+			tube_valid[i] = 0
+			tube_task[i] = list(0,0,0,0,0)
+			update_appearance(UPDATE_OVERLAYS)
+			sleep(0.1 SECONDS)
 		return
 
 	if(.)
@@ -217,12 +225,12 @@
 	var/dat = ""
 	dat += "Power status: <A href='byond://?src=\ref[src];power=1'>[on?"On":"Off"]</a>"
 	dat += "<hr>"
-	for (var/i = 1 to tubes.len)
+	for (var/i = 1 to length(tubes))
 		if(tubes[i])
 			dat += add_tube_dat(tubes[i],tube_task[i],i)
 		else
 			dat += "<A href='byond://?src=\ref[src];insertvial=[i]'>Insert a tube</a>"
-		if(i < tubes.len)
+		if(i < length(tubes))
 			dat += "<BR>"
 	dat += "<hr>"
 
@@ -232,11 +240,11 @@
 	popup.open()
 
 /obj/machinery/disease2/centrifuge/process()
-	if(machine_stat & (NOPOWER|BROKEN))
+	if(!is_operational)
 		return
 
 	if(on)
-		use_power = 2
+		update_use_power(ACTIVE_POWER_USE)
 
 		//first of all, let's see how (un)balanced are those tubes.
 		//we're not taking reagent density into account because even my autism has its limits
@@ -259,15 +267,16 @@
 
 		efficiency = base_efficiency / (1 + tube_unbalance / 70) // which will at most double the time taken.
 
-		for (var/i = 1 to tubes.len)
+		for (var/i = 1 to length(tubes))
 			if(tubes[i])
 				var/list/v_task = tube_task[i]
 				if(v_task[1])
 					tube_task[i] = centrifuge_act(tubes[i],tube_task[i])
-	else
-		use_power = 1
 
-	update_appearance()
+		update_appearance(UPDATE_OVERLAYS)
+	else
+		update_use_power(IDLE_POWER_USE)
+
 	updateUsrDialog()
 
 /obj/machinery/disease2/centrifuge/proc/centrifuge_act(obj/item/reagent_containers/cup/tube/tube, list/tube_task = list(0,0,0,0,0))
@@ -300,13 +309,12 @@
 /obj/machinery/disease2/centrifuge/Topic(href, href_list)
 
 	if(..())
-		return 1
+		return TRUE
 
 	special = CENTRIFUGE_LIGHTSPECIAL_OFF
 
 	if (href_list["power"])
 		on = !on
-		update_appearance()
 
 	else if (href_list["insertvial"])
 		var/mob/living/user
@@ -317,17 +325,17 @@
 		var/obj/item/reagent_containers/cup/tube/tube = user.get_active_hand()
 		if (istype(tube))
 			if (on)
-				to_chat(user,span_warning("You cannot add or remove tubes while the centrifuge is active. Turn it Off first."))
+				to_chat(user, span_warning("You cannot add or remove tubes while the centrifuge is active. Turn it off first."))
 				return
 			else
 				var/i = text2num(href_list["insertvial"])
 				if (!tubes[i])
+					if(!user.transferItemToLoc(tube, src))
+						return
 					tubes[i] = tube
 					tube_valid[i] = tube_has_antibodies(tube)
-					visible_message(span_notice("\The [user] adds \the [tube] to \the [src]."),span_notice("You add \the [tube] to \the [src]."))
-					playsound(loc, 'sound/machines/click.ogg', 50, 1)
-					user.transferItemToLoc(tube, loc)
-					tube.forceMove(src)
+					visible_message(span_notice("[user] adds \the [tube] to \the [src]."), span_notice("You add \the [tube] to \the [src]."))
+					playsound(src, 'sound/machines/click.ogg', vol = 50, vary = TRUE, mixer_channel = CHANNEL_MACHINERY)
 				else
 					to_chat(user,span_warning("There is already a tube in that slot."))
 					return
@@ -443,30 +451,32 @@
 
 	return result
 
-/obj/machinery/disease2/centrifuge/proc/print_dish(datum/disease/acute/D)
+/obj/machinery/disease2/centrifuge/proc/print_dish(datum/disease/acute/disease)
 	special = CENTRIFUGE_LIGHTSPECIAL_BLINKING
+	update_appearance(UPDATE_OVERLAYS)
 	/*
 	anim(target = src, a_icon = icon, flick_anim = "centrifuge_print", sleeptime = 10)
 	anim(target = src, a_icon = icon, flick_anim = "centrifuge_print_color", sleeptime = 10, col = D.color)
 	*/
-	visible_message("\The [src] prints a growth dish.")
-	spawn(10)
-		var/obj/item/weapon/virusdish/dish = new/obj/item/weapon/virusdish(src.loc)
-		if(D.disease_flags & DISEASE_DORMANT)
-			visible_message("Activating Virus Sample")
-			D.disease_flags &= ~DISEASE_DORMANT
-			D.randomize_spread()
-		dish.contained_virus = D.Copy()
-		dish.contained_virus.infectionchance = dish.contained_virus.infectionchance_base
-		dish.update_appearance()
-		dish.name = "growth dish (Unknown [dish.contained_virus.form])"
+	visible_message(span_notice("\The [src] prints a growth dish."))
+	balloon_alert_to_viewers("growth dish printed")
+	addtimer(CALLBACK(src, PROC_REF(finish_print_dish), disease), 1 SECONDS)
 
+/obj/machinery/disease2/centrifuge/proc/finish_print_dish(datum/disease/acute/disease)
+	var/obj/item/weapon/virusdish/dish = new(drop_location())
+	if(disease.disease_flags & DISEASE_DORMANT)
+		balloon_alert_to_viewers("activating virus sample")
+		disease.disease_flags &= ~DISEASE_DORMANT
+		disease.randomize_spread()
+	dish.contained_virus = disease.Copy()
+	dish.contained_virus.infectionchance = dish.contained_virus.infectionchance_base
+	dish.update_appearance()
+	dish.name = "growth dish (Unknown [dish.contained_virus.form])"
 
 /obj/machinery/disease2/centrifuge/Destroy()
-	for (var/i = 1 to tubes.len)
-		if(tubes[i])
-			var/obj/item/reagent_containers/cup/tube/tube = tubes[i]
-			tube.forceMove(loc)
+	for (var/i = 1 to length(tubes))
+		var/obj/item/reagent_containers/cup/tube/tube = tubes[i]
+		tube?.forceMove(drop_location())
 	tubes = list(null,null,null,null)
 	tube_valid = list(0,0,0,0)
 	tube_task = list(
@@ -476,26 +486,26 @@
 		list(0,0,0,0,0,),
 		)
 	special = CENTRIFUGE_LIGHTSPECIAL_OFF
-	. = ..()
+	return ..()
 
 /obj/machinery/disease2/centrifuge/fullupgrade
 	circuit = /obj/item/circuitboard/machine/centrifuge/fullupgrade
 
-/obj/machinery/disease2/centrifuge/screwdriver_act(mob/living/user, obj/item/I)
+/obj/machinery/disease2/centrifuge/screwdriver_act(mob/living/user, obj/item/tool)
 	if(..())
 		return TRUE
 	if(on)
 		to_chat(user, span_warning("\The [src] is currently on! Please turn the machine off."))
 		return FALSE
-	return default_deconstruction_screwdriver(user, "centrifugeu", "centrifuge", I)
+	return default_deconstruction_screwdriver(user, "[base_icon_state]u", base_icon_state, tool)
 
-/obj/machinery/disease2/centrifuge/crowbar_act(mob/living/user, obj/item/I)
+/obj/machinery/disease2/centrifuge/crowbar_act(mob/living/user, obj/item/tool)
 	if(..())
 		return TRUE
-	if(on == 1)
+	if(on)
 		to_chat(user, span_warning("\The [src] is currently processing! Please wait until completion."))
 		return FALSE
-	return default_deconstruction_crowbar(I)
+	return default_deconstruction_crowbar(tool)
 
 /obj/machinery/disease2/centrifuge/attack_ai(mob/user)
 	if(!panel_open)
