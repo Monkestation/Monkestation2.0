@@ -1,5 +1,5 @@
-import { BooleanLike } from 'common/react';
-import { sendAct, useBackend, useLocalState } from '../backend';
+import type { BooleanLike } from 'common/react';
+import { useBackend, useLocalState } from '../backend';
 import {
   Box,
   Button,
@@ -28,19 +28,6 @@ type NTSLTextAreaProps = {
   height?: string;
 };
 
-const debounce = (fn: Function, delay: number) => {
-  let timer: NodeJS.Timeout;
-  return (...args: any[]) => {
-    clearTimeout(timer);
-    timer = setTimeout(() => fn(...args), delay);
-  };
-};
-
-const debouncedSave = debounce(
-  (value: string) => sendAct('save_code', { saved_code: value }),
-  300,
-);
-
 // NTSLTextArea component end
 
 type Data = {
@@ -61,17 +48,27 @@ type Server_Data = {
 };
 
 export const NTSLCoding = (props) => {
+  const { data } = useBackend<Data>();
+  const { user_name } = data;
   // Make sure we don't start larger than 50%/80% of screen width/height.
-  const winWidth = Math.min(900, window.screen.availWidth * 0.5);
-  const winHeight = Math.min(600, window.screen.availHeight * 0.8);
+  const winWidth = Math.min(
+    user_name ? 900 : 250,
+    window.screen.availWidth * 0.5,
+  );
+  const winHeight = Math.min(
+    user_name ? 600 : 240,
+    window.screen.availHeight * 0.8,
+  );
 
   return (
     <Window title="Traffic Control Console" width={winWidth} height={winHeight}>
       <Window.Content>
         <Stack fill>
-          <Stack.Item width={winWidth - 240}>
-            <ScriptEditor />
-          </Stack.Item>
+          {user_name && (
+            <Stack.Item width={winWidth - 240}>
+              <ScriptEditor />
+            </Stack.Item>
+          )}
           <Stack.Item>
             <MainMenu />
           </Stack.Item>
@@ -91,7 +88,7 @@ const ScriptEditor = (props) => {
         <TextArea
           fluid
           value={stored_code}
-          onBlur={debouncedSave}
+          onBlur={(value: string) => act('save_code', { saved_code: value })}
           height="100%"
         />
       ) : (
@@ -210,7 +207,7 @@ const ServerList = (props) => {
         <Input
           mb={1}
           value={network}
-          onChange={(value) =>
+          onBlur={(value) =>
             act('set_network', {
               new_network: value,
             })
@@ -289,29 +286,26 @@ const Guide = (props) => {
       <br />
       <br />
       NT radio filters: <br />
-      (var = filter_types.filter_name) <br />
-      # fonts <br />
+      (var = filter_types.filter_name) <br /># fonts <br />
       &quot;robot&quot; (robot) <br />
-      &quot;sans&quot; (wacky) <br />
-      # manipulation <br />
+      &quot;sans&quot; (wacky) <br /># manipulation <br />
       <i>&quot;italics&quot; (emphasis)</i> <br />
       <b>&quot;yell&quot; (loud)</b> <br />
       &quot;command_headset&quot; (commanding) <br />
       <br /> {/* Btw, clown is also allowed. But we don't tell them that */}
       <br />
       NT Readable languages: <br />
-      (var = languages.language_name) <br />
-      1 (human) <br />
-      2 (monkey) <br />
-      4 (robot) <br />
-      8 (draconic) <br />
+      (var = languages.language_name) <br />1 (human) <br />2 (monkey) <br />4
+      (robot) <br />8 (draconic) <br />
       16 (beachtounge) <br />
       32 (sylvan) <br />
       64 (etherean) <br />
       128 (bonespeak) <br />
       256 (mothian) <br />
       512 (cat) <br />
-      1024 (english) <br />
+      1024 (ash) <br />
+      2048 (torii) <br />
+      4096 (uncommon) <br />
     </Section>
   );
 };
