@@ -7,7 +7,7 @@
 /datum/antagonist/on_gain()
 	. = ..()
 	if(remove_from_manifest)
-		owner.remove_from_manifest()
+		owner.remove_from_manifest(TRUE, TRUE)
 		ADD_TRAIT(owner, TRAIT_REMOVED_FROM_MANIFEST, REF(src))
 
 /datum/antagonist/on_removal()

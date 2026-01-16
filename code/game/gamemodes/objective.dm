@@ -135,6 +135,9 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	if(!HAS_TRAIT(SSstation, STATION_TRAIT_LATE_ARRIVALS) && istype(target_area, /area/shuttle/arrival))
 		return FALSE
 
+	if(possible_target.assigned_role.job_flags & JOB_CANNOT_BE_TARGET)
+		return FALSE
+
 	return TRUE
 
 //dupe_search_range is a list of antag datums / minds / teams

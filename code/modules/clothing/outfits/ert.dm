@@ -366,7 +366,7 @@
 	suit_store = null
 	back = /obj/item/storage/backpack/ert/security
 	backpack_contents = list(
-		/obj/item/clothing/head/hats/warden/police = 1,
+		/obj/item/clothing/head/hats/warden/spacepol = 1,
 		/obj/item/storage/box/handcuffs = 1,
 	)
 	belt = /obj/item/melee/baton/telescopic
@@ -518,7 +518,7 @@
 		/obj/item/storage/medkit/regular = 1,
 		/obj/item/storage/medkit/advanced = 1,
 	)
-	belt = /obj/item/storage/belt/medical/paramedic
+	belt = /obj/item/storage/belt/medical/paramedic/full
 	glasses = /obj/item/clothing/glasses/hud/health/sunglasses
 	additional_radio = /obj/item/encryptionkey/heads/cmo
 

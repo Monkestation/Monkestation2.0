@@ -1,6 +1,6 @@
 import { SearchItem } from './types';
 import { BooleanLike } from 'common/react';
-import { Component } from 'inferno';
+import { Component } from 'react';
 import { useBackend } from '../../backend';
 import { clamp } from 'common/math';
 import { Stack, Section, Button, Input } from '../../components';
@@ -86,7 +86,7 @@ export class LootPanel extends Component<{}, LootPanelState> {
         buttons={
           <Stack align="center">
             <Input
-              onInput={(_, value) => this.setState({ searchText: value })}
+              onChange={(value) => this.setState({ searchText: value })}
               placeholder="Search items..."
               value={this.state.searchText}
             />

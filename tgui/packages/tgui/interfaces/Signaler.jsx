@@ -1,6 +1,6 @@
 import { toFixed } from 'common/math';
 import { useBackend } from '../backend';
-import { Button, Grid, NumberInput, Section } from '../components';
+import { Button, Stack, Table, NumberInput, Section } from '../components';
 import { Window } from '../layouts';
 
 export const Signaler = (props) => {
@@ -21,11 +21,11 @@ export const SignalerContent = (props) => {
   const backColor = 'rgba(0, 0, 69, 0.5)';
   return (
     <Section>
-      <Grid>
-        <Grid.Column size={1.4} color="label">
+      <Stack>
+        <Stack.Item grow size={1.4} color="label">
           Frequency:
-        </Grid.Column>
-        <Grid.Column>
+        </Stack.Item>
+        <Stack.Item>
           <NumberInput
             animate
             unit="kHz"
@@ -36,14 +36,15 @@ export const SignalerContent = (props) => {
             value={frequency / 10}
             format={(value) => toFixed(value, 1)}
             width="80px"
-            onDrag={(e, value) =>
+            tickWhileDragging
+            onChange={(value) =>
               act('freq', {
                 freq: value,
               })
             }
           />
-        </Grid.Column>
-        <Grid.Column>
+        </Stack.Item>
+        <Stack.Item>
           <Button
             ml={1.3}
             icon="sync"
@@ -54,13 +55,13 @@ export const SignalerContent = (props) => {
               })
             }
           />
-        </Grid.Column>
-      </Grid>
-      <Grid mt={0.6}>
-        <Grid.Column size={1.4} color="label">
+        </Stack.Item>
+      </Stack>
+      <Stack mt={0.6}>
+        <Stack.Item grow size={1.4} color="label">
           Code:
-        </Grid.Column>
-        <Grid.Column>
+        </Stack.Item>
+        <Stack.Item>
           <NumberInput
             animate
             step={1}
@@ -69,14 +70,15 @@ export const SignalerContent = (props) => {
             maxValue={100}
             value={code}
             width="80px"
-            onDrag={(e, value) =>
+            tickWhileDragging
+            onChange={(value) =>
               act('code', {
                 code: value,
               })
             }
           />
-        </Grid.Column>
-        <Grid.Column>
+        </Stack.Item>
+        <Stack.Item>
           <Button
             ml={1.3}
             icon="sync"
@@ -87,10 +89,10 @@ export const SignalerContent = (props) => {
               })
             }
           />
-        </Grid.Column>
-      </Grid>
-      <Grid mt={0.8}>
-        <Grid.Column>
+        </Stack.Item>
+      </Stack>
+      <Table mt={0.8}>
+        <Stack.Item>
           <Button
             mb={-0.1}
             fluid
@@ -100,8 +102,8 @@ export const SignalerContent = (props) => {
             textAlign="center"
             onClick={() => act('signal')}
           />
-        </Grid.Column>
-      </Grid>
+        </Stack.Item>
+      </Table>
     </Section>
   );
 };

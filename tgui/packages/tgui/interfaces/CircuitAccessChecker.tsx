@@ -1,12 +1,12 @@
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { LabeledList, Button } from '../components';
-import { AccessConfig } from './common/AccessConfig';
+import { AccessConfig, type Region } from './common/AccessConfig';
 import { BooleanLike } from 'common/react';
 
 type Data = {
   oneAccess: BooleanLike;
-  regions: string[];
+  regions: Region[];
   accesses: string[];
 };
 

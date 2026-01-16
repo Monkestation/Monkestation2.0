@@ -169,9 +169,10 @@ const ConfigureNumberEntry = (props) => {
       value={value}
       minValue={-50}
       maxValue={50}
-      stepPixelSize={5}
+      stepPixelSize={2}
+      step={1}
       width="39px"
-      onChange={(e, value) =>
+      onChange={(value) =>
         act('configure', {
           key: name,
           value: value,
@@ -223,7 +224,7 @@ const ConfigureListEntry = (props) => {
   const { act } = useBackend();
   return (
     <Dropdown
-      displayText={value}
+      selected={value}
       options={values}
       onSelected={(value) =>
         act('configure', {
@@ -373,7 +374,7 @@ const SuitStatusSection = (props) => {
               bad: [-Infinity, 0.3],
             }}
             style={{
-              'text-shadow': '1px 1px 0 black',
+              textShadow: '1px 1px 0 black',
             }}
           >
             {!core_name
@@ -460,7 +461,7 @@ const HardwareSection = (props) => {
   const { control, helmet, chestplate, gauntlets, boots } = data;
   const { ai_name, core_name } = data.suit_status;
   return (
-    <Section title="Hardware" style={{ 'text-transform': 'capitalize' }}>
+    <Section title="Hardware" style={{ textTransform: 'capitalize' }}>
       <LabeledList>
         <LabeledList.Item label="AI Assistant">
           {ai_name || 'No AI Detected'}
@@ -608,8 +609,8 @@ const UserStatusSection = (props) => {
           <LabeledList.Item label="Fingerprints">
             <Box
               style={{
-                'word-break': 'break-all',
-                'word-wrap': 'break-word',
+                wordBreak: 'break-all',
+                wordWrap: 'break-word',
               }}
             >
               {active ? dna_unique_identity : '???'}
@@ -620,8 +621,8 @@ const UserStatusSection = (props) => {
           <LabeledList.Item label="Enzymes">
             <Box
               style={{
-                'word-break': 'break-all',
-                'word-wrap': 'break-word',
+                wordBreak: 'break-all',
+                wordWrap: 'break-word',
               }}
             >
               {active ? dna_unique_enzymes : '???'}
@@ -671,7 +672,7 @@ const ModuleSection = (props) => {
       ) : (
         <Table>
           <Table.Row header>
-            <Table.Cell colspan={3}>Actions</Table.Cell>
+            <Table.Cell colSpan={3}>Actions</Table.Cell>
             <Table.Cell>Name</Table.Cell>
             <Table.Cell width={1} textAlign="center">
               <Button

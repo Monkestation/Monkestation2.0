@@ -1,6 +1,5 @@
 import { useBackend, useLocalState } from '../backend';
-import { Dropdown, LabeledList, Section, Stack } from '../components';
-import { Button, ButtonCheckbox } from '../components/Button';
+import { Dropdown, Button, LabeledList, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 // ---- Types ----
@@ -76,6 +75,11 @@ export const SoundQueryDebug = () => {
     (a, b) => a.channel - b.channel,
   );
 
+  const selectedClient = clients.find((e) => e.ckey === selected);
+  const titleClient = selectedClient
+    ? `${selectedClient.key} (${selectedClient.name})`
+    : selected || 'None';
+
   return (
     <Window width={750} height={550} title="SoundQuery Debug">
       <Window.Content scrollable>
@@ -83,13 +87,8 @@ export const SoundQueryDebug = () => {
           <Stack.Item>
             <Dropdown
               width="100%"
-              displayText={
-                (() => {
-                  const c = clients.find((e) => e.ckey === selected);
-                  return c ? `${c.key} (${c.name})` : selected;
-                })() || selected
-              }
-              selected={selected}
+              displayText={titleClient}
+              selected={selected || undefined}
               options={clients.map((c) => ({
                 displayText: `${c.key} (${c.name})`,
                 value: c.ckey,
@@ -100,12 +99,12 @@ export const SoundQueryDebug = () => {
 
           <Stack.Item>
             <Button onClick={clearCache}>Clear</Button>
-            <ButtonCheckbox
+            <Button.Checkbox
               checked={persistMissing}
               onClick={() => setPersistMissing(!persistMissing)}
             >
               Persist missing entries
-            </ButtonCheckbox>
+            </Button.Checkbox>
           </Stack.Item>
 
           {displayed.map((s) => {

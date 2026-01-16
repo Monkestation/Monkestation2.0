@@ -14,7 +14,7 @@ export const XenobioMarket = (_) => {
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item>
-            <Tabs style={{ 'border-radius': '5px' }}>
+            <Tabs style={{ borderRadius: '5px' }}>
               <Tabs.Tab
                 key={1}
                 selected={tabIndex === 1}
@@ -68,7 +68,7 @@ const SlimeMarket = (_) => {
           {price_row.prices.map((slime_price) => (
             <Table.Cell width="25%" key={slime_price.key}>
               {!!slime_price.price && (
-                <Section style={{ 'border-radius': '5px' }} mb="6px">
+                <Section style={{ borderRadius: '5px' }} mb="6px">
                   <Stack fill>
                     <Stack.Item>
                       <Box
@@ -77,7 +77,7 @@ const SlimeMarket = (_) => {
                           slime_price.icon,
                         ])}
                         style={{
-                          'image-rendering': 'pixelated',
+                          imageRendering: 'pixelated',
                         }}
                       />
                     </Stack.Item>
@@ -102,13 +102,13 @@ const RequestViewer = (_) => {
   return (
     <Table>
       {requests.map((request) => (
-        <Section style={{ 'border-radius': '5px' }} mb="6px" key={request.name}>
+        <Section style={{ borderRadius: '5px' }} mb="6px" key={request.name}>
           <Stack fill>
             <Stack.Item>
               <Box
                 style={{
                   transform: 'scale(2)',
-                  'image-rendering': 'pixelated',
+                  imageRendering: 'pixelated',
                 }}
                 className={classes(['xenobio_market32x32', request.icon])}
               />
@@ -136,13 +136,13 @@ const StoreViewer = (_) => {
   return (
     <Table>
       {shop_items.map((item) => (
-        <Section style={{ 'border-radius': '5px' }} mb="6px" key={item.name}>
+        <Section style={{ borderRadius: '5px' }} mb="6px" key={item.name}>
           <Stack fill>
             <Stack.Item>
               <Box
                 style={{
                   transform: 'scale(2)',
-                  'image-rendering': 'pixelated',
+                  imageRendering: 'pixelated',
                 }}
                 className={classes(['xenobio_market32x32', item.icon_state])}
               />

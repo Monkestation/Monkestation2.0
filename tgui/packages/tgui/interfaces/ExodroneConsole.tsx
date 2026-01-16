@@ -16,7 +16,7 @@ import { resolveAsset } from '../assets';
 import { formatTime } from '../format';
 import { capitalize } from 'common/string';
 import nt_logo from '../assets/bg-nanotrasen.svg';
-import { Fragment } from 'inferno';
+import { Fragment } from 'react';
 
 type ExplorationEventData = {
   name: string;
@@ -187,14 +187,14 @@ const SignalLostModal = (props) => {
       width={30}
       height={22}
       p={0}
-      style={{ 'border-radius': '5%' }}
+      style={{ borderRadius: '5%' }}
     >
       <img src={nt_logo} width={64} height={64} />
       <Box
         backgroundColor="black"
         textColor="red"
         fontSize={2}
-        style={{ 'border-radius': '-10%' }}
+        style={{ borderRadius: '-10%' }}
       >
         CONNECTION LOST
       </Box>
@@ -870,7 +870,7 @@ const ExodroneConsoleContent = (props) => {
   return (
     <Stack fill vertical>
       <Stack.Item grow>
-        <Stack vertical fill grow={2}>
+        <Stack vertical fill>
           <Stack.Item grow>
             <Stack fill>
               <Stack.Item>

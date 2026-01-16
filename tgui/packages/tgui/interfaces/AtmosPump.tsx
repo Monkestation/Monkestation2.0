@@ -32,12 +32,13 @@ export const AtmosPump = (props) => {
               <LabeledList.Item label="Transfer Rate">
                 <NumberInput
                   animated
+                  step={10}
                   value={rate}
                   width="63px"
                   unit="L/s"
                   minValue={0}
                   maxValue={max_rate}
-                  onChange={(_, value) =>
+                  onChange={(value) =>
                     act('rate', {
                       rate: value,
                     })
@@ -65,7 +66,7 @@ export const AtmosPump = (props) => {
                   minValue={0}
                   maxValue={max_pressure}
                   step={10}
-                  onChange={(_, value) =>
+                  onChange={(value) =>
                     act('pressure', {
                       pressure: value,
                     })

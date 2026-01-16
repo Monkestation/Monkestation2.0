@@ -2970,10 +2970,20 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = list(/datum/addiction/stimulants = 5)
 
-/datum/reagent/kronkus_extract/on_mob_life(mob/living/carbon/kronkus_enjoyer)
+/datum/reagent/kronkus_extract/on_mob_metabolize(mob/living/carbon/user)
 	. = ..()
-	kronkus_enjoyer.adjustOrganLoss(ORGAN_SLOT_HEART, 0.1)
-	kronkus_enjoyer.stamina.adjust(2, FALSE)
+
+	user.stamina.regen_rate += 2 * REM
+
+/datum/reagent/kronkus_extract/on_mob_end_metabolize(mob/living/carbon/user)
+	user.stamina.regen_rate -= 2 * REM
+
+	return ..()
+
+/datum/reagent/kronkus_extract/on_mob_life(mob/living/carbon/kronkus_enjoyer, seconds_per_tick)
+	. = ..()
+	kronkus_enjoyer.adjustOrganLoss(ORGAN_SLOT_HEART, 0.1 * seconds_per_tick)
+	kronkus_enjoyer.stamina.adjust(1, FALSE)
 
 /datum/reagent/brimdust
 	name = "Brimdust"
