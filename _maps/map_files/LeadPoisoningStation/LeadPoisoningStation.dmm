@@ -10939,6 +10939,30 @@
 	},
 /turf/open/floor/iron/diagonal,
 /area/station/hallway/primary/central/aft)
+"fry" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/access/any/engineering/general,
+/obj/machinery/door/airlock/multi_tile/glass{
+	name = "Westationeer Bypass"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/supply/general,
+/obj/effect/mapping_helpers/airlock/access/any/science/general,
+/obj/effect/mapping_helpers/airlock/access/any/service/hydroponics,
+/obj/effect/mapping_helpers/airlock/access/any/service/crematorium,
+/obj/effect/mapping_helpers/airlock/access/any/service/chapel_office,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/purple/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/hallway/primary/central/fore)
 "frE" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -14414,6 +14438,11 @@
 	},
 /turf/open/floor/eighties,
 /area/station/service/kitchen)
+"gZN" = (
+/obj/machinery/door/airlock/multi_tile/glass,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/plating,
+/area/station/maintenance/department/engine/atmos)
 "gZZ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -19034,31 +19063,6 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron/diagonal,
 /area/station/medical/pathology)
-"jcX" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/effect/mapping_helpers/airlock/access/any/medical/general,
-/obj/effect/mapping_helpers/airlock/access/any/command/general,
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass_large{
-	name = "Eastationeer Bypass"
-	},
-/obj/structure/sign/directions/command/directional/east{
-	pixel_x = -32;
-	pixel_y = 6
-	},
-/obj/structure/sign/directions/dorms/directional/west{
-	dir = 4;
-	pixel_y = -4
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
-/obj/effect/mapping_helpers/airlock/access/any/security/entrance,
-/obj/effect/mapping_helpers/airlock/access/any/service/general,
-/turf/open/floor/iron/diagonal,
-/area/station/hallway/primary/central/aft)
 "jdd" = (
 /obj/effect/landmark/start/assistant,
 /turf/open/floor/iron,
@@ -22868,6 +22872,10 @@
 "kWA" = (
 /turf/closed/wall/r_wall,
 /area/station/command/heads_quarters/rd)
+"kXa" = (
+/obj/machinery/cassette_library,
+/turf/open/floor/wood,
+/area/station/service/library)
 "kXc" = (
 /obj/structure/window/spawner/directional/west,
 /obj/structure/flora/bush/sparsegrass/style_random,
@@ -24404,11 +24412,6 @@
 /obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/glass/airless,
 /area/space)
-"lHN" = (
-/obj/machinery/door/airlock/glass_large,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/plating,
-/area/station/maintenance/department/engine/atmos)
 "lHU" = (
 /obj/machinery/computer/telecomms/monitor{
 	dir = 8;
@@ -25869,6 +25872,28 @@
 /obj/machinery/status_display/evac/directional/east,
 /turf/open/floor/carpet,
 /area/station/maintenance/department/crew_quarters/bar)
+"mro" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/access/any/engineering/general,
+/obj/machinery/door/airlock/multi_tile/glass{
+	name = "Westationeer Bypass"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/supply/general,
+/obj/effect/mapping_helpers/airlock/access/any/science/general,
+/obj/effect/mapping_helpers/airlock/access/any/service/hydroponics,
+/obj/effect/mapping_helpers/airlock/access/any/service/crematorium,
+/obj/effect/mapping_helpers/airlock/access/any/service/chapel_office,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/effect/turf_decal/trimline/purple/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/green/line{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/hallway/primary/central/fore)
 "msD" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -32326,14 +32351,6 @@
 /obj/item/grown/bananapeel,
 /turf/open/floor/mineral/bananium,
 /area/station/maintenance/starboard/greater)
-"pBF" = (
-/obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/north,
-/obj/vehicle/ridden/battering_ram{
-	dir = 8
-	},
-/turf/open/floor/stone,
-/area/station/ai_monitored/security/armory)
 "pBM" = (
 /obj/structure/chair/sofa/right{
 	dir = 8
@@ -37513,30 +37530,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/engine_smes)
-"rWD" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/mapping_helpers/airlock/access/any/engineering/general,
-/obj/machinery/door/airlock/glass_large{
-	name = "Westationeer Bypass"
-	},
-/obj/effect/mapping_helpers/airlock/access/any/supply/general,
-/obj/effect/mapping_helpers/airlock/access/any/science/general,
-/obj/effect/mapping_helpers/airlock/access/any/service/hydroponics,
-/obj/effect/mapping_helpers/airlock/access/any/service/crematorium,
-/obj/effect/mapping_helpers/airlock/access/any/service/chapel_office,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
-/obj/effect/turf_decal/trimline/purple/line{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/blue/line{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/station/hallway/primary/central/fore)
 "rWE" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -38750,26 +38743,6 @@
 "szc" = (
 /turf/closed/wall/r_wall,
 /area/station/security/medical)
-"szf" = (
-/obj/structure/table/wood,
-/obj/item/cassette_tape/blank{
-	pixel_y = 3;
-	pixel_x = 5
-	},
-/obj/item/cassette_tape/blank{
-	pixel_y = 3;
-	pixel_x = 5
-	},
-/obj/item/cassette_tape/blank{
-	pixel_y = 3;
-	pixel_x = 5
-	},
-/obj/item/walkman{
-	pixel_y = 4;
-	pixel_x = -6
-	},
-/turf/open/floor/wood,
-/area/station/service/library)
 "szn" = (
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/effect/turf_decal/stripes/line{
@@ -42982,6 +42955,14 @@
 /obj/effect/turf_decal/siding/wood/corner,
 /turf/open/floor/carpet/grimey,
 /area/station/service/library)
+"uxf" = (
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/vehicle/ridden/battering_ram{
+	dir = 8
+	},
+/turf/open/floor/stone,
+/area/station/ai_monitored/security/armory)
 "uxn" = (
 /obj/structure/railing{
 	dir = 4
@@ -43279,10 +43260,6 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/diagonal,
 /area/station/medical/medbay/lobby)
-"uFt" = (
-/obj/machinery/cassette_library,
-/turf/open/floor/wood,
-/area/station/service/library)
 "uFw" = (
 /obj/structure/rack,
 /obj/item/storage/medkit/combat_surgeon,
@@ -43406,6 +43383,20 @@
 "uJJ" = (
 /turf/open/floor/stone,
 /area/station/service/hydroponics)
+"uJK" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/any/command/general,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/multi_tile/glass{
+	name = "Eastationeer Bypass"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/effect/mapping_helpers/airlock/access/any/security/entrance,
+/obj/effect/mapping_helpers/airlock/access/any/service/general,
+/turf/open/floor/iron/diagonal,
+/area/station/hallway/primary/central/aft)
 "uJS" = (
 /obj/structure/cable,
 /obj/machinery/light/small/directional/north,
@@ -45557,20 +45548,6 @@
 	},
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
-"vNt" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/effect/mapping_helpers/airlock/access/any/command/general,
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass_large{
-	name = "Eastationeer Bypass"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/obj/effect/mapping_helpers/airlock/access/any/security/entrance,
-/obj/effect/mapping_helpers/airlock/access/any/service/general,
-/turf/open/floor/iron/diagonal,
-/area/station/hallway/primary/central/aft)
 "vNB" = (
 /obj/structure/table/wood,
 /obj/item/clothing/glasses/gold_aviators,
@@ -48734,28 +48711,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/quartermaster)
-"xlQ" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/mapping_helpers/airlock/access/any/engineering/general,
-/obj/machinery/door/airlock/glass_large{
-	name = "Westationeer Bypass"
-	},
-/obj/effect/mapping_helpers/airlock/access/any/supply/general,
-/obj/effect/mapping_helpers/airlock/access/any/science/general,
-/obj/effect/mapping_helpers/airlock/access/any/service/hydroponics,
-/obj/effect/mapping_helpers/airlock/access/any/service/crematorium,
-/obj/effect/mapping_helpers/airlock/access/any/service/chapel_office,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/obj/effect/turf_decal/trimline/purple/line{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/green/line{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/station/hallway/primary/central/fore)
 "xmc" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/highsecurity{
@@ -49156,6 +49111,26 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/science/lobby)
+"xws" = (
+/obj/structure/table/wood,
+/obj/item/cassette_tape/blank{
+	pixel_y = 3;
+	pixel_x = 5
+	},
+/obj/item/cassette_tape/blank{
+	pixel_y = 3;
+	pixel_x = 5
+	},
+/obj/item/cassette_tape/blank{
+	pixel_y = 3;
+	pixel_x = 5
+	},
+/obj/item/walkman{
+	pixel_y = 4;
+	pixel_x = -6
+	},
+/turf/open/floor/wood,
+/area/station/service/library)
 "xww" = (
 /obj/item/food/meat/slab/human,
 /obj/item/food/meat/slab/human,
@@ -49489,6 +49464,31 @@
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/floor2/fore)
+"xFD" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/any/medical/general,
+/obj/effect/mapping_helpers/airlock/access/any/command/general,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/multi_tile/glass{
+	name = "Eastationeer Bypass"
+	},
+/obj/structure/sign/directions/command/directional/east{
+	pixel_x = -32;
+	pixel_y = 6
+	},
+/obj/structure/sign/directions/dorms/directional/west{
+	dir = 4;
+	pixel_y = -4
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/airlock/access/any/security/entrance,
+/obj/effect/mapping_helpers/airlock/access/any/service/general,
+/turf/open/floor/iron/diagonal,
+/area/station/hallway/primary/central/aft)
 "xFY" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/closed/wall,
@@ -72896,10 +72896,10 @@ eVM
 mtI
 jgC
 vNe
-xlQ
+mro
 mYJ
 qsH
-rWD
+fry
 qKq
 pJB
 pJB
@@ -86553,11 +86553,11 @@ hmt
 hmt
 hmt
 mBr
-vNt
+uJK
 hqH
 rRE
 dOm
-jcX
+xFD
 epd
 hqH
 ybW
@@ -94226,7 +94226,7 @@ pUB
 pUB
 pUB
 uYv
-pBF
+uxf
 tlo
 gwG
 eoB
@@ -132238,7 +132238,7 @@ rEF
 bOX
 hCd
 pRz
-lHN
+gZN
 pRz
 pRz
 kgK
@@ -160581,7 +160581,7 @@ eRX
 nzn
 nvL
 hqz
-szf
+xws
 tTR
 hqz
 jlv
@@ -160839,7 +160839,7 @@ pac
 aAc
 vNQ
 qWf
-uFt
+kXa
 hqz
 jlv
 dhF
