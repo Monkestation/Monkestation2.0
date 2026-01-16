@@ -92,9 +92,11 @@ export const CassetteLibrary = (props) => {
       _lcAuthorName: cassette.author_name.toLowerCase(),
       _lcAuthorCkey: cassette.author_ckey.toLowerCase(),
       _lcDesc: cassette.desc.toLowerCase(),
-      submitted_time: new Date(cassette.submitted_time).getTime(),
+      submitted_time: new Date(
+        Number.parseFloat(cassette.submitted_time),
+      ).getTime(),
       approved_time: cassette.approved_time
-        ? new Date(cassette.approved_time).getTime()
+        ? new Date(Number.parseFloat(cassette.approved_time)).getTime()
         : null,
     }));
   }, [cassettes]);
