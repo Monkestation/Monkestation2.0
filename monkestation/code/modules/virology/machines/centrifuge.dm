@@ -360,11 +360,10 @@
 			return
 		else
 			var/i = text2num(href_list["ejectvial"])
-			if (tubes[i])
-				var/obj/item/reagent_containers/cup/tube/tube = tubes[i]
-				tube.forceMove(src.loc)
+			var/obj/item/reagent_containers/cup/tube/tube = tubes[i]
+			if (tube)
+				tube.forceMove(drop_location())
 				if (Adjacent(usr))
-					tube.forceMove(usr.loc)
 					usr.put_in_hands(tube)
 				tubes[i] = null
 				tube_valid[i] = 0
