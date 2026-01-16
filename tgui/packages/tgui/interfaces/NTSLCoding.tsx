@@ -295,6 +295,30 @@ const Guide = (props) => {
         </div>
       ))}
       <br />
+      Signal flags
+      <br />
+      source: Name of person.
+      <br />
+      content: Message being said.
+      <br />
+      job: Job of the person.
+      <br />
+      freq: See NT Recognized Frequencies.
+      <br />
+      pass: Boolean, whether message will go through.
+      <br />
+      say: Say verb of the person.
+      <br />
+      ask: Ask verb of the person.
+      <br />
+      yell: Yell verb of the person.
+      <br />
+      exclaim: Exclaim verb of the person.
+      <br />
+      filters: See Radio Filters.
+      <br />
+      language: See Readable Languages.
+      <br />
       <br />
       NT radio filters: <br />
       (var = filter_types.filter_name) <br /># fonts <br />
