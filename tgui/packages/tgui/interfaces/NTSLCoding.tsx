@@ -1,5 +1,6 @@
 import type { BooleanLike } from 'common/react';
-import { useBackend, useLocalState } from '../backend';
+import { useState } from 'react';
+import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -17,15 +18,7 @@ import { Window } from '../layouts';
 // This is literally just TextArea but without ENTER updating anything, for NTSL
 
 type NTSLTextAreaProps = {
-  value: string;
-  act: (action: string, payload: any) => void;
-  dontUseTabForIndent?: boolean;
-  selfClear?: boolean;
-  onEscape?: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
-  noborder?: boolean;
-  scrollbar?: boolean;
-  width?: string;
-  height?: string;
+  storedNtslCode: [string, (field: string) => void];
 };
 
 // NTSLTextArea component end
@@ -48,8 +41,8 @@ type Server_Data = {
 };
 
 export const NTSLCoding = (props) => {
-  const { data } = useBackend<Data>();
-  const { user_name } = data;
+  const { act, data } = useBackend<Data>();
+  const { emagged, user_name, admin_view } = data;
   // Make sure we don't start larger than 50%/80% of screen width/height.
   const winWidth = Math.min(
     user_name ? 900 : 250,
@@ -60,17 +53,88 @@ export const NTSLCoding = (props) => {
     window.screen.availHeight * 0.8,
   );
 
+  const storedNtslCode = useState('');
+  const [tabIndex, setTabIndex] = useState(1);
+
   return (
     <Window title="Traffic Control Console" width={winWidth} height={winHeight}>
       <Window.Content>
         <Stack fill>
           {user_name && (
             <Stack.Item width={winWidth - 240}>
-              <ScriptEditor />
+              <ScriptEditor storedNtslCode={storedNtslCode} />
             </Stack.Item>
           )}
           <Stack.Item>
-            <MainMenu />
+            {admin_view ? (
+              <Button
+                icon="power-off"
+                color="red"
+                content="!!!(ADMIN) reset code and compile!!!"
+                onClick={() => act('admin_reset')}
+              />
+            ) : (
+              ''
+            )}
+            <Section width="240px">
+              {user_name ? (
+                <Stack>
+                  <Stack.Item>
+                    <Button
+                      icon="power-off"
+                      color="purple"
+                      content="Log Out"
+                      disabled={emagged}
+                      onClick={() => act('log_out')}
+                    />
+                  </Stack.Item>
+                  <Stack.Item verticalAlign="middle">{user_name}</Stack.Item>
+                </Stack>
+              ) : (
+                <Button
+                  icon="power-off"
+                  color="green"
+                  content="Log In"
+                  onClick={() => act('log_in')}
+                />
+              )}
+            </Section>
+            {user_name && (
+              <Section width="240px" height="90%" fill>
+                <Tabs>
+                  <Tabs.Tab
+                    selected={tabIndex === 1}
+                    onClick={() => setTabIndex(1)}
+                  >
+                    Compile
+                  </Tabs.Tab>
+                  <Tabs.Tab
+                    selected={tabIndex === 2}
+                    onClick={() => setTabIndex(2)}
+                  >
+                    Network
+                  </Tabs.Tab>
+                  <Tabs.Tab
+                    selected={tabIndex === 3}
+                    onClick={() => setTabIndex(3)}
+                  >
+                    Logs
+                  </Tabs.Tab>
+                  <Tabs.Tab
+                    selected={tabIndex === 4}
+                    onClick={() => setTabIndex(4)}
+                  >
+                    Reference
+                  </Tabs.Tab>
+                </Tabs>
+                {tabIndex === 1 && (
+                  <CompilerOutput storedNtslCode={storedNtslCode} />
+                )}
+                {tabIndex === 2 && <ServerList />}
+                {tabIndex === 3 && <LogViewer />}
+                {tabIndex === 4 && <Guide />}
+              </Section>
+            )}
           </Stack.Item>
         </Stack>
       </Window.Content>
@@ -78,9 +142,10 @@ export const NTSLCoding = (props) => {
   );
 };
 
-const ScriptEditor = (props) => {
-  const { act, data } = useBackend<Data>();
+const ScriptEditor = (props: NTSLTextAreaProps) => {
+  const { data } = useBackend<Data>();
   const { stored_code, user_name } = data;
+  const [_ntslCode, setNtslCode] = props.storedNtslCode;
 
   return (
     <Box width="100%" height="100%">
@@ -88,7 +153,7 @@ const ScriptEditor = (props) => {
         <TextArea
           fluid
           value={stored_code}
-          onBlur={(value: string) => act('save_code', { saved_code: value })}
+          onBlur={(value) => setNtslCode(value)}
           height="100%"
         />
       ) : (
@@ -100,80 +165,26 @@ const ScriptEditor = (props) => {
   );
 };
 
-const MainMenu = (props) => {
-  const { act, data } = useBackend<Data>();
-  const { emagged, user_name, admin_view } = data;
-  const [tabIndex, setTabIndex] = useLocalState('tab-index', 1);
-  return (
-    <>
-      {admin_view ? (
-        <Button
-          icon="power-off"
-          color="red"
-          content="!!!(ADMIN) reset code and compile!!!"
-          onClick={() => act('admin_reset')}
-        />
-      ) : (
-        ''
-      )}
-      <Section width="240px">
-        {user_name ? (
-          <Stack>
-            <Stack.Item>
-              <Button
-                icon="power-off"
-                color="purple"
-                content="Log Out"
-                disabled={emagged}
-                onClick={() => act('log_out')}
-              />
-            </Stack.Item>
-            <Stack.Item verticalAlign="middle">{user_name}</Stack.Item>
-          </Stack>
-        ) : (
-          <Button
-            icon="power-off"
-            color="green"
-            content="Log In"
-            onClick={() => act('log_in')}
-          />
-        )}
-      </Section>
-      {user_name && (
-        <Section width="240px" height="90%" fill>
-          <Tabs>
-            <Tabs.Tab selected={tabIndex === 1} onClick={() => setTabIndex(1)}>
-              Compile
-            </Tabs.Tab>
-            <Tabs.Tab selected={tabIndex === 2} onClick={() => setTabIndex(2)}>
-              Network
-            </Tabs.Tab>
-            <Tabs.Tab selected={tabIndex === 3} onClick={() => setTabIndex(3)}>
-              Logs
-            </Tabs.Tab>
-            <Tabs.Tab selected={tabIndex === 4} onClick={() => setTabIndex(4)}>
-              Reference
-            </Tabs.Tab>
-          </Tabs>
-          {tabIndex === 1 && <CompilerOutput />}
-          {tabIndex === 2 && <ServerList />}
-          {tabIndex === 3 && <LogViewer />}
-          {tabIndex === 4 && <Guide />}
-        </Section>
-      )}
-    </>
-  );
-};
-
-const CompilerOutput = (props) => {
+const CompilerOutput = (props: NTSLTextAreaProps) => {
   const { act, data } = useBackend<Data>();
   const { compiler_output } = data;
+  const [ntslCode] = props.storedNtslCode;
   return (
     <>
       <Box>
         <Button
           mb={1}
           icon="save"
+          content="Save"
+          disabled={ntslCode === ''}
+          tooltip={'Must be done before compiling!'}
+          onClick={() => act('save_code', { saved_code: ntslCode })}
+        />
+      </Box>
+      <Box>
+        <Button
+          mb={1}
+          icon="running"
           content="Compile & Run"
           onClick={() => act('compile_code')}
         />
