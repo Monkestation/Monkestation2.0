@@ -34,10 +34,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/arena/actual)
 "ih" = (
-/obj/structure/window/reinforced{
-	dir = 8;
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/grass,
 /area/centcom/tdome/arena/actual)
 "iF" = (
@@ -59,9 +56,7 @@
 	},
 /area/centcom/tdome/arena/actual)
 "lO" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/arena/actual)
 "mi" = (
@@ -110,10 +105,7 @@
 /turf/open/floor/iron/dark/smooth_half,
 /area/centcom/tdome/arena/actual)
 "qn" = (
-/obj/structure/window/reinforced{
-	dir = 8;
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/arena/actual)
 "qD" = (
@@ -133,10 +125,7 @@
 	},
 /area/centcom/tdome/arena/actual)
 "uX" = (
-/obj/structure/window/reinforced{
-	dir = 4;
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/arena/actual)
 "vZ" = (
@@ -172,10 +161,7 @@
 /turf/open/floor/grass,
 /area/centcom/tdome/arena/actual)
 "At" = (
-/obj/structure/window/reinforced{
-	dir = 4;
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/grass,
 /area/centcom/tdome/arena/actual)
 "Eb" = (
@@ -255,10 +241,7 @@
 /area/centcom/tdome/arena/actual)
 "Rt" = (
 /obj/structure/flora/bush/fullgrass/style_random,
-/obj/structure/window/reinforced{
-	dir = 8;
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/grass,
 /area/centcom/tdome/arena/actual)
 "RF" = (
@@ -317,10 +300,7 @@
 /area/centcom/tdome/arena/actual)
 "Yy" = (
 /obj/structure/flora/bush/stalky/style_random,
-/obj/structure/window/reinforced{
-	dir = 4;
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/grass,
 /area/centcom/tdome/arena/actual)
 
