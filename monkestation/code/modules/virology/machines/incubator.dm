@@ -346,8 +346,8 @@
 	if(on && is_operational)
 		. += mutable_appearance(icon, "incubator_light")
 		. += mutable_appearance(icon, "incubator_glass")
-		. += emissive_appearance(icon, "incubator_light", src)
-		. += emissive_appearance(icon, "incubator_glass", src)
+		. += emissive_appearance(icon, "incubator_light_e", src)
+		. += emissive_appearance(icon, "incubator_glass_e", src)
 
 	for(var/i = 1 to length(dish_data))
 		if(!isnull(dish_data[i]))
@@ -383,7 +383,7 @@
 				update = TRUE
 
 			if(update)
-				var/mutable_appearance/grown_light = emissive_appearance(icon, "incubator_grown_update", src)
+				var/mutable_appearance/grown_light = emissive_appearance(icon, "incubator_grown_update_e", src)
 				grown_light.pixel_z = -5 * slot
 				var/mutable_appearance/grown_light_n = mutable_appearance(icon, "incubator_grown_update")
 				grown_light_n.pixel_z = -5 * slot
@@ -391,7 +391,7 @@
 				overlays += grown_light
 				overlays += grown_light_n
 			else
-				var/mutable_appearance/grown_light = emissive_appearance(icon, "incubator_grown", src)
+				var/mutable_appearance/grown_light = emissive_appearance(icon, "incubator_grown_e", src)
 				grown_light.pixel_z = -5 * slot
 				var/mutable_appearance/grown_light_n = mutable_appearance(icon, "incubator_grown")
 				grown_light_n.pixel_z = -5 * slot
@@ -407,7 +407,7 @@
 				update = TRUE
 
 			if(update)
-				var/mutable_appearance/reagents_light = emissive_appearance(icon, "incubator_reagents_update", src)
+				var/mutable_appearance/reagents_light = emissive_appearance(icon, "incubator_reagents_update_e", src)
 				reagents_light.pixel_z = -5 * slot
 				var/mutable_appearance/reagents_light_n = mutable_appearance(icon, "incubator_reagents_update")
 				reagents_light_n.pixel_z = -5 * slot
@@ -415,7 +415,7 @@
 				overlays += reagents_light_n
 				overlays += reagents_light
 			else
-				var/mutable_appearance/reagents_light = emissive_appearance(icon, "incubator_reagents", src)
+				var/mutable_appearance/reagents_light = emissive_appearance(icon, "incubator_reagents_e", src)
 				reagents_light.pixel_z = -5 * slot
 				var/mutable_appearance/reagents_light_n = mutable_appearance(icon, "incubator_reagents")
 				reagents_light_n.pixel_z = -5 * slot
