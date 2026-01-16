@@ -11,7 +11,9 @@
 #define BONE (1<<7)
 #define MOTH (1<<8)
 #define CAT (1<<9)
-#define ENGLISH (1<<10)
+#define ASH_TONGUE (1<<10)
+#define TORII (1<<11)
+#define UNCOMMON (1<<12)
 
 ///Span classes that players are allowed to set in a radio transmission.
 GLOBAL_LIST_INIT(allowed_custom_spans, list(
@@ -29,6 +31,8 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 	/datum/language/common,
 	/datum/language/machine,
 	/datum/language/draconic,
+	/datum/language/uncommon,
+	/datum/language/ashtongue,
 ))
 
 /datum/n_Interpreter/TCS_Interpreter
@@ -145,7 +149,9 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 		"bonespeak" = BONE,
 		"mothian" = MOTH,
 		"cat" = CAT,
-		"english" = ENGLISH,
+		"ash" = ASH_TONGUE,
+		"torii" = TORII,
+		"uncommon" = UNCOMMON,
 	)))
 
 	interpreter.Run() // run the thing
@@ -190,6 +196,12 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 			oldlangbits = MOTH
 		if(/datum/language/nekomimetic)
 			oldlangbits = CAT
+		if(/datum/language/ashtongue)
+			oldlangbits = ASH_TONGUE
+		if(/datum/language/yangyu)
+			oldlangbits = TORII
+		if(/datum/language/uncommon)
+			oldlangbits = UNCOMMON
 
 	// Signal data
 	var/datum/n_struct/signal/script_signal = new(list(
@@ -503,4 +515,6 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 #undef BONE
 #undef MOTH
 #undef CAT
-#undef ENGLISH
+#undef ASH_TONGUE
+#undef TORII
+#undef UNCOMMON
