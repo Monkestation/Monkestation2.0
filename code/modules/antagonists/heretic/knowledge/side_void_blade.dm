@@ -5,7 +5,7 @@
 
 /datum/heretic_knowledge/limited_amount/risen_corpse
 	name = "Shattered Ritual"
-	desc = "Allows you to transmute a corpse with a soul, a pair of latex or nitrile gloves, and \
+	desc = "Allows you to transmute a corpse or oozeling core with a soul, a pair of latex or nitrile gloves, and \
 		and any exosuit clothing (such as armor) to create a Shattered Risen. \
 		Shattered Risen are strong ghouls that have 125 health, but cannot hold items, \
 		instead having two brutal weapons for hands. You can only create one at a time."

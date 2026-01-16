@@ -56,7 +56,7 @@
 
 /datum/heretic_knowledge/limited_amount/flesh_grasp
 	name = "Grasp of Flesh"
-	desc = "Your Mansus Grasp gains the ability to create a ghoul out of corpse with a soul. \
+	desc = "Your Mansus Grasp gains the ability to create a ghoul out of corpse or oozeling core with a soul. \
 		Ghouls have only 25 health and look like husks to the heathens' eyes, but can use Bloody Blades effectively. \
 		You can only create one at a time by this method."
 	gain_text = "My new found desires drove me to greater and greater heights."
@@ -146,7 +146,7 @@
 
 /datum/heretic_knowledge/limited_amount/flesh_ghoul
 	name = "Imperfect Ritual"
-	desc = "Allows you to transmute a corpse and a poppy to create a Voiceless Dead. \
+	desc = "Allows you to transmute a corpse (or oozeling core) and a poppy to create a Voiceless Dead. \
 		Voiceless Dead are mute ghouls and only have 50 health, but can use Bloody Blades effectively. \
 		You can only create two at a time."
 	gain_text = "I found notes of a dark ritual, unfinished... yet still, I pushed forward."
