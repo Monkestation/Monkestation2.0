@@ -307,7 +307,7 @@
 				continue
 			//item is either not allowed for redemption, or not in the allowed types, such as INDESTRUCTIBLE items
 			if((target_item.item_flags & NO_MAT_REDEMPTION) || (target_item.resistance_flags & INDESTRUCTIBLE) \
-					 || (allowed_item_typecache && !is_type_in_typecache(target_item, allowed_item_typecache)))
+					|| (allowed_item_typecache && !is_type_in_typecache(target_item, allowed_item_typecache)))
 				if(!(mat_container_flags & MATCONTAINER_SILENT) && i == 1) //count only child items the 1st time around
 					var/list/status_data = chat_msgs["[MATERIAL_INSERT_ITEM_FAILURE]"] || list()
 					var/list/item_data = status_data[target_item.name] || list()
