@@ -18,5 +18,4 @@
 		"kai", "ka", "ke", "keng", "kong", "kuang", "lang", "nei", "qian", "qiang", "rui", "shuai", "teng", "zu"
 	)
 	icon_state = "torii"
-	icon = 'monkestation/icons/misc/language.dmi'
 	default_priority = 94

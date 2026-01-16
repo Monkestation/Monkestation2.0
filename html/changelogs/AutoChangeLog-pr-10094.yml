@@ -1,7 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - refactor: "Digitigrade lizard/satyr clothing no longer uses a separate icon for each individual piece of clothing, which was essentially doubling the resources you need to download to log in. Now it uses masking to change clothes to fit lizards when being equipped, which does mean there's a quality drop, but in exchange new clothes don't need to be sprited twice, any piece of clothing that does not have a lizard alt made will still fit digi lizards/satyrs (unless specifically excluded), and respriting clothes won't leave lizard alts using the old version."
-  - refactor: "Digitigrade shoes have been reworked to be based off of templates & masking, which further cuts on rsc size. This comes at the cost of plenty of shoes no longer fitting lizards, however these new shoes don't need to be constantly updated when a new shoe is added/removed/resprited (which is currently the reason why many shoes don't work for lizards atm)"
-  - bugfix: "Smithed boots fit lizards better now."
-  - bugfix: "Dry galoshes are no longer invisible on lizards."
