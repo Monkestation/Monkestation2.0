@@ -275,3 +275,6 @@
   - rscadd: Added Morphine and ammoniated mercury to emergency hypo spray
   - balance: Emergency Hypo spray 5 > 10 capacity
   - balance: Emergency Hypo spray 1 > 2 recharge rate
+2026-01-16:
+  Absolucy:
+  - image: Opening/closing normal and reinforced false walls now has a proper animation.
