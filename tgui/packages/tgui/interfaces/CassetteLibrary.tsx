@@ -19,6 +19,8 @@ type CassetteData = {
   desc: string;
   author_name: string;
   author_ckey: string;
+  submitted_time: number;
+  approved_time: number;
   icon: string;
   icon_state: string;
 };
@@ -94,15 +96,27 @@ export const CassetteLibrary = (props) => {
   }, [cassettes]);
 
   const filteredCassettes = useMemo(() => {
-    if (!searchQuery) return lowerCassettes;
+    if (!searchQuery) {
+      return lowerCassettes.sort((a, b) => {
+        const timeA = a.approved_time || a.submitted_time;
+        const timeB = b.approved_time || b.submitted_time;
+        return timeB - timeA;
+      });
+    }
     const query = searchQuery.toLowerCase();
-    return lowerCassettes.filter(
-      (cassette) =>
-        cassette._lcName.includes(query) ||
-        cassette._lcAuthorName.includes(query) ||
-        cassette._lcAuthorCkey.includes(query) ||
-        cassette._lcDesc.includes(query),
-    );
+    return lowerCassettes
+      .filter(
+        (cassette) =>
+          cassette._lcName.includes(query) ||
+          cassette._lcAuthorName.includes(query) ||
+          cassette._lcAuthorCkey.includes(query) ||
+          cassette._lcDesc.includes(query),
+      )
+      .sort((a, b) => {
+        const timeA = a.approved_time || a.submitted_time;
+        const timeB = b.approved_time || b.submitted_time;
+        return timeB - timeA;
+      });
   }, [lowerCassettes, searchQuery]);
 
   // if no search is active, show the latest 20 approved cassettes
