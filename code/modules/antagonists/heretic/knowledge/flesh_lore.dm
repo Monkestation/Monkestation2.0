@@ -155,7 +155,7 @@
 		/datum/heretic_knowledge/void_cloak,
 	)
 	required_atoms = list(
-		list(/mob/living/carbon/human, /obj/item/organ/internal/brain/slime) = 1,
+		/mob/living/carbon/human = 1,
 		/obj/item/food/grown/poppy = 1,
 	)
 	limit = 2
@@ -184,6 +184,7 @@
 		if(!QDELETED(new_slime_body))
 			// ELSE THE CORE GETS DELETED AND WEIRD SHIT HAPPENS
 			atoms -= slime_core
+			atoms += new_slime_body
 			selected_atoms += new_slime_body
 			return TRUE
 
