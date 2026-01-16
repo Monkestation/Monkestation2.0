@@ -6995,7 +6995,6 @@
 #include "monkestation\code\modules\antagonists\fugitive\hunters\hunter_outfits.dm"
 #include "monkestation\code\modules\antagonists\heretic\heretic_antag.dm"
 #include "monkestation\code\modules\antagonists\heretic\heretic_knowledge.dm"
-#include "monkestation\code\modules\antagonists\heretic\heretic_monsters.dm"
 #include "monkestation\code\modules\antagonists\heretic\items\forbidden_book.dm"
 #include "monkestation\code\modules\antagonists\heretic\items\heretic_armor.dm"
 #include "monkestation\code\modules\antagonists\heretic\knowledge\ash_lore.dm"
