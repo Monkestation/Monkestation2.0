@@ -19,8 +19,8 @@ type CassetteData = {
   desc: string;
   author_name: string;
   author_ckey: string;
-  submitted_time: number;
-  approved_time: number;
+  submitted_time: string;
+  approved_time: string;
   icon: string;
   icon_state: string;
 };
@@ -92,6 +92,10 @@ export const CassetteLibrary = (props) => {
       _lcAuthorName: cassette.author_name.toLowerCase(),
       _lcAuthorCkey: cassette.author_ckey.toLowerCase(),
       _lcDesc: cassette.desc.toLowerCase(),
+      submitted_time: new Date(cassette.submitted_time).getTime(),
+      approved_time: cassette.approved_time
+        ? new Date(cassette.approved_time).getTime()
+        : null,
     }));
   }, [cassettes]);
 
