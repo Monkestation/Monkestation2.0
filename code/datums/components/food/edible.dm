@@ -457,7 +457,7 @@ Behavior that's still missing from this component that original food items had t
 
 	if(!owner?.reagents)
 		stack_trace("[eater] failed to bite [owner], because [owner] had no reagents.")
-		// Allow eating to proceed even if there are no reagents left in the food
+		return FALSE
 
 	if(eater.satiety > -200)
 		eater.adjust_satiety(-junkiness)
