@@ -75,12 +75,12 @@
 	if(!beaker)
 
 		dat = {"Please insert sample into the isolator.<BR>
-<A href='byond://?src=\ref[src];close=1'>Close</A>"}
+<A href='byond://?src=[REF(src)];close=1'>Close</A>"}
 	else if(isolating)
 		dat = "Isolating"
 	else
 		var/datum/reagents/R = beaker:reagents
-		dat += "<A href='byond://?src=\ref[src];eject=1'>Eject</A><BR><BR>"
+		dat += "<A href='byond://?src=[REF(src)];eject=1'>Eject</A><BR><BR>"
 		if(!R.total_volume)
 			dat += "[beaker] is empty."
 		else
@@ -91,7 +91,7 @@
 					var/list/virus = G.data["viruses"]
 					passes = TRUE
 					for (var/datum/disease/acute/V as anything in virus)
-						dat |= "<li>[G.name]: <A href='byond://?src=\ref[src];isolate=[V.uniqueID]'>Isolate pathogen #[V.uniqueID]</a></li>"
+						dat |= "<li>[G.name]: <A href='byond://?src=[REF(src)];isolate=[V.uniqueID]'>Isolate pathogen #[V.uniqueID]</a></li>"
 			if(!passes)
 				dat += "<li><em>No pathogen</em></li>"
 	user << browse(HTML_SKELETON_TITLE("Pathogenic Isolator", dat), "window=isolator;size=575x400")

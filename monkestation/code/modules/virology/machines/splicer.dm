@@ -25,9 +25,6 @@
 	var/target_slot = 1
 
 /obj/machinery/computer/diseasesplicer/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if(!isvirusdish(tool) && !istype(tool, /obj/item/disk/disease))
-		return NONE
-
 	if(isvirusdish(tool))
 		if(dish)
 			to_chat(user, span_warning("A virus containment dish is already inside \the [src]."))
@@ -40,7 +37,7 @@
 		update_icon()
 		return ITEM_INTERACT_SUCCESS
 
-	if(istype(tool, /obj/item/disk/disease))
+	else if(istype(tool, /obj/item/disk/disease))
 		var/obj/item/disk/disease/disk = tool
 		visible_message(span_notice("[user] swipes \the [disk] against \the [src]."),
 						span_notice("You swipe \the [disk] against \the [src], copying the data into the machine's buffer."))
@@ -50,6 +47,8 @@
 		flick_overlay_global(disk_icon, GLOB.clients, 2 SECONDS)
 		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_icon)), 2, TIMER_OVERRIDE | TIMER_UNIQUE)
 		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 /obj/machinery/computer/diseasesplicer/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
@@ -93,7 +92,7 @@
 /obj/machinery/computer/diseasesplicer/attack_hand(mob/user, list/modifiers)
 	. = ..()
 
-	if(machine_stat & (NOPOWER|BROKEN))
+	if(!is_operational)
 		eject_dish()
 		return
 
@@ -103,25 +102,26 @@
 	ui_interact(user)
 
 /obj/machinery/computer/diseasesplicer/process()
-	if(machine_stat & (NOPOWER|BROKEN))
+	if(!is_operational)
 		return
 	if(scanning || splicing || burning)
-		use_power = ACTIVE_POWER_USE
+		update_use_power(ACTIVE_POWER_USE)
 	else
-		use_power = IDLE_POWER_USE
+		update_use_power(IDLE_POWER_USE)
 
+	var/should_update_icon = FALSE
 	if(scanning)
 		scanning--
 		if(!scanning)
-			update_icon()
+			should_update_icon = TRUE
 	if(splicing)
 		splicing--
 		if(!splicing)
-			update_icon()
+			should_update_icon = TRUE
 	if(burning)
 		burning--
 		if(!burning)
-			update_icon()
+			should_update_icon = TRUE
 			var/image/print = image(icon, src, "splicer_print")
 			flick_overlay_global(print, GLOB.clients, 2 SECONDS)
 			var/obj/item/disk/disease/d = new /obj/item/disk/disease(src)
@@ -133,6 +133,8 @@
 			d.effect = memorybank
 			d.update_desc()
 			addtimer(CALLBACK(src, PROC_REF(drop_disease_disk), d), 1 SECONDS)
+	if(should_update_icon)
+		update_icon()
 
 /obj/machinery/computer/diseasesplicer/proc/drop_disease_disk(obj/item/disk/disease/disk)
 	disk.forceMove(drop_location())
@@ -143,24 +145,22 @@
 	..()
 	. = list() // We don't use any of the overlays from the parent
 
-	if(machine_stat & (BROKEN|NOPOWER))
+	if(!is_operational)
 		return
 
 	if(dish?.contained_virus)
 		if(dish.analysed)
-			var/mutable_appearance/scan_pattern = mutable_appearance(icon, "pattern-[dish.contained_virus.pattern]-s")
-			. +=  emissive_appearance(icon, "pattern-[dish.contained_virus.pattern]-s", src)
-
-			. += scan_pattern
+			. += mutable_appearance(icon, "pattern-[dish.contained_virus.pattern]-s")
+			. += emissive_appearance(icon, "pattern-[dish.contained_virus.pattern]-s", src)
 		else
 			. += mutable_appearance(icon, "splicer_unknown")
 
 	if(memorybank)
-		. += emissive_appearance(icon, "splicer_buffer", src)
-		. += mutable_appearance(icon, "splicer_buffer", src)
+		. += mutable_appearance(icon, "splicer_buffer")
+		. += emissive_appearance(icon, "splicer_buffer_e", src)
 
-	. += emissive_appearance(icon, "splicer_screen", src)
-	. += emissive_appearance(icon, "splicer_keyboard", src)
+	. += emissive_appearance(icon, "splicer_screen_e", src)
+	. += emissive_appearance(icon, "splicer_keyboard_e", src)
 
 /obj/machinery/computer/diseasesplicer/proc/buffer2dish()
 	if(!memorybank || !dish?.contained_virus)
@@ -186,15 +186,14 @@
 	if(dish.growth < 50)
 		return
 	var/list/effects = dish.contained_virus.symptoms
-	for(var/x = 1 to effects.len)
+	for(var/x = 1 to length(effects))
 		var/datum/symptom/e = effects[x]
 		if(e.stage == target_slot)
 			memorybank = e
 			break
 	scanning = DISEASE_SPLICER_SCANNING_TICKS
 	analysed = dish.analysed
-	qdel(dish)
-	dish = null
+	QDEL_NULL(dish)
 	update_icon()
 	var/image/scan = image(icon, src, "splicer_scan")
 	flick_overlay_global(scan, GLOB.clients, 2 SECONDS)
@@ -215,9 +214,8 @@
 		spliced = FALSE
 		dish.contained_virus.update_global_log()
 
-	dish.forceMove(loc)
+	dish.forceMove(drop_location())
 	if(Adjacent(usr))
-		dish.forceMove(usr.drop_location())
 		usr.put_in_hands(dish)
 	dish = null
 	update_icon()
@@ -252,6 +250,7 @@
 			return TRUE
 		if("target_slot")
 			target_slot = params["stage"]
+			return TRUE
 	return FALSE
 
 #undef DISEASE_SPLICER_BURNING_TICKS
