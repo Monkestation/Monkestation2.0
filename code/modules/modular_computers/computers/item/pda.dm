@@ -64,6 +64,7 @@
 
 /obj/item/modular_computer/pda/eject_stored_items(atom/droploc)
 	inserted_item?.forceMove(droploc) // PDA pen slot
+	inserted_item = null
 	return ..()
 
 /obj/item/modular_computer/pda/install_default_programs()
