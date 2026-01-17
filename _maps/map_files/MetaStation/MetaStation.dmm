@@ -59798,6 +59798,8 @@
 	department = "Telecomms Admin"
 	},
 /obj/effect/mapping_helpers/requests_console/announcement,
+/obj/effect/mapping_helpers/requests_console/assistance,
+/obj/effect/mapping_helpers/requests_console/information,
 /turf/open/floor/carpet/grimey,
 /area/station/tcommsat/computer)
 "uBC" = (
