@@ -60275,9 +60275,6 @@
 	id = "Cell 3";
 	name = "Cell 3 locker"
 	},
-/obj/machinery/computer/records/medical{
-	dir = 1
-	},
 /turf/open/floor/iron,
 /area/station/security/brig)
 "sOo" = (

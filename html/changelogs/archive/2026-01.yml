@@ -200,6 +200,10 @@
   SirNightKnight:
   - balance: lessened the explosion effect of oil extracts.
 2026-01-14:
+  Absolucy:
+  - bugfix: Slightly optimized some blood-related code.
+  - qol: Slashers no longer spawn a morbillion blood particles (they still spawn SOME)
+      each hit, hopefully avoiding grinding the server to a halt.
   JohnFulpWillard:
   - bugfix: The list of jobs should all fit in the latejoin menu now.
   - qol: Research console's search bar is longer.
@@ -214,15 +218,74 @@
   - bugfix: matter eater cannot eat items in storage, inventory, or that are located
       inside you.
   - balance: dying with matter eater makes you vomit all your contents.
+  - map: gave all pirate shuttles except the Dutchman inducers and a super capacity
+      SMES.
+  - bugfix: fixed the wirecutter icon for the spess knife not showing.
+  - bugfix: re-added cargo candle pack crates?
+  - bugfix: fixed every mob being able to strangle a human.
+  - qol: cyborgs can move pulled items by clicking on an open turf next to them.
+  - code_imp: replaced all secure briefcase with briefcase secure
   SirNightKnight, Jacquerel:
   - balance: Foam now passes through tables, grilles, computers, and several other
       dense structures. You can still escape foam by mantling onto tables and such.
   Tractor-Maam:
   - bugfix: Barbers can now reset their alt titles.
   - bugfix: Explorers can now reset their alt titles.
+  - bugfix: RoboTact for cyborgs now prints their name again.
   flleeppyy:
   - bugfix: PDAs should ring now
+  notghosti:
+  - bugfix: Desiccation no longer tells you it can be fixed via cloning
   wonderinghost:
   - map: added/modified map content
   - map: Blueshift PTL Now on the Left Instead of Right (fills right side with storage)
   - map: Atmos Has Powerline to PTL (look for blue wires)
+2026-01-15:
+  Absolucy:
+  - admin: Added an admin button in the Secrets panel to lobotomize Poly.
+  Chelxox:
+  - balance: Gripper gloves & gorilla gloves properly balanced.
+  Ice-Type:
+  - balance: Majorly tuned down the wounding caused by buckshot
+  - balance: Improvised shells no longer do more damage than buckshot shells
+  JohnFulpWillard:
+  - bugfix: NTSL no longer constantly freezes up saying you're doing too many inputs.
+  SirNightKnight:
+  - qol: morgue tray soul alarms don't ignore bad DNA mobs.
+  - rscadd: updated the honorbound sect guilt list to take slashers, bloodsuckers,
+      darkspawn and their thralls into account.
+  - qol: added balloon alerts to the crusade join rite.
+  - bugfix: fixed a bug  where the refrain text for attacking an innocent was sent
+      to the target instead of the attacker.
+  - code_imp: updates honorbound code to be in line with the ongoing attack chain
+      refactor.
+  - balance: you can shove anyone while honorbound.
+  - balance: removes mining soulstones from the necropolis chest loot pool.
+  - rscadd: replaced all universal blood bags with sealed saline chem packs containing
+      55 saline glucose, 35 iron, and 10 tirimol.
+  - rscadd: added saline chem packs to all existing blood crates.
+  - rscadd: added spider blood to the blood variety crate.
+  - spellcheck: fixed a minor grammar error in the penlight's decription.
+  - map: removed a misplaced computer console on kilostation.
+  - bugfix: ' voidraptor sec med uses sec access instead of brig.'
+  Tractor-Maam:
+  - map: the HoP line on Helio has their windows actually exist in full
+  notghosti:
+  - bugfix: Removed a handheld monitor node typo
+  - rscadd: Added Morphine and ammoniated mercury to emergency hypo spray
+  - balance: Emergency Hypo spray 5 > 10 capacity
+  - balance: Emergency Hypo spray 1 > 2 recharge rate
+2026-01-16:
+  Absolucy:
+  - image: Opening/closing normal and reinforced false walls now has a proper animation.
+2026-01-17:
+  JohnFulpWillard:
+  - bugfix: Telecomms servers won't brick if you get a runtime error in your NTSL
+      code.
+  - bugfix: NTSL scripting should be a little more responsive now, but will no longer
+      automatically save your code.
+  - bugfix: Added some monke-exclusive roundstart languages to NTSL script, replacing
+      non-existent languages from it.
+  - qol: Added some extra references help to the NTSL scripting computer.
+  SirNightKnight:
+  - bugfix: fixed teleporting disconnecting mobs from what they are buckled to.
