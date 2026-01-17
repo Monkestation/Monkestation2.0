@@ -149,7 +149,7 @@
 				if(user_id)
 					user_name = "[user_id?.registered_name] ([user_id?.assignment])"
 				else
-					user_name = "[user.name] ([user_id?.assignment])"
+					user_name = "[user.name] (UNKNOWN)"
 			if(!user_name)
 				balloon_alert(user, "no access!")
 				return TRUE
