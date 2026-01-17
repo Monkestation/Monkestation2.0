@@ -278,3 +278,14 @@
 2026-01-16:
   Absolucy:
   - image: Opening/closing normal and reinforced false walls now has a proper animation.
+2026-01-17:
+  JohnFulpWillard:
+  - bugfix: Telecomms servers won't brick if you get a runtime error in your NTSL
+      code.
+  - bugfix: NTSL scripting should be a little more responsive now, but will no longer
+      automatically save your code.
+  - bugfix: Added some monke-exclusive roundstart languages to NTSL script, replacing
+      non-existent languages from it.
+  - qol: Added some extra references help to the NTSL scripting computer.
+  SirNightKnight:
+  - bugfix: fixed teleporting disconnecting mobs from what they are buckled to.
