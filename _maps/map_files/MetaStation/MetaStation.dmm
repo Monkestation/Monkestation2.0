@@ -42312,13 +42312,6 @@
 	pixel_y = 6
 	},
 /obj/structure/table/wood,
-/obj/machinery/requests_console/directional/south{
-	department = "Telecomms Admin";
-	name = "Telecomms Requests Console";
-	assistance_requestable = 1;
-	anon_tips_receiver = 1;
-	can_send_announcements = 1
-	},
 /turf/open/floor/carpet/grimey,
 /area/station/tcommsat/computer)
 "ozX" = (
