@@ -328,6 +328,7 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 		if(CAT)
 			return /datum/language/nekomimetic
 
+///Stores data from the script to use between radio messages.
 /datum/n_function/default/mem
 	name = "mem"
 	interp_type = /datum/n_Interpreter/TCS_Interpreter
@@ -350,6 +351,7 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 			S.memory[address] = value
 			return TRUE
 
+///Wipes a memory list.
 /datum/n_function/default/clearmem
 	name = "clearmem"
 	interp_type = /datum/n_Interpreter/TCS_Interpreter
@@ -359,6 +361,7 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 	S.memory = list()
 	return TRUE
 
+///Sends a signal (like remote signallers), first param is the Frequency, second param is the Code.
 /datum/n_function/default/remote_signal
 	name = "remote_signal"
 	interp_type = /datum/n_Interpreter/TCS_Interpreter
@@ -397,6 +400,7 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 
 		message_admins("Telecomms server \"[S.id]\" sent a signal command, which was triggered by NTSL<B>: </B> [format_frequency(freq)]/[code]")
 
+///Broadcasts a message to the radio.
 /datum/n_function/default/broadcast
 	name = "broadcast"
 	interp_type = /datum/n_Interpreter/TCS_Interpreter
