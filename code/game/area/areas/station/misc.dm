@@ -31,3 +31,4 @@
 	requires_power = TRUE
 	ambience_index = AMBIENCE_MINING
 	outdoors = TRUE
+	allow_shuttle_docking = TRUE
