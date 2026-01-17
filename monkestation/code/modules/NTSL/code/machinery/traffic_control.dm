@@ -23,7 +23,7 @@
 	/// The network to probe
 	var/network = "NULL"
 	/// The current code being used
-	var/storedcode = ""
+	var/storedcode = "def process_signal(sig){return sig;}"
 	/// The name and job on the ID used to log in
 	var/user_name = ""
 	/// Logs for users logging in/out or compiling code
