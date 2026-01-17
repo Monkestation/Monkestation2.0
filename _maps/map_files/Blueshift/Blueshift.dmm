@@ -38909,13 +38909,11 @@
 	},
 /obj/structure/rack,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/item/storage/medkit{
-	pixel_x = 0;
-	pixel_y = -6
-	},
-/obj/item/storage/medkit{
-	pixel_x = 0;
+/obj/item/storage/medkit/regular{
 	pixel_y = 2
+	},
+/obj/item/storage/medkit/regular{
+	pixel_y = -6
 	},
 /turf/open/floor/iron/white/corner{
 	dir = 8
