@@ -91,7 +91,7 @@
 
 	return data
 
-/obj/machinery/computer/telecomms/traffic/ui_act(action, list/params)
+/obj/machinery/computer/telecomms/traffic/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	var/mob/living/user = ui.user
 
