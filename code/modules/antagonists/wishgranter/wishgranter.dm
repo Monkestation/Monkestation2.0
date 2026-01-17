@@ -12,8 +12,11 @@
 	/// List of traits given to the avatar's body.
 	var/static/list/given_traits = list(
 		TRAIT_FEARLESS,
+		TRAIT_HARDLY_WOUNDED,
+		TRAIT_NODISMEMBER,
 		TRAIT_NOFLASH, // do something besides flashbang spam
 		TRAIT_NO_PAIN_EFFECTS, // i'm just HER
+		TRAIT_OOZELING_NO_CANNIBALIZE, // anti-cheese
 		TRAIT_PUSHIMMUNE,
 		TRAIT_RESISTCOLD,
 		TRAIT_RESISTHEAT,
@@ -57,7 +60,6 @@
 	mob.update_appearance(UPDATE_OVERLAYS)
 	if(ishuman(mob))
 		var/mob/living/carbon/human/human_owner = mob
-		human_owner.physiology?.damage_resistance += 25
 		human_owner.dna?.add_mutation(/datum/mutation/telekinesis, MUTATION_SOURCE_WISHGRANTER)
 	mob.add_traits(given_traits, REF(src))
 	mob.update_sight()
@@ -68,7 +70,6 @@
 	mob.update_appearance(UPDATE_OVERLAYS)
 	if(ishuman(mob))
 		var/mob/living/carbon/human/human_owner = mob
-		human_owner.physiology?.damage_resistance -= 25
 		human_owner.dna?.remove_mutation(/datum/mutation/telekinesis, MUTATION_SOURCE_WISHGRANTER)
 	mob.remove_traits(given_traits, REF(src))
 	mob.update_sight()
