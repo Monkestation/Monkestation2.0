@@ -1,0 +1,4 @@
+author: "SirNightKnight, JohnFulpWillard"
+delete-after: True
+changes:
+  - rscadd: "Security now has a Big Red Key."
