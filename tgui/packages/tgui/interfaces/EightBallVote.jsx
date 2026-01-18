@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Box, Button, Grid, Section, NoticeBox } from '../components';
+import { Box, Button, Stack, Section, NoticeBox } from '../components';
 import { toTitleCase } from 'common/string';
 import { Window } from '../layouts';
 
@@ -25,9 +25,9 @@ const EightBallVoteQuestion = (props) => {
       <Box bold textAlign="center" fontSize="16px" m={1}>
         &quot;{question}&quot;
       </Box>
-      <Grid>
+      <Stack>
         {answers.map((answer) => (
-          <Grid.Column key={answer.answer}>
+          <Stack.Item grow key={answer.answer}>
             <Button
               fluid
               bold
@@ -46,9 +46,9 @@ const EightBallVoteQuestion = (props) => {
             <Box bold textAlign="center" fontSize="30px">
               {answer.amount}
             </Box>
-          </Grid.Column>
+          </Stack.Item>
         ))}
-      </Grid>
+      </Stack>
     </Section>
   );
 };

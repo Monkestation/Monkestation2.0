@@ -502,28 +502,25 @@
 /mob/living/carbon/on_stamina_update()
 	if(!stamina)
 		return
-	var/stam = stamina.current
-	var/max = stamina.maximum
-	var/is_exhausted = HAS_TRAIT_FROM(src, TRAIT_EXHAUSTED, STAMINA)
 	var/is_stam_stunned = HAS_TRAIT_FROM(src, TRAIT_INCAPACITATED, STAMINA)
-	if((stam < max * STAMINA_EXHAUSTION_THRESHOLD_MODIFIER) && !is_exhausted)
-		ADD_TRAIT(src, TRAIT_EXHAUSTED, STAMINA)
-		ADD_TRAIT(src, TRAIT_NO_SPRINT, STAMINA)
-		add_movespeed_modifier(/datum/movespeed_modifier/exhaustion)
 
-	if((stam < max * STAMINA_STUN_THRESHOLD_MODIFIER) && !is_stam_stunned && stat <= SOFT_CRIT)
+	//Prevent us from sprinting when our stamina damage is above 40%
+	var/has_no_sprint = HAS_TRAIT_FROM(src, TRAIT_NO_SPRINT, STAMINA)
+
+	if(stamina.loss_as_percent >= 40 && !has_no_sprint)
+		ADD_TRAIT(src, TRAIT_NO_SPRINT, STAMINA)
+		to_chat(src, span_warning("You start to feel exhausted from lack of stamina..."))
+	else if (stamina.loss_as_percent <= 30 && has_no_sprint)
+		REMOVE_TRAIT(src, TRAIT_NO_SPRINT, STAMINA)
+		to_chat(src, span_notice("You feel like you can sprint again."))
+
+	if((stamina.current <= 0) && !is_stam_stunned && stat <= SOFT_CRIT)
 		stamina_stun()
 
-	if(is_exhausted && (stam > max * STAMINA_EXHAUSTION_THRESHOLD_MODIFIER_EXIT))
-		REMOVE_TRAIT(src, TRAIT_EXHAUSTED, STAMINA)
-		REMOVE_TRAIT(src, TRAIT_NO_SPRINT, STAMINA)
-		remove_movespeed_modifier(/datum/movespeed_modifier/exhaustion)
+	if(is_stam_stunned && stamina.current >= stamina.maximum)
+		exit_stamina_stun()
 
 	update_stamina_hud()
-
-/datum/movespeed_modifier/exhaustion
-	id = "exhaustion"
-	multiplicative_slowdown = STAMINA_EXHAUSTION_MOVESPEED_SLOWDOWN
 
 /mob/living/carbon/update_sight()
 	if(!client)
@@ -757,9 +754,7 @@
 	//MONKESTATION EDIT START
 	var/current_stamina = stamina.current
 
-	if(stamina.current <= (0.20 * STAMINA_MAX)) //stamina stun threshold
-		hud_used.stamina.icon_state = "stamina_dead"
-	else if(current_stamina <= (0.30 * STAMINA_MAX)) //exhaustion threshold
+	if(current_stamina <= (0.20 * STAMINA_MAX))
 		hud_used.stamina.icon_state = "stamina_crit"
 	else if(current_stamina <= (0.40 * STAMINA_MAX))
 		hud_used.stamina.icon_state = "stamina_5"
@@ -996,6 +991,8 @@
 			if(!new_bodypart.bodypart_disabled)
 				set_usable_hands(usable_hands + 1)
 
+	synchronize_bodytypes()
+
 
 ///Proc to hook behavior on bodypart removals.  Do not directly call. You're looking for [/obj/item/bodypart/proc/drop_limb()].
 /mob/living/carbon/proc/remove_bodypart(obj/item/bodypart/old_bodypart)
@@ -1011,6 +1008,8 @@
 			set_num_hands(num_hands - 1)
 			if(!old_bodypart.bodypart_disabled)
 				set_usable_hands(usable_hands - 1)
+
+	synchronize_bodytypes()
 
 
 ///Updates the bodypart speed modifier based on our bodyparts.
@@ -1253,7 +1252,7 @@
 			QDEL_NULL(phantom_wound)
 
 /mob/living/carbon/is_face_visible()
-	return !(wear_mask?.flags_inv & HIDEFACE) && !(head?.flags_inv & HIDEFACE)
+	return !((wear_mask?.flags_inv & HIDEFACE) || (head?.flags_inv & HIDEFACE) || (wear_neck?.flags_inv & HIDEFACE))
 
 /// Returns whether or not the carbon should be able to be shocked
 /mob/living/carbon/proc/should_electrocute(power_source)

@@ -409,7 +409,6 @@
 /obj/item/clothing/under/costume/susie
 	name = "Rude Jacket"
 	desc = "A replica of the black and purple jacket a legendary lizard wore while saving the world."
-	worn_icon_digitigrade = 'icons/mob/species/misc/digitigrade.dmi'
 	icon_state = "susie"
 	inhand_icon_state = null
 	can_adjust = FALSE

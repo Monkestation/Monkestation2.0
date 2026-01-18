@@ -3,7 +3,6 @@
  * Reimplements it only slightly to use existing storage functionality.
  *
  * Contains:
- * Secure Briefcase
  * Wall Safe
  */
 
@@ -116,53 +115,6 @@
 			return
 	return
 
-///Secure Briefcase
-/obj/item/storage/secure/briefcase
-	name = "secure briefcase"
-	icon = 'icons/obj/storage/case.dmi'
-	icon_state = "secure"
-	inhand_icon_state = "sec-case"
-	lefthand_file = 'icons/mob/inhands/equipment/briefcase_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/briefcase_righthand.dmi'
-	desc = "A large briefcase with a digital locking system."
-	force = 8
-	hitsound = SFX_SWING_HIT
-	throw_speed = 2
-	throw_range = 4
-	w_class = WEIGHT_CLASS_BULKY
-	attack_verb_continuous = list("bashes", "batters", "bludgeons", "thrashes", "whacks")
-	attack_verb_simple = list("bash", "batter", "bludgeon", "thrash", "whack")
-
-/obj/item/storage/secure/briefcase/PopulateContents()
-	new /obj/item/paper(src)
-	new /obj/item/pen(src)
-
-/obj/item/storage/secure/briefcase/Initialize(mapload)
-	. = ..()
-	atom_storage.max_total_storage = 21
-	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
-
-///Syndie variant of Secure Briefcase. Contains space cash, slightly more robust.
-/obj/item/storage/secure/briefcase/syndie
-	force = 15
-
-/obj/item/storage/secure/briefcase/syndie/PopulateContents()
-	..()
-	for(var/iterator in 1 to 5)
-		new /obj/item/stack/spacecash/c1000(src)
-
-/// A briefcase that contains various sought-after spoils
-/obj/item/storage/secure/briefcase/riches
-
-/obj/item/storage/secure/briefcase/riches/PopulateContents()
-	new /obj/item/clothing/suit/armor/vest(src)
-	new /obj/item/gun/ballistic/automatic/pistol(src)
-	new /obj/item/suppressor(src)
-	new /obj/item/melee/baton/telescopic(src)
-	new /obj/item/clothing/mask/balaclava(src)
-	new /obj/item/bodybag(src)
-	new /obj/item/soap/nanotrasen(src)
-
 ///Secure Safe
 /obj/item/storage/secure/safe
 	name = "secure safe"
@@ -177,7 +129,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/storage/secure/safe, 32)
 
 /obj/item/storage/secure/safe/Initialize(mapload)
 	. = ..()
-	atom_storage.set_holdable(cant_hold_list = list(/obj/item/storage/secure/briefcase))
+	atom_storage.set_holdable(cant_hold_list = list(/obj/item/storage/briefcase/secure))
 	atom_storage.max_specific_storage = WEIGHT_CLASS_GIGANTIC
 
 /obj/item/storage/secure/safe/PopulateContents()

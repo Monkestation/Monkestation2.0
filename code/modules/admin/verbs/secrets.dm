@@ -72,7 +72,7 @@ ADMIN_VERB(secrets, R_NONE, FALSE, "Secrets", "Abuse harder than you ever have b
 		if("maint_access_engiebrig")
 			if(!is_debugger)
 				return
-			for(var/obj/machinery/door/airlock/maintenance/doors in GLOB.airlocks)
+			for(var/obj/machinery/door/airlock/maintenance/doors as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/airlock/maintenance))
 				if ((ACCESS_MAINT_TUNNELS in doors.req_access) || (ACCESS_MAINT_TUNNELS in doors.req_one_access))
 					doors.req_access = list()
 					doors.req_one_access = list(ACCESS_BRIG, ACCESS_ENGINEERING)
@@ -80,7 +80,7 @@ ADMIN_VERB(secrets, R_NONE, FALSE, "Secrets", "Abuse harder than you ever have b
 		if("maint_access_brig")
 			if(!is_debugger)
 				return
-			for(var/obj/machinery/door/airlock/maintenance/doors in GLOB.airlocks)
+			for(var/obj/machinery/door/airlock/maintenance/doors as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/airlock/maintenance))
 				if ((ACCESS_MAINT_TUNNELS in doors.req_access) || (ACCESS_MAINT_TUNNELS in doors.req_one_access))
 					doors.req_access = list(ACCESS_BRIG)
 					doors.req_one_access = list()
@@ -328,7 +328,7 @@ monkestation end */
 			if(!is_funmin)
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Egalitarian Station"))
-			for(var/obj/machinery/door/airlock/W in GLOB.airlocks)
+			for(var/obj/machinery/door/airlock/W as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/airlock))
 				if(is_station_level(W.z) && !istype(get_area(W), /area/station/command) && !istype(get_area(W), /area/station/commons) && !istype(get_area(W), /area/station/service) && !istype(get_area(W), /area/station/command/heads_quarters) && !istype(get_area(W), /area/station/security/prison))
 					W.req_access = list()
 			message_admins("[key_name_admin(holder)] activated Egalitarian Station mode")
@@ -444,6 +444,30 @@ monkestation end */
 
 			message_admins(span_boldannounce("[key_name_admin(holder)] changed the bomb cap to [GLOB.MAX_EX_DEVESTATION_RANGE], [GLOB.MAX_EX_HEAVY_RANGE], [GLOB.MAX_EX_LIGHT_RANGE]"))
 			log_admin("[key_name(holder)] changed the bomb cap to [GLOB.MAX_EX_DEVESTATION_RANGE], [GLOB.MAX_EX_HEAVY_RANGE], [GLOB.MAX_EX_LIGHT_RANGE]")
+		if("department_cooldown_override") //Happens when the button is clicked, creates a value for GLOB.department_cd_override in dept_order.dm
+			if(!is_debugger)
+				return
+			if(isnull(GLOB.department_cd_override))
+				var/set_override = tgui_input_number(usr, "How long would you like the console order cooldown to be?","Cooldown Override", 5)
+				if(isnull(set_override))
+					return //user clicked cancel
+				GLOB.department_cd_override = set_override
+			else
+				var/choice = tgui_alert(usr, "Override is active. You can change the cooldown or end the override.", "You were trying to override...", list("Override", "End Override", "Cancel"))
+				if(choice == "Override")
+					var/set_override = tgui_input_number(usr, "How long would you like the console order cooldown to be?", "Title", 5)
+					GLOB.department_cd_override = set_override
+					message_admins("[key_name_admin(holder)] changed the department console order cooldown override to [set_override] minutes.")
+					log_admin("[key_name(holder)] changed the department console order cooldown override to [set_override] minutes.")
+					return
+				if(choice == "End Override")
+					var/set_override = null
+					GLOB.department_cd_override = set_override
+					message_admins("[key_name_admin(holder)] ended the department console order cooldown override.")
+					log_admin("[key_name(holder)] ended the department console order cooldown override.")
+					return
+				if(!choice || choice == "Cancel")
+					return
 		//buttons that are fun for exactly you and nobody else.
 		if("monkey")
 			if(!is_funmin)
@@ -589,6 +613,41 @@ monkestation end */
 			ctf_controller.toggle_instagib_mode()
 			message_admins("[key_name_admin(holder)] [ctf_controller.instagib_mode ? "enabled" : "disabled"] instagib mode in CTF game: [selected_game]")
 			log_admin("[key_name_admin(holder)] [ctf_controller.instagib_mode ? "enabled" : "disabled"] instagib mode in CTF game: [selected_game]")
+
+		if("mass_heal")
+			if(!is_funmin)
+				return
+			var/heal_mobs = tgui_alert(usr, "Heal all mobs and return ghosts to their bodies?", "Mass Healing", list("Yes", "No"))
+			if(!heal_mobs || heal_mobs != "Yes")
+				return
+
+			for(var/mob/dead/observer/ghost in GLOB.player_list) //Return all ghosts if possible
+				if(!ghost.mind || !ghost.mind.current) //won't do anything if there is no body
+					continue
+				ghost.reenter_corpse()
+
+			for(var/mob/living/player in GLOB.player_list)
+				player.revive(ADMIN_HEAL_ALL, force_grab_ghost = TRUE)
+
+			sound_to_playing_players('sound/effects/pray_chaplain.ogg')
+			message_admins("[key_name_admin(holder)] healed everyone.")
+			log_admin("[key_name(holder)] healed everyone.")
+
+		if("lobotomize_the_bird")
+			var/choice = tgui_alert(usr, "Would you like to lobotomize Poly? This will kill them, and clear ALL saved phrases!", "i have to water the shitbird wait a minute", list("Yes", "No"))
+			if(choice != "Yes")
+				return
+			for(var/mob/living/basic/parrot/poly/shitbird in GLOB.mob_living_list)
+				ADD_TRAIT(shitbird, TRAIT_DONT_WRITE_MEMORY, ADMIN_TRAIT)
+				new /obj/effect/temp_visual/bsa_impact(shitbird.loc) // BOOM.
+				shitbird.dust(just_ash = TRUE)
+
+			for(var/poly_file in list("data/npc_saves/Poly.sav", "data/npc_saves/Poly.json", "data/npc_saves/polytalk.json"))
+				if(fexists(poly_file))
+					fdel(poly_file)
+
+			message_admins("[key_name_admin(holder)] lobotomized Poly.")
+			log_admin("[key_name(holder)] lobotomized Poly.")
 
 	if(E)
 		E.processing = FALSE

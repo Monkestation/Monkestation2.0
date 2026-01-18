@@ -1,0 +1,8 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - map: "Remapped Theseus' telecomms."
+  - rscadd: "Signal Techs now have Network access & NTNet Monitor."
+  - bugfix: "NTSL console now properly requires access."
+  - bugfix: "Removed 2 admin request consoles on Meta."
+  - rscdel: "NTSL console no longer holds ID cards (??)"

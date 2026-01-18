@@ -4,6 +4,10 @@
 /datum/proc/can_vv_get(var_name)
 	if(var_name == NAMEOF(src, vars))
 		return FALSE
+#ifndef TESTING
+	if(istype(src.vars[var_name], /datum/protected_list_holder))
+		return FALSE
+#endif
 	return TRUE
 
 /// Called when a var is edited with the new value to change to

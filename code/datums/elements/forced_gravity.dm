@@ -17,12 +17,13 @@
 	RegisterSignal(target, COMSIG_ATOM_HAS_GRAVITY, PROC_REF(gravity_check), override = can_override)
 	if(isturf(target))
 		RegisterSignal(target, COMSIG_TURF_HAS_GRAVITY, PROC_REF(turf_gravity_check), override = can_override)
+		RegisterSignal(target, COMSIG_TURF_CHANGE, PROC_REF(on_grav_turf_change))
 
 	ADD_TRAIT(target, TRAIT_FORCED_GRAVITY, REF(src))
 
 /datum/element/forced_gravity/Detach(datum/source)
 	. = ..()
-	var/static/list/signals_b_gone = list(COMSIG_ATOM_HAS_GRAVITY, COMSIG_TURF_HAS_GRAVITY)
+	var/static/list/signals_b_gone = list(COMSIG_ATOM_HAS_GRAVITY, COMSIG_TURF_HAS_GRAVITY, COMSIG_TURF_CHANGE)
 	UnregisterSignal(source, signals_b_gone)
 	REMOVE_TRAIT(source, TRAIT_FORCED_GRAVITY, REF(src))
 
@@ -39,3 +40,12 @@
 	SIGNAL_HANDLER
 
 	return gravity_check(null, source, gravs)
+
+/datum/element/forced_gravity/proc/on_grav_turf_change(turf/changed, path, list/new_baseturfs, flags, list/post_change_callbacks)
+	SIGNAL_HANDLER
+
+	post_change_callbacks += CALLBACK(src, PROC_REF(inherit_grav_trait), changed)
+
+/datum/element/forced_gravity/proc/inherit_grav_trait(turf/changed)
+	if(!HAS_TRAIT(changed, TRAIT_FORCED_GRAVITY))
+		ADD_TRAIT(changed, TRAIT_FORCED_GRAVITY, REF(src))

@@ -1,0 +1,300 @@
+2026-01-01:
+  EatsTheGrapes:
+  - bugfix: Fixed an issue where receiving a PDA message could freeze other active
+      TGUI interfaces
+  - code_imp: Deferred PDA messenger UI updates to prevent overlapping TGUI refreshes
+  flleeppyy:
+  - bugfix: Disallow lobby lurkers from getting roundend rewards
+  grungussuss:
+  - sound: writing something now produces sound
+2026-01-02:
+  Absolucy:
+  - bugfix: Fixed the admin VV bitfield editor not working.
+  Ice-Type:
+  - bugfix: Bluespace RPEDs now correctly function at range
+  JohnFulpWillard:
+  - bugfix: The character preference menu should look a little more like how it used
+      to look.
+  - bugfix: Bloodsucker's antag pref menu blood is red again.
+  - bugfix: Heliostation's weight machines are now visible.
+  - spellcheck: '"Out floorbot" -> "Our floorbot"'
+  - bugfix: NT Representative can no longer roll bloodling.
+  - bugfix: NT CIMS is scrollable if you have enough supermatters.
+  Kmla2:
+  - bugfix: slashers terror screech shouldn't deal over 100 stamina damage on later
+      fear stages anymore
+  - bugfix: terror screech makes people shake again
+  SirNightKnight:
+  - bugfix: fixed burn treatment medical stack items sending the can't heal alert
+      when healing burn wounds.
+  SyncIt21, JohnFulpWillard:
+  - bugfix: The PDA camera app now works.
+  Tractor-Maam:
+  - bugfix: handheld crew monitor designs no longer print the same thing.
+  flleeppyy:
+  - bugfix: VV search
+  jlsnow301:
+  - bugfix: Fixed a bluescreen in emojipedia
+  - bugfix: Fixed a bluescreen in comms console
+  jlsnow301, JohnFulpWillard:
+  - bugfix: Fixed the UIs for signalers, airlock electronics/RCDs, and clockwork slabs
+2026-01-03:
+  Absolucy:
+  - bugfix: Ckeys with pronouns in OOC are now properly underlined again.
+2026-01-04:
+  Absolucy:
+  - bugfix: Fixed an exploit related to teleporting dummy humans where they should
+      not be.
+  JohnFulpWillard:
+  - bugfix: Gary won't teleport into you anymore.
+  - bugfix: ED209's no longer take space helmets to craft.
+  - bugfix: Lung stirfry no longer takes cybernetic lungs to craft.
+  - bugfix: Plasmamen don't take toxin damage from plasma.
+  MrMelbert:
+  - bugfix: AIs can now take pictures again.
+  SirNightKnight:
+  - balance: removed the box of flashbangs as an option from security utility vouchers.
+  flleeppyy:
+  - bugfix: VV .... AGAIN... GOD.. DAMMIT
+  - rscadd: Improved the issue report dialog to include the servers master commit
+  - rscadd: Added button to runtime viewer to use monkestation ss13 json log viewer
+  - admin: add stealth follow to FLW buttons
+  - code_imp: add new CI linter to check for unescaped brackets
+2026-01-05:
+  Lawlolawl:
+  - bugfix: Fixed Theseus engi lobby airlocks missing construction access. 3 insuls
+      have been shifted to the smes room so they are harder for tiders to take.
+2026-01-06:
+  Absolucy:
+  - bugfix: Fixed C.C.M.S implants not working.
+  - qol: Added some visible messages allowing people to distinguish if an oozeling
+      manually retracted their limb, or if their limb has retracted due to low blood.
+  iliyaxox:
+  - bugfix: 'Fixed all instances of footprints returning as blood-red footprints:
+      now mob will leave oil and xenoblood footprints when stepping on oil pools and
+      xenoblood gibs, respectively.'
+  - bugfix: Living carbon xenomorphs now bleed xenoblood instead of bleeding standard
+      red blood, and will generate xenomorph remains when gibbed.
+  - bugfix: Clothes will be stained with xenoblood when interacting with xenomorphs,
+      instead of standard red blood.
+2026-01-07:
+  EssentialTomato:
+  - bugfix: (timothymtorres) Fix gravity not updating for mobs when teleporting, wormhole
+      jaunters, wizard spells, tile creation/destruction, mech entry/ejection and
+      other methods.
+  - bugfix: Modified floors around gravity generator now update their gravity properly.
+  Lawlolawl:
+  - bugfix: Fixed Oshan engi lobby missing construction access. Parameds, engisec
+      and RD can finally open the door.
+2026-01-08:
+  Absolucy:
+  - map: Added liquid barriers under the xenobio doors on Theseus.
+  SirNightKnight:
+  - bugfix: fixed ERT space suit helmets not having the right heat protection.
+  - bugfix: fixed code blue medical officers spawning with a code green outfit.
+  jlsnow301:
+  - bugfix: various TGUI interface
+  - admin: 2 new Secret panel buttons "Department Order Cooldown" and "Mass Heal Everyone"
+  - rscadd: Robotact has a new menu for showing other borgs connected to the same
+      AI as you, as well as the status of your parent AI.
+  - rscadd: Seed extractor now shows the grind/juice results and plant reagent volume,
+      for seeds
+  - code_imp: adds a new unit test to check for duplicate loadout item names.
+2026-01-09:
+  Absolucy:
+  - balance: The Security techfab can no longer print Thermal Eyes or X-ray Eyes.
+  - bugfix: Radiation collectors should produce the proper amount of power again.
+      High-end singularity setups should be viable once more!
+  - qol: The SRN rockets will no longer collide with tesla miniballls when trying
+      to shoot the tesla.
+  JohnFulpWillard:
+  - bugfix: Changing the job of one person from one job position to another won't
+      set EVERYONE ELSE of the old job's paycheck department to the new one.
+  - qol: Badges don't fall off when you roll down your shirt.
+  - bugfix: Secondary AltClick doesn't get called twice every click.
+  - balance: QM's alt clothing is now in the cargo vending machine
+  - balance: Non-Cargo personnel can't use the Cargo clothes vending machine.
+  SirNightKnight:
+  - bugfix: fixed the hook shotgun's hook attack not working.
+  - bugfix: fixed the hook shotgun's worn sprite being an error.
+  flleeppyy:
+  - bugfix: seed extractor breaking hovering on reagents.
+  tt-relay-104:
+  - bugfix: Assembler will how use proper amount of items for crafting
+  - bugfix: Fixed assembler stack exploit
+  - bugfix: Fixed assembler free craft exploit
+2026-01-10:
+  Absolucy, Rukofamicom:
+  - balance: Mesons no longer detect false walls that are closed. Open false walls
+      will still appear as an opening though.
+  - qol: The bolts on false walls are now tightened with wrenches instead of screwdrivers.
+  Ihatethisgit:
+  - bugfix: Non-darkspawn are not able to use the darkspawn cams console anymore.
+  Tractor-Maam:
+  - rscadd: Added 40 new tips to roundstart!
+2026-01-11:
+  JohnFulpWillard:
+  - balance: Default command gear is no longer access locked.
+  - balance: Reverts previous cargo-locking of the cargo vendor.
+  - bugfix: Cargo vendors now have the proper products.
+  LettuceGuardian:
+  - image: Updated the body cam sprite.
+  TheColorCyan:
+  - rscdel: shocks should no longer apply pain damage (report if it still happens)
+  - balance: burning yellow extracts apply 10 burn damage instead of pain
+  - balance: burning yellow negative effects no longer apply if the victim is shock
+      immune
+2026-01-12:
+  JohnFulpWillard:
+  - rscadd: Barbers and Explorers are now roundstart jobs when available. 1 Barber,
+      3 Explorers + 3 Latejoin Explorers.
+  - bugfix: Barbers are now considered part of Service, and Explorers are now considered
+      part of Cargo.
+  - rscadd: Explorers are no longer eligible as antagonist targets, as they are nigh
+      impossible to track down.
+  - rscdel: Barbers are no longer available on Kilo, Graveyard, IceBox & Pubby (due
+      to the lack of an office or equipment).
+  - bugfix: Fixed minor UI issues with PDA, NT Rep's app & Locked safes.
+  - bugfix: Bridge Assistant now shows on the command monitor.
+  - refactor: Digitigrade lizard/satyr clothing no longer uses a separate icon for
+      each individual piece of clothing, which was essentially doubling the resources
+      you need to download to log in. Now it uses masking to change clothes to fit
+      lizards when being equipped, which does mean there's a quality drop, but in
+      exchange new clothes don't need to be sprited twice, any piece of clothing that
+      does not have a lizard alt made will still fit digi lizards/satyrs (unless specifically
+      excluded), and respriting clothes won't leave lizard alts using the old version.
+  - refactor: Digitigrade shoes have been reworked to be based off of templates &
+      masking, which further cuts on rsc size. This comes at the cost of plenty of
+      shoes no longer fitting lizards, however these new shoes don't need to be constantly
+      updated when a new shoe is added/removed/resprited (which is currently the reason
+      why many shoes don't work for lizards atm)
+  - bugfix: Smithed boots fit lizards better now.
+  - bugfix: Dry galoshes are no longer invisible on lizards.
+  JupiterJaeden:
+  - balance: Commando operatives now start with syndicate microbomb implants, like
+      normal nuclear operatives.
+  - balance: Disarming/destroying the commando operative nuke still automatically
+      calls the shuttle, but the shuttle is now recallable if command so desires.
+  SirNightKnight:
+  - bugfix: fixed item interactions with the powerfist not working.
+  - bugfix: fixed nuclear operatives getting Nanotrasen contracts.
+  - bugfix: fixed spraycans being able to paint things in really dark colors.
+  Tractor-Maam:
+  - bugfix: integrated circuit MOD action components now have icons again.
+  - bugfix: changed the icon name of the nanite/bci/mod action icon "five" to actually
+      be five, instead of fiv.
+2026-01-13:
+  Absolucy:
+  - bugfix: Fixed willing borer host messages being white instead of big and purple.
+  - bugfix: Fixed some languages (most notably Shadowtongue) missing their icons.
+  - image: The Mushroom language now has an icon.
+  JohnFulpWillard:
+  - bugfix: Jailbird no longer breaks your memories.
+  JupiterJaeden:
+  - qol: All of security (except the brig doc) now starts with security pens in their
+      PDAs roundstart, which can be used to prompt a surrender from someone by clicking
+      on them at range. They are also printable at the security lathe.
+  Lawlolawl:
+  - qol: Made gulag point generation more intuitive (buffs mining for rare minerals)
+  - rscadd: Added surgical tools to Heliostation morgue.
+  SirNightKnight:
+  - balance: lessened the explosion effect of oil extracts.
+2026-01-14:
+  Absolucy:
+  - bugfix: Slightly optimized some blood-related code.
+  - qol: Slashers no longer spawn a morbillion blood particles (they still spawn SOME)
+      each hit, hopefully avoiding grinding the server to a halt.
+  JohnFulpWillard:
+  - bugfix: The list of jobs should all fit in the latejoin menu now.
+  - qol: Research console's search bar is longer.
+  - bugfix: Explorers won't be progtot objectives.
+  - bugfix: anarchids now have the right sprite when a creampie is thrown at their
+      face.
+  Lawlolawl:
+  - bugfix: Fixed TK teleporting bags and equipment.
+  SirNightKnight:
+  - balance: matter eater cannot eat living, indestructible (one exception), or objects
+      bigger than 32 by 32.
+  - bugfix: matter eater cannot eat items in storage, inventory, or that are located
+      inside you.
+  - balance: dying with matter eater makes you vomit all your contents.
+  - map: gave all pirate shuttles except the Dutchman inducers and a super capacity
+      SMES.
+  - bugfix: fixed the wirecutter icon for the spess knife not showing.
+  - bugfix: re-added cargo candle pack crates?
+  - bugfix: fixed every mob being able to strangle a human.
+  - qol: cyborgs can move pulled items by clicking on an open turf next to them.
+  - code_imp: replaced all secure briefcase with briefcase secure
+  SirNightKnight, Jacquerel:
+  - balance: Foam now passes through tables, grilles, computers, and several other
+      dense structures. You can still escape foam by mantling onto tables and such.
+  Tractor-Maam:
+  - bugfix: Barbers can now reset their alt titles.
+  - bugfix: Explorers can now reset their alt titles.
+  - bugfix: RoboTact for cyborgs now prints their name again.
+  flleeppyy:
+  - bugfix: PDAs should ring now
+  notghosti:
+  - bugfix: Desiccation no longer tells you it can be fixed via cloning
+  wonderinghost:
+  - map: added/modified map content
+  - map: Blueshift PTL Now on the Left Instead of Right (fills right side with storage)
+  - map: Atmos Has Powerline to PTL (look for blue wires)
+2026-01-15:
+  Absolucy:
+  - admin: Added an admin button in the Secrets panel to lobotomize Poly.
+  Chelxox:
+  - balance: Gripper gloves & gorilla gloves properly balanced.
+  Ice-Type:
+  - balance: Majorly tuned down the wounding caused by buckshot
+  - balance: Improvised shells no longer do more damage than buckshot shells
+  JohnFulpWillard:
+  - bugfix: NTSL no longer constantly freezes up saying you're doing too many inputs.
+  SirNightKnight:
+  - qol: morgue tray soul alarms don't ignore bad DNA mobs.
+  - rscadd: updated the honorbound sect guilt list to take slashers, bloodsuckers,
+      darkspawn and their thralls into account.
+  - qol: added balloon alerts to the crusade join rite.
+  - bugfix: fixed a bug  where the refrain text for attacking an innocent was sent
+      to the target instead of the attacker.
+  - code_imp: updates honorbound code to be in line with the ongoing attack chain
+      refactor.
+  - balance: you can shove anyone while honorbound.
+  - balance: removes mining soulstones from the necropolis chest loot pool.
+  - rscadd: replaced all universal blood bags with sealed saline chem packs containing
+      55 saline glucose, 35 iron, and 10 tirimol.
+  - rscadd: added saline chem packs to all existing blood crates.
+  - rscadd: added spider blood to the blood variety crate.
+  - spellcheck: fixed a minor grammar error in the penlight's decription.
+  - map: removed a misplaced computer console on kilostation.
+  - bugfix: ' voidraptor sec med uses sec access instead of brig.'
+  Tractor-Maam:
+  - map: the HoP line on Helio has their windows actually exist in full
+  notghosti:
+  - bugfix: Removed a handheld monitor node typo
+  - rscadd: Added Morphine and ammoniated mercury to emergency hypo spray
+  - balance: Emergency Hypo spray 5 > 10 capacity
+  - balance: Emergency Hypo spray 1 > 2 recharge rate
+2026-01-16:
+  Absolucy:
+  - image: Opening/closing normal and reinforced false walls now has a proper animation.
+2026-01-17:
+  JohnFulpWillard:
+  - bugfix: Telecomms servers won't brick if you get a runtime error in your NTSL
+      code.
+  - bugfix: NTSL scripting should be a little more responsive now, but will no longer
+      automatically save your code.
+  - bugfix: Added some monke-exclusive roundstart languages to NTSL script, replacing
+      non-existent languages from it.
+  - qol: Added some extra references help to the NTSL scripting computer.
+  SirNightKnight:
+  - bugfix: fixed teleporting disconnecting mobs from what they are buckled to.
+2026-01-18:
+  Absolucy:
+  - rscadd: Heretics can now actually create ghouls from oozeling cores. Flesh heretics
+      have to right click with their grasp, and oozeling cores should work with Imperfect
+      Ritual and Shattered Ritual.
+  - qol: The "Assist your master" objective for heretic minions now include their
+      master's name.
+  - bugfix: Fixed the seed extractor not showing seed icons.
+  - bugfix: Fixed the seed extractor's search not searching for reagents.
