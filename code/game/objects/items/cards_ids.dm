@@ -138,6 +138,9 @@
 		ADD_TRAIT(src, TRAIT_TASTEFULLY_THICK_ID_CARD, ROUNDSTART_TRAIT)
 
 /obj/item/card/id/Destroy()
+	if (registered_name && name != initial(name))
+		var/list/call_stack = capture_call_stack()
+		logger.Log(LOG_CATEGORY_ID_DELS, "id deleted: [name]. call stack:\n\t[json_encode(call_stack)]")
 	if (registered_account)
 		registered_account.bank_cards -= src
 	if (my_store)
@@ -146,7 +149,7 @@
 
 /obj/item/card/id/get_id_examine_strings(mob/user)
 	. = ..()
-	. += list("[icon2html(get_cached_flat_icon(), user, extra_classes = "bigicon")]")
+	. += list("[ma2html(get_cached_flat_icon(), user, extra_classes = "bigicon")]")
 
 /obj/item/card/id/update_overlays()
 	. = ..()

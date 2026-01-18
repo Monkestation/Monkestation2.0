@@ -127,6 +127,7 @@
 #define LOG_CATEGORY_BLACKMARKET "blackmarket"
 #define LOG_CATEGORY_ANTAG_REP "antag-rep"
 #define LOG_CATEGORY_HOTSPOTS "hotspots"
+#define LOG_CATEGORY_ID_DELS "id-dels"
 
 // Admin categories
 #define LOG_CATEGORY_ADMIN "admin"

@@ -65,3 +65,6 @@
 
 /datum/log_category/music
 	category = LOG_CATEGORY_MUSIC
+
+/datum/log_category/id_dels
+	category = LOG_CATEGORY_ID_DELS
