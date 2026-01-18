@@ -48515,6 +48515,9 @@
 	pixel_x = 32
 	},
 /obj/effect/turf_decal/delivery,
+/obj/vehicle/ridden/battering_ram{
+	dir = 8
+	},
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 4
 	},

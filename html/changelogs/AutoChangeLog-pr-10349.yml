@@ -1,0 +1,5 @@
+author: "Aniantan"
+delete-after: True
+changes:
+  - bugfix: "Hearts and genetic makeup transfers properly work with blood types and no longer break blood transfusion and mending touch"
+  - bugfix: "DNA console no longer gets subject's blood type wrong"

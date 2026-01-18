@@ -1,0 +1,6 @@
+author: "wraith-54321"
+delete-after: True
+changes:
+  - rscadd: "Added sub overminds for blob"
+  - rscadd: "Added more blob chemical effects"
+  - balance: "Slightly increased brute storyteller point values"

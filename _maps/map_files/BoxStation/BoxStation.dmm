@@ -13851,6 +13851,7 @@
 	},
 /obj/machinery/light/directional/west,
 /obj/machinery/cell_charger_multi/wall_mounted/directional/west,
+/obj/structure/tank_dispenser,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "evJ" = (
@@ -68915,8 +68916,8 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 9
 	},
-/obj/structure/tank_dispenser,
 /obj/structure/extinguisher_cabinet/directional/west,
+/obj/vehicle/ridden/battering_ram,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "wbK" = (

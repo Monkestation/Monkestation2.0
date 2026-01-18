@@ -32329,6 +32329,9 @@
 "pBF" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
+/obj/vehicle/ridden/battering_ram{
+	dir = 8
+	},
 /turf/open/floor/stone,
 /area/station/ai_monitored/security/armory)
 "pBM" = (
