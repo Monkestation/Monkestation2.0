@@ -303,9 +303,7 @@
 	var/obj/item/organ/internal/heart/the_heart = get_organ_by_type(/obj/item/organ/internal/heart)
 	if(the_heart?.heart_bloodtype)
 		return the_heart.heart_bloodtype
-	if(dna.species.exotic_bloodtype)
-		return dna.species.exotic_bloodtype
-	return dna.human_blood_type
+	return dna.species.exotic_bloodtype || dna.human_blood_type
 
 //to add a splatter of blood or other mob liquid.
 /mob/living/proc/add_splatter_floor(turf/blood_turf = get_turf(src), small_drip)
