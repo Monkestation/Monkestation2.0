@@ -32,6 +32,7 @@
 		if(destination.z != z && is_multi_z_level(z)) // up or down is just a good indicator "we're on the station", we don't need to check specifics
 			destination_name += ((get_dir_multiz(src, destination) & UP) ? " (Above)" : " (Below)")
 
+		BINARY_INSERT_DEFINE(destination_name, destination_list, SORT_VAR_NO_TYPE, destination_name, SORT_COMPARE_DIRECTLY, COMPARE_KEY)
 		destination_list[destination_name] = destination
 
 /*
@@ -47,7 +48,7 @@
 		balloon_alert(src, "no navigation signals!")
 		return
 
-	var/platform_code = tgui_input_list(src, "Select a location", "Navigate", sort_list(destination_list))
+	var/platform_code = tgui_input_list(src, "Select a location", "Navigate", destination_list)
 	var/atom/navigate_target = destination_list[platform_code]
 
 	if(isnull(navigate_target) || incapacitated())
