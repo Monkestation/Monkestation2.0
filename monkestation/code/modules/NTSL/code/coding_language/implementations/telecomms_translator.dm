@@ -15,8 +15,6 @@
 #define TORII 12
 #define UNCOMMON 13
 
-#define HIGHEST_LANGUAGE 13
-
 ///Span classes that players are allowed to set in a radio transmission.
 GLOBAL_LIST_INIT(allowed_custom_spans, list(
 	SPAN_ROBOT,
@@ -532,5 +530,3 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 #undef ASH_TONGUE
 #undef TORII
 #undef UNCOMMON
-
-#undef HIGHEST_LANGUAGE
