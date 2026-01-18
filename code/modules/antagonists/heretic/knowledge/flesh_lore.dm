@@ -56,7 +56,7 @@
 
 /datum/heretic_knowledge/limited_amount/flesh_grasp
 	name = "Grasp of Flesh"
-	desc = "Your Mansus Grasp gains the ability to create a ghoul out of corpse with a soul. \
+	desc = "Your Mansus Grasp gains the ability to create a ghoul out of corpse or oozeling core with a soul. \
 		Ghouls have only 25 health and look like husks to the heathens' eyes, but can use Bloody Blades effectively. \
 		You can only create one at a time by this method."
 	gain_text = "My new found desires drove me to greater and greater heights."
@@ -67,9 +67,10 @@
 
 /datum/heretic_knowledge/limited_amount/flesh_grasp/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
+	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY, PROC_REF(on_mansus_grasp_secondary))
 
 /datum/heretic_knowledge/limited_amount/flesh_grasp/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
-	UnregisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK)
+	UnregisterSignal(user, list(COMSIG_HERETIC_MANSUS_GRASP_ATTACK, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY))
 
 /datum/heretic_knowledge/limited_amount/flesh_grasp/proc/on_mansus_grasp(mob/living/source, mob/living/target)
 	SIGNAL_HANDLER
@@ -98,6 +99,30 @@
 
 	make_ghoul(source, target)
 
+// snowflake handler for ooze cores
+/datum/heretic_knowledge/limited_amount/flesh_grasp/proc/on_mansus_grasp_secondary(mob/living/source, obj/item/organ/internal/brain/slime/core)
+	//SIGNAL_HANDLER
+	if(!is_oozeling_core(core))
+		return NONE
+
+	if(LAZYLEN(created_items) >= limit)
+		core.balloon_alert(source, "at ghoul limit!")
+		return COMPONENT_BLOCK_HAND_USE
+
+	core.brainmob?.grab_ghost()
+	if(!core.mind || !core.brainmob?.client)
+		core.balloon_alert(source, "no soul!")
+		return COMPONENT_BLOCK_HAND_USE
+
+	var/mob/living/carbon/human/ghouled_slime = core.rebuild_body(nugget = FALSE, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
+	if(QDELETED(ghouled_slime))
+		core.balloon_alert(source, "failed to ghoul!")
+		return COMPONENT_BLOCK_HAND_USE
+
+	make_ghoul(source, ghouled_slime)
+
+	return COMPONENT_USE_HAND
+
 /// Makes [victim] into a ghoul.
 /datum/heretic_knowledge/limited_amount/flesh_grasp/proc/make_ghoul(mob/living/user, mob/living/carbon/human/victim)
 	user.log_message("created a ghoul, controlled by [key_name(victim)].", LOG_GAME)
@@ -121,7 +146,7 @@
 
 /datum/heretic_knowledge/limited_amount/flesh_ghoul
 	name = "Imperfect Ritual"
-	desc = "Allows you to transmute a corpse and a poppy to create a Voiceless Dead. \
+	desc = "Allows you to transmute a corpse (or oozeling core) and a poppy to create a Voiceless Dead. \
 		Voiceless Dead are mute ghouls and only have 50 health, but can use Bloody Blades effectively. \
 		You can only create two at a time."
 	gain_text = "I found notes of a dark ritual, unfinished... yet still, I pushed forward."
@@ -152,6 +177,16 @@
 		// We'll select any valid bodies here. If they're clientless, we'll give them a new one.
 		selected_atoms += body
 		return TRUE
+
+	var/obj/item/organ/internal/brain/slime/slime_core = locate() in atoms
+	if(slime_core)
+		var/mob/living/carbon/human/new_slime_body = slime_core.rebuild_body(nugget = FALSE, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
+		if(!QDELETED(new_slime_body))
+			// ELSE THE CORE GETS DELETED AND WEIRD SHIT HAPPENS
+			atoms -= slime_core
+			atoms += new_slime_body
+			selected_atoms += new_slime_body
+			return TRUE
 
 	loc.balloon_alert(user, "ritual failed, no valid body!")
 	return FALSE

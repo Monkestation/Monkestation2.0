@@ -5445,8 +5445,8 @@
 /obj/item/reagent_containers/blood/ethereal,
 /obj/item/reagent_containers/blood/slime,
 /obj/item/reagent_containers/blood/slime,
-/obj/item/reagent_containers/blood/universal,
-/obj/item/reagent_containers/blood/universal,
+/obj/item/reagent_containers/chem_pack/saline,
+/obj/item/reagent_containers/chem_pack/saline,
 /obj/item/reagent_containers/blood/podperson,
 /obj/item/reagent_containers/blood/podperson,
 /obj/effect/turf_decal/bot,
@@ -12204,7 +12204,7 @@
 /area/station/engineering/supermatter/room)
 "dGH" = (
 /obj/structure/table/reinforced/rglass,
-/obj/item/reagent_containers/blood/universal,
+/obj/item/reagent_containers/chem_pack/saline,
 /turf/open/floor/iron/dark,
 /area/station/medical/treatment_center)
 "dGL" = (
@@ -24027,7 +24027,7 @@
 	pixel_x = 2;
 	pixel_y = 3
 	},
-/obj/item/storage/secure/briefcase,
+/obj/item/storage/briefcase/secure,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
@@ -25083,7 +25083,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
 	},
-/obj/item/storage/secure/briefcase{
+/obj/item/storage/briefcase/secure{
 	pixel_y = -1;
 	pixel_x = 8
 	},
@@ -27028,7 +27028,7 @@
 	pixel_x = -3;
 	pixel_y = 2
 	},
-/obj/item/storage/secure/briefcase{
+/obj/item/storage/briefcase/secure{
 	pixel_x = 2;
 	pixel_y = -2
 	},
@@ -47634,7 +47634,7 @@
 "nUI" = (
 /obj/structure/sign/departments/exam_room/directional/east,
 /obj/machinery/iv_drip,
-/obj/item/reagent_containers/blood/universal,
+/obj/item/reagent_containers/chem_pack/saline,
 /turf/open/floor/iron/freezer,
 /area/station/maintenance/port/lesser)
 "nUQ" = (
@@ -52238,7 +52238,7 @@
 "pnT" = (
 /obj/item/radio/intercom/directional/north,
 /obj/structure/dresser,
-/obj/item/storage/secure/briefcase{
+/obj/item/storage/briefcase/secure{
 	pixel_x = -6;
 	pixel_y = 16
 	},
@@ -61420,7 +61420,7 @@
 "rSL" = (
 /obj/structure/table/reinforced,
 /obj/item/folder/red,
-/obj/item/storage/secure/briefcase,
+/obj/item/storage/briefcase/secure,
 /obj/item/book/manual/wiki/security_space_law,
 /obj/item/taperecorder,
 /obj/effect/turf_decal/tile/red/half{
@@ -73152,7 +73152,7 @@
 /area/station/security/prison/workout)
 "viH" = (
 /obj/structure/table/wood,
-/obj/item/storage/secure/briefcase{
+/obj/item/storage/briefcase/secure{
 	desc = "A large briefcase with a digital locking system, and the Nanotrasen logo emblazoned on the sides.";
 	name = "\improper Nanotrasen-brand secure briefcase exhibit";
 	pixel_y = 2
@@ -73567,7 +73567,7 @@
 /area/station/service/chapel/office)
 "vpm" = (
 /obj/structure/safe,
-/obj/item/storage/secure/briefcase/riches,
+/obj/item/storage/briefcase/secure/riches,
 /obj/item/storage/backpack/duffelbag/syndie/hitman,
 /obj/item/lazarus_injector,
 /obj/item/gun/energy/disabler,

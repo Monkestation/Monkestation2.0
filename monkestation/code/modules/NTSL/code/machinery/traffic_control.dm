@@ -21,7 +21,7 @@
 	/// The network to probe
 	var/network = "NULL"
 	/// The current code being used
-	var/storedcode = ""
+	var/storedcode = "def process_signal(sig){return sig;}"
 	/// The ID currently inserted
 	var/obj/item/card/id/inserted_id
 	/// The name and job on the ID used to log in

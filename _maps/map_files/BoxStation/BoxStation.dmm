@@ -40028,7 +40028,7 @@
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/item/radio/intercom/directional/west,
 /obj/structure/filingcabinet/chestdrawer,
-/obj/item/storage/secure/briefcase,
+/obj/item/storage/briefcase/secure,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/cmo)
 "mSP" = (

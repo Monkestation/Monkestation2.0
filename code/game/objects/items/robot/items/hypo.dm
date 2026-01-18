@@ -10,7 +10,9 @@
 	)
 #define PARAMEDIC_MEDICAL_REAGENTS list(\
 		/datum/reagent/medicine/epinephrine,\
-		/datum/reagent/toxin/formaldehyde\
+		/datum/reagent/toxin/formaldehyde,\
+		/datum/reagent/medicine/ammoniated_mercury,\
+		/datum/reagent/medicine/painkiller/morphine\
 	)
 #define EXPANDED_MEDICAL_REAGENTS list(\
 		/datum/reagent/medicine/haloperidol,\
@@ -274,7 +276,7 @@
 	name = "emergency paramedic hypospray"
 	desc = "A cut-down version of the cyborg's chemical synthesizer and injection system for paramedics able to fit into implants."
 	possible_transfer_amounts = list(1, 5)
-	max_volume_per_reagent = 5
+	max_volume_per_reagent = 10
 	default_reagent_types = PARAMEDIC_MEDICAL_REAGENTS
 	bypass_protection = TRUE
 
@@ -282,7 +284,7 @@
 	for(var/reagent in reagents_to_regen)
 		var/datum/reagent/reagent_to_regen = reagent
 		if(!stored_reagents.has_reagent(reagent_to_regen, max_volume_per_reagent))
-			stored_reagents.add_reagent(reagent_to_regen, 1, reagtemp = dispensed_temperature, no_react = TRUE)
+			stored_reagents.add_reagent(reagent_to_regen, 2, reagtemp = dispensed_temperature, no_react = TRUE)
 
 /// Peacekeeper hypospray
 /obj/item/reagent_containers/borghypo/peace
