@@ -1,19 +1,21 @@
 /**
  * Nanotrasen TCS Language - Made by Doohl, ported to Yogs by Altoids
  */
-#define HUMAN (1<<0)
-#define MONKEY (1<<1)
-#define ROBOT (1<<2)
-#define DRACONIC (1<<3)
-#define BEACHTONGUE (1<<4)
-#define SYLVAN (1<<5)
-#define ETHEREAN (1<<6)
-#define BONE (1<<7)
-#define MOTH (1<<8)
-#define CAT (1<<9)
-#define ASH_TONGUE (1<<10)
-#define TORII (1<<11)
-#define UNCOMMON (1<<12)
+#define HUMAN 1
+#define MONKEY 2
+#define ROBOT 3
+#define DRACONIC 4
+#define BEACHTONGUE 5
+#define SYLVAN 6
+#define ETHEREAN 7
+#define BONE 8
+#define MOTH 9
+#define CAT 10
+#define ASH_TONGUE 11
+#define TORII 12
+#define UNCOMMON 13
+
+#define HIGHEST_LANGUAGE 13
 
 ///Span classes that players are allowed to set in a radio transmission.
 GLOBAL_LIST_INIT(allowed_custom_spans, list(
@@ -138,21 +140,23 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 	 * However, I think the signal can only have one language
 	 * So, the lowest bit set within $language overrides any higher ones that are set.
 	 */
-	interpreter.SetVar("languages", new /datum/n_enum(list(
-		"human" = HUMAN,
-		"monkey" = MONKEY,
-		"robot" = ROBOT,
-		"draconic" = DRACONIC,
-		"beachtounge" = BEACHTONGUE,
-		"sylvan" = SYLVAN,
-		"etherean" = ETHEREAN,
-		"bonespeak" = BONE,
-		"mothian" = MOTH,
-		"cat" = CAT,
-		"ash" = ASH_TONGUE,
-		"torii" = TORII,
-		"uncommon" = UNCOMMON,
-	)))
+	interpreter.SetVar(
+		"languages", new /datum/n_enum(list(
+			"human" = HUMAN,
+			"monkey" = MONKEY,
+			"robot" = ROBOT,
+			"draconic" = DRACONIC,
+			"beachtounge" = BEACHTONGUE,
+			"sylvan" = SYLVAN,
+			"etherean" = ETHEREAN,
+			"bonespeak" = BONE,
+			"mothian" = MOTH,
+			"cat" = CAT,
+			"ash" = ASH_TONGUE,
+			"torii" = TORII,
+			"uncommon" = UNCOMMON,
+		))
+	)
 
 	interpreter.Run() // run the thing
 
@@ -339,6 +343,12 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 			return /datum/language/moffic
 		if(CAT)
 			return /datum/language/nekomimetic
+		if(ASH_TONGUE)
+			return /datum/language/ashtongue
+		if(TORII)
+			return /datum/language/yangyu
+		if(UNCOMMON)
+			return /datum/language/uncommon
 
 ///Stores data from the script to use between radio messages.
 /datum/n_function/default/mem
@@ -522,3 +532,5 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 #undef ASH_TONGUE
 #undef TORII
 #undef UNCOMMON
+
+#undef HIGHEST_LANGUAGE
