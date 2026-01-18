@@ -24940,6 +24940,11 @@
 /obj/item/radio/intercom/directional/east,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/upper)
+"huz" = (
+/obj/machinery/light/floor/has_bulb,
+/obj/structure/cable,
+/turf/open/floor/circuit/telecomms/mainframe,
+/area/station/tcommsat/server)
 "huC" = (
 /obj/machinery/light{
 	dir = 8;
@@ -115962,7 +115967,7 @@ jgm
 nhC
 jGA
 qYO
-aFa
+jgi
 aFa
 aFa
 mbi
@@ -116219,7 +116224,7 @@ jgm
 lXw
 jGA
 ree
-iZG
+huz
 aVk
 aFa
 aFa
@@ -116476,7 +116481,7 @@ jgm
 lXw
 jGA
 azB
-abt
+xNW
 tZQ
 abt
 egU
