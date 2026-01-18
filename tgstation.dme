@@ -8976,7 +8976,6 @@
 #include "monkestation\code\modules\virology\disease\symtoms\flavor\groan.dm"
 #include "monkestation\code\modules\virology\disease\symtoms\flavor\gunk.dm"
 #include "monkestation\code\modules\virology\disease\symtoms\flavor\hair_growth.dm"
-#include "monkestation\code\modules\virology\disease\symtoms\flavor\mommi_shrink.dm"
 #include "monkestation\code\modules\virology\disease\symtoms\flavor\polyvitiligo.dm"
 #include "monkestation\code\modules\virology\disease\symtoms\flavor\soreness.dm"
 #include "monkestation\code\modules\virology\disease\symtoms\flavor\special_adaptation.dm"
