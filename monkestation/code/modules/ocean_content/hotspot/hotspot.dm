@@ -188,8 +188,7 @@
 	var/message
 	if(heat > SUBCALL_HEATCOST * subcalls)
 		message = "Big Hotspot event triggered at [AREACOORD(calculation_point)] in [area_name_string] with a heat value of [heat]"
-		spawn(3 SECONDS)
-			after_move_effect(subcalls++, heat - ((SUBCALL_HEATCOST + 500) * subcalls))
+		addtimer(CALLBACK(src, PROC_REF(after_move_effect), subcalls++, heat - ((SUBCALL_HEATCOST + 500) * subcalls)), 3 SECONDS)
 	else
 		message = "Small Hotspot event triggered at [AREACOORD(calculation_point)] in [area_name_string] with a heat value of [heat]"
 
