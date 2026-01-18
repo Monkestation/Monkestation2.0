@@ -456,7 +456,7 @@ Behavior that's still missing from this component that original food items had t
 	var/atom/owner = parent
 
 	if(!owner?.reagents)
-		. = false
+		. = FALSE
 		CRASH("[eater] failed to bite [owner], because [owner] had no reagents.")
 
 	if(eater.satiety > -200)
