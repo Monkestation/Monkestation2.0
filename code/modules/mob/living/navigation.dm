@@ -1,5 +1,4 @@
-#define MAX_NAVIGATE_NODES 145
-#define MAX_NAVIGATE_DEPTH 60
+#define MAX_NAVIGATE_RANGE 145
 
 /mob/living
 	/// Cooldown of the navigate() verb.
@@ -27,7 +26,7 @@
 /mob/living/proc/create_navigation()
 	var/list/destination_list = list()
 	for(var/atom/destination as anything in GLOB.navigate_destinations)
-		if(get_dist(destination, src) > MAX_NAVIGATE_NODES || !are_zs_connected(destination, src)) // monkestation edit: check to ensure that Z-levels are connected, so we don't get centcom destinations while on station and vice-versa
+		if(get_dist(destination, src) > MAX_NAVIGATE_RANGE || !are_zs_connected(destination, src)) // monkestation edit: check to ensure that Z-levels are connected, so we don't get centcom destinations while on station and vice-versa
 			continue
 		var/destination_name = GLOB.navigate_destinations[destination]
 		if(destination.z != z && is_multi_z_level(z)) // up or down is just a good indicator "we're on the station", we don't need to check specifics
@@ -77,7 +76,7 @@
 		stack_trace("Navigate target ([navigate_target]) is not an atom, somehow.")
 		return
 
-	var/list/path = get_astar_path_to(src, navigate_target, maxnodes = MAX_NAVIGATE_NODES, maxnodedepth = MAX_NAVIGATE_DEPTH, mintargetdist = 1, access = get_access(), smooth_diagonals = FALSE) // diagonals look kind of weird when visualized for now
+	var/list/path = get_astar_path_to(src, navigate_target, maxnodes = MAX_NAVIGATE_RANGE, mintargetdist = 1, access = get_access(), smooth_diagonals = FALSE) // diagonals look kind of weird when visualized for now
 	if(!length(path))
 		balloon_alert(src, "no valid path with current access!")
 		return
@@ -172,5 +171,4 @@
 
 	return target
 
-#undef MAX_NAVIGATE_DEPTH
-#undef MAX_NAVIGATE_NODES
+#undef MAX_NAVIGATE_RANGE
