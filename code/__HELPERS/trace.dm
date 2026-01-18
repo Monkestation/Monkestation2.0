@@ -11,7 +11,9 @@
 		var/line_num = 0
 
 		if(p.proc)
+			#ifndef OPENDREAM
 			proc_name = "[p.proc.type]"
+			#endif
 			// Clean up the proc name if it has path separators
 			var/slash_pos_inner = findtext(proc_name, "/", -1)
 			if(slash_pos_inner && slash_pos_inner < length(proc_name))
