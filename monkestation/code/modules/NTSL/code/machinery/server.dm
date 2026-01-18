@@ -89,7 +89,7 @@
 			signal.data["name"] = ""
 			signal.data["reject"] = FALSE
 			Compiler.Run(signal)
-			if(!signal.data["reject"] == FALSE)
+			if(signal.data["reject"] == FALSE)
 				user.client.give_award(/datum/award/achievement/jobs/Poly_silent, user)
 		else
 			for(var/sample in signal.data["spans"])
