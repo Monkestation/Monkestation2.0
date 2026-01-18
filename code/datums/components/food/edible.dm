@@ -318,9 +318,7 @@ Behavior that's still missing from this component that original food items had t
 /datum/component/edible/proc/IsFoodGone(atom/owner, mob/living/feeder)
 	if(QDELETED(owner) || !(IS_EDIBLE(owner)))
 		return TRUE
-	if(owner.reagents.total_volume)
-		return FALSE
-	return TRUE
+	return FALSE
 
 /// Normal time to forcefeed someone something
 #define EAT_TIME_FORCE_FEED (3 SECONDS)
@@ -460,19 +458,24 @@ Behavior that's still missing from this component that original food items had t
 	if(!owner?.reagents)
 		stack_trace("[eater] failed to bite [owner], because [owner] had no reagents.")
 		return FALSE
+
 	if(eater.satiety > -200)
 		eater.adjust_satiety(-junkiness)
 	playsound(eater.loc,'sound/items/eatfood.ogg', rand(10,50), TRUE)
-	if(!owner.reagents.total_volume)
-		return
+
+	// Show warning if total_volume is zero
+	if(owner.reagents && owner.reagents.total_volume == 0)
+		to_chat(eater, span_warning("[capitalize(owner)] tastes of nothing! It doesn't feel nutritious at all..."))
+
 	var/sig_return = SEND_SIGNAL(parent, COMSIG_FOOD_EATEN, eater, feeder, bitecount, bite_consumption)
 	if(sig_return & DESTROY_FOOD)
 		qdel(owner)
 		return
 
 	var/fraction = 0.3
-	fraction = min(bite_consumption / owner.reagents.total_volume, 1)
-	owner.reagents.trans_to(eater, bite_consumption, transfered_by = feeder, methods = INGEST)
+	if(owner.reagents && owner.reagents.total_volume > 0)
+		fraction = min(bite_consumption / owner.reagents.total_volume, 1)
+		owner.reagents.trans_to(eater, bite_consumption, transfered_by = feeder, methods = INGEST)
 	eater.hud_used?.hunger?.update_hunger_bar()
 	bitecount++
 	var/desired_mask = (total_bites / bitecount)
@@ -484,7 +487,8 @@ Behavior that's still missing from this component that original food items had t
 		current_mask = desired_mask
 		parent.add_filter("bite", 0, alpha_mask_filter(icon=icon('goon/icons/obj/food.dmi', "eating[desired_mask]")))
 	checkLiked(fraction, eater)
-	if(!owner.reagents.total_volume)
+	// I've served my purpose, oh God of food. Let me rest now.
+	if(bitecount >= total_bites && total_bites > 0)
 		On_Consume(eater, feeder)
 
 	//Invoke our after eat callback if it is valid

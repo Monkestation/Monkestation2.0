@@ -1,6 +1,0 @@
-author: "SirNightKnight"
-delete-after: True
-changes:
-  - balance: "matter eater cannot eat living, indestructible (one exception), or objects bigger than 32 by 32."
-  - bugfix: "matter eater cannot eat items in storage, inventory, or that are located inside you."
-  - balance: "dying with matter eater makes you vomit all your contents."
