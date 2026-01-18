@@ -8883,7 +8883,6 @@
 #include "monkestation\code\modules\uplink\uplink_items\stealthy_tools.dm"
 #include "monkestation\code\modules\uplink\uplink_items\suits.dm"
 #include "monkestation\code\modules\vehicles\monkey_ball.dm"
-#include "monkestation\code\modules\vehicles\wheelchair.dm"
 #include "monkestation\code\modules\vehicles\cars\vim.dm"
 #include "monkestation\code\modules\vehicles\mecha\mecha_actions.dm"
 #include "monkestation\code\modules\vehicles\mecha\equipment\tools\other_tools.dm"
