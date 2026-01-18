@@ -118,6 +118,11 @@
 		balloon_alert(user, "empty...")
 		return
 	var/item_to_spawn = pick_weight_recursive(GLOB.maintenance_loot)
+	if(!item_to_spawn)
+		item_to_spawn = pick_weight_recursive(GLOB.maintenance_loot)
+		if(!item_to_spawn)
+			item_to_spawn = /obj/item/food/spaghetti/raw
+			stack_trace("Failed to pick maintenance loot for a trash pile twice...? They get spaghetti.")
 	var/obj/item/spawned_item = new item_to_spawn(drop_location())
 	if(!QDELETED(spawned_item))
 		balloon_alert(user, "found [spawned_item]!")
