@@ -456,8 +456,8 @@ Behavior that's still missing from this component that original food items had t
 	var/atom/owner = parent
 
 	if(!owner?.reagents)
-		stack_trace("[eater] failed to bite [owner], because [owner] had no reagents.")
-		return FALSE
+		. = false
+		CRASH("[eater] failed to bite [owner], because [owner] had no reagents.")
 
 	if(eater.satiety > -200)
 		eater.adjust_satiety(-junkiness)
@@ -465,7 +465,7 @@ Behavior that's still missing from this component that original food items had t
 
 	// Show warning if total_volume is zero
 	if(owner.reagents && owner.reagents.total_volume == 0)
-		to_chat(eater, span_warning("[capitalize(owner)] tastes of nothing! It doesn't feel nutritious at all..."))
+		to_chat(eater, span_warning("[capitalize("[owner]")] tastes of nothing! It doesn't feel nutritious at all..."))
 
 	var/sig_return = SEND_SIGNAL(parent, COMSIG_FOOD_EATEN, eater, feeder, bitecount, bite_consumption)
 	if(sig_return & DESTROY_FOOD)
