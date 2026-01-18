@@ -3,9 +3,7 @@
 /turf/open/misc/asteroid,
 /area/centcom/tdome/arena/actual)
 "b" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/wood,
 /area/centcom/tdome/arena/actual)
 "f" = (
@@ -21,16 +19,9 @@
 /obj/effect/turf_decal/sand{
 	density = 1
 	},
-/obj/structure/window/reinforced{
-	dir = 4;
-	pixel_y = 2
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/pod/light{
 	density = 1
 	},
@@ -60,19 +51,12 @@
 /turf/open/misc/asteroid,
 /area/centcom/tdome/arena/actual)
 "w" = (
-/obj/structure/window/reinforced{
-	dir = 4;
-	pixel_y = 2
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/wood,
 /area/centcom/tdome/arena/actual)
 "z" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/wood,
 /area/centcom/tdome/arena/actual)
 "A" = (
@@ -157,9 +141,7 @@
 /turf/open/misc/asteroid,
 /area/centcom/tdome/arena/actual)
 "R" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/iron/stairs/old,
 /area/centcom/tdome/arena/actual)
 "T" = (
@@ -174,26 +156,16 @@
 /turf/open/misc/asteroid,
 /area/centcom/tdome/arena/actual)
 "W" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/wood,
 /area/centcom/tdome/arena/actual)
 "X" = (
-/obj/structure/window/reinforced{
-	dir = 4;
-	pixel_y = 2
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/wood,
 /area/centcom/tdome/arena/actual)
 "Y" = (
-/obj/structure/window/reinforced{
-	dir = 4;
-	pixel_y = 2
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/iron/stairs/old,
 /area/centcom/tdome/arena/actual)
 "Z" = (

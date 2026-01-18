@@ -201,11 +201,8 @@
 /turf/open/floor/iron/smooth_large,
 /area/centcom/tdome/arena/actual)
 "qb" = (
-/obj/structure/sign/poster/ripped{
-	pixel_x = -34;
-	pixel_y = -4
-	},
 /obj/effect/spawner/random/trash/graffiti,
+/obj/structure/sign/poster/ripped/directional/west,
 /turf/open/floor/iron/smooth_large,
 /area/centcom/tdome/arena/actual)
 "rl" = (
@@ -449,12 +446,9 @@
 /turf/open/floor/iron/smooth_large,
 /area/centcom/tdome/arena/actual)
 "PS" = (
-/obj/structure/sign/poster/contraband/missing_gloves{
-	pixel_x = 34;
-	pixel_y = -4
-	},
 /obj/structure/grille/broken,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/poster/contraband/missing_gloves/directional/east,
 /turf/open/floor/iron/smooth_large,
 /area/centcom/tdome/arena/actual)
 "TX" = (

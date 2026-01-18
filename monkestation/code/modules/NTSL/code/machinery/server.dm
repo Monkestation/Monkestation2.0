@@ -46,6 +46,7 @@
 	log.name = "[input] ([md5(identifier)])"
 	log.input_type = input
 	log.parameters["message"] = content
+	log.parameters["language"] = /datum/language/common
 	log_entries.Add(log)
 	update_logs()
 
