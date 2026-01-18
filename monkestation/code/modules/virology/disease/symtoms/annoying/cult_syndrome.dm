@@ -5,23 +5,22 @@
 	badness = EFFECT_DANGER_ANNOYING
 	severity = 2
 	max_multiplier = 2.5
-	var/list/rune_words_rune = list("ire","ego","nahlizet","certum","veri","jatkaa","mgar","balaq", "karazet", "geeri")
 
 /datum/symptom/cult_hallucination/activate(mob/living/mob)
 	if(IS_CULTIST(mob) || istype(get_area(mob), /area/station/service/chapel) || !mob?.client)
 		return
-	mob.whisper("...[pick(rune_words_rune)]...")
+	mob.whisper("...[pick("ire","ego","nahlizet","certum","veri","jatkaa","mgar","balaq", "karazet", "geeri")]...", forced = "[type]")
 
 	var/list/turf_list = list()
 	turf_loop:
 		for(var/turf/open/turf in spiral_block(get_turf(mob), 10))
 			if(!prob(2 * multiplier))
 				continue
+			if(istype(get_area(turf), /area/station/service/chapel))
+				continue
 			for(var/atom/movable/atom_content as anything in turf.contents)
 				if(isobj(atom_content) && atom_content.density)
 					continue turf_loop
-			if(istype(get_area(turf), /area/station/service/chapel))
-				continue
 			turf_list += turf
 	for(var/turf/open/turf as anything in turf_list)
 		addtimer(CALLBACK(src, PROC_REF(start_rune_fade_in), mob, turf), rand(0, 5 SECONDS))
