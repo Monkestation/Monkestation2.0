@@ -15,6 +15,7 @@
 	var/list/starting_traits = list()
 	var/plush_flags
 	var/has_heartstring = TRUE
+	var/gets_random_traits = list(PLUSH_TRAIT_CATEGORY_PERSONALITY, PLUSH_TRAIT_CATEGORY_PHYSICALITY)
 	//--love ~<3--
 	gender = NEUTER
 	var/obj/item/toy/plush/lover
@@ -72,6 +73,20 @@
 				var/datum/plush_trait/new_trait = new trait()
 				plush_traits += new_trait
 				new_trait.activate(src)
+	if(length(gets_random_traits))
+		var/all_traits = subtypesof(/datum/plush_trait)
+		var/traits_to_add = list()
+		for(var/the_category in gets_random_traits)
+			var/possibilities = list()
+			for(var/datum/plush_trait/trait in all_traits)
+				if((trait::category == the_category) && !(is_type_in_list(trait, plush_traits)) && !(is_type_in_list(trait, traits_to_add)) && trait::tier == 1)
+					possibilities += trait
+			traits_to_add += pick(possibilities)
+		for(var/trait in traits_to_add)
+			var/datum/plush_trait/new_trait = new trait()
+			plush_traits += new_trait
+			new_trait.activate(src)
+
 
 /obj/item/toy/plush/Destroy()
 	QDEL_NULL(grenade)
@@ -128,7 +143,7 @@
 /obj/item/toy/plush/examine(mob/user)
 	. = ..()
 	if(has_heartstring == FALSE)
-		. += "It looks sad."
+		. += "It looks sad, somehow."
 
 
 /obj/item/toy/plush/attack_self(mob/user)
@@ -147,9 +162,9 @@
 	if(istype(attacking_item, /obj/item/heartstring) && !has_heartstring)
 		var/obj/item/heartstring/new_heartstring = attacking_item
 		if(new_heartstring.our_plush.resolve() != src)
-			to_chat(user, span_warning("You're trying to replace the essential soul and spirit of one plush with that of another, which is metaphysically impossible. You'll need to use the plushes' original bundle of Heart-strings."))
+			to_chat(user, span_warning("You're trying to replace the essential soul and spirit of one plush with that of another, which is metaphysically impossible. You'll need to use the plushie's original bundle of Heart-strings."))
 			return
-		user.visible_message(span_notice("[user] begins inserting [new_heartstring] into [src]."), span_notice("You begin the delicate process of rejoining the Heart-string bundle of [src] with its stuffing."))
+		user.visible_message(span_notice("[user] begins inserting [new_heartstring] into [src]."), span_notice("You begin the delicate process of rejoining the Heart-string bundle of [src] with [p_their()] stuffing."))
 		if(do_after(user, 5 SECONDS, src))
 			for(var/datum/plush_trait/plush_trait in new_heartstring.shape_strings)
 				plush_traits += plush_trait
@@ -157,13 +172,13 @@
 				if(plush_trait.processes)
 					START_PROCESSING(SSobj, src)
 				new_heartstring.shape_strings.Remove(plush_trait)
-		user.visible_message(span_notice("[user] inserts [new_heartstring] into [src]. It looks happier, somehow."), span_notice("[src] seems happier with their heartstrings back."))
+		user.visible_message(span_notice("[user] inserts [new_heartstring] into [src]. It looks happier, somehow."), span_notice("[src] seems happier with [p_their()] Heart-strings back."))
 		qdel(new_heartstring)
 		has_heartstring = TRUE
 	if(attacking_item.get_sharpness())
 		if(istype(attacking_item, /obj/item/heartstring_extractor))
 			if(has_heartstring)
-				user.visible_message(span_notice("[user] begins cutting into [src] with [attacking_item], attempting to remove [src]'s Heart-strings."), span_notice("You begin to excise [src]'s Heart-strings."))
+				user.visible_message(span_notice("[user] begins cutting into [src] with [attacking_item], attempting to remove [p_their()] Heart-strings."), span_notice("You begin to excise [src]'s Heart-strings."))
 				if(do_after(user, 3 SECONDS, src))
 					var/obj/item/heartstring/excised_heartstring = new(get_turf(src))
 					STOP_PROCESSING(SSobj, src)
@@ -237,7 +252,8 @@
 	var/concern = 20 //perhaps something might cloud true love with doubt
 	var/loyalty = 30 //why should another get between us?
 	var/duty = 50 //conquering another's is what I live for
-
+	if((PLUSH_FUGLY & Kisser.plush_flags) && !(PLUSH_KIND & plush_flags))
+		chance -= 50
 	//we are not catholic
 	if(young == TRUE || Kisser.young == TRUE)
 		user.show_message(span_notice("[src] plays tag with [Kisser]."), MSG_VISUAL,
@@ -265,38 +281,44 @@
 	else if(Kisser.lover != src && Kisser.partner != src) //cannot be lovers or married
 		if(Kisser.lover) //if the initiator has a lover
 			Kisser.lover.heartbreak(Kisser) //the old lover can get over the kiss-and-run whilst the kisser has some fun
+		if(!(Kisser.plush_flags & PLUSH_PROMISCUOUS))
 			chance -= concern //one heart already broken, what does another mean?
 		if(lover) //if the recipient has a lover
-			chance -= loyalty //mustn't... but those lips
+			if(!(plush_flags & PLUSH_PROMISCUOUS))
+				chance -= loyalty //mustn't... but those lips
 		if(partner) //if the recipient has a partner
-			chance -= duty //do we mate for life?
+			if(!(plush_flags & PLUSH_PROMISCUOUS))
+				chance -= duty //do we mate for life?
 
-		if(prob(chance)) //did we bag a date?
+		if(prob(clamp(chance, 0, 100))) //did we bag a date?
 			user.visible_message(span_notice("[user] makes [Kisser] kiss [src]!"),
 									span_notice("You make [Kisser] kiss [src]!"))
 			if(lover) //who cares for the past, we live in the present
 				lover.heartbreak(src)
 			new_lover(Kisser)
 			Kisser.new_lover(src)
+			new /obj/effect/temp_visual/heart(loc)
 		else
 			user.show_message(span_notice("[src] rejects the advances of [Kisser], maybe next time?"), MSG_VISUAL,
 								span_notice("That didn't feel like it worked, this time."), NONE)
-
+			new /obj/effect/temp_visual/annoyed(loc)
 	//then comes marriage
 	else if(Kisser.lover == src && Kisser.partner != src) //need to be lovers (assumes loving is a two way street) but not married (also assumes similar)
 		user.visible_message(span_notice("[user] pronounces [Kisser] and [src] married! D'aw."),
 									span_notice("You pronounce [Kisser] and [src] married!"))
 		new_partner(Kisser)
 		Kisser.new_partner(src)
+		new /obj/effect/temp_visual/heart(loc)
 
 	//then comes a baby in a baby's carriage, or an adoption in an adoption's orphanage
 	else if(Kisser.partner == src && !plush_child) //the one advancing does not take ownership of the child and we have a one child policy in the toyshop
 		user.visible_message(span_notice("[user] is going to break [Kisser] and [src] by bashing them like that."),
-									span_notice("[Kisser] passionately embraces [src] in your hands. Look away you perv!"))
+									span_notice("[Kisser] passionately embraces [src] in your hands. Look away, you perv!"))
 		user.client.give_award(/datum/award/achievement/misc/rule8, user)
 		if(plop(Kisser))
 			user.visible_message(span_notice("Something drops at the feet of [user]."),
 							span_notice("The miracle of oh god did that just come out of [src]?!"))
+			new /obj/effect/temp_visual/heart(loc) //wuv
 
 	//then comes protection, or abstinence if we are catholic
 	else if(Kisser.partner == src && plush_child)
@@ -310,21 +332,22 @@
 /obj/item/toy/plush/proc/heartbreak(obj/item/toy/plush/Brutus)
 	if(lover != Brutus)
 		CRASH("plushie heartbroken by a plushie that is not their lover")
-
-	scorned.Add(Brutus)
-	Brutus.scorned_by(src)
+	mood_message = "[p_they(TRUE)] look bored."
+	if(!(plush_traits & PLUSH_STOIC))
+		scorned.Add(Brutus)
+		Brutus.scorned_by(src)
+		heartbroken = TRUE
+		mood_message = pick(heartbroken_message)
 
 	lover = null
 	Brutus.lover = null //feeling's mutual
 
-	heartbroken = TRUE
-	mood_message = pick(heartbroken_message)
-
 	if(partner == Brutus) //oh dear...
 		partner = null
 		Brutus.partner = null //it'd be weird otherwise
-		vowbroken = TRUE
-		mood_message = pick(vowbroken_message)
+		if(!(plush_traits & PLUSH_STOIC))
+			vowbroken = TRUE
+			mood_message = pick(vowbroken_message)
 
 	update_desc()
 
@@ -381,8 +404,16 @@
 	maternal_parent = Mama
 	paternal_parent = Dada
 	young = TRUE
-	name = "[Mama.name] Jr" //Icelandic naming convention pending
-	normal_desc = "[src] [p_are()] a little baby of [maternal_parent] and [paternal_parent]!" //original desc won't be used so the child can have moods
+	var/mommy_or_daddy = pick(list(Mama.name, Dada.name))
+	var/iceland = replacetext(replacetext(mommy_or_daddy, " plushie", ""), "-", "")
+	var/nominative_gender = "child"
+	switch(src.gender)
+		if(MALE)
+			nominative_gender = "son"
+		if(FEMALE)
+			nominative_gender = "daughter"
+	name = "[iceland]-[nominative_gender]" //Icelandic naming convention no longer pending
+	normal_desc = "[src] [p_are()] the [nominative_gender] of [maternal_parent] and [paternal_parent]." //original desc won't be used so the child can have moods
 	transform *= 0.75
 	update_desc()
 
@@ -390,6 +421,13 @@
 	Mama.update_desc()
 	Dada.mood_message = pick(Dada.parent_message)
 	Dada.update_desc()
+
+/obj/item/toy/plush/proc/grow_up()
+	if(!young)
+		return
+	transform *= (4/3)
+	young = FALSE
+	visible_message("[src] ")
 
 /obj/item/toy/plush/proc/bad_news(obj/item/toy/plush/Deceased) //cotton to cotton, sawdust to sawdust
 	var/is_that_letter_for_me = FALSE
@@ -994,17 +1032,24 @@
 
 /datum/plush_trait
 	var/name = "Buggy Nonsense"
-	var/desc = "The neurodivergent frog guy did a fail. Please report this thing's presence with the report issue button. Include how you found it, please."
+	var/desc = "means that the neurodivergent frog guy did a fail. Please report this thing's presence with the report issue button. Include how you found it, please."
 	var/examine_text = ""
 	var/removable = TRUE
 	var/processes = FALSE
 	var/shapestring_icon_state = ""
 	var/recipe = list()
+	var/flags
+	var/tier = 1
+	var/category
 
 /datum/plush_trait/proc/activate(obj/item/toy/plush/plush)
+	if(flags)
+		plush.plush_flags |= flags
 	return
 
 /datum/plush_trait/proc/deactivate(obj/item/toy/plush/plush)
+	if(flags)
+		plush.plush_flags &= ~(flags)
 	return
 
 /datum/plush_trait/proc/process_trigger(seconds_per_tick, obj/item/toy/plush/plush)
@@ -1016,6 +1061,8 @@
 /datum/plush_trait/prickly
 	name = "Cactaceous"
 	desc = "shapes the fabric of the plush into microscopic spines, which, though mostly harmless, are extremely painful."
+	tier = 1
+	category = PLUSH_TRAIT_CATEGORY_PHYSICALITY
 
 /datum/plush_trait/prickly/squeezed(obj/item/toy/plush/plush, mob/living/squeezer)
 	var/ouched = TRUE
@@ -1030,27 +1077,97 @@
 		to_chat(carbsqueezer, span_warning("Your hand stings horribly with a wave of needling pain!"))
 		var/ouchy_arm = (carbsqueezer.get_held_index_of_item(plush) % 2) ? BODY_ZONE_L_ARM : BODY_ZONE_R_ARM
 		carbsqueezer.apply_damage(1, BRUTE, ouchy_arm)
-		carbsqueezer.emote("blink")
+
+/datum/plush_trait/life_sponge
+	name = "Viviphagous"
+	desc = "allows the plush to absorb and infuse the life forces of any who hug it. Squeeze it HARMfully to give and HELPfully to take. The longer either process goes, the more potent the drain or infusion."
+	var/stored_flesh = 0
+	var/stored_blood = 0
+	var/stored_life = 0
+	category = PLUSH_TRAIT_CATEGORY_PHYSICALITY
+	tier = 3
+	recipe = list(/datum/plush_trait/prickly, /datum/plush_trait/bloody)
+
+/datum/plush_trait/life_sponge/squeezed(obj/item/toy/plush/plush, mob/living/squeezer)
+	if(!ishuman(squeezer))
+		return
+	var/mob/living/carbon/human/humsqueezer = squeezer
+	if((humsqueezer.istate & ISTATE_HARM) || istype(humsqueezer.client?.imode, /datum/interaction_mode/combat_mode))
+		var/numcycles = 0
+		humsqueezer.visible_message(span_warning("[src] prickles painfully in your hands and begins to drain the life from your flesh!"), span_warning("A cloud of shimmering red vapor begins flowing from [humsqueezer] into [src]!"))
+		while(do_after(humsqueezer, 0.2 SECONDS, src))
+			if(((humsqueezer.getBruteLoss() + humsqueezer.getFireLoss()) < 100) && stored_flesh < 100)
+				humsqueezer.adjustBruteLoss(0.5)
+				humsqueezer.adjustFireLoss(0.5)
+				stored_flesh = min(100, stored_flesh + 1)
+			if(numcycles == 20 && stored_blood < 560)
+				to_chat(span_warning("[src] begins to drain the life from your blood!"))
+			if(numcycles >= 20 && stored_blood < 560 && (humsqueezer.getToxLoss() < 100))
+				humsqueezer.adjustToxLoss(1)
+				stored_blood = min(500, stored_blood + 5)
+			if(numcycles == 40 && stored_life < 100)
+				to_chat(span_warning("[src] begins to drain the life from your soul!"))
+			if(numcycles >= 40 && stored_life < 100)
+				humsqueezer.adjustCloneLoss(1)
+				stored_life = min(100, stored_life + 1)
+	else
+		var/numcycles = 0
+		humsqueezer.visible_message(span_notice("[src] feels warm and so very soft..."), span_notice("A cloud of shimmering red vapor steams from [src], flowing into [humsqueezer]'s flesh!"))
+		while(do_after(humsqueezer, 0.2 SECONDS, src))
+			if(humsqueezer.getBruteLoss() && stored_flesh > 0)
+				humsqueezer.adjustBruteLoss(-1)
+				stored_flesh = max(0, stored_flesh - 1)
+			if(humsqueezer.getFireLoss() && stored_flesh > 0)
+				humsqueezer.adjustFireLoss(-1)
+				stored_flesh = max(0, stored_flesh - 1)
+			if(numcycles == 20)
+				to_chat(span_notice("Your insides are all warm and fuzzy. It feels good."))
+			if(numcycles >= 20)
+				if(humsqueezer.getToxLoss() && stored_blood >= 5)
+					humsqueezer.adjustToxLoss(-1)
+					stored_blood = max(0, stored_blood - 5)
+				if(humsqueezer.blood_volume < BLOOD_VOLUME_NORMAL && stored_blood >= 5)
+					humsqueezer.blood_volume += 5
+					stored_blood = min(0, stored_blood - 5)
+			if(numcycles == 40)
+				to_chat(span_notice("Your whole body is suffused with a sort of rejuvinating heat. It feels amazing."))
+			if(numcycles >= 40)
+				if(humsqueezer.getCloneLoss() && stored_life > 0)
+					humsqueezer.adjustCloneLoss(-1)
+					stored_life = max(0, stored_life - 1)
+				for(var/obj/item/organ/internal/thing in humsqueezer.organs)
+					if(!istype(thing))
+						continue
+					if(thing.damage > 0 && stored_life > 0)
+						thing.apply_organ_damage(-5)
+						stored_life = max(0, stored_life - 1)
+				for(var/datum/wound/ouchy in humsqueezer.all_wounds)
+					if((stored_life >= ouchy.severity * 5) && ouchy.severity < WOUND_SEVERITY_LOSS)
+						ouchy.remove_wound()
+						stored_life = max(0, stored_life - (ouchy.severity * 5))
+
 
 /datum/plush_trait/ominous_levitation
 	name = "Unnervingly Hovering"
 	desc = "imbues the stuffing of the plush with an anti-gravitational telekinetic field, enabling it to levitate."
+	tier = 1
+	category = PLUSH_TRAIT_CATEGORY_PHYSICALITY
 
 /datum/plush_trait/ominous_levitation/activate(obj/item/toy/plush/plush)
+	. = ..()
 	DO_FLOATING_ANIM(plush)
 	plush.visible_message(span_warning("[plush] begins to float for no conceivable reason!"))
 
 /datum/plush_trait/ominous_levitation/deactivate(obj/item/toy/plush/plush)
+	. = ..()
 	STOP_FLOATING_ANIM(plush)
 	plush.visible_message(span_notice("[plush] stops floating."))
 
 /datum/plush_trait/energetic
 	name = "Estiferous"
 	desc = "directly imbues the cloth of the plush with a fragment of the energy of its Cotton. This manifests as a pervasive heat suffusing the plush's surface. Handle with care, and thermally insulative gloves."
-	processes = TRUE
-
-/datum/plush_trait/energetic/process_trigger(seconds_per_tick, obj/item/toy/plush/plush)
-	return
+	tier = 1
+	category = PLUSH_TRAIT_CATEGORY_PHYSICALITY
 
 /datum/plush_trait/energetic/squeezed(obj/item/toy/plush/plush, mob/living/squeezer)
 	var/ouched = TRUE
@@ -1074,11 +1191,15 @@
 /datum/plush_trait/slippery
 	name = "Lubricating"
 	desc = "causes the plush to become extremely slippery."
+	tier = 2
+	category = PLUSH_TRAIT_CATEGORY_PHYSICALITY
 
 /datum/plush_trait/slippery/activate(obj/item/toy/plush/plush)
+	. = ..()
 	plush.AddComponentFrom(REF(src), /datum/component/slippery, 50, SLIDE)
 
 /datum/plush_trait/slippery/deactivate(obj/item/toy/plush/plush)
+	. = ..()
 	plush.RemoveComponentSource(REF(src), /datum/component/slippery)
 
 //funny admin suggested traits
@@ -1086,6 +1207,8 @@
 	name = "Autoaerolocomotive"
 	desc = "The plushie moves towards the first person to hug the plushie after the Shape-string is inserted."
 	var/datum/weakref/our_owner
+	tier = 2
+	category = PLUSH_TRAIT_CATEGORY_PHYSICALITY
 
 /datum/plush_trait/wolfy/process_trigger(seconds_per_tick, obj/item/toy/plush/plush)
 	if(our_owner.resolve())
@@ -1096,16 +1219,12 @@
 		our_owner = WEAKREF(squeezer)
 		to_chat(squeezer, "It feels like [plush] is staring at you...")
 
-/datum/plush_trait/gabbie
-	name = "Cocainic"
-	desc = "The plushie increases the speed at which all actions are performed by 10% when held"
-	processes = TRUE
-
 /datum/plush_trait/puce
 	name = "Pucetrifying"
 	desc = "releases a wave of... Puce? what the fuck is puce?"
 	recipe = list(/datum/plush_trait/colorful, /datum/plush_trait/putrifying)
 	COOLDOWN_DECLARE(puceify)
+	tier = 4
 
 /datum/plush_trait/puce/squeezed(obj/item/toy/plush/plush, mob/living/squeezer)
 	if(COOLDOWN_FINISHED(src, puceify))
@@ -1119,12 +1238,69 @@
 /datum/plush_trait/putrifying
 	name = "Putrifying"
 	desc = "releases waves of putrifacting energies."
-	processes = TRUE
+	tier = 2
+	category = PLUSH_TRAIT_CATEGORY_PHYSICALITY
 
 /datum/plush_trait/colorful
 	name = "Colorful"
 	desc = "makes the plushie cute colors."
-	processes = TRUE
+	var/our_color
+	category = PLUSH_TRAIT_CATEGORY_PHYSICALITY
+	tier = 1
+
+/datum/plush_trait/colorful/activate(obj/item/toy/plush/plush)
+	. = ..()
+	our_color = "#[random_color()]"
+	plush.add_atom_colour(our_color, FIXED_COLOUR_PRIORITY)
+
+/datum/plush_trait/colorful/deactivate(obj/item/toy/plush/plush)
+	. = ..()
+	plush.remove_atom_colour(FIXED_COLOUR_PRIORITY, our_color)
+
+/datum/plush_trait/kind
+	name = "Chrysocardiac" // man i love grandeloquence
+	desc = "instills love and kindness in the plushie."
+	flags = PLUSH_KIND
+	tier = 1
+	category = PLUSH_TRAIT_CATEGORY_PERSONALITY
+
+/datum/plush_trait/charming
+	name = "Argyroglossitic" // wow these are so nuancedly uninspired
+	desc = "makes the plushie cuter and more charming than usual."
+	flags = PLUSH_CHARMING
+	category = PLUSH_TRAIT_CATEGORY_PERSONALITY
+	tier = 1
+
+/datum/plush_trait/ugly
+	name = "Dysmorphic"
+	desc = "makes the plushie conventionally unattractive (by whatever obtuse standards plushies judge attractiveness by)."
+	flags = PLUSH_FUGLY
+	tier = 1
+	category = PLUSH_TRAIT_CATEGORY_PERSONALITY
+
+/datum/plush_trait/hearts_of_iron_four
+	name = "Cold-souled"
+	desc = "instills stoic resolve."
+	flags = PLUSH_STOIC
+	tier = 1
+	category = PLUSH_TRAIT_CATEGORY_PERSONALITY
+
+/datum/plush_trait/promiscuous
+	name = "Meretricious"
+	desc = "makes the"
+	flags = PLUSH_PROMISCUOUS
+	category = PLUSH_TRAIT_CATEGORY_PERSONALITY
+	tier = 1
+
+/datum/plush_trait/bloody
+	name = "Haemokinetic"
+	desc = "imbues the plushie with the fundamental power of blood."
+	category = PLUSH_TRAIT_CATEGORY_PHYSICALITY
+	tier = 2
+
+
+
+//debuggy tools for admins feeling funny
 
 
 /obj/item/paper/fluff/plushmagic

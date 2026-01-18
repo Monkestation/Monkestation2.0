@@ -72,3 +72,13 @@
 	new /obj/item/ammo_box/magazine/sniper_rounds/disruptor(src)
 	new /obj/item/ammo_box/magazine/sniper_rounds/disruptor(src)
 	new /obj/item/suppressor(src)
+
+/obj/item/storage/briefcase/plushiemagic
+	name = "dusty briefcase"
+	desc = "It's dusty and the leather's faded but it shows no visible physical wear. A small tag on the handle proclaims it to be \"SIAE Thaumatextilics Recovery - 2516\""
+
+/obj/item/storage/briefcase/sniperbundle/PopulateContents()
+	new /obj/item/heartstring_extractor(src)
+	new /obj/item/paper/fluff/plushmagic(src)
+	new /obj/item/paper/fluff/plushwarning(src)
+	new /obj/item/disk/holodisk/clothruption(src)
