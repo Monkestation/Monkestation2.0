@@ -4,9 +4,9 @@
 ///maximum a vampire will drain, they will drain less if they hit their cap
 #define VAMP_DRAIN_AMOUNT 50
 
-/datum/species/vampire
-	name = "Vampire"
-	id = SPECIES_VAMPIRE
+/datum/species/lesser_vampire
+	name = "Lesser Vampire"
+	id = SPECIES_LESSER_VAMPIRE
 	examine_limb_id = SPECIES_HUMAN
 	inherent_traits = list(
 		TRAIT_DRINKS_BLOOD,
@@ -31,12 +31,12 @@
 	/// UI displaying how much blood we have
 	var/atom/movable/screen/blood_level/blood_display
 
-/datum/species/vampire/check_roundstart_eligible()
+/datum/species/lesser_vampire/check_roundstart_eligible()
 	if(check_holidays(HALLOWEEN))
 		return TRUE
 	return ..()
 
-/datum/species/vampire/on_species_gain(mob/living/carbon/human/new_vampire, datum/species/old_species)
+/datum/species/lesser_vampire/on_species_gain(mob/living/carbon/human/new_vampire, datum/species/old_species)
 	. = ..()
 	to_chat(new_vampire, "[info_text]")
 	new_vampire.skin_tone = "albino"
@@ -47,12 +47,12 @@
 	else
 		RegisterSignal(new_vampire, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
 
-/datum/species/vampire/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
+/datum/species/lesser_vampire/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	. = ..()
 	UnregisterSignal(C, COMSIG_MOB_APPLY_DAMAGE_MODIFIERS)
 	QDEL_NULL(blood_display)
 
-/datum/species/vampire/spec_life(mob/living/carbon/human/vampire, seconds_per_tick, times_fired)
+/datum/species/lesser_vampire/spec_life(mob/living/carbon/human/vampire, seconds_per_tick, times_fired)
 	. = ..()
 	if(istype(vampire.loc, /obj/structure/closet/crate/coffin))
 		vampire.heal_overall_damage(brute = 2 * seconds_per_tick, burn = 2 * seconds_per_tick, required_bodytype = BODYTYPE_ORGANIC)
@@ -73,23 +73,23 @@
 		vampire.ignite_mob()
 
 ///Gives the blood HUD to the vampire so they always know how much blood they have.
-/datum/species/vampire/proc/on_hud_created(mob/source)
+/datum/species/lesser_vampire/proc/on_hud_created(mob/source)
 	SIGNAL_HANDLER
 	var/datum/hud/blood_hud = source.hud_used
 	blood_display = new(null, blood_hud)
 	blood_hud.infodisplay += blood_display
 	blood_hud.show_hud(blood_hud.hud_version)
 
-/datum/species/vampire/proc/damage_weakness(datum/source, list/damage_mods, damage_amount, damagetype, def_zone, sharpness, attack_direction, obj/item/attacking_item)
+/datum/species/lesser_vampire/proc/damage_weakness(datum/source, list/damage_mods, damage_amount, damagetype, def_zone, sharpness, attack_direction, obj/item/attacking_item)
 	SIGNAL_HANDLER
 
 	if(istype(attacking_item, /obj/item/nullrod/whip))
 		damage_mods += 2
 
-/datum/species/vampire/get_species_description()
+/datum/species/lesser_vampire/get_species_description()
 	return "A classy Vampire! They descend upon Space Station Thirteen Every year to spook the crew! \"Bleeg!!\""
 
-/datum/species/vampire/create_pref_unique_perks()
+/datum/species/lesser_vampire/create_pref_unique_perks()
 	var/list/to_add = list()
 
 	to_add += list(
@@ -118,7 +118,7 @@
 	return to_add
 
 // Vampire blood is special, so it needs to be handled with its own entry.
-/datum/species/vampire/create_pref_blood_perks()
+/datum/species/lesser_vampire/create_pref_blood_perks()
 	var/list/to_add = list()
 
 	to_add += list(list(
@@ -135,7 +135,7 @@
 	return to_add
 
 // There isn't a "Minor Undead" biotype, so we have to explain it in an override (see: dullahans)
-/datum/species/vampire/create_pref_biotypes_perks()
+/datum/species/lesser_vampire/create_pref_biotypes_perks()
 	var/list/to_add = list()
 
 	to_add += list(list(

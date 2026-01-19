@@ -1,4 +1,4 @@
-/datum/preference/choiced/vampire_status
+/datum/preference/choiced/lesser_vampire_status
 	savefile_key = "feature_vampire_status"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_FEATURES
@@ -7,13 +7,13 @@
 	should_generate_icons = TRUE
 	relevant_inherent_trait = TRAIT_BLOOD_CLANS
 
-/datum/preference/choiced/vampire_status/create_default_value()
+/datum/preference/choiced/lesser_vampire_status/create_default_value()
 	return "Inoculated" //eh, have em try out the mechanic first
 
-/datum/preference/choiced/vampire_status/init_possible_values()
+/datum/preference/choiced/lesser_vampire_status/init_possible_values()
 	return list("Inoculated", "Outcast")
 
-/datum/preference/choiced/vampire_status/icon_for(value)
+/datum/preference/choiced/lesser_vampire_status/icon_for(value)
 	switch (value)
 		if ("Inoculated")
 			return icon('icons/obj/drinks/drinks.dmi', "bloodglass")
@@ -21,9 +21,9 @@
 			return icon('icons/obj/medical/bloodpack.dmi', "generic_bloodpack")
 
 ///list that stores a vampire house name for each department
-GLOBAL_LIST_EMPTY(vampire_houses)
+GLOBAL_LIST_EMPTY(lesser_vampire_houses)
 
-/datum/preference/choiced/vampire_status/apply_to_human(mob/living/carbon/human/target, value)
+/datum/preference/choiced/lesser_vampire_status/apply_to_human(mob/living/carbon/human/target, value)
 	if(!HAS_TRAIT(target, TRAIT_BLOOD_CLANS))
 		return
 
@@ -42,9 +42,9 @@ GLOBAL_LIST_EMPTY(vampire_houses)
 			break
 	if(!vampire_house) //sillycones
 		return
-	if(!GLOB.vampire_houses[vampire_house.department_name])
-		GLOB.vampire_houses[vampire_house.department_name] = pick(GLOB.vampire_house_names)
-	var/house_name = GLOB.vampire_houses[vampire_house.department_name]
+	if(!GLOB.lesser_vampire_houses[vampire_house.department_name])
+		GLOB.lesser_vampire_houses[vampire_house.department_name] = pick(GLOB.lesser_vampire_house_names)
+	var/house_name = GLOB.lesser_vampire_houses[vampire_house.department_name]
 
 	//modify name (Platos Syrup > Platos de Lioncourt)
 	var/first_space_index = findtextEx(target.real_name, " ")

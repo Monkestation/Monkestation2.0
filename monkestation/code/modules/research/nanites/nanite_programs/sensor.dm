@@ -324,7 +324,7 @@
 		"Abductor" = /datum/species/abductor,
 		"Mushroomperson" = /datum/species/mush,
 		"Skeleton" = /datum/species/skeleton,
-		"Vampire" = /datum/species/vampire,
+		"Vampire" = /datum/species/lesser_vampire,
 		"Snailperson" = /datum/species/snail,
 	)
 

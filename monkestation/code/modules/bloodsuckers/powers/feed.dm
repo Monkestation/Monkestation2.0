@@ -166,7 +166,7 @@
 		return FALSE
 	if(HAS_MIND_TRAIT(viewer, TRAIT_BLOODSUCKER_ALIGNED) || HAS_MIND_TRAIT(viewer, TRAIT_OCCULTIST) || HAS_TRAIT(viewer, TRAIT_GHOST_CRITTER))
 		return FALSE
-	if(isvampire(viewer)) // this checks for the species - i mean, they're not the same kind of vampire, but they're still a VAMPIRE, so, yeah
+	if(islesservampire(viewer)) // this checks for the species - i mean, they're not the same kind of vampire, but they're still a VAMPIRE, so, yeah
 		return FALSE
 	if(!recursed)
 		if(isguardian(viewer))

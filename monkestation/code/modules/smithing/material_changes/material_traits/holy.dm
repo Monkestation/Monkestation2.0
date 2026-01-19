@@ -21,7 +21,7 @@
 	// werewolves have insane damage resistance, so 3x damage
 	if(iswerewolf(victim))
 		damage_multiplier *= 5
-	else if(isvampire(victim))
+	else if(islesservampire(victim))
 		damage_multiplier *= 2
 
 	if(damage_multiplier != 1)
