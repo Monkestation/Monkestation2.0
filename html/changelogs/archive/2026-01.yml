@@ -325,3 +325,22 @@
       space, more compact gas storage, and less hidden pipes to bother you
   iliyaxox:
   - bugfix: Blueshift's brig infirmary now has supplied medkits instead of empty ones.
+2026-01-19:
+  Absolucy:
+  - rscdel: Removed the Dysplasia Syndrome symptom from pathology.
+  Aniantan:
+  - bugfix: Hearts and genetic makeup transfers properly work with blood types and
+      no longer break blood transfusion and mending touch
+  - bugfix: DNA console no longer gets subject's blood type wrong
+  JohnFulpWillard:
+  - bugfix: NTSL's "Mute Poly" achievement works as it's supposed to.
+  - rscadd: NTSL's language scripting has been changed. Please update your scripts
+      (The reference is updated for this as well)
+  SirNightKnight:
+  - bugfix: fixed getting stuck buckled in a wheelchair after it's destroyed.
+  SirNightKnight, JohnFulpWillard:
+  - rscadd: Security now has a Big Red Key.
+  wraith-54321:
+  - rscadd: Added sub overminds for blob
+  - rscadd: Added more blob chemical effects
+  - balance: Slightly increased brute storyteller point values

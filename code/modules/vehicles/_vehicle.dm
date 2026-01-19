@@ -84,7 +84,7 @@
 /obj/vehicle/proc/is_key(obj/item/I)
 	return istype(I, key_type)
 
-/obj/vehicle/proc/return_occupants()
+/obj/vehicle/proc/return_occupants() as /list
 	return occupants
 
 /obj/vehicle/proc/occupant_amount()

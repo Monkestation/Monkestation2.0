@@ -2866,7 +2866,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/execution/education)
 "aoP" = (
-/obj/structure/table,
+/obj/vehicle/ridden/secway,
 /turf/open/floor/plating,
 /area/station/security/lockers)
 "aoR" = (
@@ -42025,6 +42025,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/north,
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory)
 "iXW" = (
@@ -65196,10 +65197,9 @@
 /turf/open/floor/plating,
 /area/station/security/checkpoint/engineering)
 "rIj" = (
-/obj/vehicle/ridden/secway,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/delivery,
-/obj/structure/reagent_dispensers/wall/peppertank/directional/west,
+/obj/vehicle/ridden/battering_ram,
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory)
 "rIx" = (

@@ -104007,6 +104007,9 @@
 /area/station/engineering/atmos)
 "tZD" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/vehicle/ridden/battering_ram{
+	dir = 8
+	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/ai_monitored/security/armory)
 "tZU" = (
