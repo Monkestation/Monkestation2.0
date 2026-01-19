@@ -1571,12 +1571,10 @@
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/ce)
 "awH" = (
-/obj/structure/window/spawner{
-	dir = 1
-	},
-/obj/structure/window/spawner,
 /obj/structure/flora/bush/flowers_br,
 /obj/structure/flora/bush/jungle/c/style_random,
+/obj/structure/window/spawner/directional/south,
+/obj/structure/window/spawner/directional/north,
 /turf/open/floor/grass,
 /area/station/medical/treatment_center)
 "awJ" = (
@@ -2475,11 +2473,9 @@
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "aLe" = (
-/obj/structure/window/spawner{
-	dir = 4
-	},
 /mob/living/carbon/human/species/monkey,
 /obj/structure/flora/bush/jungle/c,
+/obj/structure/window/spawner/directional/east,
 /turf/open/floor/grass,
 /area/station/science/xenobiology)
 "aLn" = (
@@ -2633,7 +2629,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "aNA" = (
@@ -5199,7 +5195,7 @@
 /area/station/science/xenobiology)
 "bGq" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "bGD" = (
@@ -5339,7 +5335,7 @@
 /turf/open/floor/stone,
 /area/station/hallway/primary/starboard)
 "bIE" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing,
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
@@ -7145,15 +7141,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
-"ciI" = (
-/obj/structure/table,
-/obj/effect/turf_decal/tile/red/opposingcorners,
-/obj/structure/window/spawner{
-	dir = 1
-	},
-/obj/machinery/chem_dispenser/drinks,
-/turf/open/floor/iron/white,
-/area/station/security/prison/mess)
 "ciJ" = (
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 4
@@ -10903,7 +10890,7 @@
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "dlv" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/flora/bush/fullgrass/style_random,
 /turf/open/floor/grass,
@@ -11513,7 +11500,7 @@
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/station/service/kitchen/coldroom)
 "duA" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "duD" = (
@@ -16642,12 +16629,10 @@
 /turf/open/floor/plating,
 /area/station/security/checkpoint/science)
 "eSa" = (
-/obj/structure/window/spawner,
-/obj/structure/window/spawner{
-	dir = 1
-	},
 /obj/structure/flora/bush/fullgrass,
 /obj/structure/flora/bush/flowers_br/style_random,
+/obj/structure/window/spawner/directional/south,
+/obj/structure/window/spawner/directional/north,
 /turf/open/floor/grass,
 /area/station/command/meeting_room)
 "eSe" = (
@@ -22236,11 +22221,12 @@
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "guW" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
-/obj/structure/cable,
-/obj/structure/cable,
-/turf/open/floor/circuit,
-/area/station/ai_monitored/turret_protected/ai)
+/obj/structure/flora/bush/flowers_yw,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/window/spawner/directional/north,
+/obj/structure/window/spawner/directional/south,
+/turf/open/floor/grass,
+/area/station/medical/surgery/theatre)
 "guY" = (
 /obj/effect/landmark/event_spawn,
 /obj/effect/turf_decal/trimline/blue/filled/arrow_ccw{
@@ -25514,7 +25500,6 @@
 /area/station/command/heads_quarters/hop)
 "hte" = (
 /obj/effect/turf_decal/tile/red/half/contrasted,
-/obj/structure/flora/tree/jungle/style_random,
 /obj/structure/flora/bush/fullgrass/style_random,
 /obj/structure/flora/bush/flowers_br/style_random,
 /turf/open/floor/grass,
@@ -25962,15 +25947,11 @@
 /turf/open/floor/stone,
 /area/station/hallway/primary/port)
 "hzN" = (
-/obj/structure/window/spawner,
-/obj/structure/window/spawner{
-	dir = 1
-	},
-/obj/structure/window/spawner{
-	dir = 4
-	},
 /obj/structure/flora/bush/generic/style_random,
 /obj/structure/flora/bush/flowers_pp/style_random,
+/obj/structure/window/spawner/directional/south,
+/obj/structure/window/spawner/directional/north,
+/obj/structure/window/spawner/directional/east,
 /turf/open/floor/grass,
 /area/station/command/meeting_room)
 "hzV" = (
@@ -25983,12 +25964,10 @@
 /area/station/science/xenobiology)
 "hAm" = (
 /obj/machinery/light/directional/south,
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 8
-	},
 /obj/structure/chair/comfy/black{
 	dir = 4
 	},
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/west,
 /turf/open/floor/carpet/grimey,
 /area/station/hallway/primary/central)
 "hAu" = (
@@ -26860,12 +26839,10 @@
 /turf/open/floor/iron/dark,
 /area/station/security/office)
 "hOe" = (
-/obj/structure/window/spawner,
-/obj/structure/window/spawner{
-	dir = 1
-	},
 /obj/structure/flora/bush/flowers_pp,
 /obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/window/spawner/directional/south,
+/obj/structure/window/spawner/directional/north,
 /turf/open/floor/grass,
 /area/station/medical/treatment_center)
 "hOg" = (
@@ -29181,17 +29158,13 @@
 /turf/open/floor/iron,
 /area/station/security/office)
 "izo" = (
-/obj/structure/window/spawner{
-	dir = 8
-	},
-/obj/structure/window/spawner{
-	dir = 4
-	},
 /obj/structure/flora/bush/fullgrass/style_random,
 /obj/structure/flora/bush/sparsegrass/style_random,
 /obj/structure/flora/bush/leafy,
 /obj/structure/flora/bush/flowers_pp/style_random,
 /obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/window/spawner/directional/west,
+/obj/structure/window/spawner/directional/east,
 /turf/open/floor/grass,
 /area/station/security/office)
 "izp" = (
@@ -31662,12 +31635,10 @@
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "jkd" = (
-/obj/structure/window/spawner,
-/obj/structure/window/spawner{
-	dir = 1
-	},
 /obj/structure/flora/bush/flowers_pp,
 /obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/window/spawner/directional/south,
+/obj/structure/window/spawner/directional/north,
 /turf/open/floor/grass,
 /area/station/medical/surgery/theatre)
 "jki" = (
@@ -32007,16 +31978,12 @@
 /turf/open/floor/grass,
 /area/station/hallway/secondary/exit/departure_lounge)
 "jnZ" = (
-/obj/structure/window/spawner{
-	dir = 8
-	},
-/obj/structure/window/spawner{
-	dir = 4
-	},
 /obj/structure/flora/bush/sparsegrass/style_random,
 /obj/structure/flora/bush/jungle/c/style_random,
 /obj/structure/flora/bush/flowers_yw/style_random,
 /obj/structure/flora/bush/flowers_br/style_random,
+/obj/structure/window/spawner/directional/west,
+/obj/structure/window/spawner/directional/east,
 /turf/open/floor/grass,
 /area/station/security/office)
 "joj" = (
@@ -32451,7 +32418,7 @@
 /turf/open/floor/iron,
 /area/station/science/research)
 "jtq" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing,
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "jtr" = (
@@ -33405,9 +33372,9 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/port)
 "jHI" = (
-/obj/structure/window/spawner,
 /obj/structure/flora/bush/style_random,
 /obj/structure/flora/bush/stalky,
+/obj/structure/window/spawner/directional/south,
 /turf/open/floor/grass,
 /area/station/science/xenobiology)
 "jHJ" = (
@@ -33871,12 +33838,10 @@
 /turf/open/floor/plating,
 /area/station/engineering/engine_smes)
 "jPi" = (
-/obj/structure/window/spawner{
-	dir = 1
-	},
-/obj/structure/window/spawner,
 /obj/structure/flora/bush/fullgrass/style_random,
 /obj/structure/flora/bush/flowers_br/style_random,
+/obj/structure/window/spawner/directional/south,
+/obj/structure/window/spawner/directional/north,
 /turf/open/floor/grass,
 /area/station/medical/surgery/theatre)
 "jPk" = (
@@ -34033,12 +33998,10 @@
 /turf/open/floor/iron,
 /area/station/science/ordnance/testlab)
 "jRE" = (
-/obj/structure/window/spawner,
-/obj/structure/window/spawner{
-	dir = 1
-	},
 /obj/structure/flora/bush/flowers_yw,
 /obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/window/spawner/directional/south,
+/obj/structure/window/spawner/directional/north,
 /turf/open/floor/grass,
 /area/station/medical/treatment_center)
 "jRF" = (
@@ -34181,12 +34144,10 @@
 /turf/open/floor/grass,
 /area/station/security/prison/garden)
 "jTt" = (
-/obj/structure/window/spawner,
-/obj/structure/window/spawner{
-	dir = 1
-	},
 /obj/structure/flora/bush/flowers_yw/style_random,
 /obj/structure/flora/bush/generic/style_random,
+/obj/structure/window/spawner/directional/south,
+/obj/structure/window/spawner/directional/north,
 /turf/open/floor/grass,
 /area/station/command/meeting_room)
 "jTu" = (
@@ -38685,10 +38646,12 @@
 /turf/open/floor/iron,
 /area/station/engineering/storage_shared)
 "lhg" = (
-/obj/structure/cable,
-/obj/structure/cable,
-/turf/closed/wall,
-/area/station/solars/starboard/fore)
+/obj/structure/flora/bush/flowers_pp,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/window/spawner/directional/north,
+/obj/structure/window/spawner/directional/south,
+/turf/open/floor/grass,
+/area/station/medical/surgery/theatre)
 "lhj" = (
 /obj/structure/railing/wooden_fencing,
 /obj/structure/railing/wooden_fencing{
@@ -41349,12 +41312,10 @@
 /turf/open/floor/wood,
 /area/station/hallway/primary/port)
 "lQv" = (
-/obj/structure/window/spawner{
-	dir = 4
-	},
-/obj/structure/window/spawner,
 /obj/item/food/grown/banana,
 /obj/structure/flora/bush/stalky,
+/obj/structure/window/spawner/directional/south,
+/obj/structure/window/spawner/directional/east,
 /turf/open/floor/grass,
 /area/station/science/xenobiology)
 "lQx" = (
@@ -49026,7 +48987,6 @@
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/theatre)
 "odv" = (
-/obj/structure/cable,
 /obj/machinery/door/airlock{
 	name = "Recreation Area"
 	},
@@ -49206,8 +49166,6 @@
 /obj/machinery/door/airlock{
 	name = "Recreation Area"
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood,
 /area/station/commons/fitness/recreation)
 "ohc" = (
@@ -49285,17 +49243,11 @@
 /turf/closed/wall,
 /area/station/service/hydroponics)
 "ohM" = (
-/obj/structure/window/spawner{
-	dir = 8
-	},
-/obj/structure/window/spawner{
-	dir = 1
-	},
-/obj/structure/window/spawner{
-	dir = 4
-	},
 /obj/structure/flora/bush/fullgrass/style_random,
 /obj/structure/flora/bush/flowers_pp/style_random,
+/obj/structure/window/spawner/directional/west,
+/obj/structure/window/spawner/directional/north,
+/obj/structure/window/spawner/directional/east,
 /turf/open/floor/grass,
 /area/station/security/office)
 "ohO" = (
@@ -50121,10 +50073,10 @@
 /turf/closed/wall,
 /area/station/engineering/supermatter/room)
 "otk" = (
-/obj/machinery/door/airlock/research{
-	name = "Toxins Emergency Fire closet"
-	},
 /obj/effect/mapping_helpers/airlock/access/all/science/ordnance,
+/obj/machinery/door/airlock/research{
+	name = "Toxins Emergency Fire Closet"
+	},
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "otp" = (
@@ -50641,7 +50593,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "oBd" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "oBh" = (
@@ -51404,7 +51356,7 @@
 "oMY" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "oNg" = (
@@ -52976,12 +52928,10 @@
 /turf/closed/wall/r_wall,
 /area/station/science/research)
 "pkr" = (
-/obj/structure/window/spawner,
-/obj/structure/window/spawner{
-	dir = 1
-	},
 /obj/structure/flora/bush/flowers_yw,
 /obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/window/spawner/directional/south,
+/obj/structure/window/spawner/directional/north,
 /turf/open/floor/grass,
 /area/station/medical/surgery/theatre)
 "pkw" = (
@@ -55309,12 +55259,10 @@
 /turf/open/space/basic,
 /area/space)
 "pUi" = (
-/obj/structure/window/spawner,
-/obj/structure/window/spawner{
-	dir = 1
-	},
 /obj/structure/flora/bush/flowers_br,
 /obj/structure/flora/bush/generic/style_random,
+/obj/structure/window/spawner/directional/south,
+/obj/structure/window/spawner/directional/north,
 /turf/open/floor/grass,
 /area/station/medical/treatment_center)
 "pUj" = (
@@ -57177,10 +57125,9 @@
 /turf/open/floor/iron,
 /area/station/maintenance/port/lesser)
 "qxC" = (
-/obj/structure/lattice,
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space/nearstation)
+/obj/machinery/smartfridge/chemistry/preloaded,
+/turf/open/floor/iron/white,
+/area/station/medical/pharmacy)
 "qxG" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/maintenance,
@@ -58077,7 +58024,7 @@
 /area/station/security/courtroom)
 "qJM" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "qJQ" = (
@@ -58408,7 +58355,7 @@
 "qOY" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "qOZ" = (
@@ -60273,12 +60220,10 @@
 /turf/open/floor/plating,
 /area/space/nearstation)
 "rrJ" = (
-/obj/structure/window/spawner,
-/obj/structure/window/spawner{
-	dir = 1
-	},
 /obj/structure/flora/bush/flowers_pp/style_random,
 /obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/window/spawner/directional/north,
+/obj/structure/window/spawner/directional/south,
 /turf/open/floor/grass,
 /area/station/medical/surgery/theatre)
 "rrK" = (
@@ -61179,13 +61124,10 @@
 /area/station/ai_monitored/turret_protected/aisat/hallway)
 "rEC" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/tcoms,
 /obj/machinery/door/airlock/hatch{
 	name = "Telecomms Server Room"
 	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/carpet/grimey,
@@ -61462,14 +61404,10 @@
 /turf/open/floor/grass,
 /area/station/maintenance/starboard/greater)
 "rIv" = (
-/obj/structure/window/spawner,
-/obj/structure/window/spawner{
-	dir = 8
-	},
-/obj/structure/window/spawner{
-	dir = 1
-	},
 /obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/window/spawner/directional/south,
+/obj/structure/window/spawner/directional/west,
+/obj/structure/window/spawner/directional/north,
 /turf/open/floor/grass,
 /area/station/command/meeting_room)
 "rIx" = (
@@ -62525,7 +62463,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "rYa" = (
@@ -62716,16 +62654,12 @@
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
 "rZT" = (
-/obj/structure/window/spawner{
-	dir = 8
-	},
-/obj/structure/window/spawner{
-	dir = 4
-	},
-/obj/structure/window/spawner/directional/south,
 /obj/structure/flora/bush/sparsegrass/style_random,
 /obj/structure/flora/bush/jungle/c/style_random,
 /obj/structure/flora/bush/flowers_br/style_random,
+/obj/structure/window/spawner/directional/south,
+/obj/structure/window/spawner/directional/west,
+/obj/structure/window/spawner/directional/east,
 /turf/open/floor/grass,
 /area/station/security/office)
 "rZZ" = (
@@ -63488,7 +63422,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "slf" = (
@@ -63966,12 +63900,10 @@
 "srK" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 8
-	},
 /obj/structure/chair/comfy/black{
 	dir = 4
 	},
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/west,
 /turf/open/floor/carpet/grimey,
 /area/station/hallway/primary/central)
 "srW" = (
@@ -64330,12 +64262,10 @@
 /obj/machinery/light/directional/south{
 	dir = 1
 	},
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 8
-	},
 /obj/structure/chair/comfy/black{
 	dir = 4
 	},
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/west,
 /turf/open/floor/carpet/grimey,
 /area/station/hallway/primary/central)
 "sxo" = (
@@ -64370,7 +64300,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "sxQ" = (
@@ -66565,7 +66495,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "tgq" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing,
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 1
 	},
@@ -67786,7 +67716,7 @@
 /turf/open/floor/stone,
 /area/station/hallway/primary/central)
 "tzw" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing,
 /obj/structure/flora/bush/fullgrass/style_random,
 /turf/open/floor/grass,
 /area/station/security/prison/garden)
@@ -68531,9 +68461,7 @@
 /obj/structure/table,
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /obj/machinery/chem_dispenser/drinks,
-/obj/structure/window/spawner{
-	dir = 1
-	},
+/obj/structure/window/spawner/directional/north,
 /turf/open/floor/iron/white,
 /area/station/security/prison/mess)
 "tJM" = (
@@ -68631,24 +68559,14 @@
 /turf/open/floor/grass,
 /area/station/hallway/primary/fore)
 "tLl" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/obj/structure/chair{
-	dir = 8;
-	pixel_y = 3;
-	pixel_x = 1
-	},
-/obj/structure/chair{
-	dir = 8;
-	pixel_y = 6;
-	pixel_x = 2
-	},
-/obj/structure/chair{
-	dir = 8;
-	pixel_y = 9;
-	pixel_x = 3
-	},
+/obj/effect/spawner/random/structure/chair_flipped,
+/obj/effect/spawner/random/structure/chair_flipped,
+/obj/effect/spawner/random/structure/chair_flipped,
+/obj/effect/spawner/random/structure/chair_flipped,
+/obj/effect/spawner/random/structure/chair_flipped,
+/obj/effect/spawner/random/structure/chair_flipped,
+/obj/effect/spawner/random/structure/chair_flipped,
+/obj/effect/spawner/random/structure/chair_flipped,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "tLr" = (
@@ -76080,10 +75998,8 @@
 /area/station/maintenance/starboard/aft)
 "vUV" = (
 /obj/machinery/light/directional/north,
-/obj/structure/window/spawner{
-	dir = 4
-	},
 /obj/structure/flora/rock/style_random,
+/obj/structure/window/spawner/directional/east,
 /turf/open/floor/grass,
 /area/station/science/xenobiology)
 "vUX" = (
@@ -79874,12 +79790,10 @@
 /turf/open/floor/iron,
 /area/station/security/brig)
 "xct" = (
-/obj/structure/window/spawner{
-	dir = 1
-	},
-/obj/structure/window/spawner,
 /obj/structure/flora/bush/flowers_pp,
 /obj/structure/flora/bush/jungle/c/style_random,
+/obj/structure/window/spawner/directional/south,
+/obj/structure/window/spawner/directional/north,
 /turf/open/floor/grass,
 /area/station/medical/treatment_center)
 "xcy" = (
@@ -79989,7 +79903,7 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/break_room)
 "xeT" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing,
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 1
 	},
@@ -81441,12 +81355,10 @@
 /turf/open/floor/iron/cafeteria,
 /area/station/commons/lounge)
 "xzb" = (
-/obj/structure/window/spawner{
-	dir = 1
-	},
-/obj/structure/window/spawner,
 /obj/structure/flora/bush/flowers_yw,
 /obj/structure/flora/bush/grassy/style_random,
+/obj/structure/window/spawner/directional/south,
+/obj/structure/window/spawner/directional/north,
 /turf/open/floor/grass,
 /area/station/medical/treatment_center)
 "xzc" = (
@@ -82905,7 +82817,7 @@
 /turf/closed/wall,
 /area/station/hallway/primary/central)
 "xSo" = (
-/obj/machinery/hydroponics/constructable,
+/obj/machinery/growing,
 /obj/structure/flora/bush/fullgrass/style_random,
 /obj/structure/flora/bush/flowers_br/style_random,
 /turf/open/floor/grass,
@@ -83877,12 +83789,10 @@
 /turf/open/floor/grass,
 /area/station/hallway/primary/central)
 "ygu" = (
-/obj/structure/window/spawner,
-/obj/structure/window/spawner{
-	dir = 1
-	},
 /obj/structure/flora/bush/flowers_pp,
 /obj/structure/flora/bush/grassy/style_random,
+/obj/structure/window/spawner/directional/south,
+/obj/structure/window/spawner/directional/north,
 /turf/open/floor/grass,
 /area/station/medical/treatment_center)
 "ygv" = (
@@ -98181,7 +98091,7 @@ kWy
 jRL
 bTf
 hte
-ciI
+tJK
 qsY
 rsn
 rsn
@@ -115954,7 +115864,7 @@ aUj
 naL
 foT
 ucD
-tqE
+qxC
 naL
 foT
 foT
@@ -118014,7 +117924,7 @@ pVh
 bni
 ouE
 ygi
-tqE
+qxC
 khH
 jVc
 pss
@@ -119453,7 +119363,7 @@ rvd
 iJz
 qAM
 aga
-lhg
+lWP
 sxB
 wJV
 pLL
@@ -121596,7 +121506,7 @@ wwh
 hXc
 qWw
 vhH
-jkd
+lhg
 nek
 grS
 ewH
@@ -121853,7 +121763,7 @@ fFL
 ctk
 iWs
 vhH
-pkr
+guW
 rHG
 nJx
 ewH
@@ -137497,7 +137407,7 @@ rvd
 beI
 beI
 beI
-qxC
+beI
 beI
 beI
 beI
@@ -138503,7 +138413,7 @@ bLG
 pBg
 bLG
 bLG
-guW
+hLK
 nvI
 fzN
 nOo
