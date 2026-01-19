@@ -38909,13 +38909,11 @@
 	},
 /obj/structure/rack,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/item/storage/medkit{
-	pixel_x = 0;
-	pixel_y = -6
-	},
-/obj/item/storage/medkit{
-	pixel_x = 0;
+/obj/item/storage/medkit/regular{
 	pixel_y = 2
+	},
+/obj/item/storage/medkit/regular{
+	pixel_y = -6
 	},
 /turf/open/floor/iron/white/corner{
 	dir = 8
@@ -104009,6 +104007,9 @@
 /area/station/engineering/atmos)
 "tZD" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/vehicle/ridden/battering_ram{
+	dir = 8
+	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/ai_monitored/security/armory)
 "tZU" = (
