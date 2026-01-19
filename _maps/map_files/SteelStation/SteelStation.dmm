@@ -5081,14 +5081,6 @@
 	},
 /turf/open/floor/carpet,
 /area/station/service/library)
-"bEF" = (
-/obj/structure/cable,
-/obj/machinery/door/airlock/engineering/glass{
-	name = "Supermatter Engine Room"
-	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
-/turf/open/floor/engine,
-/area/station/engineering/supermatter/room)
 "bEI" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
@@ -5603,6 +5595,7 @@
 /obj/effect/turf_decal/trimline/dark_red/filled/warning{
 	dir = 1
 	},
+/obj/machinery/station_map/engineering/directional/north,
 /turf/open/floor/iron/white,
 /area/station/command/bridge)
 "bMp" = (
@@ -7131,10 +7124,12 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "ciI" = (
-/obj/structure/foamedmetal,
-/obj/structure/foamedmetal,
-/turf/open/floor/plating/airless,
-/area/station/maintenance/starboard/aft)
+/obj/structure/flora/bush/flowers_yw,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/window/spawner/directional/south,
+/obj/structure/window/spawner/directional/north,
+/turf/open/floor/grass,
+/area/station/medical/surgery/theatre)
 "ciJ" = (
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 4
@@ -9207,6 +9202,7 @@
 "cLM" = (
 /obj/structure/table/wood,
 /obj/effect/turf_decal/siding/wood,
+/obj/machinery/cassette_deck,
 /turf/open/floor/wood,
 /area/station/service/library)
 "cLR" = (
@@ -18858,6 +18854,12 @@
 	},
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
+"fyp" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/engineering/main)
 "fyr" = (
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -19035,6 +19037,7 @@
 "fBa" = (
 /obj/structure/table/glass,
 /obj/structure/disposalpipe/segment,
+/obj/item/stamp/head/cmo,
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/cmo)
 "fBq" = (
@@ -19731,6 +19734,7 @@
 	dir = 4
 	},
 /obj/structure/railing/wooden_fencing,
+/obj/machinery/cassette_postbox,
 /turf/open/floor/stone,
 /area/station/service/library)
 "fKD" = (
@@ -22200,7 +22204,7 @@
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "guW" = (
-/obj/structure/flora/bush/flowers_yw,
+/obj/structure/flora/bush/flowers_pp,
 /obj/structure/flora/bush/fullgrass/style_random,
 /obj/structure/window/spawner/directional/north,
 /obj/structure/window/spawner/directional/south,
@@ -24647,8 +24651,9 @@
 /turf/open/floor/glass/reinforced,
 /area/station/hallway/primary/fore)
 "hfC" = (
-/turf/open/space/basic,
-/area/station/science/explab)
+/obj/structure/foamedmetal,
+/turf/open/floor/plating/airless,
+/area/station/maintenance/starboard/aft)
 "hfK" = (
 /obj/structure/cable,
 /obj/structure/flora/bush/fullgrass/style_random,
@@ -31608,8 +31613,8 @@
 "jkd" = (
 /obj/structure/flora/bush/flowers_pp,
 /obj/structure/flora/bush/fullgrass/style_random,
-/obj/structure/window/spawner/directional/north,
 /obj/structure/window/spawner/directional/south,
+/obj/structure/window/spawner/directional/north,
 /turf/open/floor/grass,
 /area/station/medical/surgery/theatre)
 "jki" = (
@@ -38609,12 +38614,9 @@
 /turf/open/floor/iron,
 /area/station/engineering/storage_shared)
 "lhg" = (
-/obj/structure/flora/bush/flowers_pp,
-/obj/structure/flora/bush/fullgrass/style_random,
-/obj/structure/window/spawner/directional/south,
-/obj/structure/window/spawner/directional/north,
-/turf/open/floor/grass,
-/area/station/medical/surgery/theatre)
+/obj/machinery/smartfridge,
+/turf/open/floor/iron,
+/area/station/service/hydroponics)
 "lhj" = (
 /obj/structure/railing/wooden_fencing,
 /obj/structure/railing/wooden_fencing{
@@ -43466,10 +43468,6 @@
 	},
 /turf/open/floor/grass,
 /area/station/science/research)
-"mym" = (
-/obj/machinery/smartfridge,
-/turf/open/floor/iron,
-/area/station/service/hydroponics)
 "myB" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
@@ -43492,6 +43490,7 @@
 	anon_tips_receiver = 1;
 	can_send_announcements = 1
 	},
+/obj/item/stamp/head/captain,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain)
 "mzi" = (
@@ -52875,8 +52874,8 @@
 "pkr" = (
 /obj/structure/flora/bush/flowers_yw,
 /obj/structure/flora/bush/fullgrass/style_random,
-/obj/structure/window/spawner/directional/south,
 /obj/structure/window/spawner/directional/north,
+/obj/structure/window/spawner/directional/south,
 /turf/open/floor/grass,
 /area/station/medical/surgery/theatre)
 "pkw" = (
@@ -55337,12 +55336,10 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "pVP" = (
-/obj/structure/cable,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/station/engineering/main)
+/obj/structure/foamedmetal,
+/obj/structure/foamedmetal,
+/turf/open/floor/plating/airless,
+/area/station/maintenance/starboard/aft)
 "pVV" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/brown/filled/line{
@@ -57064,9 +57061,10 @@
 /turf/open/floor/iron,
 /area/station/maintenance/port/lesser)
 "qxC" = (
-/obj/structure/foamedmetal,
-/turf/open/floor/plating/airless,
-/area/station/maintenance/starboard/aft)
+/obj/structure/table,
+/obj/item/stamp/head/rd,
+/turf/open/floor/iron/dark,
+/area/station/command/heads_quarters/rd)
 "qxG" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/maintenance,
@@ -58668,12 +58666,9 @@
 /area/station/cargo/storage)
 "qUm" = (
 /obj/structure/table/wood,
-/obj/structure/cassette_rack{
-	pixel_x = -5;
-	pixel_y = 12
-	},
 /obj/machinery/airalarm/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/structure/cassette_rack/prefilled,
 /turf/open/floor/iron/vaporwave,
 /area/station/service/library)
 "qUv" = (
@@ -61634,6 +61629,7 @@
 /obj/machinery/camera/directional/north,
 /obj/machinery/firealarm/directional/north,
 /obj/structure/table/wood,
+/obj/structure/cassette_rack/prefilled,
 /turf/open/floor/iron/vaporwave,
 /area/station/service/library)
 "rOd" = (
@@ -70109,6 +70105,10 @@
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/siding/wood,
+/obj/item/cassette_tape/blank,
+/obj/item/cassette_tape/blank,
+/obj/item/cassette_tape/blank,
+/obj/item/cassette_tape/blank,
 /turf/open/floor/wood,
 /area/station/service/library)
 "uib" = (
@@ -77194,6 +77194,7 @@
 "wnE" = (
 /obj/structure/table/reinforced,
 /obj/item/flashlight/lamp,
+/obj/item/stamp/head/ce,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/ce)
 "wnN" = (
@@ -81369,6 +81370,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
+/obj/item/stamp/head/hos,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hos)
 "xzS" = (
@@ -83235,6 +83237,7 @@
 	pixel_x = -2;
 	pixel_y = 4
 	},
+/obj/item/stamp/head/hop,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/hop)
 "xZt" = (
@@ -116583,7 +116586,7 @@ fnm
 fnm
 aHk
 dre
-mym
+lhg
 aHk
 brv
 dVC
@@ -121416,7 +121419,7 @@ wwh
 hXc
 qWw
 vhH
-jkd
+guW
 nek
 grS
 ewH
@@ -121673,7 +121676,7 @@ fFL
 ctk
 iWs
 vhH
-guW
+pkr
 rHG
 nJx
 ewH
@@ -122450,7 +122453,7 @@ mxw
 ewH
 dKY
 nHn
-lhg
+jkd
 uHB
 aIx
 pyc
@@ -122707,7 +122710,7 @@ vUX
 ewH
 sBr
 uoD
-pkr
+ciI
 uHB
 rcm
 uWP
@@ -123540,8 +123543,8 @@ wch
 sXi
 mpy
 mpy
-qxC
-qxC
+hfC
+hfC
 sXi
 sXi
 sXi
@@ -123795,10 +123798,10 @@ sXi
 sXi
 sXi
 rTt
-qxC
-qxC
-ciI
-qxC
+hfC
+hfC
+pVP
+hfC
 sXi
 rvd
 rvd
@@ -124052,9 +124055,9 @@ sXi
 sXi
 ayd
 dNF
-ciI
-ciI
-ciI
+pVP
+pVP
+pVP
 rvd
 rvd
 rvd
@@ -124308,9 +124311,9 @@ sXi
 sXi
 sXi
 ayd
-qxC
-qxC
-qxC
+hfC
+hfC
+hfC
 rvd
 rvd
 rvd
@@ -124565,9 +124568,9 @@ sXi
 sXi
 sXi
 ayd
-qxC
-qxC
-qxC
+hfC
+hfC
+hfC
 rvd
 rvd
 rvd
@@ -124822,10 +124825,10 @@ sXi
 sXi
 sXi
 mpy
-qxC
-qxC
-qxC
-qxC
+hfC
+hfC
+hfC
+hfC
 rvd
 rvd
 beI
@@ -125057,7 +125060,7 @@ bYu
 esT
 fbZ
 wUf
-ozQ
+qxC
 rBj
 unM
 dwJ
@@ -125079,11 +125082,11 @@ ayd
 mpy
 kmU
 mpy
-qxC
-qxC
-qxC
-qxC
-qxC
+hfC
+hfC
+hfC
+hfC
+hfC
 rvd
 rvd
 rvd
@@ -125338,9 +125341,9 @@ sXi
 dMa
 sXi
 sXi
-qxC
-qxC
-qxC
+hfC
+hfC
+hfC
 sXi
 rvd
 rvd
@@ -125597,7 +125600,7 @@ nTE
 sXi
 nTE
 nTE
-qxC
+hfC
 sXi
 rvd
 rvd
@@ -126995,13 +126998,13 @@ oRF
 oRF
 kct
 oRF
-oRF
-oRF
-bEF
-pVP
+gvB
+gvB
+hkq
+ach
 fyr
-sXo
-afv
+fyp
+fyr
 agW
 afv
 aLc
@@ -130335,7 +130338,7 @@ gvB
 gvB
 gvB
 gvB
-gvB
+oRF
 gvB
 gvB
 xHt
@@ -131257,7 +131260,7 @@ ffL
 gdm
 qtx
 eMv
-hfC
+ukB
 rwz
 teV
 jVP
@@ -133422,8 +133425,8 @@ mQE
 mQE
 mQE
 iwJ
-ktr
-pVP
+mQE
+ach
 bIN
 sXo
 iZm
