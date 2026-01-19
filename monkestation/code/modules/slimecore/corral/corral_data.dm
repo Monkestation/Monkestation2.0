@@ -59,8 +59,7 @@
 	corral_corners = null
 
 	for(var/mob/living/basic/slime/slime as anything in managed_slimes)
-		UnregisterSignal(slime, COMSIG_ATOM_SUCKED)
-		UnregisterSignal(slime, COMSIG_LIVING_DEATH)
+		UnregisterSignal(slime, list(COMSIG_ATOM_SUCKED, COMSIG_LIVING_DEATH))
 	managed_slimes = null
 
 	. = ..()
@@ -104,16 +103,14 @@
 	update_slimes()
 
 /datum/corral_data/proc/check_exited(turf/source, atom/movable/gone, direction)
-	if(!istype(gone, /mob/living/basic/slime))
+	if(!isslime(gone))
 		return
 
 	var/turf/turf = get_step(source, direction)
 	if(turf in corral_turfs)
 		return
 
-	UnregisterSignal(gone, COMSIG_ATOM_SUCKED)
-	UnregisterSignal(gone, COMSIG_LIVING_DEATH)
-	UnregisterSignal(gone, list(COMSIG_PREQDELETED, COMSIG_QDELETING))
+	UnregisterSignal(gone, list(COMSIG_ATOM_SUCKED, COMSIG_LIVING_DEATH, COMSIG_PREQDELETED, COMSIG_QDELETING))
 	managed_slimes -= gone
 	for(var/datum/corral_upgrade/upgrade as anything in corral_upgrades)
 		upgrade.on_slime_exited(gone)
@@ -121,9 +118,7 @@
 
 /datum/corral_data/proc/remove_cause_sucked(atom/movable/gone)
 
-	UnregisterSignal(gone, COMSIG_ATOM_SUCKED)
-	UnregisterSignal(gone, COMSIG_LIVING_DEATH)
-	UnregisterSignal(gone, list(COMSIG_PREQDELETED, COMSIG_QDELETING))
+	UnregisterSignal(gone, list(COMSIG_ATOM_SUCKED, COMSIG_LIVING_DEATH, COMSIG_PREQDELETED, COMSIG_QDELETING))
 	managed_slimes -= gone
 	for(var/datum/corral_upgrade/upgrade as anything in corral_upgrades)
 		upgrade.on_slime_exited(gone)
@@ -137,13 +132,10 @@
 	for(var/mob/living/basic/slime/slime as anything in managed_slimes)
 		if(QDELETED(slime) || !(get_turf(slime) in corral_turfs))
 			managed_slimes -= slime
-			if(QDELETED(slime))
-				continue
-			UnregisterSignal(slime, COMSIG_ATOM_SUCKED)
-			UnregisterSignal(slime, COMSIG_LIVING_DEATH)
-			UnregisterSignal(slime, list(COMSIG_PREQDELETED, COMSIG_QDELETING))
-			for(var/datum/corral_upgrade/upgrade as anything in corral_upgrades)
-				upgrade.on_slime_exited(slime)
+			UnregisterSignal(slime, list(COMSIG_ATOM_SUCKED, COMSIG_LIVING_DEATH, COMSIG_PREQDELETED, COMSIG_QDELETING))
+			if(!QDELETED(slime))
+				for(var/datum/corral_upgrade/upgrade as anything in corral_upgrades)
+					upgrade.on_slime_exited(slime)
 
 /datum/corral_data/proc/start_break()
 	qdel(src)
