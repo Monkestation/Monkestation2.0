@@ -6,8 +6,6 @@
 
 import { toFixed } from 'common/math';
 import { capitalize } from 'common/string';
-import { useLocalState } from 'tgui/backend';
-import { useDispatch, useSelector } from 'tgui/backend';
 import {
   Box,
   Button,
@@ -25,31 +23,24 @@ import {
   NoticeBox,
 } from 'tgui/components';
 import { ChatPageSettings } from '../chat';
-import { clearChat, rebuildChat, saveChatToDisk } from '../chat/actions';
 import { THEMES } from '../themes';
-import {
-  changeSettingsTab,
-  exportSettings,
-  updateSettings,
-  addHighlightSetting,
-  removeHighlightSetting,
-  updateHighlightSetting,
-} from './actions';
+
 import { SETTINGS_TABS, FONTS, WARN_AFTER_HIGHLIGHT_AMT } from './constants';
 import { setEditPaneSplitters } from './scaling';
-import {
-  selectActiveTab,
-  selectSettings,
-  selectHighlightSettings,
-  selectHighlightSettingById,
-} from './selectors';
-import { importChatSettings } from './settingsImExport';
-import { reconnectWebsocket, disconnectWebsocket } from '../websocket';
+import { exportChatSettings, importChatSettings } from './settingsImExport';
 import { chatRenderer } from '../chat/renderer';
+import { useSettings } from './use-settings';
+import { useState } from 'react';
+import { useHighlights } from './use-highlights';
+import { wsDisconnect, wsReconnect } from 'tgui-panel/websocket/helpers';
 
 export const SettingsPanel = (props) => {
-  const activeTab = useSelector(selectActiveTab);
-  const dispatch = useDispatch();
+  const {
+    settings: { view },
+    updateSettings,
+  } = useSettings();
+  const { activeTab } = view;
+
   return (
     <Stack fill>
       <Stack.Item>
@@ -60,11 +51,12 @@ export const SettingsPanel = (props) => {
                 key={tab.id}
                 selected={tab.id === activeTab}
                 onClick={() =>
-                  dispatch(
-                    changeSettingsTab({
-                      tabId: tab.id,
-                    }),
-                  )
+                  updateSettings({
+                    view: {
+                      ...view,
+                      activeTab: tab.id,
+                    },
+                  })
                 }
               >
                 {tab.name}
@@ -85,11 +77,10 @@ export const SettingsPanel = (props) => {
 };
 
 export const SettingsGeneral = (props) => {
-  const { theme, fontFamily, coloredNames, fontSize, lineHeight } =
-    useSelector(selectSettings);
-  const dispatch = useDispatch();
-  const [freeFont, setFreeFont] = useLocalState('freeFont', false);
-  const [editingPanes, setEditingPanes] = useLocalState('freeFont', false);
+  const { settings, updateSettings } = useSettings();
+  const [freeFont, setFreeFont] = useState(false);
+
+  const [editingPanes, setEditingPanes] = useState(false);
 
   return (
     <Section>
@@ -99,14 +90,12 @@ export const SettingsGeneral = (props) => {
             <Button
               key={THEME}
               content={capitalize(THEME)}
-              selected={theme === THEME}
+              selected={settings.theme === THEME}
               color="transparent"
               onClick={() =>
-                dispatch(
-                  updateSettings({
-                    theme: THEME,
-                  }),
-                )
+                updateSettings({
+                  theme: THEME,
+                })
               }
             />
           ))}
@@ -129,7 +118,7 @@ export const SettingsGeneral = (props) => {
           <Stack.Item>
             {(!freeFont && (
               <Collapsible
-                title={fontFamily}
+                title={settings.fontFamily}
                 width={'100%'}
                 buttons={
                   <Button
@@ -147,14 +136,12 @@ export const SettingsGeneral = (props) => {
                     key={FONT}
                     content={FONT}
                     fontFamily={FONT}
-                    selected={fontFamily === FONT}
+                    selected={settings.fontFamily === FONT}
                     color="transparent"
                     onClick={() =>
-                      dispatch(
-                        updateSettings({
-                          fontFamily: FONT,
-                        }),
-                      )
+                      updateSettings({
+                        fontFamily: FONT,
+                      })
                     }
                   />
                 ))}
@@ -163,13 +150,11 @@ export const SettingsGeneral = (props) => {
               <Stack>
                 <Input
                   width={'100%'}
-                  value={fontFamily}
+                  value={settings.fontFamily}
                   onChange={(value) =>
-                    dispatch(
-                      updateSettings({
-                        fontFamily: value,
-                      }),
-                    )
+                    updateSettings({
+                      fontFamily: value,
+                    })
                   }
                 />
                 <Button
@@ -188,13 +173,11 @@ export const SettingsGeneral = (props) => {
         <LabeledList.Item label="High Contrast">
           <Button.Checkbox
             content="Colored Names"
-            checked={coloredNames}
+            checked={settings.coloredNames}
             onClick={() =>
-              dispatch(
-                updateSettings({
-                  coloredNames: !coloredNames,
-                }),
-              )
+              updateSettings({
+                coloredNames: !settings.coloredNames,
+              })
             }
           />
         </LabeledList.Item>
@@ -207,13 +190,11 @@ export const SettingsGeneral = (props) => {
                 stepPixelSize={20}
                 minValue={8}
                 maxValue={32}
-                value={fontSize}
+                value={settings.fontSize}
                 unit="px"
                 format={(value) => toFixed(value)}
                 tickWhileDragging
-                onChange={(_, value) =>
-                  dispatch(updateSettings({ fontSize: value }))
-                }
+                onChange={(_, value) => updateSettings({ fontSize: value })}
               />
             </Stack.Item>
           </Stack>
@@ -225,15 +206,13 @@ export const SettingsGeneral = (props) => {
             stepPixelSize={2}
             minValue={0.8}
             maxValue={5}
-            value={lineHeight}
+            value={settings.lineHeight}
             format={(value) => toFixed(value, 2)}
             tickWhileDragging
             onChange={(_, value) =>
-              dispatch(
-                updateSettings({
-                  lineHeight: value,
-                }),
-              )
+              updateSettings({
+                lineHeight: value,
+              })
             }
           />
         </LabeledList.Item>
@@ -244,7 +223,7 @@ export const SettingsGeneral = (props) => {
           <Button
             icon="compact-disc"
             tooltip="Export chat settings"
-            onClick={() => dispatch(exportSettings())}
+            onClick={exportChatSettings}
           >
             Export settings
           </Button>
@@ -254,7 +233,7 @@ export const SettingsGeneral = (props) => {
             accept=".json"
             tooltip="Import chat settings"
             icon="arrow-up-from-bracket"
-            onSelectFiles={(files) => importChatSettings(dispatch, files)}
+            onSelectFiles={importChatSettings}
           >
             Import settings
           </Button.File>
@@ -264,7 +243,7 @@ export const SettingsGeneral = (props) => {
             content="Save chat log"
             icon="save"
             tooltip="Export current tab history into HTML file"
-            onClick={() => dispatch(saveChatToDisk())}
+            onClick={() => chatRenderer.saveToDisk()}
           />
         </Stack.Item>
         <Stack.Item mt={0.15}>
@@ -272,7 +251,7 @@ export const SettingsGeneral = (props) => {
             content="Clear chat"
             icon="trash"
             tooltip="Erase current tab history"
-            onClick={() => dispatch(clearChat())}
+            onClick={() => chatRenderer.clearChat()}
           />
         </Stack.Item>
       </Stack>
@@ -281,8 +260,11 @@ export const SettingsGeneral = (props) => {
 };
 
 const TextHighlightSettings = (props) => {
-  const highlightSettings = useSelector(selectHighlightSettings);
-  const dispatch = useDispatch();
+  const {
+    highlights: { highlightSettings },
+    addHighlight,
+  } = useHighlights();
+
   return (
     <Section fill scrollable height="250px">
       <Stack vertical>
@@ -300,7 +282,7 @@ const TextHighlightSettings = (props) => {
               icon="plus"
               content="Add Highlight Setting"
               onClick={() => {
-                dispatch(addHighlightSetting());
+                addHighlight();
               }}
             />
             {highlightSettings.length >= WARN_AFTER_HIGHLIGHT_AMT && (
@@ -315,7 +297,7 @@ const TextHighlightSettings = (props) => {
       </Stack>
       <Divider />
       <Box>
-        <Button icon="check" onClick={() => dispatch(rebuildChat())}>
+        <Button icon="check" onClick={() => chatRenderer.rebuildChat()}>
           Apply now
         </Button>
         <Box inline fontSize="0.9em" ml={1} color="label">
@@ -328,16 +310,19 @@ const TextHighlightSettings = (props) => {
 
 const TextHighlightSetting = (props) => {
   const { id, ...rest } = props;
-  const highlightSettingById = useSelector(selectHighlightSettingById);
-  const dispatch = useDispatch();
+  const {
+    highlights: { highlightSettingById },
+    updateHighlight,
+    removeHighlight,
+  } = useHighlights();
   const {
     enabled,
     highlightColor,
-    highlightText,
     highlightWholeMessage,
     matchWord,
     matchCase,
   } = highlightSettingById[id];
+
   return (
     <Stack.Item {...rest}>
       <Stack mb={1} color="label" align="baseline">
@@ -347,25 +332,17 @@ const TextHighlightSetting = (props) => {
             content="Enabled"
             mr="5px"
             onClick={() =>
-              dispatch(
-                updateHighlightSetting({
-                  id: id,
-                  enabled: !enabled,
-                }),
-              )
+              updateHighlight({
+                id: id,
+                enabled: !enabled,
+              })
             }
           />
           <Button
             content="Delete"
             color="transparent"
             icon="times"
-            onClick={() =>
-              dispatch(
-                removeHighlightSetting({
-                  id: id,
-                }),
-              )
-            }
+            onClick={() => removeHighlight(id)}
           />
         </Stack.Item>
         <Stack.Item>
@@ -375,12 +352,10 @@ const TextHighlightSetting = (props) => {
             tooltip="If this option is selected, the entire message will be highlighted in yellow."
             mr="5px"
             onClick={() =>
-              dispatch(
-                updateHighlightSetting({
-                  id: id,
-                  highlightWholeMessage: !highlightWholeMessage,
-                }),
-              )
+              updateHighlight({
+                id: id,
+                highlightWholeMessage: !highlightWholeMessage,
+              })
             }
           />
         </Stack.Item>
@@ -391,12 +366,10 @@ const TextHighlightSetting = (props) => {
             tooltipPosition="bottom-start"
             tooltip="If this option is selected, only exact matches (no extra letters before or after) will trigger. Not compatible with punctuation. Overriden if regex is used."
             onClick={() =>
-              dispatch(
-                updateHighlightSetting({
-                  id: id,
-                  matchWord: !matchWord,
-                }),
-              )
+              updateHighlight({
+                id: id,
+                matchWord: !matchWord,
+              })
             }
           />
         </Stack.Item>
@@ -406,12 +379,10 @@ const TextHighlightSetting = (props) => {
             tooltip="If this option is selected, the highlight will be case-sensitive."
             checked={matchCase}
             onClick={() =>
-              dispatch(
-                updateHighlightSetting({
-                  id: id,
-                  matchCase: !matchCase,
-                }),
-              )
+              updateHighlight({
+                id: id,
+                matchCase: !matchCase,
+              })
             }
           />
         </Stack.Item>
@@ -423,31 +394,25 @@ const TextHighlightSetting = (props) => {
             placeholder="#ffffff"
             value={highlightColor}
             onChange={(value) =>
-              dispatch(
-                updateHighlightSetting({
-                  id: id,
-                  highlightColor: value,
-                }),
-              )
+              updateHighlight({
+                id: id,
+                highlightColor: value,
+              })
             }
           />
         </Stack.Item>
       </Stack>
       <TextArea
         height="3em"
-        resize="vertical"
-        value={highlightText}
         placeholder="Put words to highlight here. Separate terms with commas, i.e. (term1, term2, term3)"
         style={{
           width: '100%',
         }}
         onChange={(value) =>
-          dispatch(
-            updateHighlightSetting({
-              id: id,
-              highlightText: value,
-            }),
-          )
+          updateHighlight({
+            id: id,
+            highlightText: value,
+          })
         }
       />
     </Stack.Item>
@@ -455,9 +420,7 @@ const TextHighlightSetting = (props) => {
 };
 
 const ExperimentalSettings = (props) => {
-  const { websocketEnabled, websocketServer, scrollTrackingTolerance } =
-    useSelector(selectSettings);
-  const dispatch = useDispatch();
+  const { settings, updateSettings } = useSettings();
 
   return (
     <Section>
@@ -467,14 +430,12 @@ const ExperimentalSettings = (props) => {
             <LabeledList.Item label="Websocket Client">
               <Button.Checkbox
                 content={'Enabled'}
-                checked={websocketEnabled}
+                checked={settings.websocketEnabled}
                 color="transparent"
                 onClick={() =>
-                  dispatch(
-                    updateSettings({
-                      websocketEnabled: !websocketEnabled,
-                    }),
-                  )
+                  updateSettings({
+                    websocketEnabled: !settings.websocketEnabled,
+                  })
                 }
               />
               <Button
@@ -500,14 +461,12 @@ const ExperimentalSettings = (props) => {
                 <Stack>
                   <Input
                     width={'100%'}
-                    value={websocketServer}
+                    value={settings.websocketServer}
                     placeholder="localhost:1990"
                     onChange={(value) =>
-                      dispatch(
-                        updateSettings({
-                          websocketServer: value,
-                        }),
-                      )
+                      updateSettings({
+                        websocketServer: value,
+                      })
                     }
                   />
                 </Stack>
@@ -519,18 +478,14 @@ const ExperimentalSettings = (props) => {
                 content="Force Reconnect"
                 icon={'globe'}
                 color={'good'}
-                onClick={() => {
-                  dispatch(reconnectWebsocket({}));
-                }}
+                onClick={wsReconnect}
               />
               <Button
                 ml={0.5}
                 content="Force Disconnect"
                 icon={'globe'}
                 color={'bad'}
-                onClick={() => {
-                  dispatch(disconnectWebsocket({}));
-                }}
+                onClick={wsDisconnect}
               />
             </LabeledList.Item>
             <Divider />
@@ -544,15 +499,13 @@ const ExperimentalSettings = (props) => {
                 stepPixelSize={2}
                 minValue={12}
                 maxValue={64}
-                value={scrollTrackingTolerance}
+                value={settings.scrollTrackingTolerance}
                 format={(value) => toFixed(value)}
                 tickWhileDragging
                 onChange={(_, value) =>
-                  dispatch(
-                    updateSettings({
-                      scrollTrackingTolerance: value,
-                    }),
-                  )
+                  updateSettings({
+                    scrollTrackingTolerance: value,
+                  })
                 }
               />
             </LabeledList.Item>
@@ -569,9 +522,7 @@ const LinkedToChat = () => (
 );
 
 const SettingsStatPanel = (props) => {
-  const { statLinked, statFontSize, statTabsStyle } =
-    useSelector(selectSettings);
-  const dispatch = useDispatch();
+  const { settings, updateSettings } = useSettings();
 
   return (
     <Section fill>
@@ -583,10 +534,8 @@ const SettingsStatPanel = (props) => {
                 <Button
                   key={view}
                   color="transparent"
-                  selected={statTabsStyle === view}
-                  onClick={() =>
-                    dispatch(updateSettings({ statTabsStyle: view }))
-                  }
+                  selected={settings.statTabsStyle === view}
+                  onClick={() => updateSettings({ statTabsStyle: view })}
                 >
                   {capitalize(view)}
                 </Button>
@@ -594,7 +543,7 @@ const SettingsStatPanel = (props) => {
             </LabeledList.Item>
             <LabeledList.Item label="Font size">
               <Stack.Item grow>
-                {statLinked ? (
+                {settings.statLinked ? (
                   <LinkedToChat />
                 ) : (
                   <Slider
@@ -603,12 +552,12 @@ const SettingsStatPanel = (props) => {
                     stepPixelSize={20}
                     minValue={8}
                     maxValue={32}
-                    value={statFontSize}
+                    value={settings.statFontSize}
                     unit="px"
                     format={(value) => toFixed(value)}
                     tickWhileDragging
                     onChange={(_, value) =>
-                      dispatch(updateSettings({ statFontSize: value }))
+                      updateSettings({ statFontSize: value })
                     }
                   />
                 )}
@@ -620,13 +569,11 @@ const SettingsStatPanel = (props) => {
         <Stack.Item textAlign="center">
           <Button
             fluid
-            icon={statLinked ? 'unlink' : 'link'}
-            color={statLinked ? 'bad' : 'good'}
-            onClick={() =>
-              dispatch(updateSettings({ statLinked: !statLinked }))
-            }
+            icon={settings.statLinked ? 'unlink' : 'link'}
+            color={settings.statLinked ? 'bad' : 'good'}
+            onClick={() => updateSettings({ statLinked: !settings.statLinked })}
           >
-            {statLinked ? 'Unlink from chat' : 'Link to chat'}
+            {settings.statLinked ? 'Unlink from chat' : 'Link to chat'}
           </Button>
         </Stack.Item>
       </Stack>
