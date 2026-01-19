@@ -71113,6 +71113,7 @@
 	dir = 1;
 	name = "Unfiltered to Mix"
 	},
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/pumproom)
 "nLl" = (
@@ -106105,6 +106106,7 @@
 	dir = 4
 	},
 /obj/item/radio/intercom/directional/east,
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/pumproom)
 "usM" = (
