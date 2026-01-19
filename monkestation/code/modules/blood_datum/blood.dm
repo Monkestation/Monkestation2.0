@@ -70,7 +70,7 @@ PROCESSING_SUBSYSTEM_DEF(blood_drying)
 	blood_data["mind"] = sampled_from.mind || sampled_from.last_mind
 	blood_data["ckey"] = sampled_from.ckey || ckey(sampled_from.last_mind?.key)
 	blood_data["cloneable"] = !HAS_TRAIT_FROM(sampled_from, TRAIT_SUICIDED, REF(sampled_from))
-	blood_data["blood_type"] = sampled_from.dna.human_blood_type
+	blood_data["blood_type"] = sampled_from.get_blood_type_path()
 	blood_data["gender"] = sampled_from.gender
 	blood_data["real_name"] = sampled_from.real_name
 	blood_data["features"] = sampled_from.dna.features

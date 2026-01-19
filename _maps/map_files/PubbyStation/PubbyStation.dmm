@@ -39327,6 +39327,12 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/paramedic)
+"lEA" = (
+/obj/vehicle/ridden/battering_ram{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/station/ai_monitored/security/armory)
 "lFb" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -79067,7 +79073,7 @@ hiD
 ajj
 ajT
 aNZ
-afH
+lEA
 amh
 amZ
 anJ

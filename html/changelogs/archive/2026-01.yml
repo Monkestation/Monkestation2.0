@@ -278,3 +278,72 @@
 2026-01-16:
   Absolucy:
   - image: Opening/closing normal and reinforced false walls now has a proper animation.
+2026-01-17:
+  JohnFulpWillard:
+  - bugfix: Telecomms servers won't brick if you get a runtime error in your NTSL
+      code.
+  - bugfix: NTSL scripting should be a little more responsive now, but will no longer
+      automatically save your code.
+  - bugfix: Added some monke-exclusive roundstart languages to NTSL script, replacing
+      non-existent languages from it.
+  - qol: Added some extra references help to the NTSL scripting computer.
+  SirNightKnight:
+  - bugfix: fixed teleporting disconnecting mobs from what they are buckled to.
+2026-01-18:
+  Absolucy:
+  - rscadd: Heretics can now actually create ghouls from oozeling cores. Flesh heretics
+      have to right click with their grasp, and oozeling cores should work with Imperfect
+      Ritual and Shattered Ritual.
+  - qol: The "Assist your master" objective for heretic minions now include their
+      master's name.
+  - bugfix: Fixed the seed extractor not showing seed icons.
+  - bugfix: Fixed the seed extractor's search not searching for reagents.
+  Chelxox:
+  - bugfix: Food items with no reagents can now be eaten, although won't provide the
+      eater with any sort of nutrition.
+  - rscadd: Adds a chat warning if user eats reagentless (otherwise non-nutritive)
+      food.
+  JohnFulpWillard:
+  - map: Remapped Theseus' telecomms.
+  - rscadd: Signal Techs now have Network access & NTNet Monitor.
+  - bugfix: NTSL console now properly requires access.
+  - bugfix: Removed 2 admin request consoles on Meta.
+  - rscdel: NTSL console no longer holds ID cards (??)
+  Lawlolawl:
+  - bugfix: Fixed indestructible items (nuke disk, hand tele etc.) teleporting to
+      ore silo in vault when attempting to place them into a protolathe. No one was
+      stupid enough to try it in the last 5 months since porting tg's rework, apparently.
+  - qol: You can no longer place PDAs, pens, or radio headsets into autolathes for
+      recycling (traitor inconspicuous uplinks)
+  - bugfix: Deconstructing PDAs results in the inserted item in the pen slot (e.g.
+      pen, crayon, cig, penlight etc) being dropped on the floor correctly.
+  - rscadd: Added description text for when PDAs are missing a power cell.
+  - bugfix: Traitor objective tools (nuke core screwdriver, SM extraction scalpel
+      & hemostat) can no longer be recycled in autolathes.
+  Muffindrake:
+  - map: Rezone/Repipe/Reconstruct pass on MetaStation Atmospherics including more
+      space, more compact gas storage, and less hidden pipes to bother you
+  iliyaxox:
+  - bugfix: Blueshift's brig infirmary now has supplied medkits instead of empty ones.
+2026-01-19:
+  Absolucy:
+  - rscdel: Removed the Dysplasia Syndrome symptom from pathology.
+  Aniantan:
+  - bugfix: Hearts and genetic makeup transfers properly work with blood types and
+      no longer break blood transfusion and mending touch
+  - bugfix: DNA console no longer gets subject's blood type wrong
+  JohnFulpWillard:
+  - bugfix: NTSL's "Mute Poly" achievement works as it's supposed to.
+  - rscadd: NTSL's language scripting has been changed. Please update your scripts
+      (The reference is updated for this as well)
+  SirNightKnight:
+  - bugfix: fixed getting stuck buckled in a wheelchair after it's destroyed.
+  SirNightKnight, JohnFulpWillard:
+  - rscadd: Security now has a Big Red Key.
+  buffakaza:
+  - map: added two previously absent roundstart bz canisters to blueshift gas storage
+      room and void raptor atmos project room.
+  wraith-54321:
+  - rscadd: Added sub overminds for blob
+  - rscadd: Added more blob chemical effects
+  - balance: Slightly increased brute storyteller point values

@@ -93,6 +93,7 @@
 	random_color = FALSE
 	greyscale_config_inhand_left = null
 	greyscale_config_inhand_right = null
+	custom_materials = null // you only get one so no recycling
 
 /obj/item/screwdriver/nuke/get_belt_overlay()
 	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', "screwdriver_nuke")
@@ -259,6 +260,7 @@
 	damtype = BURN
 	usesound = 'sound/weapons/bladeslice.ogg'
 	var/usesLeft
+	custom_materials = null // you only get one so no recycling
 
 /obj/item/scalpel/supermatter/Initialize(mapload)
 	. = ..()
@@ -275,6 +277,7 @@
 	toolspeed = 0.75
 	damtype = BURN
 	var/obj/item/nuke_core/supermatter_sliver/sliver
+	custom_materials = null // you only get one so no recycling
 
 /obj/item/hemostat/supermatter/Initialize(mapload)
 	. = ..()
