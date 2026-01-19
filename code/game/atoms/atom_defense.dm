@@ -25,7 +25,7 @@
 	update_integrity(atom_integrity - damage_amount)
 
 	//BREAKING FIRST
-	if(integrity_failure && atom_integrity <= integrity_failure * max_integrity)
+	if(integrity_failure && atom_integrity <= integrity_failure * max_integrity) //should maybe turn these checks into a proc
 		atom_break(damage_flag)
 
 	//DESTROYING SECOND
@@ -55,6 +55,10 @@
 		return
 	atom_integrity = new_value
 	SEND_SIGNAL(src, COMSIG_ATOM_INTEGRITY_CHANGED, old_value, new_value)
+	on_integrity_update(new_value)
+
+/atom/proc/on_integrity_update(new_value)
+	return
 
 /// This mostly exists to keep atom_integrity private. Might be useful in the future.
 /atom/proc/get_integrity()

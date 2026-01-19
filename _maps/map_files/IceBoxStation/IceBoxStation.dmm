@@ -27491,6 +27491,7 @@
 /area/station/hallway/secondary/exit/departure_lounge)
 "iuS" = (
 /obj/machinery/airalarm/directional/north,
+/obj/vehicle/ridden/battering_ram,
 /turf/open/floor/glass/reinforced,
 /area/station/ai_monitored/security/armory/upper)
 "iuU" = (
