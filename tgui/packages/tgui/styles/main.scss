@@ -71,6 +71,15 @@
 
 @include meta.load-css('highlight.js/scss/a11y-dark.scss');
 
+// MONKESTATION ADDITION START
+@include meta.load-css('./styles/themes/clockwork.scss');
+@include meta.load-css('./styles/themes/admintickets.scss');
+// MONKESTATION ADDITION END
+
+@include meta.load-css('./styles/themes/chicken_book.scss');
+@include meta.load-css('./styles/themes/generic-yellow.scss');
+@include meta.load-css('./styles/themes/generic.scss');
+
 // NT Theme
 .Layout__content {
   background-image: url('../assets/bg-nanotrasen.svg');
