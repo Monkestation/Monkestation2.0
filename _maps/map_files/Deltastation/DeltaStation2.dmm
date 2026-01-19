@@ -7943,6 +7943,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/vehicle/ridden/battering_ram{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "bOU" = (
