@@ -114,6 +114,7 @@
 		JOB_SECURITY_OFFICER,
 		JOB_WARDEN,
 		JOB_SECURITY_ASSISTANT,
+		JOB_BRIG_PHYSICIAN,
 	)
 	restricted_roles = list(
 		JOB_AI,
@@ -172,6 +173,7 @@
 		JOB_SECURITY_OFFICER,
 		JOB_WARDEN,
 		JOB_SECURITY_ASSISTANT,
+		JOB_BRIG_PHYSICIAN,
 	)
 	restricted_roles = list(
 		JOB_AI,
@@ -229,6 +231,7 @@
 		JOB_SECURITY_OFFICER,
 		JOB_WARDEN,
 		JOB_SECURITY_ASSISTANT,
+		JOB_BRIG_PHYSICIAN,
 	)
 	restricted_roles = list(
 		JOB_AI,
@@ -653,16 +656,17 @@
 
 /datum/dynamic_ruleset/roundstart/nuclear/clown_ops/pre_execute()
 	. = ..()
-	if(.)
-		var/obj/machinery/nuclearbomb/syndicate/syndicate_nuke = locate() in GLOB.nuke_list
-		if(syndicate_nuke)
-			var/turf/nuke_turf = get_turf(syndicate_nuke)
-			if(nuke_turf)
-				new /obj/machinery/nuclearbomb/syndicate/bananium(nuke_turf)
-				qdel(syndicate_nuke)
-		for(var/datum/mind/clowns in assigned)
-			clowns.set_assigned_role(SSjob.GetJobType(/datum/job/clown_operative))
-			clowns.special_role = ROLE_CLOWN_OPERATIVE
+	if(!.)
+		return
+
+	var/list/nukes = SSmachines.get_machines_by_type(/obj/machinery/nuclearbomb/syndicate)
+	for(var/obj/machinery/nuclearbomb/syndicate/nuke as anything in nukes)
+		new /obj/machinery/nuclearbomb/syndicate/bananium(nuke.loc)
+		qdel(nuke)
+
+	for(var/datum/mind/clowns in assigned)
+		clowns.set_assigned_role(SSjob.GetJobType(/datum/job/clown_operative))
+		clowns.special_role = ROLE_CLOWN_OPERATIVE
 
 //////////////////////////////////////////////
 //                                          //

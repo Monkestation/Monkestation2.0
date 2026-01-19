@@ -4,18 +4,6 @@
 	/// If this antagonist should be removed from the crew manifest upon gain.
 	var/remove_from_manifest = FALSE
 
-/datum/antagonist/on_gain()
-	. = ..()
-	if(remove_from_manifest)
-		owner.remove_from_manifest()
-		ADD_TRAIT(owner, TRAIT_REMOVED_FROM_MANIFEST, REF(src))
-
-/datum/antagonist/on_removal()
-	REMOVE_TRAIT(owner, TRAIT_REMOVED_FROM_MANIFEST, REF(src))
-	if(remove_from_manifest && !HAS_TRAIT(owner, TRAIT_REMOVED_FROM_MANIFEST))
-		owner?.add_to_manifest()
-	return ..()
-
 ///Set our hud_keys, please only use this proc when changing them, if override_old_keys is FALSE then we will simply add keys, otherwise we we set our keys to only be passed ones
 /datum/antagonist/proc/set_hud_keys(list/keys, override_old_keys = FALSE)
 	if(!islist(keys))
@@ -24,7 +12,7 @@
 	hud_keys = (override_old_keys ? keys : keys + hud_keys)
 
 /datum/antagonist/proc/antag_token(datum/mind/hosts_mind, mob/spender)
-	SHOULD_CALL_PARENT(FALSE)
+	//SHOULD_CALL_PARENT(FALSE) //this is here for the sake of making it clear you should just fully override this proc, AKA dont call ..()
 	if(isobserver(spender))
 		var/mob/living/carbon/human/new_mob = spender.change_mob_type(/mob/living/carbon/human, delete_old_mob = TRUE)
 		new_mob.equipOutfit(/datum/outfit/job/assistant)

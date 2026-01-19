@@ -163,7 +163,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	resistance_flags = FIRE_PROOF
 	merge_type = /obj/item/stack/sheet/iron
 	grind_results = list(/datum/reagent/iron = 20)
-	point_value = 2
+	point_value = 5
 	tableVariant = /obj/structure/table
 	material_type = /datum/material/iron
 	matter_amount = 4
@@ -293,7 +293,7 @@ GLOBAL_LIST_INIT(plasteel_recipes, list ( \
 	resistance_flags = FIRE_PROOF
 	merge_type = /obj/item/stack/sheet/plasteel
 	grind_results = list(/datum/reagent/iron = 20, /datum/reagent/toxin/plasma = 20)
-	point_value = 23
+	point_value = 40
 	tableVariant = /obj/structure/table/reinforced
 	material_flags = NONE
 	matter_amount = 12
@@ -670,10 +670,8 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 
 /obj/item/stack/sheet/cardboard/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()
-	if (interacting_with != user)
-		return ITEM_INTERACT_BLOCKING
 	if(!is_species(interacting_with, /datum/species/golem/cardboard))
-		return ITEM_INTERACT_BLOCKING
+		return NONE
 	var/mob/living/carbon/human/human = user
 	var/datum/species/golem/cardboard/golem = human.dna.species
 	if(golem.last_creation + golem.brother_creation_cooldown > world.time) //no cheesing dork

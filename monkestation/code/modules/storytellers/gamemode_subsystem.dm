@@ -236,7 +236,7 @@ SUBSYSTEM_DEF(gamemode)
 		else if(!sch_event.alerted_admins && world.time >= sch_event.start_time - 1 MINUTES)
 			///Alert admins 1 minute before running and allow them to cancel or refund the event, once again.
 			sch_event.alerted_admins = TRUE
-			message_admins("Scheduled Event: [sch_event.event] will run in [(sch_event.start_time - world.time) / 10] seconds. (<a href='byond://?src=[REF(sch_event)];action=cancel'>CANCEL</a>) (<a href='byond://?src=[REF(sch_event)];action=refund'>REFUND</a>)")
+			message_admins("Scheduled Event: [sch_event.event] will run in [DisplayTimeText(sch_event.start_time - world.time)]. (<a href='byond://?src=[REF(sch_event)];action=cancel'>CANCEL</a>) (<a href='byond://?src=[REF(sch_event)];action=refund'>REFUND</a>)")
 
 	if(!halted_storyteller && next_storyteller_process <= world.time && current_storyteller)
 		// We update crew information here to adjust population scalling and event thresholds for the storyteller.
@@ -264,12 +264,10 @@ SUBSYSTEM_DEF(gamemode)
 			continue
 
 		var/counted_value = already_counted[antag.owner]
-		if(counted_value && counted_value > antag.antag_count_points)
+		if(counted_value && counted_value > antag.get_antag_count_points())
 			continue
 
-		counted_value = antag.antag_count_points
-		if(antag.owner.current && !ishuman(antag.owner.current) && !(antag.antag_flags & FLAG_ANTAG_CAP_IGNORE_HUMANITY))
-			counted_value /= 2 //non humans count for half
+		counted_value = antag.get_antag_count_points()
 		already_counted[antag.owner] = counted_value
 
 	for(var/datum/mind/owner, points in already_counted)
@@ -448,7 +446,7 @@ SUBSYSTEM_DEF(gamemode)
 	var/datum/scheduled_event/scheduled = new (passed_event, world.time + passed_time, passed_cost, passed_ignore, passed_announce)
 	var/round_started = SSticker.HasRoundStarted()
 	if(round_started)
-		message_admins("Event: [passed_event] has been scheduled to run in [passed_time / 10] seconds. (<a href='byond://?src=[REF(scheduled)];action=cancel'>CANCEL</a>) (<a href='byond://?src=[REF(scheduled)];action=refund'>REFUND</a>)")
+		message_admins("Event: [passed_event] has been scheduled to run in [DisplayTimeText(passed_time)]. (<a href='byond://?src=[REF(scheduled)];action=cancel'>CANCEL</a>) (<a href='byond://?src=[REF(scheduled)];action=refund'>REFUND</a>)")
 	else //Only roundstart events can be scheduled before round start
 		message_admins("Event: [passed_event] has been scheduled to run on roundstart. (<a href='byond://?src=[REF(scheduled)];action=cancel'>CANCEL</a>)")
 	scheduled_events += scheduled
@@ -984,7 +982,7 @@ ADMIN_VERB(forceGamemode, R_FUN, FALSE, "Open Gamemode Panel", "Opens the gamemo
 	popup.set_content(dat.Join())
 	popup.open()
 
- /// Panel containing information and actions regarding events
+/// Panel containing information and actions regarding events
 /datum/controller/subsystem/gamemode/proc/event_panel(mob/user)
 	var/list/dat = list()
 	if(current_storyteller)
@@ -1210,3 +1208,4 @@ ADMIN_VERB(forceGamemode, R_FUN, FALSE, "Open Gamemode Panel", "Opens the gamemo
 #undef DEFAULT_STORYTELLER_VOTE_OPTIONS
 #undef MAX_POP_FOR_STORYTELLER_VOTE
 #undef ROUNDSTART_VALID_TIMEFRAME
+#undef INIT_ORDER_GAMEMODE

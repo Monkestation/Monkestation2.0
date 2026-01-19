@@ -182,7 +182,6 @@ BUNNY SUITS
 	greyscale_colors = "#39393f#39393f#ffffff#87502e"
 	greyscale_config = /datum/greyscale_config/bunnysuit
 	greyscale_config_worn = /datum/greyscale_config/bunnysuit_worn
-	greyscale_config_worn_digitigrade = /datum/greyscale_config/bunnysuit_worn/digitigrade
 	flags_1 = IS_PLAYER_COLORABLE_1
 	body_parts_covered = CHEST|GROIN|LEGS
 	alt_covers_chest = TRUE
@@ -212,7 +211,6 @@ BUNNY SUITS
 	greyscale_config = null
 	greyscale_config_worn = null
 	greyscale_colors = null
-	greyscale_config_worn_digitigrade = null
 
 /obj/item/clothing/under/costume/playbunny/magician/Initialize(mapload)
 	. = ..()
@@ -234,7 +232,15 @@ BUNNY SUITS
 	greyscale_config = null
 	greyscale_config_worn = null
 	greyscale_colors = null
-	greyscale_config_worn_digitigrade = null
+
+/obj/item/clothing/suit/jacket/tailcoat/centcom/ntrep
+	name = "Centcom tailcoat"
+	desc = "An official coat usually worn by bunny themed executives. The inside is lined with comfortable yet tasteful bunny fluff. Now for Representatives"
+	icon_state = "tailcoat_centcom"
+	armor_type = /datum/armor/nanotrasen_representative_bathrobe
+	greyscale_config = null
+	greyscale_config_worn = null
+	greyscale_colors = null
 
 /obj/item/clothing/under/costume/playbunny/british
 	name = "british bunny suit"
@@ -243,7 +249,6 @@ BUNNY SUITS
 	greyscale_config = null
 	greyscale_config_worn = null
 	greyscale_colors = null
-	greyscale_config_worn_digitigrade = null
 
 /obj/item/clothing/under/costume/playbunny/communist
 	name = "really red bunny suit"
@@ -252,7 +257,6 @@ BUNNY SUITS
 	greyscale_config = null
 	greyscale_config_worn = null
 	greyscale_colors = null
-	greyscale_config_worn_digitigrade = null
 
 /obj/item/clothing/under/costume/playbunny/usa
 	name = "striped bunny suit"
@@ -261,7 +265,6 @@ BUNNY SUITS
 	greyscale_config = null
 	greyscale_config_worn = null
 	greyscale_colors = null
-	greyscale_config_worn_digitigrade = null
 /*
 END OF BUNNY SUITS
 */

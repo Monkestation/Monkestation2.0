@@ -54,6 +54,15 @@
 	. = ..()
 	update_appearance()
 
+/obj/vehicle/ridden/wheelchair/unbuckle_mob(mob/living/buckled_mob, force = FALSE, can_fall = TRUE)
+	. = ..()
+	if(force || !usr)
+		return
+	if(usr == buckled_mob)
+		return
+	if(do_after(usr, 1 SECONDS))
+		return
+
 /obj/vehicle/ridden/wheelchair/post_unbuckle_mob()
 	. = ..()
 	update_appearance()

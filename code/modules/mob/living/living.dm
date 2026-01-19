@@ -9,8 +9,8 @@
 		set_name()
 	var/datum/atom_hud/data/human/medical/advanced/medhud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	medhud.add_atom_to_hud(src)
-	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
-		diag_hud.add_atom_to_hud(src)
+	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC_BASIC]
+	diag_hud.add_atom_to_hud(src)
 	faction += "[REF(src)]"
 	GLOB.mob_living_list += src
 	SSpoints_of_interest.make_point_of_interest(src)
@@ -944,7 +944,7 @@
 	if(heal_flags & HEAL_BURN)
 		setFireLoss(0, FALSE, TRUE)
 	if(heal_flags & HEAL_STAM)
-		setStaminaLoss(0, FALSE, TRUE)
+		stamina?.revitalize()
 
 	// I don't really care to keep this under a flag
 	set_nutrition(NUTRITION_LEVEL_FED + 50)
@@ -1081,7 +1081,7 @@
 			TH.update_appearance()
 
 /mob/living/carbon/human/makeTrail(turf/target_turf, turf/start, direction)
-	if(!is_bleeding())
+	if(!bleedDragAmount()) //why ruin the floors if we arent actually bleeding
 		return
 	return ..()
 
@@ -1473,12 +1473,12 @@
 			var/static/list/robot_options = list(
 				/mob/living/silicon/robot = 200,
 				/mob/living/basic/drone/polymorphed = 200,
-				/mob/living/silicon/robot/model/syndicate = 1,
-				/mob/living/silicon/robot/model/syndicate/medical = 1,
-				/mob/living/silicon/robot/model/syndicate/saboteur = 1,
+				/mob/living/silicon/robot/model/syndicate = 100,
+				/mob/living/silicon/robot/model/syndicate/medical = 100,
+				/mob/living/silicon/robot/model/syndicate/saboteur = 100,
 			)
 
-			var/picked_robot = pick(robot_options)
+			var/picked_robot = pick_weight(robot_options)
 			new_mob = new picked_robot(loc)
 			if(issilicon(new_mob))
 				var/mob/living/silicon/robot/created_robot = new_mob
@@ -1798,6 +1798,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 			buckled.unbuckle_mob(src, force = TRUE)
 		if(has_buckled_mobs())
 			unbuckle_all_mobs(force = TRUE)
+	refresh_gravity()
 	. = ..()
 	if(. && client)
 		reset_perspective()
@@ -2619,8 +2620,8 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	var/picked_theme = tgui_input_list(admin, "Pick the guardian theme.", "Guardian Controller", list(GUARDIAN_THEME_TECH, GUARDIAN_THEME_MAGIC, GUARDIAN_THEME_CARP, GUARDIAN_THEME_MINER, "Random"))
 	if(picked_theme == "Random")
 		picked_theme = null //holopara code handles not having a theme by giving a random one
-	var/picked_name = tgui_input_text(admin, "Name the guardian, leave empty to let player name it.", "Guardian Controller")
-	var/picked_color = input(admin, "Set the guardian's color, cancel to let player set it.", "Guardian Controller", "#ffffff") as color|null
+	var/picked_name = tgui_input_text(admin, "Name the guardian, leave empty to let player name it.", "Guardian Controller", max_length = MAX_NAME_LEN)
+	var/picked_color = tgui_color_picker(admin, "Set the guardian's color, cancel to let player set it.", "Guardian Controller", COLOR_WHITE)
 	if(tgui_alert(admin, "Confirm creation.", "Guardian Controller", list("Yes", "No")) != "Yes")
 		return
 	var/mob/living/basic/guardian/summoned_guardian = new picked_type(src, picked_theme)

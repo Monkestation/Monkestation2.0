@@ -33,7 +33,7 @@ export const Jukebox = (props) => {
           <LabeledList>
             <LabeledList.Item label="Track Selected">
               <Dropdown
-                overflow-y="scroll"
+                overflowY="scroll"
                 width="240px"
                 options={songs.map((song) => song.name)}
                 disabled={active}
@@ -67,8 +67,8 @@ export const Jukebox = (props) => {
                   maxValue={50}
                   step={1}
                   stepPixelSize={1}
-                  disabled={active}
-                  onDrag={(e, value) =>
+                  tickWhileDragging
+                  onChange={(e, value) =>
                     act('set_volume', {
                       volume: value,
                     })

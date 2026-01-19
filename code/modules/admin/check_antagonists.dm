@@ -21,7 +21,7 @@
 			return "<font color=red>(DEAD)</font>"
 		else if(!owner.current.client)
 			return "(No client)"
-	return should_count_for_antag_cap() ? "([antag_count_points] points)" : null
+	return should_count_for_antag_cap() ? "([get_antag_count_points()] points)" : null
 
 //Builds the common FLW PM TP commands part
 //Probably not going to be overwritten by anything but you never know
@@ -139,7 +139,7 @@
 					if(isdrone(checked_mob))
 						drones++
 						continue
-					if(is_centcom_level(checked_mob.z))
+					if(is_centcom_level(checked_mob.z) && is_centcom_area(checked_mob))
 						living_skipped++
 						continue
 					living_players++

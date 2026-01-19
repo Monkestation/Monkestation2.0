@@ -46,6 +46,11 @@
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*2.5)
 	projectile_type = /obj/projectile/bullet/shotgun_beanbag
 
+/obj/item/ammo_casing/shotgun/beanbag/blank
+	name = "blank shell"
+	desc = "A blank shell usually used for training drills."
+	projectile_type = null
+
 /obj/item/ammo_casing/shotgun/apds
 	name = "armor-piercing slug"
 	desc = "A 12-gauge shotgun slug, reloaded with a sabot tungsten penetrator. Armor? What armor!"
@@ -114,7 +119,7 @@
 	icon_state = "rshell"
 	projectile_type = /obj/projectile/bullet/pellet/shotgun_rubbershot
 	pellets = 6 //monkestation edit
-	variance = 25 // 6 pellets for 15 stam and 1 damage each
+	variance = 25 // 6 pellets for 10 stam and 2 damage each
 	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*2)
 
 
@@ -289,7 +294,7 @@
 	icon_state = "improvshell"
 	projectile_type = /obj/projectile/bullet/pellet/shotgun_improvised
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*2.5)
-	pellets = 10
+	pellets = 8 //Improvised shells shouldn't be doing MORE damage than the real thing
 	variance = 25
 	can_be_printed = FALSE
 

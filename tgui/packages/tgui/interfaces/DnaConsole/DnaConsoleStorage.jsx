@@ -108,7 +108,7 @@ const DnaConsoleAdvancedInjectors = (props) => {
           minWidth="200px"
           content="Create new injector"
           disabled={advInjectors.length >= maxAdvInjectors}
-          onCommit={(e, value) =>
+          onCommit={(value) =>
             act('new_adv_inj', {
               name: value,
             })

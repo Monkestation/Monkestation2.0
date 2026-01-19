@@ -9,7 +9,7 @@
 	var/on = FALSE
 	///the rate the machine will scrub air
 	var/volume_rate = 1000
-	///Multiplier with ONE_ATMOSPHERE, if the enviroment pressure is higher than that, the scrubber won't work
+	///Multiplier with ONE_ATMOSPHERE, if the environment pressure is higher than that, the scrubber won't work
 	var/overpressure_m = 80
 	///Should the machine use overlay in update_overlays() when open/close?
 	var/use_overlays = TRUE
@@ -66,7 +66,7 @@
 		if(!isopenturf(open_turf))
 			continue
 		if(open_turf.pollution)
-			open_turf.pollution.scrub_amount(POLLUTION_HEIGHT_DIVISOR)
+			open_turf.pollution.scrub_amount(POLLUTION_HEIGHT_DIVISOR * 2)
 
 	return ..()
 

@@ -149,7 +149,8 @@
 	required_software = "Photography Module"
 
 /atom/movable/screen/pai/image_take/Click()
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 	var/mob/living/silicon/pai/pAI = usr
 	pAI.camera.toggle_camera_mode(usr)

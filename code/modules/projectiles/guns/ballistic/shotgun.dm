@@ -121,7 +121,7 @@
 	inhand_icon_state = "renoster_evil"
 	projectile_wound_bonus = 15
 	pin = /obj/item/firing_pin/implant/pindicate
-
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/riot/evil
 /obj/item/gun/ballistic/shotgun/riot/sol/evil/unrestricted
 	pin = /obj/item/firing_pin
 
@@ -415,6 +415,7 @@
 	name = "hook modified sawn-off shotgun"
 	desc = "Range isn't an issue when you can bring your victim to you."
 	icon_state = "hookshotgun"
+	worn_icon_state = "gun"
 	inhand_icon_state = "hookshotgun"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
@@ -444,9 +445,9 @@
 	. = ..()
 	. += span_notice("Right-click to shoot the hook.")
 
-/obj/item/gun/ballistic/shotgun/hook/try_fire_gun(atom/target, mob/living/user, params)
-	if(LAZYACCESS(params2list(params), RIGHT_CLICK))
-		return hook.try_fire_gun(target, user, params)
+/obj/item/gun/ballistic/shotgun/hook/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/params)
+	if(LAZYACCESS(params, RIGHT_CLICK))
+		return hook.try_fire_gun(interacting_with, user, params)
 	return ..()
 
 // A shotgun, but tis a revolver (Blueshift again)
@@ -486,17 +487,18 @@
 
 /obj/item/gun/ballistic/shotgun/buckshotroulette
 	name = "Buckshot roulette shotgun"
-	desc = "Relic of ancient times, this shotgun seems to have an unremovable firing pin with a label that mocks poor people. Aim at your mouth, IT knows..."
+	desc = "Relic of ancient times, this shotgun seems to have an unremovable firing pin. Aim at your mouth, IT knows..."
 	icon_state = "riotshotgun"
 	inhand_icon_state = "shotgun"
 	fire_delay = 8
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/buckshotroulette
 	sawn_desc = "This one doesn't fix itself."
 	can_be_sawn_off = TRUE
-	pin = /obj/item/firing_pin/permit_pin/buckshotroulette
+	pin = /obj/item/firing_pin/buckshotroulette/unremovable //you arent getting a 10 round shotgun for free.
 
-/obj/item/firing_pin/permit_pin/buckshotroulette //no cheating allowed
-	pin_removable = FALSE
+/obj/item/gun/ballistic/shotgun/buckshotroulette/Initialize(mapload)
+	. = ..()
+	pin.gun_insert(null, src) //this is stupid. why isnt it called, when it SPAWNS IN THE GUN. . .
 
 
 //god fucking bless brazil

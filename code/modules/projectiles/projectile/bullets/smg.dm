@@ -7,9 +7,9 @@
 	wound_falloff_tile = -10
 
 /obj/projectile/bullet/c45/rubber
-	name = ".45 bullet"
+	name = ".45 rubber bullet"
 	damage = 15
-	stamina = 45
+	stamina = 22.5
 	weak_against_armour = TRUE
 	ricochets_max = 3
 	ricochet_incidence_leeway = 0
@@ -60,14 +60,14 @@
 /obj/projectile/bullet/c46x30mm/salt
 	name = "4.6x30mm saltshot bullet"
 	damage = 0
-	stamina = 40
+	stamina = 20
 	embedding = null
 	sharpness = NONE
 
 /obj/projectile/bullet/c46x30mm/rub
 	name = "4.6x30mm rubber bullet"
 	damage = 4
-	stamina = 50
+	stamina = 25
 	embedding = null
 	sharpness = NONE
 
@@ -83,7 +83,7 @@
 
 /obj/projectile/bullet/c27_54cesarzowa/rubber
 	name = ".27-54 Cesarzowa rubber bullet"
-	stamina = 30
+	stamina = 15
 	damage = 6
 	weak_against_armour = TRUE
 	wound_bonus = -30

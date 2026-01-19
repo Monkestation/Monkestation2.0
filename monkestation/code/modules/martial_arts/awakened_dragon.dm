@@ -47,10 +47,12 @@
 /datum/martial_art/the_sleeping_carp/awakened_dragon/teach(mob/living/carbon/human/target, make_temporary)
 	. = ..()
 	target.physiology.stamina_mod *= 0.7
+	if(title && findtext_char(target.real_name, title) == 1)
+		return
 	original_name = target.real_name
-	if(original_body == null)
+	if(QDELETED(original_body))
 		original_body = target
-	if(title == null)
+	if(isnull(title))
 		title = pick(character_prefixes)
 	all_bodies += target
 	titled_name = "[title] [original_name]"
@@ -75,7 +77,7 @@
 	attacker.say("Tsunami Kick of the Heavenly Serpent!!", forced = /datum/martial_art/the_sleeping_carp/awakened_dragon, ignore_spam = TRUE)
 
 /datum/martial_art/the_sleeping_carp/awakened_dragon/dropKick(mob/living/attacker, mob/living/defender, set_damage)
-	stamina_damage = -100
+	stamina_damage = -50
 	. = ..(attacker, defender, set_damage = FALSE)
 	defender.adjustOxyLoss(30)
 	attacker.say("Heavenly Dragon Kick!!", forced = /datum/martial_art/the_sleeping_carp/awakened_dragon, ignore_spam = TRUE)
