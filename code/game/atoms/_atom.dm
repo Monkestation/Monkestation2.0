@@ -647,9 +647,6 @@
 		return null
 	return list("[dna.unique_enzymes]" = blood.type)
 
-/mob/living/carbon/alien/get_blood_dna_list()
-	return list("UNKNOWN DNA" = "X*")
-
 /mob/living/silicon/get_blood_dna_list()
 	return
 

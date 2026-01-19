@@ -97,7 +97,7 @@
 		/obj/item/clothing/head/beret/atmos = 4,
 	)
 
-/obj/machinery/vending/wardrobe/cargo_wardrobe
+/obj/machinery/vending/access/wardrobe_cargo
 	products_monke = list(
 		/obj/item/clothing/under/rank/cargo/tech/nova/long = 3,
 		/obj/item/clothing/under/rank/cargo/tech/nova/gorka = 3,

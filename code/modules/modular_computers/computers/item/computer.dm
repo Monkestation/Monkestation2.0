@@ -208,6 +208,10 @@
 		update_appearance(UPDATE_ICON)
 		return CLICK_ACTION_SUCCESS
 
+	for(var/datum/computer_file/files as anything in stored_files)
+		if(files.try_eject(user))
+			return CLICK_ACTION_SUCCESS
+
 	return CLICK_ACTION_BLOCKING
 
 /* MONKE EDIT: Secondary ID not implemented
@@ -223,9 +227,12 @@
 
 // Gets IDs/access levels from card slot. Would be useful when/if PDAs would become modular PCs. //guess what
 /obj/item/modular_computer/GetAccess()
+	var/list/access = list()
 	if(computer_id_slot)
-		return computer_id_slot.GetAccess()
-	return ..()
+		access |= computer_id_slot?.GetAccess()
+	for(var/datum/computer_file/app_access as anything in stored_files)
+		access |= app_access.get_access()
+	return access + ..()
 
 /obj/item/modular_computer/GetID()
 	RETURN_TYPE(/obj/item/card/id)
@@ -374,6 +381,8 @@
 
 	if(internal_cell)
 		. += span_info("Right-click it with a screwdriver to eject the [internal_cell].")
+	else
+		. += span_info("The power cell compartment is open and empty.")
 
 /obj/item/modular_computer/examine_more(mob/user)
 	. = ..()
@@ -522,7 +531,7 @@
 	loc.visible_message(span_notice("<img class='icon' src='\ref[src]'> \The [src] displays a [origin.filedesc] notification: [html_encode(alerttext)]"), vision_distance = vision_distance, push_appearance = src)
 
 /obj/item/modular_computer/proc/ring(ringtone, list/balloon_alertees) // bring bring
-	if(!use_energy())
+	if(!use_energy(check_programs = FALSE))
 		return
 	// Get the messenger app's new sound settings || Monkestation Addition START
 	var/sound_to_play = 'sound/machines/twobeep_high.ogg' //defaults to the original
@@ -902,23 +911,25 @@
 /obj/item/modular_computer/deconstruct(disassembled = TRUE)
 	var/atom/droploc = drop_location()
 	remove_pai()
-	eject_aicard()
-	internal_cell?.forceMove(droploc)
-	computer_id_slot?.forceMove(droploc)
-	//stored_id?.forceMove(droploc)
-	//alt_stored_id?.forceMove(droploc)
-	inserted_disk?.forceMove(droploc)
+	eject_file_contents()
+	src.eject_stored_items(droploc)
 	if (!disassembled)
 		physical.visible_message(span_notice("\The [src] breaks apart!"))
 	new /obj/item/stack/sheet/iron(droploc, steel_sheet_cost * (disassembled ? 1 : 0.5))
 	relay_qdel() // Needed for /obj/item/modular_computer/processor/relay_qdel()
 	qdel(src)
 
+/obj/item/modular_computer/proc/eject_stored_items(atom/droploc) // Only used for deconstruct()
+	internal_cell?.forceMove(droploc)
+	computer_id_slot?.forceMove(droploc)
+	//stored_id?.forceMove(droploc)
+	//alt_stored_id?.forceMove(droploc)
+	inserted_disk?.forceMove(droploc)
+
 // Ejects the inserted intellicard, if one exists. Used when the computer is deconstructed.
-/obj/item/modular_computer/proc/eject_aicard()
-	var/datum/computer_file/program/ai_restorer/program = locate() in stored_files
-	if (program)
-		return program.try_eject(forced = TRUE)
+/obj/item/modular_computer/proc/eject_file_contents()
+	for(var/datum/computer_file/files as anything in stored_files)
+		files.try_eject(forced = TRUE)
 	return FALSE
 
 // Used by processor to relay qdel() to machinery type.

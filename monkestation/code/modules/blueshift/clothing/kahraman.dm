@@ -207,7 +207,6 @@
 	icon = 'monkestation/code/modules/blueshift/icons/clothes/clothing.dmi'
 	icon_state = "jumpsuit"
 	worn_icon = 'monkestation/code/modules/blueshift/icons/clothes/clothing_worn.dmi'
-	worn_icon_digitigrade = 'monkestation/code/modules/blueshift/icons/clothes/clothing_worn_digi.dmi'
 	worn_icon_state = "jumpsuit"
 	has_sensor = SENSOR_COORDS
 	random_sensor = FALSE
@@ -225,7 +224,6 @@
 	icon = 'monkestation/code/modules/blueshift/icons/clothes/clothing.dmi'
 	icon_state = "boots"
 	worn_icon = 'monkestation/code/modules/blueshift/icons/clothes/clothing_worn.dmi'
-	worn_icon_digitigrade = 'monkestation/code/modules/blueshift/icons/clothes/clothing_worn_digi.dmi'
 	armor_type = /datum/armor/colonist_clothing
 	resistance_flags = NONE
 

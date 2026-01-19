@@ -26,9 +26,6 @@
 	///Amount of credits gained from each vendor
 	var/credits_gained = 0
 
-/// All bluespace gas senders
-GLOBAL_LIST_EMPTY_TYPED(bluespace_senders, /obj/machinery/atmospherics/components/unary/bluespace_sender)
-
 /datum/armor/unary_bluespace_sender
 	energy = 100
 	fire = 80
@@ -44,15 +41,8 @@ GLOBAL_LIST_EMPTY_TYPED(bluespace_senders, /obj/machinery/atmospherics/component
 		var/datum/gas/gas = gas_id
 		base_prices[gas_id] = initial(gas.base_value)
 
-	GLOB.bluespace_senders += src
-
 	update_appearance(UPDATE_ICON)
 	register_context()
-
-/obj/machinery/atmospherics/components/unary/bluespace_sender/Destroy()
-	GLOB.bluespace_senders -= src
-
-	return ..()
 
 /obj/machinery/atmospherics/components/unary/bluespace_sender/examine(mob/user)
 	. = ..()
