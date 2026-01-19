@@ -129,7 +129,7 @@
 	dir = 4
 	},
 /obj/machinery/static_signal/northwest,
-/turf/open/floor/iron,
+/turf/open/floor/glass/reinforced,
 /area/station/hallway/primary/starboard)
 "abT" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -7548,8 +7548,8 @@
 /obj/effect/turf_decal/trimline/green/filled/arrow_cw{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/stone,
 /area/station/hallway/primary/central)
 "coF" = (
@@ -8264,10 +8264,15 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "czn" = (
-/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/stone,
-/area/station/hallway/primary/port)
+/obj/effect/turf_decal/trimline/dark_blue/filled/arrow_ccw{
+	dir = 4
+	},
+/turf/open/floor/glass/reinforced,
+/area/station/hallway/primary/central)
 "czt" = (
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
@@ -9257,9 +9262,14 @@
 /turf/open/floor/carpet,
 /area/station/commons/dorms)
 "cMU" = (
-/obj/machinery/conveyor/no_touch{
-	id = "Walkway South"
+/obj/effect/turf_decal/trimline/yellow/filled/arrow_ccw{
+	dir = 4
 	},
+/obj/effect/turf_decal/trimline/dark_red/filled/arrow_ccw{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/stone,
 /area/station/hallway/primary/central)
 "cMZ" = (
@@ -9600,8 +9610,8 @@
 "cRK" = (
 /obj/structure/window/spawner/directional/north,
 /obj/effect/turf_decal/trimline/dark_blue/filled/arrow_ccw,
-/obj/item/kirbyplants/random,
-/turf/open/floor/glass/reinforced,
+/obj/effect/spawner/random/vending/snackvend,
+/turf/open/floor/stone,
 /area/station/hallway/primary/port)
 "cRM" = (
 /obj/structure/disposalpipe/segment{
@@ -10629,11 +10639,10 @@
 /area/station/security/interrogation)
 "dhd" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/stone,
-/area/station/hallway/primary/central)
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/glass/reinforced,
+/area/station/hallway/primary/port)
 "dhh" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/trimline/dark_blue/filled/arrow_cw{
@@ -11369,7 +11378,7 @@
 "drY" = (
 /obj/structure/cable,
 /obj/structure/window/spawner/directional/south,
-/turf/open/floor/glass/reinforced,
+/turf/open/floor/stone,
 /area/station/hallway/primary/port)
 "dsh" = (
 /obj/structure/table,
@@ -11708,7 +11717,7 @@
 	id = "Walkway West 2";
 	dir = 8
 	},
-/turf/open/floor/iron,
+/turf/open/floor/glass/reinforced,
 /area/station/hallway/primary/port)
 "dye" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
@@ -13050,7 +13059,7 @@
 	id = "Walkway East 2";
 	dir = 4
 	},
-/turf/open/floor/iron,
+/turf/open/floor/glass/reinforced,
 /area/station/hallway/primary/port)
 "dTB" = (
 /obj/effect/turf_decal/trimline/purple/filled/line,
@@ -13252,7 +13261,7 @@
 /obj/machinery/conveyor/no_touch{
 	id = "Walkway South"
 	},
-/turf/open/floor/iron,
+/turf/open/floor/glass/reinforced,
 /area/station/hallway/primary/central)
 "dWn" = (
 /obj/structure/fans/tiny,
@@ -14356,7 +14365,7 @@
 /obj/structure/cable,
 /obj/machinery/door/firedoor,
 /obj/machinery/camera/directional/west,
-/turf/open/floor/glass/reinforced,
+/turf/open/floor/stone,
 /area/station/hallway/primary/central)
 "eki" = (
 /obj/machinery/light/directional/west,
@@ -14711,7 +14720,7 @@
 /obj/machinery/conveyor/no_touch{
 	id = "Walkway South"
 	},
-/turf/open/floor/iron,
+/turf/open/floor/glass/reinforced,
 /area/station/hallway/primary/central)
 "eoI" = (
 /obj/structure/cable,
@@ -17152,7 +17161,7 @@
 /obj/structure/cable,
 /obj/structure/window/spawner/directional/east,
 /obj/effect/landmark/event_spawn,
-/turf/open/floor/glass/reinforced,
+/turf/open/floor/stone,
 /area/station/hallway/primary/central)
 "eZU" = (
 /obj/structure/table,
@@ -17578,12 +17587,14 @@
 /turf/open/floor/grass,
 /area/station/medical/pathology)
 "ffg" = (
-/obj/structure/cable,
-/obj/structure/window/spawner/directional/east,
-/obj/structure/chair/sofa/bench/left{
-	dir = 8
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/trimline/dark_blue/filled/arrow_cw{
+	dir = 4
 	},
-/turf/open/floor/glass/reinforced,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/stone,
 /area/station/hallway/primary/central)
 "ffi" = (
 /obj/structure/table/glass,
@@ -18675,7 +18686,7 @@
 	id = "Walkway South"
 	},
 /obj/machinery/static_signal,
-/turf/open/floor/iron,
+/turf/open/floor/glass/reinforced,
 /area/station/hallway/primary/central)
 "fvk" = (
 /obj/structure/cable,
@@ -19276,7 +19287,8 @@
 "fEh" = (
 /obj/structure/window/spawner/directional/north,
 /obj/effect/turf_decal/trimline/dark_blue/filled/arrow_ccw,
-/turf/open/floor/glass/reinforced,
+/obj/structure/chair/sofa/bench,
+/turf/open/floor/stone,
 /area/station/hallway/primary/port)
 "fEj" = (
 /obj/structure/cable,
@@ -20061,8 +20073,11 @@
 /turf/open/floor/iron/white,
 /area/station/medical/pathology)
 "fQe" = (
-/obj/structure/cable,
-/obj/structure/window/spawner/directional/east,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/glass/reinforced,
 /area/station/hallway/primary/central)
 "fQr" = (
@@ -21859,7 +21874,7 @@
 	id = "Walkway East 2";
 	dir = 4
 	},
-/turf/open/floor/iron,
+/turf/open/floor/glass/reinforced,
 /area/station/hallway/primary/port)
 "gpn" = (
 /obj/structure/flora/bush/style_random,
@@ -22511,7 +22526,7 @@
 	id = "Walkway North";
 	dir = 1
 	},
-/turf/open/floor/iron,
+/turf/open/floor/glass/reinforced,
 /area/station/hallway/primary/fore)
 "gAq" = (
 /obj/effect/turf_decal/siding/yellow,
@@ -23347,7 +23362,7 @@
 /obj/structure/closet/firecloset,
 /obj/structure/window/spawner/directional/north,
 /obj/effect/turf_decal/trimline/dark_blue/filled/arrow_ccw,
-/turf/open/floor/glass/reinforced,
+/turf/open/floor/stone,
 /area/station/hallway/primary/port)
 "gMg" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -23766,7 +23781,7 @@
 	id = "Walkway North";
 	dir = 1
 	},
-/turf/open/floor/iron,
+/turf/open/floor/glass/reinforced,
 /area/station/hallway/primary/fore)
 "gSF" = (
 /obj/effect/turf_decal/siding/wood,
@@ -24247,7 +24262,7 @@
 	id = "Walkway West 2";
 	dir = 8
 	},
-/turf/open/floor/iron,
+/turf/open/floor/glass/reinforced,
 /area/station/hallway/primary/port)
 "gZp" = (
 /obj/effect/turf_decal/stripes/line{
@@ -27710,7 +27725,7 @@
 	id = "Walkway East 2";
 	dir = 4
 	},
-/turf/open/floor/iron,
+/turf/open/floor/glass/reinforced,
 /area/station/hallway/primary/port)
 "idx" = (
 /obj/machinery/door/airlock/research{
@@ -28354,7 +28369,7 @@
 	id = "Walkway West 2";
 	dir = 8
 	},
-/turf/open/floor/iron,
+/turf/open/floor/glass/reinforced,
 /area/station/hallway/primary/central)
 "iof" = (
 /obj/structure/cable,
@@ -28487,12 +28502,11 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos/storage/gas)
 "iqy" = (
-/obj/machinery/conveyor/no_touch{
-	id = "Walkway North";
-	dir = 1
-	},
-/turf/open/floor/stone,
-/area/station/hallway/primary/central)
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/glass/reinforced,
+/area/station/hallway/primary/port)
 "iqz" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 4
@@ -30437,7 +30451,7 @@
 /obj/effect/turf_decal/trimline/dark_blue/filled/arrow_ccw{
 	dir = 4
 	},
-/turf/open/floor/stone,
+/turf/open/floor/glass/reinforced,
 /area/station/hallway/primary/central)
 "iUK" = (
 /obj/structure/flora/bush/fullgrass/style_random,
@@ -31924,7 +31938,7 @@
 /obj/structure/chair{
 	dir = 4
 	},
-/turf/open/floor/glass/reinforced,
+/turf/open/floor/stone,
 /area/station/hallway/primary/port)
 "jnG" = (
 /obj/structure/disposalpipe/segment{
@@ -34237,7 +34251,7 @@
 	id = "Walkway West 1";
 	dir = 8
 	},
-/turf/open/floor/iron,
+/turf/open/floor/glass/reinforced,
 /area/station/hallway/primary/starboard)
 "jVe" = (
 /obj/structure/cable,
@@ -35383,7 +35397,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron,
+/turf/open/floor/glass/reinforced,
 /area/station/hallway/primary/port)
 "kkv" = (
 /obj/effect/turf_decal/siding/wood,
@@ -37008,9 +37022,11 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos/storage/gas)
 "kHJ" = (
-/obj/effect/turf_decal/trimline/dark_blue/filled/arrow_ccw,
+/obj/effect/turf_decal/siding/white{
+	dir = 4
+	},
 /turf/open/floor/glass/reinforced,
-/area/station/hallway/secondary/entry)
+/area/station/hallway/primary/starboard)
 "kHK" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -37698,7 +37714,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/dark_blue/filled/arrow_ccw,
 /obj/structure/closet/emcloset,
-/turf/open/floor/glass/reinforced,
+/turf/open/floor/stone,
 /area/station/hallway/primary/port)
 "kTq" = (
 /obj/structure/window/reinforced/plasma/spawner/directional/west,
@@ -37900,7 +37916,7 @@
 	id = "Walkway North";
 	dir = 1
 	},
-/turf/open/floor/iron,
+/turf/open/floor/glass/reinforced,
 /area/station/hallway/primary/central)
 "kVZ" = (
 /obj/effect/decal/cleanable/dirt,
@@ -39556,17 +39572,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
 /turf/closed/wall/r_wall,
 /area/station/engineering/supermatter/icebox_bar)
-"lsE" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 4
-	},
-/obj/machinery/light/directional/west,
-/obj/structure/disposalpipe/segment,
-/obj/effect/turf_decal/trimline/dark_blue/filled/arrow_cw{
-	dir = 4
-	},
-/turf/open/floor/stone,
-/area/station/hallway/primary/central)
 "lsI" = (
 /obj/effect/spawner/random/trash/graffiti,
 /obj/effect/spawner/random/trash/mess,
@@ -40573,7 +40578,7 @@
 /obj/structure/cable,
 /obj/structure/window/spawner/directional/east,
 /obj/structure/table,
-/turf/open/floor/glass/reinforced,
+/turf/open/floor/stone,
 /area/station/hallway/primary/fore)
 "lGm" = (
 /obj/effect/turf_decal/siding/red{
@@ -40818,7 +40823,7 @@
 	dir = 4
 	},
 /obj/machinery/static_signal/northwest,
-/turf/open/floor/iron,
+/turf/open/floor/glass/reinforced,
 /area/station/hallway/primary/port)
 "lJP" = (
 /obj/effect/turf_decal/trimline/dark_red/filled/line{
@@ -41953,7 +41958,7 @@
 	id = "Walkway East 2";
 	dir = 4
 	},
-/turf/open/floor/iron,
+/turf/open/floor/glass/reinforced,
 /area/station/hallway/primary/port)
 "mav" = (
 /obj/structure/disposalpipe/segment,
@@ -43563,7 +43568,7 @@
 /area/station/maintenance/port/aft)
 "mzJ" = (
 /obj/structure/window/spawner/directional/south,
-/turf/open/floor/glass/reinforced,
+/turf/open/floor/stone,
 /area/station/hallway/primary/port)
 "mzK" = (
 /obj/structure/disposalpipe/segment,
@@ -43662,13 +43667,10 @@
 /turf/open/floor/iron/airless,
 /area/space/nearstation)
 "mBf" = (
-/obj/structure/window/spawner/directional/north,
-/obj/effect/turf_decal/trimline/dark_blue/filled/arrow_ccw,
-/obj/structure/chair{
-	dir = 8
-	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/glass/reinforced,
-/area/station/hallway/primary/port)
+/area/station/hallway/primary/central)
 "mBk" = (
 /turf/closed/wall/r_wall,
 /area/station/security/courtroom)
@@ -44757,7 +44759,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/blue/filled/arrow_ccw,
-/turf/open/floor/iron,
+/turf/open/floor/glass/reinforced,
 /area/station/hallway/primary/central)
 "mSG" = (
 /obj/effect/turf_decal/siding/wood,
@@ -45888,7 +45890,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/dark_blue/filled/arrow_ccw,
 /obj/structure/chair/sofa/bench/left,
-/turf/open/floor/glass/reinforced,
+/turf/open/floor/stone,
 /area/station/hallway/primary/port)
 "nkG" = (
 /obj/machinery/camera/directional/east,
@@ -46206,7 +46208,7 @@
 	id = "Walkway East 1";
 	dir = 4
 	},
-/turf/open/floor/iron,
+/turf/open/floor/glass/reinforced,
 /area/station/hallway/primary/central)
 "noS" = (
 /obj/machinery/door/airlock/maintenance,
@@ -46778,7 +46780,7 @@
 	dir = 8
 	},
 /obj/machinery/door/firedoor,
-/turf/open/floor/iron,
+/turf/open/floor/glass/reinforced,
 /area/station/hallway/primary/starboard)
 "nxN" = (
 /obj/machinery/light/directional/east,
@@ -52696,7 +52698,7 @@
 	dir = 1;
 	cant_grab = 1
 	},
-/turf/open/floor/iron,
+/turf/open/floor/glass/reinforced,
 /area/station/hallway/primary/central)
 "php" = (
 /obj/machinery/light/directional/east,
@@ -52829,7 +52831,7 @@
 /obj/structure/window/spawner/directional/north,
 /obj/effect/turf_decal/trimline/dark_blue/filled/arrow_ccw,
 /obj/structure/chair/sofa/bench,
-/turf/open/floor/glass/reinforced,
+/turf/open/floor/stone,
 /area/station/hallway/primary/port)
 "pjv" = (
 /obj/structure/table,
@@ -52978,7 +52980,7 @@
 /obj/structure/window/spawner/directional/north,
 /obj/effect/turf_decal/trimline/dark_blue/filled/arrow_ccw,
 /obj/structure/chair/sofa/bench/left,
-/turf/open/floor/glass/reinforced,
+/turf/open/floor/stone,
 /area/station/hallway/primary/port)
 "plT" = (
 /obj/effect/decal/cleanable/dirt,
@@ -53363,7 +53365,7 @@
 	id = "Walkway East 1";
 	dir = 4
 	},
-/turf/open/floor/iron,
+/turf/open/floor/glass/reinforced,
 /area/station/hallway/primary/starboard)
 "psy" = (
 /obj/machinery/camera/directional/north,
@@ -54796,7 +54798,7 @@
 	id = "Walkway South"
 	},
 /obj/machinery/atmospherics/pipe/bridge_pipe/orange,
-/turf/open/floor/iron,
+/turf/open/floor/glass/reinforced,
 /area/station/hallway/primary/central)
 "pOK" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -55333,7 +55335,7 @@
 	id = "Walkway East 1";
 	dir = 4
 	},
-/turf/open/floor/iron,
+/turf/open/floor/glass/reinforced,
 /area/station/hallway/primary/starboard)
 "pVP" = (
 /obj/structure/foamedmetal,
@@ -55836,7 +55838,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/stone,
+/turf/open/floor/glass/reinforced,
 /area/station/hallway/primary/port)
 "qfe" = (
 /obj/structure/rack,
@@ -55883,7 +55885,7 @@
 "qfM" = (
 /obj/machinery/camera/directional/east,
 /obj/structure/window/spawner/directional/west,
-/turf/open/floor/glass/reinforced,
+/turf/open/floor/stone,
 /area/station/hallway/primary/fore)
 "qfR" = (
 /obj/machinery/door/airlock/maintenance,
@@ -56030,7 +56032,7 @@
 	},
 /obj/effect/turf_decal/trimline/dark_blue/filled/arrow_ccw,
 /obj/structure/chair/sofa/bench,
-/turf/open/floor/iron,
+/turf/open/floor/stone,
 /area/station/hallway/primary/port)
 "qiZ" = (
 /obj/structure/disposalpipe/segment{
@@ -57087,9 +57089,11 @@
 /turf/closed/wall,
 /area/station/maintenance/starboard/lesser)
 "qxO" = (
-/obj/structure/window/spawner/directional/west,
+/obj/effect/turf_decal/trimline/green/filled/arrow_ccw{
+	dir = 1
+	},
 /turf/open/floor/glass/reinforced,
-/area/station/hallway/primary/central)
+/area/station/hallway/primary/fore)
 "qxT" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/poddoor/preopen{
@@ -58067,12 +58071,6 @@
 	},
 /turf/open/floor/grass,
 /area/station/medical/medbay/central)
-"qLj" = (
-/obj/structure/window/spawner/directional/north,
-/obj/effect/turf_decal/trimline/dark_blue/filled/arrow_ccw,
-/obj/structure/table,
-/turf/open/floor/glass/reinforced,
-/area/station/hallway/primary/port)
 "qLs" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -60238,7 +60236,7 @@
 /obj/structure/cable,
 /obj/structure/window/spawner/directional/east,
 /obj/structure/chair,
-/turf/open/floor/glass/reinforced,
+/turf/open/floor/stone,
 /area/station/hallway/primary/fore)
 "rtr" = (
 /obj/structure/cable,
@@ -60363,7 +60361,7 @@
 /obj/machinery/door/firedoor,
 /obj/structure/window/spawner/directional/east,
 /obj/machinery/camera/directional/west,
-/turf/open/floor/glass/reinforced,
+/turf/open/floor/stone,
 /area/station/hallway/primary/central)
 "rvq" = (
 /obj/structure/disposalpipe/segment,
@@ -61586,8 +61584,9 @@
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "rMZ" = (
-/obj/machinery/door/firedoor,
-/obj/structure/window/spawner/directional/west,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/glass/reinforced,
 /area/station/hallway/primary/central)
 "rNh" = (
@@ -62133,7 +62132,7 @@
 	id = "Walkway North";
 	dir = 1
 	},
-/turf/open/floor/iron,
+/turf/open/floor/glass/reinforced,
 /area/station/hallway/primary/central)
 "rUO" = (
 /obj/structure/cable,
@@ -63014,7 +63013,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/dark_blue/filled/arrow_ccw,
 /obj/structure/chair/sofa/bench/right,
-/turf/open/floor/iron,
+/turf/open/floor/stone,
 /area/station/hallway/primary/port)
 "sgf" = (
 /obj/effect/decal/cleanable/dirt,
@@ -63303,7 +63302,7 @@
 /obj/structure/window/spawner/directional/north,
 /obj/effect/turf_decal/trimline/dark_blue/filled/arrow_ccw,
 /obj/structure/chair/sofa/bench,
-/turf/open/floor/glass/reinforced,
+/turf/open/floor/stone,
 /area/station/hallway/primary/port)
 "skt" = (
 /obj/effect/turf_decal/trimline/dark_red/filled/line,
@@ -63373,7 +63372,7 @@
 /obj/machinery/conveyor/no_touch{
 	id = "Walkway South"
 	},
-/turf/open/floor/iron,
+/turf/open/floor/glass/reinforced,
 /area/station/hallway/primary/fore)
 "sln" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -63494,7 +63493,7 @@
 	},
 /obj/effect/turf_decal/trimline/dark_blue/filled/arrow_ccw,
 /obj/structure/chair/sofa/bench,
-/turf/open/floor/iron,
+/turf/open/floor/stone,
 /area/station/hallway/primary/port)
 "smX" = (
 /obj/effect/turf_decal/trimline/dark_red/filled/line{
@@ -63648,7 +63647,7 @@
 /obj/machinery/conveyor/no_touch{
 	id = "Walkway South"
 	},
-/turf/open/floor/iron,
+/turf/open/floor/glass/reinforced,
 /area/station/hallway/primary/central)
 "spK" = (
 /obj/machinery/door/airlock/grunge{
@@ -64016,7 +64015,7 @@
 	dir = 4
 	},
 /obj/machinery/static_signal/northwest,
-/turf/open/floor/iron,
+/turf/open/floor/glass/reinforced,
 /area/station/hallway/primary/central)
 "suN" = (
 /obj/structure/flora/bush/jungle/b/style_random,
@@ -65265,7 +65264,7 @@
 	id = "Walkway West 1";
 	dir = 8
 	},
-/turf/open/floor/iron,
+/turf/open/floor/glass/reinforced,
 /area/station/hallway/primary/central)
 "sNq" = (
 /obj/machinery/camera/directional/north,
@@ -67064,7 +67063,7 @@
 	id = "Walkway North";
 	dir = 1
 	},
-/turf/open/floor/iron,
+/turf/open/floor/glass/reinforced,
 /area/station/hallway/primary/fore)
 "tqE" = (
 /obj/machinery/smartfridge/chemistry/preloaded,
@@ -67279,7 +67278,7 @@
 /obj/structure/chair{
 	dir = 1
 	},
-/turf/open/floor/glass/reinforced,
+/turf/open/floor/stone,
 /area/station/hallway/primary/fore)
 "tuk" = (
 /obj/machinery/light/small/directional/west,
@@ -67646,7 +67645,7 @@
 /obj/structure/window/spawner/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/dark_blue/filled/arrow_ccw,
-/turf/open/floor/glass/reinforced,
+/turf/open/floor/stone,
 /area/station/hallway/primary/port)
 "tzC" = (
 /obj/effect/turf_decal/tile/red/half/contrasted,
@@ -67735,7 +67734,7 @@
 	id = "Walkway South"
 	},
 /obj/machinery/static_signal,
-/turf/open/floor/iron,
+/turf/open/floor/glass/reinforced,
 /area/station/hallway/primary/fore)
 "tAN" = (
 /obj/machinery/vending/cigarette,
@@ -69650,7 +69649,7 @@
 	id = "Walkway West 1";
 	dir = 8
 	},
-/turf/open/floor/iron,
+/turf/open/floor/glass/reinforced,
 /area/station/hallway/primary/starboard)
 "ubG" = (
 /obj/effect/decal/cleanable/dirt,
@@ -71922,7 +71921,7 @@
 	id = "Walkway South"
 	},
 /obj/machinery/static_signal/northeast,
-/turf/open/floor/iron,
+/turf/open/floor/glass/reinforced,
 /area/station/hallway/primary/central)
 "uKc" = (
 /obj/structure/cable,
@@ -72628,7 +72627,7 @@
 	dir = 1;
 	cant_grab = 1
 	},
-/turf/open/floor/iron,
+/turf/open/floor/glass/reinforced,
 /area/station/hallway/primary/central)
 "uSX" = (
 /obj/structure/barricade/wooden,
@@ -76227,7 +76226,7 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
-/turf/open/floor/iron,
+/turf/open/floor/glass/reinforced,
 /area/station/hallway/primary/starboard)
 "vZv" = (
 /obj/machinery/button/door/directional/west{
@@ -77700,7 +77699,7 @@
 	id = "Walkway East 2";
 	dir = 4
 	},
-/turf/open/floor/iron,
+/turf/open/floor/glass/reinforced,
 /area/station/hallway/primary/central)
 "wwx" = (
 /obj/structure/cable,
@@ -77723,7 +77722,7 @@
 	id = "Walkway West 2";
 	dir = 8
 	},
-/turf/open/floor/iron,
+/turf/open/floor/glass/reinforced,
 /area/station/hallway/primary/port)
 "wxe" = (
 /obj/structure/cable,
@@ -78290,7 +78289,7 @@
 /obj/machinery/conveyor/no_touch{
 	id = "Walkway South"
 	},
-/turf/open/floor/iron,
+/turf/open/floor/glass/reinforced,
 /area/station/hallway/primary/fore)
 "wEk" = (
 /obj/machinery/camera/directional/north{
@@ -78459,7 +78458,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/sign/departments/aiupload/directional/east,
-/turf/open/floor/glass/reinforced,
+/turf/open/floor/stone,
 /area/station/hallway/primary/fore)
 "wHk" = (
 /obj/structure/disposalpipe/segment,
@@ -78788,7 +78787,7 @@
 	},
 /obj/structure/window/spawner/directional/north,
 /obj/effect/turf_decal/trimline/dark_blue/filled/arrow_ccw,
-/turf/open/floor/glass/reinforced,
+/turf/open/floor/stone,
 /area/station/hallway/primary/port)
 "wMS" = (
 /obj/machinery/camera/directional/north,
@@ -79065,7 +79064,7 @@
 	id = "Walkway North";
 	dir = 1
 	},
-/turf/open/floor/iron,
+/turf/open/floor/glass/reinforced,
 /area/station/hallway/primary/central)
 "wQG" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -79137,7 +79136,7 @@
 /obj/machinery/light/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/glass/reinforced,
+/turf/open/floor/stone,
 /area/station/hallway/primary/fore)
 "wRW" = (
 /obj/item/kirbyplants/random,
@@ -79710,11 +79709,17 @@
 /turf/open/floor/grass,
 /area/station/medical/treatment_center)
 "xcy" = (
-/obj/structure/cable,
-/obj/structure/window/spawner/directional/east,
-/obj/machinery/door/firedoor,
-/obj/machinery/camera/directional/west,
-/turf/open/floor/glass/reinforced,
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/trimline/brown/filled/arrow_cw{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/purple/filled/arrow_cw{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/stone,
 /area/station/hallway/primary/central)
 "xcF" = (
 /obj/structure/cable,
@@ -80472,7 +80477,7 @@
 "xnC" = (
 /obj/structure/window/spawner/directional/south,
 /obj/machinery/static_signal/northwest,
-/turf/open/floor/glass/reinforced,
+/turf/open/floor/stone,
 /area/station/hallway/primary/port)
 "xnF" = (
 /turf/closed/wall,
@@ -80913,7 +80918,7 @@
 /obj/structure/cable,
 /obj/structure/window/spawner/directional/east,
 /obj/item/kirbyplants/random,
-/turf/open/floor/glass/reinforced,
+/turf/open/floor/stone,
 /area/station/hallway/primary/fore)
 "xur" = (
 /obj/effect/decal/cleanable/dirt,
@@ -81151,7 +81156,7 @@
 	id = "Walkway South"
 	},
 /obj/effect/turf_decal/trimline/blue/filled/arrow_ccw,
-/turf/open/floor/iron,
+/turf/open/floor/glass/reinforced,
 /area/station/hallway/primary/central)
 "xwZ" = (
 /obj/structure/disposalpipe/segment,
@@ -81239,8 +81244,8 @@
 "xyr" = (
 /obj/structure/window/spawner/directional/north,
 /obj/effect/turf_decal/trimline/dark_blue/filled/arrow_ccw,
-/obj/item/kirbyplants/random,
-/turf/open/floor/glass/reinforced,
+/obj/effect/spawner/random/vending/colavend,
+/turf/open/floor/stone,
 /area/station/hallway/primary/central)
 "xyx" = (
 /obj/machinery/light/directional/west,
@@ -81445,7 +81450,7 @@
 /obj/structure/window/spawner/directional/west,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/glass/reinforced,
+/turf/open/floor/stone,
 /area/station/hallway/primary/fore)
 "xAL" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -82149,7 +82154,7 @@
 	dir = 1
 	},
 /obj/machinery/static_signal/northwest,
-/turf/open/floor/iron,
+/turf/open/floor/glass/reinforced,
 /area/station/hallway/primary/central)
 "xKs" = (
 /turf/open/floor/iron,
@@ -82384,7 +82389,7 @@
 	id = "Walkway West 2";
 	dir = 8
 	},
-/turf/open/floor/iron,
+/turf/open/floor/glass/reinforced,
 /area/station/hallway/primary/port)
 "xNq" = (
 /obj/structure/disposalpipe/junction/flip{
@@ -97553,10 +97558,10 @@ jzr
 sCN
 lRK
 mTK
-hVZ
+jzr
 hVZ
 vSI
-kHJ
+cCN
 wNC
 xLh
 sZt
@@ -98070,7 +98075,7 @@ dqT
 mzJ
 xNp
 mae
-qLj
+rRP
 sId
 akt
 lUf
@@ -98327,7 +98332,7 @@ hZF
 drY
 gZg
 mae
-mBf
+nvF
 sId
 akt
 gWk
@@ -100381,8 +100386,8 @@ cBf
 bFT
 gjF
 fxi
-dqT
-jiO
+fxi
+dhd
 usj
 sId
 aBo
@@ -100638,7 +100643,7 @@ lMW
 kfF
 blr
 xRp
-czn
+xRp
 qeL
 woy
 xYW
@@ -101152,8 +101157,8 @@ mfB
 dqv
 kdf
 nnh
-fEP
-cEl
+nnh
+iqy
 mFX
 sId
 aBo
@@ -101409,8 +101414,8 @@ bWn
 bFT
 gjF
 fxi
-dqT
-cEl
+fxi
+iqy
 fxW
 sId
 aBo
@@ -103208,9 +103213,9 @@ aDk
 tuz
 aDk
 sLV
-dqT
-cEl
-fxW
+fxi
+iqy
+rfg
 sId
 dXM
 mJa
@@ -103467,7 +103472,7 @@ aDk
 fhZ
 xNp
 mae
-fEh
+lQR
 sId
 ion
 mJa
@@ -105009,7 +105014,7 @@ aDk
 qhR
 xNp
 mae
-iCj
+fEh
 sId
 cNv
 uWj
@@ -106037,7 +106042,7 @@ aDk
 igW
 xNp
 mae
-fEh
+lQR
 lFv
 aBo
 kPc
@@ -106292,8 +106297,8 @@ jjP
 rXo
 aDk
 nxB
-dqT
-cEl
+fxi
+iqy
 fjH
 maa
 kpT
@@ -108862,8 +108867,8 @@ mfx
 rXo
 aDk
 xWV
-dqT
-cEl
+fxi
+iqy
 rfg
 sId
 aBo
@@ -109378,7 +109383,7 @@ aDk
 rYH
 xNp
 mae
-iCj
+fEh
 sId
 hzM
 etJ
@@ -109635,7 +109640,7 @@ giD
 qPx
 gZg
 mae
-iCj
+fEh
 sId
 aBo
 etJ
@@ -111364,8 +111369,8 @@ tvS
 bcw
 bcw
 bcw
-lsE
-bcw
+ttv
+ffg
 bcw
 bcw
 bcw
@@ -111432,7 +111437,7 @@ vte
 gCj
 faD
 tJJ
-rjo
+czn
 iUI
 pXe
 ljA
@@ -111620,9 +111625,9 @@ kcv
 jnv
 jnv
 jnv
-jnv
-jnv
-jnv
+cMU
+cMU
+cMU
 jnv
 jnv
 jnv
@@ -111877,9 +111882,9 @@ kok
 ewQ
 ewQ
 ewQ
-mav
-uIU
 ewQ
+mav
+xcy
 ewQ
 ewQ
 ewQ
@@ -112134,7 +112139,7 @@ xaJ
 xrG
 qiS
 qiS
-cou
+qiS
 cou
 qiS
 qiS
@@ -112376,70 +112381,70 @@ nVj
 fnU
 wCJ
 rtP
-fQe
-fQe
-fQe
-fQe
+bOE
+bOE
+bOE
+bOE
 nkq
 bOE
 bOE
 bOE
 bOE
 bOE
-fQe
+bOE
 rvm
-fQe
-fQe
-bOE
-bOE
-dhd
 bOE
 bOE
 bOE
-fQe
-fQe
-fQe
-fQe
+bOE
+rtP
+bOE
+bOE
+bOE
+bOE
+bOE
+bOE
+bOE
 bOE
 rtP
 bOE
 bOE
 dBh
 bOE
-fQe
-fQe
-fQe
-fQe
+bOE
+bOE
+bOE
+bOE
 nkq
 bOE
 bOE
 bOE
 bOE
 bOE
-xcy
+dBh
 eZS
-fQe
-fQe
+bOE
+bOE
 xOR
 bIL
 egG
 egG
 egG
 egG
-ffg
-fQe
+nDs
+bOE
 ekg
-fQe
+bOE
 bIL
 jWM
 egG
 egG
 egG
 nDs
-fQe
-aPt
-fQe
-fQe
+bOE
+nkq
+bOE
+bOE
 cVt
 nkq
 nkq
@@ -112622,7 +112627,7 @@ qpO
 cQq
 pra
 egh
-jGh
+qxO
 tAC
 slj
 wEh
@@ -112632,16 +112637,16 @@ spy
 spy
 spy
 spy
-sqS
+mBf
 spy
 spy
 spy
 spy
-nkq
+aPt
 pOA
 spy
 spy
-cMU
+spy
 spy
 spy
 dWl
@@ -112649,7 +112654,7 @@ spy
 spy
 spy
 spy
-rtP
+rMZ
 spy
 spy
 uKa
@@ -112658,7 +112663,7 @@ spy
 spy
 spy
 spy
-rtP
+rMZ
 spy
 spy
 dWl
@@ -112667,7 +112672,7 @@ spy
 spy
 spy
 spy
-nkq
+aPt
 spy
 spy
 spy
@@ -112677,7 +112682,7 @@ dWl
 spy
 spy
 fuK
-cch
+fQe
 spy
 spy
 spy
@@ -112685,7 +112690,7 @@ spy
 eow
 spy
 spy
-mrD
+vdR
 spy
 spy
 spy
@@ -112694,7 +112699,7 @@ spy
 spy
 spy
 spy
-gEY
+riy
 spy
 fuK
 dWl
@@ -112879,7 +112884,7 @@ dox
 pMS
 pra
 egh
-jGh
+qxO
 tqy
 gAp
 gSB
@@ -112889,16 +112894,16 @@ wQE
 wQE
 wQE
 wQE
-sqS
+mBf
 wQE
 wQE
 wQE
 wQE
-nkq
+aPt
 wQE
 wQE
 wQE
-iqy
+wQE
 wQE
 wQE
 uSU
@@ -112906,7 +112911,7 @@ wQE
 wQE
 wQE
 wQE
-rtP
+rMZ
 wQE
 wQE
 xKp
@@ -112915,7 +112920,7 @@ wQE
 wQE
 wQE
 wQE
-rtP
+rMZ
 wQE
 wQE
 kVX
@@ -112924,7 +112929,7 @@ wQE
 wQE
 wQE
 wQE
-nkq
+aPt
 wQE
 wQE
 wQE
@@ -112934,7 +112939,7 @@ kVX
 wQE
 wQE
 xKp
-cch
+fQe
 wQE
 wQE
 wQE
@@ -112942,7 +112947,7 @@ wQE
 rUJ
 wQE
 wQE
-mrD
+vdR
 wQE
 wQE
 wQE
@@ -112951,7 +112956,7 @@ wQE
 wQE
 wQE
 wQE
-gEY
+riy
 wQE
 xKp
 phm
@@ -113177,40 +113182,40 @@ lrB
 sUM
 wfq
 lrB
-qxO
-qxO
-qxO
-qxO
+lrB
+lrB
+lrB
+lrB
 nkq
 lrB
 lrB
 lrB
 lrB
 lrB
-rMZ
-qxO
-qxO
-qxO
+wfq
+lrB
+lrB
+lrB
 cch
 lrB
 lrB
 lrB
 lrB
 aKc
-qxO
-qxO
-vdR
-qxO
+lrB
+lrB
+mrD
+lrB
 wBr
 jmo
 jsU
 wBr
 iIb
 geY
-qxO
-riy
-qxO
-qxO
+lrB
+gEY
+lrB
+lrB
 wfq
 gEY
 gEY
@@ -113984,8 +113989,8 @@ rhz
 eYo
 rUs
 gEY
-gEY
-gEY
+riy
+riy
 tqk
 tjw
 tYv
@@ -116554,8 +116559,8 @@ iCm
 slf
 ycT
 ekX
-qsE
-qsE
+ott
+ott
 qsE
 qsE
 emo
@@ -119381,8 +119386,8 @@ wVU
 jpc
 cLV
 lCk
-irS
-irS
+niu
+niu
 niu
 irS
 emo
@@ -119638,8 +119643,8 @@ ihO
 epB
 twK
 dOe
-swg
-swg
+ftc
+ftc
 ftc
 swg
 eHX
@@ -122467,7 +122472,7 @@ uWP
 uRe
 ott
 ott
-ott
+qsE
 qsE
 emo
 qEo
@@ -125806,8 +125811,8 @@ vCi
 mWh
 bPF
 tTJ
-tTJ
-tTJ
+kHJ
+kHJ
 tTJ
 tTJ
 vSN
