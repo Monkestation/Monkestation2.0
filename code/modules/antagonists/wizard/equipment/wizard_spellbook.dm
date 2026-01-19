@@ -74,53 +74,53 @@
 
 	return ..()
 
-/obj/item/spellbook/attackby(obj/item/O, mob/user, params)
+/obj/item/spellbook/attackby(obj/item/attacking_item, mob/user, params)
 	// This can be generalized in the future, but for now it stays
-	if(istype(O, /obj/item/antag_spawner/contract))
+	if(istype(attacking_item, /obj/item/antag_spawner/contract))
 		var/datum/spellbook_entry/item/contract/contract_entry = locate() in entries
 		if(!istype(contract_entry))
-			to_chat(user, span_warning("[src] doesn't seem to want to refund [O]."))
+			to_chat(user, span_warning("[src] doesn't seem to want to refund [attacking_item]."))
 			return
-		if(!contract_entry.can_refund(user, src))
-			to_chat(user, span_warning("You can't refund [src]."))
+		if(!refunds_allowed)
+			to_chat(user, span_warning("You can't refund [attacking_item]."))
 			return
-		var/obj/item/antag_spawner/contract/contract = O
+		var/obj/item/antag_spawner/contract/contract = attacking_item
 		if(contract.used)
 			to_chat(user, span_warning("The contract has been used, you can't get your points back now!"))
 			return
 
 		to_chat(user, span_notice("You feed the contract back into the spellbook, refunding your points."))
 		uses += contract_entry.cost
-		contract_entry.times--
-		qdel(O)
+		contract_entry.times = max(contract_entry.times - 1, 0)
+		qdel(attacking_item)
 
-	else if(istype(O, /obj/item/antag_spawner/slaughter_demon/laughter))
+	else if(istype(attacking_item, /obj/item/antag_spawner/slaughter_demon/laughter))
 		var/datum/spellbook_entry/item/hugbottle/demon_entry = locate() in entries
 		if(!istype(demon_entry))
-			to_chat(user, span_warning("[src] doesn't seem to want to refund [O]."))
+			to_chat(user, span_warning("[src] doesn't seem to want to refund [attacking_item]."))
 			return
-		if(!demon_entry.can_refund(user, src))
-			to_chat(user, span_warning("You can't refund [O]."))
+		if(!refunds_allowed)
+			to_chat(user, span_warning("You can't refund [attacking_item]."))
 			return
 
 		to_chat(user, span_notice("On second thought, maybe summoning a demon isn't a funny idea. You refund your points."))
 		uses += demon_entry.cost
-		demon_entry.times--
-		qdel(O)
+		demon_entry.times = max(demon_entry.times - 1, 0)
+		qdel(attacking_item)
 
-	else if(istype(O, /obj/item/antag_spawner/slaughter_demon))
+	else if(istype(attacking_item, /obj/item/antag_spawner/slaughter_demon))
 		var/datum/spellbook_entry/item/bloodbottle/demon_entry = locate() in entries
 		if(!istype(demon_entry))
-			to_chat(user, span_warning("[src] doesn't seem to want to refund [O]."))
+			to_chat(user, span_warning("[src] doesn't seem to want to refund [attacking_item]."))
 			return
-		if(!demon_entry.can_refund(user, src))
-			to_chat(user, span_warning("You can't refund [O]."))
+		if(!refunds_allowed)
+			to_chat(user, span_warning("You can't refund [attacking_item]."))
 			return
 
 		to_chat(user, span_notice("On second thought, maybe summoning a demon is a bad idea. You refund your points."))
 		uses += demon_entry.cost
-		demon_entry.times--
-		qdel(O)
+		demon_entry.times = max(demon_entry.times - 1, 0)
+		qdel(attacking_item)
 
 	return ..()
 

@@ -232,7 +232,6 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 
 	if(from_SS)
 		total_reagent_volume = reagents.total_volume
-		reagents.handle_reactions()
 
 		if(!total_reagent_volume || !members)
 			return
@@ -264,7 +263,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 
 /datum/liquid_group/proc/cleanse_members()
 	for(var/turf/listed_turf as anything in members)
-		if(isclosedturf(listed_turf))
+		if(isclosedturf(listed_turf) || isgroundlessturf(listed_turf))
 			remove_from_group(listed_turf)
 			qdel(listed_turf.liquids)
 

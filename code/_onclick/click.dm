@@ -80,121 +80,120 @@
  * * [obj/item/proc/afterattack] (atom,user,adjacent,params) - used both ranged and adjacent
  * * [mob/proc/RangedAttack] (atom,modifiers) - used only ranged, only used for tk and laser eyes but could be changed
  */
-/mob/proc/ClickOn( atom/A, params)
+/mob/proc/ClickOn(atom/clicked_on, params)
 	if(world.time <= next_click)
 		return
-	next_click = world.time + 1
 
-	if(check_click_intercept(params,A) || HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
+	next_click = world.time + 1
+	if(check_click_intercept(params, clicked_on) || HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
 
 	var/list/modifiers = params2list(params)
-
-	if(!client?.holder && (isobserver(A) || isaicamera(A)) && A.invisibility > see_invisible)
-		message_admins("[ADMIN_LOOKUPFLW(src)] clicked on [key_name_admin(A)] ([A?.type]) [ADMIN_FLW(A)], which they should not be able to see!")
-		log_admin_private("[key_name(src)] clicked on [key_name(A)] ([A?.type]), which they should not be able to see!")
+	if(!client?.holder && (isobserver(clicked_on) || isaicamera(clicked_on)) && clicked_on.invisibility > see_invisible)
+		message_admins("[ADMIN_LOOKUPFLW(src)] clicked on [key_name_admin(clicked_on)] ([clicked_on?.type]) [ADMIN_FLW(clicked_on)], which they should not be able to see!")
+		log_admin_private("[key_name(src)] clicked on [key_name(clicked_on)] ([clicked_on?.type]), which they should not be able to see!")
 
 	if(client)
 		client.imode.update_istate(src, modifiers)
 
-	if(SEND_SIGNAL(src, COMSIG_MOB_CLICKON, A, modifiers) & COMSIG_MOB_CANCEL_CLICKON)
+	if(SEND_SIGNAL(src, COMSIG_MOB_CLICKON, clicked_on, modifiers) & COMSIG_MOB_CANCEL_CLICKON)
 		return
 
 	if(!(istate & ISTATE_SECONDARY))
 		if(LAZYACCESS(modifiers, SHIFT_CLICK))
 			if(LAZYACCESS(modifiers, MIDDLE_CLICK))
-				ShiftMiddleClickOn(A)
+				ShiftMiddleClickOn(clicked_on)
 				return
 			if(istate & ISTATE_CONTROL)
-				CtrlShiftClickOn(A)
+				CtrlShiftClickOn(clicked_on)
 				return
 			if(LAZYACCESS(modifiers, ALT_CLICK))
-				alt_shift_click_on(A)
+				alt_shift_click_on(clicked_on)
 				return
-			ShiftClickOn(A)
+			ShiftClickOn(clicked_on)
 			return
 		if(LAZYACCESS(modifiers, MIDDLE_CLICK))
 			if(istate & ISTATE_CONTROL)
-				CtrlMiddleClickOn(A)
+				CtrlMiddleClickOn(clicked_on)
 			else
-				MiddleClickOn(A, params)
+				MiddleClickOn(clicked_on, params)
 			return
 		if(LAZYACCESS(modifiers, ALT_CLICK)) // alt and alt-gr (rightalt)
-			AltClickOn(A)
+			AltClickOn(clicked_on)
 			return
 		if(istate & ISTATE_CONTROL)
-			CtrlClickOn(A)
+			CtrlClickOn(clicked_on)
 			return
 	if(LAZYACCESS(modifiers, SHIFT_CLICK))
 		if(LAZYACCESS(modifiers, MIDDLE_CLICK))
-			ShiftMiddleClickOn(A)
+			ShiftMiddleClickOn(clicked_on)
 			return
 		if(istate & ISTATE_CONTROL)
-			CtrlShiftClickOn(A)
+			CtrlShiftClickOn(clicked_on)
 			return
 		if(LAZYACCESS(modifiers, ALT_CLICK))
-			alt_shift_click_on(A)
+			alt_shift_click_on(clicked_on)
 			return
 		// allow a shift right click to pass as a right click, rather than becoming a shift click... (context menu pref compatibility)
 	if(LAZYACCESS(modifiers, MIDDLE_CLICK))
 		if(istate & ISTATE_CONTROL)
-			CtrlMiddleClickOn(A)
+			CtrlMiddleClickOn(clicked_on)
 		else
-			MiddleClickOn(A, params)
+			MiddleClickOn(clicked_on, params)
 		return
 	if(LAZYACCESS(modifiers, ALT_CLICK)) // alt and alt-gr (rightalt)
 		if(istate & ISTATE_SECONDARY)
-			AltClickSecondaryOn(A)
+			AltClickSecondaryOn(clicked_on)
 		else
-			AltClickOn(A)
+			AltClickOn(clicked_on)
 		return
 	if(istate & ISTATE_CONTROL)
-		CtrlClickOn(A)
+		CtrlClickOn(clicked_on)
 		return
 
 	if(incapacitated(IGNORE_RESTRAINTS|IGNORE_STASIS|IGNORE_SOFTCRIT))
 		return
 
-	face_atom(A)
+	face_atom(clicked_on)
 
 	if(next_move > world.time) // in the year 2000...
 		return
 
-	if(!LAZYACCESS(modifiers, "catcher") && A.IsObscured())
+	if(!LAZYACCESS(modifiers, "catcher") && clicked_on.IsObscured())
 		return
 
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED) && !((stat >= SOFT_CRIT && (stat != DEAD && stat != UNCONSCIOUS))))
 		changeNext_move(CLICK_CD_HANDCUFFED)   //Doing shit in cuffs shall be vey slow
-		UnarmedAttack(A, FALSE)
+		UnarmedAttack(clicked_on, FALSE)
 		return
 
 	if(throw_mode)
-		if(throw_item(A))
+		if(throw_item(clicked_on))
 			changeNext_move(CLICK_CD_THROW)
 		return
 
-	var/obj/item/W = get_active_held_item()
+	var/obj/item/held_item = get_active_held_item()
 
-	if(W == A)
+	if(held_item == clicked_on)
 		if((istate & ISTATE_SECONDARY))
-			W.attack_self_secondary(src, modifiers)
+			held_item.attack_self_secondary(src, modifiers)
 			update_held_items()
 			return
 		else
-			W.attack_self(src, modifiers)
+			held_item.attack_self(src, modifiers)
 			update_held_items()
 			return
 
 	//These are always reachable.
 	//User itself, current loc, and user inventory
-	if(A in DirectAccess())
-		if(W)
-			W.melee_attack_chain(src, A, modifiers)
+	if(clicked_on in DirectAccess())
+		if(held_item)
+			held_item.melee_attack_chain(src, clicked_on, modifiers)
 		else
-			if(ismob(A))
+			if(ismob(clicked_on))
 				changeNext_move(CLICK_CD_MELEE)
 
-			UnarmedAttack(A, FALSE)
+			UnarmedAttack(clicked_on, FALSE)
 		return
 
 	//Can't reach anything else in lockers or other weirdness
@@ -202,27 +201,27 @@
 		return
 
 	// In a storage item with a disassociated storage parent
-	var/obj/item/item_atom = A
+	var/obj/item/item_atom = clicked_on
 	if(istype(item_atom))
 		if((item_atom.item_flags & IN_STORAGE) && (item_atom.loc.flags_1 & HAS_DISASSOCIATED_STORAGE_1))
 			UnarmedAttack(item_atom, TRUE)
 
 	//Standard reach turf to turf or reaching inside storage
-	if(CanReach(A,W))
-		if(W)
-			W.melee_attack_chain(src, A, modifiers)
+	if(CanReach(clicked_on, held_item))
+		if(held_item)
+			held_item.melee_attack_chain(src, clicked_on, modifiers)
 		else
-			if(ismob(A))
+			if(ismob(clicked_on))
 				changeNext_move(CLICK_CD_MELEE)
-			UnarmedAttack(A , 1, modifiers)
+			UnarmedAttack(clicked_on, 1, modifiers)
 	else
-		if(W)
-			A.base_ranged_item_interaction(src, W, modifiers)
+		if(held_item)
+			clicked_on.base_ranged_item_interaction(src, held_item, modifiers)
 		else
 			if((istate & ISTATE_SECONDARY))
-				ranged_secondary_attack(A, modifiers)
+				ranged_secondary_attack(clicked_on, modifiers)
 			else
-				RangedAttack(A, modifiers)
+				RangedAttack(clicked_on, modifiers)
 
 /// Is the atom obscured by a PREVENT_CLICK_UNDER_1 object above it
 /atom/proc/IsObscured()

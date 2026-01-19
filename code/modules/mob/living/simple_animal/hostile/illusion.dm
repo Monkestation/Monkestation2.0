@@ -16,33 +16,33 @@
 	health = 100
 	speed = 0
 	faction = list(FACTION_ILLUSION)
-	var/life_span = INFINITY //how long until they despawn
+	///The world.time this despawns
+	var/life_span = INFINITY
 	var/mob/living/parent_mob
 	var/multiply_chance = 0 //if we multiply on hit
-	del_on_death = 1
+	del_on_death = TRUE
 	death_message = "vanishes into thin air! It was a fake!"
-
 
 /mob/living/simple_animal/hostile/illusion/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	..()
 	if(world.time > life_span)
 		death()
 
-
-/mob/living/simple_animal/hostile/illusion/proc/Copy_Parent(mob/living/original, life = 50, hp = 100, damage = 0, replicate = 0 )
+/mob/living/simple_animal/hostile/illusion/proc/copy_parent(mob/living/original, life_span = 5 SECONDS, hp, damage, replicate = 0)
 	appearance = original.appearance
 	parent_mob = original
 	setDir(original.dir)
-	life_span = world.time+life
-	health = hp
-	melee_damage_lower = damage
-	melee_damage_upper = damage
+	src.life_span = world.time + life_span
+	if(isnum(hp))
+		health = hp
+	if(isnum(damage))
+		melee_damage_lower = damage
+		melee_damage_upper = damage
 	multiply_chance = replicate
 	faction -= FACTION_NEUTRAL
 	transform = initial(transform)
 	pixel_x = base_pixel_x
 	pixel_y = base_pixel_y
-
 
 /mob/living/simple_animal/hostile/illusion/examine(mob/user)
 	if(parent_mob)
@@ -50,17 +50,17 @@
 	else
 		return ..()
 
-
 /mob/living/simple_animal/hostile/illusion/AttackingTarget(atom/attacked_target)
 	. = ..()
 	if(. && isliving(target) && prob(multiply_chance))
-		var/mob/living/L = target
-		if(L.stat == DEAD)
+		var/mob/living/living_target = target
+		if(living_target.stat == DEAD)
 			return
-		var/mob/living/simple_animal/hostile/illusion/M = new(loc)
-		M.faction = faction.Copy()
-		M.Copy_Parent(parent_mob, 80, health/2, melee_damage_upper, multiply_chance/2)
-		M.GiveTarget(L)
+
+		var/mob/living/simple_animal/hostile/illusion/clone = new(loc)
+		clone.faction = faction.Copy()
+		clone.copy_parent(parent_mob, 80, health/2, melee_damage_upper, multiply_chance/2)
+		clone.GiveTarget(living_target)
 
 ///////Actual Types/////////
 
@@ -73,7 +73,6 @@
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
 
-
 /mob/living/simple_animal/hostile/illusion/escape/AttackingTarget(atom/attacked_target)
 	return FALSE
 
@@ -84,3 +83,17 @@
 /mob/living/simple_animal/hostile/illusion/mirage/death(gibbed)
 	do_sparks(rand(3, 6), FALSE, src)
 	return ..()
+
+/mob/living/simple_animal/hostile/illusion/blob //yes I should convert these to basic, counterpoint: I really dont want to
+	melee_damage_type = BRAIN
+	melee_damage_lower = 2
+	melee_damage_upper = 2
+	obj_damage = 0
+	environment_smash = ENVIRONMENT_SMASH_NONE
+	maxHealth = 20
+	health = 20
+	pass_flags = parent_type::pass_flags | PASSBLOB
+
+/mob/living/simple_animal/hostile/illusion/blob/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_BLOB_ALLY, INNATE_TRAIT)
