@@ -6,7 +6,8 @@
 	interaction_flags_click = ALLOW_RESTING
 	interaction_flags_mouse_drop = ALLOW_RESTING
 
-	/// Typepath of the subsystem used for Life()
+	/// Default typepath of the subsystem used for Life()
+	/// If this mob has a client/mind, it will always use SSclient_mobs.
 	/// If unset, defaults to SSmobs.
 	var/life_subsystem_type
 
