@@ -20437,7 +20437,6 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/medical)
 "cyV" = (
-/obj/structure/bloodsucker/bloodthrone,
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
@@ -24715,7 +24714,6 @@
 /area/centcom/central_command_areas/admin)
 "juk" = (
 /obj/item/flashlight/flare/candle/amber,
-/obj/structure/closet/crate/coffin/meatcoffin,
 /turf/open/floor/carpet/red,
 /area/centcom/central_command_areas/adminroom)
 "juR" = (
@@ -30527,10 +30525,6 @@
 	},
 /turf/open/floor/wood/tile,
 /area/centcom/central_command_areas/admin)
-"tyk" = (
-/obj/structure/closet/crate/coffin/meatcoffin,
-/turf/open/floor/lowered/iron/pool/cobble/side,
-/area/centcom/central_command_areas/adminroom)
 "tyZ" = (
 /obj/machinery/light/cold/directional/east,
 /obj/effect/turf_decal/siding/thinplating_new/dark/corner{
@@ -68454,7 +68448,7 @@ gRi
 wBU
 uTO
 dPS
-tyk
+tou
 qja
 aOn
 aaa

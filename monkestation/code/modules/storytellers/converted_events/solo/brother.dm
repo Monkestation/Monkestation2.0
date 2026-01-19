@@ -44,7 +44,7 @@
 	)
 	extra_spawned_events = list(
 		/datum/round_event_control/antagonist/solo/traitor/roundstart = 8,
-		/datum/round_event_control/antagonist/solo/bloodsucker/roundstart = 6,
+		/* /datum/round_event_control/antagonist/solo/bloodsucker/roundstart = 6, */ // LUCY TODO: old bloodsucker code
 		/datum/round_event_control/antagonist/solo/heretic/roundstart = 1,
 	)
 	var/static/allow_3_person_teams

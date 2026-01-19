@@ -37,7 +37,6 @@
 #define LANGUAGE_VOICECHANGE "voicechange"
 #define LANGUAGE_RADIOKEY "radiokey"
 #define LANGUAGE_BABEL "babel"
-#define LANGUAGE_BLOODSUCKER "bloodsucker"
 #define LANGUAGE_VASSAL "vassal"
 #define LANGUAGE_DARKSPAWN "darkspawn"
 

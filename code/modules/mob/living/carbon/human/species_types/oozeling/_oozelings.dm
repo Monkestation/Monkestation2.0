@@ -107,7 +107,7 @@
 	. = ..()
 	if(HAS_TRAIT(slime, TRAIT_GODMODE) || slime.blood_volume <= 0)
 		return
-	if(!HAS_TRAIT(slime, TRAIT_NOHUNGER) && slime.nutrition <= NUTRITION_LEVEL_HUNGRY && !IS_BLOODSUCKER(slime)) // bloodsuckers have snowflake nutrition handling
+	if(!HAS_TRAIT(slime, TRAIT_NOHUNGER) && slime.nutrition <= NUTRITION_LEVEL_HUNGRY /* && !IS_BLOODSUCKER(slime) */) // bloodsuckers have snowflake nutrition handling // LUCY TODO: old bloodsucker code
 		spec_slime_hunger(slime, seconds_per_tick)
 	if(!HAS_TRAIT(slime, TRAIT_SLIME_HYDROPHOBIA))
 		spec_slime_wetness(slime, seconds_per_tick)
@@ -156,11 +156,13 @@
 /datum/species/oozeling/proc/remove_blood_volume(mob/living/carbon/human/slime, amount)
 	if(!IS_FINITE(amount))
 		CRASH("Tried to remove non-finite amount of blood from an oozeling")
+	// LUCY TODO: old bloodsucker code
+	/*
 	var/datum/antagonist/bloodsucker/slimesucker = IS_BLOODSUCKER(slime)
 	if(slimesucker)
 		slimesucker.AddBloodVolume(-amount)
-	else
-		slime.blood_volume = max(slime.blood_volume - amount, 0)
+	else */
+	slime.blood_volume = max(slime.blood_volume - amount, 0)
 
 ///////
 /// CHEMICAL HANDLING

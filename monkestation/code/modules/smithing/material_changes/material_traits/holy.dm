@@ -15,8 +15,9 @@
 /datum/material_trait/holy/proc/apply_damage_multiplier(obj/item/source, damage_multiplier_ptr, mob/living/victim, def_zone)
 	SIGNAL_HANDLER
 	var/damage_multiplier = 1
-	if(IS_BLOODSUCKER(victim))
-		damage_multiplier *= 2
+	// LUCY TODO: old bloodsucker code
+	/* if(IS_BLOODSUCKER(victim))
+		damage_multiplier *= 2 */
 
 	// werewolves have insane damage resistance, so 3x damage
 	if(iswerewolf(victim))

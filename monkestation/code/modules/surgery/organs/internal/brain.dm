@@ -185,7 +185,8 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	GLOB.dead_oozeling_cores -= src
 	RegisterSignal(organ_owner, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_change))
 
-/obj/item/organ/internal/brain/slime/item_interaction(mob/living/user, obj/item/stake/stake, list/modifiers)
+// LUCY TODO: old bloodsucker code
+/* /obj/item/organ/internal/brain/slime/item_interaction(mob/living/user, obj/item/stake/stake, list/modifiers)
 	if(!istype(stake))
 		return NONE
 	if(DOING_INTERACTION_WITH_TARGET(user, src))
@@ -215,7 +216,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 			span_hear("You hear a loud crunching sound."),
 		)
 		set_organ_damage(maxHealth) // you're stabbing it with a stake.
-	return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_SUCCESS */
 
 /obj/item/organ/internal/brain/slime/proc/colorize()
 	if(isoozeling(owner))
@@ -304,12 +305,13 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 				to_chat(brainmob, span_changeling("You begin gathering your energy. You will revive in 30 seconds."))
 				addtimer(CALLBACK(src, PROC_REF(rebuild_body), null, FALSE, POLICY_ANTAGONISTIC_REVIVAL), 30 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_DELETE_ME)
 
-		if(IS_BLOODSUCKER(brainmob))
+		// LUCY TODO: old bloodsucker code
+		/* if(IS_BLOODSUCKER(brainmob))
 			var/datum/antagonist/bloodsucker/target_bloodsucker = brainmob.mind.has_antag_datum(/datum/antagonist/bloodsucker)
 			if(target_bloodsucker.bloodsucker_blood_volume >= OOZELING_MIN_REVIVE_BLOOD_THRESHOLD)
 				to_chat(brainmob, span_notice("You begin recollecting yourself. You will rise again in 3 minutes."))
 				addtimer(CALLBACK(target_bloodsucker, TYPE_PROC_REF(/datum/antagonist/bloodsucker, oozeling_revive), src), 180 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_DELETE_ME)
-				target_bloodsucker.bloodsucker_blood_volume -= (OOZELING_MIN_REVIVE_BLOOD_THRESHOLD * 0.5)
+				target_bloodsucker.bloodsucker_blood_volume -= (OOZELING_MIN_REVIVE_BLOOD_THRESHOLD * 0.5) */
 
 	if(stored_dna)
 		rebuilt = FALSE

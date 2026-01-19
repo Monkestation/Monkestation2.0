@@ -121,9 +121,12 @@
 			guilty(attacked_mob, "for their possession by an evil spirit!")
 		if(guilty_conscience.has_antag_datum(/datum/antagonist/thrall_darkspawn))
 			guilty(attacked_mob, "for being a servant of chaos and darkness!")
+		// LUCY TODO: old bloodsucker code
+		/*
 		var/datum/antagonist/bloodsucker/bloodsucker_datum = guilty_conscience.has_antag_datum(/datum/antagonist/bloodsucker)
 		if(bloodsucker_datum?.broke_masquerade == TRUE)
 			guilty(attacked_mob, "for being an unholy creature of the night!")
+		*/
 		var/datum/antagonist/darkspawn/darkspawn_datum = guilty_conscience.has_antag_datum(/datum/antagonist/darkspawn)
 		if(darkspawn_datum?.darkspawn_state > DARKSPAWN_MUNDANE)
 			guilty(attacked_mob, "for their practice of the dark arts!")

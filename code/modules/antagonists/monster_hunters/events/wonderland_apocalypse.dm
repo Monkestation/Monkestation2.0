@@ -157,7 +157,7 @@ GLOBAL_VAR_INIT(wonderland_apocalypse, FALSE)
 		/datum/action/innate/cult = TRUE,
 		/datum/action/innate/cult/comm = FALSE,
 		/datum/action/innate/clockcult/quick_bind = TRUE,
-		/datum/action/cooldown/bloodsucker = TRUE,
+		/* /datum/action/cooldown/bloodsucker = TRUE, */ // LUCY TODO: old bloodsucker code
 		/datum/action/changeling = TRUE,
 	))
 

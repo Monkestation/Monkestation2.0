@@ -1295,8 +1295,11 @@
 	if(old_value)
 		if(!handcuffed)
 
+			// LUCY TODO: old bloodsucker code
+			/*
 			if (istype(old_value, /obj/item/restraints/handcuffs/silver) && IS_BLOODSUCKER_OR_VASSAL(src))
 				src.remove_status_effect(/datum/status_effect/silver_cuffed)
+			*/
 
 			REMOVE_TRAIT(src, TRAIT_RESTRAINED, HANDCUFFED_TRAIT)
 	else if(handcuffed)

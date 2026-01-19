@@ -157,7 +157,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_TRAITOR = 0,
 	ROLE_WIZARD = 14,
 	ROLE_CLOCK_CULTIST = 14,
-	ROLE_BLOODSUCKER = 0,
+	/* ROLE_BLOODSUCKER = 0, */ // LUCY TODO: old bloodsucker code
 	ROLE_ASSAULT_OPERATIVE = 14,
 	ROLE_BLOODLING = 15,
 	ROLE_DARKSPAWN = 14,
@@ -209,7 +209,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_HERETIC_SMUGGLER = 0,
 	ROLE_PROVOCATEUR = 14,
 	ROLE_SYNDICATE_INFILTRATOR = 0,
-	ROLE_BLOODSUCKERBREAKOUT = 0,
+	/* ROLE_BLOODSUCKERBREAKOUT = 0, */ // LUCY TODO: old bloodsucker code
 
 	// I'm not too sure why these are here, but they're not moving.
 	ROLE_PAI = 0,

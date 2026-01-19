@@ -1391,9 +1391,12 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_OCCULTIST "occultist"
 /// Cannot be turned into a borg or AI under any circumstances (outside of adminbus I guess).
 #define TRAIT_UNBORGABLE "unborgable"
+// LUCY TODO: old bloodsucker code
+/*
 /// The user is "bloodsucker aligned" - i.e a bloodsucker or vassal.
 /// Basically just check for `HAS_MIND_TRAIT(user, TRAIT_BLOODSUCKER_ALIGNED)` instead of `IS_BLOODSUCKER(user) || IS_VASSAL(user)`
 #define TRAIT_BLOODSUCKER_ALIGNED "bloodsucker_aligned"
+*/
 
 // /datum/mind
 /// Indicates that the user has been removed from the crew manifest. Used to track if multiple antags have removed the same person.
