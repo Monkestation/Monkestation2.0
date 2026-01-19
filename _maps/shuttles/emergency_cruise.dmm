@@ -313,10 +313,10 @@
 /turf/open/floor/iron/kitchen/diagonal,
 /area/shuttle/escape)
 "ft" = (
-/obj/item/reagent_containers/blood/universal{
+/obj/item/reagent_containers/chem_pack/saline{
 	pixel_x = -3
 	},
-/obj/item/reagent_containers/blood/universal{
+/obj/item/reagent_containers/chem_pack/saline{
 	pixel_x = 3
 	},
 /obj/item/reagent_containers/hypospray/medipen/atropine,

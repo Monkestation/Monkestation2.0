@@ -1,5 +1,4 @@
-import { Fragment } from 'react';
-import { Box, NoticeBox } from '../../components';
+import { Box, NoticeBox } from 'tgui-core/components';
 
 export type LobbyNoticesType = (
   | string
