@@ -15,7 +15,6 @@
 	clothing_flags = SNUG_FIT | PLASMAMAN_HELMET_EXEMPT
 	flags_cover = HEADCOVERSEYES
 	flags_inv = HIDEHAIR|HIDEEARS
-	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
 	resistance_flags = FIRE_PROOF // monkestation edit so helmets don't burn, not sure how tf that happened
 
 	dog_fashion = /datum/dog_fashion/head/helmet
@@ -592,6 +591,8 @@
 	dog_fashion = null
 
 /obj/item/clothing/head/helmet/toggleable/attack_self(mob/user)
+	if(!try_toggle())
+		return
 	adjust_visor(user)
 
 ///Attempt to toggle the visor. Returns true if it does the thing.
@@ -614,8 +615,8 @@
 	icon_state = "riot"
 	base_icon_state = "riot"
 	inhand_icon_state = "riot_helmet"
-	toggle_message = "You pull the visor down on"
-	alt_toggle_message = "You push the visor up on"
+	toggle_message = "You pull the visor down on the"
+	alt_toggle_message = "You push the visor up on the"
 	armor_type = /datum/armor/toggleable_riot
 	strip_delay = 80
 	actions_types = list(/datum/action/item_action/toggle)
@@ -645,14 +646,16 @@
 	icon_state = "justice"
 	base_icon_state = "justice"
 	inhand_icon_state = "justice_helmet"
-	toggle_message = "You turn off the lights on"
-	alt_toggle_message = "You turn on the lights on"
+	toggle_message = "You turn off the lights on the"
+	alt_toggle_message = "You turn on the lights on the"
 	flags_inv = HIDEHAIR|HIDEEARS|HIDEEYES
 	actions_types = list(/datum/action/item_action/toggle_helmet_light)
 	///Cooldown for toggling the visor.
 	COOLDOWN_DECLARE(visor_toggle_cooldown)
 	///Looping sound datum for the siren helmet
 	var/datum/looping_sound/siren/weewooloop
+	///The type of looping sound datum we use
+	var/weewooloop_type = /datum/looping_sound/siren
 
 /obj/item/clothing/head/helmet/toggleable/justice/try_toggle()
 	if(!COOLDOWN_FINISHED(src, visor_toggle_cooldown))
@@ -662,7 +665,7 @@
 
 /obj/item/clothing/head/helmet/toggleable/justice/Initialize(mapload)
 	. = ..()
-	weewooloop = new(src, FALSE, FALSE)
+	weewooloop = new weewooloop_type(src, FALSE, FALSE)
 
 /obj/item/clothing/head/helmet/toggleable/justice/Destroy()
 	QDEL_NULL(weewooloop)
@@ -680,3 +683,127 @@
 	desc = "WEEEEOOO. WEEEEEOOO. STOP THAT MONKEY. WEEEOOOO."
 	icon_state = "justice2"
 	base_icon_state = "justice2"
+
+#define MEDICAL_HELMET_DEFAULT 0
+#define MEDICAL_HELMET_SHOUTING 1
+#define MEDICAL_HELMET_YELLING 2
+#define MEDICAL_HELMET_EXTREME 3
+
+/obj/item/clothing/head/helmet/toggleable/justice/medical
+	name = "medical emergency helmet"
+	desc = "A fragile, circuitry embedded helmet that was an old R&D project to help medical personnel in emergency retrieval."
+	icon_state = "justice_medical"
+	base_icon_state = "justice_medical"
+	inhand_icon_state = null
+	weewooloop_type = /datum/looping_sound/siren/alt
+	var/mode = MEDICAL_HELMET_DEFAULT
+	COOLDOWN_DECLARE(forcesay_cooldown)
+	var/list/forcesay_phrases = list(
+		"Move! Out of the way",
+		"Medical emergency! Clear the way",
+		"Clear the way",
+		"Out of the way",
+		"Move out of the way",
+		"Medical emergency",
+	)
+
+/obj/item/clothing/head/helmet/toggleable/justice/medical/examine_more(mob/user)
+	. = ..()
+	if(!iscarbon(loc))
+		return
+	var/mob/living/carbon/wearer = loc
+	if(wearer?.head == src)
+		return
+	if(mode == MEDICAL_HELMET_EXTREME)
+		. += "A small display on the inside of the helmet next to the amplifier control flashes a bright red [span_red("[mode]")]."
+	else
+		. += "A small display on the inside of the helmet next to the amplifier flashes a [mode]."
+
+/obj/item/clothing/head/helmet/toggleable/justice/medical/screwdriver_act(mob/living/carbon/human/user, obj/item/I)
+	if(..())
+		return TRUE
+	switch(mode)
+		if(MEDICAL_HELMET_DEFAULT)
+			to_chat(user, span_notice("You set the amplifier control to the middle position."))
+			mode = MEDICAL_HELMET_SHOUTING
+		if(MEDICAL_HELMET_SHOUTING)
+			to_chat(user, span_notice("You set the amplifier control to the last position."))
+			mode = MEDICAL_HELMET_YELLING
+		if(MEDICAL_HELMET_YELLING)
+			to_chat(user, span_notice("You set the amplifier control to the first position."))
+			mode = MEDICAL_HELMET_DEFAULT
+		if(MEDICAL_HELMET_EXTREME)
+			to_chat(user, span_danger("You adjust amplifier control but nothing happens, probably because it's broken."))
+	return TRUE
+
+/obj/item/clothing/head/helmet/toggleable/justice/medical/emag_act(mob/user)
+	if(obj_flags & EMAGGED)
+		return
+	obj_flags |= EMAGGED
+	mode = MEDICAL_HELMET_EXTREME
+	do_sparks(3, FALSE, src)
+	sleep(1 SECOND)
+	playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, FALSE)
+	balloon_alert(user, "safeties shorted!")
+
+/obj/item/clothing/head/helmet/toggleable/justice/medical/equipped(mob/M, slot)
+	. = ..()
+	if(slot & ITEM_SLOT_HEAD)
+		RegisterSignal(M, COMSIG_MOB_SAY, PROC_REF(handle_speech))
+	else
+		UnregisterSignal(M, COMSIG_MOB_SAY)
+
+/obj/item/clothing/head/helmet/toggleable/justice/medical/dropped(mob/M)
+	. = ..()
+	UnregisterSignal(M, COMSIG_MOB_SAY)
+
+/obj/item/clothing/head/helmet/toggleable/justice/medical/proc/handle_speech(datum/source, list/speech_args)
+	SIGNAL_HANDLER
+	var/message = speech_args[SPEECH_MESSAGE]
+	if(message[1] != "*" && mode != MEDICAL_HELMET_DEFAULT && up)
+		switch(mode)
+			if(MEDICAL_HELMET_SHOUTING)
+				message += "!"
+			if(MEDICAL_HELMET_YELLING, MEDICAL_HELMET_EXTREME)
+				message += "!!"
+		speech_args[SPEECH_MESSAGE] = message
+
+
+/obj/item/clothing/head/helmet/toggleable/justice/medical/visor_toggling()
+	. = ..()
+	if(up)
+		START_PROCESSING(SSobj, src)
+	else
+		STOP_PROCESSING(SSobj, src)
+
+/obj/item/clothing/head/helmet/toggleable/justice/medical/process(seconds_per_tick)
+	if(!COOLDOWN_FINISHED(src, forcesay_cooldown))
+		return
+	if(!iscarbon(loc))
+		return
+	var/mob/living/carbon/wearer = loc
+	if(wearer.head != src)
+		return
+	if(!mode)
+		return
+	COOLDOWN_START(src, forcesay_cooldown, 6 SECONDS)
+	wearer.say("[pick(forcesay_phrases)]", forced = "(Emergency Medical Helmet Line)")
+
+	if(mode != MEDICAL_HELMET_EXTREME)
+		return
+
+	if(ishuman(wearer))
+		var/mob/living/carbon/human/brain_ouchy_victim = wearer
+		brain_ouchy_victim.emote("twitch")
+		brain_ouchy_victim.apply_damage(10,BRAIN,BODY_ZONE_HEAD,FALSE,FALSE,FALSE)
+		do_sparks(3, FALSE, src)
+
+
+/obj/item/clothing/head/helmet/toggleable/justice/medical/Destroy()
+	. = ..()
+	STOP_PROCESSING(SSobj, src)
+
+#undef MEDICAL_HELMET_DEFAULT
+#undef MEDICAL_HELMET_SHOUTING
+#undef MEDICAL_HELMET_YELLING
+#undef MEDICAL_HELMET_EXTREME

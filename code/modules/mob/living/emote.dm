@@ -594,9 +594,10 @@ monkestation edit end */
 	if(TIMER_COOLDOWN_FINISHED(user, COOLDOWN_YAWN_PROPAGATION))
 		TIMER_COOLDOWN_START(user, COOLDOWN_YAWN_PROPAGATION, cooldown * 3)
 
-	var/mob/living/carbon/carbon_user = user
-	if(istype(carbon_user) && ((carbon_user.wear_mask?.flags_inv & HIDEFACE) || carbon_user.head?.flags_inv & HIDEFACE))
-		return // if your face is obscured, skip propagation
+	if(iscarbon(user))
+		var/mob/living/carbon/carbon_user = user
+		if(!carbon_user.is_face_visible())
+			return // if your face is obscured, skip propagation
 
 	var/propagation_distance = user.client ? 5 : 2 // mindless mobs are less able to spread yawns
 

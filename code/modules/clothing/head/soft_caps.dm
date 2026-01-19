@@ -41,7 +41,7 @@
 		else
 			icon_state = "[soft_type][soft_suffix]"
 			to_chat(user, span_notice("You flip the hat back in normal position."))
-		update_icon()
+		update_appearance(UPDATE_ICON)
 		usr.update_worn_head() //so our mob-overlays update
 
 /obj/item/clothing/head/soft/examine(mob/user)
@@ -146,9 +146,15 @@
 	fire = 20
 	acid = 50
 
+/obj/item/clothing/head/soft/sec/medical
+	name = "security medical cap"
+	desc = "It's a robust baseball hat with a tasteful red color with a reflective cross on the top."
+	icon_state = "secmedsoft"
+	soft_type = "secmed"
+
 /obj/item/clothing/head/soft/paramedic
 	name = "paramedic cap"
-	desc = "It's a baseball hat with a dark turquoise color and a reflective cross on the top."
+	desc = "It's a baseball hat with a dark turquoise color with a reflective cross on the top."
 	icon_state = "paramedicsoft"
 	soft_type = "paramedic"
 	dog_fashion = null

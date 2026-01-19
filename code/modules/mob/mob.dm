@@ -43,7 +43,7 @@
 		progressbars = null
 	for (var/alert in alerts)
 		clear_alert(alert, TRUE)
-	if(observers?.len)
+	if(length(observers))
 		for(var/mob/dead/observe as anything in observers)
 			observe.reset_perspective(null)
 
@@ -1050,6 +1050,10 @@
 		antimagic_color = LIGHT_COLOR_DARK_BLUE
 		playsound(src, 'sound/magic/magic_block_mind.ogg', 50, TRUE)
 
+	if(ishuman(src))
+		var/mob/living/carbon/human/human = src
+		human.apply_height_filters(antimagic_effect)
+
 	mob_light(range = 2, color = antimagic_color, duration = 5 SECONDS)
 	add_overlay(antimagic_effect)
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, cut_overlay), antimagic_effect), 5 SECONDS)
@@ -1368,6 +1372,7 @@
 	VV_DROPDOWN_OPTION(VV_HK_GODMODE, "Toggle Godmode")
 	VV_DROPDOWN_OPTION(VV_HK_DROP_ALL, "Drop Everything")
 	VV_DROPDOWN_OPTION(VV_HK_REGEN_ICONS, "Regenerate Icons")
+	VV_DROPDOWN_OPTION(VV_HK_REGEN_ICONS_FULL, "Regenerate Icons & Clear Stuck Overlays")
 	VV_DROPDOWN_OPTION(VV_HK_PLAYER_PANEL, "Show player panel")
 	VV_DROPDOWN_OPTION(VV_HK_BUILDMODE, "Toggle Buildmode")
 	VV_DROPDOWN_OPTION(VV_HK_DIRECT_CONTROL, "Assume Direct Control")
@@ -1380,6 +1385,12 @@
 	if(href_list[VV_HK_REGEN_ICONS])
 		if(!check_rights(NONE))
 			return
+		regenerate_icons()
+
+	if(href_list[VV_HK_REGEN_ICONS_FULL])
+		if(!check_rights(NONE))
+			return
+		cut_overlays()
 		regenerate_icons()
 
 	if(href_list[VV_HK_PLAYER_PANEL])
@@ -1619,9 +1630,10 @@
 	var/list/data = list()
 	var/list/memories = list()
 
-	for(var/memory_key in user?.mind.memories)
-		var/datum/memory/memory = user.mind.memories[memory_key]
-		memories += list(list("name" = memory.name, "quality" = memory.story_value))
+	for(var/memory_key, memory_value in user?.mind.memories)
+		var/datum/memory/memory = memory_value
+		if(memory)
+			memories += list(list("name" = memory.name, "quality" = memory.story_value))
 
 	data["memories"] = memories
 	return data

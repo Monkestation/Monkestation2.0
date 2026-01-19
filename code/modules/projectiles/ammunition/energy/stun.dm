@@ -27,7 +27,7 @@
 
 /obj/item/ammo_casing/energy/disabler/smg
 	projectile_type = /obj/projectile/beam/disabler/weak
-	e_cost = LASER_SHOTS(40, STANDARD_CELL_CHARGE)
+	e_cost = LASER_SHOTS(42, STANDARD_CELL_CHARGE)
 	fire_sound = 'sound/weapons/taser3.ogg'
 
 /obj/item/ammo_casing/energy/disabler/hos

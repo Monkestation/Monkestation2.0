@@ -10,7 +10,7 @@ const Bingle: Antagonist = {
     Feed the pit, love the pit, protect the pit.
     `,
   ],
-  category: Category.Midround,
+  category: Category.Ghost,
 };
 
 export default Bingle;

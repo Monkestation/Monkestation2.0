@@ -10,7 +10,7 @@ const DriftingContractor: Antagonist = {
     multiline`Float onto the station and complete as many
     contracts for your employer as you can!`,
   ],
-  category: Category.Midround,
+  category: Category.Ghost,
 };
 
 export default DriftingContractor;

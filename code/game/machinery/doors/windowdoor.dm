@@ -82,9 +82,6 @@
 		return
 
 	set_light(l_outer_range = 0)
-#ifndef DISABLE_DEMOS
-	SSdemo.mark_dirty(src) //Monkestation Edit: REPLAYS
-#endif
 
 /obj/machinery/door/window/update_overlays()
 	. = ..()
@@ -117,9 +114,9 @@
 		return
 	autoclose = TRUE
 	if(check_access(null))
-		sleep(5 SECONDS)
+		sleep(8 SECONDS)
 	else //secure doors close faster
-		sleep(2 SECONDS)
+		sleep(5 SECONDS)
 	if(!density && autoclose) //did someone change state while we slept?
 		close()
 

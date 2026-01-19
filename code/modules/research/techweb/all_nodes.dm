@@ -117,6 +117,7 @@
 		"shotgun_slug",
 		"sec_Islug",
 		"sec_rshot",
+		"sec_pen",
 		"servingtray",
 		"shaker",
 		"shot_glass",
@@ -236,6 +237,7 @@
 		"retractor",
 		"scalpel",
 		"stethoscope",
+		"penlight",
 		"surgical_drapes",
 		"surgical_tape",
 		"surgicaldrill",
@@ -249,5 +251,6 @@
 		"synth_stomach",
 		"synth_ears",
 		"synth_heart",
-		"cybernetic_spleen"
+		"cybernetic_spleen",
+		"vitals_monitor",
 	)

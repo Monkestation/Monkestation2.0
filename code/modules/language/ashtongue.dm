@@ -35,7 +35,6 @@
 		),
 	)
 	icon_state = "ashtongue"
-	icon = 'monkestation/code/modules/blueshift/icons/language.dmi'
 	default_priority = 90
 
 	mutual_understanding = list(

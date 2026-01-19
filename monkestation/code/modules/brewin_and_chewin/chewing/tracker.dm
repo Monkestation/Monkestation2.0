@@ -11,7 +11,7 @@
 	var/list/completed_list = list()//List of recipes marked as complete.
 	var/recipe_started = FALSE 	//Tells if steps have been taken for this recipe
 
-/datum/chewin_cooking/recipe_tracker/New(var/obj/item/reagent_containers/container)
+/datum/chewin_cooking/recipe_tracker/New(obj/item/reagent_containers/container)
 
 	#ifdef CHEWIN_DEBUG
 	log_debug("Called /datum/chewin_cooking/recipe_tracker/New")
@@ -21,7 +21,7 @@
 	src.populate_step_flags()
 
 //Call when a method is done incorrectly that provides a flat debuff to the whole meal.
-/datum/chewin_cooking/recipe_tracker/proc/apply_flat_penalty(var/penalty)
+/datum/chewin_cooking/recipe_tracker/proc/apply_flat_penalty(penalty)
 	if(active_recipe_pointers.len == 0)
 		return
 
@@ -83,7 +83,7 @@
 	return active_recipe_pointers.len
 
 //Wrapper function for analyzing process_item internally.
-/datum/chewin_cooking/recipe_tracker/proc/process_item_wrap(var/obj/used_object, var/mob/user)
+/datum/chewin_cooking/recipe_tracker/proc/process_item_wrap(obj/used_object, mob/user)
 
 	#ifdef CHEWIN_DEBUG
 	log_debug("/datum/chewin_cooking/recipe_tracker/proc/process_item_wrap called!")
@@ -97,7 +97,7 @@
 	return response
 
 //Core function that checks if a object meets all the requirements for certain recipe actions.
-/datum/chewin_cooking/recipe_tracker/proc/process_item(var/obj/used_object, var/mob/user)
+/datum/chewin_cooking/recipe_tracker/proc/process_item(obj/used_object, mob/user)
 	#ifdef CHEWIN_DEBUG
 	log_debug("Called /datum/chewin_cooking/recipe_tracker/proc/process_item")
 	#endif
@@ -288,7 +288,7 @@
 	///what our current food buff is
 	var/custom_food_buff
 
-/datum/chewin_cooking/recipe_pointer/New(start_type, recipe_id, var/datum/chewin_cooking/recipe_tracker/parent)
+/datum/chewin_cooking/recipe_pointer/New(start_type, recipe_id, datum/chewin_cooking/recipe_tracker/parent)
 
 	#ifdef CHEWIN_DEBUG
 	log_debug("Called /datum/chewin_cooking/recipe_pointer/pointer/New([start_type], [recipe_id], parent)")
@@ -405,7 +405,7 @@
 			return_flags |= step.class
 	return return_flags
 
-/datum/chewin_cooking/recipe_pointer/proc/has_option_by_id(var/id)
+/datum/chewin_cooking/recipe_pointer/proc/has_option_by_id(id)
 	if(!GLOB.chewin_step_dictionary["[id]"])
 		return FALSE
 	var/datum/chewin_cooking/recipe_step/active_step = GLOB.chewin_step_dictionary["[id]"]
@@ -414,7 +414,7 @@
 		return TRUE
 	return FALSE
 
-/datum/chewin_cooking/recipe_pointer/proc/traverse(var/id, var/obj/used_obj)
+/datum/chewin_cooking/recipe_pointer/proc/traverse(id, obj/used_obj)
 	#ifdef CHEWIN_DEBUG
 	log_debug("/recipe_pointer/traverse: Traversing pointer from [current_step.unique_id] to [id].")
 	#endif

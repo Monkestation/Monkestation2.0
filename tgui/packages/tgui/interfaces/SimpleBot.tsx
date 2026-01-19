@@ -296,6 +296,7 @@ const MedbotThreshold = (props) => {
         step={5}
         unit="%"
         value={control[1]}
+        tickWhileDragging
         onChange={(_, value) => act(control[0], { threshold: value })}
       />
     </Tooltip>
@@ -331,10 +332,8 @@ const FloorbotLine = (props) => {
         name={control[1] ? 'compass' : 'toggle-off'}
         onClick={() => act('line_mode')}
         size={!control[1] ? 2 : 1.5}
-      >
-        {' '}
-        {control[1] ? control[1].toString().charAt(0).toUpperCase() : ''}
-      </Icon>
+      />
+      {control[1] ? control[1].toString().charAt(0).toUpperCase() : ''}
     </Tooltip>
   );
 };

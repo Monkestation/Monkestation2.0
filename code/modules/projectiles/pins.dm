@@ -403,8 +403,9 @@
 
 		/area/lavaland/surface/outdoors,
 
-		/area/ocean/generated,
-		/area/ocean/generated_above,
+		/area/ocean, // uses Z-levels until Oshan mapping is fixed
+		// /area/ocean/generated,
+		// /area/ocean/generated_above,
 
 		/area/ruin,
 
@@ -419,7 +420,12 @@
 /obj/item/firing_pin/wastes/pin_auth(mob/living/user)
 	if(!istype(user) || is_type_in_list(get_area(user), blacklist))
 		return FALSE
-	if (is_type_in_list(get_area(user), wastes)|| SSticker.current_state == GAME_STATE_FINISHED) //now unlocks after game is over. have fun
+	if(SSticker.current_state == GAME_STATE_FINISHED) //now unlocks after game is over. have fun
+		return TRUE
+	if(is_type_in_list(get_area(user), wastes))
+		var/turf/userturf = get_turf(user)
+		if(istype(get_area(user), /area/ocean) && SSmapping.level_trait(userturf.z, ZTRAIT_STATION))
+			return FALSE // block Oshan main station Z
 		return TRUE
 	return FALSE
 
@@ -446,3 +452,29 @@
 /obj/item/firing_pin/cargo/unremovable
 	pin_removable = FALSE
 
+/obj/item/firing_pin/buckshotroulette
+	name = "roulette firing pin"
+	desc = "A firing pin that remembers the identity of the last person that fired it, only allowing them to fire once before having to give up their turn, unless they shoot themselves."
+	fail_message = "turn finished"
+	var/last_user
+
+/obj/item/firing_pin/buckshotroulette/proc/check_fire(obj/item/gun/weapon, mob/living/carbon/user, atom/target, params, zone_override)
+	if(user == target)
+		balloon_alert(user, "turn continued")
+		last_user = null
+
+/obj/item/firing_pin/buckshotroulette/gun_insert(mob/living/user, obj/item/gun/G)
+	..()
+	RegisterSignal(G, COMSIG_GUN_FIRED, PROC_REF(check_fire))
+
+/obj/item/firing_pin/buckshotroulette/pin_auth(mob/living/user)
+	if(!istype(user))
+		return FALSE
+	if (user == last_user)
+		return FALSE
+	last_user = user
+	return TRUE
+
+
+/obj/item/firing_pin/buckshotroulette/unremovable //no cheating allowed
+	pin_removable = FALSE

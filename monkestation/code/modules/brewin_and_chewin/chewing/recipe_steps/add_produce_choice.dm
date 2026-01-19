@@ -8,7 +8,7 @@
 
 	var/list/exclude_reagents = list()
 
-/datum/chewin_cooking/recipe_step/add_produce_choice/New(list/choices = list(), var/datum/chewin_cooking/recipe/our_recipe)
+/datum/chewin_cooking/recipe_step/add_produce_choice/New(list/choices = list(), datum/chewin_cooking/recipe/our_recipe)
 	if(!length(choices))
 		CRASH("/datum/chewin_cooking/recipe_step/add_produce_choice/New: No list passed in. Exiting.")
 
@@ -26,7 +26,7 @@
 			CRASH("/datum/chewin_cooking/recipe_step/add_produce_choice/New: [produce] not found. Exiting.")
 	..(base_quality_award, our_recipe)
 
-/datum/chewin_cooking/recipe_step/add_produce_choice/check_conditions_met(var/obj/added_item, var/datum/chewin_cooking/recipe_tracker/tracker)
+/datum/chewin_cooking/recipe_step/add_produce_choice/check_conditions_met(obj/added_item, datum/chewin_cooking/recipe_tracker/tracker)
 	#ifdef CHEWIN_DEBUG
 	log_debug("Called add_produce_choice/check_conditions_met for [added_item] against [required_produce_type]")
 	#endif
@@ -41,7 +41,7 @@
 
 	return CHEWIN_CHECK_INVALID
 
-/datum/chewin_cooking/recipe_step/add_produce_choice/calculate_quality(var/obj/added_item, var/datum/chewin_cooking/recipe_tracker/tracker)
+/datum/chewin_cooking/recipe_step/add_produce_choice/calculate_quality(obj/added_item, datum/chewin_cooking/recipe_tracker/tracker)
 
 	var/obj/item/food/grown/added_produce = added_item
 
@@ -49,7 +49,7 @@
 
 	return clamp_quality(potency_raw)
 
-/datum/chewin_cooking/recipe_step/add_produce_choice/follow_step(var/obj/added_item, var/datum/chewin_cooking/recipe_tracker/tracker)
+/datum/chewin_cooking/recipe_step/add_produce_choice/follow_step(obj/added_item, datum/chewin_cooking/recipe_tracker/tracker)
 	#ifdef CHEWIN_DEBUG
 	log_debug("Called: /datum/chewin_cooking/recipe_step/add_produce_choice/follow_step")
 	#endif

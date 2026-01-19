@@ -538,15 +538,19 @@
 	inverse_chem = /datum/reagent/inverse/corazargh
 	inverse_chem_val = 0.4
 	metabolized_traits = list(TRAIT_BATON_RESISTANCE)
+	var/purity_normalization_on_metabolize = 1
 
 /datum/reagent/medicine/ephedrine/on_mob_metabolize(mob/living/affected_mob)
-	..()
+	. = ..()
 	affected_mob.add_movespeed_modifier(/datum/movespeed_modifier/reagent/ephedrine)
+	purity_normalization_on_metabolize = normalise_creation_purity()
+	affected_mob.stamina.regen_rate += 1 * REM * purity_normalization_on_metabolize
 
 /datum/reagent/medicine/ephedrine/on_mob_end_metabolize(mob/living/affected_mob)
 	affected_mob.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/ephedrine)
 	REMOVE_TRAIT(affected_mob, TRAIT_BATON_RESISTANCE, type)
-	..()
+	affected_mob.stamina.regen_rate -= 1 * REM * purity_normalization_on_metabolize
+	return ..()
 
 /datum/reagent/medicine/ephedrine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	if(SPT_PROB(10 * (1-creation_purity), seconds_per_tick) && iscarbon(affected_mob))
@@ -556,7 +560,6 @@
 			affected_mob.set_jitter_if_lower(20 SECONDS)
 
 	affected_mob.AdjustAllImmobility(-20 * REM * seconds_per_tick * normalise_creation_purity())
-	affected_mob.stamina.adjust(1 * REM * seconds_per_tick * normalise_creation_purity(), TRUE)
 	..()
 	return TRUE
 
@@ -781,6 +784,16 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	metabolized_traits = list(TRAIT_NOCRITDAMAGE)
 
+/datum/reagent/medicine/epinephrine/on_mob_metabolize(mob/living/carbon/user)
+	. = ..()
+
+	user.stamina.regen_rate += 0.5 * REM
+
+/datum/reagent/medicine/epinephrine/on_mob_end_metabolize(mob/living/carbon/user)
+	user.stamina.regen_rate -= 0.5 * REM
+
+	return ..()
+
 /datum/reagent/medicine/epinephrine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = TRUE
 	if(holder.has_reagent(/datum/reagent/toxin/lexorin))
@@ -802,14 +815,13 @@
 			affected_mob.losebreath -= 2 * REM * seconds_per_tick
 	if(affected_mob.losebreath < 0)
 		affected_mob.losebreath = 0
-	affected_mob.stamina.adjust(0.5 * REM * seconds_per_tick, TRUE)
 	if(SPT_PROB(10, seconds_per_tick))
 		affected_mob.AdjustAllImmobility(-20)
 	..()
 
 /datum/reagent/medicine/epinephrine/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
 	if(SPT_PROB(18, REM * seconds_per_tick))
-		affected_mob.stamina.adjust(-2.5, 0)
+		affected_mob.stamina.adjust(-2.5)
 		affected_mob.adjustToxLoss(1, FALSE, required_biotype = affected_biotype)
 		var/obj/item/organ/internal/lungs/affected_lungs = affected_mob.get_organ_slot(ORGAN_SLOT_LUNGS)
 		var/our_respiration_type = affected_lungs ? affected_lungs.respiration_type : affected_mob.mob_respiration_type
@@ -1008,6 +1020,9 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/mutadone/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	var/datum/status_effect/temporary_transformation/trans_sting/sting_effect = affected_mob.has_status_effect(/datum/status_effect/temporary_transformation/trans_sting)
+	if(sting_effect && sting_effect.duration != STATUS_EFFECT_PERMANENT)
+		sting_effect.duration -= 10 SECONDS * REM * seconds_per_tick
 	affected_mob.remove_status_effect(/datum/status_effect/jitter)
 	if(affected_mob.has_dna())
 		affected_mob.dna.remove_mutation_group(affected_mob.dna.mutations - affected_mob.dna.get_mutation(/datum/mutation/race), GLOB.standard_mutation_sources)
@@ -1052,17 +1067,14 @@
 	ph = 8.7
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 	addiction_types = list(/datum/addiction/stimulants = 4) //0.8 per 2 seconds
-	metabolized_traits = list(TRAIT_BATON_RESISTANCE, TRAIT_ANALGESIA, TRAIT_CANT_STAMCRIT)
+	metabolized_traits = list(TRAIT_BATON_RESISTANCE, TRAIT_ANALGESIA)
 
 /datum/reagent/medicine/stimulants/on_mob_metabolize(mob/living/affected_mob)
 	..()
-	if(HAS_TRAIT(affected_mob, TRAIT_INCAPACITATED))
-		affected_mob.exit_stamina_stun()
 	affected_mob.add_movespeed_modifier(/datum/movespeed_modifier/reagent/stimulants)
 
 /datum/reagent/medicine/stimulants/on_mob_end_metabolize(mob/living/affected_mob)
 	affected_mob.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/stimulants)
-	REMOVE_TRAIT(affected_mob, TRAIT_BATON_RESISTANCE, type)
 	..()
 
 /datum/reagent/medicine/stimulants/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
@@ -1072,7 +1084,7 @@
 		affected_mob.adjustBruteLoss(-1 * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
 		affected_mob.adjustFireLoss(-1 * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
 	affected_mob.AdjustAllImmobility(-60  * REM * seconds_per_tick)
-	affected_mob.stamina.adjust(10 * REM * seconds_per_tick, TRUE)
+	affected_mob.stamina.adjust(12 * REM * seconds_per_tick, TRUE)
 	..()
 	. = TRUE
 
@@ -1123,6 +1135,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	affected_biotype = MOB_ORGANIC | MOB_MINERAL | MOB_PLANT // no healing ghosts
 	affected_respiration_type = ALL
+	var/healing = 1.5 // MONKESTATION ADDITION
 
 /datum/reagent/medicine/regen_jelly/expose_mob(mob/living/exposed_mob, reac_volume)
 	. = ..()
@@ -1134,12 +1147,26 @@
 	exposed_human.set_haircolor(color, update = TRUE)
 
 /datum/reagent/medicine/regen_jelly/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+// MONKESTATION EDIT START -- Changes the healing value to be adjustable like omnizine
+/*
 	affected_mob.adjustBruteLoss(-1.5 * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
 	affected_mob.adjustFireLoss(-1.5 * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
 	affected_mob.adjustOxyLoss(-1.5 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 	affected_mob.adjustToxLoss(-1.5 * REM * seconds_per_tick, FALSE, TRUE, affected_biotype) //heals TOXINLOVERs
+*/
+	affected_mob.adjustBruteLoss(-healing * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
+	affected_mob.adjustFireLoss(-healing * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
+	affected_mob.adjustOxyLoss(-healing * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+	affected_mob.adjustToxLoss(-healing * REM * seconds_per_tick, FALSE, TRUE, affected_biotype) //heals TOXINLOVERs
+// MONKESTATION EDIT END
 	..()
 	. = TRUE
+
+/datum/reagent/medicine/regen_jelly/weakened // MONKESTATION ADDITION -- Oozeling safe medipens
+	name = "Weakened Regenerative Jelly"
+	description = "Artificially weakened regenerative slime jelly that regenerates tissues slower, but lasts longer with the same volume."
+	healing = 0.5 // Same as omnizine, but still heals toxin-lovers
+	metabolization_rate = 0.125 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/syndicate_nanites //Used exclusively by Syndicate medical cyborgs
 	name = "Restorative Nanites"
@@ -1271,7 +1298,7 @@
 	metabolizer.set_jitter_if_lower(20 SECONDS * REM * seconds_per_tick)
 	metabolizer.set_dizzy_if_lower(20 SECONDS * REM * seconds_per_tick)
 	return TRUE
-MONKESTATION REMOVAL END */
+MONKESTATION REMOVAL END
 
 /datum/reagent/medicine/changelingadrenaline/on_mob_metabolize(mob/living/affected_mob)
 	. = ..()
@@ -1287,6 +1314,8 @@ MONKESTATION REMOVAL END */
 	metabolizer.adjustToxLoss(1 * REM * seconds_per_tick, FALSE)
 	..()
 	return TRUE
+
+*/
 
 /datum/reagent/medicine/changelinghaste
 	name = "Changeling Haste"
@@ -1637,18 +1666,22 @@ MONKESTATION REMOVAL END */
 
 /datum/reagent/medicine/painkiller/robopiates/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
+	affected_mob.adjust_jitter(-12 SECONDS * seconds_per_tick)
+	affected_mob.adjust_stutter(-10 SECONDS * seconds_per_tick)
+	affected_mob.adjust_slurring_up_to(2 SECONDS * seconds_per_tick, 20 SECONDS)
 	if((volume >= 10 && current_cycle > 10) || smacked_the_fuck_out)
-		affected_mob.set_dizzy_if_lower(30 SECONDS)
+		affected_mob.set_dizzy_if_lower(60 SECONDS)
 		if(smacked_the_fuck_out)
 			affected_mob.SetSleeping(10 SECONDS)
 		else
 			if(prob(clamp(10 * (current_cycle - 15), 1, 100)))
+				to_chat(affected_mob, span_hypnophrase("Feels... fuuuzzzyy..."))
 				smacked_the_fuck_out = TRUE
+				affected_mob.apply_status_effect(/datum/status_effect/grouped/anesthetic, name)
 
 /datum/reagent/medicine/painkiller/robopiates/on_mob_metabolize(mob/living/affected_mob)
 	..()
 	affected_mob.add_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
-	affected_mob.apply_status_effect(/datum/status_effect/grouped/anesthetic, name)
 
 /datum/reagent/medicine/painkiller/robopiates/on_mob_end_metabolize(mob/living/affected_mob)
 	affected_mob.remove_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)

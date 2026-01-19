@@ -202,14 +202,15 @@
 	item_path = /obj/item/toy/plush/admin/raziel
 	item_cost = 7500
 
-//Gabbie plush thingoes
 /obj/item/toy/plush/admin/gabbie
 	name = "gabbie"
 	desc = "She looks a bit angry."
 	icon_state = "gabbie"
-	squeak_override = list('monkestation/sound/items/gabnoise.ogg'=1)
+	squeak_override = list('monkestation/sound/items/gabnoise.ogg' = 1)
 	gender = FEMALE
 	append_note = FALSE
+	pet_message = "Gabbie swears!"
+
 /datum/loadout_item/plushies/gabbie
 	name = "Gabbie Plush"
 	item_path = /obj/item/toy/plush/admin/gabbie
@@ -217,6 +218,11 @@
 	name = "Gabbie Plush"
 	item_path = /obj/item/toy/plush/admin/gabbie
 	item_cost = 7500
+
+/obj/item/toy/plush/admin/gabbie/examine(mob/user)
+	. = ..()
+	if (user?.ckey == "glyphee")
+		. += span_purple("[EXAMINE_SECTION_BREAK][EXAMINE_HINT("I look good!")]")
 
 /obj/item/toy/plush/admin/gabbie/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/food/deadmouse))
@@ -229,8 +235,6 @@
 		to_chat(user, span_warning("Gabbie inhales the powder!"))
 		src.desc = "She still looks angry, but more high."
 		qdel(attacking_item)
-
-//End Gabbie plush thingoes
 
 /obj/item/toy/plush/admin/amunsethep
 	name = "amun set hep"

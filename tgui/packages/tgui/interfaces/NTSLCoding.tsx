@@ -1,4 +1,6 @@
-import { useBackend, useLocalState } from '../backend';
+import type { BooleanLike } from 'common/react';
+import { useState } from 'react';
+import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -14,62 +16,16 @@ import { Window } from '../layouts';
 
 // NTSLTextArea component start
 // This is literally just TextArea but without ENTER updating anything, for NTSL
-import { KEY_ESCAPE, KEY_TAB } from 'common/keycodes';
-import { toInputValue } from '../components/Input';
 
-class NTSLTextArea extends TextArea {
-  constructor(props) {
-    super(props);
-    super(this.textareaRef);
-    super(this.state);
-    const { dontUseTabForIndent = false } = props;
-    this.handleKeyDown = (e) => {
-      const { editing } = this.state;
-      const { onInput, onKey } = this.props;
-      if (e.keyCode === KEY_ESCAPE) {
-        if (this.props.onEscape) {
-          this.props.onEscape(e);
-        }
-        this.setEditing(false);
-        if (this.props.selfClear) {
-          e.target.value = '';
-        } else {
-          e.target.value = toInputValue(this.props.value);
-          e.target.blur();
-        }
-        return;
-      }
-      if (!editing) {
-        this.setEditing(true);
-      }
-      // Custom key handler
-      if (onKey) {
-        onKey(e, e.target.value);
-      }
-      if (!dontUseTabForIndent) {
-        const keyCode = e.keyCode || e.which;
-        if (keyCode === KEY_TAB) {
-          e.preventDefault();
-          const { value, selectionStart, selectionEnd } = e.target;
-          e.target.value =
-            value.substring(0, selectionStart) +
-            '\t' +
-            value.substring(selectionEnd);
-          e.target.selectionEnd = selectionStart + 1;
-          if (onInput) {
-            onInput(e, e.target.value);
-          }
-        }
-      }
-    };
-  }
-}
+type NTSLTextAreaProps = {
+  storedNtslCode: [string, (field: string) => void];
+};
 
 // NTSLTextArea component end
 
 type Data = {
-  admin_view: Boolean;
-  emagged: Boolean;
+  admin_view: BooleanLike;
+  emagged: BooleanLike;
   stored_code: string;
   user_name: string;
   network: string;
@@ -79,25 +35,106 @@ type Data = {
 };
 
 type Server_Data = {
-  run_code: Boolean;
+  run_code: BooleanLike;
   server: string;
   server_name: string;
 };
 
 export const NTSLCoding = (props) => {
+  const { act, data } = useBackend<Data>();
+  const { emagged, user_name, admin_view } = data;
   // Make sure we don't start larger than 50%/80% of screen width/height.
-  const winWidth = Math.min(900, window.screen.availWidth * 0.5);
-  const winHeight = Math.min(600, window.screen.availHeight * 0.8);
+  const winWidth = Math.min(
+    user_name ? 900 : 250,
+    window.screen.availWidth * 0.5,
+  );
+  const winHeight = Math.min(
+    user_name ? 600 : 240,
+    window.screen.availHeight * 0.8,
+  );
+
+  const storedNtslCode = useState('');
+  const [tabIndex, setTabIndex] = useState(1);
 
   return (
     <Window title="Traffic Control Console" width={winWidth} height={winHeight}>
       <Window.Content>
         <Stack fill>
-          <Stack.Item width={winWidth - 240}>
-            <ScriptEditor />
-          </Stack.Item>
+          {user_name && (
+            <Stack.Item width={winWidth - 240}>
+              <ScriptEditor storedNtslCode={storedNtslCode} />
+            </Stack.Item>
+          )}
           <Stack.Item>
-            <MainMenu />
+            {admin_view ? (
+              <Button
+                icon="power-off"
+                color="red"
+                content="!!!(ADMIN) reset code and compile!!!"
+                onClick={() => act('admin_reset')}
+              />
+            ) : (
+              ''
+            )}
+            <Section width="240px">
+              {user_name ? (
+                <Stack>
+                  <Stack.Item>
+                    <Button
+                      icon="power-off"
+                      color="purple"
+                      content="Log Out"
+                      disabled={emagged}
+                      onClick={() => act('log_out')}
+                    />
+                  </Stack.Item>
+                  <Stack.Item verticalAlign="middle">{user_name}</Stack.Item>
+                </Stack>
+              ) : (
+                <Button
+                  icon="power-off"
+                  color="green"
+                  content="Log In"
+                  onClick={() => act('log_in')}
+                />
+              )}
+            </Section>
+            {user_name && (
+              <Section width="240px" height="90%" fill>
+                <Tabs>
+                  <Tabs.Tab
+                    selected={tabIndex === 1}
+                    onClick={() => setTabIndex(1)}
+                  >
+                    Compile
+                  </Tabs.Tab>
+                  <Tabs.Tab
+                    selected={tabIndex === 2}
+                    onClick={() => setTabIndex(2)}
+                  >
+                    Network
+                  </Tabs.Tab>
+                  <Tabs.Tab
+                    selected={tabIndex === 3}
+                    onClick={() => setTabIndex(3)}
+                  >
+                    Logs
+                  </Tabs.Tab>
+                  <Tabs.Tab
+                    selected={tabIndex === 4}
+                    onClick={() => setTabIndex(4)}
+                  >
+                    Reference
+                  </Tabs.Tab>
+                </Tabs>
+                {tabIndex === 1 && (
+                  <CompilerOutput storedNtslCode={storedNtslCode} />
+                )}
+                {tabIndex === 2 && <ServerList />}
+                {tabIndex === 3 && <LogViewer />}
+                {tabIndex === 4 && <Guide />}
+              </Section>
+            )}
           </Stack.Item>
         </Stack>
       </Window.Content>
@@ -105,23 +142,19 @@ export const NTSLCoding = (props) => {
   );
 };
 
-const ScriptEditor = (props) => {
-  const { act, data } = useBackend<Data>();
+const ScriptEditor = (props: NTSLTextAreaProps) => {
+  const { data } = useBackend<Data>();
   const { stored_code, user_name } = data;
+  const [_ntslCode, setNtslCode] = props.storedNtslCode;
+
   return (
     <Box width="100%" height="100%">
       {user_name ? (
-        <NTSLTextArea
-          noborder
-          scrollbar
+        <TextArea
+          fluid
           value={stored_code}
-          width="100%"
+          onBlur={(value) => setNtslCode(value)}
           height="100%"
-          onChange={(_, value) =>
-            act('save_code', {
-              saved_code: value,
-            })
-          }
         />
       ) : (
         <Section width="100%" height="100%">
@@ -132,80 +165,26 @@ const ScriptEditor = (props) => {
   );
 };
 
-const MainMenu = (props) => {
-  const { act, data } = useBackend<Data>();
-  const { emagged, user_name, admin_view } = data;
-  const [tabIndex, setTabIndex] = useLocalState('tab-index', 1);
-  return (
-    <>
-      {admin_view ? (
-        <Button
-          icon="power-off"
-          color="red"
-          content="!!!(ADMIN) reset code and compile!!!"
-          onClick={() => act('admin_reset')}
-        />
-      ) : (
-        ''
-      )}
-      <Section width="240px">
-        {user_name ? (
-          <Stack>
-            <Stack.Item>
-              <Button
-                icon="power-off"
-                color="purple"
-                content="Log Out"
-                disabled={emagged}
-                onClick={() => act('log_out')}
-              />
-            </Stack.Item>
-            <Stack.Item verticalAlign="middle">{user_name}</Stack.Item>
-          </Stack>
-        ) : (
-          <Button
-            icon="power-off"
-            color="green"
-            content="Log In"
-            onClick={() => act('log_in')}
-          />
-        )}
-      </Section>
-      {user_name && (
-        <Section width="240px" height="90%" fill>
-          <Tabs>
-            <Tabs.Tab selected={tabIndex === 1} onClick={() => setTabIndex(1)}>
-              Compile
-            </Tabs.Tab>
-            <Tabs.Tab selected={tabIndex === 2} onClick={() => setTabIndex(2)}>
-              Network
-            </Tabs.Tab>
-            <Tabs.Tab selected={tabIndex === 3} onClick={() => setTabIndex(3)}>
-              Logs
-            </Tabs.Tab>
-            <Tabs.Tab selected={tabIndex === 4} onClick={() => setTabIndex(4)}>
-              Reference
-            </Tabs.Tab>
-          </Tabs>
-          {tabIndex === 1 && <CompilerOutput />}
-          {tabIndex === 2 && <ServerList />}
-          {tabIndex === 3 && <LogViewer />}
-          {tabIndex === 4 && <Guide />}
-        </Section>
-      )}
-    </>
-  );
-};
-
-const CompilerOutput = (props) => {
+const CompilerOutput = (props: NTSLTextAreaProps) => {
   const { act, data } = useBackend<Data>();
   const { compiler_output } = data;
+  const [ntslCode] = props.storedNtslCode;
   return (
     <>
       <Box>
         <Button
           mb={1}
           icon="save"
+          content="Save"
+          disabled={ntslCode === ''}
+          tooltip={'Must be done before compiling!'}
+          onClick={() => act('save_code', { saved_code: ntslCode })}
+        />
+      </Box>
+      <Box>
+        <Button
+          mb={1}
+          icon="running"
           content="Compile & Run"
           onClick={() => act('compile_code')}
         />
@@ -239,7 +218,7 @@ const ServerList = (props) => {
         <Input
           mb={1}
           value={network}
-          onChange={(_, value) =>
+          onBlur={(value) =>
             act('set_network', {
               new_network: value,
             })
@@ -316,31 +295,52 @@ const Guide = (props) => {
         </div>
       ))}
       <br />
+      Signal flags
+      <br />
+      source: Name of person.
+      <br />
+      content: Message being said.
+      <br />
+      job: Job of the person.
+      <br />
+      freq: See NT Recognized Frequencies.
+      <br />
+      pass: Boolean, whether message will go through.
+      <br />
+      say: Say verb of the person.
+      <br />
+      ask: Ask verb of the person.
+      <br />
+      yell: Yell verb of the person.
+      <br />
+      exclaim: Exclaim verb of the person.
+      <br />
+      filters: See Radio Filters.
+      <br />
+      language: See Readable Languages.
+      <br />
       <br />
       NT radio filters: <br />
-      (var = filter_types.filter_name) <br />
-      # fonts <br />
+      (var = filter_types.filter_name) <br /># fonts <br />
       &quot;robot&quot; (robot) <br />
-      &quot;sans&quot; (wacky) <br />
-      # manipulation <br />
+      &quot;sans&quot; (wacky) <br /># manipulation <br />
       <i>&quot;italics&quot; (emphasis)</i> <br />
       <b>&quot;yell&quot; (loud)</b> <br />
       &quot;command_headset&quot; (commanding) <br />
       <br /> {/* Btw, clown is also allowed. But we don't tell them that */}
       <br />
       NT Readable languages: <br />
-      (var = languages.language_name) <br />
-      1 (human) <br />
-      2 (monkey) <br />
-      4 (robot) <br />
-      8 (draconic) <br />
-      16 (beachtounge) <br />
-      32 (sylvan) <br />
-      64 (etherean) <br />
-      128 (bonespeak) <br />
-      256 (mothian) <br />
-      512 (cat) <br />
-      1024 (english) <br />
+      (var = languages.language_name) <br />1 (human) <br />2 (monkey) <br />3
+      (robot) <br />4 (draconic) <br />
+      5 (beachtounge) <br />
+      6 (sylvan) <br />
+      7 (etherean) <br />
+      8 (bonespeak) <br />
+      9 (mothian) <br />
+      10 (cat) <br />
+      11 (ash) <br />
+      12 (torii) <br />
+      13 (uncommon) <br />
     </Section>
   );
 };

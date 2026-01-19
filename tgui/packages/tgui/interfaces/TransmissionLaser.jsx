@@ -22,7 +22,7 @@ export const TransmissionLaser = (props) => {
   const { data } = useBackend();
   const { total_earnings, name = 'Power Transmission Laser' } = data;
   return (
-    <Window title="Power Transmission Laser" width="310" height="485">
+    <Window title="Power Transmission Laser" width={310} height={485}>
       <Window.Content>
         <Status />
         <InputControls />
@@ -66,7 +66,7 @@ const Status = (props) => {
           average: [0.5, 0.8],
           bad: [-Infinity, 0.5],
         }}
-        value={output_total / max_grid_load}
+        value={max_grid_load ? output_total / max_grid_load : 0}
       />
     </Section>
   );
@@ -123,7 +123,8 @@ const InputControls = (props) => {
           minValue={0}
           maxValue={999}
           value={input_number}
-          onDrag={(e, set_input) => act('set_input', { set_input })}
+          tickWhileDragging
+          onChange={(_e, set_input) => act('set_input', { set_input })}
         />
         <Button
           content={'W'}
@@ -237,7 +238,8 @@ const OutputControls = (props) => {
           maxValue={999}
           ranges={{ bad: [-Infinity, -1] }}
           value={output_number}
-          onDrag={(e, set_output) => act('set_output', { set_output })}
+          tickWhileDragging
+          onChange={(_e, set_output) => act('set_output', { set_output })}
         />
         <Button
           content={'MW'}

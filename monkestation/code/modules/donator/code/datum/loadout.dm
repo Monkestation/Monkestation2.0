@@ -114,7 +114,7 @@
 	ckeywhitelist = list("ruby_flamewing")
 
 /datum/loadout_item/under/miscellaneous/syndie_pajamas
-	name = "Syndicate Pajamas"
+	name = "Luxury Syndicate Pajamas"
 	item_path = /obj/item/clothing/under/costume/syndie_pajamas
 	donator_only = TRUE
 	requires_purchase = FALSE
@@ -439,13 +439,13 @@
 	requires_purchase = FALSE
 
 /datum/loadout_item/plushies/elliethedarksunplush
-	name = "Ellie plush"
+	name = "Ellie Dark Sun plush"
 	item_path = /obj/item/toy/plush/elliethedarksun
 	donator_only = TRUE
 	requires_purchase = FALSE
 
 /datum/loadout_item/plushies/ellie_valentine
-	name = "Ellie plush"
+	name = "Ellie Valentine plush"
 	item_path = /obj/item/toy/plush/ellie_valentine
 	donator_only = TRUE
 	requires_purchase = FALSE
@@ -548,10 +548,10 @@
 	requires_purchase = FALSE
 
 /datum/loadout_item/effects/fluffykobold
-    ckeywhitelist = list("Bluedragon66")
-    name = "Fluffy Kobold Transformation"
-    item_path = /obj/item/effect_granter/donator/fluffykobold
-    requires_purchase = FALSE
+	ckeywhitelist = list("Bluedragon66")
+	name = "Fluffy Kobold Transformation"
+	item_path = /obj/item/effect_granter/donator/fluffykobold
+	requires_purchase = FALSE
 
 //Mysterybark
 /datum/loadout_item/head/western_wizard_hat
@@ -562,10 +562,10 @@
 
 //CaptainShiba
 /datum/loadout_item/effects/darkscug
-    ckeywhitelist = list("CaptainShiba")
-    name = "Nightcat Transformation"
-    item_path = /obj/item/effect_granter/donator/darkscug
-    requires_purchase = FALSE
+	ckeywhitelist = list("CaptainShiba")
+	name = "Nightcat Transformation"
+	item_path = /obj/item/effect_granter/donator/darkscug
+	requires_purchase = FALSE
 
 /datum/loadout_item/pocket_items/donator/darkscug
 	name = "Pet Delivery Beacon - Nightcat"
@@ -573,6 +573,7 @@
 	donator_only = TRUE
 	requires_purchase = FALSE
 	ckeywhitelist = list("CaptainShiba")
+
 //NoobskyBoi
 /datum/loadout_item/head/noobskyboi_golden_tophat
 	name = "Golden Tophat"
@@ -589,7 +590,7 @@
 
 //Ophaq
 /datum/loadout_item/suit/ophaq_rainbowcoat
-	name = "Rainbow Coat"
+	name = "Ophaq Rainbow Coat"
 	item_path = /obj/item/clothing/suit/toggle/ophaq_rainbowcoat
 	donator_only = TRUE
 	requires_purchase = FALSE
