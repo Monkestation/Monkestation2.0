@@ -1026,7 +1026,7 @@
 		SEND_SIGNAL(src, COMSIG_REAGENTS_REACTION_STEP, num_reactions, seconds_per_tick)
 
 	if(length(mix_message) && my_atom) //This is only at the end
-		my_atom.audible_message(span_notice("[ma2html(my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] [mix_message.Join()]"))
+		my_atom.audible_message(span_notice("[icon2html(my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] [mix_message.Join()]"))
 
 	if(!LAZYLEN(reaction_list))
 		finish_reacting()
@@ -1093,7 +1093,7 @@
 	for(var/datum/equilibrium/equilibrium as anything in reaction_list)
 		mix_message += end_reaction(equilibrium)
 	if(my_atom && length(mix_message))
-		my_atom.audible_message(span_notice("[ma2html(my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] [mix_message.Join()]"))
+		my_atom.audible_message(span_notice("[icon2html(my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] [mix_message.Join()]"))
 	finish_reacting()
 
 /*
@@ -1114,7 +1114,7 @@
 				mix_message += end_reaction(equilibrium)
 				any_stopped = TRUE
 	if(length(mix_message))
-		my_atom.audible_message(span_notice("[ma2html(my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))][mix_message.Join()]"))
+		my_atom.audible_message(span_notice("[icon2html(my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))][mix_message.Join()]"))
 	return any_stopped
 
 /*
@@ -1205,7 +1205,7 @@
 		add_reagent(product, yield, null, chem_temp, sum_purity)
 
 	var/list/seen = viewers(4, get_turf(my_atom))
-	var/iconhtml = ma2html(cached_my_atom, seen)
+	var/iconhtml = icon2html(cached_my_atom, seen)
 	if(cached_my_atom)
 		if(!ismob(cached_my_atom) && !istype(cached_my_atom, /obj/item/circuit_component)) // No bubbling mobs
 			if(selected_reaction.mix_sound)
