@@ -67,9 +67,9 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	. = ..()
 	var/amount = get_amount()
 	if(amount <= 5)
-		icon_state = "rods-[amount]"
+		icon_state = "[initial(icon_state)]-[amount]"
 	else
-		icon_state = "rods"
+		icon_state = initial(icon_state)
 
 /obj/item/stack/rods/welder_act(mob/living/user, obj/item/tool)
 	if(get_amount() < 2)
@@ -122,7 +122,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	name = "heat resistant rod"
 	desc = "Treated, specialized iron rods. When exposed to the vaccum of space their coating breaks off, but they can hold up against the extreme heat of active lava."
 	singular_name = "heat resistant rod"
-	icon_state = "rods"
+	icon_state = "lavarods"
 	inhand_icon_state = "rods"
 	color = "#5286b9ff"
 	flags_1 = CONDUCT_1
@@ -139,6 +139,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	name = "shuttle frame rods"
 	desc = "Treated, specialized iron rods suitable for the construction of shuttle frames or the expansion of existing shuttles."
 	singular_name = "shuttle frame rod"
+	icon_state = "shuttlerods"
 	mats_per_unit = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT,  /datum/material/titanium = SMALL_MATERIAL_AMOUNT)
 	merge_type = /obj/item/stack/rods/shuttle
 
