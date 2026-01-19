@@ -251,7 +251,7 @@
 		sprint = initial
 
 	for(var/i = 0; i < max(sprint, initial); i += 20)
-		var/turf/step = get_turf(get_step(src, direction))
+		var/turf/step = get_turf(get_step_multiz(src, direction))
 		if(step)
 			if(!(ISINRANGE_EX(step.x, TRANSITIONEDGE, world.maxx - TRANSITIONEDGE) && ISINRANGE_EX(step.y, TRANSITIONEDGE, world.maxy - TRANSITIONEDGE)))
 				transition_step(step, direction)
