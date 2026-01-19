@@ -340,6 +340,9 @@
   - bugfix: fixed getting stuck buckled in a wheelchair after it's destroyed.
   SirNightKnight, JohnFulpWillard:
   - rscadd: Security now has a Big Red Key.
+  buffakaza:
+  - map: added two previously absent roundstart bz canisters to blueshift gas storage
+      room and void raptor atmos project room.
   wraith-54321:
   - rscadd: Added sub overminds for blob
   - rscadd: Added more blob chemical effects
