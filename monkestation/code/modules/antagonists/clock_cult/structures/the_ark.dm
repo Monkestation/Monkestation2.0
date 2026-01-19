@@ -55,7 +55,7 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 	if(GLOB.ratvar_risen)
 		return ..()
 	STOP_PROCESSING(SSthe_ark, src)
-	send_clock_message(null, span_bigbrass("The Ark has been destroyed, Reebe is becoming unstable!"))
+	send_clock_message(span_bigbrass("The Ark has been destroyed, Reebe is becoming unstable!"))
 	for(var/mob/living/current_mob in GLOB.player_list)
 		if(!on_reebe(current_mob))
 			continue
@@ -105,7 +105,7 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 	. = ..()
 	if(!.)
 		return
-	send_clock_message(null, span_bigbrass("The ark is taking damage!"), sent_sound = 'monkestation/sound/machines/clockcult/ark_damage.ogg')
+	send_clock_message(span_bigbrass("The ark is taking damage!"), sent_sound = 'monkestation/sound/machines/clockcult/ark_damage.ogg')
 	flick("clockwork_gateway_damaged", src)
 	playsound(src, 'monkestation/sound/machines/clockcult/ark_damage.ogg', 75, FALSE)
 
@@ -138,7 +138,7 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 	current_state = ARK_STATE_CHARGING
 	SSshuttle.registerHostileEnvironment(src)
 	icon_state = "clockwork_gateway_charging"
-	send_clock_message(null, span_bigbrass("The Ark's many cogs suddenly whir to life, steam gushing out of its many crevices; it will open in 5 minutes!"), \
+	send_clock_message(span_bigbrass("The Ark's many cogs suddenly whir to life, steam gushing out of its many crevices; it will open in 5 minutes!"), \
 					   sent_sound = 'sound/magic/clockwork/scripture_tier_up.ogg')
 	addtimer(CALLBACK(src, PROC_REF(open_gateway)), ARK_READY_PERIOD) //MOVE THIS TO A LOOP ON THE ARK SS
 
@@ -148,12 +148,12 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 	current_state = ARK_STATE_GRACE
 	SSshuttle.registerHostileEnvironment(src)
 	icon_state = "clockwork_gateway_active"
-	send_clock_message(null, span_bigbrass("The Ark has been activated, you will be transported soon! Dont forget to gather weapons with your \"Clockwork Armaments\" scripture."), \
+	send_clock_message(span_bigbrass("The Ark has been activated, you will be transported soon! Dont forget to gather weapons with your \"Clockwork Armaments\" scripture."), \
 					   sent_sound = 'sound/magic/clockwork/ark_activation_sequence.ogg')
 	addtimer(CALLBACK(src, PROC_REF(announce_gateway)), 27 SECONDS)
 
 /obj/structure/destructible/clockwork/the_ark/proc/announce_gateway()
-	send_clock_message(null, span_ratvar("DESTROY THE HERETICS."), sent_sound = 'monkestation/sound/machines/clockcult/ark_recall.ogg')
+	send_clock_message(span_ratvar("DESTROY THE HERETICS."), sent_sound = 'monkestation/sound/machines/clockcult/ark_recall.ogg')
 	sleep(3 SECONDS)
 	current_state = ARK_STATE_ACTIVE
 
@@ -199,7 +199,7 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 	current_state = ARK_STATE_FINAL
 	STOP_PROCESSING(SSthe_ark, src)
 	resistance_flags |= INDESTRUCTIBLE
-	send_clock_message(null, span_bigbrass("Ratvar approaches, you shall be eternally rewarded for your servitude!"), msg_ghosts = FALSE)
+	send_clock_message(span_bigbrass("Ratvar approaches, you shall be eternally rewarded for your servitude!"), msg_ghosts = FALSE)
 	send_to_playing_players(span_warning("You feel time slow down."))
 	GLOB.ratvar_risen = TRUE
 	sound_to_playing_players('monkestation/sound/effects/ratvar_rises.ogg', 100)

@@ -57,8 +57,6 @@
 	var/cached_brute_mod = 0
 	/// the mob we are stalking
 	var/mob/living/carbon/human/stalked_human
-	/// how close we are in % to finishing stalking
-	var/stalk_precent = 0
 	///ALL Powers currently owned
 	var/list/datum/action/cooldown/slasher/powers = list()
 
@@ -129,8 +127,8 @@
 	ADD_TRAIT(current_mob, TRAIT_RESISTHIGHPRESSURE, "slasher")
 
 	var/mob/living/carbon/carbon = current_mob
-	var/obj/item/organ/internal/eyes/shadow/shadow = new
-	shadow.Insert(carbon, drop_if_replaced = FALSE)
+	var/obj/item/organ/internal/eyes/slasher/eye = new
+	eye.Insert(carbon, drop_if_replaced = FALSE)
 
 	RegisterSignal(current_mob, COMSIG_LIVING_LIFE, PROC_REF(LifeTick))
 	RegisterSignal(current_mob, COMSIG_LIVING_PICKED_UP_ITEM, PROC_REF(item_pickup))
@@ -270,9 +268,7 @@
 		held_force = held_item.force
 
 	increase_fear(attacked_mob, held_force / 3)
-
-	for(var/i = 1 to (held_force / 3))
-		attacked_mob.blood_particles(2, max_deviation = rand(-120, 120), min_pixel_z = rand(-4, 12), max_pixel_z = rand(-4, 12))
+	attacked_mob.blood_particles(5, max_deviation = rand(-120, 120), min_pixel_z = rand(-4, 12), max_pixel_z = rand(-4, 12))
 
 /datum/antagonist/slasher/proc/item_pickup(datum/input_source, obj/item/source)
 	SIGNAL_HANDLER

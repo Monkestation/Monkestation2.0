@@ -35,10 +35,10 @@
 
 	user.whisper("Engine, V vaibxr gb-gur`r gb-pbzzhar gb-nyy.", language = /datum/language/common) //Ratvar, I invoke to-the`e to-commune to-all.
 	user.whisper(html_decode(message), filterproof = TRUE)
-	send_clock_message(user, message)
+	send_clock_message(message, user)
 
 /// Send `sent_message` to all other clock cultists and ghosts from the user
-/proc/send_clock_message(mob/living/user, sent_message, span = "<span class='brass'>", msg_ghosts = TRUE, sent_sound)
+/proc/send_clock_message(sent_message, mob/living/user, span = "<span class='brass'>", msg_ghosts = TRUE, sent_sound)
 	var/final_message = ""
 	if(user && istype(user, /mob/living/eminence))
 		final_message = span + span_bigbrass("<i><b>Master Eminence<b> transmits, \"") + sent_message + span_bigbrass("\"</i></span>")
