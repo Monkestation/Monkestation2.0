@@ -7,13 +7,14 @@
 	max_multiplier = 2.5
 
 /datum/symptom/cult_hallucination/activate(mob/living/mob)
-	if(IS_CULTIST(mob) || istype(get_area(mob), /area/station/service/chapel) || !mob?.client)
+	var/turf/mob_turf = get_turf(mob)
+	if(!mob_turf || IS_CULTIST(mob) || istype(get_area(mob), /area/station/service/chapel) || !mob?.client)
 		return
 	mob.whisper("...[pick("ire","ego","nahlizet","certum","veri","jatkaa","mgar","balaq", "karazet", "geeri")]...", forced = "[type]")
 
 	var/list/turf_list = list()
 	turf_loop:
-		for(var/turf/open/turf in spiral_block(get_turf(mob), 10))
+		for(var/turf/open/turf in RANGE_TURFS(10, mob_turf))
 			if(!prob(2 * multiplier))
 				continue
 			if(istype(get_area(turf), /area/station/service/chapel))
@@ -72,66 +73,3 @@
 	animate(color = list(1.375,0.19,0,0,0,1.375,0.19,0,0.19,0,1.375,0,0,0,0,1,0,0,0,0), time = 1)//4
 	animate(color = list(1.25,0.12,0,0,0,1.25,0.12,0,0.12,0,1.25,0,0,0,0,1,0,0,0,0), time = 1)//3
 	animate(color = list(1.125,0.06,0,0,0,1.125,0.06,0,0.06,0,1.125,0,0,0,0,1,0,0,0,0), time = 1)//2
-
-/proc/spiral_block(turf/epicenter, range, draw_red=FALSE)
-	if(!epicenter)
-		return list()
-
-	if(!range)
-		return list(epicenter)
-
-	. = list()
-
-	var/turf/T
-	var/y
-	var/x
-	var/c_dist = 1
-	. += epicenter
-
-	while( c_dist <= range )
-		y = epicenter.y + c_dist
-		x = epicenter.x - c_dist + 1
-		//bottom
-		for(x in x to epicenter.x+c_dist)
-			T = locate(x,y,epicenter.z)
-			if(T)
-				. += T
-				if(draw_red)
-					T.color = "red"
-					sleep(5)
-
-		y = epicenter.y + c_dist - 1
-		x = epicenter.x + c_dist
-		for(y in y to epicenter.y-c_dist step -1)
-			T = locate(x,y,epicenter.z)
-			if(T)
-				. += T
-				if(draw_red)
-					T.color = "red"
-					sleep(5)
-
-		y = epicenter.y - c_dist
-		x = epicenter.x + c_dist - 1
-		for(x in  x to epicenter.x-c_dist step -1)
-			T = locate(x,y,epicenter.z)
-			if(T)
-				. += T
-				if(draw_red)
-					T.color = "red"
-					sleep(5)
-
-		y = epicenter.y - c_dist + 1
-		x = epicenter.x - c_dist
-		for(y in y to epicenter.y+c_dist)
-			T = locate(x,y,epicenter.z)
-			if(T)
-				. += T
-				if(draw_red)
-					T.color = "red"
-					sleep(5)
-		c_dist++
-
-	if(draw_red)
-		sleep(30)
-		for(var/turf/Q in .)
-			Q.color = null
