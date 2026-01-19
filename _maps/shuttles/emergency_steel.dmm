@@ -35,9 +35,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/structure/window/spawner{
-	dir = 8
-	},
+/obj/structure/window/spawner/directional/west,
 /obj/machinery/camera/autoname{
 	dir = 5
 	},
@@ -57,12 +55,10 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "ht" = (
-/obj/structure/window/reinforced/tinted,
-/obj/structure/window/reinforced/tinted{
-	dir = 4
-	},
 /obj/structure/bed,
 /obj/item/bedsheet/nanotrasen,
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/south,
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/east,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "hv" = (
@@ -109,9 +105,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/structure/window/spawner{
-	dir = 8
-	},
+/obj/structure/window/spawner/directional/west,
 /obj/machinery/camera/autoname{
 	dir = 6
 	},
@@ -160,14 +154,13 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "mU" = (
-/obj/structure/window/reinforced/tinted{
-	dir = 4
-	},
 /obj/structure/dresser,
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/east,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "nq" = (
 /obj/machinery/door/window/right/directional/north,
+/obj/structure/window/spawner/directional/north,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "oh" = (
@@ -203,16 +196,14 @@
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "rL" = (
-/obj/structure/window/reinforced/tinted{
-	dir = 1
-	},
 /obj/structure/bed,
 /obj/item/bedsheet/nanotrasen,
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/north,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "sk" = (
-/obj/structure/window/reinforced/tinted,
 /obj/structure/table,
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/south,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "sn" = (
@@ -349,9 +340,7 @@
 /area/shuttle/escape)
 "Dz" = (
 /obj/machinery/icecream_vat,
-/obj/structure/window/spawner{
-	dir = 1
-	},
+/obj/structure/window/spawner/directional/north,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "Eh" = (
@@ -399,9 +388,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/structure/window/spawner{
-	dir = 8
-	},
+/obj/structure/window/spawner/directional/west,
 /obj/machinery/light/directional/north,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
@@ -416,7 +403,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "Jc" = (
@@ -424,9 +411,9 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "Jj" = (
-/obj/structure/window/reinforced/tinted,
 /obj/structure/bed,
 /obj/item/bedsheet/nanotrasen,
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/south,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "Jv" = (
@@ -454,10 +441,8 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "Km" = (
-/obj/structure/window/reinforced/tinted{
-	dir = 1
-	},
 /obj/structure/table,
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/north,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "KV" = (
@@ -491,9 +476,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/structure/window/spawner{
-	dir = 8
-	},
+/obj/structure/window/spawner/directional/west,
 /obj/machinery/light/directional/south,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
@@ -512,9 +495,7 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "OF" = (
-/obj/structure/window/spawner{
-	dir = 1
-	},
+/obj/structure/window/spawner/directional/north,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "ON" = (
@@ -554,9 +535,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/structure/window/spawner{
-	dir = 8
-	},
+/obj/structure/window/spawner/directional/west,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "Rb" = (
@@ -640,9 +619,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/structure/window/spawner{
-	dir = 8
-	},
+/obj/structure/window/spawner/directional/west,
 /obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
@@ -678,14 +655,10 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "Zl" = (
-/obj/structure/window/reinforced/tinted{
-	dir = 1
-	},
-/obj/structure/window/reinforced/tinted{
-	dir = 4
-	},
 /obj/structure/bed,
 /obj/item/bedsheet/nanotrasen,
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/north,
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/east,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "Zn" = (

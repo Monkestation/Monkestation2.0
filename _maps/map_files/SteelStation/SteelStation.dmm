@@ -2405,7 +2405,7 @@
 "aJL" = (
 /obj/effect/landmark/navigate_destination/chapel,
 /obj/structure/cable,
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/chapel,
 /area/station/service/chapel)
 "aJR" = (
@@ -3350,6 +3350,7 @@
 /obj/structure/sink/directional/east,
 /obj/structure/flora/bush/fullgrass/style_random,
 /obj/structure/flora/bush/flowers_br/style_random,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/grass,
 /area/station/security/prison/garden)
 "aZp" = (
@@ -7178,7 +7179,7 @@
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "cjm" = (
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "cjt" = (
@@ -18860,7 +18861,8 @@
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "fyp" = (
-/turf/open/space/basic,
+/obj/structure/foamedmetal,
+/turf/open/floor/plating/airless,
 /area/station/maintenance/starboard/aft)
 "fyr" = (
 /obj/structure/cable,
@@ -21252,7 +21254,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/flora/bush/fullgrass/style_random,
 /turf/open/floor/grass,
@@ -22203,13 +22205,6 @@
 	},
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
-"guW" = (
-/obj/structure/flora/bush/flowers_yw,
-/obj/structure/flora/bush/fullgrass/style_random,
-/obj/structure/window/spawner/directional/south,
-/obj/structure/window/spawner/directional/north,
-/turf/open/floor/grass,
-/area/station/medical/surgery/theatre)
 "guY" = (
 /obj/effect/landmark/event_spawn,
 /obj/effect/turf_decal/trimline/blue/filled/arrow_ccw{
@@ -23136,7 +23131,7 @@
 "gJg" = (
 /obj/machinery/door/poddoor/massdriver_trash,
 /obj/structure/fans/tiny,
-/turf/open/space/basic,
+/turf/open/floor/iron,
 /area/station/maintenance/disposal)
 "gJp" = (
 /obj/machinery/light/small/directional/south,
@@ -34537,7 +34532,7 @@
 /area/station/engineering/atmos)
 "jYX" = (
 /obj/machinery/smartfridge,
-/turf/closed/wall,
+/turf/open/floor/iron,
 /area/station/service/hydroponics)
 "jYY" = (
 /obj/item/kirbyplants/random,
@@ -38434,7 +38429,7 @@
 /obj/machinery/stasis{
 	dir = 8
 	},
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
@@ -38613,9 +38608,12 @@
 /turf/open/floor/iron,
 /area/station/engineering/storage_shared)
 "lhg" = (
-/obj/machinery/smartfridge,
+/obj/structure/flora/bush/flowers_yw,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/window/spawner/directional/south,
+/obj/structure/window/spawner/directional/north,
 /turf/open/floor/grass,
-/area/station/service/hydroponics)
+/area/station/medical/surgery/theatre)
 "lhj" = (
 /obj/structure/railing/wooden_fencing,
 /obj/structure/railing/wooden_fencing{
@@ -43468,13 +43466,12 @@
 /turf/open/floor/grass,
 /area/station/science/research)
 "mym" = (
-/obj/machinery/door/airlock/external,
-/obj/effect/mapping_helpers/airlock/access/all/engineering/atmos,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/turf/open/space/basic,
-/area/station/engineering/atmos)
+/obj/structure/flora/bush/flowers_pp,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/window/spawner/directional/north,
+/obj/structure/window/spawner/directional/south,
+/turf/open/floor/grass,
+/area/station/medical/surgery/theatre)
 "myB" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
@@ -46167,7 +46164,7 @@
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/structure/table/reinforced,
 /obj/effect/spawner/random/entertainment/lighter,
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/station/service/bar)
@@ -48625,7 +48622,7 @@
 "nZB" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/structure/table/reinforced,
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /obj/machinery/door/firedoor,
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron,
@@ -57068,6 +57065,10 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/station/maintenance/port/lesser)
+"qxC" = (
+/obj/machinery/smartfridge,
+/turf/open/floor/grass,
+/area/station/service/hydroponics)
 "qxG" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/maintenance,
@@ -59959,7 +59960,7 @@
 /obj/machinery/stasis{
 	dir = 8
 	},
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /turf/open/floor/glass/reinforced,
@@ -67018,7 +67019,6 @@
 /obj/structure/table,
 /obj/item/cultivator,
 /obj/item/cultivator,
-/obj/machinery/light/floor/has_bulb,
 /obj/structure/flora/bush/fullgrass/style_random,
 /turf/open/floor/grass,
 /area/station/security/prison/garden)
@@ -68386,12 +68386,10 @@
 /turf/open/floor/grass,
 /area/station/hallway/primary/central)
 "tJK" = (
-/obj/structure/flora/bush/flowers_pp,
-/obj/structure/flora/bush/fullgrass/style_random,
-/obj/structure/window/spawner/directional/north,
-/obj/structure/window/spawner/directional/south,
-/turf/open/floor/grass,
-/area/station/medical/surgery/theatre)
+/obj/structure/foamedmetal,
+/obj/structure/foamedmetal,
+/turf/open/floor/plating/airless,
+/area/station/maintenance/starboard/aft)
 "tJM" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
@@ -80165,7 +80163,7 @@
 /obj/structure/lattice,
 /obj/effect/decal/cleanable/glass,
 /turf/open/space/basic,
-/area/station/hallway/primary/fore)
+/area/space/nearstation)
 "xiX" = (
 /obj/structure/window/spawner/directional/south,
 /obj/structure/table/wood,
@@ -116321,7 +116319,7 @@ drP
 rPk
 wyZ
 rbE
-lhg
+qxC
 sgN
 sft
 xfH
@@ -121418,7 +121416,7 @@ wwh
 hXc
 qWw
 vhH
-tJK
+mym
 nek
 grS
 ewH
@@ -122709,7 +122707,7 @@ vUX
 ewH
 sBr
 uoD
-guW
+lhg
 uHB
 rcm
 uWP
@@ -123542,8 +123540,8 @@ wch
 sXi
 mpy
 mpy
-nMR
-nMR
+fyp
+fyp
 sXi
 sXi
 sXi
@@ -123797,10 +123795,10 @@ sXi
 sXi
 sXi
 rTt
-nMR
-nMR
-nSW
-nMR
+fyp
+fyp
+tJK
+fyp
 sXi
 rvd
 rvd
@@ -124054,11 +124052,11 @@ sXi
 sXi
 ayd
 dNF
-nSW
-nSW
-nSW
-fyp
-fyp
+tJK
+tJK
+tJK
+rvd
+rvd
 rvd
 rvd
 rvd
@@ -124310,12 +124308,12 @@ sXi
 sXi
 sXi
 ayd
-nMR
-nMR
-nMR
 fyp
 fyp
 fyp
+rvd
+rvd
+rvd
 rvd
 rvd
 rvd
@@ -124567,12 +124565,12 @@ sXi
 sXi
 sXi
 ayd
-nMR
-nMR
-nMR
 fyp
 fyp
 fyp
+rvd
+rvd
+rvd
 rvd
 rvd
 rvd
@@ -124824,12 +124822,12 @@ sXi
 sXi
 sXi
 mpy
-nMR
-nMR
-nMR
-nMR
 fyp
 fyp
+fyp
+fyp
+rvd
+rvd
 beI
 beI
 beI
@@ -125081,12 +125079,12 @@ ayd
 mpy
 kmU
 mpy
-nMR
-nMR
-nMR
-nMR
-nMR
 fyp
+fyp
+fyp
+fyp
+fyp
+rvd
 rvd
 rvd
 rvd
@@ -125340,9 +125338,9 @@ sXi
 dMa
 sXi
 sXi
-nMR
-nMR
-nMR
+fyp
+fyp
+fyp
 sXi
 rvd
 rvd
@@ -125599,7 +125597,7 @@ nTE
 sXi
 nTE
 nTE
-nMR
+fyp
 sXi
 rvd
 rvd
@@ -136537,7 +136535,7 @@ rvd
 rvd
 rvd
 lkN
-mym
+sFe
 lkN
 ycD
 ycD
