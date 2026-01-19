@@ -83,6 +83,9 @@ Always compile, always use that verb, and always make sure that it works for wha
 #define ZTRAIT_ICE_RUINS "Ice Ruins"
 #define ZTRAIT_ICE_RUINS_UNDERGROUND "Ice Ruins Underground"
 #define ZTRAIT_ISOLATED_RUINS "Isolated Ruins" //Placing ruins on z levels with this trait will use turf reservation instead of usual placement.
+#define ZTRAIT_REEBE "Reebe"
+///Generalized ztrait for levels that most things should not interact with, EG centcom or reebe
+#define ZTRAIT_RESTRICTED "Restricted"
 
 // boolean - weather types that occur on the level
 #define ZTRAIT_SNOWSTORM "Weather_Snowstorm"
@@ -125,7 +128,7 @@ Always compile, always use that verb, and always make sure that it works for wha
 
 // default trait definitions, used by SSmapping
 ///Z level traits for CentCom
-#define ZTRAITS_CENTCOM list(ZTRAIT_CENTCOM = TRUE, ZTRAIT_NOPHASE = TRUE)
+#define ZTRAITS_CENTCOM list(ZTRAIT_CENTCOM = TRUE, ZTRAIT_NOPHASE = TRUE, ZTRAIT_RESTRICTED = TRUE)
 ///Z level traits for Space Station 13
 #define ZTRAITS_STATION list(ZTRAIT_LINKAGE = CROSSLINKED, ZTRAIT_STATION = TRUE, ZTRAIT_STARLIGHT = TRUE)
 ///Z level traits for Deep Space
@@ -142,6 +145,13 @@ Always compile, always use that verb, and always make sure that it works for wha
 #define ZTRAITS_AWAY list(ZTRAIT_AWAY = TRUE)
 ///Z level traits for Secret Away Missions
 #define ZTRAITS_AWAY_SECRET list(ZTRAIT_AWAY = TRUE, ZTRAIT_SECRET = TRUE, ZTRAIT_NOPHASE = TRUE)
+///List of ztraits the reebe Z level has
+#define ZTRAITS_REEBE list(ZTRAIT_REEBE = TRUE, \
+						ZTRAIT_NOPHASE = TRUE, \
+						ZTRAIT_RESTRICTED = TRUE, \
+						ZTRAIT_BOMBCAP_MULTIPLIER = 0.5, \
+						ZTRAIT_RESERVED = TRUE, \
+						ZTRAIT_BASETURF = /turf/open/indestructible/reebe_flooring)
 
 #define DL_NAME "name"
 #define DL_TRAITS "traits"

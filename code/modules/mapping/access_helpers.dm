@@ -125,6 +125,11 @@
 	access_list += ACCESS_TCOMMS
 	return access_list
 
+/obj/effect/mapping_helpers/airlock/access/any/engineering/tcoms_admin/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_TCOMMS_ADMIN
+	return access_list
+
 /obj/effect/mapping_helpers/airlock/access/any/engineering/ce/get_access()
 	var/list/access_list = ..()
 	access_list += ACCESS_CE
@@ -605,6 +610,12 @@
 	var/list/access_list = ..()
 	access_list += ACCESS_TCOMMS
 	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/all/engineering/tcoms_admin/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_TCOMMS_ADMIN
+	return access_list
+
 
 /obj/effect/mapping_helpers/airlock/access/all/engineering/ce/get_access()
 	var/list/access_list = ..()

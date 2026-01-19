@@ -144,3 +144,203 @@
   - balance: burning yellow extracts apply 10 burn damage instead of pain
   - balance: burning yellow negative effects no longer apply if the victim is shock
       immune
+2026-01-12:
+  JohnFulpWillard:
+  - rscadd: Barbers and Explorers are now roundstart jobs when available. 1 Barber,
+      3 Explorers + 3 Latejoin Explorers.
+  - bugfix: Barbers are now considered part of Service, and Explorers are now considered
+      part of Cargo.
+  - rscadd: Explorers are no longer eligible as antagonist targets, as they are nigh
+      impossible to track down.
+  - rscdel: Barbers are no longer available on Kilo, Graveyard, IceBox & Pubby (due
+      to the lack of an office or equipment).
+  - bugfix: Fixed minor UI issues with PDA, NT Rep's app & Locked safes.
+  - bugfix: Bridge Assistant now shows on the command monitor.
+  - refactor: Digitigrade lizard/satyr clothing no longer uses a separate icon for
+      each individual piece of clothing, which was essentially doubling the resources
+      you need to download to log in. Now it uses masking to change clothes to fit
+      lizards when being equipped, which does mean there's a quality drop, but in
+      exchange new clothes don't need to be sprited twice, any piece of clothing that
+      does not have a lizard alt made will still fit digi lizards/satyrs (unless specifically
+      excluded), and respriting clothes won't leave lizard alts using the old version.
+  - refactor: Digitigrade shoes have been reworked to be based off of templates &
+      masking, which further cuts on rsc size. This comes at the cost of plenty of
+      shoes no longer fitting lizards, however these new shoes don't need to be constantly
+      updated when a new shoe is added/removed/resprited (which is currently the reason
+      why many shoes don't work for lizards atm)
+  - bugfix: Smithed boots fit lizards better now.
+  - bugfix: Dry galoshes are no longer invisible on lizards.
+  JupiterJaeden:
+  - balance: Commando operatives now start with syndicate microbomb implants, like
+      normal nuclear operatives.
+  - balance: Disarming/destroying the commando operative nuke still automatically
+      calls the shuttle, but the shuttle is now recallable if command so desires.
+  SirNightKnight:
+  - bugfix: fixed item interactions with the powerfist not working.
+  - bugfix: fixed nuclear operatives getting Nanotrasen contracts.
+  - bugfix: fixed spraycans being able to paint things in really dark colors.
+  Tractor-Maam:
+  - bugfix: integrated circuit MOD action components now have icons again.
+  - bugfix: changed the icon name of the nanite/bci/mod action icon "five" to actually
+      be five, instead of fiv.
+2026-01-13:
+  Absolucy:
+  - bugfix: Fixed willing borer host messages being white instead of big and purple.
+  - bugfix: Fixed some languages (most notably Shadowtongue) missing their icons.
+  - image: The Mushroom language now has an icon.
+  JohnFulpWillard:
+  - bugfix: Jailbird no longer breaks your memories.
+  JupiterJaeden:
+  - qol: All of security (except the brig doc) now starts with security pens in their
+      PDAs roundstart, which can be used to prompt a surrender from someone by clicking
+      on them at range. They are also printable at the security lathe.
+  Lawlolawl:
+  - qol: Made gulag point generation more intuitive (buffs mining for rare minerals)
+  - rscadd: Added surgical tools to Heliostation morgue.
+  SirNightKnight:
+  - balance: lessened the explosion effect of oil extracts.
+2026-01-14:
+  Absolucy:
+  - bugfix: Slightly optimized some blood-related code.
+  - qol: Slashers no longer spawn a morbillion blood particles (they still spawn SOME)
+      each hit, hopefully avoiding grinding the server to a halt.
+  JohnFulpWillard:
+  - bugfix: The list of jobs should all fit in the latejoin menu now.
+  - qol: Research console's search bar is longer.
+  - bugfix: Explorers won't be progtot objectives.
+  - bugfix: anarchids now have the right sprite when a creampie is thrown at their
+      face.
+  Lawlolawl:
+  - bugfix: Fixed TK teleporting bags and equipment.
+  SirNightKnight:
+  - balance: matter eater cannot eat living, indestructible (one exception), or objects
+      bigger than 32 by 32.
+  - bugfix: matter eater cannot eat items in storage, inventory, or that are located
+      inside you.
+  - balance: dying with matter eater makes you vomit all your contents.
+  - map: gave all pirate shuttles except the Dutchman inducers and a super capacity
+      SMES.
+  - bugfix: fixed the wirecutter icon for the spess knife not showing.
+  - bugfix: re-added cargo candle pack crates?
+  - bugfix: fixed every mob being able to strangle a human.
+  - qol: cyborgs can move pulled items by clicking on an open turf next to them.
+  - code_imp: replaced all secure briefcase with briefcase secure
+  SirNightKnight, Jacquerel:
+  - balance: Foam now passes through tables, grilles, computers, and several other
+      dense structures. You can still escape foam by mantling onto tables and such.
+  Tractor-Maam:
+  - bugfix: Barbers can now reset their alt titles.
+  - bugfix: Explorers can now reset their alt titles.
+  - bugfix: RoboTact for cyborgs now prints their name again.
+  flleeppyy:
+  - bugfix: PDAs should ring now
+  notghosti:
+  - bugfix: Desiccation no longer tells you it can be fixed via cloning
+  wonderinghost:
+  - map: added/modified map content
+  - map: Blueshift PTL Now on the Left Instead of Right (fills right side with storage)
+  - map: Atmos Has Powerline to PTL (look for blue wires)
+2026-01-15:
+  Absolucy:
+  - admin: Added an admin button in the Secrets panel to lobotomize Poly.
+  Chelxox:
+  - balance: Gripper gloves & gorilla gloves properly balanced.
+  Ice-Type:
+  - balance: Majorly tuned down the wounding caused by buckshot
+  - balance: Improvised shells no longer do more damage than buckshot shells
+  JohnFulpWillard:
+  - bugfix: NTSL no longer constantly freezes up saying you're doing too many inputs.
+  SirNightKnight:
+  - qol: morgue tray soul alarms don't ignore bad DNA mobs.
+  - rscadd: updated the honorbound sect guilt list to take slashers, bloodsuckers,
+      darkspawn and their thralls into account.
+  - qol: added balloon alerts to the crusade join rite.
+  - bugfix: fixed a bug  where the refrain text for attacking an innocent was sent
+      to the target instead of the attacker.
+  - code_imp: updates honorbound code to be in line with the ongoing attack chain
+      refactor.
+  - balance: you can shove anyone while honorbound.
+  - balance: removes mining soulstones from the necropolis chest loot pool.
+  - rscadd: replaced all universal blood bags with sealed saline chem packs containing
+      55 saline glucose, 35 iron, and 10 tirimol.
+  - rscadd: added saline chem packs to all existing blood crates.
+  - rscadd: added spider blood to the blood variety crate.
+  - spellcheck: fixed a minor grammar error in the penlight's decription.
+  - map: removed a misplaced computer console on kilostation.
+  - bugfix: ' voidraptor sec med uses sec access instead of brig.'
+  Tractor-Maam:
+  - map: the HoP line on Helio has their windows actually exist in full
+  notghosti:
+  - bugfix: Removed a handheld monitor node typo
+  - rscadd: Added Morphine and ammoniated mercury to emergency hypo spray
+  - balance: Emergency Hypo spray 5 > 10 capacity
+  - balance: Emergency Hypo spray 1 > 2 recharge rate
+2026-01-16:
+  Absolucy:
+  - image: Opening/closing normal and reinforced false walls now has a proper animation.
+2026-01-17:
+  JohnFulpWillard:
+  - bugfix: Telecomms servers won't brick if you get a runtime error in your NTSL
+      code.
+  - bugfix: NTSL scripting should be a little more responsive now, but will no longer
+      automatically save your code.
+  - bugfix: Added some monke-exclusive roundstart languages to NTSL script, replacing
+      non-existent languages from it.
+  - qol: Added some extra references help to the NTSL scripting computer.
+  SirNightKnight:
+  - bugfix: fixed teleporting disconnecting mobs from what they are buckled to.
+2026-01-18:
+  Absolucy:
+  - rscadd: Heretics can now actually create ghouls from oozeling cores. Flesh heretics
+      have to right click with their grasp, and oozeling cores should work with Imperfect
+      Ritual and Shattered Ritual.
+  - qol: The "Assist your master" objective for heretic minions now include their
+      master's name.
+  - bugfix: Fixed the seed extractor not showing seed icons.
+  - bugfix: Fixed the seed extractor's search not searching for reagents.
+  Chelxox:
+  - bugfix: Food items with no reagents can now be eaten, although won't provide the
+      eater with any sort of nutrition.
+  - rscadd: Adds a chat warning if user eats reagentless (otherwise non-nutritive)
+      food.
+  JohnFulpWillard:
+  - map: Remapped Theseus' telecomms.
+  - rscadd: Signal Techs now have Network access & NTNet Monitor.
+  - bugfix: NTSL console now properly requires access.
+  - bugfix: Removed 2 admin request consoles on Meta.
+  - rscdel: NTSL console no longer holds ID cards (??)
+  Lawlolawl:
+  - bugfix: Fixed indestructible items (nuke disk, hand tele etc.) teleporting to
+      ore silo in vault when attempting to place them into a protolathe. No one was
+      stupid enough to try it in the last 5 months since porting tg's rework, apparently.
+  - qol: You can no longer place PDAs, pens, or radio headsets into autolathes for
+      recycling (traitor inconspicuous uplinks)
+  - bugfix: Deconstructing PDAs results in the inserted item in the pen slot (e.g.
+      pen, crayon, cig, penlight etc) being dropped on the floor correctly.
+  - rscadd: Added description text for when PDAs are missing a power cell.
+  - bugfix: Traitor objective tools (nuke core screwdriver, SM extraction scalpel
+      & hemostat) can no longer be recycled in autolathes.
+  Muffindrake:
+  - map: Rezone/Repipe/Reconstruct pass on MetaStation Atmospherics including more
+      space, more compact gas storage, and less hidden pipes to bother you
+  iliyaxox:
+  - bugfix: Blueshift's brig infirmary now has supplied medkits instead of empty ones.
+2026-01-19:
+  Absolucy:
+  - rscdel: Removed the Dysplasia Syndrome symptom from pathology.
+  Aniantan:
+  - bugfix: Hearts and genetic makeup transfers properly work with blood types and
+      no longer break blood transfusion and mending touch
+  - bugfix: DNA console no longer gets subject's blood type wrong
+  JohnFulpWillard:
+  - bugfix: NTSL's "Mute Poly" achievement works as it's supposed to.
+  - rscadd: NTSL's language scripting has been changed. Please update your scripts
+      (The reference is updated for this as well)
+  SirNightKnight:
+  - bugfix: fixed getting stuck buckled in a wheelchair after it's destroyed.
+  SirNightKnight, JohnFulpWillard:
+  - rscadd: Security now has a Big Red Key.
+  wraith-54321:
+  - rscadd: Added sub overminds for blob
+  - rscadd: Added more blob chemical effects
+  - balance: Slightly increased brute storyteller point values

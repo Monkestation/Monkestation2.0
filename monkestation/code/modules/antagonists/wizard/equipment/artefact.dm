@@ -155,38 +155,3 @@
 /obj/item/spellbook_charge/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/charge_adjuster, type_to_charge_to = /obj/item/spellbook, charges_given = value, called_proc_name = TYPE_PROC_REF(/obj/item/spellbook, adjust_charge))
-
-//wizard shield charges
-#define ADDED_MAX_CHARGE 50
-#define MAX_CHARGES_ABSORBED 3
-/obj/item/wizard_armour_charge/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/charge_adjuster, type_to_charge_to = /obj/item/spellbook, charges_given = 1, called_proc_name = TYPE_PROC_REF(/obj/item/spellbook, adjust_charge))
-
-/obj/item/wizard_armour_charge/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	. = ..()
-	if(.)
-		return
-
-	var/obj/item/mod/module/energy_shield/wizard/shield = istype(interacting_with, /obj/item/mod/module/energy_shield/wizard) || locate(/obj/item/mod/module/energy_shield/wizard) in interacting_with.contents
-	if(shield)
-		if(isnum(shield))
-			shield = interacting_with
-		if(shield.max_charges >= (initial(shield.max_charges) + (ADDED_MAX_CHARGE * MAX_CHARGES_ABSORBED)))
-			balloon_alert(user, "\The [shield] cannot take more charges, you can put this back into your spellbook to refund it.")
-			return ITEM_INTERACT_BLOCKING
-
-		shield.max_charges += ADDED_MAX_CHARGE
-		var/datum/component/shielded/shield_comp = shield.mod?.GetComponent(/datum/component/shielded)
-		if(shield_comp)
-			shield_comp.max_charges += ADDED_MAX_CHARGE
-			shield_comp.current_charges += (ADDED_MAX_CHARGE - initial(shield_comp.charge_recovery))
-		qdel(src) //should still be able to finish the attack chain
-		return ITEM_INTERACT_SUCCESS
-	return NONE
-
-#undef ADDED_MAX_CHARGE
-#undef MAX_CHARGES_ABSORBED
-
-/obj/item/mod/module/energy_shield/wizard
-	lose_multiple_charges = TRUE //I dont think we have anything else that uses this var, so all the numbers for this are subject to change
