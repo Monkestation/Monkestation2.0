@@ -1204,7 +1204,6 @@
 		SSblackbox.record_feedback("tally", "chemical_reaction", yield, product)
 		add_reagent(product, yield, null, chem_temp, sum_purity)
 
-	var/list/seen = viewers(4, get_turf(my_atom))
 	var/iconhtml = "<img class='icon' src='\ref[cached_my_atom]'>"
 	if(cached_my_atom)
 		if(!ismob(cached_my_atom) && !istype(cached_my_atom, /obj/item/circuit_component)) // No bubbling mobs
