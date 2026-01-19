@@ -463,7 +463,6 @@
 #include "code\__DEFINES\~monkestation\is_helpers.dm"
 #include "code\__DEFINES\~monkestation\jobs.dm"
 #include "code\__DEFINES\~monkestation\keybinding.dm"
-#include "code\__DEFINES\~monkestation\level_traits.dm"
 #include "code\__DEFINES\~monkestation\lighting.dm"
 #include "code\__DEFINES\~monkestation\living.dm"
 #include "code\__DEFINES\~monkestation\logging.dm"
