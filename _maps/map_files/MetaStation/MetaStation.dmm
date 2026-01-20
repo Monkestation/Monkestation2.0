@@ -24084,6 +24084,10 @@
 /obj/structure/trash_pile,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
+"iyu" = (
+/obj/machinery/cassette_library,
+/turf/open/floor/wood,
+/area/station/service/library)
 "iyy" = (
 /obj/structure/table,
 /obj/item/folder/white{
@@ -91836,8 +91840,8 @@ iOc
 sVY
 vKt
 mfj
+iyu
 jKn
-mjr
 cWr
 ecO
 nZH
