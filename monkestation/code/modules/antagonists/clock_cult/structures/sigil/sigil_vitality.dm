@@ -72,7 +72,7 @@
 			var/pronoun_appropriate_demonym = "CLOCK-SIBLING"
 			if(affected_mob.gender == MALE)
 				pronoun_appropriate_demonym = "CLOCK-BROTHER"
-			if(affected_mob.gender == FEMALE)
+			else if(affected_mob.gender == FEMALE)
 				pronoun_appropriate_demonym = "CLOCK-SISTER"
 			SEND_SOUND(affected_mob, 'sound/magic/clockwork/scripture_tier_up.ogg')
 			to_chat(affected_mob, span_bigbrass("\"[text2ratvar("YOUR SERVITUDE IS NOT FINISHED, [uppertext(affected_mob.real_name)]. RISE, [pronoun_appropriate_demonym], AND BE RENEWED.")]\""))
@@ -112,13 +112,13 @@
 /// Checks the role of whoever was killed by the vitality sigil, and does any special code if needed.
 /obj/structure/destructible/clockwork/sigil/vitality/proc/check_special_role(mob/living/affected_mob)
 	if(IS_CULTIST(affected_mob)) //for now these just give extra vitality, but at some point I need to make them give something unique, maybe the gun?
-		send_clock_message(null, span_clockred("The dog of Nar'sie, [affected_mob] has had their vitality drained, rejoice!"))
+		send_clock_message(span_clockred("The dog of Nar'sie, [affected_mob] has had their vitality drained, rejoice!"))
 		GLOB.clock_vitality = min(GLOB.clock_vitality + 20, MAX_CLOCK_VITALITY)
 	else if(IS_HERETIC(affected_mob))
-		send_clock_message(null, span_clockred("The heretic, [affected_mob] has had their vitality drained, rejoice!"))
+		send_clock_message(span_clockred("The heretic, [affected_mob] has had their vitality drained, rejoice!"))
 		GLOB.clock_vitality = min(GLOB.clock_vitality + 30, MAX_CLOCK_VITALITY)
 	else
-		send_clock_message(null, span_clockred("[affected_mob] has had their vitality drained by [src], rejoice!"))
+		send_clock_message(span_clockred("[affected_mob] has had their vitality drained by [src], rejoice!"))
 
 #undef FREE_DAMAGE_HEALED
 #undef HEALTH_DRAINED

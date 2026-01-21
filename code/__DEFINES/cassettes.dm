@@ -15,6 +15,8 @@
 #define CASSETTE_STATUS_APPROVED 2
 /// This cassette has been denied.
 #define CASSETTE_STATUS_DENIED 3
+/// This cassette has been deleted, by an external source or in-game admin.
+#define CASSETTE_STATUS_DELETED 4
 
 /// The maximum amount of songs one side of a cassette tape can hold.
 #define MAX_SONGS_PER_CASSETTE_SIDE 7

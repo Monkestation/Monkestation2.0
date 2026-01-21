@@ -6781,6 +6781,8 @@
 	dir = 1
 	},
 /obj/item/binoculars,
+/obj/item/key/security,
+/obj/item/key/security,
 /turf/open/floor/iron/dark,
 /area/station/security/warden)
 "cbJ" = (
@@ -24940,6 +24942,11 @@
 /obj/item/radio/intercom/directional/east,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/upper)
+"huz" = (
+/obj/machinery/light/floor/has_bulb,
+/obj/structure/cable,
+/turf/open/floor/circuit/telecomms/mainframe,
+/area/station/tcommsat/server)
 "huC" = (
 /obj/machinery/light{
 	dir = 8;
@@ -26099,9 +26106,7 @@
 /obj/effect/turf_decal/siding/dark{
 	dir = 1
 	},
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
-	dir = 1
-	},
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on,
 /turf/open/floor/iron/dark/small,
 /area/station/tcommsat/computer)
 "hMA" = (
@@ -52973,15 +52978,13 @@
 /turf/open/floor/plating,
 /area/station/engineering/engine_smes)
 "pBn" = (
-/obj/machinery/nuclearbomb/beer,
 /obj/effect/turf_decal/trimline/dark_red/filled/line,
 /obj/effect/turf_decal/trimline/dark_red/filled/line{
 	dir = 1
 	},
 /obj/effect/turf_decal/bot_white,
 /obj/structure/extinguisher_cabinet/directional/north,
-/obj/item/key/security,
-/obj/item/key/security,
+/obj/vehicle/ridden/battering_ram,
 /turf/open/floor/iron,
 /area/station/ai_monitored/security/armory)
 "pBH" = (
@@ -80952,9 +80955,9 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "xwz" = (
-/obj/structure/reagent_dispensers/water_cooler,
 /obj/effect/turf_decal/bot,
 /obj/structure/cable,
+/obj/machinery/cassette_library,
 /turf/open/floor/wood,
 /area/station/service/library)
 "xwE" = (
@@ -115962,7 +115965,7 @@ jgm
 nhC
 jGA
 qYO
-aFa
+jgi
 aFa
 aFa
 mbi
@@ -116219,7 +116222,7 @@ jgm
 lXw
 jGA
 ree
-iZG
+huz
 aVk
 aFa
 aFa
@@ -116476,7 +116479,7 @@ jgm
 lXw
 jGA
 azB
-abt
+xNW
 tZQ
 abt
 egU
