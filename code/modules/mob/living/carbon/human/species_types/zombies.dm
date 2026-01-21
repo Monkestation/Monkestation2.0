@@ -191,7 +191,7 @@
 	infection = C.get_organ_slot(ORGAN_SLOT_ZOMBIE)
 	if(!infection)
 		infection = new()
-		infection.Insert(C)
+		infection.Follow_Insert(C, ORGAN_SLOT_BRAIN)
 
 // Your skin falls off
 /datum/species/human/krokodil_addict

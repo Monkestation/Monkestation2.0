@@ -86,9 +86,9 @@
 
 	if(isliving(current_mob))
 		var/obj/item/organ/internal/shadowtumor/thrall/tumor = current_mob.get_organ_slot(ORGAN_SLOT_BRAIN_TUMOR)
-		if(!tumor || !istype(tumor))
+		if(!istype(tumor))
 			tumor = new
-			tumor.Insert(current_mob, FALSE, FALSE)
+			tumor.Follow_Insert(current_mob, ORGAN_SLOT_BRAIN, FALSE, FALSE)
 			if(team)
 				tumor.antag_team = team
 

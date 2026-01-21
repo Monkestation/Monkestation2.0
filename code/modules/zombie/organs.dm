@@ -18,7 +18,7 @@
 /obj/item/organ/internal/zombie_infection/Initialize(mapload)
 	. = ..()
 	if(iscarbon(loc))
-		Insert(loc)
+		Follow_Insert(loc, ORGAN_SLOT_BRAIN)
 	GLOB.zombie_infection_list += src
 
 /obj/item/organ/internal/zombie_infection/Destroy()
@@ -50,6 +50,11 @@
 	if(!(src in owner.organs))
 		Remove(owner)
 	if(owner.mob_biotypes & MOB_MINERAL)//does not process in inorganic things
+		return
+	if(isoozeling(owner) && owner.stat != DEAD) // Cannot become a zombie. Slight symbiosis with the ooze.
+		owner.heal_ordered_damage(DAMAGE_PRECISION * seconds_per_tick, list(TOX, BRUTE, BURN)) // Weaker than stablized purple extract.
+		if (SPT_PROB(5, seconds_per_tick))
+			to_chat(owner, span_danger("Your insides shift uncomfortably... but you feel satisfied."))
 		return
 	if(HAS_TRAIT(owner, TRAIT_NO_ZOMBIFY))
 		return

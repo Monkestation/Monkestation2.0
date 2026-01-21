@@ -2431,7 +2431,7 @@
 	// Silently add the zombie infection organ to be activated upon death
 	if(!exposed_mob.get_organ_slot(ORGAN_SLOT_ZOMBIE))
 		var/obj/item/organ/internal/zombie_infection/nodamage/ZI = new()
-		ZI.Insert(exposed_mob)
+		ZI.Follow_Insert(exposed_mob, ORGAN_SLOT_BRAIN)
 
 /datum/reagent/magillitis
 	name = "Magillitis"
