@@ -2866,7 +2866,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/execution/education)
 "aoP" = (
-/obj/structure/table,
+/obj/vehicle/ridden/secway,
 /turf/open/floor/plating,
 /area/station/security/lockers)
 "aoR" = (
@@ -16459,14 +16459,14 @@
 /turf/open/floor/wood,
 /area/station/service/library)
 "byP" = (
-/obj/structure/table/wood,
-/obj/machinery/computer/libraryconsole,
 /obj/machinery/light/directional/north,
+/obj/machinery/cassette_library,
 /turf/open/floor/wood,
 /area/station/service/library)
 "byQ" = (
-/obj/machinery/skill_station,
 /obj/machinery/airalarm/directional/north,
+/obj/structure/table/wood,
+/obj/machinery/computer/libraryconsole,
 /turf/open/floor/wood,
 /area/station/service/library)
 "byR" = (
@@ -42025,6 +42025,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/north,
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory)
 "iXW" = (
@@ -65196,10 +65197,9 @@
 /turf/open/floor/plating,
 /area/station/security/checkpoint/engineering)
 "rIj" = (
-/obj/vehicle/ridden/secway,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/delivery,
-/obj/structure/reagent_dispensers/wall/peppertank/directional/west,
+/obj/vehicle/ridden/battering_ram,
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory)
 "rIx" = (
@@ -65410,6 +65410,10 @@
 /obj/machinery/vending/assist,
 /turf/open/floor/iron,
 /area/station/maintenance/port)
+"rMA" = (
+/obj/machinery/skill_station,
+/turf/open/floor/wood,
+/area/station/service/library)
 "rMK" = (
 /obj/item/reagent_containers/cup/glass/dry_ramen,
 /obj/structure/closet,
@@ -120634,7 +120638,7 @@ iiK
 buR
 buR
 bxm
-byO
+rMA
 gnv
 gDd
 gDd

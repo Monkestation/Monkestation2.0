@@ -152,6 +152,7 @@
 	shield_icon_file = 'icons/effects/magic.dmi'
 	shield_icon = "mageshield"
 	recharge_path = /obj/item/wizard_armour_charge
+	lose_multiple_charges = TRUE
 
 ///Magic Nullifier - Protects you from magic.
 /obj/item/mod/module/anti_magic

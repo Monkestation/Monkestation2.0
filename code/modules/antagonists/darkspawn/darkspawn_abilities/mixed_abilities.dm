@@ -153,14 +153,13 @@
 	. = ..()
 	if(!isliving(owner))
 		return
-	var/mob/living/L = owner
-	L.balloon_alert(L, "zkxa'ya")
-	L.visible_message(span_warning("[L] breaks away from [L]'s shadow!"), span_velvet("You create an illusion of yourself."))
-	playsound(L, 'sound/magic/darkspawn/devour_will_form.ogg', 50, 1)
+	owner.balloon_alert(owner, "zkxa'ya")
+	owner.visible_message(span_warning("[owner] breaks away from [owner]'s shadow!"), span_velvet("You create an illusion of yourself."))
+	playsound(owner, 'sound/magic/darkspawn/devour_will_form.ogg', 50, 1)
 
-	var/mob/living/simple_animal/hostile/illusion/darkspawn/M = new(get_turf(L))
-	M.Copy_Parent(L, duration, 100, 10) //closely follows regular player stats so it's not painfully obvious (still sorta is)
-	M.cached_multiplicative_slowdown = L.cached_multiplicative_slowdown
+	var/mob/living/simple_animal/hostile/illusion/darkspawn/clone = new(get_turf(owner))
+	clone.copy_parent(owner, duration, 100, 10) //closely follows regular player stats so it's not painfully obvious (still sorta is)
+	clone.cached_multiplicative_slowdown = owner.cached_multiplicative_slowdown
 
 //////////////////////////////////////////////////////////////////////////
 //--------------------Summon a sentient distraction---------------------//
@@ -241,7 +240,7 @@
 	frayed = new(get_turf(caster))
 	player_mind.active = TRUE
 
-	frayed.Copy_Parent(caster, 100, health, damage)
+	frayed.copy_parent(caster, 100, health, damage)
 	frayed.name = caster.name
 	frayed.real_name = caster.real_name
 	player_mind.transfer_to(frayed)

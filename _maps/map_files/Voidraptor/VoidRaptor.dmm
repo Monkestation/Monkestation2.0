@@ -11737,6 +11737,18 @@
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
 /area/space/nearstation)
+"dwS" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 4
+	},
+/obj/machinery/portable_atmospherics/canister/bz,
+/turf/open/floor/iron/textured_edge{
+	dir = 8
+	},
+/area/station/engineering/atmos)
 "dxg" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -47182,7 +47194,6 @@
 /turf/open/floor/iron/textured,
 /area/station/engineering/atmos)
 "nhJ" = (
-/obj/structure/table/wood,
 /obj/structure/sign/painting/library{
 	pixel_y = 32
 	},
@@ -47195,12 +47206,7 @@
 	dir = 9;
 	name = "library camera"
 	},
-/obj/item/newspaper,
-/obj/item/newspaper{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/clothing/glasses/regular,
+/obj/machinery/cassette_library,
 /turf/open/floor/wood/tile,
 /area/station/service/library)
 "nhR" = (
@@ -48503,6 +48509,9 @@
 	pixel_x = 32
 	},
 /obj/effect/turf_decal/delivery,
+/obj/vehicle/ridden/battering_ram{
+	dir = 8
+	},
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 4
 	},
@@ -84769,6 +84778,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 5
 	},
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/iron/textured,
 /area/station/engineering/atmos)
 "xxv" = (
@@ -116910,7 +116920,7 @@ qWX
 lzk
 pZr
 xxp
-xsj
+dwS
 iJq
 gQv
 jir
