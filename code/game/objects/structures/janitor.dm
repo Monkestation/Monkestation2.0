@@ -269,7 +269,7 @@
 		update_appearance(UPDATE_OVERLAYS)
 		return SECONDARY_ATTACK_CONTINUE_CHAIN //so we can empty the cart via our afterattack without trying to put the item in the bag
 
-	if(mybag?.attackby(weapon, user))
+	if(mybag?.atom_storage.attempt_insert(weapon))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
