@@ -31,6 +31,7 @@
 		/obj/item/toy/plush/carpplushie,
 		)
 	alt_titles = list(
+		"Explorer",
 		"Expeditionist",
 		"Scavenger",
 	)

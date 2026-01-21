@@ -22490,7 +22490,7 @@
 /obj/structure/table/wood,
 /obj/item/camera/detective,
 /obj/item/restraints/handcuffs,
-/obj/item/storage/secure/briefcase{
+/obj/item/storage/briefcase/secure{
 	pixel_x = 2;
 	pixel_y = -2
 	},
@@ -29676,7 +29676,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/structure/table/wood,
-/obj/item/storage/secure/briefcase{
+/obj/item/storage/briefcase/secure{
 	pixel_x = 2;
 	pixel_y = -2
 	},
@@ -32329,6 +32329,9 @@
 "pBF" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
+/obj/vehicle/ridden/battering_ram{
+	dir = 8
+	},
 /turf/open/floor/stone,
 /area/station/ai_monitored/security/armory)
 "pBM" = (
@@ -38761,6 +38764,10 @@
 	pixel_y = 3;
 	pixel_x = 5
 	},
+/obj/item/walkman{
+	pixel_y = 4;
+	pixel_x = -6
+	},
 /turf/open/floor/wood,
 /area/station/service/library)
 "szn" = (
@@ -43273,11 +43280,7 @@
 /turf/open/floor/iron/diagonal,
 /area/station/medical/medbay/lobby)
 "uFt" = (
-/obj/structure/table/wood,
-/obj/item/walkman{
-	pixel_y = 4;
-	pixel_x = -6
-	},
+/obj/machinery/cassette_library,
 /turf/open/floor/wood,
 /area/station/service/library)
 "uFw" = (

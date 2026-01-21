@@ -18,7 +18,7 @@ GLOBAL_LIST_INIT(store_inhand_items, generate_store_items(/datum/store_item/inha
 
 /datum/store_item/inhand/briefcase_secure
 	name = "Secure Briefcase"
-	item_path = /obj/item/storage/secure/briefcase
+	item_path = /obj/item/storage/briefcase/secure
 	item_cost = 4000
 
 /datum/store_item/inhand/skub
