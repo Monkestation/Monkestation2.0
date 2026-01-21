@@ -15,7 +15,7 @@
 #define OFFSET_ABSOLUTE "Absolute offset"
 #define OFFSET_RELATIVE "Relative offset"
 
-GLOBAL_LIST_INIT(spawnpanels_by_ckey, list())
+GLOBAL_ALIST_EMPTY(spawnpanels_by_ckey)
 
 /*
 	An instance of a /tg/UI™ Spawn Panel. Stores preferences, spawns things, controls the UI. Unique for each user (their ckey).
