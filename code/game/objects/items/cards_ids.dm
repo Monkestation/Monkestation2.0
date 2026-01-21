@@ -138,11 +138,6 @@
 		ADD_TRAIT(src, TRAIT_TASTEFULLY_THICK_ID_CARD, ROUNDSTART_TRAIT)
 
 /obj/item/card/id/Destroy()
-#ifndef UNIT_TESTS
-	if (registered_name && name != initial(name))
-		var/list/call_stack = capture_call_stack()
-		logger.Log(LOG_CATEGORY_ID_DELS, "id deleted: [name]. call stack:\n\t[json_encode(call_stack)]")
-#endif
 	if (registered_account)
 		registered_account.bank_cards -= src
 	if (my_store)
