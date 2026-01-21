@@ -41,13 +41,14 @@ GLOBAL_LIST_EMPTY(all_vampires)
 
 	rank_up(8, TRUE) // Rank up a lot.
 	to_chat(owner.current, span_cultbold("As a true prince, you find some of your old power returning to you!"))
-	set_antag_hud(owner.current, "prince")
+	// LUCY TODO: HUD shit
+	/* set_antag_hud(owner.current, "prince") */
 	prince = TRUE
 
 	for(var/datum/antagonist/vampire as anything in GLOB.all_vampires)
 		to_chat(vampire.owner.current, span_narsiesmall("[owner.current] has claimed the role of Prince!"))
 
-	grant_power(new /datum/action/vampire/targeted/scourgify)
+	grant_power(new /datum/action/cooldown/vampire/targeted/scourgify)
 
 	var/datum/objective/vampire/prince/prince_objective = new()
 	objectives += prince_objective
@@ -66,7 +67,7 @@ GLOBAL_LIST_EMPTY(all_vampires)
 
 	rank_up(4, TRUE) // Rank up less.
 	to_chat(owner.current, span_cultbold("As a camarilla scourge, your newfound purpose empowers you!"))
-	set_antag_hud(owner.current, "scourge")
+	// set_antag_hud(owner.current, "scourge")
 	scourge = TRUE
 
 	var/datum/objective/vampire/scourge/scourge_objective = new()
@@ -74,7 +75,7 @@ GLOBAL_LIST_EMPTY(all_vampires)
 	owner.announce_objectives()
 
 	for(var/datum/antagonist/vampire as anything in GLOB.all_vampires)
-		to_chat(vampire.owner.current, span_cultbigbold("Under authority of the Prince, [owner.current] has been raised to the duty of the Scourge!"))
+		to_chat(vampire.owner.current, span_cultbold(span_big("Under authority of the Prince, [owner.current] has been raised to the duty of the Scourge!")))
 
 	message_admins("[owner.current] has been made a Scourge of the Vampires!")
 	log_game("[owner.current] has become a Scourge of the Vampires.")

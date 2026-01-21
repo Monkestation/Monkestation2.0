@@ -2,8 +2,7 @@
 	name = "\improper Vampire"
 	roundend_category = "vampires"
 	antagpanel_category = "Vampire"
-	// banning_key = ROLE_VAMPIRE
-	required_living_playtime = 4
+	show_in_roundend = ROLE_VAMPIRE
 	ui_name = "AntagInfoVampire"
 	hijack_speed = 0.5
 
@@ -58,7 +57,7 @@
 	var/total_blood_drank = 0
 
 	/// Powers currently owned
-	var/list/datum/action/vampire/powers = list()
+	var/list/datum/action/cooldown/vampire/powers = list()
 	/// Frenzy Grab Martial art given to Vampires in a Frenzy
 	var/datum/martial_art/frenzygrab/frenzygrab = new
 
@@ -97,13 +96,14 @@
 	var/obj/effect/abstract/vampire_tracker_holder/tracker
 
 	/// Static typecache of all vampire powers.
-	var/static/list/all_vampire_powers = typecacheof(/datum/action/vampire, ignore_root_path = TRUE)
+	var/static/list/all_vampire_powers = typecacheof(/datum/action/cooldown/vampire, ignore_root_path = TRUE)
 	/// Antagonists that cannot be vassalized no matter what
 	var/static/list/vassal_banned_antags = list(
 		/datum/antagonist/vampire,
 		/datum/antagonist/changeling,
 		/datum/antagonist/cult,
-		/datum/antagonist/servant_of_ratvar,
+		/datum/antagonist/clock_cultist,
+		/datum/antagonist/monsterhunter,
 	)
 
 	/// List of traits applied inherently
@@ -123,6 +123,9 @@
 		TRAIT_TOXIMMUNE,
 		TRAIT_STABLELIVER,
 		TRAIT_OOZELING_NO_CANNIBALIZE,
+		TRAIT_ETHEREAL_NO_OVERCHARGE,
+		TRAIT_XENO_IMMUNE,
+		TRAIT_NO_ZOMBIFY,
 	)
 
 	/// List of traits applied while in torpor
@@ -169,7 +172,8 @@
 
 	create_vampire_team()
 
-	add_antag_hud(ANTAG_HUD_VAMPIRE, "vampire", current_mob)
+	// LUCY TODO: HUD shit
+	/* add_antag_hud(ANTAG_HUD_VAMPIRE, "vampire", current_mob) */
 
 	current_mob.faction |= FACTION_VAMPIRE
 
@@ -216,7 +220,8 @@
 		QDEL_NULL(sunlight_display)
 		QDEL_NULL(humanity_display)
 
-	remove_antag_hud(ANTAG_HUD_VAMPIRE, current_mob)
+	// LUCY TODO: HUD shit
+	/* remove_antag_hud(ANTAG_HUD_VAMPIRE, current_mob) */
 
 	current_mob.faction -= FACTION_VAMPIRE
 
@@ -312,7 +317,7 @@
 	. = ..()
 
 	// Transfer powers
-	for(var/datum/action/vampire/all_powers in powers)
+	for(var/datum/action/cooldown/vampire/all_powers in powers)
 		if(old_body)
 			all_powers.Remove(old_body)
 		all_powers.Grant(new_body)
@@ -325,8 +330,9 @@
 		RegisterSignal(new_body, COMSIG_LIVING_HUG_CARBON, PROC_REF(on_hug_carbon))
 		RegisterSignal(new_body, COMSIG_LIVING_APPRAISE_ART, PROC_REF(on_appraise_art))
 
+	// LUCY TODO: whatever this shit is
 	// Update punch damage
-	var/mob/living/carbon/human/human_new_body = new_body
+	/* var/mob/living/carbon/human/human_new_body = new_body
 	var/mob/living/carbon/human/human_old_body = old_body
 
 	if(ishuman(human_new_body) && ishuman(human_old_body))
@@ -341,7 +347,7 @@
 	else if(ishuman(human_new_body))
 		var/datum/species/new_species = human_new_body.dna.species
 		new_species.punchdamage += 2
-		human_new_body.physiology.stamina_mod *= VAMPIRE_INHERENT_STAMINA_RESIST
+		human_new_body.physiology.stamina_mod *= VAMPIRE_INHERENT_STAMINA_RESIST */
 
 
 	// Vampire Traits
@@ -394,7 +400,7 @@
 
 	data["clan"] += list(clan_data)
 
-	for(var/datum/action/vampire/power as anything in powers)
+	for(var/datum/action/cooldown/vampire/power as anything in powers)
 		var/list/power_data = list()
 
 		power_data["name"] = power.name
@@ -450,7 +456,7 @@
 	return report.Join("<br>")
 
 /datum/antagonist/vampire/proc/give_starting_powers()
-	for(var/datum/action/vampire/all_powers as anything in all_vampire_powers)
+	for(var/datum/action/cooldown/vampire/all_powers as anything in all_vampire_powers)
 		if(!(initial(all_powers.special_flags) & VAMPIRE_DEFAULT_POWER))
 			continue
 		grant_power(new all_powers)
@@ -460,9 +466,10 @@
 
 	// Species traits
 	if(ishuman(user) && user.dna)
-		var/datum/species/user_species = user.dna.species
+		// LUCY TODO
+		/* var/datum/species/user_species = user.dna.species
 		user_species.species_traits += TRAIT_DRINKSBLOOD
-		user_species.punchdamage += 2
+		user_species.punchdamage += 2 */
 		user.physiology.stamina_mod *= VAMPIRE_INHERENT_STAMINA_RESIST // Vampires have inherent stamina resistance
 		user.dna.remove_all_mutations()
 
@@ -470,9 +477,10 @@
 	user.add_traits(vampire_traits, TRAIT_VAMPIRE)
 
 	// Clear Addictions
-	user.reagents.addiction_list = new/list()
+	// LUCY TODO
+	/* user.reagents.addiction_list = new/list()
 	owner.remove_quirk(/datum/quirk/junkie)
-	owner.remove_quirk(/datum/quirk/junkie/smoker)
+	owner.remove_quirk(/datum/quirk/junkie/smoker) */
 
 	// No Skittish "People" allowed
 	if(HAS_TRAIT(user, TRAIT_SKITTISH))
@@ -480,7 +488,7 @@
 
 	// Tongue & Language
 	user.grant_all_languages(ALL, TRUE, LANGUAGE_VAMPIRE)
-	user.grant_language(/datum/language/vampiric)
+	user.grant_language(/datum/language/vampiric, source = LANGUAGE_VAMPIRE)
 
 	/// Clear Disabilities & Organs
 	heal_vampire_organs()
@@ -504,14 +512,14 @@
 		QDEL_NULL(my_clan)
 
 	// Powers
-	for(var/datum/action/vampire/all_powers as anything in powers)
+	for(var/datum/action/cooldown/vampire/all_powers as anything in powers)
 		remove_power(all_powers)
 
 	/// Stats
 	if(ishuman(owner.current))
-		var/datum/species/user_species = user.dna.species
+		/* var/datum/species/user_species = user.dna.species */
 		var/mob/living/carbon/human/human_user = user
-		user_species.species_traits -= TRAIT_DRINKSBLOOD
+		/* user_species.species_traits -= TRAIT_DRINKSBLOOD */
 		human_user.physiology.stamina_mod /= VAMPIRE_INHERENT_STAMINA_RESIST
 
 	// Remove all vampire traits
@@ -522,7 +530,7 @@
 
 	// Language
 	user.remove_all_languages(LANGUAGE_VAMPIRE, TRUE)
-	user.remove_language(/datum/language/vampiric)
+	user.remove_language(/datum/language/vampiric, source = LANGUAGE_VAMPIRE)
 
 	// Heart
 	var/obj/item/organ/internal/heart/newheart = user.get_organ_slot(ORGAN_SLOT_HEART)
@@ -569,7 +577,7 @@
  * Hedonism: Indulge in bad things that feel all too right.
  * Survival: Survive. Obviously.
  */
-/datum/antagonist/vampire/proc/forge_objectives()
+/datum/antagonist/vampire/forge_objectives()
 	var/datum/objective/vampire/extra_objective
 
 	if(get_max_vassals() >= 1) // Two trees for if we can make vassals or not.

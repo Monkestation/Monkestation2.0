@@ -3,7 +3,7 @@
  *	Target can no longer act and is forced to approach the vampire.
  *	Uses an AI controller to force movement towards the caster.
  */
-/datum/action/vampire/targeted/summon
+/datum/action/cooldown/vampire/targeted/summon
 	name = "Summon"
 	desc = "Compel a mortal to approach you against their will."
 	button_icon_state = "power_summon"
@@ -21,7 +21,7 @@
 	/// Maximum duration of the summon effect
 	var/summon_duration = 30 SECONDS
 
-/datum/action/vampire/targeted/summon/check_valid_target(atom/target_atom)
+/datum/action/cooldown/vampire/targeted/summon/check_valid_target(atom/target_atom)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -38,7 +38,7 @@
 		owner.balloon_alert(owner, "immune to your presence.")
 		return FALSE
 
-	if(carbon_target.has_unlimited_silicon_privilege)
+	if(HAS_SILICON_ACCESS(carbon_target))
 		owner.balloon_alert(owner, "[carbon_target] is immune.")
 		return FALSE
 
@@ -56,7 +56,7 @@
 
 	return TRUE
 
-/datum/action/vampire/targeted/summon/FireTargetedPower(atom/target_atom)
+/datum/action/cooldown/vampire/targeted/summon/FireTargetedPower(atom/target_atom)
 	. = ..()
 	var/mob/living/carbon/carbon_target = target_atom
 
@@ -81,7 +81,7 @@
 	var/step_delay = 1.5 SECONDS
 
 /datum/status_effect/summoned/on_creation(mob/living/new_owner, set_duration, mob/living/vampire)
-	if(isnum_safe(set_duration))
+	if(IS_SAFE_NUM(set_duration))
 		duration = set_duration
 	source_vampire = vampire
 	return ..()

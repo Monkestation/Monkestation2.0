@@ -6,7 +6,7 @@
  * 	Level 3: Can be used through face protection
  * 	Level 5: Doesn't need to be facing you anymore
  */
-/datum/action/vampire/targeted/mesmerize
+/datum/action/cooldown/vampire/targeted/mesmerize
 	name = "Mesmerize"
 	desc = "Transfix the mind of a mortal who can see your eyes, freezing them in place."
 	button_icon_state = "power_mez"
@@ -29,20 +29,20 @@
 	/// Reference to the target
 	var/datum/weakref/target_ref
 
-/datum/action/vampire/targeted/mesmerize/two
+/datum/action/cooldown/vampire/targeted/mesmerize/two
 	vitaecost = 45
 	level_current = 2
 
-/datum/action/vampire/targeted/mesmerize/three
+/datum/action/cooldown/vampire/targeted/mesmerize/three
 	vitaecost = 60
 	level_current = 3
 
-/datum/action/vampire/targeted/mesmerize/four
+/datum/action/cooldown/vampire/targeted/mesmerize/four
 	desc = "Transfix the mind of a mortal."
 	vitaecost = 85
 	level_current = 4
 
-/datum/action/vampire/targeted/mesmerize/can_use()
+/datum/action/cooldown/vampire/targeted/mesmerize/can_use()
 	. = ..()
 	if(!.)
 		return FALSE
@@ -59,7 +59,7 @@
 		return FALSE
 	return TRUE
 
-/datum/action/vampire/targeted/mesmerize/check_valid_target(atom/target_atom)
+/datum/action/cooldown/vampire/targeted/mesmerize/check_valid_target(atom/target_atom)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -99,7 +99,7 @@
 		owner.balloon_alert(owner, "[living_target] is already in a hypnotic gaze.")
 		return FALSE
 
-/datum/action/vampire/targeted/mesmerize/FireTargetedPower(atom/target_atom)
+/datum/action/cooldown/vampire/targeted/mesmerize/FireTargetedPower(atom/target_atom)
 	. = ..()
 	var/mob/living/living_target = target_atom
 	target_ref = WEAKREF(living_target)
@@ -127,12 +127,12 @@
 
 	living_target.Immobilize(power_time)
 	living_target.next_move = world.time + power_time // <--- Use direct change instead. We want an unmodified delay to their next move
-	living_target.notransform = TRUE // <--- Fuck it. We tried using next_move, but they could STILL resist. We're just doing a hard freeze.
+	ADD_TRAIT(living_target, TRAIT_NO_TRANSFORM, TRAIT_MESMERIZED) // <--- Fuck it. We tried using next_move, but they could STILL resist. We're just doing a hard freeze.
 	addtimer(CALLBACK(src, PROC_REF(end_mesmerize), living_target), power_time)
 
 	power_activated_sucessfully() // PAY COST! BEGIN COOLDOWN!
 
-/datum/action/vampire/targeted/mesmerize/continue_active()
+/datum/action/cooldown/vampire/targeted/mesmerize/continue_active()
 	. = ..()
 	if(!.)
 		return FALSE
@@ -144,13 +144,12 @@
 	if(!living_target || !check_valid_target(living_target))
 		return FALSE
 
-/datum/action/vampire/targeted/mesmerize/deactivate_power()
+/datum/action/cooldown/vampire/targeted/mesmerize/deactivate_power()
 	. = ..()
 	target_ref = null
 
-/datum/action/vampire/targeted/mesmerize/proc/end_mesmerize(mob/living/living_target)
-	living_target.notransform = FALSE
-	REMOVE_TRAIT(living_target, TRAIT_MUTE, TRAIT_MESMERIZED)
+/datum/action/cooldown/vampire/targeted/mesmerize/proc/end_mesmerize(mob/living/living_target)
+	living_target.remove_traits(list(TRAIT_MUTE, TRAIT_NO_TRANSFORM), TRAIT_MESMERIZED)
 
 	to_chat(living_target, span_hypnophrase("With the spell waning, so does your memory of being mesmerized."), type = MESSAGE_TYPE_WARNING)
 

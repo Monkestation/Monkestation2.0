@@ -44,11 +44,11 @@
 	var/target_department
 	///List of all departments that can be selected for the objective.
 	var/static/list/possible_departments = list(
-		"engineering" = DEPT_BITFLAG_ENG,
-		"medical" = DEPT_BITFLAG_MED,
-		"science" = DEPT_BITFLAG_SCI,
-		"cargo" = DEPT_BITFLAG_CAR,
-		"service" = DEPT_BITFLAG_SRV,
+		"engineering" = DEPARTMENT_BITFLAG_ENGINEERING,
+		"medical" = DEPARTMENT_BITFLAG_MEDICAL,
+		"science" = DEPARTMENT_BITFLAG_SCIENCE,
+		"cargo" = DEPARTMENT_BITFLAG_CARGO,
+		"service" = DEPARTMENT_BITFLAG_SERVICE,
 	)
 
 /datum/objective/vampire/ego/department_vassal/New()
@@ -74,7 +74,7 @@
 
 		// Mind Assigned
 		if(vassal_mind.assigned_role)
-			all_vassal_jobs += SSjob.GetJob(vassal_mind.assigned_role)
+			all_vassal_jobs |= vassal_mind.assigned_role
 			continue
 		// Mob Assigned
 		if(vassal_mind.current?.job)
@@ -92,7 +92,7 @@
 	var/list/vassal_jobs = get_vassal_occupations()
 	var/converted_count = 0
 	for(var/datum/job/checked_job in vassal_jobs)
-		if(checked_job.departments & target_department)
+		if(checked_job.departments_bitflags & target_department)
 			converted_count++
 	if(converted_count >= target_amount)
 		return TRUE
@@ -150,8 +150,8 @@
 
 	var/list/all_items = owner.current.get_contents()
 	var/heart_count = 0
-	for(var/obj/item/organ/heart/current_hearts in all_items)
-		if(current_hearts.organ_flags & ORGAN_SYNTHETIC) // No robo-hearts allowed
+	for(var/obj/item/organ/internal/heart/current_hearts in all_items)
+		if(current_hearts.organ_flags & ORGAN_ROBOTIC) // No robo-hearts allowed
 			continue
 		heart_count++
 

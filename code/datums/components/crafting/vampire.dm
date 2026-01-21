@@ -19,7 +19,7 @@
 	reqs = list(
 		/obj/item/stack/sheet/iron = 1,
 		/obj/item/stack/rods = 3,
-		/obj/item/candle = 2,
+		/obj/item/flashlight/flare/candle = 2,
 	)
 
 	category = CAT_VAMPIRE

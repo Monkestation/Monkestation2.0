@@ -1,4 +1,4 @@
-/datum/action/vampire/masquerade
+/datum/action/cooldown/vampire/masquerade
 	name = "Masquerade"
 	desc = "Feign the vital signs of a mortal, and escape both casual and medical notice as the monster you truly are."
 	button_icon_state = "power_human"
@@ -13,13 +13,13 @@
 	cooldown_time = 5 SECONDS
 	constant_vitaecost = 0.1
 
-/datum/action/vampire/masquerade/activate_power()
+/datum/action/cooldown/vampire/masquerade/activate_power()
 	. = ..()
 	var/mob/living/carbon/carbon_owner = owner
 	carbon_owner.balloon_alert(carbon_owner, "masquerade turned on.")
 	carbon_owner.apply_status_effect(/datum/status_effect/masquerade)
 
-/datum/action/vampire/masquerade/deactivate_power()
+/datum/action/cooldown/vampire/masquerade/deactivate_power()
 	. = ..()
 	var/mob/living/carbon/carbon_owner = owner
 	carbon_owner.balloon_alert(carbon_owner, "masquerade turned off.")
@@ -50,7 +50,7 @@
 	ADD_TRAIT(carbon_owner, TRAIT_MASQUERADE, TRAIT_VAMPIRE)
 
 	// Handle organs
-	var/obj/item/organ/internal/heart/vampheart = carbon_owner.get_organ_by_type(/obj/item/organ/heart)
+	var/obj/item/organ/internal/heart/vampheart = carbon_owner.get_organ_by_type(/obj/item/organ/internal/heart)
 	vampheart?.Restart()
 
 	to_chat(carbon_owner, span_notice("Your heart beats falsely within your lifeless chest. You may yet pass for a mortal."))

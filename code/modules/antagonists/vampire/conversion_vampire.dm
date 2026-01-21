@@ -32,7 +32,7 @@
 		return FALSE
 #endif
 
-	if(!iscarbon(conversion_target) || !conversion_target.mind || conversion_target.mind.unconvertable || is_blacklisted_antag(conversion_target))
+	if(!iscarbon(conversion_target) || !conversion_target.mind || HAS_MIND_TRAIT(conversion_target, TRAIT_UNCONVERTABLE) || is_blacklisted_antag(conversion_target))
 		living_vampire.balloon_alert(living_vampire, "can't be vassalized.")
 		return FALSE
 

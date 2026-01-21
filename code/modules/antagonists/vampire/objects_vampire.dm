@@ -65,25 +65,26 @@
 		/// Radial menu for securing your Persuasion rack in place.
 		to_chat(user, span_notice("Do you wish to secure [src] here?"))
 		var/static/list/secure_options = list(
-			"Yes" = image(icon = 'icons/hud/radials/radial_generic.dmi', icon_state = "radial_yes"),
-			"No" = image(icon = 'icons/hud/radials/radial_generic.dmi', icon_state = "radial_no"))
+			"Yes" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_yes"),
+			"No" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_no"))
 		var/secure_response = show_radial_menu(user, src, secure_options, radius = 36, require_near = TRUE)
 		if(secure_response == "Yes")
 			bolt(user)
 		return FALSE
 	return TRUE
 
-/obj/structure/vampire/AltClick(mob/user)
-	. = ..()
-	if(user == owner && user.Adjacent(src))
-		balloon_alert(user, "unbolt [src]?")
-		var/static/list/unsecure_options = list(
-			"Yes" = image(icon = 'icons/hud/radials/radial_generic.dmi', icon_state = "radial_yes"),
-			"No" = image(icon = 'icons/hud/radials/radial_generic.dmi', icon_state = "radial_no"),
-		)
-		var/unsecure_response = show_radial_menu(user, src, unsecure_options, radius = 36, require_near = TRUE)
-		if(unsecure_response == "Yes")
-			unbolt(user)
+/obj/structure/vampire/click_alt(mob/user)
+	if(user != owner || !user.Adjacent(src))
+		return NONE
+	balloon_alert(user, "unbolt [src]?")
+	var/static/list/unsecure_options = list(
+		"Yes" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_yes"),
+		"No" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_no"),
+	)
+	var/unsecure_response = show_radial_menu(user, src, unsecure_options, radius = 36, require_near = TRUE)
+	if(unsecure_response == "Yes")
+		unbolt(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/structure/vampire/vassalrack
 	name = "vassalization rack"
@@ -168,7 +169,7 @@
 
 /// Attempt Unbuckle
 /obj/structure/vampire/vassalrack/user_unbuckle_mob(mob/living/buckled_mob, mob/user)
-	if(IS_VAMPIRE(user) || IS_VASSAL(user))
+	if(HAS_MIND_TRAIT(user, TRAIT_VAMPIRE_ALIGNED))
 		return ..()
 
 	if(buckled_mob == user)
@@ -190,7 +191,7 @@
 
 	return ..()
 
-/obj/structure/vampire/vassalrack/unbuckle_mob(mob/living/buckled_mob, force = FALSE)
+/obj/structure/vampire/vassalrack/unbuckle_mob(mob/living/buckled_mob, force = FALSE, can_fall = TRUE)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -381,7 +382,7 @@
 /obj/structure/vampire/candelabrum/attack_hand(mob/living/user, list/modifiers)
 	if(!..())
 		return
-	if(anchored && (IS_VASSAL(user) || IS_VAMPIRE(user)))
+	if(anchored && HAS_MIND_TRAIT(user, TRAIT_VAMPIRE_ALIGNED))
 		toggle()
 	return ..()
 
@@ -389,7 +390,7 @@
 	lit = !lit
 	if(lit)
 		desc = initial(desc)
-		set_light(l_range = 2, l_power = 3, l_color = "#66FFFF")
+		set_light(l_outer_range = 2, l_power = 3, l_color = "#66FFFF")
 		START_PROCESSING(SSobj, src)
 	else
 		desc = "Despite not being lit, it makes your skin crawl."
@@ -402,7 +403,7 @@
 		return
 	for(var/mob/living/carbon/nearby_people in viewers(7, src))
 		/// We don't want vampires or vassals affected by this
-		if(IS_VASSAL(nearby_people) || IS_VAMPIRE(nearby_people) || IS_CURATOR(nearby_people))
+		if(HAS_MIND_TRAIT(nearby_people, TRAIT_VAMPIRE_ALIGNED) || IS_CURATOR(nearby_people) || IS_MONSTERHUNTER(nearby_people))
 			continue
 		nearby_people.set_hallucinations_if_lower(10 SECONDS)
 		nearby_people.add_mood_event("vampcandle", /datum/mood_event/vampcandle)

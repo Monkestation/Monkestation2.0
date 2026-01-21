@@ -3,7 +3,7 @@
  *	 Gives a one-word brainwash-command to a target for 60 seconds.
  * 	Level 2: Now lasts 180 seconds.
  */
-/datum/action/vampire/targeted/command
+/datum/action/cooldown/vampire/targeted/command
 	name = "Command"
 	desc = "Dominate the mind of a mortal with a simple command."
 	button_icon_state = "power_command"
@@ -26,13 +26,13 @@
 	/// Reference to the target
 	var/datum/weakref/target_ref
 
-/datum/action/vampire/targeted/command/two
+/datum/action/cooldown/vampire/targeted/command/two
 	name = "Command"
 	power_time = 180 SECONDS
 	vitaecost = 240
 	cooldown_time = 200 SECONDS
 
-/datum/action/vampire/targeted/command/can_use()
+/datum/action/cooldown/vampire/targeted/command/can_use()
 	. = ..()
 	if(!.)
 		return FALSE
@@ -48,12 +48,12 @@
 		owner.balloon_alert(owner, "your mouth is blocked.")
 		return FALSE
 
-	if(carbon_owner.silent || !isturf(carbon_owner.loc))
+	if(HAS_TRAIT(carbon_owner, TRAIT_MUTE) || !isturf(carbon_owner.loc))
 		owner.balloon_alert(owner, "you cannot speak!")
 		return FALSE
 	return TRUE
 
-/datum/action/vampire/targeted/command/check_valid_target(atom/target_atom)
+/datum/action/cooldown/vampire/targeted/command/check_valid_target(atom/target_atom)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -69,7 +69,7 @@
 		return FALSE
 
 	// Vampire/Curator check
-	if(IS_CURATOR(living_target))
+	if(IS_CURATOR(living_target) || HAS_MIND_TRAIT(living_target, TRAIT_UNCONVERTABLE))
 		owner.balloon_alert(owner, "too powerful.")
 		return FALSE
 
@@ -93,7 +93,7 @@
 		owner.balloon_alert(owner, "[living_target] is already compelled!")
 		return FALSE
 
-/datum/action/vampire/targeted/command/FireTargetedPower(atom/target_atom)
+/datum/action/cooldown/vampire/targeted/command/FireTargetedPower(atom/target_atom)
 	. = ..()
 
 	var/mob/living/living_target = target_atom
@@ -147,24 +147,24 @@
 
 	power_activated_sucessfully() // PAY COST! BEGIN COOLDOWN!
 
-/datum/action/vampire/targeted/command/proc/get_single_word_command()
+/datum/action/cooldown/vampire/targeted/command/proc/get_single_word_command()
 	. = TRUE
-	var/command = tgui_input_text(owner, "What would you like to command?", "Input a command", "STOP", timeout = 2 MINUTES)
+	var/command = tgui_input_text(owner, "What would you like to command?", "Input a command", "STOP", encode = FALSE, timeout = 2 MINUTES)
 	if(QDELETED(src))
 		return FALSE
-	if(CHAT_FILTER_CHECK(command))
-		to_chat(owner, span_warning("The command '[span_boldname("[command]")]' is forbidden!"))
-		return FALSE
-	if(findtext(command, " "))
+	/* if(CHAT_FILTER_CHECK(command))
+		to_chat(owner, span_warning("The command '[span_bold("[command]")]' is forbidden!"))
+		return FALSE */
+	if(findtext_char(command, " "))
 		to_chat(owner, span_warning("Please only input a single word."))
 		return FALSE
-	if(length(command)  > 7)
+	if(length_char(command)  > 7)
 		to_chat(owner, span_warning("Command too long!"))
 		return FALSE
 
 	return(command)
 
-/datum/action/vampire/targeted/command/continue_active()
+/datum/action/cooldown/vampire/targeted/command/continue_active()
 	. = ..()
 	if(!.)
 		return FALSE
@@ -176,11 +176,11 @@
 	if(!living_target || !check_valid_target(living_target))
 		return FALSE
 
-/datum/action/vampire/targeted/command/deactivate_power()
+/datum/action/cooldown/vampire/targeted/command/deactivate_power()
 	. = ..()
 	target_ref = null
 
-/datum/action/vampire/targeted/command/proc/end_command(mob/living/living_target)
+/datum/action/cooldown/vampire/targeted/command/proc/end_command(mob/living/living_target)
 	REMOVE_TRAIT(living_target, TRAIT_PACIFISM, TRAIT_COMMANDED)
 	unbrainwash(living_target)
 

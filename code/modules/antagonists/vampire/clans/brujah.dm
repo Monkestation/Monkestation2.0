@@ -16,4 +16,4 @@
 
 /datum/vampire_clan/brujah/on_apply()
 	. = ..()
-	set_antag_hud(vampiredatum.owner.current, "brujah")
+	// set_antag_hud(vampiredatum.owner.current, "brujah")

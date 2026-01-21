@@ -24,11 +24,11 @@
 			COOLDOWN_START(src, vampire_spam_healing, VAMPIRE_SPAM_HEALING)
 
 	var/area/current_area = get_area(owner.current)
-	if(istype(current_area, /area/chapel) && humanity <= 2)
+	if(istype(current_area, /area/station/service/chapel) && humanity <= 2)
 		to_chat(owner, span_warning("Your inhuman nature is rejected by a holy presence!"))
 		owner.current.adjustFireLoss(10)
 		owner.current.adjust_fire_stacks(4)
-		owner.current.IgniteMob()
+		owner.current.ignite_mob()
 
 	// Standard Updates
 
@@ -103,7 +103,8 @@
 	var/brute_heal = min(carbon_owner.getBruteLoss(), actual_regen) * healing_multiplier
 	var/burn_heal = min(carbon_owner.getFireLoss(), actual_regen) * 0.75 * healing_multiplier
 
-	carbon_owner.suppress_bloodloss(BLEED_TINY * healing_multiplier)
+	// LUCY TODO
+	// carbon_owner.suppress_bloodloss(BLEED_TINY * healing_multiplier)
 
 	if(in_torpor)
 		// If in a coffin: heal 5x as fast, heal burn damage at full capacity, set vitaecost to 50%, and regenerate limbs
@@ -119,7 +120,7 @@
 			vitaecost_multiplier = 0.25 // Decrease cost if we're sleeping in a coffin.
 
 			// Extinguish and remove embedded objects
-			carbon_owner.ExtinguishMob()
+			carbon_owner.extinguish_mob()
 			carbon_owner.remove_all_embedded_objects()
 
 			if(try_regenerate_limbs(vitaecost_multiplier))
@@ -178,7 +179,7 @@
 	carbon_user.regenerate_organs()
 
 	// Heal organs
-	for(var/obj/item/organ/organ as anything in carbon_user.internal_organs)
+	for(var/obj/item/organ/organ as anything in carbon_user.organs)
 		organ.set_organ_damage(0)
 
 	// Heart

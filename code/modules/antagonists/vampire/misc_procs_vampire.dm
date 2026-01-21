@@ -1,8 +1,8 @@
 /**
  * Helper proc for adding a power
 **/
-/datum/antagonist/vampire/proc/grant_power(datum/action/vampire/power)
-	for(var/datum/action/vampire/current_powers as anything in powers)
+/datum/antagonist/vampire/proc/grant_power(datum/action/cooldown/vampire/power)
+	for(var/datum/action/cooldown/vampire/current_powers as anything in powers)
 		if(current_powers.type == power.type)
 			return FALSE
 	powers += power
@@ -14,7 +14,7 @@
 /**
  * Helper proc for removing a power
 **/
-/datum/antagonist/vampire/proc/remove_power(datum/action/vampire/power)
+/datum/antagonist/vampire/proc/remove_power(datum/action/cooldown/vampire/power)
 	if(power.currently_active)
 		power.deactivate_power()
 	powers -= power
@@ -31,10 +31,11 @@
 	to_chat(owner.current, span_userdanger("You have broken the Masquerade!"))
 	to_chat(owner.current, span_warning("Vampire Tip: When you break the Masquerade, you become open for termination by fellow Vampires, and your vassals are no longer completely loyal to you, as other Vampires can steal them for themselves!"))
 
-	set_antag_hud(owner.current, "masquerade_broken")
+	// LUCY TODO: HUD shit
+	/* set_antag_hud(owner.current, "masquerade_broken") */
 
 	SEND_GLOBAL_SIGNAL(COMSIG_VAMPIRE_BROKE_MASQUERADE, src)
-	GLOB.masquerade_breakers.Add(src)
+	GLOB.masquerade_breakers += src
 
 /**
  * Increment the masquerade infraction counter and warn the vampire accordingly
@@ -80,7 +81,7 @@
 	vampire_level_unspent--
 
 /datum/antagonist/vampire/proc/remove_nondefault_powers(return_levels = FALSE)
-	for(var/datum/action/vampire/power as anything in powers)
+	for(var/datum/action/cooldown/vampire/power as anything in powers)
 		if(power.special_flags & VAMPIRE_DEFAULT_POWER)
 			continue
 		remove_power(power)
@@ -91,7 +92,7 @@
  * Disables all Torpor exclusive powers, if forced is TRUE, disable all powers
 **/
 /datum/antagonist/vampire/proc/disable_all_powers(forced = FALSE)
-	for(var/datum/action/vampire/power as anything in powers)
+	for(var/datum/action/cooldown/vampire/power as anything in powers)
 		if(forced || ((power.check_flags & BP_CANT_USE_IN_TORPOR) && is_in_torpor()))
 			if(power.currently_active)
 				power.deactivate_power()
@@ -138,9 +139,9 @@
 	// Are we adding or removing?
 	if(count > 0)
 		// We are adding
-		if(temp_humanity >= VAMPIRE_HUMANITY_MASQUERADE_POWER && !is_type_in_list(/datum/action/vampire/masquerade, powers))
+		if(temp_humanity >= VAMPIRE_HUMANITY_MASQUERADE_POWER && !is_type_in_list(/datum/action/cooldown/vampire/masquerade, powers))
 			// Grant_power might fail, so we need to check if it actually got granted
-			var/was_granted = grant_power(new /datum/action/vampire/masquerade)
+			var/was_granted = grant_power(new /datum/action/cooldown/vampire/masquerade)
 			if(was_granted)
 				power_given = TRUE
 
@@ -153,7 +154,7 @@
 	else
 		// We are removing
 		if(temp_humanity < VAMPIRE_HUMANITY_MASQUERADE_POWER)
-			for(var/datum/action/vampire/masquerade/power in powers)
+			for(var/datum/action/cooldown/vampire/masquerade/power in powers)
 				remove_power(power)
 				power_removed = TRUE
 
@@ -253,8 +254,8 @@
 
 	// It's a proc cuz we need to call this asynchronously from lifetick
 /datum/antagonist/vampire/proc/provide_clan_selector()
-	if(!is_type_in_list(/datum/action/vampire/clanselect, powers))
-		grant_power(new /datum/action/vampire/clanselect)
+	if(!is_type_in_list(/datum/action/cooldown/vampire/clanselect, powers))
+		grant_power(new /datum/action/cooldown/vampire/clanselect)
 		return
 
 /datum/antagonist/vampire/proc/get_rank_string()

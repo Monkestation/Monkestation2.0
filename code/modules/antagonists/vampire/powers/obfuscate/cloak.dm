@@ -1,4 +1,4 @@
-/datum/action/vampire/cloak
+/datum/action/cooldown/vampire/cloak
 	name = "Cloak of Darkness"
 	desc = "Blend into the shadows and become invisible to the artificial eye."
 	button_icon_state = "power_cloak"
@@ -12,39 +12,39 @@
 	cooldown_time = 5 SECONDS
 	var/cloaklevel = 20
 
-/datum/action/vampire/cloak/two
+/datum/action/cooldown/vampire/cloak/two
 	vitaecost = 40
 	constant_vitaecost = 2
 	cloaklevel = 15
 
-/datum/action/vampire/cloak/three
+/datum/action/cooldown/vampire/cloak/three
 	vitaecost = 30
 	constant_vitaecost = 3
 	cloaklevel = 10
 
-/datum/action/vampire/cloak/four
+/datum/action/cooldown/vampire/cloak/four
 	vitaecost = 20
 	constant_vitaecost = 4
 	cloaklevel = 5
 
 /// Must have nobody around to see the cloak
-/datum/action/vampire/cloak/can_use()
+/datum/action/cooldown/vampire/cloak/can_use()
 	. = ..()
 	if(!.)
 		return FALSE
 
 	return TRUE
 
-/datum/action/vampire/cloak/activate_power()
+/datum/action/cooldown/vampire/cloak/activate_power()
 	. = ..()
 	check_witnesses()
 	var/mob/living/user = owner
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/cloak)
-	user.AddElement(/datum/element/digital_camo)
+	user.AddElement(/datum/element/digitalcamo)
 	user.balloon_alert(user, "cloak turned on.")
 	animate(owner, alpha = cloaklevel, time = 1 SECONDS)
 
-/datum/action/vampire/cloak/continue_active()
+/datum/action/cooldown/vampire/cloak/continue_active()
 	. = ..()
 	if(!.)
 		return FALSE
@@ -54,11 +54,11 @@
 		return FALSE
 	return TRUE
 
-/datum/action/vampire/cloak/deactivate_power()
+/datum/action/cooldown/vampire/cloak/deactivate_power()
 	var/mob/living/user = owner
 
 	animate(user, alpha = 255, time = 1 SECONDS)
-	user.RemoveElement(/datum/element/digital_camo)
+	user.RemoveElement(/datum/element/digitalcamo)
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/cloak)
 	user.balloon_alert(user, "cloak turned off.")
 	return ..()

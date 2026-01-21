@@ -8,7 +8,7 @@
  * Teleports them to their Coffin after a delay.
  * Makes them drop everything if someone witnesses the act.
  */
-/datum/action/vampire/gohome
+/datum/action/cooldown/vampire/gohome
 	name = "Vanishing Act"
 	desc = "As dawn aproaches, disperse into mist and return directly to your lair.<br><b>WARNING:</b> You will drop <b>ALL</b> of your possessions if observed by mortals."
 	button_icon_state = "power_gohome"
@@ -23,11 +23,11 @@
 	var/teleporting_stage = GOHOME_START
 	/// The types of mobs that will drop post-teleportation.
 	var/static/list/spawning_mobs = list(
-		/mob/living/simple_animal/mouse = 3,
-		/mob/living/simple_animal/hostile/retaliate/bat = 1,
+		/mob/living/basic/mouse = 3,
+		/mob/living/basic/bat = 1,
 	)
 
-/datum/action/vampire/gohome/can_use()
+/datum/action/cooldown/vampire/gohome/can_use()
 	. = ..()
 	if(!.)
 		return FALSE
@@ -37,13 +37,13 @@
 		owner.balloon_alert(owner, "coffin was destroyed!")
 		return FALSE
 
-/datum/action/vampire/gohome/activate_power()
+/datum/action/cooldown/vampire/gohome/activate_power()
 	. = ..()
 	owner.balloon_alert(owner, "preparing to teleport...")
 	if(do_after(owner, GOHOME_TELEPORT SECONDS, timed_action_flags=(IGNORE_USER_LOC_CHANGE | IGNORE_INCAPACITATED | IGNORE_HELD_ITEM)))
 		teleport_to_coffin(owner)
 
-/datum/action/vampire/gohome/UsePower()
+/datum/action/cooldown/vampire/gohome/UsePower()
 	. = ..()
 	if(!.)
 		return FALSE
@@ -57,7 +57,7 @@
 			INVOKE_ASYNC(src, PROC_REF(flicker_lights), 4, 60)
 	teleporting_stage++
 
-/datum/action/vampire/gohome/continue_active()
+/datum/action/cooldown/vampire/gohome/continue_active()
 	. = ..()
 	if(!.)
 		return FALSE
@@ -70,23 +70,23 @@
 		return FALSE
 	return TRUE
 
-/datum/action/vampire/gohome/proc/flicker_lights(flicker_range, beat_volume)
+/datum/action/cooldown/vampire/gohome/proc/flicker_lights(flicker_range, beat_volume)
 	for(var/obj/machinery/light/nearby_lights in view(flicker_range, get_turf(owner)))
 		nearby_lights.flicker(5)
 	playsound(get_turf(owner), 'sound/effects/singlebeat.ogg', beat_volume, 1)
 
-/datum/action/vampire/gohome/proc/teleport_to_coffin(mob/living/carbon/user)
+/datum/action/cooldown/vampire/gohome/proc/teleport_to_coffin(mob/living/carbon/user)
 	var/turf/current_turf = get_turf(owner)
 	// If we aren't in the dark, anyone watching us will cause us to drop out stuff
-	if(!QDELETED(current_turf?.lighting_object) && current_turf.get_lumcount() >= 0.2)
+	if(GET_SIMPLE_LUMCOUNT(current_turf) >= 0.2)
 		for(var/mob/living/watcher in viewers(world.view, get_turf(owner)) - owner)
 			if(QDELETED(watcher.client) || watcher.client?.is_afk() || watcher.stat != CONSCIOUS)
 				continue
-			if(watcher.has_unlimited_silicon_privilege)
+			if(HAS_SILICON_ACCESS(watcher) || HAS_TRAIT(watcher, TRAIT_GHOST_CRITTER) || isdrone(watcher))
 				continue
-			if(watcher.is_blind())
+			if(watcher.is_blind() || watcher.is_nearsighted_currently())
 				continue
-			if(!IS_VAMPIRE(watcher) && !IS_VASSAL(watcher))
+			if(!HAS_MIND_TRAIT(watcher, TRAIT_VAMPIRE_ALIGNED))
 				for(var/obj/item/item in owner)
 					owner.dropItemToGround(item, TRUE)
 				break
@@ -111,7 +111,7 @@
 	deactivate_power()
 
 /datum/effect_system/steam_spread/vampire
-	effect_type = /obj/effect/particle_effect/smoke/vampsmoke
+	effect_type = /obj/effect/particle_effect/fluid/smoke/vampsmoke
 
 #undef GOHOME_START
 #undef GOHOME_FLICKER_ONE

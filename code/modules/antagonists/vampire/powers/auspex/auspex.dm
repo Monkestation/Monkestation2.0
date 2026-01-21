@@ -5,13 +5,13 @@
 	icon_state = "auspex"
 
 	// Lists of abilities granted per level
-	level_1 = list(/datum/action/vampire/auspex)
-	level_2 = list(/datum/action/vampire/auspex/two)
-	level_3 = list(/datum/action/vampire/auspex/three)
-	level_4 = list(/datum/action/vampire/auspex/four)
+	level_1 = list(/datum/action/cooldown/vampire/auspex)
+	level_2 = list(/datum/action/cooldown/vampire/auspex/two)
+	level_3 = list(/datum/action/cooldown/vampire/auspex/three)
+	level_4 = list(/datum/action/cooldown/vampire/auspex/four)
 
 /datum/discipline/auspex/malkavian
-	level_5 = list(/datum/action/vampire/auspex/four, /datum/action/vampire/astral_projection)
+	level_5 = list(/datum/action/cooldown/vampire/auspex/four, /datum/action/cooldown/vampire/astral_projection)
 
 /**
  *	# Auspex
@@ -22,7 +22,7 @@
  *	Level 4 - Raise sightrange by 7, project sight 8 tiles ahead. Xray Vision
  *	Level 5 - For Malkavians: Gain ability to astral project like a wizard.
  */
-/datum/action/vampire/auspex
+/datum/action/cooldown/vampire/auspex
 	name = "Auspex"
 	desc = "Sense the vitae of any creature directly, and use your keen senses to widen your perception."
 	button_icon_state = "power_auspex"
@@ -44,7 +44,7 @@
 	var/looking = FALSE
 	var/mob/listeningTo
 
-/datum/action/vampire/auspex/two
+/datum/action/cooldown/vampire/auspex/two
 	name = "Auspex"
 	vitaecost = 40
 	constant_vitaecost = 2
@@ -52,7 +52,7 @@
 	zoom_amt = 7
 	add_meson = TRUE
 
-/datum/action/vampire/auspex/three
+/datum/action/cooldown/vampire/auspex/three
 	name = "Auspex"
 	vitaecost = 30
 	constant_vitaecost = 3
@@ -60,7 +60,7 @@
 	zoom_amt = 8
 	add_meson = TRUE
 
-/datum/action/vampire/auspex/four
+/datum/action/cooldown/vampire/auspex/four
 	name = "Auspex"
 	vitaecost = 20
 	constant_vitaecost = 4
@@ -68,17 +68,17 @@
 	zoom_amt = 10
 	add_xray = TRUE
 
-/datum/action/vampire/auspex/activate_power()
+/datum/action/cooldown/vampire/auspex/activate_power()
 	. = ..()
 	if(!looking)
 		lookie()
 
-/datum/action/vampire/auspex/deactivate_power()
+/datum/action/cooldown/vampire/auspex/deactivate_power()
 	. = ..()
 	if(looking)
 		unlooky()
 
-/datum/action/vampire/auspex/proc/lookie()
+/datum/action/cooldown/vampire/auspex/proc/lookie()
 	SIGNAL_HANDLER
 
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(deactivate_power))
@@ -99,8 +99,8 @@
 			_x = -zoom_amt
 
 	C.change_view(get_zoomed_view(world.view, zoom_out_amt))
-	C.pixel_x = world.icon_size*_x
-	C.pixel_y = world.icon_size*_y
+	C.pixel_x = ICON_SIZE_X * _x
+	C.pixel_y = ICON_SIZE_Y * _y
 	looking = TRUE
 
 	if(add_meson)
@@ -119,7 +119,7 @@
 			owner.update_sight()
 			return
 
-/datum/action/vampire/auspex/proc/unlooky()
+/datum/action/cooldown/vampire/auspex/proc/unlooky()
 	SIGNAL_HANDLER
 
 	if(listeningTo)
@@ -133,14 +133,9 @@
 
 	looking = FALSE
 
-	if(HAS_TRAIT_FROM(owner, TRAIT_MESON_VISION, "Auspex"))
-		REMOVE_TRAIT(owner, TRAIT_MESON_VISION, "Auspex")
-
-	if(HAS_TRAIT_FROM(owner, TRAIT_XRAY_VISION, "Auspex"))
-		REMOVE_TRAIT(owner, TRAIT_XRAY_VISION, "Auspex")
-
+	owner.remove_traits(list(TRAIT_MESON_VISION, TRAIT_XRAY_VISION), "Auspex")
 	owner.update_sight()
 
-/datum/action/vampire/auspex/Destroy()
+/datum/action/cooldown/vampire/auspex/Destroy()
 	listeningTo = null
 	return ..()

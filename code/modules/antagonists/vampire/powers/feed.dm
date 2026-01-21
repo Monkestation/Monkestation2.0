@@ -4,7 +4,7 @@
 #define FEED_FRENZY_TIME 2 SECONDS
 #define FEED_BLOOD_FROM_MICE 25
 
-/datum/action/vampire/targeted/feed
+/datum/action/cooldown/vampire/targeted/feed
 	name = "Feed"
 	desc = "Feed blood off of a living creature."
 	button_icon_state = "power_feed"
@@ -40,7 +40,7 @@
 	/// Are we at a stage of the process where we can be noticed?
 	var/currently_feeding = FALSE
 
-/datum/action/vampire/targeted/feed/can_use()
+/datum/action/cooldown/vampire/targeted/feed/can_use()
 	. = ..()
 	if(!.)
 		return FALSE
@@ -54,7 +54,7 @@
 		owner.balloon_alert(owner, "mouth covered!")
 		return FALSE
 
-/datum/action/vampire/targeted/feed/continue_active()
+/datum/action/cooldown/vampire/targeted/feed/continue_active()
 	. = ..()
 	if(!.)
 		return FALSE
@@ -70,13 +70,13 @@
 		for(var/mob/living/watcher in oviewers(silent_feed ? FEED_SILENT_NOTICE_RANGE : FEED_LOUD_NOTICE_RANGE, owner) - target)
 			if(!watcher.client)
 				continue
-			if(watcher.has_unlimited_silicon_privilege)
+			if(HAS_SILICON_ACCESS(watcher))
 				continue
 			if(watcher.stat != CONSCIOUS)
 				continue
-			if(watcher.is_blind() || watcher.is_nearsighted_currently())
+			if(watcher.is_blind() || watcher.is_nearsighted_currently() || HAS_TRAIT(watcher, TRAIT_GHOST_CRITTER) || isdrone(watcher))
 				continue
-			if(IS_VAMPIRE(watcher) || IS_VASSAL(watcher))
+			if(HAS_MIND_TRAIT(watcher, TRAIT_VAMPIRE_ALIGNED))
 				continue
 
 			if(!watcher.incapacitated(IGNORE_RESTRAINTS))
@@ -94,13 +94,13 @@
 		for(var/mob/living/watcher in oviewers(silent_feed ? FEED_SILENT_NOTICE_RANGE : FEED_LOUD_NOTICE_RANGE, target))
 			if(!watcher.client)
 				continue
-			if(watcher.has_unlimited_silicon_privilege)
+			if(HAS_SILICON_ACCESS(watcher))
 				continue
 			if(watcher.stat != CONSCIOUS)
 				continue
-			if(watcher.is_blind() || watcher.is_nearsighted_currently())
+			if(watcher.is_blind() || watcher.is_nearsighted_currently() || HAS_TRAIT(watcher, TRAIT_GHOST_CRITTER) || isdrone(watcher))
 				continue
-			if(IS_VAMPIRE(watcher) || IS_VASSAL(watcher))
+			if(HAS_MIND_TRAIT(watcher, TRAIT_VAMPIRE_ALIGNED))
 				continue
 
 			if(!watcher.incapacitated(IGNORE_RESTRAINTS))
@@ -117,7 +117,7 @@
 
 	return TRUE
 
-/datum/action/vampire/targeted/feed/check_valid_target(atom/target_atom)
+/datum/action/cooldown/vampire/targeted/feed/check_valid_target(atom/target_atom)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -127,14 +127,14 @@
 		return FALSE
 	var/mob/living/target = target_atom
 	// Mice check
-	if(istype(target, /mob/living/simple_animal/mouse))
+	if(ismouse(target))
 		if(vampiredatum_power.my_clan?.blood_drink_type == VAMPIRE_DRINK_SNOBBY)
 			owner.balloon_alert(owner, "too disgusting!")
 			return FALSE
 		else
 			return TRUE
 	// Has to be human or a monkey
-	if(!ishuman(target) && !ismonkey(target))
+	if(!ishuman(target))
 		owner.balloon_alert(owner, "cant feed off!")
 		return FALSE
 	// Mindless and snobby?
@@ -176,7 +176,7 @@
 
 	silent_feed = TRUE
 
-/datum/action/vampire/targeted/feed/FireTargetedPower(atom/target_atom)
+/datum/action/cooldown/vampire/targeted/feed/FireTargetedPower(atom/target_atom)
 	. = ..()
 	var/mob/living/feed_target = target_atom
 	var/mob/living/living_owner = owner
@@ -222,7 +222,7 @@
 
 		feed_target.Stun(feed_time, TRUE)
 		feed_target.become_blind(TRAIT_FEED)
-		feed_target.add_trait(TRAIT_DEAF, TRAIT_FEED)
+		ADD_TRAIT(feed_target, TRAIT_DEAF, TRAIT_FEED)
 
 		to_chat(feed_target, span_hypnophrase("You suddenly fall into a deep trance..."), type = MESSAGE_TYPE_WARNING)
 		owner.balloon_alert(owner, "subdued! starting feed...")
@@ -343,7 +343,7 @@
 		deactivate_power()
 		return FALSE
 
-/datum/action/vampire/targeted/feed/UsePower()
+/datum/action/cooldown/vampire/targeted/feed/UsePower()
 	var/mob/living/user = owner
 
 	var/mob/living/feed_target = target_ref?.resolve()
@@ -362,9 +362,9 @@
 				var/mob/living/carbon/carbon_target = feed_target
 				carbon_target.bleed(15)
 			playsound(get_turf(feed_target), 'sound/effects/splat.ogg', 40, TRUE)
-			if(ishuman(feed_target))
+			/* if(ishuman(feed_target))
 				var/mob/living/carbon/human/target_user = feed_target
-				target_user.add_bleeding(BLEED_CRITICAL)
+				target_user.add_bleeding(BLEED_CRITICAL) */
 			feed_target.add_splatter_floor(get_turf(feed_target))
 
 			// Cover both parties in blood
@@ -432,7 +432,7 @@
 	feed_target.playsound_local(null, 'sound/effects/singlebeat.ogg', 40, TRUE)
 
 /// We assume the target is a vampire.
-/datum/action/vampire/targeted/feed/proc/diablerie(mob/living/poor_sap)
+/datum/action/cooldown/vampire/targeted/feed/proc/diablerie(mob/living/poor_sap)
 	var/datum/antagonist/vampire/victim = IS_VAMPIRE(poor_sap)
 
 	var/levels_absorbed = (victim.vampire_level + victim.vampire_level_unspent) / DIABLERIE_DIVISOR
@@ -443,17 +443,18 @@
 
 	victim.final_death()
 
-/datum/action/vampire/targeted/feed/deactivate_power()
+/datum/action/cooldown/vampire/targeted/feed/deactivate_power()
 	. = ..()
 	REMOVE_TRAITS_IN(owner, TRAIT_FEED)
 
 	// Did we already take humanity for killing them?
 	var/humanity_deducted = FALSE
 	var/mob/living/feed_target = target_ref?.resolve()
+	var/mob/living/living_owner = owner
 
 	if(feed_target)
 		// Call cure_blind after a (truly tiny) delay to make sure they don't see NOTHING
-		addtimer(CALLBACK(feed_target, TYPE_PROC_REF(/mob/living, cure_blind), TRAIT_FEED), 1 SECONDS)
+		addtimer(CALLBACK(feed_target, TYPE_PROC_REF(/mob/living, remove_status_effect), /datum/status_effect/grouped/blindness, TRAIT_FEED), 1 SECONDS)
 
 	if(feed_target && currently_feeding)
 		REMOVE_TRAITS_IN(feed_target, TRAIT_FEED)
@@ -472,11 +473,11 @@
 				to_chat(feed_target, span_announce("You feel dizzy, but it will probably pass by itself!"))
 
 		if(feed_target.stat == DEAD)
-			user.add_mood_event("drankkilled", /datum/mood_event/drankkilled)
+			living_owner.add_mood_event("drankkilled", /datum/mood_event/drankkilled)
 			humanity_deducted = TRUE
 
 		if(feed_fatal && !humanity_deducted)
-			user.add_mood_event("drankkilled", /datum/mood_event/drankkilled)
+			living_owner.add_mood_event("drankkilled", /datum/mood_event/drankkilled)
 			to_chat(owner, span_userdanger("No way will [feed_target.p_they()] survive that..."))
 			vampiredatum_power.adjust_humanity(-1)
 
@@ -505,7 +506,7 @@
 	warning_target_bloodvol = BLOOD_VOLUME_MAXIMUM
 	blood_taken = 0
 
-/datum/action/vampire/targeted/feed/proc/handle_feeding(mob/living/carbon/target, mult = 1)
+/datum/action/cooldown/vampire/targeted/feed/proc/handle_feeding(mob/living/carbon/target, mult = 1)
 	var/mob/living/living_owner = owner
 	var/feed_amount = 50 + (level_current * 2)
 

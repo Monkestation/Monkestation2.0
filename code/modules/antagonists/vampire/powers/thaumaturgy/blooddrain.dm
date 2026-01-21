@@ -1,9 +1,9 @@
-/datum/action/vampire/targeted/blooddrain
+/datum/action/cooldown/vampire/targeted/blooddrain
 	name = "Thaumaturgy: Blood Drain"
 	desc = "Cast a beam of draining magic that saps the vitality of your target to steal their blood and heal yourself."
 	button_icon_state = "power_thaumaturgy"
-	background_icon_state_on = "tremere_power_on"
-	background_icon_state_off = "tremere_power_off"
+	active_background_icon_state = "tremere_power_on"
+	base_background_icon_state = "tremere_power_off"
 	power_explanation = "Cast a beam of draining magic that saps the vitality of your target to steal their blood and heal yourself."
 	power_flags = BP_AM_TOGGLE
 	check_flags = BP_CANT_USE_IN_TORPOR | BP_CANT_USE_WHILE_STAKED | BP_CANT_USE_IN_FRENZY | BP_CANT_USE_WHILE_INCAPACITATED | BP_CANT_USE_WHILE_UNCONSCIOUS
@@ -13,9 +13,9 @@
 	power_activates_immediately = FALSE
 	prefire_message = "Select your target."
 
-	var/datum/status_effect/life_drain/active_effect
+	var/datum/status_effect/blood_drain/active_effect
 
-/datum/action/vampire/targeted/blooddrain/FireTargetedPower(atom/target_atom)
+/datum/action/cooldown/vampire/targeted/blooddrain/FireTargetedPower(atom/target_atom)
 	. = ..()
 	var/mob/living/living_owner = owner
 	var/mob/living/living_target = target_atom
@@ -27,13 +27,13 @@
 	var/obj/projectile/magic/blood_drain/drain = new(living_owner.loc)
 	drain.firer = living_owner
 	drain.fired_from = src
-	drain.def_zone = ran_zone(living_owner.get_combat_bodyzone())
+	drain.def_zone = ran_zone(living_owner.zone_selected)
 	drain.preparePixelProjectile(target_atom, living_owner)
 	INVOKE_ASYNC(drain, TYPE_PROC_REF(/obj/projectile, fire))
 
 	playsound(living_owner, 'sound/magic/wandodeath.ogg', 60, TRUE)
 
-/datum/action/vampire/targeted/blooddrain/deactivate_power()
+/datum/action/cooldown/vampire/targeted/blooddrain/deactivate_power()
 	. = ..()
 	if(!isnull(active_effect))
 		active_effect.end_drain()
@@ -73,7 +73,7 @@
 	duration = 20 SECONDS
 	var/datum/beam/drain_beam
 	var/mob/living/carbon/vampire
-	var/datum/action/vampire/targeted/blooddrain/spell
+	var/datum/action/cooldown/vampire/targeted/blooddrain/spell
 	var/blood_drain = 3	 // Amount of blood drained per tick, at 0.25 this is 12 blood per second
 
 /datum/status_effect/blood_drain/on_creation(mob/living/new_owner, mob/living/firer, fired_from, duration_override)
@@ -127,7 +127,7 @@
 	SIGNAL_HANDLER
 	spell.active_effect = null
 	spell.deactivate_power()
-	spell.start_cooldown()
+	spell.StartCooldown()
 	if(QDELING(src))
 		return
 	if(!QDELETED(drain_beam))

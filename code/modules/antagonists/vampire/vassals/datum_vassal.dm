@@ -2,7 +2,7 @@
 	name = "\improper Vassal"
 	roundend_category = "Vassal"
 	antagpanel_category = "Vampire"
-	banning_key = ROLE_VAMPIRE
+	job_rank = ROLE_VAMPIRE
 	show_in_roundend = FALSE
 
 	var/vassal_hud_name = "vassal"
@@ -27,12 +27,12 @@
 
 	// Tracking
 	setup_monitor(current_mob)
-	current_mob.grant_language(/datum/language/vampiric)
+	current_mob.grant_language(/datum/language/vampiric, source = LANGUAGE_VASSAL)
 
 	// Team
 	vampire_team = master.vampire_team
 	vampire_team.add_member(current_mob.mind)
-	add_antag_hud(ANTAG_HUD_VAMPIRE, vassal_hud_name, current_mob)
+	// add_antag_hud(ANTAG_HUD_VAMPIRE, vassal_hud_name, current_mob)
 	current_mob.faction |= FACTION_VAMPIRE
 
 /datum/antagonist/vassal/remove_innate_effects(mob/living/mob_override)
@@ -43,18 +43,15 @@
 
 	// Tracking
 	QDEL_NULL(monitor)
-	current_mob.remove_language(/datum/language/vampiric)
+	current_mob.remove_language(/datum/language/vampiric, source = LANGUAGE_VASSAL)
 
 	// Remove traits
-	for(var/vampire_trait in owner.current.status_traits)
-		REMOVE_TRAIT(owner.current, vampire_trait, TRAIT_VAMPIRE)
+	REMOVE_TRAITS_IN(owner.current, TRAIT_VAMPIRE)
 
 	// Team
 	vampire_team.remove_member(current_mob.mind)
 	vampire_team = null
 	current_mob.faction -= FACTION_VAMPIRE
-
-	remove_antag_hud(ANTAG_HUD_VAMPIRE, current_mob)
 
 /datum/antagonist/vassal/on_gain()
 	. = ..()
@@ -70,8 +67,8 @@
 	owner.current.log_message("has been vassalized by [master.owner]!", LOG_ATTACK, color="#960000")
 
 	// Give powers
-	grant_power(new /datum/action/vampire/recuperate)
-	grant_power(new /datum/action/vampire/distress)
+	grant_power(new /datum/action/cooldown/vampire/recuperate)
+	grant_power(new /datum/action/cooldown/vampire/distress)
 
 	// Give objectives
 	forge_objectives()
@@ -85,7 +82,7 @@
 		owner.enslaved_to = null
 
 	// Remove powers
-	for(var/datum/action/vampire/power in powers)
+	for(var/datum/action/cooldown/vampire/power in powers)
 		powers -= power
 		power.Remove(owner.current)
 
@@ -93,7 +90,7 @@
 
 /datum/antagonist/vassal/on_body_transfer(mob/living/old_body, mob/living/new_body)
 	. = ..()
-	for(var/datum/action/vampire/power in powers)
+	for(var/datum/action/cooldown/vampire/power in powers)
 		power.Remove(old_body)
 		power.Grant(new_body)
 
@@ -123,9 +120,9 @@
 		return
 
 	owner.current.visible_message(
-		span_deconversionmessage("[owner.current]'s eyes dart feverishly from side to side, and then stop. [owner.current.p_They()] seem[owner.current.p_s()] calm, \
+		span_deconversion_message("[owner.current]'s eyes dart feverishly from side to side, and then stop. [owner.current.p_They()] seem[owner.current.p_s()] calm, \
 			like [owner.current.p_they()] [owner.current.p_have()] regained some lost part of [owner.current.p_them()]self."),
-		span_deconversionmessage("With a snap, you are no longer enslaved to [master.owner]! You breathe in heavily, having regained your free will.")
+		span_deconversion_message("With a snap, you are no longer enslaved to [master.owner]! You breathe in heavily, having regained your free will.")
 	)
 	owner.current.playsound_local(null, 'sound/magic/mutate.ogg', 100, FALSE, pressure_affected = FALSE)
 
@@ -159,7 +156,7 @@
 
 	to_chat(choice, span_notice("Through divine intervention, you've gained a new vassal!"))
 
-/datum/antagonist/vassal/proc/forge_objectives()
+/datum/antagonist/vassal/forge_objectives()
 	var/datum/objective/vampire/vassal/vassal_objective = new
 	vassal_objective.owner = owner
 	objectives += vassal_objective
@@ -176,7 +173,7 @@
 /datum/antagonist/vassal/proc/on_examine(datum/source, mob/examiner, list/examine_text)
 	SIGNAL_HANDLER
 
-	var/text = icon2html('icons/vampires/vampiric.dmi', world, "vassal")
+	var/text = "<img class='icon' src='\ref['icons/vampires/vampiric.dmi']?state=vassal'>"
 
 	var/datum/antagonist/vampire/vampiredatum = IS_VAMPIRE(examiner)
 	if(src in vampiredatum?.vassals)
