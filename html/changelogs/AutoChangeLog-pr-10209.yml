@@ -1,8 +1,0 @@
-author: "SirNightKnight"
-delete-after: True
-changes:
-  - rscadd: "updated the honorbound sect guilt list to take slashers, bloodsuckers, darkspawn and their thralls into account."
-  - qol: "added balloon alerts to the crusade join rite."
-  - bugfix: "fixed a bug  where the refrain text for attacking an innocent was sent to the target instead of the attacker."
-  - code_imp: "updates honorbound code to be in line with the ongoing attack chain refactor."
-  - balance: "you can shove anyone while honorbound."

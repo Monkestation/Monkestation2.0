@@ -46,6 +46,7 @@
 	log.name = "[input] ([md5(identifier)])"
 	log.input_type = input
 	log.parameters["message"] = content
+	log.parameters["language"] = /datum/language/common
 	log_entries.Add(log)
 	update_logs()
 
@@ -88,7 +89,7 @@
 			signal.data["name"] = ""
 			signal.data["reject"] = FALSE
 			Compiler.Run(signal)
-			if(!signal.data["reject"] == FALSE)
+			if(signal.data["reject"] == FALSE)
 				user.client.give_award(/datum/award/achievement/jobs/Poly_silent, user)
 		else
 			for(var/sample in signal.data["spans"])

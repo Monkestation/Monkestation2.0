@@ -269,33 +269,41 @@
 	return blood_data
 */
 
+/// Returns the blood datum of the mob
 /mob/living/proc/get_blood_type() as /datum/blood_type
+	var/blood_type_path = get_blood_type_path()
+	if(blood_type_path)
+		return GLOB.blood_types[blood_type_path]
+
+/// Returns the path of blood datum of the mob
+/mob/living/proc/get_blood_type_path()
 	if(HAS_TRAIT(src, TRAIT_NOBLOOD))
 		return null
-	return GLOB.blood_types[/datum/blood_type/animal]
+	return /datum/blood_type/animal
 
-/mob/living/silicon/get_blood_type()
-	return GLOB.blood_types[/datum/blood_type/oil]
+/mob/living/silicon/get_blood_type_path()
+	return /datum/blood_type/oil
 
-/mob/living/simple_animal/bot/get_blood_type()
-	return GLOB.blood_types[/datum/blood_type/oil]
+/mob/living/simple_animal/bot/get_blood_type_path()
+	return /datum/blood_type/oil
 
-/mob/living/basic/bot/get_blood_type()
-	return GLOB.blood_types[/datum/blood_type/oil]
+/mob/living/basic/bot/get_blood_type_path()
+	return /datum/blood_type/oil
 
-/mob/living/carbon/alien/get_blood_type()
+/mob/living/carbon/alien/get_blood_type_path()
 	if(HAS_TRAIT(src, TRAIT_NOBLOOD)) // MONKESTATION EDIT: Made TRAIT_HUSK cascade into TRAIT_NOBLOOD, making snowflake checks unnecessary.
 		return null
-	return GLOB.blood_types[/datum/blood_type/xenomorph]
+	return /datum/blood_type/xenomorph
 
-/mob/living/carbon/human/get_blood_type()
+/mob/living/carbon/human/get_blood_type_path()
 	if(!dna || HAS_TRAIT(src, TRAIT_NOBLOOD)) // MONKESTATION EDIT: Made TRAIT_HUSK cascade into TRAIT_NOBLOOD, making snowflake checks unnecessary.
 		return null
 	/*if(check_holidays(APRIL_FOOLS) && is_clown_job(mind?.assigned_role))
-		return GLOB.blood_types[/datum/blood_type/clown]*/
-	if(dna.species.exotic_bloodtype)
-		return GLOB.blood_types[dna.species.exotic_bloodtype]
-	return GLOB.blood_types[dna.human_blood_type]
+		return /datum/blood_type/clown*/
+	var/obj/item/organ/internal/heart/the_heart = get_organ_by_type(/obj/item/organ/internal/heart)
+	if(the_heart?.heart_bloodtype)
+		return the_heart.heart_bloodtype
+	return dna.species.exotic_bloodtype || dna.human_blood_type
 
 //to add a splatter of blood or other mob liquid.
 /mob/living/proc/add_splatter_floor(turf/blood_turf = get_turf(src), small_drip)

@@ -3,7 +3,6 @@
 	"name": "tgui-panel",
 	"version": "5.0.0",
 	"dependencies": {
-		"@types/node": "^25.0.3",
 		"common": "workspace:*",
 		"dompurify": "^3.3.1",
 		"react": "^19.2.3",
@@ -11,9 +10,5 @@
 		"tgui": "workspace:*",
 		"tgui-core": "^5.7.2",
 		"tgui-dev-server": "workspace:*"
-	},
-	"devDependencies": {
-		"@types/react": "^19.2.7",
-		"@types/react-dom": "^19.2.3"
 	}
 }
