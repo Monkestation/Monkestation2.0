@@ -6,7 +6,7 @@
 	exclude_types = list(
 		/obj/structure/closet/crate/large,
 		/obj/structure/closet/crate/wooden,
-		/datum/export/large/crate/coffin,
+		/obj/structure/closet/crate/coffin,
 		)
 
 /datum/export/large/crate/total_printout(datum/export_report/ex, notes = TRUE) // That's why a goddamn metal crate costs that much.
