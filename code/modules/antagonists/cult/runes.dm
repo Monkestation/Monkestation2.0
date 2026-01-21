@@ -711,7 +711,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 	invocation = (user.name == "Herbert West") ? "To life, to life, I bring them!" : initial(invocation)
 
-	if(istype(revive_target, /obj/item/organ/internal/brain/slime))
+	if(is_oozeling_core(revive_target))
 		core_to_revive = revive_target
 	else
 		mob_to_revive = revive_target
@@ -754,7 +754,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		return FALSE
 	if(QDELETED(target))
 		return FALSE
-	if(!istype(target, /obj/item/organ/internal/brain/slime) && !isliving(target))
+	if(!is_oozeling_core(target) && !isliving(target))
 		return FALSE
 	if(!(target in T.contents))
 		to_chat(user, span_cult_italic("The cultist to revive has been moved!"))
