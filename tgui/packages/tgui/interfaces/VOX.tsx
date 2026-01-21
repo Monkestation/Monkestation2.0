@@ -11,7 +11,7 @@ import {
 } from 'tgui-core/components';
 import { Window } from '../layouts';
 import { formatTime } from 'tgui-core/format';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { fetchRetry } from 'tgui-core/http';
 import { resolveAsset } from '../assets';
 import { logger } from '../logging';
@@ -113,7 +113,10 @@ const AnnouncementTab = (props: { voices?: VoiceData }) => {
   const { cooldown, current_voice } = data;
   const [message] = useLocalState('message', '');
 
-  let voice_names = props.voices ? Object.keys(props.voices) : [];
+  const voice_names = useMemo(
+    () => (props.voices ? Object.keys(props.voices) : []),
+    [props.voices],
+  );
 
   return (
     <Section>
