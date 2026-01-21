@@ -234,7 +234,7 @@ const VampireGuide = (_props) => {
               <Box inline textColor="gold">
                 Masquerade
               </Box>
-              . The wolf doesn&apos;t want the sheep to know he&apos;s there.
+              . The wolf doesn&apos;t want the sheep to know they&apos;re there.
               Except these sheep have guns.
               <Box inline fontSize="14px" textColor="red" bold>
                 {' '}
