@@ -615,22 +615,22 @@
 /datum/antagonist/vampire/proc/get_max_vassals()
 	var/total_players = length(GLOB.joined_player_list)
 	switch(total_players)
-		if(1 to 15) // No vassals during low-lowpop
-			return 0
-		if(16 to 30) // 1 vassal during normal pop
+		if(1 to 20)
 			return 1
-		if(31 to INFINITY) // if we can support it, we allow 2
-			return 2
+		if(21 to 30)
+			return 3
+		else
+			return 4
 
 /datum/antagonist/vampire/proc/on_examine(datum/source, mob/examiner, list/examine_text)
 	SIGNAL_HANDLER
-	var/text = icon2html('icons/vampires/vampiric.dmi', world, "vampire")
+	var/text = "<img class='icon' src='\ref['icons/vampires/vampiric.dmi']?state=vampire'>"
 
 	if(scourge)
-		text = icon2html('icons/vampires/vampiric.dmi', world, "scourge")
+		text = "<img class='icon' src='\ref['icons/vampires/vampiric.dmi']?state=scourge'>"
 
 	if(prince)
-		text = icon2html('icons/vampires/vampiric.dmi', world, "prince")
+		text = "<img class='icon' src='\ref['icons/vampires/vampiric.dmi']?state=prince'>"
 
 	if(IS_VASSAL(examiner) in vassals)
 		text += span_cult("<EM>This is, [return_full_name()] your Master!</EM>")
