@@ -8273,13 +8273,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central)
-"cxP" = (
-/obj/machinery/cassette_library,
-/obj/effect/turf_decal/bot{
-	dir = 1
-	},
-/turf/open/floor/wood/large,
-/area/station/service/library/upper)
 "cxT" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -39280,6 +39273,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/processing)
+"lvh" = (
+/obj/machinery/cassette_postbox,
+/obj/effect/turf_decal/bot{
+	dir = 1
+	},
+/turf/open/floor/wood/large,
+/area/station/service/library/upper)
 "lvl" = (
 /obj/structure/rack,
 /obj/item/storage/toolbox/mechanical{
@@ -43213,13 +43213,6 @@
 /obj/effect/turf_decal/stripes/red/line,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
-"mCz" = (
-/obj/machinery/cassette_postbox,
-/obj/effect/turf_decal/bot{
-	dir = 1
-	},
-/turf/open/floor/wood/large,
-/area/station/service/library/upper)
 "mCD" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /obj/effect/decal/cleanable/dirt,
@@ -72393,6 +72386,13 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology/hallway)
+"uXw" = (
+/obj/machinery/cassette_library,
+/obj/effect/turf_decal/bot{
+	dir = 1
+	},
+/turf/open/floor/wood/large,
+/area/station/service/library/upper)
 "uXF" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -88880,7 +88880,7 @@ hUA
 jBI
 mux
 qgJ
-mCz
+lvh
 rtj
 rtj
 nhC
@@ -89394,7 +89394,7 @@ iRD
 xme
 fvx
 saq
-mux
+saq
 byd
 pXO
 rtj
@@ -90422,7 +90422,7 @@ wCo
 vQN
 mux
 qgJ
-cxP
+uXw
 rtj
 rtj
 nhC
