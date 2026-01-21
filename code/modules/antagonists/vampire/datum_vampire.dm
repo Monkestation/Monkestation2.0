@@ -624,13 +624,13 @@
 
 /datum/antagonist/vampire/proc/on_examine(datum/source, mob/examiner, list/examine_text)
 	SIGNAL_HANDLER
-	var/text = "<img class='icon' src='\ref['icons/vampires/vampiric.dmi']?state=vampire'>"
-
-	if(scourge)
-		text = "<img class='icon' src='\ref['icons/vampires/vampiric.dmi']?state=scourge'>"
-
+	var/text
 	if(prince)
 		text = "<img class='icon' src='\ref['icons/vampires/vampiric.dmi']?state=prince'>"
+	else if(scourge)
+		text = "<img class='icon' src='\ref['icons/vampires/vampiric.dmi']?state=scourge'>"
+	else
+		text = "<img class='icon' src='\ref['icons/vampires/vampiric.dmi']?state=vampire'>"
 
 	if(IS_VASSAL(examiner) in vassals)
 		text += span_cult("<EM>This is, [return_full_name()] your Master!</EM>")
