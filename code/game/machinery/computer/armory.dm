@@ -183,7 +183,7 @@
 	door_controller.activate()
 	armory_open = TRUE
 	user.log_message("has opened the armory with reason: \"[selected_reason]\"[extra_details != initial(extra_details) ? " with extra details: \"[extra_details]\"." : "."]", LOG_GAME, log_globally = TRUE)
-	message_admins("[key_name_admin(usr)][ADMIN_FLW(usr)] has opened the armory with reason: \"[selected_reason]\"[extra_details != initial(extra_details) ? " with extra details: \"[extra_details]\"." : "."]")
+	message_admins("[ADMIN_LOOKUPFLW(usr)] has opened the armory with reason: \"[selected_reason]\"[extra_details != initial(extra_details) ? " with extra details: \"[extra_details]\"." : "."]")
 	reset_console()
 
 	balloon_alert_to_viewers("The armory has been opened!")
