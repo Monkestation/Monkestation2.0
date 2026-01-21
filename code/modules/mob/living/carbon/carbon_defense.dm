@@ -429,6 +429,7 @@
 				span_boldnotice("[helper] closely hugs you, smothering the flames consuming your body!"),
 				span_italics("You hear a fire sizzle out."),
 			)
+			SEND_SIGNAL(src, COMSIG_LIVING_HUG_CARBON, helper)
 			var/stacks_to_extinguish = 2
 			if(pulledby == helper)
 				if(helper.grab_state > GRAB_PASSIVE)
@@ -476,6 +477,8 @@
 						null, span_hear("You hear a soft patter."), DEFAULT_MESSAGE_RANGE, list(helper, src))
 			to_chat(helper, span_notice("You boop [src] on the nose."))
 			to_chat(src, span_notice("[helper] boops you on the nose."))
+
+		SEND_SIGNAL(src, COMSIG_LIVING_HUG_CARBON, helper)
 		//Monkestation addition end
 	else if(check_zone(helper.zone_selected) == BODY_ZONE_HEAD && get_bodypart(BODY_ZONE_HEAD)) //Headpats!
 		helper.visible_message(span_notice("[helper] gives [src] a pat on the head to make [p_them()] feel better!"), \
@@ -485,6 +488,8 @@
 
 		if(HAS_TRAIT(src, TRAIT_BADTOUCH))
 			to_chat(helper, span_warning("[src] looks visibly upset as you pat [p_them()] on the head."))
+
+		SEND_SIGNAL(src, COMSIG_LIVING_HUG_CARBON, helper)
 
 	else if ((helper.zone_selected == BODY_ZONE_PRECISE_GROIN) && !isnull(src.get_organ_by_type(/obj/item/organ/external/tail)))
 		helper.visible_message(span_notice("[helper] pulls on [src]'s tail!"), \
@@ -528,6 +533,8 @@
 						null, span_hear("You hear the rustling of clothes."), DEFAULT_MESSAGE_RANGE, list(helper, src))
 			to_chat(helper, span_notice("You [gently]hug [src] to make [p_them()] feel better!"))
 			to_chat(src, span_notice("[helper] [gently]hugs you to make you feel better!"))
+
+		SEND_SIGNAL(src, COMSIG_LIVING_HUG_CARBON, helper)
 
 		if (feeble && !gently)
 			feeble_quirk_wound_chest(src, hugger=helper, force=helper.grab_state >= GRAB_AGGRESSIVE)

@@ -250,7 +250,7 @@
 	RegisterSignal(parent, COMSIG_CARBON_EQUIP_SHOECOVER, PROC_REF(equip_shoecover))
 
 /datum/component/bloodysoles/feet/update_icon()
-	if(!ishuman(wielder) || HAS_TRAIT(wielder, TRAIT_NO_BLOOD_OVERLAY))
+	if(!ishuman(wielder) || HAS_TRAIT(wielder, TRAIT_NOBLOOD_OVERLAY))
 		return
 	wielder.remove_overlay(SHOES_LAYER)
 	if(total_bloodiness > 0 && !is_obscured())

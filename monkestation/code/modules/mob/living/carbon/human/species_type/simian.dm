@@ -10,7 +10,7 @@
 		TRAIT_VAULTING,
 		TRAIT_MONKEYFRIEND,
 		/*Monkey traits that Simians don't have, and why.
-		TRAIT_NO_BLOOD_OVERLAY, //let's them have a blood overlay, why not?
+		TRAIT_NOBLOOD_OVERLAY, //let's them have a blood overlay, why not?
 		TRAIT_NO_TRANSFORMATION_STING, //Simians are a roundstart species and can equip all, unlike monkeys.
 		TRAIT_GUN_NATURAL, //Simians are Advanced tool users, this lets monkeys use guns without being smart.
 		TRAIT_VENTCRAWLER_NUDE, //We don't want a roundstart species that can ventcrawl.

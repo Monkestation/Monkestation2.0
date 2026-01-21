@@ -218,7 +218,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Species with this trait have mutant colors that cannot be chosen by the player, nor altered ingame by external means
 #define TRAIT_FIXED_MUTANT_COLORS "fixed_mutcolors"
 /// Humans with this trait won't get bloody hands, nor bloody feet
-#define TRAIT_NO_BLOOD_OVERLAY "no_blood_overlay"
+#define TRAIT_NOBLOOD_OVERLAY "no_blood_overlay"
 /// Humans with this trait cannot have underwear
 #define TRAIT_NO_UNDERWEAR "no_underwear"
 /// This carbon doesn't show an overlay when they have no brain

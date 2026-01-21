@@ -238,6 +238,9 @@
 	override = TRUE
 	colour = list(0.8,0,0,0, 0,0,0,0, 0,0,1,0, 0,0,0,1, 0,0,0,0)
 
+/datum/client_colour/glass_colour/pink
+	colour = "#ffcfe9"
+
 /datum/client_colour/temp
 	priority = PRIORITY_HIGH
 
