@@ -200,7 +200,7 @@
 
 	RegisterSignal(src, COMSIG_MACHINERY_BROKEN, PROC_REF(on_break))
 
-	RegisterSignal(SSdcs, list(COMSIG_GLOB_GREY_TIDE, COMSIG_GLOBAL_GREY_TIDE_TRAITOR), PROC_REF(grey_tide))
+	RegisterSignals(SSdcs, list(COMSIG_GLOB_GREY_TIDE, COMSIG_GLOBAL_GREY_TIDE_TRAITOR), PROC_REF(grey_tide))
 
 /obj/machinery/door/airlock/proc/grey_tide(datum/source, list/grey_tide_areas, traitor_bug = FALSE) //monkestation edit: adds traitor_bug
 	SIGNAL_HANDLER
