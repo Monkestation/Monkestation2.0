@@ -22,6 +22,7 @@ type Data = {
   cooldown: number;
 };
 
+// This is in the format of {"voice name": ["mrrp", "mrow", "nya"]}.
 type VoiceData = Record<string, string[]>;
 
 enum Tab {
@@ -30,7 +31,6 @@ enum Tab {
 }
 
 export const VOX = () => {
-  // this is in the format of {"voice name": ["mrrp", "mrow", "nya"]}
   const [voices, setVoices] = useState<VoiceData | undefined>();
   useEffect(() => {
     fetchRetry(resolveAsset('vox_voices.json'))
