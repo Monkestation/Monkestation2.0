@@ -127,7 +127,7 @@
 		vitaecost = 85
 		cooldown_time = 15 SECONDS
 
-	while(istype(target, /turf/closed/wall))
+	while(iswallturf(target))
 		var/turf/closed/wall/wall = target
 
 		tearer.visible_message(span_warning("[tearer] viciously rips into [wall]!"))
@@ -148,7 +148,7 @@
 	if(!.)
 		return FALSE
 
-	if(INDESTRUCTIBLE in target_atom.resistance_flags)
+	if(target_atom.resistance_flags & INDESTRUCTIBLE)
 		return FALSE
 	if(isliving(target_atom))
 		return TRUE
