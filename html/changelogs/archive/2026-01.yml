@@ -240,3 +240,147 @@
   - map: added/modified map content
   - map: Blueshift PTL Now on the Left Instead of Right (fills right side with storage)
   - map: Atmos Has Powerline to PTL (look for blue wires)
+2026-01-15:
+  Absolucy:
+  - admin: Added an admin button in the Secrets panel to lobotomize Poly.
+  Chelxox:
+  - balance: Gripper gloves & gorilla gloves properly balanced.
+  Ice-Type:
+  - balance: Majorly tuned down the wounding caused by buckshot
+  - balance: Improvised shells no longer do more damage than buckshot shells
+  JohnFulpWillard:
+  - bugfix: NTSL no longer constantly freezes up saying you're doing too many inputs.
+  SirNightKnight:
+  - qol: morgue tray soul alarms don't ignore bad DNA mobs.
+  - rscadd: updated the honorbound sect guilt list to take slashers, bloodsuckers,
+      darkspawn and their thralls into account.
+  - qol: added balloon alerts to the crusade join rite.
+  - bugfix: fixed a bug  where the refrain text for attacking an innocent was sent
+      to the target instead of the attacker.
+  - code_imp: updates honorbound code to be in line with the ongoing attack chain
+      refactor.
+  - balance: you can shove anyone while honorbound.
+  - balance: removes mining soulstones from the necropolis chest loot pool.
+  - rscadd: replaced all universal blood bags with sealed saline chem packs containing
+      55 saline glucose, 35 iron, and 10 tirimol.
+  - rscadd: added saline chem packs to all existing blood crates.
+  - rscadd: added spider blood to the blood variety crate.
+  - spellcheck: fixed a minor grammar error in the penlight's decription.
+  - map: removed a misplaced computer console on kilostation.
+  - bugfix: ' voidraptor sec med uses sec access instead of brig.'
+  Tractor-Maam:
+  - map: the HoP line on Helio has their windows actually exist in full
+  notghosti:
+  - bugfix: Removed a handheld monitor node typo
+  - rscadd: Added Morphine and ammoniated mercury to emergency hypo spray
+  - balance: Emergency Hypo spray 5 > 10 capacity
+  - balance: Emergency Hypo spray 1 > 2 recharge rate
+2026-01-16:
+  Absolucy:
+  - image: Opening/closing normal and reinforced false walls now has a proper animation.
+2026-01-17:
+  JohnFulpWillard:
+  - bugfix: Telecomms servers won't brick if you get a runtime error in your NTSL
+      code.
+  - bugfix: NTSL scripting should be a little more responsive now, but will no longer
+      automatically save your code.
+  - bugfix: Added some monke-exclusive roundstart languages to NTSL script, replacing
+      non-existent languages from it.
+  - qol: Added some extra references help to the NTSL scripting computer.
+  SirNightKnight:
+  - bugfix: fixed teleporting disconnecting mobs from what they are buckled to.
+2026-01-18:
+  Absolucy:
+  - rscadd: Heretics can now actually create ghouls from oozeling cores. Flesh heretics
+      have to right click with their grasp, and oozeling cores should work with Imperfect
+      Ritual and Shattered Ritual.
+  - qol: The "Assist your master" objective for heretic minions now include their
+      master's name.
+  - bugfix: Fixed the seed extractor not showing seed icons.
+  - bugfix: Fixed the seed extractor's search not searching for reagents.
+  Chelxox:
+  - bugfix: Food items with no reagents can now be eaten, although won't provide the
+      eater with any sort of nutrition.
+  - rscadd: Adds a chat warning if user eats reagentless (otherwise non-nutritive)
+      food.
+  JohnFulpWillard:
+  - map: Remapped Theseus' telecomms.
+  - rscadd: Signal Techs now have Network access & NTNet Monitor.
+  - bugfix: NTSL console now properly requires access.
+  - bugfix: Removed 2 admin request consoles on Meta.
+  - rscdel: NTSL console no longer holds ID cards (??)
+  Lawlolawl:
+  - bugfix: Fixed indestructible items (nuke disk, hand tele etc.) teleporting to
+      ore silo in vault when attempting to place them into a protolathe. No one was
+      stupid enough to try it in the last 5 months since porting tg's rework, apparently.
+  - qol: You can no longer place PDAs, pens, or radio headsets into autolathes for
+      recycling (traitor inconspicuous uplinks)
+  - bugfix: Deconstructing PDAs results in the inserted item in the pen slot (e.g.
+      pen, crayon, cig, penlight etc) being dropped on the floor correctly.
+  - rscadd: Added description text for when PDAs are missing a power cell.
+  - bugfix: Traitor objective tools (nuke core screwdriver, SM extraction scalpel
+      & hemostat) can no longer be recycled in autolathes.
+  Muffindrake:
+  - map: Rezone/Repipe/Reconstruct pass on MetaStation Atmospherics including more
+      space, more compact gas storage, and less hidden pipes to bother you
+  iliyaxox:
+  - bugfix: Blueshift's brig infirmary now has supplied medkits instead of empty ones.
+2026-01-19:
+  Absolucy:
+  - rscdel: Removed the Dysplasia Syndrome symptom from pathology.
+  Aniantan:
+  - bugfix: Hearts and genetic makeup transfers properly work with blood types and
+      no longer break blood transfusion and mending touch
+  - bugfix: DNA console no longer gets subject's blood type wrong
+  JohnFulpWillard:
+  - bugfix: NTSL's "Mute Poly" achievement works as it's supposed to.
+  - rscadd: NTSL's language scripting has been changed. Please update your scripts
+      (The reference is updated for this as well)
+  SirNightKnight:
+  - bugfix: fixed getting stuck buckled in a wheelchair after it's destroyed.
+  SirNightKnight, JohnFulpWillard:
+  - rscadd: Security now has a Big Red Key.
+  buffakaza:
+  - map: added two previously absent roundstart bz canisters to blueshift gas storage
+      room and void raptor atmos project room.
+  wraith-54321:
+  - rscadd: Added sub overminds for blob
+  - rscadd: Added more blob chemical effects
+  - balance: Slightly increased brute storyteller point values
+2026-01-20:
+  Absolucy:
+  - refactor: Refactored how mobs target turrets and mechs, which should hopefully
+      be more performant.
+  - refactor: Refactored turrets so they only process if something potentially "interesting"
+      is within its range.
+  Chelxox:
+  - rscadd: 'Introduces the Cassette Library Terminal: browse through and buy cassettes
+      with this easy method!'
+  - image: Adds on and off sprites for the cassette library terminal.
+  - map: Places cassette library terminals on all maps on rotation.
+  - admin: Adds admin logs for when a user buys their own cassette tapes multiple
+      times.
+  - server: Attention! Cassette library terminal messes with SQL entries. May need
+      operator intervention to fully implement.
+2026-01-22:
+  Chelxox:
+  - map: Added 2 more security officer lockers on Oshean's security office, making
+      it 6.
+  Gboster-0:
+  - bugfix: wheelchairs now properly take 1 second to unbuckle people
+  - bugfix: you can no longer stand in the same place whilst unbuckling someone in
+      a wheelchair, and unbuckle them from 2 tiles away
+  SirNightKnight:
+  - qol: mop buckets have 500 reagent capacity .
+  - bugfix: fixed the vacuum upgrade not working.
+  - qol: janitors have a liquid pump beacon in their outfit.
+  - qol: slightly increased to the stock of the JaniDrobe to accommodate a third set
+      of janitor gear. it also now has space cleaner.
+  - rscadd: dumping a mop bucket over a scrubber vent doesnt expose the tile to the
+      reagents inside.
+  - qol: normal mop buckets can be dumped the same way as janitorial carts.
+  - balance: removed backpack watertank slowdown.
+  - qol: light replacers can be made at engineering prolathes.
+  - bugfix: fixed trashbags not working on janitorial carts when storing items.
+  iliyaxox:
+  - rscadd: Added a cassette library and postbox to Theseus' radio outpost.
