@@ -34,7 +34,7 @@
 		owner.balloon_alert(owner, "[carbon_target] is mindless.")
 		return FALSE
 
-	if(IS_VAMPIRE(carbon_target) || IS_VASSAL(carbon_target) || IS_CURATOR(carbon_target))
+	if(HAS_MIND_TRAIT(carbon_target, TRAIT_VAMPIRE_ALIGNED) || IS_CURATOR(carbon_target) || HAS_MIND_TRAIT(carbon_target, TRAIT_UNCONVERTABLE))
 		owner.balloon_alert(owner, "immune to your presence.")
 		return FALSE
 
@@ -88,16 +88,13 @@
 
 /datum/status_effect/summoned/Destroy()
 	source_vampire = null
-	if(move_loop)
-		qdel(move_loop)
-		move_loop = null
+	QDEL_NULL(move_loop)
 	return ..()
 
 /datum/status_effect/summoned/on_apply()
 	if(!iscarbon(owner))
 		return FALSE
-	ADD_TRAIT(owner, TRAIT_INCAPACITATED, TRAIT_STATUS_EFFECT(id))
-	ADD_TRAIT(owner, TRAIT_MUTE, TRAIT_STATUS_EFFECT(id))
+	owner.add_traits(list(TRAIT_INCAPACITATED, TRAIT_MUTE), TRAIT_STATUS_EFFECT(id))
 	RegisterSignal(owner, COMSIG_MOB_CLIENT_PRE_MOVE, PROC_REF(block_player_move))
 	owner.add_client_colour(/datum/client_colour/glass_colour/pink)
 	start_movement()
@@ -124,8 +121,7 @@
 	move_loop = null
 
 /datum/status_effect/summoned/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_INCAPACITATED, TRAIT_STATUS_EFFECT(id))
-	REMOVE_TRAIT(owner, TRAIT_MUTE, TRAIT_STATUS_EFFECT(id))
+	owner.remove_traits(list(TRAIT_INCAPACITATED, TRAIT_MUTE), TRAIT_STATUS_EFFECT(id))
 
 	UnregisterSignal(owner, COMSIG_MOB_CLIENT_PRE_MOVE)
 
@@ -157,7 +153,7 @@
 		return
 
 	// Check line of sight - if broken, end the effect
-	if(!(source_vampire in view(10, owner)))
+	if(!CAN_SEE_RANGED(source_vampire, owner, 10))
 		to_chat(owner, span_awe("You lose sight of your summoner and the compulsion breaks."))
 		qdel(src)
 		return

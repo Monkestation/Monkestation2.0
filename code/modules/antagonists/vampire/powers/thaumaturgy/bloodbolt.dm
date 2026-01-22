@@ -47,17 +47,13 @@
 	new /obj/effect/gibspawner/generic(target.loc)
 	if(istype(target, /obj/structure/closet))
 		var/obj/structure/closet/hit_closet = target
-		hit_closet.welded = FALSE
-		hit_closet.locked = FALSE
-		hit_closet.broken = TRUE
-		hit_closet.update_appearance()
+		hit_closet.bust_open(destructive = FALSE)
 		qdel(src)
 		return BULLET_ACT_HIT
 
 	if(istype(target, /obj/machinery/door/airlock))
 		var/obj/machinery/door/airlock/airlock = target
-		airlock.unbolt()
-		airlock.open()
+		airlock.open(FORCING_DOOR_CHECKS)
 		qdel(src)
 		return BULLET_ACT_HIT
 
@@ -66,7 +62,7 @@
 		living_target.add_splatter_floor(get_turf(living_target))
 		living_target.blood_volume -= 50
 		living_target.emote("screams")
-		living_target.set_jitter(6 SECONDS)
+		living_target.set_jitter_if_lower(6 SECONDS)
 		living_target.Unconscious(3 SECONDS)
 		visible_message(span_danger("[living_target]'s wounds spray boiling hot blood!"), span_userdanger("Oh god it burns!"))
 		qdel(src)

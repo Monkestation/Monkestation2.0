@@ -289,7 +289,7 @@
 				animate(feed_target, 0.2 SECONDS, pixel_x = -8)
 
 		owner.visible_message(
-			span_notice("[owner.first_name()] grabs [feed_target.first_name()] tightly, biting into their neck!"),
+			span_notice("[owner.first_name()] grabs [feed_target.first_name()] tightly, biting into [feed_target.p_their()] neck!"),
 			span_notice("You slip your fangs into [feed_target.first_name()]'s neck."),
 			vision_distance = FEED_SILENT_NOTICE_RANGE, ignored_mobs = feed_target
 		)
@@ -408,7 +408,7 @@
 	// Check if full on blood
 	if(vampiredatum_power.current_vitae >= vampiredatum_power.max_vitae)
 		if(IS_VAMPIRE(feed_target))
-			owner.balloon_alert(owner, "we are full on blood, but we can continue feeding to absorb their power!")
+			owner.balloon_alert(owner, "we are full on blood, but we can continue feeding to absorb [feed_target.p_their()] power!")
 		else
 			owner.balloon_alert(owner, "we are full on blood!")
 

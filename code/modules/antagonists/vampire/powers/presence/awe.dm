@@ -27,13 +27,8 @@
 /datum/action/cooldown/vampire/awe/UsePower()
 	. = ..()
 	for(var/mob/living/victim in oviewers(aura, owner))
-		if(!can_affect(victim))
-			continue
-		if(!victim.has_status_effect(/datum/status_effect/awed))
+		if(can_affect(victim))
 			victim.apply_status_effect(/datum/status_effect/awed, owner)
-		else
-			var/datum/status_effect/awed/existing = victim.has_status_effect(/datum/status_effect/awed)
-			existing.refresh()
 
 /// Checks if this victim can be affected by the awe aura
 /datum/action/cooldown/vampire/awe/proc/can_affect(mob/living/victim)
@@ -51,7 +46,7 @@
 
 /datum/status_effect/awed
 	id = "awed"
-	status_type = STATUS_EFFECT_UNIQUE
+	status_type = STATUS_EFFECT_REFRESH
 	duration = 4 SECONDS
 	tick_interval = 1 SECONDS
 	alert_type = null
@@ -77,51 +72,45 @@
 	REMOVE_TRAIT(owner, TRAIT_SOFTSPOKEN, TRAIT_STATUS_EFFECT(id))
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/awed)
 
-/datum/status_effect/awed/refresh()
-	duration = world.time + initial(duration)
-
 /datum/status_effect/awed/tick(seconds_between_ticks)
 	if(QDELETED(source_vampire) || source_vampire.stat == DEAD)
 		qdel(src)
 		return
 
-	if(owner.incapacitated(IGNORE_RESTRAINTS))
+	if(owner.incapacitated(IGNORE_RESTRAINTS) || !COOLDOWN_FINISHED(src, awe_effect_cooldown))
 		return
 
-	if(COOLDOWN_FINISHED(src, awe_effect_cooldown))
-		COOLDOWN_START(src, awe_effect_cooldown, 5 SECONDS)
-
-		// Pick a random disruptive effect each tick
-		switch(rand(1, 6))
-			// Nothingburger
-			if(1)
-				to_chat(owner, span_awe("Your mind drifts..."))
-			// Only face them, nothing else
-			if(2)
-				owner.face_atom(source_vampire)
-			// Smile
-			if(3)
-				owner.face_atom(source_vampire)
-				owner.emote("smiles")
-				to_chat(owner, span_awe("You find yourself smiling..."))
-			// Step Towards
-			if(4)
-				owner.face_atom(source_vampire)
-				if(owner.body_position == STANDING_UP && get_step(owner.loc, get_dir(owner.loc, source_vampire.loc)) != source_vampire.loc)
-					owner.visible_message(span_warning("[owner] stumbles."), span_awe("You suddenly stumble..."))
-					owner.Move(get_step(owner.loc, get_dir(owner.loc, source_vampire.loc)))
-			// Wobbly Knees
-			if(5)
-				owner.face_atom(source_vampire)
-				if(owner.body_position == STANDING_UP && owner.stamina?.loss == 0)
-					owner.visible_message(span_warning("[owner] seems quite wobbly on [owner.p_their()] feet."), span_awe("Your knees feel wobbly..."))
-					owner.apply_damage(rand(10,30), STAMINA, owner.get_bodypart(BODY_ZONE_L_LEG), FALSE, TRUE)
-					owner.apply_damage(rand(10,30), STAMINA, owner.get_bodypart(BODY_ZONE_R_LEG), FALSE, TRUE)
-			// Stunned
-			if(6)
-				owner.face_atom(source_vampire)
-				owner.Stun(1 SECONDS, ignore_canstun = TRUE)
-				to_chat(owner, span_awe("What was I doing?"))
+	COOLDOWN_START(src, awe_effect_cooldown, 5 SECONDS)
+	// Pick a random disruptive effect each tick
+	switch(rand(1, 6))
+		// Nothingburger
+		if(1)
+			to_chat(owner, span_awe("Your mind drifts..."))
+		// Only face them, nothing else
+		if(2)
+			owner.face_atom(source_vampire)
+		// Smile
+		if(3)
+			owner.face_atom(source_vampire)
+			owner.emote("smiles")
+			to_chat(owner, span_awe("You find yourself smiling..."))
+		// Step Towards
+		if(4)
+			owner.face_atom(source_vampire)
+			if(owner.body_position == STANDING_UP && get_step(owner.loc, get_dir(owner.loc, source_vampire.loc)) != source_vampire.loc)
+				owner.visible_message(span_warning("[owner] stumbles."), span_awe("You suddenly stumble..."))
+				owner.Move(get_step(owner.loc, get_dir(owner.loc, source_vampire.loc)))
+		// Wobbly Knees
+		if(5)
+			owner.face_atom(source_vampire)
+			if(owner.body_position == STANDING_UP && owner.stamina?.loss == 0)
+				owner.visible_message(span_warning("[owner] seems quite wobbly on [owner.p_their()] feet."), span_awe("Your knees feel wobbly..."))
+				owner.stamina?.adjust(-rand(20, 40))
+		// Stunned
+		if(6)
+			owner.face_atom(source_vampire)
+			owner.Stun(1 SECONDS, ignore_canstun = TRUE)
+			to_chat(owner, span_awe("What was I doing?"))
 
 /datum/status_effect/awed/get_examine_text()
 	return span_warning("[owner.p_They()] seem[owner.p_s()] distracted and unfocused.")

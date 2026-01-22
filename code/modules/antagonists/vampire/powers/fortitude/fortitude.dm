@@ -96,7 +96,7 @@
 		return
 
 	var/mob/living/carbon/user = owner
-	if(user.buckled && istype(user.buckled, /obj/vehicle))
+	if(istype(user.buckled, /obj/vehicle))
 		user.buckled.unbuckle_mob(src, force = TRUE)
 
 /datum/action/cooldown/vampire/fortitude/deactivate_power()
@@ -111,10 +111,7 @@
 		vampire_user.physiology.stamina_mod /= resistance
 
 	// Remove Traits & Effects
-	REMOVE_TRAIT(owner, TRAIT_PIERCEIMMUNE, TRAIT_VAMPIRE)
-	REMOVE_TRAIT(owner, TRAIT_NODISMEMBER, TRAIT_VAMPIRE)
-	REMOVE_TRAIT(owner, TRAIT_PUSHIMMUNE, TRAIT_VAMPIRE)
-	REMOVE_TRAIT(owner, TRAIT_STUNIMMUNE, TRAIT_VAMPIRE)
+	owner.remove_traits(list(TRAIT_PIERCEIMMUNE, TRAIT_NODISMEMBER, TRAIT_PUSHIMMUNE, TRAIT_STUNIMMUNE), TRAIT_VAMPIRE)
 
 	owner.balloon_alert(owner, "fortitude turned off.")
 

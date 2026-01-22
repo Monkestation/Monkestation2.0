@@ -127,7 +127,7 @@
 
 		ASYNC
 			var/choice = tgui_alert(living_target,
-				message = "Your Prince has selected you as their enforcer. Should you accept, you will receive the rank of 'Scourge', be bound to their authority, and increase in power considerably.",
+				message = "Your Prince has selected you as [owner.p_their()] enforcer. Should you accept, you will receive the rank of 'Scourge', be bound to [owner.p_their()] authority, and increase in power considerably.",
 				title = "Scourge Offer",
 				buttons = list("Accept", "Refuse"),
 				timeout = cooldown_time - 5 SECONDS,

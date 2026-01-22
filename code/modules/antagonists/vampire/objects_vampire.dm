@@ -308,7 +308,7 @@
 
 		var/obj/item/bodypart/selected_bodypart = pick(target.bodyparts)
 		target.visible_message(
-			span_danger("[user] performs a ritual, spilling some of [target]'s blood from their [selected_bodypart.name]!"),
+			span_danger("[user] performs a ritual, spilling some of [target]'s blood from [target.p_their()] [selected_bodypart.name]!"),
 			span_userdanger("[user] performs a ritual, spilling some blood from your [selected_bodypart.name]!"))
 
 		INVOKE_ASYNC(target, TYPE_PROC_REF(/mob, emote), "scream")
@@ -326,7 +326,7 @@
 		return FALSE
 	vassilization_offered = TRUE
 
-	to_chat(user, span_notice("[target] has been given the opportunity for servitude. You await their decision..."))
+	to_chat(user, span_notice("[target] has been given the opportunity for servitude. You await [target.p_their()] decision..."))
 	var/alert_response = tgui_alert(
 		user = target, \
 		message = "You are being tortured! Do you want to give in and pledge your undying loyalty to [user]? \n\

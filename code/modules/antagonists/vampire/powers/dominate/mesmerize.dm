@@ -75,7 +75,7 @@
 		return FALSE
 
 	// Vampire/Curator check
-	if(IS_VAMPIRE(living_target) || IS_CURATOR(living_target))
+	if(IS_VAMPIRE(living_target) || IS_CURATOR(living_target) || HAS_MIND_TRAIT(living_target, TRAIT_UNCONVERTABLE))
 		owner.balloon_alert(owner, "too powerful.")
 		return FALSE
 

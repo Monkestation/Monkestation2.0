@@ -14,5 +14,5 @@
 
 /datum/action/cooldown/vampire/astral_projection/activate_power()
 	. = ..()
-	owner.ghostize(TRUE)
+	owner.ghostize(can_reenter_corpse = TRUE)
 	deactivate_power()

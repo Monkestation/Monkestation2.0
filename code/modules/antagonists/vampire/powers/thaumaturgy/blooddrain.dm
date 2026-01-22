@@ -59,7 +59,8 @@
 
 /obj/projectile/magic/blood_drain/Destroy()
 	if(!QDELETED(drain_beam))
-		QDEL_NULL(drain_beam)
+		qdel(drain_beam)
+	drain_beam = null
 	return ..()
 
 ///
@@ -110,14 +111,14 @@
 		owner.blood_volume -= blood_drain
 	else
 		//If they aren't incapacitated yet, drain only their stamina
-		owner.take_overall_damage(0, 0, 7, updating_health = TRUE)
+		owner.stamina?.adjust(-7)
 
 	if(prob(20))
-		owner.emote("screams")
+		INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob, emote), "scream")
 		owner.visible_message(span_boldwarning("[vampire] absorbs blood from [owner]!"), span_boldwarning("It BURNS!"))
 
 	//Vampire heals at a steady rate over the duration of the spell regardless of the victim's state
-	vampire.heal_overall_damage(0.5, 0.5, 5, updating_health = TRUE)
+	vampire.heal_overall_damage(brute = 0.5, burn = 0.5, stamina = 5)
 
 	spell.vampiredatum_power.current_vitae += blood_drain * 2	// Vampires get double the blood drained because of balance
 	//Weird beam visuals if it isn't redrawn due to the beam sending players into crit

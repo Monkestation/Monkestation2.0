@@ -39,10 +39,11 @@
 	. = ..()
 	check_witnesses()
 	var/mob/living/user = owner
-	owner.add_movespeed_modifier(/datum/movespeed_modifier/cloak)
+	ADD_TRAIT(user, TRAIT_UNKNOWN, REF(src))
+	user.add_movespeed_modifier(/datum/movespeed_modifier/cloak)
 	user.AddElement(/datum/element/digitalcamo)
 	user.balloon_alert(user, "cloak turned on.")
-	animate(owner, alpha = cloaklevel, time = 1 SECONDS)
+	animate(user, alpha = cloaklevel, time = 1 SECONDS)
 
 /datum/action/cooldown/vampire/cloak/continue_active()
 	. = ..()
@@ -58,8 +59,9 @@
 	var/mob/living/user = owner
 
 	animate(user, alpha = 255, time = 1 SECONDS)
+	REMOVE_TRAIT(user, TRAIT_UNKNOWN, REF(src))
 	user.RemoveElement(/datum/element/digitalcamo)
-	owner.remove_movespeed_modifier(/datum/movespeed_modifier/cloak)
+	user.remove_movespeed_modifier(/datum/movespeed_modifier/cloak)
 	user.balloon_alert(user, "cloak turned off.")
 	return ..()
 

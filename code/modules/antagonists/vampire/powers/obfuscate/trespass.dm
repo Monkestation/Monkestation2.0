@@ -70,37 +70,37 @@
 	)
 	// Effect Origin
 	var/sound_strength = max(40, 100 - level_current * 20)
-	playsound(get_turf(owner), 'sound/magic/summon_karp.ogg', sound_strength, 1)
+	playsound(get_turf(owner), 'sound/magic/summon_karp.ogg', vol = sound_strength, vary = TRUE)
 	var/datum/effect_system/steam_spread/vampire/puff = new /datum/effect_system/steam_spread()
-	puff.set_up(3, 0, my_turf)
+	puff.set_up(3, FALSE, my_turf)
 	puff.start()
 
 	var/mist_delay = max(5, 20 - level_current * 2.5) // Level up and do this faster.
 
 	// Freeze Me
 	user.Stun(mist_delay, ignore_canstun = TRUE)
-	user.density = FALSE
-	var/invis_was = user.invisibility
-	user.invisibility = INVISIBILITY_MAXIMUM
+	ADD_TRAIT(user, TRAIT_UNDENSE, REF(src))
+	user.SetInvisibility(INVISIBILITY_MAXIMUM, "vampire_trespass")
 
 	// Wait...
 	sleep(mist_delay / 2)
 	// Move & Freeze
 	if(isturf(target_turf))
-		do_teleport(owner, target_turf, no_effects=TRUE, channel = TELEPORT_CHANNEL_QUANTUM) // in teleport.dm?
+		do_teleport(owner, target_turf, no_effects = TRUE, channel = TELEPORT_CHANNEL_QUANTUM) // in teleport.dm?
 	user.Stun(mist_delay / 2, ignore_canstun = TRUE)
 
 	// Wait...
 	sleep(mist_delay / 2)
+
 	// Un-Hide & Freeze
-	user.dir = get_dir(my_turf, target_turf)
+	user.setDir(get_dir(my_turf, target_turf))
 	user.Stun(mist_delay / 2, ignore_canstun = TRUE)
-	user.density = 1
-	user.invisibility = invis_was
+	REMOVE_TRAIT(user, TRAIT_UNDENSE, REF(src))
+	user.RemoveInvisibility("vampire_trespass")
 
 	check_witnesses()
 	// Effect Destination
-	playsound(get_turf(owner), 'sound/magic/summon_karp.ogg', 60, 1)
+	playsound(get_turf(owner), 'sound/magic/summon_karp.ogg', vol = 60, vary = TRUE)
 	puff = new /datum/effect_system/steam_spread()
-	puff.set_up(3, 0, target_turf)
+	puff.set_up(3, FALSE, target_turf)
 	puff.start()

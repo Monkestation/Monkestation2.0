@@ -67,7 +67,7 @@
 	if(human_owner.handcuffed || human_owner.legcuffed)
 		human_owner.uncuff()
 		human_owner.visible_message(
-			span_warning("[human_owner] discards their restraints like it's nothing!"),
+			span_warning("[human_owner] discards [human_owner.p_their()] restraints like it's nothing!"),
 			span_warning("We break through our restraints!")
 		)
 		used = TRUE

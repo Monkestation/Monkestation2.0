@@ -143,10 +143,10 @@
 	if(user.body_position != STANDING_UP || user.incapacitated())
 		var/send_dir = get_dir(user, target_turf)
 		new /datum/forced_movement(user, get_ranged_target_turf(user, send_dir, 1), 1, FALSE)
-		user.spin(10)
+		user.spin(1 SECONDS)
 		return
 
-	if(IS_CURATOR(target) || target.is_shove_knockdown_blocked())
+	if(IS_CURATOR(target) || IS_MONSTERHUNTER(target) || target.is_shove_knockdown_blocked())
 		owner.balloon_alert(owner, "pushed away!")
 		target.grabbedby(owner)
 		return

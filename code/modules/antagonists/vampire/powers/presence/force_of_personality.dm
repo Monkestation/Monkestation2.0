@@ -24,13 +24,8 @@
 /datum/action/cooldown/vampire/force_of_personality/UsePower()
 	. = ..()
 	for(var/mob/living/victim in oviewers(aura_range, owner))
-		if(!can_affect(victim))
-			continue
-		if(!victim.has_status_effect(/datum/status_effect/intimidated))
+		if(can_affect(victim))
 			victim.apply_status_effect(/datum/status_effect/intimidated, owner)
-		else
-			var/datum/status_effect/intimidated/existing = victim.has_status_effect(/datum/status_effect/intimidated)
-			existing.refresh()
 
 /// Checks if this victim can be affected by the force of personality aura
 /datum/action/cooldown/vampire/force_of_personality/proc/can_affect(mob/living/victim)
@@ -49,7 +44,7 @@
 /// Status effect for being affected by Force of Personality
 /datum/status_effect/intimidated
 	id = "intimidated"
-	status_type = STATUS_EFFECT_UNIQUE
+	status_type = STATUS_EFFECT_REFRESH
 	duration = 10 SECONDS
 	tick_interval = 0.2 SECONDS
 	alert_type = null
@@ -72,9 +67,6 @@
 		return FALSE
 	return TRUE
 
-/datum/status_effect/intimidated/refresh()
-	duration = world.time + initial(duration)
-
 /datum/status_effect/intimidated/tick(seconds_between_ticks)
 	if(QDELETED(source_vampire) || source_vampire.stat == DEAD)
 		qdel(src)
@@ -95,7 +87,7 @@
 		if(retreat_turf && !retreat_turf.is_blocked_turf())
 			if(COOLDOWN_FINISHED(src, message_cooldown))
 				COOLDOWN_START(src, message_cooldown, 3 SECONDS)
-				owner.visible_message(span_warning("[owner] takes a hurried step back."), span_awe("You don't dare approach them..."))
+				owner.visible_message(span_warning("[owner] takes a hurried step back."), span_awe("You don't dare approach [source_vampire.p_them()]..."))
 			owner.Move(retreat_turf, away_dir)
 
 /datum/status_effect/intimidated/get_examine_text()

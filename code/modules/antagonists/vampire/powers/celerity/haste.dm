@@ -63,14 +63,14 @@
 	. = ..()
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 	var/mob/living/user = owner
-	var/turf/targeted_turf = isturf(target_atom) ? target_atom : get_turf(target_atom)
+	var/turf/targeted_turf = get_turf(target_atom)
 	// Pulled? Not anymore.
 	user.pulledby?.stop_pulling()
 	// Go to target turf
 	// DO NOT USE WALK TO.
 	check_witnesses()
 	owner.balloon_alert(owner, "you dash into the air!")
-	playsound(get_turf(owner), 'sound/weapons/punchmiss.ogg', 25, 1, -1)
+	playsound(get_turf(owner), 'sound/weapons/punchmiss.ogg', 25, TRUE, -1)
 	var/safety = get_dist(user, targeted_turf) * 3 + 1
 	var/consequetive_failures = 0
 	while(--safety && (get_turf(user) != targeted_turf))
@@ -98,6 +98,6 @@
 		if(hit.Find(hit_living))
 			continue
 		hit += hit_living
-		playsound(hit_living, "sound/weapons/punch[rand(1,4)].ogg", 15, 1, -1)
+		playsound(hit_living, SFX_PUNCH, 15, TRUE, -1)
 		hit_living.Knockdown(10 + level_current * 8)
-		hit_living.spin(10, 1)
+		hit_living.spin(1 SECONDS, 1)

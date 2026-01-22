@@ -66,28 +66,28 @@
 	switch(powerlevel)
 		if(1)
 			if(living_target.apply_status_effect(/datum/status_effect/bloodboil, owner))
-				to_chat(owner, span_warning("You cause [living_target.name]'s blood to boil inside their body!"))
+				to_chat(owner, span_warning("You cause [living_target]'s blood to boil inside [living_target.p_their()] body!"))
 				power_activated_sucessfully() // PAY COST! BEGIN COOLDOWN!
 			else
 				to_chat(owner, span_warning("Your thaumaturgy fails to take hold."))
 				deactivate_power()
 		if(2)
 			if(living_target.apply_status_effect(/datum/status_effect/bloodboil/strong, owner))
-				to_chat(owner, span_warning("You cause [living_target.name]'s blood to boil inside their body!"))
+				to_chat(owner, span_warning("You cause [living_target]'s blood to boil inside [living_target.p_their()] body!"))
 				power_activated_sucessfully() // PAY COST! BEGIN COOLDOWN!
 			else
 				to_chat(owner, span_warning("Your thaumaturgy fails to take hold."))
 				deactivate_power()
 		if(3)
 			if(living_target.apply_status_effect(/datum/status_effect/bloodboil/stronger, owner))
-				to_chat(owner, span_warning("You cause [living_target.name]'s blood to boil inside their body!"))
+				to_chat(owner, span_warning("You cause [living_target]'s blood to boil inside [living_target.p_their()] body!"))
 				power_activated_sucessfully() // PAY COST! BEGIN COOLDOWN!
 			else
 				to_chat(owner, span_warning("Your thaumaturgy fails to take hold."))
 				deactivate_power()
 		if(4)
 			if(living_target.apply_status_effect(/datum/status_effect/bloodboil/strongest, owner))
-				to_chat(owner, span_warning("You cause [living_target.name]'s blood to boil inside their body!"))
+				to_chat(owner, span_warning("You cause [living_target]'s blood to boil inside [living_target.p_their()] body!"))
 				power_activated_sucessfully() // PAY COST! BEGIN COOLDOWN!
 			else
 				to_chat(owner, span_warning("Your thaumaturgy fails to take hold."))
@@ -121,7 +121,7 @@
 	desc = "You feel an intense heat coursing through your veins. Your blood is boiling!"
 	icon_state = "bloodboil"
 
-/datum/status_effect/bloodboil/tick()
+/datum/status_effect/bloodboil/tick(seconds_between_ticks)
 	var/mob/living/carbon/carbon_owner
 	if(iscarbon(owner))
 		carbon_owner = owner
@@ -134,42 +134,36 @@
 			carbon_owner.stamina?.adjust(-5)
 			carbon_owner.adjustFireLoss(8)
 			owner.blood_volume -= 4
-			if(prob(50))
+			if(SPT_PROB(50, seconds_between_ticks))
 				to_chat(owner, span_warning("Oh god! IT BURNS!"))
-				owner.emote("screams")
+				INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob, emote), "scream")
 		if(2)
 			carbon_owner.stamina?.adjust(-10)
 			carbon_owner.adjustFireLoss(6)
 			owner.blood_volume -= 6
-			if(prob(50))
+			if(SPT_PROB(50, seconds_between_ticks))
 				to_chat(owner, span_warning("Oh god! IT BURNS!"))
-				owner.emote("screams")
+				INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob, emote), "scream")
 		if(3)
 			carbon_owner.stamina?.adjust(-15)
 			carbon_owner.adjustFireLoss(8)
 			owner.blood_volume -= 8
-			if(prob(50))
+			if(SPT_PROB(50, seconds_between_ticks))
 				to_chat(owner, span_warning("Oh god! IT BURNS!"))
-				owner.emote("screams")
+				INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob, emote), "scream")
 		if(4)
 			carbon_owner.stamina?.adjust(-20)
 			carbon_owner.adjustFireLoss(9)
 			owner.blood_volume -= 10
-			if(prob(50))
+			if(SPT_PROB(50, seconds_between_ticks))
 				to_chat(owner, span_warning("Oh god! IT BURNS!"))
-				owner.emote("screams")
+				INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob, emote), "scream")
 	return
 
 /datum/status_effect/bloodboil/on_apply()
 	if(!iscarbon(owner))
 		return FALSE
 	return TRUE
-
-/datum/status_effect/bloodboil/on_creation(mob/living/new_owner, target)
-	. = ..()
-	return
-
-/datum/status_effect/bloodboil/on_remove()
 
 /datum/status_effect/bloodboil/get_examine_text()
 	return span_warning("[owner.p_They()] writhe[owner.p_s()] and squirm[owner.p_s()], [owner.p_They()] seem[owner.p_s()] weirdly red?")

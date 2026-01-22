@@ -17,7 +17,7 @@
 	if(!.)
 		return FALSE
 
-	if(owner.stat >= DEAD || owner.incapacitated())
+	if(owner.stat >= DEAD || owner.incapacitated(IGNORE_RESTRAINTS))
 		owner.balloon_alert(owner, "you are incapacitated...")
 		return FALSE
 
@@ -35,22 +35,26 @@
 	if(!istype(carbon_owner))
 		return
 
+	var/needs_update = FALSE
 	carbon_owner.set_jitter_if_lower(10 SECONDS)
 	carbon_owner.stamina?.adjust(-vitaecost * 1.1)
-	carbon_owner.adjustBruteLoss(-2.5)
-	carbon_owner.adjustToxLoss(-2, forced = TRUE)
+	needs_update += carbon_owner.adjustBruteLoss(-2.5, updating_health = FALSE)
+	needs_update += carbon_owner.adjustToxLoss(-2, updating_health = FALSE, forced = TRUE)
 	// Plasmamen won't lose blood, they don't have any, so they don't heal from Burn.
 	if(!HAS_TRAIT(carbon_owner, TRAIT_NOBLOOD))
 		carbon_owner.blood_volume -= vitaecost
-		carbon_owner.adjustFireLoss(-1.5)
+		needs_update += carbon_owner.adjustFireLoss(-1.5, updating_health = FALSE)
 	// Stop Bleeding
 	//if(istype(carbon_owner) && carbon_owner.is_bleeding())
 	//	carbon_owner.cauterise_wounds(-0.5)
 
+	if(needs_update)
+		carbon_owner.updatehealth()
+
 /datum/action/cooldown/vampire/recuperate/continue_active()
 	if(owner.stat == DEAD)
 		return FALSE
-	if(owner.incapacitated())
+	if(owner.incapacitated(IGNORE_RESTRAINTS))
 		owner.balloon_alert(owner, "too exhausted...")
 		return FALSE
 	return TRUE
