@@ -81,12 +81,12 @@
 /obj/machinery/computer/camera_advanced/base_construction/GrantActions(mob/living/user)
 	..()
 	//When the eye is in use, make it visible to players so they know when someone is building.
-	eyeobj.invisibility = 0
+	eyeobj.SetInvisibility(INVISIBILITY_NONE, id=type)
 
 /obj/machinery/computer/camera_advanced/base_construction/remove_eye_control(mob/living/user)
 	..()
 	//Hide the eye when not in use.
-	eyeobj.invisibility = INVISIBILITY_MAXIMUM
+	eyeobj.RemoveInvisibility(type)
 
 /**
  * A mob used by [/obj/machinery/computer/camera_advanced/base_construction] for building in specific areas.
