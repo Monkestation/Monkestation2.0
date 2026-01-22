@@ -62876,6 +62876,7 @@
 /area/station/command/heads_quarters/hos)
 "syA" = (
 /obj/machinery/light/warm/directional/west,
+/obj/machinery/cassette_library,
 /turf/open/floor/wood/large,
 /area/station/service/library)
 "syF" = (

@@ -1,0 +1,11 @@
+author: "SirNightKnight"
+delete-after: True
+changes:
+  - qol: "mop buckets have 500 reagent capacity ."
+  - bugfix: "fixed the vacuum upgrade not working."
+  - qol: "janitors have a liquid pump beacon in their outfit."
+  - qol: "slightly increased to the stock of the JaniDrobe to accommodate a third set of janitor gear. it also now has space cleaner."
+  - rscadd: "dumping a mop bucket over a scrubber vent doesnt expose the tile to the reagents inside."
+  - qol: "normal mop buckets can be dumped the same way as janitorial carts."
+  - balance: "removed backpack watertank slowdown."
+  - qol: "light replacers can be made at engineering prolathes."

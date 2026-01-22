@@ -340,7 +340,25 @@
   - bugfix: fixed getting stuck buckled in a wheelchair after it's destroyed.
   SirNightKnight, JohnFulpWillard:
   - rscadd: Security now has a Big Red Key.
+  buffakaza:
+  - map: added two previously absent roundstart bz canisters to blueshift gas storage
+      room and void raptor atmos project room.
   wraith-54321:
   - rscadd: Added sub overminds for blob
   - rscadd: Added more blob chemical effects
   - balance: Slightly increased brute storyteller point values
+2026-01-20:
+  Absolucy:
+  - refactor: Refactored how mobs target turrets and mechs, which should hopefully
+      be more performant.
+  - refactor: Refactored turrets so they only process if something potentially "interesting"
+      is within its range.
+  Chelxox:
+  - rscadd: 'Introduces the Cassette Library Terminal: browse through and buy cassettes
+      with this easy method!'
+  - image: Adds on and off sprites for the cassette library terminal.
+  - map: Places cassette library terminals on all maps on rotation.
+  - admin: Adds admin logs for when a user buys their own cassette tapes multiple
+      times.
+  - server: Attention! Cassette library terminal messes with SQL entries. May need
+      operator intervention to fully implement.
