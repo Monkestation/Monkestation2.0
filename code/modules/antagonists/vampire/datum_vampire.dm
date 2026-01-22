@@ -5,6 +5,7 @@
 	show_in_roundend = ROLE_VAMPIRE
 	ui_name = "AntagInfoVampire"
 	hijack_speed = 0.5
+	stinger_sound = 'sound/vampires/lunge_warn.ogg'
 
 	/// How much blood we have, starting off at default blood levels.
 	/// We don't use our actual body's temperature because some species don't have blood and we don't want to exclude them
@@ -168,7 +169,10 @@
 	RegisterSignal(current_mob, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(current_mob, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 	RegisterSignal(current_mob, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
+	RegisterSignal(current_mob, COMSIG_MOB_UPDATE_SIGHT, PROC_REF(on_update_sight))
 	handle_clown_mutation(current_mob, "Your clownish nature has been subdued by your thirst for blood.")
+
+	current_mob.update_sight()
 
 	create_vampire_team()
 
@@ -203,7 +207,8 @@
 /datum/antagonist/vampire/remove_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/current_mob = mob_override || owner.current
-	UnregisterSignal(current_mob, list(COMSIG_LIVING_LIFE, COMSIG_ATOM_EXAMINE, COMSIG_LIVING_DEATH, COMSIG_MOVABLE_MOVED))
+	UnregisterSignal(current_mob, list(COMSIG_LIVING_LIFE, COMSIG_ATOM_EXAMINE, COMSIG_LIVING_DEATH, COMSIG_MOVABLE_MOVED, COMSIG_MOB_UPDATE_SIGHT))
+	current_mob.update_sight()
 
 	handle_clown_mutation(current_mob, removing = FALSE)
 
@@ -366,8 +371,6 @@
 	to_chat(owner, boxed_message(msg.Join("\n")))
 
 	owner.announce_objectives()
-
-	owner.current.playsound_local(null, 'sound/vampires/lunge_warn.ogg', 100, FALSE, pressure_affected = FALSE)
 	antag_memory += "Although you were born a mortal, in undeath you earned the name <b>[fullname]</b>.<br>"
 
 /datum/antagonist/vampire/farewell()
@@ -663,3 +666,9 @@
 		return
 
 	tracker?.tracking_beacon?.update_position()
+
+/datum/antagonist/vampire/proc/on_update_sight(mob/user)
+	SIGNAL_HANDLER
+	user.add_sight(SEE_MOBS)
+	user.lighting_cutoff = max(user.lighting_cutoff, LIGHTING_CUTOFF_HIGH)
+	user.lighting_color_cutoffs = blend_cutoff_colors(user.lighting_color_cutoffs, list(25, 8, 5))
