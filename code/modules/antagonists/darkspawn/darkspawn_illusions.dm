@@ -38,7 +38,7 @@
 
 /mob/living/simple_animal/hostile/illusion/darkspawn/psyche //sentient version
 
-/mob/living/simple_animal/hostile/illusion/darkspawn/psyche/Copy_Parent(mob/living/original, life, hp, damage, replicate)
+/mob/living/simple_animal/hostile/illusion/darkspawn/psyche/copy_parent(mob/living/original, life, hp, damage, replicate)
 	. = ..()
 	life_span = INFINITY //doesn't actually despawn
 

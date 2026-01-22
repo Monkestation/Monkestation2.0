@@ -1,17 +1,19 @@
 /**
  * Nanotrasen TCS Language - Made by Doohl, ported to Yogs by Altoids
  */
-#define HUMAN (1<<0)
-#define MONKEY (1<<1)
-#define ROBOT (1<<2)
-#define DRACONIC (1<<3)
-#define BEACHTONGUE (1<<4)
-#define SYLVAN (1<<5)
-#define ETHEREAN (1<<6)
-#define BONE (1<<7)
-#define MOTH (1<<8)
-#define CAT (1<<9)
-#define ENGLISH (1<<10)
+#define HUMAN 1
+#define MONKEY 2
+#define ROBOT 3
+#define DRACONIC 4
+#define BEACHTONGUE 5
+#define SYLVAN 6
+#define ETHEREAN 7
+#define BONE 8
+#define MOTH 9
+#define CAT 10
+#define ASH_TONGUE 11
+#define TORII 12
+#define UNCOMMON 13
 
 ///Span classes that players are allowed to set in a radio transmission.
 GLOBAL_LIST_INIT(allowed_custom_spans, list(
@@ -29,6 +31,8 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 	/datum/language/common,
 	/datum/language/machine,
 	/datum/language/draconic,
+	/datum/language/uncommon,
+	/datum/language/ashtongue,
 ))
 
 /datum/n_Interpreter/TCS_Interpreter
@@ -134,19 +138,23 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 	 * However, I think the signal can only have one language
 	 * So, the lowest bit set within $language overrides any higher ones that are set.
 	 */
-	interpreter.SetVar("languages", new /datum/n_enum(list(
-		"human" = HUMAN,
-		"monkey" = MONKEY,
-		"robot" = ROBOT,
-		"draconic" = DRACONIC,
-		"beachtounge" = BEACHTONGUE,
-		"sylvan" = SYLVAN,
-		"etherean" = ETHEREAN,
-		"bonespeak" = BONE,
-		"mothian" = MOTH,
-		"cat" = CAT,
-		"english" = ENGLISH,
-	)))
+	interpreter.SetVar(
+		"languages", new /datum/n_enum(list(
+			"human" = HUMAN,
+			"monkey" = MONKEY,
+			"robot" = ROBOT,
+			"draconic" = DRACONIC,
+			"beachtounge" = BEACHTONGUE,
+			"sylvan" = SYLVAN,
+			"etherean" = ETHEREAN,
+			"bonespeak" = BONE,
+			"mothian" = MOTH,
+			"cat" = CAT,
+			"ash" = ASH_TONGUE,
+			"torii" = TORII,
+			"uncommon" = UNCOMMON,
+		))
+	)
 
 	interpreter.Run() // run the thing
 
@@ -190,6 +198,12 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 			oldlangbits = MOTH
 		if(/datum/language/nekomimetic)
 			oldlangbits = CAT
+		if(/datum/language/ashtongue)
+			oldlangbits = ASH_TONGUE
+		if(/datum/language/yangyu)
+			oldlangbits = TORII
+		if(/datum/language/uncommon)
+			oldlangbits = UNCOMMON
 
 	// Signal data
 	var/datum/n_struct/signal/script_signal = new(list(
@@ -327,7 +341,14 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 			return /datum/language/moffic
 		if(CAT)
 			return /datum/language/nekomimetic
+		if(ASH_TONGUE)
+			return /datum/language/ashtongue
+		if(TORII)
+			return /datum/language/yangyu
+		if(UNCOMMON)
+			return /datum/language/uncommon
 
+///Stores data from the script to use between radio messages.
 /datum/n_function/default/mem
 	name = "mem"
 	interp_type = /datum/n_Interpreter/TCS_Interpreter
@@ -350,6 +371,7 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 			S.memory[address] = value
 			return TRUE
 
+///Wipes a memory list.
 /datum/n_function/default/clearmem
 	name = "clearmem"
 	interp_type = /datum/n_Interpreter/TCS_Interpreter
@@ -359,6 +381,7 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 	S.memory = list()
 	return TRUE
 
+///Sends a signal (like remote signallers), first param is the Frequency, second param is the Code.
 /datum/n_function/default/remote_signal
 	name = "remote_signal"
 	interp_type = /datum/n_Interpreter/TCS_Interpreter
@@ -397,6 +420,7 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 
 		message_admins("Telecomms server \"[S.id]\" sent a signal command, which was triggered by NTSL<B>: </B> [format_frequency(freq)]/[code]")
 
+///Broadcasts a message to the radio.
 /datum/n_function/default/broadcast
 	name = "broadcast"
 	interp_type = /datum/n_Interpreter/TCS_Interpreter
@@ -503,4 +527,6 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 #undef BONE
 #undef MOTH
 #undef CAT
-#undef ENGLISH
+#undef ASH_TONGUE
+#undef TORII
+#undef UNCOMMON

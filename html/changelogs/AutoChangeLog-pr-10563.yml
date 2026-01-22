@@ -1,0 +1,5 @@
+author: "Gboster-0"
+delete-after: True
+changes:
+  - bugfix: "wheelchairs now properly take 1 second to unbuckle people"
+  - bugfix: "you can no longer stand in the same place whilst unbuckling someone in a wheelchair, and unbuckle them from 2 tiles away"

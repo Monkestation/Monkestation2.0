@@ -7,17 +7,8 @@ SUBSYSTEM_DEF(cassettes)
 
 /datum/controller/subsystem/cassettes/Initialize()
 	. = SS_INIT_FAILURE
-	if(CONFIG_GET(flag/cassettes_in_db) && !CONFIG_GET(flag/sql_enabled))
-		stack_trace("CASSETTES_IN_DB was enabled, despite the SQL database not being enabled! Disabling CASSETTES_IN_DB.")
-		CONFIG_SET(flag/cassettes_in_db, FALSE)
-	if(CONFIG_GET(flag/cassettes_in_db))
-		if(!SSdbcore.Connect())
-			CRASH("Database-based cassettes are enabled, but a connection to the database could not be established!")
-		if(!load_all_cassettes_from_db())
-			CRASH("Failed to load all cassettes from database!")
-	else
-		if(!load_all_cassettes_from_json())
-			CRASH("Failed to load all cassettes from data folder!")
+	if(!load_all_cassettes_from_json())
+		CRASH("Failed to load all cassettes from data folder!")
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/cassettes/Recover()
@@ -25,19 +16,14 @@ SUBSYSTEM_DEF(cassettes)
 	cassettes = SScassettes.cassettes
 
 /// Loads the cassette with the given ID.
-/// If `db` is TRUE, it will load the cassette from the database.
-/// If `db` is FALSE, the cassette will be loaded from a JSON in the `data/cassette_storage` folder.
-/// If `db` is null (the default), it will load from the database if the `CASSETTES_IN_DB` config option is set, otherwise it will load from the JSON files.
-/datum/controller/subsystem/cassettes/proc/load_cassette(id, db = null) as /datum/cassette
+/datum/controller/subsystem/cassettes/proc/load_cassette(id) as /datum/cassette
 	if(!id)
 		return null
 	else if(istype(id, /datum/cassette)) // so i can be lazy
 		return id
 	if(id in cassettes)
 		return cassettes[id]
-	if(isnull(db))
-		db = CONFIG_GET(flag/cassettes_in_db)
-	var/datum/cassette/cassette_data = db ? load_cassette_from_db_raw(id) : load_cassette_from_json_raw(id)
+	var/datum/cassette/cassette_data = load_cassette_from_json_raw(id)
 	if(cassette_data)
 		cassettes[id] = cassette_data
 		return cassette_data
@@ -56,71 +42,6 @@ SUBSYSTEM_DEF(cassettes)
 	cassette_data.import(cassette_json)
 	cassette_data.id = id
 	return cassette_data
-
-/// Loads the cassette with the given ID from the database.
-/datum/controller/subsystem/cassettes/proc/load_cassette_from_db_raw(id) as /datum/cassette
-	if(!SSdbcore.Connect() || !id)
-		return
-	var/datum/db_query/query_cassette = SSdbcore.NewQuery("SELECT `name`, `desc`, `status`, `author_name`, `author_ckey`, `front`, `back` FROM [format_table_name("cassettes")] WHERE `id` = :id", list("id" = id))
-	if(!query_cassette.Execute() || !query_cassette.NextRow())
-		qdel(query_cassette)
-		return
-	var/name = query_cassette.item[1]
-	var/desc = query_cassette.item[2]
-	var/status = query_cassette.item[3]
-	var/author_name = query_cassette.item[4]
-	var/author_ckey = query_cassette.item[5]
-	var/list/front = json_decode(query_cassette.item[6])
-	var/list/back = json_decode(query_cassette.item[7])
-	qdel(query_cassette)
-
-	var/datum/cassette/cassette = new
-	cassette.id = id
-	cassette.name = name
-	cassette.desc = desc
-	cassette.status = status
-	cassette.author.name = author_name
-	cassette.author.ckey = author_ckey
-	cassette.front.import(front)
-	cassette.back.import(back)
-	return cassette
-
-/// Returns an associative list of id to cassette datums, of all existing saved cassettes.
-/// This uses the database.
-/datum/controller/subsystem/cassettes/proc/load_all_cassettes_from_db()
-	. = FALSE
-	if(!SSdbcore.Connect())
-		CRASH("Failed to connect to database")
-	var/datum/db_query/query_cassettes = SSdbcore.NewQuery("SELECT `id`, `name`, `desc`, `status`, `author_name`, `author_ckey`, `front`, `back` FROM [format_table_name("cassettes")]")
-	if(!query_cassettes.Execute())
-		qdel(query_cassettes)
-		CRASH("Failed to load cassettes from database")
-	var/loaded = 0
-	while(query_cassettes.NextRow())
-		var/id = query_cassettes.item[1]
-		var/name = query_cassettes.item[2]
-		var/desc = query_cassettes.item[3]
-		var/status = query_cassettes.item[4]
-		var/author_name = query_cassettes.item[5]
-		var/author_ckey = query_cassettes.item[6]
-		var/list/front = json_decode(query_cassettes.item[7])
-		var/list/back = json_decode(query_cassettes.item[8])
-
-		var/datum/cassette/cassette = new
-		cassette.id = id
-		cassette.name = name
-		cassette.desc = desc
-		cassette.status = status
-		cassette.author.name = author_name
-		cassette.author.ckey = author_ckey
-		cassette.front.import(front)
-		cassette.back.import(back)
-
-		cassettes[id] = cassette
-		loaded++
-	qdel(query_cassettes)
-	log_music("Loaded [loaded] cassettes from the database!")
-	return TRUE
 
 /// Returns an associative list of id to cassette datums, of all existing saved cassettes.
 /// This uses JSON files.
