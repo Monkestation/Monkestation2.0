@@ -67,7 +67,7 @@
 	inhand_icon_state = "exactitude"
 	worn_icon_state = null
 
-/obj/item/clothing/gloves/rapid/vampire/Initialize()
+/obj/item/clothing/gloves/rapid/vampire/Initialize(mapload)
 	ADD_TRAIT(src, TRAIT_NODROP, INNATE_TRAIT)
 	return ..()
 

@@ -201,7 +201,7 @@
 
 		// Don't allow normal feed on vamps. It's too easy and feels unfair.
 		if(IS_VAMPIRE(feed_target))
-			owner.balloon_alert(owner, "Too powerful. Knock them out and combat feed on them!")
+			owner.balloon_alert(owner, "too powerful, knock them out and combat feed on them!")
 			deactivate_power()
 			return
 

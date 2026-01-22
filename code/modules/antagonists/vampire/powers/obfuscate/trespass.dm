@@ -52,7 +52,7 @@
 		// Walls block trespass
 		if(iswallturf(starting_turf))
 			var/wallwarning = (i == 1) ? "in the way" : "at your destination"
-			owner.balloon_alert(owner, "There is a wall [wallwarning].")
+			owner.balloon_alert(owner, "there is a wall [wallwarning].")
 			return FALSE
 
 	target_turf = starting_turf
