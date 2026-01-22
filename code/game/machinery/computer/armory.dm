@@ -168,8 +168,7 @@
 
 	message += "\nAuthorized by: "
 
-	var/i
-	for(i = 1, i <= length(current_authorizations), i++)
+	for(var/i = 1 to length(current_authorizations))
 		var/obj/item/card/id/ID = current_authorizations[i]
 		message += "[ID.assignment] [ID.registered_name]"
 
