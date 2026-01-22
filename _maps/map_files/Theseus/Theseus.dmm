@@ -39273,6 +39273,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/processing)
+"lvh" = (
+/obj/machinery/cassette_postbox,
+/obj/effect/turf_decal/bot{
+	dir = 1
+	},
+/turf/open/floor/wood/large,
+/area/station/service/library/upper)
 "lvl" = (
 /obj/structure/rack,
 /obj/item/storage/toolbox/mechanical{
@@ -72379,6 +72386,13 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology/hallway)
+"uXw" = (
+/obj/machinery/cassette_library,
+/obj/effect/turf_decal/bot{
+	dir = 1
+	},
+/turf/open/floor/wood/large,
+/area/station/service/library/upper)
 "uXF" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -88352,8 +88366,8 @@ nhC
 jns
 rtj
 rtj
+lXw
 mvH
-nhC
 nhC
 nhC
 nhC
@@ -88609,8 +88623,8 @@ jns
 jns
 bTL
 rtj
+xXt
 jns
-nhC
 nhC
 nhC
 nhC
@@ -88866,9 +88880,9 @@ hUA
 jBI
 mux
 qgJ
+lvh
 rtj
 rtj
-nhC
 nhC
 nhC
 nhC
@@ -89123,10 +89137,10 @@ iRD
 oxo
 uYH
 mux
+mux
 tko
 rtj
 jns
-nhC
 nhC
 nhC
 nhC
@@ -89380,10 +89394,10 @@ iRD
 xme
 fvx
 saq
+saq
 byd
 pXO
 rtj
-nhC
 nhC
 nhC
 nhC
@@ -89637,10 +89651,10 @@ gbR
 azt
 agO
 mux
+mux
 cTK
 ktg
 rtj
-nhC
 nhC
 nhC
 nhC
@@ -89894,10 +89908,10 @@ xme
 xme
 mPO
 mux
+mux
 uoi
 jrq
 rtj
-nhC
 nhC
 nhC
 nhC
@@ -90150,11 +90164,11 @@ rtj
 xme
 ljy
 kfU
+mux
 jgq
 aPI
 rtj
 jns
-nhC
 nhC
 nhC
 nhC
@@ -90408,9 +90422,9 @@ wCo
 vQN
 mux
 qgJ
+uXw
 rtj
 rtj
-nhC
 nhC
 nhC
 nhC
@@ -90665,8 +90679,8 @@ jns
 jns
 mqO
 rtj
+xXt
 jns
-nhC
 nhC
 nhC
 nhC
@@ -90922,8 +90936,8 @@ nhC
 jns
 thg
 rtj
+lXw
 mvH
-nhC
 nhC
 nhC
 nhC
