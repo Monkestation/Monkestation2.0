@@ -1,6 +1,6 @@
 /obj/structure/vampire
 	/// Who owns this structure?
-	var/mob/living/owner
+	var/datum/mind/owner
 	/*
 	 *	We use vars to add descriptions to items.
 	 *	This way we don't have to make a new /examine for each structure
@@ -10,6 +10,10 @@
 	var/vampire_desc
 	var/vassal_desc
 	var/curator_desc
+
+/obj/structure/vampire/Destroy()
+	owner = null
+	return ..()
 
 /obj/structure/vampire/examine(mob/user)
 	. = ..()
@@ -27,13 +31,13 @@
 
 /// This handles bolting down the structure.
 /obj/structure/vampire/proc/bolt(mob/user)
-	if(!user)
+	if(!user?.mind)
 		return
 	to_chat(user, span_danger("You have secured [src] in place."))
 	to_chat(user, span_announce("* Vampire Tip: Examine [src] to understand how it functions!"))
 	user.playsound_local(null, 'sound/items/ratchet.ogg', 70, FALSE, pressure_affected = FALSE)
 	set_anchored(TRUE)
-	owner = user
+	owner = user.mind
 
 /// This handles unbolting of the structure.
 /obj/structure/vampire/proc/unbolt(mob/user)
@@ -74,7 +78,7 @@
 	return TRUE
 
 /obj/structure/vampire/click_alt(mob/user)
-	if(user != owner || !user.Adjacent(src))
+	if(user != owner.current || !user.Adjacent(src))
 		return NONE
 	balloon_alert(user, "unbolt [src]?")
 	var/static/list/unsecure_options = list(
@@ -224,7 +228,7 @@
 		return
 	var/mob/living/carbon/buckled_carbons = pick(buckled_mobs)
 	if(buckled_carbons)
-		if(user == owner)
+		if(user == owner.current)
 			unbuckle_mob(buckled_carbons)
 		else
 			user_unbuckle_mob(buckled_carbons, user)
