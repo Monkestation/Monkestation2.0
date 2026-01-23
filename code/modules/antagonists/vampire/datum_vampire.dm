@@ -542,7 +542,7 @@
 /datum/antagonist/vampire/proc/claim_coffin(obj/structure/closet/crate/claimed)
 	// ALREADY CLAIMED
 	if(claimed.resident)
-		if(claimed.resident == owner.current)
+		if(claimed.resident == owner)
 			to_chat(owner, "This is your [src].")
 		else
 			to_chat(owner, "This [src] has already been claimed by another.")
@@ -552,6 +552,7 @@
 		claimed.balloon_alert(owner.current, "not part of station!")
 		return
 	// This is my Lair
+	coffin.resident = owner
 	coffin = claimed
 	vampire_lair_area = coffin_area
 	to_chat(owner, span_userdanger("You have claimed [claimed] as your place of immortal rest! Your lair is now [vampire_lair_area]."))

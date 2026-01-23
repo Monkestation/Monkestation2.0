@@ -37,7 +37,7 @@
 	/// Controls the Y value of the lid, allowing up and down pixel movement.
 	var/lid_y = 0
 	/// The vampire owner of this crate (or coffin)
-	var/mob/living/resident
+	var/datum/mind/resident
 
 /obj/structure/closet/crate/Initialize(mapload)
 	. = ..()
