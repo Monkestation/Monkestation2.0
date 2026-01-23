@@ -177,3 +177,4 @@
 
 // Macros
 #define IS_CURATOR(mob) istype(mob?.mind?.assigned_role, /datum/job/curator)
+#define IS_VAMPIRE_HUNTER(mob) (IS_CURATOR(mob) || IS_MONSTERHUNTER(mob))

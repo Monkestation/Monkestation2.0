@@ -146,7 +146,7 @@
 		user.spin(1 SECONDS)
 		return
 
-	if(IS_CURATOR(target) || IS_MONSTERHUNTER(target) || target.is_shove_knockdown_blocked())
+	if(IS_VAMPIRE_HUNTER(target) || target.is_shove_knockdown_blocked())
 		owner.balloon_alert(owner, "pushed away!")
 		target.grabbedby(owner)
 		return

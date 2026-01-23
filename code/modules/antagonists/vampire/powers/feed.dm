@@ -142,7 +142,7 @@
 		owner.balloon_alert(owner, "ew, no!")
 		return FALSE
 	// Cannot be a curator
-	if(IS_CURATOR(target))
+	if(IS_VAMPIRE_HUNTER(target))
 		owner.balloon_alert(owner, "[target] is too powerful!")
 		return FALSE
 	// Only allow diablerie for masquerade breakers
