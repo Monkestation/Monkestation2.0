@@ -1,5 +1,5 @@
 /// Runs from COMSIG_LIVING_LIFE, handles Vampire constant processes.
-/datum/antagonist/vampire/proc/LifeTick(delta_time, times_fired)
+/datum/antagonist/vampire/proc/LifeTick(datum/source, seconds_per_tick, times_fired)
 	SIGNAL_HANDLER
 
 	// Weirdness shield
@@ -18,7 +18,7 @@
 		AdjustBloodVolume(-VAMPIRE_PASSIVE_BLOOD_DRAIN)
 
 	// Healing
-	if(handle_healing() && !isanimal_or_basicmob(owner))
+	if(handle_healing(seconds_per_tick) && !isanimal_or_basicmob(owner))
 		if((COOLDOWN_FINISHED(src, vampire_spam_healing)) && current_vitae > 0)
 			to_chat(owner.current, span_notice("The power of your blood knits your wounds..."))
 			COOLDOWN_START(src, vampire_spam_healing, VAMPIRE_SPAM_HEALING)
@@ -42,21 +42,7 @@
 	check_final_death()
 
 	// Set our body's blood_volume to mimick our vampire one (if we aren't using the Masquerade power)
-	update_blood()
 	update_hud()
-
-/**
- * Assuming you aren't Masquerading and your species has blood
-**/
-/datum/antagonist/vampire/proc/update_blood()
-	if(HAS_TRAIT(owner.current, TRAIT_NOBLOOD))
-		return
-
-	if(HAS_TRAIT(owner.current, TRAIT_MASQUERADE))
-		owner.current.blood_volume = BLOOD_VOLUME_NORMAL
-		return
-
-	owner.current.blood_volume = max(BLOOD_VOLUME_BAD, min(BLOOD_VOLUME_NORMAL, current_vitae))	// we want to get pale but not completely fucked up
 
 /**
  * Pretty simple, add a value to the vampire's blood volume
@@ -71,25 +57,27 @@
  * By default, burn damage is healed 50% as effectively as brute
  * When undergoing torpor it's 80%, if you're in a coffin 100%
 **/
-/datum/antagonist/vampire/proc/handle_healing()
-	var/in_torpor = is_in_torpor()
+/datum/antagonist/vampire/proc/handle_healing(seconds_per_tick)
 	var/mob/living/current = owner.current
 
 	// Weirdness shield
 	if(QDELETED(current))
 		return FALSE
-	// Dont heal if you have TRAIT_MASQUERADE and not undergoing torpor
-	if(!in_torpor && HAS_TRAIT(current, TRAIT_MASQUERADE))
-		return FALSE
-	// No healing during sol, cry about it
-	if(!in_torpor && current.has_status_effect(/datum/status_effect/vampire_sol))
-		return FALSE
+
+	var/in_torpor = is_in_torpor()
+	if(!in_torpor)
+		// Dont heal if you have TRAIT_MASQUERADE and not undergoing torpor
+		if(HAS_TRAIT(current, TRAIT_MASQUERADE))
+			return FALSE
+		// No healing during sol, cry about it
+		if(current.has_status_effect(/datum/status_effect/vampire_sol))
+			return FALSE
 
 	var/actual_regen = vampire_regen_rate + additional_regen
 
 	// Heal clone and brain damage
-	current.adjustCloneLoss(-1 * actual_regen * 4)
-	current.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1 * (actual_regen * 4))
+	current.adjustCloneLoss(-1 * actual_regen * 4 * seconds_per_tick)
+	current.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1 * (actual_regen * 4) * seconds_per_tick)
 
 	if(!iscarbon(current))
 		return FALSE
@@ -103,12 +91,19 @@
 
 	// LUCY TODO
 	// carbon_owner.suppress_bloodloss(BLEED_TINY * healing_multiplier)
+	if(length(carbon_owner.all_wounds))
+		var/datum/wound/bloodiest_wound
+		for(var/datum/wound/wound as anything in carbon_owner.all_wounds)
+			if(wound.blood_flow && (!bloodiest_wound || wound.blood_flow > bloodiest_wound?.blood_flow))
+				bloodiest_wound = wound
+
+		bloodiest_wound?.adjust_blood_flow(-0.25 * seconds_per_tick)
 
 	if(in_torpor)
 		// If in a coffin: heal 5x as fast, heal burn damage at full capacity, set vitaecost to 50%, and regenerate limbs
 		// If not: heal 3x as fast and heal burn damage at 80%
 		if(istype(carbon_owner.loc, /obj/structure/closet/crate/coffin))
-			if(HAS_TRAIT(owner.current, TRAIT_MASQUERADE) && (COOLDOWN_FINISHED(src, vampire_spam_healing)))
+			if(HAS_TRAIT(owner.current, TRAIT_MASQUERADE) && COOLDOWN_FINISHED(src, vampire_spam_healing))
 				to_chat(carbon_owner, span_alert("You do not heal while your Masquerade ability is active."))
 				COOLDOWN_START(src, vampire_spam_healing, VAMPIRE_SPAM_MASQUERADE)
 				return FALSE
@@ -133,7 +128,7 @@
 
 	if(brute_heal > 0 || burn_heal > 0) // Just a check? Don't heal/spend, and return.
 		var/vitaecost = (brute_heal * 0.5 + burn_heal) * vitaecost_multiplier * healing_multiplier
-		carbon_owner.heal_overall_damage(brute_heal, burn_heal)
+		carbon_owner.heal_overall_damage(brute_heal * seconds_per_tick, burn_heal * seconds_per_tick)
 		AdjustBloodVolume(-vitaecost)
 		return TRUE
 
