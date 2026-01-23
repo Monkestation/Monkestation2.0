@@ -104,20 +104,12 @@
 	looking = TRUE
 
 	if(add_meson)
-		if(HAS_TRAIT(owner, TRAIT_MESON_VISION))
-			return
-		else
-			ADD_TRAIT(owner, TRAIT_MESON_VISION, "Auspex")
-			owner.update_sight()
-			return
+		ADD_TRAIT(owner, TRAIT_MESON_VISION, "Auspex")
 
 	if(add_xray)
-		if(HAS_TRAIT(owner, TRAIT_XRAY_VISION))
-			return
-		else
-			ADD_TRAIT(owner, TRAIT_XRAY_VISION, "Auspex")
-			owner.update_sight()
-			return
+		ADD_TRAIT(owner, TRAIT_XRAY_VISION, "Auspex")
+
+	owner.update_sight()
 
 /datum/action/cooldown/vampire/auspex/proc/unlooky()
 	SIGNAL_HANDLER
