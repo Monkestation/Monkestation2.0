@@ -40,3 +40,4 @@
 	my_clan.on_apply()
 	if(my_clan.antag_hud_icon) // regenerate their HUD if this clan has different icon
 		add_team_hud(owner.current)
+	SEND_SIGNAL(owner, COMSIG_VAMPIRE_CLAN_CHOSEN, src, my_clan)

@@ -135,6 +135,9 @@
 /// Sent when tracking humanity gain progress: (type, subject)
 #define COMSIG_VAMPIRE_TRACK_HUMANITY_GAIN "comsig_vampire_track_humanity_gain"
 
+/// Called on the mind when a Vampire chooses a clan: (datum/antagonist/vampire, datum/bloodsucker_clan)
+#define COMSIG_VAMPIRE_CLAN_CHOSEN "vampire_clan_chosen"
+
 #define DANGER_LEVEL_FIRST_WARNING 1
 #define DANGER_LEVEL_SECOND_WARNING 2
 #define DANGER_LEVEL_THIRD_WARNING 3

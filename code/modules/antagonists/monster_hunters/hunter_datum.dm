@@ -306,7 +306,7 @@
 
 /datum/objective/hunter/Destroy()
 	if(target)
-		UnregisterSignal(target, list(COMSIG_HERETIC_PATH_CHOSEN/*, COMSIG_BLOODSUCKER_CLAN_CHOSEN */)) // LUCY TODO: old bloodsucker code
+		UnregisterSignal(target, list(COMSIG_HERETIC_PATH_CHOSEN, COMSIG_VAMPIRE_CLAN_CHOSEN))
 	return ..()
 
 /datum/objective/hunter/proc/uncover_target()
@@ -317,7 +317,7 @@
 	to_chat(owner.current, span_userdanger("You have identified a monster, your objective list has been updated!"))
 	owner.current?.log_message("identified one of their targets, [key_name(target.current)].", LOG_GAME)
 	target.current?.log_message("was identified by [key_name(owner.current)], a Monster Hunter.", LOG_GAME, log_globally = FALSE)
-	RegisterSignals(target, list(COMSIG_HERETIC_PATH_CHOSEN/*, COMSIG_BLOODSUCKER_CLAN_CHOSEN */), TYPE_PROC_REF(/datum/objective, update_explanation_text)) // LUCY TODO: old bloodsucker code
+	RegisterSignals(target, list(COMSIG_HERETIC_PATH_CHOSEN, COMSIG_VAMPIRE_CLAN_CHOSEN), TYPE_PROC_REF(/datum/objective, update_explanation_text))
 
 /datum/objective/hunter/check_completion()
 	return completed || !considered_alive(target)
