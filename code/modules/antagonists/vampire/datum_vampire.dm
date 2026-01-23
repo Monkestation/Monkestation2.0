@@ -310,6 +310,7 @@
 	RegisterSignal(SSsunlight, COMSIG_SOL_WARNING_GIVEN, PROC_REF(give_warning))
 	RegisterSignal(SSdcs, COMSIG_GLOB_MONSTER_HUNTER_QUERY, PROC_REF(query_for_monster_hunter))
 	RegisterSignal(src, COMSIG_VAMPIRE_TRACK_HUMANITY_GAIN, PROC_REF(on_track_humanity_gain_signal))
+	RegisterSignal(owner, COMSIG_OOZELING_CORE_EJECTED, PROC_REF(on_oozeling_core_ejected))
 
 	owner.teach_crafting_recipe(list(
 		/datum/crafting_recipe/vassalrack,
@@ -702,6 +703,21 @@
 		return
 	if(prince || broke_masquerade || humanity < VAMPIRE_DEFAULT_HUMANITY || length(vassals))
 		prey += owner
+
+/datum/antagonist/vampire/proc/on_oozeling_core_ejected(datum/source, obj/item/organ/internal/brain/slime/core)
+	SIGNAL_HANDLER
+	if(QDELETED(core))
+		return
+	if(current_vitae < OOZELING_MIN_REVIVE_BLOOD_THRESHOLD)
+		to_chat(core.brainmob, span_warning("You do not have enough vitae to recollect yourself on your own!"))
+		return
+	to_chat(core.brainmob, span_notice("You begin recollecting yourself. You will rise again in 3 minutes."))
+	AdjustBloodVolume(-OOZELING_MIN_REVIVE_BLOOD_THRESHOLD * 0.5)
+	addtimer(CALLBACK(src, PROC_REF(oozeling_revive), src), 3 MINUTES, TIMER_UNIQUE | TIMER_OVERRIDE)
+
+/datum/antagonist/vampire/proc/oozeling_revive(obj/item/organ/internal/brain/slime/oozeling_core)
+	var/mob/living/carbon/human/new_body = oozeling_core.rebuild_body(nugget = FALSE, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
+	heal_vampire_organs(new_body)
 
 /datum/outfit/vampire_outfit
 	name = "Vampire outfit (Preview only)"
