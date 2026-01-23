@@ -38,7 +38,7 @@
 		owner.current.remove_status_effect(/datum/status_effect/vampire_sol)
 
 		// Try to enter torpor if we're not in a frenzy or staked
-		if(frenzied)
+		if(owner.current.has_status_effect(/datum/status_effect/frenzy))
 			if(COOLDOWN_FINISHED(src, vampire_spam_sol_burn))
 				to_chat(owner.current, span_userdanger("You are in a frenzy! You cannot enter Torpor until you have enough blood."))
 				COOLDOWN_START(src, vampire_spam_sol_burn, VAMPIRE_SPAM_SOL)
@@ -127,6 +127,8 @@
 **/
 /datum/antagonist/vampire/proc/check_begin_torpor()
 	var/mob/living/carbon/carbon_owner = owner.current
+	if(QDELETED(carbon_owner))
+		return
 	var/total_damage = carbon_owner.getBruteLoss() + carbon_owner.getFireLoss()
 	if(total_damage < 10)
 		return
@@ -134,7 +136,7 @@
 		return
 	if(SSsunlight.sunlight_active)
 		return
-	if(frenzied)
+	if(carbon_owner.has_status_effect(/datum/status_effect/frenzy))
 		return
 	if(final_death)
 		return
@@ -142,11 +144,13 @@
 	torpor_begin()
 
 /datum/antagonist/vampire/proc/check_end_torpor()
-	if(frenzied)
-		torpor_end()
+	var/mob/living/carbon/user = owner.current
+	if(QDELETED(user))
 		return
 
-	var/mob/living/carbon/user = owner.current
+	if(user.has_status_effect(/datum/status_effect/frenzy))
+		torpor_end()
+		return
 
 	var/total_brute = user.getBruteLoss()
 	var/total_burn = user.getFireLoss()

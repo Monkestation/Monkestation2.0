@@ -41,6 +41,9 @@
 
 	ASSERT(!isnull(vampiredatum), "Frenzy status effect applied to a non-vampire!")
 
+	if(vampiredatum.current_vitae >= FRENZY_THRESHOLD_EXIT)
+		return FALSE
+
 	// Basic stuff
 	carbon_owner.add_movespeed_modifier(/datum/movespeed_modifier/frenzy_speed)
 	carbon_owner.add_client_colour(/datum/client_colour/cursed_heart_blood)
@@ -49,7 +52,6 @@
 	carbon_owner.stamina?.revitalize(forced = TRUE)
 	carbon_owner.SetAllImmobility(0)
 	carbon_owner.set_resting(FALSE, silent = TRUE, instant = TRUE)
-	vampiredatum.frenzied = TRUE
 
 	// Alert them
 	vampiredatum.disable_all_powers(forced = TRUE)
@@ -76,7 +78,6 @@
 	// Basic stuff
 	carbon_owner.remove_movespeed_modifier(/datum/movespeed_modifier/frenzy_speed)
 	carbon_owner.remove_client_colour(/datum/client_colour/cursed_heart_blood)
-	vampiredatum.frenzied = FALSE
 
 	// Alert them
 	carbon_owner.balloon_alert(carbon_owner, "you come back to your senses.")
@@ -91,7 +92,8 @@
 
 /datum/status_effect/frenzy/tick()
 	var/mob/living/carbon/carbon_owner = owner
-	if(!vampiredatum?.frenzied)
+	if(vampiredatum.current_vitae >= FRENZY_THRESHOLD_EXIT)
+		qdel(src)
 		return
 	carbon_owner.adjustFireLoss(0.75)
 	carbon_owner.set_jitter_if_lower(10 SECONDS)

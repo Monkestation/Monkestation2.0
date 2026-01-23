@@ -92,7 +92,7 @@
 		return TRUE
 
 	// Have enough blood? Vampires in a Frenzy don't need to pay them
-	if(vampiredatum_power.frenzied)
+	if(owner.has_status_effect(/datum/status_effect/frenzy))
 		return TRUE
 	if(vampiredatum_power.current_vitae < vitaecost)
 		owner.balloon_alert(owner, "not enough blood.")
@@ -111,7 +111,7 @@
 		to_chat(carbon_owner, span_warning("Not while you're in Torpor."))
 		return FALSE
 	// Frenzy?
-	if((check_flags & BP_CANT_USE_IN_FRENZY) && vampiredatum_power?.frenzied)
+	if((check_flags & BP_CANT_USE_IN_FRENZY) && owner.has_status_effect(/datum/status_effect/frenzy))
 		to_chat(carbon_owner, span_warning("You cannot use powers while in a Frenzy!"))
 		return FALSE
 	// Stake?
@@ -145,7 +145,7 @@
 		return
 
 	// Vampires in a Frenzy don't have enough Blood to pay it, so just don't.
-	if(!vampiredatum_power.frenzied)
+	if(!owner.has_status_effect(/datum/status_effect/frenzy))
 		vampiredatum_power.current_vitae -= vitaecost
 		vampiredatum_power.update_hud()
 

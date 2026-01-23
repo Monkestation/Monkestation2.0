@@ -138,7 +138,7 @@
 		owner.balloon_alert(owner, "cant feed off!")
 		return FALSE
 	// Mindless and snobby?
-	if(!target.mind && vampiredatum_power.my_clan?.blood_drink_type == VAMPIRE_DRINK_SNOBBY && !vampiredatum_power.frenzied)
+	if(!target.mind && vampiredatum_power.my_clan?.blood_drink_type == VAMPIRE_DRINK_SNOBBY && !owner.has_status_effect(/datum/status_effect/frenzy))
 		owner.balloon_alert(owner, "ew, no!")
 		return FALSE
 	// Cannot be a curator
@@ -215,7 +215,7 @@
 				return
 
 		// Succesful. Start feeding process by getting feed time.
-		var/feed_time = (vampiredatum_power.frenzied ? FEED_FRENZY_TIME : clamp(round(FEED_DEFAULT_TIME / (1.25 * (level_current || 1))), 1, FEED_DEFAULT_TIME)) / 2
+		var/feed_time = (owner.has_status_effect(/datum/status_effect/frenzy) ? FEED_FRENZY_TIME : clamp(round(FEED_DEFAULT_TIME / (1.25 * (level_current || 1))), 1, FEED_DEFAULT_TIME)) / 2
 
 		if(!IS_VASSAL(feed_target))
 			feed_time /= 4
@@ -380,7 +380,7 @@
 
 	// Adjust blood
 	var/feed_strength_mult = 0.3
-	if(vampiredatum_power.frenzied)
+	if(user.has_status_effect(/datum/status_effect/frenzy))
 		feed_strength_mult = 2
 	else if(!silent_feed)
 		feed_strength_mult = 1
@@ -534,7 +534,7 @@
 	if(!ishuman(target))
 		blood_to_take /= 10
 	// Penalty for frenzy(messy eater)
-	if(vampiredatum_power.frenzied)
+	if(living_owner.has_status_effect(/datum/status_effect/frenzy))
 		blood_to_take /= 2
 
 	// Give vampire the blood^
