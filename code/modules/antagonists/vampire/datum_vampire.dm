@@ -6,6 +6,7 @@
 	ui_name = "AntagInfoVampire"
 	hijack_speed = 0.5
 	stinger_sound = 'sound/vampires/lunge_warn.ogg'
+	antag_hud_name = "vampire"
 
 	/// How much blood we have, starting off at default blood levels.
 	/// We don't use our actual body's temperature because some species don't have blood and we don't want to exclude them
@@ -562,6 +563,17 @@
 	info_button.Grant(owner.current)
 	info_button_ref = WEAKREF(info_button)
 	return info_button
+
+/datum/antagonist/vampire/add_team_hud(mob/target, antag_to_check, passed_hud_keys)
+	if(broke_masquerade)
+		antag_hud_name = "masquerade_broken"
+	else if(scourge)
+		antag_hud_name = "scourge"
+	else if(prince)
+		antag_hud_name = "prince"
+	else
+		antag_hud_name = my_clan?.antag_hud_icon || initial(antag_hud_name)
+	return ..()
 
 /**
  * Every vampire has 3 starting objective categories:

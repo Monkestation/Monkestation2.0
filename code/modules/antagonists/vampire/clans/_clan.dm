@@ -29,6 +29,9 @@
 	var/is_sabbat = FALSE // In case we want a bad guy clan that doesn't care about the masquerade.
 	var/princely_score_bonus = -10 // Will be added to playtime in get_princely_score()
 
+	/// Unique antag HUD icon of this clan, if any.
+	var/antag_hud_icon
+
 /**
  * Starting Humanity score, some clans are closer to the beast, some closer to humanity.
  * We start out at null and set it in new because we want a fall back to the global default if none is set.
