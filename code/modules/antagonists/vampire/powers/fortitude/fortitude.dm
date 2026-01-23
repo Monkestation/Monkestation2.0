@@ -106,9 +106,7 @@
 	var/mob/living/carbon/human/vampire_user = owner
 	vampire_user.physiology.brute_mod /= resistance
 	vampire_user.physiology.burn_mod /= calculated_burn_resist
-
-	if(!HAS_TRAIT_FROM(vampire_user, TRAIT_STUNIMMUNE, TRAIT_VAMPIRE))
-		vampire_user.physiology.stamina_mod /= resistance
+	vampire_user.physiology.stamina_mod /= resistance * 2
 
 	// Remove Traits & Effects
 	owner.remove_traits(list(TRAIT_PIERCEIMMUNE, TRAIT_NODISMEMBER, TRAIT_PUSHIMMUNE, TRAIT_STUNIMMUNE), TRAIT_VAMPIRE)
