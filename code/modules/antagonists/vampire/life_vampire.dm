@@ -89,8 +89,6 @@
 	var/brute_heal = min(carbon_owner.getBruteLoss(), actual_regen) * healing_multiplier
 	var/burn_heal = min(carbon_owner.getFireLoss(), actual_regen) * 0.75 * healing_multiplier
 
-	// LUCY TODO
-	// carbon_owner.suppress_bloodloss(BLEED_TINY * healing_multiplier)
 	if(length(carbon_owner.all_wounds))
 		var/datum/wound/bloodiest_wound
 		for(var/datum/wound/wound as anything in carbon_owner.all_wounds)
