@@ -15,7 +15,7 @@
 
 	// Deduct Blood
 	if(owner.current.stat == CONSCIOUS && !HAS_TRAIT(owner.current, TRAIT_IMMOBILIZED) && !HAS_TRAIT(owner.current, TRAIT_NODEATH))
-		INVOKE_ASYNC(src, PROC_REF(AdjustBloodVolume), -VAMPIRE_PASSIVE_BLOOD_DRAIN)
+		AdjustBloodVolume(-VAMPIRE_PASSIVE_BLOOD_DRAIN)
 
 	// Healing
 	if(handle_healing() && !istype(owner, /mob/living/simple_animal/hostile))
@@ -34,19 +34,19 @@
 
 	// Clan specific stuff
 	if(my_clan)
-		INVOKE_ASYNC(my_clan, TYPE_PROC_REF(/datum/vampire_clan, handle_clan_life))
+		my_clan.handle_clan_life()
 	else
 		INVOKE_ASYNC(src, PROC_REF(provide_clan_selector))
 
 	// Handle blood
-	INVOKE_ASYNC(src, PROC_REF(handle_blood), delta_time)
+	handle_blood(delta_time)
 
 	// Check for Final Death
-	INVOKE_ASYNC(src, PROC_REF(check_final_death))
+	check_final_death()
 
 	// Set our body's blood_volume to mimick our vampire one (if we aren't using the Masquerade power)
-	INVOKE_ASYNC(src, PROC_REF(update_blood))
-	INVOKE_ASYNC(src, PROC_REF(update_hud))
+	update_blood()
+	update_hud()
 
 /**
  * Assuming you aren't Masquerading and your species has blood
