@@ -442,6 +442,14 @@
 
 	return data + ..()
 
+/datum/antagonist/vampire/get_preview_icon()
+	var/icon/final_icon = render_preview_outfit(/datum/outfit/vampire_outfit)
+	var/icon/blood_icon = icon('icons/effects/blood.dmi', "suitblood")
+	blood_icon.Blend(BLOOD_COLOR_RED, ICON_MULTIPLY)
+	final_icon.Blend(blood_icon, ICON_OVERLAY)
+
+	return finish_preview_icon(final_icon)
+
 /datum/antagonist/vampire/roundend_report()
 	var/list/report = list()
 
@@ -688,3 +696,16 @@
 		return
 	if(prince || broke_masquerade || humanity < VAMPIRE_DEFAULT_HUMANITY || length(vassals))
 		prey += owner
+
+/datum/outfit/vampire_outfit
+	name = "Vampire outfit (Preview only)"
+	suit = /obj/item/clothing/suit/costume/dracula
+
+/datum/outfit/vampire_outfit/post_equip(mob/living/carbon/human/enrico, visualsOnly=FALSE)
+	enrico.hairstyle = "Undercut"
+	enrico.hair_color = "FFF"
+	enrico.skin_tone = "african2"
+	enrico.eye_color_left = "#663300"
+	enrico.eye_color_right = "#663300"
+
+	enrico.update_body(is_creating = TRUE)

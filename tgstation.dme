@@ -8757,6 +8757,7 @@
 #include "monkestation\code\modules\storytellers\converted_events\solo\obsessed.dm"
 #include "monkestation\code\modules\storytellers\converted_events\solo\revolutionary.dm"
 #include "monkestation\code\modules\storytellers\converted_events\solo\traitor.dm"
+#include "monkestation\code\modules\storytellers\converted_events\solo\vampires.dm"
 #include "monkestation\code\modules\storytellers\converted_events\solo\wizard.dm"
 #include "monkestation\code\modules\storytellers\converted_events\solo\ghosts\nuclear_operative_ghost.dm"
 #include "monkestation\code\modules\storytellers\converted_events\solo\ghosts\paradox_clone.dm"
