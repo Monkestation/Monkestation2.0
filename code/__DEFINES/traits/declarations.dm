@@ -1387,7 +1387,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 // /datum/mind + /mob/living
 /// Prevents the user from casting spells using sign language. Works on both /datum/mind and /mob/living.
 #define TRAIT_CANT_SIGN_SPELLS "cant_sign_spells"
-/// You have special interactions with bloodsuckers and the occult.
+/// You have special interactions with vampires and the occult.
 #define TRAIT_OCCULTIST "occultist"
 /// Cannot be turned into a borg or AI under any circumstances (outside of adminbus I guess).
 #define TRAIT_UNBORGABLE "unborgable"

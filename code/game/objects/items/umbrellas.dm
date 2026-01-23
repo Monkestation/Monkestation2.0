@@ -2,7 +2,7 @@
  * # Umbrellas!
  * This file has code for umbrellas!
  * Umbrellas you can hold, and open and close.
- * Currently not coding for protecting against rain as ???I dont think??? rain exists. Does protect bloodsuckers from Sol, tho.
+ * Currently not coding for protecting against rain as ???I dont think??? rain exists.
  * The rest don't and it just for looks.
  */
 /obj/item/umbrella

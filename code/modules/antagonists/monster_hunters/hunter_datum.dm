@@ -39,7 +39,7 @@
 	/// A typecache of ability types that will be revealed to the monster hunter when they gain insight.
 	var/static/list/monster_abilities = typecacheof(list(
 		/datum/action/changeling,
-		// /datum/action/cooldown/bloodsucker // LUCY TODO: old bloodsucker code
+		/datum/action/cooldown/vampire,
 	))
 
 /datum/antagonist/monsterhunter/apply_innate_effects(mob/living/mob_override)
@@ -330,7 +330,7 @@
 	var/datum/antagonist/vampire/vampire = target.has_antag_datum(/datum/antagonist/vampire)
 	var/datum/antagonist/heretic/heretic = target.has_antag_datum(/datum/antagonist/heretic)
 	if(vampire)
-		explanation_text = "Slay the monster known as [target_name], a [vampire.my_clan?.name || "clanless"] Bloodsucker."
+		explanation_text = "Slay the monster known as [target_name], a [vampire.my_clan?.name || "clanless"] Vampire."
 	else if(heretic)
 		if(heretic.heretic_path == PATH_START)
 			explanation_text = "Slay the monster known as [target_name], a heretic."
