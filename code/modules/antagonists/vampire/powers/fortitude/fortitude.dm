@@ -109,7 +109,7 @@
 	vampire_user.physiology.stamina_mod /= resistance * 2
 
 	// Remove Traits & Effects
-	REMOVE_TRAITS_IN(OWNER, REF(src))
+	REMOVE_TRAITS_IN(owner, REF(src))
 
 	owner.balloon_alert(owner, "fortitude turned off.")
 
