@@ -216,8 +216,8 @@
 		timed_action_flags |= IGNORE_USER_LOC_CHANGE
 	if(!cuff_break)
 		visible_message(span_warning("[src] attempts to remove [cuffs]!"))
-		to_chat(src, span_notice("You attempt to remove [cuffs]... (This will take around [DisplayTimeText(breakouttime)] and you need to stand still.)"))
-		if(do_after(src, breakouttime, target = src, timed_action_flags = timed_action_flags, hidden = TRUE))
+		to_chat(src, span_notice("You attempt to remove [cuffs]... (This will take around [DisplayTimeText(breakouttime)]" + (cuffs.breakout_while_moving ? ".)" : " and you need to stand still.)")))
+		if(do_after(src, breakouttime, target = src, timed_action_flags = timed_action_flags, hidden = TRUE, extra_checks = CALLBACK(src, PROC_REF(cuff_resist_check_continue))))
 			. = clear_cuffs(cuffs, cuff_break)
 		else
 			to_chat(src, span_warning("You fail to remove [cuffs]!"))
@@ -226,7 +226,7 @@
 		breakouttime = 5 SECONDS
 		visible_message(span_warning("[src] is trying to break [cuffs]!"))
 		to_chat(src, span_notice("You attempt to break [cuffs]... (This will take around 5 seconds and you need to stand still.)"))
-		if(do_after(src, breakouttime, target = src, timed_action_flags = timed_action_flags))
+		if(do_after(src, breakouttime, target = src, timed_action_flags = timed_action_flags, extra_checks = CALLBACK(src, PROC_REF(cuff_resist_check_continue))))
 			. = clear_cuffs(cuffs, cuff_break)
 		else
 			to_chat(src, span_warning("You fail to break [cuffs]!"))
@@ -234,6 +234,17 @@
 	else if(cuff_break == INSTANT_CUFFBREAK)
 		. = clear_cuffs(cuffs, cuff_break)
 	cuffs.item_flags &= ~BEING_REMOVED
+
+/mob/living/carbon/proc/cuff_resist_check_continue()
+	var/obj/item/handcuffs = get_item_by_slot(ITEM_SLOT_HANDCUFFED)
+	if (handcuffs?.item_flags & BEING_REMOVED)
+		return TRUE
+
+	var/obj/item/legcuffs = get_item_by_slot(ITEM_SLOT_LEGCUFFED)
+	if (legcuffs?.item_flags & BEING_REMOVED)
+		return TRUE
+
+	return FALSE
 
 /mob/living/carbon/proc/uncuff()
 	if (handcuffed)
@@ -1290,10 +1301,6 @@
 	handcuffed = new_value
 	if(old_value)
 		if(!handcuffed)
-
-			if (istype(old_value, /obj/item/restraints/handcuffs/silver) && IS_BLOODSUCKER_OR_VASSAL(src))
-				src.remove_status_effect(/datum/status_effect/silver_cuffed)
-
 			REMOVE_TRAIT(src, TRAIT_RESTRAINED, HANDCUFFED_TRAIT)
 	else if(handcuffed)
 		ADD_TRAIT(src, TRAIT_RESTRAINED, HANDCUFFED_TRAIT)
