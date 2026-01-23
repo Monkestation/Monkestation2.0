@@ -1,4 +1,0 @@
-author: "SirNightKnight"
-delete-after: True
-changes:
-  - bugfix: "fixed trashbags not working on janitorial carts when storing items."

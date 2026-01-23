@@ -26,12 +26,12 @@
 
 	///List of acceptable reasons to open the armory under space law.
 	var/list/valid_reasons = list(
-		"CODE RED/SEVERE EMERGENCY",
-		"NON-LETHALS INEFFECTIVE",
-		"SEVERE PERSONAL RISK",
-		"ARMED AND DANGEROUS HOSTILES",
-		"MULTIPLE HOSTILES",
-		"OTHER/UNSPECIFIED"
+		list("title" = "CODE RED/SEVERE EMERGENCY", "tooltip" = "Complete deterioration of civil order - mass bombings, full blown uprisings, or severe priority threats to the station such as cults, wizards, or nuclear operatives."),
+		list("title" = "NON-LETHALS INEFFECTIVE", "tooltip" = "Unstunnable or stun-resistant hostiles: xenos, hulks, borgs, etc. - or hostiles utilizing anti-stun chems or constant teleportation."),
+		list("title" = "SEVERE PERSONAL RISK", "tooltip" = "Attempting to cuff and detain the threat would create substantial personal risk to the officer - targets that can break cuffs, cast spells, or otherwise harm the officer while detained. Changelings are a common example."),
+		list("title" = "ARMED AND DANGEROUS HOSTILES", "tooltip" = "Armed/armored heretics, well-armed syndicate agents, hostile vampires, or generally any situation where you are facing a lethal threat. Can apply equally to mundane weapons and innate/magical abilities."),
+		list("title" = "MULTIPLE HOSTILES", "tooltip" = "Gangs of thralls or otherwise brainwashed crew, riots, or other situations in which numbers make stuncuffing infeasible. Does not apply to multiple unrelated threats being present aboard the station."),
+		list("title" = "OTHER/UNSPECIFIED", "tooltip" = "Whatever the reason is, you better be able to explain this to your boss."),
 	)
 
 /obj/machinery/computer/armory/Initialize(mapload, obj/item/circuitboard/C)
@@ -54,7 +54,7 @@
 	var/list/data = list()
 
 	data["is_authorized"] = is_authorized
-	data["authorizations_remaining"] = max((auth_need - current_authorizations.len), 0)
+	data["authorizations_remaining"] = max((auth_need - length(current_authorizations)), 0)
 	data["selected_reason"] = selected_reason
 	data["extra_details"] = extra_details
 	data["armory_open"] = armory_open
@@ -94,7 +94,7 @@
 
 	switch(action)
 		if("authorize")
-			if (current_authorizations.len == auth_need)
+			if (length(current_authorizations) == auth_need)
 				return FALSE
 			if (ID in current_authorizations)
 				return FALSE
@@ -112,7 +112,7 @@
 			open_armory(user)
 
 		if("close_armory")
-			close_armory()
+			close_armory(user)
 
 		if("reason_select")
 			selected_reason = params["reason"]
@@ -133,7 +133,7 @@
 		if (ACCESS_ARMORY in ID.access)
 			. = TRUE
 
-	if (current_authorizations.len == auth_need)
+	if (length(current_authorizations) == auth_need)
 		. = TRUE
 
 	is_authorized = .
@@ -159,11 +159,8 @@
 		SSsecurity_level.set_level(SEC_LEVEL_BLUE)
 		should_play_sound = FALSE
 
-	var/title
-	var/message
-
-	title = "Armory Authorization Announcement"
-	message = "Attention! The station's security force has authorized the use of the on-board armory under the following provision of Space Law: "
+	var/title = "Armory Authorization Announcement"
+	var/message = "Attention! The station's security force has authorized the use of the on-board armory under the following provision of Space Law: "
 	message += "\n\n[selected_reason].\n"
 
 	if (extra_details != initial(extra_details))
@@ -171,12 +168,11 @@
 
 	message += "\nAuthorized by: "
 
-	var/i
-	for(i = 1, i <= current_authorizations.len, i++)
+	for(var/i = 1 to length(current_authorizations))
 		var/obj/item/card/id/ID = current_authorizations[i]
 		message += "[ID.assignment] [ID.registered_name]"
 
-		if (i != current_authorizations.len)
+		if (i != length(current_authorizations))
 			message += ", "
 
 	message += "\nStation personnel are advised to stay cautious, follow lawful orders, and report all known threats."
@@ -185,17 +181,31 @@
 
 	door_controller.activate()
 	armory_open = TRUE
+	user.log_message("has opened the armory with reason: \"[selected_reason]\"[extra_details != initial(extra_details) ? " with extra details: \"[extra_details]\"." : "."]", LOG_GAME, log_globally = TRUE)
+	message_admins("[ADMIN_LOOKUPFLW(usr)] has opened the armory with reason: \"[selected_reason]\"[extra_details != initial(extra_details) ? " with extra details: \"[extra_details]\"." : "."]")
 	reset_console()
 
 	balloon_alert_to_viewers("The armory has been opened!")
 	return TRUE
 
-/obj/machinery/computer/armory/proc/close_armory()
+/obj/machinery/computer/armory/proc/close_armory(mob/living/user)
 	if (!is_authorized || !armory_open)
 		return FALSE
 
+	var/title = "Armory De-Authorization Announcement"
+	var/message = "Attention! The immediate threats requiring use of the station's on-board armory have been neutralized. \
+	There may still be further minor threats on-board the station - refer to the station alert level or contact security for more information."
+
+	message += "\n\nAll security personnel are to return equipment to the armory desk unless otherwise authorized by command staff."
+
+	message += "\n\nStation personnel are advised to still remain vigilant, and have a secure shift."
+
+	minor_announce(message, title, TRUE, TRUE, GLOB.player_list, 'sound/misc/notice2.ogg', TRUE, "green")
+
 	door_controller.activate()
 	armory_open = FALSE
+	user.log_message("has closed the armory.", LOG_GAME, log_globally = TRUE)
+	message_admins("[key_name_admin(usr)][ADMIN_FLW(usr)] has closed the armory.")
 	reset_console()
 
 	balloon_alert_to_viewers("The armory has been closed.")
