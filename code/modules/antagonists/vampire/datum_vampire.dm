@@ -709,9 +709,9 @@
 	if(QDELETED(core))
 		return
 	if(current_vitae < OOZELING_MIN_REVIVE_BLOOD_THRESHOLD)
-		to_chat(core.brainmob, span_warning("You do not have enough vitae to recollect yourself on your own!"))
+		to_chat(core.brainmob, span_narsiesmall("You do not have enough vitae to recollect yourself on your own!"), type = MESSAGE_TYPE_WARNING)
 		return
-	to_chat(core.brainmob, span_notice("You begin recollecting yourself. You will rise again in 3 minutes."))
+	to_chat(core.brainmob, span_narsiesmall("You begin recollecting yourself. You will rise again in 3 minutes."), type = MESSAGE_TYPE_INFO)
 	AdjustBloodVolume(-OOZELING_MIN_REVIVE_BLOOD_THRESHOLD * 0.5)
 	addtimer(CALLBACK(src, PROC_REF(oozeling_revive), core), 3 MINUTES, TIMER_UNIQUE | TIMER_OVERRIDE)
 
@@ -719,6 +719,7 @@
 	if(QDELETED(oozeling_core))
 		return
 	var/mob/living/carbon/human/new_body = oozeling_core.rebuild_body(nugget = FALSE, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
+	to_chat(new_body, span_narsiesmall("You recollect yourself, your vitae reforming your body from your core!"), type = MESSAGE_TYPE_INFO)
 	heal_vampire_organs(new_body)
 
 /datum/outfit/vampire_outfit
