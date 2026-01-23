@@ -1,11 +1,11 @@
 import { BooleanLike } from 'common/react';
 import { sanitizeText } from 'tgui/sanitize';
-import { DmIcon } from 'tgui-core/components';
+import { DmIcon, Box, Icon, Section, Stack, Tabs } from 'tgui-core/components';
 
-import { useBackend, useLocalState } from '../backend';
-import { Box, Icon, Section, Stack, Tabs } from '../components';
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { Objective, ObjectivePrintout } from './common/Objectives';
+import { useState } from 'react';
 
 type VampireInformation = {
   clan: ClanInfo[];
@@ -34,9 +34,15 @@ type Info = {
   objectives: Objective[];
 };
 
-export const AntagInfoVampire = (_props) => {
+enum InfoTab {
+  General = 1,
+  Basics,
+  Powers,
+}
+
+export const AntagInfoVampire = () => {
   // Set default to 2 so Basics (now in the middle) opens by default
-  const [tab, setTab] = useLocalState('tab', 2);
+  const [tab, setTab] = useState(InfoTab.Basics);
 
   // Styles for the top-level tabs:
   const topTabsStyle = {
@@ -61,15 +67,15 @@ export const AntagInfoVampire = (_props) => {
   } as const;
 
   return (
-    <Window width={700} height={750} theme="spooky">
+    <Window width={700} height={750} theme="spookyconsole">
       <Window.Content>
         <Box align="center" style={{ width: '100%' }}>
           <Tabs style={topTabsStyle}>
             {/* Guide on the left */}
             <Tabs.Tab
               style={topTabStyle}
-              selected={tab === 1}
-              onClick={() => setTab(1)}
+              selected={tab === InfoTab.General}
+              onClick={() => setTab(InfoTab.General)}
             >
               General Guide
             </Tabs.Tab>
@@ -77,8 +83,8 @@ export const AntagInfoVampire = (_props) => {
             {/* Basics in the middle (slightly larger/bold for emphasis) */}
             <Tabs.Tab
               style={{ ...topTabStyle, fontSize: '30px', fontWeight: 900 }}
-              selected={tab === 2}
-              onClick={() => setTab(2)}
+              selected={tab === InfoTab.Basics}
+              onClick={() => setTab(InfoTab.Basics)}
             >
               Basics
             </Tabs.Tab>
@@ -86,8 +92,8 @@ export const AntagInfoVampire = (_props) => {
             {/* Powers on the right */}
             <Tabs.Tab
               style={topTabStyle}
-              selected={tab === 3}
-              onClick={() => setTab(3)}
+              selected={tab === InfoTab.Powers}
+              onClick={() => setTab(InfoTab.Powers)}
             >
               Powers
             </Tabs.Tab>
@@ -95,15 +101,15 @@ export const AntagInfoVampire = (_props) => {
         </Box>
 
         {/* Re-map which component shows for each tab index to match the new ordering */}
-        {tab === 1 && <VampireGuide />}
-        {tab === 2 && <VampireIntroduction />}
-        {tab === 3 && <PowerSection />}
+        {tab === InfoTab.General && <VampireGuide />}
+        {tab === InfoTab.Basics && <VampireIntroduction />}
+        {tab === InfoTab.Powers && <PowerSection />}
       </Window.Content>
     </Window>
   );
 };
 
-const VampireIntroduction = (_props) => {
+const VampireIntroduction = () => {
   const { data } = useBackend<Info>();
   const { objectives } = data;
   return (
@@ -118,11 +124,21 @@ const VampireIntroduction = (_props) => {
   );
 };
 
-const VampireGuide = (_props) => {
-  const { data } = useBackend<VampireInformation>();
-  const { clan } = data;
+enum GuideTab {
+  Basics = 1,
+  Masquerade,
+  Humanity,
+  Society,
+  Sol,
+  Vitae,
+  Combat,
+  Lair,
+  Structures,
+  Vassals,
+}
 
-  const [tab, setTab] = useLocalState('guideTab', 1);
+const VampireGuide = () => {
+  const [tab, setTab] = useState(GuideTab.Basics);
 
   // small vertical padding for each tab; tweak values as desired
   const guideTabStyle = { paddingTop: '10px', paddingBottom: '10px' } as const;
@@ -134,80 +150,80 @@ const VampireGuide = (_props) => {
           <Tabs vertical>
             <Tabs.Tab
               icon="list"
-              selected={tab === 1}
-              onClick={() => setTab(1)}
+              selected={tab === GuideTab.Basics}
+              onClick={() => setTab(GuideTab.Basics)}
               style={guideTabStyle}
             >
               The Basics
             </Tabs.Tab>
             <Tabs.Tab
               icon="list"
-              selected={tab === 2}
-              onClick={() => setTab(2)}
+              selected={tab === GuideTab.Masquerade}
+              onClick={() => setTab(GuideTab.Masquerade)}
               style={guideTabStyle}
             >
               The Masquerade
             </Tabs.Tab>
             <Tabs.Tab
               icon="list"
-              selected={tab === 3}
-              onClick={() => setTab(3)}
+              selected={tab === GuideTab.Humanity}
+              onClick={() => setTab(GuideTab.Humanity)}
               style={guideTabStyle}
             >
               Humanity
             </Tabs.Tab>
             <Tabs.Tab
               icon="list"
-              selected={tab === 4}
-              onClick={() => setTab(4)}
+              selected={tab === GuideTab.Society}
+              onClick={() => setTab(GuideTab.Society)}
               style={guideTabStyle}
             >
               Princes & Society
             </Tabs.Tab>
             <Tabs.Tab
               icon="list"
-              selected={tab === 5}
-              onClick={() => setTab(5)}
+              selected={tab === GuideTab.Sol}
+              onClick={() => setTab(GuideTab.Sol)}
               style={guideTabStyle}
             >
               Sol & Levelling
             </Tabs.Tab>
             <Tabs.Tab
               icon="list"
-              selected={tab === 6}
-              onClick={() => setTab(6)}
+              selected={tab === GuideTab.Vitae}
+              onClick={() => setTab(GuideTab.Vitae)}
               style={guideTabStyle}
             >
               Vitae
             </Tabs.Tab>
             <Tabs.Tab
               icon="list"
-              selected={tab === 7}
-              onClick={() => setTab(7)}
+              selected={tab === GuideTab.Combat}
+              onClick={() => setTab(GuideTab.Combat)}
               style={guideTabStyle}
             >
               Combat
             </Tabs.Tab>
             <Tabs.Tab
               icon="list"
-              selected={tab === 8}
-              onClick={() => setTab(8)}
+              selected={tab === GuideTab.Lair}
+              onClick={() => setTab(GuideTab.Lair)}
               style={guideTabStyle}
             >
               Your Lair
             </Tabs.Tab>
             <Tabs.Tab
               icon="list"
-              selected={tab === 9}
-              onClick={() => setTab(9)}
+              selected={tab === GuideTab.Structures}
+              onClick={() => setTab(GuideTab.Structures)}
               style={guideTabStyle}
             >
               Structures
             </Tabs.Tab>
             <Tabs.Tab
               icon="list"
-              selected={tab === 10}
-              onClick={() => setTab(10)}
+              selected={tab === GuideTab.Vassals}
+              onClick={() => setTab(GuideTab.Vassals)}
               style={guideTabStyle}
             >
               Vassals
@@ -216,7 +232,7 @@ const VampireGuide = (_props) => {
         </Stack.Item>
         <Stack.Divider />
         <Stack.Item grow basis={0} style={{ overflow: 'auto' }}>
-          {tab === 1 && (
+          {tab === GuideTab.Basics && (
             // The Basics
             <Box>
               <Box fontSize="18px" textColor="blue" bold>
@@ -307,7 +323,7 @@ const VampireGuide = (_props) => {
               </Box>
             </Box>
           )}
-          {tab === 2 && (
+          {tab === GuideTab.Masquerade && (
             // The Masquerade
             <Box>
               <Box fontSize="18px" textColor="gold" bold>
@@ -399,7 +415,7 @@ const VampireGuide = (_props) => {
               </Box>
             </Box>
           )}
-          {tab === 3 && (
+          {tab === GuideTab.Humanity && (
             // Humanity
             <Box>
               <Box fontSize="18px" textColor="blue" bold>
@@ -468,7 +484,7 @@ const VampireGuide = (_props) => {
               change their ways.
             </Box>
           )}
-          {tab === 4 && (
+          {tab === GuideTab.Society && (
             // Society
             <Box>
               <Box fontSize="18px" textColor="darkred" bold>
@@ -557,7 +573,7 @@ const VampireGuide = (_props) => {
               .
             </Box>
           )}
-          {tab === 5 && (
+          {tab === GuideTab.Sol && (
             // Sol
             <Box>
               <Box fontSize="32px" textColor="orange" bold>
@@ -619,7 +635,7 @@ const VampireGuide = (_props) => {
               </Box>
             </Box>
           )}
-          {tab === 6 && (
+          {tab === GuideTab.Vitae && (
             // Vitae
             <Box>
               <Box fontSize="18px" textColor="red" bold>
@@ -723,7 +739,7 @@ const VampireGuide = (_props) => {
               the Powers tab for specific costs and details on each ability.
             </Box>
           )}
-          {tab === 7 && (
+          {tab === GuideTab.Combat && (
             // Combat
             <Box>
               <Box fontSize="18px" textColor="blue" bold>
@@ -787,7 +803,7 @@ const VampireGuide = (_props) => {
               </Box>
             </Box>
           )}
-          {tab === 8 && (
+          {tab === GuideTab.Lair && (
             // Lairs
             <Box>
               <Box fontSize="18px" textColor="green" bold>
@@ -864,7 +880,7 @@ const VampireGuide = (_props) => {
               </Box>
             </Box>
           )}
-          {tab === 9 && (
+          {tab === GuideTab.Structures && (
             // Structures
             <Box>
               <Box fontSize="18px" textColor="blue" bold>
@@ -940,7 +956,7 @@ const VampireGuide = (_props) => {
               </Box>
             </Box>
           )}
-          {tab === 10 && (
+          {tab === GuideTab.Vassals && (
             // Vassals
             <Box>
               <Box fontSize="18px" textColor="purple" bold>
@@ -1010,14 +1026,14 @@ const VampireGuide = (_props) => {
   );
 };
 
-const PowerSection = (_props) => {
+const PowerSection = () => {
   const { data } = useBackend<VampireInformation>();
   const { powers } = data;
   if (!powers) {
     return <Section minHeight="220px" />;
   }
 
-  const [tab, setTab] = useLocalState('powerTab', 0);
+  const [tab, setTab] = useState(0);
   return (
     <Section title="Powers">
       <Stack>
