@@ -64,7 +64,7 @@
 	name = "Strange Blur"
 	desc = "There is a strange, subtle blur surrounding the hands."
 	icon_state = "exactitude"
-	inhand_icon_state = "exactitude"
+	inhand_icon_state = null
 	worn_icon_state = null
 
 /obj/item/clothing/gloves/rapid/vampire/Initialize(mapload)
