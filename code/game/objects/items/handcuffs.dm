@@ -130,7 +130,8 @@
 		qdel(src)
 	return
 
-/obj/item/restraints/handcuffs/silver
+// LUCY TODO: old bloodsucker code
+/* /obj/item/restraints/handcuffs/silver
 	name = "silver handcuffs"
 	desc = "A pair of silver handcuffs. Their brittle construction allows them to be used only once, but some say they can contain certain creatures of the night..."
 	breakouttime = 45 SECONDS
@@ -147,19 +148,17 @@
 /obj/item/restraints/handcuffs/silver/used
 	item_flags = DROPDEL
 
-// LUCY TODO: old bloodsucker code
-/* /obj/item/restraints/handcuffs/silver/used/equipped(mob/user, slot, initial)
+/obj/item/restraints/handcuffs/silver/used/equipped(mob/user, slot, initial)
 	. = ..()
 	if(!IS_BLOODSUCKER_OR_VASSAL(user))
-		breakout_while_moving = TRUE */
+		breakout_while_moving = TRUE/
 
 /obj/item/restraints/handcuffs/silver/used/dropped(mob/user)
 	user.visible_message(span_danger("\The [src] shatter into a hundred pieces!"))
 
 	return ..()
 
-// LUCY TODO: old bloodsucker code
-/* /obj/item/restraints/handcuffs/silver/apply_cuffs(mob/living/carbon/target, mob/user, dispense = FALSE)
+/obj/item/restraints/handcuffs/silver/apply_cuffs(mob/living/carbon/target, mob/user, dispense = FALSE)
 	. = ..()
 
 	if (target.handcuffed && IS_BLOODSUCKER_OR_VASSAL(target))
