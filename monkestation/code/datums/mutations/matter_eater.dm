@@ -510,12 +510,6 @@
 		to_chat(hungry_boy, span_danger("You were interrupted before you could eat [src]!"))
 		return EAT_FAILED
 
-	if(!HAS_TRAIT(hungry_boy, TRAIT_SHOCKIMMUNE))
-		hungry_boy.visible_message(span_warning("[hungry_boy]'s body flashes and burns up from inside in blazing light!"))
-		hungry_boy.investigate_log("has been dusted by attempting to eat a supermatter.", INVESTIGATE_DEATHS)
-		hungry_boy.dust(TRUE, TRUE)
-		return EAT_FAILED
-
 	hungry_boy.visible_message(span_danger("[hungry_boy] consumes [src] whole, how is that even possible?"))
 	return EAT_SUCCESS
 
