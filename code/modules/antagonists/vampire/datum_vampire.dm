@@ -556,9 +556,9 @@
 	// ALREADY CLAIMED
 	if(claimed.resident)
 		if(claimed.resident == owner)
-			to_chat(owner, "This is your [src].")
+			to_chat(owner, span_notice("This is your [src]."))
 		else
-			to_chat(owner, "This [src] has already been claimed by another.")
+			to_chat(owner, span_warning("This [src] has already been claimed by another."))
 		return FALSE
 	var/turf/coffin_turf = get_turf(claimed)
 	var/area/current_area = get_area(coffin_turf)
