@@ -77,13 +77,13 @@
 
 	// Traits & Effects
 	if(pierce)
-		ADD_TRAIT(owner, TRAIT_PIERCEIMMUNE, TRAIT_VAMPIRE)
+		ADD_TRAIT(owner, TRAIT_PIERCEIMMUNE, REF(src))
 	if(dismember)
-		ADD_TRAIT(owner, TRAIT_NODISMEMBER, TRAIT_VAMPIRE)
+		ADD_TRAIT(owner, TRAIT_NODISMEMBER, REF(src))
 	if(push)
-		ADD_TRAIT(owner, TRAIT_PUSHIMMUNE, TRAIT_VAMPIRE)
+		ADD_TRAIT(owner, TRAIT_PUSHIMMUNE, REF(src))
 	if(stun)
-		ADD_TRAIT(owner, TRAIT_STUNIMMUNE, TRAIT_VAMPIRE) // They'll get stun resistance + this, who cares.
+		ADD_TRAIT(owner, TRAIT_STUNIMMUNE, REF(src)) // They'll get stun resistance + this, who cares.
 
 	var/mob/living/carbon/human/user = owner
 	user.physiology.brute_mod *= resistance
@@ -109,7 +109,7 @@
 	vampire_user.physiology.stamina_mod /= resistance * 2
 
 	// Remove Traits & Effects
-	owner.remove_traits(list(TRAIT_PIERCEIMMUNE, TRAIT_NODISMEMBER, TRAIT_PUSHIMMUNE, TRAIT_STUNIMMUNE), TRAIT_VAMPIRE)
+	REMOVE_TRAITS_IN(OWNER, REF(src))
 
 	owner.balloon_alert(owner, "fortitude turned off.")
 
