@@ -185,8 +185,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	GLOB.dead_oozeling_cores -= src
 	RegisterSignal(organ_owner, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_change))
 
-// LUCY TODO: old bloodsucker code
-/* /obj/item/organ/internal/brain/slime/item_interaction(mob/living/user, obj/item/stake/stake, list/modifiers)
+/obj/item/organ/internal/brain/slime/item_interaction(mob/living/user, obj/item/stake/stake, list/modifiers)
 	if(!istype(stake))
 		return NONE
 	if(DOING_INTERACTION_WITH_TARGET(user, src))
@@ -196,8 +195,8 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	if(!do_after(user, stake.staketime, src) || QDELETED(src) || QDELETED(stake))
 		return ITEM_INTERACT_BLOCKING
 	user.balloon_alert_to_viewers("staked core!")
-	var/datum/antagonist/bloodsucker/bloodsucker_datum = IS_BLOODSUCKER(src)
-	if(bloodsucker_datum)
+	var/datum/antagonist/vampire/vampire_datum = IS_VAMPIRE(src)
+	if(vampire_datum)
 		playsound(get_turf(src), 'sound/effects/tendril_destroyed.ogg', vol = 40, vary = TRUE)
 		user.visible_message(
 			span_danger("[user] drives \the [stake] into [src], causing it to rapidly dissolve. A hollow cry wails from the rapidly melting core."),
@@ -206,7 +205,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 		)
 		to_chat(brainmob, span_userdanger("Your soul escapes your melting core as the abyss welcomes you to your Final Death."))
 		drop_items_to_ground(drop_location())
-		bloodsucker_datum.final_death(skip_destruction = TRUE)
+		vampire_datum.final_death(skip_destruction = TRUE)
 		qdel(src)
 	else
 		playsound(get_turf(src), 'sound/effects/wounds/crackandbleed.ogg', vol = 80, vary = TRUE)
@@ -216,7 +215,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 			span_hear("You hear a loud crunching sound."),
 		)
 		set_organ_damage(maxHealth) // you're stabbing it with a stake.
-	return ITEM_INTERACT_SUCCESS */
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/organ/internal/brain/slime/proc/colorize()
 	if(isoozeling(owner))
