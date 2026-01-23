@@ -45,6 +45,8 @@
 	var/frenzy_threshold = FRENZY_THRESHOLD_ENTER
 	/// If we've already alerted the player about low blood
 	var/low_blood_alerted = FALSE
+	/// Cooldown for re-entering frenzy after we exit it, to prevent potential spam/loops.
+	COOLDOWN_DECLARE(frenzy_cooldown)
 
 	/// Goal of vitae required for the next level up
 	var/current_vitae_goal = VITAE_GOAL_STANDARD

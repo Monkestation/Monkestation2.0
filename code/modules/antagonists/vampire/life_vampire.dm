@@ -216,7 +216,7 @@
 /datum/antagonist/vampire/proc/on_death(mob/living/source, gibbed)
 	SIGNAL_HANDLER
 
-	if(source.stat != DEAD || isoozeling(source)) // weirdness shield
+	if(source.stat != DEAD || is_oozeling_core(source.get_organ_slot(ORGAN_SLOT_BRAIN))) // weirdness shield
 		return
 
 	INVOKE_ASYNC(src, PROC_REF(handle_death))
@@ -250,7 +250,7 @@
 		owner.current.set_jitter_if_lower(6 SECONDS)
 
 	// Enter frenzy if our blood is low enough
-	if(current_vitae < FRENZY_THRESHOLD_ENTER)
+	if(current_vitae < FRENZY_THRESHOLD_ENTER && COOLDOWN_FINISHED(src, frenzy_cooldown))
 		owner.current.apply_status_effect(/datum/status_effect/frenzy)
 
 	// Warn them at low blood

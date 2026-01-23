@@ -75,6 +75,8 @@
 	if(!iscarbon(carbon_owner))
 		return
 
+	COOLDOWN_START(vampiredatum, frenzy_cooldown, 30 SECONDS)
+
 	// Basic stuff
 	carbon_owner.remove_movespeed_modifier(/datum/movespeed_modifier/frenzy_speed)
 	carbon_owner.remove_client_colour(/datum/client_colour/cursed_heart_blood)
