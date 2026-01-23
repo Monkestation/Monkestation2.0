@@ -22,7 +22,7 @@
 		. += span_cult(vampire_desc)
 	if(IS_VASSAL(user) && vassal_desc)
 		. += span_cult(vassal_desc)
-	if(IS_CURATOR(user) && curator_desc)
+	if((IS_CURATOR(user) || IS_MONSTERHUNTER(user)) && curator_desc)
 		. += span_cult(curator_desc)
 
 /// This handles bolting down the structure.
