@@ -186,7 +186,7 @@
 		else
 			var/mob/living/living_owner = owner
 			if(!HAS_TRAIT(living_owner, TRAIT_NOBLOOD))
-				living_owner.blood_volume -= constant_vitaecost
+				living_owner.blood_volume = max(living_owner.blood_volume - constant_vitaecost, 0)
 	return TRUE
 
 /// Checks to make sure this power can stay active
@@ -206,13 +206,13 @@
 // If there's a mortal in line of sight, we get a masq infraction
 /datum/action/cooldown/vampire/proc/check_witnesses(mob/living/target)
 	for(var/mob/living/watcher in oviewers(6, owner) - target)
-		if(!watcher.client)
+		if(!watcher.client || watcher.client.is_afk())
 			continue
 		if(HAS_SILICON_ACCESS(watcher))
 			continue
-		if(watcher.stat != CONSCIOUS)
+		if(watcher.stat != CONSCIOUS || HAS_TRAIT(watcher, TRAIT_RESTRAINED) || HAS_TRAIT(watcher, TRAIT_MOVE_VENTCRAWLING))
 			continue
-		if(watcher.is_blind() || watcher.is_nearsighted_currently() || HAS_TRAIT(watcher, TRAIT_GHOST_CRITTER) || isdrone(watcher))
+		if(watcher.is_blind() || watcher.is_nearsighted_currently() || HAS_TRAIT(watcher, TRAIT_GHOST_CRITTER))
 			continue
 		if(HAS_MIND_TRAIT(watcher, TRAIT_VAMPIRE_ALIGNED))
 			continue
