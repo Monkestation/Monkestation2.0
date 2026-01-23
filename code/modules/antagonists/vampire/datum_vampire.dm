@@ -109,22 +109,25 @@
 
 	/// List of traits that the Masquerade ability does not remove.
 	var/static/list/always_traits = list(
-		TRAIT_ETHEREAL_NO_OVERCHARGE,
-		TRAIT_NO_MINDSWAP,
-		TRAIT_NO_TRANSFORMATION_STING,
-		TRAIT_OOZELING_NO_CANNIBALIZE,
+		TRAIT_NO_DNA_COPY, // no, you can't cheat your curse with a cloner.
+		TRAIT_NO_MINDSWAP, // mindswapping vampires is buggy af and I'm too lazy to properly fix it. ~Absolucy
+		TRAIT_OOZELING_NO_CANNIBALIZE, // prevents weird softlocks
 	)
 
 	/// List of traits applied inherently
 	var/static/list/vampire_traits = list(
 		TRAIT_AGEUSIA,
-		TRAIT_COLDBLOODED,
+		TRAIT_COLD_BLOODED,
+		TRAIT_ETHEREAL_NO_OVERCHARGE,
 		TRAIT_GENELESS,
+		TRAIT_HARDLY_WOUNDED,
 		TRAIT_NOBREATH,
 		TRAIT_NOCRITDAMAGE,
 		TRAIT_NOHARDCRIT,
 		TRAIT_NOSOFTCRIT,
-		TRAIT_NO_ZOMBIFY,
+		TRAIT_NO_BLEED_WARN,
+		TRAIT_NO_MIRROR_REFLECTION,
+		TRAIT_RADIMMUNE,
 		TRAIT_RADIMMUNE,
 		TRAIT_RESISTCOLD,
 		TRAIT_SLEEPIMMUNE,
@@ -132,7 +135,9 @@
 		TRAIT_STABLELIVER,
 		TRAIT_TOXIMMUNE,
 		TRAIT_VIRUSIMMUNE,
-		TRAIT_XENO_IMMUNE,
+		// they eject zombie tumors and xeno larvae during eepy time anyways
+		TRAIT_NO_ZOMBIFY, // they're already undead lol
+		TRAIT_XENO_IMMUNE, // something something facehuggers only latch onto living things
 	)
 
 	/// List of traits applied while in torpor
