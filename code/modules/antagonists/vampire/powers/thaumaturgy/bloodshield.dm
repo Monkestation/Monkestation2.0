@@ -27,9 +27,10 @@
 		deactivate_power()
 		return FALSE
 	owner.visible_message(
-		span_warning("[owner] 's hands begins to bleed and forms into a blood shield!"),
+		span_warning("[owner]'s hands begins to bleed and forms into a blood shield!"),
 		span_warning("We activate our Blood shield!"),
-		span_hear("You hear liquids forming together."))
+		span_hear("You hear liquids forming together."),
+	)
 
 /datum/action/cooldown/vampire/bloodshield/deactivate_power()
 	. = ..()
