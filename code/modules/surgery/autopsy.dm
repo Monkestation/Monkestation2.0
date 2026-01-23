@@ -4,9 +4,7 @@
 	possible_locs = list(BODY_ZONE_CHEST)
 	steps = list(
 		/datum/surgery_step/incise,
-		/datum/surgery_step/retract_skin,
 		/datum/surgery_step/autopsy,
-		/datum/surgery_step/close,
 	)
 
 /datum/surgery/autopsy/can_start(mob/user, mob/living/patient)
