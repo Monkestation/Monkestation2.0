@@ -184,13 +184,14 @@
 	handle_clown_mutation(current_mob, "Your clownish nature has been subdued by your thirst for blood.")
 
 	current_mob.update_sight()
+	current_mob.clear_mood_event("vampcandle")
 
 	create_vampire_team()
 
 	// LUCY TODO: HUD shit
 	/* add_antag_hud(ANTAG_HUD_VAMPIRE, "vampire", current_mob) */
 
-	current_mob.faction |= FACTION_VAMPIRE
+	current_mob.faction += FACTION_VAMPIRE
 
 	if(current_mob.hud_used)
 		on_hud_created()
@@ -299,6 +300,7 @@
 	RegisterSignal(SSsunlight, COMSIG_SOL_NEAR_END, PROC_REF(sol_near_end))
 	RegisterSignal(SSsunlight, COMSIG_SOL_RISE_TICK, PROC_REF(handle_sol))
 	RegisterSignal(SSsunlight, COMSIG_SOL_WARNING_GIVEN, PROC_REF(give_warning))
+	RegisterSignal(SSdcs, COMSIG_GLOB_MONSTER_HUNTER_QUERY, PROC_REF(query_for_monster_hunter))
 	RegisterSignal(src, COMSIG_VAMPIRE_TRACK_HUMANITY_GAIN, PROC_REF(on_track_humanity_gain_signal))
 
 	owner.teach_crafting_recipe(list(
@@ -327,6 +329,7 @@
 
 /datum/antagonist/vampire/on_removal()
 	UnregisterSignal(SSsunlight, list(COMSIG_SOL_NEAR_END, COMSIG_SOL_NEAR_START, COMSIG_SOL_END, COMSIG_SOL_RISE_TICK, COMSIG_SOL_WARNING_GIVEN))
+	UnregisterSignal(SSdcs, COMSIG_GLOB_MONSTER_HUNTER_QUERY)
 
 	owner.forget_crafting_recipe(list(
 		/datum/crafting_recipe/vassalrack,
@@ -655,3 +658,10 @@
 	user.add_sight(SEE_MOBS)
 	user.lighting_cutoff = max(user.lighting_cutoff, LIGHTING_CUTOFF_HIGH)
 	user.lighting_color_cutoffs = blend_cutoff_colors(user.lighting_color_cutoffs, list(25, 8, 5))
+
+/datum/antagonist/vampire/proc/query_for_monster_hunter(datum/source, list/prey)
+	SIGNAL_HANDLER
+	if(final_death || scourge)
+		return
+	if(prince || broke_masquerade || humanity < VAMPIRE_DEFAULT_HUMANITY || length(vassals))
+		prey += owner
