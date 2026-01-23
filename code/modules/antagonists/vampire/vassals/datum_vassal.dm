@@ -24,6 +24,10 @@
 	var/mob/living/current_mob = mob_override || owner.current
 
 	RegisterSignal(current_mob, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(current_mob, COMSIG_MOB_LOGIN, PROC_REF(on_login))
+
+	// HUD
+	add_team_hud(current_mob)
 
 	// Tracking
 	setup_monitor(current_mob)
@@ -36,7 +40,7 @@
 	. = ..()
 	var/mob/living/current_mob = mob_override || owner.current
 
-	UnregisterSignal(current_mob, COMSIG_ATOM_EXAMINE)
+	UnregisterSignal(current_mob, list(COMSIG_ATOM_EXAMINE, COMSIG_MOB_LOGIN))
 
 	// Tracking
 	QDEL_NULL(monitor)
@@ -93,6 +97,9 @@
 		power.Remove(old_body)
 		power.Grant(new_body)
 
+/datum/antagonist/vassal/after_body_transfer(mob/living/old_body, mob/living/new_body)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/antagonist, add_team_hud), new_body), 0.5 SECONDS, TIMER_OVERRIDE | TIMER_UNIQUE) //i don't trust this to not act weird
+
 /datum/antagonist/vassal/greet()
 	. = ..()
 	if(silent)
@@ -129,6 +136,12 @@
 	if(master.owner)
 		to_chat(master.owner, span_cultbold("You feel the bond with your vassal [owner.current] has somehow been broken!"))
 
+/datum/antagonist/vassal/proc/on_login()
+	SIGNAL_HANDLER
+	var/mob/living/current = owner.current
+	if(!QDELETED(current))
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/antagonist, add_team_hud), current), 0.5 SECONDS, TIMER_OVERRIDE | TIMER_UNIQUE) //i don't trust this to not act weird
+
 /datum/antagonist/vassal/admin_add(datum/mind/new_owner, mob/admin)
 	var/list/datum/mind/possible_vampires = list()
 
@@ -159,6 +172,30 @@
 	var/datum/objective/vampire/vassal/vassal_objective = new
 	vassal_objective.owner = owner
 	objectives += vassal_objective
+
+/datum/antagonist/vassal/add_team_hud(mob/target)
+	QDEL_NULL(team_hud_ref)
+
+	var/datum/atom_hud/alternate_appearance/basic/has_antagonist/hud = target.add_alt_appearance(
+		/datum/atom_hud/alternate_appearance/basic/has_antagonist,
+		"antag_team_hud_[REF(src)]",
+		hud_image_on(target),
+	)
+	team_hud_ref = WEAKREF(hud)
+
+	var/list/mob/living/mob_list = list()
+	for(var/datum/antagonist/antag as anything in GLOB.antagonists)
+		if(!istype(antag, /datum/antagonist/vampire) && !istype(antag, /datum/antagonist/vassal))
+			continue
+		var/mob/living/current = antag.owner?.current
+		if(!QDELETED(current))
+			mob_list |= current
+
+	for (var/datum/atom_hud/alternate_appearance/basic/has_antagonist/antag_hud as anything in GLOB.has_antagonist_huds)
+		if(!(antag_hud.target in mob_list))
+			continue
+		antag_hud.show_to(target)
+		hud.show_to(antag_hud.target)
 
 /datum/antagonist/vassal/proc/setup_monitor(mob/target)
 	QDEL_NULL(monitor)
