@@ -142,7 +142,7 @@
 		return
 	// Don't buckle Silicon to it please.
 	if(issilicon(living_target))
-		to_chat(user, span_danger("You realize that this machine cannot be vassalized, therefore it is useless to buckle them."))
+		to_chat(user, span_danger("You realize that this machine cannot be vassalized, therefore it is useless to buckle [living_target.p_them()]."))
 		return
 	if(do_after(user, 5 SECONDS, living_target))
 		density = FALSE // Temporarily set density to false so the target is actually on the rack
@@ -156,10 +156,10 @@
 	if(!buckle_mob(target))
 		return
 	user.visible_message(
-		span_notice("[user] straps [target] into the rack, immobilizing them."),
-		span_boldnotice("You secure [target] tightly in place. They won't escape you now."))
+		span_notice("[user] straps [target] into the rack, immobilizing [target.p_them()]."),
+		span_boldnotice("You secure [target] tightly in place. [target.p_They()] won't escape you now."))
 
-	playsound(loc, 'sound/effects/pop_expl.ogg', 25, 1)
+	playsound(loc, 'sound/effects/pop_expl.ogg', vol = 25, vary = TRUE)
 	update_appearance(UPDATE_ICON)
 
 	// Set up Torture stuff now
@@ -174,7 +174,7 @@
 
 	if(buckled_mob == user)
 		buckled_mob.visible_message(
-			span_danger("[user] tries to release themself from the rack!"),
+			span_danger("[user] tries to release [user.p_them()]self from the rack!"),
 			span_danger("You attempt to release yourself from the rack!"),
 			span_hear("You hear a squishy wet noise."),
 		)
