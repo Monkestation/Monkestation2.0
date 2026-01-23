@@ -41,9 +41,8 @@ GLOBAL_LIST_EMPTY(all_vampires)
 
 	rank_up(8, TRUE) // Rank up a lot.
 	to_chat(owner.current, span_cultbold("As a true prince, you find some of your old power returning to you!"))
-	// LUCY TODO: HUD shit
-	/* set_antag_hud(owner.current, "prince") */
 	prince = TRUE
+	add_team_hud(owner.current)
 
 	for(var/datum/antagonist/vampire as anything in GLOB.all_vampires)
 		to_chat(vampire.owner.current, span_narsiesmall("[owner.current] has claimed the role of Prince!"))
@@ -69,6 +68,7 @@ GLOBAL_LIST_EMPTY(all_vampires)
 	to_chat(owner.current, span_cultbold("As a camarilla scourge, your newfound purpose empowers you!"))
 	// set_antag_hud(owner.current, "scourge")
 	scourge = TRUE
+	add_team_hud(owner.current)
 
 	var/datum/objective/vampire/scourge/scourge_objective = new()
 	objectives += scourge_objective

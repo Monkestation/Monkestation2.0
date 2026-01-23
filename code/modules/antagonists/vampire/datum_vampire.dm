@@ -167,6 +167,7 @@
 
 /datum/team/vampire/roundend_report()
 	return
+
 /**
  * Apply innate effects is everything given to the mob
  * When a body is tranferred, this is called on the new mob
@@ -175,6 +176,7 @@
 /datum/antagonist/vampire/apply_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/current_mob = mob_override || owner.current
+	RegisterSignal(current_mob, COMSIG_MOB_LOGIN, PROC_REF(on_login))
 	RegisterSignal(current_mob, COMSIG_LIVING_LIFE, PROC_REF(LifeTick))
 	RegisterSignal(current_mob, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(current_mob, COMSIG_LIVING_DEATH, PROC_REF(on_death))
@@ -192,8 +194,7 @@
 
 	create_vampire_team()
 
-	// LUCY TODO: HUD shit
-	/* add_antag_hud(ANTAG_HUD_VAMPIRE, "vampire", current_mob) */
+	add_team_hud(current_mob)
 
 	current_mob.faction += FACTION_VAMPIRE
 
@@ -226,6 +227,7 @@
 	. = ..()
 	var/mob/living/current_mob = mob_override || owner.current
 	UnregisterSignal(current_mob, list(
+		COMSIG_MOB_LOGIN,
 		COMSIG_LIVING_LIFE,
 		COMSIG_ATOM_EXAMINE,
 		COMSIG_LIVING_DEATH,
@@ -252,9 +254,6 @@
 		QDEL_NULL(vamprank_display)
 		QDEL_NULL(sunlight_display)
 		QDEL_NULL(humanity_display)
-
-	// LUCY TODO: HUD shit
-	/* remove_antag_hud(ANTAG_HUD_VAMPIRE, current_mob) */
 
 	current_mob.faction -= FACTION_VAMPIRE
 
@@ -379,6 +378,9 @@
 	// Vampire Traits
 	old_body?.remove_traits(vampire_traits + always_traits, TRAIT_VAMPIRE)
 	new_body.add_traits(vampire_traits + always_traits, TRAIT_VAMPIRE)
+
+/datum/antagonist/vampire/after_body_transfer(mob/living/old_body, mob/living/new_body)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/antagonist, add_team_hud), new_body), 0.5 SECONDS, TIMER_OVERRIDE | TIMER_UNIQUE) //i don't trust this to not act weird
 
 /datum/antagonist/vampire/greet()
 	. = ..()
@@ -667,6 +669,12 @@
 		return
 
 	tracker?.tracking_beacon?.update_position()
+
+/datum/antagonist/vampire/proc/on_login()
+	SIGNAL_HANDLER
+	var/mob/living/current = owner.current
+	if(!QDELETED(current))
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/antagonist, add_team_hud), current), 0.5 SECONDS, TIMER_OVERRIDE | TIMER_UNIQUE) //i don't trust this to not act weird
 
 /datum/antagonist/vampire/proc/on_update_sight(mob/user)
 	SIGNAL_HANDLER
