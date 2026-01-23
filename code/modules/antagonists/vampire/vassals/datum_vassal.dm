@@ -29,11 +29,8 @@
 	setup_monitor(current_mob)
 	current_mob.grant_language(/datum/language/vampiric, source = LANGUAGE_VASSAL)
 
-	// Team
-	vampire_team = master.vampire_team
-	vampire_team.add_member(current_mob.mind)
 	// add_antag_hud(ANTAG_HUD_VAMPIRE, vassal_hud_name, current_mob)
-	current_mob.faction |= FACTION_VAMPIRE
+	current_mob.faction += FACTION_VAMPIRE
 
 /datum/antagonist/vassal/remove_innate_effects(mob/living/mob_override)
 	. = ..()
@@ -46,11 +43,7 @@
 	current_mob.remove_language(/datum/language/vampiric, source = LANGUAGE_VASSAL)
 
 	// Remove traits
-	REMOVE_TRAITS_IN(owner.current, TRAIT_VAMPIRE)
-
-	// Team
-	vampire_team.remove_member(current_mob.mind)
-	vampire_team = null
+	REMOVE_TRAITS_IN(current_mob, TRAIT_VAMPIRE)
 	current_mob.faction -= FACTION_VAMPIRE
 
 /datum/antagonist/vassal/on_gain()
@@ -61,10 +54,13 @@
 
 	RegisterSignal(SSsunlight, COMSIG_SOL_WARNING_GIVEN, PROC_REF(give_warning))
 
+	vampire_team = master.vampire_team
+	vampire_team.add_member(owner)
+
 	// Enslave them to their Master
 	master.vassals |= src
-	owner.enslave_mind_to_creator(master.owner)
-	owner.current.log_message("has been vassalized by [master.owner]!", LOG_ATTACK, color="#960000")
+	owner.enslave_mind_to_creator(master.owner.current)
+	owner.current.log_message("has been vassalized by [master.owner.name]!", LOG_ATTACK, color="#960000")
 
 	// Give powers
 	grant_power(new /datum/action/cooldown/vampire/recuperate)
@@ -80,6 +76,9 @@
 	if(master)
 		master.vassals -= src
 		owner.enslaved_to = null
+
+	vampire_team.remove_member(owner)
+	vampire_team = null
 
 	// Remove powers
 	for(var/datum/action/cooldown/vampire/power in powers)
