@@ -400,41 +400,15 @@
 	fire = 50
 	acid = 50
 
-// MONKESTATION ADDITION START
-/obj/item/clothing/under/chameleon/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(attacking_item.tool_behaviour != TOOL_MULTITOOL)
-		return ..()
-
-	if(chameleon_action.hidden)
-		chameleon_action.hidden = FALSE
-		actions += chameleon_action
-		chameleon_action.Grant(user)
-		log_game("[key_name(user)] has removed the disguise lock on the chameleon jumpsuit ([name]) with [attacking_item]")
-	else
-		chameleon_action.hidden = TRUE
-		actions -= chameleon_action
-		chameleon_action.Remove(user)
-		log_game("[key_name(user)] has locked the disguise of the chameleon jumpsuit ([name]) with [attacking_item]")
-// MONKESTATION ADDITION END
-
 /obj/item/clothing/under/chameleon/Initialize(mapload)
 	. = ..()
-	chameleon_action = new(src)
-	chameleon_action.chameleon_type = /obj/item/clothing/under
-	chameleon_action.chameleon_name = "Jumpsuit"
-	chameleon_action.chameleon_blacklist = typecacheof(list(/obj/item/clothing/under, /obj/item/clothing/under/color, /obj/item/clothing/under/rank, /obj/item/clothing/under/changeling), only_root_path = TRUE)
-	chameleon_action.initialize_disguises()
-	add_item_action(chameleon_action)
-
-/obj/item/clothing/under/chameleon/Destroy()
-	QDEL_NULL(chameleon_action)
-	return ..()
-
-/obj/item/clothing/under/chameleon/emp_act(severity)
-	. = ..()
-	if(. & EMP_PROTECT_SELF)
-		return
-	chameleon_action.emp_randomise()
+	AddComponent(\
+		/datum/component/chameleon,\
+		chameleon_action,\
+		/obj/item/clothing/under,\
+		"Jumpsuit",\
+		typecacheof(list(/obj/item/clothing/under, /obj/item/clothing/under/color, /obj/item/clothing/under/rank, /obj/item/clothing/under/changeling), only_root_path = TRUE),\
+	)
 
 /obj/item/clothing/under/chameleon/broken/Initialize(mapload)
 	. = ..()
@@ -460,42 +434,16 @@
 	fire = 50
 	acid = 50
 
-// MONKESTATION ADDITION START
-/obj/item/clothing/suit/chameleon/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(attacking_item.tool_behaviour != TOOL_MULTITOOL)
-		return ..()
-
-	if(chameleon_action.hidden)
-		chameleon_action.hidden = FALSE
-		actions += chameleon_action
-		chameleon_action.Grant(user)
-		log_game("[key_name(user)] has removed the disguise lock on the chameleon suit ([name]) with [attacking_item]")
-	else
-		chameleon_action.hidden = TRUE
-		actions -= chameleon_action
-		chameleon_action.Remove(user)
-		log_game("[key_name(user)] has locked the disguise of the chameleon suit ([name]) with [attacking_item]")
-// MONKESTATION ADDITION END
-
 /obj/item/clothing/suit/chameleon/Initialize(mapload)
 	. = ..()
+	AddComponent(\
+		/datum/component/chameleon,\
+		chameleon_action,\
+		/obj/item/clothing/suit,\
+		"Suit",\
+		typecacheof(list(/obj/item/clothing/suit/armor/abductor, /obj/item/clothing/suit/changeling), only_root_path = TRUE),\
+	)
 	allowed = GLOB.security_vest_allowed //should at least act like a vest
-	chameleon_action = new(src)
-	chameleon_action.chameleon_type = /obj/item/clothing/suit
-	chameleon_action.chameleon_name = "Suit"
-	chameleon_action.chameleon_blacklist = typecacheof(list(/obj/item/clothing/suit/armor/abductor, /obj/item/clothing/suit/changeling), only_root_path = TRUE)
-	chameleon_action.initialize_disguises()
-	add_item_action(chameleon_action)
-
-/obj/item/clothing/suit/chameleon/Destroy()
-	QDEL_NULL(chameleon_action)
-	return ..()
-
-/obj/item/clothing/suit/chameleon/emp_act(severity)
-	. = ..()
-	if(. & EMP_PROTECT_SELF)
-		return
-	chameleon_action.emp_randomise()
 
 /obj/item/clothing/suit/chameleon/broken/Initialize(mapload)
 	. = ..()
@@ -519,41 +467,19 @@
 	fire = 50
 	acid = 50
 
-// MONKESTATION ADDITION START
-/obj/item/clothing/glasses/chameleon/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(attacking_item.tool_behaviour != TOOL_MULTITOOL)
-		return ..()
-
-	if(chameleon_action.hidden)
-		chameleon_action.hidden = FALSE
-		actions += chameleon_action
-		chameleon_action.Grant(user)
-		log_game("[key_name(user)] has removed the disguise lock on the chameleon glasses ([name]) with [attacking_item]")
-	else
-		chameleon_action.hidden = TRUE
-		actions -= chameleon_action
-		chameleon_action.Remove(user)
-		log_game("[key_name(user)] has locked the disguise of the chameleon glasses ([name]) with [attacking_item]")
-// MONKESTATION ADDITION END
-
 /obj/item/clothing/glasses/chameleon/Initialize(mapload)
 	. = ..()
-	chameleon_action = new(src)
-	chameleon_action.chameleon_type = /obj/item/clothing/glasses
-	chameleon_action.chameleon_name = "Glasses"
-	chameleon_action.chameleon_blacklist = typecacheof(/obj/item/clothing/glasses/changeling, only_root_path = TRUE)
-	chameleon_action.initialize_disguises()
-	add_item_action(chameleon_action)
+	AddComponent(\
+		/datum/component/chameleon,\
+		chameleon_action,\
+		/obj/item/clothing/glasses,\
+		"Glasses",\
+		typecacheof(/obj/item/clothing/glasses/changeling, only_root_path = TRUE),\
+	)
 
 /obj/item/clothing/glasses/chameleon/Destroy()
 	QDEL_NULL(chameleon_action)
 	return ..()
-
-/obj/item/clothing/glasses/chameleon/emp_act(severity)
-	. = ..()
-	if(. & EMP_PROTECT_SELF)
-		return
-	chameleon_action.emp_randomise()
 
 /obj/item/clothing/glasses/chameleon/broken/Initialize(mapload)
 	. = ..()
@@ -580,42 +506,15 @@
 	fire = 50
 	acid = 50
 
-// MONKESTATION ADDITION START
-
-/obj/item/clothing/gloves/chameleon/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(attacking_item.tool_behaviour != TOOL_MULTITOOL)
-		return ..()
-
-	if(chameleon_action.hidden)
-		chameleon_action.hidden = FALSE
-		actions += chameleon_action
-		chameleon_action.Grant(user)
-		log_game("[key_name(user)] has removed the disguise lock on the chameleon gloves ([name]) with [attacking_item]")
-	else
-		chameleon_action.hidden = TRUE
-		actions -= chameleon_action
-		chameleon_action.Remove(user)
-		log_game("[key_name(user)] has locked the disguise of the chameleon gloves ([name]) with [attacking_item]")
-// MONKESTATION ADDITION END
-
 /obj/item/clothing/gloves/chameleon/Initialize(mapload)
 	. = ..()
-	chameleon_action = new(src)
-	chameleon_action.chameleon_type = /obj/item/clothing/gloves
-	chameleon_action.chameleon_name = "Gloves"
-	chameleon_action.chameleon_blacklist = typecacheof(list(/obj/item/clothing/gloves, /obj/item/clothing/gloves/color, /obj/item/clothing/gloves/changeling), only_root_path = TRUE)
-	chameleon_action.initialize_disguises()
-	add_item_action(chameleon_action)
-
-/obj/item/clothing/gloves/chameleon/Destroy()
-	QDEL_NULL(chameleon_action)
-	return ..()
-
-/obj/item/clothing/gloves/chameleon/emp_act(severity)
-	. = ..()
-	if(. & EMP_PROTECT_SELF)
-		return
-	chameleon_action.emp_randomise()
+	AddComponent(\
+		/datum/component/chameleon,\
+		chameleon_action,\
+		/obj/item/clothing/gloves,\
+		"Gloves",\
+		typecacheof(list(/obj/item/clothing/gloves, /obj/item/clothing/gloves/color, /obj/item/clothing/gloves/changeling), only_root_path = TRUE),\
+	)
 
 /obj/item/clothing/gloves/chameleon/broken/Initialize(mapload)
 	. = ..()
@@ -640,41 +539,15 @@
 	fire = 50
 	acid = 50
 
-// MONKESTATION ADDITION START
-/obj/item/clothing/head/chameleon/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(attacking_item.tool_behaviour != TOOL_MULTITOOL)
-		return ..()
-
-	if(chameleon_action.hidden)
-		chameleon_action.hidden = FALSE
-		actions += chameleon_action
-		chameleon_action.Grant(user)
-		log_game("[key_name(user)] has removed the disguise lock on the chameleon hat ([name]) with [attacking_item]")
-	else
-		chameleon_action.hidden = TRUE
-		actions -= chameleon_action
-		chameleon_action.Remove(user)
-		log_game("[key_name(user)] has locked the disguise of the chameleon hat ([name]) with [attacking_item]")
-// MONKESTATION ADDITION END
-
 /obj/item/clothing/head/chameleon/Initialize(mapload)
 	. = ..()
-	chameleon_action = new(src)
-	chameleon_action.chameleon_type = /obj/item/clothing/head
-	chameleon_action.chameleon_name = "Hat"
-	chameleon_action.chameleon_blacklist = typecacheof(/obj/item/clothing/head/changeling, only_root_path = TRUE)
-	chameleon_action.initialize_disguises()
-	add_item_action(chameleon_action)
-
-/obj/item/clothing/head/chameleon/Destroy()
-	QDEL_NULL(chameleon_action)
-	return ..()
-
-/obj/item/clothing/head/chameleon/emp_act(severity)
-	. = ..()
-	if(. & EMP_PROTECT_SELF)
-		return
-	chameleon_action.emp_randomise()
+	AddComponent(\
+		/datum/component/chameleon,\
+		chameleon_action,\
+		/obj/item/clothing/head,\
+		"Hat",\
+		typecacheof(/obj/item/clothing/head/changeling, only_root_path = TRUE),\
+	)
 
 /obj/item/clothing/head/chameleon/broken/Initialize(mapload)
 	. = ..()
@@ -720,41 +593,15 @@
 	fire = 50
 	acid = 50
 
-// MONKESTATION ADDITION START
-/obj/item/clothing/mask/chameleon/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(attacking_item.tool_behaviour != TOOL_MULTITOOL)
-		return ..()
-
-	if(chameleon_action.hidden)
-		chameleon_action.hidden = FALSE
-		actions += chameleon_action
-		chameleon_action.Grant(user)
-		log_game("[key_name(user)] has removed the disguise lock on the chameleon mask ([name]) with [attacking_item]")
-	else
-		chameleon_action.hidden = TRUE
-		actions -= chameleon_action
-		chameleon_action.Remove(user)
-		log_game("[key_name(user)] has locked the disguise of the chameleon mask ([name]) with [attacking_item]")
-// MONKESTATION ADDITION END
-
 /obj/item/clothing/mask/chameleon/Initialize(mapload)
 	. = ..()
-	chameleon_action = new(src)
-	chameleon_action.chameleon_type = /obj/item/clothing/mask
-	chameleon_action.chameleon_name = "Mask"
-	chameleon_action.chameleon_blacklist = typecacheof(/obj/item/clothing/mask/changeling, only_root_path = TRUE)
-	chameleon_action.initialize_disguises()
-	add_item_action(chameleon_action)
-
-/obj/item/clothing/mask/chameleon/Destroy()
-	QDEL_NULL(chameleon_action)
-	return ..()
-
-/obj/item/clothing/mask/chameleon/emp_act(severity)
-	. = ..()
-	if(. & EMP_PROTECT_SELF)
-		return
-	chameleon_action.emp_randomise()
+	AddComponent(\
+		/datum/component/chameleon,\
+		chameleon_action,\
+		/obj/item/clothing/mask,\
+		"Mask",\
+		typecacheof(/obj/item/clothing/mask/changeling, only_root_path = TRUE),\
+	)
 
 /obj/item/clothing/mask/chameleon/broken/Initialize(mapload)
 	. = ..()
@@ -767,7 +614,6 @@
 	// MONKESTATION ADDITION END
 	voice_change = !voice_change
 	to_chat(user, span_notice("The voice changer is now [voice_change ? "on" : "off"]!"))
-
 
 /obj/item/clothing/mask/chameleon/drone
 	//Same as the drone chameleon hat, undroppable and no protection
@@ -809,44 +655,18 @@
 	fire = 50
 	acid = 50
 
-// MONKESTATION ADDITION START
-/obj/item/clothing/shoes/chameleon/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(attacking_item.tool_behaviour != TOOL_MULTITOOL)
-		return ..()
-
-	if(chameleon_action.hidden)
-		chameleon_action.hidden = FALSE
-		actions += chameleon_action
-		chameleon_action.Grant(user)
-		log_game("[key_name(user)] has removed the disguise lock on the chameleon shoes ([name]) with [attacking_item]")
-	else
-		chameleon_action.hidden = TRUE
-		actions -= chameleon_action
-		chameleon_action.Remove(user)
-		log_game("[key_name(user)] has locked the disguise of the chameleon shoes ([name]) with [attacking_item]")
-// MONKESTATION ADDITION END
-
 /obj/item/clothing/shoes/chameleon/Initialize(mapload)
 	. = ..()
 
 	create_storage(storage_type = /datum/storage/pockets/shoes)
 
-	chameleon_action = new(src)
-	chameleon_action.chameleon_type = /obj/item/clothing/shoes
-	chameleon_action.chameleon_name = "Shoes"
-	chameleon_action.chameleon_blacklist = typecacheof(/obj/item/clothing/shoes/changeling, only_root_path = TRUE)
-	chameleon_action.initialize_disguises()
-	add_item_action(chameleon_action)
-
-/obj/item/clothing/shoes/chameleon/Destroy()
-	QDEL_NULL(chameleon_action)
-	return ..()
-
-/obj/item/clothing/shoes/chameleon/emp_act(severity)
-	. = ..()
-	if(. & EMP_PROTECT_SELF)
-		return
-	chameleon_action.emp_randomise()
+	AddComponent(\
+		/datum/component/chameleon,\
+		chameleon_action,\
+		/obj/item/clothing/shoes,\
+		"Shoes",\
+		typecacheof(/obj/item/clothing/shoes/changeling, only_root_path = TRUE),\
+	)
 
 /obj/item/clothing/shoes/chameleon/noslip
 	name = "no-slip black shoes"
@@ -861,40 +681,14 @@
 	name = "backpack"
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-// MONKESTATION ADDITION START
-/obj/item/storage/backpack/chameleon/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(attacking_item.tool_behaviour != TOOL_MULTITOOL)
-		return ..()
-
-	if(chameleon_action.hidden)
-		chameleon_action.hidden = FALSE
-		actions += chameleon_action
-		chameleon_action.Grant(user)
-		log_game("[key_name(user)] has removed the disguise lock on the chameleon backpack ([name]) with [attacking_item]")
-	else
-		chameleon_action.hidden = TRUE
-		actions -= chameleon_action
-		chameleon_action.Remove(user)
-		log_game("[key_name(user)] has locked the disguise of the chameleon backpack ([name]) with [attacking_item]")
-// MONKESTATION ADDITION END
-
 /obj/item/storage/backpack/chameleon/Initialize(mapload)
 	. = ..()
-	chameleon_action = new(src)
-	chameleon_action.chameleon_type = /obj/item/storage/backpack
-	chameleon_action.chameleon_name = "Backpack"
-	chameleon_action.initialize_disguises()
-	add_item_action(chameleon_action)
-
-/obj/item/storage/backpack/chameleon/Destroy()
-	QDEL_NULL(chameleon_action)
-	return ..()
-
-/obj/item/storage/backpack/chameleon/emp_act(severity)
-	. = ..()
-	if(. & EMP_PROTECT_SELF)
-		return
-	chameleon_action.emp_randomise()
+	AddComponent(\
+		/datum/component/chameleon,\
+		chameleon_action,\
+		/obj/item/storage/backpack,\
+		"Backpack",\
+	)
 
 /obj/item/storage/backpack/chameleon/broken/Initialize(mapload)
 	. = ..()
@@ -905,43 +699,15 @@
 	desc = "Holds tools."
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-// MONKESTATION ADDITION START
-/obj/item/storage/belt/chameleon/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(attacking_item.tool_behaviour != TOOL_MULTITOOL)
-		return ..()
-
-	if(chameleon_action.hidden)
-		chameleon_action.hidden = FALSE
-		actions += chameleon_action
-		chameleon_action.Grant(user)
-		log_game("[key_name(user)] has removed the disguise lock on the chameleon belt ([name]) with [attacking_item]")
-	else
-		chameleon_action.hidden = TRUE
-		actions -= chameleon_action
-		chameleon_action.Remove(user)
-		log_game("[key_name(user)] has locked the disguise of the chameleon belt ([name]) with [attacking_item]")
-// MONKESTATION ADDITION END
-
 /obj/item/storage/belt/chameleon/Initialize(mapload)
 	. = ..()
-
-	chameleon_action = new(src)
-	chameleon_action.chameleon_type = /obj/item/storage/belt
-	chameleon_action.chameleon_name = "Belt"
-	chameleon_action.initialize_disguises()
-	add_item_action(chameleon_action)
-
+	AddComponent(\
+		/datum/component/chameleon,\
+		chameleon_action,\
+		/obj/item/storage/belt,\
+		"Belt",\
+	)
 	atom_storage.silent = TRUE
-
-/obj/item/storage/belt/chameleon/Destroy()
-	QDEL_NULL(chameleon_action)
-	return ..()
-
-/obj/item/storage/belt/chameleon/emp_act(severity)
-	. = ..()
-	if(. & EMP_PROTECT_SELF)
-		return
-	chameleon_action.emp_randomise()
 
 /obj/item/storage/belt/chameleon/broken/Initialize(mapload)
 	. = ..()
@@ -952,40 +718,14 @@
 	var/datum/action/item_action/chameleon/change/chameleon_action
 	action_slots = ALL
 
-// MONKESTATION ADDITION START
-/obj/item/radio/headset/chameleon/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(attacking_item.tool_behaviour != TOOL_MULTITOOL)
-		return ..()
-
-	if(chameleon_action.hidden)
-		chameleon_action.hidden = FALSE
-		actions += chameleon_action
-		chameleon_action.Grant(user)
-		log_game("[key_name(user)] has removed the disguise lock on the chameleon headset ([name]) with [attacking_item]")
-	else
-		chameleon_action.hidden = TRUE
-		actions -= chameleon_action
-		chameleon_action.Remove(user)
-		log_game("[key_name(user)] has locked the disguise of the chameleon headset ([name]) with [attacking_item]")
-// MONKESTATION ADDITION END
-
 /obj/item/radio/headset/chameleon/Initialize(mapload)
 	. = ..()
-	chameleon_action = new(src)
-	chameleon_action.chameleon_type = /obj/item/radio/headset
-	chameleon_action.chameleon_name = "Headset"
-	chameleon_action.initialize_disguises()
-	add_item_action(chameleon_action)
-
-/obj/item/radio/headset/chameleon/Destroy()
-	QDEL_NULL(chameleon_action)
-	return ..()
-
-/obj/item/radio/headset/chameleon/emp_act(severity)
-	. = ..()
-	if(. & EMP_PROTECT_SELF)
-		return
-	chameleon_action.emp_randomise()
+	AddComponent(\
+		/datum/component/chameleon,\
+		chameleon_action,\
+		/obj/item/radio/headset,\
+		"Headset",\
+	)
 
 /obj/item/radio/headset/chameleon/broken/Initialize(mapload)
 	. = ..()
@@ -995,41 +735,16 @@
 	name = "tablet"
 	var/datum/action/item_action/chameleon/change/tablet/chameleon_action
 
-// MONKESTATION ADDITION START
-/obj/item/modular_computer/pda/chameleon/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(attacking_item.tool_behaviour != TOOL_MULTITOOL)
-		return ..()
-
-	if(chameleon_action.hidden)
-		chameleon_action.hidden = FALSE
-		actions += chameleon_action
-		chameleon_action.Grant(user)
-		log_game("[key_name(user)] has removed the disguise lock on the chameleon PDA ([name]) with [attacking_item]")
-	else
-		chameleon_action.hidden = TRUE
-		actions -= chameleon_action
-		chameleon_action.Remove(user)
-		log_game("[key_name(user)] has locked the disguise of the chameleon PDA ([name]) with [attacking_item]")
-// MONKESTATION ADDITION END
 
 /obj/item/modular_computer/pda/chameleon/Initialize(mapload)
 	. = ..()
-	chameleon_action = new(src)
-	chameleon_action.chameleon_type = /obj/item/modular_computer/pda
-	chameleon_action.chameleon_name = "tablet"
-	chameleon_action.chameleon_blacklist = typecacheof(list(/obj/item/modular_computer/pda/heads), only_root_path = TRUE)
-	chameleon_action.initialize_disguises()
-	add_item_action(chameleon_action)
-
-/obj/item/modular_computer/pda/chameleon/Destroy()
-	QDEL_NULL(chameleon_action)
-	return ..()
-
-/obj/item/modular_computer/pda/chameleon/emp_act(severity)
-	. = ..()
-	if(. & EMP_PROTECT_SELF)
-		return
-	chameleon_action.emp_randomise()
+	AddComponent(\
+		/datum/component/chameleon,\
+		chameleon_action,\
+		/obj/item/modular_computer/pda,\
+		"tablet",\
+		typecacheof(list(/obj/item/modular_computer/pda/heads), only_root_path = TRUE),\
+	)
 
 /obj/item/modular_computer/pda/chameleon/broken/Initialize(mapload)
 	. = ..()
@@ -1039,34 +754,14 @@
 	var/datum/action/item_action/chameleon/change/chameleon_action
 	action_slots = ALL
 
-// MONKESTATION ADDITION START
-/obj/item/stamp/chameleon/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(attacking_item.tool_behaviour != TOOL_MULTITOOL)
-		return ..()
-
-	if(chameleon_action.hidden)
-		chameleon_action.hidden = FALSE
-		actions += chameleon_action
-		chameleon_action.Grant(user)
-		log_game("[key_name(user)] has removed the disguise lock on the chameleon stamp ([name]) with [attacking_item]")
-	else
-		chameleon_action.hidden = TRUE
-		actions -= chameleon_action
-		chameleon_action.Remove(user)
-		log_game("[key_name(user)] has locked the disguise of the chameleon stamp ([name]) with [attacking_item]")
-// MONKESTATION ADDITION END
-
 /obj/item/stamp/chameleon/Initialize(mapload)
 	. = ..()
-	chameleon_action = new(src)
-	chameleon_action.chameleon_type = /obj/item/stamp
-	chameleon_action.chameleon_name = "Stamp"
-	chameleon_action.initialize_disguises()
-	add_item_action(chameleon_action)
-
-/obj/item/stamp/chameleon/Destroy()
-	QDEL_NULL(chameleon_action)
-	return ..()
+	AddComponent(\
+		/datum/component/chameleon,\
+		chameleon_action,\
+		/obj/item/stamp,\
+		"Stamp",\
+	)
 
 /obj/item/stamp/chameleon/broken/Initialize(mapload)
 	. = ..()
@@ -1084,45 +779,19 @@
 	var/datum/action/item_action/chameleon/change/chameleon_action
 	action_slots = ALL
 
-// MONKESTATION ADDITION START
-/obj/item/clothing/neck/chameleon/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(attacking_item.tool_behaviour != TOOL_MULTITOOL)
-		return ..()
-
-	if(chameleon_action.hidden)
-		chameleon_action.hidden = FALSE
-		actions += chameleon_action
-		chameleon_action.Grant(user)
-		log_game("[key_name(user)] has removed the disguise lock on the chameleon necktie ([name]) with [attacking_item]")
-	else
-		chameleon_action.hidden = TRUE
-		actions -= chameleon_action
-		chameleon_action.Remove(user)
-		log_game("[key_name(user)] has locked the disguise of the chameleon necktie ([name]) with [attacking_item]")
-// MONKESTATION ADDITION END
-
 /datum/armor/neck_chameleon
 	fire = 50
 	acid = 50
 
 /obj/item/clothing/neck/chameleon/Initialize(mapload)
 	. = ..()
-	chameleon_action = new(src)
-	chameleon_action.chameleon_type = /obj/item/clothing/neck
-	chameleon_action.chameleon_blacklist = typecacheof(/obj/item/clothing/neck/cloak/skill_reward)
-	chameleon_action.chameleon_name = "Neck Accessory"
-	chameleon_action.initialize_disguises()
-	add_item_action(chameleon_action)
-
-/obj/item/clothing/neck/chameleon/Destroy()
-	qdel(chameleon_action)
-	return ..()
-
-/obj/item/clothing/neck/chameleon/emp_act(severity)
-	. = ..()
-	if(. & EMP_PROTECT_SELF)
-		return
-	chameleon_action.emp_randomise()
+	AddComponent(\
+		/datum/component/chameleon,\
+		chameleon_action,\
+		/obj/item/clothing/neck,\
+		"Neck Accessory",\
+		typecacheof(/obj/item/clothing/neck/cloak/skill_reward),\
+	)
 
 /obj/item/clothing/neck/chameleon/broken/Initialize(mapload)
 	. = ..()
@@ -1145,38 +814,21 @@
 /obj/item/gun/energy/laser/chameleon/give_manufacturer_examine()
 	return
 
-// MONKESTATION ADDITION START
-/obj/item/gun/energy/laser/chameleon/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(attacking_item.tool_behaviour != TOOL_MULTITOOL)
-		return ..()
-
-	if(chameleon_action.hidden)
-		chameleon_action.hidden = FALSE
-		actions += chameleon_action
-		chameleon_action.Grant(user)
-		log_game("[key_name(user)] has removed the disguise lock on the chameleon necktie ([name]) with [attacking_item]")
-	else
-		chameleon_action.hidden = TRUE
-		actions -= chameleon_action
-		chameleon_action.Remove(user)
-		log_game("[key_name(user)] has locked the disguise of the chameleon necktie ([name]) with [attacking_item]")
-// MONKESTATION ADDITION END
-
 /obj/item/gun/energy/laser/chameleon/Initialize(mapload)
 	. = ..()
-	chameleon_action = new(src)
-	chameleon_action.chameleon_type = /obj/item/gun
-	chameleon_action.chameleon_name = "Gun"
-	chameleon_action.chameleon_blacklist = typecacheof(list(/obj/item/gun/energy/minigun, /obj/item/gun/energy/recharge/kinetic_accelerator/meme), only_root_path = TRUE) //MONKESTATION EDIT - no, i dont trust people even with it as a chameleon appearance. admins dont want no bwoinkerino.
-	chameleon_action.initialize_disguises()
-	add_item_action(chameleon_action)
+	AddComponent(\
+		/datum/component/chameleon,\
+		chameleon_action,\
+		/obj/item/gun,\
+		"Gun",\
+		typecacheof(list(/obj/item/gun/energy/minigun, /obj/item/gun/energy/recharge/kinetic_accelerator/meme), only_root_path = TRUE),\
+	)
 
 	recharge_newshot()
 	set_chameleon_disguise(/obj/item/gun/energy/laser)
 
 /obj/item/gun/energy/laser/chameleon/Destroy()
 	chameleon_projectile_vars.Cut()
-	QDEL_NULL(chameleon_action)
 	return ..()
 
 /obj/item/gun/energy/laser/chameleon/emp_act(severity)
