@@ -215,6 +215,6 @@
 	if(src in vampiredatum?.vassals)
 		text += span_cult("<EM>This is your vassal!</EM>")
 		examine_text += text
-	else if(vampiredatum || IS_VAMPIRE_HUNTER(examiner) || IS_VASSAL(examiner))
+	else if(vampiredatum || (master?.broke_masquerade && IS_VAMPIRE_HUNTER(examiner)) || IS_VASSAL(examiner))
 		text += span_cult("<EM>This is [master.return_full_name()]'s vassal</EM>")
 		examine_text += text
