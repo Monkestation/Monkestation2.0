@@ -38,9 +38,6 @@
 	else
 		INVOKE_ASYNC(src, PROC_REF(provide_clan_selector))
 
-	// Handle blood
-	handle_blood(delta_time)
-
 	// Check for Final Death
 	check_final_death()
 
@@ -236,7 +233,8 @@
  * Step 4 - If we're low on blood, start jittering
  * Step 5 - Set regeneration rate based off how much blood we have
 **/
-/datum/antagonist/vampire/proc/handle_blood(delta_time)
+/datum/antagonist/vampire/proc/handle_blood()
+	SIGNAL_HANDLER
 	// Set nutrition
 	if(!isoozeling(owner.current))
 		owner.current.set_nutrition(min(current_vitae, NUTRITION_LEVEL_WELL_FED))
@@ -272,6 +270,8 @@
 	else
 		additional_regen = 0.5
 
+	return HANDLE_BLOOD_NO_NUTRITION_DRAIN | HANDLE_BLOOD_NO_EFFECTS
+
 /datum/antagonist/vampire/proc/check_final_death()
 	if(owner.current.stat <= UNCONSCIOUS)
 		return
@@ -292,7 +292,9 @@
 		COMSIG_LIVING_LIFE,
 		COMSIG_ATOM_EXAMINE,
 		COMSIG_LIVING_DEATH,
+		COMSIG_HUMAN_ON_HANDLE_BLOOD,
 		COMSIG_MOVABLE_MOVED,
+		COMSIG_LIVING_APPRAISE_ART,
 	))
 
 	final_death = TRUE

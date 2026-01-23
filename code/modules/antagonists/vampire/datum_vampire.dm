@@ -182,6 +182,7 @@
 	RegisterSignal(current_mob, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(current_mob, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 	RegisterSignal(current_mob, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
+	RegisterSignal(current_mob, COMSIG_HUMAN_ON_HANDLE_BLOOD, PROC_REF(handle_blood))
 	RegisterSignal(current_mob, COMSIG_MOB_UPDATE_SIGHT, PROC_REF(on_update_sight))
 
 	RegisterSignal(current_mob, COMSIG_LIVING_PET_ANIMAL, PROC_REF(on_pet_animal))
@@ -233,6 +234,7 @@
 		COMSIG_ATOM_EXAMINE,
 		COMSIG_LIVING_DEATH,
 		COMSIG_MOVABLE_MOVED,
+		COMSIG_HUMAN_ON_HANDLE_BLOOD,
 		COMSIG_MOB_UPDATE_SIGHT,
 		COMSIG_LIVING_PET_ANIMAL,
 		COMSIG_LIVING_HUG_CARBON,
