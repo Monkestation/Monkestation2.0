@@ -225,6 +225,9 @@
 		else
 			return FALSE // Cheeky check for type built in? Tsunami you genius!
 
+	// track the weakref, not the actual reference
+	subject = WEAKREF(subject)
+
 	// already tracked?
 	if(subject in tracking_list)
 		return FALSE
@@ -238,7 +241,7 @@
 		if(HUMANITY_ART_TYPE)
 			humanity_trackgain_art += subject
 
-	if(tracking_list.len >= goal)
+	if(length(tracking_list) >= goal)
 		// set the corresponding gained flag and award humanity
 		switch(type)
 			if(HUMANITY_HUGGING_TYPE)
