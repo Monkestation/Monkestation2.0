@@ -1124,7 +1124,9 @@
 /atom/movable/proc/forceMove(atom/destination)
 	. = FALSE
 	if(QDELING(src))
-		CRASH("Illegal forceMove() on qdeling [type]")
+		if(!isorgan(src))
+			CRASH("Illegal forceMove() on qdeling [type]")
+		return
 
 	if(destination)
 		. = doMove(destination)
