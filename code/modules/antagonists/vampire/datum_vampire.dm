@@ -713,9 +713,11 @@
 		return
 	to_chat(core.brainmob, span_notice("You begin recollecting yourself. You will rise again in 3 minutes."))
 	AdjustBloodVolume(-OOZELING_MIN_REVIVE_BLOOD_THRESHOLD * 0.5)
-	addtimer(CALLBACK(src, PROC_REF(oozeling_revive), src), 3 MINUTES, TIMER_UNIQUE | TIMER_OVERRIDE)
+	addtimer(CALLBACK(src, PROC_REF(oozeling_revive), core), 3 MINUTES, TIMER_UNIQUE | TIMER_OVERRIDE)
 
 /datum/antagonist/vampire/proc/oozeling_revive(obj/item/organ/internal/brain/slime/oozeling_core)
+	if(QDELETED(oozeling_core))
+		return
 	var/mob/living/carbon/human/new_body = oozeling_core.rebuild_body(nugget = FALSE, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 	heal_vampire_organs(new_body)
 
