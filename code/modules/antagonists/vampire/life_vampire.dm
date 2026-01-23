@@ -216,7 +216,7 @@
 /datum/antagonist/vampire/proc/on_death(mob/living/source, gibbed)
 	SIGNAL_HANDLER
 
-	if(source.stat != DEAD) // weirdness shield
+	if(source.stat != DEAD || isoozeling(source)) // weirdness shield
 		return
 
 	INVOKE_ASYNC(src, PROC_REF(handle_death))
