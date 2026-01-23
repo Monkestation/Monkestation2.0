@@ -4622,6 +4622,7 @@
 #include "code\modules\language\xenocommon.dm"
 #include "code\modules\language\yangyu.dm"
 #include "code\modules\library\admin_only.dm"
+#include "code\modules\library\archive_of_the_kindred.dm"
 #include "code\modules\library\barcode_scanner.dm"
 #include "code\modules\library\bibles.dm"
 #include "code\modules\library\book.dm"

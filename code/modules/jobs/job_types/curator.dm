@@ -1,7 +1,7 @@
 /datum/job/curator
 	title = JOB_CURATOR
 	description = "Read and write books and hand them to people, stock \
-		bookshelves, report on station news, play god awful music and livestream the latest skull-crushing."
+		bookshelves, report on station news, play god awful music, livestream the latest skull-crushing, and hunt vampires."
 	department_head = list(JOB_HEAD_OF_PERSONNEL)
 	faction = FACTION_STATION
 	total_positions = 1
