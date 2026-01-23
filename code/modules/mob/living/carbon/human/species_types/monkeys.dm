@@ -14,7 +14,7 @@
 	knife_butcher_results = list(/obj/item/food/meat/slab/monkey = 5, /obj/item/stack/sheet/animalhide/monkey = 1)
 	inherent_traits = list(
 		TRAIT_NO_UNDERWEAR,
-		TRAIT_NOBLOOD_OVERLAY,
+		TRAIT_NO_BLOOD_OVERLAY,
 		TRAIT_NO_TRANSFORMATION_STING,
 		TRAIT_NO_AUGMENTS,
 		TRAIT_VENTCRAWLER_NUDE,
@@ -255,7 +255,7 @@
 	species_language_holder = /datum/language_holder/monkey/smart
 	inherent_traits = list(
 		TRAIT_NO_UNDERWEAR,
-		TRAIT_NOBLOOD_OVERLAY,
+		TRAIT_NO_BLOOD_OVERLAY,
 		TRAIT_NO_TRANSFORMATION_STING,
 		TRAIT_NO_AUGMENTS,
 		TRAIT_GUN_NATURAL,
