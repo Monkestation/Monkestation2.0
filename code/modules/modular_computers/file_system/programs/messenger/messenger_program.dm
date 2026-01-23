@@ -693,7 +693,7 @@
 			reply = "(<a href='byond://?src=[REF(src)];choice=[reply_href];skiprefresh=1;target=[REF(chat)]'>Reply</a>)"
 
 		// resolving w/o nullcheck here, assume the messenger exists if a real person sent a message
-		var/datum/computer_file/program/messenger/sender_messenger = chat.recipient?.resolve()
+		var/datum/computer_file/program/messenger/sender_messenger = chat?.recipient?.resolve()
 
 		var/sender_title = is_fake_user ? STRINGIFY_PDA_TARGET(fake_name, fake_job) : get_messenger_name(sender_messenger)
 		var/sender_name = is_fake_user ? fake_name : sender_messenger.computer.saved_identification
