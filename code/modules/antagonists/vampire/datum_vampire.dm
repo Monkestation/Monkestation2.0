@@ -59,8 +59,6 @@
 
 	/// Powers currently owned
 	var/list/datum/action/cooldown/vampire/powers = list()
-	/// Frenzy Grab Martial art given to Vampires in a Frenzy
-	var/datum/martial_art/frenzygrab/frenzygrab = new
 
 	/// Vassals under my control. Periodically remove the dead ones.
 	var/list/datum/antagonist/vassal/vassals = list()
