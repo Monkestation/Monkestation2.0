@@ -76,26 +76,27 @@
 **/
 /datum/antagonist/vampire/proc/handle_healing()
 	var/in_torpor = is_in_torpor()
+	var/mob/living/current = owner.current
 
 	// Weirdness shield
-	if(QDELETED(owner?.current))
+	if(QDELETED(current))
 		return FALSE
 	// Dont heal if you have TRAIT_MASQUERADE and not undergoing torpor
-	if(!in_torpor && HAS_TRAIT(owner.current, TRAIT_MASQUERADE))
+	if(!in_torpor && HAS_TRAIT(current, TRAIT_MASQUERADE))
 		return FALSE
 	// No healing during sol, cry about it
-	if(!in_torpor && owner.current.has_status_effect(/datum/status_effect/vampire_sol))
+	if(!in_torpor && current.has_status_effect(/datum/status_effect/vampire_sol))
 		return FALSE
 
 	var/actual_regen = vampire_regen_rate + additional_regen
 
 	// Heal clone and brain damage
-	owner.current.adjustCloneLoss(-1 * actual_regen * 4)
-	owner.current.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1 * (actual_regen * 4))
+	current.adjustCloneLoss(-1 * actual_regen * 4)
+	current.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1 * (actual_regen * 4))
 
-	if(!iscarbon(owner.current))
+	if(!iscarbon(current))
 		return FALSE
-	var/mob/living/carbon/carbon_owner = owner.current
+	var/mob/living/carbon/carbon_owner = current
 
 	var/vitaecost_multiplier = 0.5 // Coffin makes it cheaper
 	var/healing_multiplier = 1
@@ -149,16 +150,19 @@
 
 /datum/antagonist/vampire/proc/try_regenerate_limbs(cost_muliplier = 1)
 	var/mob/living/carbon/carbon_owner = owner.current
+	if(!iscarbon(carbon_owner) || QDELING(carbon_owner))
+		return
 	var/limb_regen_cost = 50 * -cost_muliplier
 
 	var/list/missing = carbon_owner.get_missing_limbs()
-	if(missing.len && (current_vitae < limb_regen_cost + 5))
+	if(length(missing) && (current_vitae < limb_regen_cost + 5))
 		return FALSE
 	for(var/missing_limb in missing) //Find ONE Limb and regenerate it.
 		carbon_owner.regenerate_limb(missing_limb, FALSE)
 		AdjustBloodVolume(-limb_regen_cost)
 		var/obj/item/bodypart/missing_bodypart = carbon_owner.get_bodypart(missing_limb)
-		missing_bodypart.brute_dam = 60
+		if(missing_limb != BODY_ZONE_HEAD)
+			missing_bodypart.receive_damage(brute = 60, wound_bonus = CANT_WOUND)
 		to_chat(carbon_owner, span_notice("Your flesh knits as it regrows your [missing_bodypart]!"))
 		playsound(carbon_owner, 'sound/magic/demon_consume.ogg', 50, TRUE)
 		return TRUE
@@ -189,24 +193,22 @@
 
 
 	// Get rid of icky organs. From `panacea.dm`
-	var/list/bad_organs = list(
-		carbon_user.get_organ_by_type(/obj/item/organ/internal/body_egg),
-		carbon_user.get_organ_by_type(/obj/item/organ/internal/zombie_infection),
-	)
-	for(var/obj/item/organ/bad_organ as anything in bad_organs)
-		var/obj/item/organ/yucky_organ = bad_organ
-		if(!istype(yucky_organ))
+	var/static/list/bad_organs = typecacheof(list(
+		/obj/item/organ/internal/body_egg,
+		/obj/item/organ/internal/zombie_infection,
+	))
+	for(var/obj/item/organ/organ as anything in carbon_user.organs)
+		if(!is_type_in_typecache(organ, bad_organs))
 			continue
 
-		yucky_organ.Remove(carbon_user)
-		yucky_organ.forceMove(get_turf(carbon_user))
+		organ.Remove(carbon_user)
+		organ.forceMove(carbon_user.drop_location())
 
 	// Don't Revive if staked
-	if(!check_if_staked())
-		if(carbon_user.stat == DEAD)
-			carbon_user.revive()
-			// Heal suffocation
-			carbon_user.setOxyLoss(0)
+	if(!check_if_staked() && carbon_user.stat == DEAD)
+		carbon_user.revive()
+		// Heal suffocation
+		carbon_user.setOxyLoss(0)
 
 /**
  * Called when we die
@@ -320,4 +322,4 @@
 	)
 
 	torpor_end() // End it BEFORE we dust them.
-	body.dust(FALSE, TRUE)
+	body.dust(just_ash = FALSE, drop_items = TRUE)
