@@ -22,7 +22,7 @@
 	var/datum/antagonist/vampire/vampiredatum
 
 	/// Traits given by frenzy.
-	var/static/frenzy_traits = list(
+	var/static/list/frenzy_traits = list(
 		TRAIT_DISCOORDINATED_TOOL_USER,
 		TRAIT_STRONG_GRABBER,
 		TRAIT_STUNIMMUNE,
