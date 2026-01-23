@@ -147,9 +147,8 @@
 		clonemind = locate(mindref) in SSticker.minds
 		if(!istype(clonemind))	//not a mind
 			return NONE
-		// LUCY TODO: old bloodsucker code
-		/* if(clonemind.has_antag_datum(/datum/antagonist/bloodsucker)) // no cloning bloodsuckers.
-			return NONE */
+		if(clonemind.has_antag_datum(/datum/antagonist/vampire)) // no cloning vampires.
+			return NONE
 		if(!QDELETED(clonemind.current))
 			if(clonemind.current.stat != DEAD)	//mind is associated with a non-dead body
 				return NONE

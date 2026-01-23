@@ -356,7 +356,6 @@
 				ROLE_CULTIST,
 				ROLE_HERETIC,
 				ROLE_HIVE,
-				/* ROLE_INFILTRATOR, */ // LUCY TODO: old bloodsucker code
 				ROLE_MALF,
 				ROLE_MONSTERHUNTER,
 				ROLE_NINJA,

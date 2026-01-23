@@ -14,21 +14,21 @@
 		),
 		"supernatural" = list(
 			"antags" = list(
-				/* /datum/antagonist/bloodsucker, */ // LUCY TODO: old bloodsucker code
 				/datum/antagonist/clock_cultist,
 				/datum/antagonist/cult,
 				/datum/antagonist/heretic,
 				/datum/antagonist/heretic_monster,
 				/datum/antagonist/monsterhunter,
-				/* /datum/antagonist/vassal, */ // LUCY TODO: old bloodsucker code
+				/datum/antagonist/vampire,
+				/datum/antagonist/vassal,
 				/datum/antagonist/wizard,
-				/datum/antagonist/wizard_minion
+				/datum/antagonist/wizard_minion,
 			),
 			"suppression_message" = "Due to your connection to the supernatural, you are able to overcome and ignore your mind's fear of it.",
 			"unsuppression_message" = "You feel the fear of the supernatural return to your mind as you lose your connection to it."
 		),
 		"blood" = list(
-			"antags" = list(/datum/antagonist/cult/* , /datum/antagonist/bloodsucker, /datum/antagonist/vassal */), // LUCY TODO: old bloodsucker code
+			"antags" = list(/datum/antagonist/cult, /datum/antagonist/vampire, /datum/antagonist/vassal),
 			"suppression_message" = "Due to your existence's reliance on blood, you are able to overcome and ignore your mind's fear of it.",
 			"unsuppression_message" = "You feel the fear of blood return to your mind as you lose your reliance on it."
 		)

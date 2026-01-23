@@ -199,6 +199,13 @@
 
 	setup_tracker(current_mob)
 
+	if(ishuman(current_mob))
+		var/mob/living/carbon/human/current_human = current_mob
+		current_human.physiology?.stamina_mod *= VAMPIRE_INHERENT_STAMINA_RESIST
+
+	current_mob.has_dna()?.remove_all_mutations()
+	current_mob.add_traits(vampire_traits + always_traits, TRAIT_VAMPIRE)
+
 #ifdef VAMPIRE_TESTING
 	var/turf/user_loc = get_turf(current_mob)
 	new /obj/structure/closet/crate/coffin(user_loc)
@@ -224,13 +231,14 @@
 		COMSIG_LIVING_APPRAISE_ART,
 	))
 	current_mob.update_sight()
+	current_mob.remove_traits(vampire_traits + always_traits, TRAIT_VAMPIRE)
 
 	handle_clown_mutation(current_mob, removing = FALSE)
 
 	cleanup_tracker()
 
-	if(current_mob.hud_used)
-		var/datum/hud/hud_used = current_mob.hud_used
+	var/datum/hud/hud_used = current_mob.hud_used
+	if(hud_used)
 		hud_used.infodisplay -= blood_display
 		hud_used.infodisplay -= vamprank_display
 		hud_used.infodisplay -= sunlight_display
@@ -245,10 +253,9 @@
 
 	current_mob.faction -= FACTION_VAMPIRE
 
-	// Tiny lobotomy
-	current_mob?.mind?.forget_crafting_recipe(/datum/crafting_recipe/vassalrack)
-	current_mob?.mind?.forget_crafting_recipe(/datum/crafting_recipe/candelabrum)
-	current_mob?.mind?.forget_crafting_recipe(/datum/crafting_recipe/bloodthrone)
+	if(ishuman(current_mob))
+		var/mob/living/carbon/human/current_human = current_mob
+		current_human.physiology?.stamina_mod /= VAMPIRE_INHERENT_STAMINA_RESIST
 
 /datum/antagonist/vampire/proc/on_hud_created(datum/source)
 	SIGNAL_HANDLER
@@ -308,12 +315,15 @@
 
 	// Assign starting stats skill point.
 	give_starting_powers()
-	assign_starting_stats()
 	owner.special_role = ROLE_VAMPIRE
 	GLOB.all_vampires += src
 
 	// Start society if we're the first vampire
 	check_start_society()
+
+	if(!QDELETED(owner.current))
+		for(var/quirk_type in typesof(/datum/quirk/item_quirk/junkie) + /datum/quirk/skittish)
+			owner.current.remove_quirk(quirk_type)
 
 /datum/antagonist/vampire/on_removal()
 	UnregisterSignal(SSsunlight, list(COMSIG_SOL_NEAR_END, COMSIG_SOL_NEAR_START, COMSIG_SOL_END, COMSIG_SOL_RISE_TICK, COMSIG_SOL_WARNING_GIVEN))
@@ -467,38 +477,6 @@
 		if(!(initial(all_powers.special_flags) & VAMPIRE_DEFAULT_POWER))
 			continue
 		grant_power(new all_powers)
-
-/datum/antagonist/vampire/proc/assign_starting_stats()
-	var/mob/living/carbon/human/user = owner.current
-
-	// Species traits
-	if(ishuman(user) && user.dna)
-		// LUCY TODO
-		/* var/datum/species/user_species = user.dna.species
-		user_species.species_traits += TRAIT_DRINKSBLOOD
-		user_species.punchdamage += 2 */
-		user.physiology.stamina_mod *= VAMPIRE_INHERENT_STAMINA_RESIST // Vampires have inherent stamina resistance
-		user.dna.remove_all_mutations()
-
-	// Give Vampire Traits
-	user.add_traits(vampire_traits + always_traits, TRAIT_VAMPIRE)
-
-	// Clear Addictions
-	// LUCY TODO
-	/* user.reagents.addiction_list = new/list()
-	owner.remove_quirk(/datum/quirk/junkie)
-	owner.remove_quirk(/datum/quirk/junkie/smoker) */
-
-	// No Skittish "People" allowed
-	if(HAS_TRAIT(user, TRAIT_SKITTISH))
-		REMOVE_TRAIT(user, TRAIT_SKITTISH, ROUNDSTART_TRAIT)
-
-	// Tongue & Language
-	user.grant_all_languages(ALL, TRUE, LANGUAGE_VAMPIRE)
-	user.grant_language(/datum/language/vampiric, source = LANGUAGE_VAMPIRE)
-
-	/// Clear Disabilities & Organs
-	heal_vampire_organs()
 
 /**
  * ##clear_power_and_stats()

@@ -327,13 +327,11 @@
 		explanation_text = initial(explanation_text)
 		return
 	var/target_name = target.name || target.current?.real_name || target.current?.real_name
-	// LUCY TODO: old bloodsucker code
-	// var/datum/antagonist/bloodsucker/bloodsucker = target.has_antag_datum(/datum/antagonist/bloodsucker)
+	var/datum/antagonist/vampire/vampire = target.has_antag_datum(/datum/antagonist/vampire)
 	var/datum/antagonist/heretic/heretic = target.has_antag_datum(/datum/antagonist/heretic)
-	/*if(bloodsucker)
-		explanation_text = "Slay the monster known as [target_name], a [bloodsucker.my_clan?.name || "clanless"] Bloodsucker."
-	else */
-	if(heretic)
+	if(vampire)
+		explanation_text = "Slay the monster known as [target_name], a [vampire.my_clan?.name || "clanless"] Bloodsucker."
+	else if(heretic)
 		if(heretic.heretic_path == PATH_START)
 			explanation_text = "Slay the monster known as [target_name], a heretic."
 		else
@@ -423,12 +421,12 @@
 	var/static/list/antag_datums_to_check
 	if(!antag_datums_to_check)
 		antag_datums_to_check = typecacheof(list(
-			/* /datum/antagonist/bloodsucker, */ // LUCY TODO: old bloodsucker code
 			/datum/antagonist/changeling,
 			/datum/antagonist/heretic,
 			/datum/antagonist/heretic_monster,
 			/datum/antagonist/teratoma, // as they're associated with changelings
-			/* /datum/antagonist/vassal, */ // LUCY TODO: old bloodsucker code
+			/datum/antagonist/vampire,
+			/datum/antagonist/vassal,
 		))
 
 	var/datum/mind/victim_mind = get_mind(victim, include_last = TRUE)
