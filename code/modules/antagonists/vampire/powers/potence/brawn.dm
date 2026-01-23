@@ -128,8 +128,9 @@
 		var/mob/living/living_target = target_atom
 
 		// Strength of the attack
+		var/obj/item/bodypart/user_active_arm = carbon_owner.get_active_hand()
+		var/hit_strength = user_active_arm.unarmed_damage_high * damage_coefficient + 2
 
-		var/hit_strength = /* carbon_owner.dna.species.punchdamage * */ damage_coefficient + 2 // LUCY TODO: punch damage stuff
 		var/powerlevel = min(5, 1 + level_current)
 
 		if(rand(5 + powerlevel) >= 5)

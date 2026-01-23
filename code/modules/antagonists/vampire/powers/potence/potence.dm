@@ -18,12 +18,8 @@
 	level_4 = list(/datum/action/cooldown/vampire/targeted/brawn/brash/four, /datum/action/cooldown/vampire/targeted/lunge/four)
 	level_5 = list(/datum/action/cooldown/vampire/targeted/brawn/brash/five, /datum/action/cooldown/vampire/targeted/lunge/four)
 
-/* LUCY TODO: punch damage stuff
-// Extra damage. Will end at around
 /datum/discipline/potence/apply_discipline_quirks(datum/antagonist/vampire/clan_owner)
 	. = ..()
-	var/mob/living/carbon/human/stronkman = clan_owner.owner.current
-	if(istype(stronkman))
-		var/datum/species/vamp_species = stronkman.dna.species
-		vamp_species.punchdamage += 8
-*/
+	clan_owner.cleanup_limbs(clan_owner.owner.current)
+	clan_owner.base_punch_damage = 8
+	clan_owner.setup_limbs(clan_owner.owner.current)

@@ -77,6 +77,9 @@
 	/// How much damage the vampire heals each life tick. Increases per rank up
 	var/vampire_regen_rate = 0.3
 
+	/// Flat punch damage added.
+	var/base_punch_damage = 1
+
 	/// Lair
 	var/area/vampire_lair_area
 	var/obj/structure/closet/crate/coffin
@@ -95,6 +98,14 @@
 
 	/// Tracker so that vassals know where their master is
 	var/obj/effect/abstract/vampire_tracker_holder/tracker
+
+	/// List of limbs we've applied additional punch damage to.
+	var/list/affected_limbs = list(
+		BODY_ZONE_L_ARM = null,
+		BODY_ZONE_R_ARM = null,
+		BODY_ZONE_L_LEG = null,
+		BODY_ZONE_R_LEG = null,
+	)
 
 	/// Static typecache of all vampire powers.
 	var/static/list/all_vampire_powers = typecacheof(/datum/action/cooldown/vampire, ignore_root_path = TRUE)
@@ -206,6 +217,7 @@
 	else
 		RegisterSignal(current_mob, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
 
+	setup_limbs(current_mob)
 	setup_tracker(current_mob)
 
 	if(ishuman(current_mob))
@@ -247,6 +259,7 @@
 
 	handle_clown_mutation(current_mob, removing = FALSE)
 
+	cleanup_limbs(current_mob)
 	cleanup_tracker()
 
 	var/datum/hud/hud_used = current_mob.hud_used
@@ -366,26 +379,6 @@
 		if(old_body)
 			all_powers.Remove(old_body)
 		all_powers.Grant(new_body)
-
-	// LUCY TODO: whatever this shit is
-	// Update punch damage
-	/* var/mob/living/carbon/human/human_new_body = new_body
-	var/mob/living/carbon/human/human_old_body = old_body
-
-	if(ishuman(human_new_body) && ishuman(human_old_body))
-		var/datum/species/new_species = human_new_body.dna.species
-		var/datum/species/old_species = human_old_body.dna.species
-
-		new_species.species_traits += TRAIT_DRINKSBLOOD
-		old_species.species_traits -= TRAIT_DRINKSBLOOD
-
-		new_species.punchdamage = old_species.punchdamage
-		old_species.punchdamage = initial(old_species.punchdamage)
-	else if(ishuman(human_new_body))
-		var/datum/species/new_species = human_new_body.dna.species
-		new_species.punchdamage += 2
-		human_new_body.physiology.stamina_mod *= VAMPIRE_INHERENT_STAMINA_RESIST */
-
 
 	// Vampire Traits
 	old_body?.remove_traits(vampire_traits + always_traits, TRAIT_VAMPIRE)
@@ -689,6 +682,55 @@
 		return
 
 	tracker?.tracking_beacon?.update_position()
+
+/datum/antagonist/vampire/proc/setup_limbs(mob/living/carbon/target)
+	if(!iscarbon(target))
+		return
+	RegisterSignal(target, COMSIG_CARBON_POST_ATTACH_LIMB, PROC_REF(register_limb))
+	RegisterSignal(target, COMSIG_CARBON_POST_REMOVE_LIMB, PROC_REF(unregister_limb))
+	for(var/body_part in affected_limbs)
+		var/obj/item/bodypart/limb = target.get_bodypart(check_zone(body_part))
+		if(limb)
+			register_limb(target, limb, initial = TRUE)
+
+/datum/antagonist/vampire/proc/cleanup_limbs(mob/living/carbon/target)
+	if(!iscarbon(target))
+		return
+	UnregisterSignal(target, list(COMSIG_CARBON_POST_ATTACH_LIMB, COMSIG_CARBON_POST_REMOVE_LIMB))
+	for(var/body_part in affected_limbs)
+		var/obj/item/bodypart/limb = target.get_bodypart(check_zone(body_part))
+		if(limb)
+			unregister_limb(target, limb)
+
+/datum/antagonist/vampire/proc/register_limb(mob/living/carbon/owner, obj/item/bodypart/new_limb, special, initial = FALSE)
+	SIGNAL_HANDLER
+	if(new_limb.body_zone == BODY_ZONE_HEAD || new_limb.body_zone == BODY_ZONE_CHEST)
+		return
+
+	affected_limbs[new_limb.body_zone] = new_limb
+	RegisterSignal(new_limb, COMSIG_QDELETING, PROC_REF(limb_gone))
+
+	var/extra_damage = base_punch_damage + (vampire_level * VAMPIRE_UNARMED_DMG_INCREASE_ON_RANKUP)
+	new_limb.unarmed_damage_low += extra_damage
+	new_limb.unarmed_damage_high += extra_damage
+
+/datum/antagonist/vampire/proc/unregister_limb(mob/living/carbon/owner, obj/item/bodypart/lost_limb, special)
+	SIGNAL_HANDLER
+	if(lost_limb.body_zone == BODY_ZONE_HEAD || lost_limb.body_zone == BODY_ZONE_CHEST)
+		return
+	var/extra_damage = base_punch_damage + (vampire_level / VAMPIRE_UNARMED_DMG_INCREASE_ON_RANKUP)
+
+	affected_limbs[lost_limb.body_zone] = null
+	UnregisterSignal(lost_limb, COMSIG_QDELETING)
+	// safety measure in case we ever accidentally fuck up the math or something
+	lost_limb.unarmed_damage_low = max(lost_limb.unarmed_damage_low - extra_damage, initial(lost_limb.unarmed_damage_low))
+	lost_limb.unarmed_damage_high = max(lost_limb.unarmed_damage_high - extra_damage, initial(lost_limb.unarmed_damage_high))
+
+/datum/antagonist/vampire/proc/limb_gone(obj/item/bodypart/deleted_limb)
+	SIGNAL_HANDLER
+	if(affected_limbs[deleted_limb.body_zone])
+		affected_limbs[deleted_limb.body_zone] = null
+		UnregisterSignal(deleted_limb, COMSIG_QDELETING)
 
 /datum/antagonist/vampire/proc/after_expose_reagents(mob/source_mob, list/reagents, datum/reagents/source, methods = TOUCH, volume_modifier = 1, show_message = TRUE)
 	SIGNAL_HANDLER

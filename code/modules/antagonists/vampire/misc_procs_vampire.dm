@@ -64,6 +64,14 @@
 		return
 
 	vampire_level_unspent += levels
+	for(var/limb_slot, current_limb in affected_limbs)
+		var/obj/item/bodypart/limb = current_limb
+		if(QDELETED(limb))
+			continue
+		// This affects the hitting power of regular unarmed attacks and Brawn.
+		limb.unarmed_damage_low += VAMPIRE_UNARMED_DMG_INCREASE_ON_RANKUP
+		limb.unarmed_damage_high += VAMPIRE_UNARMED_DMG_INCREASE_ON_RANKUP
+
 	if(!my_clan)
 		to_chat(owner.current, span_notice("You have grown in power. Join a clan to spend it."))
 		return
