@@ -326,6 +326,7 @@
 	RegisterSignal(SSdcs, COMSIG_GLOB_MONSTER_HUNTER_QUERY, PROC_REF(query_for_monster_hunter))
 	RegisterSignal(src, COMSIG_VAMPIRE_TRACK_HUMANITY_GAIN, PROC_REF(on_track_humanity_gain_signal))
 	RegisterSignal(owner, COMSIG_OOZELING_CORE_EJECTED, PROC_REF(on_oozeling_core_ejected))
+	RegisterSignal(owner, COMSIG_OOZELING_REVIVED, PROC_REF(on_oozeling_revive))
 
 	owner.teach_crafting_recipe(list(
 		/datum/crafting_recipe/vassalrack,
@@ -356,7 +357,7 @@
 	REMOVE_TRAIT(owner, TRAIT_VAMPIRE_ALIGNED, REF(src))
 	UnregisterSignal(SSsunlight, list(COMSIG_SOL_NEAR_END, COMSIG_SOL_NEAR_START, COMSIG_SOL_END, COMSIG_SOL_RISE_TICK, COMSIG_SOL_WARNING_GIVEN))
 	UnregisterSignal(SSdcs, COMSIG_GLOB_MONSTER_HUNTER_QUERY)
-	UnregisterSignal(owner, COMSIG_OOZELING_CORE_EJECTED)
+	UnregisterSignal(owner, list(COMSIG_OOZELING_CORE_EJECTED, COMSIG_OOZELING_REVIVED))
 
 	owner.forget_crafting_recipe(list(
 		/datum/crafting_recipe/vassalrack,
@@ -419,9 +420,10 @@
 	new_owner.add_antag_datum(src)
 
 /datum/antagonist/vampire/ui_static_data(mob/user)
-	var/list/data = list()
+	. = ..()
+
 	//we don't need to update this that much.
-	data["in_clan"] = !!my_clan
+	.["in_clan"] = !!my_clan
 	var/list/clan_data = list()
 	if(my_clan)
 		clan_data["name"] = my_clan.name
@@ -429,7 +431,7 @@
 		clan_data["icon"] = my_clan.join_icon
 		clan_data["icon_state"] = my_clan.join_icon_state
 
-	data["clan"] += list(clan_data)
+	.["clan"] += list(clan_data)
 
 	for(var/datum/action/cooldown/vampire/power as anything in powers)
 		var/list/power_data = list()
@@ -443,9 +445,7 @@
 		power_data["constant_cost"] = power.constant_vitaecost ? power.constant_vitaecost : "0"
 		power_data["cooldown"] = power.cooldown_time / 10
 
-		data["powers"] += list(power_data)
-
-	return data + ..()
+		.["powers"] += list(power_data)
 
 /datum/antagonist/vampire/get_preview_icon()
 	var/icon/final_icon = render_preview_outfit(/datum/outfit/vampire_outfit)
@@ -769,14 +769,17 @@
 		return
 	to_chat(core.brainmob, span_narsiesmall("You begin recollecting yourself. You will rise again in [DisplayTimeText(OOZELING_VAMPIRE_REVIVE_TIME)]."), type = MESSAGE_TYPE_INFO)
 	AdjustBloodVolume(-OOZELING_MIN_REVIVE_BLOOD_THRESHOLD * 0.5)
-	addtimer(CALLBACK(src, PROC_REF(oozeling_revive), core), OOZELING_VAMPIRE_REVIVE_TIME, TIMER_UNIQUE | TIMER_OVERRIDE)
+	addtimer(CALLBACK(src, PROC_REF(oozeling_self_revive), core), OOZELING_VAMPIRE_REVIVE_TIME, TIMER_UNIQUE | TIMER_OVERRIDE)
 
-/datum/antagonist/vampire/proc/oozeling_revive(obj/item/organ/internal/brain/slime/oozeling_core)
-	if(QDELETED(oozeling_core))
+/datum/antagonist/vampire/proc/on_oozeling_revive(datum/source, mob/living/carbon/human/new_body, obj/item/organ/internal/brain/slime/core)
+	SIGNAL_HANDLER
+	heal_vampire_organs()
+
+/datum/antagonist/vampire/proc/oozeling_self_revive(datum/source, obj/item/organ/internal/brain/slime/core)
+	if(QDELETED(core))
 		return
-	var/mob/living/carbon/human/new_body = oozeling_core.rebuild_body(nugget = FALSE, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
+	var/mob/living/carbon/human/new_body = core.rebuild_body(nugget = FALSE, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 	to_chat(new_body, span_narsiesmall("You recollect yourself, your vitae reforming your body from your core!"), type = MESSAGE_TYPE_INFO)
-	heal_vampire_organs(new_body)
 
 /datum/outfit/vampire_outfit
 	name = "Vampire outfit (Preview only)"
