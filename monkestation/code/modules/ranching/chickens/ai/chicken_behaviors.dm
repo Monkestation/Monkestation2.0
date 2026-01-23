@@ -27,6 +27,5 @@
 	var/atom/target = controller.blackboard[target_key]
 	if(SEND_SIGNAL(controller.pawn, COMSIG_FRIENDSHIP_CHECK_LEVEL, target, FRIENDSHIP_FRIEND))
 		controller.clear_blackboard_key(target_key)
-		finish_action(controller, succeeded = FALSE)
-		return
-	. = ..()
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+	return ..()

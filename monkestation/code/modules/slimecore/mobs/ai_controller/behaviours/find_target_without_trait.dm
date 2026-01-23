@@ -1,5 +1,6 @@
 /datum/ai_behavior/find_potential_targets_without_trait
 	action_cooldown = 2 SECONDS
+	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 	/// How far can we see stuff?
 	var/vision_range = 9
 	/// Blackboard key for aggro range, uses vision range if not specified
@@ -17,8 +18,7 @@
 
 	var/atom/current_target = controller.blackboard[target_key]
 	if (targeting_strategy.can_attack(living_mob, current_target, vision_range))
-		finish_action(controller, succeeded = FALSE)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 	var/aggro_range = controller.blackboard[aggro_range_key] || vision_range
 
@@ -32,8 +32,7 @@
 				potential_targets += hostile_machine
 
 	if(!potential_targets.len)
-		finish_action(controller, succeeded = FALSE)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	var/list/filtered_targets = list()
 
@@ -55,8 +54,7 @@
 			continue
 
 	if(!filtered_targets.len)
-		finish_action(controller, succeeded = FALSE)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	var/atom/target = pick_final_target(controller, filtered_targets)
 	controller.set_blackboard_key(target_key, target)
@@ -66,7 +64,7 @@
 	if(potential_hiding_location) //If they're hiding inside of something, we need to know so we can go for that instead initially.
 		controller.set_blackboard_key(hiding_location_key, potential_hiding_location)
 
-	finish_action(controller, succeeded = TRUE)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/find_potential_targets_without_trait/finish_action(datum/ai_controller/controller, succeeded, ...)
 	. = ..()

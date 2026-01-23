@@ -163,10 +163,10 @@
 
 	var/mob/living/living_pawn = controller.pawn
 	if(!istype(living_pawn))
-		return
+		return AI_BEHAVIOR_INSTANT
 
 	living_pawn.set_resting(!living_pawn.resting)
-	finish_action(controller, TRUE)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /// Buzz
 /datum/ai_planning_subtree/random_speech/bumbles
