@@ -18,7 +18,7 @@
 		AdjustBloodVolume(-VAMPIRE_PASSIVE_BLOOD_DRAIN)
 
 	// Healing
-	if(handle_healing() && !istype(owner, /mob/living/simple_animal/hostile))
+	if(handle_healing() && !isanimal_or_basicmob(owner))
 		if((COOLDOWN_FINISHED(src, vampire_spam_healing)) && current_vitae > 0)
 			to_chat(owner.current, span_notice("The power of your blood knits your wounds..."))
 			COOLDOWN_START(src, vampire_spam_healing, VAMPIRE_SPAM_HEALING)
