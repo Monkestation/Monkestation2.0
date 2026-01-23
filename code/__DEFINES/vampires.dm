@@ -30,8 +30,10 @@
 /// When do we warn them about their low blood?
 #define VAMPIRE_LOW_BLOOD_WARNING 300
 
-/// Minimum blood required for vampires oozelings to auto-revive
+/// Minimum blood required for vampires oozelings to auto-revive.
 #define OOZELING_MIN_REVIVE_BLOOD_THRESHOLD (FRENZY_THRESHOLD_ENTER * 5)
+/// How long it takes for an vampire oozeling to auto-revive.
+#define OOZELING_VAMPIRE_REVIVE_TIME (1.5 MINUTES)
 
 /// How much blood drained from the vampire each tick during sol
 #define VAMPIRE_SOL_BURN 30

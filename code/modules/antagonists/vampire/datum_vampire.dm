@@ -711,9 +711,9 @@
 	if(current_vitae < OOZELING_MIN_REVIVE_BLOOD_THRESHOLD)
 		to_chat(core.brainmob, span_narsiesmall("You do not have enough vitae to recollect yourself on your own!"), type = MESSAGE_TYPE_WARNING)
 		return
-	to_chat(core.brainmob, span_narsiesmall("You begin recollecting yourself. You will rise again in 3 minutes."), type = MESSAGE_TYPE_INFO)
+	to_chat(core.brainmob, span_narsiesmall("You begin recollecting yourself. You will rise again in [DisplayTimeText(OOZELING_VAMPIRE_REVIVE_TIME)]."), type = MESSAGE_TYPE_INFO)
 	AdjustBloodVolume(-OOZELING_MIN_REVIVE_BLOOD_THRESHOLD * 0.5)
-	addtimer(CALLBACK(src, PROC_REF(oozeling_revive), core), 3 MINUTES, TIMER_UNIQUE | TIMER_OVERRIDE)
+	addtimer(CALLBACK(src, PROC_REF(oozeling_revive), core), OOZELING_VAMPIRE_REVIVE_TIME, TIMER_UNIQUE | TIMER_OVERRIDE)
 
 /datum/antagonist/vampire/proc/oozeling_revive(obj/item/organ/internal/brain/slime/oozeling_core)
 	if(QDELETED(oozeling_core))
