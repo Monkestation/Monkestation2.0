@@ -316,6 +316,7 @@
 		/datum/crafting_recipe/vassalrack,
 		/datum/crafting_recipe/candelabrum,
 		/datum/crafting_recipe/bloodthrone,
+		/datum/crafting_recipe/meatcoffin,
 	))
 
 	// Set name and reputation
@@ -346,6 +347,7 @@
 		/datum/crafting_recipe/vassalrack,
 		/datum/crafting_recipe/candelabrum,
 		/datum/crafting_recipe/bloodthrone,
+		/datum/crafting_recipe/meatcoffin,
 	))
 
 	clear_powers_and_stats()
