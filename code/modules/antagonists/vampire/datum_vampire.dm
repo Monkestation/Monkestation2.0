@@ -544,6 +544,15 @@
 	newheart?.beating = initial(newheart.beating)
 
 /datum/antagonist/vampire/proc/claim_coffin(obj/structure/closet/crate/claimed)
+	var/static/list/banned_areas_typecache
+	if(isnull(banned_areas_typecache))
+		banned_areas_typecache = typecacheof(list(
+			/area/icemoon,
+			/area/lavaland,
+			/area/ocean,
+			/area/space,
+		))
+
 	// ALREADY CLAIMED
 	if(claimed.resident)
 		if(claimed.resident == owner)
@@ -551,14 +560,22 @@
 		else
 			to_chat(owner, "This [src] has already been claimed by another.")
 		return FALSE
-	var/area/coffin_area = get_area(claimed)
-	if(!GLOB.the_station_areas.Find(coffin_area.type))
-		claimed.balloon_alert(owner.current, "not part of station!")
+	var/turf/coffin_turf = get_turf(claimed)
+	var/area/current_area = get_area(coffin_turf)
+	// this if check is split up bc it's annoying to read and mentally parse when it's combined into one big if statement
+	var/valid_lair_area = TRUE
+	if(!coffin_turf)
+		valid_lair_area = FALSE
+	else if(!(current_area.area_flags & ALWAYS_VALID_VAMPIRE_LAIR))
+		if(is_centcom_area(current_area) || is_type_in_typecache(current_area, banned_areas_typecache) || (istype(current_area, /area/ruin) && current_area.outdoors))
+			valid_lair_area = FALSE
+	if(!valid_lair_area)
+		claimed.balloon_alert(owner.current, "ineligible area!")
 		return
 	// This is my Lair
 	coffin.resident = owner
 	coffin = claimed
-	vampire_lair_area = coffin_area
+	vampire_lair_area = current_area
 	to_chat(owner, span_userdanger("You have claimed [claimed] as your place of immortal rest! Your lair is now [vampire_lair_area]."))
 	return TRUE
 
