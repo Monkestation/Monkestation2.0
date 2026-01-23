@@ -7,6 +7,7 @@
 	hijack_speed = 0.5
 	stinger_sound = 'sound/vampires/lunge_warn.ogg'
 	antag_hud_name = "vampire"
+	preview_outfit = /datum/outfit/vampire_outfit
 
 	/// How much blood we have, starting off at default blood levels.
 	/// We don't use our actual body's temperature because some species don't have blood and we don't want to exclude them
