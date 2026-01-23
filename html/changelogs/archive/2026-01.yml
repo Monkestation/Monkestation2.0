@@ -362,3 +362,42 @@
       times.
   - server: Attention! Cassette library terminal messes with SQL entries. May need
       operator intervention to fully implement.
+2026-01-22:
+  Chelxox:
+  - map: Added 2 more security officer lockers on Oshean's security office, making
+      it 6.
+  Gboster-0:
+  - bugfix: wheelchairs now properly take 1 second to unbuckle people
+  - bugfix: you can no longer stand in the same place whilst unbuckling someone in
+      a wheelchair, and unbuckle them from 2 tiles away
+  SirNightKnight:
+  - qol: mop buckets have 500 reagent capacity .
+  - bugfix: fixed the vacuum upgrade not working.
+  - qol: janitors have a liquid pump beacon in their outfit.
+  - qol: slightly increased to the stock of the JaniDrobe to accommodate a third set
+      of janitor gear. it also now has space cleaner.
+  - rscadd: dumping a mop bucket over a scrubber vent doesnt expose the tile to the
+      reagents inside.
+  - qol: normal mop buckets can be dumped the same way as janitorial carts.
+  - balance: removed backpack watertank slowdown.
+  - qol: light replacers can be made at engineering prolathes.
+  - bugfix: fixed trashbags not working on janitorial carts when storing items.
+  iliyaxox:
+  - rscadd: Added a cassette library and postbox to Theseus' radio outpost.
+2026-01-23:
+  Gboster-0:
+  - bugfix: arachnids no longer get a tackle attack buff due to their appendages
+  JupiterJaeden:
+  - balance: Nerfs the base regen extract (the type that the rest derive from) from
+      healing 5 dmg of every type per second -> 4.
+  - balance: Nerfs the purple regen extract from healing 10 dmg of every type per
+      second -> 4.
+  - balance: Removes the extra diminishing penalty for the purple regen extract, so
+      now every additional one (during the 90s cooldown) uses the standard 0.75 multiplier
+      instead of 0.5.
+  JupiterJaeden, flleeppyy:
+  - rscadd: Adds an 'Armory De-Authorization Announcement' for when the armory is
+      closed using the auth console, similar to the one for opening the armory.
+  - qol: The reasons for opening the armory in the auth console now have tooltips
+      giving details explaining what situations they apply to.
+  - admin: Adds admin logging for opening and closing the armory.
