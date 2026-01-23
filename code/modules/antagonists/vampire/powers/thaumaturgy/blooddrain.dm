@@ -68,10 +68,11 @@
 ///
 /datum/status_effect/blood_drain
 	id = "blood_drain"
-	alert_type = null
-	status_type = STATUS_EFFECT_REPLACE
-	tick_interval = 0.25 SECONDS
 	duration = 20 SECONDS
+	tick_interval = 0.25 SECONDS
+	status_type = STATUS_EFFECT_REPLACE
+	processing_speed = STATUS_EFFECT_PRIORITY
+	alert_type = null
 	var/datum/beam/drain_beam
 	var/mob/living/carbon/vampire
 	var/datum/action/cooldown/vampire/targeted/blooddrain/spell
