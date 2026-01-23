@@ -46,7 +46,7 @@
 		return
 
 	// Handle Traits
-	carbon_owner.remove_traits(vampiredatum.vampire_traits, TRAIT_VAMPIRE)
+	carbon_owner.remove_traits(vampiredatum.vampire_traits - vampiredatum.always_traits, TRAIT_VAMPIRE)
 	ADD_TRAIT(carbon_owner, TRAIT_MASQUERADE, TRAIT_VAMPIRE)
 
 	// Handle organs

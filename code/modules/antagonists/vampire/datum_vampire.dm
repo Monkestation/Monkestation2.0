@@ -107,35 +107,41 @@
 		/datum/antagonist/monsterhunter,
 	)
 
+	/// List of traits that the Masquerade ability does not remove.
+	var/static/list/always_traits = list(
+		TRAIT_ETHEREAL_NO_OVERCHARGE,
+		TRAIT_NO_MINDSWAP,
+		TRAIT_NO_TRANSFORMATION_STING,
+		TRAIT_OOZELING_NO_CANNIBALIZE,
+	)
+
 	/// List of traits applied inherently
 	var/static/list/vampire_traits = list(
-		TRAIT_NOBREATH,
-		TRAIT_SLEEPIMMUNE,
-		TRAIT_NOCRITDAMAGE,
-		TRAIT_RESISTCOLD,
-		TRAIT_RADIMMUNE,
-		TRAIT_GENELESS,
-		TRAIT_NOSOFTCRIT,
-		TRAIT_NOHARDCRIT,
-		TRAIT_STABLEHEART,
 		TRAIT_AGEUSIA,
 		TRAIT_COLDBLOODED,
-		TRAIT_VIRUSIMMUNE,
-		TRAIT_TOXIMMUNE,
-		TRAIT_STABLELIVER,
-		TRAIT_OOZELING_NO_CANNIBALIZE,
-		TRAIT_ETHEREAL_NO_OVERCHARGE,
-		TRAIT_XENO_IMMUNE,
+		TRAIT_GENELESS,
+		TRAIT_NOBREATH,
+		TRAIT_NOCRITDAMAGE,
+		TRAIT_NOHARDCRIT,
+		TRAIT_NOSOFTCRIT,
 		TRAIT_NO_ZOMBIFY,
+		TRAIT_RADIMMUNE,
+		TRAIT_RESISTCOLD,
+		TRAIT_SLEEPIMMUNE,
+		TRAIT_STABLEHEART,
+		TRAIT_STABLELIVER,
+		TRAIT_TOXIMMUNE,
+		TRAIT_VIRUSIMMUNE,
+		TRAIT_XENO_IMMUNE,
 	)
 
 	/// List of traits applied while in torpor
 	var/static/list/torpor_traits = list(
-		TRAIT_NODEATH,
-		TRAIT_FAKEDEATH,
 		TRAIT_DEATHCOMA,
-		TRAIT_RESISTLOWPRESSURE,
+		TRAIT_FAKEDEATH,
+		TRAIT_NODEATH,
 		TRAIT_RESISTHIGHPRESSURE,
+		TRAIT_RESISTLOWPRESSURE,
 	)
 
 	/// Humanity gain tracking, when adding more, remember to add the type define
@@ -170,6 +176,11 @@
 	RegisterSignal(current_mob, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 	RegisterSignal(current_mob, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 	RegisterSignal(current_mob, COMSIG_MOB_UPDATE_SIGHT, PROC_REF(on_update_sight))
+
+	RegisterSignal(current_mob, COMSIG_LIVING_PET_ANIMAL, PROC_REF(on_pet_animal))
+	RegisterSignal(current_mob, COMSIG_LIVING_HUG_CARBON, PROC_REF(on_hug_carbon))
+	RegisterSignal(current_mob, COMSIG_LIVING_APPRAISE_ART, PROC_REF(on_appraise_art))
+
 	handle_clown_mutation(current_mob, "Your clownish nature has been subdued by your thirst for blood.")
 
 	current_mob.update_sight()
@@ -180,11 +191,6 @@
 	/* add_antag_hud(ANTAG_HUD_VAMPIRE, "vampire", current_mob) */
 
 	current_mob.faction |= FACTION_VAMPIRE
-
-	// Teach them the old knowledge
-	current_mob.mind.teach_crafting_recipe(/datum/crafting_recipe/vassalrack)
-	current_mob.mind.teach_crafting_recipe(/datum/crafting_recipe/candelabrum)
-	current_mob.mind.teach_crafting_recipe(/datum/crafting_recipe/bloodthrone)
 
 	if(current_mob.hud_used)
 		on_hud_created()
@@ -207,7 +213,16 @@
 /datum/antagonist/vampire/remove_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/current_mob = mob_override || owner.current
-	UnregisterSignal(current_mob, list(COMSIG_LIVING_LIFE, COMSIG_ATOM_EXAMINE, COMSIG_LIVING_DEATH, COMSIG_MOVABLE_MOVED, COMSIG_MOB_UPDATE_SIGHT))
+	UnregisterSignal(current_mob, list(
+		COMSIG_LIVING_LIFE,
+		COMSIG_ATOM_EXAMINE,
+		COMSIG_LIVING_DEATH,
+		COMSIG_MOVABLE_MOVED,
+		COMSIG_MOB_UPDATE_SIGHT,
+		COMSIG_LIVING_PET_ANIMAL,
+		COMSIG_LIVING_HUG_CARBON,
+		COMSIG_LIVING_APPRAISE_ART,
+	))
 	current_mob.update_sight()
 
 	handle_clown_mutation(current_mob, removing = FALSE)
@@ -263,14 +278,11 @@
 
 	if(!broke_masquerade)
 		.["Break Masq"] = CALLBACK(src, PROC_REF(break_masquerade))
-
-	if(!broke_masquerade)
 		.["Add Infraction"] = CALLBACK(src, PROC_REF(give_masquerade_infraction))
 
 	if(humanity > 0)
 		.["Humanity Deduct"] = CALLBACK(src, PROC_REF(adjust_humanity), -1, FALSE)
-
-	if(humanity < 10)
+	else if(humanity < 10)
 		.["Humanity Add"] = CALLBACK(src, PROC_REF(adjust_humanity), 1, FALSE)
 
 /datum/antagonist/vampire/on_gain()
@@ -282,12 +294,11 @@
 	RegisterSignal(SSsunlight, COMSIG_SOL_WARNING_GIVEN, PROC_REF(give_warning))
 	RegisterSignal(src, COMSIG_VAMPIRE_TRACK_HUMANITY_GAIN, PROC_REF(on_track_humanity_gain_signal))
 
-	// Register for humanity gain signals on the owner mob
-	var/mob/living/vampire_mob = owner.current
-	if(vampire_mob)
-		RegisterSignal(vampire_mob, COMSIG_LIVING_PET_ANIMAL, PROC_REF(on_pet_animal))
-		RegisterSignal(vampire_mob, COMSIG_LIVING_HUG_CARBON, PROC_REF(on_hug_carbon))
-		RegisterSignal(vampire_mob, COMSIG_LIVING_APPRAISE_ART, PROC_REF(on_appraise_art))
+	owner.teach_crafting_recipe(list(
+		/datum/crafting_recipe/vassalrack,
+		/datum/crafting_recipe/candelabrum,
+		/datum/crafting_recipe/bloodthrone,
+	))
 
 	// Set name and reputation
 	select_first_name()
@@ -299,7 +310,7 @@
 	give_starting_powers()
 	assign_starting_stats()
 	owner.special_role = ROLE_VAMPIRE
-	GLOB.all_vampires.Add(src)
+	GLOB.all_vampires += src
 
 	// Start society if we're the first vampire
 	check_start_society()
@@ -307,14 +318,15 @@
 /datum/antagonist/vampire/on_removal()
 	UnregisterSignal(SSsunlight, list(COMSIG_SOL_NEAR_END, COMSIG_SOL_NEAR_START, COMSIG_SOL_END, COMSIG_SOL_RISE_TICK, COMSIG_SOL_WARNING_GIVEN))
 
-	// Unregister humanity gain signals from the owner mob
-	var/mob/living/vampire_mob = owner.current
-	if(vampire_mob)
-		UnregisterSignal(vampire_mob, list(COMSIG_LIVING_PET_ANIMAL, COMSIG_LIVING_HUG_CARBON, COMSIG_LIVING_APPRAISE_ART))
+	owner.forget_crafting_recipe(list(
+		/datum/crafting_recipe/vassalrack,
+		/datum/crafting_recipe/candelabrum,
+		/datum/crafting_recipe/bloodthrone,
+	))
 
 	clear_powers_and_stats()
 	owner.special_role = null
-	GLOB.all_vampires.Remove(src)
+	GLOB.all_vampires -= src
 	check_cancel_society()
 	return ..()
 
@@ -326,14 +338,6 @@
 		if(old_body)
 			all_powers.Remove(old_body)
 		all_powers.Grant(new_body)
-
-	// Transfer humanity gain signal registrations
-	if(old_body)
-		UnregisterSignal(old_body, list(COMSIG_LIVING_PET_ANIMAL, COMSIG_LIVING_HUG_CARBON, COMSIG_LIVING_APPRAISE_ART))
-	if(new_body)
-		RegisterSignal(new_body, COMSIG_LIVING_PET_ANIMAL, PROC_REF(on_pet_animal))
-		RegisterSignal(new_body, COMSIG_LIVING_HUG_CARBON, PROC_REF(on_hug_carbon))
-		RegisterSignal(new_body, COMSIG_LIVING_APPRAISE_ART, PROC_REF(on_appraise_art))
 
 	// LUCY TODO: whatever this shit is
 	// Update punch damage
@@ -356,8 +360,8 @@
 
 
 	// Vampire Traits
-	old_body?.remove_traits(vampire_traits, TRAIT_VAMPIRE)
-	new_body.add_traits(vampire_traits, TRAIT_VAMPIRE)
+	old_body?.remove_traits(vampire_traits + always_traits, TRAIT_VAMPIRE)
+	new_body.add_traits(vampire_traits + always_traits, TRAIT_VAMPIRE)
 
 /datum/antagonist/vampire/greet()
 	. = ..()
@@ -477,7 +481,7 @@
 		user.dna.remove_all_mutations()
 
 	// Give Vampire Traits
-	user.add_traits(vampire_traits, TRAIT_VAMPIRE)
+	user.add_traits(vampire_traits + always_traits, TRAIT_VAMPIRE)
 
 	// Clear Addictions
 	// LUCY TODO
@@ -526,7 +530,7 @@
 		human_user.physiology.stamina_mod /= VAMPIRE_INHERENT_STAMINA_RESIST
 
 	// Remove all vampire traits
-	user.remove_traits(vampire_traits, TRAIT_VAMPIRE)
+	user.remove_traits(vampire_traits + always_traits, TRAIT_VAMPIRE)
 
 	// Update Health
 	user.setMaxHealth(initial(user.maxHealth))
