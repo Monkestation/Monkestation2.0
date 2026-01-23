@@ -55,6 +55,11 @@
 	if(vampiredatum)
 		vampiredatum_power = vampiredatum
 
+/datum/action/cooldown/vampire/is_action_active(atom/movable/screen/movable/action_button/current_button)
+	if(currently_active)
+		return TRUE
+	return ..()
+
 //This is when we CLICK on the ability Icon, not USING.
 /datum/action/cooldown/vampire/Activate(atom/target)
 	if(currently_active)

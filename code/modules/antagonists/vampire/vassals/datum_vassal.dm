@@ -56,6 +56,7 @@
 		owner.remove_antag_datum(src)
 		CRASH("[owner.current] was vassilized without a master!")
 
+	ADD_TRAIT(owner, TRAIT_VAMPIRE_ALIGNED, REF(src))
 	RegisterSignal(SSsunlight, COMSIG_SOL_WARNING_GIVEN, PROC_REF(give_warning))
 
 	vampire_team = master.vampire_team
@@ -74,6 +75,7 @@
 	forge_objectives()
 
 /datum/antagonist/vassal/on_removal()
+	REMOVE_TRAIT(owner, TRAIT_VAMPIRE_ALIGNED, REF(src))
 	UnregisterSignal(SSsunlight, COMSIG_SOL_WARNING_GIVEN)
 
 	// Free them from their Master
