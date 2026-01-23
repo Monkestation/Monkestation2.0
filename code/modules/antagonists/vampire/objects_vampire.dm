@@ -423,50 +423,38 @@
 	vassal_desc = "This is a blood throne. It allows your master to telepathically speak to all other vampires."
 	curator_desc = "This is a chair that hurts those who try to buckle themselves onto it, though the undead have no problem latching on.\n\
 		While buckled, monsters can use this to telepathically communicate with each other."
-	var/mutable_appearance/armrest
 
 // Add rotating and armrest
 /obj/structure/vampire/bloodthrone/Initialize(mapload)
 	AddComponent(/datum/component/simple_rotation)
-	armrest = GetArmrest()
-	armrest.layer = ABOVE_MOB_LAYER
 	return ..()
-
-/obj/structure/vampire/bloodthrone/Destroy()
-	QDEL_NULL(armrest)
-	return ..()
-
-// Armrests
-/obj/structure/vampire/bloodthrone/proc/GetArmrest()
-	return mutable_appearance('icons/vampires/vamp_obj_64.dmi', "thronearm")
-
-/obj/structure/vampire/bloodthrone/proc/update_armrest()
-	if(has_buckled_mobs())
-		add_overlay(armrest)
-	else
-		cut_overlay(armrest)
 
 // Rotating
 /obj/structure/vampire/bloodthrone/setDir(newdir)
 	. = ..()
-	if(has_buckled_mobs())
-		for(var/m in buckled_mobs)
-			var/mob/living/buckled_mob = m
-			buckled_mob.setDir(newdir)
+	for(var/mob/living/buckled in buckled_mobs)
+		buckled.setDir(newdir)
 
 	if(has_buckled_mobs() && dir == NORTH)
 		layer = ABOVE_MOB_LAYER
 	else
 		layer = OBJ_LAYER
 
+/obj/structure/vampire/bloodthrone/update_overlays()
+	. = ..()
+	if(has_buckled_mobs())
+		var/mutable_appearance/armrest = mutable_appearance('icons/vampires/vamp_obj_64.dmi', "thronearm")
+		armrest.layer = ABOVE_MOB_LAYER
+		. += armrest
+
 // Buckling
 /obj/structure/vampire/bloodthrone/buckle_mob(mob/living/user, force = FALSE, check_loc = TRUE)
 	if(!anchored)
 		to_chat(user, span_announce("[src] is not bolted to the ground!"))
 		return
-	density = FALSE
+	set_density(FALSE)
 	. = ..()
-	density = TRUE
+	set_density(TRUE)
 	user.visible_message(
 		span_notice("[user] sits down on \the [src]."),
 		span_boldnotice("You sit down onto [src]."),
@@ -479,23 +467,26 @@
 		to_chat(user, span_cult("The power of the blood throne overwhelms you!"))
 
 /obj/structure/vampire/bloodthrone/post_buckle_mob(mob/living/target)
-	. = ..()
-	update_armrest()
-	target.pixel_y += 2
+	update_appearance(UPDATE_OVERLAYS)
+	target.pixel_z += 2
 
 // Unbuckling
 /obj/structure/vampire/bloodthrone/unbuckle_mob(mob/living/user, force = FALSE, can_fall = TRUE)
 	visible_message(span_danger("[user] unbuckles [user.p_them()]self from \the [src]."))
 	if(IS_VAMPIRE(user))
 		UnregisterSignal(user, COMSIG_MOB_SAY)
-	. = ..()
+	return ..()
 
 /obj/structure/vampire/bloodthrone/post_unbuckle_mob(mob/living/target)
-	target.pixel_y -= 2
+	target.pixel_z -= 2
+	update_appearance(UPDATE_OVERLAYS)
 
 // The speech itself
 /obj/structure/vampire/bloodthrone/proc/handle_speech(datum/source, list/speech_args)
 	SIGNAL_HANDLER
+
+	if(speech_args[SPEECH_FORCED])
+		return
 
 	var/message = speech_args[SPEECH_MESSAGE]
 	var/mob/living/carbon/human/user = source
