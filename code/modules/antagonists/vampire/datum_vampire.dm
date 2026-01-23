@@ -792,7 +792,7 @@
 	SIGNAL_HANDLER
 	heal_vampire_organs()
 
-/datum/antagonist/vampire/proc/oozeling_self_revive(datum/source, obj/item/organ/internal/brain/slime/core)
+/datum/antagonist/vampire/proc/oozeling_self_revive(obj/item/organ/internal/brain/slime/core)
 	if(QDELETED(core))
 		return
 	var/mob/living/carbon/human/new_body = core.rebuild_body(nugget = FALSE, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
