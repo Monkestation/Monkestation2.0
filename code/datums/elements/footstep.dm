@@ -165,7 +165,7 @@
 			heard_clients = playsound(source.loc, pick(gotten.step_sounds), 50, TRUE, falloff_distance = 1, vary = sound_vary)
 		else
 			var/list/sounds = GLOB.barefootstep[barefoot_type]
-			if(!sounds)
+			if(!length(sounds))
 				return
 
 			heard_clients = playsound(source.loc, pick(sounds[1]),
