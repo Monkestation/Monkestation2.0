@@ -7674,7 +7674,6 @@
 #include "monkestation\code\modules\clothing\shoes\boots.dm"
 #include "monkestation\code\modules\clothing\shoes\clown.dm"
 #include "monkestation\code\modules\clothing\shoes\shoe.dm"
-#include "monkestation\code\modules\clothing\spacesuits\plasmamen.dm"
 #include "monkestation\code\modules\clothing\spacesuits\hardsuits\_armor.dm"
 #include "monkestation\code\modules\clothing\spacesuits\hardsuits\_hardsuit.dm"
 #include "monkestation\code\modules\clothing\spacesuits\hardsuits\_helmet.dm"

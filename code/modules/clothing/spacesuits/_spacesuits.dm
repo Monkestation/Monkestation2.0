@@ -12,7 +12,7 @@
 	desc = "A special helmet with solar UV shielding to protect your eyes from harmful rays."
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT | PLASMAMAN_HELMET_EXEMPT | HEADINTERNALS
 	armor_type = /datum/armor/helmet_space
-	flags_inv = HIDEMASK|HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT //monkestation edit
+	flags_inv = HIDEMASK|HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	interaction_flags_click = NEED_DEXTERITY
 	clothing_traits = list(TRAIT_SNOWSTORM_IMMUNE)
 

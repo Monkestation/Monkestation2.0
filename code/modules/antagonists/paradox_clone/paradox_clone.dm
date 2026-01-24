@@ -67,6 +67,7 @@
 		clone_human.equipOutfit(original_human.mind.assigned_role.outfit)
 	else
 		clone_human.equipOutfit(original_human.mind.assigned_role.plasmaman_outfit)
+		clone_human.equipOutfit(original_human.mind.assigned_role.outfit)
 		clone_human.internal = clone_human.get_item_for_held_index(2)
 
 	//clone doesnt show up on message lists
@@ -81,6 +82,8 @@
 	if(sensor_clothes)
 		sensor_clothes.sensor_mode = SENSOR_OFF
 		clone_human.update_suit_sensors()
+
+	SSquirks.AssignQuirks(clone_human, original_human.client)
 
 	// Perform a quick copy of existing memories.
 	// This may result in some minutely imperfect memories, but it'll do

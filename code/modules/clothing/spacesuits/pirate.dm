@@ -4,6 +4,7 @@
 	icon_state = "spacepirate"
 	inhand_icon_state = "space_pirate_helmet"
 	armor_type = /datum/armor/space_pirate
+	flags_inv = HIDEMASK|HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT|HIDEEYES
 	strip_delay = 40
 	equip_delay_other = 20
 
