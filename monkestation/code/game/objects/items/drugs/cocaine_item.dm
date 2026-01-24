@@ -30,53 +30,6 @@
 	time = 2 SECONDS
 	category = CAT_CHEMISTRY //i might just make a crafting category for drugs at some point
 
-// Should probably give this the edible component at some point
-/obj/item/reagent_containers/cocaine
-	name = "cocaine"
-	desc = "Reenact your favorite scenes from Scarface!"
-	icon = 'monkestation/icons/obj/items/drugs.dmi'
-	icon_state = "cocaine"
-	volume = 5
-	list_reagents = list(/datum/reagent/drug/cocaine = 5)
-
-/obj/item/reagent_containers/cocaine/proc/snort(mob/living/user)
-	if(!iscarbon(user))
-		return
-
-	var/covered = ""
-	if(user.is_mouth_covered(ITEM_SLOT_HEAD))
-		covered = "headgear"
-	else if(user.is_mouth_covered(ITEM_SLOT_MASK))
-		covered = "mask"
-	if(covered)
-		to_chat(user, span_warning("You have to remove your [covered] first!"))
-		return
-
-	user.visible_message(span_notice("'[user] starts snorting [src]."), span_notice("You start snorting [src]..."))
-	if(!do_after(user, 3 SECONDS))
-		return
-
-	to_chat(user, span_notice("You finish snorting [src]."))
-	if(reagents.total_volume)
-		reagents.trans_to(user, reagents.total_volume, transfered_by = user, methods = INGEST)
-	qdel(src)
-
-/obj/item/reagent_containers/cocaine/attack(mob/target, mob/user)
-	if(target == user)
-		snort(user)
-
-/obj/item/reagent_containers/cocaine/attack_hand_secondary(mob/user, list/modifiers)
-	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-		return
-
-	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-	if(!in_range(user, src) || user.get_active_held_item())
-		return
-
-	snort(user)
-
 /obj/item/reagent_containers/cocainebrick
 	name = "cocaine brick"
 	desc = "A brick of cocaine. Good for transport! It'd probably break apart in your hands if you tried hard enough."
@@ -93,14 +46,14 @@
 		return
 	to_chat(user, span_notice("You finish breaking up [src]."))
 	for(var/i in 1 to 5)
-		new /obj/item/reagent_containers/cocaine(user.loc)
+		new /obj/item/stack/sheet/cocaine(user.loc)
 	qdel(src)
 
 /datum/crafting_recipe/cocainebrick
 	name = "Cocaine brick"
 	result = /obj/item/reagent_containers/cocainebrick
-	reqs = list(/obj/item/reagent_containers/cocaine = 5)
-	parts = list(/obj/item/reagent_containers/cocaine = 5)
+	reqs = list(/obj/item/stack/sheet/cocaine = 5)
+	parts = list(/obj/item/stack/sheet/cocaine = 5)
 	time = 2 SECONDS
 	category = CAT_CHEMISTRY //i might just make a crafting category for drugs at some point
 
@@ -120,7 +73,7 @@
 /datum/export/cocaine
 	cost = CARGO_CRATE_VALUE * 0.4
 	unit_name = "cocaine"
-	export_types = list(/obj/item/reagent_containers/cocaine)
+	export_types = list(/obj/item/stack/sheet/cocaine)
 	include_subtypes = FALSE
 
 /datum/export/cocainebrick

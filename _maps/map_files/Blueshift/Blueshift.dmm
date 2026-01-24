@@ -35960,11 +35960,11 @@
 /area/station/hallway/primary/upper)
 "gSU" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/cocaine{
+/obj/item/stack/sheet/cocaine{
 	pixel_x = 2;
 	pixel_y = 11
 	},
-/obj/item/reagent_containers/cocaine{
+/obj/item/stack/sheet/cocaine{
 	pixel_y = 2
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -60857,7 +60857,7 @@
 	pixel_y = -3;
 	pixel_x = 5
 	},
-/obj/item/reagent_containers/cocaine{
+/obj/item/stack/sheet/cocaine{
 	pixel_y = 12;
 	pixel_x = -3
 	},

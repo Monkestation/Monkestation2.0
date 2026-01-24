@@ -25547,7 +25547,7 @@
 /obj/effect/turf_decal/tile/dark_blue/diagonal_centre,
 /obj/structure/table/wood,
 /obj/effect/turf_decal/tile/neutral/diagonal_centre,
-/obj/item/reagent_containers/cocaine,
+/obj/item/stack/sheet/cocaine,
 /obj/item/reagent_containers/cocainebrick{
 	pixel_y = 11;
 	pixel_x = -3
