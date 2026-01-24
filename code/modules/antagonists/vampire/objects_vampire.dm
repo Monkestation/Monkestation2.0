@@ -1,4 +1,5 @@
 /obj/structure/vampire
+	pass_flags_self = parent_type::pass_flags_self | LETPASSCLICKS
 	/// Who owns this structure?
 	var/datum/mind/owner
 	/*
