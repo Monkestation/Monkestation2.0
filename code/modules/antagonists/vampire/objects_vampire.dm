@@ -136,6 +136,8 @@
 	qdel(src)
 
 /obj/structure/vampire/vassalrack/mouse_drop_receive(atom/dropped, mob/user, params)
+	if(DOING_INTERACTION(user, DOAFTER_SOURCE_PERSUASION_RACK))
+		return
 	var/mob/living/living_target = dropped
 	if(!anchored && IS_VAMPIRE(user))
 		to_chat(user, span_danger("Until this rack is secured in place, it cannot serve its purpose."))
@@ -148,10 +150,10 @@
 	if(issilicon(living_target))
 		to_chat(user, span_danger("You realize that this machine cannot be vassalized, therefore it is useless to buckle [living_target.p_them()]."))
 		return
-	if(do_after(user, 5 SECONDS, living_target))
-		density = FALSE // Temporarily set density to false so the target is actually on the rack
+	if(do_after(user, 5 SECONDS, living_target, interaction_key = DOAFTER_SOURCE_PERSUASION_RACK))
+		set_density(FALSE)
 		attach_victim(living_target, user)
-		density = TRUE
+		set_density(TRUE)
 
 /**
  * Attempts to buckle target into the Vassalization Rack
@@ -206,7 +208,7 @@
 
 /obj/structure/vampire/vassalrack/attack_hand(mob/user, list/modifiers)
 	. = ..()
-	if(!. || !has_buckled_mobs())
+	if(!. || !has_buckled_mobs() || DOING_INTERACTION(user, DOAFTER_SOURCE_PERSUASION_RACK))
 		return FALSE
 
 	var/datum/antagonist/vampire/vampiredatum = IS_VAMPIRE(user)
@@ -224,7 +226,7 @@
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
-	if(!has_buckled_mobs() || !isliving(user))
+	if(!has_buckled_mobs() || !isliving(user) || DOING_INTERACTION(user, DOAFTER_SOURCE_PERSUASION_RACK))
 		return
 	var/mob/living/carbon/buckled_carbons = pick(buckled_mobs)
 	if(buckled_carbons)
@@ -247,6 +249,9 @@
  * * vassalize target
  */
 /obj/structure/vampire/vassalrack/proc/try_to_torture(mob/living/living_vampire, mob/living/living_target, obj/item/held_item)
+	if(DOING_INTERACTION(living_vampire, DOAFTER_SOURCE_PERSUASION_RACK))
+		return
+
 	var/datum/antagonist/vampire/vampiredatum = IS_VAMPIRE(living_vampire)
 
 	if(!vampiredatum.can_make_vassal(living_target) || is_torturing)
@@ -285,7 +290,7 @@
 
 	if(wants_vassilization || !(HAS_TRAIT(living_target, TRAIT_MINDSHIELD) || length(living_target.mind.antag_datums)))
 		living_vampire.balloon_alert_to_viewers("smears blood...", "paints bloody marks...")
-		if(!do_after(living_vampire, 5 SECONDS, living_target))
+		if(!do_after(living_vampire, 5 SECONDS, living_target, interaction_key = DOAFTER_SOURCE_PERSUASION_RACK))
 			balloon_alert(living_vampire, "interrupted!")
 			return
 
@@ -307,7 +312,7 @@
 
 	// Minimum 5 seconds
 	torture_time = max(5 SECONDS, torture_time SECONDS)
-	if(do_after(user, torture_time, target))
+	if(do_after(user, torture_time, target, interaction_key = DOAFTER_SOURCE_PERSUASION_RACK))
 		held_item?.play_tool_sound(target)
 
 		var/obj/item/bodypart/selected_bodypart = pick(target.bodyparts)
@@ -376,11 +381,11 @@
 	return ..()
 
 /obj/structure/vampire/candelabrum/bolt()
-	density = TRUE
+	set_density(TRUE)
 	return ..()
 
 /obj/structure/vampire/candelabrum/unbolt()
-	density = FALSE
+	set_density(FALSE)
 	return ..()
 
 /obj/structure/vampire/candelabrum/attack_hand(mob/living/user, list/modifiers)
