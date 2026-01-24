@@ -341,6 +341,12 @@ const Guide = (props) => {
       11 (ash) <br />
       12 (torii) <br />
       13 (uncommon) <br />
+      14 (goblin) <br />
+      15 (nekomimetic) <br />
+      16 (slime) <br />
+      <br />
+      <br />
+      Broadcasted signals will not run itself through Scripts.
     </Section>
   );
 };
