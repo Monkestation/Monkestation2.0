@@ -1144,9 +1144,9 @@
 	playsound(src, 'sound/items/handling/paper_pickup.ogg', 100, TRUE, mixer_channel = CHANNEL_SOUND_EFFECTS)
 	if(!do_after(user, 5 SECONDS, src))
 		return FALSE
+	playsound(src, 'sound/items/poster_ripped.ogg', 100, TRUE, mixer_channel = CHANNEL_SOUND_EFFECTS)
 	if(!open()) //only take a use away if the door actually opens
 		return FALSE
-	playsound(src, 'sound/items/poster_ripped.ogg', 100, TRUE, mixer_channel = CHANNEL_SOUND_EFFECTS)
 	fake_card.used()
 	if(!fake_card.uses)
 		to_chat(user, span_warning("It's no good, this ID is so torn up it won't fit in another door."))

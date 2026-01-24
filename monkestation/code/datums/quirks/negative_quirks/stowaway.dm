@@ -38,6 +38,7 @@
 	accepts_accounts = FALSE
 	registered_name = "Nohbdy"
 	access = list(ACCESS_MAINT_TUNNELS)
+	///How many doors the fake card can open before it becomes completely torn up.
 	var/uses = 2
 
 /obj/item/card/id/fake_card/proc/register_name(mob/living/carbon/human/quirk_holder)
