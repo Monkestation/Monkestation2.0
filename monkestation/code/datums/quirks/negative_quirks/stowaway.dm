@@ -12,7 +12,7 @@
 
 	var/obj/item/card/id/fake_card/card = new(quirk_holder.drop_location()) //a fake ID with two uses for maint doors
 	quirk_holder.equip_to_slot_if_possible(card, ITEM_SLOT_ID)
-	card.register_name(quirk_holder.real_name)
+	card.register_name(quirk_holder)
 
 	if(prob(20))
 		stowaway.adjust_drunk_effect(50) //What did I DO last night?
@@ -40,12 +40,13 @@
 	access = list(ACCESS_MAINT_TUNNELS)
 	var/uses = 2
 
-/obj/item/card/id/fake_card/proc/register_name(new_name)
-	registered_name = new_name
-	name = "[new_name]'s \"ID Card\""
+/obj/item/card/id/fake_card/proc/register_name(mob/living/carbon/human/quirk_holder)
+	registered_name = quirk_holder.real_name
+	name = "[quirk_holder.real_name]'s \"ID Card\""
+	assignment = quirk_holder.mind.assigned_role.title
 
 /obj/item/card/id/fake_card/proc/used()
-	uses -= 1
+	uses--
 	switch(uses)
 		if(0)
 			icon_state = "counterfeit_torn2"
@@ -53,6 +54,10 @@
 			icon_state = "counterfeit_torn"
 		else
 			icon_state = "counterfeit" //in case you somehow repair it to 3+
+
+//No access to give, airlocks use snowflake check to work otherwise.
+/obj/item/card/id/fake_card/retrieve_access(datum/source, list/player_access)
+	return
 
 /obj/item/card/id/fake_card/click_alt(mob/living/user)
 	return CLICK_ACTION_BLOCKING //no accounts on fake cards
