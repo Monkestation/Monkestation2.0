@@ -226,6 +226,7 @@ export const CargoCatalog = (props) => {
                 <Stack.Item grow>
                   <Input
                     fluid
+                    expensive
                     placeholder="Search..."
                     value={searchText}
                     onChange={(value) => {

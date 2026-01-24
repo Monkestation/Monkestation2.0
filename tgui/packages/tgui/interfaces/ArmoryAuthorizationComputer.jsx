@@ -85,7 +85,7 @@ export const ArmoryAuthorizationComputer = (props) => {
             <Section title="Reason" level={4}>
               <Stack vertical>
                 {valid_reasons.map((legal_reason) => {
-                  const isSelected = legal_reason === selected_reason;
+                  const isSelected = legal_reason.title === selected_reason;
                   return (
                     // eslint-disable-next-line react/jsx-key
                     <Stack.Item>
@@ -93,10 +93,11 @@ export const ArmoryAuthorizationComputer = (props) => {
                         color={isSelected ? 'good' : 'average'}
                         disabled={!is_authorized || armory_open}
                         onClick={() =>
-                          act('reason_select', { reason: legal_reason })
+                          act('reason_select', { reason: legal_reason.title })
                         }
+                        tooltip={legal_reason.tooltip}
                       >
-                        {legal_reason}
+                        {legal_reason.title}
                       </Button>
                     </Stack.Item>
                   );

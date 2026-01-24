@@ -258,7 +258,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 				make_new_altar(bible_smacked, user)
 				return ITEM_INTERACT_SUCCESS
 			for(var/obj/effect/rune/nearby_runes in range(2, user))
-				nearby_runes.invisibility = 0
+				nearby_runes.SetInvisibility(INVISIBILITY_NONE, id=type, priority=INVISIBILITY_PRIORITY_BASIC_ANTI_INVISIBILITY)
 		bible_smacked.balloon_alert(user, "floor smacked!")
 		return ITEM_INTERACT_SUCCESS
 

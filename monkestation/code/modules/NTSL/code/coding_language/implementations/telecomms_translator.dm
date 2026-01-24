@@ -14,6 +14,9 @@
 #define ASH_TONGUE 11
 #define TORII 12
 #define UNCOMMON 13
+#define GOBLIN 14
+#define FELINID 15
+#define SLIME 16
 
 ///Span classes that players are allowed to set in a radio transmission.
 GLOBAL_LIST_INIT(allowed_custom_spans, list(
@@ -153,6 +156,9 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 			"ash" = ASH_TONGUE,
 			"torii" = TORII,
 			"uncommon" = UNCOMMON,
+			"goblin" = GOBLIN,
+			"felinid" = FELINID,
+			"slime" = SLIME,
 		))
 	)
 
@@ -204,6 +210,12 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 			oldlangbits = TORII
 		if(/datum/language/uncommon)
 			oldlangbits = UNCOMMON
+		if(/datum/language/goblin)
+			oldlangbits = GOBLIN
+		if(/datum/language/nekomimetic)
+			oldlangbits = FELINID
+		if(/datum/language/slime)
+			oldlangbits = SLIME
 
 	// Signal data
 	var/datum/n_struct/signal/script_signal = new(list(
@@ -308,6 +320,8 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 		S.properties["source"] = params[3]
 	if(length(params) >= 4)
 		S.properties["job"] = params[4]
+	if(length(params) >= 5)
+		S.properties["filters"] = params[5]
 	return S
 
 
@@ -347,6 +361,12 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 			return /datum/language/yangyu
 		if(UNCOMMON)
 			return /datum/language/uncommon
+		if(GOBLIN)
+			return /datum/language/goblin
+		if(FELINID)
+			return /datum/language/nekomimetic
+		if(SLIME)
+			return /datum/language/slime
 
 ///Stores data from the script to use between radio messages.
 /datum/n_function/default/mem
@@ -436,7 +456,7 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 	var/freq = script_signal.get_clean_property("freq")
 	var/source = script_signal.get_clean_property("source")
 	var/job = script_signal.get_clean_property("job")
-	var/spans = script_signal.get_clean_property("filters")
+	var/list/spans = script_signal.get_clean_property("filters")
 	var/say = script_signal.get_clean_property("say")
 	var/ask = script_signal.get_clean_property("ask")
 	var/yell = script_signal.get_clean_property("yell")
@@ -530,3 +550,6 @@ GLOBAL_LIST_INIT(allowed_translations, list(
 #undef ASH_TONGUE
 #undef TORII
 #undef UNCOMMON
+#undef GOBLIN
+#undef FELINID
+#undef SLIME

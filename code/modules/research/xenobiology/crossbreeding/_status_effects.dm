@@ -8,22 +8,20 @@
 	duration = 100
 	alert_type = /atom/movable/screen/alert/status_effect/rainbow_protection
 	show_duration = TRUE
-	var/originalcolor
 
 /datum/status_effect/rainbow_protection/on_apply()
 	owner.add_traits(list(TRAIT_PACIFISM, TRAIT_GODMODE), TRAIT_STATUS_EFFECT(id))
 	owner.visible_message(span_warning("[owner] shines with a brilliant rainbow light."),
 		span_notice("You feel protected by an unknown force!"))
-	originalcolor = owner.color
 	return ..()
 
 /datum/status_effect/rainbow_protection/tick()
-	owner.color = rgb(rand(0,255),rand(0,255),rand(0,255))
+	owner.add_atom_colour(rgb(rand(0, 255), rand(0, 255), rand(0, 255)), TEMPORARY_COLOUR_PRIORITY)
 	return ..()
 
 /datum/status_effect/rainbow_protection/on_remove()
 	owner.remove_traits(list(TRAIT_PACIFISM, TRAIT_GODMODE), TRAIT_STATUS_EFFECT(id))
-	owner.color = originalcolor
+	owner.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
 	owner.visible_message(span_notice("[owner] stops glowing, the rainbow light fading away."),
 		span_warning("You no longer feel protected..."))
 
@@ -37,11 +35,9 @@
 	duration = 300
 	alert_type = /atom/movable/screen/alert/status_effect/slimeskin
 	show_duration = TRUE
-	var/originalcolor
 
 /datum/status_effect/slimeskin/on_apply()
-	originalcolor = owner.color
-	owner.color = "#3070CC"
+	owner.add_atom_colour("#3070CC", TEMPORARY_COLOUR_PRIORITY)
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
 		H.physiology.damage_resistance += 10
@@ -50,7 +46,7 @@
 	return ..()
 
 /datum/status_effect/slimeskin/on_remove()
-	owner.color = originalcolor
+	owner.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, "#3070CC")
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
 		H.physiology.damage_resistance -= 10
@@ -177,7 +173,6 @@
 	owner.adjustOxyLoss(1, 0)
 	owner.adjustBruteLoss(1, 0)
 	owner.adjustFireLoss(1, 0)
-	owner.color = "#007BA7"
 
 /atom/movable/screen/alert/status_effect/bloodchill
 	name = "Bloodchilled"
@@ -774,18 +769,12 @@
 /datum/status_effect/stabilized/pyrite
 	id = "stabilizedpyrite"
 	colour = "pyrite"
-	var/originalcolor
-
-/datum/status_effect/stabilized/pyrite/on_apply()
-	originalcolor = owner.color
-	return ..()
 
 /datum/status_effect/stabilized/pyrite/tick()
-	owner.color = rgb(rand(0,255),rand(0,255),rand(0,255))
-	return ..()
+	owner.add_atom_colour(rand(0, 255), rand(0, 255), rand(0, 255), TEMPORARY_COLOUR_PRIORITY)
 
 /datum/status_effect/stabilized/pyrite/on_remove()
-	owner.color = originalcolor
+	owner.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
 
 /datum/status_effect/stabilized/red
 	id = "stabilizedred"

@@ -1,10 +1,11 @@
 SUBSYSTEM_DEF(mobs)
 	name = "Mobs"
 	priority = FIRE_PRIORITY_MOBS
-	flags = SS_KEEP_TIMING | SS_NO_INIT
+	flags = SS_KEEP_TIMING | SS_NO_INIT | SS_BACKGROUND
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 	wait = 2 SECONDS
 
+	var/list/processing = list()
 	var/list/currentrun = list()
 	///only contains living players for some reason
 	var/static/list/clients_by_zlevel[][]
@@ -15,7 +16,7 @@ SUBSYSTEM_DEF(mobs)
 	var/static/list/cubepigs = list()
 
 /datum/controller/subsystem/mobs/stat_entry(msg)
-	msg = "P:[length(GLOB.mob_living_list)]"
+	msg = "P:[length(processing)]"
 	return ..()
 
 /datum/controller/subsystem/mobs/proc/MaxZChanged()
@@ -30,18 +31,18 @@ SUBSYSTEM_DEF(mobs)
 
 /datum/controller/subsystem/mobs/fire(resumed = FALSE)
 	if (!resumed)
-		src.currentrun = GLOB.mob_living_list.Copy()
+		src.currentrun = processing.Copy()
 
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
 	var/times_fired = src.times_fired
 	var/seconds_per_tick = wait / (1 SECONDS) // TODO: Make this actually responsive to stuff like pausing and resuming
-	while(currentrun.len)
-		var/mob/living/L = currentrun[currentrun.len]
+	while(length(currentrun))
+		var/mob/living/mob = currentrun[length(currentrun)]
 		currentrun.len--
-		if(L)
-			L.Life(seconds_per_tick, times_fired)
+		if(mob)
+			mob.Life(seconds_per_tick, times_fired)
 		else
-			GLOB.mob_living_list.Remove(L)
+			processing -= mob
 		if (MC_TICK_CHECK)
 			return
