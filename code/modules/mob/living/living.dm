@@ -13,6 +13,11 @@
 	diag_hud.add_atom_to_hud(src)
 	faction += "[REF(src)]"
 	GLOB.mob_living_list += src
+	var/datum/controller/subsystem/mobs/subsystem = SSmobs
+	if(life_subsystem_type)
+		subsystem = locate(life_subsystem_type) in Master.subsystems
+	START_PROCESSING(subsystem, src)
+
 	SSpoints_of_interest.make_point_of_interest(src)
 	update_fov()
 	gravity_setup()
@@ -42,6 +47,10 @@
 
 	remove_from_all_data_huds()
 	GLOB.mob_living_list -= src
+	var/datum/controller/subsystem/mobs/subsystem = SSmobs
+	if(life_subsystem_type)
+		subsystem = locate(life_subsystem_type) in Master.subsystems
+	STOP_PROCESSING(subsystem, src)
 	GLOB.infected_contact_mobs -= src
 	if(imaginary_group)
 		imaginary_group -= src
@@ -1483,7 +1492,7 @@
 			if(issilicon(new_mob))
 				var/mob/living/silicon/robot/created_robot = new_mob
 				new_mob.gender = gender
-				new_mob.invisibility = 0
+				new_mob.SetInvisibility(INVISIBILITY_NONE)
 				new_mob.job = JOB_CYBORG
 				created_robot.lawupdate = FALSE
 				created_robot.connected_ai = null
@@ -2637,3 +2646,14 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	message_admins(span_adminnotice("[key_name_admin(admin)] gave a guardian spirit controlled by [guardian_client || "AI"] to [src]."))
 	log_admin("[key_name(admin)] gave a guardian spirit controlled by [guardian_client] to [src].")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Give Guardian Spirit")
+
+/// Switches this mob to processing as a cliented mob, instead of whatever subsystem it's currently using.
+/mob/living/proc/process_as_cliented_mob()
+	if(life_subsystem_type == /datum/controller/subsystem/mobs/client_mobs || QDELETED(src))
+		return
+	var/datum/controller/subsystem/mobs/subsystem = SSmobs
+	if(life_subsystem_type)
+		subsystem = locate(life_subsystem_type) in Master.subsystems
+	life_subsystem_type = /datum/controller/subsystem/mobs/client_mobs
+	STOP_PROCESSING(subsystem, src)
+	START_PROCESSING(SSclient_mobs, src)

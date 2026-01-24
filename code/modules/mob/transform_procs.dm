@@ -133,7 +133,7 @@
 	var/mob/living/silicon/robot/new_borg = new /mob/living/silicon/robot(loc)
 
 	new_borg.gender = gender
-	new_borg.invisibility = 0
+	new_borg.SetInvisibility(INVISIBILITY_NONE)
 
 	if(client)
 		new_borg.updatename(client)
