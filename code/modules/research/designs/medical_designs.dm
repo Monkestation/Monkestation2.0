@@ -791,7 +791,59 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY | DEPARTMENT_BITFLAG_MEDICAL
 
-//Cybernetic organs
+//Cybernetic organs and also limbs AAUGH
+
+/datum/design/surplus_cybernetic_l_leg
+	name = "Surplus cybernetic left leg"
+	desc = "A low-quality prosthetic limb"
+	id ="surplus_cybernetic_l_leg"
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
+	construction_time = 40
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5)
+	build_path = /obj/item/bodypart/leg/left/robot/surplus
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_1
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
+/datum/design/surplus_cybernetic_r_leg
+	name = "Surplus cybernetic right leg"
+	desc = "A low-quality prosthetic limb"
+	id ="surplus_cybernetic_r_leg"
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
+	construction_time = 40
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5)
+	build_path = /obj/item/bodypart/leg/right/robot/surplus
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_1
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
+/datum/design/surplus_cybernetic_l_arm
+	name = "Surplus cybernetic left arm"
+	desc = "A low-quality prosthetic limb"
+	id ="surplus_cybernetic_l_arm"
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
+	construction_time = 40
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5)
+	build_path = /obj/item/bodypart/arm/left/robot/surplus
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_1
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
+/datum/design/surplus_cybernetic_r_arm
+	name = "Surplus cybernetic right arm"
+	desc = "A low-quality prosthetic limb"
+	id ="surplus_cybernetic_r_arm"
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
+	construction_time = 40
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5)
+	build_path = /obj/item/bodypart/arm/right/robot/surplus
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_1
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
 /datum/design/cybernetic_liver
 	name = "Basic Cybernetic Liver"
