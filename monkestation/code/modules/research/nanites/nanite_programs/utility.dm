@@ -269,24 +269,7 @@
 
 //Syncs the nanites with the cumulative current mob's access level. Can potentially wipe existing access.
 /datum/nanite_program/access/on_trigger(comm_message)
-	var/list/potential_items = list()
-
-	potential_items += host_mob.get_active_held_item()
-	potential_items += host_mob.get_inactive_held_item()
-	potential_items += host_mob.pulling
-
-	if(ishuman(host_mob))
-		var/mob/living/carbon/human/H = host_mob
-		potential_items += H.wear_id
-	else if(isanimal(host_mob))
-		var/mob/living/simple_animal/A = host_mob
-		potential_items += A.access_card
-
-	var/list/new_access = list()
-	for(var/obj/item/I in potential_items)
-		new_access += I.GetAccess()
-
-	access = new_access
+	access = host_mob.get_access()
 
 /datum/nanite_program/spreading
 	name = "Infective Exo-Locomotion"

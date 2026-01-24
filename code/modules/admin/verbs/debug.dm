@@ -136,7 +136,7 @@ ADMIN_VERB(cmd_admin_grantfullaccess, R_DEBUG, FALSE, "Grant Full Access", "Gran
 		if(worn)
 			if(istype(worn, /obj/item/modular_computer))
 				var/obj/item/modular_computer/worn_computer = worn
-				worn_computer.InsertID(id, H)
+				worn_computer.insert_id(id, H)
 
 			else if(istype(worn, /obj/item/storage/wallet))
 				var/obj/item/storage/wallet/W = worn

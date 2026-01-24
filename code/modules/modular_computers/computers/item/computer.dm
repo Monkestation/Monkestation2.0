@@ -198,7 +198,7 @@
 	if(issilicon(user))
 		return NONE
 
-	if(RemoveID(user))
+	if(remove_id(user))
 		return CLICK_ACTION_SUCCESS
 
 	if(istype(inserted_pai)) // Remove pAI
@@ -259,13 +259,13 @@
 	return TRUE
 
 /**
- * InsertID
+ * insert_id
  * Attempt to insert the ID in either card slot.
  * Args:
  * inserting_id - the ID being inserted
  * user - The person inserting the ID
  */
-/obj/item/modular_computer/InsertID(obj/item/card/inserting_id, mob/user)
+/obj/item/modular_computer/insert_id(obj/item/card/inserting_id, mob/user)
 	//all slots taken
 	if(computer_id_slot)
 		return FALSE
@@ -292,7 +292,7 @@
  * Args:
  * user - The mob trying to remove the ID, if there is one
  */
-/obj/item/modular_computer/RemoveID(mob/user)
+/obj/item/modular_computer/remove_id(mob/user)
 	if(!computer_id_slot)
 		return ..()
 
@@ -817,7 +817,7 @@
 /obj/item/modular_computer/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	// Check for ID first
 	if(isidcard(tool))
-		return InsertID(tool, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
+		return insert_id(tool, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 
 	// Check for cash next
 	if(computer_id_slot && iscash(tool))
