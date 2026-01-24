@@ -136,10 +136,10 @@
 	var/list/splat_overlays = list()
 
 /obj/effect/decal/cleanable/blood/splatter/stacking/proc/add_splat_overlay(mutable_appearance/overlay)
+	splat_overlays |= overlay
 	var/excess_splats = length(splat_overlays) - maximum_splats
 	if(excess_splats > 0)
 		splat_overlays.Cut(1, excess_splats + 1)
-	splat_overlays |= overlay
 	update_appearance(UPDATE_OVERLAYS)
 
 /obj/effect/decal/cleanable/blood/splatter/stacking/Initialize(mapload, blood_color = COLOR_BLOOD)
