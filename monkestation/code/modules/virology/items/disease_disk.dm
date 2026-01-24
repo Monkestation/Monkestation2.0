@@ -5,7 +5,10 @@
 	var/stage = 1
 	var/analyzed = FALSE
 
-/obj/item/disk/disease/premade/New()
+/obj/item/disk/disease/premade
+
+/obj/item/disk/disease/premade/Initialize(mapload)
+	. = ..()
 	name = "blank GNA disk (stage: [stage])"
 	effect = new /datum/symptom
 
