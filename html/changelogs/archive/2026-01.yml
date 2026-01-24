@@ -385,6 +385,8 @@
   iliyaxox:
   - rscadd: Added a cassette library and postbox to Theseus' radio outpost.
 2026-01-23:
+  Absolucy:
+  - qol: You can properly eat the supermatter with Matter Eater again.
   Gboster-0:
   - bugfix: arachnids no longer get a tackle attack buff due to their appendages
   JupiterJaeden:
@@ -401,3 +403,6 @@
   - qol: The reasons for opening the armory in the auth console now have tooltips
       giving details explaining what situations they apply to.
   - admin: Adds admin logging for opening and closing the armory.
+  Tractor-Maam:
+  - rscdel: Opposing Force notifications have had their AI Generated sound effects
+      removed and replaced.

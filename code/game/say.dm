@@ -288,7 +288,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/virtualspeaker)
 		job = JOB_PERSONAL_AI
 	else if(isobj(M))  // Cold, emotionless machines
 		job = "Machine"
-	else  // Unidentifiable mob
+	else if(isnull(job)) // Unidentifiable mob
 		job = "Unknown"
 
 /atom/movable/virtualspeaker/GetJob()

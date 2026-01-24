@@ -1,0 +1,5 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - qol: "Added more languages to NTSL."
+  - qol: "Signals can now take a filter arg."

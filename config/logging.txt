@@ -53,6 +53,9 @@ LOG_PICTURES
 ## log prayers
 LOG_PRAYER
 
+## log NTSL
+LOG_NTSL
+
 ## log client Say
 LOG_SAY
 
