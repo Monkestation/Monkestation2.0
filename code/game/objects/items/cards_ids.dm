@@ -195,7 +195,7 @@
 	SIGNAL_HANDLER
 
 	if (slot & (ITEM_SLOT_ID|ITEM_SLOT_HANDS))
-		RegisterSignal(equipper, COMSIG_MOB_RETRIEVE_ACCESS, PROC_REF(retrieve_access))
+		RegisterSignal(equipper, COMSIG_MOB_RETRIEVE_ACCESS, PROC_REF(retrieve_access), override = TRUE)
 
 /obj/item/card/id/proc/on_loc_dropped(datum/source, mob/dropper)
 	SIGNAL_HANDLER
