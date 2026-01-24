@@ -373,12 +373,12 @@
 	ricochet_incidence_leeway = 75
 
 
-///Mining shotgun, 5 pellet
+///Mining shotgun, 5 pellet auto or 10 pellet breakaction.
 
 /obj/projectile/bullet/hydrakinetic
 	name = "Kinetic Hydra Sabot"
 	icon_state = "bullet"
-	damage = 7
+	damage = 5
 	armour_penetration = -15
 	fauna_mod = 2
 

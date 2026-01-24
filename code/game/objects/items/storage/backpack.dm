@@ -881,9 +881,9 @@
 	atom_storage.max_specific_storage = WEIGHT_CLASS_HUGE
 	atom_storage.set_holdable(list(
 		/obj/item/gun/ballistic/shotgun/autoshotgun,
-		/obj/item/gun/ballistic/automatic/proto/pksmg/kineticlmg,
+		/obj/item/gun/ballistic/automatic/pksmg/kineticlmg,
 		/obj/item/gun/ballistic/shotgun/doublebarrel/kinetic,
-		/obj/item/gun/ballistic/automatic/proto/pksmg,
+		/obj/item/gun/ballistic/automatic/pksmg,
 		/obj/item/gun/ballistic/revolver/grenadelauncher/kinetic,
 		/obj/item/gun/ballistic/rifle/minerjdj,
 		/obj/item/gun/ballistic/revolver/govmining,
@@ -908,9 +908,9 @@
 	atom_storage.max_specific_storage = WEIGHT_CLASS_HUGE
 	atom_storage.set_holdable(list(
 		/obj/item/gun/ballistic/shotgun/autoshotgun,
-		/obj/item/gun/ballistic/automatic/proto/pksmg/kineticlmg,
+		/obj/item/gun/ballistic/automatic/pksmg/kineticlmg,
 		/obj/item/gun/ballistic/shotgun/doublebarrel/kinetic,
-		/obj/item/gun/ballistic/automatic/proto/pksmg,
+		/obj/item/gun/ballistic/automatic/pksmg,
 		/obj/item/gun/ballistic/revolver/grenadelauncher/kinetic,
 		/obj/item/gun/ballistic/rifle/minerjdj,
 		/obj/item/gun/ballistic/revolver/govmining,

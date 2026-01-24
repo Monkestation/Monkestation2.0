@@ -180,5 +180,5 @@
 	multiple_sprites = AMMO_BOX_FULL_EMPTY
 	ammo_type = /obj/item/ammo_casing/energy/kinetic/smg
 	caliber = ENERGY
-	max_ammo = 45
+	max_ammo = 30
 

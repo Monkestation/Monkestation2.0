@@ -566,6 +566,8 @@
 	fire_delay = 0
 	base_pixel_x = -2
 	pixel_x = -2
+	inhand_x_dimension = 32
+	inhand_y_dimension = 32
 	actions_types = list()
 	w_class = WEIGHT_CLASS_BULKY
 	weapon_weight = WEAPON_HEAVY
@@ -579,6 +581,14 @@
 	show_bolt_icon = FALSE
 	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
 	pb_knockback = 0
+	recoil = 2
+	wield_recoil = 1
+
+/obj/item/gun/ballistic/shotgun/autoshotgun/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/automatic_fire, 0.4 SECONDS)
+
+
 
 
 /obj/item/gun/ballistic/shotgun/doublebarrel/kinetic
@@ -591,7 +601,8 @@
 	worn_icon_state = "protokshotgun"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
-	recoil = 3
+	recoil = 5
+	wield_recoil = 2.5
 	force = 20
 	inhand_x_dimension = 32
 	inhand_y_dimension = 32
@@ -607,5 +618,5 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("slashes", "cuts", "cleaves", "chops", "swipes")
 	attack_verb_simple = list("cleave", "chop", "cut", "swipe", "slash")
-	pb_knockback = 0 //you may have your point blank, but you dont get a fling    Why tf are they worried about this when half the mining guns instantly kill you
-
+	pb_knockback = 1
+	pbk_gentle = TRUE
