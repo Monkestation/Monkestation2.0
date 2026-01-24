@@ -19291,6 +19291,7 @@
 /obj/structure/table/glass,
 /obj/machinery/light_switch/directional/south,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted,
+/obj/item/storage/toolbox/electrical/medical,
 /turf/open/floor/iron/white,
 /area/station/medical/storage)
 "bCc" = (

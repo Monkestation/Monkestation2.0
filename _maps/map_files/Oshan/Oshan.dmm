@@ -43313,6 +43313,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/warning{
 	dir = 8
 	},
+/obj/item/storage/toolbox/electrical/medical,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/storage)
 "nTl" = (

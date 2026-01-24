@@ -32602,6 +32602,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/brown/filled/mid_joiner,
+/obj/item/storage/toolbox/electrical/medical,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/medical/storage)
 "jiR" = (

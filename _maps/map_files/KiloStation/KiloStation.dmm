@@ -8042,6 +8042,7 @@
 /obj/item/clothing/gloves/latex/nitrile,
 /obj/item/clothing/gloves/latex/nitrile,
 /obj/item/clothing/gloves/latex/nitrile,
+/obj/item/storage/toolbox/electrical/medical,
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/storage)
 "cuq" = (
