@@ -82,7 +82,7 @@
 			if(!watcher.incapacitated(IGNORE_RESTRAINTS))
 				watcher.face_atom(owner)
 			watcher.do_alert_animation(watcher)
-			to_chat(watcher, span_warning("[owner.first_name()] is biting [target.first_name()]'s neck!"), type = MESSAGE_TYPE_WARNING)
+			to_chat(watcher, span_warning("[owner] is biting [target]'s neck!"), type = MESSAGE_TYPE_WARNING)
 			playsound(watcher, 'sound/machines/chime.ogg', 50, FALSE, -5)
 
 			owner.balloon_alert(owner, "feed noticed!")
@@ -107,7 +107,7 @@
 				watcher.face_atom(owner)
 
 			watcher.do_alert_animation(watcher)
-			to_chat(watcher, span_warning("[owner.first_name()] is biting [target.first_name()]'s neck!"), type = MESSAGE_TYPE_WARNING)
+			to_chat(watcher, span_warning("[owner] is biting [target]'s neck!"), type = MESSAGE_TYPE_WARNING)
 			playsound(watcher, 'sound/machines/chime.ogg', 50, FALSE, -5)
 
 			owner.balloon_alert(owner, "feed noticed!")
@@ -289,8 +289,8 @@
 				animate(feed_target, 0.2 SECONDS, pixel_x = -8)
 
 		owner.visible_message(
-			span_notice("[owner.first_name()] grabs [feed_target.first_name()] tightly, biting into [feed_target.p_their()] neck!"),
-			span_notice("You slip your fangs into [feed_target.first_name()]'s neck."),
+			span_notice("[owner] grabs [feed_target] tightly, biting into [feed_target.p_their()] neck!"),
+			span_notice("You slip your fangs into [feed_target]'s neck."),
 			vision_distance = FEED_SILENT_NOTICE_RANGE, ignored_mobs = feed_target
 		)
 
@@ -300,11 +300,11 @@
 		feed_target.adjust_jitter((5 + level_current) SECONDS)
 
 		owner.visible_message(
-			span_warning("[owner.first_name()] closes [owner.p_their()] mouth around [feed_target.first_name()]'s neck!"),
-			span_warning("You sink your fangs into [feed_target.first_name()]'s neck."), ignored_mobs = feed_target
+			span_warning("[owner] closes [owner.p_their()] mouth around [feed_target]'s neck!"),
+			span_warning("You sink your fangs into [feed_target]'s neck."), ignored_mobs = feed_target
 		)
 
-		to_chat(feed_target, span_bolddanger("[owner.first_name()] seizes you with incredible strength, sinking [owner.p_their()] fangs into your neck!"), type = MESSAGE_TYPE_WARNING)
+		to_chat(feed_target, span_bolddanger("[owner] seizes you with incredible strength, sinking [owner.p_their()] fangs into your neck!"), type = MESSAGE_TYPE_WARNING)
 
 		to_chat(owner, span_announce("* Vampire Tip: Combat feeding does not erase their memories!"))
 
@@ -353,8 +353,8 @@
 	if(!continue_active())
 		if(!silent_feed)
 			user.visible_message(
-				span_warning("[user] is ripped from [feed_target.first_name()]'s throat. [feed_target.p_their(TRUE)] blood sprays everywhere!"),
-				span_warning("Your teeth are ripped from [feed_target.first_name()]'s throat. [feed_target.p_their(TRUE)] blood sprays everywhere!"))
+				span_warning("[user] is ripped from [feed_target]'s throat. [feed_target.p_their(TRUE)] blood sprays everywhere!"),
+				span_warning("Your teeth are ripped from [feed_target]'s throat. [feed_target.p_their(TRUE)] blood sprays everywhere!"))
 
 			// Time to start bleeding
 			if(iscarbon(feed_target))
@@ -575,8 +575,8 @@
 		playsound(target, 'sound/weapons/cqchit2.ogg', 80)
 
 		owner.visible_message(
-			span_warning("[target.first_name()] struggles, pushing [owner.first_name()] away!"),
-			span_warning("[target.first_name()] manages to struggle free from your grip!"), ignored_mobs = target
+			span_warning("[target] struggles, pushing [owner] away!"),
+			span_warning("[target] manages to struggle free from your grip!"), ignored_mobs = target
 		)
 
 		var/shove_dir = get_dir(target.loc, owner.loc)
