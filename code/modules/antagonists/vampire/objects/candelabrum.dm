@@ -20,10 +20,31 @@
 	. = ..()
 	RegisterSignal(src, COMSIG_CLICK, PROC_REF(distance_toggle))
 	update_appearance()
+	register_context()
 
 /obj/structure/vampire/candelabrum/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	return ..()
+
+/obj/structure/vampire/candelabrum/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = NONE
+	if(!HAS_MIND_TRAIT(user, TRAIT_VAMPIRE_ALIGNED) || held_item)
+		return NONE
+	if(!anchored)
+		if(Adjacent(user))
+			context[SCREENTIP_CONTEXT_LMB] = "Bolt"
+			return CONTEXTUAL_SCREENTIP_SET
+		return NONE
+
+	var/is_full_vampire = IS_VAMPIRE(user)
+	if(Adjacent(user) || is_full_vampire)
+		context[SCREENTIP_CONTEXT_LMB] = lit ? "Extinguish" : "Light"
+		. = CONTEXTUAL_SCREENTIP_SET
+
+	if(is_full_vampire)
+		context[SCREENTIP_CONTEXT_RMB] = lit ? "Extinguish All Nearby" : "Light All Nearby"
+		. = CONTEXTUAL_SCREENTIP_SET
+
 
 /obj/structure/vampire/candelabrum/update_icon_state()
 	icon_state = "[base_icon_state][lit ? "_lit" : ""]"
@@ -61,9 +82,49 @@
 		set_lit(!lit)
 	return ..()
 
+/obj/structure/vampire/candelabrum/attack_hand_secondary(mob/user, list/modifiers)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+
+	if(!anchored || !IS_VAMPIRE(user))
+		return
+
+	user.balloon_alert_to_viewers("gestures dramatically")
+	dramatic_toggle_all(user, !lit)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/structure/vampire/candelabrum/proc/dramatic_toggle_all(mob/user, value)
+	var/turf/our_turf = get_turf(src)
+	var/list/nearby_candels = list()
+	for(var/obj/structure/vampire/candelabrum/candel in view(7, src) | view(user))
+		if(!candel.anchored || candel.lit == value)
+			continue
+		nearby_candels[candel] = get_dist(our_turf, get_turf(candel))
+
+	if(!length(nearby_candels))
+		return
+
+	sortTim(nearby_candels, cmp = value ? GLOBAL_PROC_REF(cmp_numeric_asc) : GLOBAL_PROC_REF(cmp_numeric_dsc), associative = TRUE)
+
+	// maximum aurafarming
+	user.visible_message(
+		span_notice("[user] waves [user.p_their()] hand around, [value ? "igniting" : "extinguishing"] nearby candelabrums with a single gesture."),
+		span_notice("You wave your hand around, [value ? "igniting" : "extinguishing"] nearby candelabrums with a single gesture."),
+	)
+	for(var/i = 1 to length(nearby_candels))
+		var/obj/structure/vampire/candelabrum/candel = nearby_candels[i]
+		addtimer(CALLBACK(candel, PROC_REF(set_lit), value), i * (0.2 SECONDS), TIMER_UNIQUE | TIMER_OVERRIDE)
+
 /obj/structure/vampire/candelabrum/proc/distance_toggle(datum/source, atom/location, control, params, mob/user)
 	SIGNAL_HANDLER
-	if(anchored && !user.incapacitated() && !user.get_active_held_item() && IS_VAMPIRE(user) && !user.Adjacent(src))
+	if(!anchored || user.incapacitated() || user.get_active_held_item() || !IS_VAMPIRE(user) || user.Adjacent(src))
+		return
+	var/list/modifiers = params2list(params)
+	user.balloon_alert_to_viewers("gestures dramatically")
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		dramatic_toggle_all(user, !lit)
+	else
 		set_lit(!lit)
 		// gotta aurafarm
 		user.visible_message(
