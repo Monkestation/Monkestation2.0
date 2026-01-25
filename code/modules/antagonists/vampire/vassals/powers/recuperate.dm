@@ -21,6 +21,11 @@
 		owner.balloon_alert(owner, "you are incapacitated...")
 		return FALSE
 
+	var/mob/living/living_owner = owner
+	if(!HAS_TRAIT(owner, TRAIT_NOBLOOD) && living_owner.blood_volume <= BLOOD_VOLUME_OKAY)
+		owner.balloon_alert(owner, "not enough blood!")
+		return FALSE
+
 /datum/action/cooldown/vampire/recuperate/activate_power()
 	. = ..()
 	to_chat(owner, span_notice("Your muscles clench as your master's immortal blood mixes with your own, knitting your wounds."))
@@ -37,16 +42,25 @@
 
 	var/needs_update = FALSE
 	carbon_owner.set_jitter_if_lower(10 SECONDS)
-	carbon_owner.stamina?.adjust(-vitaecost * 1.1)
+	carbon_owner.stamina?.adjust_to(-vitaecost * 1.1, 5) // can't stamcrit you. barely.
 	needs_update += carbon_owner.adjustBruteLoss(-2.5, updating_health = FALSE)
 	needs_update += carbon_owner.adjustToxLoss(-2, updating_health = FALSE, forced = TRUE)
 	// Plasmamen won't lose blood, they don't have any, so they don't heal from Burn.
 	if(!HAS_TRAIT(carbon_owner, TRAIT_NOBLOOD))
 		carbon_owner.blood_volume -= vitaecost
 		needs_update += carbon_owner.adjustFireLoss(-1.5, updating_health = FALSE)
+
 	// Stop Bleeding
-	//if(istype(carbon_owner) && carbon_owner.is_bleeding())
-	//	carbon_owner.cauterise_wounds(-0.5)
+	var/datum/wound/bloodiest_wound
+	for(var/datum/wound/iter_wound as anything in carbon_owner.all_wounds)
+		if(iter_wound.blood_flow && (!bloodiest_wound || (iter_wound.blood_flow > bloodiest_wound.blood_flow)))
+			bloodiest_wound = iter_wound
+
+	bloodiest_wound?.adjust_blood_flow(-0.25)
+
+	for(var/obj/item/bodypart/bodypart as anything in carbon_owner.bodyparts)
+		if(bodypart.generic_bleedstacks)
+			bodypart.adjustBleedStacks(-1, 0)
 
 	if(needs_update)
 		carbon_owner.updatehealth()

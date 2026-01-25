@@ -97,6 +97,10 @@
 
 		bloodiest_wound?.adjust_blood_flow(-0.25 * seconds_per_tick)
 
+	for(var/obj/item/bodypart/bodypart as anything in carbon_owner.bodyparts)
+		if(bodypart.generic_bleedstacks)
+			bodypart.adjustBleedStacks(-1, 0)
+
 	if(in_torpor)
 		// If in a coffin: heal 5x as fast, heal burn damage at full capacity, set vitaecost to 50%, and regenerate limbs
 		// If not: heal 3x as fast and heal burn damage at 80%
