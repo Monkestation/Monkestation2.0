@@ -240,6 +240,9 @@
 	current_mob.has_dna()?.remove_all_mutations()
 	current_mob.add_traits(vampire_traits + always_traits, TRAIT_VAMPIRE)
 
+	current_mob.grant_all_languages(grant_omnitongue = TRUE, source = LANGUAGE_VAMPIRE)
+	current_mob.grant_language(/datum/language/vampiric, source = LANGUAGE_VAMPIRE)
+
 	my_clan?.apply_effects(current_mob)
 
 /**
