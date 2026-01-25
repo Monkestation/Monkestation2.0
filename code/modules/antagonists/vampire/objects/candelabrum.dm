@@ -65,7 +65,11 @@
 	SIGNAL_HANDLER
 	if(anchored && !user.incapacitated() && !user.get_active_held_item() && IS_VAMPIRE(user) && !user.Adjacent(src))
 		set_lit(!lit)
-		to_chat(user, span_notice("You wave your hand towards \the [src], [lit ? "igniting" : "extinguishing"] it."), type = MESSAGE_TYPE_INFO)
+		// gotta aurafarm
+		user.visible_message(
+			span_notice("[user] waves [user.p_their()] hand towards \the [src], causing its cold flame to [lit ? "ignite" : "extinguish"]."),
+			span_notice("You wave your hand towards \the [src], [lit ? "igniting" : "extinguishing"] it."),
+		)
 
 /obj/structure/vampire/candelabrum/proc/set_lit(value)
 	if(lit == value)
