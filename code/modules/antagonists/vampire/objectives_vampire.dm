@@ -175,7 +175,7 @@
 	explanation_text = "[initial(explanation_text)] Consume at least [target_amount] units of blood to sate your ravenous thirst."
 
 /datum/objective/vampire/hedonism/gourmand/check_completion()
-	var/datum/antagonist/vampire/vampiredatum = owner.current.mind.has_antag_datum(/datum/antagonist/vampire)
+	var/datum/antagonist/vampire/vampiredatum = owner.has_antag_datum(/datum/antagonist/vampire)
 	if(!vampiredatum)
 		return FALSE
 	var/stolen_blood = vampiredatum.total_blood_drank
@@ -194,7 +194,7 @@
 	explanation_text = "[initial(explanation_text)] Drain a mortal completely, letting their lifeblood become your sustenance and their body fall cold and spent."
 
 /datum/objective/vampire/hedonism/thirster/check_completion()
-	var/datum/antagonist/vampire/vampiredatum = owner.current.mind.has_antag_datum(/datum/antagonist/vampire)
+	var/datum/antagonist/vampire/vampiredatum = owner.has_antag_datum(/datum/antagonist/vampire)
 	if(!vampiredatum)
 		return FALSE
 
