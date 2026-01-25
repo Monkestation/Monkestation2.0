@@ -114,3 +114,30 @@
 	force = 9
 	armour_penetration = 25
 	staketime = 2 SECONDS
+
+/obj/item/stack/sheet/mineral/wood/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!tool.get_sharpness())
+		return NONE
+	user.visible_message(
+		span_notice("[user] begins whittling [src] into a pointy object."),
+		span_notice("You begin whittling [src] into a sharp point at one end."),
+		span_hear("You hear wood carving."),
+	)
+	// 5 Second Timer
+	if(!do_after(user, 5 SECONDS, src))
+		return ITEM_INTERACT_BLOCKING
+	// Make Stake
+	var/obj/item/stake/new_item = new(user.drop_location())
+	user.visible_message(
+		span_notice("[user] finishes carving a stake out of [src]."),
+		span_notice("You finish carving a stake out of [src]."),
+	)
+	// Prepare to Put in Hands (if holding wood)
+	var/obj/item/stack/sheet/mineral/wood/wood_stack = src
+	var/replace = (user.get_inactive_held_item() == wood_stack)
+	// Use Wood
+	wood_stack.use(1)
+	// If stack depleted, put item in that hand (if it had one)
+	if(!wood_stack && replace)
+		user.put_in_hands(new_item)
+	return ITEM_INTERACT_SUCCESS

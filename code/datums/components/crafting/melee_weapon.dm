@@ -215,3 +215,10 @@
 		/obj/item/fishing_hook = 1,
 	)
 	category = CAT_WEAPON_MELEE
+
+/datum/crafting_recipe/stake
+	name = "Stake"
+	result = /obj/item/stake
+	reqs = list(/obj/item/stack/sheet/mineral/wood = 3)
+	time = 8 SECONDS
+	category = CAT_WEAPON_MELEE
