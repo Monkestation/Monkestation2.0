@@ -218,7 +218,7 @@
 
 /// Checks to make sure this power can stay active
 /datum/action/cooldown/vampire/proc/continue_active()
-	if(!owner)
+	if(QDELETED(owner))
 		return FALSE
 	if(vampiredatum_power && vampiredatum_power.current_vitae < constant_vitaecost)
 		return FALSE

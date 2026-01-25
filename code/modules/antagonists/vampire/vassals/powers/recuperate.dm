@@ -66,7 +66,7 @@
 		carbon_owner.updatehealth()
 
 /datum/action/cooldown/vampire/recuperate/continue_active()
-	if(owner.stat == DEAD)
+	if(QDELETED(owner) || owner.stat == DEAD)
 		return FALSE
 	if(owner.incapacitated(IGNORE_RESTRAINTS))
 		owner.balloon_alert(owner, "too exhausted...")
@@ -74,5 +74,6 @@
 	return TRUE
 
 /datum/action/cooldown/vampire/recuperate/deactivate_power()
-	owner.balloon_alert(owner, "recuperate turned off.")
+	if(!QDELETED(owner))
+		owner.balloon_alert(owner, "recuperate turned off.")
 	return ..()
