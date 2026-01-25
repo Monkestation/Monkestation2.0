@@ -78,7 +78,9 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 			continue
 		radial_options -= possible_guardian
 	var/mob/living/basic/guardian/guardian_path
-	if(random)
+	if(IS_VAMPIRE(user))
+		guardian_path = /mob/living/basic/guardian/standard/timestop
+	else if(random)
 		guardian_path = pick(possible_guardians)
 	else
 		guardian_path = show_radial_menu(user, src, radial_options, custom_check = CALLBACK(src, PROC_REF(check_menu), user), radius = 42, require_near = TRUE)

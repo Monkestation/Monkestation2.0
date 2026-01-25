@@ -4957,6 +4957,7 @@
 #include "code\modules\mob\living\basic\guardian\guardian_types\ranged.dm"
 #include "code\modules\mob\living\basic\guardian\guardian_types\standard.dm"
 #include "code\modules\mob\living\basic\guardian\guardian_types\support.dm"
+#include "code\modules\mob\living\basic\guardian\guardian_types\timestop.dm"
 #include "code\modules\mob\living\basic\heretic\_heretic_summon.dm"
 #include "code\modules\mob\living\basic\heretic\ash_spirit.dm"
 #include "code\modules\mob\living\basic\heretic\fire_shark.dm"
