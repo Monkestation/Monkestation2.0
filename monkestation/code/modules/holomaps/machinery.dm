@@ -141,17 +141,19 @@
 	playsound(src, 'monkestation/code/modules/holomaps/sounds/holomap_close.ogg', 125)
 	icon_state = initial(icon_state)
 	if(watching_mob?.client)
-		animate(holomap_datum.base_map, alpha = 0, time = 5, easing = LINEAR_EASING)
-		spawn(5) //we give it time to fade out
-			watching_mob.client?.screen -= watching_mob.hud_used.holomap
-			watching_mob.client?.images -= holomap_datum.base_map
-			watching_mob.hud_used.holomap.used_station_map = null
-			watching_mob.hud_used.holomap.used_base_map = null
-			watching_mob = null
-			set_light(HOLOMAP_LOW_LIGHT)
+		animate(holomap_datum.base_map, alpha = 0, time = 0.5 SECONDS, easing = LINEAR_EASING)
+		addtimer(CALLBACK(src, PROC_REF(finish_close_map)), 0.5 SECONDS, TIMER_CLIENT_TIME)
 
 	use_power = IDLE_POWER_USE
 	holomap_datum.reset_map()
+
+/obj/machinery/station_map/proc/finish_close_map()
+	watching_mob.client?.screen -= watching_mob.hud_used.holomap
+	watching_mob.client?.images -= holomap_datum.base_map
+	watching_mob.hud_used.holomap.used_station_map = null
+	watching_mob.hud_used.holomap.used_base_map = null
+	watching_mob = null
+	set_light(HOLOMAP_LOW_LIGHT)
 
 /obj/machinery/station_map/power_change()
 	. = ..()

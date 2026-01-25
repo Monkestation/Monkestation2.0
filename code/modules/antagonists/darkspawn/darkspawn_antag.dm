@@ -78,7 +78,7 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 	owner.special_role = null
 	team?.remove_member(owner)
 	if(owner.current?.hud_used?.psi_counter)
-		owner.current.hud_used.psi_counter.invisibility = initial(owner.current.hud_used.psi_counter.invisibility)
+		owner.current.hud_used.psi_counter.RemoveInvisibility(type)
 		owner.current.hud_used.psi_counter.maptext = ""
 	QDEL_NULL(picked_class)
 	return ..()
@@ -96,7 +96,7 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 
 	//psi stuff
 	if(current_mob?.hud_used?.psi_counter)
-		current_mob.hud_used.psi_counter.invisibility = 0
+		current_mob.hud_used.psi_counter.SetInvisibility(INVISIBILITY_NONE, id=type)
 		update_psi_hud()
 
 	current_mob.faction |= FACTION_DARKSPAWN

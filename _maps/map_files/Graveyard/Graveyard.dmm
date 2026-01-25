@@ -14883,7 +14883,6 @@
 /obj/structure/closet/secure_closet/personal/cabinet,
 /obj/item/clothing/under/rank/security/head_of_security,
 /obj/item/clothing/under/rank/security/head_of_security/skirt,
-/obj/item/clothing/under/rank/security/head_of_security/peacekeeper,
 /obj/item/clothing/shoes/jackboots,
 /obj/item/crowbar,
 /obj/machinery/light/directional/west,
@@ -51695,6 +51694,7 @@
 "uew" = (
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
+/obj/machinery/cassette_library,
 /turf/open/floor/wood,
 /area/station/service/library)
 "uex" = (

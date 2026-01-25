@@ -340,7 +340,94 @@
   - bugfix: fixed getting stuck buckled in a wheelchair after it's destroyed.
   SirNightKnight, JohnFulpWillard:
   - rscadd: Security now has a Big Red Key.
+  buffakaza:
+  - map: added two previously absent roundstart bz canisters to blueshift gas storage
+      room and void raptor atmos project room.
   wraith-54321:
   - rscadd: Added sub overminds for blob
   - rscadd: Added more blob chemical effects
   - balance: Slightly increased brute storyteller point values
+2026-01-20:
+  Absolucy:
+  - refactor: Refactored how mobs target turrets and mechs, which should hopefully
+      be more performant.
+  - refactor: Refactored turrets so they only process if something potentially "interesting"
+      is within its range.
+  Chelxox:
+  - rscadd: 'Introduces the Cassette Library Terminal: browse through and buy cassettes
+      with this easy method!'
+  - image: Adds on and off sprites for the cassette library terminal.
+  - map: Places cassette library terminals on all maps on rotation.
+  - admin: Adds admin logs for when a user buys their own cassette tapes multiple
+      times.
+  - server: Attention! Cassette library terminal messes with SQL entries. May need
+      operator intervention to fully implement.
+2026-01-22:
+  Chelxox:
+  - map: Added 2 more security officer lockers on Oshean's security office, making
+      it 6.
+  Gboster-0:
+  - bugfix: wheelchairs now properly take 1 second to unbuckle people
+  - bugfix: you can no longer stand in the same place whilst unbuckling someone in
+      a wheelchair, and unbuckle them from 2 tiles away
+  SirNightKnight:
+  - qol: mop buckets have 500 reagent capacity .
+  - bugfix: fixed the vacuum upgrade not working.
+  - qol: janitors have a liquid pump beacon in their outfit.
+  - qol: slightly increased to the stock of the JaniDrobe to accommodate a third set
+      of janitor gear. it also now has space cleaner.
+  - rscadd: dumping a mop bucket over a scrubber vent doesnt expose the tile to the
+      reagents inside.
+  - qol: normal mop buckets can be dumped the same way as janitorial carts.
+  - balance: removed backpack watertank slowdown.
+  - qol: light replacers can be made at engineering prolathes.
+  - bugfix: fixed trashbags not working on janitorial carts when storing items.
+  iliyaxox:
+  - rscadd: Added a cassette library and postbox to Theseus' radio outpost.
+2026-01-23:
+  Absolucy:
+  - qol: You can properly eat the supermatter with Matter Eater again.
+  Gboster-0:
+  - bugfix: arachnids no longer get a tackle attack buff due to their appendages
+  JupiterJaeden:
+  - balance: Nerfs the base regen extract (the type that the rest derive from) from
+      healing 5 dmg of every type per second -> 4.
+  - balance: Nerfs the purple regen extract from healing 10 dmg of every type per
+      second -> 4.
+  - balance: Removes the extra diminishing penalty for the purple regen extract, so
+      now every additional one (during the 90s cooldown) uses the standard 0.75 multiplier
+      instead of 0.5.
+  JupiterJaeden, flleeppyy:
+  - rscadd: Adds an 'Armory De-Authorization Announcement' for when the armory is
+      closed using the auth console, similar to the one for opening the armory.
+  - qol: The reasons for opening the armory in the auth console now have tooltips
+      giving details explaining what situations they apply to.
+  - admin: Adds admin logging for opening and closing the armory.
+  Tractor-Maam:
+  - rscdel: Opposing Force notifications have had their AI Generated sound effects
+      removed and replaced.
+2026-01-25:
+  Absolucy:
+  - admin: Added the ability to sort by active turfs and such to the Atmos Control
+      Panel.
+  - code_imp: Cleaned up some more code, nya~
+  - bugfix: Fixed some more assorted minor bugs.
+  - bugfix: Fixed the library console having a NtOS bluescreen error.
+  - bugfix: HOPEFULLY FIXED THE DISAPPEARING IDS BUG, YAY!
+  - bugfix: Fixed the cursed katana getting bricked if it dismembers your arm by lashing
+      out.
+  - bugfix: Fixed weird things happening if you matter eat a teleporter component.
+  - bugfix: Nightwatcher's Rebirth no longer kills oozeling users when it heals them.
+  JohnFulpWillard:
+  - qol: Added more languages to NTSL.
+  - qol: Signals can now take a filter arg.
+  Sealed101, SirNightKnight:
+  - bugfix: fixed APC control console found in CE office only accessing APCs on its
+      z-level.
+  - bugfix: fixed restoring an emagged APC control console potentially leaving the
+      console in a forever state of restoring.
+  - bugfix: fixed the APC control console UI not loading correctly.
+  - map: added an APC control console to runtime station engineering.
+  SirNightKnight:
+  - balance: you need shock immunity either from the nerve grounding surgery or insulated
+      mutation to eat a supermatter with matter eater.

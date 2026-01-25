@@ -26679,7 +26679,7 @@
 /area/station/service/lawoffice)
 "iBP" = (
 /obj/structure/extinguisher_cabinet/directional/north,
-/obj/machinery/cassette_postbox,
+/obj/machinery/cassette_library,
 /turf/open/floor/wood,
 /area/station/service/library/lounge)
 "iCB" = (
@@ -56506,6 +56506,7 @@
 	pixel_x = 32
 	},
 /obj/machinery/light/directional/east,
+/obj/machinery/cassette_postbox,
 /turf/open/floor/wood,
 /area/station/service/library/lounge)
 "slc" = (

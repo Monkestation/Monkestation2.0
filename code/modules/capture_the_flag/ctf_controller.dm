@@ -210,9 +210,8 @@
 
 ///If the team is destroyed all players in that team need their componenet removed.
 /datum/ctf_team/Destroy(force)
-	for(var/player in team_members)
-		var/datum/component/ctf_player/ctf_player = team_members[player]
-		ctf_player.end_game()
+	for(var/ckey, player in team_members)
+		astype(player, /datum/component/ctf_player)?.end_game()
 	return ..()
 
 ///Increases this teams number of points by the provided amount.
@@ -222,18 +221,16 @@
 ///Resets this teams score and clears its member list. All members will be dusted and have their player componenet removed.
 /datum/ctf_team/proc/reset_team()
 	points = 0
-	for(var/player in team_members)
-		var/datum/component/ctf_player/ctf_player = team_members[player]
-		ctf_player.end_game()
+	for(var/ckey, player in team_members)
+		astype(player, /datum/component/ctf_player)?.end_game()
 	team_members = list()
 
 ///Sends a message to all players in this team.
 /datum/ctf_team/proc/message_team(message)
-	for(var/player in team_members)
-		var/datum/component/ctf_player/ctf_player = team_members[player]
-		ctf_player.send_message(message)
+	for(var/ckey, player in team_members)
+		astype(player, /datum/component/ctf_player)?.send_message(message)
 
-///Creates a CTF game with the provided teeam ID then returns a reference to the new controller. If a controller already exists provides a reference to it.
+///Creates a CTF game with the provided team ID then returns a reference to the new controller. If a controller already exists provides a reference to it.
 /proc/create_ctf_game(game_id)
 	if(GLOB.ctf_games[game_id])
 		return GLOB.ctf_games[game_id]
