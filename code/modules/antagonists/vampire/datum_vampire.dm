@@ -232,6 +232,7 @@
 	else
 		RegisterSignal(current_mob, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
 
+	ensure_brain_nonvital(current_mob)
 	setup_limbs(current_mob)
 	setup_tracker(current_mob)
 
@@ -394,6 +395,14 @@
 	owner.special_role = null
 	GLOB.all_vampires -= src
 	check_cancel_society()
+
+	if(iscarbon(owner.current))
+		var/mob/living/carbon/carbon_owner = owner.current
+		var/obj/item/organ/internal/brain/not_vamp_brain = carbon_owner.get_organ_slot(ORGAN_SLOT_BRAIN)
+		if(not_vamp_brain && (not_vamp_brain.decoy_override != initial(not_vamp_brain.decoy_override)))
+			not_vamp_brain.organ_flags |= ORGAN_VITAL
+			not_vamp_brain.decoy_override = FALSE
+
 	return ..()
 
 /datum/antagonist/vampire/on_body_transfer(mob/living/old_body, mob/living/new_body)
@@ -518,6 +527,20 @@
 		report += span_redtext(span_big("<br>The [name] has failed!"))
 
 	return report.Join("<br>")
+
+/// "Oh, well, that's step one. What about two through ten?"
+/// Beheading bloodsuckers is kinda buggy and results in them being dead-dead without actually being final deathed, which is NOT something that's desired.
+/// Just stake them. No shortcuts.
+/datum/antagonist/vampire/proc/ensure_brain_nonvital(mob/living/mob_override)
+	var/mob/living/carbon/carbon_owner = mob_override || owner.current
+	if(!iscarbon(carbon_owner) || isoozeling(carbon_owner))
+		return
+	var/obj/item/organ/internal/brain/brain = carbon_owner.get_organ_slot(ORGAN_SLOT_BRAIN)
+	if(QDELETED(brain))
+		return
+	brain.organ_flags &= ~ORGAN_VITAL
+	brain.decoy_override = TRUE
+
 
 /datum/antagonist/vampire/proc/give_starting_powers()
 	for(var/datum/action/cooldown/vampire/all_powers as anything in all_vampire_powers)

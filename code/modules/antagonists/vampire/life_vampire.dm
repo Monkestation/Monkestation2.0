@@ -151,7 +151,9 @@
 		carbon_owner.regenerate_limb(missing_limb, FALSE)
 		AdjustBloodVolume(-limb_regen_cost)
 		var/obj/item/bodypart/missing_bodypart = carbon_owner.get_bodypart(missing_limb)
-		if(missing_limb != BODY_ZONE_HEAD)
+		if(missing_limb == BODY_ZONE_HEAD)
+			ensure_brain_nonvital(carbon_owner)
+		else
 			missing_bodypart.receive_damage(brute = 60, wound_bonus = CANT_WOUND)
 		to_chat(carbon_owner, span_notice("Your flesh knits as it regrows your [missing_bodypart]!"))
 		playsound(carbon_owner, 'sound/magic/demon_consume.ogg', 50, TRUE)
@@ -171,6 +173,7 @@
 	// Clear husk and regenerate organs
 	carbon_user.cure_husk()
 	carbon_user.regenerate_organs()
+	ensure_brain_nonvital(carbon_user)
 
 	// Heal organs
 	for(var/obj/item/organ/organ as anything in carbon_user.organs)
