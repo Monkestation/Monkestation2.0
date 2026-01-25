@@ -87,7 +87,7 @@
 		playsound(get_turf(human_owner), 'sound/effects/grillehit.ogg', 80, TRUE, -1)
 
 	if(used)
-		check_witnesses()
+		// check_witnesses()
 	return used
 
 /datum/action/cooldown/vampire/targeted/brawn/proc/escape_puller()
@@ -116,7 +116,7 @@
 	)
 	owner.pulledby?.stop_pulling() // It's already done, but JUST IN CASE.
 
-	check_witnesses()
+	// check_witnesses()
 	return TRUE
 
 /datum/action/cooldown/vampire/targeted/brawn/FireTargetedPower(atom/target_atom)
@@ -143,7 +143,7 @@
 		// Attack!
 		owner.balloon_alert(owner, "you punch [living_target]!")
 		playsound(get_turf(living_target), 'sound/weapons/punch4.ogg', 60, TRUE, -1)
-		check_witnesses(living_target)
+		// check_witnesses(living_target)
 		carbon_owner.do_attack_animation(living_target, ATTACK_EFFECT_SMASH)
 
 		var/obj/item/bodypart/affecting = living_target.get_bodypart(ran_zone(living_target.zone_selected))
@@ -171,13 +171,13 @@
 
 		INVOKE_ASYNC(target_closet, TYPE_PROC_REF(/obj/structure/closet, bust_open), FALSE)
 		playsound(get_turf(carbon_owner), 'sound/effects/grillehit.ogg', 80, TRUE, -1)
-		check_witnesses()
+		// check_witnesses()
 	// Airlocks
 	else if(istype(target_atom, /obj/machinery/door/airlock))
 		var/obj/machinery/door/airlock/target_airlock = target_atom
 
 		playsound(get_turf(carbon_owner), 'sound/machines/airlock_alien_prying.ogg', 40, TRUE, -1)
-		check_witnesses()
+		// check_witnesses()
 		owner.balloon_alert(owner, "you prepare to tear open [target_airlock]...")
 		if(!do_after(carbon_owner, 2.5 SECONDS, target_airlock))
 			carbon_owner.balloon_alert(carbon_owner, "interrupted!")

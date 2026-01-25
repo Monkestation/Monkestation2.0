@@ -68,7 +68,7 @@
 	user.pulledby?.stop_pulling()
 	// Go to target turf
 	// DO NOT USE WALK TO.
-	check_witnesses()
+	// check_witnesses()
 	owner.balloon_alert(owner, "you dash into the air!")
 	playsound(get_turf(owner), 'sound/weapons/punchmiss.ogg', 25, TRUE, -1)
 	var/safety = get_dist(user, targeted_turf) * 3 + 1

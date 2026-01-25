@@ -132,13 +132,13 @@
 	power_activated_sucessfully()
 	// Am I next to my target to start giving the effects?
 	if(!owner.Adjacent(hit_atom))
-		check_witnesses()
+		// check_witnesses()
 		return
 
 	var/mob/living/user = owner
 	var/mob/living/carbon/target = hit_atom
 
-	check_witnesses(target)
+	// check_witnesses(target)
 	// Did I slip or get knocked unconscious?
 	if(user.body_position != STANDING_UP || user.incapacitated())
 		var/send_dir = get_dir(user, target_turf)
