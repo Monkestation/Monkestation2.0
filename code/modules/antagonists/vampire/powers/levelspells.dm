@@ -101,7 +101,10 @@
 	. = ..()
 	var/mob/living/living_target = target_atom
 
-	if(IS_VASSAL(living_target)) // We don't need to ask a lowly vassal.
+	var/datum/antagonist/vassal/vassal = IS_VASSAL(living_target)
+
+	if(vassal) // We don't need to ask a lowly vassal.
+		vassal.silent = TRUE
 		living_target.mind.remove_antag_datum(/datum/antagonist/vassal)
 
 		// Make, then give the datum
