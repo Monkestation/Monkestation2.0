@@ -1,7 +1,7 @@
 /datum/antagonist/vampire
 	name = "\improper Vampire"
 	roundend_category = "vampires"
-	antagpanel_category = "Vampires"
+	antagpanel_category = "Vampire"
 	show_in_roundend = ROLE_VAMPIRE
 	ui_name = "AntagInfoVampire"
 	hijack_speed = 0.5
@@ -94,13 +94,6 @@
 
 	/// To make sure we don't spam sol damage messages
 	var/were_shielded = FALSE
-
-	/// The start time where an oozeling vampire began waiting for revival.
-	var/oozeling_revive_start_time = 0
-	/// Looping timer used to check to see if an oozeling should revive yet.
-	var/oozeling_revive_check_timer
-	/// Cooldown for sending a chat message to the oozeling player how long until they revive.
-	COOLDOWN_DECLARE(oozeling_revive_reminder_cooldown)
 
 	/// Blood display HUD
 	var/atom/movable/screen/vampire/blood_counter/blood_display
@@ -816,7 +809,7 @@
 	SIGNAL_HANDLER
 	user.add_sight(SEE_MOBS)
 	user.lighting_cutoff = max(user.lighting_cutoff, LIGHTING_CUTOFF_HIGH)
-	user.lighting_color_cutoffs = blend_cutoff_colors(user.lighting_color_cutoffs, list(25, 8, 5))
+	user.lighting_color_cutoffs = user.lighting_color_cutoffs ? blend_cutoff_colors(user.lighting_color_cutoffs, list(25, 8, 5)) : list(25, 8, 5)
 
 /datum/antagonist/vampire/proc/query_for_monster_hunter(datum/source, list/prey)
 	SIGNAL_HANDLER

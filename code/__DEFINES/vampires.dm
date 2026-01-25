@@ -39,9 +39,11 @@
 /// Minimum blood required for vampires oozelings to auto-revive.
 #define OOZELING_MIN_REVIVE_BLOOD_THRESHOLD (FRENZY_THRESHOLD_ENTER * 5)
 /// How long it takes for an vampire oozeling to auto-revive, when left alone.
-#define OOZELING_VAMPIRE_REVIVE_TIME (1 MINUTES)
+#define OOZELING_VAMPIRE_REVIVE_TIME (1.5 MINUTES)
 /// How many times faster an oozeling vampire will revive if their core is being held by a non-vampire/non-ally.
-#define OOZELING_VAMPIRE_REVIVE_HELD_MULTIPLIER 0.3
+#define OOZELING_VAMPIRE_REVIVE_HELD_MULTIPLIER 0.5
+/// How many times faster an oozeling vampire will revive if their core is being held by an ally.
+#define OOZELING_VAMPIRE_REVIVE_ALLY_MULTIPLIER 1.2
 /// How many times faster an oozeling vampire will revive if their core is in a coffin.
 #define OOZELING_VAMPIRE_REVIVE_COFFIN_MULTIPLIER 2.5
 
