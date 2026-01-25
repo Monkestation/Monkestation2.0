@@ -98,7 +98,9 @@ GLOBAL_LIST_EMPTY(all_vampires)
 /datum/objective/vampire/scourge
 	name = "Camarilla Scourge"
 	explanation_text = "Obey your prince! Ensure order! Safeguard the Masquerade!"
+	completed = TRUE
 
 /datum/objective/vampire/prince
 	name = "Camarilla Prince"
 	explanation_text = "Rule your fellow kindred with an iron fist! Ensure the sanctity of the Masquerade, at ALL costs!"
+	completed = TRUE
