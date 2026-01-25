@@ -529,7 +529,7 @@
 	return report.Join("<br>")
 
 /// "Oh, well, that's step one. What about two through ten?"
-/// Beheading bloodsuckers is kinda buggy and results in them being dead-dead without actually being final deathed, which is NOT something that's desired.
+/// Beheading vampires is kinda buggy and results in them being dead-dead without actually being final deathed, which is NOT something that's desired.
 /// Just stake them. No shortcuts.
 /datum/antagonist/vampire/proc/ensure_brain_nonvital(mob/living/mob_override)
 	var/mob/living/carbon/carbon_owner = mob_override || owner.current

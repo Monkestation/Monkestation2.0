@@ -80,12 +80,10 @@
 		ui.open()
 
 /obj/item/book/kindred/ui_static_data(mob/user)
-	var/data = list()
+	. = list("clans" = list())
 
 	for(var/datum/vampire_clan/clan as anything in subtypesof(/datum/vampire_clan))
-		data["clans"] += list(list(
-			"clan_name" = clan::name,
-			"clan_desc" = clan::description,
+		.["clans"] += list(list(
+			"name" = clan::name,
+			"desc" = clan::description,
 		))
-
-	return data
