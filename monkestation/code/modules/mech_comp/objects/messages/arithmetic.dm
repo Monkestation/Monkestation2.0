@@ -91,7 +91,7 @@
 				. = A / B
 			catch
 				. = num2text((~0)**(~0)) //Incase this ever changes
-				spawn(0)
+				ASYNC
 					say("ERROR, CANNOT INTERPRET VALUE")
 					set_anchored(FALSE)
 					throw_at(get_edge_target_turf(pick(GLOB.cardinals), 3, 1))

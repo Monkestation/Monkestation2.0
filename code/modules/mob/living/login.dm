@@ -7,6 +7,8 @@
 		qdel(client)
 		return FALSE
 
+	process_as_cliented_mob()
+
 	//Mind updates
 	sync_mind()
 
