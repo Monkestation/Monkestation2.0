@@ -233,6 +233,11 @@
 		else
 			return FALSE // Cheeky check for type built in? Tsunami you genius!
 
+	if(isatom(subject))
+		var/atom/atom_subject = subject
+		if(atom_subject.flags_1 & HOLOGRAM_1) // doesn't count!!
+			return FALSE
+
 	// track the weakref, not the actual reference
 	subject = WEAKREF(subject)
 
