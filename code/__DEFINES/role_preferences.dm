@@ -28,6 +28,7 @@
 #define ROLE_DARKSPAWN_FIGHTER "Fighter"
 #define ROLE_DARKSPAWN_WARLOCK "Warlock"
 #define ROLE_DARKSPAWN_SCOUT "Scout"
+#define ROLE_VAMPIRE "Vampire"
 
 // Midround roles
 #define ROLE_ABDUCTOR "Abductor"
@@ -51,7 +52,6 @@
 #define ROLE_SPACE_DRAGON "Space Dragon"
 #define ROLE_SPIDER "Spider"
 #define ROLE_WIZARD_MIDROUND "Wizard (Midround)"
-#define ROLE_VAMPIRE "Vampire"
 #define ROLE_VAMPIRIC_ACCIDENT "Vampiric Accident"
 // monke midrounds
 #define ROLE_PLAGUERAT "Plague Rat"
@@ -157,9 +157,10 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_COMMANDO_OPERATIVE = 14,
 	ROLE_REV_HEAD = 14,
 	ROLE_TRAITOR = 0,
+	ROLE_VAMPIRE = 14,
 	ROLE_WIZARD = 14,
 	ROLE_CLOCK_CULTIST = 14,
-	ROLE_VAMPIRE = 14,
+	ROLE_BLOODSUCKER = 0,
 	ROLE_ASSAULT_OPERATIVE = 14,
 	ROLE_BLOODLING = 15,
 	ROLE_DARKSPAWN = 14,
@@ -211,6 +212,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_HERETIC_SMUGGLER = 0,
 	ROLE_PROVOCATEUR = 14,
 	ROLE_SYNDICATE_INFILTRATOR = 0,
+	ROLE_BLOODSUCKERBREAKOUT = 0,
 
 	// I'm not too sure why these are here, but they're not moving.
 	ROLE_PAI = 0,

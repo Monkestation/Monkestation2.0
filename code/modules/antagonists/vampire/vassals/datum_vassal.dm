@@ -4,6 +4,7 @@
 	antagpanel_category = "Vampire"
 	job_rank = ROLE_VAMPIRE
 	show_in_roundend = FALSE
+	hud_icon = 'icons/vampires/antag_hud.dmi'
 	antag_hud_name = "vassal"
 	antag_count_points = 2
 

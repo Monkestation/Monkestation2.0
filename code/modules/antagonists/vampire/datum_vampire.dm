@@ -6,6 +6,7 @@
 	ui_name = "AntagInfoVampire"
 	hijack_speed = 0.5
 	stinger_sound = 'sound/vampires/lunge_warn.ogg'
+	hud_icon = 'icons/vampires/antag_hud.dmi'
 	antag_hud_name = "vampire"
 	preview_outfit = /datum/outfit/vampire_outfit
 
