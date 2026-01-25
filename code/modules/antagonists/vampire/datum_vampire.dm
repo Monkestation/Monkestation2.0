@@ -573,8 +573,8 @@
 		claimed.balloon_alert(owner.current, "ineligible area!")
 		return
 	// This is my Lair
-	coffin.resident = owner
 	coffin = claimed
+	coffin.resident = owner
 	vampire_lair_area = current_area
 	to_chat(owner, span_userdanger("You have claimed [claimed] as your place of immortal rest! Your lair is now [vampire_lair_area]."))
 	return TRUE

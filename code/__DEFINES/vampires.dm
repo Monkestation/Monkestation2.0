@@ -3,6 +3,9 @@
 #if defined(VAMPIRE_TESTING) && defined(CIBUILDING)
 	#error VAMPIRE_TESTING is enabled, disable this!
 #endif
+#ifdef TESTING
+	#define VAMPIRE_TESTING
+#endif
 
 // Blood-level defines
 /// Determines Vampire regeneration rate
