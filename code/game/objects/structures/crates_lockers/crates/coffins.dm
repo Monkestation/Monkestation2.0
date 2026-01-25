@@ -26,6 +26,19 @@
 		. += span_cult("Alt-Click while inside the Coffin to Lock/Unlock.")
 		. += span_cult("Alt-Click while outside of your Coffin to Unclaim it, unwrenching it and all your other structures as a result.")
 
+/obj/structure/closet/crate/coffin/can_open(mob/living/user, force)
+	if(!locked)
+		return ..()
+	if(user.mind == resident)
+		if(welded)
+			welded = FALSE
+			update_appearance(UPDATE_ICON)
+		locked = FALSE
+		return TRUE
+	playsound(get_turf(src), 'sound/machines/door_locked.ogg', vol = 20, vary = TRUE)
+	to_chat(user, span_notice("[src] appears to be locked tight from the inside."))
+	return FALSE
+
 /obj/structure/closet/crate/coffin/after_close(mob/living/user, force)
 	if(user.loc != src)
 		return
