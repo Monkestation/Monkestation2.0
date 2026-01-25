@@ -240,7 +240,14 @@
 	if(subject in tracking_list)
 		return FALSE
 
-	tracking_list += subject
+	// Update the corresponding list
+	switch(type)
+		if(HUMANITY_HUGGING_TYPE)
+			humanity_trackgain_hugged += subject
+		if(HUMANITY_PETTING_TYPE)
+			humanity_trackgain_petted += subject
+		if(HUMANITY_ART_TYPE)
+			humanity_trackgain_art += subject
 
 	if(length(tracking_list) >= goal)
 		// set the corresponding gained flag and award humanity
