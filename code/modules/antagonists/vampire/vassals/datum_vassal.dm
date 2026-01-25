@@ -210,7 +210,7 @@
 /datum/antagonist/vassal/proc/on_examine(datum/source, mob/examiner, list/examine_text)
 	SIGNAL_HANDLER
 
-	var/text = "<img class='icon' src='\ref['icons/vampires/vampiric.dmi']?state=vassal'>"
+	var/text = "<img class='icon' src='\ref['icons/vampires/vampiric.dmi']?state=vassal'> "
 
 	var/datum/antagonist/vampire/vampiredatum = IS_VAMPIRE(examiner)
 	if(src in vampiredatum?.vassals)

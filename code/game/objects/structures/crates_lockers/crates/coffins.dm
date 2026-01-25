@@ -142,8 +142,8 @@
 	icon_state = "coffin"
 	base_icon_state = "coffin"
 	icon = 'icons/vampires/vamp_obj.dmi'
-	open_sound = 'monkestation/sound/bloodsuckers/coffin_open.ogg'
-	close_sound = 'monkestation/sound/bloodsuckers/coffin_close.ogg'
+	open_sound = 'sound/vampires/coffin_open.ogg'
+	close_sound = 'sound/vampires/coffin_close.ogg'
 	breakout_time = 30 SECONDS
 	pry_lid_timer = 20 SECONDS
 	resistance_flags = NONE
@@ -165,8 +165,8 @@
 	icon_state = "securecoffin"
 	base_icon_state = "securecoffin"
 	icon = 'icons/vampires/vamp_obj.dmi'
-	open_sound = 'monkestation/sound/bloodsuckers/coffin_open.ogg'
-	close_sound = 'monkestation/sound/bloodsuckers/coffin_close.ogg'
+	open_sound = 'sound/vampires/coffin_open.ogg'
+	close_sound = 'sound/vampires/coffin_close.ogg'
 	breakout_time = 35 SECONDS
 	pry_lid_timer = 35 SECONDS
 	resistance_flags = FIRE_PROOF | LAVA_PROOF | ACID_PROOF
