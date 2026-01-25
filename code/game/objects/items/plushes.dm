@@ -73,20 +73,6 @@
 				var/datum/plush_trait/new_trait = new trait()
 				plush_traits += new_trait
 				new_trait.activate(src)
-	if(length(gets_random_traits))
-		var/all_traits = subtypesof(/datum/plush_trait)
-		var/traits_to_add = list()
-		for(var/the_category in gets_random_traits)
-			var/possibilities = list()
-			for(var/datum/plush_trait/trait in all_traits)
-				if((trait::category == the_category) && !(is_type_in_list(trait, plush_traits)) && !(is_type_in_list(trait, traits_to_add)) && trait::tier == 1)
-					possibilities += trait
-			traits_to_add += pick(possibilities)
-		for(var/trait in traits_to_add)
-			var/datum/plush_trait/new_trait = new trait()
-			plush_traits += new_trait
-			new_trait.activate(src)
-
 
 /obj/item/toy/plush/Destroy()
 	QDEL_NULL(grenade)
