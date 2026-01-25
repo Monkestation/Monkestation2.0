@@ -5,6 +5,7 @@
 	job_rank = ROLE_VAMPIRE
 	show_in_roundend = FALSE
 	antag_hud_name = "vassal"
+	antag_count_points = 2
 
 	/// The Master Vampire's antag datum.
 	var/datum/antagonist/vampire/master
