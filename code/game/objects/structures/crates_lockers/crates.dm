@@ -158,6 +158,22 @@
 	opened = TRUE
 	icon_state = "crateopen"
 
+/obj/structure/closet/crate/coffin
+	name = "coffin"
+	desc = "It's a burial receptacle for the dearly departed."
+	icon_state = "coffin"
+	base_icon_state = "coffin"
+	resistance_flags = FLAMMABLE
+	max_integrity = 70
+	material_drop = /obj/item/stack/sheet/mineral/wood
+	material_drop_amount = 5
+	open_sound = 'sound/machines/wooden_closet_open.ogg'
+	close_sound = 'sound/machines/wooden_closet_close.ogg'
+	open_sound_volume = 25
+	close_sound_volume = 50
+	can_install_electronics = FALSE
+	paint_jobs = null
+
 /obj/structure/closet/crate/trashcart //please make this a generic cart path later after things calm down a little
 	desc = "A heavy, metal trashcart with wheels."
 	name = "trash cart"
