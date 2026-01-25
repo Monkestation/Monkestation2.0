@@ -42,7 +42,7 @@
 
 
 	var/looking = FALSE
-	var/mob/listeningTo
+	var/mob/listening_to
 
 /datum/action/cooldown/vampire/auspex/two
 	name = "Auspex"
@@ -81,11 +81,13 @@
 /datum/action/cooldown/vampire/auspex/proc/lookie()
 	SIGNAL_HANDLER
 
-	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(deactivate_power))
-	listeningTo = owner
-	if(!owner?.client)
+	if(!listening_to)
+		RegisterSignals(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_LOGOUT), PROC_REF(deactivate_power))
+		RegisterSignal(owner, COMSIG_ATOM_POST_DIR_CHANGE, PROC_REF(lookie))
+	listening_to = owner
+	var/client/client = owner?.client
+	if(!client)
 		return
-	var/client/C = owner.client
 	var/_x = 0
 	var/_y = 0
 	switch(owner.dir)
@@ -98,36 +100,37 @@
 		if(WEST)
 			_x = -zoom_amt
 
-	C.change_view(get_zoomed_view(world.view, zoom_out_amt))
-	C.pixel_x = ICON_SIZE_X * _x
-	C.pixel_y = ICON_SIZE_Y * _y
+	client?.change_view(get_zoomed_view(world.view, zoom_out_amt))
+	client?.pixel_x = ICON_SIZE_X * _x
+	client?.pixel_y = ICON_SIZE_Y * _y
 	looking = TRUE
 
 	if(add_meson)
-		ADD_TRAIT(owner, TRAIT_MESON_VISION, "Auspex")
+		ADD_TRAIT(owner, TRAIT_MESON_VISION, REF(src))
 
 	if(add_xray)
-		ADD_TRAIT(owner, TRAIT_XRAY_VISION, "Auspex")
+		ADD_TRAIT(owner, TRAIT_XRAY_VISION, REF(src))
 
 	owner.update_sight()
 
 /datum/action/cooldown/vampire/auspex/proc/unlooky()
 	SIGNAL_HANDLER
 
-	if(listeningTo)
-		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
-		listeningTo = null
-	if(owner && owner.client)
-		var/client/C = owner.client
-		C.change_view(CONFIG_GET(string/default_view))
-		owner.client.pixel_x = 0
-		owner.client.pixel_y = 0
+	if(listening_to)
+		UnregisterSignal(listening_to, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_LOGOUT, COMSIG_ATOM_POST_DIR_CHANGE))
+		listening_to = null
 
 	looking = FALSE
-
-	owner.remove_traits(list(TRAIT_MESON_VISION, TRAIT_XRAY_VISION), "Auspex")
+	owner.remove_traits(list(TRAIT_MESON_VISION, TRAIT_XRAY_VISION), REF(src))
 	owner.update_sight()
 
+	// do this last in case weird client shit happens and runtimes
+	var/client/client = owner.client
+	if(client)
+		client?.change_view(CONFIG_GET(string/default_view))
+		client?.pixel_x = 0
+		client?.pixel_y = 0
+
 /datum/action/cooldown/vampire/auspex/Destroy()
-	listeningTo = null
+	listening_to = null
 	return ..()
