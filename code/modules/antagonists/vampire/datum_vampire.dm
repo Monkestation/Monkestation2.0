@@ -46,6 +46,8 @@
 	var/broke_masquerade = FALSE
 	/// How many Masquerade Infractions do we have?
 	var/masquerade_infractions = 0
+	/// Cooldown between masquerade infractions, so you can't have a bunch of them in the span of a single fight.
+	COOLDOWN_DECLARE(masquerade_infraction_cooldown)
 
 	/// How many humanity points do we have? 0-10
 	/// We actually always start with 7 and then add the clan's default humanity
@@ -318,7 +320,7 @@
 
 	if(!broke_masquerade)
 		.["Break Masq"] = CALLBACK(src, PROC_REF(break_masquerade))
-		.["Add Infraction"] = CALLBACK(src, PROC_REF(give_masquerade_infraction))
+		.["Add Infraction"] = CALLBACK(src, PROC_REF(give_masquerade_infraction), TRUE)
 
 	if(humanity > 0)
 		.["Humanity Deduct"] = CALLBACK(src, PROC_REF(adjust_humanity), -1, FALSE)

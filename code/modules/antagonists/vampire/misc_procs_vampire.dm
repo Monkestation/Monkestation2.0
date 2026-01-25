@@ -39,9 +39,13 @@
 /**
  * Increment the masquerade infraction counter and warn the vampire accordingly
 **/
-/datum/antagonist/vampire/proc/give_masquerade_infraction()
+/datum/antagonist/vampire/proc/give_masquerade_infraction(ignore_cooldown = FALSE)
 	if(broke_masquerade)
 		return
+	if(!ignore_cooldown)
+		if(!COOLDOWN_FINISHED(src, masquerade_infraction_cooldown))
+			return
+		COOLDOWN_START(src, masquerade_infraction_cooldown, 90 SECONDS)
 	masquerade_infractions++
 
 	owner.current.playsound_local(null, 'sound/vampires/lunge_warn.ogg', 100, FALSE, pressure_affected = FALSE)
