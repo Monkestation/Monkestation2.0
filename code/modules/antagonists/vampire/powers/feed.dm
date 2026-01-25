@@ -361,14 +361,18 @@
 				var/mob/living/carbon/carbon_target = feed_target
 				carbon_target.bleed(15)
 			playsound(get_turf(feed_target), 'sound/effects/splat.ogg', 40, TRUE)
-			/* if(ishuman(feed_target))
-				var/mob/living/carbon/human/target_user = feed_target
-				target_user.add_bleeding(BLEED_CRITICAL) */
+
 			feed_target.add_splatter_floor(get_turf(feed_target))
 
 			// Cover both parties in blood
 			user.add_mob_blood(feed_target) // Put target's blood on us. The donor goes in the ( )
 			feed_target.add_mob_blood(feed_target)
+
+			if(ishuman(feed_target))
+				var/mob/living/carbon/human/target_user = feed_target
+				var/obj/item/bodypart/head_part = target_user.get_bodypart(BODY_ZONE_HEAD)
+				if(head_part)
+					head_part.generic_bleedstacks += 5
 
 			// Ow
 			feed_target.apply_damage(10, BRUTE, BODY_ZONE_HEAD)
