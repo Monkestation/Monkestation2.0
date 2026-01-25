@@ -58,6 +58,6 @@
 	conversion_target.mind.add_antag_datum(vassaldatum)
 
 	message_admins("[ADMIN_LOOKUPFLW(conversion_target)] has become a vassal, and is enslaved to [ADMIN_LOOKUPFLW(owner.current)].")
-	// log_objective("[conversion_target] has become a vassal, and is enslaved to [owner.current].")
+	log_admin("[key_name(conversion_target)] has become a vassal, and is enslaved to [key_name(owner.current)].")
 
 	return TRUE
