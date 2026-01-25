@@ -1287,7 +1287,7 @@
 
 /datum/plush_trait/promiscuous
 	name = "Meretricious"
-	desc = "makes the"
+	desc = "makes the affected plush scandelous and disloyal"
 	flags = PLUSH_PROMISCUOUS
 	category = PLUSH_TRAIT_CATEGORY_PERSONALITY
 	tier = 1
