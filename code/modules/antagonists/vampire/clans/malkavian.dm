@@ -20,27 +20,26 @@
 	vampiredatum.owned_disciplines += new /datum/discipline/obfuscate(vampiredatum)
 	vampiredatum.owned_disciplines += new /datum/discipline/dominate(vampiredatum)
 
-
-	var/mob/living/carbon/carbon_owner = vampiredatum.owner.current
-	if(istype(carbon_owner))
-		carbon_owner.gain_trauma(/datum/brain_trauma/mild/hallucinations, TRAUMA_RESILIENCE_ABSOLUTE)
-		carbon_owner.gain_trauma(/datum/brain_trauma/special/bluespace_prophet/phobetor, TRAUMA_RESILIENCE_ABSOLUTE)
-
-	ADD_TRAIT(vampiredatum.owner.current, TRAIT_XRAY_VISION, TRAIT_VAMPIRE)
-	vampiredatum.owner.current.update_sight()
-
 	vampiredatum.owner.current.playsound_local(get_turf(vampiredatum.owner.current), 'sound/ambience/antag/creepalert.ogg', 80, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 	to_chat(vampiredatum.owner.current, span_hypnophrase("Welcome, childe of Malkav..."))
 
-/datum/vampire_clan/malkavian/Destroy(force)
-	REMOVE_TRAIT(vampiredatum.owner.current, TRAIT_XRAY_VISION, TRAIT_VAMPIRE)
-	vampiredatum.owner.current.update_sight()
+/datum/vampire_clan/malkavian/apply_effects(mob/living/body)
+	if(iscarbon(body))
+		var/mob/living/carbon/carbon_body = body
+		carbon_body.gain_trauma(/datum/brain_trauma/mild/hallucinations, TRAUMA_RESILIENCE_ABSOLUTE)
+		carbon_body.gain_trauma(/datum/brain_trauma/special/bluespace_prophet/phobetor, TRAUMA_RESILIENCE_ABSOLUTE)
 
-	var/mob/living/carbon/carbon_owner = vampiredatum.owner.current
-	if(istype(carbon_owner))
-		carbon_owner.cure_trauma_type(/datum/brain_trauma/mild/hallucinations, TRAUMA_RESILIENCE_ABSOLUTE)
-		carbon_owner.cure_trauma_type(/datum/brain_trauma/special/bluespace_prophet/phobetor, TRAUMA_RESILIENCE_ABSOLUTE)
-	return ..()
+	ADD_TRAIT(body, TRAIT_XRAY_VISION, TRAIT_VAMPIRE)
+	body.update_sight()
+
+/datum/vampire_clan/malkavian/remove_effects(mob/living/body)
+	if(iscarbon(body))
+		var/mob/living/carbon/carbon_body = body
+		carbon_body.cure_trauma_type(/datum/brain_trauma/mild/hallucinations, TRAUMA_RESILIENCE_ABSOLUTE)
+		carbon_body.cure_trauma_type(/datum/brain_trauma/special/bluespace_prophet/phobetor, TRAUMA_RESILIENCE_ABSOLUTE)
+
+	REMOVE_TRAIT(body, TRAIT_XRAY_VISION, TRAIT_VAMPIRE)
+	body.update_sight()
 
 /datum/vampire_clan/malkavian/handle_clan_life()
 	. = ..()

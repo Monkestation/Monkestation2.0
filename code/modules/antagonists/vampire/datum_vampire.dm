@@ -236,6 +236,8 @@
 	current_mob.has_dna()?.remove_all_mutations()
 	current_mob.add_traits(vampire_traits + always_traits, TRAIT_VAMPIRE)
 
+	my_clan?.apply_effects(current_mob)
+
 /**
  * Remove innate effects is everything given to the mob
  * When a body is tranferred, this is called on the old mob.
@@ -281,6 +283,9 @@
 	if(ishuman(current_mob))
 		var/mob/living/carbon/human/current_human = current_mob
 		current_human.physiology?.stamina_mod /= VAMPIRE_INHERENT_STAMINA_RESIST
+
+	if(!QDELETED(current_mob))
+		my_clan?.remove_effects(current_mob)
 
 /datum/antagonist/vampire/proc/on_hud_created(datum/source)
 	SIGNAL_HANDLER

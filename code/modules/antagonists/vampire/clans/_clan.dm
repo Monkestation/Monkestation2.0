@@ -73,12 +73,22 @@
 
 	for(var/datum/action/cooldown/vampire/clanselect/clanselect in vampiredatum.powers)
 		vampiredatum.remove_power(clanselect)
+
+	if(!QDELETED(vampiredatum.owner?.current))
+		apply_effects(vampiredatum.owner.current)
+
+/datum/vampire_clan/proc/apply_effects(mob/living/body)
+	return
+
+/datum/vampire_clan/proc/remove_effects(mob/living/body)
 	return
 
 /datum/vampire_clan/Destroy(force)
+	if(!QDELETED(vampiredatum?.owner?.current))
+		remove_effects(vampiredatum.owner.current)
 	vampiredatum = null
 	UnregisterSignal(SSdcs, COMSIG_VAMPIRE_BROKE_MASQUERADE)
-	. = ..()
+	return ..()
 
 /**
  * Called when a Vampire exits Torpor
