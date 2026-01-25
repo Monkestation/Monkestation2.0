@@ -539,7 +539,7 @@
 	if(target.stat == DEAD)
 		blood_to_take /= 3
 	// Penalty for non-human blood
-	if(!ishuman(target))
+	if(!ishuman(target) || ismonkeybasic(target))
 		blood_to_take /= 10
 	// Penalty for frenzy(messy eater)
 	if(living_owner.has_status_effect(/datum/status_effect/frenzy))
