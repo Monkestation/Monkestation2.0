@@ -29,6 +29,9 @@
 	/// Timer between alerts for Healing messages
 	COOLDOWN_DECLARE(vampire_spam_healing)
 
+	/// Should we automatically forge objectives?
+	var/should_forge_objectives = TRUE
+
 	/// Flavor only
 	var/vampire_name
 
@@ -347,7 +350,8 @@
 	select_first_name()
 
 	// Objectives
-	forge_objectives()
+	if(should_forge_objectives)
+		forge_objectives()
 
 	// Assign starting stats skill point.
 	give_starting_powers()
@@ -413,7 +417,8 @@
 
 	to_chat(owner, boxed_message(msg.Join("\n")))
 
-	owner.announce_objectives()
+	if(should_forge_objectives)
+		owner.announce_objectives()
 	antag_memory += "Although you were born a mortal, in undeath you earned the name <b>[fullname]</b>.<br>"
 
 /datum/antagonist/vampire/farewell()

@@ -109,6 +109,7 @@
 
 		// Make, then give the datum
 		var/datum/antagonist/vampire/scourgedatum = new(living_target.mind)
+		scourgedatum.should_forge_objectives = FALSE // their one objective is to enforce their prince's authority
 		living_target.mind.add_antag_datum(scourgedatum)
 
 		// Pull them into our clan
