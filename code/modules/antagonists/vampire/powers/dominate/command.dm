@@ -132,7 +132,7 @@
 			return
 
 	ADD_TRAIT(living_target, TRAIT_PACIFISM, TRAIT_COMMANDED)
-	var/list/directives = brainwash(living_target, brainwash_list, owner)
+	var/list/directives = brainwash(living_target, brainwash_list, "[owner.real_name]'s Command")
 
 	message_admins("[ADMIN_LOOKUPFLW(owner)] used the COMMAND ability on [ADMIN_LOOKUPFLW(living_target)], commanding them to [command].")
 	log_game("[key_name(owner)] used the command ability on [living_target], commanding them to [command].")
