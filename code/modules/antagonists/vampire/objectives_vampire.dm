@@ -74,7 +74,7 @@
 
 		// Mind Assigned
 		if(vassal_mind.assigned_role)
-			all_vassal_jobs |= vassal_mind.assigned_role
+			all_vassal_jobs += vassal_mind.assigned_role
 			continue
 		// Mob Assigned
 		if(vassal_mind.current?.job)
