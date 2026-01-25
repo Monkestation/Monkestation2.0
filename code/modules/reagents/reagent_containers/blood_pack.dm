@@ -33,6 +33,41 @@
 
 	return ..()
 
+#define BLOODBAG_GULP_SIZE 5
+
+/obj/item/reagent_containers/blood/attack(mob/living/victim, mob/living/attacker, params)
+	if(!can_drink(victim, attacker))
+		return
+
+	if(victim != attacker)
+		if(!do_after(attacker, 5 SECONDS, victim, hidden = TRUE))
+			return
+		attacker.visible_message(
+			span_notice("[attacker] forces [victim] to drink from \the [src]."),
+			span_notice("You put \the [src] up to [victim]'s mouth."))
+		reagents.trans_to(victim, BLOODBAG_GULP_SIZE, transfered_by = attacker, methods = INGEST)
+		playsound(victim, 'sound/items/drink.ogg', vol = 30, vary = TRUE)
+		return TRUE
+
+	while(do_after(victim, 1 SECONDS, victim, timed_action_flags = IGNORE_USER_LOC_CHANGE, extra_checks = CALLBACK(src, PROC_REF(can_drink), victim, attacker), hidden = TRUE))
+		victim.visible_message(
+			span_notice("[victim] puts \the [src] up to [victim.p_their()] mouth."),
+			span_notice("You take a sip from \the [src]."),
+		)
+		reagents.trans_to(victim, BLOODBAG_GULP_SIZE, transfered_by = attacker, methods = INGEST)
+		playsound(victim, 'sound/items/drink.ogg', vol = 30, vary = TRUE)
+	return TRUE
+
+#undef BLOODBAG_GULP_SIZE
+
+/obj/item/reagent_containers/blood/proc/can_drink(mob/living/victim, mob/living/attacker)
+	if(!canconsume(victim, attacker))
+		return FALSE
+	if(!reagents?.total_volume)
+		to_chat(victim, span_warning("[src] is empty!"))
+		return FALSE
+	return TRUE
+
 /obj/item/reagent_containers/blood/update_name(updates)
 	. = ..()
 	if(labelled)
