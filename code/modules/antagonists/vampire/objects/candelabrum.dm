@@ -28,12 +28,15 @@
 
 /obj/structure/vampire/candelabrum/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = NONE
-	if(!HAS_MIND_TRAIT(user, TRAIT_VAMPIRE_ALIGNED) || held_item)
+	if(held_item)
 		return NONE
 	if(!anchored)
-		if(Adjacent(user))
+		if(Adjacent(user) && IS_VAMPIRE(user))
 			context[SCREENTIP_CONTEXT_LMB] = "Bolt"
 			return CONTEXTUAL_SCREENTIP_SET
+		return NONE
+
+	if(!HAS_MIND_TRAIT(user, TRAIT_VAMPIRE_ALIGNED))
 		return NONE
 
 	var/is_full_vampire = IS_VAMPIRE(user)
