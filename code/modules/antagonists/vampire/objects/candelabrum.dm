@@ -9,7 +9,6 @@
 	light_outer_range = 2
 	light_on = FALSE
 	density = FALSE
-	can_buckle = TRUE
 	anchored = FALSE
 	ghost_desc = "This is a magical candle which drains the sanity of non-vampires and non-vassals."
 	vampire_desc = "This is a magical candle which drains the sanity of mortals who are not under your command while it is active."
