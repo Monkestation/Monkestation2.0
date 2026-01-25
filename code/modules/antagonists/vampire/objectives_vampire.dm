@@ -92,7 +92,7 @@
 	var/list/vassal_jobs = get_vassal_occupations()
 	var/converted_count = 0
 	for(var/datum/job/checked_job in vassal_jobs)
-		if(checked_job.departments_bitflags & target_department)
+		if(checked_job.departments_bitflags & possible_departments[target_department])
 			converted_count++
 	if(converted_count >= target_amount)
 		return TRUE
