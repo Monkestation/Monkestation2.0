@@ -297,7 +297,7 @@
 	else if(owner.pulling == feed_target && owner.grab_state == GRAB_AGGRESSIVE) // COMBAT FEED BELOW HERE!!!!!!!!!!
 
 		feed_target.Stun((5 + level_current) SECONDS)
-		feed_target.adjust_jitter((5 + level_current) SECONDS)
+		feed_target.set_jitter_if_lower((5 + level_current) SECONDS)
 
 		owner.visible_message(
 			span_warning("[owner] closes [owner.p_their()] mouth around [feed_target]'s neck!"),
