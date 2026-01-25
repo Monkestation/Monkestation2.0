@@ -85,6 +85,11 @@
 
 	SSquirks.AssignQuirks(clone_human, original_human.client)
 
+	var/datum/atom_voice/voice = new()
+	voice.copy_from(original_human.get_voice())
+
+	clone_human.get_voice().copy_from(voice)
+
 	// Perform a quick copy of existing memories.
 	// This may result in some minutely imperfect memories, but it'll do
 	original_mind.quick_copy_all_memories(owner)

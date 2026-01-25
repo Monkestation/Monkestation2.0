@@ -942,7 +942,9 @@
 	return ..()
 
 /datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/execute()
-	possible_spawns += find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = FALSE)
+	for(var/turf/warp_point in GLOB.generic_maintenance_landmarks)
+		if(istype(warp_point.loc, /area/station/maintenance) && is_safe_turf(warp_point))
+			possible_spawns += warp_point
 	if(!possible_spawns.len)
 		return MAP_ERROR
 	return ..()
