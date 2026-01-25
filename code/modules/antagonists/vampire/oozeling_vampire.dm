@@ -18,7 +18,6 @@
 		var/mob/living/holder = get(core, /mob/living)
 		if(!QDELETED(holder) && !HAS_MIND_TRAIT(holder, TRAIT_VAMPIRE_ALIGNED))
 			multiplier = OOZELING_VAMPIRE_REVIVE_HELD_MULTIPLIER
-	var/revive_time = FLOOR(OOZELING_VAMPIRE_REVIVE_TIME / multiplier, 5 SECONDS)
 	return oozeling_revive_start_time + (OOZELING_VAMPIRE_REVIVE_TIME / multiplier)
 
 /// Handles setting up self-revival when an oozeling vampire dies.
