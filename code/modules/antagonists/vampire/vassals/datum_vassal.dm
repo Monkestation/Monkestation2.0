@@ -62,6 +62,9 @@
 	vampire_team = master.vampire_team
 	vampire_team.add_member(owner)
 
+	if(!owner.special_role)
+		owner.special_role = "Vassal"
+
 	// Enslave them to their Master
 	master.vassals |= src
 	owner.enslave_mind_to_creator(master.owner.current)
@@ -77,6 +80,9 @@
 /datum/antagonist/vassal/on_removal()
 	REMOVE_TRAIT(owner, TRAIT_VAMPIRE_ALIGNED, REF(src))
 	UnregisterSignal(SSsunlight, COMSIG_SOL_WARNING_GIVEN)
+
+	if(owner.special_role == "Vassal")
+		owner.special_role = null
 
 	// Free them from their Master
 	if(master)
