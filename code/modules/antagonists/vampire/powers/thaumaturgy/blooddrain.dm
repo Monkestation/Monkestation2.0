@@ -18,8 +18,8 @@
 /datum/action/cooldown/vampire/targeted/blooddrain/FireTargetedPower(atom/target_atom)
 	. = ..()
 	var/mob/living/living_owner = owner
-	var/mob/living/living_target = target_atom
-	// check_witnesses(living_target)
+	/* var/mob/living/living_target = target_atom
+	check_witnesses(living_target) */
 	living_owner.face_atom(target_atom)
 	living_owner.changeNext_move(CLICK_CD_RANGE)
 	living_owner.newtonian_move(get_dir(target_atom, living_owner))

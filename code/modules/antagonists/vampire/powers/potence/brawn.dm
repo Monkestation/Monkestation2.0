@@ -86,8 +86,8 @@
 	if(used)
 		playsound(get_turf(human_owner), 'sound/effects/grillehit.ogg', 80, TRUE, -1)
 
-	if(used)
-		// check_witnesses()
+	/* if(used)
+		check_witnesses() */
 	return used
 
 /datum/action/cooldown/vampire/targeted/brawn/proc/escape_puller()

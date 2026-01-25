@@ -67,10 +67,16 @@
 
 	// Check if we are seen while feeding, from the vampire's POV
 	if(currently_feeding)
+		var/turf/our_turf = get_turf(owner)
+		var/turf/target_turf = get_turf(target)
+		var/is_dark = min(GET_SIMPLE_LUMCOUNT(our_turf), GET_SIMPLE_LUMCOUNT(target_turf)) <= SHADOW_SPECIES_DIM_LIGHT
+
 		for(var/mob/living/watcher in oviewers(silent_feed ? FEED_SILENT_NOTICE_RANGE : FEED_LOUD_NOTICE_RANGE, owner) - target)
 			if(!watcher.client)
 				continue
 			if(HAS_SILICON_ACCESS(watcher))
+				continue
+			if(is_dark && !watcher.Adjacent(owner) && !watcher.Adjacent(target))
 				continue
 			if(watcher.stat != CONSCIOUS)
 				continue
@@ -97,6 +103,8 @@
 			if(HAS_SILICON_ACCESS(watcher))
 				continue
 			if(watcher.stat != CONSCIOUS)
+				continue
+			if(is_dark && !watcher.Adjacent(owner) && !watcher.Adjacent(target))
 				continue
 			if(watcher.is_blind() || watcher.is_nearsighted_currently() || HAS_TRAIT(watcher, TRAIT_GHOST_CRITTER) || isdrone(watcher))
 				continue

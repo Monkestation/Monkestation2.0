@@ -232,10 +232,15 @@
 
 // If there's a mortal in line of sight, we get a masq infraction
 /datum/action/cooldown/vampire/proc/check_witnesses(mob/living/target)
+	var/turf/our_turf = get_turf(owner)
+	var/turf/target_turf = get_turf(target)
+	var/is_dark = min(GET_SIMPLE_LUMCOUNT(our_turf), GET_SIMPLE_LUMCOUNT(target_turf)) <= SHADOW_SPECIES_DIM_LIGHT
 	for(var/mob/living/watcher in oviewers(6, owner) - target)
 		if(!watcher.client || watcher.client.is_afk())
 			continue
 		if(HAS_SILICON_ACCESS(watcher))
+			continue
+		if(is_dark && !watcher.Adjacent(owner) && !watcher.Adjacent(target))
 			continue
 		if(watcher.stat != CONSCIOUS || HAS_TRAIT(watcher, TRAIT_RESTRAINED) || HAS_TRAIT(watcher, TRAIT_MOVE_VENTCRAWLING))
 			continue
