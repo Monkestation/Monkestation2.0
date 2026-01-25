@@ -12,7 +12,7 @@
 	alerttooltipstyle = "cult"
 
 /datum/status_effect/frenzy
-	id = "Frenzy"
+	id = "frenzy"
 	status_type = STATUS_EFFECT_UNIQUE
 	duration = STATUS_EFFECT_PERMANENT
 	tick_interval = 1 SECONDS
@@ -24,9 +24,10 @@
 	/// Traits given by frenzy.
 	var/static/list/frenzy_traits = list(
 		TRAIT_DISCOORDINATED_TOOL_USER,
+		TRAIT_FRENZY,
+		TRAIT_PUSHIMMUNE,
 		TRAIT_STRONG_GRABBER,
 		TRAIT_STUNIMMUNE,
-		TRAIT_PUSHIMMUNE,
 	)
 
 /datum/status_effect/frenzy/Destroy()
@@ -66,7 +67,7 @@
 		human_owner.physiology?.stamina_mod *= 0.4
 
 	// Traits
-	carbon_owner.add_traits(frenzy_traits, TRAIT_FRENZY)
+	carbon_owner.add_traits(frenzy_traits, TRAIT_STATUS_EFFECT(id))
 
 	return TRUE
 
@@ -90,7 +91,7 @@
 		human_owner.physiology?.stamina_mod /= 0.4
 
 	// Traits
-	carbon_owner.remove_traits(frenzy_traits, TRAIT_FRENZY)
+	carbon_owner.remove_traits(frenzy_traits, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/frenzy/tick()
 	var/mob/living/carbon/carbon_owner = owner

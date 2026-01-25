@@ -4,8 +4,8 @@
 	button_icon_state = "power_veil"
 	power_explanation = "Activating Veil of Many Faces will shroud you in smoke and forge you a new identity.\n\
 		Your name and appearance will be completely randomized, deactivating the ability will restore you to your former self."
-	power_flags = BP_AM_TOGGLE
-	check_flags = BP_CANT_USE_IN_FRENZY | BP_CANT_USE_WHILE_STAKED | BP_CANT_USE_DURING_SOL
+	vampire_power_flags = BP_AM_TOGGLE
+	vampire_check_flags = BP_CANT_USE_IN_FRENZY | BP_CANT_USE_WHILE_STAKED | BP_CANT_USE_DURING_SOL
 	vitaecost = 100
 	constant_vitaecost = 4
 	cooldown_time = 10 SECONDS

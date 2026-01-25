@@ -6,8 +6,8 @@
 		At level 3, you can break closets open and break restraints.\n\
 		At level 4, you can bash airlocks open.\n\
 		Higher ranks will increase the damage when punching someone."
-	power_flags = BP_AM_TOGGLE
-	check_flags = BP_CANT_USE_IN_TORPOR | BP_CANT_USE_WHILE_STAKED | BP_CANT_USE_IN_FRENZY | BP_CANT_USE_WHILE_INCAPACITATED | BP_CANT_USE_WHILE_UNCONSCIOUS
+	vampire_power_flags = BP_AM_TOGGLE
+	vampire_check_flags = BP_CANT_USE_IN_TORPOR | BP_CANT_USE_WHILE_STAKED | BP_CANT_USE_IN_FRENZY | BP_CANT_USE_WHILE_INCAPACITATED | BP_CANT_USE_WHILE_UNCONSCIOUS
 	vitaecost = 50
 	sol_multiplier = 5
 	cooldown_time = 9 SECONDS

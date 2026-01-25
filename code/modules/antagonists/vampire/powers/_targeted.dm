@@ -1,6 +1,6 @@
 // NOTE: All Targeted spells are Toggles! We just don't bother checking here.
 /datum/action/cooldown/vampire/targeted
-	power_flags = BP_AM_TOGGLE
+	vampire_power_flags = BP_AM_TOGGLE
 
 	///If set, how far the target has to be for the power to work.
 	var/target_range
@@ -41,10 +41,10 @@
 	build_all_button_icons(UPDATE_BUTTON_NAME | UPDATE_BUTTON_BACKGROUND)
 
 /datum/action/cooldown/vampire/targeted/deactivate_power(successful = FALSE)
-	if(power_flags & BP_AM_TOGGLE)
+	if(vampire_power_flags & BP_AM_TOGGLE)
 		UnregisterSignal(owner, COMSIG_LIVING_LIFE)
 
-	if((power_flags & BP_AM_SINGLEUSE) && successful)
+	if((vampire_power_flags & BP_AM_SINGLEUSE) && successful)
 		remove_after_use()
 		return
 
@@ -88,7 +88,7 @@
 
 	power_in_use = TRUE
 	FireTargetedPower(target_atom)
-	if(power_flags & BP_AM_TOGGLE)
+	if(vampire_power_flags & BP_AM_TOGGLE)
 		RegisterSignal(owner, COMSIG_LIVING_LIFE, PROC_REF(UsePower))
 	// Skip this part so we can return TRUE right away.
 	if(power_activates_immediately)

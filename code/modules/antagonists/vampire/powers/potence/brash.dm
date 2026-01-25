@@ -17,7 +17,7 @@
 		At level 4 this ability will allow you to break through normal walls and windows. \n\
 		At level 5 this ability will allow you to break through reinforced walls and windows. \n\
 		Higher levels will increase this ability's damage and knockdown."
-	power_flags = BP_AM_VERY_DYNAMIC_COOLDOWN
+	vampire_power_flags = BP_AM_VERY_DYNAMIC_COOLDOWN
 	vitaecost = 0 // Set on use
 	cooldown_time = 1 SECONDS // Same as above
 	damage_coefficient = 1.625

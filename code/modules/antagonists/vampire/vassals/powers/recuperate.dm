@@ -6,8 +6,8 @@
 	power_explanation = "Activating this Power will begin to heal your wounds.\n\
 		You will heal Brute and Toxin damage at the cost of your Stamina and blood.\n\
 		If you aren't a bloodless race, you will additionally heal Burn damage."
-	power_flags = BP_AM_TOGGLE
-	check_flags = BP_CANT_USE_WHILE_INCAPACITATED | BP_CANT_USE_WHILE_UNCONSCIOUS
+	vampire_power_flags = BP_AM_TOGGLE
+	vampire_check_flags = BP_CANT_USE_WHILE_INCAPACITATED | BP_CANT_USE_WHILE_UNCONSCIOUS
 	special_flags = NONE
 	vitaecost = 1.5
 	cooldown_time = 10 SECONDS

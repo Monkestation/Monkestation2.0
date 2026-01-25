@@ -9,8 +9,8 @@
 		If you lunge from behind or darkness, you will aggro-grab and knock the target down, scaling with your rank.\n\
 		If used on a dead body, you will tear their organs out.\n\
 		At level 4, you will instantly lunge, but are limited to tackling from only 6 tiles away."
-	power_flags = NONE
-	check_flags =  BP_CANT_USE_IN_TORPOR | BP_CANT_USE_WHILE_STAKED | BP_CANT_USE_IN_FRENZY | BP_CANT_USE_WHILE_INCAPACITATED | BP_CANT_USE_WHILE_UNCONSCIOUS
+	vampire_power_flags = NONE
+	vampire_check_flags =  BP_CANT_USE_IN_TORPOR | BP_CANT_USE_WHILE_STAKED | BP_CANT_USE_IN_FRENZY | BP_CANT_USE_WHILE_INCAPACITATED | BP_CANT_USE_WHILE_UNCONSCIOUS
 	vitaecost = 45
 	cooldown_time = 10 SECONDS
 	power_activates_immediately = FALSE

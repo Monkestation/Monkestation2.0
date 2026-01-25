@@ -100,7 +100,7 @@
 **/
 /datum/antagonist/vampire/proc/disable_all_powers(forced = FALSE)
 	for(var/datum/action/cooldown/vampire/power as anything in powers)
-		if(forced || ((power.check_flags & BP_CANT_USE_IN_TORPOR) && is_in_torpor()))
+		if(forced || ((power.vampire_check_flags & BP_CANT_USE_IN_TORPOR) && is_in_torpor()))
 			if(power.currently_active)
 				power.deactivate_power()
 

@@ -30,8 +30,8 @@
 					- Level 2: When Activated, you will see further, and be able to sense walls and the layout of rooms. \n\
 					- Level 3: When Activated, You still have meson vision, same as level 3, but even more range. \n\
 					- Level 4: When Activated, you will see further, and be able to sense anything in sight, seeing through walls and barriers as if they were glass."
-	power_flags = BP_AM_TOGGLE | BP_AM_STATIC_COOLDOWN
-	check_flags = BP_CANT_USE_IN_TORPOR | BP_CANT_USE_IN_FRENZY | BP_CANT_USE_WHILE_STAKED | BP_CANT_USE_WHILE_INCAPACITATED | BP_CANT_USE_WHILE_UNCONSCIOUS
+	vampire_power_flags = BP_AM_TOGGLE | BP_AM_STATIC_COOLDOWN
+	vampire_check_flags = BP_CANT_USE_IN_TORPOR | BP_CANT_USE_IN_FRENZY | BP_CANT_USE_WHILE_STAKED | BP_CANT_USE_WHILE_INCAPACITATED | BP_CANT_USE_WHILE_UNCONSCIOUS
 	vitaecost = 50
 	constant_vitaecost = 1
 	cooldown_time = 10 SECONDS

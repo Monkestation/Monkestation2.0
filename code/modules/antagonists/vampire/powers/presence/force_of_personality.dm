@@ -5,8 +5,8 @@
 	power_explanation = "Project an aura around yourself that subtly pushes people away.\n\
 						Effects on those in 3 tile range. No one will be able to voluntarily approach you.\n\
 						Targets must be able to see you to be affected."
-	power_flags = BP_AM_TOGGLE | BP_AM_STATIC_COOLDOWN
-	check_flags = BP_CANT_USE_IN_TORPOR | BP_CANT_USE_WHILE_STAKED | BP_CANT_USE_IN_FRENZY
+	vampire_power_flags = BP_AM_TOGGLE | BP_AM_STATIC_COOLDOWN
+	vampire_check_flags = BP_CANT_USE_IN_TORPOR | BP_CANT_USE_WHILE_STAKED | BP_CANT_USE_IN_FRENZY
 	vitaecost = 30
 	constant_vitaecost = 2
 	cooldown_time = 10 SECONDS

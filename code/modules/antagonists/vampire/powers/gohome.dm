@@ -15,8 +15,8 @@
 	power_explanation = "Activating Vanishing Act will, after a short delay, teleport you to your Claimed Coffin.\n\
 		Immediately after activating, lights around the user will begin to flicker.\n\
 		Once the user teleports to their coffin, in their place will be a Rat or Bat."
-	power_flags = BP_AM_TOGGLE | BP_AM_SINGLEUSE | BP_AM_STATIC_COOLDOWN
-	check_flags = BP_CANT_USE_IN_FRENZY | BP_CANT_USE_WHILE_STAKED
+	vampire_power_flags = BP_AM_TOGGLE | BP_AM_SINGLEUSE | BP_AM_STATIC_COOLDOWN
+	vampire_check_flags = BP_CANT_USE_IN_FRENZY | BP_CANT_USE_WHILE_STAKED
 	vitaecost = 100
 	cooldown_time = 100 SECONDS
 	///What stage of the teleportation are we in

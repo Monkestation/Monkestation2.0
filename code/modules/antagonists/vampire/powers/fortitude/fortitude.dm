@@ -28,8 +28,8 @@
 						At level 2: Gain push immunity.\n\
 						At level 3: Gain dismember resistance.\n\
 						At level 4: Gain complete stun immunity."
-	power_flags = BP_AM_TOGGLE | BP_AM_COSTLESS_UNCONSCIOUS
-	check_flags = BP_CANT_USE_IN_TORPOR | BP_CANT_USE_IN_FRENZY | BP_CANT_USE_WHILE_STAKED
+	vampire_power_flags = BP_AM_TOGGLE | BP_AM_COSTLESS_UNCONSCIOUS
+	vampire_check_flags = BP_CANT_USE_IN_TORPOR | BP_CANT_USE_IN_FRENZY | BP_CANT_USE_WHILE_STAKED
 	vitaecost = 50
 	cooldown_time = 5 SECONDS
 	constant_vitaecost = 1

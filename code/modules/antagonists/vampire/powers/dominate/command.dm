@@ -13,8 +13,8 @@
 		At level 1, your command will stay for 60 seconds.\n\
 		At level 2, it will remain for 3 minutes.\n\
 		Be smart with your wording. They will become pacified, and won't obey violent commands."
-	power_flags = NONE
-	check_flags = BP_CANT_USE_IN_TORPOR | BP_CANT_USE_IN_FRENZY | BP_CANT_USE_WHILE_STAKED | BP_CANT_USE_WHILE_INCAPACITATED | BP_CANT_USE_WHILE_UNCONSCIOUS
+	vampire_power_flags = NONE
+	vampire_check_flags = BP_CANT_USE_IN_TORPOR | BP_CANT_USE_IN_FRENZY | BP_CANT_USE_WHILE_STAKED | BP_CANT_USE_WHILE_INCAPACITATED | BP_CANT_USE_WHILE_UNCONSCIOUS
 	vitaecost = 120
 	cooldown_time = 80 SECONDS
 	target_range = 6
@@ -132,14 +132,14 @@
 			return
 
 	ADD_TRAIT(living_target, TRAIT_PACIFISM, TRAIT_COMMANDED)
-	brainwash(living_target, brainwash_list, owner)
+	var/list/directives = brainwash(living_target, brainwash_list, owner)
 
 	message_admins("[ADMIN_LOOKUPFLW(owner)] used the COMMAND ability on [ADMIN_LOOKUPFLW(living_target)], commanding them to [command].")
 	log_game("[key_name(owner)] used the command ability on [living_target], commanding them to [command].")
 
 	living_target.Immobilize(2 SECONDS, TRUE)
 	to_chat(living_target, span_narsie("[command]!"), type = MESSAGE_TYPE_WARNING)
-	addtimer(CALLBACK(src, PROC_REF(end_command), living_target), power_time)
+	addtimer(CALLBACK(src, PROC_REF(end_command), living_target, directives), power_time)
 
 	if(power_time_adjusted)
 		power_time *= 2
@@ -180,8 +180,8 @@
 	. = ..()
 	target_ref = null
 
-/datum/action/cooldown/vampire/targeted/command/proc/end_command(mob/living/living_target)
+/datum/action/cooldown/vampire/targeted/command/proc/end_command(mob/living/living_target, list/directives)
 	REMOVE_TRAIT(living_target, TRAIT_PACIFISM, TRAIT_COMMANDED)
-	unbrainwash(living_target)
+	unbrainwash(living_target, directives)
 
 	owner.balloon_alert(owner, "[living_target] snapped out of [living_target.p_their()] trance!")

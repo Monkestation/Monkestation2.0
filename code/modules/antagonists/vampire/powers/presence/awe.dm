@@ -8,8 +8,8 @@
 						- They are slightly slowed.\n\
 						- They occasionally lose focus: facing you, stepping towards you, or dropping items.\n\
 						Targets must be able to see you to be affected."
-	power_flags = BP_AM_TOGGLE | BP_AM_STATIC_COOLDOWN
-	check_flags = BP_CANT_USE_IN_TORPOR | BP_CANT_USE_WHILE_STAKED | BP_CANT_USE_IN_FRENZY
+	vampire_power_flags = BP_AM_TOGGLE | BP_AM_STATIC_COOLDOWN
+	vampire_check_flags = BP_CANT_USE_IN_TORPOR | BP_CANT_USE_WHILE_STAKED | BP_CANT_USE_IN_FRENZY
 	vitaecost = 30
 	constant_vitaecost = 2
 	cooldown_time = 10 SECONDS

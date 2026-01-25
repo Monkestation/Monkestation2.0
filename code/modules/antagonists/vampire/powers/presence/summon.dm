@@ -11,8 +11,8 @@
 		Your target will be unable to act and will be compelled to walk towards you.\n\
 		The effect ends when they reach you, after a duration, or if line of sight is broken.\n\
 		They must be able to see you to be affected."
-	power_flags = NONE
-	check_flags = BP_CANT_USE_IN_TORPOR | BP_CANT_USE_IN_FRENZY | BP_CANT_USE_WHILE_STAKED | BP_CANT_USE_WHILE_INCAPACITATED | BP_CANT_USE_WHILE_UNCONSCIOUS
+	vampire_power_flags = NONE
+	vampire_check_flags = BP_CANT_USE_IN_TORPOR | BP_CANT_USE_IN_FRENZY | BP_CANT_USE_WHILE_STAKED | BP_CANT_USE_WHILE_INCAPACITATED | BP_CANT_USE_WHILE_UNCONSCIOUS
 	vitaecost = 100
 	cooldown_time = 60 SECONDS
 	target_range = 10

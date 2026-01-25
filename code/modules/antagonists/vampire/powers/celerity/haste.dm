@@ -10,8 +10,8 @@
 		The Power will not work if you are lying down, zero-gravity, or are being aggressively grabbed.\n\
 		Anyone in your way during your Haste will be knocked down.\n\
 		Higher levels will increase the knockdown dealt to enemies."
-	power_flags = BP_AM_TOGGLE
-	check_flags = BP_CANT_USE_IN_TORPOR | BP_CANT_USE_IN_FRENZY | BP_CANT_USE_WHILE_STAKED | BP_CANT_USE_WHILE_INCAPACITATED | BP_CANT_USE_WHILE_UNCONSCIOUS
+	vampire_power_flags = BP_AM_TOGGLE
+	vampire_check_flags = BP_CANT_USE_IN_TORPOR | BP_CANT_USE_IN_FRENZY | BP_CANT_USE_WHILE_STAKED | BP_CANT_USE_WHILE_INCAPACITATED | BP_CANT_USE_WHILE_UNCONSCIOUS
 	vitaecost = 15
 	sol_multiplier = 2
 	cooldown_time = 12 SECONDS
@@ -83,7 +83,7 @@
 				break //just stop
 		else
 			consequetive_failures = 0 //reset so we can keep moving
-		if(user.resting || user.incapacitated(IGNORE_RESTRAINTS, IGNORE_GRAB)) //actually down? stop.
+		if(user.resting || user.incapacitated(IGNORE_RESTRAINTS | IGNORE_GRAB)) //actually down? stop.
 			break
 		if(success) //don't sleep if we failed to move.
 			sleep(world.tick_lag)

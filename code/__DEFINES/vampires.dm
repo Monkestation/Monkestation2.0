@@ -174,14 +174,14 @@
 #define TRAIT_BEINGSTAKED "trait_beingstaked"
 /// For people we have bitten
 #define TRAIT_FEED_MARKED "trait_feedmarked"
+/// This vampire is currently in a frebzy,
+#define TRAIT_FRENZY "trait_frenzy"
 
 // Trait sources
 /// Source trait for all vampire traits
 #define TRAIT_VAMPIRE "trait_vampire"
 /// Source trait while Feeding
 #define TRAIT_FEED "trait_feed"
-/// Source trait during a Frenzy
-#define TRAIT_FRENZY "trait_frenzy"
 /// Source trait for vampires in torpor.
 #define TRAIT_TORPOR "trait_torpor"
 /// Source trait for vampire mesmerization.

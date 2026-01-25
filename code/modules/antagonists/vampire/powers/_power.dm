@@ -20,9 +20,9 @@
 	var/datum/antagonist/vampire/vampiredatum_power
 
 	/// The effects on this Power (Toggled/Single Use/Static Cooldown)
-	var/power_flags = BP_AM_TOGGLE | BP_AM_SINGLEUSE | BP_AM_STATIC_COOLDOWN | BP_AM_COSTLESS_UNCONSCIOUS
-	/// Requirement flags for checks
-	check_flags = BP_CANT_USE_IN_TORPOR | BP_CANT_USE_IN_FRENZY | BP_CANT_USE_WHILE_STAKED | BP_CANT_USE_WHILE_INCAPACITATED | BP_CANT_USE_WHILE_UNCONSCIOUS
+	var/vampire_power_flags = BP_AM_TOGGLE | BP_AM_SINGLEUSE | BP_AM_STATIC_COOLDOWN | BP_AM_COSTLESS_UNCONSCIOUS
+	/// Vampire-specific requirement flags for checks
+	var/vampire_check_flags = BP_CANT_USE_IN_TORPOR | BP_CANT_USE_IN_FRENZY | BP_CANT_USE_WHILE_STAKED | BP_CANT_USE_WHILE_INCAPACITATED | BP_CANT_USE_WHILE_UNCONSCIOUS
 
 	// Special flags you can give to powers. Mainly used for any powers we want them to have by default, so, feed.
 	var/special_flags = NONE
@@ -47,13 +47,35 @@
 
 /datum/action/cooldown/vampire/Destroy()
 	vampiredatum_power = null
-	. = ..()
+	return ..()
 
 /datum/action/cooldown/vampire/Grant(mob/user)
 	. = ..()
 	var/datum/antagonist/vampire/vampiredatum = IS_VAMPIRE(owner)
 	if(vampiredatum)
 		vampiredatum_power = vampiredatum
+
+	if(vampire_check_flags & BP_CANT_USE_IN_TORPOR)
+		RegisterSignals(owner, list(SIGNAL_ADDTRAIT(TRAIT_NODEATH), SIGNAL_REMOVETRAIT(TRAIT_NODEATH)), PROC_REF(update_status_on_signal))
+	if(vampire_check_flags & BP_CANT_USE_IN_FRENZY)
+		RegisterSignals(owner, list(SIGNAL_ADDTRAIT(TRAIT_FRENZY), SIGNAL_REMOVETRAIT(TRAIT_FRENZY)), PROC_REF(update_status_on_signal))
+	if(vampire_check_flags & BP_CANT_USE_WHILE_INCAPACITATED)
+		RegisterSignals(owner, list(SIGNAL_ADDTRAIT(TRAIT_INCAPACITATED), SIGNAL_REMOVETRAIT(TRAIT_INCAPACITATED)), PROC_REF(update_status_on_signal))
+	if(vampire_check_flags & BP_CANT_USE_WHILE_UNCONSCIOUS)
+		RegisterSignal(owner, COMSIG_MOB_STATCHANGE, PROC_REF(update_status_on_signal))
+
+/datum/action/cooldown/vampire/Remove(mob/removed_from)
+	if(owner)
+		UnregisterSignal(owner, list(
+			COMSIG_MOB_STATCHANGE,
+			SIGNAL_ADDTRAIT(TRAIT_NODEATH),
+			SIGNAL_ADDTRAIT(TRAIT_FRENZY),
+			SIGNAL_ADDTRAIT(TRAIT_INCAPACITATED),
+			SIGNAL_REMOVETRAIT(TRAIT_NODEATH),
+			SIGNAL_REMOVETRAIT(TRAIT_FRENZY),
+			SIGNAL_REMOVETRAIT(TRAIT_INCAPACITATED),
+		))
+	return ..()
 
 /datum/action/cooldown/vampire/is_action_active(atom/movable/screen/movable/action_button/current_button)
 	if(currently_active)
@@ -69,7 +91,7 @@
 		return FALSE
 	pay_cost()
 	activate_power()
-	if(!(power_flags & BP_AM_TOGGLE) || !currently_active)
+	if(!(vampire_power_flags & BP_AM_TOGGLE) || !currently_active)
 		StartCooldown()
 
 	return TRUE
@@ -80,7 +102,7 @@
 		desc += "<br><br><b>COST:</b> [vitaecost] Blood"
 	if(constant_vitaecost > 0)
 		desc += "<br><br><b>CONSTANT COST:</b><i> [constant_vitaecost] Blood.</i>"
-	if(power_flags & BP_AM_SINGLEUSE)
+	if(vampire_power_flags & BP_AM_SINGLEUSE)
 		desc += "<br><br><b>SINGLE USE:</br><i> Can only be used once per night.</i>"
 
 /datum/action/cooldown/vampire/proc/can_pay_cost()
@@ -112,23 +134,23 @@
 	var/mob/living/carbon/carbon_owner = owner
 
 	// Torpor?
-	if((check_flags & BP_CANT_USE_IN_TORPOR) && HAS_TRAIT(carbon_owner, TRAIT_TORPOR))
+	if((vampire_check_flags & BP_CANT_USE_IN_TORPOR) && HAS_TRAIT(carbon_owner, TRAIT_TORPOR))
 		to_chat(carbon_owner, span_warning("Not while you're in Torpor."))
 		return FALSE
 	// Frenzy?
-	if((check_flags & BP_CANT_USE_IN_FRENZY) && owner.has_status_effect(/datum/status_effect/frenzy))
+	if((vampire_check_flags & BP_CANT_USE_IN_FRENZY) && owner.has_status_effect(/datum/status_effect/frenzy))
 		to_chat(carbon_owner, span_warning("You cannot use powers while in a Frenzy!"))
 		return FALSE
 	// Stake?
-	if((check_flags & BP_CANT_USE_WHILE_STAKED) && vampiredatum_power?.check_if_staked())
+	if((vampire_check_flags & BP_CANT_USE_WHILE_STAKED) && vampiredatum_power?.check_if_staked())
 		to_chat(carbon_owner, span_warning("You have a stake in your chest! Your powers are useless."))
 		return FALSE
 	// Conscious? -- We use our own (AB_CHECK_CONSCIOUS) here so we can control it more, like the error message.
-	if((check_flags & BP_CANT_USE_WHILE_UNCONSCIOUS) && carbon_owner.stat != CONSCIOUS)
+	if((vampire_check_flags & BP_CANT_USE_WHILE_UNCONSCIOUS) && carbon_owner.stat != CONSCIOUS)
 		to_chat(carbon_owner, span_warning("You can't do this while you are unconcious!"))
 		return FALSE
 	// Incapacitated?
-	if((check_flags & BP_CANT_USE_WHILE_INCAPACITATED) && carbon_owner.incapacitated(IGNORE_RESTRAINTS, IGNORE_GRAB))
+	if((vampire_check_flags & BP_CANT_USE_WHILE_INCAPACITATED) && carbon_owner.incapacitated(IGNORE_RESTRAINTS | IGNORE_GRAB))
 		to_chat(carbon_owner, span_warning("Not while you're incapacitated!"))
 		return FALSE
 	// Constant Cost (out of blood)
@@ -136,7 +158,7 @@
 		to_chat(carbon_owner, span_warning("You don't have the blood to upkeep [src]."))
 		return FALSE
 	// Sol check
-	if((check_flags & BP_CANT_USE_DURING_SOL) && carbon_owner.has_status_effect(/datum/status_effect/vampire_sol))
+	if((vampire_check_flags & BP_CANT_USE_DURING_SOL) && carbon_owner.has_status_effect(/datum/status_effect/vampire_sol))
 		to_chat(carbon_owner, span_warning("You can't use [src] during Sol!"))
 		return FALSE
 	return TRUE
@@ -156,7 +178,7 @@
 
 /datum/action/cooldown/vampire/proc/activate_power()
 	currently_active = TRUE
-	if(power_flags & BP_AM_TOGGLE)
+	if(vampire_power_flags & BP_AM_TOGGLE)
 		RegisterSignal(owner, COMSIG_LIVING_LIFE, PROC_REF(UsePower))
 
 	owner.log_message("used [src][vitaecost != 0 ? " at the cost of [vitaecost]" : ""].", LOG_ATTACK, color="red")
@@ -166,9 +188,9 @@
 	if(!currently_active) //Already inactive? Return
 		return
 
-	if(power_flags & BP_AM_TOGGLE)
+	if(vampire_power_flags & BP_AM_TOGGLE)
 		UnregisterSignal(owner, COMSIG_LIVING_LIFE)
-	if(power_flags & BP_AM_SINGLEUSE)
+	if(vampire_power_flags & BP_AM_SINGLEUSE)
 		remove_after_use()
 		return
 
@@ -183,7 +205,7 @@
 		return FALSE
 
 	// IF USER IS UNCONSCIOUS
-	if((power_flags & BP_AM_COSTLESS_UNCONSCIOUS) && owner.stat != CONSCIOUS)
+	if((vampire_power_flags & BP_AM_COSTLESS_UNCONSCIOUS) && owner.stat != CONSCIOUS)
 		return TRUE
 	else
 		if(vampiredatum_power)

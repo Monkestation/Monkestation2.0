@@ -17,8 +17,8 @@
 		This is very obvious and the radius in which you can be detected is much larger!\n\
 		<b>IMPORTANT:</b> You are given a Masquerade Infraction if a mortal witnesses you while feeding.\n\
 		<b>IMPORTANT:</b> You may feed on other vampires if they have broken the masquerade. Should you drain them, you will absorb their power!"
-	power_flags = BP_AM_TOGGLE | BP_AM_STATIC_COOLDOWN
-	check_flags = BP_CANT_USE_IN_TORPOR | BP_CANT_USE_WHILE_STAKED | BP_CANT_USE_WHILE_INCAPACITATED | BP_CANT_USE_WHILE_UNCONSCIOUS
+	vampire_power_flags = BP_AM_TOGGLE | BP_AM_STATIC_COOLDOWN
+	vampire_check_flags = BP_CANT_USE_IN_TORPOR | BP_CANT_USE_WHILE_STAKED | BP_CANT_USE_WHILE_INCAPACITATED | BP_CANT_USE_WHILE_UNCONSCIOUS
 	special_flags = VAMPIRE_DEFAULT_POWER
 	cooldown_time = 1 SECONDS
 	target_range = 1
@@ -337,7 +337,7 @@
 
 		// Normally removed traits are done. Now we give the victim a lil something to remember us by.
 		ADD_TRAIT(feed_target, TRAIT_FEED_MARKED, TRAIT_FEED_MARKS)
-		addtimer(TRAIT_CALLBACK_REMOVE(feed_target, TRAIT_FEED_MARKED, TRAIT_FEED_MARKS), rand(5 MINUTES, 10 MINUTES))
+		addtimer(TRAIT_CALLBACK_REMOVE(feed_target, TRAIT_FEED_MARKED, TRAIT_FEED_MARKS), rand(5 MINUTES, 10 MINUTES), TIMER_UNIQUE | TIMER_OVERRIDE)
 	else
 		owner.balloon_alert(owner, "combat feed requires aggressive grab!")
 		deactivate_power()

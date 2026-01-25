@@ -6,8 +6,8 @@
 	desc = "Take the first step as a true kindred and remember your true lineage."
 	button_icon_state = "clanselect"
 	power_explanation = "Activate to select your unique vampire clan."
-	power_flags = BP_AM_SINGLEUSE
-	check_flags = BP_CANT_USE_IN_TORPOR | BP_CANT_USE_IN_FRENZY | BP_CANT_USE_WHILE_STAKED | BP_CANT_USE_WHILE_INCAPACITATED | BP_CANT_USE_WHILE_UNCONSCIOUS
+	vampire_power_flags = BP_AM_SINGLEUSE
+	vampire_check_flags = BP_CANT_USE_IN_TORPOR | BP_CANT_USE_IN_FRENZY | BP_CANT_USE_WHILE_STAKED | BP_CANT_USE_WHILE_INCAPACITATED | BP_CANT_USE_WHILE_UNCONSCIOUS
 	vitaecost = 0
 	cooldown_time = 5 SECONDS
 
@@ -24,8 +24,8 @@
 	desc = "Take another step as a full kindred, and remember your true lineage."
 	button_icon_state = "power_levelup"
 	power_explanation = "Activate to level one of your disciplines."
-	power_flags = BP_AM_SINGLEUSE
-	check_flags = BP_CANT_USE_IN_TORPOR | BP_CANT_USE_IN_FRENZY | BP_CANT_USE_WHILE_STAKED | BP_CANT_USE_WHILE_INCAPACITATED | BP_CANT_USE_WHILE_UNCONSCIOUS
+	vampire_power_flags = BP_AM_SINGLEUSE
+	vampire_check_flags = BP_CANT_USE_IN_TORPOR | BP_CANT_USE_IN_FRENZY | BP_CANT_USE_WHILE_STAKED | BP_CANT_USE_WHILE_INCAPACITATED | BP_CANT_USE_WHILE_UNCONSCIOUS
 	vitaecost = 0
 	cooldown_time = 5 SECONDS
 
@@ -46,8 +46,8 @@
 						When used on your vassal, you will become their sire, embracing them as a full-blooded vampire.\n\
 						They will be part of your own clan, and of course receive some bonus levels as well.\n\n\
 						The Scourge is your enforcer, your tool to wield in the name of the camarilla. Use them to enforce the masquerade, and to keep control over your fellow kindred."
-	power_flags = BP_AM_SINGLEUSE
-	check_flags = BP_CANT_USE_IN_TORPOR | BP_CANT_USE_IN_FRENZY | BP_CANT_USE_WHILE_STAKED | BP_CANT_USE_WHILE_INCAPACITATED | BP_CANT_USE_WHILE_UNCONSCIOUS
+	vampire_power_flags = BP_AM_SINGLEUSE
+	vampire_check_flags = BP_CANT_USE_IN_TORPOR | BP_CANT_USE_IN_FRENZY | BP_CANT_USE_WHILE_STAKED | BP_CANT_USE_WHILE_INCAPACITATED | BP_CANT_USE_WHILE_UNCONSCIOUS
 	vitaecost = 0
 	cooldown_time = 35 SECONDS
 	power_activates_immediately = FALSE
