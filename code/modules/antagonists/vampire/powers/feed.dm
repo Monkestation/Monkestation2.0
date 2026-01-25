@@ -626,5 +626,5 @@
 
 /datum/status_effect/feed_marked/proc/on_examine(atom/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
-	if(isobserver(user) || (user.Adjacent(user) && !user.is_nearsighted_currently()))
+	if(isobserver(user) || (get_dist(user, owner) <= 3 && !user.is_nearsighted_currently()))
 		examine_list += span_warning("There are two strange punctures on [owner.p_their()] neck.")
