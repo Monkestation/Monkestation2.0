@@ -234,12 +234,6 @@
 	current_mob.has_dna()?.remove_all_mutations()
 	current_mob.add_traits(vampire_traits + always_traits, TRAIT_VAMPIRE)
 
-#ifdef VAMPIRE_TESTING
-	var/turf/user_loc = get_turf(current_mob)
-	new /obj/structure/closet/crate/coffin(user_loc)
-	new /obj/structure/vampire/vassalrack(user_loc)
-#endif
-
 /**
  * Remove innate effects is everything given to the mob
  * When a body is tranferred, this is called on the old mob.
@@ -359,6 +353,12 @@
 	if(!QDELETED(owner.current))
 		for(var/quirk_type in typesof(/datum/quirk/item_quirk/junkie) + /datum/quirk/skittish)
 			owner.current.remove_quirk(quirk_type)
+
+#ifdef VAMPIRE_TESTING
+	var/turf/user_loc = get_turf(owner.current)
+	new /obj/structure/closet/crate/coffin(user_loc)
+	new /obj/structure/vampire/vassalrack(user_loc)
+#endif
 
 /datum/antagonist/vampire/on_removal()
 	REMOVE_TRAIT(owner, TRAIT_VAMPIRE_ALIGNED, REF(src))
