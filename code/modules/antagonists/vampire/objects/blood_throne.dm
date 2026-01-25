@@ -87,7 +87,7 @@
 		if(!receiver.owner.current)
 			continue
 		var/mob/receiver_mob = receiver.owner.current
-		to_chat(receiver_mob, rendered, type = MESSAGE_TYPE_RADIO)
+		to_chat(receiver_mob, rendered, type = MESSAGE_TYPE_RADIO, avoid_highlighting = receiver_mob == user)
 
 	var/datum/antagonist/vampire/vampire_datum = IS_VAMPIRE(user)
 
