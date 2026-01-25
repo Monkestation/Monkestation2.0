@@ -10,6 +10,8 @@
 	antag_hud_name = "vampire"
 	preview_outfit = /datum/outfit/vampire_outfit
 
+	antag_count_points = 4 // there's gonna be a lot of these.
+
 	show_to_ghosts = TRUE
 
 	/// How much blood we have, starting off at default blood levels.
