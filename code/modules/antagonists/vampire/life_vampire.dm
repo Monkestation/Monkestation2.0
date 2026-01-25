@@ -181,6 +181,9 @@
 		var/obj/item/organ/internal/heart/current_heart = carbon_user.get_organ_slot(ORGAN_SLOT_HEART)
 		current_heart?.Stop()
 
+	// Heal wounds
+	for(var/datum/wound/iter_wound as anything in carbon_user.all_wounds)
+		iter_wound.remove_wound()
 
 	// Get rid of icky organs. From `panacea.dm`
 	var/static/list/bad_organs = typecacheof(list(

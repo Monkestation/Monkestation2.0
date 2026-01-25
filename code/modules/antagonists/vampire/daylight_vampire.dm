@@ -130,7 +130,7 @@
 	if(QDELETED(carbon_owner))
 		return
 	var/total_damage = carbon_owner.getBruteLoss() + carbon_owner.getFireLoss()
-	if(total_damage < 10)
+	if(total_damage < 10 && !length(carbon_owner.all_wounds))
 		return
 	if(is_in_torpor())
 		return
