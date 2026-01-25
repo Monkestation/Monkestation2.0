@@ -47,7 +47,10 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	var/static/list/bannedcore = typecacheof(list(/obj/item/disk/nuclear))
 	//Allowed implants usually given by cases and injectors
 	var/static/list/allowed_implants = typecacheof(list(
-		//obj/item/implant
+		/obj/item/implant/exile,
+		/obj/item/implant/tracking,
+		/obj/item/implant/teleport_blocker,
+		/obj/item/implant/chem
 	))
 	//Extraneous organs not of oozeling origin. Usually cyber implants.
 	var/static/list/allowed_organ_types = typecacheof(list(
@@ -449,6 +452,12 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 		victim.temporarilyRemoveItemFromInventory(item, force = TRUE, idrop = FALSE)
 		process_and_store_item(item, victim)
 
+	for(var/datum/action/item_action/hands_free/activate_pill/pill_action in victim.actions) // Store dental implants
+		pill_action.Remove(victim)
+		var/obj/pill = pill_action.target
+		if(istype(pill))
+			process_and_store_item(pill, victim)
+
 	for(var/obj/item/implant/curimplant in victim.implants) // Process and store implants
 		if(!is_type_in_typecache(curimplant, allowed_implants))
 			continue
@@ -479,6 +488,9 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 
 /obj/item/organ/internal/brain/slime/proc/drop_items_to_ground(turf/turf, list/dropping = stored_items, explode = FALSE)
 	for(var/atom/movable/item as anything in dropping)
+		if(istype(item, /obj/item/implantcase)) // Delete implants that aren't re-implanted. For now.
+			stored_items.Remove(item)
+			qdel(item)
 		if(explode)
 			brainmob.dropItemToGround(item, violent = TRUE)
 			stored_items.Remove(item)
@@ -486,6 +498,21 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 			item.forceMove(turf)
 			stored_items.Remove(item)
 	//stored_items.Cut()
+
+/obj/item/organ/internal/brain/slime/proc/readd_to_body(mob/living/carbon/human/new_body)
+	if(!QDELETED(new_body) && !QDELETED(src))
+		var/specific_implants = list(/obj/item/implant/exile, /obj/item/implant/tracking, /obj/item/implant/teleport_blocker, /obj/item/implant/chem)
+		for(var/atom/movable/item as anything in stored_items)
+			if(istype(item, /obj/item/implantcase)) // For sec implants for now.
+				var/obj/item/implantcase/case = item
+				if(istype(case.imp) && (case.imp.type in specific_implants))
+					var/obj/item/implant/imp = case.imp
+					if(imp.implant(new_body, new_body, silent = TRUE))
+						stored_items.Remove(item)
+						qdel(item)
+					else
+						stored_items.Remove(item)
+						qdel(item)
 
 /obj/item/organ/internal/brain/slime/proc/rebuild_body(mob/user, nugget = TRUE, revival_policy = POLICY_REVIVAL) as /mob/living/carbon/human
 	if(rebuilt)
@@ -582,6 +609,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	new_body.grab_ghost()
 	transfer_observers_to(new_body)
 
+	readd_to_body(new_body)
 	drop_items_to_ground(new_body.drop_location())
 
 	var/policy = get_policy(revival_policy)
