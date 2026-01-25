@@ -45,13 +45,13 @@
 /datum/round_event_control/antagonist/solo/vampire/midround/get_weight()
 	. = ..()
 	// if there's only one or two vamps, let's raise the chance of giving them some friends
-	switch(length(GLOB.all_vampires))
-		if(1)
-			. *= 2
-		if(2)
-			. *= 1.5
-		else
-			return
+	var/vampire_count = length(GLOB.all_vampires)
+	if(vampire_count == 1)
+		. *= 2
+	else if(vampire_count == 2)
+		. *= 1.5
+	else if(vampire_count >= 4)
+		. *= 0.5
 
 /datum/round_event/antagonist/solo/vampire/add_datum_to_mind(datum/mind/antag_mind)
 	var/datum/antagonist/vampire/vampire_datum = antag_mind.add_antag_datum(/datum/antagonist/vampire)
