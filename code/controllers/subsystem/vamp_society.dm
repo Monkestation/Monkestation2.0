@@ -45,11 +45,14 @@ SUBSYSTEM_DEF(vsociety)
 
 	// Build a poll_config datum to match the new polling API
 	currently_polling = TRUE
+	var/icon/prince_icon = icon('icons/vampires/vampiric.dmi', "prince")
+	prince_icon.Scale(32, 32)
 	var/list/pollers = SSpolling.poll_candidates(
 		"You are eligible for princedom.",
 		poll_time = 3 MINUTES,
 		flash_window = TRUE,
 		group = vampire_living_candidates,
+		alert_pic = prince_icon,
 		role_name_text = "Prince",
 		custom_response_messages = list(
 			POLL_RESPONSE_SIGNUP = "You have made your bid for princedom. <br>* Note: Princedom has certain expectations placed upon you. If you are not in a position to enforce the masquerade, consider letting someone else take this burden.",
