@@ -49,6 +49,7 @@
 	status_type = STATUS_EFFECT_REFRESH
 	duration = 4 SECONDS
 	tick_interval = 1 SECONDS
+	processing_speed = STATUS_EFFECT_PRIORITY
 	alert_type = null
 	var/mob/living/source_vampire
 	COOLDOWN_DECLARE(awe_effect_cooldown)

@@ -47,6 +47,7 @@
 	status_type = STATUS_EFFECT_REFRESH
 	duration = 10 SECONDS
 	tick_interval = 0.2 SECONDS
+	processing_speed = STATUS_EFFECT_PRIORITY
 	alert_type = null
 	/// The vampire projecting the aura
 	var/mob/living/source_vampire

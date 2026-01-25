@@ -72,6 +72,7 @@
 	status_type = STATUS_EFFECT_UNIQUE
 	duration = 30 SECONDS
 	tick_interval = 0.5 SECONDS
+	processing_speed = STATUS_EFFECT_PRIORITY
 	alert_type = /atom/movable/screen/alert/status_effect/summoned
 	/// The vampire who is summoning us
 	var/mob/living/source_vampire
