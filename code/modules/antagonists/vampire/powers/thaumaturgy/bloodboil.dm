@@ -90,8 +90,8 @@
 	var/stamina_damage = 5 * power
 	var/blood_loss = 2 * power + 2
 
-	owner.take_overall_damage(burn = burn_damage * seconds_between_ticks, stamina = stamina_damage * seconds_between_ticks)
-	owner.blood_volume = max(owner.blood_volume - (blood_loss * seconds_between_ticks), 0)
+	owner.take_overall_damage(burn = burn_damage, stamina = stamina_damage)
+	owner.blood_volume = max(owner.blood_volume - blood_loss, 0)
 
 	if(SPT_PROB(50, seconds_between_ticks))
 		to_chat(owner, span_warning("Oh god! IT BURNS!"))
