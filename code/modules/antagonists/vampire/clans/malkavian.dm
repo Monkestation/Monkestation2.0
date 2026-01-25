@@ -49,7 +49,8 @@
 
 	if(prob(15))
 		var/message = pick(strings("antagonist_flavor/malkavian_revelations.json", "revelations", "strings"))
-		INVOKE_ASYNC(living_vampire, TYPE_PROC_REF(/mob/living, whisper), message)
+		ASYNC
+			living_vampire.whisper(message, forced = "Malkavian Revelation")
 		COOLDOWN_START(src, revelation_cooldown, rand(REVELATION_MIN_COOLDOWN, REVELATION_MAX_COOLDOWN))
 
 /datum/vampire_clan/malkavian/on_exit_torpor()
