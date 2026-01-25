@@ -79,7 +79,7 @@
 		return FALSE
 
 	// Is our target deaf?
-	if(!living_target.get_organ_slot(ORGAN_SLOT_EARS))
+	if(!living_target.can_hear())
 		owner.balloon_alert(owner, "[living_target] cannot hear you!")
 		return FALSE
 
