@@ -7,9 +7,9 @@
 	level_1 = list(/datum/action/cooldown/vampire/targeted/mesmerize)
 	level_2 = list(/datum/action/cooldown/vampire/targeted/mesmerize/two)
 	level_3 = list(/datum/action/cooldown/vampire/targeted/mesmerize/three)
-	level_4 = list(/datum/action/cooldown/vampire/targeted/mesmerize/four, /datum/action/cooldown/vampire/targeted/command)
+	level_4 = list(/datum/action/cooldown/vampire/targeted/mesmerize/four/* , /datum/action/cooldown/vampire/targeted/command */)
 	level_5 = null
 
 /datum/discipline/dominate/ventrue
-	level_3 = list(/datum/action/cooldown/vampire/targeted/mesmerize/three, /datum/action/cooldown/vampire/targeted/command)
-	level_4 = list(/datum/action/cooldown/vampire/targeted/mesmerize/four, /datum/action/cooldown/vampire/targeted/command/two)
+	level_3 = list(/datum/action/cooldown/vampire/targeted/mesmerize/three/* , /datum/action/cooldown/vampire/targeted/command */)
+	level_4 = list(/datum/action/cooldown/vampire/targeted/mesmerize/four/* , /datum/action/cooldown/vampire/targeted/command/two */)
