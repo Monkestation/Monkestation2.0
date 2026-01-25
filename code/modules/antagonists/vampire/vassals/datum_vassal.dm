@@ -4,8 +4,7 @@
 	antagpanel_category = "Vampire"
 	job_rank = ROLE_VAMPIRE
 	show_in_roundend = FALSE
-
-	var/vassal_hud_name = "vassal"
+	antag_hud_name = "vassal"
 
 	/// The Master Vampire's antag datum.
 	var/datum/antagonist/vampire/master
@@ -33,7 +32,6 @@
 	setup_monitor(current_mob)
 	current_mob.grant_language(/datum/language/vampiric, source = LANGUAGE_VASSAL)
 
-	// add_antag_hud(ANTAG_HUD_VAMPIRE, vassal_hud_name, current_mob)
 	current_mob.faction += FACTION_VAMPIRE
 
 /datum/antagonist/vassal/remove_innate_effects(mob/living/mob_override)
