@@ -81,6 +81,7 @@
 	else
 		set_light_on(FALSE)
 		STOP_PROCESSING(SSobj, src)
+	update_light()
 	update_appearance()
 
 /obj/structure/vampire/candelabrum/process()
