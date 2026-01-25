@@ -3405,6 +3405,7 @@
 #include "code\modules\antagonists\vampire\names_vampire.dm"
 #include "code\modules\antagonists\vampire\objectives_vampire.dm"
 #include "code\modules\antagonists\vampire\objects_vampire.dm"
+#include "code\modules\antagonists\vampire\oozeling_vampire.dm"
 #include "code\modules\antagonists\vampire\society.dm"
 #include "code\modules\antagonists\vampire\tracking_vampire.dm"
 #include "code\modules\antagonists\vampire\clans\_clan.dm"

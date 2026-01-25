@@ -87,6 +87,13 @@
 	/// To make sure we don't spam sol damage messages
 	var/were_shielded = FALSE
 
+	/// The start time where an oozeling vampire began waiting for revival.
+	var/oozeling_revive_start_time = 0
+	/// Looping timer used to check to see if an oozeling should revive yet.
+	var/oozeling_revive_check_timer
+	/// Cooldown for sending a chat message to the oozeling player how long until they revive.
+	COOLDOWN_DECLARE(oozeling_revive_reminder_cooldown)
+
 	/// Blood display HUD
 	var/atom/movable/screen/vampire/blood_counter/blood_display
 	/// Vampire level display HUD
@@ -776,27 +783,6 @@
 		return
 	if(prince || broke_masquerade || humanity < VAMPIRE_DEFAULT_HUMANITY || length(vassals))
 		prey += owner
-
-/datum/antagonist/vampire/proc/on_oozeling_core_ejected(datum/source, obj/item/organ/internal/brain/slime/core)
-	SIGNAL_HANDLER
-	if(QDELETED(core))
-		return
-	if(current_vitae < OOZELING_MIN_REVIVE_BLOOD_THRESHOLD)
-		to_chat(core.brainmob, span_narsiesmall("You do not have enough vitae to recollect yourself on your own!"), type = MESSAGE_TYPE_WARNING)
-		return
-	to_chat(core.brainmob, span_narsiesmall("You begin recollecting yourself. You will rise again in [DisplayTimeText(OOZELING_VAMPIRE_REVIVE_TIME)]."), type = MESSAGE_TYPE_INFO)
-	AdjustBloodVolume(-OOZELING_MIN_REVIVE_BLOOD_THRESHOLD * 0.5)
-	addtimer(CALLBACK(src, PROC_REF(oozeling_self_revive), core), OOZELING_VAMPIRE_REVIVE_TIME, TIMER_UNIQUE | TIMER_OVERRIDE)
-
-/datum/antagonist/vampire/proc/on_oozeling_revive(datum/source, mob/living/carbon/human/new_body, obj/item/organ/internal/brain/slime/core)
-	SIGNAL_HANDLER
-	heal_vampire_organs()
-
-/datum/antagonist/vampire/proc/oozeling_self_revive(obj/item/organ/internal/brain/slime/core)
-	if(QDELETED(core))
-		return
-	var/mob/living/carbon/human/new_body = core.rebuild_body(nugget = FALSE, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
-	to_chat(new_body, span_narsiesmall("You recollect yourself, your vitae reforming your body from your core!"), type = MESSAGE_TYPE_INFO)
 
 /datum/outfit/vampire_outfit
 	name = "Vampire outfit (Preview only)"
