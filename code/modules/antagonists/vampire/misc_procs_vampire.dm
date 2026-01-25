@@ -78,8 +78,11 @@
 
 	to_chat(owner, span_notice("<EM>You have grown familiar with your powers!"))
 
+	if(!ignore_reqs)
+		vitae_goal_progress = max(vitae_goal_progress - current_vitae_goal, 0)
+	else
+		vitae_goal_progress = 0
 	current_vitae_goal += VITAE_GOAL_STANDARD
-	vitae_goal_progress = 0
 
 /**
  * Decrease the unspent vampire levels by one. Only for admins
