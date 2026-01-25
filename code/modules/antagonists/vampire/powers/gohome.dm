@@ -37,6 +37,10 @@
 		owner.balloon_alert(owner, "coffin was destroyed!")
 		return FALSE
 
+	if(owner.loc == vampiredatum_power.coffin)
+		owner.balloon_alert(owner, "you're already in your coffin!")
+		return FALSE
+
 /datum/action/cooldown/vampire/gohome/activate_power()
 	. = ..()
 	owner.balloon_alert(owner, "preparing to teleport...")
