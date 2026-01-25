@@ -139,17 +139,17 @@
 /obj/structure/closet/crate/coffin/blackcoffin
 	name = "black coffin"
 	desc = "For those departed who are not so dear."
-	icon_state = "blackcoffin"
+	icon_state = "coffin"
+	base_icon_state = "coffin"
 	icon = 'icons/vampires/vamp_obj.dmi'
-	open_sound = 'sound/vampires/coffin_open.ogg'
-	close_sound = 'sound/vampires/coffin_close.ogg'
+	open_sound = 'monkestation/sound/bloodsuckers/coffin_open.ogg'
+	close_sound = 'monkestation/sound/bloodsuckers/coffin_close.ogg'
 	breakout_time = 30 SECONDS
 	pry_lid_timer = 20 SECONDS
 	resistance_flags = NONE
 	material_drop = /obj/item/stack/sheet/iron
 	material_drop_amount = 2
 	armor_type = /datum/armor/blackcoffin
-	door_anim_time = 0
 
 /datum/armor/blackcoffin
 	melee = 50
@@ -163,17 +163,16 @@
 	name = "secure coffin"
 	desc = "For those too scared of having their place of rest disturbed."
 	icon_state = "securecoffin"
+	base_icon_state = "securecoffin"
 	icon = 'icons/vampires/vamp_obj.dmi'
-	open_sound = 'sound/vampires/coffin_open.ogg'
-	close_sound = 'sound/vampires/coffin_close.ogg'
+	open_sound = 'monkestation/sound/bloodsuckers/coffin_open.ogg'
+	close_sound = 'monkestation/sound/bloodsuckers/coffin_close.ogg'
 	breakout_time = 35 SECONDS
 	pry_lid_timer = 35 SECONDS
 	resistance_flags = FIRE_PROOF | LAVA_PROOF | ACID_PROOF
 	material_drop = /obj/item/stack/sheet/iron
 	material_drop_amount = 2
 	armor_type = /datum/armor/securecoffin
-	door_anim_angle = 140
-	door_anim_time = 0.5 SECONDS
 
 /datum/armor/securecoffin
 	melee = 35
@@ -187,6 +186,7 @@
 	name = "meat coffin"
 	desc = "When you're ready to meat your maker, the steaks can never be too high."
 	icon_state = "meatcoffin"
+	base_icon_state = "meatcoffin"
 	icon = 'icons/vampires/vamp_obj.dmi'
 	resistance_flags = FIRE_PROOF
 	open_sound = 'sound/effects/footstep/slime1.ogg'
@@ -196,7 +196,6 @@
 	material_drop = /obj/item/food/meat/slab/human
 	material_drop_amount = 3
 	armor_type = /datum/armor/meatcoffin
-	door_anim_time = 0
 
 /datum/armor/meatcoffin
 	melee = 70
@@ -210,6 +209,7 @@
 	name = "metal coffin"
 	desc = "A big metal sardine can inside of another big metal sardine can, in space."
 	icon_state = "metalcoffin"
+	base_icon_state = "metalcoffin"
 	icon = 'icons/vampires/vamp_obj.dmi'
 	resistance_flags = FIRE_PROOF | LAVA_PROOF
 	open_sound = 'sound/effects/pressureplate.ogg'
@@ -219,8 +219,6 @@
 	material_drop = /obj/item/stack/sheet/iron
 	material_drop_amount = 5
 	armor_type = /datum/armor/metalcoffin
-	door_anim_angle = 140
-	door_anim_time = 0.5 SECONDS
 
 /datum/armor/metalcoffin
 	melee = 40

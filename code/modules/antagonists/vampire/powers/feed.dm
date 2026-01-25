@@ -336,8 +336,7 @@
 		feed_target.add_traits(list(TRAIT_IMMOBILIZED, TRAIT_MUTE, TRAIT_HANDS_BLOCKED), TRAIT_FEED)
 
 		// Normally removed traits are done. Now we give the victim a lil something to remember us by.
-		ADD_TRAIT(feed_target, TRAIT_FEED_MARKED, TRAIT_FEED_MARKS)
-		addtimer(TRAIT_CALLBACK_REMOVE(feed_target, TRAIT_FEED_MARKED, TRAIT_FEED_MARKS), rand(5 MINUTES, 10 MINUTES), TIMER_UNIQUE | TIMER_OVERRIDE)
+		feed_target.apply_status_effect(/datum/status_effect/feed_marked)
 	else
 		owner.balloon_alert(owner, "combat feed requires aggressive grab!")
 		deactivate_power()
@@ -592,3 +591,31 @@
 	render_target = "blind_fullscreen_overlay"
 	layer = BLIND_LAYER
 	plane = FULLSCREEN_PLANE
+
+/datum/status_effect/feed_marked
+	id = "feed marked"
+	tick_interval = STATUS_EFFECT_NO_TICK
+	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
+	status_type = STATUS_EFFECT_UNIQUE
+	alert_type = null
+
+/datum/status_effect/feed_marked/on_apply()
+	if(!iscarbon(owner))
+		return FALSE
+	RegisterSignal(owner, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
+	return TRUE
+
+/datum/status_effect/feed_marked/on_remove()
+	UnregisterSignal(owner, COMSIG_ATOM_EXAMINE)
+
+/datum/status_effect/feed_marked/on_creation(mob/living/new_owner, ...)
+	duration = rand(5 MINUTES, 10 MINUTES)
+	return ..()
+
+/datum/status_effect/feed_marked/refresh(effect, ...)
+	duration = max(duration, world.time + rand(5 MINUTES, 10 MINUTES))
+
+/datum/status_effect/feed_marked/proc/on_examine(atom/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+	if(isobserver(user) || (user.Adjacent(user) && !user.is_nearsighted_currently()))
+		examine_list += span_warning("There are two strange punctures on [owner.p_their()] neck.")

@@ -138,9 +138,6 @@
 	if (!isnull(trait_exam))
 		. += trait_exam
 
-	if(HAS_TRAIT(src, TRAIT_FEED_MARKED))
-		. += span_warning("There are two strange punctures on [t_his] neck.")
-
 	if(mob_mood)
 		switch(mob_mood.shown_mood)
 			if(-INFINITY to MOOD_SAD4)

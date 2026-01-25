@@ -172,8 +172,6 @@
 #define TRAIT_MASQUERADE "trait_masquerade"
 /// For people in the middle of being staked
 #define TRAIT_BEINGSTAKED "trait_beingstaked"
-/// For people we have bitten
-#define TRAIT_FEED_MARKED "trait_feedmarked"
 /// This vampire is currently in a frebzy,
 #define TRAIT_FRENZY "trait_frenzy"
 
