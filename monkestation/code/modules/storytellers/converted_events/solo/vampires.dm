@@ -50,8 +50,22 @@
 		. *= 2
 	else if(vampire_count == 2)
 		. *= 1.5
-	else if(vampire_count >= 4)
+	else if(vampire_count >= 4) // if there's a lot, let's... try not to go crazy
 		. *= 0.5
+
+/datum/round_event_control/antagonist/solo/vampire/midround/get_antag_amount()
+	. = ..()
+	var/vampire_amt = 0
+	for(var/datum/antagonist/vampire/vampire as anything in GLOB.all_vampires)
+		var/mob/body = vampire.owner?.current
+		if(!vampire.final_death && !QDELETED(body))
+			vampire_amt++
+	if(vampire_amt >= 7)
+		return min(., 1)
+	else if(vampire_amt >= 4)
+		return min(., 2)
+	else
+		return .
 
 /datum/round_event/antagonist/solo/vampire/add_datum_to_mind(datum/mind/antag_mind)
 	var/datum/antagonist/vampire/vampire_datum = antag_mind.add_antag_datum(/datum/antagonist/vampire)
