@@ -117,7 +117,7 @@
 	. = ..()
 	. += span_notice("Its pressure limits could be [overclocked ? "en" : "dis"]abled with a <b>multitool</b>.")
 	if(overclocked)
-		. += "Its warning light is on[on ? " and it's spewing gas!" : "."]"
+		. += span_warning("Its warning light is on[on ? " and it's spewing gas!" : "."]")
 
 /obj/machinery/atmospherics/components/binary/volume_pump/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -171,10 +171,12 @@
 /obj/machinery/atmospherics/components/binary/volume_pump/multitool_act(mob/living/user, obj/item/I)
 	if(!overclocked)
 		overclocked = TRUE
-		to_chat(user, "The pump makes a grinding noise and air starts to hiss out as you disable its pressure limits.")
+		to_chat(user, span_notice("[src] makes a grinding noise and air starts to hiss out as you disable its pressure limits."))
+		investigate_log("had its pressure limits disabled by [key_name(user)]", INVESTIGATE_ATMOS)
 	else
 		overclocked = FALSE
-		to_chat(user, "The pump quiets down as you turn its limiters back on.")
+		to_chat(user, span_notice("[src] quiets down as you turn its limiters back on."))
+		investigate_log("had its pressure limits enabled by [key_name(user)]", INVESTIGATE_ATMOS)
 	update_appearance(UPDATE_ICON)
 	return TRUE
 

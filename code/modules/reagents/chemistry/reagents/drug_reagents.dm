@@ -170,9 +170,11 @@
 /datum/reagent/drug/methamphetamine/on_mob_metabolize(mob/living/L)
 	..()
 	L.add_movespeed_modifier(/datum/movespeed_modifier/reagent/methamphetamine)
+	L.stamina.regen_rate += 2 * REM
 
 /datum/reagent/drug/methamphetamine/on_mob_end_metabolize(mob/living/L)
 	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/methamphetamine)
+	L.stamina.regen_rate -= 2 * REM
 	..()
 
 /datum/reagent/drug/methamphetamine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
@@ -185,7 +187,6 @@
 	affected_mob.AdjustUnconscious(-40 * REM * seconds_per_tick)
 	affected_mob.AdjustParalyzed(-40 * REM * seconds_per_tick)
 	affected_mob.AdjustImmobilized(-40 * REM * seconds_per_tick)
-	affected_mob.stamina.adjust(2 * REM * seconds_per_tick, TRUE)
 	affected_mob.set_jitter_if_lower(4 SECONDS * REM * seconds_per_tick)
 	if(!safe || overdosed) // MONKESTATION EDIT: Makes Unknown Methamphetamine Isomer actually safe. "safe" is false by default.
 		affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, rand(1, 4) * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)

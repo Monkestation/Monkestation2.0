@@ -53,7 +53,8 @@
 		current_gauze.forceMove(remove_to)
 	else
 		QDEL_NULL(current_gauze)
-		owner.update_bandage_overlays()
+		if(!QDELETED(owner))
+			owner.update_bandage_overlays()
 		return
 	if(can_bleed() && (generic_bleedstacks || cached_bleed_rate))
 		current_gauze.add_mob_blood(owner)

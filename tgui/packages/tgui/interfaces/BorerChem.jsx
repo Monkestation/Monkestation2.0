@@ -4,7 +4,6 @@ import { toFixed } from 'common/math';
 import { useBackend } from '../backend';
 import { Box, Button, LabeledList, ProgressBar, Section } from '../components';
 import { Window } from '../layouts';
-import { RecipeLookup } from './common/RecipeLookup';
 
 export const BorerChem = (props) => {
   const { act, data } = useBackend();
@@ -23,7 +22,7 @@ export const BorerChem = (props) => {
               tooltip="Look up recipes and reagents!"
               tooltipPosition="bottom-start"
               onClick={() => act('reaction_lookup')}
-            />
+            />,
           ]}
         >
           <LabeledList>

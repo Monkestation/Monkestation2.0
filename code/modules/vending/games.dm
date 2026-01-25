@@ -83,6 +83,7 @@
 		/obj/item/instrument/musicalmoth = 1,
 	)
 	premium = list(
+		/obj/item/walkman = 5,
 		/obj/item/disk/holodisk = 5,
 		/obj/item/rcl = 2,
 		/obj/item/airlock_painter = 1,

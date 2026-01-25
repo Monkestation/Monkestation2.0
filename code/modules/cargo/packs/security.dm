@@ -62,10 +62,10 @@
 
 /datum/supply_pack/security/securitybarriers
 	name = "Security Barrier Grenades"
-	desc = "Stem the tide with four Security Barrier grenades."
+	desc = "Stem the tide with six Security Barrier grenades."
 	access_view = ACCESS_BRIG
-	contains = list(/obj/item/grenade/barrier = 4)
-	cost = CARGO_CRATE_VALUE * 2
+	contains = list(/obj/item/grenade/barrier = 6)
+	cost = CARGO_CRATE_VALUE * 3
 	crate_name = "security barriers crate"
 
 /datum/supply_pack/security/securityclothes

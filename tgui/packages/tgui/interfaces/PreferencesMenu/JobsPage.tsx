@@ -1,14 +1,14 @@
 import { sortBy } from 'common/collections';
 import { classes } from 'common/react';
-import { InfernoNode, Inferno } from 'inferno';
+import type { ReactNode } from 'react';
 import { useBackend } from '../../backend';
-import { Box, Button, Dropdown, Stack, Tooltip } from '../../components';
+import { Box, Button, Dropdown, Stack, Tooltip } from 'tgui-core/components';
 import {
   createSetPreference,
-  Job,
+  type Job,
   JoblessRole,
   JobPriority,
-  PreferencesMenuData,
+  type PreferencesMenuData,
 } from './data';
 import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';
 
@@ -113,10 +113,10 @@ const PriorityButtons = (props: {
   return (
     <Stack
       style={{
-        'align-items': 'center',
+        alignItems: 'center',
         height: '100%',
-        'justify-content': 'flex-end',
-        'padding-left': '0.3em',
+        justifyContent: 'flex-end',
+        paddingLeft: '0.3em',
       }}
     >
       {isOverflow ? (
@@ -184,14 +184,14 @@ const JobRow = (props: { className?: string; job: Job; name: string }) => {
   const { act } = useBackend<PreferencesMenuData>();
 
   const experienceNeeded =
-    data.job_required_experience && data.job_required_experience[name];
+    data.job_required_experience && data?.job_required_experience[name];
   const daysLeft = data.job_days_left ? data.job_days_left[name] : 0;
 
   const alt_title_selected = data.job_alt_titles[name]
     ? data.job_alt_titles[name]
     : name;
 
-  let rightSide: InfernoNode;
+  let rightSide: ReactNode;
 
   if (experienceNeeded) {
     const { experience_type, required_playtime } = experienceNeeded;
@@ -234,7 +234,7 @@ const JobRow = (props: { className?: string; job: Job; name: string }) => {
     <Box
       className={className}
       style={{
-        'margin-top': 0,
+        marginTop: 0,
       }}
     >
       <Stack>
@@ -244,7 +244,7 @@ const JobRow = (props: { className?: string; job: Job; name: string }) => {
             className="job-name"
             width="70%"
             style={{
-              'padding-left': '0.3em',
+              paddingLeft: '0.3em',
             }}
           >
             {' '}
@@ -254,7 +254,7 @@ const JobRow = (props: { className?: string; job: Job; name: string }) => {
               <Dropdown
                 width="100%"
                 options={job.alt_titles}
-                displayText={alt_title_selected}
+                selected={alt_title_selected}
                 onSelected={(value) =>
                   act('set_job_title', { job: name, new_title: value })
                 }
@@ -263,7 +263,7 @@ const JobRow = (props: { className?: string; job: Job; name: string }) => {
           </Stack.Item>
         </Tooltip>
 
-        <Stack.Item width="40%" className="options" /* SKYRAT EDIT */>
+        <Stack.Item grow className="options">
           {rightSide}
         </Stack.Item>
       </Stack>
@@ -271,7 +271,10 @@ const JobRow = (props: { className?: string; job: Job; name: string }) => {
   );
 };
 
-const Department: Inferno.SFC<{ department: string }> = (props) => {
+const Department: React.FC<{
+  department: string;
+  children?: React.ReactNode;
+}> = (props) => {
   const { children, department: name } = props;
   const className = `PreferencesMenu__Jobs__departments--${name}`;
 
@@ -299,8 +302,8 @@ const Department: Inferno.SFC<{ department: string }> = (props) => {
         );
 
         return (
-          <Box>
-            <Stack vertical fill>
+          <Box className={className}>
+            <Stack vertical>
               {jobsForDepartment.map(([name, job]) => {
                 return (
                   <JobRow
@@ -333,7 +336,7 @@ const Gap = (props: { amount: number }) => {
   return <Box height={`calc(${props.amount}px + 0.2em)`} />;
 };
 
-const JoblessRoleDropdown = (props) => {
+const JoblessRoleDropdown = () => {
   const { act, data } = useBackend<PreferencesMenuData>();
   const selected = data.character_preferences.misc.joblessrole;
 
@@ -352,18 +355,17 @@ const JoblessRoleDropdown = (props) => {
     },
   ];
 
+  const selection = options?.find(
+    (option) => option.value === selected,
+  )!.displayText;
+
   return (
     <Box position="absolute" right={1} width="25%">
       <Dropdown
         width="100%"
-        selected={selected}
+        selected={selection}
         onSelected={createSetPreference(act, 'joblessrole')}
         options={options}
-        displayText={
-          <Box pr={1}>
-            {options.find((option) => option.value === selected)!.displayText}
-          </Box>
-        }
       />
     </Box>
   );
@@ -371,66 +373,40 @@ const JoblessRoleDropdown = (props) => {
 
 export const JobsPage = () => {
   return (
-    <>
+    <Stack vertical>
       <JoblessRoleDropdown />
+      <Gap amount={22} />
+      <Stack.Item>
+        <Stack className="PreferencesMenu__Jobs">
+          <Stack.Item>
+            <Gap amount={36} />
+            <PriorityHeaders />
 
-      <Stack vertical fill>
-        <Gap amount={22} />
+            <Department department="Engineering" />
+            <Department department="Science" />
+            <Department department="Silicon" />
+            <Department department="Assistant" />
+          </Stack.Item>
 
-        <Stack.Item>
-          <Stack fill className="PreferencesMenu__Jobs">
-            <Stack.Item mr={1}>
-              <Gap amount={36} />
+          <Stack.Item>
+            <Gap amount={10} />
+            <PriorityHeaders />
 
-              <PriorityHeaders />
+            <Department department="Captain" />
+            <Department department="Service" />
+            <Department department="Cargo" />
+          </Stack.Item>
 
-              <Department department="Engineering">
-                <Gap amount={6} />
-              </Department>
+          <Stack.Item>
+            <Gap amount={36} />
+            <PriorityHeaders />
 
-              <Department department="Science">
-                <Gap amount={6} />
-              </Department>
-
-              <Department department="Silicon">
-                <Gap amount={12} />
-              </Department>
-
-              <Department department="Assistant" />
-            </Stack.Item>
-
-            <Stack.Item mr={1}>
-              <PriorityHeaders />
-
-              <Department department="Captain">
-                <Gap amount={6} />
-              </Department>
-
-              <Department department="Service">
-                <Gap amount={6} />
-              </Department>
-
-              <Department department="Cargo" />
-            </Stack.Item>
-
-            <Stack.Item>
-              <Gap amount={36} />
-
-              <PriorityHeaders />
-
-              <Department department="Security">
-                <Gap amount={6} />
-              </Department>
-
-              <Department department="Medical">
-                <Gap amount={6} />
-              </Department>
-
-              <Department department="Central Command" />
-            </Stack.Item>
-          </Stack>
-        </Stack.Item>
-      </Stack>
-    </>
+            <Department department="Security" />
+            <Department department="Medical" />
+            <Department department="Central Command" />
+          </Stack.Item>
+        </Stack>
+      </Stack.Item>
+    </Stack>
   );
 };

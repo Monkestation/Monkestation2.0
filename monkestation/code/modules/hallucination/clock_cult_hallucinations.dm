@@ -22,7 +22,7 @@
 	afflicted.visible_message(span_warning("[afflicted] falls to the ground suddenly!"), ignored_mobs = afflicted)
 	afflicted.Paralyze(4 SECONDS)
 	afflicted.emote("scream")
-	afflicted.stamina.adjust(-80)
+	afflicted.stamina.adjust(-40)
 	image_state = "brass_skewer_pokeybit"
 	image_layer = ABOVE_MOB_LAYER
 	update_appearance()

@@ -1,4 +1,4 @@
-import { InfernoNode } from 'inferno';
+import { ReactNode } from 'react';
 import { useBackend, useLocalState } from '../../backend';
 import {
   Box,
@@ -46,21 +46,21 @@ type Gas = {
 };
 
 const GasSearchBar = (props: {
-  title: InfernoNode;
+  title: ReactNode;
   onChange: (inputValue: string) => void;
   activeInput: boolean;
   setActiveInput: (toggle: boolean) => void;
 }) => {
-  const { title, onChange, activeInput, setActiveInput } = props;
+  const { title, activeInput, setActiveInput } = props;
   return (
     <Flex align="center">
       <Flex.Item grow>
         {activeInput ? (
           <Input
             fluid
-            onChange={(e, value) => {
+            onChange={(value) => {
               setActiveInput(false);
-              onChange(value);
+              props.onChange(value);
             }}
           />
         ) : (
@@ -181,7 +181,7 @@ const ReactionHandbook = (props) => {
                     <Tooltip content={factor.tooltip} position="top">
                       <Flex>
                         <Flex.Item
-                          style={{ 'border-bottom': 'dotted 2px' }}
+                          style={{ borderBottom: 'dotted 2px' }}
                           shrink
                         >
                           {factor.factor_name + ':'}

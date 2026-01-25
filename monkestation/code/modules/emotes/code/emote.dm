@@ -210,7 +210,15 @@
 		)
 	if(prob(5))
 		return 'monkestation/sound/voice/feline/funnymeow.ogg'
-	return pick('monkestation/sound/voice/feline/meow1.ogg', 'monkestation/sound/voice/feline/meow2.ogg', 'monkestation/sound/voice/feline/meow3.ogg', 'monkestation/sound/voice/feline/meow4.ogg')
+	return pick(
+		'monkestation/sound/voice/feline/meow1.ogg',
+		'monkestation/sound/voice/feline/meow2.ogg',
+		'monkestation/sound/voice/feline/meow3.ogg',
+		'monkestation/sound/voice/feline/meow4.ogg',
+		'monkestation/sound/voice/feline/meow5.ogg',
+		'monkestation/sound/voice/feline/meow6.ogg',
+		'monkestation/sound/voice/feline/meow7.ogg',
+	)
 
 /datum/emote/living/mggaow
 	key = "mggaow"

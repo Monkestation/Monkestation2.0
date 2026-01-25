@@ -1113,7 +1113,7 @@
 /obj/machinery/button/flasher{
 	id = "ert_shuttle_flash"
 	},
-/obj/item/storage/secure/briefcase{
+/obj/item/storage/briefcase/secure{
 	pixel_x = 0;
 	pixel_y = 12
 	},

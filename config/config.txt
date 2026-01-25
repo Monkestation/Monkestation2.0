@@ -614,3 +614,10 @@ WEBMAP_URL https://maps.monkestation.com/maps/Monkestation/$map
 
 ## Enables the "Memory Statistics" subsystem, automatically logging some overall (albeit not detailed) memory stats every 5 minutes.
 #AUTO_MEMORY_STATS
+
+## If enabled, cassette tapes will be stored in the database, rather than JSON files on-disk.
+#CASSETTES_IN_DB
+
+#FLOXY_URL
+#FLOXY_USERNAME
+#FLOXY_PASSWORD

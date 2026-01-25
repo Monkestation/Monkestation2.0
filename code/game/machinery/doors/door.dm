@@ -79,7 +79,6 @@
 	update_freelook_sight()
 	air_update_turf(TRUE, TRUE)
 	register_context()
-	GLOB.airlocks += src
 	if(elevator_mode)
 		if(elevator_linked_id)
 			elevator_status = LIFT_PLATFORM_LOCKED
@@ -139,7 +138,6 @@
 
 /obj/machinery/door/Destroy()
 	update_freelook_sight()
-	GLOB.airlocks -= src
 	if(elevator_mode)
 		GLOB.elevator_doors -= src
 	if(spark_system)

@@ -6,6 +6,7 @@ import {
   Flex,
   Stack,
   Icon,
+  Image,
   Input,
   LabeledList,
   Section,
@@ -75,7 +76,7 @@ const ConfigDisplay = (props) => {
           <Button icon="cogs" onClick={() => act('select_config')} />
           <Input
             value={data.greyscale_config}
-            onChange={(_, value) =>
+            onChange={(value) =>
               act('load_config_from_string', { config_string: value })
             }
           />
@@ -99,7 +100,7 @@ const ColorDisplay = (props) => {
           />
           <Input
             value={colors.map((item) => item.value).join('')}
-            onChange={(_, value) =>
+            onChange={(value) =>
               act('recolor_from_string', { color_string: value })
             }
           />
@@ -124,7 +125,7 @@ const ColorDisplay = (props) => {
             <Input
               value={item.value}
               width={7}
-              onChange={(_, value) =>
+              onChange={(value) =>
                 act('recolor', { color_index: item.index, new_color: value })
               }
             />
@@ -214,28 +215,25 @@ const PreviewDisplay = (props) => {
           </Table.Cell>
           {data.sprites?.finished ? (
             <Table.Cell>
-              <Box
-                as="img"
+              <Image
                 src={data.sprites.finished}
                 m={0}
                 width="75%"
                 mx="10%"
                 style={{
-                  '-ms-interpolation-mode': 'nearest-neighbor',
-                  'image-rendering': 'pixelated',
+                  imageRendering: 'pixelated',
                 }}
               />
             </Table.Cell>
           ) : (
             <Table.Cell>
-              <Box grow>
+              <Box>
                 <Icon
                   name="image"
                   ml="25%"
                   size={5}
                   style={{
-                    '-ms-interpolation-mode': 'nearest-neighbor',
-                    'image-rendering': 'pixelated',
+                    imageRendering: 'pixelated',
                   }}
                 />
               </Box>
@@ -284,13 +282,11 @@ const PreviewDisplay = (props) => {
 const SingleSprite = (props) => {
   const { source } = props;
   return (
-    <Box
-      as="img"
+    <Image
       src={source}
       width="100%"
       style={{
-        '-ms-interpolation-mode': 'nearest-neighbor',
-        'image-rendering': 'pixelated',
+        imageRendering: 'pixelated',
       }}
     />
   );

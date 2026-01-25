@@ -31,7 +31,7 @@ export const CargoImportConsole = (props) => {
       <Window.Content>
         <Section grow height="100%" title="Company Import Requisition Console">
           <Stack>
-            <Stack.Item grow fill>
+            <Stack.Item grow>
               <Button.Checkbox
                 content="Buy Privately"
                 checked={self_paid}

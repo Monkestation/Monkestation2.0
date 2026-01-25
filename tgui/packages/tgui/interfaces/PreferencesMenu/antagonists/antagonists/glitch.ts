@@ -13,7 +13,7 @@ const Glitch: Antagonist = {
     and lethal weaponry to terminate organics.
     `,
   ],
-  category: Category.Midround,
+  category: Category.Ghost,
 };
 
 export default Glitch;

@@ -317,6 +317,7 @@
 		for(var/obj/item/dropped in dying_carbon)
 			if(!dying_carbon.dropItemToGround(dropped))
 				qdel(dropped)
+	owner.ghostize()
 	qdel(owner)
 
 /obj/item/organ/internal/tongue/abductor

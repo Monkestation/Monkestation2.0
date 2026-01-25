@@ -93,7 +93,7 @@ const SystemInfo = (props) => {
         <LabeledList.Item label="Master">
           {master_name || 'None.'}
         </LabeledList.Item>
-        <LabeledList.Item color={master_dna && 'red'} label="DNA">
+        <LabeledList.Item color={master_dna ? 'red' : undefined} label="DNA">
           {master_dna || 'None.'}
         </LabeledList.Item>
       </LabeledList>

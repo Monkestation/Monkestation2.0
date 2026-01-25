@@ -203,6 +203,11 @@
 	inhand_icon_state = null
 	armor_type = /datum/armor/plasmaman_security
 
+/obj/item/clothing/head/helmet/space/plasmaman/secmed
+	name = "security medical envirosuit helmet"
+	desc = "A new pattern plasmaman helmet for those qualified as security medical personnel. This is still EVA rated too!"
+	icon_state = "secmed_envirohelm"
+
 /obj/item/clothing/head/helmet/space/plasmaman/security/warden
 	name = "warden's plasma envirosuit helmet"
 	desc = "A plasmaman containment helmet designed for the warden. A pair of white stripes being added to differeciate them from other members of security."

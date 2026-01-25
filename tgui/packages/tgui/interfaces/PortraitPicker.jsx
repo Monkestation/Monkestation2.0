@@ -23,7 +23,7 @@ export const PortraitPicker = (props) => {
                 fluid
                 placeholder="Search Paintings..."
                 value={search_string}
-                onChange={(e, value) => {
+                onChange={(value) => {
                   act('search', {
                     to_search: value,
                   });
@@ -57,9 +57,8 @@ export const PortraitPicker = (props) => {
                         height="128px"
                         width="128px"
                         style={{
-                          'vertical-align': 'middle',
-                          '-ms-interpolation-mode': 'nearest-neighbor',
-                          'image-rendering': 'pixelated',
+                          verticalAlign: 'middle',
+                          imageRendering: 'pixelated',
                         }}
                       />
                     </Flex.Item>

@@ -29,15 +29,8 @@
 	icon_state = "[base_icon_state]-[beating ? "on" : "off"]"
 	return ..()
 
-/obj/item/organ/internal/heart/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
-	. = ..()
-	if(heart_bloodtype)
-		receiver.dna?.human_blood_type = heart_bloodtype
-
 /obj/item/organ/internal/heart/Remove(mob/living/carbon/heartless, special = 0)
 	. = ..()
-	if(heart_bloodtype)
-		heartless.dna?.human_blood_type = random_human_blood_type()
 	if(!special)
 		addtimer(CALLBACK(src, PROC_REF(stop_if_unowned)), 120)
 

@@ -183,9 +183,10 @@
 				return
 			if(!user.can_perform_action(src))
 				return
+			add_fingerprint(user)
+			playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
 			scribble_page = curr_page
 			scribble_text = s
 			attack_self(user)
-			add_fingerprint(user)
 	else
 		return ..()

@@ -18,7 +18,7 @@ const Abductor: Antagonist = {
       operate on whoever they bring back.
     `,
   ],
-  category: Category.Midround,
+  category: Category.Ghost,
 };
 
 export default Abductor;

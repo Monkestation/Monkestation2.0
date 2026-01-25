@@ -10,7 +10,7 @@ const PlagueRat: Antagonist = {
     Also wish micheal a happy birthday.
     `,
   ],
-  category: Category.Midround,
+  category: Category.Ghost,
 };
 
 export default PlagueRat;

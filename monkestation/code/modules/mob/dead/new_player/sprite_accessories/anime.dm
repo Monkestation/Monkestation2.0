@@ -182,6 +182,19 @@
 	icon_state = "plug"
 	hasinner = TRUE
 
+/datum/sprite_accessory/anime_bottom/leopard
+	name = "Leopard"
+	icon_state = "leopard"
+	hasinner = TRUE
+
+/datum/sprite_accessory/anime_bottom/twocat
+	name = "Doubled Cat Tail"
+	icon_state = "twocat"
+
+/datum/sprite_accessory/anime_bottom/catbig
+	name = "Bigger Cat Tail"
+	icon_state = "catbig"
+
 /datum/sprite_accessory/anime_halo
 	icon = 'monkestation/icons/mob/anime/anime_halo.dmi'
 	color_src = ANIME_HALO_COLOR

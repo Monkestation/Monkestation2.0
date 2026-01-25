@@ -44,7 +44,8 @@
 	if(ishuman(host_mob))
 		GLOB.nanite_sensors_list -= host_mob
 
-	host_mob.hud_set_nanite_indicator()
+	if(!QDELETED(host_mob))
+		host_mob.hud_set_nanite_indicator()
 
 #define NANITE_RESEARCH_CHANGE "nanite_research_change"
 #define NANITE_RESEARCH_SLOW "Slow (1x)"

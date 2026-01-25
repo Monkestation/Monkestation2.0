@@ -82,7 +82,7 @@ export const VotePanel = (props) => {
   }
 
   return (
-    <Window resizable title={windowTitle} width={400} height={500}>
+    <Window title={windowTitle} width={400} height={500}>
       <Window.Content>
         <Stack fill vertical>
           <Section
@@ -259,7 +259,7 @@ const ChoicesPanel = (props) => {
                   {user.singleSelection &&
                     choice.name === user.singleSelection && (
                       <Icon
-                        alignSelf="right"
+                        style={{ alignSelf: 'right' }}
                         mr={2}
                         color="green"
                         name="vote-yea"
@@ -301,7 +301,7 @@ const ChoicesPanel = (props) => {
                   {user.multiSelection &&
                   user.multiSelection[user.ckey.concat(choice.name)] === 1 ? (
                     <Icon
-                      alignSelf="right"
+                      style={{ alignSelf: 'right' }}
                       mr={2}
                       color="blue"
                       name="vote-yea"

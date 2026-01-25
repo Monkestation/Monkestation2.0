@@ -2,7 +2,7 @@ import { useBackend, useLocalState } from '../backend';
 import { Box, LabeledList, Stack, Tabs, Tooltip } from '../components';
 import { Window } from '../layouts';
 import { getDangerLevel } from './Uplink/calculateDangerLevel';
-import type { InfernoNode } from 'inferno';
+import type { ReactNode } from 'react';
 
 type Objective = {
   name: string;
@@ -130,7 +130,7 @@ const sortingOptions: SortingOption[] = [
 export const TraitorObjectiveDebug = (props) => {
   const { data, act } = useBackend<ObjectiveData>();
   const { objective_data, player_data, current_progression } = data;
-  const lines: InfernoNode[] = [];
+  const lines: ReactNode[] = [];
   lines.sort();
   for (let i = 10; i < 100; i += 10) {
     lines.push(
@@ -150,7 +150,7 @@ export const TraitorObjectiveDebug = (props) => {
           backgroundColor="green"
           height="5px"
           style={{
-            'z-index': 5,
+            zIndex: 5,
           }}
         />
         <Box
@@ -158,7 +158,7 @@ export const TraitorObjectiveDebug = (props) => {
           top={0}
           left={1}
           style={{
-            'z-index': 5,
+            zIndex: 5,
           }}
         >
           {/* Time in minutes of this threshold */}
@@ -211,7 +211,7 @@ export const TraitorObjectiveDebug = (props) => {
               <Tabs width="100%" fluid textAlign="center">
                 {sortingOptions.map((value) => (
                   <Tabs.Tab
-                    key={value.sort}
+                    key={value.name}
                     selected={value.name === sortingFunc}
                     onClick={() => setSortingFunc(value.name)}
                   >
@@ -260,7 +260,6 @@ export const TraitorObjectiveDebug = (props) => {
         <Box
           position="absolute"
           width="100%"
-          fill
           backgroundColor="black"
           left={0}
           top="100px"
@@ -377,8 +376,8 @@ const ObjectiveBox = (props: ObjectiveBoxProps) => {
       <Stack vertical width="100%">
         <Stack.Item
           style={{
-            'text-overflow': 'ellipsis',
-            'white-space': 'nowrap',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
             overflow: 'hidden',
           }}
         >
@@ -406,7 +405,7 @@ const ObjectiveBox = (props: ObjectiveBoxProps) => {
               (objective.progression_reward[1] / sizeLimit) * window.innerWidth
             }px`}
             style={{
-              'white-space': 'nowrap',
+              whiteSpace: 'nowrap',
             }}
           >
             {objective.progression_reward[0] / 600}
@@ -421,7 +420,7 @@ const ObjectiveBox = (props: ObjectiveBoxProps) => {
             backgroundColor="red"
             width={`${objective.telecrystal_reward[1] * 10}px`}
             style={{
-              'white-space': 'nowrap',
+              whiteSpace: 'nowrap',
             }}
           >
             {objective.telecrystal_reward[0]}

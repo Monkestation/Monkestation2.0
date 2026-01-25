@@ -16,7 +16,7 @@ export const LockedSafe = (props) => {
   const { act, data } = useBackend<Data>();
   const { input_code, locked, lock_code } = data;
   return (
-    <Window width={300} height={400} theme="ntos">
+    <Window width={300} height={430} theme="ntos">
       <Window.Content>
         <Box m="6px">
           <Box mb="6px" className="NuclearBomb__displayBox">

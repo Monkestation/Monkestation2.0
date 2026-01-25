@@ -25,7 +25,7 @@ const ItemListEntry = (props) => {
           <Box bold>{name}</Box>
         </Flex.Item>
         <Flex.Item>
-          {`Payout: ${payout}`} <i class="fa-solid fa-coins" />
+          {`Payout: ${payout}`} <i className="fa-solid fa-coins" />
         </Flex.Item>
         <Flex.Item>{`Difficulty: ${difficulty}`}</Flex.Item>
         <Flex.Item>
@@ -44,7 +44,7 @@ export const ChallengeSelector = (_props) => {
   const { challenges, selected_challenges } = data;
 
   return (
-    <Window resizable title="Challenge Selector" width={450} height={700}>
+    <Window title="Challenge Selector" width={450} height={700}>
       <Window.Content scrollable>
         <Section>
           <BlockQuote>Select your challenges from here</BlockQuote>

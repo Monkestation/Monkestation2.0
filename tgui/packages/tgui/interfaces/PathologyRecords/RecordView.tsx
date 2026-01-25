@@ -51,7 +51,6 @@ export const MedicalRecordView = (props) => {
           fill
           scrollable
           title={name}
-          wrap
         >
           <LabeledList>
             <LabeledList.Item label="Name">
@@ -110,7 +109,7 @@ const EditableText = (props: Props) => {
       width="50%"
       maxLength={512}
       onEscape={() => setEditing(false)}
-      onEnter={(event, value) => {
+      onEnter={(value) => {
         setEditing(false);
         act('edit_field', { field: field, crew_ref: target_ref, value: value });
       }}
@@ -123,10 +122,10 @@ const EditableText = (props: Props) => {
           as="span"
           color={!text ? 'grey' : color || 'white'}
           style={{
-            'text-decoration': 'underline',
-            'text-decoration-color': 'white',
-            'text-decoration-thickness': '1px',
-            'text-underline-offset': '1px',
+            textDecoration: 'underline',
+            textDecorationColor: 'white',
+            textDecorationThickness: '1px',
+            textUnderlineOffset: '1px',
           }}
           onClick={() => setEditing(true)}
         >

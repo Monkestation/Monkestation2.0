@@ -439,6 +439,7 @@
 	slowdown = 7
 	breakouttime = 30 SECONDS
 	slot_flags = ITEM_SLOT_LEGCUFFED
+	item_flags = IMMUTABLE_SLOW
 
 /**
  * # Bear trap
@@ -541,7 +542,7 @@
 	icon_state = "e_snare"
 	trap_damage = 0
 	breakouttime = 3 SECONDS
-	item_flags = DROPDEL
+	item_flags = DROPDEL | IMMUTABLE_SLOW
 	flags_1 = NONE
 
 /obj/item/restraints/legcuffs/beartrap/energy/Initialize(mapload)
@@ -619,7 +620,7 @@
 /**
  * A security variant of the bola.
  *
- * It's harder to remove, smaller and has a defined price.
+ * It's smaller and uncatchable (although still blockable), but easier to remove than a normal bola, slows slightly less, and non-reusable.
  */
 /obj/item/restraints/legcuffs/bola/energy
 	name = "energy bola"
@@ -628,18 +629,19 @@
 	inhand_icon_state = "ebola"
 	hitsound = 'sound/weapons/taserhit.ogg'
 	w_class = WEIGHT_CLASS_SMALL
-	breakouttime = 6 SECONDS
+	breakouttime = 2 SECONDS
+	slowdown = 5
 	custom_price = PAYCHECK_COMMAND * 0.35
 
 /obj/item/restraints/legcuffs/bola/energy/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_UNCATCHABLE, TRAIT_GENERIC) // People said energy bolas being uncatchable is a feature.
 
-/obj/item/restraints/legcuffs/bola/energy/ensnare(atom/hit_atom)
-	var/obj/item/restraints/legcuffs/beartrap/energy/cyborg/B = new (get_turf(hit_atom))
-	B.spring_trap(null, hit_atom, TRUE)
-	qdel(src)
+/obj/item/restraints/legcuffs/bola/energy/ensnare(mob/living/carbon/C)
+	. = ..()
 
+	if (C.legcuffed == src)
+		src.item_flags |= DROPDEL
 /**
  * A pacifying variant of the bola.
  *

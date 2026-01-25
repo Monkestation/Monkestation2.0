@@ -8,12 +8,13 @@ import {
   Divider,
   Button,
   Dropdown,
-} from '../components';
+} from 'tgui-core/components';
 import { Window } from '../layouts';
-import { Component } from 'inferno';
-import { fetchRetry } from '../http';
+import { formatTime } from 'tgui-core/format';
+import { useEffect, useMemo, useState } from 'react';
+import { fetchRetry } from 'tgui-core/http';
 import { resolveAsset } from '../assets';
-import { formatTime } from '../format';
+import { logger } from '../logging';
 
 type Data = {
   current_voice: string;
@@ -21,44 +22,42 @@ type Data = {
   cooldown: number;
 };
 
+// This is in the format of {"voice name": ["mrrp", "mrow", "nya"]}.
+type VoiceData = Record<string, string[]>;
+
 enum Tab {
   Announcement,
   Word,
 }
 
-// Cache response so it's only sent once
-// this is in the format of {"voice name": ["mrrp", "mrow", "nya"]}
-let voices: Record<string, string[]> | undefined;
+export const VOX = () => {
+  const [voices, setVoices] = useState<VoiceData | undefined>();
+  useEffect(() => {
+    fetchRetry(resolveAsset('vox_voices.json'))
+      .then((response) => response.json())
+      .then((voiceData: VoiceData) => setVoices(voiceData))
+      .catch((error) => {
+        logger.log('Failed to fetch vox_voices.json', JSON.stringify(error));
+      });
+  }, []);
 
-export class VOX extends Component {
-  componentDidMount() {
-    this.fetchVoices();
-  }
+  return (
+    <Window title="VOX Announcement" width={700} height={300}>
+      <Window.Content>
+        <Stack fill>
+          <Stack.Item width="100%">
+            <TextAreaSection />
+          </Stack.Item>
+          <Stack.Item width="60%">
+            <SideMenu voices={voices} />
+          </Stack.Item>
+        </Stack>
+      </Window.Content>
+    </Window>
+  );
+};
 
-  async fetchVoices() {
-    const response = await fetchRetry(resolveAsset('vox_voices.json'));
-    voices = await response.json();
-  }
-
-  render() {
-    return (
-      <Window title="VOX Announcement" fixed width={700} height={300}>
-        <Window.Content>
-          <Stack fill>
-            <Stack.Item width="100%">
-              <TextAreaSection />
-            </Stack.Item>
-            <Stack.Item width="60%">
-              <SideMenu />
-            </Stack.Item>
-          </Stack>
-        </Window.Content>
-      </Window>
-    );
-  }
-}
-
-const TextAreaSection = (props) => {
+const TextAreaSection = () => {
   const [message, setMessage] = useLocalState('message', '');
 
   return (
@@ -66,10 +65,10 @@ const TextAreaSection = (props) => {
       <Stack vertical fill>
         <Stack.Item height="100%">
           <TextArea
-            scrollbar
             height="100%"
+            width="100%"
             value={message}
-            onInput={(_, value) => setMessage(value)}
+            onChange={(value) => setMessage(value)}
           />
         </Stack.Item>
       </Stack>
@@ -77,11 +76,8 @@ const TextAreaSection = (props) => {
   );
 };
 
-const SideMenu = () => {
-  const [tabIndex, setTabIndex] = useLocalState<Tab>(
-    'tabIndex',
-    Tab.Announcement,
-  );
+const SideMenu = (props: { voices?: VoiceData }) => {
+  const [tabIndex, setTabIndex] = useState<Tab>(Tab.Announcement);
 
   return (
     <Section fill>
@@ -104,18 +100,23 @@ const SideMenu = () => {
         </Tabs.Tab>
       </Tabs>
       <Divider />
-      {tabIndex === Tab.Announcement && <AnnouncementTab />}
-      {tabIndex === Tab.Word && <WordTab />}
+      {tabIndex === Tab.Announcement && (
+        <AnnouncementTab voices={props.voices} />
+      )}
+      {tabIndex === Tab.Word && <WordTab voices={props.voices} />}
     </Section>
   );
 };
 
-const AnnouncementTab = () => {
+const AnnouncementTab = (props: { voices?: VoiceData }) => {
   const { act, data } = useBackend<Data>();
   const { cooldown, current_voice } = data;
   const [message] = useLocalState('message', '');
 
-  let voice_names = voices ? Object.keys(voices) : [];
+  const voice_names = useMemo(
+    () => (props.voices ? Object.keys(props.voices) : []),
+    [props.voices],
+  );
 
   return (
     <Section>
@@ -146,6 +147,7 @@ const AnnouncementTab = () => {
       <Box align="center">Selected Voice</Box>
       <Dropdown
         width="100%"
+        selected={current_voice}
         displayText={current_voice}
         options={voice_names}
         onSelected={(voice) => act('set_voice', { voice })}
@@ -168,8 +170,9 @@ const CooldownItem = () => {
   );
 };
 
-const WordTab = () => {
+const WordTab = (props: { voices?: VoiceData }) => {
   const { data } = useBackend<Data>();
+  const { voices } = props;
 
   if (!voices) {
     return (
@@ -187,11 +190,12 @@ const WordTab = () => {
         return (
           <Button
             key={word}
-            content={word}
             onClick={() => {
               setMessage([message.trim(), word].join(' ').trim());
             }}
-          />
+          >
+            {word}
+          </Button>
         );
       })}
     </Section>

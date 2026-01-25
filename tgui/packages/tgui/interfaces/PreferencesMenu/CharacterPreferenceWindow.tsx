@@ -154,7 +154,9 @@ export const CharacterPreferenceWindow = (props) => {
         </Stack>
       </Stack.Item>
       <Stack.Divider />
-      <Stack.Item>{pageContents}</Stack.Item>
+      <Stack.Item grow overflowY="auto" overflowX="hidden">
+        {pageContents}
+      </Stack.Item>
     </Stack>
   );
 };

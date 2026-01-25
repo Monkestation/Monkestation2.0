@@ -277,6 +277,7 @@
 	new /obj/item/reagent_containers/blood/ethereal(src)
 	new /obj/item/reagent_containers/blood/spider(src)
 	for(var/i in 1 to 3)
+		new /obj/item/reagent_containers/chem_pack/saline(src)
 		new /obj/item/reagent_containers/blood/random(src)
 
 /obj/structure/closet/crate/freezer/surplus_limbs

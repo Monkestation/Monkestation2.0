@@ -98,7 +98,7 @@
 /datum/component/nanites/Destroy()
 	STOP_PROCESSING(SSnanites, src)
 	QDEL_LIST(programs)
-	if(host_mob)
+	if(!QDELETED(host_mob))
 		set_nanite_bar(TRUE)
 		host_mob.hud_set_nanite_indicator()
 	host_mob = null
@@ -253,7 +253,7 @@
 	var/image/holder = host_mob.hud_list[DIAG_NANITE_FULL_HUD]
 	if(!holder) // what
 		return
-	holder.pixel_y = host_mob.get_cached_height() - world.icon_size
+	holder.pixel_z = host_mob.get_cached_height() - world.icon_size
 	holder.icon_state = null
 	if(remove || stealth)
 		return //bye icon

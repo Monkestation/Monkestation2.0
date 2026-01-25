@@ -172,7 +172,7 @@ const MainScreenAuth = (props) => {
         <Section>
           <Input
             value={auth_password}
-            onInput={(e, value) => setPassword(value)}
+            onChange={(value) => setPassword(value)}
             placeholder="Password"
           />
           <Button
@@ -273,7 +273,7 @@ const MainScreenNotAuth = (props) => {
         <Section>
           <Input
             value={auth_password}
-            onInput={(e, value) => setPassword(value)}
+            onChange={(value) => setPassword(value)}
             placeholder="Password"
           />
           <Button

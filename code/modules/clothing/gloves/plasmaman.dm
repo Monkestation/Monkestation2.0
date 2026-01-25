@@ -121,3 +121,10 @@
 	greyscale_colors = null
 	worn_icon_state = "radio_g"
 	clothing_traits = list(TRAIT_CAN_SIGN_ON_COMMS)
+
+/obj/item/clothing/gloves/color/plasmaman/secmed
+	name = "security medical envirogloves"
+	desc = "A new pattern plasmaman nitril glove set to match that drippy security grey suit."
+	icon_state = "secmedplasma"
+	greyscale_colors = "#918F8C"
+	clothing_traits = list(TRAIT_QUICKER_CARRY, TRAIT_FASTMED)

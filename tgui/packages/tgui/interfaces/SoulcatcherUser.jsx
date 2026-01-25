@@ -23,7 +23,7 @@ export const SoulcatcherUser = (props) => {
   } = data;
 
   return (
-    <Window width={520} height={400} resizable>
+    <Window width={520} height={400}>
       <Window.Content scrollable>
         <Section
           key={current_room.key}

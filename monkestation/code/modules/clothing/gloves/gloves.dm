@@ -5,10 +5,6 @@
 	worn_icon = 'monkestation/icons/mob/clothing/gloves.dmi'
 	icon_state = "syndimaid_arms"
 
-/obj/item/clothing/gloves/color/plasmaman
-	icon = 'monkestation/icons/obj/clothing/plasmaman_gloves.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/plasmaman_gloves.dmi'
-
 /obj/item/clothing/gloves/crueltysquad_gloves
 	name = "CSIJ level I gloves"
 	desc = "Armor used by assassins working for Cruelty Squad, stripped of all of its functions for kids to play with."

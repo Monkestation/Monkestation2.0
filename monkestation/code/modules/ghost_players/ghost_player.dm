@@ -14,6 +14,11 @@ ADMIN_VERB(flip_ghost_spawn, R_FUN, FALSE, "Toggle Centcom Spawning", "Toggles w
 	var/obj/structure/fight_button/linked_button
 	///are we dueling?
 	var/dueling = FALSE
+	/// Innate traits all ghost players have.
+	var/static/list/innate_traits = list(
+		TRAIT_SIXTHSENSE,
+		TRAIT_CAN_HEAR_MUSIC,
+	)
 
 /mob/living/carbon/human/ghost/death(gibbed)
 	. = ..()
@@ -30,7 +35,7 @@ ADMIN_VERB(flip_ghost_spawn, R_FUN, FALSE, "Toggle Centcom Spawning", "Toggles w
 	. = ..()
 	var/datum/action/cooldown/mob_cooldown/return_to_ghost/created_ability = new /datum/action/cooldown/mob_cooldown/return_to_ghost(src)
 	created_ability.Grant(src)
-	ADD_TRAIT(src, TRAIT_SIXTHSENSE, INNATE_TRAIT)
+	add_traits(innate_traits, INNATE_TRAIT)
 
 /mob/living/carbon/human/ghost/Destroy()
 	if(linked_button)

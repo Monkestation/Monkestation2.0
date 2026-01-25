@@ -24,7 +24,7 @@ interface DiscordVerificationData {
   };
 }
 
-export const DiscordVerification = (props, context) => {
+export const DiscordVerification = (props) => {
   const { data } = useBackend<DiscordVerificationData>();
   const { verification_code, discord_invite } = data;
 
@@ -65,12 +65,10 @@ export const DiscordVerification = (props, context) => {
         );
       case CkeyPollEnum.PLEXORA_CKEYPOLL_NOTLINKED:
         return (
-          <NoticeBox warning>
-            Your ckey is not linked to a Discord account.
-          </NoticeBox>
+          <NoticeBox>Your ckey is not linked to a Discord account.</NoticeBox>
         );
       case CkeyPollEnum.PLEXORA_CKEYPOLL_RECORDNOTVALID:
-        return <NoticeBox warning>The ckey record is invalid.</NoticeBox>;
+        return <NoticeBox>The ckey record is invalid.</NoticeBox>;
       case CkeyPollEnum.PLEXORA_CKEYPOLL_LINKED:
         return (
           <NoticeBox success>
@@ -80,7 +78,7 @@ export const DiscordVerification = (props, context) => {
         );
       case CkeyPollEnum.PLEXORA_CKEYPOLL_LINKED_ABSENT:
         return (
-          <NoticeBox warning>
+          <NoticeBox>
             Your linked Discord account is no longer present:{' '}
             {formatDiscordDetails(data.discord_details)}
           </NoticeBox>
@@ -134,7 +132,13 @@ export const DiscordVerification = (props, context) => {
           </Box>
         </Section>
         <Section title="Join the Discord">
-          <Button icon="paperclip" as="a" href={discord_invite} target="_blank">
+          <Button
+            icon="paperclip"
+            as="a"
+            // @ts-ignore
+            href={discord_invite}
+            target="_blank"
+          >
             Click to open in your browser
           </Button>
           <Box
@@ -167,7 +171,7 @@ export const DiscordVerification = (props, context) => {
               <Box mt={1}>
                 <img
                   src={resolveAsset('dverify_image1.png')}
-                  style={{ 'max-width': '100%' }}
+                  style={{ maxWidth: '100%' }}
                 />
               </Box>
             </LabeledList.Item>
@@ -177,7 +181,7 @@ export const DiscordVerification = (props, context) => {
               <Box mt={1}>
                 <img
                   src={resolveAsset('dverify_image2.png')}
-                  style={{ 'max-width': '100%' }}
+                  style={{ maxWidth: '100%' }}
                 />
               </Box>
             </LabeledList.Item>
@@ -189,7 +193,7 @@ export const DiscordVerification = (props, context) => {
               <Box mt={1}>
                 <img
                   src={resolveAsset('dverify_image3.png')}
-                  style={{ 'max-width': '100%' }}
+                  style={{ maxWidth: '100%' }}
                 />
               </Box>
             </LabeledList.Item>
@@ -200,7 +204,7 @@ export const DiscordVerification = (props, context) => {
               <Box mt={1}>
                 <img
                   src={resolveAsset('dverify_image4.png')}
-                  style={{ 'max-width': '100%' }}
+                  style={{ maxWidth: '100%' }}
                 />
               </Box>
             </LabeledList.Item>

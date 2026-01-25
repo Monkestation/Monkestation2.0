@@ -8,6 +8,7 @@
 	slot_flags = ITEM_SLOT_ICLOTHING
 	interaction_flags_click = NEED_DEXTERITY|ALLOW_RESTING
 	armor_type = /datum/armor/clothing_under
+	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
 	equip_sound = 'sound/items/equip/jumpsuit_equip.ogg'
 	drop_sound = 'sound/items/handling/cloth_drop.ogg'
 	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
@@ -43,7 +44,6 @@
 	/// The overlay of the accessory we're demonstrating. Only index 1 will show up.
 	/// This is the overlay on the MOB, not the item itself.
 	var/mutable_appearance/accessory_overlay
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 
 /datum/armor/clothing_under
 	bio = 10
@@ -160,13 +160,16 @@
 	if(adjusted == ALT_STYLE)
 		adjust_to_normal()
 
-/*	 MONKESTATION EDIT
 	if((supports_variations_flags & CLOTHING_DIGITIGRADE_VARIATION) && ishuman(user))
 		var/mob/living/carbon/human/wearer = user
 		if(wearer.dna.species.bodytype & BODYTYPE_DIGITIGRADE)
 			adjusted = DIGITIGRADE_STYLE
 			update_appearance()
-*/
+
+/obj/item/clothing/under/generate_digitigrade_icons(icon/base_icon, greyscale_colors)
+	var/icon/legs = icon(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/digitigrade, greyscale_colors), "jumpsuit_worn")
+	return replace_icon_legs(base_icon, legs)
+
 /obj/item/clothing/under/equipped(mob/living/user, slot)
 	..()
 	if((slot & ITEM_SLOT_ICLOTHING) && freshly_laundered)
@@ -287,7 +290,7 @@
 
 /obj/item/clothing/under/examine(mob/user)
 	. = ..()
-	if(can_adjust)
+	if(can_adjust && adjusted != DIGITIGRADE_STYLE)
 		. += "Alt-click on [src] to wear it [adjusted == ALT_STYLE ? "normally" : "casually"]."
 	if(has_sensor == BROKEN_SENSORS)
 		. += "Its sensors appear to be shorted out. You could repair it with some cabling."
@@ -419,10 +422,9 @@
 /// Returns the new state
 /obj/item/clothing/under/proc/toggle_jumpsuit_adjust()
 	switch(adjusted)
-/* MONKESTATION EDIT
 		if(DIGITIGRADE_STYLE)
 			return
-*/
+
 		if(NORMAL_STYLE)
 			adjust_to_alt()
 

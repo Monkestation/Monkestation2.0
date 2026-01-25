@@ -13,17 +13,17 @@ import {
 
 const allystyle = {
   color: 'yellow',
-  'font-weight': 'bold',
+  fontWeight: 'bold',
 };
 
 const badstyle = {
   color: 'red',
-  'font-weight': 'bold',
+  fontWeight: 'bold',
 };
 
 const goalstyle = {
   color: 'lightgreen',
-  'font-weight': 'bold',
+  fontWeight: 'bold',
 };
 
 type Category = {
@@ -98,7 +98,7 @@ const FlavorSection = (props) => {
       <Stack vertical fill>
         <Stack.Item grow>
           <Stack fill vertical>
-            <Stack.Item style={{ 'background-color': 'black' }}>
+            <Stack.Item style={{ backgroundColor: 'black' }}>
               <span style={goalstyle}>
                 System Integrity Report:
                 <br />
@@ -106,7 +106,7 @@ const FlavorSection = (props) => {
               &gt;{goal}
             </Stack.Item>
             <Stack.Divider />
-            <Stack.Item grow style={{ 'background-color': 'black' }}>
+            <Stack.Item grow style={{ backgroundColor: 'black' }}>
               <span style={allystyle}>
                 Morality Core Report:
                 <br />
@@ -114,7 +114,7 @@ const FlavorSection = (props) => {
               &gt;{allies}
             </Stack.Item>
             <Stack.Divider />
-            <Stack.Item style={{ 'background-color': 'black' }}>
+            <Stack.Item style={{ backgroundColor: 'black' }}>
               <span style={badstyle}>
                 Overall Sentience Coherence Grade: FAILING.
                 <br />
@@ -165,7 +165,7 @@ const CodewordsSection = (props) => {
                   {phrases}
                 </Stack.Item>
                 <Stack.Item>Code Responses:</Stack.Item>
-                <Stack.Item bold textColor="red">
+                <Stack.Item bold textColor="orange">
                   {responses}
                 </Stack.Item>
               </Stack>
@@ -194,7 +194,7 @@ export const AntagInfoMalf = (props) => {
       height={530}
       theme={antagInfoTab === Screen.Intro ? 'hackerman' : 'malfunction'}
     >
-      <Window.Content style={{ 'font-family': 'Consolas, monospace' }}>
+      <Window.Content style={{ fontFamily: 'Consolas, monospace' }}>
         <Stack vertical fill>
           <Stack.Item>
             <Tabs fluid>

@@ -39,6 +39,10 @@
 				"/area/station/service/bar",
 				"/area/station/hallway/secondary/service"
 			]
+		},
+		"Barber": {
+			"total_positions": 0,
+			"spawn_positions": 0
 		}
 	}
 }

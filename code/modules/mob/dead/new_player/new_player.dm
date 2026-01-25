@@ -194,8 +194,6 @@
 			return "[jobtitle] is not compatible with some antagonist role assigned to you."
 		if(JOB_UNAVAILABLE_DONOR_RANK) //MONKESTATION EDIT
 			return "The [jobtitle] job requires a higher donator rank than you have or it is out of season. Go to to https://www.patreon.com/dukeook \"Duke of Ook's Monke Content Creation Fund\" to learn more."
-		if(JOB_UNAVAILABLE_CONDITIONS_UNMET)
-			return "Conditions for [jobtitle] unmet."
 
 	return GENERIC_JOB_UNAVAILABLE_ERROR
 
@@ -317,12 +315,6 @@
 		humanc.increment_scar_slot()
 		humanc.load_persistent_scars()
 		SSpersistence.load_modular_persistence(humanc.get_organ_slot(ORGAN_SLOT_BRAIN))
-
-		//monkestation edit start
-		if(GLOB.dj_booth)
-			var/obj/machinery/cassette/dj_station/dj = GLOB.dj_booth
-			dj.add_new_player(humanc)
-		//monkestation edit end
 
 		if(GLOB.curse_of_madness_triggered)
 			give_madness(humanc, GLOB.curse_of_madness_triggered)

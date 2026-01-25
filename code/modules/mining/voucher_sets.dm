@@ -191,6 +191,7 @@
 	set_items = list(
 		/obj/item/grenade/barrier,
 		/obj/item/grenade/barrier,
+		/obj/item/grenade/barrier,
 		)
 
 /datum/voucher_set/security/utility/webbing
@@ -275,7 +276,7 @@
 
 /obj/item/storage/box/security_kit/nightwatch/PopulateContents()
 	new /obj/item/clothing/head/soft/sec(src)
-	new /obj/item/clothing/mask/russian_balaclava(src)
+	new /obj/item/clothing/mask/thermal_balaclava(src)
 	new /obj/item/clothing/suit/hooded/wintercoat/security(src)
 	new /obj/item/clothing/gloves/color/black(src)
 	new /obj/item/radio/off(src)
@@ -347,41 +348,3 @@
 	new /obj/item/gun/energy/taser/old(src)
 	new /obj/item/storage/box/pinpointer_pairs(src)
 	new /obj/item/book/manual/wiki/security_space_law(src)
-
-/// Brig physician kit
-
-/datum/voucher_set/security/brig_physician/monitor
-	name = "Officers monitor"
-	description = "A dead officer ? Not on your watch."
-	icon = 'icons/obj/device.dmi'
-	icon_state = "scanner"
-	set_items = list(
-		/obj/item/sensor_device/brigdoc
-	)
-
-/datum/voucher_set/security/brig_physician/pinpointer
-	name = "Pinpointer"
-	description = "Tracking issues ? Never heard of them."
-	icon = 'icons/obj/device.dmi'
-	icon_state = "pinpointer_crew"
-	set_items = list(
-		/obj/item/pinpointer/crew
-	)
-
-/datum/voucher_set/security/brig_physician/bodybags
-	name = "Prisoners bodybags"
-	description = "Carrying a prisoner has never been easier."
-	icon = 'icons/obj/bodybag.dmi'
-	icon_state = "prisonerenvirobag"
-	set_items = list(
-		/obj/structure/closet/body_bag/environmental/prisoner = 4
-	)
-
-/datum/voucher_set/security/brig_physician/defib_belt
-	name = "Compact Defibrilator"
-	description = "Combat medic ? Trauma team ? Small players, this one got it all."
-	icon = 'icons/obj/medical/defib.dmi'
-	icon_state = "defibcompact"
-	set_items = list(
-		/obj/item/defibrillator/compact
-	)

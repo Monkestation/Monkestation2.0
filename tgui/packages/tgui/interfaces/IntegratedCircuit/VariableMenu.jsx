@@ -7,8 +7,9 @@ import {
   Dropdown,
   Icon,
 } from '../../components';
-import { Component } from 'inferno';
+import { Component } from 'react';
 import { shallowDiffers } from 'common/react';
+import { multiline } from 'common/string';
 
 export class VariableMenu extends Component {
   constructor() {
@@ -128,7 +129,7 @@ export class VariableMenu extends Component {
                   <Input
                     placeholder="Name"
                     fluid
-                    onChange={(e, nameVal) =>
+                    onChange={(nameVal) =>
                       this.setState({
                         variable_name: nameVal,
                       })

@@ -40,7 +40,7 @@ export const CircuitModule = (props) => {
                             port_type: type,
                           })
                         }
-                        onEnter={(e, value) =>
+                        onEnter={(value) =>
                           act('set_port_name', {
                             port_id: index + 1,
                             is_input: true,
@@ -82,7 +82,7 @@ export const CircuitModule = (props) => {
                             port_type: type,
                           })
                         }
-                        onEnter={(e, value) =>
+                        onEnter={(value) =>
                           act('set_port_name', {
                             port_id: index + 1,
                             is_input: false,

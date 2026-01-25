@@ -163,7 +163,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	resistance_flags = FIRE_PROOF
 	merge_type = /obj/item/stack/sheet/iron
 	grind_results = list(/datum/reagent/iron = 20)
-	point_value = 2
+	point_value = 5
 	tableVariant = /obj/structure/table
 	material_type = /datum/material/iron
 	matter_amount = 4
@@ -293,7 +293,7 @@ GLOBAL_LIST_INIT(plasteel_recipes, list ( \
 	resistance_flags = FIRE_PROOF
 	merge_type = /obj/item/stack/sheet/plasteel
 	grind_results = list(/datum/reagent/iron = 20, /datum/reagent/toxin/plasma = 20)
-	point_value = 23
+	point_value = 40
 	tableVariant = /obj/structure/table/reinforced
 	material_flags = NONE
 	matter_amount = 12

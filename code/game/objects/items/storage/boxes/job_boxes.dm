@@ -316,3 +316,17 @@
 /obj/item/storage/box/skillchips/engineering/PopulateContents()
 	new/obj/item/skillchip/job/engineer(src)
 	new/obj/item/skillchip/job/engineer(src)
+
+// Syndie survival box
+/obj/item/storage/box/survival/operative
+	name = "operation-ready survival box"
+	desc = "A box with the essentials of your operation. This one is labelled to contain an extended-capacity tank and a spare neck gaiter."
+	icon_state = "syndiebox"
+	illustration = "extendedtank"
+	mask_type = /obj/item/clothing/mask/gas/sechailer/syndicate
+	internal_type = /obj/item/tank/internals/emergency_oxygen/engi
+	medipen_type =  /obj/item/reagent_containers/hypospray/medipen/atropine
+
+/obj/item/storage/box/survival/operative/PopulateContents()
+	..()
+	new /obj/item/tool_parcel(src)

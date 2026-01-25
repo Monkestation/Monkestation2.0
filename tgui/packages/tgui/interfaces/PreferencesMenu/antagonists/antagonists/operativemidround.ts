@@ -12,7 +12,7 @@ const OperativeMidround: Antagonist = {
     `,
     OPERATIVE_MECHANICAL_DESCRIPTION,
   ],
-  category: Category.Midround,
+  category: Category.Ghost,
 };
 
 export default OperativeMidround;

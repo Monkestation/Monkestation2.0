@@ -143,11 +143,15 @@
 		return
 	if(full_speed)
 		mod.wearer.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)
+	else
+		mod.wearer.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/halfspeed)
 
 /obj/item/mod/module/jetpack/on_deactivation(display_message = TRUE, deleting = FALSE)
 	. = ..()
 	if(full_speed)
 		mod.wearer.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)
+	else
+		mod.wearer.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/halfspeed)
 
 /obj/item/mod/module/jetpack/get_configuration()
 	. = ..()

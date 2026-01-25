@@ -259,7 +259,7 @@ ADMIN_VERB(cmd_admin_areatest, R_DEBUG, FALSE, "Test Areas", "Tests the areas fo
 			areas_all.Add(A.type)
 		CHECK_TICK
 
-	for(var/obj/machinery/power/apc/APC in GLOB.apcs_list)
+	for(var/obj/machinery/power/apc/APC as anything in SSmachines.get_machines_by_type(/obj/machinery/power/apc))
 		var/area/A = APC.area
 		if(!A)
 			dat += "Skipped over [APC] in invalid location, [APC.loc]."
@@ -288,7 +288,7 @@ ADMIN_VERB(cmd_admin_areatest, R_DEBUG, FALSE, "Test Areas", "Tests the areas fo
 			areas_with_RC.Add(A.type)
 		CHECK_TICK
 
-	for(var/obj/machinery/light/L in GLOB.machines)
+	for(var/obj/machinery/light/L as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/light))
 		var/area/A = get_area(L)
 		if(!A)
 			dat += "Skipped over [L] in invalid location, [L.loc].<br>"
@@ -297,7 +297,7 @@ ADMIN_VERB(cmd_admin_areatest, R_DEBUG, FALSE, "Test Areas", "Tests the areas fo
 			areas_with_light.Add(A.type)
 		CHECK_TICK
 
-	for(var/obj/machinery/light_switch/LS in GLOB.machines)
+	for(var/obj/machinery/light_switch/LS as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/light_switch))
 		var/area/A = get_area(LS)
 		if(!A)
 			dat += "Skipped over [LS] in invalid location, [LS.loc].<br>"

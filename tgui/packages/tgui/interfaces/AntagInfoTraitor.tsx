@@ -208,7 +208,7 @@ const CodewordsSection = (props) => {
                   {phrases}
                 </Stack.Item>
                 <Stack.Item>Code Responses:</Stack.Item>
-                <Stack.Item bold textColor="red">
+                <Stack.Item bold textColor="orange">
                   {responses}
                 </Stack.Item>
               </Stack>

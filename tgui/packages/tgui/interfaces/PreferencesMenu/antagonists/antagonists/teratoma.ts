@@ -11,7 +11,7 @@ const Teratoma: Antagonist = {
     `,
     'Spread misery and chaos upon the station.',
   ],
-  category: Category.Midround,
+  category: Category.Ghost,
 };
 
 export default Teratoma;

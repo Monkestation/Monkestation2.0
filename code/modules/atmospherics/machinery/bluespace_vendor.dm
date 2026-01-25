@@ -79,7 +79,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor, 30)
 	. = ..()
 	if(!map_spawned)
 		return
-	for(var/obj/machinery/atmospherics/components/unary/bluespace_sender/sender as anything in GLOB.bluespace_senders)
+	for(var/obj/machinery/atmospherics/components/unary/bluespace_sender/sender as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/atmospherics/components/unary/bluespace_sender))
 		register_machine(sender)
 
 /obj/machinery/bluespace_vendor/Destroy()

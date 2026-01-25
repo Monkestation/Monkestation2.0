@@ -10,7 +10,7 @@ const SpaceDragon: Antagonist = {
       carps, crush walls, and terrorize the station.
     `,
   ],
-  category: Category.Midround,
+  category: Category.Ghost,
 };
 
 export default SpaceDragon;

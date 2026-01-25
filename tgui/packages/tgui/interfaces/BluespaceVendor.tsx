@@ -10,8 +10,8 @@ import {
   ProgressBar,
   Section,
   Stack,
+  Table,
 } from '../components';
-import { Table, TableCell, TableRow } from '../components/Table';
 import { getGasColor } from '../constants';
 import { Window } from '../layouts';
 
@@ -91,7 +91,8 @@ export const BluespaceVendor = (props) => {
                     unit="% tank filling goal"
                     minValue={0}
                     maxValue={100}
-                    onDrag={(e, value) =>
+                    tickWhileDragging
+                    onChange={(value) =>
                       act('pumping_rate', {
                         rate: value,
                       })
@@ -133,19 +134,19 @@ export const BluespaceVendor = (props) => {
             >
               <Table>
                 <thead>
-                  <TableRow>
-                    <TableCell collapsing bold>
+                  <Table.Row>
+                    <Table.Cell collapsing bold>
                       Gas
-                    </TableCell>
-                    <TableCell bold collapsing>
+                    </Table.Cell>
+                    <Table.Cell bold collapsing>
                       Price
-                    </TableCell>
-                    <TableCell bold>Total</TableCell>
-                    <TableCell bold collapsing textAlign="right">
+                    </Table.Cell>
+                    <Table.Cell bold>Total</Table.Cell>
+                    <Table.Cell bold collapsing textAlign="right">
                       Moles
-                    </TableCell>
-                    <TableCell bold collapsing />
-                  </TableRow>
+                    </Table.Cell>
+                    <Table.Cell bold collapsing />
+                  </Table.Row>
                 </thead>
                 <tbody>
                   {gases.map((gas, index) => (
@@ -170,25 +171,25 @@ const GasDisplay = (props: GasDisplayProps) => {
   } = props;
 
   return (
-    <TableRow className="candystripe" height={2}>
-      <TableCell collapsing color="label">
+    <Table.Row className="candystripe" height={2}>
+      <Table.Cell collapsing color="label">
         {name}
-      </TableCell>
-      <TableCell color="yellow" collapsing textAlign="right">
+      </Table.Cell>
+      <Table.Cell color="yellow" collapsing textAlign="right">
         {price} cr
-      </TableCell>
-      <TableCell>
+      </Table.Cell>
+      <Table.Cell>
         <ProgressBar
           color={getGasColor(id)}
           value={amount}
           minValue={0}
           maxValue={gasMax}
         />
-      </TableCell>
-      <TableCell collapsing color="label" textAlign="right">
+      </Table.Cell>
+      <Table.Cell collapsing color="label" textAlign="right">
         {toFixed(amount, 2)}
-      </TableCell>
-      <TableCell collapsing textAlign="center">
+      </Table.Cell>
+      <Table.Cell collapsing textAlign="center">
         {(!pumping && selected_gas !== id && (
           <Button
             icon="play"
@@ -214,7 +215,7 @@ const GasDisplay = (props: GasDisplayProps) => {
             }
           />
         )}
-      </TableCell>
-    </TableRow>
+      </Table.Cell>
+    </Table.Row>
   );
 };

@@ -29,7 +29,7 @@
 
 	playsound(src, 'sound/items/welder2.ogg', 50, TRUE)
 	to_chat(user, span_notice("You start [welded ? "unwelding" : "welding"] [src]..."))
-	if(I.use_tool(src, user, 20))
+	if(I.use_tool(src, user, 2 SECONDS))
 		to_chat(user, span_notice("You [welded ? "unweld" : "weld"] [src]."))
 		welded = !welded
 		update_icon()
@@ -37,17 +37,17 @@
 			if(processing)
 				STOP_PROCESSING(SSobj, src)
 				processing = FALSE
-		else if (my_turf.liquids)
+		else if (!QDELETED(my_turf.liquids))
 			START_PROCESSING(SSobj, src)
 			processing = TRUE
 	return TRUE
 
 /obj/structure/drain/process()
-	if(!my_turf.liquids)
-		STOP_PROCESSING(SSobj, src)
+	if(QDELETED(my_turf.liquids) || QDELETED(my_turf.liquids.liquid_group))
 		processing = FALSE
-		return
-	my_turf.liquids.liquid_group.remove_any(my_turf.liquids, drain_flat + (drain_percent * my_turf.liquids.liquid_group.total_reagent_volume))
+		return PROCESS_KILL
+	var/drain_amt = drain_flat + (drain_percent * my_turf.liquids.liquid_group.total_reagent_volume)
+	my_turf.liquids.liquid_group.remove_any(my_turf.liquids, min(round(drain_amt * DELTA_WORLD_TIME(SSobj), CHEMICAL_VOLUME_ROUNDING), my_turf.liquids.liquid_group.total_reagent_volume))
 
 /obj/structure/drain/Initialize(mapload)
 	. = ..()
@@ -67,8 +67,7 @@
 	processing = TRUE
 
 /obj/structure/drain/Destroy()
-	if(processing)
-		STOP_PROCESSING(SSobj, src)
+	STOP_PROCESSING(SSobj, src)
 	UnregisterSignal(my_turf, COMSIG_TURF_LIQUIDS_CREATION)
 	my_turf = null
 	return ..()

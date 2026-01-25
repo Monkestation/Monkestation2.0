@@ -1,3 +1,5 @@
+import { describe, expect, it, jest, afterEach } from 'bun:test';
+
 import {
   KeyEvent,
   addScrollableNode,

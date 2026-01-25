@@ -12,7 +12,7 @@
 
 /obj/structure/mop_bucket/Initialize(mapload)
 	. = ..()
-	create_reagents(100, OPENCONTAINER)
+	create_reagents(500, OPENCONTAINER)
 	register_context()
 
 /obj/structure/mop_bucket/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
@@ -26,6 +26,10 @@
 		context[SCREENTIP_CONTEXT_LMB] = "Fill mop bucket"
 		return CONTEXTUAL_SCREENTIP_SET
 
+	if(istype(held_item) && held_item.tool_behaviour == TOOL_CROWBAR && CART_HAS_MINIMUM_REAGENT_VOLUME)
+		context[SCREENTIP_CONTEXT_LMB] = "Dump [src]'s mop bucket on [get_turf(src)]"
+		. = CONTEXTUAL_SCREENTIP_SET
+
 	return .
 
 /obj/structure/mop_bucket/attackby(obj/item/weapon, mob/user, params)
@@ -34,7 +38,7 @@
 		return FALSE // skip attack animation when refilling cart
 	if(istype(weapon, /obj/item/mop))
 		weapon.reagents?.trans_to(src, weapon.reagents.maximum_volume, transfered_by = user)
-		balloon_alert(user, "wring mop")
+		balloon_alert(user, "wringed mop")
 		update_appearance(UPDATE_OVERLAYS)
 		return FALSE
 	return ..()
@@ -61,6 +65,26 @@
 		return SECONDARY_ATTACK_CONTINUE_CHAIN // skip attack animations when refilling cart
 
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
+
+/obj/structure/mop_bucket/crowbar_act(mob/living/user, obj/item/tool)
+	if(!CART_HAS_MINIMUM_REAGENT_VOLUME)
+		balloon_alert(user, "mop bucket is empty!")
+		return ITEM_INTERACT_SUCCESS
+	user.balloon_alert_to_viewers("starts dumping [src]...", "started dumping [src]...")
+	user.visible_message(span_notice("[user] begins to dumping the contents of [src]'s mop bucket."), span_notice("You begin to dump the contents of [src]'s mop bucket..."))
+	if(tool.use_tool(src, user, 5 SECONDS, volume = 50))
+		balloon_alert(user, "dumped [src]")
+		var/turf/our_turf = get_turf(src)
+		var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber_vent = locate() in our_turf.contents
+		if(!scrubber_vent?.welded && scrubber_vent?.on)
+			to_chat(user, span_notice("You dumped the contents of [src]'s mop bucket into [scrubber_vent]."))
+			playsound(src, 'sound/effects/splosh.ogg', 50, TRUE)
+		else
+			to_chat(user, span_notice("You dumped the contents of [src]'s mop bucket onto the floor."))
+			reagents.expose(loc)
+		reagents.clear_reagents()
+		update_appearance(UPDATE_OVERLAYS)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/mop_bucket/update_overlays()
 	. = ..()
@@ -236,20 +260,6 @@
 
 	return ..()
 
-/obj/structure/mop_bucket/janitorialcart/crowbar_act(mob/living/user, obj/item/tool)
-	if(!CART_HAS_MINIMUM_REAGENT_VOLUME)
-		balloon_alert(user, "mop bucket is empty!")
-		return ITEM_INTERACT_SUCCESS
-	user.balloon_alert_to_viewers("starts dumping [src]...", "started dumping [src]...")
-	user.visible_message(span_notice("[user] begins to dumping the contents of [src]'s mop bucket."), span_notice("You begin to dump the contents of [src]'s mop bucket..."))
-	if(tool.use_tool(src, user, 5 SECONDS, volume = 50))
-		balloon_alert(user, "dumped [src]")
-		to_chat(user, span_notice("You dumped the contents of [src]'s mop bucket onto the floor."))
-		reagents.expose(loc)
-		reagents.clear_reagents()
-		update_appearance(UPDATE_OVERLAYS)
-	return ITEM_INTERACT_SUCCESS
-
 /obj/structure/mop_bucket/janitorialcart/attackby_secondary(obj/item/weapon, mob/user, params)
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
@@ -259,7 +269,7 @@
 		update_appearance(UPDATE_OVERLAYS)
 		return SECONDARY_ATTACK_CONTINUE_CHAIN //so we can empty the cart via our afterattack without trying to put the item in the bag
 
-	if(mybag?.attackby(weapon, user))
+	if(mybag?.atom_storage.attempt_insert(weapon))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	return SECONDARY_ATTACK_CONTINUE_CHAIN

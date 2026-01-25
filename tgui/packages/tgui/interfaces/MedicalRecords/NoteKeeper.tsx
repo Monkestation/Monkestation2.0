@@ -28,7 +28,7 @@ export const NoteKeeper = (props) => {
 
   const [writing, setWriting] = useLocalState('note', false);
 
-  const addNote = (event, value: string) => {
+  const addNote = (value: string) => {
     act('add_note', {
       crew_ref: crew_ref,
       content: value,
@@ -72,7 +72,7 @@ export const NoteKeeper = (props) => {
           <Box color="label" mb={1} mt={1}>
             Content:
           </Box>
-          <BlockQuote wrap>{selectedNote.content}</BlockQuote>
+          <BlockQuote>{selectedNote.content}</BlockQuote>
         </>
       )}
     </Section>
@@ -110,7 +110,6 @@ const NoteTabs = (props) => {
       {notes.map((note, index) => (
         <Tabs.Tab
           key={index}
-          label={index + 1}
           onClick={() => setNote(note)}
           selected={selectedNote?.note_ref === note.note_ref}
         >

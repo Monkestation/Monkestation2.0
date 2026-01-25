@@ -88,9 +88,9 @@
 
 	var/mob/living/datum_owner = owner.current
 	to_chat(datum_owner, "<b>Code Phrases</b>: [span_blue(jointext(GLOB.syndicate_code_phrase, ", "))]")
-	to_chat(datum_owner, "<b>Code Responses</b>: [span_red("[jointext(GLOB.syndicate_code_response, ", ")]")]")
+	to_chat(datum_owner, "<b>Code Responses</b>: [span_orange("[jointext(GLOB.syndicate_code_response, ", ")]")]")
 	datum_owner.AddComponent(/datum/component/codeword_hearing, GLOB.syndicate_code_phrase_regex, "blue", src)
-	datum_owner.AddComponent(/datum/component/codeword_hearing, GLOB.syndicate_code_response_regex, "red", src)
+	datum_owner.AddComponent(/datum/component/codeword_hearing, GLOB.syndicate_code_response_regex, "orange", src)
 	datum_owner.add_mob_memory(/datum/memory/key/codewords)
 	datum_owner.add_mob_memory(/datum/memory/key/codewords/responses)
 	memorize_code()
@@ -104,14 +104,14 @@
 /datum/antagonist/nukeop/proc/assign_nuke()
 	if(nuke_team && !nuke_team.tracked_nuke)
 		nuke_team.memorized_code = random_nukecode()
-		var/obj/machinery/nuclearbomb/syndicate/nuke = locate() in GLOB.nuke_list
+		var/obj/machinery/nuclearbomb/syndicate/nuke = locate() in SSmachines.get_machines_by_type(/obj/machinery/nuclearbomb/syndicate)
 		if(nuke)
 			nuke_team.tracked_nuke = nuke
 			if(nuke.r_code == NUKE_CODE_UNSET)
 				nuke.r_code = nuke_team.memorized_code
 			else //Already set by admins/something else?
 				nuke_team.memorized_code = nuke.r_code
-			for(var/obj/machinery/nuclearbomb/beer/beernuke in GLOB.nuke_list)
+			for(var/obj/machinery/nuclearbomb/beer/beernuke as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/nuclearbomb/beer))
 				beernuke.r_code = nuke_team.memorized_code
 		else
 			stack_trace("Syndicate nuke not found during nuke team creation.")
@@ -184,6 +184,13 @@
 	message_admins("[key_name_admin(admin)] has nuke op'ed [key_name_admin(new_owner)].")
 	log_admin("[key_name(admin)] has nuke op'ed [key_name(new_owner)].")
 
+/datum/antagonist/nukeop/remove_innate_effects(mob/living/mob_override)
+	. = ..()
+	var/mob/living/silicon/ai/datum_owner = mob_override || owner.current
+
+	for(var/datum/component/codeword_hearing/component as anything in datum_owner.GetComponents(/datum/component/codeword_hearing))
+		component.delete_if_from_source(src)
+
 /datum/antagonist/nukeop/get_admin_commands()
 	. = ..()
 	.["Send to base"] = CALLBACK(src, PROC_REF(admin_send_to_base))
@@ -194,7 +201,7 @@
 
 /datum/antagonist/nukeop/proc/admin_tell_code(mob/admin)
 	var/code
-	for (var/obj/machinery/nuclearbomb/bombue as anything in GLOB.nuke_list)
+	for (var/obj/machinery/nuclearbomb/bombue as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/nuclearbomb))
 		if (length(bombue.r_code) <= 5 && bombue.r_code != initial(bombue.r_code))
 			code = bombue.r_code
 			break
@@ -331,7 +338,7 @@
 /datum/antagonist/nukeop/lone/assign_nuke()
 	if(nuke_team && !nuke_team.tracked_nuke)
 		nuke_team.memorized_code = random_nukecode()
-		var/obj/machinery/nuclearbomb/selfdestruct/nuke = locate() in GLOB.nuke_list
+		var/obj/machinery/nuclearbomb/selfdestruct/nuke = locate() in SSmachines.get_machines_by_type(/obj/machinery/nuclearbomb/selfdestruct)
 		if(nuke)
 			nuke_team.tracked_nuke = nuke
 			if(nuke.r_code == NUKE_CODE_UNSET)

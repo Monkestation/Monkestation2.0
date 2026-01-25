@@ -4,6 +4,7 @@
 	desc = "An old, NASA CentCom branch designed, dark red space suit helmet."
 	icon_state = "void"
 	inhand_icon_state = "void_helmet"
+	flags_inv = HIDEMASK|HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT|HIDEEYES
 
 /obj/item/clothing/suit/space/nasavoid
 	name = "NASA Voidsuit"
@@ -40,6 +41,7 @@
 	desc = "A lightweight space helmet with the basic ability to protect the wearer from the vacuum of space during emergencies."
 	flash_protect = FLASH_PROTECTION_NONE
 	armor_type = /datum/armor/space_eva
+	flags_inv = HIDEMASK|HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT|HIDEEYES
 
 /datum/armor/space_eva
 	bio = 100

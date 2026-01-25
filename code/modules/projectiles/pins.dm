@@ -403,8 +403,9 @@
 
 		/area/lavaland/surface/outdoors,
 
-		/area/ocean/generated,
-		/area/ocean/generated_above,
+		/area/ocean, // uses Z-levels until Oshan mapping is fixed
+		// /area/ocean/generated,
+		// /area/ocean/generated_above,
 
 		/area/ruin,
 
@@ -419,7 +420,12 @@
 /obj/item/firing_pin/wastes/pin_auth(mob/living/user)
 	if(!istype(user) || is_type_in_list(get_area(user), blacklist))
 		return FALSE
-	if (is_type_in_list(get_area(user), wastes)|| SSticker.current_state == GAME_STATE_FINISHED) //now unlocks after game is over. have fun
+	if(SSticker.current_state == GAME_STATE_FINISHED) //now unlocks after game is over. have fun
+		return TRUE
+	if(is_type_in_list(get_area(user), wastes))
+		var/turf/userturf = get_turf(user)
+		if(istype(get_area(user), /area/ocean) && SSmapping.level_trait(userturf.z, ZTRAIT_STATION))
+			return FALSE // block Oshan main station Z
 		return TRUE
 	return FALSE
 

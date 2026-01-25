@@ -28,6 +28,7 @@
 	if(isturf(loc))
 		var/turf/turf_loc = loc
 		turf_loc.add_blueprints_preround(src)
+	connect_to_network()
 
 /obj/machinery/power/Destroy()
 	disconnect_from_network()

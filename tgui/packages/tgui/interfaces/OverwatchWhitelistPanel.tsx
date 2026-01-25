@@ -39,7 +39,7 @@ export const OverwatchWhitelistPanel = (props) => {
                 value={inputWLCkey}
                 placeholder="Input ckey"
                 fluid
-                onChange={(e, value) => {
+                onChange={(value) => {
                   setInputWLCkey(value);
                 }}
               />
@@ -109,7 +109,7 @@ export const OverwatchWhitelistPanel = (props) => {
                 );
               })}
             </Stack>
-          )) || <NoticeBox fluid> No whitelist entries to display. </NoticeBox>}
+          )) || <NoticeBox> No whitelist entries to display. </NoticeBox>}
         </Section>
       </Window.Content>
     </Window>

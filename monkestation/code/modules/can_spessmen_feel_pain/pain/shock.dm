@@ -85,7 +85,7 @@
 
 	return conditions_fulfilled
 
-/datum/disease/acute/premade/shock/cure(add_resistance, mob/living/carbon/target)
+/datum/disease/acute/premade/shock/cure(add_resistance, mob/living/carbon/target, safe = FALSE)
 	affected_mob.remove_status_effect(/datum/status_effect/low_blood_pressure)
 	affected_mob.unset_pain_mod(type)
 	return ..()

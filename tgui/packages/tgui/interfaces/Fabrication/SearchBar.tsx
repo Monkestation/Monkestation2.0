@@ -1,4 +1,4 @@
-import { Component } from 'inferno';
+import { Component } from 'react';
 import { Stack, Input, Icon } from '../../components';
 
 /**
@@ -24,7 +24,7 @@ export type SearchBarProps = {
 export class SearchBar extends Component<SearchBarProps> {
   timeout?: NodeJS.Timeout;
 
-  onInput(value: string) {
+  handleInput(value: string) {
     if (this.timeout) {
       clearTimeout(this.timeout);
     }
@@ -44,7 +44,7 @@ export class SearchBar extends Component<SearchBarProps> {
           <Input
             fluid
             placeholder={hint ? hint : 'Search for...'}
-            onInput={(_e: unknown, v: string) => this.onInput(v)}
+            onChange={(v) => this.handleInput(v)}
             value={searchText}
           />
         </Stack.Item>

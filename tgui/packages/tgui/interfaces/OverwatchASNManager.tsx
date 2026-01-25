@@ -34,7 +34,7 @@ export const OverwatchASNManager = (props) => {
                 value={inputIP}
                 placeholder="Input IP address"
                 fluid
-                onChange={(e, value) => {
+                onChange={(value) => {
                   setinputIP(value);
                 }}
               />
@@ -104,7 +104,7 @@ export const OverwatchASNManager = (props) => {
                 );
               })}
             </Stack>
-          )) || <NoticeBox fluid> No ASN Ban entries to display. </NoticeBox>}
+          )) || <NoticeBox> No ASN Ban entries to display. </NoticeBox>}
         </Section>
       </Window.Content>
     </Window>

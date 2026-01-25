@@ -13,7 +13,6 @@
 	visor_flags_cover = MASKCOVERSMOUTH
 	resistance_flags = NONE
 	interaction_flags_click = NEED_DEXTERITY|ALLOW_RESTING
-	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
 	/// Can this mask be adjusted?
 	var/adjustable = TRUE
 

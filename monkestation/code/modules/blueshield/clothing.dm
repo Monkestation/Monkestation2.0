@@ -151,7 +151,6 @@
 /obj/item/clothing/under/rank/blueshield
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/under/command.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/command.dmi'
-	worn_icon_digitigrade = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/command_digi.dmi'
 	name = "blueshield's suit"
 	desc = "A classic bodyguard's suit, with custom-fitted Blueshield-Blue cuffs and a Nanotrasen insignia over one of the pockets."
 	icon_state = "blueshield"

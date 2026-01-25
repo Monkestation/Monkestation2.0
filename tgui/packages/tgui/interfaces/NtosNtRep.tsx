@@ -115,12 +115,12 @@ export const NtosNtRepContent = (props) => {
         <Stack direction="column" align="stretch" fill>
           <Stack.Item mb={1} grow>
             <TextArea
-              scrollbar
               height="100%"
+              fluid
               placeholder="Leave your review/thoughts/comments..."
               maxLength={max_length}
               value={comment}
-              onChange={(e, value) =>
+              onBlur={(value) =>
                 act('set_text', {
                   new_review: value,
                 })

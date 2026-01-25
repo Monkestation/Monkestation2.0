@@ -109,7 +109,7 @@ const ShoppingTab = (props) => {
                 mt={0.5}
                 placeholder="Search item..."
                 value={searchItem}
-                onInput={(e, value) => {
+                onChange={(value) => {
                   setSearchItem(value);
                 }}
                 fluid
@@ -127,7 +127,7 @@ const ShoppingTab = (props) => {
                 <Stack>
                   <span
                     style={{
-                      'vertical-align': 'middle',
+                      verticalAlign: 'middle',
                     }}
                   />{' '}
                   {!condensed && (
@@ -178,7 +178,8 @@ const ShoppingTab = (props) => {
                       width="41px"
                       minValue={0}
                       maxValue={20}
-                      onChange={(e, value) =>
+                      step={1}
+                      onChange={(value) =>
                         act('cart_set', {
                           target: item.ref,
                           amt: value,
@@ -251,11 +252,12 @@ const CheckoutTab = (props) => {
                     </Stack.Item>
                     <Stack.Item mt={-0.5}>
                       <NumberInput
+                        step={1}
                         value={findAmount(item_amts, item.name) || 0}
                         width="41px"
                         minValue={0}
                         maxValue={(item.cost > 10 && 50) || 10}
-                        onChange={(e, value) =>
+                        onChange={(value) =>
                           act('cart_set', {
                             target: item.ref,
                             amt: value,
@@ -373,7 +375,7 @@ export const ProduceConsole = (props) => {
               <Stack.Item grow>
                 Currently available balance: {points || 0}
               </Stack.Item>
-              <Stack.Item textAlign="right" fill>
+              <Stack.Item textAlign="right">
                 <Button
                   ml={65}
                   mt={-4}

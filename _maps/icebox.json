@@ -55,6 +55,10 @@
 		},
 		"Captain": {
 			"special_charter": "moon"
+		},
+		"Barber": {
+			"total_positions": 0,
+			"spawn_positions": 0
 		}
 	}
 }

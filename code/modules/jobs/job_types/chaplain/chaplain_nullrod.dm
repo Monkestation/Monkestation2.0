@@ -126,7 +126,11 @@
 /obj/item/nullrod/staff/worn_overlays(mutable_appearance/standing, isinhands)
 	. = ..()
 	if(isinhands)
-		. += mutable_appearance('icons/effects/effects.dmi', shield_icon, MOB_SHIELD_LAYER)
+		var/mutable_appearance/shield = mutable_appearance('icons/effects/effects.dmi', shield_icon, MOB_SHIELD_LAYER)
+		if(ishuman(loc))
+			var/mob/living/carbon/human/human_holder = loc
+			human_holder.apply_height_filters(shield)
+		. += shield
 
 /obj/item/nullrod/staff/blue
 	name = "blue holy staff"

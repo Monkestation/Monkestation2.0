@@ -163,7 +163,8 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/structure/cable,
-/obj/machinery/power/smes/magical,
+/obj/machinery/power/smes/super/full,
+/obj/item/inducer,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "aF" = (

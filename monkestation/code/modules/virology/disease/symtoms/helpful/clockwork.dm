@@ -208,7 +208,7 @@
 					return TRUE
 	return FALSE
 
-/datum/symptom/robotic_adaptation/deactivate(mob/living/carbon/mob, datum/disease/acute/disease)
+/datum/symptom/robotic_adaptation/deactivate(mob/living/carbon/mob, datum/disease/acute/disease, safe = FALSE)
 	disease.infectable_biotypes &= ~(biotypes)
 	if(disease.stage >= 3 && (replaceorgans || replacebody)) //sorry. no disease quartets allowed
 		to_chat(mob, "<span class='userdanger'>You feel lighter and springier as your innards lose their clockwork facade.</span>")

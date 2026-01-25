@@ -10,7 +10,7 @@ const Nightmare: Antagonist = {
       Jaunt through the darkness and seek your prey with night vision.
     `,
   ],
-  category: Category.Midround,
+  category: Category.Ghost,
 };
 
 export default Nightmare;

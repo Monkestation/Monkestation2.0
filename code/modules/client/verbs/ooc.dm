@@ -153,7 +153,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 		return
 
 ADMIN_VERB(set_ooc_color, R_FUN, FALSE, "Set Player OOC Color", "Modifies the global OOC color.", ADMIN_CATEGORY_SERVER)
-	var/newColor = input(user, "Please select the new player OOC color.", "OOC color") as color | null
+	var/newColor = tgui_color_picker(user, "Please select the new player OOC color.", "OOC color")
 	if(isnull(newColor))
 		return
 	var/new_color = sanitize_color(newColor)

@@ -11,7 +11,7 @@ const Revenant: Antagonist = {
       disgruntled ghosts.
     `,
   ],
-  category: Category.Midround,
+  category: Category.Ghost,
 };
 
 export default Revenant;

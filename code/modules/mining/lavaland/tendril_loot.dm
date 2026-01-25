@@ -964,7 +964,7 @@
 	var/obj/item/cursed_katana/katana = active_item
 	if(!katana || katana.shattered)
 		return FALSE
-	if(!katana.drew_blood)
+	if(!katana.drew_blood && !QDELETED(owner))
 		to_chat(owner, span_userdanger("[katana] lashes out at you in hunger!"))
 		playsound(owner, 'sound/magic/demon_attack1.ogg', 50, TRUE)
 		var/obj/item/bodypart/part = owner.get_holding_bodypart_of_item(katana)
@@ -1107,7 +1107,7 @@
 
 /obj/item/cursed_katana/proc/cloak(mob/living/target, mob/user)
 	user.alpha = 150
-	user.invisibility = INVISIBILITY_OBSERVER // so hostile mobs cant see us or target us
+	user.SetInvisibility(INVISIBILITY_OBSERVER, id=type) // so hostile mobs cant see us or target us
 	user.add_sight(SEE_SELF) // so we can see us
 	user.visible_message(span_warning("[user] vanishes into thin air!"),
 		span_notice("You enter the dark cloak."))
@@ -1121,7 +1121,7 @@
 
 /obj/item/cursed_katana/proc/uncloak(mob/user)
 	user.alpha = 255
-	user.invisibility = 0
+	user.RemoveInvisibility(type)
 	user.clear_sight(SEE_SELF)
 	user.visible_message(span_warning("[user] appears from thin air!"),
 		span_notice("You exit the dark cloak."))

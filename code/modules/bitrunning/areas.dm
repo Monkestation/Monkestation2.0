@@ -23,6 +23,11 @@
 	static_lighting = FALSE
 	base_lighting_alpha = 255
 
+/area/virtual_domain/powered_lighting
+	name = "Virtual Domain Ruins"
+	icon_state = "bit_ruin"
+	requires_power = FALSE
+
 /// Safehouse
 
 /area/virtual_domain/safehouse

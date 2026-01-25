@@ -22,7 +22,7 @@ export const ArmamentStation = (props) => {
         <Section grow height="100%" title="Armaments Station">
           {card_inserted ? (
             <Stack>
-              <Stack.Item grow fill>
+              <Stack.Item grow>
                 <Box>
                   <b>Inserted Card:</b> {card_name}
                 </Box>

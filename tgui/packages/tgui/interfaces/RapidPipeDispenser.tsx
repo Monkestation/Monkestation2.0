@@ -255,7 +255,6 @@ const PreviewSelect = (props) => {
         <Button
           ml={0}
           key={preview.dir}
-          title={preview.dir_name}
           selected={preview.selected}
           style={{
             width: '40px',
@@ -280,8 +279,7 @@ const PreviewSelect = (props) => {
             ])}
             style={{
               transform: 'scale(1.5) translate(9.5%, 9.5%)',
-              '-ms-interpolation-mode': 'nearest-neighbor',
-              'image-rendering': 'pixelated',
+              imageRendering: 'pixelated',
             }}
           />
         </Button>
@@ -305,7 +303,6 @@ const PipeTypeSection = (props) => {
       <Tabs>
         {categories.map((category, i) => (
           <Tabs.Tab
-            fluid
             key={category.cat_name}
             icon={ICON_BY_CATEGORY_NAME[category.cat_name]}
             selected={category.cat_name === shownCategory.cat_name}
@@ -319,7 +316,7 @@ const PipeTypeSection = (props) => {
         {shownCategory?.recipes.map((recipe) => (
           <Table.Row
             key={recipe.pipe_index}
-            style={{ 'border-bottom': '1px solid #333' }}
+            style={{ borderBottom: '1px solid #333' }}
           >
             <Table.Cell collapsing py="2px" pb="1px">
               <PreviewSelect
@@ -329,7 +326,7 @@ const PipeTypeSection = (props) => {
               />
             </Table.Cell>
             <Table.Cell />
-            <Table.Cell style={{ 'vertical-align': 'middle' }}>
+            <Table.Cell style={{ verticalAlign: 'middle' }}>
               {recipe.pipe_name}
             </Table.Cell>
           </Table.Row>

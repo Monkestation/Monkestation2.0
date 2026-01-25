@@ -504,9 +504,9 @@
 
 	var/area/bingle_pit = GLOB.areas_by_type[/area/misc/bingle_pit]
 	for(var/atom/movable/thing in bingle_pit?.contents)
+		thing.forceMove(target_turf)
 		if(QDELETED(thing))
 			continue
-		thing.forceMove(target_turf)
 		var/dir = pick(GLOB.alldirs)
 		var/turf/edge = get_edge_target_turf(target_turf, dir)
 		thing.throw_at(edge, rand(1, 5), rand(1, 5))
