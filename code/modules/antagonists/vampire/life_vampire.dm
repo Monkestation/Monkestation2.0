@@ -232,8 +232,7 @@
 /datum/antagonist/vampire/proc/handle_blood()
 	SIGNAL_HANDLER
 	// Set nutrition
-	if(!isoozeling(owner.current))
-		owner.current.set_nutrition(min(current_vitae, NUTRITION_LEVEL_WELL_FED))
+	owner.current.set_nutrition(min(current_vitae, NUTRITION_LEVEL_WELL_FED))
 
 	// Try and exit frenzy
 	if(current_vitae >= FRENZY_THRESHOLD_EXIT)
