@@ -5,11 +5,12 @@
  */
 /datum/action/cooldown/vampire/targeted/command
 	name = "Command"
-	desc = "Dominate the mind of a mortal with a simple command."
+	desc = "Dominate the mind of another with a simple command."
 	button_icon_state = "power_command"
-	power_explanation = "Click any player to attempt to compell them.\n\
-		If your target is already commanded or a Curator, you will fail.\n\
+	power_explanation = "Click any player to attempt to compel them.\n\
+		If your target is already commanded, a Curator, or a vampire of higher level, you will fail.\n\
 		Once commanded, the target will do their best to fulfill it, with a duration scaling with level.\n\
+		If your target is mindshielded, your command's duration will be halved.\n\
 		At level 1, your command will stay for 60 seconds.\n\
 		At level 2, it will remain for 3 minutes.\n\
 		Be smart with your wording. They will become pacified, and won't obey violent commands."
