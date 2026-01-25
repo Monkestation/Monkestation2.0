@@ -1,7 +1,7 @@
 /datum/antagonist/vampire
 	name = "\improper Vampire"
 	roundend_category = "vampires"
-	antagpanel_category = "Vampire"
+	antagpanel_category = "Vampires"
 	show_in_roundend = ROLE_VAMPIRE
 	ui_name = "AntagInfoVampire"
 	hijack_speed = 0.5
