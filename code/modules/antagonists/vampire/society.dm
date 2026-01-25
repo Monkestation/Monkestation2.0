@@ -81,6 +81,8 @@ GLOBAL_LIST_EMPTY(all_vampires)
 	message_admins("[ADMIN_LOOKUPFLW(owner.current)] has been made a Scourge of the Vampires!")
 	log_game("[key_name(owner.current)] has become a Scourge of the Vampires.")
 
+	update_static_data_for_all_viewers()
+
 /**
  * Returns the princyness of this vampire.
  * get the players hours, convert it into a 10 point scale, 0-100 hours.
