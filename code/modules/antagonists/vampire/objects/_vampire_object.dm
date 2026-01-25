@@ -69,7 +69,7 @@
 
 		/// Radial menu for securing your Persuasion rack in place.
 		to_chat(user, span_notice("Do you wish to secure [src] here?"))
-		var/static/list/secure_options = list(
+		var/list/secure_options = list(
 			"Yes" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_yes"),
 			"No" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_no"))
 		var/secure_response = show_radial_menu(user, src, secure_options, radius = 36, require_near = TRUE)
@@ -82,7 +82,7 @@
 	if(user != owner.current || !user.Adjacent(src))
 		return NONE
 	balloon_alert(user, "unbolt [src]?")
-	var/static/list/unsecure_options = list(
+	var/list/unsecure_options = list(
 		"Yes" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_yes"),
 		"No" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_no"),
 	)

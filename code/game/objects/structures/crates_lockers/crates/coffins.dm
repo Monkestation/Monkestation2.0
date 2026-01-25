@@ -41,9 +41,21 @@
 	vampire.check_begin_torpor()
 
 /obj/structure/closet/crate/click_alt(mob/living/user)
-	if(user.loc != src || !isliving(user) || !IS_VAMPIRE(user))
+	if(!isliving(user) || !IS_VAMPIRE(user))
 		return NONE
-	return lock_me(user) ? CLICK_ACTION_SUCCESS : CLICK_ACTION_BLOCKING
+	if(user.loc == src)
+		return lock_me(user) ? CLICK_ACTION_SUCCESS : CLICK_ACTION_BLOCKING
+	if(user.mind == resident && user.Adjacent(src))
+		balloon_alert(user, "unclaim coffin?")
+		var/list/unclaim_options = list(
+			"Yes" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_yes"),
+			"No" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_no")
+		)
+		var/unclaim_response = show_radial_menu(user, src, unclaim_options, radius = 36, require_near = TRUE)
+		if(unclaim_response == "Yes")
+			unclaim_coffin(TRUE)
+		return CLICK_ACTION_SUCCESS
+	return NONE
 
 /obj/structure/closet/crate/coffin/crowbar_act(mob/living/user, obj/item/tool)
 	if((user.istate & ISTATE_HARM) || !locked)
