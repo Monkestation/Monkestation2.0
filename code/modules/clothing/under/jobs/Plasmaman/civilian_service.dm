@@ -7,7 +7,7 @@
 	icon = 'icons/obj/clothing/under/plasmaman.dmi'
 	worn_icon = 'icons/mob/clothing/under/plasmaman.dmi'
 	clothing_flags = PLASMAMAN_PREVENT_IGNITION
-	resistance_flags = NONE //not flammable
+	resistance_flags = FIRE_PROOF
 	armor_type = /datum/armor/under_plasmaman
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	can_adjust = FALSE
@@ -162,4 +162,3 @@
 	name = "plasmabunny envirosuit"
 	desc = "A plasmaman envirosuit designed for bunny themed waiters, it appears to just be a normal envirosuit with a bunnysuit on top of it"
 	icon_state = "plasmabunny_envirosuit"
-	can_adjust = TRUE
