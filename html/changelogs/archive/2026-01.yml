@@ -406,3 +406,28 @@
   Tractor-Maam:
   - rscdel: Opposing Force notifications have had their AI Generated sound effects
       removed and replaced.
+2026-01-25:
+  Absolucy:
+  - admin: Added the ability to sort by active turfs and such to the Atmos Control
+      Panel.
+  - code_imp: Cleaned up some more code, nya~
+  - bugfix: Fixed some more assorted minor bugs.
+  - bugfix: Fixed the library console having a NtOS bluescreen error.
+  - bugfix: HOPEFULLY FIXED THE DISAPPEARING IDS BUG, YAY!
+  - bugfix: Fixed the cursed katana getting bricked if it dismembers your arm by lashing
+      out.
+  - bugfix: Fixed weird things happening if you matter eat a teleporter component.
+  - bugfix: Nightwatcher's Rebirth no longer kills oozeling users when it heals them.
+  JohnFulpWillard:
+  - qol: Added more languages to NTSL.
+  - qol: Signals can now take a filter arg.
+  Sealed101, SirNightKnight:
+  - bugfix: fixed APC control console found in CE office only accessing APCs on its
+      z-level.
+  - bugfix: fixed restoring an emagged APC control console potentially leaving the
+      console in a forever state of restoring.
+  - bugfix: fixed the APC control console UI not loading correctly.
+  - map: added an APC control console to runtime station engineering.
+  SirNightKnight:
+  - balance: you need shock immunity either from the nerve grounding surgery or insulated
+      mutation to eat a supermatter with matter eater.

@@ -1,7 +1,0 @@
-author: "Sealed101, SirNightKnight"
-delete-after: True
-changes:
-  - bugfix: "fixed APC control console found in CE office only accessing APCs on its z-level."
-  - bugfix: "fixed restoring an emagged APC control console potentially leaving the console in a forever state of restoring."
-  - bugfix: "fixed the APC control console UI not loading correctly."
-  - map: "added an APC control console to runtime station engineering."
