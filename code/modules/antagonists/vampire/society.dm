@@ -44,8 +44,9 @@ GLOBAL_LIST_EMPTY(all_vampires)
 	prince = TRUE
 	add_team_hud(owner.current)
 
+	var/full_name = return_full_name()
 	for(var/datum/antagonist/vampire as anything in GLOB.all_vampires)
-		to_chat(vampire.owner.current, span_narsiesmall("[owner.current] has claimed the role of Prince!"))
+		to_chat(vampire.owner.current, span_narsiesmall("[full_name], also known as [owner.name || owner.current.real_name || owner.current.name], has claimed the role of Prince!"))
 
 	grant_power(new /datum/action/cooldown/vampire/targeted/scourgify)
 
@@ -53,10 +54,11 @@ GLOBAL_LIST_EMPTY(all_vampires)
 	objectives += prince_objective
 	owner.announce_objectives()
 
-	message_admins("[owner.current] has received the role of Vampire Prince. ([get_princely_score()] princely score, with [my_clan?.princely_score_bonus]/[min(50, owner.current?.client?.get_exp_living(TRUE) / 60) / 10] clan/hour bonus.)")
-	log_game("[owner.current] has become the Vampire Prince. ([get_princely_score()] princely score, with [my_clan?.princely_score_bonus]/[min(50, owner.current?.client?.get_exp_living(TRUE) / 60) / 10] clan/hour bonus.)")
-
+	message_admins("[ADMIN_LOOKUP(owner.current)] has received the role of Vampire Prince. ([get_princely_score()] princely score, with [my_clan?.princely_score_bonus]/[min(50, owner.current?.client?.get_exp_living(TRUE) / 60) / 10] clan/hour bonus.)")
+	log_game("[key_name(owner.current)] has become the Vampire Prince. ([get_princely_score()] princely score, with [my_clan?.princely_score_bonus]/[min(50, owner.current?.client?.get_exp_living(TRUE) / 60) / 10] clan/hour bonus.)")
 	tgui_alert(owner.current, "Congratulations, you have been chosen for Princedom.\nPlease note that this entails a certain responsibility. Your job, now, is to keep order, and to enforce the masquerade.", "Welcome, my Prince.", list("I understand"), 30 SECONDS, TRUE)
+
+	update_static_data_for_all_viewers()
 
 /**
  * Turns the player into a scourge.
@@ -66,7 +68,6 @@ GLOBAL_LIST_EMPTY(all_vampires)
 
 	rank_up(4, TRUE) // Rank up less.
 	to_chat(owner.current, span_cultbold("As a camarilla scourge, your newfound purpose empowers you!"))
-	// set_antag_hud(owner.current, "scourge")
 	scourge = TRUE
 	add_team_hud(owner.current)
 
@@ -75,10 +76,10 @@ GLOBAL_LIST_EMPTY(all_vampires)
 	owner.announce_objectives()
 
 	for(var/datum/antagonist/vampire as anything in GLOB.all_vampires)
-		to_chat(vampire.owner.current, span_cultbold(span_big("Under authority of the Prince, [owner.current] has been raised to the duty of the Scourge!")))
+		to_chat(vampire.owner.current, span_cultbold(span_big("Under authority of the Prince, [owner.name || owner.current.real_name || owner.current.name] has been raised to the duty of the Scourge!")))
 
-	message_admins("[owner.current] has been made a Scourge of the Vampires!")
-	log_game("[owner.current] has become a Scourge of the Vampires.")
+	message_admins("[ADMIN_LOOKUPFLW(owner.current)] has been made a Scourge of the Vampires!")
+	log_game("[key_name(owner.current)] has become a Scourge of the Vampires.")
 
 /**
  * Returns the princyness of this vampire.

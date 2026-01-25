@@ -1,5 +1,5 @@
 /datum/antagonist/vampire/proc/return_full_name()
-	var/fullname = vampire_name ? vampire_name : owner.current.name
+	var/fullname = vampire_name || owner.name || owner.current.real_name || owner.current.name
 
 	fullname += " the [get_rank_string(vampire_level)]"
 
