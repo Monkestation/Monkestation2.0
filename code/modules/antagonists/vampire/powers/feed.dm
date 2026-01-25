@@ -372,7 +372,7 @@
 				var/mob/living/carbon/human/target_user = feed_target
 				var/obj/item/bodypart/head_part = target_user.get_bodypart(BODY_ZONE_HEAD)
 				if(head_part)
-					head_part.generic_bleedstacks += 5
+					head_part.adjustBleedStacks(10)
 
 			// Ow
 			feed_target.apply_damage(10, BRUTE, BODY_ZONE_HEAD)
