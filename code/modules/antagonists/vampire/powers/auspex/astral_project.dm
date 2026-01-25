@@ -15,6 +15,7 @@
 /datum/action/cooldown/vampire/astral_projection/activate_power()
 	. = ..()
 	var/mob/dead/observer/ghost = owner.ghostize(can_reenter_corpse = TRUE)
+	ADD_TRAIT(ghost, TRAIT_NO_OBSERVE, TRAIT_VAMPIRE)
 	ghost.add_atom_colour(COLOR_VOID_PURPLE, ADMIN_COLOUR_PRIORITY)
 	ghost.name = "Astral Shade of [ghost.name]"
 	deactivate_power()
