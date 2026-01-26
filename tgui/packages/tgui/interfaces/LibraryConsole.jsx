@@ -915,7 +915,6 @@ export const PageSelect = (props) => {
       <Stack.Item>
         <Input
           placeholder={current_page + '/' + page_count}
-          value={input}
           onChange={(value) => {
             // I am so sorry
             if (value !== '') {

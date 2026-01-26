@@ -13,6 +13,7 @@
 	blocks_emissive = EMISSIVE_BLOCK_NONE
 	living_flags = ALWAYS_DEATHGASP
 	max_grab = GRAB_KILL
+	life_subsystem_type = /datum/controller/subsystem/mobs/carbons
 	///List of [/obj/item/organ]s in the mob. They don't go in the contents for some reason I don't want to know.
 	var/list/obj/item/organ/organs = list()
 	///Same as [above][/mob/living/carbon/var/organs], but stores "slot ID" - "organ" pairs for easy access.

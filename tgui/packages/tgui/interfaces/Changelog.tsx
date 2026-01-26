@@ -17,6 +17,8 @@ import { Window } from '../layouts';
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
 import { LobbyNoticesType } from './common/LobbyNotices';
+import { fetchRetry } from 'tgui-core/http';
+import { logger } from '../logging';
 
 const icons = {
   bugfix: { icon: 'bug', color: 'green' },
@@ -278,21 +280,26 @@ export const Changelog = (_props) => {
 
     act('get_month', { date });
 
-    fetch(resolveAsset(date + '.yml')).then(async (changelogData) => {
-      const result = await changelogData.text();
-      const errorRegex = /^Cannot find/;
+    fetchRetry(resolveAsset(date + '.yml'))
+      .then((changelogData) => changelogData.text())
+      .then((result) => {
+        const errorRegex = /^Cannot find/;
 
-      if (errorRegex.test(result)) {
-        const timeout = 50 + attemptNumber * 50;
+        if (errorRegex.test(result)) {
+          const timeout = 50 + attemptNumber * 50;
 
-        setData('Loading changelog data' + '.'.repeat(attemptNumber + 3));
-        setTimeout(() => {
-          getData(date, attemptNumber + 1);
-        }, timeout);
-      } else {
-        setData(yaml.load(result, { schema: yaml.CORE_SCHEMA }));
-      }
-    });
+          setData('Loading changelog data' + '.'.repeat(attemptNumber + 3));
+          setTimeout(() => {
+            getData(date, attemptNumber + 1);
+          }, timeout);
+        } else {
+          setData(yaml.load(result, { schema: yaml.CORE_SCHEMA }));
+        }
+      })
+      .catch((error) => {
+        logger.log('Failed to fetch changelog data', JSON.stringify(error));
+        setData('Fetching changelog data errored');
+      });
   };
 
   useEffect(() => {

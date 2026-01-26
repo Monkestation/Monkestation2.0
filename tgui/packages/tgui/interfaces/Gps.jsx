@@ -3,7 +3,7 @@ import { flow } from 'common/fp';
 import { clamp } from 'common/math';
 import { createSearch } from 'common/string';
 import { vecLength, vecSubtract } from 'common/vector';
-import { useBackend, useLocalState } from '../backend';
+import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -12,15 +12,16 @@ import {
   Section,
   Table,
   Input,
-} from '../components';
+} from 'tgui-core/components';
 import { Window } from '../layouts';
+import { useState } from 'react';
 
 const coordsToVec = (coords) => map(parseFloat)(coords.split(', '));
 
 export const Gps = (props) => {
   const { act, data } = useBackend();
   const { currentArea, currentCoords, globalmode, power, tag, updating } = data;
-  const [searchName, setSearchName] = useLocalState('searchName', '');
+  const [searchName, setSearchName] = useState('');
   const searchByName = createSearch(searchName, (gps) => gps.entrytag);
   const signals = flow([
     map((signal, index) => {

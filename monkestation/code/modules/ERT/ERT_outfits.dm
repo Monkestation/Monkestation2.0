@@ -20,7 +20,7 @@
 
 /datum/antagonist/ert/generic/greet()
 	..()
-	owner.current.playsound_local(get_turf(owner.current), 'monkestation/sound/ambience/antag/ert.ogg', 100, 0, use_reverb = FALSE) //monkestation addition
+	owner.current.playsound_local(get_turf(owner.current), 'monkestation/sound/ambience/antag/ert.ogg', 100, 0, use_reverb = FALSE)
 
 /datum/outfit/centcom/ert/generic
 	name = "Emergency Response Officer"
