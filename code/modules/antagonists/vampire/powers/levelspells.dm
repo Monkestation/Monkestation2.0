@@ -45,7 +45,7 @@
 						When used on another kindred, they will receive some levels and an objective to obey you.\n\
 						When used on your vassal, you will become their sire, embracing them as a full-blooded vampire.\n\
 						They will be part of your own clan, and of course receive some bonus levels as well.\n\n\
-						The Scourge is your enforcer, your tool to wield in the name of the camarilla. Use them to enforce the masquerade, and to keep control over your fellow kindred."
+						The Scourge is your enforcer, your tool to wield in the name of the Camarilla. Use them to enforce the masquerade, and to keep control over your fellow kindred."
 	vampire_power_flags = BP_AM_SINGLEUSE
 	vampire_check_flags = BP_CANT_USE_IN_TORPOR | BP_CANT_USE_IN_FRENZY | BP_CANT_USE_WHILE_STAKED | BP_CANT_USE_WHILE_INCAPACITATED | BP_CANT_USE_WHILE_UNCONSCIOUS
 	vitaecost = 0

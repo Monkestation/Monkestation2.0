@@ -328,18 +328,18 @@
 	var/thaumaturgy = "[span_tooltip("Thaumaturgy is the secret blood-art of the clan tremere. Allowing them all manners of blood-sorcery and pacts.", "Thaumaturgy")]"
 
 	/// All the descriptions:
-	var/ventrue = "The ventrue are the de-facto leaders of the camarilla. They style themselves as kings and emperors, often inhabiting positions of power.\n\
-		<b>IMPORTANT:</b> Members of the Ventrue Clan are eligible for princedom. If there is no current prince, you will become one. Please remember that princes are expected to behave in a manner befitting their office.\n\
+	var/ventrue = "The ventrue are the de-facto leaders of the Camarilla. They style themselves as kings and emperors, often inhabiting positions of power.\n\
+		<b>IMPORTANT:</b> Members of the Ventrue Clan are the most eligible for princedom. Please remember that princes are expected to behave in a manner befitting their office.\n\
 		<b>[disciplines]:</b> [dominate], [fortitude], [presence]"
-	var/tremere = "With a powerful ancestry of wizards and magicians, the tremere wield the secret art of blood magic, which they guard with utmost care.\n\
+	var/tremere = "With a powerful ancestry of wizards and magicians, the Tremere wield the secret art of blood magic, which they guard with utmost care.\n\
 		<b>[disciplines]:</b> [thaumaturgy], [auspex], [dominate]"
-	var/toreador = "Artists, Pleasure-workers, Celebrities. These are the people of the toreador clan. They are by far the closest to humanity of all kindred, each a deeply sensitive individual.\n\
+	var/toreador = "Artists, Pleasure-workers, Celebrities. These are the people of the Toreador clan. They are by far the closest to humanity of all kindred, each a deeply sensitive individual.\n\
 		<b>[disciplines]:</b> [presence], [auspex], [celerity]"
 	var/malkavian = "Completely insane. You gain constant hallucinations, become a prophet with unintelligable rambling, and gain insights better left unknown. You can also travel through Phobetor tears, rifts through spacetime only you can travel through.\n\
 		<b>[disciplines]:</b> [dominate], [auspex], [obfuscate]"
 	var/gangrel = "Often mistaken as werewolves, gangrel carry the smell of wet dog wherever they go. Their unique bond with the beast within allows them to transform parts of their body into powerful claws, even becoming entirely different beings.\n\
 		<b>[disciplines]:</b> [animalism], [protean], [fortitude]"
-	var/brujah = "A clan now, of mostly rebels. Though some still show fragments of their lost lineage of warrior-poets. They are long split from the camarilla, and often form their own groups.\n\
+	var/brujah = "A clan now, of mostly rebels. Though some still show fragments of their lost lineage of warrior-poets. They are long split from the Camarilla, and often form their own groups.\n\
 		<b>[disciplines]:</b> [potence], [celerity], [presence]"
 
 	// Now the logic
