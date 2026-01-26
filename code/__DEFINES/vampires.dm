@@ -182,8 +182,6 @@
 // Trait sources
 /// Source trait for all vampire traits
 #define TRAIT_VAMPIRE "trait_vampire"
-/// Source trait while Feeding
-#define TRAIT_FEED "trait_feed"
 /// Source trait for vampires in torpor.
 #define TRAIT_TORPOR "trait_torpor"
 /// Source trait for vampire mesmerization.

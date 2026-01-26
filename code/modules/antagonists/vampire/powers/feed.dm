@@ -217,7 +217,7 @@
 			owner.balloon_alert(owner, "mesmerizing [feed_target]...")
 
 			// Initial ""mesmerize""
-			if(!do_after(owner, 2 SECONDS, feed_target, NONE, TRUE, hidden = TRUE))
+			if(!do_after(owner, 2 SECONDS, feed_target, hidden = TRUE))
 				owner.balloon_alert(owner, "interrupted!")
 				deactivate_power()
 				return
@@ -229,8 +229,8 @@
 			feed_time /= 4
 
 		feed_target.Stun(feed_time, TRUE)
-		feed_target.become_blind(TRAIT_FEED)
-		ADD_TRAIT(feed_target, TRAIT_DEAF, TRAIT_FEED)
+		feed_target.become_blind(REF(src))
+		ADD_TRAIT(feed_target, TRAIT_DEAF, REF(src))
 
 		to_chat(feed_target, span_hypnophrase("You suddenly fall into a deep trance..."), type = MESSAGE_TYPE_WARNING)
 		owner.balloon_alert(owner, "subdued! starting feed...")
@@ -340,8 +340,8 @@
 		return
 
 	if(currently_feeding) // Check if we actually started successfully.
-		owner.add_traits(list(TRAIT_IMMOBILIZED, TRAIT_MUTE, TRAIT_HANDS_BLOCKED), TRAIT_FEED)
-		feed_target.add_traits(list(TRAIT_IMMOBILIZED, TRAIT_MUTE, TRAIT_HANDS_BLOCKED), TRAIT_FEED)
+		owner.add_traits(list(TRAIT_IMMOBILIZED, TRAIT_MUTE, TRAIT_HANDS_BLOCKED), REF(src))
+		feed_target.add_traits(list(TRAIT_IMMOBILIZED, TRAIT_MUTE, TRAIT_HANDS_BLOCKED), REF(src))
 
 		// Normally removed traits are done. Now we give the victim a lil something to remember us by.
 		feed_target.apply_status_effect(/datum/status_effect/feed_marked)
@@ -456,7 +456,7 @@
 
 /datum/action/cooldown/vampire/targeted/feed/deactivate_power()
 	. = ..()
-	REMOVE_TRAITS_IN(owner, TRAIT_FEED)
+	REMOVE_TRAITS_IN(owner, REF(src))
 
 	// Did we already take humanity for killing them?
 	var/humanity_deducted = FALSE
@@ -465,37 +465,36 @@
 
 	if(feed_target)
 		// Call cure_blind after a (truly tiny) delay to make sure they don't see NOTHING
-		addtimer(CALLBACK(feed_target, TYPE_PROC_REF(/mob/living, remove_status_effect), /datum/status_effect/grouped/blindness, TRAIT_FEED), 1 SECONDS)
+		addtimer(CALLBACK(feed_target, TYPE_PROC_REF(/mob/living, remove_status_effect), /datum/status_effect/grouped/blindness, REF(src)), 1 SECONDS)
+		REMOVE_TRAITS_IN(feed_target, REF(src))
+		if(currently_feeding)
 
-	if(feed_target && currently_feeding)
-		REMOVE_TRAITS_IN(feed_target, TRAIT_FEED)
+			animate(owner, 0.2 SECONDS, pixel_x = 0, pixel_y = 0)
+			animate(feed_target, 0.2 SECONDS, pixel_x = 0, pixel_y = 0)
 
-		animate(owner, 0.2 SECONDS, pixel_x = 0, pixel_y = 0)
-		animate(feed_target, 0.2 SECONDS, pixel_x = 0, pixel_y = 0)
+			log_combat(owner, feed_target, "fed on blood", addition = "(and took [blood_taken] blood)")
 
-		log_combat(owner, feed_target, "fed on blood", addition = "(and took [blood_taken] blood)")
+			to_chat(owner, span_notice("You slowly release [feed_target]."))
 
-		to_chat(owner, span_notice("You slowly release [feed_target]."))
+			if(feed_target.stat != DEAD && silent_feed)
+				to_chat(owner, span_notice("<i>[feed_target.p_They()] look[feed_target.p_s()] dazed, and will not remember this.</i>"), type = MESSAGE_TYPE_INFO)
+				if(!IS_VASSAL(feed_target))
+					to_chat(feed_target, span_hypnophrase(span_reallybig("You wake from your trance. Everything is so... hazy... You don't remember the last few moments...")), type = MESSAGE_TYPE_INFO)
+					to_chat(feed_target, span_warning(" * You do not remember that you have been fed on, the identity of the person who just fed on you, or the fact that they are a vampire."), type = MESSAGE_TYPE_INFO)
+					to_chat(feed_target, span_notice(" * If you already knew this person was a vampire from before your current encounter with them, however, you retain memory of that."), type = MESSAGE_TYPE_INFO)
+				else
+					to_chat(feed_target, span_hypnophrase(span_reallybig("You wake from your trance. Everything is so... hazy...")), type = MESSAGE_TYPE_INFO)
+				if(feed_target.blood_volume >= BLOOD_VOLUME_OKAY)
+					to_chat(feed_target, span_announce("You feel dizzy, but it will probably pass by itself!"), type = MESSAGE_TYPE_INFO)
 
-		if(feed_target.stat != DEAD && silent_feed)
-			to_chat(owner, span_notice("<i>[feed_target.p_They()] look[feed_target.p_s()] dazed, and will not remember this.</i>"), type = MESSAGE_TYPE_INFO)
-			if(!IS_VASSAL(feed_target))
-				to_chat(feed_target, span_hypnophrase(span_reallybig("You wake from your trance. Everything is so... hazy... You don't remember the last few moments...")), type = MESSAGE_TYPE_INFO)
-				to_chat(feed_target, span_warning(" * You do not remember that you have been fed on, the identity of the person who just fed on you, or the fact that they are a vampire."), type = MESSAGE_TYPE_INFO)
-				to_chat(feed_target, span_notice(" * If you already knew this person was a vampire from before your current encounter with them, however, you retain memory of that."), type = MESSAGE_TYPE_INFO)
-			else
-				to_chat(feed_target, span_hypnophrase(span_reallybig("You wake from your trance. Everything is so... hazy...")), type = MESSAGE_TYPE_INFO)
-			if(feed_target.blood_volume >= BLOOD_VOLUME_OKAY)
-				to_chat(feed_target, span_announce("You feel dizzy, but it will probably pass by itself!"), type = MESSAGE_TYPE_INFO)
+			if(feed_target.stat == DEAD)
+				living_owner.add_mood_event("drankkilled", /datum/mood_event/drankkilled)
+				humanity_deducted = TRUE
 
-		if(feed_target.stat == DEAD)
-			living_owner.add_mood_event("drankkilled", /datum/mood_event/drankkilled)
-			humanity_deducted = TRUE
-
-		if(feed_fatal && !humanity_deducted)
-			living_owner.add_mood_event("drankkilled", /datum/mood_event/drankkilled)
-			to_chat(owner, span_userdanger("No way will [feed_target.p_they()] survive that..."))
-			vampiredatum_power.adjust_humanity(-1)
+			if(feed_fatal && !humanity_deducted)
+				living_owner.add_mood_event("drankkilled", /datum/mood_event/drankkilled)
+				to_chat(owner, span_userdanger("No way will [feed_target.p_they()] survive that..."))
+				vampiredatum_power.adjust_humanity(-1)
 
 /*
 		if(iscarbon(feed_target))
