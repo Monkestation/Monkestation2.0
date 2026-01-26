@@ -35,8 +35,7 @@
 	tool_paths = list(/obj/item/stamp/head/captain)
 	category = CAT_MISC
 
-// LUCY TODO: old bloodsucker code
-/* /datum/crafting_recipe/silver_cuffs
+/datum/crafting_recipe/silver_cuffs
 	name = "Silver Cuffs"
 	result = /obj/item/restraints/handcuffs/silver
 	reqs = list(
@@ -44,7 +43,7 @@
 		/obj/item/stack/sheet/mineral/silver = 1,
 	)
 	time = 3 SECONDS
-	category = CAT_MISC */
+	category = CAT_MISC
 
 /datum/crafting_recipe/comically_large_straw
 	name = "Comically Large Straw"

@@ -161,6 +161,10 @@
 	if((vampire_check_flags & BP_CANT_USE_DURING_SOL) && carbon_owner.has_status_effect(/datum/status_effect/vampire_sol))
 		to_chat(carbon_owner, span_warning("You can't use [src] during Sol!"))
 		return FALSE
+	// Silver cuffed?
+	if(!(vampire_check_flags & BP_ALLOW_WHILE_SILVER_CUFFED) && owner.has_status_effect(/datum/status_effect/silver_cuffed))
+		owner.balloon_alert(owner, "the silver cuffs on your wrists prevent you from using your powers!")
+		return FALSE
 	return TRUE
 
 /datum/action/cooldown/vampire/proc/pay_cost()
@@ -219,6 +223,8 @@
 /// Checks to make sure this power can stay active
 /datum/action/cooldown/vampire/proc/continue_active()
 	if(QDELETED(owner))
+		return FALSE
+	if (!(check_flags & BP_ALLOW_WHILE_SILVER_CUFFED) && owner.has_status_effect(/datum/status_effect/silver_cuffed))
 		return FALSE
 	if(vampiredatum_power && vampiredatum_power.current_vitae < constant_vitaecost)
 		return FALSE

@@ -114,6 +114,8 @@
 #define BP_CANT_USE_WHILE_UNCONSCIOUS (1<<4)
 /// This Power can't be used during Sol
 #define BP_CANT_USE_DURING_SOL (1<<5)
+/// This Power CAN be used while silver cuffed
+#define BP_ALLOW_WHILE_SILVER_CUFFED (1<<6)
 
 /// This is a Default Power that all Vampires get.
 #define VAMPIRE_DEFAULT_POWER (1<<1)

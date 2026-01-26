@@ -356,3 +356,19 @@
 /datum/antagonist/vampire/proc/free_all_vassals()
 	for(var/datum/antagonist/vassal/all_vassals in vassals)
 		all_vassals.owner.remove_antag_datum(/datum/antagonist/vassal)
+
+/datum/status_effect/silver_cuffed
+	id = "silver cuffed"
+	alert_type = null
+	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
+	remove_on_fullheal = TRUE
+
+/datum/status_effect/silver_cuffed/on_apply()
+	if(!iscarbon(owner))
+		return FALSE
+	return TRUE
+
+/datum/status_effect/silver_cuffed/tick(seconds_between_ticks)
+	var/mob/living/carbon/carbon_owner = owner
+	if(!istype(carbon_owner.handcuffed, /obj/item/restraints/handcuffs/silver))
+		qdel(src)

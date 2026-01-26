@@ -4,7 +4,7 @@
 	button_icon_state = "power_strength"
 	power_explanation = "Use this power to deal a horrific blow. Punching a Cyborg will EMP it and deal high damage.\n\
 		At level 3, you can break closets open and break restraints.\n\
-		At level 4, you can bash airlocks open.\n\
+		At level 4, you can bash airlocks open, and you get the ability to break even silver handcuffs. Use wisely - security is unlikely to try and capture you alive again after the first time!\n\
 		Higher ranks will increase the damage when punching someone."
 	vampire_power_flags = BP_AM_TOGGLE
 	vampire_check_flags = BP_CANT_USE_IN_TORPOR | BP_CANT_USE_WHILE_STAKED | BP_CANT_USE_IN_FRENZY | BP_CANT_USE_WHILE_INCAPACITATED | BP_CANT_USE_WHILE_UNCONSCIOUS
@@ -30,6 +30,7 @@
 
 /datum/action/cooldown/vampire/targeted/brawn/four
 	level_current = 4
+	vampire_check_flags = parent_type::vampire_check_flags | BP_ALLOW_WHILE_SILVER_CUFFED
 
 /datum/action/cooldown/vampire/targeted/brawn/activate_power()
 	// Did we break out of our handcuffs?

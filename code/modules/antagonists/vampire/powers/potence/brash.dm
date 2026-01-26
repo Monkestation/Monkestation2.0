@@ -14,7 +14,7 @@
 		Punching a cyborg will temporarily disable it in addition to usual damage. \n\
 		At level 2 this ability will allow you to break through unbolted airlocks. \n\
 		At level 3 this ability will allow you to break through bolted airlocks. \n\
-		At level 4 this ability will allow you to break through normal walls and windows. \n\
+		At level 4 this ability will allow you to break through normal walls and windows, and can break silver handcuffs. \n\
 		At level 5 this ability will allow you to break through reinforced walls and windows. \n\
 		Higher levels will increase this ability's damage and knockdown."
 	vampire_power_flags = BP_AM_VERY_DYNAMIC_COOLDOWN
@@ -32,9 +32,11 @@
 
 /datum/action/cooldown/vampire/targeted/brawn/brash/four
 	level_current = 4
+	vampire_check_flags = parent_type::vampire_check_flags | BP_ALLOW_WHILE_SILVER_CUFFED
 
 /datum/action/cooldown/vampire/targeted/brawn/brash/five
 	level_current = 5
+	vampire_check_flags = parent_type::vampire_check_flags | BP_ALLOW_WHILE_SILVER_CUFFED
 
 /// Hit an atom, set vitaecost, set cooldown time, play a sound, and deconstruct the atom
 /// with this one convenient proc!
