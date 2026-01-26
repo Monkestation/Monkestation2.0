@@ -472,7 +472,7 @@
 			animate(owner, 0.2 SECONDS, pixel_x = 0, pixel_y = 0)
 			animate(feed_target, 0.2 SECONDS, pixel_x = 0, pixel_y = 0)
 
-			log_combat(owner, feed_target, "fed on blood", addition = "(and took [blood_taken] blood)")
+			log_combat(owner, feed_target, "fed on blood [silent_feed ? "silently" : "aggressively"]", addition = "(and took [blood_taken] blood)")
 
 			to_chat(owner, span_notice("You slowly release [feed_target]."))
 
