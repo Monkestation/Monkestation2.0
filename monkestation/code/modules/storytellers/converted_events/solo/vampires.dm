@@ -50,8 +50,6 @@
 		. *= 2
 	else if(vampire_count == 2)
 		. *= 1.5
-	else if(vampire_count >= 4) // if there's a lot, let's... try not to go crazy
-		. *= 0.5
 
 /datum/round_event_control/antagonist/solo/vampire/midround/get_antag_amount()
 	. = ..()
