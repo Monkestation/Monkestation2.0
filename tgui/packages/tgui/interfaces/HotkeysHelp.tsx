@@ -1,7 +1,7 @@
+import type { ReactNode } from 'react';
 import { useBackend } from '../backend';
 import { Box, Section, Table, Tooltip } from '../components';
 import { Window } from '../layouts';
-import type { ReactNode } from 'react';
 
 type BindingInfo = {
   name: string;

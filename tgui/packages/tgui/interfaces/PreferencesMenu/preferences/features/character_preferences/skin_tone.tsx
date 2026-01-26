@@ -1,9 +1,9 @@
 import { sortBy } from 'common/collections';
 import {
-  Feature,
-  FeatureChoicedServerData,
-  FeatureValueProps,
-  HexValue,
+  type Feature,
+  type FeatureChoicedServerData,
+  type FeatureValueProps,
+  type HexValue,
   StandardizedPalette,
 } from '../base';
 

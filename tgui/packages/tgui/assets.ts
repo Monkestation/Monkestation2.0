@@ -4,9 +4,8 @@
  * @license MIT
  */
 
-import { Action, AnyAction, Middleware } from '../common/redux';
-
-import { Dispatch } from 'common/redux';
+import type { Dispatch } from 'common/redux';
+import type { Action, AnyAction, Middleware } from '../common/redux';
 
 const EXCLUDED_PATTERNS = [/v4shim/i];
 export const loadedMappings: Record<string, string> = {};

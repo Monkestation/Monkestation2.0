@@ -1,24 +1,28 @@
-import { useBackend, useLocalState } from '../backend';
-import {
-  InfinitePlane,
-  Stack,
-  Box,
-  Button,
-  Modal,
-  Dropdown,
-  Section,
-  LabeledList,
-  Tooltip,
-  Slider,
-} from '../components';
 import { sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { classes, shallowDiffers } from 'common/react';
-import { Component, createRef, RefObject } from 'react';
-import { Window } from '../layouts';
+import { Component, createRef, type RefObject } from 'react';
 import { resolveAsset } from '../assets';
+import { useBackend, useLocalState } from '../backend';
+import {
+  Box,
+  Button,
+  Dropdown,
+  InfinitePlane,
+  LabeledList,
+  Modal,
+  Section,
+  Slider,
+  Stack,
+  Tooltip,
+} from '../components';
+import { Window } from '../layouts';
+import {
+  type Connection,
+  Connections,
+  type Position,
+} from './common/Connections';
 import { MOUSE_BUTTON_LEFT, noop } from './IntegratedCircuit/constants';
-import { Connection, Connections, Position } from './common/Connections';
 
 enum ConnectionType {
   Relay,
@@ -126,7 +130,7 @@ type PlaneDebugData = {
 // Stolen wholesale from fontcode
 const textWidth = (text, font, fontsize) => {
   // default font height is 12 in tgui
-  font = fontsize + 'x ' + font;
+  font = `${fontsize}x ${font}`;
   const c = document.createElement('canvas');
   const ctx = c.getContext('2d') as any;
   ctx.font = font;
@@ -134,33 +138,30 @@ const textWidth = (text, font, fontsize) => {
   return width;
 };
 
-const planeToPosition = function (plane: Plane, index, is_incoming): Position {
-  return {
-    x: is_incoming ? plane.x : plane.x + plane.size_x,
-    y:
-      29 +
-      plane.y +
-      plane.step_size * index +
-      (plane.step_size - plane.step_size / 3),
-  };
-};
+const planeToPosition = (plane: Plane, index, is_incoming): Position => ({
+  x: is_incoming ? plane.x : plane.x + plane.size_x,
+  y:
+    29 +
+    plane.y +
+    plane.step_size * index +
+    (plane.step_size - plane.step_size / 3),
+});
 
 // Takes a plane, returns the amount of node space it will need
-const getPlaneNodeHeight = function (plane: Plane): number {
-  return Math.max(
+const getPlaneNodeHeight = (plane: Plane): number =>
+  Math.max(
     plane.incoming_relays.length + plane.incoming_filters.length,
     plane.outgoing_relays.length + plane.outgoing_filters.length,
   );
-};
 
-const sortConnectionRefs = function (
+const sortConnectionRefs = (
   refs: ConnectionRef[],
   direction: ConnectionDirection,
   connectSources: AssocConnected,
-) {
+) => {
   refs = sortBy((connection: ConnectionRef) => connection.sort_by)(refs);
-  refs.map((connection, index) => {
-    let connectSource = connectSources[connection.ref];
+  refs.forEach((connection, index) => {
+    const connectSource = connectSources[connection.ref];
     if (direction === ConnectionDirection.Outgoing) {
       connectSource.source_index = index;
     } else if (direction === ConnectionDirection.Incoming) {
@@ -170,13 +171,13 @@ const sortConnectionRefs = function (
   return refs;
 };
 
-const addConnectionRefs = function (
+const addConnectionRefs = (
   read_from: string[],
   add_type: ConnectionDirection,
   add_to: ConnectionRef[],
   reference: AssocConnected,
   plane_info: AssocPlane,
-) {
+) => {
   for (const ref of read_from) {
     const connected = reference[ref];
     let our_plane;
@@ -194,7 +195,7 @@ const addConnectionRefs = function (
 };
 
 // Takes a list of planes, uses the depth stack to position them
-const positionPlanes = function (connectSources: AssocConnected) {
+const positionPlanes = (connectSources: AssocConnected) => {
   const { data } = useBackend<PlaneDebugData>();
   const { plane_info, relay_info, filter_connect, depth_stack } = data;
 
@@ -202,20 +203,20 @@ const positionPlanes = function (connectSources: AssocConnected) {
   // We need them in one list partly for later purposes
   // But also so we can set their source/target index nicely
   for (const ref of Object.keys(relay_info)) {
-    let connection_source: Connected = relay_info[ref];
+    const connection_source: Connected = relay_info[ref];
     connection_source.connect_type = ConnectionType.Relay;
     connection_source.connect_color = 'blue';
     connectSources[ref] = connection_source;
   }
   for (const ref of Object.keys(filter_connect)) {
-    let connection_source: Connected = filter_connect[ref];
+    const connection_source: Connected = filter_connect[ref];
     connection_source.connect_type = ConnectionType.Filter;
     connection_source.connect_color = 'purple';
     connectSources[ref] = connection_source;
   }
 
   for (const plane_ref of Object.keys(plane_info)) {
-    let our_plane = plane_info[plane_ref];
+    const our_plane = plane_info[plane_ref];
     const incoming_conct: ConnectionRef[] = [] as any;
     const outgoing_conct: ConnectionRef[] = [] as any;
     addConnectionRefs(
@@ -322,9 +323,8 @@ const positionPlanes = function (connectSources: AssocConnected) {
   }
 };
 
-const arrayRemove = function (arr: any, value) {
-  return arr.filter((element) => element !== value);
-};
+const arrayRemove = (arr: any, value) =>
+  arr.filter((element) => element !== value);
 
 export class PlaneMasterDebug extends Component {
   constructor(props) {
@@ -346,8 +346,8 @@ export class PlaneMasterDebug extends Component {
         source: connection.source_ref,
         target: connection.target_ref,
       });
-      let source_plane = plane_info[connection.source_ref];
-      let target_plane = plane_info[connection.source_ref];
+      const source_plane = plane_info[connection.source_ref];
+      const target_plane = plane_info[connection.source_ref];
       source_plane.outgoing_relays = arrayRemove(
         source_plane.outgoing_relays,
         connection.our_ref,
@@ -363,8 +363,8 @@ export class PlaneMasterDebug extends Component {
         target: filter.target_ref,
         name: filter.name,
       });
-      let source_plane = plane_info[connection.source_ref];
-      let target_plane = plane_info[connection.source_ref];
+      const source_plane = plane_info[connection.source_ref];
+      const target_plane = plane_info[connection.source_ref];
       source_plane.outgoing_filters = arrayRemove(
         source_plane.outgoing_filters,
         connection.our_ref,
@@ -403,7 +403,7 @@ export class PlaneMasterDebug extends Component {
     }
 
     return (
-      <Window width={1200} height={800} title={'Plane Debugging: ' + mob_name}>
+      <Window width={1200} height={800} title={`Plane Debugging: ${mob_name}`}>
         <Window.Content
           style={{
             backgroundImage: 'none',
@@ -447,7 +447,9 @@ type PlaneMasterProps = {
   our_plane: Plane;
   x: number;
   y: number;
+  // biome-ignore lint/complexity/noBannedTypes: im lazy and a future refactor will nuke this anyways
   onPortMouseDown: Function;
+  // biome-ignore lint/complexity/noBannedTypes: im lazy and a future refactor will nuke this anyways
   act: Function;
 };
 
@@ -560,7 +562,9 @@ class PlaneMaster extends Component<PlaneMasterProps> {
 type PortProps = {
   connection: Connected;
   isOutput?: boolean;
+  // biome-ignore lint/complexity/noBannedTypes: im lazy and a future refactor will nuke this anyways
   onPortMouseDown?: Function;
+  // biome-ignore lint/complexity/noBannedTypes: im lazy and a future refactor will nuke this anyways
   act: Function;
 };
 class Port extends Component<PortProps> {
@@ -680,7 +684,7 @@ const PlaneWindow = (props) => {
       height="100%"
       position="absolute"
       backgroundColor="#000000"
-      title={'Plane Master: ' + workingPlane.name}
+      title={`Plane Master: ${workingPlane.name}`}
       buttons={
         <>
           <ClosePlaneWindow />
@@ -848,7 +852,7 @@ const ToggleMirror = (props) => {
   );
 };
 
-const has_foreign_mob = function () {
+const has_foreign_mob = () => {
   const { data } = useBackend<PlaneDebugData>();
   const { mob_ref, our_ref } = data;
   return mob_ref !== our_ref;
@@ -937,7 +941,7 @@ const AddModal = (props) => {
 
   return (
     <Modal>
-      <Section fill title={'Add relay from ' + currentPlane.name} pr="13px">
+      <Section fill title={`Add relay from ${currentPlane.name}`} pr="13px">
         <Dropdown
           options={plane_options}
           selected={currentTarget?.name || 'planes'}
@@ -1105,9 +1109,9 @@ const InfoModal = (props) => {
         quite powerful. <br />
         Even just setting alpha to show and hide things can be quite useful.{' '}
         <br />
+        <br />I won&apos;t get into every effect we do here, you can learn more
+        about each plane by clicking on the little button in their top right.{' '}
         <br />
-        I won&apos;t get into every effect we do here, you can learn more about
-        each plane by clicking on the little button in their top right. <br />
         <br />
       </Section>
     </Modal>

@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useBackend } from '../backend';
 import {
   Box,
@@ -146,7 +146,6 @@ export const CassetteLibrary = (props) => {
           valA = a._lcDesc;
           valB = b._lcDesc;
           break;
-        case 'approved_time':
         default:
           valA = a.approved_time || a.submitted_time;
           valB = b.approved_time || b.submitted_time;

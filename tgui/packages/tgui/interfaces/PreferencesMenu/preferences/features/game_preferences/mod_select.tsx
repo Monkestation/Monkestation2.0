@@ -1,4 +1,4 @@
-import { Feature, FeatureDropdownInput } from '../base';
+import { type Feature, FeatureDropdownInput } from '../base';
 
 export const mod_select: Feature<string> = {
   name: 'MOD active module key',

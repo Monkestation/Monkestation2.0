@@ -1,5 +1,5 @@
-import { Antagonist, Category } from '../base';
 import { multiline } from 'common/string';
+import { type Antagonist, Category } from '../base';
 import { CHANGELING_MECHANICAL_DESCRIPTION } from './changeling';
 
 const SpaceChangeling: Antagonist = {

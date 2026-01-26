@@ -1,5 +1,5 @@
-import { Section, Dropdown, Input, Box, Button, TextArea } from '../components';
 import { useBackend, useLocalState } from '../backend';
+import { Box, Button, Dropdown, Input, Section, TextArea } from '../components';
 import { Window } from '../layouts';
 
 export const AdminPDA = (props) => {
@@ -106,8 +106,8 @@ const MessageInput = (props) => {
     false,
   );
 
-  const tooltipText = function (name, job, message, target) {
-    let reasonList = [];
+  const tooltipText = (name, job, message, target) => {
+    const reasonList = [];
     if (!target) reasonList.push('target');
     if (!name) reasonList.push('name');
     if (!job) reasonList.push('job');

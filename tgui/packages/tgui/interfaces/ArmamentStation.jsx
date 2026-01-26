@@ -1,13 +1,13 @@
 import { useBackend, useLocalState } from '../backend';
 import {
-  Section,
-  Stack,
   Box,
-  Divider,
   Button,
-  NoticeBox,
+  Divider,
   DmIcon,
   Icon,
+  NoticeBox,
+  Section,
+  Stack,
 } from '../components';
 import { Window } from '../layouts';
 
@@ -149,7 +149,7 @@ export const ArmamentStation = (props) => {
                                   : 'green'
                               }
                             >
-                              {'Cost: ' + item.cost}
+                              {`Cost: ${item.cost}`}
                             </Stack.Item>
                             {!!item.buyable_ammo && (
                               <Stack.Item
@@ -160,7 +160,7 @@ export const ArmamentStation = (props) => {
                                     : 'green'
                                 }
                               >
-                                {'Ammo Cost: ' + item.magazine_cost}
+                                {`Ammo Cost: ${item.magazine_cost}`}
                               </Stack.Item>
                             )}
                             <Stack.Item>

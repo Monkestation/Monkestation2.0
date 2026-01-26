@@ -1,8 +1,8 @@
+import type { ReactNode } from 'react';
 import { useBackend, useLocalState } from '../backend';
 import { Box, LabeledList, Stack, Tabs, Tooltip } from '../components';
 import { Window } from '../layouts';
 import { getDangerLevel } from './Uplink/calculateDangerLevel';
-import type { ReactNode } from 'react';
 
 type Objective = {
   name: string;

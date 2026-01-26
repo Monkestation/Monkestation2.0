@@ -20,18 +20,18 @@ export const LobbyNotices = (props: { notices?: LobbyNoticesType }) => {
       {filteredLobbyNotices.map((notice, index) => (
         <NoticeBox danger key={index}>
           {typeof notice === 'string' ? (
-            <Box key={index + '_'}>{notice}</Box>
+            <Box key={`${index}_`}>{notice}</Box>
           ) : Array.isArray(notice.TGUI_SAFE) ? (
             notice.TGUI_SAFE.map((notice, index) => (
               <Box
-                key={index + '__'}
+                key={`${index}__`}
                 dangerouslySetInnerHTML={{ __html: notice }}
               />
             ))
           ) : (
             notice.TGUI_SAFE && (
               <Box
-                key={index + '___'}
+                key={`${index}___`}
                 dangerouslySetInnerHTML={{ __html: notice.TGUI_SAFE }}
               />
             )

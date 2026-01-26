@@ -6,7 +6,7 @@
 
 import { decodeHtmlEntities } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
-import { Button, Input, Section, Table, Popper } from '../components';
+import { Button, Input, Popper, Section, Table } from '../components';
 import { Window } from '../layouts';
 
 export const RequestManagerMonke = (props) => {

@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Section, Button, Icon, Dimmer, Stack } from '../components';
+import { Button, Dimmer, Icon, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 export const CrackerPuzzle = (props) => {

@@ -1,6 +1,6 @@
 import { useBackend, useLocalState } from '../backend';
+import { Section, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
-import { Section, Tabs, Stack } from '../components';
 
 type ExtrapolatorData = {
   varients: string[];

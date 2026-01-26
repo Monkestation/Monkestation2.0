@@ -1,7 +1,7 @@
 import hljs from 'highlight.js/lib/core';
 import { Box, Button, Modal, Section } from '../../components';
 import { sanitizeText } from '../../sanitize';
-import { LuaEditorModal } from './types';
+import type { LuaEditorModal } from './types';
 
 type ChunkViewModalProps = {
   setModal: (modal: LuaEditorModal) => void;

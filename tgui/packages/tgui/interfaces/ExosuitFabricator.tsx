@@ -1,12 +1,11 @@
+import { type BooleanLike, classes } from 'common/react';
 import { useBackend } from '../backend';
-import { Box, Button, Section, Stack, Icon } from '../components';
+import { Box, Button, Icon, Section, Stack, Tooltip } from '../components';
 import { Window } from '../layouts';
-import { MaterialAccessBar } from './Fabrication/MaterialAccessBar';
-import { FabricatorData, MaterialMap, Design } from './Fabrication/Types';
 import { DesignBrowser } from './Fabrication/DesignBrowser';
+import { MaterialAccessBar } from './Fabrication/MaterialAccessBar';
 import { MaterialCostSequence } from './Fabrication/MaterialCostSequence';
-import { Tooltip } from '../components';
-import { BooleanLike, classes } from 'common/react';
+import type { Design, FabricatorData, MaterialMap } from './Fabrication/Types';
 
 type ExosuitDesign = Design & {
   constructionTime: number;
@@ -342,14 +341,11 @@ const QueueList = (props: QueueListProps) => {
                   <Box
                     width={'32px'}
                     height={'32px'}
-                    className={classes([
-                      'design32x32',
-                      entry.design && entry.design.icon,
-                    ])}
+                    className={classes(['design32x32', entry.design?.icon])}
                   />
                 </div>
                 <div className="FabricatorRecipe__Label">
-                  {entry.design && entry.design.name}
+                  {entry.design?.name}
                 </div>
               </div>
             </Tooltip>

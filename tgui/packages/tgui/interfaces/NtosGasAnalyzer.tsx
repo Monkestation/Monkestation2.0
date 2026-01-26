@@ -1,8 +1,8 @@
-import { BooleanLike } from 'common/react';
+import type { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
 import { Button } from '../components';
 import { NtosWindow } from '../layouts';
-import { GasAnalyzerContent, GasAnalyzerData } from './GasAnalyzer';
+import { GasAnalyzerContent, type GasAnalyzerData } from './GasAnalyzer';
 
 type NtosGasAnalyzerData = GasAnalyzerData & {
   atmozphereMode: 'click' | 'env';

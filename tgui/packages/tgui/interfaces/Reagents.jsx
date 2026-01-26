@@ -400,7 +400,7 @@ const RecipeLibrary = (props) => {
     if (!reagentFilter || currentReagents === null) {
       return true;
     }
-    let matches = reaction.reactants.filter((reactant) =>
+    const matches = reaction.reactants.filter((reactant) =>
       currentReagents.includes(reactant.id),
     ).length;
     return matches === currentReagents.length;
@@ -438,7 +438,7 @@ const RecipeLibrary = (props) => {
       title={bookmarkMode ? 'Bookmarked recipes' : 'Possible recipes'}
       buttons={
         <>
-          Beaker: {linkedBeaker + '  '}
+          Beaker: {`${linkedBeaker}  `}
           <Button
             content="Filter by reagents in beaker"
             icon="search"

@@ -1,3 +1,5 @@
+import type { BooleanLike } from 'common/react';
+import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -8,9 +10,6 @@ import {
   Table,
   Tooltip,
 } from '../components';
-import { BooleanLike } from 'common/react';
-
-import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 type Language = {
@@ -204,7 +203,7 @@ const OmnitongueToggle = (props) => {
       selected={omnitongue}
       onClick={() => act('toggle_omnitongue')}
     >
-      {'Omnitongue ' + (omnitongue ? 'Enabled' : 'Disabled')}
+      {`Omnitongue ${omnitongue ? 'Enabled' : 'Disabled'}`}
     </Button>
   );
 };

@@ -1,4 +1,4 @@
-import { CheckboxInput, FeatureToggle } from '../../base';
+import { CheckboxInput, type FeatureToggle } from '../../base';
 
 export const pain_flashes: FeatureToggle = {
   name: 'Disable Pain Flashes',

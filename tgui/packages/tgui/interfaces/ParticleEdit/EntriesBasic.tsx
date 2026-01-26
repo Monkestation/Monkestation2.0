@@ -3,24 +3,24 @@ import { useBackend } from '../../backend';
 import {
   Box,
   Button,
+  ColorBox,
+  Dropdown,
+  Input,
   LabeledList,
   NumberInput,
-  ColorBox,
-  Input,
-  Dropdown,
   Stack,
 } from '../../components';
 import {
-  EntryCoordProps,
-  EntryFloatProps,
-  EntryGradientProps,
-  EntryIconStateProps,
-  EntryTransformProps,
+  type EntryCoordProps,
+  type EntryFloatProps,
+  type EntryGradientProps,
+  type EntryIconStateProps,
+  type EntryTransformProps,
   MatrixTypes,
-  ParticleUIData,
   P_DATA_ICON_ADD,
   P_DATA_ICON_REMOVE,
   P_DATA_ICON_WEIGHT,
+  type ParticleUIData,
   SpaceToNum,
   SpaceTypes,
 } from './data';
@@ -108,7 +108,7 @@ export const EntryGradient = (props: EntryGradientProps) => {
   const isLooping = gradient?.find((x) => x === 'loop');
   const space_type = gradient?.includes('space')
     ? Object.keys(SpaceToNum).find(
-        (space) => SpaceToNum[space] === gradient['space'],
+        (space) => SpaceToNum[space] === gradient.space,
       )
     : 'COLORSPACE_RGB';
   return (

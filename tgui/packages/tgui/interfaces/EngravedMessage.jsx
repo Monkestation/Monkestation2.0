@@ -29,7 +29,7 @@ export const EngravedMessage = (props) => {
               <Button
                 fluid
                 icon="arrow-up"
-                content={' ' + num_likes}
+                content={` ${num_likes}`}
                 disabled={is_creator}
                 selected={has_liked}
                 textAlign="center"
@@ -54,7 +54,7 @@ export const EngravedMessage = (props) => {
               <Button
                 fluid
                 icon="arrow-down"
-                content={' ' + num_dislikes}
+                content={` ${num_dislikes}`}
                 disabled={is_creator}
                 selected={has_disliked}
                 textAlign="center"

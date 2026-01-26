@@ -1,9 +1,9 @@
 import { useBackend } from '../../../../backend';
 import { Button, Stack } from '../../../../components';
-import { PreferencesMenuData, RandomSetting } from '../../data';
+import { type PreferencesMenuData, RandomSetting } from '../../data';
 import { RandomizationButton } from '../../RandomizationButton';
 import { useRandomToggleState } from '../../useRandomToggleState';
-import { CheckboxInput, Feature, FeatureToggle } from './base';
+import { CheckboxInput, type Feature, type FeatureToggle } from './base';
 
 export const random_body: Feature<RandomSetting> = {
   name: 'Random body',
@@ -71,7 +71,7 @@ export const random_species: Feature<RandomSetting> = {
   component: (props) => {
     const { act, data } = useBackend<PreferencesMenuData>();
 
-    const species = data.character_preferences.randomization['species'];
+    const species = data.character_preferences.randomization.species;
 
     return (
       <RandomizationButton

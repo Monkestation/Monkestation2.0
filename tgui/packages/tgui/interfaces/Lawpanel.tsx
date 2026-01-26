@@ -1,4 +1,4 @@
-import { BooleanLike } from 'common/react';
+import type { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
 import {
   Button,
@@ -89,7 +89,7 @@ export const LawPrintout = (props: { cyborg_ref: string; lawset: Law[] }) => {
   const { data, act } = useBackend<Law>();
   const { cyborg_ref, lawset } = props;
 
-  let num_of_each_lawtype = [];
+  const num_of_each_lawtype = [];
 
   lawset.forEach((law) => {
     if (!num_of_each_lawtype[law.lawtype]) {
@@ -171,7 +171,7 @@ export const LawPrintout = (props: { cyborg_ref: string; lawset: Law[] }) => {
                       <Button
                         icon="arrow-down"
                         color={'green'}
-                        disabled={law.num === num_of_each_lawtype['inherent']}
+                        disabled={law.num === num_of_each_lawtype.inherent}
                         onClick={() =>
                           act('move_law', {
                             ref: cyborg_ref,

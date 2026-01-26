@@ -10,7 +10,7 @@ export const exportChatSettings = (
   const mimeType = 'application/json';
 
   const pagesEntry: Record<string, Page>[] = [];
-  pagesEntry['chatPages'] = pages;
+  pagesEntry.chatPages = pages;
 
   const exportObject = Object.assign(settings, pagesEntry);
 
@@ -30,8 +30,8 @@ export const importChatSettings = (
   if (!ourImport?.version) {
     return;
   }
-  const pageRecord = ourImport['chatPages'];
-  delete ourImport['chatPages'];
+  const pageRecord = ourImport.chatPages;
+  delete ourImport.chatPages;
 
   dispatch(importSettings(ourImport, pageRecord));
 };

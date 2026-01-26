@@ -1,4 +1,4 @@
-import { CheckboxInput, FeatureToggle } from '../base';
+import { CheckboxInput, type FeatureToggle } from '../base';
 
 export const show_init_stats: FeatureToggle = {
   name: 'Enable Lobby Game Stats',

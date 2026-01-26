@@ -1,5 +1,5 @@
 // THIS IS A NOVA SECTOR UI FILE
-import { BooleanLike } from 'common/react';
+import type { BooleanLike } from 'common/react';
 import { createSearch } from 'common/string';
 
 import { useBackend, useLocalState } from '../backend';

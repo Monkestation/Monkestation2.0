@@ -1,22 +1,21 @@
+import { type BooleanLike, classes } from 'common/react';
+import { capitalize } from 'common/string';
 import { useBackend } from '../backend';
 import {
-  LabeledList,
-  Section,
-  ProgressBar,
-  Collapsible,
-  Stack,
-  Icon,
   Box,
-  Tooltip,
   Button,
+  Collapsible,
+  Icon,
+  LabeledList,
+  ProgressBar,
+  Section,
+  Stack,
+  Tooltip,
 } from '../components';
 import { Window } from '../layouts';
-import { capitalize } from 'common/string';
-import { Design, MaterialMap } from './Fabrication/Types';
 import { DesignBrowser } from './Fabrication/DesignBrowser';
-import { BooleanLike, classes } from 'common/react';
 import { MaterialCostSequence } from './Fabrication/MaterialCostSequence';
-import { Material } from './Fabrication/Types';
+import type { Design, Material, MaterialMap } from './Fabrication/Types';
 
 type AutolatheDesign = Design & {
   customMaterials: BooleanLike;

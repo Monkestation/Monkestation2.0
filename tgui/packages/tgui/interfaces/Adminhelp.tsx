@@ -1,6 +1,6 @@
-import { BooleanLike } from 'common/react';
+import type { BooleanLike } from 'common/react';
 import { useBackend, useLocalState } from '../backend';
-import { TextArea, Stack, Button, NoticeBox, Input, Box } from '../components';
+import { Box, Button, Input, NoticeBox, Stack, TextArea } from '../components';
 import { Window } from '../layouts';
 
 type AdminhelpData = {

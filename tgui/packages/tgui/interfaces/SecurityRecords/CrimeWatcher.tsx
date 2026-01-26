@@ -1,6 +1,4 @@
-import { useLocalState, useBackend } from 'tgui/backend';
-import { SECURETAB, Crime, SecurityRecordsData } from './types';
-import { getSecurityRecord } from './helpers';
+import { useBackend, useLocalState } from 'tgui/backend';
 import {
   BlockQuote,
   Box,
@@ -17,6 +15,8 @@ import {
   TextArea,
   Tooltip,
 } from 'tgui/components';
+import { getSecurityRecord } from './helpers';
+import { type Crime, SECURETAB, type SecurityRecordsData } from './types';
 
 /** Displays a list of crimes and allows to add new ones. */
 export const CrimeWatcher = (props) => {

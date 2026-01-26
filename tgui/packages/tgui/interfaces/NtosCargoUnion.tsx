@@ -1,7 +1,7 @@
 import type { BooleanLike } from 'common/react';
-import { Button, Section, DmIcon, Stack } from '../components';
-import { NtosWindow } from '../layouts';
 import { useBackend } from '../backend';
+import { Button, DmIcon, Section, Stack } from '../components';
+import { NtosWindow } from '../layouts';
 
 type Data = {
   badge_name: string;
@@ -115,7 +115,7 @@ export const NtosCargoUnion = () => {
                   }
                   tooltip={
                     on_cooldown
-                      ? 'On cooldown for ' + seconds_left + '.'
+                      ? `On cooldown for ${seconds_left}.`
                       : 'Will print a new ID in their name, printer has a cooldown.'
                   }
                 >

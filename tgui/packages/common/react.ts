@@ -12,7 +12,7 @@ export const classes = (classNames: (string | BooleanLike)[]) => {
   for (let i = 0; i < classNames.length; i++) {
     const part = classNames[i];
     if (typeof part === 'string') {
-      className += part + ' ';
+      className += `${part} `;
     }
   }
   return className;
@@ -56,9 +56,7 @@ export const shallowDiffers = (a: object, b: object) => {
  */
 export const canRender = (value: unknown) => {
   // prettier-ignore
-  return value !== undefined
-    && value !== null
-    && typeof value !== 'boolean';
+  return value !== undefined && value !== null && typeof value !== 'boolean';
 };
 
 /**

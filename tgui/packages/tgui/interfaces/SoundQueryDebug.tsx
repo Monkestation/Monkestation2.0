@@ -1,5 +1,5 @@
 import { useBackend, useLocalState } from '../backend';
-import { Dropdown, Button, LabeledList, Section, Stack } from '../components';
+import { Button, Dropdown, LabeledList, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 // ---- Types ----

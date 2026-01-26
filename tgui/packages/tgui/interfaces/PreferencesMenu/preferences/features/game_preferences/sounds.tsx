@@ -1,9 +1,9 @@
 import { multiline } from 'common/string';
 import {
   CheckboxInput,
-  FeatureChoiced,
+  type FeatureChoiced,
   FeatureDropdownInput,
-  FeatureToggle,
+  type FeatureToggle,
 } from '../base';
 
 export const sound_ambience: FeatureToggle = {
