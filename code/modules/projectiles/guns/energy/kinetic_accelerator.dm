@@ -144,9 +144,14 @@
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/cyborg
 	icon_state = "kineticgun_b"
+	hitsound = 'sound/weapons/bladeslice.ogg' // has a blade
 	holds_charge = TRUE
 	unique_frequency = TRUE
-	max_mod_capacity = 80
+	can_bayonet = FALSE
+	sharpness = SHARP_EDGED
+	force = 15
+	wound_bonus = 5
+	bare_wound_bonus = 10 // worse than surviavl knife
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/minebot
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
@@ -158,7 +163,7 @@
 /obj/item/ammo_casing/energy/kinetic
 	projectile_type = /obj/projectile/kinetic
 	select_name = "kinetic"
-	e_cost = 500
+	e_cost = LASER_SHOTS(1, STANDARD_CELL_CHARGE * 0.5)
 	fire_sound = 'sound/weapons/kenetic_accel.ogg' // fine spelling there chap
 
 /obj/item/ammo_casing/energy/kinetic/ready_proj(atom/target, mob/living/user, quiet, zone_override = "")
@@ -179,7 +184,7 @@
 	recharge_time = 2 SECONDS
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/glock)
 	can_bayonet = FALSE
-	max_mod_capacity = 300 //experimental, if people find too many wack ass combos on the pistol im dropping it back to 200
+	max_mod_capacity = 200
 
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/railgun

@@ -245,6 +245,13 @@
 	if(src in GLOB.crew_cc_keys)
 		GLOB.crew_cc_keys -= src
 	return ..()
+
+/obj/item/encryptionkey/headset_cent/crew/service
+	channels = list(
+		RADIO_CHANNEL_CENTCOM = 1,
+		RADIO_CHANNEL_SERVICE = 1,
+	)
+
 //MONKESTATION EDIT STOP
 
 /obj/item/encryptionkey/ai //ported from NT, this goes 'inside' the AI.

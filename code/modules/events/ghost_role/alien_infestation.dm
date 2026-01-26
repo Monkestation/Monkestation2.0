@@ -20,9 +20,15 @@
 		JOB_SECURITY_OFFICER,
 		JOB_WARDEN,
 		JOB_SECURITY_ASSISTANT,
+		JOB_BRIG_PHYSICIAN,
 	)
 	required_enemies = 5
 	prompted_picking = TRUE
+	repeated_mode_adjust = TRUE
+	track = EVENT_TRACK_ROLESET
+	tags = list(TAG_COMBAT, TAG_DESTRUCTIVE, TAG_EXTERNAL, TAG_ALIEN, TAG_OUTSIDER_ANTAG, TAG_MUNDANE)
+	checks_antag_cap = TRUE
+	dont_spawn_near_roundend = TRUE
 
 /datum/round_event_control/antagonist/solo/from_ghosts/alien_infestation/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE) //MONKESTATION ADDITION: fake_check = FALSE
 	. = ..()
@@ -74,7 +80,7 @@
 	var/list/weighted_candidates = return_antag_rep_weight(candidates)
 
 	var/list/vents = list()
-	for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent in GLOB.machines)
+	for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/atmospherics/components/unary/vent_pump))
 		if(QDELETED(temp_vent))
 			continue
 		if(is_station_level(temp_vent.loc.z) && !temp_vent.welded)

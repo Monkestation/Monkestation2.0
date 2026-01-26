@@ -6,6 +6,7 @@
 	icon_state = "lipstick"
 	inhand_icon_state = "lipstick"
 	w_class = WEIGHT_CLASS_TINY
+	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING
 	var/open = FALSE
 	/// Actual color of the lipstick, also gets applied to the human
 	var/lipstick_color = COLOR_RED

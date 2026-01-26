@@ -27,13 +27,17 @@
 	/// The maximum power that the shell can use in a minute before entering overheating and destroying itself.
 	var/max_power_use_in_minute = 20000
 
-/datum/component/shell/Initialize(unremovable_circuit_components, capacity, shell_flags, starting_circuit)
+	/// List of integrated circuits that cannot be installed in the shell.
+	var/list/blacklisted_integrated_circuits = list()
+
+/datum/component/shell/Initialize(unremovable_circuit_components, capacity, shell_flags, starting_circuit, blacklisted_integrated_circuits)
 	. = ..()
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	src.shell_flags = shell_flags || src.shell_flags
 	src.capacity = capacity || src.capacity
+	src.blacklisted_integrated_circuits = typecacheof(blacklisted_integrated_circuits)
 	set_unremovable_circuit_components(unremovable_circuit_components)
 
 	if(starting_circuit)
@@ -134,7 +138,7 @@
 
 	examine_text += span_notice("There is an integrated circuit attached. Use a multitool to access the wiring. Use a screwdriver to remove it from [source].")
 	examine_text += span_notice("The cover panel to the integrated circuit is [locked? "locked" : "unlocked"].")
-	var/obj/item/stock_parts/cell/cell = attached_circuit.cell
+	var/obj/item/stock_parts/power_store/cell/cell = attached_circuit.cell
 	examine_text += span_notice("The charge meter reads [cell ? round(cell.percent(), 1) : 0]%.")
 
 	if (shell_flags & SHELL_FLAG_USB_PORT)
@@ -164,13 +168,13 @@
 	if(!is_authorized(attacker))
 		return
 
-	if(istype(item, /obj/item/stock_parts/cell))
+	if(istype(item, /obj/item/stock_parts/power_store/cell))
 		source.balloon_alert(attacker, "can't put cell in directly!")
 		return
 
 	if(istype(item, /obj/item/inducer))
 		var/obj/item/inducer/inducer = item
-		INVOKE_ASYNC(inducer, TYPE_PROC_REF(/obj/item, attack_atom), attached_circuit, attacker, list())
+		INVOKE_ASYNC(inducer, TYPE_PROC_REF(/obj/item, interact_with_atom), attached_circuit, attacker, list())
 		return COMPONENT_NO_AFTERATTACK
 
 	if(attached_circuit)
@@ -190,6 +194,11 @@
 
 	if(!istype(item, /obj/item/integrated_circuit))
 		return
+
+	if(is_type_in_typecache(item, blacklisted_integrated_circuits))
+		source.balloon_alert(attacker, "incompatible circuit!")
+		return
+
 	var/obj/item/integrated_circuit/logic_board = item
 	. = COMPONENT_NO_AFTERATTACK
 
@@ -291,7 +300,7 @@
 		if(attached_circuit)
 			remove_circuit()
 		return
-	location.use_power(power_to_use, AREA_USAGE_EQUIP)
+	location.apc?.terminal?.use_energy(power_to_use, channel = AREA_USAGE_EQUIP)
 	power_used_in_minute += power_to_use
 	COOLDOWN_START(src, power_used_cooldown, 1 MINUTES)
 	return COMPONENT_OVERRIDE_POWER_USAGE
@@ -326,6 +335,10 @@
 	else if(circuitboard.loc != parent_atom)
 		circuitboard.forceMove(parent_atom)
 	attached_circuit.set_shell(parent_atom)
+
+	// call after set_shell() sets on to true
+	if(shell_flags & SHELL_FLAG_REQUIRE_ANCHOR)
+		attached_circuit.set_on(parent_atom.anchored)
 
 /**
  * Removes the circuit from the component. Doesn't do any checks to see for an existing circuit so that should be done beforehand.

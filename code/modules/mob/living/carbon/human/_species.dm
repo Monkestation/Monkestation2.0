@@ -32,8 +32,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	///A bitfield of "bodytypes", updated by /datum/obj/item/bodypart/proc/synchronize_bodytypes()
 	var/bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC
 
-	///If this species needs special 'fallback' sprites, what is the path to the file that contains them?
-	var/fallback_clothing_path
 	///The maximum number of bodyparts this species can have.
 	var/max_bodypart_count = 6
 	///This allows races to have specific hair colors. If null, it uses the H's hair/facial hair colors. If "mutcolor", it uses the H's mutant_color. If "fixedmutcolor", it uses fixedmutcolor
@@ -81,6 +79,12 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left,
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest,
+	)
+
+	///If this species is given digitigrade, these bodyparts will be replacing bodypart_overrides.
+	var/list/bodypart_digitigrade_overrides = list(
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/right/digitigrade,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/left/digitigrade,
 	)
 
 	///List of external organs to generate like horns, frills, wings, etc. list(typepath of organ = "Round Beautiful BDSM Snout"). Still WIP
@@ -507,9 +511,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	// Drop the items the new species can't wear
 	SEND_SIGNAL(C, COMSIG_SPECIES_GAIN_PRE, src, old_species)
 
-	if(C.dna.species.exotic_bloodtype)
-		C.dna.human_blood_type = exotic_bloodtype
-
 	if(C.hud_used)
 		C.hud_used.update_locked_slots()
 
@@ -518,13 +519,13 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	C.mob_biotypes = inherent_biotypes
 	C.mob_respiration_type = inherent_respiration_type
+	C.butcher_results = knife_butcher_results?.Copy()
 	C.standard_body_temperature = src.bodytemp_normal
 	C.bodytemperature = src.bodytemp_normal
 	C.bodytemp_heat_damage_limit = src.bodytemp_heat_damage_limit
 	C.bodytemp_cold_damage_limit = src.bodytemp_cold_damage_limit
 	C.temperature_normalization_speed = src.temperature_normalization_speed
 	C.temperature_homeostasis_speed = src.temperature_homeostasis_speed
-	C.butcher_results = knife_butcher_results?.Copy()
 
 	C.physiology?.cold_mod *= coldmod
 	C.physiology?.heat_mod *= heatmod
@@ -550,8 +551,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		C.add_traits(inherent_traits, SPECIES_TRAIT)
 
 	if(TRAIT_VIRUSIMMUNE in inherent_traits)
-		for(var/datum/disease/A in C.diseases)
-			A.cure(FALSE)
+		for(var/datum/disease/disease as anything in C.diseases)
+			disease.cure(add_resistance = FALSE, target = C, safe = TRUE)
 
 	if(TRAIT_TOXIMMUNE in inherent_traits)
 		C.setToxLoss(0, TRUE, TRUE)
@@ -594,8 +595,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
  */
 /datum/species/proc/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	SHOULD_CALL_PARENT(TRUE)
-	if(C.dna.species.exotic_bloodtype)
-		C.dna.human_blood_type = random_human_blood_type()
+	C.butcher_results = null
 	for(var/X in inherent_traits)
 		REMOVE_TRAIT(C, X, SPECIES_TRAIT)
 	for(var/obj/item/organ/external/organ in C.organs)
@@ -700,12 +700,12 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	//Underwear, Undershirts & Socks
 	if(!HAS_TRAIT(species_human, TRAIT_NO_UNDERWEAR))
-		if(species_human.underwear && !(src.bodytype & BODYTYPE_DIGITIGRADE)) //MONKESTATION EDIT
+		if(species_human.underwear && !(species_human.dna.species.bodytype & BODYTYPE_DIGITIGRADE)) //MONKESTATION EDIT
 			var/datum/sprite_accessory/underwear/underwear = GLOB.underwear_list[species_human.underwear]
 			var/mutable_appearance/underwear_overlay
 			if(underwear)
 				if(species_human.dna.species.sexes && species_human.physique == FEMALE && (underwear.gender == MALE))
-					underwear_overlay = wear_female_version(underwear.icon_state, underwear.icon, BODY_LAYER, FEMALE_UNIFORM_FULL, flat = !!(species_human.mob_biotypes & MOB_REPTILE)) //MONKESTATION EDIT - Lizards
+					underwear_overlay = mutable_appearance(wear_female_version(underwear.icon_state, underwear.icon, FEMALE_UNIFORM_FULL), layer = -BODY_LAYER)
 				else
 					underwear_overlay = mutable_appearance(underwear.icon, underwear.icon_state, -BODY_LAYER)
 				if(!underwear.use_static)
@@ -716,21 +716,21 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			var/datum/sprite_accessory/undershirt/undershirt = GLOB.undershirt_list[species_human.undershirt]
 			if(undershirt)
 				var/mutable_appearance/working_shirt
-				if(species_human.dna.species.sexes && species_human.physique == FEMALE && species_human.get_bodypart(BODY_ZONE_CHEST)?.is_dimorphic)
-					working_shirt = wear_female_version(undershirt.icon_state, undershirt.icon, BODY_LAYER, flat = !!(species_human.mob_biotypes & MOB_REPTILE))  //MONKESTATION EDIT - Lizards
+				if(species_human.dna.species.sexes && species_human.physique == FEMALE)
+					working_shirt = mutable_appearance(wear_female_version(undershirt.icon_state, undershirt.icon), layer = -BODY_LAYER)
 				else
-					working_shirt = mutable_appearance(undershirt.icon, undershirt.icon_state, -BODY_LAYER)
+					working_shirt = mutable_appearance(undershirt.icon, undershirt.icon_state, layer = -BODY_LAYER)
 				standing += working_shirt
 
-		if(species_human.socks && species_human.num_legs >= 2 && !(src.bodytype & BODYTYPE_DIGITIGRADE))
+		if(species_human.socks && species_human.num_legs >= 2 && !(species_human.dna.species.bodytype & BODYTYPE_DIGITIGRADE))
 			var/datum/sprite_accessory/socks/socks = GLOB.socks_list[species_human.socks]
 			//MONKESTATION EDITS FOR COLOURABLE SOCKS
 			var/mutable_appearance/socks_overlay
 			if(socks)
 				if(species_human.dna.species.sexes && species_human.physique == FEMALE && species_human.get_bodypart(BODY_ZONE_CHEST)?.is_dimorphic)
-					socks_overlay = wear_female_version(socks.icon_state, socks.icon, BODY_LAYER, FEMALE_UNIFORM_FULL)
+					socks_overlay = mutable_appearance(wear_female_version(socks.icon_state, socks.icon, FEMALE_UNIFORM_FULL), layer = -BODY_LAYER)
 				else
-					socks_overlay = mutable_appearance(socks.icon, socks.icon_state, -BODY_LAYER)
+					socks_overlay = mutable_appearance(socks.icon, socks.icon_state, layer = -BODY_LAYER)
 				if(!socks.use_static)
 					socks_overlay.color = species_human.socks_color
 				standing += socks_overlay
@@ -776,7 +776,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 // MONKESTATION ADDITION START
 	if(mutant_bodyparts["ipc_screen"])
-		if(!source.dna.features["ipc_screen"] || source.dna.features["ipc_screen"] == "None" || (source.head && (source.head.flags_inv & HIDEFACE)) || (source.wear_mask && (source.head.flags_inv & HIDEFACE)) || !noggin)
+		if(!source.dna.features["ipc_screen"] || source.dna.features["ipc_screen"] == "None" || !source.is_face_visible() || !noggin)
 			bodyparts_to_add -= "ipc_screen"
 // MONKESTATION ADDITION END
 
@@ -840,6 +840,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 								accessory_overlay.color = source.eye_color_left
 							if(ANIME_COLOR)
 								accessory_overlay.color = source.dna.features["animecolor"]
+							if(ANIME_HALO_COLOR)
+								accessory_overlay.color = source.dna.features["animehalocolor"]
 				else
 					accessory_overlay.color = forced_colour
 			standing += accessory_overlay
@@ -968,14 +970,14 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if(ITEM_SLOT_OCLOTHING)
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(ITEM_SLOT_GLOVES)
-			if(H.num_hands < 2)
+			if(H.num_hands == 0)
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(ITEM_SLOT_FEET)
 			if(H.num_legs < 2)
 				return FALSE
 			if((bodytype & BODYTYPE_DIGITIGRADE) && !(I.item_flags & IGNORE_DIGITIGRADE))
-				if(!(I.supports_variations_flags & (CLOTHING_DIGITIGRADE_VARIATION|CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON)))
+				if(!(I.supports_variations_flags & DIGITIGRADE_VARIATIONS))
 					if(!disable_warning)
 						to_chat(H, span_warning("The footwear around here isn't compatible with your feet!"))
 					return FALSE
@@ -1196,11 +1198,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	user.do_cpr(target)
 
 /datum/species/proc/grab(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
-	if(target.check_block())
-		target.visible_message(span_warning("[target] blocks [user]'s grab!"), \
-						span_userdanger("You block [user]'s grab!"), span_hear("You hear a swoosh!"), COMBAT_MESSAGE_RANGE, user)
-		to_chat(user, span_warning("Your grab at [target] was blocked!"))
-		return FALSE
 	if(attacker_style?.grab_act(user, target) == MARTIAL_ATTACK_SUCCESS)
 		return TRUE
 	target.grabbedby(user)
@@ -1210,11 +1207,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /datum/species/proc/harm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
 	if(HAS_TRAIT(user, TRAIT_PACIFISM) && !attacker_style?.pacifist_style)
 		to_chat(user, span_warning("You don't want to harm [target]!"))
-		return FALSE
-	if(target.check_block())
-		target.visible_message(span_warning("[target] blocks [user]'s attack!"), \
-						span_userdanger("You block [user]'s attack!"), span_hear("You hear a swoosh!"), COMBAT_MESSAGE_RANGE, user)
-		to_chat(user, span_warning("Your attack at [target] was blocked!"))
 		return FALSE
 	if(attacker_style?.harm_act(user,target) == MARTIAL_ATTACK_SUCCESS)
 		return TRUE
@@ -1282,13 +1274,16 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			if(damage >= 9)
 				target.force_say()
 			log_combat(user, target, "kicked")
-			target.apply_damage(damage * 1.5, attack_type, affecting, armor_block, attack_direction = attack_direction)
+			var/ough = HAS_TRAIT(user, TRAIT_NUTCRACKER) ? 4.8 : 1
+			var/damagemod = HAS_TRAIT(user, TRAIT_NUTCRACKER) ? 3 : 1 //yeowch
+			target.apply_damage(damage * 1.5 * damagemod, attack_type, affecting, armor_block, attack_direction = attack_direction)
 			if(zone == BODY_ZONE_CHEST && user.zone_selected == BODY_ZONE_PRECISE_GROIN && ishuman(target))
 				for(var/obj/item/clothing/iter_clothing in target.get_clothing_on_part(affecting))
-					if(iter_clothing.clothing_flags & THICKMATERIAL || iter_clothing.get_armor_rating(MELEE) >= 15)
-						if(iter_clothing.body_parts_covered && BODY_ZONE_PRECISE_GROIN)
-							return TRUE
-				target.sharp_pain(BODY_ZONE_CHEST, 25, BRUTE, 30 SECONDS)
+					if(!HAS_TRAIT(user, TRAIT_NUTCRACKER))
+						if((iter_clothing.clothing_flags & THICKMATERIAL) || iter_clothing.get_armor_rating(MELEE) >= 15)
+							if(iter_clothing.body_parts_covered & GROIN)
+								return TRUE
+				target.sharp_pain(BODY_ZONE_CHEST, 25 * ough, BRUTE, 30 SECONDS)
 				user.visible_message(span_warning("[target] gets brutally [atk_verb]ed in the groin! Holy shit!"), self_message=span_warning("You [atk_verb] [target] right in the groin! <b>BRUTAL!</b>"), blind_message=span_warning("You hear a horrific pained screech!"), ignored_mobs=list(target))
 				to_chat(target, span_boldwarning("[uppertext("[user]")] BRUTALLY [uppertext("[atk_verb]")]S YOU RIGHT IN THE GROIN! JESUS FUCK IT HURTS!"))
 				target.emote("scream", message="screams for dear life!")
@@ -1313,11 +1308,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	return
 
 /datum/species/proc/disarm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
-	if(target.check_block())
-		target.visible_message(span_warning("[user]'s shove is blocked by [target]!"), \
-						span_danger("You block [user]'s shove!"), span_hear("You hear a swoosh!"), COMBAT_MESSAGE_RANGE, user)
-		to_chat(user, span_warning("Your shove at [target] was blocked!"))
-		return FALSE
 	if(attacker_style?.disarm_act(user,target) == MARTIAL_ATTACK_SUCCESS)
 		user.animate_interact(target, INTERACT_DISARM) //monkestation edit
 		return TRUE
@@ -1344,7 +1334,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		return
 	if(owner.mind)
 		attacker_style = owner.mind.martial_art
-	if((owner != target) && target.check_shields(owner, 0, owner.name, attack_type = UNARMED_ATTACK))
+	if((owner != target) && target.check_block(owner, 0, owner.name, attack_type = UNARMED_ATTACK))
 		log_combat(owner, target, "attempted to touch")
 		target.visible_message(span_warning("[owner] attempts to touch [target]!"), \
 						span_danger("[owner] attempts to touch you!"), span_hear("You hear a swoosh!"), COMBAT_MESSAGE_RANGE, owner)
@@ -1354,10 +1344,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	SEND_SIGNAL(owner, COMSIG_MOB_ATTACK_HAND, owner, target, attacker_style)
 	//monkesstation edit start
 	if(owner.istate & ISTATE_SECONDARY)
-		if(istype(owner.client?.imode, /datum/interaction_mode/intents3))
-			var/datum/interaction_mode/intents3/clients_interaction = owner.client.imode
-			if(clients_interaction.intent != INTENT_DISARM)
-				return // early end because of intent type
 		. = disarm(owner, target, attacker_style)
 		if(.)
 			owner.animate_interact(target, INTERACT_DISARM)
@@ -1375,117 +1361,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if(.)
 			owner.animate_interact(target, INTERACT_HELP)
 	//monkestation edit end
-
-/datum/species/proc/spec_attacked_by(obj/item/weapon, mob/living/user, obj/item/bodypart/affecting, mob/living/carbon/human/human)
-	// Allows you to put in item-specific reactions based on species
-	if(user != human)
-		if(human.check_shields(weapon, weapon.force, "the [weapon.name]", MELEE_ATTACK, weapon.armour_penetration))
-			return FALSE
-	if(human.check_block())
-		human.visible_message(span_warning("[human] blocks [weapon]!"), \
-						span_userdanger("You block [weapon]!"))
-		return FALSE
-
-	affecting ||= human.bodyparts[1] //Something went wrong. Maybe the limb is missing?
-	var/hit_area = affecting.plaintext_zone
-	var/armor_block = min(human.run_armor_check(
-		def_zone = affecting,
-		attack_flag = MELEE,
-		absorb_text = span_notice("Your armor has protected your [hit_area]!"),
-		soften_text = span_warning("Your armor has softened a hit to your [hit_area]!"),
-		armour_penetration = weapon.armour_penetration,
-		weak_against_armour = weapon.weak_against_armour,
-	), ARMOR_MAX_BLOCK) //cap damage reduction at 90%
-
-	var/modified_wound_bonus = weapon.wound_bonus
-	// this way, you can't wound with a surgical tool on help intent if they have a surgery active and are lying down, so a misclick with a circular saw on the wrong limb doesn't bleed them dry (they still get hit tho)
-	if((weapon.item_flags & SURGICAL_TOOL) && !(user.istate & ISTATE_HARM) && human.body_position == LYING_DOWN && (LAZYLEN(human.surgeries) > 0))
-		modified_wound_bonus = CANT_WOUND
-
-	human.send_item_attack_message(weapon, user, hit_area, affecting)
-	human.apply_damage(
-		damage = weapon.force,
-		damagetype = weapon.damtype,
-		def_zone = affecting,
-		blocked = armor_block,
-		wound_bonus = modified_wound_bonus,
-		bare_wound_bonus = weapon.bare_wound_bonus,
-		sharpness = weapon.get_sharpness(),
-		attack_direction = get_dir(user, human),
-		attacking_item = weapon,
-	)
-
-
-
-	if(!weapon.force)
-		return FALSE //item force is zero
-	var/bloody = FALSE
-	if(weapon.damtype != BRUTE)
-		return TRUE
-	if(!(prob(25 + (weapon.force * 2))))
-		return TRUE
-
-	if(affecting.can_bleed())
-		weapon.add_mob_blood(human) //Make the weapon bloody, not the person.
-		if(prob(weapon.force * 2)) //blood spatter!
-			bloody = TRUE
-			var/turf/location = human.loc
-			if(istype(location))
-				human.add_splatter_floor(location)
-			if(get_dist(user, human) <= 1) //people with TK won't get smeared with blood
-				user.add_mob_blood(human)
-
-	switch(hit_area)
-		if(BODY_ZONE_HEAD)
-			if(!weapon.get_sharpness() && armor_block < 50)
-				if(prob(weapon.force))
-					human.adjustOrganLoss(ORGAN_SLOT_BRAIN, 20)
-					if(human.stat == CONSCIOUS)
-						human.visible_message(span_danger("[human] is knocked senseless!"), \
-										span_userdanger("You're knocked senseless!"))
-						human.set_confusion_if_lower(20 SECONDS)
-						human.adjust_eye_blur(20 SECONDS)
-					if(prob(10))
-						human.gain_trauma(/datum/brain_trauma/mild/concussion)
-				else
-					human.adjustOrganLoss(ORGAN_SLOT_BRAIN, weapon.force * 0.2)
-
-				if(human.mind && human.stat == CONSCIOUS && human != user && prob(weapon.force + ((100 - human.health) * 0.5))) // rev deconversion through blunt trauma.
-					var/datum/antagonist/rev/rev = human.mind.has_antag_datum(/datum/antagonist/rev)
-					if(rev)
-						rev.remove_revolutionary(FALSE, user)
-
-			if(bloody) //Apply blood
-				if(human.wear_mask)
-					human.wear_mask.add_mob_blood(human)
-					human.update_worn_mask()
-				if(human.head)
-					human.head.add_mob_blood(human)
-					human.update_worn_head()
-				if(human.glasses && prob(33))
-					human.glasses.add_mob_blood(human)
-					human.update_worn_glasses()
-
-		if(BODY_ZONE_CHEST)
-			if(human.stat == CONSCIOUS && !weapon.get_sharpness() && armor_block < 50)
-				if(prob(weapon.force))
-					human.visible_message(span_danger("[human] is knocked down!"), \
-								span_userdanger("You're knocked down!"))
-					human.apply_effect(60, EFFECT_KNOCKDOWN, armor_block)
-
-			if(bloody)
-				if(human.wear_suit)
-					human.wear_suit.add_mob_blood(human)
-					human.update_worn_oversuit()
-				if(human.w_uniform)
-					human.w_uniform.add_mob_blood(human)
-					human.update_worn_undersuit()
-
-	/// Triggers force say events
-	if(weapon.force > 10 || weapon.force >= 5 && prob(33))
-		human.force_say(user)
-
-	return TRUE
 
 ////////////
 //  Stun  //
@@ -1941,9 +1816,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	new_species ||= target.dna.species //If no new species is provided, assume its src.
 	//Note for future: Potentionally add a new C.dna.species() to build a template species for more accurate limb replacement
 
-	var/is_digitigrade = FALSE
 	if((new_species.digitigrade_customization == DIGITIGRADE_OPTIONAL && target.dna.features["legs"] == DIGITIGRADE_LEGS) || new_species.digitigrade_customization == DIGITIGRADE_FORCED)
-		is_digitigrade = TRUE
+		new_species.bodypart_overrides[BODY_ZONE_R_LEG] = new_species.bodypart_digitigrade_overrides[BODY_ZONE_R_LEG]
+		new_species.bodypart_overrides[BODY_ZONE_L_LEG] = new_species.bodypart_digitigrade_overrides[BODY_ZONE_L_LEG]
 
 	for(var/obj/item/bodypart/old_part as anything in target.bodyparts)
 		if((old_part.change_exempt_flags & BP_BLOCK_CHANGE_SPECIES) || (old_part.bodypart_flags & BODYPART_IMPLANTED))
@@ -1953,8 +1828,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		var/obj/item/bodypart/new_part
 		if(path)
 			new_part = new path()
-			if(istype(new_part, /obj/item/bodypart/leg) && is_digitigrade)
-				new_part:set_digitigrade(TRUE)
 			new_part.replace_limb(target, TRUE)
 			new_part.update_limb(is_creating = TRUE)
 			new_part.set_initial_damage(old_part.brute_dam, old_part.burn_dam)

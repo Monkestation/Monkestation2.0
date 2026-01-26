@@ -28,6 +28,7 @@
 	plane = GAME_PLANE_UPPER_FOV_HIDDEN
 	mouse_opacity = MOUSE_OPACITY_OPAQUE // Easier to click on in melee, they're giant targets anyway
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
+	life_subsystem_type = /datum/controller/subsystem/mobs/megafauna
 	/// Crusher loot dropped when the megafauna is killed with a crusher
 	var/list/crusher_loot
 	/// Achievement given to surrounding players when the megafauna is killed
@@ -114,8 +115,8 @@
 	if(!force && health > 0)
 		return
 
-	crusher_loot.Cut()
-	loot.Cut()
+	crusher_loot?.Cut()
+	loot?.Cut()
 
 	return ..()
 

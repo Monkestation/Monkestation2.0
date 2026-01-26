@@ -24,10 +24,14 @@
 	throw_speed = 3
 	throw_range = 7
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT *2)
-	var/mode = SCANNER_VERBOSE
-	var/scanmode = SCANMODE_HEALTH
-	var/advanced = FALSE
+	interaction_flags_click = NEED_LITERACY|NEED_LIGHT|ALLOW_RESTING
 	custom_price = PAYCHECK_COMMAND
+	/// Verbose/condensed
+	var/mode = SCANNER_VERBOSE
+	/// HEALTH/WOUND
+	var/scanmode = SCANMODE_HEALTH
+	/// Advanced health analyzer
+	var/advanced = FALSE
 	/// If this analyzer will give a bonus to wound treatments apon woundscan.
 	var/give_wound_treatment_bonus = FALSE
 	var/last_scan_text
@@ -163,7 +167,7 @@
 			if(HAS_TRAIT_FROM(target, TRAIT_HUSK, BURN))
 				render_list += "<span class='alert ml-1'>Subject has been husked by [conditional_tooltip("severe burns", "Tend burns and apply a de-husking agent, such as [/datum/reagent/medicine/c2/synthflesh::name].", tochat)].</span><br>"
 			else if (HAS_TRAIT_FROM(target, TRAIT_HUSK, CHANGELING_DRAIN))
-				render_list += "<span class='alert ml-1'>Subject has been husked by [conditional_tooltip("desiccation", "Irreparable. Under normal circumstances, revival can only proceed via brain transplant, cloning, or special surgies.", tochat)].</span><br>"
+				render_list += "<span class='alert ml-1'>Subject has been husked by [conditional_tooltip("desiccation", "Irreparable. Under normal circumstances, revival can only proceed via brain transplant or special surgies.", tochat)].</span><br>"
 			else
 				render_list += "<span class='alert ml-1'>Subject has been husked by mysterious causes.</span>\n"
 
@@ -186,7 +190,7 @@
 
 	if(target.stamina.loss)
 		if(advanced)
-			render_list += "<span class='alert ml-1'>Fatigue level: [target.stamina.loss]%.</span>\n"
+			render_list += "<span class='alert ml-1'>Fatigue level: [target.stamina.loss_as_percent]%.</span>\n"
 		else
 			render_list += "<span class='alert ml-1'>Subject appears to be suffering from fatigue.</span>\n"
 	if (target.getCloneLoss())
@@ -418,6 +422,26 @@
 		else
 			render_list += "<span class='info ml-1'>Blood alcohol content: [blood_alcohol_content]%</span><br>"
 
+	for(var/datum/disease/disease as anything in target.diseases)
+		if(istype(disease, /datum/disease/acute))
+			var/datum/disease/acute/acute_disease = disease
+			acute_disease.Refresh_Acute()
+			if(!((disease.visibility_flags & HIDDEN_SCANNER) && (disease.disease_flags & DISEASE_ANALYZED) && !(disease.disease_flags & DISEASE_DORMANT)))
+				if(disease.severity == DISEASE_SEVERITY_POSITIVE || DISEASE_SEVERITY_NONTHREAT)
+					render_list += "<span class='info ml-1'><b>[acute_disease.origin] disease detected</b>\n\
+					<div class='ml-2'>Name: [acute_disease.real_name()].\nType: [disease.get_spread_string()].\nStage: [disease.stage]/[disease.max_stages].</div>\
+					</span>"
+				else
+					render_list += "<span class='alert ml-1'><b>Warning: [acute_disease.origin] disease detected</b>\n\
+					<div class='ml-2'>Name: [acute_disease.real_name()].\nType: [disease.get_spread_string()].\nStage: [disease.stage]/[disease.max_stages].</div>\
+					</span>"
+
+		else
+			if(!((disease.visibility_flags & HIDDEN_SCANNER) && (disease.disease_flags & DISEASE_ANALYZED) && !(disease.disease_flags & DISEASE_DORMANT)))
+				render_list += "<span class='alert ml-1'><b>Warning: [disease.form] disease detected</b>\n\
+				<div class='ml-2'>Name: [disease.name].\nType: [disease.get_spread_string()].\nStage: [disease.stage]/[disease.max_stages].\nPossible Cure: [disease.cure_text]</div>\
+				</span>"
+
 	// Time of death
 	if(target.tod && (target.stat == DEAD || (HAS_TRAIT(target, TRAIT_FAKEDEATH) && !advanced)))
 		render_list += "<hr>"
@@ -495,17 +519,16 @@
 		// we handled the last <br> so we don't need handholding
 		to_chat(user, custom_boxed_message("blue_box", jointext(render_list, "")), trailing_newline = FALSE, type = MESSAGE_TYPE_INFO)
 
-/obj/item/healthanalyzer/AltClick(mob/user)
-	..()
-
+/obj/item/healthanalyzer/click_alt(mob/user)
 	if(!user.can_perform_action(src, NEED_LITERACY|NEED_LIGHT) || user.is_blind())
-		return
+		return CLICK_ACTION_BLOCKING
 
 	if(mode == SCANNER_NO_MODE)
-		return
+		return CLICK_ACTION_BLOCKING
 
 	mode = !mode
 	to_chat(user, mode == SCANNER_VERBOSE ? "The scanner now shows specific limb damage." : "The scanner no longer shows limb damage.")
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/healthanalyzer/advanced
 	name = "advanced health analyzer"

@@ -25,11 +25,11 @@
 		return
 
 	for(var/mob/living/possible_cultist in range(3, src))
-		if(isnull(possible_cultist) || !IS_CLOCK(possible_cultist) || possible_cultist.health >= possible_cultist.maxHealth || !use_power(-POWER_PER_USE))
+		if(isnull(possible_cultist) || !IS_CLOCK(possible_cultist) || possible_cultist.health >= possible_cultist.maxHealth || !use_energy(-POWER_PER_USE))
 			continue
 
 		var/healed_amount = HEAL_PER_USE * seconds_per_tick
-		possible_cultist.stamina.adjust(8 * seconds_per_tick, TRUE)
+		possible_cultist.stamina.adjust(4 * seconds_per_tick, TRUE)
 		possible_cultist.adjustOxyLoss(-healed_amount)
 		possible_cultist.adjustCloneLoss(-(HEAL_PER_USE / 2) * seconds_per_tick)
 		possible_cultist.heal_overall_damage(healed_amount, healed_amount, updating_health = TRUE)

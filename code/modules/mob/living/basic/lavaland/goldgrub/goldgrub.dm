@@ -37,6 +37,8 @@
 		/datum/pet_command/follow,
 		/datum/pet_command/point_targeting/fetch,
 	)
+	/// Do we have emissives?
+	var/has_emissive = TRUE
 
 /mob/living/basic/mining/goldgrub/Initialize(mapload)
 	. = ..()
@@ -63,6 +65,8 @@
 		make_egg_layer()
 
 	RegisterSignal(src, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(block_bullets))
+	if(has_emissive)
+		update_appearance(UPDATE_OVERLAYS)
 
 /mob/living/basic/mining/goldgrub/proc/block_bullets(datum/source, obj/projectile/hitting_projectile)
 	SIGNAL_HANDLER
@@ -129,6 +133,11 @@
 		return
 	new /obj/item/food/egg/green/grub_egg(get_turf(src))
 
+/mob/living/basic/mining/goldgrub/update_overlays()
+	. = ..()
+	if(has_emissive)
+		. += emissive_appearance(icon, "[icon_state]_e", src)
+
 /mob/living/basic/mining/goldgrub/baby
 	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	name = "goldgrub baby"
@@ -144,6 +153,7 @@
 	can_tame = FALSE
 	can_lay_eggs = FALSE
 	ai_controller = /datum/ai_controller/basic_controller/babygrub
+	has_emissive = FALSE
 
 /mob/living/basic/mining/goldgrub/baby/Initialize(mapload)
 	. = ..()

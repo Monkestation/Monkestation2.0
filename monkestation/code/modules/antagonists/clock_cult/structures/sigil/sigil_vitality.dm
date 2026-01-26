@@ -46,7 +46,7 @@
 			var/damage_healed = FREE_DAMAGE_HEALED + ((affected_mob.getMaxHealth() - affected_mob.health) * 0.6)
 			if(GLOB.clock_vitality >= damage_healed)
 				GLOB.clock_vitality -= damage_healed
-				affected_mob.revive(ADMIN_HEAL_ALL)
+				affected_mob.revive(ADMIN_HEAL_ALL, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 				revived = TRUE
 
 		if(affected_mob.stat != DEAD && (!affected_mob.client || affected_mob.client.is_afk()))
@@ -72,7 +72,7 @@
 			var/pronoun_appropriate_demonym = "CLOCK-SIBLING"
 			if(affected_mob.gender == MALE)
 				pronoun_appropriate_demonym = "CLOCK-BROTHER"
-			if(affected_mob.gender == FEMALE)
+			else if(affected_mob.gender == FEMALE)
 				pronoun_appropriate_demonym = "CLOCK-SISTER"
 			SEND_SOUND(affected_mob, 'sound/magic/clockwork/scripture_tier_up.ogg')
 			to_chat(affected_mob, span_bigbrass("\"[text2ratvar("YOUR SERVITUDE IS NOT FINISHED, [uppertext(affected_mob.real_name)]. RISE, [pronoun_appropriate_demonym], AND BE RENEWED.")]\""))
@@ -100,7 +100,7 @@
 				new /obj/item/robot_suit/prebuilt/clockwork(get_turf(src))
 
 			var/obj/item/mmi/posibrain/soul_vessel/new_vessel = new(get_turf(src))
-			if(!is_banned_from(affected_mob.ckey, list(JOB_CYBORG, ROLE_CLOCK_CULTIST)) && !HAS_MIND_TRAIT(affected_mob, TRAIT_UNBORGABLE)) // monkestation edit: TRAIT_UNBORGABLE
+			if(!is_banned_from(affected_mob.ckey, list(JOB_CYBORG, ROLE_CLOCK_CULTIST)) && !HAS_MIND_TRAIT(affected_mob, TRAIT_UNBORGABLE))
 				new_vessel.transfer_personality(affected_mob)
 		affected_mob.dust(TRUE, TRUE)
 		return
@@ -112,13 +112,13 @@
 /// Checks the role of whoever was killed by the vitality sigil, and does any special code if needed.
 /obj/structure/destructible/clockwork/sigil/vitality/proc/check_special_role(mob/living/affected_mob)
 	if(IS_CULTIST(affected_mob)) //for now these just give extra vitality, but at some point I need to make them give something unique, maybe the gun?
-		send_clock_message(null, span_clockred("The dog of Nar'sie, [affected_mob] has had their vitality drained, rejoice!"))
+		send_clock_message(span_clockred("The dog of Nar'sie, [affected_mob] has had their vitality drained, rejoice!"))
 		GLOB.clock_vitality = min(GLOB.clock_vitality + 20, MAX_CLOCK_VITALITY)
 	else if(IS_HERETIC(affected_mob))
-		send_clock_message(null, span_clockred("The heretic, [affected_mob] has had their vitality drained, rejoice!"))
+		send_clock_message(span_clockred("The heretic, [affected_mob] has had their vitality drained, rejoice!"))
 		GLOB.clock_vitality = min(GLOB.clock_vitality + 30, MAX_CLOCK_VITALITY)
 	else
-		send_clock_message(null, span_clockred("[affected_mob] has had their vitality drained by [src], rejoice!"))
+		send_clock_message(span_clockred("[affected_mob] has had their vitality drained by [src], rejoice!"))
 
 #undef FREE_DAMAGE_HEALED
 #undef HEALTH_DRAINED

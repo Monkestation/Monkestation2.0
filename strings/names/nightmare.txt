@@ -35,4 +35,6 @@ Bloat
 Khaevn
 Malphysto
 Apo'phis
-gyattus
+Gyattus
+Night
+Thresh

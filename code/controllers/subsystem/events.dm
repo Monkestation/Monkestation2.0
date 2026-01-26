@@ -11,8 +11,6 @@ SUBSYSTEM_DEF(events)
 	var/frequency_lower = 1800 //3 minutes lower bound.
 	var/frequency_upper = 6000 //10 minutes upper bound. Basically an event will happen every 3 to 10 minutes.
 
-	var/wizardmode = FALSE
-
 /datum/controller/subsystem/events/Initialize()
 	for(var/datum/round_event_control/event_type as anything in typesof(/datum/round_event_control))
 		if(!event_type::typepath || !event_type::name)
@@ -22,23 +20,20 @@ SUBSYSTEM_DEF(events)
 			qdel(event) //highly iffy on this as it does cause issues for admins sometimes
 			continue
 		control += event //add it to the list of all events (controls)
-	reschedule()
 	// Instantiate our holidays list if it hasn't been already
 	if(isnull(GLOB.holidays))
 		fill_holidays()
 	return SS_INIT_SUCCESS
 
-
 /datum/controller/subsystem/events/fire(resumed = FALSE)
 	if(!resumed)
-		checkEvent() //only check these if we aren't resuming a paused fire
 		src.currentrun = running.Copy()
 
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
 
-	while(currentrun.len)
-		var/datum/thing = currentrun[currentrun.len]
+	while(length(currentrun))
+		var/datum/thing = currentrun[length(currentrun)]
 		currentrun.len--
 		if(thing)
 			thing.process(wait * 0.1)
@@ -46,63 +41,6 @@ SUBSYSTEM_DEF(events)
 			running.Remove(thing)
 		if (MC_TICK_CHECK)
 			return
-
-//checks if we should select a random event yet, and reschedules if necessary
-/datum/controller/subsystem/events/proc/checkEvent()
-	if(scheduled <= world.time)
-		spawnEvent()
-		reschedule()
-
-//decides which world.time we should select another random event at.
-/datum/controller/subsystem/events/proc/reschedule()
-	scheduled = world.time + rand(frequency_lower, max(frequency_lower,frequency_upper))
-
-//selects a random event based on whether it can occur and it's 'weight'(probability)
-/datum/controller/subsystem/events/proc/spawnEvent()
-	set waitfor = FALSE //for the admin prompt
-	if(!CONFIG_GET(flag/allow_random_events))
-		return
-
-	var/players_amt = get_active_player_count(alive_check = 1, afk_check = 1, human_check = 1)
-	// Only alive, non-AFK human players count towards this.
-
-	var/sum_of_weights = 0
-	for(var/datum/round_event_control/E in control)
-		if(!E.can_spawn_event(players_amt))
-			continue
-		var/weight = E.get_weight()
-		if(weight < 0) //for round-start events etc.
-			var/res = TriggerEvent(E)
-			if(res == EVENT_INTERRUPTED)
-				continue //like it never happened
-			if(res == EVENT_CANT_RUN)
-				return
-		sum_of_weights += weight
-
-	sum_of_weights = rand(0,sum_of_weights) //reusing this variable. It now represents the 'weight' we want to select
-
-	for(var/datum/round_event_control/E in control)
-		if(!E.can_spawn_event(players_amt))
-			continue
-		sum_of_weights -= E.get_weight()
-
-		if(sum_of_weights <= 0) //we've hit our goal
-			if(TriggerEvent(E))
-				return
-
-/datum/controller/subsystem/events/proc/TriggerEvent(datum/round_event_control/E)
-	. = E.preRunEvent()
-	if(. == EVENT_CANT_RUN)//we couldn't run this event for some reason, set its max_occurrences to 0
-		E.max_occurrences = 0
-	else if(. == EVENT_READY)
-		E.run_event(random = TRUE)
-
-
-/datum/controller/subsystem/events/proc/toggleWizardmode()
-	wizardmode = !wizardmode
-	message_admins("Summon Events has been [wizardmode ? "enabled, events will occur every [SSevents.frequency_lower / 600] to [SSevents.frequency_upper / 600] minutes" : "disabled"]!")
-	log_game("Summon Events was [wizardmode ? "enabled" : "disabled"]!")
-
 
 /datum/controller/subsystem/events/proc/resetFrequency()
 	frequency_lower = initial(frequency_lower)

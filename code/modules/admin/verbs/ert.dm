@@ -30,7 +30,7 @@
 	if(!istype(mannequin))
 		return
 
-	for(var/I in mannequin.get_equipped_items(include_pockets = TRUE))
+	for(var/I in mannequin.get_equipped_items(INCLUDE_POCKETS))
 		qdel(I)
 	if (ispath(antag, /datum/antagonist/ert))
 		var/datum/antagonist/ert/ert = antag
@@ -276,7 +276,7 @@
 
 		//Open the Armory doors
 		if(ertemplate.opendoors)
-			for(var/obj/machinery/door/poddoor/ert/door in GLOB.airlocks)
+			for(var/obj/machinery/door/poddoor/ert/door as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/poddoor/ert))
 				door.open()
 				CHECK_TICK
 		return TRUE

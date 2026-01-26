@@ -19,11 +19,14 @@
 		owner.plane -= 2
 		hidden  = TRUE
 		ADD_TRAIT(owner, TRAIT_IGNORE_ELEVATION, ACTION_TRAIT)
+		if((cortical_owner.upgrade_flags & BORER_ENERGIC))
+			cortical_owner.remove_movespeed_modifier(/datum/movespeed_modifier/borer_speed_bonus)
 	else
 		cortical_owner.upgrade_flags &= ~BORER_HIDING
 		owner.balloon_alert(owner, "stopped hiding")
 		owner.plane +=2
 		hidden = FALSE
 		REMOVE_TRAIT(owner, TRAIT_IGNORE_ELEVATION, ACTION_TRAIT)
+		if((cortical_owner.upgrade_flags & BORER_ENERGIC))
+			cortical_owner.add_movespeed_modifier(/datum/movespeed_modifier/borer_speed_bonus)
 	StartCooldown()
-  

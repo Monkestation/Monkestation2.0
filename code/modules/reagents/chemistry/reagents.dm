@@ -1,3 +1,6 @@
+// HEY IF THIS IS EVER UPDATED TO TG, MAKE SURE TO CHECK OVER IMPLEMENTATIONS
+// Some uses of name2reagent have edits to make them function how they are supposed to on TG
+
 GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 
 /proc/build_name2reagent()
@@ -7,6 +10,12 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 		if (length(initial(R.name)))
 			.[ckey(initial(R.name))] = t
 
+// MONKE EDIT: Copium proc that cleans up reagents to allow search in name2reagent
+/proc/clean_reagent_name(reagent)
+	if(!istext(reagent))
+		CRASH("Tried to call clean_reagent_name with the passed argument not being text")
+	var/static/regex/chem_regex = new(@"[^a-z]", "g")
+	return replacetext(lowertext(reagent), chem_regex, "")
 
 //Various reagents
 //Toxin & acid reagents
@@ -184,11 +193,11 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	return
 
 /// Called from [/datum/reagents/proc/metabolize]
-/datum/reagent/proc/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
+/datum/reagent/proc/on_mob_life(mob/living/carbon/metabolizer, seconds_per_tick, times_fired)
 	current_cycle++
 	if(length(reagent_removal_skip_list))
 		return
-	holder.remove_reagent(type, metabolization_rate * M.metabolism_efficiency * seconds_per_tick) //By default it slowly disappears.
+	holder.remove_reagent(type, metabolization_rate * metabolizer.metabolism_efficiency * seconds_per_tick) //By default it slowly disappears.
 
 /// Called in burns.dm *if* the reagent has the REAGENT_AFFECTS_WOUNDS process flag
 /datum/reagent/proc/on_burn_wound_processing(datum/wound/burn/flesh/burn_wound)

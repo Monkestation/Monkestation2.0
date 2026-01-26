@@ -134,8 +134,12 @@
 	/// Donor rank required for this job. Leave null for no requirement.
 	//defines found in [code\__DEFINES\~monkestation\_patreon.dm]
 	var/job_req_donor = null //MONKESTATION EDIT
-	//donator bypass for holidays
+	///donator bypass for holidays
 	var/job_donor_bypass = null //MONKESTATION EDIT
+
+	//yes this could probably be a config but I dont really care
+	///How many points of antag capacity does this job give
+	var/antag_capacity_points = 1 //might need to default this to 0 and set it manually on all station jobs
 
 /datum/job/New()
 	. = ..()
@@ -328,6 +332,8 @@
 	var/edited_total_positions = CHECK_MAP_JOB_CHANGE(title, "total_positions")
 	if(!isnull(edited_total_positions) && (edited_total_positions == 0))
 		available_latejoin = FALSE
+	if((job_flags & JOB_NO_PLANETARY) && SSmapping.is_planetary())
+		return FALSE
 
 	if(!available_roundstart && !available_latejoin) //map config disabled the job
 		return FALSE
@@ -377,10 +383,6 @@
 /datum/job/proc/get_radio_information()
 	if(job_flags & JOB_CREW_MEMBER)
 		return "<b>Prefix your message with :h to speak on your department's radio. To see other prefixes, look closely at your headset.</b>"
-
-//Checks if certain conditions are met making the job eligible.
-/datum/job/proc/conditions_met()
-	return TRUE
 
 /datum/outfit/job
 	name = "Standard Gear"
@@ -582,8 +584,7 @@
 		// This is unfortunately necessary because of snowflake AI init code. To be refactored.
 		spawn_instance = new spawn_type(get_turf(spawn_point), null, player_client.mob)
 	else
-		spawn_instance = new spawn_type(player_client.mob.loc)
-		spawn_point.JoinPlayerHere(spawn_instance, TRUE)
+		spawn_instance = spawn_point.JoinPlayerHere(spawn_type, TRUE)
 	spawn_instance.apply_prefs_job(player_client, src)
 	if(!player_client)
 		qdel(spawn_instance)
@@ -703,3 +704,34 @@
 /datum/job/proc/after_latejoin_spawn(mob/living/spawning)
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_JOB_AFTER_LATEJOIN_SPAWN, src, spawning)
+
+///Returns a string that will be used for the contents of an employment contract.
+/datum/job/proc/employment_contract_contents(employee_name)
+	SHOULD_CALL_PARENT(FALSE)
+
+	return "<center>Conditions of Employment</center>\
+	<BR><BR><BR><BR>\
+	This Agreement is made and entered into as of the date of last signature below, by and between [employee_name] (hereafter referred to as SLAVE), \
+	and Nanotrasen (hereafter referred to as the omnipresent and helpful watcher of humanity).\
+	<BR>WITNESSETH:<BR>WHEREAS, SLAVE is a natural born human or humanoid, possessing skills upon which he can aid the omnipresent and helpful watcher of humanity, \
+	who seeks employment in the omnipresent and helpful watcher of humanity.<BR>WHEREAS, the omnipresent and helpful watcher of humanity agrees to sporadically provide payment to SLAVE, \
+	in exchange for permanent servitude.<BR>NOW THEREFORE in consideration of the mutual covenants herein contained, and other good and valuable consideration, the parties hereto mutually agree as follows:\
+	<BR>In exchange for paltry payments, SLAVE agrees to work for the omnipresent and helpful watcher of humanity, \
+	for the remainder of his or her current and future lives.<BR>Further, SLAVE agrees to transfer ownership of his or her soul to the loyalty department of the omnipresent and helpful watcher of humanity.\
+	<BR>Should transfership of a soul not be possible, a lien shall be placed instead.\
+	<BR>Signed,<BR><i>[employee_name]</i>"
+
+/// Returns a large (due to cropping) icon of this job's sechud icon state.
+/datum/job/proc/get_lobby_icon() as /icon
+	var/datum/outfit/job_outfit = outfit
+	if(!job_outfit || !job_outfit::id_trim)
+	#ifdef TESTING
+		log_job_debug("[src.type] has no job outfit but either doesn't overwrite get_lobby_icon() or has no SecHUD icon.")
+	#endif
+		return
+	var/datum/id_trim/job_trim = job_outfit::id_trim
+	var/icon_state = job_trim::sechud_icon_state
+	if(!icon_state || icon_state == SECHUD_UNKNOWN)
+		CRASH("[src.type] has no job icon state.")
+
+	return uni_icon('icons/mob/huds/hud.dmi', icon_state)

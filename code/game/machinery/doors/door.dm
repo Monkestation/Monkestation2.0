@@ -79,7 +79,6 @@
 	update_freelook_sight()
 	air_update_turf(TRUE, TRUE)
 	register_context()
-	GLOB.airlocks += src
 	if(elevator_mode)
 		if(elevator_linked_id)
 			elevator_status = LIFT_PLATFORM_LOCKED
@@ -139,7 +138,6 @@
 
 /obj/machinery/door/Destroy()
 	update_freelook_sight()
-	GLOB.airlocks -= src
 	if(elevator_mode)
 		GLOB.elevator_doors -= src
 	if(spark_system)
@@ -187,6 +185,11 @@
 		var/mob/B = AM
 		if((isdrone(B) || iscyborg(B)) && B.stat)
 			return
+		if(istype(B, /mob/living/basic/mouse/plague))
+			if(!do_after(B, 3 SECONDS, src))
+				B.forceMove(drop_location())
+				to_chat(B, span_notice("You squeeze through [src]."))
+				return
 		if(isliving(AM))
 			var/mob/living/M = AM
 			//Can bump-open maybe 3 airlocks per second. This is to prevent weird mass door openings
@@ -403,7 +406,7 @@
 	if(operating)
 		return FALSE
 	operating = TRUE
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 	do_animate("opening")
 	set_opacity(0)
 	SLEEP_NOT_DEL(0.5 SECONDS)

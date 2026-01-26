@@ -38,7 +38,7 @@
 	RegisterSignal(interacting_with, COMSIG_ITEM_EQUIPPED, PROC_REF(check_wearing))
 	RegisterSignal(interacting_with, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
 	RegisterSignal(interacting_with, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
-	RegisterSignal(interacting_with, COMSIG_CLICK_ALT, PROC_REF(on_altclick))
+	RegisterSignal(interacting_with, COMSIG_CLICK_ALT, PROC_REF(on_click_alt))
 	RegisterSignal(interacting_with, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), PROC_REF(on_multitool))
 	balloon_alert(user, "style meter attached")
 	playsound(src, 'sound/machines/click.ogg', 30, TRUE)
@@ -90,13 +90,15 @@
 
 
 /// Signal proc to remove from glasses
-/obj/item/style_meter/proc/on_altclick(datum/source, mob/user)
+/obj/item/style_meter/proc/on_click_alt(datum/source, mob/user)
 	SIGNAL_HANDLER
 
-	if(istype(loc, /obj/item/clothing/glasses))
-		clean_up()
-		forceMove(get_turf(src))
+	if(!istype(loc, /obj/item/clothing/glasses) || !user.can_perform_action(source))
+		return CLICK_ACTION_BLOCKING
 
+	clean_up(loc)
+	forceMove(get_turf(src))
+	INVOKE_ASYNC(user, TYPE_PROC_REF(/mob, put_in_hands), src)
 	return COMPONENT_CANCEL_CLICK_ALT
 
 
@@ -112,9 +114,7 @@
 /// Unregister signals and just generally clean up ourselves after being removed from glasses
 /obj/item/style_meter/proc/clean_up(atom/movable/old_location)
 	old_location.cut_overlay(meter_appearance)
-	UnregisterSignal(old_location, COMSIG_ITEM_EQUIPPED)
-	UnregisterSignal(old_location, COMSIG_ITEM_DROPPED)
-	UnregisterSignal(old_location, COMSIG_ATOM_EXAMINE)
+	UnregisterSignal(old_location, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED, COMSIG_ATOM_EXAMINE, COMSIG_CLICK_ALT))
 	UnregisterSignal(old_location, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL))
 	if(!style_meter)
 		return

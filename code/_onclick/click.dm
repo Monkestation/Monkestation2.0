@@ -80,95 +80,120 @@
  * * [obj/item/proc/afterattack] (atom,user,adjacent,params) - used both ranged and adjacent
  * * [mob/proc/RangedAttack] (atom,modifiers) - used only ranged, only used for tk and laser eyes but could be changed
  */
-/mob/proc/ClickOn( atom/A, params)
+/mob/proc/ClickOn(atom/clicked_on, params)
 	if(world.time <= next_click)
 		return
-	next_click = world.time + 1
 
-	if(check_click_intercept(params,A) || HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
+	next_click = world.time + 1
+	if(check_click_intercept(params, clicked_on) || HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
 
 	var/list/modifiers = params2list(params)
-
-	if(!client?.holder && (isobserver(A) || isaicamera(A)) && A.invisibility > see_invisible)
-		message_admins("[ADMIN_LOOKUPFLW(src)] clicked on [key_name_admin(A)] ([A?.type]) [ADMIN_FLW(A)], which they should not be able to see!")
-		log_admin_private("[key_name(src)] clicked on [key_name(A)] ([A?.type]), which they should not be able to see!")
+	if(!client?.holder && (isobserver(clicked_on) || isaicamera(clicked_on)) && clicked_on.invisibility > see_invisible)
+		message_admins("[ADMIN_LOOKUPFLW(src)] clicked on [key_name_admin(clicked_on)] ([clicked_on?.type]) [ADMIN_FLW(clicked_on)], which they should not be able to see!")
+		log_admin_private("[key_name(src)] clicked on [key_name(clicked_on)] ([clicked_on?.type]), which they should not be able to see!")
 
 	if(client)
 		client.imode.update_istate(src, modifiers)
 
-	if(SEND_SIGNAL(src, COMSIG_MOB_CLICKON, A, modifiers) & COMSIG_MOB_CANCEL_CLICKON)
+	if(SEND_SIGNAL(src, COMSIG_MOB_CLICKON, clicked_on, modifiers) & COMSIG_MOB_CANCEL_CLICKON)
 		return
 
 	if(!(istate & ISTATE_SECONDARY))
 		if(LAZYACCESS(modifiers, SHIFT_CLICK))
 			if(LAZYACCESS(modifiers, MIDDLE_CLICK))
-				ShiftMiddleClickOn(A)
+				ShiftMiddleClickOn(clicked_on)
 				return
-			if(LAZYACCESS(modifiers, CTRL_CLICK))
-				CtrlShiftClickOn(A)
+			if(istate & ISTATE_CONTROL)
+				CtrlShiftClickOn(clicked_on)
 				return
-			ShiftClickOn(A)
+			if(LAZYACCESS(modifiers, ALT_CLICK))
+				alt_shift_click_on(clicked_on)
+				return
+			ShiftClickOn(clicked_on)
 			return
 		if(LAZYACCESS(modifiers, MIDDLE_CLICK))
-			if(LAZYACCESS(modifiers, CTRL_CLICK))
-				CtrlMiddleClickOn(A)
+			if(istate & ISTATE_CONTROL)
+				CtrlMiddleClickOn(clicked_on)
 			else
-				MiddleClickOn(A, params)
+				MiddleClickOn(clicked_on, params)
 			return
 		if(LAZYACCESS(modifiers, ALT_CLICK)) // alt and alt-gr (rightalt)
-			AltClickOn(A)
+			AltClickOn(clicked_on)
 			return
-		if(LAZYACCESS(modifiers, CTRL_CLICK))
-			CtrlClickOn(A)
+		if(istate & ISTATE_CONTROL)
+			CtrlClickOn(clicked_on)
 			return
-	else if(LAZYACCESS(modifiers, ALT_CLICK)) // monke edit: ensure alt-secondary works
-		alt_click_on_secondary(A)
+	if(LAZYACCESS(modifiers, SHIFT_CLICK))
+		if(LAZYACCESS(modifiers, MIDDLE_CLICK))
+			ShiftMiddleClickOn(clicked_on)
+			return
+		if(istate & ISTATE_CONTROL)
+			CtrlShiftClickOn(clicked_on)
+			return
+		if(LAZYACCESS(modifiers, ALT_CLICK))
+			alt_shift_click_on(clicked_on)
+			return
+		// allow a shift right click to pass as a right click, rather than becoming a shift click... (context menu pref compatibility)
+	if(LAZYACCESS(modifiers, MIDDLE_CLICK))
+		if(istate & ISTATE_CONTROL)
+			CtrlMiddleClickOn(clicked_on)
+		else
+			MiddleClickOn(clicked_on, params)
+		return
+	if(LAZYACCESS(modifiers, ALT_CLICK)) // alt and alt-gr (rightalt)
+		if(istate & ISTATE_SECONDARY)
+			AltClickSecondaryOn(clicked_on)
+		else
+			AltClickOn(clicked_on)
+		return
+	if(istate & ISTATE_CONTROL)
+		CtrlClickOn(clicked_on)
 		return
 
-	if(incapacitated(IGNORE_RESTRAINTS|IGNORE_STASIS|IGNORE_CRIT))
+	if(incapacitated(IGNORE_RESTRAINTS|IGNORE_STASIS|IGNORE_SOFTCRIT))
 		return
 
-	face_atom(A)
+	face_atom(clicked_on)
 
 	if(next_move > world.time) // in the year 2000...
 		return
 
-	if(!LAZYACCESS(modifiers, "catcher") && A.IsObscured())
+	if(!LAZYACCESS(modifiers, "catcher") && clicked_on.IsObscured())
 		return
 
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED) && !((stat >= SOFT_CRIT && (stat != DEAD && stat != UNCONSCIOUS))))
 		changeNext_move(CLICK_CD_HANDCUFFED)   //Doing shit in cuffs shall be vey slow
-		UnarmedAttack(A, FALSE)
+		UnarmedAttack(clicked_on, FALSE)
 		return
 
 	if(throw_mode)
-		if(throw_item(A))
+		if(throw_item(clicked_on))
 			changeNext_move(CLICK_CD_THROW)
 		return
 
-	var/obj/item/W = get_active_held_item()
+	var/obj/item/held_item = get_active_held_item()
 
-	if(W == A)
+	if(held_item == clicked_on)
 		if((istate & ISTATE_SECONDARY))
-			W.attack_self_secondary(src, modifiers)
+			held_item.attack_self_secondary(src, modifiers)
 			update_held_items()
 			return
 		else
-			W.attack_self(src, modifiers)
+			held_item.attack_self(src, modifiers)
 			update_held_items()
 			return
 
 	//These are always reachable.
 	//User itself, current loc, and user inventory
-	if(A in DirectAccess())
-		if(W)
-			W.melee_attack_chain(src, A, modifiers)
+	if(clicked_on in DirectAccess())
+		if(held_item)
+			held_item.melee_attack_chain(src, clicked_on, modifiers)
 		else
-			if(ismob(A))
+			if(ismob(clicked_on))
 				changeNext_move(CLICK_CD_MELEE)
 
-			UnarmedAttack(A, FALSE)
+			UnarmedAttack(clicked_on, FALSE)
 		return
 
 	//Can't reach anything else in lockers or other weirdness
@@ -176,27 +201,27 @@
 		return
 
 	// In a storage item with a disassociated storage parent
-	var/obj/item/item_atom = A
+	var/obj/item/item_atom = clicked_on
 	if(istype(item_atom))
 		if((item_atom.item_flags & IN_STORAGE) && (item_atom.loc.flags_1 & HAS_DISASSOCIATED_STORAGE_1))
 			UnarmedAttack(item_atom, TRUE)
 
 	//Standard reach turf to turf or reaching inside storage
-	if(CanReach(A,W))
-		if(W)
-			W.melee_attack_chain(src, A, modifiers)
+	if(CanReach(clicked_on, held_item))
+		if(held_item)
+			held_item.melee_attack_chain(src, clicked_on, modifiers)
 		else
-			if(ismob(A))
+			if(ismob(clicked_on))
 				changeNext_move(CLICK_CD_MELEE)
-			UnarmedAttack(A , 1, modifiers)
+			UnarmedAttack(clicked_on, 1, modifiers)
 	else
-		if(W)
-			A.base_ranged_item_interaction(src, W, modifiers)
+		if(held_item)
+			clicked_on.base_ranged_item_interaction(src, held_item, modifiers)
 		else
 			if((istate & ISTATE_SECONDARY))
-				ranged_secondary_attack(A, modifiers)
+				ranged_secondary_attack(clicked_on, modifiers)
 			else
-				RangedAttack(A, modifiers)
+				RangedAttack(clicked_on, modifiers)
 
 /// Is the atom obscured by a PREVENT_CLICK_UNDER_1 object above it
 /atom/proc/IsObscured()
@@ -278,7 +303,7 @@
 		if(2 to INFINITY)
 			var/obj/dummy = new(get_turf(here))
 			dummy.pass_flags |= PASSTABLE
-			dummy.invisibility = INVISIBILITY_ABSTRACT
+			dummy.SetInvisibility(INVISIBILITY_ABSTRACT)
 			for(var/i in 1 to reach) //Limit it to that many tries
 				var/turf/T = get_step(dummy, get_dir(dummy, there))
 				if(dummy.CanReach(there))
@@ -357,159 +382,17 @@
 
 /atom/proc/ShiftClick(mob/user)
 	SEND_SIGNAL(src, COMSIG_SHIFT_CLICKED_ON, user)
-	var/flags = SEND_SIGNAL(user, COMSIG_CLICK_SHIFT, src)
-	if(flags & COMSIG_MOB_CANCEL_CLICKON)
+	var/shiftclick_flags = SEND_SIGNAL(user, COMSIG_CLICK_SHIFT, src)
+	if(shiftclick_flags & COMSIG_MOB_CANCEL_CLICKON)
 		return
-	if(user.client && (user.client.eye == user || user.client.eye == user.loc || flags & COMPONENT_ALLOW_EXAMINATE))
+	if(user.client && (user.client.eye == user || user.client.eye == user.loc || shiftclick_flags & COMPONENT_ALLOW_EXAMINATE))
 		user.examinate(src)
-
-/**
- * Ctrl click
- * For most objects, pull
- */
-/mob/proc/CtrlClickOn(atom/A)
-	A.CtrlClick(src)
-	return
-
-/atom/proc/CtrlClick(mob/user)
-	SEND_SIGNAL(src, COMSIG_CLICK_CTRL, user)
-	SEND_SIGNAL(user, COMSIG_MOB_CTRL_CLICKED, src)
-	var/mob/living/ML = user
-	if(istype(ML))
-		ML.pulled(src)
-	if(!can_interact(user))
-		return FALSE
-
-/mob/living/CtrlClick(mob/user)
-	if(!isliving(user) || !user.CanReach(src) || user.incapacitated())
-		return ..()
-
-	if(world.time < user.next_move)
-		return FALSE
-
-	var/mob/living/user_living = user
-	if(user_living.apply_martial_art(src, null) == MARTIAL_ATTACK_SUCCESS)
-		user_living.changeNext_move(CLICK_CD_MELEE)
-		return TRUE
-
-	return ..()
-
-
-/mob/living/carbon/human/CtrlClick(mob/user)
-	if(!iscarbon(user) || !user.CanReach(src) || user.incapacitated())
-		return ..()
-
-	if(world.time < user.next_move)
-		return FALSE
-
-	if (ishuman(user))
-		var/mob/living/carbon/human/human_user = user
-		if(human_user.dna.species.grab(human_user, src, human_user.mind.martial_art))
-			human_user.changeNext_move(CLICK_CD_MELEE)
-			human_user.animate_interact(src, INTERACT_GRAB) //monkestation edit
-			return TRUE
-	else if(isalien(user))
-		var/mob/living/carbon/alien/adult/alien_boy = user
-		if(alien_boy.grab(src))
-			alien_boy.changeNext_move(CLICK_CD_MELEE)
-			return TRUE
-	return ..()
-
-/mob/proc/CtrlMiddleClickOn(atom/A)
-	if(check_rights_for(client, R_ADMIN))
-		client.toggle_tag_datum(A)
-	else
-		A.CtrlClick(src)
-	return
-
-/**
- * Alt click
- * Unused except for AI
- */
-/mob/proc/AltClickOn(atom/A)
-	. = SEND_SIGNAL(src, COMSIG_MOB_ALTCLICKON, A)
-	if(. & COMSIG_MOB_CANCEL_CLICKON)
-		return
-	A.AltClick(src)
-
-/**
- * Alt click on an atom.
- * Performs alt-click actions before attempting to open a loot window.
- * Returns TRUE if successful, FALSE if not.
- */
-/atom/proc/AltClick(mob/user)
-	if(!user.can_interact_with(src))
-		return FALSE
-
-	if(SEND_SIGNAL(src, COMSIG_CLICK_ALT, user) & COMPONENT_CANCEL_CLICK_ALT)
-		return TRUE
-
-	if(HAS_TRAIT(src, TRAIT_ALT_CLICK_BLOCKER) && !isobserver(user))
-		return TRUE
-
-	var/turf/tile = get_turf(src)
-	if(isnull(tile))
-		return FALSE
-
-	if(!isturf(loc) && !isturf(src))
-		return FALSE
-
-	if(!user.TurfAdjacent(tile))
-		return FALSE
-
-	if(HAS_TRAIT(user, TRAIT_MOVE_VENTCRAWLING))
-		return FALSE
-
-	var/datum/lootpanel/panel = user.client?.loot_panel
-	if(isnull(panel))
-		return FALSE
-
-	/// No loot panel if it's on our person
-	if(isobj(src) && iscarbon(user))
-		var/mob/living/carbon/carbon_user = user
-		if(src in carbon_user.get_all_gear())
-			to_chat(carbon_user, span_warning("You can't search for this item, it's already in your inventory! Take it off first."))
-			return
-
-	panel.open(tile)
-	return TRUE
-
-///The base proc of when something is right clicked on when alt is held - generally use alt_click_secondary instead
-/atom/proc/alt_click_on_secondary(atom/A)
-	. = SEND_SIGNAL(src, COMSIG_MOB_ALTCLICKON_SECONDARY, A)
-	if(. & COMSIG_MOB_CANCEL_CLICKON)
-		return
-	A.alt_click_secondary(src)
-
-///The base proc of when something is right clicked on when alt is held
-/atom/proc/alt_click_secondary(mob/user)
-	if(!user.can_interact_with(src))
-		return FALSE
-	if(SEND_SIGNAL(src, COMSIG_CLICK_ALT_SECONDARY, user) & COMPONENT_CANCEL_CLICK_ALT_SECONDARY)
-		return
-	if(isobserver(user) && user.client && check_rights_for(user.client, R_DEBUG))
-		user.client.toggle_tag_datum(src)
-		return
 
 /mob/proc/TurfAdjacent(turf/tile)
 	return tile.Adjacent(src)
 
-/**
- * Control+Shift click
- * Unused except for AI
- */
-/mob/proc/CtrlShiftClickOn(atom/A)
-	A.CtrlShiftClick(src)
-	return
-
 /mob/proc/ShiftMiddleClickOn(atom/A)
 	src.pointed(A)
-	return
-
-/atom/proc/CtrlShiftClick(mob/user)
-	if(!can_interact(user))
-		return FALSE
-	SEND_SIGNAL(src, COMSIG_CLICK_CTRL_SHIFT, user)
 	return
 
 /*

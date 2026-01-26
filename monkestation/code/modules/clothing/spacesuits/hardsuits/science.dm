@@ -54,4 +54,4 @@
 	)
 	armor_type = /datum/armor/hardsuit/science
 	hardsuit_helmet = /obj/item/clothing/head/helmet/space/hardsuit/toxins
-	cell = /obj/item/stock_parts/cell/super
+	cell = /obj/item/stock_parts/power_store/cell/super

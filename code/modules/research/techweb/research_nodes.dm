@@ -90,6 +90,7 @@
 	prereq_ids = list("adv_power", "practical_bluespace")
 	design_ids = list(
 		"bluespace_cell",
+		"bluespace_battery",
 		"quadratic_capacitor",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)

@@ -12,6 +12,7 @@
 	max_integrity = 300
 	var/list/product_types = list()
 	var/selected_flavour = ICE_CREAM_VANILLA
+	///The beaker inside of the vat used to make custom ice cream.
 	var/obj/item/reagent_containers/beaker
 	/// List of prototypes of dispensable ice cream cones. path as key, instance as assoc.
 	var/static/list/obj/item/food/icecream/cone_prototypes
@@ -183,11 +184,12 @@
 		new /obj/item/stack/sheet/iron(loc, 4)
 	qdel(src)
 
-/obj/machinery/icecream_vat/AltClick(mob/living/user)
-	. = ..()
-	if(!can_interact(user) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
-		return
-	replace_beaker(user)
+/obj/machinery/icecream_vat/click_alt(mob/living/user)
+	if(!beaker)
+		return CLICK_ACTION_BLOCKING
+	balloon_alert(user, "removed beaker")
+	try_put_in_hand(beaker, user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/icecream_vat/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
 	if(!user)

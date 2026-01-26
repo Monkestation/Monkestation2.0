@@ -434,7 +434,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 					vars[variable] = configuration["Dynamic"][variable]
 
 	setup_parameters()
-	setup_hijacking()
 	setup_shown_threat()
 	setup_rulesets()
 

@@ -110,7 +110,7 @@
 		return FALSE
 	if(ishuman(target))
 		var/mob/living/carbon/human/human_target = target
-		if(human_target.check_shields(src, 0, "[user]'s [name]", attack_type = MELEE_ATTACK))
+		if(human_target.check_block(src, 0, "[user]'s [name]", attack_type = MELEE_ATTACK))
 			return TRUE // we still return TRUE so we don't continue the attack chain
 	if(!target.dropItemToGround(item))
 		return FALSE

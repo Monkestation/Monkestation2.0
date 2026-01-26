@@ -67,17 +67,17 @@
 	icon_state = "[base_icon_state]-[state_open]"
 	return ..()
 
-/obj/machinery/artifact_xray/AltClick(mob/user)
-	. = ..()
-	if(!can_interact(user))
-		return
+/obj/machinery/artifact_xray/click_alt(mob/user)
 	if(our_disk)
 		to_chat(user,"You eject the [our_disk.name]")
 		if(!user.put_in_active_hand(our_disk))
 			our_disk.forceMove(get_turf(user))
 		our_disk = null
-		return
+		return CLICK_ACTION_SUCCESS
+
 	toggle_open()
+	return CLICK_ACTION_SUCCESS
+
 /obj/machinery/artifact_xray/proc/toggle_open()
 	if(!COOLDOWN_FINISHED(src,pulse_cooldown))
 		return

@@ -33,8 +33,8 @@
 		return FALSE
 
 	var/obj/machinery/power/apc/apc = clicked_on
-	var/obj/item/stock_parts/cell/cell = apc.get_cell()
-	cell.give(1000)
+	var/obj/item/stock_parts/power_store/cell/cell = apc.get_cell()
+	cell.give(STANDARD_BATTERY_CHARGE)
 	ai_clicker.battery -= 50
 
 

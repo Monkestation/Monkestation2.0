@@ -13,22 +13,30 @@
 	host_mob.adjust_drowsiness(1 SECONDS)
 	addtimer(CALLBACK(host_mob, TYPE_PROC_REF(/mob/living, Sleeping), 200), rand(60,200))
 
-/datum/nanite_program/paralyzing
-	name = "Paralysis"
-	desc = "The nanites force muscle contraction, effectively stunning the host." //funny that this is called paralysis and it does stun instead of para
-	use_rate = 3
+/datum/nanite_program/slow
+	name = "Muscle Impairment"
+	desc = "The nanites force muscle contraction, slowing the host down."
+	use_rate = 2
 	rogue_types = list(/datum/nanite_program/nerve_decay)
 
-/datum/nanite_program/paralyzing/active_effect()
-	host_mob.Stun(40)
+/datum/movespeed_modifier/nanite_paralyze
+	multiplicative_slowdown = 1				//Might need to balance how much this is?
 
-/datum/nanite_program/paralyzing/enable_passive_effect()
+/datum/nanite_program/slow/enable_passive_effect()
 	. = ..()
-	to_chat(host_mob, span_warning("Your muscles seize! You can't move!"))
+	to_chat(host_mob, span_warning("Your muscles seize! Moving becomes hard!"))
+	host_mob.add_movespeed_modifier(/datum/movespeed_modifier/nanite_paralyze)
+	if(ishuman(host_mob))
+		var/mob/living/carbon/human/H = host_mob
+		H.physiology.stun_mod *= 1.25
 
-/datum/nanite_program/paralyzing/disable_passive_effect()
+/datum/nanite_program/slow/disable_passive_effect()
 	. = ..()
-	to_chat(host_mob, span_notice("Your muscles relax, and you can move again."))
+	to_chat(host_mob, span_notice("Your muscles relax, and you can move easily again."))
+	host_mob.remove_movespeed_modifier(/datum/movespeed_modifier/nanite_paralyze)
+	if(ishuman(host_mob) && !QDELING(host_mob))
+		var/mob/living/carbon/human/H = host_mob
+		H.physiology.stun_mod *= 0.8
 
 /datum/nanite_program/shocking
 	name = "Electric Shock"
@@ -54,10 +62,10 @@
 	playsound(host_mob, "sparks", 75, TRUE, -1, SHORT_RANGE_SOUND_EXTRARANGE)
 	host_mob.Paralyze(80)
 
-/datum/nanite_program/pacifying
+/datum/nanite_program/pacifying		//Extremely powerful in a fight, but you can still at least run away.
 	name = "Pacification"
 	desc = "The nanites suppress the aggression center of the brain, preventing the host from causing direct harm to others."
-	use_rate = 1
+	use_rate = 2
 	rogue_types = list(/datum/nanite_program/brain_misfire, /datum/nanite_program/brain_decay)
 
 /datum/nanite_program/pacifying/enable_passive_effect()
@@ -69,18 +77,20 @@
 	REMOVE_TRAIT(host_mob, TRAIT_PACIFISM, NANITES_TRAIT)
 
 /datum/nanite_program/blinding
-	name = "Blindness"
-	desc = "The nanites suppress the host's ocular nerves, blinding them while they're active."
+	name = "Optical Disruption"
+	desc = "The nanites suppress the host's ocular nerves, making them nearsighted and making it harder to aim guns."
 	use_rate = 1.5
 	rogue_types = list(/datum/nanite_program/nerve_decay)
 
 /datum/nanite_program/blinding/enable_passive_effect()
 	. = ..()
-	host_mob.become_blind(NANITES_TRAIT)
+	host_mob.become_nearsighted(NANITES_TRAIT)
+	ADD_TRAIT(host_mob, TRAIT_POOR_AIM, NANITES_TRAIT)
 
 /datum/nanite_program/blinding/disable_passive_effect()
 	. = ..()
-	host_mob.cure_blind(NANITES_TRAIT)
+	host_mob.cure_nearsighted(NANITES_TRAIT)
+	REMOVE_TRAIT(host_mob, TRAIT_POOR_AIM, NANITES_TRAIT)
 
 /datum/nanite_program/mute
 	name = "Mute"
@@ -99,7 +109,7 @@
 /datum/nanite_program/fake_death
 	name = "Death Simulation"
 	desc = "The nanites induce a death-like coma into the host, able to fool most medical scans."
-	use_rate = 3.5
+	use_rate = 4
 	rogue_types = list(/datum/nanite_program/nerve_decay, /datum/nanite_program/necrotic, /datum/nanite_program/brain_decay)
 
 /datum/nanite_program/fake_death/enable_passive_effect()
@@ -314,3 +324,50 @@
 			message = replacetext(message, phrase.get_value(), replacement_phrase)
 			hearing_args[HEARING_RAW_MESSAGE] = message
 
+#define NES_GRAVITY "Gravity Field"
+#define NANITE_GRAV_NORMAL "1G"
+#define NANITE_GRAV_HIGH "2G"
+
+/datum/nanite_program/gravity
+	name = "Gravito-Kinetic Field Conduction"
+	desc = "The nanites channel an artifical gravitational field through the host."
+	use_rate = 3
+	rogue_types = list(/datum/nanite_program/glitch)
+	var/gravitymod = 0
+	var/current_mode
+	unique = FALSE
+
+/datum/nanite_program/gravity/register_extra_settings()
+	. = ..()
+	extra_settings[NES_GRAVITY] = new /datum/nanite_extra_setting/type(NANITE_GRAV_NORMAL, list(NANITE_GRAV_NORMAL, NANITE_GRAV_HIGH))
+
+/datum/nanite_program/gravity/active_effect()
+	. = ..()
+	var/datum/nanite_extra_setting/mode = extra_settings[NES_GRAVITY]
+
+	if (current_mode != mode.get_value() && passive_enabled)
+		disable_passive_effect() // toggles it so that it updates
+		enable_passive_effect()
+
+/datum/nanite_program/gravity/enable_passive_effect()
+	. = ..()
+	var/datum/nanite_extra_setting/mode = extra_settings[NES_GRAVITY]
+	current_mode = mode.get_value()
+	switch(current_mode)
+		if(NANITE_GRAV_NORMAL)
+			gravitymod = 1
+
+		if(NANITE_GRAV_HIGH)
+			gravitymod = 2
+
+	to_chat(host_mob, span_warning("Gravity starts warping around you!"))
+	host_mob.AddElement(/datum/element/forced_gravity, gravitymod, can_override = TRUE)
+
+/datum/nanite_program/gravity/disable_passive_effect()
+	. = ..()
+	to_chat(host_mob, span_notice("The non-newtonian nonsense is no more, thankfully."))
+	host_mob.RemoveElement(/datum/element/forced_gravity, gravitymod, can_override = TRUE)
+
+#undef NES_GRAVITY
+#undef NANITE_GRAV_NORMAL
+#undef NANITE_GRAV_HIGH

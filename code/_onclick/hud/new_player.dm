@@ -136,10 +136,7 @@
 	if(!.)
 		return
 
-	var/datum/preferences/preferences = hud.mymob.canon_client.prefs
-	preferences.current_window = PREFERENCE_TAB_CHARACTER_PREFERENCES
-	preferences.update_static_data(usr)
-	preferences.ui_interact(usr)
+	hud.mymob.canon_client.prefs.open_window(PREFERENCE_PAGE_CHARACTERS)
 
 /atom/movable/screen/lobby/button/character_setup/proc/enable_character_setup()
 	SIGNAL_HANDLER
@@ -230,50 +227,8 @@
 	var/mob/dead/new_player/new_player = hud.mymob
 	if(isnull(new_player?.client))
 		return
-	if(!new_player.client?.fully_created)
-		to_chat(new_player, span_warning("Your client is still initializing, please wait a second..."))
-		return
 
-	if(!SSticker?.IsRoundInProgress())
-		to_chat(new_player, span_boldwarning("The round is either not ready, or has already finished..."))
-		return
-
-	if(new_player.client?.check_overwatch())
-		to_chat(new_player, span_warning("Please wait until your connection has been authenticated before joining."))
-		message_admins("[new_player.key] tried to use the Join button but failed the overwatch check.")
-		return
-
-	//Determines Relevent Population Cap
-	var/relevant_cap
-	var/hard_popcap = CONFIG_GET(number/hard_popcap)
-	var/extreme_popcap = CONFIG_GET(number/extreme_popcap)
-	if(hard_popcap && extreme_popcap)
-		relevant_cap = min(hard_popcap, extreme_popcap)
-	else
-		relevant_cap = max(hard_popcap, extreme_popcap)
-
-	//Allow admins and Patreon supporters to bypass the cap/queue
-	if ((relevant_cap && living_player_count() >= relevant_cap) && (new_player.persistent_client?.patreon?.is_donator() || is_admin(new_player.client) || is_mentor(new_player.client)))
-		to_chat(new_player, span_notice("The server is currently overcap, but you are a(n) patreon/mentor/admin!"))
-	else if (SSticker.queued_players.len || (relevant_cap && living_player_count() >= relevant_cap))
-		to_chat(new_player, span_danger("[CONFIG_GET(string/hard_popcap_message)]"))
-
-		var/queue_position = SSticker.queued_players.Find(new_player)
-		if(queue_position == 1)
-			to_chat(new_player, span_notice("You are next in line to join the game. You will be notified when a slot opens up."))
-		else if(queue_position)
-			to_chat(new_player, span_notice("There are [queue_position-1] players in front of you in the queue to join the game."))
-		else
-			SSticker.queued_players += new_player
-			to_chat(new_player, span_notice("You have been added to the queue to join the game. Your position in queue is [SSticker.queued_players.len]."))
-		return
-
-	if(!LAZYACCESS(params2list(params), CTRL_CLICK))
-		GLOB.latejoin_menu.ui_interact(new_player)
-	else
-		to_chat(new_player, span_warning("Opening emergency fallback late join menu! If THIS doesn't show, ahelp immediately!"))
-		GLOB.latejoin_menu.fallback_ui(new_player)
-
+	new_player.join_game(TRUE, params)
 
 /atom/movable/screen/lobby/button/join/proc/show_join_button()
 	SIGNAL_HANDLER
@@ -351,7 +306,13 @@
 	. = ..()
 	if(!.)
 		return
-	hud.mymob.client << link("https://discord.monkestation.com")
+	var/discordurl = CONFIG_GET(string/discordurl)
+	if (!discordurl)
+		to_chat(hud.mymob, span_warning("The server does not have a Discord link configured!"))
+		return
+
+	to_chat(hud.mymob, span_notice("Opening <a href='[discordurl]'>[discordurl]</a> in your browser... If it doesn't work, try copying and pasting it into your browser."))
+	hud.mymob.client << link(discordurl)
 
 /atom/movable/screen/lobby/button/twitch
 	icon = 'icons/hud/lobby/bottom_buttons.dmi'
@@ -377,7 +338,6 @@
 /atom/movable/screen/lobby/button/settings/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	// We need IconForge and the assets to be ready before allowing the menu to open
-
 	if(SSearly_assets.initialized == INITIALIZATION_INNEW_REGULAR || SSatoms.initialized == INITIALIZATION_INNEW_REGULAR)
 		set_button_status(TRUE)
 	else
@@ -390,10 +350,7 @@
 	if(!.)
 		return
 
-	var/datum/preferences/preferences = hud.mymob.canon_client.prefs
-	preferences.current_window = PREFERENCE_TAB_GAME_PREFERENCES
-	preferences.update_static_data(usr)
-	preferences.ui_interact(usr)
+	hud.mymob.canon_client.prefs.open_window(PREFERENCE_PAGE_SETTINGS)
 
 /atom/movable/screen/lobby/button/settings/proc/enable_settings()
 	SIGNAL_HANDLER
@@ -403,19 +360,33 @@
 
 /atom/movable/screen/lobby/button/volume
 	icon = 'icons/hud/lobby/bottom_buttons.dmi'
-	icon_state = "volume"
+	icon_state = "volume_disabled"
 	base_icon_state = "volume"
 	screen_loc = "TOP:-126,CENTER:-34"
+	enabled = FALSE
+
+/atom/movable/screen/lobby/button/volume/Initialize(mapload, datum/hud/hud_owner)
+	. = ..()
+	// We need IconForge and the assets to be ready before allowing the menu to open
+	if(SSearly_assets.initialized == INITIALIZATION_INNEW_REGULAR || SSatoms.initialized == INITIALIZATION_INNEW_REGULAR)
+		set_button_status(TRUE)
+	else
+		set_button_status(FALSE)
+		RegisterSignal(SSearly_assets, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(enable_volume))
+		RegisterSignal(SSatoms, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(enable_volume))
 
 /atom/movable/screen/lobby/button/volume/Click(location, control, params)
 	. = ..()
 	if(!.)
 		return
 
-	var/datum/preferences/preferences = hud.mymob.client.prefs
-	if(!preferences.pref_mixer)
-		preferences.pref_mixer = new
-	preferences.pref_mixer.open_ui(hud.mymob)
+	hud.mymob.canon_client.prefs.open_window(PREFERENCE_PAGE_PREFERENCES_VOLUME)
+
+/atom/movable/screen/lobby/button/volume/proc/enable_volume()
+	SIGNAL_HANDLER
+	set_button_status(TRUE)
+	UnregisterSignal(SSearly_assets, COMSIG_SUBSYSTEM_POST_INITIALIZE)
+	UnregisterSignal(SSatoms, COMSIG_SUBSYSTEM_POST_INITIALIZE)
 
 /atom/movable/screen/lobby/button/changelog_button
 	icon = 'icons/hud/lobby/changelog.dmi'
@@ -690,7 +661,7 @@
 	if(!overflow_job)
 		disabled = TRUE
 		return
-	var/icon/job_icon = get_job_hud_icon(overflow_job, include_unknown = TRUE)?.scale(16, 16)?.to_icon()
+	var/icon/job_icon = get_job_hud_icon(overflow_job)?.scale(16, 16)?.to_icon()
 	if(!job_icon)
 		return
 	job_overlay = mutable_appearance(job_icon)

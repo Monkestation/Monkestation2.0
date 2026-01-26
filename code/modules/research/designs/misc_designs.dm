@@ -292,6 +292,22 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
+/datum/design/stompers
+	name = "Stomper Boots"
+	desc = /obj/item/clothing/shoes/stomper::desc
+	id = "stompers"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2,
+		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT * 1.5,
+		/datum/material/gold = SHEET_MATERIAL_AMOUNT * 1.25,
+	)
+	build_path = /obj/item/clothing/shoes/stomper
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_ENGINEERING
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
+
 /datum/design/forcefield_projector
 	name = "Forcefield Projector"
 	desc = "A device which can project temporary forcefields to seal off an area."
@@ -384,7 +400,7 @@
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SCIENCE
 	)
-	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_CARGO
 
 /datum/design/botpad_remote
 	name = "Bot Launchpad Controller"
@@ -561,7 +577,7 @@
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_JANITORIAL
 	)
-	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE | DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/light_replacer_blue
 	name = "Bluespace Light Replacer"
@@ -853,6 +869,17 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/uranium =SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/inspector
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SECURITY
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+
+/datum/design/sec_pen
+	name = "Security Pen"
+	id = "sec_pen"
+	build_type = PROTOLATHE | AUTOLATHE
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT)
+	build_path = /obj/item/pen/red/security
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SECURITY
 	)

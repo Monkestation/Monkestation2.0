@@ -96,7 +96,7 @@ type Module = {
   pinned: BooleanLike;
   idle_power: number;
   active_power: number;
-  use_power: number;
+  use_energy: number;
   module_complexity: number;
   cooldown_time: number;
   cooldown: number;
@@ -118,11 +118,10 @@ export const MODsuit = (props) => {
   const { interface_break } = data.suit_status;
   return (
     <Window
-      width={600}
-      height={600}
+      width={800}
+      height={640}
       theme={ui_theme}
       title="MOD Interface Panel"
-      resizable
     >
       <Window.Content scrollable={!interface_break}>
         <MODsuitContent />
@@ -170,9 +169,10 @@ const ConfigureNumberEntry = (props) => {
       value={value}
       minValue={-50}
       maxValue={50}
-      stepPixelSize={5}
+      stepPixelSize={2}
+      step={1}
       width="39px"
-      onChange={(e, value) =>
+      onChange={(value) =>
         act('configure', {
           key: name,
           value: value,
@@ -224,7 +224,7 @@ const ConfigureListEntry = (props) => {
   const { act } = useBackend();
   return (
     <Dropdown
-      displayText={value}
+      selected={value}
       options={values}
       onSelected={(value) =>
         act('configure', {
@@ -374,7 +374,7 @@ const SuitStatusSection = (props) => {
               bad: [-Infinity, 0.3],
             }}
             style={{
-              'text-shadow': '1px 1px 0 black',
+              textShadow: '1px 1px 0 black',
             }}
           >
             {!core_name
@@ -384,11 +384,11 @@ const SuitStatusSection = (props) => {
                 : cell_charge_current === 1e31
                   ? 'Infinite'
                   : `${formatSiUnit(
-                      cell_charge_current * 1000,
+                      cell_charge_current,
                       0,
                       'J',
                     )} of ${formatSiUnit(
-                      cell_charge_max * 1000,
+                      cell_charge_max,
                       0,
                       'J',
                     )} (${charge_percent}%)`}
@@ -461,7 +461,7 @@ const HardwareSection = (props) => {
   const { control, helmet, chestplate, gauntlets, boots } = data;
   const { ai_name, core_name } = data.suit_status;
   return (
-    <Section title="Hardware" style={{ 'text-transform': 'capitalize' }}>
+    <Section title="Hardware" style={{ textTransform: 'capitalize' }}>
       <LabeledList>
         <LabeledList.Item label="AI Assistant">
           {ai_name || 'No AI Detected'}
@@ -609,8 +609,8 @@ const UserStatusSection = (props) => {
           <LabeledList.Item label="Fingerprints">
             <Box
               style={{
-                'word-break': 'break-all',
-                'word-wrap': 'break-word',
+                wordBreak: 'break-all',
+                wordWrap: 'break-word',
               }}
             >
               {active ? dna_unique_identity : '???'}
@@ -621,8 +621,8 @@ const UserStatusSection = (props) => {
           <LabeledList.Item label="Enzymes">
             <Box
               style={{
-                'word-break': 'break-all',
-                'word-wrap': 'break-word',
+                wordBreak: 'break-all',
+                wordWrap: 'break-word',
               }}
             >
               {active ? dna_unique_enzymes : '???'}
@@ -672,7 +672,7 @@ const ModuleSection = (props) => {
       ) : (
         <Table>
           <Table.Row header>
-            <Table.Cell colspan={3}>Actions</Table.Cell>
+            <Table.Cell colSpan={3}>Actions</Table.Cell>
             <Table.Cell>Name</Table.Cell>
             <Table.Cell width={1} textAlign="center">
               <Button
@@ -694,7 +694,7 @@ const ModuleSection = (props) => {
               <Button
                 color="transparent"
                 icon="bolt"
-                tooltip="Use Power Cost"
+                tooltip="Use Energy Cost"
                 tooltipPosition="top"
               />
             </Table.Cell>
@@ -765,13 +765,45 @@ const ModuleSection = (props) => {
                     />
                   )}
                 </Table.Cell>
-                <Table.Cell textAlign="center">{module.idle_power}</Table.Cell>
                 <Table.Cell textAlign="center">
-                  {module.active_power}
+                  <div
+                    style={{
+                      display: 'inline-block',
+                      width: '60px',
+                    }}
+                  >
+                    {formatSiUnit(module.idle_power, 0)}
+                  </div>
                 </Table.Cell>
-                <Table.Cell textAlign="center">{module.use_power}</Table.Cell>
                 <Table.Cell textAlign="center">
-                  {module.module_complexity}
+                  <div
+                    style={{
+                      display: 'inline-block',
+                      width: '60px',
+                    }}
+                  >
+                    {formatSiUnit(module.active_power, 0)}
+                  </div>
+                </Table.Cell>
+                <Table.Cell textAlign="center">
+                  <div
+                    style={{
+                      display: 'inline-block',
+                      width: '60px',
+                    }}
+                  >
+                    {formatSiUnit(module.use_energy, 0)}
+                  </div>
+                </Table.Cell>
+                <Table.Cell textAlign="center">
+                  <div
+                    style={{
+                      display: 'inline-block',
+                      width: '10px',
+                    }}
+                  >
+                    {module.module_complexity}
+                  </div>
                 </Table.Cell>
               </Table.Row>
             );

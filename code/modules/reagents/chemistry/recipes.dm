@@ -252,7 +252,7 @@
 	for(var/atom/movable/X in orange(range, T))
 		if(X.anchored)
 			continue
-		if(iseffect(X) || iscameramob(X) || isdead(X))
+		if(iseffect(X) || iseyemob(X) || isdead(X))
 			continue
 		var/distance = get_dist(X, T)
 		var/moving_power = max(range - distance, 1)
@@ -293,7 +293,7 @@
 		if(ismob(holder.my_atom))
 			var/mob/M = holder.my_atom
 			inside_msg = " inside [ADMIN_LOOKUPFLW(M)]"
-		var/lastkey = holder.my_atom.fingerprintslast //This can runtime (null.fingerprintslast) - due to plumbing?
+		var/lastkey = holder.my_atom?.fingerprintslast //This can runtime (null.fingerprintslast) - due to plumbing?
 		var/touch_msg = "N/A"
 		if(lastkey)
 			var/mob/toucher = get_mob_by_key(lastkey)
@@ -402,7 +402,7 @@
 			live.apply_damage(damage)//Since this can be called multiple times
 		if(movey.anchored)
 			continue
-		if(iseffect(movey) || iscameramob(movey) || isdead(movey))
+		if(iseffect(movey) || iseyemob(movey) || isdead(movey))
 			continue
 		if(implosion)
 			var/distance = get_dist(movey, this_turf)

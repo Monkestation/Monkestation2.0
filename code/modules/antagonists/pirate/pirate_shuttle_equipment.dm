@@ -174,8 +174,8 @@
 /obj/machinery/piratepad/multitool_act(mob/living/user, obj/item/multitool/I)
 	. = ..()
 	if (istype(I))
-		to_chat(user, span_notice("You register [src] in [I]s buffer."))
 		I.set_buffer(src)
+		balloon_alert(user, "saved to multitool buffer")
 		return TRUE
 
 /obj/machinery/piratepad/screwdriver_act_secondary(mob/living/user, obj/item/screwdriver/screw)
@@ -220,10 +220,10 @@
 		pad_ref = WEAKREF(I.buffer)
 		return TRUE
 
-/obj/machinery/computer/piratepad_control/LateInitialize()
+/obj/machinery/computer/piratepad_control/LateInitialize(mapload_arg)
 	. = ..()
 	if(cargo_hold_id)
-		for(var/obj/machinery/piratepad/P in GLOB.machines)
+		for(var/obj/machinery/piratepad/P as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/piratepad))
 			if(P.cargo_hold_id == cargo_hold_id)
 				pad_ref = WEAKREF(P)
 				return

@@ -12,22 +12,23 @@
 /obj/item/borg
 	icon = 'icons/mob/silicon/robot_items.dmi'
 
+/// Cost to use the stun arm
+#define CYBORG_STUN_CHARGE_COST (STANDARD_CELL_CHARGE * 0.1)
+
 /obj/item/borg/stun
 	name = "electrically-charged arm"
 	icon_state = "elecarm"
-	/// Cost to use the stun arm
-	var/charge_cost = 1000
 	COOLDOWN_DECLARE(non_charge_cooldown)
 
 /obj/item/borg/stun/attack(mob/living/attacked_mob, mob/living/user)
 	if(ishuman(attacked_mob))
 		var/mob/living/carbon/human/human = attacked_mob
-		if(human.check_shields(src, 0, "[attacked_mob]'s [name]", MELEE_ATTACK))
+		if(human.check_block(src, 0, "[attacked_mob]'s [name]", MELEE_ATTACK))
 			playsound(attacked_mob, 'sound/weapons/genhit.ogg', 50, TRUE)
 			return FALSE
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/robot_user = user
-		if(!robot_user.cell.use(charge_cost))
+		if(!robot_user.cell.use(CYBORG_STUN_CHARGE_COST))
 			return
 
 	user.do_attack_animation(attacked_mob)
@@ -39,7 +40,7 @@
 		COOLDOWN_START(src, non_charge_cooldown, 3 SECONDS)
 		return
 
-	attacked_mob.stamina.adjust(-100)
+	attacked_mob.stamina.adjust(-50)
 	COOLDOWN_START(src, non_charge_cooldown, 5 SECONDS)
 
 	attacked_mob.visible_message(span_danger("[user] prods [attacked_mob] with [src]!"), \
@@ -185,7 +186,7 @@
 	/// Whitelist of charging machines
 	var/static/list/charge_machines = typecacheof(list(/obj/machinery/cell_charger, /obj/machinery/recharger, /obj/machinery/recharge_station, /obj/machinery/mech_bay_recharge_port))
 	/// Whitelist of chargable items
-	var/static/list/charge_items = typecacheof(list(/obj/item/stock_parts/cell, /obj/item/gun/energy))
+	var/static/list/charge_items = typecacheof(list(/obj/item/stock_parts/power_store/cell, /obj/item/gun/energy))
 
 /obj/item/borg/charger/update_icon_state()
 	icon_state = "charger_[mode]"
@@ -219,17 +220,14 @@
 				if((target_machine.machine_stat & (NOPOWER|BROKEN)) || !target_machine.anchored)
 					break
 
-				if(!user.cell.give(150))
-					break
-
-				target_machine.use_power(200)
+				target_machine.charge_cell(0.15 * STANDARD_CELL_CHARGE, user.cell)
 
 			to_chat(user, span_notice("You stop charging yourself."))
 
 		else if(is_type_in_list(target, charge_items))
-			var/obj/item/stock_parts/cell/cell = target
+			var/obj/item/stock_parts/power_store/cell/cell = target
 			if(!istype(cell))
-				cell = locate(/obj/item/stock_parts/cell) in target
+				cell = locate(/obj/item/stock_parts/power_store/cell) in target
 			if(!cell)
 				to_chat(user, span_warning("[target] has no power cell!"))
 				return
@@ -266,9 +264,9 @@
 			to_chat(user, span_notice("You stop charging yourself."))
 
 	else if(is_type_in_list(target, charge_items))
-		var/obj/item/stock_parts/cell/cell = target
+		var/obj/item/stock_parts/power_store/cell/cell = target
 		if(!istype(cell))
-			cell = locate(/obj/item/stock_parts/cell) in target
+			cell = locate(/obj/item/stock_parts/power_store/cell) in target
 		if(!cell)
 			to_chat(user, span_warning("[target] has no power cell!"))
 			return

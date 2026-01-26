@@ -482,16 +482,19 @@
 
 	return TRUE
 
-/obj/item/reagent_containers/cup/bottle/syrup_bottle/AltClick(mob/user)
+/obj/item/reagent_containers/cup/bottle/syrup_bottle/click_alt(mob/user)
 	cap_on = !cap_on
-	if(!cap_on)
-		icon_state = "syrup_open"
-		balloon_alert(user, "removed pump cap")
-	else
+	if(cap_on)
 		icon_state = "syrup"
+		spillable = FALSE
 		balloon_alert(user, "put pump cap on")
+	else
+		icon_state = "syrup_open"
+		spillable = TRUE
+		balloon_alert(user, "removed pump cap")
+
 	update_icon_state()
-	return ..()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/reagent_containers/cup/bottle/syrup_bottle/proc/rename(mob/user, obj/item/writing_instrument)
 	if(!user.can_write(writing_instrument))
@@ -503,6 +506,7 @@
 		return
 
 	if(user.can_perform_action(src))
+		playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
 		name = "[(inputvalue ? "[inputvalue]" : null)] bottle"
 
 //types of syrups

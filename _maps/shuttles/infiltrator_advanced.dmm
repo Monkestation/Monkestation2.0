@@ -201,6 +201,7 @@
 	dir = 10
 	},
 /obj/structure/cable,
+/obj/machinery/holopad/secure/hacked,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/bridge)
 "ax" = (
@@ -515,6 +516,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
+/obj/machinery/holopad/secure/hacked,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/eva)
 "bl" = (
@@ -1217,11 +1219,11 @@
 	pixel_x = 32
 	},
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high{
+/obj/item/stock_parts/power_store/cell/high{
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/item/multitool,
 /turf/open/floor/pod/dark,
 /area/shuttle/syndicate/armory)
@@ -1521,15 +1523,13 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/eva)
 "dK" = (
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
 /obj/structure/sign/warning/electric_shock/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/directional/north,
 /obj/structure/cable,
+/obj/machinery/power/smes/super/full,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/hallway)
 "dL" = (
@@ -1992,12 +1992,12 @@
 	name = "universal blood storage"
 	},
 /obj/machinery/iv_drip,
-/obj/item/reagent_containers/blood/universal{
+/obj/item/reagent_containers/chem_pack/saline{
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/reagent_containers/blood/universal,
-/obj/item/reagent_containers/blood/universal{
+/obj/item/reagent_containers/chem_pack/saline,
+/obj/item/reagent_containers/chem_pack/saline{
 	pixel_x = -4;
 	pixel_y = -4
 	},
@@ -2020,10 +2020,6 @@
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/bridge)
-"Xj" = (
-/obj/structure/rack,
-/turf/closed/wall/r_wall/syndicate/hull/nodiagonal,
-/area/shuttle/syndicate/eva)
 "YB" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/table/reinforced,
@@ -2360,7 +2356,7 @@ bg
 cU
 ce
 dR
-Xj
+dR
 dg
 dR
 ce

@@ -5,7 +5,7 @@
 		<b>higher maximum output</b> than some larger units. Most commonly seen being used not for their ability to store \
 		power, but rather for use in regulating power input and output."
 	icon = 'monkestation/code/modules/blueshift/icons/power_storage_unit/small_battery.dmi'
-	capacity = 750 * 1000
+	total_capacity = 750 * 1000
 	input_level_max = 400 * 1000
 	output_level_max = 400 * 1000
 	circuit = null
@@ -54,7 +54,7 @@
 
 /obj/machinery/power/smes/battery_pack/precharged/Initialize(mapload)
 	. = ..()
-	charge = capacity
+	charge = total_capacity
 
 // Item for creating the small battery and carrying it around
 
@@ -77,7 +77,7 @@
 		<b>low maximum output</b> compared to smaller units. Most commonly seen as large backup batteries, or simply \
 		for large power storage where throughput is not a concern."
 	icon = 'monkestation/code/modules/blueshift/icons/power_storage_unit/large_battery.dmi'
-	capacity = 10000 * 1000
+	total_capacity = 10000 * 1000
 	input_level_max = 50 * 1000
 	output_level_max = 50 * 1000
 	repacked_type = /obj/item/flatpacked_machine/large_station_battery
@@ -88,7 +88,7 @@
 
 /obj/machinery/power/smes/battery_pack/large/precharged/Initialize(mapload)
 	. = ..()
-	charge = capacity
+	charge = total_capacity
 
 /obj/item/flatpacked_machine/large_station_battery
 	name = "flat-packed large stationary battery"

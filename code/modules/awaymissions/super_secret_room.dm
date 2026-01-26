@@ -28,7 +28,7 @@
 		if(0)
 			SpeakPeace(list("Welcome to the error handling room.","Something's goofed up bad to send you here.","You should probably tell an admin what you were doing, or make a bug report."))
 			for(var/obj/structure/signpost/salvation/sign in orange(7))
-				sign.invisibility = 0
+				sign.SetInvisibility(INVISIBILITY_NONE)
 				var/datum/effect_system/fluid_spread/smoke/smoke = new
 				smoke.set_up(1, holder = src, location = sign.loc)
 				smoke.start()
@@ -144,7 +144,7 @@
 		equip_to_best_slot(crosser)
 
 /obj/item/rupee/equipped(mob/user, slot)
-	playsound(get_turf(loc), 'sound/misc/server-ready.ogg', 50, TRUE, -1)
+	playsound(get_turf(loc), 'sound/misc/server-ready.ogg', vol = 40, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE, ignore_walls = FALSE)
 	..()
 
 /obj/effect/landmark/error

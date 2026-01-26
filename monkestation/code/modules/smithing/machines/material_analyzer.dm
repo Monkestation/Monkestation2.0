@@ -25,8 +25,8 @@
 	anchored = TRUE
 	density = TRUE
 
-	idle_power_usage = 10
-	active_power_usage = 750
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.1
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.75
 	circuit = /obj/item/circuitboard/machine/material_analyzer
 
 	///the time we need to analyze a material

@@ -18,7 +18,7 @@ const BASEICONS = {
   'CentCom Commander': 'star',
   'CentCom Head Intern': 'pen-fancy',
   'CentCom Intern': 'pen-alt',
-  'CentCom Official': 'medal',
+  'Retired Captain': 'medal',
   'Nanotrasen Representative': 'medal',
   Chaplain: 'cross',
   Chef: 'utensils',
@@ -85,6 +85,7 @@ const ALTTITLES = {
   'Off-Duty Staff': BASEICONS['Assistant'],
   'Off-Duty Crew': BASEICONS['Assistant'],
   'Test Subject': BASEICONS['Assistant'],
+  'Bananotrasen Representative': BASEICONS['Assistant'],
   // Atmospheric Technician - fan
   'Life Support Technician': BASEICONS['Atmospheric Technician'],
   'Emergency Fire Technician': BASEICONS['Atmospheric Technician'],
@@ -92,6 +93,7 @@ const ALTTITLES = {
   // Barber - scissors
   'Salon Manager': BASEICONS['Barber'],
   'Salon Technician': BASEICONS['Barber'],
+  Hairdresser: BASEICONS['Barber'],
   Stylist: BASEICONS['Barber'],
   Colorist: BASEICONS['Barber'],
   // Bartender - cocktail
@@ -140,6 +142,9 @@ const ALTTITLES = {
   Mailman: BASEICONS['Cargo Technician'],
   'Union Associate': BASEICONS['Cargo Technician'],
   'Inventory Associate': BASEICONS['Cargo Technician'],
+  // Explorer - rocket
+  Expeditionist: BASEICONS['Explorer'],
+  Scavenger: BASEICONS['Explorer'],
   // Chaplain - cross
   Priest: BASEICONS['Chaplain'],
   Preacher: BASEICONS['Chaplain'],
@@ -188,6 +193,8 @@ const ALTTITLES = {
   'Private Investigator': BASEICONS['Detective'],
   'Forensic Scientist': BASEICONS['Detective'],
   'Paranormal Investigator': BASEICONS['Detective'],
+  Inspector: BASEICONS['Detective'],
+  'Gristled PI': BASEICONS['Detective'],
   // Geneticist - dna
   'Mutation Researcher': BASEICONS['Geneticist'],
   // Head of Personnel - dog
@@ -240,6 +247,7 @@ const ALTTITLES = {
   Felon: BASEICONS['Prisoner'],
   Inmate: BASEICONS['Prisoner'],
   Gamer: BASEICONS['Prisoner'],
+  'Head of Convicts': BASEICONS['Prisoner'],
   // Psychologist - brain
   Psychiatrist: BASEICONS['Psychologist'],
   Therapist: BASEICONS['Psychologist'],

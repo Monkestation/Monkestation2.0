@@ -2,8 +2,14 @@
 	see_invisible = SEE_INVISIBLE_LIVING
 	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD,NANITE_HUD,DIAG_NANITE_FULL_HUD)
 	pressure_resistance = 10
-
 	hud_type = /datum/hud/living
+	interaction_flags_click = ALLOW_RESTING
+	interaction_flags_mouse_drop = ALLOW_RESTING
+
+	/// Default typepath of the subsystem used for Life()
+	/// If this mob has a client/mind, it will always use SSclient_mobs.
+	/// If unset, defaults to SSmobs.
+	var/life_subsystem_type
 
 	///Tracks the current size of the mob in relation to its original size. Use update_transform(resize) to change it.
 	var/current_size = RESIZE_DEFAULT_SIZE
@@ -15,11 +21,6 @@
 	var/maxHealth = MAX_LIVING_HEALTH
 	/// The mob's current health.
 	var/health = MAX_LIVING_HEALTH
-
-	/// The max amount of stamina damage we can have at once (Does NOT effect stamcrit thresholds. See crit_threshold)
-	var/max_stamina = 120
-	///Stamina damage, or exhaustion. You recover it slowly naturally, and are knocked down if it gets too high. Holodeck and hallucinations deal this.
-	var/staminaloss = 0
 
 	/// Modified applied to attacks with items or fists
 	var/outgoing_damage_mod = 1

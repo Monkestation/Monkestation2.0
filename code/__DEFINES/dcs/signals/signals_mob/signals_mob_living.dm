@@ -201,11 +201,6 @@
 /// From /obj/effect/temp_visual/resonance/burst() : (mob/creator, mob/living/hit_living)
 #define COMSIG_LIVING_RESONATOR_BURST "living_resonator_burst"
 
-/// From /obj/projectile/attempt_parry() : (obj/projectile/parried_projectile)
-#define COMSIG_LIVING_PROJECTILE_PARRYING "living_projectile_parrying"
-	/// Return to allow the parry to happen
-	#define ALLOW_PARRY (1<<0)
-
 /// From /obj/projectile/on_parry() : (obj/projectile/parried_projectile)
 #define COMSIG_LIVING_PROJECTILE_PARRIED "living_projectile_parried"
 	/// Return to prevent the projectile from executing any code in on_parry()
@@ -222,6 +217,15 @@
 
 /// From /datum/ai/behavior/climb_tree/perform() : (mob/living/basic/living_pawn)
 #define COMSIG_LIVING_CLIMB_TREE "living_climb_tree"
+
+///from /mob/living/proc/check_block(): (atom/hit_by, damage, attack_text, attack_type, armour_penetration, damage_type)
+#define COMSIG_LIVING_CHECK_BLOCK "living_check_block"
+	#define FAILED_BLOCK NONE
+	#define SUCCESSFUL_BLOCK (1<<0)
+
+/// Sent to a mob grabbing another mob: (mob/living/grabbing)
+#define COMSIG_LIVING_GRAB "living_grab"
+	// Return COMPONENT_CANCEL_ATTACK_CHAIN / COMPONENT_SKIP_ATTACK_CHAIN to stop the grab
 
 /// Sent on a mob from /datum/component/mob_chain when component is attached with it as the "front" : (mob/living/basic/tail)
 #define COMSIG_MOB_GAINED_CHAIN_TAIL "living_gained_chain_tail"
@@ -245,3 +249,10 @@
 
 /// From /obj/item/proc/attack_atom: (mob/living/attacker, atom/attacked, list/modifiers)
 #define COMSIG_LIVING_ATTACK_ATOM "living_attack_atom"
+
+/// Sent from [/mob/living/examine] late, after the first signal is sent, but BEFORE flavor text handling,
+/// for when you prefer something guaranteed to appear at the bottom of the stack
+/// (Flavor text should stay at the very very bottom though)
+#define COMSIG_LIVING_LATE_EXAMINE "late_examine"
+
+#define COMSIG_LIVING_BINGLE_EVOLVE "living_bingle_evolve"

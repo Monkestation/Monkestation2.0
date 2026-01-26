@@ -49,7 +49,7 @@
 	if(.)
 		return
 
-	if(istype(tool, /obj/item/stock_parts/cell))
+	if(istype(tool, /obj/item/stock_parts/power_store/cell))
 		if(status != LIGHT_EMPTY)
 			to_chat(user, span_warning("You must remove the lightbulb first!"))
 			return

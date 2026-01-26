@@ -92,7 +92,10 @@
 		if(!QDELETED(organ))
 			organ.forceMove(body.drop_location())
 	consumed_limb.drop_limb()
-	to_chat(body, span_userdanger("Your [consumed_limb] is drawn back into your body, unable to maintain its shape!"))
+	body.visible_message(
+		span_danger("[body]'s [consumed_limb] rapidly loses its shape, painfully being drawn back into [body.p_their()] body!"),
+		span_userdanger("Your [consumed_limb] is drawn back into your body, unable to maintain its shape!")
+	)
 	qdel(consumed_limb)
 	body.blood_volume += 20
 
@@ -124,6 +127,8 @@
 		to_chat(H, span_notice("You feel intact enough as it is."))
 		return
 	to_chat(H, span_notice("You focus intently on your missing [length(limbs_to_heal) >= 2 ? "limbs" : "limb"]..."))
+	if(!do_after(H, 2 SECONDS))
+		return
 	if(H.blood_volume >= 40*length(limbs_to_heal)+BLOOD_VOLUME_OKAY)
 		H.regenerate_limbs()
 		if((BODY_ZONE_HEAD in limbs_to_heal) && istype(H.get_bodypart(BODY_ZONE_HEAD), /obj/item/bodypart/head/oozeling)) // We have a head now so we should make eyes.
@@ -193,8 +198,16 @@
 		organ.Remove(user)
 		if(!QDELETED(organ))
 			organ.forceMove(user.drop_location())
+	var/obj/item/bodypart/chest = user.get_bodypart(BODY_ZONE_CHEST)
+	var/brute = selected_limb.brute_dam
+	var/burn = selected_limb.burn_dam
 	selected_limb.drop_limb()
+	user.visible_message(
+		span_warning("[user]'s [selected_limb] is retracted into [user.p_their()] body with a quick, deliberate motion!"),
+		span_notice("You retract your [selected_limb] back into your body."),
+	)
 	qdel(selected_limb)
+	chest?.receive_damage(brute, burn, forced = TRUE, wound_bonus = CANT_WOUND)
 	user.blood_volume += 20
 	playsound(user, 'sound/items/eatfood.ogg', 20, TRUE)
 

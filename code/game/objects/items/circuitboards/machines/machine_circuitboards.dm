@@ -234,7 +234,8 @@
 	build_path = /obj/machinery/ntnet_relay
 	req_components = list(
 		/obj/item/stack/cable_coil = 2,
-		/datum/stock_part/filter = 1)
+		/datum/stock_part/filter = 1,
+	)
 
 /obj/item/circuitboard/machine/pacman
 	name = "PACMAN-type Generator"
@@ -287,9 +288,6 @@
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	build_path = /obj/machinery/rnd/production/protolathe/department/engineering
 
-/obj/item/circuitboard/machine/protolathe/department/engineering/no_tax
-	build_path = /obj/machinery/rnd/production/protolathe/department/engineering/no_tax
-
 /obj/item/circuitboard/machine/rtg
 	name = "RTG"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
@@ -322,14 +320,17 @@
 	build_path = /obj/machinery/power/smes
 	req_components = list(
 		/obj/item/stack/cable_coil = 5,
-		/obj/item/stock_parts/cell = 5,
+		/obj/item/stock_parts/power_store/battery = 5,
 		/datum/stock_part/capacitor = 1)
-	def_components = list(/obj/item/stock_parts/cell = /obj/item/stock_parts/cell/high/empty)
+	def_components = list(/obj/item/stock_parts/power_store/battery = /obj/item/stock_parts/power_store/battery/high/empty)
 
 /obj/item/circuitboard/machine/techfab/department/engineering
 	name = "\improper Departmental Techfab - Engineering"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	build_path = /obj/machinery/rnd/production/techfab/department/engineering
+
+/obj/item/circuitboard/machine/smes/super
+	def_components = list(/obj/item/stock_parts/power_store/battery = /obj/item/stock_parts/power_store/battery/super/empty)
 
 /obj/item/circuitboard/machine/thermomachine
 	name = "Thermomachine"
@@ -612,7 +613,7 @@
 		/obj/machinery/vending/wardrobe/medi_wardrobe = "MediDrobe",
 		/obj/machinery/vending/wardrobe/engi_wardrobe = "EngiDrobe",
 		/obj/machinery/vending/wardrobe/atmos_wardrobe = "AtmosDrobe",
-		/obj/machinery/vending/wardrobe/cargo_wardrobe = "CargoDrobe",
+		/obj/machinery/vending/access/wardrobe_cargo = "CargoDrobe",
 		/obj/machinery/vending/wardrobe/robo_wardrobe = "RoboDrobe",
 		/obj/machinery/vending/wardrobe/science_wardrobe = "SciDrobe",
 		/obj/machinery/vending/wardrobe/hydro_wardrobe = "HyDrobe",
@@ -734,8 +735,8 @@
 		/datum/stock_part/capacitor = 1,
 		/datum/stock_part/manipulator = 1,
 		/obj/item/stack/sheet/glass = 1,
-		/obj/item/stock_parts/cell = 1)
-	def_components = list(/obj/item/stock_parts/cell = /obj/item/stock_parts/cell/high)
+		/obj/item/stock_parts/power_store/cell = 1)
+	def_components = list(/obj/item/stock_parts/power_store/cell = /obj/item/stock_parts/power_store/cell/high)
 	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/chem_dispenser/fullupgrade
@@ -746,7 +747,7 @@
 		/datum/stock_part/capacitor/tier4 = 2,
 		/datum/stock_part/manipulator/tier4 = 2,
 		/obj/item/stack/sheet/glass = 1,
-		/obj/item/stock_parts/cell/bluespace = 1,
+		/obj/item/stock_parts/power_store/cell/bluespace = 1,
 	)
 
 /obj/item/circuitboard/machine/chem_dispenser/mutagensaltpeter
@@ -757,7 +758,7 @@
 		/datum/stock_part/capacitor/tier4 = 2,
 		/datum/stock_part/manipulator/tier4 = 2,
 		/obj/item/stack/sheet/glass = 1,
-		/obj/item/stock_parts/cell/bluespace = 1,
+		/obj/item/stock_parts/power_store/cell/bluespace = 1,
 	)
 
 /obj/item/circuitboard/machine/chem_dispenser/abductor
@@ -771,7 +772,7 @@
 		/datum/stock_part/capacitor/tier4 = 2,
 		/datum/stock_part/manipulator/tier4 = 2,
 		/obj/item/stack/sheet/glass = 1,
-		/obj/item/stock_parts/cell/bluespace = 1,
+		/obj/item/stock_parts/power_store/cell/bluespace = 1,
 	)
 	needs_anchored = FALSE
 
@@ -818,7 +819,7 @@
 /obj/item/circuitboard/machine/cryo_tube
 	name = "Cryotube"
 	greyscale_colors = CIRCUIT_COLOR_MEDICAL
-	build_path = /obj/machinery/atmospherics/components/unary/cryo_cell
+	build_path = /obj/machinery/cryo_cell
 	req_components = list(
 		/datum/stock_part/matter_bin = 1,
 		/obj/item/stack/cable_coil = 1,
@@ -915,7 +916,7 @@
 		/datum/stock_part/capacitor = 1,
 		/datum/stock_part/manipulator = 1,
 		/obj/item/stack/sheet/glass = 1,
-		/obj/item/stock_parts/cell = 1)
+		/obj/item/stock_parts/power_store/cell = 1)
 	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/stasis
@@ -952,9 +953,9 @@
 	build_path = /obj/machinery/recharge_station
 	req_components = list(
 		/datum/stock_part/capacitor = 2,
-		/obj/item/stock_parts/cell = 1,
+		/obj/item/stock_parts/power_store/cell = 1,
 		/datum/stock_part/manipulator = 1)
-	def_components = list(/obj/item/stock_parts/cell = /obj/item/stock_parts/cell/high)
+	def_components = list(/obj/item/stock_parts/power_store/cell = /obj/item/stock_parts/power_store/cell/high)
 
 /obj/item/circuitboard/machine/destructive_analyzer
 	name = "Destructive Analyzer"
@@ -1123,7 +1124,7 @@
 		/datum/stock_part/capacitor/tier4 = 2,
 		/datum/stock_part/manipulator/tier4 = 2,
 		/obj/item/stack/sheet/glass = 1,
-		/obj/item/stock_parts/cell/bluespace = 1,
+		/obj/item/stock_parts/power_store/cell/bluespace = 1,
 	)
 
 /obj/item/circuitboard/machine/chem_dispenser/drinks/beer
@@ -1138,7 +1139,7 @@
 		/datum/stock_part/capacitor/tier4 = 2,
 		/datum/stock_part/manipulator/tier4 = 2,
 		/obj/item/stack/sheet/glass = 1,
-		/obj/item/stock_parts/cell/bluespace = 1,
+		/obj/item/stock_parts/power_store/cell/bluespace = 1,
 	)
 
 /obj/item/circuitboard/machine/chem_master/condi
@@ -1202,11 +1203,10 @@
 	suction = !suction
 	to_chat(user, span_notice("You [suction ? "enable" : "disable"] the board's suction function."))
 
-/obj/item/circuitboard/machine/dish_drive/AltClick(mob/living/user)
-	if(!user.Adjacent(src))
-		return
+/obj/item/circuitboard/machine/dish_drive/click_alt(mob/living/user)
 	transmit = !transmit
 	to_chat(user, span_notice("You [transmit ? "enable" : "disable"] the board's automatic disposal transmission."))
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/circuitboard/machine/gibber
 	name = "Gibber"
@@ -1234,9 +1234,21 @@
 	req_components = list(
 		/datum/stock_part/micro_laser = 1,
 		/datum/stock_part/matter_bin = 1,
+		/datum/stock_part/capacitor = 1,
 		/obj/item/stack/cable_coil = 2,
 		/obj/item/stack/sheet/glass = 2)
 	needs_anchored = FALSE
+
+/obj/item/circuitboard/machine/microwave/engineering
+	name = "Wireless Microwave Oven"
+	greyscale_colors = CIRCUIT_COLOR_SERVICE
+	build_path = /obj/machinery/microwave/engineering
+	req_components = list(
+		/datum/stock_part/micro_laser = 1,
+		/datum/stock_part/matter_bin = 1,
+		/datum/stock_part/capacitor/tier2 = 1,
+		/obj/item/stack/cable_coil = 4,
+		/obj/item/stack/sheet/glass = 2)
 
 /obj/item/circuitboard/machine/processor
 	name = "Food Processor"
@@ -1244,14 +1256,9 @@
 	build_path = /obj/machinery/processor
 	req_components = list(
 		/datum/stock_part/matter_bin = 1,
-		/datum/stock_part/manipulator = 1)
+		/datum/stock_part/manipulator = 1,
+	)
 	needs_anchored = FALSE
-
-/obj/item/circuitboard/machine/processor/screwdriver_act(mob/living/user, obj/item/tool)
-	name = "Food Processor"
-	build_path = /obj/machinery/processor
-	to_chat(user, span_notice("Defaulting name protocols."))
-	return TRUE
 
 /obj/item/circuitboard/machine/protolathe/department/service
 	name = "Departmental Protolathe - Service"
@@ -1378,7 +1385,7 @@
 	req_components = list(
 		/datum/stock_part/capacitor = 1,
 		/datum/stock_part/micro_laser = 1,
-		/obj/item/stock_parts/cell/infinite/abductor = 1)
+		/obj/item/stock_parts/power_store/cell/infinite/abductor = 1)
 	def_components = list(
 		/datum/stock_part/capacitor = /datum/stock_part/capacitor/tier4,
 		/datum/stock_part/micro_laser = /datum/stock_part/micro_laser/tier4)

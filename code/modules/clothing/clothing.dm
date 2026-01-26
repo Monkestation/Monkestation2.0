@@ -16,6 +16,14 @@
 	var/visor_flags_cover = 0 //same as above, but for flags_cover
 	///What to toggle when toggled with weldingvisortoggle()
 	var/visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT | VISOR_VISIONFLAGS | VISOR_INVISVIEW
+	///Sound this item makes when its visor is flipped down
+	var/visor_toggle_down_sound = null
+	///Sound this item makes when its visor is flipped up
+	var/visor_toggle_up_sound = null
+	///chat message when the visor is toggled down.
+	var/toggle_message
+	///chat message when the visor is toggled up.
+	var/alt_toggle_message
 
 	var/clothing_flags = NONE
 	///List of items that can be equipped in the suit storage slot while we're worn.
@@ -75,32 +83,6 @@
 	AddElement(/datum/element/attack_equip)
 	if(!icon_state)
 		item_flags |= ABSTRACT
-
-/obj/item/clothing/MouseDrop(atom/over_object)
-	. = ..()
-	var/mob/M = usr
-
-//monkestation edit start, this is currently removed as it breaks things
-/*	if(istype(over_object, /atom/movable/screen/inventory))
-		var/atom/movable/screen/inventory/slot = over_object
-		if(M.get_item_by_slot(slot.slot_id))
-			var/obj/item/clothing/item = M.get_item_by_slot(slot.slot_id)
-			if(!M.temporarilyRemoveItemFromInventory(item))
-				return
-			if(!M.put_in_active_hand(item))
-				if(!M.put_in_inactive_hand(item))
-					if(!M.active_storage?.attempt_insert(item, M))
-						item.forceMove(get_turf(M))
-			item.equip_to_best_slot()*/
-//monkestation edit end
-
-	if(ismecha(M.loc)) // stops inventory actions in a mech
-		return
-
-	if(!M.incapacitated() && loc == M && istype(over_object, /atom/movable/screen/inventory/hand))
-		var/atom/movable/screen/inventory/hand/H = over_object
-		if(M.putItemFromInventoryInHandIfPossible(src, H.held_index))
-			add_fingerprint(usr)
 
 /obj/item/food/clothing
 	name = "temporary moth clothing snack item"
@@ -517,16 +499,9 @@ SEE_PIXELS// if an object is located on an unlit area, but some of its pixels ar
 BLIND     // can't see anything
 */
 
-/proc/generate_female_clothing(index, t_color, icon, type, flat = FALSE)	//MONKESTATION EDIT - Dimorphic lizards
+/proc/generate_female_clothing(index, t_color, icon, type)
 	var/icon/female_clothing_icon = icon("icon"=icon, "icon_state"=t_color)
-	var/female_icon_state = "female"
-
-	if(type & FEMALE_UNIFORM_FULL)	//MONKESTATION EDIT - Dimorphic lizards and splitting up a crazy long single line to be able to read it
-		female_icon_state += "_full"
-	else if((!type || (type & FEMALE_UNIFORM_TOP_ONLY)))
-		female_icon_state += "_top"
-	if(type & FEMALE_UNIFORM_NO_BREASTS || flat)
-		female_icon_state += "_no_breasts"
+	var/female_icon_state = "female[type == FEMALE_UNIFORM_FULL ? "_full" : ((!type || type & FEMALE_UNIFORM_TOP_ONLY) ? "_top" : "")][type & FEMALE_UNIFORM_NO_BREASTS ? "_no_breasts" : ""]"
 
 	var/icon/female_cropping_mask = icon("icon" = 'icons/mob/clothing/under/masking_helpers.dmi', "icon_state" = female_icon_state)
 	female_clothing_icon.Blend(female_cropping_mask, ICON_MULTIPLY)
@@ -547,6 +522,44 @@ BLIND     // can't see anything
 	update_item_action_buttons()
 	return TRUE
 
+/// Proc that adjusts the clothing item, used by things like breathing masks, welding helmets, welding goggles etc.
+/obj/item/clothing/proc/adjust_visor(mob/living/user)
+	if(!can_use(user))
+		return FALSE
+
+	visor_toggling()
+
+	var/message
+	if(up)
+		message = alt_toggle_message ?  "[alt_toggle_message] [src]." : "You push [src] out of the way."
+	else
+		message = toggle_message ? "[toggle_message] [src]." : "You push [src] back into place."
+
+	to_chat(user, span_notice("[message]"))
+
+	//play sounds when toggling the visor up or down (if there is any)
+	if(visor_toggle_up_sound && up)
+		playsound(src, visor_toggle_up_sound, 20, TRUE, -1)
+	if(visor_toggle_down_sound && !up)
+		playsound(src, visor_toggle_down_sound, 20, TRUE, -1)
+
+	update_item_action_buttons()
+
+	if(user.is_holding(src))
+		user.update_held_items()
+		return TRUE
+	user.update_clothing(slot_flags)
+	if(!iscarbon(user))
+		return TRUE
+	var/mob/living/carbon/carbon_user = user
+	if(up)
+		carbon_user.head_update(src, forced = 1)
+	if(visor_vars_to_toggle & VISOR_TINT)
+		carbon_user.update_tint()
+	if((visor_flags & (MASKINTERNALS|HEADINTERNALS)) && carbon_user.invalid_internals())
+		carbon_user.cutoff_internals()
+	return TRUE
+
 /obj/item/clothing/proc/visor_toggling() //handles all the actual toggling of flags
 	up = !up
 	SEND_SIGNAL(src, COMSIG_CLOTHING_VISOR_TOGGLE, up)
@@ -558,6 +571,7 @@ BLIND     // can't see anything
 		flash_protect ^= initial(flash_protect)
 	if(visor_vars_to_toggle & VISOR_TINT)
 		tint ^= initial(tint)
+	update_icon_state()
 
 /obj/item/clothing/head/helmet/space/plasmaman/visor_toggling() //handles all the actual toggling of flags
 	up = !up

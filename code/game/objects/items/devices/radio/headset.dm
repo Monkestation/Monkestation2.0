@@ -24,10 +24,10 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	worn_icon_state = "headset"
-	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 0.75)
+	custom_materials = null // to not be put into autolathes
 	subspace_transmission = TRUE
 	canhear_range = 0 // can't hear headsets from very far away
-
+	interaction_flags_mouse_drop = FORBID_TELEKINESIS_REACH
 	slot_flags = ITEM_SLOT_EARS
 	dog_fashion = null
 	var/obj/item/encryptionkey/keyslot2 = null
@@ -91,11 +91,9 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	. = ..()
 	.["headset"] = TRUE
 
-/obj/item/radio/headset/MouseDrop(mob/over, src_location, over_location)
-	var/mob/headset_user = usr
-	if((headset_user == over) && headset_user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
-		return attack_self(headset_user)
-	return ..()
+/obj/item/radio/headset/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
+	if(user == over)
+		return attack_self(user)
 
 /// Grants all the languages this headset allows the mob to understand via installed chips.
 /obj/item/radio/headset/proc/grant_headset_languages(mob/grant_to)
@@ -131,10 +129,12 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	if(!(slot_flags & slot))
 		return
 
+	ADD_TRAIT(user, TRAIT_CAN_HEAR_MUSIC, REF(src))
 	grant_headset_languages(user)
 
 /obj/item/radio/headset/dropped(mob/user, silent)
 	. = ..()
+	REMOVE_TRAIT(user, TRAIT_CAN_HEAR_MUSIC, REF(src))
 	remove_headset_languages(user)
 
 // Headsets do not become hearing sensitive as broadcasting instead controls their talk_into capabilities
@@ -345,7 +345,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 
 /obj/item/radio/headset/headset_cargo
 	name = "supply radio headset"
-	desc = "A headset used by the QM's slaves."
+	desc = "A headset used by the QM and their slaves."
 	icon_state = "cargo_headset"
 	worn_icon_state = "cargo_headset"
 	keyslot = /obj/item/encryptionkey/headset_cargo
@@ -391,14 +391,14 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 
 //monkestation addition start:
 /obj/item/radio/headset/headset_cent/representative
-	name = "\improper Representative headset"
+	name = "\improper nanotrasen representative headset"
 	desc = "A headset used by the lower ranking members of Central Command."
 	keyslot = /obj/item/encryptionkey/headset_com
 	keyslot2 = null
 
 /obj/item/radio/headset/headset_cent/representative/Initialize(mapload)
 	. = ..()
-	keyslot2 = new /obj/item/encryptionkey/headset_cent/crew(src)
+	keyslot2 = new /obj/item/encryptionkey/headset_cent/crew/service(src)
 	src.recalculateChannels()
 //monkestation addition end
 
@@ -484,9 +484,9 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 		remove_headset_languages(mob_loc)
 		grant_headset_languages(mob_loc)
 
-/obj/item/radio/headset/AltClick(mob/living/user)
-	if(!istype(user) || !Adjacent(user) || user.incapacitated())
-		return
-	if (command)
-		use_command = !use_command
-		to_chat(user, span_notice("You toggle high-volume mode [use_command ? "on" : "off"]."))
+/obj/item/radio/headset/click_alt(mob/living/user)
+	if(!istype(user) || !command)
+		return CLICK_ACTION_BLOCKING
+	use_command = !use_command
+	to_chat(user, span_notice("You toggle high-volume mode [use_command ? "on" : "off"]."))
+	return CLICK_ACTION_SUCCESS

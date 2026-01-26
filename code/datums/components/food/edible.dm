@@ -46,7 +46,8 @@ Behavior that's still missing from this component that original food items had t
 	var/total_bites = 0
 	var/current_mask
 	///required trait
-	var/required_trait // MONKESTATION EDIT
+	var/required_trait
+	var/tracking_entered = FALSE
 
 /datum/component/edible/Initialize(
 	list/initial_reagents,
@@ -93,12 +94,6 @@ Behavior that's still missing from this component that original food items had t
 	RegisterSignal(parent, COMSIG_OOZE_EAT_ATOM, PROC_REF(on_ooze_eat))
 	RegisterSignal(parent, COMSIG_TRY_EAT_TRAIT, PROC_REF(try_eat_trait))
 	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND_SECONDARY, PROC_REF(show_radial_recipes)) //Monkestation edit: CHEWIN COOKING
-
-	if(isturf(parent))
-		RegisterSignal(parent, COMSIG_ATOM_ENTERED, PROC_REF(on_entered))
-	else
-		var/static/list/loc_connections = list(COMSIG_ATOM_ENTERED = PROC_REF(on_entered))
-		AddComponent(/datum/component/connect_loc_behalf, parent, loc_connections)
 
 	if(isitem(parent))
 		RegisterSignal(parent, COMSIG_ITEM_ATTACK, PROC_REF(UseFromHand))
@@ -463,8 +458,8 @@ Behavior that's still missing from this component that original food items had t
 	var/atom/owner = parent
 
 	if(!owner?.reagents)
+		. = FALSE
 		stack_trace("[eater] failed to bite [owner], because [owner] had no reagents.")
-		return FALSE
 	if(eater.satiety > -200)
 		eater.adjust_satiety(-junkiness)
 	playsound(eater.loc,'sound/items/eatfood.ogg', rand(10,50), TRUE)
@@ -510,6 +505,20 @@ Behavior that's still missing from this component that original food items had t
 	if(!iscarbon(eater))
 		return FALSE
 	var/mob/living/carbon/C = eater
+
+	if(HAS_TRAIT(eater, TRAIT_FOOD_ABSORPTION))
+		if(SEND_SIGNAL(eater, COMSIG_CARBON_ATTEMPT_EAT, parent) & COMSIG_CARBON_BLOCK_EAT)
+			return
+		var/covered_bodyparts = NONE
+		for(var/obj/item/clothing/equipped in C.get_equipped_items())
+			covered_bodyparts |= equipped.body_parts_covered
+
+		if((covered_bodyparts & CHEST|HEAD|ARMS|HANDS|LEGS|FEET) == (CHEST|HEAD|ARMS|HANDS|LEGS|FEET) && C.is_mouth_covered())
+			var/who = (isnull(feeder) || eater == feeder) ? "your" : "[eater.p_their()]"
+			to_chat(feeder, span_warning("You have to expose the membrane on [who] body."))
+			return FALSE
+		else
+			return TRUE
 
 	if(!C.has_mouth())
 		return FALSE
@@ -720,9 +729,8 @@ Behavior that's still missing from this component that original food items had t
 		playsound(get_turf(eater),'sound/items/eatfood.ogg', rand(30,50), TRUE)
 		qdel(eaten_food)
 		return COMPONENT_ATOM_EATEN
-//MONKESTATION EDIT START
-/datum/component/edible/proc/UseByMouse(datum/source, mob/user)
 
+/datum/component/edible/proc/UseByMouse(datum/source, mob/user)
 	SIGNAL_HANDLER
 
 	var/atom/owner = parent
@@ -748,4 +756,16 @@ Behavior that's still missing from this component that original food items had t
 	else
 		if(prob(50))
 			L.manual_emote("nibbles away at \the [parent].")
-//MONKESTATION EDIT STOP
+
+/// Enables sending the COMSIG_FOOD_CROSSED signal.
+/// This is an optional signal because very few things use this signal,
+/// and mass tracking COMSIG_ATOM_ENTERED can be very performance-heavy.
+/datum/component/edible/proc/enable_food_crossed()
+	if(tracking_entered)
+		return
+	tracking_entered = TRUE
+	if(isturf(parent))
+		RegisterSignal(parent, COMSIG_ATOM_ENTERED, PROC_REF(on_entered))
+	else
+		var/static/list/loc_connections = list(COMSIG_ATOM_ENTERED = PROC_REF(on_entered))
+		AddComponent(/datum/component/connect_loc_behalf, parent, loc_connections)

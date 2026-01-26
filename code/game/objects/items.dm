@@ -39,15 +39,6 @@
 	///The config type to use for greyscaled belt overlays. Both this and greyscale_colors must be assigned to work.
 	var/greyscale_config_belt
 
-	//Overrides for digitigrade and snouted clothing handling
-	//Icon file for mob worn overlays, if the user is digitigrade.
-	var/icon/worn_icon_digitigrade
-	//Same as above, but for if the user is snouted.
-	var/icon/worn_icon_snouted
-
-	var/greyscale_config_worn_digitigrade
-	var/greyscale_config_worn_snouted
-
 	/// Used for BODYTYPE_CUSTOM: Needs to follow this syntax: a list() with the x and y coordinates of the pixel you want to get the color from. Colors are filled in as GAGs values for fallback.
 	var/list/species_clothing_color_coords[3]
 	/* !!!!!!!!!!!!!!! IMPORTANT !!!!!!!!!!!!!!
@@ -149,14 +140,16 @@
 	var/attack_speed = CLICK_CD_MELEE
 	/// The click cooldown on secondary attacks. Lower numbers mean faster attacks. Will use attack_speed if undefined.
 	var/secondary_attack_speed
-	///In deciseconds, how long an item takes to equip; counts only for normal clothing slots, not pockets etc.
+	/// How long an item takes to equip; counts only for normal clothing slots, not pockets etc.
 	var/equip_delay_self = 0
-	///In deciseconds, how long an item takes to put on another person
-	var/equip_delay_other = 20
-	///In deciseconds, how long an item takes to remove from another person
-	var/strip_delay = 40
-	///How long it takes to resist out of the item (cuffs and such)
+	/// How long an item takes to put on another person
+	var/equip_delay_other = 2 SECONDS
+	/// How long an item takes to remove from another person
+	var/strip_delay = 4 SECONDS
+	/// How long it takes to resist out of the item (cuffs and such)
 	var/breakouttime = 0
+	/// If TRUE, then moving will not cancel resisting out of the item.
+	var/breakout_while_moving = FALSE
 
 	///Used in [atom/proc/attackby] to say how something was attacked `"[x] has been [z.attack_verb] by [y] with [z]"`
 	var/list/attack_verb_continuous
@@ -237,10 +230,19 @@
 	var/override_notes = FALSE
 	/// Used if we want to have a custom verb text for throwing. "John Spaceman flicks the ciggerate" for example.
 	var/throw_verb
-	/// Does this use the advanced reskinning setup?
-	var/uses_advanced_reskins = FALSE
 	/// A lazylist used for applying fantasy values, contains the actual modification applied to a variable.
 	var/list/fantasy_modifications = null
+
+	/// Has the item been reskinned?
+	var/current_skin
+	/// List of options to reskin.
+	var/list/unique_reskin
+	/// If reskins change base icon state as well
+	var/unique_reskin_changes_base_icon_state = FALSE
+	/// If reskins change inhands as well
+	var/unique_reskin_changes_inhand = FALSE
+	/// Does this use the advanced reskinning setup?
+	var/uses_advanced_reskins = FALSE
 
 /obj/item/Initialize(mapload)
 	if(attack_verb_continuous)
@@ -276,6 +278,8 @@
 	if(LAZYLEN(embedding))
 		updateEmbedding()
 
+	setup_reskinning()
+
 /obj/item/Destroy(force)
 	// This var exists as a weird proxy "owner" ref
 	// It's used in a few places. Stop using it, and optimially replace all uses please
@@ -289,6 +293,32 @@
 		remove_item_action(action)
 
 	return ..()
+
+
+/obj/item/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+
+	if(!unique_reskin)
+		return
+
+	if(current_skin && !(item_flags  & INFINITE_RESKIN))
+		return
+
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "Reskin"
+	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/click_ctrl(mob/user)
+	SHOULD_NOT_OVERRIDE(TRUE)
+
+	//If the item is on the ground & not anchored we allow the player to drag it
+	. = item_ctrl_click(user)
+	if(. & CLICK_ACTION_ANY)
+		return (isturf(loc) && !anchored) ? NONE : . //allow the object to get dragged on the floor
+
+/// Subtypes only override this proc for ctrl click purposes. obeys same principles as ctrl_click()
+/obj/item/proc/item_ctrl_click(mob/user)
+	SHOULD_CALL_PARENT(FALSE)
+	return NONE
 
 /// Called when an action associated with our item is deleted
 /obj/item/proc/on_action_deleted(datum/source)
@@ -357,8 +387,8 @@
 		return FALSE
 	return TRUE
 
-/obj/item/blob_act(obj/structure/blob/B)
-	if(B && B.loc == loc)
+/obj/item/blob_act(obj/structure/blob/attacking_blob)
+	if(attacking_blob && attacking_blob.loc == loc)
 		atom_destruction(MELEE)
 
 /**Makes cool stuff happen when you suicide with an item
@@ -386,10 +416,6 @@
 		return
 	if(greyscale_config_worn)
 		worn_icon = SSgreyscale.GetColoredIconByType(greyscale_config_worn, greyscale_colors)
-	if(greyscale_config_worn_digitigrade)
-		worn_icon_digitigrade = SSgreyscale.GetColoredIconByType(greyscale_config_worn_digitigrade, greyscale_colors)
-	if(greyscale_config_worn_snouted)
-		worn_icon_snouted = SSgreyscale.GetColoredIconByType(greyscale_config_worn_snouted, greyscale_colors)
 	if(greyscale_config_inhand_left)
 		lefthand_file = SSgreyscale.GetColoredIconByType(greyscale_config_inhand_left, greyscale_colors)
 	if(greyscale_config_inhand_right)
@@ -605,7 +631,7 @@
 	if(throwing)
 		throwing.finalize(FALSE)
 	if(loc == user && outside_storage)
-		if(!allow_attack_hand_drop(user) || !user.temporarilyRemoveItemFromInventory(src))
+		if(!can_mob_unequip(user) || !user.temporarilyRemoveItemFromInventory(src))
 			return
 
 	. = FALSE
@@ -617,7 +643,9 @@
 		user.dropItemToGround(src)
 		return TRUE
 
-/obj/item/proc/allow_attack_hand_drop(mob/user)
+/// Called when a mob is manually attempting to unequip the item
+/// Returning FALSE will prevent the unequip from happening
+/obj/item/proc/can_mob_unequip(mob/user)
 	return TRUE
 
 /obj/item/attack_paw(mob/user, list/modifiers)
@@ -675,11 +703,13 @@
 	item_flags &= ~IN_INVENTORY
 	UnregisterSignal(src, list(SIGNAL_ADDTRAIT(TRAIT_NO_WORN_ICON), SIGNAL_REMOVETRAIT(TRAIT_NO_WORN_ICON)))
 	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED, user)
-	if(user && iscarbon(user))
+	if(iscarbon(user))
 		SEND_SIGNAL(user, COMSIG_CARBON_ITEM_DROPPED, src)
 	if(!silent)
 		playsound(src, drop_sound, DROP_SOUND_VOLUME, ignore_walls = FALSE, mixer_channel = drop_mixer_channel) // monkestation edit: sound mixer
-	user?.update_equipment_speed_mods()
+	if(user)
+		user.update_cached_insulation()
+		user.update_equipment_speed_mods()
 
 /// called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
@@ -689,6 +719,7 @@
 	if(iscarbon(user))
 		SEND_SIGNAL(user, COMSIG_CARBON_ITEM_PICKED_UP, src)
 	item_flags |= IN_INVENTORY
+	user.update_cached_insulation()
 
 /// called when "found" in pockets and storage items. Returns 1 if the search should end.
 /obj/item/proc/on_found(mob/finder)
@@ -748,6 +779,7 @@
 			playsound(src, equip_sound, EQUIP_SOUND_VOLUME, TRUE, ignore_walls = FALSE, mixer_channel = equip_mixer_channel) // monkestation: sound mixer
 		else if(slot & ITEM_SLOT_HANDS)
 			playsound(src, pickup_sound, PICKUP_SOUND_VOLUME, ignore_walls = FALSE, mixer_channel = pickup_mixer_channel) // monkestation: sound mixer
+	user.update_cached_insulation()
 	user.update_equipment_speed_mods()
 
 /// Gives one of our item actions to a mob, when equipped to a certain slot
@@ -1033,8 +1065,11 @@
 			else
 				apply_outline() //if the player's alive and well we send the command with no color set, so it uses the theme's color
 
-/obj/item/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
+/obj/item/base_mouse_drop_handler(atom/over, src_location, over_location, params)
+	SHOULD_NOT_OVERRIDE(TRUE)
+
 	. = ..()
+
 	remove_filter(HOVER_OUTLINE_FILTER) //get rid of the hover effect in case the mouse exit isn't called if someone drags and drops an item and somthing goes wrong
 
 /obj/item/MouseExited()
@@ -1362,7 +1397,7 @@
 
 	if(ismob(loc) && ..())
 		var/mob/mob_loc = loc
-		mob_loc.regenerate_icons()
+		mob_loc.update_clothing(slot_flags)
 
 /// Called on [/datum/element/openspace_item_click_handler/proc/on_afterattack]. Check the relative file for information.
 /obj/item/proc/handle_openspace_click(turf/target, mob/user, click_parameters)
@@ -1396,72 +1431,6 @@
 
 /obj/item/clothing/glasses	//Code to let you switch the side your eyepatch is on! Woo! Just an explanation, this is added to the base glasses so it works on eyepatch-huds too
 	var/can_switch_eye = FALSE	//Having this default to false means that its easy to make sure this doesnt apply to any pre-existing items
-
-/obj/item/reskin_obj(mob/M)
-	if(!uses_advanced_reskins)
-		return ..()
-	if(!LAZYLEN(unique_reskin))
-		return
-
-	/// Is the obj a glasses icon with swappable item states?
-	var/is_swappable = FALSE
-	/// if the item are glasses, this variable stores the item.
-	var/obj/item/clothing/glasses/reskinned_glasses
-
-	if(istype(src, /obj/item/clothing/glasses)) // TODO - Remove this mess about glasses, it shouldn't be necessary anymore.
-		reskinned_glasses = src
-		if(reskinned_glasses.can_switch_eye)
-			is_swappable = TRUE
-
-	var/list/items = list()
-
-
-	for(var/reskin_option in unique_reskin)
-		var/image/item_image = image(icon = unique_reskin[reskin_option][RESKIN_ICON] ? unique_reskin[reskin_option][RESKIN_ICON] : icon, icon_state = "[unique_reskin[reskin_option][RESKIN_ICON_STATE]]")
-		items += list("[reskin_option]" = item_image)
-	sort_list(items)
-
-	var/pick = show_radial_menu(M, src, items, custom_check = CALLBACK(src, PROC_REF(check_reskin_menu), M), radius = 38, require_near = TRUE)
-	if(!pick)
-		return
-	if(!unique_reskin[pick])
-		return
-	current_skin = pick
-
-	if(unique_reskin[pick][RESKIN_ICON])
-		icon = unique_reskin[pick][RESKIN_ICON]
-
-	if(unique_reskin[pick][RESKIN_ICON_STATE])
-		if(is_swappable)
-			base_icon_state = unique_reskin[pick][RESKIN_ICON_STATE]
-			icon_state = base_icon_state
-		else
-			icon_state = unique_reskin[pick][RESKIN_ICON_STATE]
-
-	if(unique_reskin[pick][RESKIN_WORN_ICON])
-		worn_icon = unique_reskin[pick][RESKIN_WORN_ICON]
-
-	if(unique_reskin[pick][RESKIN_WORN_ICON_STATE])
-		worn_icon_state = unique_reskin[pick][RESKIN_WORN_ICON_STATE]
-
-	if(unique_reskin[pick][RESKIN_INHAND_L])
-		lefthand_file = unique_reskin[pick][RESKIN_INHAND_L]
-	if(unique_reskin[pick][RESKIN_INHAND_R])
-		righthand_file = unique_reskin[pick][RESKIN_INHAND_R]
-	if(unique_reskin[pick][RESKIN_INHAND_STATE])
-		inhand_icon_state = unique_reskin[pick][RESKIN_INHAND_STATE]
-	if(unique_reskin[pick][RESKIN_SUPPORTS_VARIATIONS_FLAGS])
-		supports_variations_flags = unique_reskin[pick][RESKIN_SUPPORTS_VARIATIONS_FLAGS]
-	if(ishuman(M))
-		var/mob/living/carbon/human/wearer = M
-		wearer.regenerate_icons() // update that mf
-	to_chat(M, "[src] is now skinned as '[pick].'")
-	post_reskin(M)
-	return TRUE
-
-/// Automatically called after a reskin, for any extra variable changes.
-/obj/item/proc/post_reskin(mob/our_mob)
-	return
 
 /// Special stuff you want to do when an outfit equips this item.
 /obj/item/proc/on_outfit_equip(mob/living/carbon/human/outfit_wearer, visuals_only, item_slot)

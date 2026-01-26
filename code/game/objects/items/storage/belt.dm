@@ -257,7 +257,6 @@
 		/obj/item/scalpel,
 		/obj/item/shears,
 		/obj/item/stack/medical,
-		/obj/item/stack/heal_pack,
 		/obj/item/stack/sticky_tape, //surgical tape
 		/obj/item/stamp,
 		/obj/item/sensor_device,
@@ -276,9 +275,11 @@
 	icon_state = "emt"
 	inhand_icon_state = "security"
 	worn_icon_state = "emt"
+
+/obj/item/storage/belt/medical/paramedic/full
 	preload = TRUE
 
-/obj/item/storage/belt/medical/paramedic/PopulateContents()
+/obj/item/storage/belt/medical/paramedic/full/PopulateContents()
 	SSwardrobe.provide_type(/obj/item/sensor_device, src)
 	SSwardrobe.provide_type(/obj/item/stack/medical/gauze/twelve, src)
 	SSwardrobe.provide_type(/obj/item/stack/medical/bone_gel, src)
@@ -288,9 +289,39 @@
 	SSwardrobe.provide_type(/obj/item/reagent_containers/cup/bottle/formaldehyde, src)
 	update_appearance()
 
-/obj/item/storage/belt/medical/paramedic/get_types_to_preload()
+/obj/item/storage/belt/medical/paramedic/full/get_types_to_preload()
 	var/list/to_preload = list() //Yes this is a pain. Yes this is the point
 	to_preload += /obj/item/sensor_device
+	to_preload += /obj/item/stack/medical/gauze/twelve
+	to_preload += /obj/item/stack/medical/bone_gel
+	to_preload += /obj/item/stack/sticky_tape/surgical
+	to_preload += /obj/item/reagent_containers/syringe
+	to_preload += /obj/item/reagent_containers/cup/bottle/ammoniated_mercury
+	to_preload += /obj/item/reagent_containers/cup/bottle/formaldehyde
+	return to_preload
+
+/obj/item/storage/belt/medical/secmed
+	name = "security medical belt"
+	icon_state = "secmed"
+	inhand_icon_state = "security"
+	worn_icon_state = "secmed"
+
+/obj/item/storage/belt/medical/secmed/full
+	preload = TRUE
+
+/obj/item/storage/belt/medical/secmed/full/PopulateContents()
+	SSwardrobe.provide_type(/obj/item/sensor_device/security, src)
+	SSwardrobe.provide_type(/obj/item/stack/medical/gauze/twelve, src)
+	SSwardrobe.provide_type(/obj/item/stack/medical/bone_gel, src)
+	SSwardrobe.provide_type(/obj/item/stack/sticky_tape/surgical, src)
+	SSwardrobe.provide_type(/obj/item/reagent_containers/syringe, src)
+	SSwardrobe.provide_type(/obj/item/reagent_containers/cup/bottle/ammoniated_mercury, src)
+	SSwardrobe.provide_type(/obj/item/reagent_containers/cup/bottle/formaldehyde, src)
+	update_appearance()
+
+/obj/item/storage/belt/medical/secmed/full/get_types_to_preload()
+	var/list/to_preload = list() //Yes this is a pain. Yes this is the point
+	to_preload += /obj/item/sensor_device/security
 	to_preload += /obj/item/stack/medical/gauze/twelve
 	to_preload += /obj/item/stack/medical/bone_gel
 	to_preload += /obj/item/stack/sticky_tape/surgical
@@ -356,7 +387,7 @@
 		/obj/item/reagent_containers/spray/pepper,
 		/obj/item/restraints/handcuffs,
 		/obj/item/restraints/legcuffs/bola,
-		/obj/item/stock_parts/cell/microfusion, //monkestation edit
+		/obj/item/stock_parts/power_store/cell/microfusion, //monkestation edit
 	))
 
 /obj/item/storage/belt/security/full/PopulateContents()
@@ -419,7 +450,6 @@
 		/obj/item/stack/cable_coil,
 		/obj/item/stack/marker_beacon,
 		/obj/item/stack/medical,
-		/obj/item/stack/heal_pack,
 		/obj/item/stack/ore,
 		/obj/item/stack/sheet/animalhide,
 		/obj/item/stack/sheet/bone,
@@ -666,7 +696,7 @@
 		/obj/item/grenade/syndieminibomb = 2,
 		/obj/item/multitool = 1,
 		/obj/item/screwdriver = 1,
-	),src)
+	), src)
 
 
 /obj/item/storage/belt/wands
@@ -828,6 +858,7 @@
 	inhand_icon_state = "sheath"
 	worn_icon_state = "sheath"
 	w_class = WEIGHT_CLASS_BULKY
+	interaction_flags_click = parent_type::interaction_flags_click | NEED_DEXTERITY | NEED_HANDS
 
 /obj/item/storage/belt/sabre/Initialize(mapload)
 	. = ..()
@@ -836,27 +867,23 @@
 	atom_storage.max_slots = 1
 	atom_storage.rustle_sound = FALSE
 	atom_storage.max_specific_storage = WEIGHT_CLASS_BULKY
-	atom_storage.set_holdable(
-		list(
-			/obj/item/melee/sabre,
-		)
-	)
+	atom_storage.set_holdable(list(/obj/item/melee/sabre))
+	atom_storage.click_alt_open = FALSE
 
 /obj/item/storage/belt/sabre/examine(mob/user)
 	. = ..()
 	if(length(contents))
 		. += span_notice("Alt-click it to quickly draw the blade.")
 
-/obj/item/storage/belt/sabre/AltClick(mob/user)
-	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
-		return
-	if(length(contents))
-		var/obj/item/I = contents[1]
-		user.visible_message(span_notice("[user] takes [I] out of [src]."), span_notice("You take [I] out of [src]."))
-		user.put_in_hands(I)
-		update_appearance()
-	else
+/obj/item/storage/belt/sabre/click_alt(mob/user)
+	if(!length(contents))
 		balloon_alert(user, "it's empty!")
+		return CLICK_ACTION_BLOCKING
+	var/obj/item/stored_item = contents[1]
+	user.visible_message(span_notice("[user] takes [stored_item] out of [src]."), span_notice("You take [stored_item] out of [src]."))
+	user.put_in_hands(stored_item)
+	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/storage/belt/sabre/update_icon_state()
 	icon_state = initial(inhand_icon_state)

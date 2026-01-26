@@ -112,8 +112,10 @@
 		our_summon.Remove(our_summon.owner)
 	if(!IS_CLOCK(taker))
 		return
-	if(!(locate(our_summon) in taker.actions)) //dont let them have multiple summons
-		our_summon.Grant(taker)
+
+	var/datum/action/cooldown/spell/summon_spear/summon = locate(/datum/action/cooldown/spell/summon_spear) in taker.actions
+	summon?.Remove(taker) //dont let them have multiple summons
+	our_summon.Grant(taker)
 
 /obj/item/clockwork/weapon/brass_spear/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text, final_block_chance, damage, attack_type)
 	if(HAS_TRAIT(src, TRAIT_WIELDED))

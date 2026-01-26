@@ -187,6 +187,7 @@ GLOBAL_LIST_INIT(xeno_recipes, list ( \
 
 GLOBAL_LIST_INIT(leather_recipes, list ( \
 	new/datum/stack_recipe("wallet", /obj/item/storage/wallet, 1, check_density = FALSE, category = CAT_CONTAINERS), \
+	new/datum/stack_recipe("tobacco pouch", /obj/item/storage/bag/tobaccopouch/empty, 1, check_density = FALSE, category = CAT_CONTAINERS), \
 	new/datum/stack_recipe("muzzle", /obj/item/clothing/mask/muzzle, 2, check_density = FALSE, category = CAT_ENTERTAINMENT), \
 	new/datum/stack_recipe("basketball", /obj/item/toy/basketball, 20, check_density = FALSE, category = CAT_ENTERTAINMENT), \
 	new/datum/stack_recipe("baseball", /obj/item/toy/beach_ball/baseball, 3, check_density = FALSE, category = CAT_ENTERTAINMENT), \
@@ -205,7 +206,9 @@ GLOBAL_LIST_INIT(leather_recipes, list ( \
 		new/datum/stack_recipe("botanical belt", /obj/item/storage/belt/plant, 2, check_density = FALSE, category = CAT_CONTAINERS), \
 		new/datum/stack_recipe("janitorial belt", /obj/item/storage/belt/janitor, 2, check_density = FALSE, category = CAT_CONTAINERS), \
 		new/datum/stack_recipe("medical belt", /obj/item/storage/belt/medical, 2, check_density = FALSE, category = CAT_CONTAINERS), \
+		new/datum/stack_recipe("EMT belt", /obj/item/storage/belt/medical/paramedic, 2, check_density = FALSE, category = CAT_CONTAINERS), \
 		new/datum/stack_recipe("security belt", /obj/item/storage/belt/security, 2, check_density = FALSE, category = CAT_CONTAINERS), \
+		new/datum/stack_recipe("security medical belt", /obj/item/storage/belt/medical/secmed, 2, check_density = FALSE, category = CAT_CONTAINERS), \
 		new/datum/stack_recipe("shoulder holster", /obj/item/storage/belt/holster, 3, check_density = FALSE, category = CAT_CONTAINERS), \
 		new/datum/stack_recipe("bandolier", /obj/item/storage/belt/bandolier, 5, check_density = FALSE, category = CAT_CONTAINERS), \
 	)),
@@ -319,7 +322,7 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 
 /obj/item/stack/sheet/animalhide/carp
 	name = "carp scales"
-	desc = "The scaly skin of a space carp. It looks quite beatiful when detached from the foul creature who once wore it."
+	desc = "The scaly skin of a space carp. It looks quite beautiful when detached from the foul creature who once wore it."
 	singular_name = "carp scale"
 	icon_state = "sheet-carp"
 	inhand_icon_state = null

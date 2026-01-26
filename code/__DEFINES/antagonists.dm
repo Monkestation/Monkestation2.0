@@ -211,6 +211,9 @@ GLOBAL_LIST_INIT(ai_employers, list(
 /// Checks if the given mob is a blood cultist
 #define IS_CULTIST(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/cult))
 
+///Checks if the given mob is an evil clone
+#define IS_EVIL_CLONE(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/evil_clone))
+
 /// Checks if the given mob is a nuclear operative
 #define IS_NUKE_OP(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/nukeop))
 
@@ -354,12 +357,17 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 /// Used to denote an antag datum that either isn't necessarily "evil" (like Valentines)
 /// or isn't necessarily a "real" antag (like Ashwalkers)
 #define ANTAG_FAKE (1 << 0)
-/// monkestation addition: Whether the antagonist can see exploitable info on people they examine.
-#define FLAG_CAN_SEE_EXPOITABLE_INFO	(1 << 1)
-// monkestation addition: The storyteller will ignore this antag datum as counting against the antag cap.
-#define FLAG_ANTAG_CAP_IGNORE			(1 << 2)
-// monkestation addition: The storyteller will count everyone on this antag's team as a singular antag instead.
-#define FLAG_ANTAG_CAP_TEAM				(1 << 3)
+/// Whether the antagonist can see exploitable info on people they examine.
+#define FLAG_CAN_SEE_EXPOITABLE_INFO (1 << 1)
+///  The storyteller will ignore this antag datum as counting against the antag cap.
+#define FLAG_ANTAG_CAP_IGNORE (1 << 2)
+/// The storyteller will count everyone on this antag's team as a singular antag instead.
+#define FLAG_ANTAG_CAP_TEAM (1 << 3)
+/// The storyteller will only count a single instance of this type of antag datum.
+/// Basically FLAG_ANTAG_CAP_TEAM if you're too lazy to refactor the antag to actually use a team.
+#define FLAG_ANTAG_CAP_SINGLE (1 << 4)
+/// If set then we ignore mobs being human or not for antag point counting
+#define FLAG_ANTAG_CAP_IGNORE_HUMANITY (1 << 5)
 
 #define FREEDOM_IMPLANT_CHARGES 4
 

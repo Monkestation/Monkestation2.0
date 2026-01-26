@@ -123,6 +123,7 @@
 		if(!str || !length(str))
 			to_chat(user, span_warning("Invalid text!"))
 			return
+		playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
 		user.visible_message(span_notice("[user] labels [src] as [str]."))
 		name = "[name] ([str])"
 
@@ -397,15 +398,15 @@
 	new_barcode.cut_multiplier = cut_multiplier		// Also the registered percent cut.
 	user.put_in_hands(new_barcode)
 
-/obj/item/sales_tagger/CtrlClick(mob/user)
-	. = ..()
+/obj/item/sales_tagger/item_ctrl_click(mob/user)
 	payments_acc = null
 	to_chat(user, span_notice("You clear the registered account."))
+	return CLICK_ACTION_SUCCESS
 
-/obj/item/sales_tagger/AltClick(mob/user)
-	. = ..()
+/obj/item/sales_tagger/click_alt(mob/living/user)
 	var/potential_cut = input("How much would you like to pay out to the registered card?","Percentage Profit ([round(cut_min*100)]% - [round(cut_max*100)]%)") as num|null
 	if(!potential_cut)
 		cut_multiplier = initial(cut_multiplier)
 	cut_multiplier = clamp(round(potential_cut/100, cut_min), cut_min, cut_max)
 	to_chat(user, span_notice("[round(cut_multiplier*100)]% profit will be received if a package with a barcode is sold."))
+	return CLICK_ACTION_SUCCESS

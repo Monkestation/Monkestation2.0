@@ -1,5 +1,6 @@
 import { BooleanLike } from 'common/react';
-import { InfernoNode } from 'inferno';
+import { decodeHtmlEntities } from 'common/string';
+import { ReactNode } from 'react';
 import { useBackend } from '../../backend';
 import { Button, Stack } from '../../components';
 
@@ -18,7 +19,7 @@ type ObjectivePrintoutProps = {
   // For passing onto the Stack component
   fill?: boolean;
   // Allows additional components to follow the printout in the same stack
-  objectiveFollowup?: InfernoNode;
+  objectiveFollowup?: ReactNode;
   // The prefix to use for each objective, defaults to "#" (#1, #2)
   objectivePrefix?: string;
   // The font size to use for each objective
@@ -47,7 +48,7 @@ export const ObjectivePrintout = (props: ObjectivePrintoutProps) => {
           objectives.map((objective) => (
             <Stack.Item fontSize={objectiveTextSize} key={objective.count}>
               {objectivePrefix || '#'}
-              {objective.count}: {objective.explanation}
+              {objective.count}: {decodeHtmlEntities(objective.explanation)}
             </Stack.Item>
           ))}
       </Stack.Item>

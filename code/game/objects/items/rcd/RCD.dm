@@ -634,7 +634,8 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 /obj/item/construction/rcd/borg
 	desc = "A device used to rapidly build walls and floors."
 	banned_upgrades = RCD_UPGRADE_SILO_LINK
-	var/energyfactor = 72
+	/// enery usage
+	var/energyfactor = 0.072 * STANDARD_CELL_CHARGE
 
 /obj/item/construction/rcd/borg/get_matter(mob/user)
 	if(!iscyborg(user))
@@ -676,7 +677,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	desc = "A reverse-engineered RCD with black market upgrades that allow this device to deconstruct reinforced walls. Property of Donk Co."
 	icon_state = "ircd"
 	inhand_icon_state = "ircd"
-	energyfactor = 66
+	energyfactor = 0.066 * STANDARD_CELL_CHARGE
 	canRturf = TRUE
 
 /obj/item/construction/rcd/loaded
@@ -759,7 +760,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	upgrade = RCD_UPGRADE_FRAMES | RCD_UPGRADE_SIMPLE_CIRCUITS | RCD_UPGRADE_FURNISHING | RCD_UPGRADE_ANTI_INTERRUPT | RCD_UPGRADE_NO_FREQUENT_USE_COOLDOWN
 
 ///How much charge is used up for each matter unit.
-#define MASS_TO_ENERGY (16)
+#define MASS_TO_ENERGY (0.016 * STANDARD_CELL_CHARGE)
 
 /obj/item/construction/rcd/exosuit
 	name = "mounted RCD"
@@ -791,7 +792,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	if(!ismecha(owner))
 		return 0
 	var/obj/vehicle/sealed/mecha/gundam = owner
-	if(!gundam.use_power(amount * MASS_TO_ENERGY))
+	if(!gundam.use_energy(amount * MASS_TO_ENERGY))
 		gundam.balloon_alert(user, "insufficient charge!")
 		return FALSE
 	return TRUE

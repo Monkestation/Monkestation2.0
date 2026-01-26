@@ -93,7 +93,7 @@
 	next_crash = world.time + 10
 	var/mob/living/rider = buckled_mobs[1]
 	var/tony_hawk = HAS_TRAIT(rider, TRAIT_PRO_SKATER) ? 0.5 : 1
-	rider.stamina.adjust(-instability* 6 * tony_hawk)
+	rider.stamina.adjust(-instability* 3 * tony_hawk)
 	playsound(src, 'sound/effects/bang.ogg', 40, TRUE)
 	if(!iscarbon(rider) || rider.stamina.loss >= 100 || grinding || iscarbon(bumped_thing))
 		var/atom/throw_target = get_edge_target_turf(rider, pick(GLOB.cardinals))
@@ -133,7 +133,7 @@
 
 	var/mob/living/skater = buckled_mobs[1]
 	var/tony_hawk = HAS_TRAIT(skater, TRAIT_PRO_SKATER) ? 0.5 : 1
-	skater.stamina.adjust(-instability * 0.3 * tony_hawk)
+	skater.stamina.adjust(-instability * 0.15 * tony_hawk)
 	if(skater.stamina.loss >= 100)
 		obj_flags = CAN_BE_HIT
 		playsound(src, 'sound/effects/bang.ogg', 20, TRUE)
@@ -161,9 +161,8 @@
 			victim.visible_message(span_danger("[victim] straight up gets grinded into the ground by [skater]'s [src]! Radical!"))
 	addtimer(CALLBACK(src, PROC_REF(grind)), 1)
 
-/obj/vehicle/ridden/scooter/skateboard/MouseDrop(atom/over_object)
-	. = ..()
-	var/mob/living/carbon/skater = usr
+/obj/vehicle/ridden/scooter/skateboard/mouse_drop_dragged(atom/over_object, mob/user)
+	var/mob/living/carbon/skater = user
 	if(!istype(skater))
 		return
 	if (over_object == skater)

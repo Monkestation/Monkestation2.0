@@ -132,3 +132,34 @@
 	max_spawning           = 80
 	min_spawning           = 20
 	wind                   = 10
+
+/particles/weather/fall_leaves
+	icon_state	= list("leaf1"=5, "leaf2"=6, "leaf3"=5)
+
+	spin		= 6
+	position 	= generator("box", list(-500,-256,0), list(400,500,0))
+	gravity 	= list(0, -1, 0.1)
+	friction 	= 0.5
+	drift 		= generator("circle", 1)
+	lifespan = generator("num", 35, 55)
+	fade = generator("num", 2, 6)
+	max_spawning            = 40
+	min_spawning            = 20
+	wind = 2
+	transform = null
+
+
+/datum/particle_weather/fall_leaves
+	name = "Fall Leaves"
+	desc = "Gentle fall, la la description."
+	particle_effect_type = /particles/weather/fall_leaves
+
+	weather_sounds = list(/datum/looping_sound/rain)
+	indoor_weather_sounds = list(/datum/looping_sound/indoor_rain)
+
+	min_severity = 5
+	max_severity = 100
+	max_severity_change = 0
+	severity_steps = 100
+	probability = 1
+	target_trait = PARTICLEWEATHER_RAIN

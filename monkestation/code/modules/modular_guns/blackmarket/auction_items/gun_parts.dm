@@ -42,9 +42,6 @@
 	price_max = CARGO_CRATE_VALUE * 8
 	auction_weight = 4
 
-/obj/item/suppressor
-
-
 /datum/market_item/auction/gun_part/evil_wespe //Funny guns that fit the shoddy gun bidding market.
 	name = "Modified Wespe"
 	desc = "Super Illegal."

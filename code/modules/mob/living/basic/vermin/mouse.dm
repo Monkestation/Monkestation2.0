@@ -112,7 +112,7 @@
 	adjust_health(maxHealth)
 
 // On revival, re-add the mouse to the ratcap, or block it if we're at it
-/mob/living/basic/mouse/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
+/mob/living/basic/mouse/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE, revival_policy = POLICY_REVIVAL)
 	if(!contributes_to_ratcap)
 		return ..()
 
@@ -177,15 +177,14 @@
 		if(hungry && prob(90))
 			adjust_health(-4)
 
-		for(var/datum/reagent/target_reagent in attack_target.reagents.reagent_list)
-			if(istype(target_reagent, /datum/reagent/toxin))
-				visible_message(
-					span_warning("[src] devours [attack_target]! They pause for a moment..."),
-					span_warning("You devour [attack_target], something tastes off..."),
-				)
-				if(health != 0)
-					adjust_health(4)
-	//MONKESTATION EDIT STOP
+		if(locate(/datum/reagent/toxin) in attack_target.reagents?.reagent_list)
+			visible_message(
+				span_warning("[src] devours [attack_target]! [p_They()] pause[p_s()] for a moment..."),
+				span_warning("You devour [attack_target], something tastes off..."),
+			)
+			if(health != 0)
+				adjust_health(4)
+//MONKESTATION EDIT STOP
 
 	if(istype(attack_target, /obj/structure/cable))
 		try_bite_cable(attack_target)

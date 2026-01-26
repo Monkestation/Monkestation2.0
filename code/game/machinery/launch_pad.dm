@@ -7,7 +7,10 @@
 	icon_state = "lpad-idle"
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2.5
 	hud_possible = list(DIAG_LAUNCHPAD_HUD)
+	interaction_flags_mouse_drop = NEED_DEXTERITY | NEED_HANDS
 	circuit = /obj/item/circuitboard/machine/launchpad
+
+	/// The beam icon
 	var/icon_teleport = "lpad-beam"
 	var/stationary = TRUE //to prevent briefcase pad deconstruction and such
 	var/display_name = "Launchpad"
@@ -34,8 +37,8 @@
 /obj/machinery/launchpad/Initialize(mapload)
 	. = ..()
 	prepare_huds()
-	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
-		diag_hud.add_atom_to_hud(src)
+	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC_BASIC]
+	diag_hud.add_atom_to_hud(src)
 
 	update_hud()
 
@@ -57,8 +60,8 @@
 		))
 
 /obj/machinery/launchpad/Destroy()
-	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
-		diag_hud.remove_atom_from_hud(src)
+	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC_BASIC]
+	diag_hud.remove_atom_from_hud(src)
 	return ..()
 
 /obj/machinery/launchpad/examine(mob/user)
@@ -72,7 +75,7 @@
 		return ITEM_INTERACT_BLOCKING
 
 	multi.set_buffer(src)
-	to_chat(user, span_notice("You save the data in the [multi.name]'s buffer."))
+	balloon_alert(user, "saved to multitool buffer")
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/launchpad/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
@@ -189,7 +192,7 @@
 		playsound(target, 'sound/weapons/emitter2.ogg', 25, TRUE)
 
 	// use a lot of power
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 
 	var/turf/source = target
 	var/list/log_msg = list()
@@ -204,7 +207,7 @@
 	for(var/atom/movable/ROI in source)
 		if(ROI == src)
 			continue
-		if(!istype(ROI) || isdead(ROI) || iscameramob(ROI) || istype(ROI, /obj/effect/dummy/phased_mob))
+		if(!istype(ROI) || isdead(ROI) || iseyemob(ROI) || istype(ROI, /obj/effect/dummy/phased_mob))
 			continue//don't teleport these
 		var/on_chair = ""
 		if(ROI.anchored)// if it's anchored, don't teleport
@@ -284,14 +287,13 @@
 		return FALSE
 	return TRUE
 
-/obj/machinery/launchpad/briefcase/MouseDrop(over_object, src_location, over_location)
-	. = ..()
-	if(over_object == usr)
-		if(!briefcase || !usr.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
+/obj/machinery/launchpad/briefcase/mouse_drop_dragged(atom/over_object, mob/user, src_location, over_location, params)
+	if(over_object == user)
+		if(!briefcase)
 			return
-		usr.visible_message(span_notice("[usr] starts closing [src]..."), span_notice("You start closing [src]..."))
-		if(do_after(usr, 3 SECONDS, target = usr))
-			usr.put_in_hands(briefcase)
+		user.visible_message(span_notice("[user] starts closing [src]..."), span_notice("You start closing [src]..."))
+		if(do_after(user, 3 SECONDS, target = user))
+			user.put_in_hands(briefcase)
 			moveToNullspace() //hides it from suitcase contents
 			closed = TRUE
 			update_indicator()

@@ -25,7 +25,7 @@
 	icon_state = "mini"
 	inhand_icon_state = "gun"
 	w_class = WEIGHT_CLASS_SMALL
-	cell_type = /obj/item/stock_parts/cell/mini_egun
+	cell_type = /obj/item/stock_parts/power_store/cell/mini_egun
 	ammo_x_offset = 2
 	charge_sections = 3
 	single_shot_type_overlay = FALSE
@@ -44,7 +44,7 @@
 	name = "tactical energy gun"
 	desc = "Military issue energy gun, is able to fire stun rounds."
 	icon_state = "energytac"
-	cell_type = /obj/item/stock_parts/cell/upgraded //monkestation ADDITION
+	cell_type = /obj/item/stock_parts/power_store/cell/upgraded //monkestation ADDITION
 	ammo_x_offset = 2
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode/spec, /obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/laser)
 
@@ -70,7 +70,7 @@
 /obj/item/gun/energy/e_gun/hos
 	name = "\improper X-01 MultiPhase Energy Gun"
 	desc = "This is an expensive, modern recreation of an antique laser gun. This gun has several unique firemodes, but lacks the ability to recharge over time."
-	cell_type = /obj/item/stock_parts/cell/hos_gun
+	cell_type = /obj/item/stock_parts/power_store/cell/hos_gun
 	icon_state = "hoslaser"
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 10

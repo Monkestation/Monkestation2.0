@@ -2,7 +2,7 @@
 	display_name = "Weighted Chemical Splitter"
 	desc = "General chemical splitter, allows more fine grain control."
 	category = "Chemistry"
-	power_usage_per_input = 20
+	energy_usage_per_input = 20
 
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 

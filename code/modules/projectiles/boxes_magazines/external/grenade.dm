@@ -8,6 +8,14 @@
 	multiple_sprites = AMMO_BOX_FULL_EMPTY
 	max_ammo = 8
 
+// ignifist rocket
+/obj/item/ammo_box/magazine/ignifist
+	name = "Ignifist 30 Rocket"
+	icon_state = "ignifist"
+	ammo_type = /obj/item/ammo_casing/caseless/ignifist
+	caliber = CALIBER_60MM
+	max_ammo = 1
+	multiple_sprites = AMMO_BOX_FULL_EMPTY
 
 // .980 grenade magazines
 

@@ -49,7 +49,7 @@
 
 	update_appearance()
 
-/obj/machinery/power/turbine/LateInitialize()
+/obj/machinery/power/turbine/LateInitialize(mapload_arg)
 	. = ..()
 	activate_parts()
 

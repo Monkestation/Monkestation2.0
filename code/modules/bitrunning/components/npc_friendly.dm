@@ -29,9 +29,8 @@
 	player.faction |= npc_factions
 
 /datum/component/npc_friendly/Destroy(force)
-	. = ..()
-
 	var/mob/living/player = parent
-
-	player.faction.Cut()
-	player.faction.Add(previous_factions)
+	if(player)
+		player.faction.Cut()
+		player.faction.Add(previous_factions)
+	return ..()

@@ -8,13 +8,13 @@
 	lefthand_file = 'icons/mob/inhands/equipment/backpack_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/backpack_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
-	alternate_worn_layer = ABOVE_HEAD_LAYER //monkestation addition
+	alternate_worn_layer = ABOVE_HEAD_LAYER
 	slot_flags = ITEM_SLOT_BACK
-	slowdown = 1
 	actions_types = list(/datum/action/item_action/toggle_mister)
 	max_integrity = 200
 	armor_type = /datum/armor/item_watertank
 	resistance_flags = FIRE_PROOF
+	interaction_flags_mouse_drop = ALLOW_RESTING
 
 	var/obj/item/noz
 	var/volume = 500
@@ -28,6 +28,7 @@
 	create_reagents(volume, OPENCONTAINER)
 	noz = make_noz()
 	RegisterSignal(noz, COMSIG_MOVABLE_MOVED, PROC_REF(noz_move))
+	AddElement(/datum/element/drag_pickup)
 
 /obj/item/watertank/Destroy()
 	QDEL_NULL(noz)
@@ -89,13 +90,6 @@
 		toggle_mister(user)
 	else
 		return ..()
-
-/obj/item/watertank/MouseDrop(obj/over_object)
-	var/mob/M = loc
-	if(istype(M) && istype(over_object, /atom/movable/screen/inventory/hand))
-		var/atom/movable/screen/inventory/hand/H = over_object
-		M.putItemFromInventoryInHandIfPossible(src, H.held_index)
-	return ..()
 
 /obj/item/watertank/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(attacking_item == noz)
@@ -178,7 +172,6 @@
 	inhand_icon_state = "pepperbackpacksec"
 	custom_price = PAYCHECK_CREW * 2
 	volume = 1000
-	slowdown = 0 //monkestation edit
 
 /obj/item/watertank/pepperspray/Initialize(mapload)
 	. = ..()
@@ -215,7 +208,6 @@
 	icon_state = "waterbackpackatmos"
 	worn_icon_state = "waterbackpackatmos"
 	volume = 200
-	slowdown = 0
 
 /obj/item/watertank/atmos/Initialize(mapload)
 	. = ..()
@@ -394,7 +386,6 @@
 	righthand_file = 'icons/mob/inhands/equipment/backpack_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
-	slowdown = 1
 	actions_types = list(/datum/action/item_action/activate_injector)
 
 	var/on = FALSE

@@ -35,7 +35,7 @@ DEFINE_BITFIELD(sign_features, list(
 	verb_say = "beeps"
 	verb_ask = "bloops"
 	verb_exclaim = "blares"
-	idle_power_usage = 450
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.5
 	max_integrity = 150
 	integrity_failure = 0.75
 	custom_materials = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 4, /datum/material/alloy/titaniumglass = SHEET_MATERIAL_AMOUNT * 4)
@@ -80,7 +80,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 	..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/incident_display/LateInitialize()
+/obj/machinery/incident_display/LateInitialize(mapload_arg)
 	. = ..()
 	GLOB.map_delamination_counters += src
 	update_delam_count(SSpersistence.rounds_since_engine_exploded, SSpersistence.delam_highscore)

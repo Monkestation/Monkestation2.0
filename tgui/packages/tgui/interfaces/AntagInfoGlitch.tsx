@@ -38,7 +38,9 @@ export const AntagInfoGlitch = (props) => {
             </Stack.Item>
             <SpecificInfo />
             <Stack.Item>
-              <marquee scrollamount="2">{objectives[0].explanation}</marquee>
+              <span style={{ opacity: 0.6 }}>
+                &#47;&#47; {objectives[0]?.explanation}
+              </span>
             </Stack.Item>
             <Divider />
             <Stack.Item>

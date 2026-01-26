@@ -46,9 +46,6 @@
 			return
 	return ..()
 
-/obj/structure/statue/AltClick(mob/user)
-	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
-
 /obj/structure/statue/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		var/amount_mod = disassembled ? 0 : -2
@@ -558,8 +555,6 @@ Moving interrupts
 	return ..()
 
 /obj/structure/statue/custom/proc/set_visuals(model_appearance)
-	if(content_ma)
-		QDEL_NULL(content_ma)
 	content_ma = new
 	content_ma.appearance = model_appearance
 	content_ma.pixel_x = 0

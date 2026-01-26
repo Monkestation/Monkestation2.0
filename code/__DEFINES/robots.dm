@@ -27,10 +27,14 @@
 ///Malfunctioning AI hijacking mecha
 #define AI_MECH_HACK 3
 
-/** Cyborg defines */
+// Cyborg defines
 
 /// Special value to reset cyborg's lamp_cooldown
 #define BORG_LAMP_CD_RESET -1
+/// How many watts per lamp power is consumed while the lamp is on.
+#define BORG_LAMP_POWER_CONSUMPTION (5 WATTS)
+/// The minimum power consumption of a cyborg.
+#define BORG_MINIMUM_POWER_CONSUMPTION (1 WATTS)
 
 //Module slot define
 ///The third module slots is disabed.
@@ -54,6 +58,7 @@
 #define SKIN_PIXEL_Y "skin_pixel_y"
 #define SKIN_LIGHT_KEY "skin_light_key"
 #define SKIN_HAT_OFFSET "skin_hat_offset"
+#define SKIN_BADGE_OFFSET "skin_badge_offset"
 #define SKIN_TRAITS "skin_traits"
 
 /** Simple Animal BOT defines */
@@ -94,7 +99,7 @@
 //Bot cover defines indicating the Bot's status
 ///The Bot's cover is open and can be modified/emagged by anyone.
 #define BOT_COVER_MAINTS_OPEN (1<<0)
-///The Bot's cover is locked, and cannot be opened without unlocking it.
+///The Bot's cover is locked, and cannot be opened without unlocking it. (This is for bot_cover_flags, for bot_access_flags. It's the reverse (opened cover))
 #define BOT_COVER_LOCKED (1<<1)
 ///The Bot is emagged.
 #define BOT_COVER_EMAGGED (1<<2)

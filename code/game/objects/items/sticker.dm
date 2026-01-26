@@ -20,6 +20,8 @@
 	var/turf/signal_turf
 	/// If the sticker should be disincluded from normal sticker boxes.
 	var/contraband = STICKER_NORMAL
+	/// The prob() rate of the sticker sticking if its thrown.
+	var/throw_stick_rate = 50
 
 /obj/item/sticker/Initialize(mapload)
 	. = ..()
@@ -102,7 +104,7 @@
 
 /obj/item/sticker/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
-	if(!. && prob(50))
+	if(!. && prob(throw_stick_rate))
 		attempt_attach(hit_atom, px = rand(-7,7), py = rand(-7,7))
 		attached.balloon_alert_to_viewers("the sticker lands on its sticky side!")
 
@@ -199,6 +201,49 @@
 /obj/item/sticker/assistant
 	name = "assistant sticker"
 	icon_state = "tider"
+
+/obj/item/sticker/realfakeairlock
+	name = "fake airlock sticker"
+	desc = "A genuine fake airlock sticker! It's too large, so you can only fit it on walls. \
+	now with real tomfoolery action!"
+	icon_state = "realfakeairlock"
+	throw_stick_rate = 0
+	w_class = WEIGHT_CLASS_NORMAL //its an absurdly large sticker.
+
+/obj/item/sticker/realfakeairlock/attempt_attach(atom/target, mob/user, px, py)
+	if(iswallturf(target))
+		px = 0 //because even the closest you can get to perfect is slightly imperfect.
+		py = 0 //also its so fuckin massive that you can really fuck w/ surrounding vision
+		. = ..()
+	else
+		balloon_alert(user, "sticker too large!") //it takes up an entire tile dawg.
+
+/obj/item/sticker/realfakeairlock/register_signals(mob/living/user)
+	..()
+	RegisterSignal(attached, COMSIG_ATOM_BUMPED, PROC_REF(bonk))
+
+/obj/item/sticker/realfakeairlock/unregister_signals(datum/source)
+	. = ..()
+	UnregisterSignal(attached, COMSIG_ATOM_BUMPED)
+
+/obj/item/sticker/realfakeairlock/proc/bonk(atom/source, mob/living/bumper)
+	SIGNAL_HANDLER
+
+	if(!iscarbon(bumper))
+		return
+	var/obj/item/bodypart/head/donked = bumper.get_bodypart(BODY_ZONE_HEAD)
+	if(istype(donked, /obj/item/bodypart/head))
+		if(donked.brute_dam < 50) //dont wanna kill yourself from banging your head
+			donked.receive_damage(brute = 5)
+		bumper.visible_message(span_danger("[bumper] bangs [bumper.p_their()] head on the fake airlock!"), span_userdanger("You bang your head on the fake airlock!"), span_hear("You hear a loud thud followed by something falling."))
+		playsound(
+			source = bumper,
+			soundin = 'sound/effects/bang.ogg',
+			vol = 25,
+			vary = TRUE
+		)
+		bumper.Knockdown(1 SECONDS)
+
 
 /obj/item/sticker/syndicate
 	name = "syndicate sticker"

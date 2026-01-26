@@ -41,6 +41,7 @@
 	)
 	rpg_title = "Jailor"
 	job_flags = STATION_JOB_FLAGS | JOB_BOLD_SELECT_TEXT
+	antag_capacity_points = 3
 
 /datum/outfit/job/warden
 	name = "Warden"
@@ -57,8 +58,8 @@
 	ears = /obj/item/radio/headset/headset_sec/alt
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
 	gloves = /obj/item/clothing/gloves/color/black/security
-	head = /obj/item/clothing/head/hats/warden/red
-	shoes = /obj/item/clothing/shoes/jackboots/sec
+	head = /obj/item/clothing/head/hats/warden
+	shoes = /obj/item/clothing/shoes/jackboots
 	l_pocket = /obj/item/assembly/flash/handheld
 	r_pocket = /obj/item/restraints/handcuffs
 

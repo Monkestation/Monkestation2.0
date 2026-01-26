@@ -84,4 +84,10 @@
 	projectile_type = /obj/projectile/bullet/govmining
 
 
+// .500 Magnum
 
+/obj/item/ammo_casing/a500
+	name = ".500 bullet casing"
+	desc = "A monsterous bullet casing."
+	caliber = CALIBER_500
+	projectile_type = /obj/projectile/bullet/a500

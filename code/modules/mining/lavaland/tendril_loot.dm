@@ -5,33 +5,44 @@
 	name = "KA Mod Disk"
 	desc = "A design disc containing the design for a unique kinetic accelerator modkit. It's compatible with a research console."
 	icon_state = "datadisk1"
-	var/modkit_design = /datum/design/unique_modkit
+	var/list/modkit_design = list()
 
 /obj/item/disk/design_disk/modkit_disc/Initialize(mapload)
 	. = ..()
-	blueprints += new modkit_design
+	for(var/design in modkit_design)
+		blueprints += new design
+
+/obj/item/disk/design_disk/modkit_disc/blood_drunk_group
+	name = "Bloodied Mod Disk"
+	modkit_design = list(
+		/datum/design/unique_modkit/offensive_turf_aoe,
+		/datum/design/unique_modkit/rapid_repeater,
+		/datum/design/unique_modkit/resonator_blast,
+		/datum/design/unique_modkit/bounty,
+	)
 
 /obj/item/disk/design_disk/modkit_disc/mob_and_turf_aoe
 	name = "Offensive Mining Explosion Mod Disk"
-	modkit_design = /datum/design/unique_modkit/offensive_turf_aoe
+	modkit_design = list(/datum/design/unique_modkit/offensive_turf_aoe)
 
 /obj/item/disk/design_disk/modkit_disc/rapid_repeater
 	name = "Rapid Repeater Mod Disk"
-	modkit_design = /datum/design/unique_modkit/rapid_repeater
+	modkit_design = list(/datum/design/unique_modkit/rapid_repeater)
 
 /obj/item/disk/design_disk/modkit_disc/resonator_blast
 	name = "Resonator Blast Mod Disk"
-	modkit_design = /datum/design/unique_modkit/resonator_blast
+	modkit_design = list(/datum/design/unique_modkit/resonator_blast)
 
 /obj/item/disk/design_disk/modkit_disc/bounty
 	name = "Death Syphon Mod Disk"
-	modkit_design = /datum/design/unique_modkit/bounty
+	modkit_design = list(/datum/design/unique_modkit/bounty)
 
 /datum/design/unique_modkit
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_PKA_MODS,
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MINING,
 	)
-	build_type = PROTOLATHE
+	build_type = PROTOLATHE | MECHFAB
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO
 
 /datum/design/unique_modkit/offensive_turf_aoe
@@ -663,7 +674,10 @@
 
 /obj/item/clothing/suit/hooded/berserker
 	name = "berserker armor"
-	desc = "Voices echo from the armor, driving the user insane. Is not space-proof."
+	desc = "This hulking armor seems to possess some kind of dark force within; howling in rage, hungry for carnage. \
+		The self-sealing stem bolts that allowed this suit to be spaceworthy have long since corroded. However, the entity \
+		sealed within the suit seems to hunger for the fleeting lifeforce found in the remains left in the remains of drakes. \
+		Feeding it drake remains seems to empower a suit piece, though turns the remains back to lifeless ash."
 	icon_state = "berserker"
 	icon = 'icons/obj/clothing/suits/armor.dmi'
 	worn_icon = 'icons/mob/clothing/suits/armor.dmi'
@@ -674,19 +688,9 @@
 
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	resistance_flags = FIRE_PROOF
-	clothing_flags = THICKMATERIAL
-	allowed = list(
-		/obj/item/flashlight,
-		/obj/item/tank/internals,
-		/obj/item/pickaxe,
-		/obj/item/spear,
-		/obj/item/organ/internal/monster_core,
-		/obj/item/knife,
-		/obj/item/kinetic_crusher,
-		/obj/item/resonator,
-		/obj/item/melee/cleaving_saw,
-	)
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	clothing_flags = THICKMATERIAL|HEADINTERNALS
 
 /datum/armor/hooded_berserker
 	melee = 30
@@ -694,23 +698,35 @@
 	laser = 10
 	energy = 20
 	bomb = 50
+	bio = 60
 	fire = 100
 	acid = 100
+	wound = 10
+
+/datum/armor/drake_empowerment
+	melee = 35
+	laser = 30
+	energy = 20
+	bomb = 20
 
 /obj/item/clothing/suit/hooded/berserker/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/anti_magic, ALL, inventory_flags = ITEM_SLOT_OCLOTHING)
+	AddComponent(/datum/component/armor_plate, maxamount = 1, upgrade_item = /obj/item/drake_remains, armor_mod = /datum/armor/drake_empowerment, upgrade_prefix = "empowered")
+	allowed = GLOB.mining_suit_allowed
 
 #define MAX_BERSERK_CHARGE 100
 #define PROJECTILE_HIT_MULTIPLIER 1.5
 #define DAMAGE_TO_CHARGE_SCALE 0.75
 #define CHARGE_DRAINED_PER_SECOND 5
-#define BERSERK_MELEE_ARMOR_ADDED 50
 #define BERSERK_ATTACK_SPEED_MODIFIER 0.25
 
 /obj/item/clothing/head/hooded/berserker
 	name = "berserker helmet"
-	desc = "Peering into the eyes of the helmet is enough to seal damnation."
+	desc = "This burdensome helmet seems to possess some kind of dark force within; howling in rage, hungry for carnage. \
+		The self-sealing stem bolts that allowed this helmet to be spaceworthy have long since corroded. However, the entity \
+		sealed within the suit seems to hunger for the fleeting lifeforce found in the remains left in the remains of drakes. \
+		Feeding it drake remains seems to empower a suit piece, though turns the remains back to lifeless ash."
 	icon_state = "berserker"
 	icon = 'icons/obj/clothing/head/helmet.dmi'
 	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
@@ -720,7 +736,8 @@
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
-	resistance_flags = FIRE_PROOF
+	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS|HIDESNOUT
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	clothing_flags = SNUG_FIT|THICKMATERIAL
 	/// Current charge of berserk, goes from 0 to 100
 	var/berserk_charge = 0
@@ -730,6 +747,7 @@
 /obj/item/clothing/head/hooded/berserker/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, LOCKED_HELMET_TRAIT)
+	AddComponent(/datum/component/armor_plate, maxamount = 1, upgrade_item = /obj/item/drake_remains, armor_mod = /datum/armor/drake_empowerment, upgrade_prefix = "empowered")
 
 /obj/item/clothing/head/hooded/berserker/examine()
 	. = ..()
@@ -761,12 +779,12 @@
 	if(berserk_active)
 		return TRUE
 
-/// Starts berserk, giving the wearer 50 melee armor, doubled attacking speed, NOGUNS trait, adding a color and giving them the berserk movespeed modifier
+/// Starts berserk, reducing incoming brute by 50%, doubled attacking speed, NOGUNS trait, adding a color and giving them the berserk movespeed modifier
 /obj/item/clothing/head/hooded/berserker/proc/berserk_mode(mob/living/carbon/human/user)
 	to_chat(user, span_warning("You enter berserk mode."))
 	playsound(user, 'sound/magic/staff_healing.ogg', 50)
 	user.add_movespeed_modifier(/datum/movespeed_modifier/berserk)
-	user.physiology.armor = user.physiology.armor.generate_new_with_modifiers(list(MELEE = BERSERK_MELEE_ARMOR_ADDED))
+	user.physiology.brute_mod *= 0.5
 	user.next_move_modifier *= BERSERK_ATTACK_SPEED_MODIFIER
 	user.add_atom_colour(COLOR_BUBBLEGUM_RED, TEMPORARY_COLOUR_PRIORITY)
 	ADD_TRAIT(user, TRAIT_NOGUNS, BERSERK_TRAIT)
@@ -784,7 +802,7 @@
 	to_chat(user, span_warning("You exit berserk mode."))
 	playsound(user, 'sound/magic/summonitems_generic.ogg', 50)
 	user.remove_movespeed_modifier(/datum/movespeed_modifier/berserk)
-	user.physiology.armor = user.physiology.armor.generate_new_with_modifiers(list(MELEE = -BERSERK_MELEE_ARMOR_ADDED))
+	user.physiology.brute_mod *= 2
 	user.next_move_modifier /= BERSERK_ATTACK_SPEED_MODIFIER
 	user.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_BUBBLEGUM_RED)
 	REMOVE_TRAIT(user, TRAIT_NOGUNS, BERSERK_TRAIT)
@@ -795,8 +813,17 @@
 #undef PROJECTILE_HIT_MULTIPLIER
 #undef DAMAGE_TO_CHARGE_SCALE
 #undef CHARGE_DRAINED_PER_SECOND
-#undef BERSERK_MELEE_ARMOR_ADDED
 #undef BERSERK_ATTACK_SPEED_MODIFIER
+
+/obj/item/drake_remains
+	name = "drake remains"
+	desc = "The gathered remains of a drake. It still crackles with heat, and smells distinctly of brimstone."
+	icon = 'icons/obj/clothing/head/helmet.dmi'
+	icon_state = "dragon"
+
+/obj/item/drake_remains/Initialize(mapload)
+	. = ..()
+	particles = new /particles/bonfire()
 
 /obj/item/clothing/glasses/godeye
 	name = "eye of god"
@@ -804,7 +831,7 @@
 	icon_state = "godeye"
 	inhand_icon_state = null
 	vision_flags = SEE_TURFS
-	clothing_traits = list(TRAIT_MADNESS_IMMUNE)
+	clothing_traits = list(TRAIT_MADNESS_IMMUNE, TRAIT_NEARSIGHTED_CORRECTED)
 	// Blue, light blue
 	color_cutoffs = list(15, 30, 40)
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
@@ -884,7 +911,7 @@
 	scan_pinpointer.scan_target = living_scanned
 
 	to_chat(living_scanned, span_warning("You briefly see a flash of [living_owner]'s face before being knocked off-balance by an unseen force!"))
-	living_scanned.add_filter("scan", 2, list("type" = "outline", "color" = COLOR_RED, "size" = 1))
+	living_scanned.add_filter("scan", 2, list("type" = "outline", "color" = COLOR_YELLOW, "size" = 1))
 	addtimer(CALLBACK(living_scanned, TYPE_PROC_REF(/datum, remove_filter), "scan"), 30 SECONDS)
 
 	owner.playsound_local(get_turf(owner), 'sound/magic/smoke.ogg', 50, TRUE)
@@ -937,7 +964,7 @@
 	var/obj/item/cursed_katana/katana = active_item
 	if(!katana || katana.shattered)
 		return FALSE
-	if(!katana.drew_blood)
+	if(!katana.drew_blood && !QDELETED(owner))
 		to_chat(owner, span_userdanger("[katana] lashes out at you in hunger!"))
 		playsound(owner, 'sound/magic/demon_attack1.ogg', 50, TRUE)
 		var/obj/item/bodypart/part = owner.get_holding_bodypart_of_item(katana)
@@ -972,7 +999,13 @@
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | FREEZE_PROOF
+	/// The attack force when used agains tfauna.
+	var/fauna_force = 50
+	/// The block chance for attacks from fauna.
+	var/fauna_block_chance = 75
+	/// If the katana is current "shattered."
 	var/shattered = FALSE
+	/// If the katana has drew blood or not.
 	var/drew_blood = FALSE
 	var/static/list/combo_list = list(
 		ATTACK_STRIKE = list(COMBO_STEPS = list(LEFT_ATTACK, LEFT_ATTACK, RIGHT_ATTACK), COMBO_PROC = PROC_REF(strike)),
@@ -996,6 +1029,7 @@
 
 /obj/item/cursed_katana/examine(mob/user)
 	. = ..()
+	. += span_info("It is far more effective at both fighting and defending against fauna.")
 	. += drew_blood ? span_nicegreen("It's sated... for now.") : span_danger("It will not be sated until it tastes blood.")
 
 /obj/item/cursed_katana/dropped(mob/user)
@@ -1004,15 +1038,26 @@
 		qdel(src)
 
 /obj/item/cursed_katana/attack(mob/living/target, mob/user, click_parameters)
+	var/old_force = force
 	if(target.stat < DEAD && target != user)
 		drew_blood = TRUE
 		if(ismining(target))
 			user.changeNext_move(CLICK_CD_RAPID)
-	return ..()
+			force = fauna_force
+	. = ..()
+	force = old_force
 
 /obj/item/cursed_katana/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(attack_type == PROJECTILE_ATTACK)
-		final_block_chance = 0 //Don't bring a sword to a gunfight
+	if(isliving(hitby))
+		var/mob/living/living_hitby = hitby
+		if(ismining(living_hitby))
+			final_block_chance = fauna_block_chance
+	else if(attack_type == PROJECTILE_ATTACK)
+		var/mob/living/living_firer = astype(astype(hitby, /obj/projectile)?.firer, /mob/living)
+		if(living_firer && ismining(living_firer))
+			final_block_chance = fauna_block_chance
+		else
+			final_block_chance = 0 //Don't bring a sword to a gunfight
 	return ..()
 
 /obj/item/cursed_katana/proc/can_combo_attack(mob/user, mob/living/target)
@@ -1062,7 +1107,7 @@
 
 /obj/item/cursed_katana/proc/cloak(mob/living/target, mob/user)
 	user.alpha = 150
-	user.invisibility = INVISIBILITY_OBSERVER // so hostile mobs cant see us or target us
+	user.SetInvisibility(INVISIBILITY_OBSERVER, id=type) // so hostile mobs cant see us or target us
 	user.add_sight(SEE_SELF) // so we can see us
 	user.visible_message(span_warning("[user] vanishes into thin air!"),
 		span_notice("You enter the dark cloak."))
@@ -1076,7 +1121,7 @@
 
 /obj/item/cursed_katana/proc/uncloak(mob/user)
 	user.alpha = 255
-	user.invisibility = 0
+	user.RemoveInvisibility(type)
 	user.clear_sight(SEE_SELF)
 	user.visible_message(span_warning("[user] appears from thin air!"),
 		span_notice("You exit the dark cloak."))

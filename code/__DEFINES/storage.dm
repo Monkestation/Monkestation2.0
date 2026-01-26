@@ -17,7 +17,7 @@
 #define FANCY_CONTAINER_ALWAYS_OPEN 2
 
 // Defines for levels of storage locking
-// Also used fort the force param of can_insert
+// Also used for the force param of can_insert
 // Higher values are "more" locked then lower ones
 #define STORAGE_NOT_LOCKED 0
 #define STORAGE_SOFT_LOCKED 1

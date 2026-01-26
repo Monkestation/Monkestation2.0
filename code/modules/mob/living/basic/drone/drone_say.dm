@@ -12,15 +12,16 @@
 	if (dead_can_hear && source)
 		for (var/mob/dead_mob in GLOB.dead_mob_list)
 			var/link = FOLLOW_LINK(dead_mob, source)
-			to_chat(dead_mob, "[link] [msg]")
+			to_chat(dead_mob, span_binarysay("[link] [msg]"), type = MESSAGE_TYPE_RADIO)
 	for(var/global_drone in GLOB.drones_list)
 		var/mob/living/basic/drone/drone = global_drone
 		if(istype(drone) && drone.stat != DEAD)
 			if(faction_checked_mob)
 				if(drone.faction_check_atom(faction_checked_mob, exact_faction_match))
-					to_chat(drone, msg)
+					to_chat(drone, span_binarysay(msg), type = MESSAGE_TYPE_RADIO)
+					drone.playsound_local(drone, 'sound/misc/incoming_transmission.ogg', 170, 0, 0, 0, pressure_affected = FALSE, use_reverb = FALSE, mixer_channel = CHANNEL_MOB_SOUNDS)
 			else
-				to_chat(drone, msg)
+				to_chat(drone, span_binarysay(msg), type = MESSAGE_TYPE_RADIO)
 
 
 

@@ -79,6 +79,8 @@
 
 /// A trait source when adding traits through unit tests
 #define TRAIT_SOURCE_UNIT_TESTS "unit_tests"
+/// Helper to allocate a new object with the implied type (the type of the variable it's assigned to) in the corner of the test room
+#define EASY_ALLOCATE(arguments...) allocate(__IMPLIED_TYPE__, run_loc_floor_bottom_left, ##arguments)
 
 // BEGIN_INCLUDE
 #include "abductor_baton_spell.dm"
@@ -98,6 +100,7 @@
 #include "blindness.dm"
 #include "bloody_footprints.dm"
 #include "breath.dm"
+#include "buckle.dm"
 #include "cable_powernets.dm"
 #include "card_mismatch.dm"
 #include "cardboard_cutouts.dm"
@@ -109,7 +112,6 @@
 #include "component_tests.dm"
 #include "connect_loc.dm"
 #include "container_sanity.dm"
-#include "crayons.dm"
 #include "create_and_destroy.dm"
 #include "dcs_get_id_from_elements.dm"
 #include "designs.dm"
@@ -142,6 +144,7 @@
 #include "json_savefile_importing.dm"
 #include "keybinding_init.dm"
 #include "knockoff_component.dm"
+#include "language_icons.dm"
 #include "language_key_conflicts.dm"
 #include "language_transfer.dm"
 #include "leash.dm"
@@ -149,6 +152,7 @@
 #include "limbsanity.dm"
 #include "linked_xenobio_pens.dm"
 #include "load_map_security.dm"
+#include "loadout_duplicates.dm"
 #include "lootpanel.dm"
 #include "lungs.dm"
 #include "machine_disassembly.dm"
@@ -197,6 +201,7 @@
 #include "say.dm"
 #include "screenshot_antag_icons.dm"
 #include "screenshot_basic.dm"
+#include "screenshot_digi.dm"
 #include "screenshot_dynamic_human_icons.dm"
 #include "screenshot_humanoids.dm"
 #include "screenshot_husk.dm"
@@ -242,6 +247,7 @@
 #include "trick_weapon_icons.dm"
 #include "turf_icons.dm"
 #include "tutorial_sanity.dm"
+#include "unequip_defib.dm"
 #include "unit_test.dm"
 #include "vendor_boards.dm"
 #include "verify_config_tags.dm"

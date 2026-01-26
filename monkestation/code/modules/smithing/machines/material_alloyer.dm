@@ -9,8 +9,8 @@
 	max_integrity = 200
 	density = TRUE
 	use_power = IDLE_POWER_USE
-	idle_power_usage = 10
-	active_power_usage = 1500
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.1
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 1.5
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
 	circuit = /obj/item/circuitboard/machine/material_alloyer
 	light_outer_range = 3
@@ -76,10 +76,10 @@
 		return TRUE
 	return FALSE
 
-/obj/machinery/material_alloyer/AltClick(mob/user)
+/obj/machinery/material_alloyer/click_alt(mob/user)
 	if(attempt_material_forge())
-		return TRUE
-	. = ..()
+		return CLICK_ACTION_SUCCESS
+	return CLICK_ACTION_BLOCKING
 
 /obj/machinery/material_alloyer/proc/attempt_material_forge()
 	if(!slot_one_item || !slot_two_item)

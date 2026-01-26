@@ -22,7 +22,10 @@
 	if(issilicon(user) && get_dist(src,user) > 1)
 		return attack_hand(user)
 
-	if(istype(attacking_object, /obj/item/stock_parts/cell) && opened)
+	if(istype(attacking_object, /obj/item/stock_parts/power_store) && opened)
+		if(istype(attacking_object, /obj/item/stock_parts/power_store/cell/microfusion))
+			balloon_alert(user, "cell not compatible!")
+			return
 		if(cell)
 			balloon_alert(user, "cell already installed!")
 			return
@@ -34,7 +37,6 @@
 		cell = attacking_object
 		user.visible_message(span_notice("[user.name] inserts the power cell to [src.name]!"))
 		balloon_alert(user, "cell inserted")
-		chargecount = 0
 		update_appearance()
 		return
 
@@ -117,7 +119,7 @@
 			if(machine_stat & BROKEN)
 				balloon_alert(user, "frame is too damaged!")
 				return
-			if(!pseudocircuit.adapt_circuit(user, 50))
+			if(!pseudocircuit.adapt_circuit(user, 0.05 * STANDARD_CELL_CHARGE))
 				return
 			user.visible_message(span_notice("[user] fabricates a circuit and places it into [src]."), \
 			span_notice("You adapt a power control board and click it into place in [src]'s guts."))
@@ -129,12 +131,11 @@
 			if(machine_stat & MAINT)
 				balloon_alert(user, "no board for a cell!")
 				return
-			if(!pseudocircuit.adapt_circuit(user, 500))
+			if(!pseudocircuit.adapt_circuit(user, 0.5 * STANDARD_CELL_CHARGE))
 				return
-			var/obj/item/stock_parts/cell/crap/empty/bad_cell = new(src)
+			var/obj/item/stock_parts/power_store/cell/crap/empty/bad_cell = new(src)
 			bad_cell.forceMove(src)
 			cell = bad_cell
-			chargecount = 0
 			user.visible_message(span_notice("[user] fabricates a weak power cell and places it into [src]."), \
 			span_warning("Your [pseudocircuit.name] whirrs with strain as you create a weak power cell and place it into [src]!"))
 			update_appearance()
@@ -226,7 +227,7 @@
 				return
 			balloon_alert(ethereal, "received charge")
 			stomach.adjust_charge(APC_POWER_GAIN)
-			cell.use(APC_POWER_GAIN)
+			cell.use(APC_POWER_GAIN * 2000)
 		return
 
 	if(cell.charge >= cell.maxcharge - APC_POWER_GAIN)
@@ -245,7 +246,7 @@
 	if(istype(stomach))
 		balloon_alert(ethereal, "transfered power")
 		stomach.adjust_charge(-APC_POWER_GAIN)
-		cell.give(APC_POWER_GAIN)
+		cell.give(APC_POWER_GAIN * 2000)
 	else
 		balloon_alert(ethereal, "can't transfer power!")
 

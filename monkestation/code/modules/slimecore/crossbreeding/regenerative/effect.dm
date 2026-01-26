@@ -8,7 +8,7 @@
 	processing_speed = STATUS_EFFECT_PRIORITY
 	/// The damage healed (for each type) per tick.
 	/// This is multipled against the multiplier derived from cooldowns.
-	var/base_healing_amt = 5
+	var/base_healing_amt = 4
 	/// The number multiplied against the base healing amount,
 	/// used for the "diminishing returns" cooldown effect.
 	var/multiplier = 1
@@ -65,7 +65,6 @@
 
 /datum/status_effect/regenerative_extract/proc/heal_damage(heal_amt)
 	owner.heal_overall_damage(brute = heal_amt, burn = heal_amt, updating_health = FALSE)
-	owner.stamina?.adjust(-heal_amt, forced = TRUE)
 	owner.adjustOxyLoss(-heal_amt, updating_health = FALSE)
 	owner.adjustToxLoss(-heal_amt, updating_health = FALSE, forced = TRUE)
 	owner.adjustCloneLoss(-heal_amt, updating_health = FALSE)

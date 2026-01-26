@@ -84,3 +84,11 @@ export const feature_satyr_tail: FeatureChoiced = {
   small_supplemental: false,
   component: FeatureDropdownInput,
 };
+
+export const pod_color: Feature<string> = {
+  name: 'Pod Hair Color',
+  small_supplemental: false,
+  description:
+    "The color of your character's pod hair.",
+  component: FeatureColorInput,
+};

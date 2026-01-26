@@ -2,8 +2,6 @@
 #define SUCKER_UPGRADE_BALANCER "balancer"
 #define SUCKER_UPGRADE_CAPACITY "capacity"
 
-GLOBAL_LIST_EMPTY_TYPED(ooze_suckers, /obj/machinery/plumbing/ooze_sucker)
-
 ///this cannablizes floor_pump code but rips specific reagents and and such just does stuff itself so it can be expanded easier in the future
 /obj/machinery/plumbing/ooze_sucker
 	name = "ooze sucker"
@@ -49,19 +47,12 @@ GLOBAL_LIST_EMPTY_TYPED(ooze_suckers, /obj/machinery/plumbing/ooze_sucker)
 
 /obj/machinery/plumbing/ooze_sucker/Initialize(mapload, bolt, layer)
 	. = ..()
-	GLOB.ooze_suckers += src
 	AddComponent(/datum/component/plumbing/simple_supply, bolt, layer)
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/plumbing/ooze_sucker/LateInitialize()
+/obj/machinery/plumbing/ooze_sucker/post_machine_initialize()
 	. = ..()
-	locate_machinery()
 
-/obj/machinery/plumbing/ooze_sucker/Destroy()
-	GLOB.ooze_suckers -= src
-	return ..()
-
-/obj/machinery/plumbing/ooze_sucker/locate_machinery(multitool_connection)
 	if(!mapping_id)
 		return
 	for(var/obj/machinery/slime_pen_controller/main as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/slime_pen_controller))
@@ -230,7 +221,7 @@ GLOBAL_LIST_EMPTY_TYPED(ooze_suckers, /obj/machinery/plumbing/ooze_sucker)
 	targeted_group.transfer_specific_reagents(reagents, target_value, reagents_to_check = typesof(/datum/reagent/slime_ooze), remover = affected_turf.liquids,  merge = TRUE)
 	drained_last_process = TRUE
 
-/obj/machinery/plumbing/ooze_sucker/CtrlClick(mob/user)
+/obj/machinery/plumbing/ooze_sucker/click_ctrl(mob/user)
 	if(!can_interact(user) || !length(upgrade_disks))
 		return ..()
 
@@ -259,8 +250,11 @@ GLOBAL_LIST_EMPTY_TYPED(ooze_suckers, /obj/machinery/plumbing/ooze_sucker)
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
-	toggle_state()
-	balloon_alert_to_viewers("[turned_on ? "enabled" : "disabled"] ooze sucker")
+	if(anchored)
+		toggle_state()
+		balloon_alert_to_viewers("[turned_on ? "enabled" : "disabled"] ooze sucker")
+	else
+		balloon_alert(user, "unanchored!")
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/plumbing/ooze_sucker/multitool_act(mob/living/user, obj/item/multitool/multi)

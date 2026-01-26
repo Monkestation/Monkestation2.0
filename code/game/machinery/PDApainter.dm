@@ -352,6 +352,8 @@
 					continue
 
 				if(SSid_access.apply_trim_to_card(stored_id_card, path, copy_access = FALSE))
+					if(CONFIG_GET(flag/everyone_has_maint_access))
+						stored_id_card.add_access(list(ACCESS_MAINT_TUNNELS))
 					return TRUE
 
 				to_chat(usr, span_warning("The trim you selected could not be added to \the [stored_id_card]. You will need a rarer ID card to imprint that trim data."))

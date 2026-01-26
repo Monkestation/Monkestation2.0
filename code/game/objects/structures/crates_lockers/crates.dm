@@ -10,8 +10,8 @@
 	allow_objects = TRUE
 	allow_dense = TRUE
 	dense_when_open = TRUE
-	//One third chance of ashing things inside
-	ash_chance = 33
+	//One quarter chance of ashing things inside.
+	ash_chance = 25
 	delivery_icon = "deliverycrate"
 	open_sound = 'sound/machines/crate_open.ogg'
 	close_sound = 'sound/machines/crate_close.ogg'
@@ -27,7 +27,7 @@
 	/// The time spent to climb this crate.
 	var/crate_climb_time = 2 SECONDS
 	/// The reference of the manifest paper attached to the cargo crate.
-	var/obj/item/paper/fluff/jobs/cargo/manifest/manifest
+	var/datum/weakref/manifest
 	/// Where the Icons for lids are located.
 	var/lid_icon = 'icons/obj/storage/crates.dmi'
 	/// Icon state to use for lid to display when opened. Leave undefined if there isn't one.
@@ -136,12 +136,17 @@
 
 ///Removes the supply manifest from the closet
 /obj/structure/closet/crate/proc/tear_manifest(mob/user)
-	to_chat(user, span_notice("You tear the manifest off of [src]."))
+	var/obj/item/paper/fluff/jobs/cargo/manifest/our_manifest = manifest?.resolve()
+	if(QDELETED(our_manifest))
+		manifest = null
+		return
+	if(user)
+		to_chat(user, span_notice("You tear the manifest off of [src]."))
 	playsound(src, 'sound/items/poster_ripped.ogg', 75, TRUE)
 
-	manifest.forceMove(loc)
+	our_manifest.forceMove(drop_location(src))
 	if(ishuman(user))
-		user.put_in_hands(manifest)
+		user.put_in_hands(our_manifest)
 	manifest = null
 	update_appearance()
 
@@ -270,7 +275,9 @@
 	new /obj/item/reagent_containers/blood/o_plus(src)
 	new /obj/item/reagent_containers/blood/lizard(src)
 	new /obj/item/reagent_containers/blood/ethereal(src)
+	new /obj/item/reagent_containers/blood/spider(src)
 	for(var/i in 1 to 3)
+		new /obj/item/reagent_containers/chem_pack/saline(src)
 		new /obj/item/reagent_containers/blood/random(src)
 
 /obj/structure/closet/crate/freezer/surplus_limbs
@@ -309,6 +316,7 @@
 	name = "budgeted meteor satellites"
 	desc = "The lock seems to respond to Centcom's station goal announcements. CAUTION: Do not attempt to break the lock."
 	icon_state = "engi_secure_crate"
+	base_icon_state = "engi_secure_crate"
 	secure = TRUE
 	locked = TRUE
 

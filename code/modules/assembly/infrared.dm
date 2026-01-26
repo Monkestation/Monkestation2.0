@@ -23,9 +23,6 @@
 /obj/item/assembly/infra/proc/AfterRotation(mob/user, degrees)
 	refreshBeam()
 
-/obj/item/assembly/infra/AltClick(mob/user)
-	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
-
 /obj/item/assembly/infra/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	listeningTo = null
@@ -113,7 +110,10 @@
 			beams += I
 			I.master = src
 			I.setDir(_dir)
-			I.invisibility = visible? 0 : INVISIBILITY_ABSTRACT
+			if(visible)
+				I.RemoveInvisibility(REF(src))
+			else
+				I.SetInvisibility(INVISIBILITY_ABSTRACT, REF(src))
 			T = _T
 			_T = get_step(_T, _dir)
 			CHECK_TICK

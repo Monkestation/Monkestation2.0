@@ -25,7 +25,7 @@ export const OpposingForcePanel = (props) => {
   return (
     <Window
       title={'Opposing Force: ' + creator_ckey}
-      width={585}
+      width={595}
       height={840}
       theme={owner_antag ? 'syndicate' : 'admin'}
     >
@@ -243,13 +243,21 @@ export const OpposingForceTab = (props) => {
       </Stack.Item>
       <Stack.Item>
         <Section title="Backstory">
+          <Box mb="0.5em">
+            Provide a description of why you want to do bad things. Include
+            specifics such as what lead upto the events that made you want to do
+            bad things, think of it as though you were your character, react
+            appropriately. If you don&apos;t have any ideas, check the
+            #player-shared-opfors channel for some. (2000 char limit)
+          </Box>
           <TextArea
+            expensive
             disabled={!can_edit}
             height="100px"
             value={backstory}
-            placeholder="Provide a description of why you want to do bad things. Include specifics such as what lead upto the events that made you want to do bad things, think of it as though you were your character, react appropriately. If you don't have any ideas, check the #player-shared-opfors channel for some. (2000 char limit)"
             maxLength={2000}
-            onChange={(_e, value) =>
+            width="100%"
+            onChange={(value) =>
               act('set_backstory', {
                 backstory: value,
               })
@@ -260,6 +268,7 @@ export const OpposingForceTab = (props) => {
       <Stack.Item>
         <Section
           title="Objectives"
+          p="0.2em"
           buttons={
             <Button
               icon="plus"
@@ -348,12 +357,13 @@ export const OpposingForceObjectives = (props) => {
                   <Stack.Item>Title</Stack.Item>
                   <Stack.Item>
                     <Input
+                      expensive
                       disabled={!can_edit}
                       width="100%"
                       placeholder="blank objective"
                       value={selectedObjective.title}
                       maxLength={64}
-                      onChange={(e, value) =>
+                      onChange={(value) =>
                         act('set_objective_title', {
                           objective_ref: selectedObjective.ref,
                           title: value,
@@ -377,7 +387,7 @@ export const OpposingForceObjectives = (props) => {
                       format={(value) => round(value)}
                       minValue={0}
                       maxValue={500}
-                      onDrag={(e, value) =>
+                      onChange={(_, value) =>
                         act('set_objective_intensity', {
                           objective_ref: selectedObjective.ref,
                           new_intensity_level: value,
@@ -466,11 +476,12 @@ export const OpposingForceObjectives = (props) => {
                   <Stack.Item>
                     <TextArea
                       fluid
+                      expensive
                       disabled={!can_edit}
                       height="85px"
                       maxLength={1000}
                       value={selectedObjective.description}
-                      onChange={(e, value) =>
+                      onChange={(value) =>
                         act('set_objective_description', {
                           objective_ref: selectedObjective.ref,
                           new_desciprtion: value,
@@ -492,11 +503,13 @@ export const OpposingForceObjectives = (props) => {
                   </Stack.Item>
                   <Stack.Item>
                     <TextArea
+                      expensive
                       disabled={!can_edit}
                       height="85px"
+                      width="100%"
                       value={selectedObjective.justification}
                       maxLength={1000}
-                      onChange={(e, value) =>
+                      onChange={(value) =>
                         act('set_objective_justification', {
                           objective_ref: selectedObjective.ref,
                           new_justification: value,
@@ -549,7 +562,7 @@ export const EquipmentTab = (props) => {
                           value={equipment.count}
                           minValue={1}
                           maxValue={5}
-                          onChange={(e, value) =>
+                          onChange={(value) =>
                             act('set_equipment_count', {
                               selected_equipment_ref: equipment.ref,
                               new_equipment_count: value,
@@ -579,6 +592,7 @@ export const EquipmentTab = (props) => {
                   </LabeledList.Item>
                 </LabeledList>
                 <Input
+                  expensive
                   mt={1}
                   mb={1}
                   disabled={!can_edit}
@@ -586,7 +600,7 @@ export const EquipmentTab = (props) => {
                   placeholder="Reason for item"
                   value={equipment.reason}
                   maxLength={1000}
-                  onChange={(e, value) =>
+                  onChange={(value) =>
                     act('set_equipment_reason', {
                       selected_equipment_ref: equipment.ref,
                       new_equipment_reason: value,
@@ -662,7 +676,7 @@ export const AdminChatTab = (props) => {
           placeholder="Send a message or command using '/'"
           mt={1}
           maxLength={1024}
-          onEnter={(e, value) =>
+          onEnter={(value) =>
             act('send_message', {
               message: value,
             })

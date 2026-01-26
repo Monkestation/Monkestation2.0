@@ -133,7 +133,7 @@
 	var/mob/living/silicon/robot/new_borg = new /mob/living/silicon/robot(loc)
 
 	new_borg.gender = gender
-	new_borg.invisibility = 0
+	new_borg.SetInvisibility(INVISIBILITY_NONE)
 
 	if(client)
 		new_borg.updatename(client)
@@ -251,7 +251,7 @@
 	return new_slime
 
 /mob/proc/become_overmind(starting_points = OVERMIND_STARTING_POINTS)
-	var/mob/camera/blob/B = new /mob/camera/blob(get_turf(src), starting_points)
+	var/mob/eye/blob/B = new /mob/eye/blob(get_turf(src), starting_points)
 	B.PossessByPlayer(key)
 	. = B
 	qdel(src)
@@ -286,7 +286,7 @@
 
 	SSblackbox.record_feedback("amount", "gorillas_created", 1)
 
-	var/Itemlist = get_equipped_items(include_pockets = TRUE)
+	var/Itemlist = get_equipped_items(INCLUDE_POCKETS)
 	Itemlist += held_items
 	for(var/obj/item/W in Itemlist)
 		dropItemToGround(W, TRUE)

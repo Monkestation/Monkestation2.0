@@ -481,7 +481,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/cabin)
 "bF" = (
-/obj/machinery/atmospherics/components/unary/cryo_cell,
+/obj/machinery/cryo_cell,
 /turf/open/floor/iron/white,
 /area/awaymission/cabin)
 "bG" = (
@@ -3600,7 +3600,7 @@
 /area/awaymission/cabin/snowforest)
 "sK" = (
 /obj/item/clothing/shoes/sneakers/brown,
-/obj/item/clothing/head/hats/warden/police{
+/obj/item/clothing/head/hats/warden/spacepol{
 	desc = "I am the law!"
 	},
 /obj/structure/closet{

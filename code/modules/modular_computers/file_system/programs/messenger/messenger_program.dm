@@ -8,14 +8,14 @@
 /datum/computer_file/program/messenger
 	filename = "nt_messenger"
 	filedesc = "Direct Messenger"
-	category = PROGRAM_CATEGORY_MISC
-	program_icon_state = "command"
+	downloader_category = PROGRAM_CATEGORY_DEVICE
+	program_open_overlay = "command"
 	extended_desc = "This program allows old-school communication with other modular devices."
 	size = 0
 	undeletable = TRUE // It comes by default in tablets, can't be downloaded, takes no space and should obviously not be able to be deleted.
-	header_program = TRUE
-	available_on_ntnet = FALSE
-	usage_flags = PROGRAM_TABLET
+	power_cell_use = NONE
+	program_flags = PROGRAM_HEADER | PROGRAM_RUNS_WITHOUT_POWER
+	can_run_on_flags = PROGRAM_PDA
 	ui_header = "ntnrc_idle.gif"
 	tgui_id = "NtosMessenger"
 	program_icon = "comment-alt"
@@ -27,6 +27,8 @@
 	COOLDOWN_DECLARE(last_text)
 	/// even more wisdom from PDA.dm - "no everyone spamming" (prevents people from spamming the same message over and over)
 	COOLDOWN_DECLARE(last_text_everyone)
+	/// Cooldown for changing ringtone sound
+	COOLDOWN_DECLARE(ringtone_set_cooldown)
 	/// Whether or not we're in a mime PDA.
 	var/mime_mode = FALSE
 	/// Whether this app can send messages to all.
@@ -47,6 +49,8 @@
 	var/selected_image = null
 	/// Whether or not we're sending (or trying to send) a virus.
 	var/sending_virus = FALSE
+	/// The sound file to play when receiving a message || Monkestation Addition
+	var/ringtone_sound = PDA_RINGTONE_SOUND_DEFAULT
 
 /datum/computer_file/program/messenger/on_install()
 	. = ..()
@@ -320,6 +324,20 @@
 			selected_image = TEMP_IMAGE_PATH(REF(src))
 			update_pictures_for_all()
 			return TRUE
+		if("PDA_soundSet")
+			var/new_sound = params["sound"]
+			if(!(new_sound in GLOB.pda_ringtone_sounds))
+				return FALSE
+
+			ringtone_sound = new_sound
+
+			// Plays a preview of the sound selected
+			var/mob/living/usr_mob = usr
+			if(in_range(computer, usr_mob) && COOLDOWN_FINISHED(src, ringtone_set_cooldown))
+				playsound(computer, GLOB.pda_ringtone_sounds[new_sound], 30, TRUE, mixer_channel = CHANNEL_RINGTONES, extrarange = - 4)
+				COOLDOWN_START(src, ringtone_set_cooldown, 1 SECOND)
+
+			return TRUE
 
 /datum/computer_file/program/messenger/ui_static_data(mob/user)
 	var/list/static_data = list()
@@ -352,7 +370,10 @@
 	data["alert_silenced"] = alert_silenced
 	data["sending_and_receiving"] = sending_and_receiving
 	data["open_chat"] = viewing_messages_of
-
+	data["ringtone_sound"] = ringtone_sound
+	data["available_sounds"] = list()
+	for(var/sound_name in GLOB.pda_ringtone_sounds)
+		data["available_sounds"] += sound_name
 	// silicons handle selecting photos a bit differently for now
 	if(!issilicon(user))
 		var/list/stored_photos = list()
@@ -672,7 +693,7 @@
 			reply = "(<a href='byond://?src=[REF(src)];choice=[reply_href];skiprefresh=1;target=[REF(chat)]'>Reply</a>)"
 
 		// resolving w/o nullcheck here, assume the messenger exists if a real person sent a message
-		var/datum/computer_file/program/messenger/sender_messenger = chat.recipient?.resolve()
+		var/datum/computer_file/program/messenger/sender_messenger = chat?.recipient?.resolve()
 
 		var/sender_title = is_fake_user ? STRINGIFY_PDA_TARGET(fake_name, fake_job) : get_messenger_name(sender_messenger)
 		var/sender_name = is_fake_user ? fake_name : sender_messenger.computer.saved_identification
@@ -689,8 +710,9 @@
 	if (alert_able && should_ring)
 		computer.ring(ringtone, list(receiver_mob))
 
-	SStgui.update_uis(computer)
-	update_pictures_for_all()
+	if(computer.active_program == src)
+		SStgui.update_uis(computer)
+		update_pictures_for_all()
 
 /// topic call that answers to people pressing "(Reply)" in chat
 /datum/computer_file/program/messenger/Topic(href, href_list)

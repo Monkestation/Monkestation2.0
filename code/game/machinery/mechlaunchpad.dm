@@ -14,11 +14,6 @@
 /obj/machinery/mechpad/Initialize(mapload)
 	. = ..()
 	display_name = "Orbital Pad - [get_area_name(src)]"
-	GLOB.mechpad_list += src
-
-/obj/machinery/mechpad/Destroy()
-	GLOB.mechpad_list -= src
-	return ..()
 
 /obj/machinery/mechpad/examine(mob/user)
 	. = ..()
@@ -39,7 +34,7 @@
 	if(!panel_open)
 		return
 	multi.set_buffer(src)
-	to_chat(user, span_notice("You save the data in the [multi.name]'s buffer."))
+	balloon_alert(user, "saved to multitool buffer")
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/mechpad/wirecutter_act(mob/living/user, obj/item/tool)
@@ -62,7 +57,7 @@
 		"style" = STYLE_SEETHROUGH,
 		"reverse_dropoff_coords" = list(reverse_turf.x, reverse_turf.y, reverse_turf.z)
 	))
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 
 /obj/structure/closet/supplypod/mechpod
 	style = STYLE_SEETHROUGH

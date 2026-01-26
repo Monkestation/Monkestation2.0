@@ -26,7 +26,7 @@
 	/// The length of the knockdown applied to the user on clumsy_check()
 	var/clumsy_knockdown_time = 18 SECONDS
 	/// How much stamina damage we deal on a successful hit against a living, non-cyborg mob.
-	var/stamina_damage = 95 //3 hit stam crit from full, but they most likely wont be due to running a bit
+	var/stamina_damage = 45 //1 hit to cause loss of sprint - 2 hits to slow - 3 hits to stam crit
 	/// Chance of causing force_say() when stunning a human mob
 	var/force_say_chance = 33
 	/// Can we stun cyborgs?
@@ -64,7 +64,7 @@
 	. = ..()
 	// Adding an extra break for the sake of presentation
 	if(stamina_damage != 0)
-		offensive_notes = "It takes [span_warning("[CEILING(100 / stamina_damage, 1)] stunning hit\s")] to stun an enemy."
+		offensive_notes = "It takes [span_warning("[CEILING(STAMINA_MAX  / stamina_damage, 1)] stunning hit\s")] to stun an enemy."
 
 	register_item_context()
 
@@ -143,7 +143,7 @@
 	if(!active || (user.istate & ISTATE_SECONDARY))
 		return BATON_DO_NORMAL_ATTACK
 
-	if(cooldown_check > world.time)
+	if(cooldown_check > world.time || HAS_TRAIT_FROM(target, TRAIT_IWASBATONED, REF(user)))
 		var/wait_desc = get_wait_description()
 		if (wait_desc)
 			to_chat(user, wait_desc)
@@ -171,13 +171,10 @@
 		target.visible_message(desc["visible"], desc["local"])
 
 /obj/item/melee/baton/proc/check_parried(mob/living/carbon/human/human_target, mob/living/user)
-	if(!ishuman(human_target))
-		return
-	if (human_target.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK))
+	if (human_target.check_block(src, 0, "[user]'s [name]", MELEE_ATTACK))
 		playsound(human_target, 'sound/weapons/genhit.ogg', 50, TRUE)
 		return TRUE
-	if(check_martial_counter(human_target, user))
-		return TRUE
+	return FALSE
 
 /obj/item/melee/baton/proc/finalize_baton_attack(mob/living/target, mob/living/user, modifiers, in_attack_chain = TRUE)
 	if(!in_attack_chain)
@@ -205,12 +202,16 @@
 		additional_effects_cyborg(target, user)
 	else
 		if(!trait_check)
-			target.stamina.adjust(-stamina_damage)
-		else
-			var/stamina_to_min = (target.stamina.maximum * 0.29)
-			target.stamina.adjust_to(-stamina_damage, stamina_to_min)
-		if(!trait_check)
+			target.stamina.adjust(-stamina_damage) //Intentionally armor piercing!
 			target.Knockdown((isnull(stun_override) ? knockdown_time : stun_override))
+
+			if(ishuman(target))
+				if (!target.has_movespeed_modifier(/datum/movespeed_modifier/shove))
+					target.add_movespeed_modifier(/datum/movespeed_modifier/shove)
+				addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living/carbon, clear_shove_slowdown)), SHOVE_SLOWDOWN_LENGTH, TIMER_UNIQUE | TIMER_OVERRIDE)
+				target.Disorient(SHOVE_SLOWDOWN_LENGTH)
+		else
+			target.stamina.adjust(-stamina_damage * 0.5)
 		additional_effects_non_cyborg(target, user)
 	return TRUE
 
@@ -256,6 +257,9 @@
 /obj/item/melee/baton/proc/set_batoned(mob/living/target, mob/living/user, cooldown)
 	if(!cooldown)
 		return
+	var/user_ref = REF(user) // avoids harddels.
+	ADD_TRAIT(target, TRAIT_IWASBATONED, user_ref)
+	addtimer(TRAIT_CALLBACK_REMOVE(target, TRAIT_IWASBATONED, user_ref), cooldown)
 
 /obj/item/melee/baton/proc/clumsy_check(mob/living/user, mob/living/intented_target)
 	if(!active || !HAS_TRAIT(user, TRAIT_CLUMSY) || prob(50))
@@ -288,7 +292,7 @@
 		user.apply_damage(stamina_damage, STAMINA)
 		additional_effects_non_cyborg(user, user) // user is the target here
 
-	user.apply_damage(2*force, BRUTE, BODY_ZONE_HEAD)
+	user.apply_damage(2*force, BRUTE, BODY_ZONE_HEAD, attacking_item = src)
 
 	log_combat(user, user, "accidentally stun attacked [user.p_them()]self due to their clumsiness", src)
 
@@ -319,6 +323,8 @@
 	bare_wound_bonus = 5
 	clumsy_knockdown_time = 15 SECONDS
 	active = FALSE
+	cooldown = (2 SECONDS)
+	stamina_damage = 55 //2 hit stamcrit if the hits are landed quickly
 
 	/// The sound effecte played when our baton is extended.
 	var/on_sound = 'sound/weapons/batonextend.ogg'
@@ -339,12 +345,6 @@
 		attack_verb_simple_on = list("smack", "strike", "crack", "beat"), \
 	)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
-
-//monkestation edit start
-/obj/item/melee/baton/telescopic/additional_effects_non_cyborg(mob/living/target, mob/living/user)
-	. = ..()
-	target.Disorient(6 SECONDS, 5, paralyze = 3 SECONDS, stack_status = FALSE)
-//monkestation edit end
 
 /obj/item/melee/baton/telescopic/suicide_act(mob/living/user)
 	var/mob/living/carbon/human/human_user = user
@@ -428,10 +428,10 @@
 	armor_type = /datum/armor/baton_security
 	throwforce = 7
 	force_say_chance = 50
-	stamina_damage = 100 //monke edit
+	stamina_damage = 45
+	cooldown = (1.3 SECONDS)
 	knockdown_time = 5 SECONDS
 	clumsy_knockdown_time = 15 SECONDS
-	cooldown = 1 SECONDS //monke edit, enjoy your games, seccies
 	on_stun_sound = 'sound/weapons/egloves.ogg'
 	on_stun_volume = 50
 	active = FALSE
@@ -443,9 +443,9 @@
 	var/self_knockdown_time = 1 SECONDS
 
 	var/throw_stun_chance = 35
-	var/obj/item/stock_parts/cell/cell
+	var/obj/item/stock_parts/power_store/cell/cell
 	var/preload_cell_type //if not empty the baton starts with this type of cell
-	var/cell_hit_cost = 1000
+	var/cell_hit_cost = STANDARD_CELL_CHARGE
 	var/can_remove_cell = TRUE
 	var/convertible = TRUE //if it can be converted with a conversion kit
 
@@ -457,7 +457,7 @@
 /obj/item/melee/baton/security/Initialize(mapload)
 	. = ..()
 	if(preload_cell_type)
-		if(!ispath(preload_cell_type, /obj/item/stock_parts/cell))
+		if(!ispath(preload_cell_type, /obj/item/stock_parts/power_store/cell))
 			log_mapping("[src] at [AREACOORD(src)] had an invalid preload_cell_type: [preload_cell_type].")
 		else
 			cell = new preload_cell_type(src)
@@ -561,8 +561,8 @@
 	return TRUE
 
 /obj/item/melee/baton/security/attackby(obj/item/item, mob/user, params)
-	if(istype(item, /obj/item/stock_parts/cell))
-		var/obj/item/stock_parts/cell/active_cell = item
+	if(istype(item, /obj/item/stock_parts/power_store/cell))
+		var/obj/item/stock_parts/power_store/cell/active_cell = item
 		if(cell)
 			to_chat(user, span_warning("[src] already has a cell!"))
 		else
@@ -644,9 +644,8 @@
  * After a period of time, we then check to see what stun duration we give.
  */
 /obj/item/melee/baton/security/additional_effects_non_cyborg(mob/living/target, mob/living/user)
-	target.Disorient(6 SECONDS, 5, paralyze = 10 SECONDS, stack_status = FALSE)
-
 	SEND_SIGNAL(target, COMSIG_LIVING_MINOR_SHOCK)
+	return ..()
 
 /obj/item/melee/baton/security/get_wait_description()
 	return span_danger("The baton is still charging!")
@@ -665,7 +664,7 @@
 
 /obj/item/melee/baton/security/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
-	if(active && prob(throw_stun_chance) && isliving(hit_atom))
+	if(!. && active && prob(throw_stun_chance) && isliving(hit_atom))
 		finalize_baton_attack(hit_atom, thrownby?.resolve(), in_attack_chain = FALSE)
 
 /obj/item/melee/baton/security/emp_act(severity)
@@ -689,7 +688,7 @@
 	update_appearance()
 
 /obj/item/melee/baton/security/loaded //this one starts with a cell pre-installed.
-	preload_cell_type = /obj/item/stock_parts/cell/high
+	preload_cell_type = /obj/item/stock_parts/power_store/cell/high
 
 //Makeshift stun baton. Replacement for stun gloves.
 /obj/item/melee/baton/security/cattleprod
@@ -784,10 +783,10 @@
 	var/caught = hit_atom.hitby(src, skipcatch = FALSE, hitpush = FALSE, throwingdatum = throwingdatum)
 	var/mob/thrown_by = thrownby?.resolve()
 	if(isliving(hit_atom) && !iscyborg(hit_atom) && !caught && prob(throw_stun_chance))//if they are a living creature and they didn't catch it
-		finalize_baton_attack(hit_atom, thrown_by, in_attack_chain = FALSE)
+		finalize_baton_attack(hit_atom, thrown_by, in_attack_chain = TRUE)
 
 /obj/item/melee/baton/security/boomerang/loaded //Same as above, comes with a cell.
-	preload_cell_type = /obj/item/stock_parts/cell/high
+	preload_cell_type = /obj/item/stock_parts/power_store/cell/high
 
 /obj/item/melee/baton/security/cattleprod/teleprod
 	name = "teleprod"

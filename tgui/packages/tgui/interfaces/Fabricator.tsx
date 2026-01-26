@@ -57,7 +57,7 @@ export const Fabricator = (props) => {
           </Stack.Item>
         </Stack>
         {!!onHold && (
-          <Dimmer style={{ 'font-size': '2em', 'text-align': 'center' }}>
+          <Dimmer style={{ fontSize: '2em', textAlign: 'center' }}>
             Mineral access is on hold, please contact the quartermaster.
           </Dimmer>
         )}
@@ -115,10 +115,14 @@ type CustomPrintProps = {
 const CustomPrint = (props: CustomPrintProps) => {
   const { act } = useBackend();
   const { design, available } = props;
-  const canPrint = !Object.entries(design.cost).some(
-    ([material, amount]) =>
-      !available[material] || amount > (available[material] ?? 0),
+  let maxMult = Object.entries(design.cost).reduce(
+    (accumulator: number, [material, required]) => {
+      return Math.min(accumulator, (available[material] || 0) / required);
+    },
+    Infinity,
   );
+  maxMult = Math.min(Math.floor(maxMult), 50);
+  const canPrint = maxMult > 0;
 
   return (
     <div
@@ -128,10 +132,9 @@ const CustomPrint = (props: CustomPrintProps) => {
       ])}
     >
       <Button.Input
-        content={'[Max: ' + design.maxmult + ']'}
+        buttonText={`[Max: ${maxMult}]`}
         color={'transparent'}
-        maxValue={design.maxmult}
-        onCommit={(_e, value: string) =>
+        onCommit={(value: string) =>
           act('build', {
             ref: design.id,
             amount: value,

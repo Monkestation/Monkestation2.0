@@ -4,6 +4,7 @@
 	base_icon_state = "bluespace_sender"
 	name = "Bluespace Gas Sender"
 	desc = "Sends gases to the bluespace network to be shared with the connected vendors, who knows what's beyond!"
+	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT
 
 	density = TRUE
 	max_integrity = 300
@@ -25,9 +26,6 @@
 	///Amount of credits gained from each vendor
 	var/credits_gained = 0
 
-/// All bluespace gas senders
-GLOBAL_LIST_EMPTY_TYPED(bluespace_senders, /obj/machinery/atmospherics/components/unary/bluespace_sender)
-
 /datum/armor/unary_bluespace_sender
 	energy = 100
 	fire = 80
@@ -43,19 +41,8 @@ GLOBAL_LIST_EMPTY_TYPED(bluespace_senders, /obj/machinery/atmospherics/component
 		var/datum/gas/gas = gas_id
 		base_prices[gas_id] = initial(gas.base_value)
 
-	GLOB.bluespace_senders += src
-
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 	register_context()
-
-/obj/machinery/atmospherics/components/unary/bluespace_sender/Destroy()
-	if(bluespace_network.total_moles())
-		var/turf/local_turf = get_turf(src)
-		local_turf.assume_air(bluespace_network)
-
-	GLOB.bluespace_senders -= src
-
-	return ..()
 
 /obj/machinery/atmospherics/components/unary/bluespace_sender/examine(mob/user)
 	. = ..()
@@ -74,6 +61,11 @@ GLOBAL_LIST_EMPTY_TYPED(bluespace_senders, /obj/machinery/atmospherics/component
 			context[SCREENTIP_CONTEXT_LMB] = "Rotate"
 			context[SCREENTIP_CONTEXT_RMB] = "[anchored ? "Unan" : "An"]chor"
 	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/machinery/atmospherics/components/unary/bluespace_sender/is_connectable()
+	if(!anchored)
+		return FALSE
+	. = ..()
 
 /obj/machinery/atmospherics/components/unary/bluespace_sender/update_icon_state()
 	if(panel_open)
@@ -101,6 +93,12 @@ GLOBAL_LIST_EMPTY_TYPED(bluespace_senders, /obj/machinery/atmospherics/component
 	bluespace_network.temperature = T20C
 	update_parents()
 
+/obj/machinery/atmospherics/components/unary/bluespace_sender/relocate_airs()
+	if(bluespace_network.total_moles() > 0)
+		airs[1].merge(bluespace_network)
+		airs[1].garbage_collect()
+	return ..()
+
 /obj/machinery/atmospherics/components/unary/bluespace_sender/screwdriver_act(mob/living/user, obj/item/tool)
 	if(on)
 		balloon_alert(user, "turn off!")
@@ -108,22 +106,19 @@ GLOBAL_LIST_EMPTY_TYPED(bluespace_senders, /obj/machinery/atmospherics/component
 	if(!anchored)
 		balloon_alert(user, "anchor!")
 		return ITEM_INTERACT_SUCCESS
-	if(default_deconstruction_screwdriver(user, "[base_icon_state]_open", "[base_icon_state]", tool))
+	if(default_deconstruction_screwdriver(user, "[base_icon_state]_open", "[base_icon_state]_off", tool))
 		change_pipe_connection(panel_open)
 		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/atmospherics/components/unary/bluespace_sender/crowbar_act(mob/living/user, obj/item/tool)
-	default_deconstruction_crowbar(tool, custom_deconstruct = bluespace_network.total_moles() > 0 ? TRUE : FALSE)
-	say("WARNING - Bluespace network can contain hazardous gases, deconstruct with caution!")
-	if(!do_after(user, 3 SECONDS, src))
-		return
-	tool.play_tool_sound(src, 50)
-	deconstruct(TRUE)
+	if(panel_open && bluespace_network.total_moles() > 0 && !nodes[1])
+		say("WARNING - Bluespace network can contain hazardous gases, deconstruct with caution!")
+	return crowbar_deconstruction_act(user, tool)
 
 /obj/machinery/atmospherics/components/unary/bluespace_sender/multitool_act(mob/living/user, obj/item/item)
 	var/obj/item/multitool/multitool = item
 	multitool.set_buffer(src)
-	to_chat(user, span_notice("You store linkage information in [item]'s buffer."))
+	balloon_alert(user, "saved to multitool buffer")
 	return TRUE
 
 /obj/machinery/atmospherics/components/unary/bluespace_sender/wrench_act(mob/living/user, obj/item/tool)
@@ -134,6 +129,7 @@ GLOBAL_LIST_EMPTY_TYPED(bluespace_senders, /obj/machinery/atmospherics/component
 		balloon_alert(user, "open panel!")
 		return
 	if(default_unfasten_wrench(user, tool))
+		change_pipe_connection(!anchored)
 		return ITEM_INTERACT_SUCCESS
 	return
 
@@ -141,17 +137,16 @@ GLOBAL_LIST_EMPTY_TYPED(bluespace_senders, /obj/machinery/atmospherics/component
 	if(!..())
 		return FALSE
 	set_init_directions()
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 	return TRUE
 
-/obj/machinery/atmospherics/components/unary/bluespace_sender/CtrlClick(mob/living/user)
+/obj/machinery/atmospherics/components/unary/bluespace_sender/click_ctrl(mob/living/user)
 	if(!panel_open)
 		if(!can_interact(user))
 			return
-		on = !on
+		set_on(!on)
 		balloon_alert(user, "turned [on ? "on" : "off"]")
 		investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
-		update_appearance()
 		return
 	. = ..()
 
@@ -201,9 +196,8 @@ GLOBAL_LIST_EMPTY_TYPED(bluespace_senders, /obj/machinery/atmospherics/component
 
 	switch(action)
 		if("power")
-			on = !on
+			set_on(!on)
 			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", INVESTIGATE_ATMOS)
-			update_appearance()
 			. = TRUE
 
 		if("rate")

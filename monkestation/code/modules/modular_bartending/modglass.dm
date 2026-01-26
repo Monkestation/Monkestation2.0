@@ -60,7 +60,7 @@ GLOBAL_LIST_EMPTY(glass_variants)
 	rim = RIM_LARGE
 	variants = LARGE_VARIANTS
 
-/obj/item/reagent_containers/cup/glass/modglass/Initialize()
+/obj/item/reagent_containers/cup/glass/modglass/Initialize(mapload)
 	. = ..()
 	if(variants)
 		glass_skins = glass_variants_list()
@@ -76,14 +76,15 @@ GLOBAL_LIST_EMPTY(glass_variants)
 	return GLOB.glass_variants[rim] = glass_skins
 
 //if this glass can be reskinned, open a radial menu containing the skins, and change the icon_state to whatever is chosen
-/obj/item/reagent_containers/cup/glass/modglass/AltClick(mob/user)
+/obj/item/reagent_containers/cup/glass/modglass/click_alt(mob/user)
 	if(!glass_skins)
-		return
+		return CLICK_ACTION_BLOCKING
 	var/choice = show_radial_menu(user, src, glass_skins, radius = 48, require_near = TRUE)
 	if(!choice || choice == icon_state)
-		return
+		return CLICK_ACTION_BLOCKING
 	icon_state = choice
 	update_icon()
+	return CLICK_ACTION_SUCCESS
 
 //if the object is a garnish, with a valid garnish_state, and there isnt already a garnish of the same type, add it to the list at the index of its layer
 /obj/item/reagent_containers/cup/glass/modglass/attackby(obj/item/garnish/garnish, mob/user, params)
@@ -105,10 +106,10 @@ GLOBAL_LIST_EMPTY(glass_variants)
 	update_icon()
 
 /**
-  * for each layer a garnish can be on, if there is a garnish in that layers index, apply a mutable appearance of its type and our rim size
-  * if the garnish is a "rim" garnish, it is instead split into two halves, one drawn below all others,
-  * and one above all others, allowing garnishes to be placed "inside" the glass
-  */
+	* for each layer a garnish can be on, if there is a garnish in that layers index, apply a mutable appearance of its type and our rim size
+	* if the garnish is a "rim" garnish, it is instead split into two halves, one drawn below all others,
+	* and one above all others, allowing garnishes to be placed "inside" the glass
+	*/
 /obj/item/reagent_containers/cup/glass/modglass/update_overlays()
 	. = ..()
 	var/rimtype = garnishes["2"]

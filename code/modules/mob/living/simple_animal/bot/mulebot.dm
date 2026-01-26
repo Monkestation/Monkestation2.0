@@ -26,7 +26,7 @@
 	buckle_prevents_pull = TRUE // No pulling loaded shit
 	bot_mode_flags = ~BOT_MODE_ROUNDSTART_POSSESSION
 
-	maints_access_required = list(ACCESS_ROBOTICS, ACCESS_CARGO)
+	req_one_access = list(ACCESS_ROBOTICS, ACCESS_CARGO)
 	radio_key = /obj/item/encryptionkey/headset_cargo
 	radio_channel = RADIO_CHANNEL_SUPPLY
 	bot_type = MULE_BOT
@@ -51,7 +51,7 @@
 	var/auto_pickup = TRUE /// true if auto-pickup at beacon
 	var/report_delivery = TRUE /// true if bot will announce an arrival to a location.
 
-	var/obj/item/stock_parts/cell/cell /// Internal Powercell
+	var/obj/item/stock_parts/power_store/cell/cell /// Internal Powercell
 	var/cell_move_power_usage = 1///How much power we use when we move.
 	var/num_steps = 0 ///The amount of steps we should take until we rest for a time.
 
@@ -77,7 +77,7 @@
 	access_card.add_access(cargo_trim.access + cargo_trim.wildcard_access)
 	prev_access = access_card.access.Copy()
 
-	cell = new /obj/item/stock_parts/cell/upgraded(src, 2000)
+	cell = new /obj/item/stock_parts/power_store/cell/upgraded(src, 2000)
 
 	var/static/mulebot_count = 0
 	mulebot_count += 1
@@ -166,7 +166,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 /mob/living/simple_animal/bot/mulebot/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(attacking_item, /obj/item/stock_parts/cell) && bot_cover_flags & BOT_COVER_MAINTS_OPEN)
+	if(istype(attacking_item, /obj/item/stock_parts/power_store/cell) && bot_cover_flags & BOT_COVER_MAINTS_OPEN)
 		if(cell)
 			to_chat(user, span_warning("[src] already has a power cell!"))
 			return TRUE
@@ -367,20 +367,14 @@
 
 // mousedrop a crate to load the bot
 // can load anything if hacked
-/mob/living/simple_animal/bot/mulebot/MouseDrop_T(atom/movable/AM, mob/user)
-	var/mob/living/L = user
-
-	if (!istype(L))
+/mob/living/simple_animal/bot/mulebot/mouse_drop_receive(atom/movable/AM, mob/user, params)
+	if(!isliving(user))
 		return
 
-	if(user.incapacitated() || (istype(L) && L.body_position == LYING_DOWN))
-		return
-
-	if(!istype(AM) || isdead(AM) || iscameramob(AM) || istype(AM, /obj/effect/dummy/phased_mob))
+	if(!istype(AM) || isdead(AM) || iseyemob(AM) || istype(AM, /obj/effect/dummy/phased_mob))
 		return
 
 	load(AM)
-
 
 // called to load a crate
 /mob/living/simple_animal/bot/mulebot/proc/load(atom/movable/AM)
@@ -801,14 +795,13 @@
 	icon_state = "paranormalmulebot0"
 	base_icon = "paranormalmulebot"
 
-
-/mob/living/simple_animal/bot/mulebot/paranormal/MouseDrop_T(atom/movable/AM, mob/user)
+/mob/living/simple_animal/bot/mulebot/paranormal/mouse_drop_receive(atom/movable/AM, mob/user, params)
 	var/mob/living/L = user
 
 	if(user.incapacitated() || (istype(L) && L.body_position == LYING_DOWN))
 		return
 
-	if(!istype(AM) || iscameramob(AM) || istype(AM, /obj/effect/dummy/phased_mob)) //allows ghosts!
+	if(!istype(AM) || iseyemob(AM) || istype(AM, /obj/effect/dummy/phased_mob)) //allows ghosts!
 		return
 
 	load(AM)

@@ -61,7 +61,7 @@
 		if(!taser_machine.is_operational)
 			return FALSE
 		// We can't measure the output of this but if we use too much power the area will depower -> depower the machine -> stop taze next tick
-		taser_machine.use_power(60 * seconds_between_ticks)
+		taser_machine.use_energy(60 * seconds_between_ticks)
 		return TRUE
 
 	if(istype(taser, /obj/item/mecha_parts/mecha_equipment))
@@ -71,7 +71,7 @@
 			|| taser_equipment.get_integrity() <= 1 \
 			|| taser_equipment.chassis.is_currently_ejecting \
 			|| taser_equipment.chassis.equipment_disabled \
-			|| !taser_equipment.chassis.use_power(60 * seconds_between_ticks))
+			|| !taser_equipment.chassis.use_energy(60 * seconds_between_ticks))
 			return FALSE
 		return TRUE
 
@@ -134,7 +134,7 @@
 	owner.set_stutter_if_lower(10 SECONDS)
 	owner.set_jitter_if_lower(20 SECONDS)
 	owner.cause_pain(BODY_ZONES_ALL, 2 * seconds_between_ticks, BURN)
-	owner.apply_damage(120 * seconds_between_ticks * (owner.pain_controller?.pain_modifier || 1), STAMINA)
+	owner.apply_damage(60 * seconds_between_ticks * (owner.pain_controller?.pain_modifier || 1), STAMINA)
 	if(owner.stat <= SOFT_CRIT)
 		owner.do_jitter_animation(INFINITY) // maximum POWER
 
@@ -237,7 +237,7 @@
 		span_warning("[disruptor] gets tangled in the electrodes!"),
 		span_warning("You get tangled in the electrodes!"),
 	)
-	disruptor.apply_damage(90, STAMINA)
+	disruptor.apply_damage(45, STAMINA)
 	disruptor.Knockdown(5 SECONDS)
 	disruptor.adjust_jitter_up_to(10 SECONDS, 30 SECONDS)
 	qdel(src)

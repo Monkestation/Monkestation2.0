@@ -16,3 +16,6 @@
 
 /// Sent to the heretic's mind when the choose a path: (datum/antagonist/heretic, path)
 #define COMSIG_HERETIC_PATH_CHOSEN "path_chosen"
+
+/// For [/datum/status_effect/protective_blades] to signal when it is triggered
+#define COMSIG_BLADE_BARRIER_TRIGGERED "blade_barrier_triggered"

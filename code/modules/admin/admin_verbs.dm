@@ -40,17 +40,17 @@ ADMIN_VERB(admin_ghost, R_ADMIN, FALSE, "AGhost", "Become a ghost without DNR.",
 			body.key = "@[user.key]" //Haaaaaaaack. But the people have spoken. If it breaks; blame adminbus
 		BLACKBOX_LOG_ADMIN_VERB("Admin Ghost")
 
-ADMIN_VERB(invisimin, R_ADMIN, FALSE, "Inisimin", "Toggles ghost-like invisibility. (Don't abuse this)", ADMIN_CATEGORY_GAME)
+ADMIN_VERB(invisimin, R_ADMIN, FALSE, "Invisimin", "Toggles ghost-like invisibility. (Don't abuse this)", ADMIN_CATEGORY_GAME)
 	if(initial(user.mob.invisibility) == INVISIBILITY_OBSERVER)
 		to_chat(user.mob, span_boldannounce("Invisimin toggle failed. You are already an invisible mob like a ghost."), confidential = TRUE)
 		return
 
 	if(user.mob.invisibility == INVISIBILITY_OBSERVER)
-		user.mob.invisibility = initial(user.mob.invisibility)
+		user.mob.RemoveInvisibility(INVISIBILITY_SOURCE_INVISIMIN)
 		to_chat(user.mob, span_boldannounce("Invisimin off. Invisibility reset."), confidential = TRUE)
 		return
 
-	user.mob.invisibility = INVISIBILITY_OBSERVER
+	user.mob.SetInvisibility(INVISIBILITY_OBSERVER, id = INVISIBILITY_SOURCE_INVISIMIN, priority = INVISIBILITY_PRIORITY_ADMIN)
 	to_chat(user.mob, span_adminnotice("<b>Invisimin on. You are now as invisible as a ghost.</b>"), confidential = TRUE)
 
 ADMIN_VERB(check_antagonists, R_ADMIN, FALSE, "Check Antagonists", "See all antagonists for the round.", ADMIN_CATEGORY_GAME)
@@ -142,14 +142,15 @@ ADMIN_VERB(stealth, R_STEALTH, FALSE, "Stealth Mode", "Toggle stealth.", ADMIN_C
 
 #define STEALTH_MODE_TRAIT "stealth_mode"
 
-/client/proc/enable_stealth_mode()
-	var/new_key = ckeyEx(stripped_input(usr, "Enter your desired display name.", "Fake Key", key, 26))
-	if(!new_key)
-		return
+/client/proc/enable_stealth_mode(new_key, source)
+	if (!new_key)
+		new_key = ckeyEx(stripped_input(usr, "Enter your desired display name.", "Fake Key", key, 26))
+		if(!new_key)
+			return
 	holder.fakekey = new_key
 	createStealthKey()
 	if(isobserver(mob))
-		mob.invisibility = INVISIBILITY_MAXIMUM //JUST IN CASE
+		mob.SetInvisibility(INVISIBILITY_MAXIMUM, id = INVISIBILITY_SOURCE_STEALTHMODE) //JUST IN CASE
 		mob.alpha = 0 //JUUUUST IN CASE
 		mob.name = " "
 		mob.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
@@ -159,16 +160,16 @@ ADMIN_VERB(stealth, R_STEALTH, FALSE, "Stealth Mode", "Toggle stealth.", ADMIN_C
 
 	ADD_TRAIT(mob, TRAIT_ORBITING_FORBIDDEN, STEALTH_MODE_TRAIT)
 	QDEL_NULL(mob.orbiters)
-
-	log_admin("[key_name(usr)] has turned stealth mode ON (with key '[new_key]')")
-	message_admins("[key_name_admin(usr)] has turned stealth mode ON (with key '[new_key]')")
+	source = isnull(source) ? " via [source]." : ""
+	log_admin("[key_name(usr)] has turned stealth mode ON (with key '[new_key]')[source]")
+	message_admins("[key_name_admin(usr)] has turned stealth mode ON (with key '[new_key]')[source]")
 
 /client/proc/disable_stealth_mode()
 	var/previous_fakekey = holder.fakekey
 	holder.fakekey = null
 	if(isobserver(mob))
 		mob.remove_alt_appearance("stealthmin")
-		mob.invisibility = initial(mob.invisibility)
+		mob.RemoveInvisibility(INVISIBILITY_SOURCE_STEALTHMODE)
 		mob.alpha = initial(mob.alpha)
 		if(mob.mind)
 			if(mob.mind.ghostname)

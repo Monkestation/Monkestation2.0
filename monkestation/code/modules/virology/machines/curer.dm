@@ -61,7 +61,7 @@
 
 	if(machine_stat & (NOPOWER|BROKEN))
 		return
-	use_power(500)
+	use_energy(500)
 
 	if(curing)
 		curing -= 1

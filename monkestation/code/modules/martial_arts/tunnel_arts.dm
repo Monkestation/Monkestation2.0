@@ -30,7 +30,6 @@
 
 /datum/martial_art/the_tunnel_arts/on_remove(mob/living/remove_from)
 	remove_from.remove_traits(tunnel_traits, TUNNEL_ARTS_TRAIT)
-	UnregisterSignal(remove_from, list(COMSIG_ATOM_ATTACKBY))
 	remove_from.faction -= FACTION_RAT //:(
 	return ..()
 
@@ -117,7 +116,7 @@
 
 	var/mob/living/simple_animal/hostile/illusion/khan_warrior/khan = new(attacker.loc)
 	khan.faction = attacker.faction.Copy()
-	khan.Copy_Parent(attacker, 100, attacker.health / 2.5, 12, 30)
+	khan.copy_parent(attacker, 100, attacker.health / 2.5, 12, 30)
 	khan.GiveTarget(defender)
 	attacker.visible_message(
 		span_danger("[attacker] seems to duplicate before your very eyes!"),

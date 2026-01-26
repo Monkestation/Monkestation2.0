@@ -50,6 +50,7 @@
 	var/centcom = FALSE
 	var/hack_software = FALSE //Will be able to use hacking actions
 	interaction_range = 7 //wireless control range
+	var/control_disabled = FALSE // Set to 1 to stop AI from interacting via Click()
 
 	var/obj/item/modular_computer/pda/silicon/modularInterface
 
@@ -59,8 +60,8 @@
 	faction += FACTION_SILICON
 	if(ispath(radio))
 		radio = new radio(src)
-	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
-		diag_hud.add_atom_to_hud(src)
+	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC_BASIC]
+	diag_hud.add_atom_to_hud(src)
 	diag_hud_set_status()
 	diag_hud_set_health()
 	add_sensors()
@@ -68,6 +69,7 @@
 	var/static/list/traits_to_apply = list(
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_ASHSTORM_IMMUNE,
+		TRAIT_CAN_HEAR_MUSIC,
 		TRAIT_LITERATE,
 		TRAIT_MADNESS_IMMUNE,
 		TRAIT_MARTIAL_ARTS_IMMUNE,
@@ -238,7 +240,10 @@
 
 	return
 
+#define CHECK_DEAD if(stat == DEAD) { return; };
+
 /mob/living/silicon/proc/statelaws(force = 0)
+	CHECK_DEAD
 	laws_sanity_check()
 	// Create a cache of our laws and lawcheck flags before we do anything else.
 	// These are used to prevent weirdness when laws are changed when the AI is mid-stating.
@@ -255,17 +260,20 @@
 	//"radiomod" is inserted before a hardcoded message to change if and how it is handled by an internal radio.
 	say("[radiomod] Current Active Laws:", forced = forced_log_message)
 	sleep(1 SECONDS)
+	CHECK_DEAD
 
 	if (lawcache_zeroth)
 		if (force || (lawcache_zeroth in lawcache_lawcheck))
 			say("[radiomod] 0. [lawcache_zeroth]", forced = forced_log_message)
 			sleep(1 SECONDS)
 
+	CHECK_DEAD
 	for (var/index in 1 to length(lawcache_hacked))
 		var/law = lawcache_hacked[index]
 		var/num = ion_num()
 		if (length(law) <= 0)
 			continue
+		CHECK_DEAD
 		if (force || (law in lawcache_hackedcheck))
 			say("[radiomod] [num]. [law]", forced = forced_log_message)
 			sleep(1 SECONDS)
@@ -275,6 +283,7 @@
 		var/num = ion_num()
 		if (length(law) <= 0)
 			return
+		CHECK_DEAD
 		if (force || (law in lawcache_ioncheck))
 			say("[radiomod] [num]. [law]", forced = forced_log_message)
 			sleep(1 SECONDS)
@@ -284,6 +293,7 @@
 		var/law = lawcache_inherent[index]
 		if (length(law) <= 0)
 			continue
+		CHECK_DEAD
 		if (force || (law in lawcache_lawcheck))
 			say("[radiomod] [number]. [law]", forced = forced_log_message)
 			number++
@@ -294,10 +304,13 @@
 
 		if (length(law) <= 0)
 			continue
+		CHECK_DEAD
 		if (force || (law in lawcache_lawcheck))
 			say("[radiomod] [number]. [law]", forced = forced_log_message)
 			number++
 			sleep(1 SECONDS)
+
+#undef CHECK_DEAD
 
 ///Gives you a link-driven interface for deciding what laws the statelaws() proc will share with the crew.
 /mob/living/silicon/proc/checklaws()
@@ -483,3 +496,12 @@
 
 /mob/living/silicon/get_access()
 	return REGION_ACCESS_ALL_STATION
+
+
+///Places laws on the status panel for silicons
+/mob/living/silicon/get_status_tab_items()
+	. = ..()
+	var/list/law_list = list("Obey these laws:")
+	law_list += laws.get_law_list(include_zeroth = TRUE, render_html = FALSE)
+	for(var/borg_laws in law_list)
+		. += borg_laws

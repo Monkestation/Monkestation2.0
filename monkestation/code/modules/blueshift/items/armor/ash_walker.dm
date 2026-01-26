@@ -37,7 +37,6 @@
 	icon = 'monkestation/code/modules/blueshift/icons/ashwalker_clothing.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/ashwalker_clothing_mob.dmi'
 	icon_state = "headdress"
-	supports_variations_flags = NONE
 	armor_type = /datum/armor/ash_headdress
 
 	greyscale_colors = null
@@ -134,18 +133,17 @@
 	desc = "For when you're expecting to step on spiky things. Offers modest protection to your feet."
 	icon = 'monkestation/code/modules/blueshift/icons/shoes.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/feet.dmi'
-	worn_icon_digitigrade = 'monkestation/code/modules/blueshift/icons/feet_digi.dmi'
 	icon_state = "bone_greaves"
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 	armor_type = /datum/armor/bone_greaves
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /datum/crafting_recipe/ash_recipe/bone_greaves
 	name = "Bone Greaves"
 	result = /obj/item/clothing/shoes/bone_greaves
 	reqs = list(
-   		/obj/item/stack/sheet/bone = 2,
-   		/obj/item/stack/sheet/sinew = 1,
-    )
+		/obj/item/stack/sheet/bone = 2,
+		/obj/item/stack/sheet/sinew = 1,
+	)
 	category = CAT_CLOTHING
 
 /obj/item/clothing/gloves/military/ashwalk
@@ -168,7 +166,6 @@
 	icon = 'monkestation/code/modules/blueshift/icons/hats.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/head.dmi'
 	icon_state = "shamskull"
-	supports_variations_flags = NONE
 
 /obj/item/clothing/suit/ashwalkermantle
 	icon = 'monkestation/code/modules/blueshift/icons/suits.dmi'
@@ -199,13 +196,11 @@
 	icon = 'monkestation/code/modules/blueshift/icons/shoes.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/feet.dmi'
 	icon_state = "legionmetal"
-	supports_variations_flags = NONE
 
 /obj/item/clothing/shoes/jackboots/ashwalker/legate
 	icon = 'monkestation/code/modules/blueshift/icons/shoes.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/feet.dmi'
 	icon_state = "legionlegate"
-	supports_variations_flags = NONE
 
 /obj/item/clothing/shoes/wraps/ashwalker
 	icon = 'monkestation/code/modules/blueshift/icons/shoes.dmi'
@@ -213,25 +208,20 @@
 	name = "ash coated foot wraps"
 	desc = "May hurt for less than normal legs."
 	icon_state = "rag"
-	supports_variations_flags = NONE
 
 /obj/item/clothing/shoes/wraps/ashwalker/tribalwraps
 	icon = 'monkestation/code/modules/blueshift/icons/shoes.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/feet.dmi'
-	worn_icon_digitigrade = 'monkestation/code/modules/blueshift/icons/feet_digi.dmi'
 	name = "ornate leg wraps"
 	desc = "An ornate set of leg wraps commonly worn by a shaman or chieftain."
 	icon_state = "tribalcuffs"
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 
 /obj/item/clothing/shoes/wraps/ashwalker/mundanewraps
 	icon = 'monkestation/code/modules/blueshift/icons/shoes.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/feet.dmi'
-	worn_icon_digitigrade = 'monkestation/code/modules/blueshift/icons/feet_digi.dmi'
 	name = "tribal leg wraps"
 	desc = "A mundane set of leg wraps often worn by tribal villagers."
 	icon_state = "mundanecuffs"
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 
 /obj/item/clothing/under/costume/gladiator/ash_walker/greentrib
 	icon = 'monkestation/code/modules/blueshift/icons/uniforms.dmi'
@@ -295,7 +285,6 @@
 	name = "ash walker tunic"
 	desc = "A tattered red tunic of reddened fabric."
 	icon_state = "caesar_clothes"
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 
 /obj/item/clothing/under/costume/gladiator/ash_walker/legskirt_d
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/uniforms.dmi'
@@ -328,7 +317,7 @@
 	if(!ishuman(user))
 		return
 	if(slot & ITEM_SLOT_NECK)
-		user.grant_language(/datum/language/ashtongue/, source = LANGUAGE_TRANSLATOR)
+		user.grant_language(/datum/language/ashtongue, source = LANGUAGE_TRANSLATOR)
 		to_chat(user, span_boldnotice("Slipping the necklace on, you feel the insidious creep of the Necropolis enter your bones, and your very shadow. You find yourself with an unnatural knowledge of Ashtongue; but the amulet's eye stares at you."))
 
 /obj/item/clothing/neck/necklace/ashwalker/dropped(mob/user)
@@ -337,41 +326,5 @@
 		return
 	var/mob/living/carbon/human/H = user
 	if(H.get_item_by_slot(ITEM_SLOT_NECK) == src && !QDELETED(src)) //This can be called as a part of destroy
-		user.remove_language(/datum/language/ashtongue/, source = LANGUAGE_TRANSLATOR)
+		user.remove_language(/datum/language/ashtongue, source = LANGUAGE_TRANSLATOR)
 		to_chat(user, span_boldnotice("You feel the alien mind of the Necropolis lose its interest in you as you remove the necklace. The eye closes, and your mind does as well, losing its grasp of Ashtongue."))
-
-
-// ashtongue for ashwalkers
-/datum/language_holder/lizard/ash
-	understood_languages = list(/datum/language/ashtongue = list(LANGUAGE_ATOM))
-	spoken_languages = list(/datum/language/ashtongue = list(LANGUAGE_ATOM))
-	selected_language = /datum/language/ashtongue
-
-/datum/language/ashtongue
-	name = "Ashtongue"
-	desc = "A language derived from Draconic, altered and morphed into a strange tongue by the enigmatic will of the Necropolis, a half-successful attempt at patterning its own alien communication methods onto mundane races. It's become nigh-incomprehensible to speakers of the original language."
-	key = "a"
-	flags = TONGUELESS_SPEECH
-	space_chance = 70
-	syllables = list(
-		"za", "az", "ze", "ez", "zi", "iz", "zo", "oz", "zu", "uz", "zs", "sz",
-		"ha", "ah", "he", "eh", "hi", "ih", "ho", "oh", "hu", "uh", "hs", "sh",
-		"la", "al", "le", "el", "li", "il", "lo", "ol", "lu", "ul", "ls", "sl",
-		"ka", "ak", "ke", "ek", "ki", "ik", "ko", "ok", "ku", "uk", "ks", "sk",
-		"sa", "as", "se", "es", "si", "is", "so", "os", "su", "us", "ss", "ss",
-		"ra", "ar", "re", "er", "ri", "ir", "ro", "or", "ru", "ur", "rs", "sr",
-		"er", "sint", "en", "et", "nor", "bahr", "sint", "un", "ku", "lakor", "eri",
-		"noj", "dashilu", "as", "ot", "lih", "morh", "ghinu", "kin", "sha", "marik", "jibu",
-		"sudas", "fut", "kol", "bivi", "pohim", "devohr", "ru", "huirf", "neiris", "sut",
-		"viepn","bag","docu","kar","xlaqf","raa","qwos","nen","ty","von","kytaf","xin",
-		"devehr", "iru", "gher", "gan", "ujil", "lacor", "bahris", "ghar", "alnef", "wah",
-		"khurdhar", "bar", "et", "ilu", "dash", "diru", "noj", "de", "damjulan", "luvahr",
-		"telshahr", "tifur", "enhi", "am", "bahr", "nei", "neibahri", "n'chow", "n'wah",
-		"baak","hlaf","pyk","znu","agr","ith","na'ar","uah","plhu","six","fhler","bjel","scee",
-		"lleri","dttm","aggr","uujl","hjjifr","wuth","aav","inya","sod","bli","min","fril","bli","'ddn","tun'da",
-		"'ad","iir","krei","tii'","ruuk","nei","zirua","surai","lieket","miruk","ettirup","mireez","cqiek",
-		"brut","vaahk","nah'za","diierk","piut","vuurk","cs'eer","jeirk","qiruvk",
-	)
-	icon_state = "ashtongue"
-	icon = 'monkestation/code/modules/blueshift/icons/language.dmi'
-	default_priority = 90

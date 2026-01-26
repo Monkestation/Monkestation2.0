@@ -313,9 +313,9 @@
 /area/shuttle/escape/engine)
 "vj" = (
 /obj/machinery/light/directional/north,
-/obj/item/stock_parts/cell/crap,
-/obj/item/stock_parts/cell/emergency_light,
-/obj/item/stock_parts/cell/lead,
+/obj/item/stock_parts/power_store/cell/crap,
+/obj/item/stock_parts/power_store/cell/emergency_light,
+/obj/item/stock_parts/power_store/cell/lead,
 /obj/structure/closet/crate/large,
 /obj/item/stock_parts/manipulator,
 /turf/open/floor/iron/dark/textured_half,

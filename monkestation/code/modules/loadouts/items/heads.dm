@@ -350,7 +350,7 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 /datum/loadout_item/head/cargo_beret
 	name = "Supply Beret"
 	item_path = /obj/item/clothing/head/beret/cargo
-	restricted_roles = list(JOB_QUARTERMASTER, JOB_CARGO_TECHNICIAN, JOB_SHAFT_MINER, JOB_LATEJOIN_EXPLORER)
+	restricted_roles = list(JOB_QUARTERMASTER, JOB_CARGO_TECHNICIAN, JOB_SHAFT_MINER, JOB_EXPLORER)
 
 /datum/loadout_item/head/beret_med
 	name = "Medical Beret"
@@ -435,7 +435,7 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 /datum/loadout_item/head/constable
 	name = "Constable Helmet"
 	item_path = /obj/item/clothing/head/costume/constable
-	restricted_roles = list(JOB_SECURITY_ASSISTANT, JOB_BRIG_PHYSICIAN, JOB_SECURITY_OFFICER, JOB_WARDEN, JOB_HEAD_OF_SECURITY)
+	restricted_roles = list(JOB_SECURITY_ASSISTANT, JOB_SECURITY_OFFICER, JOB_WARDEN, JOB_HEAD_OF_SECURITY)
 	requires_purchase = FALSE
 
 /// EVERYTHING NOVA RELATED
@@ -690,6 +690,12 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 /datum/loadout_item/head/jester
 	name = "Jester hat"
 	item_path = /obj/item/clothing/head/costume/jester
+	restricted_roles = list(JOB_CLOWN)
+	requires_purchase = FALSE
+
+/datum/loadout_item/head/jester2
+	name = "Alternate Jester Hat"
+	item_path = /obj/item/clothing/head/costume/jester2
 	restricted_roles = list(JOB_CLOWN)
 	requires_purchase = FALSE
 

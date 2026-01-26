@@ -114,7 +114,7 @@
 	ckeywhitelist = list("ruby_flamewing")
 
 /datum/loadout_item/under/miscellaneous/syndie_pajamas
-	name = "Syndicate Pajamas"
+	name = "Luxury Syndicate Pajamas"
 	item_path = /obj/item/clothing/under/costume/syndie_pajamas
 	donator_only = TRUE
 	requires_purchase = FALSE
@@ -439,13 +439,13 @@
 	requires_purchase = FALSE
 
 /datum/loadout_item/plushies/elliethedarksunplush
-	name = "Ellie plush"
+	name = "Ellie Dark Sun plush"
 	item_path = /obj/item/toy/plush/elliethedarksun
 	donator_only = TRUE
 	requires_purchase = FALSE
 
 /datum/loadout_item/plushies/ellie_valentine
-	name = "Ellie plush"
+	name = "Ellie Valentine plush"
 	item_path = /obj/item/toy/plush/ellie_valentine
 	donator_only = TRUE
 	requires_purchase = FALSE
@@ -548,10 +548,10 @@
 	requires_purchase = FALSE
 
 /datum/loadout_item/effects/fluffykobold
-    ckeywhitelist = list("Bluedragon66")
-    name = "Fluffy Kobold Transformation"
-    item_path = /obj/item/effect_granter/donator/fluffykobold
-    requires_purchase = FALSE
+	ckeywhitelist = list("Bluedragon66")
+	name = "Fluffy Kobold Transformation"
+	item_path = /obj/item/effect_granter/donator/fluffykobold
+	requires_purchase = FALSE
 
 //Mysterybark
 /datum/loadout_item/head/western_wizard_hat
@@ -562,10 +562,10 @@
 
 //CaptainShiba
 /datum/loadout_item/effects/darkscug
-    ckeywhitelist = list("CaptainShiba")
-    name = "Nightcat Transformation"
-    item_path = /obj/item/effect_granter/donator/darkscug
-    requires_purchase = FALSE
+	ckeywhitelist = list("CaptainShiba")
+	name = "Nightcat Transformation"
+	item_path = /obj/item/effect_granter/donator/darkscug
+	requires_purchase = FALSE
 
 /datum/loadout_item/pocket_items/donator/darkscug
 	name = "Pet Delivery Beacon - Nightcat"
@@ -573,6 +573,7 @@
 	donator_only = TRUE
 	requires_purchase = FALSE
 	ckeywhitelist = list("CaptainShiba")
+
 //NoobskyBoi
 /datum/loadout_item/head/noobskyboi_golden_tophat
 	name = "Golden Tophat"
@@ -589,7 +590,7 @@
 
 //Ophaq
 /datum/loadout_item/suit/ophaq_rainbowcoat
-	name = "Rainbow Coat"
+	name = "Ophaq Rainbow Coat"
 	item_path = /obj/item/clothing/suit/toggle/ophaq_rainbowcoat
 	donator_only = TRUE
 	requires_purchase = FALSE
@@ -999,5 +1000,63 @@
 /datum/loadout_item/head/flower_wreath_pink
 	name = "Blue Flower Wreath"
 	item_path = /obj/item/clothing/head/costume/flower_wreath_blue
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+// bullke
+/datum/loadout_item/under/miscellaneous/invicible_invisible
+	name = "Invicible's Super Suit"
+	item_path = /obj/item/clothing/under/costume/invicible_invisible
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/mask/invicible_invisible
+	name = "Invicible's Mask"
+	item_path = /obj/item/clothing/mask/invicible_invisible
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/gloves/invicible_invisible
+	name = "Invicible's Gloves"
+	item_path = /obj/item/clothing/gloves/fingerless/invicible_invisible
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/shoes/invicible_invisible
+	name = "Invicible's Boots"
+	item_path =/obj/item/clothing/shoes/invicible_invisible
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+// MrBagHead
+/datum/loadout_item/mask/mrbaghead
+	name = "Mr Bag Head's Paper Sack"
+	item_path = /obj/item/clothing/mask/mrbaghead
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+// Milthy
+/datum/loadout_item/suit/monkey_jacket
+	name = "Monkey Varsity Jacket"
+	item_path = /obj/item/clothing/suit/monkey_jacket
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/head/bananotrasen_super_hat
+	name = "Bananotrasen Super Hat"
+	item_path = /obj/item/clothing/head/hats/bananotrasen_super_hat
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/plushies/monkey_plush
+	name = "Monkey Plush"
+	item_path = /obj/item/toy/plush/monkey
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/pocket_items/donator/bananadola
+	name = "Pet Delivery Beacon - Bananadola"
+	item_path = /obj/item/choice_beacon/pet/donator/bananadola
+	ckeywhitelist = list("Milthy")
 	donator_only = TRUE
 	requires_purchase = FALSE

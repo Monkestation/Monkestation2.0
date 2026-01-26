@@ -96,6 +96,10 @@
 	if(same_z_layer)
 		return
 	update_z_overlays(GET_TURF_PLANE_OFFSET(new_turf), TRUE)
+	// horrible hacky "fix" for mesons weirdness on multi-z maps, forgive me for this ~Absolucy
+	if(client && (sight & SEE_TURFS) && length(SSmapping.multiz_levels))
+		set_sight(NONE)
+		update_sight()
 
 /mob/living/carbon/proc/refresh_loop(iter_cnt, rebuild = FALSE)
 	for(var/i in 1 to iter_cnt)
@@ -335,8 +339,11 @@
 		if(!LAZYLEN(part_overlays))
 			continue
 
-		damage_overlay = mutable_appearance(layer = -DAMAGE_LAYER, appearance_flags = KEEP_TOGETHER)
-		damage_overlay.overlays += part_overlays
+		if(isnull(damage_overlay))
+			damage_overlay = mutable_appearance(layer = -DAMAGE_LAYER, appearance_flags = KEEP_TOGETHER)
+
+		for(var/overlay in part_overlays)
+			damage_overlay.add_overlay(overlay)
 
 	if(isnull(damage_overlay))
 		return
@@ -358,6 +365,29 @@
 
 	overlays_standing[WOUND_LAYER] = wound_overlay
 	apply_overlay(WOUND_LAYER)
+
+/mob/living/carbon/proc/update_bandage_overlays()
+	remove_overlay(BANDAGE_LAYER)
+
+	var/mutable_appearance/bandage_overlay
+	for(var/obj/item/bodypart/iter_part as anything in bodyparts)
+		if(isnull(bandage_overlay))
+			bandage_overlay = mutable_appearance(layer = -BANDAGE_LAYER, appearance_flags = KEEP_TOGETHER)
+
+		if(iter_part.current_gauze)
+			var/mutable_appearance/limb_bandage_overlay = iter_part.current_gauze.build_worn_icon(
+			default_layer = -BANDAGE_LAYER, // proc inverts it for us
+			override_file = 'icons/mob/effects/bandage.dmi',
+			override_state = iter_part.current_gauze.worn_icon_state, // future todo : icon states for dirty bandages as well
+		)
+			limb_bandage_overlay.color = iter_part.current_gauze.overlay_color
+			bandage_overlay.add_overlay(limb_bandage_overlay)
+
+	if(isnull(bandage_overlay))
+		return
+
+	overlays_standing[BANDAGE_LAYER] = bandage_overlay
+	apply_overlay(BANDAGE_LAYER)
 
 /mob/living/carbon/update_worn_mask()
 	remove_overlay(FACEMASK_LAYER)
@@ -478,11 +508,12 @@
 	SEND_SIGNAL(src, COMSIG_ITEM_GET_WORN_OVERLAYS, ., standing, isinhands, icon_file)
 
 ///Checks to see if any bodyparts need to be redrawn, then does so. update_limb_data = TRUE redraws the limbs to conform to the owner.
+///Returns an integer representing the number of limbs that were updated.
 /mob/living/carbon/proc/update_body_parts(update_limb_data)
 	update_damage_overlays()
 	update_wound_overlays()
 	var/list/needs_update = list()
-	var/limb_count_update = FALSE
+	var/limb_count_update = 0
 	for(var/obj/item/bodypart/limb as anything in bodyparts)
 		limb.update_limb(is_creating = update_limb_data) //Update limb actually doesn't do much, get_limb_icon is the cpu eater.
 
@@ -492,13 +523,15 @@
 		if(icon_render_keys[limb.body_zone] != old_key) //If the keys match, that means the limb doesn't need to be redrawn
 			needs_update += limb
 
+	limb_count_update += length(needs_update)
 	var/list/missing_bodyparts = get_missing_limbs()
 	if(((dna ? dna.species.max_bodypart_count : BODYPARTS_DEFAULT_MAXIMUM) - icon_render_keys.len) != missing_bodyparts.len) //Checks to see if the target gained or lost any limbs.
-		limb_count_update = TRUE
+		limb_count_update += 1
 		for(var/missing_limb in missing_bodyparts)
 			icon_render_keys -= missing_limb //Removes dismembered limbs from the key list
 
-	if(!needs_update.len && !limb_count_update)
+	. = limb_count_update
+	if(!.)
 		return
 
 	//GENERATE NEW LIMBS
@@ -560,6 +593,7 @@
 /obj/item/bodypart/proc/generate_husk_key()
 	RETURN_TYPE(/list)
 	. = list()
+	. += "[limb_id]-"
 	. += "[husk_type]"
 	. += "-husk"
 	. += "-[body_zone]"

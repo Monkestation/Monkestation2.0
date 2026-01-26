@@ -11,7 +11,20 @@ export const BorerChem = (props) => {
   return (
     <Window width={565} height={400} title="Injector" theme="wizard">
       <Window.Content scrollable>
-        <Section title="Status">
+        <Section
+          title="Status"
+          buttons={[
+            <Button
+              key="reaction_lookup"
+              icon="book"
+              disabled={!data.reagent_holder}
+              content="Reaction search"
+              tooltip="Look up recipes and reagents!"
+              tooltipPosition="bottom-start"
+              onClick={() => act('reaction_lookup')}
+            />,
+          ]}
+        >
           <LabeledList>
             <LabeledList.Item label="Storage">
               <ProgressBar value={data.energy / data.maxEnergy}>

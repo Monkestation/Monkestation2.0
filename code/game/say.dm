@@ -77,7 +77,9 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	return TRUE
 
 /atom/movable/proc/send_speech(message, range = 7, obj/source = src, bubble_type, list/spans, datum/language/message_language, list/message_mods = list(), forced = FALSE)
-	for(var/atom/movable/hearing_movable as anything in get_hearers_in_view(range, source))
+	var/list/hearers = get_hearers_in_view(range, source)
+	get_voice().start_barking(message, hearers, range, say_test(message), FALSE, src)
+	for(var/atom/movable/hearing_movable as anything in hearers)
 		if(!hearing_movable)//theoretically this should use as anything because it shouldnt be able to get nulls but there are reports that it does.
 			stack_trace("somehow theres a null returned from get_hearers_in_view() in send_speech!")
 			continue
@@ -100,7 +102,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 			namepart = "[human_speaker.get_face_name()]" //So "fake" speaking like in hallucinations does not give the speaker away if disguised
 		else if(visible_name)
 			namepart = "[human_speaker.get_visible_name()]"
-		if(!radio_freq && !HAS_TRAIT(human_speaker, TRAIT_UNKNOWN))
+		if(!radio_freq && !HAS_TRAIT(human_speaker, TRAIT_UNKNOWN) && !HAS_TRAIT(human_speaker, TRAIT_ANONYMOUS))
 			var/id_span = astype(human_speaker.wear_id?.GetID(), /obj/item/card/id)?.chat_span()
 			spanpart2 = "<span class='name [id_span || "job__unknown"]'>"
 	//End name span.
@@ -162,7 +164,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 /// Transforms the speech emphasis mods from [/atom/movable/proc/say_emphasis] into the appropriate HTML tags. Includes escaping.
 #define ENCODE_HTML_EMPHASIS(input, char, html, varname) \
 	var/static/regex/##varname = regex("(?<!\\\\)[char](.+?)(?<!\\\\)[char]", "g");\
-	input = varname.Replace_char(input, "<[html]>$1</[html]>&#8203;") //zero-width space to force maptext to respect closing tags.
+	input = replacetext_char(input, varname, "<[html]>$1</[html]>&#8203;") //zero-width space to force maptext to respect closing tags.
 
 /// Scans the input sentence for speech emphasis modifiers, notably |italics|, +bold+, and _underline_ -mothblocks
 /atom/movable/proc/say_emphasis(input)
@@ -171,7 +173,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	ENCODE_HTML_EMPHASIS(input, "_", "u", underline)
 	ENCODE_HTML_EMPHASIS(input, "\\`", "font color= 'red'", redtext) //MONKESTATION ADDITION: makes your text red
 	var/static/regex/remove_escape_backlashes = regex("\\\\(_|\\+|\\|)", "g") // Removes backslashes used to escape text modification.
-	input = remove_escape_backlashes.Replace_char(input, "$1")
+	input = replacetext_char(input, remove_escape_backlashes, "$1")
 	return input
 
 #undef ENCODE_HTML_EMPHASIS
@@ -286,7 +288,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/virtualspeaker)
 		job = JOB_PERSONAL_AI
 	else if(isobj(M))  // Cold, emotionless machines
 		job = "Machine"
-	else  // Unidentifiable mob
+	else if(isnull(job)) // Unidentifiable mob
 		job = "Unknown"
 
 /atom/movable/virtualspeaker/GetJob()

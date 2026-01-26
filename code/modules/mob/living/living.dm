@@ -9,14 +9,18 @@
 		set_name()
 	var/datum/atom_hud/data/human/medical/advanced/medhud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	medhud.add_atom_to_hud(src)
-	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
-		diag_hud.add_atom_to_hud(src)
+	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC_BASIC]
+	diag_hud.add_atom_to_hud(src)
 	faction += "[REF(src)]"
 	GLOB.mob_living_list += src
+	var/datum/controller/subsystem/mobs/subsystem = SSmobs
+	if(life_subsystem_type)
+		subsystem = locate(life_subsystem_type) in Master.subsystems
+	START_PROCESSING(subsystem, src)
+
 	SSpoints_of_interest.make_point_of_interest(src)
 	update_fov()
 	gravity_setup()
-	voice_type = pick(voice_type2sound) //monkestation edit
 	if(!blood_volume)
 		ADD_TRAIT(src, TRAIT_NOBLOOD, INNATE_TRAIT)
 
@@ -43,6 +47,10 @@
 
 	remove_from_all_data_huds()
 	GLOB.mob_living_list -= src
+	var/datum/controller/subsystem/mobs/subsystem = SSmobs
+	if(life_subsystem_type)
+		subsystem = locate(life_subsystem_type) in Master.subsystems
+	STOP_PROCESSING(subsystem, src)
 	GLOB.infected_contact_mobs -= src
 	if(imaginary_group)
 		imaginary_group -= src
@@ -546,18 +554,20 @@
  * * IGNORE_GRAB - mob that is agressively grabbed is not considered incapacitated
 **/
 /mob/living/incapacitated(flags)
-	if((flags & IGNORE_CRIT) && ((stat >= SOFT_CRIT && (stat != DEAD && stat != UNCONSCIOUS && stat != HARD_CRIT)) && !src.pulledby))
-		return FALSE
+	if(!(flags & IGNORE_RESTRAINTS) && HAS_TRAIT(src, TRAIT_RESTRAINED))
+		return TRUE
+	if(!(flags & IGNORE_GRAB) && pulledby?.grab_state >= GRAB_AGGRESSIVE)
+		return TRUE
+	if(!(flags & IGNORE_STASIS) && HAS_TRAIT(src, TRAIT_STASIS))
+		return TRUE
+
+	if(flags & IGNORE_SOFTCRIT)
+		if((stat <= SOFT_CRIT) && !(HAS_TRAIT_NOT_FROM(src, TRAIT_INCAPACITATED, STAT_TRAIT)))
+			return FALSE
 
 	if(HAS_TRAIT(src, TRAIT_INCAPACITATED))
 		return TRUE
 
-	if(!(flags & IGNORE_RESTRAINTS) && HAS_TRAIT(src, TRAIT_RESTRAINED))
-		return TRUE
-	if(!(flags & IGNORE_GRAB) && pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE)
-		return TRUE
-	if(!(flags & IGNORE_STASIS) && HAS_TRAIT(src, TRAIT_STASIS))
-		return TRUE
 	return FALSE
 
 /mob/living/canUseStorage()
@@ -844,7 +854,7 @@
  * * force_grab_ghost - We grab the ghost of the mob on revive. If TRUE, we force grab the ghost (includes suiciders). If FALSE, we do not. See [/mob/grab_ghost].
  *
  */
-/mob/living/proc/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
+/mob/living/proc/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE, revival_policy = POLICY_REVIVAL)
 	if(excess_healing)
 		adjustOxyLoss(-excess_healing, FALSE)
 		adjustToxLoss(-excess_healing, FALSE, TRUE) //slime friendly
@@ -943,7 +953,7 @@
 	if(heal_flags & HEAL_BURN)
 		setFireLoss(0, FALSE, TRUE)
 	if(heal_flags & HEAL_STAM)
-		setStaminaLoss(0, FALSE, TRUE)
+		stamina?.revitalize()
 
 	// I don't really care to keep this under a flag
 	set_nutrition(NUTRITION_LEVEL_FED + 50)
@@ -1080,7 +1090,7 @@
 			TH.update_appearance()
 
 /mob/living/carbon/human/makeTrail(turf/target_turf, turf/start, direction)
-	if(!is_bleeding())
+	if(!bleedDragAmount()) //why ruin the floors if we arent actually bleeding
 		return
 	return ..()
 
@@ -1325,37 +1335,55 @@
 /mob/living/can_hold_items(obj/item/I)
 	return ..() && HAS_TRAIT(src, TRAIT_CAN_HOLD_ITEMS) && usable_hands
 
-/mob/living/can_perform_action(atom/movable/target, action_bitflags)
+/mob/living/can_perform_action(atom/target, action_bitflags)
 	if(!istype(target))
 		CRASH("Missing target arg for can_perform_action")
+
+	if(stat == DEAD)
+		to_chat(src, span_warning("You are not conscious enough for this action!"))
+		return FALSE
+
+	if(incapacitated(action_bitflags))
+		to_chat(src, span_warning("You are incapacitated at the moment!"))
+		return FALSE
 
 	// If the MOBILITY_UI bitflag is not set it indicates the mob's hands are cutoff, blocked, or handcuffed
 	// Note - AI's and borgs have the MOBILITY_UI bitflag set even though they don't have hands
 	// Also if it is not set, the mob could be incapcitated, knocked out, unconscious, asleep, EMP'd, etc.
 	if(!(mobility_flags & MOBILITY_UI) && !(action_bitflags & ALLOW_RESTING))
-		to_chat(src, span_warning("You can't do that right now!"))
+		to_chat(src, span_warning("You don't have the mobility for this!"))
 		return FALSE
 
 	// NEED_HANDS is already checked by MOBILITY_UI for humans so this is for silicons
 	if((action_bitflags & NEED_HANDS))
+		if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
+			to_chat(src, span_warning("You hands are blocked for this action!"))
+			return FALSE
 		if(!can_hold_items(isitem(target) ? target : null)) // almost redundant if it weren't for mobs
-			to_chat(src, span_warning("You don't have the physical ability to do this!"))
+			to_chat(src, span_warning("You don't have the hands for this action!"))
 			return FALSE
 
-	if(!Adjacent(target) && (target.loc != src))
-		if(issilicon(src) && !ispAI(src))
+	if(!(action_bitflags & BYPASS_ADJACENCY) && ((action_bitflags & NOT_INSIDE_TARGET) || !recursive_loc_check(src, target)) && !CanReach(target))
+		if(HAS_SILICON_ACCESS(src) && !ispAI(src))
 			if(!(action_bitflags & ALLOW_SILICON_REACH)) // silicons can ignore range checks (except pAIs)
-				to_chat(src, span_warning("You are too far away!"))
+				if(!(action_bitflags & SILENT_ADJACENCY))
+					to_chat(src, span_warning("You are too far away!"))
 				return FALSE
 		else // just a normal carbon mob
 			if((action_bitflags & FORBID_TELEKINESIS_REACH))
-				to_chat(src, span_warning("You are too far away!"))
+				if(!(action_bitflags & SILENT_ADJACENCY))
+					to_chat(src, span_warning("You are too far away!"))
 				return FALSE
 
 			var/datum/dna/mob_DNA = has_dna()
 			if(!mob_DNA || !mob_DNA.check_mutation(/datum/mutation/telekinesis) || !tkMaxRangeCheck(src, target))
-				to_chat(src, span_warning("You are too far away!"))
+				if(!(action_bitflags & SILENT_ADJACENCY))
+					to_chat(src, span_warning("You are too far away!"))
 				return FALSE
+
+	if((action_bitflags & NEED_VENTCRAWL) && !HAS_TRAIT(src, TRAIT_VENTCRAWLER_NUDE) && !HAS_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS))
+		to_chat(src, span_warning("You wouldn't fit!"))
+		return FALSE
 
 	if((action_bitflags & NEED_DEXTERITY) && !ISADVANCEDTOOLUSER(src))
 		to_chat(src, span_warning("You don't have the dexterity to do this!"))
@@ -1454,17 +1482,17 @@
 			var/static/list/robot_options = list(
 				/mob/living/silicon/robot = 200,
 				/mob/living/basic/drone/polymorphed = 200,
-				/mob/living/silicon/robot/model/syndicate = 1,
-				/mob/living/silicon/robot/model/syndicate/medical = 1,
-				/mob/living/silicon/robot/model/syndicate/saboteur = 1,
+				/mob/living/silicon/robot/model/syndicate = 100,
+				/mob/living/silicon/robot/model/syndicate/medical = 100,
+				/mob/living/silicon/robot/model/syndicate/saboteur = 100,
 			)
 
-			var/picked_robot = pick(robot_options)
+			var/picked_robot = pick_weight(robot_options)
 			new_mob = new picked_robot(loc)
 			if(issilicon(new_mob))
 				var/mob/living/silicon/robot/created_robot = new_mob
 				new_mob.gender = gender
-				new_mob.invisibility = 0
+				new_mob.SetInvisibility(INVISIBILITY_NONE)
 				new_mob.job = JOB_CYBORG
 				created_robot.lawupdate = FALSE
 				created_robot.connected_ai = null
@@ -1779,6 +1807,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 			buckled.unbuckle_mob(src, force = TRUE)
 		if(has_buckled_mobs())
 			unbuckle_all_mobs(force = TRUE)
+	refresh_gravity()
 	. = ..()
 	if(. && client)
 		reset_perspective()
@@ -1820,7 +1849,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	..()
 	update_z(new_turf?.z)
 
-/mob/living/MouseDrop_T(atom/dropping, atom/user)
+/mob/living/mouse_drop_receive(atom/dropping, atom/user, params)
 	var/mob/living/U = user
 	if(isliving(dropping))
 		var/mob/living/M = dropping
@@ -2152,6 +2181,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 			if(. >= UNCONSCIOUS)
 				REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, TRAIT_KNOCKEDOUT)
 			add_traits(list(TRAIT_CRITICAL_CONDITION, TRAIT_POOR_AIM), STAT_TRAIT)
+			REMOVE_TRAIT(src, TRAIT_HANDS_BLOCKED, STAT_TRAIT)
 		if(UNCONSCIOUS)
 			if(. != HARD_CRIT)
 				become_blind(UNCONSCIOUS_TRAIT)
@@ -2599,8 +2629,8 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	var/picked_theme = tgui_input_list(admin, "Pick the guardian theme.", "Guardian Controller", list(GUARDIAN_THEME_TECH, GUARDIAN_THEME_MAGIC, GUARDIAN_THEME_CARP, GUARDIAN_THEME_MINER, "Random"))
 	if(picked_theme == "Random")
 		picked_theme = null //holopara code handles not having a theme by giving a random one
-	var/picked_name = tgui_input_text(admin, "Name the guardian, leave empty to let player name it.", "Guardian Controller")
-	var/picked_color = input(admin, "Set the guardian's color, cancel to let player set it.", "Guardian Controller", "#ffffff") as color|null
+	var/picked_name = tgui_input_text(admin, "Name the guardian, leave empty to let player name it.", "Guardian Controller", max_length = MAX_NAME_LEN)
+	var/picked_color = tgui_color_picker(admin, "Set the guardian's color, cancel to let player set it.", "Guardian Controller", COLOR_WHITE)
 	if(tgui_alert(admin, "Confirm creation.", "Guardian Controller", list("Yes", "No")) != "Yes")
 		return
 	var/mob/living/basic/guardian/summoned_guardian = new picked_type(src, picked_theme)
@@ -2616,3 +2646,14 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	message_admins(span_adminnotice("[key_name_admin(admin)] gave a guardian spirit controlled by [guardian_client || "AI"] to [src]."))
 	log_admin("[key_name(admin)] gave a guardian spirit controlled by [guardian_client] to [src].")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Give Guardian Spirit")
+
+/// Switches this mob to processing as a cliented mob, instead of whatever subsystem it's currently using.
+/mob/living/proc/process_as_cliented_mob()
+	if(life_subsystem_type == /datum/controller/subsystem/mobs/client_mobs || QDELETED(src))
+		return
+	var/datum/controller/subsystem/mobs/subsystem = SSmobs
+	if(life_subsystem_type)
+		subsystem = locate(life_subsystem_type) in Master.subsystems
+	life_subsystem_type = /datum/controller/subsystem/mobs/client_mobs
+	STOP_PROCESSING(subsystem, src)
+	START_PROCESSING(SSclient_mobs, src)

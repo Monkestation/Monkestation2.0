@@ -16,9 +16,6 @@
 	overlay_state_inactive = "module_armorbooster_off"
 	overlay_state_active = "module_armorbooster_on"
 	use_mod_colors = TRUE
-	suit_supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION | CLOTHING_SNOUTED_VARIATION
-	has_head_sprite = TRUE
-	head_only_when_active = TRUE
 	/// Whether or not this module removes pressure protection.
 	var/remove_pressure_protection = TRUE
 	/// Speed added to the control unit.
@@ -86,8 +83,6 @@
 /obj/item/mod/module/armor_booster/generate_worn_overlay(mutable_appearance/standing)
 	overlay_state_inactive = "[initial(overlay_state_inactive)]-[mod.skin]"
 	overlay_state_active = "[initial(overlay_state_active)]-[mod.skin]"
-	if((mod.wearer?.dna.species.bodytype & BODYTYPE_SNOUTED) && (suit_supports_variations_flags & CLOTHING_SNOUTED_VARIATION))
-		overlay_icon_file = 'monkestation/icons/mob/mod.dmi' //if the user has a snout, and the module supports a snout, we'll shift to the digi/snout icon file instead
 	return ..()
 
 ///Energy Shield - Gives you a rechargeable energy shield that nullifies attacks.
@@ -100,7 +95,7 @@
 	icon_state = "energy_shield"
 	complexity = 3
 	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 2
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 2
 	incompatible_modules = list(/obj/item/mod/module/energy_shield)
 	/// Max charges of the shield.
 	var/max_charges = 3
@@ -128,18 +123,18 @@
 /obj/item/mod/module/energy_shield/on_suit_activation()
 	mod.AddComponent(/datum/component/shielded, max_charges = max_charges, recharge_start_delay = recharge_start_delay, charge_increment_delay = charge_increment_delay, \
 	charge_recovery = charge_recovery, lose_multiple_charges = lose_multiple_charges, recharge_path = recharge_path, starting_charges = charges, shield_icon_file = shield_icon_file, shield_icon = shield_icon)
-	RegisterSignal(mod.wearer, COMSIG_HUMAN_CHECK_SHIELDS, PROC_REF(shield_reaction))
+	RegisterSignal(mod.wearer, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(shield_reaction))
 
 /obj/item/mod/module/energy_shield/on_suit_deactivation(deleting = FALSE)
 	var/datum/component/shielded/shield = mod.GetComponent(/datum/component/shielded)
 	charges = shield.current_charges
 	qdel(shield)
-	UnregisterSignal(mod.wearer, COMSIG_HUMAN_CHECK_SHIELDS)
+	UnregisterSignal(mod.wearer, COMSIG_LIVING_CHECK_BLOCK)
 
 /obj/item/mod/module/energy_shield/proc/shield_reaction(mob/living/carbon/human/owner, atom/movable/hitby, damage = 0, attack_text = "the attack", attack_type = MELEE_ATTACK, armour_penetration = 0)
 	if(SEND_SIGNAL(mod, COMSIG_ITEM_HIT_REACT, owner, hitby, attack_text, 0, damage, attack_type) & COMPONENT_HIT_REACTION_BLOCK)
-		drain_power(use_power_cost)
-		return SHIELD_BLOCK
+		drain_power(use_energy_cost)
+		return SUCCESSFUL_BLOCK
 	return NONE
 
 /obj/item/mod/module/energy_shield/wizard
@@ -150,13 +145,14 @@
 		though can also be drained by more mundane attacks. It will not protect the caster from social ridicule."
 	icon_state = "battlemage_shield"
 	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0 //magic
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 0 //magic too
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 0 //magic too
 	max_charges = 25 //monkestation edit: from 15 to 25
 	recharge_start_delay = 1 MINUTES //monkestation edit: from 0 SECONDS to 1 MINUTES
 	charge_recovery = 25 //monkestation edit: from 8 to 25
 	shield_icon_file = 'icons/effects/magic.dmi'
 	shield_icon = "mageshield"
 	recharge_path = /obj/item/wizard_armour_charge
+	lose_multiple_charges = TRUE
 
 ///Magic Nullifier - Protects you from magic.
 /obj/item/mod/module/anti_magic
@@ -261,7 +257,7 @@
 	desc = initial(the_dna_lock_behind_the_slaughter.desc)
 	icon_state = initial(the_dna_lock_behind_the_slaughter.icon_state)
 	complexity = initial(the_dna_lock_behind_the_slaughter.complexity)
-	use_power_cost = initial(the_dna_lock_behind_the_slaughter.use_power_cost)
+	use_energy_cost = initial(the_dna_lock_behind_the_slaughter.use_energy_cost)
 
 /obj/item/mod/module/springlock/bite_of_87/on_install()
 	mod.activation_step_time *= 0.1
@@ -283,7 +279,7 @@
 	icon_state = "flamethrower"
 	module_type = MODULE_ACTIVE
 	complexity = 3
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 3
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 3
 	incompatible_modules = list(/obj/item/mod/module/flamethrower)
 	cooldown_time = 2.5 SECONDS
 	overlay_state_inactive = "module_flamethrower"
@@ -298,7 +294,7 @@
 	flame.firer = mod.wearer
 	playsound(src, 'sound/items/modsuit/flamethrower.ogg', 75, TRUE)
 	INVOKE_ASYNC(flame, TYPE_PROC_REF(/obj/projectile, fire))
-	drain_power(use_power_cost)
+	drain_power(use_energy_cost)
 
 ///Power kick - Lets the user launch themselves at someone to kick them.
 /obj/item/mod/module/power_kick
@@ -307,7 +303,7 @@
 	icon_state = "power_kick"
 	module_type = MODULE_ACTIVE
 	removable = FALSE
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 5
 	incompatible_modules = list(/obj/item/mod/module/power_kick)
 	cooldown_time = 5 SECONDS
 	/// Damage on kick.
@@ -331,7 +327,7 @@
 		animate(mod.wearer, 0.2 SECONDS, pixel_z = -16, flags = ANIMATION_RELATIVE, easing = SINE_EASING|EASE_IN)
 		return
 	animate(mod.wearer)
-	drain_power(use_power_cost)
+	drain_power(use_energy_cost)
 	playsound(src, 'sound/items/modsuit/loader_launch.ogg', 75, TRUE)
 	var/angle = get_angle(mod.wearer, target) + 180
 	mod.wearer.transform = mod.wearer.transform.Turn(angle)
@@ -554,7 +550,7 @@ monkestation end */
 	RegisterSignal(mod.wearer, COMSIG_ATOM_BULLET_ACT, PROC_REF(on_bullet_act), override = TRUE)
 	RegisterSignals(mod.wearer, list(COMSIG_MOB_ITEM_ATTACK, COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_HITBY, COMSIG_ATOM_HULK_ATTACK, COMSIG_ATOM_ATTACK_PAW, COMSIG_CARBON_CUFF_ATTEMPTED), PROC_REF(unstealth), override = TRUE)
 	animate(mod.wearer, alpha = stealth_alpha, time = 1.5 SECONDS)
-	drain_power(use_power_cost)
+	drain_power(use_energy_cost)
 
 /obj/item/mod/module/stealth/wraith/on_suit_deactivation(deleting)
 	if(bumpoff)

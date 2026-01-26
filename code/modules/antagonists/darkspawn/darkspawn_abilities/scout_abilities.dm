@@ -16,7 +16,7 @@
 	var/obj/item/light_eater/armblade
 
 /datum/action/cooldown/spell/toggle/light_eater/process()
-	active = owner.is_holding_item_of_type(/obj/item/light_eater)
+	active = !!owner?.is_holding_item_of_type(/obj/item/light_eater)
 	return ..()
 
 /datum/action/cooldown/spell/toggle/light_eater/can_cast_spell(feedback)
@@ -59,7 +59,7 @@
 	var/obj/item/gun/ballistic/bow/shadow_caster/bow
 
 /datum/action/cooldown/spell/toggle/shadow_caster/process()
-	active = owner.is_holding_item_of_type(/obj/item/gun/ballistic/bow/shadow_caster)
+	active = !!owner?.is_holding_item_of_type(/obj/item/gun/ballistic/bow/shadow_caster)
 	return ..()
 
 /datum/action/cooldown/spell/toggle/shadow_caster/can_cast_spell(feedback)
@@ -112,7 +112,7 @@
 	owner.visible_message(span_warning("[owner] bends over and bellows out a cloud of black smoke!"), span_velvet("You expel a vast cloud of blinding smoke."))
 	var/obj/item/reagent_containers/cup/beaker/large/beak = new /obj/item/reagent_containers/cup/beaker/large(get_turf(owner)) //hacky
 	beak.reagents.clear_reagents() //Just in case!
-	beak.invisibility = INFINITY //This ought to do the trick
+	beak.SetInvisibility(INVISIBILITY_ABSTRACT, id=type) //This ought to do the trick
 	beak.reagents.add_reagent(/datum/reagent/darkspawn_darkness_smoke, 50)
 	var/datum/effect_system/fluid_spread/smoke/chem/darkspawn/dudespawn = new //it doesn't actually block light anyways, so let's not block vision either
 	dudespawn.attach(beak)

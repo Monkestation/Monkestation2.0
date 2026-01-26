@@ -10,11 +10,13 @@
 	//radio.talk_into(src, "Thermal systems within operational parameters. Proceeding to domain configuration.", RADIO_CHANNEL_SUPPLY) MONKESTATION REMOVAL: prisoners don't have headsets atm, edit this if that's to change
 
 /// Compiles a list of available domains.
-/obj/machinery/quantum_server/proc/get_available_domains()
+/obj/machinery/quantum_server/proc/get_available_domains(bitrunning_network)
 	var/list/levels = list()
 
 	for(var/datum/lazy_template/virtual_domain/domain as anything in available_domains)
 		if(initial(domain.test_only))
+			continue
+		if(domain.bitrunning_network != bitrunning_network)
 			continue
 		var/can_view = initial(domain.difficulty) < scanner_tier && initial(domain.cost) <= points + 5
 		var/can_view_reward = initial(domain.difficulty) < (scanner_tier + 1) && initial(domain.cost) <= points + 3
@@ -116,7 +118,7 @@
 
 /// Removes all blacklisted items from a mob and returns them to base state
 /obj/machinery/quantum_server/proc/reset_equipment(mob/living/carbon/human/person)
-	for(var/obj/item in person.get_equipped_items(include_pockets = FALSE, include_accessories = FALSE))
+	for(var/obj/item in person.get_equipped_items(INCLUDE_POCKETS | INCLUDE_ACCESSORIES))
 		qdel(item)
 
 	var/datum/antagonist/bitrunning_glitch/antag_datum = person.mind?.has_antag_datum(/datum/antagonist/bitrunning_glitch)

@@ -29,15 +29,8 @@
 	icon_state = "[base_icon_state]-[beating ? "on" : "off"]"
 	return ..()
 
-/obj/item/organ/internal/heart/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
-	. = ..()
-	if(heart_bloodtype)
-		receiver.dna?.human_blood_type = heart_bloodtype
-
 /obj/item/organ/internal/heart/Remove(mob/living/carbon/heartless, special = 0)
 	. = ..()
-	if(heart_bloodtype)
-		heartless.dna?.human_blood_type = random_human_blood_type()
 	if(!special)
 		addtimer(CALLBACK(src, PROC_REF(stop_if_unowned)), 120)
 
@@ -447,13 +440,6 @@
 	if(!COOLDOWN_FINISHED(src, crystalize_cooldown) || ethereal.stat != DEAD)
 		return //Should probably not happen, but lets be safe.
 
-	//Monkestation Edit Begin
-	if(IS_BLOODSUCKER(ethereal) && SSsol.sunlight_active)
-		to_chat(ethereal, span_warning("You were unable to finish your crystallization as Sol has halted your attempt to crystallize."))
-		stop_crystalization_process(ethereal, FALSE)
-		return
-	//Monkestation Edit End
-
 	if(ismob(location) || isitem(location) || iseffect(location) || HAS_TRAIT_FROM(src, TRAIT_HUSK, CHANGELING_DRAIN)) //Stops crystallization if they are eaten by a dragon, turned into a legion, consumed by his grace, etc.
 		to_chat(ethereal, span_warning("You were unable to finish your crystallization, for obvious reasons."))
 		stop_crystalization_process(ethereal, FALSE)
@@ -598,4 +584,4 @@
 
 /obj/item/organ/internal/heart/spider
 	name = "spider heart"
-	heart_bloodtype = /datum/blood_type/spider
+	heart_bloodtype = /datum/blood_type/crew/spider

@@ -6,6 +6,8 @@
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/plantgenes
 	pass_flags = PASSTABLE
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.5
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.5
 
 	var/obj/item/seeds/seed
 	var/obj/item/disk/plantgene/disk
