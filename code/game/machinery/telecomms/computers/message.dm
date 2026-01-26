@@ -96,19 +96,19 @@
 	switch(screen)
 		if(MSG_MON_SCREEN_MAIN)
 			data["password"] = password
-			data["status"] = linkedServer.on
+			data["status"] = linkedServer ? linkedServer.on : FALSE
 			// Check is AI or cyborg malf
 			var/mob/living/silicon/silicon_user = user
 			data["is_malf"] = istype(silicon_user) && silicon_user.hack_software
 
 		if(MSG_MON_SCREEN_LOGS)
 			var/list/message_list = list()
-			for(var/datum/data_tablet_msg/pda in linkedServer.pda_msgs)
+			for(var/datum/data_tablet_msg/pda in linkedServer?.pda_msgs)
 				message_list += list(list("ref" = REF(pda), "sender" = pda.sender, "recipient" = pda.recipient, "message" = pda.message))
 			data["messages"] = message_list
 		if(MSG_MON_SCREEN_REQUEST_LOGS)
 			var/list/request_list = list()
-			for(var/datum/data_rc_msg/rc in linkedServer.rc_msgs)
+			for(var/datum/data_rc_msg/rc in linkedServer?.rc_msgs)
 				request_list += list(list("ref" = REF(rc), "message" = rc.message, "stamp" = rc.stamp, "id_auth" = rc.id_auth, "departament" = rc.send_dpt))
 			data["requests"] = request_list
 	return data

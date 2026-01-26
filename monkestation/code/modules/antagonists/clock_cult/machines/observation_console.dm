@@ -36,7 +36,7 @@
 	eyeobj.visible_icon = TRUE
 	eyeobj.icon = 'monkestation/icons/mob/silicon/cameramob.dmi'
 	eyeobj.icon_state = "ratvar_camera"
-	eyeobj.invisibility = INVISIBILITY_OBSERVER
+	eyeobj.SetInvisibility(INVISIBILITY_OBSERVER)
 
 /datum/action/innate/clockcult/warp
 	name = "Warp"
