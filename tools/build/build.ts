@@ -89,7 +89,7 @@ export const DmTarget = new Juke.Target({
     NoWarningParameter,
   ],
   dependsOn: ({ get }) => [
-    get(DefineParameter).includes('ALL_TEMPLATES') && DmMapsIncludeTarget,
+    get(DefineParameter).includes('ALL_MAPS') && DmMapsIncludeTarget,
   ],
   inputs: [
     '_maps/map_files/generic/**',
@@ -99,6 +99,10 @@ export const DmTarget = new Juke.Target({
     'icons/**',
     'interface/**',
     'sound/**',
+    'monkestation/code/**',
+    'monkestation/icons/**',
+    'monkestation/interface/**',
+    'monkestation/sound/**',
     'tgui/public/tgui.html',
     `${DME_NAME}.dme`,
     NamedVersionFile,
