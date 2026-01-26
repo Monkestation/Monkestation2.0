@@ -716,7 +716,7 @@
 		examine_text += text
 		return
 
-	if(IS_VAMPIRE(examiner))
+	if(HAS_MIND_TRAIT(examiner, TRAIT_VAMPIRE_ALIGNED))
 
 		if(my_clan)
 			text += span_cult("<EM>[return_full_name()], of the [my_clan].</EM>")
@@ -732,7 +732,6 @@
 				text += span_cultlarge("<br><EM>You recognize [owner.current.p_them(TRUE)] as a masquerade breaker!</EM>")
 
 		examine_text += text
-		return
 
 /datum/antagonist/vampire/proc/on_moved(datum/source)
 	SIGNAL_HANDLER
