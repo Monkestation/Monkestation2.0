@@ -86,9 +86,6 @@
 		overlay_x = 15, \
 		overlay_y = 10)
 
-/obj/item/gun/energy/disabler/cargo
-	pin = /obj/item/firing_pin/cargo/unremovable
-
 /obj/item/gun/energy/disabler/smg
 	name = "disabler smg"
 	desc = "An automatic disabler variant, as opposed to the conventional model, boasts a higher ammunition capacity at the cost of slightly reduced beam effectiveness."

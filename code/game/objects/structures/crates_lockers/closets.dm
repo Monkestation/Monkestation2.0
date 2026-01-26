@@ -1,5 +1,3 @@
-#define LOCKER_FULL -1
-
 /// A comprehensive list of all roundstart closets (NOT CRATES)
 GLOBAL_LIST_EMPTY_TYPED(roundstart_station_closets, /obj/structure/closet)
 
@@ -1167,5 +1165,3 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 ///Adds the closet to a global list. Placed in its own proc so that crates may be excluded.
 /obj/structure/closet/proc/add_to_roundstart_list()
 	GLOB.roundstart_station_closets += src
-
-#undef LOCKER_FULL
