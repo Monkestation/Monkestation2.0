@@ -241,6 +241,11 @@
 	// Set nutrition
 	owner.current.set_nutrition(min(current_vitae, NUTRITION_LEVEL_WELL_FED))
 
+	if(HAS_TRAIT(owner.current, TRAIT_MASQUERADE))
+		owner.current.blood_volume = BLOOD_VOLUME_NORMAL
+	else
+		owner.current.blood_volume = clamp(current_vitae, BLOOD_VOLUME_BAD, BLOOD_VOLUME_NORMAL) // we want to get pale but not completely fucked up
+
 	// Try and exit frenzy
 	if(current_vitae >= FRENZY_THRESHOLD_EXIT)
 		owner.current.remove_status_effect(/datum/status_effect/frenzy)
