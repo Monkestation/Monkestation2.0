@@ -1,7 +1,3 @@
-
-///BSA unlocked by head ID swipes
-GLOBAL_VAR_INIT(bsa_unlock, FALSE)
-
 // Crew has to build a bluespace cannon
 // Cargo orders part for high price
 // Requires high amount of power
@@ -137,6 +133,8 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	var/ex_power = 3
 	var/power_used_per_shot = 2000000 //enough to kil standard apc - todo : make this use wires instead and scale explosion power with it
 	var/ready
+	/// How long the beam is. Is actually 6 tiles less than what is put here since we count from the center of the BSA.
+	var/beam_length = 26 //Enough to cover an entire screen.
 	pixel_y = -32
 	pixel_x = -192
 	bound_width = 352
@@ -163,11 +161,15 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	return get_turf(src)
 
 /obj/machinery/bsa/full/proc/get_target_turf()
+	/// The x value of where the beam will end up at.
+	var/x_value
 	switch(dir)
 		if(WEST)
-			return locate(1,y,z)
+			x_value = max(1,x - beam_length)
+			return locate(x_value,y,z)
 		if(EAST)
-			return locate(world.maxx,y,z)
+			x_value = min(world.maxx, x + beam_length)
+			return locate(x_value,y,z)
 	return get_turf(src)
 
 /obj/machinery/bsa/full/Initialize(mapload, cannon_direction = WEST)
@@ -207,6 +209,9 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	var/turf/point = get_front_turf()
 	var/turf/target = get_target_turf()
 	var/atom/movable/blocker
+
+	for(var/mob/living/mob in point) //The tile next to the cannon will not destroy turfs/objects, (so you can put a holobarrier) but WILL gib everyone on that tile.
+		mob.gib()
 	for(var/T in get_line(get_step(point, dir), target))
 		var/turf/tile = T
 		if(SEND_SIGNAL(tile, COMSIG_ATOM_BSA_BEAM) & COMSIG_ATOM_BLOCKS_BSA_BEAM)
@@ -222,7 +227,7 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 			break
 		else
 			SSexplosions.highturf += tile //also fucks everything else on the turf
-	point.Beam(target, icon_state = "bsa_beam", time = 5 SECONDS, maxdistance = world.maxx) //ZZZAP
+	point.Beam(target, icon_state = "bsa_beam", time = 5 SECONDS, maxdistance = beam_length) //ZZZAP
 	new /obj/effect/temp_visual/bsa_splash(point, dir)
 
 	notify_ghosts(
@@ -274,15 +279,16 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	icon_keyboard = null
 	icon_screen = null
 
+	/// Is the BSA unlocked?
+	var/bsa_unlock = FALSE
+	/// Will the BSA target itself when it's fired?
+	var/rigged_to_blow = FALSE
 	var/datum/weakref/cannon_ref
 	var/notice
 	var/target
 	var/area_aim = FALSE //should also show areas for targeting
 	COOLDOWN_DECLARE(fire_cooldown) //the "cooldown" for firing the BSA normally is it consuming a absolutely absurd amount of power.
 	var/fire_cooldown_length = 5 SECONDS // (duration the beam exists) When this is (very easily) circumvented, then shit becomes an issue.
-
-/obj/machinery/computer/bsa_control/ui_state(mob/user)
-	return GLOB.physical_state
 
 /obj/machinery/computer/bsa_control/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
@@ -297,7 +303,7 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	data["ready"] = cannon ? cannon.ready : FALSE
 	data["connected"] = cannon
 	data["notice"] = notice
-	data["unlocked"] = GLOB.bsa_unlock
+	data["unlocked"] = bsa_unlock
 	if(target)
 		data["target"] = get_target_name()
 	return data
@@ -320,7 +326,7 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	update_appearance()
 
 /obj/machinery/computer/bsa_control/proc/calibrate(mob/user)
-	if(!GLOB.bsa_unlock)
+	if(!bsa_unlock)
 		return
 	var/list/gps_locators = list()
 	for(var/datum/component/gps/G in GLOB.GPS_list) //nulls on the list somehow
@@ -347,7 +353,7 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 		return G.gpstag
 
 /obj/machinery/computer/bsa_control/proc/get_impact_turf()
-	if(obj_flags & EMAGGED)
+	if(rigged_to_blow)
 		return get_turf(src)
 	else if(istype(target, /area))
 		return pick(get_area_turfs(target))
@@ -361,11 +367,15 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 
 /obj/machinery/computer/bsa_control/proc/fire(mob/user)
 	var/obj/machinery/bsa/full/cannon = cannon_ref?.resolve()
+	var/datum/component/gps/G = target
 	if(!cannon)
 		notice = "No Cannon Exists!"
 		return
 	if(cannon.machine_stat)
 		notice = "Cannon unpowered!"
+		return
+	if(QDELETED(G.parent) && !rigged_to_blow) // Makes sure the signal isn't deleted. If rigged to blow, will still blow up the BSA.
+		notice = "Target does not exist! Select a new target!"
 		return
 	notice = null
 	if(!COOLDOWN_FINISHED(src, fire_cooldown) && fire_cooldown_length)
@@ -396,10 +406,54 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	QDEL_NULL(centerpiece.back_ref)
 	qdel(centerpiece)
 	return cannon
+
+/obj/machinery/computer/bsa_control/item_interaction(mob/living/user, obj/item/tool,  list/modifiers)
+	var/obj/item/card/id/card = tool.GetID()
+	if(card)
+		if(obj_flags & EMAGGED)
+			to_chat(user, span_warning("The authentification slot spits sparks at you and the display reads scrambled text!"))
+			do_sparks(1, FALSE, src)
+			bsa_unlock = TRUE // just in case it wasn't already for some reason. keycard reader is busted.
+			return ITEM_INTERACT_SUCCESS
+		if((ACCESS_COMMAND in card.access))
+			if(!bsa_unlock)
+				bsa_unlock = TRUE
+				to_chat(user, span_notice("[src] firing protocols have been unlocked."))	//I copied this function from mechfab code, maybe could use rewording.
+				user.log_message("has unlocked [src].", LOG_GAME)
+			else
+				bsa_unlock = FALSE
+				to_chat(user, span_notice("[src] firing protocols have been locked."))
+				user.log_message("has locked [src].", LOG_GAME)
+			update_static_data_for_all_viewers()
+			return ITEM_INTERACT_SUCCESS
+	return NONE
+
+/obj/machinery/computer/bsa_control/multitool_act(mob/living/user, obj/item/multitool/M)
+	if(!do_after(user, 5 SECONDS, src))
+		return ITEM_INTERACT_SUCCESS
+	if(!rigged_to_blow)
+		balloon_alert(user, "rigged to explode")
+		to_chat(user, span_warning("You pulse [src] and hear the focusing crystal short out. You get the feeling it wouldn't be wise to stand near [src] when the BSA fires..."))
+		user.log_message("has rigged [src] to detonate itself.", LOG_GAME)
+		rigged_to_blow = TRUE
+	else
+		balloon_alert(user, "safeties restored")
+		to_chat(user, span_warning("You pulse [src] and restore the focusing crystal. It appears someone had rigged the BSA to explode..."))
+		user.log_message("has restored the safeties of [src].", LOG_GAME)
+		rigged_to_blow = FALSE
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/computer/bsa_control/emp_act(severity)
+	. = ..()
+	rigged_to_blow = TRUE	//EMPs will make the BSA fire on itself if you don't check with multitool.
+	log_game("An EMP has rigged [src] to detonate itself.")
+
 /obj/machinery/computer/bsa_control/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
 		return FALSE
 	obj_flags |= EMAGGED
-	balloon_alert(user, "rigged to explode")
-	to_chat(user, span_warning("You emag [src] and hear the focusing crystal short out. You get the feeling it wouldn't be wise to stand near [src] when the BSA fires..."))
+	bsa_unlock = TRUE
+	balloon_alert(user, "unlocked")
+	to_chat(user, span_warning("You emag [src] bypass the authentication lock."))
+	user.log_message("has unlocked [src] with an emag.", LOG_GAME)
 	return TRUE

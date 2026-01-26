@@ -49,12 +49,6 @@ export const KeycardAuth = (props) => {
                       content="Emergency Maintenance Access"
                     />
                     <Button
-                      icon="meteor"
-                      fluid
-                      onClick={() => act('bsa_unlock')}
-                      content="Bluespace Artillery Unlock"
-                    />
-                    <Button
                       icon="key"
                       fluid
                       onClick={() => act('pin_unrestrict')}
