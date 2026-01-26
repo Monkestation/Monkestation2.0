@@ -20,7 +20,11 @@
 **/
 /datum/antagonist/vampire/proc/sol_near_end(atom/source)
 	SIGNAL_HANDLER
-	INVOKE_ASYNC(src, PROC_REF(rank_up), 1)
+	if(QDELETED(owner.current) || sol_levels_remaining < 1)
+		return
+	owner.current.balloon_alert(owner.current, "you have grown more ancient!")
+	sol_levels_remaining--
+	INVOKE_ASYNC(src, PROC_REF(rank_up), 1, TRUE)
 
 /**
  * Handles the Sol status effect, called while Sol is risen

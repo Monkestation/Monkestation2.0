@@ -78,6 +78,8 @@
 	/// The rank this vampire is at, used to level abilities and strength up
 	var/vampire_level = 0
 	var/vampire_level_unspent = VAMPIRE_STARTING_LEVELS
+	/// How many more "free" levels this vampire can get from Sol.
+	var/sol_levels_remaining = VAMPIRE_FREE_SOL_LEVELS
 
 	/// If this guy has suffered final death.
 	var/final_death = FALSE

@@ -55,6 +55,8 @@
 				return
 	lock_me(user)
 
+	INVOKE_ASYNC(vampire, TYPE_PROC_REF(/datum/antagonist/vampire, rank_up_if_goal))
+
 	// You're in a Coffin, everything else is done, you're likely here to heal. Let's offer them the opportunity to do so.
 	vampire.check_begin_torpor()
 

@@ -56,16 +56,25 @@
 		to_chat(owner.current, span_cultbold("You violated the Masquerade! Break the Masquerade [3 - masquerade_infractions] more times and you will become hunted by all other Vampires!"))
 
 /**
+ * Offers the vampire the option to thicken their blood if they've reached their vitae goal.
+ * Called when the vampire sleeps in a coffin.
+**/
+/datum/antagonist/vampire/proc/rank_up_if_goal()
+	while(vitae_goal_progress >= current_vitae_goal)
+		if(!rank_up(1))
+			return
+
+/**
  * Increase our unspent vampire levels by one and try to rank up if inside a coffin
- * Called near the end of Sol and admin abuse
+ * Called when sleeping in a coffin, and admin abuse
 **/
 /datum/antagonist/vampire/proc/rank_up(levels, ignore_reqs = FALSE)
 	if(QDELETED(owner) || QDELETED(owner.current))
-		return
+		return FALSE
 
-	if(vitae_goal_progress <= current_vitae_goal && !ignore_reqs)
+	if(vitae_goal_progress < current_vitae_goal && !ignore_reqs)
 		to_chat(owner.current, span_notice("Your lack of experience has left you unable to level up. Fulfill your vitae goal next time in order to level up."))
-		return
+		return FALSE
 
 	vampire_level_unspent += levels
 	for(var/limb_slot, current_limb in affected_limbs)
@@ -78,15 +87,17 @@
 
 	if(!my_clan)
 		to_chat(owner.current, span_notice("You have grown in power. Join a clan to spend it."))
-		return
+		return FALSE
 
-	to_chat(owner, span_notice("<EM>You have grown familiar with your powers!"))
+	to_chat(owner, span_notice("<EM>You have grown familiar with your powers!</EM>"))
 
 	if(!ignore_reqs)
 		vitae_goal_progress = max(vitae_goal_progress - current_vitae_goal, 0)
 	else
 		vitae_goal_progress = 0
 	current_vitae_goal += VITAE_GOAL_STANDARD
+
+	return TRUE
 
 /**
  * Decrease the unspent vampire levels by one. Only for admins

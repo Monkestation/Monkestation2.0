@@ -54,7 +54,7 @@
 	if(owner_vamp.vitae_goal_progress <= owner_vamp.current_vitae_goal)
 		msg += span_cultlarge("\n<b>Your progress to the next level is: <i>[owner_vamp.vitae_goal_progress]/[owner_vamp.current_vitae_goal].</i></b>")
 	else
-		msg += span_cultlarge("\n<b>You have drank deeply and greedily. Upon next sol, you will level up.</b>")
+		msg += span_cultlarge("\n<b>You have drank deeply and greedily. Sleep in a coffin to level up.</b>")
 
 	to_chat(usr, boxed_message(msg.Join("\n")))
 
