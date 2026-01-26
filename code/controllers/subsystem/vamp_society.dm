@@ -46,7 +46,7 @@ SUBSYSTEM_DEF(vsociety)
 	// Build a poll_config datum to match the new polling API
 	currently_polling = TRUE
 	var/icon/prince_icon = icon('icons/vampires/vampiric.dmi', "prince")
-	prince_icon.Scale(32, 32)
+	prince_icon.Scale(24, 24)
 	var/list/pollers = SSpolling.poll_candidates(
 		"You are eligible for princedom.",
 		poll_time = 3 MINUTES,
