@@ -488,16 +488,18 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 
 /obj/item/organ/internal/brain/slime/proc/drop_items_to_ground(turf/turf, list/dropping = stored_items, explode = FALSE)
 	for(var/atom/movable/item as anything in dropping)
-		if(istype(item, /obj/item/implantcase)) // Delete implants that aren't re-implanted. For now.
-			stored_items.Remove(item)
-			qdel(item)
-		if(explode)
-			brainmob.dropItemToGround(item, violent = TRUE)
-			stored_items.Remove(item)
+		if(item in stored_items)
+			if(istype(item, /obj/item/implantcase)) // Delete implants that aren't re-implanted. For now.
+				stored_items.Remove(item)
+				qdel(item)
+			if(explode)
+				brainmob.dropItemToGround(item, violent = TRUE)
+				stored_items.Remove(item)
+			else
+				item.forceMove(turf)
+				stored_items.Remove(item)
 		else
-			item.forceMove(turf)
-			stored_items.Remove(item)
-	//stored_items.Cut()
+			continue
 
 /obj/item/organ/internal/brain/slime/proc/readd_to_body(mob/living/carbon/human/new_body)
 	if(!QDELETED(new_body) && !QDELETED(src))
