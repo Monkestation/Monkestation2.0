@@ -607,7 +607,7 @@
 	shoes = /obj/item/clothing/shoes/sneakers
 	glasses = /obj/item/clothing/glasses/regular
 
-/obj/item/disk/holodisk/clothruption //synopsis. Man loses his mind, tries to stab himself, it doesnt even work cuz hes made of cloth stuffing instead of guts. Like, give it up for this guy. he failed at dying. Skill issue.
+/obj/item/disk/holodisk/clothruption //synopsis. Man loses his mind, tries to stab himself, it doesnt even work cuz hes made of cloth stuffing instead of guts. woe, plush upon ye.
 	name = "17-12-2515: 'I Was.'"
 	desc = "A non-descript holodisk. There's a piece of masking tape attached to the housing. Written on it, in shakey handwritten print, is a date and two words: 'I Was.'"
 	preset_image_type = /datum/preset_holoimage/dr_zachary
