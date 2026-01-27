@@ -17,14 +17,14 @@ const ExperimentStages = (props) => {
   return (
     <Table ml={2} className="ExperimentStage__Table">
       {props.children.map((stage, idx) => (
-        <ExperimentStageRow key={idx} {...stage} />
+        <ExperimentStageRow key={idx} stage={stage} />
       ))}
     </Table>
   );
 };
 
 const ExperimentStageRow = (props) => {
-  const [type, description, value, altValue] = props;
+  const [type, description, value, altValue] = props.stage;
 
   // Determine completion based on type of stage
   let completion = false;
