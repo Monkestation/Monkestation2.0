@@ -1291,13 +1291,12 @@
 	tier = 2
 	category = PLUSH_TRAIT_CATEGORY_PHYSICALITY
 
-/datum/plush_trait/sparky/squeezed(obj/item/toy/plush/plush, mob/living/squeezer)
+/datum/plush_trait/electrical/squeezed(obj/item/toy/plush/plush, mob/living/squeezer)
 	new /obj/effect/particle_effect/sparks(get_turf(plush))
 	if(!iscarbon(squeezer))
 		return
 	var/mob/living/carbon/carbsqueezer = squeezer
 	carbsqueezer.electrocute_act(10, plush, 1)
-	if(prob(1))
 
 /datum/plush_trait/wet
 	name = "Hydrogenic"
