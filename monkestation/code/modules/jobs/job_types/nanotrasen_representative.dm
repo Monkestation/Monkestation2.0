@@ -101,6 +101,7 @@
 		/obj/item/clipboard = 1,
 	)
 	belt = /obj/item/gun/energy/laser/plasmacore
+	l_pocket = /obj/item/assembly/flash/memorizer/memories
 	r_pocket = /obj/item/modular_computer/pda/heads/ntrep
 	l_hand = /obj/item/storage/secure/briefcase/cash
 	glasses = /obj/item/clothing/glasses/sunglasses
@@ -117,4 +118,5 @@
 	pda_slot = ITEM_SLOT_RPOCKET
 	skillchips = list(
 		/obj/item/skillchip/disk_verifier,
+		/obj/item/skillchip/hypnotist,
 	)

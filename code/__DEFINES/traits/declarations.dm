@@ -102,6 +102,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_CLUMSY "clumsy"
 /// Trait that means you are capable of holding items in some form
 #define TRAIT_CAN_HOLD_ITEMS "can_hold_items"
+/// This user can use advanced hypnoflashes.
+#define TRAIT_CAN_HYPNO "can_hypno"
 /// Trait which lets you clamber over a barrier
 #define TRAIT_FENCE_CLIMBER "can_climb_fences"
 /// means that you can't use weapons with normal trigger guards.
