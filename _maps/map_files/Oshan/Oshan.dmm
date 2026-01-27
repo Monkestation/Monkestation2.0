@@ -1630,6 +1630,7 @@
 	},
 /obj/effect/turf_decal/tile/orange,
 /obj/structure/drain,
+/obj/effect/landmark/start/depsec/engineering,
 /turf/open/floor/iron/dark/side{
 	dir = 8
 	},
@@ -4419,7 +4420,6 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/primary/aft)
 "byh" = (
-/obj/effect/landmark/start/depsec/engineering,
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 8
 	},
@@ -7337,6 +7337,7 @@
 	},
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
 /obj/structure/chair/office/light,
+/obj/effect/landmark/start/depsec/medical,
 /turf/open/floor/iron/white/textured,
 /area/station/security/checkpoint/medical)
 "cum" = (
@@ -8007,9 +8008,6 @@
 /area/station/maintenance/starboard/central)
 "cGK" = (
 /obj/effect/turf_decal/tile/purple/opposingcorners,
-/mob/living/basic/lizard/wags_his_tail{
-	name = "Wags-Her-Tail"
-	},
 /obj/structure/chair/stool/directional/west,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -8017,6 +8015,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
+/obj/effect/landmark/start/janitor,
 /turf/open/floor/iron/dark,
 /area/station/service/janitor)
 "cGL" = (
@@ -15338,6 +15337,7 @@
 	dir = 1;
 	pixel_y = 3
 	},
+/obj/effect/landmark/start/depsec/supply,
 /turf/open/floor/wood/tile,
 /area/station/security/checkpoint/supply)
 "eTA" = (
@@ -19795,9 +19795,9 @@
 /area/station/science/circuits)
 "gpW" = (
 /obj/structure/table/reinforced,
-/obj/machinery/door/window/left/directional/east{
-	req_access = list("hydroponics");
-	name = "Hydroponics Desk"
+/obj/machinery/door/window/left/directional/west{
+	name = "Hydroponics Desk";
+	req_access = list("hydroponics")
 	},
 /turf/open/floor/plating,
 /area/station/service/hydroponics)
@@ -35729,6 +35729,7 @@
 /obj/effect/turf_decal/siding/white{
 	dir = 4
 	},
+/obj/effect/landmark/start/paramedic,
 /turf/open/floor/carpet,
 /area/station/medical/office)
 "lua" = (
@@ -41692,6 +41693,7 @@
 	dir = 1;
 	pixel_y = 3
 	},
+/obj/effect/landmark/start/depsec/science,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/checkpoint/science/research)
 "nqU" = (
@@ -47945,6 +47947,7 @@
 	dir = 1;
 	pixel_y = 3
 	},
+/obj/effect/landmark/start/depsec/medical,
 /turf/open/floor/iron/white/textured,
 /area/station/security/checkpoint/medical)
 "pmk" = (
@@ -50940,10 +50943,10 @@
 	pixel_x = 8;
 	pixel_y = 9
 	},
-/obj/item/nanite_remote,
-/obj/item/nanite_remote,
-/obj/item/nanite_remote,
-/obj/item/nanite_remote,
+/obj/item/storage/pill_bottle/radiomagnetic_disruptor{
+	pixel_x = 6;
+	pixel_y = 0
+	},
 /turf/open/floor/iron/dark/small,
 /area/station/science/lobby)
 "qiN" = (
@@ -56761,13 +56764,14 @@
 /obj/machinery/door/airlock/science{
 	name = "Xenobiology"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/science/xenobio,
 /obj/machinery/door/firedoor/heavy,
 /obj/structure/cable,
 /obj/effect/landmark/navigate_destination,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "sci"
 	},
+/obj/effect/mapping_helpers/airlock/access/any/science/xenobio,
+/obj/effect/mapping_helpers/airlock/access/any/science/general,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "seY" = (
@@ -59080,7 +59084,6 @@
 /turf/open/floor/iron/white/textured,
 /area/station/medical/office)
 "sNP" = (
-/obj/effect/landmark/start/depsec/supply,
 /obj/effect/turf_decal/siding/wood{
 	dir = 10
 	},
@@ -66014,12 +66017,12 @@
 /area/station/common/cryopods)
 "uZg" = (
 /obj/effect/turf_decal/trimline/blue/corner,
-/obj/item/storage/medkit,
 /obj/structure/table/glass,
 /obj/machinery/light/directional/north,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 9
 	},
+/obj/item/storage/medkit/regular,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/medbay/lobby)
 "uZl" = (
@@ -68667,9 +68670,6 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/xenobiology)
 "vOM" = (
-/obj/machinery/modular_computer/preset/command{
-	dir = 8
-	},
 /obj/machinery/light/small/directional/south,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/dark_green/opposingcorners{
@@ -68677,6 +68677,9 @@
 	},
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /obj/machinery/newscaster/directional/south,
+/obj/machinery/modular_computer/preset/representative{
+	dir = 8
+	},
 /turf/open/floor/stone,
 /area/station/command/heads_quarters/nt_rep)
 "vOP" = (
@@ -69836,6 +69839,7 @@
 	},
 /obj/machinery/light/directional/east,
 /obj/machinery/digital_clock/directional/east,
+/obj/effect/landmark/start/paramedic,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/office)
 "whs" = (
@@ -71488,6 +71492,7 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 10
 	},
+/obj/effect/landmark/start/depsec/engineering,
 /turf/open/floor/iron/dark/small,
 /area/station/security/checkpoint/engineering)
 "wLG" = (
