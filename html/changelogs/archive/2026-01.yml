@@ -431,3 +431,35 @@
   SirNightKnight:
   - balance: you need shock immunity either from the nerve grounding surgery or insulated
       mutation to eat a supermatter with matter eater.
+2026-01-26:
+  Tractor-Maam:
+  - bugfix: Revelation can (hopefully) now can have a fake name again.
+2026-01-27:
+  SirNightKnight, E231kei500bandai:
+  - balance: Export scanner no longer shows value of shipping manifests, now you actually
+      have to read them.
+  - balance: Shipping manifest penalty is now only half crate cost as well as capped
+      to 500 credits.
+  - balance: correctly approved shipping manifests are worth 200 credits  instead
+      of 80.
+  - qol: shipping manifests are light orange.
+  - balance: coffins are worth 40 credits each.
+  - balance: wooden crates take 5 planks instead of 6.  worth 150 credits each.
+  - qol: manifests need to be cut off crates, they won't come off when opening the
+      crate. examining a crate that has a paper attached to it will let you interact
+      with the paper. right clicking a crate that has a manifest with stamp will quick
+      stamp the paper.
+  - qol: you can attach pieces of paper to crates.
+  - rscadd: some crates can be welded shut.
+  - qol: crate manifest overlays are colored the same as the actual paper.
+  - balance: mail crates are worth 200 credits each.
+  - qol: ' requisition forms state the cost of an order.'
+  - bugfix: the clipboard's topmost paper overlay  is colored the same way the actual
+      paper is.
+  - bugfix: ' you can export spacecash and holochips for their face value.'
+  - balance: added assemblers to the supply shuttle blacklist.
+  - balance: added ID cards to the supply shuttle blacklist.
+  - bugfix: fixed a bug where non-item contents weren't listed on shipping manifests.
+  - qol: the quartermaster starts with a boxcutter and universal scanner.
+  - balance: the QM locker has a cargo locked shotgun with beanbags (4 shot capacity)
+      instead of a cargo locked disabler.
