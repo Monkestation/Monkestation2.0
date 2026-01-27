@@ -5,6 +5,7 @@
 	steps = list(
 		/datum/surgery_step/incise,
 		/datum/surgery_step/autopsy,
+		/datum/surgery_step/close,
 	)
 
 /datum/surgery/autopsy/can_start(mob/user, mob/living/patient)
