@@ -136,6 +136,15 @@
 
 		paper_note.show_through_camera(usr)
 
+	if(href_list["core_item"] && usr.can_perform_action(src, NEED_DEXTERITY)) // Lets to pull specific items from the core, from examine_more
+		var/obj/item/organ/internal/brain/slime/core = locate(href_list["core"])
+		if(!istype(core) || !core.core_ejected)
+			return
+		var/obj/item/core_item = locate(href_list["core_item"]) in core.stored_items
+		if(core_item)
+			core.drop_items(usr, list(core_item))
+		return
+
 /mob/living/carbon/on_fall()
 	. = ..()
 	loc.handle_fall(src)//it's loc so it doesn't call the mob's handle_fall which does nothing

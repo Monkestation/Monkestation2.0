@@ -47,7 +47,10 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	var/static/list/bannedcore = typecacheof(list(/obj/item/disk/nuclear))
 	//Allowed implants usually given by cases and injectors
 	var/static/list/allowed_implants = typecacheof(list(
-		//obj/item/implant
+		/obj/item/implant/exile,
+		/obj/item/implant/tracking,
+		/obj/item/implant/teleport_blocker,
+		/obj/item/implant/chem
 	))
 	//Extraneous organs not of oozeling origin. Usually cyber implants.
 	var/static/list/allowed_organ_types = typecacheof(list(
@@ -140,6 +143,17 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 			. += span_hypnophrase("Something looks wrong with this core, you don't think plasma will fix this one, maybe there's another way?")
 		else
 			. += span_hypnophrase("You remember that <i>slowly</i> pouring a big beaker of ground plasma on it by hand, if it's non-embodied, would make it regrow one.")
+	. += span_notice("<i>You can take a closer look to see what may be inside...</i>")
+
+/obj/item/organ/internal/brain/slime/examine_more(mob/user)
+	. = ..()
+	. += span_notice("You look closer through the core's hazy interior and see...")
+	if(length(stored_items))
+		for(var/atom/movable/item as anything in stored_items)
+			. += "<a href='byond://?src=[REF(user)];core=[REF(src)];core_item=[REF(item)]' class='alert'> [item.name] </a>"
+		. += span_notice("floating inside.")
+	else
+		. += span_notice("...nothing of interest.")
 
 /obj/item/organ/internal/brain/slime/attack_self(mob/living/user) // Allows a player (presumably an antag) to deactivate the GPS signal on a slime core
 	if(DOING_INTERACTION_WITH_TARGET(user, src))
@@ -175,6 +189,35 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 		)
 	playsound(user, 'sound/effects/wounds/crackandbleed.ogg', 80, TRUE)
 	drop_items_to_ground(user.drop_location())
+
+/obj/item/organ/internal/brain/slime/proc/drop_items(mob/living/user, list/items_to_drop)
+	var/obj/item/organ/internal/brain/slime/core = user.get_active_held_item()
+	if(!core)
+		to_chat(user, span_userdanger("Hold the core in your hand to extract items from it!"))
+		return
+	if(DOING_INTERACTION_WITH_TARGET(user, src) || !length(items_to_drop))
+		return
+	user.visible_message(
+		span_warning("[user] begins jamming their hand into [src]! Slime goes everywhere!"),
+		span_notice("You jam your hand into [src], feeling for the densest point, your prize!"),
+		span_notice("You hear an obscene squelching sound.")
+	)
+	playsound(user, 'sound/surgery/organ1.ogg', 80, TRUE)
+
+	if(!do_after(user, 15 SECONDS, src))
+		user.visible_message(
+			span_warning("[user]'s hand slips out of [src] before they can cause any harm!"),
+			span_notice("Your hand slips out of the goopy core before you could find find anything."),
+			span_notice("You hear a resounding plop.")
+		)
+		return
+	user.visible_message(
+			span_warning("[user] forcefully extracts items from [src]!"),
+			span_notice("You managed to find what you were looking for and they fall to the ground."),
+			span_notice("You hear a wet squelching sounds.")
+		)
+	playsound(user, 'sound/effects/wounds/crackandbleed.ogg', 80, TRUE)
+	drop_items_to_ground(user.drop_location(), dropping = items_to_drop)
 
 /obj/item/organ/internal/brain/slime/Insert(mob/living/carbon/organ_owner, special = FALSE, drop_if_replaced, no_id_transfer)
 	. = ..()
@@ -409,6 +452,12 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 		victim.temporarilyRemoveItemFromInventory(item, force = TRUE, idrop = FALSE)
 		process_and_store_item(item, victim)
 
+	for(var/datum/action/item_action/hands_free/activate_pill/pill_action in victim.actions) // Store dental implants
+		pill_action.Remove(victim)
+		var/obj/pill = pill_action.target
+		if(istype(pill))
+			process_and_store_item(pill, victim)
+
 	for(var/obj/item/implant/curimplant in victim.implants) // Process and store implants
 		if(!is_type_in_typecache(curimplant, allowed_implants))
 			continue
@@ -437,13 +486,35 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 		item.forceMove(src)
 		stored_items |= item
 
-/obj/item/organ/internal/brain/slime/proc/drop_items_to_ground(turf/turf, explode = FALSE)
-	for(var/atom/movable/item as anything in stored_items)
-		if(explode)
-			brainmob.dropItemToGround(item, violent = TRUE)
+/obj/item/organ/internal/brain/slime/proc/drop_items_to_ground(turf/turf, list/dropping = stored_items, explode = FALSE)
+	for(var/atom/movable/item as anything in dropping)
+		if(item in stored_items)
+			if(istype(item, /obj/item/implantcase)) // Delete implants that aren't re-implanted. For now.
+				stored_items.Remove(item)
+				qdel(item)
+			if(explode)
+				brainmob.dropItemToGround(item, violent = TRUE)
+				stored_items.Remove(item)
+			else
+				item.forceMove(turf)
+				stored_items.Remove(item)
 		else
-			item.forceMove(turf)
-	stored_items.Cut()
+			continue
+
+/obj/item/organ/internal/brain/slime/proc/readd_to_body(mob/living/carbon/human/new_body)
+	if(!QDELETED(new_body) && !QDELETED(src))
+		var/specific_implants = list(/obj/item/implant/exile, /obj/item/implant/tracking, /obj/item/implant/teleport_blocker, /obj/item/implant/chem)
+		for(var/atom/movable/item as anything in stored_items)
+			if(istype(item, /obj/item/implantcase)) // For sec implants for now.
+				var/obj/item/implantcase/case = item
+				if(istype(case.imp) && (case.imp.type in specific_implants))
+					var/obj/item/implant/imp = case.imp
+					if(imp.implant(new_body, new_body, silent = TRUE))
+						stored_items.Remove(item)
+						qdel(item)
+					else
+						stored_items.Remove(item)
+						qdel(item)
 
 /obj/item/organ/internal/brain/slime/proc/rebuild_body(mob/user, nugget = TRUE, revival_policy = POLICY_REVIVAL) as /mob/living/carbon/human
 	if(rebuilt)
@@ -540,6 +611,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	new_body.grab_ghost()
 	transfer_observers_to(new_body)
 
+	readd_to_body(new_body)
 	drop_items_to_ground(new_body.drop_location())
 
 	var/policy = get_policy(revival_policy)
