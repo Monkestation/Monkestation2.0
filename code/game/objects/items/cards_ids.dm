@@ -164,20 +164,11 @@
 	return "[ma2html(get_cached_flat_icon(), user)] [thats? "That's ":""][get_examine_name(user)]"
 
 /obj/item/card/id/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
-	if (isitem(old_loc))
-		UnregisterSignal(old_loc, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
-		if (ismob(old_loc.loc))
-			UnregisterSignal(old_loc.loc, COMSIG_MOB_RETRIEVE_ACCESS)
+	if(isitem(old_loc))
+		unequip_from_item_loc(old_loc)
 	. = ..()
-	if (!isitem(loc))
-		return
-	RegisterSignal(loc, COMSIG_ITEM_EQUIPPED, PROC_REF(on_loc_equipped))
-	RegisterSignal(loc, COMSIG_ITEM_DROPPED, PROC_REF(on_loc_dropped))
-	if (ismob(loc.loc))
-		var/mob/wearer = loc.loc
-		// Equip chain shenanigans
-		UnregisterSignal(wearer, COMSIG_MOB_RETRIEVE_ACCESS)
-		on_loc_equipped(loc, wearer, wearer.get_slot_by_item(loc))
+	if(isitem(loc))
+		equip_to_item_loc(loc)
 
 /obj/item/card/id/equipped(mob/user, slot)
 	. = ..()
@@ -189,7 +180,25 @@
 
 /obj/item/card/id/dropped(mob/user)
 	UnregisterSignal(user, COMSIG_MOB_RETRIEVE_ACCESS)
+	if(isitem(loc))
+		equip_to_item_loc(loc) // "dropped" into an item, like a worn wallet
 	return ..()
+
+/// ID card is being equipped to an item (like a pda or wallet)
+/obj/item/card/id/proc/equip_to_item_loc(atom/new_loc)
+	RegisterSignal(new_loc, COMSIG_ITEM_EQUIPPED, PROC_REF(on_loc_equipped), override = TRUE)
+	RegisterSignal(new_loc, COMSIG_ITEM_DROPPED, PROC_REF(on_loc_dropped), override = TRUE)
+	if (ismob(new_loc.loc))
+		var/mob/wearer = new_loc.loc
+		// Equip chain shenanigans
+		UnregisterSignal(wearer, COMSIG_MOB_RETRIEVE_ACCESS)
+		on_loc_equipped(new_loc, wearer, wearer.get_slot_by_item(new_loc))
+
+/// ID card is being unequipped from an item (like a pda or wallet)
+/obj/item/card/id/proc/unequip_from_item_loc(atom/old_loc)
+	UnregisterSignal(old_loc, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
+	if (ismob(old_loc.loc))
+		UnregisterSignal(old_loc.loc, COMSIG_MOB_RETRIEVE_ACCESS)
 
 /obj/item/card/id/proc/on_loc_equipped(datum/source, mob/equipper, slot)
 	SIGNAL_HANDLER
