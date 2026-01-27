@@ -360,6 +360,32 @@
 	log_runtime("Unknown clan name passed to get_clan_description: [clan_name]")
 	return "No description available."
 
+/// Checks to see if an entity counts as a "watcher" for a masquerade breach
+/datum/antagonist/vampire/proc/is_masq_watcher(mob/living/watcher, recursion = 1)
+	if(!isliving(watcher) || QDELING(watcher))
+		return FALSE
+	if(!watcher.mind || !watcher.client || watcher.client.is_afk())
+		return FALSE
+	if(HAS_MIND_TRAIT(watcher, TRAIT_VAMPIRE_ALIGNED))
+		return FALSE
+	if(isanimal_or_basicmob(watcher) || HAS_TRAIT(watcher, TRAIT_GHOST_CRITTER))
+		return FALSE
+	if(watcher.stat != CONSCIOUS || HAS_TRAIT(watcher, TRAIT_RESTRAINED))
+		return FALSE
+	if(is_jaunting(watcher) || HAS_TRAIT(watcher, TRAIT_MOVE_VENTCRAWLING))
+		return FALSE
+	if(watcher.is_blind() || watcher.is_nearsighted_currently())
+		return FALSE
+	if(HAS_SILICON_ACCESS(watcher))
+		return FALSE
+	if(watcher in owner.current?.get_all_linked_holoparasites())
+		return FALSE
+	if(recursion > 0)
+		var/mob/living/master = watcher.mind.enslaved_to?.resolve()
+		if(master)
+			return .(master, recursion - 1)
+	return TRUE
+
 /**
  * Called when a Vampire reaches Final Death
  * Releases all Vassals.

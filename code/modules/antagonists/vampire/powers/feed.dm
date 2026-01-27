@@ -72,19 +72,9 @@
 		var/is_dark = min(GET_SIMPLE_LUMCOUNT(our_turf), GET_SIMPLE_LUMCOUNT(target_turf)) <= SHADOW_SPECIES_DIM_LIGHT
 
 		for(var/mob/living/watcher in oviewers(silent_feed ? FEED_SILENT_NOTICE_RANGE : FEED_LOUD_NOTICE_RANGE, owner) - target)
-			if(!watcher.client)
-				continue
-			if(HAS_SILICON_ACCESS(watcher))
-				continue
-			if(isanimal_or_basicmob(watcher))
+			if(!vampiredatum_power.is_masq_watcher(watcher))
 				continue
 			if(is_dark && !watcher.Adjacent(owner) && !watcher.Adjacent(target))
-				continue
-			if(watcher.stat != CONSCIOUS)
-				continue
-			if(watcher.is_blind() || watcher.is_nearsighted_currently() || HAS_TRAIT(watcher, TRAIT_GHOST_CRITTER) || isdrone(watcher))
-				continue
-			if(HAS_MIND_TRAIT(watcher, TRAIT_VAMPIRE_ALIGNED))
 				continue
 
 			if(!watcher.incapacitated(IGNORE_RESTRAINTS))
@@ -100,19 +90,9 @@
 
 		//from the victim's POV
 		for(var/mob/living/watcher in oviewers(silent_feed ? FEED_SILENT_NOTICE_RANGE : FEED_LOUD_NOTICE_RANGE, target))
-			if(!watcher.client)
-				continue
-			if(isanimal_or_basicmob(watcher))
-				continue
-			if(HAS_SILICON_ACCESS(watcher))
-				continue
-			if(watcher.stat != CONSCIOUS)
+			if(!vampiredatum_power.is_masq_watcher(watcher))
 				continue
 			if(is_dark && !watcher.Adjacent(owner) && !watcher.Adjacent(target))
-				continue
-			if(watcher.is_blind() || watcher.is_nearsighted_currently() || HAS_TRAIT(watcher, TRAIT_GHOST_CRITTER) || isdrone(watcher))
-				continue
-			if(HAS_MIND_TRAIT(watcher, TRAIT_VAMPIRE_ALIGNED))
 				continue
 
 			if(!watcher.incapacitated(IGNORE_RESTRAINTS))

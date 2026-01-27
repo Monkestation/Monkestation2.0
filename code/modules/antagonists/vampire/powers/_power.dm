@@ -242,21 +242,10 @@
 	var/turf/target_turf = get_turf(target)
 	var/is_dark = min(GET_SIMPLE_LUMCOUNT(our_turf), GET_SIMPLE_LUMCOUNT(target_turf)) <= SHADOW_SPECIES_DIM_LIGHT
 	for(var/mob/living/watcher in oviewers(6, owner) - target)
-		if(!watcher.client || watcher.client.is_afk())
-			continue
-		if(HAS_SILICON_ACCESS(watcher))
-			continue
-		if(isanimal_or_basicmob(watcher))
+		if(!vampiredatum_power.is_masq_watcher(watcher))
 			continue
 		if(is_dark && !watcher.Adjacent(owner) && !watcher.Adjacent(target))
 			continue
-		if(watcher.stat != CONSCIOUS || HAS_TRAIT(watcher, TRAIT_RESTRAINED) || HAS_TRAIT(watcher, TRAIT_MOVE_VENTCRAWLING))
-			continue
-		if(watcher.is_blind() || watcher.is_nearsighted_currently() || HAS_TRAIT(watcher, TRAIT_GHOST_CRITTER))
-			continue
-		if(HAS_MIND_TRAIT(watcher, TRAIT_VAMPIRE_ALIGNED))
-			continue
-
 		if(!watcher.incapacitated(IGNORE_RESTRAINTS))
 			watcher.face_atom(owner)
 
