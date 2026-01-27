@@ -205,6 +205,8 @@
 
 	if (slot & (ITEM_SLOT_ID|ITEM_SLOT_HANDS))
 		RegisterSignal(equipper, COMSIG_MOB_RETRIEVE_ACCESS, PROC_REF(retrieve_access), override = TRUE)
+	else //This is necessary because unlike TG, Monke doens't call dropped when moving an item from hand to belt/pockets/ID
+		UnregisterSignal(equipper, COMSIG_MOB_RETRIEVE_ACCESS)
 
 /obj/item/card/id/proc/on_loc_dropped(datum/source, mob/dropper)
 	SIGNAL_HANDLER
