@@ -443,6 +443,13 @@
 	credit_cost = CARGO_CRATE_VALUE * 60
 	occupancy_limit = "CLASSIFIED"
 
+/datum/map_template/shuttle/emergency/steel
+	suffix = "steel"
+	name = "Steel Station Emergency Shuttle"
+	credit_cost = CARGO_CRATE_VALUE * 12
+	description = "A spaceliner designed for Steel station. May damage regular stations."
+	occupancy_limit = "90 souls + 20 gingers"
+
 /datum/map_template/shuttle/emergency/zeta
 	suffix = "zeta"
 	name = "Tr%nPo2r& Z3TA"
