@@ -144,6 +144,12 @@
 	if(master.owner)
 		to_chat(master.owner, span_cultbold("You feel the bond with your vassal [owner.current] has somehow been broken!"))
 
+/datum/antagonist/vassal/on_mindshield(mob/implanter, mob/living/mob_override)
+	var/mob/living/target = mob_override || owner.current
+	target.log_message("has been deconverted from Vassalization by [key_name(implanter)]!", LOG_ATTACK, color="#960000")
+	owner.remove_antag_datum(/datum/antagonist/vassal)
+	return COMPONENT_MINDSHIELD_DECONVERTED
+
 /datum/antagonist/vassal/proc/on_login()
 	SIGNAL_HANDLER
 	var/mob/living/current = owner.current
