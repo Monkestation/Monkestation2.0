@@ -422,7 +422,7 @@
 		if(!contents.len)
 			to_chat(user, span_warning("There is nothing left inside [src]!"))
 			return
-		playsound(loc, 'sound/weapons/slice.ogg', 50, TRUE, -1)
+		playsound(src, 'sound/weapons/slice.ogg', 50, TRUE, -1)
 		user.visible_message(span_warning("[user] begins to cut open [src]."),\
 			span_notice("You begin to cut open [src]..."))
 		if(do_after(user, 5.4 SECONDS, target = src))

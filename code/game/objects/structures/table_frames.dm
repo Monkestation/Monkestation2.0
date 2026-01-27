@@ -27,7 +27,7 @@
 	I.play_tool_sound(src)
 	if(!I.use_tool(src, user, 3 SECONDS))
 		return TRUE
-	playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 	deconstruct(TRUE)
 	return TRUE
 

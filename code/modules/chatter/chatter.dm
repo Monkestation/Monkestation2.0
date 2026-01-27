@@ -51,8 +51,7 @@
 
 /proc/chatter_speak_word(atom/speaker, list/letter_count, phomeme, length)
 	var/path = "sound/runtime/chatter/[phomeme]_[length].ogg"
-	var/loc = speaker.loc
-	playsound(loc, path,
+	playsound(speaker, path,
 		vol = 40, vary = 0, extrarange = 3)
 
 	var/delay = (length + 1) * chatter_get_delay_multiplier(phomeme)

@@ -176,7 +176,7 @@
 		boulder.durability-- //One less durability to the processed boulder.
 		if(COOLDOWN_FINISHED(src, sound_cooldown))
 			COOLDOWN_START(src, sound_cooldown, 1.5 SECONDS)
-			playsound(loc, usage_sound, 29, FALSE, SHORT_RANGE_SOUND_EXTRARANGE) //This can get annoying. One play per process() call.
+			playsound(src, usage_sound, 29, FALSE, SHORT_RANGE_SOUND_EXTRARANGE) //This can get annoying. One play per process() call.
 		stop_processing_check = TRUE
 		if(boulder.durability <= 0)
 			breakdown_boulder(boulder) //Crack that bouwlder open!
@@ -219,7 +219,7 @@
 		return FALSE
 	if(!length(chosen_boulder.custom_materials))
 		qdel(chosen_boulder)
-		playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(src, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		update_boulder_count()
 		return FALSE
 	if(isnull(silo_materials))
@@ -252,7 +252,7 @@
 
 	refining_efficiency = initial(refining_efficiency) //Reset refining efficiency to 100% now that we've processed any relevant ores.
 	if(!length(chosen_boulder.custom_materials))
-		playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(src, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		if(is_artifact)
 			points_held = round((points_held + MINER_POINT_MULTIPLIER) * MINING_POINT_MACHINE_MULTIPLIER) /// Artifacts give bonus points!
 		chosen_boulder.break_apart()
@@ -277,7 +277,7 @@
 		return FALSE
 	if(!new_boulder.custom_materials) //Shouldn't happen, but just in case.
 		qdel(new_boulder)
-		playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(src, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		return FALSE
 	new_boulder.forceMove(src)
 	boulders_contained += new_boulder
@@ -299,7 +299,7 @@
 	if(!length(specific_boulder.custom_materials))
 		qdel(specific_boulder)
 		update_boulder_count()
-		playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(src, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		return FALSE
 	specific_boulder.restart_processing_cooldown() //Reset the cooldown so we don't pick it back up by the same machine.
 	if(isturf(drop_turf))
@@ -310,7 +310,7 @@
 		return TRUE
 	STOP_PROCESSING(SSmachines, src)
 	balloon_alert_to_viewers("clear!")
-	playsound(loc, 'sound/machines/ping.ogg', 50, FALSE)
+	playsound(src, 'sound/machines/ping.ogg', 50, FALSE)
 	return TRUE
 
 /obj/machinery/bouldertech/can_drop_off()

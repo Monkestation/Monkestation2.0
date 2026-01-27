@@ -97,7 +97,7 @@ GLOBAL_LIST_INIT(tendrils, list())
 	visible_message(span_boldannounce("The tendril writhes in fury as the earth around it begins to crack and break apart! Get back!"))
 	balloon_alert_to_viewers("interact to grab loot before collapse!", vision_distance = 7)
 	balloon_alert_to_viewers("note that you can get multiple chests if multiple people grab!", vision_distance = 7)
-	playsound(loc,'sound/effects/tendril_destroyed.ogg', 200, FALSE, 75, TRUE, TRUE)
+	playsound(src,'sound/effects/tendril_destroyed.ogg', 200, FALSE, 75, TRUE, TRUE)
 	addtimer(CALLBACK(src, PROC_REF(collapse)), 75)
 
 /obj/effect/collapse/examine(mob/user)

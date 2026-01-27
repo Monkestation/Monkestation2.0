@@ -131,5 +131,5 @@ GLOBAL_DATUM(bridge_axe, /obj/item/fireaxe)
 
 /obj/item/fireaxe/energy/ignition_effect(atom/atom, mob/user)
 	. = span_warning("[user] holds [user.p_their()] axe edge to the [atom.name]. [user.p_they(TRUE)] light[user.p_s()] [user.p_their()] [atom.name] in the process. Holy fuck.")
-	playsound(loc, hitsound, get_clamped_volume(), TRUE, -1)
+	playsound(src, hitsound, get_clamped_volume(), TRUE, -1)
 	add_fingerprint(user)

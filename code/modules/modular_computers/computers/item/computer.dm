@@ -167,7 +167,7 @@
 /obj/item/modular_computer/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if(active_program?.tap(interacting_with, user, modifiers))
 		user.do_attack_animation(interacting_with) //Emulate this animation since we kill the attack in three lines
-		playsound(loc, 'sound/items/weapons/tap.ogg', get_clamped_volume(), TRUE, -1) //Likewise for the tap sound
+		playsound(src, 'sound/items/weapons/tap.ogg', get_clamped_volume(), TRUE, -1) //Likewise for the tap sound
 		addtimer(CALLBACK(src, PROC_REF(play_ping)), 0.5 SECONDS, TIMER_UNIQUE) //Slightly delayed ping to indicate success
 		return ITEM_INTERACT_SUCCESS
 	return ..()
@@ -189,7 +189,7 @@
  * Timers runtime if you try to make them call playsound. Yep.
  */
 /obj/item/modular_computer/proc/play_ping()
-	playsound(loc, 'sound/machines/ping.ogg', get_clamped_volume(), FALSE, -1)
+	playsound(src, 'sound/machines/ping.ogg', get_clamped_volume(), FALSE, -1)
 
 /obj/item/modular_computer/get_cell()
 	return internal_cell

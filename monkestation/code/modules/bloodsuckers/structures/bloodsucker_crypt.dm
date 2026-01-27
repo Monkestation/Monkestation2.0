@@ -225,7 +225,7 @@
 		span_boldnotice("You secure [target] tightly in place. [target.p_They()] won't escape you now."),
 	)
 
-	playsound(loc, 'sound/effects/pop_expl.ogg', vol = 25, vary = TRUE)
+	playsound(src, 'sound/effects/pop_expl.ogg', vol = 25, vary = TRUE)
 	update_appearance(UPDATE_ICON)
 	set_density(TRUE)
 

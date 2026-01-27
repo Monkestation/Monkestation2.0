@@ -496,7 +496,7 @@ GLOBAL_LIST_EMPTY(siren_objects)
 	var/sound = 'monkestation/code/modules/outdoors/sound/effects/weather_warning.ogg'
 
 /obj/machinery/siren/proc/siren_warning(msg = "WARNING, bla bla bla bluh.", sound_ch = 'monkestation/code/modules/outdoors/sound/effects/weather_warning.ogg')
-	playsound(loc, sound_ch, 50, 0, mixer_channel = CHANNEL_MACHINERY)
+	playsound(src, sound_ch, 50, 0, mixer_channel = CHANNEL_MACHINERY)
 	visible_message(span_danger("[src] makes a signal. [msg]."))
 
 /obj/machinery/siren/proc/siren_warning_start(msg, sound_ch = 'monkestation/code/modules/outdoors/sound/effects/weather_warning.ogg')
@@ -511,7 +511,7 @@ GLOBAL_LIST_EMPTY(siren_objects)
 
 /obj/machinery/siren/process()
 	if(prob(2))
-		playsound(loc, sound, 80, 0, mixer_channel = CHANNEL_MACHINERY)
+		playsound(src, sound, 80, 0, mixer_channel = CHANNEL_MACHINERY)
 		visible_message(span_danger("[src] makes a signal. [message]."))
 
 /obj/machinery/siren/weather

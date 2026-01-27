@@ -78,7 +78,7 @@
 			if(C.is_blind())
 				to_chat(C, span_userdanger("As you feel someone grab your wrists, [src] start digging into your skin!"))
 
-			playsound(loc, cuffsound, 30, TRUE, -2)
+			playsound(src, cuffsound, 30, TRUE, -2)
 			log_combat(user, C, "attempted to handcuff", src, "Cuff Time: [DisplayTimeText(handcuff_time * handcuff_time_mod)]. Uncuff Time: [DisplayTimeText(breakouttime)].")
 
 			if(HAS_TRAIT(user, TRAIT_FAST_CUFFING))
@@ -474,7 +474,7 @@
 
 /obj/item/restraints/legcuffs/beartrap/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is sticking [user.p_their()] head in the [src.name]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, TRUE, -1)
+	playsound(src, 'sound/weapons/bladeslice.ogg', 50, TRUE, -1)
 	return BRUTELOSS
 
 /obj/item/restraints/legcuffs/beartrap/attack_self(mob/user)

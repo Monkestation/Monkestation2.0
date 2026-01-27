@@ -284,7 +284,7 @@
 	. = ..()
 	if(!.)
 		return
-	playsound(loc, 'sound/effects/glassbr3.ogg', 100, TRUE)
+	playsound(src, 'sound/effects/glassbr3.ogg', 100, TRUE)
 
 	var/obj/structure/floodlight_frame/floodlight_frame = new(loc)
 	floodlight_frame.state = FLOODLIGHT_NEEDS_LIGHTS

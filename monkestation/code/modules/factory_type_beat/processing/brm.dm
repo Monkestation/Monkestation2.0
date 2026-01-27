@@ -148,7 +148,7 @@
  */
 /obj/machinery/bouldertech/brm/proc/pre_collect_boulder()
 	if(!length(SSore_generation.available_boulders))
-		playsound(loc, 'sound/machines/synth_no.ogg', 30 , TRUE)
+		playsound(src, 'sound/machines/synth_no.ogg', 30 , TRUE)
 		balloon_alert_to_viewers("no boulders to collect!")
 		return FALSE //Nothing to collect
 	var/obj/item/boulder/random_boulder = pick(SSore_generation.available_boulders)
@@ -169,7 +169,7 @@
 /obj/machinery/bouldertech/brm/proc/collect_boulder(obj/item/boulder/random_boulder)
 	flick("brm-flash", src)
 	if(QDELETED(random_boulder))
-		playsound(loc, 'sound/machines/synth_no.ogg', 30 , TRUE)
+		playsound(src, 'sound/machines/synth_no.ogg', 30 , TRUE)
 		balloon_alert_to_viewers("target lost!")
 		return FALSE
 	playsound(src, AUTO_TELEPORT_SOUND, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)

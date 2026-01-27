@@ -34,7 +34,7 @@
 
 /obj/item/crowbar/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is beating [user.p_them()]self to death with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	playsound(loc, 'sound/weapons/genhit.ogg', 50, TRUE, -1)
+	playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE, -1)
 	return BRUTELOSS
 
 /obj/item/crowbar/red
@@ -154,16 +154,16 @@
 /obj/item/crowbar/power/suicide_act(mob/living/user)
 	if(tool_behaviour == TOOL_CROWBAR)
 		user.visible_message(span_suicide("[user] is putting [user.p_their()] head in [src], it looks like [user.p_theyre()] trying to commit suicide!"))
-		playsound(loc, 'sound/items/jaws_pry.ogg', 50, TRUE, -1)
+		playsound(src, 'sound/items/jaws_pry.ogg', 50, TRUE, -1)
 	else
 		user.visible_message(span_suicide("[user] is wrapping \the [src] around [user.p_their()] neck. It looks like [user.p_theyre()] trying to rip [user.p_their()] head off!"))
-		playsound(loc, 'sound/items/jaws_cut.ogg', 50, TRUE, -1)
+		playsound(src, 'sound/items/jaws_cut.ogg', 50, TRUE, -1)
 		if(iscarbon(user))
 			var/mob/living/carbon/suicide_victim = user
 			var/obj/item/bodypart/target_bodypart = suicide_victim.get_bodypart(BODY_ZONE_HEAD)
 			if(target_bodypart)
 				target_bodypart.drop_limb()
-				playsound(loc, SFX_DESECRATION, 50, TRUE, -1)
+				playsound(src, SFX_DESECRATION, 50, TRUE, -1)
 	return BRUTELOSS
 
 /obj/item/crowbar/cyborg

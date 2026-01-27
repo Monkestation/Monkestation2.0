@@ -132,7 +132,7 @@
 /obj/machinery/power/tracker/atom_break(damage_flag)
 	. = ..()
 	if(.)
-		playsound(loc, 'sound/effects/glassbr3.ogg', 100, TRUE)
+		playsound(src, 'sound/effects/glassbr3.ogg', 100, TRUE)
 		unset_control()
 
 /obj/machinery/power/tracker/deconstruct(disassembled = TRUE)

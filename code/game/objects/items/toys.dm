@@ -741,7 +741,7 @@
 	active = FALSE
 	update_appearance()
 	visible_message(span_warning("[src] slowly stops rattling and falls still, its latch snapping shut.")) //subtle difference
-	playsound(loc, 'sound/weapons/batonextend.ogg', 100, TRUE)
+	playsound(src, 'sound/weapons/batonextend.ogg', 100, TRUE)
 	animate(src, transform = matrix())
 
 /*
@@ -866,7 +866,7 @@
 /obj/item/toy/talking/attack_self(mob/user)
 	if(!cooldown)
 		activation_message(user)
-		playsound(loc, 'sound/machines/click.ogg', 20, TRUE)
+		playsound(src, 'sound/machines/click.ogg', 20, TRUE)
 
 		INVOKE_ASYNC(src, PROC_REF(do_toy_talk), user)
 

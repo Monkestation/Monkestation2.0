@@ -61,9 +61,9 @@
 /obj/structure/holopay/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			playsound(loc, 'sound/weapons/egloves.ogg', 80, TRUE)
+			playsound(src, 'sound/weapons/egloves.ogg', 80, TRUE)
 		if(BURN)
-			playsound(loc, 'sound/weapons/egloves.ogg', 80, TRUE)
+			playsound(src, 'sound/weapons/egloves.ogg', 80, TRUE)
 
 /obj/structure/holopay/deconstruct()
 	dissipate()
@@ -239,7 +239,7 @@
  * Deletes the holopay thereafter.
  */
 /obj/structure/holopay/proc/dissipate()
-	playsound(loc, 'sound/effects/empulse.ogg', 40, TRUE)
+	playsound(src, 'sound/effects/empulse.ogg', 40, TRUE)
 	visible_message(span_notice("The pay stand vanishes."))
 	qdel(src)
 

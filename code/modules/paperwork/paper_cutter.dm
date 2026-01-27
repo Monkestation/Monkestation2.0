@@ -76,11 +76,11 @@
 			return SHAME
 		user.visible_message(span_suicide("[user] is beheading [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 		user_head.drop_limb()
-		playsound(loc, SFX_DESECRATION, 50, TRUE, -1)
+		playsound(src, SFX_DESECRATION, 50, TRUE, -1)
 		return BRUTELOSS
 	// If we have no blade, just beat ourselves up
 	user.visible_message(span_suicide("[user] repeatedly bashes [src] against [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!"))
-	playsound(loc, 'sound/items/gavel.ogg', 50, TRUE, -1)
+	playsound(src, 'sound/items/gavel.ogg', 50, TRUE, -1)
 	return BRUTELOSS
 
 /obj/item/papercutter/update_icon_state()
@@ -109,7 +109,7 @@
 			return ITEM_INTERACT_BLOCKING
 		if(!user.transferItemToLoc(tool, src))
 			return ITEM_INTERACT_BLOCKING
-		playsound(loc, SFX_PAGE_TURN, 60, TRUE)
+		playsound(src, SFX_PAGE_TURN, 60, TRUE)
 		balloon_alert(user, "paper inserted")
 		stored_paper = tool
 		update_appearance()

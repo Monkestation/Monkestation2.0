@@ -153,5 +153,5 @@
 		vision_distance = COMBAT_MESSAGE_RANGE,
 	)
 	user.do_attack_animation(target, used_item = src)
-	playsound(loc, hitsound, get_clamped_volume(), TRUE, extrarange = -1, falloff_distance = 0)
+	playsound(src, hitsound, get_clamped_volume(), TRUE, extrarange = -1, falloff_distance = 0)
 	return TRUE

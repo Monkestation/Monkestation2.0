@@ -168,7 +168,7 @@
 		playsound(src, 'sound/machines/scanbuzz.ogg', 100)
 		return
 	to_chat(human_occupant, span_danger("As [src] whirrs to life you feel some cold metal restraints deploy around you, you can't move!"))
-	playsound(loc, 'sound/items/rped.ogg', 60)
+	playsound(src, 'sound/items/rped.ogg', 60)
 	say("Stage one complete!")
 	minor_announce("SECURITY BREACH DETECTED, NETWORK COMPROMISED! LOCATION UNTRACEABLE.", "GoldenEye Defence Network")
 	timer_id = addtimer(CALLBACK(src, PROC_REF(stage_two)), rand(STAGE_PROCESS_TIME_LOWER, STAGE_PROCESS_TIME_UPPER), TIMER_STOPPABLE|TIMER_UNIQUE)

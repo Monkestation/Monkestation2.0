@@ -160,7 +160,7 @@
 		if(ismob(nozzle.loc))
 			var/mob/wearer = nozzle.loc
 			wearer.temporarilyRemoveItemFromInventory(nozzle, TRUE)
-			playsound(loc, 'sound/mecha/mechmove03.ogg', 75, TRUE)
+			playsound(src, 'sound/mecha/mechmove03.ogg', 75, TRUE)
 		nozzle.forceMove(src)
 
 /obj/item/vacuum_pack/attack_hand(mob/user, list/modifiers)

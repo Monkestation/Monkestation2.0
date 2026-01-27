@@ -36,7 +36,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		M.visible_message(span_danger("[user] are stroking the head of [M] with a bangammer."), span_userdanger("[user] are stroking your head with a bangammer."), span_hear("You hear a bangammer stroking a head.")) // see above comment
 	else
 		M.visible_message(span_danger("[M] has been banned FOR NO REISIN by [user]!"), span_userdanger("You have been banned FOR NO REISIN by [user]!"), span_hear("You hear a banhammer banning someone."))
-	playsound(loc, 'sound/effects/adminhelp.ogg', 15) //keep it at 15% volume so people don't jump out of their skin too much
+	playsound(src, 'sound/effects/adminhelp.ogg', 15) //keep it at 15% volume so people don't jump out of their skin too much
 	if((user.istate & ISTATE_HARM))
 		return ..(M, user)
 
@@ -66,7 +66,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		. += "A sacred weapon of the higher castes from the clown planet, used to strike fear into the hearts of their foes. Wield it with care."
 
 /obj/item/balloon_mallet/attack(mob/living/target, mob/living/user)
-	playsound(loc, 'sound/creatures/clown/hehe.ogg', 20)
+	playsound(src, 'sound/creatures/clown/hehe.ogg', 20)
 	if (!isliving(target))
 		return
 	switch(target.mob_mood.sanity)

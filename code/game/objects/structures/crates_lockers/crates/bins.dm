@@ -41,10 +41,10 @@
 		return ..()
 
 /obj/structure/closet/crate/bin/proc/do_animate()
-	playsound(loc, open_sound, 15, TRUE, -3)
+	playsound(src, open_sound, 15, TRUE, -3)
 	flick("animate_largebins", src)
 	addtimer(CALLBACK(src, PROC_REF(do_close)), 13)
 
 /obj/structure/closet/crate/bin/proc/do_close()
-	playsound(loc, close_sound, 15, TRUE, -3)
+	playsound(src, close_sound, 15, TRUE, -3)
 	update_appearance()

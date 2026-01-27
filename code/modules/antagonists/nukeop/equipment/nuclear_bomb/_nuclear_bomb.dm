@@ -280,7 +280,7 @@ GLOBAL_VAR(station_nuke_source)
 		return
 
 	var/volume = (get_time_left() <= 20 ? 30 : 5)
-	playsound(loc, 'sound/items/timer.ogg', volume, FALSE)
+	playsound(src, 'sound/items/timer.ogg', volume, FALSE)
 
 /// Changes what mode the UI is depending on the state of the nuke.
 /obj/machinery/nuclearbomb/proc/update_ui_mode()

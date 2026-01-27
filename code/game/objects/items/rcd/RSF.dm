@@ -148,7 +148,7 @@ RSF
 	if (!is_allowed(interacting_with))
 		return NONE
 	if(use_matter(dispense_cost, user))//If we can charge that amount of charge, we do so and return true
-		playsound(loc, 'sound/machines/click.ogg', 10, TRUE)
+		playsound(src, 'sound/machines/click.ogg', 10, TRUE)
 		var/atom/meme = new to_dispense(get_turf(interacting_with))
 		to_chat(user, span_notice("[action_type] [meme.name]..."))
 		cooldown = world.time + cooldowndelay

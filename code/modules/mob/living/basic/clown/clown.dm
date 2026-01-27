@@ -449,7 +449,7 @@
 
 		qdel(eaten_atom)
 
-	playsound(loc,'sound/items/eatfood.ogg', rand(30,50), TRUE)
+	playsound(src,'sound/items/eatfood.ogg', rand(30,50), TRUE)
 	flick("glutton_mouth", src)
 
 /mob/living/basic/clown/mutant/glutton/tamed(mob/living/tamer, atom/food)

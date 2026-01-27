@@ -279,5 +279,5 @@
 	var/area/A = get_area(loc)
 	var/message = "ALERT: Self-destruct charge activated in [initial(A.name)]! Detonation in [timer_set] seconds! Evacuate the area immediately!"
 	radio.talk_into(src, message, radio_channel)
-	playsound(loc, 'sound/machines/click.ogg', 30, TRUE)
+	playsound(src, 'sound/machines/click.ogg', 30, TRUE)
 	update_appearance()

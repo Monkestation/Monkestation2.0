@@ -178,7 +178,7 @@
 			syringes += D
 			recharge_newshot()
 			update_appearance()
-			playsound(loc, load_sound, 40)
+			playsound(src, load_sound, 40)
 			return ITEM_INTERACT_SUCCESS
 		balloon_alert(user, "it's already full!")
 		return ITEM_INTERACT_BLOCKING
@@ -236,7 +236,7 @@
 			balloon_alert(user, "[A.name] loaded")
 			syringes += A
 			recharge_newshot()
-			playsound(loc, load_sound, 40)
+			playsound(src, load_sound, 40)
 			return TRUE
 		else
 			balloon_alert(user, "it's already full!")

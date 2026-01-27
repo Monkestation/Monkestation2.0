@@ -9,7 +9,7 @@
 	if(mob_size < MOB_SIZE_LARGE)
 		safe_throw_at(get_edge_target_turf(src, get_dir(user, src)), 2, 1, user)
 		hitverb = "slam"
-	playsound(loc, SFX_PUNCH, 25, TRUE, -1)
+	playsound(src, SFX_PUNCH, 25, TRUE, -1)
 	visible_message(span_danger("[user] [hitverb]s [src]!"), \
 					span_userdanger("[user] [hitverb]s you!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, user)
 	to_chat(user, span_danger("You [hitverb] [src]!"))
@@ -21,7 +21,7 @@
 		if (body_position == STANDING_UP)
 			if (prob(5))
 				Unconscious(40)
-				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
+				playsound(src, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 				log_combat(user, src, "pushed")
 				visible_message(span_danger("[user] pushes [src] down!"), \
 								span_userdanger("[user] pushes you down!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), null, user)
@@ -29,7 +29,7 @@
 		return TRUE
 	var/damage = rand(1, 9)
 	if (prob(90))
-		playsound(loc, SFX_PUNCH, 25, TRUE, -1)
+		playsound(src, SFX_PUNCH, 25, TRUE, -1)
 		visible_message(span_danger("[user] punches [src]!"), \
 						span_userdanger("[user] punches you!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, user)
 		to_chat(user, span_danger("You punch [src]!"))
@@ -42,7 +42,7 @@
 		apply_damage(damage, BRUTE, affecting)
 		log_combat(user, src, "attacked")
 	else
-		playsound(loc, 'sound/weapons/punchmiss.ogg', 25, TRUE, -1)
+		playsound(src, 'sound/weapons/punchmiss.ogg', 25, TRUE, -1)
 		visible_message(span_danger("[user]'s punch misses [src]!"), \
 						span_danger("You avoid [user]'s punch!"), span_hear("You hear a swoosh!"), COMBAT_MESSAGE_RANGE, user)
 		to_chat(user, span_warning("Your punch misses [src]!"))

@@ -438,7 +438,7 @@
 	if (!istype(carbon_occupant))
 		return
 
-	playsound(loc, 'sound/machines/ping.ogg', 30, FALSE)
+	playsound(src, 'sound/machines/ping.ogg', 30, FALSE)
 
 	var/obj/item/organ/internal/cyberimp/bci/bci_organ = carbon_occupant.get_organ_by_type(/obj/item/organ/internal/cyberimp/bci)
 

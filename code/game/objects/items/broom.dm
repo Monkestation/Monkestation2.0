@@ -85,7 +85,7 @@
 		if (target_bin)
 			target_bin.update_appearance()
 			to_chat(user, span_notice("You sweep the pile of garbage into [target_bin]."))
-		playsound(loc, 'sound/weapons/thudswoosh.ogg', 30, TRUE, -1)
+		playsound(src, 'sound/weapons/thudswoosh.ogg', 30, TRUE, -1)
 
 
 /obj/item/pushbroom/cyborg

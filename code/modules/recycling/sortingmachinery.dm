@@ -32,10 +32,10 @@
 /obj/item/delivery/proc/post_unwrap_contents(mob/user, rip_open = TRUE)
 	var/turf/turf_loc = get_turf(user || src)
 	if(rip_open)
-		playsound(loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
+		playsound(src, 'sound/items/poster_ripped.ogg', 50, TRUE)
 		new /obj/effect/decal/cleanable/wrapping(turf_loc)
 	else
-		playsound(loc, 'sound/items/box_cut.ogg', 50, TRUE)
+		playsound(src, 'sound/items/box_cut.ogg', 50, TRUE)
 		new /obj/item/stack/package_wrap(turf_loc, 1)
 	for(var/atom/movable/movable_content as anything in contents)
 		movable_content.forceMove(turf_loc)
@@ -112,7 +112,7 @@
 			var/tag = uppertext(GLOB.TAGGERLOCATIONS[dest_tagger.currTag])
 			to_chat(user, span_notice("*[tag]*"))
 			sort_tag = dest_tagger.currTag
-			playsound(loc, 'sound/machines/twobeep_high.ogg', 100, TRUE)
+			playsound(src, 'sound/machines/twobeep_high.ogg', 100, TRUE)
 			update_appearance()
 	else if(IS_WRITING_UTENSIL(item))
 		if(!user.can_write(item))

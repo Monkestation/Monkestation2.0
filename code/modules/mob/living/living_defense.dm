@@ -200,7 +200,7 @@
 			blocked = TRUE
 			return SUCCESSFUL_BLOCK
 		else
-			playsound(loc, 'sound/weapons/genhit.ogg', 50, TRUE, -1) //Item sounds are handled in the item itself
+			playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE, -1) //Item sounds are handled in the item itself
 		return ..()
 
 	var/obj/item/thrown_item = AM
@@ -451,7 +451,7 @@
 	user.do_attack_animation(src, ATTACK_EFFECT_BITE)
 	if (prob(75))
 		log_combat(user, src, "attacked")
-		playsound(loc, 'sound/weapons/bite.ogg', 50, TRUE, -1)
+		playsound(src, 'sound/weapons/bite.ogg', 50, TRUE, -1)
 		visible_message(span_danger("[user.name] bites [src]!"), \
 						span_userdanger("[user.name] bites you!"), span_hear("You hear a chomp!"), COMBAT_MESSAGE_RANGE, user)
 		to_chat(user, span_danger("You bite [src]!"))
@@ -478,7 +478,7 @@
 			visible_message(span_danger("[L.name] bites [src]!"), \
 							span_userdanger("[L.name] bites you!"), span_hear("You hear a chomp!"), COMBAT_MESSAGE_RANGE, L)
 			to_chat(L, span_danger("You bite [src]!"))
-			playsound(loc, 'sound/weapons/bite.ogg', 50, TRUE, -1)
+			playsound(src, 'sound/weapons/bite.ogg', 50, TRUE, -1)
 			return TRUE
 		else
 			visible_message(span_danger("[L.name]'s bite misses [src]!"), \

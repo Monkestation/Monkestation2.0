@@ -271,7 +271,7 @@
 			cap_lost = TRUE
 		else
 			to_chat(user, span_notice("You remove the cap from [src]."))
-			playsound(loc, 'sound/effects/can_open1.ogg', 50, TRUE)
+			playsound(src, 'sound/effects/can_open1.ogg', 50, TRUE)
 	else
 		cap_on = TRUE
 		spillable = FALSE

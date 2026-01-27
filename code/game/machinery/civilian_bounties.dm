@@ -51,11 +51,11 @@
 		return FALSE
 	if(!inserted_scan_id)
 		status_report = "Please insert your ID first."
-		playsound(loc, 'sound/machines/synth_no.ogg', 30 , TRUE)
+		playsound(src, 'sound/machines/synth_no.ogg', 30 , TRUE)
 		return FALSE
 	if(!inserted_scan_id.registered_account.civilian_bounty)
 		status_report = "Please accept a new civilian bounty first."
-		playsound(loc, 'sound/machines/synth_no.ogg', 30 , TRUE)
+		playsound(src, 'sound/machines/synth_no.ogg', 30 , TRUE)
 		return FALSE
 	status_report = "Civilian Bounty: "
 	var/obj/machinery/piratepad/pad = pad_ref?.resolve()
@@ -64,16 +64,16 @@
 			continue
 		if(inserted_scan_id.registered_account.civilian_bounty.applies_to(AM))
 			status_report += "Target Applicable."
-			playsound(loc, 'sound/machines/synth_yes.ogg', 30 , TRUE)
+			playsound(src, 'sound/machines/synth_yes.ogg', 30 , TRUE)
 			return
 	status_report += "Not Applicable."
-	playsound(loc, 'sound/machines/synth_no.ogg', 30 , TRUE)
+	playsound(src, 'sound/machines/synth_no.ogg', 30 , TRUE)
 
 /**
  * This fully rewrites base behavior in order to only check for bounty objects, and nothing else.
  */
 /obj/machinery/computer/piratepad_control/civilian/send(mob/user)
-	playsound(loc, 'sound/machines/wewewew.ogg', 70, TRUE)
+	playsound(src, 'sound/machines/wewewew.ogg', 70, TRUE)
 	if(!sending)
 		return
 	if(!inserted_scan_id)
@@ -111,7 +111,7 @@
 	pad.visible_message(span_notice("[pad] activates!"))
 	flick(pad.sending_state,pad)
 	pad.icon_state = pad.idle_state
-	playsound(loc, 'sound/machines/synth_yes.ogg', 30 , TRUE)
+	playsound(src, 'sound/machines/synth_yes.ogg', 30 , TRUE)
 	sending = FALSE
 
 ///Here is where cargo bounties are added to the player's bank accounts, then adjusted and scaled into a civilian bounty.
@@ -134,7 +134,7 @@
 
 /obj/machinery/computer/piratepad_control/civilian/proc/pick_bounty(choice)
 	if(!inserted_scan_id || !inserted_scan_id.registered_account || !inserted_scan_id.registered_account.bounties || !inserted_scan_id.registered_account.bounties[choice])
-		playsound(loc, 'sound/machines/synth_no.ogg', 40 , TRUE)
+		playsound(src, 'sound/machines/synth_no.ogg', 40 , TRUE)
 		return
 	inserted_scan_id.registered_account.civilian_bounty = inserted_scan_id.registered_account.bounties[choice]
 	inserted_scan_id.registered_account.bounties = null

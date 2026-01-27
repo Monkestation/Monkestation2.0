@@ -56,7 +56,7 @@ GLOBAL_DATUM_INIT(status_font, /datum/font, new /datum/font/tiny_unicode/size_12
 	balloon_alert(user, "[anchored ? "un" : ""]securing...")
 	tool.play_tool_sound(src)
 	if(tool.use_tool(src, user, 6 SECONDS))
-		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+		playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 		balloon_alert(user, "[anchored ? "un" : ""]secured")
 		deconstruct()
 		return TRUE

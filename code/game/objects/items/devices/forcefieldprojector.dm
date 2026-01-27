@@ -54,7 +54,7 @@
 	if(force_proj_busy)
 		to_chat(user, span_notice("[src] is busy creating a forcefield."))
 		return ITEM_INTERACT_BLOCKING
-	playsound(loc, 'sound/machines/click.ogg', 20, TRUE)
+	playsound(src, 'sound/machines/click.ogg', 20, TRUE)
 	if(creation_time)
 		force_proj_busy = TRUE
 		if(!do_after(user, creation_time, target = interacting_with))
@@ -134,7 +134,7 @@
 	return ..()
 
 /obj/structure/projected_forcefield/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
-	playsound(loc, 'sound/weapons/egloves.ogg', 80, TRUE)
+	playsound(src, 'sound/weapons/egloves.ogg', 80, TRUE)
 
 /obj/structure/projected_forcefield/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	if(sound_effect)

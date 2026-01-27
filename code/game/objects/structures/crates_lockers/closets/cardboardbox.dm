@@ -77,7 +77,7 @@
 			alerted_mob.face_atom(src)
 		alerted_mob.do_alert_animation()
 
-	playsound(loc, 'sound/machines/chime.ogg', 50, FALSE, -5)
+	playsound(src, 'sound/machines/chime.ogg', 50, FALSE, -5)
 
 /// Does the MGS ! animation
 /atom/proc/do_alert_animation()

@@ -511,7 +511,7 @@
 
 /obj/effect/temp_visual/security_holosign/Initialize(mapload, creator)
 	. = ..()
-	playsound(loc, 'sound/machines/chime.ogg', 50, FALSE) //make some noise!
+	playsound(src, 'sound/machines/chime.ogg', 50, FALSE) //make some noise!
 	if(creator)
 		visible_message(span_danger("[creator] created a security hologram!"))
 

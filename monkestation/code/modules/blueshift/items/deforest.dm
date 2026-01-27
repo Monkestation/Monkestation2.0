@@ -1091,7 +1091,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/biogenerator/medstation, 29)
 	user.balloon_alert(user, "deconstructing...")
 	tool.play_tool_sound(src)
 	if(tool.use_tool(src, user, 1 SECONDS))
-		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+		playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 		deconstruct(TRUE)
 		return TRUE
 

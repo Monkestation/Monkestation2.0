@@ -36,7 +36,7 @@
 			to_chat(user, span_warning("You can't let go of \the [tool]!"))
 			return ITEM_INTERACT_BLOCKING
 		dish = tool
-		playsound(loc, 'sound/machines/click.ogg', vol = 50, vary = TRUE)
+		playsound(src, 'sound/machines/click.ogg', vol = 50, vary = TRUE)
 		update_icon()
 		return ITEM_INTERACT_SUCCESS
 

@@ -525,9 +525,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	switch(damage_type)
 		if(BRUTE)
 			if(machine_stat & BROKEN)
-				playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 100, TRUE)
+				playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 100, TRUE)
 			else
-				playsound(loc, 'sound/effects/glasshit.ogg', 90, TRUE)
+				playsound(src, 'sound/effects/glasshit.ogg', 90, TRUE)
 		if(BURN)
 			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
 
@@ -542,7 +542,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 /obj/machinery/newscaster/atom_break(damage_flag)
 	. = ..()
 	if(.)
-		playsound(loc, 'sound/effects/glassbr3.ogg', 100, TRUE)
+		playsound(src, 'sound/effects/glassbr3.ogg', 100, TRUE)
 
 
 /obj/machinery/newscaster/attack_paw(mob/living/user, list/modifiers)
@@ -630,14 +630,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	if(channel)
 		if(update_alert)
 			say("Breaking news from [channel]!")
-			playsound(loc, 'sound/machines/twobeep_high.ogg', 75, TRUE)
+			playsound(src, 'sound/machines/twobeep_high.ogg', 75, TRUE)
 		alert = TRUE
 		update_appearance()
 		addtimer(CALLBACK(src, PROC_REF(remove_alert)), ALERT_DELAY, TIMER_UNIQUE|TIMER_OVERRIDE)
 
 	else if(!channel && update_alert)
 		say("Attention! Wanted issue distributed!")
-		playsound(loc, 'sound/machines/warning-buzzer.ogg', 75, TRUE)
+		playsound(src, 'sound/machines/warning-buzzer.ogg', 75, TRUE)
 
 /**
  * Performs a series of sanity checks before giving the user confirmation to create a new feed_channel using channel_name, and channel_desc.

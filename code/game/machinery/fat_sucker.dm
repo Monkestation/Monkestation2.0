@@ -149,7 +149,7 @@
 	if(next_fact <= 0)
 		next_fact = initial(next_fact)
 		say(pick(fat_facts))
-		playsound(loc, 'sound/machines/chime.ogg', 30, FALSE)
+		playsound(src, 'sound/machines/chime.ogg', 30, FALSE)
 	else
 		next_fact--
 	use_energy(active_power_usage * seconds_per_tick)

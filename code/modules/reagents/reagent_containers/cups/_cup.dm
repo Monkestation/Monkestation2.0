@@ -235,7 +235,7 @@
 		var/cooling = (0 - reagents.chem_temp) * extinguisher.cooling_power * 2
 		reagents.expose_temperature(cooling)
 		to_chat(user, span_notice("You cool \the [src] with the [attacking_item]!"))
-		playsound(loc, 'sound/effects/extinguish.ogg', 75, TRUE, -3)
+		playsound(src, 'sound/effects/extinguish.ogg', 75, TRUE, -3)
 		extinguisher.reagents.remove_all(1)
 		return TRUE
 
@@ -462,7 +462,7 @@
 		else
 			reagents.trans_to(O, 5, transfered_by = user)
 			to_chat(user, span_notice("You wet [O] in [src]."))
-			playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
+			playsound(src, 'sound/effects/slosh.ogg', 25, TRUE)
 		return
 	else if(isprox(O)) //This works with wooden buckets for now. Somewhat unintended, but maybe someone will add sprites for it soon(TM)
 		to_chat(user, span_notice("You add [O] to [src]."))

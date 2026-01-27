@@ -156,7 +156,7 @@
 
 /obj/machinery/artifact_xray/proc/post_pulse(datum/component/artifact/artifact)
 	update_use_power(IDLE_POWER_USE)
-	playsound(loc, 'sound/machines/chime.ogg', 30, FALSE)
+	playsound(src, 'sound/machines/chime.ogg', 30, FALSE)
 	COOLDOWN_START(src,pulse_cooldown,pulse_cooldown_time)
 	pulsing = FALSE
 	if(artifact && stored_research)

@@ -260,7 +260,7 @@
 		return FALSE
 	to_chat(user, span_notice("You start deconstructing [src]..."))
 	if(tool.use_tool(src, user, 4 SECONDS, volume=50))
-		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+		playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 		deconstruct(TRUE, 1)
 	return ITEM_INTERACT_SUCCESS
 
@@ -475,7 +475,7 @@
 	visible_message(span_warning("[src] breaks!"),
 		span_danger("You hear breaking glass."))
 
-	playsound(loc, SFX_SHATTER, 50, TRUE)
+	playsound(src, SFX_SHATTER, 50, TRUE)
 
 	new frame(loc)
 
@@ -1165,11 +1165,11 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
-				playsound(loc, 'sound/items/dodgeball.ogg', 80, TRUE)
+				playsound(src, 'sound/items/dodgeball.ogg', 80, TRUE)
 			else
-				playsound(loc, 'sound/weapons/tap.ogg', 50, TRUE)
+				playsound(src, 'sound/weapons/tap.ogg', 50, TRUE)
 		if(BURN)
-			playsound(loc, 'sound/items/welder.ogg', 40, TRUE)
+			playsound(src, 'sound/items/welder.ogg', 40, TRUE)
 
 /*
  * Rack destruction

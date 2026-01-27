@@ -110,7 +110,7 @@
 		apply_wibbly_filters(src)
 
 /obj/effect/portal/proc/expire()
-	playsound(loc, SFX_PORTAL_CLOSE, 50, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, SFX_PORTAL_CLOSE, 50, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
 	qdel(src)
 
 /obj/effect/portal/singularity_pull()
