@@ -54,6 +54,17 @@
 	RegisterSignal(oxygen_input, COMSIG_QDELETING, PROC_REF(disconnect))
 	return CLICK_ACTION_SUCCESS
 
+/obj/machinery/bouldertech/flatpack/purification_chamber/wrench_act(mob/living/user, obj/item/tool)
+	if(default_unfasten_wrench(user, tool, time = 1.5 SECONDS) == SUCCESSFUL_UNFASTEN)
+		if(anchored)
+			begin_processing()
+		else
+			src.disconnect(FALSE)
+			end_processing()
+		update_appearance(UPDATE_ICON_STATE)
+		return ITEM_INTERACT_SUCCESS
+	return
+
 /obj/machinery/bouldertech/flatpack/purification_chamber/can_process_resource(obj/item/res, return_typecache = FALSE)
 	var/static/list/processable_resources
 	if(!length(processable_resources))
@@ -66,6 +77,17 @@
 			only_root_path = TRUE
 		)
 	return return_typecache ? processable_resources : is_type_in_typecache(res, processable_resources)
+
+/obj/machinery/bouldertech/flatpack/purification_chamber/check_processing_resource()
+	var/oxygen_moles = 0
+	if(oxygen_input)
+		oxygen_input.air_contents.assert_gas(/datum/gas/oxygen, oxygen_input.air_contents)
+		oxygen_moles = oxygen_input.air_contents.gases[/datum/gas/oxygen][MOLES]
+		if(oxygen_moles >= REQUIRED_OXYGEN_MOLES)
+			return TRUE
+		if(prob(60))
+			balloon_alert_to_viewers("Not enough oxygen in connected pump!")
+	return FALSE
 
 /obj/machinery/bouldertech/flatpack/purification_chamber/CanAllowThrough(atom/movable/mover, border_dir)
 	if(border_dir != turn_cardinal(src.dir, 90))
@@ -81,21 +103,10 @@
 		oxygen_input = null
 
 /obj/machinery/bouldertech/flatpack/purification_chamber/breakdown_boulder(obj/item/boulder/chosen_boulder)
-
 	if(QDELETED(chosen_boulder))
 		return FALSE
 	if(chosen_boulder.loc != src)
 		return FALSE
-
-	var/oxygen_moles = 0
-	if(oxygen_input)
-		oxygen_input.air_contents.assert_gas(/datum/gas/oxygen, oxygen_input.air_contents)
-		oxygen_moles = oxygen_input.air_contents.gases[/datum/gas/oxygen][MOLES]
-	else
-		return TRUE
-
-	if(oxygen_moles < REQUIRED_OXYGEN_MOLES)
-		return TRUE
 
 	if(chosen_boulder.durability > 0)
 		chosen_boulder.durability -= 1
@@ -115,63 +126,19 @@
 			clump.custom_materials[material] = quantity * refining_efficiency
 			chosen_boulder.custom_materials -= material
 
-		if(!isnull(clump) && !length(clump.custom_materials))
+		if(!length(clump.custom_materials))
 			qdel(clump)
+		else
+			clump.set_colors()
+			src.remove_resource(clump)
 
-		clump.set_colors()
-		src.remove_resource(clump)
+		use_energy(active_power_usage)
+		oxygen_input.air_contents.remove_specific(/datum/gas/oxygen, REQUIRED_OXYGEN_MOLES)
 		if(!length(chosen_boulder.custom_materials))
 			chosen_boulder.break_apart()
-		else
-			src.remove_resource(chosen_boulder)
-		oxygen_input.air_contents.remove_specific(/datum/gas/oxygen, REQUIRED_OXYGEN_MOLES)
-		return TRUE
-	return FALSE
-
-/obj/machinery/bouldertech/flatpack/purification_chamber/breakdown_exotic(obj/item/chosen_exotic)
-
-	if(QDELETED(chosen_exotic))
-		return FALSE
-	if(chosen_exotic.loc != src)
-		return FALSE
-
-	var/oxygen_moles = 0
-	if(oxygen_input)
-		oxygen_input.air_contents.assert_gas(/datum/gas/oxygen, oxygen_input.air_contents)
-		oxygen_moles = oxygen_input.air_contents.gases[/datum/gas/oxygen][MOLES]
-	else
-		return TRUE
-
-	if(oxygen_moles < REQUIRED_OXYGEN_MOLES)
-		return TRUE
-
-	if(istype(chosen_exotic, /obj/item/processing/shards))
-		var/obj/item/processing/exotic = chosen_exotic
-		if(!exotic.processed_by)
-			check_for_boosts()
-			for(var/datum/material/material as anything in exotic.custom_materials)
-				if(!can_process_material(material))
-					continue
-				var/quantity = exotic.custom_materials[material]
-				var/obj/item/processing/clumps/clump  = new(src)
-				clump.custom_materials = list()
-				clump.custom_materials += material
-				clump.custom_materials[material] = quantity
-				exotic.custom_materials -= material
-
-				if(!isnull(clump) && !length(clump.custom_materials))
-					qdel(clump)
-					continue
-				clump.set_colors()
-				src.remove_resource(clump)
-			if(!length(exotic.custom_materials))
-				qdel(exotic)
-			else
-				exotic.set_colors()
-				src.remove_resource(exotic)
-			oxygen_input.air_contents.remove_specific(/datum/gas/oxygen, REQUIRED_OXYGEN_MOLES)
 			return TRUE
-	return FALSE
+		chosen_boulder.processed_by = src
+	src.remove_resource(chosen_boulder)
 
 #undef REQUIRED_OXYGEN_MOLES
 

@@ -46,7 +46,7 @@
 	var/list/current_resources = typecache_filter_list(contents, can_process_resource(null, TRUE))
 	if(length(current_resources))
 		for(var/obj/item/resource in current_resources)
-			remove_resource(current_resources)
+			remove_resource(resource)
 	return ..()
 
 /obj/machinery/bouldertech/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -199,6 +199,15 @@
 	PROTECTED_PROC(TRUE)
 
 	refining_efficiency = initial(refining_efficiency) //Reset refining efficiency to 100%.
+
+/**
+ * Checks if this machine has the extra resource to process materials.
+ * Override this if machine needs extra resources to process.
+ */
+/obj/machinery/bouldertech/proc/check_processing_resource()
+	PROTECTED_PROC(TRUE)
+
+	return FALSE
 
 /**
  * Checks if this machine can process this material
@@ -368,11 +377,10 @@
 			if(!length(exotic.custom_materials))
 				playsound(loc, usage_sound, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 				qdel(exotic)
-				return TRUE //We've processed all the materials in the boulder, so we can just destroy.
+				return TRUE //We've processed all the materials in the exotic, so we can just destroy.
 			exotic.processed_by = src
-		//eject the boulder since we are done with it
+		//eject the exotic since we are done with it
 		remove_resource(exotic)
-	return FALSE
 
 /obj/machinery/bouldertech/process()
 	if(!anchored || panel_open || !is_operational || (machine_stat & (BROKEN | NOPOWER)))
@@ -382,14 +390,14 @@
 	var/resources_processed = resources_processing_count
 	var/list/obj/item/current_resources = typecache_filter_list(contents, can_process_resource(null, TRUE))
 	for(var/obj/item/potential_resource in current_resources)
-		if(resources_processed <= 0)
+		if(resources_processed <= 0 || !check_processing_resource())
 			break //Try again next time
 		resources_found = TRUE
 		resources_processed--
 
 		if(istype(potential_resource, /obj/item/boulder))
 			resources_found = !breakdown_boulder(potential_resource)
-		else
+		else if(istype(potential_resource, /obj/item/processing))
 			resources_found = !breakdown_exotic(potential_resource)
 
 	//when the boulder is removed it plays sound and displays a balloon alert. don't overlap when that happens
@@ -414,7 +422,7 @@
 
 	if(istype(specific_resource, /obj/item/boulder))
 		boulder_removal(specific_resource)
-	else
+	else if(istype(specific_resource, /obj/item/processing))
 		exotic_removal(specific_resource)
 
 	playsound(loc, 'sound/machines/ping.ogg', 50, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)

@@ -16,6 +16,9 @@
 		)
 	return return_typecache ? processable_resources : is_type_in_typecache(res, processable_resources)
 
+/obj/machinery/bouldertech/flatpack/crusher/check_processing_resource()
+	return TRUE
+
 /obj/machinery/bouldertech/flatpack/crusher/CanAllowThrough(atom/movable/mover, border_dir)
 	if(border_dir != turn_cardinal(src.dir, 90))
 		return FALSE

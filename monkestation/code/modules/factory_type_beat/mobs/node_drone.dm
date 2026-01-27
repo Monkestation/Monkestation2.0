@@ -195,6 +195,27 @@
 	hunt_targets = list(/obj/structure/ore_vent) // What it will look for if it doesn't have a target.
 	hunt_range = 7 // Hunt vents to the end of the earth.
 
+/datum/ai_behavior/find_hunt_target/look_for_vent/perform(seconds_per_tick, datum/ai_controller/controller, hunting_target_key, types_to_hunt, hunt_range)
+	controller.behavior_cooldowns[src] = world.time + get_cooldown(controller) // Put here since cannot call parent.
+
+	var/mob/living/living_mob = controller.pawn
+	if(istype(living_mob, /mob/living/basic/node_drone)) // Knows where its vent is and will prioritize it.
+		var/mob/living/basic/node_drone/drone = living_mob
+		var/obj/structure/ore_vent/parent_vent = drone.attached_vent
+		if(istype(parent_vent) && !QDELETED(parent_vent))
+			controller.set_blackboard_key(hunting_target_key, parent_vent)
+			finish_action(controller, TRUE)
+			return
+
+	for(var/atom/possible_dinner as anything in typecache_filter_list(range(hunt_range, living_mob), types_to_hunt))
+		if(!valid_dinner(living_mob, possible_dinner, hunt_range))
+			continue
+		controller.set_blackboard_key(hunting_target_key, possible_dinner)
+		finish_action(controller, TRUE)
+		return
+
+	finish_action(controller, FALSE)
+
 // Finish override to make the drone return to hunting behavior sooner.
 /datum/ai_behavior/run_away_from_target/drone/finish_action(datum/ai_controller/controller, succeeded, target_key, hiding_location_key)
 	if(succeeded)

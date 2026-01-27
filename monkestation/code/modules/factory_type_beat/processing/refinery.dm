@@ -34,6 +34,9 @@
 		)
 	return is_type_in_list(possible_mat, processable_materials)
 
+/obj/machinery/bouldertech/refinery/check_processing_resource() // Smelter and refinery do not need extra resources to process
+	return TRUE
+
 /obj/machinery/bouldertech/refinery/update_icon_state()
 	. = ..()
 	var/suffix = ""

@@ -19,6 +19,9 @@
 		)
 	return return_typecache ? processable_resources : is_type_in_typecache(res, processable_resources)
 
+/obj/machinery/bouldertech/flatpack/enricher/check_processing_resource()
+	return TRUE
+
 /obj/machinery/bouldertech/flatpack/enricher/CanAllowThrough(atom/movable/mover, border_dir)
 	if(border_dir != turn_cardinal(src.dir, 90))
 		return FALSE
@@ -49,13 +52,13 @@
 			dust.custom_materials[material] = quantity * refining_efficiency
 			chosen_boulder.custom_materials -= material
 
-		use_energy(active_power_usage)
 		if(!length(dust.custom_materials))
 			qdel(dust)
 		else
 			dust.set_colors()
 			src.remove_resource(dust)
 
+		use_energy(active_power_usage)
 		if(!length(chosen_boulder.custom_materials))
 			chosen_boulder.break_apart()
 			return TRUE
