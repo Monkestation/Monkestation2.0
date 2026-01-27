@@ -29,7 +29,6 @@
 	bounty_types = CIV_JOB_SEC
 	departments_list = list(
 		/datum/job_department/central_command,
-		/datum/job_department/command,
 		)
 	department_for_prefs = /datum/job_department/central_command
 
