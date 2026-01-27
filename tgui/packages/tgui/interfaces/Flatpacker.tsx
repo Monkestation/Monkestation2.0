@@ -13,7 +13,8 @@ import {
   Stack,
   Table,
 } from '../components';
-import { TableCell } from '../components/Table';
+
+
 import { Window } from '../layouts';
 import { MaterialAccessBar } from './Fabrication/MaterialAccessBar';
 import { MaterialIcon } from './Fabrication/MaterialIcon';
@@ -178,9 +179,9 @@ const CostPreview = (props: CostPreviewProps) => {
                   sheets={material.amount / SHEET_MATERIAL_AMOUNT}
                 />
               </Table.Cell>
-              <TableCell verticalAlign="middle">
+              <Table.Cell verticalAlign="middle">
                 {toTitleCase(material.name)}
-              </TableCell>
+              </Table.Cell>
               <Table.Cell verticalAlign="middle">
                 &times;{(material.amount / SHEET_MATERIAL_AMOUNT).toFixed(2)}
               </Table.Cell>
