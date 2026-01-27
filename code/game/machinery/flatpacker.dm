@@ -2,7 +2,7 @@
 /obj/machinery/flatpacker
 	name = "flatpacker"
 	desc = "It produces items using iron, glass, plastic and maybe some more."
-	icon = 'icons/obj/machines/lathes.dmi'
+	icon = '/icons/obj/machines/research.dmi'
 	base_icon_state = "flatpacker"
 	icon_state = "flatpacker"
 	density = TRUE
