@@ -12,14 +12,12 @@
 		"whiteship": "whiteship_box",
 		"emergency": "emergency_box"
 	},
-	"particle_weathers": ["weather_snow"],
 	"traits": [
 		{
 			"Up": true,
 			"Mining": true,
 			"Linkage": null,
 			"Gravity": true,
-			"Daycycle": true,
 			"Ice Ruins Underground": true,
 			"Baseturf": "/turf/open/lava/plasma/ice_moon",
 			"No Parallax": true,
@@ -31,7 +29,6 @@
 			"Mining": true,
 			"Linkage": null,
 			"Gravity": true,
-			"Daycycle": true,
 			"Ice Ruins Underground": true,
 			"Baseturf": "/turf/open/openspace/icemoon/keep_below",
 			"No Parallax": true
@@ -42,7 +39,7 @@
 			"Linkage": null,
 			"Gravity": true,
 			"Ice Ruins": true,
-			"Daycycle": true,
+			"weather_snow": true,
 			"Baseturf": "/turf/open/openspace/icemoon/keep_below",
 			"No Parallax": true
 		}
