@@ -246,6 +246,8 @@
 			continue
 		if(HAS_SILICON_ACCESS(watcher))
 			continue
+		if(isanimal_or_basicmob(watcher))
+			continue
 		if(is_dark && !watcher.Adjacent(owner) && !watcher.Adjacent(target))
 			continue
 		if(watcher.stat != CONSCIOUS || HAS_TRAIT(watcher, TRAIT_RESTRAINED) || HAS_TRAIT(watcher, TRAIT_MOVE_VENTCRAWLING))

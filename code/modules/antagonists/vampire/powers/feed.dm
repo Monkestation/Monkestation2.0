@@ -76,6 +76,8 @@
 				continue
 			if(HAS_SILICON_ACCESS(watcher))
 				continue
+			if(isanimal_or_basicmob(watcher))
+				continue
 			if(is_dark && !watcher.Adjacent(owner) && !watcher.Adjacent(target))
 				continue
 			if(watcher.stat != CONSCIOUS)
@@ -99,6 +101,8 @@
 		//from the victim's POV
 		for(var/mob/living/watcher in oviewers(silent_feed ? FEED_SILENT_NOTICE_RANGE : FEED_LOUD_NOTICE_RANGE, target))
 			if(!watcher.client)
+				continue
+			if(isanimal_or_basicmob(watcher))
 				continue
 			if(HAS_SILICON_ACCESS(watcher))
 				continue

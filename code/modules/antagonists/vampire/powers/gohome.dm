@@ -86,6 +86,8 @@
 		for(var/mob/living/watcher in viewers(world.view, get_turf(owner)) - owner)
 			if(QDELETED(watcher.client) || watcher.client?.is_afk() || watcher.stat != CONSCIOUS)
 				continue
+			if(isanimal_or_basicmob(watcher))
+				continue
 			if(HAS_SILICON_ACCESS(watcher) || HAS_TRAIT(watcher, TRAIT_GHOST_CRITTER) || isdrone(watcher))
 				continue
 			if(watcher.is_blind() || watcher.is_nearsighted_currently())
