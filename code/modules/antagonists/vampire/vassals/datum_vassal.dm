@@ -7,6 +7,7 @@
 	hud_icon = 'icons/vampires/antag_hud.dmi'
 	antag_hud_name = "vassal"
 	antag_count_points = 2
+	stinger_sound = 'sound/magic/mutate.ogg'
 
 	/// The Master Vampire's antag datum.
 	var/datum/antagonist/vampire/master
@@ -109,21 +110,18 @@
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/antagonist, add_team_hud), new_body), 0.5 SECONDS, TIMER_OVERRIDE | TIMER_UNIQUE) //i don't trust this to not act weird
 
 /datum/antagonist/vassal/greet()
-	. = ..()
-	if(silent)
-		return
-
 	var/mob/living/living_vassal = owner.current
 	var/mob/living/living_master = master.owner.current
 
 	// Alert vassal
 	var/list/msg = list()
-	msg += span_cultlarge("You are now the mortal servant of [living_master], a Vampire!")
-	msg += span_cult("You are not required to obey any other Vampire, for only [living_master] is your master. The laws of Nanotrasen do not apply to you now; only your Master's word must be obeyed.")
+	msg += span_cultlarge("You are now the mortal servant of [master.owner.name], a Vampire!")
+	msg += span_cult("You are not required to obey any other Vampire, for only [master.owner.name] is your master. The laws of Nanotrasen do not apply to you now; only your Master's word must be obeyed.")
 	to_chat(living_vassal, boxed_message(msg.Join("\n")))
 
-	living_vassal.playsound_local(null, 'sound/magic/mutate.ogg', 100, FALSE, pressure_affected = FALSE)
-	antag_memory += "You are the mortal servant of <b>[living_master]</b>, a vampire!<br>"
+	play_stinger()
+
+	antag_memory += "You are the mortal servant of <b>[master.owner.name]</b>, a vampire!<br>"
 
 	// Alert master
 	to_chat(living_master, span_userdanger("[living_vassal] has become addicted to your immortal blood. [living_vassal.p_They()] [living_vassal.p_are()] now your undying servant"))
@@ -142,7 +140,7 @@
 
 	// Alert master
 	if(master.owner)
-		to_chat(master.owner, span_cultbold("You feel the bond with your vassal [owner.current] has somehow been broken!"))
+		to_chat(master.owner, span_cultbold("You feel the bond with your vassal [owner.name] has somehow been broken!"))
 
 /datum/antagonist/vassal/on_mindshield(mob/implanter, mob/living/mob_override)
 	var/mob/living/target = mob_override || owner.current
