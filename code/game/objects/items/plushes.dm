@@ -80,13 +80,10 @@
 	if(gets_random_traits && (maternal_parent == null))
 		var/list/traits_to_add = list()
 		for(var/the_category in gets_random_traits)
-			visible_message(span_notice("[the_category]"))
 			var/list/possibilities = list()
 			for(var/datum/plush_trait/trait as anything in subtypesof(/datum/plush_trait))
-				visible_message(span_notice("[trait::name] bbbbb"))
 				if((trait::category == the_category) && !(is_type_in_list(trait, plush_traits)) && !(is_type_in_list(trait, traits_to_add)) && (trait::tier == 1))
 					possibilities += trait
-					visible_message(span_notice("[trait::name] cccc"))
 			traits_to_add += pick(possibilities)
 		for(var/datum/plush_trait/trait_to_add as anything in traits_to_add)
 			var/datum/plush_trait/new_trait = new trait_to_add()
@@ -1121,7 +1118,7 @@
 	var/stored_life = 0
 	category = PLUSH_TRAIT_CATEGORY_PHYSICALITY
 	tier = 3
-	recipe = list(/datum/plush_trait/prickly, /datum/plush_trait/colorful)
+	recipe = list(/datum/plush_trait/wet, /datum/plush_trait/bloody, /datum/plush_trait/energetic)
 
 /datum/plush_trait/life_sponge/squeezed(obj/item/toy/plush/plush, mob/living/squeezer)
 	if(!ishuman(squeezer))
@@ -1286,6 +1283,22 @@
 /datum/plush_trait/sparky/squeezed(obj/item/toy/plush/plush, mob/living/squeezer)
 	new /obj/effect/particle_effect/sparks(get_turf(plush))
 
+
+
+/datum/plush_trait/electrical
+	name = "Electrogenerative"
+	desc = "suffuses the plushie with electrical energy."
+	tier = 2
+	category = PLUSH_TRAIT_CATEGORY_PHYSICALITY
+
+/datum/plush_trait/sparky/squeezed(obj/item/toy/plush/plush, mob/living/squeezer)
+	new /obj/effect/particle_effect/sparks(get_turf(plush))
+	if(!iscarbon(squeezer))
+		return
+	var/mob/living/carbon/carbsqueezer = squeezer
+	carbsqueezer.electrocute_act(10, plush, 1)
+	if(prob(1))
+
 /datum/plush_trait/wet
 	name = "Hydrogenic"
 	desc = "causes the plushie to be constantly suffused with water."
@@ -1402,6 +1415,7 @@
 	name = "Haemokinetic"
 	desc = "imbues the plushie with the fundamental power of blood."
 	category = PLUSH_TRAIT_CATEGORY_PHYSICALITY
+	recipe = list(/datum/plush_trait/wet, /datum/plush_trait/hearts_of_iron_four)
 	tier = 2
 
 
