@@ -144,19 +144,10 @@
 	if(istype(my_clan, /datum/vampire_clan/toreador))
 		count = count * 2
 
+	var/temp_humanity = clamp(humanity + count, 0, 10)
 	// No-op if nothing to change
-	if(count == 0)
+	if(humanity == temp_humanity)
 		return FALSE
-
-	// If trying to add but already at max, there's nothing to do
-	if(count > 0 && humanity >= 10)
-		return FALSE
-
-	// Same for removing
-	if(count < 0 && humanity <= 0)
-		return FALSE
-
-	var/temp_humanity = humanity + count
 
 	var/power_given = FALSE
 	var/power_removed = FALSE
@@ -190,8 +181,6 @@
 			else
 				to_chat(owner.current, span_userdanger("You have lost humanity."))
 
-	// Clamp to valid range, we are so sane we might see the face of god
-	humanity = clamp(temp_humanity, 0, 10)
 	return TRUE
 
 /// Bacon wanted a signal
