@@ -14,11 +14,11 @@
 /datum/market_item/misc/recovered_research
 	name = "Recovered Research"
 	desc = "We salvaged some classified documents and componentry from an old research station that shut down 40-something years ago for unknown reasons. Something about <i>plush toys</i>?"
-	item = /obj/item/modular_computer/pda/clear
+	item = /obj/item/storage/briefcase/plushiemagic
 
 	price_min = CARGO_CRATE_VALUE * 1.25
 	price_max = CARGO_CRATE_VALUE * 1.25
-	stock_max = 1 // always one and only one
+	stock_max = 1 // always one and only ever one per round
 	availability_prob = 100
 
 /datum/market_item/misc/jade_Lantern
