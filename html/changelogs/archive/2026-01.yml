@@ -406,3 +406,60 @@
   Tractor-Maam:
   - rscdel: Opposing Force notifications have had their AI Generated sound effects
       removed and replaced.
+2026-01-25:
+  Absolucy:
+  - admin: Added the ability to sort by active turfs and such to the Atmos Control
+      Panel.
+  - code_imp: Cleaned up some more code, nya~
+  - bugfix: Fixed some more assorted minor bugs.
+  - bugfix: Fixed the library console having a NtOS bluescreen error.
+  - bugfix: HOPEFULLY FIXED THE DISAPPEARING IDS BUG, YAY!
+  - bugfix: Fixed the cursed katana getting bricked if it dismembers your arm by lashing
+      out.
+  - bugfix: Fixed weird things happening if you matter eat a teleporter component.
+  - bugfix: Nightwatcher's Rebirth no longer kills oozeling users when it heals them.
+  JohnFulpWillard:
+  - qol: Added more languages to NTSL.
+  - qol: Signals can now take a filter arg.
+  Sealed101, SirNightKnight:
+  - bugfix: fixed APC control console found in CE office only accessing APCs on its
+      z-level.
+  - bugfix: fixed restoring an emagged APC control console potentially leaving the
+      console in a forever state of restoring.
+  - bugfix: fixed the APC control console UI not loading correctly.
+  - map: added an APC control console to runtime station engineering.
+  SirNightKnight:
+  - balance: you need shock immunity either from the nerve grounding surgery or insulated
+      mutation to eat a supermatter with matter eater.
+2026-01-26:
+  Tractor-Maam:
+  - bugfix: Revelation can (hopefully) now can have a fake name again.
+2026-01-27:
+  SirNightKnight, E231kei500bandai:
+  - balance: Export scanner no longer shows value of shipping manifests, now you actually
+      have to read them.
+  - balance: Shipping manifest penalty is now only half crate cost as well as capped
+      to 500 credits.
+  - balance: correctly approved shipping manifests are worth 200 credits  instead
+      of 80.
+  - qol: shipping manifests are light orange.
+  - balance: coffins are worth 40 credits each.
+  - balance: wooden crates take 5 planks instead of 6.  worth 150 credits each.
+  - qol: manifests need to be cut off crates, they won't come off when opening the
+      crate. examining a crate that has a paper attached to it will let you interact
+      with the paper. right clicking a crate that has a manifest with stamp will quick
+      stamp the paper.
+  - qol: you can attach pieces of paper to crates.
+  - rscadd: some crates can be welded shut.
+  - qol: crate manifest overlays are colored the same as the actual paper.
+  - balance: mail crates are worth 200 credits each.
+  - qol: ' requisition forms state the cost of an order.'
+  - bugfix: the clipboard's topmost paper overlay  is colored the same way the actual
+      paper is.
+  - bugfix: ' you can export spacecash and holochips for their face value.'
+  - balance: added assemblers to the supply shuttle blacklist.
+  - balance: added ID cards to the supply shuttle blacklist.
+  - bugfix: fixed a bug where non-item contents weren't listed on shipping manifests.
+  - qol: the quartermaster starts with a boxcutter and universal scanner.
+  - balance: the QM locker has a cargo locked shotgun with beanbags (4 shot capacity)
+      instead of a cargo locked disabler.
