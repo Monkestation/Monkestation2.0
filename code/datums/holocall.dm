@@ -607,9 +607,9 @@
 	shoes = /obj/item/clothing/shoes/sneakers
 	glasses = /obj/item/clothing/glasses/regular
 
-/obj/item/disk/holodisk/clothruption //synopsis. Man loses his mind, tries to stab himself, it doesnt even work cuz hes made of cloth stuffing instead of guts. woe, plush upon ye.
-	name = "17-12-2515: 'I Was.'"
-	desc = "A non-descript holodisk. There's a piece of masking tape attached to the housing. Written on it, in shakey handwritten print, is a date and two words: 'I Was.'"
+/obj/item/disk/holodisk/clothruption
+	name = "17-12-2515: 'PROOF'"
+	desc = "A non-descript holodisk. There's a piece of masking tape attached to the housing. Written on it, in messy handwritten print, is a date and one word: 'PROOF'"
 	preset_image_type = /datum/preset_holoimage/dr_zachary
 	preset_record_text = {"
 		NAME Human Man
@@ -619,148 +619,93 @@
 		DELAY 100
 		SAY I was Doctor Zachary Marshall Faust of The Spinward Institute for Applied Esoterica.
 		NAME Zachary Faust
+		DELAY 50
+		SAY Was!
+		DELAY 50
+		EMOTE chuckles mirthlessly.
+		DELAY 50
+		SAY Was is a +really+ funny word. Hillarious.
 		DELAY 100
-		SAY I was of sound mind and able body.
-		DELAY 50
-		EMOTE swallows. He's breathing heavily.
+		SAY It means so much and says so so |so VERY| little.
 		DELAY 100
-		SAY I was born thirty-one years and...
-		DELAY 50
-		EMOTE glances at something out of frame.
-		DELAY 50
-		SAY ...Seventeen minutes ago.
-		DELAY 50
-		SAY Happy `fucking` birthday...
-		DELAY 50
-		SAY I was raised on a planetary colony.
-		DELAY 50
-		SAY I was a good kid.
-		DELAY 50
-		SAY I-
-		DELAY 25
-		EMOTE pauses.
-		DELAY 50
-		SAY I was a student at the best college that a minimum-wage 19 year-old could hypothetically have provided for, were the minimum wage set at a reasonable value
+		SAY For example! +I+ was a SCIENTIST. I had a goddamn JOB and `EVERYTHING`.
 		DELAY 100
-		SAY I was awarded a variety of honors.
+		SAY You know, +had+.
 		DELAY 50
-		SAY I was handed a doctoral certificate at the age of 25.
+		SAY |Because +when+-|
 		DELAY 50
-		SAY I was introduced to the field I worked in, until the time of my death, by a friend.
-		DELAY 50
-		EMOTE is trembling now. He's trying not to cry.
-		DELAY 50
-		SAY ...Sorry, Jay. God. I'm actually doing this, aren't I.
-		DELAY 50
-		SAY I was a prodigy in the eyes of some.
-		DELAY 50
-		SAY I was a madman in the eyes of others.
-		DELAY 50
-		SAY I was too curious. I was learning more than was good for me.
-		DELAY 50
-		EMOTE is hyperventilating. His face is pale. He's crying.
-		DELAY 50
-		SAY I was working on- on a project.
-		DELAY 50
-		SAY I was credited with the development of a tool instrumental to my field.
-		DELAY 50
-		SAY I was the definition of success.
-		DELAY 50
-		SAY I was the |perfect target|.
-		DELAY 50
-		EMOTE clenches his hands into fists.
-		DELAY 50
-		SAY I was starting to have delusional episodes.
-		DELAY 50
-		SAY I was told it was probably plasma exposure.
-		DELAY 50
-		SAY I was given some neurine IVs and some anti-psychotic pills.
-		DELAY 50
-		SAY I was definitely not suffering from plasma exposure.
-		DELAY 50
-		SAY I was told I was seeing things that weren't real.
-		DELAY 50
-		SAY I was sure they were.
-		DELAY 50
-		SAY I was told I was hallucinating.
-		DELAY 25
-		EMOTE squeezes his eyes shut.
-		DELAY 25
-		SAY I was not halucinating.
-		DELAY 50
-		SAY I was seeing things that I was not meant to see.
-		DELAY 50
-		SAY I was unable to stop seeing them.
-		DELAY 50
-		SAY I was taught by the things I saw.
-		DELAY 50
-		SAY I was taught that we knew nothing.
-		DELAY 50
-		SAY I was taught that they could think.
-		DELAY 50
-		SAY I was taught that the things we studied were studying us.
-		DELAY 50
-		SAY I was not ready.
-		DELAY 50
-		EMOTE reaches outside of the frame of the recording. There's a rattling noise. He produces a flat-head screwdriver.
-		DELAY 50
-		SAY I was given psychiatric care.
-		DELAY 50
-		SAY I was not improving.
-		DELAY 50
-		SAY I was confined to my quarters.
-		DELAY 50
-		EMOTE stares at the screwdriver. He's gripping it so tightly that all the color has drained from his hand.
-		DELAY 50
-		SAY I was not okay.
-		DELAY 50
-		SAY I was compelled to warn others of what we had done, and what those in future must never do.
-		DELAY 50
-		SAY I was probably ignored.
-		DELAY 50
-		SAY I was alive.
-		DELAY 50
-		EMOTE raises the screwdriver to his face, gripping it with both hands.
-		DELAY 50
-		EMOTE squeezes his eyes shut.
-		DELAY 50
-		EMOTE opens his eyes. He has stopped trembling. He looks oddly calm, now.
-		DELAY 50
-		SAY I am dying on my birthday, December Seventeenth, 2515, due to a self-inflicted tracheal puncture.
-		DELAY 50
-		EMOTE yanks his hands back, forcing the shaft of screwdriver straight through his throat.
-		DELAY 50
-		EMOTE shivers. His eyes widen.
-		DELAY 50
+		EMOTE pauses, squeezes his eyes shut. He's twitching and hyperventilating. He balls his hands into fists.
+		DELAY 100
+		SAY +BECAUSE+ |apparently| when you have |reasonable objections| to the prospect of CREATING `+GOD DAMNED CLOTH HOMUNCULI TO CONTAIN CONCIOUS MINDS` THEN SUDDENLY EVERYONE HAS A PROBLEM WITH YOU.+
+		DELAY 100
+		EMOTE wiggles his fingers, clenching and releasing his fists over and over. His words are slurred and rapid.
+		DELAY 100
+		SAY I'm. Not. `+Crazy!+` I don't know where you assholes are getting this idea that I've lost my mind!
+		DELAY 100
+		SAY Perhaps +JUST MAYBE+, my reaction is a natural response to stimulus I am not capable of processing! Perhaps losing your mind is what happens when you SEE CLEARLY!
+		DELAY 100
+		EMOTE exhales. He calms down, somewhat.
+		DELAY 100
+		SAY I wonder about that. I keep wondering about it. I can't |not| wonder.
+		DELAY 100
 		EMOTE blinks.
 		DELAY 50
-		EMOTE lets go of the screwdriver, staring at it. There's a look of unfittingly normal confusion.
+		SAY ...And there we have it. That's the problem. I wondered. I dug too +greedily+ and too +deep+. In my folly, I tried - |nay| - |+dared+| to percieve the world around me.
 		DELAY 50
-		SAY I...
-		DELAY 50
-		EMOTE looks taken aback.
-		DELAY 50
-		EMOTE breathes heavily. He starts giggling madly.
-		DELAY 50
-		SAY What? I'm- I- What? Fucking HOW?
-		DELAY 25
-		SAY I should be-
-		DELAY 25
-		EMOTE rips the screwdriver from his throat. There's no fluid on the screwdriver.
-		DELAY 75
-		EMOTE looks down at the screwdriver. It's covered in white fiber.
-		DELAY 75
-		EMOTE blinks, pauses, falls silent. The hole in his throat is leaking not flesh and blood, but cotton stuffing.
+		SAY And that's why I'm here. In my quarters, on three different antipsychotics, allegedly losing my mind.
 		DELAY 100
-		SAY +Oh god.+
-		DELAY 20
-		SAY `+WHATTHEFUCKWHATTHEFUCKWHATTHEFUCKWHATTHEFUCKWHATTHEFU-`+
-		DELAY 50
-		SOUND PING
+		EMOTE sighs. There's a rattling noise as he reaches for something out of frame.
+		DELAY 100
+		SAY So. I'd like to PROVE to +all+ of you, that I'm telling the truth. That's it! Just want to make sure you know exactly what's going on.
+		DELAY 100
+		SAY These silly figurines we've been making are +people+, Jay. PEOPLE! The |prima materia| of the human fucking spirit... is cotton balls. Who'da thunk! CRAZY, RIGHT?
+		DELAY 100
+		SAY I'd wager that maybe, just maybe, condemning a soul to life as a plush toy is bad. |Unethical|, even.
+		DELAY 100
+		EMOTE grins, his smile radiating not joy, but passionate, hateful mania.
+		DELAY 100
+		SAY Ohhhhoho no, but that's not +nearly+ the worst of it. See, I've noticed something. Something you can't deny!
+		DELAY 100
+		SAY I can prove that our creations are just like us. How? Because we're |just. like. +them.+|
+		DELAY 100
+		EMOTE raises his right hand to reveal a knife.
+		DELAY 100
+		SAY These \"Constructs\" are just like we are! Miserable little piles of +`SECRETS+`. Secrets that I want to reveal. Right now.
+		DELAY 100
+		SAY As we look upon these LIVING THINKING FEELING BEINGS we create and we catalogue and we condemn and we INDUSTRIALIZE THE TORTURE OF THE SOUL.
+		DELAY 100
+		SAY But who's to say we're better! +WHO'S SAYING IT!+ I'm not! Quite honestly I think we're much worse, given what we've done.
+		DELAY 100
+		EMOTE stares at the knife in his hand. He's gripping it so tightly you're half expecting his hand to snap off.
+		DELAY 100
+		SAY We are adjacent! Hath not we eyes? Hath not these toys |cute little sewn on buttons| +`THAT WE EXPOSE TO OUR HORRORS?+`
+		DELAY 100
+		SAY +I have dimensions, senses, passions!+ As do these creations of ours, I'd bet! +I've seen them CRY!+
+		DELAY 100
+		EMOTE raises the knife in front of himself, giggling maniacally.
+		DELAY 100
+		SAY They, too, are +fed+, +hurt+, +healed+! We are IDENTICAL! Analogues! Two expressions of the same answer!
+		DELAY 100
+		EMOTE raises his left arm.
+		DELAY 100
+		SAY If you prick us, `+DO WE NOT BLEED?+`
+		EMOTE giggling, plunges the knife into the flesh of his left arm. He does not flinch.
+		DELAY 100
+		EMOTE rips the knife from his arm. There is no blood staining either, but instead only torn and tangled white fiber, leaking from the wound.
+		DELAY 100
+		SAY +`A-|FUCKING|-PPARENTLY, WE DON'T, WILLIAM! HOW FUNNY IS THAT!+`
+		DELAY 100
+		SAY YOU WANT PROOF? THERE'S YOUR PROOF. We are all cut, pun very |MUCH| intended, from the same Cloth.
+		DELAY 100
+		SAY I'm. Not. Crazy. Anymore. Am I?
+		DELAY 100
+		EMOTE giggles. The giggle turns into a laugh and then into a loud and high cackling.
+		DELAY 100
+		EMOTE blinks. Sighs. Falls forwards, out of frame.
+		DELAY 100
 		PRESET /datum/preset_holoimage/ai
-		NAME CS-220 Holorecorder
-		SAY Out of disk space. Ending recording.
+		NAME VX-220 Personal Holorecorder
+		SAY Subject out of capture area. Pausing recording.
 		DELAY 50
-
 	"}
 

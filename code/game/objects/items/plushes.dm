@@ -142,7 +142,9 @@
 /obj/item/toy/plush/examine(mob/user)
 	. = ..()
 	if(has_heartstring == FALSE)
-		. += "It looks sad, somehow."
+		. += "\nIt looks deeply and apatheticaly sad, somehow. [span_hypnophrase("SOULLESS")], even."
+	if(mood_message)
+		. += "\n[mood_message]"
 
 
 /obj/item/toy/plush/attack_self(mob/user)
@@ -348,7 +350,6 @@
 			vowbroken = TRUE
 			mood_message = pick(vowbroken_message)
 
-	update_desc()
 
 /obj/item/toy/plush/proc/scorned_by(obj/item/toy/plush/Outmoded)
 	scorned_by.Add(Outmoded)
@@ -362,7 +363,6 @@
 	lover.cheer_up()
 
 	mood_message = pick(love_message)
-	update_desc()
 
 	if(partner) //who?
 		partner = null //more like who cares
@@ -380,7 +380,6 @@
 
 	partner_message = list("[p_they(TRUE)] [p_have()] a ring on [p_their()] finger! It says 'Bound to my dear [partner.name].'")
 	mood_message = pick(partner_message)
-	update_desc()
 
 /obj/item/toy/plush/proc/plop(obj/item/toy/plush/Daddy)
 	if(partner != Daddy)
@@ -412,6 +411,26 @@
 		plush_child.plush_traits += added_trait
 		added_trait.activate(plush_child)
 
+	for(var/datum/plush_trait/possible in all_traits)
+		if(possible::recipe == list())
+			continue
+		var/could_we = TRUE
+		for(var/datum/plush_trait/needed in possible::recipe)
+			if(!is_type_in_list(needed, plush_child.plush_traits))
+				could_we = FALSE
+		if(is_type_in_list(possible, plush_child.plush_traits))
+			continue
+		if(could_we)
+			var/datum/plush_trait/created = new possible()
+			plush_child.plush_traits += created
+			created.activate(plush_child)
+			for(var/datum/plush_trait/consumed in plush_child.plush_traits)
+				if(is_type_in_list(consumed, possible::recipe))
+					consumed.deactivate(plush_child)
+					plush_child.plush_traits -= consumed
+					qdel(consumed)
+
+
 	plush_child.make_young(src, Daddy)
 
 /obj/item/toy/plush/proc/make_young(obj/item/toy/plush/Mama, obj/item/toy/plush/Dada)
@@ -432,19 +451,16 @@
 	name = "[iceland]-[nominative_gender]" //Icelandic naming convention no longer pending
 	normal_desc = "[src] [p_are()] the [nominative_gender] of [maternal_parent] and [paternal_parent]." //original desc won't be used so the child can have moods
 	transform *= 0.75
-	update_desc()
 
 	Mama.mood_message = pick(Mama.parent_message)
-	Mama.update_desc()
 	Dada.mood_message = pick(Dada.parent_message)
-	Dada.update_desc()
 
 /obj/item/toy/plush/proc/grow_up()
 	if(!young)
 		return
 	transform *= (4/3)
 	young = FALSE
-	visible_message("[src] ")
+	visible_message(span_notice("[src] grows up."))
 
 /obj/item/toy/plush/proc/bad_news(obj/item/toy/plush/Deceased) //cotton to cotton, sawdust to sawdust
 	var/is_that_letter_for_me = FALSE
@@ -483,7 +499,6 @@
 	if(is_that_letter_for_me)
 		heartbroken = TRUE
 		mood_message = pick(heartbroken_message)
-		update_desc()
 
 /obj/item/toy/plush/proc/cheer_up() //it'll be all right
 	if(!heartbroken)
@@ -495,7 +510,6 @@
 
 	if(mood_message in heartbroken_message)
 		mood_message = null
-	update_desc()
 
 /obj/item/toy/plush/proc/heal_memories() //time fixes all wounds
 	if(!vowbroken)
@@ -503,12 +517,6 @@
 		if(mood_message in vowbroken_message)
 			mood_message = null
 	cheer_up()
-
-/obj/item/toy/plush/update_desc()
-	desc = normal_desc
-	. = ..()
-	if(mood_message)
-		desc += span_info("\n[mood_message]")
 
 /obj/item/toy/plush/carpplushie
 	name = "space carp plushie"
