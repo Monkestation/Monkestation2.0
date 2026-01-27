@@ -73,15 +73,19 @@
 				var/datum/plush_trait/new_trait = new trait()
 				plush_traits += new_trait
 				new_trait.activate(src)
-//	if(length(gets_random_traits))
-//		var/all_traits = subtypesof(/datum/plush_trait)
-//		var/traits_to_add = list()
-//		for(var/the_category in gets_random_traits)
-//			var/possibilities = list()
-//			for(var/datum/plush_trait/trait in all_traits)
-//				if((trait::category == the_category) && !(is_type_in_list(trait, plush_traits)) && !(is_type_in_list(trait, traits_to_add)) && trait::tier == 1)
-//					possibilities += trait
-//			traits_to_add += pick(possibilities)
+	if(length(gets_random_traits))
+		var/all_traits = subtypesof(/datum/plush_trait)
+		var/traits_to_add = list()
+		for(var/the_category in gets_random_traits)
+			var/possibilities = list()
+			for(var/datum/plush_trait/trait in all_traits)
+				if((trait::category == the_category) && !(is_type_in_list(trait, plush_traits)) && !(is_type_in_list(trait, traits_to_add)) && (trait::tier == 1))
+					possibilities += trait
+			traits_to_add += pick(possibilities)
+		for(var/datum/plush_trait/trait in traits_to_add)
+			var/datum/plush_trait/new_trait = new trait()
+			plush_traits += new_trait
+			new_trait.activate(src)
 
 /obj/item/toy/plush/Destroy()
 	QDEL_NULL(grenade)
@@ -389,6 +393,24 @@
 		plush_child = new type(get_turf(loc))
 	else //it has your eyes
 		plush_child = new Daddy.type(get_turf(loc))
+
+	var/all_traits = subtypesof(/datum/plush_trait)
+
+	for(var/datum/plush_trait/inhereted in Daddy.plush_traits)
+		if(is_type_in_list(inhereted, plush_child.plush_traits))
+			continue
+
+		var/datum/plush_trait/added_trait = new inhereted.type()
+		plush_child.plush_traits += added_trait
+		added_trait.activate(plush_child)
+
+	for(var/datum/plush_trait/inhereted in plush_traits) // yes i know this is copied shut up
+		if(is_type_in_list(inhereted, plush_child.plush_traits))
+			continue
+
+		var/datum/plush_trait/added_trait = new inhereted.type()
+		plush_child.plush_traits += added_trait
+		added_trait.activate(plush_child)
 
 	plush_child.make_young(src, Daddy)
 
@@ -1004,7 +1026,7 @@
 		for(var/datum/plush_trait/possible_string in shape_strings)
 			if(possible_string.removable)
 				shape_string_names[possible_string.name] = possible_string
-		if(!length(shape_string_names))
+		if(!shape_string_names.len)
 			to_chat(user, span_warning("The only Shape-strings here are woven irreversably into the Soul-string."))
 			return
 		to_chat(user, span_notice("Select a Shape-string to cut from the Heart-string."))
@@ -1072,6 +1094,10 @@
 		to_chat(carbsqueezer, span_warning("Your hand stings horribly with a wave of needling pain!"))
 		var/ouchy_arm = (carbsqueezer.get_held_index_of_item(plush) % 2) ? BODY_ZONE_L_ARM : BODY_ZONE_R_ARM
 		carbsqueezer.apply_damage(1, BRUTE, ouchy_arm)
+
+
+
+
 
 /datum/plush_trait/life_sponge
 	name = "Viviphagous"
@@ -1142,6 +1168,11 @@
 						stored_life = max(0, stored_life - (ouchy.severity * 5))
 
 
+
+
+
+
+
 /datum/plush_trait/ominous_levitation
 	name = "Unnervingly Hovering"
 	desc = "imbues the stuffing of the plush with an anti-gravitational telekinetic field, enabling it to levitate."
@@ -1157,6 +1188,11 @@
 	. = ..()
 	STOP_FLOATING_ANIM(plush)
 	plush.visible_message(span_notice("[plush] stops floating."))
+
+
+
+
+
 
 /datum/plush_trait/energetic
 	name = "Estiferous"
@@ -1176,12 +1212,17 @@
 			ouched = FALSE
 		if(!ouched)
 			return
-		to_chat(carbsqueezer, span_warning("HOLY SHIT THAT'S FUCKING HOT OWWWWW!"))
+		to_chat(carbsqueezer, span_warning("[src] burns painfully in your hand!"))
 		var/ouchy_arm = (carbsqueezer.get_held_index_of_item(plush) % 2) ? BODY_ZONE_L_ARM : BODY_ZONE_R_ARM
-		carbsqueezer.apply_damage(10, BURN, ouchy_arm)
+		carbsqueezer.apply_damage(1, BURN, ouchy_arm)
 		carbsqueezer.emote("gasp")
 		carbsqueezer.Stun(1 SECOND)
 		carbsqueezer.drop_all_held_items()
+
+
+
+
+
 
 /datum/plush_trait/slippery
 	name = "Lubricating"
@@ -1196,6 +1237,66 @@
 /datum/plush_trait/slippery/deactivate(obj/item/toy/plush/plush)
 	. = ..()
 	plush.RemoveComponentSource(REF(src), /datum/component/slippery)
+
+
+
+
+
+
+/datum/plush_trait/big
+	name = "Sizable"
+	desc = "causes the plush to enlarge greatly."
+	tier = 1
+	category = PLUSH_TRAIT_CATEGORY_PHYSICALITY
+
+/datum/plush_trait/big/activate(obj/item/toy/plush/plush)
+	. = ..()
+	plush.w_class += 1
+	plush.transform *= 2
+
+/datum/plush_trait/big/deactivate(obj/item/toy/plush/plush)
+	. = ..()
+	plush.w_class -= 1
+	plush.transform *= 0.5
+
+
+
+
+
+/datum/plush_trait/sparky
+	name = "Electroreceptive"
+	desc = "causes the plushie to emit small sparks."
+	tier = 1
+	category = PLUSH_TRAIT_CATEGORY_PHYSICALITY
+
+/datum/plush_trait/sparky/squeezed(obj/item/toy/plush/plush, mob/living/squeezer)
+	new /obj/effect/particle_effect/sparks(get_turf(plush))
+
+/datum/plush_trait/wet
+	name = "Hydrogenic"
+	desc = "causes the plushie to be constantly suffused with water."
+	tier = 1
+	category = PLUSH_TRAIT_CATEGORY_PHYSICALITY
+	var/made_resistant = FALSE
+
+/datum/plush_trait/wet/squeezed(obj/item/toy/plush/plush, mob/living/squeezer)
+	var/turf/open/turf = get_turf(plush)
+	turf.add_liquid_list(list(/datum/reagent/water = 5), TRUE)
+
+/datum/plush_trait/wet/activate(obj/item/toy/plush/plush)
+	. = ..()
+	if(!plush.resistance_flags & FIRE_PROOF)
+		plush.resistance_flags |= FIRE_PROOF
+		made_resistant = TRUE
+
+/datum/plush_trait/wet/deactivate(obj/item/toy/plush/plush)
+	. = ..()
+	if(made_resistant)
+		plush.resistance_flags &= ~(FIRE_PROOF)
+		made_resistant = FALSE
+
+
+
 
 //funny admin suggested traits
 /datum/plush_trait/wolfy
@@ -1217,9 +1318,8 @@
 /datum/plush_trait/puce
 	name = "Pucetrifying"
 	desc = "releases a wave of... Puce? what the fuck is puce?"
-	recipe = list(/datum/plush_trait/colorful, /datum/plush_trait/putrifying)
 	COOLDOWN_DECLARE(puceify)
-	tier = 4
+	tier = 3
 
 /datum/plush_trait/puce/squeezed(obj/item/toy/plush/plush, mob/living/squeezer)
 	if(COOLDOWN_FINISHED(src, puceify))
@@ -1230,11 +1330,8 @@
 				to_chat(ough, span_reallybig(span_hypnophrase("P U C E")))
 		COOLDOWN_START(src, puceify, 30 SECONDS)
 
-/datum/plush_trait/putrifying
-	name = "Putrifying"
-	desc = "releases waves of putrifacting energies."
-	tier = 2
-	category = PLUSH_TRAIT_CATEGORY_PHYSICALITY
+
+
 
 /datum/plush_trait/colorful
 	name = "Colorful"
