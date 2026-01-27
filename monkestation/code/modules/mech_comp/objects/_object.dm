@@ -93,6 +93,24 @@
 	add_linker(user, tool)
 	return TRUE
 
+/obj/item/mcobject/proc/multitool_get_comp_buffer(obj/item/tool)
+	if(istype(tool, /obj/item/multitool))
+		var/obj/item/multitool/multi = tool
+		return multi.component_buffer?.resolve()
+	if(istype(tool, /obj/item/holotool))
+		var/obj/item/holotool/holo = tool
+		return holo.comp_buffer?.resolve()
+
+/obj/item/mcobject/proc/multitool_set_comp_buffer(obj/item/tool, comp_buffer_value)
+	if(istype(tool, /obj/item/multitool))
+		var/obj/item/multitool/multi = tool
+		multi.set_component_buffer(comp_buffer_value)
+		return TRUE
+	if(istype(tool, /obj/item/holotool))
+		var/obj/item/holotool/holo = tool
+		holo.set_comp_buffer(comp_buffer_value)
+		return TRUE
+
 /obj/item/mcobject/proc/unlink(mob/user, obj/item/tool)
 	var/list/options = list()
 

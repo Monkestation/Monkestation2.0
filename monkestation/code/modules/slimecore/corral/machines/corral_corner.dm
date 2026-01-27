@@ -65,7 +65,7 @@
 	start_linking_procedure()
 
 /obj/machinery/corral_corner/multitool_act(mob/living/user, obj/item/multitool/multi)
-	multi.set_buffer(src)
+	multitool_set_buffer(multi, src)
 	balloon_alert(user, "saved to multitool buffer")
 	return ITEM_INTERACT_SUCCESS
 

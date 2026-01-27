@@ -102,7 +102,7 @@
 /obj/machinery/rnd/server/multitool_act(mob/living/user, obj/item/multitool/tool)
 	if(!stored_research)
 		return
-	tool.set_buffer(stored_research)
+	multitool_set_buffer(tool, stored_research)
 	balloon_alert(user, "saved to multitool buffer")
 	return TRUE
 

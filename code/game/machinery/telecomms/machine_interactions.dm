@@ -58,7 +58,7 @@
 	data["multitool"] = heldmultitool
 
 	if(heldmultitool)
-		data["multibuff"] = heldmultitool.buffer
+		data["multibuff"] = multitool_get_buffer(heldmultitool)
 
 	data["toggled"] = toggled
 	data["id"] = id
@@ -152,12 +152,14 @@
 			if(heldmultitool)
 				var/obj/machinery/telecomms/T = heldmultitool.buffer
 				. = add_new_link(T, operator)
-		if("buffer")
-			heldmultitool.set_buffer(src)
+		if("buffer") // monkestation start -- holotool support
+			if(heldmultitool)
+				multitool_set_buffer(usr, heldmultitool, src)
 			. = TRUE
 		if("flush")
-			heldmultitool.set_buffer(null)
-			. = TRUE
+			if(heldmultitool)
+				multitool_set_buffer(usr, heldmultitool, null)
+			. = TRUE // monkestation end
 
 	add_act(action, params)
 	. = TRUE
@@ -239,19 +241,18 @@
 // Returns a multitool from a user depending on their mobtype.
 
 /obj/machinery/telecomms/proc/get_multitool(mob/user)
-	var/obj/item/multitool/P = null
-	// Let's double check
-	if(!issilicon(user) && istype(user.get_active_held_item(), /obj/item/multitool))
-		P = user.get_active_held_item()
-	else if(isAI(user))
+	if(isAI(user)) //AIs have an internal multitool they use instead.
 		var/mob/living/silicon/ai/U = user
-		P = U.aiMulti
-	else if(iscyborg(user) && in_range(user, src))
-		if(istype(user.get_active_held_item(), /obj/item/multitool))
-			P = user.get_active_held_item()
-	return P
+		return U.aiMulti
 
-/obj/machinery/telecomms/proc/canAccess(mob/user)
-	if(issilicon(user) || in_range(user, src))
-		return TRUE
-	return FALSE
+	var/obj/item/held_item = user.get_active_held_item()
+	if(QDELETED(held_item))
+		return
+	held_item = held_item.get_proxy_attacker_for(src, user) //for borgs omni tool
+	if(held_item.tool_behaviour != TOOL_MULTITOOL)
+		return
+
+	if(!HAS_SILICON_ACCESS(user))
+		return held_item
+	if(iscyborg(user) && in_range(user, src))
+		return held_item

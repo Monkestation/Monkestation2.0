@@ -117,7 +117,7 @@
 
 /obj/machinery/atmospherics/components/unary/bluespace_sender/multitool_act(mob/living/user, obj/item/item)
 	var/obj/item/multitool/multitool = item
-	multitool.set_buffer(src)
+	multitool_set_buffer(multitool, src)
 	balloon_alert(user, "saved to multitool buffer")
 	return TRUE
 

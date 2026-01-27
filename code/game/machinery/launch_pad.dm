@@ -74,7 +74,7 @@
 	if(!stationary || !panel_open)
 		return ITEM_INTERACT_BLOCKING
 
-	multi.set_buffer(src)
+	multitool_set_buffer(multi, src)
 	balloon_alert(user, "saved to multitool buffer")
 	return ITEM_INTERACT_SUCCESS
 
