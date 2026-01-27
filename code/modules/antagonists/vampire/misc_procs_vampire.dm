@@ -191,12 +191,7 @@
 				to_chat(owner.current, span_userdanger("You have lost humanity."))
 
 	// Clamp to valid range, we are so sane we might see the face of god
-	if(temp_humanity > 10)
-		temp_humanity = 10
-	if(temp_humanity < 0)
-		temp_humanity = 0
-
-	humanity = temp_humanity
+	humanity = clamp(temp_humanity, 0, 10)
 	return TRUE
 
 /// Bacon wanted a signal
