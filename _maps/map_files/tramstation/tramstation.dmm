@@ -29430,22 +29430,6 @@
 	spawn_all_loot = 1;
 	spawn_random_offset = 1
 	},
-/obj/effect/spawner/random/food_or_drink/seed{
-	spawn_all_loot = 1;
-	spawn_random_offset = 1
-	},
-/obj/effect/spawner/random/food_or_drink/seed{
-	spawn_all_loot = 1;
-	spawn_random_offset = 1
-	},
-/obj/effect/spawner/random/food_or_drink/seed{
-	spawn_all_loot = 1;
-	spawn_random_offset = 1
-	},
-/obj/effect/spawner/random/food_or_drink/seed{
-	spawn_all_loot = 1;
-	spawn_random_offset = 1
-	},
 /obj/machinery/vending/hydronutrients/wall/directional/north,
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
@@ -36005,6 +35989,15 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
+"kjP" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 4
+	},
+/obj/machinery/camera/directional/east{
+	c_tag = "Civilian - Escape Pods North"
+	},
+/turf/open/floor/iron,
+/area/station/escapepodbay)
 "kkb" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
 	dir = 9
@@ -63212,6 +63205,13 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/science/lower)
+"sFt" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/camera/directional/west{
+	c_tag = "Civilian - Escape Pods South"
+	},
+/turf/open/floor/iron,
+/area/station/escapepodbay)
 "sFw" = (
 /obj/machinery/door/window/left/directional/east{
 	dir = 1;
@@ -78412,6 +78412,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/camera/directional/east{
+	c_tag = "Civilian - Escape Pods East"
+	},
 /turf/open/floor/iron,
 /area/station/escapepodbay)
 "xly" = (
@@ -80957,6 +80960,10 @@
 	amount = 3
 	},
 /obj/item/reagent_containers/syringe/antiviral,
+/obj/machinery/camera/directional/south{
+	c_tag = "Medical - Virology Disease Isolation";
+	network = list("ss13","medbay")
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/pathology)
 "ycV" = (
@@ -95160,7 +95167,7 @@ acA
 acA
 acA
 acA
-acA
+sFt
 hTG
 aeb
 apC
@@ -95398,7 +95405,7 @@ abg
 ivr
 abg
 abB
-abg
+kjP
 abH
 abf
 abX
