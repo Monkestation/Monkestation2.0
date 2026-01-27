@@ -6,7 +6,14 @@
 	var/obj/item/card/id/advanced/card = EASY_ALLOCATE()
 
 	card.set_access(list(ACCESS_HYDROPONICS), FORCE_ADD_ALL)
-	TEST_ASSERT_EQUAL(length(card.GetAccess()), 1, "ID card access length incorrect after setting access.")
+	if(length(card.GetAccess()) != 1)
+		var/accesses
+		for(var/access in card.GetAccess())
+			if(!accesses)
+				accesses = access
+				continue
+			accesses += "& [access]"
+		TEST_FAIL("ID card access length incorrect after setting access. Has access to [accesses].")
 
 	subject.put_in_hands(card)
 	TEST_ASSERT(check_access(subject, ACCESS_HYDROPONICS), "Subject did not have the access on holding ID card.")
