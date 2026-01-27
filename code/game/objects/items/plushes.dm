@@ -417,7 +417,7 @@
 		plush_child.plush_traits += added_trait
 		added_trait.activate(plush_child)
 
-	for(var/datum/plush_trait/possible in all_traits)
+	for(var/datum/plush_trait/possible as anything in all_traits)
 		if(possible::recipe == list())
 			continue
 		var/could_we = TRUE
@@ -1129,26 +1129,26 @@
 	var/mob/living/carbon/human/humsqueezer = squeezer
 	if((humsqueezer.istate & ISTATE_HARM) || istype(humsqueezer.client?.imode, /datum/interaction_mode/combat_mode))
 		var/numcycles = 0
-		humsqueezer.visible_message(span_warning("[src] prickles painfully in your hands and begins to drain the life from your flesh!"), span_warning("A cloud of shimmering red vapor begins flowing from [humsqueezer] into [src]!"))
-		while(do_after(humsqueezer, 0.2 SECONDS, src))
+		humsqueezer.visible_message(span_warning("[plush] prickles painfully in your hands and begins to drain the life from your flesh!"), span_warning("A cloud of shimmering red vapor begins flowing from [humsqueezer] into [plush]!"))
+		while(do_after(humsqueezer, 0.2 SECONDS, plush))
 			if(((humsqueezer.getBruteLoss() + humsqueezer.getFireLoss()) < 100) && stored_flesh < 100)
 				humsqueezer.adjustBruteLoss(0.5)
 				humsqueezer.adjustFireLoss(0.5)
 				stored_flesh = min(100, stored_flesh + 1)
 			if(numcycles == 20 && stored_blood < 560)
-				to_chat(span_warning("[src] begins to drain the life from your blood!"))
+				to_chat(span_warning("[plush] begins to drain the life from your blood!"))
 			if(numcycles >= 20 && stored_blood < 560 && (humsqueezer.getToxLoss() < 100))
 				humsqueezer.adjustToxLoss(1)
 				stored_blood = min(500, stored_blood + 5)
 			if(numcycles == 40 && stored_life < 100)
-				to_chat(span_warning("[src] begins to drain the life from your soul!"))
+				to_chat(span_warning("[plush] begins to drain the life from your soul!"))
 			if(numcycles >= 40 && stored_life < 100)
 				humsqueezer.adjustCloneLoss(1)
 				stored_life = min(100, stored_life + 1)
 	else
 		var/numcycles = 0
-		humsqueezer.visible_message(span_notice("[src] feels warm and so very soft..."), span_notice("A cloud of shimmering red vapor steams from [src], flowing into [humsqueezer]'s flesh!"))
-		while(do_after(humsqueezer, 0.2 SECONDS, src))
+		humsqueezer.visible_message(span_notice("[plush] feels warm and so very soft..."), span_notice("A cloud of shimmering red vapor steams from [plush], flowing into [humsqueezer]'s flesh!"))
+		while(do_after(humsqueezer, 0.2 SECONDS, plush))
 			if(humsqueezer.getBruteLoss() && stored_flesh > 0)
 				humsqueezer.adjustBruteLoss(-1)
 				stored_flesh = max(0, stored_flesh - 1)
@@ -1226,7 +1226,7 @@
 			ouched = FALSE
 		if(!ouched)
 			return
-		to_chat(carbsqueezer, span_warning("[src] burns painfully in your hand!"))
+		to_chat(carbsqueezer, span_warning("[plush] burns painfully in your hand!"))
 		var/ouchy_arm = (carbsqueezer.get_held_index_of_item(plush) % 2) ? BODY_ZONE_L_ARM : BODY_ZONE_R_ARM
 		carbsqueezer.apply_damage(1, BURN, ouchy_arm)
 		carbsqueezer.emote("gasp")
@@ -1299,7 +1299,7 @@
 
 /datum/plush_trait/wet/activate(obj/item/toy/plush/plush)
 	. = ..()
-	if(!plush.resistance_flags & FIRE_PROOF)
+	if(!(plush.resistance_flags & FIRE_PROOF))
 		plush.resistance_flags |= FIRE_PROOF
 		made_resistant = TRUE
 
