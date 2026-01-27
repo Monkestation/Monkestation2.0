@@ -56,3 +56,4 @@
 	var/list/subject_access = subject.get_access()
 	if(isnull(expected))
 		return length(subject_access) == 0
+	return length(subject_access) == 1 && subject_access[1] == expected
