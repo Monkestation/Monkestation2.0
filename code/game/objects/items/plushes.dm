@@ -11,11 +11,11 @@
 	var/list/squeak_override //Weighted list; If you want your plush to have different squeak sounds use this
 	var/stuffed = TRUE //If the plushie has stuffing in it
 	var/obj/item/grenade/grenade //You can remove the stuffing from a plushie and add a grenade to it for *nefarious uses*
-	var/list/datum/plush_trait/plush_traits = list()
+	var/list/plush_traits = list()
 	var/list/starting_traits = list()
 	var/plush_flags
 	var/has_heartstring = TRUE
-	var/gets_random_traits = list(PLUSH_TRAIT_CATEGORY_PERSONALITY, PLUSH_TRAIT_CATEGORY_PHYSICALITY)
+	var/list/gets_random_traits = list(PLUSH_TRAIT_CATEGORY_PERSONALITY, PLUSH_TRAIT_CATEGORY_PHYSICALITY)
 	//--love ~<3--
 	gender = NEUTER
 	var/obj/item/toy/plush/lover
@@ -73,17 +73,23 @@
 				var/datum/plush_trait/new_trait = new trait()
 				plush_traits += new_trait
 				new_trait.activate(src)
-	if(length(gets_random_traits))
-		var/all_traits = subtypesof(/datum/plush_trait)
-		var/traits_to_add = list()
+	addtimer(CALLBACK(src, PROC_REF(rand_traits)), 0.5 SECONDS) // god strike me down, this WORKS. Okay? it WORKS. shut up.
+
+
+/obj/item/toy/plush/proc/rand_traits() // god help me.
+	if(gets_random_traits && (maternal_parent == null))
+		var/list/traits_to_add = list()
 		for(var/the_category in gets_random_traits)
-			var/possibilities = list()
-			for(var/datum/plush_trait/trait in all_traits)
+			visible_message(span_notice("[the_category]"))
+			var/list/possibilities = list()
+			for(var/datum/plush_trait/trait as anything in subtypesof(/datum/plush_trait))
+				visible_message(span_notice("[trait::name] bbbbb"))
 				if((trait::category == the_category) && !(is_type_in_list(trait, plush_traits)) && !(is_type_in_list(trait, traits_to_add)) && (trait::tier == 1))
 					possibilities += trait
+					visible_message(span_notice("[trait::name] cccc"))
 			traits_to_add += pick(possibilities)
-		for(var/datum/plush_trait/trait in traits_to_add)
-			var/datum/plush_trait/new_trait = new trait()
+		for(var/datum/plush_trait/trait_to_add as anything in traits_to_add)
+			var/datum/plush_trait/new_trait = new trait_to_add()
 			plush_traits += new_trait
 			new_trait.activate(src)
 
@@ -173,9 +179,9 @@
 				if(plush_trait.processes)
 					START_PROCESSING(SSobj, src)
 				new_heartstring.shape_strings.Remove(plush_trait)
-		user.visible_message(span_notice("[user] inserts [new_heartstring] into [src]. It looks happier, somehow."), span_notice("[src] seems happier with [p_their()] Heart-strings back."))
-		qdel(new_heartstring)
-		has_heartstring = TRUE
+			user.visible_message(span_notice("[user] inserts [new_heartstring] into [src]. It looks happier, somehow."), span_notice("[src] seems happier with [p_their()] Heart-strings back."))
+			qdel(new_heartstring)
+			has_heartstring = TRUE
 	if(attacking_item.get_sharpness())
 		if(istype(attacking_item, /obj/item/heartstring_extractor))
 			if(has_heartstring)
@@ -1062,7 +1068,7 @@
 	var/removable = TRUE
 	var/processes = FALSE
 	var/shapestring_icon_state = ""
-	var/recipe = list()
+	var/list/recipe = list()
 	var/flags
 	var/tier = 1
 	var/category
@@ -1115,7 +1121,7 @@
 	var/stored_life = 0
 	category = PLUSH_TRAIT_CATEGORY_PHYSICALITY
 	tier = 3
-	recipe = list(/datum/plush_trait/prickly)
+	recipe = list(/datum/plush_trait/prickly, /datum/plush_trait/colorful)
 
 /datum/plush_trait/life_sponge/squeezed(obj/item/toy/plush/plush, mob/living/squeezer)
 	if(!ishuman(squeezer))
