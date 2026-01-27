@@ -1,0 +1,49 @@
+/datum/quirk/breathless
+	name = "Breathless"
+	desc = "You don't depend on any gases to breathe, too bad you can't hold your breath forever though. Toxins, irritants, and other airborne effects can still affect you."
+	icon = FA_ICON_WIND
+	value = 10
+	gain_text = span_notice("You can breathe easily.")
+	lose_text = span_danger("Your breathing feels like it's back to normal.")
+	medical_record_text = "Patient demonstrates ability to survive without measurable levels of necessary gasses."
+	mail_goodies = list(/obj/item/storage/box/survival)
+
+/datum/quirk/breathless/add()
+	var/mob/living/carbon/carbon_holder = quirk_holder
+	if(!istype(carbon_holder))
+		return
+
+	var/obj/item/organ/internal/lungs/current_lungs = carbon_holder.get_organ_slot(ORGAN_SLOT_LUNGS)
+	if(current_lungs)
+		ADD_TRAIT(current_lungs, TRAIT_SPACEBREATHING, QUIRK_TRAIT)
+
+	// Listen for both insertion and removal to handle replacements properly
+	RegisterSignal(quirk_holder, COMSIG_CARBON_GAIN_ORGAN, PROC_REF(on_gain_organ))
+	RegisterSignal(quirk_holder, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(on_lose_organ))
+
+/datum/quirk/breathless/remove()
+	var/mob/living/carbon/carbon_holder = quirk_holder
+	if(!istype(carbon_holder))
+		return
+
+	var/obj/item/organ/internal/lungs/current_lungs = carbon_holder.get_organ_slot(ORGAN_SLOT_LUNGS)
+	if(current_lungs)
+		REMOVE_TRAIT(current_lungs, TRAIT_SPACEBREATHING, QUIRK_TRAIT)
+
+	UnregisterSignal(quirk_holder, list(COMSIG_CARBON_GAIN_ORGAN, COMSIG_CARBON_LOSE_ORGAN))
+
+/datum/quirk/breathless/proc/on_gain_organ(mob/living/carbon/source, obj/item/organ/new_organ, special)
+	SIGNAL_HANDLER
+
+	if(!istype(new_organ, /obj/item/organ/internal/lungs))
+		return
+
+	ADD_TRAIT(new_organ, TRAIT_SPACEBREATHING, QUIRK_TRAIT)
+
+/datum/quirk/breathless/proc/on_lose_organ(mob/living/carbon/source, obj/item/organ/old_organ, special)
+	SIGNAL_HANDLER
+
+	if(!istype(old_organ, /obj/item/organ/internal/lungs))
+		return
+
+	REMOVE_TRAIT(old_organ, TRAIT_SPACEBREATHING, QUIRK_TRAIT)
