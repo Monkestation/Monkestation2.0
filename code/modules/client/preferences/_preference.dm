@@ -303,7 +303,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 	if (preference.savefile_identifier == PREFERENCE_PLAYER)
 		preference.apply_to_client_updated(parent, read_preference(preference.type))
-	else if(preference.should_update_preview)
+	else if (preference.should_update_preview)
 		character_preview_view?.update_body()
 
 	return TRUE
