@@ -2,7 +2,7 @@
 /obj/machinery/flatpacker
 	name = "flatpacker"
 	desc = "It produces items using iron, glass, plastic and maybe some more."
-	icon = '/icons/obj/machines/research.dmi'
+	icon = 'icons/obj/machines/research.dmi'
 	base_icon_state = "flatpacker"
 	icon_state = "flatpacker"
 	density = TRUE
@@ -43,9 +43,9 @@
 		mat_capacity += new_matter_bin.tier * 25 * SHEET_MATERIAL_AMOUNT
 	materials.max_amount = mat_capacity
 
-	var/datum/stock_part/servo/servo = locate() in component_parts
-	max_part_tier = servo.tier
-	flatpack_time = initial(flatpack_time) - servo.tier / 2 // T4 = 2 seconds off
+	var/datum/stock_part/manipulator/manipulator = locate() in component_parts
+	max_part_tier = manipulator.tier
+	flatpack_time = initial(flatpack_time) - manipulator.tier / 2 // T4 = 2 seconds off
 	var/efficiency = initial(creation_efficiency)
 	for(var/datum/stock_part/micro_laser/laser in component_parts)
 		efficiency -= laser.tier * 0.2
@@ -115,8 +115,8 @@
 
 /obj/machinery/flatpacker/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/sheetmaterials),
-		get_asset_datum(/datum/asset/spritesheet/research_designs),
+		get_asset_datum(/datum/asset/spritesheet_batched/sheetmaterials),
+		get_asset_datum(/datum/asset/spritesheet_batched/research_designs),
 	)
 
 /obj/machinery/flatpacker/item_interaction(mob/living/user, obj/item/attacking_item, params)
@@ -239,7 +239,7 @@
 /obj/item/flatpack
 	name = "flatpack"
 	desc = "A box containing a compacted packed machine. Use multitool to deploy."
-	icon = 'icons/obj/devices/circuitry_n_data.dmi'
+	icon = 'icons/obj/module.dmi'
 	icon_state = "flatpack"
 	w_class = WEIGHT_CLASS_HUGE //cart time
 	throw_range = 2
