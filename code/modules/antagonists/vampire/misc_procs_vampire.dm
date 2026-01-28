@@ -350,8 +350,6 @@
 		return FALSE
 	if(!watcher.mind || !watcher.client || watcher.client.is_afk())
 		return FALSE
-	if(issilicon(watcher) && HasElement(owner.current, /datum/element/digitalcamo))
-		return FALSE
 	if(HAS_MIND_TRAIT(watcher, TRAIT_VAMPIRE_ALIGNED))
 		return FALSE
 	if(isanimal_or_basicmob(watcher) || HAS_TRAIT(watcher, TRAIT_GHOST_CRITTER))
