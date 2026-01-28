@@ -23,9 +23,9 @@ import {
 import { canPageAcceptType, createMessage, isSameMessage } from './model';
 import { highlightNode, linkifyNode } from './replaceInTextNode';
 import { Tooltip } from '../../tgui/components';
-import { selectSettings } from '../settings/selectors';
-import { globalStore } from 'tgui/backend';
 import { classes } from 'common/react';
+import { settingsAtom } from 'tgui-panel/settings/atoms';
+import { store } from 'tgui/events/store';
 
 const logger = createLogger('chatRenderer');
 
@@ -107,18 +107,29 @@ const updateMessageBadge = (message) => {
 };
 
 class ChatRenderer {
+  loaded: boolean;
+  rootNode: HTMLElement | null;
+  queue: Array<any>;
+  messages: Array<any>;
+  visibleMessages: Array<any>;
+  page: any;
+  events: EventEmitter;
+  scrollNode: HTMLElement | null;
+  scrollTracking: boolean;
+  lastScrollHeight: number;
+  highlightParsers: Array<any> | null;
+  handleScroll: (type: any) => void;
+  ensureScrollTracking: () => void;
+  coloredNames: boolean;
+
   constructor() {
-    /** @type {HTMLElement} */
     this.loaded = false;
-    /** @type {HTMLElement} */
     this.rootNode = null;
     this.queue = [];
     this.messages = [];
     this.visibleMessages = [];
     this.page = null;
     this.events = new EventEmitter();
-    // Scroll handler
-    /** @type {HTMLElement} */
     this.scrollNode = null;
     this.scrollTracking = true;
     this.lastScrollHeight = 0;
@@ -131,7 +142,7 @@ class ChatRenderer {
       const bottom = node.scrollTop + node.offsetHeight;
       const scrollTracking =
         Math.abs(height - bottom) <
-          selectSettings(globalStore.getState()).scrollTrackingTolerance ||
+          store.get(settingsAtom).scrollTrackingTolerance ||
         this.lastScrollHeight === 0;
       if (scrollTracking !== this.scrollTracking) {
         this.scrollTracking = scrollTracking;
@@ -185,7 +196,7 @@ class ChatRenderer {
 
   assignStyle(style = {}) {
     for (const key of Object.keys(style)) {
-      this.rootNode.style.setProperty(key, style[key]);
+      this.rootNode!.style.setProperty(key, style[key]);
     }
   }
 
@@ -227,7 +238,7 @@ class ChatRenderer {
       if (lines.length === 0) {
         return;
       }
-      const regexExpressions = [];
+      const regexExpressions: string[] = [];
       // Organize each highlight entry into regex expressions and words
       for (let line of lines) {
         // Regex expression syntax is /[exp]/
@@ -292,7 +303,7 @@ class ChatRenderer {
   scrollToBottom() {
     // scrollHeight is always bigger than scrollTop and is
     // automatically clamped to the valid range.
-    this.scrollNode.scrollTop = this.scrollNode.scrollHeight;
+    this.scrollNode!.scrollTop = this.scrollNode!.scrollHeight;
   }
 
   changePage(page) {
@@ -303,7 +314,7 @@ class ChatRenderer {
     }
     this.page = page;
     // Fast clear of the root node
-    this.rootNode.textContent = '';
+    this.rootNode!.textContent = '';
     this.visibleMessages = [];
     // Re-add message nodes
     const fragment = document.createDocumentFragment();
@@ -316,7 +327,7 @@ class ChatRenderer {
       }
     }
     if (node) {
-      this.rootNode.appendChild(fragment);
+      this.rootNode!.appendChild(fragment);
       node.scrollIntoView();
     }
   }
@@ -343,7 +354,10 @@ class ChatRenderer {
     return null;
   }
 
-  processBatch(batch, options = {}) {
+  processBatch(
+    batch,
+    options: { prepend?: boolean; notifyListeners?: boolean } = {},
+  ) {
     const { prepend, notifyListeners = true } = options;
     const now = Date.now();
     // Queue up messages until chat is ready
@@ -490,11 +504,11 @@ class ChatRenderer {
       }
     }
     if (node) {
-      const firstChild = this.rootNode.childNodes[0];
+      const firstChild = this.rootNode!.childNodes[0];
       if (prepend && firstChild) {
-        this.rootNode.insertBefore(fragment, firstChild);
+        this.rootNode!.insertBefore(fragment, firstChild);
       } else {
-        this.rootNode.appendChild(fragment);
+        this.rootNode!.appendChild(fragment);
       }
       if (this.scrollTracking) {
         setTimeout(() => this.scrollToBottom());
@@ -524,7 +538,7 @@ class ChatRenderer {
         this.visibleMessages = messages.slice(fromIndex);
         for (let i = 0; i < fromIndex; i++) {
           const message = messages[i];
-          this.rootNode.removeChild(message.node);
+          this.rootNode!.removeChild(message.node);
           // Mark this message as pruned
           message.node = 'pruned';
         }
@@ -564,7 +578,7 @@ class ChatRenderer {
       message.node = undefined;
     }
     // Fast clear of the root node
-    this.rootNode.textContent = '';
+    this.rootNode!.textContent = '';
     this.messages = [];
     this.visibleMessages = [];
     // Repopulate the chat log
@@ -585,7 +599,7 @@ class ChatRenderer {
     this.visibleMessages = [];
     for (let i = 0; i < messages.length; i++) {
       const message = messages[i];
-      this.rootNode.removeChild(message.node);
+      this.rootNode!.removeChild(message.node);
       // Mark this message as pruned
       message.node = 'pruned';
     }

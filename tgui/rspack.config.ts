@@ -125,6 +125,7 @@ export default defineConfig({
       'tgui-panel': path.resolve(dirname, './packages/tgui-panel'),
       'tgui-say': path.resolve(dirname, './packages/tgui-say'),
       'tgui-dev-server': path.resolve(dirname, './packages/tgui-dev-server'),
+      assets: path.resolve(dirname, './packages/tgui/assets'),
     },
   },
   stats: createStats(true),
