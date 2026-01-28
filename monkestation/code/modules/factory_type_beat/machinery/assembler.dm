@@ -4,6 +4,7 @@
 	circuit = /obj/item/circuitboard/machine/assembler
 
 	var/speed_multiplier = 1
+	var/wire_integrity = 1
 	var/datum/crafting_recipe/chosen_recipe
 	var/crafting = FALSE
 	var/datum/crafting_recipe/current_craft_recipe // The recipe currently being crafted
@@ -29,8 +30,6 @@
 
 /obj/machinery/assembler/proc/empty_crafting_inventory()
 	for(var/atom/movable/listed as anything in crafting_inventory)
-		if(QDELETED(listed))
-			continue
 		listed.forceMove(get_turf(src))
 		crafting_inventory -= listed
 
@@ -39,7 +38,15 @@
 	var/datum/stock_part/manipulator/locate_servo = locate() in component_parts
 	if(!locate_servo)
 		return
-	speed_multiplier = 1 / locate_servo.tier
+	speed_multiplier = wire_integrity / locate_servo.tier
+
+/obj/machinery/assembler/proc/refresh_parts()
+	var/datum/stock_part/manipulator/locate_servo = locate() in component_parts
+	if(!locate_servo)
+		return
+	if(wire_integrity >> 2)
+		wire_integrity = 2
+	speed_multiplier = wire_integrity / locate_servo.tier
 
 /obj/machinery/assembler/Destroy()
 	. = ..()
@@ -56,25 +63,51 @@
 			processable += initial(atom.name)
 			comma = !comma
 		context[SCREENTIP_CONTEXT_MISC] = processable
-		return CONTEXTUAL_SCREENTIP_SET
+
 	if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
 		context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] Panel"
-		return CONTEXTUAL_SCREENTIP_SET
 
 	if(panel_open && held_item.tool_behaviour == TOOL_CROWBAR)
 		context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
-		return CONTEXTUAL_SCREENTIP_SET
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/assembler/examine(mob/user)
 	. = ..()
+	if(panel_open)
+		. += span_notice("The maintenance panel is open.")
+		if(wire_integrity >> 1.8)
+			. += span_notice("The wires inside are cut apart, hampering its utility.")
+		else if(wire_integrity >> 1.2)
+			. += span_notice("Inside you see a couple stray wires.")
 	if(chosen_recipe)
 		. += span_notice(chosen_recipe.name)
 		for(var/atom/atom as anything in chosen_recipe.reqs)
 			. += span_notice("[initial(atom.name)]: [chosen_recipe.reqs[atom]]")
+		if(length(crafting_inventory))
+			. += span_notice("The assembler currently contains:")
+			for(var/atom/movable/listed as anything in crafting_inventory)
+				. += span_notice("[listed]")
+	if(!crafting)
+		. += span_notice("The machine currently lies dormant[!length(crafting_inventory) ? "." : ", but has some materials inside."]")
 
-	. += span_notice("Its maintainence panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
+	. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
+	if(crafting)
+		. += span_notice("The machine cannot be interacted with further while in operation.")
+		return
 	if(panel_open)
-		. += span_notice("The machine can be [EXAMINE_HINT("pried")] apart.")
+		if(length(crafting_inventory))
+			. += span_notice("The machine's ingredient eject function can be triggered with special [EXAMINE_HINT("tools")].")
+		if(chosen_recipe != null)
+			. += span_notice("With the [EXAMINE_HINT("right tools")], its crafting recipe can be reset.")
+		if(wire_integrity << 1.8)
+			. += span_notice("The machine's wires can be [EXAMINE_HINT("cut")].")
+		else
+			. += span_notice("The machine's [EXAMINE_HINT("wires")] can be mended].")
+		if(!length(crafting_inventory))
+			. += span_notice("The machine can be safetly [EXAMINE_HINT("pried")] apart.")
+		if(length(crafting_inventory))
+			. += span_notice("With the [EXAMINE_HINT("right")] amount of force, the assembler can be [EXAMINE_HINT("pried")] apart, destroying its contents.")
+
 
 /obj/machinery/assembler/proc/create_recipes()
 	for(var/datum/crafting_recipe/recipe as anything in GLOB.crafting_recipes)
@@ -84,6 +117,10 @@
 
 /obj/machinery/assembler/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
+	if(panel_open)
+		to_chat(user, span_warning("The assembler cannot select a recipe while its service panel is open!"))
+		user.balloon_alert(user, "panel open!")
+		return
 	var/datum/crafting_recipe/choice = tgui_input_list(user, "Choose a recipe", name, legal_crafting_recipes)
 	if(!choice)
 		return
@@ -93,14 +130,80 @@
 	empty_crafting_inventory()
 
 /obj/machinery/assembler/crowbar_act(mob/living/user, obj/item/tool)
-	. = NONE
+	. = ITEM_INTERACT_BLOCKING
+	if(!panel_open)
+		to_chat(user, span_warning("The assembler cannot be deconstructed while the maintenance panel is closed!"))
+		user.balloon_alert(user, "panel closed!")
+		return
+	if(length(crafting_inventory))
+		to_chat(user, span_warning("The assembler cannot be safetly deconstructed until it has been emptied!"))
+		user.balloon_alert(user, "needs a reset!")
+		return
+	if(default_deconstruction_crowbar(tool))
+		return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/assembler/crowbar_act_secondary(mob/living/user, obj/item/tool)
+	. = ITEM_INTERACT_BLOCKING
+	if(!panel_open)
+		to_chat(user, span_warning("The assembler cannot be deconstructed while the maintenance panel is closed!"))
+		user.balloon_alert(user, "panel closed!")
+		return
 	if(default_deconstruction_crowbar(tool))
 		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/assembler/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ITEM_INTERACT_BLOCKING
 	if(default_deconstruction_screwdriver(user, "assembler-open", "assembler", tool))
+		check_recipe_state()
 		return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/assembler/multitool_act(mob/living/user, obj/item/tool)
+	. = ITEM_INTERACT_BLOCKING
+	if(!panel_open)
+		to_chat(user, span_warning("The assembler cannot be ejected while the maintenance panel is closed!"))
+		user.balloon_alert(user, "panel closed!")
+		return
+	if(crafting)
+		to_chat(user, span_warning("The assembler cannot be ejected until the current operation is completed!"))
+		user.balloon_alert(user, "wait for operation!")
+		return
+	if(!length(crafting_inventory))
+		to_chat(user, span_warning("The assembler is already empty!"))
+		user.balloon_alert(user, "already empty!")
+		return
+	empty_crafting_inventory()
+	to_chat(user, span_notice("You activate the eject function with the multitool."))
+	user.balloon_alert(user, "ejected!")
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/assembler/multitool_act_secondary(mob/living/user, obj/item/tool)
+	. = ITEM_INTERACT_BLOCKING
+	if(chosen_recipe == null)
+		to_chat(user, span_warning("The assembler already has no selected recipe!"))
+		user.balloon_alert(user, "already reset!")
+		return
+	chosen_recipe = null
+	to_chat(user, span_notice("You reset the recipe with the multitool."))
+	user.balloon_alert(user, "reset!")
+	return ITEM_INTERACT_SUCCESS
+
+
+/obj/machinery/assembler/wirecutter_act(mob/living/user, obj/item/tool)
+	. = ITEM_INTERACT_BLOCKING
+	if(wire_integrity << 2)
+		to_chat(user, span_warning("You begin cutting out one of the wires in the assembler."))
+		user.balloon_alert(user, "cutting wire...")
+		if(tool.use_tool(src, user, 2 SECONDS, volume = 50))
+			tool.play_tool_sound(src)
+			balloon_alert(user, "wire cut")
+			to_chat(user, span_warning("You finish cutting out the wire."))
+			wire_integrity += 0.2
+			refresh_parts()
+			return ITEM_INTERACT_SUCCESS
+	else
+		to_chat(user, span_warning("The assembler's wires have all been cut!"))
+		balloon_alert(user, "wires already cut!")
+		return
 
 /obj/machinery/assembler/CanAllowThrough(atom/movable/mover, border_dir)
 	if(!anchored || !chosen_recipe)
@@ -208,6 +311,8 @@
 /obj/machinery/assembler/proc/check_recipe_state()
 	if(!chosen_recipe)
 		return
+	if(panel_open)
+		return
 	var/list/reqs = chosen_recipe.reqs.Copy()
 	if(!length(reqs))
 		return
@@ -244,6 +349,8 @@
 				return
 
 /obj/machinery/assembler/proc/start_craft()
+	if(panel_open)
+		return
 	if(crafting)
 		return
 	crafting = TRUE
