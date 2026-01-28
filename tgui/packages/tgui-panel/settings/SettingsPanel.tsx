@@ -22,7 +22,6 @@ import {
   Slider,
   NoticeBox,
 } from 'tgui/components';
-import { ChatPageSettings } from '../chat';
 import { THEMES } from '../themes';
 
 import { SETTINGS_TABS, FONTS, WARN_AFTER_HIGHLIGHT_AMT } from './constants';
@@ -33,6 +32,7 @@ import { useSettings } from './use-settings';
 import { useState } from 'react';
 import { useHighlights } from './use-highlights';
 import { wsDisconnect, wsReconnect } from 'tgui-panel/websocket/helpers';
+import { ChatPageSettings } from 'tgui-panel/chat/ChatPageSettings';
 
 export const SettingsPanel = (props) => {
   const {
