@@ -78,6 +78,7 @@
 		return
 
 	if(COOLDOWN_FINISHED(src, force_heal_time) && !QDELETED(owner))
+		log_game("[key_name(owner)] was in Torpor for 5 minutes, immediately reviving them to prevent a potential softlock.")
 		owner.revive(HEAL_ALL, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 		qdel(src)
 
