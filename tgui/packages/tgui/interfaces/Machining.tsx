@@ -66,7 +66,7 @@ export const Machining = (props) => {
               autoFocus
               placeholder={'Search in ' + recipes.length + ' designs...'}
               value={searchText}
-              onInput={(e, value) => {
+              onChange={(value) => {
                 setSearchText(value);
               }}
               mb={2}

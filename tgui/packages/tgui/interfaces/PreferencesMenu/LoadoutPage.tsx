@@ -82,6 +82,7 @@ export const LoadoutManager = (props) => {
                   icon="fa-solid fa-coins"
                   align="center"
                   tooltip="This is your total Monkecoin amount."
+                  tooltipPosition="top"
                 >
                   {total_coins}
                 </Button>

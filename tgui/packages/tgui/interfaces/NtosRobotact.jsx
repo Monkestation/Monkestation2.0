@@ -1,17 +1,21 @@
-import { useBackend, useSharedState } from '../backend';
+import { useState } from 'react';
 import {
   AnimatedNumber,
   Box,
   Button,
   Flex,
   LabeledList,
+  NoticeBox,
   ProgressBar,
   Section,
   Slider,
+  Stack,
   Tabs,
-} from '../components';
-import { formatEnergy } from '../format';
-import { formatPower } from '../format';
+} from 'tgui-core/components';
+import { formatEnergy } from 'tgui-core/format';
+import { formatPower } from 'tgui-core/format';
+
+import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
 
 export const NtosRobotact = (props) => {
@@ -26,8 +30,8 @@ export const NtosRobotact = (props) => {
 
 export const NtosRobotactContent = (props) => {
   const { act, data } = useBackend();
-  const [tab_main, setTab_main] = useSharedState('tab_main', 1);
-  const [tab_sub, setTab_sub] = useSharedState('tab_sub', 1);
+  const [tab_main, setTab_main] = useState(1);
+  const [tab_sub, setTab_sub] = useState(1);
   const {
     charge,
     maxcharge,
@@ -47,13 +51,17 @@ export const NtosRobotactContent = (props) => {
     thrustersInstalled,
     thrustersStatus,
     selfDestructAble,
+    cyborg_groups = [],
+    masterAI_online,
+    MasterAI_connected,
   } = data;
-  const borgName = data.name || [];
+  const borgName = data.borgName || [];
   const borgType = data.designation || [];
   const masterAI = data.masterAI || [];
   const laws = data.Laws || [];
   const borgLog = data.borgLog || [];
   const borgUpgrades = data.borgUpgrades || [];
+
   return (
     <Flex direction={'column'}>
       <Flex.Item position="relative" mb={1}>
@@ -73,6 +81,14 @@ export const NtosRobotactContent = (props) => {
             onClick={() => setTab_main(2)}
           >
             Logs
+          </Tabs.Tab>
+          <Tabs.Tab
+            icon="list"
+            lineHeight="23px"
+            selected={tab_main === 3}
+            onClick={() => setTab_main(3)}
+          >
+            Network
           </Tabs.Tab>
         </Tabs>
       </Flex.Item>
@@ -132,7 +148,6 @@ export const NtosRobotactContent = (props) => {
                   stepPixelSize={25}
                   maxValue={5}
                   minValue={1}
-                  tickWhileDragging
                   onChange={(e, value) =>
                     act('lampIntensity', {
                       ref: value,
@@ -188,7 +203,7 @@ export const NtosRobotactContent = (props) => {
                       />
                     </LabeledList.Item>
                     <LabeledList.Item
-                      label={'Stored Photos (' + printerPictures + ')'}
+                      label={`Stored Photos (${printerPictures})`}
                     >
                       <Button
                         content="View"
@@ -328,6 +343,111 @@ export const NtosRobotactContent = (props) => {
               </Box>
             ))}
           </Section>
+        </Flex.Item>
+      )}
+      {tab_main === 3 && (
+        <Flex.Item height={40}>
+          <Section
+            title={MasterAI_connected ? masterAI : 'NOT CONFIGURED'}
+            textAlign="center"
+          >
+            <LabeledList>
+              <LabeledList.Item label="Status">
+                <Box color={masterAI_online ? 'good' : 'bad'}>
+                  {!MasterAI_connected
+                    ? 'No Conection'
+                    : masterAI_online
+                      ? 'Online'
+                      : 'Unresponsive'}
+                </Box>
+              </LabeledList.Item>
+            </LabeledList>
+          </Section>
+
+          <Stack vertical>
+            {cyborg_groups.map((borggroup, cyborgindex) => (
+              <Stack.Item key={cyborgindex}>
+                <Stack>
+                  {borggroup.map((cyborg, borgindex) => (
+                    <Stack.Item key={borgindex} width="24.25%">
+                      <Section
+                        key={cyborg.ref}
+                        title={cyborg.otherBorgName.slice(0, 20)}
+                      >
+                        <LabeledList>
+                          <LabeledList.Item label="Status">
+                            <Box
+                              color={
+                                cyborg.status
+                                  ? 'bad'
+                                  : cyborg.locked_down
+                                    ? 'average'
+                                    : 'good'
+                              }
+                            >
+                              {cyborg.status
+                                ? 'Not Responding'
+                                : cyborg.locked_down
+                                  ? 'Locked Down'
+                                  : cyborg.shell_discon
+                                    ? 'Nominal/Disconnected'
+                                    : 'Nominal'}
+                            </Box>
+                          </LabeledList.Item>
+                          <LabeledList.Item label="Condition">
+                            <Box
+                              color={
+                                cyborg.integ <= 25
+                                  ? 'bad'
+                                  : cyborg.integ <= 75
+                                    ? 'average'
+                                    : 'good'
+                              }
+                            >
+                              {cyborg.integ === 0
+                                ? 'Hard Fault'
+                                : cyborg.integ <= 25
+                                  ? 'Functionality Disrupted'
+                                  : cyborg.integ <= 75
+                                    ? 'Functionality Impaired'
+                                    : 'Operational'}
+                            </Box>
+                          </LabeledList.Item>
+                          <LabeledList.Item label="Charge">
+                            <Box
+                              color={
+                                cyborg.charge <= 30
+                                  ? 'bad'
+                                  : cyborg.charge <= 70
+                                    ? 'average'
+                                    : 'good'
+                              }
+                            >
+                              {typeof cyborg.charge === 'number'
+                                ? `${cyborg.charge}%`
+                                : 'No Cell'}
+                            </Box>
+                          </LabeledList.Item>
+                          <LabeledList.Item label="Model">
+                            {cyborg.module}
+                          </LabeledList.Item>
+                        </LabeledList>
+                      </Section>
+                    </Stack.Item>
+                  ))}
+                </Stack>
+                <Stack.Divider />
+              </Stack.Item>
+            ))}
+          </Stack>
+
+          {!cyborg_groups.length && (
+            <NoticeBox textAlign="center" top="30%" position="relative">
+              <Box fontSize={2}>
+                CONNECTION UNAVAILABLE -- NETWORK STATUS UNKNOWN
+              </Box>
+            </NoticeBox>
+          )}
         </Flex.Item>
       )}
     </Flex>

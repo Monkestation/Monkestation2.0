@@ -148,7 +148,7 @@ export const MessageWriteTab = (props) => {
         height={20}
         maxLength={1025}
         value={messageText}
-        onChange={(_, value) => setMessageText(value)}
+        onChange={(value) => setMessageText(value)}
         placeholder="Type your message..."
       />
       <Section>

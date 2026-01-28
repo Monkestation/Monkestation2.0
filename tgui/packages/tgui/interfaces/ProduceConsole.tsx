@@ -109,7 +109,7 @@ const ShoppingTab = (props) => {
                 mt={0.5}
                 placeholder="Search item..."
                 value={searchItem}
-                onInput={(e, value) => {
+                onChange={(value) => {
                   setSearchItem(value);
                 }}
                 fluid
@@ -179,7 +179,7 @@ const ShoppingTab = (props) => {
                       minValue={0}
                       maxValue={20}
                       step={1}
-                      onChange={(e, value) =>
+                      onChange={(value) =>
                         act('cart_set', {
                           target: item.ref,
                           amt: value,
@@ -257,7 +257,7 @@ const CheckoutTab = (props) => {
                         width="41px"
                         minValue={0}
                         maxValue={(item.cost > 10 && 50) || 10}
-                        onChange={(e, value) =>
+                        onChange={(value) =>
                           act('cart_set', {
                             target: item.ref,
                             amt: value,

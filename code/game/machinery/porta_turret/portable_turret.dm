@@ -41,6 +41,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	base_icon_state = "standard"
 	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
 	subsystem_type = /datum/controller/subsystem/processing/turrets
+	processing_flags = START_PROCESSING_MANUALLY
 	// Same faction mobs will never be shot at, no matter the other settings
 	faction = list(FACTION_TURRET)
 
@@ -104,6 +105,8 @@ DEFINE_BITFIELD(turret_flags, list(
 	var/datum/action/turret_toggle/toggle_action
 	/// Mob that is remotely controlling the turret
 	var/mob/remote_controller
+	/// Proximity tracker used to activate/deactivate the turret's processing.
+	var/datum/proximity_monitor/advanced/turret_tracking/tracker
 	/// While the cooldown is still going on, it cannot be re-enabled.
 	COOLDOWN_DECLARE(disabled_time)
 
@@ -126,6 +129,8 @@ DEFINE_BITFIELD(turret_flags, list(
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 
+	tracker = new(src, scan_range)
+	tracker.recalculate_field(full_recalc = TRUE) // manually call this so that our tracker var is set before we set anything up
 	setup()
 	if(has_cover)
 		cover = new /obj/machinery/porta_turret_cover(loc)
@@ -161,13 +166,18 @@ DEFINE_BITFIELD(turret_flags, list(
 	INVOKE_ASYNC(src, PROC_REF(set_disabled), disrupt_duration)
 	return TRUE
 
+/// Checks to see if this should be processing, and starts/stops processing if so.
+/// Returns TRUE if processing began, FALSE if processing ended, or null if the processing state was not changed.
 /obj/machinery/porta_turret/proc/check_should_process()
 	if (datum_flags & DF_ISPROCESSING)
-		if (!on || !anchored || (machine_stat & BROKEN) || !powered())
+		if (!on || !anchored || !LAZYLEN(tracker.tracking) || (machine_stat & BROKEN) || !powered())
 			end_processing()
+			return FALSE
 	else
-		if (on && anchored && !(machine_stat & BROKEN) && powered())
+		if (on && anchored && LAZYLEN(tracker.tracking) && !(machine_stat & BROKEN) && powered())
 			begin_processing()
+			return TRUE
+	return null
 
 /obj/machinery/porta_turret/update_icon_state()
 	if(!anchored)
@@ -225,6 +235,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	stored_gun = null
 
 /obj/machinery/porta_turret/Destroy()
+	QDEL_NULL(tracker)
 	//deletes its own cover with it
 	QDEL_NULL(cover)
 	base = null
@@ -513,7 +524,7 @@ DEFINE_BITFIELD(turret_flags, list(
 					if(assess_perp(occupant) >= 4)
 						targets += mech
 
-	if((turret_flags & TURRET_FLAG_SHOOT_ANOMALOUS) && GLOB.blobs.len && (mode == TURRET_LETHAL))
+	if((turret_flags & TURRET_FLAG_SHOOT_ANOMALOUS) && length(GLOB.blobs) && (mode == TURRET_LETHAL))
 		for(var/obj/structure/blob/B in view(scan_range, base))
 			targets += B
 
@@ -604,10 +615,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	return threatcount
 
 /obj/machinery/porta_turret/proc/in_faction(mob/target)
-	for(var/faction1 in faction)
-		if(faction1 in target.faction)
-			return TRUE
-	return FALSE
+	return length(faction & target.faction)
 
 /obj/machinery/porta_turret/proc/target(atom/movable/target)
 	if(target)

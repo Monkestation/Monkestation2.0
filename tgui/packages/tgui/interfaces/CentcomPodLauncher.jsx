@@ -911,13 +911,13 @@ class PresetsPage extends Component {
               value={hue}
               minValue={0}
               maxValue={360}
-              onChange={(e, value) => setHue(value)}
+              onChange={(value) => setHue(value)}
             />
             <Input
               inline
               autofocus
               placeholder="Preset Name"
-              onChange={(e, value) => setText(value)}
+              onChange={(value) => setText(value)}
             />
             <Divider horizontal />
           </>
@@ -1155,7 +1155,8 @@ const DelayHelper = (props) => {
                 ? 'orange'
                 : 'default'
             }
-            onDrag={(e, value) => {
+            tickWhileDragging
+            onChange={(_e, value) => {
               act('editTiming', {
                 timer: '' + (i + 1),
                 value: Math.max(value, 0),

@@ -133,7 +133,7 @@
 	if(!isturf(owner_turf))
 		return
 	var/light_amount = GET_SIMPLE_LUMCOUNT(owner_turf)
-	var/delta_time = min(round(DELTA_WORLD_TIME(SSmobs), 0.1), 8) // compensate for lag, but avoid potentially taking a shitload of damage all at once
+	var/delta_time = min(round(DELTA_WORLD_TIME(SSclient_mobs), 0.1), 8) // compensate for lag, but avoid potentially taking a shitload of damage all at once
 
 	// 1 damage per second
 	if(light_amount >= SHADOW_SPECIES_DIM_LIGHT) //if there's enough light, start dying

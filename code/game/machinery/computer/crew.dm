@@ -132,7 +132,7 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		JOB_QUARTERMASTER = 50,
 		JOB_SHAFT_MINER = 51,
 		JOB_CARGO_TECHNICIAN = 52,
-		JOB_LATEJOIN_EXPLORER = 53, //monkestation edit: explorer
+		JOB_EXPLORER = 53, //monkestation edit: explorer
 		// 60+: Civilian/other
 		JOB_HEAD_OF_PERSONNEL = 60,
 		JOB_BARTENDER = 61,
@@ -145,7 +145,7 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		JOB_JANITOR = 68,
 		JOB_LAWYER = 69,
 		JOB_PSYCHOLOGIST = 71,
-		JOB_LATEJOIN_BARBER = 72, //monkestation edit: barber
+		JOB_BARBER = 72, //monkestation edit: barber
 		// 200-239: Centcom
 		JOB_CENTCOM_ADMIRAL = 200,
 		JOB_CENTCOM = 201,
@@ -351,6 +351,7 @@ GLOBAL_DATUM_INIT(crewmonitor_command, /datum/crewmonitor/command, new)
 		JOB_ERT_DEATHSQUAD = 227,
 		JOB_NANOTRASEN_REPRESENTATIVE = 230,
 		JOB_BLUESHIELD = 231,
+		JOB_BRIDGE_ASSISTANT = 232,
 	)
 
 GLOBAL_DATUM_INIT(crewmonitor_security, /datum/crewmonitor/security, new)

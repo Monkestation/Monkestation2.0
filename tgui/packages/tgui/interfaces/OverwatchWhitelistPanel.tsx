@@ -39,7 +39,7 @@ export const OverwatchWhitelistPanel = (props) => {
                 value={inputWLCkey}
                 placeholder="Input ckey"
                 fluid
-                onChange={(e, value) => {
+                onChange={(value) => {
                   setInputWLCkey(value);
                 }}
               />

@@ -82,6 +82,7 @@
 /obj/machinery/camera/directional/north{
 	c_tag = "Cargo - Staircase"
 	},
+/obj/effect/landmark/start/explorer,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "abO" = (
@@ -3903,6 +3904,7 @@
 /area/station/hallway/primary/central/aft)
 "ccl" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/landmark/start/explorer,
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
 "ccw" = (
@@ -9648,6 +9650,7 @@
 	},
 /obj/effect/turf_decal/trimline/brown/filled/corner,
 /obj/machinery/light/directional/east,
+/obj/effect/landmark/start/explorer,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "eNg" = (
@@ -22329,6 +22332,7 @@
 	dir = 4
 	},
 /obj/machinery/newscaster/directional/east,
+/obj/effect/landmark/start/explorer,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "kJH" = (
@@ -22486,7 +22490,7 @@
 /obj/structure/table/wood,
 /obj/item/camera/detective,
 /obj/item/restraints/handcuffs,
-/obj/item/storage/secure/briefcase{
+/obj/item/storage/briefcase/secure{
 	pixel_x = 2;
 	pixel_y = -2
 	},
@@ -23947,6 +23951,7 @@
 	dir = 8
 	},
 /obj/machinery/light/directional/west,
+/obj/effect/landmark/start/explorer,
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
 "lxC" = (
@@ -27224,6 +27229,7 @@
 	dir = 1
 	},
 /obj/machinery/firealarm/directional/north,
+/obj/effect/landmark/start/explorer,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "naj" = (
@@ -29670,7 +29676,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/structure/table/wood,
-/obj/item/storage/secure/briefcase{
+/obj/item/storage/briefcase/secure{
 	pixel_x = 2;
 	pixel_y = -2
 	},
@@ -32323,6 +32329,9 @@
 "pBF" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
+/obj/vehicle/ridden/battering_ram{
+	dir = 8
+	},
 /turf/open/floor/stone,
 /area/station/ai_monitored/security/armory)
 "pBM" = (
@@ -33681,6 +33690,10 @@
 /obj/effect/landmark/generic_maintenance_landmark,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
+"qjo" = (
+/obj/effect/landmark/start/explorer,
+/turf/open/floor/iron,
+/area/station/cargo/miningdock)
 "qjv" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -38751,6 +38764,10 @@
 	pixel_y = 3;
 	pixel_x = 5
 	},
+/obj/item/walkman{
+	pixel_y = 4;
+	pixel_x = -6
+	},
 /turf/open/floor/wood,
 /area/station/service/library)
 "szn" = (
@@ -43263,11 +43280,7 @@
 /turf/open/floor/iron/diagonal,
 /area/station/medical/medbay/lobby)
 "uFt" = (
-/obj/structure/table/wood,
-/obj/item/walkman{
-	pixel_y = 4;
-	pixel_x = -6
-	},
+/obj/machinery/cassette_library,
 /turf/open/floor/wood,
 /area/station/service/library)
 "uFw" = (
@@ -130461,7 +130474,7 @@ wDP
 xnJ
 ccl
 rqV
-gIC
+qjo
 bFF
 kwJ
 kim

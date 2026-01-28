@@ -1346,7 +1346,7 @@
 				"UE"=scanner_occupant.dna.unique_enzymes,
 				"UF"=scanner_occupant.dna.unique_features,
 				"name"=scanner_occupant.real_name,
-				"blood_type"="[GLOB.blood_types[scanner_occupant.dna.human_blood_type]]")
+				"blood_type"="[scanner_occupant.get_blood_type()]")
 
 			return
 

@@ -44,7 +44,7 @@ export const RequestManagerMonke = (props) => {
             <>
               <Input
                 value={searchText}
-                onInput={(_, value) => setSearchText(value)}
+                onChange={(value) => setSearchText(value)}
                 placeholder={'Search...'}
                 mr={1}
               />

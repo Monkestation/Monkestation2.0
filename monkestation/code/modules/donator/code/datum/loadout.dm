@@ -114,7 +114,7 @@
 	ckeywhitelist = list("ruby_flamewing")
 
 /datum/loadout_item/under/miscellaneous/syndie_pajamas
-	name = "Syndicate Pajamas"
+	name = "Luxury Syndicate Pajamas"
 	item_path = /obj/item/clothing/under/costume/syndie_pajamas
 	donator_only = TRUE
 	requires_purchase = FALSE
@@ -439,13 +439,13 @@
 	requires_purchase = FALSE
 
 /datum/loadout_item/plushies/elliethedarksunplush
-	name = "Ellie plush"
+	name = "Ellie Dark Sun plush"
 	item_path = /obj/item/toy/plush/elliethedarksun
 	donator_only = TRUE
 	requires_purchase = FALSE
 
 /datum/loadout_item/plushies/ellie_valentine
-	name = "Ellie plush"
+	name = "Ellie Valentine plush"
 	item_path = /obj/item/toy/plush/ellie_valentine
 	donator_only = TRUE
 	requires_purchase = FALSE
@@ -590,7 +590,7 @@
 
 //Ophaq
 /datum/loadout_item/suit/ophaq_rainbowcoat
-	name = "Rainbow Coat"
+	name = "Ophaq Rainbow Coat"
 	item_path = /obj/item/clothing/suit/toggle/ophaq_rainbowcoat
 	donator_only = TRUE
 	requires_purchase = FALSE

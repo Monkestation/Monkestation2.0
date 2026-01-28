@@ -1,19 +1,19 @@
+import { deepMerge } from 'common/collections';
+import { Color } from 'common/color';
+import type { BooleanLike } from 'common/react';
+import { useEffect } from 'react';
 import { useBackend } from '../backend';
 import {
   Box,
   Button,
-  StyleableSection,
   Icon,
-  Stack,
   NoticeBox,
+  Stack,
+  StyleableSection,
 } from '../components';
 import { Window } from '../layouts';
-import { Color } from 'common/color';
 import { JOB2ICON } from './common/JobToIcon';
-import { deepMerge } from 'common/collections';
-import { BooleanLike } from 'common/react';
-import { LobbyNotices, LobbyNoticesType } from './common/LobbyNotices';
-import { useEffect } from 'react';
+import { LobbyNotices, type LobbyNoticesType } from './common/LobbyNotices';
 
 type Job = {
   unavailable_reason: string | null;
@@ -117,10 +117,7 @@ export const JobSelection = (props) => {
   }, []);
 
   return (
-    <Window
-      width={1012}
-      height={data.shuttle_status ? 690 : 666 /* Hahahahahaha */}
-    >
+    <Window width={1212} height={data.shuttle_status ? 840 : 816}>
       <Window.Content scrollable>
         <LobbyNotices notices={data.notices} />
         <StyleableSection
@@ -140,14 +137,14 @@ export const JobSelection = (props) => {
               />
             </>
           }
-          titleStyle={{ minHeight: '3.4em' }}
+          titleStyle={{ minHeight: '2.5em' }}
         >
           <Box style={{ columns: '20em' }}>
             {Object.entries(departments).map((departmentEntry) => {
               const departmentName = departmentEntry[0];
               const entry = departmentEntry[1];
               return (
-                <Box key={departmentName} minWidth="30%">
+                <Box key={departmentName}>
                   <StyleableSection
                     title={
                       <>
@@ -183,7 +180,7 @@ export const JobSelection = (props) => {
                       color: Color.fromHex(entry.color).darken(80).toString(),
                     }}
                   >
-                    <Stack vertical>
+                    <Stack vertical fill>
                       {Object.entries(entry.jobs).map((job) => (
                         <Stack.Item key={job[0]}>
                           <JobEntry

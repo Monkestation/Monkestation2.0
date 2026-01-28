@@ -163,7 +163,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	resistance_flags = FIRE_PROOF
 	merge_type = /obj/item/stack/sheet/iron
 	grind_results = list(/datum/reagent/iron = 20)
-	point_value = 2
+	point_value = 5
 	tableVariant = /obj/structure/table
 	material_type = /datum/material/iron
 	matter_amount = 4
@@ -293,7 +293,7 @@ GLOBAL_LIST_INIT(plasteel_recipes, list ( \
 	resistance_flags = FIRE_PROOF
 	merge_type = /obj/item/stack/sheet/plasteel
 	grind_results = list(/datum/reagent/iron = 20, /datum/reagent/toxin/plasma = 20)
-	point_value = 23
+	point_value = 40
 	tableVariant = /obj/structure/table/reinforced
 	material_flags = NONE
 	matter_amount = 12
@@ -345,7 +345,7 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	new/datum/stack_recipe("wooden bucket", /obj/item/reagent_containers/cup/bucket/wooden, 3, time = 1 SECONDS, check_density = FALSE, category = CAT_CONTAINERS),\
 	new/datum/stack_recipe("rake", /obj/item/cultivator/rake, 5, time = 1 SECONDS, check_density = FALSE, category = CAT_TOOLS),\
 	new/datum/stack_recipe("ore box", /obj/structure/ore_box, 4, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_CONTAINERS),\
-	new/datum/stack_recipe("wooden crate", /obj/structure/closet/crate/wooden, 6, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_FURNITURE),\
+	new/datum/stack_recipe("wooden crate", /obj/structure/closet/crate/wooden, 5, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_FURNITURE),\
 	new/datum/stack_recipe("baseball bat", /obj/item/melee/baseball_bat, 5, time = 1.5 SECONDS, check_density = FALSE, category = CAT_WEAPON_MELEE),\
 	new/datum/stack_recipe("wooden crutch", /obj/item/cane/crutch/wood, 5, time = 1.5 SECONDS, check_density = FALSE, category = CAT_WEAPON_MELEE),\
 	new/datum/stack_recipe("loom", /obj/structure/loom, 10, time = 1.5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_TOOLS), \

@@ -1,7 +1,6 @@
 import { useBackend, useLocalState } from '../backend';
 import { Section, Button, Box, Flex, TextArea } from '../components';
 import { Window } from '../layouts';
-import { KEY_ENTER } from 'common/keycodes';
 import { decodeHtmlEntities } from 'common/string';
 
 export const TicketPanel = (props) => {
@@ -190,19 +189,15 @@ export const TicketMessages = (props) => {
       <TextArea
         fluid
         placeholder="Message to send"
-        selfclear
+        selfClear
         value={message}
         className="replybox"
         resize="vertical"
-        onChange={(e, value) => {
-          if (e.keyCode === KEY_ENTER) {
-            setMessage('');
-            e.target.value = message;
-            act('send_message', { message: value });
-          } else {
-            setMessage(value);
-          }
+        onEnter={(val) => {
+          act('send_message', { message: val });
+          setMessage('');
         }}
+        onChange={(value) => setMessage(value)}
       />
       <Button
         mt="5px"

@@ -114,6 +114,7 @@
 		/obj/item/mod/module/clamp/loader,
 		/obj/item/mod/module/magnet,
 		/obj/item/mod/module/hydraulic,
+		/obj/item/mod/module/stamp,
 	)
 
 /obj/item/mod/control/pre_equipped/mining

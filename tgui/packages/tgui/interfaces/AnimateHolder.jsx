@@ -75,7 +75,7 @@ const AnimateSteps = (props) => {
                         minValue={-1000}
                         maxValue={1000}
                         value={randomMin}
-                        onChange={(_, value) =>
+                        onChange={(value) =>
                           act('set_random_value', {
                             variable: name,
                             rand_lower: value,
@@ -88,7 +88,7 @@ const AnimateSteps = (props) => {
                         minValue={-1000}
                         maxValue={1000}
                         value={randomMax}
-                        onChange={(_, value) =>
+                        onChange={(value) =>
                           act('set_random_value', {
                             variable: name,
                             rand_upper: value,
@@ -103,7 +103,7 @@ const AnimateSteps = (props) => {
                       minValue={-1000}
                       maxValue={1000}
                       value={step[name] !== undefined ? step[name] : 0}
-                      onChange={(_, value) =>
+                      onChange={(value) =>
                         act('modify_step', {
                           variable: name,
                           value: value,
@@ -115,7 +115,7 @@ const AnimateSteps = (props) => {
                     <Input
                       value={step[name] !== undefined ? step[name] : ''}
                       width="90px"
-                      onInput={(e, value) =>
+                      onChange={(value) =>
                         act('modify_step', {
                           variable: name,
                           value: value,
@@ -228,7 +228,7 @@ export const Transform = (props) => {
             minValue={-1000}
             maxValue={1000}
             value={randomMin}
-            onChange={(_, value) =>
+            onChange={(value) =>
               act('set_random_value', {
                 variable: 'transform',
                 index: step,
@@ -241,7 +241,7 @@ export const Transform = (props) => {
             minValue={-1000}
             maxValue={1000}
             value={randomMax}
-            onChange={(_, value) =>
+            onChange={(value) =>
               act('set_random_value', {
                 variable: 'transform',
                 index: step,
@@ -257,7 +257,7 @@ export const Transform = (props) => {
             minValue={-1000}
             maxValue={1000}
             value={transformValues[0]}
-            onChange={(e, value) =>
+            onChange={(value) =>
               act('modify_transform_value', {
                 value1: value,
                 index: step,
@@ -270,7 +270,7 @@ export const Transform = (props) => {
               minValue={-1000}
               maxValue={1000}
               value={transformValues[1]}
-              onChange={(e, value) =>
+              onChange={(value) =>
                 act('modify_transform_value', {
                   value2: value,
                   index: step,

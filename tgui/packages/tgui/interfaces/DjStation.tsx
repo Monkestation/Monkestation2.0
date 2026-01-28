@@ -11,7 +11,7 @@ import {
 import { formatTime } from '../format';
 import { Window } from '../layouts';
 import { getThumbnailUrl } from '../../common/other';
-import { Component } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { BooleanLike } from 'common/react';
 import { LoadingScreen } from './common/LoadingToolbox';
 
@@ -75,125 +75,110 @@ type Data = {
   switching_tracks: BooleanLike;
 };
 
-class Controls extends Component<{ data: Data }> {
-  state: {
-    thumbnailUrl: string | null;
-  };
-  constructor(props: { data: Data }) {
-    super(props);
-    this.state = { thumbnailUrl: null };
-  }
+export function Controls({ data }: { data: Data }) {
+  const { act } = useBackend();
+  const [thumbnailUrl, setThumbnailUrl] = useState<string | null>(null);
 
-  componentDidMount() {
-    this.fetchThumbnail();
-  }
+  const fetchTokenRef = useRef(0);
 
-  componentDidUpdate(prevProps: { data: Data }) {
-    const { current_song, cassette } = this.props.data;
-    const { current_song: prev_current_song, cassette: prev_cassette } =
-      prevProps.data;
+  const {
+    current_song: currentSongId,
+    cassette,
+    progress,
+    broadcasting,
+    song_cooldown,
+  } = data;
+  const current_song = getSong(currentSongId, cassette);
 
-    if (
-      getSong(current_song, cassette)?.url !==
-      getSong(prev_current_song, prev_cassette)?.url
-    ) {
-      this.fetchThumbnail();
-    }
-  }
+  useEffect(() => {
+    const fetchThumbnail = async () => {
+      const token = ++fetchTokenRef.current;
+      if (currentSongId === null) {
+        setThumbnailUrl(null);
+        return;
+      }
 
-  private fetchToken = 0;
+      if (!current_song?.url) {
+        setThumbnailUrl(null);
+        return;
+      }
 
-  async fetchThumbnail() {
-    const token = ++this.fetchToken;
-    const { current_song: current_songId } = this.props.data;
-    if (current_songId === null) return this.setState({ thumbnailUrl: null });
-    const current_song = getSong(current_songId, this.props.data.cassette);
-    if (!current_song?.url) return this.setState({ thumbnailUrl: null });
-    const thumb = await getThumbnailUrl(current_song.url);
-    if (token === this.fetchToken) {
-      this.setState({ thumbnailUrl: thumb });
-    }
-  }
+      const thumb = await getThumbnailUrl(current_song.url);
+      if (token === fetchTokenRef.current) {
+        setThumbnailUrl(thumb);
+      }
+    };
 
-  render() {
-    const { act } = useBackend();
-    const {
-      progress,
-      broadcasting,
-      current_song: current_songId,
-      song_cooldown,
-    } = this.props.data;
-    const cassette = this.props.data?.cassette;
+    fetchThumbnail();
+  }, [currentSongId, cassette]);
 
-    const current_song = getSong(current_songId, cassette);
-
-    const { thumbnailUrl } = this.state;
+  useEffect(() => {
     if (current_song === null && thumbnailUrl !== null) {
-      this.setState({ thumbnailUrl: null });
+      setThumbnailUrl(null);
     }
+  }, [current_song, thumbnailUrl]);
 
-    return (
-      <Stack fill vertical>
-        <Stack.Item>
-          <LabeledList>
-            <LabeledList.Item label="Title">
-              <Box>{current_song?.name || 'N/A'}</Box>
+  return (
+    <Stack fill vertical>
+      <Stack.Item>
+        <LabeledList>
+          <LabeledList.Item label="Title">
+            <Box>{current_song?.name || 'N/A'}</Box>
+          </LabeledList.Item>
+          {current_song?.artist && (
+            <LabeledList.Item label="Artist">
+              {current_song.artist}
             </LabeledList.Item>
-            {current_song?.artist && (
-              <LabeledList.Item label="Artist">
-                {current_song.artist}
-              </LabeledList.Item>
-            )}
-            {current_song?.album && (
-              <LabeledList.Item label="Album">
-                {current_song.album}
-              </LabeledList.Item>
-            )}
-            <LabeledList.Item label="Controls">
-              <Button
-                icon="play"
-                disabled={broadcasting || !!song_cooldown}
-                onClick={() => act('play')}
-                tooltip={
-                  broadcasting
-                    ? null
-                    : song_cooldown
-                      ? `The DJ station needs time to cool down after playing the last song. Time left: ${formatTime(song_cooldown, 'short')}`
-                      : null
-                }
-              >
-                Play
-              </Button>
-              <Button
-                icon="stop"
-                disabled={!broadcasting}
-                onClick={() => act('stop')}
-              >
-                Stop
-              </Button>
-            </LabeledList.Item>
-            <LabeledList.Item label="Progress">
-              <ProgressBar value={progress} maxValue={1} color="good">
-                {broadcasting && current_song
-                  ? `${formatTime(progress * current_song.length, 'short')} / ${formatTime(
-                      current_song.length,
-                      'short',
-                    )}`
-                  : 'N/A'}
-              </ProgressBar>
-            </LabeledList.Item>
-          </LabeledList>
-        </Stack.Item>
-        <Stack.Item>
-          {thumbnailUrl && (
-            <Box mt={2} textAlign="center">
-              <Image src={thumbnailUrl} style={{ maxWidth: '50%' }} />
-            </Box>
           )}
-        </Stack.Item>
-      </Stack>
-    );
-  }
+          {current_song?.album && (
+            <LabeledList.Item label="Album">
+              {current_song.album}
+            </LabeledList.Item>
+          )}
+          <LabeledList.Item label="Controls">
+            <Button
+              icon="play"
+              disabled={broadcasting || !!song_cooldown}
+              onClick={() => act('play')}
+              tooltip={
+                broadcasting
+                  ? null
+                  : song_cooldown
+                    ? `The DJ station needs time to cool down after playing the last song. Time left: ${formatTime(song_cooldown, 'short')}`
+                    : null
+              }
+            >
+              Play
+            </Button>
+            <Button
+              icon="stop"
+              disabled={!broadcasting}
+              onClick={() => act('stop')}
+            >
+              Stop
+            </Button>
+          </LabeledList.Item>
+          <LabeledList.Item label="Progress">
+            <ProgressBar value={progress} maxValue={1} color="good">
+              {broadcasting && current_song
+                ? `${formatTime(progress * current_song.length, 'short')} / ${formatTime(
+                    current_song.length,
+                    'short',
+                  )}`
+                : 'N/A'}
+            </ProgressBar>
+          </LabeledList.Item>
+        </LabeledList>
+      </Stack.Item>
+      <Stack.Item>
+        {thumbnailUrl && (
+          <Box mt={2} textAlign="center">
+            <Image src={thumbnailUrl} style={{ maxWidth: '50%' }} />
+          </Box>
+        )}
+      </Stack.Item>
+    </Stack>
+  );
 }
 
 const AvailableTracks = ({

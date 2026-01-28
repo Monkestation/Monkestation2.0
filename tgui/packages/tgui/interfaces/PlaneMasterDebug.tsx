@@ -776,7 +776,7 @@ const PlaneWindow = (props) => {
           step={1}
           stepPixelSize={1.9}
           tickWhileDragging
-          onChange={(e, value) =>
+          onChange={(_, value) =>
             act('set_alpha', {
               edit: workingPlane.our_ref,
               alpha: value,

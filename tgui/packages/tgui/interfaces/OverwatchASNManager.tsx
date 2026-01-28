@@ -34,7 +34,7 @@ export const OverwatchASNManager = (props) => {
                 value={inputIP}
                 placeholder="Input IP address"
                 fluid
-                onChange={(e, value) => {
+                onChange={(value) => {
                   setinputIP(value);
                 }}
               />

@@ -193,11 +193,11 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	return
 
 /// Called from [/datum/reagents/proc/metabolize]
-/datum/reagent/proc/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
+/datum/reagent/proc/on_mob_life(mob/living/carbon/metabolizer, seconds_per_tick, times_fired)
 	current_cycle++
 	if(length(reagent_removal_skip_list))
 		return
-	holder.remove_reagent(type, metabolization_rate * M.metabolism_efficiency * seconds_per_tick) //By default it slowly disappears.
+	holder.remove_reagent(type, metabolization_rate * metabolizer.metabolism_efficiency * seconds_per_tick) //By default it slowly disappears.
 
 /// Called in burns.dm *if* the reagent has the REAGENT_AFFECTS_WOUNDS process flag
 /datum/reagent/proc/on_burn_wound_processing(datum/wound/burn/flesh/burn_wound)

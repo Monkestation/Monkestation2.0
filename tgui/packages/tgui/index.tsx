@@ -22,7 +22,7 @@ import { createRenderer } from './renderer';
 import { perf } from 'common/perf';
 import { setupGlobalEvents } from './events';
 import { setupHotKeys } from './hotkeys';
-import { setupHotReloading } from 'tgui-dev-server/link/client.cjs';
+import { setupHotReloading } from 'tgui-dev-server/link/client';
 import { setGlobalStore } from './backend';
 import { loadIconRefMap } from './icons';
 

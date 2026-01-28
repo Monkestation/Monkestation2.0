@@ -46,7 +46,7 @@ const Recipes = (props) => {
               width={12.5}
               value={searchText}
               placeholder={'Find recipe'}
-              onInput={(e, value) => setSearchText(value)}
+              onChange={(value) => setSearchText(value)}
             />
           )}
           <Button

@@ -9,6 +9,8 @@ type Data = {
   badge_icon_state: string;
   badge_leader: BooleanLike;
   union_members: UnionData[];
+  on_cooldown: BooleanLike;
+  seconds_left: string;
 };
 
 type UnionData = {
@@ -24,6 +26,8 @@ export const NtosCargoUnion = () => {
     badge_icon_state,
     badge_leader,
     union_members = [],
+    on_cooldown,
+    seconds_left,
   } = data;
   return (
     <NtosWindow width={500} height={600}>
@@ -94,7 +98,7 @@ export const NtosCargoUnion = () => {
               {!!member.leader && <Stack.Item grow={1}>LEADER</Stack.Item>}
               <Stack.Item textAlign="right">
                 <Button.Confirm
-                  confirmContent="Really "
+                  confirmContent="Really remove?"
                   onClick={() =>
                     act('remove_member', { member_name: member.name })
                   }
@@ -105,10 +109,15 @@ export const NtosCargoUnion = () => {
               </Stack.Item>
               <Stack.Item textAlign="right">
                 <Button
+                  disabled={on_cooldown}
                   onClick={() =>
                     act('print_badge', { member_name: member.name })
                   }
-                  tooltip="Will print a new ID in their name, printer has a cooldown."
+                  tooltip={
+                    on_cooldown
+                      ? 'On cooldown for ' + seconds_left + '.'
+                      : 'Will print a new ID in their name, printer has a cooldown.'
+                  }
                 >
                   Replace Badge
                 </Button>

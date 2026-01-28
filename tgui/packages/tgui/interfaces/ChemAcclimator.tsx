@@ -44,7 +44,7 @@ export const ChemAcclimator = (props) => {
                 maxValue={1000}
                 step={5}
                 stepPixelSize={2}
-                onChange={(e, value) =>
+                onChange={(value) =>
                   act('set_target_temperature', {
                     temperature: value,
                   })
@@ -58,8 +58,9 @@ export const ChemAcclimator = (props) => {
                 width="59px"
                 minValue={1}
                 maxValue={target_temperature}
+                step={5}
                 stepPixelSize={2}
-                onChange={(e, value) => {
+                onChange={(value) => {
                   act('set_allowed_temperature_difference', {
                     temperature: value,
                   });
@@ -89,7 +90,7 @@ export const ChemAcclimator = (props) => {
                 maxValue={200}
                 step={2}
                 stepPixelSize={2}
-                onChange={(e, value) =>
+                onChange={(value) =>
                   act('change_volume', {
                     volume: value,
                   })

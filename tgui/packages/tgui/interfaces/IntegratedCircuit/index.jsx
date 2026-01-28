@@ -460,7 +460,7 @@ export class IntegratedCircuit extends Component {
                   fluid
                   placeholder="Name"
                   value={display_name}
-                  onChange={(e, value) =>
+                  onChange={(value) =>
                     act('set_display_name', { display_name: value })
                   }
                 />

@@ -192,7 +192,7 @@ const ChoicedSelection = (props: {
                   }px`}
                   placeholder="Search options"
                   value={searchText}
-                  onInput={(_, value) => setSearchText(value)}
+                  onChange={(value) => setSearchText(value)}
                 />
               </Box>
             </Stack.Item>

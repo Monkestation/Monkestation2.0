@@ -127,7 +127,7 @@
 		return
 
 	// Heals all damage + Stamina
-	var/delta_time = DELTA_WORLD_TIME(SSmobs)
+	var/delta_time = DELTA_WORLD_TIME(SSclient_mobs)
 	var/needs_update = FALSE // Optimization, if nothing changes then don't update our owner's health.
 	needs_update += source.adjustBruteLoss(-2 * delta_time, updating_health = FALSE)
 	needs_update += source.adjustFireLoss(-2 * delta_time, updating_health = FALSE)
@@ -308,7 +308,7 @@
 	if(!HAS_TRAIT(our_turf, TRAIT_RUSTY))
 		return
 
-	var/delta_time = DELTA_WORLD_TIME(SSmobs)
+	var/delta_time = DELTA_WORLD_TIME(SSclient_mobs) // prolly safe to assume this will be a carbon mob
 	var/needs_update = FALSE
 	needs_update += source.adjustBruteLoss(-4 * delta_time, updating_health = FALSE)
 	needs_update += source.adjustFireLoss(-4 * delta_time, updating_health = FALSE)

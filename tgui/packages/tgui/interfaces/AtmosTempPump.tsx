@@ -45,7 +45,7 @@ export const AtmosTempPump = (props) => {
                 minValue={0}
                 maxValue={max_heat_transfer_rate}
                 step={1}
-                onChange={(e, value) =>
+                onChange={(value) =>
                   act('rate', {
                     rate: value,
                   })
@@ -72,7 +72,7 @@ export const AtmosTempPump = (props) => {
                 minValue={min_temperature}
                 maxValue={max_temperature}
                 step={1}
-                onChange={(e, value) =>
+                onChange={(value) =>
                   act('temperature', {
                     temperature: value,
                   })
