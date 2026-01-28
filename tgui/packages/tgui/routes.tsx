@@ -109,7 +109,7 @@ export function RoutedComponent() {
     }
   }
 
-  const name = config?.interface?.name;
+  const name = config?.interface;
   if (!name) {
     return <RoutingErrorWindow type="notFound" name="(undefined)" />;
   }

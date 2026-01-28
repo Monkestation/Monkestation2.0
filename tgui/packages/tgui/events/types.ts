@@ -10,11 +10,6 @@ type Client = {
   computer_id: string;
 };
 
-type IFace = {
-  layout: string;
-  name: string;
-};
-
 type TguiWindow = {
   fancy: BinaryIO;
   key: string;
@@ -30,7 +25,7 @@ type User = {
 
 export type Config = {
   client: Client;
-  interface: IFace;
+  interface: string;
   refreshing: BinaryIO;
   status: number;
   title: string;
