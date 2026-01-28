@@ -52,6 +52,7 @@
 		/obj/item/t_scanner/adv_mining_scanner/lesser = 1,
 		/obj/item/cargo_teleporter = 1,
 		/obj/item/storage/box/emergency_eva/explorer = 1,
+		/obj/item/folded_navigation_gigabeacon = 1,
 	)
 	belt = /obj/item/modular_computer/pda/shaftminer
 	ears = /obj/item/radio/headset/headset_cargo/mining
