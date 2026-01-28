@@ -6,6 +6,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		/obj/effect/portal,
 		/obj/effect/rune,
 		/obj/item/beacon,
+		/obj/item/card/id,
 		/obj/item/disk/nuclear,
 		/obj/item/gps,
 		/obj/item/hilbertshotel,
@@ -13,6 +14,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		/obj/item/shared_storage,
 		/obj/item/swapper,
 		/obj/item/warp_cube,
+		/obj/machinery/assembler,
 		/obj/machinery/autolathe, // In case you manage to get it to print a beacon while in transit
 		/obj/machinery/camera,
 		/obj/machinery/disposal,
@@ -34,9 +36,9 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		/obj/structure/extraction_point,
 		/obj/structure/guardian_beacon,
 		/obj/tear_in_reality,
-		//monkestation edits
 		/obj/ratvar,
 		/obj/item/mcobject/flusher,
+		/obj/item/mcobject/teleporter,
 	)))
 
 /// How many goody orders we can fit in a lockbox before we upgrade to a crate

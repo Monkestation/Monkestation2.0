@@ -6,8 +6,6 @@
 /datum/surgery/robot_healing
 	steps = list(
 		/datum/surgery_step/mechanic_open,
-		/datum/surgery_step/pry_off_plating,
-		/datum/surgery_step/cut_wires,
 		/datum/surgery_step/robot_heal,
 		/datum/surgery_step/mechanic_close,
 	)
@@ -28,8 +26,6 @@
 	if(healing_step_type)
 		steps = list(
 			/datum/surgery_step/mechanic_open,
-			/datum/surgery_step/pry_off_plating,
-			/datum/surgery_step/cut_wires,
 			healing_step_type,
 			/datum/surgery_step/mechanic_close,
 		)
