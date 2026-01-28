@@ -256,6 +256,8 @@
 		board.forceMove(src)
 		var/obj/machinery/build = initial(board.build_path)
 		name += " ([initial(build.name)])"
+	else
+		src.board = /obj/item/circuitboard/machine/flatpacker
 
 /obj/item/flatpack/Destroy()
 	QDEL_NULL(board)
