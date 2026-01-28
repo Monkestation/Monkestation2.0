@@ -22,10 +22,12 @@
 /datum/action/cooldown/vampire/exactitude/activate_power()
 	. = ..()
 	RegisterSignals(owner, list(COMSIG_HUMAN_EARLY_UNARMED_ATTACK, COMSIG_LIVING_EARLY_UNARMED_ATTACK), PROC_REF(on_unarmed_attack))
+	ADD_TRAIT(owner, TRAIT_PERFECT_ATTACKER, REF(src))
 
 /datum/action/cooldown/vampire/exactitude/deactivate_power()
 	. = ..()
 	UnregisterSignal(owner, list(COMSIG_HUMAN_EARLY_UNARMED_ATTACK, COMSIG_LIVING_EARLY_UNARMED_ATTACK))
+	REMOVE_TRAIT(owner, TRAIT_PERFECT_ATTACKER, REF(src))
 
 /datum/action/cooldown/vampire/exactitude/continue_active()
 	. = ..()
