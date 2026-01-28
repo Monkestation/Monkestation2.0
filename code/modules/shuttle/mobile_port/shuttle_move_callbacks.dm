@@ -81,6 +81,8 @@ All ShuttleMove procs go here
 	if(oldT.outdoor_effect)
 		oldT.outdoor_effect.process_state()
 
+	SEND_SIGNAL(src, COMSIG_TURF_AFTER_SHUTTLE_MOVE, oldT)
+
 	return TRUE
 
 /turf/proc/lateShuttleMove(turf/oldT)
