@@ -1796,6 +1796,7 @@
 #include "code\datums\quirks\neutral_quirks\pineapple_hater.dm"
 #include "code\datums\quirks\neutral_quirks\pineapple_liker.dm"
 #include "code\datums\quirks\neutral_quirks\pride_pin.dm"
+#include "code\datums\quirks\neutral_quirks\shielding_exchange.dm"
 #include "code\datums\quirks\neutral_quirks\shifty_eyes.dm"
 #include "code\datums\quirks\neutral_quirks\snappy.dm"
 #include "code\datums\quirks\neutral_quirks\snob.dm"
