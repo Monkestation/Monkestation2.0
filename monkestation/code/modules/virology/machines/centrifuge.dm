@@ -43,6 +43,8 @@
 
 	var/special = CENTRIFUGE_LIGHTSPECIAL_OFF
 
+	var/ejecting = FALSE
+
 /obj/machinery/disease2/centrifuge/Initialize(mapload)
 	. = ..()
 	RefreshParts()
@@ -215,6 +217,21 @@
 						dat += "<A href='byond://?src=[REF(src)];ejectvial=[slot]'>[tube.name] (no pathogen detected)</a> [valid ? "<A href='byond://?src=[REF(src)];synthvaccine=[slot]'>SYNTHESIZE VACCINE</a>" : "(not enough antibodies for a vaccine)"]"
 	return dat
 
+/obj/machinery/disease2/centrifuge/proc/eject_when_no_power()
+	ejecting = TRUE
+	for(var/i = 1 to length(tubes))
+		var/obj/item/reagent_containers/cup/tube/tube = tubes[i]
+		if(!tube)
+			continue
+		playsound(src, 'sound/machines/click.ogg', vol = 50, vary = TRUE, mixer_channel = CHANNEL_MACHINERY)
+		tube.forceMove(drop_location())
+		tubes[i] = null
+		tube_valid[i] = 0
+		tube_task[i] = list(0,0,0,0,0)
+		update_appearance(UPDATE_OVERLAYS)
+		sleep(0.1 SECONDS)
+	ejecting = FALSE
+
 /obj/machinery/disease2/centrifuge/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(machine_stat & (BROKEN))
@@ -222,18 +239,9 @@
 		return
 
 	if(machine_stat & (NOPOWER))
-		to_chat(user, span_notice("Deprived of power, \the [src] is unresponsive.") )
-		for(var/i = 1 to length(tubes))
-			var/obj/item/reagent_containers/cup/tube/tube = tubes[i]
-			if(!tube)
-				continue
-			playsound(src, 'sound/machines/click.ogg', vol = 50, vary = TRUE, mixer_channel = CHANNEL_MACHINERY)
-			tube.forceMove(drop_location())
-			tubes[i] = null
-			tube_valid[i] = 0
-			tube_task[i] = list(0,0,0,0,0)
-			update_appearance(UPDATE_OVERLAYS)
-			sleep(0.1 SECONDS)
+		if(!ejecting)
+			to_chat(user, span_notice("Deprived of power, \the [src] is unresponsive."))
+			INVOKE_ASYNC(src, PROC_REF(eject_when_no_power))
 		return
 
 	if(.)
