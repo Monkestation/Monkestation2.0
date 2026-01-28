@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(vsociety)
 	name = "Vampire Society"
-	wait = 10 MINUTES
+	wait = 5 MINUTES
 	flags = SS_NO_INIT | SS_BACKGROUND
 	can_fire = FALSE
 
@@ -10,8 +10,10 @@ SUBSYSTEM_DEF(vsociety)
 	// Ref to the prince datum
 	var/datum/weakref/princedatum
 
+	var/start_time = 0
+
 /datum/controller/subsystem/vsociety/fire(resumed = FALSE)
-	var/time_elapsed = world.time - SSticker.round_start_time
+	var/time_elapsed = world.time - start_time
 
 	// Give them some breathing room
 	if(time_elapsed < 9 MINUTES)

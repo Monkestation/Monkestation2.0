@@ -16,6 +16,7 @@ GLOBAL_LIST_EMPTY(all_vampires)
 		return
 
 	if(length(GLOB.all_vampires) >= 3)
+		SSvsociety.start_time = world.time
 		SSvsociety.can_fire = TRUE
 		message_admins("Vampire Society has started, as there are [length(GLOB.all_vampires)] vampires active.")
 		log_game("Vampire Society has started, as there are [length(GLOB.all_vampires)] vampires active.")
