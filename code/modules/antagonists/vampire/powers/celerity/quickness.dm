@@ -33,7 +33,7 @@
 		return FALSE
 
 /datum/action/cooldown/vampire/exactitude/proc/on_unarmed_attack(mob/living/source, atom/target, proximity, modifiers)
-	if(!(source.istate & ISTATE_HARM))
+	if(!(source.istate & ISTATE_HARM) || !currently_active)
 		return NONE
 
 	if(isliving(target) && target != source)
