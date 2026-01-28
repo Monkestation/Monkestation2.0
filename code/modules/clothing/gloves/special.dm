@@ -63,6 +63,7 @@
 /obj/item/clothing/gloves/rapid/vampire
 	name = "Strange Blur"
 	desc = "There is a strange, subtle blur surrounding the hands."
+	icon = 'icons/vampires/vamp_obj.dmi'
 	icon_state = "exactitude"
 	inhand_icon_state = null
 	worn_icon_state = null
