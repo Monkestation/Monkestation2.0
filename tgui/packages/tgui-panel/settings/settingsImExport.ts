@@ -10,6 +10,7 @@ export const exportChatSettings = (
   const mimeType = 'application/json';
 
   const pagesEntry: Record<string, Page>[] = [];
+  // @ts-expect-error Np
   pagesEntry.chatPages = pages;
 
   const exportObject = Object.assign(settings, pagesEntry);

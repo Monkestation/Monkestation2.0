@@ -10,6 +10,7 @@ const BASEICONS = {
   Blueshield: 'chess-rook',
   Botanist: 'seedling',
   'Bridge Assistant': 'coffee',
+  Bouncer: 'shield-heart',
   // Really I wanted this to be like heart wings but thats not really an option
   'Brig Physician': 'heart',
   Captain: 'crown',
