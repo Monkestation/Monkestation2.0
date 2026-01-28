@@ -1,3 +1,6 @@
+// behold, another stupid tm conflict workaround
+#ifdef STORYTELLER_TRACK_BOOSTER
+
 /datum/round_event_control/antagonist/solo/brother
 	name = "Blood Brothers"
 	antag_flag = ROLE_BROTHER
@@ -44,7 +47,7 @@
 	)
 	extra_spawned_events = list(
 		/datum/round_event_control/antagonist/solo/traitor/roundstart = 8,
-		/datum/round_event_control/antagonist/solo/vampire/roundstart = 6,
+		/datum/round_event_control/antagonist/solo/bloodsucker/roundstart = 6,
 		/datum/round_event_control/antagonist/solo/heretic/roundstart = 1,
 	)
 	var/static/allow_3_person_teams
@@ -72,3 +75,5 @@
 		team.update_name()
 		team.forge_brother_objectives()
 		team.notify_whos_who()
+
+#endif
