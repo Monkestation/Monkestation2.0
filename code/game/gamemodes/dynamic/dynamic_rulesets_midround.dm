@@ -942,7 +942,7 @@
 	return ..()
 
 /datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/execute()
-	warp_turf = find_maintenance_spawn(TRUE, FALSE)
+	warp_turf = find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = FALSE)
 	if(!warp_turf)
 		return MAP_ERROR
 	return ..()

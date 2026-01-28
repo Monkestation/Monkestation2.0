@@ -125,7 +125,7 @@
 		new /obj/effect/holy(hosts_mind.current.loc)
 		QDEL_IN(hosts_mind.current, 20)
 
-	var/turf/warp_turf = find_maintenance_spawn(TRUE, FALSE)
+	var/turf/warp_turf = find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = FALSE)
 	if(!warp_turf)
 		message_admins("No valid spawn locations found for Paradox Clone token, aborting...")
 		return MAP_ERROR

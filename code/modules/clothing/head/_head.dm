@@ -109,7 +109,7 @@
 		if(contents) 					//Checking for previous hats and preventing towers that are too large
 			if(attacking_item.contents)
 				if(attacking_item.contents.len + contents.len + 1 > HAT_CAP)
-					to_chat(user,"<span class='warning'>You think that this hat tower is perfect the way it is and decide against adding another.</span>")
+					span_warning(user,"You think that this hat tower is perfect the way it is and decide against adding another.")
 					return
 				for(var/obj/item/clothing/head/hat_movement in attacking_item.contents)
 					hat_movement.name = initial(name)
@@ -117,11 +117,11 @@
 					hat_movement.forceMove(src)
 			var/hat_count = contents.len
 			if(hat_count + 1 > HAT_CAP)
-				to_chat(user,"<span class='warning'>You think that this hat tower is perfect the way it is and decide against adding another.</span>")
+				span_warning(user,"You think that this hat tower is perfect the way it is and decide against adding another.")
 				return
 		var/obj/item/clothing/head/new_hat = attacking_item
 		if(user.transferItemToLoc(new_hat,src)) //Moving the new hat to the base hat's contents
-			to_chat(user, "<span class='notice'>You place the [new_hat] upon the [src].</span>")
+			span_notice(user, "You place the [new_hat] upon the [src].")
 			update_hats(ADD_HAT, user)
 	else
 		. = ..()
