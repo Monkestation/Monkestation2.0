@@ -45,7 +45,7 @@
 		if(to_attack.stat == DEAD || to_attack.invisibility > source.see_invisible)
 			continue
 		to_attack.attack_hand(source, modifiers)
-		source.changeNext_move(CLICK_CD_MELEE)
+		source.changeNext_move(CLICK_CD_MELEE * 0.75)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 
