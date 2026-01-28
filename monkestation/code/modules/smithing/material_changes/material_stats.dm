@@ -154,7 +154,8 @@
 	material_name = "[name_1][name_2]"
 
 /datum/material_stats/proc/merge_stats(datum/material_stats/material)
-	merged_color = BlendRGB(merged_color, material.merged_color)
+	if(material.merged_color)
+		merged_color = BlendRGB(merged_color, material.merged_color, 0.5)
 
 	if(material.conductivity)
 		conductivity += material.conductivity

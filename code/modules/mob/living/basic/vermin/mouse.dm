@@ -177,15 +177,14 @@
 		if(hungry && prob(90))
 			adjust_health(-4)
 
-		for(var/datum/reagent/target_reagent in attack_target.reagents.reagent_list)
-			if(istype(target_reagent, /datum/reagent/toxin))
-				visible_message(
-					span_warning("[src] devours [attack_target]! They pause for a moment..."),
-					span_warning("You devour [attack_target], something tastes off..."),
-				)
-				if(health != 0)
-					adjust_health(4)
-	//MONKESTATION EDIT STOP
+		if(locate(/datum/reagent/toxin) in attack_target.reagents?.reagent_list)
+			visible_message(
+				span_warning("[src] devours [attack_target]! [p_They()] pause[p_s()] for a moment..."),
+				span_warning("You devour [attack_target], something tastes off..."),
+			)
+			if(health != 0)
+				adjust_health(4)
+//MONKESTATION EDIT STOP
 
 	if(istype(attack_target, /obj/structure/cable))
 		try_bite_cable(attack_target)

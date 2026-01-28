@@ -44,7 +44,7 @@
 	..()
 
 /datum/objective/nightmare_fluff/check_completion()
-	return owner.current.stat != DEAD
+	return !QDELETED(owner.current) && owner.current.stat != DEAD
 
 /datum/antagonist/nightmare/forge_objectives()
 	var/datum/objective/nightmare_fluff/objective = new

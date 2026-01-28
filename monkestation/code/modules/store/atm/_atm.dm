@@ -51,14 +51,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/atm, 30)
 	var/obj/item/card/id/user_id = user.get_item_by_slot(ITEM_SLOT_ID)
 	if(user_id)
 		user_id = user_id.GetID()
-		if(istype(user_id))
+		if(istype(user_id) && user_id.registered_account)
 			cash_balance = user_id.registered_account.account_balance
-	else
-		if(ishuman(user))
-			var/mob/living/carbon/human/human_user = user
-			var/datum/bank_account/user_account = SSeconomy.bank_accounts_by_id["[human_user.account_id]"]
-			if(user_account)
-				cash_balance = user_account.account_balance
+	else if(ishuman(user))
+		var/mob/living/carbon/human/human_user = user
+		var/datum/bank_account/user_account = SSeconomy.bank_accounts_by_id["[human_user.account_id]"]
+		if(user_account)
+			cash_balance = user_account.account_balance
 
 	data["meta_balance"] = user.client.prefs.metacoins
 	data["cash_balance"] = cash_balance
