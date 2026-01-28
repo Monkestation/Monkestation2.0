@@ -57,6 +57,13 @@
 			comma = !comma
 		context[SCREENTIP_CONTEXT_MISC] = processable
 		return CONTEXTUAL_SCREENTIP_SET
+	if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
+		context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] Panel"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(panel_open && held_item.tool_behaviour == TOOL_CROWBAR)
+		context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
+		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/assembler/examine(mob/user)
 	. = ..()
@@ -64,6 +71,10 @@
 		. += span_notice(chosen_recipe.name)
 		for(var/atom/atom as anything in chosen_recipe.reqs)
 			. += span_notice("[initial(atom.name)]: [chosen_recipe.reqs[atom]]")
+
+	. += span_notice("Its maintainence panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
+	if(panel_open)
+		. += span_notice("The machine can be [EXAMINE_HINT("pried")] apart.")
 
 /obj/machinery/assembler/proc/create_recipes()
 	for(var/datum/crafting_recipe/recipe as anything in GLOB.crafting_recipes)
@@ -80,6 +91,16 @@
 	if(crafting)
 		return
 	empty_crafting_inventory()
+
+/obj/machinery/assembler/crowbar_act(mob/living/user, obj/item/tool)
+	. = NONE
+	if(default_deconstruction_crowbar(tool))
+		return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/assembler/screwdriver_act(mob/living/user, obj/item/tool)
+	. = ITEM_INTERACT_BLOCKING
+	if(default_deconstruction_screwdriver(user, "assembler-open", "assembler", tool))
+		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/assembler/CanAllowThrough(atom/movable/mover, border_dir)
 	if(!anchored || !chosen_recipe)
