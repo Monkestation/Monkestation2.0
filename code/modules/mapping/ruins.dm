@@ -101,6 +101,8 @@
 			SSore_generation.ore_vent_minerals = expand_weights(GLOB.ore_vent_minerals_lavaland)
 		if(OREGEN_PRESET_TRIPLE_Z)
 			SSore_generation.ore_vent_minerals = expand_weights(GLOB.ore_vent_minerals_triple_z)
+		if(OREGEN_PRESET_OSHAN)
+			SSore_generation.ore_vent_minerals = expand_weights(GLOB.ore_vent_minerals_lavaland)
 
 	//Set up the starting ruin list
 	for(var/key in ruins)

@@ -285,7 +285,7 @@ SUBSYSTEM_DEF(mapping)
 	// Generate oshan ruins
 	var/list/oshan_ruins = levels_by_trait(ZTRAIT_OSHAN_MINING)
 	if (length(oshan_ruins))
-		seedRuins(oshan_ruins, CONFIG_GET(number/oshan_budget), list(/area/ocean/generated, /area/ocean/dark), themed_ruins[ZTRAIT_OSHAN_MINING], clear_below = TRUE)
+		seedRuins(oshan_ruins, CONFIG_GET(number/oshan_budget), list(/area/ocean/generated, /area/ocean/dark), themed_ruins[ZTRAIT_OSHAN_MINING], clear_below = TRUE, mineral_budget = 15, mineral_budget_update = OREGEN_PRESET_OSHAN)
 
 /// Sets up rivers, and things that behave like rivers. So lava/plasma rivers, and chasms
 /// It is important that this happens AFTER generating mineral walls and such, since we rely on them for river logic
