@@ -344,6 +344,8 @@ SUBSYSTEM_DEF(ticker)
 	PostSetup()
 	INVOKE_ASYNC(Tracy, TYPE_PROC_REF(/datum/tracy, flush)) // monkestation edit: byond-tracy
 
+	Master.clear_profiler()
+
 	return TRUE
 
 /datum/controller/subsystem/ticker/proc/welcome_player(mob/player)

@@ -518,6 +518,33 @@
 	log_admin("Discord: [key_name(usr)] has sent [key_name(client_mob)] to Prison!")
 	message_admins("Discord: [key_name_admin(usr)] has sent [key_name_admin(client_mob)] to Prison!")
 
+/datum/world_topic/plx_kick
+	keyword = "PLX_kick"
+	require_comms_key = TRUE
+
+/datum/world_topic/plx_kick/Run(list/input)
+	var/ckey = input["ckey"]
+	var/reason = input["reason"]
+	var/kicker = input["admin_ckey"]
+
+	if(!ckey || !kicker)
+		return list("error" = PLEXORA_ERROR_BAD_PARAM, "param" = "ckey/admin_ckey", "reason" = "missing required parameter")
+
+	var/client/client = disambiguate_client(ckey)
+
+	if(QDELETED(client))
+		return list("error" = PLEXORA_ERROR_CLIENTNOTEXIST)
+
+	// Mock admin
+	var/datum/client_interface/mockadmin = new(
+		key = kicker,
+	)
+
+	to_chat_immediate(client, span_boldannounce("You have been kicked from the server by [key_name_admin(mockadmin)]. Reason: [reason]"))
+	qdel(client)
+	log_admin("Discord: [key_name(mockadmin)] has kicked [key_name(client)] from the server! Reason: [reason]")
+	message_admins("Discord: [key_name_admin(mockadmin)] has kicked [key_name_admin(client)] from the server! Reason: [reason]")
+
 /datum/world_topic/plx_ticketaction
 	keyword = "PLX_ticketaction"
 	require_comms_key = TRUE

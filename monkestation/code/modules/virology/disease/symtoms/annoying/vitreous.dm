@@ -22,15 +22,18 @@
 		to_chat(victim, span_warning("Your [check_arm] resonates with the glass in \the [glass_to_shatter], shattering it to bits!"))
 		glass_to_shatter.reagents?.expose(victim, TOUCH)
 		new/obj/effect/decal/cleanable/generic(get_turf(victim))
-		playsound(victim, 'sound/effects/glassbr1.ogg', 25, 1)
-		spawn(1 SECONDS)
-			if (victim && check_arm)
-				if (prob(50 * multiplier))
-					to_chat(victim, span_notice("Your [check_arm] deresonates, healing completely!"))
-					check_arm.heal_damage(1000) // full heal
-				else
-					to_chat(victim, span_warning("Your [check_arm] deresonates, sustaining burns!"))
-					check_arm.take_damage(15 * multiplier, BRUTE)
+		playsound(victim, 'sound/effects/glassbr1.ogg', vol = 25, vary = TRUE)
+		addtimer(CALLBACK(src, PROC_REF(deresonate), victim, check_arm), 1 SECONDS)
 		qdel(glass_to_shatter)
 	else if (prob(1))
 		to_chat(victim, span_notice("Your [check_arm] aches for the cold, smooth feel of container-grade glass..."))
+
+/datum/symptom/vitreous/proc/deresonate(mob/living/carbon/human/victim, obj/item/bodypart/arm)
+	if(QDELETED(src) || QDELETED(victim) || QDELETED(arm))
+		return
+	if(prob(50 * multiplier))
+		to_chat(victim, span_notice("Your [arm] deresonates, healing completely!"))
+		arm.heal_damage(brute = arm.max_damage, burn = arm.max_damage) // full heal
+	else
+		to_chat(victim, span_warning("Your [arm] deresonates, sustaining burns!"))
+		arm.receive_damage(burn = 15 * multiplier)

@@ -22,7 +22,7 @@
 		name = replacetextEx_char(name, "Port", "West")
 		name = replacetextEx_char(name, "Starboard", "East")
 		// change stuff like "North East" to "Northeast"
-		name = combine_regex.Replace_char(name, GLOBAL_PROC_REF(combine_area_names))
+		name = replacetext_char(name, combine_regex, GLOBAL_PROC_REF(combine_area_names))
 		auto_renamed = name
 	return ..()
 

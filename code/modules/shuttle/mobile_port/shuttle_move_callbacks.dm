@@ -77,10 +77,6 @@ All ShuttleMove procs go here
 
 	if(rotation)
 		shuttleRotate(rotation) //see shuttle_rotate.dm
-
-	if(oldT.outdoor_effect)
-		oldT.outdoor_effect.process_state()
-
 	SEND_SIGNAL(src, COMSIG_TURF_AFTER_SHUTTLE_MOVE, oldT)
 
 	return TRUE
@@ -90,10 +86,6 @@ All ShuttleMove procs go here
 	air_update_turf(TRUE, blocks_air)
 	oldT.blocks_air = initial(oldT.blocks_air)
 	oldT.air_update_turf(TRUE, oldT.blocks_air)
-
-	if(outdoor_effect)
-		oldT.outdoor_effect = null
-		oldT.get_sky_and_weather_states()
 
 
 /////////////////////////////////////////////////////////////////////////////////////

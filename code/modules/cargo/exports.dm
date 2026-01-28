@@ -21,10 +21,17 @@ Then the player gets the profit from selling his own wasted time.
 
 // Simple holder datum to pass export results around
 /datum/export_report
-	var/list/exported_atoms = list() //names of atoms sold/deleted by export
-	var/list/total_amount = list() //export instance => total count of sold objects of its type, only exists if any were sold
-	var/list/total_value = list() //export instance => total value of sold objects
-	var/list/exported_atoms_source = list() /// atoms themselves being sold
+	///names of atoms sold/deleted by export
+	var/list/exported_atoms = list()
+	///export instance => total count of sold objects of its type, only exists if any were sold
+	var/list/total_amount = list()
+	///export instance => total value of sold objects
+	var/list/total_value = list()
+	/// atoms themselves being sold
+	var/list/exported_atoms_source = list()
+	///set to false if any objects in a dry run were unscannable
+	var/all_contents_scannable = TRUE
+
 // external_report works as "transaction" object, pass same one in if you're doing more than one export in single go
 /proc/export_item_and_contents(atom/movable/AM, apply_elastic = TRUE, delete_unsold = TRUE, dry_run = FALSE, datum/export_report/external_report)
 	if(!GLOB.exports_list.len)
@@ -44,6 +51,10 @@ Then the player gets the profit from selling his own wasted time.
 		for(var/datum/export/export as anything in GLOB.exports_list)
 			if(export.applies_to(thing, apply_elastic))
 				if(!dry_run && (SEND_SIGNAL(thing, COMSIG_ITEM_PRE_EXPORT) & COMPONENT_STOP_EXPORT))
+					break
+				//Don't add value of unscannable items for a dry run report
+				if(dry_run && !export.scannable)
+					report.all_contents_scannable = FALSE
 					break
 				sold = export.sell_object(thing, report, dry_run, apply_elastic)
 				report.exported_atoms += " [thing.name]"
@@ -78,9 +89,12 @@ Then the player gets the profit from selling his own wasted time.
 	var/include_subtypes = TRUE
 	/// Types excluded from export
 	var/list/exclude_types = list()
-
+	/// Set to false if the cost shouldn't be determinable by an export scanner
+	var/scannable = TRUE
 	/// cost includes elasticity, this does not.
 	var/init_cost
+	///set to false if any objects in a dry run were unscannable
+	var/all_contents_scannable = TRUE
 
 
 

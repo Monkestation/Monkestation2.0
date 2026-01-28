@@ -1,0 +1,4 @@
+author: "Absolucy, SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Fixed MODpaint menu bluescreening."
