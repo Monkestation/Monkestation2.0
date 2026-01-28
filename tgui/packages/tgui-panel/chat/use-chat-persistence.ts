@@ -26,6 +26,7 @@ export function useChatPersistence() {
   /** Loads chat + chat settings */
   useEffect(() => {
     if (!loaded && settingsLoaded) {
+      // eslint-disable-next-line no-inner-declarations
       async function fetchChat(): Promise<void> {
         console.log('Initializing chat');
         await loadChatFromStorage();
@@ -93,4 +94,4 @@ export function useChatPersistence() {
 
     console.log(`Restored chat with ${messages.length} messages`);
   }
-}s
+}

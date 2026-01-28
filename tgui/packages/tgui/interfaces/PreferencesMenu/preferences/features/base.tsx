@@ -1,7 +1,7 @@
 import { sortBy, sortStrings } from 'common/collections';
 import { BooleanLike, classes } from 'common/react';
 import { ComponentType, createElement, ReactNode } from 'react';
-import { sendAct, useBackend, useLocalState } from '../../../../backend';
+import { useBackend, useLocalState } from 'tgui/backend';
 import {
   Box,
   Button,
@@ -11,10 +11,11 @@ import {
   Stack,
   Flex,
   Tooltip,
-} from '../../../../components';
+} from 'tgui/components';
 import { createSetPreference, PreferencesMenuData } from '../../data';
 import { ServerPreferencesFetcher } from '../../ServerPreferencesFetcher';
 import features from '.';
+import { sendAct } from 'tgui/events/act';
 
 export const sortChoices = sortBy<[string, ReactNode]>(([name]) => name);
 

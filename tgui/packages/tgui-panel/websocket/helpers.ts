@@ -176,8 +176,8 @@ export function wsDisconnect(): void {
   sendWSNotice('Websocket forcefully disconnected. (Retry count reset)', true);
 }
 
-function wsSend(type: string, payload: any): void {
+export function wsSend(msg: Record<string, any>): void {
   if (websocket?.readyState === WebSocket.OPEN) {
-    websocket.send(JSON.stringify({ type, payload }));
+    websocket.send(JSON.stringify(msg));
   }
 }

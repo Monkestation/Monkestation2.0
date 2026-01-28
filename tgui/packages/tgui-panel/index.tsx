@@ -15,6 +15,7 @@ import { setupPanelFocusHacks } from './panelFocus';
 import { createRoot } from 'react-dom/client';
 import { App } from './app';
 import { bus } from './events/listeners';
+import { wsSend } from './websocket/helpers';
 
 const root = createRoot(document.getElementById('react-root')!);
 function render(component: React.ReactElement) {
@@ -38,7 +39,10 @@ function setupApp() {
   render(<App />);
 
   // Dispatch incoming messages as store actions
-  Byond.subscribe((type, payload) => bus.dispatch({ type, payload }));
+  Byond.subscribe((type, payload) => {
+    bus.dispatch({ type, payload });
+    wsSend({ type, payload });
+  });
 
   // Unhide the panel
   Byond.winset('output_selector.legacy_output_selector', {

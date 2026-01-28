@@ -27,7 +27,7 @@ export const ChatTabs = (props) => {
             const actual = pagesRecord[page];
             return (
               <Tabs.Tab
-                key={page.id}
+                key={actual.id}
                 selected={page === currentPageId}
                 onClick={() => changeChatPage(actual)}
               >
