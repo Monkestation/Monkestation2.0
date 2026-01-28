@@ -1,5 +1,3 @@
-// shitty workaround for a merge conflict
-#if 0
 /datum/round_event_control/antagonist/solo/bloodsucker
 	antag_flag = ROLE_BLOODSUCKER
 	tags = list(TAG_COMBAT, TAG_MAGICAL, TAG_CREW_ANTAG, TAG_SPOOKY)
@@ -45,4 +43,3 @@
 /datum/round_event/antagonist/solo/bloodsucker/add_datum_to_mind(datum/mind/antag_mind)
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = antag_mind.make_bloodsucker()
 	bloodsuckerdatum.bloodsucker_level_unspent = rand(2,3)
-#endif

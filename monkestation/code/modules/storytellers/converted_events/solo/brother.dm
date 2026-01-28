@@ -1,6 +1,3 @@
-// behold, another stupid tm conflict workaround
-#ifdef STORYTELLER_TRACK_BOOSTER
-
 /datum/round_event_control/antagonist/solo/brother
 	name = "Blood Brothers"
 	antag_flag = ROLE_BROTHER
@@ -75,5 +72,3 @@
 		team.update_name()
 		team.forge_brother_objectives()
 		team.notify_whos_who()
-
-#endif

@@ -8740,8 +8740,6 @@
 #include "monkestation\code\modules\storytellers\converted_events\solo\blob_infection.dm"
 #include "monkestation\code\modules\storytellers\converted_events\solo\bloodcult.dm"
 #include "monkestation\code\modules\storytellers\converted_events\solo\bloodling.dm"
-#include "monkestation\code\modules\storytellers\converted_events\solo\bloodsuckers.dm"
-#include "monkestation\code\modules\storytellers\converted_events\solo\brother.dm"
 #include "monkestation\code\modules\storytellers\converted_events\solo\changeling.dm"
 #include "monkestation\code\modules\storytellers\converted_events\solo\clockwork_cult.dm"
 #include "monkestation\code\modules\storytellers\converted_events\solo\clown_operative.dm"
