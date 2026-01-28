@@ -7260,6 +7260,8 @@
 #include "monkestation\code\modules\blood_for_the_blood_gods\slasher\components\see_as_something.dm"
 #include "monkestation\code\modules\blood_for_the_blood_gods\slasher\components\team_monitor.dm"
 #include "monkestation\code\modules\blood_for_the_blood_gods\slasher\slasher_outfit\slasher_clothing.dm"
+#include "monkestation\code\modules\bloodsuckers\bloodsucker\bloodsucker_sol.dm"
+#include "monkestation\code\modules\bloodsuckers\powers\fortitude.dm"
 #include "monkestation\code\modules\blueshield\clothing.dm"
 #include "monkestation\code\modules\blueshield\gun.dm"
 #include "monkestation\code\modules\blueshift\shuttles.dm"
