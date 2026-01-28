@@ -281,6 +281,8 @@
 				record.entries += list(list(HOLORECORD_SAY,value))
 			if("SOUND")
 				record.entries += list(list(HOLORECORD_SOUND,value))
+			if("EMOTE")
+				record.entries += list(list(HOLORECORD_EMOTE,value))
 			if("LANGUAGE")
 				var/lang_type = text2path(value)
 				if(ispath(lang_type,/datum/language))
@@ -362,6 +364,10 @@
 
 /datum/preset_holoimage/assistant
 	outfit_type = /datum/outfit/job/assistant
+
+/datum/preset_holoimage/dr_zachary
+	outfit_type = /datum/outfit/dr_zachary
+
 
 /obj/item/disk/holodisk/example
 	preset_image_type = /datum/preset_holoimage/clown
@@ -592,3 +598,114 @@
 		DELAY 40
 		SOUND sparks
 	"}
+
+/datum/outfit/dr_zachary
+	name = "Zachary Faust"
+	id_trim = /datum/id_trim/job/scientist
+	uniform = /obj/item/clothing/under/rank/rnd/scientist
+	belt = /obj/item/modular_computer/pda/science
+	shoes = /obj/item/clothing/shoes/sneakers
+	glasses = /obj/item/clothing/glasses/regular
+
+/obj/item/disk/holodisk/clothruption
+	name = "17-12-2515: 'PROOF'"
+	desc = "A non-descript holodisk. There's a piece of masking tape attached to the housing. Written on it, in messy handwritten print, is a date and one word: 'PROOF'"
+	preset_image_type = /datum/preset_holoimage/dr_zachary
+	preset_record_text = {"
+		NAME Human Man
+		SOUND PING
+		DELAY 100
+		EMOTE sighs, clenches his hands, then relaxes. He has the face of a man who died and forgot to fall over.
+		DELAY 100
+		SAY I was Doctor Zachary Marshall Faust of The Spinward Institute for Applied Esoterica.
+		NAME Zachary Faust
+		DELAY 50
+		SAY Was!
+		DELAY 50
+		EMOTE chuckles mirthlessly.
+		DELAY 50
+		SAY Was is a +really+ funny word. Hillarious.
+		DELAY 100
+		SAY It means so much and says so so |so VERY| little.
+		DELAY 100
+		SAY For example! +I+ was a SCIENTIST. I had a goddamn JOB and `EVERYTHING`.
+		DELAY 100
+		SAY You know, +had+.
+		DELAY 50
+		SAY |Because +when+-|
+		DELAY 50
+		EMOTE pauses, squeezes his eyes shut. He's twitching and hyperventilating. He balls his hands into fists.
+		DELAY 100
+		SAY +BECAUSE+ |apparently| when you have |reasonable objections| to the prospect of CREATING `+GOD DAMNED CLOTH HOMUNCULI TO CONTAIN CONCIOUS MINDS` THEN SUDDENLY EVERYONE HAS A PROBLEM WITH YOU.+
+		DELAY 100
+		EMOTE wiggles his fingers, clenching and releasing his fists over and over. His words are slurred and rapid.
+		DELAY 100
+		SAY I'm. Not. `+Crazy!+` I don't know where you assholes are getting this idea that I've lost my mind!
+		DELAY 100
+		SAY Perhaps +JUST MAYBE+, my reaction is a natural response to stimulus I am not capable of processing! Perhaps losing your mind is what happens when you SEE CLEARLY!
+		DELAY 100
+		EMOTE exhales. He calms down, somewhat.
+		DELAY 100
+		SAY I wonder about that. I keep wondering about it. I can't |not| wonder.
+		DELAY 100
+		EMOTE blinks.
+		DELAY 50
+		SAY ...And there we have it. That's the problem. I wondered. I dug too +greedily+ and too +deep+. In my folly, I tried - |nay| - |+dared+| to percieve the world around me.
+		DELAY 50
+		SAY And that's why I'm here. In my quarters, on three different antipsychotics, allegedly losing my mind.
+		DELAY 100
+		EMOTE sighs. There's a rattling noise as he reaches for something out of frame.
+		DELAY 100
+		SAY So. I'd like to PROVE to +all+ of you, that I'm telling the truth. That's it! Just want to make sure you know exactly what's going on.
+		DELAY 100
+		SAY These silly figurines we've been making are +people+, Jay. PEOPLE! The |prima materia| of the human fucking spirit... is cotton balls. Who'da thunk! CRAZY, RIGHT?
+		DELAY 100
+		SAY I'd wager that maybe, just maybe, condemning a soul to life as a plush toy is bad. |Unethical|, even.
+		DELAY 100
+		EMOTE grins, his smile radiating not joy, but passionate, hateful mania.
+		DELAY 100
+		SAY Ohhhhoho no, but that's not +nearly+ the worst of it. See, I've noticed something. Something you can't deny!
+		DELAY 100
+		SAY I can prove that our creations are just like us. How? Because we're |just. like. +them.+|
+		DELAY 100
+		EMOTE raises his right hand to reveal a knife.
+		DELAY 100
+		SAY These \"Constructs\" are just like we are! Miserable little piles of +`SECRETS+`. Secrets that I want to reveal. Right now.
+		DELAY 100
+		SAY As we look upon these LIVING THINKING FEELING BEINGS we create and we catalogue and we condemn and we INDUSTRIALIZE THE TORTURE OF THE SOUL.
+		DELAY 100
+		SAY But who's to say we're better! +WHO'S SAYING IT!+ I'm not! Quite honestly I think we're much worse, given what we've done.
+		DELAY 100
+		EMOTE stares at the knife in his hand. He's gripping it so tightly you're half expecting his hand to snap off.
+		DELAY 100
+		SAY We are adjacent! Hath not we eyes? Hath not these toys |cute little sewn on buttons| +`THAT WE EXPOSE TO OUR HORRORS?+`
+		DELAY 100
+		SAY +I have dimensions, senses, passions!+ As do these creations of ours, I'd bet! +I've seen them CRY!+
+		DELAY 100
+		EMOTE raises the knife in front of himself, giggling maniacally.
+		DELAY 100
+		SAY They, too, are +fed+, +hurt+, +healed+! We are IDENTICAL! Analogues! Two expressions of the same answer!
+		DELAY 100
+		EMOTE raises his left arm.
+		DELAY 100
+		SAY If you prick us, `+DO WE NOT BLEED?+`
+		EMOTE giggling, plunges the knife into the flesh of his left arm. He does not flinch.
+		DELAY 100
+		EMOTE rips the knife from his arm. There is no blood staining either, but instead only torn and tangled white fiber, leaking from the wound.
+		DELAY 100
+		SAY +`A-|FUCKING|-PPARENTLY, WE DON'T, WILLIAM! HOW FUNNY IS THAT!+`
+		DELAY 100
+		SAY YOU WANT PROOF? THERE'S YOUR PROOF. We are all cut, pun very |MUCH| intended, from the same Cloth.
+		DELAY 100
+		SAY I'm. Not. Crazy. Anymore. Am I?
+		DELAY 100
+		EMOTE giggles. The giggle turns into a laugh and then into a loud and high cackling.
+		DELAY 100
+		EMOTE blinks. Sighs. Falls forwards, out of frame.
+		DELAY 100
+		PRESET /datum/preset_holoimage/ai
+		NAME VX-220 Personal Holorecorder
+		SAY Subject out of capture area. Pausing recording.
+		DELAY 50
+	"}
+
