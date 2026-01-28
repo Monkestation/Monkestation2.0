@@ -762,10 +762,6 @@ const VampireGuide = () => {
                 offers minimal protection.
                 <br />
                 <br />
-                <b>Sol:</b> Every ten minutes, sunlight cripples you unless
-                protected by a coffin or similar shelter.
-                <br />
-                <br />
                 <b>The Masquerade:</b> Break it and every vampire turns against
                 you. You will be hunted by kindred and mortals alike.
               </Box>
@@ -802,13 +798,7 @@ const VampireGuide = () => {
                 <Box inline textColor="purple">
                   vassals
                 </Box>{' '}
-                or use certain structures. If you just need somewhere to hide
-                during{' '}
-                <Box inline textColor="yellow">
-                  Sol
-                </Box>
-                , any dark corner with a locker will do. The more infrastructure
-                you build, the more evidence you leave behind.
+                or use certain structures.
               </Box>
               <br />
               <Box bold>
