@@ -31,7 +31,7 @@
 	. = ..()
 	var/datum/antagonist/vampire/vampiredatum = IS_VAMPIRE(user)
 	if(vampiredatum)
-		var/remaining_vassals = vampiredatum.get_max_vassals() - length(vampiredatum.vassals)
+		var/remaining_vassals = vampiredatum.get_max_vassals() - vampiredatum.count_vassals()
 		if(remaining_vassals > 0)
 			. += span_info("You are currently capable of creating <b>[remaining_vassals]</b> more vassal[remaining_vassals == 1 ? "" : "s"].")
 		else

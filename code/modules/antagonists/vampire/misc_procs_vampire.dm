@@ -118,7 +118,7 @@
 **/
 /datum/antagonist/vampire/proc/disable_all_powers(forced = FALSE)
 	for(var/datum/action/cooldown/vampire/power as anything in powers)
-		if(forced || ((power.vampire_check_flags & BP_CANT_USE_IN_TORPOR) && is_in_torpor()))
+		if(forced || ((power.vampire_check_flags & BP_CANT_USE_IN_TORPOR) && HAS_TRAIT(owner.current, TRAIT_TORPOR)))
 			if(power.currently_active)
 				power.deactivate_power()
 
@@ -349,6 +349,8 @@
 	if(!isliving(watcher) || QDELING(watcher))
 		return FALSE
 	if(!watcher.mind || !watcher.client || watcher.client.is_afk())
+		return FALSE
+	if(issilicon(watcher) && HasElement(owner.current, /datum/element/digitalcamo))
 		return FALSE
 	if(HAS_MIND_TRAIT(watcher, TRAIT_VAMPIRE_ALIGNED))
 		return FALSE

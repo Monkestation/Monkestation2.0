@@ -78,8 +78,8 @@
 	/// The rank this vampire is at, used to level abilities and strength up
 	var/vampire_level = 0
 	var/vampire_level_unspent = VAMPIRE_STARTING_LEVELS
-	/// How many more "free" levels this vampire can get from Sol.
-	var/sol_levels_remaining = VAMPIRE_FREE_SOL_LEVELS
+	/// How many more "free" levels this vampire will get.
+	var/free_levels_remaining = VAMPIRE_FREE_LEVELS
 
 	/// If this guy has suffered final death.
 	var/final_death = FALSE
@@ -96,17 +96,12 @@
 	var/area/vampire_lair_area
 	var/obj/structure/closet/crate/coffin
 
-	/// To make sure we don't spam sol damage messages
-	var/were_shielded = FALSE
-
 	/// Blood display HUD
 	var/atom/movable/screen/vampire/blood_counter/blood_display
 	/// Vampire level display HUD
 	var/atom/movable/screen/vampire/rank_counter/vamprank_display
 	/// Vampire humanity display HUD
 	var/atom/movable/screen/vampire/humanity_counter/humanity_display
-	/// Sunlight timer HUD
-	var/atom/movable/screen/vampire/sunlight_counter/sunlight_display
 
 	/// Tracker so that vassals know where their master is
 	var/obj/effect/abstract/vampire_tracker_holder/tracker
@@ -161,15 +156,6 @@
 		// they eject zombie tumors and xeno larvae during eepy time anyways
 		TRAIT_NO_ZOMBIFY, // they're already undead lol
 		TRAIT_XENO_IMMUNE, // something something facehuggers only latch onto living things
-	)
-
-	/// List of traits applied while in torpor
-	var/static/list/torpor_traits = list(
-		TRAIT_DEATHCOMA,
-		TRAIT_FAKEDEATH,
-		TRAIT_NODEATH,
-		TRAIT_RESISTHIGHPRESSURE,
-		TRAIT_RESISTLOWPRESSURE,
 	)
 
 	/// Humanity gain tracking, when adding more, remember to add the type define
@@ -278,11 +264,9 @@
 	if(hud_used)
 		hud_used.infodisplay -= blood_display
 		hud_used.infodisplay -= vamprank_display
-		hud_used.infodisplay -= sunlight_display
 		hud_used.infodisplay -= humanity_display
 		QDEL_NULL(blood_display)
 		QDEL_NULL(vamprank_display)
-		QDEL_NULL(sunlight_display)
 		QDEL_NULL(humanity_display)
 
 	current_mob.faction -= FACTION_VAMPIRE
@@ -303,9 +287,6 @@
 
 	vamprank_display = new /atom/movable/screen/vampire/rank_counter(null, vampire_hud)
 	vampire_hud.infodisplay += vamprank_display
-
-	sunlight_display = new /atom/movable/screen/vampire/sunlight_counter(null, vampire_hud)
-	vampire_hud.infodisplay += sunlight_display
 
 	humanity_display = new /atom/movable/screen/vampire/humanity_counter(null, vampire_hud)
 	vampire_hud.infodisplay += humanity_display
@@ -333,11 +314,6 @@
 	. = ..()
 	ADD_TRAIT(owner, TRAIT_VAMPIRE_ALIGNED, REF(src))
 
-	RegisterSignal(SSsunlight, COMSIG_SOL_NEAR_START, PROC_REF(sol_near_start))
-	RegisterSignal(SSsunlight, COMSIG_SOL_END, PROC_REF(on_sol_end))
-	RegisterSignal(SSsunlight, COMSIG_SOL_NEAR_END, PROC_REF(sol_near_end))
-	RegisterSignal(SSsunlight, COMSIG_SOL_RISE_TICK, PROC_REF(handle_sol))
-	RegisterSignal(SSsunlight, COMSIG_SOL_WARNING_GIVEN, PROC_REF(give_warning))
 	RegisterSignal(SSdcs, COMSIG_GLOB_MONSTER_HUNTER_QUERY, PROC_REF(query_for_monster_hunter))
 	RegisterSignal(src, COMSIG_VAMPIRE_TRACK_HUMANITY_GAIN, PROC_REF(on_track_humanity_gain_signal))
 	RegisterSignal(owner, COMSIG_OOZELING_CORE_EJECTED, PROC_REF(on_oozeling_core_ejected))
@@ -361,6 +337,7 @@
 	give_starting_powers()
 	owner.special_role = ROLE_VAMPIRE
 	GLOB.all_vampires += src
+	SSvampire_leveling.check_enable()
 
 	// Start society if we're the first vampire
 	check_start_society()
@@ -377,7 +354,6 @@
 
 /datum/antagonist/vampire/on_removal()
 	REMOVE_TRAIT(owner, TRAIT_VAMPIRE_ALIGNED, REF(src))
-	UnregisterSignal(SSsunlight, list(COMSIG_SOL_NEAR_END, COMSIG_SOL_NEAR_START, COMSIG_SOL_END, COMSIG_SOL_RISE_TICK, COMSIG_SOL_WARNING_GIVEN))
 	UnregisterSignal(SSdcs, COMSIG_GLOB_MONSTER_HUNTER_QUERY)
 	UnregisterSignal(owner, list(COMSIG_OOZELING_CORE_EJECTED, COMSIG_OOZELING_REVIVED))
 
@@ -391,6 +367,7 @@
 	clear_powers_and_stats()
 	owner.special_role = null
 	GLOB.all_vampires -= src
+	SSvampire_leveling.check_enable()
 	check_cancel_society()
 
 	if(iscarbon(owner.current))
@@ -419,7 +396,8 @@
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/antagonist, add_team_hud), new_body), 0.5 SECONDS, TIMER_OVERRIDE | TIMER_UNIQUE) //i don't trust this to not act weird
 
 /datum/antagonist/vampire/greet()
-	. = ..()
+	if(silent)
+		return
 	var/fullname = return_full_name()
 	var/list/msg = list()
 
@@ -428,6 +406,7 @@
 			You can also click on all of your hud meters for more information about them!")
 
 	to_chat(owner, boxed_message(msg.Join("\n")))
+	play_stinger()
 
 	if(should_forge_objectives)
 		owner.announce_objectives()
@@ -561,6 +540,7 @@
 
 	// Remove clan first
 	if(my_clan)
+		my_clan.remove_effects(user)
 		QDEL_NULL(my_clan)
 
 	// Powers
@@ -569,9 +549,7 @@
 
 	/// Stats
 	if(ishuman(owner.current))
-		/* var/datum/species/user_species = user.dna.species */
 		var/mob/living/carbon/human/human_user = user
-		/* user_species.species_traits -= TRAIT_DRINKSBLOOD */
 		human_user.physiology.stamina_mod /= VAMPIRE_INHERENT_STAMINA_RESIST
 
 	// Remove all vampire traits
@@ -601,9 +579,9 @@
 	// ALREADY CLAIMED
 	if(claimed.resident)
 		if(claimed.resident == owner)
-			to_chat(owner, span_notice("This is your [src]."))
+			to_chat(owner, span_notice("This is your [claimed]."))
 		else
-			to_chat(owner, span_warning("This [src] has already been claimed by another."))
+			to_chat(owner, span_warning("This [claimed] has already been claimed by another."))
 		return FALSE
 	var/turf/coffin_turf = get_turf(claimed)
 	var/area/current_area = get_area(coffin_turf)
@@ -621,6 +599,10 @@
 	coffin = claimed
 	coffin.resident = owner
 	vampire_lair_area = current_area
+
+	if(!(locate(/datum/action/cooldown/vampire/gohome) in powers))
+		grant_power(new /datum/action/cooldown/vampire/gohome)
+
 	to_chat(owner, span_userdanger("You have claimed [claimed] as your place of immortal rest! Your lair is now [vampire_lair_area]."))
 	return TRUE
 
@@ -692,6 +674,25 @@
 	var/datum/objective/survive/vampire/survive_objective = new
 	survive_objective.owner = owner
 	objectives += survive_objective
+
+/// Use this instead of `length(vassals)`, as it won't count round removed vassals and such.
+/datum/antagonist/vampire/proc/count_vassals()
+	. = 0
+	for(var/datum/antagonist/vassal/vassal as anything in vassals)
+		var/mob/living/vassal_body = vassal.owner.current
+		if(QDELETED(vassal_body))
+			continue
+		if(!HAS_TRAIT(vassal_body, TRAIT_MIND_TEMPORARILY_GONE))
+			if(vassal_body.stat == DEAD)
+				if(HAS_TRAIT(vassal_body, TRAIT_DEFIB_BLACKLISTED))
+					continue
+				if(!vassal_body.key)
+					var/mob/dead/observer/vassal_ghost = vassal_body.get_ghost(TRUE, TRUE)
+					if(isnull(vassal_ghost) || (istype(vassal_ghost) && !vassal_ghost.can_reenter_corpse)) // soulcatcher shitcode workaround
+						continue
+			else if(!vassal_body.key)
+				continue
+		.++
 
 /datum/antagonist/vampire/proc/get_max_vassals()
 	var/total_players = length(GLOB.joined_player_list)

@@ -9,10 +9,6 @@
 		INVOKE_ASYNC(src, PROC_REF(handle_death))
 		return
 
-	// Handle Torpor
-	if(is_in_torpor())
-		check_end_torpor()
-
 	// Deduct Blood
 	if(owner.current.stat == CONSCIOUS && !HAS_TRAIT(owner.current, TRAIT_IMMOBILIZED) && !HAS_TRAIT(owner.current, TRAIT_NODEATH))
 		AdjustBloodVolume(-VAMPIRE_PASSIVE_BLOOD_DRAIN)
@@ -64,14 +60,9 @@
 	if(QDELETED(current))
 		return FALSE
 
-	var/in_torpor = is_in_torpor()
-	if(!in_torpor)
-		// Dont heal if you have TRAIT_MASQUERADE and not undergoing torpor
-		if(HAS_TRAIT(current, TRAIT_MASQUERADE))
-			return FALSE
-		// No healing during sol, cry about it
-		if(current.has_status_effect(/datum/status_effect/vampire_sol))
-			return FALSE
+	var/in_torpor = HAS_TRAIT(current, TRAIT_TORPOR)
+	if(!in_torpor && HAS_TRAIT(current, TRAIT_MASQUERADE))
+		return FALSE
 
 	var/actual_regen = vampire_regen_rate + additional_regen
 
@@ -222,10 +213,8 @@
 	INVOKE_ASYNC(src, PROC_REF(handle_death))
 
 /datum/antagonist/vampire/proc/handle_death()
-	if(QDELETED(owner.current) || check_if_staked() || is_in_torpor())
-		return
-
-	torpor_begin()
+	if(!QDELETED(owner.current) && !check_if_staked())
+		owner.current.apply_status_effect(/datum/status_effect/vampire_torpor)
 
 /**
  * Handle things related to blood
@@ -330,5 +319,5 @@
 		span_hear("You hear a dry, crackling sound.")
 	)
 
-	torpor_end() // End it BEFORE we dust them.
+	body.remove_status_effect(/datum/status_effect/vampire_torpor)
 	body.dust(just_ash = FALSE, drop_items = TRUE)

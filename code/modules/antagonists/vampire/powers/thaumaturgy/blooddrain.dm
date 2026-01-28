@@ -27,6 +27,8 @@
 	var/obj/projectile/magic/blood_drain/drain = new(living_owner.loc)
 	drain.firer = living_owner
 	drain.fired_from = src
+	if(isliving(target_atom))
+		drain.original = target_atom
 	drain.def_zone = ran_zone(living_owner.zone_selected)
 	drain.preparePixelProjectile(target_atom, living_owner)
 	INVOKE_ASYNC(drain, TYPE_PROC_REF(/obj/projectile, fire))
@@ -53,9 +55,8 @@
 
 /obj/projectile/magic/blood_drain/on_hit(mob/living/target, blocked, pierce_hit)
 	. = ..()
-	if(!isliving(target))
-		return
-	target.apply_status_effect(/datum/status_effect/blood_drain, firer, fired_from)
+	if(isliving(target))
+		target.apply_status_effect(/datum/status_effect/blood_drain, firer, fired_from)
 
 /obj/projectile/magic/blood_drain/Destroy()
 	if(!QDELETED(drain_beam))
@@ -91,11 +92,10 @@
 	. = ..()
 
 /datum/status_effect/blood_drain/on_apply()
-	. = ..()
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/life_drain)
+	return TRUE
 
 /datum/status_effect/blood_drain/on_remove()
-	. = ..()
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/life_drain)
 	end_drain()
 

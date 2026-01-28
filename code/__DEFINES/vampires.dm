@@ -30,8 +30,8 @@
 
 /// How many starting levels do we want each one to have?
 #define VAMPIRE_STARTING_LEVELS 3
-/// How many free levels the vampire gets after each Sol.
-#define VAMPIRE_FREE_SOL_LEVELS 2
+/// How many free levels the vampire gets gradually.
+#define VAMPIRE_FREE_LEVELS 2
 /// Vampire's default stamina resist.
 #define VAMPIRE_INHERENT_STAMINA_RESIST 0.75
 
@@ -48,11 +48,6 @@
 #define OOZELING_VAMPIRE_REVIVE_ALLY_MULTIPLIER 1.2
 /// How many times faster an oozeling vampire will revive if their core is in a coffin.
 #define OOZELING_VAMPIRE_REVIVE_COFFIN_MULTIPLIER 2.5
-
-/// How much blood drained from the vampire each tick during sol
-#define VAMPIRE_SOL_BURN 30
-/// We don't go below this threshold when in a shielded area during sol
-#define VAMPIRE_SOL_SHIELD_THRESHOLD 500
 
 // vassal defines
 /// If someone passes all checks and can be vassalized
@@ -77,9 +72,6 @@
 
 /// Default Humanity
 #define VAMPIRE_DEFAULT_HUMANITY 7
-
-// List of areas that are shielded from sol.
-#define VAMPIRE_SOL_SHIELDED list(/area/station/maintenance, /area/station/medical/morgue, /area/station/security/prison, /area/station/ai_monitored, /area/shuttle)
 
 // Cooldown defines
 // Used to prevent spamming vampires
@@ -114,10 +106,8 @@
 #define BP_CANT_USE_WHILE_INCAPACITATED (1<<3)
 /// This Power can't be used while unconscious
 #define BP_CANT_USE_WHILE_UNCONSCIOUS (1<<4)
-/// This Power can't be used during Sol
-#define BP_CANT_USE_DURING_SOL (1<<5)
 /// This Power CAN be used while silver cuffed
-#define BP_ALLOW_WHILE_SILVER_CUFFED (1<<6)
+#define BP_ALLOW_WHILE_SILVER_CUFFED (1<<5)
 
 /// This is a Default Power that all Vampires get.
 #define VAMPIRE_DEFAULT_POWER (1<<1)
@@ -143,16 +133,8 @@
 #define COMSIG_VAMPIRE_BROKE_MASQUERADE "comsig_vampire_broke_masquerade"
 
 // Signals & Defines
-/// Sent every Sol tick
-#define COMSIG_SOL_RISE_TICK "comsig_sol_rise_tick"
-/// Sent 90 seconds before Sol begins
-#define COMSIG_SOL_NEAR_START "comsig_sol_near_start"
-/// Sent at the end of Sol
-#define COMSIG_SOL_END "comsig_sol_end"
-/// Sent 15 seconds before Sol ends
-#define COMSIG_SOL_NEAR_END "comsig_sol_near_end"
-/// Sent when a warning for Sol is meant to go out: (danger_level, vampire_warning_message, vassal_warning_message)
-#define COMSIG_SOL_WARNING_GIVEN "comsig_sol_warning_given"
+/// Sent whenever vampires get a "natural" rank up.
+#define COMSIG_SOL_RANKUP_VAMPIRES "sol_rankup_vampires"
 /// Sent when tracking humanity gain progress: (type, subject)
 #define COMSIG_VAMPIRE_TRACK_HUMANITY_GAIN "comsig_vampire_track_humanity_gain"
 
@@ -175,17 +157,17 @@
 
 // Traits
 /// Falsifies Health analyzer blood levels
-#define TRAIT_MASQUERADE "trait_masquerade"
+#define TRAIT_MASQUERADE "masquerade"
 /// For people in the middle of being staked
-#define TRAIT_BEINGSTAKED "trait_beingstaked"
-/// This vampire is currently in a frebzy,
-#define TRAIT_FRENZY "trait_frenzy"
+#define TRAIT_BEINGSTAKED "beingstaked"
+/// This vampire is currently in a frenzy,
+#define TRAIT_FRENZY "frenzy"
+/// This vampire is currently in torpor.
+#define TRAIT_TORPOR "torpor"
 
 // Trait sources
 /// Source trait for all vampire traits
 #define TRAIT_VAMPIRE "trait_vampire"
-/// Source trait for vampires in torpor.
-#define TRAIT_TORPOR "trait_torpor"
 /// Source trait for vampire mesmerization.
 #define TRAIT_MESMERIZED "trait_mesmerized"
 /// Source trait for vampire commandment.

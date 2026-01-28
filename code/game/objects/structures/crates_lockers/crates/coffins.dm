@@ -118,6 +118,8 @@
 	if(vampiredatum?.coffin == src)
 		vampiredatum.coffin = null
 		vampiredatum.vampire_lair_area = null
+		for(var/datum/action/cooldown/vampire/gohome/gohome in vampiredatum.powers)
+			vampiredatum.remove_power(gohome)
 
 	for(var/obj/structure/vampire/vampire_structure in get_area(src))
 		if(vampire_structure.owner == resident)

@@ -129,7 +129,7 @@ enum GuideTab {
   Masquerade,
   Humanity,
   Society,
-  Sol,
+  Leveling,
   Vitae,
   Combat,
   Lair,
@@ -182,11 +182,11 @@ const VampireGuide = () => {
             </Tabs.Tab>
             <Tabs.Tab
               icon="list"
-              selected={tab === GuideTab.Sol}
-              onClick={() => setTab(GuideTab.Sol)}
+              selected={tab === GuideTab.Leveling}
+              onClick={() => setTab(GuideTab.Leveling)}
               style={guideTabStyle}
             >
-              Sol & Levelling
+              Leveling
             </Tabs.Tab>
             <Tabs.Tab
               icon="list"
@@ -573,45 +573,12 @@ const VampireGuide = () => {
               .
             </Box>
           )}
-          {tab === GuideTab.Sol && (
-            // Sol
+          {tab === GuideTab.Leveling && (
+            // Leveling
             <Box>
               <Box fontSize="32px" textColor="orange" bold>
-                Sol
+                Leveling
               </Box>
-              <Box inline textColor="yellow">
-                Sol
-              </Box>{' '}
-              refers to the nearby temperamental star, not Earth&apos;s sun.
-              Vampires do well in space. You are just unlucky enough to be near
-              this one.
-              <br />
-              <br />
-              <Box fontSize="14px" bold>
-                Key Facts
-              </Box>
-              <Box fontSize="13px">
-                • Click the HUD icon for more detailed information
-                <br />
-                • You cannot die to Sol if you are protected by lockers,
-                maintenance tunnels, or coffins
-                <br />
-                • If you are caught unprotected, you will burn to dust
-                <br />• Higher humanity grants partial resistance to Sol&apos;s
-                effects
-              </Box>
-              <br />
-              <Box fontSize="14px" bold textColor="red">
-                During Sol
-              </Box>
-              <Box fontSize="13px">
-                • You cannot passively heal; only coffins can restore you
-                <br />
-                • You take 50% more damage from all sources
-                <br />• Your powers have doubled cooldowns, increased vitae
-                costs, and some are blocked entirely
-              </Box>
-              <br />
               <Box fontSize="16px" textColor="darkred" bold>
                 Growing in Power
               </Box>
@@ -619,10 +586,9 @@ const VampireGuide = () => {
               requirements. Click your blood meter on the HUD to see your
               current progress toward the next rank.
               <br />
-              <br />
-              After each Sol cycle, if you have consumed enough vitae to meet
-              your goal, you will gain a Rank. Each rank provides significant
-              benefits:
+              If you have consumed enough vitae to meet your goal, you will gain
+              a Rank whenever you next sleep in a coffin. Each rank provides
+              significant benefits:
               <Box fontSize="13px" ml={1}>
                 • Increased physical strength
                 <br />
@@ -633,6 +599,8 @@ const VampireGuide = () => {
                 • Higher blood capacity
                 <br />• Additional discipline points to unlock new powers
               </Box>
+              <br />
+              In addition, you also passively gain a few ranks over time.
             </Box>
           )}
           {tab === GuideTab.Vitae && (

@@ -130,7 +130,7 @@
 		owner.balloon_alert(owner, "cant feed off!")
 		return FALSE
 	// Mindless and snobby?
-	if(!target.mind && vampiredatum_power.my_clan?.blood_drink_type == VAMPIRE_DRINK_SNOBBY && !owner.has_status_effect(/datum/status_effect/frenzy))
+	if(!target.mind && vampiredatum_power.my_clan?.blood_drink_type == VAMPIRE_DRINK_SNOBBY && !HAS_TRAIT(owner, TRAIT_FRENZY))
 		owner.balloon_alert(owner, "ew, no!")
 		return FALSE
 	// Cannot be a curator
@@ -207,7 +207,7 @@
 				return
 
 		// Succesful. Start feeding process by getting feed time.
-		var/feed_time = (owner.has_status_effect(/datum/status_effect/frenzy) ? FEED_FRENZY_TIME : clamp(round(FEED_DEFAULT_TIME / (1.25 * (level_current || 1))), 1, FEED_DEFAULT_TIME)) / 2
+		var/feed_time = (HAS_TRAIT(owner, TRAIT_FRENZY) ? FEED_FRENZY_TIME : clamp(round(FEED_DEFAULT_TIME / (1.25 * (level_current || 1))), 1, FEED_DEFAULT_TIME)) / 2
 
 		if(!IS_VASSAL(feed_target))
 			feed_time /= 4
@@ -375,7 +375,7 @@
 
 	// Adjust blood
 	var/feed_strength_mult = 0.3
-	if(user.has_status_effect(/datum/status_effect/frenzy))
+	if(HAS_TRAIT(user, TRAIT_FRENZY))
 		feed_strength_mult = 2
 	else if(!silent_feed)
 		feed_strength_mult = 1
@@ -533,7 +533,7 @@
 	if(!ishuman(target) || ismonkeybasic(target))
 		blood_to_take /= 10
 	// Penalty for frenzy(messy eater)
-	if(living_owner.has_status_effect(/datum/status_effect/frenzy))
+	if(HAS_TRAIT(living_owner, TRAIT_FRENZY))
 		blood_to_take /= 2
 
 	// Give vampire the blood^
@@ -560,8 +560,8 @@
 	vampiredatum_power.total_blood_drank += blood_to_take
 	blood_taken += blood_to_take
 
-	// If we are on combat feed, we only want it to take a bit and then stop. Except if they are not conscious
-	if(!silent_feed && blood_taken >= 60 && target.stat <= SOFT_CRIT)
+	// If we are on combat feed, we only want it to take a bit and then stop. Except if they are not conscious or if they're restrained.
+	if(!silent_feed && blood_taken >= 60 && target.stat <= SOFT_CRIT && !HAS_TRAIT(target, TRAIT_RESTRAINED))
 
 		playsound(target, 'sound/weapons/cqchit2.ogg', 80)
 

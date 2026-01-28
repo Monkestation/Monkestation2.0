@@ -190,10 +190,16 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 		return NONE
 	if(DOING_INTERACTION_WITH_TARGET(user, src))
 		return ITEM_INTERACT_BLOCKING
+	if(HAS_TRAIT(src, TRAIT_BEINGSTAKED))
+		balloon_alert(user, "already being staked!")
+		return ITEM_INTERACT_BLOCKING
 	playsound(user, 'sound/magic/Demon_consume.ogg', vol = 50, vary = TRUE)
 	user.balloon_alert_to_viewers("staking core...")
+	ADD_TRAIT(src, TRAIT_BEINGSTAKED, REF(user))
 	if(!do_after(user, stake.staketime, src) || QDELETED(src) || QDELETED(stake))
+		REMOVE_TRAIT(src, TRAIT_BEINGSTAKED, REF(user))
 		return ITEM_INTERACT_BLOCKING
+	REMOVE_TRAIT(src, TRAIT_BEINGSTAKED, REF(user))
 	user.balloon_alert_to_viewers("staked core!")
 	var/datum/antagonist/vampire/vampire_datum = IS_VAMPIRE(src)
 	if(vampire_datum)

@@ -8,7 +8,7 @@
  * person_selecting - Mob override for stuff like Admins selecting someone's clan.
  */
 /datum/antagonist/vampire/proc/assign_clan_and_bane()
-	if(my_clan || owner.current.has_status_effect(/datum/status_effect/frenzy))
+	if(my_clan || HAS_TRAIT(owner.current, TRAIT_FRENZY))
 		return
 
 	var/list/options = list()

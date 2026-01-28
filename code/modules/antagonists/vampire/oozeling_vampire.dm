@@ -61,6 +61,8 @@
 
 /datum/vampire_oozeling_reviver/proc/progress_multiplier()
 	. = 1
+	if(HAS_TRAIT(core, TRAIT_BEINGSTAKED))
+		return 0
 	if(istype(core.loc, /obj/structure/closet/crate/coffin))
 		return OOZELING_VAMPIRE_REVIVE_COFFIN_MULTIPLIER
 	else

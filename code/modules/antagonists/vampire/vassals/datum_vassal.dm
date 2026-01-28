@@ -58,7 +58,6 @@
 		CRASH("[owner.current] was vassilized without a master!")
 
 	ADD_TRAIT(owner, TRAIT_VAMPIRE_ALIGNED, REF(src))
-	RegisterSignal(SSsunlight, COMSIG_SOL_WARNING_GIVEN, PROC_REF(give_warning))
 
 	vampire_team = master.vampire_team
 	vampire_team.add_member(owner)
@@ -80,7 +79,6 @@
 
 /datum/antagonist/vassal/on_removal()
 	REMOVE_TRAIT(owner, TRAIT_VAMPIRE_ALIGNED, REF(src))
-	UnregisterSignal(SSsunlight, COMSIG_SOL_WARNING_GIVEN)
 
 	if(owner.special_role == "Vassal")
 		owner.special_role = null
@@ -134,7 +132,7 @@
 	owner.current.visible_message(
 		span_deconversion_message("[owner.current]'s eyes dart feverishly from side to side, and then stop. [owner.current.p_They()] seem[owner.current.p_s()] calm, \
 			like [owner.current.p_they()] [owner.current.p_have()] regained some lost part of [owner.current.p_them()]self."),
-		span_deconversion_message("With a snap, you are no longer enslaved to [master.owner]! You breathe in heavily, having regained your free will.")
+		span_deconversion_message("With a snap, you are no longer enslaved to [master.owner]! You breathe in heavily, having regained your free will, albeit the memories of your time serving them feel like a vague fever dream...")
 	)
 	owner.current.playsound_local(null, 'sound/magic/mutate.ogg', 100, FALSE, pressure_affected = FALSE)
 

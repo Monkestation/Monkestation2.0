@@ -8,7 +8,6 @@
 	vampire_check_flags = BP_CANT_USE_IN_TORPOR | BP_CANT_USE_WHILE_STAKED | BP_CANT_USE_IN_FRENZY | BP_CANT_USE_WHILE_UNCONSCIOUS
 	vitaecost = 50
 	constant_vitaecost = 1
-	sol_multiplier = 2.5
 	cooldown_time = 5 SECONDS
 	var/cloaklevel = 20
 

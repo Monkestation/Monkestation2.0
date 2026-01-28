@@ -23,8 +23,10 @@
 	living_owner.newtonian_move(get_dir(target_atom, living_owner))
 
 	var/obj/projectile/magic/arcane_barrage/vampire/bolt = new(living_owner.loc)
-	bolt.vampire_power = src
+	// bolt.vampire_power = src
 	bolt.firer = living_owner
+	bolt.fired_from = src
+	bolt.original = target_atom
 	bolt.def_zone = ran_zone(living_owner.zone_selected)
 	bolt.preparePixelProjectile(target_atom, living_owner)
 	INVOKE_ASYNC(bolt, TYPE_PROC_REF(/obj/projectile, fire))
@@ -41,7 +43,7 @@
 	icon_state = "mini_leaper"
 	damage = 40
 	antimagic_flags = MAGIC_RESISTANCE_HOLY
-	var/datum/action/cooldown/vampire/targeted/bloodbolt/vampire_power
+	// var/datum/action/cooldown/vampire/targeted/bloodbolt/vampire_power
 
 /obj/projectile/magic/arcane_barrage/vampire/on_hit(atom/target, blocked = 0, pierce_hit)
 	new /obj/effect/gibspawner/generic(target.loc)

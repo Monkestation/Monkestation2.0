@@ -22,7 +22,7 @@
 		living_vampire.balloon_alert(living_vampire, "enter a clan first.")
 		return FALSE
 
-	if(length(vassals) >= get_max_vassals())
+	if(count_vassals() >= get_max_vassals())
 		living_vampire.balloon_alert(living_vampire, "too many vassals.")
 		return FALSE
 

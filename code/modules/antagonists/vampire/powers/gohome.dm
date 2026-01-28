@@ -4,8 +4,8 @@
 #define GOHOME_TELEPORT 6
 
 /**
- * Given to Vampires near Sol if they have a Coffin claimed.
- * Teleports them to their Coffin after a delay.
+ * Given to Vampires if they have a Coffin claimed.
+ * Teleports them to their Coffin on use.
  * Makes them drop everything if someone witnesses the act.
  */
 /datum/action/cooldown/vampire/gohome
@@ -15,10 +15,10 @@
 	power_explanation = "Activating Vanishing Act will, after a short delay, teleport you to your Claimed Coffin.\n\
 		Immediately after activating, lights around the user will begin to flicker.\n\
 		Once the user teleports to their coffin, in their place will be a Rat or Bat."
-	vampire_power_flags = BP_AM_TOGGLE | BP_AM_SINGLEUSE | BP_AM_STATIC_COOLDOWN
-	vampire_check_flags = BP_CANT_USE_IN_FRENZY | BP_CANT_USE_WHILE_STAKED
+	vampire_power_flags = BP_AM_STATIC_COOLDOWN
+	vampire_check_flags = BP_CANT_USE_IN_TORPOR | BP_CANT_USE_WHILE_STAKED | BP_CANT_USE_WHILE_INCAPACITATED | BP_CANT_USE_WHILE_UNCONSCIOUS | BP_CANT_USE_IN_FRENZY
 	vitaecost = 100
-	cooldown_time = 100 SECONDS
+	cooldown_time = 5 MINUTES
 	///What stage of the teleportation are we in
 	var/teleporting_stage = GOHOME_START
 	/// The types of mobs that will drop post-teleportation.
@@ -41,43 +41,28 @@
 		owner.balloon_alert(owner, "you're already in your coffin!")
 		return FALSE
 
-/datum/action/cooldown/vampire/gohome/activate_power()
-	. = ..()
-	owner.balloon_alert(owner, "preparing to teleport...")
-	if(do_after(owner, GOHOME_TELEPORT SECONDS, timed_action_flags=(IGNORE_USER_LOC_CHANGE | IGNORE_INCAPACITATED | IGNORE_HELD_ITEM)))
-		teleport_to_coffin(owner)
-
-/datum/action/cooldown/vampire/gohome/UsePower()
-	. = ..()
-	if(!.)
+	if(!check_teleport_valid(owner, vampiredatum_power.coffin, TELEPORT_CHANNEL_MAGIC))
+		owner.balloon_alert(owner, "something holds you back!")
 		return FALSE
 
-	switch(teleporting_stage)
-		if(GOHOME_START)
-			INVOKE_ASYNC(src, PROC_REF(flicker_lights), 3, 20)
-		if(GOHOME_FLICKER_ONE)
-			INVOKE_ASYNC(src, PROC_REF(flicker_lights), 4, 40)
-		if(GOHOME_FLICKER_TWO)
-			INVOKE_ASYNC(src, PROC_REF(flicker_lights), 4, 60)
-	teleporting_stage++
-
-/datum/action/cooldown/vampire/gohome/continue_active()
-	. = ..()
-	if(!.)
+	if((vampiredatum_power.current_vitae - vitaecost) <= vampiredatum_power.frenzy_threshold)
+		owner.balloon_alert(owner, "using this would send you into a frenzy!")
 		return FALSE
 
 	if(!isturf(owner.loc))
+		owner.balloon_alert(owner, "you cannot teleport right now!")
 		return FALSE
-	if(!vampiredatum_power.coffin)
-		owner.balloon_alert(owner, "coffin destroyed!")
-		to_chat(owner, span_warning("Your coffin has been destroyed! You no longer have a destination."))
-		return FALSE
-	return TRUE
+
+/datum/action/cooldown/vampire/gohome/activate_power()
+	. = ..()
+	var/turf/old_turf = get_turf(owner)
+	teleport_to_coffin(owner)
+	flicker_lights(4, 60, old_turf)
 
 /datum/action/cooldown/vampire/gohome/proc/flicker_lights(flicker_range, beat_volume)
 	for(var/obj/machinery/light/nearby_lights in view(flicker_range, get_turf(owner)))
 		nearby_lights.flicker(5)
-	playsound(get_turf(owner), 'sound/effects/singlebeat.ogg', beat_volume, 1)
+	playsound(get_turf(owner), 'sound/effects/singlebeat.ogg', vol = beat_volume, vary = TRUE)
 
 /datum/action/cooldown/vampire/gohome/proc/teleport_to_coffin(mob/living/carbon/user)
 	var/turf/current_turf = get_turf(owner)
@@ -93,8 +78,7 @@
 			if(watcher.is_blind() || watcher.is_nearsighted_currently())
 				continue
 			if(!HAS_MIND_TRAIT(watcher, TRAIT_VAMPIRE_ALIGNED))
-				for(var/obj/item/item in owner)
-					owner.dropItemToGround(item, TRUE)
+				user.unequip_everything()
 				break
 	user.uncuff()
 
@@ -112,7 +96,7 @@
 	do_teleport(owner, vampiredatum_power.coffin, channel = TELEPORT_CHANNEL_MAGIC, no_effects = TRUE)
 	vampiredatum_power.coffin.close(owner)
 	vampiredatum_power.coffin.take_contents()
-	playsound(vampiredatum_power.coffin.loc, vampiredatum_power.coffin.close_sound, 15, 1, -3)
+	playsound(vampiredatum_power.coffin.loc, vampiredatum_power.coffin.close_sound, 15, TRUE, -3)
 
 	deactivate_power()
 

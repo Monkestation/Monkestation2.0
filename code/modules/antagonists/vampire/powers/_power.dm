@@ -34,8 +34,6 @@
 	var/vitaecost = 0
 	///The cost to MAINTAIN this Power Only used for constant powers
 	var/constant_vitaecost = 0
-	/// A multiplier for the vitaecost during sol.
-	var/sol_multiplier = 1
 
 	///The upgraded version of this Power. 'null' means it's the max level.
 	var/upgraded_power = null
@@ -56,7 +54,7 @@
 		vampiredatum_power = vampiredatum
 
 	if(vampire_check_flags & BP_CANT_USE_IN_TORPOR)
-		RegisterSignals(owner, list(SIGNAL_ADDTRAIT(TRAIT_NODEATH), SIGNAL_REMOVETRAIT(TRAIT_NODEATH)), PROC_REF(update_status_on_signal))
+		RegisterSignals(owner, list(SIGNAL_ADDTRAIT(TRAIT_TORPOR), SIGNAL_REMOVETRAIT(TRAIT_TORPOR)), PROC_REF(update_status_on_signal))
 	if(vampire_check_flags & BP_CANT_USE_IN_FRENZY)
 		RegisterSignals(owner, list(SIGNAL_ADDTRAIT(TRAIT_FRENZY), SIGNAL_REMOVETRAIT(TRAIT_FRENZY)), PROC_REF(update_status_on_signal))
 	if(vampire_check_flags & BP_CANT_USE_WHILE_INCAPACITATED)
@@ -68,10 +66,10 @@
 	if(owner)
 		UnregisterSignal(owner, list(
 			COMSIG_MOB_STATCHANGE,
-			SIGNAL_ADDTRAIT(TRAIT_NODEATH),
+			SIGNAL_ADDTRAIT(TRAIT_TORPOR),
 			SIGNAL_ADDTRAIT(TRAIT_FRENZY),
 			SIGNAL_ADDTRAIT(TRAIT_INCAPACITATED),
-			SIGNAL_REMOVETRAIT(TRAIT_NODEATH),
+			SIGNAL_REMOVETRAIT(TRAIT_TORPOR),
 			SIGNAL_REMOVETRAIT(TRAIT_FRENZY),
 			SIGNAL_REMOVETRAIT(TRAIT_INCAPACITATED),
 		))
@@ -119,7 +117,7 @@
 		return TRUE
 
 	// Have enough blood? Vampires in a Frenzy don't need to pay them
-	if(owner.has_status_effect(/datum/status_effect/frenzy))
+	if(HAS_TRAIT(owner, TRAIT_FRENZY))
 		return TRUE
 	if(vampiredatum_power.current_vitae < vitaecost)
 		owner.balloon_alert(owner, "not enough blood.")
@@ -138,7 +136,7 @@
 		to_chat(carbon_owner, span_warning("Not while you're in Torpor."))
 		return FALSE
 	// Frenzy?
-	if((vampire_check_flags & BP_CANT_USE_IN_FRENZY) && owner.has_status_effect(/datum/status_effect/frenzy))
+	if((vampire_check_flags & BP_CANT_USE_IN_FRENZY) && HAS_TRAIT(carbon_owner, TRAIT_FRENZY))
 		to_chat(carbon_owner, span_warning("You cannot use powers while in a Frenzy!"))
 		return FALSE
 	// Stake?
@@ -157,10 +155,6 @@
 	if(constant_vitaecost > 0 && vampiredatum_power?.current_vitae <= 0)
 		to_chat(carbon_owner, span_warning("You don't have the blood to upkeep [src]."))
 		return FALSE
-	// Sol check
-	if((vampire_check_flags & BP_CANT_USE_DURING_SOL) && carbon_owner.has_status_effect(/datum/status_effect/vampire_sol))
-		to_chat(carbon_owner, span_warning("You can't use [src] during Sol!"))
-		return FALSE
 	// Silver cuffed?
 	if(!(vampire_check_flags & BP_ALLOW_WHILE_SILVER_CUFFED) && owner.has_status_effect(/datum/status_effect/silver_cuffed))
 		owner.balloon_alert(owner, "the silver cuffs on your wrists prevent you from using your powers!")
@@ -176,7 +170,7 @@
 		return
 
 	// Vampires in a Frenzy don't have enough Blood to pay it, so just don't.
-	if(!owner.has_status_effect(/datum/status_effect/frenzy))
+	if(!HAS_TRAIT(owner, TRAIT_FRENZY))
 		vampiredatum_power.current_vitae -= vitaecost
 		vampiredatum_power.update_hud()
 

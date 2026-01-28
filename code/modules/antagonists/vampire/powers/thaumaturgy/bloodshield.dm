@@ -20,12 +20,13 @@
 /datum/action/cooldown/vampire/bloodshield/activate_power()
 	. = ..()
 	var/obj/item/shield/vampire/new_shield = new
-	blood_shield = WEAKREF(new_shield)
 	if(!owner.put_in_inactive_hand(new_shield))
+		qdel(new_shield)
 		owner.balloon_alert(owner, "off hand is full!")
 		to_chat(owner, span_notice("Blood shield couldn't be activated as your off hand is full."))
 		deactivate_power()
 		return FALSE
+	blood_shield = WEAKREF(new_shield)
 	owner.visible_message(
 		span_warning("[owner]'s hands begins to bleed and forms into a blood shield!"),
 		span_warning("We activate our Blood shield!"),
