@@ -9313,6 +9313,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/west,
+/obj/item/flatpack,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "eFj" = (
@@ -18427,6 +18428,7 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/light/directional/east,
 /obj/effect/turf_decal/tile/purple,
+/obj/item/flatpack,
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
 "iRb" = (
@@ -35208,6 +35210,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 4
 	},
+/obj/item/flatpack,
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "qWu" = (

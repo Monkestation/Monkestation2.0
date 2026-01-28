@@ -2115,6 +2115,7 @@
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 8
 	},
+/obj/item/flatpack,
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "avR" = (
@@ -52784,6 +52785,7 @@
 	},
 /obj/machinery/airalarm/directional/west,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/flatpack,
 /turf/open/floor/iron,
 /area/station/engineering/storage_shared)
 "mrf" = (
@@ -81919,6 +81921,7 @@
 	},
 /obj/item/folder/white,
 /obj/item/pen,
+/obj/item/flatpack,
 /turf/open/floor/iron,
 /area/station/science/lab)
 "tpE" = (

@@ -9625,6 +9625,7 @@
 /obj/item/disk/tech_disk{
 	pixel_y = 6
 	},
+/obj/item/flatpack,
 /turf/open/floor/iron/white,
 /area/station/science/lab)
 "bQX" = (
@@ -30703,6 +30704,7 @@
 /obj/structure/table/glass,
 /obj/item/clipboard,
 /obj/item/toy/figure/engineer,
+/obj/item/flatpack,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "fSo" = (
@@ -101634,6 +101636,7 @@
 	pixel_y = 3
 	},
 /obj/item/stamp,
+/obj/item/flatpack,
 /turf/open/floor/iron/dark,
 /area/station/cargo/office)
 "tCG" = (

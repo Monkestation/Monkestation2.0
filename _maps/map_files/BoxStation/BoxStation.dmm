@@ -18713,6 +18713,7 @@
 	dir = 8
 	},
 /obj/machinery/status_display/evac/directional/west,
+/obj/item/flatpack,
 /turf/open/floor/iron/white,
 /area/station/science/lab)
 "gbM" = (
@@ -48074,6 +48075,15 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
+"pxv" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 1
+	},
+/obj/item/flatpack,
+/turf/open/floor/iron/dark/side{
+	dir = 1
+	},
+/area/station/engineering/break_room)
 "pxw" = (
 /turf/open/floor/iron,
 /area/station/engineering/main)
@@ -64650,6 +64660,11 @@
 	},
 /turf/open/floor/engine,
 /area/station/maintenance/disposal/incinerator)
+"uOl" = (
+/obj/effect/turf_decal/bot_white,
+/obj/item/flatpack,
+/turf/open/floor/iron,
+/area/station/cargo/storage)
 "uOm" = (
 /obj/item/kirbyplants/random,
 /turf/open/floor/wood,
@@ -86574,7 +86589,7 @@ aim
 nxh
 nxh
 nxh
-tEB
+uOl
 gzQ
 nxh
 dOX
@@ -106380,7 +106395,7 @@ sxJ
 nQD
 fiv
 ior
-sxJ
+pxv
 yiD
 iGG
 xiS

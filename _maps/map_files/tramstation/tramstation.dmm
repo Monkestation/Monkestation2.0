@@ -10549,6 +10549,7 @@
 	dir = 1
 	},
 /obj/structure/table/glass,
+/obj/item/flatpack,
 /turf/open/floor/plastic,
 /area/station/engineering/break_room)
 "cgX" = (
@@ -17489,6 +17490,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/station/science/lower)
+"erA" = (
+/obj/effect/turf_decal/bot,
+/obj/item/flatpack,
+/turf/open/floor/iron,
+/area/station/cargo/storage)
 "erR" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/food/pie_smudge,
@@ -58397,6 +58403,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
+/obj/item/flatpack,
 /turf/open/floor/iron/white,
 /area/station/science/lab)
 "rcD" = (
@@ -192273,7 +192280,7 @@ sLz
 wjP
 uax
 uax
-uzm
+erA
 icO
 tCe
 eOk
