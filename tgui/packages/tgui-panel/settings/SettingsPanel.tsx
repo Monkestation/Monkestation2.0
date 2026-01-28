@@ -31,7 +31,11 @@ import { chatRenderer } from '../chat/renderer';
 import { useSettings } from './use-settings';
 import { useState } from 'react';
 import { useHighlights } from './use-highlights';
-import { wsDisconnect, wsReconnect } from 'tgui-panel/websocket/helpers';
+import {
+  wsDisconnect,
+  wsReconnect,
+  wsUpdate,
+} from 'tgui-panel/websocket/helpers';
 import { ChatPageSettings } from 'tgui-panel/chat/ChatPageSettings';
 
 export const SettingsPanel = (props) => {
@@ -432,11 +436,11 @@ const ExperimentalSettings = (props) => {
                 content={'Enabled'}
                 checked={settings.websocketEnabled}
                 color="transparent"
-                onClick={() =>
-                  updateSettings({
-                    websocketEnabled: !settings.websocketEnabled,
-                  })
-                }
+                onClick={() => {
+                  const websocketEnabled = !settings.websocketEnabled;
+                  updateSettings({ websocketEnabled });
+                  wsUpdate(websocketEnabled);
+                }}
               />
               <Button
                 icon={'question'}

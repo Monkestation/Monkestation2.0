@@ -18,6 +18,7 @@ import {
   type SettingsState,
   settingsSchema,
 } from './types';
+import { wsUpdate } from 'tgui-panel/websocket/helpers';
 
 /** Fixes issues with stored highlight settings */
 function migrateHighlights(next: HighlightState): HighlightState {
@@ -99,6 +100,11 @@ export function startSettingsMigration(next: MergedSettings): void {
   setMusicVolume(draftSettings.adminMusicVolume);
   store.set(settingsAtom, draftSettings);
   console.log('Migrated panel settings:', draftSettings);
+
+  if (draftSettings.websocketEnabled !== defaultSettings.websocketEnabled) {
+    // Ensure websocket state is correct after migration
+    wsUpdate(draftSettings.websocketEnabled);
+  }
 
   const migratedHighlights = migrateHighlights(highlightPart);
 
