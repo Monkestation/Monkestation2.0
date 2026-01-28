@@ -1298,6 +1298,24 @@
 	var/mob/living/carbon/carbsqueezer = squeezer
 	carbsqueezer.electrocute_act(10, plush, 1)
 
+/datum/plush_trait/light
+	name = "Luminant"
+	desc = "causes the plushie to glow."
+	tier = 3
+	category = PLUSH_TRAIT_CATEGORY_PHYSICALITY
+	recipe = list(/datum/plush_trait/electrical, /datum/plush_trait/colorful)
+
+/datum/plush_trait/light/activate(obj/item/toy/plush/plush)
+	. = ..()
+	plush.light_system = OVERLAY_LIGHT
+	plush.light_outer_range = 6
+	plush.light_power = 2
+	plush.set_light_on(TRUE)
+
+/datum/plush_trait/light/deactivate(obj/item/toy/plush/plush)
+	. = ..()
+	plush.set_light_on(FALSE)
+
 /datum/plush_trait/wet
 	name = "Hydrogenic"
 	desc = "causes the plushie to be constantly suffused with water."

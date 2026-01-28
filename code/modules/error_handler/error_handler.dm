@@ -140,7 +140,7 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 
 	var/main_line = "\[[time_stamp()]\] Runtime in [E.file],[E.line]: [E]"
 #ifdef LOWMEMORYMODE
-		to_chat(world, span_danger(main_line))
+	to_chat(world, span_danger(main_line))
 #endif
 	SEND_TEXT(world.log, main_line)
 	for(var/line in desclines)
