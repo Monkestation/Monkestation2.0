@@ -704,13 +704,13 @@ monkestation end */
 
 	first.linked_to = second
 	first.seer = owner
-	first.desc += " This one leads to [get_area(second)]."
+	first.desc += " This one leads to <b>[get_area(second)]</b>."
 	first.name += " ([get_area(second)])"
 	created_firsts += first
 
 	second.linked_to = first
 	second.seer = owner
-	second.desc += " This one leads to [get_area(first)]."
+	second.desc += " This one leads to <b>[get_area(first)]</b>."
 	second.name += " ([get_area(first)])"
 
 	// Delete Next Portal if it's time (it will remove its partner)
@@ -791,22 +791,20 @@ monkestation end */
 	return ..()
 
 /obj/effect/client_image_holder/phobetor/proc/check_location_seen(atom/subject, turf/target_turf)
-	if(!target_turf)
-		return FALSE
 	if(!isturf(target_turf))
 		return FALSE
 	if(GET_SIMPLE_LUMCOUNT(target_turf) <= SHADOW_SPECIES_DIM_LIGHT)
 		return FALSE
-	for(var/mob/living/nearby_viewers in viewers(target_turf))
-		if(nearby_viewers == subject)
+	for(var/mob/living/nearby_viewers in viewers(target_turf) - subject)
+		if(!nearby_viewers.mind || !nearby_viewers.client || nearby_viewers.client?.is_afk())
 			continue
-		if(!isliving(nearby_viewers) || !nearby_viewers.mind || !nearby_viewers.client || nearby_viewers.client?.is_afk())
+		if(isanimal_or_basicmob(nearby_viewers) || HAS_TRAIT(nearby_viewers, TRAIT_GHOST_CRITTER))
 			continue
 		if(HAS_MIND_TRAIT(nearby_viewers, TRAIT_VAMPIRE_ALIGNED) || HAS_MIND_TRAIT(nearby_viewers, TRAIT_OCCULTIST) || HAS_TRAIT(nearby_viewers, TRAIT_GHOST_CRITTER))
 			continue
-		if(nearby_viewers.is_blind() || nearby_viewers.is_nearsighted_currently() )
+		if(nearby_viewers.is_blind() || nearby_viewers.is_nearsighted_currently())
 			continue
-		if(HAS_SILICON_ACCESS(nearby_viewers) || HAS_TRAIT(nearby_viewers, TRAIT_GHOST_CRITTER) || isdrone(nearby_viewers))
+		if(HAS_SILICON_ACCESS(nearby_viewers))
 			continue
 		return TRUE
 	return FALSE
