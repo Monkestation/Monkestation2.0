@@ -204,8 +204,6 @@
 	current_mob.update_sight()
 	current_mob.clear_mood_event("vampcandle")
 
-	create_vampire_team()
-
 	add_team_hud(current_mob)
 
 	current_mob.faction += FACTION_VAMPIRE
@@ -332,6 +330,8 @@
 	// Objectives
 	if(should_forge_objectives)
 		forge_objectives()
+
+	create_vampire_team()
 
 	// Assign starting stats skill point.
 	give_starting_powers()
