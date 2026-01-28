@@ -18731,6 +18731,7 @@
 	},
 /obj/item/stock_parts/matter_bin,
 /obj/item/stock_parts/micro_laser,
+/obj/item/flatpack,
 /turf/open/floor/iron,
 /area/station/science/lab)
 "gLZ" = (
@@ -27949,6 +27950,7 @@
 "jLf" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/firealarm/directional/north,
+/obj/item/flatpack,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "jLg" = (
@@ -28335,6 +28337,7 @@
 	},
 /obj/structure/table/reinforced,
 /obj/effect/spawner/random/trash/food_packaging,
+/obj/item/flatpack,
 /turf/open/floor/iron/dark/corner{
 	dir = 1
 	},
