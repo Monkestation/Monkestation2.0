@@ -60,21 +60,6 @@
 	. = ..()
 	AddComponent(/datum/component/wearertargeting/punchcooldown)
 
-/obj/item/clothing/gloves/rapid/vampire
-	name = "Strange Blur"
-	desc = "There is a strange, subtle blur surrounding the hands."
-	icon = 'icons/vampires/vamp_obj.dmi'
-	icon_state = "exactitude"
-	inhand_icon_state = null
-	worn_icon_state = null
-
-/obj/item/clothing/gloves/rapid/vampire/Initialize(mapload)
-	ADD_TRAIT(src, TRAIT_NODROP, INNATE_TRAIT)
-	return ..()
-
-/obj/item/clothing/gloves/rapid/vampire/attack_self(mob/user)	// Just in case
-	return
-
 /obj/item/clothing/gloves/radio
 	name = "translation gloves"
 	desc = "A pair of electronic gloves which connect to nearby radios wirelessly. Allows for sign language users to 'speak' over comms."

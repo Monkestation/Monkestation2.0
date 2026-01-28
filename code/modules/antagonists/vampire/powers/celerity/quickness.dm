@@ -10,35 +10,42 @@
 	vitaecost = 50
 	constant_vitaecost = 5
 
-	// Ref to the item
-	var/datum/weakref/item_ref
-	var/mob/living/carbon/carbon_owner
-
-/datum/action/cooldown/vampire/exactitude/Grant()
-	. = ..()
-	carbon_owner = owner
 
 /datum/action/cooldown/vampire/exactitude/can_use()
 	. = ..()
 	if(!.)
 		return FALSE
-	var/mob/living/carbon/carbon_owner = owner
-
-	if(carbon_owner.gloves)
-		if(istype(carbon_owner.gloves, /obj/item/clothing/gloves/rapid/vampire))
-			return TRUE
+	if(owner.get_item_by_slot(ITEM_SLOT_GLOVES))
 		owner.balloon_alert(owner, "you're wearing gloves!")
 		return FALSE
 
 /datum/action/cooldown/vampire/exactitude/activate_power()
 	. = ..()
-
-	var/obj/item/clothing/gloves/rapid/vampire/the_gloves = new /obj/item/clothing/gloves/rapid/vampire()
-
-	item_ref = WEAKREF(the_gloves)
-
-	carbon_owner.equip_to_slot_or_del(the_gloves, ITEM_SLOT_GLOVES)
+	RegisterSignals(owner, list(COMSIG_HUMAN_EARLY_UNARMED_ATTACK, COMSIG_LIVING_EARLY_UNARMED_ATTACK), PROC_REF(on_unarmed_attack))
 
 /datum/action/cooldown/vampire/exactitude/deactivate_power()
 	. = ..()
-	qdel(item_ref)
+	UnregisterSignal(owner, list(COMSIG_HUMAN_EARLY_UNARMED_ATTACK, COMSIG_LIVING_EARLY_UNARMED_ATTACK))
+
+/datum/action/cooldown/vampire/exactitude/continue_active()
+	. = ..()
+	if(owner.get_item_by_slot(ITEM_SLOT_GLOVES))
+		return FALSE
+
+/datum/action/cooldown/vampire/exactitude/proc/on_unarmed_attack(mob/living/source, atom/target, proximity, modifiers)
+	if(!(source.istate & ISTATE_HARM))
+		return NONE
+
+	if(isliving(target) && target != source)
+		var/mob/living/living_target = target
+		if(living_target.stat != DEAD) // don't focus on dead targets
+			return NONE
+
+	for(var/mob/living/to_attack in oview(1, source))
+		if(to_attack.stat == DEAD || to_attack.invisibility > source.see_invisible)
+			continue
+		to_attack.attack_hand(source, modifiers)
+		source.changeNext_move(CLICK_CD_MELEE)
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+
+

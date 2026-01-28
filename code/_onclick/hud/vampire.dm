@@ -76,7 +76,7 @@
 	msg += span_cult("\n<b>Currently, your rank affords you the following benefits:</b>")
 	msg += span_cult("Max Regeneration rate: +[owner_vamp.vampire_regen_rate]")
 	msg += span_cult("Max Vitae pool: +[owner_vamp.max_vitae - 600] ")
-	msg += span_cult("Unarmed damage: +[1 + (owner_vamp.vampire_level * VAMPIRE_UNARMED_DMG_INCREASE_ON_RANKUP)]")
+	msg += span_cult("Unarmed damage: +[owner_vamp.base_punch_damage + (owner_vamp.vampire_level * VAMPIRE_UNARMED_DMG_INCREASE_ON_RANKUP)]")
 
 	var/list/disciplinestext
 	for(var/datum/discipline/discipline in owner_vamp.owned_disciplines)
