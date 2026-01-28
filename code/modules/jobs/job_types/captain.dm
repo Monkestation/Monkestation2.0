@@ -23,7 +23,7 @@
 	paycheck = PAYCHECK_COMMAND
 	paycheck_department = ACCOUNT_CMD
 
-	mind_traits = list(TRAIT_DESENSITIZED)
+	desensitized_base = DESENSITIZED_THRESHOLD
 	liver_traits = list(TRAIT_ROYAL_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_CAPTAIN

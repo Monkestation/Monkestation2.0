@@ -10,6 +10,7 @@
 	suicide_cry = "FOR THE SYNDICATE!!"
 	remove_from_manifest = TRUE
 	stinger_sound = 'sound/music/antag/ops.ogg'
+	desensitized_modifier = DESENSITIZED_THRESHOLD * 0.5
 	antag_count_points = 12
 	/// Which nukie team are we on?
 	var/datum/team/nuclear/nuke_team
@@ -37,7 +38,6 @@
 		return
 
 	var/mob/living/carbon/human/operative = owner.current
-	ADD_TRAIT(operative, TRAIT_DESENSITIZED, INNATE_TRAIT)
 
 	if(!nukeop_outfit) // this variable is null in instances where an antagonist datum is granted via enslaving the mind (/datum/mind/proc/enslave_mind_to_creator), like in golems.
 		return
