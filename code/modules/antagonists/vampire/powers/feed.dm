@@ -177,7 +177,7 @@
 	// Mice
 	if(ismouse(feed_target))
 		to_chat(owner, span_warning("You recoil at the taste of a lesser lifeform."))
-		vampiredatum_power.AdjustBloodVolume(FEED_BLOOD_FROM_MICE)
+		vampiredatum_power.adjust_blood_volume(FEED_BLOOD_FROM_MICE)
 		power_activated_sucessfully()
 		feed_target.death()
 		return
@@ -334,7 +334,7 @@
 		deactivate_power()
 		return FALSE
 
-/datum/action/cooldown/vampire/targeted/feed/UsePower()
+/datum/action/cooldown/vampire/targeted/feed/use_power()
 	var/mob/living/user = owner
 
 	var/mob/living/feed_target = target_ref?.resolve()
@@ -543,12 +543,12 @@
 	if(target.client)
 		vampiredatum_power.vitae_goal_progress += vitae_absorbed
 
-	vampiredatum_power.AdjustBloodVolume(vitae_absorbed)
+	vampiredatum_power.adjust_blood_volume(vitae_absorbed)
 
 	// Diablerie takes vitae directly
 	if(IS_VAMPIRE(target))
 		var/datum/antagonist/vampire/vampire_target = IS_VAMPIRE(target)
-		vampire_target.AdjustBloodVolume(- (blood_to_take * 4))
+		vampire_target.adjust_blood_volume(- (blood_to_take * 4))
 
 	// Transfer the target's reagents into the vampire's blood
 	if(target.reagents?.total_volume)

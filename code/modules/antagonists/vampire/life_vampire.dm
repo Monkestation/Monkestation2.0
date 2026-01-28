@@ -1,5 +1,5 @@
 /// Runs from COMSIG_LIVING_LIFE, handles Vampire constant processes.
-/datum/antagonist/vampire/proc/LifeTick(datum/source, seconds_per_tick, times_fired)
+/datum/antagonist/vampire/proc/life_tick(datum/source, seconds_per_tick, times_fired)
 	SIGNAL_HANDLER
 
 	// Weirdness shield
@@ -11,7 +11,7 @@
 
 	// Deduct Blood
 	if(owner.current.stat == CONSCIOUS && !HAS_TRAIT(owner.current, TRAIT_IMMOBILIZED) && !HAS_TRAIT(owner.current, TRAIT_NODEATH))
-		AdjustBloodVolume(-VAMPIRE_PASSIVE_BLOOD_DRAIN)
+		adjust_blood_volume(-VAMPIRE_PASSIVE_BLOOD_DRAIN)
 
 	// Healing
 	if(handle_healing(seconds_per_tick) && !isanimal_or_basicmob(owner))
@@ -43,7 +43,7 @@
 /**
  * Pretty simple, add a value to the vampire's blood volume
 **/
-/datum/antagonist/vampire/proc/AdjustBloodVolume(value)
+/datum/antagonist/vampire/proc/adjust_blood_volume(value)
 	current_vitae = clamp(current_vitae + value, 0, max_vitae)
 
 /**
@@ -122,7 +122,7 @@
 	if(brute_heal > 0 || burn_heal > 0) // Just a check? Don't heal/spend, and return.
 		var/vitaecost = (brute_heal * 0.5 + burn_heal) * vitaecost_multiplier * healing_multiplier
 		carbon_owner.heal_overall_damage(brute_heal * seconds_per_tick, burn_heal * seconds_per_tick)
-		AdjustBloodVolume(-vitaecost)
+		adjust_blood_volume(-vitaecost)
 		return TRUE
 
 	// Revive them if dead and there is no damage left to heal, just in case we are not in torpor because of some wackyness.
@@ -144,7 +144,7 @@
 		return FALSE
 	for(var/missing_limb in missing) //Find ONE Limb and regenerate it.
 		carbon_owner.regenerate_limb(missing_limb, FALSE)
-		AdjustBloodVolume(-limb_regen_cost)
+		adjust_blood_volume(-limb_regen_cost)
 		var/obj/item/bodypart/missing_bodypart = carbon_owner.get_bodypart(missing_limb)
 		if(missing_limb == BODY_ZONE_HEAD)
 			ensure_brain_nonvital(carbon_owner)

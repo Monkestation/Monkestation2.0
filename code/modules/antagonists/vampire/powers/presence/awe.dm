@@ -24,7 +24,7 @@
 	. = ..()
 	to_chat(owner, span_notice("You withdraw your supernatural presence."), type = MESSAGE_TYPE_INFO)
 
-/datum/action/cooldown/vampire/awe/UsePower()
+/datum/action/cooldown/vampire/awe/use_power()
 	. = ..()
 	for(var/mob/living/victim in oviewers(aura, owner))
 		if(can_affect(victim))

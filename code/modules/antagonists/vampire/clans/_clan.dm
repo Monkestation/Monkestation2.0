@@ -97,7 +97,7 @@
 	return
 
 /**
- * Called during Vampire's LifeTick
+ * Called during Vampire's life_tick
  */
 /datum/vampire_clan/proc/handle_clan_life()
 	if(!is_type_in_list(/datum/action/cooldown/vampire/levelup, vampiredatum.powers) && vampiredatum.vampire_level_unspent > 0)

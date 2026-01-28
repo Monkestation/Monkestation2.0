@@ -9,7 +9,7 @@
 		to_chat(core.brainmob, span_narsiesmall("You do not have enough vitae to recollect yourself on your own!"), type = MESSAGE_TYPE_WARNING)
 		return
 	ADD_TRAIT(core, TRAIT_NO_ORGAN_DECAY, TRAIT_VAMPIRE)
-	AdjustBloodVolume(-OOZELING_MIN_REVIVE_BLOOD_THRESHOLD * 0.5)
+	adjust_blood_volume(-OOZELING_MIN_REVIVE_BLOOD_THRESHOLD * 0.5)
 	to_chat(core.brainmob, span_narsiesmall("You begin recollecting yourself. You will rise again soon, if your core remains undisturbed."), type = MESSAGE_TYPE_INFO)
 	new /datum/vampire_oozeling_reviver(src, core)
 

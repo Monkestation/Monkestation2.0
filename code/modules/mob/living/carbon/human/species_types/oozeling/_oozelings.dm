@@ -158,7 +158,7 @@
 		CRASH("Tried to remove non-finite amount of blood from an oozeling")
 	var/datum/antagonist/vampire/slimesucker = IS_VAMPIRE(slime)
 	if(slimesucker)
-		slimesucker.AdjustBloodVolume(-amount)
+		slimesucker.adjust_blood_volume(-amount)
 	else
 		slime.blood_volume = max(slime.blood_volume - amount, 0)
 

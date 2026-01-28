@@ -21,7 +21,7 @@
 	. = ..()
 	to_chat(owner, span_notice("You withdraw your authoritative presence."), type = MESSAGE_TYPE_INFO)
 
-/datum/action/cooldown/vampire/force_of_personality/UsePower()
+/datum/action/cooldown/vampire/force_of_personality/use_power()
 	. = ..()
 	for(var/mob/living/victim in oviewers(aura_range, owner))
 		if(can_affect(victim))

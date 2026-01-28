@@ -31,7 +31,7 @@
 	to_chat(owner, span_notice("Your muscles clench as your master's immortal blood mixes with your own, knitting your wounds."))
 	owner.balloon_alert(owner, "recuperate turned on.")
 
-/datum/action/cooldown/vampire/recuperate/UsePower()
+/datum/action/cooldown/vampire/recuperate/use_power()
 	. = ..()
 	if(!. || !currently_active)
 		return

@@ -177,7 +177,7 @@
 /datum/action/cooldown/vampire/proc/activate_power()
 	currently_active = TRUE
 	if(vampire_power_flags & BP_AM_TOGGLE)
-		RegisterSignal(owner, COMSIG_LIVING_LIFE, PROC_REF(UsePower))
+		RegisterSignal(owner, COMSIG_LIVING_LIFE, PROC_REF(use_power))
 
 	owner.log_message("used [src][vitaecost != 0 ? " at the cost of [vitaecost]" : ""].", LOG_ATTACK, color="red")
 	build_all_button_icons(UPDATE_BUTTON_NAME | UPDATE_BUTTON_BACKGROUND)
@@ -197,7 +197,7 @@
 	build_all_button_icons(UPDATE_BUTTON_NAME | UPDATE_BUTTON_BACKGROUND)
 
 /// Used by powers that are continuously active (That have BP_AM_TOGGLE flag)
-/datum/action/cooldown/vampire/proc/UsePower()
+/datum/action/cooldown/vampire/proc/use_power()
 	if(!continue_active()) // We can't afford the Power? Deactivate it.
 		deactivate_power()
 		return FALSE
@@ -207,7 +207,7 @@
 		return TRUE
 	else
 		if(vampiredatum_power)
-			vampiredatum_power.AdjustBloodVolume(-constant_vitaecost)
+			vampiredatum_power.adjust_blood_volume(-constant_vitaecost)
 		else
 			var/mob/living/living_owner = owner
 			if(!HAS_TRAIT(living_owner, TRAIT_NOBLOOD))

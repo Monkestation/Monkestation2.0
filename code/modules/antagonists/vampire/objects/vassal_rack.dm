@@ -170,14 +170,14 @@
 
 		is_torturing = TRUE
 		living_target.Paralyze(1 SECONDS)
-		vampiredatum.AdjustBloodVolume(-TORTURE_BLOOD_HALF_COST)
+		vampiredatum.adjust_blood_volume(-TORTURE_BLOOD_HALF_COST)
 
 		if(!do_torture(living_vampire, living_target, held_item))
 			is_torturing = FALSE
 			return
 		is_torturing = FALSE
 
-		vampiredatum.AdjustBloodVolume(-TORTURE_BLOOD_HALF_COST)
+		vampiredatum.adjust_blood_volume(-TORTURE_BLOOD_HALF_COST)
 		convert_progress--
 
 		if(convert_progress > 0)
@@ -202,7 +202,7 @@
 			return
 
 		// Make our target into a vassal
-		vampiredatum.AdjustBloodVolume(-TORTURE_CONVERSION_COST)
+		vampiredatum.adjust_blood_volume(-TORTURE_CONVERSION_COST)
 		if(vampiredatum.make_vassal(living_target))
 			// We've made a vassal the proper way, do clan stuff
 			vampiredatum.my_clan?.on_vassal_made(living_vampire, living_target)
