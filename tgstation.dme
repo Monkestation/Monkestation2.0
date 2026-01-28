@@ -8755,6 +8755,7 @@
 #include "monkestation\code\modules\storytellers\storytellers\nobleman.dm"
 #include "monkestation\code\modules\storytellers\storytellers\operative.dm"
 #include "monkestation\code\modules\storytellers\storytellers\sleeper.dm"
+#include "monkestation\code\modules\storytellers\storytellers\starved.dm"
 #include "monkestation\code\modules\storytellers\storytellers\vote.dm"
 #include "monkestation\code\modules\storytellers\storytellers\warrior.dm"
 #include "monkestation\code\modules\surgery\amputation.dm"
