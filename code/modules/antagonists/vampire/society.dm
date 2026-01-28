@@ -56,9 +56,17 @@ GLOBAL_LIST_EMPTY(all_vampires)
 
 	message_admins("[ADMIN_LOOKUP(owner.current)] has received the role of Vampire Prince. ([get_princely_score()] princely score, with [my_clan?.princely_score_bonus]/[min(50, owner.current?.client?.get_exp_living(TRUE) / 60) / 10] clan/hour bonus.)")
 	log_game("[key_name(owner.current)] has become the Vampire Prince. ([get_princely_score()] princely score, with [my_clan?.princely_score_bonus]/[min(50, owner.current?.client?.get_exp_living(TRUE) / 60) / 10] clan/hour bonus.)")
-	tgui_alert(owner.current, "Congratulations, you have been chosen for Princedom.\nPlease note that this entails a certain responsibility. Your job, now, is to keep order, and to enforce the masquerade.", "Welcome, my Prince.", list("I understand"), 30 SECONDS, TRUE)
+
+	notify_ghosts(
+		"[owner.name] has become the Vampire Prince!",
+		source = owner.current,
+		action = NOTIFY_ORBIT,
+		notify_flags = NOTIFY_CATEGORY_NOFLASH,
+		header = "bloodclan confirmed???",
+	)
 
 	update_static_data_for_all_viewers()
+	tgui_alert(owner.current, "Congratulations, you have been chosen for Princedom.\nPlease note that this entails a certain responsibility. Your job, now, is to keep order, and to enforce the masquerade.", "Welcome, my Prince.", list("I understand"), 30 SECONDS, TRUE)
 
 /**
  * Turns the player into a scourge.
@@ -80,6 +88,14 @@ GLOBAL_LIST_EMPTY(all_vampires)
 
 	message_admins("[ADMIN_LOOKUPFLW(owner.current)] has been made a Scourge of the Vampires!")
 	log_game("[key_name(owner.current)] has become a Scourge of the Vampires.")
+
+	notify_ghosts(
+		"[owner.name] has been raised to the duty Scourge of the Vampires!",
+		source = owner.current,
+		action = NOTIFY_ORBIT,
+		notify_flags = NOTIFY_CATEGORY_NOFLASH,
+		header = "bloodclan confirmed???",
+	)
 
 	update_static_data_for_all_viewers()
 
