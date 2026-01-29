@@ -13,6 +13,9 @@ export RUST_G_REPO="Monkestation/rust-g"
 #rust_g git tag
 export RUST_G_VERSION=4.2.0
 
+#auxcpu git tag
+export AUXCPU_VERSION=1.0.0
+
 # node version
 export NODE_VERSION_LTS=24.12.0
 

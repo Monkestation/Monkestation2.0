@@ -110,6 +110,9 @@
 ///Plane of the "splash" icon used that shows on the lobby screen
 #define SPLASHSCREEN_PLANE 50
 
+//Holds JUST cpu debug maptext, normally not shown
+#define CPU_DEBUG_PLANE 51
+
 // The largest plane here must still be less than RENDER_PLANE_GAME
 
 //-------------------- Rendering ---------------------
@@ -288,6 +291,14 @@
 
 ///cinematics are "below" the splash screen
 #define CINEMATIC_LAYER -1
+
+// CPU_DEBUG_PLANE
+
+///CPU related graph framing
+#define CPU_GRAPH_FRAME_LAYER 1
+
+///Primary CPU readout
+#define CPU_DISPLAY_LAYER 10
 
 ///Plane master controller keys
 #define PLANE_MASTERS_GAME "plane_masters_game"

@@ -10,7 +10,9 @@
 	return -1
 
 /datum/preference/numeric/fps/apply_to_client(client/client, value)
-	client.fps = (value < 0) ? RECOMMENDED_FPS : value
+	//client.fps = (value < 0) ? RECOMMENDED_FPS : value
+	var/fps = (value < 0) ? RECOMMENDED_FPS : value
+	client.tick_lag = floor(1000 / fps) / 100
 
 /datum/preference/numeric/fps/compile_constant_data()
 	var/list/data = ..()
