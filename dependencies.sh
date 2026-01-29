@@ -5,7 +5,7 @@
 
 # byond version
 export BYOND_MAJOR=516
-export BYOND_MINOR=1663
+export BYOND_MINOR=1675
 
 #rust_g repo
 export RUST_G_REPO="Monkestation/rust-g"
@@ -30,3 +30,5 @@ export DREAMLUAU_REPO="tgstation/dreamluau"
 
 #dreamluau git tag
 export DREAMLUAU_VERSION=0.1.3
+
+export ANERI_VERSION="a81dbdbffd88a8c98adfdf0f66e0514ccb1342b7"
