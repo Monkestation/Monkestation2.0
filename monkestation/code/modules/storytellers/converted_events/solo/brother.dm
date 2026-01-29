@@ -9,8 +9,8 @@
 	required_enemies = 1
 	roundstart = TRUE
 	earliest_start = 0 SECONDS
-	base_antags = 2
-	maximum_antags = 4
+	base_antags = 1 //used to determine how many teams we will have
+	maximum_antags = 3 //used to determine the max amount of teams we will have
 	denominator = 30
 	protected_roles = list(
 		JOB_CAPTAIN,
@@ -45,30 +45,58 @@
 	extra_spawned_events = list(
 		/datum/round_event_control/antagonist/solo/traitor/roundstart = 8,
 		/datum/round_event_control/antagonist/solo/bloodsucker/roundstart = 6,
-		/datum/round_event_control/antagonist/solo/heretic/roundstart = 1,
+		//datum/round_event_control/antagonist/solo/heretic/roundstart = 1,
 	)
-	var/static/allow_3_person_teams
-
-/datum/round_event_control/antagonist/solo/brother/get_antag_amount()
-	if(isnull(allow_3_person_teams))
-		allow_3_person_teams = prob(10) // 3-brother teams only happen around 10% of the time
-	. = ..()
-	if(!allow_3_person_teams)
-		return FLOOR(., 2)
 
 /datum/round_event/antagonist/solo/brother/start()
-	if(length(setup_minds) < 2) // if we somehow only got one BB chosen, despite the fact we asked for 2, fuck it, they just get to be a traitor, and we'll throw the storyteller a bone
-		var/datum/mind/lonely_sap = setup_minds[1]
-		lonely_sap.add_antag_datum(/datum/antagonist/traitor)
-		SSgamemode.point_gain_multipliers[EVENT_TRACK_ROLESET] *= 1.5
-		return
-	while(length(setup_minds))
-		var/amt = 2
-		if(length(setup_minds) == 3) // if there would be one candidate left afterwards, we'll just make this a 3-person team
-			amt++
-		var/datum/team/brother_team/team = new
-		for(var/_ in 1 to amt)
-			team.add_member(pick_n_take(setup_minds))
-		team.update_name()
-		team.forge_brother_objectives()
-		team.notify_whos_who()
+	message_admins("BBs are selected")
+	var/teams_amount = length(setup_minds)
+	var/list/target_candidates = antag_event_controller.get_candidates()
+	for(var/teamAmount in 1 to teams_amount)
+		message_admins("we are trying to make a team")
+		var/datum/team/brother_team/new_team = new
+		var/datum/mind/starting_brother = pick_n_take(setup_minds) //Picks a random brother for this new team we are making. They are added to the team later
+		var/another_brother = 1
+		while(another_brother > 0) //Adds 1 brother to the team (from anyone would could roll BB), with a 10% chance for another if we add one. keep rolling until it fails
+			another_brother = 0
+			var/mob/target_player = astype(pick_n_take(target_candidates))
+			if(isnull(target_player)) //Skips adding brothers if we cant find someone that hasnt been picked already (will likely make a team with the other brothers, or give you heretic)
+				message_admins("tried to add an player to a bb team")
+				break
+			if(target_player.mind = starting_brother) // If we are trying to add the starting player in this loop. THEY ARE ADDED LATER BECAUSE MAYBE THERES NO OTHER BROTHERS
+				break
+			new_team.add_member(target_player.mind)
+			var/and_another = prob(90)
+			if(and_another)
+				another_brother = 1
+				message_admins("Another brother!!")
+		message_admins("Done adding brothers, now to check if we actually got any on our team")
+		//next line is for the rare case where everyone has BB off but the 1-3 people who origionally rolled BB. or if they are all taken (like the 1/1000000000000000000 chance for a team of 20))
+		if(new_team.members.len == 0) //If a BB team is only 1 person long, we just add all the brothers without a team onto this one
+			message_admins("AAA")
+			for(var/datum/mind/unteamed_brother in setup_minds) //TODO, FIX THIS
+				message_admins("BBB")
+				if(unteamed_brother)
+					message_admins("CCC")
+					new_team.add_member(pop(setup_minds))
+			message_admins("Trying to adding all unteamed brothers to a team")
+		if(new_team.members.len == 0) //If no one is on their team still, they get heretic because all their possible brothers betrayed them. they also get their brothers as additional sac targets
+			var/datum/antagonist/heretic/heretic_datum
+			message_admins("1")
+			for(var/mob/player in GLOB.alive_player_list)
+				message_admins("2")
+				if(player.mind.has_antag_datum(/datum/antagonist/brother))
+					message_admins("3")
+					heretic_datum.add_sacrifice_target(player)
+					message_admins("4")
+				else(starting_brother.add_antag_datum(/datum/antagonist/traitor)) // Give them traitor if theres no brothers
+			starting_brother.add_antag_datum(heretic_datum)
+			message_admins("5")
+			new_team.Destroy()
+			message_admins("no brothers, heretic time")
+			return
+		new_team.add_member(starting_brother) //Add the first member we picked to the team that we got when this event rolled
+		new_team.update_name()
+		new_team.forge_brother_objectives()
+		new_team.notify_whos_who()
+	message_admins("you should be a bb with a team")
