@@ -344,7 +344,6 @@
 "pg" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/urinal/directional/north,
-/obj/item/reagent_containers/syringe/morphine,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/allamericandiner)
 "qp" = (
@@ -373,7 +372,6 @@
 /obj/structure/sink/directional/east,
 /obj/structure/mirror/directional/west,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/reagent_containers/syringe/morphine,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/allamericandiner)
 "rb" = (

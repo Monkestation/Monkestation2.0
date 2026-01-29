@@ -822,18 +822,6 @@
 /obj/effect/turf_decal/tile/dark/diagonal_edge,
 /turf/open/floor/iron/white/diagonal,
 /area/centcom/central_command_areas/hall)
-"acb" = (
-/obj/item/storage/briefcase{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/storage/briefcase/secure,
-/obj/structure/table/wood,
-/obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
-	dir = 4
-	},
-/turf/open/floor/iron/dark,
-/area/centcom/central_command_areas/briefing)
 "acc" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -13407,12 +13395,6 @@
 	},
 /turf/open/floor/carpet,
 /area/centcom/central_command_areas/hall)
-"aJW" = (
-/obj/structure/table/reinforced,
-/obj/item/storage/briefcase/secure,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
-/area/centcom/central_command_areas/briefing)
 "aJX" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -25112,6 +25094,12 @@
 	},
 /turf/open/floor/glass/reinforced,
 /area/centcom/central_command_areas/admin)
+"kbg" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/briefcase/secure,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/briefing)
 "kbi" = (
 /obj/structure/flora/grass/brown/style_random,
 /turf/open/floor/sandy_dirt,
@@ -25832,6 +25820,18 @@
 "lhl" = (
 /turf/open/ballpit,
 /area/centcom/central_command_areas/adminroom)
+"lhD" = (
+/obj/item/storage/briefcase{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/storage/briefcase/secure,
+/obj/structure/table/wood,
+/obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/briefing)
 "ljD" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 4
@@ -31312,6 +31312,26 @@
 	},
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/adminroom)
+"uQQ" = (
+/obj/structure/closet/cabinet,
+/obj/item/storage/box/firecrackers,
+/obj/item/storage/pill_bottle/prescription_stimulant,
+/obj/item/reagent_containers/hypospray/medipen/deforest/coagulants,
+/obj/item/reagent_containers/hypospray/medipen/deforest/coagulants,
+/obj/item/reagent_containers/hypospray/medipen/deforest/demoneye,
+/obj/item/reagent_containers/hypospray/medipen/deforest/demoneye,
+/obj/item/reagent_containers/hypospray/medipen/deforest/demoneye,
+/obj/item/reagent_containers/hypospray/medipen/deforest/aranepaine,
+/obj/item/reagent_containers/hypospray/medipen/deforest/aranepaine,
+/obj/item/autosurgeon{
+	pixel_y = 17
+	},
+/obj/item/storage/box/alienhandcuffs,
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/turf/open/floor/wood/large,
+/area/centcom/central_command_areas/adminroom)
 "uQR" = (
 /obj/machinery/light/dim/directional/south,
 /turf/open/floor/wood/tile,
@@ -31407,30 +31427,6 @@
 	},
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/evacuation)
-"uYW" = (
-/obj/structure/closet/cabinet,
-/obj/item/storage/box/firecrackers,
-/obj/item/storage/pill_bottle/prescription/aspirin_para_coffee,
-/obj/item/storage/pill_bottle/prescription_stimulant,
-/obj/item/storage/pill_bottle/painkillers,
-/obj/item/reagent_containers/hypospray/medipen/emergency_painkiller,
-/obj/item/reagent_containers/hypospray/medipen/emergency_painkiller,
-/obj/item/reagent_containers/hypospray/medipen/deforest/coagulants,
-/obj/item/reagent_containers/hypospray/medipen/deforest/coagulants,
-/obj/item/reagent_containers/hypospray/medipen/deforest/demoneye,
-/obj/item/reagent_containers/hypospray/medipen/deforest/demoneye,
-/obj/item/reagent_containers/hypospray/medipen/deforest/demoneye,
-/obj/item/reagent_containers/hypospray/medipen/deforest/aranepaine,
-/obj/item/reagent_containers/hypospray/medipen/deforest/aranepaine,
-/obj/item/autosurgeon{
-	pixel_y = 17
-	},
-/obj/item/storage/box/alienhandcuffs,
-/obj/effect/turf_decal/siding/wood{
-	dir = 9
-	},
-/turf/open/floor/wood/large,
-/area/centcom/central_command_areas/adminroom)
 "vaa" = (
 /obj/item/tank/internals/plasma/full{
 	pixel_x = -11;
@@ -63142,7 +63138,7 @@ awv
 agO
 acx
 aWN
-acb
+lhD
 awW
 atb
 aaV
@@ -64427,7 +64423,7 @@ afa
 ayr
 aRH
 aRH
-aJW
+kbg
 aeE
 arB
 aRH
@@ -69735,7 +69731,7 @@ aOn
 aOn
 aOn
 qja
-uYW
+uQQ
 bHk
 rAI
 qja

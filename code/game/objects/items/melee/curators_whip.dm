@@ -10,7 +10,6 @@
 	slot_flags = ITEM_SLOT_BELT
 	obj_flags = parent_type::obj_flags | UNIQUE_RENAME
 	force = 15
-	pain_damage = 5
 	demolition_mod = 0.25
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb_continuous = list("flogs", "whips", "lashes", "disciplines")

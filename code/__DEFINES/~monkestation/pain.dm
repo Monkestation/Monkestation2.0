@@ -1,7 +1,5 @@
 /// If the mob enters shock, they will have +1 cure condition (helps cure it faster)
 #define TRAIT_ABATES_SHOCK "shock_abated"
-/// Pain effects, such as stuttering or feedback messages ("Everything hurts") are disabled.
-#define TRAIT_NO_PAIN_EFFECTS "no_pain_effects"
 /// Shock buildup does not increase, only decrease. No effect if already in shock (unlike abates_shock)
 #define TRAIT_NO_SHOCK_BUILDUP "no_shock_buildup"
 /// Don't get slowed down by aggro grabbing (or above)

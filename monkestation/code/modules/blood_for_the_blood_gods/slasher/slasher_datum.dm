@@ -119,7 +119,6 @@
 	ADD_TRAIT(current_mob, TRAIT_DUMB, "slasher")
 	ADD_TRAIT(current_mob, TRAIT_LIMBATTACHMENT, "slasher")
 	ADD_TRAIT(current_mob, TRAIT_SLASHER, "slasher")
-	ADD_TRAIT(current_mob, TRAIT_NO_PAIN_EFFECTS, "slasher")
 	ADD_TRAIT(current_mob, TRAIT_VIRUSIMMUNE, "slasher")
 	ADD_TRAIT(current_mob, TRAIT_RESISTHEAT, "slasher")
 	ADD_TRAIT(current_mob, TRAIT_RESISTCOLD, "slasher")
