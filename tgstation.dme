@@ -7203,7 +7203,6 @@
 #include "monkestation\code\modules\bloodsuckers\bloodsucker\bloodsucker_objectives.dm"
 #include "monkestation\code\modules\bloodsuckers\bloodsucker\bloodsucker_overwrites.dm"
 #include "monkestation\code\modules\bloodsuckers\bloodsucker\bloodsucker_ruleset.dm"
-#include "monkestation\code\modules\bloodsuckers\bloodsucker\bloodsucker_shaded.dm"
 #include "monkestation\code\modules\bloodsuckers\bloodsucker\bloodsucker_sol.dm"
 #include "monkestation\code\modules\bloodsuckers\bloodsucker\bloodsucker_tracking.dm"
 #include "monkestation\code\modules\bloodsuckers\bloodsucker\bloodsucker_traumas.dm"

@@ -132,7 +132,8 @@
 
 /obj/item/restraints/handcuffs/silver
 	name = "silver handcuffs"
-	desc = "A pair of silver handcuffs. Their brittle construction allows them to be used only once, but some say they can contain certain creatures of the night..."
+	desc = "A pair of silver handcuffs. Their brittle construction allows them to be used only once, and normal crew have little trouble breaking out of them, even while being moved. \
+	But some say they can contain certain creatures of the night..."
 	breakouttime = 45 SECONDS
 
 	trashtype = /obj/item/restraints/handcuffs/silver/used

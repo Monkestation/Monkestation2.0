@@ -4,7 +4,9 @@
 	button_icon_state = "power_veil"
 	power_explanation = "Veil of Many Faces: \n\
 		Activating Veil of Many Faces will shroud you in smoke and forge you a new identity.\n\
-		Your name and appearance will be completely randomized, and turning the ability off again will undo it all."
+		Your name and appearance will be completely randomized, and turning the ability off again will undo it all.\n\
+		Be warned, for this power will not hide the ID you are wearing, which can make it rather obvious that you are not who you claim.\n\
+		Do not expect your temporary identity to hold up to much scrutiny. It's best to not stay in the same veil for too long, and avoid being arrested."
 	power_flags = BP_AM_TOGGLE
 	check_flags = BP_CANT_USE_IN_FRENZY | BP_ALLOW_WHILE_SILVER_CUFFED
 	purchase_flags = BLOODSUCKER_DEFAULT_POWER
