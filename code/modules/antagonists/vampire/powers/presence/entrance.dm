@@ -10,6 +10,7 @@
 	power_explanation = "Click any player to entrance them, leaving them momentarily impaired.\n\
 		Your target will be slowed, muted, and unable to use items for a short duration.\n\
 		The effect only lasts half as long on mindshielded targets.\n\
+		If the target is attacked by anyone, the effect will instantly wear off.\n\
 		This is a softer form of control - they can still move and resist, but are heavily hindered."
 	vampire_power_flags = NONE
 	vampire_check_flags = BP_CANT_USE_IN_TORPOR | BP_CANT_USE_IN_FRENZY | BP_CANT_USE_WHILE_STAKED | BP_CANT_USE_WHILE_INCAPACITATED | BP_CANT_USE_WHILE_UNCONSCIOUS
@@ -80,9 +81,12 @@
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/entranced)
 	owner.set_jitter_if_lower(duration)
 	owner.add_client_colour(/datum/client_colour/glass_colour/pink)
+	owner.AddElement(/datum/element/relay_attackers)
+	RegisterSignal(owner, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
 	return TRUE
 
 /datum/status_effect/entranced/on_remove()
+	UnregisterSignal(owner, COMSIG_ATOM_WAS_ATTACKED)
 	owner.remove_traits(list(TRAIT_MUTE, TRAIT_HANDS_BLOCKED, TRAIT_GRABWEAKNESS), TRAIT_STATUS_EFFECT(id))
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/entranced)
 	owner.remove_client_colour(/datum/client_colour/glass_colour/pink)
@@ -90,6 +94,12 @@
 
 /datum/status_effect/entranced/get_examine_text()
 	return span_warning("[owner.p_They()] seem[owner.p_s()] dazed and unfocused.")
+
+/datum/status_effect/entranced/proc/on_attacked(datum/source, atom/attacker, attack_flags)
+	SIGNAL_HANDLER
+	if(attacker != owner && (attack_flags & ATTACKER_DAMAGING_ATTACK))
+		to_chat(owner, span_awe("You quickly come back to your senses as you're hit by [attacker]!"))
+		qdel(src)
 
 /// Alert for entranced status
 /atom/movable/screen/alert/status_effect/entranced
