@@ -15,15 +15,15 @@
 /obj/machinery/computer/telecomms/traffic
 	name = "traffic control computer"
 	desc = "A computer used to interface with the programming of communication servers."
+	req_access = list(ACCESS_TCOMMS_ADMIN)
+	circuit = /obj/item/circuitboard/computer/comm_traffic
 
 	/// The servers located by the computer
 	var/list/obj/machinery/telecomms/server/servers = list()
 	/// The network to probe
 	var/network = "NULL"
 	/// The current code being used
-	var/storedcode = ""
-	/// The ID currently inserted
-	var/obj/item/card/id/inserted_id
+	var/storedcode = "def process_signal(sig){return sig;}"
 	/// The name and job on the ID used to log in
 	var/user_name = ""
 	/// Logs for users logging in/out or compiling code
@@ -33,13 +33,8 @@
 
 	var/unlimited_range = FALSE
 
-	circuit = /obj/item/circuitboard/computer/comm_traffic
-
-	req_access = list(ACCESS_TCOMMS_ADMIN)
-
 /obj/machinery/computer/telecomms/traffic/Initialize(mapload)
-	..()
-	GLOB.traffic_comps += src
+	. = ..()
 	if(length(GLOB.pretty_filter_items) == 0)
 		setup_pretty_filter()
 	if(mapload)
@@ -53,11 +48,7 @@
 		new_server.autoruncode = TRUE
 
 /obj/machinery/computer/telecomms/traffic/Destroy()
-	GLOB.traffic_comps -= src
 	servers = null
-	if(!isnull(inserted_id))
-		inserted_id.forceMove(drop_location())
-		inserted_id = null
 	return ..()
 
 /obj/machinery/computer/telecomms/traffic/proc/create_log(entry)
@@ -90,7 +81,6 @@
 	data["stored_code"] = storedcode
 	data["network"] = network
 	data["user_name"] = user_name
-	data["has_access"] = inserted_id
 	data["access_log"] = access_log.Copy()
 	data["compiler_output"] = compiler_output.Copy()
 	data["emagged"] = ((obj_flags & EMAGGED) > 0)
@@ -101,26 +91,28 @@
 
 	return data
 
-/obj/machinery/computer/telecomms/traffic/ui_act(action, list/params)
+/obj/machinery/computer/telecomms/traffic/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
+	var/mob/living/user = ui.user
+
 	if(action == "admin_reset") // something to note, this will runtime when clicked on by an admin ghost. But still works.
-		if(!usr.client.holder)
-			message_admins("[key_name_admin(usr)] has attempted to call \"admin_reset\" on a traffic console, this should not be possible as a non-admin and could have been an attempted javascript injection.")
+		if(!user.client.holder)
+			message_admins("[key_name_admin(user)] has attempted to call \"admin_reset\" on a traffic console, this should not be possible as a non-admin and could have been an attempted javascript injection.")
 			return
 		network = "tcommsat"
 		refresh_servers()
 		for(var/obj/machinery/telecomms/server/server as anything in servers)
 			server.rawcode = "def process_signal(sig){ return sig;" // bare minimum
 		compiler_output.Cut()
-		compiler_output = compile_all(usr)
-		var/message = "[key_name_admin(usr)] has completelly cleared the NTSL console of code and re-compiled as an admin, this should only be done in severe rule infractions."
+		compiler_output = compile_all(user)
+		var/message = "[key_name_admin(user)] has completelly cleared the NTSL console of code and re-compiled as an admin, this should only be done in severe rule infractions."
 		message_admins(message)
-		logger.Log(LOG_NTSL, "[key_name(src)] [message] [loc_name(src)]")
+		logger.Log(LOG_CATEGORY_NTSL, "[key_name(src)] [message] [loc_name(src)]")
 		access_log += "\[[get_timestamp()]\] ERR !NTSL REMOTELLY CLEARED BY NANOTRASEN STAFF!"
 		return TRUE
+
 	if(.)
 		return
-
 	playsound(src, "terminal_type", 15, FALSE)
 	switch(action)
 		if("refresh_servers")
@@ -136,13 +128,13 @@
 			return TRUE
 		if("compile_code")
 			if(!user_name)
-				message_admins("[key_name_admin(usr)] attempted compiling NTSL without being logged in.") // tell admins that someone tried a javascript injection
+				message_admins("[key_name_admin(user)] attempted compiling NTSL without being logged in.") // tell admins that someone tried a javascript injection
 				return
 			for(var/obj/machinery/telecomms/server/server as anything in servers)
 				if(istext(storedcode))
 					server.rawcode = storedcode
 			compiler_output.Cut()
-			compiler_output = compile_all(usr)
+			compiler_output = compile_all(user)
 			return TRUE
 		if("set_network")
 			if(!user_name)
@@ -150,16 +142,17 @@
 			network = params["new_network"]
 			return TRUE
 		if("log_in")
-			var/mob/living/usr_mob = usr
-			if(HAS_SILICON_ACCESS(usr_mob))
+			if(HAS_SILICON_ACCESS(user))
 				user_name = "System Administrator"
-			else if(check_access(inserted_id))
-				user_name = "[inserted_id?.registered_name] ([inserted_id?.assignment])"
-			else
-				var/obj/item/card/id/user_id = usr_mob.get_idcard(TRUE)
-				if(!check_access(user_id))
-					return
-				user_name = "[user_id?.registered_name] ([user_id?.assignment])"
+			else if(allowed(user))
+				var/obj/item/card/id/user_id = user.get_idcard(TRUE)
+				if(user_id)
+					user_name = "[user_id?.registered_name] ([user_id?.assignment])"
+				else
+					user_name = "[user.name] (UNKNOWN)"
+			if(!user_name)
+				balloon_alert(user, "no access!")
+				return TRUE
 			create_log("has logged in.")
 			return TRUE
 		if("log_out")
@@ -170,7 +163,7 @@
 			return TRUE
 		if("clear_logs")
 			if(!user_name)
-				message_admins("[key_name_admin(usr)] attempted clearing NTSL logs without being logged in.")
+				message_admins("[key_name_admin(user)] attempted clearing NTSL logs without being logged in.")
 				return
 			access_log.Cut()
 			create_log("cleared access logs.")
@@ -178,7 +171,7 @@
 
 /obj/machinery/computer/telecomms/traffic/proc/refresh_servers()
 	servers.Cut()
-	for(var/obj/machinery/telecomms/server/new_server as anything in GLOB.tcomms_servers)
+	for(var/obj/machinery/telecomms/server/new_server as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/telecomms/server))
 		if(new_server.network != network)
 			continue
 		if(!unlimited_range && get_dist(src, new_server) > 15)
@@ -204,13 +197,6 @@
 	create_log("compiled to all linked servers on [network].")
 	return list("Compiling finished.")
 
-/obj/machinery/computer/telecomms/traffic/attackby(obj/item/item, mob/user, params)
-	if(istype(item, /obj/item/card/id) && check_access(item) && user.transferItemToLoc(item, src))
-		inserted_id = item
-		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
-		return
-	return ..()
-
 /obj/machinery/computer/telecomms/traffic/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
 		return FALSE
@@ -219,15 +205,3 @@
 	create_log("has logged in.")
 	playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
 	to_chat(user, span_notice("You bypass the console's security protocols."))
-
-/obj/machinery/computer/telecomms/traffic/click_alt(mob/user)
-	if(!iscarbon(user))
-		return CLICK_ACTION_BLOCKING
-
-	var/mob/living/carbon/carbon_user = user
-	if(inserted_id)
-		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
-		inserted_id.forceMove(drop_location())
-		carbon_user.put_in_hands(inserted_id)
-		inserted_id = null
-	return CLICK_ACTION_SUCCESS

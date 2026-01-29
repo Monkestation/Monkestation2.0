@@ -226,9 +226,13 @@ export const CargoCatalog = (props) => {
                 <Stack.Item grow>
                   <Input
                     fluid
+                    expensive
                     placeholder="Search..."
                     value={searchText}
-                    onInput={(e, value) => {
+                    onChange={(value) => {
+                      if (value === undefined) {
+                        return;
+                      }
                       if (value === searchText) {
                         return;
                       }
@@ -241,13 +245,6 @@ export const CargoCatalog = (props) => {
                         setActiveSupplyName(supplies[0]?.name);
                       }
                       setSearchText(value);
-                    }}
-                    onChange={(e, value) => {
-                      // Allow edge cases like the X button to work
-                      const onInput = e.target?.props?.onInput;
-                      if (onInput) {
-                        onInput(e, value);
-                      }
                     }}
                   />
                 </Stack.Item>
@@ -444,7 +441,7 @@ const CargoCart = (props) => {
                     minValue={0}
                     maxValue={50}
                     value={entry.amount}
-                    onEnter={(e, value) =>
+                    onEnter={(value) =>
                       act('modify', {
                         order_name: entry.object,
                         amount: value,
@@ -487,7 +484,7 @@ const CargoCart = (props) => {
             <Button
               color="green"
               style={{
-                'line-height': '28px',
+                lineHeight: '28px',
                 padding: '0 12px',
               }}
               content="Confirm the order"

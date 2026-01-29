@@ -38,7 +38,7 @@ export const SecurityRecordTabs = (props) => {
         <Input
           fluid
           placeholder="Name/Job/Fingerprints"
-          onInput={(event, value) => setSearch(value)}
+          onChange={(value) => setSearch(value)}
         />
       </Stack.Item>
       <Stack.Item grow>
@@ -106,11 +106,10 @@ const CrewTab = (props: { record: SecurityRecord }) => {
   return (
     <Tabs.Tab
       className="candystripe"
-      label={record.name}
       onClick={() => selectRecord(record)}
       selected={isSelected}
     >
-      <Box bold={isSelected} color={CRIMESTATUS2COLOR[wanted_status]} wrap>
+      <Box bold={isSelected} color={CRIMESTATUS2COLOR[wanted_status]}>
         <Icon name={JOB2ICON[rank] || 'question'} /> {name}
       </Box>
     </Tabs.Tab>

@@ -100,12 +100,12 @@ GLOBAL_LIST_INIT(virusDB, list())
 
 	return list(lowest_stage,highest_concentration)
 
-/datum/disease/acute/cure(add_resistance = TRUE, mob/living/carbon/target)
+/datum/disease/acute/cure(add_resistance = TRUE, mob/living/carbon/target, safe = FALSE)
 	target = target || affected_mob || usr
 	if(!istype(affected_mob) || QDELING(affected_mob))
 		return
 	for(var/datum/symptom/symptom in symptoms)
-		symptom.disable_effect(target, src)
+		symptom.disable_effect(target, src, safe)
 	target.diseases -= src
 	target.med_hud_set_status()
 	logger.Log(LOG_CATEGORY_VIRUS, "[affected_mob.name] was cured of virus [real_name()] at [loc_name(affected_mob.loc)]", list("disease_data" = admin_details(), "location" = loc_name(affected_mob.loc)))

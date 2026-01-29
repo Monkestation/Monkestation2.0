@@ -10,7 +10,7 @@ const ParadoxClone: Antagonist = {
     Now you have to find your counterpart and kill and replace them.
     `,
   ],
-  category: Category.Midround,
+  category: Category.Ghost,
 };
 
 export default ParadoxClone;

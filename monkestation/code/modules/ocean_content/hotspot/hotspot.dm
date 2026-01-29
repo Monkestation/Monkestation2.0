@@ -167,7 +167,7 @@
 			if(isliving(listed_mob))
 				var/mob/living/listed_living = listed_mob
 				listed_living.adjustBruteLoss(5)
-				listed_living.stamina?.adjust(-30)
+				listed_living.stamina?.adjust(-15)
 
 	// For future maintainers, below are the explosions that have been commented out
 	// replace once you find a reason for a random wandering point to destroy the station.
@@ -188,8 +188,7 @@
 	var/message
 	if(heat > SUBCALL_HEATCOST * subcalls)
 		message = "Big Hotspot event triggered at [AREACOORD(calculation_point)] in [area_name_string] with a heat value of [heat]"
-		spawn(3 SECONDS)
-			after_move_effect(subcalls++, heat - ((SUBCALL_HEATCOST + 500) * subcalls))
+		addtimer(CALLBACK(src, PROC_REF(after_move_effect), subcalls++, heat - ((SUBCALL_HEATCOST + 500) * subcalls)), 3 SECONDS)
 	else
 		message = "Small Hotspot event triggered at [AREACOORD(calculation_point)] in [area_name_string] with a heat value of [heat]"
 

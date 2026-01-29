@@ -120,7 +120,7 @@ export const Interview = (props) => {
                   height={10}
                   maxLength={500}
                   placeholder="Write your response here, max of 500 characters."
-                  onChange={(e, input) =>
+                  onChange={(input) =>
                     input !== response &&
                     act('update_answer', {
                       qidx: qidx,

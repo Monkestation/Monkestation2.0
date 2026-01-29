@@ -30,6 +30,8 @@
 #define PLEXORA_ERROR_NOTWITCHKEY "plx_twitchkeynotconfigured"
 // Topic call passed invalid smite
 #define PLEXORA_ERROR_INVALIDSMITE "plx_invalidsmite"
+// Topic call bad parameter
+#define PLEXORA_ERROR_BAD_PARAM "plx_badparam"
 
 #define PLEXORA_NOTIFYSIGNUP_ENROLL "enroll"
 #define PLEXORA_NOTIFYSIGNUP_UNENROLL "unenroll"

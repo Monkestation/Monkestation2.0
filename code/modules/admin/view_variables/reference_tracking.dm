@@ -13,7 +13,10 @@ GLOBAL_LIST_INIT_TYPED(reftracker_skip_typecache, /alist, init_reftracker_skip_t
 		/datum/asset_cache_item,
 		/datum/book_info,
 		/datum/card,
-		/datum/cassette_data,
+		/datum/cassette,
+		/datum/cassette_author,
+		/datum/cassette_side,
+		/datum/cassette_song,
 		/datum/chat_payload,
 		/datum/color_palette,
 		/datum/component/mirage_border, // only turf and mirage holder refs
@@ -41,7 +44,6 @@ GLOBAL_LIST_INIT_TYPED(reftracker_skip_typecache, /alist, init_reftracker_skip_t
 		/datum/component/connect_loc_behalf,
 		/datum/reagent/consumable/nutriment,
 		/datum/chatmessage,
-		/atom/movable/outdoor_effect,
 		// these hard delete but holy shit these trigger the reftracker CONSTANTLY
 		/atom/movable/screen/map_view/char_preview,
 		// STOP IT

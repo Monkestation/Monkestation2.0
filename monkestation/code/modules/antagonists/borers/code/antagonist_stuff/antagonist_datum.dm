@@ -19,14 +19,18 @@
 	for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/atmospherics/components/unary/vent_pump))
 		if(QDELETED(temp_vent))
 			continue
-		if(is_station_level(temp_vent.loc.z) && !temp_vent.welded)
-			var/datum/pipeline/temp_vent_parent = temp_vent.parents[1]
-			if(!temp_vent_parent)
-				continue // No parent vent
-			// Stops Cortical Borers getting stuck in small networks.
-			// See: Security, Virology
-			if(length(temp_vent_parent.other_atmos_machines) > 20)
-				vents += temp_vent
+		if(!is_station_level(temp_vent.loc.z) || temp_vent.welded)
+			continue
+		var/area/vent_area = get_area(temp_vent)
+		if(!(vent_area.type in GLOB.the_station_areas))
+			continue
+		var/datum/pipeline/temp_vent_parent = temp_vent.parents[1]
+		if(!temp_vent_parent)
+			continue // No parent vent
+		// Stops Borers getting stuck in small networks.
+		// See: Security, Virology
+		if(length(temp_vent_parent.other_atmos_machines) > 20)
+			vents += temp_vent
 
 	if(!length(vents))
 		message_admins(span_adminnotice("[spender] ([ckey(spender.key)]) tried spawning in as a borer, but no suitable vents were found!"))
@@ -58,7 +62,11 @@
 	return ..()
 
 /datum/antagonist/cortical_borer/get_preview_icon()
-	return finish_preview_icon(icon('monkestation/code/modules/antagonists/borers/icons/animal.dmi', "brainslug"))
+	var/icon/preview = icon('monkestation/code/modules/antagonists/borers/icons/animal.dmi', "brainslug")
+	preview.Scale(115, 115)
+	preview.Shift(WEST, 8)
+	preview.Crop(1, 1, ANTAGONIST_PREVIEW_ICON_SIZE, ANTAGONIST_PREVIEW_ICON_SIZE)
+	return preview
 
 /datum/antagonist/cortical_borer/hivemind
 	name = "Hivemind Cortical Borer"

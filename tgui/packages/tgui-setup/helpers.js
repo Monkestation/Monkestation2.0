@@ -24,6 +24,8 @@
     return content;
   };
 
+  Error.stackTraceLimit = 50;
+
   // BYOND API object
   // ------------------------------------------------------
 

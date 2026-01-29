@@ -264,12 +264,10 @@ SUBSYSTEM_DEF(gamemode)
 			continue
 
 		var/counted_value = already_counted[antag.owner]
-		if(counted_value && counted_value > antag.antag_count_points)
+		if(counted_value && counted_value > antag.get_antag_count_points())
 			continue
 
-		counted_value = antag.antag_count_points
-		if(antag.owner.current && !ishuman(antag.owner.current) && !(antag.antag_flags & FLAG_ANTAG_CAP_IGNORE_HUMANITY))
-			counted_value /= 2 //non humans count for half
+		counted_value = antag.get_antag_count_points()
 		already_counted[antag.owner] = counted_value
 
 	for(var/datum/mind/owner, points in already_counted)
@@ -984,7 +982,7 @@ ADMIN_VERB(forceGamemode, R_FUN, FALSE, "Open Gamemode Panel", "Opens the gamemo
 	popup.set_content(dat.Join())
 	popup.open()
 
- /// Panel containing information and actions regarding events
+/// Panel containing information and actions regarding events
 /datum/controller/subsystem/gamemode/proc/event_panel(mob/user)
 	var/list/dat = list()
 	if(current_storyteller)
@@ -1210,3 +1208,4 @@ ADMIN_VERB(forceGamemode, R_FUN, FALSE, "Open Gamemode Panel", "Opens the gamemo
 #undef DEFAULT_STORYTELLER_VOTE_OPTIONS
 #undef MAX_POP_FOR_STORYTELLER_VOTE
 #undef ROUNDSTART_VALID_TIMEFRAME
+#undef INIT_ORDER_GAMEMODE

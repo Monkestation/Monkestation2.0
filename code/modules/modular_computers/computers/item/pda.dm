@@ -12,7 +12,6 @@
 	inhand_icon_state = "electronic"
 
 	steel_sheet_cost = 2
-	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 3, /datum/material/glass=SMALL_MATERIAL_AMOUNT, /datum/material/plastic=SMALL_MATERIAL_AMOUNT)
 	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_ALLOW_USER_LOCATION | INTERACT_ATOM_IGNORE_MOBILITY
 
 	icon_state_menu = "menu"
@@ -61,6 +60,11 @@
 /obj/item/modular_computer/pda/Destroy()
 	if(istype(inserted_item))
 		QDEL_NULL(inserted_item)
+	return ..()
+
+/obj/item/modular_computer/pda/eject_stored_items(atom/droploc)
+	inserted_item?.forceMove(droploc) // PDA pen slot
+	inserted_item = null
 	return ..()
 
 /obj/item/modular_computer/pda/install_default_programs()
@@ -231,6 +235,10 @@
 	if(new_ringtone && (new_ringtone != MESSENGER_RINGTONE_DEFAULT))
 		update_ringtone(new_ringtone)
 
+	var/new_sound = owner_client.prefs.read_preference(/datum/preference/choiced/pda_ringtone_sound)
+	if(new_sound)
+		update_ringtone_sound(new_sound)
+
 	var/new_theme = owner_client.prefs.read_preference(/datum/preference/choiced/pda_theme)
 	if(new_theme)
 		device_theme = GLOB.pda_name_to_theme[new_theme]
@@ -242,6 +250,14 @@
 	var/datum/computer_file/program/messenger/messenger_app = locate() in stored_files
 	if(messenger_app)
 		messenger_app.ringtone = new_ringtone
+
+/// A simple proc to set the ringtone sound || Monkestation Addition
+/obj/item/modular_computer/pda/proc/update_ringtone_sound(new_sound)
+	if(!istext(new_sound) || !(new_sound in GLOB.pda_ringtone_sounds))
+		return
+	var/datum/computer_file/program/messenger/messenger_app = locate() in stored_files
+	if(messenger_app)
+		messenger_app.ringtone_sound = new_sound
 
 /**
  * Nuclear PDA
@@ -303,6 +319,24 @@
 		/datum/computer_file/program/atmosscan,
 		/datum/computer_file/program/crew_manifest,
 	)
+
+/obj/item/modular_computer/pda/silicon/ai
+	max_idle_programs = 12
+	ethernet_forced = TRUE
+	starting_programs = list(
+		/datum/computer_file/program/messenger,
+		/datum/computer_file/program/filemanager,
+		/datum/computer_file/program/themeify,
+		/datum/computer_file/program/notepad,
+		/datum/computer_file/program/emojipedia,
+		/datum/computer_file/program/supermatter_monitor,
+		/datum/computer_file/program/signal_commander,
+		/datum/computer_file/program/newscaster,
+		/datum/computer_file/program/chatclient,
+		/datum/computer_file/program/secureye/spesstv,
+		/datum/computer_file/program/ntnetmonitor,
+	)
+
 
 /obj/item/modular_computer/pda/silicon/Initialize(mapload)
 	. = ..()

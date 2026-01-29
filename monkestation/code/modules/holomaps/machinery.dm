@@ -31,7 +31,7 @@
 	var/datum/station_holomap/holomap_datum
 	var/bonus_parts = /obj/item/stock_parts/micro_laser
 
-/obj/machinery/station_map/Initialize()
+/obj/machinery/station_map/Initialize(mapload)
 	. = ..()
 	if(!current_z_level)
 		current_z_level = loc.z
@@ -141,17 +141,19 @@
 	playsound(src, 'monkestation/code/modules/holomaps/sounds/holomap_close.ogg', 125)
 	icon_state = initial(icon_state)
 	if(watching_mob?.client)
-		animate(holomap_datum.base_map, alpha = 0, time = 5, easing = LINEAR_EASING)
-		spawn(5) //we give it time to fade out
-			watching_mob.client?.screen -= watching_mob.hud_used.holomap
-			watching_mob.client?.images -= holomap_datum.base_map
-			watching_mob.hud_used.holomap.used_station_map = null
-			watching_mob.hud_used.holomap.used_base_map = null
-			watching_mob = null
-			set_light(HOLOMAP_LOW_LIGHT)
+		animate(holomap_datum.base_map, alpha = 0, time = 0.5 SECONDS, easing = LINEAR_EASING)
+		addtimer(CALLBACK(src, PROC_REF(finish_close_map)), 0.5 SECONDS, TIMER_CLIENT_TIME)
 
 	use_power = IDLE_POWER_USE
 	holomap_datum.reset_map()
+
+/obj/machinery/station_map/proc/finish_close_map()
+	watching_mob.client?.screen -= watching_mob.hud_used.holomap
+	watching_mob.client?.images -= holomap_datum.base_map
+	watching_mob.hud_used.holomap.used_station_map = null
+	watching_mob.hud_used.holomap.used_base_map = null
+	watching_mob = null
+	set_light(HOLOMAP_LOW_LIGHT)
 
 /obj/machinery/station_map/power_change()
 	. = ..()
@@ -315,7 +317,7 @@
 
 	/*
 	var/list/air_alarms = list()
-	for(var/obj/machinery/airalarm/air_alarm in GLOB.machines)
+	for(var/obj/machinery/airalarm/air_alarm as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/airalarm))
 		var/area/alarms = get_area(air_alarm)
 		if(air_alarm?.z == current_z_level && alarms?.atmosalm) //Altered it to fire_alam since we don't have an area variable on air_alarms
 			var/image/alarm_icon = image('monkestation/code/modules/holomaps/icons/8x8.dmi', "atmos_marker")
@@ -419,7 +421,7 @@
 	name = "recon holomap"
 	desc = "A virtual map of the target station."
 
-/obj/machinery/station_map/syndicate/Initialize()
+/obj/machinery/station_map/syndicate/Initialize(mapload)
 	. = ..()
 	var/tracked_z_level = SSmapping.levels_by_trait(ZTRAIT_STATION)[1]
 	current_z_level = tracked_z_level

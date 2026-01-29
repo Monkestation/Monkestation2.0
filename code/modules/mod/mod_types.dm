@@ -114,6 +114,7 @@
 		/obj/item/mod/module/clamp/loader,
 		/obj/item/mod/module/magnet,
 		/obj/item/mod/module/hydraulic,
+		/obj/item/mod/module/stamp,
 	)
 
 /obj/item/mod/control/pre_equipped/mining
@@ -152,7 +153,10 @@
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/health_analyzer,
 		/obj/item/mod/module/injector,
-		/obj/item/mod/module/visor/medhud, // monkestation addition
+		/obj/item/mod/module/defibrillator,
+		/obj/item/mod/module/thread_ripper,
+		/obj/item/mod/module/criminalcapture/patienttransport,
+		/obj/item/mod/module/jetpack
 	)
 
 /obj/item/mod/control/pre_equipped/research

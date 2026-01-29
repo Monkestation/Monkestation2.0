@@ -70,9 +70,6 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 /// Yes I know this is a stupid flag, no you can't take him from me
 #define DECAL_INIT_UPDATE_EXPERIENCED_1 (1<<20)
 
-/// This atom should never be marked in demos/replays. (monkestation addition)
-#define DEMO_IGNORE_1 (1<<21)
-
 // Update flags for [/atom/proc/update_appearance]
 /// Update the atom's name
 #define UPDATE_NAME (1<<0)
@@ -112,9 +109,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 /// This turf will never be cleared away by other objects on Initialize.
 #define NO_CLEARING (1<<7)
 
-#define TURF_WEATHER (1<<8) //monkestation edit
 /// This atom is a pseudo-floor that blocks map generation's checkPlaceAtom() from placing things like trees ontop of it.
-#define TURF_BLOCKS_POPULATE_TERRAIN_FLORAFEATURES (1<<9)
+#define TURF_BLOCKS_POPULATE_TERRAIN_FLORAFEATURES (1<<8)
 
 ////////////////Area flags\\\\\\\\\\\\\\
 /// If it's a valid territory for cult summoning or the CRAB-17 phone to spawn

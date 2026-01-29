@@ -79,11 +79,11 @@
 	illustration = "dna"
 
 /obj/item/storage/box/injectors/PopulateContents()
-	var/static/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/dnainjector/h2m = 3,
 		/obj/item/dnainjector/m2h = 3,
 	)
-	generate_items_inside(items_inside,src)
+	generate_items_inside(items_inside, src)
 
 /obj/item/storage/box/bodybags
 	name = "body bags"
@@ -119,7 +119,7 @@
 	illustration = "beaker"
 
 /obj/item/storage/box/evilmeds/PopulateContents()
-	var/static/list/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/reagent_containers/cup/beaker/meta/omnizine = 1,
 		/obj/item/reagent_containers/cup/beaker/meta/sal_acid = 1,
 		/obj/item/reagent_containers/cup/beaker/meta/oxandrolone = 1,

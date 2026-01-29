@@ -1,5 +1,0 @@
-author: "Tractor-Maam"
-delete-after: True
-changes:
-  - rscadd: "Chat Client is now a stock PDA app."
-  - balance: "Chat Client is now 4GQ, down from 8GQ."

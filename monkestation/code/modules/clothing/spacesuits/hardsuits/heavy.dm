@@ -41,13 +41,12 @@
 			hud.hide_from(user)
 		user.update_sight()
 
-/datum/action/item_action/toggle_suit_flashlight //monkestation addition
+/datum/action/item_action/toggle_suit_flashlight
 	name = "Toggle Integrated Flashlight"
 
 /obj/item/clothing/suit/space/hardsuit/juggernaut
 	name = "cybersun juggernaut hardsuit"
 	desc = "A hyper resilient suit created from several layers of exotic materials and alloys. An etching in the neck pressure seal reads \"Property of Gorlex Marauders.\""
-	worn_icon_digitigrade = 'monkestation/icons/mob/clothing/species/suit_digi.dmi'
 	icon_state = "hardsuit-juggernaut"
 	resistance_flags = ACID_PROOF | FIRE_PROOF
 	clothing_flags = BLOCKS_SHOVE_KNOCKDOWN | STOPSPRESSUREDAMAGE | THICKMATERIAL //you are a walking wall you can't shove a wall down!

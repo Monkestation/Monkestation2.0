@@ -268,6 +268,18 @@
 
 	examine_list += span_info("[description]")
 
+/datum/plant_gene/trait/proc/process_stats(obj/item/seeds/parent_seed)
+	if(trait_flags & TRAIT_HALVES_YIELD)
+		parent_seed.adjust_yield(parent_seed.yield * 0.5)
+	if(trait_flags & TRAIT_HALVES_PRODUCTION)
+		parent_seed.adjust_production(parent_seed.production * 0.5)
+	if(trait_flags & TRAIT_HALVES_POTENCY)
+		parent_seed.adjust_potency(parent_seed.potency * 0.5)
+	if(trait_flags & TRAIT_HALVES_ENDURANCE)
+		parent_seed.adjust_endurance(parent_seed.endurance * 0.5)
+	if(trait_flags & TRAIT_HALVES_LIFESPAN)
+		parent_seed.adjust_lifespan(parent_seed.lifespan * 0.5)
+
 /// Allows the plant to be squashed when thrown or slipped on, leaving a colored mess and trash type item behind.
 /datum/plant_gene/trait/squash
 	name = "Liquid Contents"
@@ -284,7 +296,6 @@
 
 	RegisterSignal(our_plant, COMSIG_PLANT_ON_SLIP, PROC_REF(squash_plant))
 	RegisterSignal(our_plant, COMSIG_ITEM_ATTACK_SELF, PROC_REF(squash_plant))
-// monkestation start: use COMSIG_MOVABLE_IMPACT_ZONE for mobs
 	RegisterSignal(our_plant, COMSIG_MOVABLE_IMPACT, PROC_REF(on_impact))
 	RegisterSignal(our_plant, COMSIG_MOVABLE_IMPACT_ZONE, PROC_REF(on_impact_zone))
 
@@ -297,7 +308,6 @@
 	SIGNAL_HANDLER
 	if(!blocked)
 		squash_plant(our_plant, target)
-// monkestation end
 
 /*
  * Signal proc to squash the plant this trait belongs to, causing a smudge, exposing the target to reagents, and deleting it,
@@ -600,7 +610,7 @@
 
 	var/obj/item/food/grown/grown_plant = our_plant
 	if(istype(grown_plant, /obj/item/food/grown))
-		grown_plant.volume_rate = rate //Monkestation Edit
+		grown_plant.volume_rate = rate
 	else
 		//Grown inedibles however just use a reagents holder, so.
 		our_plant.reagents?.maximum_volume *= rate
@@ -712,7 +722,6 @@
 		return
 
 	RegisterSignal(our_plant, COMSIG_PLANT_ON_SLIP, PROC_REF(prickles_inject))
-// monkestation start: use COMSIG_MOVABLE_IMPACT_ZONE for mobs
 	RegisterSignal(our_plant, COMSIG_MOVABLE_IMPACT, PROC_REF(on_impact))
 	RegisterSignal(our_plant, COMSIG_MOVABLE_IMPACT_ZONE, PROC_REF(on_impact_zone))
 
@@ -725,7 +734,6 @@
 	SIGNAL_HANDLER
 	if(!blocked)
 		prickles_inject(our_plant, target)
-// monkestation end
 
 /*
  * Injects a target with a number of reagents from our plant.
@@ -1050,3 +1058,33 @@
 /datum/plant_gene/trait/plant_type/alien_properties
 	name = "?????"
 	icon = FA_ICON_QUESTION
+
+/*
+ * this limits potency, it is used for plants that have strange behavior above 100 potency.
+ *
+ */
+
+/datum/plant_gene/trait/seedless
+	name = "Seedless"
+	description = "The plant is unable to produce seeds"
+	icon = FA_ICON_STRIKETHROUGH
+	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
+
+/datum/plant_gene/trait/noreact
+	name = "Catalytic Inhibitor Serum"
+	description = "This genetic trait enables the plant to produce a serum that effectively halts chemical reactions within its tissues."
+	icon = FA_ICON_LAYER_GROUP
+	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_GRAFTABLE
+
+/datum/plant_gene/trait/noreact/on_new_plant(obj/item/our_plant, newloc)
+	. = ..()
+	if(!.)
+		return
+	ENABLE_BITFIELD(our_plant.reagents.flags, NO_REACT)
+	RegisterSignal(our_plant, COMSIG_PLANT_ON_SQUASH, PROC_REF(noreact_on_squash))
+
+/datum/plant_gene/trait/noreact/proc/noreact_on_squash(obj/item/our_plant, atom/target)
+	SIGNAL_HANDLER
+
+	DISABLE_BITFIELD(our_plant.reagents.flags, NO_REACT)
+	our_plant.reagents.handle_reactions()

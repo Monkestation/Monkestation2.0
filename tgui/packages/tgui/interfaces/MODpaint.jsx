@@ -57,20 +57,13 @@ const displayText = (param) => {
 export const MODpaint = (props) => {
   const { act, data } = useBackend();
   const { mapRef, currentColor } = data;
-  const [
-    [rr, rg, rb, ra],
-    [gr, gg, gb, ga],
-    [br, bg, bb, ba],
-    [ar, ag, ab, aa],
-    [cr, cg, cb, ca],
-  ] = currentColor;
   const presets = ['red', 'yellow', 'green', 'teal', 'blue', 'purple'];
   const prefixes = ['r', 'g', 'b'];
   return (
     <Window width={600} height={365}>
       <Window.Content>
         <Stack fill>
-          <Stack.Item fill width="30%">
+          <Stack.Item width="30%">
             {[0, 1, 2].map((row) => (
               <Section
                 key={row}
@@ -93,7 +86,8 @@ export const MODpaint = (props) => {
                         step={1}
                         stepPixelSize={0.75}
                         format={(value) => `${value}%`}
-                        onDrag={(e, value) => {
+                        tickWhileDragging
+                        onChange={(_, value) => {
                           let retColor = currentColor;
                           retColor[row * 4 + col] = value / 100;
                           act('transition_color', { color: retColor });
