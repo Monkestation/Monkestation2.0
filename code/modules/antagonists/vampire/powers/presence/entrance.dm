@@ -9,6 +9,7 @@
 	button_icon_state = "power_entrance"
 	power_explanation = "Click any player to entrance them, leaving them momentarily impaired.\n\
 		Your target will be slowed, muted, and unable to use items for a short duration.\n\
+		The effect only lasts half as long on mindshielded targets.\n\
 		This is a softer form of control - they can still move and resist, but are heavily hindered."
 	vampire_power_flags = NONE
 	vampire_check_flags = BP_CANT_USE_IN_TORPOR | BP_CANT_USE_IN_FRENZY | BP_CANT_USE_WHILE_STAKED | BP_CANT_USE_WHILE_INCAPACITATED | BP_CANT_USE_WHILE_UNCONSCIOUS
@@ -64,6 +65,8 @@
 /datum/status_effect/entranced/on_creation(mob/living/new_owner, set_duration)
 	if(IS_SAFE_NUM(set_duration))
 		duration = set_duration
+		if(HAS_TRAIT_NOT_FROM(new_owner, TRAIT_MINDSHIELD, NANITES_TRAIT)) // no you can't make everyone immune to this with nanites
+			duration /= 2
 	return ..()
 
 /datum/status_effect/entranced/on_apply()
