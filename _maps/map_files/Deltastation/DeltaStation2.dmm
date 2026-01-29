@@ -7936,18 +7936,6 @@
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron/diagonal,
 /area/station/medical/break_room)
-"bOT" = (
-/obj/effect/turf_decal/trimline/dark_red/filled/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/vehicle/ridden/battering_ram{
-	dir = 4
-	},
-/turf/open/floor/iron/dark,
-/area/station/ai_monitored/security/armory)
 "bOU" = (
 /obj/effect/landmark/start/hangover,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -16576,6 +16564,13 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
+"dUr" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/light/directional/north,
+/obj/item/kirbyplants/random,
+/turf/open/floor/iron/dark,
+/area/station/service/library)
 "dUu" = (
 /obj/structure/bookcase/random,
 /obj/machinery/firealarm/directional/north,
@@ -19828,6 +19823,13 @@
 /obj/item/folder/blue,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/hop)
+"eIw" = (
+/obj/machinery/status_display/evac/directional/north,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/cassette_library,
+/turf/open/floor/iron/dark,
+/area/station/service/library)
 "eIB" = (
 /obj/effect/turf_decal/trimline/hot_pink/filled/corner{
 	dir = 1
@@ -34079,17 +34081,6 @@
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/morgue)
-"hYh" = (
-/obj/machinery/newscaster/directional/east,
-/obj/machinery/airalarm/directional/south,
-/obj/structure/tank_holder/extinguisher,
-/obj/machinery/camera/directional/south{
-	c_tag = "Library - Art Gallery";
-	default_camera_icon = "Service - Cafeteria Aft";
-	name = "library camera"
-	},
-/turf/open/floor/wood/tile,
-/area/station/service/library/artgallery)
 "hYi" = (
 /obj/machinery/light/dim/directional/south,
 /obj/effect/landmark/event_spawn,
@@ -35296,6 +35287,16 @@
 /obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
+"ilp" = (
+/obj/machinery/newscaster/directional/east,
+/obj/machinery/airalarm/directional/south,
+/obj/structure/tank_holder/extinguisher,
+/obj/machinery/camera/directional/south{
+	c_tag = "Library - Art Gallery";
+	name = "library camera"
+	},
+/turf/open/floor/wood/tile,
+/area/station/service/library/artgallery)
 "ilq" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
@@ -43785,13 +43786,6 @@
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
 /area/space/nearstation)
-"khZ" = (
-/obj/machinery/status_display/evac/directional/north,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/cassette_library,
-/turf/open/floor/iron/dark,
-/area/station/service/library)
 "kic" = (
 /turf/closed/wall,
 /area/station/maintenance/disposal)
@@ -53502,14 +53496,6 @@
 /obj/effect/spawner/random/engineering/material,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/construction)
-"mAd" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/status_display/ai/directional/north,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/chair/sofa/right/brown,
-/turf/open/floor/iron/dark,
-/area/station/service/library)
 "mAh" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -55414,13 +55400,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/security)
-"mWD" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/light/directional/north,
-/obj/item/kirbyplants/random,
-/turf/open/floor/iron/dark,
-/area/station/service/library)
 "mWE" = (
 /obj/structure/table/wood,
 /obj/structure/cassette_rack/prefilled{
@@ -61768,20 +61747,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/carpet/grimey,
 /area/station/service/lawoffice)
-"oAn" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/computer/security/telescreen/entertainment/directional/north,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/camera/directional/north{
-	c_tag = "Library - Fore Starboard";
-	dir = 9;
-	name = "library camera"
-	},
-/obj/machinery/bookbinder,
-/obj/effect/turf_decal/bot_white,
-/turf/open/floor/iron/dark,
-/area/station/service/library)
 "oAo" = (
 /obj/effect/turf_decal/box/corners{
 	dir = 1
@@ -64518,6 +64483,14 @@
 /obj/structure/sink/directional/north,
 /turf/open/floor/iron,
 /area/station/medical/medbay)
+"piJ" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/status_display/ai/directional/north,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/chair/sofa/right/brown,
+/turf/open/floor/iron/dark,
+/area/station/service/library)
 "piR" = (
 /turf/closed/wall/r_wall,
 /area/station/command/heads_quarters/nt_rep)
@@ -67050,6 +67023,18 @@
 /obj/structure/cable/layer3,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/storage)
+"pNf" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/vehicle/ridden/battering_ram{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/station/ai_monitored/security/armory)
 "pNi" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -82658,6 +82643,20 @@
 	},
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/aft)
+"txZ" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/computer/security/telescreen/entertainment/directional/north,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/camera/directional/north{
+	c_tag = "Library - Fore Starboard";
+	dir = 9;
+	name = "library camera"
+	},
+/obj/machinery/bookbinder,
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/iron/dark,
+/area/station/service/library)
 "tym" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -149797,7 +149796,7 @@ dfZ
 fcx
 dgZ
 dfZ
-khZ
+eIw
 nHY
 ukv
 nHY
@@ -150054,7 +150053,7 @@ fQi
 lDI
 ehg
 dfZ
-oAn
+txZ
 nHY
 ukv
 nHY
@@ -150066,7 +150065,7 @@ lsJ
 ffP
 sMB
 fTH
-hYh
+ilp
 qMf
 oci
 bqS
@@ -150311,7 +150310,7 @@ ptI
 kHk
 eAA
 dfZ
-mWD
+dUr
 nHY
 phX
 lLJ
@@ -150568,7 +150567,7 @@ mOy
 mEh
 qEj
 dfZ
-mAd
+piJ
 rop
 oQd
 nHY
@@ -155935,7 +155934,7 @@ hyQ
 pDt
 pDt
 otJ
-bOT
+pNf
 wTu
 nNB
 lQh

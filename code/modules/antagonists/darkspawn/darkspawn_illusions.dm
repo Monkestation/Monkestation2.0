@@ -67,10 +67,7 @@
 	current_mob.grant_language(/datum/language/shadowtongue, source = LANGUAGE_DARKSPAWN)
 	current_mob.faction |= FACTION_DARKSPAWN
 
-	current_mob.AddComponent(/datum/component/internal_cam, list(FACTION_DARKSPAWN))
-	var/datum/component/internal_cam/cam = current_mob.GetComponent(/datum/component/internal_cam)
-	if(cam)
-		cam.change_cameranet(GLOB.thrallnet)
+	current_mob.AddComponent(/datum/component/internal_cam, list(CAMERANET_NETWORK_DARKSPAWN))
 
 /datum/antagonist/psyche/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/current_mob = mob_override || owner.current

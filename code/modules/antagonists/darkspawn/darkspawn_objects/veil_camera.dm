@@ -1,4 +1,3 @@
-GLOBAL_DATUM_INIT(thrallnet, /datum/cameranet/darkspawn, new)
 //////////////////////////////////////////////////////////////////////////
 //-------------------------Access the veilnet---------------------------//
 //////////////////////////////////////////////////////////////////////////
@@ -14,13 +13,12 @@ GLOBAL_DATUM_INIT(thrallnet, /datum/cameranet/darkspawn, new)
 	integrity_failure = 0
 	light_power = -1
 	light_color = COLOR_VELVET
-	networks = list(ROLE_DARKSPAWN)
+	networks = list(CAMERANET_NETWORK_DARKSPAWN)
 	clicksound = "crawling_shadows_walk"
 	jump_action = /datum/action/innate/camera_jump/darkspawn
 
 /obj/machinery/computer/camera_advanced/darkspawn/Initialize(mapload)
 	. = ..()
-	camnet = GLOB.thrallnet
 	src.set_light(l_power = light_power, l_color = light_color)
 
 /obj/machinery/computer/camera_advanced/darkspawn/update_overlays()
@@ -41,37 +39,27 @@ GLOBAL_DATUM_INIT(thrallnet, /datum/cameranet/darkspawn, new)
 /datum/action/innate/camera_jump/darkspawn/Activate()
 	if(!owner || !isliving(owner))
 		return
-	var/mob/eye/ai_eye/remote/remote_eye = owner.remote_control
-	var/obj/machinery/computer/camera_advanced/origin = remote_eye.origin
+	var/mob/eye/camera/remote/remote_eye = owner.remote_control
+	var/obj/machinery/computer/camera_advanced/origin = remote_eye.origin_ref.resolve()
 
-	var/list/L = list()
+	var/list/cameras_by_tag = SScameras.get_available_camera_by_tag_list(origin.networks, origin.z_lock)
 
-	for (var/obj/machinery/camera/cam as anything in origin.camnet.cameras)
-		if(length(origin.z_lock) && !(cam.z in origin.z_lock))
-			continue
-		L.Add(cam)
-
-	var/list/T = list()
-
-	for (var/obj/machinery/camera/netcam in L)
-		var/list/tempnetwork = netcam.network & origin.networks
-		if (length(tempnetwork))
-			if(!netcam.c_tag)
-				continue
-			T["[netcam.c_tag][netcam.can_use() ? null : " (Deactivated)"]"] = netcam
-
-	playsound(origin, "crawling_shadows_walk", 25, FALSE)
-	var/camera = tgui_input_list(usr, "Ally to view", "Allies", T)
+	playsound(origin, 'sound/machines/terminal_prompt.ogg', 25, FALSE)
+	var/camera = tgui_input_list(usr, "Ally to view", "Cameras", cameras_by_tag)
 	if(isnull(camera))
 		return
-	if(isnull(T[camera]))
+
+	playsound(src, SFX_TERMINAL_TYPE, 25, FALSE)
+
+	var/obj/machinery/camera/chosen_camera = cameras_by_tag[camera]
+	if(isnull(chosen_camera))
+		playsound(origin, 'sound/machines/terminal_prompt_deny.ogg', 25, FALSE)
 		return
-	var/obj/machinery/camera/final = T[camera]
-	playsound(origin, "crawling_shadows_walk", 25, FALSE)
-	if(final)
-		remote_eye.setLoc(get_turf(final))
-		owner.overlay_fullscreen("flash", /atom/movable/screen/fullscreen/flash/static)
-		owner.clear_fullscreen("flash", 1) //Shorter flash than normal since it's an ~~advanced~~ console!
+
+	playsound(origin, 'sound/machines/terminal_prompt_confirm.ogg', 25, FALSE)
+	remote_eye.setLoc(get_turf(chosen_camera))
+	owner.overlay_fullscreen("flash", /atom/movable/screen/fullscreen/flash/static)
+	owner.clear_fullscreen("flash", 3) //Shorter flash than normal since it's an ~~advanced~~ console!
 
 //////////////////////////////////////////////////////////////////////////
 //-------------------------Expand the veilnet---------------------------//
@@ -87,12 +75,8 @@ GLOBAL_DATUM_INIT(thrallnet, /datum/cameranet/darkspawn, new)
 	internal_light = FALSE
 	armor_type = /datum/armor/machinery_camera
 	flags_1 = NODECONSTRUCT_1
-
-/obj/machinery/camera/darkspawn/Initialize(mapload, obj/structure/camera_assembly/CA)
-	. = ..()
-	network = list(ROLE_DARKSPAWN)
-	change_camnet(GLOB.thrallnet)
-	setViewRange(10)
+	network = list(CAMERANET_NETWORK_DARKSPAWN)
+	view_range = 10
 
 /obj/machinery/camera/darkspawn/emp_act(severity, reset_time = 10)
 	return

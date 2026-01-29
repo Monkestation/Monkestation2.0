@@ -13,6 +13,8 @@
 
 #define isimage(thing) (istype(thing, /image))
 
+#define isalist(thing) (istype(thing, /alist))
+
 GLOBAL_VAR_INIT(magic_appearance_detecting_image, new /image) // appearances are awful to detect safely, but this seems to be the best way ~ninjanomnom
 #define isappearance(thing) (!isimage(thing) && !ispath(thing) && istype(GLOB.magic_appearance_detecting_image, thing))
 #define isappearance_or_image(thing) (isimage(thing) || (!ispath(thing) && istype(GLOB.magic_appearance_detecting_image, thing)))
@@ -207,19 +209,23 @@ GLOBAL_LIST_INIT(cat_typecache, typecacheof(list(
 
 #define isbingle(A) (istype(A, /mob/living/basic/bingle))
 
-
-//Misc mobs
-#define isobserver(A) (istype(A, /mob/dead/observer))
-
-#define isdead(A) (istype(A, /mob/dead))
-
-#define isnewplayer(A) (istype(A, /mob/dead/new_player))
+//Eye mobs
+#define iseyemob(A) (istype(A, /mob/eye))
 
 #define isovermind(A) (istype(A, /mob/eye/blob))
 
-#define iseyemob(A) (istype(A, /mob/eye))
+#define iscameramob(A) (istype(A, /mob/eye/camera))
 
-#define isaicamera(A) (istype(A, /mob/eye/ai_eye))
+#define isaicamera(A) (istype(A, /mob/eye/camera/ai))
+
+#define isremotecamera(A) (istype(A, /mob/eye/camera/remote))
+
+//Dead mobs
+#define isdead(A) (istype(A, /mob/dead))
+
+#define isobserver(A) (istype(A, /mob/dead/observer))
+
+#define isnewplayer(A) (istype(A, /mob/dead/new_player))
 
 //Objects
 #define isobj(A) istype(A, /obj) //override the byond proc because it returns true on children of /atom/movable that aren't objs

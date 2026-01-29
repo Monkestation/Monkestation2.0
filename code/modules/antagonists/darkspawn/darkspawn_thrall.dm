@@ -74,9 +74,7 @@
 	current_mob.grant_language(/datum/language/shadowtongue, source = LANGUAGE_DARKSPAWN)
 	current_mob.faction |= FACTION_DARKSPAWN
 
-	current_mob.AddComponent(/datum/component/internal_cam, list(ROLE_DARKSPAWN))
-	var/datum/component/internal_cam/cam = current_mob.GetComponent(/datum/component/internal_cam)
-	cam?.change_cameranet(GLOB.thrallnet)
+	current_mob.AddComponent(/datum/component/internal_cam, list(CAMERANET_NETWORK_DARKSPAWN))
 
 	for(var/spell in abilities)
 		if(isarachnid(current_mob) && ispath(spell, /datum/action/cooldown/spell/toggle/nightvision))

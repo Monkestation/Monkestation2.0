@@ -33,7 +33,7 @@
 
 /obj/machinery/computer/camera_advanced/ratvar/CreateEye()
 	. = ..()
-	eyeobj.visible_icon = TRUE
+	eyeobj.use_visibility = TRUE
 	eyeobj.icon = 'monkestation/icons/mob/silicon/cameramob.dmi'
 	eyeobj.icon_state = "ratvar_camera"
 	eyeobj.SetInvisibility(INVISIBILITY_OBSERVER)
@@ -67,7 +67,7 @@
 		return
 
 	var/mob/living/cam_user = owner
-	var/mob/eye/ai_eye/remote/cam = cam_user.remote_control
+	var/mob/eye/camera/remote/cam = cam_user.remote_control
 	var/turf/target_loc = get_turf(cam)
 	var/area/target_area = get_area(target_loc)
 	if(!(SSthe_ark.marked_areas[target_area]))
@@ -84,7 +84,8 @@
 	build_all_button_icons(UPDATE_BUTTON_ICON)
 	if(do_after(cam_user, 5 SECONDS, target = target_loc, extra_checks = CALLBACK(src, PROC_REF(warping_check))))
 		try_servant_warp(cam_user, target_loc)
-		astype(owner.remote_control, /mob/eye/ai_eye/remote)?.origin.remove_eye_control(owner)
+		var/obj/machinery/origin = astype(owner.remote_control, /mob/eye/camera/remote)?.origin_ref?.resolve()
+		origin?.remove_eye_control(cam_user, src)
 
 	button_icon_state = "warp_down"
 	build_all_button_icons(UPDATE_BUTTON_ICON)

@@ -113,7 +113,7 @@
 		if(!iseyemob(suspect))
 			return
 		if(isaicamera(suspect))
-			var/mob/eye/ai_eye/ai_camera = suspect
+			var/mob/eye/camera/ai/ai_camera = suspect
 			if(!ai_camera.ai)
 				return
 			suspect = ai_camera.ai
@@ -199,7 +199,7 @@
 		if(!iseyemob(suspect))
 			return
 		if(isaicamera(suspect))
-			var/mob/eye/ai_eye/ai_camera = suspect
+			var/mob/eye/camera/ai/ai_camera = suspect
 			if(!ai_camera.ai)
 				return
 			suspect = ai_camera.ai

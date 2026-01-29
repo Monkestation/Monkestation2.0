@@ -8,7 +8,7 @@
 	circuit = /obj/item/circuitboard/computer/security
 	light_color = COLOR_SOFT_RED
 
-	var/list/network = list("ss13")
+	var/list/network = list(CAMERANET_NETWORK_SS13)
 	var/obj/machinery/camera/active_camera
 	/// The turf where the camera was last updated.
 	var/turf/last_camera_turf
@@ -80,7 +80,7 @@
 		data["activeCamera"] = list(
 			name = active_camera.c_tag,
 			ref = REF(active_camera),
-			status = active_camera.status,
+			status = active_camera.camera_enabled,
 		)
 	return data
 
@@ -88,7 +88,7 @@
 	var/list/data = list()
 	data["network"] = network
 	data["mapRef"] = cam_screen.assigned_map
-	data["cameras"] = GLOB.cameranet.get_available_cameras_data(network)
+	data["cameras"] = SScameras.get_available_cameras_data(network)
 	return data
 
 /obj/machinery/computer/security/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -97,7 +97,8 @@
 		return
 
 	if(action == "switch_camera")
-		var/obj/machinery/camera/selected_camera = locate(params["camera"]) in GLOB.cameranet.cameras
+		// active_camera?.on_stop_watching(src)
+		var/obj/machinery/camera/selected_camera = locate(params["camera"]) in SScameras.cameras
 		active_camera = selected_camera
 		playsound(src, SFX_TERMINAL_TYPE, 25, FALSE)
 
@@ -219,31 +220,31 @@
 	desc = "Used to access the various cameras on the outpost."
 	icon_screen = "mining"
 	icon_keyboard = "mining_key"
-	network = list("mine", "auxbase")
+	network = list(CAMERANET_NETWORK_MINE, CAMERANET_NETWORK_AUXBASE)
 	circuit = /obj/item/circuitboard/computer/mining
 
 /obj/machinery/computer/security/research
 	name = "research camera console"
 	desc = "Used to access the various cameras in science."
-	network = list("rd")
+	network = list(CAMERANET_NETWORK_RD)
 	circuit = /obj/item/circuitboard/computer/research
 
 /obj/machinery/computer/security/hos
 	name = "\improper Head of Security's camera console"
 	desc = "A custom security console with added access to the labor camp network."
-	network = list("ss13", "labor")
+	network = list(CAMERANET_NETWORK_SS13, CAMERANET_NETWORK_LABOR)
 	circuit = null
 
 /obj/machinery/computer/security/labor
 	name = "labor camp monitoring"
 	desc = "Used to access the various cameras on the labor camp."
-	network = list("labor")
+	network = list(CAMERANET_NETWORK_LABOR)
 	circuit = null
 
 /obj/machinery/computer/security/qm
 	name = "\improper Quartermaster's camera console"
 	desc = "A console with access to the mining, auxiliary base and vault camera networks."
-	network = list("mine", "auxbase", "vault")
+	network = list(CAMERANET_NETWORK_MINE, CAMERANET_NETWORK_AUXBASE, CAMERANET_NETWORK_VAULT)
 	circuit = null
 
 /obj/machinery/computer/security/old

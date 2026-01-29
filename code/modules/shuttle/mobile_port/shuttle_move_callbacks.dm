@@ -219,11 +219,11 @@ All ShuttleMove procs go here
 	. = ..()
 	if(. & MOVE_AREA)
 		. |= MOVE_CONTENTS
-		GLOB.cameranet.removeCamera(src)
+		SScameras.remove_camera_from_chunk(src)
 
 /obj/machinery/camera/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
 	. = ..()
-	GLOB.cameranet.addCamera(src)
+	SScameras.add_camera_to_chunk(src)
 
 /obj/machinery/mech_bay_recharge_port/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir)
 	. = ..()
@@ -284,12 +284,12 @@ All ShuttleMove procs go here
 
 /************************************Mob move procs************************************/
 /mob/onShuttleMove(turf/newT, turf/oldT, list/movement_force, move_dir, obj/docking_port/stationary/old_dock, obj/docking_port/mobile/moving_dock)
-	if(!move_on_shuttle)
+	if(HAS_TRAIT(src, TRAIT_BLOCK_SHUTTLE_MOVEMENT))
 		return
 	. = ..()
 
 /mob/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
-	if(!move_on_shuttle)
+	if(HAS_TRAIT(src, TRAIT_BLOCK_SHUTTLE_MOVEMENT))
 		return
 	. = ..()
 	if(client && movement_force)

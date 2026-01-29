@@ -182,6 +182,38 @@ GLOBAL_LIST_INIT_TYPED(reftracker_skip_typecache, /alist, init_reftracker_skip_t
 			if(islist(variable))
 				DoSearchVar(variable, "[container_name] [container_print] -> [varname] (list)", recursive_limit - 1, search_time)
 
+	else if(isalist(potential_container))
+		var/alist/potential_cache = potential_container
+		for(var/key_in_list, value_in_list in potential_cache)
+			#ifndef FIND_REF_NO_CHECK_TICK
+			CHECK_TICK
+			#endif
+
+			//Check normal entrys
+			if(key_in_list == src)
+				#ifdef REFERENCE_TRACKING_DEBUG
+				if(SSgarbage.should_save_refs)
+					found_refs[potential_cache] = TRUE
+					continue //End early, don't want these logging
+				#endif
+				log_reftracker("Found [type] [text_ref(src)] as key in alist [container_name].")
+				continue
+
+			if(value_in_list == src)
+				#ifdef REFERENCE_TRACKING_DEBUG
+				if(SSgarbage.should_save_refs)
+					found_refs[potential_cache] = TRUE
+					continue //End early, don't want these logging
+				#endif
+				log_reftracker("Found [type] [text_ref(src)] as in alist [container_name]\[[key_in_list]\].")
+				continue
+
+			if(islist(key_in_list))
+				DoSearchVar(key_in_list, "[container_name] -> [key_in_list] (list)", recursive_limit - 1, search_time)
+			//Check assoc sublists
+			if(islist(value_in_list))
+				DoSearchVar(value_in_list, "[container_name]\[[key_in_list]\] -> [value_in_list] (list)", recursive_limit - 1, search_time)
+
 	else if(islist(potential_container))
 		var/normal = IS_NORMAL_LIST(potential_container)
 		var/list/potential_cache = potential_container

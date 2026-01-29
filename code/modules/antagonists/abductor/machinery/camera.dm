@@ -1,7 +1,7 @@
 /obj/machinery/computer/camera_advanced/abductor
 	name = "Human Observation Console"
 	var/team_number = 0
-	networks = list("ss13", "abductor")
+	networks = list(CAMERANET_NETWORK_SS13, CAMERANET_NETWORK_ABDUCTOR)
 	var/obj/machinery/abductor/console/console
 	/// We can't create our actions until after LateInitialize
 	/// So we instead do it on the first call to GrantActions
@@ -21,11 +21,12 @@
 	return ..()
 
 /obj/machinery/computer/camera_advanced/abductor/CreateEye()
-	..()
-	eyeobj.visible_icon = TRUE
+	. = ..()
+	//For observers
 	eyeobj.icon = 'icons/mob/eyemob.dmi'
 	eyeobj.icon_state = "abductor_camera"
-	eyeobj.invisibility = INVISIBILITY_OBSERVER
+	//For the user
+	eyeobj.set_user_icon(eyeobj.icon, eyeobj.icon_state)
 
 /obj/machinery/computer/camera_advanced/abductor/GrantActions(mob/living/carbon/user)
 	if(!abduct_created)
@@ -57,7 +58,7 @@
 		to_chat(owner, span_warning("You must wait [DisplayTimeText(use_delay - world.time)] to use the [target] again!"))
 		return
 	var/mob/living/carbon/human/C = owner
-	var/mob/eye/ai_eye/remote/remote_eye = C.remote_control
+	var/mob/eye/camera/remote/remote_eye = C.remote_control
 	var/obj/machinery/abductor/pad/P = target
 
 	var/area/target_area = get_area(remote_eye)
@@ -67,7 +68,7 @@
 
 	use_delay = (world.time + abductor_pad_cooldown)
 
-	if(GLOB.cameranet.checkTurfVis(remote_eye.loc))
+	if(SScameras.is_visible_by_cameras(remote_eye.loc))
 		P.PadToLoc(remote_eye.loc)
 
 /datum/action/innate/teleport_out
@@ -97,7 +98,7 @@
 		to_chat(owner, span_warning("You can only teleport to one place at a time!"))
 		return
 	var/mob/living/carbon/human/C = owner
-	var/mob/eye/ai_eye/remote/remote_eye = C.remote_control
+	var/mob/eye/camera/remote/remote_eye = C.remote_control
 	var/obj/machinery/abductor/pad/P = target
 
 	var/area/target_area = get_area(remote_eye)
@@ -107,7 +108,7 @@
 
 	use_delay = (world.time + teleport_self_cooldown)
 
-	if(GLOB.cameranet.checkTurfVis(remote_eye.loc))
+	if(SScameras.is_visible_by_cameras(remote_eye.loc))
 		P.MobToLoc(remote_eye.loc,C)
 
 /datum/action/innate/vest_mode_swap
@@ -143,7 +144,7 @@
 		return
 
 	var/mob/living/carbon/human/C = owner
-	var/mob/eye/ai_eye/remote/remote_eye = C.remote_control
+	var/mob/eye/camera/remote/remote_eye = C.remote_control
 
 	var/obj/machinery/abductor/console/console = target
 	console.SetDroppoint(remote_eye.loc,owner)

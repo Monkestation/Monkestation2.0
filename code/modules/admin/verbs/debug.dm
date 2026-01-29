@@ -315,7 +315,7 @@ ADMIN_VERB(cmd_admin_areatest, R_DEBUG, FALSE, "Test Areas", "Tests the areas fo
 			areas_with_intercom.Add(A.type)
 		CHECK_TICK
 
-	for(var/obj/machinery/camera/C as anything in GLOB.cameranet.cameras)
+	for(var/obj/machinery/camera/C as anything in SScameras.cameras)
 		var/area/A = get_area(C)
 		if(!A)
 			dat += "Skipped over [C] in invalid location, [C.loc].<br>"
