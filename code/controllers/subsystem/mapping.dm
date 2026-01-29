@@ -571,8 +571,6 @@ Used by the AI doomsday and the self-destruct nuke.
 		LoadGroup(FailedZs, "Trench", "map_files/Mining", "Oshan.dmm", default_traits = ZTRAITS_TRENCH)
 	else if (!isnull(current_map.minetype) && current_map.minetype != "none")
 		INIT_ANNOUNCE("WARNING: An unknown minetype '[current_map.minetype]' was set! This is being ignored! Update the maploader code!")
-	if(CONFIG_GET(flag/eclipse))
-		LoadGroup(FailedZs, "Eclipse", "~monkestation/unique", "eclipse.dmm", traits = ZTRAITS_ECLIPSE)
 #endif
 
 	if(LAZYLEN(FailedZs)) //but seriously, unless the server's filesystem is messed up this will never happen
