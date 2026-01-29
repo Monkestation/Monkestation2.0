@@ -2013,7 +2013,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
 "Lf" = (
-/obj/machinery/door/airlock/glass_large,
+/obj/machinery/door/airlock/multi_tile/public/glass,
 /turf/open/floor/wood/tile,
 /area/shuttle/escape)
 "Lo" = (

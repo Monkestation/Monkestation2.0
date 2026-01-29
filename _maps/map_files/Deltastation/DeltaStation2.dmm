@@ -4513,6 +4513,13 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/station/maintenance/port)
+"aZV" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/light/directional/north,
+/obj/item/kirbyplants/random,
+/turf/open/floor/iron/dark,
+/area/station/service/library)
 "baf" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -7936,18 +7943,6 @@
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron/diagonal,
 /area/station/medical/break_room)
-"bOT" = (
-/obj/effect/turf_decal/trimline/dark_red/filled/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/vehicle/ridden/battering_ram{
-	dir = 4
-	},
-/turf/open/floor/iron/dark,
-/area/station/ai_monitored/security/armory)
 "bOU" = (
 /obj/effect/landmark/start/hangover,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -20118,6 +20113,20 @@
 /obj/effect/turf_decal/siding/yellow/corner,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
+"eLu" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/computer/security/telescreen/entertainment/directional/north,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/camera/directional/north{
+	c_tag = "Library - Fore Starboard";
+	dir = 9;
+	name = "library camera"
+	},
+/obj/machinery/bookbinder,
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/iron/dark,
+/area/station/service/library)
 "eLz" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/carpet/grimey,
@@ -24312,6 +24321,19 @@
 	},
 /turf/open/floor/iron/dark/textured_corner,
 /area/station/security/prison/workout)
+"fJS" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/door/firedoor,
+/obj/structure/disposalpipe/segment,
+/obj/machinery/door/airlock/multi_tile/public/glass{
+	name = "Laundromat"
+	},
+/turf/open/floor/iron,
+/area/station/commons/dorms/laundry)
 "fJZ" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -31414,6 +31436,18 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/station/medical/abandoned)
+"hqw" = (
+/obj/machinery/door/airlock/multi_tile/public/glass{
+	name = "Laundromat"
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/iron,
+/area/station/commons/dorms/laundry)
 "hqK" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -43785,13 +43819,6 @@
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
 /area/space/nearstation)
-"khZ" = (
-/obj/machinery/status_display/evac/directional/north,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/cassette_library,
-/turf/open/floor/iron/dark,
-/area/station/service/library)
 "kic" = (
 /turf/closed/wall,
 /area/station/maintenance/disposal)
@@ -53502,14 +53529,6 @@
 /obj/effect/spawner/random/engineering/material,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/construction)
-"mAd" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/status_display/ai/directional/north,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/chair/sofa/right/brown,
-/turf/open/floor/iron/dark,
-/area/station/service/library)
 "mAh" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -53862,18 +53881,6 @@
 /obj/machinery/power/apc/auto_name/directional/south,
 /turf/open/floor/iron,
 /area/station/service/kitchen/abandoned)
-"mDO" = (
-/obj/machinery/door/airlock/glass_large{
-	name = "Laundromat"
-	},
-/obj/effect/turf_decal/stripes/line,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/machinery/door/firedoor,
-/obj/structure/disposalpipe/segment,
-/turf/open/floor/iron,
-/area/station/commons/dorms/laundry)
 "mDR" = (
 /obj/machinery/vending/wardrobe/law_wardrobe,
 /obj/machinery/firealarm/directional/east,
@@ -55414,13 +55421,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/security)
-"mWD" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/light/directional/north,
-/obj/item/kirbyplants/random,
-/turf/open/floor/iron/dark,
-/area/station/service/library)
 "mWE" = (
 /obj/structure/table/wood,
 /obj/structure/cassette_rack/prefilled{
@@ -61768,20 +61768,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/carpet/grimey,
 /area/station/service/lawoffice)
-"oAn" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/computer/security/telescreen/entertainment/directional/north,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/camera/directional/north{
-	c_tag = "Library - Fore Starboard";
-	dir = 9;
-	name = "library camera"
-	},
-/obj/machinery/bookbinder,
-/obj/effect/turf_decal/bot_white,
-/turf/open/floor/iron/dark,
-/area/station/service/library)
 "oAo" = (
 /obj/effect/turf_decal/box/corners{
 	dir = 1
@@ -66283,19 +66269,6 @@
 /obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay)
-"pEM" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/door/firedoor,
-/obj/structure/disposalpipe/segment,
-/obj/machinery/door/airlock/glass_large{
-	name = "Laundromat"
-	},
-/turf/open/floor/iron,
-/area/station/commons/dorms/laundry)
 "pEP" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -69400,6 +69373,18 @@
 /obj/effect/turf_decal/bot_red,
 /turf/open/floor/iron,
 /area/station/science/robotics/mechbay)
+"qoY" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/vehicle/ridden/battering_ram{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/station/ai_monitored/security/armory)
 "qpb" = (
 /obj/effect/turf_decal/trimline/hot_pink/filled/line{
 	dir = 5
@@ -74958,6 +74943,14 @@
 	dir = 8
 	},
 /area/station/hallway/primary/port)
+"rHk" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/status_display/ai/directional/north,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/chair/sofa/right/brown,
+/turf/open/floor/iron/dark,
+/area/station/service/library)
 "rHp" = (
 /obj/machinery/portable_atmospherics/canister/plasma,
 /obj/effect/turf_decal/bot,
@@ -87312,6 +87305,13 @@
 	},
 /turf/open/misc/grass,
 /area/station/hallway/primary/fore)
+"uCZ" = (
+/obj/machinery/status_display/evac/directional/north,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/cassette_library,
+/turf/open/floor/iron/dark,
+/area/station/service/library)
 "uDj" = (
 /obj/structure/cable,
 /obj/structure/sign/nanotrasen{
@@ -149797,7 +149797,7 @@ dfZ
 fcx
 dgZ
 dfZ
-khZ
+uCZ
 nHY
 ukv
 nHY
@@ -150054,7 +150054,7 @@ fQi
 lDI
 ehg
 dfZ
-oAn
+eLu
 nHY
 ukv
 nHY
@@ -150311,7 +150311,7 @@ ptI
 kHk
 eAA
 dfZ
-mWD
+aZV
 nHY
 phX
 lLJ
@@ -150568,7 +150568,7 @@ mOy
 mEh
 qEj
 dfZ
-mAd
+rHk
 rop
 oQd
 nHY
@@ -151847,14 +151847,14 @@ pFO
 arL
 mVW
 cLm
-mDO
+hqw
 eJb
 oNy
 oNy
 vjz
 jcl
 cTc
-pEM
+fJS
 pLm
 vTd
 nyq
@@ -155935,7 +155935,7 @@ hyQ
 pDt
 pDt
 otJ
-bOT
+qoY
 wTu
 nNB
 lQh
