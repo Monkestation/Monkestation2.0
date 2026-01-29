@@ -1,5 +1,5 @@
 import { classes } from 'common/react';
-import { sendAct, useBackend, useLocalState } from '../../backend';
+import { useBackend, useLocalState } from '../../backend';
 import {
   Box,
   Button,
@@ -31,6 +31,7 @@ import { filterMap, sortBy } from 'common/collections';
 import { useRandomToggleState } from './useRandomToggleState';
 import { createSearch } from 'common/string';
 import { ReactNode } from 'react';
+import { sendAct } from 'tgui/events/act';
 
 const CLOTHING_CELL_SIZE = 64;
 const CLOTHING_SIDEBAR_ROWS = 10;

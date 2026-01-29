@@ -71,9 +71,18 @@
 
 @include meta.load-css('highlight.js/scss/a11y-dark.scss');
 
+// MONKESTATION ADDITION START
+@include meta.load-css('./themes/clockwork.scss');
+@include meta.load-css('./themes/admintickets.scss');
+// MONKESTATION ADDITION END
+
+@include meta.load-css('./themes/chicken_book.scss');
+@include meta.load-css('./themes/generic-yellow.scss');
+@include meta.load-css('./themes/generic.scss');
+
 // NT Theme
 .Layout__content {
-  background-image: url('../assets/bg-nanotrasen.svg');
+  background-image: url('assets/bg-nanotrasen.svg');
   background-size: 70% 70%;
   background-position: center;
   background-repeat: no-repeat;
