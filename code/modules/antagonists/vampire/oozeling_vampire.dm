@@ -85,4 +85,5 @@
 	else if(COOLDOWN_FINISHED(src, reminder_cooldown))
 		var/progress = round((1 - (oozeling_revival_progress / OOZELING_VAMPIRE_REVIVE_TIME)) * 100, 1)
 		to_chat(core.brainmob, span_cultlarge("Your vitae coagulates... You are approximately [progress]% reformed."), type = MESSAGE_TYPE_INFO)
+		core.balloon_alert(core.brainmob, "[progress]% reformed...")
 		COOLDOWN_START(src, reminder_cooldown, 15 SECONDS)
