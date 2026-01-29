@@ -1,11 +1,26 @@
+// Make sure to add important verbs here to stick when the player is in an interview.
+GLOBAL_LIST_INIT(important_interface_verbs, list(
+	/client/verb/wiki,
+	/client/verb/forum,
+	/client/verb/rules,
+	/client/verb/github,
+	//report issue omitted
+	/client/verb/changelog,
+	/client/verb/hotkeys_help,
+	/client/verb/fix_tgui_panel,
+	/client/verb/refresh_tgui
+))
+
 //Please use mob or src (not usr) in these procs. This way they can be called in the same fashion as procs.
 /client/verb/wiki()
 	set name = "wiki"
-	set desc = "Type what you want to know about.  This will open the wiki in your web browser. Type nothing to go to the main page."
+	set desc = "Open the wiki."
 	set hidden = TRUE
 	var/wikiurl = CONFIG_GET(string/wikiurl)
 	if(wikiurl)
-		src << link(wikiurl) // monkestation edit
+		if(tgui_alert(src, "This will open the wiki in your browser. Are you sure?",, list("Yes","No"))!="Yes")
+			return
+		src << link(wikiurl)
 	else
 		to_chat(src, span_danger("The wiki URL is not set in the server configuration."))
 	return

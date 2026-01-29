@@ -13,7 +13,9 @@
 		"tgui:lint": "eslint packages --ext .js,.cjs,.ts,.tsx",
 		"tgui:prettier": "prettier --check .",
 		"tgui:test": "bun test",
-		"tgui:tsc": "tsc"
+		"tgui:tsc": "tsc",
+		"tgui:prettier-fix": "prettier --write .",
+		"tgui:eslint-fix": "eslint --fix \"packages/**/*.{js,cjs,ts,jsx,tsx}\""
 	},
 	"devDependencies": {
 		"@typescript-eslint/parser": "^5.62.0",

@@ -1,7 +1,8 @@
-import { BooleanLike } from 'common/react';
-import { isValidElement, ReactNode } from 'react';
-
-import { useBackend } from '../../backend';
+import React, {
+  type ComponentProps,
+  type Dispatch,
+  type SetStateAction,
+} from 'react';
 import {
   Box,
   Button,
@@ -9,11 +10,13 @@ import {
   LabeledList,
   Section,
   Tooltip,
-} from '../../components';
-import { BoxProps } from '../../components/Box';
+} from 'tgui-core/components';
+import type { BooleanLike } from 'tgui-core/react';
+
+import { useBackend } from '../../backend';
 import { logger } from '../../logging';
-import { CallInfo, LuaEditorModal, Variant, VariantList } from './types';
-import { ListElement, ListPath } from './types';
+import type { CallInfo, LuaEditorModal, Variant, VariantList } from './types';
+import type { ListElement, ListPath } from './types';
 
 const mapListVariantsInner = (value: any, variant: Variant) => {
   if (Array.isArray(variant)) {
@@ -94,7 +97,7 @@ const mapListVariants = (list: any[], variants: VariantList) => {
   });
 };
 
-type ListMapperProps = BoxProps & {
+type ListMapperProps = ComponentProps<typeof Box> & {
   list: ListElement[];
 } & Partial<{
     variants: VariantList;
@@ -105,8 +108,8 @@ type ListMapperProps = BoxProps & {
     collapsible: BooleanLike;
     callType: 'callFunction' | 'resumeTask';
     path: ListPath;
-    setToCall: (newValue: CallInfo | undefined) => void;
-    setModal: (newValue: LuaEditorModal) => void;
+    setToCall: Dispatch<SetStateAction<CallInfo>>;
+    setModal: Dispatch<SetStateAction<LuaEditorModal>>;
   }>;
 
 export const ListMapper = (props: ListMapperProps) => {
@@ -133,7 +136,7 @@ export const ListMapper = (props: ListMapperProps) => {
   }
 
   const ThingNode = (
-    thing: ReactNode, // There is NO way this is correct
+    thing: any,
     path: ListPath,
     canCall: BooleanLike,
     overrideProps?: ListMapperProps,
@@ -150,17 +153,14 @@ export const ListMapper = (props: ListMapperProps) => {
           {...overrideProps}
         />
       );
-    } else if (isValidElement(thing)) {
+    } else if (React.isValidElement<any>(thing)) {
       switch (thing.key) {
         case 'ref':
           return (
             <Button
               tooltip="Click to VV"
               onClick={vvAct && (() => vvAct(path))}
-              {
-                // @ts-ignore Someone should really rewrite this whole thing
-                ...thing.props
-              }
+              {...thing.props}
             />
           );
         case 'function':
@@ -177,10 +177,7 @@ export const ListMapper = (props: ListMapperProps) => {
                   });
                   setModal('call');
                 }}
-                {
-                  // @ts-ignore
-                  ...thing.props
-                }
+                {...thing.props}
               />
             );
           } else if (thing === null) {
@@ -199,9 +196,9 @@ export const ListMapper = (props: ListMapperProps) => {
   const ListMapperInner = (element: ListElement, i: number) => {
     const { key, value } = element;
     const basePath: ListPath = path ? path : [];
-    let keyPath: ListPath = [...basePath, { index: i + 1, type: 'key' }];
-    let valuePath: ListPath = [...basePath, { index: i + 1, type: 'value' }];
-    let entryPath: ListPath = [...basePath, { index: i + 1, type: 'entry' }];
+    const keyPath: ListPath = [...basePath, { index: i + 1, type: 'key' }];
+    const valuePath: ListPath = [...basePath, { index: i + 1, type: 'value' }];
+    const entryPath: ListPath = [...basePath, { index: i + 1, type: 'entry' }];
 
     if (key === null && skipNulls) {
       return;
@@ -211,7 +208,7 @@ export const ListMapper = (props: ListMapperProps) => {
      * Finding a function only accessible as a table's key is too awkward to
      * deal with for now
      */
-    let keyNode = ThingNode(key, keyPath, false);
+    const keyNode = ThingNode(key, keyPath, false);
 
     /*
      * Likewise, since table, thread, and userdata equality is tested by
@@ -221,8 +218,8 @@ export const ListMapper = (props: ListMapperProps) => {
     const uniquelyIndexable =
       typeof key === 'string' ||
       typeof key === 'number' ||
-      (isValidElement(key) && key.key === 'ref');
-    let valueNode = ThingNode(
+      (React.isValidElement(key) && key.key === 'ref');
+    const valueNode = ThingNode(
       value,
       typeof key === 'number' ? keyPath : valuePath,
       uniquelyIndexable,
@@ -267,7 +264,7 @@ export const ListMapper = (props: ListMapperProps) => {
 
   const inner = (
     <>
-      {list && list.map(ListMapperInner)}
+      {list?.map(ListMapperInner)}
       {editable && (
         <Button
           icon="plus"

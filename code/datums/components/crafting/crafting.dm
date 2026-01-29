@@ -469,6 +469,7 @@
 		result.forceMove(user.drop_location())
 	to_chat(user, span_notice("[recipe.name] crafted."))
 	user.investigate_log("crafted [recipe]", INVESTIGATE_CRAFTING)
+	result.add_hiddenprint(user)
 	recipe.on_craft_completion(user, result)
 	return TRUE
 
@@ -491,6 +492,7 @@
 					result.forceMove(user.drop_location())
 				to_chat(user, span_notice("Constructed [crafting_recipe.name]."))
 				user.investigate_log("crafted [crafting_recipe]", INVESTIGATE_CRAFTING)
+				result.add_hiddenprint(user)
 				crafting_recipe.on_craft_completion(user, result)
 			else
 				to_chat(user, span_warning("Construction failed[result]"))

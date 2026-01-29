@@ -1,4 +1,3 @@
-import type { BooleanLike } from 'common/react';
 import { useState } from 'react';
 import { useBackend } from '../backend';
 import {
@@ -9,10 +8,12 @@ import {
   Section,
   Stack,
   Tabs,
-  TextArea,
 } from '../components';
 import { RADIO_CHANNELS } from '../constants';
 import { Window } from '../layouts';
+import { AceEditor } from '../components/Ace/Editor';
+import { sleep } from 'tgui-core/timer';
+import { UI_UPDATE } from 'tgui-core/constants';
 
 // NTSLTextArea component start
 // This is literally just TextArea but without ENTER updating anything, for NTSL
@@ -24,8 +25,8 @@ type NTSLTextAreaProps = {
 // NTSLTextArea component end
 
 type Data = {
-  admin_view: BooleanLike;
-  emagged: BooleanLike;
+  admin_view: boolean;
+  emagged: boolean;
   stored_code: string;
   user_name: string;
   network: string;
@@ -35,7 +36,7 @@ type Data = {
 };
 
 type Server_Data = {
-  run_code: BooleanLike;
+  run_code: boolean;
   server: string;
   server_name: string;
 };
@@ -70,9 +71,10 @@ export const NTSLCoding = (props) => {
               <Button
                 icon="power-off"
                 color="red"
-                content="!!!(ADMIN) reset code and compile!!!"
                 onClick={() => act('admin_reset')}
-              />
+              >
+                !(ADMIN) reset code and compile!
+              </Button>
             ) : (
               ''
             )}
@@ -83,10 +85,11 @@ export const NTSLCoding = (props) => {
                     <Button
                       icon="power-off"
                       color="purple"
-                      content="Log Out"
                       disabled={emagged}
                       onClick={() => act('log_out')}
-                    />
+                    >
+                      Log Out
+                    </Button>
                   </Stack.Item>
                   <Stack.Item verticalAlign="middle">{user_name}</Stack.Item>
                 </Stack>
@@ -94,9 +97,10 @@ export const NTSLCoding = (props) => {
                 <Button
                   icon="power-off"
                   color="green"
-                  content="Log In"
                   onClick={() => act('log_in')}
-                />
+                >
+                  Log In
+                </Button>
               )}
             </Section>
             {user_name && (
@@ -143,24 +147,33 @@ export const NTSLCoding = (props) => {
 };
 
 const ScriptEditor = (props: NTSLTextAreaProps) => {
-  const { data } = useBackend<Data>();
+  const { act, data, config } = useBackend<Data>();
   const { stored_code, user_name } = data;
   const [_ntslCode, setNtslCode] = props.storedNtslCode;
 
   return (
     <Box width="100%" height="100%">
-      {user_name ? (
-        <TextArea
-          fluid
-          value={stored_code}
-          onBlur={(value) => setNtslCode(value)}
-          height="100%"
-        />
-      ) : (
-        <Section width="100%" height="100%">
-          {stored_code}
-        </Section>
-      )}
+      <AceEditor
+        value={stored_code}
+        language="ntsl"
+        width="100%"
+        height="100%"
+        onChange={setNtslCode}
+        style={{
+          mixBlendMode: 'overlay',
+        }}
+        onCtrlS={(value) => {
+          if (value === '') return false;
+          act('save_code', { saved_code: value });
+          return true;
+        }}
+        onCtrlShiftB={(value) => {
+          act('save_code', { saved_code: value });
+          sleep(150).then(() => act('compile_code'));
+          return true;
+        }}
+        readOnly={!user_name || config.status <= UI_UPDATE}
+      />
     </Box>
   );
 };
@@ -175,19 +188,24 @@ const CompilerOutput = (props: NTSLTextAreaProps) => {
         <Button
           mb={1}
           icon="save"
-          content="Save"
           disabled={ntslCode === ''}
-          tooltip={'Must be done before compiling!'}
+          tooltip={
+            'Must be done before compiling! (Hint: Ctrl-S in the editor to save)'
+          }
           onClick={() => act('save_code', { saved_code: ntslCode })}
-        />
+        >
+          Save
+        </Button>
       </Box>
       <Box>
         <Button
           mb={1}
           icon="running"
-          content="Compile & Run"
           onClick={() => act('compile_code')}
-        />
+          tooltip={'Hint: Ctrl-Shift-B in the editor to save & compile'}
+        >
+          Compile & Run
+        </Button>
       </Box>
       <Divider />
       <Section fill scrollable height="87.2%">
@@ -207,12 +225,9 @@ const ServerList = (props) => {
   return (
     <>
       <Box>
-        <Button
-          mb={1}
-          icon="sync"
-          content="Reconnect to Network"
-          onClick={() => act('refresh_servers')}
-        />
+        <Button mb={1} icon="sync" onClick={() => act('refresh_servers')}>
+          Reconnect to Network
+        </Button>
       </Box>
       <Box>
         <Input
@@ -232,13 +247,14 @@ const ServerList = (props) => {
             <Button.Checkbox
               mb={0.5}
               checked={nt_server.run_code}
-              content={nt_server.server_name}
               onClick={() =>
                 act('toggle_code_execution', {
                   selected_server: nt_server.server,
                 })
               }
-            />
+            >
+              {nt_server.server_name}
+            </Button.Checkbox>
           </Box>
         ))}
       </Section>
@@ -253,12 +269,9 @@ const LogViewer = (props) => {
   return (
     <>
       <Box>
-        <Button
-          mb={1}
-          icon="trash"
-          content="Clear Logs"
-          onClick={() => act('clear_logs')}
-        />
+        <Button mb={1} icon="trash" onClick={() => act('clear_logs')}>
+          Clear Logs
+        </Button>
       </Box>
       <Divider />
       <Section fill scrollable height="87.2%">

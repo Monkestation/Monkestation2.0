@@ -99,6 +99,7 @@ export const TextInput = (props: FeatureValueProps<string, string>) => {
   return (
     <Input
       value={props.value}
+      expensive
       onChange={(newValue) => props.handleSetValue(newValue)}
       width="100%"
     />
@@ -417,6 +418,7 @@ export const FeatureShortTextInput = (
   return (
     <Input
       width="100%"
+      expensive
       value={props.value}
       maxLength={props.serverData.maximum_length}
       onChange={(value) => props.handleSetValue(value)}

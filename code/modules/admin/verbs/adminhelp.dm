@@ -27,6 +27,28 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	var/obj/effect/statclick/ticket_list/cstatclick = new(null, null, AHELP_CLOSED)
 	var/obj/effect/statclick/ticket_list/rstatclick = new(null, null, AHELP_RESOLVED)
 
+	var/typing_timer_id
+
+/datum/admin_help_tickets/New()
+	// was unsure if I should have shoved this into a processing subsystem with Process, or into a subsystem,
+	typing_timer_id = addtimer(CALLBACK(src, PROC_REF(process_typing)), 3 SECONDS, TIMER_UNIQUE | TIMER_LOOP)
+
+/datum/admin_help_tickets/proc/process_typing()
+	var/now = world.time
+	for(var/datum/admin_help/ticket as anything in active_tickets)
+		var/trip_ui_update = FALSE
+		for(var/ckey in ticket.currently_typing)
+			if(!istext(ckey))
+				ticket.currently_typing -= ckey
+				trip_ui_update = TRUE
+				continue
+			var/last_type_time = ticket.currently_typing[ckey]
+			if(((now - last_type_time) > 3 SECONDS) && (last_type_time != CLASSIC_ADMINPM_TIME_KEY))
+				trip_ui_update = TRUE
+				ticket.currently_typing -= ckey
+		if(trip_ui_update)
+			SStgui.update_static_data_for_all_viewers(ticket)
+
 /datum/admin_help_tickets/Destroy()
 	QDEL_LIST(active_tickets)
 	QDEL_LIST(closed_tickets)
@@ -34,6 +56,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	QDEL_NULL(astatclick)
 	QDEL_NULL(cstatclick)
 	QDEL_NULL(rstatclick)
+	deltimer(typing_timer_id)
 	return ..()
 
 /datum/admin_help_tickets/proc/TicketByID(id)
@@ -104,10 +127,9 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	SHOULD_NOT_SLEEP(TRUE)
 	var/list/L = list()
 	var/num_disconnected = 0
-	L[++L.len] = list("Active Tickets:", "[astatclick.update("[active_tickets.len]")]", null, REF(astatclick))
-	astatclick.update("[active_tickets.len]")
-	for(var/I in active_tickets)
-		var/datum/admin_help/AH = I
+	L[++L.len] = list("Active Tickets:", "[astatclick.update("[length(active_tickets)]")]", null, REF(astatclick))
+	astatclick.update("[length(active_tickets)]")
+	for(var/datum/admin_help/AH in active_tickets)
 		if(AH.initiator)
 			var/obj/effect/statclick/updated = AH.statclick.update()
 			L[++L.len] = list("#[AH.id]. [AH.initiator_key_name]:", "[updated.name]", REF(AH))
@@ -115,8 +137,8 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 			++num_disconnected
 	if(num_disconnected)
 		L[++L.len] = list("Disconnected:", "[astatclick.update("[num_disconnected]")]", null, REF(astatclick))
-	L[++L.len] = list("Closed Tickets:", "[cstatclick.update("[closed_tickets.len]")]", null, REF(cstatclick))
-	L[++L.len] = list("Resolved Tickets:", "[rstatclick.update("[resolved_tickets.len]")]", null, REF(rstatclick))
+	L[++L.len] = list("Closed Tickets:", "[cstatclick.update("[length(closed_tickets)]")]", null, REF(cstatclick))
+	L[++L.len] = list("Resolved Tickets:", "[rstatclick.update("[length(resolved_tickets)]")]", null, REF(rstatclick))
 	return L
 
 //Reassociate still open ticket if one exists
@@ -140,8 +162,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 //Get a ticket given a ckey
 /datum/admin_help_tickets/proc/CKey2ActiveTicket(ckey)
-	for(var/I in active_tickets)
-		var/datum/admin_help/AH = I
+	for(var/datum/admin_help/AH as anything in active_tickets)
 		if(AH.initiator_ckey == ckey)
 			return AH
 
@@ -208,8 +229,12 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	// var/list/player_interactions // MONKESTATION - variable removed in favor of datum _interactions
 	/// List of admin ckeys that are involved, like through responding
 	var/list/admins_involved = list()
+	/// Alist of (ckey:last_type_time) that are currently typing in this ticket, whether through an `input` or tgui. Entries older than 3 seconds are deleted
+	var/list/currently_typing = list()
 	/// Has the player replied to this ticket yet?
 	var/player_replied = FALSE
+	COOLDOWN_DECLARE(client_message_cooldown)
+
 
 /**
  * Call this on its own to create a ticket, don't manually assign current_ticket
@@ -259,7 +284,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 /datum/admin_help/proc/format_embed_discord(message)
 	var/datum/discord_embed/embed = new()
 	embed.title = "Ticket #[id]"
-	embed.description = @"[Join Server!](http://play.monkestation.com:7420)"
+	embed.description = CONFIG_GET(string/roundend_webhook_description)
 	embed.author = key_name(initiator_ckey)
 	var/round_state
 	switch(SSticker.current_state)
@@ -840,7 +865,13 @@ GLOBAL_DATUM_INIT(admin_help_ui_handler, /datum/admin_help_ui_handler, new)
 /client/verb/adminhelp()
 	set category = "Admin"
 	set name = "Adminhelp"
+	if(current_ticket && !holder)
+		if(!COOLDOWN_FINISHED(src, current_ticket.client_message_cooldown))
+			to_chat(usr, span_warning("You must wait [COOLDOWN_TIMELEFT(src, current_ticket.client_message_cooldown) * 0.1] seconds before sending another message."))
+			return
 	GLOB.admin_help_ui_handler.ui_interact(mob)
+	if (current_ticket)
+		COOLDOWN_START(src, current_ticket.client_message_cooldown, 3 SECONDS)
 	to_chat(src, span_boldnotice("Adminhelp failing to open or work? <a href='byond://?src=[REF(src)];tguiless_adminhelp=1'>Click here</a>"))
 
 /client/verb/view_latest_ticket()

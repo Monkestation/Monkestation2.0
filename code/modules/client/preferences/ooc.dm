@@ -48,25 +48,33 @@ GLOBAL_LIST_INIT(pronouns_required, list(
 	if (!value || trim(value) == "")
 		return TRUE
 
-	// staff/donators/mentors can choose whatever pronouns they want given, you know, we trust them to use them like a normal person
-	if (usr && (is_admin(usr) || is_mentor(usr) || usr.persistent_client.patreon.is_donator()))
-		to_chat(usr, span_notice("Gentle reminder that since you are staff/donator, you can set this field however you like. But please use it in good faith."))
-		log_game("OOC pronouns set by [usr] ([usr.ckey]) to: [value]")
-		return TRUE
+	// extract pronouns from the start of the string
+	// only letters and slashes, must be first
+	var/regex/reg = regex(@"^[a-z/]+", "i")
+	reg.Find(value)
 
-	var/pronouns = splittext(value, "/")
+	if (!length(reg.match))
+		to_chat(usr, span_warning("Could not find any pronouns. Pronouns must come first and be separated by slashes (/)."))
+		return FALSE
+
+	var/pronoun_block = reg.match
+	var/extra_text = copytext(value, length(pronoun_block) + 1)
+	extra_text = trim(extra_text)
+
+	var/pronouns = splittext(pronoun_block, "/")
 	if (length(pronouns) > MAX_PRONOUNS)
 		to_chat(usr, span_warning("You can only set up to [MAX_PRONOUNS] different pronouns."))
 		return FALSE
 
 	for (var/pronoun in pronouns)
-		// pronouns can end in "self" or "selfs" so allow those
-		// if has "self" or "selfs" at the end, remove it
+		pronoun = trim(pronoun)
+		// remove/normalize common suffixes
 		if (endswith(pronoun, "selfs"))
 			pronoun = copytext(pronoun, 1, length(pronoun) - 5)
 		else if (endswith(pronoun, "self"))
 			pronoun = copytext(pronoun, 1, length(pronoun) - 4)
-		pronoun = trim(pronoun)
+		else if (endswith(pronoun, "s"))
+			pronoun = copytext(pronoun, 1, length(pronoun) - 1)
 
 		if (!(pronoun in GLOB.pronouns_valid))
 			to_chat(usr, span_warning("Invalid pronoun: [pronoun]. Valid pronouns are: [GLOB.pronouns_valid.Join(", ")]"))
@@ -76,12 +84,25 @@ GLOBAL_LIST_INIT(pronouns_required, list(
 		to_chat(usr, span_warning("You cannot use the same pronoun multiple times."))
 		return FALSE
 
-	for (var/pronoun in GLOB.pronouns_required)
-		if (pronoun in pronouns)
-			return TRUE
+	var/has_required = FALSE
+	for (var/req in GLOB.pronouns_required)
+		if (req in pronouns)
+			has_required = TRUE
+			break
 
-	to_chat(usr, span_warning("You must include at least one of the following pronouns: [GLOB.pronouns_required.Join(", ")]"))
-	// Someone may yell at me i dont know
-	return FALSE
+	if (!has_required)
+		to_chat(usr, span_warning("You must include at least one of the following pronouns: [GLOB.pronouns_required.Join(", ")]"))
+		return FALSE
+
+	// If there's extra text after pronouns, only staff/donators/mentors can use it
+	if (extra_text != "")
+		if (!(usr && (is_admin(usr) || is_mentor(usr) || usr.persistent_client.patreon.is_donator())))
+			to_chat(usr, span_warning("Only staff, mentors, and donators may add extra text after their pronouns."))
+			return FALSE
+
+		to_chat(usr, span_notice("Reminder: extra text after pronouns is a privilege. Please use it in good faith."))
+		log_game("OOC pronouns (with extra text) set by [usr] ([usr.ckey]) to: [value]")
+
+	return TRUE
 
 #undef MAX_PRONOUNS

@@ -1,33 +1,34 @@
+import hljs from 'highlight.js/lib/core';
+import lua from 'highlight.js/lib/languages/lua';
 import {
-  ReactNode,
+  type ReactNode,
   useCallback,
   useEffect,
   useLayoutEffect,
   useRef,
   useState,
 } from 'react';
-import hljs from 'highlight.js/lib/core';
-import lua from 'highlight.js/lib/languages/lua';
-import { useBackend } from '../../backend';
 import {
   Box,
   Button,
   Flex,
+  MenuBar,
+  ProgressBar,
   Section,
   Stack,
   Tabs,
-  TextArea,
-  ProgressBar,
-  MenuBar,
-} from '../../components';
+} from 'tgui-core/components';
+import { AceEditor } from '../../components/Ace/Editor';
+
+import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
 import { CallModal } from './CallModal';
 import { ChunkViewModal } from './ChunkViewModal';
-import { StateSelectModal } from './StateSelectModal';
 import { ListMapper } from './ListMapper';
 import { Log } from './Log';
+import { StateSelectModal } from './StateSelectModal';
 import { TaskManager } from './TaskManager';
-import { CallInfo, LuaEditorData, LuaEditorModal } from './types';
+import type { CallInfo, LuaEditorData, LuaEditorModal } from './types';
 
 hljs.registerLanguage('lua', lua);
 
@@ -153,6 +154,13 @@ export const LuaEditor = () => {
     };
   };
 
+  async function onDropHandler(event: React.DragEvent<HTMLTextAreaElement>) {
+    if (event.dataTransfer?.files.length) {
+      event.preventDefault();
+      setScriptInput(await event.dataTransfer.files[0].text());
+    }
+  }
+
   return (
     <Window width={1280} height={720}>
       <Window.Content>
@@ -208,34 +216,21 @@ export const LuaEditor = () => {
                   <Section fill>
                     <Stack fill vertical>
                       <Stack.Item grow>
-                        <TextArea
+                        <AceEditor
                           width="100%"
                           height="100%"
                           value={scriptInput}
-                          fontFamily="Consolas"
-                          onChange={setScriptInput}
-                          /* displayedValue={
-                          <Box
-                            style={{
-                              pointerEvents: 'none',
-                            }}
-                            dangerouslySetInnerHTML={{
-                              __html: hljs.highlight(scriptInput, {
-                                language: 'lua',
-                              }).value,
-                            }}
-                          />
-                        }*/
-                          /** @ts-ignore */
-                          onDrop={async (
-                            event: React.DragEvent<HTMLDivElement>,
-                          ) => {
+                          onDrop={async (event) => {
                             if (event.dataTransfer?.files.length) {
                               event.preventDefault();
                               setScriptInput(
                                 await event.dataTransfer.files[0].text(),
                               );
                             }
+                          }}
+                          language="lua"
+                          onChange={(value) => {
+                            setScriptInput(value);
                           }}
                         />
                       </Stack.Item>

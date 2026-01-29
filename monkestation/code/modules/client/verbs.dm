@@ -5,6 +5,8 @@ GLOBAL_LIST(antag_token_config)
 #define ADMIN_REJECT_ANTAG_TOKEN(user) "(<A href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];reject_antag_token=[REF(user)]'>No</a>)"
 #define ADMIN_APPROVE_TOKEN_EVENT(user) "(<A href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];approve_token_event=[REF(user)]'>Yes</a>)"
 #define ADMIN_REJECT_TOKEN_EVENT(user) "(<A href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];reject_token_event=[REF(user)]'>No</a>)"
+#define ADMIN_CHECK_ANTAGS(user) "(<a href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];check_antagonist=1'>Check antagonists</a>)"
+#define ADMIN_OPEN_TOKEN_MANAGER(user) "(<a href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];token_manager=1'>Open Token Manager</a>)"
 /client/verb/spend_antag_tokens()
 	set category = "IC"
 	set name = "Spend Antag Tokens"
@@ -60,15 +62,22 @@ GLOBAL_LIST(antag_token_config)
 	client_token_holder.in_queued_tier = tier
 	client_token_holder.in_queue = new chosen_antagonist
 
-	// Token Panel Addition START
 	var/current_antag_request = new /datum/token_request(mob, client_token_holder, "[chosen_antagonist.name]", tier, using_donor)
 	SStoken_manager.add_pending_request(current_antag_request)
 	client_token_holder.current_antag_request = current_antag_request
-	// Token Panel Addition END
 
 	to_chat(src, span_boldnotice("Your request has been sent to the admins."))
+	var/formatted_message = "[ADMIN_LOOKUPFLW(src)] has requested to use their antag token to be a [chosen_antagonist::name].\n\n"
+	if(mob.mind?.assigned_role)
+		formatted_message += "Current Role: [mob.mind.assigned_role.title]\n"
+	if(mob.mind?.special_role)
+		formatted_message += "Special Role: [mob.mind.special_role]\n"
+
+	formatted_message += "Mob Type: [mob.type]\n\n"
+	formatted_message += "[ADMIN_APPROVE_ANTAG_TOKEN(src)] | [ADMIN_REJECT_ANTAG_TOKEN(src)] | [ADMIN_CHECK_ANTAGS(src)] | [ADMIN_OPEN_TOKEN_MANAGER(src)]"
+
 	send_formatted_admin_message( \
-		"[ADMIN_LOOKUPFLW(src)] has requested to use their antag token to be a [chosen_antagonist::name].\n\n[ADMIN_APPROVE_ANTAG_TOKEN(src)] | [ADMIN_REJECT_ANTAG_TOKEN(src)]",	\
+		formatted_message, \
 		title = "Antag Token Request", \
 		color_override = "orange" \
 	)
@@ -106,7 +115,7 @@ GLOBAL_LIST(antag_token_config)
 			to_chat(src, span_boldnotice("Your request has been sent."))
 			logger.Log(LOG_CATEGORY_META, "[usr] has requested to use their event tokens to trigger [selected_event.event_name]([selected_event]).")
 			send_formatted_admin_message( \
-				"[ADMIN_LOOKUPFLW(src)] has requested use their event tokens to trigger [selected_event.event_name]([selected_event]).\n\n[ADMIN_APPROVE_TOKEN_EVENT(src)] | [ADMIN_REJECT_TOKEN_EVENT(src)]",	\
+				"[ADMIN_LOOKUPFLW(src)] has requested use their event tokens to trigger [selected_event.event_name]([selected_event]).\n\n[ADMIN_APPROVE_TOKEN_EVENT(src)] | [ADMIN_REJECT_TOKEN_EVENT(src)] | [ADMIN_OPEN_TOKEN_MANAGER(src)]",	\
 				title = "Event Token Request", \
 				color_override = "orange" \
 			)
@@ -176,3 +185,5 @@ GLOBAL_LIST(antag_token_config)
 #undef ADMIN_REJECT_ANTAG_TOKEN
 #undef ADMIN_APPROVE_TOKEN_EVENT
 #undef ADMIN_REJECT_TOKEN_EVENT
+#undef ADMIN_CHECK_ANTAGS
+#undef ADMIN_OPEN_TOKEN_MANAGER

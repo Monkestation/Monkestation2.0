@@ -63,6 +63,15 @@ menu "menu"
 		command = "fix-chat"
 		category = "&Help"
 		saved-params = "is-checked"
+	elem
+		name = "Stop All Sounds"
+		command = "stop-sounds"
+		category = "&Help"
+		saved-params = "is-checked"
+	elem  "Use Internet Routing Relay"
+		name = "Internet Routing Relays"
+		command = "go2relay"
+		saved-params = "is-checked"
 
 
 window "mainwindow"

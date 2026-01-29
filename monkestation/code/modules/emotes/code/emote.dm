@@ -210,6 +210,13 @@
 		)
 	if(prob(5))
 		return 'monkestation/sound/voice/feline/funnymeow.ogg'
+	// classy wants her characters to only have her meows play
+	if(user?.ckey == "missclassypineapple")
+		return pick(
+			'monkestation/sound/voice/feline/meow5.ogg',
+			'monkestation/sound/voice/feline/meow6.ogg',
+			'monkestation/sound/voice/feline/meow7.ogg',
+		)
 	return pick(
 		'monkestation/sound/voice/feline/meow1.ogg',
 		'monkestation/sound/voice/feline/meow2.ogg',

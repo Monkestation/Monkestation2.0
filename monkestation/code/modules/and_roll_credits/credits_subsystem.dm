@@ -43,29 +43,31 @@ SUBSYSTEM_DEF(credits)
 	credit_order += disclaimers_string
 	credit_order += cast_string
 
-	credit_order += "<center>The Admin Bus</center>"
-	var/list/admins = shuffle(admin_pref_images)
-	var/admin_length = length(admins)
+	if(length(admin_pref_images))
+		credit_order += "<center>The Admin Bus</center>"
+		var/list/admins = shuffle(admin_pref_images)
+		var/admin_length = length(admins)
 
-	for(var/i in 1 to admin_length)
-		for(var/b in 1 to 8)
-			var/atom/movable/screen/map_view/char_preview/client_image = pick_n_take(admins)
-			if(!client_image)
-				break
-			client_image.screen_loc = "LEFT+[(b - 1) * 13]%:24,BOTTOM"
-			credit_order += client_image
+		for(var/i in 1 to admin_length)
+			for(var/b in 1 to 8)
+				var/atom/movable/screen/map_view/char_preview/client_image = pick_n_take(admins)
+				if(!client_image)
+					break
+				client_image.screen_loc = "LEFT+[(b - 1) * 13]%:24,BOTTOM"
+				credit_order += client_image
 
-	credit_order += "<center>Our Lovely Contributors</center>"
-	var/list/contributors = shuffle(contributer_pref_images)
+	if(length(contributer_pref_images))
+		credit_order += "<center>Our Lovely Contributors</center>"
+		var/list/contributors = shuffle(contributer_pref_images)
 
-	var/contributors_length = length(contributors)
-	for(var/i in 1 to contributors_length)
-		for(var/b in 1 to 8)
-			var/atom/movable/screen/map_view/char_preview/client_image = pick_n_take(contributors)
-			if(!client_image)
-				break
-			client_image.screen_loc = "LEFT+[(b - 1) * 13]%:24,BOTTOM"
-			credit_order += client_image
+		var/contributors_length = length(contributors)
+		for(var/i in 1 to contributors_length)
+			for(var/b in 1 to 8)
+				var/atom/movable/screen/map_view/char_preview/client_image = pick_n_take(contributors)
+				if(!client_image)
+					break
+				client_image.screen_loc = "LEFT+[(b - 1) * 13]%:24,BOTTOM"
+				credit_order += client_image
 
 	for(var/i in major_event_icons)
 		credit_order += i
@@ -112,7 +114,8 @@ SUBSYSTEM_DEF(credits)
 		contributer_pref_images += appearance
 		CHECK_TICK
 
-	for(var/ckey in GLOB.admin_datums)
+	var/list/all_admin_datums = GLOB.admin_datums + GLOB.deadmins
+	for(var/ckey in all_admin_datums)
 		var/datum/client_interface/interface = new(ckey(ckey))
 		var/datum/preferences/mocked = new(interface)
 

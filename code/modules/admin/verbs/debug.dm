@@ -15,7 +15,7 @@ ADMIN_VERB(air_status, R_DEBUG, FALSE, "Air Status In Location", "Gets the air s
 
 ADMIN_VERB(cmd_admin_robotize, R_FUN, FALSE, "Make Cyborg", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/target)
 	if(!SSticker.HasRoundStarted())
-		tgui_alert(user,"Wait until the game starts")
+		to_chat(user, span_boldnotice("Wait until the game starts"))
 		return
 	log_admin("[key_name(user)] has robotized [target.key].")
 	INVOKE_ASYNC(target, TYPE_PROC_REF(/mob, Robotize))
@@ -113,7 +113,7 @@ ADMIN_VERB(cmd_debug_make_powernets, R_DEBUG | R_SERVER, FALSE, "Make Powernets"
 ADMIN_VERB_VISIBILITY(cmd_admin_grantfullaccess, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
 ADMIN_VERB(cmd_admin_grantfullaccess, R_DEBUG, FALSE, "Grant Full Access", "Grant full access to a mob.", ADMIN_CATEGORY_DEBUG, mob/M in world)
 	if(!SSticker.HasRoundStarted())
-		tgui_alert(user,"Wait until the game starts")
+		to_chat(user, span_boldnotice("Wait until the game starts"))
 		return
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
@@ -147,7 +147,8 @@ ADMIN_VERB(cmd_admin_grantfullaccess, R_DEBUG, FALSE, "Grant Full Access", "Gran
 			H.equip_to_slot(id,ITEM_SLOT_ID)
 
 	else
-		tgui_alert(user,"Invalid mob")
+		to_chat(user, span_boldnotice("Invalid mob"))
+		return
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Grant Full Access") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(user)] has granted [M.key] full access.")
 	message_admins(span_adminnotice("[key_name_admin(user)] has granted [M.key] full access."))
@@ -453,7 +454,7 @@ ADMIN_VERB(cmd_admin_areatest_all, R_DEBUG, FALSE, "Test Areas (ALL)", "Tests th
 
 ADMIN_VERB_ONLY_CONTEXT_MENU(cmd_admin_rejuvenate, R_ADMIN, FALSE, "Rejuvenate", mob/living/M in world)
 	if(!istype(M))
-		tgui_alert(usr,"Cannot revive a ghost")
+		to_chat(user, span_boldnotice("Cannot revive a ghost"))
 		return
 	M.revive(ADMIN_HEAL_ALL)
 
@@ -721,6 +722,11 @@ ADMIN_VERB(show_line_profiling, R_DEBUG, FALSE, "Show Line Profiling", "Shows tr
 ADMIN_VERB(reload_configuration, R_DEBUG, FALSE, "Reload Configuration", "Reloads the configuration from the default path on the disk, wiping any in-round modifications.", ADMIN_CATEGORY_DEBUG)
 	if(tgui_alert(user, "Are you absolutely sure you want to reload the configuration from the default path on the disk, wiping any in-round modifications?", "Really reset?", list("No", "Yes")) == "Yes")
 		config.admin_reload()
+
+ADMIN_VERB(reload_lobby_notices, R_NONE, FALSE, "Reload Lobby Notices", "Reloads lobby notices from disk.", ADMIN_CATEGORY_DEBUG)
+	config.load_important_notices()
+	BLACKBOX_LOG_ADMIN_VERB("Reload Lobby Notices")
+	message_admins("[key_name_admin(user)] reloaded lobby notices")
 
 ADMIN_VERB(check_timer_sources, R_DEBUG, FALSE, "Check Timer Sources", "Checks the sources of running timers.", ADMIN_CATEGORY_DEBUG)
 	var/bucket_list_output = generate_timer_source_output(SStimer.bucket_list)
