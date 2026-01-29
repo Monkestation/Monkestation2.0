@@ -104,21 +104,20 @@
 			. += span_notice("The wires inside are cut apart, hampering its utility.")
 		if(wire_integrity >= 1.4 && !wire_integrity == 2)
 			. += span_notice("Inside you see a couple stray wires.")
+
 	if(chosen_recipe)
 		. += span_notice("Selected recipe: [chosen_recipe.name]")
 		for(var/atom/atom as anything in chosen_recipe.reqs)
 			if(chosen_recipe.reqs[atom] >= 2)
-				. += span_notice("Consumes [chosen_recipe.reqs[atom]] [initial(atom.name)]s per operation.")
+				. += span_notice("Consumes [chosen_recipe.reqs[atom]] [initial(atom.name)]\s per operation.")
 			else
 				. += span_notice("Consumes one [initial(atom.name)] per operation.")
+
 	if(length(crafting_inventory))
-		. += span_notice("The assembler currently contains:")
-			for(var/atom/movable/item in crafting_inventory)
-				if(!isstack(item))
-					. += span_notice("\An [item.name].")
-				else
-					var/obj/item/stack/stack = item
-					. += span_notice("[stack.amount] [item.name]\s.")
+		. += span_notice("The assembler currently contains the following stacks:")
+		for(var/atom/item as anything in crafting_inventory)
+			. += span_notice("[initial(item.name)]")
+
 	if(!crafting)
 		. += span_notice("The machine currently lies dormant.")
 
@@ -126,6 +125,7 @@
 	if(crafting)
 		. += span_notice("The machine cannot be interacted with further while in operation.")
 		return
+
 	if(panel_open)
 		if(length(crafting_inventory))
 			. += span_notice("The machine's ingredient eject function can be triggered with special [EXAMINE_HINT("tools")].")
