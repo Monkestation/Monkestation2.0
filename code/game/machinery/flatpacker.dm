@@ -211,11 +211,8 @@
 
 /obj/machinery/flatpacker/ui_act(action, list/params)
 	. = ..()
-
 	if(.)
 		return
-
-
 	switch(action)
 		if("build")
 			if(busy)
@@ -236,10 +233,9 @@
 			materials.retrieve_sheets(amount, ejecting, drop_location())
 			return TRUE
 
-
 /obj/machinery/flatpacker/Destroy()
 	QDEL_NULL(inserted_board)
-	. = ..()
+	return ..()
 
 /obj/item/flatpack
 	name = "flatpack"
