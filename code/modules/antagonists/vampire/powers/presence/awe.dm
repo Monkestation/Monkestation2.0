@@ -83,7 +83,7 @@
 
 	COOLDOWN_START(src, awe_effect_cooldown, 5 SECONDS)
 	// Pick a random disruptive effect each tick
-	switch(rand(1, 6))
+	switch(rand(1, 5))
 		// Nothingburger
 		if(1)
 			to_chat(owner, span_awe("Your mind drifts..."))
@@ -99,19 +99,16 @@
 		if(4)
 			owner.face_atom(source_vampire)
 			if(owner.body_position == STANDING_UP && get_step(owner.loc, get_dir(owner.loc, source_vampire.loc)) != source_vampire.loc)
+				owner.balloon_alert(owner, "you stumble...")
 				owner.visible_message(span_warning("[owner] stumbles."), span_awe("You suddenly stumble..."))
 				owner.Move(get_step(owner.loc, get_dir(owner.loc, source_vampire.loc)))
 		// Wobbly Knees
 		if(5)
 			owner.face_atom(source_vampire)
 			if(owner.body_position == STANDING_UP && owner.stamina?.loss == 0)
+				owner.balloon_alert(owner, "your knees feel wobbly...")
 				owner.visible_message(span_warning("[owner] seems quite wobbly on [owner.p_their()] feet."), span_awe("Your knees feel wobbly..."))
 				owner.stamina?.adjust(-rand(20, 40))
-		// Stunned
-		if(6)
-			owner.face_atom(source_vampire)
-			owner.Stun(1 SECONDS, ignore_canstun = TRUE)
-			to_chat(owner, span_awe("What was I doing?"))
 
 /datum/status_effect/awed/get_examine_text()
 	return span_warning("[owner.p_They()] seem[owner.p_s()] distracted and unfocused.")
