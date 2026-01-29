@@ -23,6 +23,13 @@
 	/// Reference to the mob that is currently scanning whatever virus is inserted
 	var/mob/scanner = null
 
+/obj/machinery/disease2/diseaseanalyser/Destroy()
+	if(!QDELETED(dish))
+		dish.forceMove(drop_location())
+	dish = null
+	scanner = null
+	return ..()
+
 /obj/machinery/disease2/diseaseanalyser/RefreshParts()
 	. = ..()
 	var/scancount = 0
@@ -55,11 +62,11 @@
 	if(!inserting_dish.open)
 		to_chat(user, span_warning("You must open the dish's lid before it can be analysed. Be sure to wear proper protection first (at least a sterile mask and latex gloves)."))
 		return ITEM_INTERACT_BLOCKING
+	if(!user.transferItemToLoc(tool, src))
+		return ITEM_INTERACT_BLOCKING
 	visible_message(span_notice("\The [user] inserts \the [tool] in \the [src]."),
 					span_notice("You insert \the [tool] in \the [src]."))
-	playsound(loc, 'sound/machines/click.ogg', 50, 1)
-	user.dropItemToGround(tool, TRUE)
-	tool.forceMove(src)
+	playsound(src, 'sound/machines/click.ogg', vol = 50, vary = TRUE, mixer_channel = CHANNEL_MACHINERY)
 	dish = tool
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
@@ -72,8 +79,8 @@
 	if(machine_stat & (NOPOWER))
 		to_chat(user, span_notice("Deprived of power, \the [src] is unresponsive."))
 		if(dish)
-			playsound(loc, 'sound/machines/click.ogg', 50, 1)
-			dish.forceMove(loc)
+			playsound(src, 'sound/machines/click.ogg', vol = 50, vary = TRUE, mixer_channel = CHANNEL_MACHINERY)
+			dish.forceMove(drop_location())
 			dish = null
 			update_appearance()
 		return
@@ -94,7 +101,7 @@
 		to_chat(user,span_notice("Add some virus food to the dish and incubate."))
 		if(minimum_growth == 100)
 			to_chat(user,span_notice("Replacing the machine's scanning modules with better parts will lower the growth requirement."))
-		dish.forceMove(loc)
+		dish.forceMove(drop_location())
 		dish = null
 		update_appearance()
 		return
@@ -104,16 +111,14 @@
 	processing = TRUE
 	update_appearance()
 
-	spawn (1)
-		var/mutable_appearance/I = mutable_appearance(icon,"analyser_light",src)
-		I.plane = ABOVE_LIGHTING_PLANE
-		add_overlay(I)
+	var/mutable_appearance/light_overlay = mutable_appearance(icon, "analyser_light", offset_spokesman = src, plane = ABOVE_LIGHTING_PLANE)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, add_overlay), light_overlay), 0.1 SECONDS)
 	use_energy(1000)
 	set_light(2,2)
-	playsound(src, 'sound/machines/chime.ogg', 50)
+	playsound(src, 'sound/machines/chime.ogg', vol = 50, mixer_channel = CHANNEL_MACHINERY)
 
 	if(do_after(user, 5 SECONDS, src))
-		if(machine_stat & (BROKEN|NOPOWER))
+		if(!is_operational)
 			processing = FALSE // Make sure to return the machine to normal operation if power outage
 			update_appearance()
 			scanner = null
@@ -143,57 +148,57 @@
 		dish.analysed = TRUE
 		dish.contained_virus.disease_flags |= DISEASE_ANALYZED
 		dish.update_appearance()
-		dish.forceMove(loc)
+		dish.forceMove(drop_location())
 		dish = null
 	else
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 25)
+		playsound(src, 'sound/machines/buzz-sigh.ogg', vol = 25, mixer_channel = CHANNEL_MACHINERY)
 
 	processing = FALSE
 	update_appearance()
 	scanner = null
 
-/obj/machinery/disease2/diseaseanalyser/update_icon()
-	. = ..()
-	icon_state = "analyser"
+/obj/machinery/disease2/diseaseanalyser/update_icon_state()
 	if(processing)
 		icon_state = "analyzer-processing"
-
-	if(machine_stat & (NOPOWER))
+	else if(machine_stat & (NOPOWER))
 		icon_state = "analyser0"
-
-	if(machine_stat & (BROKEN))
+	else if(machine_stat & (BROKEN))
 		icon_state = "analyserb"
+	else
+		icon_state = "analyser"
+	return ..()
 
-	if(machine_stat & (BROKEN|NOPOWER))
+/obj/machinery/disease2/diseaseanalyser/update_appearance(updates)
+	. = ..()
+	if(!is_operational)
 		set_light(0)
 	else
-		set_light(2,1)
-
+		set_light(2, 1)
 
 /obj/machinery/disease2/diseaseanalyser/update_overlays()
 	. = ..()
 	if(processing)
 		. += emissive_appearance(icon, "analyzer-processing-emissive", src)
 
-		. += mutable_appearance(icon,"analyser_light",src)
-		. += emissive_appearance(icon,"analyser_light",src)
+		. += mutable_appearance(icon,"analyser_light")
+		. += emissive_appearance(icon, "analyser_light_e", src)
 
 	. += emissive_appearance(icon, "analyzer-emissive", src)
 	if(dish)
-		.+= mutable_appearance(icon, "smalldish-outline",src)
+		. += mutable_appearance(icon, "smalldish-outline")
 		if(dish.contained_virus)
-			var/mutable_appearance/I = mutable_appearance(icon,"smalldish-color",src)
-			I.color = dish.contained_virus.color
-			.+= I
+			var/mutable_appearance/dish_color_overlay = mutable_appearance(icon, "smalldish-color")
+			dish_color_overlay.color = dish.contained_virus.color
+			. += dish_color_overlay
 		else
-			.+= mutable_appearance(icon, "smalldish-empty",src)
+			. += mutable_appearance(icon, "smalldish-empty")
 
 /obj/machinery/disease2/diseaseanalyser/verb/PrintPaper()
 	set name = "Print last analysis"
 	set category = "Object"
 	set src in oview(1)
 
-	if(!usr || !isturf(usr.loc))
+	if(!isturf(usr?.loc))
 		return
 
 	if(machine_stat & (BROKEN))
@@ -203,21 +208,22 @@
 		to_chat(usr, span_notice("Deprived of power, \the [src] is unresponsive."))
 		return
 
-	var/turf/T = get_turf(src)
-	playsound(T, "sound/effects/fax.ogg", 50, 1)
+	playsound(src, "sound/effects/fax.ogg", vol = 50, vary = TRUE, mixer_channel = CHANNEL_MACHINERY)
 	var/image/paper = image(icon, src, "analyser-paper")
 	flick_overlay_global(paper, GLOB.clients, 3 SECONDS)
 	visible_message("\The [src] prints a sheet of paper.")
-	spawn(1 SECONDS)
-		var/obj/item/paper/P = new(T)
-		P.name = last_scan_name
-		P.add_raw_text(last_scan_info)
-		P.pixel_x = 8
-		P.pixel_y = -8
-		P.update_appearance()
+	addtimer(CALLBACK(src, PROC_REF(print_paper)))
+
+/obj/machinery/disease2/diseaseanalyser/proc/print_paper()
+	var/obj/item/paper/paper = new(drop_location())
+	paper.name = last_scan_name
+	paper.add_raw_text(last_scan_info)
+	paper.pixel_x = 8
+	paper.pixel_y = -8
+	paper.update_appearance()
 
 /obj/machinery/disease2/diseaseanalyser/process()
-	if(machine_stat & (NOPOWER|BROKEN))
+	if(!is_operational)
 		scanner = null
 		return
 
@@ -229,8 +235,8 @@
 /obj/machinery/disease2/diseaseanalyser/click_alt(mob/user)
 	if(!dish && scanner)
 		return CLICK_ACTION_BLOCKING
-	playsound(loc, 'sound/machines/click.ogg', 50, 1)
-	dish.forceMove(loc)
+	playsound(src, 'sound/machines/click.ogg', vol = 50, vary = TRUE, mixer_channel = CHANNEL_MACHINERY)
+	dish.forceMove(drop_location())
 	dish = null
 	update_appearance()
 	return CLICK_ACTION_SUCCESS
