@@ -48,6 +48,8 @@
 				/obj/item/clothing/under/rank/security/officer/tactical/blue = 3,
 				/obj/item/clothing/under/rank/security/officer/blueshirt = 2,
 				/obj/item/clothing/under/rank/security/officer/formal = 3,
+				/obj/item/clothing/under/rank/security/officer/dress = 3,
+				/obj/item/clothing/under/rank/security/officer/turtleneck = 3,
 				/obj/item/clothing/under/rank/security/utility = 3,
 			),
 		),
@@ -60,6 +62,7 @@
 				/obj/item/clothing/suit/armor/vest/secjacket = 3,
 				/obj/item/clothing/suit/jacket/officer/blue = 3,
 				/obj/item/clothing/suit/armor/vest/buoyantrigvest = 3,
+				/obj/item/clothing/suit/toggle/jacket/officer/patched = 3,
 			),
 		),
 		list(
