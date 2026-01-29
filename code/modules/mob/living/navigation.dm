@@ -1,6 +1,8 @@
-#define MAX_NAVIGATE_RANGE 125
+#define MAX_NAVIGATE_RANGE 145
 
 /mob/living
+	/// Are we currently pathfinding for the navigate verb?
+	var/navigating = FALSE
 	/// Cooldown of the navigate() verb.
 	COOLDOWN_DECLARE(navigate_cooldown)
 
@@ -18,6 +20,9 @@
 		addtimer(CALLBACK(src, PROC_REF(cut_navigation)), world.tick_lag)
 		balloon_alert(src, "navigation path removed")
 		return
+	if(navigating)
+		balloon_alert(src, "already navigating!")
+		return
 	if(!COOLDOWN_FINISHED(src, navigate_cooldown))
 		balloon_alert(src, "navigation on cooldown!")
 		return
@@ -32,47 +37,32 @@
 		if(destination.z != z && is_multi_z_level(z)) // up or down is just a good indicator "we're on the station", we don't need to check specifics
 			destination_name += ((get_dir_multiz(src, destination) & UP) ? " (Above)" : " (Below)")
 
+		BINARY_INSERT_DEFINE(destination_name, destination_list, SORT_VAR_NO_TYPE, destination_name, SORT_COMPARE_DIRECTLY, COMPARE_KEY)
 		destination_list[destination_name] = destination
-
-	var/can_go_down = SSmapping.level_trait(z, ZTRAIT_DOWN)
-	var/can_go_up = SSmapping.level_trait(z, ZTRAIT_UP)
-	if(can_go_down)
-		destination_list["Nearest Way Down"] = DOWN
-	if(can_go_up)
-		destination_list["Nearest Way Up"] = UP
 
 	if(!length(destination_list))
 		balloon_alert(src, "no navigation signals!")
 		return
 
-	var/platform_code = tgui_input_list(src, "Select a location", "Navigate", sort_list(destination_list))
+	var/platform_code = tgui_input_list(src, "Select a location", "Navigate", destination_list)
 	var/atom/navigate_target = destination_list[platform_code]
 
 	if(isnull(navigate_target) || incapacitated())
 		return
 
-	var/finding_zchange = FALSE
-	COOLDOWN_START(src, navigate_cooldown, 15 SECONDS)
-	if(navigate_target == UP || navigate_target == DOWN || (isatom(navigate_target) && navigate_target.z != z))
-		// lowering the cooldown to 5 seconds if we're navigating to a ladder or staircase instead of a proper destination
-		// (so we can decide to move to another destination right off the bat, rather than needing to wait)
-		COOLDOWN_START(src, navigate_cooldown, 5 SECONDS)
-		var/direction_name = isatom(navigate_target) ? "there" : (navigate_target == UP ? "up" : "down")
-		var/nav_dir = isatom(navigate_target) ? (get_dir_multiz(src, navigate_target) & (UP|DOWN)) : navigate_target
-		var/atom/new_target = find_nearest_stair_or_ladder(nav_dir)
-
-		if(!new_target)
-			balloon_alert(src, "can't find ladder or staircase going [direction_name]!")
-			return
-
-		navigate_target = new_target
-		finding_zchange = TRUE
-
 	if(!isatom(navigate_target))
-		stack_trace("Navigate target ([navigate_target]) is not an atom, somehow.")
-		return
+		CRASH("Navigate target ([navigate_target]) is not an atom, somehow.")
 
-	var/list/path = get_path_to(src, navigate_target, MAX_NAVIGATE_RANGE, mintargetdist = 1, access = get_access(), skip_first = FALSE)
+	navigating = TRUE
+	var/datum/callback/await = list(CALLBACK(src, PROC_REF(finish_navigation), navigate_target))
+	if(!SSpathfinder.astar_pathfind(src, navigate_target, maxnodes = MAX_NAVIGATE_RANGE, mintargetdist = 1, access = get_access(), smooth_diagonals = FALSE, on_finish = await)) // diagonals look kind of weird when visualized for now
+		navigating = FALSE
+		balloon_alert(src, "failed to begin navigation!")
+
+/mob/living/proc/finish_navigation(turf/navigate_target, list/path)
+	navigating = FALSE
+	if(!client)
+		return
 	if(!length(path))
 		balloon_alert(src, "no valid path with current access!")
 		return
@@ -99,10 +89,9 @@
 		client.images += path_image
 		client.navigation_images += path_image
 		animate(path_image, 0.5 SECONDS, alpha = 150)
+
 	addtimer(CALLBACK(src, PROC_REF(shine_navigation)), 0.5 SECONDS)
 	RegisterSignal(src, COMSIG_LIVING_DEATH, PROC_REF(cut_navigation))
-	if(finding_zchange)
-		RegisterSignal(src, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(cut_navigation))
 	balloon_alert(src, "navigation path created")
 	var/atom/movable/screen/navigate/navigate_hud = locate() in hud_used?.static_inventory
 	navigate_hud?.update_icon_state()
@@ -117,10 +106,12 @@
 
 /mob/living/proc/cut_navigation()
 	SIGNAL_HANDLER
-	for(var/image/navigation_path in client.navigation_images)
-		client.images -= navigation_path
-	client.navigation_images.Cut()
 	UnregisterSignal(src, list(COMSIG_LIVING_DEATH, COMSIG_MOVABLE_Z_CHANGED))
+	if(client?.navigation_images)
+		var/list/navigation_images = client.navigation_images
+		for(var/image/navigation_path in navigation_images)
+			client?.images -= navigation_path
+		navigation_images.Cut()
 	var/atom/movable/screen/navigate/navigate_hud = locate() in hud_used?.static_inventory
 	navigate_hud?.update_icon_state()
 

@@ -282,6 +282,10 @@
 /// Layer for tutorial instructions
 #define TUTORIAL_INSTRUCTIONS_LAYER 5
 
+/// Layer for pathfinding arrows
+#define PATH_ARROW_DEBUG_LAYER 7
+/// Layer for pathfinding overlays
+#define PATH_DEBUG_LAYER 8
 
 #define LOBBY_BACKGROUND_LAYER 3
 #define LOBBY_BUTTON_LAYER 4

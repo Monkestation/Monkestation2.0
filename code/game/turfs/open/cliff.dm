@@ -3,6 +3,7 @@
 	icon_state = "cliff"
 	icon = 'icons/turf/cliff/cliff.dmi'
 	density = TRUE
+	astar_weight = 500
 	/// From our perspective, where does someone need to stand to be able to fall from us? Cardinal only, we do the diagonals automatically
 	var/can_fall_from_direction = NORTH
 	/// If we fall, in which direction?

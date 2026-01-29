@@ -152,6 +152,12 @@
 	var/atom/movable/our_movable = pass_info.caller_ref?.resolve()
 	if(our_movable && !our_movable.can_z_move(DOWN, src, null, ZMOVE_FALL_FLAGS)) //If we can't fall here (flying/lattice), it's fine to path through
 		return TRUE
+	if(pass_info.multiz_checks)
+		var/turf/turf_below = GET_TURF_BELOW(src)
+		if(turf_below)
+			var/obj/structure/stairs/stairs_below = locate() in turf_below
+			if(stairs_below?.isTerminator())
+				return TRUE
 	return FALSE
 
 /turf/open/openspace/replace_floor(turf/open/new_floor_path, flags)
@@ -163,7 +169,14 @@
 	PlaceOnTop(new_floor_path, flags = flags)
 
 /turf/open/openspace/can_cross_safely(atom/movable/crossing)
-	return HAS_TRAIT(crossing, TRAIT_MOVE_FLYING)
+	if(HAS_TRAIT(crossing, TRAIT_MOVE_FLYING) || (locate(/obj/structure/lattice) in src))
+		return TRUE
+	var/turf/below = GET_TURF_BELOW(src)
+	if(below)
+		var/obj/structure/stairs/stairs_below = locate() in below
+		if(stairs_below?.isTerminator())
+			return TRUE
+	return FALSE
 
 /turf/open/openspace/icemoon
 	name = "ice chasm"
