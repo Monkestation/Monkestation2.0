@@ -126,10 +126,9 @@
  * Check if we have a stake in our heart
 **/
 /datum/antagonist/vampire/proc/check_if_staked()
-	var/obj/item/bodypart/chosen_bodypart = owner.current.get_bodypart(BODY_ZONE_CHEST)
-	for(var/obj/item/stake/embedded_stake in chosen_bodypart?.embedded_objects)
+	var/obj/item/bodypart/chosen_bodypart = owner.current?.get_bodypart(BODY_ZONE_CHEST)
+	if(locate(/obj/item/stake) in chosen_bodypart?.embedded_objects)
 		return TRUE
-
 	return FALSE
 /**
  * ##adjust_humanity(count, silent)

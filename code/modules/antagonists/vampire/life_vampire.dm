@@ -213,7 +213,11 @@
 	INVOKE_ASYNC(src, PROC_REF(handle_death))
 
 /datum/antagonist/vampire/proc/handle_death()
-	if(!QDELETED(owner.current) && !check_if_staked())
+	if(QDELETED(owner.current))
+		return
+	if(check_if_staked())
+		final_death()
+	else
 		owner.current.apply_status_effect(/datum/status_effect/vampire_torpor)
 
 /**
