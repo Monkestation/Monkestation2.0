@@ -7076,7 +7076,6 @@
 #include "monkestation\code\modules\art_sci_overrides\artifact_effects\bomb.dm"
 #include "monkestation\code\modules\art_sci_overrides\artifact_effects\bonk.dm"
 #include "monkestation\code\modules\art_sci_overrides\artifact_effects\borger.dm"
-#include "monkestation\code\modules\art_sci_overrides\artifact_effects\bread.dm"
 #include "monkestation\code\modules\art_sci_overrides\artifact_effects\cell.dm"
 #include "monkestation\code\modules\art_sci_overrides\artifact_effects\cleaning.dm"
 #include "monkestation\code\modules\art_sci_overrides\artifact_effects\emoter.dm"
