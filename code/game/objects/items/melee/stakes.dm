@@ -78,9 +78,13 @@
 		span_danger("You drive the [src] into [target]'s chest!"),
 	)
 
-	if(IS_VAMPIRE(target))
-		to_chat(target, span_userdanger("You have been staked! Your powers are useless while it's in your chest!"))
-		target.balloon_alert(target, "you have been staked!")
+	var/datum/antagonist/vampire/vampire_datum = IS_VAMPIRE(target)
+	if(vampire_datum)
+		if(HAS_TRAIT(target, TRAIT_TORPOR) || target.stat >= UNCONSCIOUS)
+			vampire_datum.final_death()
+		else
+			to_chat(target, span_userdanger("You have been staked! Your powers are useless while it's in your chest!"))
+			target.balloon_alert(target, "you have been staked!")
 
 /obj/item/stake/examine(mob/user)
 	. = ..()
