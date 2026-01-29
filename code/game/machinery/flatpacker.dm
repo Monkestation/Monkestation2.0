@@ -118,8 +118,13 @@
 		get_asset_datum(/datum/asset/spritesheet_batched/sheetmaterials),
 		get_asset_datum(/datum/asset/spritesheet_batched/research_designs),
 	)
-
+/obj/machinery/flatpacker/screwdriver_act(mob/living/user, obj/item/tool)
+	. = ITEM_INTERACT_BLOCKING
+	if(default_deconstruction_screwdriver(user, "flatpacker_o", "flatpacker", tool))
+		return ITEM_INTERACT_SUCCESS
 /obj/machinery/flatpacker/item_interaction(mob/living/user, obj/item/attacking_item, params)
+	if (panel_open)
+		return ITEM_INTERACT_FAILURE
 	if(istype(attacking_item, /obj/item/circuitboard/machine))
 		if(busy)
 			balloon_alert(user, "busy!")
