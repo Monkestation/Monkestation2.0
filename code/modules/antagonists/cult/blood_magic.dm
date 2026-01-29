@@ -518,6 +518,10 @@
 	var/datum/antagonist/vampire/vampire_datum = IS_VAMPIRE(target)
 	vampire_datum.disable_all_powers(forced = TRUE)
 
+	// ensure they're not buckled to anything, you are NOT escaping this bullshit
+	user.buckled?.unbuckle_mob(user, force = TRUE)
+	target.buckled?.unbuckle_mob(target, force = TRUE)
+
 	playsound(user, 'sound/magic/demon_dies.ogg', vol = 100, vary = TRUE)
 	var/turf/user_turf = get_turf(user)
 	var/turf/target_turf = get_turf(target)
