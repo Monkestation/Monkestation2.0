@@ -4410,7 +4410,6 @@
 /area/station/command/bridge)
 "aCE" = (
 /obj/structure/filingcabinet,
-/obj/machinery/firealarm/directional/north,
 /turf/open/floor/carpet/grimey,
 /area/station/security/detectives_office)
 "aCF" = (
@@ -12596,6 +12595,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/machinery/newscaster/directional/north,
 /turf/open/floor/carpet/grimey,
 /area/station/security/detectives_office)
 "cRW" = (
@@ -30377,7 +30377,7 @@
 	dir = 8
 	},
 /obj/effect/landmark/start/detective,
-/obj/machinery/newscaster/directional/east,
+/obj/structure/detectiveboard/directional/east,
 /turf/open/floor/carpet,
 /area/station/security/detectives_office)
 "ixP" = (
@@ -74726,6 +74726,7 @@
 /area/station/maintenance/starboard/greater)
 "waE" = (
 /obj/machinery/computer/records/medical,
+/obj/machinery/firealarm/directional/north,
 /turf/open/floor/carpet/grimey,
 /area/station/security/detectives_office)
 "waG" = (

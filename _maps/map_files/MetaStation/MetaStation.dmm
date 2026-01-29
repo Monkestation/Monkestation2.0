@@ -8404,10 +8404,10 @@
 /turf/open/floor/iron,
 /area/station/security/office)
 "dbj" = (
-/obj/machinery/airalarm/directional/east,
 /obj/machinery/computer/records/security{
 	dir = 8
 	},
+/obj/structure/detectiveboard/directional/east,
 /turf/open/floor/carpet,
 /area/station/security/detectives_office)
 "dbk" = (
@@ -65868,6 +65868,7 @@
 /area/station/command/gateway)
 "wPi" = (
 /obj/machinery/vending/wardrobe/det_wardrobe,
+/obj/machinery/airalarm/directional/east,
 /turf/open/floor/carpet/grimey,
 /area/station/security/detectives_office)
 "wPo" = (

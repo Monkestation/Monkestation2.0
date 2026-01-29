@@ -22494,6 +22494,7 @@
 	pixel_x = 2;
 	pixel_y = -2
 	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/carpet/grimey,
 /area/station/security/detectives_office)
 "kOq" = (
@@ -23060,7 +23061,6 @@
 /turf/open/floor/iron/cafeteria,
 /area/station/science/breakroom)
 "lcs" = (
-/obj/machinery/light/directional/south,
 /turf/open/floor/carpet,
 /area/station/security/detectives_office)
 "lcB" = (
@@ -36301,7 +36301,7 @@
 	dir = 1
 	},
 /obj/effect/landmark/start/detective,
-/obj/machinery/light/directional/south,
+/obj/structure/detectiveboard/directional/south,
 /turf/open/floor/carpet,
 /area/station/security/detectives_office)
 "rtA" = (
@@ -38448,6 +38448,7 @@
 	department = "Detective";
 	name = "Detective Requests Console"
 	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/carpet,
 /area/station/security/detectives_office)
 "sqN" = (

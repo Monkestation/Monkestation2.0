@@ -2178,12 +2178,12 @@
 /turf/open/floor/plating,
 /area/station/engineering/transit_tube)
 "aKf" = (
-/obj/machinery/light_switch/directional/south,
 /obj/structure/chair/comfy/brown{
 	dir = 4
 	},
 /obj/effect/landmark/start/detective,
 /obj/machinery/light/directional/south,
+/obj/structure/detectiveboard/directional/south,
 /turf/open/floor/carpet,
 /area/station/security/detectives_office)
 "aKq" = (
@@ -57211,6 +57211,7 @@
 "ryl" = (
 /obj/machinery/vending/wardrobe/det_wardrobe,
 /obj/machinery/light/directional/east,
+/obj/machinery/light_switch/directional/east,
 /turf/open/floor/carpet/grimey,
 /area/station/security/detectives_office)
 "rym" = (

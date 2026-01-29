@@ -11781,12 +11781,6 @@
 /area/station/science/genetics)
 "dMR" = (
 /obj/machinery/light/directional/east,
-/obj/machinery/requests_console/directional/east{
-	department = "Law Office";
-	name = "Law Office Requests Console"
-	},
-/obj/effect/mapping_helpers/requests_console/assistance,
-/obj/effect/mapping_helpers/requests_console/information,
 /obj/machinery/computer/warrant{
 	dir = 8
 	},
@@ -32582,6 +32576,7 @@
 /obj/structure/table/wood,
 /obj/item/camera_film,
 /obj/item/camera/detective,
+/obj/machinery/newscaster/directional/west,
 /turf/open/floor/wood,
 /area/station/security/detectives_office)
 "kxo" = (
@@ -52854,10 +52849,10 @@
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "rdk" = (
-/obj/machinery/light/directional/west,
 /obj/machinery/computer/security{
 	dir = 4
 	},
+/obj/structure/detectiveboard/directional/west,
 /turf/open/floor/wood,
 /area/station/security/detectives_office)
 "rdl" = (
@@ -63007,6 +63002,12 @@
 	pixel_y = 6
 	},
 /obj/item/clothing/glasses/sunglasses/big,
+/obj/machinery/requests_console/directional/east{
+	department = "Law Office";
+	name = "Law Office Requests Console"
+	},
+/obj/effect/mapping_helpers/requests_console/assistance,
+/obj/effect/mapping_helpers/requests_console/information,
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
 "uob" = (
@@ -72183,10 +72184,10 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/fore)
 "xft" = (
-/obj/machinery/newscaster/directional/west,
 /obj/machinery/computer/records/security{
 	dir = 4
 	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/wood,
 /area/station/security/detectives_office)
 "xfA" = (

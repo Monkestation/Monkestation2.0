@@ -18,7 +18,7 @@ import { Component, createRef, RefObject } from 'react';
 import { Window } from '../layouts';
 import { resolveAsset } from '../assets';
 import { MOUSE_BUTTON_LEFT, noop } from './IntegratedCircuit/constants';
-import { Connection, Connections, Position } from './common/Connections';
+import { type Connection, Connections, type Coordinates } from './common/Connections';
 
 enum ConnectionType {
   Relay,
@@ -134,30 +134,26 @@ const textWidth = (text, font, fontsize) => {
   return width;
 };
 
-const planeToPosition = function (plane: Plane, index, is_incoming): Position {
-  return {
+const planeToPosition = (plane: Plane, index, is_incoming): Coordinates => ({
     x: is_incoming ? plane.x : plane.x + plane.size_x,
     y:
       29 +
       plane.y +
       plane.step_size * index +
       (plane.step_size - plane.step_size / 3),
-  };
-};
+  });
 
 // Takes a plane, returns the amount of node space it will need
-const getPlaneNodeHeight = function (plane: Plane): number {
-  return Math.max(
+const getPlaneNodeHeight = (plane: Plane): number => Math.max(
     plane.incoming_relays.length + plane.incoming_filters.length,
     plane.outgoing_relays.length + plane.outgoing_filters.length,
   );
-};
 
-const sortConnectionRefs = function (
+const sortConnectionRefs = (
   refs: ConnectionRef[],
   direction: ConnectionDirection,
   connectSources: AssocConnected,
-) {
+) => {
   refs = sortBy((connection: ConnectionRef) => connection.sort_by)(refs);
   refs.map((connection, index) => {
     let connectSource = connectSources[connection.ref];
@@ -170,13 +166,13 @@ const sortConnectionRefs = function (
   return refs;
 };
 
-const addConnectionRefs = function (
+const addConnectionRefs = (
   read_from: string[],
   add_type: ConnectionDirection,
   add_to: ConnectionRef[],
   reference: AssocConnected,
   plane_info: AssocPlane,
-) {
+) => {
   for (const ref of read_from) {
     const connected = reference[ref];
     let our_plane;
@@ -194,7 +190,7 @@ const addConnectionRefs = function (
 };
 
 // Takes a list of planes, uses the depth stack to position them
-const positionPlanes = function (connectSources: AssocConnected) {
+const positionPlanes = (connectSources: AssocConnected) => {
   const { data } = useBackend<PlaneDebugData>();
   const { plane_info, relay_info, filter_connect, depth_stack } = data;
 
@@ -322,9 +318,7 @@ const positionPlanes = function (connectSources: AssocConnected) {
   }
 };
 
-const arrayRemove = function (arr: any, value) {
-  return arr.filter((element) => element !== value);
-};
+const arrayRemove = (arr: any, value) => arr.filter((element) => element !== value);
 
 export class PlaneMasterDebug extends Component {
   constructor(props) {
@@ -848,7 +842,7 @@ const ToggleMirror = (props) => {
   );
 };
 
-const has_foreign_mob = function () {
+const has_foreign_mob = () => {
   const { data } = useBackend<PlaneDebugData>();
   const { mob_ref, our_ref } = data;
   return mob_ref !== our_ref;
