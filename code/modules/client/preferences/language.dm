@@ -2,6 +2,7 @@
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 	savefile_key = "language"
 	savefile_identifier = PREFERENCE_CHARACTER
+	should_update_preview = FALSE
 
 /datum/preference/choiced/language/is_accessible(datum/preferences/preferences)
 	if (!..())
