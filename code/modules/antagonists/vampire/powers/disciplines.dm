@@ -24,7 +24,8 @@
 
 /datum/discipline/Destroy()
 	vampiredatum_discipline = null
-	. = ..()
+	owner = null
+	return ..()
 
 /**
  * Needs to be called after we have been created and assigned to a vampire.
@@ -32,10 +33,6 @@
 /datum/discipline/proc/assigned_to_owner(mob/living/carbon/carbon_owner)
 	owner = carbon_owner
 	vampiredatum_discipline = IS_VAMPIRE(carbon_owner)
-
-/datum/discipline/Destroy()
-	vampiredatum_discipline = null
-	. = ..()
 
 // 0 is null, and false is also null, which is 0. So, we gotta use 1 as the starting point that doesn't have any abilities.
 // Yes this means all levels everywhere else do not match up with this.
