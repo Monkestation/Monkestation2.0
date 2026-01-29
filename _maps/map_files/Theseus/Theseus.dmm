@@ -5695,6 +5695,7 @@
 	dir = 8
 	},
 /obj/machinery/light/directional/west,
+/obj/item/storage/toolbox/electrical/medical,
 /turf/open/floor/iron/white,
 /area/station/medical/storage)
 "bKk" = (

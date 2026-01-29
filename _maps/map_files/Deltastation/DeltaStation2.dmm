@@ -12971,10 +12971,10 @@
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 8
 	},
-/obj/structure/closet/l3closet/virology,
 /obj/effect/turf_decal/bot,
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
+/obj/machinery/recharge_station,
 /turf/open/floor/iron,
 /area/station/medical/storage)
 "cYp" = (
@@ -58063,7 +58063,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/item/kirbyplants/random,
+/obj/structure/closet/l3closet,
 /turf/open/floor/iron,
 /area/station/medical/storage)
 "nFX" = (
@@ -93037,6 +93037,7 @@
 /obj/item/mod/module/plasma_stabilizer,
 /obj/item/mod/module/thermal_regulator,
 /obj/structure/table/reinforced,
+/obj/item/storage/toolbox/electrical/medical,
 /turf/open/floor/iron,
 /area/station/medical/storage)
 "vYG" = (

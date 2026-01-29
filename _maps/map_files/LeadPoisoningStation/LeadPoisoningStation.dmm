@@ -43144,6 +43144,7 @@
 /obj/item/gun/syringe,
 /obj/machinery/door/window/right/directional/north,
 /obj/structure/window/reinforced/spawner/directional/west,
+/obj/item/storage/toolbox/electrical/medical,
 /turf/open/floor/iron/diagonal,
 /area/station/medical/office)
 "uBG" = (

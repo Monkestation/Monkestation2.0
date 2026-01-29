@@ -392,3 +392,18 @@
 	new /obj/item/wirecutters(src)
 	new /obj/item/multitool(src)
 	new /obj/item/stack/cable_coil/industrial(src)
+
+/obj/item/storage/toolbox/electrical/medical
+	name = "robotic repair toolbox"
+	desc = "Contains equipment for IPC maintenance, because we all know robotics won't do it."
+	icon_state = "toolbox-medical"
+	inhand_icon_state = "toolbox-medical"
+
+/obj/item/storage/toolbox/electrical/medical/PopulateContents()
+	new /obj/item/screwdriver(src)
+	new /obj/item/wrench(src)
+	new /obj/item/weldingtool/largetank(src)
+	new /obj/item/crowbar(src)
+	new /obj/item/wirecutters(src)
+	new /obj/item/multitool(src)
+	new /obj/item/stack/cable_coil(src)

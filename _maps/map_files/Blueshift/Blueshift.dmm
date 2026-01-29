@@ -33721,6 +33721,7 @@
 	pixel_x = -8;
 	pixel_y = 8
 	},
+/obj/item/storage/toolbox/electrical/medical,
 /turf/open/floor/iron/white,
 /area/station/medical/storage)
 "gwF" = (

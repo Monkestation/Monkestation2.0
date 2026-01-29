@@ -62053,6 +62053,7 @@
 /obj/item/paper_bin,
 /obj/item/folder/white,
 /obj/item/pen,
+/obj/item/storage/toolbox/electrical/medical,
 /turf/open/floor/iron/white,
 /area/station/medical/office)
 "tYO" = (
