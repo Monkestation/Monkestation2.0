@@ -43,6 +43,10 @@
 		owner.balloon_alert(owner, "[carbon_target] is already entranced.")
 		return FALSE
 
+	if(carbon_target.get_eye_protection() >= FLASH_PROTECTION_WELDER)
+		owner.balloon_alert(owner, "[carbon_target] has too much eye protection.")
+		return FALSE
+
 	return TRUE
 
 /datum/action/cooldown/vampire/targeted/entrance/FireTargetedPower(atom/target_atom)
