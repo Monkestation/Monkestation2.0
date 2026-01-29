@@ -451,6 +451,15 @@
 	activate_message = "<span class='notice'>You feel your mind automatically verifying long serial numbers on disk shaped objects.</span>"
 	deactivate_message = "<span class='notice'>The innate recognition of absurdly long disk-related serial numbers fades from your mind.</span>"
 
+/obj/item/skillchip/hypnotist
+	name = "M1B skillchip"
+	auto_traits = list(TRAIT_CAN_HYPNO)
+	skill_name = "R3DACT3D M1B CH1P"
+	skill_description = "\[Most of the description has been erased\]- memorizers."
+	skill_icon = "save"
+	activate_message = "<span class='notice'>You suddenly feel like you just lost your sense of individualism.</span>"
+	deactivate_message = "<span class='notice'>You suddenly... huh? You don't remember.</span>"
+
 /obj/item/skillchip/entrails_reader
 	name = "3NTR41LS skillchip"
 	auto_traits = list(TRAIT_ENTRAILS_READER)

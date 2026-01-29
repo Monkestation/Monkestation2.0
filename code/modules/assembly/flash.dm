@@ -146,7 +146,7 @@
  */
 /obj/item/assembly/flash/proc/flash_carbon(mob/living/carbon/flashed, mob/user, confusion_duration = 15 SECONDS, targeted = TRUE, generic_message = FALSE)
 	if(!istype(flashed))
-		return
+		return FALSE
 	if(user)
 		log_combat(user, flashed, "[targeted? "flashed(targeted)" : "flashed(AOE)"]", src)
 	else //caused by emp/remote signal
@@ -160,7 +160,7 @@
 	if(user)
 		var/sigreturn = SEND_SIGNAL(user, COMSIG_MOB_PRE_FLASHED_CARBON, flashed, src, deviation)
 		if(sigreturn & STOP_FLASH)
-			return
+			return FALSE
 
 		if(sigreturn & DEVIATION_OVERRIDE_FULL)
 			deviation = DEVIATION_FULL
@@ -171,7 +171,7 @@
 
 	//If you face away from someone they shouldnt notice any effects.
 	if(deviation == DEVIATION_FULL)
-		return
+		return FALSE
 
 	if(CAN_BYPASS_INNATE_FLASH_RESISTANCE(user)) // MONKESTATION EDIT: Make IPCs not resistant to bb and rev conversions.
 		ADD_TRAIT(flashed, TRAIT_CONVERSION_FLASHED, TRAIT_GENERIC)
@@ -179,7 +179,7 @@
 	if(targeted)
 		if(!flashed.has_status_effect(/datum/status_effect/currently_flashed) && flashed.flash_act(1, 1))
 			flashed.set_confusion_if_lower(confusion_duration * CONFUSION_STACK_MAX_MULTIPLIER)
-			visible_message(span_danger("[user] blinds [flashed] with the flash!"), span_userdanger("[user] blinds you with the flash!"))
+			visible_message(span_danger("[user] blinds [flashed] with the [name]!"), span_userdanger("[user] blinds you with the flash!"))
 			if (deviation == DEVIATION_PARTIAL)
 				flashed.stamina.adjust(-60)
 			else if (deviation == DEVIATION_NONE)
@@ -192,13 +192,16 @@
 			SEND_SIGNAL(user, COMSIG_MOB_SUCCESSFUL_FLASHED_CARBON, flashed, src, deviation)
 		else if(user)
 			visible_message(span_warning("[user] fails to blind [flashed] with the flash!"), span_danger("[user] fails to blind you with the flash!"))
+			return FALSE
 		else
 			to_chat(flashed, span_danger("[src] fails to blind you!"))
+			return FALSE
 	else
 		if(flashed.flash_act())
 			flashed.set_confusion_if_lower(confusion_duration * CONFUSION_STACK_MAX_MULTIPLIER)
 
 	REMOVE_TRAIT(flashed, TRAIT_CONVERSION_FLASHED, TRAIT_GENERIC) // MONKESTATION EDIT: Make IPCs not resistant to bb and rev conversions.
+	return TRUE
 
 /**
  * Handles the directionality of the attack
@@ -314,6 +317,46 @@
 	inhand_icon_state = "nullrod"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
+
+	var/trait_needed = null
+	///The message that will be left on the player after being memorized.
+	var/implant_message = "You don't remember anything from the last 5 minutes."
+
+/obj/item/assembly/flash/memorizer/attack_self(mob/living/carbon/user, flag = 0, emp = 0)
+	return FALSE //no AOE flash
+
+/obj/item/assembly/flash/memorizer/flash_carbon(mob/living/carbon/flashed, mob/living/user, confusion_duration = 15 SECONDS, targeted = TRUE, generic_message = FALSE)
+	. = ..()
+	if(trait_needed && !HAS_TRAIT(user, trait_needed))
+		user.flash_act(1, 1)
+		user.apply_status_effect(/datum/status_effect/trance/no_hypno, 3 SECONDS, TRUE)
+		return TRUE
+	if(!. || issilicon(flashed))
+		return .
+	if(flashed == user || !user.mind || !flashed.mind)
+		return .
+
+	flashed.apply_status_effect(/datum/status_effect/trance/no_hypno, 5 SECONDS, TRUE)
+	flashed.mind.wipe_memories_except_keys() // I was gonna...
+	to_chat(flashed, span_hypnophrase(implant_message))
+	user.log_message("has memorized [flashed] with [implant_message].", LOG_ATTACK)
+	flashed.log_message("has been memorized with '[implant_message]' by [key_name(user)].", LOG_VICTIM, log_globally = FALSE)
+	user.log_message("memorized [key_name(flashed)] with '[implant_message]'.", LOG_GAME)
+	return .
+
+/obj/item/assembly/flash/memorizer/memories
+	name = "advanced memorizer"
+	desc = parent_type::desc + " Can be used in-hand to set a custom phrase."
+	trait_needed = TRAIT_CAN_HYPNO
+
+/obj/item/assembly/flash/memorizer/memories/attack_self(mob/living/carbon/user, flag = 0, emp = 0)
+	if(holder)
+		return FALSE
+	var/memorize_message = tgui_input_text(user, "You don't remember anything about... (This may only erase up until roundstart, nothing prior such as innate knowledge)", "Memory Wipe")
+	if(isnull(memorize_message) || !istext(memorize_message))
+		return FALSE
+	user.balloon_alert(user, "memorizer set")
+	implant_message = "You don't remember anything about [memorize_message]."
 
 /obj/item/assembly/flash/handheld //this is now the regular pocket flashes
 
