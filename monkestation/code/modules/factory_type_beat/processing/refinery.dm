@@ -1,198 +1,123 @@
 /**
  * Your new favorite industrial waste magnet!
- * Accepts boulders and produces sheets of non-metalic materials.
- * Can be upgraded with stock parts or through chemical inputs.
- * When upgraded, it can hold more boulders and process more at once.
- *
- * Chemical inputs can be used to boost the refinery's efficiency, but produces industrial waste, which eats through the station and is generally difficult to store.
+ * Accepts resoures and produces sheets of non-metalic materials.
+ * When upgraded, it can hold more resoures and process more at once.
  */
-
 /obj/machinery/bouldertech/refinery
 	name = "boulder refinery"
-	desc = "BR for short. Accepts boulders and refines non-metallic ores into sheets using internal chemicals. Can be upgraded with stock parts or through chemical inputs."
+	desc = "BR for short. Accepts resoures and refines non-metallic ores into sheets using internal chemicals. Does more than boulders but the name stuck."
 	icon_state = "stacker"
-	holds_minerals = TRUE
-	process_string = "Refined Dust"
-	processable_materials = list(
-		/datum/material/glass,
-		/datum/material/plasma,
-		/datum/material/diamond,
-		/datum/material/bluespace,
-		/datum/material/bananium,
-		/datum/material/plastic,
-	)
 	circuit = /obj/item/circuitboard/machine/refinery
 	usage_sound = 'sound/machines/mining/refinery.ogg'
-	holds_mining_points = TRUE
+	points_held = 0
+	action = "crushing"
 
-/// okay so var that holds mining points to claim
-/// add total of pts from minerals mined in parent proc
-/// then, little mini UI showing points to collect?
+/obj/machinery/bouldertech/refinery/Initialize(mapload)
+	. = ..()
+	silo_materials = AddComponent(
+		/datum/component/remote_materials, \
+		mapload, \
+		force_connect = TRUE, /*Attempt to auto connect the machine to a local ore silo if one is avaliable*/ \
+		mat_container_flags = MATCONTAINER_NO_INSERT \
+	)
+
+/obj/machinery/bouldertech/refinery/can_process_material(datum/material/possible_mat)
+	var/static/list/processable_materials
+	if(!length(processable_materials))
+		processable_materials = list(
+			/datum/material/glass,
+			/datum/material/plasma,
+			/datum/material/diamond,
+			/datum/material/bluespace,
+			/datum/material/bananium,
+			/datum/material/plastic,
+		)
+	return is_type_in_list(possible_mat, processable_materials)
+
+/obj/machinery/bouldertech/refinery/check_processing_resource() // Smelter and refinery do not need extra resources to process
+	return TRUE
+
+/obj/machinery/bouldertech/refinery/update_icon_state()
+	. = ..()
+	var/suffix = ""
+	if(!anchored || !is_operational || (machine_stat & (BROKEN | NOPOWER)) || panel_open)
+		suffix = "-off"
+	icon_state ="[initial(icon_state)][suffix]"
+
+/obj/machinery/bouldertech/refinery/screwdriver_act(mob/living/user, obj/item/tool)
+	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-off", initial(icon_state), tool))
+		update_appearance(UPDATE_ICON_STATE)
+		return ITEM_INTERACT_SUCCESS
+	return
+
+/obj/machinery/bouldertech/refinery/can_process_resource(obj/item/res, return_typecache = FALSE)
+	var/static/list/processable_resources
+	if(!length(processable_resources))
+		processable_resources = typecacheof(list(
+			/obj/item/boulder,
+			/obj/item/boulder/artifact,
+			/obj/item/processing/refined_dust,
+			),
+			only_root_path = TRUE
+		)
+	return return_typecache ? processable_resources : is_type_in_typecache(res, processable_resources)
 
 /obj/machinery/bouldertech/refinery/RefreshParts()
 	. = ..()
-	var/manipulator_stack = 0
-	var/matter_bin_stack = 0
-	for(var/datum/stock_part/manipulator/servo in component_parts)
-		manipulator_stack += servo.tier - 1
-	boulders_processing_max = clamp(manipulator_stack, 1, 6)
+	resources_held_max = 0
 	for(var/datum/stock_part/matter_bin/bin in component_parts)
-		matter_bin_stack += bin.tier
-	boulders_held_max = matter_bin_stack
+		resources_held_max += bin.tier
 
-
-/obj/machinery/bouldertech/refinery/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	. = ..()
-	if(istype(held_item, /obj/item/boulder) || check_extras(held_item))
-		context[SCREENTIP_CONTEXT_LMB] = "Insert boulder or refined dust"
-	if(istype(held_item, /obj/item/card/id) && points_held > 0)
-		context[SCREENTIP_CONTEXT_LMB] = "Claim mining points"
-	context[SCREENTIP_CONTEXT_RMB] = "Remove boulder or refined dust"
-	return CONTEXTUAL_SCREENTIP_SET
-
-/obj/machinery/bouldertech/refinery/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(holds_minerals && check_extras(attacking_item)) // Checking for extra items it can refine.
-		var/obj/item/processing/refined_dust/my_dust = attacking_item
-		update_boulder_count()
-		if(!accept_boulder(my_dust))
-			balloon_alert_to_viewers("full!")
-			return
-		balloon_alert_to_viewers("accepted")
-		START_PROCESSING(SSmachines, src)
-		return TRUE
-	return ..()
+	resources_processing_count = 0
+	for(var/datum/stock_part/manipulator/manip in component_parts)
+		resources_processing_count += manip.tier
+	resources_processing_count = ROUND_UP((resources_processing_count / 8) * resources_held_max)
 
 /**
  * Your other new favorite industrial waste magnet!
- * Accepts boulders and produces sheets of metalic materials.
- * Can be upgraded with stock parts or through chemical inputs.
- * When upgraded, it can hold more boulders and process more at once.
- *
- * Chemical inputs can be used to boost the refinery's efficiency, but produces industrial waste, which eats through the station and is generally difficult to store.
+ * Accepts resoures and produces sheets of metalic materials.
+ * When upgraded, it can hold more resoures and process more at once.
  */
 /obj/machinery/bouldertech/refinery/smelter
 	name = "boulder smelter"
-	desc = "BS for short. Accept boulders and refines metallic ores into sheets. Can be upgraded with stock parts or through gas inputs."
+	desc = "BS for short. Accept resoures and refines metallic ores into sheets. Does more than boulders but the name stuck."
 	icon_state = "smelter"
-	processable_materials = list(
-		/datum/material/iron,
-		/datum/material/titanium,
-		/datum/material/silver,
-		/datum/material/gold,
-		/datum/material/uranium,
-		/datum/material/mythril,
-		/datum/material/adamantine,
-		/datum/material/runite,
-	)
 	light_system = OVERLAY_LIGHT
-	light_outer_range = 1
-	light_power = 2
+	light_outer_range = 2
+	light_power = 3
 	light_color = "#ffaf55"
-	light_on = FALSE
 	circuit = /obj/item/circuitboard/machine/smelter
 	usage_sound = 'sound/machines/mining/smelter.ogg'
+	action = "smelting"
 
-/obj/machinery/bouldertech/refinery/smelter/RefreshParts()
+/obj/machinery/bouldertech/refinery/smelter/Initialize(mapload)
 	. = ..()
-	light_power = boulders_processing_max
+	set_light_on(TRUE)
 
-/obj/machinery/bouldertech/refinery/smelter/accept_boulder(obj/item/boulder/new_boulder)
-	. = ..()
-	if(.)
-		set_light_on(TRUE)
-		return TRUE
+/obj/machinery/bouldertech/refinery/smelter/can_process_material(datum/material/possible_mat)
+	var/static/list/processable_materials
+	if(!length(processable_materials))
+		processable_materials = list(
+			/datum/material/iron,
+			/datum/material/titanium,
+			/datum/material/silver,
+			/datum/material/gold,
+			/datum/material/uranium,
+		)
+	return is_type_in_list(possible_mat, processable_materials)
 
-/obj/machinery/bouldertech/refinery/smelter/process()
-	. = ..()
-	if(. == PROCESS_KILL)
-		set_light_on(FALSE)
-
-/obj/machinery/bouldertech/refinery/process()
-	if(!anchored)
-		return PROCESS_KILL
-	var/stop_processing_check = FALSE
-	var/boulders_concurrent = boulders_processing_max ///How many boulders can we touch this process() call
-	for(var/obj/item/potential_boulder as anything in boulders_contained)
-		if(QDELETED(potential_boulder))
-			boulders_contained -= potential_boulder
-			break
-		if(boulders_concurrent <= 0)
-			break //Try again next time
-
-		if(!istype(potential_boulder, /obj/item/boulder) && !istype(potential_boulder, /obj/item/processing/refined_dust))
-			potential_boulder.forceMove(drop_location())
-			CRASH("\The [src] had a non-boulder in it's boulder container!")
-
-		if(istype(potential_boulder, /obj/item/processing/refined_dust))
-			boulders_concurrent-- //We count dust.
-			refine_dust(potential_boulder)
-			continue
-
-		var/obj/item/boulder/boulder = potential_boulder
-		if(boulder.durability < 0)
-			CRASH("\The [src] had a boulder with negative durability!")
-		if(!check_for_processable_materials(boulder.custom_materials)) //Checks for any new materials we can process.
-			boulders_concurrent-- //We count skipped boulders
-			remove_boulder(boulder)
-			continue
-		boulders_concurrent--
-		boulder.durability-- //One less durability to the processed boulder.
-		if(COOLDOWN_FINISHED(src, sound_cooldown))
-			COOLDOWN_START(src, sound_cooldown, 1.5 SECONDS)
-			playsound(loc, usage_sound, 29, FALSE, SHORT_RANGE_SOUND_EXTRARANGE) //This can get annoying. One play per process() call.
-		stop_processing_check = TRUE
-		if(boulder.durability <= 0)
-			breakdown_boulder(boulder) //Crack that bouwlder open!
-			continue
-	if(!stop_processing_check)
-		playsound(src.loc, 'sound/machines/ping.ogg', 50, FALSE)
-		return PROCESS_KILL
-
-/obj/machinery/bouldertech/refinery/proc/refine_dust(obj/item/processing/refined_dust/dust)
-	use_energy(BASE_MACHINE_ACTIVE_CONSUMPTION)
-	var/list/processable_ores = list()
-	for(var/datum/material/possible_mat as anything in dust.custom_materials)
-		if(!is_type_in_list(possible_mat, processable_materials))
-			continue
-		var/quantity = dust.custom_materials[possible_mat]
-		points_held = round((points_held + (quantity * possible_mat.points_per_unit * MINING_POINT_MACHINE_MULTIPLIER))) // put point total here into machine
-		processable_ores += possible_mat
-		processable_ores[possible_mat] = quantity
-		dust.custom_materials -= possible_mat //Remove it from the boulder now that it's tracked
-
-	var/obj/item/boulder/disposable_boulder = new (src)
-	disposable_boulder.custom_materials = processable_ores
-	silo_materials.mat_container.insert_item(disposable_boulder, refining_efficiency)
-	if(length(dust.custom_materials)) // If our dust still has materials we cant process eject it.
-		dust.restart_processing_cooldown() //Reset the cooldown so we don't pick it back up by the same machine.
-		if(isturf(get_step(src, dir)))
-			dust.forceMove(get_step(src, dir))
-		else
-			dust.forceMove(drop_location())
-	else
-		qdel(dust)
-
-	playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	qdel(disposable_boulder) // Boulder still remains in refinery. It will be processed unless it's deleted.
-	update_boulder_count()
-
-/obj/machinery/bouldertech/refinery/CanAllowThrough(atom/movable/mover, border_dir)
-	if(!anchored)
-		return FALSE
-	if(boulders_contained.len >= boulders_held_max)
-		return FALSE
-	if(check_extras(mover))
-		var/obj/item/processing/refined_dust/dust = mover
-		return dust.can_get_processed()
+/obj/machinery/bouldertech/refinery/smelter/set_light_on(new_value)
+	if(panel_open || !anchored || !is_operational || machine_stat & (BROKEN | NOPOWER))
+		new_value = FALSE
 	return ..()
 
-/obj/machinery/bouldertech/refinery/return_extras()
-	var/list/boulders_contained = list()
-	for(var/obj/item/processing/refined_dust/boulder in contents)
-		boulders_contained += boulder
-	return boulders_contained
+/obj/machinery/bouldertech/refinery/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/screwdriver)
+	. = ..()
+	set_light_on(TRUE)
 
-/obj/machinery/bouldertech/refinery/check_extras(obj/item/item)
-	if(istype(item, /obj/item/processing/refined_dust))
-		return TRUE
-	return FALSE
+/obj/machinery/bouldertech/refinery/default_unfasten_wrench(mob/user, obj/item/wrench, time)
+	. = ..()
+	set_light_on(TRUE)
+
+/obj/machinery/bouldertech/refinery/smelter/on_set_is_operational(old_value)
+	set_light_on(TRUE)

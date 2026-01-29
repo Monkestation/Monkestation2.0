@@ -58,70 +58,6 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_SERVICE
 
-/datum/design/dissolution_chamber
-	name = "Dissolution Chamber"
-	id = "dissolution_chamber"
-	build_type = COLONY_FABRICATOR | AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(
-		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5,
-		/datum/material/glass = SHEET_MATERIAL_AMOUNT,
-	)
-	build_path = /obj/item/flatpacked_machine/ore_processing/dissolution_chamber
-	category = list(
-		RND_CATEGORY_INITIAL,
-		FABRICATOR_SUBCATEGORY_MATERIALS,
-	)
-	construction_time = 10 SECONDS
-	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_CARGO
-
-/datum/design/chemical_washer
-	name = "Chemical Washer"
-	id = "chemical_washer"
-	build_type = COLONY_FABRICATOR | AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(
-		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5,
-		/datum/material/glass = SHEET_MATERIAL_AMOUNT,
-	)
-	build_path = /obj/item/flatpacked_machine/ore_processing/chemical_washer
-	category = list(
-		RND_CATEGORY_INITIAL,
-		FABRICATOR_SUBCATEGORY_MATERIALS,
-	)
-	construction_time = 10 SECONDS
-	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_CARGO
-
-/datum/design/chemical_injector
-	name = "Chemical Injector"
-	id = "chemical_injector"
-	build_type = COLONY_FABRICATOR | AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(
-		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5,
-		/datum/material/glass = SHEET_MATERIAL_AMOUNT,
-	)
-	build_path = /obj/item/flatpacked_machine/ore_processing/chemical_injector
-	category = list(
-		RND_CATEGORY_INITIAL,
-		FABRICATOR_SUBCATEGORY_MATERIALS,
-	)
-	construction_time = 10 SECONDS
-	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_CARGO
-
-/datum/design/crystalizer
-	name = "Crystalizer"
-	id = "crystalizer"
-	build_type = COLONY_FABRICATOR | AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(
-		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5,
-		/datum/material/glass = SHEET_MATERIAL_AMOUNT,
-	)
-	build_path = /obj/item/flatpacked_machine/ore_processing/crystalizer
-	category = list(
-		RND_CATEGORY_INITIAL,
-		FABRICATOR_SUBCATEGORY_MATERIALS,
-	)
-	construction_time = 10 SECONDS
-	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_CARGO
-
 /datum/design/crusher
 	name = "Crusher"
 	id = "crusher"
@@ -140,6 +76,7 @@
 
 /datum/design/enricher
 	name = "Enrichment Chamber"
+	desc = "Flat pack machine that extracts more resources from boulders and dust."
 	id = "enricher"
 	build_type = COLONY_FABRICATOR | AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(
@@ -170,25 +107,9 @@
 	construction_time = 10 SECONDS
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_CARGO
 
-/datum/design/brine_chamber
-	name = "Brine Chamber Controller"
-	id = "brine_chamber"
-	build_type = COLONY_FABRICATOR | AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(
-		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 15,
-		/datum/material/glass = SHEET_MATERIAL_AMOUNT,
-	)
-	build_path = /obj/item/flatpacked_machine/ore_processing/brine_chamber
-	category = list(
-		RND_CATEGORY_INITIAL,
-		FABRICATOR_SUBCATEGORY_MATERIALS,
-	)
-	construction_time = 30 SECONDS
-	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_CARGO
-
 // Autolathe-able circuitboards for starting with boulder processing machines.
 /datum/design/board/smelter
-	name = "Boulder Smelter"
+	name = "Boulder Smelter Board"
 	desc = "A circuitboard for a boulder smelter. Lowtech enough to be printed from the lathe."
 	id = "b_smelter"
 	build_type = COLONY_FABRICATOR | AUTOLATHE | PROTOLATHE
@@ -204,7 +125,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/board/refinery
-	name = "Boulder Refinery"
+	name = "Boulder Refinery Board"
 	desc = "A circuitboard for a boulder refinery. Lowtech enough to be printed from the lathe."
 	id = "b_refinery"
 	build_type = COLONY_FABRICATOR | AUTOLATHE | PROTOLATHE
@@ -219,9 +140,8 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_ENGINEERING
 
-
 /datum/design/board/brm
-	name = "Boulder Retrieval Matrix"
+	name = "Boulder Retrieval Matrix Board"
 	id = "brm"
 	materials = list(
 		/datum/material/glass = SHEET_MATERIAL_AMOUNT,

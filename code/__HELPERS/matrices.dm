@@ -75,12 +75,14 @@
 		matrix(transform).Translate(0, 1),
 		matrix(transform).Translate(1, 0),
 		matrix(transform).Translate(0, -1),
+		matrix(transform),
 	)
 
-	animate(src, transform = transforms[1], time = 0.2, loop = loops)
+	animate(src, transform = transforms[1], time = 0.1, loop = loops)
 	animate(transform = transforms[2], time = 0.1)
 	animate(transform = transforms[3], time = 0.2)
 	animate(transform = transforms[4], time = 0.3)
+	animate(transform = transforms[5], time = 0.1)
 
 /**
  * Shear the transform on either or both axes.
