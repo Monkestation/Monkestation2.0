@@ -79,7 +79,7 @@
 	return TRUE
 
 /obj/structure/vampire/click_alt(mob/user)
-	if(user != owner.current || !user.Adjacent(src))
+	if(!owner || user != owner.current || !user.Adjacent(src))
 		return NONE
 	balloon_alert(user, "unbolt [src]?")
 	var/list/unsecure_options = list(

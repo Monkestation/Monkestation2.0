@@ -234,11 +234,12 @@
 /datum/action/cooldown/vampire/proc/check_witnesses(mob/living/target)
 	var/turf/our_turf = get_turf(owner)
 	var/turf/target_turf = get_turf(target)
-	var/is_dark = min(GET_SIMPLE_LUMCOUNT(our_turf), GET_SIMPLE_LUMCOUNT(target_turf)) <= SHADOW_SPECIES_DIM_LIGHT
+	var/min_darkness = target_turf ? min(GET_SIMPLE_LUMCOUNT(our_turf), GET_SIMPLE_LUMCOUNT(target_turf)) : GET_SIMPLE_LUMCOUNT(our_turf)
+	var/is_dark = min_darkness <= SHADOW_SPECIES_DIM_LIGHT
 	for(var/mob/living/watcher in oviewers(6, owner) - target)
 		if(!vampiredatum_power.is_masq_watcher(watcher))
 			continue
-		if(is_dark && !watcher.Adjacent(owner) && !watcher.Adjacent(target))
+		if(is_dark && !watcher.Adjacent(owner) && (!target || !watcher.Adjacent(target)))
 			continue
 		if(!watcher.incapacitated(IGNORE_RESTRAINTS))
 			watcher.face_atom(owner)
