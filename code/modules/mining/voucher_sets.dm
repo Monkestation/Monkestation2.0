@@ -77,7 +77,7 @@
 		/obj/item/storage/backpack/duffelbag/mining_conscript,
 	)
 
-//MONKESTATION EDIT START
+
 //categories
 /datum/voucher_set/security
 
@@ -165,12 +165,12 @@
 		)
 
 /datum/voucher_set/security/utility/donut_box
-	name = "Box of Donuts"
+	name = "Variety Box of Donuts"
 	description = "Tantalizing..."
 	icon = 'icons/obj/food/donuts.dmi'
 	icon_state = "donutbox"
 	set_items = list(
-		/obj/item/storage/fancy/donut_box,
+		/obj/item/storage/fancy/donut_box/random,
 		/obj/item/reagent_containers/cup/glass/coffee,
 		)
 
