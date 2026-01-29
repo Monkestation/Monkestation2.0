@@ -6,6 +6,7 @@ import {
   Collapsible,
   Dropdown,
   Icon,
+  NoticeBox,
   Section,
   Stack,
   Table,
@@ -88,6 +89,10 @@ const Header = (props: { dropdown: any }) => {
   const { data } = useBackend<ChangelogData>();
   return (
     <Section>
+      <NoticeBox warning>
+        Monkestation is currently in a feature freeze until further notice to
+        prioritize and encourage bug fixes.
+      </NoticeBox>
       <h1>Monkestation</h1>
       <p>
         <b>Thanks to: </b>
