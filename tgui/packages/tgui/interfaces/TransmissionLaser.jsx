@@ -15,7 +15,7 @@ import {
   ProgressBar,
   Section,
 } from '../components';
-import { formatMoney, formatSiUnit, formatPower } from '../format';
+import { formatMoney, formatPower, formatSiUnit } from '../format';
 import { Window } from '../layouts';
 
 export const TransmissionLaser = (props) => {
@@ -221,7 +221,7 @@ const OutputControls = (props) => {
         <LabeledList.Item label="Output Level">
           {output_total
             ? output_total < 0
-              ? '-' + formatPower(Math.abs(output_total))
+              ? `-${formatPower(Math.abs(output_total))}`
               : formatPower(output_total)
             : '0 W'}
         </LabeledList.Item>

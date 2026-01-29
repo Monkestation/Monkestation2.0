@@ -1,6 +1,6 @@
 import { multiline } from 'common/string';
 import { useBackend } from '../backend';
-import { Box, Button, Table, Section, Tooltip } from '../components';
+import { Box, Button, Section, Table, Tooltip } from '../components';
 import { Window } from '../layouts';
 
 export const ComputerFabricator = (props) => {

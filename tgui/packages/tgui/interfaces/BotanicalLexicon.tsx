@@ -1,6 +1,6 @@
 import { toTitleCase } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
-import { Flex, Tabs, Stack, DmIcon, Icon } from '../components';
+import { DmIcon, Flex, Icon, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
 
 type Requirement = {
@@ -85,11 +85,11 @@ const PlantInfo = () => {
 
       <Flex.Item className="chicken-metric">
         {selectedPlant.mutates_from &&
-          'Mutates From:' + selectedPlant.mutates_from}
+          `Mutates From:${selectedPlant.mutates_from}`}
       </Flex.Item>
 
       <Flex.Item className="chicken-metric">
-        {selectedPlant.desc && 'Description:' + selectedPlant.desc}
+        {selectedPlant.desc && `Description:${selectedPlant.desc}`}
       </Flex.Item>
 
       {selectedPlant.requirements.map((stat) => (
@@ -100,7 +100,7 @@ const PlantInfo = () => {
 
       <Flex.Item className="chicken-metric">
         {selectedPlant.required_reagents &&
-          'Required Infusions: ' + selectedPlant.required_reagents}
+          `Required Infusions: ${selectedPlant.required_reagents}`}
       </Flex.Item>
     </Flex>
   );

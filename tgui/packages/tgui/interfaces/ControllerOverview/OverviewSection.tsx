@@ -1,6 +1,6 @@
 import { useBackend } from '../../backend';
 import { Button, LabeledList, Section, Stack } from '../../components';
-import { ControllerData } from './types';
+import type { ControllerData } from './types';
 
 export const OverviewSection = (props) => {
   const { act, data } = useBackend<ControllerData>();

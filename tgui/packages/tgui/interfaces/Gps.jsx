@@ -3,18 +3,18 @@ import { flow } from 'common/fp';
 import { clamp } from 'common/math';
 import { createSearch } from 'common/string';
 import { vecLength, vecSubtract } from 'common/vector';
-import { useBackend } from '../backend';
+import { useState } from 'react';
 import {
   Box,
   Button,
   Icon,
+  Input,
   LabeledList,
   Section,
   Table,
-  Input,
 } from 'tgui-core/components';
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { useState } from 'react';
 
 const coordsToVec = (coords) => map(parseFloat)(coords.split(', '));
 
@@ -130,7 +130,7 @@ export const Gps = (props) => {
                           rotation={signal.degrees}
                         />
                       )}
-                      {signal.dist !== undefined && signal.dist + 'm'}
+                      {signal.dist !== undefined && `${signal.dist}m`}
                     </Table.Cell>
                     <Table.Cell collapsing>{signal.coords}</Table.Cell>
                   </Table.Row>

@@ -77,7 +77,7 @@ export const backendReducer = (state = initialState, action) => {
     // Merge shared states
     const shared = { ...state.shared };
     if (payload.shared) {
-      for (let key of Object.keys(payload.shared)) {
+      for (const key of Object.keys(payload.shared)) {
         const value = payload.shared[key];
         if (value === '') {
           shared[key] = undefined;
@@ -333,7 +333,7 @@ const chunkSplitter = {
     // TODO: get rid of the "as any" whenever we upgrade typescript
     const charSeq = (string[Symbol.iterator]() as any).toArray();
     const length = charSeq.length;
-    let chunks: string[] = [];
+    const chunks: string[] = [];
     let startIndex = 0;
     let endIndex = 1024;
     while (startIndex < length) {
@@ -367,16 +367,15 @@ const chunkSplitter = {
 export const sendAct = (action: string, payload: object = {}) => {
   // Validate that payload is an object
   // prettier-ignore
-  const isObject = typeof payload === 'object'
-    && payload !== null
-    && !Array.isArray(payload);
+  const isObject =
+    typeof payload === 'object' && payload !== null && !Array.isArray(payload);
   if (!isObject) {
     logger.error(`Payload for act() must be an object, got this:`, payload);
     return;
   }
   const stringifiedPayload = JSON.stringify(payload);
   const urlSize = Object.entries({
-    type: 'act/' + action,
+    type: `act/${action}`,
     payload: stringifiedPayload,
     tgui: 1,
     windowId: Byond.windowId,
@@ -387,17 +386,17 @@ export const sendAct = (action: string, payload: object = {}) => {
     '',
   ).length;
   if (urlSize > 2048) {
-    let chunks: string[] = stringifiedPayload.split(chunkSplitter);
+    const chunks: string[] = stringifiedPayload.split(chunkSplitter);
     const id = `${Date.now()}`;
     globalStore?.dispatch(backendCreatePayloadQueue({ id, chunks }));
     Byond.sendMessage('oversizedPayloadRequest', {
-      type: 'act/' + action,
+      type: `act/${action}`,
       id,
       chunkCount: chunks.length,
     });
     return;
   }
-  Byond.sendMessage('act/' + action, payload);
+  Byond.sendMessage(`act/${action}`, payload);
 };
 
 type BackendState<TData> = {

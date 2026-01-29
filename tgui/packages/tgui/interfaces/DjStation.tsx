@@ -1,3 +1,6 @@
+import type { BooleanLike } from 'common/react';
+import { useEffect, useRef, useState } from 'react';
+import { getThumbnailUrl } from '../../common/other';
 import { useBackend } from '../backend';
 import {
   Box,
@@ -10,9 +13,6 @@ import {
 } from '../components';
 import { formatTime } from '../format';
 import { Window } from '../layouts';
-import { getThumbnailUrl } from '../../common/other';
-import { useEffect, useRef, useState } from 'react';
-import { BooleanLike } from 'common/react';
 import { LoadingScreen } from './common/LoadingToolbox';
 
 export enum CassetteDesign {

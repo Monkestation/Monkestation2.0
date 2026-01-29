@@ -5,18 +5,18 @@
  */
 
 import {
+  addHighlightSetting,
   changeSettingsTab,
+  importSettings,
   loadSettings,
   openChatSettings,
-  toggleSettings,
-  updateSettings,
-  addHighlightSetting,
   removeHighlightSetting,
+  toggleSettings,
   updateHighlightSetting,
-  importSettings,
+  updateSettings,
 } from './actions';
+import { FONTS, SETTINGS_TABS } from './constants';
 import { createDefaultHighlightSetting } from './model';
-import { SETTINGS_TABS, FONTS } from './constants';
 
 const defaultHighlightSetting = createDefaultHighlightSetting();
 

@@ -227,7 +227,7 @@ const ObservableSection = (props: {
         bold
         color={color ?? 'grey'}
         open={!!color}
-        title={title + ` - (${filteredSection.length})`}
+        title={`${title} - (${filteredSection.length})`}
       >
         {filteredSection.map((poi, index) => {
           return <ObservableItem color={color} item={poi} key={index} />;

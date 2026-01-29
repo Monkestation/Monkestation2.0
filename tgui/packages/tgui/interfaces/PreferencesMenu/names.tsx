@@ -1,4 +1,5 @@
 import { binaryInsertWith, sortBy } from 'common/collections';
+import { useBackend } from '../../backend';
 import {
   Button,
   Icon,
@@ -8,9 +9,8 @@ import {
   Stack,
   TrackOutsideClicks,
 } from '../../components';
-import { Name, PreferencesMenuData } from './data';
+import type { Name, PreferencesMenuData } from './data';
 import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';
-import { useBackend } from '../../backend';
 
 type NameWithKey = {
   key: string;

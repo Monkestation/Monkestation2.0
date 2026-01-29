@@ -9,7 +9,7 @@ import {
   Stack,
 } from '../components';
 import { Window } from '../layouts';
-import { Objective, ObjectivePrintout } from './common/Objectives';
+import { type Objective, ObjectivePrintout } from './common/Objectives';
 
 type BloodsuckerInformation = {
   power: PowerInfo[];
@@ -120,7 +120,7 @@ const PowerSection = (props: any) => {
         </Stack.Item>
         <Stack.Divider />
         <Stack.Item grow fontSize="16px">
-          {selectedPower && selectedPower.power_explanation}
+          {selectedPower?.power_explanation}
         </Stack.Item>
       </Stack>
     </Section>

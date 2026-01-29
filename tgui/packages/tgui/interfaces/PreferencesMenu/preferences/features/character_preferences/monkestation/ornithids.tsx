@@ -1,6 +1,6 @@
 import {
-  Feature,
-  FeatureChoiced,
+  type Feature,
+  type FeatureChoiced,
   FeatureColorInput,
   FeatureDropdownInput,
 } from '../../base';
@@ -88,7 +88,6 @@ export const feature_satyr_tail: FeatureChoiced = {
 export const pod_color: Feature<string> = {
   name: 'Pod Hair Color',
   small_supplemental: false,
-  description:
-    "The color of your character's pod hair.",
+  description: "The color of your character's pod hair.",
   component: FeatureColorInput,
 };

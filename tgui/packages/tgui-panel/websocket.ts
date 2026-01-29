@@ -1,8 +1,8 @@
 import { createAction } from 'common/redux';
+import { createLogger } from 'tgui/logging';
 import { chatRenderer } from './chat/renderer';
 import { loadSettings, updateSettings } from './settings/actions';
 import { selectSettings } from './settings/selectors';
-import { createLogger } from 'tgui/logging';
 
 const sendWSNotice = (message, small = false) => {
   chatRenderer.processBatch([
@@ -45,7 +45,8 @@ export const websocketMiddleware = (store) => {
     if (
       websocket.readyState === WebSocket.CLOSED ||
       websocket.readyState === WebSocket.CLOSING
-    ) return;
+    )
+      return;
 
     websocket.close(code, reason);
   };

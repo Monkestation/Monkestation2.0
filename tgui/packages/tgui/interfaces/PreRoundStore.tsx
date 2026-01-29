@@ -4,14 +4,14 @@ import {
   Box,
   Button,
   Divider,
-  Flex,
-  Stack,
-  Section,
-  Icon,
   DmIcon,
+  Flex,
+  Icon,
+  Section,
+  Stack,
 } from '../components';
 import { Window } from '../layouts';
-import { LobbyNotices, LobbyNoticesType } from './common/LobbyNotices';
+import { LobbyNotices, type LobbyNoticesType } from './common/LobbyNotices';
 
 type Item = {
   path: string;

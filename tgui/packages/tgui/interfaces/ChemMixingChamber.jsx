@@ -1,3 +1,4 @@
+import { round, toFixed } from 'common/math';
 import { useBackend, useLocalState } from '../backend';
 import {
   AnimatedNumber,
@@ -9,7 +10,6 @@ import {
   Stack,
 } from '../components';
 import { Window } from '../layouts';
-import { round, toFixed } from 'common/math';
 
 export const ChemMixingChamber = (props) => {
   const { act, data } = useBackend();
@@ -61,7 +61,7 @@ export const ChemMixingChamber = (props) => {
                     <Stack.Item grow>
                       <AnimatedNumber
                         value={temperature}
-                        format={(value) => toFixed(value) + ' K'}
+                        format={(value) => `${toFixed(value)} K`}
                       />
                     </Stack.Item>
                   </Stack>
@@ -134,7 +134,7 @@ export const ChemMixingChamber = (props) => {
                       <Stack.Item key={reagent}>
                         <Stack fill>
                           <Stack.Item mt={0.25} textColor="label">
-                            {reagent.name + ':'}
+                            {`${reagent.name}:`}
                           </Stack.Item>
                           <Stack.Item mt={0.25} grow>
                             {reagent.required_reagent}

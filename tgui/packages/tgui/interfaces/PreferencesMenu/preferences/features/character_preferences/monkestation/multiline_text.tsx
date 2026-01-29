@@ -1,5 +1,9 @@
 import { Box, TextArea } from '../../../../../../components';
-import { Feature, FeatureShortTextData, FeatureValueProps } from '../../base';
+import type {
+  Feature,
+  FeatureShortTextData,
+  FeatureValueProps,
+} from '../../base';
 
 export type FeatureMultiline = Feature<string, string, FeatureShortTextData>;
 export type FeatureMultilineProps = FeatureValueProps<

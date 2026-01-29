@@ -1,17 +1,17 @@
-import { useBackend, useLocalState } from '../../backend';
-import {
-  PreferencesSelectedPage,
-  PreferencesMenuData,
-  PreferencesCurrentWindow,
-} from './data';
-import { CharacterPreferenceWindow } from './CharacterPreferenceWindow';
-import { Box, Button, Section, Stack } from '../../components';
-import { PageButton } from './PageButton';
-import { Window } from '../../layouts';
-import { KeybindingsPage } from './KeybindingsPage';
-import { GamePreferencesPage } from './GamePreferencesPage';
-import { VolumeMixerPage } from './VolumeMixerPage';
 import { exhaustiveCheck } from 'common/exhaustive';
+import { useBackend, useLocalState } from '../../backend';
+import { Box, Button, Section, Stack } from '../../components';
+import { Window } from '../../layouts';
+import { CharacterPreferenceWindow } from './CharacterPreferenceWindow';
+import {
+  PreferencesCurrentWindow,
+  type PreferencesMenuData,
+  PreferencesSelectedPage,
+} from './data';
+import { GamePreferencesPage } from './GamePreferencesPage';
+import { KeybindingsPage } from './KeybindingsPage';
+import { PageButton } from './PageButton';
+import { VolumeMixerPage } from './VolumeMixerPage';
 
 export const PreferencesMenu = () => {
   const { act, data } = useBackend<PreferencesMenuData>();

@@ -42,7 +42,7 @@ export const SmokeMachine = (props) => {
             }}
           >
             <AnimatedNumber initial={0} value={TankCurrentVolume || 0} />
-            {' / ' + TankMaxVolume}
+            {` / ${TankMaxVolume}`}
           </ProgressBar>
           <Box mt={1}>
             <LabeledList>

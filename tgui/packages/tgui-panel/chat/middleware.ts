@@ -4,15 +4,16 @@
  * @license MIT
  */
 
-import DOMPurify from 'dompurify';
+import type { Store } from 'common/redux';
 import { storage } from 'common/storage';
+import DOMPurify from 'dompurify';
 import {
-  loadSettings,
-  updateSettings,
   addHighlightSetting,
+  importSettings,
+  loadSettings,
   removeHighlightSetting,
   updateHighlightSetting,
-  importSettings,
+  updateSettings,
 } from '../settings/actions';
 import { selectSettings } from '../settings/selectors';
 import {
@@ -33,7 +34,6 @@ import { MAX_PERSISTED_MESSAGES, MESSAGE_SAVE_INTERVAL } from './constants';
 import { createMessage, serializeMessage } from './model';
 import { chatRenderer } from './renderer';
 import { selectChat, selectCurrentChatPage } from './selectors';
-import { Store } from 'common/redux';
 
 // List of blacklisted tags
 const FORBID_TAGS = ['a', 'iframe', 'link', 'video'];

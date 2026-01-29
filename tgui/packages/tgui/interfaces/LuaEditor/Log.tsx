@@ -9,7 +9,7 @@ import {
 } from '../../components';
 import { logger } from '../../logging';
 import { ListMapper } from './ListMapper';
-import { LuaEditorData, LuaEditorModal } from './types';
+import type { LuaEditorData, LuaEditorModal } from './types';
 
 const parsePanic = (name, panic_json) => {
   const panic_info = JSON.parse(panic_json);
@@ -181,7 +181,7 @@ export const Log = (props: LogProps) => {
             logger.warn(`unknown log status ${status}`);
         }
         if (output === undefined) {
-          return;
+          return null;
         }
         const { chunk } = element;
         if (chunk) {

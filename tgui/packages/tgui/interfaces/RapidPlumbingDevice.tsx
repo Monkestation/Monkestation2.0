@@ -1,10 +1,10 @@
-import { useBackend, useLocalState } from '../backend';
+import { type BooleanLike, classes } from 'common/react';
 import { capitalizeAll } from 'common/string';
-import { BooleanLike, classes } from 'common/react';
+import { useBackend, useLocalState } from '../backend';
+import { Box, Button, LabeledList, Section, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
-import { Section, Tabs, Button, LabeledList, Stack, Box } from '../components';
+import { MatterItem, SiloItem } from './RapidConstructionDevice';
 import { ColorItem } from './RapidPipeDispenser';
-import { SiloItem, MatterItem } from './RapidConstructionDevice';
 
 type Data = {
   silo_upgraded: BooleanLike;

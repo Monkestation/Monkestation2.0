@@ -2,9 +2,9 @@ import { useBackend, useLocalState } from '../backend';
 import {
   Box,
   Button,
+  Dropdown,
   LabeledList,
   NumberInput,
-  Dropdown,
   Section,
   Stack,
 } from '../components';
@@ -13,7 +13,7 @@ import {
   AtmosHandbookContent,
   atmosHandbookHooks,
 } from './common/AtmosHandbook';
-import { Gasmix, GasmixParser } from './common/GasmixParser';
+import { type Gasmix, GasmixParser } from './common/GasmixParser';
 
 type Chamber = {
   id: string;

@@ -1,4 +1,4 @@
-import { Feature, FeatureNumberInput } from '../base';
+import { type Feature, FeatureNumberInput } from '../base';
 
 export const fov_darkness: Feature<number> = {
   name: 'Field of view darkness',

@@ -1,4 +1,4 @@
-import { Feature, FeatureShortTextInput } from '../base';
+import { type Feature, FeatureShortTextInput } from '../base';
 
 export const default_scryer_label: Feature<string> = {
   name: 'Default Scryer Label',

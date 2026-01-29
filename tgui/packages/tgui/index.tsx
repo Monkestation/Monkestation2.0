@@ -15,16 +15,15 @@ import './styles/themes/chicken_book.scss';
 import './styles/themes/generic-yellow.scss';
 import './styles/themes/generic.scss';
 
-import { configureStore } from './store';
-
-import { captureExternalLinks } from './links';
-import { createRenderer } from './renderer';
 import { perf } from 'common/perf';
-import { setupGlobalEvents } from './events';
-import { setupHotKeys } from './hotkeys';
 import { setupHotReloading } from 'tgui-dev-server/link/client';
 import { setGlobalStore } from './backend';
+import { setupGlobalEvents } from './events';
+import { setupHotKeys } from './hotkeys';
 import { loadIconRefMap } from './icons';
+import { captureExternalLinks } from './links';
+import { createRenderer } from './renderer';
+import { configureStore } from './store';
 
 perf.mark('inception', window.performance?.timing?.navigationStart);
 perf.mark('init');
@@ -61,14 +60,12 @@ const setupApp = () => {
   if (module.hot) {
     setupHotReloading();
     // prettier-ignore
-    module.hot.accept([
-      './components',
-      './debug',
-      './layouts',
-      './routes',
-    ], () => {
-      renderApp();
-    });
+    module.hot.accept(
+      ['./components', './debug', './layouts', './routes'],
+      () => {
+        renderApp();
+      },
+    );
   }
 };
 

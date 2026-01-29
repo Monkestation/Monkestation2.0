@@ -1,9 +1,8 @@
-import { binaryInsertWith } from 'common/collections';
-import { sortBy } from 'common/collections';
-import { ReactNode } from 'react';
+import { binaryInsertWith, sortBy } from 'common/collections';
+import type { ReactNode } from 'react';
 import { useBackend } from '../../backend';
 import { Box, Stack, Tooltip } from '../../components';
-import { PreferencesMenuData } from './data';
+import type { PreferencesMenuData } from './data';
 import features from './preferences/features';
 import { FeatureValueInput } from './preferences/features/base';
 import { TabbedMenu } from './TabbedMenu';

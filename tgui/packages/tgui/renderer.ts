@@ -1,6 +1,6 @@
 import { perf } from 'common/perf';
+import { createRoot, type Root } from 'react-dom/client';
 import { createLogger } from './logging';
-import { createRoot, Root } from 'react-dom/client';
 
 const logger = createLogger('renderer');
 
@@ -23,46 +23,51 @@ type CreateRenderer = <T extends unknown[] = [unknown]>(
 ) => (...args: T) => void;
 
 // prettier-ignore
-export const createRenderer: CreateRenderer = (getVNode) => (...args) => {
-  perf.mark('render/start');
-  // Start rendering
-  if (!reactRoot) {
-    const root = document.getElementById('react-root');
-    reactRoot = createRoot(root!);
-  }
-  if (getVNode) {
-    reactRoot.render(getVNode(...args));
-  }
-  else {
-    reactRoot.render(args[0] as any);
-  }
-  perf.mark('render/finish');
-  if (suspended) {
-    return;
-  }
-  // Report rendering time
-  if (process.env.NODE_ENV !== 'production') {
-    if (initialRender === 'resumed') {
-      logger.log('rendered in',
-        perf.measure('render/start', 'render/finish'));
+export const createRenderer: CreateRenderer =
+  (getVNode) =>
+  (...args) => {
+    perf.mark('render/start');
+    // Start rendering
+    if (!reactRoot) {
+      const root = document.getElementById('react-root');
+      reactRoot = createRoot(root!);
     }
-    else if (initialRender) {
-      logger.debug('serving from:', location.href);
-      logger.debug('bundle entered in',
-        perf.measure('inception', 'init'));
-      logger.debug('initialized in',
-        perf.measure('init', 'render/start'));
-      logger.log('rendered in',
-        perf.measure('render/start', 'render/finish'));
-      logger.log('fully loaded in',
-        perf.measure('inception', 'render/finish'));
+    if (getVNode) {
+      reactRoot.render(getVNode(...args));
+    } else {
+      reactRoot.render(args[0] as any);
     }
-    else {
-      logger.debug('rendered in',
-        perf.measure('render/start', 'render/finish'));
+    perf.mark('render/finish');
+    if (suspended) {
+      return;
     }
-  }
-  if (initialRender) {
-    initialRender = false;
-  }
-};
+    // Report rendering time
+    if (process.env.NODE_ENV !== 'production') {
+      if (initialRender === 'resumed') {
+        logger.log(
+          'rendered in',
+          perf.measure('render/start', 'render/finish'),
+        );
+      } else if (initialRender) {
+        logger.debug('serving from:', location.href);
+        logger.debug('bundle entered in', perf.measure('inception', 'init'));
+        logger.debug('initialized in', perf.measure('init', 'render/start'));
+        logger.log(
+          'rendered in',
+          perf.measure('render/start', 'render/finish'),
+        );
+        logger.log(
+          'fully loaded in',
+          perf.measure('inception', 'render/finish'),
+        );
+      } else {
+        logger.debug(
+          'rendered in',
+          perf.measure('render/start', 'render/finish'),
+        );
+      }
+    }
+    if (initialRender) {
+      initialRender = false;
+    }
+  };

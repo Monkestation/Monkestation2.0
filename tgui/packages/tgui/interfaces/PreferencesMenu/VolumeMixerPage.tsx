@@ -1,6 +1,6 @@
 import { useBackend } from '../../backend';
-import { Box, Button, Stack, Icon, Section, Slider } from '../../components';
-import { Channel, PreferencesMenuData } from './data';
+import { Box, Button, Icon, Section, Slider, Stack } from '../../components';
+import type { Channel, PreferencesMenuData } from './data';
 
 export const VolumeMixerPage = () => {
   const { data } = useBackend<PreferencesMenuData>();

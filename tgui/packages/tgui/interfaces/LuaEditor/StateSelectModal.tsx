@@ -1,6 +1,6 @@
 import { useBackend, useLocalState } from '../../backend';
 import { Button, Input, Modal, Section, Stack } from '../../components';
-import { LuaEditorData, LuaEditorModal } from './types';
+import type { LuaEditorData, LuaEditorModal } from './types';
 
 type StateSelectModalProps = {
   setModal: (modal: LuaEditorModal) => void;

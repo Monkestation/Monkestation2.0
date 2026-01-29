@@ -4,11 +4,10 @@
  * @license MIT
  */
 
-import { Box, Button } from '../components';
 import type { BooleanLike } from 'common/react';
-
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
+import { Box, Button } from '../components';
 import { Window } from './Window';
 
 export type NTOSData = {

@@ -323,7 +323,7 @@ export const DamageBar = (props) => {
         value={data.combined_damage / 100}
         align="center"
       >
-        {'Infusion Damage: ' + toFixed(data.combined_damage) + '/ 100'}
+        {`Infusion Damage: ${toFixed(data.combined_damage)}/ 100`}
       </ProgressBar>
     </Section>
   );

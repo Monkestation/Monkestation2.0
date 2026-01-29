@@ -1,4 +1,4 @@
-import { BooleanLike } from 'common/react';
+import type { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
 import {
   Button,
@@ -12,6 +12,8 @@ import {
   Stack,
 } from '../components';
 import { Window } from '../layouts';
+import { countBy } from 'es-toolkit';
+import { useMemo } from 'react';
 
 const lawtype_to_color = {
   inherent: 'white',
@@ -89,14 +91,9 @@ export const LawPrintout = (props: { cyborg_ref: string; lawset: Law[] }) => {
   const { data, act } = useBackend<Law>();
   const { cyborg_ref, lawset } = props;
 
-  let num_of_each_lawtype = [];
-
-  lawset.forEach((law) => {
-    if (!num_of_each_lawtype[law.lawtype]) {
-      num_of_each_lawtype[law.lawtype] = 0;
-    }
-    num_of_each_lawtype[law.lawtype] += 1;
-  });
+  const num_of_each_lawtype = useMemo(() => {
+    return countBy(lawset, (law) => law.lawtype);
+  }, [lawset]);
 
   return (
     <LabeledList>
@@ -171,7 +168,7 @@ export const LawPrintout = (props: { cyborg_ref: string; lawset: Law[] }) => {
                       <Button
                         icon="arrow-down"
                         color={'green'}
-                        disabled={law.num === num_of_each_lawtype['inherent']}
+                        disabled={law.num === num_of_each_lawtype.inherent}
                         onClick={() =>
                           act('move_law', {
                             ref: cyborg_ref,

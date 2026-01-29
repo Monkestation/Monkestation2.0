@@ -1,16 +1,16 @@
 import { map, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
-import { useBackend } from '../backend';
+import { useMemo, useState } from 'react';
 import {
   Box,
   Button,
+  Dropdown,
   Flex,
   Section,
   Table,
-  Dropdown,
 } from 'tgui-core/components';
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { useMemo, useState } from 'react';
 
 const sortOptions = [
   { displayText: 'Area Name', value: 'area' },

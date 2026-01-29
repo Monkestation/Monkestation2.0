@@ -1,4 +1,4 @@
-import { type ComponentProps, ReactNode, useRef } from 'react';
+import { type ComponentProps, type ReactNode, useRef } from 'react';
 import { Button, type Flex, Input, Section, Stack } from 'tgui-core/components';
 
 type TabbedMenuProps = {

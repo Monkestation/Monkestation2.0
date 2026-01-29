@@ -1,8 +1,8 @@
 import { sortBy } from 'common/collections';
 import { classes } from 'common/react';
 import type { ReactNode } from 'react';
-import { useBackend } from '../../backend';
 import { Box, Button, Dropdown, Stack, Tooltip } from 'tgui-core/components';
+import { useBackend } from '../../backend';
 import {
   createSetPreference,
   type Job,
@@ -183,8 +183,7 @@ const JobRow = (props: { className?: string; job: Job; name: string }) => {
 
   const { act } = useBackend<PreferencesMenuData>();
 
-  const experienceNeeded =
-    data.job_required_experience && data?.job_required_experience[name];
+  const experienceNeeded = data?.job_required_experience?.[name];
   const daysLeft = data.job_days_left ? data.job_days_left[name] : 0;
 
   const alt_title_selected = data.job_alt_titles[name]
@@ -357,7 +356,7 @@ const JoblessRoleDropdown = () => {
 
   const selection = options?.find(
     (option) => option.value === selected,
-  )!.displayText;
+  )?.displayText;
 
   return (
     <Box position="absolute" right={1} width="25%">

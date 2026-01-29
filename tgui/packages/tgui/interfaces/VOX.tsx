@@ -1,19 +1,19 @@
-import { useBackend, useLocalState } from '../backend';
-import {
-  Stack,
-  Box,
-  Section,
-  TextArea,
-  Tabs,
-  Divider,
-  Button,
-  Dropdown,
-} from 'tgui-core/components';
-import { Window } from '../layouts';
-import { formatTime } from 'tgui-core/format';
 import { useEffect, useMemo, useState } from 'react';
+import {
+  Box,
+  Button,
+  Divider,
+  Dropdown,
+  Section,
+  Stack,
+  Tabs,
+  TextArea,
+} from 'tgui-core/components';
+import { formatTime } from 'tgui-core/format';
 import { fetchRetry } from 'tgui-core/http';
 import { resolveAsset } from '../assets';
+import { useBackend, useLocalState } from '../backend';
+import { Window } from '../layouts';
 import { logger } from '../logging';
 
 type Data = {

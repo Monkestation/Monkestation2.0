@@ -7,14 +7,14 @@ import {
   Button,
   Chart,
   ColorBox,
+  Dimmer,
   Flex,
   Icon,
   LabeledList,
   ProgressBar,
   Section,
-  Table,
-  Dimmer,
   Stack,
+  Table,
 } from '../components';
 import { Window } from '../layouts';
 
@@ -84,7 +84,7 @@ export const PowerMonitorContent = (props) => {
                   maxValue={maxValue}
                   color="teal"
                 >
-                  {toFixed(supply / 1000) + ' kW'}
+                  {`${toFixed(supply / 1000)} kW`}
                 </ProgressBar>
               </LabeledList.Item>
               <LabeledList.Item label="Draw">
@@ -94,7 +94,7 @@ export const PowerMonitorContent = (props) => {
                   maxValue={maxValue}
                   color="pink"
                 >
-                  {toFixed(demand / 1000) + ' kW'}
+                  {`${toFixed(demand / 1000)} kW`}
                 </ProgressBar>
               </LabeledList.Item>
             </LabeledList>
@@ -203,7 +203,7 @@ export const AreaCharge = (props) => {
         }
       />
       <Box inline width="36px" textAlign="right">
-        {toFixed(charge) + '%'}
+        {`${toFixed(charge)}%`}
       </Box>
     </>
   );
@@ -213,7 +213,7 @@ const AreaStatusColorBox = (props) => {
   const { status } = props;
   const power = Boolean(status & 2);
   const mode = Boolean(status & 1);
-  const tooltipText = (power ? 'On' : 'Off') + ` [${mode ? 'auto' : 'manual'}]`;
+  const tooltipText = `${power ? 'On' : 'Off'} [${mode ? 'auto' : 'manual'}]`;
   return (
     <ColorBox
       color={power ? 'good' : 'bad'}
