@@ -166,6 +166,9 @@ GLOBAL_VAR(restart_counter)
 	MentorizeAdmins()
 
 	load_poll_data()
+	
+	// Initialize RETA system - code/modules/reta/reta_system.dm
+	reta_init_config()
 
 	LoadVerbs(/datum/verbs/menu)
 

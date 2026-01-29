@@ -198,6 +198,7 @@
 #include "reagent_transfer.dm"
 #include "required_map_items.dm"
 #include "resist.dm"
+#include "reta_system.dm"
 #include "say.dm"
 #include "screenshot_antag_icons.dm"
 #include "screenshot_basic.dm"
