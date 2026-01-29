@@ -1888,7 +1888,9 @@
 		//    this DNA can not be bad
 		//   is done via genetic damage bursts, so genetic damage immune carbons are not viable
 		// And the DNA Scanner itself must have a valid scan level
-	if(scanner_occupant.has_dna() && !HAS_TRAIT(scanner_occupant, TRAIT_GENELESS) && !HAS_TRAIT(scanner_occupant, TRAIT_BADDNA) || (connected_scanner.scan_level == 3))
+	if(HAS_TRAIT(scanner_occupant, TRAIT_GENELESS) || !scanner_occupant.has_dna()) // what is there to modify if there is no genes? - NK
+		return FALSE
+	if(!HAS_TRAIT(scanner_occupant, TRAIT_BADDNA) || (connected_scanner.scan_level >= 3))
 		return TRUE
 
 	return FALSE

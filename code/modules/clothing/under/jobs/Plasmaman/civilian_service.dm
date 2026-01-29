@@ -7,6 +7,7 @@
 	icon = 'icons/obj/clothing/under/plasmaman.dmi'
 	worn_icon = 'icons/mob/clothing/under/plasmaman.dmi'
 	clothing_flags = PLASMAMAN_PREVENT_IGNITION
+	resistance_flags = FIRE_PROOF
 	armor_type = /datum/armor/under_plasmaman
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	can_adjust = FALSE
@@ -124,6 +125,7 @@
 	desc = "An envirosuit specially designed for plasmamen with bad posture."
 	icon_state = "bitrunner_envirosuit"
 	inhand_icon_state = null
+
 /obj/item/clothing/under/plasmaman/prisoner
 	name = "prisoner envirosuit"
 	desc = "An orange envirosuit identifying and protecting a criminal plasmaman. Its suit sensors are stuck in the \"Fully On\" position."
@@ -150,3 +152,13 @@
 			foamreagent.add_reagent(/datum/reagent/lube, 15)
 			foam.set_up(4, holder = src, location = H.loc, carry = foamreagent)
 			foam.start() //Truly terrifying.
+
+/obj/item/clothing/under/plasmaman/engineering/signal_tech
+	name = "signal technician plasma envirosuit"
+	desc = "An air-tight suit designed to be used by plasmamen employed as signal technicians, the usual purple stripes being replaced by a unique bright green. It protects the user from fire and acid damage."
+	icon_state = "signal_tech_envirosuit"
+
+/obj/item/clothing/under/plasmaman/plasma_bun // i would remove this if it wasn't for the fact the bunny wand would kill plasmamen without it - NK
+	name = "plasmabunny envirosuit"
+	desc = "A plasmaman envirosuit designed for bunny themed waiters, it appears to just be a normal envirosuit with a bunnysuit on top of it"
+	icon_state = "plasmabunny_envirosuit"
