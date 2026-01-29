@@ -12,7 +12,7 @@
 	"editor.insertSpaces": false,
 	"gitlens.advanced.blame.customArguments": ["-w"],
 	"tgstationTestExplorer.project.resultsType": "json",
-	"[javascript][javascriptreact][typescript][typescriptreact][html][css][scss][json][jsonc][yaml]": {
+	"[javascript][javascriptreact][typescript][typescriptreact][html][css][scss][json][jsonc][yaml][github-actions-workflow]": {
 		"editor.rulers": [80],
 		"editor.defaultFormatter": "esbenp.prettier-vscode",
 		"editor.formatOnSave": true
