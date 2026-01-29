@@ -13,12 +13,7 @@
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/allow_items,
 		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
 	)
-
-#ifdef TESTING
-	ai_movement = /datum/ai_movement/astar
-#else
 	ai_movement = /datum/ai_movement/basic_avoidance
-#endif
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/pet_planning,

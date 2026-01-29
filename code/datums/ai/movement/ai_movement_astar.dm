@@ -1,3 +1,5 @@
+// Currently disabled until I can get this working in a less janky way
+/*
 /**
  * This movement datum represents smarter-pathing
  */
@@ -52,3 +54,4 @@
 
 /datum/ai_movement/astar/bot/travel_to_beacon
 	maximum_length = AI_BOT_PATH_LENGTH
+*/

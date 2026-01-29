@@ -1,3 +1,5 @@
+// Currently disabled until I can get this working in a less janky way
+/*
 /**
  * Used for following A* defined paths. The proc signature here's a bit long, I'm sorry
  *
@@ -194,3 +196,4 @@
 	else
 		INVOKE_ASYNC(src, PROC_REF(recalculate_path))
 		return MOVELOOP_FAILURE
+*/
