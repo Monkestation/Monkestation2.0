@@ -525,6 +525,11 @@
 	playsound(user, 'sound/magic/demon_dies.ogg', vol = 100, vary = TRUE)
 	var/turf/user_turf = get_turf(user)
 	var/turf/target_turf = get_turf(target)
+
+	// CLASH!
+	user.blood_particles(10, get_angle(target, user))
+	target.blood_particles(10, get_angle(user, target))
+
 	// this is gonna hurt for the both of them.
 	user.throw_at(get_edge_target_turf(user_turf, get_dir(target_turf, user_turf)), range = 200, speed = 5)
 	target.throw_at(get_edge_target_turf(target_turf, get_dir(user_turf, target_turf)), range = 200, speed = 5)
