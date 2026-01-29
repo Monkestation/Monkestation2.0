@@ -378,6 +378,15 @@ GLOBAL_LIST_EMPTY(shuttle_frames_by_turf)
 		CRASH("docking_port_type must be /obj/docking_port/mobile or a subpath")
 	if(!ispath(area_type, /area/shuttle))
 		CRASH("area_type must be /area/shuttle or a subpath")
+	if(!istype(dock_at))
+		dock_at = new(origin)
+		dock_at.unregister()
+		dock_at.delete_after = TRUE
+		dock_at.shuttle_id = null
+		var/area/origin_area = get_area(origin)
+		dock_at.name = origin_area.name
+		dock_at.dir = port_dir
+
 	var/list/default_area_turfs = turfs.Copy()
 	// Convert each custom area into a shuttle area, then remove the affected turfs from the list of turfs to add to the default area
 	var/list/shuttle_areas = list()
@@ -426,13 +435,9 @@ GLOBAL_LIST_EMPTY(shuttle_frames_by_turf)
 					new_ceiling.stack_ontop_of_baseturf(/turf/open/openspace, /turf/open/floor/engine/hull/ceiling)
 					new_ceiling.stack_ontop_of_baseturf(/turf/open/space/openspace, /turf/open/floor/engine/hull/ceiling)
 
-	if(!istype(dock_at))
-		dock_at = new(origin)
-		var/area/origin_area = get_area(origin)
-		dock_at.name = origin_area.name
-		dock_at.dir = port_dir
-
 	mobile_port.register(replace, custom)
+	if(mobile_port.get_docked() != dock_at)
+		mobile_port.initiate_docking(dock_at, force = TRUE)
 
 	message_admins("[key_name(user)] has created a shuttle at [ADMIN_VERBOSEJMP(origin)].")
 	log_shuttle("[key_name(user)] has created a shuttle at [get_area(origin)].")
@@ -512,7 +517,7 @@ GLOBAL_LIST_EMPTY(shuttle_frames_by_turf)
 		turfs = turfs.Copy()
 		for(var/turf/turf as anything in turfs)
 			var/move_mode = turf.fromShuttleMove(move_mode = MOVE_AREA)
-			if(move_mode & (MOVE_TURF | MOVE_CONTENTS))
+			if(move_mode & (MOVE_TURF | MOVE_CONTENTS | MOVE_SPECIAL))
 				continue
 			for(var/atom/movable/movable as anything in turf.contents)
 				//CHECK_TICK
