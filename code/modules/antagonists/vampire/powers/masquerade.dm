@@ -39,15 +39,14 @@
 	alerttooltipstyle = "cult"
 
 /datum/status_effect/masquerade/on_apply()
-	. = ..()
 	var/mob/living/carbon/carbon_owner = owner
 	var/datum/antagonist/vampire/vampiredatum = IS_VAMPIRE(carbon_owner)
 	if(!vampiredatum)
-		return
+		return FALSE
 
 	// Handle Traits
 	carbon_owner.remove_traits(vampiredatum.vampire_traits - vampiredatum.always_traits, TRAIT_VAMPIRE)
-	ADD_TRAIT(carbon_owner, TRAIT_MASQUERADE, TRAIT_VAMPIRE)
+	ADD_TRAIT(carbon_owner, TRAIT_MASQUERADE, TRAIT_STATUS_EFFECT(id))
 
 	// Handle organs
 	var/obj/item/organ/internal/heart/vampheart = carbon_owner.get_organ_by_type(/obj/item/organ/internal/heart)
@@ -56,8 +55,9 @@
 	to_chat(carbon_owner, span_notice("Your heart beats falsely within your lifeless chest. You may yet pass for a mortal."))
 	to_chat(carbon_owner, span_warning("Your vampiric healing is halted while imitating life."))
 
+	return TRUE
+
 /datum/status_effect/masquerade/on_remove()
-	. = ..()
 	var/mob/living/carbon/carbon_owner = owner
 	var/datum/antagonist/vampire/vampiredatum = IS_VAMPIRE(carbon_owner)
 	if(!vampiredatum)
@@ -70,7 +70,7 @@
 
 	// Handle Traits
 	carbon_owner.add_traits(vampiredatum.vampire_traits, TRAIT_VAMPIRE)
-	REMOVE_TRAIT(carbon_owner, TRAIT_MASQUERADE, TRAIT_VAMPIRE)
+	REMOVE_TRAIT(carbon_owner, TRAIT_MASQUERADE, TRAIT_STATUS_EFFECT(id))
 
 	// Handle organs
 	var/obj/item/organ/internal/heart/vampheart = carbon_owner.get_organ_slot(ORGAN_SLOT_HEART)
