@@ -17198,6 +17198,7 @@
 /area/station/security/checkpoint/medical)
 "bsR" = (
 /obj/effect/turf_decal/stripes/line,
+/obj/item/flatpack,
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "bsS" = (
@@ -22580,6 +22581,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
 	},
+/obj/item/flatpack,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "bSc" = (
@@ -32157,6 +32159,10 @@
 /obj/effect/turf_decal/trimline/blue/line,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
+"fsh" = (
+/obj/item/flatpack,
+/turf/open/floor/iron,
+/area/station/cargo/sorting)
 "fsA" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -94268,7 +94274,7 @@ cay
 dTT
 xIM
 aWw
-bat
+fsh
 oxM
 aZn
 aZn

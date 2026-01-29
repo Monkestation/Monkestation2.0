@@ -337,6 +337,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/warning{
 	dir = 1
 	},
+/obj/item/flatpack,
 /turf/open/floor/iron/dark/textured,
 /area/station/cargo/storage)
 "afv" = (
@@ -35353,6 +35354,7 @@
 	},
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
+/obj/item/flatpack,
 /turf/open/floor/iron/dark/textured,
 /area/station/science/lab)
 "lmO" = (
@@ -36164,6 +36166,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
+/obj/item/flatpack,
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 8
 	},

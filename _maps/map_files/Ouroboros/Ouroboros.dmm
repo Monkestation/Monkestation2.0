@@ -6029,6 +6029,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
+/obj/item/flatpack,
 /turf/open/floor/iron/edge{
 	dir = 1
 	},
@@ -8281,6 +8282,7 @@
 /obj/item/stock_parts/scanning_module,
 /obj/item/stock_parts/micro_laser,
 /obj/machinery/light_switch/directional/north,
+/obj/item/flatpack,
 /turf/open/floor/iron/white/side{
 	dir = 1
 	},
@@ -75496,6 +75498,7 @@
 /obj/effect/mapping_helpers/requests_console/assistance,
 /obj/effect/mapping_helpers/requests_console/ore_update,
 /obj/machinery/light/warm/directional/east,
+/obj/item/flatpack,
 /turf/open/openspace,
 /area/station/cargo/office)
 "whH" = (
