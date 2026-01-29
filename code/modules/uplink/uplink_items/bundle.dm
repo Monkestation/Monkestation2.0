@@ -31,7 +31,7 @@
 	if(ignore_locked)
 		handler.debug_mode = TRUE
 //monkestation edit end
-	if(possible_items.len)
+	if(length(possible_items))
 		var/datum/uplink_item/uplink_item = pick(possible_items)
 		log_uplink("[key_name(user)] purchased a random uplink item from [handler.owner]'s uplink with [handler.telecrystals] telecrystals remaining")
 		SSblackbox.record_feedback("tally", "traitor_random_uplink_items_gotten", 1, initial(uplink_item.name))
@@ -104,6 +104,8 @@
 /// picks items from the list given to proc and generates a valid uplink item that is less or equal to the amount of TC it can spend
 /datum/uplink_item/bundles_tc/surplus/proc/pick_possible_item(list/possible_items, tc_budget)
 	var/datum/uplink_item/uplink_item = pick(possible_items)
+	if(!uplink_item)
+		return null
 	if(prob(100 - uplink_item.surplus))
 		return null
 	if(tc_budget < uplink_item.cost)
@@ -111,14 +113,14 @@
 	return uplink_item
 
 /// fills the crate that will be given to the traitor, edit this to change the crate and how the item is filled
-/datum/uplink_item/bundles_tc/surplus/proc/fill_crate(obj/structure/closet/crate/surplus_crate, list/possible_items)
-	var/tc_budget = crate_tc_value
+/datum/uplink_item/bundles_tc/surplus/proc/fill_crate(obj/structure/closet/crate/surplus_crate, list/possible_items, datum/uplink_purchase_log/p_log, tc_budget = crate_tc_value)
 	while(tc_budget)
 		var/datum/uplink_item/uplink_item = pick_possible_item(possible_items, tc_budget)
 		if(!uplink_item)
 			continue
 		tc_budget -= uplink_item.cost
-		new uplink_item.item(surplus_crate)
+		var/created = new uplink_item.item(surplus_crate)
+		p_log?.LogPurchase(created, uplink_item, uplink_item.cost)
 
 /// overwrites item spawning proc for surplus items to spawn an appropriate crate via a podspawn
 /datum/uplink_item/bundles_tc/surplus/spawn_item(spawn_path, mob/user, datum/uplink_handler/handler, atom/movable/source)
@@ -134,7 +136,7 @@
 		qdel(surplus_crate)
 		CRASH("surplus crate failed to generate possible items")
 //monkestation edit end
-	fill_crate(surplus_crate, possible_items)
+	fill_crate(surplus_crate, possible_items, handler?.purchase_log)
 
 	podspawn(list(
 		"target" = get_turf(user),

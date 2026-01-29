@@ -25,7 +25,6 @@
 	cost = 4
 	restricted = TRUE
 
-
 /datum/uplink_item/implants/stealthimplant
 	name = "Stealth Implant"
 	desc = "This one-of-a-kind implant will make you almost invisible if you play your cards right. \
@@ -49,6 +48,13 @@
 	// An empty uplink is kinda useless.
 	surplus = 0
 	restricted = TRUE
+	purchasable_from = ~UPLINK_GANGS
+
+/datum/uplink_item/implants/uplink/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
+	var/obj/item/storage/box/syndie_kit/uplink_box = ..()
+	uplink_box.name = "Uplink Implant Box"
+	new /obj/item/implanter/uplink(uplink_box, uplink_handler)
+	return uplink_box
 
 /datum/uplink_item/implants/thermals
 	name = "Thermal Eyes"
@@ -71,15 +77,10 @@
 	Wait a minimum of three seconds between injections. Exact mechanism for spear summoning is classified under Aetherofusion NDA."
 	item = /obj/item/storage/box/syndie_kit/imp_hard_spear
 	cost = 7
+	purchasable_from = ~UPLINK_GANGS
 
 /datum/uplink_item/implants/weapons_auth
 	name = "Weapon Authorization Implant"
 	desc = "An implant that allows you to use any pin restricted weapon."
 	item = /obj/item/storage/box/syndie_kit/weapons_auth
 	cost = 5
-
-/datum/uplink_item/implants/uplink/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
-	var/obj/item/storage/box/syndie_kit/uplink_box = ..()
-	uplink_box.name = "Uplink Implant Box"
-	new /obj/item/implanter/uplink(uplink_box, uplink_handler)
-	return uplink_box

@@ -181,7 +181,7 @@
 	. = ..()
 	if(.)
 		return
-	use(user)
+	use(user, !(user.istate & ISTATE_SECONDARY)) //allow intents to work with single click interaction
 
 /obj/structure/ladder/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()

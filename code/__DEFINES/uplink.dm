@@ -9,6 +9,12 @@
 /// This item is purchasable to clown ops
 #define UPLINK_CLOWN_OPS (1 << 2)
 
+/// This item is purchasable to gangs
+#define UPLINK_GANGS (1 << 5)
+
+/// the uplink flag for contractors
+#define UPLINK_CONTRACTORS (1 << 6)
+
 /// Progression gets turned into a user-friendly form. This is just an abstract equation that makes progression not too large.
 #define DISPLAY_PROGRESSION(time) round(time/60, 0.01)
 

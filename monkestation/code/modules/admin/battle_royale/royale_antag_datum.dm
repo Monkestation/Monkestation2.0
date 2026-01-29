@@ -17,12 +17,14 @@
 	var/mob/living/current = mob_override || owner.current
 	RegisterSignal(current, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(on_z_change))
 	RegisterSignal(current, COMSIG_LIVING_DEATH, PROC_REF(on_death))
+	RegisterSignal(current, COMSIG_MOB_APPLY_DAMAGE_MODIFIERS, PROC_REF(on_damage_mod))
 	START_PROCESSING(SSprocessing, src)
+	mob_override.apply_damage()
 
 /datum/antagonist/battle_royale/remove_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/current = mob_override || owner.current
-	UnregisterSignal(current, list(COMSIG_MOVABLE_Z_CHANGED, COMSIG_LIVING_DEATH))
+	UnregisterSignal(current, list(COMSIG_MOVABLE_Z_CHANGED, COMSIG_LIVING_DEATH, COMSIG_MOB_APPLY_DAMAGE_MODIFIERS))
 	STOP_PROCESSING(SSprocessing, src)
 
 /datum/antagonist/battle_royale/process(seconds_per_tick)
@@ -61,6 +63,11 @@
 	var/mob/living/living_died = source
 	to_chat(living_died, span_userdanger("You died!"))
 	living_died.dust(drop_items = TRUE)
+
+/datum/antagonist/battle_royale/proc/on_damage_mod(mob/living/damaged, list/damage_mods, damage, damagetype, def_zone, sharpness, attack_direction, attacking_item)
+	SIGNAL_HANDLER
+	if(damaged.stat > CONSCIOUS)
+		damage_mods.Add(2) //double damage in crit
 
 /datum/objective/battle_royale //has no completion requirement as it cannot be completed
 	name = "Get that victory royale"

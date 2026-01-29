@@ -47,7 +47,7 @@
 	progression_minimum = 20 MINUTES
 	item = /obj/item/melee/energy/sword/saber
 	cost = 8
-	purchasable_from = ~UPLINK_CLOWN_OPS
+	purchasable_from = ~(UPLINK_CLOWN_OPS | UPLINK_GANGS) //monkestation edit: adds UPLINK_GANGS
 
 /datum/uplink_item/dangerous/powerfist
 	name = "Power Fist"
@@ -74,7 +74,7 @@
 	progression_minimum = 30 MINUTES
 	item = /obj/item/dualsaber
 	cost = 16
-	purchasable_from = ~UPLINK_CLOWN_OPS
+	purchasable_from = ~(UPLINK_CLOWN_OPS | UPLINK_GANGS) //monkestation edit: adds UPLINK_GANGS
 
 /datum/uplink_item/dangerous/doublesword/get_discount_value(discount_type)
 	switch(discount_type)
@@ -93,7 +93,7 @@
 	item = /obj/item/guardian_creator/tech
 	cost = 18
 	surplus = 40 //monkestation edit: from 0 to 40
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_GANGS) //monkestation edit: adds UPLINK_GANGS
 	restricted = TRUE
 	refundable = TRUE
 
@@ -104,7 +104,7 @@
 	progression_minimum = 30 MINUTES
 	cost = 13
 	surplus = 50
-	purchasable_from = ~UPLINK_CLOWN_OPS
+	purchasable_from = ~(UPLINK_CLOWN_OPS | UPLINK_GANGS)
 
 /datum/uplink_item/dangerous/razorwire
 	name = "Razorwire Implant"
@@ -123,6 +123,7 @@
 	progression_minimum = 15 MINUTES
 	cost = 12
 	surplus = 20
+	purchasable_from = ~UPLINK_GANGS
 
 /datum/uplink_item/dangerous/cat
 	name = "Feral cat grenade"
@@ -136,20 +137,21 @@
 	desc = "A much more proffessional version of the engineer's bootleg rebar crossbow. 3 shot mag, quicker loading, and better ammo. Owners manual included."
 	item = /obj/item/storage/box/syndie_kit/rebarxbowsyndie
 	cost = 10
+	purchasable_from = ~UPLINK_GANGS
 
 /datum/uplink_item/dangerous/minipea
 	name = "5 peashooters strapped together"
 	desc = "For use in a trash tank, 5 small machineguns strapped together using syndicate technology. It burns through ammo like no other."
 	item = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/minipea
 	cost = 8
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_GANGS)
 
 /datum/uplink_item/dangerous/devitt
 	name = "Devitt Mk3 Light Tank"
 	desc = "An ancient tank teleported in for your machinations, comes prepared with a cannon and machinegun. REQUIRES TWO CREWMEMBERS TO OPPERATE EFFECTIVELY."
 	item = /obj/vehicle/sealed/mecha/devitt
 	cost = 40
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_GANGS)
 
 /datum/uplink_item/dangerous/laser_musket
 	name = "Syndicate Laser Musket"
@@ -160,7 +162,7 @@
 	progression_minimum = 30 MINUTES
 	cost = 10
 	surplus = 40
-	purchasable_from = ~UPLINK_CLOWN_OPS
+	purchasable_from = ~(UPLINK_CLOWN_OPS | UPLINK_GANGS)
 
 /datum/uplink_item/dangerous/venom_knife
 	name = "Poisoned Knife"
@@ -173,6 +175,7 @@
 	desc = "A twelve gauge shotgun with an eight shell capacity underneath. Comes with two boxes of buckshot."
 	item = /obj/item/storage/toolbox/guncase/nova/opfor/renoster
 	cost = 10
+	purchasable_from = ~UPLINK_GANGS
 
 /datum/uplink_item/dangerous/infanteria
 	name = "Carwo-Cawil Battle Rifle Case"
@@ -180,6 +183,7 @@
 	progression_minimum = 10 MINUTES
 	item = /obj/item/storage/toolbox/guncase/nova/opfor/infanteria
 	cost = 12
+	purchasable_from = ~UPLINK_GANGS
 
 /datum/uplink_item/dangerous/miecz
 	name = "'Miecz' Submachinegun Case"
@@ -187,6 +191,7 @@
 	progression_minimum = 10 MINUTES
 	item = /obj/item/storage/toolbox/guncase/nova/opfor/miecz
 	cost = 9
+	purchasable_from = ~UPLINK_GANGS
 
 /datum/uplink_item/dangerous/kiboko
 	name = "Kiboko Grenade Launcher Case"
@@ -194,6 +199,7 @@
 	progression_minimum = 10 MINUTES
 	item = /obj/item/storage/toolbox/guncase/nova/opfor/kiboko
 	cost = 14
+	purchasable_from = ~UPLINK_GANGS
 
 /datum/uplink_item/dangerous/sidano
 	name = "Sindano SMG"
@@ -201,6 +207,7 @@
 	progression_minimum = 10 MINUTES
 	item = /obj/item/storage/toolbox/guncase/nova/pistol/opfor/sindano
 	cost = 12
+	purchasable_from = ~UPLINK_GANGS
 
 /datum/uplink_item/dangerous/wespe
 	name = "Wespe Pistol"
@@ -208,12 +215,14 @@
 	progression_minimum = 5 MINUTES
 	item = /obj/item/storage/toolbox/guncase/nova/pistol/opfor/wespe
 	cost = 6
+	purchasable_from = ~UPLINK_GANGS
 
 /datum/uplink_item/dangerous/shotgun_revolver
 	name = "\improper Bóbr 12 GA revolver"
 	desc = "An outdated sidearm rarely seen in use by some members of the CIN. A revolver type design with a four shell cylinder. That's right, shell, this one shoots twelve guage."
 	item = /obj/item/storage/box/syndie_kit/shotgun_revolver
 	cost = 8
+	purchasable_from = ~UPLINK_GANGS
 
 /datum/uplink_item/dangerous/shit_smg
 	name = "Surplus Smg Bundle"
@@ -235,3 +244,4 @@
 	desc = "A modernised version of the infamous fire axe, courtesy of the Gorlex Marauders. Capable of breaching almost anything, and cleaving through almost any armour, it is to be handled with care."
 	item = /obj/item/fireaxe/energy
 	cost = 12
+	purchasable_from = ~UPLINK_GANGS

@@ -7,6 +7,7 @@
 	desc = "A classic sturdy and robust shotgun. Fits five shells."
 	item = /obj/item/gun/ballistic/shotgun/lethal
 	cost = 7
+	purchasable_from = ~UPLINK_GANGS
 
 //NEW TOT SHOTGUN AMMO BOXES
 /datum/uplink_item/ammo/trickshot

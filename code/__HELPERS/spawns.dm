@@ -10,7 +10,7 @@
  * * spawn = spawned path or a list of the paths spawned, what you're sending basically
  * Returns the pod spawned, in case you want to spawn items yourself and modify them before putting them in.
  */
-/proc/podspawn(specifications)
+/proc/podspawn(specifications) as /obj/structure/closet/supplypod
 	//get non var edit specifications
 	var/turf/landing_location = specifications["target"]
 	var/spawn_type = specifications["path"]

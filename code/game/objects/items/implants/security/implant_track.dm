@@ -39,7 +39,7 @@
 	. = ..()
 	timerid = QDEL_IN_STOPPABLE(src, lifespan)
 
-/obj/item/implant/tracking/c38/removed(mob/living/source, silent, special)
+/obj/item/implant/tracking/c38/removed(mob/living/source, silent, special, forced)
 	. = ..()
 	deltimer(timerid)
 	timerid = null

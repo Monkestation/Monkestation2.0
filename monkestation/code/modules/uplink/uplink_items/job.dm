@@ -85,7 +85,7 @@
 	item = /obj/item/storage/box/syndie_kit/khan_package
 	restricted_roles = list(JOB_ASSISTANT)
 
-/datum/uplink_item/role_restricted/acid_spit
+/datum/uplink_item/role_restricted/matter_eater
 	name = "Refined Matter Eater Mutator"
 	desc = "A mutator containing the recently refined \"Matter Eater\" mutation from clowns. \
 		The strain was refined to only cause 20 genetic instability instead of 40 in an undisclosed amount of time. \

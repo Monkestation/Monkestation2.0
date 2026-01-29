@@ -18,14 +18,14 @@
 	desc = "A robust, 4 round pump-action grenade launcher. Comes preloaded with three 40mm HE shells."
 	cost = 10
 	item = /obj/item/gun/ballistic/shotgun/china_lake
-	purchasable_from = ~UPLINK_CLOWN_OPS
+	purchasable_from = ~(UPLINK_CLOWN_OPS | UPLINK_GANGS)
 
 /datum/uplink_item/explosives/grenade_launcher
 	name = "40mm Grenade Launcher"
 	desc = "A single round break-operation grenade launcher. Comes preloaded with a 40mm HE shell."
 	cost = 5
 	item = /obj/item/gun/ballistic/revolver/grenadelauncher/unrestricted
-	purchasable_from = ~UPLINK_CLOWN_OPS
+	purchasable_from = ~(UPLINK_CLOWN_OPS | UPLINK_GANGS)
 
 /datum/uplink_item/explosives/a40mm
 	name = "Box of 40mm HE Grenades"

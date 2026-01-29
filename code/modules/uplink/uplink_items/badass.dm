@@ -56,6 +56,7 @@
 	progression_minimum = 5 MINUTES
 	restricted = TRUE
 	illegal_tech = FALSE
+	purchasable_from = ~UPLINK_GANGS
 
 /datum/uplink_item/badass/costumes/clown
 	name = "Clown Costume"

@@ -46,6 +46,12 @@ GLOBAL_LIST(uplink_purchase_logs_by_key) //assoc key = /datum/uplink_purchase_lo
 		. += "<span class='tooltip_container'>\[[UPE.icon_b64][show_key?"([owner])":""]<span class='tooltip_hover'><b>[UPE.name]</b><br>[UPE.spent_cost ? "[UPE.spent_cost] TC" : "[UPE.base_cost] TC<br>(Surplus)"]<br>[UPE.desc]</span>[(UPE.amount_purchased > 1) ? "x[UPE.amount_purchased]" : ""]\]</span>"
 
 /datum/uplink_purchase_log/proc/LogPurchase(atom/A, datum/uplink_item/uplink_item, spent_cost)
+	if(!istype(A))
+		var/static/icon/radio_icon
+		if(!radio_icon)
+			radio_icon = icon('icons/obj/radio.dmi', "radio")
+		A = radio_icon
+
 	var/datum/uplink_purchase_entry/UPE
 	var/hash = hash_purchase(uplink_item, spent_cost)
 	if(purchase_log[hash])
@@ -53,7 +59,6 @@ GLOBAL_LIST(uplink_purchase_logs_by_key) //assoc key = /datum/uplink_purchase_lo
 	else
 		UPE = new
 		purchase_log[hash] = UPE
-		UPE.path = A.type
 		UPE.icon_b64 = "[icon2base64html(A)]"
 		UPE.desc = uplink_item.desc
 		UPE.name = uplink_item.name
@@ -68,7 +73,6 @@ GLOBAL_LIST(uplink_purchase_logs_by_key) //assoc key = /datum/uplink_purchase_lo
 
 /datum/uplink_purchase_entry
 	var/amount_purchased = 0
-	var/path
 	var/icon_b64
 	var/desc
 	var/base_cost

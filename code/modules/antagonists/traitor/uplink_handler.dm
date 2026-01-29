@@ -105,12 +105,15 @@
 	if(!check_if_restricted(to_purchase))
 		return FALSE
 
-	var/current_stock = item_stock[to_purchase.stock_key]
+	var/current_stock = get_item_stock()[to_purchase.stock_key]
 	var/stock = current_stock != null? current_stock : INFINITY
 	if(telecrystals < to_purchase.cost || stock <= 0)
 		return FALSE
 
 	return TRUE
+
+/datum/uplink_handler/proc/get_item_stock() as /list
+	return item_stock
 
 /datum/uplink_handler/proc/purchase_item(mob/user, datum/uplink_item/to_purchase, atom/movable/source)
 	if(!can_purchase_item(user, to_purchase) || !to_purchase.unique_checks(user, src, source)) //monkestation edit: adds the unique_checks() check
@@ -266,7 +269,7 @@
 
 /datum/uplink_handler/proc/take_objective(mob/user, datum/traitor_objective/to_take)
 	if(!(to_take in potential_objectives))
-		return
+		return FALSE //monkestation edit: adds the FALSE return
 
 	user.playsound_local(get_turf(user), 'sound/traitor/objective_taken.ogg', vol = 100, vary = FALSE, channel = CHANNEL_TRAITOR)
 	to_take.on_objective_taken(user)
@@ -274,6 +277,7 @@
 	potential_objectives -= to_take
 	active_objectives += to_take
 	on_update()
+	return TRUE //monkestation edit
 
 /datum/uplink_handler/proc/ui_objective_act(mob/user, datum/traitor_objective/to_act_on, action)
 	if(!(to_act_on in active_objectives))

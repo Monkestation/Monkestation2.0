@@ -22,7 +22,7 @@
 	antagpanel_category = ANTAG_GROUP_XENOS
 	prevent_roundtype_conversion = FALSE
 	show_to_ghosts = TRUE
-	antag_flags = FLAG_ANTAG_CAP_TEAM
+	antag_flags = FLAG_ANTAG_CAP_IGNORE_HUMANITY
 	antag_count_points = 4
 	var/datum/team/xeno/xeno_team
 

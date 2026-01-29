@@ -60,7 +60,7 @@
 	if(.)
 		ADD_TRAIT(target, TRAIT_CAN_HEAR_MUSIC, REF(src))
 
-/obj/item/implant/radio/removed(mob/living/source, silent, special)
+/obj/item/implant/radio/removed(mob/living/source, silent, special, forced)
 	. = ..()
 	if(.)
 		REMOVE_TRAIT(source, TRAIT_CAN_HEAR_MUSIC, REF(src))

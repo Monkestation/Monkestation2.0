@@ -60,7 +60,7 @@
 	if(.)
 		RegisterSignal(target, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 
-/obj/item/implant/dust/removed(mob/target, silent = FALSE, special = FALSE)
+/obj/item/implant/dust/removed(mob/living/target, silent, special, forced)
 	. = ..()
 	if(.)
 		UnregisterSignal(target, COMSIG_LIVING_DEATH)

@@ -241,11 +241,11 @@
 		"name" = name,
 		"description" = description,
 		"progression_minimum" = progression_minimum,
-		"progression_reward" = progression_reward,
+		"progression_reward" = progression_reward * ((valid_uplinks & UPLINK_GANGS) ? 100 : 1), //monkestation edit: adds the gang check
 		"telecrystal_reward" = telecrystal_reward,
 		"ui_buttons" = generate_ui_buttons(user),
 		"objective_state" = objective_state,
-		"original_progression" = original_progression,
+		"original_progression" = original_progression * ((valid_uplinks & UPLINK_GANGS) ? 100 : 1), //monkestation edit: adds the gang check,
 		"telecrystal_penalty" = telecrystal_penalty,
 		"contractor_rep" = given_contractor_rep, //monkestation edit
 	)

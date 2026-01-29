@@ -17,8 +17,11 @@
 #define ROLE_COMMANDO_OPERATIVE "Commando Operative"
 #define ROLE_TRAITOR "Traitor"
 #define ROLE_WIZARD "Wizard"
-#define ROLE_CLOCK_CULTIST "Clock Cultist" //monkestation edit
+
+//monkestation roles
 #define ROLE_BLOODLING "Bloodling" // monkestation edit
+#define ROLE_CLOCK_CULTIST "Clock Cultist"
+#define ROLE_GANG_MEMBER "Gang Member"
 #define ROLE_OPFOR_CANDIDATE "OPFOR Candidate"
 #define ROLE_ASSAULT_OPERATIVE "Assault Operative"
 #define ROLE_DARKSPAWN "Darkspawn"
@@ -145,6 +148,7 @@
 /// first connection in order to play.
 GLOBAL_LIST_INIT(special_roles, list(
 	// Roundstart
+	ROLE_GANG_MEMBER = 400, //set extra high for testing to make sure picked players have some degree of playtime
 	ROLE_BROTHER = 0,
 	ROLE_CHANGELING = 0,
 	ROLE_CLOWN_OPERATIVE = 14,

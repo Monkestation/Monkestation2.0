@@ -67,6 +67,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/stinger_sound
 	/// How many points does this antag contribute to antag cap usage, should only be updated via set_antag_count_points()
 	VAR_PROTECTED/antag_count_points = 10
+	/// The type we use for checking duplicate antag types in can_be_owned()
+	var/base_type
 
 	//ANTAG UI
 
@@ -81,6 +83,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/New()
 	GLOB.antagonists += src
 	typecache_datum_blacklist = typecacheof(typecache_datum_blacklist)
+	base_type ||= type
 
 /datum/antagonist/Destroy()
 	GLOB.antagonists -= src
@@ -183,7 +186,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/can_be_owned(datum/mind/new_owner)
 	. = TRUE
 	var/datum/mind/tested = new_owner || owner
-	if(tested.has_antag_datum(type))
+	if(tested.has_antag_datum(base_type))
 		return FALSE
 	for(var/datum/antagonist/badguy as anything in tested.antag_datums)
 		if(is_type_in_typecache(src, badguy.typecache_datum_blacklist))
@@ -214,10 +217,12 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 //This handles the application of antag huds/special abilities
 /datum/antagonist/proc/apply_innate_effects(mob/living/mob_override)
+	SEND_SIGNAL(src, COMSIG_ANTAGONIST_INNATE_EFFECTS_APPLIED, (mob_override || owner.current)) //IMPORTANT TODO: SET SHOULD_CALL_PARENT(TRUE) in a future PR to avoid conflicts
 	return
 
 //This handles the removal of antag huds/special abilities
 /datum/antagonist/proc/remove_innate_effects(mob/living/mob_override)
+	SEND_SIGNAL(src, COMSIG_ANTAGONIST_INNATE_EFFECTS_REMOVED, (mob_override || owner.current))
 	return
 
 /// This is called when the antagonist is being mindshielded.

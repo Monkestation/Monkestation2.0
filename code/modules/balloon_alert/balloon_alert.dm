@@ -18,6 +18,10 @@
 /atom/proc/balloon_alert(mob/viewer, text)
 	SHOULD_NOT_SLEEP(TRUE)
 
+	if(istext(viewer) && isnull(text))
+		stack_trace("Attempted to call balloon_alert with only one argument! This is invalid, but we'll assume that src is the intended viewer.")
+		viewer = ismob(src) ? src : usr
+		text = viewer
 	INVOKE_ASYNC(src, PROC_REF(balloon_alert_perform), viewer, text)
 
 /// Create balloon alerts (text that floats up) to everything within range.

@@ -33,7 +33,7 @@
 	desc = "A contract abusing a loophole found by plasmamen to invade halls with harmful gases \
 			without repercussion or warning, garnering no attention from any higher powers. \
 			Has to be signed by purchaser to be considered valid."
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_GANGS)
 	item = /obj/item/card/plasma_license
 	cost = 20
 
@@ -43,7 +43,7 @@
 			this set of feline ears combines the finest of bio-engineering and thamaturgy to allow the user to transform to and from a cat at will, \
 			granting them all the benefits (and downsides) of being a true feline, such as ventcrawling. \
 			However, this form will be clad in blood-red Syndicate armor, making its origin somewhat obvious."
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_GANGS)
 	item = /obj/item/organ/internal/ears/cat/super/syndie
 	cost = 16 // double the price of stealth implant
 	surplus = 5
@@ -65,7 +65,6 @@
 	cost = 1
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
-
 /datum/uplink_item/device_tools/murderbone
 	name = "Corporate Sponsorship for Evil"
 	desc = "Our investors have decided that publicity is good no matter what kind it is. Even for a secretive organization formed \
@@ -78,7 +77,7 @@
 	cant_discount = TRUE
 	illegal_tech = FALSE
 	surplus = 0
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_GANGS)
 	item = /obj/item/storage/briefcase/evilbundle
 
 /datum/uplink_item/device_tools/hivenode_implanter

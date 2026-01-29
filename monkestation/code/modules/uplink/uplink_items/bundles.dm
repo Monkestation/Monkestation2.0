@@ -94,4 +94,4 @@
 	item = /obj/item/storage/box/syndie_kit/mini_kit
 	cost = 10
 	stock_key = UPLINK_SHARED_STOCK_KITS
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_GANGS)

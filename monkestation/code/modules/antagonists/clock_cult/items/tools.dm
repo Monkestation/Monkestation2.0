@@ -99,6 +99,11 @@
 	name = "surgery brass box"
 	desc = "A large brass box containing tools for surgery."
 
+/obj/item/storage/toolbox/brass/surgery/Initialize(mapload)
+	. = ..()
+	atom_storage.max_total_storage = 30
+	atom_storage.max_slots = 10
+
 /obj/item/storage/toolbox/brass/surgery/PopulateContents()
 	new /obj/item/scalpel(src)
 	new /obj/item/hemostat(src)
