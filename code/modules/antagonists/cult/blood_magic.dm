@@ -513,6 +513,11 @@
 		span_warning("[user] and [target] are violently flung back by a burst of sanguine energy!"),
 		ignored_mobs = list(user, target),
 	)
+
+	// deactivate any active powers, to ensure the vampire can experience the full force of being flung away at mach fuck
+	var/datum/antagonist/vampire/vampire_datum = IS_VAMPIRE(target)
+	vampire_datum.disable_all_powers(forced = TRUE)
+
 	playsound(user, 'sound/magic/demon_dies.ogg', vol = 100, vary = TRUE)
 	var/turf/user_turf = get_turf(user)
 	var/turf/target_turf = get_turf(target)
