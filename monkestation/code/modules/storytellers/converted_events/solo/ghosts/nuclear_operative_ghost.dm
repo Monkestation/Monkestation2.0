@@ -1,9 +1,9 @@
-/datum/round_event_control/antagonist/solo/from_ghosts/nuclear_operative
+/datum/round_event_control/antagonist/from_ghosts/nuclear_operative
 	name = "Nuclear Assault"
 	tags = list(TAG_DESTRUCTIVE, TAG_COMBAT, TAG_TEAM_ANTAG, TAG_EXTERNAL, TAG_OUTSIDER_ANTAG, TAG_MUNDANE)
 	antag_flag = ROLE_OPERATIVE_MIDROUND
 	antag_datum = /datum/antagonist/nukeop
-	typepath = /datum/round_event/antagonist/solo/ghost/nuclear_operative
+	typepath = /datum/round_event/antagonist/ghost/nuclear_operative
 	restricted_roles = list(
 		JOB_AI,
 		JOB_CAPTAIN,
@@ -34,21 +34,19 @@
 		JOB_WARDEN,
 	)
 	required_enemies = 5
-	// I give up, just there should be enough heads with 35 players...
 	min_players = 35
 	earliest_start = 60 MINUTES
 	weight = 3
 	max_occurrences = 1
 	prompted_picking = TRUE
 
-/datum/round_event/antagonist/solo/ghost/nuclear_operative
-	excute_round_end_reports = TRUE
+/datum/round_event/antagonist/ghost/nuclear_operative
 	var/static/datum/team/nuclear/nuke_team
 	var/set_leader = FALSE
 	var/required_role = ROLE_NUCLEAR_OPERATIVE
 	var/datum/mind/most_experienced
 
-/datum/round_event/antagonist/solo/ghost/nuclear_operative/add_datum_to_mind(datum/mind/antag_mind)
+/datum/round_event/antagonist/ghost/nuclear_operative/add_datum_to_mind(datum/mind/antag_mind)
 	if(most_experienced == antag_mind)
 		return
 	var/mob/living/current_mob = antag_mind.current
@@ -72,38 +70,3 @@
 
 	var/datum/antagonist/nukeop/new_op = new antag_datum()
 	antag_mind.add_antag_datum(new_op)
-
-//this might be able to be kept as just calling parent
-/datum/round_event/antagonist/solo/ghost/nuclear_operative/round_end_report()
-	var/result = nuke_team.get_result()
-	switch(result)
-		if(NUKE_RESULT_FLUKE)
-			SSticker.mode_result = "loss - syndicate nuked - disk secured"
-			SSticker.news_report = NUKE_SYNDICATE_BASE
-		if(NUKE_RESULT_NUKE_WIN)
-			SSticker.mode_result = "win - syndicate nuke"
-			SSticker.news_report = STATION_DESTROYED_NUKE
-		if(NUKE_RESULT_NOSURVIVORS)
-			SSticker.mode_result = "halfwin - syndicate nuke - did not evacuate in time"
-			SSticker.news_report = STATION_DESTROYED_NUKE
-		if(NUKE_RESULT_WRONG_STATION)
-			SSticker.mode_result = "halfwin - blew wrong station"
-			SSticker.news_report = NUKE_MISS
-		if(NUKE_RESULT_WRONG_STATION_DEAD)
-			SSticker.mode_result = "halfwin - blew wrong station - did not evacuate in time"
-			SSticker.news_report = NUKE_MISS
-		if(NUKE_RESULT_CREW_WIN_SYNDIES_DEAD)
-			SSticker.mode_result = "loss - evacuation - disk secured - syndi team dead"
-			SSticker.news_report = OPERATIVES_KILLED
-		if(NUKE_RESULT_CREW_WIN)
-			SSticker.mode_result = "loss - evacuation - disk secured"
-			SSticker.news_report = OPERATIVES_KILLED
-		if(NUKE_RESULT_DISK_LOST)
-			SSticker.mode_result = "halfwin - evacuation - disk not secured"
-			SSticker.news_report = OPERATIVE_SKIRMISH
-		if(NUKE_RESULT_DISK_STOLEN)
-			SSticker.mode_result = "halfwin - detonation averted"
-			SSticker.news_report = OPERATIVE_SKIRMISH
-		else
-			SSticker.mode_result = "halfwin - interrupted"
-			SSticker.news_report = OPERATIVE_SKIRMISH

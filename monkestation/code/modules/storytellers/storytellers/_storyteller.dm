@@ -31,7 +31,7 @@
 	/// Variance in cost of the purchased events. Effectively affects frequency of events
 	var/cost_variance = 15
 
-	/// Variance in the budget of roundstart points.
+	/// Variance in % of the budget of roundstart points.
 	var/roundstart_points_variance = 15
 
 	/// Whether the storyteller guaranteed a roleset roll (antag) on roundstart. (Still needs to pass pop check)
@@ -52,14 +52,14 @@
 	var/roundstart_checks = FALSE
 	///prob of roundstart antag
 	var/roundstart_prob = 25
-	///do we ignore ran_roundstart
-	var/ignores_roundstart = FALSE
 	///is a storyteller always able to be voted for(also does not count for the amount of storytellers to pick from)
 	var/always_votable = FALSE
 	///weight this has of being picked for random storyteller/showing up in the vote if not always_votable
 	var/weight = 0
+	///the base antag capacity points this storyteller has
+	var/base_antag_points = 0
 
-/datum/storyteller/process(seconds_per_tick)
+/datum/storyteller/process(seconds_per_tick = SSgamemode.wait / 10)
 	tick(seconds_per_tick)
 
 // process() has waitfor = FALSE, so use this if you want to wait til it's done doing its thing
@@ -70,37 +70,61 @@
 	if(!guarantees_roundstart_roleset && prob(roundstart_prob) && !roundstart_checks)
 		roundstart_checks = TRUE
 
-	if(SSgamemode.current_roundstart_event && !SSgamemode.ran_roundstart && (guarantees_roundstart_roleset || roundstart_checks))
-		buy_event(SSgamemode.current_roundstart_event, EVENT_TRACK_ROLESET, TRUE)
-		if(EVENT_TRACK_ROLESET in SSgamemode.forced_next_events)
-			SSgamemode.forced_next_events[EVENT_TRACK_ROLESET] = null
-			SSgamemode.forced_next_events -= EVENT_TRACK_ROLESET
+	var/datum/controller/subsystem/gamemode/mode = SSgamemode
+	if(mode.current_roundstart_event && !mode.ran_roundstart && (guarantees_roundstart_roleset || roundstart_checks))
+		buy_event(mode.current_roundstart_event, EVENT_TRACK_ROLESET, TRUE)
+		if(EVENT_TRACK_ROLESET in mode.forced_next_events) //current_roundstart_event gets set to the forced roleset if there is one
+			mode.forced_next_events[EVENT_TRACK_ROLESET] = null
+			mode.forced_next_events -= EVENT_TRACK_ROLESET
 
 		log_storyteller("Running SSgamemode.current_roundstart_event\[[SSgamemode.current_roundstart_event]\]")
-		SSgamemode.ran_roundstart = TRUE
+		mode.ran_roundstart = TRUE
+		var/sanity = 0
+		var/fire_return
+		do
+			fire_return = mode.roundstart_fire()
+			sanity++
+		while(fire_return && sanity < 100)
 
 	add_points(seconds_per_tick)
 	handle_tracks()
 
 /// Add points to all tracks while respecting the multipliers.
 /datum/storyteller/proc/add_points(seconds_per_tick)
+	if(!seconds_per_tick)
+		return
+
 	var/datum/controller/subsystem/gamemode/mode = SSgamemode
-	var/base_point = EVENT_POINT_GAINED_PER_SECOND * seconds_per_tick * mode.event_frequency_multiplier
-	for(var/track in mode.event_track_points)
-		var/point_gain = base_point * point_gains_multipliers[track] * mode.point_gain_multipliers[track]
-		if(mode.allow_pop_scaling)
-			point_gain *= mode.current_pop_scale_multipliers[track]
-		mode.event_track_points[track] += point_gain
-		mode.last_point_gains[track] = point_gain
+	var/base_point = seconds_per_tick * mode.event_frequency_multiplier
+	for(var/track in mode.point_gain_multipliers)
+		mode.last_point_gains[track] = add_track_points(base_point, track)
+
+/// Add points to a specific track with multipliers, returns how many points were added
+/// Passed track should be an ID, not a ref
+/datum/storyteller/proc/add_track_points(count, datum/storyteller_track/track)
+	var/datum/controller/subsystem/gamemode/mode = SSgamemode
+	var/mode_gain = mode.point_gain_multipliers[track]
+	if(!isnum(mode_gain))
+		mode_gain = 1
+	var/our_gain = point_gains_multipliers[track]
+	if(!isnum(our_gain))
+		our_gain = 1
+
+	var/point_gain = round(count * our_gain * mode_gain, 0.1)
+	if(mode.allow_pop_scaling)
+		point_gain *= mode.current_pop_scale_multipliers[track]
+
+	track = mode.event_tracks[track]
+	track.points += point_gain
+	return point_gain
 
 /// Goes through every track of the gamemode and checks if it passes a threshold to buy an event, if does, buys one.
 /datum/storyteller/proc/handle_tracks()
-	. = FALSE //Has return value for the roundstart loop
 	var/datum/controller/subsystem/gamemode/mode = SSgamemode
-	for(var/track in mode.event_track_points)
-		var/points = mode.event_track_points[track]
-		if(points >= mode.point_thresholds[track] && find_and_buy_event_from_track(track))
-			. = TRUE
+	for(var/track in mode.point_gain_multipliers)
+		var/datum/storyteller_track/typed_track = mode.event_tracks[track]
+		if(typed_track.points >= typed_track.threshold)
+			typed_track.on_trigger(src)
 
 /// Find and buy a valid event from a track.
 /datum/storyteller/proc/find_and_buy_event_from_track(track)
@@ -119,22 +143,28 @@
 		if(mode.active_players < pop_required)
 			message_admins("Storyteller failed to pick an event for track of [track] due to insufficient population. (required: [pop_required] active pop for [track]. Current: [mode.active_players])")
 			log_storyteller("Storyteller failed to pick an event for track of [track] due to insufficient population. (required: [pop_required] active pop for [track]. Current: [mode.active_players])")
-			mode.event_track_points[track] *= TRACK_FAIL_POINT_PENALTY_MULTIPLIER
+			var/datum/storyteller_track/track_datum = mode.event_tracks[track]
+			track_datum.points -= track_datum.points - (TRACK_FAIL_POINT_PENALTY_MULTIPLIER * track_datum.points)
 			return
-		calculate_weights(track)
 		var/list/valid_events = list()
 		// Determine which events are valid to pick
 		var/players_amt = get_active_player_count(alive_check = TRUE, afk_check = TRUE, human_check = TRUE)
+		var/started_time = world.time - SSticker.round_start_time
+		var/is_roundstart = started_time <= ROUNDSTART_VALID_TIMEFRAME
 		for(var/datum/round_event_control/event as anything in mode.event_pools[track])
-			if(event.can_spawn_event(players_amt))
+			if((is_roundstart ? (event.roundstart && SSgamemode.can_run_roundstart) : !event.roundstart) && event.can_spawn_event(players_amt))
 				if(QDELETED(event))
+					mode.event_pools[track] -= event
 					message_admins("[event.name] was deleted!")
 					continue
-				valid_events[event] = round(event.calculated_weight * 10) //multiply weight by 10 to get first decimal value
+
+				if(calculate_single_weight(event) > 0)
+					valid_events[event] = round(event.calculated_weight * 10) //multiply weight by 10 to get first decimal value
 		///If we didn't get any events, remove the points inform admins and dont do anything
 		if(!length(valid_events))
 			message_admins("Storyteller failed to pick an event for track of [track].")
-			mode.event_track_points[track] *= TRACK_FAIL_POINT_PENALTY_MULTIPLIER
+			var/datum/storyteller_track/track_datum = mode.event_tracks[track]
+			track_datum.points -= track_datum.points - (TRACK_FAIL_POINT_PENALTY_MULTIPLIER * track_datum.points)
 			return
 		picked_event = pick_weight(valid_events)
 		if(!picked_event)
@@ -148,21 +178,21 @@
 			else
 				message_admins("WARNING: Storyteller picked a null from event pool. Aborting event roll.")
 				stack_trace("WARNING: Storyteller picked a null from event pool.")
-				SSgamemode.event_track_points[track] = 0
+				SSgamemode.event_tracks[track].points = 0
 				return
 	buy_event(picked_event, track, are_forced)
-	. = TRUE
+	return TRUE
 
 ///Attempt to buy a specific event if we can afford it, otherwise returns FALSE, note this does NOT take cost variance into account
 /datum/storyteller/proc/try_buy_event(datum/round_event_control/bought_event)
 	if(ispath(bought_event))
-		bought_event = locate(bought_event) in SSevents.control //might be able to make this slightly cheaper by searching in the track sorted list
+		bought_event = SSevents.control_by_type[bought_event]
 	var/track = bought_event.track
 	if(!track || (bought_event in SSgamemode.uncategorized))
 		return FALSE //trackless events cant be bought
 
-	var/datum/controller/subsystem/gamemode/mode = SSgamemode
-	if(mode.event_track_points[track] - (bought_event.cost * mode.point_thresholds[track]) < 0)
+	var/datum/storyteller_track/track_datum = SSgamemode.event_tracks[track]
+	if(track_datum.points - (bought_event.cost * track_datum.threshold) < 0)
 		return FALSE
 
 	buy_event(bought_event, track)
@@ -174,38 +204,46 @@
 		track = bought_event.track
 
 	var/datum/controller/subsystem/gamemode/mode = SSgamemode
+	var/datum/storyteller_track/track_datum = mode.event_tracks[track]
 	// Perhaps use some bell curve instead of a flat variance?
-	var/total_cost = bought_event.cost * mode.point_thresholds[track]
+	var/total_cost = bought_event.cost * track_datum.threshold
 	if(!bought_event.roundstart)
 		total_cost *= (1 + (rand(-cost_variance, cost_variance)/100)) //Apply cost variance if not roundstart event
-	mode.event_track_points[track] = max(mode.event_track_points[track] - total_cost, 0)
+	track_datum.points = max(track_datum.points - total_cost, 0)
 	message_admins("Storyteller purchased and triggered [bought_event] event, on [track] track, for [total_cost] cost.")
 	if(bought_event.roundstart)
-		SSgamemode.ran_roundstart = TRUE
 		mode.TriggerEvent(bought_event, forced)
 	else
 		mode.schedule_event(bought_event, 3 MINUTES, total_cost, _forced = forced)
 	SSgamemode.triggered_round_events |= bought_event.type
 
-/// Calculates the weights of the events from a passed track.
-/datum/storyteller/proc/calculate_weights(track)
+///Calculates the weights of the events from a passed track.
+/datum/storyteller/proc/calculate_weights(track, forced = TRUE)
 	var/datum/controller/subsystem/gamemode/mode = SSgamemode
 	for(var/datum/round_event_control/event as anything in mode.event_pools[track])
-		var/weight_total = event.get_weight()
-		/// Apply tag multipliers if able
-		if(tag_multipliers)
-			for(var/tag in tag_multipliers)
-				if(tag in event.tags)
-					weight_total *= tag_multipliers[tag]
-		/// Apply occurence multipliers if able
-		var/occurences = event.get_occurences()
-		if(occurences)
-			///If the event has occured already, apply a penalty multiplier based on amount of occurences
-			weight_total -= event.reoccurence_penalty_multiplier * weight_total * (1 - (event_repetition_multiplier ** occurences))
-		/// Write it
-		event.calculated_weight = weight_total
+		calculate_single_weight(event, forced)
 
-/// Extra storyteller-specific checks for if an event can run or not.
+///Calculate the weight for a specific event, skiped if already done
+/datum/storyteller/proc/calculate_single_weight(datum/round_event_control/event, forced = FALSE)
+	if(event.calculated_weight && !forced)
+		return event.calculated_weight
+
+	var/weight_total = event.get_weight()
+	/// Apply tag multipliers if able
+	if(tag_multipliers)
+		for(var/tag in tag_multipliers)
+			if(tag in event.tags)
+				weight_total *= tag_multipliers[tag]
+	/// Apply occurence multipliers if able
+	var/occurences = event.get_occurrences()
+	if(occurences)
+		///If the event has occured already, apply a penalty multiplier based on amount of occurences
+		weight_total -= event.reoccurence_penalty_multiplier * weight_total * (1 - (event_repetition_multiplier ** occurences))
+	/// Write it
+	event.calculated_weight = weight_total
+	return event.calculated_weight
+
+///Extra storyteller-specific checks for if an event can run or not.
 /datum/storyteller/proc/can_run_event(datum/round_event_control/event)
 	return TRUE
 

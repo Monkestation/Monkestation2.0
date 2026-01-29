@@ -1,9 +1,9 @@
-/datum/round_event_control/antagonist/solo/clockcult
+/datum/round_event_control/antagonist/clockcult
 	name = "Clock Cult"
 	tags = list(TAG_SPOOKY, TAG_DESTRUCTIVE, TAG_COMBAT, TAG_TEAM_ANTAG, TAG_MAGICAL)
 	antag_flag = ROLE_CLOCK_CULTIST
 	antag_datum = /datum/antagonist/clock_cultist
-	typepath = /datum/round_event/antagonist/solo/clockcult
+	typepath = /datum/round_event/antagonist/clockcult
 	shared_occurence_type = SHARED_HIGH_THREAT
 	repeated_mode_adjust = TRUE
 	restricted_roles = list(
@@ -36,21 +36,21 @@
 	required_enemies = 5
 	base_antags = 4
 	maximum_antags = 4
-	min_players = 45
+	min_players = 40
 	roundstart = TRUE
 	earliest_start = 0 SECONDS
 	weight = 4
 	max_occurrences = 1
 	event_icon_state = "clockcult"
-	preferred_events = list(/datum/round_event_control/antagonist/solo/bloodcult = 1)
+	preferred_events = list(/datum/round_event_control/antagonist/bloodcult = 1)
 
-/datum/round_event/antagonist/solo/clockcult
+/datum/round_event/antagonist/clockcult
 	end_when = 60000
 
-/datum/round_event/antagonist/solo/clockcult/setup()
+/datum/round_event/antagonist/clockcult/setup()
 	. = ..()
 	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(spawn_reebe))
 
-/datum/round_event/antagonist/solo/clockcult/add_datum_to_mind(datum/mind/antag_mind)
+/datum/round_event/antagonist/clockcult/add_datum_to_mind(datum/mind/antag_mind)
 	antag_mind.special_role = ROLE_CLOCK_CULTIST
 	antag_mind.add_antag_datum(antag_datum)

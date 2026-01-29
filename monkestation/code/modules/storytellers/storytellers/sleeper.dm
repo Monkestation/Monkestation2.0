@@ -5,12 +5,13 @@
 		EVENT_TRACK_MUNDANE = 1,
 		EVENT_TRACK_MODERATE = 1.2,
 		EVENT_TRACK_MAJOR = 1.2,
-		EVENT_TRACK_ROLESET = 0.1, ///rolesets are entirely evil atm so crank this down
+		EVENT_TRACK_ROLESET = 0.2, ///rolesets are entirely evil atm so crank this down
 		EVENT_TRACK_OBJECTIVES = 1
 		)
 	guarantees_roundstart_roleset = FALSE
 	tag_multipliers = list(TAG_COMBAT = 0.6, TAG_DESTRUCTIVE = 0.7, TAG_POSITIVE = 1.2)
 	always_votable = TRUE //good for low pop
-	population_max = 45
+	population_max = 40
 	welcome_text = "The day is going slowly."
 	weight = 2
+	base_antag_points = -10

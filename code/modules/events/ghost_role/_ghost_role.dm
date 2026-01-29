@@ -37,8 +37,8 @@
 		var/retry_count = 0
 		if(retry_count >= MAX_SPAWN_ATTEMPT)
 			message_admins("[role_name] event has exceeded maximum spawn attempts. Aborting and refunding.")
-			if(control && control.occurrences > 0) //Don't refund if it hasn't
-				control.occurrences--
+			if(control && control.get_occurrences() > 0) //Don't refund if it hasn't
+				control.subtract_occurrence()
 			return
 		var/waittime = 300 * (2**retry_count)
 		message_admins("The event will not spawn a [role_name] until certain \

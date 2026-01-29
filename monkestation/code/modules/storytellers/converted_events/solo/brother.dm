@@ -1,8 +1,8 @@
-/datum/round_event_control/antagonist/solo/brother
+/datum/round_event_control/antagonist/brother
 	name = "Blood Brothers"
 	antag_flag = ROLE_BROTHER
 	antag_datum = /datum/antagonist/brother
-	typepath = /datum/round_event/antagonist/solo/brother
+	typepath = /datum/round_event/antagonist/brother
 	tags = list(TAG_COMBAT, TAG_TEAM_ANTAG, TAG_CREW_ANTAG, TAG_MUNDANE)
 	cost = 0.45 // so it doesn't eat up threat for a relatively low-threat antag
 	weight = 10
@@ -43,20 +43,20 @@
 		JOB_BRIG_PHYSICIAN,
 	)
 	extra_spawned_events = list(
-		/datum/round_event_control/antagonist/solo/traitor/roundstart = 8,
-		/datum/round_event_control/antagonist/solo/bloodsucker/roundstart = 6,
-		/datum/round_event_control/antagonist/solo/heretic/roundstart = 1,
+		/datum/round_event_control/antagonist/traitor/roundstart = 8,
+		VAMPIRE_ROUNDSTART_EVENT = 6,
+		/datum/round_event_control/antagonist/heretic/roundstart = 1,
 	)
 	var/static/allow_3_person_teams
 
-/datum/round_event_control/antagonist/solo/brother/get_antag_amount()
+/datum/round_event_control/antagonist/brother/get_antag_amount()
 	if(isnull(allow_3_person_teams))
 		allow_3_person_teams = prob(10) // 3-brother teams only happen around 10% of the time
 	. = ..()
 	if(!allow_3_person_teams)
 		return FLOOR(., 2)
 
-/datum/round_event/antagonist/solo/brother/start()
+/datum/round_event/antagonist/brother/start()
 	if(length(setup_minds) < 2) // if we somehow only got one BB chosen, despite the fact we asked for 2, fuck it, they just get to be a traitor, and we'll throw the storyteller a bone
 		var/datum/mind/lonely_sap = setup_minds[1]
 		lonely_sap.add_antag_datum(/datum/antagonist/traitor)

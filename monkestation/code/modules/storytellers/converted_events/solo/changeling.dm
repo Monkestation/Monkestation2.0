@@ -1,4 +1,4 @@
-/datum/round_event_control/antagonist/solo/changeling
+/datum/round_event_control/antagonist/changeling
 	antag_flag = ROLE_CHANGELING
 	tags = list(TAG_COMBAT, TAG_ALIEN, TAG_CREW_ANTAG)
 	antag_datum = /datum/antagonist/changeling
@@ -24,18 +24,19 @@
 		JOB_AI,
 		JOB_CYBORG,
 	)
+	base_antags = 2
 	min_players = 20
 	weight = 10
 	shared_occurence_type = SHARED_CHANGELING
 	event_icon_state = "changeling"
 
-/datum/round_event_control/antagonist/solo/changeling/roundstart
+/datum/round_event_control/antagonist/changeling/roundstart
 	name = "Changelings"
 	roundstart = TRUE
 	earliest_start = 0
 	maximum_antags = 1
 
-/datum/round_event_control/antagonist/solo/changeling/midround
+/datum/round_event_control/antagonist/changeling/midround
 	name = "Genome Awakening (Changelings)"
 	antag_flag = ROLE_GENOMEAWAKENING
 	prompted_picking = TRUE

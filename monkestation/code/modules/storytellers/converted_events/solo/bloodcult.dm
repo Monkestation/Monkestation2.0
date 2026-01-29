@@ -1,9 +1,9 @@
-/datum/round_event_control/antagonist/solo/bloodcult
+/datum/round_event_control/antagonist/bloodcult
 	name = "Blood Cult"
 	tags = list(TAG_SPOOKY, TAG_DESTRUCTIVE, TAG_COMBAT, TAG_TEAM_ANTAG, TAG_MAGICAL)
 	antag_flag = ROLE_CULTIST
 	antag_datum = /datum/antagonist/cult
-	typepath = /datum/round_event/antagonist/solo/bloodcult
+	typepath = /datum/round_event/antagonist/bloodcult
 	shared_occurence_type = SHARED_HIGH_THREAT
 	repeated_mode_adjust = TRUE
 	restricted_roles = list(
@@ -36,30 +36,28 @@
 	required_enemies = 5
 	base_antags = 2
 	maximum_antags = 3
-	// I give up, just there should be enough heads with 35 players...
 	min_players = 30
 	roundstart = TRUE
 	earliest_start = 0 SECONDS
 	weight = 4
 	max_occurrences = 1
 	event_icon_state = "cult"
-	preferred_events = list(/datum/round_event_control/antagonist/solo/clockcult = 1)
+	preferred_events = list(/datum/round_event_control/antagonist/clockcult = 1)
 
-/datum/round_event/antagonist/solo/bloodcult
-	excute_round_end_reports = TRUE
+/datum/round_event/antagonist/bloodcult
 	end_when = 60000
 	var/static/datum/team/cult/main_cult
 
-/datum/round_event/antagonist/solo/bloodcult/setup()
+/datum/round_event/antagonist/bloodcult/setup()
 	. = ..()
 	if(!main_cult)
 		main_cult = new()
 
-/datum/round_event/antagonist/solo/bloodcult/start()
+/datum/round_event/antagonist/bloodcult/start()
 	. = ..()
 	main_cult.setup_objectives()
 
-/datum/round_event/antagonist/solo/bloodcult/add_datum_to_mind(datum/mind/antag_mind)
+/datum/round_event/antagonist/bloodcult/add_datum_to_mind(datum/mind/antag_mind)
 	var/datum/antagonist/cult/new_cultist = new antag_datum()
 	new_cultist.cult_team = main_cult
 	new_cultist.give_equipment = TRUE

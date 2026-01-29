@@ -360,8 +360,8 @@ SUBSYSTEM_DEF(ticker)
 	set waitfor = FALSE
 	if(!CONFIG_GET(flag/disable_storyteller))
 		SSgamemode.current_storyteller.round_started = TRUE
-		if(!SSgamemode.halted_storyteller)
-			SSgamemode.current_storyteller.tick(STORYTELLER_WAIT_TIME * 0.1) // we want this asap
+		/*if(!SSgamemode.halted_storyteller) //temp removal
+			SSgamemode.current_storyteller.tick()*/ // we want this asap
 	mode.post_setup()
 	addtimer(CALLBACK(src, PROC_REF(fade_all_splashes)), 1 SECONDS) // extra second to make SURE all antags are setup
 
@@ -373,19 +373,14 @@ SUBSYSTEM_DEF(ticker)
 	send2adminchat("Server", "Round [GLOB.round_id ? "#[GLOB.round_id]" : ""] has started[allmins.len ? ".":" with no active admins online!"]")
 	setup_done = TRUE
 
-	for(var/i in GLOB.start_landmarks_list)
-		var/obj/effect/landmark/start/S = i
-		if(istype(S)) //we can not runtime here. not in this important of a proc.
-			S.after_round_start()
+	for(var/obj/effect/landmark/start/mark in GLOB.start_landmarks_list)
+		if(istype(mark)) //we can not runtime here. not in this important of a proc.
+			mark.after_round_start()
 		else
-			stack_trace("[S] [S.type] found in start landmarks list, which isn't a start landmark!")
+			stack_trace("[mark] [(isdatum(mark) ? mark.type : "non datum")] found in start landmarks list, which isn't a start landmark!")
 
 	// handle persistence stuff that requires ckeys, in this case hardcore mode and temporal scarring
-	for(var/i in GLOB.player_list)
-		if(!ishuman(i))
-			continue
-		var/mob/living/carbon/human/iter_human = i
-
+	for(var/mob/living/carbon/human/iter_human in GLOB.player_list)
 		iter_human.increment_scar_slot()
 		iter_human.load_persistent_scars()
 		SSpersistence.load_modular_persistence(iter_human.get_organ_slot(ORGAN_SLOT_BRAIN))
