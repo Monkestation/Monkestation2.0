@@ -68,16 +68,8 @@
 	var/turf/current_turf = get_turf(owner)
 	// If we aren't in the dark, anyone watching us will cause us to drop out stuff
 	if(GET_SIMPLE_LUMCOUNT(current_turf) >= 0.2)
-		for(var/mob/living/watcher in viewers(world.view, get_turf(owner)) - owner)
-			if(QDELETED(watcher.client) || watcher.client?.is_afk() || watcher.stat != CONSCIOUS)
-				continue
-			if(isanimal_or_basicmob(watcher))
-				continue
-			if(HAS_SILICON_ACCESS(watcher) || HAS_TRAIT(watcher, TRAIT_GHOST_CRITTER) || isdrone(watcher))
-				continue
-			if(watcher.is_blind() || watcher.is_nearsighted_currently())
-				continue
-			if(!HAS_MIND_TRAIT(watcher, TRAIT_VAMPIRE_ALIGNED))
+		for(var/mob/living/watcher in oviewers(world.view, get_turf(owner)) - owner)
+			if(vampiredatum_power.is_masq_watcher(watcher))
 				user.unequip_everything()
 				break
 	user.uncuff()
