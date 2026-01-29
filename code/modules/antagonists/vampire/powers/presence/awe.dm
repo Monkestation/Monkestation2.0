@@ -105,10 +105,11 @@
 		// Wobbly Knees
 		if(5)
 			owner.face_atom(source_vampire)
-			if(owner.body_position == STANDING_UP && owner.stamina?.loss == 0)
+			if(owner.body_position == STANDING_UP && owner.stamina?.loss <= (STAMINA_MAX / 2))
 				owner.balloon_alert(owner, "your knees feel wobbly...")
 				owner.visible_message(span_warning("[owner] seems quite wobbly on [owner.p_their()] feet."), span_awe("Your knees feel wobbly..."))
-				owner.stamina?.adjust(-rand(20, 40))
+				owner.stamina.adjust_to(-rand(20, 40), 10)
+				owner.stamina.pause(STAMINA_REGEN_TIME * 2) // pause for longer than usual
 
 /datum/status_effect/awed/get_examine_text()
 	return span_warning("[owner.p_They()] seem[owner.p_s()] distracted and unfocused.")
