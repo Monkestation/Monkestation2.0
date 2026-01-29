@@ -138,7 +138,7 @@ GLOBAL_LIST(antag_token_config)
 		)),
 		MEDIUM_THREAT = init_antag_list(list(
 			/datum/antagonist/heretic,
-			/datum/antagonist/bloodsucker,
+			/datum/antagonist/vampire,
 			/datum/antagonist/changeling,
 			/datum/antagonist/cortical_borer/hivemind,
 		)),

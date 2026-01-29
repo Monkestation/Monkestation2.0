@@ -67,7 +67,7 @@
 		blooddeficiency?.lose_blood(slime, seconds_per_tick)
 
 	if(slime.blood_volume < BLOOD_VOLUME_OKAY)
-		if(SPT_PROB(2.5, seconds_per_tick))
+		if(SPT_PROB(2.5, seconds_per_tick) && !IS_VAMPIRE(slime)) // don't spam vampires
 			to_chat(slime, span_danger("You feel drained!"))
 
 	if(slime.blood_volume < BLOOD_VOLUME_BAD)

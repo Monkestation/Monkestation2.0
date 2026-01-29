@@ -107,7 +107,7 @@
 	. = ..()
 	if(HAS_TRAIT(slime, TRAIT_GODMODE) || slime.blood_volume <= 0)
 		return
-	if(!HAS_TRAIT(slime, TRAIT_NOHUNGER) && slime.nutrition <= NUTRITION_LEVEL_HUNGRY && !IS_BLOODSUCKER(slime)) // bloodsuckers have snowflake nutrition handling
+	if(!HAS_TRAIT(slime, TRAIT_NOHUNGER) && slime.nutrition <= NUTRITION_LEVEL_HUNGRY && !IS_VAMPIRE(slime)) // vampires have snowflake nutrition handling
 		spec_slime_hunger(slime, seconds_per_tick)
 	if(!HAS_TRAIT(slime, TRAIT_SLIME_HYDROPHOBIA))
 		spec_slime_wetness(slime, seconds_per_tick)
@@ -136,7 +136,7 @@
 		var/obj/item/organ/internal/stomach/golgi_thing = slime.get_organ_slot(ORGAN_SLOT_STOMACH)
 		if(golgi_thing?.reagents?.has_reagent(/datum/reagent/consumable/nutriment))
 			eating = TRUE
-	// don't bother with using remove_blood_volume as this doesn't proc for bloodsuckers anyways
+	// don't bother with using remove_blood_volume as this doesn't proc for vampires anyways
 	if(slime.nutrition <= NUTRITION_LEVEL_STARVING)
 		if(!eating)
 			slime.blood_volume = max(slime.blood_volume - (4 * seconds_per_tick), 0)
@@ -152,13 +152,13 @@
 			slime.balloon_alert(slime, "you're pretty hungry...")
 			COOLDOWN_START(src, starvation_alert_cooldown, 10 SECONDS)
 
-/// Stupid workaround proc so that bloodsucker oozelings also have their blood volume removed
+/// Stupid workaround proc so that vampire oozelings also have their blood volume removed
 /datum/species/oozeling/proc/remove_blood_volume(mob/living/carbon/human/slime, amount)
 	if(!IS_FINITE(amount))
 		CRASH("Tried to remove non-finite amount of blood from an oozeling")
-	var/datum/antagonist/bloodsucker/slimesucker = IS_BLOODSUCKER(slime)
+	var/datum/antagonist/vampire/slimesucker = IS_VAMPIRE(slime)
 	if(slimesucker)
-		slimesucker.AddBloodVolume(-amount)
+		slimesucker.adjust_blood_volume(-amount)
 	else
 		slime.blood_volume = max(slime.blood_volume - amount, 0)
 

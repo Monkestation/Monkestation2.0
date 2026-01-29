@@ -441,6 +441,8 @@
 			effect_coggers(target, user)
 		else if(target.can_block_magic(MAGIC_RESISTANCE | MAGIC_RESISTANCE_HOLY))
 			effect_magic_resist(target, user)
+		else if(IS_VAMPIRE(target))
+			effect_vampire(target, user)
 		else if(target.get_drunk_amount() >= OLD_MAN_HENDERSON_DRUNKENNESS)
 			effect_henderson(target, user)
 		else if(HAS_TRAIT(target, TRAIT_MINDSHIELD) || HAS_MIND_TRAIT(target, TRAIT_OCCULTIST) || HAS_MIND_TRAIT(target, TRAIT_UNCONVERTABLE) || cult_team.cult_ascendent || cult_team.is_sacrifice_target(target.mind))
@@ -503,6 +505,34 @@
 		carbon_target.adjust_stutter(30 SECONDS)
 		carbon_target.adjust_timed_status_effect(30 SECONDS, /datum/status_effect/speech/slurring/cult)
 		carbon_target.set_jitter_if_lower(30 SECONDS)
+
+/obj/item/melee/blood_magic/stun/proc/effect_vampire(mob/living/target, mob/living/carbon/user)
+	to_chat(user, span_userdanger("The spell violently reacts with [target], releasing a large burst of sanguine energy!"), type = MESSAGE_TYPE_COMBAT)
+	to_chat(target, span_userdanger("You're flung back by a violent burst of sanguine energy, as [target] attempts to hit you with ") + span_cultlarge("the blood of the Traitor!"), type = MESSAGE_TYPE_COMBAT)
+	target.visible_message(
+		span_warning("[user] and [target] are violently flung back by a burst of sanguine energy!"),
+		ignored_mobs = list(user, target),
+	)
+
+	// deactivate any active powers, to ensure the vampire can experience the full force of being flung away at mach fuck
+	var/datum/antagonist/vampire/vampire_datum = IS_VAMPIRE(target)
+	vampire_datum.disable_all_powers(forced = TRUE)
+
+	// ensure they're not buckled to anything, you are NOT escaping this bullshit
+	user.buckled?.unbuckle_mob(user, force = TRUE)
+	target.buckled?.unbuckle_mob(target, force = TRUE)
+
+	playsound(user, 'sound/magic/demon_dies.ogg', vol = 100, vary = TRUE)
+	var/turf/user_turf = get_turf(user)
+	var/turf/target_turf = get_turf(target)
+
+	// CLASH!
+	user.blood_particles(10, get_angle(target, user))
+	target.blood_particles(10, get_angle(user, target))
+
+	// this is gonna hurt for the both of them.
+	user.throw_at(get_edge_target_turf(user_turf, get_dir(target_turf, user_turf)), range = 200, speed = 5)
+	target.throw_at(get_edge_target_turf(target_turf, get_dir(user_turf, target_turf)), range = 200, speed = 5)
 
 // If this is gonna be a snowflake touch spell despite not being an actual touch spell, then we get to have snowflake code to ensure it behaves like it should.
 /obj/item/melee/blood_magic/stun/proc/snowflake_martial_arts_handler(mob/living/target, mob/living/carbon/user)

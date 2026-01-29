@@ -1295,7 +1295,7 @@
 	if(old_value)
 		if(!handcuffed)
 
-			if (istype(old_value, /obj/item/restraints/handcuffs/silver) && IS_BLOODSUCKER_OR_VASSAL(src))
+			if(istype(old_value, /obj/item/restraints/handcuffs/silver) && HAS_MIND_TRAIT(src, TRAIT_VAMPIRE_ALIGNED))
 				src.remove_status_effect(/datum/status_effect/silver_cuffed)
 
 			REMOVE_TRAIT(src, TRAIT_RESTRAINED, HANDCUFFED_TRAIT)

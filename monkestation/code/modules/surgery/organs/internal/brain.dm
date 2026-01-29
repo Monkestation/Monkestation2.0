@@ -190,13 +190,19 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 		return NONE
 	if(DOING_INTERACTION_WITH_TARGET(user, src))
 		return ITEM_INTERACT_BLOCKING
+	if(HAS_TRAIT(src, TRAIT_BEINGSTAKED))
+		balloon_alert(user, "already being staked!")
+		return ITEM_INTERACT_BLOCKING
 	playsound(user, 'sound/magic/Demon_consume.ogg', vol = 50, vary = TRUE)
 	user.balloon_alert_to_viewers("staking core...")
+	ADD_TRAIT(src, TRAIT_BEINGSTAKED, REF(user))
 	if(!do_after(user, stake.staketime, src) || QDELETED(src) || QDELETED(stake))
+		REMOVE_TRAIT(src, TRAIT_BEINGSTAKED, REF(user))
 		return ITEM_INTERACT_BLOCKING
+	REMOVE_TRAIT(src, TRAIT_BEINGSTAKED, REF(user))
 	user.balloon_alert_to_viewers("staked core!")
-	var/datum/antagonist/bloodsucker/bloodsucker_datum = IS_BLOODSUCKER(src)
-	if(bloodsucker_datum)
+	var/datum/antagonist/vampire/vampire_datum = IS_VAMPIRE(src)
+	if(vampire_datum)
 		playsound(get_turf(src), 'sound/effects/tendril_destroyed.ogg', vol = 40, vary = TRUE)
 		user.visible_message(
 			span_danger("[user] drives \the [stake] into [src], causing it to rapidly dissolve. A hollow cry wails from the rapidly melting core."),
@@ -205,7 +211,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 		)
 		to_chat(brainmob, span_userdanger("Your soul escapes your melting core as the abyss welcomes you to your Final Death."))
 		drop_items_to_ground(drop_location())
-		bloodsucker_datum.final_death(skip_destruction = TRUE)
+		vampire_datum.final_death(skip_destruction = TRUE)
 		qdel(src)
 	else
 		playsound(get_turf(src), 'sound/effects/wounds/crackandbleed.ogg', vol = 80, vary = TRUE)
@@ -303,13 +309,6 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 				target_ling.oozeling_revives--
 				to_chat(brainmob, span_changeling("You begin gathering your energy. You will revive in 30 seconds."))
 				addtimer(CALLBACK(src, PROC_REF(rebuild_body), null, FALSE, POLICY_ANTAGONISTIC_REVIVAL), 30 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_DELETE_ME)
-
-		if(IS_BLOODSUCKER(brainmob))
-			var/datum/antagonist/bloodsucker/target_bloodsucker = brainmob.mind.has_antag_datum(/datum/antagonist/bloodsucker)
-			if(target_bloodsucker.bloodsucker_blood_volume >= OOZELING_MIN_REVIVE_BLOOD_THRESHOLD)
-				to_chat(brainmob, span_notice("You begin recollecting yourself. You will rise again in 3 minutes."))
-				addtimer(CALLBACK(target_bloodsucker, TYPE_PROC_REF(/datum/antagonist/bloodsucker, oozeling_revive), src), 180 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_DELETE_ME)
-				target_bloodsucker.bloodsucker_blood_volume -= (OOZELING_MIN_REVIVE_BLOOD_THRESHOLD * 0.5)
 
 	if(stored_dna)
 		rebuilt = FALSE

@@ -1,3 +1,5 @@
+// shitty workaround for a merge conflict
+#if 0
 /**
  *	# Assigning Sol
  *
@@ -113,3 +115,4 @@
 	current.pain_controller?.remove_all_pain()
 	current.update_stat()
 	SEND_SIGNAL(src, COMSIG_BLOODSUCKER_EXIT_TORPOR)
+#endif

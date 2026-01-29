@@ -717,6 +717,21 @@ h2.alert {
   font-size: 185%;
 }
 
+.awe {
+  color: hsl(240, 100%, 30%);
+  animation: awe_glow 2s ease-in-out infinite;
+}
+
+@keyframes awe_glow {
+  0%,
+  100% {
+    text-shadow: 0 0 8px rgb(255, 131, 197);
+  }
+  50% {
+    text-shadow: 0 0 16px rgb(255, 0, 136);
+  }
+}
+
 .deconversion_message {
   color: hsl(270, 100%, 31.4%);
   font-size: 185%;

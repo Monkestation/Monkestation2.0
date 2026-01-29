@@ -3,7 +3,7 @@ import { multiline } from 'common/string';
 
 const VampiricAccident: Antagonist = {
   key: 'vampiricaccident',
-  name: 'Bloodsucker (Midround)',
+  name: 'Vampiric Accident',
   description: [
     multiline`
       After your death, you awaken to see yourself as an undead monster.

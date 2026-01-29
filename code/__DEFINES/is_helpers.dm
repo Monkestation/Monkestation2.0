@@ -106,7 +106,7 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 #define isoni(A) (is_species(A, /datum/species/oni)) //Monkestation Addition
 #define ismoth(A) (is_species(A, /datum/species/moth))
 #define isethereal(A) (is_species(A, /datum/species/ethereal))
-#define isvampire(A) (is_species(A,/datum/species/vampire))
+#define islesservampire(A) (is_species(A,/datum/species/lesser_vampire))
 #define iswerewolf(A) (is_species(A,/datum/species/werewolf))
 #define isdullahan(A) (is_species(A, /datum/species/dullahan))
 #define ismonkey(A) (is_species(A, /datum/species/monkey))

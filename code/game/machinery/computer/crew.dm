@@ -286,7 +286,11 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 
 		// Current status
 		if (sensor_mode >= SENSOR_LIVING)
-			entry["life_status"] = tracked_living_mob.stat
+			// snowflake check bc i'm a lazy bastard
+			if(tracked_living_mob.stat == UNCONSCIOUS && tracked_living_mob.health > tracked_living_mob.crit_threshold)
+				entry["life_status"] = CONSCIOUS
+			else
+				entry["life_status"] = tracked_living_mob.stat
 
 		// Damage
 		if (sensor_mode >= SENSOR_VITALS)

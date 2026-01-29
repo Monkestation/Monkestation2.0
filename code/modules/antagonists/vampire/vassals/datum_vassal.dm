@@ -1,0 +1,230 @@
+/datum/antagonist/vassal
+	name = "\improper Vassal"
+	roundend_category = "Vassal"
+	antagpanel_category = "Vampire"
+	job_rank = ROLE_VAMPIRE
+	show_in_roundend = FALSE
+	hud_icon = 'icons/vampires/antag_hud.dmi'
+	antag_hud_name = "vassal"
+	antag_count_points = 2
+	stinger_sound = 'sound/magic/mutate.ogg'
+
+	/// The Master Vampire's antag datum.
+	var/datum/antagonist/vampire/master
+	/// The Vampire's team
+	var/datum/team/vampire/vampire_team
+	/// List of Powers, like Vampires.
+	var/list/datum/action/powers = list()
+	/// A link to our team monitor, used to track our master.
+	var/datum/component/team_monitor/monitor
+
+/datum/antagonist/vassal/antag_panel_data()
+	return "Master : [master.owner.name]"
+
+/datum/antagonist/vassal/apply_innate_effects(mob/living/mob_override)
+	. = ..()
+	var/mob/living/current_mob = mob_override || owner.current
+
+	RegisterSignal(current_mob, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(current_mob, COMSIG_MOB_LOGIN, PROC_REF(on_login))
+
+	// HUD
+	add_team_hud(current_mob)
+
+	// Tracking
+	setup_monitor(current_mob)
+	current_mob.grant_language(/datum/language/vampiric, source = LANGUAGE_VASSAL)
+
+	current_mob.faction += FACTION_VAMPIRE
+
+/datum/antagonist/vassal/remove_innate_effects(mob/living/mob_override)
+	. = ..()
+	var/mob/living/current_mob = mob_override || owner.current
+
+	UnregisterSignal(current_mob, list(COMSIG_ATOM_EXAMINE, COMSIG_MOB_LOGIN))
+
+	// Tracking
+	QDEL_NULL(monitor)
+	current_mob.remove_language(/datum/language/vampiric, source = LANGUAGE_VASSAL)
+
+	// Remove traits
+	REMOVE_TRAITS_IN(current_mob, TRAIT_VAMPIRE)
+	current_mob.faction -= FACTION_VAMPIRE
+
+/datum/antagonist/vassal/on_gain()
+	. = ..()
+	if(!master)
+		owner.remove_antag_datum(src)
+		CRASH("[owner.current] was vassilized without a master!")
+
+	ADD_TRAIT(owner, TRAIT_VAMPIRE_ALIGNED, REF(src))
+
+	vampire_team = master.vampire_team
+	vampire_team.add_member(owner)
+
+	if(!owner.special_role)
+		owner.special_role = "Vassal"
+
+	// Enslave them to their Master
+	master.vassals |= src
+	owner.enslave_mind_to_creator(master.owner.current)
+	owner.current.log_message("has been vassalized by [master.owner.name]!", LOG_ATTACK, color="#960000")
+
+	// Give powers
+	grant_power(new /datum/action/cooldown/vampire/recuperate)
+	grant_power(new /datum/action/cooldown/vampire/distress)
+
+	// Give objectives
+	forge_objectives()
+
+/datum/antagonist/vassal/on_removal()
+	REMOVE_TRAIT(owner, TRAIT_VAMPIRE_ALIGNED, REF(src))
+
+	if(owner.special_role == "Vassal")
+		owner.special_role = null
+
+	// Free them from their Master
+	if(master)
+		master.vassals -= src
+		owner.enslaved_to = null
+
+	vampire_team.remove_member(owner)
+	vampire_team = null
+
+	// Remove powers
+	for(var/datum/action/cooldown/vampire/power in powers)
+		powers -= power
+		power.Remove(owner.current)
+
+	return ..()
+
+/datum/antagonist/vassal/on_body_transfer(mob/living/old_body, mob/living/new_body)
+	. = ..()
+	for(var/datum/action/cooldown/vampire/power in powers)
+		power.Remove(old_body)
+		power.Grant(new_body)
+
+/datum/antagonist/vassal/after_body_transfer(mob/living/old_body, mob/living/new_body)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/antagonist, add_team_hud), new_body), 0.5 SECONDS, TIMER_OVERRIDE | TIMER_UNIQUE) //i don't trust this to not act weird
+
+/datum/antagonist/vassal/greet()
+	var/mob/living/living_vassal = owner.current
+	var/mob/living/living_master = master.owner.current
+
+	// Alert vassal
+	var/list/msg = list()
+	msg += span_cultlarge("You are now the mortal servant of [master.owner.name], a Vampire!")
+	msg += span_cult("You are not required to obey any other Vampire, for only [master.owner.name] is your master. The laws of Nanotrasen do not apply to you now; only your Master's word must be obeyed.")
+	to_chat(living_vassal, boxed_message(msg.Join("\n")))
+
+	play_stinger()
+
+	antag_memory += "You are the mortal servant of <b>[master.owner.name]</b>, a vampire!<br>"
+
+	// Alert master
+	to_chat(living_master, span_userdanger("[living_vassal] has become addicted to your immortal blood. [living_vassal.p_They()] [living_vassal.p_are()] now your undying servant"))
+	living_master.playsound_local(null, 'sound/magic/mutate.ogg', 100, FALSE, pressure_affected = FALSE)
+
+/datum/antagonist/vassal/farewell()
+	if(silent)
+		return
+
+	owner.current.visible_message(
+		span_deconversion_message("[owner.current]'s eyes dart feverishly from side to side, and then stop. [owner.current.p_They()] seem[owner.current.p_s()] calm, \
+			like [owner.current.p_they()] [owner.current.p_have()] regained some lost part of [owner.current.p_them()]self."),
+		span_deconversion_message("With a snap, you are no longer enslaved to [master.owner]! You breathe in heavily, having regained your free will, albeit the memories of your time serving them feel like a vague fever dream...")
+	)
+	owner.current.playsound_local(null, 'sound/magic/mutate.ogg', 100, FALSE, pressure_affected = FALSE)
+
+	// Alert master
+	if(master.owner)
+		to_chat(master.owner, span_cultbold("You feel the bond with your vassal [owner.name] has somehow been broken!"))
+
+/datum/antagonist/vassal/on_mindshield(mob/implanter, mob/living/mob_override)
+	var/mob/living/target = mob_override || owner.current
+	target.log_message("has been deconverted from Vassalization by [key_name(implanter)]!", LOG_ATTACK, color="#960000")
+	owner.remove_antag_datum(/datum/antagonist/vassal)
+	return COMPONENT_MINDSHIELD_DECONVERTED
+
+/datum/antagonist/vassal/proc/on_login()
+	SIGNAL_HANDLER
+	var/mob/living/current = owner.current
+	if(!QDELETED(current))
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/antagonist, add_team_hud), current), 0.5 SECONDS, TIMER_OVERRIDE | TIMER_UNIQUE) //i don't trust this to not act weird
+
+/datum/antagonist/vassal/admin_add(datum/mind/new_owner, mob/admin)
+	var/list/datum/mind/possible_vampires = list()
+
+	// Get possible vampires
+	for(var/datum/antagonist/vampire/vampire in GLOB.antagonists)
+		var/datum/mind/vampire_mind = vampire.owner
+		if(QDELETED(vampire_mind?.current) || vampire_mind.current.stat == DEAD)
+			continue
+
+		possible_vampires += vampire_mind
+
+	if(!length(possible_vampires))
+		return
+
+	// CHOOSE A DAMN PERSON
+	var/datum/mind/choice = tgui_input_list(admin, "Which vampire should this vassal belong to?", "Vampire", possible_vampires)
+	if(!choice)
+		return
+
+	log_admin("[key_name_admin(usr)] turned [key_name_admin(new_owner)] into a vassal of [key_name_admin(choice)]!")
+	var/datum/antagonist/vampire/vampire = IS_VAMPIRE(choice.current)
+	master = vampire
+	new_owner.add_antag_datum(src)
+
+	to_chat(choice, span_notice("Through divine intervention, you've gained a new vassal!"))
+
+/datum/antagonist/vassal/forge_objectives()
+	var/datum/objective/vampire/vassal/vassal_objective = new
+	vassal_objective.owner = owner
+	objectives += vassal_objective
+
+/datum/antagonist/vassal/add_team_hud(mob/target)
+	QDEL_NULL(team_hud_ref)
+
+	var/datum/atom_hud/alternate_appearance/basic/has_antagonist/hud = target.add_alt_appearance(
+		/datum/atom_hud/alternate_appearance/basic/has_antagonist,
+		"antag_team_hud_[REF(src)]",
+		hud_image_on(target),
+	)
+	team_hud_ref = WEAKREF(hud)
+
+	var/list/mob/living/mob_list = list()
+	for(var/datum/antagonist/antag as anything in GLOB.antagonists)
+		if(!istype(antag, /datum/antagonist/vampire) && !istype(antag, /datum/antagonist/vassal))
+			continue
+		var/mob/living/current = antag.owner?.current
+		if(!QDELETED(current))
+			mob_list |= current
+
+	for (var/datum/atom_hud/alternate_appearance/basic/has_antagonist/antag_hud as anything in GLOB.has_antagonist_huds)
+		if(!(antag_hud.target in mob_list))
+			continue
+		antag_hud.show_to(target)
+		hud.show_to(antag_hud.target)
+
+/datum/antagonist/vassal/proc/setup_monitor(mob/target)
+	QDEL_NULL(monitor)
+	if(QDELETED(master?.owner?.current) || QDELETED(master.tracker))
+		return
+
+	monitor = target.AddComponent(/datum/component/team_monitor, REF(master))
+	monitor.add_to_tracking_network(master.tracker.tracking_beacon)
+	monitor.show_hud(target)
+
+/datum/antagonist/vassal/proc/on_examine(datum/source, mob/examiner, list/examine_text)
+	SIGNAL_HANDLER
+
+	var/text = "<img class='icon' src='\ref['icons/vampires/vampiric.dmi']?state=vassal'> "
+
+	var/datum/antagonist/vampire/vampiredatum = IS_VAMPIRE(examiner)
+	if(src in vampiredatum?.vassals)
+		text += span_cult("<EM>This is your vassal!</EM>")
+		examine_text += text
+	else if(vampiredatum || (master?.broke_masquerade && IS_VAMPIRE_HUNTER(examiner)) || IS_VASSAL(examiner))
+		text += span_cult("<EM>This is [master.return_full_name()]'s vassal</EM>")
+		examine_text += text

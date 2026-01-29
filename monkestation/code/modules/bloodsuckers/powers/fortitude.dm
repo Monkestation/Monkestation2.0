@@ -1,3 +1,5 @@
+// shitty workaround for a merge conflict
+#if 0
 /datum/action/cooldown/bloodsucker/fortitude
 	name = "Fortitude"
 	desc = "Withstand egregious physical wounds and walk away from attacks that would stun, pierce, and dismember lesser beings."
@@ -83,3 +85,4 @@
 	icon_ref = null
 
 	return ..()
+#endif
