@@ -239,7 +239,7 @@
 
 /obj/machinery/flatpacker/Destroy()
 	QDEL_NULL(inserted_board)
-	. = ..()
+	return ..()
 
 /obj/item/flatpack
 	name = "flatpack"
