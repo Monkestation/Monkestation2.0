@@ -507,8 +507,8 @@
 		carbon_target.set_jitter_if_lower(30 SECONDS)
 
 /obj/item/melee/blood_magic/stun/proc/effect_vampire(mob/living/target, mob/living/carbon/user)
-	to_chat(user, span_userdanger("The spell violently reacts with [target], releasing a large burst of sanguine energy!"), type = MESSAGE_TYPE_WARNING)
-	to_chat(target, span_userdanger("You're flung back by a violent burst of sanguine energy, as [target] attempts to hit you with ") + span_cultlarge("the blood of the Traitor!"), type = MESSAGE_TYPE_WARNING)
+	to_chat(user, span_userdanger("The spell violently reacts with [target], releasing a large burst of sanguine energy!"), type = MESSAGE_TYPE_COMBAT)
+	to_chat(target, span_userdanger("You're flung back by a violent burst of sanguine energy, as [target] attempts to hit you with ") + span_cultlarge("the blood of the Traitor!"), type = MESSAGE_TYPE_COMBAT)
 	target.visible_message(
 		span_warning("[user] and [target] are violently flung back by a burst of sanguine energy!"),
 		ignored_mobs = list(user, target),
