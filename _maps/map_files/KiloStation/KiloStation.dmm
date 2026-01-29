@@ -21778,7 +21778,7 @@
 /area/station/hallway/primary/central/fore)
 "gOT" = (
 /obj/structure/table,
-/obj/item/tank/internals/oxygen/red,
+/obj/item/tank/internals/oxygen/yellow,
 /obj/item/clothing/mask/gas,
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 4
@@ -22831,7 +22831,7 @@
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
-/obj/item/tank/internals/oxygen/red,
+/obj/item/tank/internals/oxygen/yellow,
 /obj/item/stack/package_wrap,
 /obj/item/clothing/mask/gas,
 /turf/open/floor/plating,
@@ -50214,7 +50214,7 @@
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
-/obj/item/tank/internals/oxygen/red,
+/obj/item/tank/internals/oxygen/yellow,
 /obj/item/clothing/mask/breath,
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
@@ -52509,7 +52509,7 @@
 /obj/structure/extinguisher_cabinet/directional/east,
 /obj/item/storage/box/lights/bulbs,
 /obj/machinery/firealarm/directional/south,
-/obj/item/tank/internals/oxygen/red,
+/obj/item/tank/internals/oxygen/yellow,
 /obj/item/clothing/mask/gas,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
@@ -63491,10 +63491,10 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /obj/structure/closet/crate/preopen,
-/obj/item/tank/internals/oxygen/red{
+/obj/item/tank/internals/oxygen/yellow{
 	pixel_x = 4
 	},
-/obj/item/tank/internals/oxygen/red{
+/obj/item/tank/internals/oxygen/yellow{
 	pixel_x = -4
 	},
 /obj/item/wrench,

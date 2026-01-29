@@ -30,10 +30,7 @@
 	if(!isnull(mask_type))
 		new mask_type(src)
 
-	if(!isplasmaman(loc))
-		new internal_type(src)
-	else
-		new /obj/item/tank/internals/plasmaman/belt(src)
+	give_internals()
 
 	if(!isnull(medipen_type))
 		new medipen_type(src)
@@ -45,18 +42,33 @@
 	if(SSmapping.is_planetary() && LAZYLEN(SSmapping.multiz_levels))
 		new /obj/item/climbing_hook/emergency(src)
 
+/obj/item/storage/box/survival/proc/give_internals()
+	if(isplasmaman(loc))
+		return new /obj/item/tank/internals/plasmaman/belt(src)
+
+	if(isoozeling(loc))
+		return new /obj/item/tank/internals/emergency_oxygen/emergency_nitrogen(src)
+
+	return new internal_type(src)
+
 /obj/item/storage/box/survival/radio/PopulateContents()
 	..() // we want the survival stuff too.
 	new /obj/item/radio/off(src)
 
 /obj/item/storage/box/survival/proc/wardrobe_removal()
-	if(!isplasmaman(loc)) //We need to specially fill the box with plasmaman gear, since it's intended for one
+	if(isplasmaman(loc)) //We need to specially fill the box with plasmaman gear, since it's intended for one
+		var/obj/item/mask = locate(mask_type) in src
+		var/obj/item/internals = locate(internal_type) in src
+		give_internals()
+		qdel(mask) // Get rid of the items that shouldn't be
+		qdel(internals)
 		return
-	var/obj/item/mask = locate(mask_type) in src
-	var/obj/item/internals = locate(internal_type) in src
-	new /obj/item/tank/internals/plasmaman/belt(src)
-	qdel(mask) // Get rid of the items that shouldn't be
-	qdel(internals)
+
+	if(isoozeling(loc)) //We need to specially fill the box with nitrogen for oozelings, since it's intended for one
+		var/obj/item/internals = locate(internal_type) in src
+		give_internals()
+		qdel(internals)
+		return
 
 // Mining survival box
 /obj/item/storage/box/survival/mining
@@ -74,6 +86,15 @@
 	illustration = "extendedtank"
 	internal_type = /obj/item/tank/internals/emergency_oxygen/engi
 
+/obj/item/storage/box/survival/engineer/give_internals()
+	if(isplasmaman(loc))
+		return new /obj/item/tank/internals/plasmaman/belt(src)
+
+	if(isoozeling(loc))
+		return new /obj/item/tank/internals/emergency_oxygen/emergency_nitrogen/engi(src)
+
+	return new internal_type(src)
+
 /obj/item/storage/box/survival/engineer/radio/PopulateContents()
 	..() // we want the regular items too.
 	new /obj/item/radio/off(src)
@@ -87,6 +108,16 @@
 	mask_type = /obj/item/clothing/mask/gas/syndicate
 	internal_type = /obj/item/tank/internals/emergency_oxygen/engi
 	medipen_type =  /obj/item/reagent_containers/hypospray/medipen/atropine
+
+/obj/item/storage/box/survival/syndie/give_internals()
+	if(isplasmaman(loc))
+		return new /obj/item/tank/internals/plasmaman/belt(src)
+
+	if(isoozeling(loc))
+		return new /obj/item/tank/internals/emergency_oxygen/emergency_nitrogen/engi(src)
+
+	return new internal_type(src)
+
 
 /obj/item/storage/box/survival/syndie/PopulateContents()
 	..()
@@ -127,9 +158,10 @@
 /obj/item/storage/box/survival/security
 	mask_type = /obj/item/clothing/mask/gas/sechailer
 
-/obj/item/storage/box/survival/security/PopulateContents() //monkestation edit
+/obj/item/storage/box/survival/security/PopulateContents()
 	..() // we want the regular stuff too
-	new /obj/item/radio/off(src)
+	if(!HAS_TRAIT(SSstation, STATION_TRAIT_PREMIUM_INTERNALS))
+		new /obj/item/radio/off(src)
 
 // Medical survival box
 /obj/item/storage/box/survival/medical

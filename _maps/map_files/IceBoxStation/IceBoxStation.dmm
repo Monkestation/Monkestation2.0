@@ -75158,7 +75158,7 @@
 /turf/open/floor/iron/white/smooth_large,
 /area/station/service/kitchen)
 "wZZ" = (
-/obj/structure/tank_holder/oxygen/red,
+/obj/structure/tank_holder/oxygen/yellow,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "xad" = (

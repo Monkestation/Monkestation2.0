@@ -38154,7 +38154,7 @@
 "mld" = (
 /obj/effect/spawner/random/structure/table_or_rack,
 /obj/item/extinguisher,
-/obj/item/tank/internals/oxygen/red,
+/obj/item/tank/internals/oxygen/yellow,
 /obj/item/clothing/mask/gas,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
@@ -66002,11 +66002,11 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/extinguisher_cabinet/directional/west,
 /obj/structure/closet/crate,
-/obj/item/tank/internals/oxygen/red{
+/obj/item/tank/internals/oxygen/yellow{
 	pixel_x = -4;
 	pixel_y = -1
 	},
-/obj/item/tank/internals/oxygen/red{
+/obj/item/tank/internals/oxygen/yellow{
 	pixel_x = -4;
 	pixel_y = -1
 	},

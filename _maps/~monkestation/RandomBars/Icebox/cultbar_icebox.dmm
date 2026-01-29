@@ -936,7 +936,7 @@
 /obj/machinery/suit_storage_unit/open,
 /obj/item/clothing/suit/hooded/cultrobes/hardened,
 /obj/item/clothing/shoes/cult/alt,
-/obj/item/tank/internals/oxygen/red,
+/obj/item/tank/internals/oxygen/yellow,
 /obj/item/clothing/mask/breath,
 /turf/open/floor/cult,
 /area/station/service/bar/backroom)
