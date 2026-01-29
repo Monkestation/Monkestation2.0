@@ -11,7 +11,7 @@
 	if(!istype(wearer) || !(wearer.dna.species.bodytype & BODYTYPE_DIGITIGRADE))
 		return
 
-	var/static/list/icon/masks_and_shading
+	var/static/list/masks_and_shading
 	if(isnull(masks_and_shading))
 		masks_and_shading = list(
 			"[NORTH]" = list(

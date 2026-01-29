@@ -224,6 +224,7 @@
 	lid_x = -26
 	lid_y = 2
 	paint_jobs = null
+	can_weld_shut = FALSE
 
 /obj/structure/closet/crate/mail/update_icon_state()
 	. = ..()

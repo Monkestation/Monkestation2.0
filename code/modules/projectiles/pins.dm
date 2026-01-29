@@ -432,12 +432,15 @@
 /obj/item/firing_pin/cargo //Firing pin for use in cargo only
 	name = "cargo-locked firing pin"
 	desc = "A firing pin that scans the area to check if it is within the station's cargo bay or warehouse before firing."
-	fail_message = "Area check failed"
+	fail_message = "area check failed"
 	var/list/station_cargo = list(
 		/area/station/cargo/warehouse,
 		/area/station/cargo/storage,
 		/area/station/cargo/office,
 		/area/station/cargo/sorting,
+		/area/station/cargo/quartermaster,
+		/area/station/cargo/lobby,
+		/area/station/cargo/drone_bay,
 		)
 
 //Checks to see if the user in cargo or it's warehouse

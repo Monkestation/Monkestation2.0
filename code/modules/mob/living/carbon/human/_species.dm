@@ -511,9 +511,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	// Drop the items the new species can't wear
 	SEND_SIGNAL(C, COMSIG_SPECIES_GAIN_PRE, src, old_species)
 
-	if(C.dna.species.exotic_bloodtype)
-		C.dna.human_blood_type = exotic_bloodtype
-
 	if(C.hud_used)
 		C.hud_used.update_locked_slots()
 
@@ -599,8 +596,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /datum/species/proc/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	SHOULD_CALL_PARENT(TRUE)
 	C.butcher_results = null
-	if(C.dna.species.exotic_bloodtype)
-		C.dna.human_blood_type = random_human_blood_type()
 	for(var/X in inherent_traits)
 		REMOVE_TRAIT(C, X, SPECIES_TRAIT)
 	for(var/obj/item/organ/external/organ in C.organs)
@@ -1286,7 +1281,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				for(var/obj/item/clothing/iter_clothing in target.get_clothing_on_part(affecting))
 					if(!HAS_TRAIT(user, TRAIT_NUTCRACKER))
 						if((iter_clothing.clothing_flags & THICKMATERIAL) || iter_clothing.get_armor_rating(MELEE) >= 15)
-							if(iter_clothing.body_parts_covered & BODY_ZONE_PRECISE_GROIN)
+							if(iter_clothing.body_parts_covered & GROIN)
 								return TRUE
 				target.sharp_pain(BODY_ZONE_CHEST, 25 * ough, BRUTE, 30 SECONDS)
 				user.visible_message(span_warning("[target] gets brutally [atk_verb]ed in the groin! Holy shit!"), self_message=span_warning("You [atk_verb] [target] right in the groin! <b>BRUTAL!</b>"), blind_message=span_warning("You hear a horrific pained screech!"), ignored_mobs=list(target))

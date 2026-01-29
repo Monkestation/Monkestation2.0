@@ -343,7 +343,7 @@
 		. = TRUE
 		mendicant.blood_volume = min(mendicant.blood_volume - round(blood_to_hurtguy, 0.1), BLOOD_VOLUME_MAXIMUM)
 		hurtguy.blood_volume = min(hurtguy.blood_volume + round(blood_to_hurtguy, 0.1), BLOOD_VOLUME_MAXIMUM)
-		if(!(mendicant.dna.human_blood_type in blood.compatible_types))
+		if(!(mendicant.get_blood_type_path() in blood.compatible_types))
 		// MONKESTATION EDIT NEW END
 			hurtguy.adjustToxLoss((blood_to_hurtguy * 0.1) * pain_multiplier) // 1 dmg per 10 blood
 			to_chat(hurtguy, span_notice("Your veins feel thicker, but they itch a bit."))
@@ -370,7 +370,7 @@
 		. = TRUE
 		mendicant.blood_volume = min(mendicant.blood_volume + round(blood_to_mendicant, 0.1), BLOOD_VOLUME_MAXIMUM)
 		hurtguy.blood_volume = min(hurtguy.blood_volume - round(blood_to_mendicant, 0.1), BLOOD_VOLUME_MAXIMUM)
-		if(!(hurtguy.dna.human_blood_type in mendicant_blood.compatible_types))
+		if(!(hurtguy.get_blood_type_path() in mendicant_blood.compatible_types))
 		// MONKESTATION EDIT NEW END
 			mendicant.adjustToxLoss((blood_to_mendicant * 0.1) * pain_multiplier) // 1 dmg per 10 blood
 			to_chat(mendicant, span_notice("Your veins swell and itch!"))

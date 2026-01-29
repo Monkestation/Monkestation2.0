@@ -1,4 +1,5 @@
-/datum/blobstrain/multiplex
+//I think this is meant to allow for use of multiple strains at the same time but its unclear, commenting out for now
+/*/datum/blobstrain/multiplex
 	var/list/blobstrains
 	var/typeshare
 
@@ -37,4 +38,4 @@
 
 /datum/blobstrain/multiplex/emp_reaction(obj/structure/blob/B, severity, coefficient = 1) //when the blob is hit with an emp, do this
 	for (var/datum/blobstrain/bt in blobstrains)
-		. += bt.emp_reaction(B, severity, coefficient*typeshare)
+		. += bt.emp_reaction(B, severity, coefficient*typeshare)*/
