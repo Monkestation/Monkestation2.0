@@ -27,7 +27,8 @@
 	register_context()
 	//Sets up a spark system
 	spark_system = new /datum/effect_system/spark_spread
-	spark_system.set_up(5, 0, src)
+	var/spark_size = (wire_integrity) * 10
+	spark_system.set_up(spark_size, 0, src)
 	spark_system.attach(src)
 
 	if(!length(legal_crafting_recipes))
@@ -129,7 +130,7 @@
 		if(length(crafting_inventory))
 			. += span_notice("The machine's ingredient eject function can be triggered with special [EXAMINE_HINT("tools")].")
 		. += span_notice("The [EXAMINE_HINT("right tools")] could be used to activate the assembler's wiring diagnostic switch.")
-		if(wire_integrity << 2)
+		if(!wire_integrity == 2)
 			. += span_notice("The machine's wires can be [EXAMINE_HINT("cut")].")
 		if(wire_integrity >= 1.4)
 			. += span_notice("The machine's [EXAMINE_HINT("wires")] can be mended.")
@@ -144,6 +145,15 @@
 		if(initial(recipe.non_craftable) || !initial(recipe.always_available))
 			continue
 		legal_crafting_recipes += recipe
+
+/obj/machinery/assembler/attack_hand(mob/living/carbon/user, list/modifiers)
+	if(panel_open)
+		var/zapchance = (wire_integrity-1)*100
+		if(prob(zapchance))
+			spark_system.start()
+			if(ismecha(loc) || user.wearing_shock_proof_gloves() || HAS_TRAIT(user, TRAIT_SHOCKIMMUNE))
+				return
+			user.electrocute_act(10, src, 1, SHOCK_NOGLOVES|SHOCK_SUPPRESS_MESSAGE)
 
 /obj/machinery/assembler/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
@@ -206,8 +216,8 @@
 		return
 	var/cut_wires = (wire_integrity - 1) * 5
 	if(wire_integrity == 1)
-		user.balloon_alert(user, ("Wires intact!"))
-		to_chat(user, span_green("You activate the wiring diagnostic switch. A small light in the assembler inside turns green!"))
+		user.balloon_alert(user, ("wires intact!"))
+		to_chat(user, span_green("You activate the wiring diagnostic switch. A small light in the assembler turns green!"))
 		return ITEM_INTERACT_SUCCESS
 	user.balloon_alert(user, ("[cut_wires] cut wires!"))
 	to_chat(user, span_warning("You activate the wiring diagnostic switch. A small light in the assembler blinks red [wire_integrity == 1.2 ? "once" : "[cut_wires] times"]."))
@@ -485,7 +495,7 @@
 /obj/machinery/assembler/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armour_penetration = 0)
 	. = ..()
 	if(. && atom_integrity > 0) //damage received
-		if(wire_integrity != 2)
+		if(!wire_integrity == 2)
 			if(prob(30))
 				spark_system.start()
 				wire_integrity += 0.2
