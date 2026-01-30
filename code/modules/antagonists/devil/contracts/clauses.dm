@@ -205,7 +205,7 @@
 	desc = "The signer shall receive a sizable amount of funds."
 	cost = 2
 
-/datum/devil_clause/handy/apply(mob/living/carbon/human/victim, first_apply = TRUE)
+/datum/devil_clause/greed/apply(mob/living/carbon/human/victim, first_apply = TRUE)
 	if(first_apply)
 		var/obj/item/stack/spacecash/c10000/cash = new(victim.loc)
 		cash.add(4)
@@ -307,7 +307,8 @@
 	if(organ_count > 1 && istype(picked_organ, /obj/item/organ/internal/brain))
 		organs -= picked_organ
 		picked_organ = pick(organs)
-	qdel(picked_organ)
+	if(picked_organ)
+		qdel(picked_organ)
 
 /datum/devil_clause/greater_leggy
 	name = "Paralyzed legs"
@@ -393,7 +394,7 @@
 			victim.obj_damage = 2
 			victim.melee_attack_cooldown = floor(initial(victim.melee_attack_cooldown) * 0.5)
 		return
-	var/mob/living/basic/frog/frogger = new(victim.loc) // Notice how first_apply isn't used? Get the implication?
+	var/mob/living/basic/frog/frogger = new(victim.loc)
 	victim.mind.transfer_to(frogger)
 	qdel(victim)
 
