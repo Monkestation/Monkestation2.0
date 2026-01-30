@@ -72,9 +72,9 @@
 	acid = 10
 	wound = 10
 
-/obj/item/storage/secure/briefcase/cash
+/obj/item/storage/briefcase/secure/cash
 // LOADSAMONEY
-/obj/item/storage/secure/briefcase/cash/PopulateContents()
+/obj/item/storage/briefcase/secure/cash/PopulateContents()
 	..()
 	for(var/iterator in 1 to 5)
 		new /obj/item/stack/spacecash/c500(src)

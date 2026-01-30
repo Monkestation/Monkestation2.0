@@ -71,7 +71,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 				to_chat(src, span_danger("[msg]"))
 				return
 
-		var/stl = CONFIG_GET(number/second_topic_limit)
+		var/stl = max(CONFIG_GET(number/second_topic_limit), CONFIG_GET(number/tgui_max_chunk_count))
 		if (stl)
 			var/second = round(world.time, 1 SECONDS)
 			if (!topiclimiter)

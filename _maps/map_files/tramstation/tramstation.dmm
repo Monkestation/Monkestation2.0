@@ -6641,6 +6641,11 @@
 	dir = 4
 	},
 /area/station/maintenance/central/greater)
+"aXl" = (
+/obj/structure/sign/clock/directional/west,
+/obj/machinery/cassette_library,
+/turf/open/floor/wood/large,
+/area/station/service/library)
 "aXo" = (
 /obj/structure/punching_bag,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -7771,7 +7776,7 @@
 /area/station/maintenance/department/cargo)
 "bsE" = (
 /obj/structure/table/glass,
-/obj/item/storage/secure/briefcase,
+/obj/item/storage/briefcase/secure,
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/white,
@@ -11816,7 +11821,7 @@
 /area/station/solars/port)
 "cDX" = (
 /obj/structure/table/reinforced,
-/obj/item/storage/secure/briefcase,
+/obj/item/storage/briefcase/secure,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
@@ -14900,7 +14905,7 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/storage/secure/briefcase,
+/obj/item/storage/briefcase/secure,
 /obj/effect/turf_decal/trimline/green/filled/corner,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 9
@@ -18201,6 +18206,13 @@
 /obj/structure/table,
 /turf/open/floor/iron,
 /area/station/commons/dorms)
+"eDJ" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/vehicle/ridden/battering_ram{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/station/ai_monitored/security/armory)
 "eDV" = (
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /obj/effect/decal/cleanable/dirt,
@@ -21882,7 +21894,7 @@
 "fMs" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/table/wood,
-/obj/item/storage/secure/briefcase{
+/obj/item/storage/briefcase/secure{
 	pixel_x = -2;
 	pixel_y = 4
 	},
@@ -33202,11 +33214,11 @@
 "jqd" = (
 /obj/structure/rack,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/storage/secure/briefcase{
+/obj/item/storage/briefcase/secure{
 	pixel_x = -2;
 	pixel_y = 6
 	},
-/obj/item/storage/secure/briefcase,
+/obj/item/storage/briefcase/secure,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/security)
 "jqf" = (
@@ -44989,6 +45001,20 @@
 /obj/machinery/newscaster/directional/north,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai)
+"mZb" = (
+/obj/machinery/door/airlock/multi_tile/public/glass{
+	name = "Elevator Access";
+	normalspeed = 0
+	},
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/caution/stand_clear/white{
+	dir = 1
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron,
+/area/station/security/brig)
 "mZl" = (
 /obj/structure/window/reinforced/spawner/directional/east,
 /mob/living/basic/chicken/brown{
@@ -58877,20 +58903,6 @@
 "rlv" = (
 /turf/open/floor/plating,
 /area/station/construction/mining/aux_base)
-"rlE" = (
-/obj/machinery/door/airlock/glass_large{
-	name = "Elevator Access";
-	normalspeed = 0
-	},
-/obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/caution/stand_clear/white{
-	dir = 1
-	},
-/obj/machinery/door/firedoor,
-/turf/open/floor/iron,
-/area/station/security/brig)
 "rlM" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/firecloset,
@@ -59331,13 +59343,6 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/station/command/heads_quarters/rd)
-"rrM" = (
-/obj/machinery/photocopier{
-	pixel_y = 3
-	},
-/obj/structure/sign/clock/directional/west,
-/turf/open/floor/wood/large,
-/area/station/service/library)
 "rsh" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron/dark,
@@ -62614,7 +62619,7 @@
 /area/station/security/brig)
 "swc" = (
 /obj/structure/table/wood,
-/obj/item/storage/secure/briefcase{
+/obj/item/storage/briefcase/secure{
 	pixel_x = -2;
 	pixel_y = 6
 	},
@@ -70638,7 +70643,7 @@
 	pixel_x = 8;
 	pixel_y = 8
 	},
-/obj/item/storage/secure/briefcase{
+/obj/item/storage/briefcase/secure{
 	pixel_x = -3;
 	pixel_y = 2
 	},
@@ -160437,7 +160442,7 @@ aUh
 mdY
 qnb
 ckM
-rrM
+aXl
 puN
 sqY
 wFq
@@ -162707,7 +162712,7 @@ qkr
 wjT
 stL
 kdr
-rlE
+mZb
 nca
 nca
 yji
@@ -166293,7 +166298,7 @@ sne
 lUo
 hgn
 hgn
-hgn
+eDJ
 dEv
 bwg
 fXP

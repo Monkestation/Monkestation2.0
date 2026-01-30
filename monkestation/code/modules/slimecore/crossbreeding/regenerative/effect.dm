@@ -8,7 +8,7 @@
 	processing_speed = STATUS_EFFECT_PRIORITY
 	/// The damage healed (for each type) per tick.
 	/// This is multipled against the multiplier derived from cooldowns.
-	var/base_healing_amt = 5
+	var/base_healing_amt = 4
 	/// The number multiplied against the base healing amount,
 	/// used for the "diminishing returns" cooldown effect.
 	var/multiplier = 1

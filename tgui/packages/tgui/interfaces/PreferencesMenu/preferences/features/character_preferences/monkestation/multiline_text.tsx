@@ -1,5 +1,9 @@
 import { Box, TextArea } from '../../../../../../components';
-import { Feature, FeatureShortTextData, FeatureValueProps } from '../../base';
+import type {
+  Feature,
+  FeatureShortTextData,
+  FeatureValueProps,
+} from '../../base';
 
 export type FeatureMultiline = Feature<string, string, FeatureShortTextData>;
 export type FeatureMultilineProps = FeatureValueProps<
@@ -22,7 +26,7 @@ export const MultilineText = (
       height={props.box_height || '36px'}
       value={props.value}
       maxLength={props.serverData.maximum_length || 1024}
-      onChange={(new_value) => {
+      onBlur={(new_value) => {
         props.handleSetValue(new_value);
       }}
     />

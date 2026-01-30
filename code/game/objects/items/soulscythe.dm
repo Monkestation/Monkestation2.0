@@ -272,7 +272,7 @@
 
 /mob/living/basic/soulscythe/proc/on_life(datum/source, seconds_per_tick, times_fired) // done like this because there's no need to go through all of life since the item does the work anyways
 	if(stat == CONSCIOUS)
-		blood_volume = min(MAX_BLOOD_LEVEL, blood_volume + round(DELTA_WORLD_TIME(SSmobs), 1))
+		blood_volume = min(MAX_BLOOD_LEVEL, blood_volume + round(DELTA_WORLD_TIME(SSclient_mobs), 1))
 	return COMPONENT_LIVING_CANCEL_LIFE_PROCESSING
 
 /// Special projectile for the soulscythe.

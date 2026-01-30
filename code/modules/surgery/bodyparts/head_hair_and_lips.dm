@@ -2,6 +2,8 @@
 
 /// Part of `update_limb()`, basically does all the head specific icon stuff.
 /obj/item/bodypart/head/proc/update_hair_and_lips(dropping_limb, is_creating)
+	if(!ishuman(owner))
+		return
 	var/mob/living/carbon/human/human_head_owner = owner
 	var/datum/species/owner_species = human_head_owner?.dna.species
 

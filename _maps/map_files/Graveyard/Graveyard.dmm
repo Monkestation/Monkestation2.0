@@ -4661,7 +4661,7 @@
 /area/station/medical/pathology)
 "bMt" = (
 /obj/structure/dresser,
-/obj/item/storage/secure/briefcase{
+/obj/item/storage/briefcase/secure{
 	pixel_x = 3;
 	pixel_y = 5
 	},
@@ -6254,11 +6254,11 @@
 /obj/item/storage/briefcase{
 	pixel_x = -3
 	},
-/obj/item/storage/secure/briefcase{
+/obj/item/storage/briefcase/secure{
 	pixel_x = 2;
 	pixel_y = 2
 	},
-/obj/item/storage/secure/briefcase{
+/obj/item/storage/briefcase/secure{
 	pixel_x = 2;
 	pixel_y = -2
 	},
@@ -14883,7 +14883,6 @@
 /obj/structure/closet/secure_closet/personal/cabinet,
 /obj/item/clothing/under/rank/security/head_of_security,
 /obj/item/clothing/under/rank/security/head_of_security/skirt,
-/obj/item/clothing/under/rank/security/head_of_security/peacekeeper,
 /obj/item/clothing/shoes/jackboots,
 /obj/item/crowbar,
 /obj/machinery/light/directional/west,
@@ -28279,7 +28278,7 @@
 /area/station/command/heads_quarters/rd)
 "kYH" = (
 /obj/structure/safe,
-/obj/item/storage/secure/briefcase/riches,
+/obj/item/storage/briefcase/secure/riches,
 /obj/item/storage/backpack/duffelbag/syndie/hitman,
 /obj/item/card/id/advanced/silver/reaper,
 /obj/item/lazarus_injector,
@@ -30929,6 +30928,13 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
+"lZr" = (
+/obj/effect/turf_decal/tile/dark_red/half,
+/obj/vehicle/ridden/battering_ram{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/textured_edge,
+/area/station/ai_monitored/security/armory)
 "lZx" = (
 /obj/effect/spawner/random/trash/mopbucket,
 /turf/open/floor/plating,
@@ -42870,7 +42876,7 @@
 	dir = 4
 	},
 /obj/structure/table/wood,
-/obj/item/storage/secure/briefcase{
+/obj/item/storage/briefcase/secure{
 	pixel_x = -2;
 	pixel_y = 4
 	},
@@ -50674,7 +50680,7 @@
 	pixel_x = -3;
 	pixel_y = 2
 	},
-/obj/item/storage/secure/briefcase{
+/obj/item/storage/briefcase/secure{
 	pixel_x = 2;
 	pixel_y = -2
 	},
@@ -51688,6 +51694,7 @@
 "uew" = (
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
+/obj/machinery/cassette_library,
 /turf/open/floor/wood,
 /area/station/service/library)
 "uex" = (
@@ -55282,7 +55289,7 @@
 /area/station/science/robotics/mechbay)
 "vzB" = (
 /obj/structure/closet/secure_closet/engineering_chief,
-/obj/item/storage/secure/briefcase,
+/obj/item/storage/briefcase/secure,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/ce)
 "vzD" = (
@@ -181200,7 +181207,7 @@ pPP
 cAX
 bMN
 cAX
-bWB
+lZr
 ikR
 eBO
 xXu

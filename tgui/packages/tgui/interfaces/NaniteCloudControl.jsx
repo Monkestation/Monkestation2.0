@@ -4,16 +4,16 @@ import {
   Box,
   Button,
   Collapsible,
-  Table,
+  Dropdown,
+  Flex,
+  Input,
   LabeledList,
   NoticeBox,
   NumberInput,
   Section,
-  Flex,
-  Tabs,
   Stack,
-  Dropdown,
-  Input,
+  Table,
+  Tabs,
 } from '../components';
 import { Window } from '../layouts';
 
@@ -453,7 +453,7 @@ export const NaniteCloudBackupList = (props) => {
     <Button
       fluid
       key={backup.cloud_id}
-      content={'Backup #' + backup.cloud_id}
+      content={`Backup #${backup.cloud_id}`}
       textAlign="center"
       onClick={() =>
         act('set_view', {
@@ -473,7 +473,7 @@ export const NaniteCloudBackupDetails = (props) => {
   const cloud_programs = data.cloud_programs || [];
   return (
     <Section
-      title={'Backup #' + current_view}
+      title={`Backup #${current_view}`}
       level={2}
       buttons={
         !!has_program && (
@@ -574,7 +574,7 @@ export const NaniteProgramHub = (props) => {
   const { act, data } = useBackend();
   const { detail_view, has_program, programs = {} } = data;
   const [selectedCategory, setSelectedCategory] = useSharedState('category');
-  const programsInCategory = (programs && programs[selectedCategory]) || [];
+  const programsInCategory = programs?.[selectedCategory] || [];
   return (
     <Section
       fill

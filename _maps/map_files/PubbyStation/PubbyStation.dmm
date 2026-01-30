@@ -28338,13 +28338,7 @@
 /turf/open/floor/iron/dark,
 /area/station/service/library)
 "cyT" = (
-/obj/structure/table/wood,
-/obj/item/paper_bin{
-	layer = 2.9;
-	pixel_x = -2;
-	pixel_y = 4
-	},
-/obj/item/pen,
+/obj/machinery/cassette_library,
 /turf/open/floor/iron/dark,
 /area/station/service/library)
 "cyU" = (
@@ -39327,6 +39321,12 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/paramedic)
+"lEA" = (
+/obj/vehicle/ridden/battering_ram{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/station/ai_monitored/security/armory)
 "lFb" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -69700,7 +69700,7 @@ nAF
 aCq
 cAK
 czH
-fYY
+cyT
 eBZ
 cyU
 aaa
@@ -72262,7 +72262,7 @@ aaa
 aaa
 aaa
 cjp
-cyT
+fYY
 cAK
 cyZ
 cAK
@@ -79067,7 +79067,7 @@ hiD
 ajj
 ajT
 aNZ
-afH
+lEA
 amh
 amZ
 anJ

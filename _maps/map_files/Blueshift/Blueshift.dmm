@@ -38909,13 +38909,11 @@
 	},
 /obj/structure/rack,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/item/storage/medkit{
-	pixel_x = 0;
-	pixel_y = -6
-	},
-/obj/item/storage/medkit{
-	pixel_x = 0;
+/obj/item/storage/medkit/regular{
 	pixel_y = 2
+	},
+/obj/item/storage/medkit/regular{
+	pixel_y = -6
 	},
 /turf/open/floor/iron/white/corner{
 	dir = 8
@@ -71115,6 +71113,7 @@
 	dir = 1;
 	name = "Unfiltered to Mix"
 	},
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/pumproom)
 "nLl" = (
@@ -97036,7 +97035,7 @@
 /turf/open/floor/iron,
 /area/station/commons/fitness)
 "sKr" = (
-/obj/structure/bookcase/manuals/engineering,
+/obj/machinery/cassette_library,
 /turf/open/floor/wood,
 /area/station/service/library)
 "sKs" = (
@@ -104009,6 +104008,9 @@
 /area/station/engineering/atmos)
 "tZD" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/vehicle/ridden/battering_ram{
+	dir = 8
+	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/ai_monitored/security/armory)
 "tZU" = (
@@ -106104,6 +106106,7 @@
 	dir = 4
 	},
 /obj/item/radio/intercom/directional/east,
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/pumproom)
 "usM" = (
@@ -109636,10 +109639,7 @@
 /area/station/science/xenobiology)
 "vcz" = (
 /obj/structure/extinguisher_cabinet/directional/south,
-/obj/structure/chair/comfy/brown{
-	color = "#A46106";
-	dir = 8
-	},
+/obj/structure/bookcase/manuals/engineering,
 /turf/open/floor/wood,
 /area/station/service/library)
 "vcA" = (
