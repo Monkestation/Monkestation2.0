@@ -163,17 +163,30 @@
 
 	var/datum/port/input/message
 	var/datum/port/input/clear
+
 	var/datum/port/output/fail_reason
 	var/datum/port/output/on_fail
-
+/*
+	var/datum/port/input/red
+	var/datum/port/input/green
+	var/datum/port/input/blue
+	var/datum/port/input/set_color
+*/
 	var/obj/structure/signboard/holosign/connected_display
 
 /obj/item/circuit_component/holo_signboard/populate_ports()
 	message = add_input_port("Message", PORT_TYPE_STRING)
 	clear = add_input_port("Clear", PORT_TYPE_SIGNAL, trigger = PROC_REF(clear_received))
+
 	fail_reason = add_output_port("Fail Reason", PORT_TYPE_STRING)
 	on_fail = add_output_port("Failed", PORT_TYPE_SIGNAL)
 
+/*
+	red = add_input_port("Red", PORT_TYPE_NUMBER)
+	green = add_input_port("Green", PORT_TYPE_NUMBER)
+	blue = add_input_port("Blue", PORT_TYPE_NUMBER)
+	set_color = add_input_port("Set Color", PORT_TYPE_SIGNAL)
+*/
 /obj/item/circuit_component/holo_signboard/register_usb_parent(atom/movable/shell)
 	. = ..()
 	if(istype(shell, /obj/structure/signboard/holosign))
@@ -204,4 +217,12 @@
 		fail_reason.set_output("Connection refused by external endpoint.")
 		on_fail.set_output(COMPONENT_SIGNAL)
 
+/*
+/obj/item/circuit_component/holo_signboard/proc/color_received(datum/port/input/port)
+	red.set_value(clamp(red.value, 0, 255))
+	blue.set_value(clamp(blue.value, 0, 255))
+	green.set_value(clamp(green.value, 0, 255))
+	var/signboard_color = rgb(red, green, blue)
 
+	connected_display.set_color(signboard_color) //doesnt have a return so no need to check and error
+*/
