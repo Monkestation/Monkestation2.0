@@ -18,6 +18,8 @@
 		CRASH("[src] had attempted to trigger, but failed to find the center turf!")
 
 	for(var/mob/living/mob in range(rand(2, 3), center_turf))
+		if(istype(mob, /mob/living/simple_animal/hostile/megafauna))
+			continue
 		mobs += mob
 	if(!length(mobs))
 		return
