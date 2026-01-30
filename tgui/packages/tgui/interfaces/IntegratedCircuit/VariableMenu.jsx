@@ -1,15 +1,15 @@
-import {
-  Box,
-  Stack,
-  Section,
-  Button,
-  Input,
-  Dropdown,
-  Icon,
-} from '../../components';
-import { Component } from 'react';
 import { shallowDiffers } from 'common/react';
 import { multiline } from 'common/string';
+import { Component } from 'react';
+import {
+  Box,
+  Button,
+  Dropdown,
+  Icon,
+  Input,
+  Section,
+  Stack,
+} from '../../components';
 
 export class VariableMenu extends Component {
   constructor() {

@@ -1,12 +1,12 @@
+import { useBackend } from '../backend';
 import {
-  Button,
-  TextArea,
-  Section,
   BlockQuote,
+  Button,
   NoticeBox,
+  Section,
+  TextArea,
 } from '../components';
 import { Window } from '../layouts';
-import { useBackend } from '../backend';
 
 export const Interview = (props) => {
   const { act, data } = useBackend();
@@ -43,11 +43,11 @@ export const Interview = (props) => {
 
   // Renders any markdown-style links within a provided body of text
   const linkify_text = (text) => {
-    let parts = text.split(link_regex);
+    const parts = text.split(link_regex);
     for (let i = 1; i < parts.length; i += 2) {
       const match = link_decompose_regex.exec(parts[i]);
       parts[i] = (
-        <a key={'link' + i} href={match[2]}>
+        <a key={`link${i}`} href={match[2]}>
           {match[1]}
         </a>
       );

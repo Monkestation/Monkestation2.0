@@ -1,5 +1,5 @@
-import { flow } from 'common/fp';
 import { filter, sortBy } from 'common/collections';
+import { flow } from 'common/fp';
 import { useBackend, useSharedState } from '../backend';
 import {
   AnimatedNumber,
@@ -8,9 +8,9 @@ import {
   Flex,
   Icon,
   Input,
-  RestrictedInput,
   LabeledList,
   NoticeBox,
+  RestrictedInput,
   Section,
   Stack,
   Table,
@@ -387,7 +387,7 @@ const CargoCartButtons = (props) => {
       <Box inline mx={1}>
         {cart.length === 0 && 'Cart is empty'}
         {cart.length === 1 && '1 item'}
-        {cart.length >= 2 && cart.length + ' items'}{' '}
+        {cart.length >= 2 && `${cart.length} items`}{' '}
         {total > 0 && `(${formatMoney(total)} cr)`}
       </Box>
       {!requestonly && !!can_send && !!can_approve_requests && (

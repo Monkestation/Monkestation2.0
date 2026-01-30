@@ -1,6 +1,6 @@
 import { useBackend } from 'tgui/backend';
 import { Box, Button, LabeledList, Section, Stack } from 'tgui/components';
-import { PaiData } from './types';
+import type { PaiData } from './types';
 
 export const SystemDisplay = (props) => {
   return (

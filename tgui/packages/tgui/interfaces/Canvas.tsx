@@ -1,8 +1,8 @@
 import { Color } from 'common/color';
-import { multiline, decodeHtmlEntities } from 'common/string';
-import { Component, createRef, RefObject } from 'react';
+import { decodeHtmlEntities, multiline } from 'common/string';
+import { Component, createRef, type RefObject } from 'react';
 import { useBackend } from '../backend';
-import { Tooltip, Icon, Box, Button, Flex } from '../components';
+import { Box, Button, Flex, Icon, Tooltip } from '../components';
 import { Window } from '../layouts';
 
 const LEFT_CLICK = 0;
@@ -147,7 +147,7 @@ class PaintCanvas extends Component<PaintCanvasProps> {
   }
 
   drawPoint(x: number, y: number, color: any) {
-    let p: PointData = { x, y, color: Color.fromHex(color) };
+    const p: PointData = { x, y, color: Color.fromHex(color) };
     this.modifiedElements.push(p);
     const canvas = this.canvasRef.current!;
     const ctx = canvas.getContext('2d')!;
