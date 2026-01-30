@@ -7,24 +7,24 @@
 import { storage } from 'common/storage';
 import { setClientTheme } from '../themes';
 import {
-  loadSettings,
-  updateSettings,
   addHighlightSetting,
+  exportSettings,
+  loadSettings,
   removeHighlightSetting,
   updateHighlightSetting,
-  exportSettings,
+  updateSettings,
 } from './actions';
-import { selectSettings } from './selectors';
 import { FONTS_DISABLED } from './constants';
 import { setDisplayScaling } from './scaling';
+import { selectSettings } from './selectors';
 import { exportChatSettings } from './settingsImExport';
 
 let setStatFontTimer;
 let statTabsTimer;
 
 const setGlobalFontSize = (fontSize, statFontSize, statLinked) => {
-  document.documentElement.style.setProperty('font-size', fontSize + 'px');
-  document.body.style.setProperty('font-size', fontSize + 'px');
+  document.documentElement.style.setProperty('font-size', `${fontSize}px`);
+  document.body.style.setProperty('font-size', `${fontSize}px`);
 
   // Used solution from theme.ts
   clearInterval(setStatFontTimer);

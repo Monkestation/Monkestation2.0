@@ -1,36 +1,36 @@
+import { filterMap, sortBy } from 'common/collections';
 import { classes } from 'common/react';
-import { sendAct, useBackend, useLocalState } from '../../backend';
+import { createSearch } from 'common/string';
+import type { ReactNode } from 'react';
+import { type sendAct, useBackend, useLocalState } from '../../backend';
 import {
   Box,
   Button,
+  FitText,
   Flex,
+  Icon,
+  Input,
   LabeledList,
   Popper,
   Stack,
-  FitText,
-  Input,
-  Icon,
 } from '../../components';
+import { CharacterPreview } from '../common/CharacterPreview';
+import { DeleteCharacterPopup } from './DeleteCharacterPopup';
 import {
   createSetPreference,
-  PreferencesMenuData,
+  type PreferencesMenuData,
   RandomSetting,
 } from './data';
-import { DeleteCharacterPopup } from './DeleteCharacterPopup';
-import { CharacterPreview } from '../common/CharacterPreview';
-import { RandomizationButton } from './RandomizationButton';
-import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';
 import { MultiNameInput, NameInput } from './names';
-import { Gender, GENDERS } from './preferences/gender';
 import features from './preferences/features';
 import {
-  FeatureChoicedServerData,
+  type FeatureChoicedServerData,
   FeatureValueInput,
 } from './preferences/features/base';
-import { filterMap, sortBy } from 'common/collections';
+import { GENDERS, Gender } from './preferences/gender';
+import { RandomizationButton } from './RandomizationButton';
+import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';
 import { useRandomToggleState } from './useRandomToggleState';
-import { createSearch } from 'common/string';
-import { ReactNode } from 'react';
 
 const CLOTHING_CELL_SIZE = 64;
 const CLOTHING_SIDEBAR_ROWS = 10;
@@ -119,7 +119,7 @@ const ChoicedSelection = (props: {
     return <Box color="red">Provided catalog had no icons!</Box>;
   }
 
-  let search = createSearch(searchText, (name: string) => {
+  const search = createSearch(searchText, (name: string) => {
     return name;
   });
 
@@ -377,8 +377,8 @@ const MainFeature = (props: {
       : undefined,
   );
 
-  let [searchText, setSearchText] = useLocalState(
-    catalog.name + '_choiced_search',
+  const [searchText, setSearchText] = useLocalState(
+    `${catalog.name}_choiced_search`,
     '',
   );
 
@@ -557,8 +557,7 @@ export const MainPage = (props: { openSpecies: () => void }) => {
     <ServerPreferencesFetcher
       render={(serverData) => {
         const currentSpeciesData =
-          serverData &&
-          serverData.species[data.character_preferences.misc.species];
+          serverData?.species[data.character_preferences.misc.species];
 
         const contextualPreferences =
           data.character_preferences.secondary_features || [];
@@ -619,12 +618,12 @@ export const MainPage = (props: { openSpecies: () => void }) => {
         };
 
         if (randomBodyEnabled) {
-          nonContextualPreferences['random_species'] =
-            data.character_preferences.randomization['species'];
+          nonContextualPreferences.random_species =
+            data.character_preferences.randomization.species;
         } else {
           // We can't use random_name/is_accessible because the
           // server doesn't know whether the random toggle is on.
-          delete nonContextualPreferences['random_name'];
+          delete nonContextualPreferences.random_name;
         }
 
         return (

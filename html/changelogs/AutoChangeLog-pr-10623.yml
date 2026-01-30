@@ -1,0 +1,5 @@
+author: "MissClassyPineapple"
+delete-after: True
+changes:
+  - bugfix: "Wylom Antimateriel Rifle no longer launches everyone. Only monkeys, dwarves, or those thinking that they can onehand it."
+  - bugfix: "M90GL can now have its secondary firing pin changed. Use rightclick with the tools to do so."

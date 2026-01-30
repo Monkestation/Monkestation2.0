@@ -1,5 +1,5 @@
-import { CSS_COLORS } from '../../constants';
 import { classes } from '../../../common/react';
+import { CSS_COLORS } from '../../constants';
 
 const SVG_CURVE_INTENSITY = 64;
 
@@ -54,7 +54,7 @@ export const Connections = (props: {
         const from = val.from;
         const to = val.to;
         if (!to || !from) {
-          return;
+          return null;
         }
 
         val.color = val.color || 'blue';

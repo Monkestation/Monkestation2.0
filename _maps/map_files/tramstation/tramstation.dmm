@@ -6641,6 +6641,11 @@
 	dir = 4
 	},
 /area/station/maintenance/central/greater)
+"aXl" = (
+/obj/structure/sign/clock/directional/west,
+/obj/machinery/cassette_library,
+/turf/open/floor/wood/large,
+/area/station/service/library)
 "aXo" = (
 /obj/structure/punching_bag,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -18201,6 +18206,13 @@
 /obj/structure/table,
 /turf/open/floor/iron,
 /area/station/commons/dorms)
+"eDJ" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/vehicle/ridden/battering_ram{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/station/ai_monitored/security/armory)
 "eDV" = (
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /obj/effect/decal/cleanable/dirt,
@@ -44989,6 +45001,20 @@
 /obj/machinery/newscaster/directional/north,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai)
+"mZb" = (
+/obj/machinery/door/airlock/multi_tile/public/glass{
+	name = "Elevator Access";
+	normalspeed = 0
+	},
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/caution/stand_clear/white{
+	dir = 1
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron,
+/area/station/security/brig)
 "mZl" = (
 /obj/structure/window/reinforced/spawner/directional/east,
 /mob/living/basic/chicken/brown{
@@ -49185,13 +49211,6 @@
 "opp" = (
 /turf/open/misc/asteroid,
 /area/station/asteroid/tram/junction/east)
-"opu" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/vehicle/ridden/battering_ram{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/station/ai_monitored/security/armory)
 "opy" = (
 /obj/structure/chair/comfy/shuttle,
 /obj/effect/turf_decal/stripes/line{
@@ -58884,20 +58903,6 @@
 "rlv" = (
 /turf/open/floor/plating,
 /area/station/construction/mining/aux_base)
-"rlE" = (
-/obj/machinery/door/airlock/glass_large{
-	name = "Elevator Access";
-	normalspeed = 0
-	},
-/obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/caution/stand_clear/white{
-	dir = 1
-	},
-/obj/machinery/door/firedoor,
-/turf/open/floor/iron,
-/area/station/security/brig)
 "rlM" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/firecloset,
@@ -59338,11 +59343,6 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/station/command/heads_quarters/rd)
-"rrM" = (
-/obj/structure/sign/clock/directional/west,
-/obj/machinery/cassette_library,
-/turf/open/floor/wood/large,
-/area/station/service/library)
 "rsh" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron/dark,
@@ -160442,7 +160442,7 @@ aUh
 mdY
 qnb
 ckM
-rrM
+aXl
 puN
 sqY
 wFq
@@ -162712,7 +162712,7 @@ qkr
 wjT
 stL
 kdr
-rlE
+mZb
 nca
 nca
 yji
@@ -166298,7 +166298,7 @@ sne
 lUo
 hgn
 hgn
-opu
+eDJ
 dEv
 bwg
 fXP

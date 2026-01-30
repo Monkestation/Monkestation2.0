@@ -53,7 +53,7 @@ export const SpaceHeater = (props) => {
                     bad: [-Infinity, 0.3],
                   }}
                 >
-                  {data.powerLevel + '%'}
+                  {`${data.powerLevel}%`}
                 </ProgressBar>
               )) ||
                 'None'}
@@ -92,7 +92,7 @@ export const SpaceHeater = (props) => {
                   }
                 />
               )) ||
-                data.targetTemp + '°C'}
+                `${data.targetTemp}°C`}
             </LabeledList.Item>
             <LabeledList.Item label="Mode">
               {(!data.open && 'Auto') || (
