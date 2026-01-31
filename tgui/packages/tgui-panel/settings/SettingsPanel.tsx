@@ -6,6 +6,7 @@
 
 import { toFixed } from 'common/math';
 import { capitalize } from 'common/string';
+import { useState } from 'react';
 import {
   Box,
   Button,
@@ -22,21 +23,19 @@ import {
   Tabs,
   TextArea,
 } from 'tgui/components';
-import { THEMES } from '../themes';
-
-import { SETTINGS_TABS, FONTS, WARN_AFTER_HIGHLIGHT_AMT } from './constants';
-import { setEditPaneSplitters } from './scaling';
-import { exportChatSettings, importChatSettings } from './settingsImExport';
-import { chatRenderer } from '../chat/renderer';
-import { useSettings } from './use-settings';
-import { useState } from 'react';
-import { useHighlights } from './use-highlights';
+import { ChatPageSettings } from 'tgui-panel/chat/ChatPageSettings';
 import {
   wsDisconnect,
   wsReconnect,
   wsUpdate,
 } from 'tgui-panel/websocket/helpers';
-import { ChatPageSettings } from 'tgui-panel/chat/ChatPageSettings';
+import { chatRenderer } from '../chat/renderer';
+import { THEMES } from '../themes';
+import { FONTS, SETTINGS_TABS, WARN_AFTER_HIGHLIGHT_AMT } from './constants';
+import { setEditPaneSplitters } from './scaling';
+import { exportChatSettings, importChatSettings } from './settingsImExport';
+import { useHighlights } from './use-highlights';
+import { useSettings } from './use-settings';
 
 export const SettingsPanel = (props) => {
   const {
@@ -285,9 +284,7 @@ const TextHighlightSettings = (props) => {
               color="transparent"
               icon="plus"
               content="Add Highlight Setting"
-              onClick={() => {
-                addHighlight();
-              }}
+              onClick={addHighlight}
             />
             {highlightSettings.length >= WARN_AFTER_HIGHLIGHT_AMT && (
               <Box inline fontSize="0.9em" ml={1} color="red">
@@ -323,6 +320,7 @@ const TextHighlightSetting = (props) => {
     enabled,
     highlightColor,
     highlightWholeMessage,
+    highlightText,
     matchWord,
     matchCase,
   } = highlightSettingById[id];
@@ -409,15 +407,14 @@ const TextHighlightSetting = (props) => {
       <TextArea
         height="3em"
         placeholder="Put words to highlight here. Separate terms with commas, i.e. (term1, term2, term3)"
-        style={{
-          width: '100%',
-        }}
+        fluid
         onChange={(value) =>
           updateHighlight({
             id: id,
             highlightText: value,
           })
         }
+        value={highlightText}
       />
     </Stack.Item>
   );
