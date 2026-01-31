@@ -73,7 +73,6 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		return new path(src)
 
 	var/old_lighting_object = lighting_object
-	var/old_outdoor_effect = outdoor_effect //monkestation addition
 	var/old_lighting_corner_NE = lighting_corner_NE
 	var/old_lighting_corner_SE = lighting_corner_SE
 	var/old_lighting_corner_SW = lighting_corner_SW
@@ -149,13 +148,6 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	liquids = old_liquids
 
 	if(SSlighting.initialized)
-		// Space tiles should never have lighting objects
-		//monkestation addition start
-		if(SSoutdoor_effects.initialized && SSoutdoor_effects.enabled)
-			outdoor_effect = old_outdoor_effect
-			get_sky_and_weather_states()
-
-		//monkestation addition end
 		if(!space_lit)
 			// Should have a lighting object if we never had one
 			lighting_object = old_lighting_object || new /datum/lighting_object(src)

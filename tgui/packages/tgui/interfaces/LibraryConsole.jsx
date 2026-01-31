@@ -1,24 +1,24 @@
 import { map, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { classes } from 'common/react';
+import { useState } from 'react';
 import { useBackend, useLocalState } from '../backend';
 import {
   Box,
   Button,
   Dropdown,
+  Flex,
   Input,
+  LabeledList,
   Modal,
   NoticeBox,
   NumberInput,
-  LabeledList,
   Section,
   Stack,
-  Flex,
   Table,
 } from '../components';
 import { Window } from '../layouts';
 import { sanitizeText } from '../sanitize';
-import { useState } from 'react';
 
 export const LibraryConsole = (props) => {
   const { act, data } = useBackend();
@@ -250,7 +250,7 @@ export const CheckoutEntries = (props) => {
           <Table.Cell>{entry.author}</Table.Cell>
           <Table.Cell>{entry.borrower}</Table.Cell>
           <Table.Cell backgroundColor={entry.overdue ? 'bad' : 'good'}>
-            {entry.overdue ? 'Overdue' : entry.due_in_minutes + ' Minutes'}
+            {entry.overdue ? 'Overdue' : `${entry.due_in_minutes} Minutes`}
           </Table.Cell>
         </Table.Row>
       ))}
@@ -914,8 +914,7 @@ export const PageSelect = (props) => {
       </Stack.Item>
       <Stack.Item>
         <Input
-          placeholder={current_page + '/' + page_count}
-          value={input}
+          placeholder={`${current_page}/${page_count}`}
           onChange={(value) => {
             // I am so sorry
             if (value !== '') {

@@ -2149,6 +2149,12 @@
 /obj/machinery/quantum_server,
 /turf/open/floor/iron,
 /area/station/bitrunning/den)
+"yx" = (
+/obj/machinery/computer/apc_control{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/engineering/main)
 "yA" = (
 /obj/docking_port/stationary/laborcamp_home{
 	dir = 8
@@ -7245,7 +7251,7 @@ aa
 aa
 aj
 al
-aA
+yx
 aj
 WT
 aj

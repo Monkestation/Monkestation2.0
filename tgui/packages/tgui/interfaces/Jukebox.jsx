@@ -5,10 +5,10 @@ import {
   Box,
   Button,
   Dropdown,
-  Section,
   Knob,
   LabeledControls,
   LabeledList,
+  Section,
 } from '../components';
 import { Window } from '../layouts';
 

@@ -1281,7 +1281,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				for(var/obj/item/clothing/iter_clothing in target.get_clothing_on_part(affecting))
 					if(!HAS_TRAIT(user, TRAIT_NUTCRACKER))
 						if((iter_clothing.clothing_flags & THICKMATERIAL) || iter_clothing.get_armor_rating(MELEE) >= 15)
-							if(iter_clothing.body_parts_covered & BODY_ZONE_PRECISE_GROIN)
+							if(iter_clothing.body_parts_covered & GROIN)
 								return TRUE
 				target.sharp_pain(BODY_ZONE_CHEST, 25 * ough, BRUTE, 30 SECONDS)
 				user.visible_message(span_warning("[target] gets brutally [atk_verb]ed in the groin! Holy shit!"), self_message=span_warning("You [atk_verb] [target] right in the groin! <b>BRUTAL!</b>"), blind_message=span_warning("You hear a horrific pained screech!"), ignored_mobs=list(target))

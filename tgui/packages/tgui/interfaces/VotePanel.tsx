@@ -1,17 +1,17 @@
-import { BooleanLike } from 'common/react';
+import type { BooleanLike } from 'common/react';
+import { useBackend } from '../backend';
 import {
   Box,
-  Icon,
-  Stack,
   Button,
-  Dimmer,
-  Section,
-  NoticeBox,
-  LabeledList,
   Collapsible,
+  Dimmer,
+  Icon,
+  LabeledList,
+  NoticeBox,
+  Section,
+  Stack,
 } from '../components';
 import { Window } from '../layouts';
-import { useBackend } from '../backend';
 
 enum VoteConfig {
   None = -1,
@@ -266,7 +266,7 @@ const ChoicesPanel = (props) => {
                       />
                     )}
                   {currentVote.displayStatistics
-                    ? choice.votes + ' Votes'
+                    ? `${choice.votes} Votes`
                     : null}
                 </LabeledList.Item>
                 <LabeledList.Divider />

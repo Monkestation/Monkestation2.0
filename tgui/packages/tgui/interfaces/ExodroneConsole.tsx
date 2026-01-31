@@ -1,3 +1,7 @@
+import { capitalize } from 'common/string';
+import { Fragment } from 'react';
+import { resolveAsset } from '../assets';
+import nt_logo from '../assets/bg-nanotrasen.svg';
 import { useBackend, useLocalState } from '../backend';
 import {
   BlockQuote,
@@ -11,12 +15,8 @@ import {
   Section,
   Stack,
 } from '../components';
-import { Window } from '../layouts';
-import { resolveAsset } from '../assets';
 import { formatTime } from '../format';
-import { capitalize } from 'common/string';
-import nt_logo from '../assets/bg-nanotrasen.svg';
-import { Fragment } from 'react';
+import { Window } from '../layouts';
 
 type ExplorationEventData = {
   name: string;
@@ -541,9 +541,9 @@ const TravelTargetSelectionScreen = (props: {
       dest.band_info[s] !== undefined && dest.band_info[s] !== 0;
     return Object.keys(all_bands).filter(band_check);
   };
-  const valid_destinations =
-    sites &&
-    sites.filter((destination) => !site || destination.ref !== site.ref);
+  const valid_destinations = sites?.filter(
+    (destination) => !site || destination.ref !== site.ref,
+  );
   return (
     (drone.drone_status === DroneStatusEnum.Travel && (
       <TravelDimmer drone={drone} />

@@ -84,19 +84,17 @@ export const JobEntry: React.FC<{
         !job.unavailable_reason && data.onClick();
       }}
     >
-      <>
-        {jobIcon && <Icon name={jobIcon} mr={1} />}
-        {job.command ? <b>{jobName}</b> : jobName}
-        <span
-          style={{
-            whiteSpace: 'nowrap',
-            position: 'absolute',
-            right: '0.5em',
-          }}
-        >
-          {job.used_slots} / {job.open_slots}
-        </span>
-      </>
+      {jobIcon && <Icon name={jobIcon} mr={1} />}
+      {job.command ? <b>{jobName}</b> : jobName}
+      <span
+        style={{
+          whiteSpace: 'nowrap',
+          position: 'absolute',
+          right: '0.5em',
+        }}
+      >
+        {job.used_slots} / {job.open_slots}
+      </span>
     </Button>
   );
 };
