@@ -27,11 +27,9 @@
 	damage_sharpness = TRUE
 
 /datum/martial_art/the_sleeping_carp/awakened_dragon/can_deflect(mob/living/carp_user, check_intent = TRUE)
-	//if(!COOLDOWN_FINISHED(src, block_cooldown)) //monke edit
-	//	return FALSE
 	if(!can_use(carp_user))
 		return FALSE
-	if(check_intent && !(carp_user.istate & ISTATE_HARM)) // monke edit: istates/intents
+	if(check_intent && !(carp_user.istate & ISTATE_HARM))
 		return FALSE
 	if(carp_user.incapacitated(IGNORE_GRAB)) //NO STUN
 		return FALSE

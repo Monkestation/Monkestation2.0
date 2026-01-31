@@ -33261,9 +33261,6 @@
 /obj/structure/sign/nanotrasen{
 	pixel_x = -32
 	},
-/obj/machinery/siren/weather{
-	dir = 4
-	},
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "kir" = (
@@ -63070,10 +63067,6 @@
 /obj/item/folder/blue,
 /turf/open/floor/wood,
 /area/station/security/courtroom)
-"tqb" = (
-/obj/machinery/siren/weather,
-/turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
 "tqk" = (
 /obj/structure/table,
 /obj/item/paper_bin{
@@ -74240,6 +74233,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
+/obj/machinery/cassette_library,
 /turf/open/floor/wood,
 /area/station/service/library)
 "wNO" = (
@@ -222646,7 +222640,7 @@ gXS
 fsv
 fMJ
 rvE
-tqb
+bln
 bln
 bln
 bln

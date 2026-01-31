@@ -131,8 +131,6 @@
 	eye.Insert(carbon, drop_if_replaced = FALSE)
 
 	RegisterSignal(current_mob, COMSIG_LIVING_LIFE, PROC_REF(LifeTick))
-	RegisterSignal(current_mob, COMSIG_LIVING_PICKED_UP_ITEM, PROC_REF(item_pickup))
-	RegisterSignal(current_mob, COMSIG_MOB_UNEQUIPPED_ITEM, PROC_REF(item_unequipped))
 	RegisterSignal(current_mob, COMSIG_MOB_ITEM_ATTACK, PROC_REF(check_attack))
 	RegisterSignal(current_mob, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 
@@ -269,18 +267,6 @@
 
 	increase_fear(attacked_mob, held_force / 3)
 	attacked_mob.blood_particles(5, max_deviation = rand(-120, 120), min_pixel_z = rand(-4, 12), max_pixel_z = rand(-4, 12))
-
-/datum/antagonist/slasher/proc/item_pickup(datum/input_source, obj/item/source)
-	SIGNAL_HANDLER
-	RegisterSignal(source, COMSIG_ITEM_DAMAGE_MULTIPLIER, PROC_REF(damage_multiplier))
-
-/datum/antagonist/slasher/proc/item_unequipped(datum/input_source, obj/item/source)
-	SIGNAL_HANDLER
-	UnregisterSignal(source, COMSIG_ITEM_DAMAGE_MULTIPLIER)
-
-/datum/antagonist/slasher/proc/damage_multiplier(obj/item/source, damage_multiplier_ptr, mob/living/attacked, def_zone)
-	//keeping this just in case we use it later, but the damage changing has been turned off
-	// *damage_multiplier_ptr = 1
 
 /datum/antagonist/slasher/proc/increase_fear(atom/movable/target, amount)
 	var/datum/weakref/weak = WEAKREF(target)

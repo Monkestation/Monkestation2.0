@@ -54,8 +54,6 @@
 	var/authorization_override = FALSE
 	/// Tracks whether the station is in full danger mode to unlock combat mechs
 	var/red_alert = FALSE
-	/// ID card of the person using the machine for the purpose of tracking access
-	var/obj/item/card/id/id_card = new()
 	/// Combined boolean value of red alert, auth override, and the users access for the sake of smaller if statements. if this is true, combat parts are available
 	var/combat_parts_allowed = FALSE
 	/// List of categories that all contains combat parts, everything in the category will be classified as combat parts
@@ -89,10 +87,6 @@
 		update_menu_tech()
 	return ..()
 
-/obj/machinery/mecha_part_fabricator/Destroy()
-	QDEL_NULL(id_card)
-	return ..()
-
 /obj/machinery/mecha_part_fabricator/attackby(obj/item/object, mob/living/user, params)
 	var/obj/item/card/id/card = object.GetID()
 	if(card)
@@ -121,14 +115,13 @@
 
 /// made as a lazy check to allow silicons full access always
 /obj/machinery/mecha_part_fabricator/proc/head_or_sillicon(mob/user)
-	if(!issilicon(user))
-		if(isliving(user))
-			var/mob/living/living_user = user
-			id_card = living_user.get_idcard(hand_first = TRUE)
-			if(!id_card)
-				return FALSE
-			return (ACCESS_COMMAND in id_card.access)
-	return issilicon(user)
+	if(issilicon(user))
+		return TRUE
+	if(isliving(user))
+		var/mob/living/living_user = user
+		var/obj/item/card/id/id_card = living_user.get_idcard(hand_first = TRUE)
+		return (ACCESS_COMMAND in id_card?.access)
+	return FALSE
 
 
 /obj/machinery/mecha_part_fabricator/emag_act(mob/user)

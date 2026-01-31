@@ -59,6 +59,7 @@ SUBSYSTEM_DEF(vote)
 	QDEL_LIST(generated_actions)
 
 	SStgui.update_uis(src)
+	SEND_SIGNAL(src, COMSIG_VOTE_ENDED)
 
 /**
  * Process the results of the vote.
@@ -272,6 +273,7 @@ SUBSYSTEM_DEF(vote)
 		if(current_vote.vote_sound && (new_voter.prefs.read_preference(/datum/preference/toggle/sound_announcements)))
 			SEND_SOUND(new_voter, sound(current_vote.vote_sound, volume = current_vote.vote_sound_volume)) // monkestation edit
 
+	SEND_SIGNAL(src, COMSIG_VOTE_STARTED)
 	return TRUE
 
 /**

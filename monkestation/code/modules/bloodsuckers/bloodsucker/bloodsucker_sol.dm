@@ -74,10 +74,8 @@
 	else
 		if(total_brute <= 10)
 			torpor_end()
-	//monkestation edit
 	if(COOLDOWN_FINISHED(src, bloodsucker_torpor_max_time))
 		torpor_end() // YOUR TAKING TOO LONG
-	//monkestation end
 /datum/antagonist/bloodsucker/proc/is_in_torpor()
 	if(QDELETED(owner.current))
 		return FALSE
@@ -93,10 +91,8 @@
 	// Without this, you'll just keep dying while you recover.
 	current.add_traits(torpor_traits, TORPOR_TRAIT)
 	current.set_timed_status_effect(0 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
-	//monkestation edit
 	// Failsafe to prevent players taking too long in torpor
 	COOLDOWN_START(src, bloodsucker_torpor_max_time, BLOODSUCKER_TORPOR_MAX_TIME)
-	//monkestation end
 	// Disable ALL Powers
 	DisableAllPowers()
 

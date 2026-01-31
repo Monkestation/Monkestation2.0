@@ -248,17 +248,12 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /// Allows for reactions to an area change without inherently requiring change_area() be called (I hate maploading)
 /turf/proc/on_change_area(area/old_area, area/new_area)
 	transfer_area_lighting(old_area, new_area)
-	GLOB.SUNLIGHT_QUEUE_WORK += src
-	if(outdoor_effect)
-		GLOB.SUNLIGHT_QUEUE_UPDATE += outdoor_effect
 
 /turf/proc/multiz_turf_del(turf/T, dir)
 	SEND_SIGNAL(src, COMSIG_TURF_MULTIZ_DEL, T, dir)
-	reconsider_sunlight() //Monkestation addition
 
 /turf/proc/multiz_turf_new(turf/T, dir)
 	SEND_SIGNAL(src, COMSIG_TURF_MULTIZ_NEW, T, dir)
-	reconsider_sunlight() //Monkestation addition
 
 /**
  * Check whether the specified turf is blocked by something dense inside it with respect to a specific atom.

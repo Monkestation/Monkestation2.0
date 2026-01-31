@@ -1,0 +1,5 @@
+author: "carlarctg, JohnFulpWillard"
+delete-after: True
+changes:
+  - qol: "Removed retractor step from Autopsy."
+  - rscadd: "Autopsy scanners can be used as advanced health analyzers on dead people."

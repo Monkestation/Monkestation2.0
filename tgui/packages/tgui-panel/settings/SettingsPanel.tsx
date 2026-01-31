@@ -15,12 +15,12 @@ import {
   Icon,
   Input,
   LabeledList,
+  NoticeBox,
   Section,
+  Slider,
   Stack,
   Tabs,
   TextArea,
-  Slider,
-  NoticeBox,
 } from 'tgui/components';
 import { THEMES } from '../themes';
 

@@ -41,7 +41,7 @@
 			hud.hide_from(user)
 		user.update_sight()
 
-/datum/action/item_action/toggle_suit_flashlight //monkestation addition
+/datum/action/item_action/toggle_suit_flashlight
 	name = "Toggle Integrated Flashlight"
 
 /obj/item/clothing/suit/space/hardsuit/juggernaut

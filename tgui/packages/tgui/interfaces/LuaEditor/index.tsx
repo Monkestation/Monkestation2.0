@@ -1,33 +1,33 @@
+import hljs from 'highlight.js/lib/core';
+import lua from 'highlight.js/lib/languages/lua';
 import {
-  ReactNode,
+  type ReactNode,
   useCallback,
   useEffect,
   useLayoutEffect,
   useRef,
   useState,
 } from 'react';
-import hljs from 'highlight.js/lib/core';
-import lua from 'highlight.js/lib/languages/lua';
 import { useBackend } from '../../backend';
 import {
   Box,
   Button,
   Flex,
+  MenuBar,
+  ProgressBar,
   Section,
   Stack,
   Tabs,
   TextArea,
-  ProgressBar,
-  MenuBar,
 } from '../../components';
 import { Window } from '../../layouts';
 import { CallModal } from './CallModal';
 import { ChunkViewModal } from './ChunkViewModal';
-import { StateSelectModal } from './StateSelectModal';
 import { ListMapper } from './ListMapper';
 import { Log } from './Log';
+import { StateSelectModal } from './StateSelectModal';
 import { TaskManager } from './TaskManager';
-import { CallInfo, LuaEditorData, LuaEditorModal } from './types';
+import type { CallInfo, LuaEditorData, LuaEditorModal } from './types';
 
 hljs.registerLanguage('lua', lua);
 
@@ -226,7 +226,7 @@ export const LuaEditor = () => {
                             }}
                           />
                         }*/
-                          /** @ts-ignore */
+                          /** @ts-expect-error */
                           onDrop={async (
                             event: React.DragEvent<HTMLDivElement>,
                           ) => {

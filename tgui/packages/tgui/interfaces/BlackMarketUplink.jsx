@@ -6,9 +6,9 @@ import {
   Button,
   Modal,
   Section,
+  Slider,
   Stack,
   Tabs,
-  Slider,
 } from '../components';
 import { formatMoney, formatTime } from '../format';
 import { Window } from '../layouts';
@@ -35,7 +35,7 @@ export const BlackMarketUplink = (props) => {
               <Box inline bold>
                 <AnimatedNumber
                   value={money}
-                  format={(value) => formatMoney(value) + ' cr'}
+                  format={(value) => `${formatMoney(value)} cr`}
                 />
               </Box>
             }
@@ -88,7 +88,7 @@ const ShipmentSelector = (props) => {
               <Box mt={1}>{method.description}</Box>
               <Button
                 mt={2}
-                content={formatMoney(method.price) + ' cr'}
+                content={`${formatMoney(method.price)} cr`}
                 disabled={money < method.price}
                 onClick={() =>
                   act('buy', {
@@ -145,12 +145,12 @@ const NormalMarket = (props) => {
                 {item.name}
               </Stack.Item>
               <Stack.Item color="label">
-                {item.amount ? item.amount + ' in stock' : 'Out of stock'}
+                {item.amount ? `${item.amount} in stock` : 'Out of stock'}
               </Stack.Item>
               <Stack.Item color="label">
-                {item.time_left ? item.time_left + ' Seconds Left' : ''}
+                {item.time_left ? `${item.time_left} Seconds Left` : ''}
               </Stack.Item>
-              <Stack.Item>{formatMoney(item.cost) + ' cr'}</Stack.Item>
+              <Stack.Item>{`${formatMoney(item.cost)} cr`}</Stack.Item>
               <Stack.Item>
                 <Button
                   content="Buy"
@@ -206,7 +206,7 @@ const AuctionMarket = (props) => {
               <Stack.Item width="30%" textAlign="center">
                 <Box backgroundColor="green" fontSize="16px">
                   {current_item.cost
-                    ? formatMoney(current_item.cost) + ' CR'
+                    ? `${formatMoney(current_item.cost)} CR`
                     : 'N/A CR'}
                 </Box>
               </Stack.Item>
@@ -230,7 +230,7 @@ const AuctionMarket = (props) => {
                     <Stack.Item grow bold>
                       {item.name}
                     </Stack.Item>
-                    <Stack.Item>{formatMoney(item.amount) + ' cr'}</Stack.Item>
+                    <Stack.Item>{`${formatMoney(item.amount)} cr`}</Stack.Item>
                   </Stack>
                 </Box>
               ))}
@@ -242,7 +242,7 @@ const AuctionMarket = (props) => {
                 <Stack vertical fill>
                   <Stack.Item grow fontSize="16px">
                     {time_left
-                      ? 'Time Left: ' + formatTime(time_left)
+                      ? `Time Left: ${formatTime(time_left)}`
                       : 'Time Left: No Auction'}
                   </Stack.Item>
                   <Stack.Item grow>
@@ -250,7 +250,7 @@ const AuctionMarket = (props) => {
                       name="Bid Amount"
                       position="relative"
                       height="100%"
-                      format={(value) => 'Bid Amount: ' + round(value) + ' cr'}
+                      format={(value) => `Bid Amount: ${round(value)} cr`}
                       step={1}
                       value={
                         current_item.cost
@@ -319,7 +319,7 @@ const AuctionMarket = (props) => {
                         : ''}
                     </Stack.Item>
                     <Stack.Item>
-                      {formatMoney(item.starting_cost) + ' cr'}
+                      {`${formatMoney(item.starting_cost)} cr`}
                     </Stack.Item>
                   </Stack>
                   {item.desc}

@@ -16,7 +16,7 @@
 /obj/machinery/porta_turret_cover/Destroy()
 	if(parent_turret)
 		parent_turret.cover = null
-		parent_turret.invisibility = 0
+		parent_turret.SetInvisibility(INVISIBILITY_NONE, id=type)
 		parent_turret = null
 	return ..()
 

@@ -1,4 +1,4 @@
-import { FeatureChoiced, FeatureDropdownInput } from '../../base';
+import { type FeatureChoiced, FeatureDropdownInput } from '../../base';
 
 export const silicon_brain: FeatureChoiced = {
   name: 'Silicon Brain',

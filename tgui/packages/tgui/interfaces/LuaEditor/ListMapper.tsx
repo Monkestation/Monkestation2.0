@@ -1,5 +1,5 @@
-import { BooleanLike } from 'common/react';
-import { isValidElement, ReactNode } from 'react';
+import type { BooleanLike } from 'common/react';
+import { isValidElement, type ReactNode } from 'react';
 
 import { useBackend } from '../../backend';
 import {
@@ -10,10 +10,16 @@ import {
   Section,
   Tooltip,
 } from '../../components';
-import { BoxProps } from '../../components/Box';
+import type { BoxProps } from '../../components/Box';
 import { logger } from '../../logging';
-import { CallInfo, LuaEditorModal, Variant, VariantList } from './types';
-import { ListElement, ListPath } from './types';
+import type {
+  CallInfo,
+  ListElement,
+  ListPath,
+  LuaEditorModal,
+  Variant,
+  VariantList,
+} from './types';
 
 const mapListVariantsInner = (value: any, variant: Variant) => {
   if (Array.isArray(variant)) {
@@ -158,7 +164,7 @@ export const ListMapper = (props: ListMapperProps) => {
               tooltip="Click to VV"
               onClick={vvAct && (() => vvAct(path))}
               {
-                // @ts-ignore Someone should really rewrite this whole thing
+                // @ts-expect-error Someone should really rewrite this whole thing
                 ...thing.props
               }
             />
@@ -178,7 +184,7 @@ export const ListMapper = (props: ListMapperProps) => {
                   setModal('call');
                 }}
                 {
-                  // @ts-ignore
+                  // @ts-expect-error
                   ...thing.props
                 }
               />
@@ -199,9 +205,9 @@ export const ListMapper = (props: ListMapperProps) => {
   const ListMapperInner = (element: ListElement, i: number) => {
     const { key, value } = element;
     const basePath: ListPath = path ? path : [];
-    let keyPath: ListPath = [...basePath, { index: i + 1, type: 'key' }];
-    let valuePath: ListPath = [...basePath, { index: i + 1, type: 'value' }];
-    let entryPath: ListPath = [...basePath, { index: i + 1, type: 'entry' }];
+    const keyPath: ListPath = [...basePath, { index: i + 1, type: 'key' }];
+    const valuePath: ListPath = [...basePath, { index: i + 1, type: 'value' }];
+    const entryPath: ListPath = [...basePath, { index: i + 1, type: 'entry' }];
 
     if (key === null && skipNulls) {
       return;
@@ -211,7 +217,7 @@ export const ListMapper = (props: ListMapperProps) => {
      * Finding a function only accessible as a table's key is too awkward to
      * deal with for now
      */
-    let keyNode = ThingNode(key, keyPath, false);
+    const keyNode = ThingNode(key, keyPath, false);
 
     /*
      * Likewise, since table, thread, and userdata equality is tested by
@@ -222,7 +228,7 @@ export const ListMapper = (props: ListMapperProps) => {
       typeof key === 'string' ||
       typeof key === 'number' ||
       (isValidElement(key) && key.key === 'ref');
-    let valueNode = ThingNode(
+    const valueNode = ThingNode(
       value,
       typeof key === 'number' ? keyPath : valuePath,
       uniquelyIndexable,
@@ -267,7 +273,7 @@ export const ListMapper = (props: ListMapperProps) => {
 
   const inner = (
     <>
-      {list && list.map(ListMapperInner)}
+      {list?.map(ListMapperInner)}
       {editable && (
         <Button
           icon="plus"

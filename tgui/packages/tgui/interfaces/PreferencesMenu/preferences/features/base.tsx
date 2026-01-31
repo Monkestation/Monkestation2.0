@@ -6,10 +6,10 @@ import {
   Box,
   Button,
   Dropdown,
+  Flex,
   Input,
   NumberInput,
   Stack,
-  Flex,
   Tooltip,
 } from 'tgui/components';
 import { createSetPreference, PreferencesMenuData } from '../../data';
@@ -270,7 +270,7 @@ export const FeatureIconnedDropdownInput = (
     Object.entries(textNames).map(([choice, textName]) => {
       let element: ReactNode = textName;
 
-      if (icons && icons[choice]) {
+      if (icons?.[choice]) {
         const icon = icons[choice];
         element = (
           <Stack>
@@ -393,7 +393,7 @@ export const FeatureValueInput = (props: {
         return createElement(feature.component, {
           act: props.act,
           featureId: props.featureId,
-          serverData: serverData && serverData[props.featureId],
+          serverData: serverData?.[props.featureId],
           shrink: props.shrink,
 
           handleSetValue: changeValue,

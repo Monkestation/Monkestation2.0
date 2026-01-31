@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Slider, Button, Stack, Section } from '../components';
+import { Button, Section, Slider, Stack } from '../components';
 import { Window } from '../layouts';
 
 export const ArtifactZapper = (props) => {
