@@ -1,0 +1,5 @@
+author: "EssentialTomato"
+delete-after: True
+changes:
+  - bugfix: "Swapped regular cells for megacells in colony kits."
+  - bugfix: "Added missing megacell design to the colony fabricators."
