@@ -5,14 +5,14 @@
  */
 import './styles/main.scss';
 
-import { captureExternalLinks } from './links';
-import { setupGlobalEvents } from './events';
-import { setupHotKeys } from './hotkeys';
 import { setupHotReloading } from 'tgui-dev-server/link/client';
-import { createStackAugmentor } from './stack';
-import { bus } from './events/listeners';
 import { App } from './app';
+import { setupGlobalEvents } from './events';
+import { bus } from './events/listeners';
+import { setupHotKeys } from './hotkeys';
+import { captureExternalLinks } from './links';
 import { render } from './renderer';
+import { createStackAugmentor } from './stack';
 
 function setupApp() {
   // Delay setup
@@ -35,11 +35,7 @@ function setupApp() {
   if (module.hot) {
     setupHotReloading();
     // prettier-ignore
-    module.hot.accept([
-      './layouts',
-      './routes',
-      './app',
-    ], () => {
+    module.hot.accept(['./layouts', './routes', './app'], () => {
       render(<App />);
     });
   }

@@ -8,13 +8,13 @@
 import './styles/main.scss';
 import './styles/themes/light.scss';
 
-import { setupHotReloading } from 'tgui-dev-server/link/client';
+import { createRoot } from 'react-dom/client';
 import { setupGlobalEvents } from 'tgui/events';
 import { captureExternalLinks } from 'tgui/links';
-import { setupPanelFocusHacks } from './panelFocus';
-import { createRoot } from 'react-dom/client';
+import { setupHotReloading } from 'tgui-dev-server/link/client';
 import { App } from './app';
 import { bus } from './events/listeners';
+import { setupPanelFocusHacks } from './panelFocus';
 import { wsSend } from './websocket/helpers';
 
 const root = createRoot(document.getElementById('react-root')!);

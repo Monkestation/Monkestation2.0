@@ -24,7 +24,12 @@ import {
   SpaceToNum,
   SpaceTypes,
 } from './data';
-import { editKeyOf, editWeightOf, isColorSpaceObject, setGradientSpace } from './helpers';
+import {
+  editKeyOf,
+  editWeightOf,
+  isColorSpaceObject,
+  setGradientSpace,
+} from './helpers';
 
 export const EntryFloat = (props: EntryFloatProps) => {
   const { act, data } = useBackend<ParticleUIData>();
@@ -107,7 +112,7 @@ export const EntryGradient = (props: EntryGradientProps) => {
   const { name, var_name, gradient } = props;
   const isLooping = gradient?.find((x) => x === 'loop');
 
-   let space_type = 'COLORSPACE_RGB';
+  let space_type = 'COLORSPACE_RGB';
   const gradientSpace = gradient?.find(isColorSpaceObject);
 
   if (gradientSpace) {

@@ -1,5 +1,8 @@
 import { filterMap, sortBy } from 'common/collections';
 import { classes } from 'common/react';
+import { createSearch } from 'common/string';
+import type { ReactNode } from 'react';
+import type { sendAct } from 'tgui/events/act';
 import { useBackend, useLocalState } from '../../backend';
 import {
   Box,
@@ -29,9 +32,6 @@ import { GENDERS, Gender } from './preferences/gender';
 import { RandomizationButton } from './RandomizationButton';
 import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';
 import { useRandomToggleState } from './useRandomToggleState';
-import { createSearch } from 'common/string';
-import { ReactNode } from 'react';
-import { sendAct } from 'tgui/events/act';
 
 const CLOTHING_CELL_SIZE = 64;
 const CLOTHING_SIDEBAR_ROWS = 10;

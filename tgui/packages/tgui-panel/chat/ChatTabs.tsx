@@ -4,10 +4,10 @@
  * @license MIT
  */
 
-import { Box, Tabs, Button, Stack } from 'tgui/components';
-import { useChatPages } from './use-chat-pages';
 import { useSetAtom } from 'jotai';
+import { Box, Button, Stack, Tabs } from 'tgui/components';
 import { settingsVisibleAtom } from 'tgui-panel/settings/atoms';
+import { useChatPages } from './use-chat-pages';
 
 const UnreadCountWidget = ({ value }) => (
   <Box className="UnreadCount">{Math.min(value, 99)}</Box>

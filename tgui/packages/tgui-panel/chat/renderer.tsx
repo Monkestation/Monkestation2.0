@@ -7,8 +7,10 @@
 import { EventEmitter } from 'common/events';
 import { classes } from 'common/react';
 import { createRoot } from 'react-dom/client';
-import { createLogger } from 'tgui/logging';
 import { Tooltip } from 'tgui/components';
+import { store } from 'tgui/events/store';
+import { createLogger } from 'tgui/logging';
+import { settingsAtom } from 'tgui-panel/settings/atoms';
 import {
   COMBINE_MAX_MESSAGES,
   COMBINE_MAX_TIME_WINDOW,
@@ -24,8 +26,6 @@ import {
 } from './constants';
 import { canPageAcceptType, createMessage, isSameMessage } from './model';
 import { highlightNode, linkifyNode } from './replaceInTextNode';
-import { settingsAtom } from 'tgui-panel/settings/atoms';
-import { store } from 'tgui/events/store';
 
 const logger = createLogger('chatRenderer');
 

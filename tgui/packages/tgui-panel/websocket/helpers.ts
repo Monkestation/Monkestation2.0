@@ -1,7 +1,7 @@
+import { createLogger } from 'tgui/logging';
 import { chatRenderer } from 'tgui-panel/chat/renderer';
 import { store } from 'tgui-panel/events/store';
 import { settingsAtom } from 'tgui-panel/settings/atoms';
-import { createLogger } from 'tgui/logging';
 
 const MAX_RETRIES = 10;
 const RETRY_INTERVAL = 500; // ms
