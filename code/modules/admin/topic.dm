@@ -754,7 +754,7 @@
 				return
 			if (!usr.client.holder.fakekey)
 				to_chat(usr, span_warning("You have been automatically stealthed via STLTH-FLW as [span_bold(usr.ckey)]"))
-				usr.client.enable_stealth_mode(usr.ckey, "STLTH-FLW")
+				usr.client.enable_stealth_mode(usr.ckey, FALSE, "STLTH-FLW")
 
 		usr.client?.admin_follow(locate(href_list["adminplayerobservefollow"]))
 	else if(href_list["admingetmovable"])
