@@ -12,7 +12,7 @@
 	player_startable = FALSE
 	vote_sound_volume = 150 // Make it loud so people don't miss it.
 	exclude_mobs = list(
-		/mob/dead/new_player
+		/mob/dead/new_player = "Lobby players are not allowed to call this vote."
 	)
 
 /datum/vote/shuttle_call/reset()
