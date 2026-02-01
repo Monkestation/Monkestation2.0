@@ -263,6 +263,8 @@ SUBSYSTEM_DEF(vote)
 
 	// And now that it's going, give everyone a voter action
 	for(var/client/new_voter as anything in GLOB.clients)
+		if(length(to_vote.exclude_mobs) && (initial(new_voter.mob.type) in to_vote.exclude_mobs))
+			continue
 		var/datum/action/vote/voting_action = new()
 		voting_action.name = "Vote: [current_vote.override_question || current_vote.name]"
 		voting_action.Grant(new_voter.mob)
