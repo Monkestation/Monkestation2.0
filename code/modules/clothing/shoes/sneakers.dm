@@ -7,11 +7,18 @@
 	greyscale_colors = "#2d2d33#ffffff"
 	greyscale_config = /datum/greyscale_config/sneakers
 	greyscale_config_worn = /datum/greyscale_config/sneakers_worn
-	greyscale_config_worn_digitigrade = /datum/greyscale_config/sneakers_worn/digitigrade
 	greyscale_config_inhand_left = /datum/greyscale_config/sneakers_inhand_left
 	greyscale_config_inhand_right = /datum/greyscale_config/sneakers_inhand_right
+	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
 	flags_1 = IS_PLAYER_COLORABLE_1
 	interaction_flags_mouse_drop = NEED_HANDS
+
+/obj/item/clothing/shoes/sneakers/get_general_color(icon/base_icon)
+	var/colors = SSgreyscale.ParseColorString(greyscale_colors)
+	return colors ? colors[1] : ..()
+
+/obj/item/clothing/shoes/sneakers/generate_digitigrade_icons(icon/base_icon, greyscale_colors)
+	return icon(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/digitigrade, greyscale_colors), "sneakers_worn")
 
 /obj/item/clothing/shoes/sneakers/random/Initialize(mapload)
 	. = ..()
@@ -80,6 +87,7 @@
 	greyscale_config_inhand_right = null
 	greyscale_config_worn = null
 	flags_1 = NONE
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 
 /obj/item/clothing/shoes/sneakers/orange
 	name = "orange shoes"
@@ -88,7 +96,6 @@
 	greyscale_colors = "#d15b1b#ffffff"
 	greyscale_config = /datum/greyscale_config/sneakers_orange
 	greyscale_config_worn = /datum/greyscale_config/sneakers_orange_worn
-	greyscale_config_worn_digitigrade = /datum/greyscale_config/sneakers_orange_worn/digitigrade
 	greyscale_config_inhand_left = /datum/greyscale_config/sneakers_orange_inhand_left
 	greyscale_config_inhand_right = /datum/greyscale_config/sneakers_orange_inhand_right
 	flags_1 = NONE

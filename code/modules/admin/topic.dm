@@ -1364,7 +1364,12 @@
 		if(!istype(error_viewer))
 			to_chat(usr, span_warning("That runtime viewer no longer exists."), confidential = TRUE)
 			return
-
+		if(href_list["viewruntime_externallog"])
+			error_viewer.send_log_file(owner)
+			return
+		if(href_list["viewruntime_savelog"])
+			error_viewer.save_log(owner, href_list["viewruntime_savelog"])
+			return
 		if(href_list["viewruntime_backto"])
 			error_viewer.show_to(owner, locate(href_list["viewruntime_backto"]), href_list["viewruntime_linear"])
 		else
@@ -1417,7 +1422,7 @@
 		else if(response.status_code != 200)
 			dat += "<br>Failed to connect to CentCom. Status code: [response.status_code]"
 		else
-			if(response.body == "[]")
+			if(response.body == "\[]")
 				dat += "<center><b>0 bans detected for [ckey]</b></center>"
 			else
 				bans = json_decode(response.body)

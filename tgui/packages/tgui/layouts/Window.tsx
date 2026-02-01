@@ -12,11 +12,12 @@ import {
   useLayoutEffect,
   useState,
 } from 'react';
-import { KeyListener, type Box } from 'tgui-core/components';
+import { type Box, KeyListener } from 'tgui-core/components';
 import { UI_DISABLED, UI_INTERACTIVE } from 'tgui-core/constants';
+import type { KeyEvent } from 'tgui-core/events';
+import { KEY_ALT } from 'tgui-core/keycodes';
 import { type BooleanLike, classes } from 'tgui-core/react';
 import { decodeHtmlEntities } from 'tgui-core/string';
-
 import { backendSuspendStart, globalStore, useBackend } from '../backend';
 import { useDebug } from '../debug';
 import {
@@ -29,8 +30,6 @@ import {
 } from '../drag';
 import { createLogger } from '../logging';
 import { Layout } from './Layout';
-import { KeyEvent } from 'tgui-core/events';
-import { KEY_ALT } from 'tgui-core/keycodes';
 import { TitleBar } from './TitleBar';
 
 const logger = createLogger('Window');
@@ -161,7 +160,7 @@ const WindowContent = (props: ContentProps) => {
   const { className, fitted, children, ...rest } = props;
   const [altDown, setAltDown] = useState(false);
 
-  let dragStartIfAltHeld = (event) => {
+  const dragStartIfAltHeld = (event) => {
     if (altDown) {
       dragStartHandler(event);
     }

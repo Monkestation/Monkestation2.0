@@ -8,7 +8,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 /mob/living/carbon/human/dummy/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_GODMODE, INNATE_TRAIT)
+	add_traits(list(TRAIT_GODMODE, TRAIT_NO_TELEPORT), INNATE_TRAIT)
 
 /mob/living/carbon/human/dummy/Destroy()
 	in_use = FALSE

@@ -1,12 +1,12 @@
 import { useBackend, useLocalState } from '../backend';
 import {
-  Section,
-  Stack,
-  Input,
   Button,
-  Table,
+  Input,
   LabeledList,
   NoticeBox,
+  Section,
+  Stack,
+  Table,
 } from '../components';
 import { Window } from '../layouts';
 
@@ -100,7 +100,7 @@ const MainScreen = (props) => {
         <Section>
           <Input
             value={networkId}
-            onInput={(e, value) => setNetworkId(value)}
+            onChange={(value) => setNetworkId(value)}
             placeholder="Network ID"
           />
           <Button

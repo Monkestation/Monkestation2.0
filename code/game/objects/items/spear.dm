@@ -192,7 +192,7 @@
 	if(stabbed.stat == CONSCIOUS && prob(50))
 		var/mob/living/simple_animal/hostile/illusion/fake_clone = new(user.loc)
 		fake_clone.faction = user.faction.Copy()
-		fake_clone.Copy_Parent(user, 100, user.health/2.5, 12, 30)
+		fake_clone.copy_parent(user, 100, user.health/2.5, 12, 30)
 		fake_clone.GiveTarget(stabbed)
 
 /*

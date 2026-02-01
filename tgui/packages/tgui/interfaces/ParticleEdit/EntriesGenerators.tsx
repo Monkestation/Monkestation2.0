@@ -2,22 +2,22 @@
 import { useBackend, useLocalState } from '../../backend';
 import {
   Button,
-  LabeledList,
-  NumberInput,
   ColorBox,
   Input,
+  LabeledList,
+  NumberInput,
   Stack,
 } from '../../components';
 import {
-  EntryGeneratorNumbersListProps,
-  FloatGeneratorColorProps,
-  FloatGeneratorProps,
-  ParticleUIData,
+  type EntryGeneratorNumbersListProps,
+  type FloatGeneratorColorProps,
+  type FloatGeneratorProps,
   P_DATA_GENERATOR,
+  type ParticleUIData,
   RandToNumber,
 } from './data';
-import { isStringArray } from './helpers';
 import { GeneratorListEntry } from './Generators';
+import { isStringArray } from './helpers';
 
 export const FloatGenerator = (props: FloatGeneratorProps) => {
   const { act, data } = useBackend<ParticleUIData>();
@@ -42,7 +42,7 @@ export const FloatGenerator = (props: FloatGeneratorProps) => {
                 var: var_name,
                 var_mod: !Array.isArray(float) ? P_DATA_GENERATOR : null,
                 new_value: !Array.isArray(float)
-                  ? ['num', 0, 1, RandToNumber['UNIFORM_RAND']]
+                  ? ['num', 0, 1, RandToNumber.UNIFORM_RAND]
                   : 0,
               })
             }
@@ -53,7 +53,8 @@ export const FloatGenerator = (props: FloatGeneratorProps) => {
             <NumberInput
               animated
               value={float || 0.0}
-              onDrag={(e, value) =>
+              tickWhileDragging
+              onChange={(value) =>
                 act('edit', {
                   var: var_name,
                   new_value: value,
@@ -92,7 +93,7 @@ export const FloatGeneratorColor = (props: FloatGeneratorColorProps) => {
                 var: var_name,
                 var_mod: !Array.isArray(float) ? P_DATA_GENERATOR : null,
                 new_value: !Array.isArray(float)
-                  ? ['num', 0, 1, RandToNumber['UNIFORM_RAND']]
+                  ? ['num', 0, 1, RandToNumber.UNIFORM_RAND]
                   : '#FFFFFF',
               })
             }
@@ -107,7 +108,7 @@ export const FloatGeneratorColor = (props: FloatGeneratorColorProps) => {
           <Stack.Item>
             <Input
               value={float?.toString()}
-              onChange={(e, value) =>
+              onChange={(value) =>
                 act('edit', {
                   var: var_name,
                   new_value: value,
@@ -148,12 +149,7 @@ export const EntryGeneratorNumbersList = (
                 var: var_name,
                 var_mod: !isStringArray(input) ? P_DATA_GENERATOR : null,
                 new_value: !isStringArray(input)
-                  ? [
-                      'sphere',
-                      [0, 0, 0],
-                      [1, 1, 1],
-                      RandToNumber['UNIFORM_RAND'],
-                    ]
+                  ? ['sphere', [0, 0, 0], [1, 1, 1], RandToNumber.UNIFORM_RAND]
                   : [1, 1, 1],
               })
             }
@@ -178,7 +174,8 @@ export const EntryGeneratorNumbersList = (
             <NumberInput
               animated
               value={input || 0}
-              onDrag={(e, value) =>
+              tickWhileDragging
+              onChange={(value) =>
                 act('edit', {
                   var: var_name,
                   new_value: value,
@@ -197,7 +194,8 @@ export const EntryGeneratorNumbersList = (
             <NumberInput
               animated
               value={input[0]}
-              onDrag={(e, value) =>
+              tickWhileDragging
+              onChange={(value) =>
                 act('edit', {
                   var: var_name,
                   new_value: [value, input![1], input![2]],
@@ -207,7 +205,8 @@ export const EntryGeneratorNumbersList = (
             <NumberInput
               animated
               value={input[1]}
-              onDrag={(e, value) =>
+              tickWhileDragging
+              onChange={(value) =>
                 act('edit', {
                   var: var_name,
                   new_value: [input![0], value, input![2]],
@@ -218,7 +217,8 @@ export const EntryGeneratorNumbersList = (
               <NumberInput
                 animated
                 value={input[2]}
-                onDrag={(e, value) =>
+                tickWhileDragging
+                onChange={(value) =>
                   act('edit', {
                     var: var_name,
                     new_value: [input![0], input![1], value],

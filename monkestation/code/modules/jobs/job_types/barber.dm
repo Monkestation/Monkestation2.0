@@ -1,5 +1,5 @@
 /datum/job/barber
-	title = JOB_LATEJOIN_BARBER
+	title = JOB_BARBER
 	description = "Cut hair, spread gossip, judge folks poor fashion taste."
 	department_head = list(JOB_HEAD_OF_PERSONNEL)
 	faction = FACTION_STATION
@@ -17,7 +17,7 @@
 
 	display_order = JOB_DISPLAY_ORDER_BARBER
 	departments_list = list(
-		/datum/job_department/late,
+		/datum/job_department/service,
 		)
 
 	mail_goodies = list(
@@ -29,9 +29,18 @@
 		/obj/item/reagent_containers/spray/super_barbers_aid = 1,
 	)
 
+	alt_titles = list(
+		"Barber",
+		"Stylist",
+		"Colorist",
+		"Hairdresser",
+		"Salon Manager",
+		"Salon Technician",
+	)
+
 	family_heirlooms = list(/obj/item/hairbrush/comb)
 	rpg_title = "Scissorhands"
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
+	job_flags = STATION_JOB_FLAGS
 
 /datum/outfit/job/barber
 	name = "Barber"

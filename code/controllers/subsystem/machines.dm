@@ -98,8 +98,8 @@ SUBSYSTEM_DEF(machines)
 	if(current_part == SSMACHINES_MACHINES_EARLY)
 		//cache for sanic speed (lists are references anyways)
 		var/list/currentrun = src.currentrun
-		while(currentrun.len)
-			var/obj/machinery/thing = currentrun[currentrun.len]
+		while(length(currentrun))
+			var/obj/machinery/thing = currentrun[length(currentrun)]
 			currentrun.len--
 			if(QDELETED(thing) || thing.process_early(wait * 0.1) == PROCESS_KILL)
 				processing_early -= thing
@@ -113,8 +113,8 @@ SUBSYSTEM_DEF(machines)
 	while(current_part in apc_steps)
 		//cache for sanic speed (lists are references anyways)
 		var/list/currentrun = src.currentrun
-		while(currentrun.len)
-			var/obj/machinery/power/apc/apc = currentrun[currentrun.len]
+		while(length(currentrun))
+			var/obj/machinery/power/apc/apc = currentrun[length(currentrun)]
 			currentrun.len--
 			if(QDELETED(apc))
 				processing_apcs -= apc
@@ -130,7 +130,7 @@ SUBSYSTEM_DEF(machines)
 			if(MC_TICK_CHECK)
 				return
 		var/next_index = apc_steps.Find(current_part) + 1
-		if (next_index > apc_steps.len)
+		if (next_index > length(apc_steps))
 			current_part = SSMACHINES_MACHINES
 			src.currentrun = processing.Copy()
 			break
@@ -141,8 +141,8 @@ SUBSYSTEM_DEF(machines)
 	if(current_part == SSMACHINES_MACHINES)
 		//cache for sanic speed (lists are references anyways)
 		var/list/currentrun = src.currentrun
-		while(currentrun.len)
-			var/obj/machinery/thing = currentrun[currentrun.len]
+		while(length(currentrun))
+			var/obj/machinery/thing = currentrun[length(currentrun)]
 			currentrun.len--
 			if(QDELETED(thing) || thing.process(wait * 0.1) == PROCESS_KILL)
 				processing -= thing
@@ -156,8 +156,8 @@ SUBSYSTEM_DEF(machines)
 	if(current_part == SSMACHINES_MACHINES_LATE)
 		//cache for sanic speed (lists are references anyways)
 		var/list/currentrun = src.currentrun
-		while(currentrun.len)
-			var/obj/machinery/thing = currentrun[currentrun.len]
+		while(length(currentrun))
+			var/obj/machinery/thing = currentrun[length(currentrun)]
 			currentrun.len--
 			if(QDELETED(thing) || thing.process_late(wait * 0.1) == PROCESS_KILL)
 				processing_late -= thing
@@ -167,7 +167,7 @@ SUBSYSTEM_DEF(machines)
 
 /datum/controller/subsystem/machines/proc/setup_template_powernets(list/cables)
 	var/obj/structure/cable/PC
-	for(var/A in 1 to cables.len)
+	for(var/A in 1 to length(cables))
 		PC = cables[A]
 		if(!PC.powernet)
 			var/datum/powernet/NewPN = new()

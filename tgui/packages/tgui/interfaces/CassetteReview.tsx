@@ -1,6 +1,6 @@
-import { BooleanLike } from 'common/react';
+import type { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
-import { Section, Button, Stack, Collapsible, Box } from '../components';
+import { Box, Button, Collapsible, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 enum CassetteStatus {

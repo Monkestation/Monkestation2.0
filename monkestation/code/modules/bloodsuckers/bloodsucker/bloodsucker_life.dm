@@ -194,11 +194,6 @@
 	if(!HAS_TRAIT(bloodsuckeruser, TRAIT_MASQUERADE))
 		var/obj/item/organ/internal/heart/current_heart = bloodsuckeruser.get_organ_slot(ORGAN_SLOT_HEART)
 		current_heart?.beating = FALSE
-	var/obj/item/organ/internal/eyes/current_eyes = bloodsuckeruser.get_organ_slot(ORGAN_SLOT_EYES)
-	if(current_eyes)
-		current_eyes.lighting_cutoff = LIGHTING_CUTOFF_HIGH
-		current_eyes.color_cutoffs = list(25, 8, 5)
-		current_eyes.sight_flags |= SEE_MOBS
 	bloodsuckeruser.update_sight()
 
 	if(bloodsuckeruser.stat == DEAD)

@@ -5,13 +5,13 @@ import { useBackend, useLocalState } from '../backend';
 import {
   Box,
   Button,
+  Dropdown,
   Icon,
+  Image,
   Input,
   Section,
   Stack,
   Tabs,
-  Dropdown,
-  Image,
 } from '../components';
 import { Window } from '../layouts';
 
@@ -75,7 +75,7 @@ export const SelectEquipment = (props) => {
                   autoFocus
                   placeholder="Search"
                   value={searchText}
-                  onInput={(e, value) => setSearchText(value)}
+                  onChange={(value) => setSearchText(value)}
                 />
               </Stack.Item>
               <Stack.Item>

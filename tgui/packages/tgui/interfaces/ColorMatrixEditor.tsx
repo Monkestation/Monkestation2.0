@@ -1,12 +1,12 @@
-import { useBackend } from '../backend';
 import { toFixed } from 'common/math';
+import { useBackend } from '../backend';
 import {
   Box,
-  Stack,
-  Section,
+  Button,
   ByondUi,
   NumberInput,
-  Button,
+  Section,
+  Stack,
 } from '../components';
 import { Window } from '../layouts';
 
@@ -45,8 +45,9 @@ export const ColorMatrixEditor = (props) => {
                                 step={0.01}
                                 width="50px"
                                 format={(value) => toFixed(value, 2)}
-                                onDrag={(_, value) => {
-                                  let retColor = currentColor;
+                                tickWhileDragging
+                                onChange={(value) => {
+                                  const retColor = currentColor;
                                   retColor[row * 4 + col] = value;
                                   act('transition_color', {
                                     color: retColor,

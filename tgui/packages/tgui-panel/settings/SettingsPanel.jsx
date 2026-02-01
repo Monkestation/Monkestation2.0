@@ -6,8 +6,7 @@
 
 import { toFixed } from 'common/math';
 import { capitalize } from 'common/string';
-import { useLocalState } from 'tgui/backend';
-import { useDispatch, useSelector } from 'tgui/backend';
+import { useDispatch, useLocalState, useSelector } from 'tgui/backend';
 import {
   Box,
   Button,
@@ -17,35 +16,35 @@ import {
   Icon,
   Input,
   LabeledList,
+  NoticeBox,
   Section,
+  Slider,
   Stack,
   Tabs,
   TextArea,
-  Slider,
-  NoticeBox,
 } from 'tgui/components';
 import { ChatPageSettings } from '../chat';
 import { clearChat, rebuildChat, saveChatToDisk } from '../chat/actions';
+import { chatRenderer } from '../chat/renderer';
 import { THEMES } from '../themes';
+import { disconnectWebsocket, reconnectWebsocket } from '../websocket';
 import {
+  addHighlightSetting,
   changeSettingsTab,
   exportSettings,
-  updateSettings,
-  addHighlightSetting,
   removeHighlightSetting,
   updateHighlightSetting,
+  updateSettings,
 } from './actions';
-import { SETTINGS_TABS, FONTS, WARN_AFTER_HIGHLIGHT_AMT } from './constants';
+import { FONTS, SETTINGS_TABS, WARN_AFTER_HIGHLIGHT_AMT } from './constants';
 import { setEditPaneSplitters } from './scaling';
 import {
   selectActiveTab,
-  selectSettings,
-  selectHighlightSettings,
   selectHighlightSettingById,
+  selectHighlightSettings,
+  selectSettings,
 } from './selectors';
 import { importChatSettings } from './settingsImExport';
-import { reconnectWebsocket, disconnectWebsocket } from '../websocket';
-import { chatRenderer } from '../chat/renderer';
 
 export const SettingsPanel = (props) => {
   const activeTab = useSelector(selectActiveTab);
@@ -164,7 +163,7 @@ export const SettingsGeneral = (props) => {
                 <Input
                   width={'100%'}
                   value={fontFamily}
-                  onChange={(e, value) =>
+                  onChange={(value) =>
                     dispatch(
                       updateSettings({
                         fontFamily: value,
@@ -211,7 +210,7 @@ export const SettingsGeneral = (props) => {
                 unit="px"
                 format={(value) => toFixed(value)}
                 tickWhileDragging
-                onChange={(e, value) =>
+                onChange={(_, value) =>
                   dispatch(updateSettings({ fontSize: value }))
                 }
               />
@@ -228,7 +227,7 @@ export const SettingsGeneral = (props) => {
             value={lineHeight}
             format={(value) => toFixed(value, 2)}
             tickWhileDragging
-            onChange={(e, value) =>
+            onChange={(_, value) =>
               dispatch(
                 updateSettings({
                   lineHeight: value,
@@ -422,7 +421,7 @@ const TextHighlightSetting = (props) => {
             monospace
             placeholder="#ffffff"
             value={highlightColor}
-            onInput={(e, value) =>
+            onChange={(value) =>
               dispatch(
                 updateHighlightSetting({
                   id: id,
@@ -441,7 +440,7 @@ const TextHighlightSetting = (props) => {
         style={{
           width: '100%',
         }}
-        onChange={(e, value) =>
+        onChange={(value) =>
           dispatch(
             updateHighlightSetting({
               id: id,
@@ -502,7 +501,7 @@ const ExperimentalSettings = (props) => {
                     width={'100%'}
                     value={websocketServer}
                     placeholder="localhost:1990"
-                    onChange={(e, value) =>
+                    onChange={(value) =>
                       dispatch(
                         updateSettings({
                           websocketServer: value,
@@ -547,7 +546,7 @@ const ExperimentalSettings = (props) => {
                 value={scrollTrackingTolerance}
                 format={(value) => toFixed(value)}
                 tickWhileDragging
-                onChange={(e, value) =>
+                onChange={(_, value) =>
                   dispatch(
                     updateSettings({
                       scrollTrackingTolerance: value,
@@ -607,7 +606,7 @@ const SettingsStatPanel = (props) => {
                     unit="px"
                     format={(value) => toFixed(value)}
                     tickWhileDragging
-                    onChange={(e, value) =>
+                    onChange={(_, value) =>
                       dispatch(updateSettings({ statFontSize: value }))
                     }
                   />

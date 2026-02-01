@@ -17,7 +17,6 @@
 	blood_overlay_type = "suit"
 	limb_integrity = 0 // disabled for most exo-suits
 	var/suittoggled = FALSE // sec duster toggling and more
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 
 /obj/item/clothing/suit/Initialize(mapload)
 	. = ..()
@@ -47,6 +46,10 @@
 	if(ismob(loc))
 		var/mob/M = loc
 		M.update_worn_oversuit()
+
+/obj/item/clothing/suit/generate_digitigrade_icons(icon/base_icon, greyscale_colors)
+	var/icon/legs = icon(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/digitigrade, greyscale_colors), "oversuit_worn")
+	return replace_icon_legs(base_icon, legs)
 
 /**
  * Wrapper proc to apply shielding through AddComponent().

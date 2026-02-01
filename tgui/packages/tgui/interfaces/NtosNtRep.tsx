@@ -1,15 +1,15 @@
-import { BooleanLike } from 'common/react';
-import { NtosWindow } from '../layouts';
+import type { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
 import {
+  Box,
+  Button,
   Dimmer,
-  Stack,
   Divider,
   Section,
-  Button,
+  Stack,
   TextArea,
-  Box,
 } from '../components';
+import { NtosWindow } from '../layouts';
 
 type Data = {
   rating: number;
@@ -108,7 +108,7 @@ export const NtosNtRepContent = (props) => {
           color={StarColor(rating)}
           onClick={() => act('change_rating', { new_rating: 5 })}
         />
-        {'  ' + RatingFeedback(rating)}
+        {`  ${RatingFeedback(rating)}`}
       </Section>
 
       <Section title="Review" fill>
@@ -116,10 +116,11 @@ export const NtosNtRepContent = (props) => {
           <Stack.Item mb={1} grow>
             <TextArea
               height="100%"
+              fluid
               placeholder="Leave your review/thoughts/comments..."
               maxLength={max_length}
               value={comment}
-              onChange={(e, value) =>
+              onBlur={(value) =>
                 act('set_text', {
                   new_review: value,
                 })

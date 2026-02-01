@@ -36,6 +36,7 @@ export type Dispatch<ActionType extends Action = AnyAction> = (
   action: ActionType,
 ) => void;
 
+// biome-ignore lint/complexity/noBannedTypes: im lazy and a future refactor will nuke this anyways
 type StoreEnhancer = (createStoreFunction: Function) => Function;
 
 type PreparedAction = {
@@ -56,7 +57,7 @@ export const createStore = <State, ActionType extends Action = AnyAction>(
   }
 
   let currentState: State;
-  let listeners: Array<() => void> = [];
+  const listeners: Array<() => void> = [];
 
   const getState = (): State => currentState;
 

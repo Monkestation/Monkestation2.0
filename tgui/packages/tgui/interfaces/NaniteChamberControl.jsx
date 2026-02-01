@@ -3,11 +3,11 @@ import {
   Box,
   Button,
   Collapsible,
-  Table,
   LabeledList,
   NoticeBox,
   NumberInput,
   Section,
+  Table,
 } from '../components';
 import { Window } from '../layouts';
 
@@ -43,7 +43,7 @@ export const NaniteChamberControlContent = (props) => {
 
   return (
     <Section
-      title={'Chamber: ' + occupant_name}
+      title={`Chamber: ${occupant_name}`}
       buttons={
         <Button
           icon={locked ? 'lock' : 'lock-open'}
@@ -103,7 +103,7 @@ export const NaniteChamberControlContent = (props) => {
                       minValue={0}
                       maxValue={500}
                       width="39px"
-                      onChange={(e, value) =>
+                      onChange={(value) =>
                         act('set_safety', {
                           value: value,
                         })
@@ -118,7 +118,7 @@ export const NaniteChamberControlContent = (props) => {
                       step={1}
                       stepPixelSize={3}
                       width="39px"
-                      onChange={(e, value) =>
+                      onChange={(value) =>
                         act('set_cloud', {
                           value: value,
                         })

@@ -1,15 +1,15 @@
 import { useBackend } from '../backend';
-import { Window } from '../layouts';
 import {
-  Section,
+  BlockQuote,
+  Box,
+  Button,
   Divider,
   Flex,
-  Box,
-  BlockQuote,
   Input,
   LabeledList,
-  Button,
+  Section,
 } from '../components';
+import { Window } from '../layouts';
 
 export const NifSoulPoem = (props) => {
   const { act, data } = useBackend();
@@ -48,14 +48,14 @@ export const NifSoulPoem = (props) => {
             <LabeledList.Item label={'Display Name'}>
               <Input
                 value={name_to_send}
-                onInput={(e, value) => act('change_name', { new_name: value })}
+                onChange={(value) => act('change_name', { new_name: value })}
                 width="100%"
               />
             </LabeledList.Item>
             <LabeledList.Item label={'Message'}>
               <Input
                 value={text_to_send}
-                onInput={(e, value) =>
+                onChange={(value) =>
                   act('change_message', { new_message: value })
                 }
                 width="100%"

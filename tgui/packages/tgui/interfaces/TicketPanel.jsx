@@ -1,8 +1,7 @@
-import { useBackend, useLocalState } from '../backend';
-import { Section, Button, Box, Flex, TextArea } from '../components';
-import { Window } from '../layouts';
-import { KEY_ENTER } from 'common/keycodes';
 import { decodeHtmlEntities } from 'common/string';
+import { useBackend, useLocalState } from '../backend';
+import { Box, Button, Flex, Section, TextArea } from '../components';
+import { Window } from '../layouts';
 
 export const TicketPanel = (props) => {
   const { act, data } = useBackend();
@@ -113,7 +112,7 @@ export const TicketPanel = (props) => {
         height={700}
       >
         <Window.Content scrollable>
-          <Section title={data.initiator_key_name + ': ' + data.name}>
+          <Section title={`${data.initiator_key_name}: ${data.name}`}>
             <span
               className="Section__titleText"
               style={{ fontWeight: 'normal' }}
@@ -190,19 +189,15 @@ export const TicketMessages = (props) => {
       <TextArea
         fluid
         placeholder="Message to send"
-        selfclear
+        selfClear
         value={message}
         className="replybox"
         resize="vertical"
-        onChange={(e, value) => {
-          if (e.keyCode === KEY_ENTER) {
-            setMessage('');
-            e.target.value = message;
-            act('send_message', { message: value });
-          } else {
-            setMessage(value);
-          }
+        onEnter={(val) => {
+          act('send_message', { message: val });
+          setMessage('');
         }}
+        onChange={(value) => setMessage(value)}
       />
       <Button
         mt="5px"

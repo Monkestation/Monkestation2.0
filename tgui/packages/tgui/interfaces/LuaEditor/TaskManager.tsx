@@ -1,6 +1,6 @@
 import { useBackend } from '../../backend';
 import { Button, LabeledList, Section, Stack } from '../../components';
-import { CallInfo, LuaEditorData, LuaEditorModal } from './types';
+import type { CallInfo, LuaEditorData, LuaEditorModal } from './types';
 
 type TaskManagerProps = {
   setToCall: (newValue: CallInfo | undefined) => void;

@@ -381,6 +381,8 @@
 
 	if(internal_cell)
 		. += span_info("Right-click it with a screwdriver to eject the [internal_cell].")
+	else
+		. += span_info("The power cell compartment is open and empty.")
 
 /obj/item/modular_computer/examine_more(mob/user)
 	. = ..()
@@ -910,16 +912,19 @@
 	var/atom/droploc = drop_location()
 	remove_pai()
 	eject_file_contents()
-	internal_cell?.forceMove(droploc)
-	computer_id_slot?.forceMove(droploc)
-	//stored_id?.forceMove(droploc)
-	//alt_stored_id?.forceMove(droploc)
-	inserted_disk?.forceMove(droploc)
+	src.eject_stored_items(droploc)
 	if (!disassembled)
 		physical.visible_message(span_notice("\The [src] breaks apart!"))
 	new /obj/item/stack/sheet/iron(droploc, steel_sheet_cost * (disassembled ? 1 : 0.5))
 	relay_qdel() // Needed for /obj/item/modular_computer/processor/relay_qdel()
 	qdel(src)
+
+/obj/item/modular_computer/proc/eject_stored_items(atom/droploc) // Only used for deconstruct()
+	internal_cell?.forceMove(droploc)
+	computer_id_slot?.forceMove(droploc)
+	//stored_id?.forceMove(droploc)
+	//alt_stored_id?.forceMove(droploc)
+	inserted_disk?.forceMove(droploc)
 
 // Ejects the inserted intellicard, if one exists. Used when the computer is deconstructed.
 /obj/item/modular_computer/proc/eject_file_contents()

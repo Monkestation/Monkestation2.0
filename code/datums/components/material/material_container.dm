@@ -279,7 +279,7 @@
 		)
 
 	//1st iteration consumes all items that do not have contents inside
-	//2nd iteration consumes items who do have contents inside(but they were consumed in the 1st iteration si its empty now)
+	//2nd iteration consumes items who do have contents inside(but they were consumed in the 1st iteration so its empty now)
 	for(var/i in 1 to 2)
 		//no point inserting more items
 		if(inserted == MATERIAL_INSERT_ITEM_NO_SPACE)
@@ -302,15 +302,12 @@
 			//can't allow abstract, hologram items
 			if((target_item.item_flags & ABSTRACT) || (target_item.flags_1 & HOLOGRAM_1))
 				continue
-			//untouchable, move it out the way, code copied from recycler
-			if(target_item.resistance_flags & INDESTRUCTIBLE)
-				target_item.forceMove(get_turf(parent))
-				continue
 			//user defined conditions
 			if(SEND_SIGNAL(src, COMSIG_MATCONTAINER_PRE_USER_INSERT, target_item, user) & MATCONTAINER_BLOCK_INSERT)
 				continue
-			//item is either not allowed for redemption, not in the allowed types
-			if((target_item.item_flags & NO_MAT_REDEMPTION) || (allowed_item_typecache && !is_type_in_typecache(target_item, allowed_item_typecache)))
+			//item is either not allowed for redemption, or not in the allowed types, such as INDESTRUCTIBLE items
+			if((target_item.item_flags & NO_MAT_REDEMPTION) || (target_item.resistance_flags & INDESTRUCTIBLE) \
+					|| (allowed_item_typecache && !is_type_in_typecache(target_item, allowed_item_typecache)))
 				if(!(mat_container_flags & MATCONTAINER_SILENT) && i == 1) //count only child items the 1st time around
 					var/list/status_data = chat_msgs["[MATERIAL_INSERT_ITEM_FAILURE]"] || list()
 					var/list/item_data = status_data[target_item.name] || list()

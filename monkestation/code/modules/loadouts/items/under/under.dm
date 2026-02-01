@@ -492,7 +492,7 @@ GLOBAL_LIST_INIT(loadout_miscunders, generate_loadout_items(/datum/loadout_item/
 	item_path = /obj/item/clothing/under/dress/gown
 
 /datum/loadout_item/under/formal/moonlit
-	name = "Regal Ball Gown"
+	name = "Moonlit Gown"
 	item_path = /obj/item/clothing/under/dress/moonlit
 
 /datum/loadout_item/under/formal/trek_command
