@@ -184,10 +184,7 @@ export const ListMapper = (props: ListMapperProps) => {
                   });
                   setModal('call');
                 }}
-                {
-                  // @ts-expect-error
-                  ...thing.props
-                }
+                {...thing.props}
               />
             );
           } else if (thing === null) {
