@@ -16,7 +16,7 @@ GLOBAL_PROTECT(href_token)
 	var/name = "nobody's admin datum (no rank)" //Makes for better runtimes
 	var/client/owner = null
 	var/fakekey = null
-	/// Boolean, or custom pronouns
+	/// Boolean, or custom pronouns. Only applicable when stealth mode is enabled
 	var/showpronouns
 
 	var/datum/marked_datum

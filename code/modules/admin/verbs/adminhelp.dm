@@ -129,7 +129,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	var/num_disconnected = 0
 	L[++L.len] = list("Active Tickets:", "[astatclick.update("[length(active_tickets)]")]", null, REF(astatclick))
 	astatclick.update("[length(active_tickets)]")
-	for(var/datum/admin_help/AH in active_tickets)
+	for(var/datum/admin_help/AH as anything in active_tickets)
 		if(AH.initiator)
 			var/obj/effect/statclick/updated = AH.statclick.update()
 			L[++L.len] = list("#[AH.id]. [AH.initiator_key_name]:", "[updated.name]", REF(AH))
