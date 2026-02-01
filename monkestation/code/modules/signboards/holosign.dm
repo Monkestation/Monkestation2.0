@@ -158,7 +158,7 @@
 
 /obj/item/circuit_component/holo_signboard
 	display_name = "Holographic Signboard"
-	desc = "Output text to a signboard."
+	desc = "Output text to a signboard, insert <br> in the message field to linebreak."
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 	var/datum/port/input/message
