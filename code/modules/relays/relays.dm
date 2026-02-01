@@ -2,6 +2,9 @@
 GLOBAL_VAR(relay_config)
 
 /client/verb/go2relay()
+	set category = "OOC"
+	set name = "Internet Routing Relays"
+
 	if(is_localhost())
 		to_chat(src, span_notice("You are on localhost, this verb is useless to you."))
 		return

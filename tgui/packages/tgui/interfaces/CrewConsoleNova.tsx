@@ -1,4 +1,3 @@
-// THIS IS A NOVA SECTOR UI FILE
 import type { BooleanLike } from 'common/react';
 import { createSearch } from 'common/string';
 

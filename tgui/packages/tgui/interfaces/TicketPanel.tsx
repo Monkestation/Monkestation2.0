@@ -232,6 +232,7 @@ export function TicketPanel() {
                               className={State2Color(data.state)}
                               style={{
                                 textDecoration: 'underline',
+                                whiteSpace: 'nowrap',
                               }}
                             >
                               Ticket #{data.id}
