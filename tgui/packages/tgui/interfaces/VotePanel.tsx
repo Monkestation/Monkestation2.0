@@ -176,7 +176,7 @@ const VoteOptions = (props) => {
                       textAlign={'center'}
                       disabled={!option.canBeInitiated}
                       tooltip={option.message}
-                      content={}
+                      content={option.name}
                       onClick={() =>
                         act('callVote', {
                           voteName: option.name,
