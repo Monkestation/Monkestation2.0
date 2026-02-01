@@ -96,7 +96,7 @@
 					heretic_datum.add_sacrifice_target(hereticTarget)
 				message_admins("Your brothers betrayed you, heretic time")
 			message_admins("Destroying the team that would have been made, as we cant find more brothers")
-			new_team.Destroy()
+			new_team.qdel()
 			return
 		new_team.add_member(starting_brother) //Add the first member we picked to the team that we got when this event rolled
 		new_team.update_name()
