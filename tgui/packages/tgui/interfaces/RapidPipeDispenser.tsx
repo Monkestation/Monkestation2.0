@@ -1,6 +1,5 @@
-import { BooleanLike, classes } from 'common/react';
-import { multiline } from 'common/string';
-import { capitalizeAll } from 'common/string';
+import { type BooleanLike, classes } from 'common/react';
+import { capitalizeAll, multiline } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
 import {
   Box,
@@ -9,8 +8,8 @@ import {
   LabeledList,
   Section,
   Stack,
-  Tabs,
   Table,
+  Tabs,
 } from '../components';
 import { Window } from '../layouts';
 
@@ -275,7 +274,7 @@ const PreviewSelect = (props) => {
           <Box
             className={classes([
               'pipes32x32',
-              preview.dir + '-' + preview.icon_state,
+              `${preview.dir}-${preview.icon_state}`,
             ])}
             style={{
               transform: 'scale(1.5) translate(9.5%, 9.5%)',
@@ -338,7 +337,7 @@ const PipeTypeSection = (props) => {
 
 export const SmartPipeBlockSection = (props) => {
   const { act, data } = useBackend<Data>();
-  const { init_directions = [] } = data;
+  const { init_directions  } = data;
   return (
     <Section fill>
       <Stack vertical textAlign="center">
@@ -359,7 +358,7 @@ export const SmartPipeBlockSection = (props) => {
             <Stack.Item>
               <Button
                 icon="arrow-up"
-                selected={init_directions['north']}
+                selected={init_directions.north}
                 onClick={() =>
                   act('init_dir_setting', {
                     dir_flag: 'north',
@@ -374,7 +373,7 @@ export const SmartPipeBlockSection = (props) => {
             <Stack.Item>
               <Button
                 icon="arrow-left"
-                selected={init_directions['west']}
+                selected={init_directions.west}
                 onClick={() =>
                   act('init_dir_setting', {
                     dir_flag: 'west',
@@ -388,7 +387,7 @@ export const SmartPipeBlockSection = (props) => {
             <Stack.Item>
               <Button
                 icon="arrow-right"
-                selected={init_directions['east']}
+                selected={init_directions.east}
                 onClick={() =>
                   act('init_dir_setting', {
                     dir_flag: 'east',
@@ -401,7 +400,7 @@ export const SmartPipeBlockSection = (props) => {
         <Stack.Item>
           <Button
             icon="arrow-down"
-            selected={init_directions['south']}
+            selected={init_directions.south}
             onClick={() =>
               act('init_dir_setting', {
                 dir_flag: 'south',

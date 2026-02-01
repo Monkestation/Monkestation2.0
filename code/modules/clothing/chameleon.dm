@@ -1296,7 +1296,7 @@
 		cartridge.loaded_projectile.impact_effect_type = template_projectile.impact_effect_type
 		cartridge.loaded_projectile.range = template_projectile.range
 		cartridge.loaded_projectile.suppressed = template_projectile.suppressed
-		cartridge.loaded_projectile.hitsound_wall =	template_projectile.hitsound_wall
+		cartridge.loaded_projectile.hitsound_wall = template_projectile.hitsound_wall
 		cartridge.loaded_projectile.pass_flags = template_projectile.pass_flags
 
 		cartridge.projectile_vars = chameleon_projectile_vars.Copy()

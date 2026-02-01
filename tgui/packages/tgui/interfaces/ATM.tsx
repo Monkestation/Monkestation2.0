@@ -1,7 +1,7 @@
-import { Window } from '../layouts';
+import type { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
-import { Box, Button, Icon, Stack, Section } from '../components';
-import { BooleanLike } from 'common/react';
+import { Box, Button, Icon, Section, Stack } from '../components';
+import { Window } from '../layouts';
 
 type ATMData = {
   flash_sale_present: BooleanLike;

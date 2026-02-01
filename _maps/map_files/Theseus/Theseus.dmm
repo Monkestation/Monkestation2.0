@@ -18851,6 +18851,7 @@
 	name = "Blueshield's Office"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/command/blueshield,
+/obj/effect/mapping_helpers/airlock/access/any/command/nt_rep,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/blueshield)
 "fGn" = (
@@ -63681,6 +63682,7 @@
 	},
 /obj/machinery/duct,
 /obj/effect/mapping_helpers/airlock/access/any/command/nt_rep,
+/obj/effect/mapping_helpers/airlock/access/any/command/blueshield,
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/nt_rep)
 "sCg" = (
@@ -74157,6 +74159,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/any/command/nt_rep,
 /obj/effect/landmark/navigate_destination,
+/obj/effect/mapping_helpers/airlock/access/any/command/blueshield,
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/nt_rep)
 "vxI" = (

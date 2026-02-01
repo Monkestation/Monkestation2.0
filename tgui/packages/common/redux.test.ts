@@ -1,12 +1,12 @@
 import { describe, expect, it } from 'bun:test';
 
 import {
-  Action,
-  Reducer,
+  type Action,
   applyMiddleware,
   combineReducers,
   createAction,
   createStore,
+  type Reducer,
 } from './redux';
 
 // Dummy Reducer
