@@ -194,7 +194,6 @@
 		return
 
 	var/edited_message = replacetextEx_char(message.value, "<br>", "\n")
-	edited_message = replacetextEx_char(message.value, "\<br\>", "\n") //in the event funky shit occurs IDK, might not be needed
 	if(connected_display.set_text(edited_message))
 		investigate_log("Circuit USB ([parent.get_creator()]) set text to \"[connected_display.sign_text || "(none)"]\"", INVESTIGATE_SIGNBOARD)
 		if(is_soft_ic_filtered(message.value))
