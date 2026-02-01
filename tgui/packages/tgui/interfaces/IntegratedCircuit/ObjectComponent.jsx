@@ -1,6 +1,6 @@
-import { Box, Stack, Button } from '../../components';
 import { Component } from 'react';
 import { shallowDiffers } from '../../../common/react';
+import { Box, Button, Stack } from '../../components';
 import { ABSOLUTE_Y_OFFSET, noop } from './constants';
 import { Port } from './Port';
 
@@ -53,8 +53,8 @@ export class ObjectComponent extends Component {
     if (dragPos && isDragging) {
       e.preventDefault();
       const { screenZoomX, screenZoomY, screenX, screenY } = e;
-      let xPos = screenZoomX || screenX;
-      let yPos = screenZoomY || screenY;
+      const xPos = screenZoomX || screenX;
+      const yPos = screenZoomY || screenY;
       if (lastMousePos) {
         this.setState({
           dragPos: {

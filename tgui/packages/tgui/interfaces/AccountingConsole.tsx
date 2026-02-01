@@ -1,3 +1,5 @@
+import type { BooleanLike } from 'common/react';
+import { useBackend, useLocalState } from '../backend';
 import {
   Blink,
   BlockQuote,
@@ -8,10 +10,7 @@ import {
   Stack,
   Tabs,
 } from '../components';
-import { useBackend } from '../backend';
-import { useLocalState } from '../backend';
 import { Window } from '../layouts';
-import { BooleanLike } from 'common/react';
 
 type Data = {
   PlayerAccounts: PlayerAccount[];

@@ -44,7 +44,7 @@ export const NtosMain = (props) => {
       <NtosWindow.Content scrollable>
         {Boolean(
           removable_media.length ||
-          programs.some((program) => program.header_program),
+            programs.some((program) => program.header_program),
         ) && (
           <Section>
             <Stack>

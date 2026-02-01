@@ -1,0 +1,20 @@
+2026-02-01:
+  Absolucy:
+  - qol: The Dragon Form and Polar Bear Form shapeshifts now keep your name when you
+      shapeshift.
+  - map: Moved the ooze suckers in all the 'extra' xenobio pens on Meta to the center
+      of their pens, instead of right up against the door.
+  EssentialTomato:
+  - bugfix: Swapped regular cells for megacells in colony kits.
+  - bugfix: Added missing megacell design to the colony fabricators.
+  JohnFulpWillard:
+  - bugfix: '"Kissing" mob emote is now controllable by the mob emote sound setting.'
+  - bugfix: BSO/NTRep accesses show up to ID consoles & airlock electronics.
+  - balance: Ash Walkers and Lizards understand eachother better.
+  carlarctg, JohnFulpWillard:
+  - qol: Removed retractor step from Autopsy.
+  - rscadd: Autopsy scanners can be used as advanced health analyzers on dead people.
+  wonderinghost:
+  - bugfix: tcomms machines accessible
+  - map: moves around tcomm machines
+  - map: adds blue wire from ptl to atmos

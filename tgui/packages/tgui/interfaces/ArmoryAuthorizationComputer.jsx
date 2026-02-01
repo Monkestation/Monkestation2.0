@@ -1,7 +1,7 @@
 import { useBackend } from '../backend';
 import { Box, Button, LabeledList, Section, Stack, Table } from '../components';
-import { EditableText } from './common/EditableText';
 import { Window } from '../layouts';
+import { EditableText } from './common/EditableText';
 
 export const ArmoryAuthorizationComputer = (props) => {
   const { act, data } = useBackend();
@@ -88,7 +88,7 @@ export const ArmoryAuthorizationComputer = (props) => {
                   const isSelected = legal_reason.title === selected_reason;
                   return (
                     // eslint-disable-next-line react/jsx-key
-                    <Stack.Item>
+                    <Stack.Item key={legal_reason}>
                       <Button
                         color={isSelected ? 'good' : 'average'}
                         disabled={!is_authorized || armory_open}
