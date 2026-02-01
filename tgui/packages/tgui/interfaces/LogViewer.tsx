@@ -104,7 +104,7 @@ const CategoryBar = (props: CategoryBarProps) => {
         <Input
           placeholder="Search"
           value={categorySearch}
-          onChange={(_: any, value: string) => setCategorySearch(value)}
+          onChange={(value: string) => setCategorySearch(value)}
         />
       }
     >
@@ -160,7 +160,10 @@ const validateRegExp = (str: string) => {
 const CategoryViewer = (props: CategoryViewerProps) => {
   const [search, setSearch] = useLocalState('search', '');
   let [searchRegex, setSearchRegex] = useLocalState('searchRegex', false);
-  let [caseSensitive, setCaseSensitive] = useLocalState('caseSensitive', false);
+  const [caseSensitive, setCaseSensitive] = useLocalState(
+    'caseSensitive',
+    false,
+  );
   if (!search && searchRegex) {
     setSearchRegex(false);
     searchRegex = false;
@@ -182,7 +185,7 @@ const CategoryViewer = (props: CategoryViewerProps) => {
           <Input
             placeholder="Search"
             value={search}
-            onChange={(_: any, value: string) => setSearch(value)}
+            onChange={(value: string) => setSearch(value)}
           />
           <Button
             icon={'code'}

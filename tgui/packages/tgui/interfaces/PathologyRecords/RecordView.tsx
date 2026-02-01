@@ -1,15 +1,15 @@
 import {
-  Input,
   Box,
-  Stack,
-  Section,
-  NoticeBox,
-  LabeledList,
   Button,
+  Input,
+  LabeledList,
+  NoticeBox,
+  Section,
+  Stack,
 } from 'tgui/components';
-import { getMedicalRecord } from './helpers';
 import { useBackend, useLocalState } from '../../backend';
-import { MedicalRecordData } from './types';
+import { getMedicalRecord } from './helpers';
+import type { MedicalRecordData } from './types';
 
 /** Views a selected record. */
 export const MedicalRecordView = (props) => {
@@ -109,7 +109,7 @@ const EditableText = (props: Props) => {
       width="50%"
       maxLength={512}
       onEscape={() => setEditing(false)}
-      onEnter={(event, value) => {
+      onEnter={(value) => {
         setEditing(false);
         act('edit_field', { field: field, crew_ref: target_ref, value: value });
       }}

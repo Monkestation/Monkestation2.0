@@ -12,7 +12,7 @@ import {
   Tooltip,
 } from 'tgui/components';
 import { getMedicalRecord } from './helpers';
-import { MedicalNote, MedicalRecordData } from './types';
+import type { MedicalNote, MedicalRecordData } from './types';
 
 /** Small section for adding notes. Passes a ref and note to Byond. */
 export const NoteKeeper = (props) => {
@@ -28,7 +28,7 @@ export const NoteKeeper = (props) => {
 
   const [writing, setWriting] = useLocalState('note', false);
 
-  const addNote = (event, value: string) => {
+  const addNote = (value: string) => {
     act('add_note', {
       crew_ref: crew_ref,
       content: value,

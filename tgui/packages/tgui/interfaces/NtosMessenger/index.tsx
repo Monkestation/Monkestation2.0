@@ -1,24 +1,23 @@
+import { sortBy } from 'common/collections';
+import type { BooleanLike } from 'common/react';
+import { createSearch } from 'common/string';
+import type React from 'react';
+import { useBackend, useLocalState } from '../../backend';
 import {
   Box,
   Button,
-  Icon,
-  Section,
-  Stack,
-  Input,
-  TextArea,
   Dimmer,
   Divider,
   Dropdown,
+  Icon,
+  Input,
+  Section,
+  Stack,
+  TextArea,
 } from '../../components';
-import { useBackend, useLocalState } from '../../backend';
-import { createSearch } from 'common/string';
-import { BooleanLike } from 'common/react';
 import { NtosWindow } from '../../layouts';
-
-import { NtChat, NtMessenger, NtPicture } from './types';
 import { ChatScreen } from './ChatScreen';
-import { sortBy } from 'common/collections';
-import React from 'react';
+import type { NtChat, NtMessenger, NtPicture } from './types';
 
 type NtosMessengerData = {
   can_spam: BooleanLike;
@@ -261,7 +260,7 @@ const ContactsScreen = (props: any) => {
               width="220px"
               placeholder="Search by name or job..."
               value={searchUser}
-              onInput={(_: any, value: string) => setSearchUser(value)}
+              onChange={(value) => setSearchUser(value)}
             />
           </Stack>
         </Section>
@@ -378,7 +377,7 @@ const SendToAllSection = (props) => {
           value={message}
           width="100%"
           placeholder="Send message to everyone..."
-          onInput={(_: any, v: string) => setmessage(v)}
+          onChange={(v) => setmessage(v)}
         />
       </Section>
     </>

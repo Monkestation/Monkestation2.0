@@ -348,7 +348,8 @@
 		if(!istype(sacker_moth_wing) || sacker_moth_wing.burnt)
 			attack_mod -= 2
 	var/obj/item/organ/external/wings/sacker_wing = sacker.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
-	if(sacker_wing)
+//	if(sacker_wing) // MONKESTATION EDIT OLD -- Arachnids use the external wing slot aswell, so we have to check for actual wings
+	if(sacker_wing && istype(sacker_wing)) // MONKESTATION EDIT NEW
 		attack_mod += 2
 
 	if(ishuman(target))

@@ -64,6 +64,7 @@ GLOBAL_LIST_INIT(call_ringtones, list(
 	category = PREFERENCE_CATEGORY_NON_CONTEXTUAL
 	savefile_key = "call_ringtone"
 	savefile_identifier = PREFERENCE_CHARACTER
+	should_update_preview = FALSE
 
 /datum/preference_middleware/call_ringtone
 	COOLDOWN_DECLARE(ringtone_cooldown)

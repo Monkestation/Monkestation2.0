@@ -1,6 +1,6 @@
 import { classes } from 'common/react';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Table, NumberInput } from '../components';
+import { Box, Button, NumberInput, Table } from '../components';
 import { Window } from '../layouts';
 
 const getNumberColor = (number) => {
@@ -18,8 +18,8 @@ export const RouletteNumberCell = (props) => {
     buttonClass = null,
     cellClass = null,
     color,
-    colspan = '1',
-    rowspan = '1',
+    colSpan = '1',
+    rowSpan = '1',
     text,
     value,
   } = props;
@@ -32,8 +32,8 @@ export const RouletteNumberCell = (props) => {
         'Roulette__board-cell-number',
         cellClass,
       ])}
-      colspan={colspan}
-      rowspan={rowspan}
+      colSpan={colSpan}
+      rowSpan={rowSpan}
     >
       <Button
         color={color}
@@ -71,7 +71,7 @@ export const RouletteBoard = () => {
           <RouletteNumberCell
             buttonClass="Roulette__board-button--rowspan-3"
             color="transparent"
-            rowspan="3"
+            rowSpan="3"
             text="0"
             value="0"
           />
@@ -125,7 +125,7 @@ export const RouletteBoard = () => {
             <RouletteNumberCell
               cellClass="Roulette__board-cell-number--colspan-4"
               color="transparent"
-              colspan="4"
+              colSpan="4"
               key={value}
               text={text}
               value={value}
@@ -138,7 +138,7 @@ export const RouletteBoard = () => {
             <RouletteNumberCell
               cellClass="Roulette__board-cell-number--colspan-2"
               color={cell.color}
-              colspan="2"
+              colSpan="2"
               key={cell.value}
               text={cell.text}
               value={cell.value}
@@ -189,7 +189,7 @@ export const RouletteBetTable = (props) => {
             'Roulette',
             'Roulette__lowertable--cell',
             'Roulette__lowertable--spinresult',
-            'Roulette__lowertable--spinresult-' + getNumberColor(data.LastSpin),
+            `Roulette__lowertable--spinresult-${getNumberColor(data.LastSpin)}`,
           ])}
         >
           {data.LastSpin}
@@ -261,7 +261,7 @@ export const RouletteBetTable = (props) => {
                   step={10}
                   stepPixelSize={4}
                   width="40px"
-                  onChange={(e, value) => setCustomBet(value)}
+                  onChange={(value) => setCustomBet(value)}
                 />
               </Table.Cell>
             </Table>
@@ -281,7 +281,7 @@ export const RouletteBetTable = (props) => {
             House Balance:
           </Box>
           <Box inline>
-            {data.HouseBalance ? data.HouseBalance + ' cr' : 'None'}
+            {data.HouseBalance ? `${data.HouseBalance} cr` : 'None'}
           </Box>
         </Table.Cell>
         <Table.Cell className="Roulette__lowertable--cell">

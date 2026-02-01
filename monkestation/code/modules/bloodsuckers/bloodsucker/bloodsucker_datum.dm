@@ -163,6 +163,7 @@
 	RegisterSignal(current_mob, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 	RegisterSignal(current_mob, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 	RegisterSignal(current_mob, COMSIG_HUMAN_ON_HANDLE_BLOOD, PROC_REF(handle_blood))
+	RegisterSignal(current_mob, COMSIG_MOB_UPDATE_SIGHT, PROC_REF(on_update_sight))
 	handle_clown_mutation(current_mob, mob_override ? null : "As a vampiric clown, you are no longer a danger to yourself. Your clownish nature has been subdued by your thirst for blood.")
 	add_team_hud(current_mob)
 	current_mob.clear_mood_event("vampcandle")
@@ -176,6 +177,8 @@
 	ensure_brain_nonvital(current_mob)
 	setup_limbs(current_mob)
 	setup_tracker(current_mob)
+
+	current_mob.update_sight()
 
 #ifdef BLOODSUCKER_TESTING
 	var/turf/user_loc = get_turf(current_mob)
@@ -192,12 +195,13 @@
 /datum/antagonist/bloodsucker/remove_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/current_mob = mob_override || owner.current
-	UnregisterSignal(current_mob, list(COMSIG_ATOM_EXAMINE, COMSIG_ATOM_AFTER_EXPOSE_REAGENTS, COMSIG_MOB_GET_STATUS_TAB_ITEMS, COMSIG_LIVING_LIFE, COMSIG_LIVING_DEATH, COMSIG_MOVABLE_MOVED, COMSIG_HUMAN_ON_HANDLE_BLOOD, SIGNAL_REMOVETRAIT(TRAIT_SHADED), COMSIG_MOB_LOGIN))
+	UnregisterSignal(current_mob, list(COMSIG_ATOM_EXAMINE, COMSIG_ATOM_AFTER_EXPOSE_REAGENTS, COMSIG_MOB_GET_STATUS_TAB_ITEMS, COMSIG_LIVING_LIFE, COMSIG_LIVING_DEATH, COMSIG_MOVABLE_MOVED, COMSIG_HUMAN_ON_HANDLE_BLOOD, COMSIG_MOB_UPDATE_SIGHT, SIGNAL_REMOVETRAIT(TRAIT_SHADED), COMSIG_MOB_LOGIN))
 	handle_clown_mutation(current_mob, removing = FALSE)
 	current_mob.remove_language(/datum/language/vampiric, source = LANGUAGE_BLOODSUCKER)
 
 	cleanup_beacon()
 	cleanup_limbs(current_mob)
+	current_mob.update_sight()
 
 	if(current_mob.hud_used)
 		var/datum/hud/hud_used = current_mob.hud_used
@@ -481,11 +485,6 @@
 	var/obj/item/organ/internal/heart/newheart = owner.current.get_organ_slot(ORGAN_SLOT_HEART)
 	if(newheart)
 		newheart.beating = initial(newheart.beating)
-	var/obj/item/organ/internal/eyes/user_eyes = user.get_organ_slot(ORGAN_SLOT_EYES)
-	if(user_eyes)
-		user_eyes.lighting_cutoff = initial(user_eyes.lighting_cutoff)
-		user_eyes.color_cutoffs = initial(user_eyes.color_cutoffs)
-		user_eyes.sight_flags = initial(user_eyes.sight_flags)
 	user.update_sight()
 
 /// Name shown on antag list
@@ -598,6 +597,12 @@
 		return
 	if(broke_masquerade || length(vassals) || total_blood_level_gain >= 250) // arbitrary number but whatever
 		prey += owner
+
+/datum/antagonist/bloodsucker/proc/on_update_sight(mob/user)
+	SIGNAL_HANDLER
+	user.add_sight(SEE_MOBS)
+	user.lighting_cutoff = max(user.lighting_cutoff, LIGHTING_CUTOFF_HIGH)
+	user.lighting_color_cutoffs = blend_cutoff_colors(user.lighting_color_cutoffs, list(25, 8, 5))
 
 /datum/status_effect/silver_cuffed
 	id = "silver cuffed"

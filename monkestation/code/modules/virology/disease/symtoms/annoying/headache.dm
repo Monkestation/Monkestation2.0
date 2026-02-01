@@ -15,7 +15,7 @@
 	badness = EFFECT_DANGER_ANNOYING
 	base_message_chance = 100
 	max_chance = 20
-	/// Cooldown between stun headaches effects (monkestation addition)
+	/// Cooldown between stun headaches effects
 	COOLDOWN_DECLARE(effect_cooldown)
 
 /datum/symptom/headache/activate(mob/living/carbon/mob)

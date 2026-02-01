@@ -1,6 +1,6 @@
-import { BooleanLike } from 'common/react';
+import type { BooleanLike } from 'common/react';
 import { useBackend, useLocalState } from '../backend';
-import { TextArea, Stack, Button, NoticeBox, Input, Box } from '../components';
+import { Box, Button, Input, NoticeBox, Stack, TextArea } from '../components';
 import { Window } from '../layouts';
 
 type AdminhelpData = {
@@ -44,7 +44,7 @@ export const Adminhelp = (props) => {
               width="100%"
               value={ahelpMessage}
               placeholder="Admin help"
-              onChange={(e, value) => setAhelpMessage(value)}
+              onChange={(value) => setAhelpMessage(value)}
             />
           </Stack.Item>
           {urgentAhelpEnabled && adminCount <= 0 && (
@@ -66,7 +66,7 @@ export const Adminhelp = (props) => {
                       placeholder="Confirmation Prompt"
                       autoFocus
                       fluid
-                      onChange={(e, value) => {
+                      onChange={(value) => {
                         if (value === confirmationText) {
                           setRequestForAdmin(true);
                         }

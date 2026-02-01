@@ -46,11 +46,14 @@
 	victim.apply_damage(20, BURN)
 
 	// Heal the caster for every victim damaged
-	caster.adjustBruteLoss(-10, FALSE)
-	caster.adjustFireLoss(-10, FALSE)
-	caster.adjustToxLoss(-10, FALSE)
-	caster.adjustOxyLoss(-10, FALSE)
+	var/needs_update = FALSE
+	needs_update += caster.adjustBruteLoss(-10, updating_health = FALSE)
+	needs_update += caster.adjustFireLoss(-10, updating_health = FALSE)
+	needs_update += caster.adjustToxLoss(-10, updating_health = FALSE, forced = TRUE)
+	needs_update += caster.adjustOxyLoss(-10, updating_health = FALSE)
 	caster.stamina.adjust(10)
+	if(needs_update)
+		caster.updatehealth()
 
 /obj/effect/temp_visual/eldritch_smoke
 	icon = 'icons/effects/eldritch.dmi'

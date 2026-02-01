@@ -30,6 +30,10 @@ GLOBAL_LIST_EMPTY(tails_list_avian)
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/ornithid,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/ornithid,
 	)
+	bodypart_digitigrade_overrides = list(
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/ornithid,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/ornithid,
+	)
 	species_pain_mod = 1.20 // Fuck it, this will fill a niche that isn't implemented yet.
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	digitigrade_customization = DIGITIGRADE_FORCED

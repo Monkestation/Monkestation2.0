@@ -326,7 +326,7 @@
 		return list("button" = A.selectedbutton, "values" = A.valueslist)
 
 /proc/input_bitfield(mob/User, title, bitfield, current_value, nwidth = 350, nheight = 350, nslidecolor, allowed_edit_list = null, list/picked_from = GLOB.bitfields[bitfield])
-	if (!User || !(bitfield in picked_from))
+	if (!User || !length(picked_from))
 		return
 	var/list/pickerlist = list()
 	for (var/i in picked_from)

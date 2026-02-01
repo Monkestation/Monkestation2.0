@@ -3,8 +3,8 @@ import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Flex, Icon, Input, Stack, Tabs } from '../components';
 
 import { NtosWindow } from '../layouts';
-import { JOB2ICON } from './common/JobToIcon';
 import { jobIsHead, jobToColor } from './CrewConsoleNova';
+import { JOB2ICON } from './common/JobToIcon';
 
 type Data = {
   selected: string;
@@ -25,7 +25,7 @@ type CrewSensor = {
   assignment: string;
   trim: string;
   ijob: number;
-  area: String;
+  area: string;
   dist: number;
   degrees: number;
   zdiff: number;
@@ -123,7 +123,7 @@ const NtosLifelineContent = () => {
             <Input
               placeholder="Search for name..."
               style={{ flex: 1 }}
-              onInput={(e, value) => setSearchQuery(value)}
+              onChange={(value) => setSearchQuery(value)}
             />
             <Button onClick={cycleSortBy}>{SORT_NAMES[sortBy]}</Button>
             <Button onClick={() => setSortAsc(!sortAsc)}>
@@ -136,7 +136,7 @@ const NtosLifelineContent = () => {
               checked={blueshield}
               onClick={() => setBlueshield(!blueshield)}
             >
-              <Icon name={JOB2ICON['Blueshield']} />
+              <Icon name={JOB2ICON.Blueshield} />
             </Button.Checkbox>
           </Flex>
         </Stack.Item>

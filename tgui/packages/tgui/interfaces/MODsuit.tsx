@@ -1,23 +1,23 @@
-import { BooleanLike } from 'common/react';
-import { formatSiUnit } from '../format';
+import type { BooleanLike } from 'common/react';
 import { useBackend, useLocalState } from '../backend';
 import {
+  AnimatedNumber,
+  Box,
   Button,
+  Collapsible,
   ColorBox,
+  Dimmer,
+  Dropdown,
+  Icon,
   LabeledList,
+  NoticeBox,
+  NumberInput,
   ProgressBar,
   Section,
-  Collapsible,
-  Box,
-  Icon,
   Stack,
   Table,
-  Dimmer,
-  NumberInput,
-  AnimatedNumber,
-  Dropdown,
-  NoticeBox,
 } from '../components';
+import { formatSiUnit } from '../format';
 import { Window } from '../layouts';
 
 type MODsuitData = {
@@ -169,9 +169,10 @@ const ConfigureNumberEntry = (props) => {
       value={value}
       minValue={-50}
       maxValue={50}
-      stepPixelSize={5}
+      stepPixelSize={2}
+      step={1}
       width="39px"
-      onChange={(e, value) =>
+      onChange={(value) =>
         act('configure', {
           key: name,
           value: value,
@@ -410,8 +411,8 @@ const SuitStatusSection = (props) => {
             content={
               link_freq
                 ? link_call
-                  ? 'Calling (' + link_call + ')'
-                  : 'Call (' + link_id + ')'
+                  ? `Calling (${link_call})`
+                  : `Call (${link_id})`
                 : 'Frequency Unset'
             }
             onClick={() => act('call')}

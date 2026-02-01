@@ -1,22 +1,23 @@
-import { classes } from 'common/react';
-import { useBackend } from '../backend';
-import { Button, Image, Input, Section, Stack, Tooltip } from '../components';
-import { NtosWindow } from '../layouts';
 import { useState } from 'react';
+import { Button, Image, Input, Section, Tooltip } from 'tgui-core/components';
+import { classes } from 'tgui-core/react';
 import { createSearch } from 'tgui-core/string';
 
-type Emoji = {
-  name: string;
-};
+import { useBackend } from '../backend';
+import { NtosWindow } from '../layouts';
 
 type Data = {
   emoji_list: Emoji[];
 };
 
-export function NtosEmojipedia(props) {
+type Emoji = {
+  name: string;
+};
+
+export const NtosEmojipedia = (props) => {
   const { data } = useBackend<Data>();
-  const { emoji_list } = data;
-  const [filter, updatefilter] = useState('');
+  const { emoji_list = [] } = data;
+  const [filter, setFilter] = useState('');
 
   const search = createSearch<Emoji>(filter, (emoji) => emoji.name);
   const filteredEmojis = emoji_list.filter(search);
@@ -26,29 +27,27 @@ export function NtosEmojipedia(props) {
       <NtosWindow.Content scrollable>
         <Section
           // required: follow semantic versioning every time you touch this file
-          title={'Emojipedia V2.7.10' + (filter ? ` - ${filter}` : '')}
+          title={`Emojipedia V2.7.11${filter ? ` - ${filter}` : ''}`}
           buttons={
-            <Stack>
+            <>
               <Input
                 placeholder="Search by name"
                 value={filter}
-                onChange={(_, value) => updatefilter(value)}
+                onChange={setFilter}
               />
               <Button
-                tooltip="Click on an emoji to copy its tag!"
+                tooltip={'Click on an emoji to copy its tag!'}
                 tooltipPosition="bottom"
                 icon="circle-question"
               />
-            </Stack>
+            </>
           }
         >
           {filteredEmojis.map((emoji) => (
-            <Tooltip content={emoji.name} key={emoji.name}>
+            <Tooltip key={emoji.name} content={emoji.name}>
               <Image
-                key={emoji.name}
-                className={classes(['emojipedia16x16', emoji.name])}
-                as="img"
                 m={0}
+                className={classes(['emojipedia16x16', emoji.name])}
                 onClick={() => {
                   copyText(emoji.name);
                 }}
@@ -59,13 +58,13 @@ export function NtosEmojipedia(props) {
       </NtosWindow.Content>
     </NtosWindow>
   );
-}
+};
 
-function copyText(text: string): void {
+const copyText = (text: string) => {
   const input = document.createElement('input');
   input.value = text;
   document.body.appendChild(input);
   input.select();
   document.execCommand('copy');
   document.body.removeChild(input);
-}
+};

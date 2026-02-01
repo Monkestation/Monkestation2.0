@@ -1,13 +1,6 @@
 import { useBackend, useLocalState } from '../backend';
-import {
-  Box,
-  Button,
-  Section,
-  Table,
-  TextArea,
-  Stack,
-} from '../components';
-import { BoxProps } from '../components/Box';
+import { Box, Button, Section, Stack, Table, TextArea } from '../components';
+import type { BoxProps } from '../components/Box';
 import { Window } from '../layouts';
 
 type PlayerData = {
@@ -279,7 +272,7 @@ export const VethPlayerPanel = (_props) => {
                         autoFocus
                         placeholder="Search by name, old name, job, or ckey"
                         value={searchTerm}
-                        onInput={(_, value) => setSearchTerm(value)}
+                        onChange={(value) => setSearchTerm(value)}
                         height="2rem"
                         width="500px"
                         className="VethPlayerPanel__search"

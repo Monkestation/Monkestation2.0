@@ -5,7 +5,7 @@
 
 /datum/heretic_knowledge/limited_amount/risen_corpse
 	name = "Shattered Ritual"
-	desc = "Allows you to transmute a corpse with a soul, a pair of latex or nitrile gloves, and \
+	desc = "Allows you to transmute a corpse or oozeling core with a soul, a pair of latex or nitrile gloves, and \
 		and any exosuit clothing (such as armor) to create a Shattered Risen. \
 		Shattered Risen are strong ghouls that have 125 health, but cannot hold items, \
 		instead having two brutal weapons for hands. You can only create one at a time."
@@ -45,6 +45,20 @@
 		// We will only accept valid bodies with a mind, or with a ghost connected that used to control the body
 		selected_atoms += body
 		return TRUE
+
+	var/obj/item/organ/internal/brain/slime/slime_core = locate() in atoms
+	if(slime_core)
+		if(!slime_core.mind)
+			to_chat(user, span_hierophant_warning("[slime_core] is mindless and cannot be made into a ghoul."))
+		else if(!slime_core.brainmob?.client && !slime_core.brainmob?.get_ghost(ghosts_with_clients = TRUE))
+			to_chat(user, span_hierophant_warning("[slime_core] is soulless and cannot be made into a ghoul."))
+		else
+			var/mob/living/carbon/human/new_slime_body = slime_core.rebuild_body(nugget = FALSE, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
+			if(!QDELETED(new_slime_body))
+				// ELSE THE CORE GETS DELETED AND WEIRD SHIT HAPPENS
+				atoms -= slime_core
+				selected_atoms += new_slime_body
+				return TRUE
 
 	loc.balloon_alert(user, "ritual failed, no valid body!")
 	return FALSE

@@ -1,3 +1,5 @@
+import { round, toFixed } from 'common/math';
+import { multiline } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
 import {
   AnimatedNumber,
@@ -5,13 +7,11 @@ import {
   Button,
   LabeledList,
   NumberInput,
-  Section,
   RoundGauge,
+  Section,
   Stack,
 } from '../components';
 import { Window } from '../layouts';
-import { round, toFixed } from 'common/math';
-import { multiline } from 'common/string';
 
 export const ChemReactionChamber = (props) => {
   const { act, data } = useBackend();
@@ -51,7 +51,7 @@ export const ChemReactionChamber = (props) => {
                       value={round(targetTemp, 0.1)}
                       minValue={0}
                       maxValue={1000}
-                      onDrag={(e, value) =>
+                      onChange={(value) =>
                         act('temperature', {
                           target: value,
                         })
@@ -70,7 +70,7 @@ export const ChemReactionChamber = (props) => {
                     <Stack.Item grow>
                       <AnimatedNumber
                         value={temperature}
-                        format={(value) => toFixed(value) + ' K'}
+                        format={(value) => `${toFixed(value)} K`}
                       />
                     </Stack.Item>
                     <Stack.Item grow>
@@ -156,7 +156,8 @@ export const ChemReactionChamber = (props) => {
                         step={1}
                         stepPixelSize={3}
                         width="39px"
-                        onDrag={(e, value) =>
+                        tickWhileDragging
+                        onChange={(value) =>
                           act('acidic', {
                             target: value,
                           })
@@ -171,7 +172,8 @@ export const ChemReactionChamber = (props) => {
                         step={1}
                         stepPixelSize={3}
                         width="39px"
-                        onDrag={(e, value) =>
+                        tickWhileDragging
+                        onChange={(value) =>
                           act('alkaline', {
                             target: value,
                           })
@@ -203,7 +205,8 @@ export const ChemReactionChamber = (props) => {
                         step={1}
                         stepPixelSize={3}
                         width="39px"
-                        onDrag={(e, value) => setReagentQuantity(value)}
+                        tickWhileDragging
+                        onChange={(value) => setReagentQuantity(value)}
                       />
                       <Box inline mr={1} />
                     </Stack.Item>
@@ -215,7 +218,7 @@ export const ChemReactionChamber = (props) => {
                       <Stack.Item key={reagent}>
                         <Stack fill>
                           <Stack.Item mt={0.25} textColor="label">
-                            {reagent.name + ':'}
+                            {`${reagent.name}:`}
                           </Stack.Item>
                           <Stack.Item mt={0.25} grow>
                             {reagent.required_reagent}

@@ -3,20 +3,20 @@ import {
   Box,
   Button,
   ColorBox,
+  Divider,
   Flex,
-  Stack,
   Icon,
   Image,
   Input,
   LabeledList,
   Section,
+  Stack,
   Table,
-  Divider,
 } from '../components';
 import { Window } from '../layouts';
 
 type ColorEntry = {
-  index: Number;
+  index: number;
   value: string;
 };
 
@@ -24,7 +24,7 @@ type SpriteData = {
   icon_states: string[];
   finished: string;
   steps: SpriteEntry[];
-  time_spent: Number;
+  time_spent: number;
 };
 
 type SpriteEntry = {
@@ -76,7 +76,7 @@ const ConfigDisplay = (props) => {
           <Button icon="cogs" onClick={() => act('select_config')} />
           <Input
             value={data.greyscale_config}
-            onChange={(_, value) =>
+            onChange={(value) =>
               act('load_config_from_string', { config_string: value })
             }
           />
@@ -100,7 +100,7 @@ const ColorDisplay = (props) => {
           />
           <Input
             value={colors.map((item) => item.value).join('')}
-            onChange={(_, value) =>
+            onChange={(value) =>
               act('recolor_from_string', { color_string: value })
             }
           />
@@ -125,7 +125,7 @@ const ColorDisplay = (props) => {
             <Input
               value={item.value}
               width={7}
-              onChange={(_, value) =>
+              onChange={(value) =>
                 act('recolor', { color_index: item.index, new_color: value })
               }
             />
@@ -173,7 +173,7 @@ const SingleDirection = (props) => {
       <Button
         content={DirectionAbbreviation[dir]}
         tooltip={`Sets the direction of the preview sprite to ${dir}`}
-        disabled={`${dir}` === data.sprites_dir ? true : false}
+        disabled={`${dir}` === data.sprites_dir}
         textAlign="center"
         onClick={() => act('change_dir', { new_sprite_dir: dir })}
         lineHeight={3}

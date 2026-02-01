@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Slider, Button, Stack, Section } from '../components';
+import { Button, Section, Slider, Stack } from '../components';
 import { Window } from '../layouts';
 
 export const ArtifactZapper = (props) => {
@@ -19,7 +19,7 @@ export const ArtifactZapper = (props) => {
                 step={100}
                 unit={'Shock Strength'}
                 tickWhileDragging
-                onChange={(e, nu) => act('strength', { target: nu })}
+                onChange={(_, nu) => act('strength', { target: nu })}
               />
             </Stack.Item>
             <Stack.Item>

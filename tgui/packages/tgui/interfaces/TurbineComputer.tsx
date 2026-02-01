@@ -1,13 +1,13 @@
-import { BooleanLike } from 'common/react';
+import type { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
 import {
+  Box,
   Button,
   LabeledList,
-  Section,
-  Box,
   Modal,
-  ProgressBar,
   NumberInput,
+  ProgressBar,
+  Section,
 } from '../components';
 import { Window } from '../layouts';
 
@@ -81,7 +81,8 @@ export const TurbineComputer = (props) => {
                 step={1}
                 minValue={1}
                 maxValue={100}
-                onDrag={(e, value) =>
+                tickWhileDragging
+                onChange={(value) =>
                   act('regulate', {
                     regulate: value * 0.01,
                   })

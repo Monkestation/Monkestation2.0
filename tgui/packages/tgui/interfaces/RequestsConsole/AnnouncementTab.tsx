@@ -1,6 +1,6 @@
 import { useBackend, useLocalState } from '../../backend';
-import { Button, NoticeBox, Section, TextArea, Stack } from '../../components';
-import { RequestsData } from './types';
+import { Button, NoticeBox, Section, Stack, TextArea } from '../../components';
+import type { RequestsData } from './types';
 
 export const AnnouncementTab = (props) => {
   const { act, data } = useBackend<RequestsData>();
@@ -14,7 +14,7 @@ export const AnnouncementTab = (props) => {
           maxLength={1025}
           height="100%"
           value={messageText}
-          onChange={(_, value) => setMessageText(value)}
+          onChange={(value) => setMessageText(value)}
           placeholder="Type your announcement..."
         />
       </Stack.Item>

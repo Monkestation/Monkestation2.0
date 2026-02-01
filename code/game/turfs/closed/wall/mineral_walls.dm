@@ -103,6 +103,10 @@
 	. = ..()
 	RegisterSignal(src, COMSIG_ATOM_PROPAGATE_RAD_PULSE, PROC_REF(radiate))
 
+/turf/closed/wall/mineral/uranium/Destroy()
+	UnregisterSignal(src, COMSIG_ATOM_PROPAGATE_RAD_PULSE)
+	return ..()
+
 /turf/closed/wall/mineral/uranium/proc/radiate()
 	SIGNAL_HANDLER
 	if(active)

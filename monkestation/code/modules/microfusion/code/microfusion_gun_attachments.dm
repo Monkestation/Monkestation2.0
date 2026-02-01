@@ -394,7 +394,7 @@ Enables you to change the light color of the laser.
 	chambered?.loaded_projectile.light_color = color_to_apply
 
 /obj/item/microfusion_gun_attachment/rgb/proc/select_color(mob/living/user)
-	var/new_color = input(user, "Please select your new projectile color", "Laser color", color_to_apply) as null|color
+	var/new_color = tgui_color_picker(user, "Please select your new projectile color", "Laser color", color_to_apply)
 
 	if(!new_color)
 		return

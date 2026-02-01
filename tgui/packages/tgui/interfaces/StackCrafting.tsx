@@ -1,6 +1,6 @@
 import { clamp } from 'common/math';
 import { createSearch, toTitleCase } from 'common/string';
-import React, { ReactNode, useState } from 'react';
+import { type ReactNode, useState } from 'react';
 import { useBackend } from '../backend';
 import {
   Box,
@@ -126,7 +126,7 @@ export const StackCrafting = (_props) => {
               <Input
                 autoFocus
                 value={searchText}
-                onInput={(e, value) => setSearchText(value)}
+                onChange={(value) => setSearchText(value)}
                 mx={1}
               />
             </>
@@ -163,7 +163,7 @@ const RecipeListBox = (props: RecipeListProps) => {
                 borderTop: 'none',
                 borderRadius: '0 0 0.33em 0.33em',
               }}
-             />
+            />
           );
         } else {
           return <RecipeBox key={title} title={title} recipe={recipe} />;

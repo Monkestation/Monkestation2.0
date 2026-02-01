@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Slider, Button, Stack, NoticeBox, Section, Box } from '../components';
+import { Box, Button, NoticeBox, Section, Slider, Stack } from '../components';
 import { Window } from '../layouts';
 
 export const ArtifactXray = (props) => {
@@ -41,7 +41,7 @@ export const ArtifactXray = (props) => {
                     step={1}
                     unit={'Pulse Strength'}
                     tickWhileDragging
-                    onChange={(e, nu) => act('change_rate', { target: nu })}
+                    onChange={(_, nu) => act('change_rate', { target: nu })}
                   />
                 </Stack.Item>
                 <Stack.Item>
