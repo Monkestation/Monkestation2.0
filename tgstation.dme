@@ -2873,6 +2873,7 @@
 #include "code\modules\admin\ipintel.dm"
 #include "code\modules\admin\IsBanned.dm"
 #include "code\modules\admin\known_alts.dm"
+#include "code\modules\admin\legacy_create.dm"
 #include "code\modules\admin\outfit_editor.dm"
 #include "code\modules\admin\outfit_manager.dm"
 #include "code\modules\admin\outfits.dm"

@@ -45,7 +45,14 @@
 	else
 		dat += "<i>Game Mode Panel (SSgamemode not initialized yet)</i>"
 	dat += "<hr/>"
-	dat += "<a href='byond://?src=[REF(src)];[HrefToken()];spawn_panel=1'>Spawn Panel</a><br>"
+	dat += "<a href='byond://?src=[REF(src)];[HrefToken()];spawn_panel=1'>Spawn Panel</a><br><br>"
+
+	dat += {"
+		<A href='byond://?src=[REF(src)];[HrefToken()];create_object=1'>Create Object (LEGACY)</A><br>
+		<A href='byond://?src=[REF(src)];[HrefToken()];quick_create_object=1'>Quick Create Object (LEGACY)</A><br>
+		<A href='byond://?src=[REF(src)];[HrefToken()];create_turf=1'>Create Turf (LEGACY)</A><br>
+		<A href='byond://?src=[REF(src)];[HrefToken()];create_mob=1'>Create Mob (LEGACY)</A><br>
+		"}
 
 	if(marked_datum && istype(marked_datum, /atom))
 		dat += "<a href='byond://?src=[REF(src)];[HrefToken()];dupe_marked_datum=1'>Duplicate Marked Datum</a><br>"
