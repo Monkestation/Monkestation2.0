@@ -8176,6 +8176,13 @@
 "cXW" = (
 /turf/open/floor/carpet/green,
 /area/station/maintenance/port/aft)
+"cYa" = (
+/obj/machinery/plumbing/ooze_sucker{
+	mapping_id = "pen3";
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/station/science/xenobiology)
 "cYc" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
@@ -9454,6 +9461,13 @@
 "duI" = (
 /turf/closed/wall,
 /area/station/command/bridge)
+"duZ" = (
+/obj/machinery/plumbing/ooze_sucker{
+	mapping_id = "pen2";
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/station/science/xenobiology)
 "dvh" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
@@ -13350,10 +13364,7 @@
 	name = "Containment Pen #6";
 	req_access = list("xenobiology")
 	},
-/obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "pen2";
-	dir = 8
-	},
+/obj/machinery/duct,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "ePu" = (
@@ -17194,10 +17205,7 @@
 	name = "Containment Pen #5";
 	req_access = list("xenobiology")
 	},
-/obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "pen3";
-	dir = 8
-	},
+/obj/machinery/duct,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "gjF" = (
@@ -22260,10 +22268,7 @@
 	name = "Containment Pen #8";
 	req_access = list("xenobiology")
 	},
-/obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "pen1";
-	dir = 4
-	},
+/obj/machinery/duct,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "hVE" = (
@@ -23330,10 +23335,7 @@
 	name = "Containment Pen #3";
 	req_access = list("xenobiology")
 	},
-/obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "pen5";
-	dir = 8
-	},
+/obj/machinery/duct,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "imV" = (
@@ -34505,6 +34507,13 @@
 /obj/effect/mapping_helpers/mail_sorting/science/ordnance,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/aft/lesser)
+"lYv" = (
+/obj/machinery/plumbing/ooze_sucker{
+	mapping_id = "pen1";
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/station/science/xenobiology)
 "lYx" = (
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
@@ -44555,10 +44564,7 @@
 	name = "Containment Pen #1";
 	req_access = list("xenobiology")
 	},
-/obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "pen7";
-	dir = 4
-	},
+/obj/machinery/duct,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "psV" = (
@@ -47672,10 +47678,7 @@
 	name = "Containment Pen #4";
 	req_access = list("xenobiology")
 	},
-/obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "pen4";
-	dir = 8
-	},
+/obj/machinery/duct,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "qvZ" = (
@@ -49415,6 +49418,13 @@
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/storage)
+"raX" = (
+/obj/machinery/plumbing/ooze_sucker{
+	mapping_id = "pen5";
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/station/science/xenobiology)
 "rbs" = (
 /obj/structure/cable,
 /obj/structure/table,
@@ -55219,6 +55229,13 @@
 /obj/effect/mapping_helpers/airlock/access/any/medical/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
+"tbo" = (
+/obj/machinery/plumbing/ooze_sucker{
+	mapping_id = "pen7";
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/station/science/xenobiology)
 "tbp" = (
 /obj/effect/turf_decal/tile/purple/fourcorners,
 /obj/machinery/door/airlock/command/glass{
@@ -59587,6 +59604,13 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/lockers)
+"uCc" = (
+/obj/machinery/plumbing/ooze_sucker{
+	mapping_id = "pen4";
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/station/science/xenobiology)
 "uCq" = (
 /obj/structure/closet/firecloset,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -113721,7 +113745,7 @@ aaa
 aaa
 cXP
 mtu
-mtu
+tbo
 mtu
 jfS
 bQQ
@@ -113735,7 +113759,7 @@ mJQ
 ces
 elm
 mtu
-mtu
+lYv
 mtu
 cXP
 aaa
@@ -118090,7 +118114,7 @@ wrc
 oyj
 xiL
 mtu
-mtu
+raX
 vHm
 shY
 qvQ
@@ -118104,7 +118128,7 @@ shY
 gjv
 aft
 xCA
-mtu
+duZ
 mtu
 xiL
 lmn
@@ -118350,7 +118374,7 @@ rTi
 iXS
 vHm
 xCA
-mtu
+uCc
 vHm
 fHs
 ycv
@@ -118358,7 +118382,7 @@ pbB
 kCw
 gRY
 xCA
-mtu
+cYa
 vHm
 xCA
 iXS

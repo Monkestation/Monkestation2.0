@@ -474,3 +474,37 @@
       ground you won't get hit by the flash of flashbangs.
   Tractor-Maam:
   - balance: removed 2 steps from robotic wound tending.
+2026-01-31:
+  Absolucy, Gboster-0:
+  - qol: Made the voting menu into a HUD element, able to be toggled in game preferences.
+  Absolucy, LT3:
+  - bugfix: Large airlocks are now a subtype and function on both tiles.
+  - code_imp: Removed some redundant code for airlocks.
+  JohnFulpWillard:
+  - bugfix: '[Theseus] NT Rep & BSO can now access eachother''s offices again.'
+  MissClassyPineapple:
+  - bugfix: Wylom Antimateriel Rifle no longer launches everyone. Only monkeys, dwarves,
+      or those thinking that they can onehand it.
+  - bugfix: M90GL can now have its secondary firing pin changed. Use rightclick with
+      the tools to do so.
+  SirNightKnight:
+  - code_imp: demodularized monkestation's plasmaman clothing sprites and implements
+      them.
+  - qol: plasmamen can have facial hair.
+  - balance: plasmaman envirosuits and gloves are fire proof.
+  - balance: plasmaman enviro gloves are considered thick material.
+  - qol: plasmaman atmos enviro gloves have quick carry same as regular atmos gloves.
+  - bugfix: fixed plasmaman helmet graffiti not washing off.
+  - bugfix: plasmaman helmets cannot have hats stacked on them as they have their
+      own logic.
+  - bugfix: DNA scanners cannot modify or scan mobs who are geneless or don't have
+      DNA regardless of scanner level.
+  - bugfix: fixed some weird code logic where a DNA scanner's scanner had to be exactly
+      tier 3 to scan bad DNA mobs.
+  - bugfix: fixed paradox clones not spawning in maintenance.
+  - bugfix: fixed paradox clones not copying the original's quirks
+  - bugfix: paradox clones copy the voice pattern of the original.
+  - bugfix: fixed paradox clones of plasmamen not getting their outfit correctly.
+  - bugfix: fixed some space helmets not hiding eye slot items properly.
+  - code_imp: demodularized hat stacking.
+  - code_imp: moved plasmaman gloves to their own dmi file.
