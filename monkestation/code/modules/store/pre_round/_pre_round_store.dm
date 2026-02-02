@@ -77,6 +77,9 @@ GLOBAL_LIST_INIT(pre_round_items, init_pre_round_items())
 		if("attempt_buy")
 			attempt_buy(params)
 			return TRUE
+		if("change_slot")
+			ui.user.client.change_character_slot()
+			return TRUE
 
 /datum/pre_round_store/proc/attempt_buy(list/params)
 	var/store_item_type = text2path(params["path"])
