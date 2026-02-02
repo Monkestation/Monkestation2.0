@@ -65,7 +65,7 @@
 	invisibility = INVISIBILITY_NONE
 	animate(src, alpha = 255, time = time, easing = EASE_OUT)
 
-/atom/movable/screen/mapvote_hud/proc/fade_out(time = 3)
+/atom/movable/screen/mapvote_hud/proc/fade_out(time = 0.3 SECONDS)
 	if(fade_timer)
 		deltimer(fade_timer)
 
