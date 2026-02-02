@@ -1,0 +1,5 @@
+author: "notghosti"
+delete-after: True
+changes:
+  - map: "Escape pods hallway and Pathology are now properly on camera."
+  - map: "Garden spawns with only 1 set of a variety of seeds, instead of the giant pile of 5."

@@ -4,11 +4,11 @@
  * @license MIT
  */
 
-import { Store } from 'common/redux';
-import { Window } from './layouts';
+import type { Store } from 'common/redux';
 import { selectBackend } from './backend';
 import { selectDebug } from './debug/selectors';
 import { LoadingScreen } from './interfaces/common/LoadingToolbox';
+import { Window } from './layouts';
 
 const requireInterface = require.context('./interfaces');
 

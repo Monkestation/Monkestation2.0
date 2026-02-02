@@ -1,3 +1,5 @@
+import { createSearch } from '../../common/string';
+import { useBackend, useLocalState } from '../backend';
 import {
   Button,
   Divider,
@@ -7,10 +9,7 @@ import {
   Stack,
   Tabs,
 } from '../components';
-import { useBackend, useLocalState } from '../backend';
-
 import { Window } from '../layouts';
-import { createSearch } from '../../common/string';
 
 type Data = {
   netsuit: string;

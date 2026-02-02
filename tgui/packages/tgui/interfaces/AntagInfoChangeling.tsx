@@ -1,18 +1,18 @@
-import { BooleanLike } from 'common/react';
+import type { BooleanLike } from 'common/react';
 import { multiline } from 'common/string';
 import { useBackend, useSharedState } from '../backend';
 import {
   Button,
   Dimmer,
   Dropdown,
+  NoticeBox,
   Section,
   Stack,
-  NoticeBox,
 } from '../components';
 import { Window } from '../layouts';
 import {
+  type Objective,
   ObjectivePrintout,
-  Objective,
   ReplaceObjectivesButton,
 } from './common/Objectives';
 

@@ -82,6 +82,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 		/datum/quirk/item_quirk/signer,
 		/datum/quirk/phobia,
 		/datum/quirk/indebted,
+		/datum/quirk/dnr,
 		/datum/quirk/item_quirk/allergic,
 		/datum/quirk/item_quirk/brainproblems,
 		/datum/quirk/item_quirk/junkie,
@@ -133,7 +134,13 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 		. += span_red("You could probably use the core in-hand to snuff out the tracking signal and retrieve the items within it.")
 	else
 		. += span_red("You could probably use the core in-hand to retrieve the items within it.")
-	if(mind?.dnr)
+	var/has_dnr_quirk = FALSE
+	if(!isnull(stored_quirks))
+		for(var/datum/quirk/quirk in stored_quirks)
+			if(istype(quirk, /datum/quirk/dnr))
+				has_dnr_quirk = TRUE
+				break
+	if(mind?.dnr || has_dnr_quirk)
 		. += span_warning("It looks dull and faded, as if the soul within the core had moved on...")
 	else if((brainmob && (brainmob.client || brainmob.get_ghost())) || (mind?.current && (mind.current.client || mind.current.get_ghost())) || decoy_override)
 		if(isnull(stored_dna))
@@ -331,7 +338,15 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 
 /obj/item/organ/internal/brain/slime/check_for_repair(obj/item/item, mob/user)
 	if(item.is_drainable() && item.reagents.has_reagent(/datum/reagent/toxin/plasma)) //attempt to heal the brain
-		if(mind?.dnr)
+
+		var/has_dnr_quirk = FALSE
+		if(!isnull(stored_quirks))
+			for(var/datum/quirk/quirk in stored_quirks)
+				if(istype(quirk, /datum/quirk/dnr))
+					has_dnr_quirk = TRUE
+					break
+
+		if(mind?.dnr || has_dnr_quirk)
 			to_chat(user, span_warning("The soul of [src] has departed..."))
 			user.balloon_alert(user, "core's soul has departed...")
 			return FALSE
@@ -355,7 +370,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 			to_chat(user, span_warning("You failed to pour the contents of [item] onto [src]!"))
 			return FALSE
 
-		if(mind?.dnr)
+		if(mind?.dnr || has_dnr_quirk)
 			to_chat(user, span_warning("The soul of [src] has departed..."))
 			user.balloon_alert(user, "core's soul has departed...")
 			return FALSE

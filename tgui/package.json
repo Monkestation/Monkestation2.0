@@ -16,7 +16,6 @@
 		"tgui:tsc": "tsc"
 	},
 	"devDependencies": {
-		"@typescript-eslint/parser": "^5.62.0",
 		"@happy-dom/global-registrator": "^20.0.11",
 		"@rspack/cli": "^1.6.8",
 		"@rspack/core": "^1.6.8",
@@ -26,11 +25,6 @@
 		"@types/webpack-env": "^1.18.8",
 		"@types/wicg-file-system-access": "^2023.10.6",
 		"css-loader": "^7.1.2",
-		"eslint": "^7.32.0",
-		"eslint-config-prettier": "^9.0.0",
-		"eslint-plugin-react": "^7.33.2",
-		"eslint-plugin-unused-imports": "^1.1.5",
-		"prettier": "^3.7.4",
 		"sass-embedded": "^1.97.1",
 		"sass-loader": "^16.0.6",
 		"typescript": "^5.8.3"

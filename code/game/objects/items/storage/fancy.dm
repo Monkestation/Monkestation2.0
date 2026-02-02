@@ -132,6 +132,17 @@
 
 	. += image(icon = initial(icon), icon_state = "[base_icon_state]_top")
 
+/obj/item/storage/fancy/donut_box/random
+	name = "variety donut box"
+	spawn_type = null
+
+/obj/item/storage/fancy/donut_box/random/PopulateContents()
+	var/list/donuts = sort_list(subtypesof(/obj/item/food/donut))
+	for(var/i = 1 to spawn_count)
+		var/thing_in_box = pick(donuts)
+		new thing_in_box(src)
+	..()
+
 #undef DONUT_INBOX_SPRITE_WIDTH
 
 /*

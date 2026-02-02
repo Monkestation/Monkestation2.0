@@ -331,12 +331,8 @@ const Guide = (props) => {
       <br />
       NT Readable languages: <br />
       (var = languages.language_name) <br />1 (human) <br />2 (monkey) <br />3
-      (robot) <br />4 (draconic) <br />
-      5 (beachtounge) <br />
-      6 (sylvan) <br />
-      7 (etherean) <br />
-      8 (bonespeak) <br />
-      9 (mothian) <br />
+      (robot) <br />4 (draconic) <br />5 (beachtounge) <br />6 (sylvan) <br />7
+      (etherean) <br />8 (bonespeak) <br />9 (mothian) <br />
       10 (cat) <br />
       11 (ash) <br />
       12 (torii) <br />
