@@ -55,7 +55,7 @@
 		add_overlay(overlay_holder)
 	QDEL_NULL(overlay_holder)
 
-/atom/movable/screen/mapvote_hud/proc/fade_in(time = 3)
+/atom/movable/screen/mapvote_hud/proc/fade_in(time = 0.3 SECONDS)
 	if(fade_timer)
 		deltimer(fade_timer)
 		fade_timer = null
