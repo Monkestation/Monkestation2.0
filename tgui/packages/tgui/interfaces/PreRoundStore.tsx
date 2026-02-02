@@ -26,6 +26,7 @@ type Data = {
   currently_owned?: string;
   balance: number;
   items: Item[];
+  selected_character?: string;
 };
 
 const ItemListEntry = (props) => {
@@ -68,7 +69,7 @@ const ItemListEntry = (props) => {
 export const PreRoundStore = (_props) => {
   const {
     act,
-    data: { notices, balance, items, currently_owned },
+    data: { notices, balance, items, currently_owned, selected_character },
   } = useBackend<Data>();
 
   return (
@@ -96,6 +97,24 @@ export const PreRoundStore = (_props) => {
                 </Flex>
               </Section>
             </Stack.Item>
+            {selected_character ? (
+              <Stack.Item
+                style={{
+                  textAlign: 'center',
+                  marginBottom: '1em',
+                }}
+              >
+                <h3
+                  style={{
+                    padding: 0,
+                  }}
+                >
+                  Readying up as '{selected_character}'
+                </h3>
+              </Stack.Item>
+            ) : (
+              ''
+            )}
             <Stack.Item>
               {items && items.length > 0
                 ? items.map((purchase) => {
