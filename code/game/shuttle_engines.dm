@@ -64,7 +64,6 @@
 	if(engine_state == ENGINE_WELDED)
 		alter_engine_power(-engine_power)
 	unsync_ship()
-	new /obj/item/stack/scrap/plasma(loc)
 	return ..()
 
 /obj/machinery/power/shuttle_engine/examine(mob/user)
