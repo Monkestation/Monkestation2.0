@@ -141,7 +141,7 @@
 		inserted_board = attacking_item
 		// 5 sheets of iron and 5 of cable coil
 		needed_mats = list()
-		for(var/type as anything in inserted_board.req_components)
+		for(var/type in inserted_board.req_components)
 			needed_mats = analyze_cost(type, needed_mats)
 
 		CREATE_AND_INCREMENT(needed_mats, /datum/material/iron, (SHEET_MATERIAL_AMOUNT * 5 + (SHEET_MATERIAL_AMOUNT / 20)))
