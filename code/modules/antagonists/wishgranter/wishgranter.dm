@@ -13,6 +13,7 @@
 	var/static/list/given_traits = list(
 		TRAIT_FEARLESS,
 		TRAIT_HARDLY_WOUNDED,
+		TRAIT_IGNOREDAMAGESLOWDOWN,
 		TRAIT_NODISMEMBER,
 		TRAIT_NOFLASH, // do something besides flashbang spam
 #ifdef TRAIT_NO_PAIN_EFFECTS
