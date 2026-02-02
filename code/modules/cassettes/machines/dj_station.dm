@@ -320,6 +320,7 @@ GLOBAL_DATUM(dj_booth, /obj/machinery/dj_station)
 					log_floxy("Floxy did not return a music endpoint for [found_track.url]")
 					stack_trace("Floxy did not return a music endpoint for [found_track.url]")
 					balloon_alert(user, "the loader mechanism malfunctioned!")
+				log_floxy("endpoint for [playing.url]: [music_endpoint]")
 				var/list/metadata = info["metadata"]
 				if(metadata)
 					if(metadata["title"])
