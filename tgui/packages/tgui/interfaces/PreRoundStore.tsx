@@ -101,7 +101,13 @@ export const PreRoundStore = (_props) => {
 
             {selected_character && (
               <Stack.Item textAlign="center" mb="1em">
-                <h3>Readying up as '{selected_character}'</h3>
+                <h3
+                  style={{
+                    padding: 0,
+                  }}
+                >
+                  Readying up as '{selected_character}'
+                </h3>
               </Stack.Item>
             )}
             <Stack.Item>
