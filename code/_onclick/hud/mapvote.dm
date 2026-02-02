@@ -72,7 +72,7 @@
 	animate(src)
 	animate(src, alpha = 0, time = time, easing = EASE_IN)
 
-	fade_timer = addtimer(CALLBACK(src, PROC_REF(_finish_hide)), time, TIMER_STOPPABLE)
+	fade_timer = addtimer(CALLBACK(src, PROC_REF(_finish_hide)), time, TIMER_STOPPABLE | TIMER_CLIENT_TIME)
 
 /atom/movable/screen/mapvote_hud/proc/show()
 	SIGNAL_HANDLER
