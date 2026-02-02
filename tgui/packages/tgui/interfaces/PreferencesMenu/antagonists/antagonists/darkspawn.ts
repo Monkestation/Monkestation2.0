@@ -1,5 +1,5 @@
-import { Antagonist, Category } from '../base';
 import { multiline } from 'common/string';
+import { type Antagonist, Category } from '../base';
 
 export const DARKSPAWN_MECHANICAL_DESCRIPTION = multiline`
       Finish what you and your fellow kin started eons ago.

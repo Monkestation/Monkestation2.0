@@ -11,7 +11,14 @@ import {
   hsvaToRgba,
   rgbaToHsva,
 } from 'tgui-core/color';
-import { Box, Button, type Interaction, Interactive, Pointer, Stack } from 'tgui-core/components';
+import {
+  Box,
+  Button,
+  type Interaction,
+  Interactive,
+  Pointer,
+  Stack,
+} from 'tgui-core/components';
 import { clamp } from 'tgui-core/math';
 import { classes } from 'tgui-core/react';
 import { colorList } from './ColorPresets';

@@ -201,7 +201,7 @@
 						return TRUE
 
 				if("ID")
-					if(RemoveID(user))
+					if(remove_id(user))
 						playsound(src, 'sound/machines/card_slide.ogg', 50)
 						return TRUE
 
