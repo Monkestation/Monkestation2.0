@@ -92,9 +92,8 @@
 	for(var/datum/material/mat_type as anything in needed_mats)
 		var/list/new_entry = list()
 		new_entry["name"] = initial(mat_type.name)
-		new_entry["amount"] = needed_mats[mat_type]
+		new_entry["amount"] = needed_mats[mat_type]* creation_efficiency
 		cost_mats += list(new_entry)
-
 	var/list/design
 	if(data["boardInserted"])
 		var/disableReason = ""
