@@ -1060,3 +1060,30 @@
 	ckeywhitelist = list("Milthy")
 	donator_only = TRUE
 	requires_purchase = FALSE
+
+/datum/loadout_item/neck/flavafloh_commissar_jacket
+	name = "Commissar Jacket"
+	item_path = /obj/item/clothing/neck/flavafloh_commissar_jacket
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/miscellaneous/flavafloh_pale_blue_fatigues
+	name = "Pale Blue Fatigues"
+	item_path = /obj/item/clothing/under/rank/security/officer/flavafloh_pale_blue_fatigues
+	donator_only = TRUE
+	requires_purchase = FALSE
+	restricted_roles = list(JOB_SECURITY_ASSISTANT,JOB_SECURITY_OFFICER,JOB_BRIG_PHYSICIAN,JOB_WARDEN,JOB_HEAD_OF_SECURITY)
+
+/datum/loadout_item/pocket_items/donator/cyber_mastiff
+	name = "Pet Delivery Beacon - Cyber Mastiff"
+	item_path = /obj/item/choice_beacon/pet/donator/cyber_mastiff
+	ckeywhitelist = list("Flava-Floh")
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/effects/cyber_mastiff
+	name = "Cyber Mastiff Transformation"
+	item_path = /obj/item/effect_granter/donator/cyber_mastiff
+	ckeywhitelist = list("Flava-Floh")
+	donator_only = TRUE
+	requires_purchase = FALSE

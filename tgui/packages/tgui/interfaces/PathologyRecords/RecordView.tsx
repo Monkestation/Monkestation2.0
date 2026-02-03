@@ -1,15 +1,15 @@
 import {
-  Input,
   Box,
-  Stack,
-  Section,
-  NoticeBox,
-  LabeledList,
   Button,
+  Input,
+  LabeledList,
+  NoticeBox,
+  Section,
+  Stack,
 } from 'tgui/components';
-import { getMedicalRecord } from './helpers';
 import { useBackend, useLocalState } from '../../backend';
-import { MedicalRecordData } from './types';
+import { getMedicalRecord } from './helpers';
+import type { MedicalRecordData } from './types';
 
 /** Views a selected record. */
 export const MedicalRecordView = (props) => {

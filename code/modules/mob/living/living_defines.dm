@@ -6,6 +6,11 @@
 	interaction_flags_click = ALLOW_RESTING
 	interaction_flags_mouse_drop = ALLOW_RESTING
 
+	/// Default typepath of the subsystem used for Life()
+	/// If this mob has a client/mind, it will always use SSclient_mobs.
+	/// If unset, defaults to SSmobs.
+	var/life_subsystem_type
+
 	///Tracks the current size of the mob in relation to its original size. Use update_transform(resize) to change it.
 	var/current_size = RESIZE_DEFAULT_SIZE
 	var/lastattacker = null

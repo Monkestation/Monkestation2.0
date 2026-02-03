@@ -9,23 +9,22 @@
 	)
 
 	research_value = TECHWEB_TIER_4_POINTS //Wow, this would make a fucking amazing weapon
-
 	weight = ARTIFACT_VERYRARE
+
 /datum/artifact_fault/death/on_trigger()
 	var/list/mobs = list()
-	var/mob/living/carbon/human
-
 	var/center_turf = get_turf(our_artifact.parent)
-
 	if(!center_turf)
 		CRASH("[src] had attempted to trigger, but failed to find the center turf!")
 
-	for(var/mob/living/carbon/mob in range(rand(2, 3), center_turf))
+	for(var/mob/living/mob in range(rand(2, 3), center_turf))
+		if(istype(mob, /mob/living/simple_animal/hostile/megafauna))
+			continue
 		mobs += mob
 	if(!length(mobs))
 		return
-	human = pick(mobs)
-	if(!human)
+	var/mob/living/living_being = pick(mobs)
+	if(!living_being)
 		return
-	our_artifact.holder.Beam(human, icon_state = "lightning[rand(1,12)]", time = 0.5 SECONDS)
-	human.death(FALSE)
+	our_artifact.holder.Beam(living_being, icon_state = "lightning[rand(1,12)]", time = 0.5 SECONDS)
+	living_being.death(FALSE)

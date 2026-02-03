@@ -44,7 +44,7 @@ export const NtosMain = (props) => {
       <NtosWindow.Content scrollable>
         {Boolean(
           removable_media.length ||
-          programs.some((program) => program.header_program),
+            programs.some((program) => program.header_program),
         ) && (
           <Section>
             <Stack>
@@ -119,7 +119,7 @@ export const NtosMain = (props) => {
               <Button
                 icon="eject"
                 content="Eject ID"
-                disabled={!proposed_login.IDInserted}
+                disabled={!proposed_login.IDName}
                 onClick={() => act('PC_Eject_Disk', { name: 'ID' })}
               />
               {!!show_imprint && (

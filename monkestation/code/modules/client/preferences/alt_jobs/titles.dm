@@ -199,6 +199,7 @@
 		"Cyborg",
 		"Robot",
 		"Android",
+		"Servitor",
 	)
 
 /datum/job/detective
@@ -363,6 +364,7 @@
 		"Security Operative",
 		"Peacekeeper",
 		"Security Cadet",
+		"Guardsman",
 	)
 
 /datum/job/shaft_miner
@@ -387,6 +389,7 @@
 		"Engineering Trainee",
 		"Station Reliability Engineer",
 		"Builder",
+		"Enginseer",
 	)
 
 /datum/job/virologist

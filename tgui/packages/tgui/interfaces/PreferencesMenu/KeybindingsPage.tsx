@@ -1,4 +1,8 @@
+import { range, sortBy } from 'common/collections';
+import { isEscape, KEY } from 'common/keys';
 import { Component } from 'react';
+import { resolveAsset } from '../../assets';
+import { useBackend } from '../../backend';
 import {
   Box,
   Button,
@@ -6,15 +10,11 @@ import {
   Tooltip,
   TrackOutsideClicks,
 } from '../../components';
-import { resolveAsset } from '../../assets';
-import { PreferencesMenuData } from './data';
-import { useBackend } from '../../backend';
-import { range, sortBy } from 'common/collections';
-import { KeyEvent } from '../../events';
-import { TabbedMenu } from './TabbedMenu';
-import { fetchRetry } from '../../http';
-import { isEscape, KEY } from 'common/keys';
 import { KeyListener } from '../../components/KeyListener';
+import type { KeyEvent } from '../../events';
+import { fetchRetry } from '../../http';
+import type { PreferencesMenuData } from './data';
+import { TabbedMenu } from './TabbedMenu';
 
 type Keybinding = {
   name: string;
@@ -224,7 +224,7 @@ const ResetToDefaultButton = (props: { keybindingId: string }) => {
   );
 };
 
-export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
+export class KeybindingsPage extends Component<any, KeybindingsPageState> {
   cancelNextKeyUp?: number;
   keybindingOnClicks: Record<string, (() => void)[]> = {};
   lastKeybinds?: PreferencesMenuData['keybindings'];
@@ -422,7 +422,7 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
     moveToBottom(keybindingEntries, 'EMOTE');
     moveToBottom(keybindingEntries, 'ADMIN');
 
-    let boundKeys: Record<string, string[]> = {};
+    const boundKeys: Record<string, string[]> = {};
 
     Object.values(keybindings).forEach((keybindingCat) => {
       Object.entries(keybindingCat).forEach(([keybindingId, keybinding]) => {

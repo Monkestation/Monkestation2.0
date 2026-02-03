@@ -5,9 +5,8 @@
  */
 
 import { useRef, useState } from 'react';
-import { Box, Dialog, Divider, MenuBar, Section } from '../components';
-
 import { useBackend } from '../backend';
+import { Box, Dialog, Divider, MenuBar, Section } from '../components';
 import { NtosWindow } from '../layouts';
 import type { NTOSData } from '../layouts/NtosWindow';
 import { createLogger } from '../logging';

@@ -1,6 +1,0 @@
-author: "tt-relay-104"
-delete-after: True
-changes:
-  - bugfix: "Assembler will how use proper amount of items for crafting"
-  - bugfix: "Fixed assembler stack exploit"
-  - bugfix: "Fixed assembler free craft exploit"

@@ -28,9 +28,6 @@
 		"diseaseanalyzer",
 		"centrifuge",
 		"path_data",
-		"heat_pack",
-		"cold_pack",
-		"medical_crutch",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	discount_experiments = list(/datum/experiment/autopsy/human = TECHWEB_DISCOUNT_MINOR * 2)
@@ -66,7 +63,7 @@
 /datum/techweb_node/adv_vitals_monitoring
 	id = "adv_vitals_monitoring"
 	display_name = "Advanced Vitals Monitoring"
-	description = "Various experimental handheld crew monitors allowing remote connection to nearby5 suit sensors without a console."
+	description = "Various experimental handheld crew monitors allowing remote connection to nearby suit sensors without a console."
 	prereq_ids = list("adv_biotech")
 	design_ids = list(
 		"sensor_device",

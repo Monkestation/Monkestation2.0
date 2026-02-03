@@ -1,8 +1,7 @@
-import { useBackend, useLocalState } from '../backend';
-import { Section, Button, Box, Flex, TextArea } from '../components';
-import { Window } from '../layouts';
-import { KEY_ENTER } from 'common/keycodes';
 import { decodeHtmlEntities } from 'common/string';
+import { useBackend, useLocalState } from '../backend';
+import { Box, Button, Flex, Section, TextArea } from '../components';
+import { Window } from '../layouts';
 
 export const TicketPanel = (props) => {
   const { act, data } = useBackend();
@@ -113,7 +112,7 @@ export const TicketPanel = (props) => {
         height={700}
       >
         <Window.Content scrollable>
-          <Section title={data.initiator_key_name + ': ' + data.name}>
+          <Section title={`${data.initiator_key_name}: ${data.name}`}>
             <span
               className="Section__titleText"
               style={{ fontWeight: 'normal' }}

@@ -1,7 +1,7 @@
 import { useBackend } from '../backend';
 import { Icon, Section, Stack } from '../components';
 import { Window } from '../layouts';
-import { Objective, ObjectivePrintout } from './common/Objectives';
+import { type Objective, ObjectivePrintout } from './common/Objectives';
 
 type Info = {
   antag_name: string;
@@ -20,7 +20,7 @@ export const AntagInfoClock = (props) => {
           <Stack vertical>
             <Stack.Item fontSize="20px" color={'good'}>
               <Icon name={'cog'} rotation={0} spin />
-              {' You are the ' + antag_name + '! '}
+              {` You are the ${antag_name}! `}
               <Icon name={'cog'} rotation={35} spin />
             </Stack.Item>
             <Stack.Item>
@@ -29,7 +29,7 @@ export const AntagInfoClock = (props) => {
                 objectives={objectives}
               />
             </Stack.Item>
-            <Stack.Item>{'Our marked areas are: ' + marked_areas}</Stack.Item>
+            <Stack.Item>{`Our marked areas are: ${marked_areas}`}</Stack.Item>
           </Stack>
         </Section>
       </Window.Content>

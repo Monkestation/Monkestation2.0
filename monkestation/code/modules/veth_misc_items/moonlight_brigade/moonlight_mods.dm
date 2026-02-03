@@ -217,7 +217,7 @@
 		/obj/item/mod/module/megaphone,
 		/obj/item/mod/module/projectile_dampener,
 		/obj/item/mod/module/pepper_shoulders,
-		/obj/item/mod/module/visor/sechud, // monkestation addition
+		/obj/item/mod/module/visor/sechud,
 	)
 	default_pins = list(
 		/obj/item/mod/module/jetpack/advanced,

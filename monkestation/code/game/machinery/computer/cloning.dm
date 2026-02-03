@@ -7,7 +7,7 @@
 	name = "record"
 	var/list/fields = list()
 
-/obj/machinery/computer/cloning		//monke start, re-add cloning
+/obj/machinery/computer/cloning
 	name = "cloning console"
 	desc = "Used to clone people and manage DNA."
 	icon_screen = "dna"

@@ -56,13 +56,21 @@
 	label_class = "command"
 	ui_color = "#6681a5"
 
+/datum/job_department/central_command
+	department_name = DEPARTMENT_CENTRAL_COMMAND
+	department_bitflags = DEPARTMENT_BITFLAG_CENTRAL_COMMAND
+	department_head = /datum/job/nanotrasen_representative
+	department_experience_type = EXP_TYPE_CENTRAL_COMMAND
+	display_order = 2
+	label_class = "command"
+	ui_color = COLOR_CENTCOM_GREEN
 
 /datum/job_department/security
 	department_name = DEPARTMENT_SECURITY
 	department_bitflags = DEPARTMENT_BITFLAG_SECURITY
 	department_head = /datum/job/head_of_security
 	department_experience_type = EXP_TYPE_SECURITY
-	display_order = 2
+	display_order = 3
 	label_class = "security"
 	ui_color = "#d46a78"
 	nation_prefixes = list("Securi", "Beepski", "Shitcuri", "Red", "Stunba", "Flashbango", "Flasha", "Stanfordi")
@@ -72,90 +80,94 @@
 	department_bitflags = DEPARTMENT_BITFLAG_ENGINEERING
 	department_head = /datum/job/chief_engineer
 	department_experience_type = EXP_TYPE_ENGINEERING
-	display_order = 3
+	display_order = 4
 	label_class = "engineering"
 	ui_color = "#dfb567"
 	nation_prefixes = list("Atomo", "Engino", "Power", "Teleco")
-
 
 /datum/job_department/medical
 	department_name = DEPARTMENT_MEDICAL
 	department_bitflags = DEPARTMENT_BITFLAG_MEDICAL
 	department_head = /datum/job/chief_medical_officer
 	department_experience_type = EXP_TYPE_MEDICAL
-	display_order = 4
+	display_order = 5
 	label_class = "medical"
 	ui_color = "#65b2bd"
 	nation_prefixes = list("Mede", "Healtha", "Recova", "Chemi", "Viro", "Psych")
-
 
 /datum/job_department/science
 	department_name = DEPARTMENT_SCIENCE
 	department_bitflags = DEPARTMENT_BITFLAG_SCIENCE
 	department_head = /datum/job/research_director
 	department_experience_type = EXP_TYPE_SCIENCE
-	display_order = 5
+	display_order = 6
 	label_class = "science"
 	ui_color = "#c973c9"
 	nation_prefixes = list("Sci", "Griffa", "Geneti", "Explosi", "Mecha", "Xeno", "Nani", "Cyto")
-
 
 /datum/job_department/cargo
 	department_name = DEPARTMENT_CARGO
 	department_bitflags = DEPARTMENT_BITFLAG_CARGO
 	department_head = /datum/job/quartermaster
 	department_experience_type = EXP_TYPE_SUPPLY
-	display_order = 6
+	display_order = 7
 	label_class = "supply"
 	ui_color = "#cf9c6c"
 	nation_prefixes = list("Cargo", "Guna", "Suppli", "Mule", "Crate", "Ore", "Mini", "Shaf")
 
+/datum/job_department/engineering
+	department_name = DEPARTMENT_ENGINEERING
+	department_bitflags = DEPARTMENT_BITFLAG_ENGINEERING
+	department_head = /datum/job/chief_engineer
+	department_experience_type = EXP_TYPE_ENGINEERING
+	display_order = 8
+	label_class = "engineering"
+	ui_color = "#dfb567"
+	nation_prefixes = list("Atomo", "Engino", "Power", "Teleco")
 
 /datum/job_department/service
 	department_name = DEPARTMENT_SERVICE
 	department_bitflags = DEPARTMENT_BITFLAG_SERVICE
 	department_head = /datum/job/head_of_personnel
 	department_experience_type = EXP_TYPE_SERVICE
-	display_order = 7
+	display_order = 9
 	label_class = "service"
 	ui_color = "#7cc46a"
 	nation_prefixes = list("Honka", "Boozo", "Fatu", "Danka", "Mimi", "Libra", "Jani", "Religi")
-
 
 /datum/job_department/silicon
 	department_name = DEPARTMENT_SILICON
 	department_bitflags = DEPARTMENT_BITFLAG_SILICON
 	department_head = /datum/job/ai
 	department_experience_type = EXP_TYPE_SILICON
-	display_order = 8
+	display_order = 10
 	label_class = "silicon"
 	ui_color = "#5dbda0"
-
-/datum/job_department/spooktober
-	department_name = DEPARTMENT_SPOOKTOBER
-	department_bitflags = DEPARTMENT_BITFLAG_SPOOKTOBER
-	display_order = 9
-	label_class = "spooktober"
-	ui_color = "#f05e16"
-
-/datum/job_department/spring
-	department_name = DEPARTMENT_SPRING
-	department_bitflags = DEPARTMENT_BITFLAG_SPRING
-	display_order = 11
-	label_class = "spring"
-	ui_color = "#75da83"
-
-
-/datum/job_department/summer
-	department_name = DEPARTMENT_SUMMER
-	department_bitflags = DEPARTMENT_BITFLAG_SUMMER
-	display_order = 12
-	label_class = "summer"
-	ui_color = "#ff4901"
 
 /datum/job_department/silicon/generate_nation_name()
 	return "United Nations" //For nations ruleset specifically, because all other sources of nation creation cannot choose silicons
 
 /// Catch-all department for undefined jobs.
 /datum/job_department/undefined
+	display_order = 11
+
+/datum/job_department/spooktober
+	department_name = DEPARTMENT_SPOOKTOBER
+	department_bitflags = DEPARTMENT_BITFLAG_SPOOKTOBER
 	display_order = 12
+	label_class = "spooktober"
+	ui_color = "#f05e16"
+
+/datum/job_department/spring
+	department_name = DEPARTMENT_SPRING
+	department_bitflags = DEPARTMENT_BITFLAG_SPRING
+	display_order = 13
+	label_class = "spring"
+	ui_color = "#75da83"
+
+/datum/job_department/summer
+	department_name = DEPARTMENT_SUMMER
+	department_bitflags = DEPARTMENT_BITFLAG_SUMMER
+	display_order = 14
+	label_class = "summer"
+	ui_color = "#ff4901"

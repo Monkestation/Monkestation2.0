@@ -1,5 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - qol: "Badges don't fall off when you roll down your shirt."
-  - bugfix: "Secondary AltClick doesn't get called twice every click."

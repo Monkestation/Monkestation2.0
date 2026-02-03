@@ -15,6 +15,7 @@
 	barefootstep = FOOTSTEP_WATER
 	clawfootstep = FOOTSTEP_WATER
 	heavyfootstep = FOOTSTEP_WATER
+	astar_weight = 75
 
 /turf/open/water/station
 	initial_gas_mix = OPENTURF_DEFAULT_ATMOS

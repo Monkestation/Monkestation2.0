@@ -6778,6 +6778,10 @@
 	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/engineering/atmos/upper)
+"cbh" = (
+/obj/vehicle/ridden/battering_ram,
+/turf/open/floor/iron/dark/diagonal,
+/area/station/ai_monitored/security/armory)
 "cbx" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
@@ -7285,9 +7289,9 @@
 /area/station/engineering/atmos/hfr_room)
 "ciS" = (
 /obj/structure/chair/office,
-/obj/item/radio/intercom/directional/west,
 /obj/machinery/light/warm/directional/west,
 /obj/effect/landmark/start/detective,
+/obj/structure/detectiveboard/directional/west,
 /turf/open/floor/wood/parquet,
 /area/station/security/detectives_office)
 "ciW" = (
@@ -13424,7 +13428,6 @@
 /area/station/maintenance/department/science/xenobiology)
 "dYP" = (
 /obj/structure/flora/bush/fullgrass/style_random,
-/obj/machinery/growing/tray,
 /obj/item/radio/intercom/prison/directional/west,
 /turf/open/misc/dirt/planet,
 /area/station/security/prison)
@@ -21998,6 +22001,10 @@
 /obj/effect/spawner/random/entertainment/cigarette,
 /turf/open/floor/carpet,
 /area/station/commons/dorms)
+"gBE" = (
+/obj/effect/landmark/start/explorer,
+/turf/open/floor/plating,
+/area/station/cargo/storage)
 "gBH" = (
 /obj/effect/turf_decal/siding/white/corner{
 	dir = 8
@@ -26684,6 +26691,16 @@
 /obj/machinery/dna_scannernew,
 /turf/open/floor/glass/reinforced,
 /area/station/science/genetics)
+"hVX" = (
+/obj/effect/turf_decal/tile/brown/half/contrasted{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/landmark/start/explorer,
+/turf/open/floor/iron/dark,
+/area/station/cargo/office)
 "hVZ" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
@@ -32576,6 +32593,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
+/obj/effect/landmark/start/explorer,
 /turf/open/floor/iron/dark,
 /area/station/cargo/storage)
 "jER" = (
@@ -36446,6 +36464,7 @@
 /obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/landmark/event_spawn,
+/obj/effect/landmark/start/explorer,
 /turf/open/floor/iron/dark/smooth_half{
 	dir = 1
 	},
@@ -53324,6 +53343,7 @@
 /obj/item/hand_labeler{
 	pixel_x = 6
 	},
+/obj/item/radio/intercom/directional/west,
 /turf/open/floor/wood/parquet,
 /area/station/security/detectives_office)
 "pGv" = (
@@ -55597,6 +55617,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
+/obj/effect/landmark/start/explorer,
 /turf/open/floor/iron/dark,
 /area/station/cargo/office)
 "qnK" = (
@@ -61147,6 +61168,7 @@
 	dir = 1
 	},
 /obj/machinery/firealarm/directional/east,
+/obj/effect/landmark/start/barber,
 /turf/open/floor/wood/large,
 /area/station/service/barber)
 "rYg" = (
@@ -62855,6 +62877,7 @@
 /area/station/command/heads_quarters/hos)
 "syA" = (
 /obj/machinery/light/warm/directional/west,
+/obj/machinery/cassette_library,
 /turf/open/floor/wood/large,
 /area/station/service/library)
 "syF" = (
@@ -64566,6 +64589,7 @@
 /obj/structure/flora/rock/pile/style_2,
 /obj/structure/flora/rock/pile,
 /obj/structure/flora/bush/sparsegrass/style_random,
+/obj/machinery/growing/tray,
 /turf/open/misc/dirt/planet,
 /area/station/security/prison)
 "sYg" = (
@@ -70137,6 +70161,16 @@
 	},
 /turf/open/floor/iron/small,
 /area/station/hallway/primary/central)
+"uIn" = (
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/obj/effect/turf_decal/siding/thinplating_new/light{
+	dir = 8
+	},
+/obj/effect/landmark/start/barber,
+/turf/open/floor/iron/cafeteria{
+	dir = 8
+	},
+/area/station/service/salon)
 "uIq" = (
 /obj/machinery/button/door/directional/south{
 	id = "detective";
@@ -70461,6 +70495,7 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "uNg" = (
+/obj/effect/landmark/start/barber,
 /turf/open/floor/carpet/purple,
 /area/station/service/barber)
 "uNm" = (
@@ -79109,6 +79144,7 @@
 /obj/structure/chair{
 	dir = 4
 	},
+/obj/effect/landmark/start/explorer,
 /turf/open/floor/iron/dark,
 /area/station/cargo/office)
 "xlO" = (
@@ -105612,7 +105648,7 @@ dFs
 suU
 wMl
 qIV
-xgP
+gBE
 gXw
 uPj
 pYn
@@ -110765,7 +110801,7 @@ mCF
 twB
 xnJ
 jIw
-jIw
+uIn
 jIw
 qIF
 qVB
@@ -121242,7 +121278,7 @@ bQR
 tbm
 bND
 kPN
-mtx
+sau
 sau
 utS
 mVZ
@@ -121500,8 +121536,8 @@ tRY
 vCx
 tRY
 sau
-sau
 ctc
+cbh
 bIn
 sWQ
 jDU
@@ -168834,7 +168870,7 @@ slY
 qlt
 kKK
 uCl
-edK
+hVX
 dqM
 uBX
 acL
