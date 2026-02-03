@@ -1,5 +1,3 @@
-#define DUALWIELD_PENALTY_EXTRA_MULTIPLIER 1.4
-
 // Master file for cell loadable energy guns. PROCS ONLY YOU MONKEYS!
 // This file is a copy/paste of _energy.dm with extensive modification.
 
@@ -189,7 +187,7 @@
 
 /obj/item/gun/microfusion/update_overlays()
 	. = ..()
-//	SEND_SIGNAL(src, COMSIG_UPDATE_AMMO_HUD) //update the ammo hud since it's heavily dependent on the gun's state //monkestation removal: still no ammo huds
+//	SEND_SIGNAL(src, COMSIG_UPDATE_AMMO_HUD) // we dont have ammo huds
 	if(!phase_emitter)
 		. += "[icon_state]_phase_emitter_missing"
 	else if(phase_emitter.damaged)
@@ -391,7 +389,7 @@
 		user.update_held_items()
 	SSblackbox.record_feedback("tally", "gun_fired", 1, type)
 
-//	SEND_SIGNAL(src, COMSIG_UPDATE_AMMO_HUD) //monkestation edit: no hud
+//	SEND_SIGNAL(src, COMSIG_UPDATE_AMMO_HUD) //no hud
 
 	return TRUE
 

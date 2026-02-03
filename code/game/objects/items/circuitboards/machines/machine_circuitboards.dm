@@ -613,7 +613,7 @@
 		/obj/machinery/vending/wardrobe/medi_wardrobe = "MediDrobe",
 		/obj/machinery/vending/wardrobe/engi_wardrobe = "EngiDrobe",
 		/obj/machinery/vending/wardrobe/atmos_wardrobe = "AtmosDrobe",
-		/obj/machinery/vending/wardrobe/cargo_wardrobe = "CargoDrobe",
+		/obj/machinery/vending/access/wardrobe_cargo = "CargoDrobe",
 		/obj/machinery/vending/wardrobe/robo_wardrobe = "RoboDrobe",
 		/obj/machinery/vending/wardrobe/science_wardrobe = "SciDrobe",
 		/obj/machinery/vending/wardrobe/hydro_wardrobe = "HyDrobe",
@@ -1234,9 +1234,21 @@
 	req_components = list(
 		/datum/stock_part/micro_laser = 1,
 		/datum/stock_part/matter_bin = 1,
+		/datum/stock_part/capacitor = 1,
 		/obj/item/stack/cable_coil = 2,
 		/obj/item/stack/sheet/glass = 2)
 	needs_anchored = FALSE
+
+/obj/item/circuitboard/machine/microwave/engineering
+	name = "Wireless Microwave Oven"
+	greyscale_colors = CIRCUIT_COLOR_SERVICE
+	build_path = /obj/machinery/microwave/engineering
+	req_components = list(
+		/datum/stock_part/micro_laser = 1,
+		/datum/stock_part/matter_bin = 1,
+		/datum/stock_part/capacitor/tier2 = 1,
+		/obj/item/stack/cable_coil = 4,
+		/obj/item/stack/sheet/glass = 2)
 
 /obj/item/circuitboard/machine/processor
 	name = "Food Processor"

@@ -32,6 +32,7 @@
 /datum/status_effect/shapechange_mob/on_apply()
 	owner.gender = caster_mob.gender
 	owner.copy_voice_from(caster_mob)
+	owner.copy_languages(caster_mob)
 	owner.regenerate_icons()
 	caster_mob.mind?.transfer_to(owner)
 	caster_mob.forceMove(owner)

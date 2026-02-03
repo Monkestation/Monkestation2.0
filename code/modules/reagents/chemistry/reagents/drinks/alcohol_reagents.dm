@@ -1561,12 +1561,25 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	bypass_restriction = TRUE
 
+/datum/reagent/consumable/ethanol/quintuple_sec/on_mob_metabolize(mob/living/carbon/user)
+	. = ..()
+
+	var/obj/item/organ/internal/liver/liver = user.get_organ_slot(ORGAN_SLOT_LIVER)
+	if(liver && HAS_TRAIT(liver, TRAIT_LAW_ENFORCEMENT_METABOLISM))
+		user.stamina.regen_rate += 2 * REM
+
+/datum/reagent/consumable/ethanol/quintuple_sec/on_mob_end_metabolize(mob/living/carbon/user)
+	var/obj/item/organ/internal/liver/liver = user.get_organ_slot(ORGAN_SLOT_LIVER)
+	if(liver && HAS_TRAIT(liver, TRAIT_LAW_ENFORCEMENT_METABOLISM))
+		user.stamina.regen_rate -= 2 * REM
+
+	return ..()
+
 /datum/reagent/consumable/ethanol/quintuple_sec/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	//Securidrink in line with the Screwdriver for engineers or Nothing for mimes but STRONG..
 	var/obj/item/organ/internal/liver/liver = drinker.get_organ_slot(ORGAN_SLOT_LIVER)
 	if(liver && HAS_TRAIT(liver, TRAIT_LAW_ENFORCEMENT_METABOLISM))
 		drinker.heal_bodypart_damage(2 * REM * seconds_per_tick, 2 * REM *  seconds_per_tick)
-		drinker.stamina.adjust(2 * REM * seconds_per_tick)
 		. = TRUE
 	return ..()
 

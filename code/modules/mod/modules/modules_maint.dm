@@ -57,6 +57,59 @@
 		mod.wearer.death() //just in case, for some reason, they're still alive
 	flash_color(mod.wearer, flash_color = "#FF0000", flash_time = 10 SECONDS)
 
+///Corpse Exoskeleton - allows your MODsuit to stand up right whilst the person inside is dead. Great for MOD AIs, I guess!
+/obj/item/mod/module/magboot/corpse_exoskeleton // hey. if the work was done for me, why not repurpose magboots?
+	name = "MOD corpse exoskeleton module"
+	desc = "An exosuit that goes around the whole body. Upon an internal health sensor detecting the user getting fatally injured, \
+	or on a manual toggle, activates servos around the full body to ensure the user stays upright, come stun or death, the user remains vertical."
+	active_traits = list(TRAIT_FORCED_STANDING)
+	icon_state = "bulwark"
+	complexity = 2 // it is inside every part of your suit, so // People wanted cheaper aurafarming.
+	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.4
+	slowdown_active = 0.3
+	incompatible_modules = list(/obj/item/mod/module/magboot/corpse_exoskeleton) // ok so the only reason to NOT repurpose magboots is that theyll conflict with this mod, oh well, sorry CE!
+	var/autotrigger = TRUE
+
+/obj/item/mod/module/magboot/corpse_exoskeleton/get_configuration()
+	. = ..()
+	.["autotrigger"] = add_ui_configuration("Autotrigger", "bool", autotrigger)
+
+/obj/item/mod/module/magboot/corpse_exoskeleton/configure_edit(key, value)
+	switch(key)
+		if("autotrigger")
+			autotrigger = text2num(value)
+
+/obj/item/mod/module/magboot/corpse_exoskeleton/on_suit_activation()
+	RegisterSignal(mod.wearer, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(health_check))
+
+/obj/item/mod/module/magboot/corpse_exoskeleton/on_suit_deactivation(deleting)
+	UnregisterSignal(mod.wearer, COMSIG_LIVING_HEALTH_UPDATE)
+
+/obj/item/mod/module/magboot/corpse_exoskeleton/proc/health_check()
+	if(!mod.wearer || active || !autotrigger)
+		return
+	var/health_scan = mod.wearer.health
+	if(health_scan > mod.wearer.crit_threshold)
+		return
+	dead_reckoning() // we beefed, turn it on.
+
+/obj/item/mod/module/magboot/corpse_exoskeleton/proc/dead_reckoning()
+	if(!mod.wearer || active || !autotrigger)
+		return
+	if(on_activation())
+		mod.wearer.visible_message(
+			span_danger("[src] inside [mod.wearer]'s [mod.name] activates!"),
+			span_danger("Your body is quickly caught by your suit.")
+		)
+		playsound(src, 'sound/mecha/mechmove04.ogg', 50, TRUE)
+	else
+		mod.wearer.visible_message(
+			span_danger("[src] inside [mod.wearer]'s [mod.name] fails to actuate."),
+		)
+		playsound(src, 'sound/mecha/mechmove04.ogg', 25, TRUE)
+
+
+
 ///Rave Visor - Gives you a rainbow visor and plays jukebox music to you.
 /obj/item/mod/module/visor/rave
 	name = "MOD rave visor module"

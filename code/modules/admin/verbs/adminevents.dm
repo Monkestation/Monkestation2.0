@@ -205,16 +205,19 @@ ADMIN_VERB(hostile_environment, R_ADMIN, FALSE, "Hostile Environment", "Disable 
 			if (SSshuttle.hostile_environments["Admin"] == TRUE)
 				to_chat(user, span_warning("Error, admin hostile environment already enabled."))
 			else
-				message_admins(span_adminnotice("[key_name_admin(user)] Enabled an admin hostile environment"))
+				message_admins(span_adminnotice("[key_name_admin(user)] enabled an admin hostile environment"))
+				log_admin("[key_name(user)] enabled an admin hostile environment")
 				SSshuttle.registerHostileEnvironment("Admin")
 		if("Disable")
 			if (!SSshuttle.hostile_environments["Admin"])
 				to_chat(user, span_warning("Error, no admin hostile environment found."))
 			else
-				message_admins(span_adminnotice("[key_name_admin(user)] Disabled the admin hostile environment"))
+				message_admins(span_adminnotice("[key_name_admin(user)] disabled the admin hostile environment"))
+				log_admin("[key_name(user)] disabled the admin hostile environment")
 				SSshuttle.clearHostileEnvironment("Admin")
 		if("Clear All")
-			message_admins(span_adminnotice("[key_name_admin(user)] Disabled all current hostile environment sources"))
+			message_admins(span_adminnotice("[key_name_admin(user)] disabled all current hostile environment sources"))
+			log_admin("[key_name(user)] disabled all current hostile environment sources")
 			SSshuttle.hostile_environments.Cut()
 			SSshuttle.checkHostileEnvironment()
 

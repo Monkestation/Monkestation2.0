@@ -130,20 +130,27 @@
 
 /// Handles slimes losing blood from starving.
 /datum/species/oozeling/proc/spec_slime_hunger(mob/living/carbon/human/slime, seconds_per_tick)
+	// if we're actively eating, don't get stuck in a loop of losing blood due to starvation and losing nutrition due to low blood
+	var/eating = slime.reagents?.has_reagent(/datum/reagent/consumable/nutriment)
+	if(!eating) // also check their stomach
+		var/obj/item/organ/internal/stomach/golgi_thing = slime.get_organ_slot(ORGAN_SLOT_STOMACH)
+		if(golgi_thing?.reagents?.has_reagent(/datum/reagent/consumable/nutriment))
+			eating = TRUE
 	// don't bother with using remove_blood_volume as this doesn't proc for bloodsuckers anyways
 	if(slime.nutrition <= NUTRITION_LEVEL_STARVING)
-		slime.blood_volume = max(slime.blood_volume - (4 * seconds_per_tick), 0)
+		if(!eating)
+			slime.blood_volume = max(slime.blood_volume - (4 * seconds_per_tick), 0)
 		if(COOLDOWN_FINISHED(src, starvation_alert_cooldown))
 			to_chat(slime, span_danger("You're starving! Get some food!"))
 			slime.balloon_alert(slime, "you're starving!")
 			COOLDOWN_START(src, starvation_alert_cooldown, 10 SECONDS)
-	else
-		if(SPT_PROB(17.5, seconds_per_tick))
+	else if(SPT_PROB(17.5, seconds_per_tick))
+		if(!eating)
 			slime.blood_volume = max(slime.blood_volume - seconds_per_tick, 0)
-			if(COOLDOWN_FINISHED(src, starvation_alert_cooldown))
-				to_chat(slime, span_warning("You're feeling pretty hungry..."))
-				slime.balloon_alert(slime, "you're pretty hungry...")
-				COOLDOWN_START(src, starvation_alert_cooldown, 10 SECONDS)
+		if(COOLDOWN_FINISHED(src, starvation_alert_cooldown))
+			to_chat(slime, span_warning("You're feeling pretty hungry..."))
+			slime.balloon_alert(slime, "you're pretty hungry...")
+			COOLDOWN_START(src, starvation_alert_cooldown, 10 SECONDS)
 
 /// Stupid workaround proc so that bloodsucker oozelings also have their blood volume removed
 /datum/species/oozeling/proc/remove_blood_volume(mob/living/carbon/human/slime, amount)
@@ -226,14 +233,9 @@
 		ORGAN_SLOT_EARS,
 	)
 	if(chem.type == /datum/reagent/toxin/plasma || chem.type == /datum/reagent/toxin/hot_ice)
-		var/brute_damage = slime.get_current_damage_of_type(damagetype = BRUTE)
-		var/burn_damage = slime.get_current_damage_of_type(damagetype = BURN)
-		var/remaining_heal = HEALTH_HEALED
-		if(brute_damage + burn_damage > 0)
+		if(slime.getBruteLoss() || slime.getFireLoss())
 			if(!HAS_TRAIT(slime, TRAIT_SLIME_HYDROPHOBIA) && slime.get_skin_temperature() > slime.bodytemp_cold_damage_limit)
-				// Make sure to double check this later.
-				remaining_heal -= abs(slime.heal_damage_type(rand(0, remaining_heal) * REM * seconds_per_tick, BRUTE))
-				slime.heal_damage_type(remaining_heal * REM * seconds_per_tick, BURN)
+				slime.heal_ordered_damage(HEALTH_HEALED * REM * seconds_per_tick, list(BRUTE, BURN))
 				slime.reagents.remove_reagent(chem.type, min(chem.volume * 0.22, 10))
 			else
 				to_chat(slime, span_purple("Your membrane is too viscous to mend its wounds..."))

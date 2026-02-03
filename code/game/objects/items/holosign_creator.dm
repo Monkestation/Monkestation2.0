@@ -41,6 +41,16 @@
 	if(!check_allowed_items(interacting_with, not_inside = TRUE))
 		return NONE
 
+	if(interacting_with.type == holosign_type)
+		if(istype(interacting_with, /obj/structure/holosign/barrier))
+			var/obj/structure/holosign/barrier/our_barrier = interacting_with
+			if(our_barrier.openable)
+				our_barrier.open(user)
+				return ITEM_INTERACT_SUCCESS
+			else
+				qdel(our_barrier)
+				return ITEM_INTERACT_SUCCESS
+
 	var/turf/target_turf = get_turf(interacting_with)
 	var/obj/structure/holosign/target_holosign = locate(holosign_type) in target_turf
 
@@ -69,6 +79,16 @@
 			return ITEM_INTERACT_BLOCKING
 
 	target_holosign = create_holosign(interacting_with, user)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/holosign_creator/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!check_allowed_items(interacting_with, not_inside = TRUE))
+		return NONE
+
+	var/turf/target_turf = get_turf(interacting_with)
+	var/obj/structure/holosign/target_holosign = locate(holosign_type) in target_turf
+	if(target_holosign)
+		qdel(target_holosign)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/holosign_creator/attack(mob/living/carbon/human/M, mob/user)

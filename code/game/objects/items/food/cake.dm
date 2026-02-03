@@ -82,7 +82,7 @@
 	tastes = list("cake" = 5, "sweetness" = 2, "brains" = 1)
 	foodtypes = GRAIN | DAIRY | MEAT | GORE | SUGAR
 	slice_type = /obj/item/food/cakeslice/brain
-	food_buffs = STATUS_EFFECT_FOOD_STAM_LARGE
+	food_buffs = STATUS_EFFECT_STAM_REGEN_LARGE
 
 /obj/item/food/cakeslice/brain
 	name = "brain cake slice"
@@ -96,7 +96,7 @@
 	)
 	tastes = list("cake" = 5, "sweetness" = 2, "brains" = 1)
 	foodtypes = GRAIN | DAIRY | MEAT | GORE | SUGAR
-	food_buffs = STATUS_EFFECT_FOOD_STAM_MEDIUM
+	food_buffs = STATUS_EFFECT_STAM_REGEN_MEDIUM
 
 /obj/item/food/cake/cheese
 	name = "cheese cake"

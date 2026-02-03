@@ -66,7 +66,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	/// A path to the audio stinger that plays upon gaining this datum.
 	var/stinger_sound
 	/// How many points does this antag contribute to antag cap usage, should only be updated via set_antag_count_points()
-	var/antag_count_points = 10
+	VAR_PROTECTED/antag_count_points = 10
 
 	//ANTAG UI
 
@@ -109,6 +109,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/custom
 	antagpanel_category = "Custom"
 	show_name_in_check_antagonists = TRUE //They're all different
+	antag_count_points = 0 //admins can manually set it
 	var/datum/team/custom_team
 
 /datum/antagonist/custom/create_team(datum/team/team)
@@ -263,7 +264,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 		if(ui_name)
 			to_chat(owner.current, span_boldnotice("For more info, read the panel. \
 				You can always come back to it using the button in the top left."))
-			info_button.Trigger()
+			// uses a timer so it doesn't block, but still gives time for the rest of on_gain() to do its thing
+			addtimer(CALLBACK(info_button, TYPE_PROC_REF(/datum/action, Trigger)), 0.1 SECONDS)
 		var/type_policy = get_policy("[type]") // path to text
 		if(type_policy)
 			to_chat(owner.current, type_policy)
@@ -281,6 +283,10 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 	for (var/datum/atom_hud/alternate_appearance/basic/antag_hud as anything in GLOB.active_alternate_appearances)
 		antag_hud.apply_to_new_mob(owner.current)
+
+	if(remove_from_manifest)
+		owner.remove_from_manifest(TRUE, TRUE)
+		ADD_TRAIT(owner, TRAIT_REMOVED_FROM_MANIFEST, REF(src))
 
 	SEND_SIGNAL(owner, COMSIG_ANTAGONIST_GAINED, src)
 
@@ -332,6 +338,10 @@ GLOBAL_LIST_EMPTY(antagonists)
 	UnregisterSignal(owner, COMSIG_MINDSHIELD_IMPLANTED)
 	get_team()?.remove_member(owner)
 	SEND_SIGNAL(owner, COMSIG_ANTAGONIST_REMOVED, src)
+
+	REMOVE_TRAIT(owner, TRAIT_REMOVED_FROM_MANIFEST, REF(src))
+	if(remove_from_manifest && !HAS_TRAIT(owner, TRAIT_REMOVED_FROM_MANIFEST))
+		owner?.add_to_manifest()
 
 	// Remove HUDs that they should no longer see
 	if(owner.current)
@@ -515,7 +525,7 @@ GLOBAL_LIST_EMPTY(cached_antag_previews)
 	if(QDELETED(antag_mob) || !antag_mob.key || antag_mob.stat == DEAD || antag_mob.client?.is_afk())
 		return FALSE
 	// don't count admins mucking around on centcom or whatever
-	if(istype(get_area(antag_mob), /area/centcom))
+	if(is_centcom_area(antag_mob))
 		return FALSE
 	return TRUE
 
@@ -632,6 +642,18 @@ GLOBAL_LIST_EMPTY(cached_antag_previews)
 
 	can_assign_self_objectives = FALSE
 	owner.announce_objectives()
+
+///Getter proc for our antag_count_points
+/datum/antagonist/proc/get_antag_count_points()
+	if(!owner)
+		return 0 //if we dont have an owner then we should not count for anything
+
+	if(antag_flags & FLAG_ANTAG_CAP_IGNORE_HUMANITY)
+		return antag_count_points
+	return ishuman(owner.current) ? antag_count_points : antag_count_points / 2
+
+/datum/antagonist/proc/adjust_antag_count_points(adjust_by)
+	set_antag_count_points(antag_count_points + adjust_by)
 
 ///Should be called to set antag_count_points()
 /datum/antagonist/proc/set_antag_count_points(new_value = 10, old_value = antag_count_points) //handling vars this way allows us to pass to parent

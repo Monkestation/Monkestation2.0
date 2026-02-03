@@ -1,5 +1,5 @@
-import { Antagonist, Category } from '../base';
 import { multiline } from 'common/string';
+import { type Antagonist, Category } from '../base';
 
 const Teratoma: Antagonist = {
   key: 'teratoma',
@@ -11,7 +11,7 @@ const Teratoma: Antagonist = {
     `,
     'Spread misery and chaos upon the station.',
   ],
-  category: Category.Midround,
+  category: Category.Ghost,
 };
 
 export default Teratoma;

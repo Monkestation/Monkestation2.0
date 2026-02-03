@@ -19,7 +19,7 @@
 	///the prehit callback we use incase unique effects need to happen before hitting
 	var/datum/callback/pre_hit_callback
 	///the stamina cost for doing these swings
-	var/stamina_cost = 20
+	var/stamina_cost = 10
 
 ///this is incredibly cursed i should probably move the default defines into this to make it not have a ton of if statements but that feels wrong aswell.
 /datum/component/multi_hit/Initialize(continues_travel, icon_state, icon, width, height, center_offset, attacking_direction, after_hit_callback, pre_hit_callback, stamina_cost)

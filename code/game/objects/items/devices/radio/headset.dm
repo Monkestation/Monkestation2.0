@@ -24,7 +24,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	worn_icon_state = "headset"
-	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 0.75)
+	custom_materials = null // to not be put into autolathes
 	subspace_transmission = TRUE
 	canhear_range = 0 // can't hear headsets from very far away
 	interaction_flags_mouse_drop = FORBID_TELEKINESIS_REACH
@@ -129,10 +129,12 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	if(!(slot_flags & slot))
 		return
 
+	ADD_TRAIT(user, TRAIT_CAN_HEAR_MUSIC, REF(src))
 	grant_headset_languages(user)
 
 /obj/item/radio/headset/dropped(mob/user, silent)
 	. = ..()
+	REMOVE_TRAIT(user, TRAIT_CAN_HEAR_MUSIC, REF(src))
 	remove_headset_languages(user)
 
 // Headsets do not become hearing sensitive as broadcasting instead controls their talk_into capabilities

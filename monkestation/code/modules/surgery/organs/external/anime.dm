@@ -95,6 +95,20 @@
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/anime_halo
 
+/obj/item/organ/external/anime_halo/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
+	. = ..()
+	RegisterSignal(receiver, COMSIG_MOB_STATCHANGE, PROC_REF(update_halo_on_death))
+
+/obj/item/organ/external/anime_halo/Remove(mob/living/carbon/organ_owner, special, moving)
+	. = ..()
+	UnregisterSignal(organ_owner, COMSIG_MOB_STATCHANGE)
+
+/obj/item/organ/external/anime_halo/proc/update_halo_on_death(mob/living/carbon/halo_owner, new_owner_stat, old_owner_stat)
+	SIGNAL_HANDLER
+	
+	if((new_owner_stat == DEAD) || (old_owner_stat == DEAD))
+		halo_owner.update_body_parts()
+
 /datum/bodypart_overlay/mutant/anime_halo
 	color_source = ORGAN_COLOR_ANIME_HALO
 	layers = EXTERNAL_FRONT | EXTERNAL_BEHIND
@@ -116,6 +130,6 @@
 	return halo_emissive_overlay
 
 /datum/bodypart_overlay/mutant/anime_halo/can_draw_on_bodypart(mob/living/carbon/human/human)
-	if(human.head?.flags_inv & HIDEEARS)
+	if((human.head?.flags_inv & HIDEEARS) || (human.stat == DEAD))
 		return FALSE
 	return ..()

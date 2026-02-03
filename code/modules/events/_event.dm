@@ -65,6 +65,8 @@
 	var/repeated_mode_adjust = FALSE
 	/// Whether repeated_mode_adjust weight changes have been logged already.
 	var/logged_repeated_mode_adjust = FALSE
+	/// Is this event blocked from running on station maps with the given ztrait?
+	var/station_ztrait_blocked
 	// monkestation end
 
 /datum/round_event_control/New()
@@ -153,6 +155,8 @@
 	if(event_group && !GLOB.event_groups[event_group].can_run())
 		return FALSE
 	if(roundstart && (!SSgamemode.can_run_roundstart || (SSgamemode.ran_roundstart && !fake_check && !SSgamemode.current_storyteller?.ignores_roundstart)))
+		return FALSE
+	if(station_ztrait_blocked && length(SSmapping.levels_by_all_traits(list(ZTRAIT_STATION, station_ztrait_blocked))))
 		return FALSE
 // monkestation end
 	if(occurrences >= max_occurrences)
@@ -243,8 +247,6 @@ Runs the event
 	*/
 	UnregisterSignal(SSdcs, COMSIG_GLOB_RANDOM_EVENT)
 	var/datum/round_event/round_event = new typepath(TRUE, src)
-	if(round_event.oshan_blocked && SSmapping.current_map.map_name == "Oshan Station")
-		return
 	if(admin_forced && length(admin_setup))
 		//not part of the signal because it's conditional and relies on usr heavily
 		for(var/datum/event_admin_setup/admin_setup_datum in admin_setup)
@@ -309,8 +311,6 @@ Runs the event
 	/// Whether a admin wants this event to be cancelled
 	var/cancel_event = FALSE
 	//monkestation vars starts
-	///canceled on oshan
-	var/oshan_blocked = FALSE
 	/// Whether the event called its start() yet or not.
 	var/has_started = FALSE
 	///have we finished setup?

@@ -217,6 +217,8 @@
 	heretic_datum.total_sacrifices++
 	heretic_datum.knowledge_points += 2
 
+	SStgui.update_uis(heretic_datum)
+
 	sacrifice.apply_status_effect(/datum/status_effect/heretic_curse, user)
 
 	if(!begin_sacrifice(sacrifice))
@@ -274,15 +276,13 @@
 	// If our target is dead, try to revive them
 	// and if we fail to revive them, don't proceede the chain
 	sac_target.adjustOxyLoss(-100, FALSE)
-	sac_target.grab_ghost() // monke edit: try to grab their ghost
+	sac_target.grab_ghost()
 
 	if(!sac_target.heal_and_revive(50, span_danger("[sac_target]'s heart begins to beat with an unholy force as they return from death!")))
 		return
 
-	//monkestation addition start:
 	sac_target.reagents?.remove_all(sac_target.reagents.total_volume) //stops chems from killing in the mansus
 	sac_target.restore_blood() //stops target from just dying from low blood in the mansus
-	//monkestation addition end
 	if(sac_target.AdjustUnconscious(SACRIFICE_SLEEP_DURATION))
 		to_chat(sac_target, span_hypnophrase("Your mind feels torn apart as you fall into a shallow slumber..."))
 	else
@@ -309,7 +309,7 @@
 	if(QDELETED(sac_target))
 		return
 
-	sac_target.grab_ghost() // monke edit: try to grab their ghost
+	sac_target.grab_ghost()
 
 	// The target disconnected or something, we shouldn't bother sending them along.
 	if(!sac_target.client || !sac_target.mind)
@@ -327,7 +327,7 @@
 	// and we fail to revive them (using a lower number than before),
 	// just disembowel them and stop the chain
 	sac_target.adjustOxyLoss(-100, FALSE)
-	sac_target.grab_ghost() // monke edit: try to grab their ghost again before revival
+	sac_target.grab_ghost()
 	if(!sac_target.heal_and_revive(60, span_danger("[sac_target]'s heart begins to beat with an unholy force as they return from death!")))
 		disembowel_target(sac_target)
 		return
@@ -335,10 +335,8 @@
 	to_chat(sac_target, span_big(span_hypnophrase("Unnatural forces begin to claw at your every being from beyond the veil.")))
 
 	sac_target.apply_status_effect(/datum/status_effect/unholy_determination, SACRIFICE_REALM_DURATION)
-	//monkestation addition start:
 	sac_target.reagents?.remove_all(sac_target.reagents.total_volume) //stops chems from killing in the mansus
 	sac_target.restore_blood() //stops target from just dying from low blood in the mansus
-	//monkestation addition end
 	addtimer(CALLBACK(src, PROC_REF(after_target_wakes), sac_target), SACRIFICE_SLEEP_DURATION * 0.5) // Begin the minigame
 
 	RegisterSignal(sac_target, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(on_target_escape)) // Cheese condition
@@ -445,6 +443,7 @@
 	if(IS_HERETIC(sac_target))
 		var/datum/antagonist/heretic/victim_heretic = sac_target.mind?.has_antag_datum(/datum/antagonist/heretic)
 		victim_heretic.knowledge_points -= 3
+		SStgui.update_uis(victim_heretic)
 	// Wherever we end up, we sure as hell won't be able to explain
 	sac_target.adjust_timed_status_effect(40 SECONDS, /datum/status_effect/speech/slurring/heretic)
 	sac_target.adjust_stutter(40 SECONDS)
@@ -525,7 +524,7 @@
 	sac_target.set_eye_blur_if_lower(100 SECONDS)
 	sac_target.set_dizzy_if_lower(1 MINUTES)
 	sac_target.AdjustKnockdown(80)
-	sac_target.stamina.adjust(-120)
+	sac_target.stamina.adjust(-60)
 
 	// Glad i'm outta there, though!
 	sac_target.add_mood_event("shadow_realm_survived", /datum/mood_event/shadow_realm_live)

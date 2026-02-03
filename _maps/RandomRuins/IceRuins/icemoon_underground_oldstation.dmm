@@ -508,7 +508,7 @@
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/item/stack/rods,
 /obj/effect/decal/cleanable/glass,
-/turf/open/floor/iron,
+/turf/open/floor/iron/icemoon,
 /area/ruin/space/ancientstation/charlie/hall)
 "cR" = (
 /obj/effect/decal/cleanable/dirt,
@@ -624,6 +624,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
 	dir = 10
 	},
+/obj/machinery/camera/autoname/old/directional/east,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/engie)
 "du" = (
@@ -990,7 +991,7 @@
 	icon_state = "small"
 	},
 /obj/effect/decal/cleanable/glass,
-/turf/open/floor/iron,
+/turf/open/floor/iron/icemoon,
 /area/ruin/space/ancientstation/delta/hall)
 "fq" = (
 /turf/closed/wall/rust,
@@ -1996,7 +1997,7 @@
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/firedoor/closed,
+/obj/structure/firelock_frame,
 /turf/open/floor/plating/icemoon,
 /area/ruin/space/ancientstation/charlie/hall)
 "kL" = (
@@ -2640,8 +2641,8 @@
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/firedoor,
 /obj/structure/barricade/wooden,
+/obj/structure/firelock_frame,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/delta/hall)
 "oc" = (
@@ -3545,7 +3546,7 @@
 /obj/structure/rack,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/crowbar,
-/obj/item/stock_parts/power_store/cell/high,
+/obj/item/stock_parts/power_store/battery/high,
 /obj/machinery/door/window/right/directional/east{
 	dir = 1;
 	req_access = list("away_general")
@@ -4215,7 +4216,7 @@
 	icon_state = "medium"
 	},
 /obj/effect/decal/cleanable/glass,
-/turf/open/floor/iron,
+/turf/open/floor/iron/icemoon,
 /area/ruin/space/ancientstation/delta/hall)
 "xl" = (
 /turf/closed/mineral/snowmountain/cavern/icemoon,
@@ -6017,21 +6018,6 @@
 /obj/machinery/light_switch/directional/south,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/ancientstation/charlie/kitchen)
-"GD" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 4
-	},
-/obj/machinery/duct,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/window/reinforced/spawner/directional/north,
-/obj/machinery/door/firedoor,
-/turf/open/floor/iron,
-/area/ruin/space/ancientstation/delta/hall)
 "GE" = (
 /obj/machinery/door/airlock/medical/glass{
 	name = "Chemical Storage"
@@ -8253,21 +8239,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/hydro)
-"TQ" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 4
-	},
-/obj/machinery/duct,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/window/reinforced/spawner/directional/north,
-/obj/machinery/door/firedoor,
-/turf/open/floor/iron,
-/area/ruin/space/ancientstation/charlie/hall)
 "TR" = (
 /obj/structure/table/glass,
 /obj/item/reagent_containers/cup/bottle/sugar{
@@ -8365,7 +8336,7 @@
 /obj/item/stack/rods,
 /obj/item/shard,
 /obj/effect/decal/cleanable/glass,
-/turf/open/floor/iron,
+/turf/open/floor/iron/icemoon,
 /area/ruin/space/ancientstation/charlie/hall)
 "Un" = (
 /obj/item/shard,
@@ -8446,7 +8417,7 @@
 	},
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/item/stack/rods,
-/turf/open/floor/iron,
+/turf/open/floor/iron/icemoon,
 /area/ruin/space/ancientstation/delta/hall)
 "UP" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle,
@@ -12630,7 +12601,7 @@ gN
 EU
 Mq
 wr
-TQ
+aZ
 wr
 AS
 JI
@@ -13022,7 +12993,7 @@ Av
 Jl
 Jl
 Av
-GD
+oE
 Av
 Jl
 JI

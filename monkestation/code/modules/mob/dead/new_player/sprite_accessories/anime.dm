@@ -182,6 +182,18 @@
 	icon_state = "plug"
 	hasinner = TRUE
 
+/datum/sprite_accessory/anime_bottom/leopard
+	name = "Leopard Tail"
+	icon_state = "leopard"
+
+/datum/sprite_accessory/anime_bottom/twocat
+	name = "Doubled Cat Tail"
+	icon_state = "twocat"
+
+/datum/sprite_accessory/anime_bottom/catbig
+	name = "Bigger Cat Tail"
+	icon_state = "catbig"
+
 /datum/sprite_accessory/anime_halo
 	icon = 'monkestation/icons/mob/anime/anime_halo.dmi'
 	color_src = ANIME_HALO_COLOR
@@ -289,3 +301,16 @@
 /datum/sprite_accessory/anime_halo/crowned
 	name = "Crowned halo"
 	icon_state = "crowned"
+
+/datum/sprite_accessory/anime_halo/goldenring
+	name = "Golden ring"
+	icon_state = "goldenring"
+	color_src = null
+
+/datum/sprite_accessory/anime_halo/neonring
+	name = "Neon ring"
+	icon_state = "neonring"
+
+/datum/sprite_accessory/anime_halo/engineer
+	name = "Grease monke's halo"
+	icon_state = "engineer"

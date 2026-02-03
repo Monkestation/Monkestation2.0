@@ -95,10 +95,9 @@
 	if(panel_open)
 		balloon_alert(user, "close panel!")
 		return
-	on = !on
+	set_on(!on)
 	balloon_alert(user, "turned [on ? "on" : "off"]")
 	investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
-	update_icon()
 	return ..()
 
 ///Checks if the reaction temperature is inside the range of temperature + a little deviation
@@ -307,7 +306,7 @@
 		return
 	switch(action)
 		if("power")
-			on = !on
+			set_on(!on)
 			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
 		if("recipe")

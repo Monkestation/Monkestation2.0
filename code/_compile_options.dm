@@ -112,11 +112,6 @@
 #define DISABLE_DREAMLUAU
 #endif
 
-//#define DISABLE_DEMOS
-#ifdef UNIT_TESTS
-#define DISABLE_DEMOS
-#endif
-
 /// If this is uncommented, force our verb processing into just the 2% of a tick
 /// We normally reserve for it
 /// NEVER run this on live, it's for simulating highpop only

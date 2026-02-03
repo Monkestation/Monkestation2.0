@@ -20,8 +20,9 @@
 /obj/structure/window/reinforced/clockwork/attackby_secondary(obj/item/tool, mob/user, params)
 	if(state == RWINDOW_SECURE)
 		if(tool.tool_behaviour == TOOL_WIRECUTTER && IS_CLOCK(user))
-			user.visible_message(span_notice("[user] starts cutting the pane of \the [src] away..."),
-								 span_notice("You start cutting away the pane of \the [src]."))
+			user.visible_message(
+				span_notice("[user] starts cutting the pane of \the [src] away..."),
+				span_notice("You start cutting away the pane of \the [src]."))
 			if(tool.use_tool(src, user, 2 SECONDS, volume = 50))
 				state = RWINDOW_BARS_CUT
 				to_chat(user, span_notice("The window pane falls out of the way exposing the frame bolts."))

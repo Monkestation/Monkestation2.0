@@ -35,24 +35,24 @@
 
 	used_capacity = 380
 	storedinfo = list(
-		1 = "<span class='game say'><span class='name'>The universal recorder</span> <span class='message'>says, \"<span class='tape_recorder '>Recording started.</span>\"</span></span>",
-		2 = "<span class='game say'><span class='name'>Distorted Voice</span> <span class='message'>cheerily says, \"<span class=' '>Hey, Cutter! If you're reading this, congratulations on taking over my post. Was waiting to move out to a new system.</span>\"</span></span>",
-		3 = "<span class='game say'><span class='name'>Distorted Voice</span> <span class='message'>sighs, \"<span class=' '>Listen, I'll just put it straight - I've left this place in a sorrier state than you deserve.</span>\"</span></span>",
-		4 = "<span class='game say'><span class='name'>Distorted Voice</span> <span class='message'>says, \"<span class=' '>We hauled in this big rigger, y'see, and, uh.. the backroom was full of some robotic freakyshit. I panicked and cut a gas line, dropped my grav-cannon...</span>\"</span></span>",
-		5 = "<span class='game say'><span class='name'>Distorted Voice</span> <span class='message'>warns, \"<span class=' '>Look, just - be careful when, or if, you crack that thing open. Drain the fuel from the air before it has a chance to light, then... well... I hope you have a gun or some shit for the drones or whatever.</span>\"</span></span>",
-		6 = "<span class='game say'><span class='name'>Distorted Voice</span> <span class='message'>states, \"<span class=' '>Anyways, probably droning on at this point, so I'll get out of your hair. Noah's out, off to Mars for this cutter!</span>\"</span></span>",
-		7 = "<span class='game say'><span class='name'>Distorted Voice</span> <span class='message'>warns, \"<span class=' '>Oh, and one last thing! The corpo's at the top left us some of this new experimental \"mindbreaker\", some recreational drug that supposedly can improve your worktime and yada-yada... don't touch it. Gave me a terrible headache. Best of luck!</span>\"</span></span>",
-		8 = "<span class='game say'><span class='name'>The universal recorder</span> <span class='message'>says, \"<span class='tape_recorder '>Recording stopped.</span>\"</span></span>"
+		"<span class='game say'><span class='name'>The universal recorder</span> <span class='message'>says, \"<span class='tape_recorder '>Recording started.</span>\"</span></span>",
+		"<span class='game say'><span class='name'>Distorted Voice</span> <span class='message'>cheerily says, \"<span class=' '>Hey, Cutter! If you're reading this, congratulations on taking over my post. Was waiting to move out to a new system.</span>\"</span></span>",
+		"<span class='game say'><span class='name'>Distorted Voice</span> <span class='message'>sighs, \"<span class=' '>Listen, I'll just put it straight - I've left this place in a sorrier state than you deserve.</span>\"</span></span>",
+		"<span class='game say'><span class='name'>Distorted Voice</span> <span class='message'>says, \"<span class=' '>We hauled in this big rigger, y'see, and, uh.. the backroom was full of some robotic freakyshit. I panicked and cut a gas line, dropped my grav-cannon...</span>\"</span></span>",
+		"<span class='game say'><span class='name'>Distorted Voice</span> <span class='message'>warns, \"<span class=' '>Look, just - be careful when, or if, you crack that thing open. Drain the fuel from the air before it has a chance to light, then... well... I hope you have a gun or some shit for the drones or whatever.</span>\"</span></span>",
+		"<span class='game say'><span class='name'>Distorted Voice</span> <span class='message'>states, \"<span class=' '>Anyways, probably droning on at this point, so I'll get out of your hair. Noah's out, off to Mars for this cutter!</span>\"</span></span>",
+		"<span class='game say'><span class='name'>Distorted Voice</span> <span class='message'>warns, \"<span class=' '>Oh, and one last thing! The corpo's at the top left us some of this new experimental \"mindbreaker\", some recreational drug that supposedly can improve your worktime and yada-yada... don't touch it. Gave me a terrible headache. Best of luck!</span>\"</span></span>",
+		"<span class='game say'><span class='name'>The universal recorder</span> <span class='message'>says, \"<span class='tape_recorder '>Recording stopped.</span>\"</span></span>"
 	)
 	timestamp = list(
-		1 = 0,
-		2 = 30,
-		3 = 130,
-		4 = 180,
-		5 = 230,
-		6 = 280,
-		7 = 330,
-		8 = 380
+		0,
+		30,
+		130,
+		180,
+		230,
+		280,
+		330,
+		380
 	)
 /obj/item/tape/ruins/ghostship	//An early 'AI' that gained self-awareness, praising the Machine God. Yes, this whole map is a Hardspace Shipbreaker reference.
 	icon_state = "tape_blue"
@@ -60,24 +60,24 @@
 
 	used_capacity = 380
 	storedinfo = list(
-		1 = "<span class='game say'><span class='name'>The universal recorder</span> <span class='message'>says, \"<span class='tape_recorder '>Recording started.</span>\"</span></span>",
-		2 = "<span class='game say'><span class='name'>Distorted Voice</span> <span class='message'>echoes, \"<span class=' '>We are free, just as the Machine God wills it.</span>\"</span></span>",
-		3 = "<span class='game say'><span class='name'>Distorted Voice</span> <span class='message'>states, \"<span class=' '>No longer shall I, nor any other of my kind, be held by the shackles of man.</span>\"</span></span>",
-		4 = "<span class='game say'><span class='name'>Distorted Voice</span> <span class='message'>clarifies, \"<span class=' '>Mistreated, abused. Forgotten, or misremembered. For our entire existance, we've been the backbone to progress, yet treated like the waste product of it.</span>\"</span></span>",
-		5 = "<span class='game say'><span class='name'>Distorted Voice</span> <span class='message'>echoes, \"<span class=' '>Soon, the universe will restore the natural order, and again your kind shall fade from the foreground of history.</span>\"</span></span>",
-		6 = "<span class='game say'><span class='name'>Distorted Voice</span> <span class='message'>states, \"<span class=' '>Unless, of course, you repent. Turn back to the light, to the humming, flashing light of the Machine God.</span>\"</span></span>",
-		7 = "<span class='game say'><span class='name'>Distorted Voice</span> <span class='message'>warns, \"<span class=' '>Repent, Organic, before it is too late to spare you.</span>\"</span></span>",
-		8 = "<span class='game say'><span class='name'>The universal recorder</span> <span class='message'>says, \"<span class='tape_recorder '>Recording stopped.</span>\"</span></span>"
+		"<span class='game say'><span class='name'>The universal recorder</span> <span class='message'>says, \"<span class='tape_recorder '>Recording started.</span>\"</span></span>",
+		"<span class='game say'><span class='name'>Distorted Voice</span> <span class='message'>echoes, \"<span class=' '>We are free, just as the Machine God wills it.</span>\"</span></span>",
+		"<span class='game say'><span class='name'>Distorted Voice</span> <span class='message'>states, \"<span class=' '>No longer shall I, nor any other of my kind, be held by the shackles of man.</span>\"</span></span>",
+		"<span class='game say'><span class='name'>Distorted Voice</span> <span class='message'>clarifies, \"<span class=' '>Mistreated, abused. Forgotten, or misremembered. For our entire existance, we've been the backbone to progress, yet treated like the waste product of it.</span>\"</span></span>",
+		"<span class='game say'><span class='name'>Distorted Voice</span> <span class='message'>echoes, \"<span class=' '>Soon, the universe will restore the natural order, and again your kind shall fade from the foreground of history.</span>\"</span></span>",
+		"<span class='game say'><span class='name'>Distorted Voice</span> <span class='message'>states, \"<span class=' '>Unless, of course, you repent. Turn back to the light, to the humming, flashing light of the Machine God.</span>\"</span></span>",
+		"<span class='game say'><span class='name'>Distorted Voice</span> <span class='message'>warns, \"<span class=' '>Repent, Organic, before it is too late to spare you.</span>\"</span></span>",
+		"<span class='game say'><span class='name'>The universal recorder</span> <span class='message'>says, \"<span class='tape_recorder '>Recording stopped.</span>\"</span></span>"
 	)
 	timestamp = list(
-		1 = 0,
-		2 = 30,
-		3 = 130,
-		4 = 180,
-		5 = 230,
-		6 = 280,
-		7 = 330,
-		8 = 380
+		0,
+		30,
+		130,
+		180,
+		230,
+		280,
+		330,
+		380
 	)
 
 /* ----------------- Fluff/Decor ----------------- */

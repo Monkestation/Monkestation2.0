@@ -3,7 +3,6 @@
 #define RESKIN_SYNDIE "Syndicate Red"
 
 /obj/item/clothing/under/syndicate
-	worn_icon_digitigrade = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/syndicate_digi.dmi'
 
 /obj/item/clothing/under/syndicate/nova
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/under/syndicate.dmi'
@@ -32,7 +31,6 @@
 	can_adjust = TRUE
 	has_sensor = HAS_SENSORS
 	armor_type = /datum/armor/clothing_under
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 	unique_reskin = list(
 		RESKIN_NT = "tactifool_blue",
 		RESKIN_CHARCOAL = "tactifool"
@@ -58,7 +56,6 @@
 /obj/item/clothing/under/syndicate/bloodred/sleepytime/sensors //Halloween-only
 	has_sensor = HAS_SENSORS
 	armor_type = /datum/armor/clothing_under
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 
 /obj/item/clothing/under/syndicate/nova/baseball
 	name = "syndicate baseball tee"
@@ -150,7 +147,6 @@
 	can_adjust = TRUE
 	alt_covers_chest = TRUE
 	armor_type = /datum/armor/clothing_under/syndicate
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 	unique_reskin = list(
 		RESKIN_SYNDIE = "syndicate_red",
 		RESKIN_CHARCOAL = "syndicate"
@@ -270,7 +266,6 @@
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/head/helmet.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/head/helmet.dmi'
 	icon_state = "swat_ds"
-	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
 
 /obj/item/clothing/head/beret/sec/syndicate
 	name = "brig officer's beret"
@@ -363,42 +358,6 @@
 	icon_state = "dssoft"
 	soft_type = "ds"
 
-//Maid Outfit
-/obj/item/clothing/head/costume/maidheadband/syndicate
-	name = "tactical maid headband"
-	desc = "Tacticute."
-	icon_state = "syndimaid_headband"
-	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/head/costume.dmi'
-	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/head/costume.dmi'
-
-/obj/item/clothing/gloves/combat/maid
-	name = "combat maid sleeves"
-	desc = "These 'tactical' gloves and sleeves are fireproof and electrically insulated. Warm to boot."
-	icon_state = "syndimaid_arms"
-
-/obj/item/clothing/under/syndicate/nova/maid
-	name = "tactical maid outfit"
-	desc = "A 'tactical' skirtleneck fashioned to the likeness of a maid outfit. Why the Syndicate has these, you'll never know."
-	icon_state = "syndimaid"
-	//armor_type = /datum/armor/clothing_under/none
-	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-	dying_key = DYE_REGISTRY_JUMPSKIRT
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
-
-/obj/item/clothing/under/syndicate/nova/maid/Initialize(mapload)
-	. = ..()
-	var/obj/item/clothing/accessory/maidcorset/syndicate/A = new (src)
-	attach_accessory(A)
-
-/obj/item/clothing/accessory/maidcorset/syndicate
-	name = "syndicate maid apron"
-	desc = "Practical? No. Tactical? Also no. Cute? Most definitely yes."
-	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/accessories.dmi'
-	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/accessories.dmi'
-	icon_state = "syndimaid_corset"
-	minimize_when_attached = FALSE
-	attachment_slot = null
-
 //Wintercoat & Hood
 /obj/item/clothing/suit/hooded/wintercoat/nova/syndicate
 	name = "syndicate winter coat"
@@ -442,7 +401,6 @@
 	icon_state = "ip_turtleneck"
 	can_adjust = TRUE
 	alt_covers_chest = TRUE
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 
 /obj/item/clothing/under/syndicate/nova/interdyne/miner
 	name = "interdyne jumpsuit"

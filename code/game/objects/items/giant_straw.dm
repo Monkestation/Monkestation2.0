@@ -5,7 +5,7 @@
 	icon_state = "straw1"
 	var/check_living = TRUE
 	var/datum/looping_sound/zucc/soundloop
-	var/suck_power = 2
+	var/suck_power = 1.5
 
 /obj/item/comically_large_straw/Initialize(mapload)
 	. = ..()

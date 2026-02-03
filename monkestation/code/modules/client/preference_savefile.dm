@@ -17,7 +17,9 @@
 		save_loadout -= loadout
 
 		if(istext(loadout))
-			loadout = _text2path(loadout)
+			var/loadout_path = text2path(loadout)
+			if(loadout_path) // if it's an invalid path, then we want it to remain text, so that sanitize_loadout_list will throw a USEFUL runtime
+				loadout = loadout_path
 		save_loadout[loadout] = entry
 
 	var/list/special_save_loadout = SANITIZE_LIST(save_data["special_loadout_list"])

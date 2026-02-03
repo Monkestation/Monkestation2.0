@@ -97,26 +97,7 @@
 		if(CLONE)
 			damage_dealt = -1 *  adjustCloneLoss(damage_amount, forced = forced)
 		if(STAMINA)
-			damage_dealt = -1 * stamina?.adjust(-damage)
-		if(PAIN)
-			if(pain_controller)
-				var/pre_pain = pain_controller.get_average_pain()
-				var/pain_amount = damage_amount
-				var/chosen_zone
-				if(spread_damage || isnull(def_zone))
-					chosen_zone = BODY_ZONES_ALL
-					pain_amount /= 6
-				else if(isbodypart(def_zone))
-					var/obj/item/bodypart/actual_hit = def_zone
-					chosen_zone = actual_hit.body_zone
-				else
-					chosen_zone = check_zone(def_zone)
-
-				sharp_pain(chosen_zone, pain_amount, STAMINA, 12.5 SECONDS, 0.8)
-				damage_dealt += pre_pain - pain_controller.get_average_pain()
-				damage_dealt += stamina?.adjust(-damage_amount * 0.25, forced = forced)
-			else
-				damage_dealt = -1 * stamina.adjust(-damage_amount, forced = forced)
+			damage_dealt = -1 * stamina?.adjust(-damage_amount)
 		if(BRAIN)
 			damage_dealt = -1 * adjustOrganLoss(ORGAN_SLOT_BRAIN, damage_amount)
 
@@ -150,19 +131,19 @@
  * when you don't know what damage type you're healing exactly.
  */
 /mob/living/proc/heal_damage_type(heal_amount = 0, damagetype = BRUTE)
-	heal_amount = abs(heal_amount) * -1
+	heal_amount = abs(heal_amount)
 
 	switch(damagetype)
 		if(BRUTE)
-			return adjustBruteLoss(heal_amount)
+			return adjustBruteLoss(-heal_amount)
 		if(BURN)
-			return adjustFireLoss(heal_amount)
+			return adjustFireLoss(-heal_amount)
 		if(TOX)
-			return adjustToxLoss(heal_amount, forced = TRUE) // monkestation edit: we're gonna assume anything using this proc intends to do true healing, so, let's not kill oozelings
+			return adjustToxLoss(-heal_amount, forced = TRUE) // monkestation edit: we're gonna assume anything using this proc intends to do true healing, so, let's not kill oozelings
 		if(OXY)
-			return adjustOxyLoss(heal_amount)
+			return adjustOxyLoss(-heal_amount)
 		if(CLONE)
-			return adjustCloneLoss(heal_amount)
+			return adjustCloneLoss(-heal_amount)
 		if(STAMINA)
 			return stamina.adjust(heal_amount)
 
@@ -248,8 +229,7 @@
 		stutter = 0 SECONDS, // Ditto
 		eyeblur = 0 SECONDS,
 		drowsy = 0 SECONDS,
-		blocked = 0, // This one's not an effect, don't be confused - it's block chance
-		stamina = 0, // This one's a damage type, and not an effect
+		blocked = 0, // This one's not an effect, don't be confused - it's the % of the other effects to be blocked by armor
 		jitter = 0 SECONDS,
 		paralyze = 0,
 		immobilize = 0,
@@ -268,10 +248,6 @@
 		apply_effect(paralyze, EFFECT_PARALYZE, blocked)
 	if(immobilize)
 		apply_effect(immobilize, EFFECT_IMMOBILIZE, blocked)
-
-	//if(stamina) //monkestation removal
-	//	apply_damage(stamina, STAMINA, null, blocked) //IF THIS ISN'T AN EFFECT AND IS A DAMAGE TYPE WHY IS IT HERE?
-
 	if(drowsy)
 		adjust_drowsiness(drowsy)
 	if(eyeblur)
@@ -503,9 +479,6 @@
 
 /mob/living/proc/pre_stamina_change(diff as num, forced)
 	return diff
-
-/mob/living/proc/setStaminaLoss(amount, updating_stamina = TRUE, forced = FALSE, required_biotype)
-	return
 
 /**
  * heal ONE external organ, organ gets randomly selected from damaged ones.

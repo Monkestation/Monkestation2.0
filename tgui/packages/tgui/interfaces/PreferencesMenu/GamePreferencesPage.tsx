@@ -1,15 +1,15 @@
 import { binaryInsertWith, sortBy } from 'common/collections';
-import { InfernoNode } from 'inferno';
+import type { ReactNode } from 'react';
 import { useBackend } from '../../backend';
-import { Box, Flex, Tooltip } from '../../components';
-import { PreferencesMenuData } from './data';
+import { Box, Stack, Tooltip } from '../../components';
+import type { PreferencesMenuData } from './data';
 import features from './preferences/features';
 import { FeatureValueInput } from './preferences/features/base';
 import { TabbedMenu } from './TabbedMenu';
 
 type PreferenceChild = {
   name: string;
-  children: InfernoNode;
+  children: ReactNode;
 };
 
 const binaryInsertPreference = binaryInsertWith<PreferenceChild>(
@@ -28,14 +28,14 @@ export const GamePreferencesPage = (props) => {
   )) {
     const feature = features[featureId];
 
-    let nameInner: InfernoNode = feature?.name || featureId;
+    let nameInner: ReactNode = feature?.name || featureId;
 
     if (feature?.description) {
       nameInner = (
         <Box
           as="span"
           style={{
-            'border-bottom': '2px dotted rgba(255, 255, 255, 0.8)',
+            borderBottom: '2px dotted rgba(255, 255, 255, 0.8)',
           }}
         >
           {nameInner}
@@ -43,10 +43,10 @@ export const GamePreferencesPage = (props) => {
       );
     }
 
-    let name: InfernoNode = (
-      <Flex.Item maxWidth="400px" grow={1} pr={2} basis={0} ml={2}>
+    let name: ReactNode = (
+      <Stack.Item grow={1} pr={2} basis={0} ml={2}>
         {nameInner}
-      </Flex.Item>
+      </Stack.Item>
     );
 
     if (feature?.description) {
@@ -58,10 +58,10 @@ export const GamePreferencesPage = (props) => {
     }
 
     const child = (
-      <Flex align="center" key={featureId} pb={2} className="candystripe">
+      <Stack align="center" key={featureId} pb={2} className="candystripe">
         {name}
 
-        <Flex.Item grow={1} basis={0}>
+        <Stack.Item grow={1} basis={0}>
           {(feature && (
             <FeatureValueInput
               feature={feature}
@@ -74,8 +74,8 @@ export const GamePreferencesPage = (props) => {
               ...is not filled out properly!!!
             </Box>
           )}
-        </Flex.Item>
-      </Flex>
+        </Stack.Item>
+      </Stack>
     );
 
     const entry = {
@@ -91,7 +91,7 @@ export const GamePreferencesPage = (props) => {
     );
   }
 
-  const gamePreferenceEntries: [string, InfernoNode][] = sortByName(
+  const gamePreferenceEntries: [string, ReactNode[]][] = sortByName(
     Object.entries(gamePreferences),
   ).map(([category, preferences]) => {
     return [category, preferences.map((entry) => entry.children)];
@@ -99,7 +99,6 @@ export const GamePreferencesPage = (props) => {
 
   return (
     <TabbedMenu
-      name="Settings"
       categoryEntries={gamePreferenceEntries}
       contentProps={{
         fontSize: 1.5,

@@ -22,7 +22,7 @@
 	var/eyesmouth_covered = 0 //based on flags_cover
 	if(iscarbon(located_mob))
 		var/mob/living/carbon/clothed_carbon = located_mob
-		for(var/obj/item/clothing/clothes in list(clothed_carbon.back, clothed_carbon.wear_mask, clothed_carbon.head))
+		for(var/obj/item/clothing/clothes in list(clothed_carbon.back, clothed_carbon.wear_mask, clothed_carbon.head, clothed_carbon.wear_neck))
 			covered_locations |= clothes.body_parts_covered
 			face_covered |= clothes.flags_inv
 			eyesmouth_covered |= clothes.flags_cover

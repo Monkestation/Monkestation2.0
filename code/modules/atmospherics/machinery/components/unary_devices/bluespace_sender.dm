@@ -26,9 +26,6 @@
 	///Amount of credits gained from each vendor
 	var/credits_gained = 0
 
-/// All bluespace gas senders
-GLOBAL_LIST_EMPTY_TYPED(bluespace_senders, /obj/machinery/atmospherics/components/unary/bluespace_sender)
-
 /datum/armor/unary_bluespace_sender
 	energy = 100
 	fire = 80
@@ -44,15 +41,8 @@ GLOBAL_LIST_EMPTY_TYPED(bluespace_senders, /obj/machinery/atmospherics/component
 		var/datum/gas/gas = gas_id
 		base_prices[gas_id] = initial(gas.base_value)
 
-	GLOB.bluespace_senders += src
-
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 	register_context()
-
-/obj/machinery/atmospherics/components/unary/bluespace_sender/Destroy()
-	GLOB.bluespace_senders -= src
-
-	return ..()
 
 /obj/machinery/atmospherics/components/unary/bluespace_sender/examine(mob/user)
 	. = ..()
@@ -147,17 +137,16 @@ GLOBAL_LIST_EMPTY_TYPED(bluespace_senders, /obj/machinery/atmospherics/component
 	if(!..())
 		return FALSE
 	set_init_directions()
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 	return TRUE
 
 /obj/machinery/atmospherics/components/unary/bluespace_sender/click_ctrl(mob/living/user)
 	if(!panel_open)
 		if(!can_interact(user))
 			return
-		on = !on
+		set_on(!on)
 		balloon_alert(user, "turned [on ? "on" : "off"]")
 		investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
-		update_appearance()
 		return
 	. = ..()
 
@@ -207,9 +196,8 @@ GLOBAL_LIST_EMPTY_TYPED(bluespace_senders, /obj/machinery/atmospherics/component
 
 	switch(action)
 		if("power")
-			on = !on
+			set_on(!on)
 			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", INVESTIGATE_ATMOS)
-			update_appearance()
 			. = TRUE
 
 		if("rate")

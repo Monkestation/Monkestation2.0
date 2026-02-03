@@ -599,7 +599,6 @@
 	var/static/list/banned_ztraits = list(
 		ZTRAIT_AWAY,
 		ZTRAIT_CENTCOM,
-		ZTRAIT_ECLIPSE,
 		ZTRAIT_REEBE,
 		ZTRAIT_RESERVED,
 	)
@@ -831,7 +830,7 @@
 	icon_state = "godeye"
 	inhand_icon_state = null
 	vision_flags = SEE_TURFS
-	clothing_traits = list(TRAIT_MADNESS_IMMUNE)
+	clothing_traits = list(TRAIT_MADNESS_IMMUNE, TRAIT_NEARSIGHTED_CORRECTED)
 	// Blue, light blue
 	color_cutoffs = list(15, 30, 40)
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
@@ -911,7 +910,7 @@
 	scan_pinpointer.scan_target = living_scanned
 
 	to_chat(living_scanned, span_warning("You briefly see a flash of [living_owner]'s face before being knocked off-balance by an unseen force!"))
-	living_scanned.add_filter("scan", 2, list("type" = "outline", "color" = COLOR_RED, "size" = 1))
+	living_scanned.add_filter("scan", 2, list("type" = "outline", "color" = COLOR_YELLOW, "size" = 1))
 	addtimer(CALLBACK(living_scanned, TYPE_PROC_REF(/datum, remove_filter), "scan"), 30 SECONDS)
 
 	owner.playsound_local(get_turf(owner), 'sound/magic/smoke.ogg', 50, TRUE)
@@ -964,7 +963,7 @@
 	var/obj/item/cursed_katana/katana = active_item
 	if(!katana || katana.shattered)
 		return FALSE
-	if(!katana.drew_blood)
+	if(!katana.drew_blood && !QDELETED(owner))
 		to_chat(owner, span_userdanger("[katana] lashes out at you in hunger!"))
 		playsound(owner, 'sound/magic/demon_attack1.ogg', 50, TRUE)
 		var/obj/item/bodypart/part = owner.get_holding_bodypart_of_item(katana)
@@ -1107,7 +1106,7 @@
 
 /obj/item/cursed_katana/proc/cloak(mob/living/target, mob/user)
 	user.alpha = 150
-	user.invisibility = INVISIBILITY_OBSERVER // so hostile mobs cant see us or target us
+	user.SetInvisibility(INVISIBILITY_OBSERVER, id=type) // so hostile mobs cant see us or target us
 	user.add_sight(SEE_SELF) // so we can see us
 	user.visible_message(span_warning("[user] vanishes into thin air!"),
 		span_notice("You enter the dark cloak."))
@@ -1121,7 +1120,7 @@
 
 /obj/item/cursed_katana/proc/uncloak(mob/user)
 	user.alpha = 255
-	user.invisibility = 0
+	user.RemoveInvisibility(type)
 	user.clear_sight(SEE_SELF)
 	user.visible_message(span_warning("[user] appears from thin air!"),
 		span_notice("You exit the dark cloak."))

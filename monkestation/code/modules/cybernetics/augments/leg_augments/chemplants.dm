@@ -10,7 +10,7 @@
 	var/current_ticks_cooldown = 0
 	var/mutable_appearance/overlay
 
-/obj/item/organ/internal/cyberimp/leg/chemplant/Initialize()
+/obj/item/organ/internal/cyberimp/leg/chemplant/Initialize(mapload)
 	. = ..()
 
 /obj/item/organ/internal/cyberimp/leg/chemplant/on_life()
@@ -22,7 +22,7 @@
 		owner.adjust_jitter(1)
 		owner.adjust_dizzy(1)
 
-		current_ticks_cooldown -= SSmobs.wait
+		current_ticks_cooldown -= SSclient_mobs.wait
 
 		return
 

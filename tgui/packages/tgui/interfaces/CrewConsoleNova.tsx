@@ -1,5 +1,5 @@
 // THIS IS A NOVA SECTOR UI FILE
-import { BooleanLike } from 'common/react';
+import type { BooleanLike } from 'common/react';
 import { createSearch } from 'common/string';
 
 import { useBackend, useLocalState } from '../backend';
@@ -205,9 +205,7 @@ const CrewTable = () => {
           </Button>
           <Input
             placeholder="Search for name..."
-            onInput={(e) =>
-              setSearchQuery((e.target as HTMLTextAreaElement).value)
-            }
+            onChange={(value) => setSearchQuery(value)}
           />
           <Button onClick={() => setfilterTracking(!filterTracking)}>
             {filterTracking ? (

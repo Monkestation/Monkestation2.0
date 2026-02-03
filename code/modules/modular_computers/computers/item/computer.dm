@@ -106,6 +106,9 @@
 	/// Allow people with chunky fingers to use?
 	var/allow_chunky = FALSE
 
+	/// Monkestation Addition. Do we force ethernet connection.
+	var/ethernet_forced = FALSE
+
 	///The amount of paper currently stored in the PDA
 	var/stored_paper = 10
 	///The max amount of paper that can be held at once.
@@ -195,7 +198,7 @@
 	if(issilicon(user))
 		return NONE
 
-	if(RemoveID(user))
+	if(remove_id(user))
 		return CLICK_ACTION_SUCCESS
 
 	if(istype(inserted_pai)) // Remove pAI
@@ -204,6 +207,10 @@
 		inserted_pai = null
 		update_appearance(UPDATE_ICON)
 		return CLICK_ACTION_SUCCESS
+
+	for(var/datum/computer_file/files as anything in stored_files)
+		if(files.try_eject(user))
+			return CLICK_ACTION_SUCCESS
 
 	return CLICK_ACTION_BLOCKING
 
@@ -220,9 +227,12 @@
 
 // Gets IDs/access levels from card slot. Would be useful when/if PDAs would become modular PCs. //guess what
 /obj/item/modular_computer/GetAccess()
+	var/list/access = list()
 	if(computer_id_slot)
-		return computer_id_slot.GetAccess()
-	return ..()
+		access |= computer_id_slot?.GetAccess()
+	for(var/datum/computer_file/app_access as anything in stored_files)
+		access |= app_access.get_access()
+	return access + ..()
 
 /obj/item/modular_computer/GetID()
 	RETURN_TYPE(/obj/item/card/id)
@@ -249,13 +259,13 @@
 	return TRUE
 
 /**
- * InsertID
+ * insert_id
  * Attempt to insert the ID in either card slot.
  * Args:
  * inserting_id - the ID being inserted
  * user - The person inserting the ID
  */
-/obj/item/modular_computer/InsertID(obj/item/card/inserting_id, mob/user)
+/obj/item/modular_computer/insert_id(obj/item/card/inserting_id, mob/user)
 	//all slots taken
 	if(computer_id_slot)
 		return FALSE
@@ -282,7 +292,7 @@
  * Args:
  * user - The mob trying to remove the ID, if there is one
  */
-/obj/item/modular_computer/RemoveID(mob/user)
+/obj/item/modular_computer/remove_id(mob/user)
 	if(!computer_id_slot)
 		return ..()
 
@@ -371,6 +381,8 @@
 
 	if(internal_cell)
 		. += span_info("Right-click it with a screwdriver to eject the [internal_cell].")
+	else
+		. += span_info("The power cell compartment is open and empty.")
 
 /obj/item/modular_computer/examine_more(mob/user)
 	. = ..()
@@ -519,19 +531,38 @@
 	loc.visible_message(span_notice("<img class='icon' src='\ref[src]'> \The [src] displays a [origin.filedesc] notification: [html_encode(alerttext)]"), vision_distance = vision_distance, push_appearance = src)
 
 /obj/item/modular_computer/proc/ring(ringtone, list/balloon_alertees) // bring bring
-	if(!use_energy())
+	if(!use_energy(check_programs = FALSE))
 		return
+	// Get the messenger app's new sound settings || Monkestation Addition START
+	var/sound_to_play = 'sound/machines/twobeep_high.ogg' //defaults to the original
+	var/datum/computer_file/program/messenger/messenger = locate() in stored_files
+	if(messenger?.ringtone_sound)
+		var/selected_sound = GLOB.pda_ringtone_sounds[messenger.ringtone_sound]
+		if(selected_sound)
+			sound_to_play = selected_sound
+	// Monkestation Addition END
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_PDA_GLITCHED))
-		playsound(src, pick('sound/machines/twobeep_voice1.ogg', 'sound/machines/twobeep_voice2.ogg'), 50, TRUE)
+		playsound(src, pick('sound/machines/twobeep_voice1.ogg', 'sound/machines/twobeep_voice2.ogg'), 50, TRUE, mixer_channel = CHANNEL_RINGTONES)
 	else
-		playsound(src, 'sound/machines/twobeep_high.ogg', 50, TRUE)
+		playsound(src, sound_to_play, 50, TRUE, mixer_channel = CHANNEL_RINGTONES) // Monkestation change
 	ringtone = "*[ringtone]*"
 	audible_message(ringtone)
 	for(var/mob/living/alertee in balloon_alertees)
 		alertee.balloon_alert(alertee, ringtone)
 
 /obj/item/modular_computer/proc/send_sound()
-	playsound(src, 'sound/machines/terminal_success.ogg', 15, TRUE)
+	// Monkestation Addition START
+	var/datum/computer_file/program/messenger/messenger = locate() in stored_files
+	if(!messenger)
+		playsound(src, 'sound/machines/terminal_success.ogg', 15, TRUE)
+		return
+
+	var/sound_file = GLOB.pda_ringtone_sounds[messenger.ringtone_sound]
+	if(!sound_file)
+		sound_file = 'sound/machines/terminal_success.ogg'
+
+	playsound(src, sound_file, 15, TRUE)
+	// Monkestation Addition END
 
 // Function used by NanoUI's to obtain data for header. All relevant entries begin with "PC_"
 /obj/item/modular_computer/proc/get_header_data()
@@ -636,6 +667,9 @@
 /obj/item/modular_computer/proc/get_ntnet_status()
 	// computers are connected through ethernet
 	if(hardware_flag & PROGRAM_CONSOLE)
+		return NTNET_ETHERNET_SIGNAL
+
+	if(ethernet_forced) //Monkestation Addition - Add a check for forced ethernet
 		return NTNET_ETHERNET_SIGNAL
 
 	// NTNet is down and we are not connected via wired connection. No signal.
@@ -783,7 +817,7 @@
 /obj/item/modular_computer/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	// Check for ID first
 	if(isidcard(tool))
-		return InsertID(tool, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
+		return insert_id(tool, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 
 	// Check for cash next
 	if(computer_id_slot && iscash(tool))
@@ -877,22 +911,25 @@
 /obj/item/modular_computer/deconstruct(disassembled = TRUE)
 	var/atom/droploc = drop_location()
 	remove_pai()
-	eject_aicard()
+	eject_file_contents()
+	src.eject_stored_items(droploc)
+	if (!disassembled)
+		physical.visible_message(span_notice("\The [src] breaks apart!"))
+	new /obj/item/stack/sheet/iron(droploc, steel_sheet_cost * (disassembled ? 1 : 0.5))
+	relay_qdel() // Needed for /obj/item/modular_computer/processor/relay_qdel()
+	qdel(src)
+
+/obj/item/modular_computer/proc/eject_stored_items(atom/droploc) // Only used for deconstruct()
 	internal_cell?.forceMove(droploc)
 	computer_id_slot?.forceMove(droploc)
 	//stored_id?.forceMove(droploc)
 	//alt_stored_id?.forceMove(droploc)
 	inserted_disk?.forceMove(droploc)
-	if (!disassembled)
-		physical.visible_message(span_notice("\The [src] breaks apart!"))
-	new /obj/item/stack/sheet/iron(droploc, steel_sheet_cost * (disassembled ? 1 : 0.5))
-	relay_qdel()
 
 // Ejects the inserted intellicard, if one exists. Used when the computer is deconstructed.
-/obj/item/modular_computer/proc/eject_aicard()
-	var/datum/computer_file/program/ai_restorer/program = locate() in stored_files
-	if (program)
-		return program.try_eject(forced = TRUE)
+/obj/item/modular_computer/proc/eject_file_contents()
+	for(var/datum/computer_file/files as anything in stored_files)
+		files.try_eject(forced = TRUE)
 	return FALSE
 
 // Used by processor to relay qdel() to machinery type.

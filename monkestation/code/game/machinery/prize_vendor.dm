@@ -86,7 +86,7 @@
 		inserted_tickets += ticket_amount
 		ticket_stack.amount = 0
 		to_chat(user, "You insert [ticket_amount] [ticket_amount == 1 ? "ticket" : "tickets"] into \the [src] but it's still not enough! \
-					   Looks you will need to get some more tickets.")
+						Looks you will need to get some more tickets.")
 
 	if(ticket_stack.get_amount() <= 0)
 		qdel(ticket_stack)
@@ -145,95 +145,99 @@
 /obj/machinery/prize_vendor/pets
 	name = "Pet Prize Vendor"
 	desc = "Friend dispenser."
-	dispense_list_override = list(/mob/living/basic/parrot = 3,
-								  /mob/living/basic/sloth = 3,
-								  /mob/living/simple_animal/pet/cat = 3,
-								  /mob/living/basic/pet/fox = 3,
-								  /mob/living/simple_animal/pet/gondola = 1,
-								  /mob/living/basic/pet/penguin/emperor = 2,
-								  /mob/living/basic/crab = 2,
-								  /mob/living/basic/axolotl = 2,
-								  /mob/living/basic/frog = 2,
-								  /mob/living/basic/mothroach = 3,
-								  /mob/living/basic/pet/dog/bullterrier = 2,
-								  /mob/living/basic/pet/dog/pug = 2,
-								  /mob/living/basic/pet/dog/corgi = 2,
-								  /mob/living/basic/rabbit = 2)
+	dispense_list_override = list(
+		/mob/living/basic/parrot = 3,
+		/mob/living/basic/sloth = 3,
+		/mob/living/simple_animal/pet/cat = 3,
+		/mob/living/basic/pet/fox = 3,
+		/mob/living/simple_animal/pet/gondola = 1,
+		/mob/living/basic/pet/penguin/emperor = 2,
+		/mob/living/basic/crab = 2,
+		/mob/living/basic/axolotl = 2,
+		/mob/living/basic/frog = 2,
+		/mob/living/basic/mothroach = 3,
+		/mob/living/basic/pet/dog/bullterrier = 2,
+		/mob/living/basic/pet/dog/pug = 2,
+		/mob/living/basic/pet/dog/corgi = 2,
+		/mob/living/basic/rabbit = 2)
 	ticket_cost = 4
 	circuit = /obj/item/circuitboard/machine/prize_vendor/pets
 
 /obj/machinery/prize_vendor/snacks
 	name = "Snack Prize Vendor"
 	desc = "Now with enough sugar to keep you gaming!"
-	dispense_list_override = list(/obj/item/reagent_containers/cup/soda_cans/cola = 3,
-								  /obj/item/reagent_containers/cup/soda_cans/space_mountain_wind = 3,
-								  /obj/item/reagent_containers/cup/soda_cans/dr_gibb = 3,
-								  /obj/item/reagent_containers/cup/soda_cans/starkist = 3,
-								  /obj/item/reagent_containers/cup/soda_cans/space_up = 3,
-								  /obj/item/reagent_containers/cup/soda_cans/pwr_game = 3,
-								  /obj/item/reagent_containers/cup/soda_cans/lemon_lime = 3,
-								  /obj/item/reagent_containers/cup/glass/bottle/mushi_kombucha = 1,
-								  /obj/item/reagent_containers/cup/glass/drinkingglass/filled/nuka_cola = 1,
-								  /obj/item/reagent_containers/cup/soda_cans/monkey_energy = 1,
-								  /obj/item/reagent_containers/cup/soda_cans/grey_bull = 1,
-								  /obj/item/reagent_containers/cup/glass/bottle/rootbeer = 1,
-								  /obj/item/food/spacetwinkie = 3,
-								  /obj/item/food/cheesiehonkers = 3,
-								  /obj/item/food/candy = 3,
-						  		  /obj/item/food/chips = 3,
-								  /obj/item/food/chips/shrimp = 3,
-								  /obj/item/food/sosjerky = 3,
-								  /obj/item/food/cornchips/random = 3,
-								  /obj/item/food/sosjerky = 3,
-								  /obj/item/food/no_raisin = 3,
-								  /obj/item/food/peanuts = 3,
-								  /obj/item/food/peanuts/random = 2,
-								  /obj/item/food/cnds = 3,
-								  /obj/item/food/cnds/random = 2,
-								  /obj/item/food/semki = 3,
-								  /obj/item/reagent_containers/cup/glass/dry_ramen = 2,
-								  /obj/item/storage/box/gum = 2,
-								  /obj/item/food/energybar = 2,
-								  /obj/item/food/syndicake = 2,
-								  /obj/item/food/peanuts/ban_appeal = 2,
-								  /obj/item/food/candy/bronx = 1,
-								  /obj/item/food/spacers_sidekick = 2,
-								  /obj/item/food/pistachios = 2,
-								  /obj/effect/spawner/random/food_or_drink/donkpockets = 2) //should just give a random donk pocket box
+	dispense_list_override = list(
+		/obj/item/reagent_containers/cup/soda_cans/cola = 3,
+		/obj/item/reagent_containers/cup/soda_cans/space_mountain_wind = 3,
+		/obj/item/reagent_containers/cup/soda_cans/dr_gibb = 3,
+		/obj/item/reagent_containers/cup/soda_cans/starkist = 3,
+		/obj/item/reagent_containers/cup/soda_cans/space_up = 3,
+		/obj/item/reagent_containers/cup/soda_cans/pwr_game = 3,
+		/obj/item/reagent_containers/cup/soda_cans/lemon_lime = 3,
+		/obj/item/reagent_containers/cup/glass/bottle/mushi_kombucha = 1,
+		/obj/item/reagent_containers/cup/glass/drinkingglass/filled/nuka_cola = 1,
+		/obj/item/reagent_containers/cup/soda_cans/monkey_energy = 1,
+		/obj/item/reagent_containers/cup/soda_cans/grey_bull = 1,
+		/obj/item/reagent_containers/cup/glass/bottle/rootbeer = 1,
+		/obj/item/food/spacetwinkie = 3,
+		/obj/item/food/cheesiehonkers = 3,
+		/obj/item/food/candy = 3,
+		/obj/item/food/chips = 3,
+		/obj/item/food/chips/shrimp = 3,
+		/obj/item/food/sosjerky = 3,
+		/obj/item/food/cornchips/random = 3,
+		/obj/item/food/sosjerky = 3,
+		/obj/item/food/no_raisin = 3,
+		/obj/item/food/peanuts = 3,
+		/obj/item/food/peanuts/random = 2,
+		/obj/item/food/cnds = 3,
+		/obj/item/food/cnds/random = 2,
+		/obj/item/food/semki = 3,
+		/obj/item/reagent_containers/cup/glass/dry_ramen = 2,
+		/obj/item/storage/box/gum = 2,
+		/obj/item/food/energybar = 2,
+		/obj/item/food/syndicake = 2,
+		/obj/item/food/peanuts/ban_appeal = 2,
+		/obj/item/food/candy/bronx = 1,
+		/obj/item/food/spacers_sidekick = 2,
+		/obj/item/food/pistachios = 2,
+		/obj/effect/spawner/random/food_or_drink/donkpockets = 2) //should just give a random donk pocket box
 	overlay_scaling = 0.6
 	circuit = /obj/item/circuitboard/machine/prize_vendor/snacks
 
 /obj/machinery/prize_vendor/games
 	name = "Game Prize Vendor"
 	desc = "For all the non-gaming gamers in your life."
-	dispense_list_override = list(/obj/item/toy/cards/deck = 2,
-								  /obj/item/toy/cards/deck/blank = 2,
-								  /obj/item/toy/cards/deck/blank/black = 2,
-								  /obj/item/toy/cards/deck/cas = 2,
-				 				  /obj/item/toy/cards/deck/cas/black = 2,
-								  /obj/item/toy/cards/deck/kotahi = 2,
-								  /obj/item/toy/cards/deck/tarot = 2,
-								  /obj/item/toy/cards/deck/wizoff = 2,
-								  /obj/item/toy/captainsaid = 1,
-								  /obj/item/toy/intento = 2,
-								  /obj/item/storage/box/tail_pin = 1,
-								  /obj/item/skillchip/appraiser = 1,
-								  /obj/item/skillchip/basketweaving = 1,
-								  /obj/item/skillchip/bonsai = 1,
-								  /obj/item/skillchip/light_remover = 1,
-								  /obj/item/skillchip/sabrage = 1,
-								  /obj/item/skillchip/useless_adapter = 1,
-								  /obj/item/skillchip/wine_taster = 1,
-								  /obj/item/camera = 1,
-								  /obj/item/camera_film = 2,
-								  /obj/item/cardpack/resin = 3,
-								  /obj/item/cardpack/series_one = 3,
-								  /obj/item/dyespray = 2,
-								  /obj/item/hourglass = 1,
-								  /obj/item/instrument/piano_synth/headphones = 1,
-								  /obj/item/razor = 2,
-								  /obj/item/storage/card_binder = 1,
-								  /obj/item/storage/dice = 2)
+	dispense_list_override = list(
+		/obj/item/toy/cards/deck = 2,
+		/obj/item/toy/cards/deck/blank = 2,
+		/obj/item/toy/cards/deck/blank/black = 2,
+		/obj/item/toy/cards/deck/cas = 2,
+		/obj/item/toy/cards/deck/cas/black = 2,
+		/obj/item/toy/cards/deck/kotahi = 2,
+		/obj/item/toy/cards/deck/tarot = 2,
+		/obj/item/toy/cards/deck/wizoff = 2,
+		/obj/item/toy/captainsaid = 1,
+		/obj/item/toy/intento = 2,
+		/obj/item/storage/box/tail_pin = 1,
+		/obj/item/skillchip/appraiser = 1,
+		/obj/item/skillchip/basketweaving = 1,
+		/obj/item/skillchip/bonsai = 1,
+		/obj/item/skillchip/light_remover = 1,
+		/obj/item/skillchip/sabrage = 1,
+		/obj/item/skillchip/useless_adapter = 1,
+		/obj/item/skillchip/wine_taster = 1,
+		/obj/item/camera = 1,
+		/obj/item/camera_film = 2,
+		/obj/item/cardpack/resin = 3,
+		/obj/item/cardpack/series_one = 3,
+		/obj/item/dyespray = 2,
+		/obj/item/hourglass = 1,
+		/obj/item/instrument/piano_synth/headphones = 1,
+		/obj/item/razor = 2,
+		/obj/item/storage/card_binder = 1,
+		/obj/item/storage/dice = 2
+	)
 	ticket_cost = 3
 	circuit = /obj/item/circuitboard/machine/prize_vendor/games
 
@@ -246,14 +250,16 @@
 /obj/machinery/prize_vendor/toy
 	name = "Toy Prize Vendor"
 	desc = "Nanotrasen is not responsible for lost eyes."
-	dispense_list_override = list(/obj/item/gun/ballistic/automatic/toy/unrestricted = 1,
-								  /obj/item/gun/ballistic/automatic/pistol/toy = 2,
-								  /obj/item/gun/ballistic/shotgun/toy/unrestricted = 2,
-								  /obj/item/toy/sword = 3,
-								  /obj/item/ammo_box/foambox = 3,
-								  /obj/item/toy/foamblade = 3,
-								  /obj/item/toy/balloon/syndicate = 1,
-								  /obj/item/gun/ballistic/shotgun/toy/crossbow = 2)
+	dispense_list_override = list(
+		/obj/item/gun/ballistic/automatic/toy/unrestricted = 1,
+		/obj/item/gun/ballistic/automatic/pistol/toy = 2,
+		/obj/item/gun/ballistic/shotgun/toy/unrestricted = 2,
+		/obj/item/toy/sword = 3,
+		/obj/item/ammo_box/foambox = 3,
+		/obj/item/toy/foamblade = 3,
+		/obj/item/toy/balloon/syndicate = 1,
+		/obj/item/gun/ballistic/shotgun/toy/crossbow = 2
+	)
 	ticket_cost = 6
 	circuit = /obj/item/circuitboard/machine/prize_vendor/toy
 

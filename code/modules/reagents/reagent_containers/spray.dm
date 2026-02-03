@@ -16,8 +16,8 @@
 	throw_range = 7
 	var/stream_mode = FALSE //whether we use the more focused mode
 	var/current_range = 3 //the range of tiles the sprayer will reach.
-	var/spray_range = 3 //the range of tiles the sprayer will reach when in spray mode.
-	var/stream_range = 1 //the range of tiles the sprayer will reach when in stream mode.
+	var/spray_range = 1 //the range of tiles the sprayer will reach when in spray mode.
+	var/stream_range = 3 //the range of tiles the sprayer will reach when in stream mode.
 	var/can_fill_from_container = TRUE
 	/// Are we able to toggle between stream and spray modes, which change the distance and amount sprayed?
 	var/can_toggle_range = TRUE
@@ -73,10 +73,10 @@
 	return TRUE
 
 /// Handles creating a chem puff that travels towards the target atom, exposing reagents to everything it hits on the way.
-/obj/item/reagent_containers/spray/proc/spray(atom/target, mob/user)
+/obj/item/reagent_containers/spray/proc/spray(atom/target, mob/user, turf/start_turf = get_turf(src))
 	var/range = max(min(current_range, get_dist(src, target)), 1)
 
-	var/obj/effect/decal/chempuff/reagent_puff = new /obj/effect/decal/chempuff(get_turf(src))
+	var/obj/effect/decal/chempuff/reagent_puff = new(start_turf)
 
 	reagent_puff.create_reagents(amount_per_transfer_from_this)
 	var/puff_reagent_left = range //how many turf, mob or dense objet we can react with before we consider the chem puff consumed
@@ -89,9 +89,8 @@
 	var/wait_step = max(round(2+3/range), 2)
 
 	var/puff_reagent_string = reagent_puff.reagents.get_reagent_log_string()
-	var/turf/src_turf = get_turf(src)
 
-	log_combat(user, src_turf, "fired a puff of reagents from", src, addition="with a range of \[[range]\], containing [puff_reagent_string].")
+	log_combat(user, start_turf, "fired a puff of reagents from", src, addition="with a range of \[[range]\], containing [puff_reagent_string].")
 	user.log_message("fired a puff of reagents from \a [src] with a range of \[[range]\] and containing [puff_reagent_string].", LOG_ATTACK)
 
 	// do_spray includes a series of step_towards and sleeps. As a result, it will handle deletion of the chempuff.
@@ -99,30 +98,36 @@
 
 /// Handles exposing atoms to the reagents contained in a spray's chempuff. Deletes the chempuff when it's completed.
 /obj/item/reagent_containers/spray/proc/do_spray(atom/target, wait_step, obj/effect/decal/chempuff/reagent_puff, range, puff_reagent_left, mob/user)
-	var/datum/move_loop/our_loop = SSmove_manager.move_towards_legacy(reagent_puff, target, wait_step, timeout = range * wait_step, flags = MOVEMENT_LOOP_START_FAST, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
 	reagent_puff.user = user
 	reagent_puff.sprayer = src
-	reagent_puff.lifetime = puff_reagent_left
 	reagent_puff.stream = stream_mode
+
+	var/turf/target_turf = get_turf(target)
+	var/turf/start_turf = get_turf(reagent_puff)
+	if(target_turf == start_turf) // Don't need to bother movelooping if we don't move
+		reagent_puff.setDir(user.dir)
+		reagent_puff.spray_down_turf(target_turf)
+		reagent_puff.end_life()
+		return
+
+	var/datum/move_loop/our_loop = SSmove_manager.move_towards_legacy(reagent_puff, target, wait_step, timeout = range * wait_step, flags = MOVEMENT_LOOP_START_FAST, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
 	reagent_puff.RegisterSignal(our_loop, COMSIG_QDELETING, TYPE_PROC_REF(/obj/effect/decal/chempuff, loop_ended))
 	reagent_puff.RegisterSignal(our_loop, COMSIG_MOVELOOP_POSTPROCESS, TYPE_PROC_REF(/obj/effect/decal/chempuff, check_move))
 
-/obj/item/reagent_containers/spray/attack_self(mob/user)
-	. = ..()
-	toggle_stream_mode(user)
-
-/obj/item/reagent_containers/spray/attack_self_secondary(mob/user)
-	. = ..()
-	toggle_stream_mode(user)
+/obj/item/reagent_containers/spray/item_ctrl_click(mob/user)
+	if(loc == user)
+		toggle_stream_mode(user)
 
 /obj/item/reagent_containers/spray/proc/toggle_stream_mode(mob/user)
-	if(stream_range == spray_range || !stream_range || !spray_range || possible_transfer_amounts.len > 2 || !can_toggle_range)
+	if(!stream_range || !spray_range || possible_transfer_amounts.len > 2 || !can_toggle_range)
 		return
 	stream_mode = !stream_mode
 	if(stream_mode)
 		current_range = stream_range
 	else
 		current_range = spray_range
+	playsound(src, 'sound/machines/click.ogg', 30, TRUE)
+	balloon_alert(user, "nozzle setting [stream_mode ? "stream":"spray"]")
 	to_chat(user, span_notice("You switch the nozzle setting to [stream_mode ? "\"stream\"":"\"spray\""]."))
 
 /obj/item/reagent_containers/spray/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
@@ -196,7 +201,7 @@
 	if(do_after(user, 3 SECONDS, user))
 		if(reagents.total_volume >= amount_per_transfer_from_this)//if not empty
 			user.visible_message(span_suicide("[user] pulls the trigger!"))
-			spray(user)
+			spray(user, user)
 			return BRUTELOSS
 		else
 			user.visible_message(span_suicide("[user] pulls the trigger...but \the [src] is empty!"))
@@ -419,8 +424,8 @@
 	inhand_icon_state = "sprayer_sus"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	spray_range = 4
-	stream_range = 2
+	spray_range = 2
+	stream_range = 4
 	volume = 100
 	custom_premium_price = PAYCHECK_COMMAND * 2
 
@@ -439,6 +444,7 @@
 	unique_reskin = list("Red" = "sprayer_med_red",
 						"Yellow" = "sprayer_med_yellow",
 						"Blue" = "sprayer_med_blue")
+	possible_transfer_amounts = list(2,5,10,15)
 
 /obj/item/reagent_containers/spray/medical/click_alt(mob/user)
 	if(unique_reskin && !current_skin && user.can_perform_action(src, NEED_DEXTERITY))
@@ -456,8 +462,11 @@
 			inhand_icon_state = "sprayer_med_blue"
 	M.update_held_items()
 
-/obj/item/reagent_containers/spray/hercuri
+/obj/item/reagent_containers/spray/hercuri //note to self make a subtype of medical spray bottles after the medical clean up is done - NK
 	name = "medical spray (hercuri)"
-	desc = "A medical spray bottle.This one contains hercuri, a medicine used to negate the effects of dangerous high-temperature environments. Careful not to freeze the patient!"
-	icon_state = "sprayer_large"
+	icon = 'icons/obj/medical/chemical.dmi'
+	desc = "A medical spray bottle. This one contains hercuri, a medicine used to negate the effects of dangerous high-temperature environments. Careful not to freeze the patient!"
+	icon_state = "sprayer_med_yellow"
 	list_reagents = list(/datum/reagent/medicine/c2/hercuri = 100)
+	volume = 100
+	possible_transfer_amounts = list(2,5,10,15)

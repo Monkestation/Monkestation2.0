@@ -74,7 +74,11 @@
 		/obj/item/gun/ballistic/revolver/c38/detective,
 		)
 	implants = list(/obj/item/implant/mindshield)
-	accessory = /obj/item/clothing/accessory/badge/holo/detective /// Monkestation edit : Adding some substance to the detective role
+	accessory = /obj/item/clothing/accessory/badge/detective // Monkestation edit : Adding some substance to the detective role
+
+#define DETECTIVE_PROMOTION_OFFICER 600 //(10 hours, you're now a patrol officer)
+#define DETECTIVE_PROMOTION_SEARGEANT 1200 //(20 hours, you're now a seargent detective)
+#define DETECTIVE_PROMOTION_LIEUTENANT 2400 //(40 hours, you're now a lieutenant, the last job that still does field work)
 
 /datum/outfit/job/detective/pre_equip(mob/living/carbon/human/human, visualsOnly = FALSE)
 	. = ..()
@@ -82,11 +86,51 @@
 		mask = /obj/item/clothing/mask/cigarette/candy
 		head = /obj/item/clothing/head/fedora/det_hat/minor
 
-/datum/outfit/job/detective/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(visualsOnly || !CONFIG_GET(flag/use_exp_tracking))
+		return
+
+	var/client/equipped_client = GLOB.directory[ckey(human.mind?.key)]
+	if(isnull(equipped_client))
+		return
+	var/player_playtime = text2num(equipped_client.prefs.exp[JOB_DETECTIVE])
+	switch(player_playtime)
+		if(DETECTIVE_PROMOTION_SEARGEANT to INFINITY)
+			accessory = /obj/item/clothing/accessory/badge/detective/gold
+
+/datum/outfit/job/detective/post_equip(mob/living/carbon/human/equipped, visualsOnly = FALSE)
 	..()
-	var/obj/item/clothing/mask/cigarette/cig = H.wear_mask
+	var/obj/item/clothing/mask/cigarette/cig = equipped.wear_mask
 	if(istype(cig)) //Some species specfic changes can mess this up (plasmamen)
 		cig.light("")
 
-	if(visualsOnly)
+	if(visualsOnly || !CONFIG_GET(flag/use_exp_tracking))
 		return
+
+	var/obj/item/clothing/accessory/badge/equipped_badge = locate() in equipped.w_uniform.attached_accessories
+	var/client/equipped_client = GLOB.directory[ckey(equipped.mind?.key)]
+	if(isnull(equipped_client))
+		return
+	var/player_playtime = text2num(equipped_client.prefs.exp[JOB_DETECTIVE])
+	switch(player_playtime)
+		if(-1 to DETECTIVE_PROMOTION_OFFICER)
+			equipped_badge.badge_string = "Junior"
+		if(DETECTIVE_PROMOTION_OFFICER to DETECTIVE_PROMOTION_SEARGEANT)
+			equipped_badge.badge_string = "Patrol"
+		if(DETECTIVE_PROMOTION_SEARGEANT to DETECTIVE_PROMOTION_LIEUTENANT)
+			equipped_badge.badge_string = "Seargent"
+		if(DETECTIVE_PROMOTION_LIEUTENANT to INFINITY)
+			//remove all EXP to get to this point, now we're going yefreitor
+			player_playtime -= DETECTIVE_PROMOTION_LIEUTENANT
+			//for every new "Officer" level (10 hours), you get a yefreitor.
+			var/number_yefreitor
+			while(player_playtime >= DETECTIVE_PROMOTION_OFFICER)
+				player_playtime -= DETECTIVE_PROMOTION_OFFICER
+				number_yefreitor++
+			if(number_yefreitor)
+				equipped_badge.badge_string = "Lieutenant \Roman[number_yefreitor]-yefreitor"
+			else
+				equipped_badge.badge_string = "Lieutenant"
+
+#undef DETECTIVE_PROMOTION_OFFICER
+#undef DETECTIVE_PROMOTION_SEARGEANT
+#undef DETECTIVE_PROMOTION_LIEUTENANT

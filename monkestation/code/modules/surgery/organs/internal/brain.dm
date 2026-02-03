@@ -82,17 +82,21 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 		/datum/quirk/item_quirk/signer,
 		/datum/quirk/phobia,
 		/datum/quirk/indebted,
+		/datum/quirk/dnr,
 		/datum/quirk/item_quirk/allergic,
 		/datum/quirk/item_quirk/brainproblems,
 		/datum/quirk/item_quirk/junkie,
 	))
 	/// Quirks that should just be completely skipped.
 	var/static/list/skip_quirks = typecacheof(list(
+		/datum/quirk/cybernetics_quirk,
 		/datum/quirk/drg_callout, // skillchips are in the brain anyways
+		/datum/quirk/item_quirk/food_allergic,
 		/datum/quirk/prosthetic_limb,
+		/datum/quirk/prosthetic_organ,
 		/datum/quirk/quadruple_amputee,
 		/datum/quirk/stowaway,
-		/datum/quirk/cybernetics_quirk,
+		/datum/quirk/tin_man,
 	))
 
 	var/rebuilt = TRUE
@@ -130,7 +134,13 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 		. += span_red("You could probably use the core in-hand to snuff out the tracking signal and retrieve the items within it.")
 	else
 		. += span_red("You could probably use the core in-hand to retrieve the items within it.")
-	if(mind?.dnr)
+	var/has_dnr_quirk = FALSE
+	if(!isnull(stored_quirks))
+		for(var/datum/quirk/quirk in stored_quirks)
+			if(istype(quirk, /datum/quirk/dnr))
+				has_dnr_quirk = TRUE
+				break
+	if(mind?.dnr || has_dnr_quirk)
 		. += span_warning("It looks dull and faded, as if the soul within the core had moved on...")
 	else if((brainmob && (brainmob.client || brainmob.get_ghost())) || (mind?.current && (mind.current.client || mind.current.get_ghost())) || decoy_override)
 		if(isnull(stored_dna))
@@ -262,6 +272,8 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	victim.visible_message(span_warning("[victim]'s body completely dissolves, collapsing outwards!"), span_notice("Your body completely dissolves, collapsing outwards!"), span_notice("You hear liquid splattering."))
 	var/turf/death_turf = get_turf(victim)
 	var/mob/living/basic/mining/legion/legionbody = astype(victim.loc)
+	if(legionbody)
+		ADD_TRAIT(src, TRAIT_NO_ORGAN_DECAY, REF(legionbody))
 
 	for(var/datum/quirk/quirk in victim.quirks) // Store certain quirks safe to transfer between bodies.
 		if(!is_type_in_typecache(quirk, saved_quirks) || is_type_in_typecache(quirk, skip_quirks))
@@ -313,6 +325,8 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	Remove(victim)
 	qdel(victim)
 
+	SEND_SIGNAL(mind, COMSIG_OOZELING_CORE_EJECTED, src)
+
 /obj/item/organ/internal/brain/slime/proc/do_steam_effects(turf/loc)
 	var/datum/effect_system/steam_spread/steam = new()
 	steam.set_up(10, FALSE, loc)
@@ -324,7 +338,15 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 
 /obj/item/organ/internal/brain/slime/check_for_repair(obj/item/item, mob/user)
 	if(item.is_drainable() && item.reagents.has_reagent(/datum/reagent/toxin/plasma)) //attempt to heal the brain
-		if(mind?.dnr)
+
+		var/has_dnr_quirk = FALSE
+		if(!isnull(stored_quirks))
+			for(var/datum/quirk/quirk in stored_quirks)
+				if(istype(quirk, /datum/quirk/dnr))
+					has_dnr_quirk = TRUE
+					break
+
+		if(mind?.dnr || has_dnr_quirk)
 			to_chat(user, span_warning("The soul of [src] has departed..."))
 			user.balloon_alert(user, "core's soul has departed...")
 			return FALSE
@@ -348,7 +370,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 			to_chat(user, span_warning("You failed to pour the contents of [item] onto [src]!"))
 			return FALSE
 
-		if(mind?.dnr)
+		if(mind?.dnr || has_dnr_quirk)
 			to_chat(user, span_warning("The soul of [src] has departed..."))
 			user.balloon_alert(user, "core's soul has departed...")
 			return FALSE
@@ -445,7 +467,10 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	GLOB.dead_oozeling_cores -= src
 	set_organ_damage(0) // heals the brain fully
 
-	if(istype(loc, /obj/effect/abstract/chasm_storage))
+	if(istype(loc, /mob/living/basic/mining/legion))
+		var/mob/living/basic/mining/legion/legion = loc
+		legion.gib()
+	else if(istype(loc, /obj/effect/abstract/chasm_storage))
 		// oh fuck we're reviving in a chasm somehow, uhhhh, quick, find us the nearest non-chasm turf
 		for(var/turf/turf as anything in spiral_range_turfs(5, get_turf(src), TRUE))
 			if(!isopenturf(turf) || isgroundlessturf(turf) || turf.is_blocked_turf(exclude_mobs = TRUE))
@@ -460,14 +485,19 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	brainmob?.mind?.grab_ghost()
 	if(isnull(mind))
 		if(isnull(brainmob))
-			user?.balloon_alert(user, "This brain is not a viable candidate for repair!")
+			user?.balloon_alert(user, "this brain is not a viable candidate for repair!")
 			return null
 		if(isnull(brainmob.stored_dna))
-			user?.balloon_alert(user, "This brain does not contain any dna!")
+			user?.balloon_alert(user, "this brain does not contain any dna!")
 			return null
 		if(isnull(brainmob.client))
-			user?.balloon_alert(user, "This brain does not contain a mind!")
+			user?.balloon_alert(user, "this brain does not contain a mind!")
 			return null
+
+	if(ismob(loc))
+		var/mob/holder = loc
+		holder.dropItemToGround(src, force = TRUE, silent = TRUE)
+
 	var/mob/living/carbon/human/new_body = new /mob/living/carbon/human(drop_location())
 
 	rebuilt = TRUE
@@ -530,6 +560,8 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	var/policy = get_policy(revival_policy)
 	if(policy)
 		to_chat(new_body, policy, avoid_highlighting = TRUE)
+
+	SEND_SIGNAL(mind, COMSIG_OOZELING_REVIVED, new_body, src)
 	return new_body
 
 ADMIN_VERB(cmd_admin_heal_oozeling, R_ADMIN, FALSE, "Heal Oozeling Core", "Use this to heal Oozeling cores.", ADMIN_CATEGORY_DEBUG, obj/item/organ/internal/brain/slime/core in GLOB.dead_oozeling_cores)

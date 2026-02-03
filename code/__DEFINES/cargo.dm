@@ -45,6 +45,12 @@
 /// The baseline unit for cargo crates. Adjusting this will change the cost of all in-game shuttles, crate export values, bounty rewards, and all supply pack import values, as they use this as their unit of measurement.
 #define CARGO_CRATE_VALUE 200
 
+/// The highest amount of orders you can have of one thing at any one time
+#define CARGO_MAX_ORDER 50
+
+/// Returned by /obj/docking_port/mobile/supply/proc/get_order_count to signify us going over the order limit
+#define OVER_ORDER_LIMIT "GO AWAY"
+
 /// Universal Scanner mode for export scanning.
 #define SCAN_EXPORTS 1
 /// Universal Scanner mode for using the sales tagger.
@@ -52,7 +58,12 @@
 /// Universal Scanner mode for using the price tagger.
 #define SCAN_PRICE_TAG 3
 
+///Discount categories for coupons. This one is for anything that isn't discountable.
+#define SUPPLY_PACK_NOT_DISCOUNTABLE null
+
 GLOBAL_LIST_EMPTY(supplypod_loading_bays)
+///Assoc List of people part of the Cargo Union, by default all Cargo personnel but the QM can add more.
+GLOBAL_LIST_EMPTY(cargo_union_employees)
 
 GLOBAL_LIST_INIT(podstyles, list(\
 	list(POD_SHAPE_NORML, "pod",         TRUE, "default", "yellow",   RUBBLE_NORMAL, "supply pod",     "A Nanotrasen supply drop pod."),\
@@ -76,3 +87,5 @@ GLOBAL_LIST_INIT(podstyles, list(\
 //Nearby reference because nobody else did this:
 //The order is: Shape, Base, Door, Decal, Glow Color, Rubble Type, Name, Description
 
+#define CARGO_UNION_NAME "name"
+#define CARGO_UNION_LEADER "leader"

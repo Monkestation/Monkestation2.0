@@ -184,7 +184,7 @@
 	recharge_time = 2 SECONDS
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/glock)
 	can_bayonet = FALSE
-	max_mod_capacity = 300 //experimental, if people find too many wack ass combos on the pistol im dropping it back to 200
+	max_mod_capacity = 200
 
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/railgun

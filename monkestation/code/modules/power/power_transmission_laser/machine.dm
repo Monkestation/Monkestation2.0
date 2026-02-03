@@ -358,3 +358,5 @@
 		else
 			explosion(victim, 3, 2, 2)
 			victim.gib(FALSE)
+
+#undef MINIMUM_POWER

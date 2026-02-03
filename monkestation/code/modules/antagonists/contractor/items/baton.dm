@@ -1,7 +1,7 @@
 #define CUFF_MAXIMUM 3
 #define MUTE_APPLIED 10 SECONDS
 #define MUTE_MAX 30 SECONDS
-#define BONUS_STAMINA_DAM 25
+#define BONUS_STAMINA_DAM 12.5
 #define BONUS_STUTTER 10 SECONDS
 #define BATON_CUFF_UPGRADE (1<<0)
 #define BATON_MUTE_UPGRADE (1<<1)
@@ -21,7 +21,7 @@
 	force = 5
 	cooldown = 2.5 SECONDS
 	force_say_chance = 80 //very high force say chance because it's funny
-	stamina_damage = 170
+	stamina_damage = 80
 	knockdown_time = 1.5 SECONDS
 	clumsy_knockdown_time = 24 SECONDS
 	affect_cyborg = TRUE
@@ -42,7 +42,6 @@
 /obj/item/melee/baton/telescopic/contractor_baton/additional_effects_non_cyborg(mob/living/target, mob/living/user)
 	target.set_jitter_if_lower(40 SECONDS)
 	target.set_stutter_if_lower(40 SECONDS)
-	target.Disorient(6 SECONDS, 5, paralyze = 3 SECONDS, stack_status = TRUE)
 	if(!iscarbon(target))
 		return
 

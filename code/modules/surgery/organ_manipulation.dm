@@ -255,7 +255,7 @@
 			log_combat(user, target, "surgically removed [target_organ.name] from", addition="COMBAT MODE: [uppertext((user.istate & ISTATE_HARM))]")
 			target_organ.Remove(target)
 			var/turf/drop_turf = get_turf(target)
-			if(drop_turf)
+			if(drop_turf && !QDELETED(target_organ))
 				target_organ.forceMove(drop_turf)
 			target_organ.on_surgical_removal(user, target, target_zone, tool)
 			target.regenerate_icons()

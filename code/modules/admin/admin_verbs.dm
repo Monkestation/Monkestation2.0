@@ -46,11 +46,11 @@ ADMIN_VERB(invisimin, R_ADMIN, FALSE, "Invisimin", "Toggles ghost-like invisibil
 		return
 
 	if(user.mob.invisibility == INVISIBILITY_OBSERVER)
-		user.mob.invisibility = initial(user.mob.invisibility)
+		user.mob.RemoveInvisibility(INVISIBILITY_SOURCE_INVISIMIN)
 		to_chat(user.mob, span_boldannounce("Invisimin off. Invisibility reset."), confidential = TRUE)
 		return
 
-	user.mob.invisibility = INVISIBILITY_OBSERVER
+	user.mob.SetInvisibility(INVISIBILITY_OBSERVER, id = INVISIBILITY_SOURCE_INVISIMIN, priority = INVISIBILITY_PRIORITY_ADMIN)
 	to_chat(user.mob, span_adminnotice("<b>Invisimin on. You are now as invisible as a ghost.</b>"), confidential = TRUE)
 
 ADMIN_VERB(check_antagonists, R_ADMIN, FALSE, "Check Antagonists", "See all antagonists for the round.", ADMIN_CATEGORY_GAME)
@@ -150,7 +150,7 @@ ADMIN_VERB(stealth, R_STEALTH, FALSE, "Stealth Mode", "Toggle stealth.", ADMIN_C
 	holder.fakekey = new_key
 	createStealthKey()
 	if(isobserver(mob))
-		mob.invisibility = INVISIBILITY_MAXIMUM //JUST IN CASE
+		mob.SetInvisibility(INVISIBILITY_MAXIMUM, id = INVISIBILITY_SOURCE_STEALTHMODE) //JUST IN CASE
 		mob.alpha = 0 //JUUUUST IN CASE
 		mob.name = " "
 		mob.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
@@ -169,7 +169,7 @@ ADMIN_VERB(stealth, R_STEALTH, FALSE, "Stealth Mode", "Toggle stealth.", ADMIN_C
 	holder.fakekey = null
 	if(isobserver(mob))
 		mob.remove_alt_appearance("stealthmin")
-		mob.invisibility = initial(mob.invisibility)
+		mob.RemoveInvisibility(INVISIBILITY_SOURCE_STEALTHMODE)
 		mob.alpha = initial(mob.alpha)
 		if(mob.mind)
 			if(mob.mind.ghostname)
@@ -567,8 +567,7 @@ ADMIN_VERB(create_mob_worm, R_FUN, FALSE, "Create Mob Worm", "Attach a linked li
 
 	var/desired_mob = text2path(attempted_target_path)
 	if(!ispath(desired_mob))
-		var/static/list/mob_paths = make_types_fancy(subtypesof(/mob/living))
-		desired_mob = pick_closest_path(attempted_target_path, mob_paths)
+		desired_mob = pick_closest_path(attempted_target_path, make_types_fancy(subtypesof(/mob/living)))
 	if(isnull(desired_mob) || !ispath(desired_mob) || QDELETED(head))
 		return //The user pressed "Cancel"
 

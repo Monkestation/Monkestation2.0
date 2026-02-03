@@ -170,13 +170,13 @@
 
 /datum/objective_item/steal/traitor/lawyers_badge
 	name = "the lawyer's badge"
-	targetitem = /obj/item/clothing/accessory/lawyers_badge
+	targetitem = /obj/item/clothing/accessory/badge/lawyer
 	excludefromjob = list(JOB_LAWYER)
 	item_owner = list(JOB_LAWYER)
 	exists_on_map = TRUE
 
-/obj/item/clothing/accessory/lawyers_badge/add_stealing_item_objective()
-	return add_item_to_steal(src, /obj/item/clothing/accessory/lawyers_badge)
+/obj/item/clothing/accessory/badge/lawyer/add_stealing_item_objective()
+	return add_item_to_steal(src, /obj/item/clothing/accessory/badge/lawyer)
 
 /datum/objective_item/steal/traitor/chief_engineer_belt
 	name = "the chief engineer's belt"

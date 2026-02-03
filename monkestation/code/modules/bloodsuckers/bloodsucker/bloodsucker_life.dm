@@ -13,8 +13,8 @@
 		check_end_torpor()
 	// Deduct Blood
 	if(owner.current.stat == CONSCIOUS && !HAS_TRAIT(owner.current, TRAIT_IMMOBILIZED) && !is_in_torpor())
-		INVOKE_ASYNC(src, PROC_REF(AddBloodVolume), -BLOODSUCKER_PASSIVE_BLOOD_DRAIN) // -.1 currently
-	if(HandleHealing())
+		INVOKE_ASYNC(src, PROC_REF(AddBloodVolume), -BLOODSUCKER_PASSIVE_BLOOD_DRAIN * seconds_per_tick) // -.1 currently
+	if(HandleHealing(seconds_per_tick))
 		if((COOLDOWN_FINISHED(src, bloodsucker_spam_healing)) && bloodsucker_blood_volume > 0)
 			to_chat(owner.current, span_notice("The power of your blood begins knitting your wounds..."))
 			COOLDOWN_START(src, bloodsucker_spam_healing, BLOODSUCKER_SPAM_HEALING)
@@ -39,17 +39,19 @@
  * ## BLOOD STUFF
  */
 
-///Adds value to the bloodsucker's current blood volume, making sure not to exceed the maximum. Triggers overfeed healing if exceeding.
+///Adds value to the bloodsucker's current blood volume, making sure not to exceed the maximum or go below 0. Triggers overfeed healing if exceeding.
 /datum/antagonist/bloodsucker/proc/AddBloodVolume(value)
 	bloodsucker_blood_volume += value
 	if (bloodsucker_blood_volume > max_blood_volume)
 		var/extra_blood = max_blood_volume - bloodsucker_blood_volume
 		bloodsucker_blood_volume = max_blood_volume
 		OverfeedHealing(extra_blood)
+	else if (bloodsucker_blood_volume < 0)
+		bloodsucker_blood_volume = 0
 
 /datum/antagonist/bloodsucker/proc/AddHumanityLost(value)
 	if(humanity_lost >= 500)
-		to_chat(owner.current, span_warning("You hit the maximum amount of lost Humanty, you are far from Human."))
+		to_chat(owner.current, span_warning("You hit the maximum amount of lost humanity, you are far from Human."))
 		return
 	humanity_lost += value
 	to_chat(owner.current, span_warning("You feel as if you lost some of your humanity, you will now enter Frenzy at [FRENZY_THRESHOLD_ENTER + (humanity_lost * 5)] Blood."))
@@ -192,11 +194,6 @@
 	if(!HAS_TRAIT(bloodsuckeruser, TRAIT_MASQUERADE))
 		var/obj/item/organ/internal/heart/current_heart = bloodsuckeruser.get_organ_slot(ORGAN_SLOT_HEART)
 		current_heart?.beating = FALSE
-	var/obj/item/organ/internal/eyes/current_eyes = bloodsuckeruser.get_organ_slot(ORGAN_SLOT_EYES)
-	if(current_eyes)
-		current_eyes.lighting_cutoff = LIGHTING_CUTOFF_HIGH
-		current_eyes.color_cutoffs = list(25, 8, 5)
-		current_eyes.sight_flags |= SEE_MOBS
 	bloodsuckeruser.update_sight()
 
 	if(bloodsuckeruser.stat == DEAD)
@@ -344,5 +341,3 @@
 /datum/antagonist/bloodsucker/proc/oozeling_revive(obj/item/organ/internal/brain/slime/oozeling_core)
 	var/mob/living/carbon/human/new_body = oozeling_core.rebuild_body(nugget = FALSE, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 	heal_vampire_organs(new_body)
-
-#undef BLOODSUCKER_PASSIVE_BLOOD_DRAIN

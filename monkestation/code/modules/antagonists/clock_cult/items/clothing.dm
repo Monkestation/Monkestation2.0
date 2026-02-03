@@ -131,7 +131,7 @@
 	else if(is_empowered)
 		enable()
 	else
-		balloon_alert(user, "Must be standing on brass!")
+		balloon_alert(user, "must be standing on brass!")
 
 /obj/item/clothing/suit/clockwork/cloak/equipped(mob/user, slot)
 	. = ..()

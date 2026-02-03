@@ -20,7 +20,7 @@
  *
  * make sure you add an update to the schema_version stable in the db changelog
  */
-#define DB_MINOR_VERSION 0 // monkestation edit: we've added plenty of our own tables to the db
+#define DB_MINOR_VERSION 1 // monkestation edit: we've added plenty of our own tables to the db
 
 
 //! ## Timing subsystem
@@ -145,6 +145,7 @@
 #define INIT_ORDER_DISCORD 78
 #define INIT_ORDER_PLEXORA 77 // monkestation addition
 #define INIT_ORDER_ACHIEVEMENTS 76 // monkestation edit: 77 -> 76 for plexora
+#define INIT_ORDER_FLOXY 75 // should initialize relatively early, so admins can start playing music if they want to. also needs to initialize before cassettes anyways
 #define INIT_ORDER_STATION 74 //This is high priority because it manipulates a lot of the subsystems that will initialize after it.
 #define INIT_ORDER_QUIRKS 73
 #define INIT_ORDER_REAGENTS 72 //HAS to be before mapping and assets - both create objects, which creates reagents, which relies on lists made in this subsystem
@@ -166,6 +167,7 @@
 #define INIT_ORDER_RESTAURANT 34
 #define INIT_ORDER_POLLUTION 32
 #define INIT_ORDER_FLUIDS 32 // Needs to be above atoms, as some atoms may want to start fluids/gases on init
+#define INIT_ORDER_CASSETTES 31 // monkestation addition: cassettes initialize before atoms, so that cassette stuff can be used in Initialize()
 #define INIT_ORDER_ATOMS 30
 #define INIT_ORDER_ARMAMENTS 27
 #define INIT_ORDER_LANGUAGE 25
@@ -185,13 +187,11 @@
 #define INIT_ORDER_XKEYSCORE -10
 #define INIT_ORDER_LIGHTING -20
 #define INIT_ORDER_STARLIGHT -21
-#define INIT_ORDER_OUTDOOR_EFFECTS -22
-#define INIT_ORDER_SHUTTLE -23
+#define INIT_ORDER_SHUTTLE -22
 #define INIT_ORDER_MINOR_MAPPING -40
 #define INIT_ORDER_PATH -50
 #define INIT_ORDER_EXPLOSIONS -69
 #define INIT_ORDER_CREDITS -93
-#define INIT_ORDER_REPLAYS -94
 #define INIT_ORDER_HOTSPOTS -95 ///only called on oshan so just call it near the end.
 #define INIT_ORDER_TWITCH -96
 #define INIT_ORDER_STATPANELS -97
@@ -210,6 +210,7 @@
 #define FIRE_PRIORITY_GLOWSHROOMS 10
 #define FIRE_PRIORITY_MEMORY_STATS 10
 #define FIRE_PRIORITY_STARLIGHT 10
+#define FIRE_PRIORITY_PARTICLE_SPEWERS 10
 #define FIRE_PRIORITY_GARBAGE 15
 #define FIRE_PRIORITY_DATABASE 16
 #define FIRE_PRIORITY_POLLUTION 18
@@ -236,12 +237,15 @@
 #define FIRE_PRIORITY_DEFAULT 50
 #define FIRE_PRIORITY_PLEXORA 60
 #define FIRE_PRIORITY_PARALLAX 65
+#define FIRE_PRIORITY_MOBS 70
+#define FIRE_PRIORITY_CARBON_MOBS 75
 #define FIRE_PRIORITY_INSTRUMENTS 80
 #define FIRE_PRIORITY_FLUIDS 80
+#define FIRE_PRIORITY_MEGAFAUNA_MOBS 80
 #define FIRE_PRIORITY_PROJECTILES 85
 #define FIRE_PRIORITY_PRIORITY_EFFECTS 90
 #define FIRE_PRIORITY_STAMINA 95
-#define FIRE_PRIORITY_MOBS 100
+#define FIRE_PRIORITY_CLIENT_MOBS 100
 #define FIRE_PRIORITY_ASSETS 105
 #define FIRE_PRIORITY_TGUI 110
 #define FIRE_PRIORITY_TICKER 200

@@ -119,6 +119,17 @@
 		RND_CATEGORY_DEFOREST_BLOOD,
 	)
 
+/datum/design/organic_printer_balm
+	name = "Red Sun Balm"
+	id = "organic_sun_balm"
+	build_type = BIOGENERATOR
+	materials = list(/datum/material/biomass = 50)
+	build_path = /obj/item/stack/medical/ointment/red_sun
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_DEFOREST_MEDICAL,
+	)
+
 /datum/design/organic_printer_gauze
 	name = "medical gauze"
 	id = "medical_gauze"
@@ -141,23 +152,23 @@
 		RND_CATEGORY_DEFOREST_MEDICAL,
 	)
 
-/datum/design/organic_bruise_pack
-	name = "Bruise Pack"
-	id = "organic_bruise_pack"
+/datum/design/organic_printer_ointment
+	name = "Ointment"
+	id = "organic_ointment"
 	build_type = BIOGENERATOR
 	materials = list(/datum/material/biomass = 25)
-	build_path = /obj/item/stack/heal_pack/brute_pack
+	build_path = /obj/item/stack/medical/ointment
 	category = list(
 		RND_CATEGORY_INITIAL,
 		RND_CATEGORY_DEFOREST_MEDICAL,
 	)
 
-/datum/design/organic_burn_pack
-	name = "Burn Pack"
-	id = "organic_burn_pack"
+/datum/design/organic_printer_bruise_pack
+	name = "Bruise Packs"
+	id = "organic_bruise_packs"
 	build_type = BIOGENERATOR
 	materials = list(/datum/material/biomass = 25)
-	build_path = /obj/item/stack/heal_pack/burn_pack
+	build_path = /obj/item/stack/medical/bruise_pack
 	category = list(
 		RND_CATEGORY_INITIAL,
 		RND_CATEGORY_DEFOREST_MEDICAL,

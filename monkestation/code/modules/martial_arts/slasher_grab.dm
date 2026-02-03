@@ -13,8 +13,8 @@
 		else
 			attacker.start_pulling(defender, supress_message = TRUE)
 			if(attacker.pulling)
-				attacker.balloon_alert(attacker, "You grab them aggressively by the neck!")
-				defender.balloon_alert(defender, "You are grabbed aggressively by the neck!")
+				attacker.balloon_alert(attacker, "you grab them aggressively by the neck!")
+				defender.balloon_alert(defender, "you are grabbed aggressively by the neck!")
 				defender.stop_pulling()
 				COOLDOWN_START(src, grabby_cd, 15 SECONDS)
 				if(grab_attack)

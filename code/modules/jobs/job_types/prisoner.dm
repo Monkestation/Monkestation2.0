@@ -46,15 +46,20 @@
 	else if(crime_name == "Random")
 		crime_name = pick(assoc_to_keys(GLOB.prisoner_crimes))
 
-	/* monkestation removal: doesn't work bc manifest gets injected AFTER [COMSIG_GLOB_CREWMEMBER_JOINED]
+	to_chat(crewmember, span_warning("You are imprisoned for \"[crime_name]\"."))
+	crewmember.add_mob_memory(/datum/memory/key/permabrig_crimes, crimes = crime_name)
+
+	//This is the same way the jailbird quirk does it, wont work for latejoiners otherwise
+	addtimer(CALLBACK(src, PROC_REF(update_security_record), crewmember, crime_name), 5 SECONDS)
+
+/datum/job/prisoner/proc/update_security_record(mob/living/carbon/human/crewmember, crime_name)
 	var/datum/prisoner_crime/crime = GLOB.prisoner_crimes[crime_name]
 	var/datum/record/crew/target_record = crewmember.mind?.crewfile || find_record(crewmember.real_name)
 	var/datum/crime/past_crime = new(crime.name, crime.desc, "Central Command", "Indefinite.")
 	target_record?.crimes += past_crime
-	target_record.recreate_manifest_photos(add_height_chart = TRUE)
-	monkestation end */
-	to_chat(crewmember, span_warning("You are imprisoned for \"[crime_name]\"."))
-	crewmember.add_mob_memory(/datum/memory/key/permabrig_crimes, crimes = crime_name)
+	target_record?.recreate_manifest_photos(add_height_chart = TRUE)
+	target_record?.wanted_status = WANTED_PRISONER
+	crewmember.sec_hud_set_security_status()
 
 /datum/outfit/job/prisoner
 	name = "Prisoner"
