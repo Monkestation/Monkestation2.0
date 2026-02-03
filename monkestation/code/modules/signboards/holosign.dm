@@ -141,16 +141,20 @@
 	update_appearance()
 
 /obj/structure/signboard/holosign/proc/sanitize_color(color)
+	testing("before sanitizing: [color]")
 	. = sanitize_hexcolor(color)
+	testing("sanitized color: [. || "(null)"]")
 	if(!. || . == "#000000")
 		return null
 
 /obj/structure/signboard/holosign/proc/set_color(new_color)
 	new_color = sanitize_color(new_color)
 	if(!new_color)
+		testing("signboard color invalid or null, removing")
 		current_color = null
 		remove_atom_colour(FIXED_COLOUR_PRIORITY)
 	else
+		testing("signboard color valid, adding")
 		current_color = new_color
 		add_atom_colour(new_color, FIXED_COLOUR_PRIORITY)
 	set_light_color(current_color || src::light_color)
@@ -166,12 +170,12 @@
 
 	var/datum/port/output/fail_reason
 	var/datum/port/output/on_fail
-/*
+
 	var/datum/port/input/red
 	var/datum/port/input/green
 	var/datum/port/input/blue
 	var/datum/port/input/set_color
-*/
+
 	var/obj/structure/signboard/holosign/connected_display
 
 /obj/item/circuit_component/holo_signboard/populate_ports()
@@ -181,12 +185,12 @@
 	fail_reason = add_output_port("Fail Reason", PORT_TYPE_STRING)
 	on_fail = add_output_port("Failed", PORT_TYPE_SIGNAL)
 
-/*
+
 	red = add_input_port("Red", PORT_TYPE_NUMBER)
 	green = add_input_port("Green", PORT_TYPE_NUMBER)
 	blue = add_input_port("Blue", PORT_TYPE_NUMBER)
-	set_color = add_input_port("Set Color", PORT_TYPE_SIGNAL)
-*/
+	set_color = add_input_port("Set Color", PORT_TYPE_SIGNAL, trigger = PROC_REF(color_received))
+
 /obj/item/circuit_component/holo_signboard/register_usb_parent(atom/movable/shell)
 	. = ..()
 	if(istype(shell, /obj/structure/signboard/holosign))
@@ -218,12 +222,13 @@
 		fail_reason.set_output("Connection refused by external endpoint.")
 		on_fail.set_output(COMPONENT_SIGNAL)
 
-/*
+
 /obj/item/circuit_component/holo_signboard/proc/color_received(datum/port/input/port)
 	red.set_value(clamp(red.value, 0, 255))
 	blue.set_value(clamp(blue.value, 0, 255))
 	green.set_value(clamp(green.value, 0, 255))
-	var/signboard_color = rgb(red, green, blue)
+	var/signboard_color = rgb(red.value, green.value, blue.value)
+	testing("color_recieved: signboard color: [signboard_color]")
 
 	connected_display.set_color(signboard_color) //doesnt have a return so no need to check and error
-*/
+
