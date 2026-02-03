@@ -572,6 +572,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	return TRUE
 
+/datum/preferences/proc/GetHighestJobPreference()
+	for(var/job in job_preferences)
+		if(job_preferences[job] == JP_HIGH)
+			return job
+
 /datum/preferences/proc/GetQuirkBalance()
 	var/bal = 0
 	for(var/V in all_quirks)

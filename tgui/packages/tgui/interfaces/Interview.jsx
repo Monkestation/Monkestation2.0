@@ -57,7 +57,7 @@ export const Interview = (props) => {
 
   return (
     <Window
-      width={500}
+      width={is_admin ? 600 : 500}
       height={600}
       canClose={is_admin || status === 'interview_approved'}
     >
