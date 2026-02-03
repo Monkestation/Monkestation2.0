@@ -33,24 +33,26 @@
 #define EXOSUIT_MODULE_RETICENCE (1<<9)
 /// Module is compatible with Marauder models
 #define EXOSUIT_MODULE_MARAUDER (1<<10)
+/// Module is compatible with Paddy models
+#define EXOSUIT_MODULE_PADDY (1<<11)
 //monkestation edit start
 // Module is compatbile with makeshift locker mechs
-#define EXOSUIT_MODULE_MAKESHIFT (1<<11)
+#define EXOSUIT_MODULE_MAKESHIFT (1<<12)
 // Module is compatbile with ambulance "mechs"
-#define EXOSUIT_MODULE_AMBULANCE (1<<12)
+#define EXOSUIT_MODULE_AMBULANCE (1<<13)
 // Module is compatbile with makeshift tank "mechs"
-#define EXOSUIT_MODULE_TRASHTANK (1<<13)
+#define EXOSUIT_MODULE_TRASHTANK (1<<14)
 // Module is compatbile with tank "mechs"
-#define EXOSUIT_MODULE_TANK (1<<14)
+#define EXOSUIT_MODULE_TANK (1<<15)
 // Module is compatbile with drilling "mechs"
-#define EXOSUIT_MODULE_DRILL (1<<15)
+#define EXOSUIT_MODULE_DRILL (1<<16)
 // Module is compatbile with the giant fucking walkers
-#define EXOSUIT_MODULE_SENTINEL (1<<16)
+#define EXOSUIT_MODULE_SENTINEL (1<<17)
 //monkestation edit end
 
 /// Module is compatible with "Working" Exosuit models - Ripley and Clarke
 #define EXOSUIT_MODULE_WORKING (EXOSUIT_MODULE_RIPLEY | EXOSUIT_MODULE_CLARKE)
 /// Module is compatible with "Combat" Exosuit models - Gygax, H.O.N.K, Durand and Phazon, or any Exosuit with an empty Concealed Weapon Bay
-#define EXOSUIT_MODULE_COMBAT (EXOSUIT_MODULE_GYGAX | EXOSUIT_MODULE_HONK | EXOSUIT_MODULE_DURAND | EXOSUIT_MODULE_PHAZON | EXOSUIT_MODULE_SAVANNAH | EXOSUIT_MODULE_RETICENCE | EXOSUIT_MODULE_MARAUDER | EXOSUIT_MODULE_CONCEALED_WEP_BAY)
+#define EXOSUIT_MODULE_COMBAT (EXOSUIT_MODULE_GYGAX | EXOSUIT_MODULE_HONK | EXOSUIT_MODULE_DURAND | EXOSUIT_MODULE_PHAZON | EXOSUIT_MODULE_SAVANNAH | EXOSUIT_MODULE_RETICENCE | EXOSUIT_MODULE_MARAUDER | EXOSUIT_MODULE_PADDY | EXOSUIT_MODULE_CONCEALED_WEP_BAY)
 /// Module is compatible with "Medical" Exosuit modelsm - Odysseus
 #define EXOSUIT_MODULE_MEDICAL EXOSUIT_MODULE_ODYSSEUS

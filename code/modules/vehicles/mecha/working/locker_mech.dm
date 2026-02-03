@@ -12,12 +12,10 @@
 	internal_damage_threshold = 30 //Its got shitty durability
 	wreckage = null
 	mech_type = EXOSUIT_MODULE_MAKESHIFT
-	cargo = list()
-	cargo_capacity = 5 // you can fit a few things in this locker but not much.
 	equip_by_category = list(
 		MECHA_L_ARM = null,
 		MECHA_R_ARM = null,
-		MECHA_UTILITY = list(/obj/item/mecha_parts/mecha_equipment/ejector),
+		MECHA_UTILITY = list(/obj/item/mecha_parts/mecha_equipment/ejector/trash),
 		MECHA_POWER = list(),
 		MECHA_ARMOR = list(),
 	)
