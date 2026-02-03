@@ -28,7 +28,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	var/obj/effect/statclick/ticket_list/rstatclick = new(null, null, AHELP_RESOLVED)
 
 /datum/admin_help_tickets/New()
-	START_PROCESSING(SSprocessing, src)
+	START_PROCESSING(SSadmintickets, src)
 
 /datum/admin_help_tickets/process()
 	var/now = world.time
