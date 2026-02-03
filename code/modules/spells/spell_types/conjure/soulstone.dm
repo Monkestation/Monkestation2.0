@@ -16,7 +16,7 @@
 	summon_type = list(/obj/item/soulstone)
 
 /datum/action/cooldown/spell/conjure/soulstone/cult
-	name = "Create Nar'sian Soulstone"
+	name = "Create Nar'sien Soulstone"
 	cooldown_time = 6 MINUTES
 
 /datum/action/cooldown/spell/conjure/soulstone/noncult

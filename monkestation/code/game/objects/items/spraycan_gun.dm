@@ -34,9 +34,11 @@
 	. = ..()
 	icon_state = contained_spraycan ? "spraycan_gun_filled" : icon_uncapped
 
-/obj/item/toy/crayon/spraycan/gun/AltClick(mob/user)
-	if(contained_spraycan)
-		unload_spraycan()
+/obj/item/toy/crayon/spraycan/gun/click_alt(mob/user)
+	if(!contained_spraycan)
+		return NONE
+	unload_spraycan()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/toy/crayon/spraycan/gun/refill()
 	if(!charges)
@@ -44,7 +46,7 @@
 
 	return ..()
 
-/obj/item/toy/crayon/spraycan/gun/use_charges(mob/user, amount = 1, requires_full = TRUE)
+/obj/item/toy/crayon/spraycan/gun/use_charges(mob/user, amount = 1, requires_full = TRUE, override_infinity = FALSE)
 	if(contained_spraycan?.charges == -1) // What's the point?
 		. = amount
 		return refill()
@@ -56,7 +58,7 @@
 		contained_spraycan.charges_left -= .
 		charges_left -= .
 
-/obj/item/toy/crayon/spraycan/gun/check_empty(mob/user, amount = 1, requires_full = TRUE)
+/obj/item/toy/crayon/spraycan/gun/check_empty(mob/user, amount = 1, requires_full = TRUE, override_infinity = FALSE)
 	if(!contained_spraycan)
 		balloon_alert(user, "no spraycan!")
 		return TRUE

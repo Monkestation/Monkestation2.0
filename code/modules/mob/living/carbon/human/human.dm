@@ -60,6 +60,8 @@
 /mob/living/carbon/human/Destroy()
 	QDEL_NULL(physiology)
 	GLOB.human_list -= src
+	GLOB.suit_sensors_list -= src
+	GLOB.nanite_sensors_list -= src
 
 	if (mob_mood)
 		QDEL_NULL(mob_mood)
@@ -406,6 +408,8 @@
 				if(WANTED_SUSPECT)
 					threatcount += 2
 				if(WANTED_PAROLE)
+					threatcount += 2
+				if(WANTED_SEARCH)
 					threatcount += 2
 
 	if(istype(head, /obj/item/clothing/head/hats/tophat/syndicate))
@@ -839,19 +843,28 @@
 	dna?.species.spec_updatehealth(src)
 	update_damage_movespeed()
 
+/mob/living/carbon/human/on_stamina_update()
+	. = ..()
+
+	update_damage_movespeed()
+
 /mob/living/carbon/human/proc/update_damage_movespeed()
-	var/health_deficiency = max((maxHealth - health), staminaloss)
-	if(health_deficiency >= 40)
-		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown, update = FALSE, multiplicative_slowdown = health_deficiency / 75)
-		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying, update = TRUE, multiplicative_slowdown = health_deficiency / 25)
+	var/lethal_deficiency = maxHealth - health
+	var/stamina_deficiency = stamina?.loss
+	var/highest_deficiency = max(lethal_deficiency, stamina_deficiency)
+	if(lethal_deficiency >= 40 || stamina_deficiency >= 60)
+		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown, update = FALSE, multiplicative_slowdown = highest_deficiency / 75)
+		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying, update = TRUE, multiplicative_slowdown = highest_deficiency / 25)
 	else if(LAZYACCESS(movespeed_modification, "[/datum/movespeed_modifier/damage_slowdown]"))
 		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown, update = FALSE)
 		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying, update = TRUE)
 
 /mob/living/carbon/human/pre_stamina_change(diff as num, forced)
-	if(diff < 0) //Taking damage, not healing
-		return diff * physiology.stamina_mod * physiology.temp_stamina_mod
-	return diff
+	. = ..()
+
+	if(. < 0) //Taking damage, not healing
+		. = . * physiology.stamina_mod * physiology.temp_stamina_mod
+	return
 
 /mob/living/carbon/human/get_exp_list(minutes)
 	. = ..()
@@ -965,6 +978,12 @@
 
 /mob/living/carbon/human/species/oozeling
 	race = /datum/species/oozeling
+
+/mob/living/carbon/human/species/oozeling/Initialize(mapload)
+	. = ..()
+	// stupid snowflake code to ensure oozelings will always start at least fed, so they don't have to IMMEDIATELY eat to avoid melting
+	if(nutrition < NUTRITION_LEVEL_FED)
+		set_nutrition(rand(NUTRITION_LEVEL_FED, NUTRITION_LEVEL_START_MAX))
 
 /mob/living/carbon/human/species/oozeling/stargazer
 	race = /datum/species/oozeling/stargazer

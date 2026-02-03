@@ -624,7 +624,7 @@
 	pixel_y = 3;
 	pixel_x = 2
 	},
-/obj/item/stock_parts/cell/high/empty{
+/obj/item/stock_parts/power_store/cell/high/empty{
 	pixel_y = 3;
 	pixel_x = 2
 	},
@@ -5992,11 +5992,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
-/obj/item/wheelchair/gold,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/glass/plastitanium/screws,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/wheelchair,
 /turf/open/floor/iron/dark/textured,
 /area/ruin/space/has_grav/abandonedscpsite/czmedbay)
 "wl" = (

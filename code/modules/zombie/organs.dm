@@ -4,6 +4,8 @@
 	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_ZOMBIE
 	icon_state = "blacktumor"
+	organ_flags = parent_type::organ_flags | ORGAN_HAZARDOUS
+
 	var/causes_damage = TRUE
 	var/datum/species/old_species = /datum/species/human
 	var/living_transformation_time = 30

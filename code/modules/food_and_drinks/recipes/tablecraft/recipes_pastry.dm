@@ -402,6 +402,7 @@
 /datum/crafting_recipe/food/donkpocket/deluxe
 	time = 15
 	name = "Deluxe Donk-pocket"
+	always_available = FALSE
 	reqs = list(
 		/obj/item/food/pastrybase = 1,
 		/obj/item/food/meatball = 1,

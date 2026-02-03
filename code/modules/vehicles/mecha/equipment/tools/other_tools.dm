@@ -178,6 +178,7 @@
 	iconstate_name = "melee"
 	protect_name = "Melee Armor"
 	armor_mod = /datum/armor/mecha_equipment_ccw_boost
+	unstackable = TRUE
 
 /datum/armor/mecha_equipment_ccw_boost
 	melee = 15
@@ -189,9 +190,10 @@
 	iconstate_name = "range"
 	protect_name = "Ranged Armor"
 	armor_mod = /datum/armor/mecha_equipment_ranged_boost
+	unstackable = TRUE
 
 /datum/armor/mecha_equipment_ranged_boost
-	bullet = 10
+	bullet = 15
 	laser = 10
 
 ////////////////////////////////// REPAIR DROID //////////////////////////////////////////////////
@@ -206,6 +208,7 @@
 	can_be_toggled = TRUE
 	active = FALSE
 	equipment_slot = MECHA_UTILITY
+	unstackable = TRUE
 	movedelay = 0.4
 	/// Repaired health per second
 	var/health_boost = 1
@@ -260,7 +263,7 @@
 		chassis.repair_damage(h_boost)
 		repaired = TRUE
 	if(repaired)
-		if(!chassis.use_power(energy_drain))
+		if(!chassis.use_energy(energy_drain))
 			active = FALSE
 			return PROCESS_KILL
 	else //no repair needed, we turn off
@@ -467,7 +470,7 @@
 /obj/item/mecha_parts/mecha_equipment/thrusters/ion/thrust(movement_dir)
 	if(!chassis)
 		return FALSE
-	if(chassis.use_power(chassis.step_energy_drain))
+	if(chassis.use_energy(chassis.step_energy_drain))
 		generate_effect(movement_dir)
 		return TRUE
 	return FALSE

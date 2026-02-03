@@ -1,2 +1,3 @@
 robots.dmi, centcomborg - i genuinely have no idea who made this, i just took it from tau ceti
 robots.dmi, kerfus_centcom - BingusSS13 (Original kerfus sprites by Deahaka, https://github.com/TauCetiStation/TauCetiClassic/pull/11025)
+ai.dmi, ai_fracktail/ai-fracktail_death_transition/ai_fracktail_dead - Cmpwarrior

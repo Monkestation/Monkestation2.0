@@ -172,7 +172,7 @@
 
 	REMOVE_TRAIT(src, TRAIT_FREE_HYPERSPACE_MOVEMENT, INNATE_TRAIT)
 
-/mob/living/basic/carp/revive(full_heal_flags, excess_healing, force_grab_ghost)
+/mob/living/basic/carp/revive(full_heal_flags, excess_healing, force_grab_ghost, revival_policy)
 	. = ..()
 
 	ADD_TRAIT(src, TRAIT_FREE_HYPERSPACE_MOVEMENT, INNATE_TRAIT)

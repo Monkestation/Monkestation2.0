@@ -75,7 +75,7 @@ SUBSYSTEM_DEF(opposing_force)
 	if(!(opposing_force in submitted_applications))
 		return "ERROR"
 	var/position = 1
-	for(var/opfor as anything in submitted_applications)
+	for(var/opfor in submitted_applications)
 		if(opposing_force == opfor)
 			break
 		position++

@@ -1,6 +1,6 @@
 /datum/round_event_control/antagonist/solo/commando_operative
 	name = "Roundstart Commando Operative"
-	tags = list(TAG_DESTRUCTIVE, TAG_COMBAT, TAG_TEAM_ANTAG, TAG_EXTERNAL, TAG_OUTSIDER_ANTAG)
+	tags = list(TAG_DESTRUCTIVE, TAG_COMBAT, TAG_TEAM_ANTAG, TAG_EXTERNAL, TAG_OUTSIDER_ANTAG, TAG_MUNDANE)
 	antag_flag = ROLE_COMMANDO_OPERATIVE
 	antag_datum = /datum/antagonist/nukeop/commando
 	typepath = /datum/round_event/antagonist/solo/commando_operative
@@ -36,13 +36,14 @@
 		JOB_HEAD_OF_SECURITY,
 		JOB_SECURITY_OFFICER,
 		JOB_SECURITY_ASSISTANT,
+		JOB_BRIG_PHYSICIAN,
 		JOB_WARDEN,
 	)
 	required_enemies = 8
 	min_players = 40
 	roundstart = TRUE
 	earliest_start = 0 SECONDS
-	weight = 5
+	weight = 4
 	max_occurrences = 1
 	event_icon_state = "nukeops"
 

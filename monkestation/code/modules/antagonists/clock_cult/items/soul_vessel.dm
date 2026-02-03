@@ -37,25 +37,25 @@
 
 /obj/item/mmi/posibrain/soul_vessel/attack_self(mob/user)
 	if(!IS_CLOCK(user))
-		balloon_alert(user, "You can't seem to figure out how \the [src] works!")
+		balloon_alert(user, "you can't seem to figure out how \the [src] works!")
 		return
 
 	if(brainmob.key && brainmob.mind)
 		if(length(SSthe_ark.cogscarabs) > MAXIMUM_COGSCARABS)
-			balloon_alert(user, "The Ark cannot support any more cogscarabs.")
+			balloon_alert(user, "the Ark cannot support any more cogscarabs.")
 			return
 
 		if(!SSthe_ark.marked_areas[get_area(src)] && !on_reebe(src))
 			to_chat(user, span_notice("Soul vessels can only be converted in marked areas or on reebe."))
 			return
 
-		balloon_alert(user, "You start converting the vessel into a cogscarab shell.")
+		balloon_alert(user, "you start converting the vessel into a cogscarab shell.")
 		if(do_after(user, 30 SECONDS, src))
 			var/mob/living/basic/drone/cogscarab/new_scarab = new(get_turf(src))
 			brainmob.mind.transfer_to(new_scarab, TRUE)
 			if(!IS_CLOCK(new_scarab))
 				new_scarab.mind.add_antag_datum(/datum/antagonist/clock_cultist)
-			balloon_alert(user, "You reform [src] into a cogscarab shell.")
+			balloon_alert(user, "you reform [src] into a cogscarab shell.")
 			qdel(src)
 		return
 

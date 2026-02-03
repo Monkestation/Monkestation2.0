@@ -67,7 +67,7 @@
 		var/datum/job/job = job_type
 		jobs += initial(job.title)
 
-	for(var/job as anything in jobs)
+	for(var/job in jobs)
 		if(!length(SSjob.all_occupations))
 			SSjob.SetupOccupations()
 		empty_list += job
@@ -81,7 +81,7 @@
 		var/datum/job/job = job_type
 		jobs += initial(job.title)
 
-	for(var/job as anything in jobs)
+	for(var/job in jobs)
 		if(job in update_list)
 			if(!update_list[job])
 				update_list[job] = 0

@@ -71,7 +71,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 				to_chat(src, span_danger("[msg]"))
 				return
 
-		var/stl = CONFIG_GET(number/second_topic_limit)
+		var/stl = max(CONFIG_GET(number/second_topic_limit), CONFIG_GET(number/tgui_max_chunk_count))
 		if (stl)
 			var/second = round(world.time, 1 SECONDS)
 			if (!topiclimiter)
@@ -267,7 +267,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		persistent_client = new(ckey)
 	persistent_client.set_client(src)
 
-	winset(src, null, list("browser-options" = "find,refresh,byondstorage"))
+	winset(src, null, list("browser-options" = "find,refresh"))
 
 	// Instantiate stat panel
 	stat_panel = new(src, "statbrowser")
@@ -386,11 +386,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		add_verb(src, /client/proc/rementor)
 	//	connecting_mentor = TRUE
 	//MONKE EDIT END
-
-	if (length(GLOB.stickybanadminexemptions))
-		GLOB.stickybanadminexemptions -= ckey
-		if (!length(GLOB.stickybanadminexemptions))
-			restore_stickybans()
 
 	if (byond_version >= 512)
 		if (!byond_build || byond_build < 1386)
@@ -1224,8 +1219,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 /client/proc/open_filter_editor(atom/in_atom)
 	if(holder)
-		holder.filteriffic = new /datum/filter_editor(in_atom)
-		holder.filteriffic.ui_interact(mob)
+		holder.filterrific = new /datum/filter_editor(in_atom)
+		holder.filterrific.ui_interact(mob)
 
 ///opens the particle editor UI for the in_atom object for this client
 /client/proc/open_particle_editor(atom/movable/in_atom)
@@ -1235,13 +1230,9 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 ///Sets the behavior of rightclick & shift rightclick. See _interaction_modes.dm
 /client/proc/set_right_click_menu_mode()
-	var/rclick_type
-	if(mob?.rclick_always_context_menu)
-		rclick_type = RIGHTCLICK_BOTH
-	else
-		rclick_type = context_menu_requires_shift
 
-	switch(rclick_type)
+	// still hard-coded to shift, but should be changed in the future for custom inspect keybindings
+	switch(context_menu_requires_shift)
 		if(RIGHTCLICK_NOSHIFT) //Right click opens context menu
 			winset(src, "mapwindow.map", "right-click=false")
 			winset(src, "ShiftUp", "command=\".winset :map.right-click=false\"")

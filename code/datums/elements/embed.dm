@@ -108,6 +108,7 @@
 		jostle_chance = jostle_chance,\
 		jostle_pain_mult = jostle_pain_mult,\
 		pain_stam_pct = pain_stam_pct)
+	SEND_SIGNAL(victim, COMSIG_CARBON_EMBED_ADDED, weapon, limb)
 
 ///A different embed element has been attached, so we'll detach and let them handle things
 /datum/element/embed/proc/severancePackage(obj/weapon, datum/element/E)

@@ -82,19 +82,6 @@
 /mob/living/speaker_implant/get_alt_name()
 	return "'s Implant"
 
-/mob/living/speaker_implant/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null, message_range = 7, datum/saymode/saymode = null)
-	. = ..()
-	if(.)
-		var/ending = copytext_char(message, -1)
-		var/sound/speak_sound
-		if(ending == "?")
-			speak_sound = voice_type2sound[voice_type]["?"]
-		else if(ending == "!")
-			speak_sound = voice_type2sound[voice_type]["!"]
-		else
-			speak_sound = voice_type2sound[voice_type][voice_type]
-		playsound(src, speak_sound, 300, 1, SHORT_RANGE_SOUND_EXTRARANGE-2, falloff_exponent = 0, pressure_affected = FALSE, ignore_walls = FALSE, use_reverb = FALSE, mixer_channel = CHANNEL_MOB_SOUNDS)
-
 /mob/living/speaker_implant/Destroy()
 	owner = null
 	return ..()

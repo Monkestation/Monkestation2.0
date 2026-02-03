@@ -6,6 +6,7 @@
 #define COMSIG_FOOD_EATEN "food_eaten"
 	#define DESTROY_FOOD (1<<0)
 /// From base of datum/component/edible/on_entered: (mob/crosser, bitecount)
+/// You must call enable_food_crossed() on the edible component in order for this signal to be sent.
 #define COMSIG_FOOD_CROSSED "food_crossed"
 /// From base of Component/edible/On_Consume: (mob/living/eater, mob/living/feeder)
 #define COMSIG_FOOD_CONSUMED "food_consumed"

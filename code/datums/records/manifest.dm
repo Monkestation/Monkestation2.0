@@ -41,7 +41,7 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 				"trim" = trim,
 				)
 			continue
-		for(var/department_type as anything in job.departments_list)
+		for(var/department_type in job.departments_list)
 			var/datum/job_department/department = departments_by_type[department_type]
 			if(!department)
 				stack_trace("get_manifest() failed to get job department for [department_type] of [job.type]")
@@ -100,6 +100,12 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 	set waitfor = FALSE
 	if(!(person.mind?.assigned_role.job_flags & JOB_CREW_MANIFEST))
 		return
+	//if you're cargo, and not a boss, you're part of the Union.
+	if((person.mind?.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_CARGO) && !(person.mind?.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND))
+		GLOB.cargo_union_employees += list(list(
+			CARGO_UNION_LEADER = !!(person.mind?.assigned_role.title == JOB_QUARTERMASTER),
+			CARGO_UNION_NAME = person.real_name,
+		))
 
 	var/assignment = person.mind.assigned_role.title
 	var/mutable_appearance/character_appearance = new(person.appearance)

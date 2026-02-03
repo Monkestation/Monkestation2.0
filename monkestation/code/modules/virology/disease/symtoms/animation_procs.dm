@@ -4,12 +4,6 @@
 								0.00, 0.00, 0.00, 1.00,\
 								0.00, 0.00, 0.00, 0.00)
 
-#define COLOR_MATRIX_GRAYSCALE list(0.33,0.33,0.33,0.00,\
-									0.33,0.33,0.33,0.00,\
-									0.33,0.33,0.33,0.00,\
-									0.00,0.00,0.00,1.00,\
-									0.00,0.00,0.00,0.00)
-
 /atom/proc/fade_matrix(time = 1 SECONDS, matrix = COLOR_MATRIX_GRAYSCALE)
 	color = COLOR_MARTIX_BASE
 	animate(src, color=matrix, time=time, easing=SINE_EASING)
@@ -76,10 +70,7 @@
 	if(isliving(src))
 		var/mob/living/living = src
 		living.Knockdown(stun_duration)
-		animate(src, pixel_x = 0, pixel_y = 0, transform = src.transform.Turn(-turn), time = 3, easing = LINEAR_EASING, flags=ANIMATION_PARALLEL)
-	else
-		spawn(stun_duration + total_time)
-			animate(src, pixel_x = 0, pixel_y = 0, transform = src.transform.Turn(-turn), time = 3, easing = LINEAR_EASING, flags=ANIMATION_PARALLEL)
+		animate(src, pixel_x = 0, pixel_y = 0, transform = src.transform.Turn(-turn), time = 0.3 SECONDS, easing = LINEAR_EASING, flags = ANIMATION_PARALLEL)
 
 #undef COLOR_MARTIX_BASE
 #undef COLOR_MATRIX_GRAYSCALE

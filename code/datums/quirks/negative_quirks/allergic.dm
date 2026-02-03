@@ -19,8 +19,8 @@
 		/datum/reagent/medicine/cordiolis_hepatico,
 		/datum/reagent/medicine/synaphydramine,
 		/datum/reagent/medicine/diphenhydramine,
-		/datum/reagent/medicine/changelingadrenaline,
-		/datum/reagent/medicine/spaceacillin
+		// /datum/reagent/medicine/changelingadrenaline,
+		/datum/reagent/medicine/antipathogenic/spaceacillin
 	)
 	var/allergy_string
 	species_blacklist = list(SPECIES_IPC)

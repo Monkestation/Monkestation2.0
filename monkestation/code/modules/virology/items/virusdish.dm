@@ -137,6 +137,9 @@ GLOBAL_LIST_INIT(virusdishes, list())
 		return ITEM_INTERACT_SUCCESS
 
 /obj/item/weapon/virusdish/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(istype(interacting_with, /obj/machinery/smartfridge/chemistry))
+		return ITEM_INTERACT_SKIP_TO_ATTACK
+
 	if(!open)
 		user.balloon_alert(user, "lid closed")
 		return ITEM_INTERACT_BLOCKING

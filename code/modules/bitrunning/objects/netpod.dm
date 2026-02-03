@@ -11,6 +11,8 @@
 	max_integrity = 300
 	obj_flags = BLOCKS_CONSTRUCTION
 	state_open = TRUE
+	interaction_flags_mouse_drop = NEED_HANDS | NEED_DEXTERITY
+
 	/// Whether we have an ongoing connection
 	var/connected = FALSE
 	/// A player selected outfit by clicking the netpod
@@ -23,13 +25,15 @@
 	var/disconnect_damage
 	/// Static list of outfits to select from
 	var/list/cached_outfits = list()
+	/// Determines our ID for what bitrunning machinery we're linked to.
+	var/bitrunning_id = "DEFAULT"
 
 /obj/machinery/netpod/Initialize(mapload)
 	. = ..()
 
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/netpod/LateInitialize()
+/obj/machinery/netpod/LateInitialize(mapload_arg)
 	. = ..()
 
 	disconnect_damage = BASE_DISCONNECT_DAMAGE
@@ -79,12 +83,10 @@
 
 	return ..()
 
-/obj/machinery/netpod/MouseDrop_T(mob/target, mob/user)
+/obj/machinery/netpod/mouse_drop_receive(mob/target, mob/user, params)
 	var/mob/living/carbon/player = user
-	if(!iscarbon(player) || !Adjacent(player) || !ISADVANCEDTOOLUSER(player) || !is_operational || !state_open)
-		return
 
-	if(player.buckled || HAS_TRAIT(player, TRAIT_HANDS_BLOCKED))
+	if(!iscarbon(player) || !is_operational || !state_open || player.buckled)
 		return
 
 	close_machine(target)
@@ -329,11 +331,14 @@
 	if(server)
 		return server
 
-	server = locate(/obj/machinery/quantum_server) in oview(4, src)
-	if(isnull(server))
+	for(var/obj/machinery/quantum_server/possible_server in oview(4, src))
+		if(possible_server.bitrunning_id == bitrunning_id)
+			server = possible_server
+			server_ref = WEAKREF(server)
+			break
+	if(!server)
 		return
 
-	server_ref = WEAKREF(server)
 	RegisterSignal(server, COMSIG_MACHINERY_REFRESH_PARTS, PROC_REF(on_server_upgraded))
 	RegisterSignal(server, COMSIG_BITRUNNER_DOMAIN_COMPLETE, PROC_REF(on_domain_complete))
 	RegisterSignal(server, COMSIG_BITRUNNER_DOMAIN_SCRUBBED, PROC_REF(on_domain_scrubbed))
@@ -479,3 +484,9 @@
 	return TRUE
 
 #undef BASE_DISCONNECT_DAMAGE
+
+/obj/machinery/netpod/tutorial_coop
+	bitrunning_id = "tutorial_coop"
+
+/obj/machinery/netpod/tutorial_solo
+	bitrunning_id = "tutorial_solo"

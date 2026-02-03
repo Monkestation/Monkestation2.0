@@ -138,6 +138,9 @@
 	var/mutable_appearance/shield_appearance = mutable_appearance(shield_icon_file, (current_charges > 0 ? shield_icon : "broken"), MOB_SHIELD_LAYER)
 	if(show_charge_as_alpha)
 		shield_appearance.alpha = (current_charges/max_charges)*255
+	if(ishuman(wearer))
+		var/mob/living/carbon/human/human_wearer = wearer
+		human_wearer.apply_height_filters(shield_appearance)
 	overlays += shield_appearance
 
 /**

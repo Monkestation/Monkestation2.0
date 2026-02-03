@@ -1,0 +1,316 @@
+# So the basic jist of the sound design here: We make use primarily of shorter instrument samples for barks. We would've went with animalese instead, but doing so would've involved quite a bit of overhead to saycode.
+# Short instrument samples tend to sound surprisingly nice for barks, being able to be played in rapid succession without being outright obnoxious.
+# It isn't just instruments that work well here, however. Anything that works well as a stab? Short attack, no sustain, a decent amount of release? Also works extremely well for barks.
+
+# --------- Instrument Sounds ---------
+[instruments]
+name = "Instruments"
+path = "sound/runtime/instruments/synthesis_samples"
+
+[instruments.muted_string_low]
+name = "Muted String (Low)"
+path = "guitar/crisis_muted/C2.ogg"
+volume = 0.2
+
+[instruments.muted_string_medium]
+name = "Muted String (Medium)"
+path = "guitar/crisis_muted/C3.ogg"
+volume = 0.2
+
+[instruments.muted_string_high]
+name = "Muted String (High)"
+path = "guitar/crisis_muted/C4.ogg"
+volume = 0.15
+
+# [instruments.banjo_medium]
+# name = "Banjo (Medium)"
+# path = "guitar/crisis_muted/banjo/Cn3.ogg"
+
+# [instruments.banjo_high]
+# name = "Banjo (High)"
+# path = "guitar/crisis_muted/banjo/Cn.ogg"
+
+# --------- Misc Sounds ---------
+
+[misc]
+name = "Miscellaneous"
+
+[misc.squeaky]
+name = "Squeaky"
+path = "sound/items/toysqueak1.ogg"
+max_speed = 4
+hidden = true
+
+[misc.beep]
+name = "Beep"
+path = "sound/machines/terminal_select.ogg"
+max_pitch = 0.7                             #Bringing the pitch higher just hurts your ears :<
+max_speed = 4                               #This soundbyte's too short for larger speeds to not sound awkward
+volume = 0.1
+
+# [misc.synthetic_grunt]
+# name = "Synthetic (Grunt)"
+# path = 'sound/misc/bloop.ogg'
+# volume = 0.07
+
+[misc.synthetic_normal]
+name = "Synthetic (Normal)"
+path = "sound/machines/uplinkerror.ogg"
+max_speed = 4
+hidden = true
+
+[misc.windy]
+name = "Windy"
+path = "sound/weapons/bulletflyby.ogg"
+max_pitch = 1.6
+hidden = true
+
+[misc.brassy]
+name = "Brassy"
+path = "sound/machines/clockcult/integration_cog_install.ogg"
+min_speed = 4
+volume = 0.1
+
+# --------- Misc Animal Sounds ---------
+
+[animal]
+name = "Animal"
+path = "sound/voice/barks/animal"
+
+[animal.moth_squeak]
+name = "Moth Squeak"
+path = "mothsqueak.ogg"
+hidden = true
+
+[animal.chirp]
+name = "Chirp"
+path = "chirp.ogg"
+volume = 0.3
+
+[animal.caw]
+name = "Caw"
+path = "caw.ogg"
+min_pitch = 0.5
+max_pitch = 1.3
+min_speed = 6
+volume = 0.25
+
+[animal.chittery]
+name = "Chittery"
+path = "mothchitter2.ogg"
+min_pitch = 1
+max_pitch = 1.3
+volume = 0.3
+
+# --------- Don"t Starve Sounds ---------
+
+[dont_starve]
+name = "Don't Starve"
+path = "sound/voice/barks/dont_starve"
+
+[dont_starve.wilson]
+name = "Wilson"
+path = "wilson.ogg"
+volume = 0.2
+
+[dont_starve.woodie]
+name = "Woodie"
+path = "woodie.ogg"
+volume = 0.1
+
+[dont_starve.wurt]
+name = "Wurt"
+path = "wurt.ogg"
+volume = 0.1
+
+[dont_starve.wx78]
+name = "WX78"
+path = "wx78.ogg"
+volume = 0.05
+
+# --------- Goonstation Sounds ---------
+[goon]
+name = "Goonstation"
+path = "goon/sounds/misc/talk"
+
+[goon.blub]
+name = "Blub"
+path = "blub.ogg"
+ask_path = "blub_ask.ogg"
+exclaim_path = "blub_exclaim.ogg"
+min_pitch = 0.7
+volume = 0.4
+
+[goon.bottalk_1]
+name = "Bottalk 1"
+path = "bottalk_1.ogg"
+min_speed = 3
+max_speed = 9
+min_pitch = 0.5
+volume = 0.4
+
+[goon.bottalk_2]
+name = "Bottalk 2"
+path = "bottalk_2.ogg"
+min_pitch = 0.9
+
+[goon.bottalk_3]
+name = "Bottalk 3"
+path = "bottalk_3.ogg"
+min_pitch = 0.6
+
+[goon.buwoo]
+name = "Buwoo"
+path = "buwoo.ogg"
+ask_path = "buwoo_ask.ogg"
+exclaim_path = "buwoo_exclaim.ogg"
+min_pitch = 0.8
+
+[goon.cow]
+name = "Cow"
+path = "cow.ogg"
+ask_path = "cow_ask.ogg"
+exclaim_path = "cow_exclaim.ogg"
+min_pitch = 0.8
+
+[goon.cyborg]
+name = "Cyborg"
+path = "cyborg.ogg"
+ask_path = "cyborg_ask.ogg"
+exclaim_path = "cyborg_exclaim.ogg"
+min_pitch = 0.6
+volume = 0.4
+
+[goon.lizard]
+name = "Lizard"
+path = "lizard.ogg"
+ask_path = "lizard_ask.ogg"
+exclaim_path = "lizard_exclaim.ogg"
+min_pitch = 0.6
+
+[goon.pug]
+name = "Pug"
+path = "pug.ogg"
+ask_path = "pug_ask.ogg"
+exclaim_path = "pug_exclaim.ogg"
+min_pitch = 0.7
+
+[goon.pugg]
+name = "Pugg"
+path = "pugg.ogg"
+ask_path = "pugg_ask.ogg"
+exclaim_path = "pugg_exclaim.ogg"
+min_pitch = 0.6
+
+[goon.radio]
+name = "Radio"
+path = "radio.ogg"
+hidden = true
+
+[goon.radio2]
+name = "Radio2"
+path = "radio2.ogg"
+hidden = true
+
+[goon.radio_ai]
+name = "Radio Ai"
+path = "radio_ai.ogg"
+hidden = true
+
+[goon.roach]
+name = "Roach"
+path = "roach.ogg"
+ask_path = "roach_ask.ogg"
+exclaim_path = "roach_exclaim.ogg"
+hidden = true
+
+[goon.skelly]
+name = "Skelly"
+path = "skelly.ogg"
+ask_path = "skelly_ask.ogg"
+exclaim_path = "skelly_exclaim.ogg"
+min_pitch = 0.6
+
+[goon.speak_1]
+name = "Speak 1"
+path = "speak_1.ogg"
+ask_path = "speak_1_ask.ogg"
+exclaim_path = "speak_1_exclaim.ogg"
+allow_random = true
+min_pitch = 0.6
+
+[goon.speak_2]
+name = "Speak 2"
+path = "speak_2.ogg"
+ask_path = "speak_2_ask.ogg"
+exclaim_path = "speak_2_exclaim.ogg"
+allow_random = true
+min_pitch = 0.5
+
+[goon.speak_3]
+name = "Speak 3"
+path = "speak_3.ogg"
+ask_path = "speak_3_ask.ogg"
+exclaim_path = "speak_3_exclaim.ogg"
+allow_random = true
+min_pitch = 0.5
+
+[goon.speak_4]
+name = "Speak 4"
+path = "speak_4.ogg"
+ask_path = "speak_4_ask.ogg"
+exclaim_path = "speak_4_exclaim.ogg"
+allow_random = true
+min_pitch = 0.6
+
+# Genetics-only/admin-only sounds. These either clash hard with the audio design of the above sounds, or have some other form of audio design issue, but aren't *too* awful as a sometimes thing.
+# Rule of fun very much applies to this section. Audio design is extremely important for the above section, but down here? No gods, no masters, pure anarchy.
+# The min/max variables simply don't apply to these, as only chargen cares about them. As such, there's no need to define those.
+
+# /datum/bark/bikehorn
+# 	name = "Bikehorn"
+# 	id = "horn"
+# 	soundpath = 'sound/instruments/bikehorn/Cn4.ogg'
+# 	ignore = TRUE // This is an unusually quiet sound.
+
+# /datum/bark/bwoink
+# 	name = "Bwoink"
+# 	id = "bwoink"
+# 	soundpath = 'sound/effects/adminhelp.ogg'
+# 	ignore = TRUE // Emergent heart attack generation
+
+# /datum/bark/merp
+# 	name = "Merp"
+# 	id = "merp"
+# 	soundpath = 'modular_citadel/sound/voice/merp.ogg'
+# 	ignore = TRUE
+
+# /datum/bark/bark
+# 	name = "Bark"
+# 	id = "bark"
+# 	soundpath = 'modular_citadel/sound/voice/bark1.ogg'
+# 	ignore = TRUE
+
+# /datum/bark/nya
+# 	name = "Nya"
+# 	id = "nya"
+# 	soundpath = 'modular_citadel/sound/voice/nya.ogg'
+# 	ignore = TRUE
+
+# /datum/bark/moff
+# 	name = "Moff"
+# 	id = "moff"
+# 	soundpath = 'modular_citadel/sound/voice/mothsqueak.ogg'
+# 	ignore = TRUE
+
+# /datum/bark/weh
+# 	name = "Weh"
+# 	id = "weh"
+# 	soundpath = 'modular_citadel/sound/voice/weh.ogg'
+# 	ignore = TRUE
+
+# /datum/bark/honk
+# 	name = "Annoying Honk"
+# 	id = "honk"
+# 	soundpath = 'sound/creatures/goose1.ogg'
+# 	ignore = TRUE

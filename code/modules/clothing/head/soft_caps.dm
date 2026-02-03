@@ -5,11 +5,14 @@
 	worn_icon = 'icons/mob/clothing/head/hats.dmi'
 	icon_state = "cargosoft"
 	inhand_icon_state = "greyscale_softcap" //todo wip
+	interaction_flags_click = NEED_DEXTERITY|ALLOW_RESTING
+	/// For setting icon archetype
 	var/soft_type = "cargo"
+	/// If there is a suffix to append
 	var/soft_suffix = "soft"
 
 	dog_fashion = /datum/dog_fashion/head/cargo_tech
-
+	/// Whether this is on backwards... Woah, cool
 	var/flipped = FALSE
 
 /obj/item/clothing/head/soft/dropped()
@@ -24,10 +27,9 @@
 	flip(usr)
 
 
-/obj/item/clothing/head/soft/AltClick(mob/user)
-	..()
-	if(user.can_perform_action(src, NEED_DEXTERITY))
-		flip(user)
+/obj/item/clothing/head/soft/click_alt(mob/user)
+	flip(user)
+	return CLICK_ACTION_SUCCESS
 
 
 /obj/item/clothing/head/soft/proc/flip(mob/user)
@@ -39,7 +41,7 @@
 		else
 			icon_state = "[soft_type][soft_suffix]"
 			to_chat(user, span_notice("You flip the hat back in normal position."))
-		update_icon()
+		update_appearance(UPDATE_ICON)
 		usr.update_worn_head() //so our mob-overlays update
 
 /obj/item/clothing/head/soft/examine(mob/user)
@@ -144,9 +146,15 @@
 	fire = 20
 	acid = 50
 
+/obj/item/clothing/head/soft/sec/medical
+	name = "security medical cap"
+	desc = "It's a robust baseball hat with a tasteful red color with a reflective cross on the top."
+	icon_state = "secmedsoft"
+	soft_type = "secmed"
+
 /obj/item/clothing/head/soft/paramedic
 	name = "paramedic cap"
-	desc = "It's a baseball hat with a dark turquoise color and a reflective cross on the top."
+	desc = "It's a baseball hat with a dark turquoise color with a reflective cross on the top."
 	icon_state = "paramedicsoft"
 	soft_type = "paramedic"
 	dog_fashion = null

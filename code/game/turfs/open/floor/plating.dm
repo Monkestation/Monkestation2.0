@@ -14,17 +14,13 @@
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+	astar_weight = 75
 
 	//Can this plating have reinforced floors placed ontop of it
 	var/attachment_holes = TRUE
 
 	//Used for upgrading this into R-Plating
 	var/upgradable = TRUE
-
-	/// If true, will allow tiles to replace us if the tile [wants to] [/obj/item/stack/tile/var/replace_plating].
-	/// And if our baseturfs are compatible.
-	/// See [/obj/item/stack/tile/proc/place_tile].
-	var/allow_replacement = TRUE
 
 /turf/open/floor/plating/broken_states()
 	return list("damaged1", "damaged2", "damaged4")
@@ -63,7 +59,7 @@
 				return
 			else
 				to_chat(user, span_notice("You begin reinforcing the floor..."))
-				if(do_after(user, 30, target = src))
+				if(do_after(user, 3 SECONDS, target = src))
 					if (R.get_amount() >= 2 && !istype(src, /turf/open/floor/engine))
 						PlaceOnTop(/turf/open/floor/engine, flags = CHANGETURF_INHERIT_AIR)
 						playsound(src, 'sound/items/deconstruct.ogg', 80, TRUE)
@@ -83,7 +79,7 @@
 				return
 			else
 				to_chat(user, span_notice("You begin insulating the floor..."))
-				if(do_after(user, 30, target = src))
+				if(do_after(user, 3 SECONDS, target = src))
 					if (Lorem.get_amount() >= 1 && !istype(src, /turf/open/floor/engine/insulation))
 						PlaceOnTop(/turf/open/floor/engine/insulation, flags = CHANGETURF_INHERIT_AIR)
 						playsound(src, 'sound/items/deconstruct.ogg', 80, TRUE)
@@ -221,7 +217,6 @@
 	heat_capacity = INFINITY
 
 	baseturfs = /turf/open/floor/plating
-	allow_replacement = FALSE
 	rcd_proof = TRUE
 	upgradable = FALSE
 

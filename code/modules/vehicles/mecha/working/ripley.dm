@@ -192,7 +192,7 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 	return ..()
 
 /obj/vehicle/sealed/mecha/ripley/cargo/populate_parts()
-	cell = new /obj/item/stock_parts/cell/high(src)
+	cell = new /obj/item/stock_parts/power_store/cell/high(src)
 	//No scanmod for Big Bess
 	capacitor = new /obj/item/stock_parts/capacitor(src)
 	manipulator = new /obj/item/stock_parts/manipulator(src)
@@ -232,7 +232,7 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 		))
 	return data
 
-/obj/item/mecha_parts/mecha_equipment/ejector/ui_act(action, list/params)
+/obj/item/mecha_parts/mecha_equipment/ejector/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return TRUE
@@ -251,17 +251,80 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 		return TRUE
 
 
-/obj/vehicle/sealed/mecha/ripley/relay_container_resist_act(mob/living/user, obj/O)
-	to_chat(user, span_notice("You lean on the back of [O] and start pushing so it falls out of [src]."))
-	if(do_after(user, 300, target = O))
-		if(!user || user.stat != CONSCIOUS || user.loc != src || O.loc != src )
-			return
-		to_chat(user, span_notice("You successfully pushed [O] out of [src]!"))
-		O.forceMove(drop_location())
-		LAZYREMOVE(cargo, O)
-	else
-		if(user.loc == src) //so we don't get the message if we resisted multiple times and succeeded.
-			to_chat(user, span_warning("You fail to push [O] out of [src]!"))
+/obj/item/mecha_parts/mecha_equipment/ejector/seccage/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_MOB_REMOVING_CUFFS, PROC_REF(stop_cuff_removal))
+
+/obj/item/mecha_parts/mecha_equipment/ejector/seccage/Destroy()
+	UnregisterSignal(src, COMSIG_MOB_REMOVING_CUFFS)
+	for(var/mob/freebird in contents) //Let's not qdel people iside the mech kthx
+		cheese_it(freebird)
+	return ..()
+
+/obj/item/mecha_parts/mecha_equipment/ejector/seccage/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	RegisterSignal(arrived, COMSIG_MOB_REMOVING_CUFFS, PROC_REF(stop_cuff_removal))
+	return ..()
+
+/obj/item/mecha_parts/mecha_equipment/ejector/seccage/Exited(atom/movable/gone, direction)
+	UnregisterSignal(gone, COMSIG_MOB_REMOVING_CUFFS)
+	return ..()
+
+/obj/item/mecha_parts/mecha_equipment/ejector/seccage/proc/stop_cuff_removal(datum/source, obj/item/cuffs)
+	SIGNAL_HANDLER
+	to_chat(source, span_warning("You don't have the room to remove [cuffs]!"))
+	return COMSIG_MOB_BLOCK_CUFF_REMOVAL
+
+/obj/item/mecha_parts/mecha_equipment/ejector/seccage/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	if(action == "eject")
+		var/mob/passenger = locate(params["cargoref"]) in contents
+		if(!passenger)
+			return FALSE
+		to_chat(chassis.occupants, "[icon2html(src,  chassis.occupants)][span_notice("You unload [passenger].")]")
+		passenger.forceMove(drop_location())
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_step), passenger, chassis.dir), 1) //That's right, one tick. Just enough to cause the tile move animation.
+		playsound(chassis, 'sound/weapons/tap.ogg', 50, TRUE)
+		var/obj/vehicle/sealed/mecha/ripley/miner = chassis
+		if(miner)
+			log_message("Unloaded [passenger]. Cargo compartment capacity: [miner.cargo_capacity - contents.len]", LOG_MECHA)
+		return TRUE
+	return ..()
+
+/obj/item/mecha_parts/mecha_equipment/ejector/seccage/container_resist_act(mob/living/user)
+	var/breakout_time = 1 MINUTES
+
+	if (user.mob_size > MOB_SIZE_HUMAN)
+		breakout_time = 6 SECONDS
+
+	to_chat(user, span_notice("You begin attempting a breakout. (This will take around [DisplayTimeText(breakout_time)] and [chassis] needs to remain stationary.)"))
+	if(!do_after(user, breakout_time, target = chassis))
+		return
+	to_chat(user, span_notice("You break out of the [src]."))
+	playsound(chassis, 'sound/items/crowbar.ogg', 100, TRUE)
+	cheese_it(user)
+	for(var/mob/freebird in contents)
+		if(user != freebird)
+			to_chat(freebird, span_warning("[user] has managed to open the hatch, and you fall out with him. You're free!"))
+			cheese_it(freebird)
+
+/obj/item/mecha_parts/mecha_equipment/ejector/seccage/proc/cheese_it(mob/living/escapee)
+	var/range = rand(1, 3)
+	var/variance = rand(-45, 45)
+	var/angle = 180
+	var/turf/current_turf = get_turf(src)
+	switch (chassis?.dir)
+		if(NORTH)
+			angle = 270
+		if(EAST)
+			angle = 180
+		if(SOUTH)
+			angle = 90
+		if(WEST)
+			angle = 0
+	var/target_x = round(range * cos(angle + variance), 1) + current_turf.x
+	var/target_y = round(range * sin(angle + variance), 1) + current_turf.y
+	escapee.Knockdown(1) //Otherwise everyone hits eachother while being thrown
+	escapee.forceMove(drop_location())
+	escapee.throw_at(locate(target_x, target_y, current_turf.z), range, 1)
 
 /**
  * Makes the mecha go faster and halves the mecha drill cooldown if in Lavaland pressure.

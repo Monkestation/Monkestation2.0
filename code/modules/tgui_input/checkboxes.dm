@@ -114,7 +114,7 @@
 
 	return data
 
-/datum/tgui_checkbox_input/ui_act(action, list/params)
+/datum/tgui_checkbox_input/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if (.)
 		return

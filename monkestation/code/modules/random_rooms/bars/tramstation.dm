@@ -9,10 +9,10 @@
 	station_name = "Tramstation"
 
 /datum/map_template/random_room/random_bar/tramstation_base/slum_bar
-    name = "Slum Tram Bar"
-    room_id = "tram_slum_bar"
-    mappath = "_maps/~monkestation/RandomBars/Tram/tram_slum_bar.dmm"
-    weight = 6
+	name = "Slum Tram Bar"
+	room_id = "tram_slum_bar"
+	mappath = "_maps/~monkestation/RandomBars/Tram/tram_slum_bar.dmm"
+	weight = 6
 
 /datum/map_template/random_room/random_bar/tramstation_base/ocean
 	name = "Ocean Tram Bar"
@@ -27,10 +27,10 @@
 	weight = 8
 
 /datum/map_template/random_room/random_bar/tramstation_base/tram_rvb_bar
-    name = "Red and Blue Bar"
-    room_id = "tram_rvb_bar"
-    mappath = "_maps/~monkestation/RandomBars/Tram/tram_rvb_bar.dmm"
-    weight = 4
+	name = "Red and Blue Bar"
+	room_id = "tram_rvb_bar"
+	mappath = "_maps/~monkestation/RandomBars/Tram/tram_rvb_bar.dmm"
+	weight = 4
 
 /datum/map_template/random_room/random_bar/tramstation_base/biodome
 	name = "Winter Biodome Tram Bar"

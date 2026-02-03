@@ -66,7 +66,11 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	if(atom_parent.resistance_flags & FIRE_PROOF)
 		atom_parent.extinguish()
 		return
-	atom_parent.take_damage(5 * seconds_per_tick, BURN, FIRE, FALSE) //monkestation edit: 10 to 5 damage
+	atom_parent.take_damage(5 * seconds_per_tick, BURN, FIRE, FALSE)
+	var/turf/open/my_turf = get_turf(src)
+	if(istype(my_turf) && !my_turf.planetary_atmos) //Pollute, but only when we're not on planetary atmos
+		var/delta_time = DELTA_WORLD_TIME(SSburning) // don't use this for take_damage, so we don't take a shitload of damage at once during lag. but it's fine for smoke generation :)
+		my_turf.pollute_turf_list(list(/datum/pollutant/smoke = 10 * delta_time, /datum/pollutant/carbon_air_pollution = 2 * delta_time), POLLUTION_PASSIVE_EMITTER_CAP)
 
 /// Alerts any examiners that the parent is on fire (even though it should be rather obvious)
 /datum/component/burning/proc/on_examine(atom/source, mob/user, list/examine_list)

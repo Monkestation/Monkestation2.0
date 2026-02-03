@@ -110,6 +110,7 @@ SUBSYSTEM_DEF(credits)
 		appearance.maptext_y = -12
 		appearance.maptext = "<center>[ckey]</center>"
 		contributer_pref_images += appearance
+		CHECK_TICK
 
 	for(var/ckey in GLOB.admin_datums)
 		var/datum/client_interface/interface = new(ckey(ckey))
@@ -122,6 +123,7 @@ SUBSYSTEM_DEF(credits)
 		appearance.maptext_y = -12
 		appearance.maptext = "<center>[ckey]</center>"
 		admin_pref_images += appearance
+		CHECK_TICK
 
 /datum/controller/subsystem/credits/proc/finalize_name()
 	if(customized_name)
@@ -171,7 +173,7 @@ SUBSYSTEM_DEF(credits)
 	for(var/mob/living/carbon/human/H in GLOB.player_list)
 		if(!H.ckey && !(H.stat == DEAD))
 			continue
-		var/player_key = H.client?.prefs?.read_preference(/datum/preference/toggle/feature_key_credits) ? "<td class= 'actorname'>[uppertext(H.mind.key)]</td><td class='actorsegue'> as </td>" : null
+		var/player_key = GLOB.roundend_hidden_ckeys[ckey(H.mind.key)] ? "<td class= 'actorname'>[uppertext(H.mind.key)]</td><td class='actorsegue'> as </td>" : null
 		var/assignment = H.get_assignment(if_no_id = "", if_no_job = "")
 		cast_string += "<center><tr>[player_key]<td class='actorrole'>[H.real_name][assignment == "" ? "" : ", [assignment]"]</td></tr></center>"
 		cast_num++
@@ -179,7 +181,7 @@ SUBSYSTEM_DEF(credits)
 	for(var/mob/living/silicon/S in GLOB.silicon_mobs)
 		if(!S.ckey)
 			continue
-		var/player_key = S.client?.prefs?.read_preference(/datum/preference/toggle/feature_key_credits) ? "[uppertext(S.mind.key)] as " : null
+		var/player_key = GLOB.roundend_hidden_ckeys[ckey(S.mind.key)] ? "[uppertext(S.mind.key)] as " : null
 		cast_string += "<center>[player_key][S.name]</center>"
 		cast_num++
 

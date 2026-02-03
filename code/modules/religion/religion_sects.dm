@@ -133,7 +133,7 @@
 	do not heal organic limbs. You can now sacrifice cells, with favor depending on their charge."
 	tgui_icon = "robot"
 	alignment = ALIGNMENT_NEUT
-	desired_items = list(/obj/item/stock_parts/cell = "with battery charge")
+	desired_items = list(/obj/item/stock_parts/power_store/cell = "with battery charge")
 	rites_list = list(/datum/religion_rites/synthconversion, /datum/religion_rites/machine_blessing)
 	altar_icon_state = "convertaltar-blue"
 	max_favor = 2500
@@ -184,7 +184,7 @@
 	return TRUE
 
 /datum/religion_sect/mechanical/on_sacrifice(obj/item/I, mob/living/chap)
-	var/obj/item/stock_parts/cell/the_cell = I
+	var/obj/item/stock_parts/power_store/cell/the_cell = I
 	if(!istype(the_cell)) //how...
 		return
 	if(the_cell.charge < 300)
@@ -322,12 +322,16 @@
  * Called by deaconize rite, this async'd proc waits for a response on joining the sect.
  * If yes, the deaconize rite can now recruit them instead of just offering invites
  */
-/datum/religion_sect/honorbound/proc/invite_crusader(mob/living/carbon/human/invited)
+/datum/religion_sect/honorbound/proc/invite_crusader(mob/living/carbon/human/invited, mob/living/inviter)
+	inviter.balloon_alert(inviter, "the honor code has been presented")
 	currently_asking += invited
 	var/ask = tgui_alert(invited, "Join [GLOB.deity]? You will be bound to a code of honor.", "Invitation", list("Yes", "No"), 60 SECONDS)
 	currently_asking -= invited
 	if(ask == "Yes")
 		possible_crusaders += invited
+		inviter.balloon_alert(inviter, "accepts being bound to the code!")
+	else
+		inviter.balloon_alert(inviter, "refuses to be bound to the code!")
 
 /datum/religion_sect/honorbound/on_conversion(mob/living/carbon/new_convert)
 	..()

@@ -122,3 +122,4 @@
 
 /obj/item/storage/photo_album/personal
 	icon_state = "album_green"
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF

@@ -9,13 +9,13 @@
 			"type": "icon_state",
 			"icon_state": "hypo2_accent1",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
 			"icon_state": "hypo2_accent2",
 			"blend_mode": "overlay",
-			"color_ids": [ 2 ]
+			"color_ids": [2]
 		}
 	],
 	"hypo2_deluxe": [
@@ -28,13 +28,13 @@
 			"type": "icon_state",
 			"icon_state": "hypo2_accent1",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
 			"icon_state": "hypo2_accent2",
 			"blend_mode": "overlay",
-			"color_ids": [ 2 ]
+			"color_ids": [2]
 		}
 	],
 	"hypo2_cmo": [
@@ -47,13 +47,13 @@
 			"type": "icon_state",
 			"icon_state": "hypo2_accent1",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
 			"icon_state": "hypo2_accent2",
 			"blend_mode": "overlay",
-			"color_ids": [ 2 ]
+			"color_ids": [2]
 		}
 	],
 	"hypo2_tactical": [
@@ -66,13 +66,13 @@
 			"type": "icon_state",
 			"icon_state": "hypo2_accent1",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
 			"icon_state": "hypo2_accent2",
 			"blend_mode": "overlay",
-			"color_ids": [ 2 ]
+			"color_ids": [2]
 		}
 	]
 }

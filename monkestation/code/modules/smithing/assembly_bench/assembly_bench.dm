@@ -35,14 +35,14 @@
 		for(var/obj/item/item as anything in current_recipe.needed_items)
 			. += span_notice("[current_recipe.needed_items[item]] [initial(item.name)] needed.")
 
-/obj/structure/machine/assembly_bench/AltClick(mob/user)
-	if(current_recipe)
-		for(var/obj/item/stored in stored_items)
-			stored.forceMove(user.loc)
-			stored_items -= stored
-		clear_recipe()
-		return TRUE
-	. = ..()
+/obj/structure/machine/assembly_bench/click_alt(mob/user)
+	if(!current_recipe)
+		return CLICK_ACTION_BLOCKING
+	for(var/obj/item/stored in stored_items)
+		stored.forceMove(user.loc)
+		stored_items -= stored
+	clear_recipe()
+	return CLICK_ACTION_SUCCESS
 
 
 /obj/structure/machine/assembly_bench/attackby(obj/item/attacking_item, mob/living/user, params)

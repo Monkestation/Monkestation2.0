@@ -33,7 +33,7 @@
 	)
 
 /datum/mutation/strong/Destroy()
-	for(var/body_part as anything in affected_limbs)
+	for(var/body_part in affected_limbs)
 		if(!isnull(affected_limbs[body_part]))
 			unregister_limb(null, affected_limbs[body_part])
 	return ..()
@@ -46,7 +46,7 @@
 	ADD_TRAIT(owner, TRAIT_BORG_PUNCHER, GENETIC_MUTATION)
 	RegisterSignal(owner, COMSIG_CARBON_POST_ATTACH_LIMB, PROC_REF(register_limb))
 	RegisterSignal(owner, COMSIG_CARBON_POST_REMOVE_LIMB, PROC_REF(unregister_limb))
-	for(var/body_part as anything in affected_limbs)
+	for(var/body_part in affected_limbs)
 		var/obj/item/bodypart/limb = owner.get_bodypart(check_zone(body_part))
 		if(!limb)
 			continue
@@ -60,7 +60,7 @@
 
 	REMOVE_TRAIT(owner, TRAIT_BORG_PUNCHER, GENETIC_MUTATION)
 	UnregisterSignal(owner, list(COMSIG_CARBON_POST_ATTACH_LIMB, COMSIG_CARBON_POST_REMOVE_LIMB))
-	for(var/body_part as anything in affected_limbs)
+	for(var/body_part in affected_limbs)
 		var/obj/item/bodypart/limb = owner.get_bodypart(check_zone(body_part))
 		if(!limb)
 			continue
@@ -72,7 +72,7 @@
 	if(isnull(owner) || GET_MUTATION_POWER(src) == 1)
 		return
 
-	for(var/body_part as anything in affected_limbs)
+	for(var/body_part in affected_limbs)
 		var/obj/item/bodypart/limb = affected_limbs[body_part]
 		limb.unarmed_damage_low += ((2 * GET_MUTATION_POWER(src)) - 2) // Bit cursed? Yep. Works with any mutation power? Yep.
 		limb.unarmed_damage_high += ((2 * GET_MUTATION_POWER(src)) - 2)
@@ -490,39 +490,6 @@
 
 	if(owner.nutrition <= NUTRITION_LEVEL_FAT)
 		owner.nutrition += 25 * seconds_per_tick
-
-/datum/mutation/horned
-	name = "Horns"
-	desc = "Enables the growth of a compacted keratin formation on the subject's head."
-	quality = MINOR_NEGATIVE
-	text_gain_indication = span_notice("A pair of horns erupt from your head.")
-	text_lose_indication = span_notice("Your horns crumble away into nothing.")
-
-/datum/mutation/horned/on_acquiring(mob/living/carbon/human/owner)
-	if(!owner || !istype(owner)) // Parent checks this, but we want to be safe when doing get_organ_slot
-		return FALSE
-
-	// First time something does get_organ_slot(ORGAN_SLOT_EXTERNAL_HORNS) btw, for very understandable reasons
-	var/obj/item/organ/external/horns/owner_horns = owner.get_organ_slot(ORGAN_SLOT_EXTERNAL_HORNS)
-	if(owner_horns)
-		return FALSE // Lets not de-horn people with horns, that'd be very rude
-
-	. = ..()
-	if(!.)
-		return
-
-	var/obj/item/organ/external/horns/horns = new()
-	horns.Insert(owner)
-
-/datum/mutation/horned/on_losing(mob/living/carbon/human/owner)
-	. = ..()
-	if(.)
-		return
-
-	// Second time something does get_organ_slot(ORGAN_SLOT_EXTERNAL_HORNS)
-	var/obj/item/organ/external/horns/owner_horns = owner.get_organ_slot(ORGAN_SLOT_EXTERNAL_HORNS)
-	if(owner_horns)
-		qdel(owner_horns)
 
 /datum/mutation/no_fingerprints
 	name = "Invisible Fingerprints"

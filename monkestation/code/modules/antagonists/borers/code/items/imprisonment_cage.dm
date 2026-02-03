@@ -88,12 +88,12 @@
 	else if(user.client)
 		container_resist_act(user)
 
-/obj/item/cortical_cage/container_resist_act(mob/living/user)
+/obj/item/cortical_cage/container_resist_act(mob/living/basic/cortical_borer/user)
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	COOLDOWN_START(user, last_special, CLICK_CD_BREAKOUT)
 	to_chat(user, span_notice("You begin squeezing through the bars in an attempt to escape! (This will take time.)"))
 	to_chat(loc, span_warning("You see [user] begin trying to squeeze through the bars!"))
-	if(!do_after(user, rand(30 SECONDS, 40 SECONDS), target = user) || opened || !(user in contents))
+	if(!do_after(user, ((user.upgrade_flags & BORER_ENERGIC) ? rand(20 SECONDS, 30 SECONDS) : rand(30 SECONDS, 40 SECONDS)), target = user) || opened || !(user in contents))
 		return
 	loc.visible_message(span_warning("[user] squeezes through [src]'s handles!"), ignored_mobs = user)
 	to_chat(user, span_boldannounce("Bingo, you squeeze through!"))

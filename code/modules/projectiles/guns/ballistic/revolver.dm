@@ -35,9 +35,9 @@
 	..()
 	chamber_round()
 
-/obj/item/gun/ballistic/revolver/AltClick(mob/user)
-	..()
+/obj/item/gun/ballistic/revolver/click_alt(mob/user)
 	spin()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/gun/ballistic/revolver/fire_sounds()
 	var/frequency_to_use = sin((90/magazine?.max_ammo) * get_ammo(TRUE, FALSE)) // fucking REVOLVERS
@@ -462,3 +462,19 @@
 		playsound(src, 'sound/items/handling/ammobox_pickup.ogg', 20, FALSE)
 	. = ..()
 
+
+// .500 Magnum, Gurtradle wanted a custom job.
+
+/obj/item/gun/ballistic/revolver/handcannon
+	name = "\improper NT-500 'The Corporate Layoff'"
+	desc = "A revolver made for a NT Admiral, its said that its dealt with hundreds, if not thousands of employees."
+	icon_state = "handcannon"
+	fire_sound = 'monkestation/code/modules/blueshift/sounds/revolver_heavy.ogg'
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/handcannon
+	can_suppress = TRUE
+	fire_delay = 0.4 SECONDS
+	recoil = 1.8
+	wield_recoil = 0.8
+
+/obj/item/gun/ballistic/revolver/takbok/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_NANOTRASEN)

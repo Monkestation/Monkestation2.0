@@ -21,6 +21,11 @@
 	if(remove_from.click_intercept == src)
 		unset_click_ability(remove_from)
 
+/datum/action/cooldown/bloodsucker/targeted/ActivatePower(trigger_flags)
+	. = ..()
+
+	return TRUE
+
 /datum/action/cooldown/bloodsucker/targeted/Trigger(trigger_flags, atom/target)
 	if(active && can_deactivate())
 		DeactivatePower()
@@ -34,11 +39,15 @@
 	if(prefire_message)
 		to_chat(owner, span_announce("[prefire_message]"))
 
-	ActivatePower(trigger_flags)
+	var/power_needs_to_set_click = ActivatePower(trigger_flags)
+
 	if(!QDELETED(target))
 		return InterceptClickOn(owner, null, target)
 
-	return set_click_ability(owner)
+	if (power_needs_to_set_click)
+		return set_click_ability(owner)
+	else
+		return FALSE
 
 /datum/action/cooldown/bloodsucker/targeted/unset_click_ability(mob/on_who, refund_cooldown)
 	. = ..()
@@ -94,10 +103,10 @@
 	return TRUE
 
 /// The power went off! We now pay the cost of the power.
-/datum/action/cooldown/bloodsucker/targeted/proc/power_activated_sucessfully(cost_override = 0)
+/datum/action/cooldown/bloodsucker/targeted/proc/power_activated_sucessfully(cost_override = 0, cooldown_override)
 	unset_click_ability(owner)
 	pay_cost(cost_override)
-	StartCooldown()
+	StartCooldown(cooldown_override)
 	DeactivatePower()
 
 /// Called on right click

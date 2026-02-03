@@ -237,29 +237,29 @@
 	. = ..()
 	. += span_notice("The leaf sight is set for: <b>[target_range] tiles</b>.")
 
-/obj/item/gun/ballistic/shotgun/china_lake/AltClick(mob/living/user)
-	if(!user.can_perform_action(src, NEED_DEXTERITY))
-		return ..()
+/obj/item/gun/ballistic/shotgun/china_lake/click_alt(mob/living/user)
 	var/new_range = tgui_input_number(user, "Please set the range", "Leaf Sight Level", 10, maximum_target_range, minimum_target_range)
-	if(!new_range || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
-		return
+	if(!new_range || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
+		return CLICK_ACTION_BLOCKING
 	if(new_range != target_range)
 		playsound(src, 'sound/machines/click.ogg', 30, TRUE)
 	target_range = new_range
 	to_chat(user, "Leaf sight set for [target_range] tiles.")
+	return CLICK_ACTION_SUCCESS
 
-/obj/item/gun/ballistic/shotgun/china_lake/MouseDrop_T(obj/item/target, mob/living/user, params)
+/obj/item/gun/ballistic/shotgun/china_lake/mouse_drop_receive(mob/living/dropped, mob/user, params)
 	. = ..()
-	if(!istype(target, /obj/item/ammo_casing/a40mm))
+	if(!iscarbon(user))
 		return
-	if(!(user.mobility_flags & MOBILITY_USE) || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED) || !Adjacent(user, target))
+	var/mob/living/carbon/carbon_user = user
+	if(!istype(dropped, /obj/item/ammo_casing/a40mm))
 		return
-	src.attackby(target, user)
-
+	if(!(carbon_user.mobility_flags & MOBILITY_USE) || carbon_user.stat != CONSCIOUS || HAS_TRAIT(carbon_user, TRAIT_HANDS_BLOCKED) || !Adjacent(carbon_user, dropped))
+		return
+	attackby(dropped, carbon_user)
 
 /obj/item/gun/ballistic/shotgun/china_lake/restricted
 	pin = /obj/item/firing_pin/implant/pindicate
-
 
 ///Mining grenade launcher
 
@@ -285,4 +285,23 @@
 	weapon_weight = WEAPON_HEAVY
 	pin = /obj/item/firing_pin/wastes
 
-
+/obj/item/gun/ballistic/ignifist
+	name = "\improper Ignifist 30"
+	desc = "A small one shot use anti tank rocketlauncher, extremely basic in design, it will only tickle soft targets."
+	icon_state = "ignifist"
+	inhand_icon_state = "ignifist"
+	accepted_magazine_type = /obj/item/ammo_box/magazine/ignifist
+	fire_sound = 'sound/weapons/gun/general/rocket_launch.ogg'
+	w_class = WEIGHT_CLASS_NORMAL
+	can_suppress = FALSE
+	burst_size = 1
+	fire_delay = 0
+	casing_ejector = FALSE
+	weapon_weight = WEAPON_HEAVY
+	bolt_type = BOLT_TYPE_NO_BOLT
+	internal_magazine = FALSE
+	cartridge_wording = "rocket"
+	empty_indicator = FALSE
+	tac_reloads = FALSE
+	gun_flags = GUN_SMOKE_PARTICLES
+	mag_display_ammo = TRUE

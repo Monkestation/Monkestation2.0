@@ -44,12 +44,10 @@
 		return FALSE
 	if(!isliving(owner))
 		return FALSE
-	// monkestation start: prevent mindswap if you have TRAIT_NO_MINDSWAP
 	if(HAS_TRAIT(owner, TRAIT_NO_MINDSWAP))
 		if(feedback)
 			to_chat(owner, span_warning("Your mind can't be swapped!"))
 		return FALSE
-	// monkestation end
 	if(HAS_TRAIT(owner, TRAIT_SUICIDED))
 		if(feedback)
 			to_chat(owner, span_warning("You're killing yourself! You can't concentrate enough to do this!"))
@@ -121,7 +119,7 @@
 	swap_mobs = list()
 	swap_ghosts = list()
 
-/datum/action/cooldown/spell/aoe/mind_swap/proc/make_fake_wizard(var/mob/living/imposter_mob) //for making the fake wizard
+/datum/action/cooldown/spell/aoe/mind_swap/proc/make_fake_wizard(mob/living/imposter_mob) //for making the fake wizard
 	var/datum/antagonist/wizard/master = owner.mind.has_antag_datum(/datum/antagonist/wizard)
 	if(!master.wiz_team)
 		master.create_wiz_team()

@@ -65,7 +65,12 @@
 
 	return data
 
-/obj/machinery/computer/teleporter/ui_act(action, params)
+/obj/machinery/computer/teleporter/proc/turn_off()
+	power_station.engaged = FALSE
+	power_station.teleporter_hub.update_appearance()
+	power_station.teleporter_hub.calibrated = FALSE
+
+/obj/machinery/computer/teleporter/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

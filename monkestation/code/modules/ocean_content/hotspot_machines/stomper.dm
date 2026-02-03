@@ -12,7 +12,7 @@
 	use_power = FALSE // we suck power ourselves by either checking cell charge or wire connection
 
 	///our inserted cell
-	var/obj/item/stock_parts/cell/installed_cell
+	var/obj/item/stock_parts/power_store/cell/installed_cell
 	///are we currently opened
 	var/opened = FALSE
 	///are we currently active
@@ -34,6 +34,10 @@
 	installed_cell = new(src)
 	register_context()
 
+/obj/machinery/power/stomper/Destroy()
+	QDEL_NULL(installed_cell)
+	return ..()
+
 /obj/machinery/power/stomper/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
 	if(held_item)
@@ -54,7 +58,7 @@
 	opened = !opened
 	to_chat(user, span_notice("You [opened ? "Open" : "Close"] the access panel on the [src]."))
 	toggle_power(FALSE)
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/power/stomper/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -65,9 +69,9 @@
 /obj/machinery/power/stomper/proc/toggle_power(state)
 	on = state
 	if(on)
-		START_PROCESSING(SSmachines, src)
+		begin_processing()
 	else
-		STOP_PROCESSING(SSmachines, src)
+		end_processing()
 	update_appearance()
 
 /obj/machinery/power/stomper/update_icon_state()
@@ -92,7 +96,7 @@
 /obj/machinery/power/stomper/attacked_by(obj/item/attacking_item, mob/living/user)
 	if(!opened || installed_cell)
 		return ..()
-	if(!istype(attacking_item, /obj/item/stock_parts/cell))
+	if(!istype(attacking_item, /obj/item/stock_parts/power_store/cell))
 		return ..()
 	attacking_item.forceMove(src)
 	installed_cell = attacking_item
@@ -117,10 +121,9 @@
 	if(!COOLDOWN_FINISHED(src, stomp_cd))
 		return
 
-	if(installed_cell)
-		if(!installed_cell.use(cell_usage))
-			toggle_power(FALSE)
-			return
+	if(installed_cell && !installed_cell.use(cell_usage))
+		toggle_power(FALSE)
+		return
 
 	COOLDOWN_START(src, stomp_cd, 10 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(stomp)), charge_up_time)
@@ -148,4 +151,4 @@
 		shake_camera(any_mob, 4, 6)
 
 	if(!automatic_mode)
-		STOP_PROCESSING(SSmachines, src)
+		end_processing()

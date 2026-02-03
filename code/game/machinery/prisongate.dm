@@ -67,7 +67,7 @@
 		return TRUE
 	for(var/obj/item/card/id/regular_id in the_toucher.get_all_contents())
 		var/list/id_access = regular_id.GetAccess()
-		if(ACCESS_BRIG in id_access)
+		if((ACCESS_BRIG in id_access) || (ACCESS_PERMABRIG in id_access))
 			if(COOLDOWN_FINISHED(src, spam_cooldown_time))
 				say("Brig clearance detected. Access granted.")
 				playsound(src, 'sound/machines/chime.ogg', 50, FALSE)

@@ -121,21 +121,22 @@
 		new_custom_price = chosen_price
 		to_chat(user, span_notice("[src] will now give things a [new_custom_price] cr tag."))
 
-/obj/item/universal_scanner/CtrlClick(mob/user)
-	. = ..()
+/obj/item/universal_scanner/item_ctrl_click(mob/user)
+	. = CLICK_ACTION_BLOCKING
 	if(scanning_mode == SCAN_SALES_TAG)
 		payments_acc = null
 		to_chat(user, span_notice("You clear the registered account."))
+		return CLICK_ACTION_SUCCESS
 
-/obj/item/universal_scanner/AltClick(mob/user)
-	. = ..()
+/obj/item/universal_scanner/click_alt(mob/living/user)
 	if(!scanning_mode == SCAN_SALES_TAG)
-		return
+		return CLICK_ACTION_BLOCKING
 	var/potential_cut = input("How much would you like to pay out to the registered card?","Percentage Profit ([round(cut_min*100)]% - [round(cut_max*100)]%)") as num|null
 	if(!potential_cut)
 		cut_multiplier = initial(cut_multiplier)
 	cut_multiplier = clamp(round(potential_cut/100, cut_min), cut_min, cut_max)
 	to_chat(user, span_notice("[round(cut_multiplier*100)]% profit will be received if a package with a barcode is sold."))
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/universal_scanner/examine(mob/user)
 	. = ..()
@@ -171,14 +172,39 @@
 	if(HAS_TRAIT(target, TRAIT_HIDDEN_EXPORT_VALUE))
 		to_chat(user, span_warning("Scanned [target], export value unknown."))
 		return
-	var/datum/export_report/ex = export_item_and_contents(target, dry_run = TRUE)
+	var/datum/export_report/report = export_item_and_contents(target, dry_run = TRUE)
 	var/price = 0
-	for(var/x in ex.total_amount)
-		price += ex.total_value[x]
-	if(price)
-		to_chat(user, span_notice("Scanned [target], value: <b>[price]</b> credits[target.contents.len ? " (contents included)" : ""]."))
+	for(var/exported_datum in report.total_amount)
+		price += report.total_value[exported_datum]
+
+	var/message = "Scanned [target]"
+	var/warning = FALSE
+	if(length(target.contents))
+		message = "Scanned [target] and its contents"
+		if(price)
+			message += ", total value: <b>[price]</b> credits"
+		else
+			message += ", no export values"
+			warning = TRUE
+		if(!report.all_contents_scannable)
+			message += " (Undeterminable value detected, final value may differ)"
+		message += "."
 	else
-		to_chat(user, span_warning("Scanned [target], no export value."))
+		if(!report.all_contents_scannable)
+			message += ", unable to determine value."
+			warning = TRUE
+		else if(price)
+			message += ", value: <b>[price]</b> credits."
+		else
+			message += ", no export value."
+			warning = TRUE
+	if(warning)
+		to_chat(user, span_warning(message))
+	else
+		to_chat(user, span_notice(message))
+
+	if(price)
+		playsound(src, 'sound/machines/terminal_select.ogg', 50, vary = TRUE)
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/scan_human = user

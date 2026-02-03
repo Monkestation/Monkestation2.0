@@ -43,6 +43,7 @@
 		/mob/living/simple_animal/hostile/illusion/mirage,
 		/mob/living/simple_animal/hostile/illusion/darkspawn,
 		/mob/living/simple_animal/hostile/illusion/darkspawn/psyche,
+		/mob/living/simple_animal/hostile/illusion/blob,
 		/mob/living/simple_animal/hostile/jungle,
 		/mob/living/simple_animal/hostile/jungle/leaper,
 		/mob/living/simple_animal/hostile/megafauna,
@@ -86,7 +87,6 @@
 		/mob/living/simple_animal/pet/gondola,
 		/mob/living/simple_animal/pet/gondola/gondolapod,
 		/mob/living/simple_animal/pet/gondola/virtual_domain,
-		/mob/living/simple_animal/soulscythe,
 
 		//MONKESTATION-SPECIFIC ENTRIES START
 		/mob/living/simple_animal/bot/buttbot,
@@ -106,6 +106,7 @@
 		/mob/living/simple_animal/hostile/feraltabby,
 		/mob/living/simple_animal/hostile/illusion/khan_warrior,
 		/mob/living/simple_animal/hostile/megafauna/wendigo/monkestation_override,
+		/mob/living/simple_animal/hostile/megafauna/wendigo/noportal,
 		/mob/living/simple_animal/hostile/syndicat,
 		/mob/living/simple_animal/hostile/syndicat/super,
 		/mob/living/simple_animal/pet/cat/breadcat/super,

@@ -45,6 +45,23 @@
 /datum/team/darkspawn/proc/remove_thrall(datum/mind/member)
 	thralls -= member
 
+/datum/team/darkspawn/antag_listing_entry()
+	var/list/parts = list()
+	parts += "<b>Darkspawns</b><br>"
+	parts += "<table cellspacing=5>"
+	for(var/datum/antagonist/antag_entry as anything in get_team_antags())
+		parts += antag_entry.antag_listing_entry()
+	parts += "</table>"
+	if(LAZYLEN(thralls))
+		parts += "<b>Darkspawn Thralls</b><br>"
+		parts += "<table cellspacing=5>"
+		for(var/datum/mind/thrall_mind in thralls)
+			var/datum/antagonist/thrall_darkspawn/thrall = thrall_mind.has_antag_datum(/datum/antagonist/thrall_darkspawn)
+			if(thrall)
+				parts += thrall.antag_listing_entry()
+		parts += "</table>"
+	return parts.Join()
+
 ////////////////////////////////////////////////////////////////////////////////////
 //-------------------------------Round end Stuff----------------------------------//
 ////////////////////////////////////////////////////////////////////////////////////
@@ -151,7 +168,7 @@
 		var/was_dead = FALSE
 		if(master.current.stat == DEAD)
 			was_dead = TRUE
-		master.current.revive(ADMIN_HEAL_ALL)
+		master.current.revive(ADMIN_HEAL_ALL, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 		if(was_dead)
 			to_chat(master.current, span_progenitor("Returning to Nullspace has revitalized your form!"))
 

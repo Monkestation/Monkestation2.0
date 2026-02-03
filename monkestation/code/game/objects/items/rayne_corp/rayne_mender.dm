@@ -47,7 +47,7 @@
 		/obj/item/reagent_containers/hypospray/medipen/salbutamol = 1,
 		/obj/item/storage/pill_bottle/multiver = 1
 	)
-	generate_items_inside(items_inside,src)
+	generate_items_inside(items_inside, src)
 
 /obj/item/storage/medkit/rayne/attack(mob/living/M, mob/living/carbon/human/user)
 	if(!user.can_read(src) || user.is_blind())

@@ -10,12 +10,16 @@
 	grab_ghost_when = CLONER_FRESH_CLONE // This helps with getting the objective for evil clones to display.
 	VAR_PRIVATE
 		static/list/image/cached_clone_images
+
+	auto_clone = TRUE
+
 	/// Am I producing evil clones?
 	var/datum/objective/evil_clone/evil_objective = null
 	/// Can my objective be changed?
 	var/locked = FALSE
 	/// The custom objective given by the traitor item.
 	var/custom_objective = null
+
 
 /obj/machinery/clonepod/experimental/Destroy()
 	clear_human_dummy(REF(src))
@@ -32,6 +36,9 @@
 				else
 					. += span_notice("Those cloned will have the objective: [evil_objective.explanation_text]")
 
+	if (auto_clone)
+		. += span_notice("This pod allows experimental autoprocessing when upgraded with better parts.")
+
 /obj/machinery/clonepod/experimental/RefreshParts()
 	. = ..()
 	if(!isnull(evil_objective) || !isnull(custom_objective))
@@ -39,7 +46,7 @@
 		speed_coeff += 1 // I still want basic parts to have base 100% speed.
 
 //Start growing a human clone in the pod!
-/obj/machinery/clonepod/experimental/growclone(clonename, ui, mutation_index, mindref, blood_type, datum/species/mrace, list/features, factions, list/quirks, datum/bank_account/insurance)
+/obj/machinery/clonepod/experimental/growclone(clonename, mutations, underwear, undershirt, socks, datum/dna/dna, mindref, factions, list/quirks)
 	if(panel_open || mess || attempting)
 		return NONE
 
@@ -49,7 +56,20 @@
 
 	var/mob/living/carbon/human/clonee = new /mob/living/carbon/human(src)
 
-	clonee.hardset_dna(ui, mutation_index, null, clonee.real_name, blood_type, mrace, features)
+	dna.copy_dna(clonee.dna, COPY_DNA_SE|COPY_DNA_SPECIES)
+
+	for(var/datum/mutation/mutation in mutations)
+		var/list/valid_sources = mutation.sources & GLOB.standard_mutation_sources
+		if(!length(valid_sources))
+			continue
+		clonee.dna.add_mutation(mutation, valid_sources)
+
+	clonee.domutcheck()
+	clonee.updateappearance(mutcolor_update = TRUE, mutations_overlay_update = TRUE)
+
+	clonee.underwear = underwear
+	clonee.undershirt = undershirt
+	clonee.socks = socks
 
 	if(efficiency > 2)
 		var/list/unclean_mutations = (GLOB.not_good_mutations|GLOB.bad_mutations)
@@ -192,7 +212,7 @@
 
 	light_color = LIGHT_COLOR_BLUE
 
-/obj/machinery/computer/prototype_cloning/Initialize()
+/obj/machinery/computer/prototype_cloning/Initialize(mapload)
 	. = ..()
 	updatemodules(TRUE)
 

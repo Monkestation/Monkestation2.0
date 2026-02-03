@@ -222,11 +222,8 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	//if we had the ability to brainwash, remove that now
 	REMOVE_TRAIT(src, TRAIT_BRAINWASHING, SKILLCHIP_TRAIT)
 	busy = FALSE
-	if(color_source)
-		qdel(color_source)
-		color_source = null
 	update_appearance()
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 
 /obj/item/proc/dye_item(dye_color, dye_key_override)
 	var/dye_key_selector = dye_key_override ? dye_key_override : dying_key

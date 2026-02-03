@@ -61,6 +61,7 @@
 	fire_colour = "#bd3f46"
 	desc = "A small lighting fixture."
 	light_type = /obj/item/light/bulb
+	power_consumption_rate = 5
 
 /obj/machinery/light/small/broken
 	status = LIGHT_BROKEN

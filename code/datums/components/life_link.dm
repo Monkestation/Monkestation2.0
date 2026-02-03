@@ -129,14 +129,14 @@
 	if(isnull(holder))
 		return
 	holder.icon_state = "hud[RoundHealth(host)]"
-	holder.pixel_y = mob_parent.get_cached_height() - world.icon_size
+	holder.pixel_z = mob_parent.get_cached_height() - world.icon_size
 
 /// Update our vital status on the medical hud
 /datum/component/life_link/proc/update_med_hud_status(mob/living/mob_parent)
 	var/image/holder = mob_parent.hud_list?[STATUS_HUD]
 	if(isnull(holder))
 		return
-	holder.pixel_y = mob_parent.get_cached_height() - world.icon_size
+	holder.pixel_z = mob_parent.get_cached_height() - world.icon_size
 	if(host.stat == DEAD || HAS_TRAIT(host, TRAIT_FAKEDEATH))
 		holder.icon_state = "huddead"
 	else

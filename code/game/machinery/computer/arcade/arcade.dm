@@ -656,7 +656,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	desc = "A picture of a blood-soaked medical cyborg flashes on the screen. The mediborg has a speech bubble that says, \"Put your hand in the machine if you aren't a <b>coward!</b>\""
 	icon_state = "arcade"
 	circuit = /obj/item/circuitboard/computer/arcade/amputation
-	/// does this machine work with slime people and oozlings
+	/// does this machine work with slime people and oozelings
 	var/works_with_slimes = TRUE
 
 /obj/machinery/computer/arcade/amputation/attack_tk(mob/user)

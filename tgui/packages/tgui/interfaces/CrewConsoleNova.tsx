@@ -1,5 +1,5 @@
 // THIS IS A NOVA SECTOR UI FILE
-import { BooleanLike } from 'common/react';
+import type { BooleanLike } from 'common/react';
 import { createSearch } from 'common/string';
 
 import { useBackend, useLocalState } from '../backend';
@@ -137,7 +137,6 @@ type CrewSensor = {
   brutedam: number;
   area: string | undefined;
   health: number;
-  can_track: BooleanLike;
   ref: string;
 };
 
@@ -206,9 +205,7 @@ const CrewTable = () => {
           </Button>
           <Input
             placeholder="Search for name..."
-            onInput={(e) =>
-              setSearchQuery((e.target as HTMLTextAreaElement).value)
-            }
+            onChange={(value) => setSearchQuery(value)}
           />
           <Button onClick={() => setfilterTracking(!filterTracking)}>
             {filterTracking ? (
@@ -264,7 +261,6 @@ const CrewTableEntry = (props: CrewTableEntryProps) => {
     burndam,
     brutedam,
     area,
-    can_track,
   } = sensor_data;
 
   return (
@@ -322,7 +318,6 @@ const CrewTableEntry = (props: CrewTableEntryProps) => {
       {!!link_allowed && (
         <Table.Cell collapsing>
           <Button
-            disabled={!can_track}
             onClick={() =>
               act('select_person', {
                 name: name,

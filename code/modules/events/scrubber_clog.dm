@@ -6,6 +6,9 @@
 	earliest_start = 5 MINUTES
 	category = EVENT_CATEGORY_JANITORIAL
 	description = "Harmless mobs climb out of a scrubber."
+	track = EVENT_TRACK_MUNDANE
+	tags = list(TAG_COMMUNAL, TAG_ALIEN, TAG_MAGICAL)
+	event_group = /datum/event_group/guests
 
 /datum/round_event/scrubber_clog
 	announce_when = 10
@@ -171,6 +174,8 @@
 	description = "Really dangerous mobs climb out of a scrubber."
 	min_wizard_trigger_potency = 3
 	max_wizard_trigger_potency = 6
+	track = EVENT_TRACK_MAJOR
+	tags = list(TAG_COMMUNAL, TAG_COMBAT, TAG_EXTERNAL, TAG_ALIEN)
 
 /datum/round_event/scrubber_clog/critical
 	maximum_spawns = 3
@@ -220,6 +225,7 @@
 		/mob/living/basic/mushroom,
 		/mob/living/simple_animal/hostile/retaliate/goose, //Janitors HATE geese.
 		/mob/living/simple_animal/pet/gondola,
-		/mob/living/basic/slugcat //Monkestation edit. Let the slugs come out of the pipes!
+		/mob/living/basic/slugcat, //Monkestation edit. Let the slugs come out of the pipes!
+		/mob/living/basic/beetmin
 	)
 	return pick(mob_list)

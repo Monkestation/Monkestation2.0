@@ -1,5 +1,5 @@
-import { Antagonist, Category } from '../base';
 import { multiline } from 'common/string';
+import { type Antagonist, Category } from '../base';
 
 const ParadoxClone: Antagonist = {
   key: 'paradoxclone',
@@ -10,7 +10,7 @@ const ParadoxClone: Antagonist = {
     Now you have to find your counterpart and kill and replace them.
     `,
   ],
-  category: Category.Midround,
+  category: Category.Ghost,
 };
 
 export default ParadoxClone;

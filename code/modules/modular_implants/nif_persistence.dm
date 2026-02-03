@@ -91,7 +91,7 @@
 	new_nif.rewards_points = persistence.stored_rewards_points
 
 	var/list/persistent_nifsoft_paths = list()
-	for(var/text as anything in splittext(persistence.persistent_nifsofts, "&"))
+	for(var/text in splittext(persistence.persistent_nifsofts, "&"))
 		var/datum/nifsoft/nifsoft_to_add = text2path(text)
 		if(!ispath(nifsoft_to_add, /datum/nifsoft) || !initial(nifsoft_to_add.able_to_keep))
 			continue

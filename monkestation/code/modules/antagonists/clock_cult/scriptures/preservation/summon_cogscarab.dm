@@ -3,10 +3,10 @@
 	desc = "Summon a Cogscarab shell, which will be possessed by fallen Ratvarian soldiers. Takes longer the more cogscarabs are alive. Requires 30 vitality."
 	tip = "Use Cogscarabs to fortify Reebe while the human servants convert and sabotage the crew."
 	button_icon_state = "Cogscarab"
-	power_cost = 500
+	power_cost = STANDARD_CELL_CHARGE * 0.5
 	vitality_cost = 30
 	invocation_time = 12 SECONDS
-	invocation_text = list("My fallen brothers,", "Now is the time we rise", "Protect our lord", "Achieve greatness!")
+	invocation_text = list("My fallen brothers,", "Now is the time we rise", "to protect our Lord", "and achieve greatness!")
 	category = SPELLTYPE_PRESERVATION
 	cogs_required = 5
 	invokers_required = 2

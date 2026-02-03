@@ -45,10 +45,11 @@ GLOBAL_LIST_EMPTY(cargo_marks)
 	spawned_marker.parent_item = src
 	marker_children += spawned_marker
 
-/obj/item/cargo_teleporter/AltClick(mob/user)
+/obj/item/cargo_teleporter/click_alt(mob/user)
 	if(length(marker_children))
 		for(var/obj/effect/decal/cleanable/cargo_mark/destroy_children in marker_children)
 			qdel(destroy_children)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/cargo_teleporter/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!COOLDOWN_FINISHED(src, use_cooldown))

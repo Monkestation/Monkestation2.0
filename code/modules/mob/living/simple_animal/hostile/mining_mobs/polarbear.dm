@@ -5,7 +5,7 @@
 	icon_state = "polarbear"
 	icon_living = "polarbear"
 	icon_dead = "polarbear_dead"
-	mob_biotypes = MOB_ORGANIC|MOB_BEAST
+	mob_biotypes = MOB_ORGANIC|MOB_BEAST|MOB_MINING
 	mouse_opacity = MOUSE_OPACITY_ICON
 	friendly_verb_continuous = "growls at"
 	friendly_verb_simple = "growl at"
@@ -58,7 +58,7 @@
 	pull_force = PULL_FORCE_DEFAULT
 	return ..()
 
-/mob/living/simple_animal/hostile/asteroid/polarbear/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
+/mob/living/simple_animal/hostile/asteroid/polarbear/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE, revival_policy = POLICY_REVIVAL)
 	. = ..()
 	if(!.)
 		return

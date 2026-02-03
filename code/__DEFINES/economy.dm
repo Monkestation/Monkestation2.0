@@ -12,13 +12,10 @@
 #define PAYCHECK_LOWER 25
 ///Paygrade for all regular crew not belonging to PAYGRADE_LOWER or PAYGRADE_COMMAND.
 #define PAYCHECK_CREW 50
+///Paygrade for NT Officials, not heads of staff but still high rankings.
+#define PAYCHECK_NANOTRASEN 75
 ///Paygrade for Heads of Staff.
 #define PAYCHECK_COMMAND 100
-
-//How many credits a player is charged if they print something from a departmental lathe they shouldn't have access to.
-#define LATHE_TAX 0
-//How much POWER a borg's cell is taxed if they print something from a departmental lathe.
-#define SILICON_LATHE_TAX 2000
 
 #define STATION_TARGET_BUFFER 25
 
@@ -44,6 +41,9 @@
 #define ACCOUNT_CAR_NAME "Cargo Budget"
 #define ACCOUNT_SEC "SEC"
 #define ACCOUNT_SEC_NAME "Defense Budget"
+
+#define IS_DEPARTMENTAL_CARD(card) (card in SSeconomy.dep_cards)
+#define IS_DEPARTMENTAL_ACCOUNT(account) (account in SSeconomy.departmental_accounts)
 
 #define NO_FREEBIES "commies go home"
 

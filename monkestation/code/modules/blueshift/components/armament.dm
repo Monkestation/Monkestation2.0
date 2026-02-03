@@ -104,9 +104,9 @@
 		data["card_name"] = inserted_card.name
 
 	data["armaments_list"] = list()
-	for(var/armament_category as anything in SSarmaments.entries)
+	for(var/armament_category in SSarmaments.entries)
 		var/list/armament_subcategories = list()
-		for(var/subcategory as anything in SSarmaments.entries[armament_category][CATEGORY_ENTRY])
+		for(var/subcategory in SSarmaments.entries[armament_category][CATEGORY_ENTRY])
 			var/list/subcategory_items = list()
 			for(var/datum/armament_entry/armament_entry as anything in SSarmaments.entries[armament_category][CATEGORY_ENTRY][subcategory])
 				if(products && !(armament_entry.type in products))
@@ -237,40 +237,17 @@
 /datum/component/armament/proc/check_access(mob/living/user)
 	if(!user)
 		return FALSE
-
-	if(!required_access)
-		return TRUE
-
-	if(issilicon(user))
-		if(ispAI(user))
-			return FALSE
-		return TRUE //AI can do whatever it wants
-
-	if(isAdminGhostAI(user))
+	if(!required_access || isAdminGhostAI(user))
 		return TRUE
 
 	//If the mob has the simple_access component with the requried access, the check passes
-	else if(SEND_SIGNAL(user, COMSIG_MOB_TRIED_ACCESS, src) & ACCESS_ALLOWED)
+	if(SEND_SIGNAL(user, COMSIG_MOB_TRIED_ACCESS, src) & ACCESS_ALLOWED)
+		return TRUE
+	var/list/player_access = user.get_access()
+	if(check_access_list(player_access))
 		return TRUE
 
-	//If the mob is holding a valid ID, they pass the access check
-	else if(check_access_obj(user.get_active_held_item()))
-		return TRUE
-
-	//if they are wearing a card that has access and are human, that works
-	else if(ishuman(user))
-		var/mob/living/carbon/human/human_user = user
-		if(check_access_obj(human_user.wear_id))
-			return TRUE
-
-	//if they're strange and have a hacky ID card as an animal
-	else if(isanimal(user))
-		var/mob/living/simple_animal/animal = user
-		if(check_access_obj(animal.access_card))
-			return TRUE
-
-/datum/component/armament/proc/check_access_obj(obj/item/id)
-	return check_access_list(id ? id.GetAccess() : null)
+	return FALSE
 
 /datum/component/armament/proc/check_access_list(list/access_list)
 	if(!islist(required_access)) //something's very wrong
@@ -370,11 +347,11 @@
 	data["self_paid"] = !!self_paid
 	data["armaments_list"] = list()
 
-	for(var/armament_category as anything in SSarmaments.entries)
+	for(var/armament_category in SSarmaments.entries)
 
 		var/list/armament_subcategories = list()
 
-		for(var/subcategory as anything in SSarmaments.entries[armament_category][CATEGORY_ENTRY])
+		for(var/subcategory in SSarmaments.entries[armament_category][CATEGORY_ENTRY])
 			var/list/subcategory_items = list()
 			for(var/datum/armament_entry/armament_entry as anything in SSarmaments.entries[armament_category][CATEGORY_ENTRY][subcategory])
 				if(products && !(armament_entry.type in products))

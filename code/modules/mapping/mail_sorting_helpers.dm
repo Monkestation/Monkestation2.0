@@ -7,7 +7,7 @@
 	..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/effect/mapping_helpers/mail_sorting/LateInitialize()
+/obj/effect/mapping_helpers/mail_sorting/LateInitialize(mapload_arg)
 	var/obj/structure/disposalpipe/sorting/mail/mail_sorter = locate(/obj/structure/disposalpipe/sorting/mail) in loc
 	if(mail_sorter)
 		mail_sorter.sortTypes |= sort_type

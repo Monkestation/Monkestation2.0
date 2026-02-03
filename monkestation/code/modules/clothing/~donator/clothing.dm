@@ -19,7 +19,6 @@
 	worn_icon = 'monkestation/icons/donator/mob/clothing/custom_w.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	supports_variations_flags = NONE
 
 // Donation reward for Thedragmeme
 // might make it have some flavour functionality in future, a'la rewritable piece of paper - JOKES ON YOU I'M MAKING IT DRAW
@@ -128,7 +127,6 @@
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 
-	supports_variations_flags = NONE
 
 // Donation reward for Thedragmeme
 /obj/item/clothing/under/syndicate/tacticool/black
@@ -137,7 +135,6 @@
 	icon = 'monkestation/icons/donator/obj/clothing/uniform.dmi'
 	icon_state = "black_turtleneck"
 	worn_icon = 'monkestation/icons/donator/mob/clothing/uniform.dmi'
-	supports_variations_flags = NONE
 	can_adjust = FALSE //There wasnt an adjustable sprite anyways
 	armor_type = /datum/armor/tacticool_black
 	has_sensor = HAS_SENSORS	//Actually has sensors, to balance the new lack of armor
@@ -162,7 +159,6 @@
 	icon = 'monkestation/icons/donator/obj/clothing/shoes.dmi'
 	worn_icon = 'monkestation/icons/donator/mob/clothing/feet.dmi'
 	icon_state = "clown_shoes_cute"
-	supports_variations_flags = NONE
 	resistance_flags = FIRE_PROOF
 
 // Donation reward for Bloodrite
@@ -172,7 +168,6 @@
 	icon = 'monkestation/icons/donator/obj/clothing/uniform.dmi'
 	worn_icon = 'monkestation/icons/donator/mob/clothing/uniform.dmi'
 	icon_state = "clowndress"
-	supports_variations_flags = NONE
 	resistance_flags = FIRE_PROOF
 
 // Donation reward for Bloodrite
@@ -184,7 +179,6 @@
 	icon_state = "cute_mask"
 	inhand_icon_state = null
 	dye_color = "clown"
-	supports_variations_flags = NONE
 	clothing_flags = MASKINTERNALS
 	w_class = WEIGHT_CLASS_SMALL
 	flags_cover = MASKCOVERSEYES
@@ -219,7 +213,6 @@
 	animal_sounds_alt = list("Join us!", "Wear the mask.")
 	cursed = FALSE
 
-	supports_variations_flags = NONE
 	clothing_flags = MASKINTERNALS | VOICEBOX_DISABLED | VOICEBOX_TOGGLABLE
 	flags_inv = HIDEFACIALHAIR | HIDESNOUT
 	visor_flags_inv = HIDEFACIALHAIR | HIDESNOUT
@@ -241,7 +234,6 @@
 	worn_icon = 'monkestation/icons/donator/mob/clothing/large-worn-icons/32x64/head.dmi'
 	flags_cover = HEADCOVERSEYES
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
-	supports_variations_flags = NONE
 
 // Donation reward for Random516
 /obj/item/clothing/gloves/fingerless/blutigen_wraps
@@ -259,7 +251,6 @@
 	icon_state = "blutigen_kimono"
 	worn_icon = 'monkestation/icons/donator/mob/clothing/suit.dmi'
 	body_parts_covered = CHEST|GROIN|ARMS
-	supports_variations_flags = NONE
 
 /obj/item/clothing/gloves/ring/hypno
 	var/list/spans = list()
@@ -270,6 +261,25 @@
 	name = "hypnodemon's ring"
 	desc = "A pallid, softly desaturated-looking gold ring that doesn't look like it belongs. It's hard to put one's finger on why it feels at odds with the world around it - the shine coming off it looks like it could be a mismatch with the lighting in the room, or it could be that it seems to glint and twinkle occasionally when there's no obvious reason for it to - though only when you're not really looking."
 	spans = list("hypnophrase")
+	icon = 'monkestation/code/modules/donator/icons/obj/misc.dmi'
+	icon_state = "ihateERROR"
+	body_parts_covered = null
+	worn_icon = null
+	inhand_icon_state = null
+	lefthand_file = 'icons/mob/inhands/clothing/gloves_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/clothing/gloves_righthand.dmi'
+
+/obj/item/clothing/gloves/ring/hypno/coffeepot/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NO_WORN_ICON, ABSTRACT_ITEM_TRAIT)
+
+/obj/item/clothing/gloves/ring/hypno/coffeepot/examine_more(mob/user)
+	. = ..()
+	. += "...you stare deeply into the ring... [span_hypnophrase("<i>you witness transcendental apparitions beyond your mortal comprehension...</i>")] [span_extremelybig(span_red("<b>ERROR</b>"))]"
+	if(ishuman(user))
+		var/mob/living/carbon/human/human_user = user
+		human_user.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10, 190)
+		human_user.add_mood_event("error_insanity", /datum/mood_event/gates_of_mansus)
 
 /datum/action/item_action/hypno_whisper
 	name = "Hypnotic Whisper"
@@ -295,7 +305,6 @@
 
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT //about as warm as an ushanka
 	actions_types = list(/datum/action/item_action/adjust)
-	supports_variations_flags = NONE
 	var/goggles = FALSE
 
 /obj/item/clothing/head/avipilot/proc/adjust_goggles(mob/living/carbon/user)
@@ -337,7 +346,6 @@
 	icon = 'monkestation/icons/donator/obj/clothing/uniform.dmi'
 	icon_state = "silver_dress"
 	worn_icon = 'monkestation/icons/donator/mob/clothing/uniform.dmi'
-	supports_variations_flags = NONE
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 
 // Donation reward for NetraKyram
@@ -355,7 +363,6 @@
 	icon = 'monkestation/icons/donator/obj/clothing/shoes.dmi'
 	icon_state = "silver_dress_boots"
 	worn_icon = 'monkestation/icons/donator/mob/clothing/feet.dmi'
-	supports_variations_flags = NONE
 
 /****************LEGACY REWARDS***************/
 // Donation reward for inferno707
@@ -443,7 +450,6 @@
 	icon_state = "darkcarapace"
 	blood_overlay_type = "armor"
 	dog_fashion = /datum/dog_fashion/back
-	supports_variations_flags = NONE
 	armor_type = /datum/armor/none
 
 /obj/item/clothing/suit/armor/vest/darkcarapace/Initialize(mapload)
@@ -460,7 +466,6 @@
 	var/c_color_index = 1
 	var/list/possible_colors = list("off", "blue", "red")
 	actions_types = list(/datum/action/item_action/hheart)
-	supports_variations_flags = NONE
 
 /obj/item/clothing/mask/hheart/Initialize(mapload)
 	. = ..()
@@ -502,7 +507,6 @@
 	hoodtype = /obj/item/clothing/head/hooded/cloakhood/zuliecloak
 	body_parts_covered = CHEST|GROIN|ARMS
 	slot_flags = ITEM_SLOT_OCLOTHING | ITEM_SLOT_NECK //it's a cloak. it's cosmetic. so why the hell not? what could possibly go wrong?
-	supports_variations_flags = NONE
 
 /obj/item/clothing/head/hooded/cloakhood/zuliecloak
 	name = "NT special issue"
@@ -511,7 +515,6 @@
 	icon = 'monkestation/icons/donator/obj/clothing/cloaks.dmi'
 	worn_icon = 'monkestation/icons/donator/mob/clothing/neck.dmi'
 	flags_inv = null
-	supports_variations_flags = NONE
 
 // Donation reward for Lyricalpaws
 /obj/item/clothing/neck/cloak/healercloak
@@ -528,7 +531,6 @@
 	icon = 'monkestation/icons/donator/obj/clothing/uniform.dmi'
 	icon_state = "lannese"
 	worn_icon = 'monkestation/icons/donator/mob/clothing/uniform.dmi'
-	supports_variations_flags = NONE
 	inhand_icon_state = "firefighter"
 	can_adjust = TRUE
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
@@ -563,7 +565,6 @@
 	icon_state = "luchador"
 	worn_icon_state = "luchador"
 	clothing_flags = MASKINTERNALS
-	supports_variations_flags = NONE
 
 // Donation Reward for Grand Vegeta
 /obj/item/clothing/under/mikubikini
@@ -823,7 +824,6 @@
 	icon = 'monkestation/icons/donator/obj/clothing/suits.dmi'
 	worn_icon = 'monkestation/icons/donator/mob/clothing/suit.dmi'
 	body_parts_covered = CHEST|LEGS|ARMS
-	supports_variations_flags = NONE
 
 //Donation reward for Hacker T.Dog
 /obj/item/clothing/head/nanotrasen_consultant/hubert
@@ -877,6 +877,10 @@
 	worn_icon = 'monkestation/icons/donator/mob/clothing/neck.dmi'
 	icon_state = "cross"
 
+/obj/item/clothing/neck/cross/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/bane_inducing, /datum/material/silver)
+
 // Donation reward for gamerguy14948
 /obj/item/storage/belt/fannypack/occult
 	name = "trinket belt"
@@ -893,7 +897,6 @@
 	icon = 'monkestation/icons/donator/obj/clothing/uniform.dmi'
 	worn_icon = 'monkestation/icons/donator/mob/clothing/uniform.dmi'
 	icon_state = "occultoutfit"
-	supports_variations_flags = NONE
 
 // Donation reward for gamerguy14948
 /obj/item/clothing/head/hooded/occult
@@ -902,7 +905,6 @@
 	icon = 'monkestation/icons/donator/obj/clothing/hats.dmi'
 	worn_icon = 'monkestation/icons/donator/mob/clothing/head.dmi'
 	icon_state = "occulthood"
-	supports_variations_flags = NONE
 
 // Donation reward for gamerguy14948
 /obj/item/clothing/suit/hooded/occult
@@ -912,7 +914,6 @@
 	worn_icon = 'monkestation/icons/donator/mob/clothing/suit.dmi'
 	icon_state = "occultcoat"
 	hoodtype = /obj/item/clothing/head/hooded/occult
-	supports_variations_flags = NONE
 
 // Donation reward for Octus
 /obj/item/clothing/mask/breath/vox/octus
@@ -960,9 +961,6 @@
 	add_fingerprint(user)
 
 /obj/item/card/fuzzy_license/attackby(obj/item/used, mob/living/user, params)
-	if(user.ckey != "fuzlet")
-		return
-
 	if(istype(used, /obj/item/pen) || istype(used, /obj/item/toy/crayon))
 		var/choice = input(user, "Select the license type", "License Type Selection") as null|anything in possible_types
 		if(!isnull(choice))
@@ -1021,7 +1019,6 @@
 	icon = 'monkestation/icons/donator/obj/clothing/masks.dmi'
 	worn_icon = 'monkestation/icons/donator/mob/clothing/mask.dmi'
 	icon_state = "larpswat"
-	supports_variations_flags = NONE
 
 // Donation reward for Cimika, on behalf of tf4
 /obj/item/clothing/neck/fishpendant
@@ -1030,6 +1027,10 @@
 	icon = 'monkestation/icons/donator/obj/clothing/necklaces.dmi'
 	worn_icon = 'monkestation/icons/donator/mob/clothing/neck.dmi'
 	icon_state = "fishpendant"
+
+/obj/item/clothing/neck/fishpendant/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/bane_inducing, /datum/material/silver)
 
 // Donation reward for Weredoggo
 /obj/item/hairbrush/tactical
@@ -1057,9 +1058,12 @@
 	worn_icon = 'monkestation/icons/donator/mob/clothing/eyes.dmi'
 
 //Donation reward for Konstyantyn
-/obj/item/clothing/accessory/badge/holo/jade
+/obj/item/clothing/accessory/badge/jade
 	name = "jade holobadge"
 	desc = "A strangely green holobadge. 'Lieutenant Uriah' is stamped onto it, above the letters JS."
+	access_required = null
+	badge_string = "Lieutenant"
+
 	icon = 'monkestation/icons/donator/obj/custom.dmi'
 	worn_icon = 'monkestation/icons/donator/mob/clothing/custom_w.dmi'
 	icon_state = "greenbadge"
@@ -1138,6 +1142,10 @@
 /obj/item/clothing/accessory/hypno_watch/examine()
 	. = ..()
 	. += span_boldwarning("Who knows what it could be used for?")
+
+/obj/item/clothing/accessory/hypno_watch/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/bane_inducing, /datum/material/gold) //maaaaan i hate that i have to do this
 
 // Donation reward for BoisterousBeebz
 
@@ -1227,7 +1235,6 @@
 	icon = 'monkestation/icons/donator/obj/clothing/hats.dmi'
 	worn_icon = 'monkestation/icons/donator/mob/clothing/head.dmi'
 	icon_state = "long-coat-hood"
-	supports_variations_flags = NONE
 
 // Donation reward for Sigmar Alkahest
 /obj/item/clothing/suit/hooded/sigmarcoat
@@ -1237,7 +1244,6 @@
 	worn_icon = 'monkestation/icons/donator/mob/clothing/suit.dmi'
 	icon_state = "long-coat"
 	hoodtype = /obj/item/clothing/head/hooded/sigmarcoat
-	supports_variations_flags = NONE
 
 //reward for SomeRandomOwl
 /obj/item/clothing/head/costume/strigihat
@@ -1298,11 +1304,12 @@
 	name = "silver jeans"
 	desc = "A pair of jeans for those with a commanding presence. Made of shining, silver denim, it's interwoven with a special alloy that provides extra protection and style."
 	icon = 'monkestation/icons/donator/obj/clothing/uniform.dmi'
-	worn_icon = 'monkestation/icons/donator/mob/clothing/uniform_digi.dmi'
+	worn_icon = 'monkestation/icons/donator/mob/clothing/suit.dmi'
 	lefthand_file = 'monkestation/icons/donator/mob/inhands/donator_left.dmi'
 	righthand_file = 'monkestation/icons/donator/mob/inhands/donator_right.dmi'
 	icon_state = "lt3_jeans"
 	inhand_icon_state = "lt3_jeans"
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /obj/item/clothing/gloves/skyy
 	name = "charcoal fingerless gloves"

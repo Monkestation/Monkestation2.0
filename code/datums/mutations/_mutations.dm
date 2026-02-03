@@ -239,3 +239,7 @@
 		valid_chrom_list += "Power"
 	if(energy_coeff != MUTATION_COEFFICIENT_UNMODIFIABLE)
 		valid_chrom_list += "Energetic"
+
+/// Returns an "ID" string, used to detect if two mutations are duplicates, even if they're separate instances.
+/datum/mutation/proc/id_string()
+	return "[alias][chromosome_name]"

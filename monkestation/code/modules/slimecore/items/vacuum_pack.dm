@@ -169,10 +169,10 @@
 	else
 		return ..()
 
-/obj/item/vacuum_pack/MouseDrop(obj/over_object)
+/obj/item/vacuum_pack/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
 	var/mob/wearer = loc
-	if(istype(wearer) && istype(over_object, /atom/movable/screen/inventory/hand))
-		var/atom/movable/screen/inventory/hand/hand = over_object
+	if(istype(wearer) && istype(over, /atom/movable/screen/inventory/hand))
+		var/atom/movable/screen/inventory/hand/hand = over
 		wearer.putItemFromInventoryInHandIfPossible(src, hand.held_index)
 	return ..()
 
@@ -268,6 +268,9 @@
 	selected_creature = choosing_creature
 
 /obj/item/vacuum_nozzle/proc/select_spawned_mob(mob/user)
+	if(!pack.linked)
+		user.balloon_alert(user, "needs to be linked to biomass recycler!")
+		return
 	var/list/items = list()
 	var/list/item_names = list()
 
@@ -419,7 +422,7 @@
 		user.visible_message(span_warning("[user] sucks [living_target] into their [pack]!"), span_notice("You successfully suck [living_target] into your [src] and recycle it."))
 		qdel(living_target)
 		playsound(user, 'sound/machines/juicer.ogg', 50, TRUE)
-		pack.linked.use_power(500)
+		pack.linked.use_energy(500)
 		pack.linked.stored_matter += pack.linked.cube_production * pack.linked.recyclable_types[living_target.type]
 		return TRUE
 
@@ -606,7 +609,7 @@
 		do_suck(chosen, user)
 
 /obj/item/vacuum_nozzle/proc/extra_selection_checks(mob/living/user, turf/target_turf)
-	return user.get_active_held_item() == src && !user.incapacitated() && CAN_THEY_SEE(user, target_turf)
+	return user.get_active_held_item() == src && !user.incapacitated() && CAN_THEY_SEE(target_turf, user)
 
 /obj/item/disk/vacuum_upgrade
 	name = "vacuum pack upgrade disk"

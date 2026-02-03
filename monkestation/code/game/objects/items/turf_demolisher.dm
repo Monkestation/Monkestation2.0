@@ -25,16 +25,16 @@
 	var/resonance_range = 0
 	COOLDOWN_DECLARE(recharge)
 
-/obj/item/turf_demolisher/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(!proximity_flag || !isturf(target) || (user.istate & ISTATE_HARM))
-		return
+/obj/item/turf_demolisher/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!isturf(interacting_with) || (user.istate & ISTATE_HARM))
+		return NONE
 
-	if(!check_breakble(target, user))
-		return
+	if(!check_breakble(interacting_with, user))
+		return ITEM_INTERACT_BLOCKING
 
-	if(try_demolish(target, user))
-		return
+	if(try_demolish(interacting_with, user))
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
 /obj/item/turf_demolisher/proc/check_breakble(turf/attacked_turf, mob/living/user, silent = FALSE, ignore_cooldown = FALSE)
 	if(recharge_time && !ignore_cooldown && !COOLDOWN_FINISHED(src, recharge))
@@ -141,5 +141,5 @@
 		return FALSE
 
 	if(GLOB.clock_ark && get_dist(our_turf, get_turf(GLOB.clock_ark)) <= ARK_TURF_DESTRUCTION_BLOCK_RANGE)
-		balloon_alert(user, "A near by energy source is interfering \the [src]!")
+		balloon_alert(user, "a near by energy source is interfering \the [src]!")
 		return FALSE

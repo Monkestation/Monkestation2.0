@@ -23,7 +23,7 @@
 	..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/door_buttons/LateInitialize()
+/obj/machinery/door_buttons/LateInitialize(mapload_arg)
 	findObjsByTag()
 
 /obj/machinery/door_buttons/emag_act(mob/user, obj/item/card/emag/emag_card)
@@ -55,7 +55,7 @@
 		if(A.idSelf == idSelf)
 			controller = A
 			break
-	for(var/obj/machinery/door/airlock/I in GLOB.airlocks)
+	for(var/obj/machinery/door/airlock/I as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/airlock))
 		if(I.id_tag == idDoor)
 			door = I
 			break
@@ -81,7 +81,7 @@
 					controller.cycleClose(door)
 		else
 			controller.onlyClose(door)
-		use_power(active_power_usage)
+		use_energy(active_power_usage)
 		addtimer(CALLBACK(src, PROC_REF(not_busy)), 2 SECONDS)
 
 /obj/machinery/door_buttons/access_button/proc/not_busy()
@@ -243,7 +243,7 @@
 			lostPower = FALSE
 
 /obj/machinery/door_buttons/airlock_controller/findObjsByTag()
-	for(var/obj/machinery/door/door as anything in GLOB.airlocks)
+	for(var/obj/machinery/door/door as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door))
 		if(door.id_tag == idInterior)
 			interiorAirlock = door
 		else if(door.id_tag == idExterior)

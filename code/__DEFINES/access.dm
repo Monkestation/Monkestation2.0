@@ -35,9 +35,9 @@
 /// Access used for the Head of Personnel's personal quarters in mapping, as well as the security console and other HoP-related things.
 #define ACCESS_HOP "hop"
 /// Access for Blueshield to their office and locker, as well as access to the NT Representitive Office
-#define ACCESS_BLUESHIELD "blueshield" ///monkestation edit
+#define ACCESS_BLUESHIELD "blueshield" //monkestation edit
 /// Access for NT Rep to their office and locker, as well as access to the Blueshield Office
-#define ACCESS_NT_REPRESENTATVE "nt_rep" ///monkestation edit
+#define ACCESS_NT_REPRESENTATVE "nt_rep" //monkestation edit
 
 /// Security's General Access. In mapping, grants access to spaces such as to the "meeting room" or firing range, as well as being the general access that Tablet/Computer Programs check for "heads". Also unlocks other types of security equipment.
 #define ACCESS_SECURITY "security"
@@ -55,8 +55,6 @@
 #define ACCESS_HOS "hos"
 /// Access for the detective to get into their office, the medical data console, and some other detective-related stuff.
 #define ACCESS_DETECTIVE "detective"
-/// Access for the brig physician to get basic access to medical tools, but not all encompassing access to medical under normal manning.
-#define ACCESS_BRIG_PHYSICIAN "brig_physician" /// MONKESTATION EDIT
 
 /// Engineering General Access, grants access to the standard parts of engineering (as well as the Supermatter and related equipment).
 #define ACCESS_ENGINEERING "engineering"
@@ -188,6 +186,9 @@
 #define ACCESS_CENT_BAR "cent_bar"
 /// Special Ops. Captain's display case, Marauder and Seraph mechs.
 #define ACCESS_CENT_SPECOPS 188 ///Remind me to separate to captain, centcom, and syndicate mech access later -SonofSpace
+
+#define ACCESS_UNION "Union"
+#define ACCESS_UNION_LEADER "Union Leader"
 
 /// - - - ANTAGONIST - - -
 /// SYNDICATE
@@ -336,7 +337,6 @@
 	ACCESS_VIROLOGY, \
 	ACCESS_WEAPONS, \
 	ACCESS_XENOBIOLOGY, \
-	ACCESS_BRIG_PHYSICIAN, \
 )  // monkestation edit: add permabrig-only access.  also added brig physician
 
 /// Command staff/secure accesses, think bridge/armoury, ai_upload, notably access to modify ID cards themselves. Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_COMMAND)
@@ -466,7 +466,6 @@
 	ACCESS_PSYCHOLOGY, \
 	ACCESS_SURGERY, \
 	ACCESS_VIROLOGY, \
-	ACCESS_BRIG_PHYSICIAN, \
 )
 //MONKESTATION ADDITION: Added brig physcian access to above
 
@@ -593,7 +592,6 @@
 	/obj/item/modular_computer/pda/warden = list(REGION_SECURITY), \
 	/obj/item/modular_computer/pda/janitor = list(REGION_GENERAL), \
 	/obj/item/modular_computer/pda/science = list(REGION_RESEARCH), \
-	/obj/item/modular_computer/pda/heads/quartermaster = list(REGION_COMMAND), \
 	/obj/item/modular_computer/pda/heads/hop = list(REGION_COMMAND), \
 	/obj/item/modular_computer/pda/heads/hos = list(REGION_COMMAND), \
 	/obj/item/modular_computer/pda/heads/cmo = list(REGION_COMMAND), \

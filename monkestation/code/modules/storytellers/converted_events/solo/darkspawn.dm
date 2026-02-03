@@ -5,6 +5,7 @@
 	antag_datum = /datum/antagonist/darkspawn
 	typepath = /datum/round_event/antagonist/solo/darkspawn
 	shared_occurence_type = SHARED_HIGH_THREAT
+	repeated_mode_adjust = TRUE
 	restricted_roles = list(
 		JOB_AI,
 		JOB_CAPTAIN,
@@ -19,8 +20,11 @@
 		JOB_CHIEF_ENGINEER,
 		JOB_RESEARCH_DIRECTOR,
 		JOB_SECURITY_ASSISTANT,
+		JOB_NANOTRASEN_REPRESENTATIVE,
+		JOB_BLUESHIELD,
+		JOB_BRIDGE_ASSISTANT,
 	)
-	required_enemies = 3
+	required_enemies = 5
 	enemy_roles = list(
 		JOB_CAPTAIN,
 		JOB_DETECTIVE,
@@ -30,6 +34,7 @@
 		JOB_CHAPLAIN,
 		JOB_CHIEF_ENGINEER,
 		JOB_SECURITY_ASSISTANT,
+		JOB_BRIG_PHYSICIAN,
 	)
 	base_antags = 2
 	maximum_antags = 4
@@ -38,7 +43,7 @@
 	//title_icon = "darkspawn"
 	earliest_start = 0 SECONDS
 	denominator = 25 //slightly more people for additional darkspawns
-	weight = 8
+	weight = 4
 	max_occurrences = 1
 
 /datum/round_event/antagonist/solo/darkspawn

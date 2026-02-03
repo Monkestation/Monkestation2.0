@@ -1,6 +1,6 @@
 /datum/round_event_control/antagonist/solo/traitor
 	antag_flag = ROLE_SYNDICATE_INFILTRATOR
-	tags = list(TAG_COMBAT, TAG_CREW_ANTAG)
+	tags = list(TAG_COMBAT, TAG_CREW_ANTAG, TAG_MUNDANE)
 	antag_datum = /datum/antagonist/traitor/infiltrator
 	protected_roles = list(
 		JOB_CAPTAIN,
@@ -15,8 +15,8 @@
 		JOB_SECURITY_OFFICER,
 		JOB_WARDEN,
 		JOB_SECURITY_ASSISTANT,
-		JOB_BRIG_PHYSICIAN,
 		JOB_BRIDGE_ASSISTANT,
+		JOB_BRIG_PHYSICIAN,
 	)
 	restricted_roles = list(
 		JOB_AI,

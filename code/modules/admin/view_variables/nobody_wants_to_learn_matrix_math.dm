@@ -4,7 +4,7 @@
  *
  * More than just a completely true statement, this datum is created as a tgui interface
  * allowing you to modify each vector until you know what you're doing.
- * Much like filteriffic, 'nobody wants to learn matrix math' is meant for developers like you and I
+ * Much like filterrific, 'nobody wants to learn matrix math' is meant for developers like you and I
  * to implement interesting matrix transformations without the hassle if needing to know... algebra? Damn, i'm stupid.
  */
 /datum/nobody_wants_to_learn_matrix_math
@@ -42,7 +42,7 @@
 	data["pixelated"] = target.appearance_flags & PIXEL_SCALE
 	return data
 
-/datum/nobody_wants_to_learn_matrix_math/ui_act(action, list/params)
+/datum/nobody_wants_to_learn_matrix_math/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

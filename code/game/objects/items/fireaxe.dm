@@ -66,7 +66,7 @@ GLOBAL_DATUM(bridge_axe, /obj/item/fireaxe)
 		return
 	if(target.resistance_flags & INDESTRUCTIBLE)
 		return
-	if(istype(target, /obj/structure/window) || istype(target, /obj/structure/grille))
+	if(istype(target, /obj/structure/window) || istype(target, /obj/structure/grille) || istype(target, /obj/structure/window_sill))
 		target.atom_destruction("fireaxe")
 
 /*

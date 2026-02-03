@@ -2,21 +2,21 @@
  *	# Thaumaturgy
  *
  *	Level 1 - One shot bloodbeam spell
- *	Level 2 - Bloodbeam spell - Gives them a Blood shield until they use Bloodbeam
- *	Level 3 - Bloodbeam spell that breaks open lockers/doors - Gives them a Blood shield until they use Bloodbeam
- *	Level 4 - Bloodbeam spell that breaks open lockers/doors + double damage to victims - Gives them a Blood shield until they use Bloodbeam
- *	Level 5 - Bloodbeam spell that breaks open lockers/doors + double damage & steals blood - Gives them a Blood shield until they use Bloodbeam
+ *	Level 3 - Bloodbeam spell - Gives them a Blood shield until they use Bloodbeam
+ *	Level 4 - Bloodbeam spell that breaks open lockers - Gives them a Blood shield until they use Bloodbeam
+ *	Level 5 - Bloodbeam spell that breaks open lockers + double damage to victims - Gives them a Blood shield until they use Bloodbeam
+ *	Level 6 - Bloodbeam spell that breaks open lockers + double damage & steals blood - Gives them a Blood shield until they use Bloodbeam
  */
 
-#define BLOOD_SHIELD_BLOCK_CHANCE 75
+#define BLOOD_SHIELD_BLOCK_CHANCE 50
 #define BLOOD_SHIELD_BLOOD_COST 15
 #define THAUMATURGY_BLOOD_COST_PER_CHARGE 5
 #define THAUMATURGY_COOLDOWN_PER_CHARGE 5 SECONDS
 
-#define THAUMATURGY_SHIELD_LEVEL 2
-#define THAUMATURGY_DOOR_BREAK_LEVEL 3
-#define THAUMATURGY_EXTRA_DAMAGE_LEVEL 4
-#define THAUMATURGY_BLOOD_STEAL_LEVEL 5
+#define THAUMATURGY_SHIELD_LEVEL 3
+#define THAUMATURGY_CLOSET_BREAK_LEVEL 4
+#define THAUMATURGY_EXTRA_DAMAGE_LEVEL 5
+#define THAUMATURGY_BLOOD_STEAL_LEVEL 6
 
 /datum/action/cooldown/bloodsucker/targeted/tremere/thaumaturgy
 	name = "Thaumaturgy"
@@ -61,8 +61,8 @@
 	. += "Fire a slow seeking blood bolt at your enemy.<br>"
 	if(level_current >= THAUMATURGY_SHIELD_LEVEL)
 		. += "Right click the button to create a blood shield<br>"
-	if(level_current >= THAUMATURGY_DOOR_BREAK_LEVEL)
-		. += "The projectile will open doors/lockers"
+	if(level_current >= THAUMATURGY_CLOSET_BREAK_LEVEL)
+		. += "The projectile will open lockers"
 	if(level_current >= THAUMATURGY_BLOOD_STEAL_LEVEL)
 		. += " and steal blood from the target"
 
@@ -74,15 +74,14 @@
 	. += "You can use Blood blast [get_max_charges()] times before needing to recast Thaumaturgy. After each shot you will have to wait [DisplayTimeText(get_shot_cooldown())]."
 	. += "At level [THAUMATURGY_SHIELD_LEVEL] it will grant you a shield that will block [BLOOD_SHIELD_BLOCK_CHANCE]% of incoming damage, costing you [THAUMATURGY_BLOOD_COST_PER_CHARGE] blood each time."
 	. += "To activate the shield, right click the action button."
-	. += "At level [THAUMATURGY_DOOR_BREAK_LEVEL], it will also break open lockers and doors."
+	. += "At level [THAUMATURGY_CLOSET_BREAK_LEVEL], it will also break open lockers."
 	. += "At level [THAUMATURGY_BLOOD_STEAL_LEVEL], it will also steal blood to feed yourself, just as much as each charge costs."
 	. += "The cooldown increases by [DisplayTimeText(THAUMATURGY_COOLDOWN_PER_CHARGE)] per charge used, and each blast costs [THAUMATURGY_BLOOD_COST_PER_CHARGE] blood."
 
 /datum/action/cooldown/bloodsucker/targeted/tremere/thaumaturgy/ActivatePower(mob/target)
-	..()
+	. = ..()
 	charges = get_max_charges()
 	toggle_blood_shield(TRUE)
-	return TRUE
 
 /datum/action/cooldown/bloodsucker/targeted/tremere/thaumaturgy/proc/toggle_blood_shield(toggle)
 	if(level_current < THAUMATURGY_SHIELD_LEVEL)
@@ -94,7 +93,7 @@
 	if(blood_shield)
 		var/shield = blood_shield?.resolve()
 		owner.visible_message(
-			span_warning("[owner]\'s [blood_shield] loses its form and disappears into [owner.p_their()] hands!"),
+			span_warning("[owner]\'s [shield] loses its form and disappears into [owner.p_their()] hands!"),
 			span_warning("We unform our Blood shield!"),
 			span_hear("You hear liquids sloshing around."),
 		)
@@ -199,13 +198,11 @@
 	// autotarget if we aim at a turf
 	if(isturf(target))
 		var/list/targets = list()
-		for(var/mob/living/possible_target as anything in orange(1, target))
-			if(!ismob(possible_target))
+		for(var/mob/living/possible_target in range(1, target) - user)
+			if(possible_target.stat == DEAD)
 				continue
-			if(possible_target == user)
-				continue
-			var/datum/antagonist/vassal/vassals = IS_VASSAL(possible_target)
-			if(length(bloodsuckerdatum_power?.vassals) && vassals && (vassals in bloodsuckerdatum_power?.vassals))
+			var/datum/antagonist/vassal/vassal = IS_VASSAL(possible_target)
+			if(vassal && (vassal in bloodsuckerdatum_power?.vassals))
 				continue
 			targets += possible_target
 		if(length(targets))
@@ -238,28 +235,20 @@
 	var/datum/action/cooldown/bloodsucker/targeted/tremere/thaumaturgy/bloodsucker_power = power_ref?.resolve()
 	if(!bloodsucker_power)
 		return ..()
-	if(istype(target, /obj/structure/closet) && bloodsucker_power.level_current >= THAUMATURGY_DOOR_BREAK_LEVEL)
-		var/obj/structure/closet/hit_closet = target
-		if(hit_closet)
+	if(bloodsucker_power.level_current >= THAUMATURGY_CLOSET_BREAK_LEVEL)
+		if(istype(target, /obj/structure/closet))
+			var/obj/structure/closet/hit_closet = target
 			hit_closet.welded = FALSE
 			hit_closet.locked = FALSE
 			hit_closet.broken = TRUE
 			hit_closet.update_appearance()
-			return ..()
-	if(istype(target, /obj/machinery/door) && bloodsucker_power.level_current >= THAUMATURGY_DOOR_BREAK_LEVEL)
-		var/obj/machinery/door/hit_airlock = target
-		hit_airlock.open(BYPASS_DOOR_CHECKS)
-		qdel(src)
-		return ..()
-	if(ismob(target))
-		if(bloodsucker_power.level_current >= THAUMATURGY_BLOOD_STEAL_LEVEL)
-			var/mob/living/person_hit = target
-			person_hit.blood_volume -= THAUMATURGY_BLOOD_COST_PER_CHARGE
-			var/datum/antagonist/bloodsucker/bloodsucker = bloodsucker_power.bloodsuckerdatum_power
-			if(bloodsucker)
-				bloodsucker.bloodsucker_blood_volume += min(THAUMATURGY_BLOOD_COST_PER_CHARGE, bloodsucker.max_blood_volume)
-		return ..()
-	. = ..()
+	if(isliving(target) && bloodsucker_power.level_current >= THAUMATURGY_BLOOD_STEAL_LEVEL)
+		var/mob/living/person_hit = target
+		person_hit.blood_volume -= THAUMATURGY_BLOOD_COST_PER_CHARGE
+		var/datum/antagonist/bloodsucker/bloodsucker = bloodsucker_power.bloodsuckerdatum_power
+		if(bloodsucker)
+			bloodsucker.bloodsucker_blood_volume += min(THAUMATURGY_BLOOD_COST_PER_CHARGE, bloodsucker.max_blood_volume)
+	return ..()
 
 /**
  *	# Blood Shield
@@ -275,7 +264,7 @@
 	icon = 'monkestation/icons/bloodsuckers/vamp_obj.dmi'
 	icon_state = "blood_shield"
 	lefthand_file = 'monkestation/icons/bloodsuckers/bloodsucker_lefthand.dmi'
-	righthand_file = 'monkestation/icons/bloodsuckers/bloodsucker_lefthand.dmi'
+	righthand_file = 'monkestation/icons/bloodsuckers/bloodsucker_righthand.dmi'
 	block_chance = BLOOD_SHIELD_BLOCK_CHANCE
 
 /obj/item/shield/bloodsucker/Initialize(mapload)
@@ -294,6 +283,6 @@
 #undef THAUMATURGY_COOLDOWN_PER_CHARGE
 
 #undef THAUMATURGY_SHIELD_LEVEL
-#undef THAUMATURGY_DOOR_BREAK_LEVEL
+#undef THAUMATURGY_CLOSET_BREAK_LEVEL
 #undef THAUMATURGY_BLOOD_STEAL_LEVEL
 #undef THAUMATURGY_EXTRA_DAMAGE_LEVEL

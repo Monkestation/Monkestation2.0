@@ -227,7 +227,7 @@
 		return
 	if(on_work)
 		return
-	if(!directly_use_power(active_power_usage))
+	if(!directly_use_energy(active_power_usage))
 		on = FALSE
 		say("Not enough energy!")
 		return
@@ -308,12 +308,12 @@
 		ui = new(user, src, "BigManipulator")
 		ui.open()
 
-/obj/machinery/big_manipulator/AltClick(mob/user)
-	. = ..()
+/obj/machinery/big_manipulator/click_alt(mob/living/user)
 	if(!filter)
-		return
+		return CLICK_ACTION_BLOCKING
 	filter.forceMove(get_turf(src))
 	filter = null
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/big_manipulator/ui_data(mob/user)
 	var/list/data = list()
@@ -422,10 +422,11 @@
 	. += span_notice("Use Alt-Click to reset the sorting list.")
 	. += span_notice("Attack things to attempt to add to the sorting list.")
 
-/obj/item/manipulator_filter/AltClick(mob/user)
+/obj/item/manipulator_filter/click_alt(mob/user)
 	visible_message("[src] pings, resetting its sorting list!")
 	playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
 	filtered_items = list()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/manipulator_filter/proc/try_attach(obj/machinery/big_manipulator/target)
 	if(target.filter)

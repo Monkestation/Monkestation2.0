@@ -5,9 +5,11 @@
 	damage_type = BURN
 	armor_flag = ENERGY
 	/// What temp to trend the target towards
-	var/temperature = HYPOTHERMIA - 50 CELCIUS
+	var/temperature = -60
+	var/min = 200
+	var/max = 400
 	/// How much temp per shot to apply
-	var/temperature_mod_per_shot = 0.5
+	var/temperature_mod_per_shot = 0.8
 
 /obj/projectile/temp/is_hostile_projectile()
 	return BODYTEMP_NORMAL - temperature != 0 // our damage is done by cooling or heating (casting to boolean here)
@@ -15,17 +17,19 @@
 /obj/projectile/temp/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(isliving(target))
+
 		var/mob/living/M = target
-		M.adjust_bodytemperature(temperature_mod_per_shot * ((100-blocked) / 100) * (temperature - M.bodytemperature), temperature, BODYTEMP_NORMAL, use_insulation = TRUE)
+		M.adjust_bodytemperature(temperature_mod_per_shot * ((100-blocked) / 100) * (temperature), min, max, use_insulation = TRUE)
 
 /obj/projectile/temp/hot
 	name = "heat beam"
-	temperature = HYPERTHERMIA + 25 CELCIUS
+	temperature =  60
 
 /obj/projectile/temp/cryo
 	name = "cryo beam"
 	range = 3
-	temperature = HYPOTHERMIA - 75 CELCIUS
+	temperature = -60
+	min = 150
 	temperature_mod_per_shot = 2.5 // get this guy really chilly really fast
 
 /obj/projectile/temp/cryo/on_hit(atom/target, blocked, pierce_hit)
@@ -46,6 +50,7 @@
 	icon_state = "firebeam" // sets on fire, diff sprite!
 	range = 9
 	temperature = 240
+	max = 1000
 
 /obj/projectile/temp/pyro/on_hit(atom/target, blocked, pierce_hit)
 	. = ..()

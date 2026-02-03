@@ -55,3 +55,22 @@
 			t_ray_images += I
 	if(t_ray_images.len)
 		flick_overlay_global(t_ray_images, list(viewer.client), flick_time)
+
+/obj/item/t_scanner/thermal
+	name = "\improper Advanced T-ray scanner"
+	desc = "A terahertz-ray emitter and scanner used to detect underfloor objects such as cables and pipes. This one has also been modified with the function to detect thermal differences."
+	var/thermal = FALSE
+
+/obj/item/t_scanner/thermal/scan()
+	if(thermal)
+		atmos_thermal(loc)
+		return
+	return ..()
+
+/obj/item/t_scanner/thermal/attack_self_secondary(mob/user)
+	thermal = !thermal
+	to_chat(user, span_notice("You turn the goggles to [thermal ? "scan for thermal difference.":"detect underfloor objects."]"))
+
+/obj/item/t_scanner/thermal/examine(mob/user)
+	. = ..()
+	. += span_notice("Right-click [src] to toggle between it's t-ray and thermal functions.")

@@ -54,11 +54,11 @@
 	if(isliving(friend_candidate_client.mob))
 		friend_candidate_client.mob.ghostize(can_reenter_corpse = TRUE)
 
-	var/mob/camera/imaginary_friend/friend_mob
+	var/mob/eye/imaginary_friend/friend_mob
 
 	if(random_appearance)
-		friend_mob = new /mob/camera/imaginary_friend(get_turf(target), target)
+		friend_mob = new /mob/eye/imaginary_friend(get_turf(target), target)
 	else
-		friend_mob = new /mob/camera/imaginary_friend(get_turf(target), target, friend_candidate_client.prefs)
+		friend_mob = new /mob/eye/imaginary_friend(get_turf(target), target, friend_candidate_client.prefs)
 
 	friend_mob.PossessByPlayer(friend_candidate_client.key)

@@ -34,8 +34,9 @@
 	if(has_cap)
 		. += span_notice("Alt-click [src] to [ cap ? "take the cap off" : "put the cap on"].")
 
-/obj/item/perfume/AltClick(mob/user)
+/obj/item/perfume/click_alt(mob/user)
 	toggle_cap(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/perfume/attack_self(mob/user, modifiers)
 	toggle_cap(user)
@@ -47,25 +48,26 @@
 		to_chat(user, span_notice("The cap on [src] is now [cap ? "on" : "off"]."))
 		update_appearance()
 
-/obj/item/perfume/afterattack(atom/attacked, mob/user, proximity)
+/obj/item/perfume/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
-		return
-	if(!ismovable(attacked))
-		return
+		return ITEM_INTERACT_BLOCKING
+	if(!ismovable(interacting_with))
+		return ITEM_INTERACT_BLOCKING
 	if(has_cap && cap)
 		to_chat(user, span_warning("Take the cap off first!"))
-		return TRUE
+		return ITEM_INTERACT_BLOCKING
 	if(uses_remaining <= 0)
 		to_chat(user, span_warning("\The [src] is empty!"))
-		return TRUE
+		return ITEM_INTERACT_BLOCKING
 	uses_remaining--
 	var/turf/my_turf = get_turf(user)
 	my_turf.pollute_turf(fragrance_type, 20)
-	user.visible_message(span_notice("[user] sprays [attacked] with \the [src]."), span_notice("You spray [attacked] with \the [src]."))
+	user.visible_message(span_notice("[user] sprays [interacting_with] with \the [src]."), span_notice("You spray [interacting_with] with \the [src]."))
 	user.changeNext_move(CLICK_CD_RANGE*2)
 	playsound(my_turf, 'sound/effects/spray2.ogg', 50, TRUE, -6)
-	attacked.AddComponent(/datum/component/temporary_pollution_emission, fragrance_type, 5, 10 MINUTES)
+	interacting_with.AddComponent(/datum/component/temporary_pollution_emission, fragrance_type, 5, 10 MINUTES)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/perfume/cologne
 	name = "cologne bottle"

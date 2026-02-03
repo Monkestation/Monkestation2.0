@@ -2,6 +2,7 @@
 	name = "large crate"
 	desc = "A hefty wooden crate. You'll need a crowbar to get it open."
 	icon_state = "largecrate"
+	base_icon_state = "largecrate"
 	density = TRUE
 	pass_flags_self = PASSSTRUCTURE
 	material_drop = /obj/item/stack/sheet/mineral/wood
@@ -14,6 +15,7 @@
 	close_sound_volume = 50
 	can_install_electronics = FALSE
 	elevation = 22
+	can_weld_shut = FALSE
 
 	// Stops people from "diving into" a crate you can't open normally
 	divable = FALSE

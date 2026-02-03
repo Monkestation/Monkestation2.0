@@ -46,7 +46,7 @@
 
 	return data
 
-/obj/machinery/computer/aifixer/ui_act(action, params)
+/obj/machinery/computer/aifixer/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -64,7 +64,7 @@
 				. = TRUE
 
 /obj/machinery/computer/aifixer/proc/Fix()
-	use_power(1000)
+	use_energy(1000)
 	occupier.adjustOxyLoss(-5, FALSE)
 	occupier.adjustFireLoss(-5, FALSE)
 	occupier.adjustBruteLoss(-5, FALSE)

@@ -40,7 +40,7 @@
 	return species_blacklist
 
 /datum/preference_middleware/quirks/get_ui_static_data(mob/user)
-	if (preferences.current_window != PREFERENCE_TAB_CHARACTER_PREFERENCES)
+	if (preferences.current_window != PREFERENCE_WINDOW_CHARACTERS)
 		return list()
 
 	var/list/data = list()

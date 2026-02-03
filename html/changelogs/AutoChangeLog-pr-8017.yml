@@ -1,6 +1,0 @@
-author: "notghosti"
-delete-after: True
-changes:
-  - rscadd: "Added sprite for Dobermans"
-  - map: "Walter the Doberman and Walter the Bullterrier are now seperate on the maps."
-  - bugfix: "You no longer will sometimes be killing goliath the miner pet for kiling pet objectives"

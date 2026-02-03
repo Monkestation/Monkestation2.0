@@ -265,7 +265,7 @@ GLOBAL_VAR(ascended_bloodling)
 
 /datum/status_effect/bloodling_thrall/proc/thrallify()
 	if(owner.stat == DEAD)
-		owner.revive(ADMIN_HEAL_ALL)
+		owner.revive(ADMIN_HEAL_ALL, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 		owner.grab_ghost(force = TRUE)
 
 	var/datum/antagonist/changeling/bloodling_thrall/thrall = owner.mind.add_antag_datum(/datum/antagonist/changeling/bloodling_thrall)

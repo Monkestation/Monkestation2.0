@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - rscdel: "Removed the Darkspeak language, and replaced it with pre-existing Shadowtongue language."

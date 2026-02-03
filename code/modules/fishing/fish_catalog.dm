@@ -16,7 +16,7 @@
 	var/static/fish_info
 	if(!fish_info)
 		fish_info = list()
-		for(var/_fish_type as anything in subtypesof(/obj/item/fish))
+		for(var/_fish_type in subtypesof(/obj/item/fish))
 			var/obj/item/fish/fish = _fish_type
 			var/list/fish_data = list()
 			if(!initial(fish.show_in_catalog))

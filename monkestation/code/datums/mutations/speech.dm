@@ -152,5 +152,5 @@
 	description = "EVERYTHING IS FINE AND I FEEL AMAZING!"
 	mood_change = 1.5
 
-/datum/mood_event/smile/add_effects(var/mutation_power)
+/datum/mood_event/smile/add_effects(mutation_power)
 	mood_change = mutation_power // Gotta love scaling that'll probably never see the light of day

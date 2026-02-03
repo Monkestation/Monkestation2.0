@@ -667,6 +667,7 @@
 	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
 	our_heretic.knowledge_points += KNOWLEDGE_RITUAL_POINTS
 	was_completed = TRUE
+	SStgui.update_uis(our_heretic)
 
 	to_chat(user, span_boldnotice("[name] completed!"))
 	to_chat(user, span_hypnophrase(span_big("[pick_list(HERETIC_INFLUENCE_FILE, "drain_message")]")))

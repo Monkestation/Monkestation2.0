@@ -43,6 +43,7 @@ GLOBAL_DATUM(current_eminence, /mob/living/eminence) //set to the current eminen
 	AddElement(/datum/element/simple_flying)
 	internal_radio = new /obj/item/radio/borg/eminence(src)
 	ADD_TRAIT(src, TRAIT_GODMODE, INNATE_TRAIT)
+	grant_all_languages() //this is appearently an issue, im too lazy to figure it out so im just gonna do this
 
 /mob/living/eminence/Destroy()
 	if(GLOB.current_eminence == src)
@@ -78,10 +79,10 @@ GLOBAL_DATUM(current_eminence, /mob/living/eminence) //set to the current eminen
 		return
 
 	if(COOLDOWN_FINISHED(src, command_sound_cooldown))
-		send_clock_message(src, span_bigbrass(message), sent_sound = 'monkestation/sound/effects/eminence_command.ogg')
+		send_clock_message(span_bigbrass(message), src, sent_sound = 'monkestation/sound/effects/eminence_command.ogg')
 		COOLDOWN_START(src, command_sound_cooldown, 40 SECONDS)
 	else
-		send_clock_message(src, span_bigbrass(message))
+		send_clock_message(span_bigbrass(message), src)
 
 /mob/living/eminence/get_status_tab_items()
 	. = ..()
@@ -127,7 +128,7 @@ GLOBAL_DATUM(current_eminence, /mob/living/eminence) //set to the current eminen
 
 /mob/living/eminence_act(mob/living/eminence/user)
 	. = ..()
-	if(IS_CLOCK(src))
+	if(user != src && IS_CLOCK(src))
 		user.marked_servant = WEAKREF(src)
 		to_chat(user, "You mark [src].")
 
@@ -168,7 +169,7 @@ GLOBAL_DATUM(current_eminence, /mob/living/eminence) //set to the current eminen
 		to_chat(user, span_warning("The panel is open and preventing you from accessing the [src]!"))
 		return
 
-	use_power(5)
+	use_energy(5)
 	icon_state = "[skin]1"
 
 	if(device)

@@ -17,7 +17,7 @@
 		return
 	// Stupid way of preventing weird organ dupes with oozelings.
 	// Any extra implants/organs they have will be inside of their core when they die anyways.
-	if(is_oozeling_core(limb.owner?.get_organ_slot(ORGAN_SLOT_BRAIN)))
+	if(isoozeling(limb.owner))
 		return FALSE
 
 /datum/wound/loss

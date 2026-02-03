@@ -13,6 +13,7 @@
 #define BLOCKS_CONSTRUCTION (1<<9) //! Does this object prevent things from being built on it?
 #define BLOCKS_CONSTRUCTION_DIR (1<<10) //! Does this object prevent same-direction things from being built on it?
 #define IGNORE_DENSITY (1<<11) //! Can we ignore density when building on this object? (for example, directional windows and grilles)
+#define INFINITE_RESKIN (1<<12) // We can reskin this item infinitely
 
 // If you add new ones, be sure to add them to /obj/Initialize as well for complete mapping support
 
@@ -109,3 +110,9 @@
 /// Flags for sharpness in obj/item
 #define SHARP_EDGED (1<<0)
 #define SHARP_POINTY (1<<1)
+
+/// Flags for specifically what kind of items to get in get_equipped_items
+#define INCLUDE_POCKETS (1<<0)
+#define INCLUDE_ACCESSORIES (1<<1)
+#define INCLUDE_HELD (1<<2)
+

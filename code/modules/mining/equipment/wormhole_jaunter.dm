@@ -1,7 +1,7 @@
 /**********************Jaunter**********************/
 /obj/item/wormhole_jaunter
 	name = "wormhole jaunter"
-	desc = "A single use device harnessing outdated wormhole technology, Nanotrasen has since turned its eyes to bluespace for more accurate teleportation. The wormholes it creates are unpleasant to travel through, to say the least.\nThanks to modifications provided by the Free Golems, this jaunter can be worn on the belt to provide protection from chasms."
+	desc = "A single use device harnessing outdated wormhole technology, Nanotrasen has since turned its eyes to bluespace for more accurate teleportation. The wormholes it creates are unpleasant to travel through, to say the least.\nThanks to modifications provided by the Free Golems, this jaunter can be worn on the belt or kept in a pocket to provide protection from chasms."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "Jaunter"
 	inhand_icon_state = "electronic"
@@ -50,7 +50,7 @@
 			to_chat(user, span_notice("\The [src] found no beacons in the world to anchor a wormhole to."))
 		else
 			visible_message(span_notice("\The [src] found no beacons in the world to anchor a wormhole to!"))
-		return TRUE // used for chasm code
+		return FALSE
 
 	var/list/destinations = get_destinations()
 	var/chosen_beacon = pick(destinations)
@@ -62,7 +62,7 @@
 		try_move_adjacent(tunnel)
 
 	qdel(src)
-	return FALSE // used for chasm code
+	return TRUE
 
 /obj/item/wormhole_jaunter/emp_act(power)
 	. = ..()
@@ -77,20 +77,32 @@
 
 	var/mob/M = loc
 	if(istype(M) && triggered)
-		M.visible_message(span_warning("Your [src.name] overloads and activates!"))
+		M.visible_message(span_userdanger("Your [src.name] overloads and activates!"))
 		SSblackbox.record_feedback("tally", "jaunter", 1, "EMP") // EMP accidental activation
 		activate(M, FALSE, TRUE)
 	else if(triggered)
 		visible_message(span_warning("\The [src] overloads and activates!"))
 		activate()
 
-/obj/item/wormhole_jaunter/proc/chasm_react(mob/user)
-	var/fall_into_chasm = activate(user, FALSE, TRUE)
+/obj/item/wormhole_jaunter/equipped(mob/user, slot, initial)
+	. = ..()
+	if (slot & (ITEM_SLOT_BELT | ITEM_SLOT_LPOCKET | ITEM_SLOT_RPOCKET))
+		RegisterSignal(user, COMSIG_MOVABLE_CHASM_DROPPED, PROC_REF(chasm_react))
 
-	if(!fall_into_chasm)
-		to_chat(user, span_notice("Your [src.name] activates, saving you from the chasm!"))
-		SSblackbox.record_feedback("tally", "jaunter", 1, "Chasm") // chasm automatic activation
-	return fall_into_chasm
+/obj/item/wormhole_jaunter/dropped(mob/user, silent)
+	. = ..()
+	UnregisterSignal(user, COMSIG_MOVABLE_CHASM_DROPPED)
+
+/obj/item/wormhole_jaunter/proc/chasm_react(mob/living/user, turf/chasm)
+	SIGNAL_HANDLER
+
+	if(!activate(user, FALSE, TRUE))
+		return
+
+	to_chat(user, span_userdanger("Your [src] activates, saving you from \the [chasm]!"))
+	chasm.visible_message(span_boldwarning("[user] falls into \the [chasm]!")) // To freak out any bystanders
+	SSblackbox.record_feedback("tally", "jaunter", 1, "Chasm") // Chasm automatic activation
+	return COMPONENT_NO_CHASM_DROP
 
 //jaunter tunnel
 /obj/effect/portal/jaunt_tunnel

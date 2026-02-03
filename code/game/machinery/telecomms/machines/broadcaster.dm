@@ -53,7 +53,7 @@ GLOBAL_VAR_INIT(message_delay, 0) // To make sure restarting the recentmessages 
 	/* --- Do a snazzy animation! --- */
 	flick("broadcaster_send", src)
 
-	use_power(idle_power_usage)
+	use_energy(idle_power_usage)
 
 /proc/end_message_delay()
 	GLOB.message_delay = FALSE

@@ -9,6 +9,9 @@
 	description = "Destroys all lights in a large area."
 	min_wizard_trigger_potency = 0
 	max_wizard_trigger_potency = 4
+	track = EVENT_TRACK_MUNDANE
+	tags = list(TAG_SPOOKY)
+	event_group = /datum/event_group/error
 
 /datum/round_event/electrical_storm
 	var/lightsoutAmount = 1
@@ -31,7 +34,6 @@
 		return
 
 	for(var/centre in epicentreList)
-		for(var/a in GLOB.apcs_list)
-			var/obj/machinery/power/apc/A = a
-			if(get_dist(centre, A) <= lightsoutRange)
-				A.overload_lighting()
+		for(var/obj/machinery/power/apc/apc as anything in SSmachines.get_machines_by_type(/obj/machinery/power/apc))
+			if(get_dist(centre, apc) <= lightsoutRange)
+				apc.overload_lighting()

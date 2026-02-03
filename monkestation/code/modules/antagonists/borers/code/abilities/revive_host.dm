@@ -35,7 +35,7 @@
 	for(var/obj/item/organ/internal/internal_target in cortical_owner.human_host.organs)
 		internal_target.apply_organ_damage(-internal_target.damage * 0.5)
 
-	cortical_owner.human_host.revive()
+	cortical_owner.human_host.revive(revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 	to_chat(cortical_owner.human_host, span_boldwarning("Your heart jumpstarts!"))
 	owner.balloon_alert(owner, "host revived")
 	var/turf/human_turf = get_turf(cortical_owner.human_host)

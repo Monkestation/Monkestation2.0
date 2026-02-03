@@ -62,6 +62,9 @@
 	var/maxdistance = SOUND_RANGE + extrarange
 	var/source_z = turf_source.z
 
+	if (falloff_distance >= maxdistance)
+		CRASH("playsound(): falloff_distance is equal to or higher than maxdistance! Bump up extrarange or reduce the falloff_distance.")
+
 	if(vary && !frequency)
 		frequency = get_rand_frequency() // skips us having to do it per-sound later. should just make this a macro tbh
 
@@ -110,6 +113,9 @@
 
 	if((mixer_channel == CHANNEL_PRUDE) && client?.prefs?.read_preference(/datum/preference/toggle/prude_mode))
 		return
+
+	if (HAS_TRAIT_FROM(src, TRAIT_HARD_OF_HEARING, EAR_DAMAGE))
+		sound_to_use.volume *= 0.2
 
 	if(vary)
 		if(frequency)
@@ -239,3 +245,52 @@
 		return soundin
 	var/datum/sound_effect/sfx = SSsounds.sfx_datum_by_key[soundin]
 	return sfx?.return_sfx() || soundin
+
+/proc/get_channel_name(channel)
+	switch(channel)
+		if(CHANNEL_MASTER_VOLUME)
+			return "Master Volume"
+		if(CHANNEL_LOBBYMUSIC)
+			return "Lobby Music"
+		if(CHANNEL_ADMIN)
+			return "Admin MIDIs"
+		if(CHANNEL_VOX)
+			return "Announcements / AI Noise"
+		if(CHANNEL_JUKEBOX)
+			return "Dance Machines"
+		if(CHANNEL_HEARTBEAT)
+			return "Heartbeat"
+		if(CHANNEL_BUZZ)
+			return "White Noise"
+		if(CHANNEL_CHARGED_SPELL)
+			return "Charged Spells"
+		if(CHANNEL_TRAITOR)
+			return "Traitor Sounds"
+		if(CHANNEL_AMBIENCE)
+			return "Ambience"
+		if(CHANNEL_SOUND_EFFECTS)
+			return "Sound Effects"
+		if(CHANNEL_SOUND_FOOTSTEPS)
+			return "Footsteps"
+		if(CHANNEL_WEATHER)
+			return "Weather"
+		if(CHANNEL_MACHINERY)
+			return "Machinery"
+		if(CHANNEL_INSTRUMENTS)
+			return "Player Instruments"
+		if(CHANNEL_INSTRUMENTS_ROBOT)
+			return "Robot Instruments" //you caused this DONGLE
+		if(CHANNEL_MOB_SOUNDS)
+			return "Mob Sounds"
+		if(CHANNEL_PRUDE)
+			return "Prude Sounds"
+		if(CHANNEL_SQUEAK)
+			return "Squeaks / Plushies"
+		if(CHANNEL_MOB_EMOTES)
+			return "Mob Emotes"
+		if(CHANNEL_SILICON_EMOTES)
+			return "Silicon Emotes"
+		if(CHANNEL_VOICES)
+			return "Voices"
+		if(CHANNEL_RINGTONES)
+			return "Ringtones (Modlinks/PDA)"

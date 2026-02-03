@@ -90,8 +90,5 @@
 		"Close-quarters mode engaged, lethal."
 	],
 
-	"operator": [
-		"Operator",
-		"Handler"
-	]
+	"operator": ["Operator", "Handler"]
 }

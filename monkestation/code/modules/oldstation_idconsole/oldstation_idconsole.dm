@@ -36,7 +36,7 @@
 		if(!do_after(user, 4 SECONDS, target = src))
 			return FALSE
 
-		use_power(active_power_usage)
+		use_energy(active_power_usage)
 
 		var/old_name = card.name
 		QDEL_NULL(card)
@@ -51,7 +51,6 @@
 /datum/computer_file/program/card_mod/old
 	filename = "charliestationidwriter"
 	filedesc = "Station Access Management"
-	available_on_ntnet = FALSE //charlie station only fools
 
 	//every access i could find on charlie station ids
 	valid_access = list(

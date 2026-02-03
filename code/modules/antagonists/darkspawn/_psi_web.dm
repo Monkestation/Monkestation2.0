@@ -25,7 +25,8 @@
 	///The antag datum of the owner(used for modifying)
 	var/datum/antagonist/darkspawn/darkspawn
 	///If it can be bought infinite times for incremental upgrades
-	var/infinite = FALSE
+
+	var/purchases_left = 1
 
 ///When the button to purchase is clicked
 /datum/psi_web/proc/on_purchase(datum/mind/user, silent = FALSE)
@@ -40,8 +41,8 @@
 	if(!darkspawn)
 		CRASH("[owner] tried to gain a psi_web datum despite not being a darkspawn")
 	if(darkspawn.willpower < willpower_cost)
+		to_chat(user, span_warning("Not Enough Willpower"))
 		return
-
 	darkspawn.willpower -= willpower_cost
 	if(willpower_cost && !silent)
 		to_chat(user, span_velvet("You have unlocked [name]"))

@@ -41,7 +41,7 @@
 	. = ..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/lift_indicator/LateInitialize()
+/obj/machinery/lift_indicator/LateInitialize(mapload_arg)
 	. = ..()
 
 	for(var/datum/lift_master/possible_match as anything in GLOB.active_lifts_by_type[BASIC_LIFT_ID])
@@ -110,7 +110,7 @@
 		set_lift_state(0, 0, force = !is_operational)
 		return PROCESS_KILL
 
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 
 	var/obj/structure/industrial_lift/lift_part = lift.lift_platforms[1]
 
