@@ -46,7 +46,7 @@
 	job_flags = STATION_JOB_FLAGS | JOB_BOLD_SELECT_TEXT | JOB_CANNOT_OPEN_SLOTS
 
 	voice_of_god_power = 1.4 //Command staff has authority
-
+	antag_capacity_points = 2
 
 /datum/job/chief_engineer/after_spawn(mob/living/spawned, client/player_client)
 	. = ..()
@@ -84,11 +84,13 @@
 	implants = list(/obj/item/implant/mindshield)
 	pda_slot = ITEM_SLOT_LPOCKET
 
+#ifndef UNIT_TESTS
 /datum/outfit/job/ce/New()
 	. = ..()
 	if(length(SSmapping.levels_by_trait(ZTRAIT_OSHAN)))
 		shoes = /obj/item/clothing/shoes/stomper
 		backpack_contents += /obj/item/sea_map
+#endif
 
 /datum/outfit/job/ce/mod
 	name = "Chief Engineer (MODsuit)"

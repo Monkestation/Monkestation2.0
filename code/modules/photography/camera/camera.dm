@@ -218,7 +218,7 @@
 			turfs += placeholder
 			for(var/mob/M in placeholder)
 				mobs += M
-			if(locate(/obj/item/areaeditor/blueprints) in placeholder)
+			if(locate(/obj/item/blueprints) in placeholder)
 				blueprints = TRUE
 
 	// do this before picture is taken so we can reveal revenants for the photo
@@ -238,7 +238,7 @@
 
 	var/datum/picture/picture = new("picture", desc.Join(" "), mobs_spotted, dead_spotted, get_icon, null, psize_x, psize_y, blueprints, can_see_ghosts = see_ghosts)
 	after_picture(user, picture)
-	SEND_SIGNAL(src, COMSIG_CAMERA_IMAGE_CAPTURED, target, user)
+	SEND_SIGNAL(src, COMSIG_CAMERA_IMAGE_CAPTURED, target, user, picture)
 	blending = FALSE
 	return picture
 

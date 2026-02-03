@@ -70,55 +70,6 @@
 	for(var/i in 1 to 8)
 		new /obj/item/toy/snappop(src)
 
-/obj/item/storage/box/matches
-	name = "matchbox"
-	desc = "A small box of Almost But Not Quite Plasma Premium Matches."
-	icon = 'icons/obj/cigarettes.dmi'
-	icon_state = "matchbox"
-	inhand_icon_state = "zippo"
-	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
-	worn_icon_state = "lighter"
-	w_class = WEIGHT_CLASS_TINY
-	slot_flags = ITEM_SLOT_BELT
-	drop_sound = 'sound/items/handling/matchbox_drop.ogg'
-	pickup_sound = 'sound/items/handling/matchbox_pickup.ogg'
-	custom_price = PAYCHECK_CREW * 0.4
-	base_icon_state = "matchbox"
-	illustration = null
-
-/obj/item/storage/box/matches/Initialize(mapload)
-	. = ..()
-	atom_storage.max_slots = 10
-	atom_storage.set_holdable(list(/obj/item/match))
-
-/obj/item/storage/box/matches/PopulateContents()
-	for(var/i in 1 to 10)
-		new /obj/item/match(src)
-
-/obj/item/storage/box/matches/item_interaction(mob/living/user, obj/item/match/match, list/modifiers)
-	if(!SHOULD_SKIP_INTERACTION(src, match, user)) // You have to harm intent to light a match
-		return NONE
-	if(istype(match))
-		match.matchignite()
-		return ITEM_INTERACT_SUCCESS
-	return NONE
-
-/obj/item/storage/box/matches/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
-	return NONE
-
-/obj/item/storage/box/matches/update_icon_state()
-	. = ..()
-	switch(length(contents))
-		if(10)
-			icon_state = base_icon_state
-		if(5 to 9)
-			icon_state = "[base_icon_state]_almostfull"
-		if(1 to 4)
-			icon_state = "[base_icon_state]_almostempty"
-		if(0)
-			icon_state = "[base_icon_state]_e"
-
 /obj/item/storage/box/lights
 	name = "box of replacement bulbs"
 	desc = "This box is shaped on the inside so that only light tubes and bulbs fit."
@@ -171,7 +122,7 @@
 	custom_premium_price = PAYCHECK_CREW * 3
 
 /obj/item/storage/box/dishdrive/PopulateContents()
-	var/static/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/circuitboard/machine/dish_drive = 1,
 		/obj/item/screwdriver = 1,
 		/obj/item/stack/cable_coil/five = 1,
@@ -181,7 +132,7 @@
 		/obj/item/stock_parts/matter_bin = 2,
 		/obj/item/wrench = 1,
 	)
-	generate_items_inside(items_inside,src)
+	generate_items_inside(items_inside, src)
 
 /obj/item/storage/box/actionfigure
 	name = "box of action figures"
@@ -216,7 +167,7 @@
 	desc = "A completely randomized and wacky box of long balloons, harvested straight from balloon farms on the clown planet."
 	illustration = "balloon"
 
-/obj/item/storage/box/lights/Initialize(mapload)
+/obj/item/storage/box/balloons/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 24
 	atom_storage.set_holdable(list(/obj/item/toy/balloon/long))

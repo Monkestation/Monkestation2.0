@@ -272,7 +272,6 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, FALSE, "Controller Overview
 	var/list/filtered_variables = list(
 		NAMEOF(src, name),
 		NAMEOF(src, parent_type),
-		NAMEOF(src, statclick),
 		NAMEOF(src, tag),
 		NAMEOF(src, type),
 		NAMEOF(src, vars),
@@ -363,6 +362,7 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, FALSE, "Controller Overview
 	log_world("Initializations complete within [time] second\s!")
 
 	initialize_cooking_recipes()
+	clear_profiler()
 
 	// monkestation edit below
 	// basically, most songs end around the 5 minute mark,
@@ -519,8 +519,7 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, FALSE, "Controller Overview
 	var/list/tickersubsystems = list()
 	var/list/runlevel_sorted_subsystems = list(list()) //ensure we always have at least one runlevel
 	var/timer = world.time
-	for (var/thing in subsystems)
-		var/datum/controller/subsystem/SS = thing
+	for (var/datum/controller/subsystem/SS as anything in subsystems)
 		if (SS.flags & SS_NO_FIRE)
 			continue
 		if (SS.init_stage > init_stage)
@@ -532,15 +531,24 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, FALSE, "Controller Overview
 		if ((SS.flags & (SS_TICKER|SS_BACKGROUND)) == SS_TICKER)
 			tickersubsystems += SS
 			// Timer subsystems aren't allowed to bunch up, so we offset them a bit
-			timer += world.tick_lag * rand(0, 1)
+			timer += TICKS2DS(rand(0, 1))
 			SS.next_fire = timer
 			continue
+
+		// Now, we have to set starting next_fires for all our new non ticker kids
+		if(SS.init_stage == init_stage - 1 && (SS.runlevels & current_runlevel))
+			// Give em a random offset so things don't clump up too bad
+			var/delay = SS.wait
+			if(SS.flags & SS_TICKER)
+				delay = TICKS2DS(delay)
+			// Gotta convert to ticks cause rand needs integers
+			SS.next_fire = world.time + TICKS2DS(rand(0, DS2TICKS(min(delay, 2 SECONDS))))
 
 		var/ss_runlevels = SS.runlevels
 		var/added_to_any = FALSE
 		for(var/I in 1 to GLOB.bitflags.len)
 			if(ss_runlevels & GLOB.bitflags[I])
-				while(runlevel_sorted_subsystems.len < I)
+				while(length(runlevel_sorted_subsystems) < I)
 					runlevel_sorted_subsystems += list(list())
 				runlevel_sorted_subsystems[I] += SS
 				added_to_any = TRUE
@@ -572,7 +580,7 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, FALSE, "Controller Overview
 	var/datum/stack_canary/canary = stack_end_detector.prime_canary()
 	canary.use_variable()
 	//the actual loop.
-	while (1)
+	while (TRUE)
 		var/newdrift = ((REALTIMEOFDAY - init_timeofday) - (world.time - init_time)) / world.tick_lag
 		tickdrift = max(0, MC_AVERAGE_FAST(tickdrift, newdrift))
 		var/starting_tick_usage = TICK_USAGE
@@ -631,7 +639,11 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, FALSE, "Controller Overview
 					//we only want to offset it if it's new and also behind
 					if(SS.next_fire > world.time || (SS in old_subsystems))
 						continue
-					SS.next_fire = world.time + world.tick_lag * rand(0, DS2TICKS(min(SS.wait, 2 SECONDS)))
+					// If they're new, give em a random offset so things don't clump up too bad
+					var/delay = SS.wait
+					if(SS.flags & SS_TICKER)
+						delay = TICKS2DS(delay)
+					SS.next_fire = world.time + TICKS2DS(rand(0, DS2TICKS(min(delay, 2 SECONDS))))
 
 			subsystems_to_check = current_runlevel_subsystems
 		else
@@ -726,6 +738,8 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, FALSE, "Controller Overview
 		if (SS_flags & SS_NO_FIRE)
 			subsystemstocheck -= SS
 			continue
+		// If we're keeping timing and running behind,
+		// fire at most 25% faster then normal to try and make up the gap without spamming
 		if ((SS_flags & (SS_TICKER|SS_KEEP_TIMING)) == SS_KEEP_TIMING && SS.last_fire + (SS.wait * 0.75) > world.time)
 			continue
 		if (SS.postponed_fires >= 1)
@@ -740,7 +754,7 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, FALSE, "Controller Overview
 					enter_queue = TRUE
 					break
 			if(!enter_queue)
-				SS.hibernating = TRUE
+				SS.hibernation_state = SS_IS_HIBERNATING
 				SS.update_nextfire()
 				continue
 		SS.enqueue()
@@ -970,3 +984,7 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, FALSE, "Controller Overview
 	last_profiled = REALTIMEOFDAY
 	SSprofiler.DumpFile(allow_yield = FALSE)
 
+/// Clears the profiler.
+/datum/controller/master/proc/clear_profiler()
+	world.Profile(PROFILE_CLEAR)
+	world.Profile(PROFILE_CLEAR, type = "sendmaps")

@@ -541,6 +541,21 @@
 	default = 50
 	integer = FALSE
 
+/datum/config_entry/string/glitchtip_dsn
+	config_entry_value = ""
+
+/datum/config_entry/string/glitchtip_dsn/ValidateAndSet(str_val)
+	var/dsn_clean = replacetext(replacetext(str_val, "http://", ""), "https://", "")
+	var/at_pos = findtext(dsn_clean, "@")
+	var/slash_pos = findtext(dsn_clean, "/", at_pos)
+
+	if(!at_pos || !slash_pos)
+		return FALSE
+	return ..()
+
+/datum/config_entry/string/glitchtip_environment
+	config_entry_value = "production"
+
 /datum/config_entry/flag/irc_announce_new_game
 	deprecated_by = /datum/config_entry/string/channel_announce_new_game
 
@@ -763,3 +778,17 @@
 	if(.)
 		SSmemory_stats.can_fire = config_entry_value
 #endif
+
+/datum/config_entry/string/floxy_url
+	protection = CONFIG_ENTRY_LOCKED
+
+/datum/config_entry/string/floxy_url/ValidateAndSet(str_val)
+	if(!is_http_protocol(str_val))
+		return FALSE
+	return ..()
+
+/datum/config_entry/string/floxy_username
+	protection = CONFIG_ENTRY_LOCKED | CONFIG_ENTRY_HIDDEN
+
+/datum/config_entry/string/floxy_password
+	protection = CONFIG_ENTRY_LOCKED | CONFIG_ENTRY_HIDDEN

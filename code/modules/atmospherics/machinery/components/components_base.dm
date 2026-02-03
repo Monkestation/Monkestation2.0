@@ -56,7 +56,7 @@
 		REMOVE_TRAIT(src, TRAIT_UNDERFLOOR, REF(src))
 	else
 		ADD_TRAIT(src, TRAIT_UNDERFLOOR, REF(src))
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 
 /obj/machinery/atmospherics/components/update_icon()
 	update_icon_nopipes()
@@ -360,7 +360,7 @@
 				continue
 			to_release.merge(air)
 			continue
-		var/datum/gas_mixture/parents_air = parents[i].air
-		parents_air.merge(air)
+		var/datum/gas_mixture/parents_air = parents[i]?.air
+		parents_air?.merge(air)
 	if(to_release)
 		local_turf.assume_air(to_release)

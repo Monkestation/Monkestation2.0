@@ -108,7 +108,7 @@
 
 /obj/item/reagent_containers/cup/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
 	. = ..()
-	if(!isliving(over))
+	if(!canconsume(over, user))
 		return
 
 	if(!isliving(usr) && !check_rights(R_FUN)) // monkestation edit: a bug? nah, its a feature!
@@ -554,7 +554,7 @@
 		if(!grinded)
 			to_chat(user, span_warning("There is nothing to grind!"))
 			return ITEM_INTERACT_BLOCKING
-		if(user.staminaloss > 50)
+		if(user.stamina.loss_as_percent > 50)
 			to_chat(user, span_warning("You are too tired to work!"))
 			return ITEM_INTERACT_BLOCKING
 
@@ -568,7 +568,7 @@
 		to_chat(user, span_notice("You start grinding..."))
 		if(!do_after(user, 2.5 SECONDS, target = src))
 			return ITEM_INTERACT_BLOCKING
-		user.stamina.adjust(-40)
+		user.stamina.adjust(-20)
 		switch(picked_option)
 			if("Juice") //prioritize juicing
 				if(grinded.juice_results)

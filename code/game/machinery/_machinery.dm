@@ -175,6 +175,7 @@
 	///extra reward for special shipbreaking components
 	var/extra_reward = list()
 
+
 /datum/armor/obj_machinery
 	melee = 25
 	bullet = 10
@@ -184,7 +185,6 @@
 
 /obj/machinery/Initialize(mapload)
 	. = ..()
-	GLOB.machines += src
 	SSmachines.register_machine(src)
 
 	if(ispath(circuit, /obj/item/circuitboard))
@@ -207,12 +207,11 @@
 
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/LateInitialize()
+/obj/machinery/LateInitialize(mapload_arg)
 	. = ..()
 	post_machine_initialize()
 
 /obj/machinery/Destroy()
-	GLOB.machines.Remove(src)
 	SSmachines.unregister_machine(src)
 	end_processing()
 	dump_inventory_contents()

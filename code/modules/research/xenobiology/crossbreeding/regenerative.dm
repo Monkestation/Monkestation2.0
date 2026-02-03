@@ -54,7 +54,7 @@ Regenerative extracts:
 
 /obj/item/slimecross/regenerative/purple
 	colour = "purple"
-	effect_desc = "Rapidly heals the target at an even greater rate, and injects them with some regenerative jelly afterwards. Prevents softcrit while active." // monkestation edit: updates effect_desc to reflect the rework
+	effect_desc = "Rapidly heals the target, and injects them with some regenerative jelly afterwards. Prevents softcrit while active." // monkestation edit: updates effect_desc to reflect the rework
 
 /* monkestation edit: moved functionality to status effect
 /obj/item/slimecross/regenerative/purple/core_effect(mob/living/target, mob/user)
@@ -249,6 +249,7 @@ Regenerative extracts:
 		to_chat(user, span_warning("The milky goo flows over [target], falling into a weak puddle."))
 	var/mob/living/dummy = new dummytype(target.loc)
 	to_chat(target, span_notice("The milky goo flows from your skin, forming an imperfect copy of you."))
+	dummy.copy_voice_from(target)
 	if(iscarbon(target))
 		var/mob/living/carbon/carbon_target = target
 		var/mob/living/carbon/carbon_dummy = dummy

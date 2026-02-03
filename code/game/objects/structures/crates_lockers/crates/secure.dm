@@ -111,30 +111,33 @@
 /obj/structure/closet/crate/secure/owned/Initialize(mapload, datum/bank_account/_buyer_account)
 	. = ..()
 	buyer_account = _buyer_account
-	if(istype(buyer_account, /datum/bank_account/department))
+	if(IS_DEPARTMENTAL_ACCOUNT(buyer_account))
 		department_purchase = TRUE
 		department_account = buyer_account
 
 /obj/structure/closet/crate/secure/owned/togglelock(mob/living/user, silent)
-	if(privacy_lock)
-		if(!broken)
-			var/obj/item/card/id/id_card = user.get_idcard(TRUE)
-			if(id_card)
-				if(id_card.registered_account)
-					if(id_card.registered_account == buyer_account || (department_purchase && (id_card.registered_account?.account_job?.paycheck_department) == (department_account.department_id)))
-						if(iscarbon(user))
-							add_fingerprint(user)
-						locked = !locked
-						user.visible_message(span_notice("[user] unlocks [src]'s privacy lock."),
-										span_notice("You unlock [src]'s privacy lock."))
-						// privacy_lock = FALSE // temporary fix while closets are being fixed
-						update_appearance()
-					else if(!silent)
-						to_chat(user, span_warning("Bank account does not match with buyer!"))
-				else if(!silent)
-					to_chat(user, span_warning("No linked bank account detected!"))
-			else if(!silent)
-				to_chat(user, span_warning("No ID detected!"))
-		else if(!silent)
+	if(!privacy_lock)
+		return ..() // calls /obj/structure/closet/proc/togglelock()
+	if(broken)
+		if(!silent)
 			to_chat(user, span_warning("[src] is broken!"))
-	else ..() // calls /obj/structure/closet/proc/togglelock()
+		return
+	var/obj/item/card/id/id_card = user.get_idcard(TRUE)
+	if(isnull(id_card))
+		if(!silent)
+			to_chat(user, span_warning("No ID detected!"))
+		return
+	if(isnull(id_card.registered_account))
+		if(!silent)
+			to_chat(user, span_warning("No linked bank account detected!"))
+		return
+	if(id_card.registered_account == buyer_account || (department_purchase && (id_card.registered_account?.account_job?.paycheck_department) == (department_account.department_id)))
+		if(iscarbon(user))
+			add_fingerprint(user)
+		locked = !locked
+		user.visible_message(span_notice("[user] unlocks [src]'s privacy lock."),
+						span_notice("You unlock [src]'s privacy lock."))
+		// privacy_lock = FALSE // temporary fix while closets are being fixed
+		update_appearance()
+	else if(!silent)
+		to_chat(user, span_warning("Bank account does not match with buyer!"))

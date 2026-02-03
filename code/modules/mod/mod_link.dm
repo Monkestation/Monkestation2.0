@@ -158,6 +158,7 @@ GLOBAL_LIST_INIT(scryer_auto_link_freqs, zebra_typecacheof(list(
 		return
 	var/old_name = mod_link.visual.name
 	mod_link.visual.name = speaker.GetVoice()
+	mod_link.visual.copy_voice_from(speaker)
 	mod_link.visual.say(raw_message, sanitize = FALSE, language = message_language, message_range = 2)
 	mod_link.visual.name = old_name
 
@@ -189,9 +190,12 @@ GLOBAL_LIST_INIT(scryer_auto_link_freqs, zebra_typecacheof(list(
 	var/starting_frequency
 	/// An additional name tag for the scryer, seen as "MODlink scryer - [label]"
 	var/label
+	/// The name of the ringtone we want to use for the modlink scryer
+	var/ringtone = CALL_RINGTONE_SOUND_DEFAULT
 
-/obj/item/clothing/neck/link_scryer/Initialize(mapload)
+/obj/item/clothing/neck/link_scryer/Initialize(mapload, ringtone = CALL_RINGTONE_SOUND_DEFAULT)
 	. = ..()
+	set_ringtone(ringtone)
 	mod_link = new(
 		src,
 		starting_frequency,
@@ -199,7 +203,8 @@ GLOBAL_LIST_INIT(scryer_auto_link_freqs, zebra_typecacheof(list(
 		CALLBACK(src, PROC_REF(can_call)),
 		CALLBACK(src, PROC_REF(make_link_visual)),
 		CALLBACK(src, PROC_REF(get_link_visual)),
-		CALLBACK(src, PROC_REF(delete_link_visual))
+		CALLBACK(src, PROC_REF(delete_link_visual)),
+		ringtone
 	)
 	START_PROCESSING(SSobj, src)
 
@@ -217,6 +222,7 @@ GLOBAL_LIST_INIT(scryer_auto_link_freqs, zebra_typecacheof(list(
 		. += span_notice("It is missing a battery, one can be installed by clicking with a power cell on it.")
 	. += span_notice("The MODlink ID is [mod_link.id], frequency is [mod_link.frequency || "unset"]. <b>Right-click</b> with multitool to copy/imprint frequency.")
 	. += span_notice("Use in hand to set name.")
+	. += span_notice("Its ringtone is set to '[ringtone]'")
 
 /obj/item/clothing/neck/link_scryer/equipped(mob/living/user, slot)
 	. = ..()
@@ -228,13 +234,24 @@ GLOBAL_LIST_INIT(scryer_auto_link_freqs, zebra_typecacheof(list(
 	mod_link?.end_call()
 
 /obj/item/clothing/neck/link_scryer/attack_self(mob/user, modifiers)
-	var/new_label = reject_bad_text(tgui_input_text(user, "Change the visible name", "Set Name", label, MAX_NAME_LEN))
-	if(!new_label)
-		balloon_alert(user, "invalid name!")
-		return
-	label = new_label
-	balloon_alert(user, "name set")
-	update_name()
+	var/choice = tgui_alert(user, "What would you like to do?", "MODlink Options", list("Set Name", "Set Ringtone", "Cancel"))
+	switch(choice)
+		if("Set Name")
+			var/new_label = reject_bad_text(tgui_input_text(user, "Change the visible name", "Set Name", label, MAX_NAME_LEN))
+			if(!new_label)
+				balloon_alert(user, "invalid name!")
+				return
+			label = new_label
+			balloon_alert(user, "name set")
+			update_name()
+		if("Set Ringtone")
+			var/new_ringtone = tgui_input_list(user, "Choose a ringtone", "Ringtone", GLOB.call_ringtones)
+			if(!new_ringtone)
+				return
+			set_ringtone(new_ringtone)
+			to_chat(user, span_notice("Ringtone '[ringtone]' selected."))
+		if("Cancel")
+			return
 
 /obj/item/clothing/neck/link_scryer/process(seconds_per_tick)
 	if(!mod_link.link_call)
@@ -310,6 +327,15 @@ GLOBAL_LIST_INIT(scryer_auto_link_freqs, zebra_typecacheof(list(
 		user.balloon_alert(user, "no charge!")
 	else
 		call_link(user, mod_link)
+
+/obj/item/clothing/neck/link_scryer/proc/set_ringtone(ringtone)
+	if(!ringtone)
+		return
+
+	src.ringtone = ringtone
+	src.mod_link?.soundloop?.set_ringtone(src.ringtone)
+	src.mod_link?.soundloop?.stop()
+
 
 /obj/item/clothing/neck/link_scryer/proc/get_user()
 	var/mob/living/carbon/user = loc
@@ -408,6 +434,10 @@ GLOBAL_LIST_INIT(scryer_auto_link_freqs, zebra_typecacheof(list(
 	var/datum/callback/get_visual_callback
 	/// A callback that deletes the visuals of the MODlink.
 	var/datum/callback/delete_visual_callback
+	/// The looping sound of our ringtone
+	var/datum/looping_sound/call_ringtone/soundloop
+	/// Reference to the mod_link that is being called (if this is the caller)
+	var/datum/mod_link/attempting_target = null
 
 /datum/mod_link/New(
 	atom/holder,
@@ -416,7 +446,8 @@ GLOBAL_LIST_INIT(scryer_auto_link_freqs, zebra_typecacheof(list(
 	datum/callback/can_call_callback,
 	datum/callback/make_visual_callback,
 	datum/callback/get_visual_callback,
-	datum/callback/delete_visual_callback
+	datum/callback/delete_visual_callback,
+	ringtone = CALL_RINGTONE_SOUND_DEFAULT
 )
 	var/attempts = 0
 	var/digits_to_make = 3
@@ -437,12 +468,14 @@ GLOBAL_LIST_INIT(scryer_auto_link_freqs, zebra_typecacheof(list(
 	src.make_visual_callback = make_visual_callback
 	src.get_visual_callback = get_visual_callback
 	src.delete_visual_callback = delete_visual_callback
+	src.soundloop = new(holder, ringtone = ringtone)
 	RegisterSignal(holder, COMSIG_QDELETING, PROC_REF(on_holder_delete))
 
 /datum/mod_link/Destroy()
 	GLOB.mod_link_ids -= id
 	if(link_call)
 		end_call()
+	QDEL_NULL(soundloop)
 	return ..()
 
 /datum/mod_link/proc/get_other()
@@ -473,12 +506,14 @@ GLOBAL_LIST_INIT(scryer_auto_link_freqs, zebra_typecacheof(list(
 	if(!can_call_callback.Invoke() || !called.can_call_callback.Invoke())
 		holder.balloon_alert(user, "can't call!")
 		return
-	link_target.playsound_local(get_turf(called.holder), 'sound/weapons/ring.ogg', 15, vary = TRUE)
+
+	called.soundloop.start()
 	var/atom/movable/screen/alert/modlink_call/alert = link_target.throw_alert("[REF(src)]_modlink", /atom/movable/screen/alert/modlink_call)
 	alert.desc = "[holder] ([id]) is calling you! Left-click this to accept the call. Right-click to deny it."
 	alert.link_caller_ref = WEAKREF(src)
 	alert.link_receiver_ref = WEAKREF(called)
 	alert.user_ref = WEAKREF(user)
+	attempting_target = called
 
 /datum/mod_link/proc/end_call()
 	QDEL_NULL(link_call)
@@ -540,6 +575,21 @@ GLOBAL_LIST_INIT(scryer_auto_link_freqs, zebra_typecacheof(list(
 /proc/call_link(mob/user, datum/mod_link/calling_link)
 	if(!calling_link.frequency)
 		return
+	if(calling_link.attempting_target)
+		var/response = tgui_alert(user, "You are currently attempting a call. Would you like to cancel it?", "MODlink Call", list("Cancel Call", "Keep Trying"))
+		if(response == "Cancel Call")
+			var/datum/mod_link/target_link = calling_link.attempting_target
+			if(target_link)
+				target_link.soundloop.stop()
+				var/mob/living/target_mob = target_link.get_user_callback.Invoke()
+				if(target_mob)
+					var/atom/movable/screen/alert/modlink_call/alert = target_mob.alerts["[REF(calling_link)]_modlink"]
+					if(alert)
+						alert.end_message = "call cancelled!"
+					target_mob.clear_alert("[REF(calling_link)]_modlink")
+			calling_link.attempting_target = null
+		return
+
 	var/list/callers = list()
 	for(var/id in GLOB.mod_link_ids)
 		var/datum/mod_link/link = GLOB.mod_link_ids[id]
@@ -562,7 +612,7 @@ GLOBAL_LIST_INIT(scryer_auto_link_freqs, zebra_typecacheof(list(
 	name = "MODlink Call Incoming"
 	desc = "Someone is calling you! Left-click this to accept the call. Right-click to deny it."
 	icon_state = "called"
-	timeout = 10 SECONDS
+	timeout = 30 SECONDS
 	var/end_message = "call timed out!"
 	/// A weak reference to the MODlink that is calling.
 	var/datum/weakref/link_caller_ref
@@ -593,7 +643,33 @@ GLOBAL_LIST_INIT(scryer_auto_link_freqs, zebra_typecacheof(list(
 /atom/movable/screen/alert/modlink_call/Destroy()
 	var/mob/living/user = user_ref?.resolve()
 	var/datum/mod_link/link_caller = link_caller_ref?.resolve()
-	if(!user || !link_caller)
+	var/datum/mod_link/link_receiver = link_receiver_ref?.resolve()
+	if(link_receiver)
+		link_receiver.soundloop.stop()
+	if(!link_caller || !user)
 		return ..()
 	link_caller.holder.balloon_alert(user, end_message)
+	link_caller.attempting_target = null
 	return ..()
+
+/datum/looping_sound/call_ringtone
+	volume = 50
+	channel = CHANNEL_RINGTONES
+	sound_channel = CHANNEL_RINGTONES
+
+/datum/looping_sound/call_ringtone/New(_parent, start_immediately, _direct, _skip_starting_sounds, _channel = CHANNEL_RINGTONES, ringtone = CALL_RINGTONE_SOUND_DEFAULT)
+	set_ringtone(ringtone)
+	. = ..()
+
+/datum/looping_sound/call_ringtone/stop(null_parent)
+	. = ..()
+	playsound(get_turf(parent), sound(null), channel = CHANNEL_RINGTONES, mixer_channel = CHANNEL_RINGTONES)
+
+/datum/looping_sound/call_ringtone/proc/set_ringtone(ringtone = CALL_RINGTONE_SOUND_DEFAULT)
+	var/list/ringtone_set = GLOB.call_ringtones[ringtone]
+	mid_sounds = ringtone_set[CALL_RINGTONE_I_SOUNDFILE]
+	mid_length = ringtone_set[CALL_RINGTONE_I_LENGTH]
+	if(loop_started)
+		stop()
+		start()
+

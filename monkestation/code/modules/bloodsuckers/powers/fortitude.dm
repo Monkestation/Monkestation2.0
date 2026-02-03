@@ -3,20 +3,17 @@
 	desc = "Withstand egregious physical wounds and walk away from attacks that would stun, pierce, and dismember lesser beings."
 	button_icon_state = "power_fortitude"
 	power_explanation = "Fortitude:\n\
-		Activating Fortitude will provide pierce, shove, and dismember immunity for 10 seconds.\n\
-		Everyone around you will know that you have activated it.\n\
-		You will additionally gain resistance to Brute and Stamina damage, scaling with level.\n\
-		While using Fortitude, you will be unable to sprint.\n\
-		At level 4, you gain complete stun immunity.\n\
-		Higher levels will increase Brute and Stamina resistance, increase the duration, and reduce the cooldown."
-	power_flags = BP_AM_TOGGLE | BP_AM_CUSTOM_COOLDOWN | BP_AM_COSTLESS_UNCONSCIOUS
+		Activating Fortitude will provide pierce, shove, and dismember immunity.\n\
+		However, everyone around you will know that you have activated it, and you will be unable to sprint.\n\
+		You will additionally gain resistance to Brute and Stamina damage, starting at 20%, increasing 5% per level, and maxing at 50%. \n\
+		At level 4, you gain additional resistance to stun batons, and will ignore their staggering effects."
+	power_flags = BP_AM_TOGGLE
 	check_flags = BP_CANT_USE_IN_TORPOR | BP_CANT_USE_IN_FRENZY
 	purchase_flags = BLOODSUCKER_CAN_BUY | VASSAL_CAN_BUY
-	bloodcost = 30
-	cooldown_time = 30 SECONDS
-	constant_bloodcost = 0.2
+	bloodcost = 10
+	cooldown_time = 10 SECONDS
+	constant_bloodcost = 3
 
-	var/fortitude_resist // So we can raise and lower your brute resist based on what your level_current WAS.
 	/// Base traits granted by fortitude.
 	var/static/list/base_traits = list(
 		TRAIT_PIERCEIMMUNE,
@@ -29,27 +26,13 @@
 		TRAIT_NO_SHOCK_BUILDUP,
 	)
 	/// Upgraded traits granted by fortitude.
-	var/static/list/upgraded_traits = list(TRAIT_STUNIMMUNE, TRAIT_CANT_STAMCRIT)
+	var/static/list/upgraded_traits = list(TRAIT_BATON_RESISTANCE)
 
-	///How long fortitude lasts, in seconds
-	var/power_duration = 10
-	///How much time is left on this current usage of fortitude, in seconds
-	var/seconds_remaining = 10
-	///The user's brute mod before fortitude was enabled
-	var/old_brute_mod = 1
-	///The user's stamina mod before fortitude was enabled
-	var/old_stamina_mod = 1
+	///How much resistance is provided by the current use of fortitude, so it can be adjusted correctly when fortitude ends.
+	///Needs to be tracked separately from level_current to avoid exploits.
+	var/fortitude_resist
 	///Reference to the visual icon of the fortitude power.
 	var/atom/movable/flick_visual/icon_ref
-
-/datum/action/cooldown/bloodsucker/fortitude/upgrade_power()
-	. = ..()
-
-	power_duration += 1
-	seconds_remaining = power_duration
-
-	//Reduce cooldown by 5 seconds for every level, can't go below 10 seconds.
-	cooldown_time = max(10 SECONDS, (35 SECONDS - ((5 SECONDS) * level_current)))
 
 /datum/action/cooldown/bloodsucker/fortitude/ActivatePower(trigger_flags)
 	. = ..()
@@ -62,23 +45,17 @@
 
 	if(level_current >= 4)
 		owner.add_traits(upgraded_traits, FORTITUDE_TRAIT)
-		owner.visible_message(span_warning("[owner]'s skin turns extremely hard! Stuns will be completely ineffective!"))
+		owner.visible_message(span_warning("[owner]'s skin turns extremely hard! Batons will be extremely ineffective!"))
 	else
 		owner.visible_message(span_warning("[owner]'s skin hardens!"))
 
 	var/mob/living/carbon/human/bloodsucker_user = owner
-	if(HAS_MIND_TRAIT(owner, TRAIT_BLOODSUCKER_ALIGNED))
-		fortitude_resist = max(0.3, 0.7 - level_current * 0.1)
 
-		old_brute_mod = bloodsucker_user.physiology.brute_mod
-		old_stamina_mod = bloodsucker_user.physiology.stamina_mod
+	fortitude_resist = max(0.5, 0.85 - level_current * 0.05)
 
-		bloodsucker_user.physiology.brute_mod *= fortitude_resist
+	bloodsucker_user.physiology.brute_mod *= fortitude_resist
+	bloodsucker_user.physiology.stamina_mod *= fortitude_resist
 
-		if (level_current >= 4)
-			bloodsucker_user.physiology.stamina_mod = 0
-		else
-			bloodsucker_user.physiology.stamina_mod *= fortitude_resist
 
 /datum/action/cooldown/bloodsucker/fortitude/process(seconds_per_tick)
 	// Checks that we can keep using this.
@@ -93,27 +70,13 @@
 	if(istype(user.buckled, /obj/vehicle))
 		user.buckled.unbuckle_mob(src, force=TRUE)
 
-	if (seconds_remaining > 0)
-		seconds_remaining -= seconds_per_tick
-		build_all_button_icons(UPDATE_BUTTON_STATUS)
-	else
-		DeactivatePower()
-
-/datum/action/cooldown/bloodsucker/fortitude/update_button_status(atom/movable/screen/movable/action_button/button, force = FALSE)
-	. = ..()
-
-	if (active)
-		button.maptext = MAPTEXT_TINY_UNICODE("[round(seconds_remaining, 1)]")
-
 /datum/action/cooldown/bloodsucker/fortitude/DeactivatePower()
-	if(ishuman(owner) && HAS_MIND_TRAIT(owner, TRAIT_BLOODSUCKER_ALIGNED))
-		var/mob/living/carbon/human/bloodsucker_user = owner
-		bloodsucker_user.physiology.brute_mod = old_brute_mod
-		bloodsucker_user.physiology.stamina_mod = old_stamina_mod
+	var/mob/living/carbon/human/bloodsucker_user = owner
+	bloodsucker_user.physiology.brute_mod /= fortitude_resist
+	bloodsucker_user.physiology.stamina_mod /= fortitude_resist
+
 	// Remove Traits & Effects
 	owner.remove_traits(base_traits + upgraded_traits, FORTITUDE_TRAIT)
-
-	seconds_remaining = power_duration
 
 	owner.visible_message(span_warning("[owner]'s skin softens & returns to normal."))
 	owner.remove_power_icon_animation(icon_ref)

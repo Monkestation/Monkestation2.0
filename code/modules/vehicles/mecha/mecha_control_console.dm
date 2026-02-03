@@ -119,6 +119,8 @@
 	return ..()
 
 /obj/item/mecha_parts/mecha_tracking/try_attach_part(mob/user, obj/vehicle/sealed/mecha/M, attach_right = FALSE)
+	if(!do_after(user, 5 SECONDS, M))
+		return
 	. = ..()
 	if(!.)
 		return

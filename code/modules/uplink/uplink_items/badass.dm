@@ -43,7 +43,7 @@
 	name = "Syndicate Smokes"
 	desc = "Strong flavor, dense smoke, infused with omnizine."
 	item = /obj/item/storage/fancy/cigarettes/cigpack_syndicate
-	cost = 2
+	cost = 1
 	illegal_tech = FALSE
 
 /datum/uplink_item/badass/syndiecash
@@ -51,7 +51,7 @@
 	desc = "A secure briefcase containing 5000 space credits. Useful for bribing personnel, or purchasing goods \
 			and services at lucrative prices. The briefcase also feels a little heavier to hold; it has been \
 			manufactured to pack a little bit more of a punch if your client needs some convincing."
-	item = /obj/item/storage/secure/briefcase/syndie
+	item = /obj/item/storage/briefcase/secure/syndie
 	cost = 3
 	progression_minimum = 5 MINUTES
 	restricted = TRUE

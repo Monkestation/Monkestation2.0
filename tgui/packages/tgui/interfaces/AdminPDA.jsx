@@ -1,6 +1,5 @@
-import { Section, Dropdown, Input, Box, TextArea } from '../components';
 import { useBackend, useLocalState } from '../backend';
-import { Button } from '../components/Button';
+import { Box, Button, Dropdown, Input, Section, TextArea } from '../components';
 import { Window } from '../layouts';
 
 export const AdminPDA = (props) => {
@@ -75,7 +74,7 @@ const SenderInfo = (props) => {
         <Input
           placeholder="Sender name..."
           fluid
-          onInput={(e, value) => {
+          onChange={(value) => {
             setName(value);
           }}
         />
@@ -84,7 +83,7 @@ const SenderInfo = (props) => {
         <Input
           placeholder="Sender's job..."
           fluid
-          onInput={(e, value) => {
+          onChange={(value) => {
             setJob(value);
           }}
         />
@@ -107,8 +106,8 @@ const MessageInput = (props) => {
     false,
   );
 
-  const tooltipText = function (name, job, message, target) {
-    let reasonList = [];
+  const tooltipText = (name, job, message, target) => {
+    const reasonList = [];
     if (!target) reasonList.push('target');
     if (!name) reasonList.push('name');
     if (!job) reasonList.push('job');
@@ -124,8 +123,9 @@ const MessageInput = (props) => {
         <TextArea
           placeholder="Type the message you want to send..."
           height="200px"
+          width="100%"
           mb={1}
-          onInput={(e, value) => {
+          onChange={(value) => {
             setMessageText(value);
           }}
         />

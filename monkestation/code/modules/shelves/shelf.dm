@@ -18,7 +18,7 @@
 /obj/structure/cargo_shelf/debug
 	capacity = 12
 
-/obj/structure/cargo_shelf/Initialize()
+/obj/structure/cargo_shelf/Initialize(mapload)
 	. = ..()
 	shelf_contents = new/list(capacity) // Initialize our shelf's contents list, this will be used later.
 	var/stack_layer // This is used to generate the sprite layering of the shelf pieces.
@@ -190,3 +190,5 @@
 		R.add_fingerprint(user)
 		qdel(src)
 	building = FALSE
+
+#undef DEFAULT_SHELF_CAPACITY

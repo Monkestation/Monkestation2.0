@@ -1,8 +1,3 @@
-#define BLOODSUCKER_MAX_BLOOD_DEFAULT 600
-#define BLOODSUCKER_MAX_BLOOD_INCREASE_ON_RANKUP 80
-#define BLOODSUCKER_REGEN_INCREASE_ON_RANKUP 0.25
-#define BLOODSUCKER_UNARMED_DMG_INCREASE_ON_RANKUP 0.5
-
 /datum/antagonist/bloodsucker
 	name = "\improper Bloodsucker"
 	show_in_antagpanel = TRUE
@@ -17,6 +12,7 @@
 	ui_name = "AntagInfoBloodsucker"
 	preview_outfit = /datum/outfit/bloodsucker_outfit
 	stinger_sound = 'monkestation/sound/bloodsuckers/BloodsuckerAlert.ogg'
+	can_assign_self_objectives = TRUE
 	/// How much blood we have, starting off at default blood levels.
 	var/bloodsucker_blood_volume = BLOOD_VOLUME_NORMAL
 	/// How much blood we can have at once, increases per level.
@@ -73,6 +69,7 @@
 
 	/// Used for Bloodsuckers gaining levels from drinking blood
 	var/blood_level_gain = 0
+	var/total_blood_level_gain = 0
 	var/blood_level_gain_amount = 0
 
 	///Blood display HUD
@@ -166,6 +163,7 @@
 	RegisterSignal(current_mob, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 	RegisterSignal(current_mob, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 	RegisterSignal(current_mob, COMSIG_HUMAN_ON_HANDLE_BLOOD, PROC_REF(handle_blood))
+	RegisterSignal(current_mob, COMSIG_MOB_UPDATE_SIGHT, PROC_REF(on_update_sight))
 	handle_clown_mutation(current_mob, mob_override ? null : "As a vampiric clown, you are no longer a danger to yourself. Your clownish nature has been subdued by your thirst for blood.")
 	add_team_hud(current_mob)
 	current_mob.clear_mood_event("vampcandle")
@@ -179,6 +177,8 @@
 	ensure_brain_nonvital(current_mob)
 	setup_limbs(current_mob)
 	setup_tracker(current_mob)
+
+	current_mob.update_sight()
 
 #ifdef BLOODSUCKER_TESTING
 	var/turf/user_loc = get_turf(current_mob)
@@ -195,12 +195,13 @@
 /datum/antagonist/bloodsucker/remove_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/current_mob = mob_override || owner.current
-	UnregisterSignal(current_mob, list(COMSIG_ATOM_EXAMINE, COMSIG_ATOM_AFTER_EXPOSE_REAGENTS, COMSIG_MOB_GET_STATUS_TAB_ITEMS, COMSIG_LIVING_LIFE, COMSIG_LIVING_DEATH, COMSIG_MOVABLE_MOVED, COMSIG_HUMAN_ON_HANDLE_BLOOD, SIGNAL_REMOVETRAIT(TRAIT_SHADED), COMSIG_MOB_LOGIN))
+	UnregisterSignal(current_mob, list(COMSIG_ATOM_EXAMINE, COMSIG_ATOM_AFTER_EXPOSE_REAGENTS, COMSIG_MOB_GET_STATUS_TAB_ITEMS, COMSIG_LIVING_LIFE, COMSIG_LIVING_DEATH, COMSIG_MOVABLE_MOVED, COMSIG_HUMAN_ON_HANDLE_BLOOD, COMSIG_MOB_UPDATE_SIGHT, SIGNAL_REMOVETRAIT(TRAIT_SHADED), COMSIG_MOB_LOGIN))
 	handle_clown_mutation(current_mob, removing = FALSE)
 	current_mob.remove_language(/datum/language/vampiric, source = LANGUAGE_BLOODSUCKER)
 
-	cleanup_tracker()
+	cleanup_beacon()
 	cleanup_limbs(current_mob)
+	current_mob.update_sight()
 
 	if(current_mob.hud_used)
 		var/datum/hud/hud_used = current_mob.hud_used
@@ -250,6 +251,7 @@
 ///Called when you get the antag datum, called only ONCE per antagonist.
 /datum/antagonist/bloodsucker/on_gain()
 	RegisterSignal(SSsol, COMSIG_SOL_RANKUP_BLOODSUCKERS, PROC_REF(sol_rank_up))
+	RegisterSignal(SSdcs, COMSIG_GLOB_MONSTER_HUNTER_QUERY, PROC_REF(query_for_monster_hunter))
 
 	ADD_TRAIT(owner, TRAIT_BLOODSUCKER_ALIGNED, REF(src))
 
@@ -276,6 +278,7 @@
 /// Called by the remove_antag_datum() and remove_all_antag_datums() mind procs for the antag datum to handle its own removal and deletion.
 /datum/antagonist/bloodsucker/on_removal()
 	REMOVE_TRAIT(owner, TRAIT_BLOODSUCKER_ALIGNED, REF(src))
+	UnregisterSignal(SSdcs, COMSIG_GLOB_MONSTER_HUNTER_QUERY)
 	UnregisterSignal(SSsol, COMSIG_SOL_RANKUP_BLOODSUCKERS)
 	clear_powers_and_stats()
 	check_cancel_sunlight() //check if sunlight should end
@@ -331,7 +334,9 @@
 /datum/antagonist/bloodsucker/get_preview_icon()
 
 	var/icon/final_icon = render_preview_outfit(/datum/outfit/bloodsucker_outfit)
-	final_icon.Blend(icon('icons/effects/blood.dmi', "uniformblood"), ICON_OVERLAY)
+	var/icon/blood_icon = icon('icons/effects/blood.dmi', "suitblood")
+	blood_icon.Blend(BLOOD_COLOR_RED, ICON_MULTIPLY)
+	final_icon.Blend(blood_icon, ICON_OVERLAY)
 
 	return finish_preview_icon(final_icon)
 
@@ -480,11 +485,6 @@
 	var/obj/item/organ/internal/heart/newheart = owner.current.get_organ_slot(ORGAN_SLOT_HEART)
 	if(newheart)
 		newheart.beating = initial(newheart.beating)
-	var/obj/item/organ/internal/eyes/user_eyes = user.get_organ_slot(ORGAN_SLOT_EYES)
-	if(user_eyes)
-		user_eyes.lighting_cutoff = initial(user_eyes.lighting_cutoff)
-		user_eyes.color_cutoffs = initial(user_eyes.color_cutoffs)
-		user_eyes.sight_flags = initial(user_eyes.sight_flags)
 	user.update_sight()
 
 /// Name shown on antag list
@@ -502,7 +502,9 @@
 	// Claim a Lair Objective
 	objectives += new /datum/objective/bloodsucker/lair(null, owner)
 	// Escape Objective
-	objectives += new /datum/objective/escape(null)
+	var/datum/objective/escape/escape_objective = new
+	escape_objective.owner = owner
+	objectives += escape_objective
 
 	// Conversion objective.
 	// Most likely to just be "have X living vassals", but can also be "vassalize command" or "vassalize X members of Y department"
@@ -589,7 +591,31 @@
 	if(!QDELETED(current))
 		addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/antagonist, add_team_hud), current), 0.5 SECONDS, TIMER_OVERRIDE | TIMER_UNIQUE) //i don't trust this to not act weird
 
+/datum/antagonist/bloodsucker/proc/query_for_monster_hunter(datum/source, list/prey)
+	SIGNAL_HANDLER
+	if(final_death || handling_death || istype(my_clan, /datum/bloodsucker_clan/vassal))
+		return
+	if(broke_masquerade || length(vassals) || total_blood_level_gain >= 250) // arbitrary number but whatever
+		prey += owner
+
+/datum/antagonist/bloodsucker/proc/on_update_sight(mob/user)
+	SIGNAL_HANDLER
+	user.add_sight(SEE_MOBS)
+	user.lighting_cutoff = max(user.lighting_cutoff, LIGHTING_CUTOFF_HIGH)
+	user.lighting_color_cutoffs = blend_cutoff_colors(user.lighting_color_cutoffs, list(25, 8, 5))
+
 /datum/status_effect/silver_cuffed
 	id = "silver cuffed"
 	alert_type = null
+	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
 	remove_on_fullheal = TRUE
+
+/datum/status_effect/silver_cuffed/on_apply()
+	if(!iscarbon(owner))
+		return FALSE
+	return TRUE
+
+/datum/status_effect/silver_cuffed/tick(seconds_between_ticks)
+	var/mob/living/carbon/carbon_owner = owner
+	if(!istype(carbon_owner.handcuffed, /obj/item/restraints/handcuffs/silver))
+		qdel(src)

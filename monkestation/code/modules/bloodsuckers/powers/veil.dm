@@ -12,8 +12,9 @@
 	constant_bloodcost = 0.1
 	cooldown_time = 10 SECONDS
 	var/datum/dna/originalDNA
-	var/originalname
 	var/prev_disfigured
+	var/original_name
+	var/alist/original_clothing_prefs
 
 /datum/action/cooldown/bloodsucker/veil/ActivatePower(trigger_flags)
 	. = ..()
@@ -35,7 +36,8 @@
 	var/mob/living/carbon/human/user = owner
 	to_chat(owner, span_warning("You mystify the air around your person. Your identity is now altered."))
 	originalDNA = new user.dna.type
-	originalname = user.real_name
+	original_name = user.real_name
+	original_clothing_prefs = user.backup_clothing_prefs()
 	user.dna.copy_dna(originalDNA)
 	randomize_human(user)
 	prev_disfigured = HAS_TRAIT(user, TRAIT_DISFIGURED) // I was disfigured! //prev_disabilities = user.disabilities
@@ -49,8 +51,9 @@
 	var/mob/living/carbon/human/user = owner
 	to_chat(user, span_notice("You return to your old form."))
 	originalDNA.copy_dna(user.dna, COPY_DNA_SE|COPY_DNA_SPECIES|COPY_DNA_MUTATIONS)
-	user.real_name = originalname
-	user.updateappearance(mutcolor_update=1)
+	user.real_name = original_name
+	user.restore_clothing_prefs(original_clothing_prefs)
+	user.updateappearance(mutcolor_update = TRUE)
 	//user.disabilities = prev_disabilities // Restore HUSK, CLUMSY, etc.
 	if(prev_disfigured)
 		//We are ASSUMING husk. // user.status_flags |= DISFIGURED // Restore "Unknown" disfigurement

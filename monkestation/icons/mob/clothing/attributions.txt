@@ -1,3 +1,6 @@
 left_green_jester_shoes - Cmpwarrior
 right_green_jester_shoes - Cmpwarrior
 bells_green_jester_shoes - Cmpwarrior
+
+batter_hat - Snack-Max/Snackiversal/Snackalus
+batter - Snack-Max/Snackiversal/Snackalus

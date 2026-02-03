@@ -32,14 +32,12 @@
 /datum/quirk/glass_jaw/remove()
 	UnregisterSignal(quirk_holder, COMSIG_MOB_APPLY_DAMAGE)
 
-/datum/quirk/glass_jaw/proc/punch_out(mob/living/carbon/source, damage, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction)
+/datum/quirk/glass_jaw/proc/punch_out(mob/living/carbon/source, damage, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction, attacking_item)
 	SIGNAL_HANDLER
 	if(isbodypart(def_zone))
 		var/obj/item/bodypart/hitting = def_zone
 		def_zone = hitting.body_zone
-	if(damagetype != BRUTE || def_zone != BODY_ZONE_HEAD)
-		return
-	if(damage < 5)
+	if(damage < 5 || damagetype != BRUTE || def_zone != BODY_ZONE_HEAD || wound_bonus == CANT_WOUND)
 		return
 	//blunt items are more likely to knock out, but sharp ones are still capable of doing it
 	if(prob(CEILING(damage * (sharpness & (SHARP_EDGED|SHARP_POINTY) ? 0.65 : 1), 1)))

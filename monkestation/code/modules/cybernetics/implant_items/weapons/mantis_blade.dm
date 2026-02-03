@@ -87,7 +87,7 @@
 	COOLDOWN_START(other, lunge, 10 SECONDS)
 	if(isliving(user))
 		var/mob/living/living = user
-		living.stamina?.adjust(-50) // cost of a lunge
+		living.stamina?.adjust(-25) // cost of a lunge
 	attack(interacting_with, user)
 	return
 

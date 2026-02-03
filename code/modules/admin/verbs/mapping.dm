@@ -206,6 +206,8 @@ ADMIN_VERB(create_mapping_job_icons, R_DEBUG, FALSE, "Generate job landmarks ico
 			if(JOB_CYBORG)
 				final.Insert(icon('icons/mob/silicon/robots.dmi', "robot", SOUTH, 1), "Cyborg")
 			else
+				if(isnull(JB.outfit))
+					continue
 				for(var/obj/item/I in D)
 					qdel(I)
 				randomize_human(D)

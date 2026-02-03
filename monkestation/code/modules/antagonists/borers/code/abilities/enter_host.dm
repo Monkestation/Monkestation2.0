@@ -26,7 +26,7 @@
 				owner.balloon_alert(owner, "cannot function with sugar in host")
 				return
 			// we have a host with sugar and our host is dead. Amazing fuckup
-			owner.balloon_alert(owner, "Struggling to leave")
+			owner.balloon_alert(owner, "struggling to leave")
 			to_chat(cortical_owner, span_userdanger("We struggle to leave our host, barelly able to due to the sugar in their blood no longer moving, this will take time..."))
 			StartCooldown(30 SECONDS) // stay in place now
 			sleep(30 SECONDS)
@@ -116,6 +116,11 @@
 
 	var/obj/item/organ/internal/borer_body/borer_organ = new(cortical_owner.human_host)
 	borer_organ.borer = owner
+	var/obj/item/organ/internal/brain = cortical_owner.human_host.get_organ_slot(ORGAN_SLOT_BRAIN)
+	if(brain)
+		borer_organ.zone = brain.zone // The worm follows the brain
+	cortical_owner.bodytemp_heat_damage_limit = cortical_owner.human_host.bodytemp_heat_damage_limit
+	cortical_owner.bodytemp_cold_damage_limit = cortical_owner.human_host.bodytemp_cold_damage_limit
 	borer_organ.Insert(cortical_owner.human_host)
 
 	var/turf/human_turftwo = get_turf(cortical_owner.human_host)

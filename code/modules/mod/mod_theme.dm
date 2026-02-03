@@ -376,7 +376,7 @@
 		),
 	)
 
-/datum/mod_theme/loader/New()
+/datum/mod_theme/mining/New()
 	.=..()
 	allowed_suit_storage = GLOB.mining_suit_allowed
 
@@ -476,7 +476,6 @@
 		/obj/item/reagent_containers/pill,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/stack/medical,
-		/obj/item/stack/heal_pack,
 		/obj/item/sensor_device,
 		/obj/item/storage/pill_bottle,
 		/obj/item/storage/bag/chemistry,
@@ -573,7 +572,6 @@
 		/obj/item/reagent_containers/pill,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/stack/medical,
-		/obj/item/stack/heal_pack,
 		/obj/item/sensor_device,
 		/obj/item/storage/pill_bottle,
 		/obj/item/storage/bag/chemistry,
@@ -1198,7 +1196,6 @@
 		/obj/item/sensor_device,
 		/obj/item/shield/energy,
 		/obj/item/stack/medical,
-		/obj/item/stack/heal_pack,
 		/obj/item/storage/bag/bio,
 		/obj/item/storage/bag/chemistry,
 		/obj/item/storage/pill_bottle,

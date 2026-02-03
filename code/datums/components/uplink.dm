@@ -99,6 +99,7 @@
 /datum/component/uplink/proc/handle_uplink_handler_update()
 	SIGNAL_HANDLER
 	SStgui.update_uis(src)
+	SStgui.update_static_data_for_all_viewers()
 
 /// When a new uplink is made via the syndicate beacon it locks all lockable uplinks and destroys replacement uplinks
 /datum/component/uplink/proc/handle_uplink_replaced()

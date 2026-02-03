@@ -20,6 +20,7 @@
 	id = "flash_blur"
 	status_type = STATUS_EFFECT_REFRESH
 	tick_interval = STATUS_EFFECT_NO_TICK
+	processing_speed = STATUS_EFFECT_PRIORITY
 	alert_type = null
 	remove_on_fullheal = TRUE
 	on_remove_on_mob_delete = TRUE
@@ -46,7 +47,7 @@
 
 	var/atom/movable/plane_master_controller/game_plane_master_controller = owner.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
 	game_plane_master_controller.transition_filter("flash_blur", gauss_blur_filter(size = 0), FLASH_BLUR_FADE_OUT_TIME)
-	owner.flash_timer = addtimer(CALLBACK(game_plane_master_controller, TYPE_PROC_REF(/datum, remove_filter), "flash_blur"), FLASH_BLUR_FADE_OUT_TIME + 1, TIMER_STOPPABLE | TIMER_OVERRIDE | TIMER_UNIQUE)
+	owner.flash_timer = addtimer(CALLBACK(game_plane_master_controller, TYPE_PROC_REF(/datum, remove_filter), "flash_blur"), FLASH_BLUR_FADE_OUT_TIME + 1, TIMER_STOPPABLE | TIMER_OVERRIDE | TIMER_UNIQUE | TIMER_CLIENT_TIME)
 
 /datum/status_effect/flash_blur/refresh(effect, ...)
 	remove_owner_timer()

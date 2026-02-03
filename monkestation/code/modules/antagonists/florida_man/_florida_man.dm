@@ -8,6 +8,7 @@
 	objectives = list()
 	show_to_ghosts = TRUE
 	preview_outfit = /datum/outfit/florida_man_one
+	antag_count_points = 5
 	var/datum/action/cooldown/spell/florida_doorbuster/doorbuster
 	var/datum/action/cooldown/spell/florida_cuff_break/cuff_break
 	var/datum/action/cooldown/spell/florida_regeneration/regen

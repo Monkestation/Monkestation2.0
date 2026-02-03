@@ -62,7 +62,7 @@
 		RegisterSignal(parent, COMSIG_ATOM_EMP_ACT, PROC_REF(on_emp))
 		RegisterSignal(parent, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 		RegisterSignal(parent, COMSIG_LIVING_REVIVE, PROC_REF(on_revive))
-		RegisterSignal(parent, COMSIG_MOB_TRIED_ACCESS, PROC_REF(check_access))
+		RegisterSignal(parent, COMSIG_MOB_RETRIEVE_ACCESS, PROC_REF(retrieve_access))
 		RegisterSignal(parent, COMSIG_LIVING_ELECTROCUTE_ACT, PROC_REF(on_shock))
 		RegisterSignal(parent, COMSIG_LIVING_MINOR_SHOCK, PROC_REF(on_minor_shock))
 		RegisterSignal(parent, COMSIG_SPECIES_GAIN, PROC_REF(check_viable_biotype))
@@ -87,7 +87,7 @@
 								COMSIG_NANITE_SYNC,
 								COMSIG_ATOM_EMP_ACT,
 								COMSIG_LIVING_DEATH,
-								COMSIG_MOB_TRIED_ACCESS,
+								COMSIG_MOB_RETRIEVE_ACCESS,
 								COMSIG_LIVING_ELECTROCUTE_ACT,
 								COMSIG_LIVING_MINOR_SHOCK,
 								COMSIG_MOVABLE_HEAR,
@@ -98,7 +98,7 @@
 /datum/component/nanites/Destroy()
 	STOP_PROCESSING(SSnanites, src)
 	QDEL_LIST(programs)
-	if(host_mob)
+	if(!QDELETED(host_mob))
 		set_nanite_bar(TRUE)
 		host_mob.hud_set_nanite_indicator()
 	host_mob = null
@@ -253,7 +253,7 @@
 	var/image/holder = host_mob.hud_list[DIAG_NANITE_FULL_HUD]
 	if(!holder) // what
 		return
-	holder.pixel_y = host_mob.get_cached_height() - world.icon_size
+	holder.pixel_z = host_mob.get_cached_height() - world.icon_size
 	holder.icon_state = null
 	if(remove || stealth)
 		return //bye icon
@@ -333,15 +333,11 @@
 	if(!(host_mob.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD|MOB_ROBOTIC)) || issilicon(host_mob))
 		qdel(src) //bodytype no longer sustains nanites
 
-/datum/component/nanites/proc/check_access(datum/source, obj/O)
+/datum/component/nanites/proc/retrieve_access(datum/source, list/access_list)
 	SIGNAL_HANDLER
-
 	for(var/datum/nanite_program/access/access_program in programs)
 		if(access_program.activated)
-			return O.check_access_list(access_program.access)
-		else
-			return FALSE
-	return FALSE
+			access_list += access_program.access
 
 /datum/component/nanites/proc/set_volume(datum/source, amount)
 	SIGNAL_HANDLER

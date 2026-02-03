@@ -146,7 +146,7 @@
 
 /obj/item/card/id/get_id_examine_strings(mob/user)
 	. = ..()
-	. += list("[icon2html(get_cached_flat_icon(), user, extra_classes = "bigicon")]")
+	. += list("[ma2html(get_cached_flat_icon(), user, extra_classes = "bigicon")]")
 
 /obj/item/card/id/update_overlays()
 	. = ..()
@@ -161,7 +161,61 @@
 	return cached_flat_icon
 
 /obj/item/card/id/get_examine_string(mob/user, thats = FALSE)
-	return "[icon2html(get_cached_flat_icon(), user)] [thats? "That's ":""][get_examine_name(user)]"
+	return "[ma2html(get_cached_flat_icon(), user)] [thats? "That's ":""][get_examine_name(user)]"
+
+/obj/item/card/id/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	if(isitem(old_loc))
+		unequip_from_item_loc(old_loc)
+	. = ..()
+	if(isitem(loc))
+		equip_to_item_loc(loc)
+
+/obj/item/card/id/equipped(mob/user, slot)
+	. = ..()
+	if (slot & (ITEM_SLOT_ID|ITEM_SLOT_HANDS))
+		RegisterSignal(user, COMSIG_MOB_RETRIEVE_ACCESS, PROC_REF(retrieve_access))
+	if (slot & ITEM_SLOT_POCKETS)
+		//putting it in your pocket doesn't let you use it as access.
+		UnregisterSignal(user, COMSIG_MOB_RETRIEVE_ACCESS)
+
+/obj/item/card/id/dropped(mob/user)
+	UnregisterSignal(user, COMSIG_MOB_RETRIEVE_ACCESS)
+	if(isitem(loc))
+		equip_to_item_loc(loc) // "dropped" into an item, like a worn wallet
+	return ..()
+
+/// ID card is being equipped to an item (like a pda or wallet)
+/obj/item/card/id/proc/equip_to_item_loc(atom/new_loc)
+	RegisterSignal(new_loc, COMSIG_ITEM_EQUIPPED, PROC_REF(on_loc_equipped), override = TRUE)
+	RegisterSignal(new_loc, COMSIG_ITEM_DROPPED, PROC_REF(on_loc_dropped), override = TRUE)
+	if (ismob(new_loc.loc))
+		var/mob/wearer = new_loc.loc
+		// Equip chain shenanigans
+		UnregisterSignal(wearer, COMSIG_MOB_RETRIEVE_ACCESS)
+		on_loc_equipped(new_loc, wearer, wearer.get_slot_by_item(new_loc))
+
+/// ID card is being unequipped from an item (like a pda or wallet)
+/obj/item/card/id/proc/unequip_from_item_loc(atom/old_loc)
+	UnregisterSignal(old_loc, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
+	if (ismob(old_loc.loc))
+		UnregisterSignal(old_loc.loc, COMSIG_MOB_RETRIEVE_ACCESS)
+
+/obj/item/card/id/proc/on_loc_equipped(datum/source, mob/equipper, slot)
+	SIGNAL_HANDLER
+
+	if (slot & (ITEM_SLOT_ID|ITEM_SLOT_HANDS))
+		RegisterSignal(equipper, COMSIG_MOB_RETRIEVE_ACCESS, PROC_REF(retrieve_access), override = TRUE)
+	else //This is necessary because unlike TG, Monke doens't call dropped when moving an item from hand to belt/pockets/ID
+		UnregisterSignal(equipper, COMSIG_MOB_RETRIEVE_ACCESS)
+
+/obj/item/card/id/proc/on_loc_dropped(datum/source, mob/dropper)
+	SIGNAL_HANDLER
+	UnregisterSignal(dropper, COMSIG_MOB_RETRIEVE_ACCESS)
+
+///Called when we're being used as access.
+/obj/item/card/id/proc/retrieve_access(datum/source, list/player_access)
+	SIGNAL_HANDLER
+	player_access += GetAccess()
 
 /**
  * Helper proc, checks whether the ID card can hold any given set of wildcards.
@@ -800,7 +854,7 @@
 	RETURN_TYPE(/obj/item/card/id)
 	return src
 
-/obj/item/card/id/RemoveID()
+/obj/item/card/id/remove_id()
 	return src
 
 /obj/item/card/id/proc/chat_span()
@@ -1066,24 +1120,15 @@
 	is_intern = FALSE
 	update_label()
 
-/obj/item/card/id/advanced/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
+/obj/item/card/id/advanced/on_loc_equipped(datum/source, mob/equipper, slot)
 	. = ..()
+	if(istype(loc, /obj/item/storage/wallet) || istype(loc, /obj/item/modular_computer))
+		update_intern_status(source, equipper, slot)
 
-	//Old loc
-	if(istype(old_loc, /obj/item/storage/wallet))
-		UnregisterSignal(old_loc, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
-
-	if(istype(old_loc, /obj/item/modular_computer))
-		UnregisterSignal(old_loc, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
-
-	//New loc
-	if(istype(loc, /obj/item/storage/wallet))
-		RegisterSignal(loc, COMSIG_ITEM_EQUIPPED, PROC_REF(update_intern_status))
-		RegisterSignal(loc, COMSIG_ITEM_DROPPED, PROC_REF(remove_intern_status))
-
-	if(istype(loc, /obj/item/modular_computer))
-		RegisterSignal(loc, COMSIG_ITEM_EQUIPPED, PROC_REF(update_intern_status))
-		RegisterSignal(loc, COMSIG_ITEM_DROPPED, PROC_REF(remove_intern_status))
+/obj/item/card/id/advanced/on_loc_dropped(datum/source, mob/dropper)
+	. = ..()
+	if(istype(loc, /obj/item/storage/wallet) || istype(loc, /obj/item/modular_computer))
+		remove_intern_status(source, dropper)
 
 /obj/item/card/id/advanced/update_overlays()
 	. = ..()
@@ -1313,6 +1358,10 @@
 	var/time_to_assign
 	/// Time left on a card till they can leave.
 	var/time_left = 0
+	/// if the card has been given a custom name.
+	var/named = FALSE
+
+
 
 /obj/item/card/id/advanced/prisoner/attackby(obj/item/card/id/C, mob/user)
 	..()
@@ -1326,19 +1375,46 @@
 		timed = FALSE
 		time_to_assign = initial(time_to_assign)
 		registered_name = initial(registered_name)
+
 		STOP_PROCESSING(SSobj, src)
 		to_chat(user, "Restating prisoner ID to default parameters.")
 		return
 	var/choice = tgui_input_number(user, "Sentence time in seconds", "Sentencing")
-	if(!choice || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH) || loc != user)
+	if( QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH) || loc != user)
 		return FALSE
-	time_to_assign = choice
-	to_chat(user, "You set the sentence time to [time_to_assign] seconds.")
-	timed = TRUE
-
+	if(choice)
+		time_to_assign = choice
+		to_chat(user, "You set the sentence time to [time_to_assign] seconds.")
+		timed = TRUE
 /obj/item/card/id/advanced/prisoner/proc/start_timer()
 	say("Sentence started, welcome to the corporate rehabilitation center!")
 	START_PROCESSING(SSobj, src)
+
+/obj/item/card/id/advanced/prisoner/attackby_secondary(obj/item/card/id/C, mob/user)
+	..()
+	var/list/id_access = C.GetAccess()
+	if(!(ACCESS_BRIG in id_access))
+		return FALSE
+	if(loc != user)
+		to_chat(user, span_warning("You must be holding the ID to continue!"))
+		return FALSE
+	if(named)
+		named = FALSE
+		registered_name = initial(registered_name)
+		name = initial(name)
+		to_chat(user, "Restating prisoner ID to default parameters.")
+		return
+	var/name_input = tgui_input_text(user, "Enter prisoner name. (Will appear on suit sensors.)", "Prisoner Identification", registered_name, MAX_NAME_LEN)
+	if( QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH) || loc != user)
+		return FALSE
+	if(!name_input || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH) || loc != user)
+		return FALSE
+	registered_name = name_input
+	name = "[name_input]'s ID Card (Prisoner)"
+	to_chat(user, "You set the ID's identification to [name_input].")
+	named = TRUE
+
+
 
 /obj/item/card/id/advanced/prisoner/examine(mob/user)
 	. = ..()

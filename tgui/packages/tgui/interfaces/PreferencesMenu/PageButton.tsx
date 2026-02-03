@@ -1,15 +1,15 @@
-import { InfernoNode } from 'inferno';
-import { Button } from '../../components';
+import type { ReactNode } from 'react';
 import { useBackend } from '../../backend';
-import { PreferencesMenuData } from './data';
+import { Button } from '../../components';
+import type { PreferencesMenuData } from './data';
 
-export const PageButton = <P extends unknown>(props: {
+export const PageButton = <P,>(props: {
   currentPage: P;
   page: P;
   otherActivePages?: P[];
 
   setPage: (page: P) => void;
-  children?: InfernoNode;
+  children?: ReactNode;
 }) => {
   const { act } = useBackend<PreferencesMenuData>();
   const pageIsActive =

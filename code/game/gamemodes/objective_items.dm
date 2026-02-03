@@ -170,13 +170,13 @@
 
 /datum/objective_item/steal/traitor/lawyers_badge
 	name = "the lawyer's badge"
-	targetitem = /obj/item/clothing/accessory/lawyers_badge
+	targetitem = /obj/item/clothing/accessory/badge/lawyer
 	excludefromjob = list(JOB_LAWYER)
 	item_owner = list(JOB_LAWYER)
 	exists_on_map = TRUE
 
-/obj/item/clothing/accessory/lawyers_badge/add_stealing_item_objective()
-	return add_item_to_steal(src, /obj/item/clothing/accessory/lawyers_badge)
+/obj/item/clothing/accessory/badge/lawyer/add_stealing_item_objective()
+	return add_item_to_steal(src, /obj/item/clothing/accessory/badge/lawyer)
 
 /datum/objective_item/steal/traitor/chief_engineer_belt
 	name = "the chief engineer's belt"
@@ -420,17 +420,17 @@
 
 /datum/objective_item/steal/blueprints
 	name = "the station blueprints"
-	targetitem = /obj/item/areaeditor/blueprints
+	targetitem = /obj/item/blueprints
 	excludefromjob = list(JOB_CHIEF_ENGINEER)
 	item_owner = list(JOB_CHIEF_ENGINEER)
 	altitems = list(/obj/item/photo)
 	exists_on_map = TRUE
 
-/obj/item/areaeditor/blueprints/add_stealing_item_objective()
-	return add_item_to_steal(src, /obj/item/areaeditor/blueprints)
+/obj/item/blueprints/add_stealing_item_objective()
+	return add_item_to_steal(src, /obj/item/blueprints)
 
 /datum/objective_item/steal/blueprints/check_special_completion(obj/item/I)
-	if(istype(I, /obj/item/areaeditor/blueprints))
+	if(istype(I, /obj/item/blueprints))
 		return TRUE
 	if(istype(I, /obj/item/photo))
 		var/obj/item/photo/P = I

@@ -100,7 +100,6 @@
 		if(41 to 80)
 			INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob, emote), "pale")
 			shake_camera(owner, 15, 1)
-			owner.stamina.adjust(-70)
 			to_chat(owner, span_userdanger("You feel your heart lurching in your chest..."))
 		if(81 to 100)
 			INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob, emote), "cough")
@@ -132,7 +131,7 @@
 		JOB_PSYCHOLOGIST = TRAIT_DEPRESSION,
 		JOB_LAWYER = TRAIT_JAILBIRD,
 		JOB_JANITOR = TRAIT_SNOB,
-		JOB_LATEJOIN_BARBER = TRAIT_BALD,
+		JOB_BARBER = TRAIT_BALD,
 	) // Jobs and their corresponding quirks
 	var/list/special_pool = list() //The special list, for quirk-based
 	var/chosen_victim  //The obsession target

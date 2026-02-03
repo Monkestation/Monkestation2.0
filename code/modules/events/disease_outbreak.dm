@@ -148,7 +148,7 @@
 	var/mob/living/carbon/human/victim
 	while(length(afflicted))
 		victim = pick_n_take(afflicted)
-		if(victim.infect_disease(new_disease, TRUE, notes = "Infected via Outbreak [key_name(victim)]"))
+		if(victim.infect_disease(new_disease, TRUE, notes = "Infected via Outbreak [key_name(victim)]", patient_zero = TRUE))
 			message_admins("Event triggered: Disease Outbreak - [new_disease.name] starting with patient zero [ADMIN_LOOKUPFLW(victim)]!")
 			log_game("Event triggered: Disease Outbreak - [new_disease.name] starting with patient zero [key_name(victim)].")
 			announce_to_ghosts(victim)
@@ -252,14 +252,12 @@
 		)
 	var/datum/disease/acute/new_disease = new virus_choice
 	new_disease.makerandom(list(50,90),list(50,100),anti,bad,src)
-	new_disease.carrier = TRUE
-	illness_type = new_disease.name
 	new_disease.Refresh_Acute()
 
 	var/mob/living/carbon/human/victim
 	while(length(afflicted))
 		victim = pick_n_take(afflicted)
-		if(victim.infect_disease(new_disease, TRUE, notes = "Infected via Outbreak [key_name(victim)]"))
+		if(victim.infect_disease(new_disease, TRUE, notes = "Infected via Outbreak [key_name(victim)]", patient_zero = TRUE))
 			message_admins("Event triggered: Disease Outbreak - [new_disease.name] starting with patient zero [ADMIN_LOOKUPFLW(victim)]!")
 			log_game("Event triggered: Disease Outbreak - [new_disease.name] starting with patient zero [key_name(victim)].")
 			announce_to_ghosts(victim)

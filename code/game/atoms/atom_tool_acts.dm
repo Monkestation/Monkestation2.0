@@ -14,7 +14,7 @@
 		if(tool_return)
 			return tool_return
 
-	var/is_right_clicking = text2num(LAZYACCESS(modifiers, RIGHT_CLICK))
+	var/is_right_clicking = user.istate & ISTATE_SECONDARY
 	var/is_left_clicking = !is_right_clicking
 	var/early_sig_return = NONE
 	if(is_left_clicking)
@@ -85,7 +85,7 @@
 	if(!tool_type)
 		return NONE
 
-	var/is_right_clicking = LAZYACCESS(modifiers, RIGHT_CLICK)
+	var/is_right_clicking = user.istate & ISTATE_SECONDARY
 	var/is_left_clicking = !is_right_clicking
 
 	var/list/processing_recipes = list()
@@ -189,7 +189,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 	PROTECTED_PROC(TRUE)
 
-	var/is_right_clicking = LAZYACCESS(modifiers, RIGHT_CLICK)
+	var/is_right_clicking = user.istate & ISTATE_SECONDARY
 	var/is_left_clicking = !is_right_clicking
 	var/early_sig_return = NONE
 	if(is_left_clicking)

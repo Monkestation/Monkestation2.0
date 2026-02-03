@@ -14,14 +14,9 @@
 	density = FALSE
 	layer = TURF_LAYER + 0.1
 	var/item_value_consumed = 0
-	var/max_item_value = 300
-	var/bingles_ready = 0
-	var/bingle_per_item_value = 50
-	var/ghost_edible = FALSE
 	var/current_pit_size = 1 // 1 = 1x1, 2 = 2x2, 3 = 3x3 can go higher
 	var/list/pit_overlays = list()
 	var/last_bingle_spawn_value = 0
-	var/last_bingle_poll_value = 0
 	var/max_pit_size = 40 // Maximum size (40x40) for the pit
 	var/healing_range = 3
 	var/static/datum/team/bingles/bingle_team
@@ -50,7 +45,7 @@
 	AddElement(/datum/element/connect_loc, loc_connections)
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/structure/bingle_hole/LateInitialize()
+/obj/structure/bingle_hole/LateInitialize(mapload_arg)
 	SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_BINGLE_PIT)
 	log_game("Bingle Pit Template loaded.")
 
@@ -127,7 +122,7 @@
 			bong.armour_penetration = 10
 			bong.evolved = TRUE
 
-		SEND_SIGNAL(bong, BINGLE_EVOLVE)
+		SEND_SIGNAL(bong, COMSIG_LIVING_BINGLE_EVOLVE)
 
 /obj/structure/bingle_hole/proc/swallow_mob(mob/living/victim)
 	if(!isliving(victim))
@@ -509,9 +504,9 @@
 
 	var/area/bingle_pit = GLOB.areas_by_type[/area/misc/bingle_pit]
 	for(var/atom/movable/thing in bingle_pit?.contents)
+		thing.forceMove(target_turf)
 		if(QDELETED(thing))
 			continue
-		thing.forceMove(target_turf)
 		var/dir = pick(GLOB.alldirs)
 		var/turf/edge = get_edge_target_turf(target_turf, dir)
 		thing.throw_at(edge, rand(1, 5), rand(1, 5))

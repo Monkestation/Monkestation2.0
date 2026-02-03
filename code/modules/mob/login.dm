@@ -49,6 +49,8 @@
 		if (forced_interaction_mode)
 			client.imode?.replace(forced_interaction_mode)
 		else
+			// Give you your preferred hud rather than whatever imode is already in your client
+			client.imode?.replace(available_interaction_modes[client.prefs.read_preference(/datum/preference/choiced/interaction_mode)])
 			client.imode?.reload_hud(src)
 		hud_used.show_hud(hud_used.hud_version) // see above, this can process a disconnect
 		if(!client)
@@ -128,9 +130,6 @@
 		auto_deadmin_on_login()
 
 	log_message("Client [key_name(src)] has taken ownership of mob [src]([src.type])", LOG_OWNERSHIP)
-#ifndef DISABLE_DEMOS
-	SSdemo.write_event_line("setmob [client.ckey] \ref[src]") //Monkestation Edit: REPLAYS
-#endif
 	log_mob_tag("NEW OWNER: [key_name(src)]")
 	SEND_SIGNAL(src, COMSIG_MOB_CLIENT_LOGIN, client)
 	SEND_SIGNAL(client, COMSIG_CLIENT_MOB_LOGIN, src)

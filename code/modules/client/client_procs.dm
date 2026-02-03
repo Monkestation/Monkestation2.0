@@ -71,7 +71,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 				to_chat(src, span_danger("[msg]"))
 				return
 
-		var/stl = CONFIG_GET(number/second_topic_limit)
+		var/stl = max(CONFIG_GET(number/second_topic_limit), CONFIG_GET(number/tgui_max_chunk_count))
 		if (stl)
 			var/second = round(world.time, 1 SECONDS)
 			if (!topiclimiter)
@@ -267,7 +267,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		persistent_client = new(ckey)
 	persistent_client.set_client(src)
 
-	winset(src, null, list("browser-options" = "find,refresh,byondstorage"))
+	winset(src, null, list("browser-options" = "find,refresh"))
 
 	// Instantiate stat panel
 	stat_panel = new(src, "statbrowser")
@@ -1219,8 +1219,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 /client/proc/open_filter_editor(atom/in_atom)
 	if(holder)
-		holder.filteriffic = new /datum/filter_editor(in_atom)
-		holder.filteriffic.ui_interact(mob)
+		holder.filterrific = new /datum/filter_editor(in_atom)
+		holder.filterrific.ui_interact(mob)
 
 ///opens the particle editor UI for the in_atom object for this client
 /client/proc/open_particle_editor(atom/movable/in_atom)

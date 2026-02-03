@@ -15,7 +15,7 @@
 
 	AddComponent(/datum/component/shell, list(
 		new /obj/item/circuit_component/bci_core,
-	), SHELL_CAPACITY_SMALL, starting_circuit = circuit)
+	), SHELL_CAPACITY_SMALL, starting_circuit = circuit, blacklisted_integrated_circuits = list(/obj/item/integrated_circuit/chemical))
 
 /obj/item/organ/internal/cyberimp/bci/on_insert(mob/living/carbon/receiver)
 	. = ..()
@@ -163,6 +163,9 @@
 	))
 
 /obj/item/circuit_component/bci_core/input_received(datum/port/input/port)
+	if (!COMPONENT_TRIGGERED_BY(send_message_signal, port))
+		return
+
 	var/sent_message = trim(message.value)
 	if (!sent_message)
 		return

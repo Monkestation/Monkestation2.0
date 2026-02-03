@@ -529,6 +529,87 @@
 		return ITEM_INTERACT_BLOCKING
 	return ..()
 
+#define FIRING_PIN_REMOVAL_DELAY 50
+/obj/item/gun/ballistic/automatic/m90/screwdriver_act_secondary(mob/living/user, obj/item/I)
+	. = ..()
+	if(.)
+		return
+	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
+		return
+	else if(underbarrel.pin?.pin_removable && user.is_holding(src))
+		user.visible_message(span_warning("[user] attempts to remove [underbarrel.pin] from [underbarrel] with [I]."),
+		span_notice("You attempt to remove [underbarrel.pin] from [underbarrel]. (It will take [DisplayTimeText(FIRING_PIN_REMOVAL_DELAY)].)"), null, 3)
+		if(I.use_tool(src, user, FIRING_PIN_REMOVAL_DELAY, volume = 50))
+			if(!underbarrel.pin) //check to see if the pin is still there, or we can spam messages by clicking multiple times during the tool delay
+				return
+			user.visible_message(span_notice("[underbarrel.pin] is pried out of [underbarrel] by [user], destroying the pin in the process."),
+								span_warning("You pry [underbarrel.pin] out with [I], destroying the pin in the process."), null, 3)
+			QDEL_NULL(underbarrel.pin)
+			return TRUE
+
+/obj/item/gun/ballistic/automatic/m90/welder_act_secondary(mob/living/user, obj/item/I)
+	. = ..()
+	if(.)
+		return
+	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
+		return
+	else if(underbarrel.pin?.pin_removable && user.is_holding(src))
+		user.visible_message(span_warning("[user] attempts to remove [underbarrel.pin] from [underbarrel] with [I]."),
+		span_notice("You attempt to remove [underbarrel.pin] from [underbarrel]. (It will take [DisplayTimeText(FIRING_PIN_REMOVAL_DELAY)].)"), null, 3)
+		if(I.use_tool(src, user, FIRING_PIN_REMOVAL_DELAY, 5, volume = 50))
+			if(!underbarrel.pin) //check to see if the pin is still there, or we can spam messages by clicking multiple times during the tool delay
+				return
+			user.visible_message(span_notice("[underbarrel.pin] is spliced out of [underbarrel] by [user], melting part of the pin in the process."),
+								span_warning("You splice [underbarrel.pin] out of [underbarrel] with [I], melting part of the pin in the process."), null, 3)
+			QDEL_NULL(underbarrel.pin)
+			return TRUE
+
+/obj/item/gun/ballistic/automatic/m90/wirecutter_act_secondary(mob/living/user, obj/item/I)
+	. = ..()
+	if(.)
+		return
+	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
+		return
+	else if(underbarrel.pin?.pin_removable && user.is_holding(src))
+		user.visible_message(span_warning("[user] attempts to remove [underbarrel.pin] from [underbarrel] with [I]."),
+		span_notice("You attempt to remove [underbarrel.pin] from [underbarrel]. (It will take [DisplayTimeText(FIRING_PIN_REMOVAL_DELAY)].)"), null, 3)
+		if(I.use_tool(src, user, FIRING_PIN_REMOVAL_DELAY, volume = 50))
+			if(!underbarrel.pin) //check to see if the pin is still there, or we can spam messages by clicking multiple times during the tool delay
+				return
+			user.visible_message(span_notice("[underbarrel.pin] is ripped out of [underbarrel] by [user], mangling the pin in the process."),
+								span_warning("You rip [underbarrel.pin] out of [underbarrel] with [I], mangling the pin in the process."), null, 3)
+			QDEL_NULL(underbarrel.pin)
+			return TRUE
+
+/obj/item/firing_pin/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!isgun(interacting_with))
+		return NONE
+	if(!(("underbarrel") in (interacting_with.vars)))
+		return NONE
+	var/obj/item/gun/ballistic/automatic/m90/targeted_gun = interacting_with
+	var/obj/item/firing_pin/old_pin = targeted_gun.underbarrel.pin
+	if(old_pin?.pin_removable && (force_replace || old_pin.pin_hot_swappable))
+		if(Adjacent(user))
+			user.put_in_hands(old_pin)
+		else
+			old_pin.forceMove(targeted_gun.drop_location())
+		old_pin.gun_remove(user)
+
+	if(!targeted_gun.underbarrel.pin)
+		if(!user.temporarilyRemoveItemFromInventory(src))
+			return .
+		if(gun_insert(user, targeted_gun.underbarrel))
+			if(old_pin)
+				balloon_alert(user, "swapped firing pin")
+			else
+				balloon_alert(user, "inserted firing pin")
+	else
+		to_chat(user, span_notice("This firearm already has a firing pin installed."))
+
+	return ITEM_INTERACT_SUCCESS
+
+#undef FIRING_PIN_REMOVAL_DELAY
+
 /obj/item/gun/ballistic/automatic/m90/update_overlays()
 	. = ..()
 	switch(select)

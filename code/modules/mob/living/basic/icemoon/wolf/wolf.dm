@@ -5,7 +5,6 @@
 	icon_state = "whitewolf"
 	icon_living = "whitewolf"
 	icon_dead = "whitewolf_dead"
-	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	mouse_opacity = MOUSE_OPACITY_ICON
 	speak_emote = list("howls")
 	friendly_verb_continuous = "howls at"
@@ -83,12 +82,6 @@
 	. = ..()
 	faction = new_friend.faction.Copy()
 	visible_message(span_notice("[src] lowers [src.p_their()] snout at [new_friend]'s offering and begins to wag [src.p_their()] tail."))
-
-/obj/item/crusher_trophy/wolf_ear
-	name = "wolf ear"
-	desc = "It's a wolf ear."
-	icon_state = "wolf_ear"
-	denied_type = /obj/item/crusher_trophy/wolf_ear
 
 /obj/item/crusher_trophy/wolf_ear/effect_desc()
 	return "mark detonation to gain a slight speed boost temporarily"

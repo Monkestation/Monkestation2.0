@@ -174,7 +174,7 @@
 
 /obj/structure/trap/eldritch/on_trap_entered(datum/source, atom/movable/entering_atom)
 	if(!isliving(entering_atom))
-		return ..()
+		return
 	var/mob/living/living_mob = entering_atom
 	if(WEAKREF(living_mob) == owner)
 		return
@@ -231,7 +231,7 @@
 	if(!iscarbon(victim))
 		return
 	var/mob/living/carbon/carbon_victim = victim
-	carbon_victim.stamina.adjust(-80)
+	carbon_victim.stamina.adjust(-40)
 	carbon_victim.adjust_silence(20 SECONDS)
 	carbon_victim.adjust_emote_mute(20 SECONDS)
 	carbon_victim.adjust_stutter(1 MINUTES)

@@ -47,7 +47,7 @@
 
 		SSthe_ark.marked_areas[input_area] = TRUE
 		cached_addable_areas -= input_area
-		send_clock_message(null, "[input_area] added to warpable areas.")
+		send_clock_message("[input_area] added to warpable areas.")
 
 /datum/action/innate/clockcult/add_warp_area/proc/choose_starting_warp_areas()
 	if(!length(cached_addable_areas))

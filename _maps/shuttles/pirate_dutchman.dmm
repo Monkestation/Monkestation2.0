@@ -289,6 +289,10 @@
 	},
 /turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
+"gn" = (
+/obj/machinery/holopad/secure/hacked,
+/turf/open/floor/wood/airless,
+/area/shuttle/pirate/flying_dutchman)
 "gq" = (
 /obj/machinery/computer/shuttle/pirate{
 	dir = 1
@@ -1249,7 +1253,7 @@ fW
 St
 Da
 da
-WB
+gn
 WB
 RQ
 eG

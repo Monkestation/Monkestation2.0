@@ -1,6 +1,6 @@
 @use 'sass:color';
-@use '../base.scss';
-@use '../colors.scss';
+@use '../legacy-base.scss' as base;
+@use '../legacy-colors.scss' as colors;
 @use '../functions.scss' as *;
 
 $color-default: color.adjust(base.$color-bg, $lightness: 10%) !default;
@@ -36,7 +36,7 @@ $color-selected: colors.bg(colors.$green) !default;
 
   &:hover,
   &:focus {
-    border-color: lighten($color-default, 30%);
+    border-color: color.adjust($color-default, $lightness: 30%);
   }
 }
 
@@ -44,7 +44,7 @@ $color-selected: colors.bg(colors.$green) !default;
   border-color: $color-selected;
   &:hover,
   &:focus {
-    border-color: lighten($color-selected, 30%);
+    border-color: color.adjust($color-selected, $lightness: 30%);
   }
 }
 

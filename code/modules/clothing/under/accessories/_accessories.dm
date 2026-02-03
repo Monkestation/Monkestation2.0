@@ -212,7 +212,7 @@
 	. += "It can be worn above or below your suit. Right-click to toggle."
 
 /obj/item/clothing/accessory/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	if(!isnull(held_item))
+	if(!isnull(held_item) && held_item != src)
 		return NONE
 
 	context[SCREENTIP_CONTEXT_RMB] = "Wear [above_suit ? "below" : "above"] suit"

@@ -37,7 +37,6 @@
 	if(healed_mob.stat == DEAD) //technically the husk healing is free but it should be fine
 		return FALSE
 
-	//MMMMMM, CHUNKY
 	healed_mob.blood_volume = BLOOD_VOLUME_NORMAL
 	healed_mob.set_nutrition(NUTRITION_LEVEL_FULL)
 	healed_mob.bodytemperature = BODYTEMP_NORMAL

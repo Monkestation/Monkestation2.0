@@ -16,7 +16,7 @@
 	. = ..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/effect/baseturf_helper/LateInitialize()
+/obj/effect/baseturf_helper/LateInitialize(mapload_arg)
 	if(!baseturf_to_replace)
 		baseturf_to_replace = typecacheof(list(/turf/open/space,/turf/baseturf_bottom))
 	else if(!length(baseturf_to_replace))
@@ -128,7 +128,7 @@
 		payload(airlock)
 */
 
-/obj/effect/mapping_helpers/airlock/LateInitialize()
+/obj/effect/mapping_helpers/airlock/LateInitialize(mapload_arg)
 	. = ..()
 	var/obj/machinery/door/airlock/airlock = locate(/obj/machinery/door/airlock) in (offset_dir ?  get_step(src, offset_dir) : loc) //monkestation edit: adds offset_dir check
 	if(!airlock)
@@ -272,7 +272,7 @@
 
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/effect/mapping_helpers/airalarm/LateInitialize()
+/obj/effect/mapping_helpers/airalarm/LateInitialize(mapload_arg)
 	. = ..()
 	var/obj/machinery/airalarm/target = locate(/obj/machinery/airalarm) in loc
 
@@ -433,7 +433,7 @@
 
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/effect/mapping_helpers/apc/LateInitialize()
+/obj/effect/mapping_helpers/apc/LateInitialize(mapload_arg)
 	. = ..()
 	var/obj/machinery/power/apc/target = locate(/obj/machinery/power/apc) in (offset_dir ?  get_step(src, offset_dir) : loc) //monkestation edit: adds offset_dir check
 
@@ -572,7 +572,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	var/target_name
 
 //Late init so everything is likely ready and loaded (no warranty)
-/obj/effect/mapping_helpers/atom_injector/LateInitialize()
+/obj/effect/mapping_helpers/atom_injector/LateInitialize(mapload_arg)
 	if(!check_validity())
 		return
 	var/turf/target_turf = (offset_dir ?  get_turf(get_step(src, offset_dir)) : get_turf(src)) //monkestation edit: adds offset_dir check
@@ -825,6 +825,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	/// These species IDs will be barred from spawning if morgue_cadaver_disable_nonhumans is disabled (In the future, we can also dehardcode this)
 	var/list/blacklisted_from_rng_placement = list(
 		SPECIES_ETHEREAL, // they revive on death which is bad juju
+		SPECIES_OOZELING, // they become a core, which clogs up GPSes
 		SPECIES_HUMAN,  // already have a 50% chance of being selected
 	)
 
@@ -834,7 +835,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 		return
 	admin_spawned = TRUE
 
-/obj/effect/mapping_helpers/dead_body_placer/LateInitialize()
+/obj/effect/mapping_helpers/dead_body_placer/LateInitialize(mapload_arg)
 	var/area/morgue_area = get_area(src)
 	var/list/obj/structure/bodycontainer/morgue/trays = list()
 	for (var/list/zlevel_turfs as anything in morgue_area.get_zlevel_turf_lists())
@@ -921,7 +922,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	/// if TRUE, we give a map log warning if we can't find Ian's dogbed.
 	var/map_warning = TRUE
 
-/obj/effect/mapping_helpers/ianbirthday/LateInitialize()
+/obj/effect/mapping_helpers/ianbirthday/LateInitialize(mapload_arg)
 	if(check_holidays(IAN_HOLIDAY))
 		birthday()
 	qdel(src)
@@ -985,7 +986,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	icon_state = "bdayhelper"
 	map_warning = FALSE
 
-/obj/effect/mapping_helpers/ianbirthday/admin/LateInitialize()
+/obj/effect/mapping_helpers/ianbirthday/admin/LateInitialize(mapload_arg)
 	birthday()
 	qdel(src)
 
@@ -995,7 +996,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	late = TRUE
 	icon_state = "iansnewyrshelper"
 
-/obj/effect/mapping_helpers/iannewyear/LateInitialize()
+/obj/effect/mapping_helpers/iannewyear/LateInitialize(mapload_arg)
 	if(check_holidays(NEW_YEAR))
 		fireworks()
 	qdel(src)
@@ -1036,7 +1037,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	var/note_name //custom note name
 	var/note_path //if you already have something wrote up in a paper subtype, put the path here
 
-/obj/effect/mapping_helpers/airlock_note_placer/LateInitialize()
+/obj/effect/mapping_helpers/airlock_note_placer/LateInitialize(mapload_arg)
 	var/turf/turf = (offset_dir ?  get_turf(get_step(src, offset_dir)) : get_turf(src)) //monkestation edit: adds offset_dir check
 	if(note_path && !istype(note_path, /obj/item/paper)) //don't put non-paper in the paper slot thank you
 		log_mapping("[src] at [x],[y] had an improper note_path path, could not place paper note.")
@@ -1080,7 +1081,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	late = TRUE
 	icon_state = "trapdoor"
 
-/obj/effect/mapping_helpers/trapdoor_placer/LateInitialize()
+/obj/effect/mapping_helpers/trapdoor_placer/LateInitialize(mapload_arg)
 	var/turf/component_target = (offset_dir ?  get_turf(get_step(src, offset_dir)) : get_turf(src)) //monkestation edit: adds offset_dir check
 	component_target.AddComponent(/datum/component/trapdoor, starts_open = FALSE, conspicuous = FALSE)
 	qdel(src)
@@ -1092,7 +1093,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	/// List of traits to add to this Z-level.
 	var/list/traits_to_add = list()
 
-/obj/effect/mapping_helpers/ztrait_injector/LateInitialize()
+/obj/effect/mapping_helpers/ztrait_injector/LateInitialize(mapload_arg)
 	var/datum/space_level/level = SSmapping.z_list[z]
 	if(!level || !length(traits_to_add))
 		return
@@ -1161,7 +1162,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	late = TRUE
 	layer = ABOVE_NORMAL_TURF_LAYER
 
-/obj/effect/mapping_helpers/broken_floor/LateInitialize()
+/obj/effect/mapping_helpers/broken_floor/LateInitialize(mapload_arg)
 	var/turf/open/floor/floor = (offset_dir ?  get_turf(get_step(src, offset_dir)) : get_turf(src)) //monkestation edit: adds offset_dir check
 	floor.break_tile()
 	qdel(src)
@@ -1173,7 +1174,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	layer = ABOVE_NORMAL_TURF_LAYER
 	late = TRUE
 
-/obj/effect/mapping_helpers/burnt_floor/LateInitialize()
+/obj/effect/mapping_helpers/burnt_floor/LateInitialize(mapload_arg)
 	var/turf/open/floor/floor = (offset_dir ?  get_turf(get_step(src, offset_dir)) : get_turf(src)) //monkestation edit: adds offset_dir check
 	floor.burn_tile()
 	qdel(src)
@@ -1193,7 +1194,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 		log_mapping("[src] spawned outside of mapload!")
 		return INITIALIZE_HINT_QDEL
 
-/obj/effect/mapping_helpers/basic_mob_flags/LateInitialize()
+/obj/effect/mapping_helpers/basic_mob_flags/LateInitialize(mapload_arg)
 	. = ..()
 	var/had_any_mobs = FALSE
 	for(var/mob/living/basic/basic_mobs in loc)

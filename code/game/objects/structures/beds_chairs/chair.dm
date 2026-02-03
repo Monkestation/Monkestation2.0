@@ -12,6 +12,7 @@
 	custom_materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT)
 	layer = OBJ_LAYER
 	interaction_flags_mouse_drop = NEED_HANDS | NEED_DEXTERITY
+	astar_weight = 2
 
 	var/buildstacktype = /obj/item/stack/sheet/iron
 	var/buildstackamount = 1
@@ -463,6 +464,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 /obj/structure/chair/bronze/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
 	. = ..()
+
+/obj/structure/chair/bronze/MakeRotate() // we have our own rotation handler
+	return
 
 /obj/structure/chair/bronze/process()
 	setDir(turn(dir,-90))

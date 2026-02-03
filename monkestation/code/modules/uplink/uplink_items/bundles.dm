@@ -7,7 +7,7 @@
 	purchasable_from = UPLINK_TRAITORS
 
 /datum/uplink_item/bundles_tc/contract_kit/unique_checks(mob/user, datum/uplink_handler/handler, atom/movable/source)
-	if(length(handler.active_objectives) || !handler.can_take_objectives || !handler.has_objectives)
+	if(!handler || length(handler.active_objectives) || !handler.can_take_objectives || !handler.has_objectives)
 		return FALSE
 
 	for(var/datum/traitor_objective/objective in handler.completed_objectives)
@@ -32,7 +32,7 @@
 
 /datum/uplink_item/bundles_tc/surplus/lootbox/unique_checks(mob/user, datum/uplink_handler/handler, atom/movable/source)
 	//we dont acually have the var that makes this get checked so do it manually
-	if(length(handler.purchase_log.purchase_log) > 0)
+	if(handler && length(handler.purchase_log?.purchase_log) > 0)
 		return FALSE
 	return TRUE
 

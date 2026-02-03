@@ -1,6 +1,3 @@
-/// List of all implants currently implanted into a mob
-GLOBAL_LIST_EMPTY_TYPED(tracked_implants, /obj/item/implant)
-
 /obj/machinery/computer/prisoner/management
 	name = "prisoner management console"
 	desc = "Used to modify prisoner IDs, as well as manage security implants placed inside convicts and parolees."

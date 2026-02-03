@@ -55,19 +55,19 @@
 
 	var/type_rolled
 	if(!guarentee_unusual)
-		type_rolled = rand(1, 100)
+		type_rolled = rand(1, 200)
 	else
 		type_rolled = 1
 
 	var/type_string
 	switch(type_rolled)
-		if(1)
+		if(1 to 2)
 			type_string = "Unusual"
-		if(2 to 3)
+		if(3 to 4)
 			type_string = "High Tier"
-		if(4 to 8)
+		if(5 to 9)
 			type_string = "Medium Tier"
-		if(9 to 15)
+		if(10 to 16)
 			type_string = "Low Tier"
 		else
 			type_string = "Loadout Item"

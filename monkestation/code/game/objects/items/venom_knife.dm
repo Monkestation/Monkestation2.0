@@ -17,7 +17,7 @@
 	/// Where we are in the possible transfer amount list.
 	var/amount_list_position = 2
 
-/obj/item/knife/venom/Initialize()
+/obj/item/knife/venom/Initialize(mapload)
 	. = ..()
 	create_reagents(VENOM_KNIFE_VOLUME, OPENCONTAINER)
 

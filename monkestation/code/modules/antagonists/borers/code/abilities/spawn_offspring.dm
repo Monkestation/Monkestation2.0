@@ -18,7 +18,7 @@
 		return FALSE
 	var/mob/living/basic/cortical_borer/cortical_owner = owner
 	if(cortical_owner.neutered == TRUE)
-		owner.balloon_alert(owner, "You cannot reproduce!")
+		owner.balloon_alert(owner, "you cannot reproduce!")
 		return
 	if(!(cortical_owner.upgrade_flags & BORER_ALONE_PRODUCTION) && !cortical_owner.inside_human())
 		owner.balloon_alert(owner, "host required")
@@ -38,16 +38,16 @@
 			switch(eggroll)
 				if(1 to 34)
 					cortical_owner.human_host.gain_trauma_type(BRAIN_TRAUMA_MILD, TRAUMA_RESILIENCE_BASIC)
-					owner.balloon_alert(owner, "Cerebrum damaged!")
+					owner.balloon_alert(owner, "cerebrum damaged!")
 				if(35 to 60)
 					cortical_owner.human_host.gain_trauma_type(BRAIN_TRAUMA_MILD, TRAUMA_RESILIENCE_SURGERY)
-					owner.balloon_alert(owner, "Cerebellum damaged!")
+					owner.balloon_alert(owner, "cerebellum damaged!")
 				if(61 to 71)
 					cortical_owner.human_host.gain_trauma_type(BRAIN_TRAUMA_SEVERE, TRAUMA_RESILIENCE_SURGERY)
-					owner.balloon_alert(owner, "Brainstem damaged!")
+					owner.balloon_alert(owner, "brainstem damaged!")
 				if(72 to 75)
 					cortical_owner.human_host.gain_trauma_type(BRAIN_TRAUMA_SEVERE, TRAUMA_RESILIENCE_LOBOTOMY)
-					owner.balloon_alert(owner, "Brainstem severelly damaged!")
+					owner.balloon_alert(owner, "brainstem severelly damaged!")
 	to_chat(cortical_owner.human_host, span_warning("Your brain begins to hurt..."))
 	var/turf/borer_turf = get_turf(cortical_owner)
 	new /obj/effect/decal/cleanable/vomit(borer_turf)
@@ -98,7 +98,7 @@
 		return FALSE
 	var/mob/living/basic/cortical_borer/cortical_owner = owner
 	if(cortical_owner.neutered == TRUE)
-		owner.balloon_alert(owner, "You cannot reproduce!")
+		owner.balloon_alert(owner, "you cannot reproduce!")
 		return
 
 	cortical_owner.chemical_storage -= chemical_cost

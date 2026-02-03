@@ -8,13 +8,13 @@
 
 /datum/mutation/breathless/on_acquiring(mob/living/carbon/human/acquirer)
 	. = ..()
-	if(!.)
-		return
-	ADD_TRAIT(acquirer, TRAIT_NOBREATH, GENETIC_MUTATION)
+	if(.)
+		ADD_TRAIT(acquirer, TRAIT_NOBREATH, GENETIC_MUTATION)
 
 /datum/mutation/breathless/on_losing(mob/living/carbon/human/owner)//this shouldnt happen under normal condition but just to be sure
 	. = ..()
-	REMOVE_TRAIT(owner, TRAIT_NOBREATH, GENETIC_MUTATION)
+	if(!QDELETED(owner))
+		REMOVE_TRAIT(owner, TRAIT_NOBREATH, GENETIC_MUTATION)
 
 /datum/mutation/quick
 	name = "Quick"
@@ -25,13 +25,13 @@
 
 /datum/mutation/quick/on_acquiring(mob/living/carbon/human/acquirer)
 	. = ..()
-	if(!.)
-		return
-	acquirer.add_movespeed_modifier(/datum/movespeed_modifier/dna_vault_speedup)
+	if(.)
+		acquirer.add_movespeed_modifier(/datum/movespeed_modifier/dna_vault_speedup)
 
 /datum/mutation/quick/on_losing(mob/living/carbon/human/owner)
 	. = ..()
-	owner.remove_movespeed_modifier(/datum/movespeed_modifier/dna_vault_speedup)
+	if(!QDELETED(owner))
+		owner.remove_movespeed_modifier(/datum/movespeed_modifier/dna_vault_speedup)
 
 /datum/mutation/tough
 	name = "Tough"
@@ -49,8 +49,9 @@
 
 /datum/mutation/tough/on_losing(mob/living/carbon/human/owner)
 	. = ..()
-	owner.physiology.brute_mod /= 0.7
-	REMOVE_TRAIT(owner, TRAIT_PIERCEIMMUNE, GENETIC_MUTATION)
+	if(!QDELETED(owner))
+		owner.physiology.brute_mod /= 0.7
+		REMOVE_TRAIT(owner, TRAIT_PIERCEIMMUNE, GENETIC_MUTATION)
 
 /datum/mutation/dextrous
 	name = "Dextrous"
@@ -61,13 +62,13 @@
 
 /datum/mutation/dextrous/on_acquiring(mob/living/carbon/human/acquirer)
 	. = ..()
-	if(!.)
-		return
-	acquirer.next_move_modifier *= 0.5
+	if(.)
+		acquirer.next_move_modifier *= 0.5
 
 /datum/mutation/dextrous/on_losing(mob/living/carbon/human/owner)
 	. = ..()
-	owner.next_move_modifier /= 0.5
+	if(!QDELETED(owner))
+		owner.next_move_modifier /= 0.5
 
 /datum/mutation/fire_immunity
 	name = "Fire Immunity"
@@ -85,8 +86,9 @@
 
 /datum/mutation/fire_immunity/on_losing(mob/living/carbon/human/owner)
 	. = ..()
-	owner.physiology.burn_mod /= 0.5
-	owner.remove_traits(list(TRAIT_RESISTHEAT, TRAIT_NOFIRE), GENETIC_MUTATION)
+	if(!QDELETED(owner))
+		owner.physiology.burn_mod /= 0.5
+		owner.remove_traits(list(TRAIT_RESISTHEAT, TRAIT_NOFIRE), GENETIC_MUTATION)
 
 /datum/mutation/quick_recovery
 	name = "Quick Recovery"
@@ -97,13 +99,13 @@
 
 /datum/mutation/quick_recovery/on_acquiring(mob/living/carbon/human/acquirer)
 	. = ..()
-	if(!.)
-		return
-	acquirer.physiology.stun_mod *= 0.5
+	if(.)
+		acquirer.physiology.stun_mod *= 0.5
 
 /datum/mutation/quick_recovery/on_losing(mob/living/carbon/human/owner)
 	. = ..()
-	owner.physiology.stun_mod /= 0.5
+	if(!QDELETED(owner))
+		owner.physiology.stun_mod /= 0.5
 
 /datum/mutation/plasmocile
 	name = "Plasmocile"
@@ -125,10 +127,12 @@
 
 /datum/mutation/plasmocile/on_losing(mob/living/carbon/human/owner)
 	. = ..()
-	var/obj/item/organ/internal/lungs/improved_lungs = owner.get_organ_slot(ORGAN_SLOT_LUNGS)
+	if(!owner)
+		return
 	REMOVE_TRAIT(owner, TRAIT_VIRUSIMMUNE, GENETIC_MUTATION)
 	UnregisterSignal(owner, COMSIG_CARBON_LOSE_ORGAN)
 	UnregisterSignal(owner, COMSIG_CARBON_GAIN_ORGAN)
+	var/obj/item/organ/internal/lungs/improved_lungs = owner.get_organ_slot(ORGAN_SLOT_LUNGS)
 	if(improved_lungs)
 		remove_buff(improved_lungs)
 

@@ -27,7 +27,7 @@
 	if(source_atom != src) //if we are someone else then call that attack chain else we can proceed with the usual stuff
 		return source_atom.melee_attack_chain(user, target, modifiers, attack_modifiers)
 
-	var/is_right_clicking = LAZYACCESS(modifiers, RIGHT_CLICK)
+	var/is_right_clicking = (user.istate & ISTATE_SECONDARY)
 
 	var/item_interact_result = target.base_item_interaction(user, src, modifiers)
 	if(item_interact_result & ITEM_INTERACT_SUCCESS)
@@ -218,7 +218,7 @@
  * * attack_modifiers - attack modifiers such as force, damage type, etc
  */
 /obj/item/proc/attack(mob/living/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)
-	var/signal_return = SEND_SIGNAL(src, COMSIG_ITEM_ATTACK, target_mob, user, modifiers, attack_modifiers) || SEND_SIGNAL(user, COMSIG_MOB_ITEM_ATTACK, target_mob, user, modifiers, attack_modifiers)
+	var/signal_return = SEND_SIGNAL(src, COMSIG_ITEM_ATTACK, target_mob, user, modifiers, attack_modifiers) || SEND_SIGNAL(user, COMSIG_MOB_ITEM_ATTACK, target_mob, user, modifiers, attack_modifiers, src)
 	if(signal_return & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return TRUE
 	if(signal_return & COMPONENT_SKIP_ATTACK)
@@ -340,6 +340,7 @@
 	if(user != src)
 		// This doesn't factor in armor, or most damage modifiers (physiology). Your mileage may vary
 		if(check_block(attacking_item, damage, "the [attacking_item.name]", MELEE_ATTACK, attacking_item.armour_penetration, attacking_item.damtype))
+			LAZYADDASSOC(attack_modifiers, ATTACK_BLOCKED, TRUE)
 			return FALSE
 
 	SEND_SIGNAL(attacking_item, COMSIG_ITEM_ATTACK_ZONE, src, user, targeting)
@@ -365,7 +366,7 @@
 
 	attack_effects(damage_done, targeting, armor_block, attacking_item, user)
 
-	return TRUE
+	return damage
 
 /**
  * Called when we take damage, used to cause effects such as a blood splatter.

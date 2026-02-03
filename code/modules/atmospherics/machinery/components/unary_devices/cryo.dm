@@ -159,7 +159,7 @@
 			adjusted_occupant = TRUE
 			var/mob/living/living = occupant
 			living.bodytemp_cold_damage_limit -= 270 KELVIN
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 
 /obj/machinery/cryo_cell/on_construction(mob/user)
 	..(user, dir, dir)
@@ -264,7 +264,7 @@
 		update_use_power(ACTIVE_POWER_USE)
 	else
 		update_use_power(IDLE_POWER_USE)
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 	if(QDELETED(occupant))
 		return
 	if(on)
@@ -339,6 +339,9 @@
 					radio.talk_into(src, msg, radio_channel)
 			else // otherwise if we were only treating wounds and now we don't have any, turn off treating_wounds so we can boot 'em out
 				treating_wounds = FALSE
+				for(var/datum/brain_trauma/trauma as anything in C.get_traumas())
+					if(trauma.resilience == TRAUMA_RESILIENCE_WOUND)
+						qdel(trauma)
 
 		if(!treating_wounds)
 			set_on(FALSE)
@@ -474,7 +477,7 @@
 /obj/machinery/cryo_cell/screwdriver_act(mob/living/user, obj/item/tool)
 
 	if(!on && !occupant && !state_open && (default_deconstruction_screwdriver(user, "pod-off", "pod-off", tool)))
-		update_appearance()
+		update_appearance(UPDATE_ICON)
 	else
 		to_chat(user, "<span class='warning'>You can't access the maintenance panel while the pod is " \
 		+ (on ? "active" : (occupant ? "full" : "open")) + "!</span>")
@@ -526,7 +529,7 @@
 	if(on || occupant || state_open)
 		return FALSE
 	if(default_change_direction_wrench(user, tool))
-		update_appearance()
+		update_appearance(UPDATE_ICON)
 		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/cryo_cell/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)

@@ -5,7 +5,7 @@
 	icon_screen = "nanite_chamber_control"
 	circuit = /obj/item/circuitboard/computer/nanite_chamber_control
 
-/obj/machinery/computer/nanite_chamber_control/Initialize()
+/obj/machinery/computer/nanite_chamber_control/Initialize(mapload)
 	. = ..()
 	find_chamber()
 

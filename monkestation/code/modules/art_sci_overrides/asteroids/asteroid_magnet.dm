@@ -61,7 +61,7 @@
 	templates_on_map = list()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/asteroid_magnet/LateInitialize()
+/obj/machinery/asteroid_magnet/LateInitialize(mapload_arg)
 	. = ..()
 	GenerateMap()
 

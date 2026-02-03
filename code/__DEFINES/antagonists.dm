@@ -211,6 +211,9 @@ GLOBAL_LIST_INIT(ai_employers, list(
 /// Checks if the given mob is a blood cultist
 #define IS_CULTIST(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/cult))
 
+///Checks if the given mob is an evil clone
+#define IS_EVIL_CLONE(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/evil_clone))
+
 /// Checks if the given mob is a nuclear operative
 #define IS_NUKE_OP(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/nukeop))
 
@@ -363,10 +366,10 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 /// The storyteller will only count a single instance of this type of antag datum.
 /// Basically FLAG_ANTAG_CAP_TEAM if you're too lazy to refactor the antag to actually use a team.
 #define FLAG_ANTAG_CAP_SINGLE (1 << 4)
+/// If set then we ignore mobs being human or not for antag point counting
+#define FLAG_ANTAG_CAP_IGNORE_HUMANITY (1 << 5)
 
 #define FREEDOM_IMPLANT_CHARGES 4
-
-#define MALF_MAX_PP 400
 
 /// Changeling abilities with DNA cost = this are innately given to all changelings
 #define CHANGELING_POWER_INNATE -1

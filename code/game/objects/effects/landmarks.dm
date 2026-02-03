@@ -107,6 +107,10 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	name = "Shaft Miner"
 	icon_state = "Shaft Miner"
 
+/obj/effect/landmark/start/explorer
+	name = "Explorer"
+	icon_state = "Explorer"
+
 /obj/effect/landmark/start/security_officer
 	name = "Security Officer"
 	icon_state = "Security Officer"
@@ -195,6 +199,10 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 /obj/effect/landmark/start/psychologist
 	name = "Psychologist"
 	icon_state = "Psychologist"
+
+/obj/effect/landmark/start/barber
+	name = "Barber"
+	icon_state = "Barber"
 
 /obj/effect/landmark/start/chaplain
 	name = "Chaplain"
@@ -510,7 +518,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	party_debris = null
 	return ..()
 
-/obj/effect/landmark/start/hangover/LateInitialize()
+/obj/effect/landmark/start/hangover/LateInitialize(mapload_arg)
 	. = ..()
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_BIRTHDAY))
 		party_debris += new /obj/effect/decal/cleanable/confetti(get_turf(src)) //a birthday celebration can also be a hangover
@@ -583,7 +591,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	. = ..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/effect/landmark/navigate_destination/LateInitialize()
+/obj/effect/landmark/navigate_destination/LateInitialize(mapload_arg)
 	. = ..()
 	if(!location)
 		var/obj/machinery/door/airlock/A = locate(/obj/machinery/door/airlock) in loc
@@ -676,6 +684,9 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 
 /obj/effect/landmark/navigate_destination/minisat_access_chapel_library
 	location = "Chapel and Library MiniSat Access"
+
+/obj/effect/landmark/navigate_destination/garden
+	location = "Public Garden"
 
 //Service
 /obj/effect/landmark/navigate_destination/kitchen

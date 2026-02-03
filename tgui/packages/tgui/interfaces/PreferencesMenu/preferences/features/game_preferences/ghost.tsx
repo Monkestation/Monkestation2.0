@@ -1,18 +1,18 @@
+import { binaryInsertWith } from 'common/collections';
+import { classes } from 'common/react';
 import { multiline } from 'common/string';
+import type { ReactNode } from 'react';
+import { useBackend } from 'tgui/backend';
+import { Box, Dropdown, Flex } from 'tgui/components';
+import type { PreferencesMenuData } from '../../../data';
 import {
   CheckboxInput,
-  FeatureChoiced,
-  FeatureChoicedServerData,
+  type FeatureChoiced,
+  type FeatureChoicedServerData,
   FeatureDropdownInput,
-  FeatureToggle,
-  FeatureValueProps,
+  type FeatureToggle,
+  type FeatureValueProps,
 } from '../base';
-import { Box, Dropdown, Flex } from '../../../../../components';
-import { classes } from 'common/react';
-import { InfernoNode } from 'inferno';
-import { binaryInsertWith } from 'common/collections';
-import { useBackend } from '../../../../../backend';
-import { PreferencesMenuData } from '../../../data';
 
 export const ghost_accs: FeatureChoiced = {
   name: 'Ghost accessories',
@@ -22,7 +22,7 @@ export const ghost_accs: FeatureChoiced = {
 };
 
 const insertGhostForm = binaryInsertWith<{
-  displayText: InfernoNode;
+  displayText: ReactNode;
   value: string;
 }>(({ value }) => value);
 
@@ -33,7 +33,7 @@ const GhostFormInput = (
 
   const serverData = props.serverData;
   if (!serverData) {
-    return;
+    return null;
   }
 
   const displayNames = serverData.display_names;
@@ -43,7 +43,7 @@ const GhostFormInput = (
 
   const displayTexts = {};
   let options: {
-    displayText: InfernoNode;
+    displayText: ReactNode;
     value: string;
   }[] = [];
 

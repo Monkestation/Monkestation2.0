@@ -173,27 +173,3 @@ PROCESSING_SUBSYSTEM_DEF(the_ark)
 	return charged_count
 
 //#undef SERVANT_CAPACITY_TO_GIVE
-
-/datum/action/cooldown/spell/spacetime_dist
-	///The type of effect we actually spawn
-	var/obj/effect/cross_action/spacetime_dist/spawned_effect_type = /obj/effect/cross_action/spacetime_dist
-
-/datum/action/cooldown/spell/spacetime_dist/clock_ark
-	name = "Clockwork Spacetime Dist"
-	cooldown_time = 0
-	scramble_radius = 2
-	duration = 1 MINUTE
-	spawned_effect_type = /obj/effect/cross_action/spacetime_dist/clock_ark
-
-/obj/effect/cross_action/spacetime_dist/clock_ark
-
-/obj/effect/cross_action/spacetime_dist/clock_ark/walk_link(atom/movable/AM)
-	if(isliving(AM))
-		var/mob/living/living_mob = AM
-		if(IS_CLOCK(living_mob))
-			return
-	return ..()
-
-/obj/effect/timestop/magic/clock_ark
-	icon_state = ""
-	hidden = TRUE

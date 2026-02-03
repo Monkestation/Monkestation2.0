@@ -178,12 +178,6 @@
 		if(SSatoms.InitAtom(src, FALSE, args))
 			//we were deleted
 			return
-#ifndef DISABLE_DEMOS
-		// monkestation start: replays
-		if(!(flags_1 & DEMO_IGNORE_1))
-			SSdemo.mark_new(src)
-		// monkestation end
-#endif
 
 /**
  * The primary method that objects are setup in SS13 with
@@ -271,7 +265,7 @@
  * that all atoms will actually exist in the "WORLD" at this time and that all their Intialization
  * code has been run
  */
-/atom/proc/LateInitialize()
+/atom/proc/LateInitialize(mapload_arg)
 	set waitfor = FALSE
 /**
  * Top level of the destroy chain for most atoms
@@ -652,9 +646,6 @@
 	if(isnull(blood)) // Skeletons?
 		return null
 	return list("[dna.unique_enzymes]" = blood.type)
-
-/mob/living/carbon/alien/get_blood_dna_list()
-	return list("UNKNOWN DNA" = "X*")
 
 /mob/living/silicon/get_blood_dna_list()
 	return

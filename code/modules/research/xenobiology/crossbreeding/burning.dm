@@ -99,15 +99,17 @@ Burning extracts:
 /obj/item/slimecross/burning/yellow/do_effect(mob/user)
 	user.visible_message(span_danger("[src] explodes into an energy field, shocking others nearby!"))
 	playsound(get_turf(src), 'sound/weapons/zapbang.ogg', 50, TRUE)
-	// nothing here should deal actual damage - it's just painful and disorienting
 	for(var/mob/living/victim in range(4, get_turf(user)) - user)
-		victim.cause_pain(BODY_ZONES_ALL, 10, BURN)
+		user.Beam(victim, icon_state = "sm_arc", time = 0.5 SECONDS)
+		// Shock immunity prevents negative effects
+		if (HAS_TRAIT(victim, TRAIT_SHOCKIMMUNE))
+			continue
+		victim.adjustFireLoss(10)
 		victim.set_confusion_if_lower(10 SECONDS)
 		victim.set_eye_blur_if_lower(10 SECONDS)
 		ADD_TRAIT(victim, TRAIT_POOR_AIM, type)
 		addtimer(TRAIT_CALLBACK_REMOVE(victim, TRAIT_POOR_AIM, type), 15 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 		to_chat(victim, span_userdanger("You feel a sharp, painful pulse of energy throughout your body!"))
-		user.Beam(victim, icon_state = "sm_arc", time = 0.5 SECONDS)
 		log_combat(user, victim, "disoriented (burning yellow extract)")
 	..()
 

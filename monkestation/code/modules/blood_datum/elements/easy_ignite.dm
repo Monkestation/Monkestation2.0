@@ -78,9 +78,7 @@
 /datum/element/easy_ignite/proc/welder_react(obj/item/source, mob/user, obj/item/tool)
 	SIGNAL_HANDLER
 
-	if(tool.get_temperature() && item_ignition(source, tool, user))
-		ignite(source, user)
-		return FALSE
+	item_ignition(source, tool, user)
 
 /datum/element/easy_ignite/proc/item_ignition(obj/item/source, obj/item/tool, mob/user)
 	if(tool.get_temperature() >= required_temp)

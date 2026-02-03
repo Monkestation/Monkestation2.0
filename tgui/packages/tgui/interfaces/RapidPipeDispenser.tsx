@@ -1,6 +1,5 @@
-import { BooleanLike, classes } from 'common/react';
-import { multiline } from 'common/string';
-import { capitalizeAll } from 'common/string';
+import { type BooleanLike, classes } from 'common/react';
+import { capitalizeAll, multiline } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
 import {
   Box,
@@ -9,8 +8,8 @@ import {
   LabeledList,
   Section,
   Stack,
-  Tabs,
   Table,
+  Tabs,
 } from '../components';
 import { Window } from '../layouts';
 
@@ -255,7 +254,6 @@ const PreviewSelect = (props) => {
         <Button
           ml={0}
           key={preview.dir}
-          title={preview.dir_name}
           selected={preview.selected}
           style={{
             width: '40px',
@@ -276,12 +274,11 @@ const PreviewSelect = (props) => {
           <Box
             className={classes([
               'pipes32x32',
-              preview.dir + '-' + preview.icon_state,
+              `${preview.dir}-${preview.icon_state}`,
             ])}
             style={{
               transform: 'scale(1.5) translate(9.5%, 9.5%)',
-              '-ms-interpolation-mode': 'nearest-neighbor',
-              'image-rendering': 'pixelated',
+              imageRendering: 'pixelated',
             }}
           />
         </Button>
@@ -305,7 +302,6 @@ const PipeTypeSection = (props) => {
       <Tabs>
         {categories.map((category, i) => (
           <Tabs.Tab
-            fluid
             key={category.cat_name}
             icon={ICON_BY_CATEGORY_NAME[category.cat_name]}
             selected={category.cat_name === shownCategory.cat_name}
@@ -319,7 +315,7 @@ const PipeTypeSection = (props) => {
         {shownCategory?.recipes.map((recipe) => (
           <Table.Row
             key={recipe.pipe_index}
-            style={{ 'border-bottom': '1px solid #333' }}
+            style={{ borderBottom: '1px solid #333' }}
           >
             <Table.Cell collapsing py="2px" pb="1px">
               <PreviewSelect
@@ -329,7 +325,7 @@ const PipeTypeSection = (props) => {
               />
             </Table.Cell>
             <Table.Cell />
-            <Table.Cell style={{ 'vertical-align': 'middle' }}>
+            <Table.Cell style={{ verticalAlign: 'middle' }}>
               {recipe.pipe_name}
             </Table.Cell>
           </Table.Row>
@@ -341,7 +337,7 @@ const PipeTypeSection = (props) => {
 
 export const SmartPipeBlockSection = (props) => {
   const { act, data } = useBackend<Data>();
-  const { init_directions = [] } = data;
+  const { init_directions  } = data;
   return (
     <Section fill>
       <Stack vertical textAlign="center">
@@ -362,7 +358,7 @@ export const SmartPipeBlockSection = (props) => {
             <Stack.Item>
               <Button
                 icon="arrow-up"
-                selected={init_directions['north']}
+                selected={init_directions.north}
                 onClick={() =>
                   act('init_dir_setting', {
                     dir_flag: 'north',
@@ -377,7 +373,7 @@ export const SmartPipeBlockSection = (props) => {
             <Stack.Item>
               <Button
                 icon="arrow-left"
-                selected={init_directions['west']}
+                selected={init_directions.west}
                 onClick={() =>
                   act('init_dir_setting', {
                     dir_flag: 'west',
@@ -391,7 +387,7 @@ export const SmartPipeBlockSection = (props) => {
             <Stack.Item>
               <Button
                 icon="arrow-right"
-                selected={init_directions['east']}
+                selected={init_directions.east}
                 onClick={() =>
                   act('init_dir_setting', {
                     dir_flag: 'east',
@@ -404,7 +400,7 @@ export const SmartPipeBlockSection = (props) => {
         <Stack.Item>
           <Button
             icon="arrow-down"
-            selected={init_directions['south']}
+            selected={init_directions.south}
             onClick={() =>
               act('init_dir_setting', {
                 dir_flag: 'south',

@@ -74,7 +74,7 @@
 	///List of liked foods
 	var/list/liked_foods = list(/obj/item/food/grown/wheat = 3,)
 	///list of disliked foods
-	var/list/disliked_food_types = list(MEAT = 4,)
+	var/alist/disliked_food_types = alist(MEAT = 4)
 	///list of disliked foods
 	var/list/disliked_foods = list()
 	///list of dislike chemicals

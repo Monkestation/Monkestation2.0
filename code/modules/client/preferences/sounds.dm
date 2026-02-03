@@ -56,6 +56,7 @@
 /datum/preference/toggle/sound_jukebox/apply_to_client_updated(client/client, value)
 	if (!value)
 		client.mob.stop_sound_channel(CHANNEL_JUKEBOX)
+	client.mob.update_media_source()
 
 /// Controls hearing lobby music
 /datum/preference/toggle/sound_lobby

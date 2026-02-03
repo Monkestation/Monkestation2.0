@@ -11,7 +11,7 @@
 
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/effect/mapping_helpers/requests_console/LateInitialize()
+/obj/effect/mapping_helpers/requests_console/LateInitialize(mapload_arg)
 	var/obj/machinery/airalarm/target = locate(/obj/machinery/requests_console) in loc
 	if(isnull(target))
 		var/area/target_area = get_area(target)

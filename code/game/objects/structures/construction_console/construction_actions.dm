@@ -56,6 +56,7 @@
 			rcd_target = S //If we don't break out of this loop we'll get the last placed thing
 	owner.changeNext_move(CLICK_CD_RANGE)
 	check_rcd()
+	base_console.internal_rcd.mode = base_console.internal_rcd.construction_mode
 	base_console.internal_rcd.rcd_create(rcd_target, owner) //Activate the RCD and force it to work remotely!
 	playsound(target_turf, 'sound/items/deconstruct.ogg', 60, TRUE)
 

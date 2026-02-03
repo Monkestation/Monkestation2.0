@@ -201,7 +201,7 @@
 	weapon_to_spawn = /obj/item/gun/ballistic/automatic/sol_grenade_launcher/no_mag
 	extra_to_spawn = /obj/item/ammo_box/magazine/c980_grenade/starts_empty
 
-/obj/item/storage/toolbox/guncase/skyrat/carwo_large_case/kiboko_magfull  //monke addition
+/obj/item/storage/toolbox/guncase/skyrat/carwo_large_case/kiboko_magfull
 	name = "\improper Carwo 'Kiboko' gunset"
 
 	weapon_to_spawn = /obj/item/gun/ballistic/automatic/sol_grenade_launcher/no_mag
@@ -241,8 +241,8 @@
 	. = ..()
 
 	generate_items_inside(list(
-		/obj/item/storage/toolbox/guncase/skyrat/carwo_large_case/kiboko_magfull = 1, //monke edit
-		/obj/item/storage/toolbox/guncase/skyrat/quarad_guncase = 1, //monke edit
+		/obj/item/storage/toolbox/guncase/skyrat/carwo_large_case/kiboko_magfull = 1,
+		/obj/item/storage/toolbox/guncase/skyrat/quarad_guncase = 1,
 		/obj/item/storage/toolbox/guncase/skyrat/carwo_large_case/wylom = 1, //REPLACE WITH IGNIFIST/20mm WHEN THE PR IS DONE
 	), src)
 

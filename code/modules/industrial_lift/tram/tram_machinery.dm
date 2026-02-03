@@ -27,7 +27,7 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	AddComponent(/datum/component/usb_port, list(/obj/item/circuit_component/tram_controls))
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/computer/tram_controls/LateInitialize()
+/obj/machinery/computer/tram_controls/LateInitialize(mapload_arg)
 	. = ..()
 	find_tram()
 
@@ -351,7 +351,7 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	. = ..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/crossing_signal/LateInitialize()
+/obj/machinery/crossing_signal/LateInitialize(mapload_arg)
 	. = ..()
 	find_tram()
 
@@ -608,7 +608,7 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	. = ..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/destination_sign/LateInitialize()
+/obj/machinery/destination_sign/LateInitialize(mapload_arg)
 	. = ..()
 	find_tram()
 

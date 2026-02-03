@@ -97,9 +97,15 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	if(. & ITEM_INTERACT_ANY_BLOCKER)
 		user.Beam(attacked_object, icon_state = "rped_upgrade", time = 0.5 SECONDS)
 
-/obj/item/storage/part_replacer/bluespace/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	return interact_with_atom(interacting_with, user, modifiers)
-
+/obj/item/storage/part_replacer/bluespace/ranged_interact_with_atom(obj/attacked_object, mob/living/user, list/modifiers)
+	if(!ismachinery(attacked_object) || istype(attacked_object, /obj/machinery/computer))
+		return NONE
+		//I don't think it matters what we return here since we're at a distance anyway so I'm leaving it identical to the normal interaction
+	var/obj/machinery/attacked_machinery = attacked_object
+	if(!LAZYLEN(attacked_machinery.component_parts))
+		return ITEM_INTERACT_FAILURE
+	user.Beam(attacked_object, icon_state = "rped_upgrade", time = 0.5 SECONDS)
+	return attacked_machinery.exchange_parts(user, src) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_FAILURE
 /**
  * Signal handler for when a part has been inserted into the BRPED.
  *

@@ -47,7 +47,7 @@
 		return
 
 	chosen_item = valid_list[chosen_item]
-	if(!can_interact(user) || !anchored || !is_powered || !chosen_item || !COOLDOWN_FINISHED(src, use_cooldown))
+	if(!can_interact(user) || !anchored || !check_powered() || !chosen_item || !COOLDOWN_FINISHED(src, use_cooldown))
 		return
 
 	if(!length(transmission_sigils))
