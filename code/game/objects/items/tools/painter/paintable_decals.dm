@@ -213,6 +213,10 @@
 	if(color == "yellow")
 		color = ""
 
+	if(copytext(state, -3) == "__8")
+		state = splicetext(state, -3, 0, "")
+		dir = turn(dir, 45)
+
 	return list(
 		"[DECAL_INFO_ICON_STATE]" = "[state][color ? "_" : ""][color]",
 		"[DECAL_INFO_DIR]" = dir,
@@ -441,6 +445,10 @@ GLOBAL_LIST_INIT(paintable_decals, init_subtypes(/datum/paintable_decal_category
 /datum/paintable_decal/warning/line
 	name = "Warning Line"
 	icon_state = "warningline"
+
+/datum/paintable_decal/warning/line/line_inner_corner
+	name = "Warning Line Inner Corner"
+	icon_state = "warningline__8" // 8 dir sprite
 
 /datum/paintable_decal/warning/line_corner
 	name = "Warning Line Corner"
