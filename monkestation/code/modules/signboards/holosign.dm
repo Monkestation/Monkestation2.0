@@ -162,7 +162,7 @@
 
 /obj/item/circuit_component/holo_signboard
 	display_name = "Holographic Signboard"
-	desc = "Output text to a signboard, insert <br> in the message field to linebreak."
+	desc = "Output text to a signboard, insert <br> in the message field to linebreak. Set the color to 0, 0, 0 to reset to default."
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 	var/datum/port/input/message
@@ -229,6 +229,10 @@
 	green.set_value(clamp(green.value, 0, 255))
 	var/signboard_color = rgb(red.value, green.value, blue.value)
 	testing("color_recieved: signboard color: [signboard_color]")
-
+	if(signboard_color && signboard_color != rgb(0, 0, 0) && is_color_dark_with_saturation(signboard_color, 25))
+		fail_reason.set_output("Color too dark to display.")
+		on_fail.set_output(COMPONENT_SIGNAL)
+		return
 	connected_display.set_color(signboard_color) //doesnt have a return so no need to check and error
+	investigate_log("Circuit USB ([parent.get_creator()]) set the color to [signboard_color || "(none)"]", INVESTIGATE_SIGNBOARD)
 
