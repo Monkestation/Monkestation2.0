@@ -22,7 +22,7 @@
 
 /atom/movable/screen/alert/clockwork/clocksense/process()
 	if(GLOB.ratvar_risen)
-		desc = "<b>RAT'VAR HAS RISEN.<b>"
+		desc = "<b>RATVAR HAS RISEN.<b>"
 		return PROCESS_KILL
 
 	var/static/last_process_tick
@@ -33,16 +33,16 @@
 
 /atom/movable/screen/alert/clockwork/clocksense/proc/get_static_desc()
 	if(GLOB.ratvar_risen)
-		return "<b>RAT'VAR HAS RISEN.<b>"
+		return "<b>RATVAR HAS RISEN.<b>"
 
-	var/new_desc = "Stored Power - <b>[display_power(SSthe_ark.clock_power)]</b>.<br>"
+	var/new_desc = "Stored Power - <b>[display_power(SSthe_ark.clock_power, FALSE)]</b>.<br>"
 	new_desc += "Stored Vitality - <b>[GLOB.clock_vitality]</b>.<br>"
 	new_desc += "Passive power access - <b>[SSthe_ark.passive_power]</b>.<br>"
 	if(!GLOB.main_clock_cult)
 		return
 
 	new_desc += "We current have [length(GLOB.main_clock_cult.human_servants)] human servants out of [GLOB.main_clock_cult.max_human_servants] maximum human servants, \
-			 as well as [length(GLOB.main_clock_cult.members)] servants all together.<br>"
+			as well as [length(GLOB.main_clock_cult.members)] servants all together.<br>"
 
 	if(GLOB.clock_ark?.charging_for)
 		new_desc += "The Ark will open in [600 - GLOB.clock_ark.charging_for] seconds!<br>"

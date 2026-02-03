@@ -37,7 +37,7 @@
 		MECHA_R_ARM = 1,
 		MECHA_UTILITY = 3,
 		MECHA_POWER = 1,
-		MECHA_ARMOR = 3,
+		MECHA_ARMOR = 2,
 	)
 	//no tax on flying, since the power cost is in the leap itself.
 	phasing_energy_drain = 0
@@ -90,7 +90,7 @@
 	if(chassis.phasing)
 		to_chat(owner, span_warning("You're already airborne!"))
 		return
-	if(TIMER_COOLDOWN_CHECK(chassis, COOLDOWN_MECHA_SKYFALL))
+	if(TIMER_COOLDOWN_RUNNING(chassis, COOLDOWN_MECHA_SKYFALL))
 		var/timeleft = S_TIMER_COOLDOWN_TIMELEFT(chassis, COOLDOWN_MECHA_SKYFALL)
 		to_chat(owner, span_warning("You need to wait [DisplayTimeText(timeleft, 1)] before attempting to Skyfall."))
 		return
@@ -260,7 +260,7 @@
 		return
 	if(!chassis || !(owner in chassis.occupants))
 		return
-	if(TIMER_COOLDOWN_CHECK(chassis, COOLDOWN_MECHA_MISSILE_STRIKE))
+	if(TIMER_COOLDOWN_RUNNING(chassis, COOLDOWN_MECHA_MISSILE_STRIKE))
 		var/timeleft = S_TIMER_COOLDOWN_TIMELEFT(chassis, COOLDOWN_MECHA_MISSILE_STRIKE)
 		to_chat(owner, span_warning("You need to wait [DisplayTimeText(timeleft, 1)] before firing another Ivanov Strike."))
 		return

@@ -120,18 +120,18 @@ GLOBAL_LIST_EMPTY(order_console_products)
 			"cat" = item.category_index,
 			"ref" = REF(item),
 			"cost" = FLOOR(item.cost_per_order * cargo_cost_multiplier, 1),
-			"icon" = text_ref(item.item_path::icon),
-			"icon_state" = item.item_path::icon_state,
+			"icon" = item.item_path::icon_preview || item.item_path::icon,
+			"icon_state" = item.item_path::icon_state_preview || item.item_path::icon_state,
 		))
 	return data
 
-/obj/machinery/computer/order_console/ui_act(action, params)
+/obj/machinery/computer/order_console/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
-	if(!isliving(usr))
+	var/mob/living/living_user = ui.user
+	if(!isliving(living_user))
 		return
-	var/mob/living/living_user = usr
 	switch(action)
 		if("add_one")
 			var/datum/orderable_item/wanted_item = locate(params["target"]) in GLOB.order_console_products
@@ -150,7 +150,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
 			if(!grocery_list[wanted_item])
 				grocery_list -= wanted_item
 		if("purchase")
-			if(!grocery_list.len || !COOLDOWN_FINISHED(src, order_cooldown))
+			if(!length(grocery_list) || !COOLDOWN_FINISHED(src, order_cooldown))
 				return
 			if(forced_express)
 				return ui_act(action = "express")
@@ -158,7 +158,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
 			if(get_total_cost() < CARGO_CRATE_VALUE)
 				return
 			var/obj/item/card/id/used_id_card = living_user.get_idcard(TRUE)
-			if(!used_id_card || !used_id_card.registered_account)
+			if(!used_id_card?.registered_account)
 				say("No bank account detected!")
 				return
 			if(!purchase_items(used_id_card))
@@ -169,10 +169,10 @@ GLOBAL_LIST_EMPTY(order_console_products)
 			grocery_list.Cut()
 			COOLDOWN_START(src, order_cooldown, cooldown_time)
 		if("express")
-			if(!grocery_list.len || !COOLDOWN_FINISHED(src, order_cooldown))
+			if(!length(grocery_list) || !COOLDOWN_FINISHED(src, order_cooldown))
 				return
 			var/obj/item/card/id/used_id_card = living_user.get_idcard(TRUE)
-			if(!used_id_card || !used_id_card.registered_account)
+			if(!used_id_card?.registered_account)
 				say("No bank account detected!")
 				return
 			if(!purchase_items(used_id_card, express = TRUE))
@@ -217,7 +217,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
 	return FALSE
 
 /**
- * whatever type of points was retrived in retrive_points() subtract those type of points from the card upon confirming order
+ * whatever type of points was retrieved in retrive_points() subtract those type of points from the card upon confirming order
  * Args:
  * final_cost - amount of points to subtract from this card
  * card - The ID card to subtract these points from

@@ -12,7 +12,9 @@
 	flags_cover = MASKCOVERSMOUTH
 	visor_flags_cover = MASKCOVERSMOUTH
 	resistance_flags = NONE
-	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
+	interaction_flags_click = NEED_DEXTERITY|ALLOW_RESTING
+	/// Can this mask be adjusted?
+	var/adjustable = TRUE
 
 /datum/armor/mask_breath
 	bio = 50
@@ -22,12 +24,14 @@
 	return OXYLOSS
 
 /obj/item/clothing/mask/breath/attack_self(mob/user)
-	adjustmask(user)
-
-/obj/item/clothing/mask/breath/AltClick(mob/user)
-	..()
-	if(user.can_perform_action(src, NEED_DEXTERITY))
+	if(adjustable)
 		adjustmask(user)
+
+/obj/item/clothing/mask/breath/click_alt(mob/user)
+	if(!adjustable)
+		return
+	adjustmask(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/mask/breath/examine(mob/user)
 	. = ..()

@@ -68,7 +68,7 @@
 //For when the machine is destroyed
 /obj/machinery/bomb_actualizer/Destroy()
 	inserted_bomb = null
-	radio = null
+	QDEL_NULL(radio)
 	combined_gasmix = null
 	QDEL_NULL(countdown)
 	end_processing()
@@ -119,7 +119,7 @@
  * Starts the Detonation Sequence
  */
 /obj/machinery/bomb_actualizer/proc/start_detonation()
-	if(!TIMER_COOLDOWN_CHECK(src, COOLDOWN_BOMB_BUTTON))
+	if(TIMER_COOLDOWN_FINISHED(src, COOLDOWN_BOMB_BUTTON))
 
 		if(active)
 			say("ERROR: The countdown has aready begun!!!")

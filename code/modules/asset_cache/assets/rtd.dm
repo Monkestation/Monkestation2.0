@@ -21,7 +21,7 @@
 				if(tile_directions == null)
 					continue
 
-				for(var/direction as anything in tile_directions)
+				for(var/direction in tile_directions)
 					//we can rotate the icon is css for these directions
 					if(direction in GLOB.tile_dont_rotate)
 						continue

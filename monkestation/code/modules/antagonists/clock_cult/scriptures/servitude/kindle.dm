@@ -7,7 +7,7 @@
 	desc = "Stuns and mutes a target from a short range."
 	tip = "Best paired with hateful manacels for conversion, they are stunned for 7 seconds and muted for 14."
 	button_icon_state = "Kindle"
-	power_cost = 125
+	power_cost = STANDARD_CELL_CHARGE * 0.125
 	invocation_time = 2 SECONDS
 	invocation_text = list("Divinity, show them your light!")
 	after_use_text = "Let the power flow through you!"

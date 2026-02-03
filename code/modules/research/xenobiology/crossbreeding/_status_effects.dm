@@ -8,22 +8,20 @@
 	duration = 100
 	alert_type = /atom/movable/screen/alert/status_effect/rainbow_protection
 	show_duration = TRUE
-	var/originalcolor
 
 /datum/status_effect/rainbow_protection/on_apply()
 	owner.add_traits(list(TRAIT_PACIFISM, TRAIT_GODMODE), TRAIT_STATUS_EFFECT(id))
 	owner.visible_message(span_warning("[owner] shines with a brilliant rainbow light."),
 		span_notice("You feel protected by an unknown force!"))
-	originalcolor = owner.color
 	return ..()
 
 /datum/status_effect/rainbow_protection/tick()
-	owner.color = rgb(rand(0,255),rand(0,255),rand(0,255))
+	owner.add_atom_colour(rgb(rand(0, 255), rand(0, 255), rand(0, 255)), TEMPORARY_COLOUR_PRIORITY)
 	return ..()
 
 /datum/status_effect/rainbow_protection/on_remove()
 	owner.remove_traits(list(TRAIT_PACIFISM, TRAIT_GODMODE), TRAIT_STATUS_EFFECT(id))
-	owner.color = originalcolor
+	owner.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
 	owner.visible_message(span_notice("[owner] stops glowing, the rainbow light fading away."),
 		span_warning("You no longer feel protected..."))
 
@@ -37,11 +35,9 @@
 	duration = 300
 	alert_type = /atom/movable/screen/alert/status_effect/slimeskin
 	show_duration = TRUE
-	var/originalcolor
 
 /datum/status_effect/slimeskin/on_apply()
-	originalcolor = owner.color
-	owner.color = "#3070CC"
+	owner.add_atom_colour("#3070CC", TEMPORARY_COLOUR_PRIORITY)
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
 		H.physiology.damage_resistance += 10
@@ -50,7 +46,7 @@
 	return ..()
 
 /datum/status_effect/slimeskin/on_remove()
-	owner.color = originalcolor
+	owner.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, "#3070CC")
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
 		H.physiology.damage_resistance -= 10
@@ -177,7 +173,6 @@
 	owner.adjustOxyLoss(1, 0)
 	owner.adjustBruteLoss(1, 0)
 	owner.adjustFireLoss(1, 0)
-	owner.color = "#007BA7"
 
 /atom/movable/screen/alert/status_effect/bloodchill
 	name = "Bloodchilled"
@@ -186,7 +181,7 @@
 
 /datum/status_effect/bloodchill
 	id = "bloodchill"
-	duration = 100
+	duration = 10 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/bloodchill
 
 /datum/status_effect/bloodchill/on_apply()
@@ -194,8 +189,7 @@
 	return ..()
 
 /datum/status_effect/bloodchill/tick()
-	if(prob(50))
-		owner.adjustFireLoss(2)
+	owner.adjust_bodytemperature(-20 KELVIN)
 
 /datum/status_effect/bloodchill/on_remove()
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/bloodchill)
@@ -572,11 +566,11 @@
 		return ..()
 	cooldown = max_cooldown
 	var/list/batteries = list()
-	for(var/obj/item/stock_parts/cell/C in owner.get_all_contents())
+	for(var/obj/item/stock_parts/power_store/cell/C in owner.get_all_contents())
 		if(C.charge < C.maxcharge)
 			batteries += C
 	if(batteries.len)
-		var/obj/item/stock_parts/cell/ToCharge = pick(batteries)
+		var/obj/item/stock_parts/power_store/cell/ToCharge = pick(batteries)
 		ToCharge.charge += min(ToCharge.maxcharge - ToCharge.charge, ToCharge.maxcharge/10) //10% of the cell, or to maximum.
 		to_chat(owner, span_notice("[linked_extract] discharges some energy into a device you have."))
 	return ..()
@@ -679,14 +673,13 @@
 
 /datum/status_effect/bluespacestabilization
 	id = "stabilizedbluespacecooldown"
-	duration = 1200
+	duration = 2 MINUTES
 	alert_type = null
 
 /datum/status_effect/stabilized/bluespace
 	id = "stabilizedbluespace"
 	colour = "bluespace"
 	alert_type = /atom/movable/screen/alert/status_effect/bluespaceslime
-	var/healthcheck
 
 /datum/status_effect/stabilized/bluespace/tick()
 	if(owner.has_status_effect(/datum/status_effect/bluespacestabilization))
@@ -697,8 +690,8 @@
 		linked_alert.desc = "The stabilized bluespace extract will try to redirect you from harm!"
 		linked_alert.icon_state = "slime_bluespace_on"
 
-	if(healthcheck && (healthcheck - owner.health) > 5)
-		owner.visible_message(span_warning("[linked_extract] notices the sudden change in [owner]'s physical health, and activates!"))
+	if(owner.stat >= SOFT_CRIT)
+		owner.visible_message(span_warning("[linked_extract] notices the change in [owner]'s physical health, and activates!"))
 		do_sparks(5,FALSE,owner)
 		var/F = find_safe_turf(zlevels = owner.z, extended_safety_checks = TRUE)
 		var/range = 0
@@ -709,7 +702,6 @@
 			to_chat(owner, span_notice("[linked_extract] will take some time to re-align you on the bluespace axis."))
 			do_sparks(5,FALSE,owner)
 			owner.apply_status_effect(/datum/status_effect/bluespacestabilization)
-	healthcheck = owner.health
 	return ..()
 
 /datum/status_effect/stabilized/sepia
@@ -756,6 +748,7 @@
 		var/mob/living/carbon/carbon_owner = owner
 		var/mob/living/carbon/carbon_clone = clone
 		carbon_clone.real_name = carbon_owner.real_name
+		carbon_clone.copy_voice_from(carbon_owner)
 		carbon_owner.dna.copy_dna(carbon_clone.dna, COPY_DNA_SE|COPY_DNA_SPECIES)
 		carbon_clone.updateappearance(mutcolor_update = TRUE)
 
@@ -776,18 +769,12 @@
 /datum/status_effect/stabilized/pyrite
 	id = "stabilizedpyrite"
 	colour = "pyrite"
-	var/originalcolor
-
-/datum/status_effect/stabilized/pyrite/on_apply()
-	originalcolor = owner.color
-	return ..()
 
 /datum/status_effect/stabilized/pyrite/tick()
-	owner.color = rgb(rand(0,255),rand(0,255),rand(0,255))
-	return ..()
+	owner.add_atom_colour(rand(0, 255), rand(0, 255), rand(0, 255), TEMPORARY_COLOUR_PRIORITY)
 
 /datum/status_effect/stabilized/pyrite/on_remove()
-	owner.color = originalcolor
+	owner.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
 
 /datum/status_effect/stabilized/red
 	id = "stabilizedred"
@@ -809,14 +796,16 @@
 	id = "stabilizedgreen"
 	colour = "green"
 	var/datum/dna/originalDNA
-	var/originalname
+	var/original_name
+	var/alist/original_clothing_prefs
 
 /datum/status_effect/stabilized/green/on_apply()
 	to_chat(owner, span_warning("You feel different..."))
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
 		originalDNA = new H.dna.type
-		originalname = H.real_name
+		original_name = H.real_name
+		original_clothing_prefs = H.backup_clothing_prefs()
 		H.dna.copy_dna(originalDNA, COPY_DNA_SE|COPY_DNA_SPECIES)
 		randomize_human(H)
 	return ..()
@@ -833,7 +822,8 @@
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human = owner
 		originalDNA.copy_dna(human.dna, COPY_DNA_SE|COPY_DNA_SPECIES|COPY_DNA_MUTATIONS)
-		human.real_name = originalname
+		human.real_name = original_name
+		human.restore_clothing_prefs(original_clothing_prefs)
 		human.updateappearance(mutcolor_update = TRUE)
 	originalDNA = null
 
@@ -1063,7 +1053,6 @@
 		familiar.copy_languages(owner, LANGUAGE_MASTER)
 		if(linked.saved_mind)
 			linked.saved_mind.transfer_to(familiar)
-			familiar.update_atom_languages()
 			familiar.PossessByPlayer(linked.saved_mind.key)
 	else
 		if(familiar.mind)
@@ -1123,7 +1112,7 @@
 	var/obj/item/slimecross/stabilized/rainbow/extract = linked_extract
 	if(QDELETED(src) || !istype(extract) || QDELING(extract) || QDELETED(extract.regencore))
 		return
-	if(TIMER_COOLDOWN_CHECK(owner, COOLDOWN_STABLE_RAINBOW))
+	if(TIMER_COOLDOWN_RUNNING(owner, COOLDOWN_STABLE_RAINBOW))
 		trigger_after_cooldown = TRUE
 		return
 	trigger_after_cooldown = FALSE

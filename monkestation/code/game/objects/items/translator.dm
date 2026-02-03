@@ -13,8 +13,8 @@
 	var/static/list/language_name_list
 	if(!language_name_list)
 		language_name_list = list()
-		for(var/language in user.mind.language_holder.understood_languages)
-			if(language in user.mind.language_holder.blocked_languages)
+		for(var/language in user.get_language_holder().understood_languages)
+			if(language in user.get_language_holder().blocked_languages)
 				continue
 			var/atom/A = language
 			language_name_list[initial(A.name)] = A

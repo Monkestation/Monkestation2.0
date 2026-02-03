@@ -10,6 +10,9 @@
 	category = EVENT_CATEGORY_SPACE
 	description = "A regular meteor wave."
 	map_flags = EVENT_SPACE_ONLY
+	track = EVENT_TRACK_MAJOR
+	tags = list(TAG_COMMUNAL, TAG_SPACE, TAG_DESTRUCTIVE, TAG_EXTERNAL)
+	event_group = /datum/event_group/meteors
 
 /datum/round_event/meteor_wave
 	start_when = 6

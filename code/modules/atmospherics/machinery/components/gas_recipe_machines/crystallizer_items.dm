@@ -32,6 +32,7 @@
 		worn_item.add_atom_colour("#00fff7", FIXED_COLOUR_PRIORITY)
 		worn_item.min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 		worn_item.clothing_flags |= STOPSPRESSUREDAMAGE
+		user.update_cached_insulation()
 
 	uses--
 	if(uses <= 0)

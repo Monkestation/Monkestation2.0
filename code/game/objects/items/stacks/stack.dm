@@ -106,7 +106,7 @@
 	update_weight()
 	update_appearance()
 
-/obj/item/stack/LateInitialize()
+/obj/item/stack/LateInitialize(mapload_arg)
 	merge_with_loc()
 
 /obj/item/stack/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
@@ -298,8 +298,9 @@
 	return data
 
 /obj/item/stack/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
-	if(..())
-		return FALSE
+	. = ..()
+	if(.)
+		return
 
 	switch(action)
 		if("make")
@@ -516,6 +517,8 @@
 	return TRUE
 
 /obj/item/stack/use(used, transfer = FALSE, check = TRUE) // return 0 = borked; return 1 = had enough
+	if(!..())
+		return FALSE
 	if(check && is_zero_amount(delete_if_zero = TRUE))
 		return FALSE
 	if(is_cyborg)

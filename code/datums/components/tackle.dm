@@ -4,9 +4,9 @@
 /**
  * For when you want to throw a person at something and have fun stuff happen
  *
- * This component is made for carbon mobs (really, humans), and allows its parent to throw themselves and perform tackles. This is done by enabling throw mode, then clicking on your
+ * This component is made for carbon mobs (really, humans), and allows its parent to throw themselves and perform tackles. This is done by enabling throw mode, then right-clicking on your
  *   intended target with an empty hand. You will then launch toward your target. If you hit a carbon, you'll roll to see how hard you hit them. If you hit a solid non-mob, you'll
- *   roll to see how badly you just messed yourself up. If, along your journey, you hit a table, you'll slam onto it and send up to MAX_TABLE_MESSES (8) /obj/items on the table flying,
+ *   roll to see how badly you just messed yourself up. If, along your journey, you hit a table, you'll slam onto it and send up to MAX_TABLE_MESSES /obj/items on the table flying,
  *   and take a bit of extra damage and stun for each thing launched.
  *
  * There are 2 separate """skill rolls""" involved here, which are handled and explained in [rollTackle()][/datum/component/tackler/proc/rollTackle] (for roll 1, carbons), and [splat()][/datum/component/tackler/proc/splat] (for roll 2, walls and solid objects)
@@ -18,7 +18,7 @@
 	var/tackling = TRUE
 	///How much stamina it takes to launch a tackle
 	var/stamina_cost
-	///Launching a tackle calls Knockdown on you for this long, so this is your cooldown. Once you stand back up, you can tackle again.
+	///Launching a tackle calls Knockdown on you for this long.
 	var/base_knockdown
 	///Your max range for how far you can tackle.
 	var/range
@@ -31,7 +31,7 @@
 	///A wearkef to the throwdatum we're currently dealing with, if we need it
 	var/datum/weakref/tackle_ref
 
-/datum/component/tackler/Initialize(stamina_cost = 25, base_knockdown = 1 SECONDS, range = 4, speed = 1, skill_mod = 0, min_distance = min_distance)
+/datum/component/tackler/Initialize(stamina_cost = 13, base_knockdown = 1 SECONDS, range = 4, speed = 1, skill_mod = 0, min_distance = min_distance)
 	if(!iscarbon(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -74,7 +74,7 @@
 	if(!modifiers[RIGHT_CLICK] || modifiers[ALT_CLICK] || modifiers[SHIFT_CLICK] || modifiers[CTRL_CLICK] || modifiers[MIDDLE_CLICK])
 		return
 
-	if(!user.throw_mode || user.get_active_held_item() || user.pulling || user.buckled || user.incapacitated())
+	if(!user.throw_mode || user.get_active_held_item() || user.buckled || user.incapacitated())
 		return
 
 	if(!clicked_atom || !(isturf(clicked_atom) || isturf(clicked_atom.loc)))
@@ -96,13 +96,17 @@
 		to_chat(user, span_warning("You're not ready to tackle!"))
 		return
 
-	if(user.has_movespeed_modifier(/datum/movespeed_modifier/shove)) // can't tackle if you just got shoved
+	if(user.has_movespeed_modifier(/datum/movespeed_modifier/shove)) // can't tackle if you just got shoved or tackled recently
 		to_chat(user, span_warning("You're too off balance to tackle!"))
 		return
+
+	if (user.pulling)
+		user.stop_pulling()
 
 	user.face_atom(clicked_atom)
 
 	tackling = TRUE
+	user.toggle_throw_mode()
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(checkObstacle))
 	playsound(user, 'sound/weapons/thudswoosh.ogg', 40, TRUE, -1)
 
@@ -118,6 +122,12 @@
 
 	user.Knockdown(base_knockdown, ignore_canstun = TRUE)
 	user.stamina.adjust(-stamina_cost)
+
+	if(ishuman(user))
+		if (!user.has_movespeed_modifier(/datum/movespeed_modifier/shove))
+			user.add_movespeed_modifier(/datum/movespeed_modifier/shove)
+		addtimer(CALLBACK(user, TYPE_PROC_REF(/mob/living/carbon, clear_shove_slowdown)), SHOVE_SLOWDOWN_LENGTH, TIMER_UNIQUE | TIMER_OVERRIDE)
+
 	user.throw_at(clicked_atom, range, speed, user, FALSE)
 	addtimer(CALLBACK(src, PROC_REF(resetTackle)), base_knockdown, TIMER_STOPPABLE)
 	return(COMSIG_MOB_CANCEL_CLICKON)
@@ -148,7 +158,6 @@
 		tackle = null
 		return
 
-	user.toggle_throw_mode()
 	if(!iscarbon(hit))
 		if(hit.density)
 			INVOKE_ASYNC(src, PROC_REF(splat), user, hit)
@@ -162,6 +171,20 @@
 	var/roll = rollTackle(target)
 	tackling = FALSE
 	tackle.gentle = TRUE
+
+	if(T.check_block(user, 0, user.name, attack_type = LEAP_ATTACK))
+		user.visible_message(span_danger("[user]'s tackle is blocked by [target], softening the effect!"), span_userdanger("Your tackle is blocked by [target], softening the effect!"), ignored_mobs = target)
+		to_chat(T, span_userdanger("[target] blocks [user]'s tackle attempt, softening the effect!"))
+
+		//Prevent us from getting fucked over too harshly from a tackle being blocked
+		user.SetKnockdown(0)
+		user.get_up(TRUE)
+
+		if (ishuman(target))
+			if (!target.has_movespeed_modifier(/datum/movespeed_modifier/shove))
+				target.add_movespeed_modifier(/datum/movespeed_modifier/shove)
+			addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living/carbon, clear_shove_slowdown)), SHOVE_SLOWDOWN_LENGTH, TIMER_UNIQUE | TIMER_OVERRIDE)
+		return COMPONENT_MOVABLE_IMPACT_FLIP_HITPUSH
 
 	switch(roll)
 		if(-INFINITY to -5)
@@ -179,9 +202,10 @@
 			to_chat(target, span_userdanger("[user] lands a weak [tackle_word] on you, briefly knocking you off-balance!"))
 
 			user.Knockdown(30)
-			if(ishuman(target) && !T.has_movespeed_modifier(/datum/movespeed_modifier/shove))
-				T.add_movespeed_modifier(/datum/movespeed_modifier/shove) // maybe define a slightly more severe/longer slowdown for this
-				addtimer(CALLBACK(T, TYPE_PROC_REF(/mob/living/carbon, clear_shove_slowdown)), SHOVE_SLOWDOWN_LENGTH * 2)
+			if(ishuman(target))
+				if (!target.has_movespeed_modifier(/datum/movespeed_modifier/shove))
+					target.add_movespeed_modifier(/datum/movespeed_modifier/shove) // maybe define a slightly more severe/longer slowdown for this
+				addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living/carbon, clear_shove_slowdown)), SHOVE_SLOWDOWN_LENGTH * 2, TIMER_UNIQUE | TIMER_OVERRIDE)
 
 		if(-1 to 0) // decent hit, both parties are about equally inconvenienced
 			user.visible_message(span_warning("[user] lands a passable [tackle_word] on [target], sending them both tumbling!"), span_userdanger("You land a passable [tackle_word] on [target], sending you both tumbling!"), ignored_mobs = target)
@@ -196,7 +220,7 @@
 			user.visible_message(span_warning("[user] lands a solid [tackle_word] on [target], knocking them both down hard!"), span_userdanger("You land a solid [tackle_word] on [target], knocking you both down hard!"), ignored_mobs = target)
 			to_chat(target, span_userdanger("[user] lands a solid [tackle_word] on you, knocking you both down hard!"))
 
-			target.stamina.adjust(-30)
+			target.stamina.adjust(-15)
 			target.Paralyze(0.5 SECONDS)
 			user.Knockdown(1 SECONDS)
 			target.Knockdown(2 SECONDS)
@@ -208,7 +232,7 @@
 			user.SetKnockdown(0)
 			user.get_up(TRUE)
 			user.forceMove(get_turf(target))
-			target.stamina.adjust(-40)
+			target.stamina.adjust(-20)
 			target.Paralyze(0.5 SECONDS)
 			target.Knockdown(3 SECONDS)
 			if(ishuman(target) && ishuman(user))
@@ -221,7 +245,7 @@
 				user.visible_message(span_warning("[user] lands a monsterly reckless [tackle_word] on [target], knocking both of them senseless!"), span_userdanger("You land a monsterly reckless [tackle_word] on [target], knocking both of you senseless!"), ignored_mobs = target)
 				to_chat(target, span_userdanger("[user] lands a monsterly reckless [tackle_word] on you, knocking the both of you senseless!"))
 				user.forceMove(get_turf(target))
-				target.stamina.adjust(-60)
+				target.stamina.adjust(-30)
 				target.Paralyze(1 SECONDS)
 				target.Knockdown(5 SECONDS)
 			else
@@ -231,7 +255,7 @@
 				user.SetKnockdown(0)
 				user.get_up(TRUE)
 				user.forceMove(get_turf(target))
-				target.stamina.adjust(-40)
+				target.stamina.adjust(-20)
 				target.Paralyze(0.5 SECONDS)
 				target.Knockdown(3 SECONDS)
 				if(ishuman(target) && ishuman(user))
@@ -324,7 +348,8 @@
 		if(!istype(sacker_moth_wing) || sacker_moth_wing.burnt)
 			attack_mod -= 2
 	var/obj/item/organ/external/wings/sacker_wing = sacker.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
-	if(sacker_wing)
+//	if(sacker_wing) // MONKESTATION EDIT OLD -- Arachnids use the external wing slot aswell, so we have to check for actual wings
+	if(sacker_wing && istype(sacker_wing)) // MONKESTATION EDIT NEW
 		attack_mod += 2
 
 	if(ishuman(target))
@@ -333,7 +358,7 @@
 		var/suit_slot = S.get_item_by_slot(ITEM_SLOT_OCLOTHING)
 		if(suit_slot && (istype(suit_slot,/obj/item/clothing/suit/armor/riot))) // tackling in riot armor is more effective, but tiring
 			attack_mod += 2
-			sacker.stamina.adjust(-20)
+			sacker.stamina.adjust(-10)
 
 	var/r = rand(-3, 3) - defense_mod + attack_mod + skill_mod
 	return r
@@ -395,11 +420,10 @@
 				hed.receive_damage(brute=40, updating_health=FALSE, wound_bonus = 40)
 			else
 				user.adjustBruteLoss(40, updating_health=FALSE)
-			user.stamina.adjust(-30)
+			user.stamina.adjust(-15)
 			playsound(user, 'sound/effects/blobattack.ogg', 60, TRUE)
 			playsound(user, 'sound/effects/splat.ogg', 70, TRUE)
 			playsound(user, 'sound/effects/wounds/crack2.ogg', 70, TRUE)
-			user.pain_emote("scream")
 			user.gain_trauma(/datum/brain_trauma/severe/paralysis/paraplegic) // oopsie indeed!
 			shake_camera(user, 7, 7)
 			user.flash_act(1, TRUE, TRUE, length = 4.5)
@@ -411,7 +435,7 @@
 				hed.receive_damage(brute = 30, updating_health = FALSE, wound_bonus = 25)
 			else
 				user.adjustBruteLoss(40, updating_health = FALSE)
-			user.stamina.adjust(-30)
+			user.stamina.adjust(-15)
 			user.gain_trauma_type(BRAIN_TRAUMA_MILD)
 			playsound(user, 'sound/effects/blobattack.ogg', 60, TRUE)
 			playsound(user, 'sound/effects/splat.ogg', 70, TRUE)
@@ -421,7 +445,7 @@
 
 		if(93 to 96)
 			user.visible_message(span_danger("[user] slams face-first into [hit] with a concerning squish, immediately going limp!"), span_userdanger("You slam face-first into [hit], and immediately lose consciousness!"))
-			user.stamina.adjust(-30)
+			user.stamina.adjust(-15)
 			user.adjustBruteLoss(30)
 			user.Unconscious(10 SECONDS)
 			user.gain_trauma_type(BRAIN_TRAUMA_MILD)
@@ -431,7 +455,7 @@
 
 		if(86 to 92)
 			user.visible_message(span_danger("[user] slams head-first into [hit], suffering major cranial trauma!"), span_userdanger("You slam head-first into [hit], and the world explodes around you!"))
-			user.stamina.adjust(-30)
+			user.stamina.adjust(-15)
 			user.adjustBruteLoss(30)
 			user.adjust_confusion(15 SECONDS)
 			if(prob(80))
@@ -443,7 +467,7 @@
 
 		if(68 to 85)
 			user.visible_message(span_danger("[user] slams hard into [hit], knocking [user.p_them()] senseless!"), span_userdanger("You slam hard into [hit], knocking yourself senseless!"))
-			user.stamina.adjust(-30)
+			user.stamina.adjust(-15)
 			user.adjustBruteLoss(10)
 			user.adjust_confusion(10 SECONDS)
 			user.Knockdown(3 SECONDS)
@@ -451,7 +475,7 @@
 
 		if(1 to 67)
 			user.visible_message(span_danger("[user] slams into [hit]!"), span_userdanger("You slam into [hit]!"))
-			user.stamina.adjust(-20)
+			user.stamina.adjust(-10)
 			user.adjustBruteLoss(10)
 			user.Knockdown(2 SECONDS)
 			shake_camera(user, 2, 2)
@@ -506,7 +530,7 @@
 			HOW_big_of_a_miss_did_we_just_make = ", making a ginormous mess!" // an extra exclamation point!! for emphasis!!!
 
 	owner.visible_message(span_danger("[owner] trips over [kevved] and slams into it face-first[HOW_big_of_a_miss_did_we_just_make]!"), span_userdanger("You trip over [kevved] and slam into it face-first[HOW_big_of_a_miss_did_we_just_make]!"))
-	owner.stamina.adjust(-15 + messes.len * 2, FALSE)
+	owner.stamina.adjust(-8 + messes.len * 2, FALSE)
 	owner.adjustBruteLoss(8 + messes.len)
 	owner.Paralyze(0.4 SECONDS * messes.len) // .4 seconds of paralyze for each thing you knock around
 	owner.Knockdown(2 SECONDS + 0.4 SECONDS * messes.len) // 2 seconds of knockdown after the paralyze

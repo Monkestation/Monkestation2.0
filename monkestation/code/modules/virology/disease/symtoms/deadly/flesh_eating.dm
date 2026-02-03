@@ -33,9 +33,9 @@ Bonus
 
 /datum/symptom/flesh_eating/proc/Flesheat(mob/living/mob, datum/disease/acute/disease)
 	var/get_damage = rand(15,25) * multiplier
-	mob.take_overall_damage(brute = get_damage, required_bodytype = BODYTYPE_ORGANIC)
+	mob.take_overall_damage(brute = get_damage)
 	if(round(multiplier) == 2)
-		mob.stamina.adjust(-get_damage * 2)
+		mob.stamina.adjust(-get_damage)
 		var/mob/living/carbon/human/H = mob
 		var/obj/item/bodypart/random_part = pick(H.bodyparts)
 		random_part.adjustBleedStacks(5 * multiplier)

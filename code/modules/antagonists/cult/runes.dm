@@ -530,6 +530,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 				movesuccess = TRUE
 	if(movedsomething)
 		..()
+		playsound(src, SFX_PORTAL_ENTER, 50, TRUE)
+		playsound(target, SFX_PORTAL_ENTER, 50, TRUE)
 		if(moveuserlater)
 			if(do_teleport(user, target, channel = TELEPORT_CHANNEL_CULT))
 				movesuccess = TRUE
@@ -552,7 +554,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 /obj/effect/rune/teleport/proc/handle_portal(portal_type, turf/origin)
 	var/turf/T = get_turf(src)
 	close_portal() // To avoid stacking descriptions/animations
-	playsound(T, 'sound/effects/portal_travel.ogg', 100, TRUE, 14)
+	playsound(T, SFX_PORTAL_CREATED, 100, TRUE, 14)
 	inner_portal = new /obj/effect/temp_visual/cult/portal(T)
 	if(portal_type == "space")
 		set_light_color(color)
@@ -709,7 +711,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			fail_invoke()
 			return
 		sacrifices_used += SOULS_TO_REVIVE
-		mob_to_revive.revive(ADMIN_HEAL_ALL) //This does remove traits and such, but the rune might actually see some use because of it! //Why did you think this was a good idea
+		mob_to_revive.revive(ADMIN_HEAL_ALL, revival_policy = POLICY_ANTAGONISTIC_REVIVAL) //This does remove traits and such, but the rune might actually see some use because of it! //Why did you think this was a good idea
 
 	if(!mob_to_revive.client || mob_to_revive.client.is_afk())
 		set waitfor = FALSE
@@ -834,12 +836,15 @@ structure_check() searches for nearby cultist structures required for the invoca
 									  span_cult_italic("<b>Overwhelming vertigo consumes you as you are hurled through the air!</b>"))
 	..()
 	visible_message(span_warning("A foggy shape materializes atop [src] and solidifies into [cultist_to_summon]!"))
+	var/turf/old_turf = get_turf(cultist_to_summon)
 	if(!do_teleport(cultist_to_summon, get_turf(src)))
 		to_chat(user, span_warning("The summoning has completely failed for [cultist_to_summon]!"))
 		fail_logmsg += "target failed criteria to teleport." //catch-all term, just means they failed do_teleport somehow. The most common reasons why someone should fail to be summoned already have verbose messages.
 		log_game(fail_logmsg)
 		fail_invoke()
 		return
+	playsound(src, SFX_PORTAL_ENTER, 100, TRUE, SILENCED_SOUND_EXTRARANGE)
+	playsound(old_turf, SFX_PORTAL_ENTER, 100, TRUE, SILENCED_SOUND_EXTRARANGE)
 	qdel(src)
 
 //Rite of Boiling Blood: Deals extremely high amounts of damage to non-cultists nearby
@@ -911,10 +916,6 @@ structure_check() searches for nearby cultist structures required for the invoca
 	var/mob/living/affecting = null
 	var/ghost_limit = 3
 	var/ghosts = 0
-
-/obj/effect/rune/manifest/Initialize(mapload)
-	. = ..()
-
 
 /obj/effect/rune/manifest/can_invoke(mob/living/user)
 	if(!(user in get_turf(src)))
@@ -1001,6 +1002,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		affecting.visible_message(span_warning("[affecting] freezes statue-still, glowing an unearthly red."), \
 						span_cult("You see what lies beyond. All is revealed. In this form you find that your voice booms louder and you can mark targets for the entire cult"))
 		var/mob/dead/observer/G = affecting.ghostize(TRUE)
+		ADD_TRAIT(G, TRAIT_NO_OBSERVE, CULT_TRAIT)
 		var/datum/action/innate/cult/comm/spirit/CM = new
 		var/datum/action/innate/cult/ghostmark/GM = new
 		G.name = "Dark Spirit of [G.name]"

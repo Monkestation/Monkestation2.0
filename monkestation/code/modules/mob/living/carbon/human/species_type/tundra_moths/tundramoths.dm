@@ -4,6 +4,9 @@
 	id = SPECIES_TUNDRA
 	mutanteyes = /obj/item/organ/internal/eyes/moth/tundra
 	external_organs = list(/obj/item/organ/external/wings/moth = "Tundra", /obj/item/organ/external/antennae = "Tundra")
+	inherent_traits = list(
+		TRAIT_HAS_MARKINGS,
+	)
 
 	bodypart_overrides = list(
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/tundramoth,

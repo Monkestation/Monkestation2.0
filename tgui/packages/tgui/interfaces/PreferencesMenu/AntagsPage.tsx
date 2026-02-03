@@ -10,8 +10,8 @@ import {
   Stack,
   Tooltip,
 } from '../../components';
-import { Antagonist, Category } from './antagonists/base';
-import { PreferencesMenuData } from './data';
+import { type Antagonist, Category } from './antagonists/base';
+import type { PreferencesMenuData } from './data';
 
 const requireAntag = require.context(
   './antagonists/antagonists',
@@ -103,8 +103,7 @@ const AntagSelection = (props: { antagonists: Antagonist[]; name: string }) => {
           const isBanned =
             data.antag_bans && data.antag_bans.indexOf(antagonist.key) !== -1;
 
-          const daysLeft =
-            (data.antag_days_left && data.antag_days_left[antagonist.key]) || 0;
+          const daysLeft = data.antag_days_left?.[antagonist.key] || 0;
 
           return (
             <Flex.Item
@@ -123,10 +122,10 @@ const AntagSelection = (props: { antagonists: Antagonist[]; name: string }) => {
               <Stack align="center" vertical>
                 <Stack.Item
                   style={{
-                    'font-weight': 'bold',
-                    'margin-top': 'auto',
-                    'max-width': '100px',
-                    'text-align': 'center',
+                    fontWeight: 'bold',
+                    marginTop: 'auto',
+                    maxWidth: '100px',
+                    textAlign: 'center',
                   }}
                 >
                   {antagonist.name}
@@ -194,21 +193,25 @@ const AntagSelection = (props: { antagonists: Antagonist[]; name: string }) => {
 
 export const AntagsPage = () => {
   return (
-    <Box className="PreferencesMenu__Antags">
-      <AntagSelection
-        name="Roundstart"
-        antagonists={antagsByCategory.get(Category.Roundstart)!}
-      />
-
-      <AntagSelection
-        name="Midround"
-        antagonists={antagsByCategory.get(Category.Midround)!}
-      />
-
-      <AntagSelection
-        name="Latejoin"
-        antagonists={antagsByCategory.get(Category.Latejoin)!}
-      />
-    </Box>
+    <Stack vertical>
+      <Stack.Item>
+        <AntagSelection
+          name="Roundstart"
+          antagonists={antagsByCategory.get(Category.Roundstart)!}
+        />
+      </Stack.Item>
+      <Stack.Item>
+        <AntagSelection
+          name="Midround"
+          antagonists={antagsByCategory.get(Category.Midround)!}
+        />
+      </Stack.Item>
+      <Stack.Item>
+        <AntagSelection
+          name="Ghost"
+          antagonists={antagsByCategory.get(Category.Ghost)!}
+        />
+      </Stack.Item>
+    </Stack>
   );
 };

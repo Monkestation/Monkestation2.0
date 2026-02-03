@@ -245,7 +245,7 @@
 	var/hornsound = 'sound/items/carhorn.ogg'
 
 /datum/action/vehicle/sealed/horn/Trigger(trigger_flags)
-	if(TIMER_COOLDOWN_CHECK(src, COOLDOWN_CAR_HONK))
+	if(TIMER_COOLDOWN_RUNNING(src, COOLDOWN_CAR_HONK))
 		return
 	TIMER_COOLDOWN_START(src, COOLDOWN_CAR_HONK, 2 SECONDS)
 	vehicle_entered_target.visible_message(span_danger("[vehicle_entered_target] loudly honks!"))
@@ -329,7 +329,7 @@
 	var/bell_cooldown
 
 /datum/action/vehicle/ridden/wheelchair/bell/Trigger(trigger_flags)
-	if(TIMER_COOLDOWN_CHECK(src, bell_cooldown))
+	if(TIMER_COOLDOWN_RUNNING(src, bell_cooldown))
 		return
 	TIMER_COOLDOWN_START(src, bell_cooldown, 0.5 SECONDS)
 	playsound(vehicle_ridden_target, 'sound/machines/microwave/microwave-end.ogg', 70)
@@ -351,7 +351,7 @@
 	var/mob/living/rider = owner
 	var/turf/landing_turf = get_step(vehicle.loc, vehicle.dir)
 	var/tony_hawk = HAS_TRAIT(rider, TRAIT_PRO_SKATER) ? 0.5 : 1
-	rider.stamina.adjust(-vehicle.instability * 0.75 * tony_hawk)
+	rider.stamina.adjust(-vehicle.instability * 0.5 * tony_hawk)
 	if (rider.stamina.loss >= 100)
 		vehicle.obj_flags &= ~CAN_BE_HIT
 		playsound(src, 'sound/effects/bang.ogg', 20, TRUE)

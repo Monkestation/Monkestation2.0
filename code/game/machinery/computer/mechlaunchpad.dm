@@ -35,7 +35,7 @@
 	connected_mechpad = null
 
 /obj/machinery/computer/mechpad/LateInitialize()
-	for(var/obj/machinery/mechpad/pad in GLOB.mechpad_list)
+	for(var/obj/machinery/mechpad/pad as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/mechpad))
 		if(pad == connected_mechpad)
 			continue
 		if(pad.id != id)
@@ -199,7 +199,7 @@
 			data["mechonly"] = current_pad.mech_only
 	return data
 
-/obj/machinery/computer/mechpad/ui_act(action, params)
+/obj/machinery/computer/mechpad/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

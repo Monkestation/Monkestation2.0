@@ -53,7 +53,7 @@
 
 /// Returns true if we find any of our spoken commands in the text
 /datum/pet_command/proc/find_command_in_text(spoken_text)
-	for (var/command as anything in speech_commands)
+	for (var/command in speech_commands)
 		if (!findtext(spoken_text, command))
 			continue
 		return TRUE

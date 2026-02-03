@@ -7,6 +7,11 @@
 	//dynamic_should_hijack = TRUE
 	category = EVENT_CATEGORY_INVASION
 	description = "One or more abductor teams spawns, and they plan to experiment on the crew."
+	track = EVENT_TRACK_MAJOR
+	tags = list(TAG_TARGETED, TAG_SPOOKY, TAG_EXTERNAL, TAG_ALIEN, TAG_OUTSIDER_ANTAG)
+	checks_antag_cap = TRUE
+	dont_spawn_near_roundend = TRUE
+	repeated_mode_adjust = TRUE
 
 /datum/round_event/ghost_role/abductor
 	minimum_required = 2
@@ -20,8 +25,8 @@
 		return NOT_ENOUGH_PLAYERS
 
 	SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_ABDUCTOR_SHIPS)
-	var/mob/living/carbon/human/agent = make_body(pick_n_take(candidates))
-	var/mob/living/carbon/human/scientist = make_body(pick_n_take(candidates))
+	var/mob/living/carbon/human/agent = make_body(pick_n_take(candidates), FALSE)
+	var/mob/living/carbon/human/scientist = make_body(pick_n_take(candidates), FALSE)
 
 	var/datum/team/abductor_team/T = new
 	if(T.team_number > ABDUCTOR_MAX_TEAMS)

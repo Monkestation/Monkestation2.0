@@ -72,10 +72,10 @@
 
 /datum/component/cleave_attack/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
-	RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK, PROC_REF(on_afterattack))
+	RegisterSignal(parent, COMSIG_RANGED_ITEM_INTERACTING_WITH_ATOM, PROC_REF(ranged_interact_with_atom))
 
 /datum/component/cleave_attack/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_ATOM_EXAMINE, COMSIG_ITEM_AFTERATTACK))
+	UnregisterSignal(parent, list(COMSIG_ATOM_EXAMINE, COMSIG_ITEM_AFTERATTACK, COMSIG_RANGED_ITEM_INTERACTING_WITH_ATOM))
 
 /datum/component/cleave_attack/proc/on_examine(atom/examined_item, mob/user, list/examine_list)
 	var/arc_desc
@@ -90,14 +90,13 @@
 			arc_desc = "full circle"
 	examine_list += "It can swing in a [arc_desc]."
 
-/datum/component/cleave_attack/proc/on_afterattack(obj/item/item, atom/target, mob/living/user, proximity_flag, click_parameters)
-	if(proximity_flag || !(user.istate & ISTATE_HARM))
-		return // don't sweep on precise hits or non-harmful intents
-	perform_sweep(item, target, user, click_parameters)
+/datum/component/cleave_attack/proc/ranged_interact_with_atom(atom/interacting_with, mob/living/user, atom/target, list/modifiers)
+	if((user.next_move > world.time) || !(user.istate & ISTATE_HARM))
+		return ITEM_INTERACT_BLOCKING// don't spam it or swing on help
 
-/datum/component/cleave_attack/proc/perform_sweep(obj/item/item, atom/target, mob/living/user, params)
-	if(user.next_move > world.time)
-		return // don't spam it
+	perform_sweep(interacting_with, user, target, modifiers)
+
+/datum/component/cleave_attack/proc/perform_sweep(obj/item/item, mob/living/user, atom/target, list/modifiers)
 	if(requires_wielded && !HAS_TRAIT(item, TRAIT_WIELDED))
 		return // if it needs to be wielded, check to make sure it is
 
@@ -120,7 +119,7 @@
 	// now swing across those turfs
 	ADD_TRAIT(item, TRAIT_CLEAVING, REF(src))
 	for(var/turf/T as anything in turf_list)
-		if(hit_atoms_on_turf(item, target, user, T, params))
+		if(hit_atoms_on_turf(item, target, user, T, modifiers))
 			break
 	REMOVE_TRAIT(item, TRAIT_CLEAVING, REF(src))
 
@@ -131,6 +130,7 @@
 
 /// Hits all possible atoms on a turf, returns TRUE if the swing should end early
 /datum/component/cleave_attack/proc/hit_atoms_on_turf(obj/item/item, atom/target, mob/living/user, turf/hit_turf, params)
+
 	for(var/atom/movable/hit_atom in hit_turf)
 		if(hit_atom == user || hit_atom == target)
 			continue // why are you hitting yourself

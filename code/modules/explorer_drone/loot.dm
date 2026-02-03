@@ -152,12 +152,11 @@ GLOBAL_LIST_INIT(adventure_loot_generator_index,generate_generator_index())
 	lefthand_file = 'icons/mob/inhands/items/firelance_lefthand.dmi'
 	var/windup_time = 10 SECONDS
 	var/melt_range = 3
-	var/charge_per_use = 200
-	var/obj/item/stock_parts/cell/cell
+	var/obj/item/stock_parts/power_store/cell/cell
 
 /obj/item/firelance/Initialize(mapload)
 	. = ..()
-	cell = new /obj/item/stock_parts/cell(src)
+	cell = new /obj/item/stock_parts/power_store/cell(src)
 	AddComponent(/datum/component/two_handed)
 
 /obj/item/firelance/attack(mob/living/M, mob/living/user, params)
@@ -175,7 +174,7 @@ GLOBAL_LIST_INIT(adventure_loot_generator_index,generate_generator_index())
 		return .
 	if(LAZYACCESS(user.do_afters, "firelance"))
 		return .
-	if(!cell.use(200))
+	if(!cell.use(0.2 * STANDARD_CELL_CHARGE))
 		to_chat(user,span_warning("[src]'s battery ran dry!"))
 		return .
 	ADD_TRAIT(user, TRAIT_IMMOBILIZED, REF(src))

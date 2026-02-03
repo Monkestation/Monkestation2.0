@@ -83,6 +83,12 @@
 		"brokecomp",
 	)
 
+	AddElement( \
+		/datum/element/contextual_screentip_bare_hands, \
+		lmb_text = "Rummage", \
+		rmb_text = "Hide", \
+	)
+
 /obj/structure/trash_pile/attack_hand(mob/living/user)
 	if(user in contents)
 		eject_mob(user)
@@ -112,7 +118,19 @@
 		balloon_alert(user, "empty...")
 		return
 	var/item_to_spawn = pick_weight_recursive(GLOB.maintenance_loot)
-	var/obj/item/spawned_item = new item_to_spawn(drop_location())
+	if(!item_to_spawn)
+		item_to_spawn = pick_weight_recursive(GLOB.maintenance_loot)
+		if(!item_to_spawn)
+			item_to_spawn = /obj/item/food/spaghetti/raw
+			stack_trace("Failed to pick maintenance loot for a trash pile twice...? They get spaghetti.")
+	var/turf/drop_loc = drop_location()
+	var/list/old_contents = drop_loc.contents.Copy()
+	var/obj/item/spawned_item = new item_to_spawn(drop_loc)
+	if(QDELETED(spawned_item))
+		var/list/diff_contents = drop_loc.contents - old_contents
+		diff_contents -= spawned_item
+		if(length(diff_contents) == 1)
+			spawned_item = diff_contents[1]
 	if(!QDELETED(spawned_item))
 		balloon_alert(user, "found [spawned_item]!")
 	else
@@ -136,10 +154,13 @@
 	if(user.transferItemToLoc(attacking_item, src))
 		balloon_alert(user, "item hidden!")
 
-/obj/structure/trash_pile/MouseDrop_T(mob/living/carbon/dropped_mob, mob/user, params)
-	if(user != dropped_mob || !iscarbon(dropped_mob))
+/obj/structure/trash_pile/attack_hand_secondary(mob/mob_user, list/modifiers)
+	. = ..()
+	if(!iscarbon(mob_user))
+
 		return ..()
-	if(DOING_INTERACTION(user, DOAFTER_SOURCE_TRASH_PILE) || !(dropped_mob.mobility_flags & MOBILITY_MOVE))
+	var/mob/living/carbon/user = mob_user
+	if(DOING_INTERACTION(user, DOAFTER_SOURCE_TRASH_PILE) || !(user.mobility_flags & MOBILITY_MOVE))
 		return
 
 	user.visible_message(
@@ -189,14 +210,14 @@
 	if(COOLDOWN_FINISHED(src, trash_cooldown))
 		COOLDOWN_START(src, trash_cooldown, trash_delay * 0.5 + rand() * trash_delay) // x0.5 to x1.5
 		remaining_trash_throws[ckey]--
-		var/item_to_spawn
-		item_to_spawn = pick_weight_recursive(GLOB.trash_pile_loot)
-		var/obj/item/spawned_item = new item_to_spawn(drop_location())
-		if(!QDELETED(spawned_item))
-			var/turf/throw_at = get_ranged_target_turf_direct(src, user, 7, rand(-60, 60))
-			// this can totally be changed to use /datum/component/movable_physics to make it way more fun and expressive, but i can't be bothered to figure out good velocity/friction values right now
-			if(spawned_item.safe_throw_at(throw_at, rand(2, 4), rand(1, 3), user, spin = TRUE))
-				playsound(src, 'sound/weapons/punchmiss.ogg', 10)
+		var/item_to_spawn = pick_weight_recursive(GLOB.trash_pile_loot)
+		if(item_to_spawn)
+			var/obj/item/spawned_item = new item_to_spawn(drop_location())
+			if(!QDELETED(spawned_item))
+				var/turf/throw_at = get_ranged_target_turf_direct(src, user, 7, rand(-60, 60))
+				// this can totally be changed to use /datum/component/movable_physics to make it way more fun and expressive, but i can't be bothered to figure out good velocity/friction values right now
+				if(spawned_item.safe_throw_at(throw_at, rand(2, 4), rand(1, 3), user, spin = TRUE))
+					playsound(src, 'sound/weapons/punchmiss.ogg', 10)
 
 	if(COOLDOWN_FINISHED(src, funny_sound_cooldown))
 		COOLDOWN_START(src, funny_sound_cooldown, funny_sound_delay * 0.5 + rand() * funny_sound_delay) // x0.5 to x1.5

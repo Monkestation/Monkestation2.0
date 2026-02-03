@@ -24,9 +24,11 @@
 	controller.clear_blackboard_key(target_key)
 	var/list/potential_targets = hearers(aggro_range, controller.pawn) - living_mob //Remove self, so we don't suicide
 
-	for(var/atom/hostile_machine as anything in GLOB.hostile_machines) //Can we see any hostile machines?
-		if (can_see(living_mob, hostile_machine, aggro_range))
-			potential_targets += hostile_machine
+	var/turf/mob_turf = get_turf(living_mob)
+	if(mob_turf?.z)
+		for (var/atom/hostile_machine as anything in GLOB.hostile_machines_by_z[mob_turf.z])
+			if (can_see(living_mob, hostile_machine, aggro_range))
+				potential_targets += hostile_machine
 
 	if(!potential_targets.len)
 		finish_action(controller, succeeded = FALSE)

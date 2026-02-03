@@ -7,6 +7,7 @@
 	var/blood_type = null
 	var/labelled = FALSE
 	fill_icon_thresholds = list(10, 20, 30, 40, 50, 60, 70, 80, 90, 100)
+	reagent_flags = DRAWABLE | DRAINABLE
 
 /obj/item/reagent_containers/blood/Initialize(mapload, vol)
 	. = ..()
@@ -71,8 +72,8 @@
 /obj/item/reagent_containers/blood/ethereal
 	blood_type = /datum/blood_type/crew/ethereal
 
-/obj/item/reagent_containers/blood/skrell
-	blood_type = /datum/blood_type/crew/skrell
+/obj/item/reagent_containers/blood/spider
+	blood_type = /datum/blood_type/crew/spider
 
 /obj/item/reagent_containers/blood/snail
 	blood_type = /datum/blood_type/snail
@@ -96,11 +97,8 @@
 	. = ..()
 	. += span_notice("There is a toxin warning on the label. This is for slimepeople.")
 
-/obj/item/reagent_containers/blood/universal
-	blood_type = /datum/blood_type/universal
-
 /obj/item/reagent_containers/blood/attackby(obj/item/tool, mob/user, params)
-	if (istype(tool, /obj/item/pen) || istype(tool, /obj/item/toy/crayon))
+	if (IS_WRITING_UTENSIL(tool))
 		if(!user.can_write(tool))
 			return
 		var/custom_label = tgui_input_text(user, "What would you like to label the blood pack?", "Blood Pack", name, MAX_NAME_LEN)
@@ -111,6 +109,7 @@
 		if(custom_label)
 			labelled = TRUE
 			name = "blood pack - [custom_label]"
+			playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
 			balloon_alert(user, "new label set")
 		else
 			labelled = FALSE

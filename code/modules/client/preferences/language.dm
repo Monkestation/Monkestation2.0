@@ -2,12 +2,13 @@
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 	savefile_key = "language"
 	savefile_identifier = PREFERENCE_CHARACTER
+	should_update_preview = FALSE
 
 /datum/preference/choiced/language/is_accessible(datum/preferences/preferences)
-	if (!..(preferences))
+	if (!..())
 		return FALSE
 
-	return "Bilingual" in preferences.all_quirks
+	return /datum/quirk/bilingual::name in preferences.all_quirks
 
 /datum/preference/choiced/language/init_possible_values()
 	var/list/values = list()
@@ -16,10 +17,8 @@
 		generate_selectable_species_and_languages()
 
 	values += "Random"
-
 	//we add uncommon as it's foreigner-only.
-	var/datum/language/uncommon/uncommon_language = /datum/language/uncommon
-	values += initial(uncommon_language.name)
+	values += /datum/language/uncommon::name
 
 	for(var/datum/language/language_type as anything in GLOB.roundstart_languages)
 		if(ispath(language_type, /datum/language/common))

@@ -41,14 +41,16 @@
 
 	return msg.Join("\n")
 
-/datum/getrev/proc/GetTestMergeInfo(header = TRUE)
+/datum/getrev/proc/GetTestMergeInfo(header = TRUE, hide_silent = TRUE)
 	if(!testmerge.len)
 		return ""
 	. = header ? "The following pull requests are currently test merged:<br>" : ""
 	for(var/line in testmerge)
 		var/datum/tgs_revision_information/test_merge/tm = line
 		var/cm = tm.head_commit
-		var/details = ": '" + html_encode(tm.title) + "' by " + html_encode(tm.author) + " at commit " + html_encode(copytext_char(cm, 1, 11))
+		if(hide_silent && findtext(tm.title, @"[s]"))
+			continue
+		var/details = ": '" + html_encode(trimtext(tm.title)) + "' by " + html_encode(tm.author) + " at commit " + html_encode(copytext_char(cm, 1, 11))
 		. += "<a href=\"[CONFIG_GET(string/githuburl)]/pull/[tm.number]\">#[tm.number][details]</a><br>"
 
 /client/verb/showrevinfo()

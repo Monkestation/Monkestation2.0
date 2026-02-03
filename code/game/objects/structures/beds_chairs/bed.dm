@@ -93,6 +93,8 @@
 	desc = "A compact medical bed. This emergency version can be folded and carried for quick transport."
 	icon_state = "emerg_down"
 	base_icon_state = "emerg"
+	build_stack_type = /obj/item/stack/sheet/iron
+	build_stack_amount = 1
 	foldable_type = /obj/item/emergency_bed
 
 /obj/structure/bed/medical/Initialize(mapload)
@@ -116,11 +118,11 @@
 	if(!isnull(foldable_type))
 		. += span_notice("You can fold it up with a Right-click.")
 
-/obj/structure/bed/medical/AltClick(mob/user)
-	. = ..()
+/obj/structure/bed/medical/click_alt(mob/living/user)
 	anchored = !anchored
 	balloon_alert(user, "brakes [anchored ? "applied" : "released"]")
 	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/structure/bed/medical/post_buckle_mob(mob/living/patient)
 	set_density(TRUE)
@@ -220,13 +222,11 @@
 /obj/item/emergency_bed/attack_self(mob/user)
 	deploy_bed(user, user.loc)
 
-/obj/item/emergency_bed/afterattack(obj/target, mob/user, proximity)
-	. = ..()
-	if(!proximity)
-		return
-
-	if(isopenturf(target))
-		deploy_bed(user, target)
+/obj/item/emergency_bed/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(isopenturf(interacting_with))
+		deploy_bed(user, interacting_with)
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
 /obj/item/emergency_bed/proc/deploy_bed(mob/user, atom/location)
 	var/obj/structure/bed/medical/emergency/deployed = new /obj/structure/bed/medical/emergency(location)

@@ -79,13 +79,13 @@
 		return FALSE
 	display_statistics = display_stats == "Yes"
 
-	override_question = tgui_input_text(vote_creator, "What is the vote for?", "Custom Vote")
+	override_question = tgui_input_text(vote_creator, "What is the vote for?", "Custom Vote", encode = FALSE)
 	if(!override_question)
 		return FALSE
 
 	default_choices = list()
 	for(var/i in 1 to MAX_CUSTOM_VOTE_OPTIONS)
-		var/option = tgui_input_text(vote_creator, "Please enter an option, or hit cancel to finish. [MAX_CUSTOM_VOTE_OPTIONS] max.", "Options", max_length = MAX_NAME_LEN)
+		var/option = tgui_input_text(vote_creator, "Please enter an option, or hit cancel to finish. [MAX_CUSTOM_VOTE_OPTIONS] max.", "Options", max_length = MAX_NAME_LEN, encode = FALSE)
 		if(!vote_creator?.client)
 			return FALSE
 		if(!option)

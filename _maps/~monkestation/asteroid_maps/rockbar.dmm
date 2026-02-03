@@ -1,31 +1,31 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/open/misc/asteroid/airless/tospace,
-/area/space)
+/area/template_noop)
 "b" = (
 /obj/item/ammo_casing/spent{
 	dir = 1
 	},
 /turf/open/misc/asteroid/airless/tospace,
-/area/space)
+/area/template_noop)
 "c" = (
 /obj/structure/table/wood/shuttle_bar,
 /obj/item/reagent_containers/condiment/saltshaker{
 	pixel_x = -3
 	},
 /turf/open/misc/asteroid/airless/tospace,
-/area/space)
+/area/template_noop)
 "e" = (
 /obj/machinery/chem_dispenser/drinks/beer{
 	pixel_y = 7
 	},
 /obj/structure/table/wood/shuttle_bar,
 /turf/open/misc/asteroid/airless/tospace,
-/area/space)
+/area/template_noop)
 "g" = (
 /obj/effect/decal/cleanable/blood,
 /turf/open/misc/asteroid/airless/tospace,
-/area/space)
+/area/template_noop)
 "j" = (
 /obj/effect/decal/cleanable/blood/footprints{
 	dir = 4;
@@ -33,72 +33,72 @@
 	pixel_y = 8
 	},
 /turf/open/misc/asteroid/airless/tospace,
-/area/space)
+/area/template_noop)
 "l" = (
 /obj/structure/reagent_dispensers/beerkeg,
 /turf/open/misc/asteroid/airless/tospace,
-/area/space)
+/area/template_noop)
 "n" = (
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 4
 	},
 /turf/open/misc/asteroid/airless/tospace,
-/area/space)
+/area/template_noop)
 "t" = (
 /obj/item/ammo_casing/spent{
 	pixel_y = 1;
 	pixel_x = -1
 	},
 /turf/open/misc/asteroid/airless/tospace,
-/area/space)
+/area/template_noop)
 "w" = (
 /obj/effect/decal/cleanable/blood/footprints,
 /turf/open/misc/asteroid/airless/tospace,
-/area/space)
+/area/template_noop)
 "x" = (
 /turf/closed/mineral/random/asteroid/tospace,
-/area/space)
+/area/template_noop)
 "y" = (
 /obj/structure/table/wood/shuttle_bar,
 /obj/structure/desk_bell{
 	pixel_x = 13
 	},
 /turf/open/misc/asteroid/airless/tospace,
-/area/space)
+/area/template_noop)
 "A" = (
 /obj/structure/table/wood/shuttle_bar,
 /obj/item/reagent_containers/condiment/peppermill{
 	pixel_x = 3
 	},
 /turf/open/misc/asteroid/airless/tospace,
-/area/space)
+/area/template_noop)
 "B" = (
 /obj/item/gun/ballistic/shotgun/doublebarrel,
 /turf/open/misc/asteroid/airless/tospace,
-/area/space)
+/area/template_noop)
 "D" = (
 /obj/effect/mob_spawn/corpse/human/bartender,
 /turf/open/misc/asteroid/airless/tospace,
-/area/space)
+/area/template_noop)
 "E" = (
 /obj/item/vending_refill/cigarette,
 /obj/structure/closet,
 /obj/item/reagent_containers/cup/glass/bottle,
 /turf/open/misc/asteroid/airless/tospace,
-/area/space)
+/area/template_noop)
 "F" = (
 /obj/structure/table/wood/shuttle_bar,
 /obj/effect/spawner/random/food_or_drink/booze{
 	pixel_y = 8
 	},
 /turf/open/misc/asteroid/airless/tospace,
-/area/space)
+/area/template_noop)
 "H" = (
 /obj/item/ammo_casing/spent{
 	pixel_x = -7
 	},
 /turf/open/misc/asteroid/airless/tospace,
-/area/space)
+/area/template_noop)
 "I" = (
 /obj/structure/table/wood/shuttle_bar,
 /obj/item/stack/package_wrap{
@@ -110,7 +110,7 @@
 	pixel_y = 1
 	},
 /turf/open/misc/asteroid/airless/tospace,
-/area/space)
+/area/template_noop)
 "M" = (
 /obj/structure/table/wood/shuttle_bar,
 /obj/effect/spawner/random/food_or_drink/booze{
@@ -118,13 +118,13 @@
 	pixel_y = 10
 	},
 /turf/open/misc/asteroid/airless/tospace,
-/area/space)
+/area/template_noop)
 "N" = (
 /obj/structure/chair/stool/bar{
 	dir = 1
 	},
 /turf/open/misc/asteroid/airless/tospace,
-/area/space)
+/area/template_noop)
 "P" = (
 /obj/item/ammo_casing/spent{
 	pixel_x = -7;
@@ -135,32 +135,32 @@
 	pixel_y = 5
 	},
 /turf/open/misc/asteroid/airless/tospace,
-/area/space)
+/area/template_noop)
 "R" = (
 /obj/structure/barricade/wooden,
 /turf/open/misc/asteroid/airless/tospace,
-/area/space)
+/area/template_noop)
 "U" = (
 /obj/item/ammo_casing/spent{
 	pixel_x = 9;
 	pixel_y = -6
 	},
 /turf/open/misc/asteroid/airless/tospace,
-/area/space)
+/area/template_noop)
 "V" = (
 /obj/structure/table/wood/shuttle_bar,
 /obj/item/reagent_containers/cup/glass/bottle{
 	pixel_y = 12
 	},
 /turf/open/misc/asteroid/airless/tospace,
-/area/space)
+/area/template_noop)
 "W" = (
 /obj/item/ammo_casing/shotgun/buckshot/spent,
 /turf/open/misc/asteroid/airless/tospace,
-/area/space)
+/area/template_noop)
 "Y" = (
 /turf/open/space/basic,
-/area/space)
+/area/template_noop)
 
 (1,1,1) = {"
 Y

@@ -52,11 +52,10 @@
 	wound = 0
 //Monkestation edit end
 
-
-/turf/closed/wall/MouseDrop_T(mob/living/carbon/carbon_mob, mob/user)
-	..()
-	if(carbon_mob != user)
+/turf/closed/wall/mouse_drop_receive(atom/dropping, mob/user, params)
+	if(dropping != user || !iscarbon(dropping))
 		return
+	var/mob/living/carbon/carbon_mob = dropping
 	if(carbon_mob.is_leaning == TRUE)
 		return
 	if(carbon_mob.pulledby)

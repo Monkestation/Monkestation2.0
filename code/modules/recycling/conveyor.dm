@@ -77,6 +77,10 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	if(.)
 		set_operating(TRUE)
 
+/obj/machinery/conveyor/auto/inverted
+	icon_state = "conveyor_map_inverted"
+	flipped = TRUE
+
 // create a conveyor
 /obj/machinery/conveyor/Initialize(mapload, new_dir, new_id)
 	..()
@@ -97,7 +101,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	LAZYADD(GLOB.conveyors_by_id[id], src)
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/conveyor/LateInitialize()
+/obj/machinery/conveyor/LateInitialize(mapload_arg)
 	. = ..()
 	build_neighbors()
 
@@ -593,9 +597,9 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	if(!attached_switch)
 		return
 
-	INVOKE_ASYNC(src, PROC_REF(update_conveyers), port)
+	INVOKE_ASYNC(src, PROC_REF(update_conveyors), port)
 
-/obj/item/circuit_component/conveyor_switch/proc/update_conveyers(datum/port/input/port)
+/obj/item/circuit_component/conveyor_switch/proc/update_conveyors(datum/port/input/port)
 	if(!attached_switch)
 		return
 

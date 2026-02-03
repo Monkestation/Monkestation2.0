@@ -297,6 +297,13 @@
 		ui = new(user, src, "Reflector")
 		ui.open()
 
+/obj/structure/reflector/attack_robot(mob/user)
+	ui_interact(user)
+	return
+
+/obj/structure/reflector/ui_state(mob/user)
+	return GLOB.physical_state //Prevents borgs from adjusting this at range
+
 /obj/structure/reflector/ui_data(mob/user)
 	var/list/data = list()
 	data["rotation_angle"] = rotation_angle
@@ -304,7 +311,7 @@
 
 	return data
 
-/obj/structure/reflector/ui_act(action, params)
+/obj/structure/reflector/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

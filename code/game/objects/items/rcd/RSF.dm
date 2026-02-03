@@ -102,9 +102,7 @@ RSF
 	else
 		return ..()
 
-/obj/item/rsf/attack_self(mob/user)
-	playsound(src.loc, 'sound/effects/pop.ogg', 50, FALSE)
-	var/target = cost_by_item
+/obj/item/rsf/proc/select_item(mob/user, target)
 	var/cost = 0
 	//Warning, prepare for bodgecode
 	while(islist(target))//While target is a list we continue the loop
@@ -113,7 +111,7 @@ RSF
 			return
 		for(var/emem in target)//Back through target agian
 			var/atom/test = OBJECT_OR_LIST_ELEMENT(target, emem)
-			if(picked == initial(test.name))//We try and find the entry that matches the radial selection
+			if(picked == initial(test.type))//We try and find the entry that matches the radial selection
 				cost = target[emem]//We cash the cost
 				target = emem
 				break
@@ -123,13 +121,20 @@ RSF
 	dispense_cost = cost
 	// Change mode
 
+/obj/item/rsf/attack_self(mob/user)
+	playsound(src.loc, 'sound/effects/pop.ogg', 50, FALSE)
+	select_item(user, cost_by_item)
+
 ///Forms a radial menu based off an object in a list, or a list's associated object
 /obj/item/rsf/proc/formRadial(from)
 	var/list/radial_list = list()
 	for(var/meme in from)//We iterate through all of targets entrys
 		var/atom/temp = OBJECT_OR_LIST_ELEMENT(from, meme)
 		//We then add their data into the radial menu
-		radial_list[initial(temp.name)] = image(icon = initial(temp.icon), icon_state = initial(temp.icon_state))
+		var/datum/radial_menu_choice/option = new
+		option.name = initial(temp.name)
+		option.image = image(icon = initial(temp.icon), icon_state = initial(temp.icon_state))
+		radial_list[initial(temp.type)] = option
 	return radial_list
 
 /obj/item/rsf/proc/check_menu(mob/user)
@@ -209,5 +214,93 @@ RSF
 		toxin = FALSE
 		to_dispense = /obj/item/food/cookie
 		to_chat(user, span_notice("Cookie Synthesizer reset."))
+
+//RSF but with more stuff, split into categories
+/obj/item/rsf/deluxe
+	name = "\improper Deluxe Rapid-Service-Fabricator"
+	icon_state = "drsf"
+	inhand_icon_state = "drsf"
+	base_icon_state = "drsf"
+	var/options = list(
+		bureaucracy = list(
+			name = "Bureaucracy",
+			icon = 'icons/obj/service/bureaucracy.dmi',
+			icon_state = "pen-fountain",
+		),
+		bartending = list(
+			name = "Bartending",
+			icon = 'icons/obj/drinks/bottles.dmi',
+			icon_state = "beer",
+		),
+		comforts = list(
+			name = "Comforts",
+			icon = 'icons/obj/clothing/masks.dmi',
+			icon_state = "cigar2off",
+		),
+		cooking = list(
+			name = "Kitchenware",
+			icon = 'icons/obj/kitchen.dmi',
+			icon_state = "knife",
+		),
+	)
+	cost_by_item = list(
+		bureaucracy = list(
+			/obj/item/clipboard = 50,
+			/obj/item/folder = 20,
+			/obj/item/folder/blue = 20,
+			/obj/item/folder/red = 20,
+			/obj/item/folder/yellow = 20,
+			/obj/item/folder/white = 20,
+			/obj/item/paper = 10,
+			/obj/item/paper/carbon = 20,
+			/obj/item/pen = 50,
+			/obj/item/pen/fountain = 60,
+			/obj/item/stamp/granted = 30,
+			/obj/item/stamp/denied = 30,
+		),
+		cooking = list(
+			/obj/item/plate/small = 30,
+			/obj/item/plate = 70,
+			/obj/item/plate/large = 100,
+			/obj/item/reagent_containers/cup/bowl = 70,
+			/obj/item/kitchen/fork/plastic = 30,
+			/obj/item/knife/plastic = 30,
+			/obj/item/kitchen/spoon/plastic = 30,
+			/obj/item/food/seaweedsheet = 30,
+		),
+		comforts = list(
+			/obj/item/storage/dice = 200,
+			/obj/item/toy/cards/deck = 200,
+			/obj/item/clothing/mask/cigarette = 10,
+			/obj/item/clothing/mask/cigarette/cigar/cohiba = 30,
+			/obj/item/clothing/mask/cigarette/cigar/havana = 60,
+			/obj/item/lighter = 50,
+		),
+		bartending = list(
+			/obj/item/reagent_containers/cup/glass/bottle = 40,
+			/obj/item/reagent_containers/cup/glass/drinkingglass = 20,
+			/obj/item/reagent_containers/cup/glass/mug = 20,
+			/obj/item/reagent_containers/cup/glass/mug/britcup = 20,
+			/obj/item/reagent_containers/cup/glass/mug/nanotrasen = 20,
+			/obj/item/reagent_containers/cup/glass/sillycup = 10,
+		),
+	)
+
+/obj/item/rsf/deluxe/attack_self(mob/user)
+	playsound(src.loc, 'sound/effects/pop.ogg', 50, FALSE)
+	var/list/radial_list = list()
+	for(var/key in options)
+		var/datum/radial_menu_choice/option = new
+		option.name = options[key]["name"]
+		option.image = image(icon = options[key]["icon"], icon_state = options[key]["icon_state"])
+		radial_list[key] = option
+	var/picked = show_radial_menu(user, src, radial_list, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE)
+	if(!check_menu(user) || picked == null)
+		return
+	if(cost_by_item[picked])
+		select_item(user, cost_by_item[picked])
+
+/obj/item/rsf/deluxe/cyborg
+	matter = 30
 
 #undef OBJECT_OR_LIST_ELEMENT

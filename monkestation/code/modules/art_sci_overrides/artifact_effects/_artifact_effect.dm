@@ -58,7 +58,7 @@
 ///Called on process() IF the artifact is active.
 /datum/artifact_effect/proc/effect_process()
 	return
-///Called when the artifact/effect is destroyed is destroyed
+///Called when the artifact/effect is destroyed
 /datum/artifact_effect/proc/on_destroy(atom/source)
 	return
 ///Util, can be called to activate, then de-activate the artifact as a whole swiftly. Wont Re activate already active artifacts.

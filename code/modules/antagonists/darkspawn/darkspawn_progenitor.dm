@@ -122,10 +122,10 @@
 	. += emissive_appearance(icon, icon_state, src)
 
 
-/mob/living/simple_animal/hostile/darkspawn_progenitor/AttackingTarget()
-	if(istype(target, /obj/machinery/door) || istype(target, /obj/structure/door_assembly))
-		playsound(target, 'sound/magic/darkspawn/pass_smash_door.ogg', 100, FALSE)
-	. = ..()
+/mob/living/simple_animal/hostile/darkspawn_progenitor/AttackingTarget(atom/attacked_target)
+	if(istype(attacked_target, /obj/machinery/door) || istype(attacked_target, /obj/structure/door_assembly))
+		playsound(get_turf(attacked_target), 'sound/magic/darkspawn/pass_smash_door.ogg', 100, FALSE)
+	return ..()
 
 //////////////////////////////////////////////////////////////////////////
 //-------------------------------Roar-----------------------------------//

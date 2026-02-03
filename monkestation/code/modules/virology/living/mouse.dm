@@ -66,3 +66,5 @@
 		if(TICK_CHECK)
 			break
 		share_contact_diseases(mouse)//Mice automatically share contact diseases among themselves
+		if(!(stat == DEAD))
+			spread_airborne_diseases()

@@ -52,6 +52,6 @@
 	desc = "A purrfect drink for a cat."
 
 /datum/reagent/consumable/catnip_tea/on_mob_life(mob/living/carbon/M)
-	M.stamina.adjust(3)
+	M.stamina.adjust(1.5)
 	to_chat(M, span_notice("[pick("I feel oddly calm.", "I feel relaxed.", "Mew?")]"))
 	..()

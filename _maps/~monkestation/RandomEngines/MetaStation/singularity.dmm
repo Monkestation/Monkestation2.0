@@ -74,6 +74,7 @@
 "gQ" = (
 /obj/machinery/the_singularitygen,
 /obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "hn" = (
@@ -137,6 +138,7 @@
 "np" = (
 /obj/machinery/the_singularitygen/tesla,
 /obj/structure/sign/directions/ptl/directional/east,
+/obj/structure/cable/layer3,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "nM" = (
@@ -182,6 +184,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
+/obj/structure/cable/layer3,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "rn" = (
@@ -222,6 +225,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
+/obj/structure/cable/layer3,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "ut" = (
@@ -236,6 +240,7 @@
 "uU" = (
 /obj/machinery/power/energy_accumulator/grounding_rod,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable/layer3,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "vd" = (
@@ -244,6 +249,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "vB" = (
@@ -263,6 +269,7 @@
 /area/station/engineering/supermatter/room)
 "vY" = (
 /obj/machinery/power/energy_accumulator/grounding_rod,
+/obj/structure/cable/layer3,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "wm" = (
@@ -533,6 +540,7 @@
 /area/station/engineering/supermatter/room)
 "NN" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable/layer3,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "NP" = (

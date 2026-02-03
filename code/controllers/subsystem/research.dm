@@ -113,12 +113,11 @@ SUBSYSTEM_DEF(research)
 
 		if (techweb_list.nanite_bonus)
 			bitcoins[TECHWEB_POINT_TYPE_GENERIC] += techweb_list.nanite_bonus
-
 		if(!isnull(techweb_list.last_income))
 			var/income_time_difference = world.time - techweb_list.last_income
 			techweb_list.last_bitcoins = bitcoins  // Doesn't take tick drift into account
 			for(var/i in bitcoins)
-				bitcoins[i] *= (income_time_difference / 10) * techweb_list.income_modifier
+				bitcoins[i] *= (income_time_difference / 10) * techweb_list.income_modifier * checkxenos() //multiplier check. If captive xenos and if the research server is intact.
 			techweb_list.add_point_list(bitcoins)
 
 		techweb_list.last_income = world.time
@@ -130,13 +129,11 @@ SUBSYSTEM_DEF(research)
 				var/datum/techweb_node/node = SSresearch.techweb_node_by_id(node_id)
 				if(node.is_free(techweb_list)) // Automatically research all free nodes in queue if any
 					techweb_list.research_node(node)
-
 	for(var/core_type in slime_core_prices)
 		var/obj/item/slime_extract/core = core_type
 		var/price_mod = rand(SLIME_RANDOM_MODIFIER_MIN * 1000000, SLIME_RANDOM_MODIFIER_MAX * 1000000) / 1000000
 		var/price_limiter = 1 - ((default_core_prices[initial(core.tier)] * SLIME_SELL_MINIMUM_MODIFIER) / slime_core_prices[core_type])
 		slime_core_prices[core_type] = (1 + price_mod * price_limiter) * slime_core_prices[core_type]
-
 /datum/controller/subsystem/research/proc/initialize_slime_prices()
 	for(var/core_type in subtypesof(/obj/item/slime_extract))
 		var/obj/item/slime_extract/core = core_type
@@ -340,3 +337,50 @@ SUBSYSTEM_DEF(research)
 			for (var/datum/experiment/ordnance/ordnance_experiment as anything in ordnance_experiments)
 				partner.accepted_experiments += ordnance_experiment.type
 		scientific_partners += partner
+
+/datum/controller/subsystem/research/proc/checkxenos()
+	var/datum/team/xeno/captive/captive_team = locate(/datum/team/xeno/captive) in GLOB.antagonist_teams
+	if(captive_team)
+		return 1 + captive_team.captive_xenos
+	return 1
+
+/**
+ * Goes through all techwebs and goes through their servers to find ones on a valid z-level
+ * Returns the full list of all techweb servers.
+ */
+/datum/controller/subsystem/research/proc/get_available_servers(turf/location)
+	var/list/local_servers = list()
+	if(!location)
+		return local_servers
+	for (var/datum/techweb/individual_techweb as anything in techwebs)
+		var/list/servers = find_valid_servers(location, individual_techweb)
+		if(length(servers))
+			local_servers += servers
+	return local_servers
+
+/**
+ * Goes through an individual techweb's servers and finds one on a valid z-level
+ * Returns a list of existing ones, or an empty list otherwise.
+ * Args:
+ * - checking_web - The techweb we're checking the servers of.
+ */
+/datum/controller/subsystem/research/proc/find_valid_servers(turf/location, datum/techweb/checking_web)
+	var/list/valid_servers = list()
+	for(var/obj/machinery/rnd/server/server as anything in checking_web.techweb_servers)
+		if(!is_valid_z_level(get_turf(server), location))
+			continue
+		valid_servers += server
+	return valid_servers
+
+/// Returns true if you can make an anomaly core of the provided type
+/datum/controller/subsystem/research/proc/is_core_available(core_type)
+	if (!ispath(core_type, /obj/item/assembly/signaler/anomaly))
+		return FALSE // The fuck are you checking this random object for?
+	var/already_made = created_anomaly_types[core_type] || 0
+	var/hard_limit = anomaly_hard_limit_by_type[core_type]
+	return already_made < hard_limit
+
+/// Increase our tracked number of cores of this type
+/datum/controller/subsystem/research/proc/increment_existing_anomaly_cores(core_type)
+	var/existing = created_anomaly_types[core_type] || 0
+	created_anomaly_types[core_type] = existing + 1

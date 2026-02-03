@@ -28,6 +28,12 @@
 
 #define MATTER_POWER_CONVERSION 10 //Crystal converts 1/this value of stored matter into energy.
 
+/// The internal energy gain coefficient.
+#define GAS_HEAT_POWER_SCALING_COEFFICIENT (1/6)
+
+/// The base zap power transmission of the supermatter crystal in W/MeV.
+#define BASE_POWER_TRANSMISSION_RATE 1040
+
 //These would be what you would get at point blank, decreases with distance
 #define DETONATION_HALLUCINATION (20 MINUTES)
 
@@ -55,7 +61,16 @@
 #define SLIGHTLY_CHARGED_ZAP_ICON_STATE "sm_arc_supercharged"
 #define OVER_9000_ZAP_ICON_STATE "sm_arc_dbz_referance" //Witty I know
 
+// Zap energy accumulation keys.
+/// Normal zap energy accumulation key from normal operations.
+#define ZAP_ENERGY_ACCUMULATION_NORMAL "normal"
+/// High energy zap energy accumulation key from high energy extra effects.
+#define ZAP_ENERGY_ACCUMULATION_HIGH_ENERGY "high"
+
 #define SUPERMATTER_DEFAULT_BULLET_ENERGY 2
+
+/// Zap energy discharge portion per tick.
+#define ZAP_ENERGY_DISCHARGE_PORTION 0.1
 
 #define SUPERMATTER_CASCADE_PERCENT 80
 

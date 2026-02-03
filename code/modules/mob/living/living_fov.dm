@@ -102,7 +102,7 @@
 		var/client/mob_client = living_mob.client
 		if(!mob_client)
 			continue
-		if(HAS_TRAIT(living_mob, TRAIT_DEAF)) //Deaf people can't hear sounds so no sound indicators
+		if(HAS_TRAIT(living_mob, TRAIT_DEAF) || HAS_TRAIT(living_mob, TRAIT_HARD_OF_HEARING)) //Deaf people can't hear sounds so no sound indicators
 			continue
 		if(living_mob.in_fov(center, ignore_self))
 			continue

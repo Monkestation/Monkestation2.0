@@ -1,0 +1,1966 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aj" = (
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/indestructible/vault,
+/area/deathmatch/fullbright)
+"ao" = (
+/obj/structure/grille/broken,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/indestructible/plating,
+/area/deathmatch/fullbright)
+"aD" = (
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 5
+	},
+/obj/machinery/light/floor,
+/turf/open/indestructible/vault,
+/area/deathmatch/fullbright)
+"aI" = (
+/turf/open/chasm/true,
+/area/deathmatch/fullbright)
+"bg" = (
+/obj/effect/turf_decal/siding/wideplating/dark/corner{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/vault,
+/area/deathmatch/fullbright)
+"bw" = (
+/obj/item/gun/ballistic/automatic/wt550,
+/obj/structure/table/reinforced,
+/obj/item/ammo_box/magazine/wt550m9,
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch/fullbright)
+"bC" = (
+/obj/structure/barricade/wooden,
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch/fullbright)
+"cf" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/box/donkpockets/donkpocketpizza,
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch/fullbright)
+"cw" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/old,
+/obj/machinery/light/floor,
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch/fullbright)
+"cM" = (
+/obj/structure/grille/broken,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/indestructible/plating,
+/area/deathmatch/fullbright)
+"cY" = (
+/obj/structure/barricade/security/murderdome,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch/fullbright)
+"dp" = (
+/obj/structure/lattice/catwalk,
+/obj/effect/light_emitter{
+	set_cap = 2;
+	light_color = "#DEEFFF";
+	set_luminosity = 4
+	},
+/obj/effect/landmark/deathmatch_player_spawn,
+/turf/open/chasm/true,
+/area/deathmatch/fullbright)
+"dN" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch/fullbright)
+"dU" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/landmark/deathmatch_player_spawn,
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch/fullbright)
+"ek" = (
+/obj/item/gun/ballistic/shotgun/sc_pump,
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch/fullbright)
+"eC" = (
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/indestructible/vault,
+/area/deathmatch/fullbright)
+"fp" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/storage/medkit/tactical/premium,
+/obj/structure/table/reinforced,
+/obj/structure/window/spawner/directional/south,
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch/fullbright)
+"fX" = (
+/obj/structure/railing,
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch/fullbright)
+"hb" = (
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/vault,
+/area/deathmatch/fullbright)
+"hG" = (
+/obj/effect/spawner/structure/window,
+/turf/open/indestructible/plating,
+/area/deathmatch/fullbright)
+"ir" = (
+/obj/effect/turf_decal/siding/wideplating/dark,
+/turf/open/indestructible/vault,
+/area/deathmatch/fullbright)
+"jA" = (
+/obj/effect/turf_decal/siding/wideplating/dark/corner{
+	dir = 8
+	},
+/turf/open/indestructible/vault,
+/area/deathmatch/fullbright)
+"kk" = (
+/turf/open/indestructible/vault,
+/area/deathmatch/fullbright)
+"lv" = (
+/obj/structure/chair/office/tactical{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch/fullbright)
+"lQ" = (
+/obj/item/gun/ballistic/revolver/reverse,
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/light_emitter{
+	set_cap = 2;
+	light_color = "#DEEFFF";
+	set_luminosity = 4
+	},
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch/fullbright)
+"lS" = (
+/obj/structure/table/reinforced,
+/obj/item/grenade/frag/mega,
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch/fullbright)
+"lT" = (
+/obj/effect/landmark/deathmatch_player_spawn,
+/obj/structure/bed/maint,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch/fullbright)
+"mz" = (
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 6
+	},
+/turf/open/indestructible/vault,
+/area/deathmatch/fullbright)
+"mI" = (
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 8
+	},
+/obj/structure/barricade/security/murderdome,
+/turf/open/indestructible/vault,
+/area/deathmatch/fullbright)
+"mV" = (
+/obj/structure/grille/broken,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/indestructible/plating,
+/area/deathmatch/fullbright)
+"ns" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/vault,
+/area/deathmatch/fullbright)
+"nI" = (
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch/fullbright)
+"nT" = (
+/obj/effect/light_emitter{
+	set_cap = 2;
+	light_color = "#DEEFFF";
+	set_luminosity = 4
+	},
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch/fullbright)
+"pt" = (
+/obj/item/clothing/suit/armor/swat,
+/obj/item/clothing/head/helmet/swat/nanotrasen,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/melee/energy/sword,
+/obj/effect/light_emitter{
+	set_cap = 2;
+	light_color = "#DEEFFF";
+	set_luminosity = 4
+	},
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/indestructible/plating,
+/area/deathmatch/fullbright)
+"pR" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 8
+	},
+/turf/open/indestructible/vault,
+/area/deathmatch/fullbright)
+"qa" = (
+/turf/closed/indestructible/riveted,
+/area/deathmatch/fullbright)
+"qH" = (
+/obj/structure/table/reinforced,
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch/fullbright)
+"qP" = (
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/indestructible/vault,
+/area/deathmatch/fullbright)
+"rc" = (
+/obj/effect/turf_decal/siding/wideplating/dark,
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 1
+	},
+/turf/open/indestructible/vault,
+/area/deathmatch/fullbright)
+"sd" = (
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 10
+	},
+/turf/open/indestructible/vault,
+/area/deathmatch/fullbright)
+"sk" = (
+/obj/item/gun/ballistic/rifle/rebarxbow/syndie,
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch/fullbright)
+"st" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/table/reinforced,
+/obj/item/shield/roman,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wideplating/dark,
+/turf/open/indestructible/vault,
+/area/deathmatch/fullbright)
+"sK" = (
+/obj/effect/light_emitter{
+	set_cap = 2;
+	light_color = "#DEEFFF";
+	set_luminosity = 4
+	},
+/turf/open/indestructible/vault,
+/area/deathmatch/fullbright)
+"tc" = (
+/obj/item/stack/rods/ten,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wideplating/dark,
+/turf/open/indestructible/vault,
+/area/deathmatch/fullbright)
+"tF" = (
+/obj/structure/mystery_box/tdome,
+/turf/open/indestructible/vault,
+/area/deathmatch/fullbright)
+"tT" = (
+/obj/structure/barricade/security/murderdome,
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch/fullbright)
+"ud" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/light_emitter{
+	set_cap = 2;
+	light_color = "#DEEFFF";
+	set_luminosity = 4
+	},
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch/fullbright)
+"un" = (
+/obj/structure/barricade/security/murderdome,
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch/fullbright)
+"vm" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/light/floor,
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch/fullbright)
+"vM" = (
+/obj/structure/table/reinforced,
+/obj/item/reagent_containers/spray/waterflower/superlube,
+/obj/structure/window/plasma/spawner/directional/east,
+/obj/structure/window/plasma/spawner/directional/north,
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch/fullbright)
+"vW" = (
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 4
+	},
+/obj/item/gun/ballistic/automatic/m90/unrestricted,
+/turf/open/indestructible/vault,
+/area/deathmatch/fullbright)
+"wg" = (
+/obj/structure/table/reinforced,
+/obj/item/ammo_casing/shotgun/frag12,
+/obj/item/ammo_casing/shotgun/frag12,
+/obj/item/ammo_casing/shotgun/frag12,
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch/fullbright)
+"wz" = (
+/obj/effect/spawner/random/contraband/armory,
+/obj/item/clothing/suit/armor/bone,
+/turf/open/indestructible/vault,
+/area/deathmatch/fullbright)
+"xD" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch/fullbright)
+"xG" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+/obj/machinery/conveyor/auto,
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch/fullbright)
+"xJ" = (
+/obj/machinery/door/airlock/grunge,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch/fullbright)
+"yb" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/vault,
+/area/deathmatch/fullbright)
+"yA" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch/fullbright)
+"zd" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch/fullbright)
+"zy" = (
+/obj/structure/mystery_box/tdome,
+/obj/effect/light_emitter{
+	set_cap = 2;
+	light_color = "#DEEFFF";
+	set_luminosity = 4
+	},
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch/fullbright)
+"An" = (
+/obj/structure/table/reinforced,
+/obj/item/clothing/suit/armor/vest/alt,
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch/fullbright)
+"As" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/plating,
+/area/deathmatch/fullbright)
+"Bl" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/table/reinforced,
+/obj/machinery/microwave,
+/obj/item/kitchen/fork,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wideplating/dark,
+/turf/open/indestructible/vault,
+/area/deathmatch/fullbright)
+"Br" = (
+/obj/effect/turf_decal/siding/wideplating/dark/corner{
+	dir = 4
+	},
+/turf/open/indestructible/vault,
+/area/deathmatch/fullbright)
+"BH" = (
+/obj/structure/lattice/catwalk,
+/obj/effect/landmark/deathmatch_player_spawn,
+/turf/open/chasm/true,
+/area/deathmatch/fullbright)
+"Db" = (
+/obj/item/gun/ballistic/revolver/nagant,
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/vault,
+/area/deathmatch/fullbright)
+"Dp" = (
+/obj/item/gun/ballistic/automatic/pistol/m1911,
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch/fullbright)
+"DC" = (
+/obj/structure/grille/broken,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/indestructible/plating,
+/area/deathmatch/fullbright)
+"DF" = (
+/obj/effect/landmark/deathmatch_player_spawn,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/vault,
+/area/deathmatch/fullbright)
+"Ef" = (
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 5
+	},
+/turf/open/indestructible/vault,
+/area/deathmatch/fullbright)
+"En" = (
+/turf/cordon,
+/area/deathmatch/fullbright)
+"EA" = (
+/obj/effect/landmark/deathmatch_player_spawn,
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch/fullbright)
+"EQ" = (
+/obj/effect/turf_decal/siding/wideplating/dark,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/indestructible/vault,
+/area/deathmatch/fullbright)
+"Gb" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/conveyor/auto{
+	dir = 4
+	},
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch/fullbright)
+"Go" = (
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/vault,
+/area/deathmatch/fullbright)
+"Gz" = (
+/obj/item/gun/ballistic/rifle/boltaction/prime,
+/obj/structure/table/reinforced,
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch/fullbright)
+"GY" = (
+/obj/structure/table/reinforced,
+/obj/item/grenade/mirage,
+/obj/item/grenade/mirage,
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch/fullbright)
+"HD" = (
+/obj/lightning_thrower,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/plating,
+/area/deathmatch/fullbright)
+"Ig" = (
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 4
+	},
+/turf/open/indestructible/vault,
+/area/deathmatch/fullbright)
+"Ih" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/indestructible/vault,
+/area/deathmatch/fullbright)
+"In" = (
+/obj/structure/mystery_box/tdome,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch/fullbright)
+"IJ" = (
+/obj/effect/light_emitter{
+	set_cap = 2;
+	light_color = "#DEEFFF";
+	set_luminosity = 2
+	},
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch/fullbright)
+"Jm" = (
+/obj/effect/light_emitter{
+	set_cap = 2;
+	light_color = "#DEEFFF";
+	set_luminosity = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch/fullbright)
+"Jq" = (
+/obj/structure/lattice/catwalk,
+/turf/open/chasm/true,
+/area/deathmatch/fullbright)
+"JN" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch/fullbright)
+"Kb" = (
+/obj/structure/table/reinforced,
+/obj/item/ammo_box/strilka310/surplus,
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch/fullbright)
+"Kr" = (
+/obj/item/stack/rods/ten,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/light_emitter{
+	set_cap = 2;
+	light_color = "#DEEFFF";
+	set_luminosity = 4
+	},
+/obj/effect/turf_decal/siding/wideplating/dark,
+/turf/open/indestructible/vault,
+/area/deathmatch/fullbright)
+"KT" = (
+/obj/structure/chair/office/tactical{
+	dir = 1
+	},
+/turf/open/indestructible/vault,
+/area/deathmatch/fullbright)
+"KX" = (
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 8
+	},
+/obj/machinery/light/floor,
+/turf/open/indestructible/vault,
+/area/deathmatch/fullbright)
+"Lh" = (
+/obj/item/clothing/suit/armor/vest/russian_coat,
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch/fullbright)
+"LA" = (
+/obj/effect/spawner/random/medical/medkit_rare,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/indestructible/vault,
+/area/deathmatch/fullbright)
+"Ml" = (
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 10
+	},
+/obj/structure/barricade/security/murderdome,
+/turf/open/indestructible/vault,
+/area/deathmatch/fullbright)
+"Mq" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/vault,
+/area/deathmatch/fullbright)
+"ML" = (
+/obj/effect/landmark/deathmatch_player_spawn,
+/obj/effect/light_emitter{
+	set_cap = 2;
+	light_color = "#DEEFFF";
+	set_luminosity = 4
+	},
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch/fullbright)
+"Om" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/remains/human,
+/turf/open/indestructible/plating,
+/area/deathmatch/fullbright)
+"OK" = (
+/obj/effect/turf_decal/siding/wideplating/dark,
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 1
+	},
+/obj/structure/barricade/security/murderdome,
+/turf/open/indestructible/vault,
+/area/deathmatch/fullbright)
+"OU" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch/fullbright)
+"Qd" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/medkit/tactical/premium,
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch/fullbright)
+"QQ" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/indestructible/plating,
+/area/deathmatch/fullbright)
+"QY" = (
+/obj/structure/table/reinforced,
+/obj/item/gun/ballistic/automatic/pistol/m1911,
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch/fullbright)
+"Rq" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/vault,
+/area/deathmatch/fullbright)
+"RE" = (
+/obj/effect/light_emitter{
+	set_cap = 2;
+	light_color = "#DEEFFF";
+	set_luminosity = 2
+	},
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/vault,
+/area/deathmatch/fullbright)
+"Sy" = (
+/obj/machinery/light/floor,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch/fullbright)
+"SZ" = (
+/obj/effect/landmark/deathmatch_player_spawn,
+/obj/effect/light_emitter{
+	set_cap = 2;
+	light_color = "#DEEFFF";
+	set_luminosity = 2
+	},
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch/fullbright)
+"TC" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/railing/corner/end,
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch/fullbright)
+"TQ" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/machinery/light/floor,
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch/fullbright)
+"Uk" = (
+/obj/structure/lattice/catwalk,
+/obj/effect/light_emitter{
+	set_cap = 2;
+	light_color = "#DEEFFF";
+	set_luminosity = 4
+	},
+/turf/open/chasm/true,
+/area/deathmatch/fullbright)
+"Uv" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch/fullbright)
+"UU" = (
+/obj/structure/table/reinforced,
+/obj/structure/window/plasma/spawner/directional/north,
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch/fullbright)
+"UV" = (
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 5
+	},
+/obj/machinery/deployable_turret,
+/turf/open/indestructible/vault,
+/area/deathmatch/fullbright)
+"Vl" = (
+/obj/structure/mystery_box/tdome,
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch/fullbright)
+"Vx" = (
+/obj/structure/barricade/security/murderdome,
+/obj/effect/turf_decal/siding/wideplating/dark,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/vault,
+/area/deathmatch/fullbright)
+"VA" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/table/reinforced,
+/obj/item/gun/ballistic/revolver/c38,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/vault,
+/area/deathmatch/fullbright)
+"Wd" = (
+/obj/effect/landmark/deathmatch_player_spawn,
+/turf/open/indestructible/vault,
+/area/deathmatch/fullbright)
+"We" = (
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 8
+	},
+/turf/open/indestructible/vault,
+/area/deathmatch/fullbright)
+"Ws" = (
+/obj/effect/turf_decal/siding/wideplating/dark/corner{
+	dir = 8
+	},
+/obj/structure/barricade/security/murderdome,
+/turf/open/indestructible/vault,
+/area/deathmatch/fullbright)
+"WE" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wideplating/dark,
+/turf/open/indestructible/vault,
+/area/deathmatch/fullbright)
+"WP" = (
+/obj/structure/table/reinforced,
+/obj/item/gun/ballistic/revolver/c38,
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch/fullbright)
+"WQ" = (
+/obj/effect/spawner/random/entertainment/drugs,
+/obj/effect/spawner/random/entertainment/drugs,
+/obj/effect/spawner/random/entertainment/drugs,
+/obj/effect/spawner/random/entertainment/drugs,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch/fullbright)
+"Xc" = (
+/obj/effect/spawner/random/contraband/armory,
+/obj/item/clothing/suit/armor/bone,
+/obj/structure/table/reinforced,
+/turf/open/indestructible/vault,
+/area/deathmatch/fullbright)
+"XG" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch/fullbright)
+"XP" = (
+/obj/machinery/light/floor,
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch/fullbright)
+"XR" = (
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 9
+	},
+/turf/open/indestructible/vault,
+/area/deathmatch/fullbright)
+"XT" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/mystery_box/tdome,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/vault,
+/area/deathmatch/fullbright)
+"Yc" = (
+/obj/effect/turf_decal/siding/wideplating/dark,
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/indestructible/vault,
+/area/deathmatch/fullbright)
+"YI" = (
+/obj/structure/lattice/catwalk,
+/obj/item/storage/toolbox/guncase/rocketlauncher{
+	weapon_to_spawn = /obj/item/gun/ballistic/rocketlauncher/unrestricted
+	},
+/obj/effect/light_emitter{
+	set_cap = 2;
+	light_color = "#DEEFFF";
+	set_luminosity = 2
+	},
+/turf/open/chasm/true,
+/area/deathmatch/fullbright)
+"ZO" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/railing/corner/end{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/indestructible/dark/smooth_large,
+/area/deathmatch/fullbright)
+"ZR" = (
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/vault,
+/area/deathmatch/fullbright)
+"ZZ" = (
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 4
+	},
+/obj/structure/barricade/security/murderdome,
+/turf/open/indestructible/vault,
+/area/deathmatch/fullbright)
+
+(1,1,1) = {"
+En
+En
+En
+En
+En
+En
+En
+En
+En
+En
+En
+En
+En
+En
+En
+En
+En
+En
+En
+En
+En
+En
+En
+En
+En
+En
+En
+En
+En
+En
+En
+En
+"}
+(2,1,1) = {"
+En
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+En
+"}
+(3,1,1) = {"
+En
+qa
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+qa
+En
+"}
+(4,1,1) = {"
+En
+qa
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+qa
+En
+"}
+(5,1,1) = {"
+En
+qa
+aI
+aI
+qa
+XG
+zd
+XG
+qa
+qa
+qa
+XG
+zd
+vm
+TC
+dU
+JN
+ZO
+cw
+dN
+zd
+qa
+qa
+qa
+XG
+zd
+qa
+qa
+aI
+aI
+qa
+En
+"}
+(6,1,1) = {"
+En
+qa
+aI
+aI
+EQ
+nI
+nI
+nI
+Vl
+qa
+Vl
+nI
+nI
+yA
+nI
+nI
+nI
+yA
+yA
+yA
+yA
+Vl
+qa
+Vl
+nI
+nI
+vM
+qa
+aI
+aI
+qa
+En
+"}
+(7,1,1) = {"
+En
+qa
+aI
+aI
+EQ
+nI
+XP
+nI
+nI
+qa
+nI
+nI
+nI
+qa
+qa
+hG
+hG
+qa
+qa
+nI
+nI
+nI
+qa
+nI
+XP
+XP
+yA
+qa
+aI
+aI
+qa
+En
+"}
+(8,1,1) = {"
+En
+qa
+aI
+aI
+EQ
+nI
+Jq
+nI
+nI
+rc
+nI
+nI
+yA
+qa
+tF
+kk
+LA
+wz
+qa
+nI
+nI
+yA
+rc
+nI
+Jq
+Jq
+yA
+qa
+aI
+aI
+qa
+En
+"}
+(9,1,1) = {"
+En
+qa
+aI
+aI
+EQ
+nI
+Uk
+nI
+nI
+OK
+nI
+ud
+nI
+aj
+kk
+Wd
+sK
+Ih
+ir
+nI
+lQ
+yA
+OK
+yA
+Jq
+Uk
+nI
+qa
+aI
+aI
+qa
+En
+"}
+(10,1,1) = {"
+En
+qa
+aI
+aI
+EQ
+nI
+BH
+nI
+nI
+rc
+nI
+nI
+nI
+qa
+Xc
+KT
+Ih
+tF
+qa
+Uv
+nI
+nI
+rc
+nI
+Jq
+BH
+An
+qa
+aI
+aI
+qa
+En
+"}
+(11,1,1) = {"
+En
+qa
+aI
+aI
+qa
+nI
+XP
+nI
+WP
+qa
+Qd
+EA
+nI
+qa
+qa
+hG
+hG
+qa
+qa
+Uv
+Uv
+nI
+qa
+nI
+XP
+XP
+bw
+qa
+aI
+aI
+qa
+En
+"}
+(12,1,1) = {"
+En
+qa
+aI
+aI
+qa
+nI
+nI
+nI
+An
+qa
+An
+nI
+nI
+nI
+nI
+nI
+ek
+nI
+nI
+yA
+nI
+lS
+qa
+qa
+bC
+bC
+qa
+qa
+aI
+aI
+qa
+En
+"}
+(13,1,1) = {"
+En
+qa
+aI
+aI
+XR
+We
+We
+We
+We
+mI
+We
+We
+We
+KX
+sd
+yA
+nI
+nI
+TQ
+yA
+EA
+wg
+qa
+Vl
+EA
+nI
+GY
+qa
+aI
+aI
+qa
+En
+"}
+(14,1,1) = {"
+En
+qa
+aI
+aI
+aI
+aI
+Jq
+aI
+aI
+aI
+aI
+Jq
+aI
+aI
+jA
+We
+We
+qP
+sd
+nI
+nI
+QY
+qa
+nI
+nI
+nT
+nI
+fX
+aI
+aI
+qa
+En
+"}
+(15,1,1) = {"
+En
+qa
+aI
+aI
+aI
+aI
+Uk
+aI
+aI
+aI
+aI
+Uk
+aI
+aI
+Jq
+Jq
+Jq
+aI
+jA
+We
+We
+We
+Ml
+nI
+yA
+nI
+nI
+nI
+aI
+aI
+qa
+En
+"}
+(16,1,1) = {"
+En
+qa
+aI
+aI
+aI
+aI
+Jq
+aI
+aI
+aI
+aI
+Jq
+aI
+aI
+Jq
+dp
+Jq
+aI
+aI
+aI
+aI
+aI
+Ws
+We
+We
+We
+qP
+sd
+aI
+aI
+qa
+En
+"}
+(17,1,1) = {"
+En
+qa
+aI
+aI
+UV
+ZZ
+Ig
+Ig
+vW
+eC
+Ig
+eC
+Br
+aI
+Jq
+Jq
+Jq
+aI
+aI
+YI
+aI
+aI
+aI
+aI
+aI
+Jq
+aI
+aI
+aI
+aI
+qa
+En
+"}
+(18,1,1) = {"
+En
+qa
+aI
+aI
+qa
+qa
+Uv
+nI
+SZ
+nI
+nI
+nI
+Ef
+Ig
+Ig
+Ig
+Br
+aI
+aI
+Jq
+aI
+aI
+aI
+aI
+aI
+Uk
+aI
+aI
+aI
+aI
+qa
+En
+"}
+(19,1,1) = {"
+En
+qa
+aI
+aI
+qa
+fp
+Uv
+yA
+nI
+yA
+nI
+nI
+yA
+nI
+Uv
+yA
+Ef
+Ig
+eC
+hb
+bg
+aI
+aI
+aI
+aI
+Jq
+aI
+aI
+aI
+aI
+qa
+En
+"}
+(20,1,1) = {"
+En
+qa
+aI
+aI
+qa
+qa
+qa
+tT
+Uv
+nI
+tT
+tT
+nI
+Uv
+Uv
+IJ
+nI
+nI
+nI
+Uv
+aD
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+mz
+aI
+aI
+qa
+En
+"}
+(21,1,1) = {"
+En
+qa
+aI
+aI
+Bl
+cf
+qa
+Jm
+Uv
+yA
+zy
+tT
+OU
+qa
+qa
+DC
+DC
+mV
+DC
+mV
+qa
+qa
+xJ
+UU
+qa
+nT
+yA
+qa
+aI
+aI
+qa
+En
+"}
+(22,1,1) = {"
+En
+qa
+aI
+aI
+WE
+yA
+rc
+Uv
+Uv
+nI
+Uv
+nI
+nI
+Kb
+qa
+As
+HD
+Om
+HD
+As
+qa
+lT
+Sy
+lv
+qa
+cY
+yA
+qa
+aI
+aI
+qa
+En
+"}
+(23,1,1) = {"
+En
+qa
+aI
+aI
+WE
+nI
+rc
+Dp
+nI
+Uv
+Uv
+nI
+nI
+Gz
+qa
+As
+As
+pt
+Om
+As
+qa
+WQ
+xD
+In
+qa
+nI
+nI
+qa
+aI
+aI
+qa
+En
+"}
+(24,1,1) = {"
+En
+qa
+aI
+aI
+Kr
+nI
+qa
+ML
+nI
+Uv
+zy
+tT
+nI
+SZ
+qa
+Om
+HD
+As
+HD
+QQ
+qa
+qa
+qa
+qa
+qa
+nI
+cY
+qa
+aI
+aI
+qa
+En
+"}
+(25,1,1) = {"
+En
+qa
+aI
+aI
+tc
+yA
+qa
+qa
+bC
+bC
+tT
+tT
+nI
+nI
+qa
+ao
+cM
+ao
+ao
+ao
+qa
+Lh
+yA
+nI
+nI
+sk
+nI
+xG
+aI
+aI
+qa
+En
+"}
+(26,1,1) = {"
+En
+qa
+aI
+aI
+st
+nI
+qH
+qa
+ZR
+Db
+qa
+nI
+yA
+nI
+Yc
+nI
+nI
+nI
+nI
+yA
+rc
+nT
+tT
+nI
+un
+ML
+nI
+xG
+aI
+aI
+qa
+En
+"}
+(27,1,1) = {"
+En
+qa
+aI
+aI
+qa
+XP
+yA
+Go
+RE
+DF
+Vx
+nI
+yA
+XP
+rc
+nI
+nI
+ML
+yA
+nI
+rc
+nI
+nI
+yA
+nI
+nI
+Vl
+qa
+aI
+aI
+qa
+En
+"}
+(28,1,1) = {"
+En
+qa
+aI
+aI
+qa
+qa
+pR
+qa
+Mq
+yb
+qa
+Rq
+Rq
+qa
+qa
+qa
+VA
+ns
+XT
+qa
+qa
+qa
+Gb
+Gb
+Gb
+Gb
+qa
+qa
+aI
+aI
+qa
+En
+"}
+(29,1,1) = {"
+En
+qa
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+qa
+En
+"}
+(30,1,1) = {"
+En
+qa
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+qa
+En
+"}
+(31,1,1) = {"
+En
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+En
+"}
+(32,1,1) = {"
+En
+En
+En
+En
+En
+En
+En
+En
+En
+En
+En
+En
+En
+En
+En
+En
+En
+En
+En
+En
+En
+En
+En
+En
+En
+En
+En
+En
+En
+En
+En
+En
+"}

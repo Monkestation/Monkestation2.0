@@ -1,21 +1,28 @@
-GLOBAL_LIST_INIT(infected_cleanables, list())
+GLOBAL_LIST_EMPTY(infected_cleanables)
 
 /obj/effect/decal/cleanable/Initialize(mapload, list/datum/disease/diseases)
-	. = ..()
-	spawn(1)//cleanables can get infected in many different ways when they spawn so it's much easier to handle the pathogen overlay here after a delay
-		if (src.diseases && length(src.diseases))
-			GLOB.infected_cleanables += src
-			if (!pathogen)
-				pathogen = image('monkestation/code/modules/virology/icons/effects.dmi',src,"pathogen_blood")
-				pathogen.plane = HUD_PLANE
-				pathogen.appearance_flags = RESET_COLOR|RESET_ALPHA
-			for (var/mob/L in GLOB.virus_viewers)
-				if (L.client)
-					L.client.images |= pathogen
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/effect/decal/cleanable/LateInitialize(mapload_arg)
+	//cleanables can get infected in many different ways when they spawn so it's much easier to handle the pathogen overlay here after a delay
+	addtimer(CALLBACK(src, PROC_REF(setup_diseases)), 0.1 SECONDS)
+
+/obj/effect/decal/cleanable/proc/setup_diseases()
+	if(!length(src.diseases) || QDELETED(src))
+		return
+	GLOB.infected_cleanables += src
+	if (!pathogen)
+		pathogen = image('monkestation/code/modules/virology/icons/effects.dmi', src, "pathogen_blood")
+		SET_PLANE_EXPLICIT(pathogen, HUD_PLANE, src)
+		pathogen.appearance_flags = RESET_COLOR|RESET_ALPHA
+	for (var/mob/L in GLOB.virus_viewers)
+		if (L.client)
+			L.client.images |= pathogen
 
 /obj/effect/decal/cleanable/Destroy()
-	. = ..()
 	GLOB.infected_cleanables -= src
+	return ..()
 
 /obj/effect/decal/cleanable/Entered(mob/living/perp)
 	..()

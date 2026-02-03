@@ -174,8 +174,8 @@
 /obj/machinery/piratepad/multitool_act(mob/living/user, obj/item/multitool/I)
 	. = ..()
 	if (istype(I))
-		to_chat(user, span_notice("You register [src] in [I]s buffer."))
 		I.set_buffer(src)
+		balloon_alert(user, "saved to multitool buffer")
 		return TRUE
 
 /obj/machinery/piratepad/screwdriver_act_secondary(mob/living/user, obj/item/screwdriver/screw)
@@ -220,10 +220,10 @@
 		pad_ref = WEAKREF(I.buffer)
 		return TRUE
 
-/obj/machinery/computer/piratepad_control/LateInitialize()
+/obj/machinery/computer/piratepad_control/LateInitialize(mapload_arg)
 	. = ..()
 	if(cargo_hold_id)
-		for(var/obj/machinery/piratepad/P in GLOB.machines)
+		for(var/obj/machinery/piratepad/P as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/piratepad))
 			if(P.cargo_hold_id == cargo_hold_id)
 				pad_ref = WEAKREF(P)
 				return
@@ -246,7 +246,7 @@
 	data["status_report"] = status_report
 	return data
 
-/obj/machinery/computer/piratepad_control/ui_act(action, params)
+/obj/machinery/computer/piratepad_control/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -394,21 +394,3 @@
 		var/turf/parrot_turf = get_turf(current_parrot)
 		if(parrot_turf && is_station_level(parrot_turf.z))
 			return current_parrot
-
-/datum/export/pirate/cash
-	cost = 1
-	unit_name = "bills"
-	export_types = list(/obj/item/stack/spacecash)
-
-/datum/export/pirate/cash/get_amount(obj/O)
-	var/obj/item/stack/spacecash/C = O
-	return ..() * C.amount * C.value
-
-/datum/export/pirate/holochip
-	cost = 1
-	unit_name = "holochip"
-	export_types = list(/obj/item/holochip)
-
-/datum/export/pirate/holochip/get_cost(atom/movable/AM)
-	var/obj/item/holochip/H = AM
-	return H.credits

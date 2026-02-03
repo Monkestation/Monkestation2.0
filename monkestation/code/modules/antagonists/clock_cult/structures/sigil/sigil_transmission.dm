@@ -5,7 +5,7 @@
 /obj/structure/destructible/clockwork/sigil/transmission
 	name = "sigil of transmission"
 	desc = "A strange sigil, swirling with a yellow light."
-	clockwork_desc = "A glorious sigil used to power Rat'varian structures and recharge energy-based objects."
+	clockwork_desc = "A glorious sigil used to power Ratvarian structures and recharge energy-based objects."
 	icon_state = "sigiltransmission"
 	effect_stand_time = 1 SECONDS
 	idle_color = "#f1a746"
@@ -53,7 +53,7 @@
 			is_clockie = TRUE // If one person is a cultist, we just say "they good" to the mech itself
 			break
 
-		var/obj/item/stock_parts/cell/power_cell = target_mech.cell
+		var/obj/item/stock_parts/power_store/cell/power_cell = target_mech.cell
 
 		if(!power_cell)
 			return
@@ -65,12 +65,12 @@
 
 		else
 			if(power_cell.charge)
-				target_mech.use_power(power_cell.chargerate)
+				target_mech.use_energy(power_cell.chargerate)
 				SSthe_ark.clock_power += POWER_SIPHON
 
 	else if(iscyborg(apply_to))
 		var/mob/living/silicon/robot/borg = apply_to
-		var/obj/item/stock_parts/cell/power_cell = borg.get_cell()
+		var/obj/item/stock_parts/power_store/cell/power_cell = borg.get_cell()
 
 		if(!power_cell)
 			return
@@ -89,7 +89,7 @@
 		var/list/human_contents = human.get_contents()
 
 		for(var/obj/item/content_item as anything in human_contents)
-			var/obj/item/stock_parts/cell/power_cell = content_item.get_cell()
+			var/obj/item/stock_parts/power_store/cell/power_cell = content_item.get_cell()
 
 			if(!power_cell)
 				continue

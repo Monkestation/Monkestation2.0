@@ -51,8 +51,6 @@
 	///Harm-intent verb in present simple tense.
 	var/response_harm_simple = "hit"
 	var/harm_intent_damage = 3
-	///Minimum force required to deal any damage.
-	var/force_threshold = 0
 	///Maximum amount of stamina damage the mob can be inflicted with total
 	var/max_staminaloss = 200
 	///How much stamina the mob recovers per second
@@ -112,9 +110,6 @@
 	///Sorry, no spider+corgi buttbabies.
 	var/animal_species
 
-	///Simple_animal access.
-	///Innate access uses an internal ID card.
-	var/obj/item/card/id/access_card = null
 	///If the mob can be spawned with a gold slime core. HOSTILE_SPAWN are spawned with plasma, FRIENDLY_SPAWN are spawned with blood.
 	var/gold_core_spawnable = NO_SPAWN
 
@@ -198,11 +193,10 @@
 
 /mob/living/simple_animal/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()
-	if(staminaloss > 0)
+	if(stamina.loss > 0)
 		stamina.adjust(stamina_recovery * seconds_per_tick, FALSE, TRUE)
 
 /mob/living/simple_animal/Destroy()
-	QDEL_NULL(access_card)
 	GLOB.simple_animals[AIStatus] -= src
 	SSnpcpool.currentrun -= src
 
@@ -215,8 +209,6 @@
 			. += span_deadsay("Upon closer examination, [p_they()] appear[p_s()] to be asleep.")
 		else
 			. += span_deadsay("Upon closer examination, [p_they()] appear[p_s()] to be dead.")
-	if(access_card)
-		. += "There appears to be [icon2html(access_card, user)] \a [access_card] pinned to [p_them()]."
 
 /mob/living/simple_animal/update_stat()
 	if(HAS_TRAIT(src, TRAIT_GODMODE))
@@ -235,7 +227,7 @@
  * Reduces the stamina loss by stamina_recovery
  */
 /mob/living/simple_animal/on_stamina_update()
-	set_varspeed(initial(speed) + (staminaloss * 0.06))
+	set_varspeed(initial(speed) + (stamina?.loss * 0.06))
 
 /mob/living/simple_animal/proc/handle_automated_action()
 	set waitfor = FALSE
@@ -460,7 +452,7 @@
 			return FALSE
 	return TRUE
 
-/mob/living/simple_animal/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
+/mob/living/simple_animal/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE, revival_policy = POLICY_REVIVAL)
 	. = ..()
 	if(!.)
 		return
@@ -534,10 +526,6 @@
 		if(A.update_remote_sight(src)) //returns 1 if we override all other sight updates.
 			return
 	return ..()
-
-//Will always check hands first, because access_card is internal to the mob and can't be removed or swapped.
-/mob/living/simple_animal/get_idcard(hand_first)
-	return (..() || access_card)
 
 /mob/living/simple_animal/put_in_hands(obj/item/I, del_on_fail = FALSE, merge_stacks = TRUE, ignore_animation = TRUE)
 	. = ..()
@@ -642,3 +630,9 @@
 
 /mob/living/simple_animal/compare_sentience_type(compare_type)
 	return sentience_type == compare_type
+
+/mob/living/simple_animal/update_cached_insulation()
+	return
+
+/mob/living/simple_animal/get_insulation(temperature)
+	return temperature_insulation

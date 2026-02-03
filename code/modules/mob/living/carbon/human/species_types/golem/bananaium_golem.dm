@@ -64,16 +64,11 @@
 	return golem_name
 
 /datum/species/golem/bananium/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style)
-	..()
-	if(COOLDOWN_FINISHED(src, banana_cooldown) && M != H && (M.istate & ISTATE_HARM))
-		new /obj/item/grown/bananapeel/specialpeel(get_turf(H))
-		COOLDOWN_START(src, banana_cooldown, banana_delay)
-
-/datum/species/golem/bananium/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, mob/living/carbon/human/H)
-	..()
-	if((user != H) && COOLDOWN_FINISHED(src, banana_cooldown))
-		new /obj/item/grown/bananapeel/specialpeel(get_turf(H))
-		COOLDOWN_START(src, banana_cooldown, banana_delay)
+	. = ..()
+	if(!COOLDOWN_FINISHED(src, banana_cooldown))
+		return
+	new /obj/item/grown/bananapeel/specialpeel(get_turf(H))
+	COOLDOWN_START(src, banana_cooldown, banana_delay)
 
 /datum/species/golem/bananium/spec_hitby(atom/movable/AM, mob/living/carbon/human/H)
 	..()

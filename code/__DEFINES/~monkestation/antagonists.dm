@@ -69,6 +69,8 @@
 #define BORER_HIDING (1<<3)
 /// If the borer can produce eggs without a host
 #define BORER_ALONE_PRODUCTION (1<<4)
+/// If the borer is energic, used for crawling into various spaces
+#define BORER_ENERGIC (1<<5)
 
 /// If the given mob is a bloodling
 #define IS_BLOODLING(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/bloodling))

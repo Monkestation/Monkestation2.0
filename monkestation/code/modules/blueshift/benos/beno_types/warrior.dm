@@ -11,8 +11,6 @@
 	melee_damage_upper = 35
 
 /mob/living/carbon/alien/adult/nova/warrior/Initialize(mapload)
-	if(neutered)
-		src.name = "Lamarr"
 	. = ..()
 	var/static/list/innate_actions = list(
 		/datum/action/cooldown/spell/aoe/repulse/xeno/nova_tailsweep,
@@ -79,6 +77,3 @@
 
 /datum/movespeed_modifier/warrior_agility
 	multiplicative_slowdown = -2
-
-/mob/living/carbon/alien/adult/nova/warrior/lamarr
-	name = "Lamarr"

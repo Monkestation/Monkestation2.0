@@ -28,7 +28,7 @@
 	/// If the cell can be removed via screwdriver
 	var/cell_removable = TRUE
 	var/obj/item/shockpaddles/paddles
-	var/obj/item/stock_parts/cell/high/cell
+	var/obj/item/stock_parts/power_store/cell/cell
 	/// If true, revive through space suits, allow for combat shocking
 	var/combat = FALSE
 	/// How long does it take to recharge
@@ -56,6 +56,7 @@
 	paddles = new paddle_type(src)
 	update_power()
 	RegisterSignal(paddles, COMSIG_DEFIBRILLATOR_SUCCESS, PROC_REF(on_defib_success))
+	AddElement(/datum/element/drag_pickup)
 
 /obj/item/defibrillator/loaded/Initialize(mapload) //starts with hicap
 	. = ..()
@@ -111,7 +112,7 @@
 
 /obj/item/defibrillator/CheckParts(list/parts_list)
 	..()
-	cell = locate(/obj/item/stock_parts/cell) in contents
+	cell = locate(/obj/item/stock_parts/power_store/cell) in contents
 	update_power()
 
 /obj/item/defibrillator/ui_action_click()
@@ -136,14 +137,6 @@
 		ui_action_click() //checks for this are handled in defibrillator.mount.dm
 	return ..()
 
-/obj/item/defibrillator/MouseDrop(obj/over_object)
-	. = ..()
-	if(ismob(loc))
-		var/mob/M = loc
-		if(!M.incapacitated() && istype(over_object, /atom/movable/screen/inventory/hand))
-			var/atom/movable/screen/inventory/hand/H = over_object
-			M.putItemFromInventoryInHandIfPossible(src, H.held_index)
-
 /obj/item/defibrillator/screwdriver_act(mob/living/user, obj/item/tool)
 	if(!cell || !cell_removable)
 		return FALSE
@@ -159,8 +152,8 @@
 /obj/item/defibrillator/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(attacking_item == paddles)
 		toggle_paddles()
-	else if(istype(attacking_item, /obj/item/stock_parts/cell))
-		var/obj/item/stock_parts/cell/C = attacking_item
+	else if(istype(attacking_item, /obj/item/stock_parts/power_store/cell))
+		var/obj/item/stock_parts/power_store/cell/C = attacking_item
 		if(cell)
 			to_chat(user, span_warning("[src] already has a cell!"))
 		else
@@ -304,7 +297,7 @@
 
 /obj/item/defibrillator/compact/combat/loaded/Initialize(mapload)
 	. = ..()
-	cell = new /obj/item/stock_parts/cell/infinite(src)
+	cell = new /obj/item/stock_parts/power_store/cell/infinite(src)
 	update_power()
 
 /obj/item/defibrillator/compact/combat/loaded/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
@@ -338,7 +331,7 @@
 	resistance_flags = INDESTRUCTIBLE
 	base_icon_state = "defibpaddles"
 
-	var/revivecost = 1000
+	var/revivecost = STANDARD_CELL_CHARGE * 0.1
 	var/cooldown = FALSE
 	var/busy = FALSE
 	var/obj/item/defibrillator/defib
@@ -515,7 +508,7 @@
 	busy = TRUE
 	M.visible_message(span_danger("[user] touches [M] with [src]!"), \
 			span_userdanger("[user] touches [M] with [src]!"))
-	M.stamina.adjust(-60)
+	M.stamina.adjust(-80)
 	M.Knockdown(75)
 	M.set_jitter_if_lower(100 SECONDS)
 	M.apply_status_effect(/datum/status_effect/convulsing)

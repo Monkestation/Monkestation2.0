@@ -84,7 +84,7 @@
 	if (tame)
 		faction |= FACTION_NEUTRAL
 	else
-		AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/cheese), tame_chance = 100, after_tame = CALLBACK(src, PROC_REF(tamed)))
+		AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/cheese), tame_chance = 100)
 
 /mob/living/basic/mouse/Destroy()
 	SSmobs.cheeserats -= src
@@ -112,7 +112,7 @@
 	adjust_health(maxHealth)
 
 // On revival, re-add the mouse to the ratcap, or block it if we're at it
-/mob/living/basic/mouse/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
+/mob/living/basic/mouse/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE, revival_policy = POLICY_REVIVAL)
 	if(!contributes_to_ratcap)
 		return ..()
 
@@ -177,15 +177,14 @@
 		if(hungry && prob(90))
 			adjust_health(-4)
 
-		for(var/datum/reagent/target_reagent in attack_target.reagents.reagent_list)
-			if(istype(target_reagent, /datum/reagent/toxin))
-				visible_message(
-					span_warning("[src] devours [attack_target]! They pause for a moment..."),
-					span_warning("You devour [attack_target], something tastes off..."),
-				)
-				if(health != 0)
-					adjust_health(4)
-	//MONKESTATION EDIT STOP
+		if(locate(/datum/reagent/toxin) in attack_target.reagents?.reagent_list)
+			visible_message(
+				span_warning("[src] devours [attack_target]! [p_They()] pause[p_s()] for a moment..."),
+				span_warning("You devour [attack_target], something tastes off..."),
+			)
+			if(health != 0)
+				adjust_health(4)
+//MONKESTATION EDIT STOP
 
 	if(istype(attack_target, /obj/structure/cable))
 		try_bite_cable(attack_target)
@@ -199,7 +198,7 @@
 		to_chat(entered, span_notice("[icon2html(src, entered)] Squeak!"))
 
 /// Called when a mouse is hand-fed some cheese, it will stop being afraid of humans
-/mob/living/basic/mouse/proc/tamed(mob/living/tamer, obj/item/food/cheese/cheese)
+/mob/living/basic/mouse/tamed(mob/living/tamer, obj/item/food/cheese/cheese)
 	new /obj/effect/temp_visual/heart(loc)
 	faction |= FACTION_NEUTRAL
 	tame = TRUE
@@ -409,9 +408,7 @@
 	var/trans_amount = reagents.maximum_volume - reagents.total_volume * (4 / 3)
 	if(target_reagents.has_reagent(/datum/reagent/fuel) && target_reagents.trans_to(src, trans_amount))
 		to_chat(user, span_notice("You dip [src] into [interacting_with]."))
-	else
-		to_chat(user, span_warning("That's a terrible idea."))
-	return ITEM_INTERACT_BLOCKING
+		return ITEM_INTERACT_SUCCESS
 
 /obj/item/food/deadmouse/moldy
 	name = "moldy dead mouse"

@@ -72,6 +72,12 @@
 	item = /obj/item/storage/box/syndie_kit/imp_hard_spear
 	cost = 7
 
+/datum/uplink_item/implants/weapons_auth
+	name = "Weapon Authorization Implant"
+	desc = "An implant that allows you to use any pin restricted weapon."
+	item = /obj/item/storage/box/syndie_kit/weapons_auth
+	cost = 5
+
 /datum/uplink_item/implants/uplink/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
 	var/obj/item/storage/box/syndie_kit/uplink_box = ..()
 	uplink_box.name = "Uplink Implant Box"

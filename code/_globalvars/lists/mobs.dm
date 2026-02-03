@@ -8,33 +8,33 @@ GLOBAL_LIST_EMPTY(stealthminID) //reference list with IDs that store ckeys, for 
 
 /// List of types of abstract mob which shouldn't usually exist in the world on its own if we're spawning random mobs
 GLOBAL_LIST_INIT(abstract_mob_types, list(
+	/mob/living/basic,
 	/mob/living/basic/blob_minion,
 	/mob/living/basic/bot,
 	/mob/living/basic/construct,
 	/mob/living/basic/guardian,
 	/mob/living/basic/heretic_summon,
+	/mob/living/basic/mimic, // Cannot exist if spawned without being passed an item reference
+	/mob/living/basic/mimic/crate,
 	/mob/living/basic/mining,
 	/mob/living/basic/pet,
-	/mob/living/basic,
+	/mob/living/basic/soulscythe, // This is just a way for players to control the soulscythe item
 	/mob/living/basic/spider,
-	/mob/living/carbon/alien/adult,
-	/mob/living/carbon/alien,
-	/mob/living/carbon/human/consistent,
-	/mob/living/carbon/human/dummy/consistent,
-	/mob/living/carbon/human/dummy,
-	/mob/living/carbon/human/species,
 	/mob/living/carbon,
+	/mob/living/carbon/alien,
+	/mob/living/carbon/alien/adult,
+	/mob/living/carbon/human/consistent,
+	/mob/living/carbon/human/dummy,
+	/mob/living/carbon/human/dummy/consistent,
+	/mob/living/carbon/human/species,
 	/mob/living/silicon,
-	/mob/living/simple_animal/bot,
-	/mob/living/simple_animal/hostile/asteroid/elite,
-	/mob/living/simple_animal/hostile/asteroid,
-	/mob/living/simple_animal/hostile/megafauna,
-	/mob/living/basic/mimic/crate, // Cannot exist if spawned without being passed an item reference
-	/mob/living/simple_animal/hostile/retaliate,
-	/mob/living/simple_animal/hostile,
-	/mob/living/simple_animal/pet,
-	/mob/living/simple_animal/soulscythe, // As mimic, can't exist if spawned outside an item
 	/mob/living/simple_animal,
+	/mob/living/simple_animal/bot,
+	/mob/living/simple_animal/hostile,
+	/mob/living/simple_animal/hostile/asteroid,
+	/mob/living/simple_animal/hostile/asteroid/elite,
+	/mob/living/simple_animal/hostile/megafauna,
+	/mob/living/simple_animal/hostile/retaliate,
 ))
 
 
@@ -87,10 +87,12 @@ GLOBAL_LIST_EMPTY(revenant_relay_mobs)
 ///underages who have been reported to security for trying to buy things they shouldn't, so they can't spam
 GLOBAL_LIST_EMPTY(narcd_underages)
 
-GLOBAL_LIST_EMPTY(language_datum_instances)
-GLOBAL_LIST_EMPTY(all_languages)
-///List of all languages ("name" = type)
-GLOBAL_LIST_EMPTY(language_types_by_name)
+/// List of language prototypes to reference, assoc [type] = prototype
+GLOBAL_LIST_INIT_TYPED(language_datum_instances, /datum/language, init_language_prototypes())
+/// List if all language typepaths learnable, IE, those with keys
+GLOBAL_LIST_INIT(all_languages, init_all_languages())
+// /List of language prototypes to reference, assoc "name" = typepath
+GLOBAL_LIST_INIT(language_types_by_name, init_language_types_by_name())
 
 GLOBAL_LIST_EMPTY(latejoin_ai_cores)
 
@@ -106,6 +108,31 @@ GLOBAL_LIST_INIT(construct_radial_images, list(
 
 /// List of all species prototypes to reference, assoc [type] = prototype
 GLOBAL_LIST_INIT_TYPED(species_prototypes, /datum/species, init_species_prototypes())
+
+/proc/init_language_prototypes()
+	var/list/lang_list = list()
+	for(var/datum/language/lang_type as anything in typesof(/datum/language))
+		if(!initial(lang_type.key))
+			continue
+
+		lang_list[lang_type] = new lang_type()
+	return lang_list
+
+/proc/init_all_languages()
+	var/list/lang_list = list()
+	for(var/datum/language/lang_type as anything in typesof(/datum/language))
+		if(!initial(lang_type.key))
+			continue
+		lang_list += lang_type
+	return lang_list
+
+/proc/init_language_types_by_name()
+	var/list/lang_list = list()
+	for(var/datum/language/lang_type as anything in typesof(/datum/language))
+		if(!initial(lang_type.key))
+			continue
+		lang_list[initial(lang_type.name)] = lang_type
+	return lang_list
 
 /proc/init_species_prototypes()
 	var/list/species_list = list()

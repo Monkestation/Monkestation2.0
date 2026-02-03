@@ -44,7 +44,7 @@
 
 //cant put new parts in
 /obj/vehicle/sealed/mecha/steam_helios/populate_parts()
-	cell = new /obj/item/stock_parts/cell/clock(src)
+	cell = new /obj/item/stock_parts/power_store/cell/clock(src)
 	scanmod = new /obj/item/stock_parts/scanning_module/triphasic/clock(src) //walking is free
 	capacitor = new /obj/item/stock_parts/capacitor/quadratic/clock(src)
 	manipulator = new /obj/item/stock_parts/manipulator/femto/clock(src)
@@ -98,7 +98,7 @@
 		return
 	if(!chassis || !(owner in chassis.occupants))
 		return
-	if(TIMER_COOLDOWN_CHECK(chassis, COOLDOWN_MECHA_JUDICIAL_MARK))
+	if(TIMER_COOLDOWN_RUNNING(chassis, COOLDOWN_MECHA_JUDICIAL_MARK))
 		var/timeleft = S_TIMER_COOLDOWN_TIMELEFT(chassis, COOLDOWN_MECHA_JUDICIAL_MARK)
 		to_chat(owner, span_warning("You need to wait [DisplayTimeText(timeleft, 1)] before marking another tile."))
 		return
@@ -158,7 +158,7 @@
 		return
 	if(!chassis || !(owner in chassis.occupants))
 		return
-	if(TIMER_COOLDOWN_CHECK(chassis, COOLDOWN_MECHA_STEAM_DISCHARGE))
+	if(TIMER_COOLDOWN_RUNNING(chassis, COOLDOWN_MECHA_STEAM_DISCHARGE))
 		var/timeleft = S_TIMER_COOLDOWN_TIMELEFT(chassis, COOLDOWN_MECHA_STEAM_DISCHARGE)
 		to_chat(owner, span_warning("You need to wait [DisplayTimeText(timeleft, 1)] before discharging steam again."))
 		return
@@ -181,8 +181,10 @@
 			for(var/mob/living/steam_target in steam_turf)
 				if(IS_CLOCK(steam_target) || steam_target.throwing)
 					continue
-				steam_target.visible_message(span_warning("The steam from \The [chassis] sends [steam_target] flying backwards!"),
-											 span_userdanger("The steam from \The [chassis] burns and sends you flying backwards!"))
+				steam_target.visible_message(
+					span_warning("The steam from \The [chassis] sends [steam_target] flying backwards!"),
+					span_userdanger("The steam from \The [chassis] burns and sends you flying backwards!")
+				)
 				var/turf/thrownat = get_ranged_target_turf_direct(chassis, steam_target, 10, rand(-10, 10)) //easier to read
 				steam_target.throw_at(thrownat, 8, 2, null, TRUE, force = MOVE_FORCE_OVERPOWERING, gentle = TRUE)
 				steam_target.apply_damage((IS_CULTIST(steam_target) ? 30 : 20), BURN, wound_bonus = 30) //more damage to blood cultists

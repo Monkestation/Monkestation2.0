@@ -7,15 +7,18 @@ SUBSYSTEM_DEF(economy)
 	var/roundstart_paychecks = 5
 	///How many credits does the in-game economy have in circulation at round start? Divided up by 6 of the 7 department budgets evenly, where cargo starts with nothing.
 	var/budget_pool = 35000
-	var/list/department_accounts = list(ACCOUNT_CIV = ACCOUNT_CIV_NAME,
-										ACCOUNT_ENG = ACCOUNT_ENG_NAME,
-										ACCOUNT_SCI = ACCOUNT_SCI_NAME,
-										ACCOUNT_MED = ACCOUNT_MED_NAME,
-										ACCOUNT_SRV = ACCOUNT_SRV_NAME,
-										ACCOUNT_CAR = ACCOUNT_CAR_NAME,
-										ACCOUNT_SEC = ACCOUNT_SEC_NAME,
-										ACCOUNT_CMD = ACCOUNT_CMD_NAME)
-	var/list/generated_accounts = list()
+	var/list/department_accounts = list(
+		ACCOUNT_CIV = ACCOUNT_CIV_NAME,
+		ACCOUNT_ENG = ACCOUNT_ENG_NAME,
+		ACCOUNT_SCI = ACCOUNT_SCI_NAME,
+		ACCOUNT_MED = ACCOUNT_MED_NAME,
+		ACCOUNT_SRV = ACCOUNT_SRV_NAME,
+		ACCOUNT_CAR = ACCOUNT_CAR_NAME,
+		ACCOUNT_SEC = ACCOUNT_SEC_NAME,
+		ACCOUNT_CMD = ACCOUNT_CMD_NAME,
+		ACCOUNT_CC = ACCOUNT_CC_NAME,
+	)
+	var/list/departmental_accounts = list()
 	/**
 	 * Enables extra money charges for things that normally would be free, such as sleepers/cryo/beepsky.
 	 * Take care when enabling, as players will NOT respond well if the economy is set up for low cash flows.
@@ -67,8 +70,6 @@ SUBSYSTEM_DEF(economy)
 	/// Tracks a temporary sum of all money in the system
 	/// We need this on the subsystem because of yielding and such
 	var/temporary_total = 0
-	/// The mail crate we last generated.
-	var/obj/structure/closet/crate/mail/economy/mail_crate
 
 /datum/controller/subsystem/economy/Initialize()
 	//removes cargo from the split
@@ -83,7 +84,7 @@ SUBSYSTEM_DEF(economy)
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/economy/Recover()
-	generated_accounts = SSeconomy.generated_accounts
+	departmental_accounts = SSeconomy.departmental_accounts
 	bank_accounts_by_id = SSeconomy.bank_accounts_by_id
 	dep_cards = SSeconomy.dep_cards
 
@@ -123,7 +124,7 @@ SUBSYSTEM_DEF(economy)
  */
 /datum/controller/subsystem/economy/proc/get_dep_account(dep_id) as /datum/bank_account/department
 	RETURN_TYPE(/datum/bank_account/department)
-	for(var/datum/bank_account/department/D in generated_accounts)
+	for(var/datum/bank_account/department/D in departmental_accounts)
 		if(D.department_id == dep_id)
 			return D
 

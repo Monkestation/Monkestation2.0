@@ -9,7 +9,7 @@
 	var/on = FALSE
 	///the rate the machine will scrub air
 	var/volume_rate = 1000
-	///Multiplier with ONE_ATMOSPHERE, if the enviroment pressure is higher than that, the scrubber won't work
+	///Multiplier with ONE_ATMOSPHERE, if the environment pressure is higher than that, the scrubber won't work
 	var/overpressure_m = 80
 	///Should the machine use overlay in update_overlays() when open/close?
 	var/use_overlays = TRUE
@@ -66,7 +66,7 @@
 		if(!isopenturf(open_turf))
 			continue
 		if(open_turf.pollution)
-			open_turf.pollution.scrub_amount(POLLUTION_HEIGHT_DIVISOR)
+			open_turf.pollution.scrub_amount(POLLUTION_HEIGHT_DIVISOR * 2)
 
 	return ..()
 
@@ -149,7 +149,7 @@
 	else if(on && holding)
 		user.investigate_log("started a transfer into [holding].", INVESTIGATE_ATMOS)
 
-/obj/machinery/portable_atmospherics/scrubber/ui_act(action, params)
+/obj/machinery/portable_atmospherics/scrubber/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

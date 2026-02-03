@@ -42,10 +42,10 @@
 	shoes = /obj/item/clothing/shoes/laceup
 	neck = /obj/item/clothing/neck/tie/red/tied
 	l_pocket = /obj/item/laser_pointer/red
-	r_pocket = /obj/item/clothing/accessory/lawyers_badge
 	l_hand = /obj/item/storage/briefcase/lawyer
 
 	chameleon_extras = /obj/item/stamp/law
+	accessory = /obj/item/clothing/accessory/badge/lawyer
 
 /datum/outfit/job/lawyer/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)

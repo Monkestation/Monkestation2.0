@@ -10,8 +10,8 @@
 	departmental_flags =  DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/board/nanite_cloud_control
-	name = "Nanite Cloud Control"
-	desc = "Allows for the construction of circuit boards used to build a new nanite cloud control console."
+	name = "Nanite Programmer"
+	desc = "Allows for the construction of circuit boards used to build a new nanite programmer console."
 	id = "nanite_cloud_control"
 	build_path = /obj/item/circuitboard/computer/nanite_cloud_controller
 	category = list(

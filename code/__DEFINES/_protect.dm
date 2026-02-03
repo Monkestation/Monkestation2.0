@@ -10,6 +10,9 @@
 ##Path/CanProcCall(procname){\
 	return FALSE;\
 }\
+##Path/can_vv_mark(procname){\
+	return FALSE;\
+}\
 ##Path/Read(savefile/savefile){\
 	del(src);\
 }\

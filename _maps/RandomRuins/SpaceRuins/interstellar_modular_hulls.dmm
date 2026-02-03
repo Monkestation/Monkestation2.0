@@ -118,7 +118,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/ruined_hull_1)
 "rq" = (
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ruined_hull_1)
 "rr" = (

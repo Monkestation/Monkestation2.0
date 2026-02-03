@@ -198,7 +198,7 @@ const ProductDisplay = (props: {
         !!onstation &&
         user && (
           <Box fontSize="16px" color="green">
-            {(user && user.cash) || 0} cr <Icon name="coins" color="gold" />
+            {user?.cash || 0} cr <Icon name="coins" color="gold" />
           </Box>
         )
       }
@@ -284,7 +284,7 @@ const ProductImage = (props) => {
         <img
           src={`data:image/jpeg;base64,${product.img}`}
           style={{
-            'vertical-align': 'middle',
+            verticalAlign: 'middle',
           }}
         />
       ) : product.icon && product.icon_state ? (
@@ -297,7 +297,7 @@ const ProductImage = (props) => {
         <span
           className={classes(['vending32x32', product.path])}
           style={{
-            'vertical-align': 'middle',
+            verticalAlign: 'middle',
           }}
         />
       )}
@@ -344,12 +344,12 @@ const ProductButton = (props) => {
   const { act, data } = useBackend<VendingData>();
   const { access } = data;
   const { custom, discount, disabled, free, product, redPrice } = props;
-  const customPrice = access ? 'FREE' : product.price + ' cr';
-  let standardPrice = product.price + ' cr';
+  const customPrice = access ? 'FREE' : `${product.price} cr`;
+  let standardPrice = `${product.price} cr`;
   if (free) {
     standardPrice = 'FREE';
   } else if (discount) {
-    standardPrice = redPrice + ' cr';
+    standardPrice = `${redPrice} cr`;
   }
   return custom ? (
     <Button
@@ -392,21 +392,17 @@ const CategorySelector = (props: {
 
   return (
     <Section>
-      <Stack grow>
-        <Stack.Item>
-          {Object.entries(categories).map(([name, category]) => (
-            <Button
-              key={name}
-              selected={name === selectedCategory}
-              color={CATEGORY_COLORS[name]}
-              icon={category.icon}
-              onClick={() => onSelect(name)}
-            >
-              {name}
-            </Button>
-          ))}
-        </Stack.Item>
-      </Stack>
+      {Object.entries(categories).map(([name, category]) => (
+        <Button
+          key={name}
+          selected={name === selectedCategory}
+          color={CATEGORY_COLORS[name]}
+          icon={category.icon}
+          onClick={() => onSelect(name)}
+        >
+          {name}
+        </Button>
+      ))}
     </Section>
   );
 };

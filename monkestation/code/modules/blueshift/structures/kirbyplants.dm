@@ -15,6 +15,8 @@
 
 	/// Can this plant be trimmed by someone with TRAIT_BONSAI
 	var/trimmable = TRUE
+	// Does the plant have an internal storage
+	var/can_hide_items_in_self = TRUE
 	/// Whether this plant is dead and requires a seed to revive
 	var/dead = FALSE
 	///If it's a special named plant, set this to true to prevent dead-name overriding.
@@ -25,7 +27,8 @@
 
 /obj/item/kirbyplants/Initialize(mapload)
 	. = ..()
-	create_storage(storage_type = /datum/storage/kirbyplants)
+	if(can_hide_items_in_self)
+		create_storage(storage_type = /datum/storage/kirbyplants)
 	AddComponent(/datum/component/tactical)
 	AddComponent(/datum/component/two_handed, require_twohands = TRUE, force_unwielded = 10, force_wielded = 10)
 	AddElement(/datum/element/beauty, 500)
@@ -153,6 +156,7 @@
 	desc = "An old botanical research sample collected on a long forgotten jungle planet."
 	icon_state = "fern"
 	trimmable = FALSE
+	can_hide_items_in_self = FALSE
 
 /obj/item/kirbyplants/fern/Initialize(mapload)
 	. = ..()

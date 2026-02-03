@@ -126,16 +126,16 @@
 	user.set_hairstyle(actual_hairstyle, update = TRUE)
 	actual_hairstyle = null
 
-/obj/item/clothing/head/hair_tie/AltClick(mob/living/user)
+/obj/item/clothing/head/hair_tie/click_alt(mob/living/user)
 	if(!(user.get_slot_by_item(src) == ITEM_SLOT_HANDS))
 		balloon_alert(user, "hold in-hand!")
-		return
+		return CLICK_ACTION_BLOCKING
 	user.visible_message(
 		span_danger("[user.name] puts [src] around [user.p_their()] fingers, beginning to flick it!"),
 		span_notice("You try to flick [src]!"),
 	)
 	flick_hair_tie(user)
-	return
+	return CLICK_ACTION_SUCCESS
 
 ///This proc flicks the hair tie out of the player's hand, tripping the target hit for 1 second
 /obj/item/clothing/head/hair_tie/proc/flick_hair_tie(mob/living/user)
@@ -170,7 +170,7 @@
 
 /obj/projectile/bullet/hair_tie/syndicate
 	damage = 10 //getting hit with this one fucking sucks
-	stamina = 30
+	stamina = 15
 	eyeblur = 2 SECONDS
 	jitter = 8 SECONDS
 
@@ -212,7 +212,7 @@
 		return
 
 	if(target_human.hairstyle == "Bald" && target_human.facial_hairstyle == "Shaved")
-		balloon_alert(user, "What hair? They have none!")
+		balloon_alert(user, "what hair? They have none!")
 		return
 
 	if(user.zone_selected != BODY_ZONE_HEAD)
@@ -225,7 +225,7 @@
 
 	if(selected_part == "Hair")
 		if(!target_human.hairstyle == "Bald" && target_human.head)
-			balloon_alert(user, "They have no hair to cut!")
+			balloon_alert(user, "they have no hair to cut!")
 			return
 
 		var/hair_id = tgui_input_list(user, "Please select what hairstyle you'd like to sculpt!", "Select masterpiece", GLOB.hairstyles_list)
@@ -245,7 +245,7 @@
 			new /obj/effect/decal/cleanable/hair(get_turf(src))
 	else
 		if(!target_human.facial_hairstyle == "Shaved" && target_human.wear_mask)
-			balloon_alert(user, "They have no facial hair to cut!")
+			balloon_alert(user, "they have no facial hair to cut!")
 			return
 
 		var/facial_hair_id = tgui_input_list(user, "Please select what facial hairstyle you'd like to sculpt!", "Select masterpiece", GLOB.facial_hairstyles_list)
@@ -307,7 +307,7 @@
 		/obj/item/lipstick/quantum = 1,
 		/obj/item/razor = 1,
 		/obj/item/storage/box/perfume = 1,
-		/obj/item/secateurs = 1, //monkestation edit: plant
+		/obj/item/secateurs = 1,
 	)
 	refill_canister = /obj/item/vending_refill/barbervend
 	default_price = PAYCHECK_CREW
@@ -366,7 +366,7 @@
 	else
 		mode = COLOR_MODE_SPECIFIC
 
-	balloon_alert(user, "Set to [mode]!")
+	balloon_alert(user, "set to [mode]!")
 
 /obj/item/fur_dyer/attack(mob/living/M, mob/living/user, params)
 	if(!ishuman(M))

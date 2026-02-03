@@ -71,19 +71,24 @@
 	pen = null
 	update_icon()
 
-/obj/item/clipboard/AltClick(mob/user)
-	..()
-	if(pen)
-		if(integrated_pen)
-			to_chat(user, span_warning("You can't seem to find a way to remove [src]'s [pen]."))
-		else
-			remove_pen(user)
+/obj/item/clipboard/click_alt(mob/user)
+	if(isnull(pen))
+		return CLICK_ACTION_BLOCKING
+
+	if(integrated_pen)
+		to_chat(user, span_warning("You can't seem to find a way to remove [src]'s [pen]."))
+		return CLICK_ACTION_BLOCKING
+
+	remove_pen(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/clipboard/update_overlays()
 	. = ..()
 	var/obj/item/paper/toppaper = toppaper_ref?.resolve()
 	if(toppaper)
-		. += toppaper.icon_state
+		var/mutable_appearance/paper_overlay = mutable_appearance(toppaper.icon, toppaper.icon_state)
+		paper_overlay.color = toppaper.color
+		. += paper_overlay
 		. += toppaper.overlays
 	if(!integrated_pen && pen) //monkestation edit
 		. += "clipboard_pen"
@@ -148,7 +153,7 @@
 
 	return data
 
-/obj/item/clipboard/ui_act(action, params)
+/obj/item/clipboard/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

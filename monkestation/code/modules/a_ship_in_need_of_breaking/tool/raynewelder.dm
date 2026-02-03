@@ -14,20 +14,4 @@
 	power_use_amount = 20
 	// We don't use fuel
 	change_icons = FALSE
-	max_fuel = 20
-
-/obj/item/weldingtool/electric/raynewelder/attack_self(mob/user)
-	if(!istype(get_area(src), /area/space/shipbreak))
-		return
-
-/obj/item/weldingtool/electric/raynewelder/process(seconds_per_tick)
-	if(!istype(get_area(src), /area/space/shipbreak))
-		src.say("Outside of Designated Area.")
-		switched_off()
-		return
-	if(!powered)
-		switched_off()
-		return
-	if(!(item_use_power(power_use_amount) & COMPONENT_POWER_SUCCESS))
-		switched_off()
-		return
+	max_fuel = 80

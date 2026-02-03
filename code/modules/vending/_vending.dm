@@ -41,6 +41,8 @@
 	var/category
 	///List of items that have been returned to the vending machine.
 	var/list/returned_products
+	///If set, this access is needed to see this vending product.
+	var/access_requirement
 
 /**
  * # vending machines
@@ -350,7 +352,7 @@
  * * categories - A list in the format of product_categories to source category from
  * * startempty - should we set vending_product record amount from the product list (so it's prefilled at roundstart)
  */
-/obj/machinery/vending/proc/build_inventory(list/productlist, list/recordlist, list/categories, start_empty = FALSE)
+/obj/machinery/vending/proc/build_inventory(list/productlist, list/recordlist, list/categories, start_empty = FALSE, access_needed)
 	default_price = round(initial(default_price) * SSeconomy.inflation_value())
 	extra_price = round(initial(extra_price) * SSeconomy.inflation_value())
 
@@ -378,6 +380,8 @@
 		R.age_restricted = initial(temp.age_restricted)
 		R.colorable = !!(initial(temp.greyscale_config) && initial(temp.greyscale_colors) && (initial(temp.flags_1) & IS_PLAYER_COLORABLE_1))
 		R.category = product_to_category[typepath]
+		if(access_needed)
+			R.access_requirement = access_needed
 		recordlist += R
 
 /obj/machinery/vending/proc/build_inventories(start_empty)
@@ -563,7 +567,7 @@
 	. = ..()
 	if(!panel_open)
 		return FALSE
-	if(default_unfasten_wrench(user, tool, time = 6 SECONDS))
+	if(default_unfasten_wrench(user, tool, time = 3 SECONDS))
 		unbuckle_all_mobs(TRUE)
 		return ITEM_INTERACT_SUCCESS
 	return FALSE
@@ -1082,13 +1086,16 @@
 	return TRUE
 
 /obj/machinery/vending/interact(mob/user)
+	if (!Adjacent(user))
+		return ..()
+
 	if(seconds_electrified && !(machine_stat & NOPOWER))
 		if(shock(user, 100))
 			return
 
-	if(tilted && !user.buckled && !isAdminGhostAI(user))
+	if(tilted && !user.buckled)
 		to_chat(user, span_notice("You begin righting [src]."))
-		if(do_after(user, 50, target=src))
+		if(do_after(user, 5 SECONDS, target=src))
 			untilt(user)
 		return
 
@@ -1101,7 +1108,7 @@
 
 /obj/machinery/vending/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/vending),
+		get_asset_datum(/datum/asset/spritesheet_batched/vending),
 	)
 
 /obj/machinery/vending/ui_interact(mob/user, datum/tgui/ui)
@@ -1119,15 +1126,15 @@
 
 	var/list/categories = list()
 
-	data["product_records"] = collect_records_for_static_data(product_records, categories)
-	data["coin_records"] = collect_records_for_static_data(coin_records, categories, premium = TRUE)
-	data["hidden_records"] = collect_records_for_static_data(hidden_records, categories, premium = TRUE)
+	data["product_records"] = collect_records_for_static_data(product_records, categories, user)
+	data["coin_records"] = collect_records_for_static_data(coin_records, categories, user, premium = TRUE)
+	data["hidden_records"] = collect_records_for_static_data(hidden_records, categories, user, premium = TRUE)
 
 	data["categories"] = categories
 
 	return data
 
-/obj/machinery/vending/proc/collect_records_for_static_data(list/records, list/categories, premium)
+/obj/machinery/vending/proc/collect_records_for_static_data(list/records, list/categories, mob/living/user, premium)
 	var/static/list/default_category = list(
 		"name" = "Products",
 		"icon" = "cart-shopping",
@@ -1136,6 +1143,13 @@
 	var/list/out_records = list()
 
 	for (var/datum/data/vending_product/record as anything in records)
+		if(record.access_requirement)
+			var/obj/item/card/id/user_id
+			if(!istype(user))
+				continue
+			user_id = user.get_idcard(TRUE)
+			if(!issilicon(user) && !(record.access_requirement in user_id?.access) && !(obj_flags & EMAGGED) && onstation)
+				continue
 		var/list/static_record = list(
 			path = replacetext(replacetext("[record.product_path]", "/obj/item/", ""), "/", "-"),
 			name = record.name,
@@ -1150,7 +1164,7 @@
 			&& (!initial(printed.greyscale_config) || !initial(printed.greyscale_colors)) \
 			&& !initial(printed.color) \
 		)
-			static_record["icon"] = text_ref(initial(printed.icon))
+			static_record["icon"] = initial(printed.icon)
 			static_record["icon_state"] = initial(printed.icon_state)
 
 		var/list/category = record.category || default_category
@@ -1199,7 +1213,7 @@
 
 	.["extended_inventory"] = extended_inventory
 
-/obj/machinery/vending/ui_act(action, params)
+/obj/machinery/vending/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -1208,6 +1222,10 @@
 			. = vend(params)
 		if("select_colors")
 			. = select_colors(params)
+
+/// Check if the list of given access is allowed to purchase the given product
+/obj/machinery/vending/proc/allow_purchase(mob/living/user, product_path)
+	return TRUE
 
 /obj/machinery/vending/proc/can_vend(user, silent=FALSE)
 	. = FALSE
@@ -1338,7 +1356,7 @@
 		purchase_message_cooldown = world.time + 5 SECONDS
 		//This is not the best practice, but it's safe enough here since the chances of two people using a machine with the same ref in 5 seconds is fuck low
 		last_shopper = REF(usr)
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 	if(icon_vend) //Show the vending animation if needed
 		flick(icon_vend,src)
 	playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
@@ -1571,7 +1589,7 @@
 			)
 			.["vending_machine_input"] += list(data)
 
-/obj/machinery/vending/custom/ui_act(action, params)
+/obj/machinery/vending/custom/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -1592,7 +1610,7 @@
 			speak("\The [src] has been linked to [C].")
 
 	if(compartmentLoadAccessCheck(user))
-		if(istype(attacking_item, /obj/item/pen))
+		if(IS_WRITING_UTENSIL(attacking_item))
 			name = tgui_input_text(user, "Set name", "Name", name, 20)
 			desc = tgui_input_text(user, "Set description", "Description", desc, 60)
 			slogan_list += tgui_input_text(user, "Set slogan", "Slogan", "Epic", 60)
@@ -1657,7 +1675,7 @@
 			last_shopper = REF(usr)
 	/// Remove the item
 	loaded_items--
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 	vending_machine_input[choice] = max(vending_machine_input[choice] - 1, 0)
 	if(user.CanReach(src) && user.put_in_hands(dispensed_item))
 		to_chat(user, span_notice("You take [dispensed_item.name] out of the slot."))

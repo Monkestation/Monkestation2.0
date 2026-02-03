@@ -20,6 +20,10 @@
 	var/prox_check = TRUE //If the emag requires you to be in range
 	var/type_blacklist //List of types that require a specialized emag
 
+	var/microwaveable = TRUE
+	var/microwaved = FALSE
+	var/microwaved_uses_left = -1
+
 /obj/item/card/emag/attack_self(mob/user) //for traitors with balls of plastitanium
 	if(Adjacent(user))
 		user.visible_message(span_notice("[user] shows you: [icon2html(src, viewers(user))] [name]."), span_notice("You show [src]."))
@@ -46,16 +50,32 @@
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 
+/obj/item/card/emagfake/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/edible, \
+		initial_reagents = list( \
+			/datum/reagent/consumable/nutriment = 1, \
+			/datum/reagent/consumable/nutriment/protein = 0.5, \
+		), \
+		food_flags = FOOD_FINGER_FOOD, \
+		tastes = list("crime" = 1), \
+		eatverbs = list("swallow" = 1), \
+		eat_time = 0, \
+		foodtypes = JUNKFOOD, \
+		bite_consumption = 99999, \
+	)
+	ADD_TRAIT(src, TRAIT_FISHING_BAIT, INNATE_TRAIT)
+
 /obj/item/card/emagfake/attack_self(mob/user) //for assistants with balls of plasteel
 	if(Adjacent(user))
 		user.visible_message(span_notice("[user] shows you: [icon2html(src, viewers(user))] [name]."), span_notice("You show [src]."))
 	add_fingerprint(user)
 
-/obj/item/card/emagfake/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if (!proximity_flag)
-		return
+/obj/item/card/emagfake/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(SHOULD_SKIP_INTERACTION(interacting_with, src, user))
+		return NONE
 	playsound(src, 'sound/items/bikehorn.ogg', 50, TRUE)
+	return ITEM_INTERACT_SKIP_TO_ATTACK
 
 /obj/item/card/emag/Initialize(mapload)
 	. = ..()
@@ -85,6 +105,30 @@
 			return FALSE
 	return TRUE
 
+/obj/item/card/emag/microwave_act(obj/machinery/microwave/microwave_source, mob/microwaver, randomize_pixel_offset)
+	if(!microwaveable)
+		return ..()
+	if(microwaved)
+		microwave_source.spark()
+		sleep(0.6 SECONDS)
+		// explode the microwave,
+		explosion(microwave_source, heavy_impact_range = 0, light_impact_range = 2, flame_range = 1, smoke = TRUE)
+		microwave_source.broken = 2
+		microwave_source.update_appearance()
+		return qdel(src)
+
+	desc += " Some of the components look a little crispy."
+	icon_state = "[initial(icon_state)]_burnt"
+
+	microwaved_uses_left = 5
+	microwaved = TRUE
+	return ..() | COMPONENT_MICROWAVE_SUCCESS
+
+/obj/item/card/emag/examine_more(mob/user)
+	. = ..()
+	if(microwaveable)
+		. += span_notice("I wonder what happens if you microwave it... surely that's not a good idea.")
+
 /*
  * DOORMAG
  */
@@ -98,6 +142,7 @@
 	var/max_charges = 3
 	var/list/charge_timers = list()
 	var/charge_time = 1800 //three minutes
+	microwaveable = FALSE
 
 /obj/item/card/emag/doorjack/Initialize(mapload)
 	. = ..()

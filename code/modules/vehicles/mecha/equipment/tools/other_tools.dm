@@ -178,6 +178,7 @@
 	iconstate_name = "melee"
 	protect_name = "Melee Armor"
 	armor_mod = /datum/armor/mecha_equipment_ccw_boost
+	unstackable = TRUE
 
 /datum/armor/mecha_equipment_ccw_boost
 	melee = 15
@@ -189,9 +190,10 @@
 	iconstate_name = "range"
 	protect_name = "Ranged Armor"
 	armor_mod = /datum/armor/mecha_equipment_ranged_boost
+	unstackable = TRUE
 
 /datum/armor/mecha_equipment_ranged_boost
-	bullet = 10
+	bullet = 15
 	laser = 10
 
 ////////////////////////////////// REPAIR DROID //////////////////////////////////////////////////
@@ -206,6 +208,7 @@
 	can_be_toggled = TRUE
 	active = FALSE
 	equipment_slot = MECHA_UTILITY
+	unstackable = TRUE
 	movedelay = 0.4
 	/// Repaired health per second
 	var/health_boost = 1
@@ -260,7 +263,7 @@
 		chassis.repair_damage(h_boost)
 		repaired = TRUE
 	if(repaired)
-		if(!chassis.use_power(energy_drain))
+		if(!chassis.use_energy(energy_drain))
 			active = FALSE
 			return PROCESS_KILL
 	else //no repair needed, we turn off
@@ -388,7 +391,7 @@
 	for(var/obj/item/I in M.equip_by_category[MECHA_UTILITY])
 		if(istype(I, src))
 			to_chat(user, span_warning("[M] already has this thruster package!"))
-			return FALSE
+			return ITEM_INTERACT_FAILURE
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/thrusters/attach(obj/vehicle/sealed/mecha/new_mecha, attach_right = FALSE)
@@ -467,7 +470,7 @@
 /obj/item/mecha_parts/mecha_equipment/thrusters/ion/thrust(movement_dir)
 	if(!chassis)
 		return FALSE
-	if(chassis.use_power(chassis.step_energy_drain))
+	if(chassis.use_energy(chassis.step_energy_drain))
 		generate_effect(movement_dir)
 		return TRUE
 	return FALSE
@@ -479,10 +482,10 @@
 	desc = "A compartment that allows a non-combat mecha to equip one weapon while hiding the weapon from plain sight."
 	icon_state = "mecha_weapon_bay"
 
-/obj/item/mecha_parts/mecha_equipment/concealed_weapon_bay/try_attach_part(mob/user, obj/vehicle/sealed/mecha/M)
+/obj/item/mecha_parts/mecha_equipment/concealed_weapon_bay/try_attach_part(mob/user, obj/vehicle/sealed/mecha/M, attach_right)
 	if(M.mech_type & EXOSUIT_MODULE_COMBAT)
 		to_chat(user, span_warning("[M] does not have the correct bolt configuration!"))
-		return
+		return ITEM_INTERACT_FAILURE
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/concealed_weapon_bay/special_attaching_interaction(attach_right = FALSE, obj/vehicle/sealed/mecha/mech, mob/user, checkonly = FALSE)
@@ -524,7 +527,7 @@
 /obj/item/mecha_parts/camera_kit/try_attach_part(mob/user, obj/vehicle/sealed/mecha/mech, attach_right)
 	if(mech.chassis_camera)
 		balloon_alert(user, "already has a camera!")
-		return FALSE
+		return ITEM_INTERACT_FAILURE
 
 	. = ..()
 

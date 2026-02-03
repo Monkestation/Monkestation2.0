@@ -126,7 +126,7 @@
 	brain_owner.clear_mood_event("brain_damage")
 
 /obj/item/organ/internal/brain/proc/transfer_identity(mob/living/L)
-	name = "[L.name]'s [initial(name)]"
+	name = "[L.real_name]'s [initial(name)]"
 	if(brainmob || decoy_override)
 		return
 	if(!L.mind)

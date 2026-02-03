@@ -245,15 +245,16 @@
 /obj/item/stack/rail_track/fifty
 	amount = 50
 
-/obj/item/stack/rail_track/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	if(!isopenturf(target) || !proximity_flag)
-		return ..()
-	var/turf/target_turf = get_turf(target)
-	var/obj/structure/railroad/check_rail = locate() in target_turf
+/obj/item/stack/rail_track/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!isopenturf(interacting_with))
+		return NONE
+	var/obj/structure/railroad/check_rail = locate() in interacting_with
 	if(check_rail || !use(1))
-		return ..()
-	to_chat(user, span_notice("You place [src] on [target_turf]."))
-	new /obj/structure/railroad(get_turf(target))
+		return ITEM_INTERACT_BLOCKING
+	to_chat(user, span_notice("You place [src] on [interacting_with]."))
+	new /obj/structure/railroad(interacting_with)
+	playsound(interacting_with, 'sound/weapons/genhit.ogg', 50, TRUE)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/railroad
 	name = "railroad track"
@@ -286,7 +287,7 @@
 	tool.play_tool_sound(src)
 	new /obj/item/stack/rail_track(get_turf(src))
 	qdel(src)
-	return
+	return ITEM_INTERACT_SUCCESS
 
 /obj/vehicle/ridden/rail_cart
 	name = "rail cart"
@@ -324,9 +325,9 @@
 	if(has_buckled_mobs())
 		. += railoverlay
 
-/obj/vehicle/ridden/rail_cart/AltClick(mob/user)
+/obj/vehicle/ridden/rail_cart/click_alt(mob/user)
 	attach_trailer()
-	return
+	return CLICK_ACTION_SUCCESS
 
 /obj/vehicle/ridden/rail_cart/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
@@ -485,22 +486,20 @@
 
 /obj/structure/plant_tank/wrench_act(mob/living/user, obj/item/tool)
 	balloon_alert(user, "[anchored ? "un" : ""]bolting")
-	tool.play_tool_sound(src, 50)
-	if(!tool.use_tool(src, user, 2 SECONDS))
-		return TRUE
+	if(!tool.use_tool(src, user, 2 SECONDS, volume = 50))
+		return ITEM_INTERACT_BLOCKING
 
 	anchored = !anchored
 	balloon_alert(user, "[anchored ? "" : "un"]bolted")
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/plant_tank/screwdriver_act(mob/living/user, obj/item/tool)
 	balloon_alert(user, "deconstructing")
-	tool.play_tool_sound(src, 50)
-	if(!tool.use_tool(src, user, 2 SECONDS))
-		return TRUE
+	if(!tool.use_tool(src, user, 2 SECONDS, volume = 50))
+		return ITEM_INTERACT_BLOCKING
 
 	deconstruct()
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/plant_tank/deconstruct(disassembled)
 	var/target_turf = get_turf(src)
@@ -743,7 +742,7 @@
 		qdel(src)
 		return
 
-	living_inside.revive(ADMIN_HEAL_ALL)
+	living_inside.revive(ADMIN_HEAL_ALL, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 	living_inside.forceMove(get_turf(src))
 	living_inside.mind.grab_ghost()
 	living_inside.balloon_alert_to_viewers("[living_inside] breaks out of [src]!")
@@ -985,7 +984,7 @@
 /**
  * a proc that will increase the amount of items the crop could produce (at a maximum of 6, from base of 3)
  */
-/obj/structure/simple_farm/proc/increase_yield(mob/user, var/silent = FALSE)
+/obj/structure/simple_farm/proc/increase_yield(mob/user, silent = FALSE)
 	if(!allow_yield_increase())
 		if(!silent)
 			balloon_alert(user, "plant is at maximum yield")
@@ -1011,7 +1010,7 @@
 /**
  * a proc that will decrease the amount of time it takes to be ready for harvest (at a maximum of 30 seconds, from a base of 1 minute)
  */
-/obj/structure/simple_farm/proc/decrease_cooldown(mob/user, var/silent = FALSE)
+/obj/structure/simple_farm/proc/decrease_cooldown(mob/user, silent = FALSE)
 	if(!allow_decrease_cooldown())
 		if(!silent)
 			balloon_alert(user, "already at maximum growth speed!")
@@ -1028,7 +1027,7 @@
 /**
  * a proc that will increase the potency the crop grows at
  */
-/obj/structure/simple_farm/proc/increase_potency(mob/user, var/silent = FALSE)
+/obj/structure/simple_farm/proc/increase_potency(mob/user, silent = FALSE)
 	if(bonus_potency >= 50)
 		if(!silent)
 			balloon_alert(user, "plant is at maximum potency")
@@ -1059,7 +1058,7 @@
 /**
  * will create a harvest of the seeds product, with a chance to create a mutated version
  */
-/obj/structure/simple_farm/proc/create_harvest(var/obj/item/storage/bag/plants/plant_bag, var/mob/user)
+/obj/structure/simple_farm/proc/create_harvest(obj/item/storage/bag/plants/plant_bag, mob/user)
 	if(!planted_seed)
 		return
 
@@ -1101,6 +1100,9 @@
 	icon = 'monkestation/icons/obj/vending.dmi'
 	icon_state = "ashclothvendor"
 	icon_deny = "necrocrate"
+	use_power = NO_POWER_USE
+	initial_language_holder = /datum/language_holder/ashwalker
+	vend_reply = "Glory to the Necropolis."
 
 	products = list( //Relatively normal to have, I GUESS
 		/obj/item/clothing/under/costume/gladiator/ash_walker/tribal = 15,
@@ -1117,7 +1119,7 @@
 		/obj/item/clothing/shoes/jackboots/ashwalker/legate = 12,
 		/obj/item/clothing/shoes/wraps/ashwalker/mundanewraps = 15,
 		/obj/item/clothing/shoes/wraps/ashwalker = 10,
-		/obj/item/clothing/shoes/wraps/ashwalker/tribalwraps = 2,,
+		/obj/item/clothing/shoes/wraps/ashwalker/tribalwraps = 2,
 		/obj/item/clothing/head/shamanash = 3,
 		/obj/item/clothing/neck/cloak/tribalmantle = 2,
 		/obj/item/clothing/gloves/military/claw = 5,

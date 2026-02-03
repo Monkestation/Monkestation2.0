@@ -151,7 +151,7 @@
 
 /// Updates the theme of the NIFSoft to match the parent NIF
 /datum/nifsoft/proc/update_theme()
-	var/obj/item/organ/internal/cyberimp/brain/nif/target_nif = parent_nif.resolve()
+	var/obj/item/organ/internal/cyberimp/brain/nif/target_nif = parent_nif?.resolve()
 	if(!target_nif)
 		return FALSE
 

@@ -20,7 +20,7 @@
 	if(starting_cutout)
 		return INITIALIZE_HINT_LATELOAD
 
-/obj/item/cardboard_cutout/LateInitialize()
+/obj/item/cardboard_cutout/LateInitialize(mapload_arg)
 	ASSERT(!isnull(starting_cutout))
 
 	var/datum/cardboard_cutout/cutout

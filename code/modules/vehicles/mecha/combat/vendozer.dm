@@ -5,9 +5,9 @@
 	icon_state = "vendozer"
 	base_icon_state = "vendozer"
 	SET_BASE_PIXEL(-24, 0)
-	step_energy_drain = 50 // 5x drain holy fuck
-	movedelay = 5.25 // slowish.
-	max_integrity = 750 // shes fat, very fucking fat
+	step_energy_drain = 5 // .5x drain because fucking mega cells ruining everything
+	movedelay = 4.75 // slowish.
+	max_integrity = 1100 // shes fat, very fucking fat
 	armor_type = /datum/armor/vendozer
 	max_temperature = 25000
 	force = 60 // dont get hit
@@ -34,7 +34,7 @@
 	)
 
 /datum/armor/vendozer
-	melee = 50
+	melee = 80 // why are you trying to melee fight a melee monster?
 	bullet = 35
 	laser = 25
 	energy = 25

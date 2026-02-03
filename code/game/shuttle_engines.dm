@@ -33,6 +33,10 @@
 	fire = 50
 	acid = 70
 
+/obj/machinery/power/shuttle_engine/Initialize(mapload)
+	. = ..()
+	extra_reward += /obj/item/stack/scrap/plasma
+
 /obj/machinery/power/shuttle_engine/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	. = ..()
 	if(!port)
@@ -47,6 +51,7 @@
 	if(engine_state == ENGINE_WELDED)
 		alter_engine_power(-engine_power)
 	unsync_ship()
+	new /obj/item/stack/scrap/plasma(loc)
 	return ..()
 
 /**
@@ -135,6 +140,10 @@
 	desc = "A standard reliable bluespace engine used by many forms of shuttles."
 	circuit = /obj/item/circuitboard/machine/engine/propulsion
 	opacity = TRUE
+
+/obj/machinery/power/shuttle_engine/propulsion/Initialize(mapload)
+	. = ..()
+	extra_reward += /obj/item/stack/scrap/core
 
 /obj/machinery/power/shuttle_engine/propulsion/left
 	name = "left propulsion engine"

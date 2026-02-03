@@ -11,11 +11,14 @@
 	antag_hud_name = "vassal4"
 	special_type = REVENGE_VASSAL
 	vassal_description = "The Revenge Vassal will not deconvert on your Final Death, \
-		instead they will gain all your Powers, and the objective to take revenge for your demise. \
+		instead they will gain all your Powers, become immune to mindshields, and gain the objective to take revenge for your demise. \
 		They additionally maintain your Vassals after your departure, rather than become aimless."
 
 	///all ex-vassals brought back into the fold.
 	var/list/datum/antagonist/ex_vassal/ex_vassals = list()
+
+	///Has this revenge vassal been 'activated' by their master's final death?
+	var/revenge_mode = FALSE
 
 /datum/antagonist/vassal/revenge/roundend_report()
 	var/list/report = list()
@@ -41,6 +44,12 @@
 	UnregisterSignal(master, COMSIG_BLOODSUCKER_FINAL_DEATH)
 	return ..()
 
+/datum/antagonist/vassal/revenge/pre_mindshield(mob/implanter, mob/living/mob_override)
+	if (revenge_mode)
+		return COMPONENT_MINDSHIELD_RESISTED
+	else
+		return ..()
+
 /datum/antagonist/vassal/revenge/ui_static_data(mob/user)
 	var/list/data = list()
 	for(var/datum/action/cooldown/bloodsucker/power as anything in powers)
@@ -54,20 +63,23 @@
 
 	return data + ..()
 
-/datum/antagonist/vassal/revenge/pre_mindshield(mob/implanter, mob/living/mob_override)
-	return COMPONENT_MINDSHIELD_RESISTED
-
 /datum/antagonist/vassal/revenge/proc/on_master_death(datum/antagonist/bloodsucker/bloodsuckerdatum, mob/living/carbon/master)
 	SIGNAL_HANDLER
 
 	show_in_roundend = TRUE
+	revenge_mode = TRUE
 	for(var/datum/objective/all_objectives as anything in objectives)
 		objectives -= all_objectives
 	BuyPower(new /datum/action/cooldown/bloodsucker/vassal_blood)
 	for(var/datum/action/cooldown/bloodsucker/master_powers as anything in bloodsuckerdatum.powers)
 		if(master_powers.purchase_flags & BLOODSUCKER_DEFAULT_POWER)
 			continue
-		master_powers.Grant(owner.current)
+		if(istype(master_powers, /datum/action/cooldown/bloodsucker/gohome))
+			continue
+		if (master_powers.active)
+			master_powers.DeactivatePower()
+		master_powers.bloodsuckerdatum_power = null
+		BuyPower(master_powers)
 
 	var/datum/objective/survive/new_objective = new
 	new_objective.name = "Avenge Bloodsucker"

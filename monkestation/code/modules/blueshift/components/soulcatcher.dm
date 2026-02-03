@@ -82,18 +82,17 @@
 /obj/item/attachable_soulcatcher/attack_self(mob/user, modifiers)
 	linked_soulcatcher.ui_interact(user)
 
-/obj/item/attachable_soulcatcher/afterattack(obj/item/target_item, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(!proximity_flag || !istype(target_item))
-		return FALSE
-
+/obj/item/attachable_soulcatcher/interact_with_atom(atom/interacting_with, mob/user)
+	if(!isitem(interacting_with))
+		return NONE
+	var/obj/item/target_item = interacting_with
 	if(target_item.GetComponent(/datum/component/soulcatcher))
 		balloon_alert(user, "already attached!")
-		return FALSE
+		return ITEM_INTERACT_BLOCKING
 
 	if(is_type_in_list(target_item, blacklisted_items))
 		balloon_alert(user, "incompatible!")
-		return FALSE
+		return ITEM_INTERACT_BLOCKING
 
 	var/datum/component/soulcatcher/new_soulcatcher = target_item.AddComponent(/datum/component/soulcatcher/attachable_soulcatcher)
 	playsound(target_item.loc, 'sound/weapons/circsawhit.ogg', 50, vary = TRUE)
@@ -109,3 +108,4 @@
 
 	if(destroy_on_use)
 		qdel(src)
+	return ITEM_INTERACT_SUCCESS

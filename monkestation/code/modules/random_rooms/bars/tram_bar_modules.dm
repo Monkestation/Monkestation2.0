@@ -132,7 +132,7 @@
 			to_chat(invoker, span_warning("Nar'Sie is already on this plane, you lost your opportunity to summon beer with her!"))
 		log_game("Beer rune activated by [user] at [COORD(src)] failed - Nar'sie is summoned.")
 	used = TRUE
-	if(GLOB.clock_ark) // Rat'var is against alcoholism
+	if(GLOB.clock_ark) // Ratvar is against alcoholism
 		if(!GLOB.narsie_breaching_rune)
 			GLOB.narsie_breaching_rune = src
 		for(var/invoker in invokers)

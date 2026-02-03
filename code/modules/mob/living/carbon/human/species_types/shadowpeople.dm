@@ -133,10 +133,14 @@
 	if(!isturf(owner_turf))
 		return
 	var/light_amount = GET_SIMPLE_LUMCOUNT(owner_turf)
-	var/delta_time = min(round(DELTA_WORLD_TIME(SSmobs), 0.1), 8) // compensate for lag, but avoid potentially taking a shitload of damage all at once
+	var/delta_time = min(round(DELTA_WORLD_TIME(SSclient_mobs), 0.1), 8) // compensate for lag, but avoid potentially taking a shitload of damage all at once
 
 	// 1 damage per second
 	if(light_amount >= SHADOW_SPECIES_DIM_LIGHT) //if there's enough light, start dying
+		var/datum/antagonist/darkspawn/darkspawn = IS_DARKSPAWN(owner)
+		if(darkspawn)
+			if(HAS_TRAIT(darkspawn, TRAIT_DARKSPAWN_LIGHTRES) || HAS_TRAIT(darkspawn, TRAIT_DARKSPAWN_CREEP))
+				return
 		owner.take_overall_damage(brute = delta_time, burn = delta_time, required_bodytype = BODYTYPE_ORGANIC)
 	else //heal in the dark
 		owner.heal_overall_damage(brute = delta_time, burn = delta_time, required_bodytype = BODYTYPE_ORGANIC)
@@ -180,7 +184,6 @@
 		// monkestation addition: pain system
 		TRAIT_ABATES_SHOCK,
 		TRAIT_ANALGESIA,
-		TRAIT_NO_PAIN_EFFECTS,
 		TRAIT_NO_SHOCK_BUILDUP,
 		// monkestation end
 	)
@@ -215,7 +218,8 @@
 	changesource_flags = MIRROR_BADMIN //never put this in the pride pool because they look super valid and can never be changed off of
 	siemens_coeff = 0
 	armor = 10
-	burnmod = 1.2
+	brutemod = 0.8
+	burnmod = 1
 	heatmod = 1.5
 	no_equip_flags = ITEM_SLOT_MASK | ITEM_SLOT_OCLOTHING | ITEM_SLOT_GLOVES | ITEM_SLOT_FEET | ITEM_SLOT_ICLOTHING | ITEM_SLOT_SUITSTORE | ITEM_SLOT_EYES
 	inherent_traits = list(
@@ -241,7 +245,6 @@
 		TRAIT_SPECIESLOCK, //never let them swap off darkspawn, it can cause issues
 		TRAIT_ABATES_SHOCK,
 		TRAIT_ANALGESIA,
-		TRAIT_NO_PAIN_EFFECTS,
 		TRAIT_NO_SHOCK_BUILDUP,
 		TRAIT_NEVER_WOUNDED,
 		)
@@ -408,7 +411,7 @@
 	if(respawn_progress < HEART_RESPAWN_THRESHHOLD)
 		return
 
-	owner.revive(HEAL_ALL & ~HEAL_REFRESH_ORGANS)
+	owner.revive(HEAL_ALL & ~HEAL_REFRESH_ORGANS, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 	if(!(owner.dna.species.id == SPECIES_SHADOW || owner.dna.species.id == SPECIES_NIGHTMARE))
 		var/mob/living/carbon/old_owner = owner
 		Remove(owner, HEART_SPECIAL_SHADOWIFY)

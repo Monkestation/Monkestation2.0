@@ -9,15 +9,15 @@
 /datum/quirk/outsider/add_unique(client/client_source)
 	var/is_human = ishumanbasic(quirk_holder)
 	if (is_human)
-		quirk_holder.remove_language(/datum/language/common, TRUE, TRUE, LANGUAGE_ALL)
-	for (var/language in quirk_holder.language_holder.understood_languages)
+		quirk_holder.remove_language(/datum/language/common, source = LANGUAGE_ALL)
+	for (var/language in quirk_holder.get_language_holder().understood_languages)
 		if (language != /datum/language/common)
-			quirk_holder.remove_language(language, TRUE, FALSE, LANGUAGE_ALL)
-	for (var/language in quirk_holder.language_holder.spoken_languages)
+			quirk_holder.remove_language(language, language_flags = UNDERSTOOD_LANGUAGE, source = LANGUAGE_ALL)
+	for (var/language in quirk_holder.get_language_holder().spoken_languages)
 		if (language != /datum/language/common)
-			quirk_holder.remove_language(language, FALSE, TRUE, LANGUAGE_ALL)
+			quirk_holder.remove_language(language, language_flags = SPOKEN_LANGUAGE, source = LANGUAGE_ALL)
 	if (is_human)
-		quirk_holder.grant_language(pick(GLOB.roundstart_languages), TRUE, TRUE, LANGUAGE_QUIRK)
+		quirk_holder.grant_language(pick(GLOB.roundstart_languages), source = LANGUAGE_QUIRK)
 
 /datum/quirk/listener
 	name = "Listener"
@@ -30,7 +30,7 @@
 	medical_record_text = "Patient does not speak Galactic Common and may require an interpreter."
 
 /datum/quirk/listener/add_unique(client/client_source)
-	quirk_holder.remove_language(/datum/language/common, FALSE, TRUE, LANGUAGE_ATOM)
+	quirk_holder.remove_language(/datum/language/common, language_flags = SPOKEN_LANGUAGE, source = LANGUAGE_ALL)
 	if (!iscarbon(quirk_holder))
 		return
 	var/mob/living/carbon/carbon_holder = quirk_holder

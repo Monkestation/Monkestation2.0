@@ -23,7 +23,7 @@
 			items += list(list(
 				"id" = item_path,
 				"name" = item.name,
-				"icon" = text_ref(actual_item.icon),
+				"icon" = actual_item.icon,
 				"icon_state" = actual_item.icon_state,
 				"cost" = item.cost,
 				"desc" = item.desc,
@@ -36,7 +36,8 @@
 				"restricted_species" = item.restricted_species,
 				"progression_minimum" = item.progression_minimum,
 				"cost_override_string" = item.cost_override_string,
-				"lock_other_purchases" = item.lock_other_purchases
+				"lock_other_purchases" = item.lock_other_purchases,
+				"lock_secondary_objectives" = item.lock_secondary_objectives,
 			))
 		}
 		SStraitor.uplink_items += item

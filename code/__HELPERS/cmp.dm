@@ -176,3 +176,6 @@
 /// Orders cameras by their `c_tag` ascending
 /proc/cmp_camera_ctag_asc(obj/machinery/camera/a, obj/machinery/camera/b)
 	return sorttext(b.c_tag, a.c_tag)
+
+/proc/cmp_deathmatch_mods(datum/deathmatch_modifier/a, datum/deathmatch_modifier/b)
+	return sorttext(b.name, a.name)

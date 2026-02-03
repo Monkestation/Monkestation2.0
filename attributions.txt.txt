@@ -1,3 +1,0 @@
-Added batter uniform and batter hat sprites and made them purchasable in the autodrobe.
-
-Added by Snack-Max/Snackiversal/Snackalus

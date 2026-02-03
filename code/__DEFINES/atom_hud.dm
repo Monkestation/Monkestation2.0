@@ -9,14 +9,14 @@
 #define STATUS_HUD "2"
 /// the job asigned to your ID
 #define ID_HUD "3"
-/// wanted, released, parroled, security status
+/// wanted, released, paroled, security status
 #define WANTED_HUD "4"
-/// loyality implant
+/// mindshield implant
 #define IMPLOYAL_HUD "5"
-/// chemical implant
-#define IMPCHEM_HUD "6"
-/// tracking implant
-#define IMPTRACK_HUD "7"
+/// first security implant
+#define IMPSEC_FIRST_HUD "6"
+/// second security implant
+#define IMPSEC_SECOND_HUD "7"
 /// Silicon/Mech/Circuit Status
 #define DIAG_STAT_HUD "8"
 /// Silicon health bar
@@ -54,6 +54,8 @@
 #define SENSOR_HUD	"25"
 // for silicons to know if you're crew
 #define CREW_HUD "26"
+/// Hud for spying who already has a host as a borer
+#define BORER_HUD "27"
 //monkestation edit end
 
 //by default everything in the hud_list of an atom is an image
@@ -74,6 +76,7 @@
 #define DATA_HUD_PERMIT 10 //monkestation edit
 #define DATA_HUD_SENSORS 11 //monkestation edit
 #define DATA_HUD_CREW 12 //monkestation edit
+#define DATA_HUD_BORER 13
 
 // Notification action types
 #define NOTIFY_JUMP "jump"

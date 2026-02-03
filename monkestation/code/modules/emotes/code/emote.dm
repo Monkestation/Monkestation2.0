@@ -210,7 +210,15 @@
 		)
 	if(prob(5))
 		return 'monkestation/sound/voice/feline/funnymeow.ogg'
-	return pick('monkestation/sound/voice/feline/meow1.ogg', 'monkestation/sound/voice/feline/meow2.ogg', 'monkestation/sound/voice/feline/meow3.ogg', 'monkestation/sound/voice/feline/meow4.ogg')
+	return pick(
+		'monkestation/sound/voice/feline/meow1.ogg',
+		'monkestation/sound/voice/feline/meow2.ogg',
+		'monkestation/sound/voice/feline/meow3.ogg',
+		'monkestation/sound/voice/feline/meow4.ogg',
+		'monkestation/sound/voice/feline/meow5.ogg',
+		'monkestation/sound/voice/feline/meow6.ogg',
+		'monkestation/sound/voice/feline/meow7.ogg',
+	)
 
 /datum/emote/living/mggaow
 	key = "mggaow"
@@ -528,3 +536,16 @@
 /datum/emote/living/breatheout/can_run_emote(mob/user, status_check, intentional)
 	return ..() && IS_SLASHER(user)
 //End
+
+/datum/emote/living/alert
+	key = "!"
+	name = "Alert"
+	cooldown = 5 SECONDS
+	audio_cooldown = 10 SECONDS //no free *chime
+	emote_type = EMOTE_VISIBLE
+	sound = 'sound/machines/chime.ogg'
+	empty_message_intentional = TRUE
+
+/datum/emote/living/alert/run_emote(mob/user, params, type_override, intentional)
+	. = ..()
+	user.do_alert_animation()

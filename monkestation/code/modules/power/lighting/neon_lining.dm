@@ -35,17 +35,13 @@
 	. = ..()
 	icon_state = "item_[lining_color]"
 
-/obj/item/stack/neon_lining/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(!isfloorturf(target))
-		return
-
-	if(!user.Adjacent(target))
-		return
+/obj/item/stack/neon_lining/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!isfloorturf(interacting_with))
+		return NONE
 
 	var/facing_dir = user.dir
 
-	var/obj/machinery/light/neon_lining/new_lining = new /obj/machinery/light/neon_lining(target)
+	var/obj/machinery/light/neon_lining/new_lining = new /obj/machinery/light/neon_lining(interacting_with)
 	switch(facing_dir)
 		if(NORTH)
 			new_lining.rotation = 2
@@ -55,11 +51,12 @@
 			new_lining.rotation = 3
 		else
 			new_lining.rotation = 1
-	to_chat(user, span_notice("You lay down some neon lining on the [target]."))
+	to_chat(user, span_notice("You lay down some neon lining on the [interacting_with]."))
 	new_lining.lining_color = lining_color
 	new_lining.update_appearance()
 	new_lining.rebuild_lining_string()
 	use(1)
+	return ITEM_INTERACT_SUCCESS
 
 ///the neon lighting object itself
 /obj/machinery/light/neon_lining

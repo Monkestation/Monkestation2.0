@@ -1,0 +1,1 @@
+broadcast.dmi, big_broadcast_cam - https://github.com/space-wizards/space-station-14/blob/master/Resources/Textures/Structures/monitors.rsi/mobilevision.png

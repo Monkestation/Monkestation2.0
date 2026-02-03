@@ -25,13 +25,14 @@
 		return
 	var/txt = tgui_input_text(user, "What would you like to write on the sign?", "Sign Label", max_length = 30)
 	if(txt && user.can_perform_action(src))
+		playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
 		label = txt
 		name = "[label] sign"
 		desc = "It reads: [label]"
 
-/obj/item/picket_sign/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(attacking_item, /obj/item/pen) || istype(attacking_item, /obj/item/toy/crayon))
-		retext(user, attacking_item)
+/obj/item/picket_sign/attackby(obj/item/W, mob/user, params)
+	if(IS_WRITING_UTENSIL(W))
+		retext(user, W)
 	else
 		return ..()
 

@@ -414,7 +414,7 @@
 
 /datum/loadout_item/accessory/mercbadge
 	name = "Jade Badge"
-	item_path = /obj/item/clothing/accessory/badge/holo/jade
+	item_path = /obj/item/clothing/accessory/badge/jade
 	donator_only = TRUE
 	requires_purchase = FALSE
 

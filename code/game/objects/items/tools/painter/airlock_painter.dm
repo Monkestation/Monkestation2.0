@@ -143,11 +143,13 @@
 	else
 		return ..()
 
-/obj/item/airlock_painter/AltClick(mob/user)
+/obj/item/airlock_painter/click_alt(mob/user)
 	if(!ink)
-		return TRUE
+		return CLICK_ACTION_BLOCKING
+
 	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 	ink.forceMove(user.drop_location())
 	user.put_in_hands(ink)
 	to_chat(user, span_notice("You remove [ink] from [src]."))
 	ink = null
+	return CLICK_ACTION_SUCCESS

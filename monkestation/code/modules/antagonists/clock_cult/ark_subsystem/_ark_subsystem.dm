@@ -25,9 +25,9 @@ PROCESSING_SUBSYSTEM_DEF(the_ark)
 	///How many clockwork airlocks have been created on reebe, used for limiting airlock spam
 	var/reebe_clockwork_airlock_count = 0
 	///How much power does the cult have stored
-	var/clock_power = 250
+	var/clock_power = STANDARD_CELL_CHARGE * 0.25
 	///What is the maximum amount of power the cult can have stored
-	var/max_clock_power = 250
+	var/max_clock_power = STANDARD_CELL_CHARGE * 0.25
 	///How much passive power does the cult have access to, this gets used for things like turning on structures
 	var/passive_power = 15
 	///The list of areas that has been marked by the cult, formatted as a filled with 1s for anti duplication
@@ -173,27 +173,3 @@ PROCESSING_SUBSYSTEM_DEF(the_ark)
 	return charged_count
 
 //#undef SERVANT_CAPACITY_TO_GIVE
-
-/datum/action/cooldown/spell/spacetime_dist
-	///The type of effect we actually spawn
-	var/obj/effect/cross_action/spacetime_dist/spawned_effect_type = /obj/effect/cross_action/spacetime_dist
-
-/datum/action/cooldown/spell/spacetime_dist/clock_ark
-	name = "Clockwork Spacetime Dist"
-	cooldown_time = 0
-	scramble_radius = 2
-	duration = 1 MINUTE
-	spawned_effect_type = /obj/effect/cross_action/spacetime_dist/clock_ark
-
-/obj/effect/cross_action/spacetime_dist/clock_ark
-
-/obj/effect/cross_action/spacetime_dist/clock_ark/walk_link(atom/movable/AM)
-	if(isliving(AM))
-		var/mob/living/living_mob = AM
-		if(IS_CLOCK(living_mob))
-			return
-	return ..()
-
-/obj/effect/timestop/magic/clock_ark
-	icon_state = ""
-	hidden = TRUE

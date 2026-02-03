@@ -1,6 +1,4 @@
 GLOBAL_LIST_INIT(oshan_launch_points, list())
-GLOBAL_LIST_INIT(cargo_launch_points, list())
-
 
 /obj/effect/oshan_launch_point
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
@@ -20,17 +18,6 @@ GLOBAL_LIST_INIT(cargo_launch_points, list())
 /obj/effect/oshan_launch_point/player/Destroy(force)
 	. = ..()
 	GLOB.oshan_launch_points -= src
-/obj/effect/oshan_launch_point/cargo
-	name = "cargo launch point"
-
-/obj/effect/oshan_launch_point/cargo/Initialize(mapload)
-	. = ..()
-	GLOB.cargo_launch_points += src
-
-/obj/effect/oshan_launch_point/cargo/Destroy(force)
-	. = ..()
-	GLOB.cargo_launch_points -= src
-
 
 /obj/structure/closet/stasis_pod
 	name = "human capsule missile"

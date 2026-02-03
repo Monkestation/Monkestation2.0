@@ -79,3 +79,6 @@
 	max_ammo = 1
 	start_empty = TRUE
 	caliber = CALIBER_ARROW
+
+/obj/item/gun/ballistic/bow/can_trigger_gun(mob/living/user, akimbo_usage)
+	return TRUE

@@ -65,7 +65,7 @@
 /datum/component/jousting/proc/on_attack(datum/source, mob/living/target, mob/user)
 	SIGNAL_HANDLER
 
-	if(user != current_holder)
+	if(user != current_holder || !isliving(target))
 		return
 	var/current = current_tile_charge
 	var/obj/item/I = parent

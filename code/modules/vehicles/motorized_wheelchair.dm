@@ -20,7 +20,7 @@
 		/datum/stock_part/capacitor,
 	)
 	///power cell we draw power from
-	var/obj/item/stock_parts/cell/power_cell
+	var/obj/item/stock_parts/power_store/cell/power_cell
 	///stock parts for this chair
 	var/list/component_parts = list()
 
@@ -90,7 +90,7 @@
 	if(!panel_open)
 		return ..()
 
-	if(istype(attacking_item, /obj/item/stock_parts/cell))
+	if(istype(attacking_item, /obj/item/stock_parts/power_store/cell))
 		if(power_cell)
 			to_chat(user, span_warning("There is a power cell already installed."))
 		else
@@ -173,13 +173,13 @@
 		unbuckle_mob(disabled)
 		disabled.throw_at(throw_target, 2, 3)
 		disabled.Knockdown(100)
-		disabled.stamina.adjust(-40)
+		disabled.stamina.adjust(-20)
 		if(isliving(A))
 			var/mob/living/ramtarget = A
 			throw_target = get_edge_target_turf(ramtarget, pick(GLOB.cardinals))
 			ramtarget.throw_at(throw_target, 2, 3)
 			ramtarget.Knockdown(80)
-			ramtarget.stamina.adjust(-35)
+			ramtarget.stamina.adjust(-17.5)
 			visible_message(span_danger("[src] crashes into [ramtarget], sending [disabled] and [ramtarget] flying!"))
 		else
 			visible_message(span_danger("[src] crashes into [A], sending [disabled] flying!"))

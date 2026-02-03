@@ -6,25 +6,58 @@
 	anchored = FALSE
 	density = TRUE
 	max_integrity = 200
+	/// Airlock's current construction state
 	var/state = AIRLOCK_ASSEMBLY_NEEDS_WIRES
 	var/base_name = "Airlock"
+	var/created_name = null
 	var/mineral = null
 	var/obj/item/electronics/airlock/electronics = null
-	var/airlock_type = /obj/machinery/door/airlock //the type path of the airlock once completed
+	/// Do we perform the extra checks required for multi-tile (large) airlocks
+	var/multi_tile = FALSE
+	/// The type path of the airlock once completed (solid version)
+	var/airlock_type = /obj/machinery/door/airlock
+	/// The type path of the airlock once completed (glass version)
 	var/glass_type = /obj/machinery/door/airlock/glass
-	var/glass = 0 // 0 = glass can be installed. 1 = glass is already installed.
-	var/created_name = null
-	var/heat_proof_finished = 0 //whether to heat-proof the finished airlock
+	/// FALSE = glass can be installed. TRUE = glass is already installed.
+	var/glass = FALSE
+	/// Whether to heat-proof the finished airlock
+	var/heat_proof_finished = FALSE
+	/// If you're changing the airlock material, what is the previous type
 	var/previous_assembly = /obj/structure/door_assembly
-	var/noglass = FALSE //airlocks with no glass version, also cannot be modified with sheets
-	var/nomineral = FALSE //airlock with glass version, but cannot be modified with sheets
+	/// Airlocks with no glass version, also cannot be modified with sheets
+	var/noglass = FALSE
+	/// Airlock with glass version, but cannot be modified with sheets
+	var/nomineral = FALSE
+	/// What type of material the airlock drops when deconstructed
 	var/material_type = /obj/item/stack/sheet/iron
+	/// Amount of material the airlock drops when deconstructed
 	var/material_amt = 4
+
+/obj/structure/door_assembly/multi_tile
+	name = "large airlock assembly"
+	icon = 'icons/obj/doors/airlocks/multi_tile/public/glass.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/multi_tile/public/overlays.dmi'
+	base_name = "large airlock"
+	glass_type = /obj/machinery/door/airlock/multi_tile/public/glass
+	airlock_type = /obj/machinery/door/airlock/multi_tile/public/glass
+	dir = EAST
+	multi_tile = TRUE
+	glass = TRUE
+	nomineral = TRUE
 
 /obj/structure/door_assembly/Initialize(mapload)
 	. = ..()
 	update_appearance()
 	update_name()
+
+/obj/structure/door_assembly/multi_tile/Initialize(mapload)
+	. = ..()
+	set_bounds()
+	update_overlays()
+
+/obj/structure/door_assembly/multi_tile/Move()
+	. = ..()
+	set_bounds()
 
 /obj/structure/door_assembly/examine(mob/user)
 	. = ..()
@@ -50,8 +83,8 @@
 	if(doorname)
 		. += span_notice("There is a small <i>paper</i> placard on the assembly labelled \"[doorname]\".")
 
-/obj/structure/door_assembly/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(attacking_item, /obj/item/pen) && !(user.istate & ISTATE_HARM))
+/obj/structure/door_assembly/attackby(obj/item/attacking_item, mob/living/user, params)
+	if(IS_WRITING_UTENSIL(attacking_item) && !(user.istate & ISTATE_HARM))
 		var/t = tgui_input_text(user, "Enter the name for the door", "Airlock Renaming", created_name, MAX_NAME_LEN)
 		if(!t)
 			return
@@ -78,7 +111,7 @@
 				to_chat(user, span_notice("You weld the glass panel out."))
 				if(heat_proof_finished)
 					new /obj/item/stack/sheet/rglass(get_turf(src))
-					heat_proof_finished = 0
+					heat_proof_finished = FALSE
 				else
 					new /obj/item/stack/sheet/glass(get_turf(src))
 				glass = 0
@@ -151,7 +184,7 @@
 		attacking_item.play_tool_sound(src, 100)
 		user.visible_message(span_notice("[user] installs the electronics into the airlock assembly."), \
 							span_notice("You start to install electronics into the airlock assembly..."))
-		if(do_after(user, 40, target = src))
+		if(do_after(user, 4 SECONDS, target = src))
 			if( state != AIRLOCK_ASSEMBLY_NEEDS_ELECTRONICS )
 				return
 			if(!user.transferItemToLoc(attacking_item, src))
@@ -191,7 +224,7 @@
 							playsound(src, 'sound/items/crowbar.ogg', 100, TRUE)
 							user.visible_message(span_notice("[user] adds [G.name] to the airlock assembly."), \
 												span_notice("You start to install [G.name] into the airlock assembly..."))
-							if(do_after(user, 40, target = src))
+							if(do_after(user, 4 SECONDS, target = src))
 								if(G.get_amount() < 1 || glass)
 									return
 								if(G.type == /obj/item/stack/sheet/rglass)
@@ -214,7 +247,7 @@
 								playsound(src, 'sound/items/crowbar.ogg', 100, TRUE)
 								user.visible_message(span_notice("[user] adds [G.name] to the airlock assembly."), \
 									span_notice("You start to install [G.name] into the airlock assembly..."))
-								if(do_after(user, 40, target = src))
+								if(do_after(user, 4 SECONDS, target = src))
 									if(G.get_amount() < 2 || mineral)
 										return
 									to_chat(user, span_notice("You install [M] plating into the airlock assembly."))

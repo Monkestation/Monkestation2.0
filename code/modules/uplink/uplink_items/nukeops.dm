@@ -620,6 +620,18 @@
 	item = /obj/vehicle/sealed/mecha/marauder/mauler/loaded
 	cost = 140
 
+/datum/uplink_item/support/sentinel
+	name = "Sentinel Exosuit"
+	desc = "A Superheavy Seige walker fitted with a giant cannon in a turret, great for annihalating stations."
+	item = /obj/vehicle/sealed/mecha/sentinel/syntinel
+	cost = 175
+
+/datum/uplink_item/support/sentinelammo
+	name = "Sentinel Ammo"
+	desc = "10 more shells for the monsterous cannons of the Sentinel."
+	item = /obj/item/mecha_ammo/sentinel
+	cost = 10
+
 /datum/uplink_item/support/devitt
 	name = "Devitt Mk3 Light Tank"
 	desc = "An ancient tank found in the wearhouse, comes prepared with a cannon and machinegun. REQUIRES TWO CREWMEMBERS TO OPPERATE EFFECTIVELY."
@@ -773,6 +785,14 @@
 	cost = 20
 	purchasable_from = UPLINK_NUKE_OPS
 	restricted = TRUE
+
+/datum/uplink_item/implants/fakemacro
+	name = "Macrorevival Implant"
+	desc = "An implant injected into the body, and later activated automatically upon death. \
+			Upon death, fakes the effects of a macrobomb before injecting a variety of medicines and restarting your heart. Only works once."
+	item = /obj/item/storage/box/syndie_kit/imp_fakemacro
+	cost = 16
+	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/implants/reviver
 	name = "Reviver Implant"

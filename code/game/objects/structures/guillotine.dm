@@ -174,7 +174,7 @@
 					addtimer(CALLBACK(spectator, TYPE_PROC_REF(/mob/, emote), "clap"), delay_offset * 0.3)
 					delay_offset++
 			else
-				victim.apply_damage(15 * blade_sharpness, BRUTE, head)
+				victim.apply_damage(15 * blade_sharpness, BRUTE, head, attacking_item = src)
 				log_combat(user, victim, "dropped the blade on", src, " non-fatally")
 				victim.emote("scream")
 
@@ -193,7 +193,7 @@
 		if (blade_status == GUILLOTINE_BLADE_RAISED)
 			if (blade_sharpness < GUILLOTINE_BLADE_MAX_SHARP)
 				blade_status = GUILLOTINE_BLADE_SHARPENING
-				if(do_after(user, 7, target = src))
+				if(do_after(user, 0.7 SECONDS, target = src))
 					blade_status = GUILLOTINE_BLADE_RAISED
 					user.visible_message(span_notice("[user] sharpens the large blade of the guillotine."),
 						                 span_notice("You sharpen the large blade of the guillotine."))

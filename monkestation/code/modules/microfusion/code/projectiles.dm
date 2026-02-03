@@ -5,7 +5,7 @@
 /obj/item/ammo_casing/energy/laser/microfusion
 	name = "microfusion energy lens"
 	projectile_type = /obj/projectile/beam/laser/microfusion
-	e_cost = 100 //LASER_SHOTS(10, STANDARD_CELL_CHARGE) // 10 shots with a normal cell. //monkestation edit, replaced to simply be 100(still 10 shots I think)
+	e_cost = 100
 	select_name = "laser"
 	fire_sound = 'monkestation/code/modules/microfusion/sound/laser_1.ogg'
 	fire_sound_volume = 100
@@ -16,8 +16,9 @@
 /obj/projectile/beam/laser/microfusion
 	name = "microfusion laser"
 	icon = 'monkestation/code/modules/microfusion/icons/projectiles.dmi'
-	damage = 25
+	damage = 22
 
+//Currently unused - needs to have stamina dmg re-balanced if it's ever added in
 /obj/projectile/beam/microfusion_disabler
 	name = "microfusion disabler laser"
 	icon = 'monkestation/code/modules/microfusion/icons/projectiles.dmi'
@@ -91,7 +92,7 @@
 	color = COLOR_VIVID_YELLOW
 	light_color = COLOR_VIVID_YELLOW
 	damage_type = STAMINA
-	damage = 25
+	damage = 22
 	armor_flag = ENERGY
 	hitsound = 'sound/misc/slip.ogg'
 	impact_type = /obj/effect/projectile/impact/disabler

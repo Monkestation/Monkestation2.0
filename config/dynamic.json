@@ -7,18 +7,7 @@
 			"weight": 0,
 			"required_candidates": 1,
 			"minimum_required_age": 0,
-			"requirements": [
-				10,
-				10,
-				10,
-				10,
-				10,
-				10,
-				10,
-				10,
-				10,
-				10
-			],
+			"requirements": [10, 10, 10, 10, 10, 10, 10, 10, 10, 10],
 			"antag_cap": {
 				"denominator": 24
 			},
@@ -30,9 +19,7 @@
 				"Head of Security",
 				"Captain"
 			],
-			"restricted_roles": [
-				"Cyborg"
-			]
+			"restricted_roles": ["Cyborg"]
 		},
 
 		"Blood Brothers": {
@@ -130,20 +117,6 @@
 		},
 
 		"Paradox Clone": {
-			"weight": 0
-		}
-	},
-
-	"Latejoin": {
-		"Syndicate Infiltrator": {
-			"weight": 0
-		},
-
-		"Provocateur": {
-			"weight": 0
-		},
-
-		"Heretic Smuggler": {
 			"weight": 0
 		}
 	}

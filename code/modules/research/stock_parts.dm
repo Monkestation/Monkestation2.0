@@ -97,9 +97,15 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	if(. & ITEM_INTERACT_ANY_BLOCKER)
 		user.Beam(attacked_object, icon_state = "rped_upgrade", time = 0.5 SECONDS)
 
-/obj/item/storage/part_replacer/bluespace/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	return interact_with_atom(interacting_with, user, modifiers)
-
+/obj/item/storage/part_replacer/bluespace/ranged_interact_with_atom(obj/attacked_object, mob/living/user, list/modifiers)
+	if(!ismachinery(attacked_object) || istype(attacked_object, /obj/machinery/computer))
+		return NONE
+		//I don't think it matters what we return here since we're at a distance anyway so I'm leaving it identical to the normal interaction
+	var/obj/machinery/attacked_machinery = attacked_object
+	if(!LAZYLEN(attacked_machinery.component_parts))
+		return ITEM_INTERACT_FAILURE
+	user.Beam(attacked_object, icon_state = "rped_upgrade", time = 0.5 SECONDS)
+	return attacked_machinery.exchange_parts(user, src) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_FAILURE
 /**
  * Signal handler for when a part has been inserted into the BRPED.
  *
@@ -118,10 +124,10 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 		RegisterSignal(inserted_component.reagents, COMSIG_REAGENTS_PRE_ADD_REAGENT, PROC_REF(on_insered_component_reagent_pre_add))
 
 
-	if(!istype(inserted_component, /obj/item/stock_parts/cell))
+	if(!istype(inserted_component, /obj/item/stock_parts/power_store/cell))
 		return
 
-	var/obj/item/stock_parts/cell/inserted_cell = inserted_component
+	var/obj/item/stock_parts/power_store/cell/inserted_cell = inserted_component
 
 	if(inserted_cell.rigged || inserted_cell.corrupted)
 		message_admins("[ADMIN_LOOKUPFLW(usr)] has inserted rigged/corrupted [inserted_cell] into [src].")
@@ -163,7 +169,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 		new /obj/item/stock_parts/manipulator(src)
 		new /obj/item/stock_parts/micro_laser(src)
 		new /obj/item/stock_parts/matter_bin(src)
-		new /obj/item/stock_parts/cell/high(src)
+		new /obj/item/stock_parts/power_store/cell/high(src)
 
 /obj/item/storage/part_replacer/bluespace/tier2
 
@@ -174,7 +180,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 		new /obj/item/stock_parts/manipulator/nano(src)
 		new /obj/item/stock_parts/micro_laser/high(src)
 		new /obj/item/stock_parts/matter_bin/adv(src)
-		new /obj/item/stock_parts/cell/super(src)
+		new /obj/item/stock_parts/power_store/cell/super(src)
 
 /obj/item/storage/part_replacer/bluespace/tier3
 
@@ -185,7 +191,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 		new /obj/item/stock_parts/manipulator/pico(src)
 		new /obj/item/stock_parts/micro_laser/ultra(src)
 		new /obj/item/stock_parts/matter_bin/super(src)
-		new /obj/item/stock_parts/cell/hyper(src)
+		new /obj/item/stock_parts/power_store/cell/hyper(src)
 
 /obj/item/storage/part_replacer/bluespace/tier4
 
@@ -196,7 +202,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 		new /obj/item/stock_parts/manipulator/femto(src)
 		new /obj/item/stock_parts/micro_laser/quadultra(src)
 		new /obj/item/stock_parts/matter_bin/bluespace(src)
-		new /obj/item/stock_parts/cell/bluespace(src)
+		new /obj/item/stock_parts/power_store/cell/bluespace(src)
 		new /obj/item/reagent_containers/cup/beaker/bluespace(src)
 
 /obj/item/storage/part_replacer/cargo //used in a cargo crate

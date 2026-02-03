@@ -45,8 +45,10 @@
 	var/allow_riding = TRUE
 	///Whether the borg can stuff itself into disposals
 	var/canDispose = FALSE
-	///The y offset of  the hat put on
+	///The y offset of the hat worn on our head.
 	var/hat_offset = -3
+	///The y offset of the badge we're decorated with.
+	var/badge_offset = -3
 	///The x offsets of a person riding the borg
 	var/list/ride_offset_x = list("north" = 0, "south" = 0, "east" = -6, "west" = 6)
 	///The y offsets of a person riding the borg
@@ -230,6 +232,8 @@
 	new_model.robot = cyborg
 	cyborg.icon = 'icons/mob/silicon/robots.dmi' //reset our icon to default, but before a new custom icon may be applied by be_transformed_to
 	if(!new_model.be_transformed_to(src, forced))
+		if(!cyborg.client)
+			cyborg.pending_model = new_config_type
 		qdel(new_model)
 		return
 	cyborg.model = new_model
@@ -273,6 +277,8 @@
 			special_light_key = details[SKIN_LIGHT_KEY]
 		if(!isnull(details[SKIN_HAT_OFFSET]))
 			hat_offset = details[SKIN_HAT_OFFSET]
+		if(!isnull(details[SKIN_BADGE_OFFSET]))
+			badge_offset = details[SKIN_BADGE_OFFSET]
 		if(!isnull(details[SKIN_TRAITS]))
 			model_traits += details[SKIN_TRAITS]
 	for(var/i in old_model.added_modules)
@@ -284,6 +290,8 @@
 	var/mob/living/silicon/robot/cyborg = loc
 	if(cyborg.hat)
 		cyborg.hat.forceMove(drop_location())
+	if(cyborg.worn_badge)
+		cyborg.worn_badge.forceMove(drop_location())
 
 	cyborg.cut_overlays()
 	cyborg.setDir(SOUTH)
@@ -357,6 +365,7 @@
 	model_select_icon = "service"
 	cyborg_base_icon = "clown"
 	hat_offset = -2
+	badge_offset = -2
 
 /obj/item/robot_model/clown/respawn_consumable(mob/living/silicon/robot/cyborg, coeff = 1)
 	. = ..()
@@ -383,7 +392,7 @@
 		/obj/item/t_scanner,
 		/obj/item/analyzer,
 		/obj/item/assembly/signaler/cyborg,
-		/obj/item/areaeditor/blueprints/cyborg,
+		/obj/item/blueprints/cyborg,
 		/obj/item/electroadaptive_pseudocircuit,
 		/obj/item/stack/sheet/iron,
 		/obj/item/stack/sheet/glass,
@@ -401,6 +410,7 @@
 	model_select_icon = "engineer"
 	model_traits = list(TRAIT_NEGATES_GRAVITY)
 	hat_offset = -4
+	badge_offset = -4
 
 /obj/item/robot_model/janitor
 	name = "Janitor"
@@ -428,6 +438,7 @@
 	cyborg_base_icon = "janitor"
 	model_select_icon = "janitor"
 	hat_offset = -5
+	badge_offset = -2
 	/// Weakref to the wash toggle action we own
 	var/datum/weakref/wash_toggle_ref
 
@@ -697,6 +708,7 @@
 	model_select_icon = "medical"
 	model_traits = list(TRAIT_PUSHIMMUNE)
 	hat_offset = 3
+	badge_offset = 0
 	borg_skins = list(
 		"Machinified Doctor" = list(SKIN_ICON_STATE = "medical"),
 		"Qualified Doctor" = list(SKIN_ICON_STATE = "qualified_doctor"),
@@ -717,6 +729,7 @@
 		/obj/item/gun/energy/recharge/kinetic_accelerator/cyborg,
 		/obj/item/gps/cyborg,
 		/obj/item/stack/marker_beacon,
+		/obj/item/borg/apparatus/organ_storage/monster,
 	)
 	radio_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SUPPLY)
 	emag_modules = list(
@@ -725,9 +738,10 @@
 	cyborg_base_icon = "miner"
 	model_select_icon = "miner"
 	hat_offset = 0
+	badge_offset = -2
 	borg_skins = list(
 		"Asteroid Miner" = list(SKIN_ICON_STATE = "minerOLD"),
-		"Spider Miner" = list(SKIN_ICON_STATE = "spidermin"),
+		"Spider Miner" = list(SKIN_ICON_STATE = "spidermin", SKIN_BADGE_OFFSET = -8),
 		"Lavaland Miner" = list(SKIN_ICON_STATE = "miner"),
 	)
 	var/obj/item/t_scanner/adv_mining_scanner/cyborg/mining_scanner //built in memes. //fuck you
@@ -760,6 +774,7 @@
 	model_select_icon = "standard"
 	model_traits = list(TRAIT_PUSHIMMUNE)
 	hat_offset = -2
+	badge_offset = -2
 
 /obj/item/robot_model/peacekeeper/do_transform_animation()
 	..()
@@ -784,6 +799,7 @@
 	model_select_icon = "security"
 	model_traits = list(TRAIT_PUSHIMMUNE)
 	hat_offset = 3
+	badge_offset = -3
 
 /obj/item/robot_model/security/do_transform_animation()
 	..()
@@ -854,7 +870,13 @@
 		"Kent" = list(SKIN_ICON_STATE = "kent", SKIN_LIGHT_KEY = "medical", SKIN_HAT_OFFSET = 3),
 		"Tophat" = list(SKIN_ICON_STATE = "tophat", SKIN_LIGHT_KEY = NONE, SKIN_HAT_OFFSET = INFINITY),
 		"Waitress" = list(SKIN_ICON_STATE = "service_f"),
-		"Kerfus" = list(SKIN_ICON_STATE = "kerfus_service", SKIN_LIGHT_KEY = NONE, SKIN_ICON = CYBORG_ICON_CARGO, SKIN_TRAITS = list(TRAIT_CAT)),
+		"Kerfus" = list(
+			SKIN_ICON_STATE = "kerfus_service",
+			SKIN_LIGHT_KEY = NONE,
+			SKIN_ICON = CYBORG_ICON_CARGO,
+			SKIN_TRAITS = list(TRAIT_CAT),
+			SKIN_BADGE_OFFSET = -6,
+		),
 	)
 
 /obj/item/robot_model/service/respawn_consumable(mob/living/silicon/robot/cyborg, coeff = 1)
@@ -864,9 +886,10 @@
 		enzyme.reagents.add_reagent(/datum/reagent/consumable/enzyme, 2 * coeff)
 
 //MONKESTATION ADDITION - lets service borgs craft
-/obj/item/robot_model/service/rebuild_modules()
-	..()
+/obj/item/robot_model/service/be_transformed_to(obj/item/robot_model/old_model)
+	. = ..()
 	var/mob/living/silicon/robot/cyborg = loc
+
 	cyborg.AddComponent(/datum/component/personal_crafting/borg)
 	var/datum/component/personal_crafting/borg/crafting = cyborg.GetComponent(/datum/component/personal_crafting/borg)
 	crafting.forced_mode = TRUE
@@ -876,8 +899,8 @@
 
 /obj/item/robot_model/service/Destroy()
 	var/mob/living/silicon/robot/cyborg = loc
-	qdel(cyborg.GetComponent(/datum/component/personal_crafting/borg))
 	if(istype(cyborg, /mob/living/silicon/robot))
+		qdel(cyborg.GetComponent(/datum/component/personal_crafting/borg))
 		for(var/atom/movable/screen/craft/button in cyborg.hud_used.static_inventory)
 			qdel(button)
 	return ..()
@@ -898,6 +921,7 @@
 	model_select_icon = "malf"
 	model_traits = list(TRAIT_PUSHIMMUNE)
 	hat_offset = 3
+	badge_offset = -3
 
 /obj/item/robot_model/syndicate/rebuild_modules()
 	..()
@@ -969,6 +993,7 @@
 	model_select_icon = "malf"
 	model_traits = list(TRAIT_PUSHIMMUNE, TRAIT_NEGATES_GRAVITY)
 	hat_offset = -4
+	badge_offset = -4
 	canDispose = TRUE
 
 /obj/item/robot_model/syndicate/kiltborg
@@ -980,6 +1005,7 @@
 	model_select_icon = "kilt"
 	cyborg_base_icon = "kilt"
 	hat_offset = -2
+	badge_offset = -2
 	breakable_modules = FALSE
 	locked_transform = FALSE //GO GO QUICKLY AND SLAUGHTER THEM ALL
 
@@ -1000,6 +1026,99 @@
 	robot.place_on_head(new /obj/item/clothing/head/beret/highlander(robot)) //THE ONLY PART MORE IMPORTANT THAN THE SWORD IS THE HAT
 	ADD_TRAIT(robot.hat, TRAIT_NODROP, HIGHLANDER_TRAIT)
 
+//CENTCOM BORG!!!!
+/obj/item/robot_model/centcom
+	name = "CentCom"
+	basic_modules = list(
+		/obj/item/assembly/flash/cyborg,
+		/obj/item/gun/energy/disabler/cyborg,
+		/obj/item/clipboard/cyborg,
+		/obj/item/pen,
+		/obj/item/pen/fountain,
+		/obj/item/stamp/centcom,
+		/obj/item/stamp/granted,
+		/obj/item/stamp/denied,
+		/obj/item/stamp/void,
+		/obj/item/knife/kitchen/silicon,
+		/obj/item/borg/apparatus/cooking,
+		/obj/item/reagent_containers/cup/beaker/large,
+		/obj/item/reagent_containers/condiment/enzyme,
+		/obj/item/soap/deluxe/centcom/cyborg,
+		/obj/item/extinguisher/mini,
+		/obj/item/hand_labeler/borg,
+		/obj/item/rsf/deluxe/cyborg,
+		/obj/item/instrument/piano_synth/robot,
+		/obj/item/lighter,
+		/obj/item/storage/bag/tray,
+		/obj/item/reagent_containers/borghypo/borgshaker/centcom,
+		/obj/item/borg/apparatus/beaker/service,
+	)
+	radio_channels = list(RADIO_CHANNEL_CENTCOM)
+	cyborg_base_icon = "centcomborg"
+	model_select_icon = "service"
+	special_light_key = "centcomborg"
+	hat_offset = 3
+	badge_offset = -3
+	borg_skins = list(
+		"Standard" = list(SKIN_ICON_STATE = "centcomborg"),
+		"Kerfus" = list(
+			SKIN_ICON_STATE = "kerfus_centcom",
+			SKIN_LIGHT_KEY = NONE,
+			SKIN_TRAITS = list(TRAIT_CAT),
+			SKIN_BADGE_OFFSET = -6,
+		),
+	)
+
+/obj/item/robot_model/centcom/respawn_consumable(mob/living/silicon/robot/cyborg, coeff = 1)
+	..()
+	var/obj/item/reagent_containers/enzyme = locate(/obj/item/reagent_containers/condiment/enzyme) in basic_modules
+	if(enzyme)
+		enzyme.reagents.add_reagent(/datum/reagent/consumable/enzyme, 2 * coeff)
+	var/obj/item/soap/deluxe/centcom/cyborg/soap = locate(/obj/item/soap/deluxe/centcom/cyborg) in basic_modules
+	if(!soap)
+		return
+	if(soap.uses < initial(soap.uses))
+		soap.uses += ROUND_UP(initial(soap.uses) / 100) * coeff
+
+/obj/item/robot_model/centcom/be_transformed_to(obj/item/robot_model/old_model)
+	. = ..()
+	var/mob/living/silicon/robot/cyborg = loc
+
+	cyborg.AddComponent(/datum/component/personal_crafting/borg)
+	var/datum/component/personal_crafting/borg/crafting = cyborg.GetComponent(/datum/component/personal_crafting/borg)
+	crafting.forced_mode = TRUE
+	crafting.mode = TRUE
+	if(cyborg.client)
+		crafting.create_mob_button(cyborg, cyborg.client)
+
+	qdel(cyborg.radio.keyslot)
+	cyborg.radio.keyslot = new /obj/item/encryptionkey/headset_cent()
+	cyborg.radio.recalculateChannels()
+
+	//remove all laws
+	if(!cyborg.shell)
+		cyborg.set_connected_ai(null)
+		cyborg.clear_inherent_laws()
+		cyborg.clear_zeroth_law()
+		cyborg.clear_supplied_laws()
+		cyborg.clear_ion_laws()
+		cyborg.clear_hacked_laws()
+	cyborg.emagged = TRUE
+	cyborg.centcom = TRUE
+
+/obj/item/robot_model/centcom/Destroy()
+	var/mob/living/silicon/robot/cyborg = loc
+	if(istype(cyborg, /mob/living/silicon/robot))
+		qdel(cyborg.GetComponent(/datum/component/personal_crafting/borg))
+		for(var/atom/movable/screen/craft/button in cyborg.hud_used.static_inventory)
+			qdel(button)
+
+		qdel(cyborg.radio.keyslot)
+		cyborg.radio.recalculateChannels()
+
+		cyborg.emagged = FALSE
+		cyborg.centcom = FALSE
+	return ..()
 
 // ------------------------------------------ Storages
 /datum/robot_energy_storage

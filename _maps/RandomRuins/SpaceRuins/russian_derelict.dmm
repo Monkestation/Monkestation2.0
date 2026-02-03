@@ -436,7 +436,7 @@
 /obj/structure/rack,
 /obj/item/stack/cable_coil/five,
 /obj/item/screwdriver,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /turf/open/floor/iron,
 /area/ruin/space/ks13/engineering/sb_bow_solars_control)
 "dA" = (
@@ -969,23 +969,23 @@
 "id" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/structure/table,
-/obj/item/stock_parts/cell/high{
+/obj/item/stock_parts/power_store/cell/high{
 	pixel_x = 7;
 	pixel_y = 7
 	},
-/obj/item/stock_parts/cell/high{
+/obj/item/stock_parts/power_store/cell/high{
 	pixel_x = 7;
 	pixel_y = 4
 	},
-/obj/item/stock_parts/cell/high{
+/obj/item/stock_parts/power_store/cell/high{
 	pixel_x = 7;
 	pixel_y = 1
 	},
-/obj/item/stock_parts/cell/high{
+/obj/item/stock_parts/power_store/cell/high{
 	pixel_x = -7;
 	pixel_y = 7
 	},
-/obj/item/stock_parts/cell/high{
+/obj/item/stock_parts/power_store/cell/high{
 	pixel_x = -7;
 	pixel_y = 4
 	},
@@ -1413,7 +1413,7 @@
 /area/space/nearstation)
 "lW" = (
 /obj/structure/rack,
-/obj/item/stock_parts/cell/lead,
+/obj/item/stock_parts/power_store/cell/lead,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/effect/mapping_helpers/apc/no_charge,
@@ -6664,7 +6664,7 @@
 /area/ruin/space/ks13/security/sec)
 "MM" = (
 /obj/structure/table,
-/obj/item/stock_parts/cell,
+/obj/item/stock_parts/power_store/cell,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/dorms)
@@ -8036,15 +8036,15 @@
 /area/ruin/space/ks13/hallway/aft)
 "SO" = (
 /obj/structure/rack,
-/obj/item/stock_parts/cell/high{
+/obj/item/stock_parts/power_store/cell/high{
 	pixel_x = 7;
 	pixel_y = 7
 	},
-/obj/item/stock_parts/cell/high{
+/obj/item/stock_parts/power_store/cell/high{
 	pixel_x = 7;
 	pixel_y = 4
 	},
-/obj/item/stock_parts/cell/high{
+/obj/item/stock_parts/power_store/cell/high{
 	pixel_x = 7;
 	pixel_y = 1
 	},
@@ -8451,7 +8451,7 @@
 	pixel_x = -7;
 	pixel_y = 9
 	},
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/engineering/tech_storage)

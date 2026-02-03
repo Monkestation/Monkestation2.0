@@ -49,14 +49,14 @@
 	var/obj/item/slasher_machette/linked_machette
 	/// the linked apron for increasing his armor values on soul succ
 	var/obj/item/clothing/suit/apron/slasher/linked_apron
+	/// list of traps owned by this slasher
+	var/list/linked_traps = list()
 	///rallys the amount of souls effects are based on this
 	var/souls_sucked = 0
 	///our cached brute_mod
 	var/cached_brute_mod = 0
 	/// the mob we are stalking
 	var/mob/living/carbon/human/stalked_human
-	/// how close we are in % to finishing stalking
-	var/stalk_precent = 0
 	///ALL Powers currently owned
 	var/list/datum/action/cooldown/slasher/powers = list()
 
@@ -89,31 +89,17 @@
 	var/datum/martial_art/slasher_grab/grabart
 
 /datum/antagonist/slasher/on_gain()
-	. = ..() // Call parent first
-
-	if(give_objectives)
-		forge_objectives()
-		if(owner?.current)
-			for(var/datum/objective/objective in objectives)
-				owner.announce_objectives()
+	forge_objectives()
+	. = ..()
 
 /datum/antagonist/slasher/forge_objectives()
 	if(!owner)
 		return
-
-	// Clear any existing objectives
-	objectives.Cut()
-
 	// Add all slasher objective subtypes
 	for(var/objective_type in subtypesof(/datum/objective/slasher))
-		var/datum/objective/new_objective = new objective_type
+		var/datum/objective/slasher/new_objective = new objective_type
 		new_objective.owner = owner
 		objectives += new_objective
-
-	// Make sure these objectives are also in the mind's objectives list
-	if(owner)
-		for(var/datum/objective/O in objectives)
-			owner.objectives += O
 
 /datum/antagonist/slasher/apply_innate_effects(mob/living/mob_override)
 	. = ..()
@@ -133,7 +119,6 @@
 	ADD_TRAIT(current_mob, TRAIT_DUMB, "slasher")
 	ADD_TRAIT(current_mob, TRAIT_LIMBATTACHMENT, "slasher")
 	ADD_TRAIT(current_mob, TRAIT_SLASHER, "slasher")
-	ADD_TRAIT(current_mob, TRAIT_NO_PAIN_EFFECTS, "slasher")
 	ADD_TRAIT(current_mob, TRAIT_VIRUSIMMUNE, "slasher")
 	ADD_TRAIT(current_mob, TRAIT_RESISTHEAT, "slasher")
 	ADD_TRAIT(current_mob, TRAIT_RESISTCOLD, "slasher")
@@ -141,12 +126,10 @@
 	ADD_TRAIT(current_mob, TRAIT_RESISTHIGHPRESSURE, "slasher")
 
 	var/mob/living/carbon/carbon = current_mob
-	var/obj/item/organ/internal/eyes/shadow/shadow = new
-	shadow.Insert(carbon, drop_if_replaced = FALSE)
+	var/obj/item/organ/internal/eyes/slasher/eye = new
+	eye.Insert(carbon, drop_if_replaced = FALSE)
 
 	RegisterSignal(current_mob, COMSIG_LIVING_LIFE, PROC_REF(LifeTick))
-	RegisterSignal(current_mob, COMSIG_LIVING_PICKED_UP_ITEM, PROC_REF(item_pickup))
-	RegisterSignal(current_mob, COMSIG_MOB_UNEQUIPPED_ITEM, PROC_REF(item_unequipped))
 	RegisterSignal(current_mob, COMSIG_MOB_ITEM_ATTACK, PROC_REF(check_attack))
 	RegisterSignal(current_mob, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 
@@ -282,21 +265,7 @@
 		held_force = held_item.force
 
 	increase_fear(attacked_mob, held_force / 3)
-
-	for(var/i = 1 to (held_force / 3))
-		attacked_mob.blood_particles(2, max_deviation = rand(-120, 120), min_pixel_z = rand(-4, 12), max_pixel_z = rand(-4, 12))
-
-/datum/antagonist/slasher/proc/item_pickup(datum/input_source, obj/item/source)
-	SIGNAL_HANDLER
-	RegisterSignal(source, COMSIG_ITEM_DAMAGE_MULTIPLIER, PROC_REF(damage_multiplier))
-
-/datum/antagonist/slasher/proc/item_unequipped(datum/input_source, obj/item/source)
-	SIGNAL_HANDLER
-	UnregisterSignal(source, COMSIG_ITEM_DAMAGE_MULTIPLIER)
-
-/datum/antagonist/slasher/proc/damage_multiplier(obj/item/source, damage_multiplier_ptr, mob/living/attacked, def_zone)
-	//keeping this just in case we use it later, but the damage changing has been turned off
-	// *damage_multiplier_ptr = 1
+	attacked_mob.blood_particles(5, max_deviation = rand(-120, 120), min_pixel_z = rand(-4, 12), max_pixel_z = rand(-4, 12))
 
 /datum/antagonist/slasher/proc/increase_fear(atom/movable/target, amount)
 	var/datum/weakref/weak = WEAKREF(target)
@@ -449,19 +418,18 @@
 
 /datum/objective/slasher/harvest_souls
 	name = "Harvest Souls"
-	explanation_text = "Harvest souls from the dead to increase your power."
+	explanation_text = "Use soulsteal to harvest souls from the dead to increase your power."
 	admin_grantable = TRUE
 
-/datum/objective/slasher/soulsteal
-	name = "Soulsteal"
-	explanation_text = "Use soulsteal to harvest souls."
+/datum/objective/slasher/scream
+	name = "Screech"
+	explanation_text = "Use your terror screech to temporarily stun victims."
 	admin_grantable = TRUE
 
 /datum/objective/slasher/trappem
 	name = "Trapping"
-	explanation_text = "Use your traps to slow down your victims."
+	explanation_text = "Use your traps to slow down your targets."
 	admin_grantable = TRUE
-
 
 /datum/antagonist/slasher/antag_token(datum/mind/hosts_mind, mob/spender)
 	var/spender_key = spender.key

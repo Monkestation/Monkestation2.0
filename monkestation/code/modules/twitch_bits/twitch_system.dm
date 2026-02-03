@@ -29,7 +29,7 @@ SUBSYSTEM_DEF(twitch)
 	)
 
 /datum/controller/subsystem/twitch/Initialize()
-	for(var/event as anything in subtypesof(/datum/twitch_event))
+	for(var/event in subtypesof(/datum/twitch_event))
 		twitch_events_by_type[event] = new event
 	return SS_INIT_SUCCESS
 

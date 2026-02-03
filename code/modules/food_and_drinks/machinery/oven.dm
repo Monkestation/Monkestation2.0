@@ -96,7 +96,7 @@
 			visible_message(span_danger("You smell a burnt smell coming from [src]!"))
 	set_smoke_state(worst_cooked_food_state)
 	update_appearance()
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 
 
 /obj/machinery/oven/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
@@ -137,6 +137,19 @@
 	used_tray = null
 	UnregisterSignal(oven_tray, COMSIG_MOVABLE_MOVED)
 	update_baking_audio()
+
+/obj/machinery/oven/attack_robot(mob/user)
+	. = ..()
+	if(user.Adjacent(src))
+		attack_hand(user)
+	return TRUE
+
+/obj/machinery/oven/attack_robot_secondary(mob/user, list/modifiers)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	attack_hand_secondary(user, modifiers)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/oven/attack_hand(mob/user, modifiers)
 	. = ..()

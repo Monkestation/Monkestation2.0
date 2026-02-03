@@ -1,29 +1,4 @@
 // Badges, pins, and other very small items that slot onto a shirt.
-/obj/item/clothing/accessory/lawyers_badge
-	name = "attorney's badge"
-	desc = "Fills you with the conviction of JUSTICE. Lawyers tend to want to show it to everyone they meet."
-	icon_state = "lawyerbadge"
-
-/obj/item/clothing/accessory/lawyers_badge/interact(mob/user)
-	. = ..()
-	if(prob(1))
-		user.say("The testimony contradicts the evidence!", forced = "[src]")
-	user.visible_message(span_notice("[user] shows [user.p_their()] attorney's badge."), span_notice("You show your attorney's badge."))
-
-/obj/item/clothing/accessory/lawyers_badge/accessory_equipped(obj/item/clothing/under/clothes, mob/living/user)
-	RegisterSignal(user, COMSIG_LIVING_SLAM_TABLE, PROC_REF(table_slam))
-	user.bubble_icon = "lawyer"
-
-/obj/item/clothing/accessory/lawyers_badge/accessory_dropped(obj/item/clothing/under/clothes, mob/living/user)
-	UnregisterSignal(user, COMSIG_LIVING_SLAM_TABLE)
-	user.bubble_icon = initial(user.bubble_icon)
-
-/obj/item/clothing/accessory/lawyers_badge/proc/table_slam(mob/living/source, obj/structure/table/the_table)
-	SIGNAL_HANDLER
-
-	ASYNC
-		source.say("Objection!!", spans = list(SPAN_YELL), forced = "[src]")
-
 /obj/item/clothing/accessory/clown_enjoyer_pin
 	name = "\improper Clown Pin"
 	desc = "A pin to show off your appreciation for clowns and clowning!"
@@ -170,7 +145,10 @@
 	else
 		display = span_notice("The dogtag is all scratched up.")
 
-/*
+/obj/item/clothing/accessory/dogtag/borg_ready
+	name = "Pre-Approved Cyborg Cantidate dogtag"
+	display = "This employee has been screened for negative mental traits to an acceptable level of accuracy, and is approved for the NT Cyborg program as an alternative to medical resuscitation."
+
 /// Reskins for the pride pin accessory, mapped by display name to icon state
 GLOBAL_LIST_INIT(pride_pin_reskins, list(
 	"Rainbow Pride" = "pride",
@@ -181,26 +159,31 @@ GLOBAL_LIST_INIT(pride_pin_reskins, list(
 	"Transgender Pride" = "pride_trans",
 	"Intersex Pride" = "pride_intersex",
 	"Lesbian Pride" = "pride_lesbian",
+	"Gay Pride" = "pride_mlm",
+	"Genderfluid Pride" = "pride_genderfluid",
+	"Genderqueer Pride" = "pride_genderqueer",
+	"Aromantic Pride" = "pride_aromantic",
 ))
-*/
 
 /obj/item/clothing/accessory/pride
 	name = "pride pin"
 	desc = "A Nanotrasen Diversity & Inclusion Center-sponsored holographic pin to show off your pride, reminding the crew of their unwavering commitment to equity, diversity, and inclusion!"
 	icon_state = "pride"
-	obj_flags = UNIQUE_RENAME
-	infinite_reskin = TRUE
+	item_flags = UNIQUE_RENAME | INFINITE_RESKIN
 
 /obj/item/clothing/accessory/pride/Initialize(mapload)
-	. = ..()
 	unique_reskin = GLOB.pride_pin_reskins
-
-/obj/item/clothing/accessory/pride/reskin_obj(mob/M)
 	. = ..()
-	post_reskin(M)
 
-/obj/item/clothing/accessory/pride/post_reskin(mob/our_mob)
-	for(var/pride_name as anything in GLOB.pride_pin_reskins)
+/obj/item/clothing/accessory/pride/setup_reskinning()
+	if(!check_setup_reskinning())
+		return
+
+	// We already register context regardless in Initialize.
+	RegisterSignal(src, COMSIG_CLICK_ALT, PROC_REF(on_click_alt_reskin))
+
+/obj/item/clothing/accessory/pride/post_reskin()
+	for(var/pride_name in GLOB.pride_pin_reskins)
 		if(GLOB.pride_pin_reskins[pride_name] == icon_state)
 			name = "[lowertext(pride_name)] pin"
 			return
@@ -244,19 +227,19 @@ GLOBAL_LIST_INIT(pride_pin_reskins, list(
 	if(!press_name)
 		press_name = tgui_input_text(user, "For what organization you work?", "Press Name", "Nanotrasen", MAX_CHARTER_LEN)
 
-/obj/item/clothing/accessory/press_badge/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(!isliving(target) || !proximity_flag)
-		return
+/obj/item/clothing/accessory/press_badge/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!isliving(interacting_with))
+		return NONE
 
-	var/mob/living/interacting_living = target
+	var/mob/living/interacting_living = interacting_with
 	if(user.istate & ISTATE_HARM)
 		playsound(interacting_living, 'sound/weapons/throw.ogg', 30)
 		examine(interacting_living)
-		to_chat(interacting_living, span_userdanger("[user] shoves the [src] up your face!"))
-		user.visible_message(span_warning("[user] have shoved a [src] into [interacting_living] face."))
+		to_chat(interacting_living, span_userdanger("[user] shoves [src] up your face!"))
+		user.visible_message(span_warning("[user] have shoved [src] into [interacting_living] face."))
 	else
 		playsound(interacting_living, 'sound/weapons/throwsoft.ogg', 20)
 		examine(interacting_living)
-		to_chat(interacting_living, span_boldwarning("[user] shows the [src] to you."))
-		user.visible_message(span_notice("[user] shows a [src] to [interacting_living]."))
+		to_chat(interacting_living, span_boldwarning("[user] shows [src] to you."))
+		user.visible_message(span_notice("[user] shows [src] to [interacting_living]."))
+	return ITEM_INTERACT_SUCCESS

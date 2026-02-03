@@ -3,6 +3,7 @@
 	desc = "A disk for storing the structure of a pathogen's Glycol Nucleic Acid pertaining to a specific symptom."
 	var/datum/symptom/effect = null
 	var/stage = 1
+	var/analyzed = FALSE
 
 /obj/item/disk/disease/premade/New()
 	name = "blank GNA disk (stage: [stage])"

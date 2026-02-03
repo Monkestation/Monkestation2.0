@@ -5,6 +5,7 @@
 	antag_datum = /datum/antagonist/bloodling
 	typepath = /datum/round_event/antagonist/solo/bloodling
 	shared_occurence_type = SHARED_HIGH_THREAT
+	repeated_mode_adjust = TRUE
 	protected_roles = list(
 		JOB_CAPTAIN,
 		JOB_HEAD_OF_PERSONNEL,
@@ -16,6 +17,7 @@
 		JOB_PRISONER,
 		JOB_SECURITY_OFFICER,
 		JOB_SECURITY_ASSISTANT,
+		JOB_BRIG_PHYSICIAN,
 		JOB_WARDEN,
 	)
 	restricted_roles = list(
@@ -29,6 +31,7 @@
 		JOB_WARDEN,
 		JOB_SECURITY_OFFICER,
 		JOB_SECURITY_ASSISTANT,
+		JOB_BRIG_PHYSICIAN,
 	)
 	required_enemies = 5
 	weight = 4

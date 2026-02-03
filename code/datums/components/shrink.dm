@@ -20,7 +20,7 @@
 		L.add_movespeed_modifier(/datum/movespeed_modifier/shrink_ray)
 		if(iscarbon(L))
 			var/mob/living/carbon/C = L
-			C.unequip_everything()
+			C.drop_all_held_items()
 			C.visible_message(span_warning("[C]'s belongings fall off of [C.p_them()] as they shrink down!"),
 			span_userdanger("Your belongings fall away as everything grows bigger!"))
 			if(ishuman(C))
