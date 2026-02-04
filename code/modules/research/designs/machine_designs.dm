@@ -1227,3 +1227,13 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
 
+/datum/design/board/ecto_sniffer
+	name = "Ectoscopic Sniffer Board"
+	desc = "The circuit board for an Ectoscopic Sniffer, the latest in Sci-Fi!"
+	id = "ecto_sniffer"
+	build_path = /obj/item/circuitboard/machine/ecto_sniffer
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_RESEARCH
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
+
