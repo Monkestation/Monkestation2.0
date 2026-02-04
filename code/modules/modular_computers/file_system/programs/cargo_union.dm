@@ -10,6 +10,7 @@
 	extended_desc = "The official Supply Employees Union (SEU) employee tracker and badge printer/recycler. Uses a Union badge as access."
 	program_flags = PROGRAM_ON_NTNET_STORE | PROGRAM_REQUIRES_NTNET
 	can_run_on_flags = PROGRAM_CONSOLE | PROGRAM_LAPTOP
+	program_open_overlay = "union"
 	download_access = list(ACCESS_UNION_LEADER, ACCESS_QM) //you can't put the badge into the PC until it's downloaded but just in-case.
 	run_access = list(ACCESS_UNION, ACCESS_CARGO)
 	size = 6

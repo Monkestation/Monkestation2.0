@@ -310,10 +310,8 @@ Security HUDs! Basic mode shows only the job.
 
 /// Returns the gun permit icon if the ID's access contain weapon permit
 /mob/living/carbon/human/proc/has_weapons_permit()
-	var/obj/item/card/id/id_card = get_idcard(FALSE)
-	var/weapon_permission = SEND_SIGNAL(src, COMSIG_WEAPONS_CHECK)
-
-	if((weapon_permission & COMPONENT_WEAPON_HAS_PERMIT) || (ACCESS_WEAPONS in id_card?.GetAccess()))
+	var/list/access = get_access()
+	if(ACCESS_WEAPONS in access)
 		return TRUE
 	return FALSE
 //monkestation edit end

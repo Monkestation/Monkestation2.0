@@ -146,41 +146,19 @@
 /obj/item/clothing/accessory/badge/cargo/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
 	if(slot & (ITEM_SLOT_ICLOTHING|ITEM_SLOT_HANDS)) //ITEM_SLOT_NECK inv doesn't call dropped so we don't need to re-register.
-		RegisterSignal(user, COMSIG_WEAPONS_CHECK, PROC_REF(on_weapons_check))
+		RegisterSignal(user, COMSIG_MOB_RETRIEVE_ACCESS, PROC_REF(retrieve_access))
 		if(ishuman(user))
 			user.sec_hud_set_ID()
 
 /obj/item/clothing/accessory/badge/cargo/dropped(mob/living/carbon/human/user)
-	UnregisterSignal(user, COMSIG_WEAPONS_CHECK)
+	UnregisterSignal(user, COMSIG_MOB_RETRIEVE_ACCESS)
 	if(ishuman(user))
 		user.sec_hud_set_ID()
-	return ..()
-
-///Called when we're getting threat accessed to see if we have a weapons permit.
-/obj/item/clothing/accessory/badge/cargo/proc/on_weapons_check(mob/living/carbon/human/source)
-	SIGNAL_HANDLER
-	if(ACCESS_WEAPONS in access)
-		return COMPONENT_WEAPON_HAS_PERMIT
-	return NONE
-
-///Called when we're being used to see if we have access to open locked_thing.
-/obj/item/clothing/accessory/badge/cargo/proc/on_tried_access(datum/source, obj/locked_thing)
-	RegisterSignal(user, COMSIG_MOB_RETRIEVE_ACCESS, PROC_REF(retrieve_access))
-
-/obj/item/clothing/accessory/badge/cargo/dropped(mob/living/user)
-	UnregisterSignal(user, COMSIG_MOB_RETRIEVE_ACCESS)
 	return ..()
 
 /obj/item/clothing/accessory/badge/cargo/proc/retrieve_access(datum/source, list/player_access)
 	SIGNAL_HANDLER
 	player_access += access
-
-///Called when we're getting threat accessed to see if we have a weapons permit.
-/obj/item/clothing/accessory/badge/cargo/proc/on_weapons_check(mob/living/carbon/human/source)
-	SIGNAL_HANDLER
-	if(ACCESS_WEAPONS in access)
-		return COMPONENT_WEAPON_HAS_PERMIT
-	return NONE
 
 /obj/item/clothing/accessory/badge/cargo/GetAccess()
 	return access
