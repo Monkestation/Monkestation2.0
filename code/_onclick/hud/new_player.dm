@@ -26,8 +26,6 @@
 	var/atom/movable/screen/lobby/button/start_now/start_button = new(our_hud = src)
 	start_button.SlowInit()
 	static_inventory += start_button
-	start_button.RegisterSignal(src, COMSIG_HUD_LOBBY_COLLAPSED, TYPE_PROC_REF(/atom/movable/screen/lobby, collapse_button))
-	start_button.RegisterSignal(src, COMSIG_HUD_LOBBY_EXPANDED, TYPE_PROC_REF(/atom/movable/screen/lobby, expand_button))
 
 /atom/movable/screen/lobby
 	plane = SPLASHSCREEN_PLANE
@@ -684,14 +682,12 @@
 	icon = 'icons/hud/lobby/start_now.dmi'
 	icon_state = "start_now"
 	base_icon_state = "start_now"
-	always_available = FALSE
-	select_sound_play = FALSE
 
 /atom/movable/screen/lobby/button/start_now/Click(location, control, params)
 	. = ..()
 	if(!. || !usr.client.is_localhost() || !check_rights_for(usr.client, R_SERVER))
 		return
-	SEND_SOUND(hud.mymob, sound('sound/effects/cartoon_sfx/cartoon_splat.ogg', volume = 50))
+	SEND_SOUND(hud.mymob, sound('sound/effects/cartoon_splat.ogg', volume = 50))
 	SSticker.start_immediately = TRUE
 	if(SSticker.current_state == GAME_STATE_STARTUP)
 		to_chat(usr, span_admin("The server is still setting up, but the round will be started as soon as possible."))
