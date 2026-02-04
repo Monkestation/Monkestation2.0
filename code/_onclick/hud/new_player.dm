@@ -11,7 +11,7 @@
 
 	var/list/buttons = subtypesof(/atom/movable/screen/lobby)
 	for(var/atom/movable/screen/lobby/button_type as anything in buttons)
-		if(button_type::abstract_type == button_type)
+		if(button_type::abstract_type == button_type || button_type::always_create != TRUE)
 			continue
 		var/atom/movable/screen/lobby/lobbyscreen = new button_type(our_hud = src)
 		lobbyscreen.SlowInit()
@@ -26,6 +26,7 @@
 	var/atom/movable/screen/lobby/button/start_now/start_button = new(our_hud = src)
 	start_button.SlowInit()
 	static_inventory += start_button
+	start_button.owner = REF(owner)
 
 /atom/movable/screen/lobby
 	plane = SPLASHSCREEN_PLANE
@@ -34,6 +35,8 @@
 	/// Do not instantiate if type matches this.
 	var/abstract_type = /atom/movable/screen/lobby
 	var/here
+	/// If true we will create this button every time the HUD is generated
+	var/always_create = TRUE
 
 ///Set the HUD in New, as lobby screens are made before Atoms are Initialized.
 /atom/movable/screen/lobby/New(loc, datum/hud/our_hud, ...)
@@ -682,6 +685,7 @@
 	icon = 'icons/hud/lobby/start_now.dmi'
 	icon_state = "start_now"
 	base_icon_state = "start_now"
+	always_create = FALSE
 
 /atom/movable/screen/lobby/button/start_now/Click(location, control, params)
 	. = ..()
