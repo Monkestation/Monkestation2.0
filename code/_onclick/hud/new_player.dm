@@ -678,7 +678,7 @@
 /// LOCALHOST ONLY - Start Now button
 /atom/movable/screen/lobby/button/start_now
 	name = "Start Now (LOCALHOST ONLY)"
-	screen_loc = "TOP:-146,CENTER:-54"
+	screen_loc = "TOP:-150,CENTER:-40"
 	icon = 'icons/hud/lobby/start_now.dmi'
 	icon_state = "start_now"
 	base_icon_state = "start_now"
