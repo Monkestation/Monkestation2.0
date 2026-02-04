@@ -165,7 +165,7 @@
 
 ///Called when we're being used to see if we have access to open locked_thing.
 /obj/item/clothing/accessory/badge/cargo/proc/on_tried_access(datum/source, obj/locked_thing)
-		RegisterSignal(user, COMSIG_MOB_RETRIEVE_ACCESS, PROC_REF(retrieve_access))
+	RegisterSignal(user, COMSIG_MOB_RETRIEVE_ACCESS, PROC_REF(retrieve_access))
 
 /obj/item/clothing/accessory/badge/cargo/dropped(mob/living/user)
 	UnregisterSignal(user, COMSIG_MOB_RETRIEVE_ACCESS)
