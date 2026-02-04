@@ -3,11 +3,11 @@ import { Button, DmIcon, Stack } from 'tgui-core/components';
 import { useBackend, useSharedState } from '../../backend';
 import { Window } from '../../layouts';
 import { AuditScreen } from './AuditScreen';
-import { UnionScreen } from './UnionScreen';
 import { FakeDesktopButton } from './FakeDesktopButton';
 import { FakeToolbarButton } from './FakeToolbarButton';
 import { FakeWindow, FakeWindowPet } from './FakeWindow';
 import { type Data, SCREENS } from './types';
+import { UnionScreen } from './UnionScreen';
 import { UsersScreen } from './UsersScreen';
 
 export const AccountingConsole = () => {
