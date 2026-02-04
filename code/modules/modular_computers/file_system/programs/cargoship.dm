@@ -32,7 +32,7 @@
 
 	switch(action)
 		if("ejectid")
-			computer.RemoveID(usr)
+			computer.remove_id(usr)
 		if("selectid")
 			if(!computer.computer_id_slot.registered_account)
 				playsound(get_turf(computer.ui_host()), 'sound/machines/buzz-sigh.ogg', 50, TRUE, -1)

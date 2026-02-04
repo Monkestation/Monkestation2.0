@@ -146,13 +146,12 @@
 /obj/item/clothing/accessory/badge/cargo/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
 	if(slot & (ITEM_SLOT_ICLOTHING|ITEM_SLOT_HANDS)) //ITEM_SLOT_NECK inv doesn't call dropped so we don't need to re-register.
-		RegisterSignal(user, COMSIG_MOB_TRIED_ACCESS, PROC_REF(on_tried_access))
 		RegisterSignal(user, COMSIG_WEAPONS_CHECK, PROC_REF(on_weapons_check))
 		if(ishuman(user))
 			user.sec_hud_set_ID()
 
 /obj/item/clothing/accessory/badge/cargo/dropped(mob/living/carbon/human/user)
-	UnregisterSignal(user, list(COMSIG_MOB_TRIED_ACCESS, COMSIG_WEAPONS_CHECK))
+	UnregisterSignal(user, COMSIG_WEAPONS_CHECK)
 	if(ishuman(user))
 		user.sec_hud_set_ID()
 	return ..()
@@ -166,8 +165,22 @@
 
 ///Called when we're being used to see if we have access to open locked_thing.
 /obj/item/clothing/accessory/badge/cargo/proc/on_tried_access(datum/source, obj/locked_thing)
+		RegisterSignal(user, COMSIG_MOB_RETRIEVE_ACCESS, PROC_REF(retrieve_access))
+
+/obj/item/clothing/accessory/badge/cargo/dropped(mob/living/user)
+	UnregisterSignal(user, COMSIG_MOB_RETRIEVE_ACCESS)
+	return ..()
+
+/obj/item/clothing/accessory/badge/cargo/proc/retrieve_access(datum/source, list/player_access)
 	SIGNAL_HANDLER
-	return locked_thing?.check_access(src) ? ACCESS_ALLOWED : NONE
+	player_access += access
+
+///Called when we're getting threat accessed to see if we have a weapons permit.
+/obj/item/clothing/accessory/badge/cargo/proc/on_weapons_check(mob/living/carbon/human/source)
+	SIGNAL_HANDLER
+	if(ACCESS_WEAPONS in access)
+		return COMPONENT_WEAPON_HAS_PERMIT
+	return NONE
 
 /obj/item/clothing/accessory/badge/cargo/GetAccess()
 	return access
@@ -193,22 +206,25 @@
 
 	///The mob we're gonna copy over when we get first examined. This is like the `virgin` var of filingcabinets,
 	///this is necessary beacuse we don't know quirks/holy role/traits on initialize.
-	var/mob/living/to_copy
+	var/datum/weakref/to_copy_ref
 
 /obj/item/clothing/accessory/badge/lawyer/Initialize(mapload)
 	. = ..()
-	to_copy = recursive_loc_check(src, /mob/living)
+	var/mob/living/person_wearing_us = recursive_loc_check(src, /mob/living)
+	if(person_wearing_us)
+		to_copy_ref = WEAKREF(person_wearing_us)
 
 /obj/item/clothing/accessory/badge/lawyer/Destroy(force)
-	to_copy = null
+	to_copy_ref = null
 	return ..()
 
 /obj/item/clothing/accessory/badge/lawyer/examine(mob/user)
-	if(isnull(to_copy))
+	if(isnull(to_copy_ref))
 		return ..()
-	if(!QDELETED(to_copy))
-		set_identity(to_copy)
-	to_copy = null
+	var/mob/living/badge_owner = to_copy_ref?.resolve()
+	if(badge_owner)
+		set_identity(badge_owner)
+	to_copy_ref = null
 	return ..()
 
 /obj/item/clothing/accessory/badge/lawyer/set_identity(mob/living/named_mob)

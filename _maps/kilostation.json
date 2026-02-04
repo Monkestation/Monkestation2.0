@@ -21,6 +21,10 @@
 		},
 		"Captain": {
 			"special_charter": "asteroid"
+		},
+		"Barber": {
+			"total_positions": 0,
+			"spawn_positions": 0
 		}
 	}
 }

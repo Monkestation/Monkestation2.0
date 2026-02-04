@@ -116,7 +116,7 @@
 
 	var/mob/living/simple_animal/hostile/illusion/khan_warrior/khan = new(attacker.loc)
 	khan.faction = attacker.faction.Copy()
-	khan.Copy_Parent(attacker, 100, attacker.health / 2.5, 12, 30)
+	khan.copy_parent(attacker, 100, attacker.health / 2.5, 12, 30)
 	khan.GiveTarget(defender)
 	attacker.visible_message(
 		span_danger("[attacker] seems to duplicate before your very eyes!"),

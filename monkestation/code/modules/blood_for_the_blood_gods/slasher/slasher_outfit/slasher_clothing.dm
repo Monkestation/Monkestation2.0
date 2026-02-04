@@ -162,3 +162,6 @@
 	inhand_icon_state = "clown"
 	worn_icon_state = "clown"
 
+/obj/item/organ/internal/eyes/slasher
+	color_cutoffs = list(40, 40, 40)
+	pepperspray_protect = TRUE

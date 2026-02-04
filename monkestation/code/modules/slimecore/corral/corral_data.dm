@@ -23,7 +23,7 @@
 
 	for(var/turf/turf as anything in corral_turfs)
 		turf.air_update_turf(update = TRUE, remove = FALSE)
-		RegisterSignal(turf, COMSIG_ATOM_ENTERED, PROC_REF(check_entered))
+		RegisterSignals(turf, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON), PROC_REF(check_entered))
 		RegisterSignal(turf, COMSIG_ATOM_EXITED, PROC_REF(check_exited))
 
 		for(var/mob/living/basic/slime/slime in turf.contents)
@@ -48,8 +48,8 @@
 	STOP_PROCESSING(SSxenobio, src)
 	QDEL_LIST(corral_connectors)
 	for(var/turf/turf as anything in corral_turfs)
-		if(!QDELETED(turf))
-			turf.air_update_turf(update = TRUE, remove = FALSE)
+		UnregisterSignal(turf, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, COMSIG_ATOM_EXITED))
+		turf.air_update_turf(update = TRUE, remove = FALSE)
 	corral_turfs = null
 
 	for(var/obj/machinery/corral_corner/corner as anything in corral_corners)
@@ -59,8 +59,7 @@
 	corral_corners = null
 
 	for(var/mob/living/basic/slime/slime as anything in managed_slimes)
-		UnregisterSignal(slime, COMSIG_ATOM_SUCKED)
-		UnregisterSignal(slime, COMSIG_LIVING_DEATH)
+		UnregisterSignal(slime, list(COMSIG_ATOM_SUCKED, COMSIG_LIVING_DEATH))
 	managed_slimes = null
 
 	. = ..()
@@ -72,11 +71,12 @@
 		for(var/mob/living/carbon/human/monke in turf)
 			if(!ismonkeybasic(monke) || monke.stat != DEAD || monke.ckey || monke.mind || monke.pulledby)
 				continue
-			if((monke.timeofdeath + (5 MINUTES)) <= world.time)
+			if((monke.timeofdeath + (5 MINUTES)) <= world.time && !monke.get_filter("dust_animation")) // stupid janky way of avoiding dusting the same chimp repeatedly while the dusting animation is ongoing
 				monke.visible_message(span_warning("[monke] is automatically dissolved by the slime corral."))
 				monke.dust(just_ash = TRUE, drop_items = TRUE)
 
 /datum/corral_data/proc/check_entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	SIGNAL_HANDLER
 	if(!isslime(arrived))
 		return
 
@@ -103,16 +103,14 @@
 	update_slimes()
 
 /datum/corral_data/proc/check_exited(turf/source, atom/movable/gone, direction)
-	if(!istype(gone, /mob/living/basic/slime))
+	if(!isslime(gone))
 		return
 
 	var/turf/turf = get_step(source, direction)
 	if(turf in corral_turfs)
 		return
 
-	UnregisterSignal(gone, COMSIG_ATOM_SUCKED)
-	UnregisterSignal(gone, COMSIG_LIVING_DEATH)
-	UnregisterSignal(gone, list(COMSIG_PREQDELETED, COMSIG_QDELETING))
+	UnregisterSignal(gone, list(COMSIG_ATOM_SUCKED, COMSIG_LIVING_DEATH, COMSIG_PREQDELETED, COMSIG_QDELETING))
 	managed_slimes -= gone
 	for(var/datum/corral_upgrade/upgrade as anything in corral_upgrades)
 		upgrade.on_slime_exited(gone)
@@ -120,9 +118,7 @@
 
 /datum/corral_data/proc/remove_cause_sucked(atom/movable/gone)
 
-	UnregisterSignal(gone, COMSIG_ATOM_SUCKED)
-	UnregisterSignal(gone, COMSIG_LIVING_DEATH)
-	UnregisterSignal(gone, list(COMSIG_PREQDELETED, COMSIG_QDELETING))
+	UnregisterSignal(gone, list(COMSIG_ATOM_SUCKED, COMSIG_LIVING_DEATH, COMSIG_PREQDELETED, COMSIG_QDELETING))
 	managed_slimes -= gone
 	for(var/datum/corral_upgrade/upgrade as anything in corral_upgrades)
 		upgrade.on_slime_exited(gone)
@@ -136,13 +132,10 @@
 	for(var/mob/living/basic/slime/slime as anything in managed_slimes)
 		if(QDELETED(slime) || !(get_turf(slime) in corral_turfs))
 			managed_slimes -= slime
-			if(QDELETED(slime))
-				continue
-			UnregisterSignal(slime, COMSIG_ATOM_SUCKED)
-			UnregisterSignal(slime, COMSIG_LIVING_DEATH)
-			UnregisterSignal(slime, list(COMSIG_PREQDELETED, COMSIG_QDELETING))
-			for(var/datum/corral_upgrade/upgrade as anything in corral_upgrades)
-				upgrade.on_slime_exited(slime)
+			UnregisterSignal(slime, list(COMSIG_ATOM_SUCKED, COMSIG_LIVING_DEATH, COMSIG_PREQDELETED, COMSIG_QDELETING))
+			if(!QDELETED(slime))
+				for(var/datum/corral_upgrade/upgrade as anything in corral_upgrades)
+					upgrade.on_slime_exited(slime)
 
 /datum/corral_data/proc/start_break()
 	qdel(src)

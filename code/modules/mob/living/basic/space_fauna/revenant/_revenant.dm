@@ -145,7 +145,7 @@
 		return COMPONENT_LIVING_CANCEL_LIFE_PROCESSING
 
 	if(essence_regenerating && !HAS_TRAIT(src, TRAIT_REVENANT_INHIBITED) && essence < max_essence) //While inhibited, essence will not regenerate
-		var/change_in_time = DELTA_WORLD_TIME(SSmobs)
+		var/change_in_time = DELTA_WORLD_TIME(SSclient_mobs)
 		essence = min(essence + (essence_regen_amount * change_in_time), max_essence)
 		update_mob_action_buttons() //because we update something required by our spells in life, we need to update our buttons
 

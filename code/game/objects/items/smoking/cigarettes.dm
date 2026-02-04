@@ -26,7 +26,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	light_color = LIGHT_COLOR_FIRE
 	light_system = OVERLAY_LIGHT
 	light_on = FALSE
-	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
 	throw_verb = "flick"
 	/// Whether this cigarette has been lit.
 	VAR_FINAL/lit = FALSE
@@ -111,6 +110,22 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	UnregisterSignal(dropee, list(COMSIG_HUMAN_FORCESAY, COMSIG_ATOM_DIR_CHANGE))
 	QDEL_NULL(mob_smoke)
 	how_long_have_we_been_smokin = 0 SECONDS
+
+/obj/item/clothing/mask/cigarette/examine(mob/user)
+	. = ..()
+	. += span_notice("While smoking, you can [EXAMINE_HINT("Right-Click")] to intentionally choke on it.")
+
+/obj/item/clothing/mask/cigarette/attack_hand_secondary(mob/living/carbon/user, list/modifiers)
+	if(!iscarbon(user) || !lit)
+		return SECONDARY_ATTACK_CALL_NORMAL
+	var/mob/living/carbon/smoker = user
+	if(smoker.wear_mask != src)
+		return SECONDARY_ATTACK_CALL_NORMAL
+	user.balloon_alert(user, "eating cigarette...")
+	if(!do_after(user, 2 SECONDS, src, hidden = TRUE))
+		return SECONDARY_ATTACK_CALL_NORMAL
+	on_forcesay(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/clothing/mask/cigarette/proc/on_forcesay(mob/living/source)
 	SIGNAL_HANDLER
@@ -520,7 +535,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	chem_volume = 50
 	list_reagents = null
 	choke_time_max = 40 SECONDS
-	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
 
 /obj/item/clothing/mask/cigarette/rollie/Initialize(mapload)
 	name = pick(list(
@@ -672,7 +686,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	smoketime = 20 MINUTES
 	chem_volume = 60
 	list_reagents = list(/datum/reagent/drug/nicotine = 30)
-	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
 
 /obj/item/clothing/mask/cigarette/cigar/havana
 	name = "premium Havanian cigar"
@@ -683,7 +696,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	smoketime = 30 MINUTES
 	chem_volume = 75
 	list_reagents = list(/datum/reagent/drug/nicotine = 45)
-	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
 
 /obj/item/cigbutt
 	name = "cigarette butt"
@@ -716,7 +728,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	list_reagents = null
 	w_class = WEIGHT_CLASS_SMALL
 	choke_forever = TRUE
-	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
 	///name of the stuff packed inside this pipe
 	var/packeditem
 

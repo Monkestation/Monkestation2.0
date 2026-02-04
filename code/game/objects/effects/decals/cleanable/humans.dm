@@ -484,7 +484,7 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 		icon_state_to_use += "paw"
 	else if(SPECIES_TRAINED_MONKEY in species_types)
 		icon_state_to_use += "paw"
-	else if(BODYPART_ID_DIGITIGRADE in species_types)
+	else if((BODYPART_ID_DIGITIGRADE in species_types) || (SPECIES_ORNITHID in species_types))
 		icon_state_to_use += "claw"
 
 	for(var/Ddir in GLOB.cardinals)

@@ -6,7 +6,7 @@
 	area_flags = UNIQUE_AREA | FLORA_ALLOWED
 	//ambience_index = AMBIENCE_ICEMOON
 	sound_environment = SOUND_ENVIRONMENT_PLAIN
-	ambient_buzz = 'monkestation/code/modules/outdoors/sound/weather/forest_ambience.ogg'
+	ambient_buzz = 'monkestation/sound/ambience/forest_ambience.ogg'
 	name = "Forest Planet"
 	icon_state = "explored"
 	always_unpowered = TRUE

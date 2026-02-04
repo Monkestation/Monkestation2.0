@@ -1,20 +1,20 @@
 import { map, sortBy } from 'common/collections';
 import { useBackend, useLocalState } from '../backend';
 import {
-  Button,
-  Section,
-  Modal,
-  Tabs,
   Box,
+  Button,
+  Collapsible,
+  Divider,
+  Flex,
+  Icon,
   Input,
   LabeledList,
-  Flex,
+  Modal,
   ProgressBar,
-  Collapsible,
-  Icon,
-  Divider,
+  Section,
+  Tabs,
 } from '../components';
-import { Window, NtosWindow } from '../layouts';
+import { NtosWindow, Window } from '../layouts';
 import { Experiment } from './ExperimentConfigure';
 
 // Data reshaping / ingestion (thanks stylemistake for the help, very cool!)
@@ -29,7 +29,7 @@ const selectRemappedStaticData = (data) => {
   // Handle reshaping of node cache to fill in unsent fields, and
   // decompress the node IDs
   const node_cache = {};
-  for (let id of Object.keys(data.static_data.node_cache)) {
+  for (const id of Object.keys(data.static_data.node_cache)) {
     const node = data.static_data.node_cache[id];
     const costs = Object.keys(node.costs || {}).map((x) => ({
       type: remapId(x),
@@ -49,7 +49,7 @@ const selectRemappedStaticData = (data) => {
 
   // Do the same as the above for the design cache
   const design_cache = {};
-  for (let id of Object.keys(data.static_data.design_cache)) {
+  for (const id of Object.keys(data.static_data.design_cache)) {
     const [name, classes] = data.static_data.design_cache[id];
     design_cache[remapId(id)] = {
       name: name,
@@ -303,9 +303,11 @@ const TechwebOverview = (props) => {
           </Flex.Item>
           <Flex.Item align={'center'}>
             <Input
+              width="100%"
               value={searchText}
               onChange={(value) => setSearchText(value)}
               placeholder={'Search...'}
+              expensive
             />
           </Flex.Item>
         </Flex>

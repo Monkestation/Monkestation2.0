@@ -1,8 +1,8 @@
 import {
   CheckboxInput,
-  FeatureToggle,
-  FeatureChoiced,
+  type FeatureChoiced,
   FeatureDropdownInput,
+  type FeatureToggle,
 } from '../../base';
 
 export const see_looc_on_map: FeatureToggle = {

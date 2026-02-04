@@ -2,10 +2,10 @@ import { useBackend } from '../backend';
 import {
   Box,
   Button,
-  Stack,
   Icon,
-  Section,
   NumberInput,
+  Section,
+  Stack,
   Table,
 } from '../components';
 import { Window } from '../layouts';
