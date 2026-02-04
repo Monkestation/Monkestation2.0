@@ -82952,9 +82952,6 @@
 	name = "frozen safe"
 	},
 /obj/item/reagent_containers/condiment/coldsauce,
-/obj/item/temperature_pack/cold,
-/obj/item/temperature_pack/cold,
-/obj/item/temperature_pack/cold,
 /obj/item/reagent_containers/condiment/coldsauce,
 /obj/item/food/grown/icepepper,
 /obj/item/clothing/head/costume/drfreezehat,
