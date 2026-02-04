@@ -27,6 +27,7 @@
 	stunmod = 1.3
 	payday_modifier = 1
 
+	species_race_mutation = /datum/mutation/race/simian
 	give_monkey_species_effects = FALSE
 
 /datum/species/monkey/simian/get_species_description()
@@ -69,9 +70,6 @@
 	)
 
 	return to_add
-
-/datum/species/monkey/simian/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load)
-	. = ..()
 
 /datum/species/monkey/simian/random_name(gender,unique,lastname)
 	if(unique)

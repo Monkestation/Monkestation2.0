@@ -1025,7 +1025,7 @@
 		sting_effect.duration -= 10 SECONDS * REM * seconds_per_tick
 	affected_mob.remove_status_effect(/datum/status_effect/jitter)
 	if(affected_mob.has_dna())
-		affected_mob.dna.remove_mutation_group(affected_mob.dna.mutations - affected_mob.dna.get_mutation(/datum/mutation/race), GLOB.standard_mutation_sources)
+		affected_mob.dna.remove_mutation_group(affected_mob.dna.mutations - affected_mob.dna.get_mutation(/datum/mutation/race) - affected_mob.dna.get_mutation(/datum/mutation/race/simian), GLOB.standard_mutation_sources)
 		affected_mob.dna.scrambled = FALSE
 	if(!QDELETED(affected_mob)) //We were a monkey, now a human
 		..()
