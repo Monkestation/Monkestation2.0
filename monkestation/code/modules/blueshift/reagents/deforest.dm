@@ -13,7 +13,6 @@
 
 /datum/reagent/medicine/lidocaine/overdose_process(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	affected_mob.cause_pain(BODY_ZONES_ALL, -1 * REM * seconds_per_tick)
 	affected_mob.adjustOrganLoss(ORGAN_SLOT_HEART,3 * REM * seconds_per_tick, 80)
 
 //Inverse Medicines//
