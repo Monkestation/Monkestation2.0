@@ -221,7 +221,7 @@
 		return
 	original_species = owner.dna.species.type
 	original_name = owner.real_name
-	owner.monkeyize(species_turned_into)
+	owner.monkeyize(monkey_type = species_turned_into)
 
 /datum/mutation/race/on_losing(mob/living/carbon/human/owner)
 	if(owner.stat == DEAD)

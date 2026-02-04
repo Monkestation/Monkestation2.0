@@ -117,7 +117,7 @@
 		var/turf/target = get_ranged_target_turf(user, dir_step, range = 3)
 		. = user.throw_at(target, range = 3, speed = 0.5)
 	if(prob((locate(/obj/machinery) in get_turf(climbed_thing)) ? 70 : 25))
-		user.Knockdown(10)
+		user.Knockdown(8)
 
 	climbed_thing.set_density(TRUE)
 
