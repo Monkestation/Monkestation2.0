@@ -4,7 +4,7 @@
 						'monkestation/sound/ai/duke/welcome/welcome2.ogg')
 	alert_sounds = list('sound/ai/default/attention.ogg')
 	command_report_sounds = list('sound/ai/default/commandreport.ogg')
-	event_sounds = list(ANNOUNCER_AIMALF = 'sound/ai/default/aimalf.ogg',
+	event_sounds = list(ANNOUNCER_AIMALF = 'monkestation/sound/ai/default_modular/aimalf.ogg', // monkestation edit: new AI malf announcement sound - 'sound/ai/default/aimalf.ogg'
 		ANNOUNCER_ALIENS = 'sound/ai/default/aliens.ogg',
 		ANNOUNCER_ANIMES = 'sound/ai/default/animes.ogg',
 		ANNOUNCER_GRANOMALIES = 'sound/ai/default/granomalies.ogg',
