@@ -301,8 +301,9 @@
 		mind.transfer_to(new_gorilla)
 	else
 		new_gorilla.PossessByPlayer(key)
-	if(name_to_give && old_name)
-		new_gorilla.name = new_gorilla.real_name = name_to_give
+	if(name_to_give)
+		new_gorilla.real_name = name_to_give
+		new_gorilla.name = name_to_give
 		new_gorilla.gender = src.gender
 	to_chat(new_gorilla, span_boldnotice("You are now a gorilla. Ooga ooga!"))
 	qdel(src)
