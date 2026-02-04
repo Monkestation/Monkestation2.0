@@ -31,7 +31,8 @@
 	give_monkey_species_effects = FALSE
 
 /datum/species/monkey/simian/get_species_description()
-	return "Monke."
+	return "Simians are the closest siblings to Humans, unlike Monkeys, which is a term reserved for bio-engineered and mass produced \
+		creations that can be packaged into a cube, known as the Monkey Cube."
 
 /datum/species/monkey/simian/create_pref_unique_perks()
 	var/list/to_add = list()
