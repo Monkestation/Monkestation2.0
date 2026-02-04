@@ -1,0 +1,8 @@
+author: "notghosti"
+delete-after: True
+changes:
+  - map: "Paramedics, dep sec, ect. will now no longer spawn ontop of eachother on normal shifts on oshan"
+  - map: "Nanite lab now has purge pills on oshan"
+  - map: "Medical kit is now loaded with medical supplies outside medical on oshan"
+  - map: "botany windoor is no longer inverted and doubled"
+  - map: "NT rep was taught by the RD how to download their programs on their computer."

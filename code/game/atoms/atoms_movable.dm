@@ -121,6 +121,9 @@
 	/// If TRUE, then this will be affected by things such as the "Bot Language Matrix Malfunction" station trait.
 	var/can_language_malfunction = TRUE
 
+	/// The weight for A* pathfinding added to turfs this atom is on.
+	var/astar_weight
+
 /mutable_appearance/emissive_blocker
 
 /mutable_appearance/emissive_blocker/New()
@@ -189,6 +192,10 @@
 			AddComponent(/datum/component/overlay_lighting, is_directional = TRUE)
 		if(MOVABLE_LIGHT_BEAM)
 			AddComponent(/datum/component/overlay_lighting, is_directional = TRUE, is_beam = TRUE)
+
+	if(astar_weight && isturf(loc))
+		var/turf/turf_loc = loc
+		turf_loc.astar_weight += astar_weight
 
 /atom/movable/Destroy(force)
 	QDEL_NULL(language_holder)
@@ -866,6 +873,12 @@
 
 	var/turf/old_turf = get_turf(old_loc)
 	var/turf/new_turf = get_turf(src)
+
+	if(astar_weight)
+		if(old_turf)
+			old_turf.astar_weight -= astar_weight
+		if(new_turf)
+			new_turf.astar_weight += astar_weight
 
 	if (old_turf?.z != new_turf?.z)
 		var/same_z_layer = (GET_TURF_PLANE_OFFSET(old_turf) == GET_TURF_PLANE_OFFSET(new_turf))

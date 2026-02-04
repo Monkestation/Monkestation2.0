@@ -944,3 +944,20 @@
 	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
 	icon_state = "bananotrasen_super_hat"
 	worn_icon_state = "bananotrasen_super_hat"
+
+/obj/item/clothing/neck/flavafloh_commissar_jacket
+	name = "commissar jacket"
+	desc = "A dark leather jacket worn smooth by years of service."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "commissar_jacket"
+	inhand_icon_state = null
+	slot_flags = ITEM_SLOT_OCLOTHING | ITEM_SLOT_NECK
+
+/obj/item/clothing/under/rank/security/officer/flavafloh_pale_blue_fatigues
+	name = "pale blue fatigues"
+	desc = "A set of pale blue fatigues- they've been well worn."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "pale_blue_fatigues"
+	inhand_icon_state = null
