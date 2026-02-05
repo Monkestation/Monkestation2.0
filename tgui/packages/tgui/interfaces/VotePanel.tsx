@@ -91,10 +91,11 @@ export const VotePanel = (props) => {
               !!user.isLowerAdmin && (
                 <Button
                   icon="refresh"
-                  content="Reset Cooldown"
                   disabled={LastVoteTime + VoteCD <= 0}
                   onClick={() => act('resetCooldown')}
-                />
+                >
+                  Reset Cooldown
+                </Button>
               )
             }
           >
@@ -157,17 +158,16 @@ const VoteOptions = (props) => {
                             ? 'This vote cannot be disabled.'
                             : null
                         }
-                        content={
-                          option.config === VoteConfig.Enabled
-                            ? 'Enabled'
-                            : 'Disabled'
-                        }
                         onClick={() =>
                           act('toggleVote', {
                             voteName: option.name,
                           })
                         }
-                      />
+                      >
+                        {option.config === VoteConfig.Enabled
+                          ? 'Enabled'
+                          : 'Disabled'}
+                      </Button.Checkbox>
                     </Stack.Item>
                   )}
                   <Stack.Item>

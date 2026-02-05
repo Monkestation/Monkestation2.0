@@ -55,3 +55,17 @@
   SirNightKnight:
   - rscdel: Removed the pain system.
   - balance: nutcracking someone paralyzes them and knocks them down.
+2026-02-05:
+  Absolucy, Majkl-J:
+  - bugfix: Ruins will now correctly spawn their tied ruins in.
+  flleeppyy:
+  - qol: Vote HUD now fades in and out instead of being right in your face.
+  - code_imp: Vote datums can now specify excluded mobs from votes
+  - bugfix: Lobby players can no longer vote for the shuttle to be called.
+  notghosti:
+  - map: Paramedics, dep sec, ect. will now no longer spawn ontop of eachother on
+      normal shifts on oshan
+  - map: Nanite lab now has purge pills on oshan
+  - map: Medical kit is now loaded with medical supplies outside medical on oshan
+  - map: botany windoor is no longer inverted and doubled
+  - map: NT rep was taught by the RD how to download their programs on their computer.
