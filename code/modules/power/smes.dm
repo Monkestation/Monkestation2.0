@@ -136,7 +136,7 @@
 	if(emp_proofed)
 		. += span_notice("It has been upgraded to be protected from EMPs.")
 	else
-		. += span_notice("It can be upgraded with EMP-proofing using [EXAMINE_HINT("30 sheets of reinforced plasma glass")].")
+		. += span_notice("It can be upgraded with EMP-proofing using [EXAMINE_HINT("10 sheets of reinforced plasma glass")].")
 
 /obj/machinery/power/smes/update_overlays()
 	. = ..()
@@ -296,7 +296,7 @@
 			balloon_alert(user, "already shielded from EMPs!")
 			return ITEM_INTERACT_BLOCKING
 		var/obj/item/stack/sheet/plasmarglass/glass = installing_cable
-		if(glass.amount < 30)
+		if(glass.amount < 10)
 			balloon_alert(user, "not enough glass!")
 			return ITEM_INTERACT_BLOCKING
 		balloon_alert(user, "installing EMP shielding....")
@@ -305,7 +305,7 @@
 		if(emp_proofed)
 			balloon_alert(user, "already shielded from EMPs!")
 			return ITEM_INTERACT_BLOCKING
-		if(!glass.use(30))
+		if(!glass.use(10))
 			balloon_alert(user, "not enough glass!")
 			return ITEM_INTERACT_BLOCKING
 		emp_proofed = TRUE
