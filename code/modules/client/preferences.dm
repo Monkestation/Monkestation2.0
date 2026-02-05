@@ -676,7 +676,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/list/options = list()
 	var/current_slot
 
-	for(var/i = 1, i <= length(characters), i++)
+	for(var/i = 1 to length(characters))
 		var/name = characters[i]
 		if (isnull(name))
 			continue
