@@ -4,6 +4,9 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "syndbeacon"
 
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	move_resist = INFINITY
+
 	use_power = NO_POWER_USE
 	density = TRUE
 
