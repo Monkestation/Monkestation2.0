@@ -47,11 +47,18 @@
 		/datum/round_event_control/antagonist/solo/bloodsucker/roundstart = 6,
 		//datum/round_event_control/antagonist/solo/heretic/roundstart = 1,
 	)
+	var/brother_chance = 10
 
 /datum/round_event/antagonist/solo/brother/start()
 	message_admins("BBs are selected")
 	var/teams_amount = length(setup_minds)
-	var/list/target_candidates = antag_event_controller.get_candidates() //This should try to grab from anyone who has BB enabled
+	var/list/possible_bro = list()
+	for (var/mob/player in GLOB.alive_player_list)
+		if(ROLE_BROTHER in player.mind.current.client.prefs.be_special) //This should try to grab from anyone who has BB enabled
+			possible_bro.Add(player)
+			message_admins("Possible brother to pick from")
+
+
 	for(var/teamAmount in 1 to teams_amount)
 		message_admins("we are trying to make a team")
 		var/datum/team/brother_team/new_team = new
@@ -59,11 +66,11 @@
 		var/another_brother = 1
 		while(another_brother > 0) //Adds 1 brother to the team (from anyone would could roll BB), with a 10% chance for another if we add one. keep rolling until it fails
 			another_brother = 0
-			var/and_another = prob(10)
+			var/and_another = prob(brother_chance)
 			if(and_another)
 				another_brother = 1
 				message_admins("Another brother!!")
-			var/mob/target_player = astype(pick_n_take(target_candidates))
+			var/mob/target_player = astype(pick_n_take(possible_bro))
 			if(isnull(target_player)) //skip adding a brother if we picked null (like if only one person has BB enabled)
 				message_admins("tried to add null to a bb team")
 				break
@@ -81,19 +88,19 @@
 					new_team.add_member(pop(setup_minds))
 		if(new_team.members.len == 0) //If no one is on their team still, they get heretic because all their possible brothers betrayed them. they also get their brothers as additional sac targets
 			message_admins("Still no one on our team")
-			var/list/enemyBrothers = list()
+			var/list/enemy_brothers = list()
 			for(var/mob/player in GLOB.alive_player_list)
 				message_admins("Checking all players to see if they are a BB")
 				if(player.mind.has_antag_datum(/datum/antagonist/brother))
-					enemyBrothers.Add(player)
+					enemy_brothers.Add(player)
 					message_admins("We found a BB, we will become a heretic and hunt them down")
-			if(enemyBrothers.len == 0)
+			if(enemy_brothers.len == 0)
 				starting_brother.add_antag_datum(/datum/antagonist/traitor) // Give them traitor if theres no brothers
 				message_admins("Brothers dont exist so become a traitor")
 			else
 				var/datum/antagonist/heretic/heretic_datum = starting_brother.add_antag_datum(/datum/antagonist/heretic)
-				for(var/mob/hereticTarget in enemyBrothers)
-					heretic_datum.add_sacrifice_target(hereticTarget)
+				for(var/mob/heretic_target in enemy_brothers)
+					heretic_datum.add_sacrifice_target(heretic_target)
 				message_admins("Your brothers betrayed you, heretic time")
 			message_admins("Destroying the team that would have been made, as we cant find more brothers")
 			qdel(new_team)
