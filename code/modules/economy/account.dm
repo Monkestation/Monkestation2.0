@@ -183,8 +183,6 @@
 		return FALSE
 
 	var/money_to_transfer = round(account_job.paycheck * payday_modifier * amount_of_paychecks)
-	if(amount_of_paychecks == 1)
-		money_to_transfer = clamp(money_to_transfer, 0, PAYCHECK_CREW) //We want to limit single, passive paychecks to regular crew income.
 	if(free)
 		adjust_money(money_to_transfer, "Nanotrasen: Shift Payment")
 		SSblackbox.record_feedback("amount", "free_income", money_to_transfer)

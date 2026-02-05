@@ -9,6 +9,7 @@
 	icon_keyboard = "id_key"
 	circuit = /obj/item/circuitboard/computer/accounting
 	light_color = LIGHT_COLOR_GREEN
+	req_access = list(ACCESS_HOP)
 
 /obj/machinery/computer/accounting/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
@@ -58,7 +59,10 @@
 	playsound(src, SFX_TERMINAL_TYPE, 50, FALSE)
 	var/datum/bank_account/bank_account = SSeconomy.bank_accounts_by_id[params["account_id"]]
 	if(isnull(bank_account) || !(bank_account.account_job?.job_flags & JOB_CREW_MANIFEST))
-		return
+		return FALSE
+	if(!allowed(ui.user))
+		balloon_alert(ui.user, "access not found!")
+		return FALSE
 
 	switch(action)
 		if("paycheck_advance")
