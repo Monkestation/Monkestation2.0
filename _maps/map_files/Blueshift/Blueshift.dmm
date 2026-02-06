@@ -43614,6 +43614,9 @@
 	id = "secmechbay";
 	name = "Security Mech Garage Door Control"
 	},
+/obj/effect/turf_decal/stripes{
+	dir = 8
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/mechbay)
 "itv" = (
@@ -45297,6 +45300,7 @@
 	req_access = list("security");
 	name = "Security Mech Garage Door Control"
 	},
+/obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/iron/dark/side{
 	dir = 4
 	},
@@ -59523,6 +59527,9 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/stripes{
+	dir = 8
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/mechbay)
 "ltt" = (
@@ -60388,6 +60395,9 @@
 "lCR" = (
 /obj/effect/turf_decal/tile/red,
 /obj/machinery/newscaster/directional/east,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
 /turf/open/floor/iron/dark/side{
 	dir = 4
 	},
@@ -83780,6 +83790,9 @@
 /obj/effect/turf_decal/tile/red,
 /obj/structure/reagent_dispensers/fueltank,
 /obj/machinery/light_switch/directional/south,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/mechbay)
 "qhK" = (
@@ -112568,6 +112581,9 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/stripes{
+	dir = 4
+	},
 /turf/open/floor/iron/dark/side{
 	dir = 4
 	},
@@ -116129,6 +116145,14 @@
 	},
 /turf/open/floor/wood,
 /area/station/command/captain_dining)
+"wjU" = (
+/obj/effect/turf_decal/stripes{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/side{
+	dir = 4
+	},
+/area/station/security/office)
 "wjW" = (
 /turf/open/floor/wood/parquet,
 /area/station/cargo/quartermaster)
@@ -159527,7 +159551,7 @@ nOi
 rxV
 dOk
 iLd
-vwN
+wjU
 vBs
 lCR
 rCT
