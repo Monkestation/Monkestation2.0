@@ -108,16 +108,7 @@
 	if (def_zone != BODY_ZONE_CHEST && def_zone != BODY_ZONE_HEAD)
 		stamina_armor_check = min(ARMOR_MAX_BLOCK, check_projectile_armor(BODY_ZONE_CHEST, hitting_projectile, is_silent = TRUE))
 
-	var/damage_done = apply_damage(
-		damage = hitting_projectile.damage,
-		damagetype = hitting_projectile.damage_type,
-		def_zone = def_zone,
-		blocked = armor_check,
-		wound_bonus = hitting_projectile.wound_bonus,
-		bare_wound_bonus = hitting_projectile.bare_wound_bonus,
-		sharpness = hitting_projectile.sharpness,
-		attack_direction = hitting_projectile.dir,
-	)
+
 	if(hitting_projectile.stamina)
 		apply_damage(
 			damage = hitting_projectile.stamina,
