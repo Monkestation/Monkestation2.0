@@ -82952,9 +82952,6 @@
 	name = "frozen safe"
 	},
 /obj/item/reagent_containers/condiment/coldsauce,
-/obj/item/temperature_pack/cold,
-/obj/item/temperature_pack/cold,
-/obj/item/temperature_pack/cold,
 /obj/item/reagent_containers/condiment/coldsauce,
 /obj/item/food/grown/icepepper,
 /obj/item/clothing/head/costume/drfreezehat,
@@ -120119,7 +120116,7 @@
 /area/station/maintenance/department/medical)
 "wYS" = (
 /obj/machinery/computer/records/security,
-/obj/structure/noticeboard/directional/north,
+/obj/structure/detectiveboard/directional/north,
 /turf/open/floor/carpet,
 /area/station/security/detectives_office)
 "wYV" = (

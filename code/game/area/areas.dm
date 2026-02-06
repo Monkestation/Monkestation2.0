@@ -127,6 +127,9 @@
 	/// Are shuttles allowed to dock in this area
 	var/allow_shuttle_docking = FALSE
 
+	/// Extra A* weight applied to all turfs in this area.
+	var/astar_weight = 0
+
 /**
  * A list of teleport locations
  *

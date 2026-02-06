@@ -232,5 +232,5 @@
 #define HOVER_OUTLINE_FILTER "hover_outline"
 
 // Vote HUD
-#define ui_votehud "EAST-5:23,NORTH"
-#define ui_votehud_left "WEST+2:23,NORTH"
+#define UI_VOTEHUD "EAST-5:23,NORTH"
+#define UI_VOTEHUD_LEFT "WEST+2:23,NORTH"

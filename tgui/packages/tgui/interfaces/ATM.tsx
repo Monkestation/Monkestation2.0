@@ -11,6 +11,7 @@ type ATMData = {
   meta_balance: number;
   cash_balance: number;
   lottery_pool: number;
+  time_until_draw: number;
 };
 export const ATM = () => {
   const { act, data } = useBackend<ATMData>();
@@ -23,20 +24,21 @@ export const ATM = () => {
     meta_balance,
     cash_balance,
     lottery_pool,
+    time_until_draw,
   } = data;
 
   return (
     <Window
       title="Automated Teller Machine"
       width={360}
-      height={flash_sale_present ? 500 : 420}
+      height={flash_sale_present ? 420 : 340}
     >
       <Window.Content>
         <Stack vertical fill>
           <Section title="Account Overview">
             <Stack vertical>
               <Box textAlign="center" fontSize="20px" bold>
-                ${cash_balance}
+                {cash_balance}cr
               </Box>
 
               <Stack justify="space-between">
@@ -50,9 +52,16 @@ export const ATM = () => {
               <Stack justify="space-between">
                 <Box>
                   <Icon name="ticket" mr={1} />
-                  Lottery Pool
+                  Current Lottery Pool
                 </Box>
-                <Box>{lottery_pool}</Box>
+                <Box>{lottery_pool}cr</Box>
+              </Stack>
+              <Stack justify="space-between">
+                <Box>
+                  <Icon name="sync" mr={1} />
+                  Next lottery pull in:
+                </Box>
+                <Box>{time_until_draw}</Box>
               </Stack>
             </Stack>
           </Section>

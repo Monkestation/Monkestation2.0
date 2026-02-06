@@ -35,6 +35,7 @@ GLOBAL_PROTECT(href_token)
 	var/datum/particle_editor/particle_test
 	var/datum/colorblind_tester/color_test = new
 	var/datum/plane_master_debug/plane_debug
+	var/datum/pathfind_debug/path_debug
 	var/obj/machinery/computer/libraryconsole/admin_only_do_not_map_in_you_fucker/library_manager
 
 	/// Whether or not the user tried to connect, but was blocked by 2FA
@@ -103,7 +104,8 @@ GLOBAL_PROTECT(href_token)
 		message_admins("[key_name_admin(usr)][msg]")
 		log_admin("[key_name(usr)][msg]")
 		return QDEL_HINT_LETMELIVE
-	qdel(ranks)
+	QDEL_NULL(ranks)
+	QDEL_NULL(path_debug)
 	marked_datum = null
 	filterrific = null
 	particle_test = null
@@ -135,6 +137,7 @@ GLOBAL_PROTECT(href_token)
 	GLOB.deadmins[target] = src
 	GLOB.admin_datums -= target
 	QDEL_NULL(plane_debug)
+	QDEL_NULL(path_debug)
 
 	deadmined = TRUE
 
