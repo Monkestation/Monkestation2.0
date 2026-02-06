@@ -454,6 +454,15 @@ GLOBAL_LIST_INIT(paintable_decals, init_subtypes(/datum/paintable_decal_category
 	name = "Warning Line Corner"
 	icon_state = "warninglinecorner"
 
+/datum/paintable_decal/warning/warn_end
+	name = "Warning Line Ending"
+	icon_state = "warn_end"
+
+/datum/paintable_decal/warning/warn_box
+	name = "Warning Line Box"
+	icon_state = "warn_box"
+	directional = FALSE
+
 /datum/paintable_decal/warning/caution
 	name = "Caution Label"
 	icon_state = "caution"
@@ -469,6 +478,16 @@ GLOBAL_LIST_INIT(paintable_decals, init_subtypes(/datum/paintable_decal_category
 /datum/paintable_decal/warning/bot
 	name = "Bot"
 	icon_state = "bot"
+	directional = FALSE
+
+/datum/paintable_decal/warning/bot_right
+	name = "Bot Right"
+	icon_state = "bot_right"
+	directional = FALSE
+
+/datum/paintable_decal/warning/bot_left
+	name = "Bot Left"
+	icon_state = "bot_left"
 	directional = FALSE
 
 /datum/paintable_decal/warning/loading
