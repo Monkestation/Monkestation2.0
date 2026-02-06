@@ -288,6 +288,7 @@
 		bottle.smash(attacked, user)
 		shuttle.name = new_name
 		rename_area(shuttle.default_area, new_name)
+		update_name()
 
 /obj/item/shuttle_blueprints/proc/start_visualizing(mob/user)
 	visualize_frame_turfs = TRUE
