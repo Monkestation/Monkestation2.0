@@ -82,7 +82,7 @@
 		. += mutable_appearance(icon, "[base_icon_state]_on")
 	. += emissive_appearance(icon, "[base_icon_state]_e", src, alpha = src.alpha)
 
-/obj/machinery/mail_collector/vv_edit_var(vname, vval)
+/obj/machinery/mail_collector/vv_edit_var(var_name, var_value)
 	. = ..()
 	if(var_name == NAMEOF(src, money_collected))
 		update_appearance(UPDATE_ICON)
