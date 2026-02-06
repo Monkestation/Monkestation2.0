@@ -186,6 +186,15 @@
 	if(new_bodypart)
 		new_bodypart.update_limb(is_creating = TRUE)
 
+/// Makes sure that the owner's bodytype flags match the flags of all of it's parts and organs
+/mob/living/carbon/proc/synchronize_bodytypes()
+	var/all_limb_flags = NONE
+	for(var/obj/item/bodypart/limb as anything in bodyparts)
+		for(var/obj/item/organ/external/ext_organ as anything in limb.external_organs)
+			all_limb_flags |= ext_organ.external_bodytypes
+		all_limb_flags |= limb.bodytype
+	bodytype = all_limb_flags
+	dna?.species.bodytype = all_limb_flags
 
 /proc/skintone2hex(skin_tone)
 	. = 0
@@ -219,3 +228,23 @@
 		//Used exclusively for the jaundice yourself monkecoin shop purchase
 		if("simpsons_yellow")
 			. = "#F5CD30"
+
+/proc/body_zone_as_plaintext(body_zone)
+	switch (body_zone)
+		if (BODY_ZONE_L_ARM)
+			return "left arm"
+		if (BODY_ZONE_R_ARM)
+			return "right arm"
+		if (BODY_ZONE_L_LEG)
+			return "left leg"
+		if (BODY_ZONE_R_LEG)
+			return "right leg"
+		if (BODY_ZONE_PRECISE_L_HAND)
+			return "left hand"
+		if (BODY_ZONE_PRECISE_R_HAND)
+			return "right hand"
+		if (BODY_ZONE_PRECISE_L_FOOT)
+			return "left foot"
+		if (BODY_ZONE_PRECISE_R_FOOT)
+			return "right foot"
+	return body_zone

@@ -46,10 +46,10 @@
 		owner.balloon_alert(owner, "host required")
 		return FALSE
 	if(needs_living_host == TRUE && cortical_owner.human_host.stat == DEAD)
-		owner.balloon_alert(owner, "Alive host required")
+		owner.balloon_alert(owner, "alive host required")
 		return FALSE
 	if(needs_dead_host == TRUE && cortical_owner.human_host.stat != DEAD)
-		owner.balloon_alert(owner, "Dead host required")
+		owner.balloon_alert(owner, "dead host required")
 		return FALSE
 	if(sugar_restricted == TRUE && cortical_owner.host_sugar())
 		owner.balloon_alert(owner, "cannot function with sugar in host")

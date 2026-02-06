@@ -1,17 +1,7 @@
-// Remove these once we have Byond implementation.
-// ------------------------------------
-#define IS_NAN(a) (a != a)
-
-#define IS_INF__UNSAFE(a) (a == a && a-a != a-a)
-#define IS_INF(a) (isnum(a) && IS_INF__UNSAFE(a))
-
-#define IS_FINITE__UNSAFE(a) (a-a == a-a)
+#define IS_FINITE__UNSAFE(a) (!isinf(a) && !isnan(a))
 #define IS_FINITE(a) (isnum(a) && IS_FINITE__UNSAFE(a))
 
-#define IS_SAFE_NUM(a) (isnum(a) && !IS_INF__UNSAFE(a) && IS_FINITE__UNSAFE(a))
-
-// ------------------------------------
-// Aight dont remove the rest
+#define IS_SAFE_NUM(a) IS_FINITE(a)
 
 // Credits to Nickr5 for the useful procs I've taken from his library resource.
 // This file is quadruple wrapped for your pleasure
@@ -21,7 +11,6 @@
 
 
 #define PI 3.1416
-#define PI2 PI / 2 //MONKESTATION MODULE OUTDOOR_EFFECTS
 #define INFINITY 1e31 //closer then enough
 
 #define SHORT_REAL_LIMIT 16777216

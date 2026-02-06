@@ -111,7 +111,7 @@
 /obj/machinery/gibber/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/gibber/attackby(obj/item/P, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "grinder_open", "grinder", P))
@@ -154,7 +154,7 @@
 		set_occupant(null)
 		return
 
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 	audible_message(span_hear("You hear a loud squelchy grinding sound."))
 	playsound(loc, 'sound/machines/juicer.ogg', 50, TRUE)
 	operating = TRUE
@@ -179,7 +179,7 @@
 
 	if(ishuman(occupant))
 		var/mob/living/carbon/human/gibee = occupant
-		if(prob(40) && (sourcejob in list(JOB_SECURITY_OFFICER,JOB_WARDEN,JOB_HEAD_OF_SECURITY,JOB_SECURITY_ASSISTANT))) // monkestation edit: add secass
+		if(prob(40) && (sourcejob in list(JOB_SECURITY_OFFICER, JOB_WARDEN, JOB_HEAD_OF_SECURITY, JOB_SECURITY_ASSISTANT, JOB_BRIG_PHYSICIAN,)))
 			typeofmeat = /obj/item/food/meat/slab/pig
 		else if(gibee.dna && gibee.dna.species)
 			typeofmeat = gibee.dna.species.meat

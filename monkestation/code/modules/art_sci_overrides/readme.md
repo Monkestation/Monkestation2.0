@@ -1,7 +1,8 @@
 ## Title: <!--Title of your addition-->
 
 <!-- uppercase, underscore_connected name of your module, that you use to mark files-->
-MODULE ID: ART_SCI_OVERRIDES 
+
+MODULE ID: ART_SCI_OVERRIDES
 
 ### Description:
 
@@ -10,13 +11,18 @@ This redoes art sci to be code compliant
 <!-- Here, try to describe what your PR does, what features it provides and any other directly useful information -->
 
 ### TG Proc/File Changes:
-	- code\modules\artsci\artifact_datum.dm
-	- code\modules\artsci\testing_machines\heater.dm
+
+    - code\modules\artsci\artifact_datum.dm
+    - code\modules\artsci\testing_machines\heater.dm
+
 <!-- If you had to edit, or append to any core procs in the process of making this PR, list them here. APPEND: Also, please include any files that you've changed. .DM files that is. -->
 
 ### Defines:
-	- code\__DEFINES\artifact.dm
+
+    - code\__DEFINES\artifact.dm
+
 <!-- If you needed to add any defines, mention the files you added those defines in -->
+
 ### Master file additions
 
 - N/A
@@ -31,5 +37,6 @@ This redoes art sci to be code compliant
 
 <!-- Here go the credits to you, dear coder, and in case of collaborative work or ports, credits to the original source of the code -->
 <!-- Orignal Coders -->
+
 Made by Dwasint
 Most of Sprites from Goon in Goon Folder

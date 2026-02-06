@@ -58,6 +58,10 @@
 	QDEL_NULL(wheels)
 	. = ..()
 
+/obj/item/clothing/shoes/wheelys/cheap
+	name = "Cheap Wheely-Heels"
+	wheels = /obj/vehicle/ridden/scooter/skateboard/wheelys/cheap
+
 /obj/item/clothing/shoes/wheelys/rollerskates
 	name = "roller skates"
 	desc = "An EightO brand pair of roller skates. The wheels are retractable, though're quite bulky to walk in."

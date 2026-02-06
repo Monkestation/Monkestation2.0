@@ -1,8 +1,8 @@
 /datum/computer_file/program/shipping
 	filename = "shipping"
 	filedesc = "GrandArk Exporter"
-	category = PROGRAM_CATEGORY_SUPL
-	program_icon_state = "shipping"
+	downloader_category = PROGRAM_CATEGORY_SUPPLY
+	program_open_overlay = "shipping"
 	extended_desc = "A combination printer/scanner app that enables modular computers to print barcodes for easy scanning and shipping."
 	size = 6
 	tgui_id = "NtosShipping"
@@ -32,7 +32,7 @@
 
 	switch(action)
 		if("ejectid")
-			computer.RemoveID(usr)
+			computer.remove_id(usr)
 		if("selectid")
 			if(!computer.computer_id_slot.registered_account)
 				playsound(get_turf(computer.ui_host()), 'sound/machines/buzz-sigh.ogg', 50, TRUE, -1)

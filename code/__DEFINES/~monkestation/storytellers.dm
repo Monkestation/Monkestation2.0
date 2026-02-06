@@ -30,6 +30,8 @@
 #define TAG_ALIEN "alien"
 /// When the event is magical in nature
 #define TAG_MAGICAL "magical"
+/// When the event is mundane in nature (complete opposite of the above)
+#define TAG_MUNDANE "mundane"
 
 #define EVENT_TRACK_MUNDANE "Mundane"
 #define EVENT_TRACK_MODERATE "Moderate"
@@ -81,7 +83,7 @@
 #define EVENT_PANEL_TRACKS list(EVENT_TRACK_MUNDANE, EVENT_TRACK_MODERATE, EVENT_TRACK_MAJOR, EVENT_TRACK_ROLESET, EVENT_TRACK_OBJECTIVES, UNCATEGORIZED_EVENTS, ALL_EVENTS)
 
 /// Defines for the antag cap to prevent midround injections.
-#define ANTAG_CAP_FLAT 3
+#define ANTAG_CAP_FLAT 30
 #define ANTAG_CAP_DENOMINATOR 30
 
 ///Below are defines for roundstart point pool. The GAIN ones are multiplied by ready population

@@ -74,14 +74,14 @@
 		if(tank_volume && (damage_flag == BULLET || damage_flag == LASER))
 			boom()
 
-/obj/structure/reagent_dispensers/attackby(obj/item/W, mob/user, params)
-	if(W.is_refillable())
+/obj/structure/reagent_dispensers/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(attacking_item.is_refillable())
 		return FALSE //so we can refill them via their afterattack.
-	if(istype(W, /obj/item/assembly_holder) && accepts_rig)
+	if(istype(attacking_item, /obj/item/assembly_holder) && accepts_rig)
 		if(rig)
 			balloon_alert(user, "another device is in the way!")
 			return ..()
-		var/obj/item/assembly_holder/holder = W
+		var/obj/item/assembly_holder/holder = attacking_item
 		if(!(locate(/obj/item/assembly/igniter) in holder.assemblies))
 			return ..()
 
@@ -102,8 +102,8 @@
 		user.balloon_alert_to_viewers("attached rig")
 		return
 
-	if(istype(W, /obj/item/stack/sheet/iron) && can_be_tanked)
-		var/obj/item/stack/sheet/iron/metal_stack = W
+	if(istype(attacking_item, /obj/item/stack/sheet/iron) && can_be_tanked)
+		var/obj/item/stack/sheet/iron/metal_stack = attacking_item
 		metal_stack.use(1)
 		var/obj/structure/reagent_dispensers/plumbed/storage/new_tank = new /obj/structure/reagent_dispensers/plumbed/storage(drop_location())
 		new_tank.reagents.maximum_volume = reagents.maximum_volume
@@ -214,7 +214,7 @@
 	balloon_alert(user, "[leaking ? "opened" : "closed"] [src]'s tap")
 	user.log_message("[leaking ? "opened" : "closed"] [src].", LOG_GAME)
 	tank_leak()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/reagent_dispensers/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
@@ -236,7 +236,7 @@
 	. = ..()
 	if(has_gravity())
 		playsound(src, 'sound/effects/roll.ogg', 100, 1)//Monkestation edit end
-		
+
 /obj/structure/reagent_dispensers/watertank/high
 	name = "high-capacity water tank"
 	desc = "A highly pressurized water tank made to hold gargantuan amounts of water."
@@ -271,6 +271,7 @@
 	accepts_rig = TRUE
 	can_buckle = TRUE //Monkestation edit start
 	buckle_lying = 0
+	cover_amount = 50
 
 /obj/structure/reagent_dispensers/fueltank/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
@@ -306,22 +307,22 @@
 		log_bomber(P.firer, "detonated a", src, "via projectile")
 		boom()
 
-/obj/structure/reagent_dispensers/fueltank/attackby(obj/item/I, mob/living/user, params)
-	if(I.tool_behaviour == TOOL_WELDER)
+/obj/structure/reagent_dispensers/fueltank/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(attacking_item.tool_behaviour == TOOL_WELDER)
 		if(!reagents.has_reagent(/datum/reagent/fuel))
 			to_chat(user, span_warning("[src] is out of fuel!"))
 			return
-		var/obj/item/weldingtool/W = I
-		if(istype(W) && !W.welding)
-			if(W.reagents.has_reagent(/datum/reagent/fuel, W.max_fuel))
-				to_chat(user, span_warning("Your [W.name] is already full!"))
+		var/obj/item/weldingtool/welder = attacking_item
+		if(istype(welder) && !welder.welding)
+			if(welder.reagents.has_reagent(/datum/reagent/fuel, welder.max_fuel))
+				to_chat(user, span_warning("Your [welder.name] is already full!"))
 				return
-			reagents.trans_to(W, W.max_fuel, transfered_by = user)
-			user.visible_message(span_notice("[user] refills [user.p_their()] [W.name]."), span_notice("You refill [W]."))
+			reagents.trans_to(welder, welder.max_fuel, transfered_by = user)
+			user.visible_message(span_notice("[user] refills [user.p_their()] [welder.name]."), span_notice("You refill [welder]."))
 			playsound(src, 'sound/effects/refill.ogg', 50, TRUE)
-			W.update_appearance()
+			welder.update_appearance()
 		else
-			user.visible_message(span_danger("[user] catastrophically fails at refilling [user.p_their()] [I.name]!"), span_userdanger("That was stupid of you."))
+			user.visible_message(span_danger("[user] catastrophically fails at refilling [user.p_their()] [attacking_item.name]!"), span_userdanger("That was stupid of you."))
 			log_bomber(user, "detonated a", src, "via welding tool")
 			boom()
 		return
@@ -403,6 +404,71 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/virusfood, 30)
 
+/obj/structure/reagent_dispensers/wall/mutagenvirusfood
+	name = "mutagenic agar dispenser"
+	desc = "A dispenser of high-potency mutagenic agar."
+	icon_state = "virus_food"
+	reagent_id = /datum/reagent/toxin/mutagen/mutagenvirusfood
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/mutagenvirusfood, 30)
+
+
+/obj/structure/reagent_dispensers/wall/mutagenvirusfoodsugar
+	name = "sucrose agar dispenser"
+	desc = "A dispenser of high-potency sugary sucrose agar."
+	icon_state = "virus_food"
+	reagent_id = /datum/reagent/toxin/mutagen/mutagenvirusfood/sugar
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/mutagenvirusfoodsugar, 30)
+
+/obj/structure/reagent_dispensers/wall/synaptizinevirusfood
+	name = "virus rations dispenser"
+	desc = "A dispenser of high-potency virus mutagenic."
+	icon_state = "virus_food"
+	reagent_id = /datum/reagent/medicine/synaptizine/synaptizinevirusfood
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/synaptizinevirusfood, 30)
+
+/obj/structure/reagent_dispensers/wall/plasmavirusfood
+	name = "virus plasma dispenser"
+	desc = "A dispenser of high-potency virus plasma."
+	icon_state = "virus_food"
+	reagent_id = /datum/reagent/toxin/plasma/plasmavirusfood
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/plasmavirusfood, 30)
+
+/obj/structure/reagent_dispensers/wall/plasmavirusfoodweak
+	name = "weak virus plasma dispenser"
+	desc = "A dispenser of high-potency weak-potency virus plasma."
+	icon_state = "virus_food"
+	reagent_id = /datum/reagent/toxin/plasma/plasmavirusfood/weak
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/plasmavirusfoodweak, 30)
+
+/obj/structure/reagent_dispensers/wall/uraniumvirusfood
+	name = "decaying uranium gel dispenser"
+	desc = "A dispenser of decaying uranium gel."
+	icon_state = "virus_food"
+	reagent_id = /datum/reagent/uranium/uraniumvirusfood
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/uraniumvirusfood, 30)
+
+/obj/structure/reagent_dispensers/wall/uraniumvirusfoodunstable
+	name = "unstable uranium gel dispenser"
+	desc = "A dispenser of unstable uranium gel."
+	icon_state = "virus_food"
+	reagent_id =/datum/reagent/uranium/uraniumvirusfood/unstable
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/uraniumvirusfoodunstable, 30)
+
+/obj/structure/reagent_dispensers/wall/uraniumvirusfoodstable
+	name = "stable uranium gel dispenser"
+	desc = "A dispenser of high-potency virus mutagenic."
+	icon_state = "virus_food"
+	reagent_id = /datum/reagent/uranium/uraniumvirusfood/stable
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/uraniumvirusfoodstable, 30)
+
 /obj/structure/reagent_dispensers/cooking_oil
 	name = "vat of cooking oil"
 	desc = "A huge metal vat with a tap on the front. Filled with cooking oil for use in frying food."
@@ -433,7 +499,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/virusfood, 30
 /obj/structure/reagent_dispensers/plumbed/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/reagent_dispensers/plumbed/storage
 	name = "stationary storage tank"
@@ -443,9 +509,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/virusfood, 30
 /obj/structure/reagent_dispensers/plumbed/storage/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/simple_rotation)
-
-/obj/structure/reagent_dispensers/plumbed/storage/AltClick(mob/user)
-	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
 /obj/structure/reagent_dispensers/plumbed/storage/update_overlays()
 	. = ..()

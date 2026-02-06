@@ -54,7 +54,7 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 
 /// Invoke this scripture, checking if there's valid power and vitality
 /datum/scripture/proc/invoke()
-	if(GLOB.clock_power < power_cost || GLOB.clock_vitality < vitality_cost)
+	if(SSthe_ark.clock_power < power_cost || GLOB.clock_vitality < vitality_cost)
 		invoke_fail()
 
 		if(invocation_chant_timer)
@@ -65,30 +65,25 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 
 		return
 
-	GLOB.clock_power -= power_cost
+	SSthe_ark.clock_power -= power_cost
 	GLOB.clock_vitality -= vitality_cost
 	invoke_success()
-
 
 /// On success of invoking the scripture
 /datum/scripture/proc/invoke_success()
 	return TRUE
 
-
 /// On failure of invoking the scripture
 /datum/scripture/proc/invoke_fail()
 	return TRUE
 
-
 /// The overall reciting proc for saying every single line for a scripture
-/datum/scripture/proc/recital()
+/datum/scripture/proc/recital(input_invoke_time)
 	if(!length(invocation_text))
 		return
 
 	var/steps = length(invocation_text)
-	var/true_invocation_time = invocation_time
-	if(fast_invoke_mult && HAS_TRAIT(invoker, TRAIT_FASTER_SLAB_INVOKE))
-		true_invocation_time = invocation_time * fast_invoke_mult
+	var/true_invocation_time = input_invoke_time || get_true_invocation_time()
 	var/time_between_say = true_invocation_time / (steps + 1)
 
 	if(invocation_chant_timer)
@@ -97,6 +92,9 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 
 	recite(1, time_between_say, steps)
 
+/datum/scripture/proc/get_true_invocation_time()
+	. = invocation_time * (HAS_TRAIT(invoker, TRAIT_FASTER_SLAB_INVOKE) ? fast_invoke_mult : 1)
+	return .
 
 /// For reciting an individual line of a scripture
 /datum/scripture/proc/recite(text_point, wait_time, stop_at = 0)
@@ -194,16 +192,9 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 		end_invoke()
 		return
 
-	recital()
-
-	var/true_invocation_time = invocation_time
-	if(fast_invoke_mult && HAS_TRAIT(invoker, TRAIT_FASTER_SLAB_INVOKE))
-		true_invocation_time = invocation_time * fast_invoke_mult
-
-	if(istype(src, /datum/scripture/create_structure) && GLOB.clock_ark?.current_state >= ARK_STATE_ACTIVE)
-		true_invocation_time *= (iscogscarab(invoking_mob) ? 2.5 : 5)
-
-	if(do_after(invoking_mob, true_invocation_time, target = invoking_mob, extra_checks = CALLBACK(src, PROC_REF(check_special_requirements), invoking_mob)))
+	var/true_invocation_time = get_true_invocation_time()
+	recital(true_invocation_time)
+	if(do_after(invoking_mob, true_invocation_time, invoking_mob, extra_checks = CALLBACK(src, PROC_REF(check_special_requirements), invoking_mob), hidden = TRUE))
 		invoke()
 
 		to_chat(invoking_mob, span_brass("You invoke <b>[name]</b>."))
@@ -219,11 +210,9 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 
 		end_invoke()
 
-
 /// End the invoking, nulling things out
 /datum/scripture/proc/end_invoke()
 	invoking_slab.invoking_scripture = null
-
 
 // Call these on the instances in the global lists
 /// Set a scripture's unique_locked to FALSE and reload the UIs of slabs if set
@@ -252,8 +241,10 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 
 // Base create structure scripture
 /datum/scripture/create_structure
-	/// Typepath for the structure to create
+	///Typepath for the structure to create
 	var/summoned_structure
+	///How long is our creation time multiplied by if the assault has begun
+	var/assault_invoke_time_mult = 2
 
 
 /datum/scripture/create_structure/check_special_requirements(mob/user)
@@ -269,15 +260,13 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 
 	return TRUE
 
+/datum/scripture/create_structure/get_true_invocation_time()
+	. = ..()
+	if(GLOB.clock_ark?.current_state >= ARK_STATE_ACTIVE)
+		. *= (iscogscarab(invoker) ? assault_invoke_time_mult : assault_invoke_time_mult * 2)
 
 /datum/scripture/create_structure/invoke_success()
-	var/created_structure = new summoned_structure(get_turf(invoker))
-	var/obj/structure/destructible/clockwork/clockwork_structure = created_structure
-
-	if(istype(clockwork_structure))
-		clockwork_structure.owner = invoker.mind
-
-
+	return new summoned_structure(get_turf(invoker))
 
 //For scriptures that charge the slab, and the slab will affect something
 //(stunning etc.)
@@ -319,7 +308,6 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 
 	return ..()
 
-
 /datum/scripture/slab/invoke()
 	progress = new(invoker, use_time, invoking_slab)
 	uses_left = uses
@@ -329,10 +317,9 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 	invoking_slab.active_scripture = src
 	pointed_spell.set_click_ability(invoker)
 	count_down()
-	GLOB.clock_power -= power_cost
+	SSthe_ark.clock_power -= power_cost
 	GLOB.clock_vitality -= vitality_cost
 	invoke_success()
-
 
 /// Count down the progress bar
 /datum/scripture/slab/proc/count_down()
@@ -347,7 +334,6 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 		loop_timer_id = addtimer(CALLBACK(src, PROC_REF(count_down)), 0.1 SECONDS, TIMER_STOPPABLE)
 	else
 		end_invocation()
-
 
 /// What occurs when an atom is clicked on.
 /datum/scripture/slab/proc/click_on(atom/clicked_atom)
@@ -367,7 +353,6 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 		clockwork_say(invoker, text2ratvar(after_use_text), TRUE)
 
 	end_invocation(TRUE)
-
 
 /// What occurs when the invocation ends
 /datum/scripture/slab/proc/end_invocation(silent = FALSE)
@@ -389,12 +374,9 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 
 	end_invoke()
 
-
 /// Apply the effects of a scripture to an atom
 /datum/scripture/slab/proc/apply_effects(atom/applied_atom)
 	return TRUE
-
-
 
 /datum/action/cooldown/spell/pointed/slab
 	/// The scripture datum that this spell is referring to
@@ -403,7 +385,6 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 /datum/action/cooldown/spell/pointed/slab/Destroy()
 	parent_scripture = null
 	return ..()
-
 
 /datum/action/cooldown/spell/pointed/slab/InterceptClickOn(mob/living/user, params, atom/target)
 	parent_scripture?.click_on(target)

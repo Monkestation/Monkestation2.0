@@ -45,7 +45,7 @@
 		QDEL_NULL(arm)
 	if((movement_type & PHASING))
 		playsound(src, 'sound/effects/curse3.ogg', 25, TRUE, -1)
-	var/turf/T = get_step(src, dir)
+	var/turf/T = get_turf(src)
 	var/obj/effect/temp_visual/dir_setting/curse/hand/leftover = new(T, dir)
 	leftover.icon_state = icon_state
 	for(var/obj/effect/temp_visual/dir_setting/curse/grasp_portal/G in starting)
@@ -53,8 +53,8 @@
 	if(!T) //T can be in nullspace when src is set to QDEL
 		return
 	new /obj/effect/temp_visual/dir_setting/curse/grasp_portal/fading(starting, dir)
-	var/datum/beam/D = starting.Beam(T, icon_state = "curse[handedness]", time = 32, beam_type=/obj/effect/ebeam/curse_arm)
-	animate(D.visuals, alpha = 0, time = 32)
+	var/datum/beam/beam = starting.Beam(T, icon_state = "curse[handedness]", time = 3.2 SECONDS, maxdistance = INFINITY, beam_type=/obj/effect/ebeam/curse_arm)
+	animate(beam.visuals, alpha = 0, time = 3.2 SECONDS)
 
 /obj/projectile/curse_hand/on_range()
 	finale()
@@ -73,3 +73,9 @@
 	range = 20
 	color = "#ff7e7e"//Tint it slightly
 
+/obj/projectile/curse_hand/progenitor/on_hit(atom/target, blocked, pierce_hit)
+	if(isliving(target))
+		var/mob/living/victim = target
+		if(IS_DARKSPAWN_OR_THRALL(victim))
+			return BULLET_ACT_FORCE_PIERCE
+	return ..()

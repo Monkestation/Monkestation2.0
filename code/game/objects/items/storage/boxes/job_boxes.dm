@@ -188,18 +188,19 @@
 	desc = "A colorful cardboard box for the clown"
 	illustration = "clown"
 
-/obj/item/storage/box/clown/attackby(obj/item/I, mob/user, params)
-	if((istype(I, /obj/item/bodypart/arm/left/robot)) || (istype(I, /obj/item/bodypart/arm/right/robot)))
+/obj/item/storage/box/clown/tool_act(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/bodypart/arm/left/robot) || istype(tool, /obj/item/bodypart/arm/right/robot))
 		if(contents.len) //prevent accidently deleting contents
 			balloon_alert(user, "items inside!")
-			return
-		if(!user.temporarilyRemoveItemFromInventory(I))
-			return
-		qdel(I)
-		balloon_alert(user, "wheels added, honk!")
+			return FALSE
+		if(!user.temporarilyRemoveItemFromInventory(tool))
+			return FALSE
+		qdel(tool)
+		loc.balloon_alert(user, "wheels added, honk!")
 		var/obj/item/bot_assembly/honkbot/A = new
 		qdel(src)
 		user.put_in_hands(A)
+		return FALSE
 	else
 		return ..()
 
@@ -315,3 +316,17 @@
 /obj/item/storage/box/skillchips/engineering/PopulateContents()
 	new/obj/item/skillchip/job/engineer(src)
 	new/obj/item/skillchip/job/engineer(src)
+
+// Syndie survival box
+/obj/item/storage/box/survival/operative
+	name = "operation-ready survival box"
+	desc = "A box with the essentials of your operation. This one is labelled to contain an extended-capacity tank and a spare neck gaiter."
+	icon_state = "syndiebox"
+	illustration = "extendedtank"
+	mask_type = /obj/item/clothing/mask/gas/sechailer/syndicate
+	internal_type = /obj/item/tank/internals/emergency_oxygen/engi
+	medipen_type =  /obj/item/reagent_containers/hypospray/medipen/atropine
+
+/obj/item/storage/box/survival/operative/PopulateContents()
+	..()
+	new /obj/item/tool_parcel(src)

@@ -117,11 +117,26 @@
 /turf/open/indestructible/TerraformTurf(path, new_baseturf, flags, defer_change = FALSE, ignore_air = FALSE)
 	return
 
+/turf/open/indestructible/large
+	icon_state = "floor_large"
+
 /turf/open/indestructible/white
 	icon_state = "white"
 
+/turf/open/indestructible/white/smooth_large
+	icon_state = "white_large"
+
+/turf/open/indestructible/white/textured
+	icon_state = "textured_white"
+
 /turf/open/indestructible/dark
 	icon_state = "darkfull"
+
+/turf/open/indestructible/dark/textured
+	icon_state = "textured_dark"
+
+/turf/open/indestructible/dark/smooth_large
+	icon_state = "dark_large"
 
 /turf/open/indestructible/light
 	icon_state = "light_on-1"
@@ -234,6 +249,20 @@
 	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 	baseturfs = /turf/open/indestructible/meat
 
+/turf/open/indestructible/vault
+	icon_state = "rockvault"
+
+/turf/open/indestructible/kitchen
+	icon_state = /turf/open/floor/iron/kitchen::icon_state
+
+/turf/open/indestructible/rockyground
+	icon_state = /turf/open/misc/ashplanet/rocky::icon_state
+	icon = /turf/open/misc/ashplanet/rocky::icon
+	name = /turf/open/misc/ashplanet/rocky::name
+
+/turf/open/indestructible/stone
+	icon_state = /turf/open/floor/stone::icon_state
+	name = /turf/open/floor/stone::name
 
 /turf/open/indestructible/bingle
 	desc = "The floor of a bingle pit, its blue and unbreakable."
@@ -416,3 +445,32 @@
 		if(istype(get_step(src, direction), /turf/open/floor))
 			return TRUE
 	return FALSE
+
+/turf/open/get_heuristic_slowdown(mob/traverser, travel_dir)
+	. = ..()
+	if(slowdown)
+		. += slowdown * 10
+
+	var/liquid_state = liquids?.liquid_group?.group_overlay_state
+	if(liquid_state)
+		if(liquid_state == LIQUID_STATE_FULLTILE)
+			. += 20
+		else if(liquid_state == LIQUID_STATE_SHOULDERS)
+			. += 10
+		else if(liquid_state == LIQUID_STATE_WAIST)
+			. += 5
+		else if(liquid_state == LIQUID_STATE_ANKLES)
+			. += 3
+		else if(liquid_state == LIQUID_STATE_PUDDLE)
+			. += 2
+
+	// i don't like these, but they can be improved later ~Lucy
+	// add cost from climbable obstacles
+	for(var/obj/structure/some_object in src)
+		if(some_object.density && HAS_TRAIT(some_object, TRAIT_CLIMBABLE))
+			. += 2 // extra tile penalty
+			break
+	// door will have to be opened
+	var/obj/machinery/door/door = locate() in src
+	if(door?.density && !door.locked)
+		. += 5 // try to avoid closed doors where possible

@@ -9,6 +9,7 @@
 #define	ANTIGEN_COMMON	"common"
 #define	ANTIGEN_RARE	"rare"
 #define	ANTIGEN_ALIEN	"alien"
+#define ANTIGEN_UNIQUE	"unique"
 
 //blood antigens
 #define	ANTIGEN_O	"O"
@@ -27,6 +28,8 @@
 #define	ANTIGEN_X	"X"
 #define	ANTIGEN_Y	"Y"
 #define	ANTIGEN_Z	"Z"
+//Unique antigens
+#define ANTIGEN_IG "Ig" //For TB
 
 
 #define DISEASE_BUMP "bump"

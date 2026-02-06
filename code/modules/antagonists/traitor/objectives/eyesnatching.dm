@@ -73,6 +73,9 @@
 		if(!possible_target.assigned_role)
 			continue
 
+		if(possible_target.assigned_role.job_flags & JOB_CANNOT_BE_TARGET)
+			return FALSE
+
 		if(heads_of_staff)
 			if(!(possible_target.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND))
 				continue
@@ -188,7 +191,7 @@
 	)
 	eyeballies.apply_organ_damage(eyeballies.maxHealth)
 	target.emote("scream")
-	playsound(target, "sound/effects/wounds/crackandbleed.ogg", 100)
+	playsound(target, 'sound/effects/wounds/crackandbleed.ogg', 100)
 	log_combat(user, target, "cracked the skull of (eye snatching)", src)
 
 	if(!do_after(user, 5 SECONDS, target = target, extra_checks = CALLBACK(src, PROC_REF(eyeballs_exist), eyeballies, head, target)))

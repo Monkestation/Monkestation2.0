@@ -2257,6 +2257,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
+"gp" = (
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/iron/white/textured,
+/area/ruin/space/has_grav/deepstorage/xenobiology)
 "gq" = (
 /obj/machinery/power/terminal{
 	dir = 1
@@ -3024,6 +3028,11 @@
 	},
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/deepstorage/dorm)
+"zv" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/deepstorage)
 "Ad" = (
 /obj/machinery/slime_market_pad,
 /obj/machinery/light/directional/north,
@@ -3082,7 +3091,6 @@
 /obj/item/storage/box/beakers/bluespace,
 /obj/item/storage/box/syringes,
 /obj/item/storage/box/syringes,
-/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/has_grav/deepstorage/xenobiology)
 "Cf" = (
@@ -3386,12 +3394,6 @@
 /obj/effect/mapping_helpers/airalarm/syndicate_access,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/dorm)
-"QH" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/structure/table/wood,
-/obj/machinery/light/floor/has_bulb,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/deepstorage)
 "Re" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -4299,7 +4301,7 @@ KZ
 CQ
 sy
 sy
-sy
+gp
 KO
 An
 VY
@@ -4403,7 +4405,7 @@ KZ
 NE
 sy
 sy
-sy
+gp
 UO
 sx
 ml
@@ -4621,8 +4623,8 @@ yQ
 yQ
 tH
 cl
-QH
-cT
+cI
+zv
 fT
 dF
 dV

@@ -9,23 +9,23 @@
 	var/isolating = 0
 	var/beaker = null
 
-/obj/machinery/disease2/isolator/attackby(obj/item/I, mob/living/user, params)
-	if(!istype(I,/obj/item/reagent_containers/syringe))
-		return
+/obj/machinery/disease2/isolator/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/reagent_containers/syringe))
+		return NONE
 
-	var/obj/item/reagent_containers/syringe/B = I
-
-	if(src.beaker)
+	var/obj/item/reagent_containers/syringe/B = tool
+	if(beaker)
 		to_chat(user, "A syringe is already loaded into the machine.")
-		return
-
-	if(user.dropItemToGround(B))
-		B.forceMove(src)
-		src.beaker =  B
-		if(istype(B,/obj/item/reagent_containers/syringe))
-			to_chat(user, "You add the syringe to the machine!")
-			src.updateUsrDialog()
-			icon_state = "isolator_in"
+		return ITEM_INTERACT_BLOCKING
+	if(!user.dropItemToGround(B))
+		return ITEM_INTERACT_BLOCKING
+	if(!B.forceMove(src))
+		return ITEM_INTERACT_BLOCKING
+	beaker = B
+	to_chat(user, "You add the syringe to the machine!")
+	src.updateUsrDialog()
+	icon_state = "isolator_in"
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/disease2/isolator/Topic(href, href_list)
 	if(..())

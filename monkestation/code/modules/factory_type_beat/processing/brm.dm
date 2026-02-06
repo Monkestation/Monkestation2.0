@@ -53,7 +53,7 @@
 
 	COOLDOWN_START(src, manual_teleport_cooldown, teleportation_time)
 
-/obj/machinery/bouldertech/brm/attackby(obj/item/attacking_item, mob/user, params)
+/obj/machinery/bouldertech/brm/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(is_wire_tool(attacking_item) && panel_open)
 		wires.interact(user)
 		return TRUE
@@ -179,7 +179,7 @@
 	random_boulder.pixel_y = rand(-2, 2)
 	balloon_alert_to_viewers("boulder appears!")
 	random_boulder.visible_message(span_warning("[random_boulder] suddenly appears!"))
-	use_power(BASE_MACHINE_ACTIVE_CONSUMPTION * 0.1)
+	use_energy(BASE_MACHINE_ACTIVE_CONSUMPTION * 0.1)
 	return TRUE
 
 /**

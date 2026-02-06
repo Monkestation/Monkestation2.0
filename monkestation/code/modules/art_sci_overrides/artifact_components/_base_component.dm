@@ -40,9 +40,7 @@
 		/datum/artifact_origin/precursor,
 		/datum/artifact_origin/martian
 	)
-	var/activation_message
 	var/activation_sound
-	var/deactivation_message
 	var/deactivation_sound
 	var/mutable_appearance/act_effect
 	///Have we been xray scanned at least once?
@@ -152,6 +150,7 @@
 	var/list/datum/artifact_effect/dont_touch = GLOB.artifact_effect_rarity["all"] //Dont touch because below.
 	var/list/datum/artifact_effect/all_possible_effects = dont_touch.Copy() //If you touch it, it actually edits the list, we need a copy. We cant call copy directly because its not a static type list.
 	var/effects_amount = rand(1,BASE_MAX_EFFECTS)
+	effects_amount -= length(artifact_effects) // if we already have some
 
 	while(effects_amount > 0)
 		if(effects_amount <= 0)
@@ -321,10 +320,16 @@
 	if(active) //dont activate activated objects
 		return FALSE
 
-	if(activation_sound && !silent)
-		playsound(holder, activation_sound, 75, TRUE)
-	if(activation_message && !silent)
-		holder.visible_message(span_notice("[holder] [activation_message]"))
+	if(!silent)
+		var/dont_play_sound = FALSE //play a activation sound once
+		for(var/datum/artifact_effect/effect as anything in artifact_effects)
+			if(effect.activation_sound && !dont_play_sound)
+				playsound(holder, effect.activation_sound, 75, TRUE)
+				dont_play_sound = TRUE
+			if(effect.activation_message)
+				holder.visible_message(span_notice("[holder] [effect.activation_message]"))
+		if(!dont_play_sound) //play the sound our artifact makes normally
+			playsound(holder, activation_sound, 75, TRUE)
 	active = TRUE
 	holder.add_overlay(act_effect)
 	logger.Log(LOG_CATEGORY_ARTIFACT, "[parent] has been activated")
@@ -336,10 +341,16 @@
 /datum/component/artifact/proc/artifact_deactivate(silent = FALSE)
 	if(!active)
 		return
-	if(deactivation_sound && !silent)
-		playsound(holder, deactivation_sound, 75, TRUE)
-	if(deactivation_message && !silent)
-		holder.visible_message(span_notice("[holder] [deactivation_message]"))
+	if(!silent)
+		var/dont_play_sound = FALSE //play a deactivation sound once
+		for(var/datum/artifact_effect/effect as anything in artifact_effects)
+			if(effect.deactivation_sound && !dont_play_sound)
+				playsound(holder, effect.deactivation_sound, 75, TRUE)
+				dont_play_sound = TRUE
+			if(effect.deactivation_message)
+				holder.visible_message(span_notice("[holder] [effect.deactivation_message]"))
+		if(!dont_play_sound) //play the sound our artifact makes normally
+			playsound(holder, deactivation_sound, 75, TRUE)
 	active = FALSE
 	holder.cut_overlay(act_effect)
 	logger.Log(LOG_CATEGORY_ARTIFACT, "[parent] has been deactivated")
@@ -355,28 +366,27 @@
 /datum/component/artifact/proc/process_stimuli(stimuli, stimuli_value, triggers_faults = TRUE)
 	if(!stimuli)
 		return
-	var/checked_fault = FALSE
+	var/checked_fault = FALSE // to make sure we run our fault once
 	var/correct_trigger = FALSE
 	for(var/datum/artifact_activator/listed_activator in activators)
-		if(!(listed_activator.required_stimuli & stimuli) && chosen_fault)
-			if(!triggers_faults)
+		var/stimuli_is_matching = listed_activator.required_stimuli & stimuli
+		if(!stimuli_is_matching && chosen_fault)
+			if(!triggers_faults || checked_fault)
 				continue
 			if(freebies >= 1)
 				freebies--
-				continue
-			if(checked_fault)
 				continue
 			checked_fault = TRUE
 			if(prob(chosen_fault.trigger_chance))
 				logger.Log(LOG_CATEGORY_ARTIFACT, "[parent]'s fault has been triggered, trigger type [chosen_fault].")
 				chosen_fault.on_trigger(src)
 				if(chosen_fault.visible_message)
-					holder.visible_message("[holder] [chosen_fault.visible_message]")
+					holder.visible_message(span_warning("[holder] [chosen_fault.visible_message]"))
 			continue
-		checked_fault = TRUE
-		if((listed_activator.required_stimuli & stimuli) && istype(listed_activator, /datum/artifact_activator/range))
-			if(stimuli_value < listed_activator.amount)
-				continue
+		if(!stimuli_is_matching)
+			continue
+		if(istype(listed_activator, /datum/artifact_activator/range) && stimuli_value < listed_activator.amount)
+			continue // the """"refactor"""" butchered the hell out of stimulus and whatever else so i need to keep it simple
 		correct_trigger = TRUE
 		break
 	if(active || !correct_trigger)

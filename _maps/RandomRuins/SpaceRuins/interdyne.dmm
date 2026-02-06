@@ -358,6 +358,7 @@
 "me" = (
 /obj/structure/rack,
 /obj/item/storage/toolbox/mechanical/old,
+/obj/structure/cable,
 /turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/interdyne)
 "mf" = (
@@ -915,6 +916,11 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
+"Jy" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/interdyne)
 "JC" = (
 /obj/machinery/door/airlock/hatch,
 /obj/effect/mapping_helpers/airlock/access/all/medical/general,
@@ -1334,11 +1340,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
-"XD" = (
-/obj/structure/cable,
-/obj/effect/mapping_helpers/burnt_floor,
-/turf/open/floor/iron/smooth,
-/area/ruin/space/has_grav/interdyne)
 "XS" = (
 /obj/machinery/vending/cigarette/syndicate,
 /turf/open/floor/mineral/plastitanium/red,
@@ -1380,6 +1381,7 @@
 /obj/structure/rack,
 /obj/structure/rack,
 /obj/item/storage/medkit/regular,
+/obj/structure/cable,
 /turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/interdyne)
 "Zi" = (
@@ -1835,9 +1837,9 @@ nw
 Zi
 dU
 Vp
-EM
+wE
 YB
-oJ
+Jy
 me
 dU
 Zi
@@ -1871,8 +1873,8 @@ Zi
 dU
 Fe
 wE
-XD
-wE
+Ye
+EM
 wE
 li
 fu
@@ -1905,7 +1907,7 @@ qj
 Zi
 dU
 rQ
-EM
+wE
 OW
 iN
 EM

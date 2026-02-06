@@ -23,6 +23,8 @@
 	/// What effect should we play when we phase out (at the source turf)
 	var/phaseout = /obj/effect/temp_visual/dir_setting/ninja/phase/out
 
+	var/teleport_channel = TELEPORT_CHANNEL_BLUESPACE
+
 /datum/action/innate/dash/IsAvailable(feedback = FALSE)
 	. = ..()
 	if (!.)
@@ -51,7 +53,7 @@
 		user.balloon_alert(user, "out of view!")
 		return FALSE
 
-	if(!do_teleport(user, target_turf, no_effects = TRUE))
+	if(!do_teleport(user, target_turf, no_effects = TRUE ,channel = teleport_channel))
 		user.balloon_alert(user, "dash blocked!")
 		return FALSE
 

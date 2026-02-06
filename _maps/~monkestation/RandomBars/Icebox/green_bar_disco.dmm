@@ -112,7 +112,12 @@
 /area/station/service/theater)
 "ic" = (
 /obj/machinery/smartfridge,
-/turf/closed/wall,
+/obj/effect/turf_decal/tile/dark/opposingcorners,
+/obj/effect/turf_decal/tile/dark_green/opposingcorners{
+	color = "#43cC1E";
+	dir = 1
+	},
+/turf/open/floor/iron,
 /area/station/service/bar/backroom)
 "iI" = (
 /obj/effect/turf_decal/tile/dark/opposingcorners,

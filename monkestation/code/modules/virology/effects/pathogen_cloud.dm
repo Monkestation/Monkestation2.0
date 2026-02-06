@@ -21,13 +21,13 @@ GLOBAL_LIST_INIT(virus_viewers, list())
 	var/modified = FALSE
 	var/moving = TRUE
 	var/list/id_list = list()
-	var/death = 0
 
-/obj/effect/pathogen_cloud/New(turf/loc, mob/sourcemob, list/virus, isCarrier = TRUE, isCore = TRUE)
-	..()
-	if (!loc || !virus || virus.len <= 0)
-		qdel(src)
-		return
+/obj/effect/pathogen_cloud/Initialize(mapload, mob/sourcemob, list/virus, isCarrier = TRUE, isCore = TRUE)
+	. = ..()
+	if (!loc || length(virus) <= 0)
+		return INITIALIZE_HINT_QDEL
+	if(!SSpathogen_clouds.can_fire) // presumably an admin has manually disabled this bc it's being laggy as shit
+		return INITIALIZE_HINT_QDEL
 	core = isCore
 	sourceIsCarrier = isCarrier
 	GLOB.pathogen_clouds += src
@@ -40,12 +40,8 @@ GLOBAL_LIST_INIT(virus_viewers, list())
 	if(!core)
 		var/obj/effect/pathogen_cloud/core/core = locate(/obj/effect/pathogen_cloud/core) in src.loc
 		if(get_turf(core) == get_turf(src))
-			for(var/datum/disease/acute/V as anything in viruses)
-				if("[V.uniqueID]-[V.subID]" in core.id_list)
-					continue
-				core.viruses |= V.Copy()
-				core.modified = TRUE
-			qdel(src)
+			core.add_virus(viruses)
+			return INITIALIZE_HINT_QDEL
 
 	if(istype(src, /obj/effect/pathogen_cloud/core))
 		SSpathogen_clouds.cores += src
@@ -62,22 +58,26 @@ GLOBAL_LIST_INIT(virus_viewers, list())
 
 	source = sourcemob
 
-	death = world.time + lifetime
+	QDEL_IN(src, lifetime)
 
-	START_PROCESSING(SSpathogen_processing, src)
-
-/obj/effect/pathogen_cloud/process(seconds_per_tick)
-	if(death <= world.time)
-		qdel(src)
-		return PROCESS_KILL
+/obj/effect/pathogen_cloud/proc/add_virus(list/viruses)
+	. = FALSE
+	if(!islist(viruses))
+		viruses = list(viruses)
+	for(var/datum/disease/acute/virus as anything in viruses)
+		var/id = "[virus.uniqueID]-[virus.subID]"
+		if(id in id_list)
+			continue
+		viruses += virus.Copy()
+		id_list += id
+		. = TRUE
+	if(.)
+		modified = TRUE
 
 /obj/effect/pathogen_cloud/core
 	core = TRUE
 
 /obj/effect/pathogen_cloud/Destroy()
-	. = ..()
-	STOP_PROCESSING(SSpathogen_processing, src)
-
 	if(istype(src, /obj/effect/pathogen_cloud/core))
 		SSpathogen_clouds.cores -= src
 		SSpathogen_clouds.current_run_cores -= src
@@ -96,27 +96,31 @@ GLOBAL_LIST_INIT(virus_viewers, list())
 	viruses = list()
 	lifetime = 3
 	target = null
-	. = ..()
+	return ..()
 
-/obj/effect/pathogen_cloud/core/New(turf/loc, mob/sourcemob, list/virus)
-	..()
-	if (!loc || !virus || virus.len <= 0)
+/obj/effect/pathogen_cloud/core/Initialize(mapload, mob/sourcemob, list/virus)
+	. = ..()
+	if(.)
 		return
 
 	var/strength = 0
 	for (var/datum/disease/acute/V as anything in viruses)
 		strength += V.infectionchance
-	strength = round(strength/viruses.len)
+	strength = round(strength / length(viruses))
 	var/list/possible_turfs = list()
-	for (var/turf/open/T in range(max(0,(strength/20)-1),loc))//stronger viruses can reach turfs further away.
-		if(isclosedturf(T))
-			continue
+	var/max_range = clamp((strength / 20) - 1, 0, 7)
+	for (var/turf/open/T in range(max_range, loc))//stronger viruses can reach turfs further away.
 		possible_turfs += T
+	if(!length(possible_turfs))
+		return INITIALIZE_HINT_QDEL
 	target = pick(possible_turfs)
+	START_PROCESSING(SSpathogen_processing, src)
 
+/obj/effect/pathogen_cloud/core/Destroy()
+	STOP_PROCESSING(SSpathogen_processing, src)
+	return ..()
 
 /obj/effect/pathogen_cloud/core/process(seconds_per_tick)
-	. = ..()
 	var/turf/open/turf = get_turf(src)
 	if ((turf != target) && moving)
 		if (prob(75))

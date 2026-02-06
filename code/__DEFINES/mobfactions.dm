@@ -89,7 +89,8 @@
 #define FACTION_PLAGUE "plague"
 /// Bingles
 #define FACTION_BINGLE "bingle"
-// Antagonist factions
+/// Darkspawn
+#define FACTION_DARKSPAWN "darkspawn"
 
 /// Cultists and their constructs
 #define FACTION_CULT "cult"

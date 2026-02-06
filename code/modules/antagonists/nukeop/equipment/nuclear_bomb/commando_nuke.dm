@@ -55,7 +55,6 @@
 		/area/station/engineering/atmospherics_engine,
 		/area/station/solars))
 	pick_decrypt_areas()
-	START_PROCESSING(SSobj, src)
 
 /obj/machinery/nuclearbomb/commando/process(seconds_per_tick)
 	. = ..()
@@ -173,7 +172,6 @@
 		)
 		if(SSsecurity_level.get_current_level_as_number() == SEC_LEVEL_DELTA)
 			SSsecurity_level.set_level(SEC_LEVEL_RED)
-		SSshuttle.admin_emergency_no_recall = TRUE
 		if(!EMERGENCY_AT_LEAST_DOCKED)
 			SSshuttle.emergency.request()
 	return ..()
@@ -365,6 +363,7 @@
 
 /obj/machinery/nuclearbomb/commando/arm_nuke(mob/armer)
 	var/turf/our_turf = get_turf(src)
+	START_PROCESSING(SSobj, src)
 	message_admins("\The [src] was armed at [ADMIN_VERBOSEJMP(our_turf)] by [armer ? ADMIN_LOOKUPFLW(armer) : "an unknown user"].")
 	armer.log_message("armed \the [src].", LOG_GAME)
 	armer.add_mob_memory(/datum/memory/bomb_planted/nuke, antagonist = src)
@@ -431,10 +430,9 @@
 	. = ..()
 	update_appearance(UPDATE_OVERLAYS)
 
-/obj/item/nuke_recaller/AltClick(mob/living/user)
-	if(!user.can_perform_action(src, NEED_DEXTERITY))
-		return ..()
+/obj/item/nuke_recaller/click_alt(mob/living/user)
 	toggle_safety(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/nuke_recaller/proc/toggle_safety(mob/living/user)
 	playsound(src, 'sound/machines/click.ogg', 30, TRUE)
@@ -458,7 +456,7 @@
 /obj/item/nuke_recaller/attack_self(mob/user)
 	if(!(check_usability(user)))
 		return
-	var/obj/machinery/nuclearbomb/commando/nuke = locate() in GLOB.nuke_list
+	var/obj/machinery/nuclearbomb/commando/nuke = locate() in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/nuclearbomb/commando)
 	if(nuke)
 		var/obj/structure/closet/supplypod/nuke_relocation/new_pod = new()
 		new /obj/effect/pod_landingzone(get_turf(nuke), new_pod)

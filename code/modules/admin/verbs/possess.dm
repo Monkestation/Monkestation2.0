@@ -1,4 +1,4 @@
-ADMIN_VERB(possess, R_POSSESS, FALSE, "Possess Obj", "Possess an object.", ADMIN_CATEGORY_OBJECT, obj/target in world)
+ADMIN_VERB_AND_CONTEXT_MENU(possess, R_POSSESS, FALSE, "Possess Obj", "Possess an object.", ADMIN_CATEGORY_OBJECT, obj/target in world)
 	if((target.obj_flags & DANGEROUS_POSSESSION) && CONFIG_GET(flag/forbid_singulo_possession))
 		to_chat(user, "[target] is too powerful for you to possess.", confidential = TRUE)
 		return

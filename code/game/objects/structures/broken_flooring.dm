@@ -13,7 +13,7 @@
 	. = ..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/structure/broken_flooring/LateInitialize()
+/obj/structure/broken_flooring/LateInitialize(mapload_arg)
 	. = ..()
 	var/turf/turf = get_turf(src)
 	if(!isplatingturf(turf)) // Render as trash if not on plating
@@ -30,7 +30,7 @@
 	loc.balloon_alert(user, "tile reclaimed")
 	new /obj/item/stack/tile/iron(get_turf(src))
 	qdel(src)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/broken_flooring/singular
 	icon_state = "singular"

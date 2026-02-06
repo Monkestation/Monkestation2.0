@@ -126,7 +126,11 @@
 /obj/item/nullrod/staff/worn_overlays(mutable_appearance/standing, isinhands)
 	. = ..()
 	if(isinhands)
-		. += mutable_appearance('icons/effects/effects.dmi', shield_icon, MOB_SHIELD_LAYER)
+		var/mutable_appearance/shield = mutable_appearance('icons/effects/effects.dmi', shield_icon, MOB_SHIELD_LAYER)
+		if(ishuman(loc))
+			var/mob/living/carbon/human/human_holder = loc
+			human_holder.apply_height_filters(shield)
+		. += shield
 
 /obj/item/nullrod/staff/blue
 	name = "blue holy staff"
@@ -155,8 +159,8 @@
 	menu_description = "A sharp claymore which provides a low chance of blocking incoming melee attacks. Can be worn on the back or belt."
 
 /obj/item/nullrod/claymore/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(attack_type == PROJECTILE_ATTACK)
-		final_block_chance = 0 //Don't bring a sword to a gunfight
+	if(attack_type == PROJECTILE_ATTACK || attack_type == LEAP_ATTACK)
+		final_block_chance = 0 //Don't bring a sword to a gunfight and swords do not block tackles, body throws, or leaps.
 	return ..()
 
 /obj/item/nullrod/claymore/darkblade
@@ -194,6 +198,15 @@
 	inhand_icon_state = "swordon"
 	worn_icon_state = "swordon"
 	menu_description = "A sharp weapon which provides a low chance of blocking incoming melee attacks. Can be worn on the back or belt."
+
+/obj/item/nullrod/claymore/glowing/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, PROC_REF(on_light_eater))
+
+/obj/item/nullrod/claymore/glowing/proc/on_light_eater(atom/source, datum/light_eater)
+	SIGNAL_HANDLER
+	visible_message("The undying glow of \the [src] refuses to fade.")
+	return COMPONENT_BLOCK_LIGHT_EATER
 
 /obj/item/nullrod/claymore/katana
 	name = "\improper Hanzo steel"

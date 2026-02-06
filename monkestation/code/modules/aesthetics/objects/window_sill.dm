@@ -30,7 +30,7 @@ GLOBAL_LIST_INIT(sheets_to_window_types, zebra_typecacheof(list(
 	. = ..()
 	tool.play_tool_sound(src, 100)
 	deconstruct()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/window_sill/deconstruct(disassembled = TRUE, wrench_disassembly = 0)
 	new /obj/item/stack/sheet/iron(drop_location())
@@ -62,7 +62,7 @@ GLOBAL_LIST_INIT(sheets_to_window_types, zebra_typecacheof(list(
 		return TRUE
 	return existing_grille.rcd_act(user, the_rcd, passed_mode)
 
-/obj/structure/window_sill/attackby(obj/item/attacking_item, mob/user, params)
+/obj/structure/window_sill/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	var/obj/item/stack/stack = attacking_item
 	if((user.istate & ISTATE_HARM) || !isstack(stack))
 		return ..()
@@ -78,17 +78,23 @@ GLOBAL_LIST_INIT(sheets_to_window_types, zebra_typecacheof(list(
 	))
 		balloon_alert(user, "blocked!")
 		return
-	if(stack.amount < 2)
+	if(stack.get_amount() < 2)
 		balloon_alert(user, "need at least 2 of \the [stack]!")
 		return
-	balloon_alert_to_viewers("building [window_type::name]...")
+	to_chat(user, span_notice("You start placing the [window_type::name]..."))
 	if(!do_after(user, 2 SECONDS, src, extra_checks = CALLBACK(src, PROC_REF(window_build_check), stack, 2)))
 		return
 	if(!stack.use(2))
 		balloon_alert(user, "need at least 2 of \the [stack]!")
 		return
 	balloon_alert_to_viewers("built [window_type::name]")
-	new window_type(our_turf)
+	var/obj/structure/built = new window_type(our_turf)
+	if(istype(built, /obj/structure/grille))
+		built.set_anchored(TRUE)
+	else if(istype(built, /obj/structure/window))
+		var/obj/structure/window/built_window = built
+		built_window.set_anchored(FALSE)
+		built_window.state = WINDOW_OUT_OF_FRAME
 
 //merges adjacent full-tile windows into one
 /obj/structure/window_sill/update_overlays(updates=ALL)
@@ -117,4 +123,4 @@ GLOBAL_LIST_INIT(sheets_to_window_types, zebra_typecacheof(list(
 	return FALSE
 
 /obj/structure/window_sill/proc/window_build_check(obj/item/stack/stack, min_amt)
-	return !QDELETED(src) && !QDELETED(stack) && stack.amount >= min_amt
+	return !QDELETED(src) && !QDELETED(stack) && stack.get_amount() >= min_amt

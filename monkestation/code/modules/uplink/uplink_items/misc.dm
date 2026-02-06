@@ -48,6 +48,7 @@
 	cost = 16 // double the price of stealth implant
 	surplus = 5
 	limited_stock = 1
+	lock_secondary_objectives = TRUE // no you can't cheese progtot with ventcrawling
 
 /datum/uplink_item/device_tools/magboots
 	name = "Blood-Red Magboots"

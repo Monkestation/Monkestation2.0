@@ -58,6 +58,13 @@
 	AddElement(/datum/element/give_turf_traits, give_turf_traits)
 	register_context()
 
+	ADD_TRAIT(src, TRAIT_COMBAT_MODE_SKIP_INTERACTION, INNATE_TRAIT)
+
+///Adds the element used to make the object climbable, and also the one that shift the mob buckled to it up.
+/obj/structure/table/proc/make_climbable()
+	AddElement(/datum/element/climbable)
+	AddElement(/datum/element/elevation, pixel_shift = 12)
+
 /obj/structure/table/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()
 
@@ -137,6 +144,39 @@
 				user.stop_pulling()
 	return ..()
 
+/* // Currently table flipping does not yet exist
+/obj/structure/table/attack_hand_secondary(mob/user, list/modifiers)
+	. = ..()
+	if(!istype(user) || !user.can_interact_with(src))
+		return FALSE
+
+	if(!can_flip)
+		return
+
+	if(!is_flipped)
+		user.balloon_alert_to_viewers("flipping table...")
+		if(do_after(user, max_integrity * 0.25))
+			flip_table(get_dir(user, src))
+		return
+
+	user.balloon_alert_to_viewers("flipping table upright...")
+	if(do_after(user, max_integrity * 0.25, src))
+		unflip_table()
+	return
+*/
+
+/obj/structure/table/proc/is_able_to_throw(obj/structure/table, atom/movable/movable_entity)
+	if (movable_entity == table) //Thing is not the table
+		return FALSE
+	if (movable_entity.anchored) //Thing isn't anchored
+		return FALSE
+	if(!isliving(movable_entity) && !isobj(movable_entity)) //Thing isn't an obj or mob
+		return FALSE
+	if(movable_entity.throwing || (movable_entity.movement_type & (FLOATING|FLYING)) || HAS_TRAIT(movable_entity, TRAIT_IGNORE_ELEVATION)) //Thing isn't flying/floating
+		return FALSE
+
+	return TRUE
+
 /obj/structure/table/attack_tk(mob/user)
 	return
 
@@ -213,7 +253,7 @@
 	to_chat(user, span_notice("You start disassembling [src]..."))
 	if(tool.use_tool(src, user, 2 SECONDS, volume=50))
 		deconstruct(TRUE)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/table/wrench_act_secondary(mob/living/user, obj/item/tool)
 	if(flags_1 & NODECONSTRUCT_1 || !deconstruction_ready)
@@ -222,80 +262,70 @@
 	if(tool.use_tool(src, user, 4 SECONDS, volume=50))
 		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 		deconstruct(TRUE, 1)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/table/attackby(obj/item/I, mob/living/user, params)
-	var/list/modifiers = params2list(params)
+// This extends base item interaction because tables default to blocking 99% of interactions
+/obj/structure/table/base_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = ..()
+	if(.)
+		return .
 
-	if(istype(I, /obj/item/storage/bag/tray))
-		var/obj/item/storage/bag/tray/T = I
-		if(T.contents.len > 0) // If the tray isn't empty
-			for(var/x in T.contents)
-				var/obj/item/item = x
-				AfterPutItemOnTable(item, user)
-			I.atom_storage.remove_all(drop_location())
-			user.visible_message(span_notice("[user] empties [I] on [src]."))
-			return
-		// If the tray IS empty, continue on (tray will be placed on the table like other items)
+	if(istype(tool, /obj/item/toy/cards/deck))
+		. = deck_act(user, tool, modifiers, !!LAZYACCESS(modifiers, RIGHT_CLICK))
+	if(istype(tool, /obj/item/storage/bag/tray))
+		. = tray_act(user, tool)
+	//else if(istype(tool, /obj/item/riding_offhand))
+	//	. = riding_offhand_act(user, tool) TALBESMASH COMPONENT
 
-	if(istype(I, /obj/item/toy/cards/deck))
-		var/obj/item/toy/cards/deck/dealer_deck = I
-		if(dealer_deck.wielded) // deal a card facedown on the table
-			var/obj/item/toy/singlecard/card = dealer_deck.draw(user)
-			if(card)
-				attackby(card, user, params)
-			return
+	// Continue to placing if we don't do anything else
+	if(.)
+		return .
 
-	if(istype(I, /obj/item/riding_offhand))
-		var/obj/item/riding_offhand/riding_item = I
-		var/mob/living/carried_mob = riding_item.rider
-		if(carried_mob == user) //Piggyback user.
-			return
-		if((user.istate & ISTATE_HARM))
-			user.unbuckle_mob(carried_mob)
-			tablelimbsmash(user, carried_mob)
-		else
-			var/tableplace_delay = 3.5 SECONDS
-			var/skills_space = ""
-			if(HAS_TRAIT(user, TRAIT_QUICKER_CARRY))
-				tableplace_delay = 2 SECONDS
-				skills_space = " expertly"
-			else if(HAS_TRAIT(user, TRAIT_QUICK_CARRY))
-				tableplace_delay = 2.75 SECONDS
-				skills_space = " quickly"
-			carried_mob.visible_message(span_notice("[user] begins to[skills_space] place [carried_mob] onto [src]..."),
-				span_userdanger("[user] begins to[skills_space] place [carried_mob] onto [src]..."))
-			if(do_after(user, tableplace_delay, target = carried_mob))
-				user.unbuckle_mob(carried_mob)
-				tableplace(user, carried_mob)
-		return TRUE
+	if(!(user.istate & ISTATE_HARM) || (tool.item_flags & NOBLUDGEON))
+		return table_place_act(user, tool, modifiers)
 
-	if(!(user.istate & ISTATE_HARM) && !(I.item_flags & ABSTRACT))
-		if(user.transferItemToLoc(I, drop_location(), silent = FALSE))
-			//Center the icon where the user clicked.
-			if(!LAZYACCESS(modifiers, ICON_X) || !LAZYACCESS(modifiers, ICON_Y))
-				return
-			//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
-			I.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(world.icon_size/2), world.icon_size/2)
-			I.pixel_y = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(world.icon_size/2), world.icon_size/2)
-			AfterPutItemOnTable(I, user)
-			return TRUE
-	else
-		return ..()
+	return NONE
 
-/obj/structure/table/attackby_secondary(obj/item/weapon, mob/user, params)
-	if(istype(weapon, /obj/item/toy/cards/deck))
-		var/obj/item/toy/cards/deck/dealer_deck = weapon
-		if(dealer_deck.wielded) // deal a card faceup on the table
-			var/obj/item/toy/singlecard/card = dealer_deck.draw(user)
-			if(card)
-				card.Flip()
-				attackby(card, user, params)
-			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	..()
-	return SECONDARY_ATTACK_CONTINUE_CHAIN
+/obj/structure/table/proc/tray_act(mob/living/user, obj/item/storage/bag/tray/used_tray)
+	if(used_tray.contents.len <= 0)
+		return NONE // If the tray IS empty, continue on (tray will be placed on the table like other items)
 
-/obj/structure/table/proc/AfterPutItemOnTable(obj/item/I, mob/living/user)
+	for(var/obj/item/thing in used_tray.contents)
+		AfterPutItemOnTable(thing, user)
+	used_tray.atom_storage.remove_all(drop_location())
+	user.visible_message(span_notice("[user] empties [used_tray] on [src]."))
+	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/table/proc/deck_act(mob/living/user, obj/item/toy/cards/deck/dealer_deck, list/modifiers, flip)
+	if(!HAS_TRAIT(dealer_deck, TRAIT_WIELDED))
+		return NONE
+
+	var/obj/item/toy/singlecard/card = dealer_deck.draw(user)
+	if(isnull(card))
+		return ITEM_INTERACT_BLOCKING
+	if(flip)
+		card.Flip()
+	return table_place_act(user, card, modifiers)
+
+// Where putting things on tables is handled.
+/obj/structure/table/proc/table_place_act(mob/living/user, obj/item/tool, list/modifiers)
+	if(tool.item_flags & ABSTRACT)
+		return NONE
+
+	var/x_offset = 0
+	var/y_offset = 0
+	// Items are centered by default, but we move them if click ICON_X and ICON_Y are available
+	if(LAZYACCESS(modifiers, ICON_X) && LAZYACCESS(modifiers, ICON_Y))
+		// Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
+		x_offset = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(world.icon_size/2), (world.icon_size/2))
+		y_offset = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(world.icon_size/2), (world.icon_size/2))
+
+	if(!user.transfer_item_to_turf(tool, get_turf(src), x_offset, y_offset, silent = FALSE))
+		return ITEM_INTERACT_BLOCKING
+	AfterPutItemOnTable(tool, user)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/table/proc/AfterPutItemOnTable(obj/item/thing, mob/living/user)
 	return
 
 /obj/structure/table/deconstruct(disassembled = TRUE, wrench_disassembly = 0)
@@ -633,23 +663,27 @@
 	else
 		return span_notice("The top cover is firmly <b>welded</b> on.")
 
-/obj/structure/table/reinforced/attackby_secondary(obj/item/weapon, mob/user, params)
-	if(weapon.tool_behaviour == TOOL_WELDER)
-		if(weapon.tool_start_check(user, amount = 0))
-			if(deconstruction_ready)
-				to_chat(user, span_notice("You start strengthening the reinforced table..."))
-				if (weapon.use_tool(src, user, 50, volume = 50))
-					to_chat(user, span_notice("You strengthen the table."))
-					deconstruction_ready = FALSE
-			else
-				to_chat(user, span_notice("You start weakening the reinforced table..."))
-				if (weapon.use_tool(src, user, 50, volume = 50))
-					to_chat(user, span_notice("You weaken the table."))
-					deconstruction_ready = TRUE
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+/obj/structure/table/reinforced/welder_act_secondary(mob/living/user, obj/item/tool)
+	if(tool.tool_start_check(user, amount = 0))
+		if(deconstruction_ready)
+			to_chat(user, span_notice("You start strengthening the reinforced table..."))
+			if (tool.use_tool(src, user, 50, volume = 50))
+				to_chat(user, span_notice("You strengthen the table."))
+				deconstruction_ready = FALSE
+				return ITEM_INTERACT_SUCCESS
+		else
+			to_chat(user, span_notice("You start weakening the reinforced table..."))
+			if (tool.use_tool(src, user, 50, volume = 50))
+				to_chat(user, span_notice("You weaken the table."))
+				deconstruction_ready = TRUE
+				return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
-	else
-		. = ..()
+/obj/structure/table/reinforced/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
+	if(tool.tool_behaviour == TOOL_WELDER)
+		return NONE
+
+	return ..()
 
 /obj/structure/table/bronze
 	name = "bronze table"
@@ -721,9 +755,16 @@
 	can_buckle = 1
 	buckle_lying = 90
 	climbable = FALSE
-	custom_materials = list(/datum/material/silver =SHEET_MATERIAL_AMOUNT)
-	var/mob/living/patient = null
+	custom_materials = list(/datum/material/silver = SHEET_MATERIAL_AMOUNT)
+	can_flip = FALSE
+	/// Mob currently lying on the table
+	var/mob/living/carbon/patient = null
+	/// Operating computer we're linked to, to sync operations from
 	var/obj/machinery/computer/operating/computer = null
+	/// Tank attached under the table
+	var/obj/item/tank/air_tank = null
+	/// Mask attached *to* the table, doesn't mean its inside the table as it can be worn by the patient
+	var/obj/item/clothing/mask/breath/breath_mask = null
 
 /obj/structure/table/optable/Initialize(mapload)
 	. = ..()
@@ -733,16 +774,69 @@
 			computer.table = src
 			break
 
-	RegisterSignal(loc, COMSIG_ATOM_ENTERED, PROC_REF(mark_patient))
-	RegisterSignal(loc, COMSIG_ATOM_EXITED, PROC_REF(unmark_patient))
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = PROC_REF(mark_patient),
+		COMSIG_ATOM_EXITED = PROC_REF(unmark_patient),
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+
+	for (var/mob/living/carbon/potential_patient in loc)
+		mark_patient(potential_patient)
 
 /obj/structure/table/optable/Destroy()
 	if(computer && computer.table == src)
 		computer.table = null
 	patient = null
-	UnregisterSignal(loc, COMSIG_ATOM_ENTERED)
-	UnregisterSignal(loc, COMSIG_ATOM_EXITED)
+	QDEL_NULL(air_tank)
+	if (breath_mask?.loc == src)
+		qdel(breath_mask)
+	breath_mask = null
 	return ..()
+
+/obj/structure/table/optable/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
+	if(isnull(held_item))
+		if (breath_mask?.loc == src)
+			context[SCREENTIP_CONTEXT_RMB] = "Take mask"
+			. |= CONTEXTUAL_SCREENTIP_SET
+		return
+
+	if(breath_mask && breath_mask != held_item)
+		if (held_item.tool_behaviour == TOOL_SCREWDRIVER)
+			context[SCREENTIP_CONTEXT_LMB] = "Detach mask"
+			. |= CONTEXTUAL_SCREENTIP_SET
+	else if (istype(held_item, /obj/item/clothing/mask/breath))
+		context[SCREENTIP_CONTEXT_LMB] = "Attach mask"
+		. |= CONTEXTUAL_SCREENTIP_SET
+
+	if(air_tank)
+		if (held_item.tool_behaviour == TOOL_WRENCH)
+			context[SCREENTIP_CONTEXT_LMB] = "Detach tank"
+			. |= CONTEXTUAL_SCREENTIP_SET
+	else if (istype(held_item, /obj/item/tank))
+		var/obj/item/tank/as_tank = held_item
+		if (as_tank.tank_holder_icon_state)
+			context[SCREENTIP_CONTEXT_LMB] = "Attach tank"
+			. |= CONTEXTUAL_SCREENTIP_SET
+
+/obj/structure/table/optable/deconstruct(disassembled, wrench_disassembly) // This should be atom_deconstruct()
+	. = ..()
+	var/atom/drop_loc = drop_location()
+	if (!drop_loc)
+		return
+
+	if (air_tank)
+		air_tank.forceMove(drop_loc)
+		air_tank = null
+
+	if (!breath_mask)
+		return
+	UnregisterSignal(breath_mask, list(COMSIG_MOVABLE_MOVED, COMSIG_ITEM_DROPPED))
+	if (breath_mask.loc == src)
+		breath_mask.forceMove(drop_loc)
+	else if (breath_mask.loc)
+		UnregisterSignal(breath_mask.loc, COMSIG_MOVABLE_MOVED)
+	breath_mask = null
 
 /obj/structure/table/optable/tablepush(mob/living/user, mob/living/pushed_mob)
 	pushed_mob.forceMove(loc)
@@ -771,19 +865,224 @@
 /// The check is a bit broad so we can find a replacement patient.
 /obj/structure/table/optable/proc/recheck_patient(mob/living/carbon/potential_patient)
 	SIGNAL_HANDLER
+
 	if(patient && patient != potential_patient)
 		return
 
 	if(potential_patient.body_position == LYING_DOWN && potential_patient.loc == loc)
-		patient = potential_patient
+		set_patient(potential_patient)
 		return
 
 	// Find another lying mob as a replacement.
 	for (var/mob/living/carbon/replacement_patient in loc.contents)
 		if(replacement_patient.body_position == LYING_DOWN)
-			patient = replacement_patient
+			set_patient(replacement_patient)
 			return
-	patient = null
+
+	set_patient(null)
+
+/obj/structure/table/optable/proc/set_patient(mob/living/carbon/new_patient)
+	if (patient)
+		UnregisterSignal(patient, list(COMSIG_MOB_SURGERY_STARTED, COMSIG_MOB_SURGERY_FINISHED))
+		if (patient.external && patient.external == air_tank)
+			patient.close_externals()
+
+	patient = new_patient
+	update_appearance()
+	if (!patient)
+		return
+	RegisterSignal(patient, COMSIG_MOB_SURGERY_STARTED, PROC_REF(on_surgery_change))
+	RegisterSignal(patient, COMSIG_MOB_SURGERY_FINISHED, PROC_REF(on_surgery_change))
+
+/obj/structure/table/optable/proc/on_surgery_change(datum/source)
+	SIGNAL_HANDLER
+	update_appearance()
+
+/obj/structure/table/optable/attackby(obj/item/tool, mob/living/user, params)
+	. = ..()
+	if (istype(tool, /obj/item/clothing/mask/breath))
+		if (breath_mask && breath_mask != tool)
+			balloon_alert(user, "mask already attached!")
+			return ITEM_INTERACT_BLOCKING
+
+		if (!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
+
+		if (breath_mask != tool)
+			breath_mask = tool
+			RegisterSignal(breath_mask, COMSIG_MOVABLE_MOVED, PROC_REF(on_mask_moved))
+
+		balloon_alert(user, "mask attached")
+		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+		update_appearance()
+		return ITEM_INTERACT_SUCCESS
+
+	if (!istype(tool, /obj/item/tank))
+		return NONE
+
+	if (air_tank)
+		balloon_alert(user, "tank already attached!")
+		return ITEM_INTERACT_BLOCKING
+
+	var/obj/item/tank/as_tank = tool
+	if (!as_tank.tank_holder_icon_state)
+		balloon_alert(user, "does not fit!")
+		return ITEM_INTERACT_BLOCKING
+
+	if (!user.transferItemToLoc(tool, src))
+		return ITEM_INTERACT_BLOCKING
+
+	air_tank = as_tank
+	balloon_alert(user, "tank attached")
+	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/table/optable/screwdriver_act(mob/living/user, obj/item/tool)
+	if (!breath_mask)
+		return NONE
+
+	if (breath_mask.loc != src)
+		return ITEM_INTERACT_BLOCKING
+
+	breath_mask.forceMove(drop_location())
+	tool.play_tool_sound(src, 50)
+	balloon_alert(user, "mask detached")
+	UnregisterSignal(breath_mask, list(COMSIG_MOVABLE_MOVED, COMSIG_ITEM_DROPPED))
+	if (user.CanReach(breath_mask))
+		user.put_in_hands(breath_mask)
+	breath_mask = null
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/table/optable/wrench_act(mob/living/user, obj/item/tool)
+	if (!air_tank)
+		return NONE
+	balloon_alert(user, "detaching the tank...")
+	if (!tool.use_tool(src, user, 3 SECONDS))
+		return ITEM_INTERACT_BLOCKING
+	air_tank.forceMove(drop_location())
+	tool.play_tool_sound(src, 50)
+	balloon_alert(user, "tank detached")
+	if (user.CanReach(air_tank))
+		user.put_in_hands(air_tank)
+	if (patient?.external && patient.external == air_tank)
+		patient.close_externals()
+	air_tank = null
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/table/optable/attack_hand_secondary(mob/living/user, list/modifiers)
+	. = ..()
+	if (. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+
+	if (detach_mask(user))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/structure/table/optable/examine(mob/user)
+	. = ..()
+	if (air_tank)
+		. += span_notice("It has \a [air_tank] secured to it with a couple of [EXAMINE_HINT("bolts")].")
+		if (patient)
+			. += span_info("You can connect [patient]'s internals to \the [air_tank] by dragging \the [src] onto them.")
+	else
+		. += span_notice("It has an attachment slot for an air tank underneath.")
+	if (breath_mask)
+		. += span_notice("It has \a [breath_mask] attached to its side, the tube secured with a single [EXAMINE_HINT("screw")].")
+		if (breath_mask.loc == src)
+			. += span_info("You can detach the mask by right-clicking \the [src] with an empty hand.")
+	else
+		. += span_notice("There's a port for a breathing mask tube on its side.")
+
+/obj/structure/table/optable/proc/detach_mask(mob/living/user)
+	if (!istype(user) || !user.CanReach(src) || !user.can_interact_with(src))
+		return FALSE
+
+	if (!breath_mask)
+		balloon_alert(user, "no mask attached!")
+		return TRUE
+
+	if (!user.put_in_hands(breath_mask))
+		balloon_alert(user, "hands busy!")
+		return TRUE
+
+	to_chat(user, span_notice("You pull out \the [breath_mask] from \the [src]."))
+	update_appearance()
+	return TRUE
+
+/obj/structure/table/optable/mouse_drop_dragged(atom/over, mob/living/user, src_location, over_location, params)
+	if (over != patient || !istype(user) || !user.CanReach(src) || !user.can_interact_with(src))
+		return
+
+	if (!air_tank)
+		balloon_alert(user, "no tank attached!")
+		return
+
+	var/internals = patient.can_breathe_internals()
+	if (!internals)
+		balloon_alert(user, "no internals connector!")
+		return
+
+	user.visible_message(span_notice("[user] begins connecting [src]'s [air_tank] to [patient]'s [internals]."), span_notice("You begin connecting [src]'s [air_tank] to [patient]'s [internals]..."), ignored_mobs = patient)
+	to_chat(patient, span_userdanger("[user] begins connecting [src]'s [air_tank] to your [internals]!"))
+
+	if (!do_after(user, 4 SECONDS, patient))
+		return
+
+	if (!air_tank || patient != over || !patient.can_breathe_internals())
+		return
+
+	patient.open_internals(air_tank, is_external = TRUE)
+	to_chat(user, span_notice("You connect [src]'s [air_tank] to [patient]'s [internals]."))
+	to_chat(patient, span_userdanger("[user] connects [src]'s [air_tank] to your [internals]!"))
+
+/obj/structure/table/optable/proc/on_mask_moved(datum/source, atom/oldloc, direction)
+	SIGNAL_HANDLER
+	if (oldloc != src)
+		UnregisterSignal(oldloc, COMSIG_MOVABLE_MOVED)
+	if (breath_mask.loc && breath_mask.loc != src)
+		RegisterSignal(breath_mask.loc, COMSIG_MOVABLE_MOVED, PROC_REF(check_mask_range))
+	check_mask_range()
+
+/obj/structure/table/optable/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
+	if (breath_mask)
+		check_mask_range()
+
+/obj/structure/table/optable/proc/check_mask_range()
+	SIGNAL_HANDLER
+
+	// Check if the mask is inside of us, or if its being *directly held* by someone and not in their backpack
+	if (breath_mask.loc == src || (isturf(breath_mask.loc?.loc) && in_range(breath_mask, src)))
+		return
+
+	if(isliving(loc))
+		var/mob/living/user = loc
+		to_chat(user, span_warning("[breath_mask]'s tube overextends and it comes out of your hands!"))
+	else
+		visible_message(span_notice("[breath_mask] snaps back into \the [src]."))
+	snap_mask_back()
+
+/obj/structure/table/optable/proc/snap_mask_back()
+	SIGNAL_HANDLER
+	if (ismob(breath_mask.loc))
+		var/mob/as_mob = breath_mask.loc
+		as_mob.temporarilyRemoveItemFromInventory(breath_mask, force = TRUE)
+	breath_mask.forceMove(src)
+	update_appearance()
+
+/obj/structure/table/optable/update_overlays()
+	. = ..()
+	if (air_tank)
+		. += mutable_appearance(icon, air_tank.tank_holder_icon_state)
+	if (breath_mask?.loc == src)
+		. += mutable_appearance(icon, "mask_[breath_mask.icon_state]")
+	if (!length(patient?.surgeries))
+		return
+	. += mutable_appearance(icon, "[icon_state]_[computer ? "" : "un"]linked")
+	if (computer)
+		. += emissive_appearance(icon, "[icon_state]_linked", src, alpha = 175)
 
 /*
  * Racks
@@ -798,6 +1097,29 @@
 	anchored = TRUE
 	pass_flags_self = LETPASSTHROW //You can throw objects over this, despite it's density.
 	max_integrity = 20
+/*
+/obj/structure/rack/skeletal
+	name = "skeletal minibar"
+	desc = "Rattle me boozes!"
+	icon = 'icons/obj/fluff/general.dmi'
+	icon_state = "minibar"
+*/
+/obj/structure/rack/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/climbable)
+	AddElement(/datum/element/elevation, pixel_shift = 12)
+	register_context()
+	ADD_TRAIT(src, TRAIT_COMBAT_MODE_SKIP_INTERACTION, INNATE_TRAIT)
+
+/obj/structure/rack/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	if(isnull(held_item))
+		return NONE
+
+	if(held_item.tool_behaviour == TOOL_WRENCH)
+		context[SCREENTIP_CONTEXT_RMB] = "Deconstruct"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	return NONE
 
 /obj/structure/rack/examine(mob/user)
 	. = ..()
@@ -810,24 +1132,20 @@
 	if(istype(mover) && (mover.pass_flags & PASSTABLE))
 		return TRUE
 
-/obj/structure/rack/MouseDrop_T(obj/O, mob/user)
-	. = ..()
-	if ((!( isitem(O) ) || user.get_active_held_item() != O))
-		return
-	if(!user.dropItemToGround(O))
-		return
-	if(O.loc != src.loc)
-		step(O, get_dir(O, src))
+/obj/structure/rack/wrench_act_secondary(mob/living/user, obj/item/tool)
+	tool.play_tool_sound(src)
+	deconstruct(TRUE)
+	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/rack/attackby(obj/item/W, mob/living/user, params)
-	if (W.tool_behaviour == TOOL_WRENCH && !(flags_1&NODECONSTRUCT_1) && (user.istate & ISTATE_SECONDARY))
-		W.play_tool_sound(src)
-		deconstruct(TRUE)
-		return
-	if((user.istate & ISTATE_HARM))
-		return ..()
-	if(user.transferItemToLoc(W, drop_location()))
-		return 1
+/obj/structure/rack/base_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = ..()
+	if(.)
+		return .
+	if((tool.item_flags & ABSTRACT) || ((user.istate & ISTATE_HARM) && !(tool.item_flags & NOBLUDGEON)))
+		return NONE
+	if(user.transferItemToLoc(tool, drop_location(), silent = FALSE))
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
 /obj/structure/rack/attack_paw(mob/living/user, list/modifiers)
 	attack_hand(user, modifiers)
@@ -879,8 +1197,8 @@
 	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT)
 	var/building = FALSE
 
-/obj/item/rack_parts/attackby(obj/item/W, mob/user, params)
-	if (W.tool_behaviour == TOOL_WRENCH)
+/obj/item/rack_parts/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if (attacking_item.tool_behaviour == TOOL_WRENCH)
 		new /obj/item/stack/sheet/iron(user.loc)
 		qdel(src)
 	else
@@ -891,7 +1209,7 @@
 		return
 	building = TRUE
 	to_chat(user, span_notice("You start constructing a rack..."))
-	if(do_after(user, 50, target = user, progress=TRUE))
+	if(do_after(user, 5 SECONDS, target = user, progress=TRUE))
 		if(!user.temporarilyRemoveItemFromInventory(src))
 			return
 		var/obj/structure/rack/R = new /obj/structure/rack(get_turf(src))

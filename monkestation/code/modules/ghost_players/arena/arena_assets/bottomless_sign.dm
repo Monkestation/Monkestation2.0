@@ -3,7 +3,7 @@
 	desc = "I sure hope nobody puts a bottom in the pit."
 	icon_state = "bottomlesspit1"
 	icon = 'monkestation/code/modules/ghost_players/arena/arena_assets/icons/sign2.dmi'
-	custom_materials = list(/datum/material/wood = 2000)
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT)
 
 /obj/structure/sign/bottomless/examine(mob/user)
 	. = ..()

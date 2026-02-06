@@ -222,11 +222,8 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	//if we had the ability to brainwash, remove that now
 	REMOVE_TRAIT(src, TRAIT_BRAINWASHING, SKILLCHIP_TRAIT)
 	busy = FALSE
-	if(color_source)
-		qdel(color_source)
-		color_source = null
 	update_appearance()
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 
 /obj/item/proc/dye_item(dye_color, dye_key_override)
 	var/dye_key_selector = dye_key_override ? dye_key_override : dying_key
@@ -334,10 +331,10 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	if(!panel_open || busy)
 		return FALSE
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/washing_machine/attackby(obj/item/W, mob/living/user, params)
-	if(default_deconstruction_screwdriver(user, null, null, W))
+/obj/machinery/washing_machine/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(default_deconstruction_screwdriver(user, null, null, attacking_item))
 		update_appearance()
 		return
 
@@ -354,11 +351,11 @@ GLOBAL_LIST_INIT(dye_registry, list(
 			to_chat(user, span_warning("The washing machine is full!"))
 			return TRUE
 
-		if(!user.transferItemToLoc(W, src))
-			to_chat(user, span_warning("\The [W] is stuck to your hand, you cannot put it in the washing machine!"))
+		if(!user.transferItemToLoc(attacking_item, src))
+			to_chat(user, span_warning("\The [attacking_item] is stuck to your hand, you cannot put it in the washing machine!"))
 			return TRUE
-		if(W.dye_color)
-			color_source = W
+		if(attacking_item.dye_color)
+			color_source = attacking_item
 		update_appearance()
 
 	else

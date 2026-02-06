@@ -10,6 +10,7 @@
 	antag_hud_name = "fugitive_hunter"
 	suicide_cry = "FOR GLORY!!"
 	count_against_dynamic_roll_chance = FALSE
+	antag_flags = parent_type::antag_flags | FLAG_ANTAG_CAP_IGNORE
 	var/datum/team/fugitive_hunters/hunter_team
 	var/backstory = "error"
 

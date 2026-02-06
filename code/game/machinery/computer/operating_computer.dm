@@ -23,14 +23,14 @@
 	find_table()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/computer/operating/LateInitialize()
+/obj/machinery/computer/operating/LateInitialize(mapload_arg)
 	. = ..()
 	var/static/list/dissection_signals = list(
-		COMSIG_OPERATING_COMPUTER_DISSECTION_COMPLETE = TYPE_PROC_REF(/datum/component/experiment_handler, try_run_dissection_experiment)
+		COMSIG_OPERATING_COMPUTER_AUTOPSY_COMPLETE = TYPE_PROC_REF(/datum/component/experiment_handler, try_run_autopsy_experiment)
 	)
 	experiment_handler = AddComponent(
 		/datum/component/experiment_handler, \
-		allowed_experiments = list(/datum/experiment/dissection), \
+		allowed_experiments = list(/datum/experiment/autopsy), \
 		config_flags = EXPERIMENT_CONFIG_ALWAYS_ACTIVE, \
 		config_mode = EXPERIMENT_CONFIG_ALTCLICK, \
 		experiment_signals = dissection_signals, \
@@ -59,7 +59,7 @@
 			span_notice("You begin to load a surgery protocol from \the [O]..."), \
 			span_hear("You hear the chatter of a floppy drive."))
 		var/obj/item/disk/surgery/D = O
-		if(do_after(user, 10, target = src))
+		if(do_after(user, 1 SECONDS, target = src))
 			advanced_surgeries |= D.surgeries
 		return TRUE
 	return ..()
@@ -169,9 +169,7 @@
 			))
 	return data
 
-
-
-/obj/machinery/computer/operating/ui_act(action, params)
+/obj/machinery/computer/operating/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

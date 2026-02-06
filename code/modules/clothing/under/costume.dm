@@ -409,7 +409,6 @@
 /obj/item/clothing/under/costume/susie
 	name = "Rude Jacket"
 	desc = "A replica of the black and purple jacket a legendary lizard wore while saving the world."
-	worn_icon_digitigrade = 'icons/mob/species/misc/digitigrade.dmi'
 	icon_state = "susie"
 	inhand_icon_state = null
 	can_adjust = FALSE
@@ -417,7 +416,19 @@
 
 /obj/item/clothing/under/costume/kris
 	name = "Vessel's Armor"
-	desc = "* It appears to be the replica of the armor a legendary vessel wore while saving the world.."
+	desc = "* It appears to be the replica of the armor a legendary vessel wore while saving the world."
 	icon_state = "kris_armor"
 	inhand_icon_state = null
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/dio
+	name = "flamboyant turtleneck"
+	desc = "Looking at this REALLY makes you want to reject your humanity."
+	icon_state = "dio_turtleneck"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/jimbo
+	name = "joker's suit"
+	desc = "A costume fit for an ace of spades, club, diamonds and hearts. It's a suit of suits."
+	icon_state = "jimbo"
 	can_adjust = FALSE

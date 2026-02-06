@@ -73,6 +73,10 @@
 		to_chat(user, span_alert("[src] has already been used. The tools are dull and won't reactivate."))
 		return
 
+	if(!iscarbon(target))
+		to_chat(user, span_alert("[target] cannot be implanted."))
+		return
+
 	if(implant_time)
 		user.visible_message( "[user] prepares to use [src] on [target].", "You begin to prepare to use [src] on [target].")
 		if(!do_after(user, (8 SECONDS * surgery_speed), target))
@@ -101,7 +105,7 @@
 	add_fingerprint(user)
 	use_autosurgeon(target, user, 8 SECONDS)
 
-/obj/item/autosurgeon/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/autosurgeon/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(isorgan(attacking_item))
 		load_organ(attacking_item, user)
 	else
@@ -133,6 +137,12 @@
 	desc = "A single use autosurgeon that contains a medical heads-up display augment. A screwdriver can be used to remove it, but implants can't be placed back in."
 	uses = 1
 	starting_organ = /obj/item/organ/internal/cyberimp/eyes/hud/medical
+
+/obj/item/autosurgeon/perfect_serverlink
+	name = "autosurgeon"
+	desc = "A single use autosurgeon that contains an advanced serverlink augment. A screwdriver can be used to remove it, but implants can't be placed back in."
+	uses = 1
+	starting_organ = /obj/item/organ/internal/cyberimp/brain/linked_surgery/perfect/nt
 
 // monkestation edit start
 /obj/item/autosurgeon/security_hud

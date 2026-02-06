@@ -20,7 +20,7 @@
 
 /datum/disease/acute/premade/fungal_tb/after_add()
 	. = ..()
-	antigen = null
+	antigen = list(ANTIGEN_IG)
 	stage = 4
 
 /datum/disease/acute/premade/fungal_tb/activate(mob/living/mob, starved, seconds_per_tick)
@@ -28,4 +28,4 @@
 	if(mob.has_reagent(/datum/reagent/medicine/antipathogenic/spaceacillin, 1))
 		if(mob.has_reagent(/datum/reagent/medicine/c2/convermol, 1))
 			if(prob(5))
-				cure()
+				cure(add_resistance = FALSE)

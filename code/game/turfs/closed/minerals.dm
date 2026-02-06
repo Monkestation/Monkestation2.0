@@ -87,29 +87,30 @@
 	return ..()
 
 
-/turf/closed/mineral/attackby(obj/item/I, mob/user, params)
+/turf/closed/mineral/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if (!ISADVANCEDTOOLUSER(user))
 		to_chat(usr, span_warning("You don't have the dexterity to do this!"))
 		return
 
-	if(I.tool_behaviour == TOOL_MINING)
-		var/turf/T = user.loc
-		if (!isturf(T))
-			return
+	if(attacking_item.tool_behaviour != TOOL_MINING)
+		return
+	var/turf/T = user.loc
+	if (!isturf(T))
+		return
 
-		if(TIMER_COOLDOWN_CHECK(src, REF(user))) //prevents mining turfs in progress
-			return
+	if(TIMER_COOLDOWN_RUNNING(src, REF(user))) //prevents mining turfs in progress
+		return
 
-		TIMER_COOLDOWN_START(src, REF(user), tool_mine_speed)
+	TIMER_COOLDOWN_START(src, REF(user), tool_mine_speed)
 
-		balloon_alert(user, "picking...")
+	balloon_alert(user, "picking...")
 
-		if(!I.use_tool(src, user, tool_mine_speed, volume=50))
-			TIMER_COOLDOWN_END(src, REF(user)) //if we fail we can start again immediately
-			return
-		if(ismineralturf(src))
-			gets_drilled(user, TRUE)
-			SSblackbox.record_feedback("tally", "pick_used_mining", 1, I.type)
+	if(!attacking_item.use_tool(src, user, tool_mine_speed, volume=50))
+		TIMER_COOLDOWN_END(src, REF(user)) //if we fail we can start again immediately
+		return
+	if(ismineralturf(src))
+		gets_drilled(user, TRUE)
+		SSblackbox.record_feedback("tally", "pick_used_mining", 1, attacking_item.type)
 
 /turf/closed/mineral/attack_hand(mob/user)
 	if(!weak_turf)
@@ -117,7 +118,7 @@
 	var/turf/user_turf = user.loc
 	if (!isturf(user_turf))
 		return
-	if(TIMER_COOLDOWN_CHECK(src, REF(user))) //prevents mining turfs in progress
+	if(TIMER_COOLDOWN_RUNNING(src, REF(user))) //prevents mining turfs in progress
 		return
 	TIMER_COOLDOWN_START(src, REF(user), hand_mine_speed)
 	var/skill_modifier = user.mind?.get_skill_modifier(/datum/skill/mining, SKILL_SPEED_MODIFIER) || 1
@@ -187,7 +188,7 @@
 
 /turf/closed/mineral/attack_hulk(mob/living/carbon/human/H)
 	..()
-	if(do_after(H, 50, target = src))
+	if(do_after(H, 5 SECONDS, target = src))
 		playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
 		H.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ), forced = "hulk")
 		gets_drilled(H)
@@ -771,10 +772,10 @@
 		var/obj/item/gibtonite/G = new (src)
 		if(det_time <= 0)
 			G.quality = 3
-			G.icon_state = "Gibtonite ore 3"
+			G.icon_state = "gibtonite_3"
 		if(det_time >= 1 && det_time <= 2)
 			G.quality = 2
-			G.icon_state = "Gibtonite ore 2"
+			G.icon_state = "gibtonite_2"
 
 	var/flags = NONE
 	var/old_type = type
@@ -816,7 +817,7 @@
 	base_icon_state = "rock_wall"
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 
-/turf/closed/mineral/strong/attackby(obj/item/I, mob/user, params)
+/turf/closed/mineral/strong/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(!ishuman(user))
 		to_chat(usr, span_warning("Only a more advanced species could break a rock such as this one!"))
 		return FALSE

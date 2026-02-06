@@ -16,7 +16,7 @@
 	return ..()
 
 /datum/status_effect/eldritch/Destroy()
-	QDEL_NULL(marked_underlay)
+	marked_underlay = null
 	return ..()
 
 /datum/status_effect/eldritch/on_apply()
@@ -83,7 +83,7 @@
 /datum/status_effect/eldritch/ash/on_effect(mob/living/activator) // monkestation edit: add "activator" arg to /datum/status_effect/eldritch/proc/on_effect()
 	if(iscarbon(owner))
 		var/mob/living/carbon/carbon_owner = owner
-		carbon_owner.stamina.adjust(-6 * repetitions) // first one = 30 stam
+		carbon_owner.stamina.adjust(-3 * repetitions) // first one = 15 stam
 		carbon_owner.adjustFireLoss(3 * repetitions) // first one = 15 burn
 		for(var/mob/living/carbon/victim in shuffle(range(1, carbon_owner)))
 			if(IS_HERETIC(victim) || victim == carbon_owner)
@@ -134,6 +134,7 @@ monkestation end */
 /datum/status_effect/eldritch/void/on_effect(mob/living/activator) // monkestation edit: add "activator" arg to /datum/status_effect/eldritch/proc/on_effect()
 	owner.apply_status_effect(/datum/status_effect/void_chill, 2)
 	owner.adjust_silence(10 SECONDS)
+	owner.adjust_emote_mute(10 SECONDS)
 	return ..()
 
 // MARK OF BLADES
@@ -263,11 +264,15 @@ monkestation end */
 
 /datum/status_effect/eldritch/knock/on_apply()
 	. = ..()
-	ADD_TRAIT(owner, TRAIT_ALWAYS_NO_ACCESS, TRAIT_STATUS_EFFECT(id))
+	RegisterSignal(owner, COMSIG_MOB_TRIED_ACCESS, PROC_REF(on_tried_access))
 
 /datum/status_effect/eldritch/knock/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_ALWAYS_NO_ACCESS, TRAIT_STATUS_EFFECT(id))
+	UnregisterSignal(owner, COMSIG_MOB_TRIED_ACCESS)
 	return ..()
+
+/datum/status_effect/eldritch/knock/proc/on_tried_access(atom/movable/source_opening)
+	SIGNAL_HANDLER
+	return ACCESS_DISALLOWED
 
 // MARK OF MOON
 

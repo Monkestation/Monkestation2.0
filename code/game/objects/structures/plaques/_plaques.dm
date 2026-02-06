@@ -80,8 +80,8 @@
 	atom_integrity = max_integrity
 	return TRUE
 
-/obj/structure/plaque/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/pen/fountain))
+/obj/structure/plaque/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/pen/fountain))
 		if(engraved)
 			to_chat(user, span_warning("This plaque has already been engraved."))
 			return
@@ -104,7 +104,7 @@
 		user.visible_message(span_notice("[user] engraves [src]."), \
 			span_notice("You engrave [src]."))
 		return
-	if(istype(I, /obj/item/pen))
+	if(istype(attacking_item, /obj/item/pen))
 		if(engraved)
 			to_chat(user, span_warning("This plaque has already been engraved, and your pen isn't fancy enough to engrave it anyway! Find a fountain pen."))
 			return
@@ -153,8 +153,8 @@
 	return TRUE
 
 
-/obj/item/plaque/attackby(obj/item/I, mob/user, params) //Same as part of the above, except for the item in hand instead of the structure.
-	if(istype(I, /obj/item/pen/fountain))
+/obj/item/plaque/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers) //Same as part of the above, except for the item in hand instead of the structure.
+	if(istype(attacking_item, /obj/item/pen/fountain))
 		if(engraved)
 			to_chat(user, span_warning("This plaque has already been engraved."))
 			return
@@ -169,7 +169,7 @@
 			return
 		user.visible_message(span_notice("[user] begins engraving [src]."), \
 			span_notice("You begin engraving [src]."))
-		if(!do_after(user, 40, target = src)) //This spits out a visible message that somebody is engraving a plaque, then has a delay.
+		if(!do_after(user, 4 SECONDS, target = src)) //This spits out a visible message that somebody is engraving a plaque, then has a delay.
 			return
 		name = "\improper [namechoice]" //We want improper here so examine doesn't get weird if somebody capitalizes the plaque title.
 		desc = "The plaque reads: '[descriptionchoice]'"
@@ -177,7 +177,7 @@
 		user.visible_message(span_notice("[user] engraves [src]."), \
 			span_notice("You engrave [src]."))
 		return
-	if(istype(I, /obj/item/pen))
+	if(istype(attacking_item, /obj/item/pen))
 		if(engraved)
 			to_chat(user, span_warning("This plaque has already been engraved, and your pen isn't fancy enough to engrave it anyway! Find a fountain pen."))
 			return
@@ -185,11 +185,10 @@
 		return
 	return ..()
 
-/obj/item/plaque/afterattack(atom/target, mob/user, proximity)
-	. = ..()
-	if(!iswallturf(target) || !proximity)
-		return
-	var/turf/target_turf = target
+/obj/item/plaque/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!iswallturf(interacting_with))
+		return NONE
+	var/turf/target_turf = interacting_with
 	var/turf/user_turf = get_turf(user)
 	var/obj/structure/plaque/placed_plaque = new plaque_path(user_turf) //We place the plaque on the turf the user is standing, and pixel shift it to the target wall, as below.
 	//This is to mimic how signs and other wall objects are usually placed by mappers, and so they're only visible from one side of a wall.
@@ -213,3 +212,4 @@
 	placed_plaque.update_integrity(get_integrity())
 	placed_plaque.setDir(dir)
 	qdel(src)
+	return ITEM_INTERACT_SUCCESS

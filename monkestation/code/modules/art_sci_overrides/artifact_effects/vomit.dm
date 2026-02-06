@@ -8,16 +8,20 @@
 		/datum/artifact_origin/wizard,
 		/datum/artifact_origin/martian,
 	) //silicons dont like organic stuff or something
+	/// Range of effect
 	var/range = 0
+	/// How far to vomit organs
 	var/spew_range = 1
+	/// Do they  vomit organs
 	var/spew_organs = FALSE
+	/// Do they vomit blood too
 	var/bloody_vomit = FALSE
 	COOLDOWN_DECLARE(cooldown)
 
 	research_value = TECHWEB_DISCOUNT_MINOR / 4 //To busy vomiting cant research
 
 
-	examine_discovered = span_warning("It appears to be some sort of sick prank")
+	examine_discovered = span_warning("It appears to be some sort of sick prank.")
 
 /datum/artifact_effect/vomit/setup()
 	switch(rand(1,100))

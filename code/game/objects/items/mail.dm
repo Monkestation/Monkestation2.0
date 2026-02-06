@@ -3,7 +3,7 @@
 	name = "mail"
 	gender = NEUTER
 	desc = "An officially postmarked, tamper-evident parcel regulated by CentCom and made of high-quality materials."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "mail_small"
 	inhand_icon_state = "paper"
 	worn_icon_state = "paper"
@@ -65,6 +65,7 @@
 			ACCOUNT_CAR = COLOR_BEIGE,
 			ACCOUNT_SEC = COLOR_PALE_RED_GRAY,
 			ACCOUNT_CMD = COLOR_BLUE_GRAY,
+			ACCOUNT_CC = COLOR_CENTCOM_GREEN,
 		)
 
 	// Icons
@@ -99,10 +100,10 @@
 		postmark_image.appearance_flags |= RESET_COLOR
 		add_overlay(postmark_image)
 
-/obj/item/mail/attackby(obj/item/W, mob/user, params)
+/obj/item/mail/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	// Destination tagging
-	if(istype(W, /obj/item/dest_tagger))
-		var/obj/item/dest_tagger/destination_tag = W
+	if(istype(attacking_item, /obj/item/dest_tagger))
+		var/obj/item/dest_tagger/destination_tag = attacking_item
 
 		if(sort_tag != destination_tag.currTag)
 			var/tag = uppertext(GLOB.TAGGERLOCATIONS[destination_tag.currTag])
@@ -217,19 +218,22 @@
 	name = "mail crate"
 	desc = "A certified post crate from CentCom."
 	icon_state = "mail"
+	base_icon_state = "mail"
 	can_install_electronics = FALSE
 	lid_icon_state = "maillid"
 	lid_x = -26
 	lid_y = 2
+	paint_jobs = null
+	can_weld_shut = FALSE
 
 /obj/structure/closet/crate/mail/update_icon_state()
 	. = ..()
 	if(opened)
-		icon_state = "[initial(icon_state)]open"
+		icon_state = "[base_icon_state]open"
 		if(locate(/obj/item/mail) in src)
-			icon_state = initial(icon_state)
+			icon_state = base_icon_state
 	else
-		icon_state = "[initial(icon_state)]sealed"
+		icon_state = "[base_icon_state]sealed"
 
 /// Fills this mail crate with N pieces of mail, where N is the lower of the amount var passed, and the maximum capacity of this crate. If N is larger than the number of alive human players, the excess will be junkmail.
 /obj/structure/closet/crate/mail/proc/populate(amount)
@@ -277,11 +281,16 @@
 	populate(INFINITY)
 
 
+/// Opened mail crate
+/obj/structure/closet/crate/mail/preopen
+	opened = TRUE
+	icon_state = "mailopen"
+
 /// Mailbag.
 /obj/item/storage/bag/mail
 	name = "mail bag"
 	desc = "A bag for letters, envelopes, and other postage."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "mailbag"
 	worn_icon_state = "mailbag"
 	resistance_flags = FLAMMABLE
@@ -306,7 +315,7 @@
 	var/nuclear_option_odds = 0.1
 
 /obj/item/paper/fluff/junkmail_redpill/Initialize(mapload)
-	var/obj/machinery/nuclearbomb/selfdestruct/self_destruct = locate() in GLOB.nuke_list
+	var/obj/machinery/nuclearbomb/selfdestruct/self_destruct = locate() in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/nuclearbomb/selfdestruct)
 	if(!self_destruct || !prob(nuclear_option_odds)) // 1 in 1000 chance of getting 2 random nuke code characters.
 		add_raw_text("<i>You need to escape the simulation. Don't forget the numbers, they help you remember:</i> '[rand(0,9)][rand(0,9)][rand(0,9)]...'")
 		return ..()

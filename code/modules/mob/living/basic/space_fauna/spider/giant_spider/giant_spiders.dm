@@ -424,7 +424,7 @@
 /**
  * ### Scrawny Hunter Spider
  *
- * A hunter spider that trades damage for health, unable to smash enviroments.
+ * A hunter spider that trades damage for health, unable to smash environments.
  * Used as a minor threat in abandoned places, such as areas in maintenance or a ruin.
  */
 /mob/living/basic/spider/giant/hunter/scrawny
@@ -440,7 +440,7 @@
 /**
  * ### Scrawny Tarantula
  *
- * A weaker version of the Tarantula, unable to smash enviroments.
+ * A weaker version of the Tarantula, unable to smash environments.
  * Used as a moderately strong but slow threat in abandoned places, such as areas in maintenance or a ruin.
  */
 /mob/living/basic/spider/giant/tarantula/scrawny
@@ -456,7 +456,7 @@
 /**
  * ### Scrawny Nurse Spider
  *
- * A weaker version of the nurse spider with reduced health, unable to smash enviroments.
+ * A weaker version of the nurse spider with reduced health, unable to smash environments.
  * Mainly used as a weak threat in abandoned places, such as areas in maintenance or a ruin.
  * In the future we should give this AI so that it actually heals its teammates.
  */

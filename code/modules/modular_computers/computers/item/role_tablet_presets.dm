@@ -5,6 +5,7 @@
 /obj/item/modular_computer/pda/heads
 	greyscale_config = /datum/greyscale_config/tablet/head
 	greyscale_colors = "#67A364#a92323"
+	max_capacity = parent_type::max_capacity * 2
 	starting_programs = list(
 		/datum/computer_file/program/crew_manifest,
 		/datum/computer_file/program/status,
@@ -49,7 +50,7 @@
 	name = "head of security PDA"
 	greyscale_config = /datum/greyscale_config/tablet/head
 	greyscale_colors = "#EA3232#0000CC"
-	inserted_item = /obj/item/pen/fountain
+	inserted_item = /obj/item/pen/red/security
 	starting_programs = list(
 		/datum/computer_file/program/crew_manifest,
 		/datum/computer_file/program/status,
@@ -105,6 +106,7 @@
 		/datum/computer_file/program/scipaper_program,
 	)
 
+/* //Monkestation edit - QM is not part of command.
 /obj/item/modular_computer/pda/heads/quartermaster
 	name = "quartermaster PDA"
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
@@ -120,6 +122,7 @@
 		/datum/computer_file/program/shipping,
 		/datum/computer_file/program/robocontrol,
 	)
+*/
 
 /**
  * Security
@@ -128,6 +131,7 @@
 /obj/item/modular_computer/pda/security
 	name = "security PDA"
 	greyscale_colors = "#EA3232#0000cc"
+	inserted_item = /obj/item/pen/red/security
 	starting_programs = list(
 		/datum/computer_file/program/records/security,
 		/datum/computer_file/program/crew_manifest,
@@ -137,6 +141,7 @@
 /obj/item/modular_computer/pda/detective
 	name = "detective PDA"
 	greyscale_colors = "#805A2F#990202"
+	inserted_item = /obj/item/pen/red/security
 	starting_programs = list(
 		/datum/computer_file/program/records/security,
 		/datum/computer_file/program/crew_manifest,
@@ -150,6 +155,7 @@
 	name = "warden PDA"
 	greyscale_config = /datum/greyscale_config/tablet/stripe_split
 	greyscale_colors = "#EA3232#0000CC#363636"
+	inserted_item = /obj/item/pen/red/security
 	starting_programs = list(
 		/datum/computer_file/program/records/security,
 		/datum/computer_file/program/crew_manifest,
@@ -388,6 +394,7 @@
 	starting_programs = list(
 		/datum/computer_file/program/emojipedia,
 		/datum/computer_file/program/newscaster,
+		/datum/computer_file/program/portrait_printer,
 	)
 
 /* monkestation removal: don't force ringer off by default

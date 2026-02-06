@@ -22,8 +22,8 @@
 	)
 
 	var/datum/universal_icon/icon
-	for(var/icon_file as anything in essentials)
-		for(var/icon_state as anything in essentials[icon_file])
+	for(var/icon_file in essentials)
+		for(var/icon_state in essentials[icon_file])
 			icon = uni_icon(icon_file, icon_state)
 			if(icon_state == "window-0" || icon_state == "reinforced_window-0")
 				icon.blend_color("#305a6d", ICON_MULTIPLY)
@@ -33,7 +33,7 @@
 	//for each airlock type we create its overlayed version with the suffix Glass in the sprite name
 	var/list/airlocks = list(
 		"Standard" = 'icons/obj/doors/airlocks/station/public.dmi',
-		"Public" = 'icons/obj/doors/airlocks/station2/glass.dmi',
+		"Public" = 'icons/obj/doors/airlocks/public/glass.dmi',
 		"Engineering" = 'icons/obj/doors/airlocks/station/engineering.dmi',
 		"Atmospherics" = 'icons/obj/doors/airlocks/station/atmos.dmi',
 		"Security" = 'icons/obj/doors/airlocks/station/security.dmi',

@@ -10,6 +10,7 @@
 	worn_icon_state = "radio"
 	desc = "A basic handheld radio that communicates with local telecommunication networks."
 	dog_fashion = /datum/dog_fashion/back
+	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_ALLOW_USER_LOCATION | INTERACT_ATOM_IGNORE_MOBILITY
 
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
@@ -66,8 +67,10 @@
 	var/translate_binary = FALSE
 	/// If true, can say/hear on the special CentCom channel.
 	var/independent = FALSE
-	/// If true, hears all well-known channels automatically, and can say/hear on the Syndicate channel. Also protects from radio jammers.
+	/// If true, hears all well-known channels automatically, and can say/hear on the Syndicate channel. Also protects from passive radio jamming effects.
 	var/syndie = FALSE
+	/// If true, ignores all radio jamming effects, including targeted disruptor waves.
+	var/ignores_radio_jammers = FALSE
 	/// associative list of the encrypted radio channels this radio is currently set to listen/broadcast to, of the form: list(channel name = TRUE or FALSE)
 	var/list/channels
 	/// associative list of the encrypted radio channels this radio can listen/broadcast to, of the form: list(channel name = channel frequency)
@@ -335,7 +338,7 @@
 	// monkestation end
 
 	// Nearby active jammers prevent the message from transmitting
-	if(is_within_radio_jammer_range(src) && !syndie)
+	if(is_within_radio_jammer_range(src) && !syndie && !ignores_radio_jammers)
 		return
 
 	// Determine the identity information which will be attached to the signal.
@@ -610,7 +613,7 @@
 	to_chat(user, span_notice("You pop out the encryption key in the radio."))
 	return ..()
 
-/obj/item/radio/borg/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/radio/borg/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 
 	if(istype(attacking_item, /obj/item/encryptionkey))
 		if(keyslot)

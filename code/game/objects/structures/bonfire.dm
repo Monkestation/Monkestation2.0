@@ -17,19 +17,14 @@
 	anchored = TRUE
 	buckle_lying = 0
 	pass_flags_self = PASSTABLE | LETPASSTHROW
-	///is the bonfire lit?
+	/// is the bonfire lit?
 	var/burning = FALSE
-	///icon for the bonfire while on. for a softer more burning embers icon, use "bonfire_warm"
+	/// icon for the bonfire while on. for a softer more burning embers icon, use "bonfire_warm"
 	var/burn_icon = "bonfire_on_fire"
-	///if the bonfire has a grill attached
+	/// if the bonfire has a grill attached
 	var/grill = FALSE
-
-/obj/structure/bonfire/dense
-	density = TRUE
-
-/obj/structure/bonfire/prelit/Initialize(mapload)
-	. = ..()
-	start_burning()
+	/// the looping sound effect that is played while burning
+	var/datum/looping_sound/burning/burning_loop
 
 /obj/structure/bonfire/Initialize(mapload)
 	. = ..()
@@ -37,6 +32,20 @@
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
+	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, PROC_REF(on_light_eater))
+	burning_loop = new(src)
+
+//fire isn't one light source, it's several constantly appearing and disappearing... or something
+/obj/structure/bonfire/proc/on_light_eater(atom/source, datum/light_eater)
+	SIGNAL_HANDLER
+	if(burning)
+		visible_message(span_warning("The roaring fire of \the [src] refuses to fade."))
+	return COMPONENT_BLOCK_LIGHT_EATER
+
+/obj/structure/bonfire/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	QDEL_NULL(burning_loop)
+	. = ..()
 
 /obj/structure/bonfire/attackby(obj/item/used_item, mob/living/user, params)
 	if(istype(used_item, /obj/item/stack/rods) && !can_buckle && !grill)
@@ -77,7 +86,6 @@
 		else
 			return ..()
 
-
 /obj/structure/bonfire/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
@@ -85,7 +93,7 @@
 	if(burning)
 		to_chat(user, span_warning("You need to extinguish [src] before removing the logs!"))
 		return
-	if(!has_buckled_mobs() && do_after(user, 50, target = src))
+	if(!has_buckled_mobs() && do_after(user, 5 SECONDS, target = src))
 		for(var/obj/item/grown/log/bonfire_log in contents)
 			bonfire_log.forceMove(drop_location())
 			bonfire_log.pixel_x += rand(1,4)
@@ -107,6 +115,8 @@
 /obj/structure/bonfire/proc/start_burning()
 	if(burning || !check_oxygen())
 		return
+
+	burning_loop.start()
 	icon_state = burn_icon
 	burning = TRUE
 	set_light(6)
@@ -160,17 +170,20 @@
 		return
 	var/turf/open/my_turf = get_turf(src)
 	if(istype(my_turf) && !my_turf.planetary_atmos) //Pollute, but only when we're not on planetary atmos
-		my_turf.pollute_turf_list(list(/datum/pollutant/smoke = 15, /datum/pollutant/carbon_air_pollution = 5), POLLUTION_PASSIVE_EMITTER_CAP)
+		var/delta_time = DELTA_WORLD_TIME(SSobj)
+		my_turf.pollute_turf_list(list(/datum/pollutant/smoke = 15 * delta_time, /datum/pollutant/carbon_air_pollution = 5 * delta_time), POLLUTION_PASSIVE_EMITTER_CAP)
 	bonfire_burn(seconds_per_tick)
 
 /obj/structure/bonfire/extinguish()
 	. = ..()
 	if(!burning)
 		return
+
+	burning_loop.stop()
 	icon_state = "bonfire"
 	burning = FALSE
 	set_light(0)
-	QDEL_NULL(particles)
+	particles = null
 	STOP_PROCESSING(SSobj, src)
 
 /obj/structure/bonfire/buckle_mob(mob/living/buckled_mob, force = FALSE, check_loc = TRUE)
@@ -180,5 +193,12 @@
 /obj/structure/bonfire/unbuckle_mob(mob/living/buckled_mob, force = FALSE, can_fall = TRUE)
 	if(..())
 		buckled_mob.pixel_y -= 13
+
+/obj/structure/bonfire/dense
+	density = TRUE
+
+/obj/structure/bonfire/prelit/Initialize(mapload)
+	. = ..()
+	start_burning()
 
 #undef BONFIRE_FIRE_STACK_STRENGTH

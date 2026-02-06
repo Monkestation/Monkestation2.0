@@ -72,22 +72,22 @@
 				H.set_eye_blur_if_lower(10 SECONDS)
 				eyes.apply_organ_damage(5)
 
-/obj/item/clothing/glasses/AltClick(mob/user)
-	if(glass_colour_type && !forced_glass_color && ishuman(user))
-		var/mob/living/carbon/human/human_user = user
+/obj/item/clothing/glasses/click_alt(mob/user) // on TG, a component handles this /datum/element/wearable_client_colour
+	if(!glass_colour_type || forced_glass_color || !ishuman(user))
+		return CLICK_ACTION_BLOCKING
 
-		if (human_user.glasses != src)
-			return ..()
+	var/mob/living/carbon/human/human_user = user
+	if(human_user.glasses != src)
+		return CLICK_ACTION_BLOCKING
 
-		if (HAS_TRAIT_FROM(human_user, TRAIT_SEE_GLASS_COLORS, GLASSES_TRAIT))
-			REMOVE_TRAIT(human_user, TRAIT_SEE_GLASS_COLORS, GLASSES_TRAIT)
-			to_chat(human_user, span_notice("You will no longer see glasses colors."))
-		else
-			ADD_TRAIT(human_user, TRAIT_SEE_GLASS_COLORS, GLASSES_TRAIT)
-			to_chat(human_user, span_notice("You will now see glasses colors."))
-		human_user.update_glasses_color(src, TRUE)
+	if(HAS_TRAIT_FROM(human_user, TRAIT_SEE_GLASS_COLORS, GLASSES_TRAIT))
+		REMOVE_TRAIT(human_user, TRAIT_SEE_GLASS_COLORS, GLASSES_TRAIT)
+		to_chat(human_user, span_notice("You will no longer see glasses colors."))
 	else
-		return ..()
+		ADD_TRAIT(human_user, TRAIT_SEE_GLASS_COLORS, GLASSES_TRAIT)
+		to_chat(human_user, span_notice("You will now see glasses colors."))
+	human_user.update_glasses_color(src, TRUE)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/glasses/proc/change_glass_color(mob/living/carbon/human/H, datum/client_colour/glass_colour/new_color_type)
 	var/old_colour_type = glass_colour_type
@@ -197,10 +197,10 @@
 	icon_state = (icon_state == base_icon_state) ? "[base_icon_state]_flipped" : base_icon_state
 	user.update_worn_glasses()
 
-/obj/item/clothing/glasses/eyepatch/AltClick(mob/user)
-	. = ..()
+/obj/item/clothing/glasses/eyepatch/click_alt(mob/living/user)
 	icon_state = (icon_state == base_icon_state) ? "[base_icon_state]_flipped" : base_icon_state
 	user.update_worn_glasses()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/glasses/eyepatch/medical
 	name = "medical eyepatch"
@@ -515,20 +515,20 @@
 	action_slots = ALL
 
 // MONKESTATION ADDITION START
-/obj/item/clothing/glasses/thermal/syndi/attackby(obj/item/W, mob/user, params)
-	if(W.tool_behaviour != TOOL_MULTITOOL)
+/obj/item/clothing/glasses/thermal/syndi/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(attacking_item.tool_behaviour != TOOL_MULTITOOL)
 		return ..()
 
 	if(chameleon_action.hidden)
 		chameleon_action.hidden = FALSE
 		actions += chameleon_action
 		chameleon_action.Grant(user)
-		log_game("[key_name(user)] has removed the disguise lock on the chameleon thermals ([name]) with [W]")
+		log_game("[key_name(user)] has removed the disguise lock on the chameleon thermals ([name]) with [attacking_item]")
 	else
 		chameleon_action.hidden = TRUE
 		actions -= chameleon_action
 		chameleon_action.Remove(user)
-		log_game("[key_name(user)] has locked the disguise of the chameleon thermals ([name]) with [W]")
+		log_game("[key_name(user)] has locked the disguise of the chameleon thermals ([name]) with [attacking_item]")
 // MONKESTATION ADDITION END
 
 /obj/item/clothing/glasses/thermal/syndi/Initialize(mapload)
@@ -646,18 +646,19 @@
 			var/datum/atom_hud/our_hud = GLOB.huds[hud]
 			our_hud.hide_from(user)
 
-/obj/item/clothing/glasses/debug/AltClick(mob/user)
-	. = ..()
-	if(ishuman(user))
-		if(xray)
-			vision_flags -= SEE_MOBS|SEE_OBJS
-			REMOVE_TRAIT(user, TRAIT_XRAY_VISION, GLASSES_TRAIT)
-		else
-			vision_flags += SEE_MOBS|SEE_OBJS
-			ADD_TRAIT(user, TRAIT_XRAY_VISION, GLASSES_TRAIT)
-		xray = !xray
-		var/mob/living/carbon/human/H = user
-		H.update_sight()
+/obj/item/clothing/glasses/debug/click_alt(mob/living/user)
+	if(!ishuman(user))
+		return CLICK_ACTION_BLOCKING
+	if(xray)
+		vision_flags &= ~SEE_MOBS|SEE_OBJS
+		REMOVE_TRAIT(user, TRAIT_XRAY_VISION, GLASSES_TRAIT)
+	else
+		vision_flags |= SEE_MOBS|SEE_OBJS
+		ADD_TRAIT(user, TRAIT_XRAY_VISION, GLASSES_TRAIT)
+	xray = !xray
+	var/mob/living/carbon/human/human_user = user
+	human_user.update_sight()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/glasses/regular/kim
 	name = "binoclard lenses"

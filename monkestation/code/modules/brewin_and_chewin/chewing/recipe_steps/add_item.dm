@@ -17,7 +17,7 @@
 
 //item_type: The type path of the object we are looking for.
 //our_recipe: The parent recipe object,
-/datum/chewin_cooking/recipe_step/add_item/New(var/item_type, var/datum/chewin_cooking/recipe/our_recipe)
+/datum/chewin_cooking/recipe_step/add_item/New(item_type, datum/chewin_cooking/recipe/our_recipe)
 
 	#ifdef CHEWIN_DEBUG
 	if(!ispath(item_type, /obj/item))
@@ -39,7 +39,7 @@
 	..(our_recipe)
 
 
-/datum/chewin_cooking/recipe_step/add_item/check_conditions_met(var/obj/added_item, var/datum/chewin_cooking/recipe_tracker/tracker)
+/datum/chewin_cooking/recipe_step/add_item/check_conditions_met(obj/added_item, datum/chewin_cooking/recipe_tracker/tracker)
 	#ifdef CHEWIN_DEBUG
 	log_debug("Called add_item/check_conditions_met for [added_item], checking against item type [required_item_type]. Exact_path = [exact_path]")
 	#endif
@@ -56,11 +56,11 @@
 //The quality of add_item is special, in that it inherits the quality level of its parent and
 //passes it along.
 //May need "Balancing" with var/inherited_quality_modifier
-/datum/chewin_cooking/recipe_step/add_item/calculate_quality(var/obj/added_item, var/datum/chewin_cooking/recipe_tracker/tracker)
+/datum/chewin_cooking/recipe_step/add_item/calculate_quality(obj/added_item, datum/chewin_cooking/recipe_tracker/tracker)
 	var/raw_quality = added_item?:food_quality * inherited_quality_modifier
 	return clamp_quality(raw_quality)
 
-/datum/chewin_cooking/recipe_step/add_item/follow_step(var/obj/added_item, var/datum/chewin_cooking/recipe_tracker/tracker)
+/datum/chewin_cooking/recipe_step/add_item/follow_step(obj/added_item, datum/chewin_cooking/recipe_tracker/tracker)
 	#ifdef CHEWIN_DEBUG
 	logger.Log(LOG_CATEGORY_DEBUG, "Called: /datum/chewin_cooking/recipe_step/add_item/follow_step")
 	#endif

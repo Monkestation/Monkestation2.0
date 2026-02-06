@@ -48,7 +48,7 @@
 		icon_state = "gizmo_scan"
 	to_chat(user, span_notice("You switch the device to [mode == GIZMO_SCAN? "SCAN": "MARK"] MODE"))
 
-/obj/item/abductor/gizmo/attack(mob/living/target, mob/user)
+/obj/item/abductor/gizmo/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!ScientistCheck(user))
 		return
 	if(!console)
@@ -57,28 +57,15 @@
 
 	switch(mode)
 		if(GIZMO_SCAN)
-			scan(target, user)
+			scan(interacting_with, user)
 		if(GIZMO_MARK)
-			mark(target, user)
+			mark(interacting_with, user)
 
 
-/obj/item/abductor/gizmo/afterattack(atom/target, mob/living/user, flag, params)
-	. = ..()
-	if(flag)
-		return
-	if(!ScientistCheck(user))
-		return .
-	if(!console)
-		to_chat(user, span_warning("The device is not linked to console!"))
-		return .
-
-	switch(mode)
-		if(GIZMO_SCAN)
-			scan(target, user)
-		if(GIZMO_MARK)
-			mark(target, user)
-
-	return .
+/obj/item/abductor/gizmo/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!ismob(interacting_with))
+		return NONE
+	return ranged_interact_with_atom(interacting_with, user, modifiers)
 
 /obj/item/abductor/gizmo/proc/scan(atom/target, mob/living/user)
 	if(ishuman(target))
@@ -101,7 +88,7 @@
 		to_chat(user, span_warning("You need to be next to the specimen to prepare it for transport!"))
 		return
 	to_chat(user, span_notice("You begin preparing [target] for transport..."))
-	if(do_after(user, 100, target = target))
+	if(do_after(user, 10 SECONDS, target = target))
 		marked_target_weakref = WEAKREF(target)
 		to_chat(user, span_notice("You finish preparing [target] for transport."))
 
@@ -118,20 +105,17 @@
 	icon_state = "silencer"
 	inhand_icon_state = "gizmo"
 
-/obj/item/abductor/silencer/attack(mob/living/target, mob/user)
+/obj/item/abductor/silencer/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!AbductorCheck(user))
-		return
-	radio_off(target, user)
+		return ITEM_INTERACT_SKIP_TO_ATTACK // So you slap them with it
 
-/obj/item/abductor/silencer/afterattack(atom/target, mob/living/user, flag, params)
-	. = ..()
-	if(flag)
-		return
-	. |= AFTERATTACK_PROCESSED_ITEM
-	if(!AbductorCheck(user))
-		return .
-	radio_off(target, user)
-	return .
+	radio_off(interacting_with, user)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/abductor/silencer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!ismob(interacting_with))
+		return NONE
+	return ranged_interact_with_atom(interacting_with, user, modifiers)
 
 /obj/item/abductor/silencer/proc/radio_off(atom/target, mob/living/user)
 	if( !(user in (viewers(7,target))) )
@@ -147,12 +131,11 @@
 		radio_off_mob(human_target)
 
 /obj/item/abductor/silencer/proc/radio_off_mob(mob/living/carbon/human/target)
-	var/list/all_items = target.get_all_contents()
-
-	for(var/obj/item/radio/radio in all_items)
-		radio.set_listening(FALSE)
-		if(!istype(radio, /obj/item/radio/headset))
-			radio.set_broadcasting(FALSE) //goddamned headset hacks
+	var/list/target_contents = target.get_all_contents() + target
+	for (var/obj/item/radio/radio in target_contents)
+		radio.set_broadcasting(FALSE)
+	for (var/obj/item/bodycam_upgrade/bodycamera in target_contents)
+		bodycamera.turn_off()
 
 /obj/item/abductor/mind_device
 	name = "mental interface device"
@@ -174,17 +157,21 @@
 		icon_state = "mind_device_message"
 	to_chat(user, span_notice("You switch the device to [mode == MIND_DEVICE_MESSAGE? "TRANSMISSION": "COMMAND"] MODE"))
 
-/obj/item/abductor/mind_device/afterattack(atom/target, mob/living/user, flag, params)
-	. = ..()
-	. |= AFTERATTACK_PROCESSED_ITEM
+/obj/item/abductor/mind_device/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!ismob(interacting_with))
+		return NONE
+	return ranged_interact_with_atom(interacting_with, user, modifiers)
+
+/obj/item/abductor/mind_device/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!ScientistCheck(user))
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	switch(mode)
 		if(MIND_DEVICE_CONTROL)
-			mind_control(target, user)
+			mind_control(interacting_with, user)
 		if(MIND_DEVICE_MESSAGE)
-			mind_message(target, user)
+			mind_message(interacting_with, user)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/abductor/mind_device/proc/mind_control(atom/target, mob/living/user)
 	if(iscarbon(target))
@@ -269,6 +256,9 @@
 	selfcharge = 1//shot costs 200 energy, has a max capacity of 1000 for 5 shots. self charge returns 25 energy every couple ticks, so about 1 shot charged every 12~ seconds
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL// variable-size trigger, get it? (abductors need this to be set so the gun is usable for them)
 
+/obj/item/gun/energy/shrink_ray/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_ABDUCTOR)
+
 /obj/item/paper/guides/antag/abductor
 	name = "Dissection Guide"
 	icon_state = "alienpaper_words"
@@ -292,8 +282,8 @@
 <br>
 Congratulations! You are now trained for invasive xenobiology research!"}
 
-/obj/item/paper/guides/antag/abductor/AltClick()
-	return //otherwise it would fold into a paperplane.
+/obj/item/paper/guides/antag/abductor/click_alt(mob/living/user, obj/item/I)
+	return CLICK_ACTION_BLOCKING //otherwise it would fold into a paperplane.
 
 /obj/item/melee/baton/abductor
 	name = "advanced baton"
@@ -319,7 +309,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 
 	var/mode = BATON_STUN
 
-	var/sleep_time = 2 MINUTES
+	var/sleep_time = 1 MINUTES
 	var/time_to_cuff = 3 SECONDS
 
 /obj/item/melee/baton/abductor/Initialize(mapload)
@@ -335,7 +325,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		if(BATON_STUN)
 			txt = "stunning"
 		if(BATON_SLEEP)
-			txt = "sleep inducement"
+			txt = "paralysis inducement"
 		if(BATON_CUFF)
 			txt = "restraining"
 		if(BATON_PROBE)
@@ -387,6 +377,8 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 			target.set_stutter_if_lower(16 SECONDS)
 			SEND_SIGNAL(target, COMSIG_LIVING_MINOR_SHOCK)
 			target.Paralyze(knockdown_time * (HAS_TRAIT(target, TRAIT_BATON_RESISTANCE) ? 0.1 : 1))
+			ADD_TRAIT(target, TRAIT_SOFTSPOKEN, type)
+			addtimer(TRAIT_CALLBACK_REMOVE(target, TRAIT_SOFTSPOKEN, type), 14 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 		if(BATON_SLEEP)
 			SleepAttack(target,user)
 		if(BATON_CUFF)
@@ -413,14 +405,14 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 			span_userdanger("You feel a strange wave of heavy drowsiness wash over you!"))
 			target.adjust_drowsiness(4 SECONDS)
 			return
-		target.visible_message(span_danger("[user] induces sleep in [target] with [src]!"), \
+		target.visible_message(span_danger("[user] paralyzes [target] with [src]!"), \
 		span_userdanger("You suddenly feel very drowsy!"))
-		target.Sleeping(sleep_time)
-		log_combat(user, target, "put to sleep")
+		target.SetParalyzed(sleep_time)
+		log_combat(user, target, "paralyzed")
 	else
 		if(target.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0))
-			to_chat(user, span_warning("The specimen has some kind of mental protection that is completely blocking our sleep inducement methods! It seems you've been foiled."))
-			target.visible_message(span_danger("[user] tried to induce sleep in [target] with [src], but is unsuccessful!"), \
+			to_chat(user, span_warning("The specimen has some kind of mental protection that is completely blocking our paralysis inducement methods! It seems you've been foiled."))
+			target.visible_message(span_danger("[user] tried to induce paralysis in [target] with [src], but is unsuccessful!"), \
 			span_userdanger("Any sense of drowsiness is quickly diminished!"))
 			return
 		target.adjust_drowsiness(2 SECONDS)
@@ -520,7 +512,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 
 // Stops humans from disassembling abductor headsets.
 /obj/item/radio/headset/abductor/screwdriver_act(mob/living/user, obj/item/tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/abductor_machine_beacon
 	name = "machine beacon"

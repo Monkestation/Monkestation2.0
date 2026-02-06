@@ -18,7 +18,7 @@
 /datum/bounty/item/virus/applies_to(obj/O)
 	if(O.flags_1 & HOLOGRAM_1)
 		return FALSE
-	if(istype(O, /obj/item/weapon/virusdish))
+	if(isvirusdish(O))
 		var/obj/item/weapon/virusdish/dish = O
 		if(accepts_virus(dish.contained_virus))
 			return TRUE

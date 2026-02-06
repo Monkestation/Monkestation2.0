@@ -9,6 +9,7 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	circuit = /obj/item/circuitboard/machine/coffeemaker
 	anchored_tabletop_offset = 4
+	pass_flags = PASSTABLE
 	var/obj/item/reagent_containers/cup/coffeepot/coffeepot = null
 	var/brewing = FALSE
 	var/brew_time = 20 SECONDS
@@ -184,7 +185,7 @@
 /obj/machinery/coffeemaker/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/coffeemaker/attackby(obj/item/attack_item, mob/living/user, params)
 	//You can only screw open empty grinder
@@ -206,8 +207,8 @@
 		update_appearance(UPDATE_OVERLAYS)
 		return TRUE //no afterattack
 
-	if (istype(attack_item, /obj/item/reagent_containers/cup/glass/coffee_cup) && !(attack_item.item_flags & ABSTRACT) && attack_item.is_open_container())
-		var/obj/item/reagent_containers/cup/glass/coffee_cup/new_cup = attack_item
+	if (istype(attack_item, /obj/item/reagent_containers/cup/glass/coffee) && !(attack_item.item_flags & ABSTRACT) && attack_item.is_open_container())
+		var/obj/item/reagent_containers/cup/glass/coffee/new_cup = attack_item
 		if(new_cup.reagents.total_volume > 0)
 			balloon_alert(user, "the cup must be empty!")
 			return
@@ -365,7 +366,7 @@
 	if(!coffee_cups) //shouldn't happen, but we all know how stuff manages to break
 		balloon_alert(user, "no cups left!")
 		return
-	var/obj/item/reagent_containers/cup/glass/coffee_cup/new_cup = new(get_turf(src))
+	var/obj/item/reagent_containers/cup/glass/coffee/no_lid/new_cup = new(get_turf(src))
 	user.put_in_hands(new_cup)
 	coffee_cups--
 	update_appearance(UPDATE_OVERLAYS)
@@ -411,7 +412,7 @@
 	if(!silent)
 		playsound(src, 'sound/machines/coffeemaker_brew.ogg', 20, vary = TRUE)
 	toggle_steam()
-	use_power(active_power_usage * time * 0.1) // .1 needed here to convert time (in deciseconds) to seconds such that watts * seconds = joules
+	use_energy(active_power_usage * time / (1 SECONDS)) // .1 needed here to convert time (in deciseconds) to seconds such that watts * seconds = joules
 	addtimer(CALLBACK(src, PROC_REF(stop_operating)), time / speed)
 
 /obj/machinery/coffeemaker/proc/stop_operating()
@@ -513,7 +514,6 @@
 	initial_cartridge = null //no cartridge, just coffee beans
 	brew_time = 15 SECONDS //industrial grade, its faster than the regular one
 	density = TRUE
-	pass_flags = PASSTABLE
 	/// Current amount of coffee beans stored
 	var/coffee_amount = 0
 	/// List of coffee bean objects are stored
@@ -735,8 +735,28 @@
 	if(!try_brew())
 		return
 	operate_for(brew_time)
+
+	// create a reference bean reagent list
+	var/list/reference_bean_reagents = list()
+	var/obj/item/food/grown/coffee/reference_bean = new /obj/item/food/grown/coffee(src)
+	for(var/datum/reagent/ref_bean_reagent as anything in reference_bean.reagents.reagent_list)
+		reference_bean_reagents += ref_bean_reagent.name
+
+	// add all the reagents from the coffee beans to the coffeepot (ommit the ones from the reference bean)
+	var/list/reagent_delta = list()
+	var/obj/item/food/grown/coffee/bean = coffee[coffee_amount]
+	for(var/datum/reagent/substance as anything in bean.reagents.reagent_list)
+		if(!(reference_bean_reagents.Find(substance.name)))	// we only add the reagent if it's a non-standard for coffee beans
+			reagent_delta += list(substance.type = substance.volume)
+	coffeepot.reagents.add_reagent_list(reagent_delta)
+
+	qdel(reference_bean)
+
+	// brew some coffee
 	coffeepot.reagents.add_reagent_list(list(/datum/reagent/consumable/coffee = 120))
-	coffee.Cut(1,2) //remove the first item from the list
+
+	// remove the coffee beans from the machine
+	coffee.Cut(1,2)
 	coffee_amount--
 	update_appearance(UPDATE_OVERLAYS)
 

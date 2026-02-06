@@ -167,6 +167,7 @@
 	icon_state = "detective"
 	inhand_icon_state = "det_hat"
 	dog_fashion = /datum/dog_fashion/head/detective
+	interaction_flags_click = FORBID_TELEKINESIS_REACH|ALLOW_RESTING
 	///prefix our phrases must begin with
 	var/prefix = "go go gadget"
 	///an assoc list of phrase = item (like gun = revolver)
@@ -243,12 +244,12 @@
 		return
 	user.put_in_inactive_hand(items_by_phrase[phrase])
 
-/obj/item/clothing/head/fedora/inspector_hat/AltClick(mob/user)
-	. = ..()
+/obj/item/clothing/head/fedora/inspector_hat/click_alt(mob/living/user)
 	var/new_prefix = tgui_input_text(user, "What should be the new prefix?", "Activation prefix", prefix, max_length = 24)
-	if(!new_prefix)
-		return
+	if(!new_prefix || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
+		return CLICK_ACTION_BLOCKING
 	prefix = new_prefix
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/head/fedora/inspector_hat/Exited(atom/movable/gone, direction)
 	. = ..()
@@ -334,8 +335,8 @@
 
 /obj/item/clothing/head/hats/warden
 	name = "warden's police hat"
-	desc = "It's a special armored hat issued to the Warden of a security force. Protects the head from impacts."
-	icon_state = "policehelm"
+	desc = "It's an old armored hat previously issued to the Warden of a security force. Protects the head from impacts."
+	icon_state = "wardenhat_police"
 	armor_type = /datum/armor/hats_warden
 	strip_delay = 60
 	dog_fashion = /datum/dog_fashion/head/warden
@@ -350,27 +351,20 @@
 	acid = 60
 	wound = 6
 
-/obj/item/clothing/head/hats/warden/police
+/obj/item/clothing/head/hats/warden/spacepol
 	name = "police officer's hat"
 	desc = "A police officer's hat. This hat emphasizes that you are THE LAW."
 
+/obj/item/clothing/head/hats/warden/blue
+	name = "warden's hat"
+	desc = "A blue warden's hat. Looking at it gives you the feeling of wanting to keep people in cells for as long as possible."
+	icon_state = "wardenhat_blue"
+
 /obj/item/clothing/head/hats/warden/red
 	name = "warden's hat"
-	desc = "A warden's red hat. Looking at it gives you the feeling of wanting to keep people in cells for as long as possible."
-	icon_state = "wardenhat"
-	armor_type = /datum/armor/warden_red
-	strip_delay = 60
+	desc = "A red warden's hat. Looking at it gives you the feeling of wanting to keep people in cells for as long as possible."
+	icon_state = "wardenhat_red"
 	dog_fashion = /datum/dog_fashion/head/warden_red
-
-/datum/armor/warden_red
-	melee = 40
-	bullet = 30
-	laser = 30
-	energy = 40
-	bomb = 25
-	fire = 30
-	acid = 60
-	wound = 6
 
 /obj/item/clothing/head/hats/warden/drill
 	name = "warden's campaign hat"
@@ -523,6 +517,11 @@
 	name = "turquoise surgery cap"
 	icon_state = "surgicalcapcmo"
 	desc = "The CMO's medical surgery cap to prevent their hair from entering the insides of the patient!"
+
+/obj/item/clothing/head/utility/surgerycap/sec
+	name = "security surgical cap"
+	desc = "A security red medical surgery cap to prevent the surgeon's hair from entering the insides of the patient!"
+	icon_state = "surgicalcapsec"
 
 //Engineering
 /obj/item/clothing/head/beret/engi

@@ -123,7 +123,7 @@
 		investigate_log("([key_name(user)]) set text to \"[sign_text || "(none)"]\"", INVESTIGATE_SIGNBOARD)
 		return TRUE
 
-/obj/structure/signboard/alt_click_secondary(mob/user)
+/obj/structure/signboard/click_alt_secondary(mob/user)
 	. = ..()
 	if(!sign_text || !can_interact(user) || !user.can_perform_action(src, NEED_DEXTERITY))
 		return
@@ -140,7 +140,7 @@
 	. = ..()
 	if(!anchored || !check_locked(user))
 		default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/signboard/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	if(!same_z_layer)

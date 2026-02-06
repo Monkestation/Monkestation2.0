@@ -66,7 +66,6 @@
 	success_sound = 'sound/surgery/organ2.ogg'
 	time = 6 SECONDS
 	repeatable = TRUE
-	pain_amount = 12
 
 /datum/surgery_step/repair_veins/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	var/in_where = "[target]'s [parse_zone(target_zone)]"
@@ -79,8 +78,7 @@
 	)
 	display_pain(
 		target,
-		"You feel a horrible stabbing pain in your [parse_zone(target_zone)]!",
-		target_zone = target_zone,
+		"You feel a horrible stabbing pain in your [parse_zone(target_zone)]!"
 	)
 
 /datum/surgery_step/repair_veins/success(mob/living/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
@@ -90,9 +88,9 @@
 		display_results(
 			user,
 			target,
-			span_green("You've finishes repairing all the arterial damage in [in_where]."),
-			span_green("[user] finishes repaiing all the arterial damage in [in_where] with [tool]!"),
-			span_green("[user] finishes repaiing all the arterial damage in [in_where]!"),
+			span_green("You've finished repairing all the arterial damage in [in_where]."),
+			span_green("[user] finishes repairing all the arterial damage in [in_where] with [tool]!"),
+			span_green("[user] finishes repairing all the arterial damage in [in_where]!"),
 		)
 		repeatable = FALSE
 		return ..()

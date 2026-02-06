@@ -128,7 +128,7 @@
 	var/list/pending_relays = list()
 
 	var/list/our_planes = our_hud?.get_planes_from(current_group)
-	for(var/plane_string as anything in our_planes)
+	for(var/plane_string in our_planes)
 		var/list/this_plane = list()
 		var/atom/movable/screen/plane_master/plane = our_planes[plane_string]
 		var/string_plane = "[plane.plane]"
@@ -191,13 +191,11 @@
 		this_plane["outgoing_filters"] = list()
 		// We're gonna collect a list of filters, partly because they're useful info
 		// But also because they can be used as connections, and we need to support that
-		for(var/filter_id in plane.filter_data)
-			var/list/filter = plane.filter_data[filter_id]
+		for(var/list/filter in plane.filter_data)
 			if(!filter["render_source"])
 				continue
 			var/list/filter_info = filter.Copy()
 			filter_info["target_ref"] = string_plane
-			filter_info["name"] = filter_id
 			filter_queue += list(filter_info)
 
 		plane_info[plane_string] = this_plane

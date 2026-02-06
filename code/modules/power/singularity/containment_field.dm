@@ -49,7 +49,7 @@
 		shock(user)
 		return TRUE
 
-/obj/machinery/field/containment/attackby(obj/item/W, mob/user, params)
+/obj/machinery/field/containment/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	shock(user)
 	return TRUE
 

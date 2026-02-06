@@ -77,6 +77,8 @@
 
 ///Tries to transfer the atoms reagents then delete it
 /mob/living/simple_animal/hostile/ooze/proc/eat_atom(atom/eat_target, silent)
+	if(isnull(eat_target))
+		return
 	if(SEND_SIGNAL(eat_target, COMSIG_OOZE_EAT_ATOM, src, edible_food_types) & COMPONENT_ATOM_EATEN)
 		return
 	if(silent || !isitem(eat_target)) //Don't bother reporting it for everything
@@ -222,7 +224,7 @@
 		to_chat(src, span_warning("You are already consuming another creature!"))
 		return FALSE
 	owner.visible_message(span_warning("[ooze] starts attempting to devour [target]!"), span_notice("You start attempting to devour [target]."))
-	if(!do_after(ooze, 15, target = ooze.pulling))
+	if(!do_after(ooze, 1.5 SECONDS, target = ooze.pulling))
 		return FALSE
 	var/mob/living/eat_target = ooze.pulling
 

@@ -14,7 +14,7 @@
 		return INITIALIZE_HINT_QDEL
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/effect/mapping_helpers/damaged_window/LateInitialize()
+/obj/effect/mapping_helpers/damaged_window/LateInitialize(mapload_arg)
 	var/obj/structure/window/target = locate(/obj/structure/window) in loc
 
 	if(isnull(target))

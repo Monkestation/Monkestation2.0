@@ -1,7 +1,7 @@
 /obj/item/papercutter
 	name = "paper cutter"
 	desc = "Standard office equipment. Precisely cuts paper using a large blade."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "papercutter"
 	force = 5
 	throwforce = 5
@@ -20,7 +20,9 @@
 /obj/item/papercutter/Initialize(mapload)
 	. = ..()
 	stored_blade = new /obj/item/hatchet/cutterblade(src)
+	register_context()
 	update_appearance()
+	AddElement(/datum/element/drag_pickup)
 
 /obj/item/papercutter/Destroy(force)
 	if(stored_paper)
@@ -31,11 +33,39 @@
 		stored_blade = null
 	return ..()
 
-/obj/item/papercutter/examine(mob/user)
+/obj/item/papercutter/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
-	. += "<b>Right-Click</b> to cut paper once it's inside."
-	if(stored_blade)
-		. += "The blade could be [blade_secured ? "un" : ""]secured with a <b>screwdriver</b>[blade_secured ? "" : " or removed with an <b>empty hand</b>"]."
+
+	if(!isnull(held_item))
+		if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
+			if(isnull(stored_blade))
+				return NONE
+			context[SCREENTIP_CONTEXT_LMB] = "[(blade_secured ? "Unsecure" : "Secure")] blade"
+		if(istype(held_item, /obj/item/paper))
+			if(!isnull(stored_paper))
+				return NONE
+			context[SCREENTIP_CONTEXT_LMB] = "Insert paper"
+		if(istype(held_item, /obj/item/hatchet/cutterblade))
+			if(!isnull(stored_blade))
+				return NONE
+			context[SCREENTIP_CONTEXT_LMB] = "Insert blade"
+
+	if(!isnull(stored_paper))
+		context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove paper"
+		if(!(isnull(stored_blade)) && blade_secured)
+			context[SCREENTIP_CONTEXT_RMB] = "Cut paper"
+
+	else if(!isnull(stored_blade) && !blade_secured)
+		context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove blade"
+
+	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/papercutter/Exited(atom/movable/leaving, atom/new_loc)
+	. = ..()
+	if(leaving == stored_paper)
+		stored_paper = null
+	if(leaving == stored_blade)
+		stored_blade = null
 
 /obj/item/papercutter/suicide_act(mob/living/user)
 	if(iscarbon(user) && stored_blade)
@@ -53,7 +83,6 @@
 	playsound(loc, 'sound/items/gavel.ogg', 50, TRUE, -1)
 	return BRUTELOSS
 
-
 /obj/item/papercutter/update_icon_state()
 	icon_state = (stored_blade ? "[initial(icon_state)]-cutter" : "[initial(icon_state)]")
 	return ..()
@@ -66,36 +95,48 @@
 /obj/item/papercutter/screwdriver_act(mob/living/user, obj/item/tool)
 	if(!stored_blade && !blade_secured)
 		balloon_alert(user, "no blade to secure!")
-		return
+		return ITEM_INTERACT_BLOCKING
+
 	tool.play_tool_sound(src)
 	balloon_alert(user, "blade [blade_secured ? "un" : ""]secured")
 	blade_secured = !blade_secured
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
-
-/obj/item/papercutter/attackby(obj/item/inserted_item, mob/user, params)
-	if(istype(inserted_item, /obj/item/paper) && !istype(inserted_item, /obj/item/paper/paperslip))
+/obj/item/papercutter/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/paper) && !istype(tool, /obj/item/paper/paperslip))
 		if(stored_paper)
 			balloon_alert(user, "already paper inside!")
-		if(!user.transferItemToLoc(inserted_item, src))
-			return
+			return ITEM_INTERACT_BLOCKING
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
 		playsound(loc, SFX_PAGE_TURN, 60, TRUE)
 		balloon_alert(user, "paper inserted")
-		stored_paper = inserted_item
+		stored_paper = tool
+		update_appearance()
+		return ITEM_INTERACT_SUCCESS
 
-	if(istype(inserted_item, /obj/item/hatchet/cutterblade))
+	if(istype(tool, /obj/item/hatchet/cutterblade))
 		if(stored_blade)
 			balloon_alert(user, "already a blade inside!")
-			return
-		if(!user.transferItemToLoc(inserted_item, src))
-			return
+			return ITEM_INTERACT_BLOCKING
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
 		balloon_alert(user, "blade inserted")
-		inserted_item.forceMove(src)
-		stored_blade = inserted_item
+		tool.forceMove(src)
+		stored_blade = tool
+		update_appearance()
+		return ITEM_INTERACT_SUCCESS
 
+	return NONE
+
+/obj/item/papercutter/click_alt(mob/user)
+	// can only remove one at a time; paper goes first, as its most likely what players will want to be taking out
+	if(!isnull(stored_paper))
+		user.put_in_hands(stored_paper)
+	else if(!isnull(stored_blade) && !blade_secured)
+		user.put_in_hands(stored_blade)
 	update_appearance()
-
-	return ..()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/papercutter/attack_hand(mob/user, list/modifiers)
 	add_fingerprint(user)
@@ -148,20 +189,6 @@
 	new /obj/item/paper/paperslip(get_turf(src))
 	update_appearance()
 
-/obj/item/papercutter/MouseDrop(atom/over_object)
-	. = ..()
-	var/mob/user = usr
-	if(user.incapacitated() || !Adjacent(user))
-		return
-
-	if(over_object == user)
-		user.put_in_hands(src)
-
-	else if(istype(over_object, /atom/movable/screen/inventory/hand))
-		var/atom/movable/screen/inventory/hand/target_hand = over_object
-		user.putItemFromInventoryInHandIfPossible(src, target_hand.held_index)
-	add_fingerprint(user)
-
 /obj/item/paper/paperslip
 	name = "paper slip"
 	desc = "A little slip of paper left over after a larger piece was cut. Whoa."
@@ -185,7 +212,7 @@
 /obj/item/hatchet/cutterblade
 	name = "paper cutter blade"
 	desc = "The blade of a paper cutter. Most likely removed for polishing or sharpening."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "cutterblade"
 	inhand_icon_state = "knife"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'

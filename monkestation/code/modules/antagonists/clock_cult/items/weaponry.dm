@@ -112,8 +112,10 @@
 		our_summon.Remove(our_summon.owner)
 	if(!IS_CLOCK(taker))
 		return
-	if(!(locate(our_summon) in taker.actions)) //dont let them have multiple summons
-		our_summon.Grant(taker)
+
+	var/datum/action/cooldown/spell/summon_spear/summon = locate(/datum/action/cooldown/spell/summon_spear) in taker.actions
+	summon?.Remove(taker) //dont let them have multiple summons
+	our_summon.Grant(taker)
 
 /obj/item/clockwork/weapon/brass_spear/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text, final_block_chance, damage, attack_type)
 	if(HAS_TRAIT(src, TRAIT_WIELDED))
@@ -179,6 +181,7 @@
 	desc = "A brass hammer glowing with energy."
 	base_icon_state = "ratvarian_hammer"
 	icon_state = "ratvarian_hammer0"
+	force = 15
 	throwforce = 25
 	armour_penetration = 6
 	attack_verb_simple = list("bash", "hammer", "attack", "smash")
@@ -264,6 +267,8 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/bow/clockwork
 	/// Time between bolt recharges
 	var/recharge_time = 1.5 SECONDS
+	drawn = TRUE
+	nodrop = TRUE
 
 /obj/item/gun/ballistic/bow/clockwork/Initialize(mapload)
 	. = ..()
@@ -309,7 +314,7 @@
 	chambered = bolt
 	update_icon()
 
-/obj/item/gun/ballistic/bow/clockwork/attackby(obj/item/I, mob/user, params)
+/obj/item/gun/ballistic/bow/clockwork/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	return
 
 /obj/item/gun/ballistic/bow/clockwork/update_icon_state()

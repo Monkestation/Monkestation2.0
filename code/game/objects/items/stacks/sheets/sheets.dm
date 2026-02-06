@@ -13,11 +13,14 @@
 	attack_verb_simple = list("bash", "batter", "bludgeon", "thrash", "smash")
 	novariants = FALSE
 	material_flags = MATERIAL_EFFECTS
-	var/sheettype = null //this is used for girders in the creation of walls/false walls
-	var/point_value = 0 //turn-in value for the gulag stacker - loosely relative to its rarity.
+	///this is used for girders in the creation of walls/false walls
+	var/sheettype = null
+	///turn-in value for the gulag stacker - loosely relative to its rarity.
+	var/point_value = 0
+	///Set to true if this is vended from a material storage
+	var/manufactured = FALSE
 	///What type of wall does this sheet spawn
 	var/walltype
-
 /obj/item/stack/sheet/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
 	. = ..()
 	pixel_x = rand(-4, 4)
@@ -33,7 +36,7 @@
  * * params: paramas passed in from attackby
  */
 /obj/item/stack/sheet/proc/on_attack_floor(mob/user, params)
-	if(get_amount() < 1)
+	if(is_zero_amount(delete_if_zero = TRUE))
 		return FALSE
 	var/list/shards = list()
 	for(var/datum/material/mat in custom_materials)

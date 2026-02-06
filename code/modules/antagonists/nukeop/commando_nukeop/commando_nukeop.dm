@@ -16,13 +16,13 @@
 	nuke_icon_state = "old_nuclearbomb_base"
 
 /datum/antagonist/nukeop/commando/greet()
-	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ops.ogg',100,0, use_reverb = FALSE)
+	play_stinger()
 	to_chat(owner, span_big("You are a [nuke_team ? nuke_team.syndicate_name : "syndicate"] agent!"))
 	owner.announce_objectives()
 
 /datum/antagonist/nukeop/commando/assign_nuke()
 	if(nuke_team && !nuke_team.tracked_nuke)
-		var/obj/machinery/nuclearbomb/commando/nuke = locate() in GLOB.nuke_list
+		var/obj/machinery/nuclearbomb/commando/nuke = locate() in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/nuclearbomb/commando)
 		if(nuke)
 			nuke_team.tracked_nuke = nuke
 			nuke_team.memorized_code = nuke.r_code
@@ -70,7 +70,7 @@
 
 /datum/antagonist/nukeop/commando/admin_tell_code(mob/admin)
 	var/code
-	for (var/obj/machinery/nuclearbomb/commando/bombue as anything in GLOB.nuke_list)
+	for (var/obj/machinery/nuclearbomb/commando/bombue as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/nuclearbomb/commando))
 		if (length(bombue.r_code) <= 5 && bombue.r_code != initial(bombue.r_code))
 			code = bombue.r_code
 			break
@@ -101,7 +101,7 @@
 			H.update_icons()
 
 /datum/antagonist/nukeop/commando/leader/greet()
-	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ops.ogg',100,0, use_reverb = FALSE)
+	play_stinger()
 	to_chat(owner, "<span class='warningplain'><B>You are the Syndicate [title] for this mission. You are responsible for guiding the team.</B></span>")
 	to_chat(owner, "<span class='warningplain'><B>If you feel you are not up to this task, give your disk and radio to another operative.</B></span>")
 	owner.announce_objectives()

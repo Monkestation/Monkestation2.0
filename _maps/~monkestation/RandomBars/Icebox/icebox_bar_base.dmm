@@ -319,7 +319,8 @@
 /area/station/commons/lounge)
 "sj" = (
 /obj/machinery/smartfridge,
-/turf/closed/wall,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron,
 /area/station/service/bar/backroom)
 "tt" = (
 /obj/effect/turf_decal/siding/wood{

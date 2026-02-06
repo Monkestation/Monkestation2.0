@@ -66,27 +66,27 @@
 	if(mergeable_decal)
 		return TRUE
 
-/obj/effect/decal/cleanable/attackby(obj/item/W, mob/user, params)
-	if((istype(W, /obj/item/reagent_containers/cup) && !istype(W, /obj/item/reagent_containers/cup/rag)) || istype(W, /obj/item/reagent_containers/cup/glass))
-		if(src.reagents && W.reagents)
+/obj/effect/decal/cleanable/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if((istype(attacking_item, /obj/item/reagent_containers/cup) && !istype(attacking_item, /obj/item/reagent_containers/cup/rag)) || istype(attacking_item, /obj/item/reagent_containers/cup/glass))
+		if(src.reagents && attacking_item.reagents)
 			. = 1 //so the containers don't splash their content on the src while scooping.
 			if(!src.reagents.total_volume)
 				to_chat(user, span_notice("[src] isn't thick enough to scoop up!"))
 				return
-			if(W.reagents.total_volume >= W.reagents.maximum_volume)
-				to_chat(user, span_notice("[W] is full!"))
+			if(attacking_item.reagents.total_volume >= attacking_item.reagents.maximum_volume)
+				to_chat(user, span_notice("[attacking_item] is full!"))
 				return
-			to_chat(user, span_notice("You scoop up [src] into [W]!"))
-			reagents.trans_to(W, reagents.total_volume, transfered_by = user)
+			to_chat(user, span_notice("You scoop up [src] into [attacking_item]!"))
+			reagents.trans_to(attacking_item, reagents.total_volume, transfered_by = user)
 			if(!reagents.total_volume) //scooped up all of it
 				qdel(src)
 				return
-	if(W.get_temperature()) //todo: make heating a reagent holder proc
-		if(istype(W, /obj/item/clothing/mask/cigarette))
+	if(attacking_item.get_temperature()) //todo: make heating a reagent holder proc
+		if(istype(attacking_item, /obj/item/clothing/mask/cigarette))
 			return
-		var/hotness = W.get_temperature()
+		var/hotness = attacking_item.get_temperature()
 		reagents?.expose_temperature(hotness)
-		to_chat(user, span_notice("You heat [name] with [W]!"))
+		to_chat(user, span_notice("You heat [name] with [attacking_item]!"))
 	else
 		return ..()
 

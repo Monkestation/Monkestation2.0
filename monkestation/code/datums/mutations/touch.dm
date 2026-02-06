@@ -34,11 +34,45 @@
 
 /obj/item/melee/touch_attack/shock/far
 
-/obj/item/melee/touch_attack/shock/far/afterattack(atom/target, mob/living/carbon/user, proximity, click_parameters)
-	if(!can_see(user, target, 5) || get_dist(target, user) > 5)
+/obj/item/melee/touch_attack/shock/far/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!can_see(user, interacting_with, 5) || get_dist(interacting_with, user) > 5)
 		user.visible_message(span_notice("[user]'s hand reaches out but nothing happens."))
-		return
-	return ..(target, user, TRUE, click_parameters) //call the parent, forcing proximity = TRUE so even distant things are considered nearby
+		return NONE
+	return ..()
+
+/obj/item/melee/touch_attack/shock/far/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!can_see(user, interacting_with, 5) || get_dist(interacting_with, user) > 5)
+		user.visible_message(span_notice("[user]'s hand reaches out but nothing happens."))
+		return NONE
+	return ..()
+
+/obj/item/melee/touch_attack/shock/far/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	var/datum/action/cooldown/spell/touch/hand_spell = spell_which_made_us?.resolve()
+	if(!hand_spell || !hand_spell.can_hit_with_hand(interacting_with, user))
+		return NONE
+
+	if(!can_see(user, interacting_with, 5) || get_dist(interacting_with, user) > 5)
+		user.visible_message(span_notice("[user]'s hand reaches out but nothing happens."))
+		return NONE
+
+	hand_spell.do_hand_hit(src, interacting_with, user)
+	if(QDELETED(src))
+		return ITEM_INTERACT_SUCCESS
+	return NONE
+
+/obj/item/melee/touch_attack/shock/far/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	var/datum/action/cooldown/spell/touch/hand_spell = spell_which_made_us?.resolve()
+	if(!hand_spell || !hand_spell.can_hit_with_hand(interacting_with, user))
+		return NONE
+
+	if(!can_see(user, interacting_with, 5) || get_dist(interacting_with, user) > 5)
+		user.visible_message(span_notice("[user]'s hand reaches out but nothing happens."))
+		return NONE
+
+	hand_spell.do_secondary_hand_hit(src, interacting_with, user)
+	if(QDELETED(src))
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
 /datum/mutation/lay_on_hands
 	conflicts = list(/datum/mutation/lay_on_hands/syndicate)

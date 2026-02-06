@@ -33,10 +33,10 @@
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
 
-/obj/item/gavelblock/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/gavelhammer))
+/obj/item/gavelblock/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/gavelhammer))
 		playsound(loc, 'sound/items/gavel.ogg', 100, TRUE)
-		user.visible_message(span_warning("[user] strikes [src] with [I]."))
+		user.visible_message(span_warning("[user] strikes [src] with [attacking_item]."))
 		user.changeNext_move(CLICK_CD_MELEE)
 	else
 		return ..()

@@ -22,63 +22,38 @@
 	department_color = COLOR_COMMAND_BLUE
 	subdepartment_color = COLOR_SECURITY_RED
 	sechud_icon_state = SECHUD_BLUESHIELD
-	extra_access = list(
-		ACCESS_BRIG,
-		ACCESS_CARGO,
-		ACCESS_COURT,
-		ACCESS_GATEWAY,
-	)
 	minimal_access = list(
-		ACCESS_SECURITY,
 		ACCESS_ALL_PERSONAL_LOCKERS,
-		ACCESS_BRIG_ENTRANCE,
 		ACCESS_BLUESHIELD,
+		ACCESS_BRIG_ENTRANCE,
 		ACCESS_COMMAND,
 		ACCESS_CONSTRUCTION,
+		ACCESS_COURT,
 		ACCESS_ENGINEERING,
 		ACCESS_EVA,
+		ACCESS_GATEWAY,
+		ACCESS_HYDROPONICS,
 		ACCESS_MAINT_TUNNELS,
 		ACCESS_MEDICAL,
 		ACCESS_MINERAL_STOREROOM,
+		ACCESS_MINING,
+		ACCESS_MINING_STATION,
+		ACCESS_MORGUE,
 		ACCESS_SCIENCE,
+		ACCESS_SECURITY,
+		ACCESS_SERVICE,
 		ACCESS_TELEPORTER,
 		ACCESS_WEAPONS,
 	)
-	template_access = list(
-		ACCESS_CAPTAIN,
-		ACCESS_CHANGE_IDS
-		)
-	job = /datum/job/blueshield
-
-/datum/id_trim/job/brig_physician
-	assignment = "Brig Physician"
-	trim_state = "trim_brigphysician"
-	department_color = COLOR_SECURITY_RED
-	subdepartment_color = COLOR_MEDICAL_BLUE
-	sechud_icon_state = SECHUD_BRIG_PHYSICIAN
-	minimal_access = list(
-		ACCESS_BRIG,
-		ACCESS_BRIG_ENTRANCE,
-		ACCESS_COURT,
-		ACCESS_MECH_SECURITY,
-		ACCESS_BRIG_PHYSICIAN,
-		ACCESS_MINERAL_STOREROOM,
-		ACCESS_MORGUE,
-		ACCESS_SECURITY,
-		ACCESS_WEAPONS,
-		)
 	extra_access = list(
-		ACCESS_DETECTIVE,
-		ACCESS_MAINT_TUNNELS,
-		ACCESS_SURGERY,
-		ACCESS_MEDICAL,
-		)
+		ACCESS_CARGO,
+	)
 	template_access = list(
 		ACCESS_CAPTAIN,
 		ACCESS_CHANGE_IDS,
-		ACCESS_HOS,
+		ACCESS_NT_REPRESENTATVE,
 		)
-	job = /datum/job/brig_physician
+	job = /datum/job/blueshield
 
 /datum/id_trim/job/explorer
 	assignment = "Explorer"
@@ -101,6 +76,7 @@
 		ACCESS_CAPTAIN,
 		ACCESS_CHANGE_IDS,
 		ACCESS_HOP,
+		ACCESS_QM,
 		)
 	job = /datum/job/shaft_miner
 
@@ -117,6 +93,7 @@
 		ACCESS_WEAPONS,
 		ACCESS_NT_REPRESENTATVE,
 		ACCESS_RC_ANNOUNCE,
+		ACCESS_KEYCARD_AUTH,
 		)
 	extra_access = list(
 		ACCESS_BAR,
@@ -142,6 +119,7 @@
 		ACCESS_MECH_ENGINE,
 		ACCESS_MINERAL_STOREROOM,
 		ACCESS_MINISAT,
+		ACCESS_NETWORK,
 		ACCESS_TCOMMS,
 		ACCESS_TCOMMS_ADMIN,
 		ACCESS_TECH_STORAGE,

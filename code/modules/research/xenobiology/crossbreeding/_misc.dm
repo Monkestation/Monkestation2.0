@@ -52,11 +52,10 @@ Slimecrossing Items
 		ret[part.body_zone] = saved_part
 	return ret
 
-/obj/item/camera/rewind/afterattack(atom/target, mob/user, flag)
-	. |= AFTERATTACK_PROCESSED_ITEM
-
-	if(!on || !pictures_left || !isturf(target.loc))
-		return .
+/obj/item/camera/rewind/photo_taken(atom/target, mob/user)
+	. = ..()
+	if(!.)
+		return
 
 	if(user == target)
 		to_chat(user, span_notice("You take a selfie!"))
@@ -66,9 +65,6 @@ Slimecrossing Items
 	to_chat(target, span_boldnotice("You'll remember this moment forever!"))
 
 	target.AddComponent(/datum/component/dejavu, 2)
-	return . | ..()
-
-
 
 //Timefreeze camera - Old Burning Sepia result. Kept in case admins want to spawn it
 /obj/item/camera/timefreeze
@@ -77,21 +73,19 @@ Slimecrossing Items
 	pictures_left = 1
 	pictures_max = 1
 
-/obj/item/camera/timefreeze/afterattack(atom/target, mob/user, flag)
-	. |= AFTERATTACK_PROCESSED_ITEM
-
-	if(!on || !pictures_left || !isturf(target.loc))
-		return .
+/obj/item/camera/timefreeze/photo_taken(atom/target, mob/user)
+	. = ..()
+	if(!.)
+		return
 	new /obj/effect/timestop(get_turf(target), 2, 50, list(user))
-	return . | ..()
 
 //Hypercharged slime cell - Charged Yellow
-/obj/item/stock_parts/cell/emproof/slime/hypercharged // monke edit: make hypercharged slime cells EMP-proof, by changing their parent from cell/high to cell/emproof
+/obj/item/stock_parts/power_store/cell/emproof/slime/hypercharged // monke edit: make hypercharged slime cells EMP-proof, by changing their parent from cell/high to cell/emproof
 	name = "hypercharged slime core"
 	desc = "A charged yellow slime extract, infused with plasma. It almost hurts to touch. Its organic nature makes it immune to EMPs."
 	rating = 7
-	maxcharge = 50000
-	chargerate = 2500
+	maxcharge = STANDARD_CELL_CHARGE * 50
+	chargerate = STANDARD_CELL_RATE * 0.25
 
 //Barrier cube - Chilling Grey
 /obj/item/barriercube

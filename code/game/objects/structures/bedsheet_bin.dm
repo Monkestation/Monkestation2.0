@@ -24,6 +24,7 @@ LINEN BINS
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
 	dying_key = DYE_REGISTRY_BEDSHEET
+	interaction_flags_click = NEED_DEXTERITY|ALLOW_RESTING
 
 	dog_fashion = /datum/dog_fashion/head/ghost
 	/// Custom nouns to act as the subject of dreams
@@ -124,8 +125,8 @@ LINEN BINS
 	UnregisterSignal(sleeper, COMSIG_QDELETING)
 	signal_sleeper = null
 
-/obj/item/bedsheet/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_WIRECUTTER || I.get_sharpness())
+/obj/item/bedsheet/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(attacking_item.tool_behaviour == TOOL_WIRECUTTER || attacking_item.get_sharpness())
 		if (!(flags_1 & HOLOGRAM_1))
 			var/obj/item/stack/sheet/cloth/shreds = new (get_turf(src), stack_amount)
 			if(!QDELETED(shreds)) //stacks merged
@@ -136,11 +137,9 @@ LINEN BINS
 	else
 		return ..()
 
-/obj/item/bedsheet/AltClick(mob/living/user)
-	// double check the canUseTopic args to make sure it's correct
-	if(!istype(user) || !user.can_perform_action(src, NEED_DEXTERITY))
-		return
-	dir = turn(dir, 180)
+/obj/item/bedsheet/click_alt(mob/living/user)
+	setDir(REVERSE_DIR(dir))
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/bedsheet/blue
 	icon_state = "sheetblue"
@@ -679,33 +678,33 @@ LINEN BINS
 		return FALSE
 	if(amount)
 		to_chat(user, span_warning("The [src] must be empty first!"))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	if(tool.use_tool(src, user, 0.5 SECONDS, volume=50))
 		to_chat(user, span_notice("You disassemble the [src]."))
 		new /obj/item/stack/rods(loc, 2)
 		qdel(src)
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 /obj/structure/bedsheetbin/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool, time = 0.5 SECONDS)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/bedsheetbin/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/bedsheet))
-		if(!user.transferItemToLoc(I, src))
+/obj/structure/bedsheetbin/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/bedsheet))
+		if(!user.transferItemToLoc(attacking_item, src))
 			return
-		sheets.Add(I)
+		sheets.Add(attacking_item)
 		amount++
-		to_chat(user, span_notice("You put [I] in [src]."))
+		to_chat(user, span_notice("You put [attacking_item] in [src]."))
 		update_appearance()
 
-	else if(amount && !hidden && I.w_class < WEIGHT_CLASS_BULKY) //make sure there's sheets to hide it among, make sure nothing else is hidden in there.
-		if(!user.transferItemToLoc(I, src))
-			to_chat(user, span_warning("\The [I] is stuck to your hand, you cannot hide it among the sheets!"))
+	else if(amount && !hidden && attacking_item.w_class < WEIGHT_CLASS_BULKY) //make sure there's sheets to hide it among, make sure nothing else is hidden in there.
+		if(!user.transferItemToLoc(attacking_item, src))
+			to_chat(user, span_warning("\The [attacking_item] is stuck to your hand, you cannot hide it among the sheets!"))
 			return
-		hidden = I
-		to_chat(user, span_notice("You hide [I] among the sheets."))
+		hidden = attacking_item
+		to_chat(user, span_notice("You hide [attacking_item] among the sheets."))
 
 
 /obj/structure/bedsheetbin/attack_paw(mob/user, list/modifiers)

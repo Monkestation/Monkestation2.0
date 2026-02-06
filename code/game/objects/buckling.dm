@@ -28,7 +28,7 @@
 			if(user_unbuckle_mob(buckled_mobs[1],user))
 				return TRUE
 
-/atom/movable/attackby(obj/item/attacking_item, mob/user, params)
+/atom/movable/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(!can_buckle || !istype(attacking_item, /obj/item/riding_offhand) || !user.Adjacent(src))
 		return ..()
 
@@ -54,9 +54,8 @@
 		else
 			return user_unbuckle_mob(buckled_mobs[1], user)
 
-/atom/movable/MouseDrop_T(mob/living/M, mob/living/user)
-	. = ..()
-	return mouse_buckle_handling(M, user)
+/atom/movable/mouse_drop_receive(atom/dropped, mob/user, params)
+	return mouse_buckle_handling(dropped, user)
 
 /**
  * Does some typechecks and then calls user_buckle_mob

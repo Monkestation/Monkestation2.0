@@ -8,13 +8,10 @@
 	strip_delay = 40
 	equip_delay_other = 40
 	blood_overlay_type = "mask"
-	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
 	var/mask_adjusted = FALSE
 	var/adjusted_flags = null
 	///Did we install a filtering cloth?
 	var/has_filter = FALSE
-	/// The unique sound effect of dying while wearing this
-	var/unique_death
 
 /obj/item/clothing/mask/attack_self(mob/user)
 	if((clothing_flags & VOICEBOX_TOGGLABLE))

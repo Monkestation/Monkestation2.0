@@ -117,7 +117,7 @@
 	. = ..()
 	if(hud_icon)
 		var/image/holder = user.hud_list[ID_HUD]
-		holder.pixel_y = user.get_cached_height() - world.icon_size
+		holder.pixel_z = user.get_cached_height() - world.icon_size
 		holder.icon_state = hud_icon
 
 /**

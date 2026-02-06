@@ -4,7 +4,7 @@
 			"type": "icon_state",
 			"icon_state": "face_scarf",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		}
 	],
 	"face_scarf_t": [
@@ -12,7 +12,7 @@
 			"type": "icon_state",
 			"icon_state": "face_scarf_t",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		}
 	]
 }

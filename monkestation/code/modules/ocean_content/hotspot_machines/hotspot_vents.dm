@@ -19,45 +19,44 @@
 
 /obj/machinery/power/vent/Initialize(mapload)
 	. = ..()
-	if(istype(src.loc, /turf/open/floor/plating/ocean))
-		var/turf/open/floor/plating/ocean/location = src.loc
+	if(istype(loc, /turf/open/floor/plating/ocean))
+		var/turf/open/floor/plating/ocean/location = loc
 		location.captured = TRUE
-		update_state(src.loc)
+		update_state(location)
 
 /obj/machinery/power/vent/proc/update_state()
 	if(!isturf(loc))
 		return
-	var/datum/hotspot/found_hotspot = SShotspots.retrieve_hotspot(src.loc)
-	if(!found_hotspot)
-		return
-	found_hotspot.calculate_vent_count(found_hotspot.center.return_turf())
+	var/datum/hotspot/found_hotspot = SShotspots.retrieve_hotspot(loc)
+	if(found_hotspot)
+		found_hotspot.calculate_vent_count(found_hotspot.center.return_turf())
 
 /obj/machinery/power/vent/crowbar_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(!setup)
 		if(!do_after(user, 2 SECONDS, src))
-			return TOOL_ACT_TOOLTYPE_SUCCESS
+			return ITEM_INTERACT_SUCCESS
 		if(!connect_to_network())
-			to_chat(user, "You fail to turn on the [src] as it lacks a connection to the powergrid.")
-			return TOOL_ACT_TOOLTYPE_SUCCESS
-		to_chat(user, "You pry the [src] up turning it on.")
+			to_chat(user, span_warning("You fail to turn on the [src] as it lacks a connection to the powergrid."))
+			return ITEM_INTERACT_SUCCESS
+		to_chat(user, span_notice("You pry the [src] up turning it on."))
 		setup = TRUE
 		update_appearance()
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/power/vent/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(!do_after(user, 5 SECONDS, src))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
-	to_chat(user, "You dissassemble the [src].")
+		return ITEM_INTERACT_SUCCESS
+	to_chat(user, span_notice("You dissassemble the [src]."))
 	disassemble()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/power/vent/attackby(obj/item/W, mob/user, params)
+/obj/machinery/power/vent/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
-	if(istype(W, /obj/item/stack/cable_coil))
+	if(istype(attacking_item, /obj/item/stack/cable_coil))
 		var/turf/turf = get_turf(src)
-		turf.attackby(W)
+		turf.attackby(attacking_item)
 
 /obj/machinery/power/vent/examine(mob/user)
 	. = ..()

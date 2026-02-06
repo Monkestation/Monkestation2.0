@@ -1123,9 +1123,6 @@
 2023-11-12T09:04:04.1659906Z ##[group]/datum/unit_test/contents_barfer
 2023-11-12T09:04:04.1881762Z [1;32mPASS[0m /datum/unit_test/contents_barfer 0s
 2023-11-12T09:04:04.1884275Z ##[endgroup]
-2023-11-12T09:04:04.2328534Z ##[group]/datum/unit_test/space_dragon_expiration
-2023-11-12T09:04:04.2672064Z [1;32mPASS[0m /datum/unit_test/space_dragon_expiration 0s
-2023-11-12T09:04:04.2674522Z ##[endgroup]
 2023-11-12T09:04:04.3282341Z ##[group]/datum/unit_test/glass_style_icons
 2023-11-12T09:04:04.3517947Z [1;32mPASS[0m /datum/unit_test/glass_style_icons 0s
 2023-11-12T09:04:04.3520368Z ##[endgroup]

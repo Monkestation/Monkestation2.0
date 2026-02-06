@@ -3,6 +3,7 @@ SUBSYSTEM_DEF(liquids)
 	wait = 0.5 SECONDS
 	flags = SS_KEEP_TIMING | SS_NO_INIT
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
+	priority = FIRE_PRIORITY_LIQUID_TURFS
 	var/list/active_groups = list()
 
 	var/list/evaporation_queue = list()
@@ -91,7 +92,7 @@ SUBSYSTEM_DEF(liquids)
 				liquid_group.process_group(TRUE)
 				if(populate_evaporation && (liquid_group.always_evaporates || liquid_group.expected_turf_height < LIQUID_STATE_ANKLES) && liquid_group.evaporates)
 					for(var/turf/listed_turf as anything in liquid_group.members)
-						if(QDELETED(listed_turf))
+						if(!listed_turf || isoceanturf(listed_turf))
 							continue
 						evaporation_queue |= listed_turf
 				group_process_work_queue -= liquid_group
@@ -131,7 +132,7 @@ SUBSYSTEM_DEF(liquids)
 			for(var/turf/liquid_turf as anything in evaporation_queue)
 				if(MC_TICK_CHECK)
 					return
-				if(!prob(EVAPORATION_CHANCE) || QDELETED(liquid_turf))
+				if(!prob(EVAPORATION_CHANCE) || !liquid_turf || isoceanturf(liquid_turf))
 					evaporation_queue -= liquid_turf
 					continue
 				liquid_turf?.liquids?.process_evaporation()
@@ -146,7 +147,7 @@ SUBSYSTEM_DEF(liquids)
 				for(var/turf/burning_turf as anything in liquid_group.burning_members)
 					if(MC_TICK_CHECK)
 						return
-					if(!istype(burning_turf) || QDELING(burning_turf))
+					if(!istype(burning_turf))
 						liquid_group.burning_members -= burning_turf
 						continue
 					liquid_group.process_spread(burning_turf)
@@ -203,14 +204,14 @@ SUBSYSTEM_DEF(liquids)
 			while((process_count <= 500) && length(cached_exposures))
 				process_count++
 				var/turf/member = pick_n_take(cached_exposures)
-				if(QDELETED(member) || QDELETED(member.liquids) || QDELETED(member.liquids.liquid_group))
+				if(!member || QDELETED(member.liquids) || QDELETED(member.liquids.liquid_group))
 					continue
 				var/datum/liquid_group/liquid_group = member.liquids.liquid_group
 				if(!(liquid_group in groups_we_rebuilt))
 					groups_we_rebuilt |= liquid_group
 					liquid_group.build_turf_reagent()
 
-				if(!istype(member) || QDELING(member))
+				if(!istype(member))
 					liquid_group.members -= member
 					continue
 				liquid_group.process_member(member)

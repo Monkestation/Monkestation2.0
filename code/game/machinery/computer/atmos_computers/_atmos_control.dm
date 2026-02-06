@@ -99,7 +99,7 @@
 		//register the sensor's unique ID with it's assositated chamber
 		connected_sensors[sensor.chamber_id] = sensor.id_tag
 		user.balloon_alert(user, "sensor connected to [src]")
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 	return
 
@@ -152,7 +152,7 @@
 		data["chambers"] += list(chamber_info)
 	return data
 
-/obj/machinery/computer/atmos_control/ui_act(action, params)
+/obj/machinery/computer/atmos_control/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(. || !(control || reconnecting))
 		return

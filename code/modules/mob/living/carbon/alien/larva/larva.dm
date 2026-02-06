@@ -30,9 +30,18 @@
 
 
 //This is fine right now, if we're adding organ specific damage this needs to be updated
-/mob/living/carbon/alien/larva/Initialize(mapload)
-	var/datum/action/cooldown/alien/larva_evolve/evolution = new(src)
-	evolution.Grant(src)
+/mob/living/carbon/alien/larva/Initialize(mapload, neuter)
+	// If a larva is neutered or not it gets a different ability and trait
+	if(neuter)
+		src.name = "Lamarr"
+		src.maxHealth = 100
+		src.health = 100
+		ADD_TRAIT(src, TRAIT_NEUTERED, INNATE_TRAIT)
+		src.remove_blocked_language(/datum/language/common)
+		src.grant_language(/datum/language/common, TRUE, FALSE)
+	else
+		var/datum/action/cooldown/alien/larva_evolve/evolution = new(src)
+		evolution.Grant(src)
 	var/datum/action/cooldown/alien/hide/hide = new(src)
 	hide.Grant(src)
 	return ..()
@@ -45,7 +54,8 @@
 // This comment is 12 years old I hope it's fixed by now
 /mob/living/carbon/alien/larva/get_status_tab_items()
 	. = ..()
-	. += "Progress: [amount_grown]/[max_grown]"
+	if(!HAS_TRAIT(src, TRAIT_NEUTERED))
+		. += "Progress: [amount_grown]/[max_grown]"
 
 /mob/living/carbon/alien/larva/Login()
 	. = ..()
@@ -54,7 +64,7 @@
 	to_chat(src, "<b>You are an alien larva. Hide from danger until you can evolve.<br>Use say :a to communicate with the hivemind.</b>")
 
 /mob/living/carbon/alien/larva/adjustPlasma(amount)
-	if(stat != DEAD && amount > 0)
+	if(stat != DEAD && amount > 0 && !HAS_TRAIT(src, TRAIT_NEUTERED))
 		amount_grown = min(amount_grown + 1, max_grown)
 	..(amount)
 

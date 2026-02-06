@@ -11,30 +11,27 @@
 	/// Anti-metagaming protections. If TRUE, anyone can change the ID card's details. If FALSE, only syndicate agents can.
 	var/anyone = TRUE
 
-	var/datum/action/item_action/chameleon/change/id/chameleon_card_action // MONKESTATION ADDITION -- DATUM MOVED FROM INITIALIZE()
+	var/datum/action/item_action/chameleon/change/id/chameleon_card_action // DATUM MOVED FROM INITIALIZE()
 
-// MONKESTATION ADDITION START
-/obj/item/card/id/advanced/undercover/attackby(obj/item/W, mob/user, params)
-	if(W.tool_behaviour != TOOL_MULTITOOL)
+/obj/item/card/id/advanced/undercover/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(attacking_item.tool_behaviour != TOOL_MULTITOOL)
 		return ..()
 
 	if(chameleon_card_action.hidden)
 		chameleon_card_action.hidden = FALSE
 		actions += chameleon_card_action
 		chameleon_card_action.Grant(user)
-		log_game("[key_name(user)] has removed the disguise lock on the agent ID ([name]) with [W]")
+		log_game("[key_name(user)] has removed the disguise lock on the agent ID ([name]) with [attacking_item]")
 	else
 		chameleon_card_action.hidden = TRUE
 		actions -= chameleon_card_action
 		chameleon_card_action.Remove(user)
-		log_game("[key_name(user)] has locked the disguise of the agent ID ([name]) with [W]")
-// MONKESTATION ADDITION END
+		log_game("[key_name(user)] has locked the disguise of the agent ID ([name]) with [attacking_item]")
 
 /obj/item/card/id/advanced/undercover/Initialize(mapload)
 	. = ..()
 
-//	var/datum/action/item_action/chameleon/change/id/chameleon_card_action = new(src) MONKESTATION EDIT CHANGE OLD
-	chameleon_card_action = new(src) // MONKESTATION EDIT CHANGE NEW -- MOVED THE DATUM TO THE ITEM ITSELF
+	chameleon_card_action = new(src)
 	chameleon_card_action.chameleon_type = /obj/item/card/id/advanced
 	chameleon_card_action.chameleon_name = "ID Card"
 	chameleon_card_action.initialize_disguises()
@@ -57,10 +54,8 @@
 	return data
 
 /obj/item/card/id/advanced/undercover/attack_self(mob/user)
-	// MONKESTATION ADDITION START
 	if(chameleon_card_action.hidden)
 		return ..()
-	// MONKESTATION ADDITION END
 	if(isliving(user) && user.mind)
 		var/popup_input = tgui_input_list(user, "Choose Action", "Agent ID", list("Show", "Forge/Reset", "Change Account ID"))
 		if(user.incapacitated())

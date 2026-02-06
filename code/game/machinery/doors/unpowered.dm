@@ -7,7 +7,7 @@
 	return
 
 
-/obj/machinery/door/unpowered/attackby(obj/item/I, mob/user, params)
+/obj/machinery/door/unpowered/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(locked)
 		return
 	else

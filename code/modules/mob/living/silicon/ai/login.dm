@@ -10,6 +10,7 @@
 		end_multicam()
 	view_core()
 	INVOKE_ASYNC(src, PROC_REF(preload_vox_voices))
+	show_laws(FALSE)
 
 /// Preloads the `vox_voices.json` asset
 /mob/living/silicon/ai/proc/preload_vox_voices()

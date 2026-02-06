@@ -26,7 +26,7 @@
 		to_chat(user, span_warning("[user]'s taser jams, sputtering acid onto [user]!"))
 		target = user //get tased
 		user.apply_damage(24, BURN, spread_damage = TRUE, wound_bonus = 10)
-		user.apply_damage(150, STAMINA)
+		user.apply_damage(75, STAMINA)
 		if(prob(25))
 			user.adjust_fire_stacks(2)
 		user.ignite_mob()
@@ -46,7 +46,7 @@
 //MONKESTATION EDIT START
 /obj/item/gun/energy/e_gun/advtaser/evil
 	pin = /obj/item/firing_pin/implant/pindicate
-	
+
 /obj/item/gun/energy/e_gun/advtaser/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	if(select == 1)
 		playsound(src, 'monkestation/sound/effects/taser_charge.ogg', 45, TRUE, 1)
@@ -66,6 +66,9 @@
 	return
 
 /obj/item/gun/energy/e_gun/advtaser/cyborg/emp_act()
+	return
+
+/obj/item/gun/energy/e_gun/advtaser/cyborg/give_manufacturer_examine()
 	return
 
 /obj/item/gun/energy/disabler
@@ -108,6 +111,7 @@
 	desc = "An integrated disabler that draws from a cyborg's power cell. This weapon contains a limiter to prevent the cyborg's power cell from overheating."
 	can_charge = FALSE
 	use_cyborg_cell = TRUE
+	cyborg_cost_multiplier = 15
 
 /obj/item/gun/energy/disabler/cyborg/emp_act()
 	return

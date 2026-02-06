@@ -21,7 +21,7 @@
 /datum/component/turf_healing/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_LIVING_LIFE)
 
-/datum/component/turf_healing/proc/handle_healing(seconds_per_tick)
+/datum/component/turf_healing/proc/handle_healing(mob/living/owner, seconds_per_tick)
 	SIGNAL_HANDLER
 
 	var/mob/living/healed_mob = parent

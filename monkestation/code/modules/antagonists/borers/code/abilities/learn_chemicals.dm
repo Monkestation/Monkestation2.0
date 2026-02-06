@@ -129,7 +129,7 @@ GLOBAL_VAR_INIT(objective_blood_borer, 3)
 
 	cortical_owner.human_host.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5 * cortical_owner.host_harm_multiplier, maximum = BRAIN_DAMAGE_SEVERE)
 
-	if(cortical_owner.blood_chems_learned == BLOOD_CHEM_OBJECTIVE)
+	if(cortical_owner.blood_chems_learned == BLOOD_CHEM_OBJECTIVE && !cortical_owner.neutered)
 		GLOB.successful_blood_chem += 1
 
 	owner.balloon_alert(owner, "[reagent_choice] learned")

@@ -6,7 +6,7 @@
 
 /obj/structure/closet/secure_closet/medical1/PopulateContents()
 	..()
-	var/static/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/reagent_containers/cup/beaker = 2,
 		/obj/item/reagent_containers/dropper = 2,
 		/obj/item/storage/belt/medical = 1,
@@ -16,7 +16,7 @@
 		/obj/item/reagent_containers/cup/bottle/epinephrine= 3,
 		/obj/item/reagent_containers/cup/bottle/multiver = 3,
 		/obj/item/storage/box/rxglasses = 1)
-	generate_items_inside(items_inside,src)
+	generate_items_inside(items_inside, src)
 
 /obj/structure/closet/secure_closet/medical2
 	name = "anesthetic closet"
@@ -28,7 +28,7 @@
 	for(var/i in 1 to 3)
 		new /obj/item/tank/internals/anesthetic(src)
 	for(var/i in 1 to 3)
-		new /obj/item/clothing/mask/muzzle/breath(src)
+		new /obj/item/clothing/mask/breath/muzzle(src)
 
 /obj/structure/closet/secure_closet/medical3
 	name = "medical doctor's locker"
@@ -89,7 +89,7 @@
 	new /obj/item/circuitboard/machine/techfab/department/medical(src)
 	new /obj/item/storage/photo_album/cmo(src)
 	new /obj/item/storage/lockbox/medal/med(src)
-//	new /obj/item/extrapolator(src) //MONKESTATION EDIT: extrapolators are not useful! missed this single case! -Dexee, 04/13/24
+	new /obj/item/extrapolator(src) //MONKESTATION EDIT:
 
 /obj/structure/closet/secure_closet/chief_medical/populate_contents_immediate()
 	. = ..()

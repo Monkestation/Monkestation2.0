@@ -38,7 +38,7 @@
 		var/mob/living/living_victim = victim
 		living_victim.throw_at(throw_target, 4, 5)
 		living_victim.Knockdown(4 SECONDS)
-		living_victim.stamina.adjust(-20)
+		living_victim.stamina.adjust(-10)
 		playsound(src, 'sound/effects/bang.ogg', 50, 1, mixer_channel = CHANNEL_MOB_SOUNDS)
 		last_bump = world.time + 1 SECONDS
 

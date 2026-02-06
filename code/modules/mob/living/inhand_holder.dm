@@ -23,9 +23,12 @@
 	deposit(M)
 	. = ..()
 
+/obj/item/clothing/head/mob_holder/proc/release_on_destroy()
+	release(FALSE)
+
 /obj/item/clothing/head/mob_holder/Destroy()
 	if(!QDELETED(held_mob))
-		release(FALSE)
+		release_on_destroy()
 	return ..()
 
 /obj/item/clothing/head/mob_holder/proc/deposit(mob/living/L)
@@ -121,12 +124,10 @@
 
 /obj/item/clothing/head/mob_holder/destructible
 
-/obj/item/clothing/head/mob_holder/destructible/Destroy()
-	if(held_mob)
-		release(FALSE, TRUE, TRUE)
-	return ..()
-
 /obj/item/clothing/head/mob_holder/destructible/release(del_on_release = TRUE, display_messages = TRUE, delete_mob = FALSE)
 	if(delete_mob && held_mob)
 		QDEL_NULL(held_mob)
 	return ..()
+
+/obj/item/clothing/head/mob_holder/destructible/release_on_destroy()
+	release(FALSE, TRUE, TRUE)

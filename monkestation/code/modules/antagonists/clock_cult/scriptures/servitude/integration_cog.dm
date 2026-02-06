@@ -4,7 +4,7 @@
 	tip = "Install integration cogs into APCs to increase your energy stores and unlock new scriptures."
 	button_icon_state = "Integration Cog"
 	invocation_time = 1 SECONDS
-	invocation_text = list("Tick tock Eng'Ine...")
+	invocation_text = list("Tick tock Engine...")
 	category = SPELLTYPE_SERVITUDE
 
 /datum/scripture/integration_cog/invoke_success()

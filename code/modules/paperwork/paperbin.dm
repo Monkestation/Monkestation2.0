@@ -3,7 +3,7 @@
 /obj/item/paper_bin
 	name = "paper bin"
 	desc = "Contains all the paper you'll never need."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "paper_bin0"
 	inhand_icon_state = "sheet-metal"
 	lefthand_file = 'icons/mob/inhands/items/sheets_lefthand.dmi'
@@ -104,20 +104,20 @@
 	add_fingerprint(user)
 	return ..()
 
-/obj/item/paper_bin/attackby(obj/item/I, mob/user, params)
+/obj/item/paper_bin/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(at_overlay_limit())
 		dump_contents(drop_location(), TRUE)
 		return
-	if(istype(I, /obj/item/paper))
-		var/obj/item/paper/paper = I
+	if(istype(attacking_item, /obj/item/paper))
+		var/obj/item/paper/paper = attacking_item
 		if(!user.transferItemToLoc(paper, src))
 			return
 		to_chat(user, span_notice("You put [paper] in [src]."))
 		paper_stack += paper
 		total_paper += 1
 		update_appearance()
-	else if(istype(I, /obj/item/pen) && !bin_pen)
-		var/obj/item/pen/pen = I
+	else if(istype(attacking_item, /obj/item/pen) && !bin_pen)
+		var/obj/item/pen/pen = attacking_item
 		if(!user.transferItemToLoc(pen, src))
 			return
 		to_chat(user, span_notice("You put [pen] in [src]."))

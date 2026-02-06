@@ -116,6 +116,11 @@
 	if (length(status_examines))
 		. += status_examines
 
+	//Nosferatu examine
+	var/datum/antagonist/bloodsucker/bloodsucker_datum = mind?.has_antag_datum(/datum/antagonist/bloodsucker)
+	if (bloodsucker_datum?.my_clan?.name == CLAN_NOSFERATU)
+		. += span_warning("[t_He] appear[p_s()] slouched over and grotesque - a twisted abomination, like some shameless creature of the night...")
+
 	var/appears_dead = FALSE
 	var/just_sleeping = FALSE
 
@@ -316,7 +321,7 @@
 		if(appears_dead)
 			bleed_text += ", but it has pooled and is not flowing.</span></B>\n"
 		else
-			if(reagents.has_reagent(/datum/reagent/toxin/heparin, needs_metabolizing = TRUE))
+			if(reagents?.has_reagent(/datum/reagent/toxin/heparin, needs_metabolizing = TRUE))
 				bleed_text += " incredibly quickly"
 
 			bleed_text += "!</B>\n"
@@ -327,8 +332,11 @@
 
 		msg += bleed_text.Join()
 
-	if(reagents.has_reagent(/datum/reagent/teslium, needs_metabolizing = TRUE))
+	if(reagents?.has_reagent(/datum/reagent/teslium, needs_metabolizing = TRUE))
 		msg += "[t_He] [t_is] emitting a gentle blue glow!\n"
+
+	if((!wear_suit && !w_uniform) && mind?.has_antag_datum(/datum/antagonist/thrall_darkspawn))
+		msg += "[t_His] whole body is covered in sigils!\n"
 
 	if(just_sleeping)
 		msg += "[t_He] [t_is]n't responding to anything around [t_him] and seem[p_s()] to be asleep.\n"
@@ -350,6 +358,11 @@
 					msg += "[t_He] appear[p_s()] to be staring off into space.\n"
 				if (HAS_TRAIT(src, TRAIT_DEAF))
 					msg += "[t_He] appear[p_s()] to not be responding to noises.\n"
+				else if (HAS_TRAIT(src, TRAIT_HARD_OF_HEARING))
+					if (HAS_TRAIT_FROM(src, TRAIT_HARD_OF_HEARING, EAR_DAMAGE))
+						msg += "[t_He] appear[p_s()] to not be responding to <strong>quiet</strong> noises.\n"
+					else
+						msg += "[t_He] appear[p_s()] to not be responding to <strong>quiet voices</strong>.\n"
 				if (bodytemperature > bodytemp_heat_damage_limit)
 					msg += "[t_He] [t_is] flushed and wheezing.\n"
 				if (bodytemperature < bodytemp_cold_damage_limit)
@@ -385,7 +398,9 @@
 					msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
 		if(get_organ_by_type(/obj/item/organ/internal/brain))
 			var/obj/item/organ/internal/brain/brain = get_organ_by_type(/obj/item/organ/internal/brain)
-			if(!key && !brain.temporary_sleep)
+			if(HAS_TRAIT(src, TRAIT_MIND_TEMPORARILY_GONE))
+				msg += "[span_deadsay("[t_He] [t_has] a vacant expression on their face, as if staring a thousand yards ahead. Maybe [t_He] will snap out of it soon.")]\n"
+			else if(!key && !brain.temporary_sleep)
 				msg += "[span_deadsay("[t_He] [t_is] totally catatonic. The stresses of life in deep-space must have been too much for [t_him]. Any recovery is unlikely.")]\n"
 			else if(brain.temporary_sleep)
 				msg += "[span_deadsay("[t_He] [t_is] temporarly disconnected from their mind. Recovery is likely.")]\n"
@@ -415,9 +430,20 @@
 	if (length(msg))
 		. += span_warning("[msg.Join("")]")
 
+	if((isobserver(user) || isrevenant(user)) && user.invisibility <= see_invisible)
+		. += span_revennotice("[t_He] can see you!<br>")
+
 	var/trait_exam = common_trait_examine()
 	if (!isnull(trait_exam))
 		. += trait_exam
+
+	if(isliving(user))
+		var/mob/living/morbid_weirdo = user
+		if(HAS_MIND_TRAIT(morbid_weirdo, TRAIT_MORBID))
+			if(HAS_TRAIT(src, TRAIT_DISSECTED))
+				msg += "[span_notice("[t_He] appears to have been dissected. Useless for examination... <b><i>for now.</i></b>")]\n"
+			if(HAS_TRAIT(src, TRAIT_SURGICALLY_ANALYZED))
+				msg += "[span_notice("A skilled hand has mapped this one's internal intricacies. It will be far easier to perform future experimentations upon [t_him]. <b><i>Exquisite.</i></b>")]\n"
 
 	var/perpname = get_face_name(get_id_name(""))
 	if(perpname && (HAS_TRAIT(user, TRAIT_SECURITY_HUD) || HAS_TRAIT(user, TRAIT_MEDICAL_HUD)))
@@ -460,7 +486,7 @@
 					"<a href='byond://?src=[REF(src)];hud=s;add_citation=1;examine_time=[world.time]'>\[Add citation\]</a>",
 					"<a href='byond://?src=[REF(src)];hud=s;add_crime=1;examine_time=[world.time]'>\[Add crime\]</a>",
 					"<a href='byond://?src=[REF(src)];hud=s;add_note=1;examine_time=[world.time]'>\[Add note\]</a>"), "")
-	else if(isobserver(user))
+	else if(isobserver(user) || HAS_TRAIT(user, TRAIT_EMPATH))
 		. += span_info("<b>Traits:</b> [get_quirk_string(FALSE, CAT_QUIRK_ALL)]")
 	. += "</span>"
 
@@ -471,6 +497,8 @@
 			. += span_info("Antag Opt-in Status: <b><font color='[GLOB.antag_opt_in_colors[stringified_optin]]'>[stringified_optin]</font></b>")
 
 	SEND_SIGNAL(src, COMSIG_ATOM_EXAMINE, user, .)
+
+	. += late_examine(user)
 
 /**
  * Shows any and all examine text related to any status effects the user has.
@@ -492,7 +520,7 @@
 
 /mob/living/carbon/human/examine_more(mob/user)
 	. = ..()
-	if ((wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE)))
+	if(!is_face_visible())
 		return
 	var/age_text
 	switch(age)

@@ -1,7 +1,7 @@
 /**
  * An armblade that instantly snuffs out lights
  */
-/obj/item/light_eater
+/obj/item/light_eater/nightmare
 	name = "light eater" //as opposed to heavy eater
 	icon = 'icons/obj/weapons/changeling_items.dmi'
 	icon_state = "arm_blade"
@@ -19,7 +19,7 @@
 	wound_bonus = -30
 	bare_wound_bonus = 20
 
-/obj/item/light_eater/Initialize(mapload)
+/obj/item/light_eater/nightmare/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 	AddComponent(/datum/component/butchering, \
@@ -27,3 +27,4 @@
 	effectiveness = 70, \
 	)
 	AddComponent(/datum/component/light_eater)
+

@@ -62,7 +62,7 @@
 	pixel_y = 10
 	},
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /turf/open/floor/circuit/green/airless,
 /area/shuttle/ruin/cyborg_mothership)
 "eO" = (
@@ -217,7 +217,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/ruin/cyborg_mothership)
 "mC" = (
-/obj/machinery/mineral/ore_redemption{
+/obj/machinery/mineral/ore_redemption/offstation{
 	input_dir = 4
 	},
 /obj/structure/lattice/catwalk,
@@ -243,9 +243,7 @@
 /obj/structure/window/reinforced/spawner/directional/north{
 	layer = 2.9
 	},
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 8
 	},

@@ -6,6 +6,8 @@
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/plantgenes
 	pass_flags = PASSTABLE
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.5
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.5
 
 	var/obj/item/seeds/seed
 	var/obj/item/disk/plantgene/disk
@@ -68,7 +70,7 @@
 /obj/machinery/plantgenes/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/plantgenes/screwdriver_act(mob/living/user, obj/item/tool)
 	if(..())
@@ -87,31 +89,31 @@
 	. = ..()
 	update_appearance(UPDATE_OVERLAYS)
 
-/obj/machinery/plantgenes/attackby(obj/item/I, mob/user, params)
+/obj/machinery/plantgenes/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(iscyborg(user))
 		return
 	if(!anchored)
 		return ..()
 
-	if(istype(I, /obj/item/seeds))
+	if(istype(attacking_item, /obj/item/seeds))
 		if (operation)
 			to_chat(user, "<span class='notice'>Please complete current operation.</span>")
 			return
-		if(!user.transferItemToLoc(I, src))
+		if(!user.transferItemToLoc(attacking_item, src))
 			return
 		eject_seed()
-		insert_seed(I)
-		to_chat(user, "<span class='notice'>You add [I] to the machine.</span>")
+		insert_seed(attacking_item)
+		to_chat(user, "<span class='notice'>You add [attacking_item] to the machine.</span>")
 		interact(user)
-	else if(istype(I, /obj/item/disk/plantgene))
+	else if(istype(attacking_item, /obj/item/disk/plantgene))
 		if (operation)
 			to_chat(user, "<span class='notice'>Please complete current operation.</span>")
 			return
-		if(!user.transferItemToLoc(I, src))
+		if(!user.transferItemToLoc(attacking_item, src))
 			return
 		eject_disk()
-		disk = I
-		to_chat(user, "<span class='notice'>You add [I] to the machine.</span>")
+		disk = attacking_item
+		to_chat(user, "<span class='notice'>You add [attacking_item] to the machine.</span>")
 		interact(user)
 	else
 		..()

@@ -57,13 +57,6 @@
 		return FALSE
 	return ..()
 
-/datum/ai_controller/hostile_friend/get_access()
-	var/mob/living/simple_animal/simple_pawn = pawn
-	if(!istype(simple_pawn))
-		return
-
-	return simple_pawn.access_card.GetAccess()
-
 /datum/ai_controller/hostile_friend/proc/on_ridden_driver_move(atom/movable/movable_parent, mob/living/user, direction)
 	SIGNAL_HANDLER
 	PauseAi(ride_penalty_movement)
@@ -106,10 +99,11 @@
 
 	if(!COOLDOWN_FINISHED(src, command_cooldown))
 		return
-	if(!istype(clicker) || blackboard[BB_HOSTILE_FRIEND] != clicker)
+	if(!istype(clicker) || blackboard[BB_HOSTILE_FRIEND] != clicker || !clicker.can_perform_action(source))
 		return
-	. = COMPONENT_CANCEL_CLICK_ALT
+
 	INVOKE_ASYNC(src, PROC_REF(command_radial), clicker)
+	return CLICK_ACTION_BLOCKING
 
 /// Show the command radial menu
 /datum/ai_controller/hostile_friend/proc/command_radial(mob/living/clicker)

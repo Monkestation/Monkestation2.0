@@ -2,7 +2,7 @@
 
 /datum/nanite_program/nervous
 	name = "Nerve Support"
-	desc = "The nanites act as a secondary nervous system, reducing the amount of time the host is stunned."
+	desc = "The nanites act as a secondary nervous system, halving the time the host is stunned."
 	use_rate = 1.5
 	rogue_types = list(/datum/nanite_program/nerve_decay)
 
@@ -20,7 +20,7 @@
 
 /datum/nanite_program/hardening
 	name = "Dermal Hardening"
-	desc = "The nanites form a mesh under the host's skin, protecting them from melee and bullet impacts."
+	desc = "The nanites form a mesh under the host's skin, reducing the impact of melee attacks and bullets by about 20%"
 	use_rate = 0.5
 	rogue_types = list(/datum/nanite_program/skin_decay)
 
@@ -48,7 +48,7 @@
 
 /datum/nanite_program/refractive
 	name = "Dermal Refractive Surface"
-	desc = "The nanites form a membrane above the host's skin, reducing the effect of laser and energy impacts."
+	desc = "The nanites form a membrane above the host's skin, reducing the effect of laser and energy impacts by about 20%."
 	use_rate = 0.50
 	rogue_types = list(/datum/nanite_program/skin_decay)
 
@@ -66,7 +66,7 @@
 
 /datum/nanite_program/coagulating
 	name = "Vein Repressurization"
-	desc = "The nanites re-route circulating blood away from open wounds, dramatically reducing bleeding rate."
+	desc = "The nanites re-route circulating blood away from open wounds, halving bleeding rate. Consumes nanites even when host is not bleeding."
 	use_rate = 0.20
 	rogue_types = list(/datum/nanite_program/suffocating)
 
@@ -106,6 +106,8 @@
 
 /datum/nanite_program/mindshield/enable_passive_effect()
 	. = ..()
+	if(IS_DARKSPAWN_OR_THRALL(host_mob))
+		return
 	if(!host_mob.mind.has_antag_datum(/datum/antagonist/rev, TRUE)) //won't work if on a rev, to avoid having implanted revs.
 		ADD_TRAIT(host_mob, TRAIT_MINDSHIELD, NANITES_TRAIT)
 		host_mob.sec_hud_set_implants()

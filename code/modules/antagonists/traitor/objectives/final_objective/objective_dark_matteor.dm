@@ -57,7 +57,7 @@
 /obj/structure/closet/crate/engineering/smuggled_meteor_shields/PopulateContents()
 	..()
 	for(var/i in 1 to 11)
-		new /obj/machinery/satellite/meteor_shield(src)
+		new /obj/item/meteor_shield_capsule(src)
 	new /obj/item/card/emag/meteor_shield_recalibrator(src)
 	new /obj/item/paper/dark_matteor_summoning(src)
 

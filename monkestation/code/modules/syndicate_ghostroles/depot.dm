@@ -194,22 +194,22 @@
 
 
 
-/obj/machinery/syndicate_blackbox_recorder/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/syndicate_blackbox))
-		if(HAS_TRAIT(I, TRAIT_NODROP) || !user.transferItemToLoc(I, src))
-			to_chat(user, span_warning("[I] is stuck to your hand!"))
+/obj/machinery/syndicate_blackbox_recorder/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/syndicate_blackbox))
+		if(HAS_TRAIT(attacking_item, TRAIT_NODROP) || !user.transferItemToLoc(attacking_item, src))
+			to_chat(user, span_warning("[attacking_item] is stuck to your hand!"))
 			return
-		user.visible_message(span_notice("[user] clicks [I] into [src]!"), \
+		user.visible_message(span_notice("[user] clicks [attacking_item] into [src]!"), \
 		span_notice("You press the device into [src], and it clicks into place. The tapes begin spinning again."))
 		resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 		var/area/A = get_area(loc)
 		var/message = "Storage device re-connected in [initial(A.name)]."
 		radio.talk_into(src, message, radio_channel)
-		stored = I
+		stored = attacking_item
 		update_appearance()
 		return
-	if(istype(I, /obj/item/blackbox))
+	if(istype(attacking_item, /obj/item/blackbox))
 		user.visible_message(span_notice("[src] buzzes; seems like this type of black-box isn't compatible with the recorder."))
 		playsound(src, 'sound/machines/uplinkerror.ogg', 50, TRUE)
 		return
@@ -219,7 +219,7 @@
 	. = ..()
 	if(stored)
 		balloon_alert(user, "removing blackbox...")
-		if(do_after(user, 60, target = src))
+		if(do_after(user, 6 SECONDS, target = src, hidden = TRUE))
 			stored.forceMove(drop_location())
 			if(Adjacent(user))
 				user.put_in_hands(stored)

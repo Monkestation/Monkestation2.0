@@ -41,8 +41,6 @@
 #define COMSIG_TURF_PREPARE_STEP_SOUND "turf_prepare_step_sound"
 ///from base of datum/thrownthing/finalize(): (turf/turf, atom/movable/thrownthing) when something is thrown and lands on us
 #define COMSIG_TURF_MOVABLE_THROW_LANDED "turf_movable_throw_landed"
-///from /obj/item/pushbroom/sweep(): (broom, user, items_to_sweep)
-#define COMSIG_TURF_RECEIVE_SWEEPED_ITEMS "turf_receive_sweeped_items"
 
 ///From element/elevation/reset_elevation(): (list/values)
 #define COMSIG_TURF_RESET_ELEVATION "turf_reset_elevation"

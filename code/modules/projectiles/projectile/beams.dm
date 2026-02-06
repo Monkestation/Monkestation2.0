@@ -2,7 +2,7 @@
 	name = "laser"
 	icon_state = "laser"
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
-	damage = 20
+	damage = 22
 	damage_type = BURN
 	hitsound = 'sound/weapons/sear.ogg'
 	hitsound_wall = 'sound/weapons/effects/searwall.ogg'
@@ -28,10 +28,40 @@
 	wound_bonus = -30
 	bare_wound_bonus = 40
 
+/obj/projectile/beam/laser/lasrifle
+	generic_name = "rifle beam"
+	damage = 25
+	range = 30
+	tracer_type = /obj/effect/projectile/tracer/laser/rifle
+	impact_type = /obj/effect/projectile/impact/laser/rifle
+	muzzle_type = /obj/effect/projectile/muzzle/laser/rifle
+	hitscan = TRUE
+	tile_dropoff = 1 //This makes ricochets less impactful
+	armour_penetration = -30 //armor is * 130% more effective against it
+	wound_bonus = -15
+	wound_falloff_tile = 3
+	impact_effect_type = null
+	hitscan_light_intensity = 2
+	hitscan_light_outer_range = 0.5
+	hitscan_light_color_override = LIGHT_COLOR_INTENSE_RED
+	muzzle_flash_intensity = 4
+	muzzle_flash_range = 0.5
+	muzzle_flash_color_override = LIGHT_COLOR_INTENSE_RED
+	impact_light_intensity = 4
+	impact_light_outer_range = 1
+	impact_light_color_override = LIGHT_COLOR_INTENSE_RED
+	expanded_bounce = TRUE
+	ricochets_max = 2
+	ricochet_chance = 100
+	ricochet_auto_aim_angle = 10
+	ricochet_auto_aim_range = 10
+	ricochet_incidence_leeway = 90
+	ricochet_shoots_firer = TRUE
+
 /obj/projectile/beam/laser/carbine
 	icon_state = "carbine_laser"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/yellow_laser
-	damage = 10
+	damage = 9
 
 //overclocked laser, does a bit more damage but has much higher wound power (-0 vs -20)
 /obj/projectile/beam/laser/hellfire
@@ -60,20 +90,29 @@
 	else if(isturf(target))
 		impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser/wall
 
+
 /obj/projectile/beam/laser/musket
 	name = "low-power laser"
 	icon_state = "laser_musket"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/purple_laser
 	damage = 28
-	stamina = 35
+	stamina = 17.5
 	light_color = COLOR_STRONG_VIOLET
 	weak_against_armour = TRUE
 
 /obj/projectile/beam/laser/musket/prime
 	name = "mid-power laser"
-	damage = 25
-	stamina = 20
+	damage = 45
+	stamina = 10
 	weak_against_armour = FALSE
+
+/obj/projectile/beam/laser/musket/syndicate
+	name = "resonant laser"
+	damage = 30
+	stamina = 32.5
+	weak_against_armour = FALSE
+	armour_penetration = 45 //less powerful than armor piercing rounds
+	wound_bonus = 10
 
 /obj/projectile/beam/weak
 	damage = 15
@@ -110,7 +149,7 @@
 	icon_state = "omnilaser"
 	damage = 0
 	damage_type = STAMINA
-	stamina = 35
+	stamina = 24
 	paralyze_timer = 5 SECONDS
 	armor_flag = ENERGY
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
@@ -118,23 +157,18 @@
 	tracer_type = /obj/effect/projectile/tracer/disabler
 	muzzle_type = /obj/effect/projectile/muzzle/disabler
 	impact_type = /obj/effect/projectile/impact/disabler
-	debilitating = TRUE
-	debilitate_mult = 3
 
 /obj/projectile/beam/disabler/weak
-	stamina = 15
-	debilitate_mult = 0.5
+	stamina = 11.5
 
 /obj/projectile/beam/disabler/smoothbore
 	name = "unfocused disabler beam"
 	weak_against_armour = TRUE
-	debilitate_mult = 2
 
 /obj/projectile/beam/disabler/smoothbore/prime
 	name = "focused disabler beam"
 	weak_against_armour = FALSE
-	stamina = 65 // MONKESTATION EDIT ORG: 30
-	debilitate_mult = 3.5 // MONKESTATION ADDITION
+	stamina = 30
 
 /obj/projectile/beam/pulse
 	name = "pulse"
@@ -217,7 +251,7 @@
 		var/mob/living/carbon/human/M = target
 		if(istype(M.wear_suit))
 			if(M.wear_suit.type in suit_types)
-				M.stamina.adjust(-34)
+				M.stamina.adjust(-17)
 
 /obj/projectile/beam/lasertag/redtag
 	icon_state = "laser"
@@ -244,3 +278,15 @@
 /obj/projectile/magic/shrink/alien
 	antimagic_flags = NONE
 	shrink_time = 9 SECONDS
+
+/obj/projectile/beam/laser/plasma_glob
+	name = "plasma globule"
+	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/szot_dynamica/ammo.dmi'
+	icon_state = "plasma_glob"
+	damage = 10
+	speed = 1.5
+	bare_wound_bonus = 55 // Lasers have a wound bonus of 40, this is a bit higher
+	wound_bonus = -50 // However we do not very much against armor
+	pass_flags = PASSTABLE | PASSGRILLE // His ass does NOT pass through glass!
+	weak_against_armour = TRUE
+

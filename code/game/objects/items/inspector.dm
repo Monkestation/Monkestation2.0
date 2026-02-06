@@ -1,3 +1,6 @@
+///Energy used to say an error message.
+#define ENERGY_TO_SPEAK (0.001 * STANDARD_CELL_CHARGE)
+
 /**
  * # N-spect scanner
  *
@@ -14,6 +17,7 @@
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
+	interaction_flags_click = NEED_DEXTERITY
 	throw_range = 1
 	throw_speed = 1
 	///How long it takes to print on time each mode, ordered NORMAL, FAST, HONK
@@ -23,13 +27,13 @@
 	///determines the sound that plays when printing a report
 	var/print_sound_mode = INSPECTOR_PRINT_SOUND_MODE_NORMAL
 	///Power cell used to power the scanner. Paths g
-	var/obj/item/stock_parts/cell/cell = /obj/item/stock_parts/cell/crap
+	var/obj/item/stock_parts/power_store/cell/cell = /obj/item/stock_parts/power_store/cell/crap
 	///Cell cover status
 	var/cell_cover_open = FALSE
-	///Power used per print in cell units
-	var/power_per_print = INSPECTOR_POWER_USAGE_NORMAL
-	///Power used to say an error message
-	var/power_to_speak = 1
+	///Energy used per print.
+	var/energy_per_print = INSPECTOR_ENERGY_USAGE_NORMAL
+	///Energy used to say an error message.
+	var/energy_to_speak = 1 KILO JOULES
 
 /obj/item/inspector/Initialize(mapload)
 	. = ..()
@@ -65,25 +69,26 @@
 	balloon_alert(user, "[cell_cover_open ? "opened" : "closed"] cell cover")
 	return TRUE
 
-/obj/item/inspector/attackby(obj/item/I, mob/user, params)
-	if(cell_cover_open && istype(I, /obj/item/stock_parts/cell))
+/obj/item/inspector/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(cell_cover_open && istype(attacking_item, /obj/item/stock_parts/power_store/cell))
 		if(cell)
 			to_chat(user, span_warning("[src] already has a cell installed."))
 			return
-		if(user.transferItemToLoc(I, src))
-			cell = I
+		if(user.transferItemToLoc(attacking_item, src))
+			cell = attacking_item
 			to_chat(user, span_notice("You successfully install \the [cell] into [src]."))
 			return
 	return ..()
 
-/obj/item/inspector/CtrlClick(mob/living/user)
+/obj/item/inspector/item_ctrl_click(mob/user)
 	if(!user.can_perform_action(src, NEED_DEXTERITY) || !cell_cover_open || !cell)
-		return ..()
+		return CLICK_ACTION_BLOCKING
 	user.visible_message(span_notice("[user] removes \the [cell] from [src]!"), \
 		span_notice("You remove [cell]."))
 	cell.add_fingerprint(user)
 	user.put_in_hands(cell)
 	cell = null
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/inspector/examine(mob/user)
 	. = ..()
@@ -117,8 +122,8 @@
 	if(cell.charge == 0)
 		to_chat(user, "<span class='info'>\The [src] doesn't seem to be on... Perhaps it ran out of power?")
 		return
-	if(!cell.use(power_per_print))
-		if(cell.use(power_to_speak))
+	if(!cell.use(energy_per_print))
+		if(cell.use(ENERGY_TO_SPEAK))
 			say("ERROR! POWER CELL CHARGE LEVEL TOO LOW TO PRINT REPORT!")
 		return
 
@@ -136,7 +141,7 @@
 /obj/item/paper/report
 	name = "encrypted station inspection"
 	desc = "Contains no information about the station's current status."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "slip"
 	///What area the inspector scanned when the report was made. Used to verify the security bounty.
 	var/area/scanned_area
@@ -196,8 +201,8 @@
 	cycle_print_time(user)
 	return TRUE
 
-/obj/item/inspector/clown/attackby(obj/item/I, mob/user, params)
-	if(cell_cover_open && istype(I, /obj/item/kitchen/fork))
+/obj/item/inspector/clown/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(cell_cover_open && istype(attacking_item, /obj/item/kitchen/fork))
 		cycle_sound(user)
 		return
 	return ..()
@@ -244,8 +249,8 @@
  *
  * Can print things way faster, at full power the reports printed by this will destroy
  * themselves and leave water behind when folding is attempted by someone who isn't an
- * origami master. Printing at full power costs INSPECTOR_POWER_USAGE_HONK cell units
- * instead of INSPECTOR_POWER_USAGE_NORMAL cell units.
+ * origami master. Printing at full power costs INSPECTOR_ENERGY_USAGE_HONK cell units
+ * instead of INSPECTOR_ENERGY_USAGE_NORMAL cell units.
  */
 /obj/item/inspector/clown/bananium
 	name = "\improper Bananium HONK-spect scanner"
@@ -264,28 +269,28 @@
 
 /obj/item/inspector/clown/bananium/proc/check_settings_legality()
 	if(print_sound_mode == INSPECTOR_PRINT_SOUND_MODE_NORMAL && time_mode == INSPECTOR_TIME_MODE_HONK)
-		if(cell.use(power_to_speak))
+		if(cell.use(ENERGY_TO_SPEAK))
 			say("Setting combination forbidden by Geneva convention revision CCXXIII selected, reverting to defaults")
 		time_mode = INSPECTOR_TIME_MODE_SLOW
 		print_sound_mode = INSPECTOR_PRINT_SOUND_MODE_NORMAL
-		power_per_print = INSPECTOR_POWER_USAGE_NORMAL
+		energy_per_print = INSPECTOR_ENERGY_USAGE_NORMAL
 
 /obj/item/inspector/clown/bananium/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
 	check_settings_legality()
 	return TRUE
 
-/obj/item/inspector/clown/bananium/attackby(obj/item/I, mob/user, params)
+/obj/item/inspector/clown/bananium/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(cell_cover_open)
 		check_settings_legality()
-	if(istype(I, /obj/item/paper/fake_report) || paper_charges >= max_paper_charges)
-		to_chat(user, span_info("\The [src] refuses to consume \the [I]!"))
+	if(istype(attacking_item, /obj/item/paper/fake_report) || paper_charges >= max_paper_charges)
+		to_chat(user, span_info("\The [src] refuses to consume \the [attacking_item]!"))
 		return
-	if(istype(I, /obj/item/paper))
-		to_chat(user, span_info("\The [src] consumes \the [I]!"))
+	if(istype(attacking_item, /obj/item/paper))
+		to_chat(user, span_info("\The [src] consumes \the [attacking_item]!"))
 		paper_charges = min(paper_charges + charges_per_paper, max_paper_charges)
-		qdel(I)
+		qdel(attacking_item)
 
 /obj/item/inspector/clown/bananium/Initialize(mapload)
 	. = ..()
@@ -302,7 +307,7 @@
 	if(time_mode != INSPECTOR_TIME_MODE_HONK)
 		return ..()
 	if(paper_charges == 0)
-		if(cell.use(power_to_speak))
+		if(cell.use(ENERGY_TO_SPEAK))
 			say("ERROR! OUT OF PAPER! MAXIMUM PRINTING SPEED UNAVAIBLE! SWITCH TO A SLOWER SPEED TO OR PROVIDE PAPER!")
 		else
 			to_chat(user, "<span class='info'>\The [src] doesn't seem to be on... Perhaps it ran out of power?")
@@ -314,7 +319,7 @@
 	var/message
 	switch(time_mode)
 		if(INSPECTOR_TIME_MODE_HONK)
-			power_per_print = INSPECTOR_POWER_USAGE_NORMAL
+			energy_per_print = INSPECTOR_ENERGY_USAGE_NORMAL
 			time_mode = INSPECTOR_TIME_MODE_SLOW
 			message = "SLOW."
 		if(INSPECTOR_TIME_MODE_SLOW)
@@ -322,7 +327,7 @@
 			message = "LIGHTNING FAST."
 		else
 			time_mode = INSPECTOR_TIME_MODE_HONK
-			power_per_print = INSPECTOR_POWER_USAGE_HONK
+			energy_per_print = INSPECTOR_ENERGY_USAGE_HONK
 			message = "HONK!"
 	balloon_alert(user, "scanning speed set to [message]")
 
@@ -334,7 +339,7 @@
 /obj/item/paper/fake_report
 	name = "encrypted station inspection"
 	desc = "Contains no information about the station's current status."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "slip"
 	show_written_words = FALSE
 	///What area the inspector scanned when the report was made. Used to generate the examine text of the report
@@ -378,15 +383,19 @@
  */
 /obj/item/paper/fake_report/water
 	grind_results = list(/datum/reagent/water = 5)
+	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING
 
-/obj/item/paper/fake_report/water/AltClick(mob/living/user, obj/item/I)
-	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
-		return
+/obj/item/paper/fake_report/water/click_alt(mob/living/user)
 	var/datum/action/innate/origami/origami_action = locate() in user.actions
 	if(origami_action?.active) //Origami masters can fold water
-		make_plane(user, I, /obj/item/paperplane/syndicate)
-	else if(do_after(user, 1 SECONDS, target = src, progress=TRUE))
-		var/turf/open/target = get_turf(src)
-		target.MakeSlippery(TURF_WET_WATER, min_wet_time = 10 SECONDS, wet_time_to_add = 5 SECONDS)
-		to_chat(user, span_notice("As you try to fold [src] into the shape of a plane, it disintegrates into water!"))
-		qdel(src)
+		make_plane(user, src, /obj/item/paperplane/syndicate)
+		return CLICK_ACTION_SUCCESS
+	if(!do_after(user, 1 SECONDS, target = src, progress=TRUE))
+		return CLICK_ACTION_BLOCKING
+	var/turf/open/target = get_turf(src)
+	target.MakeSlippery(TURF_WET_WATER, min_wet_time = 10 SECONDS, wet_time_to_add = 5 SECONDS)
+	to_chat(user, span_notice("As you try to fold [src] into the shape of a plane, it disintegrates into water!"))
+	qdel(src)
+	return CLICK_ACTION_SUCCESS
+
+#undef ENERGY_TO_SPEAK

@@ -24,10 +24,12 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		list("Ageusia", "Vegetarian", "Deviant Tastes", "Gamer"),
 		list("Ananas Affinity", "Ananas Aversion", "Gamer"),
 		list("Alcohol Tolerance", "Light Drinker"),
+		list("Drunken Resilience", "Light Drinker"),
 		list("Clown Enjoyer", "Mime Fan"),
 		list("Bad Touch", "Friendly"),
 		list("Extrovert", "Introvert"),
 		list("Prosthetic Limb", "Quadruple Amputee", "Body Purist"),
+		list("Prosthetic Organ", "Tin Man", "Body Purist"),
 		list("Quadruple Amputee", "Paraplegic"),
 		list("Quadruple Amputee", "Frail"),
 		list("Gigantism", "Dwarfism"),
@@ -48,8 +50,11 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		list("Body Purist", "Hosed"),
 		list("Body Purist", "Neuralinked"),
 		list("Body Purist", "Bright Eyes"),
-		list("Hypoalgesia", "Hyperalgesia", "Analgesia"),
 		list("Kakologophobia", "Easily Offended"),
+		list("Deaf", "Hard Of Hearing"),
+		list("Paraplegic", "Hemiplegic", "Monoplegic"),
+		list("Prosthetic Limb", "Monoplegic"),
+		list("Cyborg Pre-screened dogtag", "Unborgable")
 		//MONKESTATION ADDITION END
 	)
 

@@ -108,6 +108,17 @@
 		RND_CATEGORY_DEFOREST_BLOOD,
 	)
 
+/datum/design/organic_bloodbag_arachnid
+	name = "S Blood Pack"
+	id = "organic_bloodbag_arachnid"
+	build_type = BIOGENERATOR
+	materials = list(/datum/material/biomass = 100)
+	build_path = /obj/item/reagent_containers/blood/spider
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_DEFOREST_BLOOD,
+	)
+
 /datum/design/organic_printer_balm
 	name = "Red Sun Balm"
 	id = "organic_sun_balm"
@@ -120,22 +131,22 @@
 	)
 
 /datum/design/organic_printer_gauze
-	name = "Sealed Aseptic Guaze"
-	id = "organic_gauze"
+	name = "medical gauze"
+	id = "medical_gauze"
 	build_type = BIOGENERATOR
 	materials = list(/datum/material/biomass = 50)
-	build_path = /obj/item/stack/medical/gauze/sterilized
+	build_path = /obj/item/stack/medical/gauze
 	category = list(
 		RND_CATEGORY_INITIAL,
 		RND_CATEGORY_DEFOREST_MEDICAL,
 	)
 
-/datum/design/organic_printer_coagulant_f
-	name = "Coagulant-F Packet"
-	id = "organic_coagulant_pack"
+/datum/design/organic_sterilized_gauze
+	name = "sealed aseptic gauze"
+	id = "sterilized_gauze"
 	build_type = BIOGENERATOR
 	materials = list(/datum/material/biomass = 50)
-	build_path = /obj/item/stack/medical/suture/coagulant
+	build_path = /obj/item/stack/medical/gauze/sterilized
 	category = list(
 		RND_CATEGORY_INITIAL,
 		RND_CATEGORY_DEFOREST_MEDICAL,
@@ -174,6 +185,19 @@
 		RND_CATEGORY_DEFOREST_MEDICAL,
 	)
 
+/*
+/datum/design/organic_printer_tramadol_pill
+	name = "Tramadol Painkiller"
+	id = "organic_printer_tramadol_pill"
+	build_type = BIOGENERATOR
+	materials = list(/datum/material/biomass = 25)
+	build_path = /obj/item/reagent_containers/pill // /tramadol
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_DEFOREST_MEDICAL,
+	)
+*/ // XANTODO: gonna add tram later
+
 /datum/design/organic_printer_synth_patch
 	name = "Robotic Repair Patch"
 	id = "organic_repair_patch"
@@ -184,7 +208,6 @@
 		RND_CATEGORY_INITIAL,
 		RND_CATEGORY_DEFOREST_MEDICAL,
 	)
-
 
 /datum/design/organic_printer_bone_gel
 	name = "Bone Gel"

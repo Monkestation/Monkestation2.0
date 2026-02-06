@@ -1,7 +1,6 @@
 /obj/item/clothing/under/rank/medical
 	icon = 'icons/obj/clothing/under/medical.dmi'
 	worn_icon = 'icons/mob/clothing/under/medical.dmi'
-	worn_icon_digitigrade = 'icons/mob/clothing/under/medical_digi.dmi'
 	armor_type = /datum/armor/rank_medical
 
 /datum/armor/rank_medical
@@ -138,7 +137,6 @@
 	desc = "A utility uniform worn by Medical doctors."
 	icon_state = "util_med"
 	can_adjust = TRUE
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 
 /obj/item/clothing/under/rank/medical/doctor/utility/syndicate
 	armor_type = /datum/armor/clothing_under/utility_syndicate

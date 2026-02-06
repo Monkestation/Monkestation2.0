@@ -557,9 +557,6 @@
 	// Enough to make the mob sleep.
 		if(n2o_pp > n2o_sleep_min)
 			breather.Sleeping(min(breather.AmountSleeping() + 100, 200))
-		// And apply anesthesia if it worked
-		if(HAS_TRAIT(breather, TRAIT_KNOCKEDOUT))
-			breather.apply_status_effect(/datum/status_effect/grouped/anesthetic, /datum/gas/nitrous_oxide)
 
 /// N2O side-effects. "Too much N2O!"
 /obj/item/organ/internal/lungs/proc/safe_n2o(mob/living/carbon/breather, datum/gas_mixture/breath, old_n2o_pp)
@@ -663,21 +660,6 @@
 			// Less blood so breaths give you less oxygen
 			breather.adjustOxyLoss(-1 * min(5, BLOOD_VOLUME_NORMAL / breather.blood_volume))
 
-	// We're in a low / high pressure environment, can't breathe, but trying to, so this hurts the lungs
-	// Unless it's cybernetic then it just doesn't care. Handwave magic whatever
-	else if(!skip_breath && (owner && !HAS_TRAIT(owner, TRAIT_ASSISTED_BREATHING)))
-		if(lung_pop_tick > 5)
-			lung_pop_tick = 0
-			if(!failed && num_moles < 0.02)
-				// Lungs are poppin
-				to_chat(breather, span_boldwarning("You feel air rapidly exiting your lungs!"))
-				breather.failed_last_breath = TRUE
-				breather.cause_pain(BODY_ZONE_CHEST, 10, BRUTE)
-				apply_organ_damage(35)
-
-		failed_last_breath_checker = TRUE
-		if(num_moles < 0.02)
-			lung_pop_tick++
 	// Robot, don't care lol
 	else if((owner && !HAS_TRAIT(owner, TRAIT_ASSISTED_BREATHING)))
 		// Can't breathe!
@@ -1039,6 +1021,19 @@
 	cold_level_warning_threshold = CELCIUS_TO_KELVIN(-73.15 CELCIUS)
 	cold_level_hazard_threshold = CELCIUS_TO_KELVIN(-133.15 CELCIUS)
 	cold_level_danger_threshold = CELCIUS_TO_KELVIN(-173.15 CELCIUS)
+
+/obj/item/organ/internal/lungs/cybernetic/surplus
+	name = "surplus prosthetic lungs"
+	desc = "Two fragile, inflatable sacks of air that only barely mimic the function of human lungs. \
+		Offer no protection against EMPs."
+	icon_state = "lungs-c-s"
+	maxHealth = 0.35 * STANDARD_ORGAN_THRESHOLD
+	emp_vulnerability = 100
+
+//surplus organs are so awful that they explode when removed, unless failing
+/obj/item/organ/internal/lungs/cybernetic/surplus/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/dangerous_organ_removal, /*surgical = */ TRUE)
 
 /obj/item/organ/internal/lungs/cybernetic/emp_act(severity)
 	. = ..()

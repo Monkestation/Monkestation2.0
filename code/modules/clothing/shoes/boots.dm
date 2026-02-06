@@ -3,6 +3,7 @@
 	desc = "High speed, low drag combat boots."
 	icon_state = "jackboots"
 	inhand_icon_state = "jackboots"
+	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
 	armor_type = /datum/armor/shoes_combat
 	strip_delay = 40
 	resistance_flags = NONE
@@ -44,11 +45,16 @@
 	name = "\improper Combat boots"
 	desc = "Replica of a high speed (not anymore), no drag combat boots."
 
+/obj/item/clothing/shoes/combat/nutcracker
+	desc = "High speed, low drag combat boots. The toe looks weirdly rigid."
+	clothing_traits = list(TRAIT_NUTCRACKER) //evil meanie shoes for bullying people
+
 /obj/item/clothing/shoes/jackboots
 	name = "jackboots"
 	desc = "Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time."
 	icon_state = "jackboots"
 	inhand_icon_state = "jackboots"
+	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
 	strip_delay = 30
 	equip_delay_other = 50
 	resistance_flags = NONE
@@ -62,7 +68,10 @@
 	. = ..()
 
 	create_storage(storage_type = /datum/storage/pockets/shoes)
-	AddComponent(/datum/component/shoesteps/combine_boot_sounds) //MONKESTATION EDIT
+	if(type == /obj/item/clothing/shoes/jackboots/sec/hos)
+		AddComponent(/datum/component/shoesteps/hosboots)
+	else
+		AddComponent(/datum/component/shoesteps/combine_boot_sounds) //MONKESTATION EDIT
 
 /obj/item/clothing/shoes/jackboots/fast
 	slowdown = -1
@@ -70,11 +79,20 @@
 /obj/item/clothing/shoes/jackboots/sec
 	icon_state = "jackboots_sec"
 
+/obj/item/clothing/shoes/jackboots/sec/hos
+	name = "head of security jackboots"
+	icon_state = "jackboots_hos"
+	desc = "Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time. \
+	These ones are extra protective and extra loud."
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	armor_type = /datum/armor/combat_swat
+
 /obj/item/clothing/shoes/winterboots
 	name = "winter boots"
 	desc = "Boots lined with 'synthetic' animal fur."
 	icon_state = "winterboots"
 	inhand_icon_state = null
+	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
 	armor_type = /datum/armor/shoes_winterboots
 
 	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT
@@ -124,11 +142,17 @@
 	desc = "Nanotrasen-issue Engineering lace-up work boots for the especially blue-collar."
 	icon_state = "workboots"
 	inhand_icon_state = "jackboots"
+	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
 	armor_type = /datum/armor/shoes_workboots
 	strip_delay = 20
 	equip_delay_other = 40
 	lace_time = 8 SECONDS
 	species_exception = list(/datum/species/golem/uranium)
+
+/obj/item/clothing/shoes/workboots/black
+	name = "black work boots"
+	desc = "Lace-up work boots to protect the average grey-collar worker from stepping on hazards, from broken glass to dropped pens."
+	icon_state = "workboots_black"
 
 /obj/item/clothing/shoes/workboots/independent //nanotrasen does not make all work boots in existence
 	desc = "A pair of lace-up work boots for the especially blue-collar."
@@ -153,6 +177,7 @@
 	icon_state = "rus_shoes"
 	inhand_icon_state = null
 	lace_time = 8 SECONDS
+	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
 
 /obj/item/clothing/shoes/russian/Initialize(mapload)
 	. = ..()
@@ -164,6 +189,7 @@
 	desc = "They may have lost some of their lustre over the years, but these green lizardskin shoes fit you perfectly."
 	icon_state = "lizardskin_shoes"
 	inhand_icon_state = null
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 
 /obj/item/clothing/shoes/kim
 	name = "aerostatic boots"

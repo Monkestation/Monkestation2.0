@@ -108,24 +108,24 @@
 	balloon_alert(user, "output level set to [pressure_setting_to_text(pressure_setting)]")
 	return TRUE
 
-/obj/item/pneumatic_cannon/attackby(obj/item/W, mob/living/user, params)
+/obj/item/pneumatic_cannon/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if((user.istate & ISTATE_HARM))
 		return ..()
-	if(istype(W, /obj/item/tank/internals))
+	if(istype(attacking_item, /obj/item/tank/internals))
 		if(needs_air == FALSE)
 			return
 		if(!tank)
-			var/obj/item/tank/internals/IT = W
+			var/obj/item/tank/internals/IT = attacking_item
 			if(IT.volume <= 3)
 				to_chat(user, span_warning("\The [IT] is too small for \the [src]."))
 				return
-			updateTank(W, 0, user)
-	else if(W.type == type)
+			updateTank(attacking_item, 0, user)
+	else if(attacking_item.type == type)
 		to_chat(user, span_warning("You're fairly certain that putting a pneumatic cannon inside another pneumatic cannon would cause a spacetime disruption."))
 	else if(loadedWeightClass >= maxWeightClass)
 		to_chat(user, span_warning("\The [src] can't hold any more items!"))
-	else if(isitem(W))
-		var/obj/item/IW = W
+	else if(isitem(attacking_item))
+		var/obj/item/IW = attacking_item
 		load_item(IW, user)
 
 /obj/item/pneumatic_cannon/proc/can_load_item(obj/item/I, mob/user)
@@ -161,14 +161,15 @@
 		loadedWeightClass++
 	return TRUE
 
-/obj/item/pneumatic_cannon/afterattack(atom/target, mob/living/user, flag, params)
-	. = ..()
-	if(flag && (user.istate & ISTATE_HARM))//melee attack
-		return
-	if(!istype(user))
-		return
-	Fire(user, target)
-	return AFTERATTACK_PROCESSED_ITEM
+/obj/item/pneumatic_cannon/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(user.istate & ISTATE_HARM)
+		return ITEM_INTERACT_SKIP_TO_ATTACK
+	Fire(user, interacting_with)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/pneumatic_cannon/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	Fire(user, interacting_with)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/pneumatic_cannon/proc/Fire(mob/living/user, atom/target)
 	if(!istype(user) && !target)

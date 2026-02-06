@@ -103,7 +103,7 @@
 	if(!stored_research)
 		return
 	tool.set_buffer(stored_research)
-	to_chat(user, span_notice("Stored [src]'s techweb information in [tool]."))
+	balloon_alert(user, "saved to multitool buffer")
 	return TRUE
 
 /// Master R&D server. As long as this still exists and still holds the HDD for the theft objective, research points generate at normal speed. Destroy it or an antag steals the HDD? Half research speed.
@@ -148,7 +148,7 @@
 		if(HDD_OVERLOADED)
 			. += "The front panel is dangling open. The hdd inside is destroyed and the wires are all burned."
 
-/obj/machinery/rnd/server/master/tool_act(mob/living/user, obj/item/tool, tool_type, is_right_clicking)
+/obj/machinery/rnd/server/master/tool_act(mob/living/user, obj/item/tool, list/modifiers)
 	// Only antags are given the training and knowledge to disassemble this thing.
 	if(is_special_character(user))
 		return ..()
@@ -159,7 +159,7 @@
 	balloon_alert(user, "you can't find an obvious maintenance hatch!")
 	return TRUE
 
-/obj/machinery/rnd/server/master/attackby(obj/item/attacking_item, mob/user, params)
+/obj/machinery/rnd/server/master/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/computer_disk/hdd_theft))
 		switch(deconstruction_state)
 			if(HDD_PANEL_CLOSED)

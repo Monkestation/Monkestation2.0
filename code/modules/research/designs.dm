@@ -32,14 +32,14 @@ other types of metals and chemistry for reagents).
 	/// List of materials required to create one unit of the product. Format is (typepath or caregory) -> amount
 	var/list/materials = list()
 	/// The amount of time required to create one unit of the product.
-	var/construction_time
+	var/construction_time = 3.2 SECONDS
 	/// The typepath of the object produced by this design
 	var/build_path = null
 	/// Reagent produced by this design. Currently only supported by the biogenerator.
 	var/make_reagent
 	/// What categories this design falls under. Used for sorting in production machines.
 	var/list/category = list()
-	/// List of reagents required to create one unit of the product.
+	/// List of reagents required to create one unit of the product. Currently only supported by the limb grower.
 	var/list/reagents_list = list()
 	/// The maximum number of units of whatever is produced by this can be produced in one go.
 	var/maxstack = 1
@@ -59,6 +59,9 @@ other types of metals and chemistry for reagents).
 	var/search_metadata
 	/// For protolathe designs that don't require reagents: If they can be exported to autolathes with a design disk or not.
 	var/autolathe_exportable = TRUE
+
+	/// bitflags for special interactions, currently only used in exosuit fabricators
+	var/special_design_flags = NONE
 
 /datum/design/error_design
 	name = "ERROR"

@@ -18,16 +18,26 @@
 #define ROLE_TRAITOR "Traitor"
 #define ROLE_WIZARD "Wizard"
 #define ROLE_CLOCK_CULTIST "Clock Cultist" //monkestation edit
+#define ROLE_BLOODLING "Bloodling" // monkestation edit
 #define ROLE_OPFOR_CANDIDATE "OPFOR Candidate"
 #define ROLE_ASSAULT_OPERATIVE "Assault Operative"
+#define ROLE_DARKSPAWN "Darkspawn"
+///darkspawns class paths are different jobs technically
+#define ROLE_DARKSPAWN_CLASSLESS "Deprived"
+#define ROLE_DARKSPAWN_ADMEME "Admeme"
+#define ROLE_DARKSPAWN_FIGHTER "Fighter"
+#define ROLE_DARKSPAWN_WARLOCK "Warlock"
+#define ROLE_DARKSPAWN_SCOUT "Scout"
 
 // Midround roles
 #define ROLE_ABDUCTOR "Abductor"
 #define ROLE_ALIEN "Xenomorph"
 #define ROLE_BLOB "Blob"
 #define ROLE_BLOB_INFECTION "Blob Infection"
-#define ROLE_CHANGELING_MIDROUND "Changeling (Midround)"
+#define ROLE_CHANGELING_SPACE "Space Changeling"
+#define ROLE_FORBIDDENCALLING "Forbidden Calling"
 #define ROLE_FUGITIVE "Fugitive"
+#define ROLE_GENOMEAWAKENING "Genome Awakening"
 #define ROLE_LONE_OPERATIVE "Lone Operative"
 #define ROLE_MALF_MIDROUND "Malf AI (Midround)"
 #define ROLE_NIGHTMARE "Nightmare"
@@ -37,7 +47,6 @@
 #define ROLE_COMMANDO_OPERATIVE_MIDROUND "Commando Operative (Midround)"
 #define ROLE_PARADOX_CLONE "Paradox Clone"
 #define ROLE_REV_HEAD "Head Revolutionary"
-#define ROLE_SENTIENT_DISEASE "Sentient Disease"
 #define ROLE_SLEEPER_AGENT "Syndicate Sleeper Agent"
 #define ROLE_SPACE_DRAGON "Space Dragon"
 #define ROLE_SPIDER "Spider"
@@ -53,6 +62,7 @@
 #define ROLE_JUNIOR_LONE_OPERATIVE "Junior Lone Operative"
 #define ROLE_BINGLE "Bingle"
 #define ROLE_BINGLE_MIDROUND "Bingle (Midround)"
+#define ROLE_WILLING_HOST "Willing Host"
 // Latejoin roles
 #define ROLE_HERETIC_SMUGGLER "Heretic Smuggler"
 #define ROLE_PROVOCATEUR "Provocateur"
@@ -80,6 +90,7 @@
 #define ROLE_LAVALAND "Lavaland"
 #define ROLE_LAZARUS_BAD "Slaved Revived Mob"
 #define ROLE_LAZARUS_GOOD "Friendly Revived Mob"
+#define ROLE_BLOODLING_THRALL "Bloodling Thrall" // monkestation edit
 
 #define ROLE_CLOWN_OPERATIVE "Clown Operative"
 #define ROLE_FREE_GOLEM "Free Golem"
@@ -148,13 +159,16 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_CLOCK_CULTIST = 14,
 	ROLE_BLOODSUCKER = 0,
 	ROLE_ASSAULT_OPERATIVE = 14,
+	ROLE_BLOODLING = 15,
+	ROLE_DARKSPAWN = 14,
 
 	// Midround
 	ROLE_ABDUCTOR = 0,
 	ROLE_ALIEN = 0,
 	ROLE_BLOB = 0,
 	ROLE_BLOB_INFECTION = 0,
-	ROLE_CHANGELING_MIDROUND = 0,
+	ROLE_CHANGELING_SPACE = 0,
+	ROLE_GENOMEAWAKENING = 0,
 	ROLE_GLITCH = 0,
 	ROLE_FUGITIVE = 0,
 	ROLE_LONE_OPERATIVE = 14,
@@ -166,7 +180,6 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_COMMANDO_OPERATIVE_MIDROUND = 14,
 	ROLE_PARADOX_CLONE = 0,
 	ROLE_REVENANT = 0,
-	ROLE_SENTIENT_DISEASE = 0,
 	ROLE_SLEEPER_AGENT = 0,
 	ROLE_SPACE_DRAGON = 0,
 	ROLE_SPIDER = 0,
@@ -176,6 +189,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_CORTICAL_BORER = 0,  // Module ID: CORTICAL_BORERS
 	ROLE_DRIFTING_CONTRACTOR = 0,
 	ROLE_VAMPIRICACCIDENT = 0,
+	ROLE_FORBIDDENCALLING = 0,
 	ROLE_MONSTERHUNTER = 0,
 	ROLE_SLASHER = 0,
 	ROLE_FLORIDA_MAN = 0,
@@ -183,6 +197,12 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_TERATOMA = 0,
 	ROLE_JUNIOR_LONE_OPERATIVE = 0,
 	ROLE_BINGLE = 0,
+//darkspawns role classes
+	ROLE_DARKSPAWN_WARLOCK = 0,
+	ROLE_DARKSPAWN_SCOUT = 0,
+	ROLE_DARKSPAWN_WARLOCK = 0,
+	ROLE_DARKSPAWN_ADMEME = 0,
+	ROLE_DARKSPAWN_CLASSLESS = 0,
 //monkestation edit end
 
 	// Latejoin

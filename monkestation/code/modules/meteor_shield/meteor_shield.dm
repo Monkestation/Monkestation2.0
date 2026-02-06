@@ -1,4 +1,3 @@
-GLOBAL_LIST_EMPTY_TYPED(meteor_shield_sats, /obj/machinery/satellite/meteor_shield)
 GLOBAL_VAR_INIT(total_meteors_zapped, 0)
 
 /obj/machinery/satellite/meteor_shield
@@ -21,16 +20,14 @@ GLOBAL_VAR_INIT(total_meteors_zapped, 0)
 	. = ..()
 	AddElement(/datum/element/repackable, /obj/item/flatpacked_machine/generic, 2 SECONDS, TRUE, TRUE)
 
-	GLOB.meteor_shield_sats += src
 	RegisterSignal(src, COMSIG_MOVABLE_SPACEMOVE, PROC_REF(on_space_move)) // so these fuckers don't drift off into space when you're trying to position them
 	setup_proximity()
 	setup_proxies()
 	register_context()
 
 /obj/machinery/satellite/meteor_shield/Destroy()
-	GLOB.meteor_shield_sats -= src
-	proxies = null
 	QDEL_NULL(monitor)
+	proxies = null
 	return ..()
 
 /obj/machinery/satellite/meteor_shield/examine(mob/user)
@@ -86,14 +83,17 @@ GLOBAL_VAR_INIT(total_meteors_zapped, 0)
 	setup_proxies()
 
 /obj/machinery/satellite/meteor_shield/proc/setup_proximity()
+	if(QDELETED(src))
+		return
 	if((obj_flags & EMAGGED) || !active)
-		if(!QDELETED(monitor))
-			QDEL_NULL(monitor)
+		QDEL_NULL(monitor)
 	else
 		if(QDELETED(monitor))
 			monitor = new(src, kill_range)
 
 /obj/machinery/satellite/meteor_shield/proc/setup_proxies()
+	if(QDELETED(src))
+		return
 	for(var/stacked_z in SSmapping.get_connected_levels(get_turf(src)))
 		setup_proxy_for_z(stacked_z)
 

@@ -62,14 +62,14 @@ Tgcode map edits can, unfortunately, not be modularized. As such, it is heavily 
 
 ### Assets: images, sounds, icons and binaries
 
-Git doesn't handle conflicts of binary files well at all, therefore changes to core binary files are absolutely forbidden, unless you have a really *really* ***really*** good reason to do otherwise.
+Git doesn't handle conflicts of binary files well at all, therefore changes to core binary files are absolutely forbidden, unless you have a really _really_ **_really_** good reason to do otherwise.
 
 All assets added should be placed in the `/monkestation` folder.
 
-- ***Example:*** You're adding a new lavaland mob.
+- **_Example:_** You're adding a new lavaland mob.
 
   First of all, you want to find a regular lavaland mob's file path, which would be `code/modules/mob/living/simple_animal/hostile/mining_mobs/`.
-  
+
   Next, you want to mirror that in the `/monkestation` folder, making it `/monkestation/code/modules/mob/living/simple_animal/hostile/mining_mobs/your_new_mob_here.dm`
 
   Then, you add the new mob to that new file in the `/monkestation` folder, like so.
@@ -87,8 +87,7 @@ All assets added should be placed in the `/monkestation` folder.
 
 ## Modular Overrides (Important!!)
 
-Note, that it is possible to append code in front, or behind a core proc, in a modular fashion, without editing the original proc, through referring the parent proc, using `..()`, in one of the following forms.  And likewise, it is possible to add a new var to an existing datum or obj, without editing the core files.
-
+Note, that it is possible to append code in front, or behind a core proc, in a modular fashion, without editing the original proc, through referring the parent proc, using `..()`, in one of the following forms. And likewise, it is possible to add a new var to an existing datum or obj, without editing the core files.
 
 To keep it simple, let's assume you wanted to make guns spark when shot, for simulating muzzle flash or whatever other reasons, and you want potentially to use it with all kinds of guns.
 
@@ -145,7 +144,6 @@ In those cases, this is the following convention, with examples:
   //MONKESTATION REMOVAL END
   WARNING("couldn't find dock with id: [id]")
   ```
-
 
 - **Change:**
 

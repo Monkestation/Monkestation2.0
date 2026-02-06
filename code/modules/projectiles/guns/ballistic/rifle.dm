@@ -18,6 +18,7 @@
 	gun_flags = GUN_SMOKE_PARTICLES
 	/// Does the bolt need to be open to interact with the gun (e.g. magazine interactions)?
 	var/need_bolt_lock_to_interact = TRUE
+	box_reload_delay = CLICK_CD_RANGE ///0.4 SECONDS
 
 /obj/item/gun/ballistic/rifle/rack(mob/user = null)
 	if (bolt_locked == FALSE)
@@ -123,15 +124,8 @@
 		process_fire(user, user, FALSE)
 		. = TRUE
 
-/obj/item/gun/ballistic/rifle/boltaction/harpoon
-	name = "ballistic harpoon gun"
-	desc = "A weapon favored by carp hunters, but just as infamously employed by agents of the Animal Rights Consortium against human aggressors. Because it's ironic."
-	icon_state = "speargun"
-	inhand_icon_state = "speargun"
-	worn_icon_state = "speargun"
-	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/harpoon
-	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
-	can_be_sawn_off = FALSE
+/obj/item/gun/ballistic/rifle/boltaction/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_SAKHNO)
 
 /obj/item/gun/ballistic/rifle/boltaction/surplus
 	desc = "A classic Mosin Nagant, ruined by centuries of moisture. Some Space Russians claim that the moisture \
@@ -164,106 +158,8 @@
 	if(.)
 		name = "\improper Regal Obrez" // wear it loud and proud
 
-/obj/item/gun/ballistic/rifle/rebarxbow
-	name = "heated rebar crossbow"
-	desc = "A handcrafted crossbow. \
-		   Aside from conventional sharpened iron rods, it can also fire specialty ammo made from the atmos crystalizer - zaukerite, metallic hydrogen, and healium rods all work. \
-		   Very slow to reload - you can craft the crossbow with a crowbar to loosen the crossbar, but risk a misfire, or worse..."
-	icon = 'icons/obj/weapons/guns/ballistic.dmi'
-	icon_state = "rebarxbow"
-	base_icon_state = "rebarxbow"
-	inhand_icon_state = "rebarxbow"
-	worn_icon_state = "rebarxbow"
-	rack_sound = 'sound/weapons/gun/sniper/rack.ogg'
-	mag_display = FALSE
-	empty_indicator = TRUE
-	bolt_type = BOLT_TYPE_OPEN
-	semi_auto = FALSE
-	internal_magazine = TRUE
-	can_modify_ammo = FALSE
-	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_SUITSTORE
-	bolt_wording = "bowstring"
-	magazine_wording = "rod"
-	cartridge_wording = "rod"
-	weapon_weight = WEAPON_HEAVY
-	initial_caliber = CALIBER_REBAR
-	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/rebarxbow/normal
-	fire_sound = 'sound/items/xbow_lock.ogg'
-	can_be_sawn_off = FALSE
-	tac_reloads = FALSE
-	var/draw_time = 3 SECONDS
-	SET_BASE_PIXEL(0, 0)
-	need_bolt_lock_to_interact = FALSE
-
-/obj/item/gun/ballistic/rifle/rebarxbow/rack(mob/user = null)
-	if (bolt_locked)
-		drop_bolt(user)
-		return
-	balloon_alert(user, "bowstring loosened")
-	playsound(src, rack_sound, rack_sound_volume, rack_sound_vary)
-	handle_chamber(empty_chamber =  FALSE, from_firing = FALSE, chamber_next_round = FALSE)
-	bolt_locked = TRUE
-	update_appearance()
-
-/obj/item/gun/ballistic/rifle/rebarxbow/drop_bolt(mob/user = null)
-	if(!do_after(user, draw_time, target = src))
-		return
-	playsound(src, bolt_drop_sound, bolt_drop_sound_volume, FALSE)
-	balloon_alert(user, "bowstring drawn")
-	chamber_round()
-	bolt_locked = FALSE
-	update_appearance()
-
-/obj/item/gun/ballistic/rifle/rebarxbow/shoot_live_shot(mob/living/user)
-	..()
-	rack()
-
-/obj/item/gun/ballistic/rifle/rebarxbow/can_shoot()
-	if (bolt_locked)
-		return FALSE
-	return ..()
-
-/obj/item/gun/ballistic/rifle/rebarxbow/shoot_with_empty_chamber(mob/living/user)
-	if(chambered || !magazine || !length(magazine.contents))
-		return ..()
-	drop_bolt(user)
-
-/obj/item/gun/ballistic/rifle/rebarxbow/examine(mob/user)
-	. = ..()
-	. += "The crossbow is [bolt_locked ? "not ready" : "ready"] to fire."
-
-/obj/item/gun/ballistic/rifle/rebarxbow/update_overlays()
-	. = ..()
-	if(!magazine)
-		. += "[base_icon_state]" + "_empty"
-	if(!bolt_locked)
-		. += "[base_icon_state]" + "_bolt_locked"
-
-/obj/item/gun/ballistic/rifle/rebarxbow/forced
-	name = "stressed rebar crossbow"
-	desc = "Some idiot decided that they would risk shooting themselves in the face if it meant they could have a draw this crossbow a bit faster. Hopefully, it was worth it."
-	// Feel free to add a recipe to allow you to change it back if you would like, I just wasn't sure if you could have two recipes for the same thing.
-	can_misfire = TRUE
-	draw_time = 1.5
-	misfire_probability = 25
-	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/rebarxbow/force
-
-/obj/item/gun/ballistic/rifle/rebarxbow/syndie
-	name = "syndicate rebar crossbow"
-	desc = "The syndicate liked the bootleg rebar crossbow NT engineers made, so they showed what it could be if properly developed. \
-			Holds three shots without a chance of exploding, and features a built in scope. Compatible with all known crossbow ammunition."
-	base_icon_state = "rebarxbowsyndie"
-	icon_state = "rebarxbowsyndie"
-	inhand_icon_state = "rebarxbowsyndie"
-	worn_icon_state = "rebarxbowsyndie"
-	w_class = WEIGHT_CLASS_NORMAL
-	initial_caliber = CALIBER_REBAR
-	draw_time = 1
-	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/rebarxbow/syndie
-
-/obj/item/gun/ballistic/rifle/rebarxbow/syndie/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/scope, range_modifier = 2) //enough range to at least be useful for stealth
+/obj/item/gun/ballistic/rifle/boltaction/prime/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_XHIHAO)
 
 /obj/item/gun/ballistic/rifle/boltaction/pipegun
 	name = "pipegun"
@@ -291,6 +187,9 @@
 /obj/item/gun/ballistic/rifle/boltaction/pipegun/handle_chamber(mob/living/user, empty_chamber = TRUE, from_firing = TRUE, chamber_next_round = TRUE)
 	. = ..()
 	do_sparks(1, TRUE, src)
+
+/obj/item/gun/ballistic/rifle/boltaction/pipegun/give_manufacturer_examine()
+	return
 
 /obj/item/gun/ballistic/rifle/boltaction/pipegun/prime
 	name = "regal pipegun"
@@ -404,3 +303,120 @@
 		It is also able to be suppressed....somehow. This one seems to have a little picture of someone in a blood-red MODsuit stenciled on it, pointing at a green floppy disk. \
 		Who knows what that might mean."
 	pin = /obj/item/firing_pin/implant/pindicate
+
+
+/// Blueshift guns
+///	Currently nonexistent in code, some day I hope to convert this to 6.5 anti-xeno and get a slick mining rifle
+
+
+/obj/item/gun/ballistic/rifle/boltaction/sporterized
+	name = "\improper Rengo Precision Rifle"
+	desc = "A heavily modified Sakhno rifle, parts made by Xhihao light arms based around Jupiter herself. \
+		Has a higher capacity than standard Sakhno rifles, fitting ten .310 cartridges."
+	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/xhihao_light_arms/guns40x.dmi'
+	icon_state = "rengo"
+	inhand_icon_state = "moistnugget"
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/bubba
+	can_be_sawn_off = FALSE
+	knife_x_offset = 35
+
+/obj/item/gun/ballistic/rifle/boltaction/sporterized/Initialize(mapload)
+	. = ..()
+
+	AddComponent(/datum/component/scope, range_modifier = 1.5)
+
+/obj/item/gun/ballistic/rifle/boltaction/sporterized/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_XHIHAO)
+
+/obj/item/gun/ballistic/rifle/boltaction/sporterized/examine(mob/user)
+	. = ..()
+	. += span_notice("You can <b>examine closer</b> to learn a little more about this weapon.")
+
+/obj/item/gun/ballistic/rifle/boltaction/sporterized/examine_more(mob/user)
+	. = ..()
+
+	. += "The Xhihao 'Rengo' conversion rifle. Came as parts sold in a single kit by Xhihao Light Arms, \
+		which can be swapped out with many of the outdated or simply old parts on a typical Sakhno rifle. \
+		While not necessarily increasing performance in any way, the magazine is slightly longer. The weapon \
+		is also overall a bit shorter, making it easier to handle for some people. Cannot be sawn off, cutting \
+		really any part of this weapon off would make it non-functional."
+
+	return .
+
+/obj/item/gun/ballistic/rifle/boltaction/sporterized/empty
+	bolt_locked = TRUE // so the bolt starts visibly open
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/bubba/empty
+
+/obj/item/ammo_box/magazine/internal/boltaction/bubba
+	name = "Sakhno extended internal magazine"
+	desc = "How did you get it out?"
+	ammo_type = /obj/item/ammo_casing/strilka310
+	caliber = CALIBER_STRILKA310
+	max_ammo = 10
+
+/obj/item/ammo_box/magazine/internal/boltaction/bubba/empty
+	start_empty = TRUE
+
+/*
+*	Box that contains Sakhno rifles, but less soviet union since we don't have one of those
+*/
+
+/obj/item/storage/toolbox/guncase/soviet/sakhno
+	desc = "A weapon's case. This one is green and looks pretty old, but is otherwise in decent condition."
+	icon = 'icons/obj/storage/case.dmi'
+	material_flags = NONE // ????? Why do these have materials enabled??
+
+
+//.45 Long Lever-Rifle, cargo cowboy gun, used to be a shotgun, this makes more sense.
+/obj/item/gun/ballistic/rifle/leveraction
+	name = "brush gun"
+	desc = "While lever-actions have been horribly out of date for hundreds of years now, \
+	putting a nicely sized hole in a man-sized target with a .45 Long round has stayed relatively timeless."
+	icon_state = "brushgun"
+	icon = 'monkestation/icons/obj/guns/guns.dmi'
+	bolt_wording = "Lever"
+	bolt_type = BOLT_TYPE_STANDARD
+	cartridge_wording = "bullet"
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/levergun
+	projectile_wound_bonus = 10
+	projectile_damage_multiplier = 1.4
+	w_class = WEIGHT_CLASS_BULKY
+	force = 10
+	flags_1 = CONDUCT_1
+	semi_auto = FALSE
+	internal_magazine = TRUE
+	casing_ejector = FALSE
+	weapon_weight = WEAPON_HEAVY
+	pb_knockback = 0
+	need_bolt_lock_to_interact = FALSE
+	box_reload_delay = CLICK_CD_MELEE
+
+
+
+//Stupid OP mining rifle, WARNING, FIRES PLASMA NOT BULLETS     probably the singlehandedly most expensive weapon a miner can buy, and for good reason
+/obj/item/gun/ballistic/rifle/minerjdj
+	name = ".950 JDJ 'Thor' Kinetic Rifle"
+	desc = "Completely absurd, in both size and firepower. The people down in Mining Research were either overcompensating, \
+	or just having a damn good time, but we found this laying on a table surrounded by about six researchers, \
+	and the Mining Research Director, all passed out on the floor with beers and sodas. Fires an absolutely massive round that \
+	is sure to stop pretty much anything in its tracks that would even warrent it."
+	icon_state = "fatmac"
+	w_class = WEIGHT_CLASS_HUGE
+	weapon_weight = WEAPON_HEAVY
+	slot_flags = ITEM_SLOT_BACK
+	icon = 'icons/obj/weapons/guns/wide_guns.dmi'
+	inhand_icon_state = "fatmac"
+	worn_icon = 'icons/mob/clothing/back.dmi'
+	worn_icon_state = "fatmac"
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/minerjdj
+	bolt_wording = "bolt"
+	bolt_type = BOLT_TYPE_LOCKING
+	semi_auto = FALSE
+	recoil = 8 //ow my back
+	fire_sound = 'monkestation/sound/weapons/gun/shotgun/quadfire.ogg'
+	fire_sound_volume = 200 // L O U D
+	rack_sound = 'monkestation/sound/weapons/gun/shotgun/quadrack.ogg'
+	bolt_drop_sound = 'monkestation/sound/weapons/gun/shotgun/quadinsert.ogg'
+	need_bolt_lock_to_interact = TRUE
+	pin = /obj/item/firing_pin/wastes //hey so yeah did you see how much damage the bullet this thing fires does ok cool so you know why this is NEVER EVER coming off
+

@@ -4,7 +4,7 @@
 	icon = 'monkestation/code/modules/brewin_and_chewin/icons/objects.dmi'
 	icon_state = "bottler_box"
 	w_class = WEIGHT_CLASS_NORMAL
-	custom_materials = list(/datum/material/iron = 2000, /datum/material/glass = 4000)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT, /datum/material/glass = SHEET_MATERIAL_AMOUNT*2)
 	var/glass_colour = "brew_bottle"
 	var/fake_glass_name = "Kinda Blue"
 

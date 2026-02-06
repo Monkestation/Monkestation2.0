@@ -1,6 +1,11 @@
 #define DEFAULT_WHO_CELLS_PER_ROW 4
 #define NO_ADMINS_ONLINE_MESSAGE "Adminhelps are also sent through TGS to services like IRC and Discord. If no admins are available in game, sending an adminhelp might still be noticed and responded to."
 
+/client
+	var/awho_count_since = 0
+	COOLDOWN_DECLARE(adminwho_alert_cooldown)
+
+
 /client/verb/who()
 	set name = "Who"
 	set category = "OOC"
@@ -86,6 +91,17 @@
 		lines += codermonkey_string
 
 	to_chat(src, fieldset_block(span_bold(header), jointext(lines, "\n"), "boxed_message"), type = MESSAGE_TYPE_OOC)
+
+	if(COOLDOWN_FINISHED(src, adminwho_alert_cooldown) && !is_admin(src))
+		var/laststring = "has checked adminwho."
+		if(awho_count_since > 0)
+			laststring += " ([awho_count_since] checks since last cooldown)"
+		awho_count_since = 0
+		message_admins("[ADMIN_STEALTHLOOKUPFLW(mob)] [laststring]")
+		log_admin_private("[key_name(src)] [laststring]")
+		COOLDOWN_START(src, adminwho_alert_cooldown, 1 MINUTES)
+
+	awho_count_since++
 
 /// Proc that generates the applicable string to dispatch to the client for adminwho.
 /client/proc/generate_adminwho_string()

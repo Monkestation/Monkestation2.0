@@ -43,7 +43,29 @@
 /obj/machinery/medical_kiosk/Initialize(mapload) //loaded subtype for mapping use
 	. = ..()
 	AddComponent(/datum/component/payment, active_price, SSeconomy.get_dep_account(ACCOUNT_MED), PAYMENT_FRIENDLY)
+	register_context()
 	scanner_wand = new/obj/item/scanner_wand(src)
+
+/obj/machinery/medical_kiosk/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	var/screentip_change = FALSE
+
+	if(!held_item && scanner_wand)
+		context[SCREENTIP_CONTEXT_RMB] = "Pick up scanner wand"
+		return screentip_change = TRUE
+
+	if(istype(held_item) && held_item.tool_behaviour == TOOL_WRENCH)
+		context[SCREENTIP_CONTEXT_LMB] = anchored ? "Unsecure" : "Secure"
+		return screentip_change = TRUE
+	if(istype(held_item) && held_item.tool_behaviour == TOOL_CROWBAR && panel_open)
+		context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
+		return screentip_change = TRUE
+	if(istype(held_item) && held_item.tool_behaviour == TOOL_SCREWDRIVER)
+		context[SCREENTIP_CONTEXT_LMB] = panel_open ? "Close panel" : "Open panel"
+		return screentip_change = TRUE
+	if(istype(held_item, /obj/item/scanner_wand))
+		context[SCREENTIP_CONTEXT_LMB] = "Return the scanner wand"
+		return screentip_change = TRUE
 
 /obj/machinery/medical_kiosk/proc/inuse()  //Verifies that the user can use the interface, followed by showing medical information.
 	var/mob/living/carbon/human/paying = paying_ref?.resolve()
@@ -53,7 +75,7 @@
 
 	var/obj/item/card/id/card = paying.get_idcard(TRUE)
 	if(card?.registered_account?.account_job?.paycheck_department == payment_department)
-		use_power(active_power_usage)
+		use_energy(active_power_usage)
 		paying_customer = TRUE
 		say("Hello, esteemed medical staff!")
 		RefreshParts()
@@ -61,7 +83,7 @@
 	var/bonus_fee = pandemonium ? rand(10,30) : 0
 	if(attempt_charge(src, paying, bonus_fee) & COMPONENT_OBJ_CANCEL_CHARGE )
 		return
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 	paying_customer = TRUE
 	icon_state = "[base_icon_state]_active"
 	say("Thank you for your patronage!")
@@ -86,7 +108,7 @@
 /obj/machinery/medical_kiosk/wrench_act(mob/living/user, obj/item/tool) //Allows for wrenching/unwrenching the machine.
 	..()
 	default_unfasten_wrench(user, tool, time = 0.1 SECONDS)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/medical_kiosk/RefreshParts()
 	. = ..()
@@ -95,49 +117,59 @@
 		active_price = board.custom_cost
 	return
 
-/obj/machinery/medical_kiosk/attackby(obj/item/O, mob/user, params)
-	if(default_deconstruction_screwdriver(user, "[base_icon_state]_open", "[base_icon_state]_off", O))
-		return
-	else if(default_deconstruction_crowbar(O))
-		return
+/obj/machinery/medical_kiosk/screwdriver_act(mob/living/user, obj/item/tool)
+	if(default_deconstruction_screwdriver(user, "[base_icon_state]_open", "[base_icon_state]_off", tool))
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
-	if(istype(O, /obj/item/scanner_wand))
-		var/obj/item/scanner_wand/W = O
-		if(scanner_wand)
-			to_chat(user, span_warning("There's already a scanner wand in [src]!"))
-			return
-		if(HAS_TRAIT(O, TRAIT_NODROP) || !user.transferItemToLoc(O, src))
-			to_chat(user, span_warning("[O] is stuck to your hand!"))
-			return
-		user.visible_message(span_notice("[user] snaps [O] onto [src]!"), \
-		span_notice("You press [O] into the side of [src], clicking into place."))
-		//This will be the scanner returning scanner_wand's selected_target variable and assigning it to the altPatient var
-		if(W.selected_target)
-			var/datum/weakref/target_ref = WEAKREF(W.return_patient())
-			if(patient_ref != target_ref)
-				clearScans()
-			patient_ref = target_ref
-			user.visible_message(span_notice("[W.return_patient()] has been set as the current patient."))
-			W.selected_target = null
-		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
-		scanner_wand = O
-		return
-	return ..()
+/obj/machinery/medical_kiosk/crowbar_act(mob/living/user, obj/item/tool)
+	if(default_deconstruction_crowbar(tool))
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
-/obj/machinery/medical_kiosk/AltClick(mob/living/carbon/user)
-	if(!istype(user) || !user.can_perform_action(src))
-		return
+/obj/machinery/medical_kiosk/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/scanner_wand))
+		return NONE
+
+	var/obj/item/scanner_wand/wand = tool
+	if(scanner_wand)
+		balloon_alert(user, "already has a wand!")
+		return ITEM_INTERACT_BLOCKING
+	if(HAS_TRAIT(tool, TRAIT_NODROP) || !user.transferItemToLoc(tool, src))
+		balloon_alert(user, "stuck to your hand!")
+		return ITEM_INTERACT_BLOCKING
+	user.visible_message(span_notice("[user] snaps [tool] onto [src]!"))
+	balloon_alert(user, "wand returned")
+	//This will be the scanner returning scanner_wand's selected_target variable and assigning it to the altPatient var
+	if(wand.selected_target)
+		var/datum/weakref/target_ref = WEAKREF(wand.return_patient())
+		if(patient_ref != target_ref)
+			clearScans()
+		patient_ref = target_ref
+		user.visible_message(span_notice("[wand.return_patient()] has been set as the current patient."))
+		wand.selected_target = null
+	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+	scanner_wand = tool
+	return
+
+/obj/machinery/medical_kiosk/attack_hand_secondary(mob/user, list/modifiers)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(!ishuman(user) || !user.can_perform_action(src))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(!scanner_wand)
-		to_chat(user, span_warning("The scanner wand is currently removed from the machine."))
-		return
+		balloon_alert(user, "no scanner wand!")
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(!user.put_in_hands(scanner_wand))
-		to_chat(user, span_warning("The scanner wand falls to the floor."))
+		balloon_alert(user, "scanner wand falls!")
 		scanner_wand = null
-		return
-	user.visible_message(span_notice("[user] unhooks the [scanner_wand] from [src]."), \
-	span_notice("You detach the [scanner_wand] from [src]."))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	user.visible_message(span_notice("[user] unhooks the [scanner_wand] from [src]."))
+	balloon_alert(user, "scanner pulled")
 	playsound(src, 'sound/machines/click.ogg', 60, TRUE)
 	scanner_wand = null
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/medical_kiosk/Destroy()
 	qdel(scanner_wand)

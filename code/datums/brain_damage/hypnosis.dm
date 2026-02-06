@@ -77,3 +77,7 @@
 	if(!owner.can_hear() || owner == hearing_args[HEARING_SPEAKER])
 		return
 	hearing_args[HEARING_RAW_MESSAGE] = target_phrase.Replace(hearing_args[HEARING_RAW_MESSAGE], span_hypnophrase("$1"))
+
+/// A "hardened" variant of the hypnosis trauma, used by hypnoflashes so that nanites can't cure it.
+/datum/brain_trauma/hypnosis/hardened
+	trauma_flags = parent_type::trauma_flags | TRAUMA_NOT_RANDOM | TRAUMA_SPECIAL_CURE_PROOF

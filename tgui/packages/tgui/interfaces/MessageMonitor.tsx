@@ -1,13 +1,13 @@
-import { BooleanLike } from 'common/react';
+import type { BooleanLike } from 'common/react';
 import { useBackend, useLocalState } from '../backend';
 import {
+  Box,
+  Button,
+  Input,
+  NoticeBox,
   Section,
   Stack,
-  Input,
-  Button,
   Table,
-  NoticeBox,
-  Box,
 } from '../components';
 import { Window } from '../layouts';
 
@@ -172,7 +172,7 @@ const MainScreenAuth = (props) => {
         <Section>
           <Input
             value={auth_password}
-            onInput={(e, value) => setPassword(value)}
+            onChange={(value) => setPassword(value)}
             placeholder="Password"
           />
           <Button
@@ -273,7 +273,7 @@ const MainScreenNotAuth = (props) => {
         <Section>
           <Input
             value={auth_password}
-            onInput={(e, value) => setPassword(value)}
+            onChange={(value) => setPassword(value)}
             placeholder="Password"
           />
           <Button

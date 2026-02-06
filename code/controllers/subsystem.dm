@@ -31,6 +31,9 @@
 	/// This var is set to `INITIALIZATION_INNEW_REGULAR` after the subsystem has been initialized.
 	var/initialized = FALSE
 
+	/// Similar to above however this will be set even if an SS has SS_NO_INIT set.
+	var/ready = FALSE
+
 	/// Set to 0 to prevent fire() calls, mostly for admin use or subsystems that may be resumed later
 	/// use the [SS_NO_FIRE] flag instead for systems that never fire to keep it from even being added to list that is checked every tick
 	var/can_fire = TRUE
@@ -61,7 +64,7 @@
 	var/next_fire = 0
 
 	/// The subsystem had no work during CheckQueue and was not queued.
-	var/hibernating
+	var/hibernation_state
 
 	/// Running average of the amount of milliseconds it takes the subsystem to complete a run (including all resumes but not the time spent paused)
 	var/cost = 0
@@ -198,7 +201,7 @@
 /// (we loop thru a linked list until we get to the end or find the right point)
 /// (this lets us sort our run order correctly without having to re-sort the entire already sorted list)
 /datum/controller/subsystem/proc/enqueue()
-	hibernating = FALSE
+	hibernation_state = hibernation_state == SS_IS_HIBERNATING ? SS_WAKING_UP : SS_NOT_HIBERNATING
 
 	var/SS_priority = priority
 	var/SS_flags = flags
@@ -296,8 +299,8 @@
 	return msg
 
 /datum/controller/subsystem/proc/state_letter()
-	if(hibernating)
-		return "H"
+	if(hibernation_state)
+		return hibernation_state == SS_WAKING_UP ? "W" : "H"
 
 	switch (state)
 		if (SS_RUNNING)

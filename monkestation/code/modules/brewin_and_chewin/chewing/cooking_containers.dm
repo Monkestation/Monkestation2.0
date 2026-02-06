@@ -28,7 +28,7 @@
 	var/list/grill_data = list("High"=0 , "Medium" = 0, "Low"=0) //Record of what grill-cooking has been done on this food.
 	var/list/oven_data = list("High"=0 , "Medium" = 0, "Low"=0) //Record of what oven-cooking has been done on this food.
 
-/obj/item/reagent_containers/cooking_container/Initialize()
+/obj/item/reagent_containers/cooking_container/Initialize(mapload)
 	.=..()
 	appearance_flags |= KEEP_TOGETHER
 	RegisterSignal(src, COMSIG_STOVE_PROCESS, PROC_REF(process_stovetop))
@@ -50,7 +50,7 @@
 /obj/item/reagent_containers/cooking_container/proc/get_reagent_info()
 	return "It contains [reagents.total_volume] units of reagents."
 
-/obj/item/reagent_containers/cooking_container/attackby(var/obj/item/used_item, var/mob/user)
+/obj/item/reagent_containers/cooking_container/attackby(obj/item/used_item, mob/user)
 
 	#ifdef CHEWIN_DEBUG
 	logger.Log(LOG_CATEGORY_DEBUG"cooking_container/attackby() called!")
@@ -90,7 +90,7 @@
 	. = ..()
 
 
-/obj/item/reagent_containers/cooking_container/afterattack(var/obj/target, var/mob/user, var/flag)
+/obj/item/reagent_containers/cooking_container/afterattack(obj/target, mob/user, flag)
 	if(!istype(target, /obj/item/reagent_containers))
 		return FALSE
 	if(!flag)
@@ -100,7 +100,7 @@
 	if(after_attack_pour(user, target))
 		return TRUE
 
-/obj/item/reagent_containers/cooking_container/proc/process_item(var/obj/I, var/mob/user, var/lower_quality_on_fail = 0, var/send_message = TRUE)
+/obj/item/reagent_containers/cooking_container/proc/process_item(obj/I, mob/user, lower_quality_on_fail = 0, send_message = TRUE)
 
 
 	#ifdef CHEWIN_DEBUG
@@ -117,7 +117,7 @@
 	. = FALSE
 	switch(tracker.process_item_wrap(I, user))
 		if(CHEWIN_NO_STEPS)
-			if(no_step_checks(I)) //literally fryers
+			if(no_step_checks(I, user)) //literally fryers
 				if(send_message)
 					to_chat(user, span_warning("It doesn't seem like you can create a meal from that. Yet."))
 				if(lower_quality_on_fail)
@@ -165,7 +165,7 @@
 	set desc = "Removes items from the container, excluding reagents."
 	do_empty(usr)
 
-/obj/item/reagent_containers/cooking_container/proc/do_empty(mob/user, var/atom/target = null, var/reagent_clear = TRUE)
+/obj/item/reagent_containers/cooking_container/proc/do_empty(mob/user, atom/target = null, reagent_clear = TRUE)
 	#ifdef CHEWIN_DEBUG
 	logger.Log(LOG_CATEGORY_DEBUG"cooking_container/do_empty() called!")
 	#endif
@@ -206,8 +206,9 @@
 		to_chat(user, span_notice("You remove all the solid items from [src]."))
 
 
-/obj/item/reagent_containers/cooking_container/AltClick(var/mob/user)
+/obj/item/reagent_containers/cooking_container/click_alt(mob/user)
 	do_empty(user)
+	return CLICK_ACTION_SUCCESS
 
 //Deletes contents of container.
 //Used when food is burned, before replacing it with a burned mess
@@ -226,7 +227,7 @@
 	grill_data = list("High"=0 , "Medium" = 0, "Low"=0)
 	fryer_data = list("High"=0)
 
-/obj/item/reagent_containers/cooking_container/proc/label(var/number, var/CT = null)
+/obj/item/reagent_containers/cooking_container/proc/label(number, CT = null)
 	//This returns something like "Fryer basket 1 - empty"
 	//The latter part is a brief reminder of contents
 	//This is used in the removal menu
@@ -251,7 +252,7 @@
 	if(lip)
 		add_overlay(image(src.icon, icon_state=lip, layer=ABOVE_OBJ_LAYER))
 
-/obj/item/reagent_containers/cooking_container/proc/add_to_visible(var/obj/item/our_item)
+/obj/item/reagent_containers/cooking_container/proc/add_to_visible(obj/item/our_item)
 	our_item.pixel_x = initial(our_item.pixel_x)
 	our_item.pixel_y = initial(our_item.pixel_y)
 	our_item.vis_flags = VIS_INHERIT_LAYER | VIS_INHERIT_PLANE | VIS_INHERIT_ID
@@ -259,7 +260,7 @@
 	our_item.transform *= 0.6
 	src.vis_contents += our_item
 
-/obj/item/reagent_containers/cooking_container/proc/remove_from_visible(var/obj/item/our_item)
+/obj/item/reagent_containers/cooking_container/proc/remove_from_visible(obj/item/our_item)
 	our_item.vis_flags = 0
 	our_item.blend_mode = 0
 	our_item.transform = null
@@ -339,11 +340,15 @@
 	removal_penalty = 5
 	appliancetype = DF_BASKET
 
-/obj/item/reagent_containers/cooking_container/proc/no_step_checks(obj/item/item)
+/obj/item/reagent_containers/cooking_container/proc/no_step_checks(obj/item/item, mob/living/user)
 	return TRUE
 
-/obj/item/reagent_containers/cooking_container/deep_basket/no_step_checks(obj/item/item)
-	item.forceMove(src)
+/obj/item/reagent_containers/cooking_container/deep_basket/no_step_checks(obj/item/item, mob/living/user)
+	if(user && isitem(item))
+		if(!user.transferItemToLoc(item, src))
+			return TRUE
+	else
+		item.forceMove(src)
 	qdel(tracker)
 	update_icon()
 	return FALSE

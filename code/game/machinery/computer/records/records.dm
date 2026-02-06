@@ -55,10 +55,10 @@
 				balloon_alert(user, "out of range!")
 				return TRUE
 
+			investigate_log("[key_name(user)] expunged the record of [target.name].", INVESTIGATE_RECORDS)
 			expunge_record_info(target)
 			balloon_alert(user, "record expunged")
 			playsound(src, 'sound/machines/terminal_eject.ogg', 70, TRUE)
-			investigate_log("[key_name(user)] expunged the record of [target.name].", INVESTIGATE_RECORDS)
 
 			return TRUE
 
@@ -100,7 +100,7 @@
 			if(!target)
 				return FALSE
 
-			playsound(src, "sound/machines/terminal_button0[rand(1, 8)].ogg", 50, TRUE)
+			playsound(src, SFX_TERMINAL_TYPE, 50, TRUE)
 			update_preview(user, params["assigned_view"], target, ui.window)
 			return TRUE
 
@@ -173,7 +173,7 @@
 		return FALSE
 
 	new /datum/record/crew(name = name, character_appearance = mugshot.picture.picture_image)
-
+	investigate_log("[key_name(user)] created a new record named [name]", INVESTIGATE_RECORDS)
 	balloon_alert(user, "record created")
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 70, TRUE)
 

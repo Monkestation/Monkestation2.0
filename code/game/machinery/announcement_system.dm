@@ -36,10 +36,14 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	/// The text that we send when announcing researched nodes.
 	var/node_message = "The %NODE techweb node has been researched"
 
+	can_language_malfunction = FALSE
+
 /obj/machinery/announcement_system/Initialize(mapload)
 	. = ..()
 	GLOB.announcement_systems += src
 	radio = new /obj/item/radio/headset/silicon/ai(src)
+	radio.lossless = TRUE
+	radio.subspace_transmission = FALSE
 	update_appearance()
 
 /obj/machinery/announcement_system/update_icon_state()
@@ -94,12 +98,12 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	switch(message_type)
 		if(AUTO_ANNOUNCE_ARRIVAL)
 			if(!arrival_toggle)
-				message = CompileText(arrival, target, rank)
 				return
+			message = CompileText(arrival, target, rank)
 		if(AUTO_ANNOUNCE_NEWHEAD)
 			if(!newhead_toggle)
-				message = CompileText(newhead, target, rank)
 				return
+			message = CompileText(newhead, target, rank)
 		if(AUTO_ANNOUNCE_ARRIVALS_BROKEN)
 			message = "The arrivals shuttle has been damaged. Docking for repairs..."
 		if(AUTO_ANNOUNCE_NODE)
@@ -116,7 +120,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 
 /// Sends a message to the appropriate channels.
 /obj/machinery/announcement_system/proc/broadcast(message, list/channels)
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 	if(channels.len == 0)
 		radio.talk_into(src, message, null)
 	else

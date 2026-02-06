@@ -29,4 +29,4 @@
 
 	COOLDOWN_START(src, cd, 0.2 SECONDS)
 	fire(stored_message)
-	log_message("triggered by [key_name(source)]", LOG_MECHCOMP)
+	log_message("triggered by [key_name(thing)]", LOG_MECHCOMP)

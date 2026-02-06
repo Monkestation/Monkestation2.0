@@ -3,19 +3,28 @@
 	desc = "Summon an anchoring crystal to the station."
 	tip = "Oops!" //this is set on New()
 	button_icon_state = "Clockwork Obelisk"
-	power_cost = 2000
+	power_cost = STANDARD_CELL_CHARGE * 0.5
 	invocation_time = 20 SECONDS
-	invocation_text = list("Reality Fold...", "Time will mold...", "Anchor us here...", "Eng'ine is near!")
+	invocation_text = list("Space shall fold...", "Time shall mold...", "Anchor us here...", "Engine is near!")
 	summoned_structure = /obj/structure/destructible/clockwork/anchoring_crystal
 	cogs_required = 5
 	invokers_required = 3
 	category = SPELLTYPE_STRUCTURES
 	///how long in seconds until the scripture can be invoked again, pretty much a cooldown
 	var/static/time_until_invokable = 0
+	///the list of
+	var/static/list/valid_areas
 
 /datum/scripture/create_structure/anchoring_crystal/New()
-	tip = "With this crystal [anchoring_crystal_charge_message()]"
+	update_info()
 	. = ..()
+	RegisterSignal(SSthe_ark, COMSIG_ANCHORING_CRYSTAL_CHARGED, PROC_REF(on_crystal_charged))
+	RegisterSignal(SSthe_ark, COMSIG_ANCHORING_CRYSTAL_CREATED, PROC_REF(update_info))
+
+/datum/scripture/create_structure/anchoring_crystal/Destroy(force)
+	UnregisterSignal(SSthe_ark, COMSIG_ANCHORING_CRYSTAL_CHARGED)
+	UnregisterSignal(SSthe_ark, COMSIG_ANCHORING_CRYSTAL_CREATED)
+	return ..()
 
 /datum/scripture/create_structure/anchoring_crystal/process(seconds_per_tick)
 	time_until_invokable = time_until_invokable - (seconds_per_tick SECONDS)
@@ -33,14 +42,10 @@
 		to_chat(invoker, span_warning("The ark will be stable enough to summon another crystal in [time_until_invokable] seconds."))
 		return FALSE
 
-	var/datum/objective/anchoring_crystals/crystals_objective = locate() in GLOB.main_clock_cult?.objectives
-	if(!length(crystals_objective?.valid_areas))
-		return FALSE
-
-	if(get_charged_anchor_crystals() && !(get_area(invoker) in crystals_objective.valid_areas))
+	if(SSthe_ark.charged_anchoring_crystals && !SSthe_ark.valid_crystal_areas[get_area(invoker)])
 		var/list/area_list = list()
-		for(var/area/added_area in crystals_objective.valid_areas)
-			area_list += added_area.get_original_area_name()
+		for(var/area/added_area in SSthe_ark.valid_crystal_areas)
+			area_list += SSthe_ark.valid_crystal_areas[added_area]
 		to_chat(invoker, span_warning("This cystal can only be summoned in [english_list(area_list)]."))
 		return FALSE
 
@@ -64,11 +69,22 @@
 	var/datum/scripture/create_structure/anchoring_crystal/scripture = GLOB.clock_scriptures_by_type[/datum/scripture/create_structure/anchoring_crystal]
 	START_PROCESSING(SSprocessing, scripture)
 
+/datum/scripture/create_structure/anchoring_crystal/proc/on_crystal_charged()
+	SIGNAL_HANDLER
+	if(SSthe_ark.charged_anchoring_crystals >= ANCHORING_CRYSTALS_TO_SUMMON + 2)
+		unique_lock()
+		return
+
 /datum/scripture/create_structure/anchoring_crystal/proc/update_info()
-	var/datum/objective/anchoring_crystals/crystals_objective = locate() in GLOB.main_clock_cult?.objectives
-	if(crystals_objective && get_charged_anchor_crystals())
-		var/list/area_list = list()
-		for(var/area/added_area in crystals_objective.valid_areas)
-			area_list += added_area.get_original_area_name()
-		desc = "Summon an anchoring crystal to the station, it can be summoned in [english_list(area_list)]."
+	SIGNAL_HANDLER
 	tip = "With this crystal [anchoring_crystal_charge_message()]"
+	if(!SSthe_ark.charged_anchoring_crystals)
+		return
+
+	if(!length(SSthe_ark.valid_crystal_areas))
+		desc = "We cannot summon any more anchoring crystals to the station."
+	else
+		var/list/area_list = list()
+		for(var/area/added_area in SSthe_ark.valid_crystal_areas)
+			area_list += SSthe_ark.valid_crystal_areas[added_area]
+		desc = "Summon an anchoring crystal to the station, it can be summoned in [english_list(area_list)]."

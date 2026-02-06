@@ -16,40 +16,12 @@
 
 /obj/item/mod/paint/Initialize(mapload)
 	. = ..()
-	current_color = color_matrix_identity()
+	current_color = COLOR_MATRIX_IDENTITY
 
 /obj/item/mod/paint/examine(mob/user)
 	. = ..()
 	. += span_notice("<b>Left-click</b> a MODsuit to change skin.")
 	. += span_notice("<b>Right-click</b> a MODsuit to recolor.")
-
-/obj/item/mod/paint/pre_attack(atom/attacked_atom, mob/living/user, params)
-	if(!istype(attacked_atom, /obj/item/mod/control))
-		return ..()
-	var/obj/item/mod/control/mod = attacked_atom
-	if(mod.active || mod.activating)
-		balloon_alert(user, "suit is active!")
-		return TRUE
-	paint_skin(mod, user)
-
-/obj/item/mod/paint/pre_attack_secondary(atom/attacked_atom, mob/living/user, params)
-	if(!istype(attacked_atom, /obj/item/mod/control))
-		return ..()
-	var/obj/item/mod/control/mod = attacked_atom
-	if(mod.active || mod.activating)
-		balloon_alert(user, "suit is active!")
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	if(editing_mod)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	editing_mod = mod
-	proxy_view = new()
-	proxy_view.generate_view("color_matrix_proxy_[REF(user.client)]")
-
-	proxy_view.appearance = editing_mod.appearance
-	proxy_view.color = null
-	proxy_view.display_to(user)
-	ui_interact(user)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/mod/paint/ui_interact(mob/user, datum/tgui/ui)
 	if(!editing_mod)
@@ -67,7 +39,7 @@
 	. = ..()
 	editing_mod = null
 	QDEL_NULL(proxy_view)
-	current_color = color_matrix_identity()
+	current_color = COLOR_MATRIX_IDENTITY
 
 /obj/item/mod/paint/ui_status(mob/user)
 	if(check_menu(editing_mod, user))
@@ -84,7 +56,7 @@
 	data["currentColor"] = current_color
 	return data
 
-/obj/item/mod/paint/ui_act(action, list/params)
+/obj/item/mod/paint/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -177,20 +149,20 @@
 	. = ..()
 	name = "MOD [skin] skin applier"
 
-/obj/item/mod/skin_applier/pre_attack(atom/attacked_atom, mob/living/user, params)
+/obj/item/mod/skin_applier/interact_with_atom(atom/attacked_atom, mob/living/user, params)
 	if(!istype(attacked_atom, /obj/item/mod/control))
-		return ..()
+		return NONE
 	var/obj/item/mod/control/mod = attacked_atom
 	if(mod.active || mod.activating)
-		balloon_alert(user, "suit is active!")
-		return TRUE
+		balloon_alert(user, "unit active!")
+		return ITEM_INTERACT_BLOCKING
 	if(!istype(mod.theme, compatible_theme))
 		balloon_alert(user, "incompatible theme!")
-		return TRUE
+		return ITEM_INTERACT_BLOCKING
 	mod.set_mod_skin(skin)
 	balloon_alert(user, "skin applied")
 	qdel(src)
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/mod/skin_applier/honkerative
 	skin = "honkerative"

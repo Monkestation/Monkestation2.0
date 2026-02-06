@@ -62,6 +62,24 @@
 	. = ..()
 	. += status_string()
 
+/obj/item/lightreplacer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return do_action(interacting_with, user) ? ITEM_INTERACT_SUCCESS : NONE
+
+/obj/item/lightreplacer/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	// has no bluespace capabilities
+	if(!bluespace_toggle)
+		return NONE
+	// target not in range
+	if(interacting_with.z != user.z)
+		return NONE
+	// target not in view
+	if(!(interacting_with in view(7, get_turf(user))))
+		user.balloon_alert(user, "out of range!")
+		return ITEM_INTERACT_BLOCKING
+
+	//replace lights & stuff
+	return do_action(interacting_with, user) ? ITEM_INTERACT_SUCCESS : NONE
+
 /obj/item/lightreplacer/attackby(obj/item/insert, mob/user, params)
 
 	if(istype(insert, /obj/item/stack/sheet/glass))
@@ -157,11 +175,50 @@
 		update_appearance()
 	return ..()
 
-
 /obj/item/lightreplacer/attack_self(mob/user)
 	for(var/obj/machinery/light/target in user.loc)
 		replace_light(target, user)
 	to_chat(user, status_string())
+
+/**
+ * attempts to fix lights, flood lights & lights on a turf
+ * Arguments
+ * * target - the target we are trying to fix
+ * * user - the mob performing this action
+ * returns TRUE if the target was valid[light, floodlight or turf] regardless if any light's were fixed or not
+ */
+/obj/item/lightreplacer/proc/do_action(atom/target, mob/user)
+	// if we are attacking an light fixture then replace it directly
+	if(istype(target, /obj/machinery/light))
+		if(replace_light(target, user) && bluespace_toggle)
+			user.Beam(target, icon_state = "rped_upgrade", time = 0.5 SECONDS)
+			playsound(src, 'sound/items/pshoom/pshoom.ogg', 40, 1)
+		return TRUE
+
+	// if we are attacking a floodlight frame finish it
+	if(istype(target, /obj/structure/floodlight_frame))
+		var/obj/structure/floodlight_frame/frame = target
+		if(frame.state == FLOODLIGHT_NEEDS_LIGHTS && Use(user))
+			new /obj/machinery/power/floodlight(frame.loc)
+			if(bluespace_toggle)
+				user.Beam(target, icon_state = "rped_upgrade", time = 0.5 SECONDS)
+				playsound(src, 'sound/items/pshoom/pshoom.ogg', 40, 1)
+			to_chat(user, span_notice("You finish \the [frame] with a light tube."))
+			qdel(frame)
+		return TRUE
+
+	//attempt to replace all light sources on the turf
+	if(isturf(target))
+		var/light_replaced = FALSE
+		for(var/atom/target_atom in target)
+			if(replace_light(target_atom, user))
+				light_replaced = TRUE
+		if(light_replaced && bluespace_toggle)
+			user.Beam(target, icon_state = "rped_upgrade", time = 0.5 SECONDS)
+			playsound(src, 'sound/items/pshoom/pshoom.ogg', 40, 1)
+		return TRUE
+
+	return FALSE
 
 /obj/item/lightreplacer/proc/range_check(atom/destination, mob/user)
 	if(destination.z != user.z)
@@ -171,34 +228,6 @@
 		return FALSE
 	else
 		return TRUE
-
-/obj/item/lightreplacer/afterattack(atom/target, mob/user, proximity)
-	. = ..()
-	if(!can_use(user))
-		balloon_alert(user, "no more lights!")
-		return
-
-	/**
-	 * return if it has no bluespace capabilities and target is not in proximity OR
-	 * return if it has bluespace capabilities but the target is not in its Line of sight
-	 */
-	if((!proximity && !bluespace_toggle) || (bluespace_toggle && !range_check(target, user)))
-		return
-
-	// if we are attacking an light fixture then replace it directly
-	if(istype(target, /obj/machinery/light))
-		if(replace_light(target, user) && bluespace_toggle)
-			user.Beam(target, icon_state = "rped_upgrade", time = 1 SECONDS)
-			playsound(src, 'sound/items/pshoom.ogg', 40, 1)
-		return
-
-	var/light_replaced = FALSE
-	for(var/atom/target_atom in target)
-		if(replace_light(target_atom, user))
-			light_replaced = TRUE
-	if(light_replaced && bluespace_toggle)
-		user.Beam(target, icon_state = "rped_upgrade", time = 1 SECONDS)
-		playsound(src, 'sound/items/pshoom.ogg', 40, 1)
 
 /obj/item/lightreplacer/proc/status_string()
 	return "It has [uses] light\s remaining (plus [bulb_shards] fragment\s)."

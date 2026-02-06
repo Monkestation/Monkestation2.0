@@ -109,12 +109,13 @@ const InputY = (props) => {
 
 const PingButton = (props) => {
   const { act, data } = useBackend();
-  const { ping_result, Auto_pinging } = data;
+  const { ping_result, Auto_pinging, status } = data;
 
   return (
     <Section title="Ping system">
       <LabeledList>
-        <LabeledList.Item label="Ping result: ">{ping_result}</LabeledList.Item>
+        <LabeledList.Item label="Ping result">{ping_result}</LabeledList.Item>
+        <LabeledList.Item label="Magnet Status">{status}</LabeledList.Item>
       </LabeledList>
       <Box mt="0.5em">
         <Button

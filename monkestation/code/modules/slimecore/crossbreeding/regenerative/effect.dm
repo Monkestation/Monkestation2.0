@@ -5,9 +5,10 @@
 	tick_interval = 0.2 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/regen_extract
 	show_duration = TRUE
+	processing_speed = STATUS_EFFECT_PRIORITY
 	/// The damage healed (for each type) per tick.
 	/// This is multipled against the multiplier derived from cooldowns.
-	var/base_healing_amt = 5
+	var/base_healing_amt = 4
 	/// The number multiplied against the base healing amount,
 	/// used for the "diminishing returns" cooldown effect.
 	var/multiplier = 1
@@ -42,7 +43,6 @@
 /datum/status_effect/regenerative_extract/on_remove()
 	owner.remove_traits(islist(extra_traits) ? (given_traits + extra_traits) : given_traits, TRAIT_STATUS_EFFECT(id))
 	owner.apply_status_effect(/datum/status_effect/slime_regen_cooldown, diminishing_multiplier, diminish_time)
-	owner.cause_pain(BODY_ZONE_CHEST, pain_amount, BRUTE)
 
 /datum/status_effect/regenerative_extract/tick(seconds_between_ticks, times_fired)
 	var/heal_amt = base_healing_amt * seconds_between_ticks * multiplier
@@ -64,7 +64,6 @@
 
 /datum/status_effect/regenerative_extract/proc/heal_damage(heal_amt)
 	owner.heal_overall_damage(brute = heal_amt, burn = heal_amt, updating_health = FALSE)
-	owner.stamina?.adjust(-heal_amt, forced = TRUE)
 	owner.adjustOxyLoss(-heal_amt, updating_health = FALSE)
 	owner.adjustToxLoss(-heal_amt, updating_health = FALSE, forced = TRUE)
 	owner.adjustCloneLoss(-heal_amt, updating_health = FALSE)
@@ -78,22 +77,10 @@
 		owner.nutrition = min(owner.nutrition + blood_restore, nutrition_heal_cap)
 
 /datum/status_effect/regenerative_extract/proc/heal_organs(heal_amt)
-	var/static/list/ignored_traumas
-	if(!ignored_traumas)
-		ignored_traumas = typecacheof(list(
-			/datum/brain_trauma/hypnosis,
-			/datum/brain_trauma/special/obsessed,
-			/datum/brain_trauma/severe/split_personality/brainwashing,
-		))
 	var/mob/living/carbon/carbon_owner = owner
 	for(var/obj/item/organ/organ in carbon_owner.organs)
 		organ.apply_organ_damage(-heal_amt)
-	// stupid manual trauma curing code, so you can't just remove trauma-based antags with one click
-	var/obj/item/organ/internal/brain/brain = carbon_owner.get_organ_slot(ORGAN_SLOT_BRAIN)
-	for(var/datum/brain_trauma/trauma as anything in shuffle(brain?.traumas))
-		if(!is_type_in_typecache(trauma, ignored_traumas) && trauma.resilience <= TRAUMA_RESILIENCE_MAGIC)
-			qdel(trauma)
-			return
+	carbon_owner.cure_trauma_type(resilience = TRAUMA_RESILIENCE_MAGIC, ignore_flags = TRAUMA_SPECIAL_CURE_PROOF)
 
 /datum/status_effect/regenerative_extract/proc/heal_wounds()
 	var/mob/living/carbon/carbon_owner = owner

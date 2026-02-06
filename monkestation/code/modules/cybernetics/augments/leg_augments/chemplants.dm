@@ -10,7 +10,7 @@
 	var/current_ticks_cooldown = 0
 	var/mutable_appearance/overlay
 
-/obj/item/organ/internal/cyberimp/leg/chemplant/Initialize()
+/obj/item/organ/internal/cyberimp/leg/chemplant/Initialize(mapload)
 	. = ..()
 
 /obj/item/organ/internal/cyberimp/leg/chemplant/on_life()
@@ -22,7 +22,7 @@
 		owner.adjust_jitter(1)
 		owner.adjust_dizzy(1)
 
-		current_ticks_cooldown -= SSmobs.wait
+		current_ticks_cooldown -= SSclient_mobs.wait
 
 		return
 
@@ -58,9 +58,8 @@
 		overlays += overlay
 
 /obj/item/organ/internal/cyberimp/leg/chemplant/proc/remove_overlay()
-	QDEL_NULL(overlay)
-
-	UnregisterSignal(owner,COMSIG_ATOM_UPDATE_OVERLAYS)
+	overlay = null
+	UnregisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS)
 
 /obj/effect/temp_visual/chempunk
 	icon = 'monkestation/code/modules/cybernetics/icons/96x96.dmi'

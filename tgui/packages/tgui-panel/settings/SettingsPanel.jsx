@@ -6,8 +6,7 @@
 
 import { toFixed } from 'common/math';
 import { capitalize } from 'common/string';
-import { useLocalState } from 'tgui/backend';
-import { useDispatch, useSelector } from 'common/redux';
+import { useDispatch, useLocalState, useSelector } from 'tgui/backend';
 import {
   Box,
   Button,
@@ -17,39 +16,39 @@ import {
   Icon,
   Input,
   LabeledList,
+  NoticeBox,
   Section,
+  Slider,
   Stack,
   Tabs,
   TextArea,
-  Slider,
-  NoticeBox,
 } from 'tgui/components';
 import { ChatPageSettings } from '../chat';
 import { clearChat, rebuildChat, saveChatToDisk } from '../chat/actions';
+import { chatRenderer } from '../chat/renderer';
 import { THEMES } from '../themes';
+import { disconnectWebsocket, reconnectWebsocket } from '../websocket';
 import {
+  addHighlightSetting,
   changeSettingsTab,
   exportSettings,
-  updateSettings,
-  addHighlightSetting,
   removeHighlightSetting,
   updateHighlightSetting,
+  updateSettings,
 } from './actions';
-import { SETTINGS_TABS, FONTS, WARN_AFTER_HIGHLIGHT_AMT } from './constants';
+import { FONTS, SETTINGS_TABS, WARN_AFTER_HIGHLIGHT_AMT } from './constants';
 import { setEditPaneSplitters } from './scaling';
 import {
   selectActiveTab,
-  selectSettings,
-  selectHighlightSettings,
   selectHighlightSettingById,
+  selectHighlightSettings,
+  selectSettings,
 } from './selectors';
 import { importChatSettings } from './settingsImExport';
-import { reconnectWebsocket, disconnectWebsocket } from '../websocket';
-import { chatRenderer } from '../chat/renderer';
 
-export const SettingsPanel = (props, context) => {
-  const activeTab = useSelector(context, selectActiveTab);
-  const dispatch = useDispatch(context);
+export const SettingsPanel = (props) => {
+  const activeTab = useSelector(selectActiveTab);
+  const dispatch = useDispatch();
   return (
     <Stack fill>
       <Stack.Item>
@@ -84,12 +83,10 @@ export const SettingsPanel = (props, context) => {
   );
 };
 
-export const SettingsGeneral = (props, context) => {
-  const { theme, fontFamily, coloredNames, fontSize, lineHeight } = useSelector(
-    context,
-    selectSettings,
-  );
-  const dispatch = useDispatch(context);
+export const SettingsGeneral = (props) => {
+  const { theme, fontFamily, coloredNames, fontSize, lineHeight } =
+    useSelector(selectSettings);
+  const dispatch = useDispatch();
   const [freeFont, setFreeFont] = useLocalState('freeFont', false);
   const [editingPanes, setEditingPanes] = useLocalState('freeFont', false);
 
@@ -166,7 +163,7 @@ export const SettingsGeneral = (props, context) => {
                 <Input
                   width={'100%'}
                   value={fontFamily}
-                  onChange={(e, value) =>
+                  onChange={(value) =>
                     dispatch(
                       updateSettings({
                         fontFamily: value,
@@ -212,7 +209,8 @@ export const SettingsGeneral = (props, context) => {
                 value={fontSize}
                 unit="px"
                 format={(value) => toFixed(value)}
-                onChange={(e, value) =>
+                tickWhileDragging
+                onChange={(_, value) =>
                   dispatch(updateSettings({ fontSize: value }))
                 }
               />
@@ -228,7 +226,8 @@ export const SettingsGeneral = (props, context) => {
             maxValue={5}
             value={lineHeight}
             format={(value) => toFixed(value, 2)}
-            onDrag={(e, value) =>
+            tickWhileDragging
+            onChange={(_, value) =>
               dispatch(
                 updateSettings({
                   lineHeight: value,
@@ -280,9 +279,9 @@ export const SettingsGeneral = (props, context) => {
   );
 };
 
-const TextHighlightSettings = (props, context) => {
-  const highlightSettings = useSelector(context, selectHighlightSettings);
-  const dispatch = useDispatch(context);
+const TextHighlightSettings = (props) => {
+  const highlightSettings = useSelector(selectHighlightSettings);
+  const dispatch = useDispatch();
   return (
     <Section fill scrollable height="250px">
       <Stack vertical>
@@ -326,10 +325,10 @@ const TextHighlightSettings = (props, context) => {
   );
 };
 
-const TextHighlightSetting = (props, context) => {
+const TextHighlightSetting = (props) => {
   const { id, ...rest } = props;
-  const highlightSettingById = useSelector(context, selectHighlightSettingById);
-  const dispatch = useDispatch(context);
+  const highlightSettingById = useSelector(selectHighlightSettingById);
+  const dispatch = useDispatch();
   const {
     enabled,
     highlightColor,
@@ -422,7 +421,7 @@ const TextHighlightSetting = (props, context) => {
             monospace
             placeholder="#ffffff"
             value={highlightColor}
-            onInput={(e, value) =>
+            onChange={(value) =>
               dispatch(
                 updateHighlightSetting({
                   id: id,
@@ -438,7 +437,10 @@ const TextHighlightSetting = (props, context) => {
         resize="vertical"
         value={highlightText}
         placeholder="Put words to highlight here. Separate terms with commas, i.e. (term1, term2, term3)"
-        onChange={(e, value) =>
+        style={{
+          width: '100%',
+        }}
+        onChange={(value) =>
           dispatch(
             updateHighlightSetting({
               id: id,
@@ -451,12 +453,10 @@ const TextHighlightSetting = (props, context) => {
   );
 };
 
-const ExperimentalSettings = (props, context) => {
-  const { websocketEnabled, websocketServer } = useSelector(
-    context,
-    selectSettings,
-  );
-  const dispatch = useDispatch(context);
+const ExperimentalSettings = (props) => {
+  const { websocketEnabled, websocketServer, scrollTrackingTolerance } =
+    useSelector(selectSettings);
+  const dispatch = useDispatch();
 
   return (
     <Section>
@@ -501,7 +501,7 @@ const ExperimentalSettings = (props, context) => {
                     width={'100%'}
                     value={websocketServer}
                     placeholder="localhost:1990"
-                    onChange={(e, value) =>
+                    onChange={(value) =>
                       dispatch(
                         updateSettings({
                           websocketServer: value,
@@ -532,6 +532,29 @@ const ExperimentalSettings = (props, context) => {
                 }}
               />
             </LabeledList.Item>
+            <Divider />
+            <LabeledList.Item
+              label="ScrollTT"
+              tooltip="Scroll Tracking Tolerance: The smallest possible scroll offset that is still trackable. Mess with this if your chat sucks at autoscrolling."
+            >
+              <Slider
+                width="100%"
+                step={1}
+                stepPixelSize={2}
+                minValue={12}
+                maxValue={64}
+                value={scrollTrackingTolerance}
+                format={(value) => toFixed(value)}
+                tickWhileDragging
+                onChange={(_, value) =>
+                  dispatch(
+                    updateSettings({
+                      scrollTrackingTolerance: value,
+                    }),
+                  )
+                }
+              />
+            </LabeledList.Item>
           </LabeledList>
         </Stack.Item>
       </Stack>
@@ -544,12 +567,10 @@ const LinkedToChat = () => (
   <NoticeBox color="red">Unlink Stat Panel from chat!</NoticeBox>
 );
 
-const SettingsStatPanel = (props, context) => {
-  const { statLinked, statFontSize, statTabsStyle } = useSelector(
-    context,
-    selectSettings,
-  );
-  const dispatch = useDispatch(context);
+const SettingsStatPanel = (props) => {
+  const { statLinked, statFontSize, statTabsStyle } =
+    useSelector(selectSettings);
+  const dispatch = useDispatch();
 
   return (
     <Section fill>
@@ -584,7 +605,8 @@ const SettingsStatPanel = (props, context) => {
                     value={statFontSize}
                     unit="px"
                     format={(value) => toFixed(value)}
-                    onChange={(e, value) =>
+                    tickWhileDragging
+                    onChange={(_, value) =>
                       dispatch(updateSettings({ statFontSize: value }))
                     }
                   />

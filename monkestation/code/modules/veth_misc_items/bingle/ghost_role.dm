@@ -1,7 +1,7 @@
 /datum/round_event_control/bingle
 	name = "Spawn Bingle"
 	typepath = /datum/round_event/ghost_role/bingle
-	weight = 10
+	weight = 5
 	max_occurrences = 1
 	track = EVENT_TRACK_MODERATE
 	description = "Spawns a pesky little blue fella."

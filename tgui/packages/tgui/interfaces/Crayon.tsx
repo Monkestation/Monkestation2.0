@@ -1,7 +1,8 @@
-import { BooleanLike } from 'common/react';
+import type { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
 import { Button, LabeledList, Section } from '../components';
 import { Window } from '../layouts';
+import { ColorItem } from './RapidPipeDispenser';
 
 type Data = {
   has_cap: BooleanLike;
@@ -9,6 +10,7 @@ type Data = {
   drawables: Drawable[];
   is_capped: BooleanLike;
   selected_stencil: string;
+  is_literate_user: BooleanLike;
   text_buffer: string;
 };
 
@@ -25,6 +27,7 @@ export const Crayon = (props) => {
     drawables = [],
     is_capped,
     selected_stencil,
+    is_literate_user,
     text_buffer,
   } = data;
   const capOrChanges = has_cap || can_change_colour;
@@ -43,11 +46,14 @@ export const Crayon = (props) => {
                   onClick={() => act('toggle_cap')}
                 />
               </LabeledList.Item>
+              <ColorItem />
+              <LabeledList.Item>
+                <Button
+                  content="Custom color"
+                  onClick={() => act('custom_color')}
+                />
+              </LabeledList.Item>
             </LabeledList>
-            <Button
-              content="Select New Color"
-              onClick={() => act('select_colour')}
-            />
           </Section>
         )}
         <Section title="Stencil">
@@ -73,14 +79,16 @@ export const Crayon = (props) => {
             })}
           </LabeledList>
         </Section>
-        <Section title="Text">
-          <LabeledList>
-            <LabeledList.Item label="Current Buffer">
-              {text_buffer}
-            </LabeledList.Item>
-          </LabeledList>
-          <Button content="New Text" onClick={() => act('enter_text')} />
-        </Section>
+        {!!is_literate_user && (
+          <Section title="Text">
+            <LabeledList>
+              <LabeledList.Item label="Current Buffer">
+                {text_buffer}
+              </LabeledList.Item>
+            </LabeledList>
+            <Button content="New Text" onClick={() => act('enter_text')} />
+          </Section>
+        )}
       </Window.Content>
     </Window>
   );

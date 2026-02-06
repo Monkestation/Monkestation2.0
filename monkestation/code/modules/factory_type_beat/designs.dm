@@ -9,7 +9,7 @@
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_CARGO
 	)
-	materials = list(/datum/material/iron = 2000)
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_SERVICE
 
 /datum/design/manipulator_filter_cargo
@@ -21,7 +21,7 @@
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_CARGO
 	)
-	materials = list(/datum/material/iron = 2000)
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_SERVICE
 
 /datum/design/manipulator_filter_internal
@@ -33,7 +33,7 @@
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_CARGO
 	)
-	materials = list(/datum/material/iron = 2000)
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_SERVICE
 
 /datum/design/board/big_manipulator
@@ -191,7 +191,7 @@
 	name = "Boulder Smelter"
 	desc = "A circuitboard for a boulder smelter. Lowtech enough to be printed from the lathe."
 	id = "b_smelter"
-	build_type = AUTOLATHE | COLONY_FABRICATOR
+	build_type = COLONY_FABRICATOR | AUTOLATHE | PROTOLATHE
 	materials = list(
 		/datum/material/glass = SHEET_MATERIAL_AMOUNT,
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT,
@@ -207,7 +207,7 @@
 	name = "Boulder Refinery"
 	desc = "A circuitboard for a boulder refinery. Lowtech enough to be printed from the lathe."
 	id = "b_refinery"
-	build_type = AUTOLATHE | COLONY_FABRICATOR
+	build_type = COLONY_FABRICATOR | AUTOLATHE | PROTOLATHE
 	materials = list(
 		/datum/material/glass = SHEET_MATERIAL_AMOUNT,
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT,

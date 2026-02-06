@@ -2328,8 +2328,8 @@
 	},
 /obj/item/clothing/glasses/night,
 /obj/machinery/light/directional/west,
-/obj/item/bodybag/environmental/prisoner/pressurized,
-/obj/item/bodybag/environmental/prisoner/pressurized,
+/obj/item/bodybag/environmental/prisoner,
+/obj/item/bodybag/environmental/prisoner,
 /obj/item/ammo_box/magazine/m45,
 /obj/item/ammo_box/magazine/m45,
 /obj/item/gun/ballistic/automatic/pistol/m1911,
@@ -3159,7 +3159,7 @@
 /mob/living/simple_animal/bot/secbot/beepsky/armsky{
 	name = "Hotelsky";
 	desc = "It's Hotelsky! He's a disgruntled servant of the hotel that would probably shoot you if he had hands.";
-	maints_access_required = list("away_sec");
+	req_one_access = list("away_sec");
 	access_card = list("away_general")
 	},
 /turf/open/floor/carpet/neon/simple/red/nodots,

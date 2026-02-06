@@ -25,10 +25,10 @@
 
 	chicken_scan(user, scanned_chicken)
 
-/obj/item/chicken_scanner/AltClick(mob/user)
-	. = ..()
+/obj/item/chicken_scanner/click_alt(mob/living/user)
 	scan_mode = !scan_mode
 	to_chat(user, "<span class='info'>Switched to Stat Mode</span>")
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/chicken_scanner/proc/chicken_scan(mob/living/carbon/human/user, mob/living/basic/chicken/scanned_chicken)
 	if(scan_mode)
@@ -119,9 +119,12 @@
 	name = "Chicken Scanner"
 	id = "chicken_scanner"
 	build_type = AUTOLATHE | PROTOLATHE
-	materials = list(/datum/material/iron = 1000)
+	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/chicken_scanner
-	category = list("initial","Tools","Tool Designs")
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_BOTANY,
+	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
 /obj/machinery/feed_machine
@@ -132,8 +135,8 @@
 	icon_state = "feed_producer"
 
 	use_power = IDLE_POWER_USE
-	idle_power_usage = 5
-	active_power_usage = 100
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.05
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.1
 	max_integrity = 300
 
 	circuit = /obj/item/circuitboard/machine/feed_machine
@@ -177,15 +180,14 @@
 			return
 		if(beaker)
 			beaker.forceMove(drop_location())
-			if(user && Adjacent(user) && !issiliconoradminghost(user))
+			if(user && Adjacent(user) && !HAS_SILICON_ACCESS(user))
 				user.put_in_hands(beaker)
 		beaker = attacked_reagent_container
 		return
 
-/obj/machinery/feed_machine/AltClick(mob/user)
-	. = ..()
+/obj/machinery/feed_machine/click_alt(mob/living/user)
 	if(length(held_foods) == 0)
-		return
+		return CLICK_ACTION_BLOCKING
 	var/obj/item/chicken_feed/produced_feed = new(src.loc)
 	produced_feed.placements_left *= food_inserted
 
@@ -203,13 +205,14 @@
 
 		beaker.forceMove(drop_location())
 		beaker.reagents.remove_all(1000)
-		if(user && Adjacent(user) && !issiliconoradminghost(user))
+		if(user && Adjacent(user) && !HAS_SILICON_ACCESS(user))
 			user.put_in_hands(beaker)
 		beaker = null
 
 	first_food = null
 	held_foods = list()
 	food_inserted = 0
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/chicken_feed
 	name = "chicken feed"
@@ -232,14 +235,13 @@
 		feed_top.color = "#cacc52"
 	add_overlay(feed_top)
 
-/obj/item/chicken_feed/afterattack(atom/attacked_atom, mob/user)
-	if(!user.Adjacent(attacked_atom))
-		return
-	try_place(attacked_atom)
+/obj/item/chicken_feed/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!isopenturf(interacting_with))
+		return NONE
+	try_place(interacting_with)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/chicken_feed/proc/try_place(atom/target)
-	if(!isopenturf(target))
-		return FALSE
 	var/turf/open/targeted_turf = get_turf(target)
 	var/list/compiled_reagents = list()
 	for(var/datum/reagent/listed_reagent in reagents.reagent_list)
@@ -291,8 +293,8 @@
 	name = "Incubator"
 	desc = "For most eggs this can force them to hatch, that is unless a fresh mutation."
 	use_power = IDLE_POWER_USE
-	idle_power_usage = 2
-	active_power_usage = 500
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.02
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.5
 
 	max_integrity = 300
 	circuit = /obj/item/circuitboard/machine/egg_incubator
@@ -330,23 +332,23 @@
 		flop_animation(contained_egg)
 		contained_egg.desc = "You can hear pecking from the inside of this seems it may hatch soon."
 
-/obj/machinery/egg_incubator/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/storage/bag/tray))
-		var/obj/item/storage/bag/tray/T = I
+/obj/machinery/egg_incubator/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/storage/bag/tray))
+		var/obj/item/storage/bag/tray/T = attacking_item
 		if(T.contents.len > 0) // If the tray isn't empty
-			I.atom_storage.remove_all(drop_location())
-			user.visible_message(span_notice("[user] empties [I] on [src]."))
+			attacking_item.atom_storage.remove_all(drop_location())
+			user.visible_message(span_notice("[user] empties [attacking_item] on [src]."))
 			return
 
-	if(!(user.istate & ISTATE_HARM) && !(I.item_flags & ABSTRACT))
-		if(user.transferItemToLoc(I, drop_location(), silent = FALSE))
-			var/list/click_params = params2list(params)
+	if(!(user.istate & ISTATE_HARM) && !(attacking_item.item_flags & ABSTRACT))
+		if(user.transferItemToLoc(attacking_item, drop_location(), silent = FALSE))
+			var/list/click_params = params2list(modifiers)
 			//Center the icon where the user clicked.
 			if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
 				return
 			//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
-			I.pixel_x = clamp(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
-			I.pixel_y = clamp(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
+			attacking_item.pixel_x = clamp(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
+			attacking_item.pixel_y = clamp(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
 			return TRUE
 	else
 		return ..()

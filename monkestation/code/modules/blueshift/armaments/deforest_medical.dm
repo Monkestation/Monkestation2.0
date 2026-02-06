@@ -48,10 +48,6 @@
 	item_type = /obj/item/stack/medical/suture/coagulant
 	cost = PAYCHECK_LOWER
 
-/datum/armament_entry/company_import/deforest/first_aid/suture
-	item_type = /obj/item/stack/medical/suture
-	cost = PAYCHECK_LOWER
-
 /datum/armament_entry/company_import/deforest/first_aid/red_sun
 	item_type = /obj/item/stack/medical/ointment/red_sun
 	cost = PAYCHECK_LOWER
@@ -60,13 +56,8 @@
 	item_type = /obj/item/stack/medical/ointment
 	cost = PAYCHECK_LOWER
 
-/datum/armament_entry/company_import/deforest/first_aid/mesh
-	item_type = /obj/item/stack/medical/mesh
-	cost = PAYCHECK_LOWER
-
 /datum/armament_entry/company_import/deforest/first_aid/sterile_gauze
 	item_type = /obj/item/stack/medical/gauze/sterilized
-	cost = PAYCHECK_LOWER
 
 /datum/armament_entry/company_import/deforest/first_aid/amollin
 	item_type = /obj/item/storage/pill_bottle/painkiller
@@ -75,6 +66,10 @@
 /datum/armament_entry/company_import/deforest/first_aid/robo_patch
 	item_type = /obj/item/reagent_containers/pill/robotic_patch/synth_repair
 	cost = PAYCHECK_CREW
+
+/datum/armament_entry/company_import/deforest/first_aid/robo_pen
+	item_type = /obj/item/reagent_containers/hypospray/medipen/synthcare
+	cost = PAYCHECK_CREW * 2
 
 /datum/armament_entry/company_import/deforest/first_aid/subdermal_splint
 	item_type = /obj/item/stack/medical/wound_recovery
@@ -122,6 +117,9 @@
 
 /datum/armament_entry/company_import/deforest/medpens/robo_cleaner
 	item_type = /obj/item/reagent_containers/hypospray/medipen/deforest/robot_system_cleaner
+
+/datum/armament_entry/company_import/deforest/medpens/robo_painkiller
+	item_type = /obj/item/reagent_containers/hypospray/medipen/synthpainkill
 
 /datum/armament_entry/company_import/deforest/medpens/pentibinin
 	item_type = /obj/item/reagent_containers/hypospray/medipen/deforest/pentibinin

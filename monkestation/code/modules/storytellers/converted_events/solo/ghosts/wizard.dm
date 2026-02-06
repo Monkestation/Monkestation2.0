@@ -2,6 +2,8 @@
 	name = "Ghost Wizard"
 	tags = list(TAG_COMBAT, TAG_DESTRUCTIVE, TAG_EXTERNAL, TAG_MAGICAL, TAG_OUTSIDER_ANTAG)
 	typepath = /datum/round_event/antagonist/solo/ghost/wizard
+	shared_occurence_type = SHARED_HIGH_THREAT
+	repeated_mode_adjust = TRUE
 	antag_flag = ROLE_WIZARD
 	antag_datum = /datum/antagonist/wizard
 	restricted_roles = list(
@@ -15,9 +17,9 @@
 		JOB_DETECTIVE,
 		JOB_HEAD_OF_SECURITY,
 		JOB_SECURITY_OFFICER,
-		JOB_BRIG_PHYSICIAN,
 		JOB_WARDEN,
 		JOB_CHAPLAIN,
+		JOB_BRIG_PHYSICIAN,
 	)
 	required_enemies = 5
 	weight = 2

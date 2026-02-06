@@ -84,7 +84,10 @@
 	else
 		ui_color = initial(ui_color)
 
-	if(TIMER_COOLDOWN_CHECK(parent, COOLDOWN_CIRCUIT_SOUNDEMITTER))
+	if(!parent.shell)
+		return
+
+	if(TIMER_COOLDOWN_RUNNING(parent.shell, COOLDOWN_CIRCUIT_SOUNDEMITTER))
 		return
 
 	var/sound_to_play = options_map[sound_file.value]

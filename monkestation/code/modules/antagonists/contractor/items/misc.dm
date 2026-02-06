@@ -53,11 +53,10 @@
 
 	return ..()
 
-/obj/item/pinpointer/area_pinpointer/AltClick(mob/living/carbon/user)
-	if(!istype(user) || !user.can_perform_action(src))
-		return
+/obj/item/pinpointer/area_pinpointer/click_alt(mob/user)
 	user.visible_message(span_notice("[user] quietly flips a switch in [user.p_their()] pinpointer."), span_notice("You quietly flip the switch your pinpointer."))
 	door_mode = !door_mode
+	return CLICK_ACTION_SUCCESS
 
 // we need to get our own examine text, since it would be "tracking the floor" otherwise
 /obj/item/pinpointer/area_pinpointer/examine(mob/user)

@@ -38,7 +38,7 @@
 		to_chat(user, span_userdanger("You dont have an internal slab, this should not be the case and you should tell an admin with an ahelp(f1)."))
 		return FALSE
 
-	if(internal_slab.invoking_scripture || (scripture_datum.power_cost > GLOB.clock_power))
+	if(internal_slab.invoking_scripture || (scripture_datum.power_cost > SSthe_ark.clock_power))
 		to_chat(user, span_brass("You fail to invoke [name]."))
 		return FALSE
 

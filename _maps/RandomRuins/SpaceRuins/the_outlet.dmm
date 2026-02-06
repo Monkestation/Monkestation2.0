@@ -547,7 +547,7 @@
 "oG" = (
 /obj/structure/table/reinforced/rglass,
 /obj/item/clothing/glasses/blindfold,
-/obj/item/clothing/mask/muzzle/breath,
+/obj/item/clothing/mask/breath/muzzle,
 /obj/item/clothing/suit/jacket/straight_jacket,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
@@ -2026,7 +2026,7 @@
 /turf/open/floor/plating/rust,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "Wz" = (
-/obj/machinery/door/airlock/glass_large,
+/obj/machinery/door/airlock/multi_tile/public/glass,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/the_outlet/storefront)
 "WC" = (

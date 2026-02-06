@@ -21,6 +21,11 @@
 	. = ..()
 	AddComponent(/datum/component/stove, container_x = -6, container_y = 16)
 
+/obj/machinery/stove/attack_robot(mob/user)
+	. = ..()
+	attack_hand(user)
+	return TRUE
+
 // Soup pot for cooking soup
 // Future addention ideas:
 // - Thermostat you can stick in the pot to see in examine the temperature
@@ -116,7 +121,7 @@
 	. = ..()
 	LAZYREMOVE(added_ingredients, gone)
 
-/obj/item/reagent_containers/cup/soup_pot/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/reagent_containers/cup/soup_pot/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(.)
 		return

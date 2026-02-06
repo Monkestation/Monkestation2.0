@@ -1,12 +1,37 @@
 //entirely neutral or internal status effects go here
 
-/datum/status_effect/crusher_damage //tracks the damage dealt to this mob by kinetic crushers
+/datum/status_effect/crusher_damage
 	id = "crusher_damage"
 	duration = STATUS_EFFECT_PERMANENT
 	tick_interval = STATUS_EFFECT_NO_TICK
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = null
+	/// How much damage?
 	var/total_damage = 0
+
+/datum/status_effect/crusher_damage/on_apply()
+	RegisterSignal(owner, COMSIG_MOB_AFTER_APPLY_DAMAGE, PROC_REF(damage_taken))
+	return TRUE
+
+/datum/status_effect/crusher_damage/on_remove()
+	UnregisterSignal(owner, COMSIG_MOB_AFTER_APPLY_DAMAGE)
+
+/datum/status_effect/crusher_damage/proc/damage_taken(
+	datum/source,
+	damage_dealt,
+	damagetype,
+	def_zone,
+	blocked,
+	wound_bonus,
+	bare_wound_bonus,
+	sharpness,
+	attack_direction,
+	attacking_item,
+)
+	SIGNAL_HANDLER
+
+	if(istype(attacking_item, /obj/item/kinetic_crusher))
+		total_damage += damage_dealt
 
 /datum/status_effect/syphon_mark
 	id = "syphon_mark"
@@ -336,6 +361,21 @@
 
 	owner.emote("surrender")
 
+///For when you need to make someone be prompted for surrender, but not forever
+/datum/status_effect/surrender_timed
+	id = "surrender_timed"
+	duration = 30 SECONDS
+	status_type = STATUS_EFFECT_UNIQUE
+	alert_type = null
+
+/datum/status_effect/surrender_timed/on_apply()
+	owner.apply_status_effect(/datum/status_effect/grouped/surrender, REF(src))
+	return ..()
+
+/datum/status_effect/surrender_timed/on_remove()
+	owner.remove_status_effect(/datum/status_effect/grouped/surrender, REF(src))
+	return ..()
+
 /*
  * A status effect used for preventing caltrop message spam
  *
@@ -522,3 +562,74 @@
 #undef EIGENSTASIUM_PHASE_2_END
 #undef EIGENSTASIUM_PHASE_3_START
 #undef EIGENSTASIUM_PHASE_3_END
+
+/datum/status_effect/tagalong //applied to darkspawns while they accompany someone //yogs start: darkspawn
+	id = "tagalong"
+	tick_interval = 2 //as fast as possible
+	alert_type = /atom/movable/screen/alert/status_effect/tagalong
+	var/mob/living/shadowing
+	//we store this so if the mob is somehow gibbed we aren't put into nullspace
+	var/turf/cached_location
+
+/datum/status_effect/tagalong/on_creation(mob/living/owner, mob/living/tag)
+	. = ..()
+	if(!.)
+		return
+	shadowing = tag
+	RegisterSignal(owner, COMSIG_MOB_EQUIPPED_ITEM, PROC_REF(on_equip))
+
+/datum/status_effect/tagalong/on_remove()
+	if(owner.loc != shadowing)
+		return
+	owner.forceMove(cached_location ? cached_location : get_turf(owner))
+	shadowing.visible_message(span_warning("[owner] breaks away from [shadowing]'s shadow!"), \
+	span_userdanger("You feel a sense of freezing cold pass through you!"))
+	to_chat(owner, span_velvet("You break away from [shadowing]."))
+	playsound(owner, 'sound/magic/darkspawn/devour_will_form.ogg', 50, TRUE)
+	owner.setDir(SOUTH)
+
+/datum/status_effect/tagalong/proc/on_equip()
+	SIGNAL_HANDLER
+	to_chat(owner, span_userdanger("Equipping an item forces you out!"))
+	qdel(src)
+
+/datum/status_effect/tagalong/tick()
+	. = ..()
+	if(!shadowing)
+		owner.forceMove(cached_location)
+		qdel(src)
+		return
+	cached_location = get_turf(shadowing)
+	if(cached_location.get_lumcount() < SHADOW_SPECIES_DIM_LIGHT)
+		owner.forceMove(cached_location)
+		shadowing.visible_message(span_warning("[owner] suddenly appears from the dark!"))
+		to_chat(owner, span_warning("You are forced out of [shadowing]'s shadow!"))
+		qdel(src)
+
+/atom/movable/screen/alert/status_effect/tagalong
+	name = "Tagalong"
+	desc = "You are accompanying TARGET_NAME. Use the Tagalong ability to break away at any time."
+	icon_state = "shadow_mend"
+
+/atom/movable/screen/alert/status_effect/tagalong/MouseEntered()
+	var/datum/status_effect/tagalong/tagalong = attached_effect
+	desc = replacetext(desc, "TARGET_NAME", tagalong.shadowing.real_name)
+	..()
+	desc = initial(desc) //yogs end
+
+/datum/status_effect/gutted
+	id = "gutted"
+	alert_type = null
+	duration = -1
+	tick_interval = -1
+
+/datum/status_effect/gutted/on_apply()
+	RegisterSignal(owner, COMSIG_MOB_STATCHANGE, PROC_REF(stop_gutting))
+	return TRUE
+
+/datum/status_effect/gutted/on_remove()
+	UnregisterSignal(owner, COMSIG_MOB_STATCHANGE)
+
+/datum/status_effect/gutted/proc/stop_gutting()
+	SIGNAL_HANDLER
+	qdel(src)

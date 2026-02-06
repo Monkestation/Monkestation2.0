@@ -53,7 +53,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/list/job_preferences = list()
 
 	/// The current window, PREFERENCE_TAB_* in [`code/__DEFINES/preferences.dm`]
-	var/current_window = PREFERENCE_TAB_CHARACTER_PREFERENCES
+	var/current_window = PREFERENCE_WINDOW_CHARACTERS
+	var/starting_page = PREFERENCE_PAGE_CHARACTERS
 
 	var/unlock_content = 0
 
@@ -98,6 +99,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/locked = FALSE
 	/// Timer ID of the "unlock timer"
 	var/unlock_timer_id
+	/// UI is waiting to open
+	var/sleeping = FALSE
 
 /datum/preferences/Destroy(force)
 	acquire_lock()
@@ -173,6 +176,15 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		character_preview_view = create_character_preview_view(user)
+
+		var/needs_save = FALSE
+		for(var/channel in GLOB.used_sound_channels)
+			if(isnull(channel_volume["[channel]"]))
+				channel_volume["[channel]"] = 50
+				needs_save = TRUE
+		if(needs_save)
+			save_preferences()
+
 		ui = new(user, src, "PreferencesMenu")
 		ui.set_autoupdate(FALSE)
 		ui.open()
@@ -201,7 +213,34 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	for (var/datum/preference_middleware/preference_middleware as anything in middleware)
 		data += preference_middleware.get_ui_data(user)
 
+	if (current_window == PREFERENCE_WINDOW_GAME_PREFERENCES)
+		var/list/channels = list()
+		for(var/channel in GLOB.used_sound_channels)
+			channels += list(list(
+				"num" = channel,
+				"name" = get_channel_name(channel),
+				"volume" = channel_volume["[channel]"]
+			))
+		data["channels"] = channels
+
 	return data
+
+/datum/preferences/proc/open_window(starting_page, user=usr, sleep_time=0)
+	if (starting_page == PREFERENCE_PAGE_CHARACTERS)
+		src.current_window = PREFERENCE_WINDOW_CHARACTERS
+	else
+		src.current_window = PREFERENCE_WINDOW_GAME_PREFERENCES
+		src.starting_page = starting_page
+	if (sleeping)
+		return
+	if (unlock_timer_id)
+		sleep_time += timeleft(unlock_timer_id)
+	if (sleep_time)
+		sleeping = TRUE
+		sleep(sleep_time)
+		sleeping = FALSE
+	update_static_data(user)
+	ui_interact(user)
 
 /datum/preferences/ui_static_data(mob/user)
 	var/list/data = list()
@@ -211,6 +250,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	data["character_preview_view"] = character_preview_view.assigned_map
 	data["overflow_role"] = SSjob.GetJobType(SSjob.overflow_role).title
 	data["window"] = current_window
+	data["starting_page"] = starting_page
 
 	data["content_unlocked"] = unlock_content
 
@@ -230,12 +270,63 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	return assets
 
+/datum/preferences/proc/set_channel_volume(channel, vol, mob/user)
+	user.update_media_volume(channel)
+
+	var/sound/S = sound(null, channel = channel, volume = vol)
+	S.status = SOUND_UPDATE
+	SEND_SOUND(usr, S)
+
 /datum/preferences/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if (.)
 		return
 
 	switch (action)
+		if ("try_fix_preview")
+			ui.close()
+			INVOKE_ASYNC(src, PROC_REF(open_window), PREFERENCE_PAGE_CHARACTERS, usr, 0.1 SECONDS)
+			return FALSE
+
+		if ("open_character")
+			if (locked || current_window == PREFERENCE_WINDOW_CHARACTERS)
+				return FALSE
+			acquire_lock()
+			release_lock() // Prevents this function from being used again for 0.5s
+			current_window = PREFERENCE_WINDOW_CHARACTERS
+			update_static_data(usr)
+			return TRUE
+
+		if ("open_game")
+			if (locked || current_window == PREFERENCE_WINDOW_GAME_PREFERENCES)
+				return FALSE
+			acquire_lock()
+			release_lock() // Prevents this function from being used again for 0.5s
+			current_window = PREFERENCE_WINDOW_GAME_PREFERENCES
+			update_static_data(usr)
+			return TRUE
+
+		if ("volume")
+			var/mob/user = ui.user
+			var/channel = text2num(params["channel"])
+			var/volume = text2num(params["volume"])
+			if(isnull(channel))
+				return FALSE
+			channel_volume["[channel]"] = volume
+			save_preferences()
+			var/static/list/instrument_channels = list(
+				CHANNEL_INSTRUMENTS,
+				CHANNEL_INSTRUMENTS_ROBOT,
+			)
+			if(!(channel in GLOB.proxy_sound_channels)) //if its a proxy we are just wasting time
+				set_channel_volume(channel, volume, user)
+
+			else if((channel in instrument_channels))
+				var/datum/song/holder_song = new
+				for(var/used_channel in holder_song.channels_playing)
+					set_channel_volume(used_channel, volume, user)
+			return TRUE
+
 		if ("change_slot")
 			// Save existing character
 			save_character()
@@ -329,9 +420,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		return
 
 	if (href_list["open_keybindings"])
-		current_window = PREFERENCE_TAB_KEYBINDINGS
-		update_static_data(usr)
-		ui_interact(usr)
+		open_window(PREFERENCE_PAGE_KEYBINDINGS)
 		return TRUE
 
 /datum/preferences/proc/acquire_lock()

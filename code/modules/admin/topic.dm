@@ -36,9 +36,6 @@
 	else if(href_list["ahelp_tickets"])
 		GLOB.ahelp_tickets.BrowseTickets(text2num(href_list["ahelp_tickets"]))
 
-	else if(href_list["stickyban"])
-		stickyban(href_list["stickyban"],href_list)
-
 	else if(href_list["getplaytimewindow"])
 		if(!check_rights(R_ADMIN))
 			return
@@ -69,7 +66,7 @@
 	else if(href_list["gamemode_panel"])
 		if(!check_rights(R_ADMIN))
 			return
-		SSticker.mode.admin_panel()
+		//SSticker.mode.admin_panel()
 		SSgamemode.admin_panel(usr) //monkestation addition
 
 	else if(href_list["call_shuttle"])
@@ -748,12 +745,16 @@
 		usr.client.selectedPlayerCkey = target_mob.ckey
 		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/vuap_personal, target_mob)
 
-	else if(href_list["adminopendemo"])
-		usr.client << link("http://viewer.monkestation.com/?roundid=[GLOB.round_id]&password=[CONFIG_GET(string/replay_password)]#[world.time]") //opens current round at current time
-
 	else if(href_list["adminplayerobservefollow"])
 		if(!isobserver(usr) && !check_rights(R_ADMIN))
 			return
+
+		if(href_list["stealth"])
+			if(!check_rights(R_STEALTH, TRUE))
+				return
+			if (!usr.client.holder.fakekey)
+				to_chat(usr, span_warning("You have been automatically stealthed via STLTH-FLW as [span_bold(usr.ckey)]"))
+				usr.client.enable_stealth_mode(usr.ckey, "STLTH-FLW")
 
 		usr.client?.admin_follow(locate(href_list["adminplayerobservefollow"]))
 	else if(href_list["admingetmovable"])
@@ -1051,8 +1052,7 @@
 		if(!ismob(M))
 			to_chat(usr, "This can only be used on instances of type /mob.", confidential = TRUE)
 			return
-		var/datum/language_holder/H = M.get_language_holder()
-		H.open_language_menu(usr)
+		M.get_language_holder().open_language_menu(usr)
 
 	else if(href_list["traitor"])
 		if(!check_rights(R_ADMIN))
@@ -1104,6 +1104,9 @@
 			to_chat(usr, "This can only be used on instances on mindless mobs", confidential = TRUE)
 			return
 		M.mind_initialize()
+
+	else if(href_list["spawn_panel"])
+		SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/spawn_panel)
 
 	else if(href_list["create_object"])
 		if(!check_rights(R_SPAWN))
@@ -1243,16 +1246,16 @@
 			new /obj/effect/pod_landingzone(target, pod)
 
 		if (number == 1)
-			log_admin("[key_name(usr)] created a [english_list(paths)]")
+			log_admin("[key_name(usr)] created an instance of [english_list(paths)]")
 			for(var/path in paths)
 				if(ispath(path, /mob))
-					message_admins("[key_name_admin(usr)] created a [english_list(paths)]")
+					message_admins("[key_name_admin(usr)] created an instance of [english_list(paths)]")
 					break
 		else
-			log_admin("[key_name(usr)] created [number]ea [english_list(paths)]")
+			log_admin("[key_name(usr)] created [number] instances of [english_list(paths)]")
 			for(var/path in paths)
 				if(ispath(path, /mob))
-					message_admins("[key_name_admin(usr)] created [number]ea [english_list(paths)]")
+					message_admins("[key_name_admin(usr)] created [number] instances of [english_list(paths)]")
 					break
 		return
 
@@ -1281,7 +1284,7 @@
 		if(!check_rights(R_ADMIN))
 			return
 		var/code = random_nukecode()
-		for(var/obj/machinery/nuclearbomb/selfdestruct/SD in GLOB.nuke_list)
+		for(var/obj/machinery/nuclearbomb/selfdestruct/SD as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/nuclearbomb/selfdestruct))
 			SD.r_code = code
 		message_admins("[key_name_admin(usr)] has set the self-destruct \
 			code to \"[code]\".")
@@ -1364,7 +1367,12 @@
 		if(!istype(error_viewer))
 			to_chat(usr, span_warning("That runtime viewer no longer exists."), confidential = TRUE)
 			return
-
+		if(href_list["viewruntime_externallog"])
+			error_viewer.send_log_file(owner)
+			return
+		if(href_list["viewruntime_savelog"])
+			error_viewer.save_log(owner, href_list["viewruntime_savelog"])
+			return
 		if(href_list["viewruntime_backto"])
 			error_viewer.show_to(owner, locate(href_list["viewruntime_backto"]), href_list["viewruntime_linear"])
 		else
@@ -1417,7 +1425,7 @@
 		else if(response.status_code != 200)
 			dat += "<br>Failed to connect to CentCom. Status code: [response.status_code]"
 		else
-			if(response.body == "[]")
+			if(response.body == "\[]")
 				dat += "<center><b>0 bans detected for [ckey]</b></center>"
 			else
 				bans = json_decode(response.body)
@@ -1766,14 +1774,16 @@
 		log_admin("[user_client]'s [token_holder.in_queue] token has been rejected by [owner].")
 		token_holder.reject_antag_token()
 
+
 	else if(href_list["open_music_review"])
 		if(!check_rights(R_ADMIN))
 			return
-		var/id = href_list["open_music_review"]
-		var/datum/cassette_review/cassette_review = fetch_review(id)
-		if(!istype(cassette_review))
-			return
-		cassette_review.ui_interact(usr)
+		var/id = text2num(href_list["open_music_review"])
+		var/datum/cassette_review/cassette_review = GLOB.cassette_reviews[id]
+		if(cassette_review)
+			cassette_review.ui_interact(usr)
+		else
+			to_chat(usr, span_warning("Cassette review not found!"), type = MESSAGE_TYPE_ADMINLOG, confidential = TRUE)
 
 	else if(href_list["approve_token_event"])
 		if(!check_rights(R_ADMIN))
@@ -1803,3 +1813,25 @@
 		log_admin("[user_client]'s [token_holder.queued_token_event.event_name] event token has been rejected by [owner].")
 		token_holder.reject_token_event()
 //monkestation edit end
+// Token Panel Addition START
+	else if(href_list["token_manager"])
+		SStoken_manager.ui_interact(usr)
+		return
+	else if(href_list["token_action"])
+		switch(href_list["token_action"])
+			if("accepted")
+				to_chat(usr, span_admin("Tokens accepted this round: [SStoken_manager.accepted_count]"))
+			if("pending")
+				// Show pending requests
+				var/list/pending = SStoken_manager.get_pending_requests_for_panel()
+				if(!length(pending))
+					to_chat(usr, span_admin("No pending token requests."))
+				else
+					for(var/list/request in pending)
+						to_chat(usr, span_admin("[request["requester"]] - [request["type"]]: [request["details"]]"))
+			if("rejected")
+				to_chat(usr, span_admin("Tokens rejected this round: [SStoken_manager.rejected_count]"))
+			if("timed_out")
+				to_chat(usr, span_admin("Tokens timed out this round: [SStoken_manager.timed_out_count]"))
+		return
+// Token Panel Addition END

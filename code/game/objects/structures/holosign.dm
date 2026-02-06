@@ -103,19 +103,6 @@
 		if(allow_walk && moving_carbon.m_intent == MOVE_INTENT_WALK)
 			return TRUE
 
-// /obj/structure/holosign/barrier/ranged_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-// 	. = ..()
-// 	if(tool != projector)
-// 		return
-// 	if(openable)
-// 		open(user)
-
-/obj/structure/holosign/barrier/attackby(obj/item/tool, mob/living/user, params)
-	. = ..()
-	if(tool != projector)
-		return
-	qdel(src)
-
 /obj/structure/holosign/barrier/update_icon_state()
 	if(openable)
 		if(!opened)

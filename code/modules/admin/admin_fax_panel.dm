@@ -19,7 +19,7 @@ ADMIN_VERB(fax_panel, R_ADMIN, FALSE, "Fax Panel", "View and respond to faxes se
 
 /datum/fax_panel_interface/New()
 	//Get all faxes, and save them to our list.
-	for(var/obj/machinery/fax/fax in GLOB.machines)
+	for(var/obj/machinery/fax/fax as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/fax))
 		available_faxes += WEAKREF(fax)
 
 	//Get all stamps

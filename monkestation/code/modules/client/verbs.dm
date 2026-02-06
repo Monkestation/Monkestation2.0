@@ -60,6 +60,12 @@ GLOBAL_LIST(antag_token_config)
 	client_token_holder.in_queued_tier = tier
 	client_token_holder.in_queue = new chosen_antagonist
 
+	// Token Panel Addition START
+	var/current_antag_request = new /datum/token_request(mob, client_token_holder, "[chosen_antagonist.name]", tier, using_donor)
+	SStoken_manager.add_pending_request(current_antag_request)
+	client_token_holder.current_antag_request = current_antag_request
+	// Token Panel Addition END
+
 	to_chat(src, span_boldnotice("Your request has been sent to the admins."))
 	send_formatted_admin_message( \
 		"[ADMIN_LOOKUPFLW(src)] has requested to use their antag token to be a [chosen_antagonist::name].\n\n[ADMIN_APPROVE_ANTAG_TOKEN(src)] | [ADMIN_REJECT_ANTAG_TOKEN(src)]",	\
@@ -80,7 +86,7 @@ GLOBAL_LIST(antag_token_config)
 	var/static/list/event_list
 	if(!event_list)
 		event_list = list()
-		for(var/event as anything in SStwitch.twitch_events_by_type)
+		for(var/event in SStwitch.twitch_events_by_type)
 			var/datum/twitch_event/event_instance = SStwitch.twitch_events_by_type[event]
 			if(!event_instance.token_cost)
 				continue

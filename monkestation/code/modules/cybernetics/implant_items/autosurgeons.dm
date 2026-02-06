@@ -117,8 +117,8 @@
 	if(uses <= 0)
 		desc = "[initial(desc)] The surgical tools look too blunt and worn to pierce a skull. Looks like it's all used up."
 
-/obj/item/autosurgeon/skillchip/attackby(obj/item/I, mob/user, params)
-	if(!istype(I, skillchip_type))
+/obj/item/autosurgeon/skillchip/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(!istype(attacking_item, skillchip_type))
 		return ..()
 
 	if(stored_skillchip)
@@ -129,12 +129,12 @@
 		to_chat(user, span_alert("[src] has already been used up."))
 		return
 
-	if(!user.transferItemToLoc(I, src))
+	if(!user.transferItemToLoc(attacking_item, src))
 		to_chat(user, span_alert("You fail to insert the skillchip into [src]. It seems stuck to your hand.") )
 		return
 
-	stored_skillchip = I
-	to_chat(user, span_notice("You insert the [I] into [src].") )
+	stored_skillchip = attacking_item
+	to_chat(user, span_notice("You insert the [attacking_item] into [src].") )
 
 /obj/item/autosurgeon/skillchip/screwdriver_act(mob/living/user, obj/item/I)
 	. = ..()

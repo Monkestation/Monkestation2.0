@@ -27,14 +27,14 @@
 /obj/structure/barricade/proc/make_debris()
 	return
 
-/obj/structure/barricade/attackby(obj/item/I, mob/living/user, params)
-	if(I.tool_behaviour == TOOL_WELDER && !(user.istate & ISTATE_HARM) && bar_material == METAL)
+/obj/structure/barricade/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(attacking_item.tool_behaviour == TOOL_WELDER && !(user.istate & ISTATE_HARM) && bar_material == METAL)
 		if(atom_integrity < max_integrity)
-			if(!I.tool_start_check(user, amount=0))
+			if(!attacking_item.tool_start_check(user, amount=0))
 				return
 
 			to_chat(user, span_notice("You begin repairing [src]..."))
-			if(I.use_tool(src, user, 40, volume=40))
+			if(attacking_item.use_tool(src, user, 40, volume=40))
 				atom_integrity = clamp(atom_integrity + 20, 0, max_integrity)
 	else
 		return ..()
@@ -70,16 +70,16 @@
 	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
 	register_context()
 
-/obj/structure/barricade/wooden/attackby(obj/item/I, mob/user)
-	if(istype(I,/obj/item/stack/sheet/mineral/wood))
-		var/obj/item/stack/sheet/mineral/wood/W = I
+/obj/structure/barricade/wooden/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item,/obj/item/stack/sheet/mineral/wood))
+		var/obj/item/stack/sheet/mineral/wood/W = attacking_item
 		if(W.amount < 5)
 			to_chat(user, span_warning("You need at least five wooden planks to make a wall!"))
 			return
 		else
-			to_chat(user, span_notice("You start adding [I] to [src]..."))
+			to_chat(user, span_notice("You start adding [attacking_item] to [src]..."))
 			playsound(src, 'sound/items/hammering_wood.ogg', 50, vary = TRUE)
-			if(do_after(user, 50, target=src) && W.use(5))
+			if(do_after(user, 5 SECONDS, target=src) && W.use(5))
 				var/turf/T = get_turf(src)
 				T.PlaceOnTop(/turf/closed/wall/mineral/wood/nonmetal)
 				qdel(src)
@@ -94,7 +94,7 @@
 	tool.play_tool_sound(src)
 	new /obj/item/stack/sheet/mineral/wood(drop_location(), drop_amount)
 	qdel(src)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/barricade/wooden/crude
 	name = "crude plank barricade"
@@ -143,12 +143,18 @@
 	proj_pass_rate = 20
 	armor_type = /datum/armor/barricade_security
 
+	light_inner_range = 0.5
+	light_outer_range = 1 // luminosity when locked
+	light_color = COLOR_MAROON
+	light_system = OVERLAY_LIGHT
+
 	var/deploy_time = 5 SECONDS //monkestation edit
 	var/deploy_message = TRUE
-	//monkestation edit: var for setting density
 	var/locked = FALSE
+	/// prevents toggling the lock before the deploy time is done
+	var/deploy_lock = FALSE
+	var/lock_broken = FALSE
 	pass_same_type = FALSE
-
 
 /datum/armor/barricade_security
 	melee = 10
@@ -160,16 +166,40 @@
 
 /obj/structure/barricade/security/Initialize(mapload)
 	. = ..()
+	deploy_lock = TRUE
 	addtimer(CALLBACK(src, PROC_REF(deploy)), deploy_time)
+	update_appearance(UPDATE_OVERLAYS)
+	register_context()
+
+/obj/structure/barricade/security/examine(mob/user)
+	. = ..()
+	if(lock_broken)
+		. += span_warning("Its control panel is smoking slightly.")
+
+/obj/structure/barricade/security/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
+	if(ACCESS_SECURITY in user.get_access())
+		context[SCREENTIP_CONTEXT_RMB] = locked ? "Unlock" : "Lock"
+		return CONTEXTUAL_SCREENTIP_SET
+
+/obj/structure/barricade/security/update_overlays()
+	. = ..()
+	if(locked)
+		. += emissive_appearance(icon, "barrier1-e", src, alpha = src.alpha)
 
 /obj/structure/barricade/security/proc/deploy()
-	toggle_lock() //monkestation edit
+	toggle_lock(force = TRUE)
 	set_anchored(TRUE)
 	if(deploy_message)
 		visible_message(span_warning("[src] deploys!"))
+	deploy_lock = FALSE
 
-//MONKESTATION EDIT START
-/obj/structure/barricade/security/proc/toggle_lock()
+/obj/structure/barricade/security/proc/toggle_lock(mob/living/user, force = FALSE)
+	if(deploy_lock && !force)
+		return
+	if(lock_broken)
+		balloon_alert(user, "controls fried!")
+		return
 	if(!locked)
 		set_density(TRUE)
 		icon_state = "barrier1"
@@ -180,18 +210,25 @@
 		icon_state = "barrier0"
 		locked = FALSE
 		playsound(src, 'sound/machines/boltsdown.ogg', 45)
-	update_appearance()
+	update_appearance(UPDATE_ICON)
+	balloon_alert(user, "barrier [locked ? "locked" : "unlocked"]")
 
 /obj/structure/barricade/security/attackby(obj/item/tool, mob/living/user, params)
-	if(isidcard(tool))
-		var/obj/item/card/id/id_card = tool
+	if(tool.GetID())
+		var/obj/item/card/id/id_card = tool.GetID()
 		if((ACCESS_SECURITY in id_card.GetAccess()))
-			toggle_lock()
-			balloon_alert(user, "barrier [locked ? "locked" : "unlocked"]")
+			toggle_lock(user)
 		else
 			balloon_alert(user, "no access!")
 	else
 		return ..()
+
+/obj/structure/barricade/security/attack_hand_secondary(mob/living/user, list/modifiers)
+	. = ..()
+	if(ACCESS_SECURITY in user.get_access())
+		toggle_lock(user)
+	else
+		balloon_alert(user, "no access!")
 
 /obj/structure/barricade/security/wrench_act(mob/living/user, obj/item/tool, params)
 	if(locked)
@@ -202,14 +239,21 @@
 	set_anchored(!anchored)
 	tool.play_tool_sound(src)
 	user.balloon_alert_to_viewers("[anchored ? "anchored" : "unanchored"]")
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/barricade/security/emp_act(severity)
-	toggle_lock()
+	toggle_lock(force = TRUE)
+	if(severity == EMP_HEAVY)
+		lock_broken = TRUE
+		do_sparks(rand(1,3), FALSE, src)
 
-/obj/structure/barricade/security/emag_act()
-	toggle_lock()
-//MONKESTATION EDIT STOP
+/obj/structure/barricade/security/emag_act(mob/user)
+	if(!lock_broken)
+		toggle_lock(force = TRUE)
+		lock_broken = TRUE
+		balloon_alert(user, "controls overloaded!")
+		obj_flags |= EMAGGED
+		do_sparks(rand(1,3), FALSE, src)
 
 /obj/item/grenade/barrier
 	name = "barrier grenade"
@@ -222,12 +266,21 @@
 
 /obj/item/grenade/barrier/examine(mob/user)
 	. = ..()
-	. += span_notice("Alt-click to toggle modes.")
+	. += span_notice("Current Mode: [capitalize(mode)].  Alt-click to switch the current mode.")
 
-/obj/item/grenade/barrier/AltClick(mob/living/carbon/user)
-	if(!istype(user) || !user.can_perform_action(src))
-		return
+/obj/item/grenade/barrier/Initialize(mapload)
+	. = ..()
+	update_appearance(UPDATE_OVERLAYS)
+
+/obj/item/grenade/barrier/update_overlays()
+	. = ..()
+	. += mutable_appearance(icon, "wallbang-[mode]")
+	. += emissive_appearance(icon, "wallbang-[mode]", src, alpha = src.alpha)
+
+
+/obj/item/grenade/barrier/click_alt(mob/living/carbon/user)
 	toggle_mode(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/grenade/barrier/proc/toggle_mode(mob/user)
 	switch(mode)
@@ -237,8 +290,9 @@
 			mode = HORIZONTAL
 		if(HORIZONTAL)
 			mode = SINGLE
-
+	playsound(src, 'sound/machines/click.ogg', 50)
 	to_chat(user, span_notice("[src] is now in [mode] mode."))
+	update_appearance(UPDATE_OVERLAYS)
 
 /obj/item/grenade/barrier/detonate(mob/living/lanced_by)
 	. = ..()

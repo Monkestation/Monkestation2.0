@@ -1,4 +1,4 @@
-/datum/orderable_item/golem
+/datum/orderable_item/golem //stuff thats only really needed by golems and freeminers
 	category_index = CATEGORY_GOLEM
 
 /datum/orderable_item/golem/mining_id
