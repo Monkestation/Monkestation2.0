@@ -126,8 +126,9 @@
 	if(contents.len)
 		user.put_in_hands(contents[1])
 	if(GLOB.cargo_union.demand_is_implemented(/datum/union_demand/automatic_mail))
+		//we don't use subtypes here, for ruins.
 		for(var/obj/machinery/mail_collector/collector as anything in SSmachines.get_machines_by_type(/obj/machinery/mail_collector))
-			collector.money_collected += (CARGO_CRATE_VALUE / 2)
+			collector.adjust_money(/datum/export/mail_token::cost / 2)
 	else
 		user.put_in_hands(new /obj/item/cargo/mail_token) // MONKESTATION EDIT
 	playsound(loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
