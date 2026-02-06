@@ -1,3 +1,6 @@
+///Chance for a ruin mail collector to start off emagged (aka eat your money)
+#define RUIN_EMAG_CHANCE 5
+
 /obj/machinery/mail_collector
 	name = "mail collector"
 	icon = 'icons/obj/machines/mail_machine.dmi'
@@ -8,11 +11,16 @@
 	anchored = TRUE
 	density = FALSE
 
+	///Whether the machine's ID wire is intact, allowing you to swipe to collect money.
+	var/can_collect = TRUE
+	/// How long the mail collector is electrified for.
+	var/seconds_electrified = MACHINE_NOT_ELECTRIFIED
 	///Amount of money stored in the mail collector.
 	var/money_collected = 0
 
 /obj/machinery/mail_collector/Initialize(mapload)
 	. = ..()
+	set_wires(new /datum/wires/mail_collector(src))
 	register_context()
 	for(var/turf/closed/wall/hung_on in dview(1, get_turf(src)))
 		var/direction_to_place = get_dir(hung_on, src)
@@ -29,22 +37,13 @@
 				continue
 		break
 
+/obj/machinery/mail_collector/Destroy()
+	QDEL_NULL(wires)
+	return ..()
+
 /obj/machinery/mail_collector/examine(mob/user)
 	. = ..()
 	. += span_notice("It has [money_collected][MONEY_SYMBOL] saved currently.")
-
-/obj/machinery/mail_collector/emag_act(mob/user, obj/item/card/emag/emag_card)
-	if(obj_flags & EMAGGED)
-		return
-	playsound(src, SFX_SPARKS, 100, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
-	do_sparks(3, cardinal_only = FALSE, source = src)
-	obj_flags |= EMAGGED
-
-/obj/machinery/mail_collector/update_overlays()
-	. = ..()
-	if(money_collected)
-		. += mutable_appearance(icon, "[base_icon_state]_on")
-	. += emissive_appearance(icon, "[base_icon_state]_hacked_e", src, alpha = src.alpha)
 
 /obj/machinery/mail_collector/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	if(istype(held_item, /obj/item/card/id) && money_collected > 0)
@@ -52,9 +51,56 @@
 		return CONTEXTUAL_SCREENTIP_SET
 	return NONE
 
+/obj/machinery/mail_collector/emag_act(mob/user, obj/item/card/emag/emag_card)
+	if(obj_flags & EMAGGED)
+		return
+	playsound(src, SFX_SPARKS, 100, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+	flick_overlay_view("[base_icon_state]_hacked", 1 SECONDS)
+	obj_flags |= EMAGGED
+
+/obj/machinery/mail_collector/update_overlays()
+	. = ..()
+	if(machine_stat & MAINT)
+		. += mutable_appearance(icon, "[base_icon_state]_panel")
+		return .
+	if(machine_stat & (BROKEN|NOPOWER))
+		return .
+	if(money_collected)
+		. += mutable_appearance(icon, "[base_icon_state]_on")
+	. += emissive_appearance(icon, "[base_icon_state]_e", src, alpha = src.alpha)
+
+/obj/machinery/mail_collector/on_set_is_operational(old_value)
+	if (old_value == FALSE)
+		end_processing()
+		return
+	begin_processing()
+
+/obj/machinery/mail_collector/process(seconds_per_tick)
+	if(seconds_electrified > MACHINE_NOT_ELECTRIFIED)
+		seconds_electrified -= seconds_per_tick
+
+/obj/machinery/mail_collector/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(!is_wire_tool(attacking_item))
+		return ..()
+	if(!(machine_stat & MAINT))
+		balloon_alert(user, "open panel first!")
+		return TRUE
+	wires.interact(user)
+	return TRUE
+
+/obj/machinery/mail_collector/screwdriver_act(mob/living/user, obj/item/tool)
+	if(default_deconstruction_screwdriver(user, base_icon_state, base_icon_state, tool))
+		update_appearance(UPDATE_ICON)
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
+
 //yes, this is all taken from bouldertech.
 /obj/machinery/mail_collector/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(seconds_electrified && shock(user))
+		return ITEM_INTERACT_BLOCKING
+
 	if(istype(tool, /obj/item/cargo/mail_token))
+		balloon_alert(user, "token recycled")
 		flick_overlay_view("[base_icon_state]_accept", 1 SECONDS)
 		adjust_money(/datum/export/mail_token::cost / 2)
 		qdel(tool)
@@ -64,6 +110,10 @@
 		return NONE
 
 	if(money_collected <= 0)
+		return ITEM_INTERACT_BLOCKING
+
+	if(!can_collect)
+		balloon_alert(user, "ID jams!")
 		return ITEM_INTERACT_BLOCKING
 
 	var/amount = tgui_input_number(user, "How much money do you wish to claim? ID Balance: \
@@ -98,6 +148,13 @@
 	money_collected += money_to_adjust
 	update_appearance(UPDATE_ICON)
 
+///Shocks the user, incredible!
+/obj/machinery/mail_collector/proc/shock(mob/living/user)
+	if(!istype(user) || machine_stat & (BROKEN|NOPOWER))
+		return FALSE
+	do_sparks(5, TRUE, src)
+	return electrocute_mob(user, get_area(src), src, 0.7, dist_check = TRUE)
+
 //will not update by the station as it uses get_machines_by_type, not including subtypes.
 //good as a credit reward for players if you so wish.
 /obj/machinery/mail_collector/ruin
@@ -106,5 +163,7 @@
 /obj/machinery/mail_collector/ruin/Initialize(mapload)
 	. = ..()
 	adjust_money(rand(200, 2000))
-	if(prob(5)) //he he he ha
+	if(prob(RUIN_EMAG_CHANCE)) //he he he ha
 		emag_act()
+
+#undef RUIN_EMAG_CHANCE
