@@ -1,5 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - qol: "ATMs are now generally better and take into account stowaways better."
-  - bugfix: "Stowaways can no longer accidentally put money into a fake ID, losing the money forever."
