@@ -13,7 +13,7 @@
 	var/obj/machinery/mail_collector/machine = holder
 	if(!issilicon(user) && machine.seconds_electrified && machine.shock(user, 100))
 		return FALSE
-	if(machine.machine_stat & MAINT)
+	if(machine.panel_open || machine.machine_stat & MAINT)
 		return TRUE
 	return FALSE
 

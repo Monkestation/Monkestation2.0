@@ -7,7 +7,8 @@
 	icon_state = "clockmachine"
 	base_icon_state = "clockmachine"
 	desc = "Automatically collects credits that would otherwise be done through mail tokens."
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	max_integrity = 400
+	integrity_failure = 0.75
 	anchored = TRUE
 	density = FALSE
 
@@ -17,11 +18,15 @@
 	var/seconds_electrified = MACHINE_NOT_ELECTRIFIED
 	///Amount of money stored in the mail collector.
 	var/money_collected = 0
+	/// What kind of sign do we drop upon being disassembled?
+	var/disassemble_result = null
 
 /obj/machinery/mail_collector/Initialize(mapload)
 	. = ..()
 	set_wires(new /datum/wires/mail_collector(src))
 	register_context()
+	if(isclosedturf(loc)) //being placed as a disassembler
+		return .
 	for(var/turf/closed/wall/hung_on in dview(1, get_turf(src)))
 		var/direction_to_place = get_dir(hung_on, src)
 		switch(direction_to_place)
@@ -58,9 +63,17 @@
 	flick_overlay_view("[base_icon_state]_hacked", 1 SECONDS)
 	obj_flags |= EMAGGED
 
+/obj/machinery/mail_collector/update_icon_state()
+	. = ..()
+	if(machine_stat & BROKEN)
+		icon_state = "[base_icon_state]_broken"
+		return .
+	icon_state = base_icon_state
+	return .
+
 /obj/machinery/mail_collector/update_overlays()
 	. = ..()
-	if(machine_stat & MAINT)
+	if(panel_open)
 		. += mutable_appearance(icon, "[base_icon_state]_panel")
 		return .
 	if(machine_stat & (BROKEN|NOPOWER))
@@ -68,6 +81,12 @@
 	if(money_collected)
 		. += mutable_appearance(icon, "[base_icon_state]_on")
 	. += emissive_appearance(icon, "[base_icon_state]_e", src, alpha = src.alpha)
+
+/obj/machinery/mail_collector/vv_edit_var(vname, vval)
+	. = ..()
+	if(var_name == NAMEOF(src, money_collected))
+		update_appearance(UPDATE_ICON)
+
 
 /obj/machinery/mail_collector/on_set_is_operational(old_value)
 	if (old_value == FALSE)
@@ -79,34 +98,21 @@
 	if(seconds_electrified > MACHINE_NOT_ELECTRIFIED)
 		seconds_electrified -= seconds_per_tick
 
-/obj/machinery/mail_collector/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(!is_wire_tool(attacking_item))
-		return ..()
-	if(!(machine_stat & MAINT))
-		balloon_alert(user, "open panel first!")
-		return TRUE
-	wires.interact(user)
-	return TRUE
-
-/obj/machinery/mail_collector/screwdriver_act(mob/living/user, obj/item/tool)
-	if(default_deconstruction_screwdriver(user, base_icon_state, base_icon_state, tool))
-		update_appearance(UPDATE_ICON)
-		return ITEM_INTERACT_SUCCESS
-	return ITEM_INTERACT_BLOCKING
-
 //yes, this is all taken from bouldertech.
 /obj/machinery/mail_collector/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(seconds_electrified && shock(user))
 		return ITEM_INTERACT_BLOCKING
 
 	if(istype(tool, /obj/item/cargo/mail_token))
+		if(machine_stat & BROKEN)
+			return NONE
 		balloon_alert(user, "token recycled")
 		flick_overlay_view("[base_icon_state]_accept", 1 SECONDS)
 		adjust_money(/datum/export/mail_token::cost / 2)
 		qdel(tool)
 		return ITEM_INTERACT_SUCCESS
 	var/obj/item/card/id/id_card = tool.GetID()
-	if(isnull(id_card))
+	if(isnull(id_card) || (machine_stat & BROKEN))
 		return NONE
 
 	if(money_collected <= 0)
@@ -143,6 +149,39 @@
 	flick_overlay_view("[base_icon_state]_accept", 1 SECONDS)
 	return ITEM_INTERACT_SUCCESS
 
+/obj/machinery/mail_collector/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(!is_wire_tool(attacking_item))
+		return ..()
+	if(!panel_open)
+		balloon_alert(user, "open panel first!")
+		return TRUE
+	wires.interact(user)
+	return TRUE
+
+/obj/machinery/mail_collector/screwdriver_act(mob/living/user, obj/item/tool)
+	if(default_deconstruction_screwdriver(user, base_icon_state, base_icon_state, tool))
+		update_appearance(UPDATE_ICON)
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
+
+/obj/machinery/mail_collector/welder_act(mob/living/user, obj/item/tool)
+	if(user.istate & ISTATE_HARM)
+		return
+	if(atom_integrity >= max_integrity)
+		return TRUE
+	balloon_alert(user, "repairing...")
+	if(!tool.use_tool(src, user, 4 SECONDS, amount = 0, volume=50))
+		return TRUE
+	balloon_alert(user, "repaired")
+	atom_integrity = max_integrity
+	set_machine_stat(machine_stat & ~BROKEN)
+	update_appearance()
+	return TRUE
+
+/obj/machinery/mail_collector/on_deconstruction(disassembled)
+	if(disassemble_result)
+		new disassemble_result(drop_location())
+
 ///Use this to update the amount of money stored as to ensure overlays is updated.
 /obj/machinery/mail_collector/proc/adjust_money(money_to_adjust)
 	money_collected += money_to_adjust
@@ -159,6 +198,7 @@
 //good as a credit reward for players if you so wish.
 /obj/machinery/mail_collector/ruin
 	name = "ancient mail collector"
+	disassemble_result = null
 
 /obj/machinery/mail_collector/ruin/Initialize(mapload)
 	. = ..()
@@ -166,4 +206,23 @@
 	if(prob(RUIN_EMAG_CHANCE)) //he he he ha
 		emag_act()
 
+/obj/machinery/mail_collector/cargo
+	disassemble_result = /obj/item/wallframe/mail_collector
+
+/obj/machinery/mail_collector/cargo/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!GLOB.cargo_union.demand_is_implemented(/datum/union_demand/automatic_mail))
+		return ITEM_INTERACT_BLOCKING
+	return ..()
+
+
 #undef RUIN_EMAG_CHANCE
+
+/obj/item/wallframe/mail_collector
+	name = "mail collector frame"
+	desc = "Used to automatically collect money from opening mail."
+	icon = 'icons/obj/machines/mail_machine.dmi'
+	icon_state = "clockmachine_frame"
+	result_path = /obj/machinery/mail_collector/cargo
+	custom_materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT,
+	)

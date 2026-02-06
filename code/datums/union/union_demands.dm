@@ -167,6 +167,10 @@
 
 /datum/union_demand/automatic_mail/implement_demand(datum/union/union_demanding)
 	. = ..()
+	//one already exists, let's not give another.
+	for(var/obj/machinery/mail_collector/cargo/collector as anything in SSmachines.get_machines_by_type(/obj/machinery/mail_collector/cargo))
+		collector.update_appearance(UPDATE_ICON)
+		return
 	var/turf/turf_to_spawn
 	if(length(GLOB.cargo_mail_machine_spawns))
 		turf_to_spawn = get_turf(pick(GLOB.cargo_mail_machine_spawns))
@@ -174,13 +178,13 @@
 		turf_to_spawn = pick(get_area_turfs(/area/station/cargo/storage))
 		stack_trace("GLOB.cargo_mail_machine_spawns list is empty! This needs to be mapped in!")
 
-	new /obj/machinery/mail_collector(turf_to_spawn)
+	new /obj/machinery/mail_collector/cargo(turf_to_spawn)
 	var/datum/effect_system/spark_spread/sparks = new
 	sparks.set_up(5, 1, location = turf_to_spawn)
 	sparks.start()
 
 /datum/union_demand/automatic_mail/unimplement_demand(datum/union/union_demanding)
-	for(var/obj/machinery/mail_collector/collector as anything in SSmachines.get_machines_by_type(/obj/machinery/mail_collector))
+	for(var/obj/machinery/mail_collector/cargo/collector as anything in SSmachines.get_machines_by_type(/obj/machinery/mail_collector/cargo))
 		qdel(collector)
 	return ..()
 
