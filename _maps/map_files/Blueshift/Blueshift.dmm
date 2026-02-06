@@ -38518,14 +38518,14 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/red,
-/obj/machinery/door/poddoor/shutters{
-	dir = 8;
-	id = "secmechbay";
-	name = "Security Mech Bay Shutters"
-	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/poddoor/shutters/window{
+	id = "secmechbay";
+	name = "Security Mech Bay Shutters";
+	dir = 8
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/mechbay)
 "htS" = (
@@ -49286,10 +49286,10 @@
 	color = "#DE3A3A";
 	dir = 4
 	},
-/obj/machinery/door/poddoor/shutters{
-	dir = 8;
+/obj/machinery/door/poddoor/shutters/window{
 	id = "secmechbay";
-	name = "Security Mech Bay Shutters"
+	name = "Security Mech Bay Shutters";
+	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/mechbay)
@@ -63551,6 +63551,14 @@
 /obj/item/pen,
 /turf/open/floor/plating,
 /area/station/maintenance/console_room)
+"miM" = (
+/obj/effect/turf_decal/stripes{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/side{
+	dir = 4
+	},
+/area/station/security/office)
 "miO" = (
 /obj/effect/spawner/structure/window/reinforced/tinted,
 /turf/open/floor/plating,
@@ -116145,14 +116153,6 @@
 	},
 /turf/open/floor/wood,
 /area/station/command/captain_dining)
-"wjU" = (
-/obj/effect/turf_decal/stripes{
-	dir = 4
-	},
-/turf/open/floor/iron/dark/side{
-	dir = 4
-	},
-/area/station/security/office)
 "wjW" = (
 /turf/open/floor/wood/parquet,
 /area/station/cargo/quartermaster)
@@ -159551,7 +159551,7 @@ nOi
 rxV
 dOk
 iLd
-wjU
+miM
 vBs
 lCR
 rCT

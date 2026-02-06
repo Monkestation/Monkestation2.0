@@ -16161,11 +16161,6 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "fPn" = (
-/obj/machinery/door/poddoor/shutters{
-	dir = 8;
-	id = "secmechbay";
-	name = "Security Mech Bay Shutters"
-	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -16173,6 +16168,11 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/box,
+/obj/machinery/door/poddoor/shutters/window{
+	id = "secmechbay";
+	name = "Security Mech Bay Shutters";
+	dir = 8
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/mechbay)
 "fPD" = (
@@ -41887,15 +41887,15 @@
 /turf/open/floor/wood,
 /area/station/service/library)
 "ouQ" = (
-/obj/machinery/door/poddoor/shutters{
-	dir = 8;
-	id = "secmechbay";
-	name = "Security Mech Bay Shutters"
-	},
 /obj/effect/turf_decal/caution/stand_clear{
 	dir = 4
 	},
 /obj/effect/turf_decal/box,
+/obj/machinery/door/poddoor/shutters/window{
+	id = "secmechbay";
+	name = "Security Mech Bay Shutters";
+	dir = 8
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/mechbay)
 "ouR" = (
