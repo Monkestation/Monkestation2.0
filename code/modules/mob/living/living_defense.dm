@@ -108,7 +108,16 @@
 	if (def_zone != BODY_ZONE_CHEST && def_zone != BODY_ZONE_HEAD)
 		stamina_armor_check = min(ARMOR_MAX_BLOCK, check_projectile_armor(BODY_ZONE_CHEST, hitting_projectile, is_silent = TRUE))
 
-
+	apply_damage(
+		damage = hitting_projectile.damage,
+		damagetype = hitting_projectile.damage_type,
+		def_zone = def_zone,
+		blocked = armor_check,
+		wound_bonus = hitting_projectile.wound_bonus,
+		bare_wound_bonus = hitting_projectile.bare_wound_bonus,
+		sharpness = hitting_projectile.sharpness,
+		attack_direction = hitting_projectile.dir,
+	)
 	if(hitting_projectile.stamina)
 		apply_damage(
 			damage = hitting_projectile.stamina,
@@ -118,12 +127,9 @@
 			attack_direction = hitting_projectile.dir,
 		)
 
-	var/extra_paralyze = 0 SECONDS
-	var/extra_knockdown = 0 SECONDS
-
 	apply_effects(
 		stun = hitting_projectile.stun,
-		knockdown = hitting_projectile.knockdown + extra_knockdown,
+		knockdown = hitting_projectile.knockdown,
 		unconscious = hitting_projectile.unconscious,
 		slur = (mob_biotypes & MOB_ROBOTIC) ? 0 SECONDS : hitting_projectile.slur, // Don't want your cyborgs to slur from being ebow'd
 		stutter = (mob_biotypes & MOB_ROBOTIC) ? 0 SECONDS : hitting_projectile.stutter, // Don't want your cyborgs to stutter from being tazed
@@ -131,7 +137,7 @@
 		drowsy = hitting_projectile.drowsy,
 		blocked = armor_check,
 		jitter = (mob_biotypes & MOB_ROBOTIC) ? 0 SECONDS : hitting_projectile.jitter, // Cyborgs can jitter but not from being shot
-		paralyze = hitting_projectile.paralyze + extra_paralyze,
+		paralyze = hitting_projectile.paralyze,
 		immobilize = hitting_projectile.immobilize,
 	)
 	if(hitting_projectile.dismemberment)
