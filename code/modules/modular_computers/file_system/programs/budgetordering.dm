@@ -51,10 +51,9 @@
 
 	//Aquire access from the inserted ID card.
 	if(!length(access))
-		var/obj/item/card/id/D = computer?.computer_id_slot?.GetID()
-		if(!D)
+		access = computer?.GetAccess()
+		if(!length(access))
 			return FALSE
-		access = D.GetAccess()
 
 	if(paccess_to_check in access)
 		return TRUE

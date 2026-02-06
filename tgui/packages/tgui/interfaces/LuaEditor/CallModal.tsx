@@ -1,7 +1,7 @@
 import { useBackend } from '../../backend';
 import { Button, Modal, Section } from '../../components';
 import { ListMapper } from './ListMapper';
-import { CallInfo, LuaEditorData, LuaEditorModal } from './types';
+import type { CallInfo, LuaEditorData, LuaEditorModal } from './types';
 
 type CallModalProps = {
   setModal: (modal: LuaEditorModal) => void;

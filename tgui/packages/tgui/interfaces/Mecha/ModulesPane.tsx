@@ -1,21 +1,21 @@
+import { toFixed } from 'common/math';
+import { classes } from 'common/react';
+import { GasmixParser } from 'tgui/interfaces/common/GasmixParser';
 import { useBackend } from '../../backend';
 import {
-  Icon,
-  NumberInput,
-  ProgressBar,
   Box,
   Button,
-  Section,
-  Stack,
+  Collapsible,
+  Icon,
   LabeledList,
   NoticeBox,
-  Collapsible,
+  NumberInput,
+  ProgressBar,
+  Section,
+  Stack,
 } from '../../components';
-import { MainData, MechModule } from './data';
-import { classes } from 'common/react';
-import { toFixed } from 'common/math';
 import { formatPower } from '../../format';
-import { GasmixParser } from 'tgui/interfaces/common/GasmixParser';
+import type { MainData, MechModule } from './data';
 
 const moduleSlotIcon = (param) => {
   switch (param) {
@@ -521,7 +521,7 @@ const SnowflakeRadio = (props) => {
           selected={microphone}
           icon={microphone ? 'microphone' : 'microphone-slash'}
         >
-          {(microphone ? 'En' : 'Dis') + 'abled'}
+          {`${microphone ? 'En' : 'Dis'}abled`}
         </Button>
       </LabeledList.Item>
       <LabeledList.Item label="Speaker">
@@ -535,7 +535,7 @@ const SnowflakeRadio = (props) => {
           selected={speaker}
           icon={speaker ? 'volume-up' : 'volume-mute'}
         >
-          {(speaker ? 'En' : 'Dis') + 'abled'}
+          {`${speaker ? 'En' : 'Dis'}abled`}
         </Button>
       </LabeledList.Item>
       <LabeledList.Item label="Frequency">
@@ -919,7 +919,7 @@ const SnowflakeGeneraor = (props) => {
     <LabeledList.Item label="Fuel Amount">
       {fuel === null
         ? 'None'
-        : toFixed(fuel * sheet_material_amount, 0.1) + ' cm³'}
+        : `${toFixed(fuel * sheet_material_amount, 0.1)} cm³`}
     </LabeledList.Item>
   );
 };

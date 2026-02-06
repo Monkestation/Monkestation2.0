@@ -1,3 +1,4 @@
+import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -7,8 +8,6 @@ import {
   Section,
   Stack,
 } from '../components';
-
-import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
 
 // byond defines for the program state

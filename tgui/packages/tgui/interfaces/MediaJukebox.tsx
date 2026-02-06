@@ -1,5 +1,5 @@
 import { round } from 'common/math';
-import { BooleanLike } from 'common/react';
+import type { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
 import {
   Box,
@@ -122,7 +122,7 @@ const Controls = () => {
             average: [25, 75],
             bad: [0, 25],
           }}
-          format={(val) => round(val, 1) + '%'}
+          format={(val) => `${round(val, 1)}%`}
           tickWhileDragging
           onChange={(_, volume) => act('set_volume', { volume })}
         />
@@ -135,8 +135,8 @@ const AvailableTracks = () => {
   const { act, data } = useBackend<Data>();
   const { playing, tracks, current_track } = data;
 
-  let genre_songs = tracks.reduce((acc, obj) => {
-    let key = obj.genre || 'Uncategorized';
+  const genre_songs = tracks.reduce((acc, obj) => {
+    const key = obj.genre || 'Uncategorized';
     if (!acc[key]) {
       acc[key] = [];
     }
@@ -144,7 +144,7 @@ const AvailableTracks = () => {
     return acc;
   }, {});
 
-  let true_genre = !!playing && (current_track?.genre || 'Uncategorized');
+  const true_genre = !!playing && (current_track?.genre || 'Uncategorized');
 
   return (
     <Stack vertical fill>

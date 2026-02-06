@@ -46214,6 +46214,7 @@
 /obj/effect/turf_decal/siding/wood/end{
 	dir = 4
 	},
+/obj/machinery/newscaster/directional/east,
 /turf/open/floor/wood,
 /area/station/security/detectives_office)
 "kBP" = (
@@ -81087,7 +81088,7 @@
 /obj/machinery/computer/records/security{
 	dir = 8
 	},
-/obj/machinery/newscaster/directional/east,
+/obj/structure/detectiveboard/directional/east,
 /turf/open/floor/carpet,
 /area/station/security/detectives_office)
 "xPt" = (

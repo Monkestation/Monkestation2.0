@@ -29,6 +29,7 @@ GLOBAL_VAR_INIT(starlight_color, pick(COLOR_TEAL, COLOR_GREEN, COLOR_CYAN, COLOR
 	vis_flags = VIS_INHERIT_ID //when this be added to vis_contents of something it be associated with something on clicking, important for visualisation of turf in openspace and interraction with openspace that show you turf.
 
 	force_no_gravity = TRUE
+	astar_weight = 500
 
 /turf/open/space/basic/New() //Do not convert to Initialize
 	SHOULD_CALL_PARENT(FALSE)
@@ -253,7 +254,7 @@ GLOBAL_VAR_INIT(starlight_color, pick(COLOR_TEAL, COLOR_GREEN, COLOR_CYAN, COLOR
 	destination_z = dest_z
 
 /turf/open/space/can_cross_safely(atom/movable/crossing)
-	return HAS_TRAIT(crossing, TRAIT_SPACEWALK)
+	return HAS_TRAIT(crossing, TRAIT_SPACEWALK) || (locate(/obj/structure/lattice) in src)
 
 /turf/open/space/openspace
 	icon = 'icons/turf/floors.dmi'
