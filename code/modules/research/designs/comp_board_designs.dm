@@ -374,7 +374,7 @@
 	category = list(
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_COMMAND
 	)
-  departmental_flags = DEPARTMENT_BITFLAG_SECURITY | DEPARTMENT_BITFLAG_ENGINEERING //Monkestation edit: Engi circuit
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY | DEPARTMENT_BITFLAG_ENGINEERING //Monkestation edit: Engi circuit
 
 /datum/design/board/shuttle
 	category = list(
