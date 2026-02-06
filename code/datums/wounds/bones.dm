@@ -385,7 +385,8 @@
 	if(prob(65))
 		user.visible_message(span_danger("[user] snaps [victim]'s dislocated [limb.plaintext_zone] back into place!"), span_notice("You snap [victim]'s dislocated [limb.plaintext_zone] back into place!"), ignored_mobs=victim)
 		to_chat(victim, span_userdanger("[user] snaps your dislocated [limb.plaintext_zone] back into place!"))
-		victim.emote("scream")
+		if(!HAS_TRAIT(victim, TRAIT_ANALGESIA))
+			victim.emote("scream")
 		victim.apply_damage(20, BRUTE, limb, wound_bonus = CANT_WOUND)
 		qdel(src)
 	else
@@ -404,7 +405,8 @@
 	if(prob(65))
 		user.visible_message(span_danger("[user] snaps [victim]'s dislocated [limb.plaintext_zone] with a sickening crack!"), span_danger("You snap [victim]'s dislocated [limb.plaintext_zone] with a sickening crack!"), ignored_mobs=victim)
 		to_chat(victim, span_userdanger("[user] snaps your dislocated [limb.plaintext_zone] with a sickening crack!"))
-		victim.emote("scream")
+		if(!HAS_TRAIT(victim, TRAIT_ANALGESIA))
+			victim.emote("scream")
 		victim.apply_damage(25, BRUTE, limb, wound_bonus = 30)
 	else
 		user.visible_message(span_danger("[user] wrenches [victim]'s dislocated [limb.plaintext_zone] around painfully!"), span_danger("You wrench [victim]'s dislocated [limb.plaintext_zone] around painfully!"), ignored_mobs=victim)
@@ -434,8 +436,8 @@
 		limb.receive_damage(brute=10, wound_bonus=CANT_WOUND)
 		user.visible_message(span_danger("[user] finishes resetting [victim]'s [limb.plaintext_zone]!"), span_nicegreen("You finish resetting [victim]'s [limb.plaintext_zone]!"), ignored_mobs=victim)
 		to_chat(victim, span_userdanger("[user] resets your [limb.plaintext_zone]!"))
-
-	victim.emote("scream")
+	if(!HAS_TRAIT(victim, TRAIT_ANALGESIA))
+		victim.emote("scream")
 	qdel(src)
 
 /*
@@ -544,7 +546,8 @@
 		return TRUE
 
 	I.use(1)
-	victim.emote("scream")
+	if(!HAS_TRAIT(victim, TRAIT_ANALGESIA))
+		victim.emote("scream")
 
 	if(user != victim)
 		user.visible_message(span_notice("[user] finishes applying [I] to [victim]'s [limb.plaintext_zone], emitting a fizzing noise!"), span_notice("You finish applying [I] to [victim]'s [limb.plaintext_zone]!"), ignored_mobs=victim)
