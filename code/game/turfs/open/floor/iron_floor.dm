@@ -216,8 +216,8 @@
 	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/iron/white
-	icon_state = "white"
-	base_icon_state = "white"
+	icon_state = "whitefull"
+	base_icon_state = "whitefull"
 	floor_tile = /obj/item/stack/tile/iron/white
 
 /turf/open/floor/iron/white/smooth_edge

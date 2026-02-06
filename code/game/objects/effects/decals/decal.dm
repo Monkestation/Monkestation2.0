@@ -60,11 +60,11 @@
 	flags_1 |= INITIALIZED_1
 
 	// If the tile uses holiday colors, apply them here
-	if(use_holiday_colors)
-		var/current_holiday_color = request_holiday_colors(src, pattern)
-		if(current_holiday_color)
-			color = current_holiday_color
-			alpha = DECAL_ALPHA
+	// if(use_holiday_colors)
+	// 	var/current_holiday_color = request_holiday_colors(src, pattern)
+	// 	if(current_holiday_color)
+	// 		color = current_holiday_color
+	// 		alpha = DECAL_ALPHA
 
 	var/turf/T = loc
 	if(!istype(T)) //you know this will happen somehow
