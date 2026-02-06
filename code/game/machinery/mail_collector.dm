@@ -119,7 +119,7 @@
 		return ITEM_INTERACT_BLOCKING
 
 	if(!can_collect)
-		balloon_alert(user, "ID jams!")
+		balloon_alert(user, "id card jams!")
 		return ITEM_INTERACT_BLOCKING
 
 	var/amount = tgui_input_number(user, "How much money do you wish to claim? ID Balance: \
