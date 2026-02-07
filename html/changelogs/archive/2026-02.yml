@@ -69,3 +69,9 @@
   - map: Medical kit is now loaded with medical supplies outside medical on oshan
   - map: botany windoor is no longer inverted and doubled
   - map: NT rep was taught by the RD how to download their programs on their computer.
+2026-02-06:
+  Absolucy:
+  - rscadd: You can now use 10 sheets of reinforced plasma glass to upgrade SMESes
+      to be shielded against EMPs.
+  - map: All mapped in singularity/tesla engines now use an EMP-shielded SMES for
+      the emitters.

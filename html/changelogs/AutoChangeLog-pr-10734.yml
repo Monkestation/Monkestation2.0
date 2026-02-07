@@ -1,0 +1,7 @@
+author: "KittyNoodle"
+delete-after: True
+changes:
+  - bugfix: "People scream again in various painful situations involving their bones."
+  - bugfix: "People scream again when their spine is annihilated via catastrophic tackle failure."
+  - bugfix: "Artery repair now has its surgery pain text restored."
+  - bugfix: "Guns no longer paralyze you or knock you down due to an oversight."

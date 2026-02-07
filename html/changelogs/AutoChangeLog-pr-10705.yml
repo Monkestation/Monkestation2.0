@@ -1,0 +1,5 @@
+author: "Tractor-Maam"
+delete-after: True
+changes:
+  - bugfix: "NTNet relays can be DDoSed properly again."
+  - map: "Ook's modem is now a fluff object, and wont show on DoS generator or Wirecarp as a useless endpoint as such."
