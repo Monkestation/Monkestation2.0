@@ -94,6 +94,7 @@
 	name = "union management console"
 	desc = "Handles paychecks of all Union personnel."
 	union_mode = TRUE
+	req_access = list(ACCESS_UNION_LEADER)
 
 /obj/machinery/computer/accounting/union/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
