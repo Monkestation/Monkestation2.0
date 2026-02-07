@@ -1,0 +1,6 @@
+author: "flleeppyy"
+delete-after: True
+changes:
+  - qol: "Pre-round shop, latejoin and the stat panel now shows you the character you're readying up as"
+  - qol: "You can now change your character from the pre-round shop, and latejoin menus, as well as the \"Change Character Slot\" verb."
+  - admin: "makes the interview menu wider to fit the buttons if you're an admin"

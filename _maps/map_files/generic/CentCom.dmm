@@ -2719,10 +2719,11 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/briefing)
 "ahp" = (
-/obj/machinery/ntnet_relay{
+/obj/structure/fluff{
+	desc = "A very complex router and transmitter capable of connecting electronic devices together. Did Ook somehow steal this hunk of junk from NT or something??";
 	name = "Ook's Modem";
-	is_operational = 0;
-	desc = "A very complex router and transmitter capable of connecting electronic devices together. Did Ook somehow steal this hunk of junk from NT or something??"
+	icon = 'icons/obj/machines/telecomms.dmi';
+	icon_state = "bus"
 	},
 /turf/open/misc/grass,
 /area/centcom/central_command_areas/admin)

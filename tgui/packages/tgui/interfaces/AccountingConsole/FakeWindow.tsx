@@ -29,7 +29,6 @@ export const FakeWindowPet = (props: FakeWindowPetProps) => {
     </FakeWindow>
   );
 };
-
 export const FakeWindow = (
   props: FakeWindowProps & {
     children: React.ReactNode;

@@ -1,5 +1,5 @@
 #define MAX_ADVANCES 3
-#define MIN_PAY_MOD 0.5
+#define MIN_PAY_MOD 0.25
 #define MAX_PAY_MOD 2
 
 /obj/machinery/computer/accounting
@@ -9,6 +9,7 @@
 	icon_keyboard = "id_key"
 	circuit = /obj/item/circuitboard/computer/accounting
 	light_color = LIGHT_COLOR_GREEN
+	req_access = list(ACCESS_HOP)
 
 	///In Union mode, we show Cargo-related stuff.
 	var/union_mode = FALSE
