@@ -42,26 +42,32 @@
 /obj/machinery/computer/accounting/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
-		return
+		return TRUE
 
 	playsound(src, SFX_TERMINAL_TYPE, 50, FALSE)
 
 /obj/machinery/computer/accounting/hop/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
-		return
+		return TRUE
 
 	var/datum/bank_account/bank_account = SSeconomy.bank_accounts_by_id[params["account_id"]]
-	if(isnull(bank_account) || !(bank_account.account_job?.job_flags & JOB_CREW_MANIFEST))
-		return
+	if(isnull(bank_account))
+		return TRUE
 
 	switch(action)
 		if("paycheck_advance")
+			if(!allowed(ui.user))
+				balloon_alert(ui.user, "no access!")
+				return TRUE
 			if(bank_account.paydays_to_skip[bank_account.account_job.paycheck_department] < MAX_ADVANCES)
 				bank_account.payday(1, event = "Paycheck advance")
 				bank_account.paydays_to_skip[bank_account.account_job.paycheck_department] += 1
 			return TRUE
 		if("change_pay_mod")
+			if(!allowed(ui.user))
+				balloon_alert(ui.user, "no access!")
+				return TRUE
 			var/old_modifier = bank_account.payday_modifier[bank_account.account_job.paycheck_department]
 			bank_account.payday_modifier[bank_account.account_job.paycheck_department] = clamp(round(text2num(params["pay_mod"]), 0.05), MIN_PAY_MOD, MAX_PAY_MOD)
 			var/new_check_total = bank_account.payday_modifier[bank_account.account_job.paycheck_department] * bank_account.account_job.paycheck
@@ -99,11 +105,11 @@
 /obj/machinery/computer/accounting/union/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
-		return
+		return TRUE
 
 	var/datum/bank_account/bank_account = SSeconomy.bank_accounts_by_id[params["account_id"]]
-	if(isnull(bank_account) || !(bank_account.account_job?.job_flags & JOB_CREW_MANIFEST))
-		return
+	if(isnull(bank_account))
+		return TRUE
 
 	switch(action)
 		if("paycheck_advance")
@@ -125,8 +131,6 @@
 	var/list/player_accounts = list()
 	for(var/member in GLOB.cargo_union.union_employees)
 		var/datum/bank_account/current_bank_account = member[CARGO_UNION_BANK]
-		if(!(current_bank_account.account_job?.job_flags & JOB_CREW_MANIFEST))
-			continue
 		player_accounts += list(list(
 			"name" = member[CARGO_UNION_NAME],
 			"job" = current_bank_account.account_job.title,
