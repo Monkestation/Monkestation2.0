@@ -601,7 +601,7 @@
 /area/virtual_domain/powered_lighting)
 "gX" = (
 /obj/effect/turf_decal/delivery,
-/obj/machinery/door/airlock/glass_large,
+/obj/machinery/door/airlock/multi_tile/public/glass,
 /obj/machinery/door/poddoor/preopen{
 	id = "blast_door_blueshift_lobby_left_down"
 	},
@@ -2755,7 +2755,7 @@
 /area/virtual_domain/powered_lighting)
 "Bv" = (
 /obj/effect/turf_decal/delivery,
-/obj/machinery/door/airlock/glass_large,
+/obj/machinery/door/airlock/multi_tile/public/glass,
 /obj/machinery/door/poddoor/preopen{
 	id = "blast_door_blueshift_lobby_left_up"
 	},
@@ -3100,7 +3100,7 @@
 /area/virtual_domain/powered_lighting)
 "Ej" = (
 /obj/effect/turf_decal/delivery,
-/obj/machinery/door/airlock/glass_large,
+/obj/machinery/door/airlock/multi_tile/public/glass,
 /obj/machinery/door/poddoor/preopen{
 	id = "blast_door_blueshift_lobby_right_down"
 	},
@@ -3947,7 +3947,7 @@
 /area/virtual_domain/powered_lighting)
 "Mz" = (
 /obj/effect/turf_decal/delivery,
-/obj/machinery/door/airlock/glass_large,
+/obj/machinery/door/airlock/multi_tile/public/glass,
 /obj/machinery/door/poddoor/preopen{
 	id = "blast_door_blueshift_lobby_right_up"
 	},

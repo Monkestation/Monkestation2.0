@@ -191,6 +191,11 @@
 		base_icon_state = "ready"
 		var/client/new_client = new_player.client
 		if(new_client)
+			var/highest_job = new_client.prefs.GetHighestJobPreference()
+			var/ready_message = "Readying up as '[new_client.prefs.read_preference(/datum/preference/name/real_name)]'"
+			if(length(highest_job))
+				ready_message += ", Highest occupation setting: [highest_job]"
+			to_chat(new_client, span_notice(ready_message))
 			if(!new_client.readied_store)
 				new_client.readied_store = new(new_player)
 			new_client.readied_store.ui_interact(new_player)

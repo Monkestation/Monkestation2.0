@@ -1,14 +1,14 @@
 import { useBackend } from '../backend';
-import { Window } from '../layouts';
 import {
   Button,
-  Input,
-  Section,
   Collapsible,
+  Dropdown,
+  Input,
   LabeledList,
   NumberInput,
-  Dropdown,
+  Section,
 } from '../components';
+import { Window } from '../layouts';
 
 export const AnimateHolder = (props) => {
   const { act, data } = useBackend();
@@ -45,7 +45,7 @@ const AnimateSteps = (props) => {
   return (
     <Section fill scrollable title="Animation Steps">
       {steps.map((step, index) => (
-        <Collapsible key={index} title={'Step:' + (index + 1)}>
+        <Collapsible key={index} title={`Step:${index + 1}`}>
           <LabeledList>
             {variables.map(({ name, type }) => {
               const isRandom = step[name] === 'RANDOM';

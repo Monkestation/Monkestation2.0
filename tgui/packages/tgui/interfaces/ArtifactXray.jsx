@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Slider, Button, Stack, NoticeBox, Section, Box } from '../components';
+import { Box, Button, NoticeBox, Section, Slider, Stack } from '../components';
 import { Window } from '../layouts';
 
 export const ArtifactXray = (props) => {

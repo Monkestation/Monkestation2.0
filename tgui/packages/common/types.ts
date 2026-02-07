@@ -1,9 +1,12 @@
 /**
  * Returns the arguments of a function F as an array.
  */
-// prettier-ignore
-export type ArgumentsOf<F extends Function>
-  = F extends (...args: infer A) => unknown ? A : never;
+// biome-ignore lint/complexity/noBannedTypes: im lazy and a future refactor will nuke this anyways
+export type ArgumentsOf<F extends Function> = F extends (
+  ...args: infer A
+) => unknown
+  ? A
+  : never;
 
 export enum BandcampImageSize {
   PNG_2000_8BIT = 0,
