@@ -60,6 +60,16 @@ export const UnionScreen = () => {
           </>
         }
       >
+        {!badge_name && (
+          <Stack vertical>
+            <Stack.Item fontSize="140%" color="bad" bold textAlign="center">
+              No Badge detected
+            </Stack.Item>
+            <Stack.Item textAlign="center">
+              Please insert a badge to use this section.
+            </Stack.Item>
+          </Stack>
+        )}
         <Stack>
           <Stack.Item>
             {!!badge_icon && (

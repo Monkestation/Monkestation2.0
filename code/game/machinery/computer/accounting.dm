@@ -44,7 +44,7 @@
 	if(.)
 		return TRUE
 
-	playsound(src, SFX_TERMINAL_TYPE, 50, FALSE)
+	playsound(src.loc, SFX_TERMINAL_TYPE, 50, FALSE)
 
 /obj/machinery/computer/accounting/hop/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
@@ -53,7 +53,7 @@
 
 	var/datum/bank_account/bank_account = SSeconomy.bank_accounts_by_id[params["account_id"]]
 	if(isnull(bank_account))
-		return TRUE
+		return
 
 	switch(action)
 		if("paycheck_advance")
@@ -109,7 +109,7 @@
 
 	var/datum/bank_account/bank_account = SSeconomy.bank_accounts_by_id[params["account_id"]]
 	if(isnull(bank_account))
-		return TRUE
+		return
 
 	switch(action)
 		if("paycheck_advance")
