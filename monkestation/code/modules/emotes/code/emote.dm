@@ -78,16 +78,6 @@
 	hands_use_check = TRUE
 	emote_type = EMOTE_VISIBLE
 
-/datum/emote/living/whistle
-	key = "whistle"
-	key_third_person="whistle"
-	message = "whistles a few notes."
-	message_robot = "whistles a few synthesized notes."
-	message_AI = "whistles a synthesized song."
-	message_ipc = "whistles a few synthesized notes."
-	message_param = "whistles at %t."
-	emote_type = EMOTE_AUDIBLE
-
 /datum/emote/living/scream
 	key = "scream"
 	key_third_person = "screams"

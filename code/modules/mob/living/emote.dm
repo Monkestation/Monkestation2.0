@@ -708,3 +708,18 @@ monkestation edit end */
 	message = "says a swear word!"
 	message_mime = "makes a rude gesture!"
 	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/whistle
+	key = "whistle"
+	key_third_person = "whistle"
+	message = "whistles a few notes."
+	message_robot = "whistles a few synthesized notes."
+	message_AI = "whistles a synthesized song."
+	message_ipc = "whistles a few synthesized notes."
+	message_param = "whistles at %t."
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/whistle/get_sound(mob/living/user)
+	if(ishuman(user))
+		return 'sound/effects/whistle.ogg'
+	return FALSE
