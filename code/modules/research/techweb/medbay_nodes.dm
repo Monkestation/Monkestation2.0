@@ -28,9 +28,6 @@
 		"diseaseanalyzer",
 		"centrifuge",
 		"path_data",
-		"heat_pack",
-		"cold_pack",
-		"medical_crutch",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	discount_experiments = list(/datum/experiment/autopsy/human = TECHWEB_DISCOUNT_MINOR * 2)

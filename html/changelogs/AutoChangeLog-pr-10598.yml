@@ -1,0 +1,8 @@
+author: "Infernal-0"
+delete-after: True
+changes:
+  - qol: "Medbay can now print prosthetic surplus limbs."
+  - qol: "Medbay now has a robot-repair toolbox."
+  - balance: "You can now no longer print implants from protolathes."
+  - image: "Medical toolbox sprites."
+  - map: "Added medical repair toolboxes to medbay storage, fixes some consistency issues with L3BioHaz lockers and cyborg chargers."

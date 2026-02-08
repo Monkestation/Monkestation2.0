@@ -26,6 +26,7 @@ type Data = {
   currently_owned?: string;
   balance: number;
   items: Item[];
+  selected_character?: string;
 };
 
 const ItemListEntry = (props) => {
@@ -68,7 +69,7 @@ const ItemListEntry = (props) => {
 export const PreRoundStore = (_props) => {
   const {
     act,
-    data: { notices, balance, items, currently_owned },
+    data: { notices, balance, items, currently_owned, selected_character },
   } = useBackend<Data>();
 
   return (
@@ -80,22 +81,35 @@ export const PreRoundStore = (_props) => {
             Purchase an item that will spawn with you round start!
           </BlockQuote>
           <Stack vertical fill>
-            {currently_owned ? (
+            {currently_owned && (
               <Stack.Item>
                 <Box>Held Item: {currently_owned}</Box>
               </Stack.Item>
-            ) : (
-              ''
             )}
             <Stack.Item>
               <Section>
-                <Flex direction="row" align="center">
+                <Flex direction="row" align="center" justify="space-between">
                   <Box>
                     Balance: {balance} <Icon name="coins" />
                   </Box>
+                  <Button icon="user" onClick={() => act('change_slot')}>
+                    Change Character
+                  </Button>
                 </Flex>
               </Section>
             </Stack.Item>
+
+            {selected_character && (
+              <Stack.Item textAlign="center" mb="1em">
+                <h3
+                  style={{
+                    padding: 0,
+                  }}
+                >
+                  Readying up as '{selected_character}'
+                </h3>
+              </Stack.Item>
+            )}
             <Stack.Item>
               {items && items.length > 0
                 ? items.map((purchase) => {

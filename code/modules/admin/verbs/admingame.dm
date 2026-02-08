@@ -305,7 +305,7 @@ ADMIN_VERB(manage_job_slots, R_ADMIN, FALSE, "Manage Job Slots", "Manage the num
 /datum/admins/proc/manage_free_slots()
 	if(!check_rights())
 		return
-	var/datum/browser/browser = new(usr, "jobmanagement", "Manage Free Slots", 520)
+	var/datum/browser/browser = new(usr, "jobmanagement", "Manage Free Slots", 580)
 	var/list/dat = list()
 	var/count = 0
 

@@ -125,8 +125,8 @@
 			continue
 		unreceived[asset_name] = ACI
 
-	if (unreceived.len)
-		if (unreceived.len >= ASSET_CACHE_TELL_CLIENT_AMOUNT)
+	if (length(unreceived))
+		if (length(unreceived) >= ASSET_CACHE_TELL_CLIENT_AMOUNT)
 			to_chat(client, span_infoplain("Sending Resources..."))
 
 		for (var/asset_name in unreceived)

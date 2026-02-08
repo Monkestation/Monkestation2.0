@@ -32,7 +32,8 @@ GLOBAL_LIST_INIT(scryer_auto_link_freqs, zebra_typecacheof(list(
 	animate(visuals, 0.5 SECONDS, alpha = 255)
 	var/datum/callback/setdir_callback = CALLBACK(mod_link.holder, proc_path)
 	setdir_callback.Invoke(user, user.dir, user.dir)
-	mod_link.holder.RegisterSignal(mod_link.holder.loc, COMSIG_ATOM_DIR_CHANGE, proc_path)
+	var/holder_location = (istype(mod_link.holder.loc, /obj/item/clothing/accessory/scryer_accessory) && !isnull(user)) ? user : mod_link.holder.loc
+	mod_link.holder.RegisterSignal(holder_location, COMSIG_ATOM_DIR_CHANGE, proc_path)
 
 /proc/delete_link_visual_generic(datum/mod_link/mod_link)
 	var/mob/living/user = mod_link.get_user_callback.Invoke()
@@ -223,10 +224,11 @@ GLOBAL_LIST_INIT(scryer_auto_link_freqs, zebra_typecacheof(list(
 	. += span_notice("The MODlink ID is [mod_link.id], frequency is [mod_link.frequency || "unset"]. <b>Right-click</b> with multitool to copy/imprint frequency.")
 	. += span_notice("Use in hand to set name.")
 	. += span_notice("Its ringtone is set to '[ringtone]'")
+	. += span_notice("You can wear this as an accessory.")
 
 /obj/item/clothing/neck/link_scryer/equipped(mob/living/user, slot)
 	. = ..()
-	if(slot != ITEM_SLOT_NECK)
+	if(slot != ITEM_SLOT_NECK && (istype(src.loc, /obj/item/clothing/accessory/scryer_accessory)) && slot != ITEM_SLOT_ICLOTHING)
 		mod_link?.end_call()
 
 /obj/item/clothing/neck/link_scryer/dropped(mob/living/user)
@@ -252,6 +254,25 @@ GLOBAL_LIST_INIT(scryer_auto_link_freqs, zebra_typecacheof(list(
 			to_chat(user, span_notice("Ringtone '[ringtone]' selected."))
 		if("Cancel")
 			return
+
+/obj/item/clothing/neck/link_scryer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	. = ..()
+	if(istype(interacting_with, /obj/item/clothing/under))
+		var/obj/item/clothing/under/clothes = interacting_with
+		if(!isliving(user))
+			return .
+		if(!user.temporarilyRemoveItemFromInventory(src) || QDELETED(src))
+			return .
+		var/obj/item/clothing/accessory/scryer_accessory/holder = new(user, src)
+		if(QDELETED(holder))
+			return .
+		if(!clothes.attach_accessory(holder, user))
+			user.temporarilyRemoveItemFromInventory(holder)
+			holder.scryer = null
+			user.put_in_hands(src)
+			qdel(holder)
+			return .
+		return ITEM_INTERACT_SUCCESS
 
 /obj/item/clothing/neck/link_scryer/process(seconds_per_tick)
 	if(!mod_link.link_call)
@@ -336,15 +357,35 @@ GLOBAL_LIST_INIT(scryer_auto_link_freqs, zebra_typecacheof(list(
 	src.mod_link?.soundloop?.set_ringtone(src.ringtone)
 	src.mod_link?.soundloop?.stop()
 
-
 /obj/item/clothing/neck/link_scryer/proc/get_user()
 	var/mob/living/carbon/user = loc
 	return istype(user) && user.wear_neck == src ? user : null
+
+/obj/item/clothing/neck/link_scryer/proc/get_accessory_user()
+	var/obj/item/clothing/accessory/scryer_accessory/acc = loc
+	if(!istype(acc))
+		return null
+	var/obj/item/clothing/under/uniform = acc.loc
+	if(!istype(uniform))
+		return null
+	var/mob/living/carbon/human/user = uniform.loc
+	return istype(user) && user.w_uniform == uniform  ? user : null
 
 /obj/item/clothing/neck/link_scryer/proc/can_call()
 	if(!cell?.charge)
 		return FALSE
 	return base_mod_link_checks(loc)
+
+/obj/item/clothing/neck/link_scryer/proc/can_accessory_call()
+	if(!cell?.charge)
+		return FALSE
+	var/obj/item/clothing/accessory/scryer_accessory/acc = loc
+	if(!istype(acc))
+		return FALSE
+	var/obj/item/clothing/under/uniform = acc.loc
+	if(!istype(uniform))
+		return FALSE
+	return base_mod_link_checks(uniform.loc)
 
 /obj/item/clothing/neck/link_scryer/proc/make_link_visual()
 	var/mob/living/user = mod_link.get_user_callback.Invoke()
@@ -362,7 +403,8 @@ GLOBAL_LIST_INIT(scryer_auto_link_freqs, zebra_typecacheof(list(
 
 /obj/item/clothing/neck/link_scryer/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods, message_range)
 	. = ..()
-	if(speaker != loc)
+	var/location = istype(loc, /obj/item/clothing/accessory/scryer_accessory) ? get_accessory_user() : loc
+	if(speaker != location)
 		return
 	var/old_name = mod_link.visual.name
 	mod_link.visual.name = speaker.GetVoice()
@@ -376,7 +418,8 @@ GLOBAL_LIST_INIT(scryer_auto_link_freqs, zebra_typecacheof(list(
 /obj/item/clothing/neck/link_scryer/proc/update_link_visual()
 	if(QDELETED(mod_link.link_call))
 		return
-	var/mob/living/user = loc
+	var/location = istype(loc, /obj/item/clothing/accessory/scryer_accessory) ? get_accessory_user() : loc
+	var/mob/living/user = location
 	mod_link.visual.cut_overlay(mod_link.visual_overlays)
 	mod_link.visual_overlays = user.overlays - user.active_thinking_indicator
 	mod_link.visual.add_overlay(mod_link.visual_overlays)
