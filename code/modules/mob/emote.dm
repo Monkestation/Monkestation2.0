@@ -55,7 +55,7 @@
 	var/list/keys = list()
 	var/list/message = list("Available emotes, you can use them with say [span_bold("\"*emote\"")]: \n")
 	message += span_smallnoticeital("Note - emotes highlighted in blue play a sound\n")
-	message += span_smallnoticeital("Note - underlined emotes have a visual queue \n\n")
+	message += "<u>Note - underlined emotes have a visual queue</u> \n\n"
 
 	for(var/key in GLOB.emote_list)
 		for(var/datum/emote/emote_action in GLOB.emote_list[key])
