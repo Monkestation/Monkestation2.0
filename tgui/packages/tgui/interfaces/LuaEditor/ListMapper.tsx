@@ -1,5 +1,10 @@
 import type { BooleanLike } from 'common/react';
-import { isValidElement, type ReactNode } from 'react';
+import React, {
+  type ComponentProps,
+  type Dispatch,
+  isValidElement,
+  type SetStateAction,
+} from 'react';
 
 import { useBackend } from '../../backend';
 import {
@@ -10,7 +15,6 @@ import {
   Section,
   Tooltip,
 } from '../../components';
-import type { BoxProps } from '../../components/Box';
 import { logger } from '../../logging';
 import type {
   CallInfo,
@@ -100,7 +104,7 @@ const mapListVariants = (list: any[], variants: VariantList) => {
   });
 };
 
-type ListMapperProps = BoxProps & {
+type ListMapperProps = ComponentProps<typeof Box> & {
   list: ListElement[];
 } & Partial<{
     variants: VariantList;
@@ -111,8 +115,8 @@ type ListMapperProps = BoxProps & {
     collapsible: BooleanLike;
     callType: 'callFunction' | 'resumeTask';
     path: ListPath;
-    setToCall: (newValue: CallInfo | undefined) => void;
-    setModal: (newValue: LuaEditorModal) => void;
+    setToCall: Dispatch<SetStateAction<CallInfo>>;
+    setModal: Dispatch<SetStateAction<LuaEditorModal>>;
   }>;
 
 export const ListMapper = (props: ListMapperProps) => {
@@ -139,7 +143,7 @@ export const ListMapper = (props: ListMapperProps) => {
   }
 
   const ThingNode = (
-    thing: ReactNode, // There is NO way this is correct
+    thing: any,
     path: ListPath,
     canCall: BooleanLike,
     overrideProps?: ListMapperProps,
@@ -156,17 +160,14 @@ export const ListMapper = (props: ListMapperProps) => {
           {...overrideProps}
         />
       );
-    } else if (isValidElement(thing)) {
+    } else if (React.isValidElement<any>(thing)) {
       switch (thing.key) {
         case 'ref':
           return (
             <Button
               tooltip="Click to VV"
               onClick={vvAct && (() => vvAct(path))}
-              {
-                // @ts-expect-error Someone should really rewrite this whole thing
-                ...thing.props
-              }
+              {...thing.props}
             />
           );
         case 'function':
@@ -183,10 +184,7 @@ export const ListMapper = (props: ListMapperProps) => {
                   });
                   setModal('call');
                 }}
-                {
-                  // @ts-expect-error
-                  ...thing.props
-                }
+                {...thing.props}
               />
             );
           } else if (thing === null) {

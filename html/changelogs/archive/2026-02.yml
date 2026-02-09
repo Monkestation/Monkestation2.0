@@ -55,3 +55,135 @@
   SirNightKnight:
   - rscdel: Removed the pain system.
   - balance: nutcracking someone paralyzes them and knocks them down.
+2026-02-05:
+  Absolucy, Majkl-J:
+  - bugfix: Ruins will now correctly spawn their tied ruins in.
+  flleeppyy:
+  - qol: Vote HUD now fades in and out instead of being right in your face.
+  - code_imp: Vote datums can now specify excluded mobs from votes
+  - bugfix: Lobby players can no longer vote for the shuttle to be called.
+  notghosti:
+  - map: Paramedics, dep sec, ect. will now no longer spawn ontop of eachother on
+      normal shifts on oshan
+  - map: Nanite lab now has purge pills on oshan
+  - map: Medical kit is now loaded with medical supplies outside medical on oshan
+  - map: botany windoor is no longer inverted and doubled
+  - map: NT rep was taught by the RD how to download their programs on their computer.
+2026-02-06:
+  Absolucy:
+  - rscadd: You can now use 10 sheets of reinforced plasma glass to upgrade SMESes
+      to be shielded against EMPs.
+  - map: All mapped in singularity/tesla engines now use an EMP-shielded SMES for
+      the emitters.
+2026-02-07:
+  JohnFulpWillard:
+  - bugfix: Being turned into a gorilla now keeps your gender.
+  - bugfix: AIs can now track Silicon as long as their built-in camera is online.
+  KittyNoodle:
+  - bugfix: People scream again in various painful situations involving their bones.
+  - bugfix: People scream again when their spine is annihilated via catastrophic tackle
+      failure.
+  - bugfix: Artery repair now has its surgery pain text restored.
+  - bugfix: Guns no longer paralyze you or knock you down due to an oversight.
+  MrMelbert:
+  - rscadd: The HoP can now give pay increases/cuts/advances.
+  Siro:
+  - rscadd: Scryers can be worn as an accessory like a medal or pin. Scryers can still
+      be used as normal neck items if you want.
+  - balance: Scryer accessory can be stripped with a 4 second delay from examine.
+      Must be adjacent to the wearer.
+  - code_imp: modlink code slightly adapted for accessory/scryer_accessory
+  - code_imp: Fixed a few potential bugs that showed up if an accessory was qdel before
+      forcemove. Didn't happen normally but could have potentially happened and does
+      with this addition.
+  - code_imp: Adds thermal destabilization to temp gun. Prevents mob from homeostasis
+      for 3 seconds and refreshes with every shot. This effects all temperature projectiles.
+      Some examples are pyrokinesis, Watchers, Ice Demons, Earth bolt etc.
+  - qol: Can examine cores closer to see the items inside and pull those specific
+      items out with a shorter duration.
+  - qol: Oozelings that are special revived not in a nugget state will reequip their
+      items automatically.
+  - bugfix: Cultist revival now revives oozelings and will offer their bodies up if
+      the player playing them is afk or they went souless.
+  - balance: Oozeling limb retraction now has a 2 second delay and incapacitation
+      check to prevent intentional retractions while being cuffed.
+  - balance: Water vapor now affects oozelings. Starting at 1kPa partial pressure
+      it will do lung and blood damage. Max damage occurs at 8kPa. Hydrophobia does
+      not protect against this.
+  - balance: Basic mask filters can prevent breathing in of water vapor.
+  - balance: Festering ooze again lightly heals oozelings. Heal is weaker than a stabilized
+      purple extract.
+  - balance: Specific security implants will get stored on death and reimplant upon
+      revival of oozelings. Prevents oozeling antags from dying and reviving to remove
+      the implants.
+  - balance: Black listed oozeling limbs from limb swapper causing issues for non-oozeling
+      species.
+  - balance: Short spray cooldown so certain angles of extinguisher sprays doesn't
+      completely drain oozeling's blood.
+  Tractor-Maam:
+  - bugfix: NTNet relays can be DDoSed properly again.
+  - map: Ook's modem is now a fluff object, and wont show on DoS generator or Wirecarp
+      as a useless endpoint as such.
+  - bugfix: fixed some space leaking through on the Tram Slum Bar.
+  flleeppyy:
+  - rscadd: NTSL/Lua editor now uses the ACE Editor, with proper syntax highlighting,
+      and making it much easier to edit scripts.
+  - rscadd: When viewing logs using the `Get-Current-Logs` verb, if the file is a
+      json file and you click "View", it will open using the json log viewer.
+  - admin: R_AUTOADMIN has been removed in favor of the Autoadmin preference, which
+      can be changed from the admin section in game preferences
+  - admin: Bumped max reason length for bans from 600 to 1024
+  - admin: '"Unban" in the Unbanning Panel will now prompt if you want to unban similar
+      bans. This is useful if you need to remove someone from a ban thats banned from
+      a whole department, or a ton of roles, and you don''t want to painstakingly
+      click Unban on every single one.'
+  - admin: improved ticket windows, interview panel, and fixed popups.
+  - admin: Claiming/unclaiming now logs as an interaction in a ticket.
+  - admin: Trying to play music while the on-station cassette player is playing music,
+      will now prompt you before playing. This is so admins can be courteous of curators
+      playing music, since they have cooldowns and admins do not.
+  - admin: Antag Request notifications now show more player info such as their current
+      role, special role, and mob type. Additionally adds "Check Antagonists" and
+      "Open Token Manager" as buttons to the notification
+  - admin: Fixed admin popups not working
+  - admin: Added a notice to interviews for admins
+  - admin: Added a few useful buttons for admins
+  - admin: You can now specify pronouns in stealth-mode.
+  - qol: Tickets now show when a user is typing
+  - qol: '"Admin PM Mob" now uses TGUI''s input list for easy searching'
+  - qol: VV window links are easier on the eyes
+  - qol: Made "manage Job Slots" Window wider
+  - qol: Admin announcements now show pronouns
+  - rscadd: Added "Stop All Sounds" to "Help" window dropdown
+  - rscadd: Added "Reload Lobby Notices" verb
+  - rscadd: Added "Get" and "Jump To" context menu verbs.
+  - rscadd: Added "Reissue roundstart ID" VV dropdown for carbon humans
+  - rscadd: Added relay chooser (Named "Internet Routing Relays" at the top of the
+      window) ported from IrisStation
+  - rscadd: You can now search through keybindings and game preferences
+  - bugfix: Crafting items now adds a hiddenprint to the crafted item
+  - bugfix: properly applied cooldowns to typing for tickets
+  - bugfix: Stopping web sounds now properly stops the cassette player on station
+      instead of leaving it in a weird state
+  - bugfix: VOX no longer plays for players in the lobby.
+  - bugfix: Fix an instance of NTSL recompilation not logging correctly
+  - bugfix: Fixed subtle message runtiming if the player you're messaging spontaneously
+      implodes
+  - bugfix: Interface verbs not working as interviewee.
+  - code_imp: Normalized instances of server join links to use the `roundend_webhook_description`
+      config value
+  - code_imp: Moved djstation "play"/"stop" topic codeblocks to their own procs for
+      calling play/stop outside of topics.
+  - code_imp: Yapped about BYOND's SoundQuery proc and the fact it only returns specific
+      vars.
+  - code_imp: Added `legend` bool param to gameTimestamp. When true, gives 00h:00m:00s
+      instead of 00:00:00
+  - code_imp: (OOC Pronouns) One pronoun is required always now. Custom text is still
+      staff/donator only
+  - code_imp: Partially demodularized new_player.dm
+  - code_imp: Refactored OOC code for admin stealth pronouns
+  - qol: Pre-round shop, latejoin and the stat panel now shows you the character you're
+      readying up as
+  - qol: You can now change your character from the pre-round shop, and latejoin menus,
+      as well as the "Change Character Slot" verb.
+  - admin: makes the interview menu wider to fit the buttons if you're an admin

@@ -2,7 +2,7 @@
 	name = "C.H.R.O.M.A.T.A. mantis blade implants"
 	desc =  "High tech mantis blade implants, easily portable weapon, that has a high wound potential."
 	id = "ci-set-mantis"
-	build_type = PROTOLATHE | MECHFAB
+	build_type = MECHFAB
 	construction_time = 3 SECONDS
 	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT*2.5, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/silver =HALF_SHEET_MATERIAL_AMOUNT * 1.5)
 	build_path = /obj/item/organ/internal/cyberimp/arm/item_set/mantis
@@ -15,7 +15,7 @@
 	name = "Officer Arm Implant"
 	desc =  "A powerful cybernetic implant that contains combat modules built into the user's arm."
 	id = "ci-set-combat"
-	build_type = PROTOLATHE | MECHFAB
+	build_type = MECHFAB
 	construction_time = 3 SECONDS
 	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT*2.5, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/silver =HALF_SHEET_MATERIAL_AMOUNT * 1.5)
 	build_path = /obj/item/organ/internal/cyberimp/arm/item_set/combat
@@ -29,7 +29,7 @@
 	name = "Arm-mounted Taser Arm Implant"
 	desc =  "A powerful cybernetic implant that engrains an advanced taser into the user's arm."
 	id = "ci-set-taser"
-	build_type = PROTOLATHE | MECHFAB
+	build_type = MECHFAB
 	construction_time = 3 SECONDS
 	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT*2.5, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/silver =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/titanium =HALF_SHEET_MATERIAL_AMOUNT * 1.5)
 	build_path = /obj/item/organ/internal/cyberimp/arm/item_set/gun/taser
@@ -42,7 +42,7 @@
 	name = "Integrated High-intensity Photon Projector"
 	desc =  "A powerful cybernetic implant that engrains a flash into the user's arm."
 	id = "ci-set-flash"
-	build_type = PROTOLATHE | MECHFAB
+	build_type = MECHFAB
 	construction_time = 3 SECONDS
 	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT*2.5, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/silver =HALF_SHEET_MATERIAL_AMOUNT * 1,)
 	build_path = /obj/item/organ/internal/cyberimp/arm/item_set/flash

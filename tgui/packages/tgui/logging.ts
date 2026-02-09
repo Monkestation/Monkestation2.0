@@ -6,6 +6,7 @@
 
 import { sendLogEntry } from 'tgui-dev-server/link/client';
 
+Error.stackTraceLimit = 20;
 const LEVEL_DEBUG = 0;
 const LEVEL_LOG = 1;
 const LEVEL_INFO = 2;
@@ -20,7 +21,19 @@ interface Logger {
   error: (...args: any[]) => void;
 }
 
+const LoggerEnum = {
+  [LEVEL_DEBUG]: 'debug',
+  [LEVEL_LOG]: 'log',
+  [LEVEL_INFO]: 'info',
+  [LEVEL_WARN]: 'warn',
+  [LEVEL_ERROR]: 'error',
+};
+
 const log = (level: number, namespace = 'Generic', ...args: any[]): void => {
+  if (level !== LEVEL_DEBUG) {
+    console[LoggerEnum[level]](...args);
+  }
+
   // Send logs to a remote log collector
   if (process.env.NODE_ENV !== 'production') {
     sendLogEntry(level, namespace, ...args);

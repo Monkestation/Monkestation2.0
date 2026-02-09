@@ -1,6 +1,0 @@
-author: "flleeppyy"
-delete-after: True
-changes:
-  - qol: "Vote HUD now fades in and out instead of being right in your face."
-  - code_imp: "Vote datums can now specify excluded mobs from votes"
-  - bugfix: "Lobby players can no longer vote for the shuttle to be called."
