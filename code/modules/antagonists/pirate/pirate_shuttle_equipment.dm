@@ -394,21 +394,3 @@
 		var/turf/parrot_turf = get_turf(current_parrot)
 		if(parrot_turf && is_station_level(parrot_turf.z))
 			return current_parrot
-
-/datum/export/pirate/cash
-	cost = 1
-	unit_name = "bills"
-	export_types = list(/obj/item/stack/spacecash)
-
-/datum/export/pirate/cash/get_amount(obj/O)
-	var/obj/item/stack/spacecash/C = O
-	return ..() * C.amount * C.value
-
-/datum/export/pirate/holochip
-	cost = 1
-	unit_name = "holochip"
-	export_types = list(/obj/item/holochip)
-
-/datum/export/pirate/holochip/get_cost(atom/movable/AM)
-	var/obj/item/holochip/H = AM
-	return H.credits

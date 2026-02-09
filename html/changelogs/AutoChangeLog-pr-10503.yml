@@ -1,7 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - bugfix: "Telecomms servers won't brick if you get a runtime error in your NTSL code."
-  - bugfix: "NTSL scripting should be a little more responsive now, but will no longer automatically save your code."
-  - bugfix: "Added some monke-exclusive roundstart languages to NTSL script, replacing non-existent languages from it."
-  - qol: "Added some extra references help to the NTSL scripting computer."

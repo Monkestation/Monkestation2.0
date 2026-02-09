@@ -1096,10 +1096,9 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(toshow.active_storage != src && (toshow.stat == CONSCIOUS))
 		for(var/obj/item/thing in real_location)
 			if(thing.on_found(toshow))
-				toshow.active_storage.hide_contents(toshow)
+				toshow.active_storage?.hide_contents(toshow)
 
-	if(toshow.active_storage)
-		toshow.active_storage.hide_contents(toshow)
+	toshow.active_storage?.hide_contents(toshow)
 
 	toshow.active_storage = src
 

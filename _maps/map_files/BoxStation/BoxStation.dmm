@@ -11781,12 +11781,6 @@
 /area/station/science/genetics)
 "dMR" = (
 /obj/machinery/light/directional/east,
-/obj/machinery/requests_console/directional/east{
-	department = "Law Office";
-	name = "Law Office Requests Console"
-	},
-/obj/effect/mapping_helpers/requests_console/assistance,
-/obj/effect/mapping_helpers/requests_console/information,
 /obj/machinery/computer/warrant{
 	dir = 8
 	},
@@ -13851,6 +13845,7 @@
 	},
 /obj/machinery/light/directional/west,
 /obj/machinery/cell_charger_multi/wall_mounted/directional/west,
+/obj/structure/tank_dispenser,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "evJ" = (
@@ -26678,7 +26673,7 @@
 /area/station/service/lawoffice)
 "iBP" = (
 /obj/structure/extinguisher_cabinet/directional/north,
-/obj/machinery/cassette_postbox,
+/obj/machinery/cassette_library,
 /turf/open/floor/wood,
 /area/station/service/library/lounge)
 "iCB" = (
@@ -32581,6 +32576,7 @@
 /obj/structure/table/wood,
 /obj/item/camera_film,
 /obj/item/camera/detective,
+/obj/machinery/newscaster/directional/west,
 /turf/open/floor/wood,
 /area/station/security/detectives_office)
 "kxo" = (
@@ -52853,10 +52849,10 @@
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "rdk" = (
-/obj/machinery/light/directional/west,
 /obj/machinery/computer/security{
 	dir = 4
 	},
+/obj/structure/detectiveboard/directional/west,
 /turf/open/floor/wood,
 /area/station/security/detectives_office)
 "rdl" = (
@@ -56505,6 +56501,7 @@
 	pixel_x = 32
 	},
 /obj/machinery/light/directional/east,
+/obj/machinery/cassette_postbox,
 /turf/open/floor/wood,
 /area/station/service/library/lounge)
 "slc" = (
@@ -62051,6 +62048,7 @@
 /obj/item/paper_bin,
 /obj/item/folder/white,
 /obj/item/pen,
+/obj/item/storage/toolbox/electrical/medical,
 /turf/open/floor/iron/white,
 /area/station/medical/office)
 "tYO" = (
@@ -63005,6 +63003,12 @@
 	pixel_y = 6
 	},
 /obj/item/clothing/glasses/sunglasses/big,
+/obj/machinery/requests_console/directional/east{
+	department = "Law Office";
+	name = "Law Office Requests Console"
+	},
+/obj/effect/mapping_helpers/requests_console/assistance,
+/obj/effect/mapping_helpers/requests_console/information,
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
 "uob" = (
@@ -68915,8 +68919,8 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 9
 	},
-/obj/structure/tank_dispenser,
 /obj/structure/extinguisher_cabinet/directional/west,
+/obj/vehicle/ridden/battering_ram,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "wbK" = (
@@ -72181,10 +72185,10 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/fore)
 "xft" = (
-/obj/machinery/newscaster/directional/west,
 /obj/machinery/computer/records/security{
 	dir = 4
 	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/wood,
 /area/station/security/detectives_office)
 "xfA" = (

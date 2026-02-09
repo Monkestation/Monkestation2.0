@@ -133,7 +133,7 @@
 	var/mob/living/silicon/robot/new_borg = new /mob/living/silicon/robot(loc)
 
 	new_borg.gender = gender
-	new_borg.invisibility = 0
+	new_borg.SetInvisibility(INVISIBILITY_NONE)
 
 	if(client)
 		new_borg.updatename(client)
@@ -281,6 +281,7 @@
 /mob/living/carbon/proc/gorillize()
 	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
+	var/name_to_give = !isnull(key) ? (real_name || name) : null
 	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, PERMANENT_TRANSFORMATION_TRAIT)
 	Paralyze(1, ignore_canstun = TRUE)
 
@@ -300,6 +301,10 @@
 		mind.transfer_to(new_gorilla)
 	else
 		new_gorilla.PossessByPlayer(key)
+	if(name_to_give)
+		new_gorilla.real_name = name_to_give
+		new_gorilla.name = name_to_give
+		new_gorilla.gender = src.gender
 	to_chat(new_gorilla, span_boldnotice("You are now a gorilla. Ooga ooga!"))
 	qdel(src)
 	return new_gorilla

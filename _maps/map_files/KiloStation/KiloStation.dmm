@@ -4880,7 +4880,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
-/obj/machinery/cassette_postbox,
+/obj/machinery/cassette_library,
 /turf/open/floor/iron/dark,
 /area/station/service/library)
 "bBS" = (
@@ -8042,6 +8042,7 @@
 /obj/item/clothing/gloves/latex/nitrile,
 /obj/item/clothing/gloves/latex/nitrile,
 /obj/item/clothing/gloves/latex/nitrile,
+/obj/item/storage/toolbox/electrical/medical,
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/storage)
 "cuq" = (
@@ -19550,11 +19551,11 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
-/obj/structure/noticeboard/directional/east,
 /obj/machinery/camera/directional/east{
 	c_tag = "Detective's Office";
 	name = "detective camera"
 	},
+/obj/machinery/newscaster/directional/east,
 /turf/open/floor/wood,
 /area/station/security/detectives_office)
 "gdW" = (
@@ -42910,6 +42911,9 @@
 /obj/structure/reagent_dispensers/wall/peppertank/directional/south,
 /obj/effect/turf_decal/siding/thinplating_new/dark,
 /obj/effect/turf_decal/trimline/red/line,
+/obj/vehicle/ridden/battering_ram{
+	dir = 8
+	},
 /turf/open/floor/iron/dark/textured_edge,
 /area/station/ai_monitored/security/armory)
 "nmO" = (
@@ -57307,7 +57311,7 @@
 /area/station/ai_monitored/command/storage/satellite)
 "rRx" = (
 /obj/machinery/computer/records/medical,
-/obj/machinery/newscaster/directional/north,
+/obj/structure/detectiveboard/directional/north,
 /turf/open/floor/wood,
 /area/station/security/detectives_office)
 "rRz" = (
@@ -57753,6 +57757,9 @@
 "rYK" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/machinery/holopad,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/bot_white,
 /turf/open/floor/iron/dark,
 /area/station/service/library)
 "rZa" = (
@@ -59143,10 +59150,8 @@
 /obj/structure/sign/painting/library{
 	pixel_x = 32
 	},
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/holopad,
-/obj/effect/turf_decal/bot_white,
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/machinery/cassette_postbox,
 /turf/open/floor/iron/dark,
 /area/station/service/library)
 "suA" = (

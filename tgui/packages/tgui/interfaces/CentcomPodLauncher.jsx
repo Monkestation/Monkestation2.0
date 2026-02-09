@@ -787,13 +787,13 @@ class PresetsPage extends Component {
   }
 
   saveDataToPreset(id, data) {
-    storage.set('podlauncher_preset_' + id, data);
+    storage.set(`podlauncher_preset_${id}`, data);
   }
 
   async loadDataFromPreset(id) {
     const { act } = useBackend();
     act('loadDataFromPreset', {
-      payload: await storage.get('podlauncher_preset_' + id),
+      payload: await storage.get(`podlauncher_preset_${id}`),
     });
   }
 
@@ -1026,7 +1026,7 @@ const StylePage = (props) => {
           onClick={() => act('setStyle', { style: i })}
         >
           <Box
-            className={classes(['supplypods64x64', 'pod_asset' + (i + 1)])}
+            className={classes(['supplypods64x64', `pod_asset${i + 1}`])}
             style={{
               transform: 'rotate(45deg) translate(-25%,-10%)',
               pointerEvents: 'none',
@@ -1077,8 +1077,8 @@ const Bays = (props) => {
           key={i}
           content={bay.title}
           tooltipPosition="bottom-end"
-          selected={data.bayNumber === '' + (i + 1)}
-          onClick={() => act('switchBay', { bayNumber: '' + (i + 1) })}
+          selected={data.bayNumber === `${i + 1}`}
+          onClick={() => act('switchBay', { bayNumber: `${i + 1}` })}
         />
       ))}
     </Section>
@@ -1158,7 +1158,7 @@ const DelayHelper = (props) => {
             tickWhileDragging
             onChange={(_e, value) => {
               act('editTiming', {
-                timer: '' + (i + 1),
+                timer: `${i + 1}`,
                 value: Math.max(value, 0),
                 reverse: reverse,
               });

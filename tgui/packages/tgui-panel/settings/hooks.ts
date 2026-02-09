@@ -5,7 +5,7 @@
  */
 
 import { useDispatch, useSelector } from 'tgui/backend';
-import { updateSettings, toggleSettings } from './actions';
+import { toggleSettings, updateSettings } from './actions';
 import { selectSettings } from './selectors';
 
 export const useSettings = () => {

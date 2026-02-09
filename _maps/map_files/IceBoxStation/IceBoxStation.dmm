@@ -2178,12 +2178,12 @@
 /turf/open/floor/plating,
 /area/station/engineering/transit_tube)
 "aKf" = (
-/obj/machinery/light_switch/directional/south,
 /obj/structure/chair/comfy/brown{
 	dir = 4
 	},
 /obj/effect/landmark/start/detective,
 /obj/machinery/light/directional/south,
+/obj/structure/detectiveboard/directional/south,
 /turf/open/floor/carpet,
 /area/station/security/detectives_office)
 "aKq" = (
@@ -27491,6 +27491,7 @@
 /area/station/hallway/secondary/exit/departure_lounge)
 "iuS" = (
 /obj/machinery/airalarm/directional/north,
+/obj/vehicle/ridden/battering_ram,
 /turf/open/floor/glass/reinforced,
 /area/station/ai_monitored/security/armory/upper)
 "iuU" = (
@@ -33259,9 +33260,6 @@
 "kii" = (
 /obj/structure/sign/nanotrasen{
 	pixel_x = -32
-	},
-/obj/machinery/siren/weather{
-	dir = 4
 	},
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
@@ -57213,6 +57211,7 @@
 "ryl" = (
 /obj/machinery/vending/wardrobe/det_wardrobe,
 /obj/machinery/light/directional/east,
+/obj/machinery/light_switch/directional/east,
 /turf/open/floor/carpet/grimey,
 /area/station/security/detectives_office)
 "rym" = (
@@ -63069,10 +63068,6 @@
 /obj/item/folder/blue,
 /turf/open/floor/wood,
 /area/station/security/courtroom)
-"tqb" = (
-/obj/machinery/siren/weather,
-/turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
 "tqk" = (
 /obj/structure/table,
 /obj/item/paper_bin{
@@ -71242,6 +71237,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 10
 	},
+/obj/item/storage/toolbox/electrical/medical,
 /turf/open/floor/iron/dark,
 /area/station/medical/storage)
 "vTi" = (
@@ -74239,6 +74235,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
+/obj/machinery/cassette_library,
 /turf/open/floor/wood,
 /area/station/service/library)
 "wNO" = (
@@ -222645,7 +222642,7 @@ gXS
 fsv
 fMJ
 rvE
-tqb
+bln
 bln
 bln
 bln

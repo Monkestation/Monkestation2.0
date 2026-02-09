@@ -1,11 +1,11 @@
+import { multiline } from 'common/string';
 import {
   CheckboxInput,
+  type Feature,
   FeatureColorInput,
-  Feature,
   FeatureDropdownInput,
-  FeatureToggle,
+  type FeatureToggle,
 } from '../base';
-import { multiline } from 'common/string';
 
 export const asaycolor: Feature<string> = {
   name: 'Admin chat color',
@@ -25,7 +25,7 @@ export const autoadmin: FeatureToggle = {
   name: 'Autoadmin - On join',
   category: 'ADMIN',
   description:
-    'When enabled, you will automatically readmin on new connection (Only if you have a rank with the AUTOADMIN flag).',
+    'When enabled, you will automatically readmin on new connection.',
   component: CheckboxInput,
 };
 

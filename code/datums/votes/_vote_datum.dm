@@ -40,6 +40,9 @@
 	// can we start this vote by a player
 	var/player_startable = TRUE
 
+	/// List of mob types who should not recieve this vote. key is type, value is reasoning to show in vote menu
+	var/list/exclude_mobs
+
 /**
  * Used to determine if this vote is a possible
  * vote type for the vote subsystem.

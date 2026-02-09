@@ -1,16 +1,16 @@
-import { BooleanLike } from 'common/react';
+import type { BooleanLike } from 'common/react';
 import { useBackend, useLocalState } from '../backend';
 import {
-  Section,
-  Stack,
-  Tabs,
-  Divider,
   Box,
   Button,
   Dimmer,
+  Divider,
   Icon,
   Input,
   NoticeBox,
+  Section,
+  Stack,
+  Tabs,
   Tooltip,
 } from '../components';
 import { Window } from '../layouts';
@@ -27,14 +27,14 @@ type Atoms = {
 };
 
 type Recipe = {
-  ref: String;
-  result: Number;
-  category: String;
-  name: String;
-  desc: String;
-  machinery_type: String;
+  ref: string;
+  result: number;
+  category: string;
+  name: string;
+  desc: string;
+  machinery_type: string;
   reqs: Atoms;
-  machining_skill_required: Number;
+  machining_skill_required: number;
 };
 
 type Data = {
@@ -44,7 +44,7 @@ type Data = {
   craftable: BooleanLike;
   user_machining_skill: BooleanLike;
   recipes: Recipe[];
-  atom_data: String[];
+  atom_data: string[];
 };
 
 export const Machining = (props) => {
@@ -64,7 +64,7 @@ export const Machining = (props) => {
           <Stack.Item width={'200px'}>
             <Input
               autoFocus
-              placeholder={'Search in ' + recipes.length + ' designs...'}
+              placeholder={`Search in ${recipes.length} designs...`}
               value={searchText}
               onChange={(value) => {
                 setSearchText(value);
@@ -132,10 +132,7 @@ export const Machining = (props) => {
             textAlign: 'center',
           }}
         >
-          <Icon
-            name={craftable ? 'check' : 'hourglass'}
-            spin={craftable ? false : true}
-          />
+          <Icon name={craftable ? 'check' : 'hourglass'} spin={!craftable} />
           {craftable
             ? ' Ready to produce!'
             : ' Awaiting materials for recipe...'}
