@@ -1,7 +1,9 @@
 //max channel is 1024. Only go lower from here, because byond tends to pick the first available channel to play sounds on
 #define CHANNEL_LOBBYMUSIC 1024
 #define CHANNEL_ADMIN 1023
+//Sound channel for VOX & Announcements, such as AI, Captain arrivavl/announcements, Doomsday clock, Sec level change, etc.
 #define CHANNEL_VOX 1022
+//Sound channel for event announcements, `/datum/centcom_announcer`
 #define CHANNEL_ANNOUNCER 1021
 #define CHANNEL_JUKEBOX 1020
 #define CHANNEL_HEARTBEAT 1019 //sound channel for heartbeats
