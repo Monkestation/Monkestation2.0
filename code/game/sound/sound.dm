@@ -256,6 +256,8 @@
 			return "Admin MIDIs"
 		if(CHANNEL_VOX)
 			return "Announcements / AI Noise"
+		if(CHANNEL_ANNOUNCER)
+			return "Event Announcer"
 		if(CHANNEL_JUKEBOX)
 			return "Dance Machines"
 		if(CHANNEL_HEARTBEAT)

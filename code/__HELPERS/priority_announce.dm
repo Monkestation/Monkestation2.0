@@ -90,7 +90,7 @@
 	else
 		finalized_announcement = CHAT_ALERT_DEFAULT_SPAN(jointext(announcement_strings, ""))
 
-	dispatch_announcement_to_players(finalized_announcement, players, sound)
+	dispatch_announcement_to_players(finalized_announcement, players, sound, sound_channel = CHANNEL_ANNOUNCER)
 
 	if(isnull(sender_override) && players == GLOB.player_list)
 		if(length(title) > 0)
@@ -195,7 +195,7 @@
 	return jointext(returnable_strings, "")
 
 /// Proc that just dispatches the announcement to our applicable audience. Only the announcement is a mandatory arg.
-/proc/dispatch_announcement_to_players(announcement, list/players = GLOB.player_list, sound_override = null, should_play_sound = TRUE)
+/proc/dispatch_announcement_to_players(announcement, list/players = GLOB.player_list, sound_override = null, should_play_sound = TRUE, sound_channel = CHANNEL_VOX)
 	var/sound_to_play = !isnull(sound_override) ? sound_override : 'sound/misc/notice2.ogg'
 
 	for(var/mob/target in players)
@@ -209,8 +209,8 @@
 		if(target.client?.prefs?.read_preference(/datum/preference/toggle/sound_announcements))
 			// monkestation start: volume mixer
 			var/sound/mixed_sound = sound(sound_to_play)
-			if("[CHANNEL_VOX]" in target.client?.prefs?.channel_volume)
-				mixed_sound.volume = target.client?.prefs?.channel_volume["[CHANNEL_VOX]"]
+			if("[sound_channel]" in target.client?.prefs?.channel_volume)
+				mixed_sound.volume = target.client?.prefs?.channel_volume["[sound_channel]"]
 			if(!isnull(target.client))
 				SEND_SOUND(target, mixed_sound)
 			// monkestation end
