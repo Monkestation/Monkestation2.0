@@ -76,6 +76,10 @@
 		span_notice("[user] begins to repair the arteries in [in_where] with [tool]."),
 		span_notice("[user] begins to repair the arteries in [in_where]."),
 	)
+	display_pain(
+		target,
+		"You feel a horrible stabbing pain in your [parse_zone(target_zone)]!"
+	)
 
 /datum/surgery_step/repair_veins/success(mob/living/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	var/in_where = "[target]'s [parse_zone(target_zone)]"

@@ -103,16 +103,48 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 		var/avoid_highlight = receiver == src
 		if(holder)
 			if(!holder.fakekey || receiver.holder)
-				var/keyfield_pre = "[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]"
-				var/keyfield = conditional_tooltip_alt(keyfield_pre, pronouns, length(pronouns))
+				var/list/key_chunks = list()
+
+				var/key_real = keyname
+				var/tooltip_real = length(pronouns) ? pronouns : null
+				key_chunks += tooltip_real ? conditional_tooltip_alt(key_real, tooltip_real, TRUE) : key_real
+
+				if(holder.fakekey)
+					var/key_fake = "(" + holder.fakekey + ")"
+					var/tooltip_fake = null
+
+					if(istext(holder.showpronouns))
+						tooltip_fake = holder.showpronouns
+					else if(holder.showpronouns && length(pronouns))
+						tooltip_fake = pronouns
+
+					key_chunks += tooltip_fake ? conditional_tooltip_alt(key_fake, tooltip_fake, TRUE) : key_fake
+
+				var/keyfield = key_chunks.Join("/")
+
 				if(check_rights_for(src, R_ADMIN))
 					var/ooc_color = prefs.read_preference(/datum/preference/color/ooc_color)
 					to_chat(receiver, span_adminooc("[CONFIG_GET(flag/allow_admin_ooccolor) && ooc_color ? "<font color=[ooc_color]>" :"" ][span_prefix("OOC:")] <EM>[keyfield]:</EM> <span class='message linkify'>[msg]</span>"), avoid_highlighting = avoid_highlight)
 				else
 					to_chat(receiver, span_adminobserverooc(span_prefix("OOC:</span> <EM>[keyfield]:</EM> <span class='message linkify'>[msg]")), avoid_highlighting = avoid_highlight)
 			else
+				var/keyfield
 				var/keyfield_pre = holder.fakekey ? holder.fakekey : key
-				var/keyfield = conditional_tooltip_alt(keyfield_pre, pronouns, length(pronouns))
+				var/pronoun_text = null
+
+				if (holder.fakekey)
+					if (istext(holder.showpronouns))
+						pronoun_text = holder.showpronouns
+					else if (holder.showpronouns && length(pronouns))
+						pronoun_text = pronouns
+				else if (length(pronouns))
+					pronoun_text = pronouns
+
+				if (pronoun_text)
+					keyfield = conditional_tooltip_alt(keyfield_pre, pronoun_text, TRUE)
+				else
+					keyfield = keyfield_pre
+
 				if(GLOB.OOC_COLOR)
 					to_chat(receiver, span_oocplain("<font color='[GLOB.OOC_COLOR]'><b>[span_prefix("OOC:")] <EM>[keyfield]:</EM> <span class='message linkify'>[msg]</span></b></font>"), avoid_highlighting = avoid_highlight)
 				else

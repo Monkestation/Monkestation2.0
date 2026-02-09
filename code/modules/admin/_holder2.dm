@@ -16,6 +16,8 @@ GLOBAL_PROTECT(href_token)
 	var/name = "nobody's admin datum (no rank)" //Makes for better runtimes
 	var/client/owner = null
 	var/fakekey = null
+	/// Boolean, or custom pronouns. Only applicable when stealth mode is enabled
+	var/showpronouns
 
 	var/datum/marked_datum
 
@@ -51,7 +53,6 @@ GLOBAL_PROTECT(href_token)
 	///The bitfield of admin flags
 	var/static/datum/protected_list_holder/admin_flags_bitfield = new(list(
 	"ADMIN" = R_ADMIN,
-	"AUTOLOGIN" = R_AUTOADMIN,
 	"BAN" = R_BAN,
 	"BUILDMODE" = R_BUILD,
 	"DBRANKS" = R_DBRANKS,
@@ -93,7 +94,7 @@ GLOBAL_PROTECT(href_token)
 		GLOB.protected_admins[target] = src
 	try_give_profiling()
 	try_give_devtools()
-	if (force_active || (rank_flags() & R_AUTOADMIN))
+	if (force_active || usr?.client.prefs.read_preference(/datum/preference/toggle/autoadmin))
 		activate()
 	else
 		deactivate()

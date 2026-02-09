@@ -1,0 +1,4 @@
+author: "SmArtKar, Gboster"
+delete-after: True
+changes:
+  - qol: "parts of layer manifolds connecting to colors are now fully colored (just see the image in the PR if you want, its hard to explain. It just looks much better)"
