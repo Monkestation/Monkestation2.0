@@ -16,6 +16,8 @@
 	var/ineligible_for_roles = FALSE
 	/// Used to track if the player's jobs menu sent a message saying it successfully mounted.
 	var/jobs_menu_mounted = FALSE
+	/// What is our temp assignment, used for round start antag calculation
+	var/datum/job/temp_assignment
 
 
 /mob/dead/new_player/Initialize(mapload)
@@ -34,7 +36,8 @@
 
 /mob/dead/new_player/Destroy()
 	GLOB.new_player_list -= src
-
+	if(temp_assignment)
+		temp_assignment = null
 	return ..()
 
 /mob/dead/new_player/mob_negates_gravity()
@@ -65,6 +68,16 @@
 	set name = "Join Game"
 	set category = "IC"
 	join_game(FALSE)
+
+/mob/dead/new_player/verb/observe()
+	set category = "IC"
+	set name = "Observe"
+
+	if (!(SSticker.current_state > GAME_STATE_STARTUP) && !check_rights())
+		to_chat(src, span_warning("Please wait for the server to finish initializing!"))
+		return
+
+	make_me_an_observer()
 
 /mob/dead/new_player/proc/join_game(from_lobby_menu = FALSE, params = null)
 	if(isnull(client))
@@ -451,9 +464,10 @@
 	if (I)
 		I.ui_interact(src)
 
-	// Add verb for re-opening the interview panel, fixing chat and re-init the verbs for the stat panel
+	// Add verb for re-opening the interview panel, fixing chat and re-init the verbs for the stat panel. See interface/interface.dm
 	add_verb(src, /mob/dead/new_player/proc/open_interview)
-	add_verb(client, /client/verb/fix_tgui_panel)
+	add_verb(src, GLOB.important_interface_verbs)
+
 
 /client/proc/register_for_interview()
 	// First we detain them by removing all the verbs they have on client
@@ -471,6 +485,6 @@
 	if (I)
 		I.ui_interact(mob)
 
-	// Add verb for re-opening the interview panel, fixing chat and re-init the verbs for the stat panel
+	// Add verb for re-opening the interview panel, fixing chat and re-init the verbs for the stat panel. See interface/interface.dm
 	add_verb(mob, /mob/dead/new_player/proc/open_interview)
-	add_verb(src, /client/verb/fix_tgui_panel)
+	add_verb(mob, GLOB.important_interface_verbs)

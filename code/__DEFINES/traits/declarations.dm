@@ -173,6 +173,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_RESISTCOLD "resist_cold"
 #define TRAIT_RESISTHIGHPRESSURE "resist_high_pressure"
 #define TRAIT_RESISTLOWPRESSURE "resist_low_pressure"
+/// Prevents natural body temperature stabilization effects. Direct temperature changes still work.
+#define TRAIT_THERMAL_STASIS "thermal_stasis"
 /// This human is immune to the effects of being exploded. (ex_act)
 #define TRAIT_BOMBIMMUNE "bomb_immunity"
 /// This mob won't get gibbed by nukes going off

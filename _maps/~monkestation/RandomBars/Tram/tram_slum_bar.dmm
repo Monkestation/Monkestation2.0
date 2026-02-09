@@ -471,6 +471,7 @@
 /area/station/service/kitchen)
 "rf" = (
 /obj/structure/bonfire/prelit,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/stone,
 /area/station/commons/lounge)
 "rm" = (
@@ -857,7 +858,6 @@
 /turf/open/floor/wood/tile,
 /area/station/service/theater)
 "HQ" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/structure/chair/greyscale{
 	dir = 8;
 	pixel_x = 4
@@ -1351,7 +1351,7 @@ nk
 nk
 nk
 nk
-QC
+nk
 QC
 QC
 QC
@@ -1376,9 +1376,9 @@ nk
 qi
 iF
 GW
+iY
 rf
 nk
-QC
 QC
 QC
 QC
@@ -1403,9 +1403,9 @@ nk
 iY
 dN
 nq
+dN
 HQ
 nk
-QC
 QC
 QC
 QC

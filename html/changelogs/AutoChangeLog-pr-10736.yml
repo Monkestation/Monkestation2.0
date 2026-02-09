@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - qol: "Gary should no longer randomly wander into the supermatter at roundstart."

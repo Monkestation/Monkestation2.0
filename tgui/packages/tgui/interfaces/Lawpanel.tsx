@@ -1,4 +1,6 @@
 import type { BooleanLike } from 'common/react';
+import { countBy } from 'es-toolkit';
+import { useMemo } from 'react';
 import { useBackend } from '../backend';
 import {
   Button,
@@ -12,8 +14,6 @@ import {
   Stack,
 } from '../components';
 import { Window } from '../layouts';
-import { countBy } from 'es-toolkit';
-import { useMemo } from 'react';
 
 const lawtype_to_color = {
   inherent: 'white',
