@@ -290,6 +290,11 @@ export const BiomeCheckTarget = new Juke.Target({
   executes: () => bunRoot('tgui:lint'),
 });
 
+export const BiomeFixTarget = new Juke.Target({
+  dependsOn: [BunTarget, BiomeInstallTarget],
+  executes: () => bunRoot('tgui:fix'),
+});
+
 export const TguiLintTarget = new Juke.Target({
   dependsOn: [BunTarget, BiomeCheckTarget, TguiTscTarget],
 });

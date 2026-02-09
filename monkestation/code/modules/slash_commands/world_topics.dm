@@ -7,7 +7,7 @@
 	var/datum/discord_embed/embed = new()
 
 	embed.title = "Status"
-	embed.description = @"[Join Server!](http://play.monkestation.com:7420)"
+	embed.description = CONFIG_GET(string/roundend_webhook_description)
 	embed.author = "Round Controller"
 
 	var/player_count = "**Total**: [length(GLOB.clients)]"
