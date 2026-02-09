@@ -50,7 +50,7 @@
 			if(QDELETED(player) || isnewplayer(player) || issilicon(player))
 				continue
 			to_chat(player, span_userdanger("An ominous wave of pressure fills the air around you, as if a chaotic malignant blaze had ignited elsewhere."))
-			player.playsound_local(player, 'sound/ambience/antag/wishgranter_awaken.ogg', vol = 75, vary = FALSE, pressure_affected = FALSE)
+			player.playsound_local(null, 'sound/ambience/antag/wishgranter_awaken.ogg', vol = 75, vary = FALSE, pressure_affected = FALSE)
 			if(isliving(player))
 				var/mob/living/living_player = player
 				living_player.add_mood_event("wishgranter_awakening", /datum/mood_event/wishgranter_awakening)
