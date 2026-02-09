@@ -17,7 +17,7 @@
 	. = ..()
 	if(.)
 		return
-	if(charges <= 0)
+	if(charges <= 0 || is_banned_from(user.ckey, ROLE_SYNDICATE))
 		to_chat(user, span_boldnotice("The Wish Granter lies silent."))
 		return
 
