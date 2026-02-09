@@ -255,13 +255,13 @@
 
 /obj/item/flatpack/Initialize(mapload, obj/item/circuitboard/machine/board)
 	. = ..()
-	if(!isnull(board))
-		src.board = board // i got board
+	if(board)
 		board.forceMove(src)
-		var/obj/machinery/build = initial(board.build_path)
-		name += " ([initial(build.name)])"
 	else
-		src.board = /obj/item/circuitboard/machine/flatpacker
+		board = new /obj/item/circuitboard/machine/flatpacker
+	src.board = board
+	var/obj/machinery/build = initial(board.build_path)
+	name += " ([initial(build.name)])"
 
 /obj/item/flatpack/Destroy()
 	QDEL_NULL(board)
