@@ -36,7 +36,7 @@
 
 /datum/emote/living/carbon/human/superfart
 	key = "superfart"
-	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE | EMOTE_HAS_VISUAL
 
 /datum/emote/living/carbon/human/superfart/run_emote(mob/user, params, type_override, intentional)
 	. = ..()

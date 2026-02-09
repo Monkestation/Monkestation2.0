@@ -21,6 +21,7 @@
 					"hands" = emote.hands_use_check,
 					"visible" = emote.emote_type & EMOTE_VISIBLE,
 					"audible" = emote.emote_type & EMOTE_AUDIBLE,
+					"has_visual" = emote.emote_type & EMOTE_HAS_VISUAL,
 					"sound" = !isnull(emote.get_sound(user)),
 					"use_params" = emote.message_param,
 				))
