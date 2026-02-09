@@ -257,7 +257,7 @@
 		if(CHANNEL_VOX)
 			return "Announcements / AI Noise"
 		if(CHANNEL_ANNOUNCER)
-			return "Event Announcer"
+			return "Storyteller"
 		if(CHANNEL_JUKEBOX)
 			return "Dance Machines"
 		if(CHANNEL_HEARTBEAT)
