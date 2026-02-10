@@ -3,7 +3,7 @@
 
 /datum/unit_test/vendor_boards/Run()
 	var/obj/item/circuitboard/machine/vendor/dummy_board = new
-	var/list/vending_names_paths = dummy_board.vending_names_paths.Copy()
+	var/list/vending_names_paths = dummy_board.valid_vendor_names_paths.Copy()
 	QDEL_NULL(dummy_board)
 
 	// 'cuz there's various subtypes of the same vendor which are pretty much the same thing,
