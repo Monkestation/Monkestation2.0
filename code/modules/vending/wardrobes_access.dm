@@ -1,46 +1,3 @@
-/**
- * This vending machine supports a list of items that changes based on the user/card's access.
- */
-/obj/machinery/vending/access
-	name = "access-based vending machine"
-	///If set, this access is required to see non-access locked products in the vending machine.
-	var/minimum_access_to_view
-
-/obj/machinery/vending/access/Initialize(mapload)
-	. = ..()
-	var/list/inventory = list()
-	build_access_list(inventory)
-	for(var/access in inventory)
-		build_inventory(inventory[access], product_records, product_categories, start_empty = FALSE, access_needed = access)
-
-/**
- * This is where you generate the list to store what items each access grants.
- * Should be an assosciative list where the key is the access as a string and the value is the items typepath.
- * You can also set it to TRUE instead of a list to allow them to purchase anything.
- */
-/obj/machinery/vending/access/proc/build_access_list(list/inventory)
-	return
-
-/obj/machinery/vending/access/collect_records_for_static_data(list/records, list/categories, mob/living/user, premium)
-	if(isnull(minimum_access_to_view))
-		return ..()
-	//dead people can see records, i GUESS...
-	if(!istype(user))
-		return ..()
-	var/obj/item/card/id/user_id = user.get_idcard(TRUE)
-	if(!issilicon(user) && !(obj_flags & EMAGGED) && onstation && !(minimum_access_to_view in user_id?.access))
-		records = list()
-		return ..()
-	return ..()
-
-/// Debug version to verify access checking is working and functional
-/obj/machinery/vending/access/debug
-	minimum_access_to_view = ACCESS_ENGINEERING
-
-/obj/machinery/vending/access/debug/build_access_list(list/inventory)
-	inventory[ACCESS_EVA] = list(/obj/item/crowbar)
-	inventory[ACCESS_SECURITY] = list(/obj/item/wrench, /obj/item/gun/ballistic/revolver/mateba)
-
 /obj/machinery/vending/access/command
 	name = "\improper Command Outfitting Station"
 	desc = "A vending machine for specialised clothing for members of Command."
@@ -187,8 +144,6 @@
 	product_ads = "Upgraded Assistant Style! Pick yours today!;These shorts are comfy and easy to wear, get yours now!"
 	vend_reply = "Thank you for using the CargoDrobe!"
 
-	panel_type = "panel19"
-	light_mask = "wardrobe-light-mask"
 	products = list(
 		/obj/item/storage/bag/mail = 3,
 		/obj/item/clothing/suit/hooded/wintercoat/cargo = 3,
@@ -212,7 +167,11 @@
 		/obj/item/cane = 1,
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/cargo_wardrobe
+	default_price = /obj/machinery/vending/wardrobe::default_price
+	extra_price = /obj/machinery/vending/wardrobe::extra_price
 	payment_department = ACCOUNT_CAR
+	panel_type = /obj/machinery/vending/wardrobe::panel_type
+	light_mask = /obj/machinery/vending/wardrobe::light_mask
 
 /obj/item/vending_refill/wardrobe/cargo_wardrobe
 	machine_name = "CargoDrobe"
@@ -234,4 +193,56 @@
 		/obj/item/clothing/under/rank/cargo/qm/nova/formal = 1,
 		/obj/item/clothing/under/rank/cargo/qm/nova/formal/skirt = 1,
 		/obj/item/clothing/shoes/sneakers/brown = 1,
+	)
+
+/obj/machinery/vending/access/engi_wardrobe
+	name = "EngiDrobe"
+	desc = "A vending machine renowned for vending industrial grade clothing."
+	icon_state = "engidrobe"
+	product_ads = "Guaranteed to protect your feet from industrial accidents!;Afraid of radiation? Then wear yellow!"
+	vend_reply = "Thank you for using the EngiDrobe!"
+
+	products = list(
+		/obj/item/clothing/accessory/pocketprotector = 3,
+		/obj/item/storage/backpack/duffelbag/engineering = 3,
+		/obj/item/storage/backpack/industrial = 3,
+		/obj/item/storage/backpack/satchel/eng = 3,
+		/obj/item/clothing/suit/hooded/wintercoat/engineering = 3,
+		/obj/item/clothing/under/rank/engineering/engineer = 3,
+		/obj/item/clothing/under/rank/engineering/engineer/skirt = 3,
+		/obj/item/clothing/under/rank/engineering/engineer/hazard = 3,
+		/obj/item/clothing/suit/hazardvest = 3,
+		/obj/item/clothing/shoes/workboots = 3,
+		/obj/item/clothing/head/beret/engi = 3,
+		/obj/item/clothing/mask/bandana/striped/engineering = 3,
+		/obj/item/clothing/head/utility/hardhat = 3,
+		/obj/item/clothing/head/utility/hardhat/welding = 3,
+		/obj/item/radio/headset/headset_eng = 3,
+		/obj/item/clothing/under/rank/engineering/engineer/nova/trouser = 3,
+		/obj/item/clothing/under/rank/engineering/engineer/nova/utility = 3,
+		/obj/item/clothing/under/rank/engineering/engineer/nova/hazard_chem = 3,
+		/obj/item/clothing/under/misc/overalls = 3,
+		/obj/item/clothing/suit/toggle/jacket/engi = 3,
+		/obj/item/clothing/head/utility/hardhat/orange = 2,
+		/obj/item/clothing/head/utility/hardhat/welding/orange = 2,
+		/obj/item/clothing/head/utility/hardhat/dblue = 2,
+		/obj/item/clothing/head/utility/hardhat/welding/dblue = 2,
+		/obj/item/clothing/head/utility/hardhat/red = 2,
+	)
+	refill_canister = /obj/item/vending_refill/wardrobe/engi_wardrobe
+	light_color = COLOR_VIVID_YELLOW
+	default_price = /obj/machinery/vending/wardrobe::default_price
+	extra_price = /obj/machinery/vending/wardrobe::extra_price
+	payment_department = ACCOUNT_ENG
+	panel_type = /obj/machinery/vending/wardrobe::panel_type
+	light_mask = /obj/machinery/vending/wardrobe::light_mask
+
+/obj/item/vending_refill/wardrobe/engi_wardrobe
+	machine_name = "EngiDrobe"
+
+/obj/machinery/vending/access/engi_wardrobe/build_access_list(list/inventory)
+	inventory[ACCESS_TCOMMS_ADMIN] = list(
+		/obj/item/clothing/under/rank/engineering/signal_tech = 2,
+		/obj/item/clothing/suit/hooded/wintercoat/engineering/signal_tech = 2,
+		/obj/item/clothing/gloves/color/black = 2,
 	)

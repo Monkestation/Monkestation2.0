@@ -11,7 +11,7 @@
 
 	var/list/buttons = subtypesof(/atom/movable/screen/lobby)
 	for(var/atom/movable/screen/lobby/button_type as anything in buttons)
-		if(button_type::abstract_type == button_type)
+		if(button_type::abstract_type == button_type || button_type::always_create != TRUE)
 			continue
 		var/atom/movable/screen/lobby/lobbyscreen = new button_type(our_hud = src)
 		lobbyscreen.SlowInit()
@@ -20,6 +20,14 @@
 			var/atom/movable/screen/lobby/button/lobby_button = lobbyscreen
 			lobby_button.owner = REF(owner)
 
+	if (!owner.client.is_localhost())
+		return
+
+	var/atom/movable/screen/lobby/button/start_now/start_button = new(our_hud = src)
+	start_button.SlowInit()
+	static_inventory += start_button
+	start_button.owner = REF(owner)
+
 /atom/movable/screen/lobby
 	plane = SPLASHSCREEN_PLANE
 	layer = LOBBY_BUTTON_LAYER
@@ -27,6 +35,8 @@
 	/// Do not instantiate if type matches this.
 	var/abstract_type = /atom/movable/screen/lobby
 	var/here
+	/// If true we will create this button every time the HUD is generated
+	var/always_create = TRUE
 
 ///Set the HUD in New, as lobby screens are made before Atoms are Initialized.
 /atom/movable/screen/lobby/New(loc, datum/hud/our_hud, ...)
@@ -672,3 +682,21 @@
 	job_overlay = mutable_appearance(job_icon)
 	job_overlay.pixel_x = 8
 	job_overlay.pixel_y = 18
+
+/// LOCALHOST ONLY - Start Now button
+/atom/movable/screen/lobby/button/start_now
+	name = "Start Now (LOCALHOST ONLY)"
+	screen_loc = "TOP:-150,CENTER:-40"
+	icon = 'icons/hud/lobby/start_now.dmi'
+	icon_state = "start_now"
+	base_icon_state = "start_now"
+	always_create = FALSE
+
+/atom/movable/screen/lobby/button/start_now/Click(location, control, params)
+	. = ..()
+	if(!. || !usr.client.is_localhost() || !check_rights_for(usr.client, R_SERVER))
+		return
+	SEND_SOUND(hud.mymob, sound('sound/effects/cartoon_splat.ogg', volume = 50))
+	SSticker.start_immediately = TRUE
+	if(SSticker.current_state == GAME_STATE_STARTUP)
+		to_chat(usr, span_admin("The server is still setting up, but the round will be started as soon as possible."))
