@@ -19,7 +19,7 @@
 	in_order = TRUE
 	each_once = TRUE
 	mid_length = 5
-	volume = 33
+	volume = 30
 	extra_range = 3
 
 /datum/looping_sound/tape_recorder_hiss
