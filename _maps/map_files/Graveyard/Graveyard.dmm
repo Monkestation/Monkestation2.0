@@ -24147,7 +24147,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
 "jsq" = (
-/obj/item/storage/secure/safe/directional/east,
+/obj/structure/secure_safe/directional/east,
 /obj/structure/bed,
 /obj/item/bedsheet/patriot,
 /turf/open/floor/carpet/grimey,
@@ -41124,7 +41124,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/item/storage/secure/safe/directional/south,
+/obj/structure/secure_safe/directional/south,
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/ce)
@@ -61728,7 +61728,7 @@
 /area/station/commons/dorms)
 "xWe" = (
 /obj/structure/table/wood/fancy/green,
-/obj/item/storage/secure/safe/directional/north,
+/obj/structure/secure_safe/directional/north,
 /obj/item/flashlight/lamp/green{
 	pixel_x = 5;
 	pixel_y = 16

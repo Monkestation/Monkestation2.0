@@ -872,7 +872,7 @@
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 8
 	},
-/obj/item/storage/secure/safe/directional/west,
+/obj/structure/secure_safe/directional/west,
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/rd)
 "ajP" = (
@@ -1891,7 +1891,7 @@
 /area/station/tcommsat/server)
 "atM" = (
 /obj/structure/table/wood,
-/obj/item/storage/secure/safe/hos{
+/obj/structure/secure_safe/hos{
 	pixel_x = 32
 	},
 /obj/item/flashlight/lamp{
@@ -12114,7 +12114,7 @@
 /area/station/service/theater)
 "cNy" = (
 /obj/item/kirbyplants/random,
-/obj/item/storage/secure/safe/directional/east,
+/obj/structure/secure_safe/directional/east,
 /turf/open/floor/carpet/grimey,
 /area/station/command/heads_quarters/captain/private)
 "cNH" = (
@@ -33515,7 +33515,7 @@
 /area/station/hallway/secondary/exit/departure_lounge)
 "hQJ" = (
 /obj/structure/table/wood,
-/obj/item/storage/secure/safe/directional/east,
+/obj/structure/secure_safe/directional/east,
 /obj/machinery/computer/security/wooden_tv,
 /obj/machinery/light_switch/directional/south{
 	pixel_x = 8
@@ -46337,7 +46337,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
 "kPf" = (
-/obj/item/storage/secure/safe/directional/east,
+/obj/structure/secure_safe/directional/east,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/dish_drive/bullet,
 /turf/open/floor/iron/dark,
@@ -48248,7 +48248,7 @@
 /obj/structure/table/glass,
 /obj/machinery/computer/records/medical/laptop,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
-/obj/item/storage/secure/safe/directional/north,
+/obj/structure/secure_safe/directional/north,
 /obj/item/radio/intercom/directional/east,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -52235,7 +52235,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/obj/item/storage/secure/safe/caps_spare/directional/west,
+/obj/structure/secure_safe/caps_spare/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "miM" = (
@@ -55067,7 +55067,7 @@
 /obj/item/stack/package_wrap,
 /obj/machinery/light/small/directional/north,
 /obj/effect/turf_decal/tile/neutral,
-/obj/item/storage/secure/safe/directional/north,
+/obj/structure/secure_safe/directional/north,
 /obj/item/stack/package_wrap,
 /obj/item/hand_labeler,
 /obj/machinery/airalarm/directional/east,
@@ -94700,7 +94700,7 @@
 /obj/structure/table/wood,
 /obj/machinery/light/directional/north,
 /obj/item/storage/lockbox/loyalty,
-/obj/item/storage/secure/safe/directional/east,
+/obj/structure/secure_safe/directional/east,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "wqQ" = (
@@ -100654,7 +100654,7 @@
 "xMu" = (
 /obj/machinery/computer/security/telescreen/entertainment/directional/east,
 /obj/structure/closet/secure_closet/nanotrasen_representative,
-/obj/item/storage/secure/safe/directional/north,
+/obj/structure/secure_safe/directional/north,
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
 "xMy" = (

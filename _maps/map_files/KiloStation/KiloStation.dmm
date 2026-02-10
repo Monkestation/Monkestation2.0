@@ -22324,7 +22324,7 @@
 "gWH" = (
 /obj/machinery/suit_storage_unit/hos,
 /obj/effect/turf_decal/delivery,
-/obj/item/storage/secure/safe/hos{
+/obj/structure/secure_safe/hos{
 	pixel_x = 36;
 	pixel_y = 28
 	},
@@ -48190,7 +48190,7 @@
 /obj/structure/table,
 /obj/item/healthanalyzer,
 /obj/item/hand_labeler,
-/obj/item/storage/secure/safe/caps_spare/directional/north,
+/obj/structure/secure_safe/caps_spare/directional/north,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 1
 	},
@@ -68197,7 +68197,7 @@
 	},
 /obj/machinery/light/directional/east,
 /obj/item/lighter,
-/obj/item/storage/secure/safe/directional/east,
+/obj/structure/secure_safe/directional/east,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
 	},
