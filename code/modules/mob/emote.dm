@@ -59,7 +59,7 @@
 
 	for(var/key in GLOB.emote_list)
 		for(var/datum/emote/emote_action in GLOB.emote_list[key])
-			if(emote_action.key in keys)
+			if(emote_action.key in keys) //skip over alt_keys
 				continue
 			if(emote_action.can_run_emote(user, status_check = FALSE , intentional = TRUE))
 				keys += emote_action.key

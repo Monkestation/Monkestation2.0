@@ -98,6 +98,8 @@ GLOBAL_LIST_EMPTY(latejoin_ai_cores)
 
 GLOBAL_LIST_EMPTY(mob_config_movespeed_type_lookup)
 
+///Assoc list key OR alt_key = emote datum. Important to check by key when going through this so you don't have several
+///alt keys flooding the list.
 GLOBAL_LIST_EMPTY(emote_list)
 
 GLOBAL_LIST_INIT(construct_radial_images, list(

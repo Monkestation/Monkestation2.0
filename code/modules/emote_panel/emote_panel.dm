@@ -9,7 +9,7 @@
 
 	for(var/key in GLOB.emote_list)
 		for(var/datum/emote/emote in GLOB.emote_list[key])
-			if(emote.key in keys)
+			if(emote.key in keys) //skip over alt_keys
 				continue
 			if(emote.key in blacklisted_emotes)
 				continue
