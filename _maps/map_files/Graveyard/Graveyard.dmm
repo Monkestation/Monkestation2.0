@@ -8753,6 +8753,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/item/flatpack,
 /turf/open/floor/iron,
 /area/station/science/lab)
 "drk" = (
@@ -27017,6 +27018,7 @@
 	pixel_y = -31;
 	pixel_x = 8
 	},
+/obj/item/storage/toolbox/electrical/medical,
 /turf/open/floor/iron/dark,
 /area/station/medical/storage)
 "kCc" = (
@@ -31321,6 +31323,7 @@
 	pixel_y = 9
 	},
 /obj/effect/turf_decal/tile/brown/fourcorners,
+/obj/item/flatpack,
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "mhi" = (
@@ -48827,6 +48830,11 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
+"taW" = (
+/obj/structure/cable,
+/obj/item/flatpack,
+/turf/open/floor/iron,
+/area/station/engineering/main)
 "tbe" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
@@ -151647,7 +151655,7 @@ bOO
 vhL
 sfI
 goi
-wCp
+taW
 fdf
 muv
 lcW

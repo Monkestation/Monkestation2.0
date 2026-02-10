@@ -13,7 +13,7 @@ import {
 import { Window } from '../layouts';
 
 type Data = {
-  announce_contents: string;
+  announce_contents: BooleanLike;
   announcer_sounds: string[];
   command_name: string;
   command_name_presets: string[];
@@ -24,7 +24,7 @@ type Data = {
   subheader: string;
   custom_name: string;
   played_sound: string;
-  print_report: string;
+  print_report: BooleanLike;
   append_update_name: BooleanLike;
 };
 

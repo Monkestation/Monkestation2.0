@@ -147,7 +147,8 @@
 		"universal_scanner",
 		"voice_analyzer",
 		"watering_can",
-		"modlink_scryer", // monkestation addition
+		"modlink_scryer",// monkestation addition
+		"flatpacker",
 	)
 
 /datum/techweb_node/basic_tools
@@ -219,6 +220,10 @@
 		"cybernetic_liver",
 		"cybernetic_lungs",
 		"cybernetic_stomach",
+		"surplus_cybernetic_l_leg",
+		"surplus_cybernetic_r_leg",
+		"surplus_cybernetic_l_arm",
+		"surplus_cybernetic_r_arm",
 		"defibmountdefault",
 		"dropper",
 		"hemostat",

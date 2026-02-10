@@ -337,6 +337,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/warning{
 	dir = 1
 	},
+/obj/item/flatpack,
 /turf/open/floor/iron/dark/textured,
 /area/station/cargo/storage)
 "afv" = (
@@ -3052,7 +3053,7 @@
 /obj/item/clothing/under/misc/burial,
 /obj/item/clothing/under/misc/burial,
 /obj/item/clothing/under/misc/burial,
-/obj/item/radio/intercom/chapel/directional/west,
+/obj/item/radio/intercom/directional/west,
 /obj/item/reagent_containers/cup/glass/bottle/wine/unlabeled,
 /obj/item/reagent_containers/cup/glass/bottle/wine/unlabeled,
 /obj/item/reagent_containers/cup/glass/bottle/wine/unlabeled,
@@ -6570,6 +6571,7 @@
 /area/station/maintenance/abandon_cafeteria)
 "ceK" = (
 /obj/machinery/light/small/directional/south,
+/obj/item/radio/intercom/chapel/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel/office)
 "ceU" = (
@@ -35497,6 +35499,7 @@
 	},
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
+/obj/item/flatpack,
 /turf/open/floor/iron/dark/textured,
 /area/station/science/lab)
 "lmO" = (
@@ -36317,6 +36320,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
+/obj/item/flatpack,
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 8
 	},
@@ -43473,6 +43477,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/warning{
 	dir = 8
 	},
+/obj/item/storage/toolbox/electrical/medical,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/storage)
 "nTl" = (
@@ -64572,7 +64577,7 @@
 /obj/effect/turf_decal/trimline/dark_blue/filled/warning{
 	dir = 10
 	},
-/obj/item/radio/intercom/chapel/directional/west,
+/obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/secondary/entry)
 "uzc" = (

@@ -1,4 +1,0 @@
-author: "Tractor-Maam"
-delete-after: True
-changes:
-  - bugfix: "fixed some space leaking through on the Tram Slum Bar."

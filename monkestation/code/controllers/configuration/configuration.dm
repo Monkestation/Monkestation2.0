@@ -24,6 +24,7 @@
 
 */
 /datum/controller/configuration/proc/load_important_notices()
+	lobby_notices?.Cut()
 	var/rawnotices = file2text("[directory]/lobby_notices.json")
 	if(rawnotices)
 		var/parsed = safe_json_decode(rawnotices)
