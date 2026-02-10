@@ -1,4 +1,0 @@
-author: "flleeppyy"
-delete-after: True
-changes:
-  - bugfix: "Fix \"Internet routing relays\" button not doing anything"
