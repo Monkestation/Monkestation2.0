@@ -192,7 +192,7 @@
 	products = list(
 		/obj/item/storage/bag/mail = 3,
 		/obj/item/clothing/suit/hooded/wintercoat/cargo = 3,
-		/obj/item/clothing/suit/hooded/wintercoat/miner = 3,
+		/obj/item/clothing/suit/hazardvest = 6,
 		/obj/item/clothing/under/rank/cargo/tech = 3,
 		/obj/item/clothing/under/rank/cargo/tech/skirt = 3,
 		/obj/item/clothing/shoes/sneakers/black = 3,
@@ -204,14 +204,8 @@
 		/obj/item/storage/backpack = 3,
 		/obj/item/storage/backpack/satchel = 3,
 		/obj/item/storage/backpack/duffelbag = 3,
-		/obj/item/storage/backpack/explorer = 3,
-		/obj/item/storage/backpack/satchel/explorer = 3,
-		/obj/item/storage/backpack/duffelbag/explorer = 3,
 	)
 	premium = list(
-		/obj/item/clothing/under/rank/cargo/miner = 3,
-		/obj/item/clothing/under/rank/cargo/miner/lavaland = 3,
-		/obj/item/clothing/shoes/workboots/mining = 3,
 		/obj/item/clothing/head/costume/mailman = 1,
 		/obj/item/clothing/under/misc/mailman = 1,
 	)
@@ -243,4 +237,14 @@
 		/obj/item/clothing/under/rank/cargo/qm/nova/formal = 1,
 		/obj/item/clothing/under/rank/cargo/qm/nova/formal/skirt = 1,
 		/obj/item/clothing/shoes/sneakers/brown = 1,
+	)
+
+	inventory[ACCESS_MINING] = list(
+		/obj/item/clothing/under/rank/cargo/miner = 3,
+		/obj/item/clothing/under/rank/cargo/miner/lavaland = 3,
+		/obj/item/clothing/shoes/workboots/mining = 3,
+		/obj/item/clothing/suit/hooded/wintercoat/miner = 3,
+		/obj/item/storage/backpack/explorer = 3,
+		/obj/item/storage/backpack/satchel/explorer = 3,
+		/obj/item/storage/backpack/duffelbag/explorer = 3,
 	)
