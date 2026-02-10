@@ -187,3 +187,41 @@
   - qol: You can now change your character from the pre-round shop, and latejoin menus,
       as well as the "Change Character Slot" verb.
   - admin: makes the interview menu wider to fit the buttons if you're an admin
+2026-02-09:
+  Absolucy:
+  - qol: Gary should no longer randomly wander into the supermatter at roundstart.
+  Infernal-0:
+  - qol: Medbay can now print prosthetic surplus limbs.
+  - qol: Medbay now has a robot-repair toolbox.
+  - balance: You can now no longer print implants from protolathes.
+  - image: Medical toolbox sprites.
+  - map: Added medical repair toolboxes to medbay storage, fixes some consistency
+      issues with L3BioHaz lockers and cyborg chargers.
+  JohnFulpWillard:
+  - bugfix: Fixes some issues with Theseus primarily around telecomms, brig and holopads.
+  - bugfix: Bloodless species can get chemicals removed from their 'blood' again.
+  Siro:
+  - rscadd: Added Glitch, Drifting Contractor, Fugative, Lone Operator, Lone Junior
+      Operator, Mid ROund Commando Operative, and Teratoma to the roleban menu.
+  SmArtKar, Gboster:
+  - qol: parts of layer manifolds connecting to colors are now fully colored (just
+      see the image in the PR if you want, its hard to explain. It just looks much
+      better)
+  Tractor-Maam:
+  - rscadd: (SmArtKar) Localhost dev servers now have a giant START NOW button plastered
+      in the middle of their lobby UI  (carlarctg) that goes "splort".
+  - rscadd: Added a print recipe for the Ectoscopic Sniffer to the Advanced Robotics
+      technode.
+  - rscadd: Added a USB port to the Holographic Signboard, allowing circuit access.
+  pseudo-savant:
+  - rscadd: Ported over the flatpacker from /tg/ to monkestation
+2026-02-10:
+  SirNightKnight:
+  - qol: added some missing warning line decals to the decal painter.
+  - qol: decal painters can paint windows.
+  - bugfix: standardized tile decal alphas a bit better.
+  - bugfix: fixed a bug where holosign projectors could not be placed on tables.
+  - rscdel: removed random department colors for windows and made them be colored
+      the same as their respective department's decal color.
+  Tractor-Maam:
+  - map: fixed confessional intercoms on Oshan
