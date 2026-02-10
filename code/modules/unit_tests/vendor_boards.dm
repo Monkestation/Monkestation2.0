@@ -9,8 +9,8 @@
 	// 'cuz there's various subtypes of the same vendor which are pretty much the same thing,
 	// we're gonna check refill canister types rather than vendor types.
 	var/list/valid_vendor_refills = list()
-	for(var/obj/machinery/vending/vendor_type as anything in vending_names_paths)
-		if(isnull(vendor_type::refill_canister))
+	for(var/vendor_type in vending_names_paths)
+		if(isnull(vending_names_paths[vendor_type]::refill_canister))
 			TEST_FAIL("[vendor_type] ([vendor_type::name]) does not have a refill_canister set, despite the fact it can be constructed from a vendor board!")
 		else
 			valid_vendor_refills |= vendor_type::refill_canister
