@@ -2,7 +2,7 @@
 	key = "assinhale"
 	key_third_person = "inhales through their ass"
 
-	var/sounds = list(
+	var/list/sounds = list(
 		'monkestation/sound/effects/fart_reverse1.ogg',
 		'monkestation/sound/effects/fart_reverse2.ogg',
 		'monkestation/sound/effects/fart_reverse3.ogg',

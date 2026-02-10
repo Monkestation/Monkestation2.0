@@ -204,6 +204,7 @@ export const EmotePanelContent = (props) => {
                       <EmoteIcons
                         visible={emote.visible}
                         audible={emote.audible}
+                        visual={emote.has_visual}
                         sound={emote.sound}
                         hands={emote.hands}
                         use_params={emote.use_params}
@@ -245,7 +246,7 @@ export const EmotePanelContent = (props) => {
 };
 
 const EmoteIcons = (props) => {
-  const { visible, audible, sound, hands, use_params, margin } = props;
+  const { visible, audible, visual, sound, hands, use_params, margin } = props;
 
   return (
     <Box inline align="right">
@@ -260,6 +261,12 @@ const EmoteIcons = (props) => {
         m={margin}
         color={!audible ? 'red' : ''}
         opacity={!audible ? 0.5 : 1}
+      />
+      <Icon
+        name="camera"
+        m={margin}
+        color={!visual ? 'red' : ''}
+        opacity={!visual ? 0.5 : 1}
       />
       <Icon
         name="volume-up"

@@ -250,6 +250,7 @@
 
 /datum/emote/living/carbon/sweatdrop
 	key = "sweatdrop"
+	alt_keys = list("sweat", "sweats")
 	key_third_person = "sweatdrops"
 	emote_type = EMOTE_VISIBLE | EMOTE_HAS_VISUAL
 
@@ -263,10 +264,6 @@
 		emote_animation = human_user.apply_height_offsets(emote_animation, UPPER_BODY)
 	flick_overlay_global(emote_animation, GLOB.clients, 3 SECONDS)
 	playsound(user, 'sound/effects/sweatdrop.ogg', vol = 50, vary = TRUE)
-
-/datum/emote/living/carbon/sweatdrop/sweat //This is entirely the same as sweatdrop, however people might use either, so I'm adding this one instead of editing the other one.
-	key = "sweat"
-	key_third_person = "sweats"
 
 /datum/emote/living/carbon/annoyed
 	key = "annoyed"
@@ -286,6 +283,7 @@
 
 /datum/emote/living/carbon/realize
 	key = "realize"
+	alt_keys = list("realizes", "realise", "realises")
 	key_third_person = "realizes"
 	emote_type = EMOTE_VISIBLE | EMOTE_HAS_VISUAL
 

@@ -170,6 +170,13 @@ GLOBAL_LIST_INIT_TYPED(species_prototypes, /datum/species, init_species_prototyp
 		else if(E.message) //Assuming all non-base emotes have this
 			stack_trace("Keyless emote: [E.type]")
 
+		if(LAZYLEN(E.alt_keys))
+			for(var/alt_key in E.alt_keys)
+				if(!.[alt_key])
+					.[alt_key] = list(E)
+				else
+					.[alt_key] += E
+
 		if(E.key_third_person) //This one is optional
 			if(!.[E.key_third_person])
 				.[E.key_third_person] = list(E)
