@@ -74969,7 +74969,7 @@
 	dir = 6
 	},
 /obj/structure/sign/poster/official/moth_delam/directional/south,
-/obj/machinery/vending/wardrobe/engi_wardrobe,
+/obj/machinery/vending/access/engi_wardrobe,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/station/engineering/main)
