@@ -2,10 +2,9 @@
 /datum/unit_test/vendor_boards
 
 /datum/unit_test/vendor_boards/Run()
-	var/list/vending_names_paths = list()
-	for(var/obj/machinery/vending/vendor_type as anything in subtypesof(/obj/machinery/vending))
-		if(vendor_type::refill_canister)
-			vending_names_paths[vendor_type::name] = vendor_type
+	var/obj/item/circuitboard/machine/vendor/dummy_board = new
+	var/list/vending_names_paths = dummy_board.vending_names_paths.Copy()
+	QDEL_NULL(dummy_board)
 
 	// 'cuz there's various subtypes of the same vendor which are pretty much the same thing,
 	// we're gonna check refill canister types rather than vendor types.
