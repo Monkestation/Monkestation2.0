@@ -341,3 +341,8 @@
 		if (NAMEOF(src, queued_priority)) //editing this breaks things.
 			return FALSE
 	. = ..()
+	if(!.)
+		return
+	switch(var_name)
+		if (NAMEOF(src, wait), NAMEOF(src, flags))
+			update_nextfire(reset_time = TRUE)
