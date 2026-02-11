@@ -1,4 +1,0 @@
-author: "Tractor-Maam"
-delete-after: True
-changes:
-  - rscadd: "Added a USB port to the Holographic Signboard, allowing circuit access."

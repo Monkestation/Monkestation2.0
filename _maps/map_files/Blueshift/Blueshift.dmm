@@ -5292,7 +5292,7 @@
 /area/station/maintenance/department/engineering/engine_aft_port)
 "bbl" = (
 /obj/effect/turf_decal/bot,
-/obj/machinery/vending/wardrobe/engi_wardrobe,
+/obj/machinery/vending/access/engi_wardrobe,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage_shared)
 "bbm" = (
@@ -44461,12 +44461,10 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "iCM" = (
-/obj/structure/bodycontainer{
-	dir = 4
-	},
 /obj/effect/turf_decal/bot_white,
 /obj/machinery/status_display/ai/directional/west,
 /obj/structure/window/spawner/directional/north,
+/obj/structure/bodycontainer/morgue,
 /turf/open/floor/iron/dark/small,
 /area/station/medical/morgue)
 "iCV" = (
@@ -77449,11 +77447,9 @@
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "oVo" = (
-/obj/structure/bodycontainer{
-	dir = 4
-	},
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/turf_decal/bot_white,
+/obj/structure/bodycontainer/morgue,
 /turf/open/floor/iron/dark/small,
 /area/station/medical/morgue)
 "oVJ" = (

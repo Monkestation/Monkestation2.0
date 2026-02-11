@@ -3053,7 +3053,7 @@
 /obj/item/clothing/under/misc/burial,
 /obj/item/clothing/under/misc/burial,
 /obj/item/clothing/under/misc/burial,
-/obj/item/radio/intercom/chapel/directional/west,
+/obj/item/radio/intercom/directional/west,
 /obj/item/reagent_containers/cup/glass/bottle/wine/unlabeled,
 /obj/item/reagent_containers/cup/glass/bottle/wine/unlabeled,
 /obj/item/reagent_containers/cup/glass/bottle/wine/unlabeled,
@@ -6571,6 +6571,7 @@
 /area/station/maintenance/abandon_cafeteria)
 "ceK" = (
 /obj/machinery/light/small/directional/south,
+/obj/item/radio/intercom/chapel/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel/office)
 "ceU" = (
@@ -62460,7 +62461,7 @@
 /area/station/engineering/atmos)
 "tPU" = (
 /obj/effect/turf_decal/trimline/orange/filled/line,
-/obj/machinery/vending/wardrobe/engi_wardrobe,
+/obj/machinery/vending/access/engi_wardrobe,
 /obj/machinery/light_switch/directional/south,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark/textured_large,
@@ -64576,7 +64577,7 @@
 /obj/effect/turf_decal/trimline/dark_blue/filled/warning{
 	dir = 10
 	},
-/obj/item/radio/intercom/chapel/directional/west,
+/obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/secondary/entry)
 "uzc" = (
