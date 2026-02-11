@@ -39804,7 +39804,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "mbe" = (
-/obj/machinery/vending/wardrobe/engi_wardrobe,
+/obj/machinery/vending/access/engi_wardrobe,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
