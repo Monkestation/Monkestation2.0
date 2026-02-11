@@ -255,7 +255,7 @@
 	)
 	if(chem.type == /datum/reagent/toxin/plasma || chem.type == /datum/reagent/toxin/hot_ice)
 		if(slime.getBruteLoss() || slime.getFireLoss())
-			if(!HAS_TRAIT(slime, TRAIT_SLIME_HYDROPHOBIA) && slime.get_skin_temperature() > slime.bodytemp_cold_damage_limit)
+			if(slime.get_skin_temperature() > slime.bodytemp_cold_damage_limit)
 				var/list/to_heal = rand(2) ? list(BRUTE, BURN) : list(BURN, BRUTE) // Randomize what is healed first
 				slime.heal_ordered_damage(HEALTH_HEALED * REM * seconds_per_tick, to_heal)
 				slime.reagents.remove_reagent(chem.type, min(chem.volume * 0.22, 10))
