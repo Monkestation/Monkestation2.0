@@ -5671,19 +5671,6 @@
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron/dark/textured,
 /area/station/cargo/miningoffice)
-"bON" = (
-/obj/machinery/telecomms/processor/preset_one,
-/obj/effect/turf_decal/siding/thinplating_new/dark{
-	dir = 5
-	},
-/obj/effect/turf_decal/tile/purple/anticorner/contrasted{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/purple/filled/corner{
-	dir = 8
-	},
-/turf/open/floor/iron/dark/telecomms,
-/area/station/tcommsat/server)
 "bOQ" = (
 /obj/structure/plasticflaps/opaque,
 /obj/effect/turf_decal/delivery,
@@ -6428,8 +6415,14 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/security/checkpoint/medical)
 "cck" = (
-/obj/machinery/telecomms/receiver/preset_right,
-/turf/open/floor/circuit/green/telecomms/mainframe,
+/obj/machinery/telecomms/server/presets/science,
+/obj/effect/turf_decal/siding/thinplating_new/dark/end{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/purple/filled/end{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "cco" = (
 /obj/structure/cable,
@@ -6836,17 +6829,23 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/station/security/prison)
 "ciU" = (
-/obj/effect/turf_decal/stripes{
-	dir = 8
-	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
-/obj/effect/turf_decal/siding/thinplating_new/dark{
-	dir = 8
-	},
 /obj/effect/turf_decal/siding/thinplating_new/dark/corner{
 	dir = 4
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+	dir = 8
 	},
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
@@ -22532,17 +22531,6 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/security/office)
-"hiw" = (
-/obj/machinery/telecomms/processor/preset_three,
-/obj/effect/turf_decal/siding/thinplating_new/dark{
-	dir = 6
-	},
-/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted,
-/obj/effect/turf_decal/trimline/dark_blue/filled/corner{
-	dir = 1
-	},
-/turf/open/floor/iron/dark/telecomms,
-/area/station/tcommsat/server)
 "hiP" = (
 /obj/structure/table/reinforced,
 /obj/item/multitool,
@@ -28034,14 +28022,11 @@
 /area/station/maintenance/starboard/upper)
 "iZi" = (
 /obj/machinery/telecomms/server/presets/medical,
-/obj/effect/turf_decal/siding/thinplating_new/dark{
-	dir = 10
-	},
-/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
+/obj/effect/turf_decal/siding/thinplating_new/dark/end{
 	dir = 8
 	},
-/obj/effect/turf_decal/trimline/blue/filled/corner{
-	dir = 4
+/obj/effect/turf_decal/trimline/blue/filled/end{
+	dir = 8
 	},
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
@@ -30269,18 +30254,9 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/primary/central)
 "jJS" = (
-/obj/machinery/telecomms/server/presets/command,
-/obj/effect/turf_decal/siding/thinplating_new/dark{
-	dir = 10
-	},
-/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/dark_blue/filled/corner{
-	dir = 4
-	},
 /obj/machinery/light/small/directional/west,
-/turf/open/floor/iron/dark/telecomms,
+/obj/machinery/telecomms/receiver/preset_left,
+/turf/open/floor/circuit/green/telecomms/mainframe,
 /area/station/tcommsat/server)
 "jJT" = (
 /obj/effect/turf_decal/trimline/purple/filled/corner{
@@ -34541,16 +34517,9 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/central)
 "kZw" = (
-/obj/machinery/telecomms/server/presets/science,
-/obj/effect/turf_decal/siding/thinplating_new/dark{
-	dir = 9
-	},
-/obj/effect/turf_decal/tile/purple/anticorner/contrasted{
-	dir = 1
-	},
-/obj/effect/turf_decal/trimline/purple/filled/corner,
 /obj/machinery/light/small/directional/west,
-/turf/open/floor/iron/dark/telecomms,
+/obj/machinery/telecomms/receiver/preset_right,
+/turf/open/floor/circuit/green/telecomms/mainframe,
 /area/station/tcommsat/server)
 "kZy" = (
 /obj/effect/turf_decal/trimline/yellow/filled/warning{
@@ -39895,16 +39864,22 @@
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics)
 "mMv" = (
-/obj/effect/turf_decal/stripes{
-	dir = 8
-	},
 /obj/effect/turf_decal/stripes/corner,
-/obj/effect/turf_decal/siding/thinplating_new/dark{
-	dir = 8
-	},
 /obj/effect/turf_decal/siding/thinplating_new/dark/corner,
 /obj/machinery/power/terminal,
 /obj/structure/cable,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+	dir = 8
+	},
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "mMM" = (
@@ -47457,6 +47432,16 @@
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plating,
 /area/station/maintenance/port/central)
+"pfB" = (
+/obj/machinery/telecomms/processor/preset_one,
+/obj/effect/turf_decal/siding/thinplating_new/dark/end{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/purple/filled/end{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/telecomms,
+/area/station/tcommsat/server)
 "pfE" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/techstorage/security_all,
@@ -51775,12 +51760,11 @@
 /area/station/service/library)
 "qzg" = (
 /obj/machinery/telecomms/bus/preset_one,
-/obj/effect/turf_decal/siding/thinplating_new/dark{
-	dir = 6
+/obj/effect/turf_decal/trimline/blue/filled/end{
+	dir = 4
 	},
-/obj/effect/turf_decal/tile/blue/anticorner/contrasted,
-/obj/effect/turf_decal/trimline/blue/filled/corner{
-	dir = 1
+/obj/effect/turf_decal/siding/thinplating_new/dark/end{
+	dir = 4
 	},
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
@@ -57748,14 +57732,11 @@
 /area/station/service/chapel)
 "svM" = (
 /obj/machinery/telecomms/bus/preset_three,
-/obj/effect/turf_decal/siding/thinplating_new/dark{
-	dir = 5
-	},
-/obj/effect/turf_decal/tile/red/anticorner/contrasted{
+/obj/effect/turf_decal/siding/thinplating_new/dark/end{
 	dir = 4
 	},
-/obj/effect/turf_decal/trimline/red/filled/corner{
-	dir = 8
+/obj/effect/turf_decal/trimline/red/filled/end{
+	dir = 4
 	},
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
@@ -65244,19 +65225,13 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/primary/central/aft)
 "uLv" = (
+/obj/structure/cable,
 /obj/effect/turf_decal/stripes{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
+	dir = 9
 	},
 /obj/effect/turf_decal/siding/thinplating_new/dark{
-	dir = 1
+	dir = 9
 	},
-/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
-	dir = 8
-	},
-/obj/structure/cable,
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "uLw" = (
@@ -70878,13 +70853,12 @@
 /area/station/commons/dorms)
 "wBp" = (
 /obj/machinery/telecomms/server/presets/security,
-/obj/effect/turf_decal/siding/thinplating_new/dark{
-	dir = 9
+/obj/effect/turf_decal/siding/thinplating_new/dark/end{
+	dir = 8
 	},
-/obj/effect/turf_decal/tile/red/anticorner/contrasted{
-	dir = 1
+/obj/effect/turf_decal/trimline/red/filled/end{
+	dir = 8
 	},
-/obj/effect/turf_decal/trimline/red/filled/corner,
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "wBq" = (
@@ -73367,13 +73341,11 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/office)
 "xpO" = (
-/obj/effect/turf_decal/stripes,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 1
+/obj/effect/turf_decal/stripes{
+	dir = 10
 	},
-/obj/effect/turf_decal/siding/thinplating_new/dark,
-/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
-	dir = 1
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 10
 	},
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
@@ -73691,8 +73663,14 @@
 /turf/open/floor/wood/tile,
 /area/station/commons/lounge)
 "xvt" = (
-/obj/machinery/telecomms/receiver/preset_left,
-/turf/open/floor/circuit/green/telecomms/mainframe,
+/obj/machinery/telecomms/server/presets/command,
+/obj/effect/turf_decal/siding/thinplating_new/dark/end{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/dark_blue/filled/end{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "xvv" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
@@ -73736,12 +73714,12 @@
 /turf/open/floor/iron/dark/diagonal,
 /area/station/hallway/secondary/entry)
 "xvM" = (
-/obj/effect/turf_decal/stripes,
-/obj/effect/turf_decal/stripes{
-	dir = 1
-	},
+/obj/machinery/telecomms/processor/preset_three,
 /obj/effect/turf_decal/siding/thinplating_new/dark/end{
-	dir = 8
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/dark_blue/filled/end{
+	dir = 4
 	},
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
@@ -118747,13 +118725,13 @@ imu
 omd
 hCB
 svM
-hiw
+kJi
 xvM
 pEN
 bzA
 pEN
+pfB
 kJi
-bON
 qzg
 hCB
 pDS
