@@ -1,18 +1,3 @@
-/obj/item/autosurgeon/toolset
-	starting_organ = /obj/item/organ/internal/cyberimp/arm/item_set/toolset
-
-/obj/item/autosurgeon/surgery
-	starting_organ = /obj/item/organ/internal/cyberimp/arm/item_set/surgery
-
-/obj/item/autosurgeon/botany
-	starting_organ = /obj/item/organ/internal/cyberimp/arm/item_set/botany
-
-/obj/item/autosurgeon/janitor
-	starting_organ = /obj/item/organ/internal/cyberimp/arm/item_set/janitor
-
-/obj/item/autosurgeon/muscle
-	starting_organ = /obj/item/organ/internal/cyberimp/arm/strongarm
-
 //xeno-organs
 /obj/item/autosurgeon/xeno
 	name = "strange autosurgeon"

@@ -7746,7 +7746,6 @@
 #include "monkestation\code\modules\cybernetics\designs\security.dm"
 #include "monkestation\code\modules\cybernetics\elements\dancing.dm"
 #include "monkestation\code\modules\cybernetics\hud\cybernetics.dm"
-#include "monkestation\code\modules\cybernetics\implant_items\autosurgeons.dm"
 #include "monkestation\code\modules\cybernetics\implant_items\weapons\mantis_blade.dm"
 #include "monkestation\code\modules\cybernetics\implant_items\weapons\razorwire_spool.dm"
 #include "monkestation\code\modules\cybernetics\premade_storages\antags.dm"
