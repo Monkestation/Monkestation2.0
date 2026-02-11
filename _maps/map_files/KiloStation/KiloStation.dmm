@@ -34143,7 +34143,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
 "kyT" = (
-/obj/machinery/vending/wardrobe/engi_wardrobe,
+/obj/machinery/vending/access/engi_wardrobe,
 /obj/effect/turf_decal/bot,
 /obj/machinery/camera/directional/north{
 	c_tag = "Engineering Lockers";

@@ -215,3 +215,29 @@
   - rscadd: Added a USB port to the Holographic Signboard, allowing circuit access.
   pseudo-savant:
   - rscadd: Ported over the flatpacker from /tg/ to monkestation
+2026-02-10:
+  Absolucy:
+  - bugfix: Ignoring people should now consistently work in deadchat.
+  JohnFulpWillard:
+  - rscadd: Signal technician's clothings can now be found in the Engineering vending
+      machine, if you have Telecomms Admin access.
+  PotatoTomahto:
+  - rscadd: ports yogstation RD holotool
+  - rscadd: holotool added as thief objective
+  - code_imp: multitool interactions now support different item types
+  SirNightKnight:
+  - qol: added some missing warning line decals to the decal painter.
+  - qol: decal painters can paint windows.
+  - bugfix: standardized tile decal alphas a bit better.
+  - bugfix: fixed a bug where holosign projectors could not be placed on tables.
+  - rscdel: removed random department colors for windows and made them be colored
+      the same as their respective department's decal color.
+  Tractor-Maam:
+  - map: fixed confessional intercoms on Oshan
+  - rscadd: Added the Advanced Health Analyzer cyborg upgrade to the Medical Cyborg
+      Upgrades technode.
+  - bugfix: Syndicate Medical Cyborgs can now read their analyzer in the dark, on
+      par with their standard counterparts.
+  - map: fixed broken morgue trays on Blueshift.
+  flleeppyy:
+  - bugfix: Fix "Internet routing relays" button not doing anything

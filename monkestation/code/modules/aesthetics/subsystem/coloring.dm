@@ -6,19 +6,19 @@ SUBSYSTEM_DEF(station_coloring)
 	///do we bother with wall trims?
 	var/wall_trims = FALSE
 	//RED (Only sec stuff honestly)
-	var/list/red = list("#d0294c", "#d6292f", "#d62f29", "#d63a29")
+	var/list/red = list("#DE3A3A")
 	//BAR
-	var/list/bar = list("#3790aa", "#5ca9c1", "#5cb092", "#4daf9b", "#4a9bdf", "#30cedf", "#c7804a", "#b0cedf")
+	var/list/bar = list("#791500")
 	//PURPLE (RnD + Research outpost)
-	var/list/purple = list("#674dba", "#6b43bc", "#864ec5", "#8d40c3")
+	var/list/purple = list("#D381C9")
 	//BROWN (Mining + Cargo)
-	var/list/brown = list("#826627", "#825327", "#a9682b", "#a9542b")
+	var/list/brown = list("#A46106")
 	//GREEN (Virology and Hydro areas)
-	var/list/green = list("#50b47c", "#59b25d", "#46955a", "#4ba17b")
+	var/list/green = list("#9FED58")
 	//BLUE (Some of Medbay areas)
-	var/list/blue = list("#336f92", "#5d99bc", "#3f87ae", "#6eabce", "#307199")
+	var/list/blue = list("#52B4E9")
 	//ORANGE (engineering)
-	var/list/orange = list("#f3a852", "#f39d3a", "#c47010", "#f08913", "#fc8600")
+	var/list/orange = list("#EFB341")
 
 /datum/controller/subsystem/station_coloring/Initialize()
 	var/list/color_palette = list(
@@ -57,13 +57,13 @@ SUBSYSTEM_DEF(station_coloring)
 	var/list/color_palette = list(
 		pick(red)          = typesof(/area/station/security),
 		pick(purple)       = typesof(/area/station/science),
-		pick(green)        = list(/area/station/medical/virology,
-		                        /area/station/service/hydroponics),
+		pick(green)        = list(/area/station/medical/virology) + typesof(/area/station/service) - /area/station/service/bar,
 		pick(blue)         = typesof(/area/station/medical),
 		pick(bar)          = list(/area/station/service/bar),
 		pick(brown)		   = typesof(/area/station/cargo) + typesof(/area/mine),
 		COLOR_WHITE        = typesof(/area/shuttle),
 		COLOR_WHITE        = typesof(/area/centcom),
+		pick(orange)	   = typesof(/area/station/engineering),
 	)
 
 	for(var/color in color_palette)
