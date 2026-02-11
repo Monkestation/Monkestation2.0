@@ -62274,6 +62274,7 @@
 /obj/effect/turf_decal/trimline/orange/filled/line,
 /obj/machinery/light_switch/directional/south,
 /obj/effect/turf_decal/bot,
+/obj/machinery/vending/access/engi_wardrobe,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/engineering/lobby)
 "tPY" = (
