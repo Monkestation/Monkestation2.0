@@ -4410,7 +4410,6 @@
 /area/station/command/bridge)
 "aCE" = (
 /obj/structure/filingcabinet,
-/obj/machinery/firealarm/directional/north,
 /turf/open/floor/carpet/grimey,
 /area/station/security/detectives_office)
 "aCF" = (
@@ -8010,7 +8009,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/miningdock/cafeteria)
 "bvI" = (
-/obj/machinery/vending/wardrobe/engi_wardrobe,
+/obj/machinery/vending/access/engi_wardrobe,
 /obj/structure/sign/poster/official/safety_eye_protection/directional/east,
 /turf/open/floor/iron,
 /area/station/engineering/main)
@@ -10554,6 +10553,7 @@
 	dir = 1
 	},
 /obj/structure/table/glass,
+/obj/item/flatpack,
 /turf/open/floor/plastic,
 /area/station/engineering/break_room)
 "cgX" = (
@@ -12601,6 +12601,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/machinery/newscaster/directional/north,
 /turf/open/floor/carpet/grimey,
 /area/station/security/detectives_office)
 "cRW" = (
@@ -17494,6 +17495,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/station/science/lower)
+"erA" = (
+/obj/effect/turf_decal/bot,
+/obj/item/flatpack,
+/turf/open/floor/iron,
+/area/station/cargo/storage)
 "erR" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/food/pie_smudge,
@@ -29442,22 +29448,6 @@
 	spawn_all_loot = 1;
 	spawn_random_offset = 1
 	},
-/obj/effect/spawner/random/food_or_drink/seed{
-	spawn_all_loot = 1;
-	spawn_random_offset = 1
-	},
-/obj/effect/spawner/random/food_or_drink/seed{
-	spawn_all_loot = 1;
-	spawn_random_offset = 1
-	},
-/obj/effect/spawner/random/food_or_drink/seed{
-	spawn_all_loot = 1;
-	spawn_random_offset = 1
-	},
-/obj/effect/spawner/random/food_or_drink/seed{
-	spawn_all_loot = 1;
-	spawn_random_offset = 1
-	},
 /obj/machinery/vending/hydronutrients/wall/directional/north,
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
@@ -30389,7 +30379,7 @@
 	dir = 8
 	},
 /obj/effect/landmark/start/detective,
-/obj/machinery/newscaster/directional/east,
+/obj/structure/detectiveboard/directional/east,
 /turf/open/floor/carpet,
 /area/station/security/detectives_office)
 "ixP" = (
@@ -36017,6 +36007,15 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
+"kjP" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 4
+	},
+/obj/machinery/camera/directional/east{
+	c_tag = "Civilian - Escape Pods North"
+	},
+/turf/open/floor/iron,
+/area/station/escapepodbay)
 "kkb" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
 	dir = 9
@@ -58416,6 +58415,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
+/obj/item/flatpack,
 /turf/open/floor/iron/white,
 /area/station/science/lab)
 "rcD" = (
@@ -63212,6 +63212,13 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/science/lower)
+"sFt" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/camera/directional/west{
+	c_tag = "Civilian - Escape Pods South"
+	},
+/turf/open/floor/iron,
+/area/station/escapepodbay)
 "sFw" = (
 /obj/machinery/door/window/left/directional/east{
 	dir = 1;
@@ -74726,6 +74733,7 @@
 /area/station/maintenance/starboard/greater)
 "waE" = (
 /obj/machinery/computer/records/medical,
+/obj/machinery/firealarm/directional/north,
 /turf/open/floor/carpet/grimey,
 /area/station/security/detectives_office)
 "waG" = (
@@ -78412,6 +78420,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/camera/directional/east{
+	c_tag = "Civilian - Escape Pods East"
+	},
 /turf/open/floor/iron,
 /area/station/escapepodbay)
 "xly" = (
@@ -80957,6 +80968,10 @@
 	amount = 3
 	},
 /obj/item/reagent_containers/syringe/antiviral,
+/obj/machinery/camera/directional/south{
+	c_tag = "Medical - Virology Disease Isolation";
+	network = list("ss13","medbay")
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/pathology)
 "ycV" = (
@@ -95160,7 +95175,7 @@ acA
 acA
 acA
 acA
-acA
+sFt
 hTG
 aeb
 apC
@@ -95398,7 +95413,7 @@ abg
 ivr
 abg
 abB
-abg
+kjP
 abH
 abf
 abX
@@ -192273,7 +192288,7 @@ sLz
 wjP
 uax
 uax
-uzm
+erA
 icO
 tCe
 eOk

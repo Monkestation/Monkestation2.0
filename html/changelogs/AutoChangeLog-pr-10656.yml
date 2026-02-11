@@ -1,6 +1,0 @@
-author: "wonderinghost"
-delete-after: True
-changes:
-  - bugfix: "tcomms machines accessible"
-  - map: "moves around tcomm machines"
-  - map: "adds blue wire from ptl to atmos"

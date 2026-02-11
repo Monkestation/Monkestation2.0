@@ -110,7 +110,7 @@ export const EntryGradient = (props: EntryGradientProps) => {
   const { act, data } = useBackend<ParticleUIData>();
   const [desc, setdesc] = useState('');
   const { name, var_name, gradient } = props;
-  const isLooping = gradient?.find((x) => x === 'loop');
+  const isLooping = gradient?.some((x) => x === 'loop');
 
   let space_type = 'COLORSPACE_RGB';
   const gradientSpace = gradient?.find(isColorSpaceObject);

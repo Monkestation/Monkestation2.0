@@ -2115,6 +2115,7 @@
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 8
 	},
+/obj/item/flatpack,
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "avR" = (
@@ -12966,10 +12967,10 @@
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 8
 	},
-/obj/structure/closet/l3closet/virology,
 /obj/effect/turf_decal/bot,
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
+/obj/machinery/recharge_station,
 /turf/open/floor/iron,
 /area/station/medical/storage)
 "cYp" = (
@@ -30511,7 +30512,7 @@
 	dir = 8
 	},
 /obj/machinery/light/directional/east,
-/obj/machinery/status_display/evac/directional/east,
+/obj/structure/detectiveboard/directional/east,
 /turf/open/floor/carpet,
 /area/station/security/detectives_office)
 "hfM" = (
@@ -52811,6 +52812,7 @@
 	},
 /obj/machinery/airalarm/directional/west,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/flatpack,
 /turf/open/floor/iron,
 /area/station/engineering/storage_shared)
 "mrf" = (
@@ -58063,7 +58065,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/item/kirbyplants/random,
+/obj/structure/closet/l3closet,
 /turf/open/floor/iron,
 /area/station/medical/storage)
 "nFX" = (
@@ -74967,7 +74969,7 @@
 	dir = 6
 	},
 /obj/structure/sign/poster/official/moth_delam/directional/south,
-/obj/machinery/vending/wardrobe/engi_wardrobe,
+/obj/machinery/vending/access/engi_wardrobe,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/station/engineering/main)
@@ -81912,6 +81914,7 @@
 	},
 /obj/item/folder/white,
 /obj/item/pen,
+/obj/item/flatpack,
 /turf/open/floor/iron,
 /area/station/science/lab)
 "tpE" = (
@@ -93037,6 +93040,7 @@
 /obj/item/mod/module/plasma_stabilizer,
 /obj/item/mod/module/thermal_regulator,
 /obj/structure/table/reinforced,
+/obj/item/storage/toolbox/electrical/medical,
 /turf/open/floor/iron,
 /area/station/medical/storage)
 "vYG" = (

@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - bugfix: "BSO/NTRep accesses show up to ID consoles & airlock electronics."

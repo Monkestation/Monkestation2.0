@@ -4,7 +4,7 @@
 	icon_state = "Glass_top"
 	maptext_width = 96
 	maptext_height = 160
-	screen_loc = ui_votehud
+	screen_loc = UI_VOTEHUD
 	plane = SPLASHSCREEN_PLANE
 	invisibility = INVISIBILITY_ABSTRACT
 	var/user_preference = "Glass"
@@ -12,6 +12,7 @@
 	var/atom/movable/screen/mapvote_button/last_choice
 	var/latest_vote_count
 	var/latest_vote_length
+	var/fade_timer
 
 /atom/movable/screen/mapvote_hud/Initialize(mapload, datum/hud/hud_owner, datum/preferences/preferences)
 	. = ..()
@@ -26,7 +27,7 @@
 
 	// position this to the left if you're in the lobby, else it overlaps with the server buttons
 	if(isnewplayer(hud_owner?.mymob))
-		screen_loc = ui_votehud_left
+		screen_loc = UI_VOTEHUD_LEFT
 
 	RegisterSignal(SSvote, COMSIG_VOTE_STARTED, PROC_REF(show))
 	RegisterSignal(SSvote, COMSIG_VOTE_ENDED, PROC_REF(hide))
@@ -54,10 +55,29 @@
 		add_overlay(overlay_holder)
 	QDEL_NULL(overlay_holder)
 
+/atom/movable/screen/mapvote_hud/proc/fade_in(time = 0.3 SECONDS)
+	if(fade_timer)
+		deltimer(fade_timer)
+		fade_timer = null
+
+	animate(src)
+	alpha = 0
+	invisibility = INVISIBILITY_NONE
+	animate(src, alpha = 255, time = time, easing = EASE_OUT)
+
+/atom/movable/screen/mapvote_hud/proc/fade_out(time = 0.3 SECONDS)
+	if(fade_timer)
+		deltimer(fade_timer)
+
+	animate(src)
+	animate(src, alpha = 0, time = time, easing = EASE_IN)
+
+	fade_timer = addtimer(CALLBACK(src, PROC_REF(_finish_hide)), time, TIMER_STOPPABLE | TIMER_CLIENT_TIME)
+
 /atom/movable/screen/mapvote_hud/proc/show()
 	SIGNAL_HANDLER
+	fade_in()
 
-	invisibility = INVISIBILITY_NONE
 	var/datum/vote/vote = SSvote.current_vote
 	latest_vote_count = vote.count_method
 	var/choices = vote.choices
@@ -88,12 +108,18 @@
 
 /atom/movable/screen/mapvote_hud/proc/hide()
 	SIGNAL_HANDLER
+	// unregister signals so clicking doesn't do anything while fading out
+	for(var/atom/movable/screen/mapvote_button/button as anything in buttons)
+		UnregisterSignal(button, COMSIG_VOTE_CHOICE_SELECTED)
 
+	fade_out()
+
+/atom/movable/screen/mapvote_hud/proc/_finish_hide()
 	invisibility = INVISIBILITY_ABSTRACT
 	last_choice = null
+	fade_timer = null
 	for(var/atom/movable/screen/mapvote_button/button as anything in buttons)
 		vis_contents -= button
-		UnregisterSignal(button, COMSIG_VOTE_CHOICE_SELECTED)
 		qdel(button)
 
 	buttons.Cut()

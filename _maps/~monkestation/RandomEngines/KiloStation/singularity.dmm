@@ -1141,7 +1141,6 @@
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "UU" = (
-/obj/machinery/power/smes/engineering,
 /obj/structure/cable,
 /obj/effect/turf_decal/siding/yellow,
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
@@ -1149,6 +1148,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+/obj/machinery/power/smes/engineering/emp_proof,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "Vk" = (
