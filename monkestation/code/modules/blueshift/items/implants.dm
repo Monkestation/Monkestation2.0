@@ -13,20 +13,6 @@
 /obj/item/autosurgeon/muscle
 	starting_organ = /obj/item/organ/internal/cyberimp/arm/strongarm
 
-//syndie
-
-/obj/item/autosurgeon/syndicate/esword_arm
-	starting_organ = /obj/item/organ/internal/cyberimp/arm/item_set/esword
-
-/obj/item/autosurgeon/syndicate/nodrop
-	starting_organ = /obj/item/organ/internal/cyberimp/brain/anti_drop/syndicate
-
-/obj/item/autosurgeon/syndicate/baton
-	starting_organ = /obj/item/organ/internal/cyberimp/arm/item_set/baton
-
-/obj/item/autosurgeon/syndicate/flash
-	starting_organ = /obj/item/organ/internal/cyberimp/arm/item_set/flash
-
 //xeno-organs
 /obj/item/autosurgeon/xeno
 	name = "strange autosurgeon"

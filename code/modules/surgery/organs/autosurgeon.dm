@@ -144,13 +144,11 @@
 	uses = 1
 	starting_organ = /obj/item/organ/internal/cyberimp/brain/linked_surgery/perfect/nt
 
-// monkestation edit start
 /obj/item/autosurgeon/security_hud
 	name = "autosurgeon"
 	desc = "A single use autosurgeon that contains a security heads-up display augment. A screwdriver can be used to remove it, but implants can't be placed back in."
 	uses = 1
 	starting_organ = /obj/item/organ/internal/cyberimp/eyes/hud/security
-// monkestation edit end
 
 /obj/item/autosurgeon/syndicate
 	name = "suspicious autosurgeon"
@@ -158,10 +156,16 @@
 	surgery_speed = 0.75
 	loaded_overlay = "autosurgeon_syndicate_loaded_overlay"
 
+/obj/item/autosurgeon/syndicate/Initialize(mapload)
+	. = ..()
+	if(istype(stored_organ, /obj/item/organ/internal/cyberimp))
+		var/obj/item/organ/internal/cyberimp/starting_implant = stored_organ
+		starting_implant.organ_flags |= ORGAN_HIDDEN
+
 /obj/item/autosurgeon/syndicate/laser_arm
 	desc = "A single use autosurgeon that contains a combat arms-up laser augment. A screwdriver can be used to remove it, but implants can't be placed back in."
-	uses = 1
 	starting_organ = /obj/item/organ/internal/cyberimp/arm/item_set/gun/laser
+	uses = 1
 
 /obj/item/autosurgeon/syndicate/thermal_eyes
 	desc = "A single use autosurgeon that contains a pair of upgraded thermal eyes. A screwdriver can be used to remove it, but implants can't be placed back in."
@@ -169,13 +173,19 @@
 	uses = 1
 
 /obj/item/autosurgeon/syndicate/xray_eyes
+	desc = "A single use autosurgeon that contains a pair of x-ray eyes. A screwdriver can be used to remove it, but implants can't be placed back in."
 	starting_organ = /obj/item/organ/internal/eyes/robotic/xray/syndicate
+	uses = 1
 
-/obj/item/autosurgeon/syndicate/anti_stun //monkestation edit start: Syndicate cybernetics
+/obj/item/autosurgeon/syndicate/anti_stun
+	desc = "A single use autosurgeon that contains a contraband CNS rebooter implant. A screwdriver can be used to remove it, but implants can't be placed back in."
 	starting_organ = /obj/item/organ/internal/cyberimp/brain/anti_stun/syndicate
+	uses = 1
 
 /obj/item/autosurgeon/syndicate/reviver
-	starting_organ = /obj/item/organ/internal/cyberimp/chest/reviver/syndicate //monkestation edit end: Syndicate cybernetics
+	desc = "A single use autosurgeon that contains a contraband reviver implant. A screwdriver can be used to remove it, but implants can't be placed back in."
+	starting_organ = /obj/item/organ/internal/cyberimp/chest/reviver/syndicate
+	uses = 1
 
 /obj/item/autosurgeon/syndicate/commsagent
 	desc = "A device that automatically - painfully - inserts an implant. It seems someone's specially \
@@ -187,4 +197,82 @@
 	organ_whitelist += /obj/item/organ/internal/tongue
 
 /obj/item/autosurgeon/syndicate/emaggedsurgerytoolset
+	desc = "A single use autosurgeon that contains a hacked surgical toolset implant. A screwdriver can be used to remove it, but implants can't be placed back in."
 	starting_organ = /obj/item/organ/internal/cyberimp/arm/item_set/surgery/emagged
+	uses = 1
+
+/obj/item/autosurgeon/syndicate/hacked_linked_surgery
+	desc = "A single use autosurgeon that contains a hacked surgical serverlink brain implant. A screwdriver can be used to remove it, but implants can't be placed back in."
+	starting_organ = /obj/item/organ/internal/cyberimp/brain/linked_surgery/perfect
+	uses = 1
+
+/obj/item/autosurgeon/syndicate/polyglot_voicebox
+	desc = "A single use autosurgeon that contains a polyglot voicebox implant. A screwdriver can be used to remove it, but implants can't be placed back in."
+	starting_organ = /obj/item/organ/internal/tongue/polyglot_voicebox
+	uses = 1
+
+/obj/item/autosurgeon/toolset/synthcare
+	name = "synthetic care toolset autosurgeon"
+	desc = "A single use autosurgeon that contains a synthetic repair toolkit implant with a powerful welder and cable coils. Good for taking care of your local synthetic. Cables cannot be refilled and instead the toolset should be replaced with a new one should you run out. <b> IPCs must take care to implant the toolset in the arm that does not have their charging cable! </b>"
+	uses = 1
+	starting_organ = /obj/item/organ/internal/cyberimp/arm/item_set/synth_repair
+
+/obj/item/autosurgeon/syndicate/esword
+	desc = "A single use autosurgeon that contains a arm-mounted energy blade implant. A screwdriver can be used to remove it, but implants can't be placed back in."
+	starting_organ = /obj/item/organ/internal/cyberimp/arm/item_set/esword
+	uses = 1
+
+/obj/item/autosurgeon/syndicate/ammo_counter
+	starting_organ = /obj/item/organ/internal/cyberimp/arm/ammo_counter/syndicate
+	uses = 1
+
+/obj/item/autosurgeon/syndicate/nodrop
+	desc = "A single use autosurgeon that contains a contraband anti-drop implant. A screwdriver can be used to remove it, but implants can't be placed back in."
+	starting_organ = /obj/item/organ/internal/cyberimp/brain/anti_drop/syndicate
+	uses = 1
+
+/obj/item/autosurgeon/syndicate/baton
+	desc = "A single use autosurgeon that contains a arm electrification implant implant. A screwdriver can be used to remove it, but implants can't be placed back in."
+	starting_organ = /obj/item/organ/internal/cyberimp/arm/item_set/baton
+	uses = 1
+
+/obj/item/autosurgeon/syndicate/flash
+	desc = "A single use autosurgeon that contains a integrated high-intensity photon projector implant. A screwdriver can be used to remove it, but implants can't be placed back in."
+	starting_organ = /obj/item/organ/internal/cyberimp/arm/item_set/flash
+	uses = 1
+
+/obj/item/autosurgeon/syndicate/hivenode
+	starting_organ = /obj/item/organ/internal/alien/hivenode
+	uses = 1
+
+/obj/item/autosurgeon/syndicate/syndie_mantis
+	starting_organ = /obj/item/organ/internal/cyberimp/arm/item_set/syndie_mantis
+	uses = 1
+
+/obj/item/autosurgeon/syndicate/syndie_mantis/l
+	starting_organ = /obj/item/organ/internal/cyberimp/arm/item_set/syndie_mantis/l
+	uses = 1
+
+/obj/item/autosurgeon/syndicate/razorwire
+	starting_organ = /obj/item/organ/internal/cyberimp/arm/item_set/razorwire
+	uses = 1
+
+/obj/item/autosurgeon/syndicate/razorwire/l
+	starting_organ = /obj/item/organ/internal/cyberimp/arm/item_set/razorwire/l
+	uses = 1
+
+/obj/item/autosurgeon/syndicate/sandy
+	starting_organ = /obj/item/organ/internal/cyberimp/chest/sandevistan
+	uses = 1
+
+/obj/item/autosurgeon/syndicate/dualwield
+	starting_organ = /obj/item/organ/internal/cyberimp/chest/dualwield
+	uses = 1
+
+/obj/item/autosurgeon/syndicate/deepvien
+	starting_organ = /obj/item/organ/internal/cyberimp/leg/chemplant/drugs
+	uses = 1
+
+/obj/item/autosurgeon/syndicate/deepvien/l
+	starting_organ = /obj/item/organ/internal/cyberimp/leg/chemplant/drugs/l
+	uses = 1

@@ -207,7 +207,7 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 		/obj/item/pinpointer/area_pinpointer/debug,
 		/obj/item/flashlight/emp/debug,
 		/obj/item/airlock_painter/decal/debug,
-		/obj/item/autosurgeon/organ/nif/debug,
+		/obj/item/autosurgeon/nif/debug,
 
 		/obj/item/melee/skateboard/hoverboard/admin,
 		/obj/item/mod/control/pre_equipped/administrative,
