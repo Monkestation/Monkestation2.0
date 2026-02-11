@@ -8,7 +8,7 @@ ADMIN_VERB(flip_ghost_spawn, R_FUN, FALSE, "Toggle Centcom Spawning", "Toggles w
 	var/old_key
 	var/datum/mind/old_mind
 	var/old_reenter
-	var/obj/item/organ/internal/brain/old_human
+	var/datum/weakref/old_human_ref
 
 	///the button we are tied to for dueling
 	var/obj/structure/fight_button/linked_button
@@ -24,12 +24,12 @@ ADMIN_VERB(flip_ghost_spawn, R_FUN, FALSE, "Toggle Centcom Spawning", "Toggles w
 	. = ..()
 	life_or_death()
 
-/mob/living/carbon/human/ghost/New(_old_key, datum/mind/_old_mind, _old_reenter, obj/item/organ/internal/brain/_old_human)
+/mob/living/carbon/human/ghost/New(old_key, datum/mind/old_mind, old_reenter, obj/item/organ/internal/brain/old_human)
 	. = ..()
-	old_key = _old_key
-	old_mind = _old_mind
-	old_reenter = _old_reenter
-	old_human = _old_human
+	src.old_key = old_key
+	src.old_mind = old_mind
+	src.old_reenter = old_reenter
+	src.old_human_ref = WEAKREF(old_human)
 
 /mob/living/carbon/human/ghost/Initialize(mapload)
 	. = ..()
@@ -45,7 +45,10 @@ ADMIN_VERB(flip_ghost_spawn, R_FUN, FALSE, "Toggle Centcom Spawning", "Toggles w
 			linked_button.remove_user(src)
 			linked_button = null
 
-	return ..()
+	. = ..()
+
+	old_mind = null
+	old_human_ref = null
 
 /mob/living/carbon/human/ghost/Life(seconds_per_tick, times_fired)
 	. = ..()
@@ -61,6 +64,7 @@ ADMIN_VERB(flip_ghost_spawn, R_FUN, FALSE, "Toggle Centcom Spawning", "Toggles w
 		new_ghost.PossessByPlayer(old_key)
 		new_ghost.mind = old_mind
 		new_ghost.can_reenter_corpse = old_reenter
+	var/obj/item/organ/internal/brain/old_human = old_human_ref?.resolve()
 	old_human?.temporary_sleep = FALSE
 	qdel(src)
 
