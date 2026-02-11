@@ -1,6 +1,6 @@
-import { BooleanLike } from 'common/react';
+import type { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
-import { Button, Section, Input, Dropdown, LabeledList } from '../components';
+import { Button, Dropdown, Input, LabeledList, Section } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -42,7 +42,7 @@ export const AiVoiceChanger = (props) => {
           <LabeledList.Item label="Verb">
             <Input
               placeholder={say_verb}
-              onChange={(e, value) =>
+              onChange={(value) =>
                 act('verb', {
                   verb: value,
                 })
@@ -60,7 +60,7 @@ export const AiVoiceChanger = (props) => {
           <LabeledList.Item label="Fake name">
             <Input
               placeholder={name}
-              onChange={(e, value) =>
+              onChange={(value) =>
                 act('name', {
                   name: value,
                 })

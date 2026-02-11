@@ -2,9 +2,9 @@ import { useBackend, useLocalState } from '../backend';
 import {
   Box,
   Button,
+  Dropdown,
   LabeledList,
   NumberInput,
-  Dropdown,
   Section,
   Stack,
 } from '../components';
@@ -13,7 +13,7 @@ import {
   AtmosHandbookContent,
   atmosHandbookHooks,
 } from './common/AtmosHandbook';
-import { Gasmix, GasmixParser } from './common/GasmixParser';
+import { type Gasmix, GasmixParser } from './common/GasmixParser';
 
 type Chamber = {
   id: string;
@@ -112,7 +112,7 @@ export const AtmosControlConsole = (props) => {
                         minValue={0}
                         maxValue={data.maxInput}
                         step={10}
-                        onChange={(e, value) =>
+                        onChange={(value) =>
                           act('adjust_input', {
                             chamber: selectedChamber.id,
                             rate: value,
@@ -154,7 +154,7 @@ export const AtmosControlConsole = (props) => {
                         minValue={0}
                         maxValue={data.maxOutput}
                         step={10}
-                        onChange={(e, value) =>
+                        onChange={(value) =>
                           act('adjust_output', {
                             chamber: selectedChamber.id,
                             rate: value,

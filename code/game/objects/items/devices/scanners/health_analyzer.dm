@@ -167,7 +167,7 @@
 			if(HAS_TRAIT_FROM(target, TRAIT_HUSK, BURN))
 				render_list += "<span class='alert ml-1'>Subject has been husked by [conditional_tooltip("severe burns", "Tend burns and apply a de-husking agent, such as [/datum/reagent/medicine/c2/synthflesh::name].", tochat)].</span><br>"
 			else if (HAS_TRAIT_FROM(target, TRAIT_HUSK, CHANGELING_DRAIN))
-				render_list += "<span class='alert ml-1'>Subject has been husked by [conditional_tooltip("desiccation", "Irreparable. Under normal circumstances, revival can only proceed via brain transplant, cloning, or special surgies.", tochat)].</span><br>"
+				render_list += "<span class='alert ml-1'>Subject has been husked by [conditional_tooltip("desiccation", "Irreparable. Under normal circumstances, revival can only proceed via brain transplant or special surgies.", tochat)].</span><br>"
 			else
 				render_list += "<span class='alert ml-1'>Subject has been husked by mysterious causes.</span>\n"
 
@@ -575,7 +575,6 @@
 			simple_scanner.show_emotion(AID_EMOTION_WARN)
 			playsound(simple_scanner, 'sound/machines/twobeep.ogg', 50, FALSE)
 
-//MONKESTATION ADDITION START
 //Cyborgs can use an integrated health analyzer even if they cant see
 /obj/item/healthanalyzer/cyborg
 
@@ -628,7 +627,21 @@
 
 	chemscan(user, victim)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-//MONKESTATION ADDITION END
+
+/obj/item/healthanalyzer/cyborg/proc/upgrade() //so that it wont get moved upon upgrade in the cyborgs toolkit
+	advanced = TRUE
+	name = /obj/item/healthanalyzer/advanced::name
+	desc = /obj/item/healthanalyzer/advanced::desc
+	icon_state = /obj/item/healthanalyzer/advanced::icon_state
+	update_appearance()
+
+/obj/item/healthanalyzer/cyborg/proc/downgrade()
+	advanced = initial(advanced)
+	name = initial(name)
+	desc = initial(desc)
+	icon_state = initial(icon_state)
+	update_appearance()
+
 
 /obj/item/healthanalyzer/simple
 	name = "wound analyzer"

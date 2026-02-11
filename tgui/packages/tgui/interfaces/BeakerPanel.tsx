@@ -220,7 +220,7 @@ export const BeakerPanel = (props) => {
             return (
               <Flex key={index} align="center" mb={1}>
                 <Flex.Item grow>
-                  {currentreagentData?.name || 'Unknown Reagent ' + reagent.id}
+                  {currentreagentData?.name || `Unknown Reagent ${reagent.id}`}
                 </Flex.Item>
                 <Flex.Item>
                   <NumberInput
@@ -230,7 +230,7 @@ export const BeakerPanel = (props) => {
                     maxValue={1000}
                     step={1}
                     stepPixelSize={10}
-                    onChange={(e, value) => {
+                    onChange={(value) => {
                       if (value === 0) {
                         removeReagentfromContainer(containerNum, index);
                       } else {
@@ -263,7 +263,7 @@ export const BeakerPanel = (props) => {
                 style={{
                   border: '1px solid #ccc',
                   minHeight: '25px',
-                  backgroundColor: 1 ? '#2a2a2a' : '#1a1a1a',
+                  backgroundColor: '#2a2a2a',
                 }}
               >
                 {selectedReagents[containerNum]?.name || 'No reagent selected'}
@@ -286,7 +286,7 @@ export const BeakerPanel = (props) => {
           <Input
             placeholder="Search reagents..."
             value={safeReagentSearch}
-            onChange={(e, value) => handleSearchChange(containerNum, value)}
+            onChange={(value) => handleSearchChange(containerNum, value)}
             mb={1}
           />
           <Section fill scrollable height="200px">
@@ -344,7 +344,7 @@ export const BeakerPanel = (props) => {
                         maxValue={10.0}
                         unit="seconds"
                         value={grenadeData.grenadeTimer}
-                        onChange={(e, value) =>
+                        onChange={(value) =>
                           setGrenadeData({
                             ...grenadeData,
                             grenadeTimer: value,

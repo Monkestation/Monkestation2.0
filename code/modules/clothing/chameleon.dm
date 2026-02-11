@@ -706,7 +706,6 @@
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
 	w_class = WEIGHT_CLASS_SMALL
-	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
 
 	var/voice_change = 1 ///This determines if the voice changer is on or off.
 
@@ -1297,7 +1296,7 @@
 		cartridge.loaded_projectile.impact_effect_type = template_projectile.impact_effect_type
 		cartridge.loaded_projectile.range = template_projectile.range
 		cartridge.loaded_projectile.suppressed = template_projectile.suppressed
-		cartridge.loaded_projectile.hitsound_wall =	template_projectile.hitsound_wall
+		cartridge.loaded_projectile.hitsound_wall = template_projectile.hitsound_wall
 		cartridge.loaded_projectile.pass_flags = template_projectile.pass_flags
 
 		cartridge.projectile_vars = chameleon_projectile_vars.Copy()

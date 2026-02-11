@@ -1,4 +1,4 @@
-import { BooleanLike } from 'common/react';
+import type { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
 import { Button, Input, LabeledList, Section, Stack } from '../components';
 import { Window } from '../layouts';
@@ -111,7 +111,7 @@ export function AirLockMainSection(props) {
                 fluid
                 maxLength={30}
                 value={passedName}
-                onChange={(e, value) =>
+                onChange={(value) =>
                   act('passedName', {
                     passedName: value,
                   })
@@ -123,7 +123,7 @@ export function AirLockMainSection(props) {
                 fluid
                 maxLength={30}
                 value={passedCycleId}
-                onChange={(e, value) =>
+                onChange={(value) =>
                   act('passedCycleId', {
                     passedCycleId: value,
                   })

@@ -76,28 +76,13 @@
 
 #undef MINIMUM_CLOTHING_STOCK
 
-/obj/machinery/vending/wardrobe/engi_wardrobe
-	products_monke = list(
-		/obj/item/radio/headset/headset_eng = 3,
-		/obj/item/clothing/under/rank/engineering/engineer/nova/trouser = 3,
-		/obj/item/clothing/under/rank/engineering/engineer/nova/utility = 3,
-		/obj/item/clothing/under/rank/engineering/engineer/nova/hazard_chem = 3,
-		/obj/item/clothing/under/misc/overalls = 3,
-		/obj/item/clothing/suit/toggle/jacket/engi = 3,
-		/obj/item/clothing/head/utility/hardhat/orange = 2,
-		/obj/item/clothing/head/utility/hardhat/welding/orange = 2,
-		/obj/item/clothing/head/utility/hardhat/dblue = 2,
-		/obj/item/clothing/head/utility/hardhat/welding/dblue = 2,
-		/obj/item/clothing/head/utility/hardhat/red = 2,
-	)
-
 /obj/machinery/vending/wardrobe/atmos_wardrobe
 	products_monke = list(
 		/obj/item/clothing/glasses/meson/engine = 2,
 		/obj/item/clothing/head/beret/atmos = 4,
 	)
 
-/obj/machinery/vending/wardrobe/cargo_wardrobe
+/obj/machinery/vending/access/wardrobe_cargo
 	products_monke = list(
 		/obj/item/clothing/under/rank/cargo/tech/nova/long = 3,
 		/obj/item/clothing/under/rank/cargo/tech/nova/gorka = 3,

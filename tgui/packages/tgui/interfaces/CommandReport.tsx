@@ -1,4 +1,4 @@
-import { BooleanLike } from 'common/react';
+import type { BooleanLike } from 'common/react';
 import { useBackend, useLocalState } from '../backend';
 import {
   Box,
@@ -13,7 +13,7 @@ import {
 import { Window } from '../layouts';
 
 type Data = {
-  announce_contents: string;
+  announce_contents: BooleanLike;
   announcer_sounds: string[];
   command_name: string;
   command_name_presets: string[];
@@ -24,7 +24,7 @@ type Data = {
   subheader: string;
   custom_name: string;
   played_sound: string;
-  print_report: string;
+  print_report: BooleanLike;
   append_update_name: BooleanLike;
 };
 
@@ -83,7 +83,7 @@ const CentComName = (props) => {
           mt={1}
           value={command_name}
           placeholder={command_name}
-          onChange={(_, value) =>
+          onChange={(value) =>
             act('update_command_name', {
               updated_name: value,
             })
@@ -113,7 +113,7 @@ const SubHeader = (props) => {
         mt={1}
         value={subheader}
         placeholder={subheader}
-        onChange={(_, value) =>
+        onChange={(value) =>
           act('set_subheader', {
             new_subheader: value,
           })
@@ -220,7 +220,7 @@ const ReportText = (props) => {
         height="200px"
         mb={1}
         width="100%"
-        onInput={(_, value) => setCommandReport(value)}
+        onChange={(value) => setCommandReport(value)}
         value={commandReport}
       />
       <Stack vertical>

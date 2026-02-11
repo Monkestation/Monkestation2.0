@@ -57,9 +57,6 @@
 	. = ..()
 	RegisterSignal(src, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(eat_some_bullets)) //Specifically handles the next part...
 
-/obj/machinery/power/rad_collector/Destroy()
-	return ..()
-
 /obj/machinery/power/rad_collector/cable_layer_change_checks(mob/living/user, obj/item/tool)
 	if(anchored)
 		balloon_alert(user, "unanchor first!")
@@ -69,34 +66,32 @@
 /obj/machinery/power/rad_collector/should_have_node()
 	return anchored
 
-/obj/machinery/power/rad_collector/proc/eat_some_bullets(datum/source, obj/projectile/projectile)
-	if(istype(projectile,/obj/projectile/energy/nuclear_particle))
-		var/obj/projectile/energy/nuclear_particle/proj = projectile
-		var/final_output = (proj.stored_energy += power_coeff)
-		stored_energy += (final_output*1.4) //2.5 yields ~145KW/s avg per collector.
-		return
+/obj/machinery/power/rad_collector/proc/eat_some_bullets(datum/source, obj/projectile/energy/nuclear_particle/projectile)
+	if(istype(projectile))
+		stored_energy += projectile.stored_energy * power_coeff * 1.4 //2.5 yields ~145KW/s avg per collector.
 
 /obj/machinery/power/rad_collector/process(seconds_per_tick)
 	if(loaded_tank)
 		var/datum/gas_mixture/tank_mix = loaded_tank.return_air()
 		if(active)
 			for(var/id in tank_mix.gases)
-				if(tank_mix.gases[id][MOLES] >= 10) //Stops cheesing.
-					power_coeff += (GLOB.meta_gas_info[id][META_GAS_SPECIFIC_HEAT]) //250 (plasma), 2000 (hypernobi), etc etc
-					var/gasdrained = min(power_production_drain * drain_ratio * seconds_per_tick, tank_mix.gases[id][MOLES])
-					tank_mix.gases[id][MOLES] -= gasdrained
-					tank_mix.assert_gas(/datum/gas/hydrogen) //Produce Hydrogen. Mostly because it explodes.
-					tank_mix.gases[/datum/gas/hydrogen][MOLES] += gasdrained
-					tank_mix.garbage_collect()
+				if(tank_mix.gases[id][MOLES] < 10) //Stops cheesing.
+					continue
+				power_coeff += (GLOB.meta_gas_info[id][META_GAS_SPECIFIC_HEAT]) //250 (plasma), 2000 (hypernobi), etc etc
+				var/gasdrained = min(power_production_drain * drain_ratio * seconds_per_tick, tank_mix.gases[id][MOLES])
+				tank_mix.gases[id][MOLES] -= gasdrained
+				tank_mix.assert_gas(/datum/gas/hydrogen) //Produce Hydrogen. Mostly because it explodes.
+				tank_mix.gases[/datum/gas/hydrogen][MOLES] += gasdrained
+				tank_mix.garbage_collect()
 		if(!tank_mix && loaded_tank)
 			investigate_log("<font color='red'>out of gas.</font>.", INVESTIGATE_ENGINE)
-			playsound(src, 'sound/machines/ding.ogg', 50, TRUE)
+			playsound(src, 'sound/machines/ding.ogg', vol = 50, vary = TRUE, mixer_channel = CHANNEL_MACHINERY)
 			power_coeff = 0 //Should NEVER happen.
 			return //Immediately stop processing past this point to prevent atmos/MC crashes
 	if(!loaded_tank)
 		power_coeff -= 0.5 //Half power
 	var/power_produced = RAD_COLLECTOR_OUTPUT
-	add_avail(power_produced)
+	add_avail(power_to_energy(power_produced))
 	stored_energy -= power_produced
 
 /obj/machinery/power/rad_collector/interact(mob/user)
@@ -106,8 +101,8 @@
 		to_chat(user, span_warning("The controls are locked!"))
 		return
 	toggle_power()
-	user.visible_message(span_notice("[user.name] turns the [src.name] [active? "on":"off"]."), \
-	span_notice("You turn the [src.name] [active? "on":"off"]."))
+	user.visible_message(span_notice("[user] turns \the [name] [active ? "on":"off"]."), \
+	span_notice("You turn \the [src] [active? "on":"off"]."))
 	var/datum/gas_mixture/tank_mix = loaded_tank?.return_air()
 	var/fuel
 	if(loaded_tank)
@@ -122,7 +117,6 @@
 		to_chat(user, span_warning("Remove the plasma tank first!"))
 	return FAILED_UNFASTEN
 
-
 /obj/machinery/power/rad_collector/set_anchored(anchorvalue)
 	. = ..()
 	if(isnull(.))
@@ -132,74 +126,69 @@
 		return
 	connect_to_network()
 
-/obj/machinery/power/rad_collector/attackby(obj/item/item, mob/user, params)
-	if(istype(item, /obj/item/tank/internals/plasma))
+/obj/machinery/power/rad_collector/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/tank/internals/plasma))
 		if(!anchored)
 			to_chat(user, span_warning("[src] needs to be secured to the floor first!"))
-			return TRUE
+			return ITEM_INTERACT_BLOCKING
 		if(loaded_tank)
 			to_chat(user, span_warning("There's already a plasma tank loaded!"))
-			return TRUE
+			return ITEM_INTERACT_BLOCKING
 		if(panel_open)
 			to_chat(user, span_warning("Close the maintenance panel first!"))
-			return TRUE
-		if(!user.transferItemToLoc(item, src))
-			return
-		loaded_tank = item
+			return ITEM_INTERACT_BLOCKING
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
+		loaded_tank = tool
 		update_appearance()
-	else if(item.GetID())
+		return ITEM_INTERACT_SUCCESS
+
+	if(tool.GetID())
 		if(!allowed(user))
 			to_chat(user, span_danger("Access denied."))
-			return TRUE
+			return ITEM_INTERACT_BLOCKING
 		if(!active)
 			to_chat(user, span_warning("The controls can only be locked when \the [src] is active!"))
-			return TRUE
+			return ITEM_INTERACT_BLOCKING
 		locked = !locked
 		to_chat(user, span_notice("You [locked ? "lock" : "unlock"] the controls."))
-		return TRUE
-	else
-		return ..()
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 /obj/machinery/power/rad_collector/wrench_act(mob/living/user, obj/item/item)
 	. = ..()
 	default_unfasten_wrench(user, item)
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/power/rad_collector/screwdriver_act(mob/living/user, obj/item/item)
-	if(..())
-		return TRUE
+	. = ..()
 	if(!loaded_tank)
 		default_deconstruction_screwdriver(user, icon_state, icon_state, item)
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
 	to_chat(user, span_warning("Remove the plasma tank first!"))
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/power/rad_collector/crowbar_act(mob/living/user, obj/item/I)
 	if(loaded_tank)
 		if(!locked)
 			eject()
-			return TRUE
+			return ITEM_INTERACT_SUCCESS
 		to_chat(user, span_warning("The controls are locked!"))
-		return TRUE
+		return ITEM_INTERACT_BLOCKING
 	if(default_deconstruction_crowbar(I))
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
 	to_chat(user, span_warning("There isn't a tank loaded!"))
-	return TRUE
+	return ITEM_INTERACT_BLOCKING
 
 /obj/machinery/power/rad_collector/return_analyzable_air()
-	if(!loaded_tank)
-		return null
-	return loaded_tank.return_analyzable_air()
+	return loaded_tank?.return_analyzable_air()
 
 /obj/machinery/power/rad_collector/examine(mob/user)
 	. = ..()
 	if(!active)
 		. += span_notice("<b>[src]'s display displays the words:</b> \"Power production mode. Please insert <b>Plasma, Tritium, CO2 or Hypernobilium</b>.\"")
-	// stored_energy is converted directly to watts every SSmachines.wait * 0.1 seconds.
-	// Therefore, its units are joules per SSmachines.wait * 0.1 seconds.
-	// So joules = stored_energy * SSmachines.wait * 0.1
-	var/joules = stored_energy * SSmachines.wait * 0.1
-	. += span_notice("[src]'s display states that it has stored <b>[display_power(joules)]</b>, and is processing <b>[display_power(RAD_COLLECTOR_OUTPUT)]</b>.")
+	. += span_notice("[src]'s display states that it has stored <b>[display_power(stored_energy)]</b>, and is processing <b>[display_power(RAD_COLLECTOR_OUTPUT)]</b>.")
 
 /obj/machinery/power/rad_collector/atom_break(damage_flag)
 	. = ..()

@@ -56,6 +56,7 @@
 			if(target)
 				executed = TRUE
 				target.dos_sources.Add(src)
+				target.begin_processing() //target will handle stopping processing itself
 				if(SSmodular_computers.intrusion_detection_enabled)
 					SSmodular_computers.add_log("IDS WARNING - Excess traffic flood targeting relay [target.uid] detected from device: [computer.name]")
 					SSmodular_computers.intrusion_detection_alarm = TRUE

@@ -1,5 +1,5 @@
 import { Dropdown, NumberInput, Stack } from '../../../../../components';
-import { Feature, FeatureNumericData, FeatureValueProps } from '../base';
+import type { Feature, FeatureNumericData, FeatureValueProps } from '../base';
 
 type FpsServerData = FeatureNumericData & {
   recommended_fps: number;
@@ -57,7 +57,7 @@ const FpsInput = (props: FeatureValueProps<number, number, FpsServerData>) => {
             maxValue={serverData.maximum}
             step={1}
             value={value || recommendedValue}
-            onChange={(_, v) => handleSetValue(v)}
+            onChange={(v) => handleSetValue(v)}
           />
         )}
       </Stack.Item>

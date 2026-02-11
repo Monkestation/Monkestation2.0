@@ -27,11 +27,11 @@
 		stored_research = SSresearch.science_tech
 
 /datum/computer_file/program/science/application_attackby(obj/item/attacking_item, mob/living/user)
-	if(!istype(attacking_item, /obj/item/multitool))
+	if(!istype(attacking_item) || attacking_item.tool_behaviour != TOOL_MULTITOOL)
 		return FALSE
-	var/obj/item/multitool/attacking_tool = attacking_item
-	if(!QDELETED(attacking_tool.buffer) && istype(attacking_tool.buffer, /datum/techweb))
-		stored_research = attacking_tool.buffer
+	var/datum/buffer = multitool_get_buffer(attacking_item)
+	if(!QDELETED(buffer) && istype(buffer, /datum/techweb))
+		stored_research = buffer
 	return TRUE
 
 /datum/computer_file/program/science/ui_assets(mob/user)

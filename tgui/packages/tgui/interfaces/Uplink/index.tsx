@@ -1,5 +1,5 @@
-import { BooleanLike } from 'common/react';
-import { Component, Fragment } from 'react';
+import type { BooleanLike } from 'common/react';
+import { Component } from 'react';
 
 import { resolveAsset } from '../../assets';
 import { useBackend } from '../../backend';
@@ -15,14 +15,14 @@ import {
 } from '../../components';
 import { fetchRetry } from '../../http';
 import { Window } from '../../layouts';
+import { type ContractorItem, ContractorMenu } from './ContractorMenu';
 import {
   calculateDangerLevel,
   calculateProgression,
   dangerLevelsTooltip,
 } from './calculateDangerLevel';
-import { ContractorItem, ContractorMenu } from './ContractorMenu';
-import { GenericUplink, Item } from './GenericUplink';
-import { Objective, ObjectiveMenu } from './ObjectiveMenu';
+import { GenericUplink, type Item } from './GenericUplink';
+import { type Objective, ObjectiveMenu } from './ObjectiveMenu';
 import { PrimaryObjectiveMenu } from './PrimaryObjectiveMenu';
 
 type UplinkItem = {
@@ -106,7 +106,7 @@ type ItemExtraData = Item & {
 // Cache response so it's only sent once
 let fetchServerData: Promise<ServerData> | undefined;
 
-export class Uplink extends Component<{}, UplinkState> {
+export class Uplink extends Component<any, UplinkState> {
   constructor(props) {
     super(props);
     this.state = {
@@ -159,10 +159,8 @@ export class Uplink extends Component<{}, UplinkState> {
       ) {
         return false;
       }
-      {
-        if (value.purchasable_from & uplinkFlag) {
-          return true;
-        }
+      if (value.purchasable_from & uplinkFlag) {
+        return true;
       }
       return false;
     });

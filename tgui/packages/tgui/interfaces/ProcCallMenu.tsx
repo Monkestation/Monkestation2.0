@@ -1,12 +1,12 @@
-import { BooleanLike } from 'common/react';
+import type { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
 import {
-  Stack,
-  Section,
-  Input,
   Button,
   Dropdown,
+  Input,
   NoticeBox,
+  Section,
+  Stack,
 } from '../components';
 import { Window } from '../layouts';
 
@@ -92,7 +92,7 @@ export const ProcCallMenu = (props) => {
                         datatype: type,
                       })
                     }
-                    onEnter={(e, value) =>
+                    onEnter={(value) =>
                       act('rename_argument', {
                         index: index + 1,
                         name: value,

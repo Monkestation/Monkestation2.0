@@ -194,35 +194,6 @@
 /obj/item/vending_refill/wardrobe/medi_wardrobe
 	machine_name = "MediDrobe"
 
-/obj/machinery/vending/wardrobe/engi_wardrobe
-	name = "EngiDrobe"
-	desc = "A vending machine renowned for vending industrial grade clothing."
-	icon_state = "engidrobe"
-	product_ads = "Guaranteed to protect your feet from industrial accidents!;Afraid of radiation? Then wear yellow!"
-	vend_reply = "Thank you for using the EngiDrobe!"
-	products = list(
-		/obj/item/clothing/accessory/pocketprotector = 3,
-		/obj/item/storage/backpack/duffelbag/engineering = 3,
-		/obj/item/storage/backpack/industrial = 3,
-		/obj/item/storage/backpack/satchel/eng = 3,
-		/obj/item/clothing/suit/hooded/wintercoat/engineering = 3,
-		/obj/item/clothing/under/rank/engineering/engineer = 3,
-		/obj/item/clothing/under/rank/engineering/engineer/skirt = 3,
-		/obj/item/clothing/under/rank/engineering/engineer/hazard = 3,
-		/obj/item/clothing/suit/hazardvest = 3,
-		/obj/item/clothing/shoes/workboots = 3,
-		/obj/item/clothing/head/beret/engi = 3,
-		/obj/item/clothing/mask/bandana/striped/engineering = 3,
-		/obj/item/clothing/head/utility/hardhat = 3,
-		/obj/item/clothing/head/utility/hardhat/welding = 3,
-	)
-	refill_canister = /obj/item/vending_refill/wardrobe/engi_wardrobe
-	payment_department = ACCOUNT_ENG
-	light_color = COLOR_VIVID_YELLOW
-
-/obj/item/vending_refill/wardrobe/engi_wardrobe
-	machine_name = "EngiDrobe"
-
 /obj/machinery/vending/wardrobe/atmos_wardrobe
 	name = "AtmosDrobe"
 	desc = "This relatively unknown vending machine delivers clothing for Atmospherics Technicians, an equally unknown job."
@@ -245,40 +216,6 @@
 
 /obj/item/vending_refill/wardrobe/atmos_wardrobe
 	machine_name = "AtmosDrobe"
-
-/obj/machinery/vending/wardrobe/cargo_wardrobe
-	name = "CargoDrobe"
-	desc = "A highly advanced vending machine for buying cargo related clothing for free."
-	icon_state = "cargodrobe"
-	product_ads = "Upgraded Assistant Style! Pick yours today!;These shorts are comfy and easy to wear, get yours now!"
-	vend_reply = "Thank you for using the CargoDrobe!"
-	products = list(
-		/obj/item/storage/bag/mail = 3,
-		/obj/item/clothing/suit/hooded/wintercoat/cargo = 3,
-		/obj/item/clothing/under/rank/cargo/tech = 3,
-		/obj/item/clothing/under/rank/cargo/tech/skirt = 3,
-		/obj/item/clothing/shoes/sneakers/black = 3,
-		/obj/item/clothing/gloves/fingerless = 3,
-		/obj/item/clothing/head/beret/cargo = 3,
-		/obj/item/clothing/mask/bandana/striped/cargo = 3,
-		/obj/item/clothing/head/soft = 3,
-		/obj/item/radio/headset/headset_cargo = 3,
-	)
-	premium = list(
-		/obj/item/clothing/under/rank/cargo/miner = 3,
-		/obj/item/clothing/head/costume/mailman = 1,
-		/obj/item/clothing/under/misc/mailman = 1,
-	)
-	contraband = list(
-		/obj/item/clothing/under/wonka = 1,
-		/obj/item/clothing/head/wonka = 1,
-		/obj/item/cane = 1
-	)
-	refill_canister = /obj/item/vending_refill/wardrobe/cargo_wardrobe
-	payment_department = ACCOUNT_CAR
-
-/obj/item/vending_refill/wardrobe/cargo_wardrobe
-	machine_name = "CargoDrobe"
 
 /obj/machinery/vending/wardrobe/robo_wardrobe
 	name = "RoboDrobe"
@@ -470,26 +407,28 @@
 	product_ads = "Come and get your janitorial clothing, now endorsed by lizard janitors everywhere!"
 	vend_reply = "Thank you for using the JaniDrobe!"
 	products = list(
-		/obj/item/clothing/under/rank/civilian/janitor = 2,
-		/obj/item/clothing/under/rank/civilian/janitor/skirt = 2,
-		/obj/item/clothing/suit/hooded/wintercoat/janitor = 2,
-		/obj/item/clothing/gloves/color/black = 2,
-		/obj/item/clothing/head/soft/purple = 2,
-		/obj/item/clothing/mask/bandana/purple = 2,
-		/obj/item/pushbroom = 2,
-		/obj/item/paint/paint_remover = 2,
-		/obj/item/melee/flyswatter = 2,
-		/obj/item/flashlight = 2,
-		/obj/item/clothing/suit/caution = 6,
-		/obj/item/holosign_creator = 2,
-		/obj/item/lightreplacer = 2,
-		/obj/item/soap/nanotrasen = 2,
-		/obj/item/storage/bag/trash = 2,
-		/obj/item/clothing/shoes/galoshes = 2,
-		/obj/item/watertank/janitor = 1,
-		/obj/item/storage/belt/janitor = 2,
-		/obj/item/plunger = 2,
-		/obj/item/wirebrush = 2,
+		/obj/item/clothing/under/rank/civilian/janitor = 3,
+		/obj/item/clothing/under/rank/civilian/janitor/skirt = 3,
+		/obj/item/clothing/suit/hooded/wintercoat/janitor = 3,
+		/obj/item/clothing/gloves/color/black = 3,
+		/obj/item/clothing/head/soft/purple = 3,
+		/obj/item/clothing/mask/bandana/purple = 3,
+		/obj/item/pushbroom = 3,
+		/obj/item/paint/paint_remover = 3,
+		/obj/item/melee/flyswatter = 3,
+		/obj/item/flashlight = 3,
+		/obj/item/clothing/suit/caution = 8,
+		/obj/item/holosign_creator = 3,
+		/obj/item/lightreplacer = 3,
+		/obj/item/soap/nanotrasen = 4,
+		/obj/item/storage/bag/trash = 5,
+		/obj/item/clothing/shoes/galoshes = 3,
+		/obj/item/watertank/janitor = 2,
+		/obj/item/reagent_containers/spray/cleaner = 4,
+		/obj/item/storage/belt/janitor = 3,
+		/obj/item/plunger = 4,
+		/obj/item/wirebrush = 3,
+
 		/obj/item/radio/headset/headset_srv = 2,
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/jani_wardrobe

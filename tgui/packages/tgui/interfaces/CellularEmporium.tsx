@@ -1,14 +1,14 @@
-import { BooleanLike } from '../../common/react';
+import type { BooleanLike } from '../../common/react';
 import { useBackend, useLocalState } from '../backend';
 import {
+  Box,
   Button,
-  Section,
   Icon,
   Input,
-  Stack,
   LabeledList,
-  Box,
   NoticeBox,
+  Section,
+  Stack,
 } from '../components';
 import { Window } from '../layouts';
 
@@ -72,7 +72,7 @@ export const CellularEmporium = (props) => {
               <Stack.Item>
                 <Input
                   width="200px"
-                  onInput={(e, val) => setSearchAbilities(val)}
+                  onChange={(val) => setSearchAbilities(val)}
                   placeholder="Search Abilities..."
                   value={searchAbilities}
                 />

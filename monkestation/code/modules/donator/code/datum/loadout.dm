@@ -114,7 +114,7 @@
 	ckeywhitelist = list("ruby_flamewing")
 
 /datum/loadout_item/under/miscellaneous/syndie_pajamas
-	name = "Syndicate Pajamas"
+	name = "Luxury Syndicate Pajamas"
 	item_path = /obj/item/clothing/under/costume/syndie_pajamas
 	donator_only = TRUE
 	requires_purchase = FALSE
@@ -439,13 +439,13 @@
 	requires_purchase = FALSE
 
 /datum/loadout_item/plushies/elliethedarksunplush
-	name = "Ellie plush"
+	name = "Ellie Dark Sun plush"
 	item_path = /obj/item/toy/plush/elliethedarksun
 	donator_only = TRUE
 	requires_purchase = FALSE
 
 /datum/loadout_item/plushies/ellie_valentine
-	name = "Ellie plush"
+	name = "Ellie Valentine plush"
 	item_path = /obj/item/toy/plush/ellie_valentine
 	donator_only = TRUE
 	requires_purchase = FALSE
@@ -590,7 +590,7 @@
 
 //Ophaq
 /datum/loadout_item/suit/ophaq_rainbowcoat
-	name = "Rainbow Coat"
+	name = "Ophaq Rainbow Coat"
 	item_path = /obj/item/clothing/suit/toggle/ophaq_rainbowcoat
 	donator_only = TRUE
 	requires_purchase = FALSE
@@ -1058,5 +1058,32 @@
 	name = "Pet Delivery Beacon - Bananadola"
 	item_path = /obj/item/choice_beacon/pet/donator/bananadola
 	ckeywhitelist = list("Milthy")
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/neck/flavafloh_commissar_jacket
+	name = "Commissar Jacket"
+	item_path = /obj/item/clothing/neck/flavafloh_commissar_jacket
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/miscellaneous/flavafloh_pale_blue_fatigues
+	name = "Pale Blue Fatigues"
+	item_path = /obj/item/clothing/under/rank/security/officer/flavafloh_pale_blue_fatigues
+	donator_only = TRUE
+	requires_purchase = FALSE
+	restricted_roles = list(JOB_SECURITY_ASSISTANT,JOB_SECURITY_OFFICER,JOB_BRIG_PHYSICIAN,JOB_WARDEN,JOB_HEAD_OF_SECURITY)
+
+/datum/loadout_item/pocket_items/donator/cyber_mastiff
+	name = "Pet Delivery Beacon - Cyber Mastiff"
+	item_path = /obj/item/choice_beacon/pet/donator/cyber_mastiff
+	ckeywhitelist = list("Flava-Floh")
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/effects/cyber_mastiff
+	name = "Cyber Mastiff Transformation"
+	item_path = /obj/item/effect_granter/donator/cyber_mastiff
+	ckeywhitelist = list("Flava-Floh")
 	donator_only = TRUE
 	requires_purchase = FALSE

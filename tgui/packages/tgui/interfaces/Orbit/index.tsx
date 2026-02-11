@@ -97,8 +97,8 @@ const ObservableSearch = (props) => {
           <Input
             autoFocus
             fluid
-            onEnter={(e, value) => orbitMostRelevant(value)}
-            onInput={(e, value) => setSearchQuery(value)}
+            onEnter={(value) => orbitMostRelevant(value)}
+            onChange={(value) => setSearchQuery(value)}
             placeholder="Search..."
             value={searchQuery}
           />
@@ -227,7 +227,7 @@ const ObservableSection = (props: {
         bold
         color={color ?? 'grey'}
         open={!!color}
-        title={title + ` - (${filteredSection.length})`}
+        title={`${title} - (${filteredSection.length})`}
       >
         {filteredSection.map((poi, index) => {
           return <ObservableItem color={color} item={poi} key={index} />;
