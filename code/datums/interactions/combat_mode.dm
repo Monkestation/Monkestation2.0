@@ -2,6 +2,12 @@
 	shift_to_open_context_menu = TRUE
 	var/combat_mode = FALSE
 
+/datum/interaction_mode/combat_mode/Destroy(force)
+	var/atom/movable/screen/combattoggle/selector = UI
+	if(selector?.combat_mode == src)
+		selector.combat_mode = null
+	return ..()
+
 /datum/interaction_mode/combat_mode/update_istate(mob/M, modifiers)
 	M.istate = NONE
 
