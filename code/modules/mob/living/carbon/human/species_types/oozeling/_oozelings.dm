@@ -139,7 +139,7 @@
 		return
 
 	if(wetness.stacks >= DAMAGE_WATER_STACKS)
-		remove_blood_volume(slime, 5 * seconds_per_tick)
+		remove_blood_volume(slime, 3 * seconds_per_tick)
 		slime.balloon_alert(slime, "too wet, dry off!")
 		if(SPT_PROB(25, seconds_per_tick))
 			slime.visible_message(span_danger("[slime]'s form begins to lose cohesion, seemingly diluting with the water!"), span_warning("The water starts to dilute your body, dry it off!"))
@@ -299,7 +299,7 @@
 		if(!quiet_if_protected)
 			to_chat(slime, span_warning("Water splashes against your oily membrane and rolls right off your body!"))
 		return FALSE
-	remove_blood_volume(slime, 50 * water_multiplier)
+	remove_blood_volume(slime, 30 * water_multiplier)
 	if(COOLDOWN_FINISHED(src, water_alert_cooldown))
 		slime.visible_message(
 			span_warning("[slime]'s form melts away from the water!"),
