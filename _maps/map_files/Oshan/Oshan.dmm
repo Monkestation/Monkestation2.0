@@ -5428,7 +5428,7 @@
 /obj/effect/landmark/start/depsec/medical,
 /obj/machinery/holopad,
 /turf/open/floor/iron/dark/textured,
-/area/station/security/medical)
+/area/station/security/checkpoint/medical)
 "bLm" = (
 /obj/structure/broken_flooring/singular/directional/north,
 /obj/effect/decal/cleanable/dirt,
@@ -6426,7 +6426,7 @@
 	},
 /obj/effect/turf_decal/tile/dark_red/full,
 /turf/open/floor/iron/dark/textured,
-/area/station/security/medical)
+/area/station/security/checkpoint/medical)
 "cck" = (
 /obj/machinery/telecomms/receiver/preset_right,
 /turf/open/floor/circuit/green/telecomms/mainframe,
@@ -16849,7 +16849,7 @@
 /area/station/engineering/atmospherics_engine)
 "fpq" = (
 /turf/closed/wall,
-/area/station/security/medical)
+/area/station/security/checkpoint/medical)
 "fpw" = (
 /obj/machinery/door/airlock/virology/glass{
 	name = "Isolation B"
@@ -18859,7 +18859,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark/textured,
-/area/station/security/medical)
+/area/station/security/checkpoint/medical)
 "fXm" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/atmospherics/pipe/smart/manifold/yellow/visible{
@@ -25870,6 +25870,11 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/office)
+"imh" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/security/checkpoint/medical)
 "imn" = (
 /turf/closed/wall/r_wall,
 /area/station/science/ordnance/office)
@@ -27098,7 +27103,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark/textured,
-/area/station/security/medical)
+/area/station/security/checkpoint/medical)
 "iIo" = (
 /obj/effect/turf_decal/stripes/corner,
 /obj/effect/turf_decal/siding/thinplating_new/dark/corner,
@@ -30935,7 +30940,7 @@
 	},
 /obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/iron/dark/textured,
-/area/station/security/medical)
+/area/station/security/checkpoint/medical)
 "jWZ" = (
 /obj/structure/table/glass,
 /obj/item/food/tofu{
@@ -33459,7 +33464,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark/textured,
-/area/station/security/medical)
+/area/station/security/checkpoint/medical)
 "kMk" = (
 /obj/effect/turf_decal/trimline/red/filled/warning{
 	dir = 4
@@ -34676,7 +34681,7 @@
 	},
 /obj/effect/turf_decal/tile/dark_red/full,
 /turf/open/floor/iron/dark/textured,
-/area/station/security/medical)
+/area/station/security/checkpoint/medical)
 "lbi" = (
 /obj/effect/turf_decal/trimline/brown/corner,
 /obj/machinery/navbeacon{
@@ -39107,7 +39112,7 @@
 	},
 /obj/effect/turf_decal/trimline/dark_red/filled/corner,
 /turf/open/floor/iron/dark/textured,
-/area/station/security/medical)
+/area/station/security/checkpoint/medical)
 "mwy" = (
 /obj/effect/turf_decal/trimline/dark_red/filled/warning{
 	dir = 1
@@ -44109,7 +44114,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark/textured,
-/area/station/security/medical)
+/area/station/security/checkpoint/medical)
 "ofO" = (
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Primary Tool Storage"
@@ -68184,7 +68189,7 @@
 	dir = 5
 	},
 /turf/open/floor/iron/dark/textured,
-/area/station/security/medical)
+/area/station/security/checkpoint/medical)
 "vIn" = (
 /obj/machinery/vending/cigarette,
 /turf/open/floor/iron/white/textured,
@@ -68981,7 +68986,7 @@
 	},
 /obj/effect/turf_decal/tile/dark_red/full,
 /turf/open/floor/iron/dark/textured,
-/area/station/security/medical)
+/area/station/security/checkpoint/medical)
 "vVY" = (
 /obj/effect/turf_decal/trimline/yellow/corner{
 	dir = 4
@@ -71105,7 +71110,7 @@
 	dir = 6
 	},
 /turf/open/floor/iron/dark/textured,
-/area/station/security/medical)
+/area/station/security/checkpoint/medical)
 "wEQ" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/structure/chair/stool/bar/directional/west{
@@ -73634,7 +73639,7 @@
 "xul" = (
 /obj/effect/turf_decal/trimline/dark_red/filled/line,
 /turf/open/floor/iron/dark/textured,
-/area/station/security/medical)
+/area/station/security/checkpoint/medical)
 "xuu" = (
 /obj/machinery/vending/cola/black,
 /turf/open/floor/plating,
@@ -104296,7 +104301,7 @@ fpq
 vIl
 ofB
 wEH
-rPF
+imh
 pAq
 tgV
 hdo
@@ -104553,7 +104558,7 @@ fpq
 cbV
 lbg
 vVV
-rPF
+imh
 chC
 aYK
 mNM
