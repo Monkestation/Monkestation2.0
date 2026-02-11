@@ -38,6 +38,8 @@ ADMIN_VERB(flip_ghost_spawn, R_FUN, FALSE, "Toggle Centcom Spawning", "Toggles w
 	add_traits(innate_traits, INNATE_TRAIT)
 
 /mob/living/carbon/human/ghost/Destroy()
+	wake_up_from_temporary_sleep()
+
 	if(linked_button)
 		if(dueling)
 			addtimer(CALLBACK(linked_button, TYPE_PROC_REF(/obj/structure/fight_button, end_duel), src), 3 SECONDS)
@@ -45,10 +47,10 @@ ADMIN_VERB(flip_ghost_spawn, R_FUN, FALSE, "Toggle Centcom Spawning", "Toggles w
 			linked_button.remove_user(src)
 			linked_button = null
 
-	. = ..()
-
 	old_mind = null
 	old_human_ref = null
+
+	return ..()
 
 /mob/living/carbon/human/ghost/Life(seconds_per_tick, times_fired)
 	. = ..()
@@ -64,9 +66,12 @@ ADMIN_VERB(flip_ghost_spawn, R_FUN, FALSE, "Toggle Centcom Spawning", "Toggles w
 		new_ghost.PossessByPlayer(old_key)
 		new_ghost.mind = old_mind
 		new_ghost.can_reenter_corpse = old_reenter
-	var/obj/item/organ/internal/brain/old_human = old_human_ref?.resolve()
-	old_human?.temporary_sleep = FALSE
 	qdel(src)
+
+/mob/living/carbon/human/ghost/proc/wake_up_from_temporary_sleep()
+	var/obj/item/organ/internal/brain/old_human = old_human_ref?.resolve()
+	if(old_human)
+		old_human.temporary_sleep = FALSE
 
 /mob/living/carbon/human/ghost/proc/life_or_death()
 	if(dueling)
