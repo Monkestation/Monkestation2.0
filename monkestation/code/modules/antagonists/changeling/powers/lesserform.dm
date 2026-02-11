@@ -8,7 +8,7 @@
 
 /datum/action/changeling/lesserform/become_monkey(mob/living/carbon/human/user)
 	if(drop_stuff)
-		RegisterSignal(user, COMSIG_HUMAN_MONKEYIZE, PROC_REF(on_monkeyize))
+		RegisterSignal(user, COMSIG_HUMAN_MONKEYIZE, PROC_REF(on_monkeyize), override = TRUE)
 	return ..()
 
 /datum/action/changeling/lesserform/proc/on_monkeyize(mob/living/carbon/human/user)
