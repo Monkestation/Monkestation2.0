@@ -3166,6 +3166,7 @@
 #include "code\modules\antagonists\darkspawn\darkspawn_upgrades\utility_upgrades.dm"
 #include "code\modules\antagonists\devil\devil_antag.dm"
 #include "code\modules\antagonists\devil\devil_antag_contracting.dm"
+#include "code\modules\antagonists\devil\devil_token.dm"
 #include "code\modules\antagonists\devil\objectives.dm"
 #include "code\modules\antagonists\devil\contracts\clauses.dm"
 #include "code\modules\antagonists\devil\contracts\contract.dm"

@@ -1,4 +1,9 @@
-#define DEVIL_REVIVAL_TIME (10 MINUTES)
+#ifdef LOWMEMORYMODE
+	#define DEVIL_REVIVAL_TIME (1 MINUTES)
+#else
+	#define DEVIL_REVIVAL_TIME (10 MINUTES)
+#endif
+
 #define INNATE_DEVIL_TRAITS list(\
 	TRAIT_NO_SOUL, \
 	TRAIT_NOFIRE, \
@@ -168,6 +173,19 @@
 		RegisterSignal(owner.current, COMSIG_QDELETING, PROC_REF(on_devil_deleted))
 		return
 
+	var/mob/living/carbon/human/new_body = make_body()
+	new_body.fully_replace_character_name(newname = owner.name)
+	owner.transfer_to(new_body)
+	new_body.revive(NONE, revival_policy = POLICY_ANTAGONISTIC_REVIVAL) // Gotta drag the ghost to their new body, and give a message
+	lifes_left--
+	if(lifes_left)
+		to_chat(new_body, span_danger("You can revive [lifes_left] more times from full-body removal. You should remain carefull."))
+	else
+		to_chat(new_body, span_userdanger("You can't revive the next time you perish, this is your final life!"))
+		UnregisterSignal(owner, COMSIG_MIND_TRANSFERRED)
+		UnregisterSignal(owner.current, COMSIG_QDELETING)
+
+/datum/antagonist/devil/proc/make_body()
 	var/mob/living/carbon/human/new_body = new(find_safe_turf(dense_atoms = TRUE))
 	var/datum/color_palette/generic_colors/located = new_body.dna.color_palettes[/datum/color_palette/generic_colors]
 	located.mutant_color = "#A02720"
@@ -191,17 +209,8 @@
 	new_body.eye_color_left = "#FEE5A3"
 	new_body.eye_color_right = "#FEE5A3"
 	new_body.set_species(/datum/species/lizard)
-	new_body.fully_replace_character_name(newname = owner.name)
 	new_body.equipOutfit(/datum/outfit/devil)
-	owner.transfer_to(new_body)
-	new_body.revive(NONE, revival_policy = POLICY_ANTAGONISTIC_REVIVAL) // Gotta drag the ghost to their new body, and give a message
-	lifes_left--
-	if(lifes_left)
-		to_chat(new_body, span_danger("You can revive [lifes_left] more times from full-body removal. You should remain carefull."))
-	else
-		to_chat(new_body, span_userdanger("You can't revive the next time you perish, this is your final life!"))
-		UnregisterSignal(owner, COMSIG_MIND_TRANSFERRED)
-		UnregisterSignal(owner.current, COMSIG_QDELETING)
+	return new_body
 
 /datum/outfit/devil
 	name = "Devil"
