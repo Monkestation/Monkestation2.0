@@ -11,6 +11,7 @@
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
 	atom_storage.max_slots = 14
 	atom_storage.max_total_storage = 35
+	atom_storage.numerical_stacking = TRUE
 	atom_storage.set_holdable(list(
 		/obj/item/dnainjector,
 		/obj/item/reagent_containers/dropper,
