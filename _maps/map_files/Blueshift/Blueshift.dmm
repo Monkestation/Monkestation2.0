@@ -2680,7 +2680,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "aBz" = (
-/obj/item/storage/secure/safe/directional/north,
+/obj/structure/secure_safe/directional/north,
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
 "aBB" = (
@@ -85340,7 +85340,7 @@
 /turf/open/floor/iron/dark,
 /area/station/maintenance/solars/starboard/fore)
 "qyn" = (
-/obj/item/storage/secure/safe{
+/obj/structure/secure_safe{
 	pixel_x = 32
 	},
 /obj/structure/chair/comfy/brown,
@@ -85946,7 +85946,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/item/storage/secure/safe/caps_spare/directional/south,
+/obj/structure/secure_safe/caps_spare/directional/south,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "qDq" = (
@@ -118049,7 +118049,7 @@
 /turf/open/floor/iron/white,
 /area/station/science)
 "wDr" = (
-/obj/item/storage/secure/safe/directional/east,
+/obj/structure/secure_safe/directional/east,
 /obj/structure/cable,
 /obj/machinery/light/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -120533,7 +120533,7 @@
 /area/station/hallway/primary/upper)
 "xdl" = (
 /obj/machinery/photocopier,
-/obj/item/storage/secure/safe/directional/east,
+/obj/structure/secure_safe/directional/east,
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},

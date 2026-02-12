@@ -241,3 +241,16 @@
   - map: fixed broken morgue trays on Blueshift.
   flleeppyy:
   - bugfix: Fix "Internet routing relays" button not doing anything
+2026-02-12:
+  Absolucy:
+  - qol: Oshan hotspots will now try to go a few extra steps if they drift into a
+      wall, to hopefully avoid them being stuck in a wall.
+  - rscdel: Liquids no longer interact with air temperature.
+  SirNightKnight:
+  - qol: added mining clothing and storage bags to the cargo drobe.
+  - qol: added botanical lexicons to the megaseed vendor.
+  - qol: moved the univseral scanner to the backpack of the cargo tech outfit.
+  - rscadd: cargo techs have hazard vests as part of their outfit.
+  timothymtorres, JohnFulpWillard:
+  - refactor: Secure safes now use TGUI
+  - rscadd: Safes can now be constructed.
