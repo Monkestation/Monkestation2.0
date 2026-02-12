@@ -229,7 +229,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	/// if the gibtonite is currently primed for explosion
 	var/primed = FALSE
 	/// how long does it take for this to detonate
-	var/det_time = 5 SECONDS
+	var/det_time = 10 SECONDS
 	/// the timer
 	var/det_timer
 	/// How pure this gibtonite is, determines the explosion produced by it and is derived from the det_time of the rock wall it was taken from, higher value = better
@@ -351,7 +351,10 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		log_bomber(user, triggered_by, src, attacher_text, notify_admins)
 	else
 		log_bomber(user, "Something has primed a", src, "for detonation.[attacher_text ? " " : ""][attacher_text]", notify_admins)
-
+	if(rig)
+		det_time = 5 SECONDS
+	else
+		det_time = 10 SECONDS
 	det_timer = addtimer(CALLBACK(src, PROC_REF(detonate), notify_admins), det_time, TIMER_STOPPABLE)
 
 /obj/item/gibtonite/proc/detonate(notify_admins)
