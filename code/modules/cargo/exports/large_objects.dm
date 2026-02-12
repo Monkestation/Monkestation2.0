@@ -9,7 +9,7 @@
 		/obj/structure/closet/crate/coffin,
 		)
 
-/datum/export/large/crate/total_printout(datum/export_report/ex, notes = TRUE) // That's why a goddamn metal crate costs that much.
+/datum/export/large/crate/datum/export_report/ex, notes = TRUE) // That's why a goddamn metal crate costs that much.
 	. = ..()
 	if(. && notes)
 		. += " Thanks for participating in Nanotrasen Crates Recycling Program."
