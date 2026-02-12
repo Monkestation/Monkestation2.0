@@ -65815,7 +65815,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/office)
 "wOB" = (
-/obj/machinery/vending/wardrobe/engi_wardrobe,
+/obj/machinery/vending/access/engi_wardrobe,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/station/engineering/main)

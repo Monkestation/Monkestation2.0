@@ -62183,7 +62183,7 @@
 /obj/structure/railing{
 	dir = 5
 	},
-/obj/machinery/vending/wardrobe/engi_wardrobe,
+/obj/machinery/vending/access/engi_wardrobe,
 /turf/open/floor/iron,
 /area/station/engineering/storage)
 "snU" = (

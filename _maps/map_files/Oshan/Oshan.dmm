@@ -62461,7 +62461,7 @@
 /area/station/engineering/atmos)
 "tPU" = (
 /obj/effect/turf_decal/trimline/orange/filled/line,
-/obj/machinery/vending/wardrobe/engi_wardrobe,
+/obj/machinery/vending/access/engi_wardrobe,
 /obj/machinery/light_switch/directional/south,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark/textured_large,

@@ -8009,7 +8009,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/miningdock/cafeteria)
 "bvI" = (
-/obj/machinery/vending/wardrobe/engi_wardrobe,
+/obj/machinery/vending/access/engi_wardrobe,
 /obj/structure/sign/poster/official/safety_eye_protection/directional/east,
 /turf/open/floor/iron,
 /area/station/engineering/main)

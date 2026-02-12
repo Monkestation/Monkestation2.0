@@ -25955,7 +25955,7 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/pathology)
 "khM" = (
-/obj/machinery/vending/wardrobe/engi_wardrobe,
+/obj/machinery/vending/access/engi_wardrobe,
 /obj/machinery/light/directional/north,
 /obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/iron,

@@ -1,6 +1,0 @@
-author: "PotatoTomahto"
-delete-after: True
-changes:
-  - rscadd: "ports yogstation RD holotool"
-  - rscadd: "holotool added as thief objective"
-  - code_imp: "multitool interactions now support different item types"
