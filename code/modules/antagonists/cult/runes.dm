@@ -678,6 +678,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		return
 	rune_in_use = TRUE
 	var/mob/living/mob_to_revive
+	var/obj/item/organ/internal/brain/slime/core_to_revive
 	var/list/potential_revive_mobs = list()
 	var/mob/living/user = invokers[1]
 
@@ -685,33 +686,47 @@ structure_check() searches for nearby cultist structures required for the invoca
 		if(IS_CULTIST(target) && (target.stat == DEAD || isnull(target.client) || target.client.is_afk()))
 			potential_revive_mobs += target
 
+	for(var/obj/item/organ/internal/brain/slime/core in loc)
+		if(IS_CULTIST(core) && core.brainmob)
+			potential_revive_mobs += core
+
+
 	if(!length(potential_revive_mobs))
 		to_chat(user, span_cultitalic("There are no dead cultists on the rune!"))
 		log_game("Raise Dead rune activated by [user] at [COORD(src)] failed - no cultists to revive.")
 		fail_invoke()
 		return
 
+	var/revive_target
 	if(length(potential_revive_mobs) > 1 && user.mind)
-		mob_to_revive = tgui_input_list(user, "Cultist to revive", "Revive Cultist", potential_revive_mobs)
-		if(isnull(mob_to_revive))
+		revive_target = tgui_input_list(user, "Cultist to revive", "Revive Cultist", potential_revive_mobs)
+		if(isnull(revive_target))
 			return
 	else
-		mob_to_revive = potential_revive_mobs[1]
+		revive_target = potential_revive_mobs[1]
 
-	if(QDELETED(src) || !validness_checks(mob_to_revive, user))
+	if(QDELETED(src) || !validness_checks(revive_target, user))
 		fail_invoke()
 		return
 
 	invocation = (user.name == "Herbert West") ? "To life, to life, I bring them!" : initial(invocation)
 
-	if(mob_to_revive.stat == DEAD)
+	if(is_oozeling_core(revive_target))
+		core_to_revive = revive_target
+	else
+		mob_to_revive = revive_target
+
+	if(istype(core_to_revive) || mob_to_revive.stat == DEAD)
 		var/diff = LAZYLEN(GLOB.sacrificed) - SOULS_TO_REVIVE - sacrifices_used
 		if(diff < 0)
 			to_chat(user, span_warning("Your cult must carry out [abs(diff)] more sacrifice\s before it can revive another cultist!"))
 			fail_invoke()
 			return
 		sacrifices_used += SOULS_TO_REVIVE
-		mob_to_revive.revive(ADMIN_HEAL_ALL, revival_policy = POLICY_ANTAGONISTIC_REVIVAL) //This does remove traits and such, but the rune might actually see some use because of it! //Why did you think this was a good idea
+		if(istype(core_to_revive))
+			mob_to_revive = core_to_revive.rebuild_body(user, FALSE, POLICY_ANTAGONISTIC_REVIVAL)
+		else
+			mob_to_revive.revive(ADMIN_HEAL_ALL, revival_policy = POLICY_ANTAGONISTIC_REVIVAL) //This does remove traits and such, but the rune might actually see some use because of it! //Why did you think this was a good idea
 
 	if(!mob_to_revive.client || mob_to_revive.client.is_afk())
 		set waitfor = FALSE
@@ -731,15 +746,17 @@ structure_check() searches for nearby cultist structures required for the invoca
 	rune_in_use = FALSE
 	return ..()
 
-/obj/effect/rune/raise_dead/proc/validness_checks(mob/living/target_mob, mob/living/user)
+/obj/effect/rune/raise_dead/proc/validness_checks(atom/target, mob/living/user)
 	var/turf/T = get_turf(src)
 	if(QDELETED(user))
 		return FALSE
 	if(!Adjacent(user) || user.incapacitated())
 		return FALSE
-	if(QDELETED(target_mob))
+	if(QDELETED(target))
 		return FALSE
-	if(!(target_mob in T.contents))
+	if(!is_oozeling_core(target) && !isliving(target))
+		return FALSE
+	if(!(target in T.contents))
 		to_chat(user, span_cult_italic("The cultist to revive has been moved!"))
 		log_game("Raise Dead rune activated by [user] at [COORD(src)] failed - revival target moved.")
 		return FALSE
@@ -751,6 +768,9 @@ structure_check() searches for nearby cultist structures required for the invoca
 	for(var/mob/living/M in range(1,src))
 		if(IS_CULTIST(M) && M.stat == DEAD)
 			M.visible_message(span_warning("[M] twitches."))
+	for(var/obj/item/organ/internal/brain/slime/core in range(1,src))
+		if(IS_CULTIST(core))
+			core.visible_message(span_warning("[core] jiggles slightly."))
 
 //Rite of the Corporeal Shield: When invoked, becomes solid and cannot be passed. Invoke again to undo.
 /obj/effect/rune/wall

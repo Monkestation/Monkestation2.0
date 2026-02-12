@@ -1,0 +1,7 @@
+author: "SirNightKnight"
+delete-after: True
+changes:
+  - qol: "added mining clothing and storage bags to the cargo drobe."
+  - qol: "added botanical lexicons to the megaseed vendor."
+  - qol: "moved the univseral scanner to the backpack of the cargo tech outfit."
+  - rscadd: "cargo techs have hazard vests as part of their outfit."

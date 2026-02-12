@@ -21,9 +21,8 @@
 	create_storage(1000, WEIGHT_CLASS_BULKY, 1000, TRUE)
 
 /obj/item/mcobject/messaging/storage/multitool_act_secondary(mob/living/user, obj/item/tool)
-	var/obj/item/multitool/multitool = tool
-	multitool.component_buffer = src
-	to_chat(user, span_notice("You save the data in the [multitool.name]'s buffer."))
+	if(multitool_set_comp_buffer(tool, src))
+		to_chat(user, span_notice("You save the data in the [tool.name]'s buffer."))
 	return TRUE
 
 /obj/item/mcobject/messaging/storage/proc/swap_signal(mob/user, obj/item/tool)

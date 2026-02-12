@@ -8445,7 +8445,7 @@
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/directional/south,
-/obj/machinery/vending/wardrobe/engi_wardrobe,
+/obj/machinery/vending/access/engi_wardrobe,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "ejz" = (
@@ -9339,6 +9339,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/west,
+/obj/item/flatpack,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "eFj" = (
@@ -18471,6 +18472,7 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/light/directional/east,
 /obj/effect/turf_decal/tile/purple,
+/obj/item/flatpack,
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
 "iRb" = (
@@ -35264,6 +35266,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 4
 	},
+/obj/item/flatpack,
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "qWu" = (
@@ -43162,6 +43165,7 @@
 /obj/item/gun/syringe,
 /obj/machinery/door/window/right/directional/north,
 /obj/structure/window/reinforced/spawner/directional/west,
+/obj/item/storage/toolbox/electrical/medical,
 /turf/open/floor/iron/diagonal,
 /area/station/medical/office)
 "uBG" = (

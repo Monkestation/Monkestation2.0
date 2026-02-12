@@ -3387,7 +3387,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/botany)
 "ajg" = (
-/obj/machinery/vending/wardrobe/engi_wardrobe,
+/obj/machinery/vending/access/engi_wardrobe,
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/hall)
 "ajh" = (
@@ -14514,7 +14514,7 @@
 /area/centcom/central_command_areas/kitchen)
 "aMP" = (
 /obj/effect/turf_decal/tile/dark/opposingcorners,
-/obj/machinery/vending/wardrobe/engi_wardrobe,
+/obj/machinery/vending/access/engi_wardrobe,
 /obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/observation)

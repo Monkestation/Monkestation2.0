@@ -281,8 +281,8 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(fired_from)
-		SEND_SIGNAL(fired_from, COMSIG_PROJECTILE_ON_HIT, firer, target, Angle, def_zone, blocked)
-	SEND_SIGNAL(src, COMSIG_PROJECTILE_SELF_ON_HIT, firer, target, Angle, def_zone, blocked)
+		SEND_SIGNAL(fired_from, COMSIG_PROJECTILE_ON_HIT, firer, target, Angle, def_zone, blocked, pierce_hit)
+	SEND_SIGNAL(src, COMSIG_PROJECTILE_SELF_ON_HIT, firer, target, Angle, def_zone, blocked, pierce_hit)
 
 	if(QDELETED(src)) // in case one of the above signals deleted the projectile for whatever reason
 		return BULLET_ACT_BLOCK

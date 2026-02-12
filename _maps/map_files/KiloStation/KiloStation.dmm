@@ -8042,6 +8042,7 @@
 /obj/item/clothing/gloves/latex/nitrile,
 /obj/item/clothing/gloves/latex/nitrile,
 /obj/item/clothing/gloves/latex/nitrile,
+/obj/item/storage/toolbox/electrical/medical,
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/storage)
 "cuq" = (
@@ -34142,7 +34143,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
 "kyT" = (
-/obj/machinery/vending/wardrobe/engi_wardrobe,
+/obj/machinery/vending/access/engi_wardrobe,
 /obj/effect/turf_decal/bot,
 /obj/machinery/camera/directional/north{
 	c_tag = "Engineering Lockers";
@@ -39857,6 +39858,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
+/obj/item/flatpack,
 /turf/open/floor/iron,
 /area/station/engineering/storage_shared)
 "mmF" = (
@@ -53060,6 +53062,12 @@
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
 /area/station/solars/starboard/fore)
+"qzj" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/flatpack,
+/turf/open/floor/iron,
+/area/station/cargo/storage)
 "qzv" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/holopad,
@@ -71762,6 +71770,7 @@
 /obj/effect/turf_decal/siding/purple,
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/turf_decal/tile/purple/half/contrasted,
+/obj/item/flatpack,
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/lab)
 "wrc" = (
@@ -117019,7 +117028,7 @@ baS
 eQD
 tNj
 owA
-baS
+qzj
 mlH
 rpF
 tbK
