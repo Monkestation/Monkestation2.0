@@ -331,6 +331,7 @@
 	greyscale_colors = null
 
 /obj/item/encryptionkey/slime
+	name = "\improper Slime translation key"
 	desc = "An encryption key that automatically encodes Slime heard through the radio into common. The signal's rather scratchy."
 	icon_state = "translation_cypherkey"
 	language_data = list(
