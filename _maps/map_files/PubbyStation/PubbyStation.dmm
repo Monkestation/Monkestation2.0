@@ -50153,6 +50153,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/table/reinforced,
 /obj/machinery/newscaster/directional/west,
+/obj/item/surgery_tray/deployed,
 /obj/item/autopsy_scanner,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
