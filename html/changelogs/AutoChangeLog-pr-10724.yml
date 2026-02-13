@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - qol: "Oshan hotspots will now try to go a few extra steps if they drift into a wall, to hopefully avoid them being stuck in a wall."

@@ -1,0 +1,7 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - rscadd: "Wishgranter Avatars now have an obvious overlay."
+  - balance: "Wishgranter Avatars are directly given pressure+temp+stun immunity now, instead of relying on some random mutations slapped together."
+  - rscadd: "Wishgranter Avatars now show up in orbit menu, and it is announced to both admins and deadchat whenever someone uses the Wishgranter."
+  - rscadd: "Wishgranter Avatar now has a proper antag HUD icon (thanks, halfaplum)"
