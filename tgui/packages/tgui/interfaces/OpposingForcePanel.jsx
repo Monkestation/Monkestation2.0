@@ -250,12 +250,13 @@ export const OpposingForceTab = (props) => {
             #player-shared-opfors channel for some. (2000 char limit)
           </Box>
           <TextArea
+            expensive
             disabled={!can_edit}
             height="100px"
             value={backstory}
             maxLength={2000}
             width="100%"
-            onBlur={(value) =>
+            onChange={(value) =>
               act('set_backstory', {
                 backstory: value,
               })
@@ -355,12 +356,13 @@ export const OpposingForceObjectives = (props) => {
                   <Stack.Item>Title</Stack.Item>
                   <Stack.Item>
                     <Input
+                      expensive
                       disabled={!can_edit}
                       width="100%"
                       placeholder="blank objective"
                       value={selectedObjective.title}
                       maxLength={64}
-                      onBlur={(value) =>
+                      onChange={(value) =>
                         act('set_objective_title', {
                           objective_ref: selectedObjective.ref,
                           title: value,
@@ -473,11 +475,12 @@ export const OpposingForceObjectives = (props) => {
                   <Stack.Item>
                     <TextArea
                       fluid
+                      expensive
                       disabled={!can_edit}
                       height="85px"
                       maxLength={1000}
                       value={selectedObjective.description}
-                      onBlur={(value) =>
+                      onChange={(value) =>
                         act('set_objective_description', {
                           objective_ref: selectedObjective.ref,
                           new_desciprtion: value,
@@ -499,12 +502,13 @@ export const OpposingForceObjectives = (props) => {
                   </Stack.Item>
                   <Stack.Item>
                     <TextArea
+                      expensive
                       disabled={!can_edit}
                       height="85px"
                       width="100%"
                       value={selectedObjective.justification}
                       maxLength={1000}
-                      onBlur={(value) =>
+                      onChange={(value) =>
                         act('set_objective_justification', {
                           objective_ref: selectedObjective.ref,
                           new_justification: value,
@@ -587,6 +591,7 @@ export const EquipmentTab = (props) => {
                   </LabeledList.Item>
                 </LabeledList>
                 <Input
+                  expensive
                   mt={1}
                   mb={1}
                   disabled={!can_edit}
@@ -594,7 +599,7 @@ export const EquipmentTab = (props) => {
                   placeholder="Reason for item"
                   value={equipment.reason}
                   maxLength={1000}
-                  onBlur={(value) =>
+                  onChange={(value) =>
                     act('set_equipment_reason', {
                       selected_equipment_ref: equipment.ref,
                       new_equipment_reason: value,
