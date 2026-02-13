@@ -8740,6 +8740,7 @@
 #include "monkestation\code\modules\storytellers\storytellers\mystic.dm"
 #include "monkestation\code\modules\storytellers\storytellers\nobleman.dm"
 #include "monkestation\code\modules\storytellers\storytellers\operative.dm"
+#include "monkestation\code\modules\storytellers\storytellers\peasant.dm"
 #include "monkestation\code\modules\storytellers\storytellers\sleeper.dm"
 #include "monkestation\code\modules\storytellers\storytellers\vote.dm"
 #include "monkestation\code\modules\storytellers\storytellers\warrior.dm"
