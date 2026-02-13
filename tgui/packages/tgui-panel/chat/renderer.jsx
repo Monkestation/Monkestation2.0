@@ -5,8 +5,12 @@
  */
 
 import { EventEmitter } from 'common/events';
+import { classes } from 'common/react';
 import { createRoot } from 'react-dom/client';
+import { globalStore } from 'tgui/backend';
 import { createLogger } from 'tgui/logging';
+import { Tooltip } from '../../tgui/components';
+import { selectSettings } from '../settings/selectors';
 import {
   COMBINE_MAX_MESSAGES,
   COMBINE_MAX_TIME_WINDOW,
@@ -22,10 +26,6 @@ import {
 } from './constants';
 import { canPageAcceptType, createMessage, isSameMessage } from './model';
 import { highlightNode, linkifyNode } from './replaceInTextNode';
-import { Tooltip } from '../../tgui/components';
-import { selectSettings } from '../settings/selectors';
-import { globalStore } from 'tgui/backend';
-import { classes } from 'common/react';
 
 const logger = createLogger('chatRenderer');
 
@@ -49,7 +49,7 @@ export const TGUI_CHAT_ATTRIBUTES_TO_PROPS = {
 const createHighlightNode = (text, color) => {
   const node = document.createElement('span');
   node.className = 'Chat__highlight';
-  node.setAttribute('style', 'background-color:' + color);
+  node.setAttribute('style', `background-color:${color}`);
   node.textContent = text;
   return node;
 };
@@ -194,7 +194,7 @@ class ChatRenderer {
     if (!highlightSettings) {
       return;
     }
-    highlightSettings.map((id) => {
+    highlightSettings.forEach((id) => {
       const setting = highlightSettingById[id];
       const text = setting.highlightText;
       const highlightColor = setting.highlightColor;
@@ -442,7 +442,7 @@ class ChatRenderer {
         if (!message.avoidHighlighting && this.highlightParsers) {
           this.highlightParsers
             .filter((parser) => parser.enabled)
-            .map((parser) => {
+            .forEach((parser) => {
               const highlighted = highlightNode(
                 node,
                 parser.highlightRegex,

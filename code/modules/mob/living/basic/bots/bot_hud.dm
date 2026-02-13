@@ -39,7 +39,7 @@
 /mob/living/basic/bot/proc/generate_bot_path(datum/move_loop/has_target/jps/source)
 	SIGNAL_HANDLER
 
-	UnregisterSignal(src, COMSIG_MOVELOOP_JPS_FINISHED_PATHING)
+	UnregisterSignal(src, COMSIG_MOVELOOP_FINISHED_PATHING)
 
 	if(isnull(ai_controller))
 		return

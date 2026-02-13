@@ -2178,12 +2178,12 @@
 /turf/open/floor/plating,
 /area/station/engineering/transit_tube)
 "aKf" = (
-/obj/machinery/light_switch/directional/south,
 /obj/structure/chair/comfy/brown{
 	dir = 4
 	},
 /obj/effect/landmark/start/detective,
 /obj/machinery/light/directional/south,
+/obj/structure/detectiveboard/directional/south,
 /turf/open/floor/carpet,
 /area/station/security/detectives_office)
 "aKq" = (
@@ -19894,6 +19894,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
+/obj/item/flatpack,
 /turf/open/floor/iron/white,
 /area/station/science/lab)
 "gax" = (
@@ -22205,7 +22206,7 @@
 /area/station/cargo/warehouse)
 "gKk" = (
 /obj/structure/table/reinforced,
-/obj/item/storage/secure/safe/caps_spare/directional/east,
+/obj/structure/secure_safe/caps_spare/directional/east,
 /obj/item/papercutter,
 /turf/open/floor/iron,
 /area/station/command/bridge)
@@ -23099,7 +23100,7 @@
 /turf/open/floor/iron/dark,
 /area/station/science/breakroom)
 "gYz" = (
-/obj/item/storage/secure/safe/directional/west,
+/obj/structure/secure_safe/directional/west,
 /obj/structure/displaycase/captain,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain)
@@ -23241,7 +23242,7 @@
 /turf/open/floor/vault,
 /area/station/security/prison/rec)
 "haw" = (
-/obj/item/storage/secure/safe/directional/south,
+/obj/structure/secure_safe/directional/south,
 /obj/machinery/light/directional/south,
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -28774,7 +28775,7 @@
 	dir = 6
 	},
 /obj/structure/table,
-/obj/item/storage/secure/safe/directional/south,
+/obj/structure/secure_safe/directional/south,
 /obj/item/storage/briefcase/secure,
 /turf/open/floor/iron/smooth,
 /area/station/command/heads_quarters/rd)
@@ -31143,6 +31144,11 @@
 	},
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/underground/explored)
+"jCx" = (
+/obj/effect/turf_decal/bot,
+/obj/item/flatpack,
+/turf/open/floor/iron,
+/area/station/cargo/storage)
 "jCD" = (
 /obj/structure/table/wood,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -39659,6 +39665,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+/obj/item/flatpack,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "miR" = (
@@ -52839,7 +52846,7 @@
 	},
 /obj/machinery/newscaster/directional/west,
 /obj/effect/landmark/start/nanotrasen_representative,
-/obj/item/storage/secure/safe/directional/north,
+/obj/structure/secure_safe/directional/north,
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/nt_rep)
 "qfh" = (
@@ -57211,6 +57218,7 @@
 "ryl" = (
 /obj/machinery/vending/wardrobe/det_wardrobe,
 /obj/machinery/light/directional/east,
+/obj/machinery/light_switch/directional/east,
 /turf/open/floor/carpet/grimey,
 /area/station/security/detectives_office)
 "rym" = (
@@ -60768,7 +60776,7 @@
 /obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
 	pixel_x = 6
 	},
-/obj/item/storage/secure/safe/hos{
+/obj/structure/secure_safe/hos{
 	pixel_x = 35
 	},
 /obj/machinery/light/directional/south,
@@ -63837,7 +63845,7 @@
 /obj/item/bedsheet/medical{
 	dir = 4
 	},
-/obj/item/storage/secure/safe/directional/south,
+/obj/structure/secure_safe/directional/south,
 /obj/effect/turf_decal/tile/green/full,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/medical/pathology/isolation)
@@ -71236,6 +71244,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 10
 	},
+/obj/item/storage/toolbox/electrical/medical,
 /turf/open/floor/iron/dark,
 /area/station/medical/storage)
 "vTi" = (
@@ -72739,7 +72748,7 @@
 	},
 /area/station/science/research)
 "wqc" = (
-/obj/machinery/vending/wardrobe/engi_wardrobe,
+/obj/machinery/vending/access/engi_wardrobe,
 /obj/machinery/computer/security/telescreen/entertainment/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage_shared)
@@ -229584,7 +229593,7 @@ veh
 ajw
 ajw
 vlN
-mmi
+jCx
 aUA
 mmi
 ajw

@@ -1,8 +1,8 @@
+import { paginate, range } from 'common/collections';
+import { multiline } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
 import { BlockQuote, Box, Button, Section, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
-import { multiline } from 'common/string';
-import { paginate, range } from 'common/collections';
 
 type Entry = {
   name: string;
@@ -83,7 +83,7 @@ export const InfuserBook = (props) => {
 
   const paginatedEntries = paginateEntries(entries);
 
-  let currentEntry = paginatedEntries[chapter][pageInChapter];
+  const currentEntry = paginatedEntries[chapter][pageInChapter];
 
   const switchChapter = (newChapter) => {
     if (chapter === newChapter) {
@@ -245,7 +245,7 @@ const InfuserEntry = (props: InfuserEntryProps) => {
   return (
     <Section
       fill
-      title={entry.name + ' Mutant'}
+      title={`${entry.name} Mutant`}
       height={PAGE_HEIGHT}
       buttons={
         <Button tooltip={tierData.desc} icon={tierData.icon}>
@@ -296,7 +296,7 @@ const paginateEntries = (collection: Entry[]): Entry[][] => {
   });
   // negative 1 to account for introduction, which has no entries
   let tier = -1;
-  for (let _ in range(tier, maxTier + 1)) {
+  for (const _ in range(tier, maxTier + 1)) {
     pages.push(collection.filter((entry) => entry.tier === tier));
     tier++;
   }

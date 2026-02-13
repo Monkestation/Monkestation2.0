@@ -13,7 +13,7 @@ import {
 } from '../components';
 import { formatSiUnit } from '../format';
 import { Window } from '../layouts';
-import { Material } from './Fabrication/Types';
+import type { Material } from './Fabrication/Types';
 
 type IconData = {
   id: string;

@@ -2680,7 +2680,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "aBz" = (
-/obj/item/storage/secure/safe/directional/north,
+/obj/structure/secure_safe/directional/north,
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
 "aBB" = (
@@ -5292,7 +5292,7 @@
 /area/station/maintenance/department/engineering/engine_aft_port)
 "bbl" = (
 /obj/effect/turf_decal/bot,
-/obj/machinery/vending/wardrobe/engi_wardrobe,
+/obj/machinery/vending/access/engi_wardrobe,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage_shared)
 "bbm" = (
@@ -9625,6 +9625,7 @@
 /obj/item/disk/tech_disk{
 	pixel_y = 6
 	},
+/obj/item/flatpack,
 /turf/open/floor/iron/white,
 /area/station/science/lab)
 "bQX" = (
@@ -30703,6 +30704,7 @@
 /obj/structure/table/glass,
 /obj/item/clipboard,
 /obj/item/toy/figure/engineer,
+/obj/item/flatpack,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "fSo" = (
@@ -33721,6 +33723,7 @@
 	pixel_x = -8;
 	pixel_y = 8
 	},
+/obj/item/storage/toolbox/electrical/medical,
 /turf/open/floor/iron/white,
 /area/station/medical/storage)
 "gwF" = (
@@ -44458,12 +44461,10 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "iCM" = (
-/obj/structure/bodycontainer{
-	dir = 4
-	},
 /obj/effect/turf_decal/bot_white,
 /obj/machinery/status_display/ai/directional/west,
 /obj/structure/window/spawner/directional/north,
+/obj/structure/bodycontainer/morgue,
 /turf/open/floor/iron/dark/small,
 /area/station/medical/morgue)
 "iCV" = (
@@ -77446,11 +77447,9 @@
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "oVo" = (
-/obj/structure/bodycontainer{
-	dir = 4
-	},
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/turf_decal/bot_white,
+/obj/structure/bodycontainer/morgue,
 /turf/open/floor/iron/dark/small,
 /area/station/medical/morgue)
 "oVJ" = (
@@ -82952,9 +82951,6 @@
 	name = "frozen safe"
 	},
 /obj/item/reagent_containers/condiment/coldsauce,
-/obj/item/temperature_pack/cold,
-/obj/item/temperature_pack/cold,
-/obj/item/temperature_pack/cold,
 /obj/item/reagent_containers/condiment/coldsauce,
 /obj/item/food/grown/icepepper,
 /obj/item/clothing/head/costume/drfreezehat,
@@ -85344,7 +85340,7 @@
 /turf/open/floor/iron/dark,
 /area/station/maintenance/solars/starboard/fore)
 "qyn" = (
-/obj/item/storage/secure/safe{
+/obj/structure/secure_safe{
 	pixel_x = 32
 	},
 /obj/structure/chair/comfy/brown,
@@ -85950,7 +85946,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/item/storage/secure/safe/caps_spare/directional/south,
+/obj/structure/secure_safe/caps_spare/directional/south,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "qDq" = (
@@ -101634,6 +101630,7 @@
 	pixel_y = 3
 	},
 /obj/item/stamp,
+/obj/item/flatpack,
 /turf/open/floor/iron/dark,
 /area/station/cargo/office)
 "tCG" = (
@@ -118052,7 +118049,7 @@
 /turf/open/floor/iron/white,
 /area/station/science)
 "wDr" = (
-/obj/item/storage/secure/safe/directional/east,
+/obj/structure/secure_safe/directional/east,
 /obj/structure/cable,
 /obj/machinery/light/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -120119,7 +120116,7 @@
 /area/station/maintenance/department/medical)
 "wYS" = (
 /obj/machinery/computer/records/security,
-/obj/structure/noticeboard/directional/north,
+/obj/structure/detectiveboard/directional/north,
 /turf/open/floor/carpet,
 /area/station/security/detectives_office)
 "wYV" = (
@@ -120536,7 +120533,7 @@
 /area/station/hallway/primary/upper)
 "xdl" = (
 /obj/machinery/photocopier,
-/obj/item/storage/secure/safe/directional/east,
+/obj/structure/secure_safe/directional/east,
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},

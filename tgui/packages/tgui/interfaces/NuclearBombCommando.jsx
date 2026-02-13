@@ -1,7 +1,7 @@
 import { classes } from 'common/react';
 
 import { useBackend } from '../backend';
-import { Box, Button, Flex, Table, Icon } from '../components';
+import { Box, Button, Flex, Icon, Table } from '../components';
 import { Window } from '../layouts';
 
 // This ui is so many manual overrides and !important tags
@@ -34,7 +34,7 @@ export const NukeKeypad = (props) => {
                 className={classes([
                   'NuclearBombCommando__Button',
                   'NuclearBombCommando__Button--keypad',
-                  'NuclearBombCommando__Button--' + key,
+                  `NuclearBombCommando__Button--${key}`,
                 ])}
                 onClick={() => act('keypad', { digit: key })}
               />

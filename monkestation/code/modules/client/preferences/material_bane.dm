@@ -4,6 +4,7 @@ GLOBAL_LIST_INIT(baneable_materials, list("Iron", "Glass", "Silver", "Gold", "Pl
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 	savefile_key = "material_bane_material"
 	savefile_identifier = PREFERENCE_CHARACTER
+	should_update_preview = FALSE
 
 /datum/preference/choiced/material_bane/init_possible_values()
 	return GLOB.baneable_materials

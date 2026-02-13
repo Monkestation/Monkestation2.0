@@ -17,6 +17,7 @@
 	prereq_ids = list("neural_programming", "robotics", "cyborg")
 	design_ids = list(
 		"mmi_posi",
+		"ecto_sniffer",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 

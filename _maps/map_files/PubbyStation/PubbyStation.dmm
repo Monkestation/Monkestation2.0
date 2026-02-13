@@ -8721,6 +8721,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/newscaster/directional/south,
 /turf/open/floor/carpet,
 /area/station/security/detectives_office)
 "aFY" = (
@@ -8733,7 +8734,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/newscaster/directional/south,
+/obj/structure/detectiveboard/directional/south,
 /turf/open/floor/carpet,
 /area/station/security/detectives_office)
 "aGd" = (
@@ -17198,6 +17199,7 @@
 /area/station/security/checkpoint/medical)
 "bsR" = (
 /obj/effect/turf_decal/stripes/line,
+/obj/item/flatpack,
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "bsS" = (
@@ -19291,6 +19293,7 @@
 /obj/structure/table/glass,
 /obj/machinery/light_switch/directional/south,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted,
+/obj/item/storage/toolbox/electrical/medical,
 /turf/open/floor/iron/white,
 /area/station/medical/storage)
 "bCc" = (
@@ -22580,6 +22583,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
 	},
+/obj/item/flatpack,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "bSc" = (
@@ -32157,6 +32161,10 @@
 /obj/effect/turf_decal/trimline/blue/line,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
+"fsh" = (
+/obj/item/flatpack,
+/turf/open/floor/iron,
+/area/station/cargo/sorting)
 "fsA" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -39796,7 +39804,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "mbe" = (
-/obj/machinery/vending/wardrobe/engi_wardrobe,
+/obj/machinery/vending/access/engi_wardrobe,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -43106,7 +43114,7 @@
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 1
 	},
-/obj/item/storage/secure/safe/caps_spare/directional/west,
+/obj/structure/secure_safe/caps_spare/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "oQn" = (
@@ -55072,7 +55080,7 @@
 	dir = 1
 	},
 /obj/machinery/newscaster/directional/north,
-/obj/item/storage/secure/safe/directional/west,
+/obj/structure/secure_safe/directional/west,
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
 "xOm" = (
@@ -94268,7 +94276,7 @@ cay
 dTT
 xIM
 aWw
-bat
+fsh
 oxM
 aZn
 aZn

@@ -2,10 +2,10 @@ import { useBackend } from '../backend';
 import {
   Box,
   Button,
-  Stack,
   Icon,
-  Section,
   NumberInput,
+  Section,
+  Stack,
   Table,
 } from '../components';
 import { Window } from '../layouts';
@@ -204,7 +204,7 @@ export const Reflector = () => {
                     <Button
                       fluid
                       icon="redo-alt"
-                      iconPosition="right"
+                      iconPosition=""
                       content="+5"
                       mb={1}
                       onClick={() =>
