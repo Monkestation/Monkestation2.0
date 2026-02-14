@@ -634,10 +634,7 @@
 	req_components = list(initial(typepath.refill_canister) = 1)
 
 /obj/item/circuitboard/machine/vendor/apply_default_parts(obj/machinery/machine)
-	for(var/typepath in valid_vendor_names_paths)
-		if(istype(machine, typepath))
-			set_type(typepath)
-			break
+	set_type(machine.type)
 	return ..()
 
 /obj/item/circuitboard/machine/vending/donksofttoyvendor
