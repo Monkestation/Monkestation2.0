@@ -43,70 +43,51 @@
 		JOB_BRIG_PHYSICIAN,
 	)
 	extra_spawned_events = list(
-		//datum/round_event_control/antagonist/solo/traitor/roundstart = 8,
+		/datum/round_event_control/antagonist/solo/traitor/roundstart = 8,
 		/datum/round_event_control/antagonist/solo/bloodsucker/roundstart = 6,
-		//datum/round_event_control/antagonist/solo/heretic/roundstart = 1,
+		/datum/round_event_control/antagonist/solo/heretic/roundstart = 1,
 	)
-	var/brother_chance = 10
 
 /datum/round_event/antagonist/solo/brother/start()
-	message_admins("BBs are selected")
 	var/teams_amount = length(setup_minds)
 	var/list/possible_bro = list()
 	for (var/mob/player in GLOB.alive_player_list)
 		if(ROLE_BROTHER in player.mind.current.client.prefs.be_special) //This should try to grab from anyone who has BB enabled
 			possible_bro.Add(player)
-			message_admins("Possible brother to pick from")
-
-
 	for(var/teamAmount in 1 to teams_amount)
-		message_admins("we are trying to make a team")
 		var/datum/team/brother_team/new_team = new
 		var/datum/mind/starting_brother = pick_n_take(setup_minds) //Picks a random brother for this new team we are making. They are added to the team later
 		var/another_brother = 1
 		while(another_brother > 0) //Adds 1 brother to the team (from anyone would could roll BB), with a 10% chance for another if we add one. keep rolling until it fails
 			another_brother = 0
-			var/and_another = prob(brother_chance)
+			var/and_another = prob(10)
 			if(and_another)
 				another_brother = 1
-				message_admins("Another brother!!")
 			var/mob/target_player = astype(pick_n_take(possible_bro))
 			if(isnull(target_player)) //skip adding a brother if we picked null (like if only one person has BB enabled)
-				message_admins("tried to add null to a bb team")
 				break
 			if(target_player.mind == starting_brother) // If we are trying to add the starting player in this loop. THEY ARE ADDED LATER BECAUSE MAYBE THERES NO OTHER BROTHERS
 				break
 			new_team.add_member(target_player.mind)
-		message_admins("Done adding brothers, now to check if we actually got any on our team")
 		//next line is for the rare case where everyone has BB off but the 1-3 people who origionally rolled BB. or if they are all taken (like the 1/1000000000000000000 chance for a team of 20))
 		if(new_team.members.len == 0) //If a BB team is only 1 person long, we just add all the brothers without a team onto this one
-			message_admins("Trying to adding all unteamed brothers to a team")
 			for(var/unteamed_brother in setup_minds.len)
-				message_admins("We have possible brothers to add")
 				if(unteamed_brother)
-					message_admins("Adding a brother")
 					new_team.add_member(pop(setup_minds))
 		if(new_team.members.len == 0) //If no one is on their team still, they get heretic because all their possible brothers betrayed them. they also get their brothers as additional sac targets
-			message_admins("Still no one on our team")
 			var/list/enemy_brothers = list()
 			for(var/mob/player in GLOB.alive_player_list)
-				message_admins("Checking all players to see if they are a BB")
 				if(player.mind.has_antag_datum(/datum/antagonist/brother))
 					enemy_brothers.Add(player)
-					message_admins("We found a BB, we will become a heretic and hunt them down")
 			if(enemy_brothers.len == 0)
 				starting_brother.add_antag_datum(/datum/antagonist/traitor) // Give them traitor if theres no brothers
-				message_admins("Brothers dont exist so become a traitor")
 			else
 				var/datum/antagonist/heretic/heretic_datum = starting_brother.add_antag_datum(/datum/antagonist/heretic)
 				for(var/mob/heretic_target in enemy_brothers)
 					heretic_datum.add_sacrifice_target(heretic_target)
-				message_admins("Your brothers betrayed you, heretic time")
-			message_admins("Destroying the team that would have been made, as we cant find more brothers")
 			qdel(new_team)
 			return
 		new_team.add_member(starting_brother) //Add the first member we picked to the team that we got when this event rolled
 		new_team.update_name()
 		new_team.forge_brother_objectives()
 		new_team.notify_whos_who()
-		message_admins("BB team fully made")
