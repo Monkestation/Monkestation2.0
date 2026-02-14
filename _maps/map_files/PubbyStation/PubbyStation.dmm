@@ -43114,7 +43114,7 @@
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 1
 	},
-/obj/item/storage/secure/safe/caps_spare/directional/west,
+/obj/structure/secure_safe/caps_spare/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "oQn" = (
@@ -50153,6 +50153,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/table/reinforced,
 /obj/machinery/newscaster/directional/west,
+/obj/item/surgery_tray/deployed,
 /obj/item/autopsy_scanner,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
@@ -55080,7 +55081,7 @@
 	dir = 1
 	},
 /obj/machinery/newscaster/directional/north,
-/obj/item/storage/secure/safe/directional/west,
+/obj/structure/secure_safe/directional/west,
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
 "xOm" = (

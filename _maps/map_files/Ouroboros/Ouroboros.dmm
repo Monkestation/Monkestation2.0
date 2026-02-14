@@ -55309,7 +55309,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/item/storage/secure/safe/caps_spare,
+/obj/structure/secure_safe/caps_spare,
 /obj/effect/turf_decal/bot_white,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
@@ -80727,7 +80727,7 @@
 	dir = 8
 	},
 /obj/effect/landmark/start/nanotrasen_representative,
-/obj/item/storage/secure/safe/directional/east,
+/obj/structure/secure_safe/directional/east,
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
 "xKb" = (

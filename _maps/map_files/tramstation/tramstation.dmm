@@ -3834,7 +3834,7 @@
 /turf/open/floor/iron/white,
 /area/station/security/medical)
 "awY" = (
-/obj/item/storage/secure/safe/directional/north,
+/obj/structure/secure_safe/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -15111,7 +15111,7 @@
 "dHf" = (
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/table/wood,
-/obj/item/storage/secure/safe/directional/north,
+/obj/structure/secure_safe/directional/north,
 /obj/machinery/fax{
 	fax_name = "Head of Personnel's Office";
 	name = "Head of Personnel's Fax Machine"
@@ -27634,7 +27634,7 @@
 /area/station/commons/fitness/recreation)
 "hGG" = (
 /obj/structure/closet/secure_closet/hos,
-/obj/item/storage/secure/safe/hos{
+/obj/structure/secure_safe/hos{
 	pixel_x = 35
 	},
 /obj/structure/sign/poster/official/space_cops/directional/north,
@@ -27799,7 +27799,7 @@
 /turf/open/floor/iron/smooth,
 /area/station/cargo/drone_bay)
 "hKL" = (
-/obj/item/storage/secure/safe/directional/east,
+/obj/structure/secure_safe/directional/east,
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/carpet,
 /area/station/security/detectives_office)
@@ -45359,7 +45359,7 @@
 /area/station/maintenance/department/cargo)
 "nfh" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/item/storage/secure/safe/directional/north{
+/obj/structure/secure_safe/directional/north{
 	name = "armory safe A"
 	},
 /obj/structure/closet/secure_closet/armory_kiboko,
@@ -46349,7 +46349,7 @@
 /area/station/commons/vacant_room/office)
 "nug" = (
 /obj/structure/table/reinforced,
-/obj/item/storage/secure/safe/caps_spare/directional/east,
+/obj/structure/secure_safe/caps_spare/directional/east,
 /obj/machinery/cell_charger{
 	pixel_y = 4
 	},
@@ -57213,7 +57213,7 @@
 "qLy" = (
 /obj/structure/bed/double,
 /obj/item/bedsheet/centcom/double,
-/obj/item/storage/secure/safe/directional/east,
+/obj/structure/secure_safe/directional/east,
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
 "qLD" = (
@@ -61191,7 +61191,7 @@
 	pixel_x = -4
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/item/storage/secure/safe/directional/north{
+/obj/structure/secure_safe/directional/north{
 	name = "armory safe B"
 	},
 /turf/open/floor/iron/dark,
@@ -65663,7 +65663,7 @@
 	pixel_y = 5
 	},
 /obj/machinery/status_display/evac/directional/north,
-/obj/item/storage/secure/safe/directional/west,
+/obj/structure/secure_safe/directional/west,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain)
 "tqT" = (
@@ -67640,7 +67640,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/tram/right)
 "tYg" = (
-/obj/item/storage/secure/safe/directional/east,
+/obj/structure/secure_safe/directional/east,
 /obj/structure/closet{
 	name = "Evidence Closet 3"
 	},

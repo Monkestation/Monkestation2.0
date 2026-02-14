@@ -319,3 +319,23 @@
 	)
 	greyscale_config = null
 	greyscale_colors = null
+
+/obj/item/encryptionkey/uncommon
+	name = "\improper Uncommon translation key"
+	desc = "An encryption key that automatically encodes Uncommon heard through the radio into common. The signal's rather scratchy."
+	icon_state = "translation_cypherkey"
+	language_data = list(
+		/datum/language/uncommon = 100,
+	)
+	greyscale_config = null
+	greyscale_colors = null
+
+/obj/item/encryptionkey/slime
+	name = "\improper Slime translation key"
+	desc = "An encryption key that automatically encodes Slime heard through the radio into common. The signal's rather scratchy."
+	icon_state = "translation_cypherkey"
+	language_data = list(
+		/datum/language/slime = 100,
+	)
+	greyscale_config = null
+	greyscale_colors = null
