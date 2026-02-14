@@ -1,6 +1,0 @@
-author: "PotatoTomahto"
-delete-after: True
-changes:
-  - qol: "conveyors are placed in the direction you're facing"
-  - qol: "conveyor switch assemblies can set their ids to be the same"
-  - bugfix: "interactor mechcomp can actually interact"
