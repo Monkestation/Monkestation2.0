@@ -138,7 +138,7 @@
 	var/bigger_shuttle_dimension = max(shuttle.width, shuttle.height)
 	var/list/viewsize = getviewsize(world.view)
 	var/smaller_view_dimension = min(viewsize[1], viewsize[2])
-	var/new_view_range = max(bigger_shuttle_dimension - smaller_view_dimension, 1)
+	var/new_view_range = max(bigger_shuttle_dimension - smaller_view_dimension + 1, 1)
 	if(new_view_range != view_range)
 		view_range = new_view_range
 
