@@ -216,6 +216,15 @@
   pseudo-savant:
   - rscadd: Ported over the flatpacker from /tg/ to monkestation
 2026-02-10:
+  Absolucy:
+  - bugfix: Ignoring people should now consistently work in deadchat.
+  JohnFulpWillard:
+  - rscadd: Signal technician's clothings can now be found in the Engineering vending
+      machine, if you have Telecomms Admin access.
+  PotatoTomahto:
+  - rscadd: ports yogstation RD holotool
+  - rscadd: holotool added as thief objective
+  - code_imp: multitool interactions now support different item types
   SirNightKnight:
   - qol: added some missing warning line decals to the decal painter.
   - qol: decal painters can paint windows.
@@ -225,3 +234,49 @@
       the same as their respective department's decal color.
   Tractor-Maam:
   - map: fixed confessional intercoms on Oshan
+  - rscadd: Added the Advanced Health Analyzer cyborg upgrade to the Medical Cyborg
+      Upgrades technode.
+  - bugfix: Syndicate Medical Cyborgs can now read their analyzer in the dark, on
+      par with their standard counterparts.
+  - map: fixed broken morgue trays on Blueshift.
+  flleeppyy:
+  - bugfix: Fix "Internet routing relays" button not doing anything
+2026-02-12:
+  Absolucy:
+  - qol: Oshan hotspots will now try to go a few extra steps if they drift into a
+      wall, to hopefully avoid them being stuck in a wall.
+  - rscdel: Liquids no longer interact with air temperature.
+  SirNightKnight:
+  - qol: added mining clothing and storage bags to the cargo drobe.
+  - qol: added botanical lexicons to the megaseed vendor.
+  - qol: moved the univseral scanner to the backpack of the cargo tech outfit.
+  - rscadd: cargo techs have hazard vests as part of their outfit.
+  timothymtorres, JohnFulpWillard:
+  - refactor: Secure safes now use TGUI
+  - rscadd: Safes can now be constructed.
+2026-02-13:
+  Absolucy:
+  - rscadd: Wishgranter Avatars now have an obvious overlay.
+  - balance: Wishgranter Avatars are directly given pressure+temp+stun immunity now,
+      instead of relying on some random mutations slapped together.
+  - rscadd: Wishgranter Avatars now show up in orbit menu, and it is announced to
+      both admins and deadchat whenever someone uses the Wishgranter.
+  - rscadd: Wishgranter Avatar now has a proper antag HUD icon (thanks, halfaplum)
+  LaikoDaemon, Carpotoxin, Absolucy, Chelxox, JohnFulpWillard:
+  - rscadd: 'Added three new animated emotes: *question, *realize & *exclaim.'
+  - qol: The emote panel & *help verbs now show emotes that have a visual tell.
+  PotatoTomahto:
+  - qol: conveyors are placed in the direction you're facing
+  - qol: conveyor switch assemblies can set their ids to be the same
+  - bugfix: interactor mechcomp can actually interact
+  SirNightKnight:
+  - bugfix: fixed hat stacking logic for plasmaman helmets being weird.
+2026-02-14:
+  PotatoTomahto:
+  - balance: meltdown nanite program ignores safety threshold when activating
+  Tractor-Maam:
+  - rscadd: the medical bandolier can now be crafted.
+  - rscadd: the medical bandolier now stacks items put inside.
+  notghosti:
+  - map: Pubby morgue now has surgery tools
+  - rscadd: Added slime and uncommon radio encryption keys
