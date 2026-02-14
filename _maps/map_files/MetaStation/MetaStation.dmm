@@ -51066,7 +51066,6 @@
 /obj/structure/table/glass,
 /obj/item/reagent_containers/cup/beaker,
 /obj/item/reagent_containers/dropper,
-/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/iron/white/diagonal,
 /area/station/medical/pathology/isolation)
 "rEO" = (
@@ -65329,6 +65328,7 @@
 "wEN" = (
 /obj/structure/table/glass,
 /obj/item/restraints/handcuffs,
+/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/iron/white/diagonal,
 /area/station/medical/pathology/isolation)
 "wER" = (
