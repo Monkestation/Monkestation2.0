@@ -861,8 +861,7 @@
 	name = "backpack"
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-// MONKESTATION ADDITION START
-/obj/item/storage/backpack/chameleon/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+/obj/item/storage/backpack/chameleon/item_interaction(mob/living/user, obj/item/attacking_item, list/modifiers)
 	if(attacking_item.tool_behaviour != TOOL_MULTITOOL)
 		return ..()
 
@@ -876,7 +875,7 @@
 		actions -= chameleon_action
 		chameleon_action.Remove(user)
 		log_game("[key_name(user)] has locked the disguise of the chameleon backpack ([name]) with [attacking_item]")
-// MONKESTATION ADDITION END
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/storage/backpack/chameleon/Initialize(mapload)
 	. = ..()

@@ -6,7 +6,7 @@
 	key_third_person = "cries"
 	message = "cries."
 	message_mime = "sobs silently."
-	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
+	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE | EMOTE_HAS_VISUAL
 	stat_allowed = SOFT_CRIT
 
 /datum/emote/living/carbon/human/cry/run_emote(mob/user, params, type_override, intentional)
@@ -31,7 +31,7 @@
 	key = "glasses"
 	key_third_person = "glasses"
 	message = "pushes up their glasses."
-	emote_type = EMOTE_VISIBLE
+	emote_type = EMOTE_VISIBLE | EMOTE_HAS_VISUAL
 
 /datum/emote/living/carbon/human/glasses/can_run_emote(mob/user, status_check = TRUE, intentional)
 	var/obj/eyes_slot = user.get_item_by_slot(ITEM_SLOT_EYES)
@@ -294,7 +294,7 @@ monkestation edit end */
 	key = "glow"
 	key_third_person = "glows"
 	message = "glows brightly!"
-	emote_type = EMOTE_VISIBLE
+	emote_type = EMOTE_VISIBLE | EMOTE_HAS_VISUAL
 
 /datum/emote/living/carbon/human/glow/can_run_emote(mob/living/carbon/human/user, status_check = TRUE , intentional, params)
 	if(!isethereal(user))
@@ -310,7 +310,7 @@ monkestation edit end */
 	key = "flare"
 	key_third_person = "flares"
 	message = "flares up to a dazzling intensity!"
-	emote_type = EMOTE_VISIBLE
+	emote_type = EMOTE_VISIBLE | EMOTE_HAS_VISUAL
 	sound = "sound/mobs/humanoids/ethereal/ethereal_hiss.ogg"
 
 /datum/emote/living/carbon/human/flare/can_run_emote(mob/living/carbon/human/user, status_check = TRUE , intentional, params)
@@ -327,7 +327,7 @@ monkestation edit end */
 	key = "flicker"
 	key_third_person = "flicker"
 	message = "flickers."
-	emote_type = EMOTE_VISIBLE
+	emote_type = EMOTE_VISIBLE | EMOTE_HAS_VISUAL
 	sound = "sound/effects/sparks/sparks4.ogg"
 
 /datum/emote/living/carbon/human/flicker/can_run_emote(mob/living/carbon/human/user, status_check = TRUE , intentional, params)

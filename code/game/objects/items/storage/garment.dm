@@ -121,6 +121,8 @@
 	new /obj/item/clothing/under/rank/medical/chief_medical_officer/skirt(src)
 	new /obj/item/clothing/under/rank/medical/chief_medical_officer/turtleneck(src)
 	new /obj/item/clothing/under/rank/medical/chief_medical_officer/turtleneck/skirt(src)
+	new /obj/item/clothing/under/rank/medical/chief_medical_officer/formal(src)
+	new /obj/item/clothing/under/rank/medical/chief_medical_officer/formal/skirt(src)
 	new /obj/item/clothing/under/rank/medical/chief_medical_officer/scrubs(src)
 	new /obj/item/clothing/suit/hooded/wintercoat/medical/cmo(src)
 	new /obj/item/clothing/suit/toggle/labcoat/cmo(src)
