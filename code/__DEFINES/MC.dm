@@ -82,6 +82,9 @@
 /// Don't show when this has init'd
 #define SS_NO_INIT_MESSAGE (1 << 8)
 
+/// Allows the subsystem to be dynamically swapped between backgrounding.
+#define SS_DYNAMIC (1 << 9)
+
 //! SUBSYSTEM STATES
 #define SS_IDLE 0 /// ain't doing shit.
 #define SS_QUEUED 1 /// queued to run
