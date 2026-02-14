@@ -327,7 +327,8 @@
 
 /obj/item/assembly/flash/memorizer/flash_carbon(mob/living/carbon/flashed, mob/living/user, confusion_duration = 15 SECONDS, targeted = TRUE, generic_message = FALSE)
 	. = ..()
-	if(trait_needed && !HAS_TRAIT(user, trait_needed))
+	if(trait_needed && !HAS_MIND_TRAIT(user, trait_needed))
+		to_chat(user, span_warning("Unable to understand how to use [src], you accidentally blind yourself!"))
 		user.flash_act(1, 1)
 		user.apply_status_effect(/datum/status_effect/trance/no_hypno, 3 SECONDS, TRUE)
 		return TRUE
@@ -338,7 +339,8 @@
 
 	flashed.apply_status_effect(/datum/status_effect/trance/no_hypno, 5 SECONDS, TRUE)
 	flashed.mind.wipe_memories_except_keys() // I was gonna...
-	to_chat(flashed, span_hypnophrase(implant_message))
+	to_chat(flashed, span_big(span_hypnophrase(implant_message)))
+	to_chat(flashed, span_warning("Your memories have been erased! If it is targeting a specific memory, then it can't erase anything you know innately (such as your job, job knowledge, antagonist status, etc) that you realistically should know prior to the round."))
 	user.log_message("has memorized [flashed] with [implant_message].", LOG_ATTACK)
 	flashed.log_message("has been memorized with '[implant_message]' by [key_name(user)].", LOG_VICTIM, log_globally = FALSE)
 	user.log_message("memorized [key_name(flashed)] with '[implant_message]'.", LOG_GAME)
@@ -351,10 +353,10 @@
 
 /obj/item/assembly/flash/memorizer/memories/attack_self(mob/living/carbon/user, flag = 0, emp = 0)
 	if(holder)
-		return FALSE
+		return ..()
 	var/memorize_message = tgui_input_text(user, "You don't remember anything about... (This may only erase up until roundstart, nothing prior such as innate knowledge)", "Memory Wipe")
 	if(isnull(memorize_message) || !istext(memorize_message))
-		return FALSE
+		return ..()
 	user.balloon_alert(user, "memorizer set")
 	implant_message = "You don't remember anything about [memorize_message]."
 

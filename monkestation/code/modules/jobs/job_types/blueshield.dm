@@ -23,6 +23,7 @@
 	paycheck = PAYCHECK_NANOTRASEN
 	paycheck_department = ACCOUNT_CC
 
+	mind_traits = list(TRAIT_CAN_HYPNO)
 	liver_traits = list(TRAIT_PRETENDER_ROYAL_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_BLUESHIELD
@@ -85,9 +86,6 @@
 	r_pocket = /obj/item/modular_computer/pda/blueshield
 	pda_slot = ITEM_SLOT_RPOCKET
 	id_trim = /datum/id_trim/job/blueshield
-	skillchips = list(
-		/obj/item/skillchip/hypnotist,
-	)
 
 /datum/outfit/plasmaman/blueshield
 	name = "Blueshield Plasmaman"

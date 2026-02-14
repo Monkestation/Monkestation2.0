@@ -24,6 +24,7 @@
 	paycheck = PAYCHECK_NANOTRASEN
 	paycheck_department = ACCOUNT_CC
 
+	mind_traits = list(TRAIT_CAN_HYPNO)
 	liver_traits = list(TRAIT_PRETENDER_ROYAL_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_NANOTRASEN_REPRESENTATIVE
@@ -118,5 +119,4 @@
 	pda_slot = ITEM_SLOT_RPOCKET
 	skillchips = list(
 		/obj/item/skillchip/disk_verifier,
-		/obj/item/skillchip/hypnotist,
 	)
