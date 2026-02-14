@@ -287,7 +287,7 @@ ADMIN_VERB(play_web_sound, R_SOUND, FALSE, "Play Internet Sound", "Play a given 
 ADMIN_VERB_CUSTOM_EXIST_CHECK(play_web_sound_classic)
 	return !!CONFIG_GET(string/invoke_youtubedl)
 
-ADMIN_VERB(play_web_sound_classic, R_SOUND, FALSE, "Play Internet Sound", "Play a given internet sound to all players.", ADMIN_CATEGORY_FUN)
+ADMIN_VERB(play_web_sound_classic, R_SOUND, FALSE, "Play Internet Sound Classic", "Play a given internet sound to all players.", ADMIN_CATEGORY_FUN)
 	if(GLOB.dj_booth?.broadcasting)
 		var/prompt = tgui_alert(
 			user,
