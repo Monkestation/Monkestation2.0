@@ -126,6 +126,8 @@
 			smoker_lungs = /obj/item/organ/internal/lungs/plasmaman/plasmaman_smoker
 		else if(isethereal(carbon_holder))
 			smoker_lungs = /obj/item/organ/internal/lungs/ethereal/ethereal_smoker
+		else if(isoozeling(carbon_holder))
+			smoker_lungs = /obj/item/organ/internal/lungs/slime/slime_smoker
 		else
 			smoker_lungs = /obj/item/organ/internal/lungs/smoker_lungs
 	if(!isnull(smoker_lungs))

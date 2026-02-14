@@ -1,0 +1,5 @@
+author: "SirNightKnight"
+delete-after: True
+changes:
+  - rscadd: "added the CMO's formal shirt/skirt."
+  - bugfix: "added the CMO's turtleneck skirt to the command drobe."

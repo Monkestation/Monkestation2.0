@@ -177,15 +177,17 @@
 
 /obj/machinery/slime_pen_controller/multitool_act(mob/living/user, obj/item/multitool/multitool)
 	. = NONE
-	if(!multitool.buffer)
+	var/datum/buffer = multitool_get_buffer(multitool)
+
+	if(!buffer)
 		return NONE
 
-	if(linked_oozesucker(multitool.buffer, linked_data))  // Linking a new ooze sucker instead of a pen.
+	if(linked_oozesucker(buffer, linked_data))  // Linking a new ooze sucker instead of a pen.
 		balloon_alert_to_viewers("linked sucker")
-		to_chat(user, span_notice("You link the [multitool.buffer] to the [src]."))
+		to_chat(user, span_notice("You link the [buffer] to the [src]."))
 		return ITEM_INTERACT_SUCCESS
 
-	var/obj/machinery/corral_corner/pad = astype(multitool.buffer)
+	var/obj/machinery/corral_corner/pad = astype(buffer)
 	if(!pad?.connected_data)
 		return
 	if(linked_data)

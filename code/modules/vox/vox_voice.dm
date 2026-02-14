@@ -53,6 +53,8 @@ GLOBAL_LIST_INIT_TYPED(vox_voices, /datum/vox_voice, initialize_vox_voices())
 			if(player_mob.client && !player_mob.client?.prefs)
 				stack_trace("[player_mob] ([player_mob.ckey]) has null prefs, which shouldn't be possible!")
 				continue
+			if(isnewplayer(player_mob))
+				continue
 			if(check_hearing && !player_mob.can_hear())
 				continue
 			if(!player_mob.client?.prefs?.read_preference(/datum/preference/toggle/sound_vox))

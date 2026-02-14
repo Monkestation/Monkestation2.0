@@ -144,7 +144,7 @@
 	return FALSE
 
 /mob/proc/can_put_in_hand(I, hand_index)
-	if(hand_index > held_items.len)
+	if(hand_index > length(held_items))
 		return FALSE
 	if(!put_in_hand_check(I))
 		return FALSE
@@ -153,7 +153,7 @@
 	return !held_items[hand_index]
 
 /mob/proc/put_in_hand(obj/item/I, hand_index, forced = FALSE, ignore_anim = TRUE)
-	if(hand_index == null || !held_items.len || (!forced && !can_put_in_hand(I, hand_index)))
+	if(hand_index == null || !length(held_items) || (!forced && !can_put_in_hand(I, hand_index)))
 		return FALSE
 
 	if(isturf(I.loc) && !ignore_anim)

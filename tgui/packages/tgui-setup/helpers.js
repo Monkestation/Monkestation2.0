@@ -1,11 +1,6 @@
 /* eslint-disable */
 
 (function () {
-  // Inferno needs Int32Array, and it is not covered by core-js.
-  if (!window.Int32Array) {
-    window.Int32Array = Array;
-  }
-
   // Utility functions
   var hasOwn = Object.prototype.hasOwnProperty;
 
@@ -30,7 +25,6 @@
   };
 
   Error.stackTraceLimit = 50;
-
 
   // BYOND API object
   // ------------------------------------------------------
@@ -386,7 +380,7 @@
             return file.close();
           });
         })
-        .catch(function () { });
+        .catch(function () {});
     }
   };
 
@@ -451,7 +445,7 @@ window.onerror = function (msg, url, line, col, error) {
   }
   // Short-circuit further updates
   if (Byond.strictMode) {
-    window.update = function () { };
+    window.update = function () {};
     window.update.queue = [];
   }
   // Prevent default action
@@ -531,7 +525,7 @@ window.replaceHtml = function (inline_html) {
   document.body.insertAdjacentHTML(
     'afterbegin',
     '<!-- tgui:inline-html-start -->' +
-    inline_html +
-    '<!-- tgui:inline-html-end -->'
+      inline_html +
+      '<!-- tgui:inline-html-end -->'
   );
 };

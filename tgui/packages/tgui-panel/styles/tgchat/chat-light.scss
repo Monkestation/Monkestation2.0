@@ -677,6 +677,12 @@ h2.alert {
   color: hsl(278.7, 45.8%, 32.5%);
 }
 
+.purplelarge {
+  color: hsl(278.7, 45.8%, 32.5%);
+  font-weight: bold;
+  font-size: 185%;
+}
+
 .holoparasite {
   color: hsl(257.1, 6.4%, 21.4%);
 }
@@ -1266,11 +1272,11 @@ $border-width-px: $border-width * 1px;
 }
 
 .velvet {
-  color: #21007f;
+  color: hsl(255.6, 100%, 24.9%);
 }
 
 .progenitor {
-  color: #21007f;
+  color: hsl(255.6, 100%, 24.9%);
   font-weight: bold;
   font-size: 185%;
 }

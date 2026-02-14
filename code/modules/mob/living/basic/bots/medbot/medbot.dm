@@ -184,8 +184,9 @@
 	return attack_hand(user, modifiers)
 
 /mob/living/basic/bot/medbot/multitool_act(mob/living/user, obj/item/multitool/tool)
-	if(!QDELETED(tool.buffer) && istype(tool.buffer, /datum/techweb))
-		link_techweb(tool.buffer) // monkestation edit: techweb linking refactor
+	var/datum/buffer = multitool_get_buffer(tool)
+	if(!QDELETED(buffer) && istype(buffer, /datum/techweb))
+		link_techweb(buffer) // monkestation edit: techweb linking refactor
 	return ITEM_INTERACT_SUCCESS
 
 // Variables sent to TGUI

@@ -8721,6 +8721,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/newscaster/directional/south,
 /turf/open/floor/carpet,
 /area/station/security/detectives_office)
 "aFY" = (
@@ -8733,7 +8734,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/newscaster/directional/south,
+/obj/structure/detectiveboard/directional/south,
 /turf/open/floor/carpet,
 /area/station/security/detectives_office)
 "aGd" = (
@@ -11755,6 +11756,7 @@
 	layer = 4;
 	pixel_y = 32
 	},
+/obj/effect/landmark/start/explorer,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "aUG" = (
@@ -17197,6 +17199,7 @@
 /area/station/security/checkpoint/medical)
 "bsR" = (
 /obj/effect/turf_decal/stripes/line,
+/obj/item/flatpack,
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "bsS" = (
@@ -17643,6 +17646,13 @@
 /obj/effect/turf_decal/tile/purple/half/contrasted,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
+"buZ" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/landmark/start/explorer,
+/turf/open/floor/iron,
+/area/station/cargo/storage)
 "bva" = (
 /turf/closed/wall,
 /area/station/maintenance/department/engine)
@@ -19283,6 +19293,7 @@
 /obj/structure/table/glass,
 /obj/machinery/light_switch/directional/south,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted,
+/obj/item/storage/toolbox/electrical/medical,
 /turf/open/floor/iron/white,
 /area/station/medical/storage)
 "bCc" = (
@@ -22572,6 +22583,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
 	},
+/obj/item/flatpack,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "bSc" = (
@@ -28330,13 +28342,7 @@
 /turf/open/floor/iron/dark,
 /area/station/service/library)
 "cyT" = (
-/obj/structure/table/wood,
-/obj/item/paper_bin{
-	layer = 2.9;
-	pixel_x = -2;
-	pixel_y = 4
-	},
-/obj/item/pen,
+/obj/machinery/cassette_library,
 /turf/open/floor/iron/dark,
 /area/station/service/library)
 "cyU" = (
@@ -32155,6 +32161,10 @@
 /obj/effect/turf_decal/trimline/blue/line,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
+"fsh" = (
+/obj/item/flatpack,
+/turf/open/floor/iron,
+/area/station/cargo/sorting)
 "fsA" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -32347,6 +32357,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
+"fAZ" = (
+/obj/effect/landmark/start/explorer,
+/turf/open/floor/iron,
+/area/station/cargo/storage)
 "fBp" = (
 /turf/closed/wall/r_wall,
 /area/station/engineering/atmos)
@@ -39315,6 +39329,12 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/paramedic)
+"lEA" = (
+/obj/vehicle/ridden/battering_ram{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/station/ai_monitored/security/armory)
 "lFb" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -39784,7 +39804,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "mbe" = (
-/obj/machinery/vending/wardrobe/engi_wardrobe,
+/obj/machinery/vending/access/engi_wardrobe,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -43094,7 +43114,7 @@
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 1
 	},
-/obj/item/storage/secure/safe/caps_spare/directional/west,
+/obj/structure/secure_safe/caps_spare/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "oQn" = (
@@ -48320,6 +48340,7 @@
 /area/station/science/xenobiology)
 "sYu" = (
 /obj/machinery/holopad,
+/obj/effect/landmark/start/explorer,
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
 "sYE" = (
@@ -50132,6 +50153,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/table/reinforced,
 /obj/machinery/newscaster/directional/west,
+/obj/item/surgery_tray/deployed,
 /obj/item/autopsy_scanner,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
@@ -55059,7 +55081,7 @@
 	dir = 1
 	},
 /obj/machinery/newscaster/directional/north,
-/obj/item/storage/secure/safe/directional/west,
+/obj/structure/secure_safe/directional/west,
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
 "xOm" = (
@@ -69687,7 +69709,7 @@ nAF
 aCq
 cAK
 czH
-fYY
+cyT
 eBZ
 cyU
 aaa
@@ -72249,7 +72271,7 @@ aaa
 aaa
 aaa
 cjp
-cyT
+fYY
 cAK
 cyZ
 cAK
@@ -79054,7 +79076,7 @@ hiD
 ajj
 ajT
 aNZ
-afH
+lEA
 amh
 amZ
 anJ
@@ -94255,7 +94277,7 @@ cay
 dTT
 xIM
 aWw
-bat
+fsh
 oxM
 aZn
 aZn
@@ -96571,7 +96593,7 @@ sAD
 cCB
 nxG
 baB
-baB
+buZ
 bbK
 bcF
 gne
@@ -96820,7 +96842,7 @@ aNQ
 aEj
 jiu
 cCB
-cCB
+fAZ
 cCB
 bUh
 wkM
@@ -97333,9 +97355,9 @@ aMw
 aQo
 bbJ
 cCB
+fAZ
 cCB
-cCB
-cCB
+fAZ
 aUz
 vrX
 sAD

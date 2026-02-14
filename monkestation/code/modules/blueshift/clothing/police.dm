@@ -51,7 +51,6 @@
 	desc = "A close-fitting tactical mask."
 	icon = 'monkestation/code/modules/blueshift/icons/mask.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/wornmask.dmi'
-	worn_icon_digitigrade = 'monkestation/code/modules/blueshift/icons/wornmask_digi.dmi'
 	icon_state = "nri_police"
 	inhand_icon_state = "swat"
 	flags_inv = HIDEFACIALHAIR | HIDEFACE | HIDESNOUT
@@ -78,7 +77,6 @@
 	desc = "Fancy white satin shirt and a pair of cotton-blend pants with a black synthleather belt."
 	icon = 'monkestation/code/modules/blueshift/icons/colonies/clothing.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/colonies/clothing_worn.dmi'
-	worn_icon_digitigrade = 'monkestation/code/modules/blueshift/icons/colonies/clothing_digi.dmi'
 	icon_state = "under_colonial"
 
 
@@ -87,7 +85,6 @@
 	desc = "Good old laceless boots, with a sturdy plastic toe to, theoretically, keep your toes uncrushed."
 	icon = 'monkestation/code/modules/blueshift/icons/colonies/clothing.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/colonies/clothing_worn.dmi'
-	worn_icon_digitigrade = 'monkestation/code/modules/blueshift/icons/colonies/clothing_digi.dmi'
 	icon_state = "boots_colonial"
 
 
@@ -98,7 +95,6 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	icon = 'monkestation/code/modules/blueshift/icons/colonies/clothing.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/colonies/clothing_worn.dmi'
-	worn_icon_digitigrade = 'monkestation/code/modules/blueshift/icons/colonies/clothing_digi.dmi'
 	icon_state = "cloak_colonial"
 	allowed = /obj/item/clothing/suit/jacket/leather::allowed // these are special and can be worn in the suit slot, so we need this var to be defined
 
@@ -108,6 +104,5 @@
 	desc = "A puffy cap made out of tarpaulin covered by some textile. It is sturdy and comfortable, and seems to retain its form very well."
 	icon = 'monkestation/code/modules/blueshift/icons/colonies/clothing.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/colonies/clothing_worn.dmi'
-	worn_icon_digitigrade = 'monkestation/code/modules/blueshift/icons/colonies/clothing_digi.dmi'
 	icon_state = "cap_colonial"
 	inhand_icon_state = null

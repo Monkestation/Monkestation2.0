@@ -621,7 +621,7 @@
 	. = ..()
 	if(!.)
 		return
-	acquirer.add_traits(list(TRAIT_NOSOFTCRIT, TRAIT_ANALGESIA, TRAIT_NO_PAIN_EFFECTS), GENETIC_MUTATION)
+	acquirer.add_traits(list(TRAIT_NOSOFTCRIT, TRAIT_ANALGESIA), GENETIC_MUTATION)
 	RegisterSignal(acquirer, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(check_health))
 	check_health()
 
@@ -630,7 +630,7 @@
 	if(.)
 		return
 	UnregisterSignal(owner, COMSIG_LIVING_HEALTH_UPDATE)
-	owner.remove_traits(list(TRAIT_NOSOFTCRIT, TRAIT_ANALGESIA, TRAIT_NO_PAIN_EFFECTS), GENETIC_MUTATION)
+	owner.remove_traits(list(TRAIT_NOSOFTCRIT, TRAIT_ANALGESIA), GENETIC_MUTATION)
 	REMOVE_TRAIT(owner, TRAIT_SOFTSPOKEN, REF(src))
 
 /datum/mutation/inexorable/proc/check_health(...)

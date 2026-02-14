@@ -611,7 +611,7 @@
 		/obj/machinery/vending/wardrobe/sec_wardrobe = "SecDrobe",
 		/obj/machinery/vending/wardrobe/det_wardrobe = "DetDrobe",
 		/obj/machinery/vending/wardrobe/medi_wardrobe = "MediDrobe",
-		/obj/machinery/vending/wardrobe/engi_wardrobe = "EngiDrobe",
+		/obj/machinery/vending/access/engi_wardrobe = "EngiDrobe",
 		/obj/machinery/vending/wardrobe/atmos_wardrobe = "AtmosDrobe",
 		/obj/machinery/vending/access/wardrobe_cargo = "CargoDrobe",
 		/obj/machinery/vending/wardrobe/robo_wardrobe = "RoboDrobe",
@@ -1571,4 +1571,14 @@
 	needs_anchored = FALSE
 	req_components = list(
 		/obj/item/pipe/trinary/flippable/filter = 1,
+	)
+/obj/item/circuitboard/machine/flatpacker
+	name = "Flatpacker"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/flatpacker
+	req_components = list(
+		/datum/stock_part/matter_bin = 2,
+		/datum/stock_part/micro_laser = 2,
+		/datum/stock_part/manipulator = 1,
+		/obj/item/stack/sheet/plasteel = 5,
 	)
