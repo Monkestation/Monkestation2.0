@@ -184,7 +184,7 @@
 
 	create_storage(storage_type = /datum/storage/pockets)
 
-/obj/item/clothing/suit/chameleon/syndie_armor/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+/obj/item/clothing/suit/chameleon/syndie_armor/item_interaction(mob/living/user, obj/item/attacking_item, list/modifiers)
 	if(attacking_item.tool_behaviour != TOOL_MULTITOOL)
 		return ..()
 
@@ -192,12 +192,13 @@
 		chameleon_action.hidden = FALSE
 		actions += chameleon_action
 		chameleon_action.Grant(user)
-		log_game("[key_name(user)] has removed the disguise lock on the chameleon backpack ([name]) with [attacking_item]")
+		log_game("[key_name(user)] has removed the disguise lock on the chameleon body armor ([name]) with [attacking_item]")
 	else
 		chameleon_action.hidden = TRUE
 		actions -= chameleon_action
 		chameleon_action.Remove(user)
-		log_game("[key_name(user)] has locked the disguise of the chameleon backpack ([name]) with [attacking_item]")
+		log_game("[key_name(user)] has locked the disguise of the chameleon body armor ([name]) with [attacking_item]")
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/clothing/suit/infinity_jacket
 	name = "infinity jersey"
