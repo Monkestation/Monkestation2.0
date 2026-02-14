@@ -12,7 +12,7 @@ GLOBAL_VAR(pop_split_target_lastroundid)
 	if(!CONFIG_GET(flag/pop_split))
 		return
 
-	if(!CONFIG_GET(flag/pop_split_target))
+	if(!CONFIG_GET(string/pop_split_target))
 		log_config("Pop split is enabled but no target world is set!")
 		return
 
@@ -23,8 +23,9 @@ GLOBAL_VAR(pop_split_target_lastroundid)
 		return
 
 	var/target = CONFIG_GET(string/pop_split_target)
-	// Check if the target world can reboot, if so, DO IT BITCH
+	var/target_name = CONFIG_GET(string/pop_split_target_name)
 
+	// Check if the target world can reboot, if so, DO IT BITCH
 	var/target_can_reboot = world.Export("byond://[target]?can_empty_reboot", Persist = TRUE)
 	if(target_can_reboot)
 		message_admins(span_bolddanger("POP-SPLIT: Source and target server eligible for pop-split, rebooting target..."))
@@ -70,12 +71,9 @@ GLOBAL_VAR(pop_split_target_lastroundid)
 	GLOB.pop_split_marked = marked_clients
 	GLOB.pop_splitting = TRUE
 
-	var/target = CONFIG_GET(string/pop_split_target)
-	var/target_name = CONFIG_GET(string/pop_split_target_name)
-
 	to_chat(GLOB.pop_split_marked, span_boldnotice("POP-SPLIT: You have been selected for pop splitting, you will be moved over to '[target_name]' ([target])"))
-	message_admins(span_bolddanger("POP-SPLIT: Pop split is active (Over [threshold] players). [CONFIG_GET(flag/pop_split_exclude_admins) ? "\[Admins are exempt from pop split]" : ""]"))
-	log_game("POP-SPLIT: Pop split is active (Over [threshold] players). [CONFIG_GET(flag/pop_split_exclude_admins) ? "\[Admins are exempt from pop split]" : ""]")
+	message_admins(span_bolddanger("POP-SPLIT: Pop split is active (Over [threshold] players). [CONFIG_GET(flag/pop_split_exclude_admins) ? "Admins are exempt from pop split" : ""]"))
+	log_game("POP-SPLIT: Pop split is active (Over [threshold] players). [CONFIG_GET(flag/pop_split_exclude_admins) ? "Admins are exempt from pop split" : ""]")
 
 /datum/controller/subsystem/server_maint/Shutdown()
 	if(!CONFIG_GET(flag/pop_split))
@@ -86,6 +84,9 @@ GLOBAL_VAR(pop_split_target_lastroundid)
 		message_admins(span_bolddanger("POP-SPLIT: Pop split bailing out. (Player count below [bailout_threshold])"))
 		log_game("POP-SPLIT: Bailing out. (Player count below [bailout_threshold])")
 		return ..()
+
+	var/target = CONFIG_GET(string/pop_split_target)
+	var/target_name = CONFIG_GET(string/pop_split_target_name)
 
 	var/target_status = world.Export("byond://[target]?status")
 	if(!target_status["round_id"])
@@ -104,9 +105,6 @@ GLOBAL_VAR(pop_split_target_lastroundid)
 		for(var/client/C in GLOB.pop_split_marked)
 			if(C?.holder)
 				GLOB.pop_split_marked -= C
-
-	var/target = CONFIG_GET(string/pop_split_target)
-	var/target_name = CONFIG_GET(string/pop_split_target_name)
 
 	for(var/client/C in GLOB.pop_split_marked)
 		if(!QDELETED(C) && !C.holder)
