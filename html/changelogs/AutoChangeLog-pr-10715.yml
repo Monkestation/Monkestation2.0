@@ -1,5 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - rscadd: "You can now use 10 sheets of reinforced plasma glass to upgrade SMESes to be shielded against EMPs."
-  - map: "All mapped in singularity/tesla engines now use an EMP-shielded SMES for the emitters."

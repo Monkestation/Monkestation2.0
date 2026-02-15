@@ -142,11 +142,31 @@ ADMIN_VERB(stealth, R_STEALTH, FALSE, "Stealth Mode", "Toggle stealth.", ADMIN_C
 
 #define STEALTH_MODE_TRAIT "stealth_mode"
 
-/client/proc/enable_stealth_mode(new_key, source)
+/client/proc/enable_stealth_mode(new_key, pronouns, source)
 	if (!new_key)
-		new_key = ckeyEx(stripped_input(usr, "Enter your desired display name.", "Fake Key", key, 26))
+		new_key = ckeyEx(stripped_input(usr, "Enter your desired display name.", "Stealth - Fake Key", key, 26))
 		if(!new_key)
 			return
+	if (isnull(pronouns))
+		var/response = alert(src, "Show pronouns in ooc?", "Stealth - OOC Pronouns", "Yes", "No", "Custom")
+		switch(response)
+			if("Yes")
+				holder.showpronouns = TRUE
+			if("No")
+				holder.showpronouns = FALSE
+			if("Custom")
+#define PRONOUN_INPUT input(usr, "Enter the pronouns you'd like to use. Empty entry will be perceived as no custom. Rules apply. Example: \"she/it/they - Local nerd\"", "Stealth - OOC Pronouns", prefs.read_preference(/datum/preference/text/ooc_pronouns)) as text|null
+				response = PRONOUN_INPUT
+				var/datum/preference/text/ooc_pronouns/validator = new
+				while(validator.is_valid(response) == FALSE)
+					response = PRONOUN_INPUT
+#undef PRONOUN_INPUT
+
+				if(!length(response))
+					holder.showpronouns = FALSE
+				else
+					holder.showpronouns = response
+
 	holder.fakekey = new_key
 	createStealthKey()
 	if(isobserver(mob))
@@ -160,13 +180,14 @@ ADMIN_VERB(stealth, R_STEALTH, FALSE, "Stealth Mode", "Toggle stealth.", ADMIN_C
 
 	ADD_TRAIT(mob, TRAIT_ORBITING_FORBIDDEN, STEALTH_MODE_TRAIT)
 	QDEL_NULL(mob.orbiters)
-	source = isnull(source) ? " via [source]." : ""
+	source = isnull(source) ? "" : " via [source]."
 	log_admin("[key_name(usr)] has turned stealth mode ON (with key '[new_key]')[source]")
 	message_admins("[key_name_admin(usr)] has turned stealth mode ON (with key '[new_key]')[source]")
 
 /client/proc/disable_stealth_mode()
 	var/previous_fakekey = holder.fakekey
 	holder.fakekey = null
+	holder.showpronouns = null
 	if(isobserver(mob))
 		mob.remove_alt_appearance("stealthmin")
 		mob.RemoveInvisibility(INVISIBILITY_SOURCE_STEALTHMODE)

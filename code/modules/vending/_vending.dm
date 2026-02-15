@@ -1348,7 +1348,7 @@
 		if(D)
 			D.adjust_money(price_to_use)
 			SSblackbox.record_feedback("amount", "vending_spent", price_to_use)
-			SSeconomy.track_purchase(account, price_to_use, name)
+			SSeconomy.add_audit_entry(account, price_to_use, name)
 			log_econ("[price_to_use] credits were inserted into [src] by [account.account_holder] to buy [R].")
 	if(last_shopper != REF(usr) || purchase_message_cooldown < world.time)
 		var/vend_response = vend_reply || "Thank you for shopping with [src]!"
@@ -1715,3 +1715,47 @@
 	add_filter("vending_rays", 10, list("type" = "rays", "size" = 35, "color" = COLOR_VIVID_YELLOW))
 
 #undef MAX_VENDING_INPUT_AMOUNT
+
+/**
+ * This vending machine supports a list of items that changes based on the user/card's access.
+ */
+/obj/machinery/vending/access
+	name = "access-based vending machine"
+	///If set, this access is required to see non-access locked products in the vending machine.
+	var/minimum_access_to_view
+
+/obj/machinery/vending/access/Initialize(mapload)
+	. = ..()
+	var/list/inventory = list()
+	build_access_list(inventory)
+	for(var/access in inventory)
+		build_inventory(inventory[access], product_records, product_categories, start_empty = FALSE, access_needed = access)
+
+/**
+ * This is where you generate the list to store what items each access grants.
+ * Should be an assosciative list where the key is the access as a string and the value is the items typepath.
+ * You can also set it to TRUE instead of a list to allow them to purchase anything.
+ */
+/obj/machinery/vending/access/proc/build_access_list(list/inventory)
+	return
+
+/obj/machinery/vending/access/collect_records_for_static_data(list/records, list/categories, mob/living/user, premium)
+	if(isnull(minimum_access_to_view))
+		return ..()
+	//dead people can see records, i GUESS...
+	if(!istype(user))
+		return ..()
+	var/obj/item/card/id/user_id = user.get_idcard(TRUE)
+	if(!issilicon(user) && !(obj_flags & EMAGGED) && onstation && !(minimum_access_to_view in user_id?.access))
+		records = list()
+		return ..()
+	return ..()
+
+/// Debug version to verify access checking is working and functional
+/obj/machinery/vending/access/debug
+	minimum_access_to_view = ACCESS_ENGINEERING
+
+/obj/machinery/vending/access/debug/build_access_list(list/inventory)
+	inventory[ACCESS_EVA] = list(/obj/item/crowbar)
+	inventory[ACCESS_SECURITY] = list(/obj/item/wrench, /obj/item/gun/ballistic/revolver/mateba)
+

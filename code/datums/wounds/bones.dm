@@ -126,7 +126,7 @@
 	if(!prob((severity - 1) * 15))
 		return NONE
 
-	var/painless = victim.has_status_effect(/datum/status_effect/determined)
+	var/painless = HAS_TRAIT(victim, TRAIT_ANALGESIA) || victim.has_status_effect(/datum/status_effect/determined)
 	// And you have a 70% or 50% chance to actually land the blow, respectively
 	if(prob(70 - 20 * (severity - 1)))
 		to_chat(victim, span_userdanger("The fracture in your [limb.plaintext_zone] [painless ? "jostles uncomfortably" : "shoots with pain"] as you strike [target]!"))
@@ -139,6 +139,8 @@
 		vision_distance = COMBAT_MESSAGE_RANGE,
 
 	)
+	if(!painless)
+		INVOKE_ASYNC(victim, TYPE_PROC_REF(/mob, emote), "scream")
 	victim.Stun(0.5 SECONDS)
 	victim.apply_damage(10, BRUTE, limb)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
@@ -162,7 +164,7 @@
 	if(footstep_counter >= 8)
 		footstep_counter = 1
 
-	if((limb.current_gauze ? limb.current_gauze.splint_factor : 1) <= 0.75)
+	if((limb.current_gauze ? limb.current_gauze.splint_factor : 1) <= 0.75 || HAS_TRAIT(victim, TRAIT_ANALGESIA))
 		return
 	if(limb.body_zone == SELECT_LEFT_OR_RIGHT(footstep_counter, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
 		return
@@ -186,7 +188,7 @@
 
 	if(limb.body_zone != BODY_ZONE_CHEST)
 		return NONE
-	if(limb.current_gauze && limb.current_gauze.splint_factor <= 0.75)
+	if(HAS_TRAIT(victim, TRAIT_ANALGESIA) || limb.current_gauze && limb.current_gauze.splint_factor <= 0.75)
 		return NONE
 	var/pain_prob = min(75, 20 * severity * (victim.body_position == LYING_DOWN ? 1.5 : 1))
 	if(!prob(pain_prob))
@@ -194,6 +196,7 @@
 	to_chat(victim, span_danger("You wince as you take a deep breath, feeling the pain in your ribs!"))
 	var/breath_prob = min(50, 15 * severity * (victim.body_position == LYING_DOWN ? 1.2 : 1))
 	if(prob(breath_prob))
+		INVOKE_ASYNC(victim, TYPE_PROC_REF(/mob, emote), "gasp")
 		. = BREATHE_SKIP_BREATH
 	else
 		. = NONE
@@ -382,6 +385,8 @@
 	if(prob(65))
 		user.visible_message(span_danger("[user] snaps [victim]'s dislocated [limb.plaintext_zone] back into place!"), span_notice("You snap [victim]'s dislocated [limb.plaintext_zone] back into place!"), ignored_mobs=victim)
 		to_chat(victim, span_userdanger("[user] snaps your dislocated [limb.plaintext_zone] back into place!"))
+		if(!HAS_TRAIT(victim, TRAIT_ANALGESIA))
+			victim.emote("scream")
 		victim.apply_damage(20, BRUTE, limb, wound_bonus = CANT_WOUND)
 		qdel(src)
 	else
@@ -400,6 +405,8 @@
 	if(prob(65))
 		user.visible_message(span_danger("[user] snaps [victim]'s dislocated [limb.plaintext_zone] with a sickening crack!"), span_danger("You snap [victim]'s dislocated [limb.plaintext_zone] with a sickening crack!"), ignored_mobs=victim)
 		to_chat(victim, span_userdanger("[user] snaps your dislocated [limb.plaintext_zone] with a sickening crack!"))
+		if(!HAS_TRAIT(victim, TRAIT_ANALGESIA))
+			victim.emote("scream")
 		victim.apply_damage(25, BRUTE, limb, wound_bonus = 30)
 	else
 		user.visible_message(span_danger("[user] wrenches [victim]'s dislocated [limb.plaintext_zone] around painfully!"), span_danger("You wrench [victim]'s dislocated [limb.plaintext_zone] around painfully!"), ignored_mobs=victim)
@@ -429,7 +436,8 @@
 		limb.receive_damage(brute=10, wound_bonus=CANT_WOUND)
 		user.visible_message(span_danger("[user] finishes resetting [victim]'s [limb.plaintext_zone]!"), span_nicegreen("You finish resetting [victim]'s [limb.plaintext_zone]!"), ignored_mobs=victim)
 		to_chat(victim, span_userdanger("[user] resets your [limb.plaintext_zone]!"))
-
+	if(!HAS_TRAIT(victim, TRAIT_ANALGESIA))
+		victim.emote("scream")
 	qdel(src)
 
 /*
@@ -538,6 +546,8 @@
 		return TRUE
 
 	I.use(1)
+	if(!HAS_TRAIT(victim, TRAIT_ANALGESIA))
+		victim.emote("scream")
 
 	if(user != victim)
 		user.visible_message(span_notice("[user] finishes applying [I] to [victim]'s [limb.plaintext_zone], emitting a fizzing noise!"), span_notice("You finish applying [I] to [victim]'s [limb.plaintext_zone]!"), ignored_mobs=victim)

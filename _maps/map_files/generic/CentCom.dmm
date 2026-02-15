@@ -2719,10 +2719,11 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/briefing)
 "ahp" = (
-/obj/machinery/ntnet_relay{
+/obj/structure/fluff{
+	desc = "A very complex router and transmitter capable of connecting electronic devices together. Did Ook somehow steal this hunk of junk from NT or something??";
 	name = "Ook's Modem";
-	is_operational = 0;
-	desc = "A very complex router and transmitter capable of connecting electronic devices together. Did Ook somehow steal this hunk of junk from NT or something??"
+	icon = 'icons/obj/machines/telecomms.dmi';
+	icon_state = "bus"
 	},
 /turf/open/misc/grass,
 /area/centcom/central_command_areas/admin)
@@ -3386,7 +3387,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/botany)
 "ajg" = (
-/obj/machinery/vending/wardrobe/engi_wardrobe,
+/obj/machinery/vending/access/engi_wardrobe,
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/hall)
 "ajh" = (
@@ -14513,7 +14514,7 @@
 /area/centcom/central_command_areas/kitchen)
 "aMP" = (
 /obj/effect/turf_decal/tile/dark/opposingcorners,
-/obj/machinery/vending/wardrobe/engi_wardrobe,
+/obj/machinery/vending/access/engi_wardrobe,
 /obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/observation)

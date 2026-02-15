@@ -22,6 +22,7 @@ export function TabbedMenu(props: TabbedMenuProps) {
                 align="center"
                 fontSize="1.2em"
                 fluid
+                disabled={children.length === 0}
                 onClick={() => {
                   const offsetTop = categoryRefs.current[category]?.offsetTop;
                   if (offsetTop === undefined) {
@@ -65,6 +66,7 @@ export function TabbedMenu(props: TabbedMenuProps) {
       >
         <Stack vertical fill px={2}>
           {props.categoryEntries.map(([category, children]) => {
+            if (children.length === 0) return null;
             return (
               <div
                 key={category}
