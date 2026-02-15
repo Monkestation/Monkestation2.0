@@ -427,7 +427,9 @@
 		/obj/item/pickaxe,
 		/obj/item/t_scanner/adv_mining_scanner,
 		/obj/item/soap/nanotrasen, 
-		/obj/item/borg/cyborghug, // Zipties have been removed because why god would you let them become security 2.
+		/obj/item/borg/cyborghug,
+		/obj/item/storage/bag/tray,
+		// Zipties have been removed because why god would you let them become security 2.
 	) 
 	emag_modules = list(
 		/obj/item/melee/energy/sword/cyborg, //I don't think there was any reason to use cyborg specific esword with this? They both act functionally the same.
