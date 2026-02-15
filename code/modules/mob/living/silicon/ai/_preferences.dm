@@ -87,7 +87,6 @@ GLOBAL_LIST_INIT(ai_core_display_screens, sort_list(list(
 	"House",
 	"Inverted",
 	"Matrix",
-
 	"Monochrome",
 	"Murica",
 	"Nanotrasen",
