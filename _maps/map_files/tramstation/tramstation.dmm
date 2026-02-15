@@ -7813,10 +7813,10 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},
-/obj/structure/sign/clock/directional/north,
 /obj/machinery/camera/directional/north{
 	c_tag = "Command - Bridge North"
 	},
+/obj/machinery/incident_display/tram/directional/north,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "bsW" = (
@@ -9382,6 +9382,7 @@
 /obj/structure/reagent_dispensers/fueltank,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/extinguisher_cabinet/directional/east,
 /turf/open/floor/iron,
 /area/station/maintenance/port/central)
 "bSd" = (
@@ -9611,10 +9612,18 @@
 /turf/open/floor/wood,
 /area/station/command/meeting_room)
 "bVe" = (
-/turf/open/floor/iron/dark/corner{
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 8
 	},
-/area/station/command/bridge)
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/incident_display/tram{
+	desc = "A display that indicates how many dents that'll need fixed after the shift is over.";
+	name = "darwin award counter";
+	pixel_x = 32
+	},
+/turf/open/floor/iron,
+/area/station/maintenance/port/central)
 "bVs" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp/green,
@@ -29611,7 +29620,6 @@
 	pixel_x = -25;
 	pixel_y = -5
 	},
-/obj/machinery/atm/directional/north,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "int" = (
@@ -34858,9 +34866,6 @@
 /turf/open/floor/plating,
 /area/station/science/lab)
 "jRP" = (
-/obj/machinery/incident_display/tram{
-	pixel_x = -32
-	},
 /obj/structure/table/reinforced,
 /obj/item/storage/medkit/regular{
 	pixel_x = -5;
@@ -34870,6 +34875,7 @@
 	pixel_x = 8;
 	pixel_y = 4
 	},
+/obj/structure/fireaxecabinet/directional/west,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "jRS" = (
@@ -36657,7 +36663,6 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},
-/obj/structure/fireaxecabinet/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
@@ -37343,6 +37348,9 @@
 	},
 /obj/machinery/light/directional/east,
 /obj/machinery/portable_atmospherics/canister/anesthetic_mix,
+/obj/machinery/incident_display/tram{
+	pixel_x = 32
+	},
 /turf/open/floor/iron/dark,
 /area/station/medical/treatment_center)
 "kFT" = (
@@ -41649,9 +41657,6 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 2
 	},
-/obj/machinery/incident_display/tram{
-	pixel_x = 32
-	},
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "lVK" = (
@@ -44195,6 +44200,12 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /obj/machinery/requests_console/directional/south{
 	anon_tips_receiver = 1;
 	assistance_requestable = 1;
@@ -44203,12 +44214,6 @@
 	pixel_y = 30;
 	can_send_announcements = 1
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "mKP" = (
@@ -49150,13 +49155,15 @@
 /turf/open/floor/catwalk_floor,
 /area/station/science/auxlab/firing_range)
 "onB" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/trimline/neutral/filled/line{
-	dir = 4
+/obj/machinery/door/firedoor,
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/stripes/white/full,
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
 	},
-/obj/structure/extinguisher_cabinet/directional/north,
-/turf/open/floor/iron,
-/area/station/maintenance/port/central)
+/turf/open/floor/iron/dark,
+/area/station/medical/medbay/lobby)
 "ook" = (
 /turf/closed/wall/r_wall,
 /area/station/hallway/primary/tram/left)
@@ -49620,11 +49627,6 @@
 /obj/structure/table,
 /obj/item/storage/toolbox/emergency,
 /obj/item/crowbar,
-/obj/machinery/incident_display/tram{
-	desc = "A display that indicates how many dents that'll need fixed after the shift is over.";
-	name = "darwin award counter";
-	pixel_x = 32
-	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/station/maintenance/port/central)
@@ -52693,12 +52695,6 @@
 /obj/item/book/bible,
 /turf/open/floor/carpet,
 /area/station/service/chapel/monastery)
-"pwx" = (
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 1
-	},
-/turf/open/floor/iron/white,
-/area/station/medical/medbay/lobby)
 "pwF" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 1
@@ -71177,6 +71173,7 @@
 /area/station/security/office)
 "uYR" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line,
+/obj/machinery/atm/directional/south,
 /turf/open/floor/iron/smooth,
 /area/station/hallway/primary/tram/center)
 "uYX" = (
@@ -101325,7 +101322,7 @@ pZW
 hWa
 agP
 oRH
-sUf
+bVe
 sUf
 sUf
 aqf
@@ -101583,7 +101580,7 @@ hWa
 pZW
 pZW
 pZW
-onB
+uss
 uss
 xir
 uwf
@@ -166085,7 +166082,7 @@ tkU
 qyZ
 qyZ
 mKv
-bVe
+hhc
 jkq
 mXN
 pHs
@@ -178442,7 +178439,7 @@ aGO
 jJV
 mTM
 iVr
-wyd
+lDt
 inc
 xJA
 gHh
@@ -178700,7 +178697,7 @@ jJV
 mTM
 iVr
 rks
-pwx
+xck
 lNF
 wAI
 wAI
@@ -178956,7 +178953,7 @@ rZD
 jJV
 mTM
 jeW
-hNo
+onB
 jop
 wcl
 xqY
@@ -179984,7 +179981,7 @@ rlO
 jJV
 syH
 fxs
-lDt
+uBA
 mJc
 kin
 juV
@@ -180241,7 +180238,7 @@ uGM
 dYS
 syH
 fxs
-uBA
+wyd
 wyd
 rks
 rks
@@ -180768,13 +180765,13 @@ jVw
 pnU
 sYU
 gNk
-gNk
+aNv
 gNk
 mFV
 gNk
 eqq
 tgU
-aNv
+gNk
 eSv
 wCn
 kGa
