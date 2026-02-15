@@ -92,7 +92,7 @@ SUBSYSTEM_DEF(server_maint)
 	var/server = CONFIG_GET(string/server)
 	for(var/client/C in GLOB.clients)
 		C?.tgui_panel?.send_roundrestart()
-		if(server && !GLOB.pop_splitting) //if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
+		if(server) //if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
 			C << link("byond://[server]")
 	var/datum/tgs_version/tgsversion = world.TgsVersion()
 	if(tgsversion)

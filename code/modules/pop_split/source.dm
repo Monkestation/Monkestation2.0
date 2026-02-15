@@ -68,6 +68,9 @@ GLOBAL_VAR(pop_split_target_lastroundid)
 		if(POP_SPLIT_SORT_LEAST_PLAYTIME)
 			sortTim(marked_clients, GLOBAL_PROC_REF(cmp_playtime_asc))
 
+	// TODO: make the divisor configurable or something. what if they want to split like.. by a certain amount? i dunno
+	marked_clients.len = floor(length(marked_clients) / 2)
+
 	GLOB.pop_split_marked = marked_clients
 	GLOB.pop_splitting = TRUE
 
@@ -93,13 +96,13 @@ GLOBAL_VAR(pop_split_target_lastroundid)
 		GLOB.pop_splitting = FALSE
 		message_admins(span_bolddanger("POP-SPLIT: Bailing out. (Target server did not return proper status)"))
 		log_game("POP-SPLIT: Bailing out. (Target server did not return proper status)")
-		return
+		return ..()
 
 	if(target_status["round_id"] == GLOB.pop_split_target_lastroundid)
 		GLOB.pop_splitting = FALSE
 		message_admins(span_bolddanger("POP-SPLIT: Bailing out. (Target server did not roll rounds as requested)"))
 		log_game("POP-SPLIT: Bailing out. (Target server did not roll rounds as requested)")
-		return
+		return ..()
 
 	if(CONFIG_GET(flag/pop_split_exclude_admins))
 		for(var/client/C in GLOB.pop_split_marked)
@@ -114,11 +117,3 @@ GLOBAL_VAR(pop_split_target_lastroundid)
 			C << link("byond://[target]")
 
 	return ..()
-
-
-
-
-
-
-// cmp_playtime_asc
-// cmp_playtime_dsc
