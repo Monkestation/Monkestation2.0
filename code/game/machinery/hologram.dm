@@ -51,6 +51,7 @@ Possible to do for anyone motivated enough:
 	light_power = 0.8
 	light_outer_range = 2
 	light_color = LIGHT_COLOR_BLUE
+	light_on = FALSE
 	/// associative lazylist of the form: list(owner of a hologram = hologram representing that owner).
 	var/list/masters
 	/// Holoray-owner link
