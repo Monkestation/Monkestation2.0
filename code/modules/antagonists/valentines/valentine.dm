@@ -89,6 +89,3 @@
 
 /datum/objective/protect/valentine/update_explanation_text()
 	explanation_text = "Protect [target.name], your date."
-
-/obj/item/paper/valentine/item_action_slot_check(slot, mob/user, datum/action/action)
-    return !!user.is_holding(src)
