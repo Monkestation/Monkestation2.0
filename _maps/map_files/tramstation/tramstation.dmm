@@ -9612,18 +9612,10 @@
 /turf/open/floor/wood,
 /area/station/command/meeting_room)
 "bVe" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/trimline/yellow/warning{
+/turf/open/floor/iron/dark/corner{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/incident_display/tram{
-	desc = "A display that indicates how many dents that'll need fixed after the shift is over.";
-	name = "darwin award counter";
-	pixel_x = 32
-	},
-/turf/open/floor/iron,
-/area/station/maintenance/port/central)
+/area/station/command/bridge)
 "bVs" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp/green,
@@ -49155,15 +49147,18 @@
 /turf/open/floor/catwalk_floor,
 /area/station/science/auxlab/firing_range)
 "onB" = (
-/obj/machinery/door/firedoor,
-/obj/structure/disposalpipe/segment,
-/obj/effect/turf_decal/stripes/white/full,
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 1
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/yellow/warning{
+	dir = 8
 	},
-/turf/open/floor/iron/dark,
-/area/station/medical/medbay/lobby)
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/incident_display/tram{
+	desc = "A display that indicates how many dents that'll need fixed after the shift is over.";
+	name = "darwin award counter";
+	pixel_x = 32
+	},
+/turf/open/floor/iron,
+/area/station/maintenance/port/central)
 "ook" = (
 /turf/closed/wall/r_wall,
 /area/station/hallway/primary/tram/left)
@@ -52695,6 +52690,16 @@
 /obj/item/book/bible,
 /turf/open/floor/carpet,
 /area/station/service/chapel/monastery)
+"pwx" = (
+/obj/machinery/door/firedoor,
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/stripes/white/full,
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/station/medical/medbay/lobby)
 "pwF" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 1
@@ -101322,7 +101327,7 @@ pZW
 hWa
 agP
 oRH
-bVe
+onB
 sUf
 sUf
 aqf
@@ -166082,7 +166087,7 @@ tkU
 qyZ
 qyZ
 mKv
-hhc
+bVe
 jkq
 mXN
 pHs
@@ -178953,7 +178958,7 @@ rZD
 jJV
 mTM
 jeW
-onB
+pwx
 jop
 wcl
 xqY
