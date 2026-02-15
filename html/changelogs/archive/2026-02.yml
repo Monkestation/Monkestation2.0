@@ -280,3 +280,14 @@
   notghosti:
   - map: Pubby morgue now has surgery tools
   - rscadd: Added slime and uncommon radio encryption keys
+2026-02-15:
+  Absolucy:
+  - bugfix: Being an oozeling with the Smoker quirk no longer makes you immune to
+      water vapor, or removes your ability to gain blood from plasma.
+  SirNightKnight:
+  - bugfix: fixed glasses poking out through envirosuit helmets.
+  - rscadd: added the CMO's formal shirt/skirt.
+  - bugfix: added the CMO's turtleneck skirt to the command drobe.
+  - bugfix: chameleon syndicate body armor can be locked with a multitool like other
+      chameleon clothing items.
+  - bugfix: fixed chameleon backpacks not being able to have their disguise locked.

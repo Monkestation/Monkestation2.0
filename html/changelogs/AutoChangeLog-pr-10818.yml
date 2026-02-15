@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - rscadd: "pAIs can now control PDAs they are inserted into."
