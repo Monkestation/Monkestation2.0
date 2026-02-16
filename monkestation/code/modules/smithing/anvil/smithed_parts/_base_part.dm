@@ -110,8 +110,10 @@
 	cost = 1
 
 /datum/export/smithed_part/get_cost(obj/item/smithed_part/O, apply_elastic)
-	var/obj/item/dummy = new O.made_of
-	var/datum/export_report/export = export_item_and_contents(dummy,dry_run = TRUE)
+	var/obj/item/dummy
+	if(ispath(O.made_of))
+		dummy = new O.made_of
+	var/datum/export_report/export = export_item_and_contents(dummy || O.made_of, dry_run = TRUE)
 	var/price = 0
 	for(var/x in export.total_amount)
 		price += export.total_value[x]
