@@ -87,7 +87,6 @@ GLOBAL_LIST_INIT(ai_core_display_screens, sort_list(list(
 	"House",
 	"Inverted",
 	"Matrix",
-	"Monkestation",
 	"Monochrome",
 	"Murica",
 	"Nanotrasen",
@@ -107,8 +106,14 @@ GLOBAL_LIST_INIT(ai_core_display_screens, sort_list(list(
 	"Too Deep",
 	"Triumvirate-M",
 	"Triumvirate",
-	"Weird",
-	"Randomgod", // monkestation addition
+	"Weird", // monkestation additions start below this line
+	"Monkestation",
+	"Facepunch",
+	"Kitty",
+	"Sus", 
+	"Marionette",
+	"Company",
+	"Randomgod", // why in gods green earth is AI core images stored in preferences?? who did this??? why???
 )))
 
 /// A form of resolve_ai_icon that is guaranteed to never sleep.

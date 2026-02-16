@@ -7463,7 +7463,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/central)
 "dIW" = (
-/obj/item/storage/secure/safe/caps_spare/directional/west,
+/obj/structure/secure_safe/caps_spare/directional/west,
 /obj/machinery/firealarm/directional/north,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain/private)
