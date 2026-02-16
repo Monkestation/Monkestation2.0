@@ -36203,6 +36203,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/bot,
+/obj/vehicle/sealed/mecha/ripley/paddy/preset,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/mechbay)
 "gUa" = (
