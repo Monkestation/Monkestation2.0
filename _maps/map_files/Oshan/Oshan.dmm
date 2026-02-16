@@ -1560,6 +1560,7 @@
 /obj/structure/chair/office,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted,
 /obj/machinery/light_switch/directional/east,
+/obj/effect/landmark/start/medical_doctor,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/office)
 "aBm" = (
@@ -14130,6 +14131,7 @@
 /obj/effect/turf_decal/trimline/blue/line{
 	dir = 1
 	},
+/obj/effect/landmark/start/medical_doctor,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/medbay/central)
 "eyp" = (
@@ -24604,6 +24606,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},
+/obj/effect/landmark/start/medical_doctor,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/treatment_center)
 "hPZ" = (
@@ -27478,6 +27481,7 @@
 	dir = 8
 	},
 /obj/machinery/camera/autoname/directional/west,
+/obj/effect/landmark/start/medical_doctor,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/office)
 "iPT" = (
@@ -38031,6 +38035,10 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark,
 /turf/open/floor/iron/dark/small,
 /area/station/engineering/atmospherics_engine)
+"meq" = (
+/obj/effect/landmark/start/chief_medical_officer,
+/turf/closed/wall/r_wall,
+/area/station/command/heads_quarters/cmo)
 "meu" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/cup/bottle/nutrient/rh{
@@ -40464,6 +40472,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 6
 	},
+/obj/effect/landmark/start/medical_doctor,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/surgery/aft)
 "mWk" = (
@@ -54171,6 +54180,7 @@
 /obj/effect/turf_decal/trimline/blue/corner{
 	dir = 4
 	},
+/obj/effect/landmark/start/medical_doctor,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/treatment_center)
 "rlW" = (
@@ -69245,6 +69255,10 @@
 	dir = 4
 	},
 /area/station/hallway/secondary/entry)
+"vZs" = (
+/obj/effect/landmark/start/paramedic,
+/turf/open/floor/iron/white/textured,
+/area/station/medical/storage)
 "vZv" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/dark_red/filled/line,
@@ -101447,7 +101461,7 @@ kjb
 bfx
 iXL
 cCI
-lTb
+meq
 aBy
 wil
 kjQ
@@ -107886,7 +107900,7 @@ joc
 yaE
 cCM
 eRf
-ehz
+vZs
 iTR
 gTr
 mog
