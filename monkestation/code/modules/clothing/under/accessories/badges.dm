@@ -89,6 +89,8 @@
 ///Sets the badge's identity to the name and description given to us.
 /obj/item/clothing/accessory/badge/proc/set_identity(mob/living/named_mob)
 	if(!ismob(named_mob))
+		//If we used a custom name of someone that exists, use their actual
+		//name to keep capitalization consistency.
 		var/found_name = findname(named_mob)
 		if(found_name)
 			named_mob = found_name
@@ -133,13 +135,25 @@
 		ACCESS_UNION,
 	)
 
-/obj/item/clothing/accessory/badge/cargo/equipped(mob/living/user, slot)
+/obj/item/clothing/accessory/badge/cargo/Initialize(mapload)
+	. = ..()
+	GLOB.cargo_union.printed_badges += src
+
+/obj/item/clothing/accessory/badge/cargo/Destroy()
+	GLOB.cargo_union.printed_badges -= src
+	return ..()
+
+/obj/item/clothing/accessory/badge/cargo/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
 	if(slot & (ITEM_SLOT_ICLOTHING|ITEM_SLOT_HANDS)) //ITEM_SLOT_NECK inv doesn't call dropped so we don't need to re-register.
 		RegisterSignal(user, COMSIG_MOB_RETRIEVE_ACCESS, PROC_REF(retrieve_access))
+		if(ishuman(user))
+			user.sec_hud_set_ID()
 
-/obj/item/clothing/accessory/badge/cargo/dropped(mob/living/user)
+/obj/item/clothing/accessory/badge/cargo/dropped(mob/living/carbon/human/user)
 	UnregisterSignal(user, COMSIG_MOB_RETRIEVE_ACCESS)
+	if(ishuman(user))
+		user.sec_hud_set_ID()
 	return ..()
 
 /obj/item/clothing/accessory/badge/cargo/proc/retrieve_access(datum/source, list/player_access)

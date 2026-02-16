@@ -1354,6 +1354,16 @@
 		/obj/item/stack/sheet/glass = 2,
 		/obj/item/stack/cable_coil = 5)
 
+/obj/item/circuitboard/machine/union_stand
+	name = "Union Stand"
+	greyscale_colors = CIRCUIT_COLOR_SUPPLY
+	build_path = /obj/machinery/union_stand
+	req_components = list(
+		/obj/item/stock_parts/matter_bin = 1,
+		/obj/item/stock_parts/manipulator = 1,
+		/obj/item/stock_parts/micro_laser = 2,
+	)
+
 /obj/item/circuitboard/machine/techfab/department/cargo
 	name = "\improper Departmental Techfab - Cargo"
 	greyscale_colors = CIRCUIT_COLOR_SUPPLY

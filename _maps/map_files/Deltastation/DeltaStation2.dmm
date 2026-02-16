@@ -18070,6 +18070,7 @@
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 1
 	},
+/obj/effect/landmark/cargo_mail_machine,
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "env" = (
@@ -88037,7 +88038,7 @@
 /turf/open/floor/carpet/blue,
 /area/station/commons/vacant_room/office)
 "uNy" = (
-/obj/machinery/computer/accounting{
+/obj/machinery/computer/accounting/hop{
 	dir = 4
 	},
 /turf/open/floor/wood,

@@ -113,6 +113,7 @@ GLOBAL_LIST_EMPTY(generic_event_spawns)
 /// These will take precedence over normal job spawnpoints if created,
 /// essentially allowing a user to override generic job spawnpoints with a specific one
 GLOBAL_LIST_EMPTY(jobspawn_overrides)
+GLOBAL_LIST_EMPTY(cargo_mail_machine_spawns)
 
 GLOBAL_LIST_EMPTY(wizardstart)
 GLOBAL_LIST_EMPTY(nukeop_start)

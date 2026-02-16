@@ -40391,7 +40391,7 @@
 "mwy" = (
 /obj/machinery/newscaster/directional/west,
 /obj/machinery/airalarm/directional/north,
-/obj/machinery/computer/accounting{
+/obj/machinery/computer/accounting/hop{
 	dir = 4
 	},
 /turf/open/floor/carpet/blue,
@@ -63443,6 +63443,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/loading_area,
+/obj/effect/landmark/cargo_mail_machine,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "tRw" = (
