@@ -678,6 +678,7 @@
 	var/static/list/chemfridge_typecache = typecacheof(list(
 					/obj/item/reagent_containers/syringe,
 					/obj/item/reagent_containers/cup/bottle,
+					/obj/item/reagent_containers/cup/tube,
 					/obj/item/reagent_containers/cup/beaker,
 					/obj/item/reagent_containers/spray,
 					/obj/item/reagent_containers/medigel,

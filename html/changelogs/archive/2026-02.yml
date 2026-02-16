@@ -297,10 +297,46 @@
   - bugfix: Safes have the proper icon now.
   SirNightKnight:
   - map: removed the ouroboros map.
+  - balance: all prefilled bottles containing 30 units are now filled with 50 units  so
+      they are at capacity. this includes all poisons.
+  - balance: removed singular pills from the spawning pool for the medical supplies
+      crate.
+  - balance: slightly increased the inventory of the nanomed plus and nanomed drug
+      vendors.
+  - balance: added formaldehyde bottles and neurine pills to the nanomed drug vendor.
+  - balance: added bruise packs and regenerative meshes to the nanomed plus.
+  - balance: emergency medical helmet does more brain damage when emagged.
+  - bugfix: fixed a bug where the emergency medical helmet forced the wearer to speak
+      when dead.
+  - qol: made the emergency medical helmet siren louder.
+  - qol: smart fridges can hold test tubes.
+  - balance: removed rescue hooks from the nanomed plus.
+  - qol: added an icon for holopads when there's an outgoing call.
+  - bugfix: fixed holopad lights getting stuck.
+  - rscadd: the old robot and repair drone icons are available as AI hologram choices.
+  - code_imp: updated custom vendor code to generate off vending machine types instead
+      of a pre-defined list.
   Siro:
   - code_imp: Complete refactor
+  Sorenon:
+  - rscadd: Added a low chance for players to fart upon violent collisions or just
+      after death, adding some gritty realism this codebase desperately craves
+  - rscadd: Updated the Loud Ass quirk to make players always fart upon violent collisions
+      or just after death.
   Tractor-Maam:
   - code_imp: NTNet relays never stop processing, making them more likely to Actually
       Get DDoSed Properly now.
+  flleeppyy:
+  - rscadd: Play-internet-sound-classic verb
   funkynuggets:
   - rscadd: 5 new AI core sprites.
+  mc-oofert, SirNightKnight:
+  - bugfix: gibtonite rigging works again (attaching assemblies to it so you can remotely
+      detonate it). rigging a gibtonite shortens the timer to 5 seconds from 10.
+  - balance: fixed the export price of all materials and lavaland items/loot.
+  - balance: getting hit by a gibtonite chunk knocks you over if it travelled more
+      than two tiles.
+  - balance: added more lavaland loot to the lavaland artifact export lists, moved
+      some items around so they are more valuable.
+  - balance: exporting lavaland loot/items is more lucrative.
+  - balance: gibtonite is more valuable the higher the quality is.

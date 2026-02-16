@@ -820,7 +820,9 @@
 				"floating face" = 'icons/mob/silicon/ai.dmi',
 				"xeno queen" = 'icons/mob/nonhuman-player/alien.dmi',
 				"horror" = 'icons/mob/silicon/ai.dmi',
-				"clock" = 'icons/mob/silicon/ai.dmi'
+				"clock" = 'icons/mob/silicon/ai.dmi',
+				"robot" = 'icons/mob/silicon/robots.dmi',
+				"drone" = 'icons/mob/silicon/drone.dmi',
 				)
 
 			input = tgui_input_list(usr, "Select a hologram", "Hologram", sort_list(icon_list))
@@ -832,6 +834,10 @@
 			switch(input)
 				if("xeno queen")
 					working_state = "alienq"
+				if("robot") //this really needs a refactor
+					working_state = "robot_old"
+				if("drone")
+					working_state = "drone_repair"
 				else
 					working_state = input
 			hologram_appearance = mutable_appearance(icon_list[input], working_state)
