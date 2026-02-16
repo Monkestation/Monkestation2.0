@@ -271,3 +271,36 @@
   - bugfix: interactor mechcomp can actually interact
   SirNightKnight:
   - bugfix: fixed hat stacking logic for plasmaman helmets being weird.
+2026-02-14:
+  PotatoTomahto:
+  - balance: meltdown nanite program ignores safety threshold when activating
+  Tractor-Maam:
+  - rscadd: the medical bandolier can now be crafted.
+  - rscadd: the medical bandolier now stacks items put inside.
+  notghosti:
+  - map: Pubby morgue now has surgery tools
+  - rscadd: Added slime and uncommon radio encryption keys
+2026-02-15:
+  Absolucy:
+  - bugfix: Being an oozeling with the Smoker quirk no longer makes you immune to
+      water vapor, or removes your ability to gain blood from plasma.
+  SirNightKnight:
+  - bugfix: fixed glasses poking out through envirosuit helmets.
+  - rscadd: added the CMO's formal shirt/skirt.
+  - bugfix: added the CMO's turtleneck skirt to the command drobe.
+  - bugfix: chameleon syndicate body armor can be locked with a multitool like other
+      chameleon clothing items.
+  - bugfix: fixed chameleon backpacks not being able to have their disguise locked.
+2026-02-16:
+  JohnFulpWillard:
+  - rscadd: pAIs can now control PDAs they are inserted into.
+  - bugfix: Safes have the proper icon now.
+  SirNightKnight:
+  - map: removed the ouroboros map.
+  Siro:
+  - code_imp: Complete refactor
+  Tractor-Maam:
+  - code_imp: NTNet relays never stop processing, making them more likely to Actually
+      Get DDoSed Properly now.
+  funkynuggets:
+  - rscadd: 5 new AI core sprites.
