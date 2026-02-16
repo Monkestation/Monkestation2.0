@@ -120,3 +120,6 @@
 	COOLDOWN_DECLARE(bleeding_message_cd)
 
 	var/next_smell = 0 /// Cooldown for the next smell
+
+	/// Timer used to make the carbon fart shortly after they die
+	var/death_fart_timerid

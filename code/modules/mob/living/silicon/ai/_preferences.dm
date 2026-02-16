@@ -38,6 +38,8 @@ GLOBAL_LIST_INIT(ai_hologram_icons, list(
 	AI_HOLOGRAM_RATVAR = 'icons/mob/silicon/ai.dmi',
 	AI_HOLOGRAM_SPIDER = 'icons/mob/simple/animal.dmi',
 	AI_HOLOGRAM_XENO = 'icons/mob/nonhuman-player/alien.dmi',
+	AI_HOLOGRAM_ROBOT = 'icons/mob/silicon/robots.dmi',
+	AI_HOLOGRAM_DRONE = 'icons/mob/silicon/drone.dmi',
 ))
 
 // New items need to also be added to ai_hologram_icons list
@@ -60,6 +62,8 @@ GLOBAL_LIST_INIT(ai_hologram_icon_state, list(
 	AI_HOLOGRAM_RATVAR = "clock",
 	AI_HOLOGRAM_SPIDER = "guard",
 	AI_HOLOGRAM_XENO = "alienq",
+	AI_HOLOGRAM_ROBOT = "robot_old",
+	AI_HOLOGRAM_DRONE = "drone_repair",
 ))
 
 
@@ -101,7 +105,7 @@ GLOBAL_LIST_INIT(ai_core_display_screens, sort_list(list(
 	"Steve",
 	"Syndicat Meow",
 	"TEC",
-	"Tenna", 
+	"Tenna",
 	"Text",
 	"Too Deep",
 	"Triumvirate-M",
