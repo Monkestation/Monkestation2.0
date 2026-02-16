@@ -7,7 +7,7 @@
 	dir = 4
 	},
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "aL" = (
@@ -19,7 +19,7 @@
 /obj/item/surgicaldrill,
 /obj/effect/turf_decal/tile/red/anticorner/contrasted,
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "ba" = (
@@ -28,7 +28,7 @@
 	dir = 8
 	},
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "bw" = (
@@ -38,7 +38,7 @@
 	dir = 4
 	},
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "cI" = (
@@ -48,14 +48,14 @@
 	dir = 4
 	},
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "cO" = (
 /obj/machinery/stasis,
 /obj/effect/turf_decal/tile/green/anticorner/contrasted,
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "cR" = (
@@ -63,7 +63,7 @@
 	dir = 4
 	},
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "cT" = (
@@ -73,7 +73,7 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "dx" = (
@@ -84,7 +84,7 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "dX" = (
@@ -95,7 +95,7 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "gp" = (
@@ -104,7 +104,7 @@
 	dir = 8
 	},
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "gr" = (
@@ -114,7 +114,7 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "hK" = (
@@ -128,7 +128,7 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "hQ" = (
@@ -139,13 +139,13 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "jr" = (
 /obj/effect/turf_decal/tile/blue,
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "kJ" = (
@@ -153,7 +153,7 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "lU" = (
@@ -163,7 +163,7 @@
 	dir = 8
 	},
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "nj" = (
@@ -172,7 +172,7 @@
 	dir = 4
 	},
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "pe" = (
@@ -182,7 +182,7 @@
 	},
 /obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "pY" = (
@@ -191,7 +191,7 @@
 	},
 /obj/effect/turf_decal/tile/red/half/contrasted,
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "qw" = (
@@ -199,7 +199,7 @@
 	dir = 8
 	},
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "qV" = (
@@ -208,7 +208,7 @@
 	dir = 8
 	},
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "qX" = (
@@ -218,12 +218,12 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "tI" = (
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "uj" = (
@@ -232,7 +232,7 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "wu" = (
@@ -241,7 +241,7 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "wV" = (
@@ -251,14 +251,14 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "xf" = (
 /obj/structure/table/optable,
 /obj/effect/turf_decal/tile/red/half/contrasted,
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "xz" = (
@@ -267,7 +267,7 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "yk" = (
@@ -279,7 +279,7 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "zd" = (
@@ -290,7 +290,7 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "Ac" = (
@@ -299,7 +299,7 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "An" = (
@@ -308,7 +308,7 @@
 	},
 /obj/effect/turf_decal/tile/red/half/contrasted,
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "BI" = (
@@ -317,14 +317,14 @@
 	dir = 4
 	},
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "BS" = (
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted,
 /obj/machinery/disease2/centrifuge,
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "BT" = (
@@ -334,7 +334,7 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "Ck" = (
@@ -343,7 +343,7 @@
 	dir = 8
 	},
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "Ct" = (
@@ -354,7 +354,7 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "CQ" = (
@@ -364,7 +364,7 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "DT" = (
@@ -372,7 +372,7 @@
 	dir = 8
 	},
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "DW" = (
@@ -380,7 +380,7 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "Ea" = (
@@ -392,7 +392,7 @@
 /obj/item/reagent_containers/cup/tube,
 /obj/item/reagent_containers/cup/tube,
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "Ga" = (
@@ -400,7 +400,7 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "GN" = (
@@ -409,21 +409,21 @@
 	},
 /obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "Ig" = (
 /obj/machinery/iv_drip,
 /obj/effect/turf_decal/tile/green/half/contrasted,
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "Ke" = (
 /obj/structure/window/spawner/directional/south,
 /obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "KD" = (
@@ -431,7 +431,7 @@
 	dir = 4
 	},
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "Lt" = (
@@ -439,7 +439,7 @@
 	dir = 4
 	},
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "LW" = (
@@ -451,7 +451,7 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "NV" = (
@@ -459,7 +459,7 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "PJ" = (
@@ -471,7 +471,7 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "Qu" = (
@@ -482,7 +482,7 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "RA" = (
@@ -494,7 +494,7 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "RJ" = (
@@ -504,7 +504,7 @@
 	dir = 8
 	},
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "Sb" = (
@@ -517,13 +517,13 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "Sj" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "Tt" = (
@@ -532,7 +532,7 @@
 	},
 /obj/effect/turf_decal/tile/green/half/contrasted,
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "TI" = (
@@ -540,7 +540,7 @@
 	dir = 4
 	},
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "WK" = (
@@ -551,7 +551,7 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "Xm" = (
@@ -559,14 +559,14 @@
 	dir = 8
 	},
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "XM" = (
 /obj/structure/window/spawner/directional/south,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted,
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "Zq" = (
@@ -578,7 +578,7 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 
