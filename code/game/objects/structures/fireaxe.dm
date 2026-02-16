@@ -92,9 +92,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 	switch(damage_type)
 		if(BRUTE)
 			if(broken)
-				playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 90, TRUE)
+				playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 90, TRUE)
 			else
-				playsound(loc, 'sound/effects/glasshit.ogg', 90, TRUE)
+				playsound(src, 'sound/effects/glasshit.ogg', 90, TRUE)
 		if(BURN)
 			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
 

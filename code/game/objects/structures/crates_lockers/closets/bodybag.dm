@@ -342,7 +342,7 @@
 			return
 	sinched = !sinched
 	if(sinched)
-		playsound(loc, sinch_sound, 15, TRUE, -2)
+		playsound(src, sinch_sound, 15, TRUE, -2)
 	user.visible_message(span_notice("[user] [sinched ? null : "un"]sinches [src]."),
 							span_notice("You [sinched ? null : "un"]sinch [src]."),
 							span_hear("You hear stretching followed by metal clicking from [src]."))

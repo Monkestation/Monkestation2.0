@@ -72,7 +72,7 @@
 
 		user.visible_message(span_notice("[user.name] adds cables to the APC frame."))
 		balloon_alert(user, "adding cables to the frame...")
-		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+		playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 
 		if(!do_after(user, 2 SECONDS, target = src))
 			return
@@ -102,7 +102,7 @@
 
 		user.visible_message(span_notice("[user.name] inserts the power control board into [src]."))
 		balloon_alert(user, "you start to insert the board...")
-		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+		playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 
 		if(!do_after(user, 1 SECONDS, target = src) || has_electronics)
 			return

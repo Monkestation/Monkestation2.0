@@ -691,14 +691,14 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		if("Welding Tool")
 			tool_behaviour = TOOL_WELDER
 
-	playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
+	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 
 /obj/item/abductor/alien_omnitool/attack_self_secondary(mob/user, modifiers) //ADD SFX FOR USING THE TOOL
 	if(!user)
 		return
 
 	set_toolset(user)
-	playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
+	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 
 /obj/item/abductor/alien_omnitool/proc/check_menu(mob/user)
 	if(!istype(user))

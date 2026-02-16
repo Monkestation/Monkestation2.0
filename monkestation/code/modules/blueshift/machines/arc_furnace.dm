@@ -118,7 +118,7 @@
 	if(operating)
 		return
 
-	playsound(loc, 'sound/machines/click.ogg', 15, TRUE, -3)
+	playsound(src, 'sound/machines/click.ogg', 15, TRUE, -3)
 
 	if(!length(contents))
 		return

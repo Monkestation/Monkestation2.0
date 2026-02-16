@@ -154,7 +154,7 @@
 		return
 	biomatter += round(biomatter_added * input_multiplier)
 	if(yucky)
-		playsound(loc, 'sound/machines/juicer.ogg', vol = 50, vary = TRUE)
+		playsound(src, 'sound/machines/juicer.ogg', vol = 50, vary = TRUE)
 		audible_message(span_hear("You hear a loud squelchy grinding sound."))
 	update_appearance()
 	flick("composter_animate", src)

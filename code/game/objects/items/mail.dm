@@ -109,7 +109,7 @@
 			var/tag = uppertext(GLOB.TAGGERLOCATIONS[destination_tag.currTag])
 			to_chat(user, span_notice("*[tag]*"))
 			sort_tag = destination_tag.currTag
-			playsound(loc, 'sound/machines/twobeep_high.ogg', 100, TRUE)
+			playsound(src, 'sound/machines/twobeep_high.ogg', 100, TRUE)
 
 /obj/item/mail/attack_self(mob/user)
 	if(recipient_ref)
@@ -127,7 +127,7 @@
 	if(contents.len)
 		user.put_in_hands(contents[1])
 	user.put_in_hands(new /obj/item/cargo/mail_token) // MONKESTATION EDIT
-	playsound(loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
+	playsound(src, 'sound/items/poster_ripped.ogg', 50, TRUE)
 	qdel(src)
 
 /obj/item/mail/examine_more(mob/user)

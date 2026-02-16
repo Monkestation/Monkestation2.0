@@ -301,7 +301,7 @@
 		var/volume = clamp(vol_by_damage() + 20, 0, 100)
 		if(suppressed)
 			volume = 5
-		playsound(loc, hitsound_wall, volume, TRUE, -1, mixer_channel = mixer_channel)
+		playsound(src, hitsound_wall, volume, TRUE, -1, mixer_channel = mixer_channel)
 
 	if(!isliving(target))
 		if(impact_effect_type && !hitscan)
@@ -359,12 +359,12 @@
 		if(def_zone)
 			organ_hit_text = " in \the [parse_zone(def_zone)]"
 		if(suppressed == SUPPRESSED_VERY)
-			playsound(loc, hitsound, 5, TRUE, -1, mixer_channel = mixer_channel)
+			playsound(src, hitsound, 5, TRUE, -1, mixer_channel = mixer_channel)
 		else if(suppressed)
-			playsound(loc, hitsound, 5, TRUE, -1, mixer_channel = mixer_channel)
+			playsound(src, hitsound, 5, TRUE, -1, mixer_channel = mixer_channel)
 			to_chat(living_target, span_userdanger("You're [grazing ? "grazed" : "hit"] by \a [generic_name || src][organ_hit_text]!"))
 		else
-			playsound(loc, hitsound, vol_by_damage(), TRUE, -1, mixer_channel = mixer_channel)
+			playsound(src, hitsound, vol_by_damage(), TRUE, -1, mixer_channel = mixer_channel)
 			living_target.visible_message(
 				span_danger("[living_target] is [grazing ? "grazed" : "hit"] by \a [generic_name || src][organ_hit_text]!"),
 				span_userdanger("You're [grazing ? "grazed" : "hit"] by \a [generic_name || src][organ_hit_text]!"),

@@ -147,9 +147,9 @@
 		if(BRUTE)
 			if(sound_effect)
 				if(damage_amount)
-					playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
+					playsound(src, 'sound/weapons/smash.ogg', 50, 1)
 				else
-					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
+					playsound(src, 'sound/weapons/tap.ogg', 50, 1)
 		if(BURN)
 			if(sound_effect)
 				playsound(src.loc, 'sound/items/welder.ogg', 100, 1)

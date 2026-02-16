@@ -58,7 +58,7 @@
 
 /// Plays a sound when the helmet is toggled
 /obj/item/clothing/suit/space/hardsuit/proc/on_helmet_toggle()
-	playsound(loc, 'sound/mecha/mechmove03.ogg', 50, TRUE)
+	playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE)
 
 /obj/item/clothing/suit/space/hardsuit/Destroy()
 	return ..()

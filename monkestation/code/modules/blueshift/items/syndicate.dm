@@ -125,7 +125,7 @@
 		attack_self(user)
 		return
 
-	playsound(loc, SFX_PUNCH, 25, TRUE, -1)
+	playsound(src, SFX_PUNCH, 25, TRUE, -1)
 
 	if(attacked_mob.stat == DEAD)
 		attacked_mob.visible_message(span_danger("[user] smacks [attacked_mob]'s lifeless corpse with [src]."), span_userdanger("[user] smacks your lifeless corpse with [src]."), span_hear("You hear smacking."))

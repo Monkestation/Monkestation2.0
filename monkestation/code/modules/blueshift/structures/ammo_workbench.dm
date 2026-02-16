@@ -373,7 +373,7 @@
 		loaded_magazine.update_appearance()
 		flick("ammobench_process", src)
 		use_energy(3 KW)
-		playsound(loc, 'sound/machines/piston_raise.ogg', 60, 1)
+		playsound(src, 'sound/machines/piston_raise.ogg', 60, 1)
 	else
 		qdel(new_casing)
 		ammo_fill_finish(FALSE)
@@ -392,9 +392,9 @@
 /obj/machinery/ammo_workbench/proc/ammo_fill_finish(successfully = TRUE)
 	SStgui.update_uis(src)
 	if(successfully)
-		playsound(loc, 'sound/machines/ping.ogg', 40, TRUE)
+		playsound(src, 'sound/machines/ping.ogg', 40, TRUE)
 	else
-		playsound(loc, 'sound/machines/buzz-sigh.ogg', 40, TRUE)
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 40, TRUE)
 	update_appearance()
 	busy = FALSE
 	if(timer_id)
@@ -545,7 +545,7 @@
 		flick("h_lathe_load", src)
 		update_appearance()
 		update_ammotypes()
-		playsound(loc, 'sound/weapons/autoguninsert.ogg', 35, 1)
+		playsound(src, 'sound/weapons/autoguninsert.ogg', 35, 1)
 		return TRUE
 	if(istype(O, /obj/item/disk/ammo_workbench))
 		if(!user.transferItemToLoc(O, src))
@@ -554,7 +554,7 @@
 		to_chat(user, span_notice("You insert [O] to into [src]'s floppydisk port."))
 		flick("h_lathe_load", src)
 		update_appearance()
-		playsound(loc, 'sound/machines/terminal_insert_disc.ogg', 35, 1)
+		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 35, 1)
 		return TRUE
 	return FALSE
 

@@ -124,7 +124,7 @@
 		return FALSE
 	to_chat(user, span_notice("You start unsecuring [name]..."))
 	if(tool.use_tool(src, user, 3 SECONDS, volume=50))
-		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+		playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 		to_chat(user, span_notice("You unsecure [name]."))
 		deconstruct()
 	return TRUE

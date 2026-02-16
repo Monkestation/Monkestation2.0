@@ -129,7 +129,7 @@
 			if(attacking_item.use_tool(src, user, 40))
 				to_chat(user, span_notice("You unsecure the button frame."))
 				transfer_fingerprints_to(new /obj/item/wallframe/button(get_turf(src)))
-				playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+				playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 				qdel(src)
 
 		update_appearance()

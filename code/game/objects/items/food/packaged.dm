@@ -140,7 +140,7 @@
 		span_nicegreen("You chow down on [src]."),
 		span_notice("You hear sloppy eating noises."))
 	SEND_SIGNAL(src, COMSIG_FOOD_CONSUMED, hungry_pet, dog_mom ? dog_mom : hungry_pet) //If there is no dog mom, we assume the pet fed itself.
-	playsound(loc, 'sound/items/eatfood.ogg', rand(30, 50), TRUE)
+	playsound(src, 'sound/items/eatfood.ogg', rand(30, 50), TRUE)
 	qdel(src)
 
 /obj/item/food/canned/squid_ink

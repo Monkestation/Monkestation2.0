@@ -91,7 +91,7 @@
 	dish_data[slot] = dish_datum
 
 	visible_message(span_notice("\The [user] adds \the [VD] to \the [src]."),span_notice("You add \the [VD] to \the [src]."))
-	playsound(loc, 'sound/machines/click.ogg', 50, 1)
+	playsound(src, 'sound/machines/click.ogg', 50, 1)
 	update_appearance()
 
 /obj/machinery/disease2/incubator/ui_act(action, params)
@@ -194,7 +194,7 @@
 			if(dish_datum == null)
 				continue
 
-			playsound(loc, 'sound/machines/click.ogg', 50, 1)
+			playsound(src, 'sound/machines/click.ogg', 50, 1)
 			dish_datum.dish.forceMove(loc)
 			update_appearance()
 			dish_data[i] = null

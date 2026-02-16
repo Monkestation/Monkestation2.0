@@ -140,7 +140,7 @@
 /obj/machinery/rnd/destructive_analyzer/proc/unload_item()
 	if(!loaded_item)
 		return FALSE
-	playsound(loc, 'sound/machines/terminal_insert_disc.ogg', 30, FALSE)
+	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 30, FALSE)
 	loaded_item.forceMove(drop_location())
 	loaded_item = null
 	update_appearance(UPDATE_ICON)

@@ -112,7 +112,7 @@
 		return
 	. = ..()
 	if(.)
-		playsound(loc, 'sound/effects/glassbr3.ogg', 100, TRUE)
+		playsound(src, 'sound/effects/glassbr3.ogg', 100, TRUE)
 		set_light(0)
 
 /obj/machinery/computer/emp_act(severity)

@@ -158,6 +158,6 @@
 	if((victim.body_position != STANDING_UP))
 		return
 	victim.Knockdown(20)
-	playsound(loc, 'sound/misc/slip.ogg', 15)
+	playsound(src, 'sound/misc/slip.ogg', 15)
 	victim.visible_message(span_danger("[victim] slips on [src]'s butter!"))
 

@@ -124,7 +124,7 @@
 			notify_volume = 75,
 		)
 
-	playsound(loc, 'sound/items/timer.ogg', 30, FALSE)
+	playsound(src, 'sound/items/timer.ogg', 30, FALSE)
 	sleep(delay * 0.25)
 	if(imp_in && !imp_in.stat)
 		imp_in.visible_message(span_warning("[imp_in] doubles over in pain!"))
@@ -132,7 +132,7 @@
 	for(var/index in 1 to 3) // Total of 4 bomb beeps, and we've already beeped once
 		//for extra spice
 		var/beep_volume = 30 + (5 * index)
-		playsound(loc, 'sound/items/timer.ogg', beep_volume, vary = FALSE)
+		playsound(src, 'sound/items/timer.ogg', beep_volume, vary = FALSE)
 		sleep(delay * 0.25)
 
 	explosion(src, devastation_range = explosion_devastate, heavy_impact_range = explosion_heavy, light_impact_range = explosion_light, flame_range = explosion_light, flash_range = explosion_light, explosion_cause = src)
@@ -187,7 +187,7 @@
 
 /obj/item/implant/fakemacro/proc/do_revive()
 	imp_in.visible_message(span_warning("[imp_in] starts beeping ominously!"))
-	playsound(loc, 'sound/items/timer.ogg', 30, FALSE)
+	playsound(src, 'sound/items/timer.ogg', 30, FALSE)
 	sleep(delay*0.25)
 	if(imp_in && !imp_in.stat)
 		imp_in.visible_message(span_warning("[imp_in] doubles over in pain!"))
@@ -208,7 +208,7 @@
 	//for extra spice
 	var/beep_volume = 35
 	for(var/i in 1 to 3)
-		playsound(loc, 'sound/items/timer.ogg', beep_volume, FALSE)
+		playsound(src, 'sound/items/timer.ogg', beep_volume, FALSE)
 		sleep(delay * 0.25)
 		beep_volume += 5
 	if(imp_in.getBruteLoss() <= 299)

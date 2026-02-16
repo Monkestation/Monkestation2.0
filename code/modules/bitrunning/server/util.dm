@@ -5,7 +5,7 @@
 /obj/machinery/quantum_server/proc/cool_off()
 	is_ready = TRUE
 	update_appearance()
-	playsound(loc, 'sound/machines/click.ogg', 30, TRUE) //MONKESTATION ADDITION
+	playsound(src, 'sound/machines/click.ogg', 30, TRUE) //MONKESTATION ADDITION
 	balloon_alert_to_viewers("Thermal systems within operational parameters. Proceeding to domain configuration.")
 	//radio.talk_into(src, "Thermal systems within operational parameters. Proceeding to domain configuration.", RADIO_CHANNEL_SUPPLY) MONKESTATION REMOVAL: prisoners don't have headsets atm, edit this if that's to change
 

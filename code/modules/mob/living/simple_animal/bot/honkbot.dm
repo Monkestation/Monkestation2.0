@@ -45,7 +45,7 @@
 /mob/living/simple_animal/bot/secbot/honkbot/knockOver(mob/living/carbon/tripped_target)
 	. = ..()
 	INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living/simple_animal/bot, speak), "Honk!")
-	playsound(loc, 'sound/misc/sadtrombone.ogg', 50, TRUE, -1)
+	playsound(src, 'sound/misc/sadtrombone.ogg', 50, TRUE, -1)
 	icon_state = "[initial(icon_state)]-c"
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_appearance)), 0.2 SECONDS)
 
@@ -140,7 +140,7 @@
 /mob/living/simple_animal/bot/secbot/honkbot/proc/bike_horn() // horn attack
 	if(limiting_spam)
 		return
-	playsound(loc, honksound, 50, TRUE, -1)
+	playsound(src, honksound, 50, TRUE, -1)
 	limiting_spam = TRUE // prevent spam
 	icon_state = "[initial(icon_state)]-c"
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_appearance)), 0.2 SECONDS)

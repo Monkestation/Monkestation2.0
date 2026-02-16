@@ -63,7 +63,7 @@
 		boulder.durability-- //One less durability to the processed boulder.
 		if(COOLDOWN_FINISHED(src, sound_cooldown))
 			COOLDOWN_START(src, sound_cooldown, 1.5 SECONDS)
-			playsound(loc, usage_sound, 29, FALSE, SHORT_RANGE_SOUND_EXTRARANGE) //This can get annoying. One play per process() call.
+			playsound(src, usage_sound, 29, FALSE, SHORT_RANGE_SOUND_EXTRARANGE) //This can get annoying. One play per process() call.
 		stop_processing_check = TRUE
 		if(boulder.durability <= 0)
 			export_clump(boulder) //Crack that bouwlder open!
@@ -84,7 +84,7 @@
 		dust.forceMove(get_step(src, dir))
 
 	qdel(shard)
-	playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	update_boulder_count()
 
 /obj/machinery/bouldertech/purification_chamber/proc/export_clump(obj/item/boulder/boulder)
@@ -105,7 +105,7 @@
 			artboulder.artifact_inside = null
 
 	qdel(boulder)
-	playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	update_boulder_count()
 
 /obj/machinery/bouldertech/purification_chamber/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)

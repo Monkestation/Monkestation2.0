@@ -177,7 +177,7 @@ Warning the icebox version is being overridden in monkestation/code/modules/mob/
 /mob/living/simple_animal/hostile/megafauna/wendigo/proc/try_teleport()
 	teleport(6)
 	if(WENDIGO_ENRAGED)
-		playsound(loc, 'sound/magic/clockwork/invoke_general.ogg', 100, TRUE)
+		playsound(src, 'sound/magic/clockwork/invoke_general.ogg', 100, TRUE)
 		for(var/shots in 1 to WENDIGO_SHOTGUN_SHOTCOUNT)
 			var/spread = shots * 10 - 30
 			var/turf/startloc = get_step(get_turf(src), get_dir(src, target))
@@ -207,7 +207,7 @@ Warning the icebox version is being overridden in monkestation/code/modules/mob/
 	can_move = FALSE
 	COOLDOWN_START(src, scream_cooldown, scream_cooldown_time)
 	SLEEP_CHECK_DEATH(5, src)
-	playsound(loc, 'sound/magic/demon_dies.ogg', 600, FALSE, 10)
+	playsound(src, 'sound/magic/demon_dies.ogg', 600, FALSE, 10)
 	var/pixel_shift = rand(5, 15)
 	animate(src, pixel_z = pixel_shift, time = 1, loop = 20, flags = ANIMATION_RELATIVE)
 	animate(pixel_z = -pixel_shift, time = 1, flags = ANIMATION_RELATIVE)

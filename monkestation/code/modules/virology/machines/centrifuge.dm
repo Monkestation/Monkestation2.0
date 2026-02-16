@@ -70,7 +70,7 @@
 		tubes[to_insert] = inserting_tube
 		tube_valid[to_insert] = tube_has_antibodies(inserting_tube)
 		visible_message(span_notice("\The [user] adds \the [inserting_tube] to \the [src]."),span_notice("You add \the [inserting_tube] to \the [src]."))
-		playsound(loc, 'sound/machines/click.ogg', 50, 1)
+		playsound(src, 'sound/machines/click.ogg', 50, 1)
 		user.transferItemToLoc(inserting_tube, loc)
 		inserting_tube.forceMove(src)
 		update_appearance()
@@ -198,7 +198,7 @@
 		for (var/i = 1 to tubes.len)
 			if(tubes[i])
 				var/obj/item/reagent_containers/cup/tube/tube = tubes[i]
-				playsound(loc, 'sound/machines/click.ogg', 50, 1)
+				playsound(src, 'sound/machines/click.ogg', 50, 1)
 				tube.forceMove(loc)
 				tubes[i] = null
 				tube_valid[i] = 0
@@ -325,7 +325,7 @@
 					tubes[i] = tube
 					tube_valid[i] = tube_has_antibodies(tube)
 					visible_message(span_notice("\The [user] adds \the [tube] to \the [src]."),span_notice("You add \the [tube] to \the [src]."))
-					playsound(loc, 'sound/machines/click.ogg', 50, 1)
+					playsound(src, 'sound/machines/click.ogg', 50, 1)
 					user.transferItemToLoc(tube, loc)
 					tube.forceMove(src)
 				else

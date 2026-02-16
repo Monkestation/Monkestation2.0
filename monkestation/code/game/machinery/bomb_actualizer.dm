@@ -170,21 +170,21 @@
 		return
 	if(!isnull(next_beep) && (next_beep <= world.time))
 
-		playsound(loc, beepsound, volume, FALSE)
+		playsound(src, beepsound, volume, FALSE)
 		next_beep = world.time +10
 	if(seconds_remaining() <= 60)
 		if(stage == 0)
 			radio.talk_into(src, "WARNING: DETONATION IN ONE MINUTE.", common_channel)
-			playsound(loc, scarywarning, volume, FALSE)
+			playsound(src, scarywarning, volume, FALSE)
 			stage++
 	if(seconds_remaining() <= 10)
 		if(stage == 1)
 			radio.talk_into(src, "FAILSAFE DISENGAGED, DETONATION IMMINENT", common_channel)
-			playsound(loc, verybadsound, 80, FALSE)
+			playsound(src, verybadsound, 80, FALSE)
 			stage++
 
 	if(active && (timer <= world.time))
-		playsound(loc, youdied, 100, FALSE, 45)
+		playsound(src, youdied, 100, FALSE, 45)
 		active = FALSE
 		stage = 0
 		update_appearance()

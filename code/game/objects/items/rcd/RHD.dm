@@ -108,7 +108,7 @@
 	upgrade |= design_disk.upgrade
 	if((design_disk.upgrade & RCD_UPGRADE_SILO_LINK) && !silo_mats)
 		silo_mats = AddComponent(/datum/component/remote_materials, FALSE, FALSE)
-	playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
+	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 	qdel(design_disk)
 
 /// Inserts matter into the RCD allowing it to build
@@ -127,7 +127,7 @@
 		if(ammo.ammoamt <= 0)
 			qdel(ammo)
 		matter += load
-		playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
+		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 		loaded = TRUE
 	else if(isstack(item))
 		loaded = loadwithsheets(item, user)
@@ -144,16 +144,16 @@
 		var/amount_to_use = min(the_stack.amount, maxsheets)
 		the_stack.use(amount_to_use)
 		matter += the_stack.matter_amount * amount_to_use
-		playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
+		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 		return TRUE
 	balloon_alert(user, "storage full!")
 	return FALSE
 
 /obj/item/construction/proc/activate()
-	playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 
 /obj/item/construction/attack_self(mob/user)
-	playsound(loc, 'sound/effects/pop.ogg', 50, FALSE)
+	playsound(src, 'sound/effects/pop.ogg', 50, FALSE)
 	if(prob(20))
 		spark_system.start()
 

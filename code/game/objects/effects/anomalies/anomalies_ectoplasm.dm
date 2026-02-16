@@ -154,7 +154,7 @@
 		playsound(src, pick(spooky_noises), 100)
 
 /obj/structure/ghost_portal/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
-	playsound(loc, 'sound/effects/empulse.ogg', 75, TRUE)
+	playsound(src, 'sound/effects/empulse.ogg', 75, TRUE)
 	if(prob(40))
 		playsound(src, pick(spooky_noises), 50)
 

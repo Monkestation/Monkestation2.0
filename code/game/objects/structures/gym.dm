@@ -33,7 +33,7 @@
 	if(.)
 		return
 	flick("[icon_state]-punch", src)
-	playsound(loc, pick(hit_sounds), 25, TRUE, -1)
+	playsound(src, pick(hit_sounds), 25, TRUE, -1)
 	if(isliving(user))
 		var/mob/living/L = user
 		L.add_mood_event("exercise", /datum/mood_event/exercise)

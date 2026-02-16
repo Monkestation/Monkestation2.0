@@ -200,7 +200,7 @@
 	sound = 'monkestation/sound/misc/spinal_laugh.ogg'
 
 /obj/effect/mine/sound/mineEffect(mob/victim)
-	playsound(loc, sound, 100, TRUE)
+	playsound(src, sound, 100, TRUE)
 
 
 /obj/effect/mine/sound/bwoink
@@ -266,7 +266,7 @@
 /// Deploys the mine and deletes itself
 /obj/item/minespawner/proc/deploy_mine()
 	do_alert_animation()
-	playsound(loc, 'sound/machines/chime.ogg', 30, FALSE, -3)
+	playsound(src, 'sound/machines/chime.ogg', 30, FALSE, -3)
 	var/obj/effect/mine/new_mine = new mine_type(get_turf(src))
 	visible_message(span_danger("\The [src] releases a puff of smoke, revealing \a [new_mine]!"))
 	var/obj/effect/particle_effect/fluid/smoke/poof = new (get_turf(src))

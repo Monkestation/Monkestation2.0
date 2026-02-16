@@ -99,7 +99,7 @@
 	add_fingerprint(user)
 	if(attacking_item.tool_behaviour == TOOL_CROWBAR)
 		to_chat(user, span_notice("You start to [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"]..."))
-		playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 50, TRUE)
+		playsound(src, 'sound/effects/stonedoor_openclose.ogg', 50, TRUE)
 		if(attacking_item.use_tool(src, user, 30))
 			user.visible_message(span_notice("[user] [cistern ? "replaces the lid on the cistern" : "lifts the lid off the cistern"]!"), span_notice("You [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"]!"), span_hear("You hear grinding porcelain."))
 			cistern = !cistern
@@ -218,7 +218,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 	if(..())
 		return TRUE
 	to_chat(user, span_notice("You start to [exposed ? "screw the cap back into place" : "unscrew the cap to the drain protector"]..."))
-	playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/stonedoor_openclose.ogg', 50, TRUE)
 	if(I.use_tool(src, user, 20))
 		user.visible_message(span_notice("[user] [exposed ? "screws the cap back into place" : "unscrew the cap to the drain protector"]!"),
 			span_notice("You [exposed ? "screw the cap back into place" : "unscrew the cap on the drain"]!"),
@@ -413,7 +413,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 		reagents.trans_to(O, 5, transfered_by = user)
 		begin_reclamation()
 		to_chat(user, span_notice("You wet [O] in [src]."))
-		playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
+		playsound(src, 'sound/effects/slosh.ogg', 25, TRUE)
 		return
 
 	if(O.tool_behaviour == TOOL_WRENCH && !(flags_1&NODECONSTRUCT_1))
@@ -657,7 +657,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 	if(istype(O, /obj/item/mop))
 		O.reagents.add_reagent(dispensedreagent, 5)
 		to_chat(user, span_notice("You wet [O] in [src]."))
-		playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
+		playsound(src, 'sound/effects/slosh.ogg', 25, TRUE)
 		return
 
 	if(istype(O, /obj/item/stack/medical/gauze))
@@ -790,7 +790,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 	. = ..()
 	if(.)
 		return
-	playsound(loc, 'sound/effects/curtain.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/curtain.ogg', 50, TRUE)
 	toggle()
 
 /obj/structure/curtain/deconstruct(disassembled = TRUE)
@@ -805,9 +805,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 			if(damage_amount)
 				playsound(src.loc, 'sound/weapons/slash.ogg', 80, TRUE)
 			else
-				playsound(loc, 'sound/weapons/tap.ogg', 50, TRUE)
+				playsound(src, 'sound/weapons/tap.ogg', 50, TRUE)
 		if(BURN)
-			playsound(loc, 'sound/items/welder.ogg', 80, TRUE)
+			playsound(src, 'sound/items/welder.ogg', 80, TRUE)
 
 /obj/structure/curtain/bounty
 	icon_type = "bounty"

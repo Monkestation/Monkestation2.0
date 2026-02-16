@@ -39,7 +39,7 @@
 				ignored_mobs = user,
 			)
 			to_chat(user, span_notice("You [response_help_simple] [src]."))
-			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
+			playsound(src, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 		return TRUE
 
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
@@ -57,7 +57,7 @@
 		ignored_mobs = user,
 	)
 	to_chat(user, span_danger("You [response_harm_simple] [src]!"))
-	playsound(loc, attacked_sound, 25, TRUE, -1)
+	playsound(src, attacked_sound, 25, TRUE, -1)
 	apply_damage(damage)
 	log_combat(user, src, "attacked")
 	updatehealth()
@@ -67,7 +67,7 @@
 	. = ..()
 	if(!.)
 		return
-	playsound(loc, SFX_PUNCH, 25, TRUE, -1)
+	playsound(src, SFX_PUNCH, 25, TRUE, -1)
 	visible_message(span_danger("[user] punches [src]!"), \
 					span_userdanger("You're punched by [user]!"), null, COMBAT_MESSAGE_RANGE, user)
 	to_chat(user, span_danger("You punch [src]!"))
@@ -83,7 +83,7 @@
 			visible_message(span_notice("[user.name] [response_help_continuous] [src]."), \
 							span_notice("[user.name] [response_help_continuous] you."), null, COMBAT_MESSAGE_RANGE, user)
 			to_chat(user, span_notice("You [response_help_simple] [src]."))
-			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
+			playsound(src, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 
 
 /mob/living/basic/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
@@ -91,7 +91,7 @@
 	if(!.)
 		return
 	if((istate & ISTATE_SECONDARY))
-		playsound(loc, 'sound/weapons/pierce.ogg', 25, TRUE, -1)
+		playsound(src, 'sound/weapons/pierce.ogg', 25, TRUE, -1)
 		visible_message(span_danger("[user] [response_disarm_continuous] [name]!"), \
 			span_userdanger("[user] [response_disarm_continuous] you!"), null, COMBAT_MESSAGE_RANGE, user)
 		to_chat(user, span_danger("You [response_disarm_simple] [name]!"))
@@ -101,7 +101,7 @@
 	visible_message(span_danger("[user] slashes at [src]!"), \
 		span_userdanger("You're slashed at by [user]!"), null, COMBAT_MESSAGE_RANGE, user)
 	to_chat(user, span_danger("You slash at [src]!"))
-	playsound(loc, 'sound/weapons/slice.ogg', 25, TRUE, -1)
+	playsound(src, 'sound/weapons/slice.ogg', 25, TRUE, -1)
 	apply_damage(damage)
 	log_combat(user, src, "attacked")
 

@@ -38,7 +38,7 @@
 	if(biological_sample.handle_growth(src))
 		if(!prob(10))
 			return
-		playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
+		playsound(src, 'sound/effects/slosh.ogg', 25, TRUE)
 		audible_message(pick(list(span_notice("[src] grumbles!"), span_notice("[src] makes a splashing noise!"), span_notice("[src] sloshes!"))))
 
 ///Handles the petri dish depositing into the vat.

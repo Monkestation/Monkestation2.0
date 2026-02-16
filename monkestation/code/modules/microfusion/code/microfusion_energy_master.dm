@@ -300,7 +300,7 @@
 		sleep(2.5 SECONDS)
 		if(user.is_holding(src))
 			user.visible_message(span_suicide("[user] melts [user.p_their()] face off with [src]!"))
-			playsound(loc, fire_sound, 50, TRUE, -1)
+			playsound(src, fire_sound, 50, TRUE, -1)
 			cell.use(microfusion_lens.e_cost + extra_power_usage)
 			update_appearance()
 			return(FIRELOSS)

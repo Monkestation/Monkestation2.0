@@ -13,7 +13,7 @@
 
 
 /obj/structure/artifact_forcefield/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
-	playsound(loc, 'sound/weapons/egloves.ogg', 80, TRUE)
+	playsound(src, 'sound/weapons/egloves.ogg', 80, TRUE)
 
 /datum/artifact_effect/forcegen
 	weight = ARTIFACT_UNCOMMON

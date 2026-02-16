@@ -48,7 +48,7 @@
 		dust.forceMove(get_step(src, dir))
 
 	qdel(clump)
-	playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	update_boulder_count()
 
 /obj/machinery/bouldertech/crusher/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)

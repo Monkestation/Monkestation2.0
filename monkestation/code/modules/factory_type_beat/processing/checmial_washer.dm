@@ -72,7 +72,7 @@
 	if(processed)
 		reagents.remove_all_type(/datum/reagent/water, water_per_use)
 
-		playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(src, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		update_boulder_count()
 
 /datum/component/plumbing/chemical_washer

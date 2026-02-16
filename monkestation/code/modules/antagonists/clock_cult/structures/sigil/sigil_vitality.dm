@@ -89,9 +89,9 @@
 		visible_message(span_clockred("[src] fails to siphon [affected_mob]'s spirit!"))
 		return
 
-	playsound(loc, 'sound/magic/clockwork/ratvar_attack.ogg', 40)
+	playsound(src, 'sound/magic/clockwork/ratvar_attack.ogg', 40)
 	if((affected_mob.stat == DEAD) || affected_mob.getMaxHealth() <= 0)
-		playsound(loc, 'sound/magic/exit_blood.ogg', 60)
+		playsound(src, 'sound/magic/exit_blood.ogg', 60)
 		to_chat(affected_mob, span_clockred("The last of your life is drained away..."))
 		check_special_role(affected_mob)
 		GLOB.clock_vitality = min(GLOB.clock_vitality + 40, MAX_CLOCK_VITALITY) // 100 (for clients) total in the ideal situation, since it'll take 6 pulses to go from full to crit

@@ -208,7 +208,7 @@
 	var/list/quips = list("Clang!", "Crack!", "Bang!", "Clunk!", "Clank!")
 	if(length(contents))
 		visible_message(span_notice("[pick(quips)] Something falls out of \the [src]!"))
-		playsound(loc, 'sound/effects/picaxe1.ogg', 60, FALSE, ignore_walls = FALSE)
+		playsound(src, 'sound/effects/picaxe1.ogg', 60, FALSE, ignore_walls = FALSE)
 		for(var/obj/item/content as anything in contents)
 			content.forceMove(get_turf(src))
 	qdel(src)

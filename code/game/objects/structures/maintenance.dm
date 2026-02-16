@@ -289,7 +289,7 @@ at the cost of risking a vicious bite.**/
 		balloon_alert(user, "must be off!")
 		return
 	if(tool.use_tool(src, user, 3 SECONDS))
-		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+		playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 		deconstruct()
 		return TRUE
 

@@ -735,7 +735,7 @@
 
 /obj/machinery/microwave/proc/muck()
 	wzhzhzh()
-	playsound(loc, 'sound/effects/splat.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
 	dirty_anim_playing = TRUE
 	update_appearance()
 	cook_loop(type = MICROWAVE_MUCK, cycles = 4)
@@ -857,7 +857,7 @@
 
 /obj/machinery/microwave/proc/open(autoclose = 2 SECONDS)
 	open = TRUE
-	playsound(loc, 'sound/machines/click.ogg', 15, TRUE, -3)
+	playsound(src, 'sound/machines/click.ogg', 15, TRUE, -3)
 	update_appearance()
 	addtimer(CALLBACK(src, PROC_REF(close)), autoclose)
 

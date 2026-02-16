@@ -88,7 +88,7 @@
 				volume = 10
 			else
 				volume = 5
-		playsound(loc, beepsound, volume, FALSE)
+		playsound(src, beepsound, volume, FALSE)
 		next_beep = world.time + 10
 
 	if(active && ((detonation_timer <= world.time) || explode_now))
@@ -227,7 +227,7 @@
 	countdown.start()
 	next_beep = world.time + 10
 	detonation_timer = world.time + (timer_set * 10)
-	playsound(loc, 'sound/machines/click.ogg', 30, TRUE)
+	playsound(src, 'sound/machines/click.ogg', 30, TRUE)
 	update_appearance()
 
 /obj/machinery/syndicatebomb/proc/settings(mob/user)
@@ -504,14 +504,14 @@
 				reactants += S.reagents
 
 	if(!chem_splash(get_turf(src), reagents, spread_range, reactants, temp_boost))
-		playsound(loc, 'sound/items/screwdriver2.ogg', 50, TRUE)
+		playsound(src, 'sound/items/screwdriver2.ogg', 50, TRUE)
 		return // The Explosion didn't do anything. No need to log, or disappear.
 
 	if(adminlog)
 		message_admins(adminlog)
 		log_game(adminlog)
 
-	playsound(loc, 'sound/effects/bamf.ogg', 75, TRUE, 5)
+	playsound(src, 'sound/effects/bamf.ogg', 75, TRUE, 5)
 
 /obj/item/bombcore/chemical/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(attacking_item.tool_behaviour == TOOL_CROWBAR && beakers.len > 0)

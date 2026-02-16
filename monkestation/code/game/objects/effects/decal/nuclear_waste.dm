@@ -46,7 +46,7 @@
 		continue
 */
 /obj/effect/landmark/nuclear_waste_spawner/proc/fire()
-	playsound(loc, 'sound/effects/footstep/gib_step.ogg', 100)
+	playsound(src, 'sound/effects/footstep/gib_step.ogg', 100)
 	new /obj/effect/decal/nuclear_waste/epicenter(get_turf(src))
 	for(var/turf/open/floor in orange(range, get_turf(src)))
 		if(prob(20)) //Scatter the sludge, don't smear it everywhere
@@ -66,7 +66,7 @@
 
 	if(isliving(AM))
 		var/mob/living/L = AM
-		playsound(loc, 'sound/effects/footstep/gib_step.ogg', HAS_TRAIT(L, TRAIT_LIGHT_STEP) ? 20 : 50, 1)
+		playsound(src, 'sound/effects/footstep/gib_step.ogg', HAS_TRAIT(L, TRAIT_LIGHT_STEP) ? 20 : 50, 1)
 	radiation_pulse(src, 500, 5) //MORE RADS
 
 /obj/effect/decal/nuclear_waste/attackby(obj/item/tool, mob/user)

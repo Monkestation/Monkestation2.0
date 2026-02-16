@@ -555,7 +555,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			gameover = TRUE
 			blocked = FALSE
 			temp = "<br><center><h3>[enemy_name] has fallen! Rejoice!<center><h3>"
-			playsound(loc, 'sound/arcade/win.ogg', 50, TRUE)
+			playsound(src, 'sound/arcade/win.ogg', 50, TRUE)
 
 			if(obj_flags & EMAGGED)
 				new /obj/effect/spawner/newbomb/plasma(loc, /obj/item/assembly/timer)
@@ -578,7 +578,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			timer_id = null
 		gameover = TRUE
 		temp = "<br><center><h3>You have been crushed! GAME OVER<center><h3>"
-		playsound(loc, 'sound/arcade/lose.ogg', 50, TRUE)
+		playsound(src, 'sound/arcade/lose.ogg', 50, TRUE)
 		xp_gained += 10//pity points
 		if(obj_flags & EMAGGED)
 			var/mob/living/living_user = user

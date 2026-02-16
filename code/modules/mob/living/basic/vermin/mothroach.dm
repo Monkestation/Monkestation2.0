@@ -55,14 +55,14 @@
 	if(src.stat == DEAD)
 		return
 	else
-		playsound(loc, 'sound/voice/moth/scream_moth.ogg', 50, TRUE)
+		playsound(src, 'sound/voice/moth/scream_moth.ogg', 50, TRUE)
 
 /mob/living/basic/mothroach/attackby(obj/item/attacking_item, mob/living/user, params)
 	. = ..()
 	if(src.stat == DEAD)
 		return
 	else
-		playsound(loc, 'sound/voice/moth/scream_moth.ogg', 50, TRUE)
+		playsound(src, 'sound/voice/moth/scream_moth.ogg', 50, TRUE)
 
 /datum/ai_controller/basic_controller/mothroach
 	blackboard = list()

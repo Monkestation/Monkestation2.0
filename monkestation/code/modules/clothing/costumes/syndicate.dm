@@ -71,7 +71,7 @@
 
 /obj/item/clothing/head/hats/tophat/syndicate/proc/explode(mob/living/carbon/human/user)
 	user.remove_filter(id)
-	playsound(loc, 'sound/items/timer.ogg', 30, FALSE)
+	playsound(src, 'sound/items/timer.ogg', 30, FALSE)
 	user.visible_message(span_userdanger("A bright flash eminates from under [user]'s hat!"))
 	log_game("[key_name(user)] has been gibbed by the removal of their [src]")
 	user.gib()
