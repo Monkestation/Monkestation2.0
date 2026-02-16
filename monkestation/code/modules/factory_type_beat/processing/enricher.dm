@@ -1,124 +1,100 @@
-/obj/machinery/bouldertech/enricher
+/obj/machinery/bouldertech/flatpack/enricher
 	name = "enrichment chamber"
-	desc = "Enriches boulders and dirty dust into dust which can then de smelted at a smelter for double the materials."
+	desc = "Enriches boulders and dirty dust into dust which can then be smelted at a smelter for double the materials."
 	icon_state = "enricher"
-	holds_minerals = TRUE
-	process_string = "Dirty Dust"
-	processable_materials = list(
-		/datum/material/iron,
-		/datum/material/titanium,
-		/datum/material/silver,
-		/datum/material/gold,
-		/datum/material/uranium,
-		/datum/material/mythril,
-		/datum/material/adamantine,
-		/datum/material/runite,
-		/datum/material/glass,
-		/datum/material/plasma,
-		/datum/material/diamond,
-		/datum/material/bluespace,
-		/datum/material/bananium,
-		/datum/material/plastic,
-	)
 
-/obj/machinery/bouldertech/enricher/process()
-	if(!anchored)
-		return PROCESS_KILL
-	var/stop_processing_check = FALSE
-	var/boulders_concurrent = boulders_processing_max ///How many boulders can we touch this process() call
-	for(var/obj/item/potential_boulder as anything in boulders_contained)
-		if(QDELETED(potential_boulder))
-			boulders_contained -= potential_boulder
-			break
-		if(boulders_concurrent <= 0)
-			break //Try again next time
+	machine = /obj/item/flatpacked_machine/ore_processing/enricher
+	refining_efficiency = 2
+	action = "enriching"
 
-		if(!istype(potential_boulder, /obj/item/boulder))
-			process_dirty_dust(potential_boulder)
-			continue
+/obj/machinery/bouldertech/flatpack/enricher/can_process_resource(obj/item/res, return_typecache = FALSE)
+	var/static/list/processable_resources
+	if(!length(processable_resources))
+		processable_resources = typecacheof(list(
+			/obj/item/boulder,
+			/obj/item/boulder/artifact,
+			/obj/item/processing/dirty_dust,
+			),
+			only_root_path = TRUE
+		)
+	return return_typecache ? processable_resources : is_type_in_typecache(res, processable_resources)
 
-		var/obj/item/boulder/boulder = potential_boulder
-		if(boulder.durability < 0)
-			CRASH("\The [src] had a boulder with negative durability!")
-		if(!check_for_processable_materials(boulder.custom_materials)) //Checks for any new materials we can process.
-			boulders_concurrent-- //We count skipped boulders
-			remove_boulder(boulder)
-			continue
-		boulders_concurrent--
-		boulder.durability-- //One less durability to the processed boulder.
-		if(COOLDOWN_FINISHED(src, sound_cooldown))
-			COOLDOWN_START(src, sound_cooldown, 1.5 SECONDS)
-			playsound(loc, usage_sound, 29, FALSE, SHORT_RANGE_SOUND_EXTRARANGE) //This can get annoying. One play per process() call.
-		stop_processing_check = TRUE
-		if(boulder.durability <= 0)
-			export_dust(boulder) //Crack that bouwlder open!
-			continue
-	if(!stop_processing_check)
-		playsound(src.loc, 'sound/machines/ping.ogg', 50, FALSE)
-		return PROCESS_KILL
+/obj/machinery/bouldertech/flatpack/enricher/check_processing_resource()
+	return TRUE
 
-/obj/machinery/bouldertech/enricher/proc/export_dust(obj/item/boulder/boulder)
-	for(var/datum/material/material as anything in boulder.custom_materials)
-		var/quantity = boulder.custom_materials[material]
-		for(var/i = 1 to 2)
-			var/obj/item/processing/refined_dust/dust = new(get_turf(src))
-			dust.custom_materials = list()
-			dust.custom_materials += material
-			dust.custom_materials[material] = quantity
-			dust.set_colors()
-			dust.forceMove(get_step(src, dir))
+/obj/machinery/bouldertech/flatpack/enricher/CanAllowThrough(atom/movable/mover, border_dir)
+	if(border_dir != turn_cardinal(src.dir, 90))
+		return FALSE
+	return ..()
 
-	if(istype(boulder, /obj/item/boulder/artifact)) // If we are breaking an artifact boulder drop the artifact before deletion.
-		var/obj/item/boulder/artifact/artboulder = boulder
-		if(artboulder.artifact_inside)
-			artboulder.artifact_inside.forceMove(drop_location())
-			artboulder.artifact_inside = null
+/obj/machinery/bouldertech/flatpack/enricher/breakdown_boulder(obj/item/boulder/chosen_boulder)
 
-	qdel(boulder)
-	playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	update_boulder_count()
+	if(QDELETED(chosen_boulder))
+		return FALSE
+	if(chosen_boulder.loc != src)
+		return FALSE
 
-/obj/machinery/bouldertech/enricher/proc/process_dirty_dust(obj/item/processing/dirty_dust/dirty_dust)
-	for(var/datum/material/material as anything in dirty_dust.custom_materials)
-		var/quantity = dirty_dust.custom_materials[material]
-		var/obj/item/processing/refined_dust/dust  = new(get_turf(src))
+	if(chosen_boulder.durability > 0)
+		chosen_boulder.durability -= 1
+		if(chosen_boulder.durability > 0)
+			return FALSE
+
+	//if boulders are kept inside because there is no space to eject them, then they could be reprocessed, lets avoid that
+	if(!chosen_boulder.processed_by)
+		check_for_boosts()
+		var/obj/item/processing/refined_dust/dust  = new(src)
 		dust.custom_materials = list()
-		dust.custom_materials += material
-		dust.custom_materials[material] = quantity
-		dust.set_colors()
-		dust.forceMove(get_step(src, dir))
-	qdel(dirty_dust)
-	playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	update_boulder_count()
+		for(var/datum/material/material as anything in chosen_boulder.custom_materials)
+			if(!can_process_material(material))
+				continue
+			var/quantity = chosen_boulder.custom_materials[material]
+			dust.custom_materials += material
+			dust.custom_materials[material] = quantity * refining_efficiency
+			chosen_boulder.custom_materials -= material
 
-/obj/machinery/bouldertech/enricher/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(holds_minerals && check_extras(attacking_item)) // Checking for extra items it can refine.
-		var/obj/item/processing/dirty_dust/dirty_dust = attacking_item
-		update_boulder_count()
-		if(!accept_boulder(dirty_dust))
-			balloon_alert_to_viewers("full!")
-			return
-		balloon_alert_to_viewers("accepted")
-		START_PROCESSING(SSmachines, src)
-		return TRUE
-	return ..()
+		if(!length(dust.custom_materials))
+			qdel(dust)
+		else
+			dust.set_colors()
+			src.remove_resource(dust)
 
-/obj/machinery/bouldertech/enricher/CanAllowThrough(atom/movable/mover, border_dir)
-	if(!anchored)
+		use_energy(active_power_usage)
+		if(!length(chosen_boulder.custom_materials))
+			chosen_boulder.break_apart()
+			return TRUE
+		chosen_boulder.processed_by = src
+	src.remove_resource(chosen_boulder)
+
+/obj/machinery/bouldertech/flatpack/enricher/breakdown_exotic(obj/item/chosen_exotic)
+
+	if(QDELETED(chosen_exotic))
 		return FALSE
-	if(boulders_contained.len >= boulders_held_max)
+	if(chosen_exotic.loc != src)
 		return FALSE
-	if(check_extras(mover))
-		return TRUE
-	return ..()
 
-/obj/machinery/bouldertech/enricher/return_extras()
-	var/list/boulders_contained = list()
-	for(var/obj/item/processing/dirty_dust/boulder in contents)
-		boulders_contained += boulder
-	return boulders_contained
+	if(istype(chosen_exotic, /obj/item/processing/dirty_dust))
+		var/obj/item/processing/exotic = chosen_exotic
+		if(!exotic.processed_by)
+			check_for_boosts()
+			for(var/datum/material/material as anything in exotic.custom_materials)
+				if(!can_process_material(material))
+					continue
+				var/quantity = exotic.custom_materials[material]
+				var/obj/item/processing/refined_dust/dust  = new(src)
+				dust.custom_materials = list()
+				dust.custom_materials += material
+				dust.custom_materials[material] = quantity
+				exotic.custom_materials -= material
 
-/obj/machinery/bouldertech/enricher/check_extras(obj/item/item)
-	if(istype(item, /obj/item/processing/dirty_dust))
-		return TRUE
-	return FALSE
+				if(!length(dust.custom_materials))
+					qdel(dust)
+				else
+					dust.set_colors()
+					src.remove_resource(dust)
+			use_energy(active_power_usage)
+			if(!length(exotic.custom_materials))
+				qdel(exotic)
+				return TRUE
+			exotic.processed_by = src
+			exotic.set_colors()
+		src.remove_resource(chosen_exotic)

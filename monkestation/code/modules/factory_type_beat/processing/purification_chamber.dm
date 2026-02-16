@@ -1,171 +1,150 @@
 #define REQUIRED_OXYGEN_MOLES 25
-/obj/machinery/bouldertech/purification_chamber
+
+/obj/machinery/bouldertech/flatpack/purification_chamber
 	name = "purification chamber"
-	desc = "Uses a large amount of oxygen to purify ore boulders and shards into ore clumps. The high temperature oxygen rich process burns away impurities."
+	desc = "Uses a large amount of oxygen to purify ore boulders and shards into ore clumps. The high temperature oxygen rich process burns away impurities but they still need to be crushed."
 	icon_state = "purification_chamber"
-	holds_minerals = TRUE
-	process_string = "Ore Shards, Oxygen"
-	processable_materials = list(
-		/datum/material/iron,
-		/datum/material/titanium,
-		/datum/material/silver,
-		/datum/material/gold,
-		/datum/material/uranium,
-		/datum/material/mythril,
-		/datum/material/adamantine,
-		/datum/material/runite,
-		/datum/material/glass,
-		/datum/material/plasma,
-		/datum/material/diamond,
-		/datum/material/bluespace,
-		/datum/material/bananium,
-		/datum/material/plastic,
-	)
 
-	var/oxygen_moles = 0
+	refining_efficiency = 3
+	machine = /obj/item/flatpacked_machine/ore_processing/purification_chamber
 	var/obj/machinery/portable_atmospherics/purification_input/oxygen_input
+	usage_sound = 'sound/machines/mining/smelter.ogg'
+	action = "baking"
 
-/obj/machinery/bouldertech/purification_chamber/process()
-	if(!anchored)
-		return PROCESS_KILL
+/obj/machinery/bouldertech/flatpack/purification_chamber/Destroy()
+	disconnect(TRUE)
+	return ..()
 
+/obj/machinery/bouldertech/flatpack/purification_chamber/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(. == CONTEXTUAL_SCREENTIP_SET && !panel_open && anchored)
+		if(isnull(oxygen_input))
+			context[SCREENTIP_CONTEXT_ALT_LMB] = "Deploy oxygen pump"
+		else
+			context[SCREENTIP_CONTEXT_ALT_LMB] = "Disconnect oxygen pump"
+
+/obj/machinery/bouldertech/flatpack/purification_chamber/click_alt(mob/living/user)
+	. = ..()
+	if(panel_open)
+		return CLICK_ACTION_BLOCKING
+	if(oxygen_input)
+		disconnect(FALSE)
+
+	var/list/options = list()
+	switch(dir)
+		if(NORTH, SOUTH)
+			options = list("North", "South")
+		if(EAST, WEST)
+			options = list("East", "West")
+
+	var/side = text2dir(tgui_input_list(user, "Choose a side to try and deploy the pump on", "[name]", options))
+	if(!side)
+		return CLICK_ACTION_BLOCKING
+
+	if(!(locate(/obj/machinery/atmospherics/components/unary/portables_connector) in get_step(src, side)))
+		balloon_alert_to_viewers("anchored connector port required")
+		return CLICK_ACTION_BLOCKING
+
+	oxygen_input = new(get_step(src, side))
+	var/obj/machinery/atmospherics/components/unary/portables_connector/possible_port = \
+	locate(/obj/machinery/atmospherics/components/unary/portables_connector) in oxygen_input.loc
+	if(!oxygen_input.connect(possible_port))
+		QDEL_NULL(oxygen_input)
+		return CLICK_ACTION_BLOCKING
+	RegisterSignal(oxygen_input, COMSIG_QDELETING, PROC_REF(disconnect))
+	return CLICK_ACTION_SUCCESS
+
+/obj/machinery/bouldertech/flatpack/purification_chamber/wrench_act(mob/living/user, obj/item/tool)
+	if(default_unfasten_wrench(user, tool, time = 1.5 SECONDS) == SUCCESSFUL_UNFASTEN)
+		if(anchored)
+			begin_processing()
+		else
+			src.disconnect(FALSE)
+			end_processing()
+		update_appearance(UPDATE_ICON_STATE)
+		return ITEM_INTERACT_SUCCESS
+	return
+
+/obj/machinery/bouldertech/flatpack/purification_chamber/can_process_resource(obj/item/res, return_typecache = FALSE)
+	var/static/list/processable_resources
+	if(!length(processable_resources))
+		processable_resources = typecacheof(list(
+				/obj/item/boulder,
+				/obj/item/boulder/artifact,
+				/obj/item/processing/shards,
+				/datum/gas/oxygen,
+			),
+			only_root_path = TRUE
+		)
+	return return_typecache ? processable_resources : is_type_in_typecache(res, processable_resources)
+
+/obj/machinery/bouldertech/flatpack/purification_chamber/check_processing_resource()
+	var/oxygen_moles = 0
 	if(oxygen_input)
 		oxygen_input.air_contents.assert_gas(/datum/gas/oxygen, oxygen_input.air_contents)
 		oxygen_moles = oxygen_input.air_contents.gases[/datum/gas/oxygen][MOLES]
-
-	if(oxygen_moles < REQUIRED_OXYGEN_MOLES)
-		return
-
-	var/stop_processing_check = FALSE
-	var/boulders_concurrent = boulders_processing_max ///How many boulders can we touch this process() call
-	for(var/obj/item/potential_boulder as anything in boulders_contained)
-		if(oxygen_input)
-			oxygen_input.air_contents.remove_specific(/datum/gas/oxygen, REQUIRED_OXYGEN_MOLES)
-
-		if(QDELETED(potential_boulder))
-			boulders_contained -= potential_boulder
-			break
-		if(boulders_concurrent <= 0)
-			break //Try again next time
-
-		if(!istype(potential_boulder, /obj/item/boulder))
-			process_shard(potential_boulder)
-			continue
-
-		var/obj/item/boulder/boulder = potential_boulder
-		if(boulder.durability < 0)
-			CRASH("\The [src] had a boulder with negative durability!")
-		if(!check_for_processable_materials(boulder.custom_materials)) //Checks for any new materials we can process.
-			boulders_concurrent-- //We count skipped boulders
-			remove_boulder(boulder)
-			continue
-		boulders_concurrent--
-		boulder.durability-- //One less durability to the processed boulder.
-		if(COOLDOWN_FINISHED(src, sound_cooldown))
-			COOLDOWN_START(src, sound_cooldown, 1.5 SECONDS)
-			playsound(loc, usage_sound, 29, FALSE, SHORT_RANGE_SOUND_EXTRARANGE) //This can get annoying. One play per process() call.
-		stop_processing_check = TRUE
-		if(boulder.durability <= 0)
-			export_clump(boulder) //Crack that bouwlder open!
-			continue
-	if(!stop_processing_check)
-		playsound(src.loc, 'sound/machines/ping.ogg', 50, FALSE)
-		return PROCESS_KILL
-
-
-/obj/machinery/bouldertech/purification_chamber/proc/process_shard(obj/item/processing/shards/shard)
-	for(var/datum/material/material as anything in shard.custom_materials)
-		var/quantity = shard.custom_materials[material]
-		var/obj/item/processing/clumps/dust = new(get_turf(src))
-		dust.custom_materials = list()
-		dust.custom_materials += material
-		dust.custom_materials[material] = quantity
-		dust.set_colors()
-		dust.forceMove(get_step(src, dir))
-
-	qdel(shard)
-	playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	update_boulder_count()
-
-/obj/machinery/bouldertech/purification_chamber/proc/export_clump(obj/item/boulder/boulder)
-	for(var/datum/material/material as anything in boulder.custom_materials)
-		var/quantity = boulder.custom_materials[material]
-		for(var/i = 1 to 3)
-			var/obj/item/processing/clumps/dust = new(get_turf(src))
-			dust.custom_materials = list()
-			dust.custom_materials += material
-			dust.custom_materials[material] = quantity
-			dust.set_colors()
-			dust.forceMove(get_step(src, dir))
-
-	if(istype(boulder, /obj/item/boulder/artifact)) // If we are breaking an artifact boulder, drop the artifact before deletion.
-		var/obj/item/boulder/artifact/artboulder = boulder
-		if(artboulder.artifact_inside)
-			artboulder.artifact_inside.forceMove(drop_location())
-			artboulder.artifact_inside = null
-
-	qdel(boulder)
-	playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	update_boulder_count()
-
-/obj/machinery/bouldertech/purification_chamber/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(attacking_item.tool_behaviour == TOOL_MULTITOOL)
-		if(oxygen_input)
-			oxygen_input.disconnect()
-			QDEL_NULL(oxygen_input)
-
-		var/side = tgui_input_list(user, "Choose a side to try and deploy the tank on", "[name]", list("North", "South"))
-		if(!side)
-			return CLICK_ACTION_BLOCKING
-
-		var/direction = NORTH
-		if(side == "South")
-			direction = SOUTH
-
-		if(!(locate(/obj/machinery/atmospherics/components/unary/portables_connector) in get_step(src, direction)))
-			return CLICK_ACTION_BLOCKING
-
-		oxygen_input = new(get_step(src, direction))
-		var/obj/machinery/atmospherics/components/unary/portables_connector/possible_port = locate(/obj/machinery/atmospherics/components/unary/portables_connector) in oxygen_input.loc
-		if(!oxygen_input.connect(possible_port))
-			QDEL_NULL(oxygen_input)
-		return CLICK_ACTION_SUCCESS
-
-	if(holds_minerals && check_extras(attacking_item)) // Checking for extra items it can refine.
-		var/obj/item/processing/shards/my_dust = attacking_item
-		update_boulder_count()
-		if(!accept_boulder(my_dust))
-			balloon_alert_to_viewers("full!")
-			return
-		balloon_alert_to_viewers("accepted")
-		START_PROCESSING(SSmachines, src)
-		return TRUE
-	return ..()
-
-/obj/machinery/bouldertech/purification_chamber/CanAllowThrough(atom/movable/mover, border_dir)
-	if(!anchored)
-		return FALSE
-	if(boulders_contained.len >= boulders_held_max)
-		return FALSE
-	if(check_extras(mover))
-		return TRUE
-	return ..()
-
-/obj/machinery/bouldertech/purification_chamber/return_extras()
-	var/list/boulders_contained = list()
-	for(var/obj/item/processing/shards/boulder in contents)
-		boulders_contained += boulder
-	return boulders_contained
-
-/obj/machinery/bouldertech/purification_chamber/check_extras(obj/item/item)
-	if(istype(item, /obj/item/processing/shards))
-		return TRUE
+		if(oxygen_moles >= REQUIRED_OXYGEN_MOLES)
+			return TRUE
+		if(prob(60))
+			balloon_alert_to_viewers("Not enough oxygen in connected pump!")
 	return FALSE
+
+/obj/machinery/bouldertech/flatpack/purification_chamber/CanAllowThrough(atom/movable/mover, border_dir)
+	if(border_dir != turn_cardinal(src.dir, 90))
+		return FALSE
+	return ..()
+
+/obj/machinery/bouldertech/flatpack/purification_chamber/proc/disconnect(destroyed = FALSE)
+	if(!QDELETED(oxygen_input))
+		UnregisterSignal(oxygen_input, COMSIG_QDELETING)
+		oxygen_input.disconnect(destroyed)
+		QDEL_NULL(oxygen_input)
+	else
+		oxygen_input = null
+
+/obj/machinery/bouldertech/flatpack/purification_chamber/breakdown_boulder(obj/item/boulder/chosen_boulder)
+	if(QDELETED(chosen_boulder))
+		return FALSE
+	if(chosen_boulder.loc != src)
+		return FALSE
+
+	if(chosen_boulder.durability > 0)
+		chosen_boulder.durability -= 1
+		if(chosen_boulder.durability > 0)
+			return FALSE
+
+	//if boulders are kept inside because there is no space to eject them, then they could be reprocessed, lets avoid that
+	if(!chosen_boulder.processed_by)
+		check_for_boosts()
+		var/obj/item/processing/clumps/clump  = new(src)
+		clump.custom_materials = list()
+		for(var/datum/material/material as anything in chosen_boulder.custom_materials)
+			if(!can_process_material(material))
+				continue
+			var/quantity = chosen_boulder.custom_materials[material]
+			clump.custom_materials += material
+			clump.custom_materials[material] = quantity * refining_efficiency
+			chosen_boulder.custom_materials -= material
+
+		if(!length(clump.custom_materials))
+			qdel(clump)
+		else
+			clump.set_colors()
+			src.remove_resource(clump)
+
+		use_energy(active_power_usage)
+		oxygen_input.air_contents.remove_specific(/datum/gas/oxygen, REQUIRED_OXYGEN_MOLES)
+		if(!length(chosen_boulder.custom_materials))
+			chosen_boulder.break_apart()
+			return TRUE
+		chosen_boulder.processed_by = src
+	src.remove_resource(chosen_boulder)
 
 #undef REQUIRED_OXYGEN_MOLES
 
 /obj/machinery/portable_atmospherics/purification_input
-	name = "external purification oxygen tank"
+	name = "external purification oxygen pump"
+	desc = "Pumps pure oxygen into the purification chamber. Can take oxygen tanks but an atmospherics network is recommended."
 	icon = 'monkestation/code/modules/factory_type_beat/icons/mining_machines.dmi'
 	icon_state = "air_pump"
 	pressure_resistance = 7 * ONE_ATMOSPHERE
@@ -175,6 +154,8 @@
 	integrity_failure = 0.4
 	armor_type = /datum/armor/portable_atmospherics_canister
 
+/obj/machinery/portable_atmospherics/purification_input/wrench_act(mob/living/user, obj/item/tool)
+	return FALSE
 
 /obj/machinery/portable_atmospherics/purification_input/Initialize(mapload)
 	. = ..()

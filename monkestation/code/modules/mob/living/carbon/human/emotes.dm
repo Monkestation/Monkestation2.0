@@ -2,7 +2,7 @@
 	key = "assinhale"
 	key_third_person = "inhales through their ass"
 
-	var/sounds = list(
+	var/list/sounds = list(
 		'monkestation/sound/effects/fart_reverse1.ogg',
 		'monkestation/sound/effects/fart_reverse2.ogg',
 		'monkestation/sound/effects/fart_reverse3.ogg',
@@ -36,7 +36,7 @@
 
 /datum/emote/living/carbon/human/superfart
 	key = "superfart"
-	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE | EMOTE_HAS_VISUAL
 
 /datum/emote/living/carbon/human/superfart/run_emote(mob/user, params, type_override, intentional)
 	. = ..()

@@ -37,11 +37,29 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	//Direction -> if we have a conveyor belt in that direction
 	var/list/neighbors
 
-/obj/machinery/conveyor/Initialize(mapload)
-	. = ..()
+// create a conveyor
+/obj/machinery/conveyor/Initialize(mapload, new_dir, new_id)
+	. =..()
+	if(new_dir)
+		setDir(new_dir)
+	if(new_id)
+		id = new_id
+	neighbors = list()
+	///Leaving onto conveyor detection won't work at this point, but that's alright since it's an optimization anyway
+	///Should be fine without it
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_EXITED = PROC_REF(conveyable_exit),
+		COMSIG_ATOM_ENTERED = PROC_REF(conveyable_enter),
+		COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON = PROC_REF(conveyable_enter)
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+	update_move_direction()
+	LAZYADD(GLOB.conveyors_by_id[id], src)
+
 	AddElement(/datum/element/footstep_override, priority = STEP_SOUND_CONVEYOR_PRIORITY)
 	var/static/list/give_turf_traits = list(TRAIT_TURF_IGNORE_SLOWDOWN)
 	AddElement(/datum/element/give_turf_traits, give_turf_traits)
+	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/conveyor/examine(mob/user)
 	. = ..()
@@ -80,26 +98,6 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 /obj/machinery/conveyor/auto/inverted
 	icon_state = "conveyor_map_inverted"
 	flipped = TRUE
-
-// create a conveyor
-/obj/machinery/conveyor/Initialize(mapload, new_dir, new_id)
-	..()
-	if(new_dir)
-		setDir(new_dir)
-	if(new_id)
-		id = new_id
-	neighbors = list()
-	///Leaving onto conveyor detection won't work at this point, but that's alright since it's an optimization anyway
-	///Should be fine without it
-	var/static/list/loc_connections = list(
-		COMSIG_ATOM_EXITED = PROC_REF(conveyable_exit),
-		COMSIG_ATOM_ENTERED = PROC_REF(conveyable_enter),
-		COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON = PROC_REF(conveyable_enter)
-	)
-	AddElement(/datum/element/connect_loc, loc_connections)
-	update_move_direction()
-	LAZYADD(GLOB.conveyors_by_id[id], src)
-	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/conveyor/LateInitialize(mapload_arg)
 	. = ..()
@@ -443,8 +441,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 
 /obj/machinery/conveyor_switch/crowbar_act(mob/user, obj/item/tool)
 	tool.play_tool_sound(src, 50)
-	var/obj/item/conveyor_switch_construct/switch_construct = new/obj/item/conveyor_switch_construct(src.loc)
-	switch_construct.id = id
+	var/obj/item/conveyor_switch_construct/switch_construct = new/obj/item/conveyor_switch_construct(src.loc, id)
 	transfer_fingerprints_to(switch_construct)
 	to_chat(user, span_notice("You detach [src]."))
 	qdel(src)
@@ -488,14 +485,15 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	// ID of the switch-in-the-making, to link conveyor belts to it.
 	var/id = ""
 
-/obj/item/conveyor_switch_construct/Initialize(mapload)
+/obj/item/conveyor_switch_construct/Initialize(mapload, newid)
 	. = ..()
-	id = "[rand()]" //this couldn't possibly go wrong
+	id = newid ? newid : "[rand()]" //this couldn't possibly go wrong
 
 /obj/item/conveyor_switch_construct/attack_self(mob/user)
 	for(var/obj/item/stack/conveyor/belt in view())
 		belt.id = id
 	to_chat(user, span_notice("You have linked all nearby conveyor belt assemblies to this switch."))
+	return TRUE
 
 /obj/item/conveyor_switch_construct/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!isfloorturf(interacting_with))
@@ -513,6 +511,14 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	transfer_fingerprints_to(built_switch)
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
+
+/obj/item/conveyor_switch_construct/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	. = ..()
+	if(istype(attacking_item, /obj/item/conveyor_switch_construct))
+		to_chat(user, span_notice("You configure the switches to have the same signal for conveyor belts."))
+		var/obj/item/conveyor_switch_construct/switch_construct = attacking_item
+		id = switch_construct.id
+		return TRUE
 
 /obj/item/stack/conveyor
 	name = "conveyor belt assembly"
@@ -533,7 +539,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 /obj/item/stack/conveyor/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!isfloorturf(interacting_with))
 		return NONE
-	var/belt_dir = get_dir(interacting_with, user)
+	var/belt_dir = get_dir(user, interacting_with)
 	if(interacting_with == user.loc)
 		to_chat(user, span_warning("You cannot place a conveyor belt under yourself!"))
 		return ITEM_INTERACT_BLOCKING
@@ -542,12 +548,13 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	use(1)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/stack/conveyor/attackby(obj/item/item_used, mob/user, params)
-	..()
+/obj/item/stack/conveyor/attackby(obj/item/item_used, mob/user, list/modifiers, list/attack_modifiers)
+	. = ..()
 	if(istype(item_used, /obj/item/conveyor_switch_construct))
 		to_chat(user, span_notice("You link the switch to the conveyor belt assembly."))
 		var/obj/item/conveyor_switch_construct/switch_construct = item_used
 		id = switch_construct.id
+		return TRUE
 
 /obj/item/stack/conveyor/update_weight()
 	return FALSE

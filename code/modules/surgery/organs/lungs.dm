@@ -954,6 +954,14 @@
 		var/plasma_pp = breath.get_breath_partial_pressure(breath.gases[/datum/gas/plasma][MOLES])
 		breather_slime.blood_volume += (0.2 * plasma_pp) // 10/s when breathing literally nothing but plasma, which will suffocate you.
 
+/obj/item/organ/internal/lungs/slime/slime_smoker
+	name = "smoker vacuole"
+	desc = "A large organelle designed to store oxygen and other important gasses. It loosk discolored, from smoking a lot."
+	icon_state = "lungs_smoker"
+
+	maxHealth = SMOKER_ORGAN_HEALTH
+	healing_factor = SMOKER_LUNG_HEALING
+
 /obj/item/organ/internal/lungs/oni
 	name = "oni lungs"
 	desc = "The lungs of an oni, resistant to heat and able to produce small amounts of flame to be expelled through the mouth."
