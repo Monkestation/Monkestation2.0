@@ -330,7 +330,7 @@
 
 /obj/structure/flatpack_cart/attack_hand(mob/user, list/modifiers)
 	. = ..()
-	if(.)
+	if(. || !length(contents))
 		return
 	user.put_in_hands(contents[length(contents)]) //topmost box
 	update_appearance(UPDATE_OVERLAYS)
