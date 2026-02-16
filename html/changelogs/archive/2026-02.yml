@@ -291,3 +291,16 @@
   - bugfix: chameleon syndicate body armor can be locked with a multitool like other
       chameleon clothing items.
   - bugfix: fixed chameleon backpacks not being able to have their disguise locked.
+2026-02-16:
+  JohnFulpWillard:
+  - rscadd: pAIs can now control PDAs they are inserted into.
+  - bugfix: Safes have the proper icon now.
+  SirNightKnight:
+  - map: removed the ouroboros map.
+  Siro:
+  - code_imp: Complete refactor
+  Tractor-Maam:
+  - code_imp: NTNet relays never stop processing, making them more likely to Actually
+      Get DDoSed Properly now.
+  funkynuggets:
+  - rscadd: 5 new AI core sprites.
