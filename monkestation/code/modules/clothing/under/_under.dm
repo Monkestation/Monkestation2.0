@@ -26,7 +26,7 @@
 	RegisterSignal(accessory, COMSIG_QDELETING, PROC_REF(refresh_armor))
 	refresh_armor()
 
-/obj/item/clothing/under/remove_accessory(obj/item/clothing/accessory/removed)
+/obj/item/clothing/under/remove_accessory(obj/item/clothing/accessory/removed, popped = FALSE)
 	. = ..()
 	UnregisterSignal(removed, COMSIG_QDELETING)
 	refresh_armor()

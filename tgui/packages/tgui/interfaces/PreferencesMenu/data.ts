@@ -1,6 +1,6 @@
-import { BooleanLike } from 'common/react';
-import { sendAct } from '../../backend';
-import { Gender } from './preferences/gender';
+import type { BooleanLike } from 'common/react';
+import type { sendAct } from '../../backend';
+import type { Gender } from './preferences/gender';
 
 export enum Food {
   Alcohol = 'ALCOHOL',

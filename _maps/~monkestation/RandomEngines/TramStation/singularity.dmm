@@ -212,7 +212,7 @@
 /obj/machinery/airalarm/directional/west,
 /obj/machinery/light/directional/south,
 /obj/structure/cable,
-/obj/machinery/power/smes/engineering,
+/obj/machinery/power/smes/engineering/emp_proof,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "wX" = (

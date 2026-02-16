@@ -8042,6 +8042,7 @@
 /obj/item/clothing/gloves/latex/nitrile,
 /obj/item/clothing/gloves/latex/nitrile,
 /obj/item/clothing/gloves/latex/nitrile,
+/obj/item/storage/toolbox/electrical/medical,
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/storage)
 "cuq" = (
@@ -19550,11 +19551,11 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
-/obj/structure/noticeboard/directional/east,
 /obj/machinery/camera/directional/east{
 	c_tag = "Detective's Office";
 	name = "detective camera"
 	},
+/obj/machinery/newscaster/directional/east,
 /turf/open/floor/wood,
 /area/station/security/detectives_office)
 "gdW" = (
@@ -22323,7 +22324,7 @@
 "gWH" = (
 /obj/machinery/suit_storage_unit/hos,
 /obj/effect/turf_decal/delivery,
-/obj/item/storage/secure/safe/hos{
+/obj/structure/secure_safe/hos{
 	pixel_x = 36;
 	pixel_y = 28
 	},
@@ -34142,7 +34143,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
 "kyT" = (
-/obj/machinery/vending/wardrobe/engi_wardrobe,
+/obj/machinery/vending/access/engi_wardrobe,
 /obj/effect/turf_decal/bot,
 /obj/machinery/camera/directional/north{
 	c_tag = "Engineering Lockers";
@@ -39857,6 +39858,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
+/obj/item/flatpack,
 /turf/open/floor/iron,
 /area/station/engineering/storage_shared)
 "mmF" = (
@@ -48188,7 +48190,7 @@
 /obj/structure/table,
 /obj/item/healthanalyzer,
 /obj/item/hand_labeler,
-/obj/item/storage/secure/safe/caps_spare/directional/north,
+/obj/structure/secure_safe/caps_spare/directional/north,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 1
 	},
@@ -53060,6 +53062,12 @@
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
 /area/station/solars/starboard/fore)
+"qzj" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/flatpack,
+/turf/open/floor/iron,
+/area/station/cargo/storage)
 "qzv" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/holopad,
@@ -57310,7 +57318,7 @@
 /area/station/ai_monitored/command/storage/satellite)
 "rRx" = (
 /obj/machinery/computer/records/medical,
-/obj/machinery/newscaster/directional/north,
+/obj/structure/detectiveboard/directional/north,
 /turf/open/floor/wood,
 /area/station/security/detectives_office)
 "rRz" = (
@@ -68189,7 +68197,7 @@
 	},
 /obj/machinery/light/directional/east,
 /obj/item/lighter,
-/obj/item/storage/secure/safe/directional/east,
+/obj/structure/secure_safe/directional/east,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
 	},
@@ -71761,6 +71769,7 @@
 /obj/effect/turf_decal/siding/purple,
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/turf_decal/tile/purple/half/contrasted,
+/obj/item/flatpack,
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/lab)
 "wrc" = (
@@ -117018,7 +117027,7 @@ baS
 eQD
 tNj
 owA
-baS
+qzj
 mlH
 rpF
 tbK

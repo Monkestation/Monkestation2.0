@@ -66,6 +66,8 @@ Warning the icebox version is being overridden in monkestation/code/modules/mob/
 	var/can_move = TRUE
 	/// Time before the wendigo can scream again
 	var/scream_cooldown_time = 10 SECONDS
+	/// Should it create the portal? Special cases use this like ore_vents.
+	var/make_portal = TRUE //MONKESTATION EDIT
 	/// Stores the last scream time so it doesn't spam it
 	COOLDOWN_DECLARE(scream_cooldown)
 

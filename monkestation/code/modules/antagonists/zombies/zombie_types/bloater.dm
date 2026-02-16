@@ -52,7 +52,7 @@
 		infection = infectee.get_organ_slot(ORGAN_SLOT_ZOMBIE)
 		if(!infection)
 			infection = new()
-			infection.Insert(infectee)
+			infection.Follow_Insert(infectee, ORGAN_SLOT_BRAIN)
 
 		infects++
 

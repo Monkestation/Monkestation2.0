@@ -599,7 +599,6 @@
 	var/static/list/banned_ztraits = list(
 		ZTRAIT_AWAY,
 		ZTRAIT_CENTCOM,
-		ZTRAIT_ECLIPSE,
 		ZTRAIT_REEBE,
 		ZTRAIT_RESERVED,
 	)

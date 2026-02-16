@@ -1786,7 +1786,7 @@
 "aEP" = (
 /obj/machinery/light_switch/directional/east,
 /obj/structure/dresser,
-/obj/item/storage/secure/safe/directional/north,
+/obj/structure/secure_safe/directional/north,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain/private)
 "aEW" = (
@@ -8176,6 +8176,13 @@
 "cXW" = (
 /turf/open/floor/carpet/green,
 /area/station/maintenance/port/aft)
+"cYa" = (
+/obj/machinery/plumbing/ooze_sucker{
+	mapping_id = "pen3";
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/station/science/xenobiology)
 "cYc" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
@@ -8404,10 +8411,10 @@
 /turf/open/floor/iron,
 /area/station/security/office)
 "dbj" = (
-/obj/machinery/airalarm/directional/east,
 /obj/machinery/computer/records/security{
 	dir = 8
 	},
+/obj/structure/detectiveboard/directional/east,
 /turf/open/floor/carpet,
 /area/station/security/detectives_office)
 "dbk" = (
@@ -9454,6 +9461,13 @@
 "duI" = (
 /turf/closed/wall,
 /area/station/command/bridge)
+"duZ" = (
+/obj/machinery/plumbing/ooze_sucker{
+	mapping_id = "pen2";
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/station/science/xenobiology)
 "dvh" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
@@ -13350,10 +13364,7 @@
 	name = "Containment Pen #6";
 	req_access = list("xenobiology")
 	},
-/obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "pen2";
-	dir = 8
-	},
+/obj/machinery/duct,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "ePu" = (
@@ -16050,7 +16061,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/range)
 "fOn" = (
-/obj/item/storage/secure/safe/directional/north,
+/obj/structure/secure_safe/directional/north,
 /obj/machinery/camera/directional/north{
 	c_tag = "Chief Engineer's Office"
 	},
@@ -16496,7 +16507,7 @@
 /area/station/service/kitchen)
 "fWE" = (
 /obj/structure/table/wood/fancy/green,
-/obj/item/storage/secure/safe/directional/north,
+/obj/structure/secure_safe/directional/north,
 /obj/item/flashlight/lamp/green{
 	pixel_x = 5;
 	pixel_y = 16
@@ -16762,7 +16773,7 @@
 /turf/closed/wall,
 /area/station/security/courtroom)
 "gaX" = (
-/obj/item/storage/secure/safe/hos{
+/obj/structure/secure_safe/hos{
 	pixel_x = 36;
 	pixel_y = 28
 	},
@@ -16886,7 +16897,7 @@
 	},
 /obj/machinery/light/directional/west,
 /obj/structure/table/glass,
-/obj/item/storage/secure/safe/caps_spare/directional/west,
+/obj/structure/secure_safe/caps_spare/directional/west,
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 8
 	},
@@ -17194,10 +17205,7 @@
 	name = "Containment Pen #5";
 	req_access = list("xenobiology")
 	},
-/obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "pen3";
-	dir = 8
-	},
+/obj/machinery/duct,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "gjF" = (
@@ -18723,6 +18731,7 @@
 	},
 /obj/item/stock_parts/matter_bin,
 /obj/item/stock_parts/micro_laser,
+/obj/item/flatpack,
 /turf/open/floor/iron,
 /area/station/science/lab)
 "gLZ" = (
@@ -22260,10 +22269,7 @@
 	name = "Containment Pen #8";
 	req_access = list("xenobiology")
 	},
-/obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "pen1";
-	dir = 4
-	},
+/obj/machinery/duct,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "hVE" = (
@@ -23330,10 +23336,7 @@
 	name = "Containment Pen #3";
 	req_access = list("xenobiology")
 	},
-/obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "pen5";
-	dir = 8
-	},
+/obj/machinery/duct,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "imV" = (
@@ -27947,6 +27950,7 @@
 "jLf" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/firealarm/directional/north,
+/obj/item/flatpack,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "jLg" = (
@@ -28333,6 +28337,7 @@
 	},
 /obj/structure/table/reinforced,
 /obj/effect/spawner/random/trash/food_packaging,
+/obj/item/flatpack,
 /turf/open/floor/iron/dark/corner{
 	dir = 1
 	},
@@ -29799,7 +29804,7 @@
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/testlab)
 "krP" = (
-/obj/item/storage/secure/safe/directional/south,
+/obj/structure/secure_safe/directional/south,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
@@ -32643,7 +32648,7 @@
 /obj/machinery/camera/directional/north{
 	c_tag = "Security - Evidence Storage"
 	},
-/obj/item/storage/secure/safe/directional/north{
+/obj/structure/secure_safe/directional/north{
 	name = "evidence safe"
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -34505,6 +34510,13 @@
 /obj/effect/mapping_helpers/mail_sorting/science/ordnance,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/aft/lesser)
+"lYv" = (
+/obj/machinery/plumbing/ooze_sucker{
+	mapping_id = "pen1";
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/station/science/xenobiology)
 "lYx" = (
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
@@ -41855,7 +41867,7 @@
 /area/station/maintenance/port/fore)
 "ovz" = (
 /obj/structure/table/wood,
-/obj/item/storage/secure/safe/directional/east,
+/obj/structure/secure_safe/directional/east,
 /obj/machinery/computer/security/wooden_tv{
 	pixel_x = 3;
 	pixel_y = 2
@@ -44555,10 +44567,7 @@
 	name = "Containment Pen #1";
 	req_access = list("xenobiology")
 	},
-/obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "pen7";
-	dir = 4
-	},
+/obj/machinery/duct,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "psV" = (
@@ -47672,10 +47681,7 @@
 	name = "Containment Pen #4";
 	req_access = list("xenobiology")
 	},
-/obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "pen4";
-	dir = 8
-	},
+/obj/machinery/duct,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "qvZ" = (
@@ -49415,6 +49421,13 @@
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/storage)
+"raX" = (
+/obj/machinery/plumbing/ooze_sucker{
+	mapping_id = "pen5";
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/station/science/xenobiology)
 "rbs" = (
 /obj/structure/cable,
 /obj/structure/table,
@@ -55219,6 +55232,13 @@
 /obj/effect/mapping_helpers/airlock/access/any/medical/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
+"tbo" = (
+/obj/machinery/plumbing/ooze_sucker{
+	mapping_id = "pen7";
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/station/science/xenobiology)
 "tbp" = (
 /obj/effect/turf_decal/tile/purple/fourcorners,
 /obj/machinery/door/airlock/command/glass{
@@ -56704,7 +56724,7 @@
 	pixel_x = 2;
 	pixel_y = 3
 	},
-/obj/item/storage/secure/safe/directional/east,
+/obj/structure/secure_safe/directional/east,
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp/green{
 	pixel_x = -12;
@@ -59114,7 +59134,7 @@
 /turf/open/floor/carpet,
 /area/station/medical/pathology)
 "uuU" = (
-/obj/item/storage/secure/safe/directional/north{
+/obj/structure/secure_safe/directional/north{
 	name = "armory safe A"
 	},
 /obj/structure/rack,
@@ -59587,6 +59607,13 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/lockers)
+"uCc" = (
+/obj/machinery/plumbing/ooze_sucker{
+	mapping_id = "pen4";
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/station/science/xenobiology)
 "uCq" = (
 /obj/structure/closet/firecloset,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -61602,6 +61629,7 @@
 /obj/item/clothing/gloves/latex/nitrile,
 /obj/item/clothing/gloves/latex/nitrile,
 /obj/item/wrench/medical,
+/obj/item/storage/toolbox/electrical/medical,
 /turf/open/floor/iron/dark,
 /area/station/medical/storage)
 "vot" = (
@@ -65787,7 +65815,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/office)
 "wOB" = (
-/obj/machinery/vending/wardrobe/engi_wardrobe,
+/obj/machinery/vending/access/engi_wardrobe,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/station/engineering/main)
@@ -65868,6 +65896,7 @@
 /area/station/command/gateway)
 "wPi" = (
 /obj/machinery/vending/wardrobe/det_wardrobe,
+/obj/machinery/airalarm/directional/east,
 /turf/open/floor/carpet/grimey,
 /area/station/security/detectives_office)
 "wPo" = (
@@ -113721,7 +113750,7 @@ aaa
 aaa
 cXP
 mtu
-mtu
+tbo
 mtu
 jfS
 bQQ
@@ -113735,7 +113764,7 @@ mJQ
 ces
 elm
 mtu
-mtu
+lYv
 mtu
 cXP
 aaa
@@ -118090,7 +118119,7 @@ wrc
 oyj
 xiL
 mtu
-mtu
+raX
 vHm
 shY
 qvQ
@@ -118104,7 +118133,7 @@ shY
 gjv
 aft
 xCA
-mtu
+duZ
 mtu
 xiL
 lmn
@@ -118350,7 +118379,7 @@ rTi
 iXS
 vHm
 xCA
-mtu
+uCc
 vHm
 fHs
 ycv
@@ -118358,7 +118387,7 @@ pbB
 kCw
 gRY
 xCA
-mtu
+cYa
 vHm
 xCA
 iXS

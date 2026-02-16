@@ -1,18 +1,18 @@
 import { sortBy, sortStrings } from 'common/collections';
-import { BooleanLike, classes } from 'common/react';
-import { ComponentType, createElement, ReactNode } from 'react';
-import { sendAct, useBackend, useLocalState } from '../../../../backend';
+import { type BooleanLike, classes } from 'common/react';
+import { type ComponentType, createElement, type ReactNode } from 'react';
+import { type sendAct, useBackend, useLocalState } from '../../../../backend';
 import {
   Box,
   Button,
   Dropdown,
+  Flex,
   Input,
   NumberInput,
   Stack,
-  Flex,
   Tooltip,
 } from '../../../../components';
-import { createSetPreference, PreferencesMenuData } from '../../data';
+import { createSetPreference, type PreferencesMenuData } from '../../data';
 import { ServerPreferencesFetcher } from '../../ServerPreferencesFetcher';
 import features from '.';
 
@@ -99,6 +99,7 @@ export const TextInput = (props: FeatureValueProps<string, string>) => {
   return (
     <Input
       value={props.value}
+      expensive
       onChange={(newValue) => props.handleSetValue(newValue)}
       width="100%"
     />
@@ -269,7 +270,7 @@ export const FeatureIconnedDropdownInput = (
     Object.entries(textNames).map(([choice, textName]) => {
       let element: ReactNode = textName;
 
-      if (icons && icons[choice]) {
+      if (icons?.[choice]) {
         const icon = icons[choice];
         element = (
           <Stack>
@@ -392,7 +393,7 @@ export const FeatureValueInput = (props: {
         return createElement(feature.component, {
           act: props.act,
           featureId: props.featureId,
-          serverData: serverData && serverData[props.featureId],
+          serverData: serverData?.[props.featureId],
           shrink: props.shrink,
 
           handleSetValue: changeValue,
@@ -417,6 +418,7 @@ export const FeatureShortTextInput = (
   return (
     <Input
       width="100%"
+      expensive
       value={props.value}
       maxLength={props.serverData.maximum_length}
       onChange={(value) => props.handleSetValue(value)}

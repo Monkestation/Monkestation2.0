@@ -1,17 +1,17 @@
 import { filter, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { toFixed } from 'common/math';
-import { BooleanLike } from 'common/react';
+import type { BooleanLike } from 'common/react';
 import { multiline } from 'common/string';
 import { useBackend } from '../backend';
 import {
+  Box,
   Button,
   Divider,
+  LabeledList,
   NumberInput,
   ProgressBar,
   Section,
-  Box,
-  LabeledList,
   Stack,
 } from '../components';
 import { getGasColor } from '../constants';
@@ -104,7 +104,7 @@ export const BluespaceSender = (props) => {
             </>
           }
         >
-          <Box>{'The vendors have made ' + credits + ' credits so far.'}</Box>
+          <Box>{`The vendors have made ${credits} credits so far.`}</Box>
           <Divider />
           <LabeledList>
             {gases.map((gas, index) => (
@@ -153,7 +153,7 @@ const GasDisplay = (props: GasDisplayProps) => {
           />
         </Stack.Item>
         <Stack.Item color="label" grow={2}>
-          {toFixed(amount, 2) + ' moles'}
+          {`${toFixed(amount, 2)} moles`}
         </Stack.Item>
       </Stack>
     </LabeledList.Item>

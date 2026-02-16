@@ -198,14 +198,11 @@
 	if(issilicon(user))
 		return NONE
 
-	if(RemoveID(user))
+	if(remove_id(user))
 		return CLICK_ACTION_SUCCESS
 
 	if(istype(inserted_pai)) // Remove pAI
-		user.put_in_hands(inserted_pai)
-		balloon_alert(user, "removed pAI")
-		inserted_pai = null
-		update_appearance(UPDATE_ICON)
+		remove_pai(user)
 		return CLICK_ACTION_SUCCESS
 
 	for(var/datum/computer_file/files as anything in stored_files)
@@ -259,13 +256,13 @@
 	return TRUE
 
 /**
- * InsertID
+ * insert_id
  * Attempt to insert the ID in either card slot.
  * Args:
  * inserting_id - the ID being inserted
  * user - The person inserting the ID
  */
-/obj/item/modular_computer/InsertID(obj/item/card/inserting_id, mob/user)
+/obj/item/modular_computer/insert_id(obj/item/card/inserting_id, mob/user)
 	//all slots taken
 	if(computer_id_slot)
 		return FALSE
@@ -292,7 +289,7 @@
  * Args:
  * user - The mob trying to remove the ID, if there is one
  */
-/obj/item/modular_computer/RemoveID(mob/user)
+/obj/item/modular_computer/remove_id(mob/user)
 	if(!computer_id_slot)
 		return ..()
 
@@ -447,7 +444,7 @@
 			var/mob/living/carbon/human/human_wearer = loc
 			human_wearer.sec_hud_set_ID()
 	if(inserted_pai == gone)
-		inserted_pai = null
+		update_appearance(UPDATE_ICON)
 	if(inserted_disk == gone)
 		inserted_disk = null
 		update_appearance(UPDATE_ICON)
@@ -817,7 +814,7 @@
 /obj/item/modular_computer/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	// Check for ID first
 	if(isidcard(tool))
-		return InsertID(tool, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
+		return insert_id(tool, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 
 	// Check for cash next
 	if(computer_id_slot && iscash(tool))
@@ -828,12 +825,7 @@
 		return inserted_id.insert_money(tool, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING // If we do, try and put that attacking object in
 
 	// Inserting a pAI
-	if(istype(tool, /obj/item/pai_card) && !inserted_pai)
-		if(!user.transferItemToLoc(tool, src))
-			return ITEM_INTERACT_BLOCKING
-		inserted_pai = tool
-		balloon_alert(user, "inserted pai")
-		update_appearance(UPDATE_ICON)
+	if(istype(tool, /obj/item/pai_card) && pai_act(user, tool))
 		return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/stock_parts/power_store/cell))
@@ -946,12 +938,23 @@
 /obj/item/modular_computer/proc/get_messenger_ending()
 	return "Sent from my PDA"
 
+/obj/item/modular_computer/proc/pai_act(mob/user, obj/item/pai_card/card)
+	if(inserted_pai)
+		return ITEM_INTERACT_BLOCKING
+	if(!user.transferItemToLoc(card, src))
+		return ITEM_INTERACT_BLOCKING
+	inserted_pai = card
+	balloon_alert(user, "inserted pai")
+	if(inserted_pai.pai)
+		inserted_pai.pai.give_messenger_ability()
+	update_appearance(UPDATE_ICON)
+	return ITEM_INTERACT_SUCCESS
+
 /obj/item/modular_computer/proc/remove_pai(mob/user)
 	if(!inserted_pai)
 		return FALSE
-	// MONKE EDIT: Not added
-	//if(inserted_pai.pai)
-	//	inserted_pai.pai.remove_messenger_ability()
+	if(inserted_pai.pai)
+		inserted_pai.pai.remove_messenger_ability()
 	if(user)
 		user.put_in_hands(inserted_pai)
 		balloon_alert(user, "removed pAI")

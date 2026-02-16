@@ -240,8 +240,6 @@ Always compile, always use that verb, and always make sure that it works for wha
 
 #define ZTRAIT_OSHAN_MINING "Oshan Mining"
 
-#define ZTRAIT_ECLIPSE "Eclipse"
-
 ///Z level traits for Lavaland
 #define ZTRAITS_TRENCH list(\
 	ZTRAIT_OSHAN_MINING = TRUE, \
@@ -261,26 +259,3 @@ Always compile, always use that verb, and always make sure that it works for wha
 #define PARTICLEWEATHER_DUST "weather_dust"
 #define PARTICLEWEATHER_RADS "weather_rads"
 //monkestation end
-
-#define ZTRAITS_ECLIPSE list(\
-	list(\
-		ZTRAIT_UP = TRUE, \
-		ZTRAIT_GRAVITY = TRUE, \
-		ZTRAIT_MINING = TRUE, \
-		ZTRAIT_NOPARALLAX = TRUE, \
-		ZTRAIT_DAYCYCLE = TRUE, \
-		ZTRAIT_BOMBCAP_MULTIPLIER = 2, \
-		ZTRAIT_BASETURF = /turf/open/misc/dirt/forest, \
-		ZTRAIT_ECLIPSE = TRUE, \
-	), \
-	list(\
-		ZTRAIT_DOWN = TRUE, \
-		ZTRAIT_GRAVITY = TRUE, \
-		ZTRAIT_MINING = TRUE, \
-		ZTRAIT_NOPARALLAX = TRUE, \
-		ZTRAIT_DAYCYCLE = TRUE, \
-		ZTRAIT_BOMBCAP_MULTIPLIER = 2, \
-		ZTRAIT_BASETURF = /turf/open/openspace/forest, \
-		ZTRAIT_ECLIPSE = TRUE, \
-	)\
-)

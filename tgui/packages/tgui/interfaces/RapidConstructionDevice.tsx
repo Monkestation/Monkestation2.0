@@ -1,8 +1,8 @@
-import { Window } from '../layouts';
-import { BooleanLike, classes } from 'common/react';
+import { type BooleanLike, classes } from 'common/react';
 import { capitalizeAll } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
-import { LabeledList, Section, Button, Tabs, Stack, Box } from '../components';
+import { Box, Button, LabeledList, Section, Stack, Tabs } from '../components';
+import { Window } from '../layouts';
 import { AirLockMainSection } from './AirlockElectronics';
 
 type Data = {
