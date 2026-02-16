@@ -58,30 +58,10 @@
 		client.mob.stop_sound_channel(CHANNEL_JUKEBOX)
 	client.mob.update_media_source()
 
-/// Controls hearing lobby music
-/datum/preference/toggle/sound_lobby
-	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
-	savefile_key = "sound_lobby"
-	savefile_identifier = PREFERENCE_PLAYER
-
-/datum/preference/toggle/sound_lobby/apply_to_client_updated(client/client, value)
-	if(!isnewplayer(client?.mob))
-		return
-	if (value)
-		client.playtitlemusic()
-	else
-		client.mob.update_media_source()
-
 /// Controls hearing admin music
 /datum/preference/toggle/sound_midi
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
 	savefile_key = "sound_midi"
-	savefile_identifier = PREFERENCE_PLAYER
-
-/// Controls hearing ship ambience
-/datum/preference/toggle/sound_ship_ambience
-	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
-	savefile_key = "sound_ship_ambience"
 	savefile_identifier = PREFERENCE_PLAYER
 
 /// Whether or not to hear curator music.
@@ -96,17 +76,6 @@
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
 	savefile_key = "sound_elevator"
 	savefile_identifier = PREFERENCE_PLAYER
-
-/datum/preference/toggle/sound_vox
-	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
-	default_value = TRUE
-	savefile_key = "sound_vox"
-	savefile_identifier = PREFERENCE_PLAYER
-
-/datum/preference/toggle/sound_vox/apply_to_client_updated(client/client, value)
-	. = ..()
-	if (!value)
-		client.mob?.stop_sound_channel(CHANNEL_VOX)
 
 /datum/preference/toggle/sound_ai_radio
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES

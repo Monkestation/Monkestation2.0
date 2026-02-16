@@ -2,9 +2,9 @@
 #define CHANNEL_LOBBYMUSIC 1024
 #define CHANNEL_ADMIN 1023
 //Sound channel for VOX & Announcements, such as AI, Captain arrivavl/announcements, Doomsday clock, Sec level change, etc.
-#define CHANNEL_VOX 1022
+#define CHANNEL_ANNOUNCEMENTS_VOX 1022
 //Sound channel for event announcements, `/datum/centcom_announcer`
-#define CHANNEL_ANNOUNCER 1021
+#define CHANNEL_STORYTELLER 1021
 #define CHANNEL_JUKEBOX 1020
 #define CHANNEL_HEARTBEAT 1019 //sound channel for heartbeats
 #define CHANNEL_AMBIENCE 1018

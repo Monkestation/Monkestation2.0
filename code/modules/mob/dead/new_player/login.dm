@@ -32,6 +32,7 @@
 	if(!. || !client)
 		return FALSE
 
+	GLOB.lobby_media.add_listener(src)
 	var/motd = global.config.motd
 	if(motd)
 		to_chat(src, "<div class=\"motd\">[motd]</div>", handle_whitespace=FALSE)

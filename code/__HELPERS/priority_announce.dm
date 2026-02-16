@@ -55,6 +55,7 @@
 	else if(SSstation.announcer.event_sounds[sound])
 		sound = SSstation.announcer.event_sounds[sound]
 
+	var/sound_channel = CHANNEL_ANNOUNCEMENTS_VOX
 	var/header
 	switch(type)
 		if(ANNOUNCEMENT_TYPE_PRIORITY)
@@ -75,6 +76,7 @@
 		// MONKESTATION ADDITION END
 		else
 			header += generate_unique_announcement_header(title, sender_override, append_update) // Monkestation edit - update append
+			sound_channel = CHANNEL_STORYTELLER
 
 	announcement_strings += ANNOUNCEMENT_HEADER(header)
 
@@ -90,7 +92,7 @@
 	else
 		finalized_announcement = CHAT_ALERT_DEFAULT_SPAN(jointext(announcement_strings, ""))
 
-	dispatch_announcement_to_players(finalized_announcement, players, sound, sound_channel = CHANNEL_ANNOUNCER)
+	dispatch_announcement_to_players(finalized_announcement, players, sound, sound_channel = sound_channel)
 
 	if(isnull(sender_override) && players == GLOB.player_list)
 		if(length(title) > 0)
@@ -195,7 +197,7 @@
 	return jointext(returnable_strings, "")
 
 /// Proc that just dispatches the announcement to our applicable audience. Only the announcement is a mandatory arg.
-/proc/dispatch_announcement_to_players(announcement, list/players = GLOB.player_list, sound_override = null, should_play_sound = TRUE, sound_channel = CHANNEL_VOX)
+/proc/dispatch_announcement_to_players(announcement, list/players = GLOB.player_list, sound_override = null, should_play_sound = TRUE, sound_channel = CHANNEL_ANNOUNCEMENTS_VOX)
 	var/sound_to_play = !isnull(sound_override) ? sound_override : 'sound/misc/notice2.ogg'
 
 	for(var/mob/target in players)

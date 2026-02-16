@@ -48,23 +48,10 @@ export const sound_jukebox: FeatureToggle = {
   component: CheckboxInput,
 };
 
-export const sound_lobby: FeatureToggle = {
-  name: 'Enable lobby music',
-  category: 'SOUND',
-  component: CheckboxInput,
-};
-
 export const sound_midi: FeatureToggle = {
   name: 'Enable admin music',
   category: 'SOUND',
   description: 'When enabled, admins will be able to play music to you.',
-  component: CheckboxInput,
-};
-
-export const sound_ship_ambience: FeatureToggle = {
-  name: 'Enable ship ambience',
-  category: 'SOUND',
-  description: `Ship ambience refers to the low ambient buzz that plays on loop.`,
   component: CheckboxInput,
 };
 
@@ -76,14 +63,6 @@ export const sound_achievement: FeatureChoiced = {
     If disabled, no sound will be played.
   `,
   component: FeatureDropdownInput,
-};
-
-export const sound_vox: FeatureToggle = {
-  name: 'Enable AI VOX announcements',
-  category: 'SOUND',
-  subcategory: 'IC',
-  description: 'When enabled, hear AI VOX (text-to-speech) announcements.',
-  component: CheckboxInput,
 };
 
 export const hearmusic: FeatureToggle = {

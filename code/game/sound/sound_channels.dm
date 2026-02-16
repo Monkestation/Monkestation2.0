@@ -2,8 +2,8 @@ GLOBAL_LIST_INIT(used_sound_channels, list(
 	CHANNEL_MASTER_VOLUME,
 	CHANNEL_LOBBYMUSIC,
 	CHANNEL_ADMIN,
-	CHANNEL_VOX,
-	CHANNEL_ANNOUNCER,
+	CHANNEL_ANNOUNCEMENTS_VOX,
+	CHANNEL_STORYTELLER,
 	CHANNEL_JUKEBOX,
 	CHANNEL_HEARTBEAT,
 	CHANNEL_AMBIENCE,
@@ -56,9 +56,9 @@ GLOBAL_DATUM_INIT(cached_mixer_channels, /alist, alist())
 	else if(findtext(sound_text_string, "creatures/"))
 		. = GLOB.cached_mixer_channels[sound_text_string] = CHANNEL_MOB_SOUNDS
 	else if(findtext(sound_text_string, "/announcer/"))
-		. = GLOB.cached_mixer_channels[sound_text_string] = CHANNEL_VOX
+		. = GLOB.cached_mixer_channels[sound_text_string] = CHANNEL_ANNOUNCEMENTS_VOX
 	else if(findtext(sound_text_string, "/ai/"))
-		. = GLOB.cached_mixer_channels[sound_text_string] = CHANNEL_ANNOUNCER
+		. = GLOB.cached_mixer_channels[sound_text_string] = CHANNEL_STORYTELLER
 	else if(findtext(sound_text_string, "chatter/"))
 		. = GLOB.cached_mixer_channels[sound_text_string] = CHANNEL_MOB_SOUNDS
 	else if(findtext(sound_text_string, "items/"))

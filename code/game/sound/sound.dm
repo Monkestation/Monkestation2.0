@@ -213,7 +213,7 @@
 		vol = channel_volume["[CHANNEL_LOBBYMUSIC]"]
 	if("[CHANNEL_MASTER_VOLUME]" in channel_volume)
 		vol *= channel_volume["[CHANNEL_MASTER_VOLUME]"] * 0.01
-	if(vol <= 0 || (prefs && (!prefs.read_preference(/datum/preference/toggle/sound_lobby))) || CONFIG_GET(flag/disallow_title_music))
+	if(CONFIG_GET(flag/disallow_title_music))
 		return
 
 	if(QDELETED(media_player)) ///media is set on creation thats weird
@@ -254,9 +254,9 @@
 			return "Lobby Music"
 		if(CHANNEL_ADMIN)
 			return "Admin MIDIs"
-		if(CHANNEL_VOX)
+		if(CHANNEL_ANNOUNCEMENTS_VOX)
 			return "Announcements / AI Noise"
-		if(CHANNEL_ANNOUNCER)
+		if(CHANNEL_STORYTELLER)
 			return "Storyteller"
 		if(CHANNEL_JUKEBOX)
 			return "Dance Machines"

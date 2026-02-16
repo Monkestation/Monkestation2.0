@@ -146,6 +146,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		apply_all_client_preferences()
 		parent.set_macros()
 
+	var/needs_save = FALSE
+	for(var/channel in GLOB.used_sound_channels)
+		if(isnull(channel_volume["[channel]"]))
+			channel_volume["[channel]"] = 50
+			needs_save = TRUE
+	if(needs_save)
+		save_preferences()
+
 	if(!loaded_preferences_successfully)
 		if(load_preferences())
 			if(load_character())
@@ -176,15 +184,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		character_preview_view = create_character_preview_view(user)
-
-		var/needs_save = FALSE
-		for(var/channel in GLOB.used_sound_channels)
-			if(isnull(channel_volume["[channel]"]))
-				channel_volume["[channel]"] = 50
-				needs_save = TRUE
-		if(needs_save)
-			save_preferences()
-
 		ui = new(user, src, "PreferencesMenu")
 		ui.set_autoupdate(FALSE)
 		ui.open()

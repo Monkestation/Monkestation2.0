@@ -118,7 +118,7 @@ SUBSYSTEM_DEF(ambience)
 	var/area/my_area = get_area(src)
 	var/sound_to_use = my_area?.ambient_buzz
 
-	if(!sound_to_use || !(client.prefs.read_preference(/datum/preference/toggle/sound_ship_ambience)))
+	if(!sound_to_use || !client?.prefs?.channel_volume["[CHANNEL_BUZZ]"])
 		SEND_SOUND(src, sound(null, repeat = 0, wait = 0, channel = CHANNEL_BUZZ))
 		client.current_ambient_sound = null
 		return
