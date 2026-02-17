@@ -59,6 +59,9 @@
 	if(power <= 0)
 		return
 	var/turf/T = get_turf(holder.my_atom)
+	if(isnull(T))
+		holder.clear_reagents()
+		return
 	var/inside_msg
 	if(ismob(holder.my_atom))
 		var/mob/M = holder.my_atom
