@@ -14,7 +14,7 @@
 	/// An existing strip menus
 	var/list/strip_menus
 
-/datum/element/strippable/Attach(datum/target, list/items, should_strip_proc_path)
+/datum/element/strippable/Attach(datum/target, list/items = list(), should_strip_proc_path)
 	. = ..()
 	if (!isatom(target))
 		return ELEMENT_INCOMPATIBLE
@@ -67,8 +67,7 @@
 		if (mob.can_be_held && (user.grab_state == GRAB_AGGRESSIVE) && (user.pulling == source))
 			return
 
-	var/datum/strip_menu/strip_menu
-
+	var/datum/strip_menu/strip_menu = LAZYACCESS(strip_menus, source)
 	if (isnull(strip_menu))
 		strip_menu = new(source, src)
 		LAZYSET(strip_menus, source, strip_menu)
@@ -174,18 +173,25 @@
 	SHOULD_NOT_SLEEP(TRUE)
 	return STRIPPABLE_OBSCURING_NONE
 
-/// Returns the ID of this item's strippable action.
-/// Return `null` if there is no alternate action.
-/// Any return value of this must be in StripMenu.
-/datum/strippable_item/proc/get_alternate_action(atom/source, mob/user)
+/**
+ * Returns a list of alternate actions that can be performed on this strippable_item.
+ * All string keys in the list must be inside tgui\packages\tgui\interfaces\StripMenu.tsx
+ * You can also return null if there are no alternate actions.
+ */
+/datum/strippable_item/proc/get_alternate_actions(atom/source, mob/user)
+	RETURN_TYPE(/list)
 	return null
 
-/// Performs an alternative action on this strippable_item.
-/// `has_alternate_action` needs to be TRUE.
-/// Returns FALSE if blocked by signal, TRUE otherwise.
-/datum/strippable_item/proc/alternate_action(atom/source, mob/user)
+/**
+ * Performs an alternate action on this strippable_item.
+ * - source: The source of the action.
+ * - user: The user performing the action.
+ * - action_key: The key of the alternate action to perform.
+ * Returns FALSE if unable to perform the action; whether it be due to the signal or some other factor.
+ */
+/datum/strippable_item/proc/perform_alternate_action(atom/source, mob/user, action_key)
 	SHOULD_CALL_PARENT(TRUE)
-	if(SEND_SIGNAL(user, COMSIG_TRY_ALT_ACTION, source) & COMPONENT_CANT_ALT_ACTION)
+	if(SEND_SIGNAL(user, COMSIG_TRY_ALT_ACTION, source, action_key) & COMPONENT_CANT_ALT_ACTION)
 		return FALSE
 	return TRUE
 
@@ -364,7 +370,11 @@
 
 		result["icon"] = icon2base64(icon(item.icon, item.icon_state))
 		result["name"] = item.name
-		result["alternate"] = item_data.get_alternate_action(owner, user)
+		result["alternate"] = item_data.get_alternate_actions(owner, user)
+		var/static/list/already_cried = list()
+		if(length(result["alternate"]) > 2 && !(type in already_cried))
+			stack_trace("Too many alternate actions for [type]! Only two are supported at the moment! This will look bad!")
+			already_cried += type
 
 		items[strippable_key] = result
 
@@ -456,6 +466,7 @@
 				strippable_item.finish_unequip(owner, user)
 		if ("alt")
 			var/key = params["key"]
+			var/alt_action = params["alternate_action"]
 			var/datum/strippable_item/strippable_item = strippable.items[key]
 
 			if (isnull(strippable_item))
@@ -471,13 +482,13 @@
 			if (isnull(item))
 				return
 
-			if (isnull(strippable_item.get_alternate_action(owner, user)))
+			if (!(alt_action in strippable_item.get_alternate_actions(owner, user)))
 				return
 
 			LAZYORASSOCLIST(interactions, user, key)
 
 			// Potentially yielding
-			strippable_item.alternate_action(owner, user)
+			strippable_item.perform_alternate_action(owner, user, alt_action)
 
 			LAZYREMOVEASSOC(interactions, user, key)
 
@@ -492,7 +503,7 @@
 		ui_status_only_living(user, owner),
 		ui_status_user_has_free_hands(user, owner),
 		ui_status_user_is_adjacent(user, owner, allow_tk = FALSE),
-		HAS_TRAIT(user, TRAIT_CAN_STRIP) && !HAS_TRAIT(user, TRAIT_CANT_STRIP) ? UI_INTERACTIVE : UI_UPDATE, // monkestation edit
+		HAS_TRAIT(user, TRAIT_CAN_STRIP) ? UI_INTERACTIVE : UI_UPDATE,
 		max(
 			ui_status_user_is_conscious_and_lying_down(user),
 			ui_status_user_is_abled(user, owner),
