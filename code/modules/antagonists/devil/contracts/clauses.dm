@@ -130,13 +130,6 @@
 	cost = 6
 	ability = /datum/action/cooldown/spell/devil/invisibility
 
-/datum/devil_clause/trait_giver/no_fire
-	name = "Fear of Fire"
-	prefix = "Get rid of the"
-	desc = "The signer shall never be set on fire again."
-	cost = 2
-	trait = TRAIT_NOFIRE
-
 /datum/devil_clause/random
 	name = "Chance"
 	prefix = "Embrace"
@@ -159,27 +152,6 @@
 	cost = 3
 	trait = TRAIT_NOFLASH
 
-/datum/devil_clause/trait_giver/no_shock
-	name = "Fear of Electricity"
-	prefix = "Get rid of the"
-	desc = "The signer shall never be shocked by electricity again."
-	cost = 2
-	trait = TRAIT_SHOCKIMMUNE
-
-/datum/devil_clause/trait_giver/no_food
-	name = "Gluttony"
-	prefix = "Embrace"
-	desc = "The signer shall never need to eat again."
-	cost = 1
-	trait = TRAIT_NOHUNGER
-
-/datum/devil_clause/trait_giver/no_breath
-	name = "Fear of Drowning"
-	prefix = "Get rid of the"
-	desc = "The signer shall never need to breathe air again."
-	cost = 1
-	trait = TRAIT_NOBREATH
-
 /datum/devil_clause/trait_giver/no_slip
 	name = "Fear of Clowns"
 	prefix = "Get rid of the"
@@ -194,12 +166,51 @@
 	cost = 3
 	trait = list(TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTHIGHPRESSURE)
 
+/datum/devil_clause/trait_giver/no_shock
+	name = "Fear of Electricity"
+	prefix = "Get rid of the"
+	desc = "The signer shall never be shocked by electricity again."
+	cost = 2
+	trait = TRAIT_SHOCKIMMUNE
+
+/datum/devil_clause/trait_giver/no_fire
+	name = "Fear of Fire"
+	prefix = "Get rid of the"
+	desc = "The signer shall never be set on fire again."
+	cost = 2
+	trait = TRAIT_NOFIRE
+
 /datum/devil_clause/trait_giver/freeze
 	name = "Fear of Freezing"
 	prefix = "Get rid of the"
 	desc = "The signer shall not be affected by low temperatures anymore."
 	cost = 2
 	trait = TRAIT_RESISTCOLD
+
+/datum/devil_clause/trait_giver/no_pain
+	name = "Pain"
+	prefix = "Resist"
+	desc = "The signer shall feel no pain nor move slower from being near death."
+	cost = 2
+	trait = list(TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_NO_SHOCK_BUILDUP)
+
+/datum/devil_clause/trait_giver/no_food
+	name = "Gluttony"
+	prefix = "Embrace"
+	desc = "The signer shall never need to eat again."
+	cost = 1
+	trait = TRAIT_NOHUNGER
+
+/datum/devil_clause/trait_giver/no_food/apply(mob/living/carbon/human/victim, first_apply = TRUE)
+	. = ..()
+	victim.set_nutrition(NUTRITION_LEVEL_FED + 50)
+
+/datum/devil_clause/trait_giver/no_breath
+	name = "Fear of Drowning"
+	prefix = "Get rid of the"
+	desc = "The signer shall never need to breathe air again."
+	cost = 1
+	trait = TRAIT_NOBREATH
 
 /datum/devil_clause/greed
 	name = "Greed"
@@ -212,13 +223,6 @@
 		var/obj/item/stack/spacecash/c10000/cash = new(victim.loc)
 		cash.add(4)
 		victim.put_in_hands(cash)
-
-/datum/devil_clause/trait_giver/no_pain
-	name = "Pain"
-	prefix = "Resist"
-	desc = "The signer shall feel no pain nor move slower from being near death."
-	cost = 2
-	trait = list(TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_NO_SHOCK_BUILDUP)
 
 /datum/devil_clause/trait_giver/clumsy
 	name = "Clumsy"
@@ -259,38 +263,6 @@
 	desc = "The signers leg will be donated to the devil leg foundation."
 	zones_to_target = list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 
-/datum/devil_clause/trait_giver/soul
-	name = "Soul"
-	prefix = "Lose your"
-	desc = "Gives the signers soul to the contractor."
-	cost = -STARTING_CONTRACT_VALUE
-	default_clause = TRUE
-	trait = list(TRAIT_DEFIB_BLACKLISTED, TRAIT_BADDNA, TRAIT_NO_SOUL)
-
-/datum/devil_clause/trait_giver/soul/apply(mob/living/victim, first_apply = TRUE)
-	. = ..()
-	if(first_apply)
-		var/datum/objective/collect_souls/soul_objective = locate(/datum/objective/collect_souls) in devil.objectives
-		if(soul_objective)
-			soul_objective.collected_souls++
-			soul_objective.check_completion()
-
-/datum/devil_clause/weakness
-	name = "Weakness"
-	prefix = "Embrace"
-	desc = "The signer shall take double damage from any source."
-	cost = -10
-
-/datum/devil_clause/weakness/apply(mob/living/victim, first_apply = TRUE)
-	RegisterSignal(victim, COMSIG_MOB_APPLY_DAMAGE_MODIFIERS, PROC_REF(affect_resistances))
-
-/datum/devil_clause/weakness/remove(mob/living/victim)
-	UnregisterSignal(victim, COMSIG_MOB_APPLY_DAMAGE_MODIFIERS)
-
-/datum/devil_clause/weakness/proc/affect_resistances(datum/source, list/damage_mods, damage_amount, damagetype, def_zone, sharpness, attack_direction, obj/item/attacking_item)
-	SIGNAL_HANDLER
-	damage_mods += 2
-
 /datum/devil_clause/organ
 	name = "Organ"
 	prefix = "Lose an"
@@ -311,6 +283,22 @@
 		picked_organ = pick(organs)
 	if(picked_organ)
 		qdel(picked_organ)
+
+/datum/devil_clause/trait_giver/soul
+	name = "Soul"
+	prefix = "Lose your"
+	desc = "Gives the signers soul to the contractor."
+	cost = -STARTING_CONTRACT_VALUE
+	default_clause = TRUE
+	trait = list(TRAIT_DEFIB_BLACKLISTED, TRAIT_BADDNA, TRAIT_NO_SOUL)
+
+/datum/devil_clause/trait_giver/soul/apply(mob/living/victim, first_apply = TRUE)
+	. = ..()
+	if(first_apply)
+		var/datum/objective/collect_souls/soul_objective = locate(/datum/objective/collect_souls) in devil.objectives
+		if(soul_objective)
+			soul_objective.collected_souls++
+			soul_objective.check_completion()
 
 /datum/devil_clause/greater_leggy
 	name = "Paralyzed legs"
@@ -359,6 +347,22 @@
 		victim.cure_trauma_type(/datum/brain_trauma/severe/paralysis/paraplegic/devil, TRAUMA_RESILIENCE_ABSOLUTE)
 	else
 		victim.remove_movespeed_modifier(/datum/movespeed_modifier/devils_wheelchair)
+
+/datum/devil_clause/weakness
+	name = "Weakness"
+	prefix = "Embrace"
+	desc = "The signer shall take double damage from any source."
+	cost = -10
+
+/datum/devil_clause/weakness/apply(mob/living/victim, first_apply = TRUE)
+	RegisterSignal(victim, COMSIG_MOB_APPLY_DAMAGE_MODIFIERS, PROC_REF(affect_resistances))
+
+/datum/devil_clause/weakness/remove(mob/living/victim)
+	UnregisterSignal(victim, COMSIG_MOB_APPLY_DAMAGE_MODIFIERS)
+
+/datum/devil_clause/weakness/proc/affect_resistances(datum/source, list/damage_mods, damage_amount, damagetype, def_zone, sharpness, attack_direction, obj/item/attacking_item)
+	SIGNAL_HANDLER
+	damage_mods += 2
 
 /datum/devil_clause/blind
 	name = "Blindness"
