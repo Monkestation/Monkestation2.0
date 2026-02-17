@@ -1,3 +1,5 @@
+#define STARTING_CONTRACT_VALUE 8
+
 /datum/devil_clause
 	/// Name of the clause
 	var/name = "Suicide"
@@ -84,7 +86,7 @@
 	name = "Resistance"
 	prefix = "Gain"
 	desc = "Cuts down the damage the signer takes by half, however they shall become weaker to holy magicks."
-	cost = 7
+	cost = 12
 
 /datum/devil_clause/resistance/apply(mob/living/victim, first_apply = TRUE)
 	RegisterSignal(victim, COMSIG_MOB_APPLY_DAMAGE_MODIFIERS, PROC_REF(affect_resistances))
@@ -103,14 +105,14 @@
 	name = "Fear of Death"
 	prefix = "Get rid of the"
 	desc = "The signer shall be able to walk and act under normally mortal wounds, until the body can no longer physically take it."
-	cost = 5
+	cost = 8
 	trait = list(TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT)
 
 /datum/devil_clause/ability_giver/revival
 	name = "Revival"
 	prefix = "Obtain"
 	desc = "Makes the signer able to revive themselfes exactly one time."
-	cost = 5
+	cost = STARTING_CONTRACT_VALUE
 	conflicts = list(/datum/devil_clause/ability_giver/immortality, /datum/devil_clause/time)
 	default_clause = TRUE
 	ability = /datum/action/cooldown/spell/devil/revival
@@ -125,14 +127,14 @@
 	name = "Invisibility"
 	prefix = "Obtain"
 	desc = "Makes the signer able to turn mostly invisible at any time they may desire."
-	cost = 5
+	cost = 6
 	ability = /datum/action/cooldown/spell/devil/invisibility
 
 /datum/devil_clause/trait_giver/no_fire
 	name = "Fear of Fire"
 	prefix = "Get rid of the"
 	desc = "The signer shall never be set on fire again."
-	cost = 4
+	cost = 2
 	trait = TRAIT_NOFIRE
 
 /datum/devil_clause/random
@@ -161,35 +163,35 @@
 	name = "Fear of Electricity"
 	prefix = "Get rid of the"
 	desc = "The signer shall never be shocked by electricity again."
-	cost = 3
+	cost = 2
 	trait = TRAIT_SHOCKIMMUNE
 
 /datum/devil_clause/trait_giver/no_food
 	name = "Gluttony"
 	prefix = "Embrace"
 	desc = "The signer shall never need to eat again."
-	cost = 2
+	cost = 1
 	trait = TRAIT_NOHUNGER
 
 /datum/devil_clause/trait_giver/no_breath
 	name = "Fear of Drowning"
 	prefix = "Get rid of the"
 	desc = "The signer shall never need to breathe air again."
-	cost = 2
+	cost = 1
 	trait = TRAIT_NOBREATH
 
 /datum/devil_clause/trait_giver/no_slip
 	name = "Fear of Clowns"
 	prefix = "Get rid of the"
 	desc = "The signer shall never be slipped again."
-	cost = 2
+	cost = 3
 	trait = TRAIT_NO_SLIP_ALL
 
 /datum/devil_clause/trait_giver/pressure
 	name = "Fear of Crushing"
 	prefix = "Get rid of the"
 	desc = "The signer shall not be crushed by any pressure anymore."
-	cost = 2
+	cost = 3
 	trait = list(TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTHIGHPRESSURE)
 
 /datum/devil_clause/trait_giver/freeze
@@ -203,7 +205,7 @@
 	name = "Greed"
 	prefix = "Embrace"
 	desc = "The signer shall receive a sizable amount of funds."
-	cost = 2
+	cost = 1
 
 /datum/devil_clause/greed/apply(mob/living/carbon/human/victim, first_apply = TRUE)
 	if(first_apply)
@@ -215,7 +217,7 @@
 	name = "Pain"
 	prefix = "Resist"
 	desc = "The signer shall feel no pain nor move slower from being near death."
-	cost = 1
+	cost = 2
 	trait = list(TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_NO_SHOCK_BUILDUP)
 
 /datum/devil_clause/trait_giver/clumsy
@@ -261,7 +263,7 @@
 	name = "Soul"
 	prefix = "Lose your"
 	desc = "Gives the signers soul to the contractor."
-	cost = -5
+	cost = -STARTING_CONTRACT_VALUE
 	default_clause = TRUE
 	trait = list(TRAIT_DEFIB_BLACKLISTED, TRAIT_BADDNA, TRAIT_NO_SOUL)
 
@@ -277,7 +279,7 @@
 	name = "Weakness"
 	prefix = "Embrace"
 	desc = "The signer shall take double damage from any source."
-	cost = -6
+	cost = -10
 
 /datum/devil_clause/weakness/apply(mob/living/victim, first_apply = TRUE)
 	RegisterSignal(victim, COMSIG_MOB_APPLY_DAMAGE_MODIFIERS, PROC_REF(affect_resistances))
@@ -370,7 +372,7 @@
 /datum/devil_clause/blind/remove(mob/living/victim)
 	victim.cure_blind(DEVIL_TRAIT)
 
-/datum/devil_clause/trait_giver/mute
+/datum/devil_clause/trait_giver/pacifist
 	name = "Will to fight"
 	prefix = "Lose your"
 	desc = "The signer won't be able hurt anyone anymore."
@@ -381,7 +383,7 @@
 	name = "Humanity"
 	prefix = "Give up your"
 	desc = "The signer will discard their humanity, turning into a frog, permanently."
-	cost = -16
+	cost = -20
 
 /datum/devil_clause/frog/apply(mob/living/basic/frog/victim, first_apply = TRUE)
 	if(istype(victim)) // Make sure we don't do an infinite loop of creating frogs, transferring into them and refreshing yeah?
@@ -414,3 +416,5 @@
 	if(QDELETED(mind))
 		return
 	mind.current?.dust()
+
+#undef STARTING_CONTRACT_VALUE
