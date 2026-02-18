@@ -660,6 +660,8 @@
 #define AI_HOLOGRAM_RATVAR "Ratvar"
 #define AI_HOLOGRAM_SPIDER "Spider"
 #define AI_HOLOGRAM_XENO "Xeno Queen"
+#define AI_HOLOGRAM_ROBOT "Robot"
+#define AI_HOLOGRAM_DRONE "Drone"
 
 /// Icon state to use for ai displays that just turns them off
 #define AI_DISPLAY_DONT_GLOW "ai_off"
