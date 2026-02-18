@@ -292,9 +292,17 @@
       chameleon clothing items.
   - bugfix: fixed chameleon backpacks not being able to have their disguise locked.
 2026-02-16:
+  CocoKailey:
+  - balance: Changed the liquid_fire_power variable of various alcoholic beverages
+      to be varying numbers below the baseline of liquid_fire_power = 10 that exists
+      with ethanol.
   JohnFulpWillard:
   - rscadd: pAIs can now control PDAs they are inserted into.
   - bugfix: Safes have the proper icon now.
+  - bugfix: Simians vault over railings properly.
+  - bugfix: Simians have a new species description.
+  - bugfix: Simians now have a Simianize gene (could also be found in Humans).
+  - qol: Monkeys/Simians can now have their genes edited.
   SirNightKnight:
   - map: removed the ouroboros map.
   - balance: all prefilled bottles containing 30 units are now filled with 50 units  so
@@ -318,6 +326,13 @@
       of a pre-defined list.
   Siro:
   - code_imp: Complete refactor
+  - bugfix: Adds an Adjacent check after the dash to prevent the attack after dashing
+      if they aren't truly adjacent to the target.
+  - rscadd: New no knock back status effect. Disables knock back from structures with
+      density like walls.
+  - bugfix: Knock back is prevented from being tossed while slipping. Puzzles like
+      clown ruins can now be completed again.
+  - map: Clown ruins on lavaland readded.
   Sorenon:
   - rscadd: Added a low chance for players to fart upon violent collisions or just
       after death, adding some gritty realism this codebase desperately craves
@@ -340,3 +355,5 @@
       some items around so they are more valuable.
   - balance: exporting lavaland loot/items is more lucrative.
   - balance: gibtonite is more valuable the higher the quality is.
+  wonderinghost:
+  - balance: merges bot surgery with their respective organic surgery tree
