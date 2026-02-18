@@ -57,7 +57,11 @@
 	COOLDOWN_DECLARE(true_name_cooldown)
 
 /datum/antagonist/devil/proc/create_objectives()
+	var/datum/team/devils_team = new(owner)
+	devils_team.show_roundend_report = FALSE
+
 	var/datum/objective/collect_souls/soul_objective = new
+	soul_objective.team = devils_team
 	objectives += soul_objective
 
 /datum/antagonist/devil/on_gain()

@@ -19,7 +19,6 @@
 	update_explanation_text()
 
 /datum/objective/collect_souls/check_completion()
-	update_explanation_text()
 	if(collected_souls == required_souls && stage != STAGE_FINAL && !disable_progression)
 		var/list/datum/mind/owners = get_owners()
 		stage++
@@ -28,6 +27,7 @@
 			for(var/datum/mind/objective_owner as anything in owners)
 				give_abilities(objective_owner)
 
+	update_explanation_text()
 	return collected_souls >= required_souls
 
 /datum/objective/collect_souls/update_explanation_text()
