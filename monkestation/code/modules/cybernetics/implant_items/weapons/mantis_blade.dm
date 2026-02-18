@@ -88,8 +88,9 @@
 	if(isliving(user))
 		var/mob/living/living = user
 		living.stamina?.adjust(-25) // cost of a lunge
+	if(!user.Adjacent(interacting_with)) // If we do not reach the target don't hit it.
+		return
 	attack(interacting_with, user)
-	return
 
 /////////SHIELD MANTIS BLADES/////////////////
 /obj/item/mantis_blade/shield

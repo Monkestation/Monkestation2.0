@@ -77,12 +77,10 @@
 	var/obj/item/instrument/piano_synth/instrument
 	/// Newscaster
 	var/obj/machinery/newscaster/pai/newscaster
-	/// PDA
-	var/atom/movable/screen/ai/modpc/pda_button
-	/// Photography module
-	var/obj/item/camera/siliconcam/pai_camera/camera
 	/// Remote signaler
 	var/obj/item/assembly/signaler/internal/signaler
+	///The messeenger ability that pAIs get when they are put in a PDA.
+	var/datum/action/innate/pai/messenger/messenger_ability
 
 	// Static lists
 	/// List of all available downloads
@@ -142,8 +140,8 @@
 	return ..(target, action_bitflags)
 
 /mob/living/silicon/pai/Destroy()
+	QDEL_NULL(messenger_ability)
 	QDEL_NULL(atmos_analyzer)
-	QDEL_NULL(camera)
 	QDEL_NULL(hacking_cable)
 	QDEL_NULL(instrument)
 	QDEL_NULL(internal_gps)
@@ -188,8 +186,8 @@
 			card.update_appearance()
 	if(deleting_atom == atmos_analyzer)
 		atmos_analyzer = null
-	if(deleting_atom == camera)
-		camera = null
+	if(deleting_atom == aicamera)
+		aicamera = null
 	if(deleting_atom == internal_gps)
 		internal_gps = null
 	if(deleting_atom == instrument)
@@ -202,6 +200,8 @@
 
 /mob/living/silicon/pai/Initialize(mapload)
 	. = ..()
+	if(istype(loc, /obj/item/modular_computer))
+		give_messenger_ability()
 	START_PROCESSING(SSfastprocess, src)
 	GLOB.pai_list += src
 	make_laws()
@@ -450,3 +450,14 @@
 
 /mob/living/silicon/pai/get_access()
 	return list(ACCESS_MAINT_TUNNELS) //MONKESTATION EDIT: Add inherent maints access to pAIs
+
+///Gives the messenger ability to the pAI, creating a new one if it doesn't have one already.
+/mob/living/silicon/pai/proc/give_messenger_ability()
+	if(!messenger_ability)
+		messenger_ability = new(src)
+	messenger_ability.Grant(src)
+
+///Removes the messenger ability from the pAI, but does not delete it.
+/mob/living/silicon/pai/proc/remove_messenger_ability()
+	if(messenger_ability)
+		messenger_ability.Remove(src)

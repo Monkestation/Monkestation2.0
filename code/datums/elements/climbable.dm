@@ -79,8 +79,8 @@
 		if(QDELETED(climbed_thing)) //Checking if structure has been destroyed
 			return
 
-		if(HAS_TRAIT(user, TRAIT_VAULTING) && user.m_intent == MOVE_INTENT_RUN || HAS_TRAIT(user, TRAIT_VAULTING) &&user.m_intent == MOVE_INTENT_SPRINT)//monkestation edit: simians can fling themselves off climbable structures
-			vault_over_object(user, climbed_thing)
+		if(HAS_TRAIT(user, TRAIT_VAULTING) && (user.m_intent == MOVE_INTENT_RUN || user.m_intent == MOVE_INTENT_SPRINT))//monkestation edit: simians can fling themselves off climbable structures
+			vault_over_object(climbed_thing, user, params)
 			if(climb_stun)
 				user.Immobilize(climb_stun)
 				user.visible_message(span_warning("[user] flips over [climbed_thing]!"), \
@@ -103,19 +103,23 @@
 	LAZYREMOVEASSOC(current_climbers, climbed_thing, user)
 
 
-/proc/vault_over_object(mob/user, object, range = 3, speed = 0.5)
-	var/dir = get_dir(user, object)
-	var/turf/target = get_ranged_target_turf(user, dir, range)
-	var/obj/machinery/machine_target = locate() in target
-	var/mob/living/carbon/human/H = user
-	if(machine_target)
-		user.throw_at(machine_target, range, speed)
-		if(prob(70))
-			H.Knockdown(10)
+/datum/element/climbable/proc/vault_over_object(atom/climbed_thing, mob/living/user, params)
+	if(!can_climb(climbed_thing, user))
+		return
+
+	climbed_thing.set_density(FALSE)
+
+	var/dir_step = get_dir(user, climbed_thing)
+	var/same_loc = climbed_thing.loc == user.loc
+	if((climbed_thing.flags_1 & ON_BORDER_1 && (same_loc || !(dir_step & REVERSE_DIR(climbed_thing.dir)))))
+		. = user.throw_at(get_step(climbed_thing, climbed_thing.dir), range = 3, speed = 0.5)
 	else
-		user.throw_at(target, range, speed)
-		if(prob(25))
-			H.Knockdown(10)
+		var/turf/target = get_ranged_target_turf(user, dir_step, range = 3)
+		. = user.throw_at(target, range = 3, speed = 0.5)
+	if(prob((locate(/obj/machinery) in get_turf(climbed_thing)) ? 70 : 25))
+		user.Knockdown(8)
+
+	climbed_thing.set_density(TRUE)
 
 /datum/element/climbable/proc/do_climb(atom/climbed_thing, mob/living/user, params)
 	if(!can_climb(climbed_thing, user))

@@ -743,3 +743,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 /obj/effect/landmark/navigate_destination/virology
 	location = "Virology"
 //End of monke edit
+
+/obj/effect/landmark/navigate_destination/mining_foundry
+	location = "Mining Foundry"

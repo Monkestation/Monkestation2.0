@@ -982,6 +982,14 @@
 	. = ..()
 	operated = FALSE
 
+/obj/item/organ/internal/lungs/slime/slime_smoker
+	name = "smoker vacuole"
+	desc = "A large organelle designed to store oxygen and other important gasses. It loosk discolored, from smoking a lot."
+	icon_state = "lungs_smoker"
+
+	maxHealth = SMOKER_ORGAN_HEALTH
+	healing_factor = SMOKER_LUNG_HEALING
+
 /obj/item/organ/internal/lungs/oni
 	name = "oni lungs"
 	desc = "The lungs of an oni, resistant to heat and able to produce small amounts of flame to be expelled through the mouth."
