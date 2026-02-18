@@ -1,5 +1,13 @@
 import { useBackend } from '../../backend';
-import { Box, Button, Icon, Section, Slider, Stack } from '../../components';
+import {
+  Box,
+  Button,
+  Icon,
+  Section,
+  Slider,
+  Stack,
+  Tooltip,
+} from '../../components';
 import type { Channel, PreferencesMenuData } from './data';
 
 export const VolumeMixerPage = () => {
@@ -30,9 +38,18 @@ const VolumeSlider = (props: { channel: Channel }) => {
         padding: '5px 10px',
       }}
     >
-      <Box fontSize="1.25rem" mt={'0.5rem'}>
-        {channel.name}
-      </Box>
+      <Tooltip position="bottom" content={channel.desc}>
+        <Box
+          fontSize="1.25rem"
+          mt={'0.5rem'}
+          as="span"
+          style={{
+            borderBottom: '2px dotted rgba(255, 255, 255, 0.8)',
+          }}
+        >
+          {channel.name}
+        </Box>
+      </Tooltip>
       <Box mt="0.5rem">
         <Stack>
           <Stack.Item grow={1}>

@@ -215,9 +215,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if (current_window == PREFERENCE_WINDOW_GAME_PREFERENCES)
 		var/list/channels = list()
 		for(var/channel in GLOB.used_sound_channels)
+			var/list/channel_info = get_channel_info(channel)
 			channels += list(list(
 				"num" = channel,
-				"name" = get_channel_name(channel),
+				"name" = channel_info[1],
+				"desc" = channel_info[2],
 				"volume" = channel_volume["[channel]"]
 			))
 		data["channels"] = channels

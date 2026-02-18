@@ -131,6 +131,7 @@ export enum PreferencesCurrentWindow {
 export type Channel = {
   num: number;
   name: string;
+  desc: string;
   volume: number;
 };
 

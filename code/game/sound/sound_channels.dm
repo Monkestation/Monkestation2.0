@@ -55,12 +55,12 @@ GLOBAL_DATUM_INIT(cached_mixer_channels, /alist, alist())
 		. = GLOB.cached_mixer_channels[sound_text_string] = CHANNEL_MACHINERY
 	else if(findtext(sound_text_string, "creatures/"))
 		. = GLOB.cached_mixer_channels[sound_text_string] = CHANNEL_MOB_SOUNDS
-	else if(findtext(sound_text_string, "/announcer/"))
+	else if(findtext(sound_text_string, "announcer/"))
 		. = GLOB.cached_mixer_channels[sound_text_string] = CHANNEL_ANNOUNCEMENTS_VOX
-	else if(findtext(sound_text_string, "/ai/"))
+	else if(findtext(sound_text_string, "ai/"))
 		. = GLOB.cached_mixer_channels[sound_text_string] = CHANNEL_STORYTELLER
 	else if(findtext(sound_text_string, "chatter/"))
-		. = GLOB.cached_mixer_channels[sound_text_string] = CHANNEL_MOB_SOUNDS
+		. = GLOB.cached_mixer_channels[sound_text_string] = CHANNEL_VOICES
 	else if(findtext(sound_text_string, "items/"))
 		. = GLOB.cached_mixer_channels[sound_text_string] = CHANNEL_SOUND_EFFECTS
 	else if(findtext(sound_text_string, "weapons/"))

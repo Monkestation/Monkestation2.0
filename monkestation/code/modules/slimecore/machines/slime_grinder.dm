@@ -68,7 +68,7 @@
 			'monkestation/code/modules/slimecore/sounds/slimeblender13.ogg',
 			'monkestation/code/modules/slimecore/sounds/slimeblender15.ogg',
 		)
-		playsound(src, pick(slime_blender), rand(35, 50), TRUE, mixer_channel = CHANNEL_MOB_SOUNDS)
+		playsound(src, pick(slime_blender), rand(35, 50), TRUE, mixer_channel = CHANNEL_VOICES)
 		playsound(src, 'sound/machines/blender.ogg', 80, TRUE, mixer_channel = CHANNEL_MACHINERY)
 
 /obj/machinery/plumbing/slime_grinder/proc/grind_slimes()
