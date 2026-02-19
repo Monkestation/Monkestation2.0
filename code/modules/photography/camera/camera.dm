@@ -195,16 +195,15 @@
 	var/list/desc = list("This is a photo of an area of [size_x+1] meters by [size_y+1] meters.")
 	var/list/mobs_spotted = list()
 	var/list/dead_spotted = list()
-	var/ai_user = isAI(user)
-	var/list/seen
 	var/list/viewlist = user?.client ? getviewsize(user.client.view) : getviewsize(world.view)
-	var/viewr = max(viewlist[1], viewlist[2]) + max(size_x, size_y)
-	var/viewc = user?.client ? user.client.eye : target
-	seen = get_hear(viewr, viewc)
+	var/view_range = max(viewlist[1], viewlist[2]) + max(size_x, size_y)
+	var/viewer = get_turf(user?.client?.eye || user || target) // not sure why target is a fallback
+	var/list/seen = get_hear(view_range, viewer)
 	var/list/turfs = list()
 	var/list/mobs = list()
 	var/blueprints = FALSE
 	var/clone_area = SSmapping.request_turf_block_reservation(size_x * 2 + 1, size_y * 2 + 1, 1)
+	var/cameranet_user = isAI(user)// || istype(viewer, /mob/eye/camera)
 
 	var/width = size_x * 2 + 1
 	var/height = size_y * 2 + 1
@@ -214,7 +213,7 @@
 			if(!placeholder)
 				break
 
-		if(placeholder && ((ai_user && GLOB.cameranet.checkTurfVis(placeholder)) || (placeholder in seen)))
+		if(placeholder && ((cameranet_user && GLOB.cameranet.checkTurfVis(placeholder)) || (placeholder in seen)))
 			turfs += placeholder
 			for(var/mob/M in placeholder)
 				mobs += M
