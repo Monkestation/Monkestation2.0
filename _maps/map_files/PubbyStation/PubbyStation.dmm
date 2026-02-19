@@ -38807,6 +38807,10 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine)
+"ljQ" = (
+/obj/structure/closet/secure_closet/shipbreaker,
+/turf/open/floor/iron,
+/area/station/engineering/shipbreaker_hut)
 "ljT" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -86504,8 +86508,8 @@ aaa
 gYo
 aaa
 cRL
+ljQ
 kWf
-dVv
 hjE
 cRL
 cRL
@@ -86761,7 +86765,7 @@ aaa
 gYo
 aaa
 qNb
-dVv
+ljQ
 hjE
 hjE
 mAm
