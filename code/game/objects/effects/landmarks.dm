@@ -723,6 +723,9 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 /obj/effect/landmark/navigate_destination/dockescpod4
 	location = "Escape Pod 4 Dock"
 
+/obj/effect/landmark/navigate_destination/dockescpod5
+	location = "Escape Pod 5 Dock"
+
 /obj/effect/landmark/navigate_destination/dockaux
 	location = "Auxiliary Dock"
 
