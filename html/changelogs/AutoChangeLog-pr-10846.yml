@@ -1,0 +1,7 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - bugfix: "pAI cameras now work while inside of a PDA."
+  - bugfix: "pAIs can now set the zoom of their camera."
+  - bugfix: "pAIs can now access their PDA Messenger & GPS."
+  - bugfix: "pAIs no longer have all access."
