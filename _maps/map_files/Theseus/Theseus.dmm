@@ -48365,7 +48365,7 @@
 /obj/machinery/door/airlock/maintenance{
 	name = "Ook Special Room"
 	},
-/turf/open/indestructible/permalube,
+/turf/open/floor/iron/permalube,
 /area/station/maintenance/port/lesser)
 "oeh" = (
 /obj/effect/turf_decal/stripes/line{
@@ -54245,7 +54245,7 @@
 "pSY" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/lattice/catwalk,
-/turf/open/indestructible/permalube{
+/turf/open/floor/iron/permalube{
 	initial_gas_mix = "TEMP=2.7"
 	},
 /area/space/nearstation)
@@ -68279,7 +68279,7 @@
 /turf/open/floor/plating,
 /area/station/security/brig/entrance)
 "tNN" = (
-/turf/open/indestructible/permalube,
+/turf/open/floor/iron/permalube,
 /area/station/maintenance/port/lesser)
 "tNO" = (
 /turf/closed/wall,
@@ -80750,7 +80750,7 @@
 /area/station/science/robotics/lab)
 "xrM" = (
 /obj/effect/decal/cleanable/glass,
-/turf/open/indestructible/permalube,
+/turf/open/floor/iron/permalube,
 /area/station/maintenance/port/lesser)
 "xrQ" = (
 /obj/structure/railing{
