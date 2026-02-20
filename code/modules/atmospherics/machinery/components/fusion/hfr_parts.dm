@@ -191,7 +191,7 @@
 			ui.open()
 	else
 		to_chat(user, span_notice("Activate the machine first by using a multitool on the interface."))
-		ui?.close() /// fix error from the original TG code. I am remove the comment after i will fix this on the TG
+		ui?.close()
 
 /obj/machinery/hypertorus/interface/proc/gas_list_to_gasid_list(list/gas_list)
 	var/list/gasid_list = list()
