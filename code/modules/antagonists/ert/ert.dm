@@ -237,7 +237,7 @@
 		H.equipOutfit(plasmaman_outfit)
 		H.open_internals(H.get_item_for_held_index(2))
 	H.equipOutfit(outfit)
-
+	ADD_TRAIT(H?.mind, TRAIT_CAN_HYPNO, JOB_TRAIT)
 
 /datum/antagonist/ert/greet()
 	if(!ert_team)
