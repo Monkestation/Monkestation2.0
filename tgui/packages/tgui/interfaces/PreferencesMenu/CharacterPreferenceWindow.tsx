@@ -128,7 +128,7 @@ export const CharacterPreferenceWindow = (props) => {
                     Fun fact: This isn't "Jobs" so that it intentionally
                     catches your eyes, because it's really important!
                   */}
-              Occupations
+              Filter Occupations
             </PageButton>
           </Stack.Item>
 
@@ -138,7 +138,7 @@ export const CharacterPreferenceWindow = (props) => {
               page={Page.Antags}
               setPage={setCurrentPage}
             >
-              Antagonists
+              Filter Antagonists
             </PageButton>
           </Stack.Item>
 

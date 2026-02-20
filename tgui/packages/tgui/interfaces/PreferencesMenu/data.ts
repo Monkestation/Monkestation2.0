@@ -113,6 +113,8 @@ export enum PreferencesSelectedPage {
   Settings = 0,
   Keybindings = 1,
   Volume = 2,
+  Antag = 3,
+  Jobs = 4,
 }
 
 export const createSetPreference =

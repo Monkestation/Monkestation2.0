@@ -12,6 +12,8 @@ import { GamePreferencesPage } from './GamePreferencesPage';
 import { KeybindingsPage } from './KeybindingsPage';
 import { PageButton } from './PageButton';
 import { VolumeMixerPage } from './VolumeMixerPage';
+import { AntagsPage } from './AntagsPage';
+import { JobsPageOverall } from './JobsPageOverall';
 
 export const PreferencesMenu = () => {
   const { act, data } = useBackend<PreferencesMenuData>();
@@ -27,6 +29,10 @@ export const PreferencesMenu = () => {
   if (window === PreferencesCurrentWindow.Character) {
     currentPage = PreferencesSelectedPage.Character;
 
+    if (currentPageLocal == PreferencesSelectedPage.Jobs) {
+        currentPage = PreferencesSelectedPage.Jobs;
+    }
+
     setGamePage = (page: PreferencesSelectedPage) => {
       setCurrentPage(page);
       act('open_game');
@@ -36,6 +42,10 @@ export const PreferencesMenu = () => {
   let pageContents: any;
   switch (window) {
     case PreferencesCurrentWindow.Character:
+      if (currentPageLocal == PreferencesSelectedPage.Jobs) {
+        pageContents = <JobsPageOverall />;
+        break;
+      }
       pageContents = <CharacterPreferenceWindow />;
       break;
     case PreferencesCurrentWindow.Game:
@@ -48,6 +58,12 @@ export const PreferencesMenu = () => {
           break;
         case PreferencesSelectedPage.Volume:
           pageContents = <VolumeMixerPage />;
+          break;
+        case PreferencesSelectedPage.Antag:
+          pageContents = <AntagsPage />;
+          break;
+        case PreferencesSelectedPage.Jobs:
+          pageContents = <JobsPageOverall />;
           break;
         case PreferencesSelectedPage.Character:
           pageContents = <Box>Error</Box>;
@@ -62,6 +78,7 @@ export const PreferencesMenu = () => {
 
   const settingsCategories = (
     <Stack vertical width="115px">
+      Characters
       <Stack.Item>
         <PageButton
           currentPage={currentPage}
@@ -79,13 +96,37 @@ export const PreferencesMenu = () => {
           fontSize="1em"
           fluid
           onClick={() => {
-            act('open_store');
+            act('open_character');
           }}
         >
           Loadout Store
         </Button>
       </Stack.Item>
+
       <Stack.Divider />
+      Role Selection
+        <Stack.Item>
+        <PageButton
+          currentPage={currentPage}
+          page={PreferencesSelectedPage.Jobs}
+          setPage={(_) => {
+            setCurrentPage(PreferencesSelectedPage.Jobs);
+            act('open_character');
+          }}        >
+          Occupations
+        </PageButton>
+      </Stack.Item>
+      <Stack.Item>
+        <PageButton
+          currentPage={currentPage}
+          page={PreferencesSelectedPage.Antag}
+          setPage={setGamePage}
+        >
+          Antagonists
+        </PageButton>
+      </Stack.Item>
+      <Stack.Divider />
+      Game Settings
       <Stack.Item>
         <PageButton
           currentPage={currentPage}

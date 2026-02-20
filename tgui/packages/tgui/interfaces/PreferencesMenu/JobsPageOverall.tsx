@@ -1,7 +1,7 @@
 import { sortBy } from 'common/collections';
 import { classes } from 'common/react';
 import type { ReactNode } from 'react';
-import { Box, Button, Dropdown, Stack, Tooltip } from 'tgui-core/components';
+import { Box, Button, Dropdown, Section, Stack, Tooltip } from 'tgui-core/components';
 import { useBackend } from '../../backend';
 import {
   createSetPreference,
@@ -94,16 +94,21 @@ const PriorityHeaders = () => {
 
       <Stack.Item className={className}>Off</Stack.Item>
 
-      <Stack.Item className={className}>On</Stack.Item>
+      <Stack.Item className={className}>Low</Stack.Item>
+
+      <Stack.Item className={className}>Medium</Stack.Item>
+
+      <Stack.Item className={className}>High</Stack.Item>
     </Stack>
   );
 };
 
 const PriorityButtons = (props: {
   createSetPriority: CreateSetPriority;
+  isOverflow: boolean;
   priority: JobPriority;
 }) => {
-  const { createSetPriority, priority } = props;
+  const { createSetPriority, isOverflow, priority } = props;
 
   return (
     <Stack
@@ -114,6 +119,7 @@ const PriorityButtons = (props: {
         paddingLeft: '0.3em',
       }}
     >
+      {isOverflow ? (
         <>
           <PriorityButton
             name="Off"
@@ -130,7 +136,38 @@ const PriorityButtons = (props: {
             onClick={createSetPriority(JobPriority.High)}
           />
         </>
+      ) : (
+        <>
+          <PriorityButton
+            name="Off"
+            modifier="off"
+            color="light-grey"
+            enabled={!priority}
+            onClick={createSetPriority(null)}
+          />
 
+          <PriorityButton
+            name="Low"
+            color="red"
+            enabled={priority === JobPriority.Low}
+            onClick={createSetPriority(JobPriority.Low)}
+          />
+
+          <PriorityButton
+            name="Medium"
+            color="yellow"
+            enabled={priority === JobPriority.Medium}
+            onClick={createSetPriority(JobPriority.Medium)}
+          />
+
+          <PriorityButton
+            name="High"
+            color="green"
+            enabled={priority === JobPriority.High}
+            onClick={createSetPriority(JobPriority.High)}
+          />
+        </>
+      )}
     </Stack>
   );
 };
@@ -139,7 +176,7 @@ const JobRow = (props: { className?: string; job: Job; name: string }) => {
   const { data } = useBackend<PreferencesMenuData>();
   const { className, job, name } = props;
 
-  const isOverflow = data.overflow_role === name || true;
+  const isOverflow = data.overflow_role === name;
   const priority = data.job_preferences[name];
 
   const createSetPriority = createCreateSetPriorityFromName(name);
@@ -186,6 +223,7 @@ const JobRow = (props: { className?: string; job: Job; name: string }) => {
     rightSide = (
       <PriorityButtons
         createSetPriority={createSetPriority}
+        isOverflow={isOverflow}
         priority={priority}
       />
     );
@@ -203,14 +241,17 @@ const JobRow = (props: { className?: string; job: Job; name: string }) => {
           <Stack.Item
             align="center"
             className="job-name"
-            width="80%"
+            width="70%"
             style={{
               paddingLeft: '0.3em',
             }}
           >
             {' '}
-            {!job.alt_titles ? (
-              name
+            {!job.alt_titles || true ? (
+              <Button                 width="100%"
+>
+                {name}
+              </Button>
             ) : (
               <Dropdown
                 width="100%"
@@ -311,7 +352,7 @@ const JoblessRoleDropdown = () => {
       value: JoblessRole.BeRandomJob,
     },
     {
-      displayText: `Use as default character`,
+      displayText: `Return to lobby if unavailable`,
       value: JoblessRole.ReturnToLobby,
     },
   ];
@@ -332,10 +373,48 @@ const JoblessRoleDropdown = () => {
   );
 };
 
-export const JobsPage = () => {
+const JoblessRoleDropdown2 = () => {
+  const { act, data } = useBackend<PreferencesMenuData>();
+  const selected = data.character_preferences.misc.joblessrole;
+
+  const options = [
+    {
+      displayText: `Join as ${data.overflow_role} if unavailable`,
+      value: JoblessRole.BeOverflow,
+    },
+    {
+      displayText: `Join as a random job if unavailable`,
+      value: JoblessRole.BeRandomJob,
+    },
+    {
+      displayText: `Edit Selected Characters`,
+      value: JoblessRole.ReturnToLobby,
+    },
+  ];
+
+  const selection = options?.find(
+    (option) => option.value === selected,
+  )?.displayText;
+
   return (
+    <Box position="absolute" left={1} width="25%">
+      <Dropdown
+        width="100%"
+        selected={selection}
+        onSelected={createSetPreference(act, 'joblessrole')}
+        options={options}
+      />
+    </Box>
+  );
+};
+
+export const JobsPageOverall = () => {
+  return (
+        <Section
+          title="Occupations">
     <Stack vertical>
       <JoblessRoleDropdown />
+      <JoblessRoleDropdown2 />
       <Gap amount={22} />
       <Stack.Item>
         <Stack className="PreferencesMenu__Jobs">
@@ -369,5 +448,6 @@ export const JobsPage = () => {
         </Stack>
       </Stack.Item>
     </Stack>
+    </Section>
   );
 };
