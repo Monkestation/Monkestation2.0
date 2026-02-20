@@ -573,9 +573,12 @@
 
 	return send_message_signal(sender, message, targets, fake_photo, FALSE, TRUE, fake_name, fake_job)
 
-/datum/computer_file/program/messenger/proc/send_message_signal(mob/sender, message, list/datum/computer_file/program/messenger/targets, photo_path = null, everyone = FALSE, rigged = FALSE, fake_name = null, fake_job = null)
-	if(!sender.can_perform_action(computer, ALLOW_RESTING))
-		return FALSE
+/datum/computer_file/program/messenger/proc/send_message_signal(atom/source, message, list/datum/computer_file/program/messenger/targets, photo_path = null, everyone = FALSE, rigged = FALSE, fake_name = null, fake_job = null)
+	var/mob/sender
+	if(ismob(source))
+		sender = source
+		if(!sender.can_perform_action(computer, ALLOW_RESTING|ALLOW_PAI))
+			return FALSE
 
 	if(!COOLDOWN_FINISHED(src, last_text))
 		return FALSE
@@ -719,7 +722,7 @@
 
 	if(QDELETED(src))
 		return
-	if(!usr.can_perform_action(computer, FORBID_TELEKINESIS_REACH))
+	if(!usr.can_perform_action(computer, FORBID_TELEKINESIS_REACH | ALLOW_RESTING | ALLOW_PAI))
 		return
 
 	// send an activation message and open the messenger
