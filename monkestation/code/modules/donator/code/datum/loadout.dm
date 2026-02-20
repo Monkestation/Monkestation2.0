@@ -1087,3 +1087,9 @@
 	ckeywhitelist = list("Flava-Floh")
 	donator_only = TRUE
 	requires_purchase = FALSE
+
+/datum/loadout_item/mask/lobotomites_visage
+	name = "Lobotomite's Visage"
+	item_path = /obj/item/clothing/mask/gas/lobotomites_visage
+	donator_only = TRUE
+	requires_purchase = FALSE
