@@ -1,7 +1,0 @@
-author: "notghosti"
-delete-after: True
-changes:
-  - map: "Tramstation captains office now closes it's shutters, instead of the aux base"
-  - map: "Tramstation engineering maintence door is now also accessible via construction access"
-  - map: "Metastation pathology no longer uses supernatural cameras to stalk its patients."
-  - map: "Tramstation incident counters should stick off of walls less"
