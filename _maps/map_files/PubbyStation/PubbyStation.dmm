@@ -49032,8 +49032,11 @@
 /turf/open/floor/iron,
 /area/station/security/prison/workout)
 "tta" = (
+/obj/structure/chemical_manufacturer,
+/obj/item/multitool,
+/obj/item/integrated_circuit/chemical,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/light/directional/north,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 1
 	},
@@ -85173,7 +85176,7 @@ fgs
 xmg
 buk
 bja
-jfg
+tta
 uXp
 xqq
 dMR
