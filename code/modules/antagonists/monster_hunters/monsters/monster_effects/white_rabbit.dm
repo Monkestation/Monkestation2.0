@@ -19,8 +19,6 @@
 	var/image/hunter_image
 	/// Has the rabbit already whispered?
 	var/being_used = FALSE
-	/// Is this rabbit selected to drop the gun?
-	var/drop_gun = FALSE
 
 /obj/effect/bnnuy/Initialize(mapload, datum/antagonist/monsterhunter/hunter)
 	. = ..()
@@ -78,13 +76,14 @@
 
 /obj/effect/bnnuy/proc/spotted(mob/living/user)
 	var/list/extra_logs = list()
-	if(hunter_antag?.rabbits_spotted == 0) //our first bunny
-		user.put_in_hands(new /obj/item/clothing/mask/cursed_rabbit(drop_location()))
-		extra_logs += "the cursed rabbit mask"
+	if(hunter_antag)
+		if(hunter_antag.rabbits_spotted == 0) //our first bunny
+			user.put_in_hands(new /obj/item/clothing/mask/cursed_rabbit(drop_location()))
+			extra_logs += "the cursed rabbit mask"
+		else if(hunter_antag.rabbits_spotted == 1) //our second bnnuy!
+			give_gun(user)
+			extra_logs += "the hunter's revolver"
 	user.put_in_hands(new /obj/item/rabbit_eye(drop_location()))
-	if(drop_gun)
-		give_gun(user)
-		extra_logs += "the hunter's revolver"
 	hunter_antag?.rabbits -= src
 	var/msg = "claimed a white rabbit at [AREACOORD(src)]"
 	if(length(extra_logs) > 0)
