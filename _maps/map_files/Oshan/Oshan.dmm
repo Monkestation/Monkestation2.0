@@ -8369,7 +8369,6 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/digital_clock/directional/north,
-/obj/structure/closet/l3closet/scientist,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "cLN" = (
@@ -13779,7 +13778,6 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/structure/closet/l3closet/scientist,
 /obj/effect/mapping_helpers/apc/cell_10k,
 /obj/effect/mapping_helpers/apc/full_charge,
 /turf/open/floor/iron/white,
@@ -52433,6 +52431,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/dark_purple/opposingcorners,
+/obj/structure/closet/l3closet/scientist,
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
 "qCO" = (
@@ -76286,6 +76285,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/dark_purple/opposingcorners,
+/obj/structure/closet/l3closet/scientist,
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
 "yeG" = (
