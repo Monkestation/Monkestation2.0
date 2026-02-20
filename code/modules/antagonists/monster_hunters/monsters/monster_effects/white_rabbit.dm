@@ -92,7 +92,7 @@
 
 /obj/effect/bnnuy/proc/give_gun(mob/living/user)
 	user.put_in_hands(new /obj/item/gun/ballistic/revolver/hunter_revolver(drop_location()))
-	var/datum/action/cooldown/spell/conjure_item/blood_silver/silverblood = new(user)
+	var/datum/action/cooldown/spell/conjure_item/blood_silver/silverblood = new
 	silverblood.StartCooldown()
 	silverblood.Grant(user)
 	hunter_antag.powers += silverblood
