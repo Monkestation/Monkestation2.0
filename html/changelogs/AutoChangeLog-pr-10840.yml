@@ -1,0 +1,4 @@
+author: "SirNightKnight"
+delete-after: True
+changes:
+  - bugfix: "fixed the bot scan experiment requiring medical cleanbots."
