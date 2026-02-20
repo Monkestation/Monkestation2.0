@@ -36661,7 +36661,6 @@
 /area/station/engineering/supermatter/room)
 "kLm" = (
 /obj/structure/table/glass,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /obj/item/defibrillator/loaded{
 	pixel_y = 3
 	},
@@ -67020,7 +67019,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/upper)
 "tvw" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /turf/open/floor/iron/dark,
 /area/station/medical/cryo)
 "tvD" = (
