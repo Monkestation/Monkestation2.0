@@ -109,7 +109,7 @@
 		/area/station/solars,
 	))
 
-	var/list/turf_groups = noise_turfs_station_equal_weight(6, forbidden_area_typecache)
+	var/list/turf_groups = noise_turfs_station_equal_weight(4, forbidden_area_typecache)
 	main_loop:
 		while(length(rabbits) < amount && length(turf_groups))
 			var/idx = rand(1, length(turf_groups))
