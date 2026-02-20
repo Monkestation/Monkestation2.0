@@ -499,3 +499,11 @@
 /turf/open/floor/iron/snowed/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/diggable, /obj/item/stack/sheet/mineral/snow, 2)
+
+/turf/open/floor/iron/permalube
+	icon_state = "darkfull"
+	base_icon_state = "darkfull"
+
+/turf/open/floor/iron/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/wet_floor, TURF_WET_LUBE, INFINITY, 0, INFINITY, TRUE)
