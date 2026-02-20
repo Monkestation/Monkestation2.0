@@ -25339,7 +25339,6 @@
 /turf/open/floor/iron/dark/small,
 /area/station/security/checkpoint/engineering)
 "ibA" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/engine,
 /area/station/science/explab)
@@ -45896,6 +45895,9 @@
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /obj/effect/turf_decal/trimline/purple/filled/mid_joiner,
 /obj/machinery/firealarm/directional/south,
+/obj/machinery/modular_computer/preset/research{
+	dir = 1
+	},
 /turf/open/floor/iron/dark/herringbone,
 /area/station/science/server)
 "oDx" = (
@@ -68974,6 +68976,7 @@
 /obj/effect/turf_decal/trimline/orange/filled/warning{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/lockers)
 "vOe" = (
