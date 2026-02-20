@@ -26369,9 +26369,6 @@
 /obj/structure/table/wood,
 /obj/effect/turf_decal/tile/dark/opposingcorners,
 /obj/effect/turf_decal/tile/dark/opposingcorners,
-/obj/item/book/mimery{
-	pixel_x = 4
-	},
 /obj/item/reagent_containers/cup/glass/bottle/bottleofnothing{
 	pixel_x = -10;
 	pixel_y = 8
