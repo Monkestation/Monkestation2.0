@@ -54,7 +54,7 @@
 
 /obj/machinery/power/solar/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	. = ..()
-	if(same_z_layer)
+	if(same_z_layer || isnull(new_turf))
 		return
 	SET_PLANE(panel_edge, PLANE_TO_TRUE(panel_edge.plane), new_turf)
 	SET_PLANE(panel, PLANE_TO_TRUE(panel.plane), new_turf)
