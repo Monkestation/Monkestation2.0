@@ -121,8 +121,6 @@
 	var/cached_linear_dropoff = 10
 	/// Do not directly set, use update_sustain()
 	var/cached_exponential_dropoff = 1.045
-	/////////////////////////////////////////////////////////////////////////
-	var/mixing_channel = CHANNEL_INSTRUMENTS
 	///care about distance?
 	var/cares_about_distance = TRUE
 

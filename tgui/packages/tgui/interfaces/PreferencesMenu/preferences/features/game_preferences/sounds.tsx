@@ -34,13 +34,6 @@ export const sound_endofround: FeatureToggle = {
   component: CheckboxInput,
 };
 
-export const sound_instruments: FeatureToggle = {
-  name: 'Enable instruments',
-  category: 'SOUND',
-  description: 'When enabled, be able hear instruments in game.',
-  component: CheckboxInput,
-};
-
 export const sound_jukebox: FeatureToggle = {
   name: 'Enable jukebox music',
   category: 'SOUND',
