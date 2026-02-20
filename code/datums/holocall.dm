@@ -39,6 +39,7 @@
 	call_start_time = world.time
 	user = caller_user
 	calling_pad.outgoing_call = src
+	calling_pad.SetLightsAndPower()
 	calling_holopad = calling_pad
 	head_call = elevated_access
 	dialed_holopads = list()

@@ -7461,8 +7461,12 @@
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "cHV" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/duct,
 /obj/machinery/camera/autoname/directional/east,
-/turf/closed/wall/r_wall,
+/turf/open/floor/stone,
 /area/station/science/xenobiology)
 "cId" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -51066,7 +51070,6 @@
 /obj/structure/table/glass,
 /obj/item/reagent_containers/cup/beaker,
 /obj/item/reagent_containers/dropper,
-/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/iron/white/diagonal,
 /area/station/medical/pathology/isolation)
 "rEO" = (
@@ -65329,6 +65332,7 @@
 "wEN" = (
 /obj/structure/table/glass,
 /obj/item/restraints/handcuffs,
+/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/iron/white/diagonal,
 /area/station/medical/pathology/isolation)
 "wER" = (
@@ -117609,7 +117613,7 @@ hjt
 wEu
 vul
 kkT
-jdj
+cHV
 xNm
 jdj
 jdj
@@ -117866,7 +117870,7 @@ imw
 aft
 ygF
 xRz
-cHV
+jlU
 jlU
 aYt
 gva
