@@ -47,17 +47,6 @@
 	if(sound_to_send)
 		SEND_SOUND(client.mob, sound_to_send)
 
-/// Controls hearing dance machines
-/datum/preference/toggle/sound_jukebox
-	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
-	savefile_key = "sound_jukebox"
-	savefile_identifier = PREFERENCE_PLAYER
-
-/datum/preference/toggle/sound_jukebox/apply_to_client_updated(client/client, value)
-	if (!value)
-		client.mob.stop_sound_channel(CHANNEL_JUKEBOX)
-	client.mob.update_media_source()
-
 /// Controls hearing admin music
 /datum/preference/toggle/sound_midi
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES

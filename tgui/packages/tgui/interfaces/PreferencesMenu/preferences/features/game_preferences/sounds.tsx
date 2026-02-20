@@ -34,13 +34,6 @@ export const sound_endofround: FeatureToggle = {
   component: CheckboxInput,
 };
 
-export const sound_jukebox: FeatureToggle = {
-  name: 'Enable jukebox music',
-  category: 'SOUND',
-  description: 'When enabled, hear music for jukeboxes, dance machines, etc.',
-  component: CheckboxInput,
-};
-
 export const sound_midi: FeatureToggle = {
   name: 'Enable admin music',
   category: 'SOUND',
