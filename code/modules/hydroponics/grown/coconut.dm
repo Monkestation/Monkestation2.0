@@ -76,7 +76,5 @@
 	e_cost = 120
 
 /obj/projectile/beam/disabler/coconut
-	stamina = 55
-
 	icon = 'monkestation/icons/obj/hydroponics/fruit.dmi'
 	icon_state = "coconut"

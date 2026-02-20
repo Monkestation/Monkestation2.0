@@ -116,4 +116,5 @@
 		host_mob.drop_all_held_items()
 	else if(prob(4))
 		to_chat(host_mob, span_warning("You can't feel your legs!"))
-		host_mob.Disorient(6 SECONDS, 10, paralyze = 3 SECONDS)
+		host_mob.Disorient(6 SECONDS, paralyze = 3 SECONDS)
+		host_mob.stamina.adjust(-10)

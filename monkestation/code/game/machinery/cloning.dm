@@ -330,16 +330,18 @@
 
 /obj/machinery/clonepod/multitool_act(mob/living/user, obj/item/multitool/multi)
 	. = NONE
-	if(!istype(multi.buffer, /obj/machinery/computer/cloning))
-		multi.set_buffer(src)
-		to_chat(user, "<font color = #666633>-% Successfully stored [REF(multi.buffer)] [multi.buffer] in buffer %-</font color>")
+
+	var/datum/buffer = multitool_get_buffer(multi)
+	if(!istype(buffer, /obj/machinery/computer/cloning))
+		multitool_set_buffer(multi, src)
+		to_chat(user, "<font color = #666633>-% Successfully stored [REF(buffer)] [buffer] in buffer %-</font color>")
 		return ITEM_INTERACT_SUCCESS
-	if(get_dist(src, multi.buffer) > 16)
+	if(get_dist(src, buffer) > 16)
 		to_chat(user, "<font color = #666633>-% Cannot link machines that far away. %-</font color>")
 		return ITEM_INTERACT_BLOCKING
 
-	to_chat(user, "<font color = #666633>-% Successfully linked [multi.buffer] with [src] %-</font color>")
-	var/obj/machinery/computer/cloning/comp = multi.buffer
+	to_chat(user, "<font color = #666633>-% Successfully linked [buffer] with [src] %-</font color>")
+	var/obj/machinery/computer/cloning/comp = buffer
 	if(connected)
 		connected.DetachCloner(src)
 	comp.AttachCloner(src)

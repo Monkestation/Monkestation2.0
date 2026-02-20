@@ -168,6 +168,12 @@
 	inhand_icon_state = "securitypack"
 	alternate_worn_layer = (HEAD_LAYER-0.5)
 
+/obj/item/storage/backpack/secmed
+	name = "security medical backpack"
+	desc = "A security-grade backpack, now in security grey!"
+	icon_state = "backpack-secmed"
+	inhand_icon_state = "backpack-secmed"
+
 /obj/item/storage/backpack/captain
 	name = "captain's backpack"
 	desc = "It's a special backpack made exclusively for Nanotrasen officers."
@@ -427,6 +433,12 @@
 	icon_state = "satchel-security"
 	inhand_icon_state = "satchel-sec"
 
+/obj/item/storage/backpack/satchel/secmed
+	name = "security medical satchel"
+	desc = "A security-grade satchel, now in security grey!"
+	icon_state = "satchel-secmed"
+	inhand_icon_state = "satchel-secmed"
+
 /obj/item/storage/backpack/satchel/explorer
 	name = "explorer satchel"
 	desc = "A robust satchel for stashing your loot."
@@ -557,8 +569,6 @@
 	icon_state = "duffel-virology"
 	inhand_icon_state = "duffel-virology"
 
-
-
 /obj/item/storage/backpack/duffelbag/med/surgery/PopulateContents()
 	new /obj/item/scalpel(src)
 	new /obj/item/hemostat(src)
@@ -578,11 +588,16 @@
 	icon_state = "duffel-security"
 	inhand_icon_state = "duffel-sec"
 
-/obj/item/storage/backpack/duffelbag/sec/surgery
-	name = "surgical duffel bag"
-	desc = "A large duffel bag for holding extra supplies - this one has a material inlay with space for various sharp-looking tools."
+/obj/item/storage/backpack/duffelbag/secmed
+	name = "security medical duffelbag"
+	desc = "A large duffel bag for holding extra supplies, now in security grey!"
+	icon_state = "duffel-secmed"
+	inhand_icon_state = "duffel-secmed"
 
-/obj/item/storage/backpack/duffelbag/sec/surgery/PopulateContents()
+/obj/item/storage/backpack/duffelbag/secmed/surgery
+	desc = "A large duffel bag for holding extra supplies, now in security grey! - this one has a material inlay with space for various sharp-looking tools."
+
+/obj/item/storage/backpack/duffelbag/secmed/surgery/PopulateContents()
 	new /obj/item/scalpel(src)
 	new /obj/item/hemostat(src)
 	new /obj/item/retractor(src)

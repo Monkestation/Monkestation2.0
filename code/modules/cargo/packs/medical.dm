@@ -4,9 +4,10 @@
 
 /datum/supply_pack/medical/bloodpacks
 	name = "Blood Pack Variety Crate"
-	desc = "Contains ten different blood packs for reintroducing blood to patients."
-	cost = CARGO_CRATE_VALUE * 7
+	desc = "Contains ten different blood packs for reintroducing blood to patients along with three saline chem packs."
+	cost = CARGO_CRATE_VALUE * 5
 	contains = list(/obj/item/reagent_containers/blood = 2,
+					/obj/item/reagent_containers/chem_pack/saline = 3,
 					/obj/item/reagent_containers/blood/a_plus,
 					/obj/item/reagent_containers/blood/a_minus,
 					/obj/item/reagent_containers/blood/b_plus,
@@ -15,7 +16,8 @@
 					/obj/item/reagent_containers/blood/o_minus,
 					/obj/item/reagent_containers/blood/lizard,
 					/obj/item/reagent_containers/blood/ethereal,
-					/obj/item/reagent_containers/blood/slime
+					/obj/item/reagent_containers/blood/slime,
+					/obj/item/reagent_containers/blood/spider,
 				)
 	crate_name = "blood freezer"
 	crate_type = /obj/structure/closet/crate/freezer
@@ -75,8 +77,9 @@
 					/obj/item/reagent_containers/cup/bottle/epinephrine,
 					/obj/item/reagent_containers/cup/bottle/morphine,
 					/obj/item/reagent_containers/cup/bottle/toxin,
+					/obj/item/reagent_containers/cup/bottle/formaldehyde,
 					/obj/item/reagent_containers/cup/beaker/large,
-					/obj/item/reagent_containers/pill/insulin,
+					/obj/item/reagent_containers/syringe/convermol = 2,
 					/obj/item/stack/medical/gauze,
 					/obj/item/storage/box/beakers,
 					/obj/item/storage/box/medigels,
@@ -89,8 +92,6 @@
 					/obj/item/storage/medkit/fire,
 					/obj/item/defibrillator/loaded,
 					/obj/item/reagent_containers/blood/o_minus,
-					/obj/item/storage/pill_bottle/mining,
-					/obj/item/reagent_containers/pill/neurine,
 					/obj/item/stack/medical/bone_gel = 2,
 					/obj/item/vending_refill/medical,
 					/obj/item/vending_refill/drugs,

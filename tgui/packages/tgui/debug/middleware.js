@@ -14,10 +14,7 @@ import {
 } from './actions';
 
 // prettier-ignore
-const relayedTypes = [
-  'backend/update',
-  'chat/message',
-];
+const relayedTypes = ['backend/update', 'chat/message'];
 
 export const debugMiddleware = (store) => {
   acquireHotKey(KEY_F11);
@@ -35,9 +32,10 @@ export const debugMiddleware = (store) => {
       setTimeout(() => {
         // prettier-ignore
         throw new Error(
-          'OOPSIE WOOPSIE!! UwU We made a fucky wucky!! A wittle'
-          + ' fucko boingo! The code monkeys at our headquarters are'
-          + ' working VEWY HAWD to fix this!');
+          'OOPSIE WOOPSIE!! UwU We made a fucky wucky!! A wittle' +
+            ' fucko boingo! The code monkeys at our headquarters are' +
+            ' working VEWY HAWD to fix this!',
+        );
       });
     }
   });
@@ -45,7 +43,7 @@ export const debugMiddleware = (store) => {
 };
 
 export const relayMiddleware = (store) => {
-  const devServer = require('tgui-dev-server/link/client.cjs');
+  const devServer = require('tgui-dev-server/link/client.ts');
   const externalBrowser = location.search === '?external';
   if (externalBrowser) {
     devServer.subscribe((msg) => {
@@ -68,7 +66,7 @@ export const relayMiddleware = (store) => {
   return (next) => (action) => {
     const { type, payload, relayed } = action;
     if (type === openExternalBrowser.type) {
-      window.open(location.href + '?external', '_blank');
+      window.open(`${location.href}?external`, '_blank');
       return;
     }
     if (relayedTypes.includes(type) && !relayed && !externalBrowser) {

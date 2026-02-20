@@ -4,10 +4,9 @@
  * @license MIT
  */
 
-import { vecAdd, vecMultiply, vecScale, vecSubtract } from 'common/vector';
-
-import { createLogger } from './logging';
 import { storage } from 'common/storage';
+import { vecAdd, vecMultiply, vecScale, vecSubtract } from 'common/vector';
+import { createLogger } from './logging';
 
 const logger = createLogger('drag');
 const pixelRatio = window.devicePixelRatio ?? 1;
@@ -39,17 +38,17 @@ export const getWindowSize = (): [number, number] => [
 ];
 
 // Set window position
-const setWindowPosition = (vec: [number, number]) => {
+export const setWindowPosition = (vec: [number, number]) => {
   const byondPos = vecAdd(vec, screenOffset);
   return Byond.winset(Byond.windowId, {
-    pos: byondPos[0] + ',' + byondPos[1],
+    pos: `${byondPos[0]},${byondPos[1]}`,
   });
 };
 
 // Set window size
 const setWindowSize = (vec: [number, number]) => {
   return Byond.winset(Byond.windowId, {
-    size: vec[0] + 'x' + vec[1],
+    size: `${vec[0]}x${vec[1]}`,
   });
 };
 
@@ -95,7 +94,7 @@ export const touchRecents = (
 };
 
 // Store window geometry in local storage
-const storeWindowGeometry = async () => {
+export const storeWindowGeometry = async () => {
   logger.log('storing geometry');
   const geometry = {
     pos: getWindowPosition(),
@@ -131,21 +130,19 @@ export const recallWindowGeometry = async (
   let pos = geometry?.pos || options.pos;
   let size = options.size;
   // Convert size from css-pixels to display-pixels
-  if ((options.scale || Byond.TRIDENT) && size) {
+  if (options.scale && size) {
     size = [size[0] * pixelRatio, size[1] * pixelRatio];
   }
 
-  if (!Byond.TRIDENT) {
-    if (!options.scale) {
-      document.body.style.zoom = `${100 / window.devicePixelRatio}%`;
-      document.documentElement.style.setProperty(
-        '--scaling-amount',
-        window.devicePixelRatio.toString(),
-      );
-    } else {
-      document.body.style.zoom = '';
-      document.documentElement.style.setProperty('--scaling-amount', null);
-    }
+  if (!options.scale) {
+    document.body.style.zoom = `${100 / window.devicePixelRatio}%`;
+    document.documentElement.style.setProperty(
+      '--scaling-amount',
+      window.devicePixelRatio.toString(),
+    );
+  } else {
+    document.body.style.zoom = '';
+    document.documentElement.style.setProperty('--scaling-amount', null);
   }
 
   // Wait until screen offset gets resolved
@@ -181,7 +178,7 @@ export const recallWindowGeometry = async (
 // Setup draggable window
 export const setupDrag = async () => {
   // Calculate screen offset caused by the windows taskbar
-  let windowPosition = getWindowPosition();
+  const windowPosition = getWindowPosition();
 
   screenOffsetPromise = Byond.winget(Byond.windowId, 'pos').then((pos) => [
     pos.x - windowPosition[0],

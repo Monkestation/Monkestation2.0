@@ -1,6 +1,6 @@
-import { BooleanLike } from 'common/react';
+import type { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
-import { Box, Button, Section, Stack } from '../components';
+import { Box, Button, Image, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -26,7 +26,7 @@ export const Vendatray = (props) => {
           </Stack.Item>
         </Stack>
         {registered ? (
-          <Section italics>Pays to the account of {owner_name}.</Section>
+          <Section italic>Pays to the account of {owner_name}.</Section>
         ) : (
           <>
             <Section>Tray is unregistered.</Section>
@@ -58,22 +58,21 @@ const ProductInfo = (props) => {
           <Button icon="pen" onClick={() => act('Adjust')} />
         </Box>
       </Section>
-      <>
-        <Button
-          fluid
-          icon="window-restore"
-          content={tray_open ? 'Open' : 'Closed'}
-          selected={tray_open}
-          onClick={() => act('Open')}
-        />
-        <Button.Confirm
-          fluid
-          icon="money-bill-wave"
-          content="Purchase Item"
-          disabled={!product_name}
-          onClick={() => act('Buy')}
-        />
-      </>
+
+      <Button
+        fluid
+        icon="window-restore"
+        content={tray_open ? 'Open' : 'Closed'}
+        selected={tray_open}
+        onClick={() => act('Open')}
+      />
+      <Button.Confirm
+        fluid
+        icon="money-bill-wave"
+        content="Purchase Item"
+        disabled={!product_name}
+        onClick={() => act('Buy')}
+      />
     </>
   );
 };
@@ -85,16 +84,14 @@ const VendingImage = (props) => {
 
   return (
     <Section height="100%">
-      <Box
-        as="img"
+      <Image
         m={1}
         src={`data:image/jpeg;base64,${product_icon}`}
         height="96px"
         width="96px"
         style={{
-          '-ms-interpolation-mode': 'nearest-neighbor',
-          'image-rendering': 'pixelated',
-          'vertical-align': 'middle',
+          imageRendering: 'pixelated',
+          verticalAlign: 'middle',
         }}
       />
     </Section>

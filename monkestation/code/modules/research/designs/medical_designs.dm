@@ -15,7 +15,7 @@
 	desc = "A brain implant with a bluespace technology that lets you perform an advanced surgery through your station research server."
 	id = "linked_surgery"
 	build_path = /obj/item/organ/internal/cyberimp/brain/linked_surgery
-	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
+	build_type = MECHFAB
 	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*6, /datum/material/glass = SMALL_MATERIAL_AMOUNT*6, /datum/material/silver = SMALL_MATERIAL_AMOUNT*5, /datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = SMALL_MATERIAL_AMOUNT*2.5)
 	construction_time = 6 SECONDS
 	category = list(
@@ -85,7 +85,7 @@
 	name = "Vacuole ligament system"
 	desc = "Mechicanical servos in ones leg that increases their natural stride. Popular amongst parkour enthusiasts. You need to implant this in both of your legs to make it work."
 	id = "ci-sprinter"
-	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
+	build_type = MECHFAB
 	construction_time = 50
 	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT*1.5, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/silver =SMALL_MATERIAL_AMOUNT*5, /datum/material/gold =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/organ/internal/cyberimp/leg/sprinter
@@ -138,7 +138,7 @@
 	name = "Meson Eyes"
 	desc = "These cybernetic eyes will give you meson vision. Never wonder where the kitchen is again."
 	id = "ci-meson"
-	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
+	build_type = MECHFAB
 	construction_time = 40
 	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*6, /datum/material/glass = SMALL_MATERIAL_AMOUNT*4)
 	build_path = /obj/item/organ/internal/eyes/robotic/meson
@@ -151,7 +151,7 @@
 	name = "Pathology HUD Implant"
 	desc = "These cybernetic eyes will reveal all the pathogens around you. Germaphobes beware."
 	id = "ci-pathohud"
-	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
+	build_type = MECHFAB
 	construction_time = 50
 	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*6, /datum/material/glass = SMALL_MATERIAL_AMOUNT*6, /datum/material/silver =SMALL_MATERIAL_AMOUNT*5, /datum/material/gold =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/organ/internal/cyberimp/eyes/hud/pathology
@@ -164,7 +164,7 @@
 	name = "Science HUD Implant"
 	desc = "These cybernetic eyes will reveal the molecular makeup of items upon inspection."
 	id = "ci-scihud"
-	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
+	build_type = MECHFAB
 	construction_time = 50
 	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*6, /datum/material/glass = SMALL_MATERIAL_AMOUNT*6, /datum/material/silver = SMALL_MATERIAL_AMOUNT*6, /datum/material/gold = SMALL_MATERIAL_AMOUNT*6)
 	build_path = /obj/item/organ/internal/cyberimp/eyes/fakehud/science

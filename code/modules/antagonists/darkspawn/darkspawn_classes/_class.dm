@@ -235,13 +235,10 @@
 	eye_icon = "admeme_eyes"
 	class_icon = "admeme_sigils"
 	var/last_colour = 0
-	var/list/hsv
 
 /datum/component/darkspawn_class/admin/update_owner_overlay(atom/source, list/overlays)
-	if(!hsv)
-		hsv = rgb2hsv(rgb(255, 0, 0))
-	hsv = RotateHue(hsv, (world.time - last_colour) * 15)
+	var/list/rgb_colors = RotateHue(rgb(255, 0, 0), (world.time - last_colour) * 15)
 	last_colour = world.time
-	class_color = hsv2rgb(hsv) //rainbow
+	class_color = rgb_colors //rainbow
 	addtimer(CALLBACK(owner, TYPE_PROC_REF(/atom, update_appearance), UPDATE_OVERLAYS), 1 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE) //regularly refresh the overlays
 	return ..()

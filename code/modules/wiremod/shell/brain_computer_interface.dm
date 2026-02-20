@@ -15,7 +15,7 @@
 
 	AddComponent(/datum/component/shell, list(
 		new /obj/item/circuit_component/bci_core,
-	), SHELL_CAPACITY_SMALL, starting_circuit = circuit)
+	), SHELL_CAPACITY_SMALL, starting_circuit = circuit, blacklisted_integrated_circuits = list(/obj/item/integrated_circuit/chemical))
 
 /obj/item/organ/internal/cyberimp/bci/on_insert(mob/living/carbon/receiver)
 	. = ..()

@@ -4,7 +4,6 @@
 	icon_state = "joy"
 	clothing_flags = MASKINTERNALS
 	flags_inv = HIDESNOUT
-	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
 	item_flags = INFINITE_RESKIN
 	unique_reskin = list(
 			"Joy" = "joy",

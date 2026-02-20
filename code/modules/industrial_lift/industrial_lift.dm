@@ -422,6 +422,10 @@ GLOBAL_LIST_INIT(all_radial_directions, list(
 				collided.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_R_ARM, wound_bonus = 14)
 				log_combat(src, collided, "collided with")
 
+				var/mob/living/carbon/carbon_collided = collided
+				if (istype(carbon_collided))
+					carbon_collided.impact_fart(probability=20, volume=200)
+
 				//increment the hit counter signs
 				if(should_increment_count)
 					SSpersistence.tram_hits_this_round++

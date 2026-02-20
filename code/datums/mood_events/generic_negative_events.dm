@@ -498,3 +498,8 @@
 	if(HAS_TRAIT(owner, TRAIT_SMOKER))
 		description = "Blowing smoke in my face, really?"
 		mood_change = 0
+
+/datum/mood_event/wishgranter_awakening
+	description = "What... what was that ominous feeling?"
+	mood_change = -10
+	timeout = 5 MINUTES

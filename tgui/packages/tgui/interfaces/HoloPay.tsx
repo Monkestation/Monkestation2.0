@@ -77,7 +77,7 @@ const AccountDisplay = (props) => {
 
   return (
     <Section>
-      <Table fill>
+      <Table>
         <Table.Row>
           <Table.Cell>
             <Box color="label">
@@ -137,7 +137,7 @@ const TerminalDisplay = (props) => {
               content={
                 <>
                   <Icon name="coins" />
-                  Pay {force_fee + ' cr'}
+                  Pay {`${force_fee} cr`}
                 </>
               }
               disabled={cannot_pay}
@@ -223,7 +223,7 @@ const SetupDisplay = (props) => {
             fluid
             height="3rem"
             maxLength={42}
-            onChange={(_, value) => {
+            onChange={(value) => {
               value?.length > 3 && act('rename', { name: value });
             }}
             placeholder={decodeHtmlEntities(name)}
@@ -237,7 +237,7 @@ const SetupDisplay = (props) => {
             <RestrictedInput
               fluid
               maxValue={max_fee}
-              onChange={(_, value) => act('fee', { amount: value })}
+              onChange={(value) => act('fee', { amount: value })}
               value={force_fee}
             />
           </Tooltip>

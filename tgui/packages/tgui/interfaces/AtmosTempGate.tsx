@@ -1,4 +1,4 @@
-import { BooleanLike } from 'common/react';
+import type { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
 import { Button, LabeledList, NumberInput, Section } from '../components';
 import { Window } from '../layouts';
@@ -36,7 +36,7 @@ export const AtmosTempGate = (props) => {
                 minValue={min_temperature}
                 maxValue={max_temperature}
                 step={1}
-                onChange={(e, value) =>
+                onChange={(value) =>
                   act('temperature', {
                     temperature: value,
                   })

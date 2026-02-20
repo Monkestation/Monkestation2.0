@@ -180,11 +180,12 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	if (!istype(multi_tool) || locked)
 		return .
 
-	if(istype(multi_tool.buffer, /obj/machinery/air_sensor))
+	var/datum/buffer = multitool_get_buffer(multi_tool)
+	if(istype(buffer, /obj/machinery/air_sensor))
 		if(!allow_link_change)
 			balloon_alert(user, "linking disabled")
 			return ITEM_INTERACT_BLOCKING
-		connect_sensor(multi_tool.buffer)
+		connect_sensor(buffer)
 		balloon_alert(user, "connected sensor")
 		return ITEM_INTERACT_SUCCESS
 

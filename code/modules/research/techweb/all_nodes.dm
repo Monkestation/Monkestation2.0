@@ -117,6 +117,7 @@
 		"shotgun_slug",
 		"sec_Islug",
 		"sec_rshot",
+		"sec_pen",
 		"servingtray",
 		"shaker",
 		"shot_glass",
@@ -146,7 +147,8 @@
 		"universal_scanner",
 		"voice_analyzer",
 		"watering_can",
-		"modlink_scryer", // monkestation addition
+		"modlink_scryer",// monkestation addition
+		"flatpacker",
 	)
 
 /datum/techweb_node/basic_tools
@@ -218,6 +220,10 @@
 		"cybernetic_liver",
 		"cybernetic_lungs",
 		"cybernetic_stomach",
+		"surplus_cybernetic_l_leg",
+		"surplus_cybernetic_r_leg",
+		"surplus_cybernetic_l_arm",
+		"surplus_cybernetic_r_arm",
 		"defibmountdefault",
 		"dropper",
 		"hemostat",
@@ -250,5 +256,6 @@
 		"synth_stomach",
 		"synth_ears",
 		"synth_heart",
-		"cybernetic_spleen"
+		"cybernetic_spleen",
+		"vitals_monitor",
 	)

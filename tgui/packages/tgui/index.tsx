@@ -6,25 +6,6 @@
 
 // Themes
 import './styles/main.scss';
-import './styles/themes/abductor.scss';
-import './styles/themes/cardtable.scss';
-import './styles/themes/spookyconsole.scss';
-import './styles/themes/hackerman.scss';
-import './styles/themes/malfunction.scss';
-import './styles/themes/neutral.scss';
-import './styles/themes/ntos.scss';
-import './styles/themes/ntos_cat.scss';
-import './styles/themes/ntos_darkmode.scss';
-import './styles/themes/ntos_lightmode.scss';
-import './styles/themes/ntOS95.scss';
-import './styles/themes/ntos_synth.scss';
-import './styles/themes/ntos_terminal.scss';
-import './styles/themes/ntos_spooky.scss';
-import './styles/themes/paper.scss';
-import './styles/themes/retro.scss';
-import './styles/themes/syndicate.scss';
-import './styles/themes/wizard.scss';
-import './styles/themes/admin.scss';
 // MONKESTATION ADDITION START
 import './styles/themes/clockwork.scss';
 import './styles/themes/admintickets.scss';
@@ -34,16 +15,15 @@ import './styles/themes/chicken_book.scss';
 import './styles/themes/generic-yellow.scss';
 import './styles/themes/generic.scss';
 
-import { configureStore } from './store';
-
-import { captureExternalLinks } from './links';
-import { createRenderer } from './renderer';
 import { perf } from 'common/perf';
+import { setupHotReloading } from 'tgui-dev-server/link/client';
+import { setGlobalStore } from './backend';
 import { setupGlobalEvents } from './events';
 import { setupHotKeys } from './hotkeys';
-import { setupHotReloading } from 'tgui-dev-server/link/client.cjs';
-import { setGlobalStore } from './backend';
 import { loadIconRefMap } from './icons';
+import { captureExternalLinks } from './links';
+import { createRenderer } from './renderer';
+import { configureStore } from './store';
 
 perf.mark('inception', window.performance?.timing?.navigationStart);
 perf.mark('init');
@@ -80,14 +60,12 @@ const setupApp = () => {
   if (module.hot) {
     setupHotReloading();
     // prettier-ignore
-    module.hot.accept([
-      './components',
-      './debug',
-      './layouts',
-      './routes',
-    ], () => {
-      renderApp();
-    });
+    module.hot.accept(
+      ['./components', './debug', './layouts', './routes'],
+      () => {
+        renderApp();
+      },
+    );
   }
 };
 

@@ -305,7 +305,7 @@ ADMIN_VERB(manage_job_slots, R_ADMIN, FALSE, "Manage Job Slots", "Manage the num
 /datum/admins/proc/manage_free_slots()
 	if(!check_rights())
 		return
-	var/datum/browser/browser = new(usr, "jobmanagement", "Manage Free Slots", 520)
+	var/datum/browser/browser = new(usr, "jobmanagement", "Manage Free Slots", 580)
 	var/list/dat = list()
 	var/count = 0
 
@@ -440,3 +440,10 @@ ADMIN_VERB(lag_switch_panel, R_ADMIN, FALSE, "Show Lag Switches", "Display the c
 	dat += "</body></html>"
 	user << browse(dat.Join(), "window=lag_switch_panel;size=420x480")
 	BLACKBOX_LOG_ADMIN_VERB("Lag Switch Panel") //MONKE EDIT
+
+ADMIN_VERB(spawn_panel, R_SPAWN, FALSE, "Spawn Panel", "Spawn Panel (TGUI).", ADMIN_CATEGORY_GAME)
+	var/datum/spawnpanel/panel = get_spawnpanel_for_admin(user.mob)
+	if(panel)
+		panel.ui_interact(user.mob)
+	BLACKBOX_LOG_ADMIN_VERB("Spawn Panel")
+

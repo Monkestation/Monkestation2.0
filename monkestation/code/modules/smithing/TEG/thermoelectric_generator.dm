@@ -382,7 +382,8 @@
 						continue
 					if(ismob(movable))
 						var/mob/living/mob = movable
-						mob.Disorient(8 SECONDS, 25)
+						mob.Disorient(8 SECONDS)
+						mob.stamina.adjust(-25)
 						mob.adjustBruteLoss(-10)
 						var/turf/target_turf = get_edge_target_turf(mob, get_dir(src, get_step_away(mob, src)))
 						mob.throw_at(target_turf, 200, 5) // begone
@@ -408,7 +409,8 @@
 
 				for(var/mob/living/mob in range(6, src))
 					shake_camera(mob, 0.2 SECONDS, 5)
-					mob.Disorient(1 SECONDS, 25)
+					mob.Disorient(1 SECONDS)
+					mob.stamina.adjust(-25)
 				damage -= 15
 
 			if(prob(33))
@@ -423,7 +425,8 @@
 						continue
 					if(ismob(movable))
 						var/mob/living/mob = movable
-						mob.Disorient(8 SECONDS, 25)
+						mob.Disorient(8 SECONDS)
+						mob.stamina.adjust(-25)
 						mob.adjustBruteLoss(-10)
 						var/turf/target_turf = get_edge_target_turf(mob, get_dir(src, get_step_away(mob, src)))
 						mob.throw_at(target_turf, 200, 5) // begone

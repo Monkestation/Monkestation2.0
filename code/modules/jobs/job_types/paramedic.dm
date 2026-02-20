@@ -50,7 +50,7 @@
 	backpack_contents = list(
 		/obj/item/emergency_bed = 1,
 		)
-	belt = /obj/item/storage/belt/medical/paramedic
+	belt = /obj/item/storage/belt/medical/paramedic/full
 	ears = /obj/item/radio/headset/headset_med
 	head = /obj/item/clothing/head/soft/paramedic
 	gloves = /obj/item/clothing/gloves/latex/nitrile
