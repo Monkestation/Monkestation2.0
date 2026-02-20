@@ -112,16 +112,16 @@
 	. += "It has [pictures_left] photos left."
 
 //user can be atom or mob
-/obj/item/camera/proc/can_target(atom/target, mob/user)
+/obj/item/camera/proc/can_target(atom/target, mob/user, through_camera_console)
 	if(!on || blending || !pictures_left)
 		return FALSE
 	var/turf/T = get_turf(target)
 	if(!T)
 		return FALSE
+	if(through_camera_console && GLOB.cameranet.checkTurfVis(T))
+		return TRUE
 	if(istype(user))
-		if(isAI(user) && !GLOB.cameranet.checkTurfVis(T))
-			return FALSE
-		else if(user.client && !(get_turf(target) in get_hear(user.client.view, user)))
+		if(user.client && !(get_turf(target) in get_hear(user.client.view, user)))
 			return FALSE
 		else if(!(get_turf(target) in get_hear(world.view, user)))
 			return FALSE
@@ -154,20 +154,21 @@
 			to_chat(user, span_warning("Invalid holodisk target."))
 			return ITEM_INTERACT_BLOCKING
 
-	if(!can_target(interacting_with, user))
+	var/through_camera_console = findtext(LAZYACCESS(modifiers, SCREEN_LOC), "camera_console") || isAI(user) || isaicamera(user)
+	if(!can_target(interacting_with, user, through_camera_console))
 		return ITEM_INTERACT_BLOCKING
-	if(!photo_taken(interacting_with, user))
+	if(!photo_taken(interacting_with, user, through_camera_console))
 		return ITEM_INTERACT_BLOCKING
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/camera/proc/photo_taken(atom/target, mob/user)
+/obj/item/camera/proc/photo_taken(atom/target, mob/user, through_camera_console)
 
 	on = FALSE
 	addtimer(CALLBACK(src, PROC_REF(cooldown)), cooldown)
 
 	icon_state = state_off
 
-	INVOKE_ASYNC(src, PROC_REF(captureimage), target, user, picture_size_x - 1, picture_size_y - 1)
+	INVOKE_ASYNC(src, PROC_REF(captureimage), target, user, picture_size_x - 1, picture_size_y - 1, through_camera_console)
 	return TRUE
 
 /obj/item/camera/proc/cooldown()
@@ -181,7 +182,7 @@
 	to_chat(user, P.desc)
 	qdel(P)
 
-/obj/item/camera/proc/captureimage(atom/target, mob/user, size_x = 1, size_y = 1)
+/obj/item/camera/proc/captureimage(atom/target, mob/user, size_x = 1, size_y = 1, through_camera_console)
 	if(flash_enabled)
 		set_light_on(TRUE)
 		addtimer(CALLBACK(src, PROC_REF(flash_end)), FLASH_LIGHT_DURATION, TIMER_OVERRIDE|TIMER_UNIQUE)
@@ -203,7 +204,6 @@
 	var/list/mobs = list()
 	var/blueprints = FALSE
 	var/clone_area = SSmapping.request_turf_block_reservation(size_x * 2 + 1, size_y * 2 + 1, 1)
-	var/cameranet_user = isAI(user)// || istype(viewer, /mob/eye/camera)
 
 	var/width = size_x * 2 + 1
 	var/height = size_y * 2 + 1
@@ -213,7 +213,7 @@
 			if(!placeholder)
 				break
 
-		if(placeholder && ((cameranet_user && GLOB.cameranet.checkTurfVis(placeholder)) || (placeholder in seen)))
+		if(placeholder && ((through_camera_console && GLOB.cameranet.checkTurfVis(placeholder)) || (placeholder in seen)))
 			turfs += placeholder
 			for(var/mob/M in placeholder)
 				mobs += M
