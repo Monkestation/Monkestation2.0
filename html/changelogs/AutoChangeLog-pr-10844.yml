@@ -1,4 +1,0 @@
-author: "flleeppyy"
-delete-after: True
-changes:
-  - bugfix: "silent marked PRs should no longer announce"
