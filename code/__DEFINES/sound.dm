@@ -29,6 +29,7 @@
 #define CHANNEL_ESCAPEMENU 1000
 #define CHANNEL_VOICES 999
 #define CHANNEL_RINGTONES 998
+#define CHANNEL_DELTA_SIRENS 997
 // monkestation end
 
 /// This is the lowest volume that can be used by playsound otherwise it gets ignored

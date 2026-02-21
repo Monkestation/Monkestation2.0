@@ -21,6 +21,7 @@ GLOBAL_LIST_INIT(used_sound_channels, list(
 	CHANNEL_SILICON_EMOTES,
 	CHANNEL_VOICES,
 	CHANNEL_RINGTONES,
+	CHANNEL_DELTA_SIRENS,
 ))
 
 GLOBAL_LIST_INIT(proxy_sound_channels, list(

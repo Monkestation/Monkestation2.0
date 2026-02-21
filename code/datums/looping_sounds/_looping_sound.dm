@@ -42,7 +42,6 @@
 	var/use_reverb = TRUE
 	/// Are we ignoring walls? Defaults to TRUE.
 	var/ignore_walls = TRUE
-	var/channel //monkestation edit
 
 	// State stuff
 	/// The source of the sound, or the recipient of the sound.
@@ -64,7 +63,13 @@
 	/// Sound channel to play on, random if not provided
 	var/sound_channel
 
-/datum/looping_sound/New(_parent, start_immediately = FALSE, _direct = FALSE, _skip_starting_sounds = FALSE, _channel = 0) //monkestation edit
+/datum/looping_sound/New(
+	_parent,
+	start_immediately = FALSE,
+	_direct = FALSE,
+	_skip_starting_sounds = FALSE,
+	sound_channel,
+)
 	if(!mid_sounds)
 		WARNING("A looping sound datum was created without sounds to play.")
 		return
@@ -72,7 +77,8 @@
 	set_parent(_parent)
 	direct = _direct
 	skip_starting_sounds = _skip_starting_sounds
-	channel = _channel
+	if(sound_channel)
+		src.sound_channel = sound_channel
 
 	if(start_immediately)
 		start()
@@ -152,7 +158,7 @@
 /datum/looping_sound/proc/play(soundfile, volume_override)
 	var/sound/sound_to_play = sound(soundfile)
 	// monkestation edit: volume mixer
-	var/actual_channel = channel || SSsounds.random_available_channel()
+	var/actual_channel = sound_channel || SSsounds.random_available_channel()
 	if(direct)
 		var/mob/mob_parent = parent
 		if(!istype(mob_parent)) // no point in playing directly to something that can't even hear sound anyways

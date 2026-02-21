@@ -139,12 +139,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if(loaded_preferences_successfully)
 		if(load_character())
 			loaded = TRUE
-			return
-	//we couldn't load character data so just randomize the character appearance + name
-	randomise_appearance_prefs() //let's create a random character then - rather than a fat, bald and naked man.
-	if(parent)
-		apply_all_client_preferences()
-		parent.set_macros()
 
 	var/needs_save = FALSE
 	for(var/channel in GLOB.used_sound_channels)
@@ -153,6 +147,15 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			needs_save = TRUE
 	if(needs_save)
 		save_preferences()
+
+	//If we loaded prefs, we still want to make sure they have all sound channels, now that it's done we can safely early return.
+	if(loaded)
+		return
+	//we couldn't load character data so just randomize the character appearance + name
+	randomise_appearance_prefs() //let's create a random character then - rather than a fat, bald and naked man.
+	if(parent)
+		apply_all_client_preferences()
+		parent.set_macros()
 
 	if(!loaded_preferences_successfully)
 		if(load_preferences())
