@@ -30,8 +30,12 @@ import {
   wsUpdate,
 } from 'tgui-panel/websocket/helpers';
 import { chatRenderer } from '../chat/renderer';
-import { THEMES } from '../themes';
-import { FONTS, SETTINGS_TABS, WARN_AFTER_HIGHLIGHT_AMT } from './constants';
+import {
+  FONTS,
+  SETTINGS_TABS,
+  THEMES,
+  WARN_AFTER_HIGHLIGHT_AMT,
+} from './constants';
 import { setEditPaneSplitters } from './scaling';
 import { exportChatSettings, importChatSettings } from './settingsImExport';
 import { useHighlights } from './use-highlights';
