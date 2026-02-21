@@ -183,7 +183,7 @@
 #define ui_pai_rest "SOUTH:5,WEST+2:2"
 #define ui_pai_light "SOUTH:5,WEST+3:2"
 #define ui_pai_crew_manifest "SOUTH:5,CENTER-2"
-#define ui_pai_crew_monitor "SOUTH:5,CENTER-1"//change...
+#define ui_pai_crew_monitor "SOUTH:5,CENTER-1"
 #define ui_pai_host_monitor "SOUTH:5,CENTER"
 #define ui_pai_internal_gps "SOUTH:5,CENTER+1"
 #define ui_pai_mod_int "SOUTH:5,CENTER+2"

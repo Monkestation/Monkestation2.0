@@ -80,7 +80,7 @@
 
 /atom/movable/screen/pai/host_monitor
 	name = "Host Health Scan"
-	icon_state = "template"
+	icon_state = "host_scan"
 	required_software = "Host Scan"
 
 /atom/movable/screen/pai/host_monitor/Click(location, control, params)
