@@ -2649,11 +2649,20 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 /// Switches this mob to processing as a cliented mob, instead of whatever subsystem it's currently using.
 /mob/living/proc/process_as_cliented_mob()
-	if(life_subsystem_type == /datum/controller/subsystem/mobs/client_mobs || QDELETED(src))
+	if(QDELETED(src))
 		return
-	var/datum/controller/subsystem/mobs/subsystem = SSmobs
-	if(life_subsystem_type)
-		subsystem = locate(life_subsystem_type) in Master.subsystems
-	life_subsystem_type = /datum/controller/subsystem/mobs/client_mobs
-	STOP_PROCESSING(subsystem, src)
+	var/datum/controller/subsystem/mobs/clientless_subsystem = locate(life_subsystem_type) in Master.subsystems
+	if(!clientless_subsystem)
+		return
+	STOP_PROCESSING(clientless_subsystem, src)
 	START_PROCESSING(SSclient_mobs, src)
+
+/// Switches this mob to processing as a cliented mob, instead of whatever subsystem it's currently using.
+/mob/living/proc/process_as_clientless_mob()
+	if(QDELETED(src))
+		return
+	var/datum/controller/subsystem/mobs/clientless_subsystem = locate(life_subsystem_type) in Master.subsystems
+	if(!clientless_subsystem)
+		return
+	STOP_PROCESSING(SSclient_mobs, src)
+	START_PROCESSING(clientless_subsystem, src)

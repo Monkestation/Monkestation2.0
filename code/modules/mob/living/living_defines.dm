@@ -9,7 +9,7 @@
 	/// Default typepath of the subsystem used for Life()
 	/// If this mob has a client/mind, it will always use SSclient_mobs.
 	/// If unset, defaults to SSmobs.
-	var/life_subsystem_type
+	var/life_subsystem_type = /datum/controller/subsystem/mobs
 
 	///Tracks the current size of the mob in relation to its original size. Use update_transform(resize) to change it.
 	var/current_size = RESIZE_DEFAULT_SIZE

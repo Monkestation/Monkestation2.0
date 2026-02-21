@@ -15,15 +15,6 @@ GLOBAL_VAR_INIT(ssd_indicator_overlay, mutable_appearance('monkestation/icons/ef
 		cut_overlay(GLOB.ssd_indicator_overlay)
 		log_message("<font color='green'>is no longer SSD and lost their indicator!</font>", LOG_ATTACK)
 
-/mob/living/Login()
-	. = ..()
-	set_ssd_indicator(FALSE)
-
-/mob/living/Logout()
-	lastclienttime = world.time
-	set_ssd_indicator(TRUE)
-	. = ..()
-
 //Temporary, look below for the reason
 /mob/living/ghostize(can_reenter_corpse = TRUE)
 	. = ..()
