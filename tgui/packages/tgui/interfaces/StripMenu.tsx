@@ -1,6 +1,6 @@
 import { range } from 'common/collections';
 import type { BooleanLike } from 'common/react';
-
+import type { CSSProperties } from 'react';
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
 import { Box, Button, Icon, Image, Stack } from '../components';
@@ -313,7 +313,7 @@ export const StripMenu = (props) => {
                           const alternateAction =
                             ALTERNATE_ACTIONS[alternateKey];
 
-                          const alternateActionStyle = {
+                          const alternateActionStyle: CSSProperties = {
                             background: 'rgba(0, 0, 0, 0.6)',
                             position: 'absolute',
                             overflow: 'hidden',
