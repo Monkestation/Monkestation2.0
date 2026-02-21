@@ -385,8 +385,16 @@
 2026-02-21:
   CannibalHunter:
   - rscadd: Added Gurrog's Donator item!
+  JohnFulpWillard:
+  - qol: You now need to click twice on the telecomms monitor console to wipe logs.
+  - rscadd: You can now take photos through a camera console.
   PotatoTomahto:
   - rscadd: adds the (actual) cassette tapes to loadout
+  SirNightKnight:
+  - rscdel: removed the corporate sponsorship of evil from the uplink.
   Tractor-Maam:
   - balance: Exosuit Radios are no longer subspace transmission. (This means they
       work without telecomms like a Intercom.)
+  ZephyrTFA, SirNightKnight:
+  - balance: You can now adjust the suit sensors of another player in the strip menu.
+      No longer must you first take it off.
