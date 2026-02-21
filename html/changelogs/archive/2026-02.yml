@@ -357,3 +357,36 @@
   - balance: gibtonite is more valuable the higher the quality is.
   wonderinghost:
   - balance: merges bot surgery with their respective organic surgery tree
+2026-02-20:
+  Absolucy:
+  - map: Fixed a spot on the Syndicate lavaland base that had two lightbulbs and fire
+      alarms stacked on the same tile.
+  BobDABuilder9001:
+  - rscadd: Added a shipbreaker locker to pubby's shipbreaking room, as well as a
+      tiny fan
+  JohnFulpWillard:
+  - bugfix: pAI cameras now work while inside of a PDA.
+  - bugfix: pAIs can now set the zoom of their camera.
+  - bugfix: pAIs can now access their PDA Messenger & GPS.
+  - bugfix: pAIs no longer have all access.
+  - bugfix: pAIs in a PDA can now use abilities that rely on being carried.
+  SirNightKnight:
+  - bugfix: fixed the bot scan experiment requiring medical cleanbots.
+  flleeppyy:
+  - sound: Made the intern announcer NOT LOUD AS FUCK
+  - bugfix: silent marked PRs should no longer announce
+  notghosti:
+  - map: Tramstation captains office now closes it's shutters, instead of the aux
+      base
+  - map: Tramstation engineering maintence door is now also accessible via construction
+      access
+  - map: Metastation pathology no longer uses supernatural cameras to stalk its patients.
+  - map: Tramstation incident counters should stick off of walls less
+2026-02-21:
+  CannibalHunter:
+  - rscadd: Added Gurrog's Donator item!
+  PotatoTomahto:
+  - rscadd: adds the (actual) cassette tapes to loadout
+  Tractor-Maam:
+  - balance: Exosuit Radios are no longer subspace transmission. (This means they
+      work without telecomms like a Intercom.)
