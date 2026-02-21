@@ -113,7 +113,7 @@
 		/obj/item/extinguisher = 1,
 		/obj/item/bodypart/arm/right/robot = 1,
 		/obj/item/assembly/prox_sensor = 1,
-		/obj/item/clothing/head/utility/hardhat/red = 1,
+		/obj/item/clothing/head/utility/hardhat = 1,
 	)
 	time = 4 SECONDS
 	category = CAT_ROBOT

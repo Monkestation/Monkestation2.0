@@ -24135,7 +24135,7 @@
 /obj/item/clothing/suit/utility/fire/firefighter{
 	pixel_y = 5
 	},
-/obj/item/clothing/head/utility/hardhat/red,
+/obj/item/clothing/head/utility/hardhat/fire,
 /obj/item/tank/internals/oxygen/red{
 	pixel_x = 9;
 	pixel_y = -5
@@ -74095,7 +74095,7 @@
 /obj/item/clothing/suit/utility/fire/firefighter{
 	pixel_y = 5
 	},
-/obj/item/clothing/head/utility/hardhat/red,
+/obj/item/clothing/head/utility/hardhat/fire,
 /obj/item/tank/internals/oxygen/red{
 	pixel_x = 9;
 	pixel_y = -5

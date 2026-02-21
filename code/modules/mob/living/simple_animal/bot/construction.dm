@@ -485,7 +485,7 @@
 	..()
 	switch(build_step)
 		if(ASSEMBLY_FIRST_STEP)
-			if(istype(attacking_item, /obj/item/clothing/head/utility/hardhat/red))
+			if(istype(attacking_item, /obj/item/clothing/head/utility/hardhat/fire))
 				if(!user.temporarilyRemoveItemFromInventory(attacking_item))
 					return
 				to_chat(user,span_notice("You add the [attacking_item] to [src]!"))

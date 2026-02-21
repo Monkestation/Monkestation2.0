@@ -550,7 +550,7 @@
 /obj/item/storage/toolbox/mechanical,
 /obj/structure/rack,
 /obj/item/clothing/suit/utility/fire/firefighter,
-/obj/item/clothing/head/utility/hardhat/red,
+/obj/item/clothing/head/utility/hardhat/fire,
 /turf/open/floor/iron/smooth_large,
 /area/shuttle/escape)
 "VO" = (

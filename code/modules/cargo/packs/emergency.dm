@@ -52,7 +52,7 @@
 					/obj/item/flashlight = 2,
 					/obj/item/tank/internals/oxygen/red = 2,
 					/obj/item/extinguisher/advanced = 2,
-					/obj/item/clothing/head/utility/hardhat/red = 2,
+					/obj/item/clothing/head/utility/hardhat/fire = 2,
 				)
 	crate_name = "firefighting crate"
 

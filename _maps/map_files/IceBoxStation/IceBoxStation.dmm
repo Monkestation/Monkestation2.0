@@ -1666,7 +1666,7 @@
 /obj/item/extinguisher,
 /obj/item/clothing/suit/utility/fire/firefighter,
 /obj/item/clothing/mask/gas,
-/obj/item/clothing/head/utility/hardhat/red,
+/obj/item/clothing/head/utility/hardhat/fire,
 /obj/item/tank/internals/oxygen,
 /obj/item/clothing/glasses/meson,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible/layer4,

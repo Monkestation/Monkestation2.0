@@ -297,7 +297,7 @@
 	var/atom/Tsec = drop_location()
 
 	new /obj/item/assembly/prox_sensor(Tsec)
-	new /obj/item/clothing/head/utility/hardhat/red(Tsec)
+	new /obj/item/clothing/head/utility/hardhat/fire(Tsec)
 
 	var/turf/T = get_turf(Tsec)
 

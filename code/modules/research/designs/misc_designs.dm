@@ -129,7 +129,7 @@
 		/datum/material/plastic =SHEET_MATERIAL_AMOUNT * 1.5,
 		/datum/material/silver =SMALL_MATERIAL_AMOUNT*5,
 	)
-	build_path = /obj/item/clothing/head/utility/hardhat/red/upgraded
+	build_path = /obj/item/clothing/head/utility/hardhat/upgraded
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_ENGINEERING
 	)
