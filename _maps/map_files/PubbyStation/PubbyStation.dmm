@@ -48307,6 +48307,7 @@
 /area/station/engineering/supermatter/room)
 "sWE" = (
 /obj/machinery/door/airlock/engineering,
+/obj/structure/fans/tiny,
 /turf/open/floor/iron,
 /area/station/engineering/shipbreaker_hut)
 "sWH" = (
@@ -50653,6 +50654,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
+"uDw" = (
+/obj/structure/closet/secure_closet/shipbreaker,
+/turf/open/floor/iron,
+/area/station/engineering/shipbreaker_hut)
 "uDA" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -86761,7 +86766,7 @@ aaa
 gYo
 aaa
 qNb
-dVv
+uDw
 hjE
 hjE
 mAm

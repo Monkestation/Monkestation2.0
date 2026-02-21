@@ -123,6 +123,10 @@ GLOBAL_LIST_INIT(loadout_toys, generate_loadout_items(/datum/loadout_item/toys))
 	name = "Walkman"
 	item_path = /obj/item/walkman
 
+/datum/loadout_item/toys/cassette_tape
+	name = "Spare Cassette Tape"
+	item_path = /obj/item/cassette_tape/random
+
 /datum/loadout_item/toys/monkey_pen
 	name = "Monkey Pen"
 	item_path = /obj/item/pen/monkey
