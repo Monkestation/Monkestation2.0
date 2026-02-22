@@ -4,12 +4,6 @@
 	savefile_key = "sound_combatmode"
 	savefile_identifier = PREFERENCE_PLAYER
 
-/// Controls hearing instruments
-/datum/preference/toggle/sound_instruments
-	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
-	savefile_key = "sound_instruments"
-	savefile_identifier = PREFERENCE_PLAYER
-
 /datum/preference/choiced/sound_achievement
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
 	savefile_key = "sound_achievement"
@@ -25,12 +19,6 @@
 	var/sound/sound_to_send = LAZYACCESS(GLOB.achievement_sounds, value)
 	if(sound_to_send)
 		SEND_SOUND(client.mob, sound_to_send)
-
-/// Controls hearing admin music
-/datum/preference/toggle/sound_midi
-	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
-	savefile_key = "sound_midi"
-	savefile_identifier = PREFERENCE_PLAYER
 
 /// Whether or not to hear curator music.
 /datum/preference/toggle/hear_music

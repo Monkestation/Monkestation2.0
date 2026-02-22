@@ -26,7 +26,7 @@ ADMIN_VERB(play_sound, R_SOUND, FALSE, "Play Global Sound", "Play a sound to all
 	message_admins("[key_name_admin(user)] played sound [sound]")
 
 	for(var/mob/M in GLOB.player_list)
-		if(M.client.prefs.read_preference(/datum/preference/toggle/sound_midi))
+		if(M.client.prefs.channel_volume["[CHANNEL_ADMIN]"])
 			admin_sound.volume = vol * M.client.admin_music_volume
 			SEND_SOUND(M, admin_sound)
 			admin_sound.volume = vol
@@ -141,7 +141,7 @@ ADMIN_VERB(play_direct_mob_sound, R_SOUND, FALSE, "Play Direct Mob Sound", "Play
 		for(var/m in GLOB.player_list)
 			var/mob/M = m
 			var/client/C = M.client
-			if(C.prefs.read_preference(/datum/preference/toggle/sound_midi))
+			if(C.prefs.channel_volume["[CHANNEL_ADMIN]"])
 				if(!stop_web_sounds)
 					C.tgui_panel?.play_music(web_sound_url, music_extra_data)
 					C.media_player?.stop()

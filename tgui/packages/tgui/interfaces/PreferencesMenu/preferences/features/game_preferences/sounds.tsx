@@ -13,13 +13,6 @@ export const sound_combatmode: FeatureToggle = {
   component: CheckboxInput,
 };
 
-export const sound_midi: FeatureToggle = {
-  name: 'Enable admin music',
-  category: 'SOUND',
-  description: 'When enabled, admins will be able to play music to you.',
-  component: CheckboxInput,
-};
-
 export const sound_achievement: FeatureChoiced = {
   name: 'Achievement unlock sound',
   category: 'SOUND',
