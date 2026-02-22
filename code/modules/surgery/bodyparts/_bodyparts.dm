@@ -726,7 +726,7 @@
 		//monkestation edit start
 		if(HAS_TRAIT(owner, TRAIT_REVIVES_BY_HEALING))
 			owner.cure_husk() // If it has TRAIT_REVIVES_BY_HEALING, it probably can't be cloned. No husk cure, so we cure that here.
-			if(owner.stat == DEAD && !HAS_TRAIT(owner, TRAIT_DEFIB_BLACKLISTED) && owner.health > 50)
+			if(owner.stat == DEAD && (!owner.mind || !HAS_TRAIT(owner.mind, TRAIT_DEFIB_BLACKLISTED)) && owner.health > 50)
 				owner.revive(FALSE)
 		//monkestation edit end
 
