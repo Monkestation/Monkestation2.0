@@ -157,26 +157,12 @@
  */
 /datum/looping_sound/proc/play(soundfile, volume_override)
 	var/sound/sound_to_play = sound(soundfile)
-	// monkestation edit: volume mixer
-	var/actual_channel = sound_channel || SSsounds.random_available_channel()
+
 	if(direct)
 		var/mob/mob_parent = parent
-		if(!istype(mob_parent)) // no point in playing directly to something that can't even hear sound anyways
-			return
-		mob_parent.playsound_local(
-			get_turf(parent),
-			sound_to_play,
-			volume_override || volume,
-			vary,
-			extra_range,
-			falloff_exponent = falloff_exponent,
-			pressure_affected = pressure_affected,
-			falloff_distance = falloff_distance,
-			use_reverb = use_reverb,
-			channel = actual_channel,
-			mixer_channel = actual_channel
-		)
-	// monkestation end
+		sound_to_play.channel = sound_channel || guess_mixer_channel(soundfile) || SSsounds.random_available_channel()
+		sound_to_play.volume = volume_override || calculate_mixed_volume(mob_parent.client, sound_to_play.volume, sound_to_play.channel)
+		SEND_SOUND(mob_parent, sound_to_play)
 	else
 		playsound(
 			parent,
@@ -185,14 +171,12 @@
 			vary,
 			extra_range,
 			falloff_exponent = falloff_exponent,
+			channel = sound_channel || sound_to_play.channel,
 			pressure_affected = pressure_affected,
 			ignore_walls = ignore_walls,
 			falloff_distance = falloff_distance,
 			use_reverb = use_reverb,
-			// monkestation start: volume mixer
-			channel = actual_channel,
-			mixer_channel = actual_channel,
-			// monkestation end
+			mixer_channel = sound_to_play.channel,
 		)
 
 /// Returns the sound we should now be playing.

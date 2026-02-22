@@ -49,9 +49,6 @@
 	if (!turf_source || !soundin || !vol)
 		return
 
-	if(!mixer_channel)
-		mixer_channel = guess_mixer_channel(soundin)
-
 	if(vol < SOUND_AUDIBLE_VOLUME_MIN) // never let sound go below SOUND_AUDIBLE_VOLUME_MIN or bad things will happen
 		return
 
