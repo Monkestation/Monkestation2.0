@@ -398,3 +398,11 @@
   ZephyrTFA, SirNightKnight:
   - balance: You can now adjust the suit sensors of another player in the strip menu.
       No longer must you first take it off.
+2026-02-22:
+  Absolucy:
+  - qol: Reworked the Monster Hunter rabbit spawning logic - they now use selection
+      similar to heretic influences, and won't spawn in stupid unfair places.
+  - balance: Monster Hunters will now always get the bloodsilver revolver from their
+      second rabbit.
+  sylvia-from-fulp-station:
+  - rscadd: 3 alternative job titles for Explorer and 1 for Shaft Miner

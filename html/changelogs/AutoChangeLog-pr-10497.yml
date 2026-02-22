@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - refactor: "Refactored some pathology shitcode. Report any issues with pathology machines."
