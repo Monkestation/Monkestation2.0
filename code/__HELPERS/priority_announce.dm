@@ -208,7 +208,7 @@
 		if(!should_play_sound)
 			continue
 
-		if(target.client?.prefs?.read_preference(/datum/preference/toggle/sound_announcements))
+		if(target.client?.prefs?.channel_volume["[CHANNEL_ANNOUNCEMENTS_VOX]"])
 			// monkestation start: volume mixer
 			var/sound/mixed_sound = sound(sound_to_play)
 			if("[sound_channel]" in target.client?.prefs?.channel_volume)

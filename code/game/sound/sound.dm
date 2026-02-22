@@ -292,6 +292,8 @@
 			return list("Mob Emotes", "Spitting, kissing, and every other emote with a sound tied to it for non-silicons.")
 		if(CHANNEL_SILICON_EMOTES)
 			return list("Silicon Emotes", "Any emote with a sound tied to it for silicons.")
+		if(CHANNEL_ELEVATOR)
+			return list("Elevator Music", "The music that plays while you're in an elevator, on multi-z maps.")
 		if(CHANNEL_VOICES)
 			return list("Voices", "The sound of the 'barks' when someone speaks.")
 		if(CHANNEL_RINGTONES)

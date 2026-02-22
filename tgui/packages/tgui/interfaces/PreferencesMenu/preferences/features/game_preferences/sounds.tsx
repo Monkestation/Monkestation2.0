@@ -6,20 +6,6 @@ import {
   type FeatureToggle,
 } from '../base';
 
-export const sound_ambience: FeatureToggle = {
-  name: 'Enable ambience',
-  category: 'SOUND',
-  description: `Ambience refers to the more noticeable ambient sounds that play on occasion.`,
-  component: CheckboxInput,
-};
-
-export const sound_announcements: FeatureToggle = {
-  name: 'Enable announcement sounds',
-  category: 'SOUND',
-  description: 'When enabled, hear sounds for command reports, notices, etc.',
-  component: CheckboxInput,
-};
-
 export const sound_combatmode: FeatureToggle = {
   name: 'Enable combat mode sound',
   category: 'SOUND',
@@ -56,12 +42,6 @@ export const hearmusic: FeatureToggle = {
   category: 'SOUND',
   description:
     'When enabled, hear music played in-game by the cassette player.',
-  component: CheckboxInput,
-};
-
-export const sound_elevator: FeatureToggle = {
-  name: 'Enable elevator music',
-  category: 'SOUND',
   component: CheckboxInput,
 };
 

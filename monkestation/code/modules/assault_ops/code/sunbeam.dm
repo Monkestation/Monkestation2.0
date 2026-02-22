@@ -209,15 +209,17 @@ ADMIN_VERB(spawn_sunbeam, R_FUN, FALSE, "Spawn Sunbeam", "Spawns an ICARUS sunbe
 	var/static/list/quiet_areas = typecacheof(typesof(/area/station/maintenance) + typesof(/area/space) + typesof(/area/station/commons/dorms))
 	if(!players)
 		players = GLOB.player_list
-	for(var/m in players)
-		if(ismob(m) && !isnewplayer(m))
-			var/mob/M = m
-			if(M.client?.prefs.read_preference(/datum/preference/toggle/sound_announcements) && M.can_hear())
-				if(override_volume)
-					M.playsound_local(get_turf(M), S, 80, FALSE)
-				else
-					var/area/A = get_area(M)
-					if(is_type_in_typecache(A, quiet_areas)) //These areas don't hear it as loudly
-						M.playsound_local(get_turf(M), S, 10, FALSE)
-					else
-						M.playsound_local(get_turf(M), S, 70, FALSE)
+	for(var/player in players)
+		if(!ismob(player) || isnewplayer(player))
+			continue
+		var/mob/M = player
+		if(!(M.client?.prefs?.channel_volume["[CHANNEL_ANNOUNCEMENTS_VOX]"]) || !M.can_hear())
+			continue
+		if(override_volume)
+			M.playsound_local(get_turf(M), S, 80, FALSE)
+			continue
+		var/area/A = get_area(M)
+		if(is_type_in_typecache(A, quiet_areas)) //These areas don't hear it as loudly
+			M.playsound_local(get_turf(M), S, 10, FALSE)
+		else
+			M.playsound_local(get_turf(M), S, 70, FALSE)

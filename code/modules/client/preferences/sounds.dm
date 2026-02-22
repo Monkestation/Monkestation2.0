@@ -1,18 +1,3 @@
-/// Controls hearing ambience
-/datum/preference/toggle/sound_ambience
-	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
-	savefile_key = "sound_ambience"
-	savefile_identifier = PREFERENCE_PLAYER
-
-/datum/preference/toggle/sound_ambience/apply_to_client(client/client, value)
-	client.update_ambience_pref(value)
-
-/// Controls hearing announcement sounds
-/datum/preference/toggle/sound_announcements
-	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
-	savefile_key = "sound_announcements"
-	savefile_identifier = PREFERENCE_PLAYER
-
 /// Controls hearing the combat mode toggle sound
 /datum/preference/toggle/sound_combatmode
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
@@ -59,12 +44,6 @@
 	savefile_key = "hearmusic"
 	savefile_identifier = PREFERENCE_PLAYER
 	default_value = TRUE
-
-/// Controls hearing elevator music
-/datum/preference/toggle/sound_elevator
-	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
-	savefile_key = "sound_elevator"
-	savefile_identifier = PREFERENCE_PLAYER
 
 /datum/preference/toggle/sound_ai_radio
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
