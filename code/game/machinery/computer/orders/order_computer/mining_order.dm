@@ -198,8 +198,8 @@
 /obj/item/explorer_voucher
 	name = "explorer voucher"
 	desc = "A token to redeem a piece of equipment. Use it on a mining equipment vendor."
-	icon = 'icons/obj/mining.dmi'
-	icon_state = "mining_voucher"
+	icon = 'monkestation/icons/obj/items/explorer_voucher.dmi'
+	icon_state = "explorer_voucher"
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/machinery/computer/order_console/mining/proc/redeem_explorer_voucher(obj/item/explorer_voucher/voucher, mob/redeemer)
