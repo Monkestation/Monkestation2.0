@@ -12,6 +12,5 @@
 	if(!(toggles & 1<<11))
 		channel_volume["[CHANNEL_ANNOUNCEMENTS_VOX]"] = 0
 	write_preference(GLOB.preference_entries[/datum/preference/toggle/sound_combatmode], toggles & 1<<22)
-	write_preference(GLOB.preference_entries[/datum/preference/toggle/sound_endofround], toggles & 1<<20)
 	write_preference(GLOB.preference_entries[/datum/preference/toggle/sound_instruments], toggles & 1<<7)
 	write_preference(GLOB.preference_entries[/datum/preference/toggle/sound_midi], toggles & 1<<1)

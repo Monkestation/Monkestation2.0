@@ -4,12 +4,6 @@
 	savefile_key = "sound_combatmode"
 	savefile_identifier = PREFERENCE_PLAYER
 
-/// Controls hearing round end sounds
-/datum/preference/toggle/sound_endofround
-	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
-	savefile_key = "sound_endofround"
-	savefile_identifier = PREFERENCE_PLAYER
-
 /// Controls hearing instruments
 /datum/preference/toggle/sound_instruments
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES

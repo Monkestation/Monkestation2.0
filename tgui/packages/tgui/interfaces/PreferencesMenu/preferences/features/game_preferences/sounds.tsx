@@ -13,13 +13,6 @@ export const sound_combatmode: FeatureToggle = {
   component: CheckboxInput,
 };
 
-export const sound_endofround: FeatureToggle = {
-  name: 'Enable end of round sounds',
-  category: 'SOUND',
-  description: 'When enabled, hear a sound when the server is rebooting.',
-  component: CheckboxInput,
-};
-
 export const sound_midi: FeatureToggle = {
   name: 'Enable admin music',
   category: 'SOUND',
