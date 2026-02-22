@@ -183,3 +183,43 @@
 	worn_icon_state = "x4"
 	directional = TRUE
 	boom_sizes = list(0, 2, 5)
+
+//monke edit, crew sided c-4
+/obj/item/grenade/c4/explosivecharge
+	name = "breaching charge"
+	desc = "A brick of c-4 with extra safety features. It cannot be stuck onto a living being."
+
+/obj/item/grenade/c4/explosivecharge/examine(mob/user)
+	. = ..()
+	if(obj_flags & EMAGGED)
+		. += span_warning("The safety light is dark. The biological sensors are inactive and the Clown-proof safety lock is disabled..")
+	else
+		. += span_notice("A green light indicates the biological sensors are activate, and so is the Clown-proof safety lock.")
+
+/obj/item/grenade/c4/explosivecharge/emag_act(mob/user, obj/item/card/emag/E)
+	if(obj_flags & EMAGGED)
+		return FALSE
+	obj_flags |= EMAGGED
+	to_chat(user, span_warning("You short out the [src.name]'s safety lock!"))
+	return TRUE
+
+/obj/item/grenade/c4/explosivecharge/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!(obj_flags & EMAGGED) && isliving(interacting_with))
+		to_chat(user, span_warning("The [src.name]'s Clown-proof safety lock prevents this!"))
+		return ITEM_INTERACT_BLOCKING
+
+	return ..()
+
+/obj/item/grenade/c4/explosivecharge/suicide_act(mob/living/user)
+	message_admins("[ADMIN_LOOKUPFLW(user)] suicided with [src] at [ADMIN_VERBOSEJMP(user)]")
+	user.log_message("suicided with [src].", LOG_ATTACK)
+	log_game("[key_name(user)] suicided with [src] at [AREACOORD(user)]")
+	user.visible_message(span_suicide("[user] activates [src] and holds it above [user.p_their()] head! It looks like [user.p_theyre()] going out with a bang!"))
+	shout_syndicate_crap(user)
+	
+	// If emagged, the suicide gains explosive range
+	var/suicide_power = (obj_flags & EMAGGED) ? 2 : 0
+	explosion(user, heavy_impact_range = suicide_power, explosion_cause = src) 
+	
+	user.gib(1, 1)
+	qdel(src)

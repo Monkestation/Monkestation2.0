@@ -115,11 +115,13 @@
 
 /datum/voucher_set/explorer/breacher_kit
 	name = "Breaching Kit"
-	description = "Contains a singular brick of C-4, nothing else. You'll make an entrance. Or an exit, your choice really."
+	description = "Contains three breaching charges. Like c-4, but cannot be attached to living things."
 	icon = 'icons/obj/weapons/grenade.dmi'
 	icon_state = "plastic-explosive0"
 	set_items = list(
-		/obj/item/grenade/c4,
+		/obj/item/grenade/c4/explosivecharge,
+		/obj/item/grenade/c4/explosivecharge,
+		/obj/item/grenade/c4/explosivecharge,
 		)
 
 /datum/voucher_set/explorer/outback
