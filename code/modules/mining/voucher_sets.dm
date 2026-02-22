@@ -78,6 +78,82 @@
 	)
 
 
+// monkestation explorer vouchers
+/datum/voucher_set/explorer
+
+/datum/voucher_set/explorer/retro_laser 
+	name = "Retro Laser Gun Kit"
+	description = "Contains an old Laser Gun with a primitive, low capacity, but self-charging battery and hook to attach to your suit. It's firing pin won't work on the station or in NanoTrasen controlled space."
+	icon = 'icons/obj/weapons/guns/energy.dmi'
+	icon_state = "retro"
+	set_items = list(
+		/obj/item/gun/energy/laser/retro/old/explorer
+		)
+
+/datum/voucher_set/explorer/extraction_kit
+	name = "Medevac Kit"
+	description = "Contains some fulton extraction packs and a beacon signaller, which allows you to send back dead bodies using your cargo teleporter. Smack the cargo teleporter with the fulton packs, and set up the signaller in a safe place. Comes with a regular first aid kit."
+	icon = 'icons/obj/fulton.dmi'
+	icon_state = "extraction_pack"
+	set_items = list(
+		/obj/item/extraction_pack,
+		/obj/item/fulton_core,
+		/obj/item/storage/medkit/regular,
+		)
+
+/datum/voucher_set/explorer/survival_capsule
+	name = "Survival Kit"
+	description = "Contains an explorer's webbing with a surival capsule inside, a tube of ointment for burns, a roll of sutures for bruises and a coagulant injector for bleeding."
+	icon = 'icons/obj/clothing/belts.dmi'
+	icon_state = "explorer1"
+	set_items = list(
+		/obj/item/storage/belt/mining/vendor,
+		/obj/item/stack/medical/ointment = 1,
+		/obj/item/stack/medical/suture = 1,
+		/obj/item/reagent_containers/hypospray/medipen/deforest/coagulants,
+		)
+
+/datum/voucher_set/explorer/breacher_kit
+	name = "Breaching Kit"
+	description = "Contains a singular brick of C-4, nothing else. You'll make an entrance. Or an exit, your choice really."
+	icon = 'icons/obj/weapons/grenade.dmi'
+	icon_state = "plastic-explosive0"
+	set_items = list(
+		/obj/item/grenade/c4,
+		)
+
+/datum/voucher_set/explorer/outback
+	name = "Bushman Kit"
+	description = "Contains a robust bowie knife and sheathe to keep it secure. Comes with a stocked frontier medical kit for tending your injuries."
+	icon = 'monkestation/code/modules/blueshift/icons/bowie.dmi'
+	icon_state = "bowiehand"
+	set_items = list(
+		/obj/item/storage/belt/bowie_sheath,
+		/obj/item/storage/medkit/frontier/stocked,
+		/obj/item/clothing/head/cowboy/brown,
+		)
+
+/datum/voucher_set/explorer/shipbreaker
+	name = "Shipbreaker Kit"
+	description = "Contains a trusty sledgehammer that will tear through machinery and other debris. Also comes with a full toolbelt for finer work."
+	icon = 'icons/obj/weapons/hammer.dmi'
+	icon_state = "sledgehammer"
+	set_items = list(
+		/obj/item/melee/sledgehammer,
+		/obj/item/storage/belt/utility/full,
+		/obj/item/clothing/head/utility/hardhat,
+		)
+
+/datum/voucher_set/explorer/first_mate
+	name = "First Mate's Kit"
+	description = "The captain of every voyage needs a trusty right hand spaceman. Bring a buddy along into the abyss with a spare mining hardsuit, jetpack, gps device and cargo teleporter."
+	icon = 'monkestation/icons/obj/clothing/hardsuits/suit.dmi'
+	icon_state = "hardsuit-mining"
+	set_items = list(
+		/obj/item/storage/box/emergency_eva/explorer,
+		/obj/item/cargo_teleporter = 1,
+		)
+
 //categories
 /datum/voucher_set/security
 

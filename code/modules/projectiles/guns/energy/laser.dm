@@ -61,6 +61,13 @@
 /obj/item/gun/energy/laser/retro/old/give_manufacturer_examine()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_NANOTRASEN)
 
+//  Monkestation Edit - explorer laser gun
+/obj/item/gun/energy/laser/retro/old/explorer
+	name ="explorer laser gun"
+	desc = "A dusty laser gun, recently ransacked from some rotting NanoTrasen facility. While not technically legal to distrubute the battery inside anymore, NanoTrasen figures putting it in the capable hands of it's exploration crews will sweep this under the rug. A small hook allows it to attach to any explorer suit."
+	pin = /obj/item/firing_pin/explorer
+	selfcharge = 1
+
 /obj/item/gun/energy/laser/hellgun
 	name ="hellfire laser gun"
 	desc = "A relic of a weapon, built before NT began installing regulators on its laser weaponry. This pattern of laser gun became infamous for the gruesome burn wounds it caused, and was quietly discontinued once it began to affect NT's reputation."
