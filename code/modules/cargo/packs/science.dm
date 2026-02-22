@@ -108,7 +108,7 @@
 	cost = CARGO_CRATE_VALUE * 3
 	access = ACCESS_ROBOTICS
 	access_view = ACCESS_ROBOTICS
-	contains = list(/obj/tem/assembly/prox_sensor = 6,
+	contains = list(/obj/item/assembly/prox_sensor = 6,
 					/obj/item/bodypart/arm/left/robot = 4,
 					/obj/item/healthanalyzer = 2,
 					/obj/item/clothing/head/utility/hardhat = 2,
