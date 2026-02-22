@@ -295,4 +295,4 @@
 		if(CHANNEL_RINGTONES)
 			return list("Ringtones", "Sound when you are being called by a PDA or MODLink Scryer.")
 		if(CHANNEL_DELTA_SIRENS)
-			return list("Sirens", "The constant siren sound that plays during a Delta Alert.")
+			return list("Sirens", "The sirens that blares during a Delta Alert.")

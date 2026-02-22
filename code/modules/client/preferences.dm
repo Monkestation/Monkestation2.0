@@ -274,12 +274,16 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	return assets
 
-/datum/preferences/proc/set_channel_volume(channel, vol, mob/user)
-	user.update_media_volume(channel)
+/datum/preferences/proc/set_channel_volume(channel, vol)
+	parent.mob.update_media_volume(channel)
 
-	var/sound/S = sound(null, channel = channel, volume = vol)
-	S.status = SOUND_UPDATE
-	SEND_SOUND(usr, S)
+	//we gotta take into account existing sounds repeating/waiting, otherwise we completely remove looping sounds (such as whitenoise).
+	for(var/sound/S in parent.SoundQuery())
+		if(S.channel != channel)
+			continue
+		var/sound/new_sound = sound(null, repeat = S.repeat, wait = S.wait, channel = channel, volume = vol)
+		new_sound.status = SOUND_UPDATE
+		SEND_SOUND(parent.mob, new_sound)
 
 /datum/preferences/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
@@ -311,7 +315,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			return TRUE
 
 		if ("volume")
-			var/mob/user = ui.user
 			var/channel = text2num(params["channel"])
 			var/volume = text2num(params["volume"])
 			if(isnull(channel))
@@ -323,12 +326,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				CHANNEL_INSTRUMENTS_ROBOT,
 			)
 			if(!(channel in GLOB.proxy_sound_channels)) //if its a proxy we are just wasting time
-				set_channel_volume(channel, volume, user)
+				set_channel_volume(channel, volume)
 
 			else if((channel in instrument_channels))
 				var/datum/song/holder_song = new
 				for(var/used_channel in holder_song.channels_playing)
-					set_channel_volume(used_channel, volume, user)
+					set_channel_volume(used_channel, volume)
 			return TRUE
 
 		if ("change_slot")

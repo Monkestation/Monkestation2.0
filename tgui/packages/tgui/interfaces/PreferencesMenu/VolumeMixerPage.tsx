@@ -57,7 +57,6 @@ const VolumeSlider = (props: { channel: Channel }) => {
               minValue={0}
               maxValue={100}
               stepPixelSize={3.13}
-              tickWhileDragging
               value={channel.volume}
               onChange={(_, value) =>
                 act('volume', {

@@ -138,4 +138,5 @@ SUBSYSTEM_DEF(ambience)
 			return
 
 		client.current_ambient_sound = sound_to_use
-		SEND_SOUND(src, sound(my_area.ambient_buzz, repeat = 1, wait = 0, volume = my_area.ambient_buzz_vol, channel = CHANNEL_BUZZ))
+		var/volume_to_play = calculate_mixed_volume(client, my_area.ambient_buzz_vol, CHANNEL_BUZZ)
+		SEND_SOUND(src, sound(my_area.ambient_buzz, repeat = 1, wait = 0, volume = volume_to_play, channel = CHANNEL_BUZZ))
