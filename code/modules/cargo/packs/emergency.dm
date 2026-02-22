@@ -45,7 +45,7 @@
 /datum/supply_pack/emergency/firefighting
 	name = "Firefighting Crate"
 	desc = "Only you can prevent station fires. Partner up with two firefighter suits, gas masks, \
-		flashlights, large oxygen tanks, extinguishers, and hardhats!"
+		flashlights, large oxygen tanks, extinguishers, black gloves, and firefighter helmets!"
 	cost = CARGO_CRATE_VALUE * 2
 	contains = list(/obj/item/clothing/suit/utility/fire/firefighter = 2,
 					/obj/item/clothing/mask/gas = 2,
@@ -53,6 +53,7 @@
 					/obj/item/tank/internals/oxygen/red = 2,
 					/obj/item/extinguisher/advanced = 2,
 					/obj/item/clothing/head/utility/hardhat/fire = 2,
+					/obj/item/clothing/gloves/color/black = 2,
 				)
 	crate_name = "firefighting crate"
 
