@@ -190,7 +190,6 @@
 			mixer_channel = guess_mixer_channel(soundin)
 
 	sound_to_use.volume = calculate_mixed_volume(client, sound_to_use.volume, mixer_channel)
-
 	SEND_SOUND(src, sound_to_use)
 
 /proc/sound_to_playing_players(soundin, volume = 100, vary = FALSE, frequency = 0, channel = 0, pressure_affected = FALSE, sound/S)

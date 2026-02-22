@@ -19,6 +19,7 @@
 	var/datum/ui_module/volume_mixer/pref_mixer
 
 	var/list/channel_volume = list(
+		"1024" = 100,
 		"1019" = 100,
 	)
 

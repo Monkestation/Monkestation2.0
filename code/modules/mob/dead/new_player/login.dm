@@ -32,7 +32,6 @@
 	if(!. || !client)
 		return FALSE
 
-	GLOB.lobby_media.add_listener(src)
 	var/motd = global.config.motd
 	if(motd)
 		to_chat(src, "<div class=\"motd\">[motd]</div>", handle_whitespace=FALSE)
@@ -78,3 +77,4 @@
 
 
 	addtimer(CALLBACK(client, TYPE_PROC_REF(/client, playtitlemusic)), 4 SECONDS, TIMER_DELETE_ME)
+	GLOB.lobby_media.add_listener(src)

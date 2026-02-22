@@ -838,6 +838,7 @@ SUBSYSTEM_DEF(ticker)
 	var/sound/end_of_round_sound_ref = sound(round_end_sound)
 	for(var/mob/M in GLOB.player_list)
 		if(M.client.prefs.read_preference(/datum/preference/toggle/sound_endofround))
+			end_of_round_sound_ref.volume = calculate_mixed_volume(M.client, 100, CHANNEL_LOBBYMUSIC)
 			SEND_SOUND(M.client, end_of_round_sound_ref)
 
 	// monkestation removal start: fix-lobby-music
