@@ -273,12 +273,13 @@ ADMIN_VERB(play_web_sound, R_SOUND, FALSE, "Play Internet Sound", "Play a given 
 		for(var/m in GLOB.player_list)
 			var/mob/M = m
 			var/client/C = M.client
-			if(C.prefs.read_preference(/datum/preference/toggle/sound_midi))
-				if(!stop_web_sounds)
-					C.tgui_panel?.play_music(web_sound_url, music_extra_data)
-					C.media_player?.stop()
-				else
-					C.tgui_panel?.stop_music()
+			if(!(C.prefs.channel_volume["[CHANNEL_ADMIN]"]))
+				continue
+			if(!stop_web_sounds)
+				C.tgui_panel?.play_music(web_sound_url, music_extra_data)
+				C.media_player?.stop()
+			else
+				C.tgui_panel?.stop_music()
 	if(stop_web_sounds)
 		GLOB.dj_booth?.stop(null, force = TRUE)
 
