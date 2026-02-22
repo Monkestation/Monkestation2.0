@@ -192,9 +192,9 @@
 /obj/item/grenade/c4/explosivecharge/examine(mob/user)
 	. = ..()
 	if(obj_flags & EMAGGED)
-		. += span_warning("The safety light is dark. The biological sensors are inactive and the Clown-proof safety lock is disabled..")
+		. += span_warning("The safety light is dark. The biological sensors are inactive and the clown-proof safety lock is disabled..")
 	else
-		. += span_notice("A green light indicates the biological sensors are activate, and so is the Clown-proof safety lock.")
+		. += span_notice("A green light indicates the biological sensors are active, and so is the clown-proof safety lock.")
 
 /obj/item/grenade/c4/explosivecharge/emag_act(mob/user, obj/item/card/emag/E)
 	if(obj_flags & EMAGGED)
@@ -205,7 +205,7 @@
 
 /obj/item/grenade/c4/explosivecharge/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!(obj_flags & EMAGGED) && isliving(interacting_with))
-		to_chat(user, span_warning("The [src.name]'s Clown-proof safety lock prevents this!"))
+		to_chat(user, span_warning("The [src.name]'s clown-proof safety lock prevents this!"))
 		return ITEM_INTERACT_BLOCKING
 
 	return ..()
@@ -214,7 +214,7 @@
 	message_admins("[ADMIN_LOOKUPFLW(user)] suicided with [src] at [ADMIN_VERBOSEJMP(user)]")
 	user.log_message("suicided with [src].", LOG_ATTACK)
 	log_game("[key_name(user)] suicided with [src] at [AREACOORD(user)]")
-	user.visible_message(span_suicide("[user] activates [src] and holds it above [user.p_their()] head! It looks like [user.p_theyre()] going out with a bang!"))
+	user.visible_message(span_suicide("[user] puts the [src] up to [user.p_their()] mouth! It looks like [user.p_theyre()] are trying to bite off the safety lock!"))
 	shout_syndicate_crap(user)
 	
 	// If emagged, the suicide gains explosive range
