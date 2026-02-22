@@ -1,6 +1,6 @@
 /datum/quirk/dnr
 	name = "Revival Blacklist"
-	desc = "You cannot be revived through conventional means such as defibrilation or cloning upon death, make your only shot count."
+	desc = "You cannot be revived through conventional means such as defibrilation or cloning, but have a bit more health. Make your only shot count."
 	value = -6
 	gain_text = span_danger("You have one chance left.")
 	lose_text = span_notice("Your connection to this mortal plane strengthens!")
