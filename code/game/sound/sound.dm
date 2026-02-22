@@ -55,7 +55,7 @@
 	//allocate a channel if necessary now so its the same for everyone
 	channel = channel || SSsounds.random_available_channel()
 
-	var/sound/S = sound(get_sfx(soundin))
+	var/sound/S = isdatum(soundin) ? soundin : sound(get_sfx(soundin))
 	var/maxdistance = SOUND_RANGE + extrarange
 	var/source_z = turf_source.z
 
@@ -104,9 +104,15 @@
 	if(!sound_to_use)
 		sound_to_use = sound(get_sfx(soundin))
 
+	if(!mixer_channel)
+		if(channel in GLOB.used_sound_channels)
+			mixer_channel = channel
+		else
+			mixer_channel = guess_mixer_channel(soundin) || channel //channel fallback in case nothing could be guessed.
+
 	sound_to_use.wait = 0 //No queue
 	sound_to_use.channel = channel || SSsounds.random_available_channel()
-	sound_to_use.volume = vol
+	sound_to_use.volume = calculate_mixed_volume(client, vol, mixer_channel)
 
 	if((mixer_channel == CHANNEL_PRUDE) && client?.prefs?.read_preference(/datum/preference/toggle/prude_mode))
 		return
@@ -183,13 +189,6 @@
 	if(HAS_TRAIT(src, TRAIT_SOUND_DEBUGGED))
 		to_chat(src, span_admin("Max Range-[max_distance] Distance-[distance] Vol-[round(sound_to_use.volume, 0.01)] Sound-[sound_to_use.file]"))
 
-	if(!mixer_channel)
-		if(channel in GLOB.used_sound_channels)
-			mixer_channel = channel
-		else
-			mixer_channel = guess_mixer_channel(soundin)
-
-	sound_to_use.volume = calculate_mixed_volume(client, sound_to_use.volume, mixer_channel)
 	SEND_SOUND(src, sound_to_use)
 
 /proc/sound_to_playing_players(soundin, volume = 100, vary = FALSE, frequency = 0, channel = 0, pressure_affected = FALSE, sound/S)
@@ -245,7 +244,7 @@
 /proc/get_channel_info(channel)
 	switch(channel)
 		if(CHANNEL_MASTER_VOLUME)
-			return list("Master Volume", "Controls the volume of the whole game.")
+			return list("Master Volume", "Controls the volume of the whole game. This applies to every other volume slider as well.")
 		if(CHANNEL_LOBBYMUSIC)
 			return list("Lobby Music", "The music that plays at the start/end of the game, including the reboot theme.")
 		if(CHANNEL_ADMIN)
