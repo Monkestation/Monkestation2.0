@@ -108,7 +108,7 @@
 		if(channel in GLOB.used_sound_channels)
 			mixer_channel = channel
 		else
-			mixer_channel = guess_mixer_channel(soundin) || channel //channel fallback in case nothing could be guessed.
+			mixer_channel = guess_mixer_channel(sound_to_use) || channel //channel fallback in case nothing could be guessed.
 
 	sound_to_use.wait = 0 //No queue
 	sound_to_use.channel = channel || SSsounds.random_available_channel()
