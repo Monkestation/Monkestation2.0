@@ -64,10 +64,20 @@
 //  Monkestation Edit - explorer laser gun
 /obj/item/gun/energy/laser/retro/old/explorer
 	name ="explorer laser gun"
-	desc = "A dusty laser gun, recently ransacked from some rotting NanoTrasen facility. While not technically legal to distrubute the battery inside anymore, NanoTrasen figures putting it in the capable hands of it's exploration crews will sweep this under the rug. A small hook allows it to attach to any explorer suit."
+	desc = "A decomissioned military lasergun. Acid damage has left it's internal recharging battery fused inside with pitiful capacity."
 	pin = /obj/item/firing_pin/explorer
+	icon = 'monkestation/icons/obj/guns/explorer.dmi'
+	icon_state = "explorer"
 	selfcharge = 1
+	var/frequency_to_use = 10
 
+/obj/item/gun/energy/laser/retro/old/explorer/add_seclight_point()
+	AddComponent(/datum/component/seclite_attachable, \
+		light_overlay_icon = 'icons/obj/weapons/guns/flashlights.dmi', \
+		light_overlay = "flight", \
+		overlay_x = 20, \
+		overlay_y = 10)
+	
 /obj/item/gun/energy/laser/hellgun
 	name ="hellfire laser gun"
 	desc = "A relic of a weapon, built before NT began installing regulators on its laser weaponry. This pattern of laser gun became infamous for the gruesome burn wounds it caused, and was quietly discontinued once it began to affect NT's reputation."

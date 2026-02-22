@@ -82,10 +82,10 @@
 /datum/voucher_set/explorer
 
 /datum/voucher_set/explorer/retro_laser 
-	name = "Retro Laser Gun Kit"
-	description = "Contains an old Laser Gun with a primitive, low capacity, but self-charging battery and hook to attach to your suit. It's firing pin won't work on the station or in NanoTrasen controlled space."
-	icon = 'icons/obj/weapons/guns/energy.dmi'
-	icon_state = "retro"
+	name = "Laser Gun Kit"
+	description = "Contains a Laser Gun with a damaged, low capacity, but self-charging battery and hook to attach to your suit. It's firing pin won't work on the station or in NanoTrasen controlled space. No connection has been found by NT to any alleged 'war crimes' and the distrubition of this weapon to an incredibly accident prone workforce."
+	icon = 'monkestation/icons/obj/guns/explorer.dmi'
+	icon_state = "explorer"
 	set_items = list(
 		/obj/item/gun/energy/laser/retro/old/explorer
 		)
