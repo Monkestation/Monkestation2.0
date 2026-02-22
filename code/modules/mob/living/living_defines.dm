@@ -230,6 +230,9 @@
 	/// What our current gravity state is. Used to avoid duplicate animates and such
 	var/gravity_state = null
 
+	/// how many tiles can this mob reach with their hands? 1 tile is adjacent.
+	var/reach_length = 1
+
 	/// Body temp we homeostasize to
 	var/standard_body_temperature = BODYTEMP_NORMAL
 	/// Temperature of our insides

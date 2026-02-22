@@ -41,7 +41,7 @@
 		user.balloon_alert(user, "controls locked")
 		return ITEM_INTERACT_BLOCKING
 
-	multi_tool.set_buffer(parent_turret)
+	multitool_set_buffer(multi_tool, parent_turret)
 	balloon_alert(user, "saved to multitool buffer")
 	return ITEM_INTERACT_SUCCESS
 

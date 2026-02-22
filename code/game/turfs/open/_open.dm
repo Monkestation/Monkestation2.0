@@ -378,9 +378,9 @@
 	if(slide_distance)
 		var/turf/target = get_ranged_target_turf(slipper, olddir, slide_distance)
 		if(lube & SLIDE)
-			slipper.AddComponent(/datum/component/force_move, target, TRUE)
+			slipper.AddComponent(/datum/component/force_move, target, TRUE, TRUE)
 		else if(lube & SLIDE_ICE)
-			slipper.AddComponent(/datum/component/force_move, target, FALSE)//spinning would be bad for ice, fucks up the next dir
+			slipper.AddComponent(/datum/component/force_move, target, FALSE, TRUE)//spinning would be bad for ice, fucks up the next dir
 	return TRUE
 
 /turf/open/proc/MakeSlippery(wet_setting = TURF_WET_WATER, min_wet_time = 0, wet_time_to_add = 0, max_wet_time = MAXIMUM_WET_TIME, permanent)

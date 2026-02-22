@@ -63,10 +63,10 @@
 		to_chat(user, span_warning("You must be holding the camera to continue!"))
 		return FALSE
 	var/desired_x = tgui_input_number(user, "How wide do you want the camera to shoot?", "Zoom", picture_size_x, picture_size_x_max, picture_size_x_min)
-	if(!desired_x || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH) || loc != user)
+	if(!desired_x || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH|ALLOW_PAI) || loc != user)
 		return FALSE
 	var/desired_y = tgui_input_number(user, "How high do you want the camera to shoot", "Zoom", picture_size_y, picture_size_y_max, picture_size_y_min)
-	if(!desired_y || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH) || loc != user)
+	if(!desired_y || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH|ALLOW_PAI) || loc != user)
 		return FALSE
 	picture_size_x = min(clamp(desired_x, picture_size_x_min, picture_size_x_max), CAMERA_PICTURE_SIZE_HARD_LIMIT)
 	picture_size_y = min(clamp(desired_y, picture_size_y_min, picture_size_y_max), CAMERA_PICTURE_SIZE_HARD_LIMIT)
@@ -112,16 +112,16 @@
 	. += "It has [pictures_left] photos left."
 
 //user can be atom or mob
-/obj/item/camera/proc/can_target(atom/target, mob/user)
+/obj/item/camera/proc/can_target(atom/target, mob/user, through_camera_console)
 	if(!on || blending || !pictures_left)
 		return FALSE
 	var/turf/T = get_turf(target)
 	if(!T)
 		return FALSE
+	if(through_camera_console && GLOB.cameranet.checkTurfVis(T))
+		return TRUE
 	if(istype(user))
-		if(isAI(user) && !GLOB.cameranet.checkTurfVis(T))
-			return FALSE
-		else if(user.client && !(get_turf(target) in get_hear(user.client.view, user)))
+		if(user.client && !(get_turf(target) in get_hear(user.client.view, user)))
 			return FALSE
 		else if(!(get_turf(target) in get_hear(world.view, user)))
 			return FALSE
@@ -154,20 +154,21 @@
 			to_chat(user, span_warning("Invalid holodisk target."))
 			return ITEM_INTERACT_BLOCKING
 
-	if(!can_target(interacting_with, user))
+	var/through_camera_console = findtext(LAZYACCESS(modifiers, SCREEN_LOC), "camera_console") || isAI(user) || isaicamera(user)
+	if(!can_target(interacting_with, user, through_camera_console))
 		return ITEM_INTERACT_BLOCKING
-	if(!photo_taken(interacting_with, user))
+	if(!photo_taken(interacting_with, user, through_camera_console))
 		return ITEM_INTERACT_BLOCKING
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/camera/proc/photo_taken(atom/target, mob/user)
+/obj/item/camera/proc/photo_taken(atom/target, mob/user, through_camera_console)
 
 	on = FALSE
 	addtimer(CALLBACK(src, PROC_REF(cooldown)), cooldown)
 
 	icon_state = state_off
 
-	INVOKE_ASYNC(src, PROC_REF(captureimage), target, user, picture_size_x - 1, picture_size_y - 1)
+	INVOKE_ASYNC(src, PROC_REF(captureimage), target, user, picture_size_x - 1, picture_size_y - 1, through_camera_console)
 	return TRUE
 
 /obj/item/camera/proc/cooldown()
@@ -181,7 +182,7 @@
 	to_chat(user, P.desc)
 	qdel(P)
 
-/obj/item/camera/proc/captureimage(atom/target, mob/user, size_x = 1, size_y = 1)
+/obj/item/camera/proc/captureimage(atom/target, mob/user, size_x = 1, size_y = 1, through_camera_console)
 	if(flash_enabled)
 		set_light_on(TRUE)
 		addtimer(CALLBACK(src, PROC_REF(flash_end)), FLASH_LIGHT_DURATION, TIMER_OVERRIDE|TIMER_UNIQUE)
@@ -195,12 +196,10 @@
 	var/list/desc = list("This is a photo of an area of [size_x+1] meters by [size_y+1] meters.")
 	var/list/mobs_spotted = list()
 	var/list/dead_spotted = list()
-	var/ai_user = isAI(user)
-	var/list/seen
 	var/list/viewlist = user?.client ? getviewsize(user.client.view) : getviewsize(world.view)
-	var/viewr = max(viewlist[1], viewlist[2]) + max(size_x, size_y)
-	var/viewc = user?.client ? user.client.eye : target
-	seen = get_hear(viewr, viewc)
+	var/view_range = max(viewlist[1], viewlist[2]) + max(size_x, size_y)
+	var/viewer = get_turf(user?.client?.eye || user || target) // not sure why target is a fallback
+	var/list/seen = get_hear(view_range, viewer)
 	var/list/turfs = list()
 	var/list/mobs = list()
 	var/blueprints = FALSE
@@ -214,7 +213,7 @@
 			if(!placeholder)
 				break
 
-		if(placeholder && ((ai_user && GLOB.cameranet.checkTurfVis(placeholder)) || (placeholder in seen)))
+		if(placeholder && ((through_camera_console && GLOB.cameranet.checkTurfVis(placeholder)) || (placeholder in seen)))
 			turfs += placeholder
 			for(var/mob/M in placeholder)
 				mobs += M

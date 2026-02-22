@@ -130,22 +130,22 @@
  * Simply a wrapper for calling mob adjustXLoss() procs to heal a certain damage type,
  * when you don't know what damage type you're healing exactly.
  */
-/mob/living/proc/heal_damage_type(heal_amount = 0, damagetype = BRUTE)
+/mob/living/proc/heal_damage_type(heal_amount = 0, damagetype = BRUTE, update_health = TRUE)
 	heal_amount = abs(heal_amount)
 
 	switch(damagetype)
 		if(BRUTE)
-			return adjustBruteLoss(-heal_amount)
+			return adjustBruteLoss(-heal_amount, update_health)
 		if(BURN)
-			return adjustFireLoss(-heal_amount)
+			return adjustFireLoss(-heal_amount, update_health)
 		if(TOX)
-			return adjustToxLoss(-heal_amount, forced = TRUE) // monkestation edit: we're gonna assume anything using this proc intends to do true healing, so, let's not kill oozelings
+			return adjustToxLoss(-heal_amount, update_health, forced = TRUE) // monkestation edit: we're gonna assume anything using this proc intends to do true healing, so, let's not kill oozelings
 		if(OXY)
-			return adjustOxyLoss(-heal_amount)
+			return adjustOxyLoss(-heal_amount, update_health)
 		if(CLONE)
-			return adjustCloneLoss(-heal_amount)
+			return adjustCloneLoss(-heal_amount, update_health)
 		if(STAMINA)
-			return stamina.adjust(heal_amount)
+			return stamina.adjust(heal_amount, update_health)
 
 /// return the damage amount for the type given
 /**
@@ -516,12 +516,14 @@
 		updatehealth()
 
 ///heal up to amount damage, in a given order
-/mob/living/proc/heal_ordered_damage(amount, list/damage_types)
+/mob/living/proc/heal_ordered_damage(amount, list/damage_types, update_health = TRUE)
 	. = 0 //we'll return the amount of damage healed
 	for(var/damagetype in damage_types)
 		var/amount_to_heal = min(abs(amount), get_current_damage_of_type(damagetype)) //heal only up to the amount of damage we have
 		if(amount_to_heal)
-			. += heal_damage_type(amount_to_heal, damagetype)
+			. += heal_damage_type(amount_to_heal, damagetype, FALSE)
 			amount -= amount_to_heal //remove what we healed from our current amount
 		if(!amount)
 			break
+	if(. && update_health)
+		updatehealth()

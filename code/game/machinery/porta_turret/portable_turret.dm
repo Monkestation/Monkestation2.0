@@ -332,7 +332,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	if(locked)
 		return
 
-	tool.set_buffer(src)
+	multitool_set_buffer(tool, src)
 	balloon_alert(user, "saved to multitool buffer")
 	return ITEM_INTERACT_SUCCESS
 
@@ -989,9 +989,10 @@ DEFINE_BITFIELD(turret_flags, list(
 	if(machine_stat & BROKEN)
 		return
 
-	if(multi_tool.buffer && istype(multi_tool.buffer, /obj/machinery/porta_turret))
-		turrets |= WEAKREF(multi_tool.buffer)
-		to_chat(user, span_notice("You link \the [multi_tool.buffer] with \the [src]."))
+	var/datum/buffer = multitool_get_buffer(multi_tool)
+	if(buffer && istype(buffer, /obj/machinery/porta_turret))
+		turrets |= WEAKREF(buffer)
+		to_chat(user, span_notice("You link \the [buffer] with \the [src]."))
 		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/turretid/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)

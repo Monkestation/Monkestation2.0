@@ -1,5 +1,6 @@
 /datum/export/material
 	cost = 5 // Cost per SHEET_MATERIAL_AMOUNT, which is 100cm3 as of May 2023.
+	k_elasticity = 0
 	message = "cm3 of developer's tears. Please, report this on github"
 	amount_report_multiplier = SHEET_MATERIAL_AMOUNT
 	var/material_id = null

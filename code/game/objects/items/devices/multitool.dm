@@ -30,16 +30,16 @@
 	custom_premium_price = PAYCHECK_COMMAND * 3
 	toolspeed = 1
 	usesound = 'sound/weapons/empty.ogg'
-	var/datum/buffer // simple machine buffer for device linkage
+	var/datum/weakref/buffer // simple machine buffer for device linkage
 	var/mode = 0
 	var/apc_scanner = TRUE
 	COOLDOWN_DECLARE(next_apc_scan)
 	///the component buffer
-	var/obj/item/mcobject/component_buffer
+	var/datum/weakref/component_buffer
 
 /obj/item/multitool/examine(mob/user)
 	. = ..()
-	. += span_notice("Its buffer [buffer ? "contains [buffer]." : "is empty."]")
+	. += span_notice("Its buffer [buffer?.resolve() ? "contains [buffer.resolve()]." : "is empty."]")
 
 /obj/item/multitool/storage_insert_on_interaction(datum/storage, atom/storage_holder, mob/user)
 	return !isitem(storage_holder) || !(user?.istate & (ISTATE_HARM | ISTATE_SECONDARY))
@@ -115,21 +115,16 @@
  * * buffer - the new object to assign to the multitool's buffer
  */
 /obj/item/multitool/proc/set_buffer(datum/buffer)
-	if(src.buffer)
-		UnregisterSignal(src.buffer, COMSIG_QDELETING)
-	src.buffer = buffer
-	if(!QDELETED(buffer))
-		RegisterSignal(buffer, COMSIG_QDELETING, PROC_REF(on_buffer_del))
+	src.buffer = WEAKREF(buffer)
 
 /**
- * Called when the buffer's stored object is deleted
+ * Sets the multitool component buffer
  *
- * This proc does not clear the buffer of the multitool, it is here to
- * handle the deletion of the object the buffer references
+ * Arguments:
+ * * buffer - the new object to assign to the multitool's component buffer
  */
-/obj/item/multitool/proc/on_buffer_del(datum/source)
-	SIGNAL_HANDLER
-	buffer = null
+/obj/item/multitool/proc/set_component_buffer(datum/component_buffer)
+	src.component_buffer = WEAKREF(component_buffer)
 
 // Syndicate device disguised as a multitool; it will turn red when an AI camera is nearby.
 

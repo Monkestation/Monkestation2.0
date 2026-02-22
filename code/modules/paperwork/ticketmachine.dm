@@ -51,7 +51,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 	. += span_notice("You can take a ticket out with <b>Left-Click</b> to be number [ticket_number + 1] in queue.")
 
 /obj/machinery/ticket_machine/multitool_act(mob/living/user, obj/item/multitool/M)
-	M.set_buffer(src)
+	multitool_set_buffer(M, src)
 	balloon_alert(user, "saved to multitool buffer")
 	return ITEM_INTERACT_SUCCESS
 
@@ -109,15 +109,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 
 /obj/machinery/button/ticket_machine/multitool_act(mob/living/user, obj/item/I)
 	. = ..()
-	if(I.tool_behaviour == TOOL_MULTITOOL)
-		var/obj/item/multitool/M = I
-		if(M.buffer && !istype(M.buffer, /obj/machinery/ticket_machine))
-			return
-		var/obj/item/assembly/control/ticket_machine/controller = device
-		controller.ticket_machine_ref = WEAKREF(M.buffer)
-		id = null
-		controller.id = null
-		to_chat(user, span_warning("You've linked [src] to [M.buffer]."))
+	var/datum/buffer = multitool_get_buffer(I)
+	if(!QDELETED(buffer) && !istype(buffer, /obj/machinery/ticket_machine))
+		return
+	var/obj/item/assembly/control/ticket_machine/controller = device
+	controller.ticket_machine_ref = WEAKREF(buffer)
+	id = null
+	controller.id = null
+	to_chat(user, span_notice("You link [src] to [buffer]."))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/assembly/control/ticket_machine
 	name = "ticket machine controller"

@@ -7463,7 +7463,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/central)
 "dIW" = (
-/obj/item/storage/secure/safe/caps_spare/directional/west,
+/obj/structure/secure_safe/caps_spare/directional/west,
 /obj/machinery/firealarm/directional/north,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain/private)
@@ -8444,7 +8444,7 @@
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/directional/south,
-/obj/machinery/vending/wardrobe/engi_wardrobe,
+/obj/machinery/vending/access/engi_wardrobe,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "ejz" = (
@@ -9338,6 +9338,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/west,
+/obj/item/flatpack,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "eFj" = (
@@ -18470,6 +18471,7 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/light/directional/east,
 /obj/effect/turf_decal/tile/purple,
+/obj/item/flatpack,
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
 "iRb" = (
@@ -35263,6 +35265,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 4
 	},
+/obj/item/flatpack,
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "qWu" = (
