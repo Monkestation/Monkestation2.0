@@ -247,7 +247,7 @@
 		if(CHANNEL_MASTER_VOLUME)
 			return list("Master Volume", "Controls the volume of the whole game.")
 		if(CHANNEL_LOBBYMUSIC)
-			return list("Lobby Music", "The music that plays at the start/end of the game.")
+			return list("Lobby Music", "The music that plays at the start/end of the game, including the reboot theme.")
 		if(CHANNEL_ADMIN)
 			return list("Admin MIDIs", "Sound of Admin-played music.")
 		if(CHANNEL_ANNOUNCEMENTS_VOX)
