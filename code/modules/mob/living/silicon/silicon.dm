@@ -513,3 +513,9 @@
 	law_list += laws.get_law_list(include_zeroth = TRUE, render_html = FALSE)
 	for(var/borg_laws in law_list)
 		. += borg_laws
+
+/mob/living/silicon/body_temperature_damage(datum/gas_mixture/environment, seconds_per_tick, times_fired)
+	return
+
+/mob/living/silicon/body_temperature_alerts()
+	return
