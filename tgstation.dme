@@ -1547,6 +1547,7 @@
 #include "code\datums\elements\mob_killed_tally.dm"
 #include "code\datums\elements\movement_turf_changer.dm"
 #include "code\datums\elements\movetype_handler.dm"
+#include "code\datums\elements\nav_computer_icon.dm"
 #include "code\datums\elements\nerfed_pulling.dm"
 #include "code\datums\elements\noisy_movement.dm"
 #include "code\datums\elements\noticable_organ.dm"
