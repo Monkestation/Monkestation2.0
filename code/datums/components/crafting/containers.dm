@@ -21,6 +21,17 @@
 	result = /obj/item/storage/backpack/holding
 	category = CAT_CONTAINERS
 
+/datum/crafting_recipe/surgery_tray
+	name = "Surgery Tray"
+	result = /obj/item/surgery_tray
+	time = 3 SECONDS
+	reqs = list(
+				/obj/item/stack/rods = 5,
+				/obj/item/stack/sheet/mineral/silver = 1,
+				)
+	tool_behaviors = list(TOOL_SCREWDRIVER)
+	category = CAT_CONTAINERS
+
 /datum/crafting_recipe/underwater_basket
 	name = "Underwater Basket (Bamboo)"
 	reqs = list(
