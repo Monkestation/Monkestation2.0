@@ -147,13 +147,8 @@
 		legal_crafting_recipes += recipe
 
 /obj/machinery/assembler/attack_hand(mob/living/carbon/user, list/modifiers)
-	if(panel_open)
-		var/zapchance = (wire_integrity-1)*100
-		if(prob(zapchance))
-			spark_system.start()
-			if(ismecha(loc) || user.wearing_shock_proof_gloves() || HAS_TRAIT(user, TRAIT_SHOCKIMMUNE))
-				return
-			user.electrocute_act(10, src, 1, SHOCK_NOGLOVES|SHOCK_SUPPRESS_MESSAGE)
+	if(panel_open && iscarbon(user))
+		shock(user)
 
 /obj/machinery/assembler/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
@@ -224,7 +219,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 
-/obj/machinery/assembler/wirecutter_act(mob/living/user, obj/item/tool)
+/obj/machinery/assembler/wirecutter_act(mob/living/user, obj/item/tool, list/modifiers)
 	. = ITEM_INTERACT_BLOCKING
 	if(!panel_open)
 		to_chat(user, span_warning("The maintenance panel is closed!"))
@@ -242,7 +237,17 @@
 		to_chat(user, span_warning("You finish cutting out the wire."))
 		wire_integrity += 0.2
 		refresh_parts()
+		if(iscarbon(user))
+			shock(user)
 		return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/assembler/proc/shock(mob/living/carbon/user, list/modifiers)
+	var/zapchance = (wire_integrity-1)*100
+	if(prob(zapchance))
+		spark_system.start()
+		if(ismecha(loc) || user.wearing_shock_proof_gloves() || HAS_TRAIT(user, TRAIT_SHOCKIMMUNE))
+			return
+		user.electrocute_act(10, src, 1, SHOCK_NOGLOVES|SHOCK_SUPPRESS_MESSAGE)
 
 /obj/machinery/assembler/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(istype(attacking_item, /obj/item/stack/cable_coil))
@@ -495,13 +500,7 @@
 /obj/machinery/assembler/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armour_penetration = 0)
 	. = ..()
 	if(. && atom_integrity > 0) //damage received
-		if(!wire_integrity == 2)
-			if(prob(30))
-				spark_system.start()
-				wire_integrity += 0.2
-				return
-		else
-			spark_system.start()
+		spark_system.start()
 
 /datum/hover_data/assembler
 	var/obj/effect/overlay/hover/recipe_icon
