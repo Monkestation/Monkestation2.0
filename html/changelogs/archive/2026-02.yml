@@ -406,3 +406,43 @@
       second rabbit.
   sylvia-from-fulp-station:
   - rscadd: 3 alternative job titles for Explorer and 1 for Shaft Miner
+2026-02-23:
+  Absolucy:
+  - refactor: Refactored some pathology shitcode. Report any issues with pathology
+      machines.
+  - code_imp: (tontyGH) made /proc/getviewsize() pure.
+  - refactor: (tontyGH) /mob/eye/ai_eye has been restructured, now inheriting from
+      a generic mob/eye/camera type.
+  - refactor: (tontyGH) advanced cameras and their subtypes are now mob/eye/camera/remote
+      subtypes.
+  - code_imp: (tontyGH) the cameranet no longer expects the user to be an AI eye.
+  - code_imp: (tontyGH) remote camera eyes have had their initialization streamlined.
+  - code_imp: (tontyGH) remote cameras handle assigning and unassigning users by themselves
+      now.
+  - code_imp: (tontyGH) remote cameras now use weakrefs instead of hard referencing
+      owners and origins.
+  - code_imp: (tontyGH) also the sentient disease is_define was removed (we don't
+      have those anymore)
+  - bugfix: (tontyGH) AI eyes no longer assign real names to themselves, fixing their
+      orbit name.
+  - bugfix: (00-Steven) The static from holocalls no longer stays even after exiting
+      the holocall.
+  - bugfix: (SyncIt21) advanced camera consoles correctly deactivate when something
+      happens(no proximity, no power etc) to its user.
+  - bugfix: (Holoo-1) fixed camera static not being drawn for AI in multicamera mode.
+      Also fixes secondary AI cameras not existing and gives them their AI name.
+  JohnFulpWillard:
+  - bugfix: Silicon cameras no longer cause server lag.
+  - bugfix: pAIs now regenerate their chassis integrity.
+  - qol: pAIs now have a new HUD to take widescreen into account, it includes a new
+      button for Crew Monitor.
+  notghosti:
+  - map: Oshan now has power for brig medical
+  - map: Oshan has better construction access
+  - map: Oshan has RD Console
+  - map: Oshan has xenobio lockers moved from public hallway
+  - map: Thesues no longer has mapped mime book
+  - map: Theseus no longer has indestructible perma lube floors. Replaced with slippery
+      oil
+  - map: Theseus cryogenics now hook into distro
+  - map: Pubby now has wirechemistry added
