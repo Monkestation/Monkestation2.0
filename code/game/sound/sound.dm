@@ -54,6 +54,11 @@
 
 	//allocate a channel if necessary now so its the same for everyone
 	channel = channel || SSsounds.random_available_channel()
+	if(!mixer_channel)
+		if(channel in GLOB.used_sound_channels)
+			mixer_channel = channel
+		else
+			mixer_channel = guess_mixer_channel(sound_to_use) || channel
 
 	var/sound/S = isdatum(soundin) ? soundin : sound(get_sfx(soundin))
 	var/maxdistance = SOUND_RANGE + extrarange
