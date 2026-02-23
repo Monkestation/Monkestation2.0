@@ -8369,7 +8369,6 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/digital_clock/directional/north,
-/obj/structure/closet/l3closet/scientist,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "cLN" = (
@@ -13779,7 +13778,6 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/structure/closet/l3closet/scientist,
 /obj/effect/mapping_helpers/apc/cell_10k,
 /obj/effect/mapping_helpers/apc/full_charge,
 /turf/open/floor/iron/white,
@@ -25339,7 +25337,6 @@
 /turf/open/floor/iron/dark/small,
 /area/station/security/checkpoint/engineering)
 "ibA" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/engine,
 /area/station/science/explab)
@@ -45896,6 +45893,9 @@
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /obj/effect/turf_decal/trimline/purple/filled/mid_joiner,
 /obj/machinery/firealarm/directional/south,
+/obj/machinery/modular_computer/preset/research{
+	dir = 1
+	},
 /turf/open/floor/iron/dark/herringbone,
 /area/station/science/server)
 "oDx" = (
@@ -48331,8 +48331,9 @@
 /turf/open/floor/iron/dark/diagonal,
 /area/station/cargo/lobby)
 "poo" = (
-/obj/effect/mapping_helpers/airlock/access/any/engineering/general,
 /obj/machinery/door/airlock/maintenance,
+/obj/effect/mapping_helpers/airlock/access/any/engineering/general,
+/obj/effect/mapping_helpers/airlock/access/any/engineering/construction,
 /turf/open/floor/plating,
 /area/station/engineering/storage_shared)
 "poN" = (
@@ -52431,6 +52432,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/dark_purple/opposingcorners,
+/obj/structure/closet/l3closet/scientist,
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
 "qCO" = (
@@ -61807,6 +61809,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/any/engineering/general,
+/obj/effect/mapping_helpers/airlock/access/any/engineering/construction,
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 1
@@ -68974,6 +68977,7 @@
 /obj/effect/turf_decal/trimline/orange/filled/warning{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/lockers)
 "vOe" = (
@@ -74652,6 +74656,12 @@
 /obj/item/food/grown/banana,
 /turf/open/misc/grass/jungle,
 /area/station/maintenance/port/central)
+"xBJ" = (
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
+	dir = 1
+	},
+/turf/closed/wall/r_wall,
+/area/station/science/xenobiology)
 "xBN" = (
 /obj/effect/turf_decal/trimline/brown/filled/warning,
 /obj/effect/turf_decal/trimline/brown/corner{
@@ -76283,6 +76293,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/dark_purple/opposingcorners,
+/obj/structure/closet/l3closet/scientist,
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
 "yeG" = (
@@ -119768,7 +119779,7 @@ gro
 bUk
 mgC
 pxf
-fxe
+xBJ
 xbo
 fOM
 pFk

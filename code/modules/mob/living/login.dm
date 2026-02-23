@@ -31,3 +31,4 @@
 
 	if(GLOB.sacrament_done)
 		AddComponent(/datum/component/shadowlands)
+	set_ssd_indicator(FALSE)

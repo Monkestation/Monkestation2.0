@@ -41,8 +41,10 @@ GLOBAL_DATUM_INIT(thrallnet, /datum/cameranet/darkspawn, new)
 /datum/action/innate/camera_jump/darkspawn/Activate()
 	if(!owner || !isliving(owner))
 		return
-	var/mob/eye/ai_eye/remote/remote_eye = owner.remote_control
-	var/obj/machinery/computer/camera_advanced/origin = remote_eye.origin
+	var/mob/eye/camera/remote/remote_eye = owner.remote_control
+	var/obj/machinery/computer/camera_advanced/origin = remote_eye.origin_ref?.resolve()
+	if(!origin)
+		return
 
 	var/list/L = list()
 
@@ -87,12 +89,11 @@ GLOBAL_DATUM_INIT(thrallnet, /datum/cameranet/darkspawn, new)
 	internal_light = FALSE
 	armor_type = /datum/armor/machinery_camera
 	flags_1 = NODECONSTRUCT_1
-
-/obj/machinery/camera/darkspawn/Initialize(mapload, obj/structure/camera_assembly/CA)
-	. = ..()
 	network = list(ROLE_DARKSPAWN)
-	change_camnet(GLOB.thrallnet)
-	setViewRange(10)
+	view_range = 10
+
+/obj/machinery/camera/darkspawn/default_camera_net()
+	return GLOB.thrallnet
 
 /obj/machinery/camera/darkspawn/emp_act(severity, reset_time = 10)
 	return
