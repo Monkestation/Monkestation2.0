@@ -113,6 +113,9 @@
 #define CHARACTER_ROLE_MODE_FILTER 2
 #define CHARACTER_ROLE_MODE_PER_CHAR 3
 
+#define JOB_PREFS_OVERALL 1
+#define JOB_PREFS_CHARACTER 2
+
 // Values for /datum/preferences/starting_page
 #define PREFERENCE_PAGE_CHARACTERS -1
 #define PREFERENCE_PAGE_SETTINGS 0

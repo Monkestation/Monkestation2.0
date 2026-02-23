@@ -173,12 +173,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		fcopy(savefile.path, bacpath) //byond helpfully lets you use a savefile for the first arg.
 		return FALSE
 
-	apply_all_client_preferences()
-
 	// jobs
 	enabled_characters = savefile.get_entry("enabled_characters", enabled_characters)
 	overall_job_preferences = savefile.get_entry("overall_job_preferences", overall_job_preferences)
-	job_preferences = overall_job_preferences
+
+	apply_all_client_preferences()
 
 	// for (var/enabled_character in enabled_characters)
 	// 	enabled_character_job_preferences[enabled_character] =
@@ -236,6 +235,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	be_special = sanitize_be_special(SANITIZE_LIST(be_special))
 	key_bindings = sanitize_keybindings(key_bindings)
 	favorite_outfits = SANITIZE_LIST(favorite_outfits)
+	overall_job_preferences = clean_job_preferences(overall_job_preferences) // <-- needs to happen before apply_all_client_preferences()
 
 	if(needs_update >= 0 || needs_update_monkestation >= 0) //save the updated version //MONKESTATION EDIT - Modular updates
 		var/old_default_slot = active_slot
@@ -254,6 +254,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		active_slot = old_default_slot
 		max_save_slots = old_max_save_slots
 		save_preferences()
+
+	if (read_preference(/datum/preference/choiced/character_role_select_mode) != CHARACTER_ROLE_MODE_PER_CHAR)
+		job_preferences = overall_job_preferences
 
 	return TRUE
 
@@ -335,18 +338,24 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	//Sanitize
 	randomise = SANITIZE_LIST(randomise)
-	job_preferences = SANITIZE_LIST(job_preferences)
 	all_quirks = SANITIZE_LIST(all_quirks)
 
-	//Validate job prefs
-	for(var/j in job_preferences)
-		if(job_preferences[j] != JP_LOW && job_preferences[j] != JP_MEDIUM && job_preferences[j] != JP_HIGH)
-			job_preferences -= j
-
+	selected_character_job_preferences = clean_job_preferences(selected_character_job_preferences)
 	all_quirks = SSquirks.filter_invalid_quirks(SANITIZE_LIST(all_quirks))
 	validate_quirks()
 
+	if (read_preference(/datum/preference/choiced/character_role_select_mode) == CHARACTER_ROLE_MODE_PER_CHAR)
+		job_preferences = selected_character_job_preferences
+
 	return TRUE
+
+/datum/preferences/proc/clean_job_preferences(list/job_preferences_in)
+	var/jprefs = SANITIZE_LIST(job_preferences_in)
+	//Validate job prefs
+	for(var/j in jprefs)
+		if(jprefs[j] != JP_LOW && jprefs[j] != JP_MEDIUM && jprefs[j] != JP_HIGH)
+			jprefs -= j
+	return jprefs
 
 /datum/preferences/proc/save_character()
 	SHOULD_NOT_SLEEP(TRUE)

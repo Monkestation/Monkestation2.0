@@ -590,29 +590,29 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if (!job)
 		return FALSE
 
-	var/list/job_preferences
-	if (type == "character")
-		job_preferences = selected_character_job_preferences
-	if (type == "overall")
-		job_preferences = overall_job_preferences
+	var/list/jprefs
+	if (type == JOB_PREFS_OVERALL)
+		jprefs = overall_job_preferences
+	if (type == JOB_PREFS_CHARACTER)
+		jprefs = selected_character_job_preferences
 	to_chat(parent, html="job=[job.title] level=[level] type=[type]")
 
 	if (level == JP_HIGH)
 		var/datum/job/overflow_role = SSjob.overflow_role
 		var/overflow_role_title = initial(overflow_role.title)
 
-		for(var/other_job in job_preferences)
-			if(job_preferences[other_job] == JP_HIGH)
+		for(var/other_job in jprefs)
+			if(jprefs[other_job] == JP_HIGH)
 				// Overflow role needs to go to NEVER, not medium!
 				if(other_job == overflow_role_title)
-					job_preferences[other_job] = null
+					jprefs[other_job] = null
 				else
-					job_preferences[other_job] = JP_MEDIUM
+					jprefs[other_job] = JP_MEDIUM
 
 	if(level == null)
-		job_preferences -= job.title
+		jprefs -= job.title
 	else
-		job_preferences[job.title] = level
+		jprefs[job.title] = level
 
 	return TRUE
 
@@ -627,19 +627,27 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		enabled_characters.Add(slot)
 
 /datum/preferences/proc/pick_character_for_job(datum/job/job)
-	var/chosen = active_slot
+	var/mode = read_preference(/datum/preference/choiced/character_role_select_mode)
+	if (mode == CHARACTER_ROLE_MODE_SIMPLE || mode == CHARACTER_ROLE_MODE_PER_CHAR)
+		return
+
+	var/chosen = default_character
 	for (var/character_slot in shuffle(enabled_characters))
 		// It won't be updated in the savefile yet, so just read the name directly
 		if (character_slot == active_slot)
-			if (!isnull(selected_character_job_preferences[job]))
+			to_chat(parent, "active character")
+			if (!isnull(selected_character_job_preferences[job.title]))
 				return
 
 		var/tree_key = "character[character_slot]"
 		var/save_data = savefile.get_entry(tree_key)
 		var/job_prefs = save_data?["job_preferences"]
 
-		if (!isnull(job_prefs) && !isnull(job_prefs[job]))
+		to_chat(parent, "character [character_slot] [(save_data?["real_name"])]")
+
+		if (!isnull(job_prefs) && !isnull(job_prefs[job.title]))
 			chosen = character_slot
+			to_chat(parent, "success")
 			break
 
 	switch_to_slot(chosen)
