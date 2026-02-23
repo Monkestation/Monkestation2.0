@@ -77,17 +77,18 @@
 		/obj/item/storage/backpack/duffelbag/mining_conscript,
 	)
 
-
 // monkestation explorer vouchers
 /datum/voucher_set/explorer
 
 /datum/voucher_set/explorer/retro_laser 
 	name = "Laser Gun Kit"
-	description = "Contains a Laser Gun with a damaged, low capacity, but self-charging battery and hook to attach to your suit. It's firing pin won't work on the station or in NanoTrasen controlled space. No connection has been found by NT to any alleged 'war crimes' and the distrubition of this weapon to an incredibly accident prone workforce."
+	description = "Contains a low capacity but recharging laser gun, and a knife and flashlight to attach to it. It's firing pin won't work on the station or in NanoTrasen controlled space. No connection has been found by NT to any alleged 'war crimes' and the distrubition of this weapon to an incredibly accident prone workforce."
 	icon = 'monkestation/icons/obj/guns/explorer.dmi'
 	icon_state = "explorer"
 	set_items = list(
-		/obj/item/gun/energy/laser/retro/old/explorer
+		/obj/item/gun/energy/laser/explorer,
+		/obj/item/flashlight/seclite,
+		/obj/item/knife/combat/survival,
 		)
 
 /datum/voucher_set/explorer/extraction_kit
@@ -148,10 +149,11 @@
 
 /datum/voucher_set/explorer/first_mate
 	name = "First Mate's Kit"
-	description = "The captain of every voyage needs a trusty right hand spaceman. Bring a buddy along into the abyss with a spare mining hardsuit, jetpack, gps device and cargo teleporter."
+	description = "The captain of every voyage needs a trusty right hand spaceman. Bring a buddy along into the abyss with a laser musket, spare mining hardsuit, jetpack, gps device and cargo teleporter."
 	icon = 'monkestation/icons/obj/clothing/hardsuits/suit.dmi'
 	icon_state = "hardsuit-mining"
 	set_items = list(
+		/obj/item/gun/energy/laser/musket,
 		/obj/item/storage/box/emergency_eva/explorer,
 		/obj/item/cargo_teleporter = 1,
 		)

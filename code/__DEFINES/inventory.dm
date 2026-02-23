@@ -293,7 +293,7 @@ GLOBAL_LIST_INIT(mining_suit_allowed, list(
 	/obj/item/gun/ballistic/automatic/proto/pksmg,
 	/obj/item/gun/ballistic/revolver/grenadelauncher/kinetic,
 	/obj/item/gun/ballistic/revolver/govmining,
-	/obj/item/gun/energy/laser/retro/old/explorer,
+	/obj/item/gun/energy/laser/explorer,
 	/obj/item/melee/sledgehammer,
 ))
 
