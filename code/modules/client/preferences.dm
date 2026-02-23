@@ -11,6 +11,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	/// Whether or not we allow saving/loading. Used for guests, if they're enabled
 	var/load_and_save = TRUE
 	/// Ensures that we always load the last used save, QOL
+	/// TODO rename to active slot
 	var/default_slot = 1
 	/// The maximum number of slots we're allowed to contain
 	var/max_save_slots = 20
@@ -59,7 +60,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	//
 	// --- legacy ---
 	// job_preferences = character_job_preferences[selected_character]
-	var/job_preferences_mode = "filter"
+	var/job_preferences_mode = 0
 
 	var/default_character
 
@@ -586,9 +587,15 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	return profiles
 
-/datum/preferences/proc/set_job_preference_level(datum/job/job, level)
+/datum/preferences/proc/set_job_preference_level(datum/job/job, level, which)
 	if (!job)
 		return FALSE
+
+	var/list/job_preferences
+	if (which == "character")
+		job_preferences = selected_character_job_preferences
+	if (which == "overall")
+		job_preferences = overall_job_preferences
 
 	if (level == JP_HIGH)
 		var/datum/job/overflow_role = SSjob.overflow_role
@@ -620,7 +627,22 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		enabled_characters.Add(slot)
 
 /datum/preferences/proc/pick_character_for_job(datum/job/job)
-	// switch_to_slot
+	var/chosen = default_slot
+	for (var/character_slot in shuffle(enabled_characters))
+		// It won't be updated in the savefile yet, so just read the name directly
+		if (character_slot == default_slot)
+			if (!isnull(selected_character_job_preferences[job]))
+				return
+
+		var/tree_key = "character[character_slot]"
+		var/save_data = savefile.get_entry(tree_key)
+		var/job_prefs = save_data?["job_preferences"]
+
+		if (!isnull(job_prefs) && !isnull(job_prefs[job]))
+			chosen = character_slot
+			break
+
+	switch_to_slot(chosen)
 
 /datum/preferences/proc/GetQuirkBalance()
 	var/bal = 0

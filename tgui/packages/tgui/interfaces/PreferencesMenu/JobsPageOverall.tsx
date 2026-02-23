@@ -11,6 +11,7 @@ import {
 } from 'tgui-core/components';
 import { useBackend } from '../../backend';
 import {
+  CharacterMode,
   createSetPreference,
   type Job,
   JoblessRole,
@@ -80,6 +81,7 @@ const createCreateSetPriorityFromName = (
       act('set_job_preference', {
         job: jobName,
         level: priority,
+        which: 'overall',
       });
     };
 
@@ -379,20 +381,20 @@ const JoblessRoleDropdown = () => {
 
 const JoblessRoleDropdown2 = () => {
   const { act, data } = useBackend<PreferencesMenuData>();
-  const selected = data.character_preferences.misc.joblessrole;
+  const selected = data.character_select_mode;
 
   const options = [
     {
-      displayText: `Join as ${data.overflow_role} if unavailable`,
-      value: JoblessRole.BeOverflow,
+      displayText: `Simple: One Character -- Choose one character and set occupations in occupations settings`,
+      value: CharacterMode.Simple,
     },
     {
-      displayText: `Join as a random job if unavailable`,
-      value: JoblessRole.BeRandomJob,
+      displayText: `Character Filters: Many Characters -- Choose at least one character, set occupations in occupation settings and set occupation filters in character settings`,
+      value: CharacterMode.PerCharacterFilters,
     },
     {
-      displayText: `Edit Selected Characters`,
-      value: JoblessRole.ReturnToLobby,
+      displayText: `Character Priorities: One Character (old version) -- Choose one character and set occupations in character settings`,
+      value: CharacterMode.PerCharacterPriorities,
     },
   ];
 
@@ -401,14 +403,17 @@ const JoblessRoleDropdown2 = () => {
   )?.displayText;
 
   return (
-    <Box position="absolute" left={1} width="25%">
-      <Dropdown
-        width="100%"
-        selected={selection}
-        onSelected={createSetPreference(act, 'joblessrole')}
-        options={options}
-      />
-    </Box>
+    <>
+      MODE:
+      <Box width="30%">
+        <Dropdown
+          width="100%"
+          selected={selection}
+          onSelected={createSetPreference(act, 'joblessrole')}
+          options={options}
+        />
+      </Box>
+    </>
   );
 };
 
@@ -422,16 +427,17 @@ const CharacterSelect = () => {
       {profiles.map((profile, slot) => (
         <Stack.Item key={slot} my={0.25}>
           <Button
-            selected={enabled_chars.includes(slot)}
+            selected={enabled_chars.includes(slot + 1)}
             onClick={() => {
               act('set_character_enabled', {
-                slot: slot,
-                enabled: !enabled_chars.includes(slot),
+                slot: slot + 1,
+                enabled: !enabled_chars.includes(slot + 1),
               });
             }}
             fluid
           >
             {profile ?? 'BAH'}
+            {data.default_character === slot ? ' (default)' : ''}
           </Button>
         </Stack.Item>
       ))}
@@ -443,10 +449,10 @@ export const JobsPageOverall = () => {
   return (
     <Section title="Occupations">
       <Stack vertical>
-        <CharacterSelect />
-        {/* <JoblessRoleDropdown />
-        <JoblessRoleDropdown2 /> */}
+        {/* <JoblessRoleDropdown /> */}
+        <JoblessRoleDropdown2 />
         <Gap amount={22} />
+        <CharacterSelect />
         <Stack.Item>
           <Stack className="PreferencesMenu__Jobs">
             <Stack.Item>

@@ -7,6 +7,7 @@
 /datum/preference_middleware/jobs/proc/set_job_preference(list/params, mob/user)
 	var/job_title = params["job"]
 	var/level = params["level"]
+	var/which = params["which"]
 
 	if (level != null && level != JP_LOW && level != JP_MEDIUM && level != JP_HIGH)
 		return FALSE
@@ -19,7 +20,7 @@
 	if (job.faction != FACTION_STATION)
 		return FALSE
 
-	if (!preferences.set_job_preference_level(job, level))
+	if (!preferences.set_job_preference_level(job, level, which))
 		return FALSE
 
 	preferences.character_preview_view?.update_body()

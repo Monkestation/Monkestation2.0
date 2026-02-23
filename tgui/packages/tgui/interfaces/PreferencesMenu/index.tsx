@@ -2,6 +2,7 @@ import { exhaustiveCheck } from 'common/exhaustive';
 import { useBackend, useLocalState } from '../../backend';
 import { Box, Button, Section, Stack } from '../../components';
 import { Window } from '../../layouts';
+import { AntagsPage } from './AntagsPage';
 import { CharacterPreferenceWindow } from './CharacterPreferenceWindow';
 import {
   PreferencesCurrentWindow,
@@ -9,11 +10,10 @@ import {
   PreferencesSelectedPage,
 } from './data';
 import { GamePreferencesPage } from './GamePreferencesPage';
+import { JobsPageOverall } from './JobsPageOverall';
 import { KeybindingsPage } from './KeybindingsPage';
 import { PageButton } from './PageButton';
 import { VolumeMixerPage } from './VolumeMixerPage';
-import { AntagsPage } from './AntagsPage';
-import { JobsPageOverall } from './JobsPageOverall';
 
 export const PreferencesMenu = () => {
   const { act, data } = useBackend<PreferencesMenuData>();
@@ -29,10 +29,6 @@ export const PreferencesMenu = () => {
   if (window === PreferencesCurrentWindow.Character) {
     currentPage = PreferencesSelectedPage.Character;
 
-    if (currentPageLocal == PreferencesSelectedPage.Jobs) {
-        currentPage = PreferencesSelectedPage.Jobs;
-    }
-
     setGamePage = (page: PreferencesSelectedPage) => {
       setCurrentPage(page);
       act('open_game');
@@ -42,10 +38,6 @@ export const PreferencesMenu = () => {
   let pageContents: any;
   switch (window) {
     case PreferencesCurrentWindow.Character:
-      if (currentPageLocal == PreferencesSelectedPage.Jobs) {
-        pageContents = <JobsPageOverall />;
-        break;
-      }
       pageContents = <CharacterPreferenceWindow />;
       break;
     case PreferencesCurrentWindow.Game:
@@ -102,17 +94,14 @@ export const PreferencesMenu = () => {
           Loadout Store
         </Button>
       </Stack.Item>
-
       <Stack.Divider />
       Role Selection
-        <Stack.Item>
+      <Stack.Item>
         <PageButton
           currentPage={currentPage}
           page={PreferencesSelectedPage.Jobs}
-          setPage={(_) => {
-            setCurrentPage(PreferencesSelectedPage.Jobs);
-            act('open_character');
-          }}        >
+          setPage={setGamePage}
+        >
           Occupations
         </PageButton>
       </Stack.Item>

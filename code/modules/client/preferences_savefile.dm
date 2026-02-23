@@ -381,7 +381,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	save_data["randomise"] = randomise
 
 	//Write prefs
-	save_data["job_preferences"] = job_preferences
+	save_data["job_preferences"] = selected_character_job_preferences
 
 	//Quirks
 	save_data["all_quirks"] = all_quirks

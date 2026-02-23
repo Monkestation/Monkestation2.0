@@ -108,6 +108,12 @@ export enum JoblessRole {
   ReturnToLobby = 3,
 }
 
+export enum CharacterMode {
+  Simple = 1,
+  PerCharacterFilters = 2,
+  PerCharacterPriorities = 3,
+}
+
 export enum PreferencesSelectedPage {
   Character = -1,
   Settings = 0,
@@ -177,6 +183,8 @@ export type PreferencesMenuData = {
   job_preferences_overall: Record<string, JobPriority>;
   selected_character_job_preferences: Record<string, JobPriority>;
   enabled_characters: number[];
+  character_select_mode: CharacterMode;
+  default_character: number;
 
   keybindings: Record<string, string[]>;
   overflow_role: string;

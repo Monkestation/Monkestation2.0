@@ -73,6 +73,7 @@ const createCreateSetPriorityFromName = (
       act('set_job_preference', {
         job: jobName,
         level: priority,
+        which: 'character',
       });
     };
 
@@ -139,8 +140,7 @@ const JobRow = (props: { className?: string; job: Job; name: string }) => {
   const { className, job, name } = props;
 
   const isOverflow = data.overflow_role === name || true;
-  const priority =
-    data.selected_character_job_preferences[data.active_slot][name];
+  const priority = data.selected_character_job_preferences[name];
 
   const createSetPriority = createCreateSetPriorityFromName(name);
 
