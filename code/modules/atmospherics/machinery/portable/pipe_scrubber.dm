@@ -74,7 +74,7 @@
 		if(direction == PUMP_IN)
 			scrub(air_contents)
 		else
-			secondary_tank_contents.pump_gas_to(air_contents, PUMP_MAX_PRESSURE)
+			secondary_tank_contents.pump_gas_to(air_contents, PIPE_SCRUBBER_PUMP_MAX_PRESSURE)
 
 	if(!suppress_reactions)
 		if(secondary_tank_contents.react(src))
