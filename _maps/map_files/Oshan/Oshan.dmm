@@ -23691,9 +23691,12 @@
 	req_access = list("medical");
 	name = "First Aid Supplies"
 	},
-/obj/item/storage/medkit,
 /obj/item/storage/medkit/fire,
 /obj/item/storage/medkit/fire,
+/obj/item/storage/medkit/regular{
+	pixel_x = -3;
+	pixel_y = -3
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/storage)
 "hBM" = (
@@ -27780,6 +27783,10 @@
 	pixel_y = 14;
 	pixel_x = -9
 	},
+/obj/item/cane/crutch,
+/obj/item/cane/crutch,
+/obj/item/cane/white,
+/obj/item/cane/white,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/storage)
 "iUi" = (
@@ -51776,9 +51783,12 @@
 "qvQ" = (
 /obj/structure/rack,
 /obj/structure/window/spawner/directional/west,
-/obj/item/storage/medkit,
 /obj/item/storage/medkit/toxin,
 /obj/item/storage/medkit/toxin,
+/obj/item/storage/medkit/regular{
+	pixel_x = -3;
+	pixel_y = -3
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/storage)
 "qvS" = (
@@ -52593,10 +52603,13 @@
 "qLj" = (
 /obj/structure/rack,
 /obj/structure/window/spawner/directional/west,
-/obj/item/storage/medkit,
 /obj/item/storage/medkit/o2,
 /obj/item/storage/medkit/o2,
 /obj/item/gun/syringe,
+/obj/item/storage/medkit/regular{
+	pixel_x = -3;
+	pixel_y = -3
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/storage)
 "qLC" = (
@@ -60396,9 +60409,12 @@
 	name = "First Aid Supplies";
 	req_access = list("medical")
 	},
-/obj/item/storage/medkit,
 /obj/item/storage/medkit/brute,
 /obj/item/storage/medkit/brute,
+/obj/item/storage/medkit/regular{
+	pixel_x = -3;
+	pixel_y = -3
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/storage)
 "tiI" = (
