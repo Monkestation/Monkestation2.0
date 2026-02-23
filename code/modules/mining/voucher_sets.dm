@@ -158,6 +158,16 @@
 		/obj/item/cargo_teleporter = 1,
 		)
 
+/datum/voucher_set/explorer/conscription_kit
+	name = "Lavaland Kit"
+	description = "Contains the classic lavaland mining kit, and a proto-kinetic crusher for exploring the lavaland wastes. Consisting of a proto-kinetic accelerator, a survival knife, a seclite, an explorer's suit, a mesons, an automatic mining scanner, a mining satchel, a gas mask, a mining radio key and a special ID card with a basic mining access."
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "crusher"
+	set_items = list(
+		/obj/item/storage/backpack/duffelbag/mining_conscript,
+		/obj/item/kinetic_crusher,
+	)
+
 //categories
 /datum/voucher_set/security
 
