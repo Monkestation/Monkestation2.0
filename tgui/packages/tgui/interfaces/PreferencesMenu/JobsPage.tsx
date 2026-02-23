@@ -114,23 +114,22 @@ const PriorityButtons = (props: {
         paddingLeft: '0.3em',
       }}
     >
-        <>
-          <PriorityButton
-            name="Off"
-            modifier="off"
-            color="light-grey"
-            enabled={!priority}
-            onClick={createSetPriority(null)}
-          />
+      <>
+        <PriorityButton
+          name="Off"
+          modifier="off"
+          color="light-grey"
+          enabled={!priority}
+          onClick={createSetPriority(null)}
+        />
 
-          <PriorityButton
-            name="On"
-            color="green"
-            enabled={!!priority}
-            onClick={createSetPriority(JobPriority.High)}
-          />
-        </>
-
+        <PriorityButton
+          name="On"
+          color="green"
+          enabled={!!priority}
+          onClick={createSetPriority(JobPriority.High)}
+        />
+      </>
     </Stack>
   );
 };
@@ -140,7 +139,8 @@ const JobRow = (props: { className?: string; job: Job; name: string }) => {
   const { className, job, name } = props;
 
   const isOverflow = data.overflow_role === name || true;
-  const priority = data.job_preferences[name];
+  const priority =
+    data.selected_character_job_preferences[data.active_slot][name];
 
   const createSetPriority = createCreateSetPriorityFromName(name);
 

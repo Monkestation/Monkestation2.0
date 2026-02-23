@@ -89,7 +89,9 @@
 	if(isnull(preferences.alt_job_titles))
 		preferences.alt_job_titles = list()
 
-	data["job_preferences"] = preferences.job_preferences
+	data["job_preferences_overall"] = preferences.overall_job_preferences
+	data["selected_character_job_preferences"] = preferences.selected_character_job_preferences
+	data["enabled_characters"] = preferences.enabled_characters
 
 	data["job_alt_titles"] = preferences.alt_job_titles
 

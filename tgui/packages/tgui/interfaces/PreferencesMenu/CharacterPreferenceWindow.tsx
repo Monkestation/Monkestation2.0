@@ -135,16 +135,6 @@ export const CharacterPreferenceWindow = (props) => {
           <Stack.Item grow>
             <PageButton
               currentPage={currentPage}
-              page={Page.Antags}
-              setPage={setCurrentPage}
-            >
-              Filter Antagonists
-            </PageButton>
-          </Stack.Item>
-
-          <Stack.Item grow>
-            <PageButton
-              currentPage={currentPage}
               page={Page.Quirks}
               setPage={setCurrentPage}
             >

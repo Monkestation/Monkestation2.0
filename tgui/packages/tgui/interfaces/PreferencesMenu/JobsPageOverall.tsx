@@ -1,7 +1,14 @@
 import { sortBy } from 'common/collections';
 import { classes } from 'common/react';
 import type { ReactNode } from 'react';
-import { Box, Button, Dropdown, Section, Stack, Tooltip } from 'tgui-core/components';
+import {
+  Box,
+  Button,
+  Dropdown,
+  Section,
+  Stack,
+  Tooltip,
+} from 'tgui-core/components';
 import { useBackend } from '../../backend';
 import {
   createSetPreference,
@@ -177,7 +184,7 @@ const JobRow = (props: { className?: string; job: Job; name: string }) => {
   const { className, job, name } = props;
 
   const isOverflow = data.overflow_role === name;
-  const priority = data.job_preferences[name];
+  const priority = data.job_preferences_overall[name];
 
   const createSetPriority = createCreateSetPriorityFromName(name);
 
@@ -247,11 +254,8 @@ const JobRow = (props: { className?: string; job: Job; name: string }) => {
             }}
           >
             {' '}
-            {!job.alt_titles || true ? (
-              <Button                 width="100%"
->
-                {name}
-              </Button>
+            {!job.alt_titles ? (
+              <Button width="100%">{name}</Button>
             ) : (
               <Dropdown
                 width="100%"
@@ -408,46 +412,73 @@ const JoblessRoleDropdown2 = () => {
   );
 };
 
+const CharacterSelect = () => {
+  const { act, data } = useBackend<PreferencesMenuData>();
+  const profiles = data.character_profiles;
+  const enabled_chars = data.enabled_characters;
+
+  return (
+    <Stack justify="center" wrap>
+      {profiles.map((profile, slot) => (
+        <Stack.Item key={slot} my={0.25}>
+          <Button
+            selected={enabled_chars.includes(slot)}
+            onClick={() => {
+              act('set_character_enabled', {
+                slot: slot,
+                enabled: !enabled_chars.includes(slot),
+              });
+            }}
+            fluid
+          >
+            {profile ?? 'BAH'}
+          </Button>
+        </Stack.Item>
+      ))}
+    </Stack>
+  );
+};
+
 export const JobsPageOverall = () => {
   return (
-        <Section
-          title="Occupations">
-    <Stack vertical>
-      <JoblessRoleDropdown />
-      <JoblessRoleDropdown2 />
-      <Gap amount={22} />
-      <Stack.Item>
-        <Stack className="PreferencesMenu__Jobs">
-          <Stack.Item>
-            <Gap amount={36} />
-            <PriorityHeaders />
+    <Section title="Occupations">
+      <Stack vertical>
+        <CharacterSelect />
+        {/* <JoblessRoleDropdown />
+        <JoblessRoleDropdown2 /> */}
+        <Gap amount={22} />
+        <Stack.Item>
+          <Stack className="PreferencesMenu__Jobs">
+            <Stack.Item>
+              <Gap amount={36} />
+              <PriorityHeaders />
 
-            <Department department="Engineering" />
-            <Department department="Science" />
-            <Department department="Silicon" />
-            <Department department="Assistant" />
-          </Stack.Item>
+              <Department department="Engineering" />
+              <Department department="Science" />
+              <Department department="Silicon" />
+              <Department department="Assistant" />
+            </Stack.Item>
 
-          <Stack.Item>
-            <Gap amount={10} />
-            <PriorityHeaders />
+            <Stack.Item>
+              <Gap amount={10} />
+              <PriorityHeaders />
 
-            <Department department="Captain" />
-            <Department department="Service" />
-            <Department department="Cargo" />
-          </Stack.Item>
+              <Department department="Captain" />
+              <Department department="Service" />
+              <Department department="Cargo" />
+            </Stack.Item>
 
-          <Stack.Item>
-            <Gap amount={36} />
-            <PriorityHeaders />
+            <Stack.Item>
+              <Gap amount={36} />
+              <PriorityHeaders />
 
-            <Department department="Security" />
-            <Department department="Medical" />
-            <Department department="Central Command" />
-          </Stack.Item>
-        </Stack>
-      </Stack.Item>
-    </Stack>
+              <Department department="Security" />
+              <Department department="Medical" />
+              <Department department="Central Command" />
+            </Stack.Item>
+          </Stack>
+        </Stack.Item>
+      </Stack>
     </Section>
   );
 };

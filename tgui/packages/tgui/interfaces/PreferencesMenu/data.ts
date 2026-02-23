@@ -174,7 +174,9 @@ export type PreferencesMenuData = {
       required_playtime: number;
     }
   >;
-  job_preferences: Record<string, JobPriority>;
+  job_preferences_overall: Record<string, JobPriority>;
+  selected_character_job_preferences: Record<string, JobPriority>;
+  enabled_characters: number[];
 
   keybindings: Record<string, string[]>;
   overflow_role: string;

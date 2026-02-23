@@ -49,8 +49,41 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	//Quirk list
 	var/list/all_quirks = list()
 
+	// which mode does the player use to choose jobs
+	// --- filter ---
+	// job_preferences = job_preferences_overall
+	//
+	// when a job is picked the system will iterate over enabled_characters to pick one where
+	// character_job_preferences[character][job] != null
+	// if none fit that then default_character will be used
+	//
+	// --- legacy ---
+	// job_preferences = character_job_preferences[selected_character]
+	var/job_preferences_mode = "filter"
+
+	var/default_character
+
 	//Job preferences 2.0 - indexed by job title , no key or value implies never
-	var/list/job_preferences = list()
+	// ["job title"] = priority
+	var/list/job_preferences
+
+	// [character slot number]
+	var/list/enabled_characters = list()
+
+	// [character_slot_num] = (enabled, antag enabled)
+	var/list/character_settings	= list()
+
+	// ["character slot"]["job title"] = (int) priority
+	// this is generated on the fly and not saved
+	var/alist/enabled_character_job_preferences = list()
+
+	// ["job title"] = (int) priority
+	var/alist/selected_character_job_preferences = list()
+
+	// ["job title"] = (int) priority
+	var/alist/overall_job_preferences = list()
+
+	var/tainted_preferences = FALSE
 
 	/// The current window, PREFERENCE_TAB_* in [`code/__DEFINES/preferences.dm`]
 	var/current_window = PREFERENCE_WINDOW_CHARACTERS
@@ -327,6 +360,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					set_channel_volume(used_channel, volume, user)
 			return TRUE
 
+		if ("set_character_enabled")
+		//TODO SANITISE
+			set_character_enabled(params["slot"], params["enabled"])
+			return TRUE
 		if ("change_slot")
 			// Save existing character
 			save_character()
@@ -576,6 +613,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	for(var/job in job_preferences)
 		if(job_preferences[job] == JP_HIGH)
 			return job
+
+/datum/preferences/proc/set_character_enabled(slot, enabled)
+	enabled_characters.RemoveAll(slot)
+	if (enabled)
+		enabled_characters.Add(slot)
+
+/datum/preferences/proc/pick_character_for_job(datum/job/job)
+	// switch_to_slot
 
 /datum/preferences/proc/GetQuirkBalance()
 	var/bal = 0

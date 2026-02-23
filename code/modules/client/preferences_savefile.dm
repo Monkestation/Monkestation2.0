@@ -175,6 +175,14 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	apply_all_client_preferences()
 
+	// jobs
+	enabled_characters = savefile.get_entry("enabled_characters", enabled_characters)
+	overall_job_preferences = savefile.get_entry("overall_job_preferences", overall_job_preferences)
+	job_preferences = overall_job_preferences
+
+	// for (var/enabled_character in enabled_characters)
+	// 	enabled_character_job_preferences[enabled_character] =
+
 	//general preferences
 	lastchangelog = savefile.get_entry("lastchangelog", lastchangelog)
 	be_special = savefile.get_entry("be_special", be_special)
@@ -309,7 +317,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	randomise = save_data?["randomise"]
 
 	//Load prefs
-	job_preferences = save_data?["job_preferences"]
+	selected_character_job_preferences = save_data?["job_preferences"]
 
 	//Quirks
 	all_quirks = save_data?["all_quirks"]
