@@ -13,12 +13,12 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	tiled_dirt = FALSE
 	rcd_proof = TRUE
+	var/tooltip_description = "The reinforcement rods are <b>wrenched</b> firmly in place."
 
 
 /turf/open/floor/engine/examine(mob/user)
 	. += ..()
-	if(!istype(src, /turf/open/floor/engine/insulation))
-		. += span_notice("The reinforcement rods are <b>wrenched</b> firmly in place.")
+	. += span_notice(tooltip_description)
 
 /turf/open/floor/engine/airless
 	initial_gas_mix = AIRLESS_ATMOS
@@ -238,21 +238,15 @@
 	thermal_conductivity = 0
 	heat_capacity = INFINITY
 	floor_tile = /obj/item/stack/sheet/mineral/plastitanium
+	tooltip_description = "The insulated plating is <b>screwed</b> firmly in place."
 
 /turf/open/floor/engine/insulation/wrench_act(mob/living/user, obj/item/I)
 	return
 
-/turf/open/floor/engine/insulation/examine(mob/user)
-	. += ..()
-	. += span_notice("The insulated plating is <b>screwed</b> firmly in place.")
-
-/turf/open/floor/engine/insulation/airless
-	initial_gas_mix = AIRLESS_ATMOS
-
-/turf/open/floor/engine/insulation/screwdriver_act(mob/living/user, obj/item/Lorem)
+/turf/open/floor/engine/insulation/screwdriver_act(mob/living/user, obj/item/interacting_item)
 	..()
 	to_chat(user, span_notice("You begin unscrewing the plating..."))
-	if(Lorem.use_tool(src, user, 30, volume=80))
+	if(interacting_item.use_tool(src, user, 30, volume=80))
 		if(!istype(src, /turf/open/floor/engine/insulation))
 			return TRUE
 		if(floor_tile)
@@ -260,6 +254,5 @@
 		ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 	return TRUE
 
-
-
-
+/turf/open/floor/engine/insulation/airless
+	initial_gas_mix = AIRLESS_ATMOS

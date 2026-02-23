@@ -1,4 +1,5 @@
 #define PORTABLE_ATMOS_IGNORE_ATMOS_LIMIT 0
+#define PIPE_SCRUBBER_PUMP_MAX_PRESSURE 9000
 
 /obj/machinery/portable_atmospherics/pipe_scrubber
 	name = "pipe scrubber"
@@ -76,7 +77,7 @@
 			secondary_tank_contents.pump_gas_to(air_contents, PUMP_MAX_PRESSURE)
 
 	if(!suppress_reactions)
-		if(max(air_contents.react(src), secondary_tank_contents.react(src)))
+		if(secondary_tank_contents.react(src))
 			excited = TRUE
 
 	if(!excited)
@@ -105,7 +106,7 @@
 
 /// Scrub gasses from own air_contents into secondary_tank_contents
 /obj/machinery/portable_atmospherics/pipe_scrubber/proc/scrub()
-	if(secondary_tank_contents.return_pressure() >= PUMP_MAX_PRESSURE)
+	if(secondary_tank_contents.return_pressure() >= PIPE_SCRUBBER_PUMP_MAX_PRESSURE)
 		return
 
 	var/transfer_moles = min(1, volume_rate / air_contents.volume) * air_contents.total_moles()
@@ -182,3 +183,4 @@
 	update_appearance()
 
 #undef PORTABLE_ATMOS_IGNORE_ATMOS_LIMIT
+#undef PIPE_SCRUBBER_PUMP_MAX_PRESSURE
