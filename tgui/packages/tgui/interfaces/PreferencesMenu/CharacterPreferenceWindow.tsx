@@ -2,8 +2,8 @@ import { exhaustiveCheck } from 'common/exhaustive';
 import { useBackend, useLocalState } from '../../backend';
 import { Button, Stack } from '../../components';
 import { AntagsPage } from './AntagsPage';
-import type { PreferencesMenuData } from './data';
-import { JobsPage } from './JobsPage';
+import { CharacterMode, type PreferencesMenuData } from './data';
+import { JobsPage, JobsPageType } from './JobsPage';
 import { LoadoutManager } from './LoadoutPage';
 import { MainPage } from './MainPage';
 import { PageButton } from './PageButton';
@@ -57,7 +57,7 @@ export const CharacterPreferenceWindow = (props) => {
       pageContents = <AntagsPage />;
       break;
     case Page.Jobs:
-      pageContents = <JobsPage />;
+      pageContents = <JobsPage type={JobsPageType.Character} />;
       break;
     case Page.Loadout:
       pageContents = <LoadoutManager />;
@@ -118,19 +118,27 @@ export const CharacterPreferenceWindow = (props) => {
             </PageButton>
           </Stack.Item>
 
-          <Stack.Item grow>
-            <PageButton
-              currentPage={currentPage}
-              page={Page.Jobs}
-              setPage={setCurrentPage}
-            >
-              {/*
+          {data.character_preferences.misc.character_role_select_mode !==
+          CharacterMode.Simple ? (
+            <Stack.Item grow>
+              <PageButton
+                currentPage={currentPage}
+                page={Page.Jobs}
+                setPage={setCurrentPage}
+              >
+                {/*
                     Fun fact: This isn't "Jobs" so that it intentionally
                     catches your eyes, because it's really important!
                   */}
-              Filter Occupations
-            </PageButton>
-          </Stack.Item>
+                {data.character_preferences.misc.character_role_select_mode ===
+                CharacterMode.Filters
+                  ? 'Filter Occupations'
+                  : 'Character Occupations'}
+              </PageButton>
+            </Stack.Item>
+          ) : (
+            ''
+          )}
 
           <Stack.Item grow>
             <PageButton

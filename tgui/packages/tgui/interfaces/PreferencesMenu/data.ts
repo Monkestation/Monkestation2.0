@@ -110,7 +110,7 @@ export enum JoblessRole {
 
 export enum CharacterMode {
   Simple = 1,
-  PerCharacterFilters = 2,
+  Filters = 2,
   PerCharacterPriorities = 3,
 }
 
@@ -163,6 +163,7 @@ export type PreferencesMenuData = {
       gender: Gender;
       joblessrole: JoblessRole;
       species: string;
+      character_role_select_mode: CharacterMode;
     };
 
     randomization: Record<string, RandomSetting>;
@@ -183,7 +184,6 @@ export type PreferencesMenuData = {
   job_preferences_overall: Record<string, JobPriority>;
   selected_character_job_preferences: Record<string, JobPriority>;
   enabled_characters: number[];
-  character_select_mode: CharacterMode;
   default_character: number;
 
   keybindings: Record<string, string[]>;

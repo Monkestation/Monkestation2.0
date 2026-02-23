@@ -10,7 +10,7 @@ import {
   PreferencesSelectedPage,
 } from './data';
 import { GamePreferencesPage } from './GamePreferencesPage';
-import { JobsPageOverall } from './JobsPageOverall';
+import { JobsPage, JobsPageType } from './JobsPage';
 import { KeybindingsPage } from './KeybindingsPage';
 import { PageButton } from './PageButton';
 import { VolumeMixerPage } from './VolumeMixerPage';
@@ -55,7 +55,7 @@ export const PreferencesMenu = () => {
           pageContents = <AntagsPage />;
           break;
         case PreferencesSelectedPage.Jobs:
-          pageContents = <JobsPageOverall />;
+          pageContents = <JobsPage type={JobsPageType.Overall} />;
           break;
         case PreferencesSelectedPage.Character:
           pageContents = <Box>Error</Box>;

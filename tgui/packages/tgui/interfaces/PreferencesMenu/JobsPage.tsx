@@ -1,9 +1,18 @@
 import { sortBy } from 'common/collections';
 import { classes } from 'common/react';
 import type { ReactNode } from 'react';
-import { Box, Button, Dropdown, Stack, Tooltip } from 'tgui-core/components';
+import {
+  Box,
+  Button,
+  Dropdown,
+  Icon,
+  Section,
+  Stack,
+  Tooltip,
+} from 'tgui-core/components';
 import { useBackend } from '../../backend';
 import {
+  CharacterMode,
   createSetPreference,
   type Job,
   JoblessRole,
@@ -50,11 +59,18 @@ const PriorityButton = (props: {
 
 type CreateSetPriority = (priority: JobPriority | null) => () => void;
 
-const createSetPriorityCache: Record<string, CreateSetPriority> = {};
+const createSetPriorityCacheChar: Record<string, CreateSetPriority> = {};
+const createSetPriorityCacheOver: Record<string, CreateSetPriority> = {};
 
 const createCreateSetPriorityFromName = (
   jobName: string,
+  pageType: JobsPageType,
 ): CreateSetPriority => {
+  const createSetPriorityCache =
+    pageType === JobsPageType.Character
+      ? createSetPriorityCacheChar
+      : createSetPriorityCacheOver;
+
   if (createSetPriorityCache[jobName] !== undefined) {
     return createSetPriorityCache[jobName];
   }
@@ -73,7 +89,7 @@ const createCreateSetPriorityFromName = (
       act('set_job_preference', {
         job: jobName,
         level: priority,
-        which: 'character',
+        type: pageType,
       });
     };
 
@@ -86,8 +102,20 @@ const createCreateSetPriorityFromName = (
   return createSetPriority;
 };
 
-const PriorityHeaders = () => {
+const PriorityHeaders = (props: { isFilter: boolean }) => {
   const className = 'PreferencesMenu__Jobs__PriorityHeader';
+
+  if (props.isFilter) {
+    return (
+      <Stack>
+        <Stack.Item grow />
+
+        <Stack.Item className={className}>Off</Stack.Item>
+
+        <Stack.Item className={className}>On</Stack.Item>
+      </Stack>
+    );
+  }
 
   return (
     <Stack>
@@ -95,16 +123,21 @@ const PriorityHeaders = () => {
 
       <Stack.Item className={className}>Off</Stack.Item>
 
-      <Stack.Item className={className}>On</Stack.Item>
+      <Stack.Item className={className}>Low</Stack.Item>
+
+      <Stack.Item className={className}>Medium</Stack.Item>
+
+      <Stack.Item className={className}>High</Stack.Item>
     </Stack>
   );
 };
 
 const PriorityButtons = (props: {
   createSetPriority: CreateSetPriority;
+  isBoolean: boolean;
   priority: JobPriority;
 }) => {
-  const { createSetPriority, priority } = props;
+  const { createSetPriority, isBoolean, priority } = props;
 
   return (
     <Stack
@@ -115,34 +148,80 @@ const PriorityButtons = (props: {
         paddingLeft: '0.3em',
       }}
     >
-      <>
-        <PriorityButton
-          name="Off"
-          modifier="off"
-          color="light-grey"
-          enabled={!priority}
-          onClick={createSetPriority(null)}
-        />
+      {isBoolean ? (
+        <>
+          <PriorityButton
+            name="Off"
+            modifier="off"
+            color="light-grey"
+            enabled={!priority}
+            onClick={createSetPriority(null)}
+          />
 
-        <PriorityButton
-          name="On"
-          color="green"
-          enabled={!!priority}
-          onClick={createSetPriority(JobPriority.High)}
-        />
-      </>
+          <PriorityButton
+            name="On"
+            color="green"
+            enabled={!!priority}
+            onClick={createSetPriority(JobPriority.High)}
+          />
+        </>
+      ) : (
+        <>
+          <PriorityButton
+            name="Off"
+            modifier="off"
+            color="light-grey"
+            enabled={!priority}
+            onClick={createSetPriority(null)}
+          />
+
+          <PriorityButton
+            name="Low"
+            color="red"
+            enabled={priority === JobPriority.Low}
+            onClick={createSetPriority(JobPriority.Low)}
+          />
+
+          <PriorityButton
+            name="Medium"
+            color="yellow"
+            enabled={priority === JobPriority.Medium}
+            onClick={createSetPriority(JobPriority.Medium)}
+          />
+
+          <PriorityButton
+            name="High"
+            color="green"
+            enabled={priority === JobPriority.High}
+            onClick={createSetPriority(JobPriority.High)}
+          />
+        </>
+      )}
     </Stack>
   );
 };
 
-const JobRow = (props: { className?: string; job: Job; name: string }) => {
+const JobRow = (props: {
+  className?: string;
+  job: Job;
+  name: string;
+  pageType: JobsPageType;
+}) => {
   const { data } = useBackend<PreferencesMenuData>();
-  const { className, job, name } = props;
+  const { className, job, name, pageType } = props;
 
-  const isOverflow = data.overflow_role === name || true;
-  const priority = data.selected_character_job_preferences[name];
+  const isFilter =
+    pageType === JobsPageType.Character &&
+    data.character_preferences.misc.character_role_select_mode ===
+      CharacterMode.Filters;
+  const isOverflow = data.overflow_role === name;
+  const job_preferences =
+    pageType === JobsPageType.Overall
+      ? data.job_preferences_overall
+      : data.selected_character_job_preferences;
+  const priority = job_preferences[name];
 
-  const createSetPriority = createCreateSetPriorityFromName(name);
+  const createSetPriority = createCreateSetPriorityFromName(name, pageType);
 
   const { act } = useBackend<PreferencesMenuData>();
 
@@ -186,6 +265,7 @@ const JobRow = (props: { className?: string; job: Job; name: string }) => {
     rightSide = (
       <PriorityButtons
         createSetPriority={createSetPriority}
+        isBoolean={isOverflow || isFilter}
         priority={priority}
       />
     );
@@ -203,14 +283,14 @@ const JobRow = (props: { className?: string; job: Job; name: string }) => {
           <Stack.Item
             align="center"
             className="job-name"
-            width="80%"
+            width="70%"
             style={{
               paddingLeft: '0.3em',
             }}
           >
             {' '}
             {!job.alt_titles ? (
-              name
+              <Button width="100%">{name}</Button>
             ) : (
               <Dropdown
                 width="100%"
@@ -235,8 +315,9 @@ const JobRow = (props: { className?: string; job: Job; name: string }) => {
 const Department: React.FC<{
   department: string;
   children?: React.ReactNode;
+  pageType: JobsPageType;
 }> = (props) => {
-  const { children, department: name } = props;
+  const { children, department: name, pageType } = props;
   const className = `PreferencesMenu__Jobs__departments--${name}`;
 
   return (
@@ -275,6 +356,7 @@ const Department: React.FC<{
                     key={name}
                     job={job}
                     name={name}
+                    pageType={pageType}
                   />
                 );
               })}
@@ -311,7 +393,7 @@ const JoblessRoleDropdown = () => {
       value: JoblessRole.BeRandomJob,
     },
     {
-      displayText: `Use as default character`,
+      displayText: `Return to lobby if unavailable`,
       value: JoblessRole.ReturnToLobby,
     },
   ];
@@ -332,42 +414,151 @@ const JoblessRoleDropdown = () => {
   );
 };
 
-export const JobsPage = () => {
+const JoblessRoleDropdown2 = () => {
+  const { act, data } = useBackend<PreferencesMenuData>();
+  const selected = data.character_preferences.misc.character_role_select_mode;
+
+  const options = [
+    {
+      displayText: `Simple: One Character`, // -- Choose one character and set occupations in occupations settings
+      value: CharacterMode.Simple,
+    },
+    {
+      displayText: `Character Filters: Many Characters`, // -- Choose at least one character, set occupations in occupation settings and set occupation filters in character settings
+      value: CharacterMode.Filters,
+    },
+    {
+      displayText: `Per Character Priorities: One Character`, // -- Choose one character and set occupations in character settings  (old version)
+      value: CharacterMode.PerCharacterPriorities,
+    },
+  ];
+
+  const selection = options?.find(
+    (option) => option.value === selected,
+  )?.displayText;
+
   return (
-    <Stack vertical>
-      <JoblessRoleDropdown />
-      <Gap amount={22} />
-      <Stack.Item>
-        <Stack className="PreferencesMenu__Jobs">
-          <Stack.Item>
-            <Gap amount={36} />
-            <PriorityHeaders />
+    <Box width="27%">
+      Mode:
+      <Button>
+        <Icon name={'question'} />
+      </Button>
+      <Dropdown
+        width="100%"
+        selected={selection}
+        onSelected={createSetPreference(act, 'character_role_select_mode')}
+        options={options}
+      />
+    </Box>
+  );
+};
 
-            <Department department="Engineering" />
-            <Department department="Science" />
-            <Department department="Silicon" />
-            <Department department="Assistant" />
-          </Stack.Item>
+const CharacterSelect = () => {
+  const { act, data } = useBackend<PreferencesMenuData>();
+  const profiles = data.character_profiles;
+  const enabled_chars = data.enabled_characters;
 
-          <Stack.Item>
-            <Gap amount={10} />
-            <PriorityHeaders />
-
-            <Department department="Captain" />
-            <Department department="Service" />
-            <Department department="Cargo" />
-          </Stack.Item>
-
-          <Stack.Item>
-            <Gap amount={36} />
-            <PriorityHeaders />
-
-            <Department department="Security" />
-            <Department department="Medical" />
-            <Department department="Central Command" />
-          </Stack.Item>
-        </Stack>
-      </Stack.Item>
+  return (
+    <Stack justify="center" wrap>
+      {profiles.map((profile, slot) => (
+        <Stack.Item key={slot} my={0.25}>
+          <Button
+            selected={enabled_chars.includes(slot + 1)}
+            onClick={() => {
+              act('set_character_enabled', {
+                slot: slot + 1,
+                enabled: !enabled_chars.includes(slot + 1),
+              });
+            }}
+            fluid
+          >
+            {profile ?? 'BAH'}
+            {data.default_character === slot ? ' (default)' : ''}
+          </Button>
+        </Stack.Item>
+      ))}
     </Stack>
   );
+};
+
+export enum JobsPageType {
+  Overall = 1,
+  Character = 2,
+}
+
+export const JobsPage = (props: { type: JobsPageType }) => {
+  const { type } = props;
+  const { data } = useBackend<PreferencesMenuData>();
+
+  const mode = data.character_preferences.misc.character_role_select_mode;
+
+  const works =
+    (type === JobsPageType.Overall &&
+      mode !== CharacterMode.PerCharacterPriorities) ||
+    (type === JobsPageType.Character && mode !== CharacterMode.Simple);
+
+  const isFilter =
+    type === JobsPageType.Character && mode === CharacterMode.Filters;
+
+  const contents2 = (
+    <Stack.Item>
+      <Stack className="PreferencesMenu__Jobs">
+        <Stack.Item>
+          <Gap amount={36} />
+          <PriorityHeaders isFilter={isFilter} />
+
+          <Department pageType={type} department="Engineering" />
+          <Department pageType={type} department="Science" />
+          <Department pageType={type} department="Silicon" />
+          <Department pageType={type} department="Assistant" />
+
+          <Gap amount={10} />
+          <Button>Deselect All</Button>
+        </Stack.Item>
+
+        <Stack.Item>
+          <Gap amount={10} />
+          <PriorityHeaders isFilter={isFilter} />
+
+          <Department pageType={type} department="Captain" />
+          <Department pageType={type} department="Service" />
+          <Department pageType={type} department="Cargo" />
+        </Stack.Item>
+
+        <Stack.Item>
+          <Gap amount={36} />
+          <PriorityHeaders isFilter={isFilter} />
+
+          <Department pageType={type} department="Security" />
+          <Department pageType={type} department="Medical" />
+          <Department pageType={type} department="Central Command" />
+        </Stack.Item>
+      </Stack>
+    </Stack.Item>
+  );
+
+  const contents = (
+    <Stack vertical>
+      <JoblessRoleDropdown />
+      <JoblessRoleDropdown2 />
+      {type === JobsPageType.Overall && mode === CharacterMode.Filters ? (
+        <>
+          {' '}
+          <CharacterSelect />
+        </>
+      ) : (
+        ''
+      )}
+      {works ? contents2 : ''}
+    </Stack>
+  );
+
+  if (type === JobsPageType.Overall) {
+    return (
+      <Section title="Occupations" maxHeight="100%" overflowY="scroll">
+        {contents}
+      </Section>
+    );
+  }
+  return <Section>{contents}</Section>;
 };

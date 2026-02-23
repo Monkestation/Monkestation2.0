@@ -186,7 +186,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//general preferences
 	lastchangelog = savefile.get_entry("lastchangelog", lastchangelog)
 	be_special = savefile.get_entry("be_special", be_special)
-	default_slot = savefile.get_entry("default_slot", default_slot)
+	active_slot = savefile.get_entry("default_slot", active_slot)
 	chat_toggles = savefile.get_entry("chat_toggles", chat_toggles)
 	toggles = savefile.get_entry("toggles", toggles)
 	ignoring = savefile.get_entry("ignoring", ignoring)
@@ -231,14 +231,14 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	//Sanitize
 	lastchangelog = sanitize_text(lastchangelog, initial(lastchangelog))
-	default_slot = sanitize_integer(default_slot, 1, max_save_slots, initial(default_slot))
+	active_slot = sanitize_integer(active_slot, 1, max_save_slots, initial(active_slot))
 	toggles = sanitize_integer(toggles, 0, SHORT_REAL_LIMIT-1, initial(toggles))
 	be_special = sanitize_be_special(SANITIZE_LIST(be_special))
 	key_bindings = sanitize_keybindings(key_bindings)
 	favorite_outfits = SANITIZE_LIST(favorite_outfits)
 
 	if(needs_update >= 0 || needs_update_monkestation >= 0) //save the updated version //MONKESTATION EDIT - Modular updates
-		var/old_default_slot = default_slot
+		var/old_default_slot = active_slot
 		var/old_max_save_slots = max_save_slots
 
 		for (var/slot in savefile.get_entry()) //but first, update all current character slots.
@@ -248,10 +248,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			if (!slotnum)
 				continue
 			max_save_slots = max(max_save_slots, slotnum) //so we can still update byond member slots after they lose memeber status
-			default_slot = slotnum
+			active_slot = slotnum
 			if (load_character())
 				save_character()
-		default_slot = old_default_slot
+		active_slot = old_default_slot
 		max_save_slots = old_max_save_slots
 		save_preferences()
 
@@ -277,7 +277,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	savefile.set_entry("lastchangelog", lastchangelog)
 	savefile.set_entry("be_special", be_special)
-	savefile.set_entry("default_slot", default_slot)
+	savefile.set_entry("default_slot", active_slot)
 	savefile.set_entry("toggles", toggles)
 	savefile.set_entry("chat_toggles", chat_toggles)
 	savefile.set_entry("ignoring", ignoring)
@@ -291,10 +291,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 /datum/preferences/proc/load_character(slot)
 	SHOULD_NOT_SLEEP(TRUE)
 	if(!slot)
-		slot = default_slot
-	slot = sanitize_integer(slot, 1, max_save_slots, initial(default_slot))
-	if(slot != default_slot)
-		default_slot = slot
+		slot = active_slot
+	slot = sanitize_integer(slot, 1, max_save_slots, initial(active_slot))
+	if(slot != active_slot)
+		active_slot = slot
 		savefile.set_entry("default_slot", slot)
 
 	var/tree_key = "character[slot]"
@@ -352,7 +352,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	SHOULD_NOT_SLEEP(TRUE)
 	if(!path)
 		return FALSE
-	var/tree_key = "character[default_slot]"
+	var/tree_key = "character[active_slot]"
 	if(!(tree_key in savefile.get_entry()))
 		savefile.set_entry(tree_key, list())
 	var/save_data = savefile.get_entry(tree_key)
@@ -406,14 +406,14 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	PRIVATE_PROC(TRUE)
 
 	var/closest_slot
-	for (var/other_slot in default_slot - 1 to 1 step -1)
+	for (var/other_slot in active_slot - 1 to 1 step -1)
 		var/save_data = savefile.get_entry("character[other_slot]")
 		if (!isnull(save_data))
 			closest_slot = other_slot
 			break
 
 	if (isnull(closest_slot))
-		for (var/other_slot in default_slot + 1 to max_save_slots)
+		for (var/other_slot in active_slot + 1 to max_save_slots)
 			var/save_data = savefile.get_entry("character[other_slot]")
 			if (!isnull(save_data))
 				closest_slot = other_slot
@@ -423,7 +423,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		stack_trace("remove_current_slot() being called when there are no slots to go to, the client should prevent this")
 		return
 
-	savefile.remove_entry("character[default_slot]")
+	savefile.remove_entry("character[active_slot]")
 	tainted_character_profiles = TRUE
 	switch_to_slot(closest_slot)
 

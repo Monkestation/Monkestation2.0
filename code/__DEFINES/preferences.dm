@@ -109,6 +109,10 @@
 /// Open the game preferences window
 #define PREFERENCE_WINDOW_GAME_PREFERENCES 1
 
+#define CHARACTER_ROLE_MODE_SIMPLE 1
+#define CHARACTER_ROLE_MODE_FILTER 2
+#define CHARACTER_ROLE_MODE_PER_CHAR 3
+
 // Values for /datum/preferences/starting_page
 #define PREFERENCE_PAGE_CHARACTERS -1
 #define PREFERENCE_PAGE_SETTINGS 0

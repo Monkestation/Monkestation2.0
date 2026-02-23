@@ -7,7 +7,7 @@
 /datum/preference_middleware/jobs/proc/set_job_preference(list/params, mob/user)
 	var/job_title = params["job"]
 	var/level = params["level"]
-	var/which = params["which"]
+	var/type = params["type"]
 
 	if (level != null && level != JP_LOW && level != JP_MEDIUM && level != JP_HIGH)
 		return FALSE
@@ -20,7 +20,7 @@
 	if (job.faction != FACTION_STATION)
 		return FALSE
 
-	if (!preferences.set_job_preference_level(job, level, which))
+	if (!preferences.set_job_preference_level(job, level, type))
 		return FALSE
 
 	preferences.character_preview_view?.update_body()
@@ -93,6 +93,8 @@
 	data["job_preferences_overall"] = preferences.overall_job_preferences
 	data["selected_character_job_preferences"] = preferences.selected_character_job_preferences
 	data["enabled_characters"] = preferences.enabled_characters
+	data["default_character"] = preferences.default_character
+	data["character_role_select_mode"] = preferences.character_role_select_mode
 
 	data["job_alt_titles"] = preferences.alt_job_titles
 

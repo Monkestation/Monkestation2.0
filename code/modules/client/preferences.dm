@@ -11,8 +11,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	/// Whether or not we allow saving/loading. Used for guests, if they're enabled
 	var/load_and_save = TRUE
 	/// Ensures that we always load the last used save, QOL
-	/// TODO rename to active slot
-	var/default_slot = 1
+	var/active_slot = 1
 	/// The maximum number of slots we're allowed to contain
 	var/max_save_slots = 20
 
@@ -60,9 +59,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	//
 	// --- legacy ---
 	// job_preferences = character_job_preferences[selected_character]
-	var/job_preferences_mode = 0
+	var/character_role_select_mode = CHARACTER_ROLE_MODE_SIMPLE
 
-	var/default_character
+	var/default_character = 1
 
 	//Job preferences 2.0 - indexed by job title , no key or value implies never
 	// ["job title"] = priority
@@ -242,7 +241,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	data["character_preferences"] = compile_character_preferences(user)
 
-	data["active_slot"] = default_slot
+	data["active_slot"] = active_slot
 
 	for (var/datum/preference_middleware/preference_middleware as anything in middleware)
 		data += preference_middleware.get_ui_data(user)
@@ -571,7 +570,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	for (var/index in 1 to max_save_slots)
 		// It won't be updated in the savefile yet, so just read the name directly
-		if (index == default_slot)
+		if (index == active_slot)
 			profiles += read_preference(/datum/preference/name/real_name)
 			continue
 
@@ -587,15 +586,16 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	return profiles
 
-/datum/preferences/proc/set_job_preference_level(datum/job/job, level, which)
+/datum/preferences/proc/set_job_preference_level(datum/job/job, level, type)
 	if (!job)
 		return FALSE
 
 	var/list/job_preferences
-	if (which == "character")
+	if (type == "character")
 		job_preferences = selected_character_job_preferences
-	if (which == "overall")
+	if (type == "overall")
 		job_preferences = overall_job_preferences
+	to_chat(parent, html="job=[job.title] level=[level] type=[type]")
 
 	if (level == JP_HIGH)
 		var/datum/job/overflow_role = SSjob.overflow_role
@@ -627,10 +627,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		enabled_characters.Add(slot)
 
 /datum/preferences/proc/pick_character_for_job(datum/job/job)
-	var/chosen = default_slot
+	var/chosen = active_slot
 	for (var/character_slot in shuffle(enabled_characters))
 		// It won't be updated in the savefile yet, so just read the name directly
-		if (character_slot == default_slot)
+		if (character_slot == active_slot)
 			if (!isnull(selected_character_job_preferences[job]))
 				return
 
@@ -748,7 +748,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		if (isnull(name))
 			continue
 
-		if(prefs.default_slot == i)
+		if(prefs.active_slot == i)
 			current_slot = name
 
 		options[name] = i
