@@ -1314,6 +1314,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	set name = "Stop Sounds"
 	set category = "OOC"
 	set desc = "Stop Current Sounds"
+
+	current_ambient_sound = null
 	SEND_SOUND(usr, sound(null))
 	tgui_panel?.stop_music()
 	media_player?.stop()

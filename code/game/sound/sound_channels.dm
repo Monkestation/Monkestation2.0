@@ -77,7 +77,7 @@ GLOBAL_DATUM_INIT(cached_mixer_channels, /alist, alist())
 	if(isnull(channels))
 		return .
 	. *= channels["[CHANNEL_MASTER_VOLUME]"] * 0.01
-	if(isnull(mixer_channel) || !(mixer_channel in channels))
+	if(isnull(mixer_channel) || !("[mixer_channel]" in channels))
 		return .
 	. *= channels["[mixer_channel]"] * 0.01
 
