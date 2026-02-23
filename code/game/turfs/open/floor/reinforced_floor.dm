@@ -228,8 +228,6 @@
 /turf/open/floor/engine/telecomms
 	initial_gas_mix = TCOMMS_ATMOS
 
-//Monkestation addition
-
 /turf/open/floor/engine/insulation
 	name = "hyper-insulated floor"
 	desc = "Sturdy and completely heat-proof."
