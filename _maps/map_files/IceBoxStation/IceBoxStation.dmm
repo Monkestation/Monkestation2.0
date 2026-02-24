@@ -21104,7 +21104,7 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "gsr" = (
-/obj/structure/tank_holder/oxygen/yellow,
+/obj/structure/tank_holder/oxygen/red,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "gst" = (

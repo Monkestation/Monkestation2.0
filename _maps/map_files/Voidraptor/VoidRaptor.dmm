@@ -42932,10 +42932,10 @@
 	req_access = list("armory")
 	},
 /obj/structure/closet/crate,
-/obj/item/tank/internals/oxygen/yellow{
+/obj/item/tank/internals/oxygen/red{
 	pixel_x = 3
 	},
-/obj/item/tank/internals/oxygen/yellow{
+/obj/item/tank/internals/oxygen/red{
 	pixel_x = -3
 	},
 /obj/item/wrench,
