@@ -26,9 +26,3 @@
 	savefile_key = "hearmusic"
 	savefile_identifier = PREFERENCE_PLAYER
 	default_value = TRUE
-
-/datum/preference/toggle/sound_ai_radio
-	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
-	default_value = TRUE
-	savefile_key = "sound_ai_radio"
-	savefile_identifier = PREFERENCE_PLAYER

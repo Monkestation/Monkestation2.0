@@ -31,6 +31,7 @@
 #define CHANNEL_VOICES 998
 #define CHANNEL_RINGTONES 997
 #define CHANNEL_DELTA_SIRENS 996
+#define CHANNEL_ADMIN_SOUNDS 995
 // monkestation end
 
 /// This is the lowest volume that can be used by playsound otherwise it gets ignored

@@ -277,11 +277,18 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 /datum/preferences/proc/set_channel_volume(channel, vol)
 	parent.mob.update_media_volume(channel)
 
-	//we gotta take into account existing sounds repeating/waiting, otherwise we completely remove looping sounds (such as whitenoise).
+	//we gotta take into account existing sounds repeating/waiting, otherwise we completely wipe looping sounds (such as whitenoise).
 	for(var/sound/S in parent.SoundQuery())
-		if(S.channel != channel)
+		//master channel affects all others.
+		if((channel != CHANNEL_MASTER_VOLUME) && (S.channel != channel))
 			continue
-		var/sound/new_sound = sound(null, repeat = S.repeat, wait = S.wait, channel = channel, volume = vol)
+		var/sound/new_sound = sound(
+			null,
+			repeat = S.repeat,
+			wait = S.wait,
+			channel = S.channel,
+			volume = calculate_mixed_volume(parent, S.volume, S.channel),
+		)
 		new_sound.status = SOUND_UPDATE
 		SEND_SOUND(parent.mob, new_sound)
 

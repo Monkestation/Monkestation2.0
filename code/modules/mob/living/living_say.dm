@@ -260,7 +260,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		return FALSE
 	if(!GET_CLIENT(src))
 		return
-	if(client?.prefs?.read_preference(/datum/preference/toggle/sound_ai_radio) && (radio_freq && (radio_freq == FREQ_COMMON || radio_freq < MIN_FREQ)) && can_hear())
+	if((client?.prefs?.channel_volume["[CHANNEL_VOX]"]) && (radio_freq && (radio_freq == FREQ_COMMON || radio_freq < MIN_FREQ)) && can_hear())
 		var/atom/movable/virtualspeaker/vspeaker = speaker
 		if(isAI(vspeaker.source))
 			playsound_local(
@@ -268,9 +268,9 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 				'goon/sounds/misc/talk/radio_ai.ogg',
 				vol = 170,
 				vary = TRUE,
+				channel = CHANNEL_VOX,
 				pressure_affected = FALSE,
 				use_reverb = FALSE,
-				mixer_channel = CHANNEL_MOB_SOUNDS
 			)
 
 	if (HAS_TRAIT(src, TRAIT_HARD_OF_HEARING) && !HAS_TRAIT(speaker, TRAIT_SIGN_LANG))
