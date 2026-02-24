@@ -1,0 +1,6 @@
+author: "notghosti"
+delete-after: True
+changes:
+  - map: "Heliostation suffers from less off-camera key items and areas."
+  - map: "Heliostation teleporter has slightly more sensible rails."
+  - map: "Heliostation Asteroid magnet is now hooked to power and has proper science access"

@@ -1,0 +1,4 @@
+author: "Cujo"
+delete-after: True
+changes:
+  - bugfix: "Makes brain surgery automatically repeat on success and stop when brain damage equals zero"

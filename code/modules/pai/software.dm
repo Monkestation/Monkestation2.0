@@ -160,8 +160,11 @@
 		to_chat(src, span_syndradio("You are not at liberty to do this! All agents are clandestine."))
 		return FALSE
 	var/mob/living/carbon/holder = get_holder()
-	if(!iscarbon(holder))
+	if(isnull(holder))
 		balloon_alert(src, "not being carried")
+		return FALSE
+	if(!iscarbon(holder))
+		balloon_alert(src, "no dna detected!")
 		return FALSE
 	balloon_alert(src, "requesting dna sample")
 	if(tgui_alert(holder, "[src] is requesting a DNA sample from you. Will you allow it to confirm your identity?", "Checking DNA", list("Yes", "No")) != "Yes")
@@ -198,8 +201,8 @@
 /mob/living/silicon/pai/proc/host_scan(mode)
 	switch(mode)
 		if(PAI_SCAN_TARGET)
-			var/mob/living/target = get_holder()
-			if(!isliving(target))
+			var/mob/living/carbon/target = get_holder()
+			if(!iscarbon(target))
 				balloon_alert(src, "not being carried!")
 				return FALSE
 			healthscan(src, target)

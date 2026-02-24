@@ -48307,6 +48307,7 @@
 /area/station/engineering/supermatter/room)
 "sWE" = (
 /obj/machinery/door/airlock/engineering,
+/obj/structure/fans/tiny,
 /turf/open/floor/iron,
 /area/station/engineering/shipbreaker_hut)
 "sWH" = (
@@ -49031,8 +49032,11 @@
 /turf/open/floor/iron,
 /area/station/security/prison/workout)
 "tta" = (
+/obj/structure/chemical_manufacturer,
+/obj/item/multitool,
+/obj/item/integrated_circuit/chemical,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/light/directional/north,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 1
 	},
@@ -50653,6 +50657,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
+"uDw" = (
+/obj/structure/closet/secure_closet/shipbreaker,
+/turf/open/floor/iron,
+/area/station/engineering/shipbreaker_hut)
 "uDA" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -85168,7 +85176,7 @@ fgs
 xmg
 buk
 bja
-jfg
+tta
 uXp
 xqq
 dMR
@@ -86761,7 +86769,7 @@ aaa
 gYo
 aaa
 qNb
-dVv
+uDw
 hjE
 hjE
 mAm
