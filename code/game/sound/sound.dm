@@ -117,7 +117,7 @@
 
 	sound_to_use.wait = 0 //No queue
 	sound_to_use.channel = channel || SSsounds.random_available_channel()
-	sound_to_use.volume = calculate_mixed_volume(client, vol, mixer_channel)
+	sound_to_use.volume = vol
 
 	if((mixer_channel == CHANNEL_PRUDE) && client?.prefs?.read_preference(/datum/preference/toggle/prude_mode))
 		return
@@ -194,6 +194,8 @@
 	if(HAS_TRAIT(src, TRAIT_SOUND_DEBUGGED))
 		to_chat(src, span_admin("Max Range-[max_distance] Distance-[distance] Vol-[round(sound_to_use.volume, 0.01)] Sound-[sound_to_use.file]"))
 
+	//Let's recalculate the volume with pressure & falloff applied.
+	sound_to_use.volume = calculate_mixed_volume(client, sound_to_use.volume, mixer_channel)
 	SEND_SOUND(src, sound_to_use)
 
 /proc/sound_to_playing_players(soundin, volume = 100, vary = FALSE, frequency = 0, channel = 0, pressure_affected = FALSE, sound/S)
