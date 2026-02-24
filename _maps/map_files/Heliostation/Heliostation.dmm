@@ -4144,10 +4144,11 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "axD" = (
-/obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/station/hallway/secondary/command)
+/obj/machinery/camera/directional/south{
+	c_tag = "Service - Chicken Ranch"
+	},
+/turf/open/floor/grass,
+/area/station/service/hydroponics/chicken)
 "axG" = (
 /obj/machinery/status_display/evac/directional/east,
 /turf/open/floor/iron,
@@ -31435,6 +31436,11 @@
 /obj/structure/cable,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
+"eVv" = (
+/obj/structure/cable,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/station/hallway/secondary/command)
 "eVC" = (
 /obj/machinery/button/door/directional/north{
 	id = "nt_rep_privacy_shutters";
@@ -41557,6 +41563,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/machinery/camera/directional/west{
+	c_tag = "Arrivals - Customs Post"
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint)
 "iQg" = (
@@ -43667,13 +43676,6 @@
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron/textured_half,
 /area/station/maintenance/fore)
-"jDm" = (
-/obj/machinery/camera/directional/west{
-	network = list("ss13","medbay");
-	c_tag = "Medbay - Coroner Office"
-	},
-/turf/open/floor/iron/dark,
-/area/station/medical/morgue)
 "jDn" = (
 /obj/machinery/airalarm/directional/west,
 /obj/machinery/conveyor{
@@ -65618,6 +65620,13 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
+"rPh" = (
+/obj/machinery/camera/directional/west{
+	network = list("ss13","medbay");
+	c_tag = "Medbay - Coroner Office"
+	},
+/turf/open/floor/iron/dark,
+/area/station/medical/morgue)
 "rPj" = (
 /obj/structure/cable,
 /obj/structure/sign/warning/electric_shock/directional/north,
@@ -67245,6 +67254,9 @@
 	name = "Service Fax Machine"
 	},
 /obj/machinery/status_display/ai/directional/east,
+/obj/machinery/camera/directional/north{
+	c_tag = "Service - Techfab Storage"
+	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/service)
 "sAB" = (
@@ -72125,6 +72137,19 @@
 	dir = 1
 	},
 /area/station/science/research)
+"uoO" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/duct,
+/obj/machinery/camera/directional/north{
+	c_tag = "Service Hallway West"
+	},
+/turf/open/floor/iron,
+/area/station/hallway/secondary/service)
 "uoW" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/decal/cleanable/dirt,
@@ -77279,7 +77304,7 @@
 /area/station/service/chapel)
 "wnJ" = (
 /obj/machinery/camera/directional/west{
-	c_tag = "Arrivals - Customs Post"
+	c_tag = "Security - Checkpoint"
 	},
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
@@ -107395,7 +107420,7 @@ uGE
 awE
 von
 von
-von
+axD
 uGE
 hAy
 pfD
@@ -108418,7 +108443,7 @@ bAc
 bAc
 sMc
 bwW
-sUA
+uoO
 fxb
 qAp
 von
@@ -120725,7 +120750,7 @@ hNv
 aYK
 aYK
 qAt
-jDm
+rPh
 xjy
 aYK
 aYK
@@ -124023,7 +124048,7 @@ lvs
 dWc
 iGu
 aaa
-axD
+eVv
 jrq
 azv
 cOl
