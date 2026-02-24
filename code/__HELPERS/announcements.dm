@@ -51,19 +51,18 @@
 
 	if(islist(players))
 		for(var/mob/target in players)
+			if(isnull(target.client))
+				continue
 			to_chat(target, finalized_announcement)
 			if(play_sound && target.client?.prefs?.channel_volume["[CHANNEL_ANNOUNCEMENTS]"])
-				SEND_SOUND(target, sound(sound_override))
+				SEND_SOUND(target, sound(sound_override, volume = calculate_mixed_volume(target?.client, 100, CHANNEL_ANNOUNCEMENTS)))
 	else
 		to_chat(world, finalized_announcement)
-
-
 		if(!play_sound)
 			return
-
 		for(var/mob/player in GLOB.player_list)
-			if(player.client?.prefs?.channel_volume["[CHANNEL_ANNOUNCEMENTS]"])
-				SEND_SOUND(player, sound(sound_override))
+			if(player.client.prefs?.channel_volume["[CHANNEL_ANNOUNCEMENTS]"])
+				SEND_SOUND(player, sound(sound_override, volume = calculate_mixed_volume(player.client, 100, CHANNEL_ANNOUNCEMENTS)))
 
 /**
  * Inserts a span styled message into an alert box div
