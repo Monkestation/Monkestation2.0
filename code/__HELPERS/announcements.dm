@@ -52,7 +52,7 @@
 	if(islist(players))
 		for(var/mob/target in players)
 			to_chat(target, finalized_announcement)
-			if(play_sound && target.client?.prefs?.channel_volume["[CHANNEL_ANNOUNCEMENTS_VOX]"])
+			if(play_sound && target.client?.prefs?.channel_volume["[CHANNEL_ANNOUNCEMENTS]"])
 				SEND_SOUND(target, sound(sound_override))
 	else
 		to_chat(world, finalized_announcement)
@@ -62,7 +62,7 @@
 			return
 
 		for(var/mob/player in GLOB.player_list)
-			if(player.client?.prefs?.channel_volume["[CHANNEL_ANNOUNCEMENTS_VOX]"])
+			if(player.client?.prefs?.channel_volume["[CHANNEL_ANNOUNCEMENTS]"])
 				SEND_SOUND(player, sound(sound_override))
 
 /**

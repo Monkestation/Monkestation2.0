@@ -96,7 +96,7 @@
 	var/datum/vox_voice/used_vox_voice = GLOB.vox_voices[/datum/vox_voice/normal::name]
 	if(used_vox_voice.sounds[word])
 		var/sound_file = used_vox_voice.sounds[word]
-		var/sound/voice = sound(sound_file, wait = 1, channel = CHANNEL_ANNOUNCEMENTS_VOX)
+		var/sound/voice = sound(sound_file, wait = 1, channel = CHANNEL_VOX)
 		voice.status = SOUND_STREAM
 
 	// If there is no single listener, broadcast to everyone in the same z level
@@ -107,7 +107,7 @@
 					stack_trace("[player_mob] ([player_mob.ckey]) has null prefs, which shouldn't be possible!")
 					continue
 
-				if(!player_mob.can_hear() || !player_mob.client?.prefs?.channel_volume["[CHANNEL_ANNOUNCEMENTS_VOX]"])
+				if(!player_mob.can_hear() || !player_mob.client?.prefs?.channel_volume["[CHANNEL_VOX]"])
 					continue
 
 				var/turf/player_turf = get_turf(player_mob)

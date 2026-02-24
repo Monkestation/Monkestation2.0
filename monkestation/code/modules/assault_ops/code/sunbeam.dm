@@ -213,7 +213,7 @@ ADMIN_VERB(spawn_sunbeam, R_FUN, FALSE, "Spawn Sunbeam", "Spawns an ICARUS sunbe
 		if(!ismob(player) || isnewplayer(player))
 			continue
 		var/mob/M = player
-		if(!(M.client?.prefs?.channel_volume["[CHANNEL_ANNOUNCEMENTS_VOX]"]) || !M.can_hear())
+		if(!(M.client?.prefs?.channel_volume["[CHANNEL_ANNOUNCEMENTS]"]) || !M.can_hear())
 			continue
 		if(override_volume)
 			M.playsound_local(get_turf(M), S, 80, FALSE)

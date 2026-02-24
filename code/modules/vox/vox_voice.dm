@@ -41,7 +41,7 @@ GLOBAL_LIST_INIT_TYPED(vox_voices, /datum/vox_voice, initialize_vox_voices())
 	var/sound_file = sounds[word]
 	if(isnull(sound_file))
 		return FALSE
-	var/sound/voice = sound(sound_file, wait = TRUE, channel = CHANNEL_ANNOUNCEMENTS_VOX, volume = volume)
+	var/sound/voice = sound(sound_file, wait = TRUE, channel = CHANNEL_VOX, volume = volume)
 	voice.status = SOUND_STREAM
 
 	var/list/listeners
@@ -57,7 +57,7 @@ GLOBAL_LIST_INIT_TYPED(vox_voices, /datum/vox_voice, initialize_vox_voices())
 				continue
 			if(check_hearing && !player_mob.can_hear())
 				continue
-			if(!player_mob.client?.prefs?.channel_volume["[CHANNEL_ANNOUNCEMENTS_VOX]"])
+			if(!player_mob.client?.prefs?.channel_volume["[CHANNEL_VOX]"])
 				continue
 			if(!isnull(origin_turf))
 				var/turf/player_turf = get_turf(player_mob)

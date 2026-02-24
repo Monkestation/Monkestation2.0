@@ -10,7 +10,7 @@
 	if(!(toggles & 1<<8))
 		channel_volume["[CHANNEL_BUZZ]"] = 0
 	if(!(toggles & 1<<11))
-		channel_volume["[CHANNEL_ANNOUNCEMENTS_VOX]"] = 0
+		channel_volume["[CHANNEL_ANNOUNCEMENTS]"] = 0
 	if(!(toggles & 1<<7))
 		channel_volume["[CHANNEL_INSTRUMENTS]"] = 0
 		channel_volume["[CHANNEL_INSTRUMENTS_ROBOT]"] = 0

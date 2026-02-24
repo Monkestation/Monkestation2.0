@@ -353,8 +353,8 @@ SUBSYSTEM_DEF(ticker)
 	var/list/channel_volume = client?.prefs?.channel_volume?.Copy()
 	if(!client)
 		SEND_SOUND(player, sound(SSstation.announcer.get_rand_welcome_sound(), volume = 100))
-	else if("[CHANNEL_ANNOUNCEMENTS_VOX]" in channel_volume)
-		SEND_SOUND(player, sound(SSstation.announcer.get_rand_welcome_sound(), volume = channel_volume["[CHANNEL_ANNOUNCEMENTS_VOX]"] * (channel_volume["[CHANNEL_MASTER_VOLUME]"] * 0.01)))
+	else if("[CHANNEL_STORYTELLER]" in channel_volume)
+		SEND_SOUND(player, sound(SSstation.announcer.get_rand_welcome_sound(), volume = channel_volume["[CHANNEL_STORYTELLER]"] * (channel_volume["[CHANNEL_MASTER_VOLUME]"] * 0.01)))
 
 /datum/controller/subsystem/ticker/proc/PostSetup()
 	set waitfor = FALSE

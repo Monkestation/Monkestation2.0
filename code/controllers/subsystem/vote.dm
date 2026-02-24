@@ -271,7 +271,7 @@ SUBSYSTEM_DEF(vote)
 
 		new_voter.persistent_client.player_actions += voting_action
 		generated_actions += voting_action
-		if(current_vote.vote_sound && (new_voter.prefs?.channel_volume["[CHANNEL_ANNOUNCEMENTS_VOX]"]))
+		if(current_vote.vote_sound && (new_voter.prefs?.channel_volume["[CHANNEL_ANNOUNCEMENTS]"]))
 			SEND_SOUND(new_voter, sound(current_vote.vote_sound, volume = current_vote.vote_sound_volume)) // monkestation edit
 
 	SEND_SIGNAL(src, COMSIG_VOTE_STARTED)
