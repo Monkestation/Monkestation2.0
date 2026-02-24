@@ -1288,13 +1288,6 @@
 "agl" = (
 /turf/open/floor/iron,
 /area/station/security/prison/garden)
-"agn" = (
-/obj/machinery/camera/directional/west{
-	network = list("ss13","medbay");
-	c_tag = "Medbay - Coroner Office"
-	},
-/turf/open/floor/iron/dark,
-/area/station/medical/morgue)
 "ago" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
@@ -4151,11 +4144,10 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "axD" = (
-/obj/machinery/camera/directional/south{
-	c_tag = "Service - Chicken Ranch"
-	},
-/turf/open/floor/grass,
-/area/station/service/hydroponics/chicken)
+/obj/structure/cable,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/station/hallway/secondary/command)
 "axG" = (
 /obj/machinery/status_display/evac/directional/east,
 /turf/open/floor/iron,
@@ -10259,12 +10251,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
-"aZZ" = (
-/obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
-	dir = 1
-	},
-/turf/open/space/basic,
-/area/station/ai_monitored/turret_protected/ai_upload)
 "baa" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -39794,6 +39780,19 @@
 /obj/machinery/telecomms/server/presets/medical,
 /turf/open/floor/circuit/telecomms/mainframe,
 /area/station/tcommsat/server)
+"ijB" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/duct,
+/obj/machinery/camera/directional/north{
+	c_tag = "Service Hallway West"
+	},
+/turf/open/floor/iron,
+/area/station/hallway/secondary/service)
 "ijC" = (
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plating,
@@ -47474,11 +47473,6 @@
 /obj/machinery/destructive_scanner,
 /turf/open/floor/iron/dark/textured,
 /area/station/science/lobby)
-"lch" = (
-/obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/station/hallway/secondary/command)
 "lco" = (
 /obj/machinery/seed_extractor,
 /obj/effect/turf_decal/bot,
@@ -69322,6 +69316,12 @@
 /obj/structure/closet/firecloset/wall/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/entry)
+"tlp" = (
+/obj/machinery/camera/directional/south{
+	c_tag = "Service - Chicken Ranch"
+	},
+/turf/open/floor/grass,
+/area/station/service/hydroponics/chicken)
 "tls" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
@@ -74773,18 +74773,12 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "vri" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/disposalpipe/segment{
-	dir = 4
+/obj/machinery/camera/directional/west{
+	network = list("ss13","medbay");
+	c_tag = "Medbay - Coroner Office"
 	},
-/obj/structure/cable,
-/obj/machinery/duct,
-/obj/machinery/camera/directional/north{
-	c_tag = "Service Hallway West"
-	},
-/turf/open/floor/iron,
-/area/station/hallway/secondary/service)
+/turf/open/floor/iron/dark,
+/area/station/medical/morgue)
 "vrn" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
@@ -107427,7 +107421,7 @@ uGE
 awE
 von
 von
-axD
+tlp
 uGE
 hAy
 pfD
@@ -108450,7 +108444,7 @@ bAc
 bAc
 sMc
 bwW
-vri
+ijB
 fxb
 qAp
 von
@@ -120757,7 +120751,7 @@ hNv
 aYK
 aYK
 qAt
-agn
+vri
 xjy
 aYK
 aYK
@@ -123796,7 +123790,7 @@ aaa
 aaa
 aaa
 aaa
-iGu
+aak
 aaa
 gAL
 yjU
@@ -124053,9 +124047,9 @@ kXQ
 avX
 lvs
 dWc
-iGu
+aak
 aaa
-lch
+axD
 jrq
 azv
 cOl
@@ -125337,7 +125331,7 @@ fKq
 vBr
 ozi
 kjm
-aZZ
+uUc
 avX
 hks
 sGN
