@@ -473,7 +473,7 @@ const CharacterSelect = () => {
             fluid
           >
             {profile ?? 'BAH'}
-            {data.default_character === slot ? ' (default)' : ''}
+            {data.default_character === slot + 1 ? ' (default)' : ''}
           </Button>
         </Stack.Item>
       ))}
@@ -488,7 +488,7 @@ export enum JobsPageType {
 
 export const JobsPage = (props: { type: JobsPageType }) => {
   const { type } = props;
-  const { data } = useBackend<PreferencesMenuData>();
+  const { act, data } = useBackend<PreferencesMenuData>();
 
   const mode = data.character_preferences.misc.character_role_select_mode;
 
@@ -502,6 +502,7 @@ export const JobsPage = (props: { type: JobsPageType }) => {
 
   const contents2 = (
     <Stack.Item>
+      {data.default_character}
       <Stack className="PreferencesMenu__Jobs">
         <Stack.Item>
           <Gap amount={36} />
@@ -514,6 +515,13 @@ export const JobsPage = (props: { type: JobsPageType }) => {
 
           <Gap amount={10} />
           <Button>Deselect All</Button>
+          <Button
+            onClick={() => {
+              act('set_default_character');
+            }}
+          >
+            Set Default Character
+          </Button>
         </Stack.Item>
 
         <Stack.Item>

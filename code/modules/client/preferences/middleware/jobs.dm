@@ -2,7 +2,12 @@
 	action_delegations = list(
 		"set_job_preference" = PROC_REF(set_job_preference),
 		"set_job_title" = PROC_REF(set_job_title),
+		"set_default_character" = PROC_REF(set_default_character),
 	)
+
+/datum/preference_middleware/jobs/proc/set_default_character(list/params, mob/user)
+		user.client.prefs.set_default_character()
+		return TRUE
 
 /datum/preference_middleware/jobs/proc/set_job_preference(list/params, mob/user)
 	var/job_title = params["job"]

@@ -12,7 +12,7 @@
 	return TRUE
 
 /datum/preference/choiced/character_role_select_mode/apply_to_client(client/client, value)
-	if (isnull(client))
+	if (isnull(client.prefs))
 		return
 
 	client.prefs.job_preferences = client.prefs.overall_job_preferences

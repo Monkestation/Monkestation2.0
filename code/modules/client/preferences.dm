@@ -63,6 +63,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/default_character = 1
 
+	// not saved
+	var/latejoin_overrride_character = 0
+	var/enabled_character_names = null
+
 	//Job preferences 2.0 - indexed by job title , no key or value implies never
 	// ["job title"] = priority
 	var/list/job_preferences
@@ -395,6 +399,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			if (istype(requested_preference, /datum/preference/name))
 				tainted_character_profiles = TRUE
+				enabled_character_names = null
 
 			for(var/datum/preference_middleware/preference_middleware as anything in middleware)
 				preference_middleware.post_set_preference(ui.user, requested_preference_key, value)
@@ -565,19 +570,21 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	QDEL_NULL(body)
 	body = new
 
+
+/datum/preferences/proc/get_character_name(slot)
+	// It won't be updated in the savefile yet, so just read the name directly
+	if (slot == active_slot)
+		return read_preference(/datum/preference/name/real_name)
+
+	var/tree_key = "character[slot]"
+	var/save_data = savefile.get_entry(tree_key)
+	return save_data?["real_name"]
+
 /datum/preferences/proc/create_character_profiles()
 	var/list/profiles = list()
 
 	for (var/index in 1 to max_save_slots)
-		// It won't be updated in the savefile yet, so just read the name directly
-		if (index == active_slot)
-			profiles += read_preference(/datum/preference/name/real_name)
-			continue
-
-		var/tree_key = "character[index]"
-		var/save_data = savefile.get_entry(tree_key)
-		var/name = save_data?["real_name"]
-
+		var/name = get_character_name(index)
 		if (isnull(name))
 			profiles += null
 			continue
@@ -621,12 +628,47 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		if(job_preferences[job] == JP_HIGH)
 			return job
 
+/datum/preferences/proc/get_enabled_character_names()
+	if (enabled_character_names)
+		return enabled_character_names
+
+	if (latejoin_overrride_character != 0)
+		return get_character_name(latejoin_overrride_character)
+
+	var/mode = read_preference(/datum/preference/choiced/character_role_select_mode)
+	if (mode == CHARACTER_ROLE_MODE_SIMPLE || mode == CHARACTER_ROLE_MODE_PER_CHAR)
+		return list(read_preference(/datum/preference/name/real_name))
+
+	enabled_character_names = ""
+	var/i = 0
+
+	for (var/character_slot in enabled_characters)
+		var/name = get_character_name(character_slot)
+		i += 1
+
+		if (!isnull(name))
+			if (length(enabled_character_names) == 0)
+				enabled_character_names += name
+			else if (i == length(enabled_characters) - 1)
+				enabled_character_names += "or [name]"
+			else
+				enabled_character_names += ", [name]"
+
+	return enabled_character_names
+
 /datum/preferences/proc/set_character_enabled(slot, enabled)
 	enabled_characters.RemoveAll(slot)
 	if (enabled)
 		enabled_characters.Add(slot)
+		enabled_character_names = null
 
 /datum/preferences/proc/pick_character_for_job(datum/job/job)
+	if (latejoin_overrride_character != 0)
+		if (latejoin_overrride_character != active_slot)
+			save_character()
+			switch_to_slot(latejoin_overrride_character)
+		return
+
 	var/mode = read_preference(/datum/preference/choiced/character_role_select_mode)
 	if (mode == CHARACTER_ROLE_MODE_SIMPLE || mode == CHARACTER_ROLE_MODE_PER_CHAR)
 		return
@@ -650,6 +692,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			to_chat(parent, "success")
 			break
 
+	save_character()
 	switch_to_slot(chosen)
 
 /datum/preferences/proc/GetQuirkBalance()
@@ -775,3 +818,57 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	prefs.switch_to_slot(slot)
 	to_chat(src, span_notice("Selected character '[choice]'"))
 
+/datum/preferences/proc/tmp_change_character_slot()
+	var/list/characters = create_character_profiles()
+	var/list/options = list()
+	var/current_slot
+
+	for(var/i = 1 to length(characters))
+		var/name = characters[i]
+		if (isnull(name))
+			continue
+
+		if(latejoin_overrride_character == i)
+			current_slot = name
+
+		options[name] = i
+
+	if(!length(options))
+		to_chat(parent, span_warning("You have no characters."))
+		return
+
+	var/choice = tgui_input_list(parent, "Select a character slot", "Change Character Slot", options, current_slot)
+
+	if(!choice)
+		return
+
+	latejoin_overrride_character = options[choice]
+	enabled_character_names = null
+	to_chat(parent, span_notice("Selected character '[choice]'"))
+
+/datum/preferences/proc/set_default_character()
+	var/list/characters = create_character_profiles()
+	var/list/options = list()
+	var/current_slot
+
+	for(var/i = 1 to length(characters))
+		var/name = characters[i]
+		if (isnull(name))
+			continue
+
+		if(active_slot == i)
+			current_slot = name
+
+		options[name] = i
+
+	if(!length(options))
+		to_chat(parent, span_warning("You have no characters."))
+		return
+
+	var/choice = tgui_input_list(parent, "Select a character slot", "Change Default Character", options, current_slot)
+
+	if(!choice)
+		return
+
+	default_character = options[choice]
+	to_chat(parent, span_notice("Selected default character '[choice]'"))

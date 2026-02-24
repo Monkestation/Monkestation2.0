@@ -287,6 +287,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	savefile.set_entry("key_bindings", key_bindings)
 	savefile.set_entry("hearted_until", (hearted_until > world.realtime ? hearted_until : null))
 	savefile.set_entry("favorite_outfits", favorite_outfits)
+	savefile.set_entry("enabled_characters", enabled_characters)
+	savefile.set_entry("overall_job_preferences", overall_job_preferences)
+	savefile.set_entry("default_character", default_character)
+
 	save_preferences_monkestation()
 	savefile.save()
 	return TRUE
