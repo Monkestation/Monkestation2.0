@@ -326,6 +326,26 @@
 	},
 /turf/open/floor/stone,
 /area/shuttle/escape/simulation)
+"mE" = (
+/obj/structure/rack,
+/obj/item/tank/internals/oxygen/yellow,
+/obj/item/clothing/suit/utility/fire/firefighter,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/head/utility/hardhat/red,
+/obj/machinery/light/directional/west,
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/obj/structure/rack,
+/obj/item/tank/internals/oxygen/red,
+/obj/item/clothing/suit/utility/fire/firefighter,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/head/utility/hardhat/fire,
+/obj/machinery/light/directional/west,
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
 "mG" = (
 /obj/structure/flora/bush/sunny/style_random,
 /obj/effect/decal/remains/human,
@@ -1077,15 +1097,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
-"RV" = (
-/obj/structure/rack,
-/obj/item/tank/internals/oxygen/yellow,
-/obj/item/clothing/suit/utility/fire/firefighter,
-/obj/item/clothing/mask/gas,
-/obj/item/clothing/head/utility/hardhat/red,
-/obj/machinery/light/directional/west,
-/turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/escape)
 "Sf" = (
 /obj/structure/rack,
 /obj/item/storage/toolbox/electrical{
@@ -1884,7 +1895,7 @@ hw
 hw
 hw
 hw
-RV
+mE
 aG
 Fs
 Su

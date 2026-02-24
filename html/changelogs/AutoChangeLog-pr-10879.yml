@@ -1,0 +1,8 @@
+author: "SirNightKnight"
+delete-after: True
+changes:
+  - image: "resprited the firefighter helmet to be a weaker variant of the atmos firefighter helmet."
+  - balance: "the workplace ready firefighter helmet is now an even brighter hardhat without firefighter helmet protection."
+  - rscadd: "added black gloves to fire closets."
+  - qol: "firebots are made with hardhats instead of firefighter helmets."
+  - balance: "touched up the robotics assembly crate to have everything need for two firebots, cleanbots, medibots, and floorbots."
