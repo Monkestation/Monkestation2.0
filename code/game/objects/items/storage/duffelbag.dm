@@ -21,6 +21,8 @@
 
 /obj/item/storage/backpack/duffelbag/Initialize(mapload)
 	. = ..()
+	create_storage(storage_type = storage_type)
+
 	slowdown += zip_slowdown
 	set_zipper(TRUE)
 	RegisterSignal(src, COMSIG_SPEED_POTION_APPLIED, PROC_REF(on_speed_potioned))
