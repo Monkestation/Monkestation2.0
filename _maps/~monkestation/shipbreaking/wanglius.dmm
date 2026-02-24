@@ -626,7 +626,7 @@
 /area/template_noop)
 "Qj" = (
 /obj/structure/rack,
-/obj/item/tank/internals/oxygen/red,
+/obj/item/tank/internals/oxygen/yellow,
 /obj/item/clothing/suit/utility/fire/firefighter,
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/head/utility/hardhat/red,

@@ -192,7 +192,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav)
 "Fw" = (
-/obj/structure/tank_holder/oxygen/red,
+/obj/structure/tank_holder/oxygen/yellow,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark/textured,

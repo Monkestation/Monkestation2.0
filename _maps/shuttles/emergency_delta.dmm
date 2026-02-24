@@ -508,7 +508,7 @@
 "bl" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/utility/fire/firefighter,
-/obj/item/tank/internals/oxygen/red,
+/obj/item/tank/internals/oxygen/yellow,
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/head/utility/hardhat/red,
 /obj/effect/turf_decal/bot,
