@@ -235,13 +235,8 @@
 			backpack_contents.Insert(1, box)
 			backpack_contents[box] = 1
 
-		if(backpack_contents)
-			for(var/path in backpack_contents)
-				var/number = backpack_contents[path]
-				if(!isnum(number))//Default to 1
-					number = 1
-				for(var/i in 1 to number)
-					EQUIP_OUTFIT_ITEM(path, ITEM_SLOT_BACKPACK)
+		if(backpack_contents && H.back?.atom_storage)
+			generate_items_inside(backpack_contents, H.back) //hacky fix gotta port https://github.com/tgstation/tgstation/pull/76442 someday - SNK
 
 	post_equip(H, visualsOnly)
 
