@@ -1288,6 +1288,13 @@
 "agl" = (
 /turf/open/floor/iron,
 /area/station/security/prison/garden)
+"agn" = (
+/obj/machinery/camera/directional/west{
+	network = list("ss13","medbay");
+	c_tag = "Medbay - Coroner Office"
+	},
+/turf/open/floor/iron/dark,
+/area/station/medical/morgue)
 "ago" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
@@ -10252,6 +10259,12 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
+"aZZ" = (
+/obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
+	dir = 1
+	},
+/turf/open/space/basic,
+/area/station/ai_monitored/turret_protected/ai_upload)
 "baa" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -30174,13 +30187,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/prison)
-"exn" = (
-/obj/machinery/camera/directional/west{
-	network = list("ss13","medbay");
-	c_tag = "Medbay - Coroner Office"
-	},
-/turf/open/floor/iron/dark,
-/area/station/medical/morgue)
 "exq" = (
 /obj/structure/bed,
 /obj/item/bedsheet/medical,
@@ -32754,11 +32760,6 @@
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/wood/parquet,
 /area/station/service/cafeteria)
-"fyn" = (
-/obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/station/hallway/secondary/command)
 "fyz" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8
@@ -47286,6 +47287,10 @@
 	dir = 10
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/camera/directional/south{
+	network = list("ss13","rd");
+	c_tag = "Science - Asteriod Magnet Control"
+	},
 /turf/open/floor/iron/dark/textured,
 /area/mine/maintenance/public)
 "kXh" = (
@@ -47469,6 +47474,11 @@
 /obj/machinery/destructive_scanner,
 /turf/open/floor/iron/dark/textured,
 /area/station/science/lobby)
+"lch" = (
+/obj/structure/cable,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/station/hallway/secondary/command)
 "lco" = (
 /obj/machinery/seed_extractor,
 /obj/effect/turf_decal/bot,
@@ -60248,12 +60258,6 @@
 /obj/structure/cable,
 /turf/open/floor/plastic,
 /area/station/commons/toilet/auxiliary)
-"pNy" = (
-/obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
-	dir = 1
-	},
-/turf/open/space/basic,
-/area/station/ai_monitored/turret_protected/ai_upload)
 "pNH" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 1
@@ -120753,7 +120757,7 @@ hNv
 aYK
 aYK
 qAt
-exn
+agn
 xjy
 aYK
 aYK
@@ -124051,7 +124055,7 @@ lvs
 dWc
 iGu
 aaa
-fyn
+lch
 jrq
 azv
 cOl
@@ -125333,7 +125337,7 @@ fKq
 vBr
 ozi
 kjm
-pNy
+aZZ
 avX
 hks
 sGN
