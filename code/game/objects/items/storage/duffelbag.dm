@@ -318,7 +318,6 @@
 	new /obj/item/cautery/advanced(src)
 	new /obj/item/surgical_drapes(src)
 	new /obj/item/reagent_containers/medigel/sterilizine(src)
-	new /obj/item/surgicaldrill(src)
 	new /obj/item/bonesetter(src)
 	new /obj/item/blood_filter(src)
 	new /obj/item/stack/medical/bone_gel(src)
