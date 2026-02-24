@@ -31,7 +31,7 @@
 	var/obj/item/blood_filter/bloodfilter = tool
 	if(target.reagents?.total_volume)
 		for(var/datum/reagent/chem as anything in target.reagents.reagent_list)
-			if(!length(bloodfilter.whitelist) || (chem.type in bloodfilter.whitelist))
+			if(!length(bloodfilter.blacklist) || !(chem.type in bloodfilter.blacklist))
 				var/purge_amt = (chem.volume <= 2) ? chem.volume : min(chem.volume * chem_purge_factor, 10)
 				target.reagents.remove_reagent(chem.type, purge_amt)
 	var/tox_loss = target.getToxLoss()

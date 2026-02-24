@@ -446,3 +446,14 @@
       oil
   - map: Theseus cryogenics now hook into distro
   - map: Pubby now has wirechemistry added
+2026-02-24:
+  JohnFulpWillard:
+  - bugfix: Silicons no longer get a bugged cold/hot alert,
+  SirNightKnight:
+  - image: made floor tile sprites more consistent.
+  - qol: increased the picket sign character limit by 10 characters.
+  - bugfix: added the warden's grey jumpsuit to their garment bag.
+  - bugfix: basic and makeshift microfusion cells have the correct charge capacity.
+  Siro:
+  - rscadd: Warning message added to the Advanced Cassette Deck. Players should admin
+      who and ahelp before creating/submitting their cassette.

@@ -1,0 +1,4 @@
+author: "Cujo"
+delete-after: True
+changes:
+  - qol: "Changes the blood filter whitelist into a blacklist"

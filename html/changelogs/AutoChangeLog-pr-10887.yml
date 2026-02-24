@@ -1,4 +1,0 @@
-author: "Siro"
-delete-after: True
-changes:
-  - rscadd: "Warning message added to the Advanced Cassette Deck. Players should admin who and ahelp before creating/submitting their cassette."
