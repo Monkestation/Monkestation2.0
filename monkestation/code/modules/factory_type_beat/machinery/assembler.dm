@@ -5,6 +5,7 @@
 
 	var/speed_multiplier = 1
 	var/wire_integrity = 1 // Affects speed_multiplier depending on wires cut and causes electric mishaps
+	var/spark_size = 5
 	var/datum/crafting_recipe/chosen_recipe
 	var/crafting = FALSE
 	var/datum/crafting_recipe/current_craft_recipe // The recipe currently being crafted
@@ -27,7 +28,7 @@
 	register_context()
 	//Sets up a spark system
 	spark_system = new /datum/effect_system/spark_spread
-	var/spark_size = (wire_integrity) * 10
+	spark_size = (wire_integrity) * 5
 	spark_system.set_up(spark_size, 0, src)
 	spark_system.attach(src)
 
@@ -53,6 +54,7 @@
 	if(wire_integrity >= 2)
 		wire_integrity = 2
 	speed_multiplier = wire_integrity / locate_servo.tier
+	spark_size = (wire_integrity) * 5
 
 /obj/machinery/assembler/Destroy()
 	. = ..()
@@ -243,6 +245,7 @@
 
 /obj/machinery/assembler/proc/shock(mob/living/carbon/user, list/modifiers)
 	var/zapchance = (wire_integrity-1)*100
+	spark_size = (wire_integrity) * 5
 	if(prob(zapchance))
 		spark_system.start()
 		if(ismecha(loc) || user.wearing_shock_proof_gloves() || HAS_TRAIT(user, TRAIT_SHOCKIMMUNE))
@@ -499,7 +502,7 @@
 
 /obj/machinery/assembler/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armour_penetration = 0)
 	. = ..()
-	if(. && atom_integrity > 0) //damage received
+	if(. && atom_integrity > 0 && prob((wire_integrity-1)*50)) //damage received
 		spark_system.start()
 
 /datum/hover_data/assembler
