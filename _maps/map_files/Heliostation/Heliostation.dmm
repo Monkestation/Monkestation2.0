@@ -16958,6 +16958,7 @@
 	dir = 1
 	},
 /obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/mine/maintenance/public)
 "bBH" = (
@@ -30173,6 +30174,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/prison)
+"exn" = (
+/obj/machinery/camera/directional/west{
+	network = list("ss13","medbay");
+	c_tag = "Medbay - Coroner Office"
+	},
+/turf/open/floor/iron/dark,
+/area/station/medical/morgue)
 "exq" = (
 /obj/structure/bed,
 /obj/item/bedsheet/medical,
@@ -31436,11 +31444,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
-"eVv" = (
-/obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/station/hallway/secondary/command)
 "eVC" = (
 /obj/machinery/button/door/directional/north{
 	id = "nt_rep_privacy_shutters";
@@ -32751,6 +32754,11 @@
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/wood/parquet,
 /area/station/service/cafeteria)
+"fyn" = (
+/obj/structure/cable,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/station/hallway/secondary/command)
 "fyz" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8
@@ -38333,9 +38341,10 @@
 /obj/effect/mapping_helpers/airlock/unres{
 	dir = 4
 	},
-/obj/effect/mapping_helpers/airlock/access/any/science/maintenance,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/any/science/general,
 /turf/open/floor/iron,
 /area/station/maintenance/department/science)
 "hEB" = (
@@ -44416,6 +44425,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/mine/maintenance/public)
 "jSU" = (
@@ -60238,6 +60248,12 @@
 /obj/structure/cable,
 /turf/open/floor/plastic,
 /area/station/commons/toilet/auxiliary)
+"pNy" = (
+/obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
+	dir = 1
+	},
+/turf/open/space/basic,
+/area/station/ai_monitored/turret_protected/ai_upload)
 "pNH" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 1
@@ -65620,13 +65636,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
-"rPh" = (
-/obj/machinery/camera/directional/west{
-	network = list("ss13","medbay");
-	c_tag = "Medbay - Coroner Office"
-	},
-/turf/open/floor/iron/dark,
-/area/station/medical/morgue)
 "rPj" = (
 /obj/structure/cable,
 /obj/structure/sign/warning/electric_shock/directional/north,
@@ -72137,19 +72146,6 @@
 	dir = 1
 	},
 /area/station/science/research)
-"uoO" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/cable,
-/obj/machinery/duct,
-/obj/machinery/camera/directional/north{
-	c_tag = "Service Hallway West"
-	},
-/turf/open/floor/iron,
-/area/station/hallway/secondary/service)
 "uoW" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/decal/cleanable/dirt,
@@ -74773,11 +74769,18 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "vri" = (
-/obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
-	dir = 1
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
-/turf/open/space/basic,
-/area/station/ai_monitored/turret_protected/ai_upload)
+/obj/structure/cable,
+/obj/machinery/duct,
+/obj/machinery/camera/directional/north{
+	c_tag = "Service Hallway West"
+	},
+/turf/open/floor/iron,
+/area/station/hallway/secondary/service)
 "vrn" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
@@ -108443,7 +108446,7 @@ bAc
 bAc
 sMc
 bwW
-uoO
+vri
 fxb
 qAp
 von
@@ -120750,7 +120753,7 @@ hNv
 aYK
 aYK
 qAt
-rPh
+exn
 xjy
 aYK
 aYK
@@ -124048,7 +124051,7 @@ lvs
 dWc
 iGu
 aaa
-eVv
+fyn
 jrq
 azv
 cOl
@@ -125330,7 +125333,7 @@ fKq
 vBr
 ozi
 kjm
-vri
+pNy
 avX
 hks
 sGN
