@@ -469,7 +469,7 @@ ADMIN_VERB(cmd_admin_pm_panel, R_NONE, FALSE, "Admin PM", "Show a list of client
 
 	// Let's play some music for the admin, only if they want it tho
 	if(sound_prefs & SOUND_ADMINHELP)
-		recipient.playsound_local(null, 'sound/effects/adminhelp.ogg', 100, vary = FALSE, channel = CHANNEL_ADMIN_SOUNDS, pressure_affected = FALSE, use_reverb = FALSE)
+		recipient.mob.playsound_local(null, 'sound/effects/adminhelp.ogg', 100, vary = FALSE, channel = CHANNEL_ADMIN_SOUNDS, pressure_affected = FALSE, use_reverb = FALSE)
 
 	SEND_SIGNAL(ticket, COMSIG_ADMIN_HELP_REPLIED)
 
