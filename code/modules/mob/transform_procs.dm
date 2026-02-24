@@ -4,7 +4,7 @@
 /// Considered "permanent" since we'll be deleting the old mob and the client will be inserted into a new one (without this trait)
 #define PERMANENT_TRANSFORMATION_TRAIT "permanent_transformation"
 
-/mob/living/carbon/proc/monkeyize(instant = FALSE)
+/mob/living/carbon/proc/monkeyize(instant = FALSE, monkey_type = /datum/species/monkey)
 	if (transformation_timer || HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
 
@@ -12,7 +12,7 @@
 		return
 
 	if(instant)
-		finish_monkeyize()
+		finish_monkeyize(monkey_type)
 		return
 
 	//Make mob invisible and spawn animation
@@ -23,14 +23,14 @@
 	invisibility = INVISIBILITY_MAXIMUM
 
 	new /obj/effect/temp_visual/monkeyify(loc)
-	transformation_timer = addtimer(CALLBACK(src, PROC_REF(finish_monkeyize)), TRANSFORMATION_DURATION, TIMER_UNIQUE)
+	transformation_timer = addtimer(CALLBACK(src, PROC_REF(finish_monkeyize), monkey_type), TRANSFORMATION_DURATION, TIMER_UNIQUE)
 
-/mob/living/carbon/proc/finish_monkeyize()
+/mob/living/carbon/proc/finish_monkeyize(monkey_type = /datum/species/monkey)
 	transformation_timer = null
 	REMOVE_TRAIT(src, TRAIT_NO_TRANSFORM, TEMPORARY_TRANSFORMATION_TRAIT)
 	icon = initial(icon)
 	invisibility = 0
-	set_species(/datum/species/monkey)
+	set_species(monkey_type)
 	to_chat(src, span_boldnotice("You are now \a [dna.species.name]."))
 	fully_replace_character_name(null, pick(GLOB.random_monkey_names))
 	regenerate_icons()
@@ -281,6 +281,7 @@
 /mob/living/carbon/proc/gorillize()
 	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
+	var/name_to_give = !isnull(key) ? (real_name || name) : null
 	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, PERMANENT_TRANSFORMATION_TRAIT)
 	Paralyze(1, ignore_canstun = TRUE)
 
@@ -300,6 +301,10 @@
 		mind.transfer_to(new_gorilla)
 	else
 		new_gorilla.PossessByPlayer(key)
+	if(name_to_give)
+		new_gorilla.real_name = name_to_give
+		new_gorilla.name = name_to_give
+		new_gorilla.gender = src.gender
 	to_chat(new_gorilla, span_boldnotice("You are now a gorilla. Ooga ooga!"))
 	qdel(src)
 	return new_gorilla

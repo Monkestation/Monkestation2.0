@@ -7463,7 +7463,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/central)
 "dIW" = (
-/obj/item/storage/secure/safe/caps_spare/directional/west,
+/obj/structure/secure_safe/caps_spare/directional/west,
 /obj/machinery/firealarm/directional/north,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain/private)
@@ -8444,7 +8444,7 @@
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/directional/south,
-/obj/machinery/vending/wardrobe/engi_wardrobe,
+/obj/machinery/vending/access/engi_wardrobe,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "ejz" = (
@@ -9338,6 +9338,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/west,
+/obj/item/flatpack,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "eFj" = (
@@ -18470,6 +18471,7 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/light/directional/east,
 /obj/effect/turf_decal/tile/purple,
+/obj/item/flatpack,
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
 "iRb" = (
@@ -22540,6 +22542,7 @@
 	pixel_x = 2;
 	pixel_y = -2
 	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/carpet/grimey,
 /area/station/security/detectives_office)
 "kOq" = (
@@ -23106,7 +23109,6 @@
 /turf/open/floor/iron/cafeteria,
 /area/station/science/breakroom)
 "lcs" = (
-/obj/machinery/light/directional/south,
 /turf/open/floor/carpet,
 /area/station/security/detectives_office)
 "lcB" = (
@@ -35263,6 +35265,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 4
 	},
+/obj/item/flatpack,
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "qWu" = (
@@ -36356,7 +36359,7 @@
 	dir = 1
 	},
 /obj/effect/landmark/start/detective,
-/obj/machinery/light/directional/south,
+/obj/structure/detectiveboard/directional/south,
 /turf/open/floor/carpet,
 /area/station/security/detectives_office)
 "rtA" = (
@@ -38484,6 +38487,7 @@
 	department = "Detective";
 	name = "Detective Requests Console"
 	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/carpet,
 /area/station/security/detectives_office)
 "sqN" = (
@@ -43160,6 +43164,7 @@
 /obj/item/gun/syringe,
 /obj/machinery/door/window/right/directional/north,
 /obj/structure/window/reinforced/spawner/directional/west,
+/obj/item/storage/toolbox/electrical/medical,
 /turf/open/floor/iron/diagonal,
 /area/station/medical/office)
 "uBG" = (

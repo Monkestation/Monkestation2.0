@@ -661,4 +661,8 @@ GLOBAL_LIST_EMPTY(cached_antag_previews)
 	SEND_SIGNAL(src, COMSIG_ANTAGONIST_COUNT_POINTS_SET, new_value, old_value)
 	antag_count_points = new_value
 
+/datum/antagonist/proc/operator""()
+	return "[name]"
+
+
 #undef CUSTOM_OBJECTIVE_MAX_LENGTH

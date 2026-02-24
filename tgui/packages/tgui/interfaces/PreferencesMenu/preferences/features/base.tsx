@@ -1,7 +1,7 @@
 import { sortBy, sortStrings } from 'common/collections';
 import { type BooleanLike, classes } from 'common/react';
 import { type ComponentType, createElement, type ReactNode } from 'react';
-import { type sendAct, useBackend, useLocalState } from '../../../../backend';
+import { useBackend, useLocalState } from 'tgui/backend';
 import {
   Box,
   Button,
@@ -11,7 +11,8 @@ import {
   NumberInput,
   Stack,
   Tooltip,
-} from '../../../../components';
+} from 'tgui/components';
+import type { sendAct } from 'tgui/events/act';
 import { createSetPreference, type PreferencesMenuData } from '../../data';
 import { ServerPreferencesFetcher } from '../../ServerPreferencesFetcher';
 import features from '.';
@@ -99,6 +100,7 @@ export const TextInput = (props: FeatureValueProps<string, string>) => {
   return (
     <Input
       value={props.value}
+      expensive
       onChange={(newValue) => props.handleSetValue(newValue)}
       width="100%"
     />
@@ -417,6 +419,7 @@ export const FeatureShortTextInput = (
   return (
     <Input
       width="100%"
+      expensive
       value={props.value}
       maxLength={props.serverData.maximum_length}
       onChange={(value) => props.handleSetValue(value)}

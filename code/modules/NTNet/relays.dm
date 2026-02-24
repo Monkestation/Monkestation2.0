@@ -97,7 +97,6 @@
 		set_dos_failure(FALSE)
 		update_appearance()
 		SSmodular_computers.add_log("Quantum relay switched from overload recovery mode to normal operation mode.")
-	return ..()
 
 /obj/machinery/ntnet_relay/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

@@ -124,6 +124,9 @@
 	/// List of all air scrubbers in the area
 	var/list/obj/machinery/atmospherics/components/unary/vent_scrubber/air_scrubbers = list()
 
+	/// Extra A* weight applied to all turfs in this area.
+	var/astar_weight = 0
+
 /**
  * A list of teleport locations
  *

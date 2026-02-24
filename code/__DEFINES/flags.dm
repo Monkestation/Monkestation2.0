@@ -334,3 +334,6 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define EMOTE_VISIBLE (1<<1)
 /// Is it an emote that should be shown regardless of blindness/deafness
 #define EMOTE_IMPORTANT (1<<2)
+/// Does this emote play a visual when being played, unrelated to whether or not it's visual
+//(which is whether you need to see to be told of the emote being played)
+#define EMOTE_HAS_VISUAL (1<<3)

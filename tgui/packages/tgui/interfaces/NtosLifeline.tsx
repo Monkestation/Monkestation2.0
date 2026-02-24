@@ -125,8 +125,10 @@ const NtosLifelineContent = () => {
               style={{ flex: 1 }}
               onChange={(value) => setSearchQuery(value)}
             />
-            <Button onClick={cycleSortBy}>{SORT_NAMES[sortBy]}</Button>
-            <Button onClick={() => setSortAsc(!sortAsc)}>
+            <Button selected onClick={cycleSortBy}>
+              {SORT_NAMES[sortBy]}
+            </Button>
+            <Button selected onClick={() => setSortAsc(!sortAsc)}>
               <Icon
                 style={{ marginLeft: '2px' }}
                 name={sortAsc ? 'chevron-up' : 'chevron-down'}

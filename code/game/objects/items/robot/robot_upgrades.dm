@@ -816,3 +816,23 @@
 		var/obj/item/borg/sight/meson/M = new (R.model)
 		R.model.basic_modules += M
 		R.model.add_module(M, FALSE, TRUE)
+
+/obj/item/borg/upgrade/adv_healthanalyzer
+	name = "health analyzer upgrade"
+	desc = "An updated sensor and driver kit for medical cyborgs. Allowing the cyborg unit to preform more in-depth analysis of patients."
+	icon_state = "cyborg_upgrade4"
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/medical, /obj/item/robot_model/syndicate_medical) //the fact that syndimed doesnt get advanced stock suprises me just as much as you.
+	model_flags = BORG_MODEL_MEDICAL
+
+/obj/item/borg/upgrade/adv_healthanalyzer/action(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if(.)
+		for(var/obj/item/healthanalyzer/cyborg/analyzer in R.model.modules)
+			analyzer.upgrade()
+
+/obj/item/borg/upgrade/adv_healthanalyzer/deactivate(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if(.)
+		for(var/obj/item/healthanalyzer/cyborg/analyzer in R.model.modules)
+			analyzer.downgrade()

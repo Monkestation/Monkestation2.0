@@ -55,15 +55,16 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/multitool_act(mob/living/user, obj/item/multitool/multi_tool)
 	. = ..()
 
-	if(istype(multi_tool.buffer, /obj/machinery/air_sensor))
-		var/obj/machinery/air_sensor/sensor = multi_tool.buffer
+	var/datum/buffer = multitool_get_buffer(multi_tool)
+	if(istype(buffer, /obj/machinery/air_sensor))
+		var/obj/machinery/air_sensor/sensor = buffer
 		sensor.outlet_id = id_tag
-		multi_tool.set_buffer(null)
+		multitool_set_buffer(multi_tool, null)
 		balloon_alert(user, "output linked to sensor")
 		return ITEM_INTERACT_SUCCESS
 
 	balloon_alert(user, "saved in buffer")
-	multi_tool.set_buffer(src)
+	multitool_set_buffer(multi_tool, src)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/atmospherics/components/unary/vent_pump/Destroy()

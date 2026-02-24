@@ -204,7 +204,7 @@ export const Reflector = () => {
                     <Button
                       fluid
                       icon="redo-alt"
-                      iconPosition="right"
+                      iconPosition=""
                       content="+5"
                       mb={1}
                       onClick={() =>

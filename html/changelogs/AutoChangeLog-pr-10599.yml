@@ -1,6 +1,0 @@
-author: "SmArtKar, MrMelbert, JohnFulpWillard"
-delete-after: True
-changes:
-  - bugfix: "Fake IDs can no longer be used as real IDs when inside of a PDA."
-  - bugfix: "Fake IDs can register to a PDA to access messenger."
-  - refactor: "Changed how access handling is done, please put a bug report if you should have access to something but it doesn't act accordingly."

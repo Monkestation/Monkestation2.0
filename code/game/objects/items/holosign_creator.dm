@@ -57,7 +57,7 @@
 	if(target_holosign)
 		return ITEM_INTERACT_BLOCKING
 	if(target_turf.is_blocked_turf(TRUE, ignore_atoms = projectable_through, type_list = TRUE)) //can't put holograms on a tile that has dense stuff
-		return ITEM_INTERACT_BLOCKING
+		return NONE
 	if(holocreator_busy)
 		balloon_alert(user, "busy making a hologram!")
 		return ITEM_INTERACT_BLOCKING

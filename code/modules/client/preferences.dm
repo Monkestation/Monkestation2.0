@@ -572,6 +572,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	return TRUE
 
+/datum/preferences/proc/GetHighestJobPreference()
+	for(var/job in job_preferences)
+		if(job_preferences[job] == JP_HIGH)
+			return job
+
 /datum/preferences/proc/GetQuirkBalance()
 	var/bal = 0
 	for(var/V in all_quirks)
@@ -661,3 +666,37 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			default_randomization[preference_key] = RANDOM_ENABLED
 
 	return default_randomization
+
+/client/verb/change_character_slot()
+	set name = "Change Character Slot"
+	set desc = "Changes the active character slot. This is no different than clicking the preferred character slot in the Character Setup menu."
+	set category = "OOC"
+
+	var/list/characters = prefs.create_character_profiles()
+	var/list/options = list()
+	var/current_slot
+
+	for(var/i = 1 to length(characters))
+		var/name = characters[i]
+		if (isnull(name))
+			continue
+
+		if(prefs.default_slot == i)
+			current_slot = name
+
+		options[name] = i
+
+	if(!length(options))
+		to_chat(src, span_warning("You have no characters."))
+		return
+
+	var/choice = tgui_input_list(src, "Select a character slot", "Change Character Slot", options, current_slot)
+
+	if(!choice)
+		return
+
+	var/slot = options[choice]
+	prefs.save_character()
+	prefs.switch_to_slot(slot)
+	to_chat(src, span_notice("Selected character '[choice]'"))
+

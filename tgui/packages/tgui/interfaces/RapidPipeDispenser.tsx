@@ -337,7 +337,7 @@ const PipeTypeSection = (props) => {
 
 export const SmartPipeBlockSection = (props) => {
   const { act, data } = useBackend<Data>();
-  const { init_directions  } = data;
+  const { init_directions } = data;
   return (
     <Section fill>
       <Stack vertical textAlign="center">

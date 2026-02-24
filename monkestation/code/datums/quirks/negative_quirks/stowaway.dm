@@ -35,6 +35,7 @@
 	slot_flags = ITEM_SLOT_ID
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	registered_account = null
+	create_bank_on_init = FALSE
 	accepts_accounts = FALSE
 	registered_name = "Nohbdy"
 	access = list(ACCESS_MAINT_TUNNELS)

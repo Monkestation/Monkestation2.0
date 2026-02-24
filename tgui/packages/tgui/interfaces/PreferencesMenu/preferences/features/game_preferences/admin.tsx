@@ -25,7 +25,7 @@ export const autoadmin: FeatureToggle = {
   name: 'Autoadmin - On join',
   category: 'ADMIN',
   description:
-    'When enabled, you will automatically readmin on new connection (Only if you have a rank with the AUTOADMIN flag).',
+    'When enabled, you will automatically readmin on new connection.',
   component: CheckboxInput,
 };
 

@@ -59,6 +59,8 @@
 
 	/// The name registered on the card (for example: Dr Bryan See)
 	var/registered_name = null
+	///Boolean on whether a blank bank account should be created on the ID's init.
+	var/create_bank_on_init = TRUE
 	/// Linked bank account.
 	var/datum/bank_account/registered_account
 
@@ -119,10 +121,11 @@
 /obj/item/card/id/Initialize(mapload)
 	. = ..()
 
-	var/datum/bank_account/blank_bank_account = new /datum/bank_account("Unassigned", player_account = FALSE)
-	registered_account = blank_bank_account
-	blank_bank_account.account_job = new /datum/job/unassigned
-	registered_account.replaceable = TRUE
+	if(create_bank_on_init)
+		var/datum/bank_account/blank_bank_account = new /datum/bank_account("Unassigned", player_account = FALSE)
+		registered_account = blank_bank_account
+		blank_bank_account.account_job = new /datum/job/unassigned
+		registered_account.replaceable = TRUE
 
 	// Applying the trim updates the label and icon, so don't do this twice.
 	if(ispath(trim))

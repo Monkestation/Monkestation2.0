@@ -20,7 +20,7 @@ import { Window } from '../layouts';
 import {
   type Connection,
   Connections,
-  type Position,
+  type Coordinates,
 } from './common/Connections';
 import { MOUSE_BUTTON_LEFT, noop } from './IntegratedCircuit/constants';
 
@@ -138,7 +138,7 @@ const textWidth = (text, font, fontsize) => {
   return width;
 };
 
-const planeToPosition = (plane: Plane, index, is_incoming): Position => ({
+const planeToPosition = (plane: Plane, index, is_incoming): Coordinates => ({
   x: is_incoming ? plane.x : plane.x + plane.size_x,
   y:
     29 +

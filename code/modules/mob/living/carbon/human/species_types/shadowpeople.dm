@@ -184,7 +184,6 @@
 		// monkestation addition: pain system
 		TRAIT_ABATES_SHOCK,
 		TRAIT_ANALGESIA,
-		TRAIT_NO_PAIN_EFFECTS,
 		TRAIT_NO_SHOCK_BUILDUP,
 		// monkestation end
 	)
@@ -246,7 +245,6 @@
 		TRAIT_SPECIESLOCK, //never let them swap off darkspawn, it can cause issues
 		TRAIT_ABATES_SHOCK,
 		TRAIT_ANALGESIA,
-		TRAIT_NO_PAIN_EFFECTS,
 		TRAIT_NO_SHOCK_BUILDUP,
 		TRAIT_NEVER_WOUNDED,
 		)

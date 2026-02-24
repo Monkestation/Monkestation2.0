@@ -42,6 +42,10 @@
 	/// Terminal for charging this smes
 	var/obj/machinery/power/terminal/terminal = null
 
+
+	/// Has this SMES been upgraded to be EMP-proof?
+	var/emp_proofed = FALSE
+
 /obj/machinery/power/smes/Initialize(mapload)
 	. = ..()
 
@@ -68,6 +72,8 @@
 		atom_break()
 		return
 	terminal.master = src
+	if(emp_proofed)
+		AddElement(/datum/element/empprotection, EMP_PROTECT_ALL)
 	update_appearance(UPDATE_OVERLAYS)
 
 /obj/machinery/power/smes/on_construction(mob/user)
@@ -116,7 +122,7 @@
 /obj/machinery/power/smes/examine(user)
 	. = ..()
 
-	. += span_notice("it's maintainence panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "opened"]")
+	. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "opened"]")
 	if(panel_open)
 		if(!terminal)
 			. += span_notice("It can be [EXAMINE_HINT("pried")] apart.")
@@ -127,10 +133,18 @@
 	else if(panel_open)
 		. += span_notice("The terminal can be [EXAMINE_HINT("cut")] apart.")
 
+	if(emp_proofed)
+		. += span_notice("It has been upgraded to be protected from EMPs.")
+	else
+		. += span_notice("It can be upgraded with EMP-proofing using [EXAMINE_HINT("10 sheets of reinforced plasma glass")].")
+
 /obj/machinery/power/smes/update_overlays()
 	. = ..()
 	if(panel_open || !is_operational)
 		return
+
+	if(emp_proofed)
+		. += "smes-noemp"
 
 	if(show_display_lights)
 		. += "smes-op[outputting ? 1 : 0]"
@@ -275,6 +289,28 @@
 		terminal.setDir(get_dir(turf, src))
 		terminal.connect_to_network()
 		set_machine_stat(machine_stat & ~BROKEN)
+		return ITEM_INTERACT_SUCCESS
+
+	else if(istype(installing_cable, /obj/item/stack/sheet/plasmarglass))
+		if(emp_proofed)
+			balloon_alert(user, "already shielded from EMPs!")
+			return ITEM_INTERACT_BLOCKING
+		var/obj/item/stack/sheet/plasmarglass/glass = installing_cable
+		if(glass.amount < 10)
+			balloon_alert(user, "not enough glass!")
+			return ITEM_INTERACT_BLOCKING
+		balloon_alert(user, "installing EMP shielding....")
+		if(!do_after(user, 15 SECONDS, src))
+			return ITEM_INTERACT_BLOCKING
+		if(emp_proofed)
+			balloon_alert(user, "already shielded from EMPs!")
+			return ITEM_INTERACT_BLOCKING
+		if(!glass.use(10))
+			balloon_alert(user, "not enough glass!")
+			return ITEM_INTERACT_BLOCKING
+		emp_proofed = TRUE
+		AddElement(/datum/element/empprotection, EMP_PROTECT_ALL)
+		update_appearance(UPDATE_OVERLAYS)
 		return ITEM_INTERACT_SUCCESS
 
 //opening using screwdriver
@@ -536,6 +572,9 @@
 /obj/machinery/power/smes/engineering
 	charge = 50 * STANDARD_BATTERY_CHARGE // Engineering starts with some charge for singulo
 	output_level = 90 KILO WATTS
+
+/obj/machinery/power/smes/engineering/emp_proof
+	emp_proofed = TRUE
 
 /obj/machinery/power/smes/magical
 	name = "magical power storage unit"

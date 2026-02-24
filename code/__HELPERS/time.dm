@@ -9,7 +9,7 @@
 /proc/time_stamp_metric()
 	return time2text(world.timeofday, "YYYY-MM-DDThh:mm:ss")
 
-/proc/gameTimestamp(format = "hh:mm:ss", wtime=null)
+/proc/gameTimestamp(format = "hh:mm:ss", wtime=null, legend = FALSE)
 	if(!wtime)
 		wtime = world.time - SSticker.round_start_time
 	var/hour = round(wtime / 36000)
@@ -24,7 +24,10 @@
 	if(second < 10)
 		second = "0[second]"
 
-	return "[hour]:[minute]:[second]"
+	if(legend)
+		return "[hour]h:[minute]m:[second]s"
+	else
+		return "[hour]:[minute]:[second]"
 
 /proc/station_time_timestamp(format = "hh:mm:ss", wtime)
 	return time2text(station_time(wtime), format)

@@ -9,11 +9,6 @@
 		/datum/surgery_step/close,
 	)
 
-/datum/surgery/blood_filter/can_start(mob/user, mob/living/carbon/target)
-	if(HAS_TRAIT(target, TRAIT_NOBLOOD)) // MONKESTATION EDIT: You can't filter the blood of people without blood. Duh.
-		return FALSE
-	return ..()
-
 /* monke edit: replaced for toxin healing support
 /datum/surgery_step/filter_blood/initiate(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
 	if(!..())

@@ -939,7 +939,7 @@
 		/obj/item/assembly/flash/cyborg,
 		/obj/item/reagent_containers/borghypo/syndicate,
 		/obj/item/shockpaddles/syndicate/cyborg,
-		/obj/item/healthanalyzer,
+		/obj/item/healthanalyzer/cyborg,
 		/obj/item/surgical_drapes,
 		/obj/item/retractor/augment, //monkestation edit start: Augmented tools
 		/obj/item/hemostat/augment,

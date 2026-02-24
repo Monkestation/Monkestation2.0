@@ -39,6 +39,7 @@ type Data = {
   priority: BooleanLike;
   round_duration: string;
   notices: LobbyNoticesType;
+  selected_character?: string;
 };
 
 export const JobEntry: React.FC<{
@@ -124,15 +125,44 @@ export const JobSelection = (props) => {
               {data.shuttle_status && (
                 <NoticeBox info>{data.shuttle_status}</NoticeBox>
               )}
-              <span style={{ color: 'grey' }}>
-                It is currently {data.round_duration} into the shift.
-              </span>
-              <Button
-                style={{ position: 'absolute', right: '1em' }}
-                onClick={() => act('select_job', { job: 'Random' })}
-                content="Random Job!"
-                tooltip="Roll target random job. You can re-roll or cancel your random job if you don't like it."
-              />
+              <Stack
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}
+              >
+                <span
+                  style={{
+                    color: 'lightgrey',
+                  }}
+                >
+                  {!!data.selected_character &&
+                    `Joining as '${data.selected_character}' — `}
+                  <span style={{ color: 'grey' }}>
+                    It is currently {data.round_duration} into the shift.
+                  </span>
+                </span>
+
+                <Stack direction="horizontal" style={{ right: '1em', top: 0 }}>
+                  <Stack.Item>
+                    <Button
+                      onClick={() => act('change_slot')}
+                      tooltip="Quickly change your current character without opening the Character Setup menu."
+                    >
+                      Change Character
+                    </Button>
+                  </Stack.Item>
+                  <Stack.Item>
+                    <Button
+                      onClick={() => act('select_job', { job: 'Random' })}
+                      tooltip="Roll target random job. You can re-roll or cancel your random job if you don't like it."
+                    >
+                      Random Job!
+                    </Button>
+                  </Stack.Item>
+                </Stack>
+              </Stack>
             </>
           }
           titleStyle={{ minHeight: '2.5em' }}

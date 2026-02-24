@@ -18,8 +18,8 @@ import {
   Section,
   Stack,
   Tabs,
-  TextArea,
 } from '../../components';
+import { AceEditor } from '../../components/Ace/Editor';
 import { Window } from '../../layouts';
 import { CallModal } from './CallModal';
 import { ChunkViewModal } from './ChunkViewModal';
@@ -153,6 +153,13 @@ export const LuaEditor = () => {
     };
   };
 
+  async function onDropHandler(event: React.DragEvent<HTMLTextAreaElement>) {
+    if (event.dataTransfer?.files.length) {
+      event.preventDefault();
+      setScriptInput(await event.dataTransfer.files[0].text());
+    }
+  }
+
   return (
     <Window width={1280} height={720}>
       <Window.Content>
@@ -208,34 +215,21 @@ export const LuaEditor = () => {
                   <Section fill>
                     <Stack fill vertical>
                       <Stack.Item grow>
-                        <TextArea
+                        <AceEditor
                           width="100%"
                           height="100%"
                           value={scriptInput}
-                          fontFamily="Consolas"
-                          onChange={setScriptInput}
-                          /* displayedValue={
-                          <Box
-                            style={{
-                              pointerEvents: 'none',
-                            }}
-                            dangerouslySetInnerHTML={{
-                              __html: hljs.highlight(scriptInput, {
-                                language: 'lua',
-                              }).value,
-                            }}
-                          />
-                        }*/
-                          /** @ts-expect-error */
-                          onDrop={async (
-                            event: React.DragEvent<HTMLDivElement>,
-                          ) => {
+                          onDrop={async (event) => {
                             if (event.dataTransfer?.files.length) {
                               event.preventDefault();
                               setScriptInput(
                                 await event.dataTransfer.files[0].text(),
                               );
                             }
+                          }}
+                          language="lua"
+                          onChange={(value) => {
+                            setScriptInput(value);
                           }}
                         />
                       </Stack.Item>

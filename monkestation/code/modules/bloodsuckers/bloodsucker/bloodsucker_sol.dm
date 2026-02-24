@@ -110,6 +110,5 @@
 	if(!HAS_TRAIT(current, TRAIT_MASQUERADE))
 		ADD_TRAIT(current, TRAIT_SLEEPIMMUNE, BLOODSUCKER_TRAIT)
 	heal_vampire_organs()
-	current.pain_controller?.remove_all_pain()
 	current.update_stat()
 	SEND_SIGNAL(src, COMSIG_BLOODSUCKER_EXIT_TORPOR)

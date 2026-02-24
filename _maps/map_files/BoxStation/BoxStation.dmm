@@ -11781,12 +11781,6 @@
 /area/station/science/genetics)
 "dMR" = (
 /obj/machinery/light/directional/east,
-/obj/machinery/requests_console/directional/east{
-	department = "Law Office";
-	name = "Law Office Requests Console"
-	},
-/obj/effect/mapping_helpers/requests_console/assistance,
-/obj/effect/mapping_helpers/requests_console/information,
 /obj/machinery/computer/warrant{
 	dir = 8
 	},
@@ -18713,6 +18707,7 @@
 	dir = 8
 	},
 /obj/machinery/status_display/evac/directional/west,
+/obj/item/flatpack,
 /turf/open/floor/iron/white,
 /area/station/science/lab)
 "gbM" = (
@@ -21942,7 +21937,7 @@
 	dir = 4
 	},
 /obj/machinery/airalarm/directional/east,
-/obj/machinery/vending/wardrobe/engi_wardrobe,
+/obj/machinery/vending/access/engi_wardrobe,
 /turf/open/floor/iron/dark/side{
 	dir = 4
 	},
@@ -22640,7 +22635,7 @@
 "hny" = (
 /obj/effect/turf_decal/tile/dark_blue/fourcorners,
 /obj/machinery/light/small/directional/east,
-/obj/item/storage/secure/safe/caps_spare/directional/east,
+/obj/structure/secure_safe/caps_spare/directional/east,
 /obj/machinery/keycard_auth/directional/east{
 	pixel_y = 8
 	},
@@ -26441,7 +26436,7 @@
 /area/station/commons/locker)
 "ixJ" = (
 /obj/machinery/camera/autoname/directional/west,
-/obj/item/storage/secure/safe/directional/west,
+/obj/structure/secure_safe/directional/west,
 /obj/structure/table,
 /obj/item/aicard,
 /obj/item/circuitboard/aicore,
@@ -30494,7 +30489,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
-/obj/item/storage/secure/safe/hos{
+/obj/structure/secure_safe/hos{
 	pixel_x = 32
 	},
 /obj/structure/closet/secure_closet/hos,
@@ -32582,6 +32577,7 @@
 /obj/structure/table/wood,
 /obj/item/camera_film,
 /obj/item/camera/detective,
+/obj/machinery/newscaster/directional/west,
 /turf/open/floor/wood,
 /area/station/security/detectives_office)
 "kxo" = (
@@ -33523,7 +33519,7 @@
 /area/station/service/hydroponics/garden)
 "kOa" = (
 /obj/machinery/airalarm/directional/west,
-/obj/item/storage/secure/safe/directional/south,
+/obj/structure/secure_safe/directional/south,
 /obj/machinery/suit_storage_unit/cmo,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/cmo)
@@ -48074,6 +48070,15 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
+"pxv" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 1
+	},
+/obj/item/flatpack,
+/turf/open/floor/iron/dark/side{
+	dir = 1
+	},
+/area/station/engineering/break_room)
 "pxw" = (
 /turf/open/floor/iron,
 /area/station/engineering/main)
@@ -51822,7 +51827,7 @@
 /turf/open/floor/engine/n2,
 /area/station/engineering/atmos)
 "qJD" = (
-/obj/item/storage/secure/safe/directional/east,
+/obj/structure/secure_safe/directional/east,
 /obj/structure/bed,
 /obj/item/bedsheet/qm,
 /obj/effect/landmark/start/quartermaster,
@@ -52854,10 +52859,10 @@
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "rdk" = (
-/obj/machinery/light/directional/west,
 /obj/machinery/computer/security{
 	dir = 4
 	},
+/obj/structure/detectiveboard/directional/west,
 /turf/open/floor/wood,
 /area/station/security/detectives_office)
 "rdl" = (
@@ -62053,6 +62058,7 @@
 /obj/item/paper_bin,
 /obj/item/folder/white,
 /obj/item/pen,
+/obj/item/storage/toolbox/electrical/medical,
 /turf/open/floor/iron/white,
 /area/station/medical/office)
 "tYO" = (
@@ -63007,6 +63013,12 @@
 	pixel_y = 6
 	},
 /obj/item/clothing/glasses/sunglasses/big,
+/obj/machinery/requests_console/directional/east{
+	department = "Law Office";
+	name = "Law Office Requests Console"
+	},
+/obj/effect/mapping_helpers/requests_console/assistance,
+/obj/effect/mapping_helpers/requests_console/information,
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
 "uob" = (
@@ -64650,6 +64662,11 @@
 	},
 /turf/open/floor/engine,
 /area/station/maintenance/disposal/incinerator)
+"uOl" = (
+/obj/effect/turf_decal/bot_white,
+/obj/item/flatpack,
+/turf/open/floor/iron,
+/area/station/cargo/storage)
 "uOm" = (
 /obj/item/kirbyplants/random,
 /turf/open/floor/wood,
@@ -64783,7 +64800,7 @@
 /turf/open/floor/iron/dark,
 /area/station/command/teleporter)
 "uQm" = (
-/obj/item/storage/secure/safe/directional/south,
+/obj/structure/secure_safe/directional/south,
 /obj/machinery/requests_console/directional/east{
 	department = "Nanotrasen Representative's Desk";
 	name = "Nanotrasen Representative's Requests Console"
@@ -72183,10 +72200,10 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/fore)
 "xft" = (
-/obj/machinery/newscaster/directional/west,
 /obj/machinery/computer/records/security{
 	dir = 4
 	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/wood,
 /area/station/security/detectives_office)
 "xfA" = (
@@ -86574,7 +86591,7 @@ aim
 nxh
 nxh
 nxh
-tEB
+uOl
 gzQ
 nxh
 dOX
@@ -106380,7 +106397,7 @@ sxJ
 nQD
 fiv
 ior
-sxJ
+pxv
 yiD
 iGG
 xiS

@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-max-depth */
 import { sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { useBackend, useLocalState } from '../backend';

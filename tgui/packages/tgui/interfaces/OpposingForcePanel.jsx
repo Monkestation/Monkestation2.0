@@ -1,4 +1,3 @@
-// THIS IS A NOVA SECTOR UI FILE
 import { round } from 'common/math';
 
 import { useBackend, useLocalState } from '../backend';

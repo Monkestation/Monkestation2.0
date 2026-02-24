@@ -1,0 +1,5 @@
+author: "Cujo"
+delete-after: True
+changes:
+  - rscadd: "Add lathe recipe for surgery trays"
+  - bugfix: "Adds missing detach handler from noisy_movement"

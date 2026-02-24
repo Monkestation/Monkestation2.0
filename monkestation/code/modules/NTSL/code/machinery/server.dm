@@ -96,5 +96,6 @@
 				if(sample == SPAN_COMMAND)
 					user.client.give_award(/datum/award/achievement/jobs/Poly_loud, user)
 					break // Not having this break leaves us open to a potential DoS attack.
+		signal.data["reject"] = TRUE //Don't pass achievement signals.
 	return compileerrors
 //end-NTSL

@@ -247,7 +247,6 @@
 		// monkestation addition: pain system
 		TRAIT_ABATES_SHOCK,
 		TRAIT_ANALGESIA,
-		TRAIT_NO_PAIN_EFFECTS,
 		TRAIT_NO_SHOCK_BUILDUP,
 		// monkestation end
 	)

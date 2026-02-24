@@ -43,11 +43,16 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 //
 	var/list/stored_quirks = list()
 	var/list/stored_items = list()
+	var/alist/items_per_slot = alist()
+
 	///Item types that should never be stored in core and will drop on death. Takes priority over allowed lists.
 	var/static/list/bannedcore = typecacheof(list(/obj/item/disk/nuclear))
 	//Allowed implants usually given by cases and injectors
 	var/static/list/allowed_implants = typecacheof(list(
-		//obj/item/implant
+		/obj/item/implant/exile,
+		/obj/item/implant/tracking,
+		/obj/item/implant/teleport_blocker,
+		/obj/item/implant/chem
 	))
 	//Extraneous organs not of oozeling origin. Usually cyber implants.
 	var/static/list/allowed_organ_types = typecacheof(list(
@@ -125,6 +130,9 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 			drop_items_to_ground(drop_loc, explode = TRUE)
 		else
 			QDEL_LIST(stored_items)
+
+	items_per_slot = null
+
 	return ..()
 
 /obj/item/organ/internal/brain/slime/examine()
@@ -134,19 +142,24 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 		. += span_red("You could probably use the core in-hand to snuff out the tracking signal and retrieve the items within it.")
 	else
 		. += span_red("You could probably use the core in-hand to retrieve the items within it.")
-	var/has_dnr_quirk = FALSE
-	if(!isnull(stored_quirks))
-		for(var/datum/quirk/quirk in stored_quirks)
-			if(istype(quirk, /datum/quirk/dnr))
-				has_dnr_quirk = TRUE
-				break
-	if(mind?.dnr || has_dnr_quirk)
+	if(mind?.dnr || (locate(/datum/quirk/dnr) in stored_quirks))
 		. += span_warning("It looks dull and faded, as if the soul within the core had moved on...")
 	else if((brainmob && (brainmob.client || brainmob.get_ghost())) || (mind?.current && (mind.current.client || mind.current.get_ghost())) || decoy_override)
 		if(isnull(stored_dna))
 			. += span_hypnophrase("Something looks wrong with this core, you don't think plasma will fix this one, maybe there's another way?")
 		else
 			. += span_hypnophrase("You remember that <i>slowly</i> pouring a big beaker of ground plasma on it by hand, if it's non-embodied, would make it regrow one.")
+	. += span_notice("<i>You can take a closer look to see what may be inside...</i>")
+
+/obj/item/organ/internal/brain/slime/examine_more(mob/user)
+	. = ..()
+	. += span_notice("You look closer through the core's hazy interior and see...")
+	if(length(stored_items))
+		for(var/atom/movable/item as anything in stored_items)
+			. += " [ma2html(item, user)] <a href='byond://?src=[REF(src)];core_item=[REF(item)]'>[item.get_examine_name(user)]</a>"
+		. += span_notice("floating inside...")
+	else
+		. += span_notice("...nothing of interest.")
 
 /obj/item/organ/internal/brain/slime/attack_self(mob/living/user) // Allows a player (presumably an antag) to deactivate the GPS signal on a slime core
 	if(DOING_INTERACTION_WITH_TARGET(user, src))
@@ -160,7 +173,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 
 	if(!do_after(user, 30 SECONDS, src))
 		user.visible_message(
-			span_warning("[user]'s hand slips out of [src] before they can cause any harm!"),
+			span_warning("[user]'s hand slips out of [src] before [user.p_they()] can cause any harm!"),
 			gps_active ? span_notice("Your hand slips out of the goopy core before you can find it's densest point.") : span_notice("Your hand slips out of the goopy core before you can find any dense points."),
 			span_notice("You hear a resounding plop.")
 		)
@@ -182,6 +195,44 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 		)
 	playsound(user, 'sound/effects/wounds/crackandbleed.ogg', 80, TRUE)
 	drop_items_to_ground(user.drop_location())
+
+/obj/item/organ/internal/brain/slime/proc/drop_items(mob/living/user, list/items_to_drop)
+	if(user.get_active_held_item() != src)
+		to_chat(user, span_userdanger("Hold [src] in your hand to extract items from it!"))
+		return
+	if(DOING_INTERACTION_WITH_TARGET(user, src) || !length(items_to_drop))
+		return
+
+	var/our_name = brainmob ? key_name(brainmob) : name
+	user.log_message("is stripping [our_name] of [english_list(items_to_drop)].", LOG_ATTACK, color="red")
+	log_message("is being stripped of [english_list(items_to_drop)] by [key_name(user)].", LOG_VICTIM, color="orange", log_globally=FALSE)
+	brainmob?.log_message("is being stripped of [english_list(items_to_drop)] by [key_name(user)].", LOG_VICTIM, color="orange", log_globally=FALSE)
+
+	user.visible_message(
+		span_warning("[user] begins jamming their hand into [src]! Slime goes everywhere!"),
+		span_notice("You jam your hand into [src], feeling for the densest point, your prize!"),
+		span_notice("You hear an obscene squelching sound.")
+	)
+	playsound(user, 'sound/surgery/organ1.ogg', 80, TRUE)
+
+	if(!do_after(user, 15 SECONDS, src))
+		user.visible_message(
+			span_warning("[user]'s hand slips out of [src] before [user.p_they()] can cause any harm!"),
+			span_notice("Your hand slips out of the goopy core before you could find find anything."),
+			span_notice("You hear a resounding plop.")
+		)
+		return
+	user.visible_message(
+			span_warning("[user] forcefully extracts items from [src]!"),
+			span_notice("You managed to find what you were looking for, and it falls to the ground."),
+			span_notice("You hear a wet squelching sounds.")
+		)
+	playsound(user, 'sound/effects/wounds/crackandbleed.ogg', 80, TRUE)
+	drop_items_to_ground(user.drop_location(), dropping = items_to_drop)
+
+	user.log_message("has stripped [our_name] of [english_list(items_to_drop)].", LOG_ATTACK, color="red")
+	log_message("has been stripped of [english_list(items_to_drop)] by [key_name(user)].", LOG_VICTIM, color="orange", log_globally=FALSE)
+	brainmob?.log_message("has been stripped of [english_list(items_to_drop)] by [key_name(user)].", LOG_VICTIM, color="orange", log_globally=FALSE)
 
 /obj/item/organ/internal/brain/slime/Insert(mob/living/carbon/organ_owner, special = FALSE, drop_if_replaced, no_id_transfer)
 	. = ..()
@@ -225,9 +276,12 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/organ/internal/brain/slime/proc/colorize()
-	if(isoozeling(owner))
-		var/datum/color_palette/generic_colors/located = owner.dna.color_palettes[/datum/color_palette/generic_colors]
-		core_color = located.return_color(MUTANT_COLOR)
+	if(!isoozeling(owner))
+		return
+	var/datum/color_palette/generic_colors/located = owner.dna.color_palettes[/datum/color_palette/generic_colors]
+	var/new_core_color = located.return_color(MUTANT_COLOR)
+	if(new_core_color)
+		core_color = new_core_color
 		add_atom_colour(core_color, FIXED_COLOUR_PRIORITY)
 
 /obj/item/organ/internal/brain/slime/proc/on_stat_change(mob/living/carbon/victim, new_stat, turf/loc_override)
@@ -280,6 +334,8 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 			continue
 		quirk.remove_from_current_holder(quirk_transfer = TRUE)
 		stored_quirks |= quirk
+
+	store_item_slots(victim)
 	victim.drop_all_held_items()
 	process_items(victim) // Start moving items before anything else can touch them.
 
@@ -327,6 +383,26 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 
 	SEND_SIGNAL(mind, COMSIG_OOZELING_CORE_EJECTED, src)
 
+/obj/item/organ/internal/brain/slime/proc/store_item_slots(mob/living/carbon/human/victim)
+	items_per_slot = alist()
+	// instantly retract any modsuits, to avoid jank
+	if(istype(victim.back, /obj/item/mod/control))
+		var/obj/item/mod/control/mod_control = victim.back
+		for(var/obj/item/part as anything in mod_control.mod_parts)
+			mod_control.retract(null, part)
+	// also retract any deployables
+	if(victim.wear_suit)
+		var/datum/component/toggle_attached_clothing/hood_component = victim.wear_suit.GetComponent(/datum/component/toggle_attached_clothing)
+		hood_component?.remove_deployable()
+	for(var/obj/item/equipped as anything in victim.get_equipped_items(INCLUDE_POCKETS))
+		if(equipped.item_flags & (DROPDEL | ABSTRACT | HAND_ITEM))
+			continue
+		if(HAS_TRAIT(equipped, TRAIT_NODROP))
+			continue
+		var/slot = victim.get_slot_by_item(equipped)
+		if(slot)
+			items_per_slot[equipped] = slot
+
 /obj/item/organ/internal/brain/slime/proc/do_steam_effects(turf/loc)
 	var/datum/effect_system/steam_spread/steam = new()
 	steam.set_up(10, FALSE, loc)
@@ -338,13 +414,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 
 /obj/item/organ/internal/brain/slime/check_for_repair(obj/item/item, mob/user)
 	if(item.is_drainable() && item.reagents.has_reagent(/datum/reagent/toxin/plasma)) //attempt to heal the brain
-
-		var/has_dnr_quirk = FALSE
-		if(!isnull(stored_quirks))
-			for(var/datum/quirk/quirk in stored_quirks)
-				if(istype(quirk, /datum/quirk/dnr))
-					has_dnr_quirk = TRUE
-					break
+		var/has_dnr_quirk = locate(/datum/quirk/dnr) in stored_quirks
 
 		if(mind?.dnr || has_dnr_quirk)
 			to_chat(user, span_warning("The soul of [src] has departed..."))
@@ -424,6 +494,12 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 		victim.temporarilyRemoveItemFromInventory(item, force = TRUE, idrop = FALSE)
 		process_and_store_item(item, victim)
 
+	for(var/datum/action/item_action/hands_free/activate_pill/pill_action in victim.actions) // Store dental implants
+		pill_action.Remove(victim)
+		var/obj/pill = pill_action.target
+		if(istype(pill))
+			process_and_store_item(pill, victim)
+
 	for(var/obj/item/implant/curimplant in victim.implants) // Process and store implants
 		if(!is_type_in_typecache(curimplant, allowed_implants))
 			continue
@@ -452,13 +528,38 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 		item.forceMove(src)
 		stored_items |= item
 
-/obj/item/organ/internal/brain/slime/proc/drop_items_to_ground(turf/turf, explode = FALSE)
-	for(var/atom/movable/item as anything in stored_items)
-		if(explode)
+/obj/item/organ/internal/brain/slime/proc/drop_items_to_ground(turf/turf, list/dropping = stored_items, explode = FALSE)
+	for(var/atom/movable/item as anything in dropping)
+		if(!(item in stored_items))
+			continue
+		if(istype(item, /obj/item/implantcase)) // Delete implants that aren't re-implanted. For now.
+			qdel(item)
+		else if(explode)
 			brainmob.dropItemToGround(item, violent = TRUE)
 		else
 			item.forceMove(turf)
-	stored_items.Cut()
+		stored_items -= item
+
+/obj/item/organ/internal/brain/slime/proc/reequip_items(mob/living/carbon/human/body)
+	for(var/i, slot in items_per_slot)
+		var/obj/item/item = i
+		if(QDELETED(item))
+			continue
+		body.equip_to_slot(item, slot)
+		if(body.get_item_by_slot(slot) == item)
+			stored_items -= item
+	items_per_slot.Cut()
+
+/obj/item/organ/internal/brain/slime/proc/readd_to_body(mob/living/carbon/human/new_body)
+	if(QDELETED(new_body) || QDELETED(src))
+		return
+	var/specific_implants = list(/obj/item/implant/exile, /obj/item/implant/tracking, /obj/item/implant/teleport_blocker, /obj/item/implant/chem)
+	for(var/obj/item/implantcase/case in stored_items)
+		if(!is_type_in_list(case.imp, specific_implants))
+			continue
+		case.imp.implant(new_body, new_body, silent = TRUE)
+		stored_items -= case
+		qdel(case)
 
 /obj/item/organ/internal/brain/slime/proc/rebuild_body(mob/user, nugget = TRUE, revival_policy = POLICY_REVIVAL) as /mob/living/carbon/human
 	if(rebuilt)
@@ -520,6 +621,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	new_body.forceMove(drop_location())
 	if(!nugget)
 		new_body.set_nutrition(NUTRITION_LEVEL_FED)
+		reequip_items(new_body)
 	new_body.blood_volume = nugget ? (BLOOD_VOLUME_SAFE + 60) : BLOOD_VOLUME_NORMAL
 	REMOVE_TRAIT(new_body, TRAIT_NO_TRANSFORM, REF(src))
 	if(!isnull(stored_quirks))
@@ -555,6 +657,7 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 	new_body.grab_ghost()
 	transfer_observers_to(new_body)
 
+	readd_to_body(new_body)
 	drop_items_to_ground(new_body.drop_location())
 
 	var/policy = get_policy(revival_policy)
@@ -563,6 +666,15 @@ GLOBAL_LIST_EMPTY_TYPED(dead_oozeling_cores, /obj/item/organ/internal/brain/slim
 
 	SEND_SIGNAL(mind, COMSIG_OOZELING_REVIVED, new_body, src)
 	return new_body
+
+/obj/item/organ/internal/brain/slime/Topic(href, list/href_list)
+	. = ..()
+	if(href_list["core_item"])
+		if(!core_ejected || !iscarbon(usr) || !usr.can_perform_action(src, NEED_DEXTERITY | NEED_HANDS | FORBID_TELEKINESIS_REACH | ALLOW_RESTING))
+			return
+		var/obj/item/core_item = locate(href_list["core_item"]) in stored_items
+		if(core_item)
+			drop_items(usr, list(core_item))
 
 ADMIN_VERB(cmd_admin_heal_oozeling, R_ADMIN, FALSE, "Heal Oozeling Core", "Use this to heal Oozeling cores.", ADMIN_CATEGORY_DEBUG, obj/item/organ/internal/brain/slime/core in GLOB.dead_oozeling_cores)
 	if(QDELETED(core))
