@@ -205,7 +205,6 @@
 	. = ..()
 	if(istype(loc, /obj/item/modular_computer))
 		give_messenger_ability()
-	START_PROCESSING(SSfastprocess, src)
 	GLOB.pai_list += src
 	make_laws()
 	for(var/law in laws.inherent)
@@ -232,7 +231,8 @@
 	laws = new /datum/ai_laws/pai()
 	return TRUE
 
-/mob/living/silicon/pai/process(seconds_per_tick)
+/mob/living/silicon/pai/Life(seconds_per_tick, times_fired)
+	. = ..()
 	holochassis_health = clamp((holochassis_health + (HOLOCHASSIS_REGEN_PER_SECOND * seconds_per_tick)), -50, HOLOCHASSIS_MAX_HEALTH)
 
 /mob/living/silicon/pai/Process_Spacemove(movement_dir = 0, continuous_move = FALSE)
@@ -293,7 +293,7 @@
  * 	or FALSE if the pAI is not being carried.
  */
 /mob/living/silicon/pai/proc/get_holder()
-	var/mob/holder = recursive_loc_check(card, /mob)
+	var/mob/holder = recursive_loc_check(card, /mob/living/carbon)
 	if(isnull(holder))
 		return FALSE
 	return holder

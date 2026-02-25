@@ -34,6 +34,9 @@
 		"Explorer",
 		"Expeditionist",
 		"Scavenger",
+		"Astronaut",
+		"Asteroid Miner",
+		"Space Miner",
 	)
 	rpg_title = "Adventurer"
 	job_flags = STATION_JOB_FLAGS | JOB_CANNOT_BE_TARGET | JOB_NO_PLANETARY

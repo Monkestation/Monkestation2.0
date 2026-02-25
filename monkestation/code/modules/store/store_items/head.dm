@@ -134,7 +134,7 @@ GLOBAL_LIST_INIT(store_head, generate_store_items(/datum/store_item/head))
 
 /datum/store_item/head/red_hardhat
 	name = "Red Hardhat"
-	item_path = /obj/item/clothing/head/utility/hardhat/red
+	item_path = /obj/item/clothing/head/utility/hardhat/fire
 
 /datum/store_item/head/white_hardhat
 	name = "White Hardhat"

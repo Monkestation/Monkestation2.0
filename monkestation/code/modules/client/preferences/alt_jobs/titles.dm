@@ -375,6 +375,7 @@
 		"Spelunker",
 		"Drill Technician",
 		"Prospector",
+		"Big Game Hunter",
 	)
 
 /datum/job/station_engineer
