@@ -117,8 +117,8 @@
 /datum/voucher_set/explorer/breacher_kit
 	name = "Breaching Kit"
 	description = "Contains three breaching charges. Like c-4, but cannot be attached to living things."
-	icon = 'icons/obj/weapons/grenade.dmi'
-	icon_state = "plastic-explosive0"
+	icon = 'monkestation/icons/obj/items/breachingcharge.dmi'
+	icon_state = "breaching-charge0"
 	set_items = list(
 		/obj/item/grenade/c4/explosivecharge,
 		/obj/item/grenade/c4/explosivecharge,
@@ -136,27 +136,38 @@
 		/obj/item/clothing/head/cowboy/brown,
 		)
 
-/datum/voucher_set/explorer/shipbreaker
-	name = "Shipbreaker Kit"
-	description = "Contains a trusty sledgehammer that will tear through machinery and other debris. Also comes with a full toolbelt for finer work."
-	icon = 'icons/obj/weapons/hammer.dmi'
-	icon_state = "sledgehammer"
+/datum/voucher_set/explorer/first_mate
+	name = "Explorer Conscription Kit"
+	description = "The captain of every voyage needs a trusty right hand spaceman. Bring a buddy along into the abyss with a duffel bag containing a spare mining hardsuit, jetpack, gps device, a proto-kinetic accelerator, a survival knife, a seclite, a mesons, an automatic mining scanner, a mining satchel, a gas mask, a mining radio key and a special ID card with a basic mining access."
+	icon = 'icons/obj/storage/backpack.dmi'
+	icon_state = "duffel-explorer"
 	set_items = list(
-		/obj/item/melee/sledgehammer,
-		/obj/item/storage/belt/utility/full,
-		/obj/item/clothing/head/utility/hardhat,
+		/obj/item/storage/backpack/duffelbag/explorer_conscript = 1,
 		)
 
-/datum/voucher_set/explorer/first_mate
-	name = "First Mate's Kit"
-	description = "The captain of every voyage needs a trusty right hand spaceman. Bring a buddy along into the abyss with a laser musket, spare mining hardsuit, jetpack, gps device and cargo teleporter."
-	icon = 'monkestation/icons/obj/clothing/hardsuits/suit.dmi'
-	icon_state = "hardsuit-mining"
-	set_items = list(
-		/obj/item/gun/energy/laser/musket,
-		/obj/item/storage/box/emergency_eva/explorer,
-		/obj/item/cargo_teleporter = 1,
-		)
+/obj/item/card/id/advanced/explorer
+	name = "explorer ID"
+	trim = /datum/id_trim/job/explorer/spare
+
+/obj/item/storage/backpack/duffelbag/explorer_conscript
+	name = "explorer conscription kit"
+	desc = "A kit containing everything a crewmember needs to join the exploration force."
+	icon = 'icons/obj/storage/backpack.dmi'
+	icon_state = "duffel-explorer"
+	inhand_icon_state = "duffel-explorer"
+
+/obj/item/storage/backpack/duffelbag/explorer_conscript/PopulateContents()
+	new /obj/item/clothing/glasses/meson(src)
+	new /obj/item/t_scanner/adv_mining_scanner/lesser(src)
+	new /obj/item/storage/bag/ore(src)
+	new /obj/item/storage/box/emergency_eva/explorer(src)
+	new /obj/item/encryptionkey/headset_mining(src)
+	new /obj/item/clothing/mask/gas/explorer(src)
+	new /obj/item/card/id/advanced/explorer(src)
+	new /obj/item/gun/energy/recharge/kinetic_accelerator(src)
+	new /obj/item/knife/combat/survival(src)
+	new /obj/item/flashlight/seclite(src)
+	new /obj/item/cargo_teleporter(src)
 
 /datum/voucher_set/explorer/conscription_kit
 	name = "Lavaland Kit"
