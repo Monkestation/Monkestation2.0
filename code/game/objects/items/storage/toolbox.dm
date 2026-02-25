@@ -87,6 +87,9 @@
 	new /obj/item/analyzer(src)
 	new /obj/item/wirecutters(src)
 
+/obj/item/storage/toolbox/mechanical/empty/PopulateContents()
+	return
+
 /obj/item/storage/toolbox/mechanical/old
 	name = "rusty blue toolbox"
 	icon_state = "toolbox_blue_old"

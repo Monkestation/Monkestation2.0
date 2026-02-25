@@ -1,0 +1,6 @@
+author: "Urist-McCoder"
+delete-after: True
+changes:
+  - balance: "gave the default salad item in salad.dm the Resistance buff"
+  - balance: "gave the seafood in meatdish.dm the Resistance buff"
+  - balance: "gave the meat dishes in meatdish.dm either Healt Tiny or Health Medium"

@@ -103,15 +103,19 @@
 /datum/supply_pack/science/robotics
 	name = "Robotics Assembly Crate"
 	desc = "The tools you need to replace those finicky humans with a loyal robot army! \
-		Contains four proximity sensors, two empty first aid kits, two health analyzers, \
-		two red hardhats, two mechanical toolboxes, and two cleanbot assemblies!"
+		Contains six proximity sensors, two medibot assemblies, two health analyzers, \
+		two firebot assemblies, two hardhats, two floorbot assemblies, and two cleanbot assemblies, and four robotic arms! Requires assembly!"
 	cost = CARGO_CRATE_VALUE * 3
 	access = ACCESS_ROBOTICS
 	access_view = ACCESS_ROBOTICS
-	contains = list(/obj/item/assembly/prox_sensor = 5,
+	contains = list(/obj/item/assembly/prox_sensor = 6,
+					/obj/item/bodypart/arm/left/robot = 4,
 					/obj/item/healthanalyzer = 2,
-					/obj/item/clothing/head/utility/hardhat/red = 2,
-					/obj/item/storage/medkit = 2)
+					/obj/item/clothing/head/utility/hardhat = 2,
+					/obj/item/bot_assembly/floorbot = 2,
+					/obj/item/bot_assembly/firebot = 2,
+					/obj/item/bot_assembly/medbot = 2,
+					/obj/item/bot_assembly/cleanbot = 2)
 	crate_name = "robotics assembly crate"
 	crate_type = /obj/structure/closet/crate/secure/science
 
