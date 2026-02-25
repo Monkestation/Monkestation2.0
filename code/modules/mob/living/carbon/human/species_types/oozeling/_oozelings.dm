@@ -123,7 +123,7 @@
 		return FALSE
 
 	if(slime_wetness.stacks >= 10)
-		slime.adjust_wet_stacks(-6, /datum/status_effect/fire_handler/wet_stacks/oozeling)
+		slime.adjust_wet_stacks(-5, /datum/status_effect/fire_handler/wet_stacks/oozeling)
 		return TRUE
 
 	return FALSE
@@ -139,7 +139,7 @@
 		return
 
 	if(wetness.stacks >= DAMAGE_WATER_STACKS)
-		remove_blood_volume(slime, 3 * seconds_per_tick)
+		remove_blood_volume(slime, 10 * seconds_per_tick)
 		slime.balloon_alert(slime, "too wet, dry off!")
 		if(SPT_PROB(25, seconds_per_tick))
 			slime.visible_message(span_danger("[slime]'s form begins to lose cohesion, seemingly diluting with the water!"), span_warning("The water starts to dilute your body, dry it off!"))
@@ -273,7 +273,7 @@
 		if(HAS_TRAIT(slime, TRAIT_GODMODE) || slime.blood_volume <= 0)
 			return ..()
 
-		remove_blood_volume(slime, 5 * seconds_per_tick)
+		remove_blood_volume(slime, 10 * seconds_per_tick)
 		chem.holder?.remove_reagent(chem.type, min(chem.volume * 0.22, 10))
 		if(SPT_PROB(25, seconds_per_tick))
 			to_chat(slime, span_warning("The water starts to weaken and adulterate your insides!"))
@@ -282,10 +282,9 @@
 	return ..()
 
 /datum/species/oozeling/proc/water_exposure(mob/living/carbon/human/slime, check_clothes = TRUE, quiet_if_protected = FALSE)
-	if(HAS_TRAIT(slime, TRAIT_WAS_SPRAYED))
-		return
-	ADD_TRAIT(slime, TRAIT_WAS_SPRAYED, TRAIT_GENERIC)
-	addtimer(TRAIT_CALLBACK_REMOVE(slime, TRAIT_WAS_SPRAYED, TRAIT_GENERIC), 0.5 SECOND)
+	if(!COOLDOWN_FINISHED(src, water_exposure_cooldown))
+		return FALSE
+	COOLDOWN_START(src, water_exposure_cooldown, 0.1 SECOND)
 	var/water_multiplier = 1
 	// thick clothing won't protect you if you just drink or inject tho
 	if(check_clothes)
@@ -299,7 +298,7 @@
 		if(!quiet_if_protected)
 			to_chat(slime, span_warning("Water splashes against your oily membrane and rolls right off your body!"))
 		return FALSE
-	remove_blood_volume(slime, 30 * water_multiplier)
+	remove_blood_volume(slime, 40 * water_multiplier)
 	if(COOLDOWN_FINISHED(src, water_alert_cooldown))
 		slime.visible_message(
 			span_warning("[slime]'s form melts away from the water!"),

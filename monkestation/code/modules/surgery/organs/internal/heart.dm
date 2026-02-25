@@ -72,6 +72,14 @@
 
 	if(slime.blood_volume >= BLOOD_VOLUME_OKAY)
 		slime.adjust_wet_stacks(1, /datum/status_effect/fire_handler/wet_stacks/oozeling)
+		var/datum/status_effect/fire_handler/wet_stacks/oozeling/slime_wetness = slime.has_status_effect(/datum/status_effect/fire_handler/wet_stacks/oozeling)
+		if(slime_wetness?.stacks > 9 && slime_wetness?.stacks <= 10)
+			slime.balloon_alert(slime, "membrane restored!")
+			playsound(slime, 'sound/surgery/organ1.ogg', 80, TRUE)
+		slime.visible_message(
+			span_notice("[slime]'s body forms an oily outer membrance!"),
+			span_nicegreen("Your protective membrance regenerates!"),
+		)
 
 	if(slime.blood_volume < BLOOD_VOLUME_BAD)
 		Cannibalize_Body(slime)
