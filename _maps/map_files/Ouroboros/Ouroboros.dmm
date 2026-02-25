@@ -8030,11 +8030,11 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/medical/paramedic)
 "cuk" = (
-/obj/item/tank/internals/oxygen/red{
+/obj/item/tank/internals/oxygen/yellow{
 	pixel_x = -4;
 	pixel_y = -1
 	},
-/obj/item/tank/internals/oxygen/red{
+/obj/item/tank/internals/oxygen/yellow{
 	pixel_x = 4;
 	pixel_y = -1
 	},

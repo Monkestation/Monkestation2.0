@@ -68031,11 +68031,11 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "xzt" = (
-/obj/item/tank/internals/oxygen/red{
+/obj/item/tank/internals/oxygen/yellow{
 	pixel_x = -4;
 	pixel_y = -1
 	},
-/obj/item/tank/internals/oxygen/red{
+/obj/item/tank/internals/oxygen/yellow{
 	pixel_x = 4;
 	pixel_y = -1
 	},
