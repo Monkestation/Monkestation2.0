@@ -45,7 +45,7 @@
 	dir = 4
 	},
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "p" = (
@@ -112,7 +112,7 @@
 	dir = 4
 	},
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "B" = (
@@ -136,7 +136,7 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "F" = (
@@ -156,12 +156,12 @@
 	dir = 4
 	},
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "J" = (
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "K" = (
@@ -192,7 +192,7 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "P" = (
@@ -220,7 +220,7 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "X" = (
@@ -228,7 +228,7 @@
 	dir = 4
 	},
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 "Y" = (
@@ -242,7 +242,7 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor{
-	icon_state = "white"
+	icon_state = "whitefull"
 	},
 /area/template_noop)
 

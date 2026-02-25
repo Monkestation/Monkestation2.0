@@ -145,7 +145,7 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 
 /datum/loadout_item/head/red_hardhat
 	name = "Red Hardhat"
-	item_path = /obj/item/clothing/head/utility/hardhat/red
+	item_path = /obj/item/clothing/head/utility/hardhat/fire
 
 /datum/loadout_item/head/white_hardhat
 	name = "White Hardhat"
