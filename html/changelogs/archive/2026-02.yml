@@ -446,3 +446,49 @@
       oil
   - map: Theseus cryogenics now hook into distro
   - map: Pubby now has wirechemistry added
+2026-02-24:
+  JohnFulpWillard:
+  - bugfix: Silicons no longer get a bugged cold/hot alert,
+  SirNightKnight:
+  - image: made floor tile sprites more consistent.
+  - qol: increased the picket sign character limit by 10 characters.
+  - bugfix: added the warden's grey jumpsuit to their garment bag.
+  - bugfix: basic and makeshift microfusion cells have the correct charge capacity.
+  Siro:
+  - rscadd: Warning message added to the Advanced Cassette Deck. Players should admin
+      who and ahelp before creating/submitting their cassette.
+2026-02-25:
+  Cujo:
+  - rscadd: Add lathe recipe for surgery trays
+  - bugfix: Adds missing detach handler from noisy_movement
+  - bugfix: Makes brain surgery automatically repeat on success and stop when brain
+      damage equals zero
+  - qol: Changes the blood filter whitelist into a blacklist
+  JohnFulpWillard:
+  - bugfix: Chem scanning a maintenance pill removes the achievement value.
+  SirNightKnight:
+  - image: resprited the firefighter helmet to be a weaker variant of the atmos firefighter
+      helmet.
+  - balance: the workplace ready firefighter helmet is now an even brighter hardhat
+      without firefighter helmet protection.
+  - rscadd: added black gloves to fire closets.
+  - qol: firebots are made with hardhats instead of firefighter helmets.
+  - balance: touched up the robotics assembly crate to have everything need for two
+      firebots, cleanbots, medibots, and floorbots.
+  funkynuggets:
+  - rscadd: Nanotrasen has deemed it fit to reactivate an older Cyborg model as supply
+      shortages have left holes that could be filled by this older product. All sales
+      are final and warranties are not included.
+  notghosti:
+  - map: Heliostation suffers from less off-camera key items and areas.
+  - map: Heliostation teleporter has slightly more sensible rails.
+  - map: Heliostation Asteroid magnet is now hooked to power and has proper science
+      access
+  - balance: Heat Cures no longer generate antibodies
+  - bugfix: Health analyzers no longer tell you the wrong diseases existances.
+  - rscdel: Exolathes can no longer print megacells
+  wonderinghost:
+  - map: '[oshan] Reworks Medical Department Layout'
+  - map: '[oshan] Proper Chemistry room'
+  - map: '[oshan] Fixes Access For NTrep and Blueshield doors'
+  - map: '[oshan] Chefs and Chaplains Medical Front Door Access for Morgue'
