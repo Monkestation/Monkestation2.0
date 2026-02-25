@@ -36,15 +36,3 @@
 /datum/orderable_item/explorer/hardsuit_jetpack_upgrade
 	item_path = /obj/item/jetpack_module
 	cost_per_order = 250
-
-/datum/orderable_item/explorer/fulton_core 
-	item_path = /obj/item/fulton_core
-	cost_per_order = 400
-
-/datum/orderable_item/explorer/fulton 
-	item_path = /obj/item/extraction_pack
-	cost_per_order = 1000
-
-/datum/orderable_item/explorer/advanced_gps 
-	item_path = /obj/item/gps/advanced
-	cost_per_order = 500
