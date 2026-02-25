@@ -190,7 +190,6 @@
 	desc = "A brick of c-4 with company safety features. It cannot be stuck onto a living being or used on NanoTrasen property."
 	icon = 'monkestation/icons/obj/items/breachingcharge.dmi'
 	icon_state = "breaching-charge0"
-	inhand_icon_state = "breaching-charge"
 
 /obj/item/grenade/c4/explosivecharge/examine(mob/user)
 	. = ..()
