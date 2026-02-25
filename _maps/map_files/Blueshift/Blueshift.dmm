@@ -29628,7 +29628,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/station/engineering/atmos)
 "fHH" = (
-/obj/structure/tank_holder/oxygen/yellow,
+/obj/structure/tank_holder/oxygen/red,
 /turf/open/floor/circuit,
 /area/station/tcommsat/computer)
 "fHR" = (
@@ -52442,11 +52442,11 @@
 /turf/open/floor/iron,
 /area/station/science/ordnance)
 "kdI" = (
-/obj/item/tank/internals/oxygen/yellow{
+/obj/item/tank/internals/oxygen/red{
 	pixel_x = -4;
 	pixel_y = -1
 	},
-/obj/item/tank/internals/oxygen/yellow{
+/obj/item/tank/internals/oxygen/red{
 	pixel_x = 4;
 	pixel_y = -1
 	},
