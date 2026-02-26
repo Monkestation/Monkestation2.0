@@ -85,7 +85,7 @@
 	var/message = tgui_input_text(user, "Whisper a secret truth to drive your victims to madness", "Whispers of Madness")
 	if(!message || QDELETED(user) || QDELETED(book) || !can_buy(user, book))
 		return FALSE
-	curse_of_madness(user, message)
+	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(curse_of_madness), user, message)
 	playsound(user, 'sound/magic/mandswap.ogg', 50, TRUE)
 	return ..()
 

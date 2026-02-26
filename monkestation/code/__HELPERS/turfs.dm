@@ -13,4 +13,3 @@
 	visible_message(span_userdanger("\The [src] looks like its about to collapse!"))
 	Shake(0.2, 0.2, shake_duration)
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(explosion), src, explosion_stats[1], explosion_stats[2], explosion_stats[3], 0, 0, do_log), shake_duration)
-	explosion()

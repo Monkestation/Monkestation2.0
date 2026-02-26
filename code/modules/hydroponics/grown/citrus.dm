@@ -84,6 +84,22 @@
 	icon_state = "lemon"
 	juice_results = list(/datum/reagent/consumable/lemonjuice = 0)
 
+/obj/item/food/grown/citrus/lemon/suicide_act(mob/living/user)
+	user.visible_message(span_suicide("[user] tries to make life take the lemons back! It looks like [user.p_theyre()] trying to commit suicide!"))
+	ADD_TRAIT(user, TRAIT_DISFIGURED, TRAIT_GENERIC)
+	user.set_light_color(COLOR_VERY_SOFT_YELLOW)
+	user.set_light(2)
+	user.add_overlay(mutable_appearance('icons/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER))
+	var/matrix/M = matrix()
+	M.Scale(1.4, 1.2)
+	animate(src, time = 10, transform = M, easing = SINE_EASING)
+	sleep(1 SECONDS)
+	playsound(get_turf(user), "desecration-01.ogg", 50, TRUE, -1)
+	user.reagents.add_reagent(/datum/reagent/consumable/lemonjuice, 300)
+	new /obj/effect/decal/cleanable/piss_stain(get_turf(user))
+	return BRUTELOSS
+
+
 // Combustible lemon
 /obj/item/seeds/firelemon //combustible lemon is too long so firelemon
 	name = "pack of combustible lemon seeds"

@@ -1,15 +1,15 @@
 /datum/computer_file/program/science
 	filename = "experi_track"
 	filedesc = "Nanotrasen Science Hub"
-	category = PROGRAM_CATEGORY_SCI
-	program_icon_state = "research"
+	downloader_category = PROGRAM_CATEGORY_SCIENCE
+	program_open_overlay = "research"
 	extended_desc = "Connect to the internal science server in order to assist in station research efforts."
-	requires_ntnet = TRUE
+	program_flags = PROGRAM_ON_NTNET_STORE | PROGRAM_REQUIRES_NTNET
 	size = 10
 	tgui_id = "NtosTechweb"
 	program_icon = "atom"
-	required_access = list(ACCESS_COMMAND, ACCESS_RESEARCH)
-	transfer_access = list(ACCESS_RESEARCH)
+	run_access = list(ACCESS_COMMAND, ACCESS_RESEARCH)
+	download_access = list(ACCESS_RESEARCH)
 	/// Reference to global science techweb
 	var/datum/techweb/stored_research
 	/// Access needed to lock/unlock the console
@@ -27,11 +27,11 @@
 		stored_research = SSresearch.science_tech
 
 /datum/computer_file/program/science/application_attackby(obj/item/attacking_item, mob/living/user)
-	if(!istype(attacking_item, /obj/item/multitool))
+	if(!istype(attacking_item) || attacking_item.tool_behaviour != TOOL_MULTITOOL)
 		return FALSE
-	var/obj/item/multitool/attacking_tool = attacking_item
-	if(!QDELETED(attacking_tool.buffer) && istype(attacking_tool.buffer, /datum/techweb))
-		stored_research = attacking_tool.buffer
+	var/datum/buffer = multitool_get_buffer(attacking_item)
+	if(!QDELETED(buffer) && istype(buffer, /datum/techweb))
+		stored_research = buffer
 	return TRUE
 
 /datum/computer_file/program/science/ui_assets(mob/user)

@@ -68,7 +68,7 @@
 //For when the machine is destroyed
 /obj/machinery/bomb_actualizer/Destroy()
 	inserted_bomb = null
-	radio = null
+	QDEL_NULL(radio)
 	combined_gasmix = null
 	QDEL_NULL(countdown)
 	end_processing()

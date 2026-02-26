@@ -1,6 +1,6 @@
 /datum/round_event_control/antagonist/solo/assault_operative
 	name = "Roundstart Assault Operatives"
-	tags = list(TAG_DESTRUCTIVE, TAG_COMBAT, TAG_TEAM_ANTAG, TAG_EXTERNAL, TAG_OUTSIDER_ANTAG)
+	tags = list(TAG_DESTRUCTIVE, TAG_COMBAT, TAG_TEAM_ANTAG, TAG_EXTERNAL, TAG_OUTSIDER_ANTAG, TAG_MUNDANE)
 	antag_flag = ROLE_ASSAULT_OPERATIVE
 	antag_datum = /datum/antagonist/assault_operative
 	typepath = /datum/round_event/antagonist/solo/assault_operative
@@ -30,6 +30,7 @@
 		JOB_HEAD_OF_SECURITY,
 		JOB_SECURITY_OFFICER,
 		JOB_SECURITY_ASSISTANT,
+		JOB_BRIG_PHYSICIAN,
 		JOB_WARDEN,
 	)
 	required_enemies = 5

@@ -79,6 +79,9 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	new/datum/stack_recipe("unfinished canister frame", /obj/structure/canister_frame/machine/unfinished_canister_frame, 5, time = 0.8 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_ATMOSPHERIC), \
 	null, \
 	new/datum/stack_recipe("floor tile", /obj/item/stack/tile/iron/base, 1, 4, 20, category = CAT_TILES), \
+	new/datum/stack_recipe("lowered pool tile", /obj/item/stack/tile/lowered/iron/pool, 1, 4, 20, category = CAT_TILES), \
+	new/datum/stack_recipe("lowered tile", /obj/item/stack/tile/lowered/iron, 1, 4, 20, category = CAT_TILES), \
+	new/datum/stack_recipe("raised tile", /obj/item/stack/tile/elevated, 1, 4, 20, category = CAT_TILES), \
 	new/datum/stack_recipe("iron rod", /obj/item/stack/rods, 1, 2, 60, category = CAT_MISC), \
 	null, \
 	new/datum/stack_recipe("wall girders (anchored)", /obj/structure/girder, 2, time = 4 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, trait_booster = TRAIT_QUICK_BUILD, trait_modifier = 0.75, category = CAT_STRUCTURE), \
@@ -160,7 +163,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	resistance_flags = FIRE_PROOF
 	merge_type = /obj/item/stack/sheet/iron
 	grind_results = list(/datum/reagent/iron = 20)
-	point_value = 2
+	point_value = 5
 	tableVariant = /obj/structure/table
 	material_type = /datum/material/iron
 	matter_amount = 4
@@ -290,7 +293,7 @@ GLOBAL_LIST_INIT(plasteel_recipes, list ( \
 	resistance_flags = FIRE_PROOF
 	merge_type = /obj/item/stack/sheet/plasteel
 	grind_results = list(/datum/reagent/iron = 20, /datum/reagent/toxin/plasma = 20)
-	point_value = 23
+	point_value = 40
 	tableVariant = /obj/structure/table/reinforced
 	material_flags = NONE
 	matter_amount = 12
@@ -342,7 +345,7 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	new/datum/stack_recipe("wooden bucket", /obj/item/reagent_containers/cup/bucket/wooden, 3, time = 1 SECONDS, check_density = FALSE, category = CAT_CONTAINERS),\
 	new/datum/stack_recipe("rake", /obj/item/cultivator/rake, 5, time = 1 SECONDS, check_density = FALSE, category = CAT_TOOLS),\
 	new/datum/stack_recipe("ore box", /obj/structure/ore_box, 4, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_CONTAINERS),\
-	new/datum/stack_recipe("wooden crate", /obj/structure/closet/crate/wooden, 6, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_FURNITURE),\
+	new/datum/stack_recipe("wooden crate", /obj/structure/closet/crate/wooden, 5, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_FURNITURE),\
 	new/datum/stack_recipe("baseball bat", /obj/item/melee/baseball_bat, 5, time = 1.5 SECONDS, check_density = FALSE, category = CAT_WEAPON_MELEE),\
 	new/datum/stack_recipe("wooden crutch", /obj/item/cane/crutch/wood, 5, time = 1.5 SECONDS, check_density = FALSE, category = CAT_WEAPON_MELEE),\
 	new/datum/stack_recipe("loom", /obj/structure/loom, 10, time = 1.5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_TOOLS), \
@@ -664,6 +667,28 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 				new/obj/item/storage/box/syndie_kit(droploc)
 	else
 		. = ..()
+
+/obj/item/stack/sheet/cardboard/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	. = ..()
+	if(!is_species(interacting_with, /datum/species/golem/cardboard))
+		return NONE
+	var/mob/living/carbon/human/human = user
+	var/datum/species/golem/cardboard/golem = human.dna.species
+	if(golem.last_creation + golem.brother_creation_cooldown > world.time) //no cheesing dork
+		return ITEM_INTERACT_BLOCKING
+	if(amount < 10)
+		to_chat(human, span_warning("You do not have enough cardboard!"))
+		return ITEM_INTERACT_BLOCKING
+	to_chat(human, span_notice("You attempt to create a new cardboard brother."))
+	if(do_after(human, 3 SECONDS, target = human))
+		if(golem.last_creation + golem.brother_creation_cooldown > world.time) //no cheesing dork
+			return ITEM_INTERACT_BLOCKING
+		if(!use(10))
+			to_chat(human, span_warning("You do not have enough cardboard!"))
+			return ITEM_INTERACT_BLOCKING
+		to_chat(human, span_notice("You create a new cardboard golem shell."))
+		golem.create_brother(human, human.loc)
+		return ITEM_INTERACT_SUCCESS
 
 /*
  * Bronze

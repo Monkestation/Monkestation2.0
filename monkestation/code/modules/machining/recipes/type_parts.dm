@@ -160,8 +160,10 @@
 	machinery_type = MACHINING_LATHE
 	crafting_time = MACHINING_DELAY_VERY_FAST
 	result = /obj/item/machining_intermediates/bullet_small
+	result_amount = 6
 	reqs = list(
 		/obj/item/stack/sheet/iron = 1,
+		/obj/item/machining_intermediates/bullet_small_casing = 1,
 	)
 	machining_skill_required = 2
 
@@ -170,7 +172,9 @@
 	machinery_type = MACHINING_LATHE
 	crafting_time = MACHINING_DELAY_VERY_FAST
 	result = /obj/item/machining_intermediates/bullet_large
+	result_amount = 6
 	reqs = list(
 		/obj/item/stack/sheet/iron = 2,
+		/obj/item/machining_intermediates/bullet_large_casing = 1,
 	)
 	machining_skill_required = 2

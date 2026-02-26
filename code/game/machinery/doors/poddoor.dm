@@ -150,9 +150,6 @@
 /obj/machinery/door/poddoor/update_icon_state()
 	. = ..()
 	icon_state = density ? "closed" : "open"
-#ifndef DISABLE_DEMOS
-	SSdemo.mark_dirty(src) //Monkestation Edit: REPLAYS
-#endif
 
 /obj/machinery/door/poddoor/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
 	if(density & !(resistance_flags & INDESTRUCTIBLE))

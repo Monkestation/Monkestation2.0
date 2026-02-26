@@ -7,10 +7,18 @@
 	greyscale_colors = "#2d2d33#ffffff"
 	greyscale_config = /datum/greyscale_config/sneakers
 	greyscale_config_worn = /datum/greyscale_config/sneakers_worn
-	greyscale_config_worn_digitigrade = /datum/greyscale_config/sneakers_worn/digitigrade
 	greyscale_config_inhand_left = /datum/greyscale_config/sneakers_inhand_left
 	greyscale_config_inhand_right = /datum/greyscale_config/sneakers_inhand_right
+	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
 	flags_1 = IS_PLAYER_COLORABLE_1
+	interaction_flags_mouse_drop = NEED_HANDS
+
+/obj/item/clothing/shoes/sneakers/get_general_color(icon/base_icon)
+	var/colors = SSgreyscale.ParseColorString(greyscale_colors)
+	return colors ? colors[1] : ..()
+
+/obj/item/clothing/shoes/sneakers/generate_digitigrade_icons(icon/base_icon, greyscale_colors)
+	return icon(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/digitigrade, greyscale_colors), "sneakers_worn")
 
 /obj/item/clothing/shoes/sneakers/random/Initialize(mapload)
 	. = ..()
@@ -79,6 +87,7 @@
 	greyscale_config_inhand_right = null
 	greyscale_config_worn = null
 	flags_1 = NONE
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 
 /obj/item/clothing/shoes/sneakers/orange
 	name = "orange shoes"
@@ -87,7 +96,6 @@
 	greyscale_colors = "#d15b1b#ffffff"
 	greyscale_config = /datum/greyscale_config/sneakers_orange
 	greyscale_config_worn = /datum/greyscale_config/sneakers_orange_worn
-	greyscale_config_worn_digitigrade = /datum/greyscale_config/sneakers_orange_worn/digitigrade
 	greyscale_config_inhand_left = /datum/greyscale_config/sneakers_orange_inhand_left
 	greyscale_config_inhand_right = /datum/greyscale_config/sneakers_orange_inhand_right
 	flags_1 = NONE
@@ -150,18 +158,15 @@
 		return ..()
 	attacking_item.forceMove(src)
 
-/obj/item/clothing/shoes/sneakers/orange/allow_attack_hand_drop(mob/user)
-	if(ishuman(user))
-		var/mob/living/carbon/human/C = user
-		if(C.shoes == src && attached_cuffs)
-			to_chat(user, span_warning("You need help taking these off!"))
-			return FALSE
+/obj/item/clothing/shoes/sneakers/orange/can_mob_unequip(mob/user)
+	if(user.get_item_by_slot(slot_flags) == src && attached_cuffs)
+		to_chat(user, span_warning("You need help taking these off!"))
+		return FALSE
 	return ..()
 
-/obj/item/clothing/shoes/sneakers/orange/MouseDrop(atom/over)
-	var/mob/m = usr
-	if(ishuman(m))
-		var/mob/living/carbon/human/c = m
+/obj/item/clothing/shoes/sneakers/orange/mouse_drop_dragged(atom/over_object, mob/user)
+	if(ishuman(user))
+		var/mob/living/carbon/human/c = user
 		if(c.shoes == src && attached_cuffs)
 			to_chat(c, span_warning("You need help taking these off!"))
 			return
@@ -186,3 +191,9 @@
 	name = "cyborg boots"
 	desc = "Shoes for a cyborg costume."
 	greyscale_colors = "#4e4e4e#4e4e4e"
+
+/obj/item/clothing/shoes/sneakers/secred
+	name = "security red sneakers"
+	desc = "A nice set of sneakers in security red. These even have the custom fabric used by medical white! Sweet!"
+	armor_type = /datum/armor/sneakers_white
+	greyscale_colors = "#a52f29#918f8c"

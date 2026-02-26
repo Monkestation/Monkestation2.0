@@ -26,6 +26,13 @@
 	if(!islist(logging[smessage_type]))
 		logging[smessage_type] = list()
 
+	var/game_finish_was_added = FALSE
+	if(SSticker.current_state == GAME_STATE_FINISHED)
+		game_finish_was_added = TRUE
+		color = "yellow"
+		message += " <SMALL><B>!!!GAME STATE FINISHED!!!</B></SMALL>"
+
+
 	var/colored_message = message
 	if(color)
 		if(color[1] == "#")
@@ -53,7 +60,7 @@
 	if(client)
 		persistent_client.logging[smessage_type] += timestamped_message
 
-	..()
+	..(message, message_type, color, log_globally, game_finish_was_added)
 
 /**
  * Returns an associative list of the logs of a certain amount of lines spoken recently by this mob

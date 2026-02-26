@@ -147,13 +147,11 @@
 	. = ..()
 	. += span_notice("Alt-click to set your war cry.")
 
-/obj/item/spear/explosive/AltClick(mob/user)
-	if(user.can_perform_action(src))
-		..()
-		if(istype(user) && loc == user)
-			var/input = tgui_input_text(user, "What do you want your war cry to be? You will shout it when you hit someone in melee.", "War Cry", max_length = 50)
-			if(input)
-				src.war_cry = input
+/obj/item/spear/explosive/click_alt(mob/user)
+	var/input = tgui_input_text(user, "What do you want your war cry to be? You will shout it when you hit someone in melee.", "War Cry", max_length = 50)
+	if(input)
+		war_cry = input
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/spear/explosive/afterattack(atom/movable/target, mob/user, click_parameters)
 	if(!HAS_TRAIT(src, TRAIT_WIELDED) || !istype(target))
@@ -194,7 +192,7 @@
 	if(stabbed.stat == CONSCIOUS && prob(50))
 		var/mob/living/simple_animal/hostile/illusion/fake_clone = new(user.loc)
 		fake_clone.faction = user.faction.Copy()
-		fake_clone.Copy_Parent(user, 100, user.health/2.5, 12, 30)
+		fake_clone.copy_parent(user, 100, user.health/2.5, 12, 30)
 		fake_clone.GiveTarget(stabbed)
 
 /*

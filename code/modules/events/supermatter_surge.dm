@@ -35,6 +35,9 @@
 	admin_setup = list(
 		/datum/event_admin_setup/input_number/surge_spiciness,
 	)
+	track = EVENT_TRACK_MODERATE
+	tags = list(TAG_DESTRUCTIVE, TAG_COMMUNAL)
+	event_group = /datum/event_group/error
 
 /datum/round_event_control/supermatter_surge/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE) //monkestation edit: adds fake_check
 	. = ..()

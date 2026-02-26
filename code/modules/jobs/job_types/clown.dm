@@ -26,12 +26,13 @@
 	mail_goodies = list(
 		/obj/item/food/grown/banana = 100,
 		/obj/item/food/pie/cream = 50,
+		/obj/item/clothing/head/nanner_crown = 30,
 		/obj/item/clothing/shoes/clown_shoes/combat = 10,
 		/obj/item/reagent_containers/spray/waterflower/lube = 20, // lube
 		/obj/item/reagent_containers/spray/waterflower/superlube = 1 // Superlube, good lord.
 	)
 
-	family_heirlooms = list(/obj/item/bikehorn/golden)
+	family_heirlooms = list(/obj/item/bikehorn/golden, /obj/item/clothing/head/nanner_crown)
 	rpg_title = "Jester"
 	job_flags = STATION_JOB_FLAGS
 

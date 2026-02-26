@@ -24,14 +24,11 @@
 	. = ..()
 	name += " #[rand(0, 999)]" // If it works for monkeys, it surely works for soulcatchers.
 	SSpoints_of_interest.make_point_of_interest(src)
+	linked_soulcatcher = AddComponent(/datum/component/soulcatcher)
+	linked_soulcatcher.name = name
 
 /obj/item/handheld_soulcatcher/attack_self(mob/user, modifiers)
 	linked_soulcatcher.ui_interact(user)
-
-/obj/item/handheld_soulcatcher/Initialize(mapload)
-	. = ..()
-	linked_soulcatcher = AddComponent(/datum/component/soulcatcher)
-	linked_soulcatcher.name = name
 
 /obj/item/handheld_soulcatcher/Destroy(force)
 	if(linked_soulcatcher)

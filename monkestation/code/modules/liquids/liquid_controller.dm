@@ -3,6 +3,7 @@ SUBSYSTEM_DEF(liquids)
 	wait = 0.5 SECONDS
 	flags = SS_KEEP_TIMING | SS_NO_INIT
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
+	priority = FIRE_PRIORITY_LIQUID_TURFS
 	var/list/active_groups = list()
 
 	var/list/evaporation_queue = list()
@@ -64,16 +65,6 @@ SUBSYSTEM_DEF(liquids)
 				liquid_group.work_on_split_queue()
 				liquid_group.cleanse_members()
 
-	if(!length(temperature_queue))
-		for(var/datum/liquid_group/liquid_group as anything in active_groups)
-			if(MC_TICK_CHECK)
-				return
-			if(QDELETED(liquid_group))
-				temperature_queue -= active_groups
-				continue
-			var/list/turfs = liquid_group.fetch_temperature_queue()
-			temperature_queue += turfs
-
 	if(run_type == SSLIQUIDS_RUN_TYPE_GROUPS)
 		if(!length(group_process_work_queue))
 			group_process_work_queue |= active_groups
@@ -91,27 +82,11 @@ SUBSYSTEM_DEF(liquids)
 				liquid_group.process_group(TRUE)
 				if(populate_evaporation && (liquid_group.always_evaporates || liquid_group.expected_turf_height < LIQUID_STATE_ANKLES) && liquid_group.evaporates)
 					for(var/turf/listed_turf as anything in liquid_group.members)
-						if(QDELETED(listed_turf))
+						if(!listed_turf || isoceanturf(listed_turf))
 							continue
 						evaporation_queue |= listed_turf
 				group_process_work_queue -= liquid_group
 
-
-		run_type = SSLIQUIDS_RUN_TYPE_TEMPERATURE
-
-	if(run_type == SSLIQUIDS_RUN_TYPE_TEMPERATURE)
-		list_clear_nulls(temperature_queue)
-		if(length(temperature_queue))
-			for(var/turf/open/temperature_turf as anything in temperature_queue)
-				if(MC_TICK_CHECK)
-					return
-				temperature_queue -= temperature_turf
-				if(QDELETED(temperature_turf.liquids))
-					continue
-				if(QDELETED(temperature_turf.liquids.liquid_group))
-					QDEL_NULL(temperature_turf.liquids)
-					continue
-				temperature_turf.liquids.liquid_group.act_on_queue(temperature_turf)
 		run_type = SSLIQUIDS_RUN_TYPE_EVAPORATION
 
 	if(run_type == SSLIQUIDS_RUN_TYPE_EVAPORATION && !debug_evaporation)
@@ -131,7 +106,7 @@ SUBSYSTEM_DEF(liquids)
 			for(var/turf/liquid_turf as anything in evaporation_queue)
 				if(MC_TICK_CHECK)
 					return
-				if(!prob(EVAPORATION_CHANCE) || QDELETED(liquid_turf))
+				if(!prob(EVAPORATION_CHANCE) || !liquid_turf || isoceanturf(liquid_turf))
 					evaporation_queue -= liquid_turf
 					continue
 				liquid_turf?.liquids?.process_evaporation()
@@ -146,7 +121,7 @@ SUBSYSTEM_DEF(liquids)
 				for(var/turf/burning_turf as anything in liquid_group.burning_members)
 					if(MC_TICK_CHECK)
 						return
-					if(!istype(burning_turf) || QDELING(burning_turf))
+					if(!istype(burning_turf))
 						liquid_group.burning_members -= burning_turf
 						continue
 					liquid_group.process_spread(burning_turf)
@@ -203,14 +178,14 @@ SUBSYSTEM_DEF(liquids)
 			while((process_count <= 500) && length(cached_exposures))
 				process_count++
 				var/turf/member = pick_n_take(cached_exposures)
-				if(QDELETED(member) || QDELETED(member.liquids) || QDELETED(member.liquids.liquid_group))
+				if(!member || QDELETED(member.liquids) || QDELETED(member.liquids.liquid_group))
 					continue
 				var/datum/liquid_group/liquid_group = member.liquids.liquid_group
 				if(!(liquid_group in groups_we_rebuilt))
 					groups_we_rebuilt |= liquid_group
 					liquid_group.build_turf_reagent()
 
-				if(!istype(member) || QDELING(member))
+				if(!istype(member))
 					liquid_group.members -= member
 					continue
 				liquid_group.process_member(member)
@@ -236,7 +211,6 @@ SUBSYSTEM_DEF(liquids)
 				if(liquid_group.reagents_per_turf > LIQUID_HEIGHT_DIVISOR)
 					liquid_group.process_cached_edges()
 				cached_edge_work_queue -= liquid_group
-
 
 		run_type = SSLIQUIDS_RUN_TYPE_GROUPS
 

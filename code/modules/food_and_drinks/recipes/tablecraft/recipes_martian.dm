@@ -121,7 +121,7 @@
 	name = "Hawaiian pineapple fried rice"
 	reqs = list(
 		/obj/item/food/grown/pineapple = 1,
-		/obj/item/food/boiledrice = 5,
+		/obj/item/food/boiledrice = 1,
 		/obj/item/food/pineappleslice/grilled = 1,
 		/obj/item/food/grown/chili = 1,
 		/obj/item/food/grown/carrot = 1,

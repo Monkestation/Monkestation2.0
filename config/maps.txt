@@ -87,3 +87,7 @@ map leadpoisoningstation
 	votable
 	minplayers 40
 endmap
+
+map oshan
+	votable
+endmap

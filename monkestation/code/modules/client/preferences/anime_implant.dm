@@ -190,3 +190,65 @@
 		if(item == "Anime")
 			return TRUE
 	return FALSE
+
+/datum/preference/choiced/anime_halo
+	category = PREFERENCE_CATEGORY_CLOTHING
+	savefile_identifier = PREFERENCE_CHARACTER
+	main_feature_name = "Anime Halo"
+	savefile_key = "feature_anime_halo"
+	should_generate_icons = TRUE
+
+/datum/preference/choiced/anime_halo/init_possible_values()
+	return assoc_to_keys_features(GLOB.anime_halo_list)
+
+/datum/preference/choiced/anime_halo/create_default_value()
+	return /datum/sprite_accessory/anime_halo/none::name
+
+/datum/preference/choiced/anime_halo/icon_for(value)
+
+	var/datum/sprite_accessory/accessory = GLOB.anime_halo_list[value]
+
+	if(isnull(accessory.icon_state) || accessory.icon_state == "none")
+		return icon('icons/mob/landmarks.dmi', "x")
+
+	return icon('monkestation/icons/mob/anime/anime_halo_preview.dmi', "[accessory.icon_state]_preview")
+
+/datum/preference/choiced/anime_halo/apply_to_human(mob/living/carbon/human/target, value)
+	target.dna.features["anime_halo"] = value
+
+/datum/preference/choiced/anime_halo/is_accessible(datum/preferences/preferences)
+	if (!..(preferences))
+		return FALSE
+
+	var/datum/preference_middleware/quirks/located = locate(/datum/preference_middleware/quirks) in preferences.middleware
+	if(!located)
+		return FALSE
+	var/list/quirks = located.get_selected_quirks()
+	for(var/item in quirks)
+		if(item == "Anime")
+			return TRUE
+	return FALSE
+
+/datum/preference/color/anime_halo_color
+	savefile_key = "feature_animehalocolor"
+	savefile_identifier = PREFERENCE_CHARACTER
+	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
+
+/datum/preference/color/anime_halo_color/create_default_value()
+	return sanitize_hexcolor("[pick("7F", "FF")][pick("7F", "FF")][pick("7F", "FF")]")
+
+/datum/preference/color/anime_halo_color/apply_to_human(mob/living/carbon/human/target, value)
+	target.dna.features["animehalocolor"] = value
+
+/datum/preference/color/anime_halo_color/is_accessible(datum/preferences/preferences)
+	if (!..(preferences))
+		return FALSE
+
+	var/datum/preference_middleware/quirks/located = locate(/datum/preference_middleware/quirks) in preferences.middleware
+	if(!located)
+		return FALSE
+	var/list/quirks = located.get_selected_quirks()
+	for(var/item in quirks)
+		if(item == "Anime")
+			return TRUE
+	return FALSE

@@ -79,7 +79,7 @@
 	if(!do_teleport(M, target, channel = TELEPORT_CHANNEL_BLUESPACE))
 		return
 	playsound(loc, SFX_PORTAL_ENTER, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 	new /obj/effect/temp_visual/portal_animation(start_turf, src, M)
 	if(!calibrated && ishuman(M) && prob(30 - ((accuracy) * 10))) //oh dear a problem
 		var/mob/living/carbon/human/human = M
@@ -166,20 +166,21 @@
 	. = NONE
 
 	if(panel_open)
-		multi.set_buffer(src)
-		to_chat(user, span_notice("You download the data to the [multi.name]'s buffer."))
+		multitool_set_buffer(multi, src)
+		balloon_alert(user, "saved to multitool buffer")
 		return ITEM_INTERACT_SUCCESS
 
-	if(!istype(multi.buffer, /obj/machinery/teleport/station) || multi.buffer == src)
+	var/datum/buffer = multitool_get_buffer(multi)
+	if(!istype(buffer, /obj/machinery/teleport/station) || buffer == src)
 		return ITEM_INTERACT_BLOCKING
 
 	if(linked_stations.len > efficiency)
 		to_chat(user, span_alert("This station can't hold more information, try to use better parts."))
 		return ITEM_INTERACT_BLOCKING
 
-	linked_stations.Add(multi.buffer)
-	multi.set_buffer(null)
-	to_chat(user, span_notice("You upload the data from the [multi.name]'s buffer."))
+	linked_stations.Add(buffer)
+	multitool_set_buffer(multi, null)
+	balloon_alert(user, "data uploaded from buffer")
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/teleport/station/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
@@ -203,7 +204,7 @@
 			to_chat(user, span_alert("The teleporter hub isn't responding."))
 		else
 			engaged = !engaged
-			use_power(active_power_usage)
+			use_energy(active_power_usage)
 			to_chat(user, span_notice("Teleporter [engaged ? "" : "dis"]engaged!"))
 	else
 		teleporter_console.target_ref = null

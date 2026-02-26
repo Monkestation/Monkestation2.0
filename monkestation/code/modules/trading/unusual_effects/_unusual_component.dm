@@ -79,13 +79,19 @@ GLOBAL_LIST_INIT(total_unusuals_per_type, list())
 	examine_list += span_notice(" Unboxed on: [round_id]")
 	examine_list += span_notice(" Unusual Type: [unusual_description]")
 	examine_list += span_notice(" Series Number: [unusual_number]")
-	examine_list += span_notice(span_italics("Right-click on it in order to [spewer.paused ? "enable" : "disable"] its effects."))
+	if(spewer)
+		examine_list += span_notice(span_italics("Right-click on it in order to [spewer.paused ? "enable" : "disable"] its effects."))
 
 /datum/component/unusual_handler/proc/on_attack_self_secondary(datum/source, mob/user)
 	SIGNAL_HANDLER
-	spewer.paused = !spewer.paused
+	if (spewer.paused)
+		spewer.paused = FALSE
+		spewer.update_processing()
+		to_chat(user, span_notice("You enable [source_object]'s effects."))
+		return
+	spewer.paused = TRUE
 	spewer.update_processing()
-	to_chat(user, span_notice("You [spewer.paused ? "disable" : "enable"] [source_object]'s effects."))
+	to_chat(user, span_notice("You disable [source_object]'s effects."))
 
 /datum/component/unusual_handler/proc/setup_from_list(list/parsed_results)
 	particle_path = text2path(parsed_results["type"])

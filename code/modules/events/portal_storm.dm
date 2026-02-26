@@ -7,6 +7,9 @@
 	earliest_start = 30 MINUTES
 	category = EVENT_CATEGORY_ENTITIES
 	description = "Syndicate troops pour out of portals."
+	track = EVENT_TRACK_MAJOR
+	tags = list(TAG_COMBAT, TAG_EXTERNAL, TAG_COMMUNAL)
+	event_group = /datum/event_group/guests
 
 /datum/round_event/portal_storm/syndicate_shocktroop
 	boss_types = list(/mob/living/basic/trooper/syndicate/melee/space/stormtrooper = 2)
@@ -42,6 +45,7 @@
 	category = EVENT_CATEGORY_ENTITIES
 	track = EVENT_TRACK_MAJOR
 	description = "Angry monkies pour out of portals."
+	tags = list(TAG_EXTERNAL, TAG_COMMUNAL)
 
 /datum/round_event/portal_storm/portal_storm_monkey
 	boss_types = list(/mob/living/basic/gorilla/lesser = 1)

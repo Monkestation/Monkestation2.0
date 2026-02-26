@@ -42,7 +42,7 @@
 	rpg_title = "Guild Questgiver"
 	job_flags = STATION_JOB_FLAGS | JOB_BOLD_SELECT_TEXT | JOB_CANNOT_OPEN_SLOTS
 	voice_of_god_power = 1.4 //Command staff has authority
-
+	antag_capacity_points = 3 //could tone back down to 2
 
 /datum/job/head_of_personnel/get_captaincy_announcement(mob/living/captain)
 	return "Due to staffing shortages, newly promoted Acting Captain [captain.real_name] on deck!"

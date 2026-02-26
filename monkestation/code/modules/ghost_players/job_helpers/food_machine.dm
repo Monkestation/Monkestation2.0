@@ -1,6 +1,6 @@
 /obj/structure/food_machine
 	name = "all in one food transporter"
-	desc = "Centcomms latest and greatest, capable of transporting all forms of produce to Centcommms chefs in training."
+	desc = "Centcoms latest and greatest, capable of transporting all forms of produce to Centcoms chefs in training."
 
 
 	resistance_flags = INDESTRUCTIBLE

@@ -2,11 +2,13 @@
 	name = "quantum console"
 
 	circuit = /obj/item/circuitboard/computer/quantum_console
-	icon_keyboard = "mining"
+	icon_keyboard = "mining_key"
 	icon_screen = "bitrunning"
 	req_access = list(ACCESS_MINING)
 	/// The server this console is connected to.
 	var/datum/weakref/server_ref
+	/// ID for making sure we connect to the correct server.
+	var/bitrunning_id = "DEFAULT"
 
 /obj/machinery/computer/quantum_console/Initialize(mapload, obj/item/circuitboard/circuit)
 	. = ..()
@@ -14,7 +16,7 @@
 
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/computer/quantum_console/LateInitialize()
+/obj/machinery/computer/quantum_console/LateInitialize(mapload_arg)
 	. = ..()
 
 	if(isnull(server_ref?.resolve()))
@@ -60,7 +62,7 @@
 	if(isnull(server))
 		return data
 
-	data["available_domains"] = server.get_available_domains()
+	data["available_domains"] = server.get_available_domains(server.bitrunning_network)
 	data["avatars"] = server.get_avatar_data()
 
 	return data
@@ -102,6 +104,12 @@
 
 	for(var/direction in GLOB.cardinals)
 		var/obj/machinery/quantum_server/nearby_server = locate(/obj/machinery/quantum_server, get_step(src, direction))
-		if(nearby_server)
+		if(nearby_server && nearby_server.bitrunning_id == bitrunning_id)
 			server_ref = WEAKREF(nearby_server)
 			return nearby_server
+
+/obj/machinery/computer/quantum_console/tutorial_coop
+	bitrunning_id = "tutorial_coop"
+
+/obj/machinery/computer/quantum_console/tutorial_solo
+	bitrunning_id = "tutorial_solo"

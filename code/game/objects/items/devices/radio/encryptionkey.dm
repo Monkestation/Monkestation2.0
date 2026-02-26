@@ -245,6 +245,13 @@
 	if(src in GLOB.crew_cc_keys)
 		GLOB.crew_cc_keys -= src
 	return ..()
+
+/obj/item/encryptionkey/headset_cent/crew/service
+	channels = list(
+		RADIO_CHANNEL_CENTCOM = 1,
+		RADIO_CHANNEL_SERVICE = 1,
+	)
+
 //MONKESTATION EDIT STOP
 
 /obj/item/encryptionkey/ai //ported from NT, this goes 'inside' the AI.
@@ -309,6 +316,26 @@
 	icon_state = "translation_cypherkey"
 	language_data = list(
 		/datum/language/nekomimetic = 100,
+	)
+	greyscale_config = null
+	greyscale_colors = null
+
+/obj/item/encryptionkey/uncommon
+	name = "\improper Uncommon translation key"
+	desc = "An encryption key that automatically encodes Uncommon heard through the radio into common. The signal's rather scratchy."
+	icon_state = "translation_cypherkey"
+	language_data = list(
+		/datum/language/uncommon = 100,
+	)
+	greyscale_config = null
+	greyscale_colors = null
+
+/obj/item/encryptionkey/slime
+	name = "\improper Slime translation key"
+	desc = "An encryption key that automatically encodes Slime heard through the radio into common. The signal's rather scratchy."
+	icon_state = "translation_cypherkey"
+	language_data = list(
+		/datum/language/slime = 100,
 	)
 	greyscale_config = null
 	greyscale_colors = null

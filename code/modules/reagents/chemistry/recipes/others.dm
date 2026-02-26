@@ -175,9 +175,9 @@
 /datum/chemical_reaction/virus_food
 	results = list(/datum/reagent/consumable/virus_food = 15)
 	required_reagents = list(/datum/reagent/water = 5, /datum/reagent/consumable/milk = 5)
-	required_temp = 400
-	optimal_temp = 450
-	overheat_temp = 550
+	required_temp = 600
+	optimal_temp = 625
+	overheat_temp = 700
 
 /datum/chemical_reaction/virus_food_mutagen
 	results = list(/datum/reagent/toxin/mutagen/mutagenvirusfood = 1)

@@ -20,13 +20,12 @@
 	prompted_picking = TRUE
 
 /datum/round_event/antagonist/solo/ghost/paradox_clone
-	var/list/possible_spawns = list() ///places the antag can spawn
 	var/mob/living/carbon/human/clone_victim
 	var/mob/living/carbon/human/new_human
 
 /datum/round_event/antagonist/solo/ghost/paradox_clone/setup()
-	possible_spawns += find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = FALSE)
-	if(!possible_spawns.len)
+	var/turf/warp_turf = find_maintenance_spawn(TRUE, FALSE)
+	if(!warp_turf)
 		return
 	var/datum/round_event_control/antagonist/solo/cast_control = control
 	antag_count = cast_control.get_antag_amount()
@@ -66,7 +65,9 @@
 			candidate.mind = new /datum/mind(candidate.key)
 
 		clone_victim = find_original()
-		new_human = duplicate_object(clone_victim, pick(possible_spawns))
+		new_human = duplicate_object(clone_victim, warp_turf)
+		if(new_human.loc != warp_turf)
+			new_human.forceMove(warp_turf)
 		new_human.PossessByPlayer(candidate_ckey)
 		new_human.mind.special_role = antag_flag
 		new_human.mind.restricted_roles = restricted_roles

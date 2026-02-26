@@ -21,12 +21,17 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
  */
 /datum/request_manager
 	/// Associative list of ckey -> list of requests
-	var/list/requests = list()
+	var/alist/requests
 	/// List where requests can be accessed by ID
-	var/list/requests_by_id = list()
+	var/alist/requests_by_id
+
+/datum/request_manager/New()
+	. = ..()
+	requests = alist()
+	requests_by_id = alist()
 
 /datum/request_manager/Destroy(force)
-	QDEL_LIST(requests)
+	QDEL_LIST_ASSOC_VAL(requests)
 	return ..()
 
 /**
@@ -133,7 +138,6 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 	if (!requests[C.ckey])
 		requests[C.ckey] = list()
 	requests[C.ckey] += request
-	requests_by_id.len++
 	requests_by_id[request.id] = request
 
 /datum/request_manager/mentor/request_for_client(client/C, type, message, additional_info)
@@ -141,7 +145,7 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 	if (!requests[C.ckey])
 		requests[C.ckey] = list()
 	requests[C.ckey] += request
-	requests_by_id[request.id] = request
+	requests_by_id["[request.id]"] = request
 
 /datum/request_manager/ui_interact(mob/user, datum/tgui/ui = null)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -238,7 +242,7 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 				to_chat(usr, "You cannot set the nuke code for a non-nuke-code-request request!", confidential = TRUE)
 				return TRUE
 			var/code = random_nukecode()
-			for(var/obj/machinery/nuclearbomb/selfdestruct/SD in GLOB.nuke_list)
+			for(var/obj/machinery/nuclearbomb/selfdestruct/SD in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/nuclearbomb/selfdestruct))
 				SD.r_code = code
 			message_admins("[key_name_admin(usr)] has set the self-destruct code to \"[code]\".")
 			return TRUE
@@ -255,7 +259,7 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 			if(request.req_type != REQUEST_INTERNET_SOUND)
 				to_chat(usr, "Request doesn't have a sound to play.", confidential = TRUE)
 				return TRUE
-			if(findtext(request.message, ":") && !findtext(request.message, GLOB.is_http_protocol))
+			if(findtext(request.message, ":") && !is_http_protocol(request.message))
 				to_chat(usr, "Request is not a valid URL.", confidential = TRUE)
 				return TRUE
 
@@ -266,8 +270,8 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 	. = list(
 		"requests" = list()
 	)
-	for (var/ckey in requests)
-		for (var/datum/request/request as anything in requests[ckey])
+	for (var/ckey, ckey_requests in requests)
+		for (var/datum/request/request as anything in ckey_requests)
 			var/list/data = list(
 				"id" = request.id,
 				"req_type" = request.req_type,

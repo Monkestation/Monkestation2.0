@@ -42,12 +42,11 @@
 		TRAIT_BINGLE,
 		TRAIT_CLUMSY,
 		TRAIT_DUMB,
-		TRAIT_NO_PAIN_EFFECTS,
 	)
 
 /mob/living/basic/bingle/Initialize(mapload, obj/structure/bingle_hole/origin_pit)
 	. = ..()
-	RegisterSignal(src, BINGLE_EVOLVE, PROC_REF(evolve))
+	RegisterSignal(src, COMSIG_LIVING_BINGLE_EVOLVE, PROC_REF(evolve))
 	add_traits(bingle_traits, INNATE_TRAIT)
 	set_linked_pit(origin_pit)
 
@@ -74,8 +73,8 @@
 	if(!isliving(target))
 		return ..()
 	var/mob/living/mob_target = target
-	mob_target.Disorient(6 SECONDS, 5, paralyze = 10 SECONDS, stack_status = FALSE)
-	mob_target.stamina.adjust(-65)
+	mob_target.Disorient(3 SECONDS)
+	mob_target.stamina?.adjust(-32)
 	SEND_SIGNAL(target, COMSIG_LIVING_MINOR_SHOCK)
 	return ..()
 

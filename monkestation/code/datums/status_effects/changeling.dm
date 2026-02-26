@@ -118,9 +118,7 @@
 		return
 	COOLDOWN_START(src, extra_effects_cooldown, 1 SECOND)
 
-	var/mob/living/basic/cortical_borer/brain_pest = owner.has_borer()
-	if(istype(brain_pest))
-		brain_pest.leave_host()
+	owner.has_borer()?.leave_host()
 
 	if(!iscarbon(owner))
 		return
@@ -171,7 +169,6 @@
 /datum/status_effect/changeling_muscles/on_apply()
 	. = ..()
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/strained_muscles)
-	owner.add_movespeed_mod_immunities(REF(src), /datum/movespeed_modifier/exhaustion)
 
 	RegisterSignal(owner, COMSIG_LIVING_STAMINA_STUN, PROC_REF(on_stamina_stun))
 	RegisterSignal(owner, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_change))
@@ -181,7 +178,6 @@
 /datum/status_effect/changeling_muscles/on_remove()
 	. = ..()
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/strained_muscles)
-	owner.remove_movespeed_mod_immunities(REF(src), /datum/movespeed_modifier/exhaustion)
 
 	UnregisterSignal(owner, list(COMSIG_LIVING_STAMINA_STUN, COMSIG_MOB_STATCHANGE))
 

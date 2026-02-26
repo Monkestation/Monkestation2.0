@@ -1,0 +1,509 @@
+2026-02-01:
+  Absolucy:
+  - qol: The Dragon Form and Polar Bear Form shapeshifts now keep your name when you
+      shapeshift.
+  - map: Moved the ooze suckers in all the 'extra' xenobio pens on Meta to the center
+      of their pens, instead of right up against the door.
+  EssentialTomato:
+  - bugfix: Swapped regular cells for megacells in colony kits.
+  - bugfix: Added missing megacell design to the colony fabricators.
+  JohnFulpWillard:
+  - bugfix: '"Kissing" mob emote is now controllable by the mob emote sound setting.'
+  - bugfix: BSO/NTRep accesses show up to ID consoles & airlock electronics.
+  - balance: Ash Walkers and Lizards understand eachother better.
+  carlarctg, JohnFulpWillard:
+  - qol: Removed retractor step from Autopsy.
+  - rscadd: Autopsy scanners can be used as advanced health analyzers on dead people.
+  wonderinghost:
+  - bugfix: tcomms machines accessible
+  - map: moves around tcomm machines
+  - map: adds blue wire from ptl to atmos
+2026-02-02:
+  JohnFulpWillard:
+  - bugfix: Instakill artifact can now target non-humans.
+  SirNightKnight:
+  - rscadd: the donut box from the utility security voucher has random donuts instead
+      of just plain and sprinkled ones.
+  SmArtKar, MrMelbert, JohnFulpWillard:
+  - bugfix: Fake IDs can no longer be used as real IDs when inside of a PDA.
+  - bugfix: Fake IDs can register to a PDA to access messenger.
+  - refactor: Changed how access handling is done, please put a bug report if you
+      should have access to something but it doesn't act accordingly.
+  notghosti:
+  - map: Escape pods hallway and Pathology are now properly on camera.
+  - map: Garden spawns with only 1 set of a variety of seeds, instead of the giant
+      pile of 5.
+2026-02-03:
+  Absolucy, dwasint:
+  - rscadd: Added A* pathfinding, currently used by the Navigate verb/button.
+  - rscadd: Navigation now works properly across multiple Z-levels, creating a full
+      path up/down stairs, instead of requiring you to re-use the navigator manually
+      when changing Z-levels.
+  Absolucy, mcbalaam, Ez-Briz:
+  - admin: Added a new TGUI spawn panel, removing it's ancestors - HTML "Create X"
+      panels
+2026-02-04:
+  CannibalHunter:
+  - rscadd: Added Flava-Floh's donator items!
+  FeudeyTF, jlsnow301, JohnFulpWillard:
+  - rscadd: Added the Detective Board.
+  JohnFulpWillard:
+  - rscadd: You can now intentionally choke on a cigarette you're smoking.
+  - qol: ATMs are now generally better and take into account stowaways better.
+  - bugfix: Stowaways can no longer accidentally put money into a fake ID, losing
+      the money forever.
+  SirNightKnight:
+  - rscdel: Removed the pain system.
+  - balance: nutcracking someone paralyzes them and knocks them down.
+2026-02-05:
+  Absolucy, Majkl-J:
+  - bugfix: Ruins will now correctly spawn their tied ruins in.
+  flleeppyy:
+  - qol: Vote HUD now fades in and out instead of being right in your face.
+  - code_imp: Vote datums can now specify excluded mobs from votes
+  - bugfix: Lobby players can no longer vote for the shuttle to be called.
+  notghosti:
+  - map: Paramedics, dep sec, ect. will now no longer spawn ontop of eachother on
+      normal shifts on oshan
+  - map: Nanite lab now has purge pills on oshan
+  - map: Medical kit is now loaded with medical supplies outside medical on oshan
+  - map: botany windoor is no longer inverted and doubled
+  - map: NT rep was taught by the RD how to download their programs on their computer.
+2026-02-06:
+  Absolucy:
+  - rscadd: You can now use 10 sheets of reinforced plasma glass to upgrade SMESes
+      to be shielded against EMPs.
+  - map: All mapped in singularity/tesla engines now use an EMP-shielded SMES for
+      the emitters.
+2026-02-07:
+  JohnFulpWillard:
+  - bugfix: Being turned into a gorilla now keeps your gender.
+  - bugfix: AIs can now track Silicon as long as their built-in camera is online.
+  KittyNoodle:
+  - bugfix: People scream again in various painful situations involving their bones.
+  - bugfix: People scream again when their spine is annihilated via catastrophic tackle
+      failure.
+  - bugfix: Artery repair now has its surgery pain text restored.
+  - bugfix: Guns no longer paralyze you or knock you down due to an oversight.
+  MrMelbert:
+  - rscadd: The HoP can now give pay increases/cuts/advances.
+  Siro:
+  - rscadd: Scryers can be worn as an accessory like a medal or pin. Scryers can still
+      be used as normal neck items if you want.
+  - balance: Scryer accessory can be stripped with a 4 second delay from examine.
+      Must be adjacent to the wearer.
+  - code_imp: modlink code slightly adapted for accessory/scryer_accessory
+  - code_imp: Fixed a few potential bugs that showed up if an accessory was qdel before
+      forcemove. Didn't happen normally but could have potentially happened and does
+      with this addition.
+  - code_imp: Adds thermal destabilization to temp gun. Prevents mob from homeostasis
+      for 3 seconds and refreshes with every shot. This effects all temperature projectiles.
+      Some examples are pyrokinesis, Watchers, Ice Demons, Earth bolt etc.
+  - qol: Can examine cores closer to see the items inside and pull those specific
+      items out with a shorter duration.
+  - qol: Oozelings that are special revived not in a nugget state will reequip their
+      items automatically.
+  - bugfix: Cultist revival now revives oozelings and will offer their bodies up if
+      the player playing them is afk or they went souless.
+  - balance: Oozeling limb retraction now has a 2 second delay and incapacitation
+      check to prevent intentional retractions while being cuffed.
+  - balance: Water vapor now affects oozelings. Starting at 1kPa partial pressure
+      it will do lung and blood damage. Max damage occurs at 8kPa. Hydrophobia does
+      not protect against this.
+  - balance: Basic mask filters can prevent breathing in of water vapor.
+  - balance: Festering ooze again lightly heals oozelings. Heal is weaker than a stabilized
+      purple extract.
+  - balance: Specific security implants will get stored on death and reimplant upon
+      revival of oozelings. Prevents oozeling antags from dying and reviving to remove
+      the implants.
+  - balance: Black listed oozeling limbs from limb swapper causing issues for non-oozeling
+      species.
+  - balance: Short spray cooldown so certain angles of extinguisher sprays doesn't
+      completely drain oozeling's blood.
+  Tractor-Maam:
+  - bugfix: NTNet relays can be DDoSed properly again.
+  - map: Ook's modem is now a fluff object, and wont show on DoS generator or Wirecarp
+      as a useless endpoint as such.
+  - bugfix: fixed some space leaking through on the Tram Slum Bar.
+  flleeppyy:
+  - rscadd: NTSL/Lua editor now uses the ACE Editor, with proper syntax highlighting,
+      and making it much easier to edit scripts.
+  - rscadd: When viewing logs using the `Get-Current-Logs` verb, if the file is a
+      json file and you click "View", it will open using the json log viewer.
+  - admin: R_AUTOADMIN has been removed in favor of the Autoadmin preference, which
+      can be changed from the admin section in game preferences
+  - admin: Bumped max reason length for bans from 600 to 1024
+  - admin: '"Unban" in the Unbanning Panel will now prompt if you want to unban similar
+      bans. This is useful if you need to remove someone from a ban thats banned from
+      a whole department, or a ton of roles, and you don''t want to painstakingly
+      click Unban on every single one.'
+  - admin: improved ticket windows, interview panel, and fixed popups.
+  - admin: Claiming/unclaiming now logs as an interaction in a ticket.
+  - admin: Trying to play music while the on-station cassette player is playing music,
+      will now prompt you before playing. This is so admins can be courteous of curators
+      playing music, since they have cooldowns and admins do not.
+  - admin: Antag Request notifications now show more player info such as their current
+      role, special role, and mob type. Additionally adds "Check Antagonists" and
+      "Open Token Manager" as buttons to the notification
+  - admin: Fixed admin popups not working
+  - admin: Added a notice to interviews for admins
+  - admin: Added a few useful buttons for admins
+  - admin: You can now specify pronouns in stealth-mode.
+  - qol: Tickets now show when a user is typing
+  - qol: '"Admin PM Mob" now uses TGUI''s input list for easy searching'
+  - qol: VV window links are easier on the eyes
+  - qol: Made "manage Job Slots" Window wider
+  - qol: Admin announcements now show pronouns
+  - rscadd: Added "Stop All Sounds" to "Help" window dropdown
+  - rscadd: Added "Reload Lobby Notices" verb
+  - rscadd: Added "Get" and "Jump To" context menu verbs.
+  - rscadd: Added "Reissue roundstart ID" VV dropdown for carbon humans
+  - rscadd: Added relay chooser (Named "Internet Routing Relays" at the top of the
+      window) ported from IrisStation
+  - rscadd: You can now search through keybindings and game preferences
+  - bugfix: Crafting items now adds a hiddenprint to the crafted item
+  - bugfix: properly applied cooldowns to typing for tickets
+  - bugfix: Stopping web sounds now properly stops the cassette player on station
+      instead of leaving it in a weird state
+  - bugfix: VOX no longer plays for players in the lobby.
+  - bugfix: Fix an instance of NTSL recompilation not logging correctly
+  - bugfix: Fixed subtle message runtiming if the player you're messaging spontaneously
+      implodes
+  - bugfix: Interface verbs not working as interviewee.
+  - code_imp: Normalized instances of server join links to use the `roundend_webhook_description`
+      config value
+  - code_imp: Moved djstation "play"/"stop" topic codeblocks to their own procs for
+      calling play/stop outside of topics.
+  - code_imp: Yapped about BYOND's SoundQuery proc and the fact it only returns specific
+      vars.
+  - code_imp: Added `legend` bool param to gameTimestamp. When true, gives 00h:00m:00s
+      instead of 00:00:00
+  - code_imp: (OOC Pronouns) One pronoun is required always now. Custom text is still
+      staff/donator only
+  - code_imp: Partially demodularized new_player.dm
+  - code_imp: Refactored OOC code for admin stealth pronouns
+  - qol: Pre-round shop, latejoin and the stat panel now shows you the character you're
+      readying up as
+  - qol: You can now change your character from the pre-round shop, and latejoin menus,
+      as well as the "Change Character Slot" verb.
+  - admin: makes the interview menu wider to fit the buttons if you're an admin
+2026-02-09:
+  Absolucy:
+  - qol: Gary should no longer randomly wander into the supermatter at roundstart.
+  Infernal-0:
+  - qol: Medbay can now print prosthetic surplus limbs.
+  - qol: Medbay now has a robot-repair toolbox.
+  - balance: You can now no longer print implants from protolathes.
+  - image: Medical toolbox sprites.
+  - map: Added medical repair toolboxes to medbay storage, fixes some consistency
+      issues with L3BioHaz lockers and cyborg chargers.
+  JohnFulpWillard:
+  - bugfix: Fixes some issues with Theseus primarily around telecomms, brig and holopads.
+  - bugfix: Bloodless species can get chemicals removed from their 'blood' again.
+  Siro:
+  - rscadd: Added Glitch, Drifting Contractor, Fugative, Lone Operator, Lone Junior
+      Operator, Mid ROund Commando Operative, and Teratoma to the roleban menu.
+  SmArtKar, Gboster:
+  - qol: parts of layer manifolds connecting to colors are now fully colored (just
+      see the image in the PR if you want, its hard to explain. It just looks much
+      better)
+  Tractor-Maam:
+  - rscadd: (SmArtKar) Localhost dev servers now have a giant START NOW button plastered
+      in the middle of their lobby UI  (carlarctg) that goes "splort".
+  - rscadd: Added a print recipe for the Ectoscopic Sniffer to the Advanced Robotics
+      technode.
+  - rscadd: Added a USB port to the Holographic Signboard, allowing circuit access.
+  pseudo-savant:
+  - rscadd: Ported over the flatpacker from /tg/ to monkestation
+2026-02-10:
+  Absolucy:
+  - bugfix: Ignoring people should now consistently work in deadchat.
+  JohnFulpWillard:
+  - rscadd: Signal technician's clothings can now be found in the Engineering vending
+      machine, if you have Telecomms Admin access.
+  PotatoTomahto:
+  - rscadd: ports yogstation RD holotool
+  - rscadd: holotool added as thief objective
+  - code_imp: multitool interactions now support different item types
+  SirNightKnight:
+  - qol: added some missing warning line decals to the decal painter.
+  - qol: decal painters can paint windows.
+  - bugfix: standardized tile decal alphas a bit better.
+  - bugfix: fixed a bug where holosign projectors could not be placed on tables.
+  - rscdel: removed random department colors for windows and made them be colored
+      the same as their respective department's decal color.
+  Tractor-Maam:
+  - map: fixed confessional intercoms on Oshan
+  - rscadd: Added the Advanced Health Analyzer cyborg upgrade to the Medical Cyborg
+      Upgrades technode.
+  - bugfix: Syndicate Medical Cyborgs can now read their analyzer in the dark, on
+      par with their standard counterparts.
+  - map: fixed broken morgue trays on Blueshift.
+  flleeppyy:
+  - bugfix: Fix "Internet routing relays" button not doing anything
+2026-02-12:
+  Absolucy:
+  - qol: Oshan hotspots will now try to go a few extra steps if they drift into a
+      wall, to hopefully avoid them being stuck in a wall.
+  - rscdel: Liquids no longer interact with air temperature.
+  SirNightKnight:
+  - qol: added mining clothing and storage bags to the cargo drobe.
+  - qol: added botanical lexicons to the megaseed vendor.
+  - qol: moved the univseral scanner to the backpack of the cargo tech outfit.
+  - rscadd: cargo techs have hazard vests as part of their outfit.
+  timothymtorres, JohnFulpWillard:
+  - refactor: Secure safes now use TGUI
+  - rscadd: Safes can now be constructed.
+2026-02-13:
+  Absolucy:
+  - rscadd: Wishgranter Avatars now have an obvious overlay.
+  - balance: Wishgranter Avatars are directly given pressure+temp+stun immunity now,
+      instead of relying on some random mutations slapped together.
+  - rscadd: Wishgranter Avatars now show up in orbit menu, and it is announced to
+      both admins and deadchat whenever someone uses the Wishgranter.
+  - rscadd: Wishgranter Avatar now has a proper antag HUD icon (thanks, halfaplum)
+  LaikoDaemon, Carpotoxin, Absolucy, Chelxox, JohnFulpWillard:
+  - rscadd: 'Added three new animated emotes: *question, *realize & *exclaim.'
+  - qol: The emote panel & *help verbs now show emotes that have a visual tell.
+  PotatoTomahto:
+  - qol: conveyors are placed in the direction you're facing
+  - qol: conveyor switch assemblies can set their ids to be the same
+  - bugfix: interactor mechcomp can actually interact
+  SirNightKnight:
+  - bugfix: fixed hat stacking logic for plasmaman helmets being weird.
+2026-02-14:
+  PotatoTomahto:
+  - balance: meltdown nanite program ignores safety threshold when activating
+  Tractor-Maam:
+  - rscadd: the medical bandolier can now be crafted.
+  - rscadd: the medical bandolier now stacks items put inside.
+  notghosti:
+  - map: Pubby morgue now has surgery tools
+  - rscadd: Added slime and uncommon radio encryption keys
+2026-02-15:
+  Absolucy:
+  - bugfix: Being an oozeling with the Smoker quirk no longer makes you immune to
+      water vapor, or removes your ability to gain blood from plasma.
+  SirNightKnight:
+  - bugfix: fixed glasses poking out through envirosuit helmets.
+  - rscadd: added the CMO's formal shirt/skirt.
+  - bugfix: added the CMO's turtleneck skirt to the command drobe.
+  - bugfix: chameleon syndicate body armor can be locked with a multitool like other
+      chameleon clothing items.
+  - bugfix: fixed chameleon backpacks not being able to have their disguise locked.
+2026-02-16:
+  CocoKailey:
+  - balance: Changed the liquid_fire_power variable of various alcoholic beverages
+      to be varying numbers below the baseline of liquid_fire_power = 10 that exists
+      with ethanol.
+  JohnFulpWillard:
+  - rscadd: pAIs can now control PDAs they are inserted into.
+  - bugfix: Safes have the proper icon now.
+  - bugfix: Simians vault over railings properly.
+  - bugfix: Simians have a new species description.
+  - bugfix: Simians now have a Simianize gene (could also be found in Humans).
+  - qol: Monkeys/Simians can now have their genes edited.
+  SirNightKnight:
+  - map: removed the ouroboros map.
+  - balance: all prefilled bottles containing 30 units are now filled with 50 units  so
+      they are at capacity. this includes all poisons.
+  - balance: removed singular pills from the spawning pool for the medical supplies
+      crate.
+  - balance: slightly increased the inventory of the nanomed plus and nanomed drug
+      vendors.
+  - balance: added formaldehyde bottles and neurine pills to the nanomed drug vendor.
+  - balance: added bruise packs and regenerative meshes to the nanomed plus.
+  - balance: emergency medical helmet does more brain damage when emagged.
+  - bugfix: fixed a bug where the emergency medical helmet forced the wearer to speak
+      when dead.
+  - qol: made the emergency medical helmet siren louder.
+  - qol: smart fridges can hold test tubes.
+  - balance: removed rescue hooks from the nanomed plus.
+  - qol: added an icon for holopads when there's an outgoing call.
+  - bugfix: fixed holopad lights getting stuck.
+  - rscadd: the old robot and repair drone icons are available as AI hologram choices.
+  - code_imp: updated custom vendor code to generate off vending machine types instead
+      of a pre-defined list.
+  Siro:
+  - code_imp: Complete refactor
+  - bugfix: Adds an Adjacent check after the dash to prevent the attack after dashing
+      if they aren't truly adjacent to the target.
+  - rscadd: New no knock back status effect. Disables knock back from structures with
+      density like walls.
+  - bugfix: Knock back is prevented from being tossed while slipping. Puzzles like
+      clown ruins can now be completed again.
+  - map: Clown ruins on lavaland readded.
+  Sorenon:
+  - rscadd: Added a low chance for players to fart upon violent collisions or just
+      after death, adding some gritty realism this codebase desperately craves
+  - rscadd: Updated the Loud Ass quirk to make players always fart upon violent collisions
+      or just after death.
+  Tractor-Maam:
+  - code_imp: NTNet relays never stop processing, making them more likely to Actually
+      Get DDoSed Properly now.
+  flleeppyy:
+  - rscadd: Play-internet-sound-classic verb
+  funkynuggets:
+  - rscadd: 5 new AI core sprites.
+  mc-oofert, SirNightKnight:
+  - bugfix: gibtonite rigging works again (attaching assemblies to it so you can remotely
+      detonate it). rigging a gibtonite shortens the timer to 5 seconds from 10.
+  - balance: fixed the export price of all materials and lavaland items/loot.
+  - balance: getting hit by a gibtonite chunk knocks you over if it travelled more
+      than two tiles.
+  - balance: added more lavaland loot to the lavaland artifact export lists, moved
+      some items around so they are more valuable.
+  - balance: exporting lavaland loot/items is more lucrative.
+  - balance: gibtonite is more valuable the higher the quality is.
+  wonderinghost:
+  - balance: merges bot surgery with their respective organic surgery tree
+2026-02-20:
+  Absolucy:
+  - map: Fixed a spot on the Syndicate lavaland base that had two lightbulbs and fire
+      alarms stacked on the same tile.
+  BobDABuilder9001:
+  - rscadd: Added a shipbreaker locker to pubby's shipbreaking room, as well as a
+      tiny fan
+  JohnFulpWillard:
+  - bugfix: pAI cameras now work while inside of a PDA.
+  - bugfix: pAIs can now set the zoom of their camera.
+  - bugfix: pAIs can now access their PDA Messenger & GPS.
+  - bugfix: pAIs no longer have all access.
+  - bugfix: pAIs in a PDA can now use abilities that rely on being carried.
+  SirNightKnight:
+  - bugfix: fixed the bot scan experiment requiring medical cleanbots.
+  flleeppyy:
+  - sound: Made the intern announcer NOT LOUD AS FUCK
+  - bugfix: silent marked PRs should no longer announce
+  notghosti:
+  - map: Tramstation captains office now closes it's shutters, instead of the aux
+      base
+  - map: Tramstation engineering maintence door is now also accessible via construction
+      access
+  - map: Metastation pathology no longer uses supernatural cameras to stalk its patients.
+  - map: Tramstation incident counters should stick off of walls less
+2026-02-21:
+  CannibalHunter:
+  - rscadd: Added Gurrog's Donator item!
+  JohnFulpWillard:
+  - qol: You now need to click twice on the telecomms monitor console to wipe logs.
+  - rscadd: You can now take photos through a camera console.
+  PotatoTomahto:
+  - rscadd: adds the (actual) cassette tapes to loadout
+  SirNightKnight:
+  - rscdel: removed the corporate sponsorship of evil from the uplink.
+  Tractor-Maam:
+  - balance: Exosuit Radios are no longer subspace transmission. (This means they
+      work without telecomms like a Intercom.)
+  ZephyrTFA, SirNightKnight:
+  - balance: You can now adjust the suit sensors of another player in the strip menu.
+      No longer must you first take it off.
+2026-02-22:
+  Absolucy:
+  - qol: Reworked the Monster Hunter rabbit spawning logic - they now use selection
+      similar to heretic influences, and won't spawn in stupid unfair places.
+  - balance: Monster Hunters will now always get the bloodsilver revolver from their
+      second rabbit.
+  sylvia-from-fulp-station:
+  - rscadd: 3 alternative job titles for Explorer and 1 for Shaft Miner
+2026-02-23:
+  Absolucy:
+  - refactor: Refactored some pathology shitcode. Report any issues with pathology
+      machines.
+  - code_imp: (tontyGH) made /proc/getviewsize() pure.
+  - refactor: (tontyGH) /mob/eye/ai_eye has been restructured, now inheriting from
+      a generic mob/eye/camera type.
+  - refactor: (tontyGH) advanced cameras and their subtypes are now mob/eye/camera/remote
+      subtypes.
+  - code_imp: (tontyGH) the cameranet no longer expects the user to be an AI eye.
+  - code_imp: (tontyGH) remote camera eyes have had their initialization streamlined.
+  - code_imp: (tontyGH) remote cameras handle assigning and unassigning users by themselves
+      now.
+  - code_imp: (tontyGH) remote cameras now use weakrefs instead of hard referencing
+      owners and origins.
+  - code_imp: (tontyGH) also the sentient disease is_define was removed (we don't
+      have those anymore)
+  - bugfix: (tontyGH) AI eyes no longer assign real names to themselves, fixing their
+      orbit name.
+  - bugfix: (00-Steven) The static from holocalls no longer stays even after exiting
+      the holocall.
+  - bugfix: (SyncIt21) advanced camera consoles correctly deactivate when something
+      happens(no proximity, no power etc) to its user.
+  - bugfix: (Holoo-1) fixed camera static not being drawn for AI in multicamera mode.
+      Also fixes secondary AI cameras not existing and gives them their AI name.
+  JohnFulpWillard:
+  - bugfix: Silicon cameras no longer cause server lag.
+  - bugfix: pAIs now regenerate their chassis integrity.
+  - qol: pAIs now have a new HUD to take widescreen into account, it includes a new
+      button for Crew Monitor.
+  notghosti:
+  - map: Oshan now has power for brig medical
+  - map: Oshan has better construction access
+  - map: Oshan has RD Console
+  - map: Oshan has xenobio lockers moved from public hallway
+  - map: Thesues no longer has mapped mime book
+  - map: Theseus no longer has indestructible perma lube floors. Replaced with slippery
+      oil
+  - map: Theseus cryogenics now hook into distro
+  - map: Pubby now has wirechemistry added
+2026-02-24:
+  JohnFulpWillard:
+  - bugfix: Silicons no longer get a bugged cold/hot alert,
+  SirNightKnight:
+  - image: made floor tile sprites more consistent.
+  - qol: increased the picket sign character limit by 10 characters.
+  - bugfix: added the warden's grey jumpsuit to their garment bag.
+  - bugfix: basic and makeshift microfusion cells have the correct charge capacity.
+  Siro:
+  - rscadd: Warning message added to the Advanced Cassette Deck. Players should admin
+      who and ahelp before creating/submitting their cassette.
+2026-02-25:
+  Cujo:
+  - rscadd: Add lathe recipe for surgery trays
+  - bugfix: Adds missing detach handler from noisy_movement
+  - bugfix: Makes brain surgery automatically repeat on success and stop when brain
+      damage equals zero
+  - qol: Changes the blood filter whitelist into a blacklist
+  JohnFulpWillard:
+  - bugfix: Chem scanning a maintenance pill removes the achievement value.
+  SirNightKnight:
+  - image: resprited the firefighter helmet to be a weaker variant of the atmos firefighter
+      helmet.
+  - balance: the workplace ready firefighter helmet is now an even brighter hardhat
+      without firefighter helmet protection.
+  - rscadd: added black gloves to fire closets.
+  - qol: firebots are made with hardhats instead of firefighter helmets.
+  - balance: touched up the robotics assembly crate to have everything need for two
+      firebots, cleanbots, medibots, and floorbots.
+  funkynuggets:
+  - rscadd: Nanotrasen has deemed it fit to reactivate an older Cyborg model as supply
+      shortages have left holes that could be filled by this older product. All sales
+      are final and warranties are not included.
+  notghosti:
+  - map: Heliostation suffers from less off-camera key items and areas.
+  - map: Heliostation teleporter has slightly more sensible rails.
+  - map: Heliostation Asteroid magnet is now hooked to power and has proper science
+      access
+  - balance: Heat Cures no longer generate antibodies
+  - bugfix: Health analyzers no longer tell you the wrong diseases existances.
+  - rscdel: Exolathes can no longer print megacells
+  wonderinghost:
+  - map: '[oshan] Reworks Medical Department Layout'
+  - map: '[oshan] Proper Chemistry room'
+  - map: '[oshan] Fixes Access For NTrep and Blueshield doors'
+  - map: '[oshan] Chefs and Chaplains Medical Front Door Access for Morgue'
+2026-02-26:
+  Cujo:
+  - rscadd: Allows deaf people to see emotes in runechat
+  Lawlolawl:
+  - balance: Bubblegum blood pools are harder to clean (only soap, mops, rags, cleanbot
+      cleaning, and cleaning artifacts can remove them). This prevents cheesing the
+      boss fight using blood removal to negate one of the boss attacks.
+  Tractor-Maam:
+  - bugfix: fixed ghosts not being able to jump to Stray Cargo Pods after 3 seconds.
+  Urist-McCoder:
+  - balance: gave the default salad item in salad.dm the Resistance buff
+  - balance: gave the seafood in meatdish.dm the Resistance buff
+  - balance: gave the meat dishes in meatdish.dm either Healt Tiny or Health Medium
+  notghosti:
+  - map: Thesues Kitchen disposals/delivery has been fixed

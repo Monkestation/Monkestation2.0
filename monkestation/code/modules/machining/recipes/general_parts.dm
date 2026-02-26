@@ -23,10 +23,11 @@
 	machinery_type = MACHINING_WORKSTATION
 	crafting_time = MACHINING_DELAY_NORMAL
 	result = /obj/item/machining_intermediates/universalcircuit
-	machining_skill_required = 3
+	result_amount = 2
+	machining_skill_required = 2
 	reqs = list(
-		/obj/item/machining_intermediates/moltenplastic = 1,
-		/obj/item/stack/machining_intermediates/smallwire = 5,
+		/obj/item/machining_intermediates/moltenplastic = 2,
+		/obj/item/stack/machining_intermediates/smallwire = 6,
 		/obj/item/stack/sheet/mineral/gold = 1,
 	)
 
@@ -38,7 +39,7 @@
 	machining_skill_required = 3
 	reqs = list(
 		/obj/item/stack/rods = 2,
-		/obj/item/stack/machining_intermediates/smallwire = 20,
+		/obj/item/stack/machining_intermediates/smallwire = 15,
 		/obj/item/stack/cable_coil = 5,
 		/obj/item/stack/sheet/iron = 4,
 	)
@@ -60,7 +61,7 @@
 	crafting_time = MACHINING_DELAY_NORMAL
 	result = /obj/item/machining_intermediates/moltenplastic
 	reqs = list(
-		/obj/item/stack/sheet/plastic = 2
+		/obj/item/stack/sheet/plastic = 1
 	)
 
 /datum/machining_recipe/steel

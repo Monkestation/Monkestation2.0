@@ -66,6 +66,7 @@
 				/obj/item/seeds/sunflower = 3,
 				/obj/item/seeds/harebell = 3,
 				/obj/item/seeds/poppy/lily = 3,
+				/obj/item/seeds/poppy/lily/trumpet = 3,
 			),
 		),
 
@@ -96,13 +97,14 @@
 		/obj/item/seeds/reishi = 2,
 		/obj/item/seeds/cannabis = 3,
 		/obj/item/seeds/starthistle = 2,
-		/obj/item/seeds/cocaleaf = 2, // MONKESTATION ADDITION
-		/obj/item/seeds/coconut = 3, // MONKESTATION ADDITION
+		/obj/item/seeds/cocaleaf = 2,
+		/obj/item/seeds/coconut = 3,
 		/obj/item/seeds/random = 2,
 	)
 
 	premium = list(
 		/obj/item/reagent_containers/spray/waterflower = 1,
+		/obj/item/book/manual/botanical_lexicon = 8,
 	)
 
 	refill_canister = /obj/item/vending_refill/hydroseeds

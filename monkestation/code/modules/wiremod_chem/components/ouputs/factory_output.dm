@@ -1,3 +1,6 @@
+//max amount of items allowed before no longer producing them
+#define MAX_FLOOR_PRODUCTS 10
+
 /obj/structure/chemical_tank/factory
 	name = "remote factory output"
 	desc = "Produces patchs, pills or bottles on demand."
@@ -25,10 +28,13 @@
 	var/patch_style = DEFAULT_PATCH_STYLE
 	/// List of available patch styles for UI
 	var/list/patch_styles
+	/// Whether or not the machine autooutputs
+	var/autooutput = FALSE
 
 /obj/structure/chemical_tank/factory/Initialize(mapload)
 	. = ..()
 	load_styles()
+	START_PROCESSING(SSobj, src)
 
 /obj/structure/chemical_tank/factory/proc/load_styles()
 	//expertly copypasted from chemmasters
@@ -40,6 +46,43 @@
 				pill_styles += list("[style.icon_state]" = image(icon = style.icon, icon_state = style.icon_state))
 			if(category == CAT_PATCHES)
 				patch_styles += list("[style.icon_state]" = image(icon = style.icon, icon_state = style.icon_state))
+
+/obj/structure/chemical_tank/factory/process(seconds_per_tick)
+	if(!anchored)
+		return
+	if(!autooutput)
+		return
+	if(current_volume)
+		var/pill_amount = 0
+		for(var/obj/item/reagent_containers/thing in loc)
+			pill_amount++
+			if(pill_amount >= MAX_FLOOR_PRODUCTS)
+				break
+		if(pill_amount < MAX_FLOOR_PRODUCTS && anchored)
+			if (product == "pill")
+				var/obj/item/reagent_containers/pill/P = new(get_turf(src))
+				reagents.trans_to(P, current_volume)
+				P.name = trim("[product_name] pill")
+				P.forceMove(drop_location())
+				if(pill_style == -1)
+					P.icon_state = pick(pill_styles)
+				else
+					P.icon_state = "[pill_style]"
+				if(P.icon_state == "pill4") //mirrored from chem masters
+					P.desc = "A tablet or capsule, but not just any, a red one, one taken by the ones not scared of knowledge, freedom, uncertainty and the brutal truths of reality."
+
+			else if (product == "patch")
+				var/obj/item/reagent_containers/pill/patch/P = new(get_turf(src))
+				reagents.trans_to(P, current_volume)
+				P.name = trim("[product_name] patch")
+				P.icon_state = patch_style
+				P.forceMove(drop_location())
+
+			else if (product == "tube")
+				var/obj/item/reagent_containers/cup/tube/P = new(get_turf(src))
+				reagents.trans_to(P, current_volume)
+				P.name = trim("[product_name] bottle")
+				P.forceMove(drop_location())
 
 /obj/structure/chemical_tank/factory/proc/generate_product(mob/user)
 	if(reagents.total_volume < current_volume)
@@ -67,8 +110,7 @@
 		P.name = trim("[product_name] bottle")
 		user.put_in_hands(P)
 
-/obj/structure/chemical_tank/factory/AltClick(mob/user)
-	. = ..()
+/obj/structure/chemical_tank/factory/click_alt(mob/living/user)
 	var/choice_product = tgui_input_list(user, "Pick Product", "[name]", list("pill", "patch", "tube"))
 	if(choice_product)
 		product = choice_product
@@ -90,7 +132,24 @@
 		var/pill_choice = show_radial_menu(user, src, pill_styles)
 		if(pill_choice)
 			pill_style = pill_choice
+	balloon_alert(user, "auto-output [choice_product]?")
+	var/static/list/autooutput_options = list(
+		"Yes" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_yes"),
+		"No" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_no")
+	)
+	var/autooutput_response = show_radial_menu(user, src, autooutput_options, radius = 36, require_near = TRUE)
+	switch(autooutput_response)
+		if("Yes")
+			autooutput = TRUE
+		if("No")
+			autooutput = FALSE
+	..()
+	return CLICK_ACTION_SUCCESS
 
 /obj/structure/chemical_tank/factory/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	generate_product(user)
+
+/obj/structure/chemical_tank/factory/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	. = ..()

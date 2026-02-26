@@ -1,0 +1,27 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"t" = (
+/obj/structure/ore_vent/random,
+/turf/open/floor/plating/ocean/dark,
+/area/ocean/generated)
+"Z" = (
+/turf/open/floor/plating/ocean/dark,
+/area/ocean/generated)
+
+(1,1,1) = {"
+a
+Z
+a
+"}
+(2,1,1) = {"
+Z
+t
+Z
+"}
+(3,1,1) = {"
+a
+Z
+a
+"}

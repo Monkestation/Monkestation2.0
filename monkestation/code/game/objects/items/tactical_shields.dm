@@ -2,7 +2,7 @@
 /// Comes with a built-in 8 round ammobox to allow for easy reloading
 /// I based it off of ammo_box instead of shield because I believe ammo_box is more complicated
 
-/obj/item/ammo_box/tacshield/tutel/
+/obj/item/ammo_box/tacshield/tutel
 	name = "Tutel tactical buckler"
 	desc = "A lightweight titanium-alloy shield. It has an integrated shotgun speedloader, allowing you to reload without putting down the shield."
 	icon = 'icons/obj/weapons/shields.dmi'
@@ -27,6 +27,7 @@
 	start_empty = TRUE
 	spriteshift = FALSE
 	var/tutel_break_leftover = /obj/item/broken_shield
+	var/old_ammo_count
 
 /obj/item/ammo_box/tacshield/tutel/examine(mob/user)
 	. = ..()
@@ -44,6 +45,34 @@
 	explosion(owner, 0, 0, 0, 0) //Shield breaking should be extremely obvious, and a little silly
 	new tutel_break_leftover(get_turf(src))
 
+/obj/item/ammo_box/tacshield/tutel/pre_attack(atom/target, mob/living/user)
+	if(DOING_INTERACTION(user, "doafter_reloading"))
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+	if(length(stored_ammo) == 0 && !istype(target, /obj/item/ammo_casing))
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+	if(istype(target, /obj/item/gun/ballistic))
+		var/obj/item/gun/ballistic/gun = target
+		if(!(istype(target, /obj/item/gun/ballistic/revolver)))
+			if(length(gun.magazine.stored_ammo) >= gun.magazine.max_ammo)
+				return COMPONENT_CANCEL_ATTACK_CHAIN
+		else
+			var/live_ammo = gun.magazine.ammo_count(FALSE)
+			if(live_ammo >= length(gun.magazine.stored_ammo))
+				return COMPONENT_CANCEL_ATTACK_CHAIN
+		var/reload_delay = 1 SECOND
+		if(istype(gun, /obj/item/gun/ballistic/revolver/shotgun_revolver))
+			reload_delay = 0.1 SECOND
+		to_chat(user, span_notice("You start unloading a shell from the [src]..."))
+		old_ammo_count = length(stored_ammo)
+		if(!do_after(user, reload_delay, src, timed_action_flags = IGNORE_USER_LOC_CHANGE, interaction_key = "doafter_reloading"))
+			return COMPONENT_CANCEL_ATTACK_CHAIN
+		to_chat(user, span_notice("You load a shell into the [gun]."))
+
+/obj/item/ammo_box/tacshield/tutel/afterattack(atom/target, mob/user, proximity_flag, click_parameters) //why did i do this, i guess it's funny?
+	. = ..()
+	if(istype(target, /obj/item/gun/ballistic))
+		if(old_ammo_count == length(stored_ammo))
+			to_chat(user, span_notice("You pause for a moment, something isn't right..."))
 
 /obj/item/ammo_box/tacshield/tutel/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	. = ..()

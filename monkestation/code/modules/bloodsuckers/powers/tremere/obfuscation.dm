@@ -14,7 +14,7 @@
 #define OBFUSCATION_ANYWHERE_LEVEL 6
 
 #define OBFUSCATION_HIDDEN_ALPHA 22
-#define OBFUSCATION_REVEALED_ALPHA 100
+#define OBFUSCATION_REVEALED_ALPHA 255
 #define OBFUSCATION_RECLOAK_TIME (10 SECONDS)
 
 /datum/action/cooldown/bloodsucker/targeted/tremere/obfuscation
@@ -24,7 +24,6 @@
 	check_flags = BP_CANT_USE_IN_TORPOR | BP_CANT_USE_WHILE_INCAPACITATED | BP_CANT_USE_WHILE_UNCONSCIOUS
 	purchase_flags = TREMERE_CAN_BUY
 	bloodcost = 10
-	sol_multiplier = 4
 	constant_bloodcost = 2
 	cooldown_time = 12 SECONDS
 	target_range = 2
@@ -71,10 +70,8 @@
 	. = ..()
 	if(!.)
 		return FALSE
-	if(!isturf(target_atom))
-		return FALSE
-	var/turf/target_turf = target_atom
-	if(target_turf.is_blocked_turf_ignore_climbable())
+	var/turf/target_turf = get_turf(target_atom)
+	if(!target_turf || target_turf.is_blocked_turf_ignore_climbable())
 		return FALSE
 	if(level_current < OBFUSCATION_ANYWHERE_LEVEL && !(target_turf in view(owner.client.view, owner.client)))
 		owner.balloon_alert(owner, "out of view!")
@@ -82,7 +79,7 @@
 	return TRUE
 
 /datum/action/cooldown/bloodsucker/targeted/tremere/obfuscation/ActivatePower(trigger_flags)
-	..()
+	. = ..()
 	revealed = FALSE
 	owner.AddElement(/datum/element/relay_attackers)
 	RegisterSignal(owner, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
@@ -106,6 +103,7 @@
 		recloak_timer = null
 	REMOVE_TRAIT(owner, TRAIT_UNKNOWN, REF(src))
 	animate(owner, alpha = 255, time = 2 SECONDS)
+	owner.RemoveElement(/datum/element/relay_attackers)
 	owner.RemoveElement(/datum/element/digitalcamo)
 	revealed = FALSE
 
@@ -114,9 +112,7 @@
 
 /datum/action/cooldown/bloodsucker/targeted/tremere/obfuscation/FireSecondaryTargetedPower(atom/target, params)
 	. = ..()
-	var/mob/living/user = owner
-	var/turf/targeted_turf = get_turf(target)
-	obfuscation_blink(user, targeted_turf)
+	obfuscation_blink(owner, get_turf(target))
 	return TRUE
 
 /datum/action/cooldown/bloodsucker/targeted/tremere/obfuscation/proc/on_use_item(mob/living/source, atom/target, obj/item/weapon, click_parameters)

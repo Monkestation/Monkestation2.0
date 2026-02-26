@@ -44,14 +44,6 @@
 /datum/armament_entry/company_import/deforest/first_aid
 	subcategory = "First-Aid Consumables"
 
-/datum/armament_entry/company_import/deforest/first_aid/brute_kit
-	item_type = /obj/item/stack/heal_pack/brute_pack
-	cost = PAYCHECK_LOWER
-
-/datum/armament_entry/company_import/deforest/first_aid/burn_kit
-	item_type = /obj/item/stack/heal_pack/burn_pack
-	cost = PAYCHECK_LOWER
-
 /datum/armament_entry/company_import/deforest/first_aid/coagulant
 	item_type = /obj/item/stack/medical/suture/coagulant
 	cost = PAYCHECK_LOWER

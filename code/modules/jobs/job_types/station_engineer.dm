@@ -33,7 +33,7 @@
 		/obj/item/lightreplacer = 10,
 		/obj/item/holosign_creator/engineering = 8,
 		/obj/item/wrench/bolter = 8,
-		/obj/item/clothing/head/utility/hardhat/red/upgraded = 1
+		/obj/item/clothing/head/utility/hardhat/upgraded = 1
 	)
 	rpg_title = "Crystallomancer"
 	job_flags = STATION_JOB_FLAGS
@@ -63,6 +63,14 @@
 	box = /obj/item/storage/box/survival/engineer
 	pda_slot = ITEM_SLOT_LPOCKET
 	skillchips = list(/obj/item/skillchip/job/engineer)
+
+#ifndef UNIT_TESTS
+/datum/outfit/job/engineer/New()
+	. = ..()
+	if(length(SSmapping.levels_by_trait(ZTRAIT_OSHAN)))
+		shoes = /obj/item/clothing/shoes/stomper
+		backpack_contents += /obj/item/sea_map
+#endif
 
 /datum/outfit/job/engineer/gloved
 	name = "Station Engineer (Gloves)"

@@ -41,6 +41,8 @@
 	var/category
 	///List of items that have been returned to the vending machine.
 	var/list/returned_products
+	///If set, this access is needed to see this vending product.
+	var/access_requirement
 
 /**
  * # vending machines
@@ -350,7 +352,7 @@
  * * categories - A list in the format of product_categories to source category from
  * * startempty - should we set vending_product record amount from the product list (so it's prefilled at roundstart)
  */
-/obj/machinery/vending/proc/build_inventory(list/productlist, list/recordlist, list/categories, start_empty = FALSE)
+/obj/machinery/vending/proc/build_inventory(list/productlist, list/recordlist, list/categories, start_empty = FALSE, access_needed)
 	default_price = round(initial(default_price) * SSeconomy.inflation_value())
 	extra_price = round(initial(extra_price) * SSeconomy.inflation_value())
 
@@ -378,6 +380,8 @@
 		R.age_restricted = initial(temp.age_restricted)
 		R.colorable = !!(initial(temp.greyscale_config) && initial(temp.greyscale_colors) && (initial(temp.flags_1) & IS_PLAYER_COLORABLE_1))
 		R.category = product_to_category[typepath]
+		if(access_needed)
+			R.access_requirement = access_needed
 		recordlist += R
 
 /obj/machinery/vending/proc/build_inventories(start_empty)
@@ -1082,11 +1086,14 @@
 	return TRUE
 
 /obj/machinery/vending/interact(mob/user)
+	if (!Adjacent(user))
+		return ..()
+
 	if(seconds_electrified && !(machine_stat & NOPOWER))
 		if(shock(user, 100))
 			return
 
-	if(tilted && !user.buckled && !isAdminGhostAI(user))
+	if(tilted && !user.buckled)
 		to_chat(user, span_notice("You begin righting [src]."))
 		if(do_after(user, 5 SECONDS, target=src))
 			untilt(user)
@@ -1101,7 +1108,7 @@
 
 /obj/machinery/vending/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/vending),
+		get_asset_datum(/datum/asset/spritesheet_batched/vending),
 	)
 
 /obj/machinery/vending/ui_interact(mob/user, datum/tgui/ui)
@@ -1119,15 +1126,15 @@
 
 	var/list/categories = list()
 
-	data["product_records"] = collect_records_for_static_data(product_records, categories)
-	data["coin_records"] = collect_records_for_static_data(coin_records, categories, premium = TRUE)
-	data["hidden_records"] = collect_records_for_static_data(hidden_records, categories, premium = TRUE)
+	data["product_records"] = collect_records_for_static_data(product_records, categories, user)
+	data["coin_records"] = collect_records_for_static_data(coin_records, categories, user, premium = TRUE)
+	data["hidden_records"] = collect_records_for_static_data(hidden_records, categories, user, premium = TRUE)
 
 	data["categories"] = categories
 
 	return data
 
-/obj/machinery/vending/proc/collect_records_for_static_data(list/records, list/categories, premium)
+/obj/machinery/vending/proc/collect_records_for_static_data(list/records, list/categories, mob/living/user, premium)
 	var/static/list/default_category = list(
 		"name" = "Products",
 		"icon" = "cart-shopping",
@@ -1136,6 +1143,13 @@
 	var/list/out_records = list()
 
 	for (var/datum/data/vending_product/record as anything in records)
+		if(record.access_requirement)
+			var/obj/item/card/id/user_id
+			if(!istype(user))
+				continue
+			user_id = user.get_idcard(TRUE)
+			if(!issilicon(user) && !(record.access_requirement in user_id?.access) && !(obj_flags & EMAGGED) && onstation)
+				continue
 		var/list/static_record = list(
 			path = replacetext(replacetext("[record.product_path]", "/obj/item/", ""), "/", "-"),
 			name = record.name,
@@ -1199,7 +1213,7 @@
 
 	.["extended_inventory"] = extended_inventory
 
-/obj/machinery/vending/ui_act(action, params)
+/obj/machinery/vending/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -1208,6 +1222,10 @@
 			. = vend(params)
 		if("select_colors")
 			. = select_colors(params)
+
+/// Check if the list of given access is allowed to purchase the given product
+/obj/machinery/vending/proc/allow_purchase(mob/living/user, product_path)
+	return TRUE
 
 /obj/machinery/vending/proc/can_vend(user, silent=FALSE)
 	. = FALSE
@@ -1330,7 +1348,7 @@
 		if(D)
 			D.adjust_money(price_to_use)
 			SSblackbox.record_feedback("amount", "vending_spent", price_to_use)
-			SSeconomy.track_purchase(account, price_to_use, name)
+			SSeconomy.add_audit_entry(account, price_to_use, name)
 			log_econ("[price_to_use] credits were inserted into [src] by [account.account_holder] to buy [R].")
 	if(last_shopper != REF(usr) || purchase_message_cooldown < world.time)
 		var/vend_response = vend_reply || "Thank you for shopping with [src]!"
@@ -1338,7 +1356,7 @@
 		purchase_message_cooldown = world.time + 5 SECONDS
 		//This is not the best practice, but it's safe enough here since the chances of two people using a machine with the same ref in 5 seconds is fuck low
 		last_shopper = REF(usr)
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 	if(icon_vend) //Show the vending animation if needed
 		flick(icon_vend,src)
 	playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
@@ -1571,7 +1589,7 @@
 			)
 			.["vending_machine_input"] += list(data)
 
-/obj/machinery/vending/custom/ui_act(action, params)
+/obj/machinery/vending/custom/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -1657,7 +1675,7 @@
 			last_shopper = REF(usr)
 	/// Remove the item
 	loaded_items--
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 	vending_machine_input[choice] = max(vending_machine_input[choice] - 1, 0)
 	if(user.CanReach(src) && user.put_in_hands(dispensed_item))
 		to_chat(user, span_notice("You take [dispensed_item.name] out of the slot."))
@@ -1697,3 +1715,47 @@
 	add_filter("vending_rays", 10, list("type" = "rays", "size" = 35, "color" = COLOR_VIVID_YELLOW))
 
 #undef MAX_VENDING_INPUT_AMOUNT
+
+/**
+ * This vending machine supports a list of items that changes based on the user/card's access.
+ */
+/obj/machinery/vending/access
+	name = "access-based vending machine"
+	///If set, this access is required to see non-access locked products in the vending machine.
+	var/minimum_access_to_view
+
+/obj/machinery/vending/access/Initialize(mapload)
+	. = ..()
+	var/list/inventory = list()
+	build_access_list(inventory)
+	for(var/access in inventory)
+		build_inventory(inventory[access], product_records, product_categories, start_empty = FALSE, access_needed = access)
+
+/**
+ * This is where you generate the list to store what items each access grants.
+ * Should be an assosciative list where the key is the access as a string and the value is the items typepath.
+ * You can also set it to TRUE instead of a list to allow them to purchase anything.
+ */
+/obj/machinery/vending/access/proc/build_access_list(list/inventory)
+	return
+
+/obj/machinery/vending/access/collect_records_for_static_data(list/records, list/categories, mob/living/user, premium)
+	if(isnull(minimum_access_to_view))
+		return ..()
+	//dead people can see records, i GUESS...
+	if(!istype(user))
+		return ..()
+	var/obj/item/card/id/user_id = user.get_idcard(TRUE)
+	if(!issilicon(user) && !(obj_flags & EMAGGED) && onstation && !(minimum_access_to_view in user_id?.access))
+		records = list()
+		return ..()
+	return ..()
+
+/// Debug version to verify access checking is working and functional
+/obj/machinery/vending/access/debug
+	minimum_access_to_view = ACCESS_ENGINEERING
+
+/obj/machinery/vending/access/debug/build_access_list(list/inventory)
+	inventory[ACCESS_EVA] = list(/obj/item/crowbar)
+	inventory[ACCESS_SECURITY] = list(/obj/item/wrench, /obj/item/gun/ballistic/revolver/mateba)
+

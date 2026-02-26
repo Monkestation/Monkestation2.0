@@ -59,8 +59,8 @@
 	var/new_option = input_options.value
 	switch(new_option)
 		if(COMP_INPUT_STRING)
-			var/player_input = tgui_input_text(player, "Input a value", "Input value")
-			if(isnull(player_input))
+			var/player_input = trimtext(tgui_input_text(player, "Input a value", "Input value", encode = FALSE))
+			if(!length(player_input))
 				return
 			input_response.set_output(player_input)
 		if(COMP_INPUT_NUMBER)

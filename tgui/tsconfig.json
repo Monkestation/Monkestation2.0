@@ -2,20 +2,31 @@
 	"compilerOptions": {
 		"allowJs": true,
 		"allowSyntheticDefaultImports": true,
+		"baseUrl": ".",
 		"checkJs": false,
 		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,
 		"isolatedModules": false,
 		"jsx": "preserve",
 		"lib": ["DOM", "DOM.Iterable", "ESNext", "ScriptHost"],
-		"module": "ESNext",
-		"moduleResolution": "Node",
+		"module": "esnext",
+		"moduleResolution": "bundler",
 		"noEmit": true,
+		"paths": {
+			"tgui": ["packages/tgui"],
+			"tgui/*": ["packages/tgui/*"],
+			"tgui-panel": ["packages/tgui-panel"],
+			"tgui-panel/*": ["packages/tgui-panel/*"],
+			"tgui-say": ["packages/tgui-say"],
+			"tgui-say/*": ["packages/tgui-say/*"],
+			"tgui-dev-server": ["packages/tgui-dev-server"],
+			"tgui-dev-server/*": ["packages/tgui-dev-server/*"]
+		},
 		"resolveJsonModule": true,
 		"skipLibCheck": true,
 		"strict": false,
 		"strictNullChecks": true,
-		"target": "ES5"
+		"target": "esnext"
 	},
 	"include": ["./*.d.ts", "./packages"]
 }

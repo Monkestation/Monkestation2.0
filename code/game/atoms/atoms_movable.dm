@@ -71,7 +71,7 @@
 	var/atom/movable/pulling
 	var/grab_state = 0
 	/// The strongest grab we can acomplish
-	var/max_grab = GRAB_KILL
+	var/max_grab = GRAB_PASSIVE
 	var/throwforce = 0
 	var/datum/component/orbiter/orbiting
 
@@ -117,6 +117,12 @@
 
 	///can we grab this object?
 	var/cant_grab = FALSE
+
+	/// If TRUE, then this will be affected by things such as the "Bot Language Matrix Malfunction" station trait.
+	var/can_language_malfunction = TRUE
+
+	/// The weight for A* pathfinding added to turfs this atom is on.
+	var/astar_weight
 
 /mutable_appearance/emissive_blocker
 
@@ -186,6 +192,10 @@
 			AddComponent(/datum/component/overlay_lighting, is_directional = TRUE)
 		if(MOVABLE_LIGHT_BEAM)
 			AddComponent(/datum/component/overlay_lighting, is_directional = TRUE, is_beam = TRUE)
+
+	if(astar_weight && isturf(loc))
+		var/turf/turf_loc = loc
+		turf_loc.astar_weight += astar_weight
 
 /atom/movable/Destroy(force)
 	QDEL_NULL(language_holder)
@@ -611,7 +621,7 @@
 			buckled_mob.set_glide_size(target, TRUE)
 
 /**
- * meant for movement with zero side effects. only use for objects that are supposed to move "invisibly" (like camera mobs or ghosts)
+ * meant for movement with zero side effects. only use for objects that are supposed to move "invisibly" (like eye mobs or ghosts)
  * if you want something to move onto a tile with a beartrap or recycler or tripmine or mouse without that object knowing about it at all, use this
  * most of the time you want forceMove()
  */
@@ -854,9 +864,6 @@
 	if (!moving_diagonally && client_mobs_in_contents)
 		update_parallax_contents()
 
-#ifndef DISABLE_DEMOS
-	SSdemo.mark_dirty(src) //Monkestation Edit: REPLAYS
-#endif
 	SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, old_loc, movement_dir, forced, old_locs, momentum_change)
 
 	if(old_loc)
@@ -866,6 +873,12 @@
 
 	var/turf/old_turf = get_turf(old_loc)
 	var/turf/new_turf = get_turf(src)
+
+	if(astar_weight)
+		if(old_turf)
+			old_turf.astar_weight -= astar_weight
+		if(new_turf)
+			new_turf.astar_weight += astar_weight
 
 	if (old_turf?.z != new_turf?.z)
 		var/same_z_layer = (GET_TURF_PLANE_OFFSET(old_turf) == GET_TURF_PLANE_OFFSET(new_turf))
@@ -1124,7 +1137,9 @@
 /atom/movable/proc/forceMove(atom/destination)
 	. = FALSE
 	if(QDELING(src))
-		CRASH("Illegal forceMove() on qdeling [type]")
+		if(!isorgan(src))
+			CRASH("Illegal forceMove() on qdeling [type]")
+		return
 
 	if(destination)
 		. = doMove(destination)
@@ -1615,6 +1630,8 @@
  * - They are on the escape shuttle
  */
 /atom/movable/proc/randomize_language_if_on_station()
+	if(!can_language_malfunction)
+		return
 	var/turf/atom_turf = get_turf(src)
 	var/area/atom_area = get_area(src)
 
@@ -1633,8 +1650,14 @@
 
 /* End language procs */
 
-//Returns an atom's power cell, if it has one. Overload for individual items.
-/atom/movable/proc/get_cell()
+/**
+ * Returns an atom's power cell, if it has one. Overload for individual items.
+ * Args
+ *
+ * * /atom/movable/interface - the atom that is trying to interact with this cell
+ * * mob/user - the mob that is holding the interface
+ */
+/atom/movable/proc/get_cell(atom/movable/interface, mob/user)
 	return
 
 /atom/movable/proc/can_be_pulled(user, grab_state, force)

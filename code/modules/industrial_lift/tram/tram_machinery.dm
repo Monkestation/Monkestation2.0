@@ -27,7 +27,7 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	AddComponent(/datum/component/usb_port, list(/obj/item/circuit_component/tram_controls))
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/computer/tram_controls/LateInitialize()
+/obj/machinery/computer/tram_controls/LateInitialize(mapload_arg)
 	. = ..()
 	find_tram()
 
@@ -351,7 +351,7 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	. = ..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/crossing_signal/LateInitialize()
+/obj/machinery/crossing_signal/LateInitialize(mapload_arg)
 	. = ..()
 	find_tram()
 
@@ -425,7 +425,7 @@ GLOBAL_LIST_EMPTY(tram_doors)
  */
 /obj/machinery/crossing_signal/proc/update_operating()
 
-	use_power(idle_power_usage)
+	use_energy(idle_power_usage)
 
 	// Emagged crossing signals don't update
 	if(obj_flags & EMAGGED)
@@ -451,7 +451,7 @@ GLOBAL_LIST_EMPTY(tram_doors)
 		set_signal_state(XING_STATE_MALF, force = !is_operational)
 		return PROCESS_KILL
 
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 
 	var/obj/structure/industrial_lift/tram/tram_part = tram.return_closest_platform_to(src)
 
@@ -608,7 +608,7 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	. = ..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/destination_sign/LateInitialize()
+/obj/machinery/destination_sign/LateInitialize(mapload_arg)
 	. = ..()
 	find_tram()
 
@@ -664,7 +664,7 @@ GLOBAL_LIST_EMPTY(tram_doors)
 		update_appearance()
 		return PROCESS_KILL
 
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 
 	if(malfunctioning)
 		icon_state = "[base_icon_state][pick(sign_states)]"

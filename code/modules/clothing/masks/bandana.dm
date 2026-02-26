@@ -17,11 +17,9 @@
 	worn_icon_state = "bandana_worn"
 	greyscale_config = /datum/greyscale_config/bandana
 	greyscale_config_worn = /datum/greyscale_config/bandana_worn
-	greyscale_config_worn_snouted = /datum/greyscale_config/bandana_worn/snouted
 	greyscale_config_inhand_left = /datum/greyscale_config/bandana_inhands_left
 	greyscale_config_inhand_right = /datum/greyscale_config/bandana_inhands_right
 	greyscale_colors = "#2e2e2e"
-	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
 
 /obj/item/clothing/mask/bandana/attack_self(mob/user)
 	if(slot_flags & ITEM_SLOT_NECK)
@@ -39,35 +37,37 @@
 		worn_icon_state = initial(worn_icon_state)
 		undyeable = initial(undyeable)
 
-/obj/item/clothing/mask/bandana/AltClick(mob/user)
-	. = ..()
-	if(iscarbon(user))
-		var/mob/living/carbon/char = user
-		var/matrix/widen = matrix()
-		if((char.get_item_by_slot(ITEM_SLOT_NECK) == src) || (char.get_item_by_slot(ITEM_SLOT_MASK) == src) || (char.get_item_by_slot(ITEM_SLOT_HEAD) == src))
-			to_chat(user, span_warning("You can't tie [src] while wearing it!"))
-			return
-		else if(slot_flags & ITEM_SLOT_HEAD)
-			to_chat(user, span_warning("You must undo [src] before you can tie it into a neckerchief!"))
-			return
-		else if(!user.is_holding(src))
-			to_chat(user, span_warning("You must be holding [src] in order to tie it!"))
-			return
+/obj/item/clothing/mask/bandana/click_alt(mob/living/user)
+	if(!iscarbon(user))
+		return NONE
+
+	var/mob/living/carbon/char = user
+	var/matrix/widen = matrix()
+	if((char.get_item_by_slot(ITEM_SLOT_NECK) == src) || (char.get_item_by_slot(ITEM_SLOT_MASK) == src) || (char.get_item_by_slot(ITEM_SLOT_HEAD) == src))
+		to_chat(user, span_warning("You can't tie [src] while wearing it!"))
+		return CLICK_ACTION_BLOCKING
+	else if(slot_flags & ITEM_SLOT_HEAD)
+		to_chat(user, span_warning("You must undo [src] before you can tie it into a neckerchief!"))
+		return CLICK_ACTION_BLOCKING
+	else if(!user.is_holding(src))
+		to_chat(user, span_warning("You must be holding [src] in order to tie it!"))
+		return CLICK_ACTION_BLOCKING
 
 
-		if(slot_flags & ITEM_SLOT_MASK)
-			undyeable = TRUE
-			slot_flags = ITEM_SLOT_NECK
-			worn_y_offset = -3
-			widen.Scale(1.25, 1)
-			transform = widen
-			user.visible_message(span_notice("[user] ties [src] up like a neckerchief."), span_notice("You tie [src] up like a neckerchief."))
-		else
-			undyeable = initial(undyeable)
-			slot_flags = initial(slot_flags)
-			worn_y_offset = initial(worn_y_offset)
-			transform = initial(transform)
-			user.visible_message(span_notice("[user] unties the neckercheif."), span_notice("You untie the neckercheif."))
+	if(slot_flags & ITEM_SLOT_MASK)
+		undyeable = TRUE
+		slot_flags = ITEM_SLOT_NECK
+		worn_y_offset = -3
+		widen.Scale(1.25, 1)
+		transform = widen
+		user.visible_message(span_notice("[user] ties [src] up like a neckerchief."), span_notice("You tie [src] up like a neckerchief."))
+	else
+		undyeable = initial(undyeable)
+		slot_flags = initial(slot_flags)
+		worn_y_offset = initial(worn_y_offset)
+		transform = initial(transform)
+		user.visible_message(span_notice("[user] unties the neckercheif."), span_notice("You untie the neckercheif."))
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/mask/bandana/red
 	name = "red bandana"
@@ -133,7 +133,6 @@
 	worn_icon_state = "bandstriped_worn"
 	greyscale_config = /datum/greyscale_config/bandstriped
 	greyscale_config_worn = /datum/greyscale_config/bandstriped_worn
-	greyscale_config_worn_snouted = /datum/greyscale_config/bandstriped_worn/snouted
 	greyscale_config_inhand_left = /datum/greyscale_config/bandana_striped_inhands_left
 	greyscale_config_inhand_right = /datum/greyscale_config/bandana_striped_inhands_right
 	greyscale_colors = "#2e2e2e#C6C6C6"
@@ -188,7 +187,6 @@
 	worn_icon_state = "bandskull_worn"
 	greyscale_config = /datum/greyscale_config/bandskull
 	greyscale_config_worn = /datum/greyscale_config/bandskull_worn
-	greyscale_config_worn_snouted = /datum/greyscale_config/bandskull_worn/snouted
 	greyscale_config_inhand_left = /datum/greyscale_config/bandana_skull_inhands_left
 	greyscale_config_inhand_right = /datum/greyscale_config/bandana_skull_inhands_right
 	greyscale_colors = "#2e2e2e#C6C6C6"

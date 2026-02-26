@@ -6,7 +6,9 @@
 	layer = OBJ_LAYER
 	max_integrity = 50 //MONKESTATION EDIT
 	armor_type = /datum/armor/ridden_wheelchair
-	density = FALSE //Thought I couldn't fix this one easily, phew
+	density = FALSE
+	interaction_flags_mouse_drop = ALLOW_RESTING
+
 	/// Run speed delay is multiplied with this for vehicle move delay.
 	var/delay_multiplier = 3
 	/// This variable is used to specify which overlay icon is used for the wheelchair, ensures wheelchair can cover your legs
@@ -52,6 +54,14 @@
 	. = ..()
 	update_appearance()
 
+/obj/vehicle/ridden/wheelchair/unbuckle_mob(mob/living/buckled_mob, force = FALSE, can_fall = TRUE)
+	if(force || !usr || usr == buckled_mob)
+		return ..()
+	if(!do_after(usr, 1 SECONDS, src))
+		to_chat(usr, span_warning("You need yourself and [src] to stand still in order to unbuckle [buckled_mob]!"))
+		return null
+	return ..()
+
 /obj/vehicle/ridden/wheelchair/post_unbuckle_mob()
 	. = ..()
 	update_appearance()
@@ -65,9 +75,6 @@
 		new /obj/item/stack/sheet/iron(drop_location(), 4)
 		qdel(src)
 	return TRUE
-
-/obj/vehicle/ridden/wheelchair/AltClick(mob/user)
-	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
 /obj/vehicle/ridden/wheelchair/update_overlays()
 	. = ..()
@@ -127,17 +134,14 @@
 	fire = 30
 	acid = 40
 
-/obj/vehicle/ridden/wheelchair/MouseDrop(over_object, src_location, over_location)  //Lets you collapse wheelchair
-	. = ..()
-	if(over_object != usr || !Adjacent(usr) || !foldabletype)
-		return FALSE
-	if(!ishuman(usr) || !usr.can_perform_action(src))
+/obj/vehicle/ridden/wheelchair/mouse_drop_dragged(atom/over_object, mob/user)  //Lets you collapse wheelchair
+	if(over_object != user || !foldabletype || !ishuman(user))
 		return FALSE
 	if(has_buckled_mobs())
 		return FALSE
-	usr.visible_message(span_notice("[usr] collapses [src]."), span_notice("You collapse [src]."))
+	user.visible_message(span_notice("[user] collapses [src]."), span_notice("You collapse [src]."))
 	var/obj/vehicle/ridden/wheelchair/wheelchair_folded = new foldabletype(get_turf(src))
-	usr.put_in_hands(wheelchair_folded)
+	user.put_in_hands(wheelchair_folded)
 	qdel(src)
 
 /obj/item/wheelchair/attack_self(mob/user)  //Deploys wheelchair on in-hand use

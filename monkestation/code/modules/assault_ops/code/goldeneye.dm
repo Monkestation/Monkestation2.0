@@ -102,7 +102,6 @@ SUBSYSTEM_DEF(goldeneye)
 	AddComponent(/datum/component/gps, goldeneye_tag)
 	beacon = AddComponent(/datum/component/tracking_beacon, "goldeneye_key", _colour = choose_beacon_color(), _global = TRUE, _always_update = TRUE)
 	SSpoints_of_interest.make_point_of_interest(src)
-	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_GOLDENEYE_KEY_CREATED, src)
 
 /obj/item/goldeneye_key/Destroy(force)
 	SSgoldeneye.goldeneye_keys -= src

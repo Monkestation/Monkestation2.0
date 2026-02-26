@@ -23,51 +23,6 @@
 		var/mob/living/carbon/user = owner
 		user.applied_food_buffs--
 
-/datum/status_effect/food/stamina_increase
-	id = "t1_stamina"
-	alert_type = /atom/movable/screen/alert/status_effect/food/stamina_increase_t1
-	var/stam_increase = 10
-
-/datum/status_effect/food/stamina_increase/apply_quality(quality)
-	stam_increase *= 1 + (quality / 50)
-
-/atom/movable/screen/alert/status_effect/food/stamina_increase_t1
-	name = "Tiny Stamina Increase"
-	desc = "Increases your stamina by a tiny amount"
-	icon_state = "stam_t1"
-
-/datum/status_effect/food/stamina_increase/t2
-	id = "t2_stamina"
-	alert_type = /atom/movable/screen/alert/status_effect/food/stamina_increase_t2
-	stam_increase = 20
-
-/atom/movable/screen/alert/status_effect/food/stamina_increase_t2
-	name = "Medium Stamina Increase"
-	desc = "Increases your stamina by a moderate amount"
-	icon_state = "stam_t2"
-
-/datum/status_effect/food/stamina_increase/t3
-	id = "t3_stamina"
-	alert_type = /atom/movable/screen/alert/status_effect/food/stamina_increase_t3
-	stam_increase = 30
-
-/atom/movable/screen/alert/status_effect/food/stamina_increase_t3
-	name = "Large Stamina Increase"
-	desc = "Increases your stamina greatly"
-	icon_state = "stam_t3"
-
-/datum/status_effect/food/stamina_increase/on_apply()
-	if(ishuman(owner) && !owner.stamina.set_maximum(owner.stamina.maximum + stam_increase))
-		stam_increase = 0 // Ensure we don't ADD more than we need to maximum upon removal
-		return FALSE
-	return ..()
-
-/datum/status_effect/food/stamina_increase/on_remove()
-	. = ..()
-	if(ishuman(owner))
-		owner.stamina?.set_maximum(owner.stamina.maximum - stam_increase)
-
-
 /datum/status_effect/food/resistance
 	id = "resistance_food"
 	alert_type = /atom/movable/screen/alert/status_effect/food/resistance
@@ -273,7 +228,7 @@
 /datum/status_effect/food/stam_regen
 	id = "t1_stam_regen"
 	alert_type = /atom/movable/screen/alert/status_effect/food/stam_regen_t1
-	var/regen_increase = 0.5
+	var/regen_increase = 0.25
 
 /datum/status_effect/food/stam_regen/apply_quality(quality)
 	regen_increase *= (1 + (quality / 20))
@@ -286,7 +241,7 @@
 /datum/status_effect/food/stam_regen/t2
 	id = "t2_stam_regen"
 	alert_type = /atom/movable/screen/alert/status_effect/food/stam_regen_t2
-	regen_increase = 1.5
+	regen_increase = 0.5
 
 /atom/movable/screen/alert/status_effect/food/stam_regen_t2
 	name = "Moderate Stamina Regeneration Increase"
@@ -296,7 +251,7 @@
 /datum/status_effect/food/stam_regen/t3
 	id = "t2_stam_regen"
 	alert_type = /atom/movable/screen/alert/status_effect/food/stam_regen_t3
-	regen_increase = 3
+	regen_increase = 1
 
 /atom/movable/screen/alert/status_effect/food/stam_regen_t3
 	name = "Large Stamina Regeneration Increase"

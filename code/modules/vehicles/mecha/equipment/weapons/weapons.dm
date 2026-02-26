@@ -113,10 +113,22 @@
 	projectile = /obj/projectile/beam/laser/heavylaser
 	fire_sound = 'sound/weapons/lasercannonfire.ogg'
 
+/obj/item/mecha_parts/mecha_equipment/weapon/energy/laser/sentinellascannon
+	equip_cooldown = 50
+	name = "\improper Sentinel Laser Cannon"
+	desc = "A massive turbolaser mounted in a turret."
+	icon_state = "sentinel_cannon_laser"
+	energy_drain = 300
+	projectile = /obj/projectile/bullet/rocket/sentinellaser
+	projectiles_per_shot = 2
+	projectile_delay = 0.1 SECONDS
+	fire_sound = 'sound/weapons/marauder.ogg'
+	mech_flags = EXOSUIT_MODULE_SENTINEL
+
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/ion
 	equip_cooldown = 20
 	name = "\improper MKIV ion heavy cannon"
-	desc = "A weapon for combat exosuits. Shoots technology-disabling ion beams. Don't catch yourself in the blast!"
+	desc = "A weapon for combat exosuits. Shoots tech-disabling ion beams. Don't get caught in the blast!"
 	icon_state = "mecha_ion"
 	energy_drain = 120
 	projectile = /obj/projectile/ion
@@ -125,7 +137,7 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/tesla
 	equip_cooldown = 35
 	name = "\improper MKI Tesla Cannon"
-	desc = "A weapon for combat exosuits. Fires bolts of electricity similar to the experimental tesla engine."
+	desc = "A weapon for combat exosuits. Fires electric bolts alike to the experimental tesla engine."
 	icon_state = "mecha_ion"
 	energy_drain = 500
 	projectile = /obj/projectile/energy/tesla/cannon
@@ -300,7 +312,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/silenced
 	name = "\improper S.H.H. \"Quietus\" Carbine"
-	desc = "A weapon for combat exosuits. A mime invention, field tests have shown that targets cannot even scream before going down."
+	desc = "A weapon for combat exosuits. A mime invention; field tests show targets cannot even scream before going down."
 	fire_sound = 'sound/weapons/gun/general/heavy_shot_suppressed.ogg'
 	icon_state = "mecha_mime"
 	equip_cooldown = 30
@@ -340,6 +352,70 @@
 	harmful = TRUE
 	ammo_type = MECHA_AMMO_LMG
 
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/heavy
+	name = "Executor Mech Rifle"
+	desc = "A weapon for combat exosuits. Its armor piercing rounds bring down men and mech alike."
+	icon_state = "mecha_heavy"
+	equip_cooldown = 3.4 SECONDS
+	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
+	projectile = /obj/projectile/bullet/neville
+	projectiles = 20
+	projectiles_cache = 20
+	projectiles_cache_max = 100
+	projectiles_per_shot = 1
+	harmful = TRUE
+	ammo_type = MECHA_AMMO_ATR
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/rotary
+	name = "Hotchkiss Rotary Cannon"
+	desc = "A very expensive and complicated Rotary Cannon for combat exosuits. NT execs only."
+	icon_state = "mecha_rotary"
+	equip_cooldown = 0.3 SECONDS
+	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
+	projectile = /obj/projectile/bullet/neville
+	projectiles = 400
+	projectiles_cache = 400
+	projectiles_cache_max = 400
+	projectiles_per_shot = 10
+	projectile_delay = 0.06 SECONDS
+	variance = 12
+	randomspread = 7
+	harmful = TRUE
+	ammo_type = MECHA_AMMO_ATR
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/minigun
+	name = "\improper Avtomat AC 3"
+	desc = "An SSC-designed weapon for combat exosuits licensed by NT. Fires a small caliber at considerable speed."
+	icon_state = "mecha_minigun"
+	equip_cooldown = 0.3 SECONDS
+	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
+	projectile = /obj/projectile/bullet/peashooter
+	projectiles = 750
+	projectiles_cache = 0
+	projectiles_cache_max = 1500
+	projectiles_per_shot = 6
+	projectile_delay = 0.09 SECONDS
+	variance = 20
+	randomspread = 13
+	harmful = TRUE
+	ammo_type = MECHA_AMMO_PEASHOOTER
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/flamethrower
+	name = "\improper FNX-100 \"Conflagrator\" Flamethrower"
+	desc = "A modified FNX-99 Hades carbine that sacrifices its incendary bullets to be a full flamethrower."
+	icon_state = "mecha_flamethrower"
+	fire_sound = 'sound/items/modsuit/flamethrower.ogg'
+	equip_cooldown = 0.7 SECONDS
+	projectile = /obj/projectile/bullet/incendiary/fire/heavy
+	projectiles = 120
+	projectiles_cache = 0
+	projectiles_cache_max = 240
+	projectiles_per_shot = 4
+	variance = 24
+	randomspread = 15
+	harmful = TRUE
+	ammo_type = MECHA_AMMO_FLAME
+
 /// Missiles
 /// SRM-8 Missile Rack - Used by Nuclear Operatives - Explodes when it hits anything
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack
@@ -359,7 +435,7 @@
 /// PEP-6 Missile Rack - Used by Robotics - Explodes only when it hits dense objects like walls, borgs and mechs
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/breaching
 	name = "\improper PEP-6 missile rack"
-	desc = "A weapon for combat exosuits. Launches precision explosive projectiles designed to explode only when striking a structured target, including walls, exosuits and cyborgs."
+	desc = "A weapon for combat exosuits. Launches precision missiles designed only to explode when striking a structured target, such as walls, exosuits and cyborgs."
 	icon_state = "mecha_missilerack_six"
 	projectile = /obj/projectile/bullet/rocket/pep
 	fire_sound = 'sound/weapons/gun/general/rocket_launch.ogg'
@@ -380,7 +456,7 @@
 	if(!action_checks(target))
 		return
 	TIMER_COOLDOWN_START(chassis, COOLDOWN_MECHA_EQUIPMENT(type), equip_cooldown)
-	chassis.use_power(energy_drain)
+	chassis.use_energy(energy_drain)
 	var/newtonian_target = turn(chassis.dir,180)
 	var/obj/O = new projectile(chassis.loc)
 	playsound(chassis, fire_sound, 50, TRUE)
@@ -558,7 +634,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/light_tank_cannon
 	name = "40mm tank cannon"
-	desc = "a multi hundred year old cannon, it looks overbuilt but you can't shake that worrying feeling. It has no autoloader or mounting bolts, you doubt it would work on anything else."
+	desc = "A centuries-old tank cannon. It seems ominously overbuilt for its age. It has no autoloader or mounting bolts, you doubt it would work on anything else."
 	icon_state = "mecha_light_tank_cannon"
 	fire_sound = 'sound/weapons/gun/general/lighttankgun.ogg'
 	harmful = TRUE
@@ -570,10 +646,27 @@
 	ammo_type = MECHA_AMMO_LIGHTTANK
 	mech_flags = EXOSUIT_MODULE_TANK
 
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/sentinelcannon
+	name = "Sentinel Cannon"
+	desc = "A large artillery cannon affixed to a turret."
+	icon_state = "sentinel_cannon"
+	fire_sound = 'sound/weapons/gun/general/lighttankgun.ogg'
+	harmful = TRUE
+	projectile = /obj/projectile/bullet/rocket/sentinelshell
+	equip_cooldown = 12 SECONDS
+	projectiles = 20
+	projectiles_cache = 0
+	projectiles_cache_max = 40
+	projectiles_per_shot = 2
+	variance = 10
+	randomspread = 3
+	projectile_delay = 0.1 SECONDS
+	ammo_type = MECHA_AMMO_SENTINEL
+	mech_flags = EXOSUIT_MODULE_SENTINEL
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lighttankmg
 	name = "12.7mm Malone Mk.1 Ratcatcher"
-	desc = "you reckon this machinegun could've existed before planes were a thing. Despite the calibre it doesn't do that much.It has no autoloader or mounting bolts, you doubt it would work on anything else."
+	desc = "You reckon this machinegun could've existed even before the planes did! Despite the calibre it don't do much. It's got no autoloader or mountin' bolts, you doubt it'd work on nothin' else!"
 	icon_state = "mecha_light_tank_mg"
 	fire_sound = 'sound/weapons/gun/l6/shot.ogg'
 	projectile = /obj/projectile/bullet/mm127x70
@@ -601,3 +694,124 @@
 	harmful = TRUE
 	ammo_type = MECHA_AMMO_LIGHTTANKMG
 	mech_flags = EXOSUIT_MODULE_TANK
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/cuban
+	name = "\improper SGL-9001 fission grenade launcher \"The Cuban Pete\""
+	desc = "This grenade launcher goes \"Chig chiggy boom chig chiggy BOOM\"!"
+	icon_state = "mecha_cuban"
+	projectile = /obj/projectile/bullet/rocket/mininuke
+	projectiles = 100000000
+	projectiles_cache = 10000000
+	projectiles_cache_max = 100000000
+	equip_cooldown = 1 SECONDS
+	harmful = TRUE
+	ammo_type = MECHA_AMMO_LIGHTTANKMG
+
+/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/makeshift
+	name = "makeshift clamp"
+	desc = "Loose arrangement of cobbled together bits resembling a clamp."
+	equip_cooldown = 25
+	force = 10
+	mech_flags = EXOSUIT_MODULE_MAKESHIFT
+
+/obj/item/mecha_parts/mecha_equipment/weapon/honker/makeshift
+	name = "harm alarm horn"
+	icon_state = "mecha_harm_alarm"
+	desc = "A crude honking horn that alarms nearby bystanders of a passing ambulance."
+	mech_flags = EXOSUIT_MODULE_AMBULANCE
+	honk_range = 1 //only directly besides, are affected
+	tactile_message = "HARM ALARM"
+	energy_drain = 400
+	equip_cooldown = 25 SECONDS
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/pipegun
+	name = "pipegun breech"
+	desc = "A pipegun fitted to be mounted to a tank turret. The actual gun seems haphazardly tacked on with scrap."
+	icon_state = "mecha_pipegun"
+	equip_cooldown = 10
+	projectile = /obj/projectile/bullet/a762/surplus
+	projectiles = 8
+	projectiles_cache = 0
+	projectiles_cache_max = 24
+	projectiles_per_shot = 1
+	projectile_delay = 0.5 SECONDS
+	harmful = TRUE
+	ammo_type = MECHA_AMMO_PIPEGUN
+	mech_flags = EXOSUIT_MODULE_TRASHTANK
+
+/obj/projectile/bullet/pellet/shotgun_improvised/tank
+	tile_dropoff = 0 //its a peashooter that fires with bullets the size of pellets, but don't do this now...
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/peashooter
+	name = "peashooter breech"
+	desc = "Something that can be charitably called a \" Peashooter \" that is fitted to be mounted to a tank turret, it seems haphazardly built from scrap."
+	icon_state = "mecha_peashooter"
+	equip_cooldown = 10
+	projectile = /obj/projectile/bullet/pellet/shotgun_improvised
+	projectiles = 30
+	projectiles_cache = 0
+	projectiles_cache_max = 120
+	projectiles_per_shot = 6
+	projectile_delay = 0.2 SECONDS
+	equip_cooldown = 1 SECONDS
+	harmful = TRUE
+	ammo_type = MECHA_AMMO_PEASHOOTER
+	mech_flags = EXOSUIT_MODULE_TRASHTANK
+
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/minipea
+	name = "peashooter minigun"
+	desc = "Through the power of special Syndicate glue, multiple peashooters have been strapped together to increase the firerate."
+	icon_state = "mecha_minipea"
+	projectile = /obj/projectile/bullet/pellet/shotgun_improvised
+	projectiles = 120
+	projectiles_cache = 0
+	projectiles_cache_max = 600
+	projectiles_per_shot = 30
+	projectile_delay = 0.05 SECONDS
+	equip_cooldown = 1 SECONDS
+	harmful = TRUE
+	ammo_type = MECHA_AMMO_PEASHOOTER
+	mech_flags = EXOSUIT_MODULE_TRASHTANK
+
+/obj/item/mecha_parts/mecha_equipment/tankupgrade
+	name = "trash tank armor plating"
+	desc = "A jumble of whatever scrap can be scrounged together to beef up a trash tank."
+	icon_state = "tank_armor"
+	mech_flags = EXOSUIT_MODULE_TRASHTANK
+
+/obj/item/mecha_parts/mecha_equipment/tankupgrade/can_attach(obj/vehicle/sealed/mecha/trash_tank/tank, attach_right = FALSE, mob/user)
+	if(tank.type != /obj/vehicle/sealed/mecha/trash_tank)
+		to_chat(user, span_warning("This armor plating can only be installed to a trash tank!"))
+		return FALSE
+	if(!(tank.mecha_flags & PANEL_OPEN)) //non-removable upgrade, so lets make sure the pilot or owner has their say.
+		to_chat(user, span_warning("[tank] must have maintenance protocols active in order to allow this conversion kit."))
+		return FALSE
+	return TRUE
+
+/obj/item/mecha_parts/mecha_equipment/tankupgrade/attach(obj/vehicle/sealed/mecha/trash_tank/tank, attach_right = FALSE)
+	tank.upgrade()
+	playsound(get_turf(tank),'sound/items/ratchet.ogg',50,TRUE)
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/infantry_support_gun
+	name = "infantry support gun breech"
+	desc = "An improvised mantlet fitted to launch IED's torwards enemies."
+	icon_state = "mecha_supportgun"
+	fire_sound = 'sound/weapons/gun/general/grenade_launch.ogg'
+	harmful = TRUE
+	ammo_type = MECHA_AMMO_ISG
+	mech_flags = EXOSUIT_MODULE_TRASHTANK
+	var/det_time = 3 SECONDS
+	equip_cooldown = 60
+	projectile = /obj/item/grenade/iedcasing/spawned
+	missile_speed = 1.5
+	projectiles = 1
+	projectiles_cache = 0
+	projectiles_cache_max = 6
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/infantry_support_gun/proj_init(obj/item/grenade/flashbang/F, mob/user)
+	var/turf/T = get_turf(src)
+	message_admins("[ADMIN_LOOKUPFLW(user)] fired a [F] in [ADMIN_VERBOSEJMP(T)]")
+	user.log_message("fired a [F] in [AREACOORD(T)].", LOG_GAME)
+	user.log_message("fired a [F] in [AREACOORD(T)].", LOG_ATTACK)
+	addtimer(CALLBACK(F, TYPE_PROC_REF(/obj/item/grenade/iedcasing/spawned, detonate)), det_time)

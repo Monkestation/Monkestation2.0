@@ -268,10 +268,10 @@
 
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	clothing_flags = THICKMATERIAL
+	clothing_flags = THICKMATERIAL|HEADINTERNALS
 	resistance_flags = FIRE_PROOF|LAVA_PROOF|ACID_PROOF
 	transparent_protection = HIDESUITSTORAGE|HIDEJUMPSUIT
-	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/resonator, /obj/item/mining_scanner, /obj/item/t_scanner/adv_mining_scanner, /obj/item/gun/energy/recharge/kinetic_accelerator, /obj/item/pickaxe)
+	allowed = null
 	greyscale_colors = "#4d4d4d#808080"
 	greyscale_config = /datum/greyscale_config/heck_suit
 	greyscale_config_worn = /datum/greyscale_config/heck_suit/worn
@@ -290,6 +290,7 @@
 	. = ..()
 	AddElement(/datum/element/radiation_protected_clothing)
 	AddComponent(/datum/component/gags_recolorable)
+	allowed = GLOB.mining_suit_allowed
 
 /obj/item/clothing/suit/hooded/hostile_environment/process(seconds_per_tick)
 	. = ..()
@@ -389,7 +390,7 @@
 
 /obj/item/melee/ghost_sword/Destroy()
 	for(var/mob/dead/observer/G in spirits)
-		G.invisibility = GLOB.observer_default_invisibility
+		G.RemoveInvisibility(type)
 	spirits.Cut()
 	STOP_PROCESSING(SSobj, src)
 	. = ..()
@@ -432,10 +433,10 @@
 			continue
 		var/mob/dead/observer/G = i
 		ghost_counter++
-		G.invisibility = 0
+		G.SetInvisibility(INVISIBILITY_NONE, id = type, priority = INVISIBILITY_PRIORITY_BASIC_ANTI_INVISIBILITY)
 		current_spirits |= G
 	for(var/mob/dead/observer/G in spirits - current_spirits)
-		G.invisibility = GLOB.observer_default_invisibility
+		G.RemoveInvisibility(type)
 	spirits = current_spirits
 	return ghost_counter
 
@@ -527,7 +528,7 @@
 	var/static/list/banned_turfs = typecacheof(list(/turf/open/space/transit, /turf/closed))
 
 /obj/item/lava_staff/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(SHOULD_SKIP_INTERACTION(interacting_with, src, user))
+	if(!isturf(interacting_with) && (user.istate & ISTATE_HARM))
 		return NONE
 	return ranged_interact_with_atom(interacting_with, user, modifiers)
 
@@ -710,10 +711,10 @@
  *
  */
 
-/obj/item/melee/cleaving_saw/AltClick(mob/user) //want blood born quick steps or dark souls rolls (completely cosmetic)
-	. = ..()
+/obj/item/melee/cleaving_saw/click_alt(mob/user) //want blood born quick steps or dark souls rolls (completely cosmetic)
 	roll_orientation = !roll_orientation
 	to_chat(user, span_notice("You are now [roll_orientation ? "rolling" : "quick-stepping"] when you dodge. (This only affects if you spin or not during a dodge.)"))
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/melee/cleaving_saw/pre_attack_secondary(atom/A, mob/living/user, params)
 	return TRUE // Let's dance.
@@ -753,7 +754,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	slot_flags = ITEM_SLOT_BACK
-	w_class = WEIGHT_CLASS_BULKY
+	w_class = WEIGHT_CLASS_NORMAL
 	force = 20
 	damtype = BURN
 	hitsound = 'sound/weapons/taserhit.ogg'
@@ -807,11 +808,13 @@
 	affected_weather.wind_down()
 	user.log_message("has dispelled a storm at [AREACOORD(user_turf)].", LOG_GAME)
 
+/obj/item/storm_staff/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!isturf(interacting_with) && (user.istate & ISTATE_HARM))
+		return NONE
+	return ranged_interact_with_atom(interacting_with, user, modifiers)
+
 /obj/item/storm_staff/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	return thunder_blast(interacting_with, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
-
-/obj/item/storm_staff/afterattack(atom/target, mob/user, click_parameters)
-	thunder_blast(target, user)
 
 /obj/item/storm_staff/proc/thunder_blast(atom/target, mob/user)
 	if(!thunder_charges)

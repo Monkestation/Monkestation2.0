@@ -3,13 +3,13 @@
 /datum/computer_file/program/secureye
 	filename = "secureye"
 	filedesc = "SecurEye"
-	category = PROGRAM_CATEGORY_MISC
+	downloader_category = PROGRAM_CATEGORY_SECURITY
 	ui_header = "borg_mon.gif"
-	program_icon_state = "generic"
+	program_open_overlay = "generic"
 	extended_desc = "This program allows access to standard security camera networks."
-	requires_ntnet = TRUE
-	transfer_access = list(ACCESS_SECURITY)
-	usage_flags = PROGRAM_CONSOLE | PROGRAM_LAPTOP
+	program_flags = PROGRAM_ON_NTNET_STORE | PROGRAM_REQUIRES_NTNET
+	download_access = list(ACCESS_SECURITY)
+	can_run_on_flags = PROGRAM_CONSOLE | PROGRAM_LAPTOP
 	size = 5
 	tgui_id = "NtosSecurEye"
 	program_icon = "eye"
@@ -18,7 +18,7 @@
 	///Boolean on whether or not the app will make noise when flipping around the channels.
 	var/spying = FALSE
 
-	var/list/network = list("ss13")
+	var/list/network = list(CAMERANET_NETWORK_SS13)
 	///List of weakrefs of all users watching the program.
 	var/list/concurrent_users = list()
 
@@ -38,14 +38,18 @@
 	filename = "syndeye"
 	filedesc = "SyndEye"
 	extended_desc = "This program allows for illegal access to security camera networks."
-	transfer_access = list()
-	available_on_ntnet = FALSE
-	available_on_syndinet = TRUE
-	requires_ntnet = FALSE
-	usage_flags = PROGRAM_ALL
-	unique_copy = TRUE
+	download_access = list()
+	can_run_on_flags = PROGRAM_ALL
+	program_flags = PROGRAM_ON_SYNDINET_STORE | PROGRAM_UNIQUE_COPY
 
-	network = list("ss13", "mine", "rd", "labor", "ordnance", "minisat")
+	network = list(
+		CAMERANET_NETWORK_SS13,
+		CAMERANET_NETWORK_MINE,
+		CAMERANET_NETWORK_RD,
+		CAMERANET_NETWORK_LABOR,
+		CAMERANET_NETWORK_ORDNANCE,
+		CAMERANET_NETWORK_MINISAT,
+	)
 	spying = TRUE
 
 /datum/computer_file/program/secureye/on_install(datum/computer_file/source, obj/item/modular_computer/computer_installing)
@@ -99,7 +103,7 @@
 		data["activeCamera"] = list(
 			name = active_camera.c_tag,
 			ref = REF(active_camera),
-			status = active_camera.status,
+			status = active_camera.camera_enabled,
 		)
 	return data
 

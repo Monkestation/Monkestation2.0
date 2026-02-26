@@ -40,14 +40,18 @@
 	for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/atmospherics/components/unary/vent_pump))
 		if(QDELETED(temp_vent))
 			continue
-		if(is_station_level(temp_vent.loc.z) && !temp_vent.welded)
-			var/datum/pipeline/temp_vent_parent = temp_vent.parents[1]
-			if(!temp_vent_parent)
-				continue // No parent vent
-			// Stops Cortical Borers getting stuck in small networks.
-			// See: Security, Virology
-			if(length(temp_vent_parent.other_atmos_machines) > 20)
-				vents += temp_vent
+		if(!is_station_level(temp_vent.loc.z) || temp_vent.welded)
+			continue
+		var/area/vent_area = get_area(temp_vent)
+		if(!(vent_area.type in GLOB.the_station_areas))
+			continue
+		var/datum/pipeline/temp_vent_parent = temp_vent.parents[1]
+		if(!temp_vent_parent)
+			continue // No parent vent
+		// Stops Borers getting stuck in small networks.
+		// See: Security, Virology
+		if(length(temp_vent_parent.other_atmos_machines) > 20)
+			vents += temp_vent
 
 	if(!length(vents))
 		message_admins("An event attempted to spawn a borer but no suitable vents were found. Shutting down.")
@@ -56,7 +60,7 @@
 	var/list/candidates = SSpolling.poll_ghost_candidates(
 		role = ROLE_CORTICAL_BORER,
 		ignore_category = POLL_IGNORE_CORTICAL_BORER,
-		alert_pic = /mob/living/basic/cortical_borer,
+		alert_pic = /mob/living/basic/cortical_borer/empowered,
 	)
 
 	if(!length(candidates))
@@ -69,7 +73,7 @@
 		var/mob/dead/observer/new_borer = pick(candidates)
 		candidates -= new_borer
 		var/vent = pick(vents)
-		var/mob/living/basic/cortical_borer/spawned_cb = new /mob/living/basic/cortical_borer(get_turf(vent))
+		var/mob/living/basic/cortical_borer/empowered/spawned_cb = new /mob/living/basic/cortical_borer/empowered(get_turf(vent))
 		spawned_cb.move_into_vent(vent)
 		spawned_cb.PossessByPlayer(new_borer.ckey)
 		spawned_cb.mind.add_antag_datum(/datum/antagonist/cortical_borer/hivemind)
@@ -101,21 +105,25 @@
 	for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/atmospherics/components/unary/vent_pump))
 		if(QDELETED(temp_vent))
 			continue
-		if(is_station_level(temp_vent.loc.z) && !temp_vent.welded)
-			var/datum/pipeline/temp_vent_parent = temp_vent.parents[1]
-			if(!temp_vent_parent)
-				continue // No parent vent
-			// Stops Borers getting stuck in small networks.
-			// See: Security, Virology
-			if(length(temp_vent_parent.other_atmos_machines) > 20)
-				vents += temp_vent
+		if(!is_station_level(temp_vent.loc.z) || temp_vent.welded)
+			continue
+		var/area/vent_area = get_area(temp_vent)
+		if(!(vent_area.type in GLOB.the_station_areas))
+			continue
+		var/datum/pipeline/temp_vent_parent = temp_vent.parents[1]
+		if(!temp_vent_parent)
+			continue // No parent vent
+		// Stops Borers getting stuck in small networks.
+		// See: Security, Virology
+		if(length(temp_vent_parent.other_atmos_machines) > 20)
+			vents += temp_vent
 	if(!length(vents))
 		return FALSE
 	return TRUE
 
 /datum/dynamic_ruleset/midround/from_ghosts/cortical_borer/generate_ruleset_body(mob/applicant)
 	var/obj/vent = pick_n_take(vents)
-	var/mob/living/basic/cortical_borer/new_borer = new(vent.loc)
+	var/mob/living/basic/cortical_borer/empowered/new_borer = new(vent.loc)
 	new_borer.PossessByPlayer(applicant.key)
 	new_borer.move_into_vent(vent)
 	message_admins("[ADMIN_LOOKUPFLW(new_borer)] has been made into a borer by the midround ruleset.")

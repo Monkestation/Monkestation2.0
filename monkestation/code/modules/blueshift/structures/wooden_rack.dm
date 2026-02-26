@@ -6,14 +6,14 @@
 	icon = 'monkestation/code/modules/blueshift/icons/storage.dmi'
 	resistance_flags = FLAMMABLE
 
-/obj/structure/rack/wooden/MouseDrop_T(obj/object, mob/user, params)
+/obj/structure/rack/wooden/mouse_drop_receive(mob/living/dropped, mob/user, params)
 	. = ..()
 	var/list/modifiers = params2list(params)
 	if(!LAZYACCESS(modifiers, ICON_X) || !LAZYACCESS(modifiers, ICON_Y))
 		return
 
-	object.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(world.icon_size / 3), world.icon_size / 3)
-	object.pixel_y = text2num(LAZYACCESS(modifiers, ICON_Y)) > 16 ? 10 : -4
+	dropped.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(world.icon_size / 3), world.icon_size / 3)
+	dropped.pixel_y = text2num(LAZYACCESS(modifiers, ICON_Y)) > 16 ? 10 : -4
 
 /obj/structure/rack/wooden/wrench_act_secondary(mob/living/user, obj/item/tool)
 	return NONE

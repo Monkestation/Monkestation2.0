@@ -52,10 +52,10 @@
 	if(!scrambledcodes && !builtInCamera)
 		builtInCamera = new (src)
 		builtInCamera.c_tag = real_name
-		builtInCamera.network = list("ss13")
+		builtInCamera.network = list(CAMERANET_NETWORK_SS13)
 		builtInCamera.internal_light = FALSE
 		if(wires.is_cut(WIRE_CAMERA))
-			builtInCamera.status = 0
+			builtInCamera.camera_enabled = 0
 	update_icons()
 	. = ..()
 
@@ -90,7 +90,13 @@
 	log_silicon("New cyborg [key_name(src)] created with [connected_ai ? "master AI: [key_name(connected_ai)]" : "no master AI"]")
 	log_current_laws()
 
-	alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER, ALARM_CAMERA, ALARM_BURGLAR, ALARM_MOTION), list(z))
+	var/static/list/alert_areas
+	if(isnull(alert_areas))
+		alert_areas = (GLOB.the_station_areas + typesof(/area/mine))
+	if(is_station_level(z))
+		alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER, ALARM_CAMERA, ALARM_BURGLAR, ALARM_MOTION), SSmapping.levels_by_trait(ZTRAIT_STATION), alert_areas)
+	else
+		alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER, ALARM_CAMERA, ALARM_BURGLAR, ALARM_MOTION), (SSmapping.levels_by_trait(ZTRAIT_STATION) + z), alert_areas)
 	RegisterSignal(alert_control.listener, COMSIG_ALARM_LISTENER_TRIGGERED, PROC_REF(alarm_triggered))
 	RegisterSignal(alert_control.listener, COMSIG_ALARM_LISTENER_CLEARED, PROC_REF(alarm_cleared))
 	alert_control.listener.RegisterSignal(src, COMSIG_LIVING_DEATH, TYPE_PROC_REF(/datum/alarm_listener, prevent_alarm_changes))
@@ -172,6 +178,7 @@
 			"Miner" = /obj/item/robot_model/miner,
 			"Janitor" = /obj/item/robot_model/janitor,
 			"Service" = /obj/item/robot_model/service,
+			"Standard" = /obj/item/robot_model/standard,
 		)
 		if(!CONFIG_GET(flag/disable_peaceborg))
 			GLOB.cyborg_model_list["Peacekeeper"] = /obj/item/robot_model/peacekeeper
@@ -237,11 +244,9 @@
 	if(!ionpulse_on)
 		return
 
-	if(cell.charge <= 10)
+	if(!cell.use(0.01 * STANDARD_CELL_CHARGE))
 		toggle_ionpulse()
 		return
-
-	cell.charge -= 10
 	return TRUE
 
 /mob/living/silicon/robot/proc/toggle_ionpulse()
@@ -263,7 +268,7 @@
 /mob/living/silicon/robot/get_status_tab_items()
 	. = ..()
 	if(cell)
-		. += "Charge Left: [cell.charge]/[cell.maxcharge]"
+		. += "Charge Left: [display_energy(cell.charge)]/[display_energy(cell.maxcharge)]"
 	else
 		. += "No Cell Inserted!"
 
@@ -327,8 +332,12 @@
 			add_overlay("ov-opencover -c")
 	if(hat)
 		var/mutable_appearance/head_overlay = hat.build_worn_icon(default_layer = 20, default_icon_file = 'icons/mob/clothing/head/default.dmi')
-		head_overlay.pixel_z += hat_offset
+		head_overlay.pixel_z += model.hat_offset
 		add_overlay(head_overlay)
+	if(worn_badge)
+		var/mutable_appearance/accessory_overlay = mutable_appearance(worn_badge.worn_icon, worn_badge.icon_state)
+		accessory_overlay.pixel_z += model.badge_offset
+		add_overlay(accessory_overlay)
 	update_appearance(UPDATE_OVERLAYS)
 
 /mob/living/silicon/robot/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
@@ -397,6 +406,13 @@
 		clear_alert(ALERT_HACKED)
 	set_lockcharge(state)
 
+/mob/living/silicon/robot/proc/motivate()
+	// :3
+	if(!wires?.is_cut(WIRE_MOTIVATIONAL))
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/mob, emote), "scream")
+		playsound(src, "goon/sounds/sparks/electric_shock_short.ogg", 50, 1)
+		emp_act(EMP_HEAVY)
+		logevent("System motivational shock applied!")
 
 ///Reports the event of the change in value of the lockcharge variable.
 /mob/living/silicon/robot/proc/set_lockcharge(new_lockcharge)
@@ -615,9 +631,12 @@
 		if(A.update_remote_sight(src)) //returns 1 if we override all other sight updates.
 			return
 
-	if(sight_mode & BORGMESON)
+	if(sight_mode & (BORGMESON|BORGNVMESON))
 		new_sight |= SEE_TURFS
-		lighting_color_cutoffs = blend_cutoff_colors(lighting_color_cutoffs, list(5, 15, 5))
+		if(sight_mode & BORGNVMESON)
+			lighting_color_cutoffs = blend_cutoff_colors(lighting_color_cutoffs, list(10, 30, 10))
+		else
+			lighting_color_cutoffs = blend_cutoff_colors(lighting_color_cutoffs, list(5, 15, 5))
 
 	if(sight_mode & BORGMATERIAL)
 		new_sight |= SEE_OBJS
@@ -659,7 +678,7 @@
 	update_health_hud()
 	update_icons() //Updates eye_light overlay
 
-/mob/living/silicon/robot/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
+/mob/living/silicon/robot/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE, revival_policy = POLICY_REVIVAL)
 	. = ..()
 	if(!.)
 		return
@@ -726,8 +745,6 @@
 	if(length(model.model_traits))
 		add_traits(model.model_traits, MODEL_TRAIT)
 
-	hat_offset = model.hat_offset
-
 	INVOKE_ASYNC(src, PROC_REF(updatename))
 
 
@@ -738,6 +755,13 @@
 	new_hat.forceMove(src)
 	update_icons()
 
+/mob/living/silicon/robot/proc/pin_badge(obj/item/clothing/accessory/badge/new_badge)
+	if(worn_badge)
+		worn_badge.forceMove(get_turf(src))
+	worn_badge = new_badge
+	worn_badge.forceMove(src)
+	update_icons()
+
 /**
 	*Checking Exited() to detect if a hat gets up and walks off.
 	*Drones and pAIs might do this, after all.
@@ -746,6 +770,11 @@
 	. = ..()
 	if(hat == gone)
 		hat = null
+		if(!QDELETED(src)) //Don't update icons if we are deleted.
+			update_icons()
+
+	if(worn_badge == gone)
+		worn_badge = null
 		if(!QDELETED(src)) //Don't update icons if we are deleted.
 			update_icons()
 

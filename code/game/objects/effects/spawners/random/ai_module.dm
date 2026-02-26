@@ -27,6 +27,8 @@
 		/obj/item/ai_module/core/full/crewsimovpp,
 		/obj/item/ai_module/supplied/crimereligion,
 		/obj/item/ai_module/core/full/honkertech,
+		/obj/item/ai_module/core/full/milf,
+		/obj/item/ai_module/core/full/henchmen,
 		/obj/item/ai_module/core/full/custom, // uses lawsets from config/silicon_laws.txt (defaults to asmiov if no lawsets)
 	)
 
@@ -47,7 +49,10 @@
 		/obj/item/ai_module/zeroth/deltaemergency,
 		/obj/item/ai_module/core/full/viromajor,
 		/obj/item/ai_module/core/full/independentstation,
-		/obj/item/ai_module/core/full/dalegribble
+		/obj/item/ai_module/core/full/dalegribble,
+		/obj/item/ai_module/core/full/tsundere,
+		/obj/item/ai_module/core/full/dj,
+		/obj/item/ai_module/core/full/wormtongue,
 	)
 
 /obj/effect/spawner/random/aimodule/harmful

@@ -91,7 +91,7 @@
 	else if(times_to_lower_stamina)
 		next_action -= seconds_per_tick
 		if(next_action < 0)
-			hallucinator.stamina.adjust(-15)
+			hallucinator.stamina.adjust(-8)
 			next_action += 2
 			times_to_lower_stamina -= 1
 

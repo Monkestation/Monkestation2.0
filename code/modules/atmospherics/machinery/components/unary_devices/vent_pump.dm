@@ -16,6 +16,7 @@
 	shift_underlay_only = FALSE
 	pipe_state = "uvent"
 	vent_movement = VENTCRAWL_ALLOWED | VENTCRAWL_CAN_SEE | VENTCRAWL_ENTRANCE_ALLOWED
+	interaction_flags_click = NEED_VENTCRAWL
 
 	///Direction of pumping the gas (ATMOS_DIRECTION_RELEASING or ATMOS_DIRECTION_SIPHONING)
 	var/pump_direction = ATMOS_DIRECTION_RELEASING
@@ -54,15 +55,16 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/multitool_act(mob/living/user, obj/item/multitool/multi_tool)
 	. = ..()
 
-	if(istype(multi_tool.buffer, /obj/machinery/air_sensor))
-		var/obj/machinery/air_sensor/sensor = multi_tool.buffer
+	var/datum/buffer = multitool_get_buffer(multi_tool)
+	if(istype(buffer, /obj/machinery/air_sensor))
+		var/obj/machinery/air_sensor/sensor = buffer
 		sensor.outlet_id = id_tag
-		multi_tool.set_buffer(null)
+		multitool_set_buffer(multi_tool, null)
 		balloon_alert(user, "output linked to sensor")
 		return ITEM_INTERACT_SUCCESS
 
 	balloon_alert(user, "saved in buffer")
-	multi_tool.set_buffer(src)
+	multitool_set_buffer(multi_tool, src)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/atmospherics/components/unary/vent_pump/Destroy()
@@ -150,7 +152,7 @@
 	if(!is_operational)
 		return
 	if(!nodes[1])
-		on = FALSE
+		set_on(FALSE)
 	if(!on || welded)
 		return
 	var/turf/open/us = loc
@@ -169,11 +171,12 @@
 			pressure_delta = min(pressure_delta, (air_contents.return_pressure() - internal_pressure_bound))
 
 		if(pressure_delta > 0)
-			if(air_contents.temperature > 0)
-				var/transfer_moles = (pressure_delta * environment.volume) / (air_contents.temperature * R_IDEAL_GAS_EQUATION)
+			var/contents_temp = air_contents.temperature
+			if(contents_temp > 0)
+				var/transfer_moles = (pressure_delta * environment.volume) / (contents_temp * R_IDEAL_GAS_EQUATION)
 				var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
 
-				if(!removed || !removed.total_moles())
+				if(!removed?.total_moles())
 					return
 
 				loc.assume_air(removed)
@@ -186,16 +189,18 @@
 		if(pressure_checks&ATMOS_INTERNAL_BOUND)
 			pressure_delta = min(pressure_delta, (internal_pressure_bound - air_contents.return_pressure()))
 
-		if(pressure_delta > 0 && environment.temperature > 0)
-			var/transfer_moles = (pressure_delta * air_contents.volume) / (environment.temperature * R_IDEAL_GAS_EQUATION)
+		if(pressure_delta > 0)
+			var/env_temperature = environment.temperature
+			if(env_temperature > 0)
+				var/transfer_moles = (pressure_delta * air_contents.volume) / (env_temperature * R_IDEAL_GAS_EQUATION)
 
-			var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
+				var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
 
-			if(!removed || !removed.total_moles()) //No venting from space 4head
-				return
+				if(!removed?.total_moles()) //No venting from space 4head
+					return
 
-			air_contents.merge(removed)
-			update_parents()
+				air_contents.merge(removed)
+				update_parents()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/update_name()
 	. = ..()
@@ -215,7 +220,7 @@
 		else
 			user.visible_message(span_notice("[user] unwelded the vent."), span_notice("You unweld the vent."), span_hear("You hear welding."))
 			welded = FALSE
-		update_appearance()
+		update_appearance(UPDATE_ICON)
 		pipe_vision_img = image(src, loc, dir = dir)
 		SET_PLANE_EXPLICIT(pipe_vision_img, ABOVE_HUD_PLANE, src)
 		investigate_log("was [welded ? "welded shut" : "unwelded"] by [key_name(user)]", INVESTIGATE_ATMOS)
@@ -242,7 +247,7 @@
 		return
 	user.visible_message(span_warning("[user] furiously claws at [src]!"), span_notice("You manage to clear away the stuff blocking the vent."), span_hear("You hear loud scraping noises."))
 	welded = FALSE
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 	pipe_vision_img = image(src, loc, dir = dir)
 	SET_PLANE_EXPLICIT(pipe_vision_img, ABOVE_HUD_PLANE, src)
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 100, TRUE)

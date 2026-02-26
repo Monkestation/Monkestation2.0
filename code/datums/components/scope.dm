@@ -49,6 +49,13 @@
 /datum/component/scope/proc/do_secondary_zoom(datum/source, mob/user, atom/target, list/modifiers)
 	SIGNAL_HANDLER
 
+	// scoping in using a TK grab causes a lot of strange issues, so don't
+	var/obj/item/gun/thisgun = parent
+	if(thisgun.tk_firing(user))
+		to_chat(user, span_warning("You cannot comprehend what it would mean to scope in with your mind!"))
+		user.balloon_alert(user, "can't scope in!")
+		return ITEM_INTERACT_BLOCKING
+
 	if(tracker)
 		stop_zooming(user)
 	else

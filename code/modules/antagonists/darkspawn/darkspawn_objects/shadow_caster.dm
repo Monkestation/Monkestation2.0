@@ -17,6 +17,7 @@
 	. = ..()
 	update_icon_state()
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
+	AddComponent(/datum/component/light_eater)
 
 
 /obj/item/gun/ballistic/bow/shadow_caster/shoot_live_shot(mob/living/user, pointblank, atom/pbtarget, message)
@@ -62,19 +63,22 @@
 	icon_state = "caster_arrow"
 	inhand_icon_state = null
 	embedding = list("embed_chance" = 20, "embedded_fall_chance" = 0)
-	projectile_type = /obj/projectile/energy/shadow_arrow
+	projectile_type = /obj/projectile/bullet/shadow_arrow
 
 //the projectile being shot from the bow
-/obj/projectile/energy/shadow_arrow
+/obj/projectile/bullet/shadow_arrow
 	name = "shadow arrow"
 	icon = 'icons/obj/darkspawn_projectiles.dmi'
 	icon_state = "caster_arrow"
 	damage = 25 //reduced damage per arrow compared to regular ones
+	damage_type = BURN
+	wound_bonus = -100
+	embedding = list("embed_chance" = 20, "embedded_fall_chance" = 0)
 
-/obj/projectile/energy/shadow_arrow/Initialize(mapload)
+/obj/projectile/bullet/shadow_arrow/Initialize(mapload)
 	. = ..()
 	update_appearance(UPDATE_OVERLAYS)
 
-/obj/projectile/energy/shadow_arrow/update_overlays()
+/obj/projectile/bullet/shadow_arrow/update_overlays()
 	. = ..()
 	. += emissive_appearance(icon, "[icon_state]_emissive", src)

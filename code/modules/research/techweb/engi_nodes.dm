@@ -26,9 +26,11 @@
 		"firelock_board",
 		"generic_tank",
 		"grounding_rod",
+		"high_battery",
 		"high_cell",
 		"high_micro_laser",
 		"mesons",
+		"microwave_engineering",
 		"nano_mani",
 		"oxygen_tank",
 		"pacman",
@@ -57,6 +59,7 @@
 		"teg",
 		"teg-circ",
 		"marker_beacon",
+		"stompers",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_5_POINTS)
 	discount_experiments = list(/datum/experiment/scanning/random/material/easy = TECHWEB_TIER_3_POINTS)
@@ -190,10 +193,12 @@
 	prereq_ids = list("engineering")
 	design_ids = list(
 		"hyper_cell",
+		"hyper_battery",
 		"power_turbine_console",
 		"smes",
 		"super_capacitor",
 		"super_cell",
+		"super_battery",
 		"turbine_compressor",
 		"turbine_rotor",
 		"turbine_stator",

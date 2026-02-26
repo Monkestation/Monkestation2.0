@@ -25,15 +25,10 @@
 		gong(H)
 
 /datum/species/golem/bronze/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style)
-	..()
-	if(world.time > last_gong_time + gong_cooldown && (M.istate & ISTATE_HARM))
-		gong(H)
-
-/datum/species/golem/bronze/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, mob/living/carbon/human/H)
-	..()
-	if(world.time > last_gong_time + gong_cooldown)
-		gong(H)
-
+	. = ..()
+	if(world.time < last_gong_time + gong_cooldown)
+		return
+	gong(H)
 
 /datum/species/golem/bronze/proc/gong(mob/living/carbon/human/H)
 	last_gong_time = world.time

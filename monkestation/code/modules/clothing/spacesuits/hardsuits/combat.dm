@@ -5,7 +5,6 @@
 	name = "security hardsuit"
 	desc = "A special suit designed for work in a hazardous, low pressure environment. Has an additional layer of armor."
 	icon_state = "hardsuit-sec"
-	worn_icon_digitigrade = 'monkestation/icons/mob/clothing/species/suit_digi.dmi'
 	armor_type = /datum/armor/hardsuit/sec
 	hardsuit_helmet = /obj/item/clothing/head/helmet/space/hardsuit/sec
 	allowed = list(

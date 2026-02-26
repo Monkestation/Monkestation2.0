@@ -6,7 +6,10 @@
 	var/time_string = time2text(world.timeofday, format)
 	return show_ds ? "[time_string]:[world.timeofday % 10]" : time_string
 
-/proc/gameTimestamp(format = "hh:mm:ss", wtime=null)
+/proc/time_stamp_metric()
+	return time2text(world.timeofday, "YYYY-MM-DDThh:mm:ss")
+
+/proc/gameTimestamp(format = "hh:mm:ss", wtime=null, legend = FALSE)
 	if(!wtime)
 		wtime = world.time - SSticker.round_start_time
 	var/hour = round(wtime / 36000)
@@ -21,7 +24,10 @@
 	if(second < 10)
 		second = "0[second]"
 
-	return "[hour]:[minute]:[second]"
+	if(legend)
+		return "[hour]h:[minute]m:[second]s"
+	else
+		return "[hour]:[minute]:[second]"
 
 /proc/station_time_timestamp(format = "hh:mm:ss", wtime)
 	return time2text(station_time(wtime), format)
@@ -149,12 +155,3 @@ GLOBAL_VAR_INIT(rollovercheck_last_timeofday, 0)
 	else if (time < 1 HOURS)
 		time += 12 HOURS // e.g. 12.23 AM
 	return "[time2text(time, format)] [am_pm]"
-
-//monkestation edit start
-//returns time diff of two times normalized to time_rate_multiplier
-/proc/daytimeDiff(timeA, timeB)
-
-	//if the time is less than station time, add 24 hours (MIDNIGHT_ROLLOVER)
-	var/time_diff = timeA > timeB ? (timeB + 24 HOURS) - timeA : timeB - timeA
-	return time_diff / SSticker.station_time_rate_multiplier // normalise with the time rate multiplier
-//monkestation edit end

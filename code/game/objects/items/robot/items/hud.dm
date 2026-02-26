@@ -17,6 +17,11 @@
 	sight_mode = BORGMESON
 	icon_state = "meson"
 
+/obj/item/borg/sight/meson/nightvision
+	name = "\proper bright meson vision"
+	sight_mode = BORGNVMESON
+	icon_state = "meson"
+
 /obj/item/borg/sight/material
 	name = "\proper material vision"
 	sight_mode = BORGMATERIAL

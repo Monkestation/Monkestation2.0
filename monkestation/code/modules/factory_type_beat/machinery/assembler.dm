@@ -6,6 +6,7 @@
 	var/speed_multiplier = 1
 	var/datum/crafting_recipe/chosen_recipe
 	var/crafting = FALSE
+	var/datum/crafting_recipe/current_craft_recipe // The recipe currently being crafted
 
 	var/static/list/legal_crafting_recipes = list()
 	var/list/crafting_inventory = list()
@@ -26,6 +27,13 @@
 	if(!length(legal_crafting_recipes))
 		create_recipes()
 
+/obj/machinery/assembler/proc/empty_crafting_inventory()
+	for(var/atom/movable/listed as anything in crafting_inventory)
+		if(QDELETED(listed))
+			continue
+		listed.forceMove(get_turf(src))
+		crafting_inventory -= listed
+
 /obj/machinery/assembler/RefreshParts()
 	. = ..()
 	var/datum/stock_part/manipulator/locate_servo = locate() in component_parts
@@ -35,9 +43,7 @@
 
 /obj/machinery/assembler/Destroy()
 	. = ..()
-	for(var/atom/movable/movable in crafting_inventory)
-		movable.forceMove(get_turf(src))
-		crafting_inventory -= movable
+	empty_crafting_inventory()
 
 /obj/machinery/assembler/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -71,9 +77,9 @@
 	if(!choice)
 		return
 	chosen_recipe = choice
-	for(var/atom/movable/listed as anything in crafting_inventory)
-		listed.forceMove(get_turf(src))
-		crafting_inventory -= listed
+	if(crafting)
+		return
+	empty_crafting_inventory()
 
 /obj/machinery/assembler/CanAllowThrough(atom/movable/mover, border_dir)
 	if(!anchored || !chosen_recipe)
@@ -98,6 +104,8 @@
 
 /obj/machinery/assembler/proc/accept_item(atom/movable/atom_movable)
 	if(!chosen_recipe)
+		return
+	if(!isturf(atom_movable.loc))
 		return
 	if(isstack(atom_movable))
 		var/obj/item/stack/stack = atom_movable
@@ -199,45 +207,53 @@
 	if(!length(reqs))
 		start_craft()
 
+/obj/machinery/assembler/proc/consume_stack(obj/item/Type, amount)
+	var/left = amount
+	for(var/obj/item/item as anything in crafting_inventory)
+		if(isstack(item) && istype(item, Type))
+			var/obj/item/stack/stack = item
+			if(left >= stack.amount)
+				left -= stack.amount
+				stack.use(stack.amount)
+				crafting_inventory -= item
+				if(left == 0)
+					return
+			else
+				stack.use(left)
+				return
+
 /obj/machinery/assembler/proc/start_craft()
 	if(crafting)
 		return
 	crafting = TRUE
+	current_craft_recipe = chosen_recipe // Store the recipe we're actually crafting
 
-	if(!machine_do_after_visable(src, chosen_recipe.time * speed_multiplier * 3))
+	if(!machine_do_after_visable(src, current_craft_recipe.time * speed_multiplier * 3))
+		crafting = FALSE
+		current_craft_recipe = null
 		return
 
-	var/list/requirements = chosen_recipe.reqs
+	var/list/requirements = current_craft_recipe.reqs
 	var/list/parts = list()
 
 	for(var/obj/item/req as anything in requirements)
-		for(var/obj/item/item as anything in crafting_inventory)
-			if(!istype(item, req))
-				continue
-			if(isstack(item))
-				var/obj/item/stack/stack = item
-				if(stack.amount == requirements[stack.merge_type])
-					var/failed = TRUE
-					crafting_inventory -= item
-					for(var/obj/item/part as anything in chosen_recipe.parts)
-						if(!istype(item, part))
-							continue
-						parts += item
-						failed = FALSE
-					if(failed)
-						qdel(item)
-				else if(stack.amount > requirements[item.type])
-					for(var/obj/item/part as anything in chosen_recipe.parts)
-						if(!istype(item, part))
-							continue
-						var/obj/item/stack/new_stack = new item
-						new_stack.amount = requirements[item.type]
-						parts += new_stack
-					stack.amount -= requirements[stack.merge_type]
-			else
+		if(ispath(req, /obj/item/stack))
+			for(var/obj/item/part as anything in current_craft_recipe.parts)
+				if(!istype(req, part))
+					continue
+				var/obj/item/stack/new_stack = new req.type
+				new_stack.amount = current_craft_recipe.parts[part]
+				parts += new_stack
+			consume_stack(req, requirements[req])
+			continue
+		else
+			var/left = requirements[req]
+			for(var/obj/item/item as anything in crafting_inventory)
+				if(!istype(item, req))
+					continue
 				var/failed = TRUE
 				crafting_inventory -= item
-				for(var/obj/item/part as anything in chosen_recipe.parts)
+				for(var/obj/item/part as anything in current_craft_recipe.parts)
 					if(!istype(item, part))
 						continue
 					parts += item
@@ -245,21 +261,28 @@
 
 				if(failed)
 					qdel(item)
+				left -= 1
+				if(left <= 0)
+					break
 
 	var/atom/movable/I
-	if(ispath(chosen_recipe.result, /obj/item/stack))
-		I = new chosen_recipe.result(src, chosen_recipe.result_amount || 1)
+	if(ispath(current_craft_recipe.result, /obj/item/stack))
+		I = new current_craft_recipe.result(src, current_craft_recipe.result_amount || 1)
 		I.forceMove(drop_location())
 	else
-		I = new chosen_recipe.result (src)
+		I = new current_craft_recipe.result (src)
 		I.forceMove(drop_location())
-		if(I.atom_storage && chosen_recipe.delete_contents)
+		if(I.atom_storage && current_craft_recipe.delete_contents)
 			for(var/obj/item/thing in I)
 				qdel(thing)
-	I.CheckParts(parts, chosen_recipe)
+	I.CheckParts(parts, current_craft_recipe)
 	I.forceMove(drop_location())
 
+	if(current_craft_recipe != chosen_recipe)
+		empty_crafting_inventory()
+
 	crafting = FALSE
+	current_craft_recipe = null
 	check_recipe_state()
 
 

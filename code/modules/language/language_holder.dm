@@ -398,16 +398,11 @@ GLOBAL_LIST_INIT(prototype_language_holders, init_language_holder_prototypes())
 	understood_languages = list(
 		/datum/language/common = list(LANGUAGE_ATOM),
 		/datum/language/draconic = list(LANGUAGE_ATOM),
-		/datum/language/ashtongue = list(LANGUAGE_ATOM),
 	)
 	spoken_languages = list(
 		/datum/language/common = list(LANGUAGE_ATOM),
 		/datum/language/draconic = list(LANGUAGE_ATOM),
-		/datum/language/ashtongue = list(LANGUAGE_ATOM),
 	)
-
-/datum/language_holder/lizard/ash
-	selected_language = /datum/language/draconic
 
 /datum/language_holder/lizard/silver
 	understood_languages = list(
@@ -482,7 +477,6 @@ GLOBAL_LIST_INIT(prototype_language_holders, init_language_holder_prototypes())
 		/datum/language/slime = list(LANGUAGE_ATOM),
 		/datum/language/mushroom = list(LANGUAGE_ATOM),
 		/datum/language/monkey = list(LANGUAGE_ATOM),
-		/datum/language/ashtongue = list(LANGUAGE_ATOM),
 		/datum/language/goblin = list(LANGUAGE_ATOM),
 		/datum/language/nekomimetic = list(LANGUAGE_ATOM),
 		/datum/language/yangyu = list(LANGUAGE_ATOM),
@@ -500,7 +494,6 @@ GLOBAL_LIST_INIT(prototype_language_holders, init_language_holder_prototypes())
 		/datum/language/slime = list(LANGUAGE_ATOM),
 		/datum/language/mushroom = list(LANGUAGE_ATOM),
 		/datum/language/monkey = list(LANGUAGE_ATOM),
-		/datum/language/ashtongue = list(LANGUAGE_ATOM),
 		/datum/language/goblin = list(LANGUAGE_ATOM),
 		/datum/language/nekomimetic = list(LANGUAGE_ATOM),
 		/datum/language/yangyu = list(LANGUAGE_ATOM),
@@ -661,6 +654,47 @@ GLOBAL_LIST_INIT(prototype_language_holders, init_language_holder_prototypes())
 		/datum/language/beachbum = list(LANGUAGE_ATOM),
 	)
 	selected_language = /datum/language/beachbum
+
+/datum/language_holder/ashwalker
+	understood_languages = list(/datum/language/ashtongue = list(LANGUAGE_ATOM))
+	spoken_languages = list(/datum/language/ashtongue = list(LANGUAGE_ATOM))
+	selected_language = /datum/language/ashtongue
+
+/// Language holder for borers, that let them understand any language their host understands.
+/datum/language_holder/borer
+
+/datum/language_holder/borer/has_language(language, flag_to_check = UNDERSTOOD_LANGUAGE)
+	. = ..()
+	if(.)
+		return
+	var/mob/living/basic/cortical_borer/cortical_owner = owner
+	if(istype(cortical_owner))
+		return cortical_owner.human_host?.get_language_holder()?.has_language(language, flag_to_check)
+
+/datum/language_holder/apid
+	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM))
+	spoken_languages = list(/datum/language/common = list(LANGUAGE_ATOM))
+
+/datum/language_holder/goblin
+	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
+								/datum/language/goblin = list(LANGUAGE_ATOM))
+	spoken_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
+							/datum/language/goblin = list(LANGUAGE_ATOM))
+
+/datum/language_holder/yangyu
+	understood_languages = list(
+		/datum/language/common = list(LANGUAGE_ATOM),
+		/datum/language/yangyu = list(LANGUAGE_ATOM),
+	)
+	spoken_languages = list(
+		/datum/language/common = list(LANGUAGE_ATOM),
+		/datum/language/yangyu = list(LANGUAGE_ATOM),
+	)
+
+/datum/language_holder/slugcat
+	understood_languages = list(/datum/language/common = list(LANGUAGE_MIND),
+								/datum/language/wawa = list(LANGUAGE_MIND))
+	spoken_languages = list(/datum/language/wawa = list(LANGUAGE_MIND))
 
 /datum/language_holder/empty
 	understood_languages = null

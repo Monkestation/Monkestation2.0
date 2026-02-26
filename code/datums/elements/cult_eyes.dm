@@ -22,7 +22,7 @@
 /datum/element/cult_eyes/proc/set_eyes(mob/living/target)
 	SIGNAL_HANDLER
 
-	if(!IS_CULTIST(target))
+	if(!IS_CULTIST(target) && !IS_EVIL_CLONE(target))
 		target.RemoveElement(/datum/element/cult_eyes)
 		return
 

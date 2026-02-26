@@ -50,7 +50,7 @@ export const PaintingAdminPanel = (props) => {
             <LabeledList>
               <LabeledList.Item label="md5" content={chosenPainting.md5} />
               <LabeledList.Item label="title">
-                <Box inline style={{ 'word-break': 'break-all' }}>
+                <Box inline style={{ wordBreak: 'break-all' }}>
                   {decodeHtmlEntities(chosenPainting.title)}
                 </Box>
                 <Button
@@ -147,7 +147,7 @@ export const PaintingAdminPanel = (props) => {
             </Table.Row>
             {paintings.map((painting) => (
               <Table.Row key={painting.ref} className="candystripe">
-                <Table.Cell style={{ 'word-break': 'break-all' }}>
+                <Table.Cell style={{ wordBreak: 'break-all' }}>
                   {decodeHtmlEntities(painting.title)}
                 </Table.Cell>
                 <Table.Cell>{painting.creator_ckey}</Table.Cell>

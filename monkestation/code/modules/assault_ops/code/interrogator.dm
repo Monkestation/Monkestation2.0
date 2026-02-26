@@ -59,14 +59,14 @@
 	. += "It requies a direct link to a Nanotrasen defence network, stay near a Nanotrasen comms sat!"
 	. += span_info(span_italics("If a target has committed suicide, their body can still be used to instantly extract the keycard."))
 
-/obj/machinery/interrogator/AltClick(mob/user)
-	. = ..()
-	if(!can_interact(user) || contains(user))
-		return
+/obj/machinery/interrogator/click_alt(mob/living/user)
+	if(contains(user))
+		return CLICK_ACTION_BLOCKING
 	if(!processing)
 		attempt_extract(user)
 	else
 		stop_extract(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/interrogator/interact(mob/user)
 	. = ..()
@@ -268,3 +268,6 @@
 		human_occupant.forceMove(safe_turf)
 		stack_trace("[type] - return_target was unable to teleport [human_occupant] to the observer start turf. Forcemoving.")
 
+#undef STAGE_PROCESS_TIME_LOWER
+#undef STAGE_PROCESS_TIME_UPPER
+#undef ALERT_CREW_TIME

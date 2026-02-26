@@ -72,14 +72,13 @@
 /mob/living/proc/on_knockedout_trait(datum/source)
 	SIGNAL_HANDLER
 	if(HAS_TRAIT(src, TRAIT_KNOCKEDOUT))
+		set_combat_indicator(FALSE)
 		become_blind(UNCONSCIOUS_TRAIT)
-		set_pain_mod(PAIN_MOD_KOD, 0.8)
 		add_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_IMMOBILIZED, TRAIT_INCAPACITATED, TRAIT_FLOORED), TRAIT_KNOCKEDOUT)
 		update_body() // Update eyelids
 
 	else
 		cure_blind(UNCONSCIOUS_TRAIT)
-		unset_pain_mod(PAIN_MOD_KOD)
 		remove_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_IMMOBILIZED, TRAIT_INCAPACITATED, TRAIT_FLOORED), TRAIT_KNOCKEDOUT)
 		update_body() // Update eyelids
 

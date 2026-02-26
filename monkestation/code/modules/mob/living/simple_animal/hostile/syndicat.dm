@@ -48,3 +48,16 @@
 	for(var/obj/item/implant/original_implants as anything in toinstall)
 		var/obj/item/implant/copied_implant = new original_implants.type
 		copied_implant.implant(src, silent = TRUE, force = TRUE)
+	update_appearance(UPDATE_OVERLAYS)
+
+/mob/living/simple_animal/hostile/syndicat/revive(full_heal_flags, excess_healing, force_grab_ghost, revival_policy)
+	. = ..()
+	update_appearance(UPDATE_OVERLAYS)
+
+/mob/living/simple_animal/hostile/syndicat/death(gibbed)
+	. = ..()
+	update_appearance(UPDATE_OVERLAYS)
+
+/mob/living/simple_animal/hostile/syndicat/update_overlays()
+	. = ..()
+	. += emissive_appearance(icon, "[icon_state]_e", src)

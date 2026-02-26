@@ -75,7 +75,7 @@
 
 ///Initializes airlock links.
 /obj/machinery/computer/vaultcontroller/proc/find_airlocks()
-	for(var/obj/machinery/door/airlock/A in GLOB.airlocks)
+	for(var/obj/machinery/door/airlock/A as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/airlock))
 		if(A.id_tag == "derelictvault")
 			if(!door1)
 				door1 = A
@@ -140,7 +140,7 @@
 		ui = new(user, src, "VaultController", name)
 		ui.open()
 
-/obj/machinery/computer/vaultcontroller/ui_act(action, params)
+/obj/machinery/computer/vaultcontroller/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

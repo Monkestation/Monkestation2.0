@@ -4,7 +4,7 @@
 	if(sprite_datum.layers)
 		var/mutable_appearance/MA = mutable_appearance(layer = layer)
 		for(var/state in sprite_datum.layers)
-			var/mutable_appearance/returned =  get_image(layer, limb, state)
+			var/mutable_appearance/returned = get_image(layer, limb, state)
 			color_image(returned, layer, limb, sprite_datum.layers[state])
 			MA.overlays += returned
 		return MA

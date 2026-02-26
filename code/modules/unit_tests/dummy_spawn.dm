@@ -20,6 +20,9 @@
 		if(!can_you_hear_this)
 			log_test("\tJob type [one_two_three] could not be retrieved from SSjob")
 			continue
+		//no outfit to spawn as, which is fine for non-crew jobs.
+		if(!(can_you_hear_this.job_flags & JOB_CREW_MANIFEST) && isnull(can_you_hear_this.outfit))
+			continue
 		lad.job = can_you_hear_this
 		lad.dress_up_as_job(can_you_hear_this, TRUE)
 		lad.wipe_state() //Nuke it all

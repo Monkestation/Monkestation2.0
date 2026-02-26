@@ -110,7 +110,7 @@ Stabilized extracts:
 
 /obj/item/slimecross/stabilized/red
 	colour = "red"
-	effect_desc = "Nullifies all equipment based slowdowns."
+	effect_desc = "Nullifies all equipment based slowdowns, except bolas and other legcuffs."
 
 /obj/item/slimecross/stabilized/green
 	colour = "green"
@@ -180,7 +180,7 @@ Stabilized extracts:
 
 /obj/item/slimecross/stabilized/lightpink
 	colour = "light pink"
-	effect_desc = "The owner moves at high speeds while holding this extract, also stabilizes anyone in critical condition around you using Epinephrine."
+	effect_desc = "The owner moves at high speeds while holding this extract and prevents them from harming other beings, also stabilizes anyone in critical condition around you using Epinephrine."
 
 /obj/item/slimecross/stabilized/adamantine
 	colour = "adamantine"

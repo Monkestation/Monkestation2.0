@@ -414,44 +414,43 @@
 /datum/action/innate/cult/master/pulse/IsAvailable(feedback = FALSE)
 	return ..() && COOLDOWN_FINISHED(src, pulse_cooldown)
 
-/datum/action/innate/cult/master/pulse/InterceptClickOn(mob/living/user, params, atom/clicked_on)
-	var/turf/caller_turf = get_turf(user)
-	if(!isturf(caller_turf))
+/datum/action/innate/cult/master/pulse/InterceptClickOn(mob/living/clicker, params, atom/clicked_on)
+	var/turf/clicker_turf = get_turf(clicker)
+	if(!isturf(clicker_turf))
 		return FALSE
 
-	if(!(clicked_on in view(7, caller_turf)))
+	if(!(clicked_on in view(7, clicker_turf)))
 		return FALSE
 
-	if(clicked_on == user)
+	if(clicked_on == clicker)
 		return FALSE
 
 	return ..()
 
-/datum/action/innate/cult/master/pulse/do_ability(mob/living/user, atom/clicked_on)
+/datum/action/innate/cult/master/pulse/do_ability(mob/living/clicker, atom/clicked_on)
 	var/atom/throwee = throwee_ref?.resolve()
-
-	if(QDELETED(throwee))
-		to_chat(user, span_cult("You lost your target!"))
+	if(throwee && QDELING(throwee))
+		to_chat(clicker, span_cult("You lost your target!"))
 		throwee = null
 		throwee_ref = null
 		return FALSE
 
 	if(throwee)
 		if(get_dist(throwee, clicked_on) >= 16)
-			to_chat(user, span_cult("You can't teleport [clicked_on.p_them()] that far!"))
+			to_chat(clicker, span_cult("You can't teleport [clicked_on.p_them()] that far!"))
 			return FALSE
 
 		var/turf/throwee_turf = get_turf(throwee)
 
 		playsound(throwee_turf, 'sound/magic/exit_blood.ogg')
-		new /obj/effect/temp_visual/cult/sparks(throwee_turf, user.dir)
+		new /obj/effect/temp_visual/cult/sparks(throwee_turf, clicker.dir)
 		throwee.visible_message(
 			span_warning("A pulse of magic whisks [throwee] away!"),
 			span_cult("A pulse of blood magic whisks you away..."),
 		)
 
 		if(!do_teleport(throwee, clicked_on, channel = TELEPORT_CHANNEL_CULT))
-			to_chat(user, span_cult("The teleport fails!"))
+			to_chat(clicker, span_cult("The teleport fails!"))
 			throwee.visible_message(
 				span_warning("...Except they don't go very far"),
 				span_cult("...Except you don't appear to have moved very far."),
@@ -459,34 +458,32 @@
 			return FALSE
 
 		throwee_turf.Beam(clicked_on, icon_state = "sendbeam", time = 0.4 SECONDS)
-		new /obj/effect/temp_visual/cult/sparks(get_turf(clicked_on), user.dir)
+		new /obj/effect/temp_visual/cult/sparks(get_turf(clicked_on), clicker.dir)
 		throwee.visible_message(
 			span_warning("[throwee] appears suddenly in a pulse of magic!"),
 			span_cult("...And you appear elsewhere."),
 		)
 
 		COOLDOWN_START(src, pulse_cooldown, pulse_cooldown_duration)
-		to_chat(user, span_cult("A pulse of blood magic surges through you as you shift [throwee] through time and space."))
-		user.click_intercept = null
+		to_chat(clicker, span_cult("A pulse of blood magic surges through you as you shift [throwee] through time and space."))
+		clicker.click_intercept = null
 		throwee_ref = null
 		build_all_button_icons()
 		addtimer(CALLBACK(src, PROC_REF(build_all_button_icons)), pulse_cooldown_duration + 1)
 
 		return TRUE
 
-	else
-		if(isliving(clicked_on))
-			var/mob/living/living_clicked = clicked_on
-			if(!IS_CULTIST(living_clicked))
-				return FALSE
-			SEND_SOUND(user, sound('sound/weapons/thudswoosh.ogg'))
-			to_chat(user, span_cultbold("You reach through the veil with your mind's eye and seize [clicked_on]! <b>Click anywhere nearby to teleport [clicked_on.p_them()]!</b>"))
-			throwee_ref = WEAKREF(clicked_on)
-			return TRUE
+	if(isliving(clicked_on))
+		var/mob/living/living_clicked = clicked_on
+		if(!IS_CULTIST(living_clicked))
+			return FALSE
+		SEND_SOUND(clicker, sound('sound/weapons/thudswoosh.ogg'))
+		to_chat(clicker, span_cultbold("You reach through the veil with your mind's eye and seize [clicked_on]! <b>Click anywhere nearby to teleport [clicked_on.p_them()]!</b>"))
+		throwee_ref = WEAKREF(clicked_on)
+		return TRUE
 
-		if(istype(clicked_on, /obj/structure/destructible/cult))
-			to_chat(user, span_cultbold("You reach through the veil with your mind's eye and lift [clicked_on]! <b>Click anywhere nearby to teleport it!</b>"))
-			throwee_ref = WEAKREF(clicked_on)
-			return TRUE
-
+	if(istype(clicked_on, /obj/structure/destructible/cult))
+		to_chat(clicker, span_cultbold("You reach through the veil with your mind's eye and lift [clicked_on]! <b>Click anywhere nearby to teleport it!</b>"))
+		throwee_ref = WEAKREF(clicked_on)
+		return TRUE
 	return FALSE

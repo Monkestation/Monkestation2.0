@@ -4,24 +4,28 @@
  */
 
 /datum/action/cooldown/bloodsucker/targeted/haste
-	name = "Immortal Haste"
-	desc = "Dash somewhere with supernatural speed. Those nearby may be knocked away, stunned, or left empty-handed."
+	name = "Sweeping Dash"
+	desc = "Dash somewhere with supernatural speed. Those nearby will be knocked to the ground."
 	button_icon_state = "power_speed"
-	power_explanation = "Immortal Haste:\n\
-		Click anywhere to immediately dash towards that location.\n\
+	power_explanation = "Sweeping Dash:\n\
+		Click anywhere within 2 tiles to immediately dash towards that location.\n\
 		The Power will not work if you are lying down, in no gravity, or are aggressively grabbed.\n\
-		Anyone in your way during your Haste will be knocked down.\n\
-		Higher levels will increase the knockdown dealt to enemies."
+		Anyone in your way during your Dash will be knocked down.\n\
+		Higher levels will increase the range and knockdown dealt to enemies."
 	power_flags = BP_AM_TOGGLE
 	check_flags = BP_CANT_USE_IN_TORPOR | BP_CANT_USE_IN_FRENZY | BP_CANT_USE_WHILE_INCAPACITATED | BP_CANT_USE_WHILE_UNCONSCIOUS
 	purchase_flags = BLOODSUCKER_CAN_BUY | VASSAL_CAN_BUY
 	bloodcost = 6
-	sol_multiplier = 10
 	cooldown_time = 12 SECONDS
-	target_range = 15
+	target_range = 2
 	power_activates_immediately = TRUE
 	///List of all people hit by our power, so we don't hit them again.
 	var/list/hit = list()
+
+/datum/action/cooldown/bloodsucker/targeted/haste/upgrade_power()
+	. = ..()
+
+	target_range++
 
 /datum/action/cooldown/bloodsucker/targeted/haste/can_use(mob/living/carbon/user, trigger_flags)
 	. = ..()
@@ -35,11 +39,11 @@
 		user.balloon_alert(user, "you cannot dash while floating!")
 		return FALSE
 	if(user.body_position == LYING_DOWN)
-		user.balloon_alert(user, "you must be standing to tackle!")
+		user.balloon_alert(user, "you must be standing to dash!")
 		return FALSE
 	return TRUE
 
-/// Anything will do, if it's not me or my square
+/// Anything in range will do, if it's not me or my square
 /datum/action/cooldown/bloodsucker/targeted/haste/CheckValidTarget(atom/target_atom)
 	. = ..()
 	if(!.)
@@ -56,7 +60,7 @@
 	user.pulledby?.stop_pulling()
 	// Go to target turf
 	// DO NOT USE WALK TO.
-	owner.balloon_alert(owner, "you dash into the air!")
+	owner.balloon_alert_to_viewers("dashes into the air!", "you dash into the air!")
 	playsound(get_turf(owner), 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 	var/safety = get_dist(user, targeted_turf) * 3 + 1
 	var/consequetive_failures = 0

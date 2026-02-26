@@ -17,6 +17,7 @@
 	anchored = TRUE
 	density = TRUE
 	layer = ABOVE_MOB_LAYER
+	interaction_flags_click = NEED_DEXTERITY | NEED_HANDS | FORBID_TELEKINESIS_REACH
 	/// Keeps track of the total points scored
 	var/total_score = 0
 	/// The chance to score a ball into the hoop based on distance
@@ -138,7 +139,7 @@
 	baller.stamina.adjust(-STAMINA_COST_DUNKING_MOB)
 	baller.stop_pulling()
 
-/obj/structure/hoop/CtrlClick(mob/living/user)
+/obj/structure/hoop/click_ctrl(mob/living/user)
 	if(!user.can_perform_action(src, NEED_DEXTERITY|FORBID_TELEKINESIS_REACH|NEED_HANDS))
 		return
 
@@ -186,7 +187,7 @@
 	return NONE
 
 // No resetting the score for minigame hoops
-/obj/structure/hoop/minigame/CtrlClick(mob/living/user)
+/obj/structure/hoop/minigame/click_ctrl(mob/living/user)
 	return
 
 /obj/structure/hoop/minigame/score(obj/item/toy/basketball/ball, mob/living/baller, points)

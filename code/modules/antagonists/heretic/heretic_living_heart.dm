@@ -80,6 +80,8 @@
 	var/last_tracked_name
 	/// Whether the target radial is currently opened.
 	var/radial_open = FALSE
+	/// Beacon we have on the target
+	var/datum/component/tracking_beacon/target_beacon
 
 /datum/action/cooldown/track_target/Grant(mob/granted)
 	if(!IS_HERETIC(granted))
@@ -103,20 +105,34 @@
 	right_clicked = !!(trigger_flags & TRIGGER_SECONDARY_ACTION)
 	return ..()
 
-/* monkestation removal: replaced in [monkestation\code\modules\antagonists\heretic\heretic_living_heart.dm]
 /datum/action/cooldown/track_target/Activate(atom/target)
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(owner)
 	var/datum/heretic_knowledge/sac_knowledge = heretic_datum.get_knowledge(/datum/heretic_knowledge/hunt_and_sacrifice)
-	if(!LAZYLEN(heretic_datum.sac_targets))
+	if(!LAZYLEN(heretic_datum.current_sac_targets))
 		owner.balloon_alert(owner, "no targets, visit a rune!")
 		StartCooldown(1 SECONDS)
 		return TRUE
 
 	var/list/targets_to_choose = list()
-	var/list/mob/living/carbon/human/human_targets = list()
-	for(var/mob/living/carbon/human/sac_target as anything in heretic_datum.sac_targets)
-		human_targets[sac_target.real_name] = sac_target
-		targets_to_choose[sac_target.real_name] = heretic_datum.sac_targets[sac_target]
+	var/list/mob/living/living_targets = list()
+	for(var/datum/weakref/target_ref as anything in heretic_datum.current_sac_targets)
+		var/datum/mind/target_mind = target_ref?.resolve()
+		if(QDELETED(target_mind))
+			continue
+		var/mob/living/living_target = target_mind.current
+		if(QDELETED(living_target))
+			continue
+		var/sac_name = trimtext(target_mind.name || living_target.real_name || living_target.name)
+		living_targets[sac_name] = living_target
+		var/mutable_appearance/target_appearance = new(isbrain(living_target) ? living_target.loc : living_target)
+		target_appearance.appearance_flags = KEEP_TOGETHER
+		target_appearance.layer = FLOAT_LAYER
+		target_appearance.plane = FLOAT_PLANE
+		target_appearance.dir = SOUTH
+		target_appearance.pixel_x = living_target.base_pixel_x
+		target_appearance.pixel_y = living_target.base_pixel_y
+		target_appearance.pixel_z = 0 /* living_target.base_pixel_z */
+		targets_to_choose[sac_name] = strip_appearance_underlays(target_appearance)
 
 	// If we don't have a last tracked name, open a radial to set one.
 	// If we DO have a last tracked name, we skip the radial if they right click the action.
@@ -137,13 +153,15 @@
 	if(isnull(last_tracked_name))
 		return FALSE
 
-	var/mob/living/carbon/human/tracked_mob = human_targets[last_tracked_name]
+	var/mob/living/tracked_mob = living_targets[last_tracked_name]
 	if(QDELETED(tracked_mob))
 		last_tracked_name = null
 		return FALSE
 
 	playsound(owner, 'sound/effects/singlebeat.ogg', 50, TRUE, SILENCED_SOUND_EXTRARANGE)
 	owner.balloon_alert(owner, get_balloon_message(tracked_mob))
+	target_beacon = tracked_mob.AddComponent(/datum/component/tracking_beacon, heretic_datum.monitor_key, _colour = COLOR_GREEN, _always_update = TRUE)
+	addtimer(CALLBACK(src, PROC_REF(remove_beacon)), 3 SECONDS)
 
 	// Let them know how to sacrifice people if they're able to be sac'd
 	if(tracked_mob.stat == DEAD)
@@ -152,7 +170,10 @@
 
 	StartCooldown()
 	return TRUE
-monkestation end */
+
+/datum/action/cooldown/track_target/proc/remove_beacon()
+	if(target_beacon)
+		QDEL_NULL(target_beacon)
 
 /// Callback for the radial to ensure it's closed when not allowed.
 /datum/action/cooldown/track_target/proc/check_menu()
@@ -162,14 +183,24 @@ monkestation end */
 		return FALSE
 	return TRUE
 
-/* monkestation removal: replaced in [monkestation\code\modules\antagonists\heretic\heretic_living_heart.dm]
 /// Gets the balloon message for who we're tracking.
-/datum/action/cooldown/track_target/proc/get_balloon_message(mob/living/carbon/human/tracked_mob)
+/datum/action/cooldown/track_target/proc/get_balloon_message(mob/living/tracked_mob)
 	var/balloon_message = "error text!"
 	var/turf/their_turf = get_turf(tracked_mob)
 	var/turf/our_turf = get_turf(owner)
 	var/their_z = their_turf?.z
 	var/our_z = our_turf?.z
+
+	var/is_alone = TRUE
+	for(var/mob/living/watcher in view(7, tracked_mob))
+		if(QDELETED(watcher.client) || watcher == tracked_mob)
+			continue
+		if(IS_HERETIC_OR_MONSTER(watcher) || (watcher.mind?.enslaved_to?.resolve() == owner) || HAS_TRAIT(watcher, TRAIT_GHOST_CRITTER))
+			continue
+		if(watcher.stat == DEAD || watcher.is_blind())
+			continue
+		is_alone = FALSE
+		break
 
 	// One of us is in somewhere we shouldn't be
 	if(!our_z || !their_z)
@@ -198,6 +229,10 @@ monkestation end */
 		else if(is_away_level(their_z) || is_secret_level(their_z))
 			balloon_message = "beyond the gateway!"
 
+		// On a shuttle
+		else if(is_reserved_level(their_z) && istype(get_area(their_turf), /area/shuttle))
+			balloon_message = "on a shuttle!"
+
 		// They're somewhere we probably can't get too - sacrifice z-level, centcom, etc
 		else
 			balloon_message = "on another plane!"
@@ -217,8 +252,9 @@ monkestation end */
 			else
 				balloon_message = "very far!"
 
-	if(tracked_mob.stat == DEAD)
+	if(tracked_mob.stat == DEAD || isbrain(tracked_mob))
 		balloon_message = "they're dead, " + balloon_message
+	else if(is_alone)
+		balloon_message = "they're alone, " + balloon_message
 
 	return balloon_message
-monkestation end */

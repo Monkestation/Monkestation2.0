@@ -78,16 +78,16 @@
 	. = ..()
 	update_appearance(UPDATE_OVERLAYS)
 
-/obj/vehicle/ridden/magic_broom/MouseDrop(over_object, src_location, over_location)  //for picking up your floating broom i guess
+/obj/vehicle/ridden/magic_broom/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
 	. = ..()
-	if(over_object != usr || !Adjacent(usr) || QDELETED(folded_item))
+	if(over != user || !Adjacent(user) || QDELETED(folded_item))
 		return FALSE
-	if(!ishuman(usr) || !usr.can_perform_action(src))
+	if(!ishuman(user) || !user.can_perform_action(src))
 		return FALSE
 	if(has_buckled_mobs())
 		return FALSE
-	usr.visible_message(span_notice("[usr] picks up [src]."), span_notice("You pick up [src]."))
+	user.visible_message(span_notice("[user] picks up [src]."), span_notice("You pick up [src]."))
 	folded_item.forceMove(drop_location())
-	usr.put_in_hands(folded_item)
+	user.put_in_hands(folded_item)
 	folded_item = null
 	qdel(src)

@@ -2,7 +2,7 @@
 	display_name = "Chemical Filter"
 	desc = "General chemical filter."
 	category = "Chemistry"
-	power_usage_per_input = 25
+	energy_usage_per_input = 25
 
 	///this is our chosen chemical
 	var/datum/port/input/chemical_input

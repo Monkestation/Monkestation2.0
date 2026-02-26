@@ -90,7 +90,7 @@
 	desc = "A mutator containing the recently refined \"Matter Eater\" mutation from clowns. \
 		The strain was refined to only cause 20 genetic instability instead of 40 in an undisclosed amount of time. \
 		Be cautious as it can be detected using genetic scanners and is curable with mutadone."
-	cost = 6
+	cost = 3
 	item = /obj/item/dnainjector/syndicate_matter_eater
 	restricted_roles = list(JOB_GENETICIST)
 

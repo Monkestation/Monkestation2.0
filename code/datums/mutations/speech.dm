@@ -133,8 +133,9 @@
 
 /datum/mutation/stoner/on_losing(mob/living/carbon/human/owner)
 	..()
-	owner.remove_language(/datum/language/beachbum, source = LANGUAGE_STONER)
-	owner.remove_blocked_language(subtypesof(/datum/language) - /datum/language/beachbum, LANGUAGE_STONER)
+	if(!QDELETED(owner))
+		owner.remove_language(/datum/language/beachbum, source = LANGUAGE_STONER)
+		owner.remove_blocked_language(subtypesof(/datum/language) - /datum/language/beachbum, LANGUAGE_STONER)
 
 /datum/mutation/medieval
 	name = "Medieval"

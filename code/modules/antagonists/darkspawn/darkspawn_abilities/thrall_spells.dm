@@ -54,7 +54,7 @@
 	owner.balloon_alert(owner, "krx'lna tyhx graha...")
 	to_chat(owner, span_velvet("You begin to channel your psionic powers through [target]'s mind."))
 	playsound(owner, 'sound/magic/darkspawn/devour_will_victim.ogg', 50)
-	if(!do_after(owner, 2 SECONDS, target))
+	if(!do_after(owner, 2 SECONDS, target, hidden = TRUE))
 		return FALSE
 
 	if(!IS_THRALL(target))
@@ -78,7 +78,7 @@
 		if(HAS_TRAIT(target, TRAIT_MINDSHIELD))
 			to_chat(owner, span_warning("[target] has foreign machinery that resists our thralling, we shall attempt to destroy it."))
 			target.visible_message(span_warning("[target] seems to resist an unseen force!"))
-			if(!do_after(owner, 20 SECONDS, target))
+			if(!do_after(owner, 20 SECONDS, target, hidden = TRUE))
 				to_chat(target, span_userdanger("It cannot be permitted to succeed."))
 				return FALSE
 			for(var/obj/item/implant/mindshield/L in target)
@@ -86,14 +86,14 @@
 
 	playsound(owner, 'sound/ambience/antag/darkspawn/veil_mind_gasp.ogg', 25)
 
-	if(!do_after(owner, 2 SECONDS, target))
+	if(!do_after(owner, 2 SECONDS, target, hidden = TRUE))
 		return FALSE
 
 	playsound(owner, 'sound/ambience/antag/darkspawn/veil_mind_scream.ogg', 100)
 	if(IS_THRALL(target))
 		owner.balloon_alert(owner, "...tia")
 		to_chat(owner, span_velvet("You revitalize your thrall [target.real_name]."))
-		target.revive(TRUE, TRUE)
+		target.revive(TRUE, TRUE, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 		target.grab_ghost()
 		return TRUE
 
@@ -340,7 +340,7 @@
 
 /datum/action/cooldown/spell/pointed/thrallbuff/speed/empower(mob/living/carbon/target)
 	to_chat(target, span_velvet("You feel fast."))
-	target.apply_status_effect(/datum/status_effect/speed_boost, speed_strength, buff_duration, type)
+	target.apply_status_effect(/datum/status_effect/speed_boost, buff_duration, speed_strength, type)
 
 //////////////////////////////////////////////////////////////////////////
 //----------------Single target global ally giga buff-------------------//
@@ -382,10 +382,10 @@
 		return FALSE
 	var/mob/living/carbon/target = cast_on
 	target.grab_ghost()
-	target.revive(TRUE)
+	target.revive(TRUE, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 	target.SetAllImmobility(0, TRUE)
 	target.resting = FALSE
-	target.apply_status_effect(/datum/status_effect/speed_boost, -0.5, 15 SECONDS, type)
+	target.apply_status_effect(/datum/status_effect/speed_boost, 15 SECONDS, -0.5, type)
 	target.visible_message(span_danger("Streaks of velvet light crack out of [target]'s skin."), span_velvet("Power roars through you like a raging storm, pushing you to your absolute limits."))
 	var/obj/item/cuffs = target.get_item_by_slot(ITEM_SLOT_HANDCUFFED)
 	var/obj/item/legcuffs = target.get_item_by_slot(ITEM_SLOT_LEGCUFFED)

@@ -33,7 +33,7 @@
 	if (!LAZYLEN(hallucinations))
 		return
 	organ_owner.client?.images -= hallucinations
-	QDEL_NULL(hallucinations)
+	hallucinations.Cut()
 
 
 /// Sometimes speak in incomprehensible tongues

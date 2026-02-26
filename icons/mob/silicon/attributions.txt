@@ -1,0 +1,6 @@
+ai-steve - Cmpwarrior
+ai-steve_dead - Cmpwarrior
+ai-TEC - Cmpwarrior
+ai-TEC_death_transition - Cmpwarrior
+ai-monkestation - Cmpwarrior
+ai-monkestation_dead - Cmpwarrior

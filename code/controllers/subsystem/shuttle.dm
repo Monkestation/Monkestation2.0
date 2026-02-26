@@ -828,9 +828,9 @@ SUBSYSTEM_DEF(shuttle)
 	hidden_shuttle_turf_images -= remove_images
 	hidden_shuttle_turf_images += add_images
 
-	for(var/V in GLOB.navigation_computers)
-		var/obj/machinery/computer/camera_advanced/shuttle_docker/C = V
-		C.update_hidden_docking_ports(remove_images, add_images)
+	for(var/obj/machinery/computer/camera_advanced/shuttle_docker/docking_computer \
+		as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/computer/camera_advanced/shuttle_docker))
+		docking_computer.update_hidden_docking_ports(remove_images, add_images)
 
 	remove_images.Cut()
 
@@ -1040,7 +1040,7 @@ SUBSYSTEM_DEF(shuttle)
 
 	return data
 
-/datum/controller/subsystem/shuttle/ui_act(action, params)
+/datum/controller/subsystem/shuttle/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

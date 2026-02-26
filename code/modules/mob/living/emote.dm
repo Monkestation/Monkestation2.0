@@ -71,7 +71,7 @@
 	key = "collapse"
 	key_third_person = "collapses"
 	message = "collapses!"
-	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE | EMOTE_HAS_VISUAL
 
 /datum/emote/living/collapse/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
@@ -127,7 +127,7 @@
 
 
 /datum/emote/living/deathgasp/get_sound(mob/living/user)
-	if(iscarbon(user))
+	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
 		// Alternative deathgasps.
 		if(LAZYLEN(human_user.alternative_deathgasps))
@@ -404,7 +404,7 @@ monkestation edit end */
 	key_third_person = "sighs"
 	message = "sighs."
 	message_mime = "acts out an exaggerated silent sigh."
-	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE | EMOTE_HAS_VISUAL
 
 /datum/emote/living/sigh/run_emote(mob/living/carbon/human/user, params, type_override, intentional)
 	. = ..()
@@ -482,7 +482,7 @@ monkestation edit end */
 	key = "surrender"
 	key_third_person = "surrenders"
 	message = "puts their hands on their head and falls to the ground, they surrender%s!"
-	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE | EMOTE_HAS_VISUAL
 
 /datum/emote/living/surrender/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
@@ -594,9 +594,10 @@ monkestation edit end */
 	if(TIMER_COOLDOWN_FINISHED(user, COOLDOWN_YAWN_PROPAGATION))
 		TIMER_COOLDOWN_START(user, COOLDOWN_YAWN_PROPAGATION, cooldown * 3)
 
-	var/mob/living/carbon/carbon_user = user
-	if(istype(carbon_user) && ((carbon_user.wear_mask?.flags_inv & HIDEFACE) || carbon_user.head?.flags_inv & HIDEFACE))
-		return // if your face is obscured, skip propagation
+	if(iscarbon(user))
+		var/mob/living/carbon/carbon_user = user
+		if(!carbon_user.is_face_visible())
+			return // if your face is obscured, skip propagation
 
 	var/propagation_distance = user.client ? 5 : 2 // mindless mobs are less able to spread yawns
 

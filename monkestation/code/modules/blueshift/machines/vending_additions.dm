@@ -76,28 +76,13 @@
 
 #undef MINIMUM_CLOTHING_STOCK
 
-/obj/machinery/vending/wardrobe/engi_wardrobe
-	products_monke = list(
-		/obj/item/radio/headset/headset_eng = 3,
-		/obj/item/clothing/under/rank/engineering/engineer/nova/trouser = 3,
-		/obj/item/clothing/under/rank/engineering/engineer/nova/utility = 3,
-		/obj/item/clothing/under/rank/engineering/engineer/nova/hazard_chem = 3,
-		/obj/item/clothing/under/misc/overalls = 3,
-		/obj/item/clothing/suit/toggle/jacket/engi = 3,
-		/obj/item/clothing/head/utility/hardhat/orange = 2,
-		/obj/item/clothing/head/utility/hardhat/welding/orange = 2,
-		/obj/item/clothing/head/utility/hardhat/dblue = 2,
-		/obj/item/clothing/head/utility/hardhat/welding/dblue = 2,
-		/obj/item/clothing/head/utility/hardhat/red = 2,
-	)
-
 /obj/machinery/vending/wardrobe/atmos_wardrobe
 	products_monke = list(
 		/obj/item/clothing/glasses/meson/engine = 2,
 		/obj/item/clothing/head/beret/atmos = 4,
 	)
 
-/obj/machinery/vending/wardrobe/cargo_wardrobe
+/obj/machinery/vending/access/wardrobe_cargo
 	products_monke = list(
 		/obj/item/clothing/under/rank/cargo/tech/nova/long = 3,
 		/obj/item/clothing/under/rank/cargo/tech/nova/gorka = 3,
@@ -174,23 +159,6 @@
 		/obj/item/clothing/under/suit/nova/inferno/beeze = 2,
 	)
 
-
-/// Removes given list of products. Must be called before build_inventory() to actually prevent the records from being created.
-/obj/machinery/vending/proc/remove_products(list/paths_to_remove)
-	if(!length(paths_to_remove))
-		return
-	for(var/typepath in products)
-		for(var/to_remove in paths_to_remove)
-			if(ispath(typepath, to_remove))
-				products.Remove(typepath)
-
-/obj/machinery/vending/
-	/// list of products to exclude when building the vending machine's inventory
-	var/list/excluded_products
-
-/obj/machinery/vending/Initialize(mapload)
-	remove_products(excluded_products)
-	return ..()
 
 /obj/machinery/vending/clothing
 	product_categories_monke = list(

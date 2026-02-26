@@ -194,7 +194,7 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 
 	var/true_invocation_time = get_true_invocation_time()
 	recital(true_invocation_time)
-	if(do_after(invoking_mob, true_invocation_time, invoking_mob, extra_checks = CALLBACK(src, PROC_REF(check_special_requirements), invoking_mob)))
+	if(do_after(invoking_mob, true_invocation_time, invoking_mob, extra_checks = CALLBACK(src, PROC_REF(check_special_requirements), invoking_mob), hidden = TRUE))
 		invoke()
 
 		to_chat(invoking_mob, span_brass("You invoke <b>[name]</b>."))

@@ -62,9 +62,9 @@
 	item_type = /obj/item/storage/backpack/duffelbag/syndie/maid
 
 /obj/item/storage/backpack/duffelbag/syndie/maid/PopulateContents() //by far the weakest bundle
-	new /obj/item/clothing/under/syndicate/nova/maid(src)
+	new /obj/item/clothing/under/syndicate/skirt/maid(src)
 	new /obj/item/clothing/gloves/combat/maid(src)
-	new /obj/item/clothing/head/costume/maidheadband/syndicate(src)
+	new /obj/item/clothing/head/maidheadband/syndicate(src)
 	new /obj/item/clothing/shoes/laceup(src)
 	new /obj/item/radio/headset/syndicate/alt(src)
 	new /obj/item/card/id/advanced/chameleon(src)
@@ -325,7 +325,7 @@
 	new /obj/item/card/id/advanced/chameleon(src)
 
 /datum/opposing_force_equipment/clothing_magic/narsian
-	name = "Nar'Sien Prophet"
+	name = "Nar'Sian Prophet"
 	description = "An overshadowed cult following, whom incidentally thrive best in the dark."
 	item_type = /obj/item/storage/backpack/satchel/leather/narsian
 

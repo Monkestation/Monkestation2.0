@@ -7,12 +7,7 @@
 
 /datum/corral_upgrade/autofeeder/on_add(datum/corral_data/parent)
 	. = ..()
-	START_PROCESSING(SSxenobio, src)
 	corral_data_weakref = WEAKREF(parent)
-
-/datum/corral_upgrade/autofeeder/Destroy(force)
-	STOP_PROCESSING(SSxenobio, src)
-	return ..()
 
 /datum/corral_upgrade/autofeeder/process(seconds_per_tick)
 	var/datum/corral_data/corral_data = corral_data_weakref?.resolve()

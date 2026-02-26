@@ -17,7 +17,7 @@ import { Window } from '../layouts';
 
 const formatPressure = (value) => {
   if (value < 10000) {
-    return toFixed(value) + ' kPa';
+    return `${toFixed(value)} kPa`;
   }
   return formatSiUnit(value * 1000, 1, 'Pa');
 };
@@ -103,7 +103,8 @@ export const Canister = (props) => {
                       maxValue={maxReleasePressure}
                       step={5}
                       stepPixelSize={1}
-                      onDrag={(e, value) =>
+                      tickWhileDragging
+                      onChange={(_e, value) =>
                         act('pressure', {
                           pressure: value,
                         })
@@ -169,7 +170,7 @@ export const Canister = (props) => {
             <Section>
               <LabeledList>
                 <LabeledList.Item label="Cell Charge">
-                  {hasCell ? cellCharge + '%' : 'Missing Cell'}
+                  {hasCell ? `${cellCharge}%` : 'Missing Cell'}
                 </LabeledList.Item>
                 {!!hasHypernobCrystal && (
                   <LabeledList.Item label="Reaction Suppression">

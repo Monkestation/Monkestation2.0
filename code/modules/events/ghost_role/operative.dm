@@ -5,6 +5,9 @@
 	max_occurrences = 1
 	category = EVENT_CATEGORY_INVASION
 	description = "A single nuclear operative assaults the station."
+	track = EVENT_TRACK_MAJOR //this is a safe guard and does not trigger normally(technically it can but not really) so no tags
+	checks_antag_cap = TRUE
+	repeated_mode_adjust = TRUE
 
 /datum/round_event/ghost_role/operative
 	minimum_required = 1

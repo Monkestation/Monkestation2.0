@@ -18,3 +18,8 @@
 	desc = "A plasmaman containment suit designed for the warden, white stripes being added to differentiate them from other members of security."
 	icon_state = "warden_envirosuit"
 	inhand_icon_state = null
+
+/obj/item/clothing/under/plasmaman/secmed
+	name = "security medical envirosuit"
+	desc = "A new pattern plasmaman suit for those qualified as security medical personnel."
+	icon_state = "secmed_envirosuit"

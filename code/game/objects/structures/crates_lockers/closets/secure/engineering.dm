@@ -20,12 +20,15 @@
 	new /obj/item/storage/photo_album/ce(src)
 	new /obj/item/storage/box/skillchips/engineering(src)
 
+	if(length(SSmapping.levels_by_trait(ZTRAIT_OSHAN)))
+		new /obj/item/mod/module/stomper(src)
+
 /obj/structure/closet/secure_closet/engineering_chief/populate_contents_immediate()
 	. = ..()
 
-	// Traitor steal objective
-	new /obj/item/areaeditor/blueprints(src)
 	new /obj/item/gun/ballistic/SRN_rocketlauncher(src)
+	// Traitor steal objective
+	new /obj/item/blueprints(src)
 	new /obj/item/pipe_dispenser(src)
 
 /obj/structure/closet/secure_closet/engineering_electrical
@@ -36,12 +39,12 @@
 
 /obj/structure/closet/secure_closet/engineering_electrical/PopulateContents()
 	..()
-	var/static/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/inducer = 2,
 		/obj/item/storage/toolbox/electrical = 3,
 		/obj/item/electronics/apc = 3,
 		/obj/item/multitool = 3)
-	generate_items_inside(items_inside,src)
+	generate_items_inside(items_inside, src)
 
 /obj/structure/closet/secure_closet/engineering_electrical/populate_contents_immediate()
 	. = ..()
@@ -78,6 +81,9 @@
 	new /obj/item/storage/box/emptysandbags(src)
 	new /obj/item/storage/bag/construction(src)
 
+	if(length(SSmapping.levels_by_trait(ZTRAIT_OSHAN)))
+		new /obj/item/mod/module/stomper(src)
+
 
 /obj/structure/closet/secure_closet/atmospherics
 	name = "atmospheric technician's locker"
@@ -112,7 +118,7 @@
 
 /obj/structure/closet/secure_closet/shipbreaker/PopulateContents()
 	..()
-	var/static/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/storage/toolbox/electrical = 1,
 		/obj/item/melee/sledgehammer = 1,
 		/obj/item/weldingtool/electric/raynewelder = 1,
@@ -120,7 +126,7 @@
 		/obj/item/storage/toolbox/mechanical = 1,
 		/obj/item/tank/jetpack/void = 1,
 		/obj/item/extinguisher = 1,)
-	generate_items_inside(items_inside,src)
+	generate_items_inside(items_inside, src)
 
 /obj/structure/closet/secure_closet/shipbreaker/populate_contents_immediate()
 	. = ..()

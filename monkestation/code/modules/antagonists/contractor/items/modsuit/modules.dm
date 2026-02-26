@@ -2,42 +2,46 @@
 	name = "MOD baton holster module"
 	desc = "A module installed into the chest of a MODSuit, this allows you \
 		to retrieve an inserted baton from the suit at will. Insert a baton \
-		by using the module with the baton in hand. \
+		by placing it into the module with the baton in hand. \
 		Remove an inserted baton by using a wrench on the module while it is removed from the suit."
 	icon_state = "holster"
 	icon = 'monkestation/icons/obj/items/modsuit_modules.dmi'
 	module_type = MODULE_ACTIVE
 	complexity = 3
 	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
-	device = /obj/item/melee/baton/telescopic/contractor_baton
+	device = null
 	incompatible_modules = list(/obj/item/mod/module/baton_holster)
 	cooldown_time = 0.5 SECONDS
 	allow_flags = MODULE_ALLOW_INACTIVE
-	/// Have they sacrificed a baton to actually be able to use this?
-	var/eaten_baton = FALSE
 
 /obj/item/mod/module/baton_holster/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
-	if(!istype(attacking_item, /obj/item/melee/baton/telescopic/contractor_baton) || eaten_baton)
+	if(!istype(attacking_item, /obj/item/melee/baton/telescopic/contractor_baton) || device)
 		return
 	balloon_alert(user, "[attacking_item] inserted")
-	eaten_baton = TRUE
-	for(var/obj/item/melee/baton/telescopic/contractor_baton/device_baton as anything in src)
-		for(var/obj/item/baton_upgrade/original_upgrade in attacking_item)
-			var/obj/item/baton_upgrade/new_upgrade = new original_upgrade.type(device_baton)
-			device_baton.add_upgrade(new_upgrade)
-		for(var/obj/item/restraints/handcuffs/cable/baton_cuffs in attacking_item)
-			baton_cuffs.forceMove(device_baton)
-	qdel(attacking_item) //TEST CUFFS
+	attacking_item.forceMove(src)
+	device = attacking_item
+
+	ADD_TRAIT(device, TRAIT_NODROP, MOD_TRAIT)
+	RegisterSignal(device, COMSIG_QDELETING, PROC_REF(on_device_deletion))
+
+/obj/item/mod/module/baton_holster/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+
+	if (device)
+		REMOVE_TRAIT(device, TRAIT_NODROP, MOD_TRAIT)
+		UnregisterSignal(device, COMSIG_QDELETING)
+
+		device.forceMove(drop_location())
+		device = null
 
 /obj/item/mod/module/baton_holster/on_activation()
-	if(!eaten_baton)
+	if(!device)
 		balloon_alert(mod.wearer, "no baton inserted")
 		return
 	return ..()
 
 /obj/item/mod/module/baton_holster/preloaded
-	eaten_baton = TRUE
 	device = /obj/item/melee/baton/telescopic/contractor_baton
 
 /obj/item/mod/module/baton_holster/preloaded/upgraded

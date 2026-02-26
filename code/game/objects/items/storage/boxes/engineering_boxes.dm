@@ -29,65 +29,6 @@
 		new/obj/item/grenade/smokebomb/nanofrost(src)
 //MONKESTATION EDIT STOP
 
-/obj/item/storage/box/material
-	name = "box of materials"
-	illustration = "implant"
-
-/obj/item/storage/box/material/PopulateContents() //less uranium because radioactive
-	// amount should be null if it should spawn with the type's default amount
-	var/static/items_inside = list(
-		/obj/item/stack/sheet/iron/fifty = null,
-		/obj/item/stack/sheet/glass/fifty = null,
-		/obj/item/stack/sheet/rglass = 50,
-		/obj/item/stack/sheet/plasmaglass = 50,
-		/obj/item/stack/sheet/titaniumglass = 50,
-		/obj/item/stack/sheet/plastitaniumglass = 50,
-		/obj/item/stack/sheet/plasteel = 50,
-		/obj/item/stack/sheet/mineral/plastitanium = 50,
-		/obj/item/stack/sheet/mineral/titanium = 50,
-		/obj/item/stack/sheet/mineral/gold = 50,
-		/obj/item/stack/sheet/mineral/silver = 50,
-		/obj/item/stack/sheet/mineral/plasma = 50,
-		/obj/item/stack/sheet/mineral/uranium = 20,
-		/obj/item/stack/sheet/mineral/diamond = 50,
-		/obj/item/stack/sheet/bluespace_crystal = 50,
-		/obj/item/stack/sheet/mineral/bananium = 50,
-		/obj/item/stack/sheet/mineral/wood = 50,
-		/obj/item/stack/sheet/plastic/fifty = null,
-		/obj/item/stack/sheet/runed_metal/fifty = null,
-	)
-	for(var/obj/item/stack/stack_type as anything in items_inside)
-		var/amt = items_inside[stack_type]
-		new stack_type(src, amt, FALSE)
-
-/obj/item/storage/box/debugtools
-	name = "box of debug tools"
-	icon_state = "syndiebox"
-
-/obj/item/storage/box/debugtools/Initialize(mapload)
-	. = ..()
-	atom_storage.max_specific_storage = WEIGHT_CLASS_GIGANTIC
-
-/obj/item/storage/box/debugtools/PopulateContents()
-	var/static/items_inside = list(
-		/obj/item/card/emag=1,
-		/obj/item/construction/rcd/combat/admin=1,
-		/obj/item/disk/tech_disk/debug=1,
-		/obj/item/flashlight/emp/debug=1,
-		/obj/item/geiger_counter=1,
-		/obj/item/healthanalyzer/advanced=1,
-		/obj/item/card/id/advanced/debug=1,
-		/obj/item/pipe_dispenser=1,
-		/obj/item/stack/spacecash/c1000=50,
-		/obj/item/storage/box/beakers/bluespace=1,
-		/obj/item/storage/box/beakers/variety=1,
-		/obj/item/storage/box/material=1,
-		/obj/item/uplink/debug=1,
-		/obj/item/uplink/nuclear/debug=1,
-		/obj/item/clothing/ears/earmuffs/debug = 1,
-		)
-	generate_items_inside(items_inside,src)
-
 /obj/item/storage/box/plastic
 	name = "plastic box"
 	desc = "It's a solid, plastic shell box."

@@ -147,9 +147,10 @@
 	var/obj/item/disk/disease/d = new /obj/item/disk/disease(get_turf(current_user))
 	current_user.put_in_hands(d)
 
+	d.analyzed = TRUE
 	d.effect = created_symptom
 	d.update_desc()
-	d.name = "[created_symptom.name] GNA disk."
+	d.name = "\improper [created_symptom.name] GNA disk"
 
 	current_user = null
 	symptom_types -= current_choice

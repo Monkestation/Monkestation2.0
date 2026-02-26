@@ -82,7 +82,6 @@
 #define ui_crafting "EAST-4:22,SOUTH:5"
 #define ui_building "EAST-4:22,SOUTH:21"
 #define ui_language_menu "EAST-4:6,SOUTH:21"
-#define ui_navigate_menu "EAST-4:22,SOUTH:5"
 
 //Upper left (action buttons)
 #define ui_action_palette "WEST+0:23,NORTH-1:5"
@@ -142,15 +141,17 @@
 #define ui_borg_camera "CENTER+3:21,SOUTH:5"
 #define ui_borg_alerts "CENTER+4:21,SOUTH:5"
 #define ui_borg_language_menu "CENTER+4:19,SOUTH+1:6"
-#define ui_borg_navigate_menu "CENTER+4:19,SOUTH+1:6"
+#define ui_borg_navigate_menu "CENTER+3:21,SOUTH:21"
 
 //Aliens
 #define ui_alien_health "EAST,CENTER-1:15"
 #define ui_alienplasmadisplay "EAST,CENTER-2:15"
 #define ui_alien_queen_finder "EAST,CENTER-3:15"
 #define ui_alien_storage_r "CENTER+1:18,SOUTH:5"
-#define ui_alien_language_menu "EAST-4:20,SOUTH:5"
-#define ui_alien_navigate_menu "EAST-4:20,SOUTH:5"
+#define ui_alien_language_menu "EAST-2:26,SOUTH+2:8"
+#define ui_alien_navigate_menu "EAST-1:28,SOUTH+1:23"
+#define ui_alien_larva_language_menu "EAST-4:20,SOUTH:20"
+#define ui_alien_larva_navigate_menu "EAST-4:21,SOUTH:-12"
 
 //AI
 #define ui_ai_core "BOTTOM:6,RIGHT-4"
@@ -175,22 +176,23 @@
 
 
 //pAI
-#define ui_pai_software "SOUTH:6,WEST"
-#define ui_pai_shell "SOUTH:6,WEST+1"
-#define ui_pai_chassis "SOUTH:6,WEST+2"
-#define ui_pai_rest "SOUTH:6,WEST+3"
-#define ui_pai_light "SOUTH:6,WEST+4"
-#define ui_pai_state_laws "SOUTH:6,WEST+5"
-#define ui_pai_crew_manifest "SOUTH:6,WEST+6"
-#define ui_pai_host_monitor "SOUTH:6,WEST+7"
-#define ui_pai_internal_gps "SOUTH:6,WEST+8"
-#define ui_pai_mod_int "SOUTH:6,WEST+9"
-#define ui_pai_newscaster "SOUTH:6,WEST+10"
-#define ui_pai_take_picture "SOUTH:6,WEST+11"
-#define ui_pai_view_images "SOUTH:6,WEST+12"
-#define ui_pai_radio "SOUTH:6,WEST+13"
-#define ui_pai_language_menu "SOUTH+1:8,WEST+12:31"
-#define ui_pai_navigate_menu "SOUTH+1:8,WEST+12:31"
+#define ui_pai_software "SOUTH+1:5,WEST:2"
+#define ui_pai_state_laws "SOUTH+1:5,WEST+1"
+#define ui_pai_shell "SOUTH:5,WEST:2"
+#define ui_pai_chassis "SOUTH:5,WEST+1:2"
+#define ui_pai_rest "SOUTH:5,WEST+2:2"
+#define ui_pai_light "SOUTH:5,WEST+3:2"
+#define ui_pai_crew_manifest "SOUTH:5,CENTER-2"
+#define ui_pai_crew_monitor "SOUTH:5,CENTER-1"
+#define ui_pai_host_monitor "SOUTH:5,CENTER"
+#define ui_pai_internal_gps "SOUTH:5,CENTER+1"
+#define ui_pai_mod_int "SOUTH:5,CENTER+2"
+#define ui_pai_newscaster "SOUTH:5,CENTER+3"
+#define ui_pai_take_picture "SOUTH:5,EAST-3:28"
+#define ui_pai_view_images "SOUTH:5,EAST-2:28"
+#define ui_pai_radio "SOUTH:5,EAST-1:28"
+#define ui_pai_language_menu "SOUTH+1:22,EAST-1:28"
+#define ui_pai_navigate_menu "SOUTH:1:20,EAST-1:28"
 
 //Ghosts
 #define ui_ghost_spawners_menu "SOUTH:6,CENTER-3:24"
@@ -229,3 +231,7 @@
 
 /// The filter name for the hover outline
 #define HOVER_OUTLINE_FILTER "hover_outline"
+
+// Vote HUD
+#define UI_VOTEHUD "EAST-5:23,NORTH"
+#define UI_VOTEHUD_LEFT "WEST+2:23,NORTH"

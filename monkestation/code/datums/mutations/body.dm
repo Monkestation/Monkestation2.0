@@ -491,39 +491,6 @@
 	if(owner.nutrition <= NUTRITION_LEVEL_FAT)
 		owner.nutrition += 25 * seconds_per_tick
 
-/datum/mutation/horned
-	name = "Horns"
-	desc = "Enables the growth of a compacted keratin formation on the subject's head."
-	quality = MINOR_NEGATIVE
-	text_gain_indication = span_notice("A pair of horns erupt from your head.")
-	text_lose_indication = span_notice("Your horns crumble away into nothing.")
-
-/datum/mutation/horned/on_acquiring(mob/living/carbon/human/owner)
-	if(!owner || !istype(owner)) // Parent checks this, but we want to be safe when doing get_organ_slot
-		return FALSE
-
-	// First time something does get_organ_slot(ORGAN_SLOT_EXTERNAL_HORNS) btw, for very understandable reasons
-	var/obj/item/organ/external/horns/owner_horns = owner.get_organ_slot(ORGAN_SLOT_EXTERNAL_HORNS)
-	if(owner_horns)
-		return FALSE // Lets not de-horn people with horns, that'd be very rude
-
-	. = ..()
-	if(!.)
-		return
-
-	var/obj/item/organ/external/horns/horns = new()
-	horns.Insert(owner)
-
-/datum/mutation/horned/on_losing(mob/living/carbon/human/owner)
-	. = ..()
-	if(.)
-		return
-
-	// Second time something does get_organ_slot(ORGAN_SLOT_EXTERNAL_HORNS)
-	var/obj/item/organ/external/horns/owner_horns = owner.get_organ_slot(ORGAN_SLOT_EXTERNAL_HORNS)
-	if(owner_horns)
-		qdel(owner_horns)
-
 /datum/mutation/no_fingerprints
 	name = "Invisible Fingerprints"
 	desc = "Subjects finger tips melt into a singular smooth structure, causing their fingerprints to be impossible to detect."

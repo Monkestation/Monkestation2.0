@@ -19,6 +19,6 @@
 	else
 		mob.add_homeostasis_level(type, -6 * power, 0.25 KELVIN * power)
 
-/datum/symptom/fridge/deactivate(mob/living/carbon/mob)
+/datum/symptom/fridge/deactivate(mob/living/carbon/mob, datum/disease/acute/disease, safe = FALSE)
 	if(mob)
 		mob.remove_homeostasis_level(type)

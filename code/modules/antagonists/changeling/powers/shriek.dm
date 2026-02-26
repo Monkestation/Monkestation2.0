@@ -7,6 +7,7 @@
 	dna_cost = 1
 	req_human = TRUE
 	disabled_by_fire = FALSE
+	weird = TRUE
 
 //A flashy ability, good for crowd control and sowing chaos.
 /datum/action/changeling/resonant_shriek/sting_action(mob/user)
@@ -43,6 +44,7 @@
 	chemical_cost = 20
 	dna_cost = 1
 	disabled_by_fire = FALSE
+	weird = TRUE
 
 /datum/action/changeling/dissonant_shriek/sting_action(mob/user)
 	..()

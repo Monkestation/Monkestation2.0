@@ -4,13 +4,11 @@
 
 From this point on, we are killing modularization. Do not follow modularization guidelines.
 
-See the following announcement from the discord below
-
 --
 
-# We need to talk about modularization on Monkestation.
+# No more modularization
 
-Modularization. It's a core part of our codebase and we've preached it a lot in the past before, especially in the days we we're just a baby fork of Tgstation. It was supposed to be our savior for keeping things balanced with features pulled from upstream (upstream being TG). But a lot of time and commits have passed since then, **and late last year we deforked from TG due to how many problems it caused.**
+Monke is very behind from Tgstation and it is way too late to start caring.
 
 ## We are behind 17k commits, comparing the following commits
 
@@ -32,9 +30,9 @@ And by the way, each commit is essentially a PR since TG merges PRs via "Squash 
 
 Any PRs going forward **should not participate in modularization or follow its guidelines**.
 
-Modularization aimed to make things easier and give coders less of a headache, but as I just said, we've deviated from TG so much that it's starting to bite us in the ass with how our features are spread between `code` and `monkestation/code`.
+We've deviated from TG so much that it's starting to bite us in the ass with how our features are spread between `code` and `monkestation/code`.
 
-We’re not doing a mass deletion/demodularization (yet). Stuff that’s modular will stay that way until it’s touched again by whoever feels like demodularizing. But new stuff? Put it in `code`. You are unleashed.
+We’re not doing a mass deletion/demodularization (yet). Stuff that’s modular will stay that way until it’s touched again by whoever feels like demodularizing. Put new stuff in `code` instead of `monkestation`
 
 # TL;DR
 

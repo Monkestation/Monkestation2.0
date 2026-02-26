@@ -16,7 +16,7 @@
 	health = 25
 	maxHealth = 25
 
-	maints_access_required = list(ACCESS_ROBOTICS, ACCESS_CONSTRUCTION)
+	req_one_access = list(ACCESS_ROBOTICS, ACCESS_CONSTRUCTION)
 	radio_key = /obj/item/encryptionkey/headset_eng
 	radio_channel = RADIO_CHANNEL_ENGINEERING
 	bot_type = FLOOR_BOT
@@ -140,9 +140,10 @@
 	return data
 
 // Actions received from TGUI
-/mob/living/simple_animal/bot/floorbot/ui_act(action, params)
+/mob/living/simple_animal/bot/floorbot/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	if(. || (bot_cover_flags & BOT_COVER_LOCKED && !usr.has_unlimited_silicon_privilege))
+	var/mob/user = ui.user
+	if(. || (bot_cover_flags & BOT_COVER_LOCKED && !HAS_SILICON_ACCESS(user)))
 		return
 
 	switch(action)
@@ -160,8 +161,8 @@
 			if(tilestack)
 				tilestack.forceMove(drop_location())
 		if("line_mode")
-			var/setdir = tgui_input_list(usr, "Select construction direction", "Direction", list("north", "east", "south", "west", "disable"))
-			if(isnull(setdir))
+			var/setdir = tgui_input_list(user, "Select construction direction", "Direction", list("north", "east", "south", "west", "disable"))
+			if(isnull(setdir) || QDELETED(ui) || ui.status != UI_INTERACTIVE)
 				return
 			switch(setdir)
 				if("north")

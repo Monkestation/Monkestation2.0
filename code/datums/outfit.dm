@@ -210,9 +210,11 @@
 		H.undershirt = initial(undershirt.name)
 
 	if(accessory)
-		var/obj/item/clothing/under/U = H.w_uniform
-		if(U)
-			U.attach_accessory(SSwardrobe.provide_type(accessory, H))
+		var/obj/item/clothing/under/jumpsuit_attached = H.w_uniform
+		if(jumpsuit_attached)
+			var/obj/item/clothing/accessory/worn_accessory = SSwardrobe.provide_type(accessory, H)
+			jumpsuit_attached.attach_accessory(worn_accessory)
+			astype(worn_accessory, /obj/item/clothing/accessory/badge)?.set_identity(H)
 		else
 			WARNING("Unable to equip accessory [accessory] in outfit [name]. No uniform present!")
 

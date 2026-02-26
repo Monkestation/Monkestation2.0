@@ -13,3 +13,5 @@
 #define MUTANT_COLOR_SECONDARY "mutant_color_secondary"
 
 #define ANIME_COLOR "anime_color"
+
+#define ANIME_HALO_COLOR "anime_halo_color"

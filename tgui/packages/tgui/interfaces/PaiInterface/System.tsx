@@ -1,6 +1,6 @@
 import { useBackend } from 'tgui/backend';
 import { Box, Button, LabeledList, Section, Stack } from 'tgui/components';
-import { PaiData } from './types';
+import type { PaiData } from './types';
 
 export const SystemDisplay = (props) => {
   return (
@@ -93,7 +93,7 @@ const SystemInfo = (props) => {
         <LabeledList.Item label="Master">
           {master_name || 'None.'}
         </LabeledList.Item>
-        <LabeledList.Item color={master_dna && 'red'} label="DNA">
+        <LabeledList.Item color={master_dna ? 'red' : undefined} label="DNA">
           {master_dna || 'None.'}
         </LabeledList.Item>
       </LabeledList>

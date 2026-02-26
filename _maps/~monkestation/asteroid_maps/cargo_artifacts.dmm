@@ -19,7 +19,7 @@
 /turf/open/space/basic,
 /area/template_noop)
 "B" = (
-/obj/item/stock_parts/cell/artifact,
+/obj/item/stock_parts/power_store/cell/artifact,
 /obj/structure/table,
 /turf/open/floor/iron/airless,
 /area/template_noop)

@@ -92,7 +92,7 @@
 /// Prefer the autowiki build target instead.
 // #define AUTOWIKI
 
-/// If this is uncommented, will profile mapload atom initializations
+/// If this is uncommented, will profile mapload atom initializations, available via debug verb "Display Init Costs"
 // #define PROFILE_MAPLOAD_INIT_ATOM
 
 /// If this is uncommented, Dreamluau will be fully disabled.
@@ -110,11 +110,6 @@
 // Get rid of this whenever it does have support.
 #ifdef OPENDREAM_REAL
 #define DISABLE_DREAMLUAU
-#endif
-
-//#define DISABLE_DEMOS
-#ifdef UNIT_TESTS
-#define DISABLE_DEMOS
 #endif
 
 /// If this is uncommented, force our verb processing into just the 2% of a tick

@@ -33,21 +33,22 @@
 	context[SCREENTIP_CONTEXT_ALT_LMB] = "Maximize transfer rate"
 	return CONTEXTUAL_SCREENTIP_SET
 
-/obj/machinery/atmospherics/components/binary/temperature_pump/CtrlClick(mob/user)
+/obj/machinery/atmospherics/components/binary/temperature_pump/click_ctrl(mob/user)
 	if(can_interact(user))
-		on = !on
+		set_on(!on)
 		balloon_alert(user, "turned [on ? "on" : "off"]")
 		investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
-		update_appearance()
 	return ..()
 
-/obj/machinery/atmospherics/components/binary/temperature_pump/AltClick(mob/user)
-	if(can_interact(user) && !(heat_transfer_rate == max_heat_transfer_rate))
-		heat_transfer_rate = max_heat_transfer_rate
-		investigate_log("was set to [heat_transfer_rate]% by [key_name(user)]", INVESTIGATE_ATMOS)
-		balloon_alert(user, "transfer rate set to [heat_transfer_rate]%")
-		update_appearance()
-	return ..()
+/obj/machinery/atmospherics/components/binary/temperature_pump/click_alt(mob/user)
+	if(heat_transfer_rate == max_heat_transfer_rate)
+		return CLICK_ACTION_BLOCKING
+
+	heat_transfer_rate = max_heat_transfer_rate
+	investigate_log("was set to [heat_transfer_rate]% by [key_name(user)]", INVESTIGATE_ATMOS)
+	balloon_alert(user, "transfer rate set to [heat_transfer_rate]%")
+	update_appearance(UPDATE_ICON)
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/atmospherics/components/binary/temperature_pump/examine(mob/user)
 	. = ..()
@@ -102,7 +103,7 @@
 	air_output.merge(remove_output)
 
 	if(power_usage)
-		use_power(power_usage)
+		use_energy(power_usage)
 
 /obj/machinery/atmospherics/components/binary/temperature_pump/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -120,13 +121,13 @@
 	data["max_temperature"] = round(max_temperature)
 	return data
 
-/obj/machinery/atmospherics/components/binary/temperature_pump/ui_act(action, params)
+/obj/machinery/atmospherics/components/binary/temperature_pump/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
 	switch(action)
 		if("power")
-			on = !on
+			set_on(!on)
 			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
 		if("rate")
@@ -151,7 +152,7 @@
 			if(.)
 				target_temperature = clamp(minimum_temperature, temperature, max_temperature)
 				investigate_log("was set to [target_temperature] K by [key_name(usr)]", INVESTIGATE_ATMOS)
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 
 /obj/machinery/atmospherics/components/binary/temperature_pump/multitool_act(mob/living/user, obj/item/multitool/Lorem)
 	. = ..()

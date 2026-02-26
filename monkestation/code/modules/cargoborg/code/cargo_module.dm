@@ -14,7 +14,7 @@
 		/obj/item/assembly/flash/cyborg,
 		/obj/item/borg/hydraulic_clamp,
 		/obj/item/borg/hydraulic_clamp/mail,
-		/obj/item/storage/bag/mail_token_catcher, //monkestation edit
+		/obj/item/storage/bag/mail_token_catcher,
 		/obj/item/hand_labeler/cyborg,
 		/obj/item/dest_tagger,
 		/obj/item/crowbar/cyborg,
@@ -29,11 +29,24 @@
 		/obj/item/borg/paperplane_crossbow,
 	)
 	hat_offset = 0
+	badge_offset = 0
 	cyborg_base_icon = "cargo"
 	model_select_icon = "cargo"
 	canDispose = TRUE
 	borg_skins = list(
-		"Technician" = list(SKIN_ICON_STATE = "cargoborg", SKIN_ICON = CYBORG_ICON_CARGO),
-		"Zoomba" = list(SKIN_ICON_STATE = "zoomba_cargo", SKIN_ICON = CYBORG_ICON_CARGO),
-		"Kerfus" = list(SKIN_ICON_STATE = "kerfus_cargo", SKIN_LIGHT_KEY = NONE, SKIN_ICON = CYBORG_ICON_CARGO, SKIN_TRAITS = list(TRAIT_CAT)),
+		"Technician" = list(
+			SKIN_ICON_STATE = "cargoborg",
+			SKIN_ICON = CYBORG_ICON_CARGO,
+		),
+		"Zoomba" = list(
+			SKIN_ICON_STATE = "zoomba_cargo",
+			SKIN_ICON = CYBORG_ICON_CARGO,
+			SKIN_BADGE_OFFSET = -9,
+		),
+		"Kerfus" = list(
+			SKIN_ICON_STATE = "kerfus_cargo",
+			SKIN_LIGHT_KEY = NONE, SKIN_ICON = CYBORG_ICON_CARGO,
+			SKIN_TRAITS = list(TRAIT_CAT),
+			SKIN_BADGE_OFFSET = -6,
+		),
 	)

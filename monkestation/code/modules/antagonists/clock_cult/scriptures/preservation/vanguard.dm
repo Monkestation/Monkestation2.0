@@ -9,7 +9,7 @@
 	button_icon_state = "Vanguard"
 	category = SPELLTYPE_PRESERVATION
 	cogs_required = 2
-	power_cost = 150
+	power_cost = STANDARD_CELL_CHARGE * 0.15
 
 /datum/scripture/slab/vanguard/apply_effects(atom/applied_atom)
 	return FALSE
@@ -19,8 +19,7 @@
 	invoker.add_traits(list(TRAIT_STUNIMMUNE,
 							TRAIT_PUSHIMMUNE,
 							TRAIT_IGNOREDAMAGESLOWDOWN,
-							TRAIT_NOLIMBDISABLE,
-							TRAIT_NO_PAIN_EFFECTS), VANGUARD_TRAIT)
+							TRAIT_NOLIMBDISABLE), VANGUARD_TRAIT)
 	to_chat(invoker, span_notice("You feel like nothing can stop you!"))
 
 /datum/scripture/slab/vanguard/count_down()
@@ -32,7 +31,6 @@
 	. = ..()
 	invoker.remove_traits(list(TRAIT_STUNIMMUNE,
 							   TRAIT_PUSHIMMUNE,
-							   TRAIT_IGNOREDAMAGESLOWDOWN,
 							   TRAIT_NOLIMBDISABLE,
-							   TRAIT_NO_PAIN_EFFECTS), VANGUARD_TRAIT)
+							   TRAIT_IGNOREDAMAGESLOWDOWN), VANGUARD_TRAIT)
 	to_chat(invoker, span_bolddanger("You feel the last of the energy from \the [invoking_slab] leave you.")) //smaller span here because its pretty obvious when it ends anyway

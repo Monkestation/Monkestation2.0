@@ -91,7 +91,7 @@
 
 /// What effect the damage aura has if it has an owner.
 /datum/component/damage_aura/proc/owner_effect(mob/living/owner_mob, seconds_per_tick)
-	owner_mob.stamina.adjust(20 * seconds_per_tick)
+	owner_mob.stamina.adjust(10 * seconds_per_tick)
 	owner_mob.adjustBruteLoss(-1 * seconds_per_tick, updating_health = FALSE)
 	owner_mob.adjustFireLoss(-1 * seconds_per_tick, updating_health = FALSE)
 	owner_mob.adjustToxLoss(-1 * seconds_per_tick, updating_health = FALSE, forced = TRUE)

@@ -2,6 +2,7 @@
 	name = "\improper Survivalist"
 	show_in_antagpanel = FALSE
 	show_name_in_check_antagonists = TRUE
+	antag_count_points = 3
 	suicide_cry = "FOR MYSELF!!"
 	var/greet_message = ""
 

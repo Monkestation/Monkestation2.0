@@ -153,7 +153,7 @@
 	name = "Kinetic Accelerator Damage Mod"
 	desc = "A device which allows kinetic accelerators to deal more damage."
 	id = "damagemod"
-	build_type = PROTOLATHE | AWAY_LATHE
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	materials = list(
 		/datum/material/iron =SHEET_MATERIAL_AMOUNT,
 		/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT * 1.5,
@@ -162,63 +162,42 @@
 	)
 	build_path = /obj/item/borg/upgrade/modkit/damage
 	category = list(
-		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_PKA_MODS
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_PKA_MODS,
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MINING,
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO
-
-/datum/design/damage_mod/borg
-	id = "borg_upgrade_damagemod"
-	build_type = MECHFAB
-	category = list(
-		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MINING
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/cooldown_mod
 	name = "Kinetic Accelerator Cooldown Mod"
 	desc = "A device which decreases the cooldown of a Kinetic Accelerator."
 	id = "cooldownmod"
-	build_type = PROTOLATHE | AWAY_LATHE
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/gold =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/uranium =HALF_SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/borg/upgrade/modkit/cooldown
 	category = list(
-		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_PKA_MODS
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_CARGO
-
-/datum/design/cooldown_mod/borg
-	id = "borg_upgrade_cooldownmod"
-	build_type = MECHFAB
-	category = list(
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_PKA_MODS,
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MINING
 	)
-	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_CARGO
 
 /datum/design/range_mod
 	name = "Kinetic Accelerator Range Mod"
 	desc = "A device which allows kinetic accelerators to fire at a further range."
 	id = "rangemod"
-	build_type = PROTOLATHE | AWAY_LATHE
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/gold =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/uranium =HALF_SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/borg/upgrade/modkit/range
 	category = list(
-		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_PKA_MODS
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_CARGO
-
-/datum/design/range_mod/borg
-	id = "borg_upgrade_rangemod"
-	build_type = MECHFAB
-	category = list(
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_PKA_MODS,
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MINING
 	)
-	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_CARGO
 
 /datum/design/hyperaccelerator
 	name = "Kinetic Accelerator Mining AoE Mod"
 	desc = "A modification kit for Kinetic Accelerators which causes it to fire AoE blasts that destroy rock."
 	id = "hypermod"
-	build_type = PROTOLATHE | AWAY_LATHE
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	materials = list(
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT*4,
 		/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT * 1.5,
@@ -228,17 +207,10 @@
 	)
 	build_path = /obj/item/borg/upgrade/modkit/aoe/turfs
 	category = list(
-		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_PKA_MODS
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_CARGO
-
-/datum/design/hyperaccelerator/borg
-	id = "borg_upgrade_hypermod"
-	build_type = MECHFAB
-	category = list(
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_PKA_MODS,
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_MINING
 	)
-	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_CARGO
 
 /datum/design/mining_scanner
 	name = "Mining Scanner"

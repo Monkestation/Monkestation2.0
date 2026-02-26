@@ -106,18 +106,14 @@ GLOBAL_LIST_INIT(inspectable_diseases, list())
 	if(!(spread_flags & DISEASE_SPREAD_AIRBORNE) && !force_spread)
 		return
 
-	if(HAS_TRAIT(affected_mob, TRAIT_VIRUS_RESISTANCE) || (affected_mob.satiety > 0 && prob(affected_mob.satiety/10)))
+	if(HAS_TRAIT(affected_mob, TRAIT_VIRUS_RESISTANCE) || (affected_mob.satiety > 0 && prob(affected_mob.satiety/10)) || HAS_TRAIT(affected_mob, TRAIT_NOBREATH) || affected_mob.check_airborne_sterility())
+		return
+
+	if((affected_mob.stat == DEAD) && process_dead == FALSE) // Only create clouds if we process our dead.
 		return
 
 	affected_mob.spread_airborne_diseases()
-	/*
-	var/turf/T = affected_mob.loc
-	if(istype(T))
-		for(var/mob/living/carbon/C in oview(spread_range, affected_mob))
-			var/turf/V = get_turf(C)
-			if(disease_air_spread_walk(T, V))
-				C.AirborneContractDisease(src, force_spread)
-	*/
+
 /proc/disease_air_spread_walk(turf/start, turf/end)
 	if(!start || !end)
 		return FALSE
@@ -134,7 +130,7 @@ GLOBAL_LIST_INIT(inspectable_diseases, list())
 		return TRUE
 	return FALSE
 
-/datum/disease/proc/cure(add_resistance = TRUE, mob/living/carbon/target) // monkestation edit: AAAAAAAAAAAAA
+/datum/disease/proc/cure(add_resistance = TRUE, mob/living/carbon/target, safe = FALSE) // monkestation edit: AAAAAAAAAAAAA
 	if(affected_mob)
 		if(add_resistance && (disease_flags & CAN_RESIST))
 			LAZYOR(affected_mob.disease_resistances, GetDiseaseID())

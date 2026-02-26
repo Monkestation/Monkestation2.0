@@ -12,7 +12,7 @@ export const classes = (classNames: (string | BooleanLike)[]) => {
   for (let i = 0; i < classNames.length; i++) {
     const part = classNames[i];
     if (typeof part === 'string') {
-      className += part + ' ';
+      className += `${part} `;
     }
   }
   return className;
@@ -52,22 +52,11 @@ export const shallowDiffers = (a: object, b: object) => {
 };
 
 /**
- * Default inferno hooks for pure components.
- */
-export const pureComponentHooks = {
-  onComponentShouldUpdate: (lastProps, nextProps) => {
-    return shallowDiffers(lastProps, nextProps);
-  },
-};
-
-/**
  * A helper to determine whether the object is renderable by React.
  */
 export const canRender = (value: unknown) => {
   // prettier-ignore
-  return value !== undefined
-    && value !== null
-    && typeof value !== 'boolean';
+  return value !== undefined && value !== null && typeof value !== 'boolean';
 };
 
 /**

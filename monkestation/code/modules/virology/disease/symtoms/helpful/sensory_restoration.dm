@@ -23,7 +23,7 @@
 					darkness = TRUE
 					mob.update_sight()
 				if(prob(2.5))
-					to_chat(mob, span_notice("[pick("Your eyes feel great.", "You are able to make out finer details at a distance.", "You don't feel the need to squint.")]"))
+					to_chat(mob, span_notice("[pick("Your eyes feel great.", "You are able to make out finer details at distance.", "You don't feel the need to squint.")]"))
 
 			if(3)
 				if(!darkness)
@@ -33,9 +33,9 @@
 					darkness = TRUE
 					mob.update_sight()
 				if(prob(2.5))
-					to_chat(mob, span_notice("[pick("Your eyes feel amazing.", "You are able to make out the details in the darkness.", "You don't feel the need to squint.")]"))
+					to_chat(mob, span_notice("[pick("Your eyes feel amazing.", "You are able to make out the details in darkness.", "You don't feel the need to squint.")]"))
 
-/datum/symptom/sensory_restoration/deactivate(mob/living/carbon/mob, datum/disease/acute/disease)
+/datum/symptom/sensory_restoration/deactivate(mob/living/carbon/mob, datum/disease/acute/disease, safe = FALSE)
 	if(!squinting)
 		squinting = TRUE
 		REMOVE_TRAIT(mob, TRAIT_NEARSIGHTED_CORRECTED, DISEASE_TRAIT)

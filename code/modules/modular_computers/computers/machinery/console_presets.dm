@@ -53,6 +53,26 @@
 		/datum/computer_file/program/crew_manifest,
 	)
 
+/obj/machinery/modular_computer/preset/quartermaster
+	name = "quartermaster's identification console"
+	desc = "A stationary computer. This one comes preloaded with cargo and identification modification programs."
+	starting_programs = list(
+		/datum/computer_file/program/chatclient,
+		/datum/computer_file/program/card_mod,
+		/datum/computer_file/program/job_management,
+		/datum/computer_file/program/crew_manifest,
+		/datum/computer_file/program/cargo_union,
+	)
+
+/obj/machinery/modular_computer/preset/representative
+	name = "nanotrasen representative console"
+	desc = "A stationary computer. This one comes preloaded with command programs."
+	starting_programs = list(
+		/datum/computer_file/program/chatclient,
+		/datum/computer_file/program/secureye,
+		/datum/computer_file/program/nt_rep_comments,
+	)
+
 /obj/machinery/modular_computer/preset/id/centcom
 	desc = "A stationary computer. This one comes preloaded with CentCom identification modification programs."
 
@@ -117,13 +137,13 @@
 	name = "department chatroom console"
 	desc = "A stationary computer. This one comes preloaded with a chatroom for incoming cargo requests. You may moderate it from this computer."
 
-/obj/machinery/modular_computer/preset/cargochat/cargo/LateInitialize()
+/obj/machinery/modular_computer/preset/cargochat/cargo/LateInitialize(mapload_arg)
 	. = ..()
 	var/datum/computer_file/program/chatclient/chatprogram = cpu.find_file_by_name("ntnrc_client")
 	chatprogram.username = "cargo_requests_operator"
 
 	var/datum/ntnet_conversation/cargochat = chatprogram.create_new_channel("#cargobus", strong = TRUE)
-	for(var/obj/machinery/modular_computer/preset/cargochat/cargochat_console in GLOB.machines)
+	for(var/obj/machinery/modular_computer/preset/cargochat/cargochat_console as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/modular_computer/preset/cargochat))
 		if(cargochat_console == src)
 			continue
 		var/datum/computer_file/program/chatclient/other_chatprograms = cargochat_console.cpu.find_file_by_name("ntnrc_client")

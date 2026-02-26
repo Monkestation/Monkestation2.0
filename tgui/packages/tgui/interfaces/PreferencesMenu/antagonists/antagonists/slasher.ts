@@ -1,5 +1,5 @@
-import { Antagonist, Category } from '../base';
 import { multiline } from 'common/string';
+import { type Antagonist, Category } from '../base';
 
 const Slasher: Antagonist = {
   key: 'slasher',
@@ -17,7 +17,7 @@ const Slasher: Antagonist = {
     Give the station something to fear.
     `,
   ],
-  category: Category.Midround,
+  category: Category.Ghost,
 };
 
 export default Slasher;

@@ -192,3 +192,5 @@
 		"gbp_machine",
 	)
 	return ..()
+
+#undef GBP_PUNCH_REWARD

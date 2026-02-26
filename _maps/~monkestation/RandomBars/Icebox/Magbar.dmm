@@ -1156,7 +1156,7 @@
 "Rd" = (
 /obj/item/radio/intercom/directional/north,
 /obj/machinery/smartfridge/survival_pod/preloaded,
-/turf/closed/wall/mineral/titanium/survival/pod,
+/turf/open/floor/pod,
 /area/station/service/bar)
 "SB" = (
 /obj/structure/window/reinforced/survival_pod/spawner/directional/west,

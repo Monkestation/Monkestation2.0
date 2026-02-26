@@ -4,7 +4,7 @@
 	desc = "Ascend your form to that of a clockwork golem, giving them innate armor, environmental immunity, and faster invoking for most scriptures."
 	tip = "Can only be used by humaniod servants."
 	button_icon_state = "Spatial Warp"
-	power_cost = 500
+	power_cost = STANDARD_CELL_CHARGE * 0.5
 	invocation_time = 15 SECONDS
 	invocation_text = list("My form is weak...", "It must ascend...", "To that of clockwork.")
 	cogs_required = 3

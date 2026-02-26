@@ -116,10 +116,10 @@
 	var/riposte_ready = TRUE
 
 /datum/heretic_knowledge/blade_dance/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
-	RegisterSignal(user, COMSIG_HUMAN_CHECK_SHIELDS, PROC_REF(on_shield_reaction))
+	RegisterSignal(user, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(on_shield_reaction))
 
 /datum/heretic_knowledge/blade_dance/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
-	UnregisterSignal(user, COMSIG_HUMAN_CHECK_SHIELDS)
+	UnregisterSignal(user, COMSIG_LIVING_CHECK_BLOCK)
 
 /datum/heretic_knowledge/blade_dance/proc/on_shield_reaction(
 	mob/living/carbon/human/source,
@@ -173,6 +173,8 @@
 	// And reset after a bit
 	riposte_ready = FALSE
 	addtimer(CALLBACK(src, PROC_REF(reset_riposte), source), BLADE_DANCE_COOLDOWN)
+
+	return SUCCESSFUL_BLOCK
 
 /datum/heretic_knowledge/blade_dance/proc/counter_attack(mob/living/carbon/human/source, mob/living/target, obj/item/melee/sickly_blade/weapon, attack_text)
 	playsound(get_turf(source), 'sound/weapons/parry.ogg', 100, TRUE)
@@ -435,8 +437,3 @@
 	if(target.stat != DEAD)
 		// And! Get some free healing for a portion of the bonus damage dealt.
 		source.heal_overall_damage(bonus_damage / 2, bonus_damage / 2)
-		// monkestation start: heal pain on lifesteal too
-		source.cause_pain(BODY_ZONES_ALL, -(bonus_damage / 2), BRUTE)
-		source.cause_pain(BODY_ZONES_ALL, -(bonus_damage / 2), BURN)
-		source.adjust_pain_shock(-bonus_damage)
-		// monkestation end

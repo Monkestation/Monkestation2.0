@@ -253,7 +253,6 @@
 
 		qdel(created_ore)
 		new_boulder.set_custom_materials(new_mats)
-
 	slam_jams -= slam_jams_needed
 
 
@@ -279,3 +278,5 @@
 
 /obj/item/flatpacked_machine/ore_thumper/give_manufacturer_examine()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_KAHRAMAN)
+
+#undef SLAM_JAM_DELAY

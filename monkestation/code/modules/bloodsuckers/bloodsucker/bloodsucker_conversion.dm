@@ -88,8 +88,8 @@
 		vassaldatum.special_type = special_type
 	conversion_target.mind.add_antag_datum(vassaldatum)
 
-	message_admins("[conversion_target] has become a Vassal, and is enslaved to [owner.current].")
-	log_admin("[conversion_target] has become a Vassal, and is enslaved to [owner.current].")
+	message_admins("[ADMIN_LOOKUPFLW(conversion_target)] has become a Vassal, and is enslaved to [ADMIN_LOOKUPFLW(owner.current)].")
+	log_admin("[key_name(conversion_target)] has become a Vassal, and is enslaved to [key_name(owner)].")
 	return vassaldatum
 
 /*
@@ -120,6 +120,6 @@
 /datum/mind/proc/make_bloodsucker(datum/mind/creator)
 	var/datum/antagonist/bloodsuckerdatum = add_antag_datum(/datum/antagonist/bloodsucker)
 	if(bloodsuckerdatum && creator)
-		message_admins("[src] has become a Bloodsucker, and was created by [creator].")
-		log_admin("[src] has become a Bloodsucker, and was created by [creator].")
+		message_admins("[ADMIN_LOOKUPFLW(current)] has become a Bloodsucker, and was created by [ADMIN_LOOKUPFLW(creator.current)].")
+		log_admin("[key_name(src)] has become a Bloodsucker, and was created by [key_name(creator)].")
 	return bloodsuckerdatum

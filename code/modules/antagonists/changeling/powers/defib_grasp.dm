@@ -30,7 +30,7 @@
 	remove_arms(changeling, defibber, defib)
 
 	if(changeling.stat == DEAD)
-		changeling.revive(heal_flags)
+		changeling.revive(heal_flags, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 	else
 		changeling.fully_heal(heal_flags)
 
@@ -45,6 +45,9 @@
 	playsound(defib, 'sound/machines/defib_zap.ogg', 75, TRUE, -1)
 	playsound(defib, 'sound/machines/defib_success.ogg', 50, FALSE) // I guess
 	defib.shock_pulling(30, changeling)
+
+	var/datum/antagonist/changeling/changeling_datum = changeling.mind?.has_antag_datum(/datum/antagonist/changeling)
+	changeling_datum.used_weird_power = TRUE
 
 /// Removes the arms of the defibber if they're a carbon, and stuns them for a bit.
 /// If they're a cyborg, they'll just get stunned instead.

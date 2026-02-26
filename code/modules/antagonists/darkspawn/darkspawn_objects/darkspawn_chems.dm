@@ -10,7 +10,6 @@
 	. = ..()
 	exposed_mob.add_movespeed_modifier(/datum/movespeed_modifier/reagent/shadowfrost)
 
-
 /datum/reagent/shadowfrost/on_mob_end_metabolize(mob/living/L)
 	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/shadowfrost)
 	return ..()
@@ -40,16 +39,16 @@
 	. = ..()
 	if(!ishuman(exposed_mob))
 		return
-	if(IS_TEAM_DARKSPAWN(exposed_mob) && exposed_mob.reagents) //since darkspawns don't breathe, let's do this
-		exposed_mob.reagents.add_reagent(type, 5)
+	if(IS_TEAM_DARKSPAWN(exposed_mob)) //since darkspawns don't breathe, let's do this
+		exposed_mob.reagents?.add_reagent(type, 5)
 
 /datum/reagent/darkspawn_darkness_smoke/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	if(!IS_TEAM_DARKSPAWN(affected_mob))
 		to_chat(affected_mob, span_warning("<b>The pitch black smoke irritates your eyes horribly!</b>"))
 
-		affected_mob.adjust_temp_blindness(2 SECONDS)
+		affected_mob.adjust_temp_blindness_up_to(2 SECONDS * seconds_per_tick, 10 SECONDS)
 		if(prob(25))
-			affected_mob.visible_message("<b>[affected_mob]</b> claws at their eyes!")
+			affected_mob.visible_message(span_warning("<b>[affected_mob]</b> claws at [affected_mob.p_their()] eyes!"))
 			affected_mob.Stun(3)
 
 	holder.remove_reagent(type, 1)//tick down at 1u at a time

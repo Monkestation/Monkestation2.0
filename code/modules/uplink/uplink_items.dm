@@ -10,16 +10,30 @@
 			per_category[possible_sale.category] = list()
 		per_category[possible_sale.category] += possible_sale
 
-	for (var/i in 1 to num)
+	for (var/i in 1 to min(length(per_category), num))
 		var/datum/uplink_category/item_category = pick(per_category)
 		var/datum/uplink_item/taken_item = pick(per_category[item_category])
 		per_category -= item_category
 		var/datum/uplink_item/uplink_item = new taken_item.type()
 		var/discount = uplink_item.get_discount()
-		var/list/disclaimer = list("Void where prohibited.", "Not recommended for children.", "Contains small parts.", "Check local laws for legality in region.", "Do not taunt.", "Not responsible for direct, indirect, incidental or consequential damages resulting from any defect, error or failure to perform.", "Keep away from fire or flames.", "Product is provided \"as is\" without any implied or expressed warranties.", "As seen on TV.", "For recreational use only.", "Use only as directed.", "16% sales tax will be charged for orders originating within Space Nebraska.")
+		var/static/list/disclaimer = list(
+			"Void where prohibited.",
+			"Not recommended for children.",
+			"Contains small parts.",
+			"Check local laws for legality in region.",
+			"Do not taunt.",
+			"Not responsible for direct, indirect, incidental or consequential damages resulting from any defect, error or failure to perform.",
+			"Keep away from fire or flames.",
+			"Product is provided \"as is\" without any implied or expressed warranties.",
+			"As seen on TV.",
+			"For recreational use only.",
+			"Use only as directed.",
+			"16% sales tax will be charged for orders originating within Space Nebraska.",
+		)
 		uplink_item.limited_stock = limited_stock
 		if(uplink_item.cost >= 20) //Tough love for nuke ops
 			discount *= 0.5
+		uplink_item.stock_key = WEAKREF(uplink_item)
 		uplink_item.category = category
 		uplink_item.cost = max(round(uplink_item.cost * (1 - discount)),1)
 		uplink_item.name += " ([round(((initial(uplink_item.cost)-uplink_item.cost)/initial(uplink_item.cost))*100)]% off!)"
@@ -82,6 +96,9 @@
 	/// Uses the purchase log, so items purchased that are not visible in the purchase log will not count towards this.
 	/// However, they won't be purchasable afterwards.
 	var/lock_other_purchases = FALSE
+	/// Whether this item prevents secondary objectives from being taken.
+	/// In addition, if any secondary objectives have been taken or completed, this item will not be available for purchase.
+	var/lock_secondary_objectives = FALSE
 
 /datum/uplink_item/New()
 	. = ..()
@@ -124,6 +141,8 @@
 		uplink_handler.purchase_log.LogPurchase(A, src, cost)
 	if(lock_other_purchases)
 		uplink_handler.shop_locked = TRUE
+	if(lock_secondary_objectives)
+		uplink_handler.disable_secondary_objectives()
 
 /// Spawns an item in the world
 /datum/uplink_item/proc/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)

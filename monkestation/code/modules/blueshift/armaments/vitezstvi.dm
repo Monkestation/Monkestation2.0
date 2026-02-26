@@ -143,7 +143,7 @@
 	item_type = /obj/item/ammo_box/advanced/s12gauge
 
 /* unbalancable for imports without being bloat, maybe we could find a better place for them?
- /datum/armament_entry/company_import/vitezstvi/shot_shells/AP_slugs
+/datum/armament_entry/company_import/vitezstvi/shot_shells/AP_slugs
 	item_type = /obj/item/ammo_box/advanced/s12gauge/apds
 */
 /datum/armament_entry/company_import/vitezstvi/shot_shells/buckshot

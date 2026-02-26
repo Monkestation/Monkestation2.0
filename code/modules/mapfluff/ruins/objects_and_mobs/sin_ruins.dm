@@ -129,6 +129,7 @@
 	var/mob/living/carbon/human/H = target
 	if(user.real_name != H.dna.real_name)
 		user.real_name = H.dna.real_name
+		user.copy_voice_from(H)
 		H.dna.copy_dna(user.dna, COPY_DNA_SE|COPY_DNA_SPECIES)
 		user.updateappearance(mutcolor_update=1)
 		user.domutcheck()

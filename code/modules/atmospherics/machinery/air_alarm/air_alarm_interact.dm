@@ -142,7 +142,7 @@
 
 			if(istype(attacking_item, /obj/item/electroadaptive_pseudocircuit))
 				var/obj/item/electroadaptive_pseudocircuit/P = attacking_item
-				if(!P.adapt_circuit(user, 25))
+				if(!P.adapt_circuit(user, 0.025 * STANDARD_CELL_CHARGE))
 					return
 				user.visible_message(span_notice("[user] fabricates a circuit and places it into [src]."), \
 				span_notice("You adapt an air alarm circuit and slot it into the assembly."))

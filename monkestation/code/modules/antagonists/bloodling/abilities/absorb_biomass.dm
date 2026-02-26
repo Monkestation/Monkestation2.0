@@ -22,11 +22,11 @@
 		return FALSE
 
 	if(is_absorbing)
-		owner.balloon_alert(owner, "Already absorbing!")
+		owner.balloon_alert(owner, "already absorbing!")
 		return FALSE
 
 	if(get_dist(usr, target) > 1)
-		owner.balloon_alert(owner, "Too Far!")
+		owner.balloon_alert(owner, "too Far!")
 		return FALSE
 
 	if(is_type_in_list(target, absorbable_types))
@@ -90,7 +90,7 @@
 		playsound(our_mob, 'sound/items/eatfood.ogg', 20)
 		return TRUE
 
-	our_mob.balloon_alert(our_mob, "You begin absorbing [target]!")
+	our_mob.balloon_alert(our_mob, "you begin absorbing [target]!")
 	var/mob/living/mob_to_absorb = target
 
 	if(!iscarbon(mob_to_absorb))

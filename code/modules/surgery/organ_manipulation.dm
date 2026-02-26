@@ -240,8 +240,8 @@
 
 	else if(current_type == "extract")
 		if(target_organ && target_organ.owner == target)
-			if(istype(tool, /obj/item/organ/internal/shadowtumor/thrall))//Thralls resist deconversion
-				var/obj/item/organ/internal/shadowtumor/thrall/tumor = tool
+			if(istype(target_organ, /obj/item/organ/internal/shadowtumor/thrall))//Thralls resist deconversion
+				var/obj/item/organ/internal/shadowtumor/thrall/tumor = target_organ
 				if(tumor.resist(target))
 					return FALSE
 			display_results(
@@ -255,7 +255,7 @@
 			log_combat(user, target, "surgically removed [target_organ.name] from", addition="COMBAT MODE: [uppertext((user.istate & ISTATE_HARM))]")
 			target_organ.Remove(target)
 			var/turf/drop_turf = get_turf(target)
-			if(drop_turf)
+			if(drop_turf && !QDELETED(target_organ))
 				target_organ.forceMove(drop_turf)
 			target_organ.on_surgical_removal(user, target, target_zone, tool)
 			target.regenerate_icons()

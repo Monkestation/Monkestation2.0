@@ -32,7 +32,7 @@
 		"borg_upgrade_holding",
 		"borg_upgrade_lavaproof",
 		"borg_upgrade_rped",
-		"borg_upgrade_hypermod",
+		"borg_upgrade_nvmeson"
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE)
@@ -50,6 +50,7 @@
 		"borg_upgrade_pinpointer",
 		"borg_upgrade_surgicalprocessor",
 		"borg_upgrade_surgicaltools", //Monke edit: Might need to move this one to the same research node as cybernetic surgical toolset for balance.
+		"borg_upgrade_advanalyzer",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE)

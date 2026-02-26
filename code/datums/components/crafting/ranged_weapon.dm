@@ -362,7 +362,7 @@
 		/obj/item/stack/cable_coil = 5,
 		/obj/item/pipe = 1,
 		/obj/item/stock_parts/micro_laser = 1,
-		/obj/item/stock_parts/cell = 1,
+		/obj/item/stock_parts/power_store/cell = 1,
 		/obj/item/assembly/mousetrap = 1,
 	)
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WRENCH)
@@ -376,7 +376,7 @@
 	reqs = list(
 		/obj/item/gun/energy/disabler/smoothbore = 1,
 		/obj/item/stack/sheet/mineral/gold = 5,
-		/obj/item/stock_parts/cell/hyper = 1,
+		/obj/item/stock_parts/power_store/cell/hyper = 1,
 		/datum/reagent/consumable/red_queen = 10, //monke edit
 	)
 	tool_behaviors = list(TOOL_SCREWDRIVER)

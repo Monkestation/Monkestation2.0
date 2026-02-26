@@ -887,3 +887,87 @@
 	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
 	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing_32x48.dmi'
 	icon_state = "pastelflowers-pink"
+
+/obj/item/clothing/under/costume/invicible_invisible
+	name = "Invicible's Super Suit"
+	desc = "If he's invincible, why can I see him?"
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "invicible_uniform"
+	can_adjust = FALSE
+	inhand_icon_state = null
+
+/obj/item/clothing/mask/invicible_invisible
+	name = "Invicible's Mask"
+	desc = "When you look closely at it, it kinda looks like a big yellow ballon with 3 holes in it."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "invicible_mask"
+	inhand_icon_state = null
+	slot_flags = ITEM_SLOT_MASK | ITEM_SLOT_HEAD
+	flags_inv = HIDEFACE|HIDEEYES
+
+/obj/item/clothing/gloves/fingerless/invicible_invisible
+	name = "Invicible's Gloves"
+	desc = "A pair of gloves that Invicible uses to reduce the impact of punches upon his hands while making the reciver take more force. This pair doesn't do this though."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "invicible_gloves"
+
+/obj/item/clothing/shoes/invicible_invisible
+	name = "Invicible's Boots"
+	desc = "Some thick pair of boots, you're not sure what they're made of but they look pretty cool."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "invicible_boots"
+
+/obj/item/clothing/mask/mrbaghead
+	name = "Mr Bag Head's Paper Sack"
+	desc = "A brown paper sack painted with a red face. You also notice the signature 'MrBagHead' inside the bag."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "mrbagheadsack"
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+
+/obj/item/clothing/suit/monkey_jacket
+	name = "Monkey Varsity Jacket"
+	desc = "Dark grey varsity jacket with a monkey face on the back!"
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "monkey_jacket"
+	worn_icon_state = "monkey_jacket"
+
+/obj/item/clothing/head/hats/bananotrasen_super_hat
+	name = "bananotrasen super hat"
+	desc = "The standard-issue cap of the... Head of Bananas. <span class='small'>That can't be right???</span> For showing the monkeys who's in charge???"
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "bananotrasen_super_hat"
+	worn_icon_state = "bananotrasen_super_hat"
+
+/obj/item/clothing/neck/flavafloh_commissar_jacket
+	name = "\improper Commissar Jacket"
+	desc = "A dark leather jacket worn smooth by years of service."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "commissar_jacket"
+	inhand_icon_state = null
+	slot_flags = ITEM_SLOT_OCLOTHING | ITEM_SLOT_NECK
+
+/obj/item/clothing/under/rank/security/officer/flavafloh_pale_blue_fatigues
+	name = "\improper Pale Blue Fatigues"
+	desc = "A set of pale blue fatigues- they've been well worn."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "pale_blue_fatigues"
+	inhand_icon_state = null
+
+/obj/item/clothing/mask/gas/lobotomites_visage
+	name = "\improper Lobotomite's Visage"
+	desc = "The archaic helm belonging to a shy and troubled man so that he may hide his face. There is a massive C-shaped mark on the left side."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "lobotomites_visage"
+	inhand_icon_state = null
+	flags_cover = MASKCOVERSEYES
+	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT

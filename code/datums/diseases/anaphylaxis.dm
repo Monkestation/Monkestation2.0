@@ -8,7 +8,7 @@
 	cure_chance = 20
 	agent = "Allergy"
 	viable_mobtypes = list(/mob/living/carbon/human)
-	disease_flags = CURABLE
+	disease_flags = CURABLE | DISEASE_ANALYZED
 	severity = DISEASE_SEVERITY_DANGEROUS
 	spread_flags = DISEASE_SPREAD_NON_CONTAGIOUS
 	spread_text = "None"

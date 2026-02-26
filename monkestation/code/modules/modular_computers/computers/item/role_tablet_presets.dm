@@ -50,7 +50,9 @@
 	name = "signal PDA"
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
 	greyscale_colors = "#D99A2E#0EC220#727272"
-	starting_programs = list()
+	starting_programs = list(
+		/datum/computer_file/program/ntnetmonitor,
+	)
 
 /obj/item/modular_computer/pda/barber
 	name = "barber PDA"
@@ -60,6 +62,14 @@
 /obj/item/modular_computer/pda/heads/ntrep
 	name = "Nanotrasen Representative's PDA"
 	inserted_item = /obj/item/pen/fountain
+	starting_programs = list(
+		/datum/computer_file/program/crew_manifest,
+		/datum/computer_file/program/status,
+		/datum/computer_file/program/nt_rep_comments,
+		/datum/computer_file/program/science,
+		/datum/computer_file/program/robocontrol,
+		/datum/computer_file/program/budgetorders,
+	)
 
 /obj/item/modular_computer/pda/xenobiologist
 	name = "xenobiologist PDA"

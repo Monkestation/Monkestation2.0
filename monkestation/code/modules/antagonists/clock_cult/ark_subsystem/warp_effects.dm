@@ -122,7 +122,7 @@
 				basic_bot.bot_access_flags &= ~BOT_CONTROL_PANEL_OPEN | ~BOT_MAINTS_PANEL_OPEN
 			else if(isbot(selected_atom))
 				var/mob/living/simple_animal/bot/simple_bot = selected_atom
-				simple_bot.bot_cover_flags &= BOT_COVER_OPEN | ~BOT_COVER_LOCKED
+				simple_bot.bot_cover_flags &= BOT_COVER_MAINTS_OPEN | ~BOT_COVER_LOCKED
 			selected_atom.emag_act()
 
 /datum/controller/subsystem/processing/the_ark/proc/crystal_warp_space()
@@ -157,3 +157,23 @@
 	if(istype(checked_atom, /mob/living/simple_animal/bot))
 		var/mob/living/simple_animal/bot/checked_bot = checked_atom
 		return checked_bot.bot_cover_flags & BOT_COVER_EMAGGED
+
+/datum/action/cooldown/spell/spacetime_dist/clock_ark
+	name = "Clockwork Spacetime Dist"
+	cooldown_time = 0
+	scramble_radius = 2
+	duration = 1 MINUTE
+	spawned_effect_type = /obj/effect/cross_action/spacetime_dist/clock_ark
+
+/obj/effect/cross_action/spacetime_dist/clock_ark
+
+/obj/effect/cross_action/spacetime_dist/clock_ark/walk_link(atom/movable/AM)
+	if(isliving(AM))
+		var/mob/living/living_mob = AM
+		if(IS_CLOCK(living_mob))
+			return
+	return ..()
+
+/obj/effect/timestop/magic/clock_ark
+	icon_state = ""
+	hidden = TRUE

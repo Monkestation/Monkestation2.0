@@ -256,6 +256,18 @@
 	cost = PAYCHECK_CREW * 12
 	contains = list(/obj/item/encryptionkey/felinid)
 
+/datum/supply_pack/goody/uncommon_encryption_key
+	name = "Uncommon radio encryption key"
+	desc = "A hi-tech radio encryption key that allows the wearer to understand uncommon when the radio is worn."
+	cost = PAYCHECK_CREW * 12
+	contains = list(/obj/item/encryptionkey/uncommon)
+
+/datum/supply_pack/goody/slime_encryption_key
+	name = "Slime radio encryption key"
+	desc = "A hi-tech radio encryption key that allows the wearer to understand slime when the radio is worn."
+	cost = PAYCHECK_CREW * 12
+	contains = list(/obj/item/encryptionkey/slime)
+
 /datum/supply_pack/goody/fishing_toolbox
 	name = "Fishing toolbox"
 	desc = "Complete toolbox set for your fishing adventure. Advanced hooks and lines sold separetely."
@@ -334,4 +346,12 @@
 	cost = CARGO_CRATE_VALUE * 0.75
 	contains = list(
 		/obj/item/disk/nifsoft_uploader/summoner,
+	)
+
+/datum/supply_pack/goody/pipebox
+	name = "Smoking Pipe Set"
+	desc = "Contains a pipebox, smoking pipe, and two pouches of tobacco."
+	cost = CARGO_CRATE_VALUE * 0.75
+	contains = list(
+		/obj/item/storage/pipebox,
 	)

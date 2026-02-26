@@ -25,7 +25,7 @@
 	..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/effect/particle_effect/sparks/LateInitialize()
+/obj/effect/particle_effect/sparks/LateInitialize(mapload_arg)
 	flick(icon_state, src)
 	playsound(src, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	var/turf/T = loc

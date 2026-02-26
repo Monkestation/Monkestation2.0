@@ -13,7 +13,7 @@
 	e.multiplier_tweak(-0.1)
 
 //Major Mutations
-/datum/disease/proc/effectmutate(var/inBody=FALSE, datum/symptom/symptom)
+/datum/disease/proc/effectmutate(inBody=FALSE, datum/symptom/symptom)
 	clean_global_log()
 	subID = rand(0,9999)
 

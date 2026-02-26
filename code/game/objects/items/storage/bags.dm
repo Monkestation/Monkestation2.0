@@ -285,11 +285,10 @@
 	. = ..()
 	. += span_notice("Ctrl-click to activate seed extraction.")
 
-/obj/item/storage/bag/plants/portaseeder/CtrlClick(mob/user)
-	if(user.incapacitated())
-		return
+/obj/item/storage/bag/plants/portaseeder/item_ctrl_click(mob/user)
 	for(var/obj/item/plant in contents)
 		seedify(plant, 1)
+	return CLICK_ACTION_SUCCESS
 
 // -----------------------------
 //        Sheet Snatcher
@@ -348,8 +347,8 @@
 	atom_storage.set_holdable(list(
 		/obj/item/book,
 		/obj/item/spellbook,
-		/obj/item/book,
 		/obj/item/poster,
+		/obj/item/cassette_tape,
 	))
 
 /*

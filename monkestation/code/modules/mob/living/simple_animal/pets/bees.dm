@@ -11,7 +11,7 @@
 	icon_base = "bee"
 
 
-/mob/living/basic/bee/friendly/Initialize()
+/mob/living/basic/bee/friendly/Initialize(mapload)
 	. = ..()
 	var/datum/reagent/R = pick(typesof(/datum/reagent/drug)) //if it's from maint, it's probably drugs
 	assign_reagent(GLOB.chemical_reagents_list[R])

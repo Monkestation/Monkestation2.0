@@ -54,7 +54,7 @@ Regenerative extracts:
 
 /obj/item/slimecross/regenerative/purple
 	colour = "purple"
-	effect_desc = "Rapidly heals the target at an even greater rate, and injects them with some regenerative jelly afterwards. Prevents softcrit while active." // monkestation edit: updates effect_desc to reflect the rework
+	effect_desc = "Rapidly heals the target, and injects them with some regenerative jelly afterwards. Prevents softcrit while active." // monkestation edit: updates effect_desc to reflect the rework
 
 /* monkestation edit: moved functionality to status effect
 /obj/item/slimecross/regenerative/purple/core_effect(mob/living/target, mob/user)
@@ -88,11 +88,11 @@ Regenerative extracts:
 
 /obj/item/slimecross/regenerative/yellow/core_effect(mob/living/target, mob/user)
 	var/list/batteries = list()
-	for(var/obj/item/stock_parts/cell/C in target.get_all_contents())
+	for(var/obj/item/stock_parts/power_store/cell/C in target.get_all_contents())
 		if(C.charge < C.maxcharge)
 			batteries += C
 	if(batteries.len)
-		var/obj/item/stock_parts/cell/ToCharge = pick(batteries)
+		var/obj/item/stock_parts/power_store/cell/ToCharge = pick(batteries)
 		ToCharge.charge = ToCharge.maxcharge
 		to_chat(target, span_notice("You feel a strange electrical pulse, and one of your electrical items was recharged."))
 
@@ -249,6 +249,7 @@ Regenerative extracts:
 		to_chat(user, span_warning("The milky goo flows over [target], falling into a weak puddle."))
 	var/mob/living/dummy = new dummytype(target.loc)
 	to_chat(target, span_notice("The milky goo flows from your skin, forming an imperfect copy of you."))
+	dummy.copy_voice_from(target)
 	if(iscarbon(target))
 		var/mob/living/carbon/carbon_target = target
 		var/mob/living/carbon/carbon_dummy = dummy

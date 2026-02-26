@@ -238,7 +238,7 @@
 /obj/item/tank/internals/oxygen/red,
 /obj/item/clothing/suit/utility/fire/firefighter,
 /obj/item/clothing/mask/gas,
-/obj/item/clothing/head/utility/hardhat/red,
+/obj/item/clothing/head/utility/hardhat/fire,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/extinguisher,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted,
@@ -1174,7 +1174,7 @@
 /obj/item/tank/internals/oxygen/red,
 /obj/item/clothing/suit/utility/fire/firefighter,
 /obj/item/clothing/mask/gas,
-/obj/item/clothing/head/utility/hardhat/red,
+/obj/item/clothing/head/utility/hardhat/fire,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "da" = (
@@ -1601,7 +1601,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/structure/table/reinforced,
 /turf/open/floor/plating,
 /area/shuttle/escape)

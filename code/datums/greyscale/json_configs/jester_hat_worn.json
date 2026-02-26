@@ -1,0 +1,23 @@
+{
+    "jester_hat": [
+        {
+            "type": "icon_state",
+            "icon_state": "leftjester_hat",
+            "blend_mode": "overlay",
+            "color_ids": [1]
+        },
+		{
+            "type": "icon_state",
+            "icon_state": "rightjester_hat",
+            "blend_mode": "overlay",
+			"color_ids": [2]
+        },
+		{
+            "type": "icon_state",
+            "icon_state": "bellsjester_hat",
+            "blend_mode": "overlay",
+			"color_ids": [3]
+        }
+
+    ]
+}

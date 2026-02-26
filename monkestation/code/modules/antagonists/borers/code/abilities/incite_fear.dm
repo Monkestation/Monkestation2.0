@@ -43,7 +43,7 @@
 	var/mob/living/basic/cortical_borer/cortical_owner = owner
 	to_chat(singular_fear, span_warning("Something glares menacingly at you!"))
 	singular_fear.Paralyze(7 SECONDS)
-	singular_fear.stamina.adjust(-50)
+	singular_fear.stamina.adjust(-25)
 	singular_fear.set_confusion_if_lower(9 SECONDS)
 	var/turf/human_turf = get_turf(singular_fear)
 	var/logging_text = "[key_name(cortical_owner)] feared/paralyzed [key_name(singular_fear)] at [loc_name(human_turf)]"
@@ -54,7 +54,7 @@
 	var/mob/living/basic/cortical_borer/cortical_owner = owner
 	owner.balloon_alert(owner, "fear incited into host")
 	cortical_owner.human_host.Paralyze(10 SECONDS)
-	cortical_owner.human_host.stamina.adjust(-100)
+	cortical_owner.human_host.stamina.adjust(-50)
 	cortical_owner.human_host.set_confusion_if_lower(15 SECONDS)
 	to_chat(cortical_owner.human_host, span_warning("Something moves inside of you violently!"))
 	var/turf/human_turf = get_turf(cortical_owner.human_host)

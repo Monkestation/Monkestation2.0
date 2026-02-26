@@ -12,6 +12,7 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 	antag_moodlet = /datum/mood_event/sling
 	stinger_sound = 'sound/ambience/antag/darkspawn/darkspawn.ogg'
 	antag_flags = parent_type::antag_flags | FLAG_ANTAG_CAP_TEAM
+	antag_count_points = 20
 
 	//team used for all the darkspawns, thralls, and the objective
 	var/datum/team/darkspawn/team
@@ -75,13 +76,11 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 /datum/antagonist/darkspawn/on_removal()
 	STOP_PROCESSING(SSprocessing, src)
 	owner.special_role = null
-	if(team)
-		team.remove_member(owner)
-	owner.current.hud_used.psi_counter.invisibility = initial(owner.current.hud_used.psi_counter.invisibility)
-	owner.current.hud_used.psi_counter.maptext = ""
+	team?.remove_member(owner)
+	if(owner.current?.hud_used?.psi_counter)
+		owner.current.hud_used.psi_counter.RemoveInvisibility(type)
+		owner.current.hud_used.psi_counter.maptext = ""
 	QDEL_NULL(picked_class)
-	UnregisterSignal(owner, COMSIG_MIND_CHECK_ANTAG_RESOURCE)
-	UnregisterSignal(owner, COMSIG_MIND_SPEND_ANTAG_RESOURCE)
 	return ..()
 
 /datum/antagonist/darkspawn/apply_innate_effects(mob/living/mob_override)
@@ -97,7 +96,7 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 
 	//psi stuff
 	if(current_mob?.hud_used?.psi_counter)
-		current_mob.hud_used.psi_counter.invisibility = 0
+		current_mob.hud_used.psi_counter.SetInvisibility(INVISIBILITY_NONE, id=type)
 		update_psi_hud()
 
 	current_mob.faction |= FACTION_DARKSPAWN
@@ -125,6 +124,7 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 		for(var/datum/action/cooldown/spell/divulge/divulge in current_mob.actions) //remove divulge if they haven't yet
 			divulge.Remove(current_mob)
 			qdel(divulge)
+		UnregisterSignal(current_mob, list(COMSIG_MIND_CHECK_ANTAG_RESOURCE, COMSIG_MIND_SPEND_ANTAG_RESOURCE))
 
 ////////////////////////////////////////////////////////////////////////////////////
 //--------------------------------Antag hud---------------------------------------//
@@ -181,6 +181,13 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 ////////////////////////////////////////////////////////////////////////////////////
 //----------------------------UI and Psi web stuff--------------------------------//
 ////////////////////////////////////////////////////////////////////////////////////
+
+/datum/antagonist/darkspawn/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "AntagInfoDarkspawn", name)
+		ui.open()
+
 /datum/antagonist/darkspawn/ui_data(mob/user)
 	var/list/data = list()
 
@@ -207,18 +214,18 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 		var/list/paths = list()
 
 		if(picked_class)
-			for(var/datum/psi_web/knowledge as anything in picked_class.get_purchasable_abilities())
+			for(var/datum/psi_web/knowledge in picked_class.get_purchasable_abilities())
 				if(category != initial(knowledge.menu_tab))
 					continue
 
 				var/list/knowledge_data = list()
-				knowledge_data["path"] = knowledge
+				knowledge_data["path"] = knowledge.type
 				knowledge_data["name"] = initial(knowledge.name)
 				knowledge_data["desc"] = initial(knowledge.desc)
 				knowledge_data["lore_description"]  = initial(knowledge.lore_description)
 				knowledge_data["cost"] = initial(knowledge.willpower_cost)
 				knowledge_data["disabled"] = (initial(knowledge.willpower_cost) > willpower)
-				knowledge_data["infinite"] = (initial(knowledge.infinite))
+				knowledge_data["purchases_left"] = knowledge.purchases_left
 				if(initial(knowledge.icon_state)) //only include an icon if one actually exists
 					knowledge_data["icon"] = initial(knowledge.icon)
 					knowledge_data["icon_state"] = initial(knowledge.icon_state)
@@ -249,7 +256,7 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 
 	return data
 
-/datum/antagonist/darkspawn/ui_act(action, params)
+/datum/antagonist/darkspawn/ui_act(action, list/params, datum/tgui/ui)
 	. = ..()
 	if(.)
 		return
@@ -258,7 +265,10 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 			var/upgrade_path = text2path(params["upgrade_path"])
 			if(!ispath(upgrade_path, /datum/psi_web))
 				return FALSE
-			SEND_SIGNAL(owner, COMSIG_DARKSPAWN_PURCHASE_POWER, upgrade_path)
+			SEND_SIGNAL(owner, COMSIG_DARKSPAWN_PURCHASE_POWER, upgrade_path, willpower)
+			ui.send_update()
+		if("refresh")
+			ui.send_update()
 		if("select")
 			if(picked_class)
 				return FALSE
@@ -267,6 +277,7 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 				return FALSE
 			picked_class = owner.AddComponent(class_path)
 			var/processed_message = span_velvet("<b>\[Mindlink\] [owner.current] has selected [picked_class.name] as their class.</b>")
+			picked_class.populate_ability_list()
 			for(var/T in GLOB.alive_mob_list)
 				var/mob/M = T
 				if(IS_TEAM_DARKSPAWN(M))
@@ -310,7 +321,7 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 			deadguy.heal_ordered_damage(10, list(STAMINA, BURN, BRUTE, TOX, OXY, CLONE, BRAIN))
 			if(deadguy.health >= deadguy.maxHealth)
 				deadguy.grab_ghost()
-				deadguy.revive(TRUE)
+				deadguy.revive(TRUE, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 				revive_notice = FALSE
 				deadguy.visible_message(span_progenitor("[deadguy]'s sigils flare brightly as they are once again in the realm of the living!"), span_progenitor("You rise once more!"))
 				playsound(deadguy, 'sound/magic/darkspawn/demented_outburst_scream.ogg', 40, FALSE)
@@ -346,6 +357,7 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 		COOLDOWN_START(src, psi_cooldown, psi_regen_delay)
 	psi = round(psi - amount, 0.1)
 	update_psi_hud()
+	owner.current?.update_mob_action_buttons(UPDATE_BUTTON_STATUS)
 	return TRUE
 
 /datum/antagonist/darkspawn/proc/regenerate_psi()
@@ -357,6 +369,7 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 	update_psi_hud()
 	if(psi >= psi_cap || !COOLDOWN_FINISHED(src, psi_cooldown))
 		psi_regenerating = FALSE
+		owner.current?.update_mob_action_buttons(UPDATE_BUTTON_STATUS)
 		return
 	var/delay = (1/psi_per_second) SECONDS
 	addtimer(CALLBACK(src, PROC_REF(regenerate_psi)), delay, TIMER_UNIQUE) //tick it up very quickly
@@ -376,7 +389,7 @@ GLOBAL_VAR_INIT(sacrament_done, FALSE)
 		owner.current.clear_alert("psiblock")
 
 /datum/antagonist/darkspawn/proc/update_psi_hud()
-	if(!owner.current || !owner.current.hud_used)
+	if(!owner.current?.hud_used)
 		return
 	var/atom/movable/screen/counter = owner.current.hud_used.psi_counter
 	counter.maptext = ANTAG_MAPTEXT(psi, COLOR_DARKSPAWN_PSI)

@@ -1,7 +1,8 @@
+#define COMA_COOLDOWN (40 SECONDS)
 /datum/symptom/coma
 	name = "Regenerative Coma"
-	desc = "The virus causes the host to fall into a death-like coma when severely damaged, then rapidly fixes the damage."
-	max_multiplier = 12
+	desc = "The virus causes the host to fall into a death-like coma when severely damaged, then rapidly fixes the damage. Waking the host up some time later."
+	max_multiplier = 6
 	max_chance = 100
 	stage = 3
 	badness = EFFECT_DANGER_HELPFUL
@@ -10,13 +11,21 @@
 	var/passive_message = span_notice("The pain from your wounds makes you feel oddly sleepy...")
 	var/added_to_mob = FALSE
 	var/active_coma = FALSE //to prevent multiple coma procs
+	COOLDOWN_DECLARE(last_coma)
+	var/cooldown_alert = FALSE // To give some mechanical signal that it's back online
 
 /datum/symptom/coma/activate(mob/living/carbon/mob, datum/disease/acute/disease)
 	. = ..()
-	if(!added_to_mob && max_multiplier >= 9)
+	if (!COOLDOWN_FINISHED(src, last_coma))
+		cooldown_alert = FALSE
+		return
+	if(!added_to_mob && max_multiplier >= 4)
 		added_to_mob = TRUE
 		ADD_TRAIT(mob, TRAIT_NOCRITDAMAGE, type)
-
+	if(!cooldown_alert)
+		cooldown_alert = !cooldown_alert
+		INVOKE_ASYNC(mob, TYPE_PROC_REF(/mob, emote), "yawn")
+		to_chat(mob, span_warning("You can't help the urge to yawn."))
 	var/effectiveness = CanHeal(mob)
 	if(!effectiveness)
 		return
@@ -56,13 +65,14 @@
 	if(QDELETED(victim) || victim.stat == DEAD)
 		return
 	victim.fakedeath("regenerative_coma", TRUE)
-	addtimer(CALLBACK(src, PROC_REF(uncoma), victim), 30 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(uncoma), victim), 20 SECONDS)
 
 /datum/symptom/coma/proc/uncoma(mob/living/victim)
 	if(QDELETED(victim) || !active_coma)
 		return
+	addtimer(CALLBACK(victim, TYPE_PROC_REF(/mob/living, cure_fakedeath), "regenerative_coma"), 15 SECONDS)
 	active_coma = FALSE
-	victim.cure_fakedeath("regenerative_coma")
+	COOLDOWN_START(src, last_coma, COMA_COOLDOWN)
 
 /datum/symptom/coma/proc/Heal(mob/living/carbon/victim, actual_power)
 	var/list/parts = victim.get_damaged_bodyparts(brute = TRUE, burn = TRUE)
@@ -78,3 +88,5 @@
 	if((victim.getBruteLoss() + victim.getFireLoss()) > 30)
 		return TRUE
 	return FALSE
+
+#undef COMA_COOLDOWN

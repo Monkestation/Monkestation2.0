@@ -71,6 +71,9 @@
 		lightning_timer = addtimer(CALLBACK(src, PROC_REF(clear_lightning_overlay)), time_to_last, (TIMER_UNIQUE|TIMER_OVERRIDE))
 		return
 	lightning_overlay = mutable_appearance(icon = 'icons/effects/effects.dmi', icon_state = "lightning")
+	if(ishuman(owner))
+		var/mob/living/carbon/human/human_owner = owner
+		human_owner.apply_height_filters(lightning_overlay)
 	owner.add_overlay(lightning_overlay)
 	lightning_timer = addtimer(CALLBACK(src, PROC_REF(clear_lightning_overlay)), time_to_last, (TIMER_UNIQUE|TIMER_OVERRIDE))
 
@@ -101,14 +104,14 @@
 		return
 
 	var/list/batteries = list()
-	for(var/obj/item/stock_parts/cell/cell in owner.get_all_contents())
+	for(var/obj/item/stock_parts/power_store/cell/cell in owner.get_all_contents())
 		if(cell.used_charge())
 			batteries += cell
 
 	if(!length(batteries))
 		return
 
-	var/obj/item/stock_parts/cell/cell = pick(batteries)
+	var/obj/item/stock_parts/power_store/cell/cell = pick(batteries)
 	cell.give(cell.maxcharge * 0.1)
 
 ///Does a few things to try to help you live whatever you may be going through
@@ -123,7 +126,7 @@
 
 ///Alerts our owner that the organ is ready to do its thing again
 /obj/item/organ/internal/heart/cybernetic/anomalock/proc/notify_cooldown(mob/living/carbon/organ_owner)
-	balloon_alert(organ_owner, "your heart strenghtens")
+	balloon_alert(organ_owner, "your heart strengthens")
 	playsound(organ_owner, 'sound/items/eshield_recharge.ogg', 40)
 
 ///Returns the mob we are implanted in so that the electricity effect doesn't runtime
@@ -172,6 +175,7 @@
 /obj/item/organ/internal/heart/cybernetic/anomalock/prebuilt/Initialize(mapload)
 	. = ..()
 	core = new /obj/item/assembly/signaler/anomaly/flux(src)
+	add_organ_trait(TRAIT_SHOCKIMMUNE)
 	update_icon_state()
 
 /datum/status_effect/voltaic_overdrive
@@ -179,14 +183,16 @@
 	duration = 30 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/anomalock_active
 	show_duration = TRUE
+	processing_speed = STATUS_EFFECT_PRIORITY
 
 /datum/status_effect/voltaic_overdrive/tick(seconds_between_ticks)
 	. = ..()
-
-	if(owner.health <= owner.crit_threshold)
-		owner.heal_overall_damage(5, 5)
-		owner.adjustOxyLoss(-5)
-		owner.adjustToxLoss(-5)
+	if(owner.health > owner.crit_threshold)
+		return
+	owner.heal_overall_damage(brute = 5, burn = 5, updating_health = FALSE)
+	owner.adjustOxyLoss(-5, updating_health = FALSE)
+	owner.adjustToxLoss(-5, updating_health = FALSE, forced = TRUE)
+	owner.updatehealth()
 
 /datum/status_effect/voltaic_overdrive/on_apply()
 	. = ..()

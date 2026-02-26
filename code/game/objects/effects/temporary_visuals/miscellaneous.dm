@@ -213,6 +213,17 @@
 		if(EAST)
 			icon_state = "beam_splash_e"
 
+/obj/effect/temp_visual/bsa_impact
+	name = "\improper Bluespace Artillery detonation"
+	desc = "Tearing into conventional space once more, the immense energy of the beam is delivered directly into the target and its surroundings."
+	icon = 'icons/effects/96x160.dmi'
+	icon_state = "bsa_impact_ex"
+	layer = ABOVE_ALL_MOB_LAYER
+	plane = ABOVE_GAME_PLANE
+	pixel_y = -32
+	pixel_x = -32
+	duration = 10
+
 /obj/effect/temp_visual/wizard
 	name = "water"
 	icon = 'icons/mob/simple/mob.dmi'
@@ -281,7 +292,7 @@
 
 /obj/effect/temp_visual/fire
 	icon = 'icons/effects/fire.dmi'
-	icon_state = "3"
+	icon_state = "heavy"
 	light_outer_range = LIGHT_RANGE_FIRE
 	light_color = LIGHT_COLOR_FIRE
 	duration = 1 SECONDS
@@ -344,14 +355,6 @@
 
 /obj/effect/temp_visual/gib_animation/animal
 	icon = 'icons/mob/simple/animal.dmi'
-
-/obj/effect/temp_visual/dust_animation
-	icon = 'icons/mob/simple/mob.dmi'
-	duration = 15
-
-/obj/effect/temp_visual/dust_animation/Initialize(mapload, dust_icon)
-	icon_state = dust_icon // Before ..() so the correct icon is flick()'d
-	. = ..()
 
 /obj/effect/temp_visual/mummy_animation
 	icon = 'icons/mob/simple/mob.dmi'

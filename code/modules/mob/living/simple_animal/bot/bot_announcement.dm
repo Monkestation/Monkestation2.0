@@ -7,7 +7,6 @@
 	button_icon = 'icons/mob/actions/actions_AI.dmi'
 	button_icon_state = "intercom"
 	cooldown_time = 10 SECONDS
-	melee_cooldown_time = 0 SECONDS
 	/// List of strings to sound effects corresponding to automated messages we can play
 	var/list/automated_announcements
 

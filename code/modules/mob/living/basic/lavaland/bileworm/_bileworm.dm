@@ -60,3 +60,9 @@
 	ai_controller.set_blackboard_key(BB_BILEWORM_SPEW_BILE, spew_bile)
 	ai_controller.set_blackboard_key(BB_BILEWORM_RESURFACE, resurface)
 	ai_controller.set_blackboard_key(BB_BILEWORM_DEVOUR, devour)
+	update_appearance(UPDATE_OVERLAYS)
+
+/mob/living/basic/mining/bileworm/update_overlays()
+	. = ..()
+	if (stat != DEAD)
+		. += emissive_appearance(icon, "[icon_living]_e", src)

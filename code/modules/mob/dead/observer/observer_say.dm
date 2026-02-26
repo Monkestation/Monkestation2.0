@@ -64,7 +64,7 @@
 		create_chat_message(speaker, message_language, raw_message, spans)
 	// monkestation start: bold messages for ghosts when they're nearby
 	var/list/our_spans = spans
-	if((client?.prefs.chat_toggles & CHAT_GHOSTEARS) && CAN_THEY_SEE(src, to_follow))
+	if((client?.prefs.chat_toggles & CHAT_GHOSTEARS) && CAN_THEY_SEE(to_follow, src))
 		our_spans = spans.Copy()
 		our_spans |= SPAN_BOLD
 	// monkestation end

@@ -35,7 +35,7 @@
 	connected_mechpad = null
 
 /obj/machinery/computer/mechpad/LateInitialize()
-	for(var/obj/machinery/mechpad/pad in GLOB.mechpad_list)
+	for(var/obj/machinery/mechpad/pad as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/mechpad))
 		if(pad == connected_mechpad)
 			continue
 		if(pad.id != id)
@@ -87,25 +87,28 @@
 
 /obj/machinery/computer/mechpad/multitool_act(mob/living/user, obj/item/multitool/multi)
 	. = NONE
-	if(!istype(multi.buffer, /obj/machinery/mechpad))
+
+	var/datum/buffer = multitool_get_buffer(multi)
+	if(!istype(buffer, /obj/machinery/mechpad))
 		return ITEM_INTERACT_BLOCKING
 
-	var/obj/machinery/mechpad/buffered_pad = multi.buffer
+	var/obj/machinery/mechpad/buffered_pad = buffer
 	if(!(mechpads.len < maximum_pads))
 		to_chat(user, span_warning("[src] cannot handle any more connections!"))
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
 	if(buffered_pad == connected_mechpad)
 		to_chat(user, span_warning("[src] cannot connect to its own mechpad!"))
 	else if(!connected_mechpad && buffered_pad == find_pad())
 		if(buffered_pad in mechpads)
 			remove_pad(buffered_pad)
 		connect_launchpad(buffered_pad)
-		multi.set_buffer(null)
+		multitool_set_buffer(multi, null)
 		to_chat(user, span_notice("You connect the console to the pad with data from the [multi.name]'s buffer."))
 	else
 		add_pad(buffered_pad)
-		multi.set_buffer(null)
+		multitool_set_buffer(multi, null)
 		to_chat(user, span_notice("You upload the data from the [multi.name]'s buffer."))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/computer/mechpad/proc/add_pad(obj/machinery/mechpad/pad)
 	mechpads += pad
@@ -199,7 +202,7 @@
 			data["mechonly"] = current_pad.mech_only
 	return data
 
-/obj/machinery/computer/mechpad/ui_act(action, params)
+/obj/machinery/computer/mechpad/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

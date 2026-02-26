@@ -39,7 +39,7 @@
 	..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/effect/sliding_puzzle/LateInitialize()
+/obj/effect/sliding_puzzle/LateInitialize(mapload_arg)
 	if(auto_setup)
 		setup()
 

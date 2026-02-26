@@ -147,17 +147,11 @@
 	/// What job does this mob have
 	var/job = null//Living
 
-	/// Can this mob enter shuttles
-	var/move_on_shuttle = 1
-
 	///A weakref to the last mob/living/carbon to push/drag/grab this mob (exclusively used by slimes friend recognition)
 	var/datum/weakref/LAssailant = null
 
 	/// bitflags defining which status effects can be inflicted (replaces canknockdown, canstun, etc)
 	var/status_flags = CANSTUN|CANKNOCKDOWN|CANUNCONSCIOUS|CANPUSH
-
-	/// Can they interact with station electronics
-	var/has_unlimited_silicon_privilege = FALSE
 
 	///Used by admins to possess objects. All mobs should have this var
 	var/obj/control_object

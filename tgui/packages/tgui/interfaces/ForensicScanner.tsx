@@ -1,3 +1,5 @@
+import { capitalizeFirst } from '../../common/string';
+import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -6,9 +8,6 @@ import {
   NoticeBox,
   Section,
 } from '../components';
-import { capitalizeFirst } from '../../common/string';
-
-import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 type ForensicScannerData = {

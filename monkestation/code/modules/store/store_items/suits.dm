@@ -332,7 +332,7 @@ GLOBAL_LIST_INIT(store_suits, generate_store_items(/datum/store_item/suit))
 	item_cost = 5000
 
 /datum/store_item/suit/winter_coat/narsie
-	name = "Narsie Winter Coat"
+	name = "Nar'Sie Winter Coat"
 	item_path = /obj/item/clothing/suit/hooded/wintercoat/narsie
 	item_cost = 5000
 
@@ -655,10 +655,6 @@ GLOBAL_LIST_INIT(store_suits, generate_store_items(/datum/store_item/suit))
 /datum/store_item/suit/hoodie/mu
 	name = "Mojave University Hoodie"
 	item_path = /obj/item/clothing/suit/toggle/jacket/hoodie/branded/mu
-
-/datum/store_item/suit/peacekeeper_jacket/badge
-	name = "Badged Peacekeeper Jacket"
-	item_path = /obj/item/clothing/suit/armor/vest/peacekeeper/jacket/badge
 
 /datum/store_item/suit/offdep_jacket
 	name = "Off-Department Jacket"

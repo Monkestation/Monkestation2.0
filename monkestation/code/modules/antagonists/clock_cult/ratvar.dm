@@ -111,6 +111,8 @@ GLOBAL_DATUM(cult_ratvar, /obj/ratvar)
 
 /obj/ratvar/attack_ghost(mob/user)
 	. = ..()
+	if(is_banned_from(user.ckey, list(ROLE_CLOCK_CULTIST)))
+		return
 	var/mob/living/basic/drone/created_drone = new /mob/living/basic/drone/cogscarab(get_turf(src))
 	created_drone.flags_1 |= (flags_1 & ADMIN_SPAWNED_1)
 	if(user.mind)

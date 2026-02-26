@@ -46,6 +46,9 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 	var/event_timeout
 	/// The month we last used a donator token on
 	var/token_month = 0
+	// Ticket Panel Additions
+	var/datum/token_request/current_antag_request
+	var/datum/token_request/current_event_request
 
 /datum/meta_token_holder/New(client/creator)
 	. = ..()
@@ -156,16 +159,20 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 /datum/meta_token_holder/proc/approve_antag_token()
 	if(!in_queue)
 		return
-
 	to_chat(owner, span_boldnicegreen("Your request to play as [in_queue] has been approved."))
 	logger.Log(LOG_CATEGORY_META, "[owner]'s antag token for [in_queue] has been approved")
+
+
+	SStoken_manager.record_accepted() 	// Token Panel Addition
+
 	spend_antag_token(in_queued_tier, queued_donor)
 	if(!owner.mob.mind)
 		owner.mob.mind_initialize()
 	in_queue.antag_token(owner.mob.mind, owner.mob) //might not be in queue
 
-	qdel(in_queue)
-	in_queue = null
+	QDEL_NULL(in_queue)
+
+	QDEL_NULL(current_antag_request)	// Token Panel Addition
 	in_queued_tier = null
 	queued_donor = FALSE
 	if(antag_timeout)
@@ -178,8 +185,12 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 
 	to_chat(owner, span_boldwarning("Your request to play as [in_queue] has been denied."))
 	logger.Log(LOG_CATEGORY_META, "[owner]'s antag token for [in_queue] has been denied.")
+
+	SStoken_manager.record_rejected() // Token Panel Addition
+
 	SEND_SOUND(owner, sound('sound/misc/compiler-failure.ogg', volume = 50))
-	in_queue = null
+	QDEL_NULL(in_queue)
+	QDEL_NULL(current_antag_request)	// Token Panel Addition
 	in_queued_tier = null
 	queued_donor = FALSE
 	if(antag_timeout)
@@ -189,8 +200,14 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 /datum/meta_token_holder/proc/timeout_antag_token()
 	if(!in_queue)
 		return
+	current_antag_request?.timeout_timer = null
+
 	to_chat(owner, span_boldwarning("Your request to play as [in_queue] wasn't answered within 5 minutes. Better luck next time!"))
 	logger.Log(LOG_CATEGORY_META, "[owner]'s antag token for [in_queue] has timed out.")
+
+	SStoken_manager.record_timeout() 	// Token Panel Addition
+	QDEL_NULL(current_antag_request)	// Token Panel Addition
+
 	SEND_SOUND(owner, sound('sound/misc/compiler-failure.ogg', volume = 50))
 	in_queue = null
 	in_queued_tier = null

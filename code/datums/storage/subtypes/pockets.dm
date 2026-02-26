@@ -77,6 +77,7 @@
 		/obj/item/switchblade,
 		/obj/item/boxcutter,
 		/obj/item/pen,
+		/obj/item/flashlight/pen,
 		/obj/item/scalpel,
 		/obj/item/dnainjector,
 		/obj/item/reagent_containers/syringe,

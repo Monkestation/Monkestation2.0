@@ -10,6 +10,7 @@
 		/obj/item/organ/external/anime_head,
 		/obj/item/organ/external/anime_middle,
 		/obj/item/organ/external/anime_bottom,
+		/obj/item/organ/external/anime_halo,
 	)
 
 /datum/quirk/anime/add(client/client_source)

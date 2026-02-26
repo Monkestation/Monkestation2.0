@@ -301,6 +301,12 @@ GLOBAL_LIST_INIT(loadout_exosuits, generate_loadout_items(/datum/loadout_item/su
 	item_path = /obj/item/clothing/suit/jacket/tailcoat/bartender
 	restricted_roles = list(JOB_BARTENDER)
 
+/datum/loadout_item/suit/qm_jacket
+	name = "Quartermaster's Jacket"
+	item_path = /obj/item/clothing/suit/toggle/jacket/supply/head
+	restricted_roles = list(JOB_QUARTERMASTER)
+
+
 /*
 *	FAMILIES
 */
@@ -334,7 +340,7 @@ GLOBAL_LIST_INIT(loadout_exosuits, generate_loadout_items(/datum/loadout_item/su
 	item_path = /obj/item/clothing/suit/hooded/wintercoat/ratvar
 
 /datum/loadout_item/suit/winter_coat/narsie
-	name = "Narsie Winter Coat"
+	name = "Nar'Sie Winter Coat"
 	item_path = /obj/item/clothing/suit/hooded/wintercoat/narsie
 
 /datum/loadout_item/suit/saints
@@ -661,7 +667,7 @@ GLOBAL_LIST_INIT(loadout_exosuits, generate_loadout_items(/datum/loadout_item/su
 /datum/loadout_item/suit/navybluejacketofficer
 	name = "Security Officer's Navy Blue Formal Jacket"
 	item_path = /obj/item/clothing/suit/jacket/officer/blue
-	restricted_roles = list(JOB_WARDEN, JOB_DETECTIVE, JOB_SECURITY_OFFICER, JOB_HEAD_OF_SECURITY, JOB_SECURITY_ASSISTANT, JOB_BRIG_PHYSICIAN)
+	restricted_roles = list(JOB_WARDEN, JOB_DETECTIVE, JOB_SECURITY_OFFICER, JOB_HEAD_OF_SECURITY, JOB_SECURITY_ASSISTANT)
 	requires_purchase = FALSE
 
 /datum/loadout_item/suit/navybluejacketwarden
@@ -682,27 +688,11 @@ GLOBAL_LIST_INIT(loadout_exosuits, generate_loadout_items(/datum/loadout_item/su
 	restricted_roles = list(JOB_WARDEN, JOB_DETECTIVE, JOB_SECURITY_OFFICER, JOB_HEAD_OF_SECURITY, JOB_SECURITY_ASSISTANT, JOB_BRIG_PHYSICIAN)
 	requires_purchase = FALSE
 
-/datum/loadout_item/suit/brit
-	name = "High Vis Armored Vest"
-	item_path = /obj/item/clothing/suit/armor/vest/peacekeeper/brit
-	restricted_roles = list(JOB_HEAD_OF_SECURITY, JOB_SECURITY_OFFICER, JOB_WARDEN, JOB_DETECTIVE,  JOB_SECURITY_ASSISTANT, JOB_BRIG_PHYSICIAN)
-	requires_purchase = FALSE
-
 /datum/loadout_item/suit/british_jacket
 	name = "Peacekeeper Officer Coat"
 	item_path = /obj/item/clothing/suit/british_officer
 	restricted_roles = list(JOB_WARDEN, JOB_DETECTIVE, JOB_SECURITY_OFFICER, JOB_HEAD_OF_SECURITY,  JOB_SECURITY_ASSISTANT, JOB_BRIG_PHYSICIAN)
 	requires_purchase = FALSE
-
-/datum/loadout_item/suit/peacekeeper_jacket
-	name = "Peacekeeper Jacket"
-	item_path = /obj/item/clothing/suit/armor/vest/peacekeeper/jacket
-	restricted_roles = list(JOB_WARDEN, JOB_DETECTIVE, JOB_SECURITY_OFFICER, JOB_HEAD_OF_SECURITY,  JOB_SECURITY_ASSISTANT, JOB_BRIG_PHYSICIAN)
-	requires_purchase = FALSE
-
-/datum/loadout_item/suit/peacekeeper_jacket/badge
-	name = "Badged Peacekeeper Jacket"
-	item_path = /obj/item/clothing/suit/armor/vest/peacekeeper/jacket/badge
 
 /datum/loadout_item/suit/offdep_jacket
 	name = "Off-Department Jacket"
@@ -732,7 +722,7 @@ GLOBAL_LIST_INIT(loadout_exosuits, generate_loadout_items(/datum/loadout_item/su
 	restricted_roles = list(JOB_CARGO_TECHNICIAN, JOB_SHAFT_MINER, JOB_QUARTERMASTER)
 	requires_purchase = FALSE
 
-/datum/loadout_item/suit/digicoat_glitched //Public donator reward for Razurath.
+/datum/loadout_item/suit/digicoat_glitched //Purchasable version of Razurath's donator reward.
 	name = "Glitched Digicoat"
 	item_path = /obj/item/clothing/suit/toggle/digicoat/glitched
 

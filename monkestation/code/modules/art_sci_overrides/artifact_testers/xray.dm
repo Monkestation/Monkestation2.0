@@ -47,10 +47,12 @@
 	stored_research = new_techweb
 
 /obj/machinery/artifact_xray/multitool_act(mob/living/user, obj/item/multitool/tool)
-	if(!QDELETED(tool.buffer) && istype(tool.buffer, /datum/techweb))
-		connect_techweb(tool.buffer)
+	var/datum/buffer = multitool_get_buffer(tool)
+	if(!QDELETED(buffer) && istype(buffer, /datum/techweb))
+		connect_techweb(buffer)
 		return TRUE
 	return FALSE
+
 /obj/machinery/artifact_xray/RefreshParts()
 	. = ..()
 	var/power_usage = 250
@@ -67,17 +69,17 @@
 	icon_state = "[base_icon_state]-[state_open]"
 	return ..()
 
-/obj/machinery/artifact_xray/AltClick(mob/user)
-	. = ..()
-	if(!can_interact(user))
-		return
+/obj/machinery/artifact_xray/click_alt(mob/user)
 	if(our_disk)
 		to_chat(user,"You eject the [our_disk.name]")
 		if(!user.put_in_active_hand(our_disk))
 			our_disk.forceMove(get_turf(user))
 		our_disk = null
-		return
+		return CLICK_ACTION_SUCCESS
+
 	toggle_open()
+	return CLICK_ACTION_SUCCESS
+
 /obj/machinery/artifact_xray/proc/toggle_open()
 	if(!COOLDOWN_FINISHED(src,pulse_cooldown))
 		return

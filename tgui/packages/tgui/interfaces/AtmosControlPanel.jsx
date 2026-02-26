@@ -1,21 +1,45 @@
 import { map, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
+import { useMemo, useState } from 'react';
+import {
+  Box,
+  Button,
+  Dropdown,
+  Flex,
+  Section,
+  Table,
+} from 'tgui-core/components';
 import { useBackend } from '../backend';
-import { Box, Button, Flex, Section, Table } from '../components';
 import { Window } from '../layouts';
+
+const sortOptions = [
+  { displayText: 'Area Name', value: 'area' },
+  { displayText: 'Breakdown', value: 'breakdown' },
+  { displayText: 'Dismantle', value: 'dismantle' },
+  { displayText: 'Active Turfs', value: 'size' },
+];
 
 export const AtmosControlPanel = (props) => {
   const { act, data } = useBackend();
+
+  const [sortVar, setSortVar] = useState('area');
+  const sorter = useMemo(() => sortBy((group) => group[sortVar]), [sortVar]);
+
   const groups = flow([
     map((group, i) => ({
       ...group,
       // Generate a unique id
       id: group.area + i,
     })),
-    sortBy((group) => group.id),
+    sorter,
   ])(data.excited_groups);
+
+  if (sortVar !== 'area') {
+    groups.reverse();
+  }
+
   return (
-    <Window title="SSAir Control Panel" width={900} height={500}>
+    <Window title="SSAir Control Panel" width={1200} height={500}>
       <Section m={1}>
         <Flex justify="space-between" align="baseline">
           <Flex.Item>
@@ -31,6 +55,17 @@ export const AtmosControlPanel = (props) => {
           <Flex.Item>Excited Groups: {data.excited_size}</Flex.Item>
           <Flex.Item>Hotspots: {data.hotspots_size}</Flex.Item>
           <Flex.Item>Superconductors: {data.conducting_size}</Flex.Item>
+          <Flex.Item>
+            <Dropdown
+              selected={sortVar}
+              options={sortOptions}
+              displayText={(() => {
+                const option = sortOptions.find((opt) => opt.value === sortVar);
+                return `Sort by: ${option ? option.displayText : sortVar}`;
+              })()}
+              onSelected={(value) => setSortVar(value)}
+            />
+          </Flex.Item>
           <Flex.Item>
             <Button.Checkbox
               checked={data.showing_user}

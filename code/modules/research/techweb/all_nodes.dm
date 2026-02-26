@@ -9,6 +9,7 @@
 	// Default research tech, prevents bricking
 	design_ids = list(
 		"basic_capacitor",
+		"basic_battery",
 		"basic_cell",
 		"basic_matter_bin",
 		"basic_micro_laser",
@@ -116,6 +117,7 @@
 		"shotgun_slug",
 		"sec_Islug",
 		"sec_rshot",
+		"sec_pen",
 		"servingtray",
 		"shaker",
 		"shot_glass",
@@ -145,7 +147,8 @@
 		"universal_scanner",
 		"voice_analyzer",
 		"watering_can",
-		"modlink_scryer", // monkestation addition
+		"modlink_scryer",// monkestation addition
+		"flatpacker",
 	)
 
 /datum/techweb_node/basic_tools
@@ -159,6 +162,7 @@
 		"boxcutter",
 		"cable_coil",
 		"cable_coil",
+		"chicken_scanner",
 		"industrial_coil",
 		"crowbar",
 		"cultivator",
@@ -216,6 +220,10 @@
 		"cybernetic_liver",
 		"cybernetic_lungs",
 		"cybernetic_stomach",
+		"surplus_cybernetic_l_leg",
+		"surplus_cybernetic_r_leg",
+		"surplus_cybernetic_l_arm",
+		"surplus_cybernetic_r_arm",
 		"defibmountdefault",
 		"dropper",
 		"hemostat",
@@ -229,10 +237,12 @@
 		"plumbing_rcd",
 		"plumbing_rcd_service",
 		"plumbing_rcd_sci",
+		"plumbing_rcd_engi",
 		"portable_chem_mixer",
 		"retractor",
 		"scalpel",
 		"stethoscope",
+		"penlight",
 		"surgical_drapes",
 		"surgical_tape",
 		"surgicaldrill",
@@ -240,7 +250,6 @@
 		"syringe",
 		"xlarge_beaker",
 		"tube",
-		"synth_eyes",
 		"synth_tongue",
 		"synth_liver",
 		"synth_lungs",
@@ -248,6 +257,7 @@
 		"synth_ears",
 		"synth_heart",
 		"cybernetic_spleen",
+		"vitals_monitor",,
 		"hypospray",
 		"large_vial",
 		"vial"

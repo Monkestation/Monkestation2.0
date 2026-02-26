@@ -34,6 +34,8 @@
 	var/active = FALSE
 	/// Does this ability stop working if you are burning?
 	var/disabled_by_fire = TRUE
+	/// Does this ability set the `used_weird_power` flag on the changeling's antag datum?
+	var/weird = FALSE
 
 /*
 changeling code now relies on on_purchase to grant powers.
@@ -73,6 +75,8 @@ the same goes for Remove(). if you override Remove(), call parent or else your p
 		sting_feedback(user, target)
 		changeling.adjust_chemicals(-chemical_cost)
 		user.changeNext_move(CLICK_CD_MELEE)
+		if(weird)
+			changeling.used_weird_power = TRUE
 		return TRUE
 	return FALSE
 

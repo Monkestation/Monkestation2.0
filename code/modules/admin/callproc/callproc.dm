@@ -92,11 +92,12 @@ GLOBAL_PROTECT(AdminProcCallHandler)
 	usr = lastusr
 	handler.remove_caller(user)
 
-ADMIN_VERB(advanced_proc_call, R_DEBUG, FALSE, "Advanced ProcCall", "Call a proc on any datum in the server.", ADMIN_CATEGORY_DEBUG)
+#define NEEDED_PROC_CALL_RIGHT R_ADVANCEDCALL
+ADMIN_VERB(advanced_proc_call, NEEDED_PROC_CALL_RIGHT, FALSE, "Advanced ProcCall", "Call a proc on any datum in the server.", ADMIN_CATEGORY_DEBUG)
 	user.callproc_blocking()
 
 /client/proc/callproc_blocking(list/get_retval)
-	if(!check_rights(R_ADMIN))
+	if(!check_rights(NEEDED_PROC_CALL_RIGHT))
 		return
 
 	var/datum/target
@@ -164,6 +165,8 @@ ADMIN_VERB(advanced_proc_call, R_DEBUG, FALSE, "Advanced ProcCall", "Call a proc
 	if(.)
 		to_chat(usr, ., confidential = TRUE)
 
+#undef NEEDED_PROC_CALL_RIGHT
+
 GLOBAL_VAR(AdminProcCaller)
 GLOBAL_PROTECT(AdminProcCaller)
 GLOBAL_VAR_INIT(AdminProcCallCount, 0)
@@ -184,6 +187,7 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 	if(target != GLOBAL_PROC && !target.CanProcCall(procname))
 		to_chat(usr, "Proccall on [target.type]/proc/[procname] is disallowed!", confidential = TRUE)
 		return
+
 	var/current_caller = GLOB.AdminProcCaller
 	var/user_identifier = usr ? usr.client?.ckey : GLOB.AdminProcCaller
 	var/is_remote_handler = usr == GLOB.AdminProcCallHandler

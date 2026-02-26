@@ -1,7 +1,7 @@
 import { useBackend } from '../backend';
 import { Divider, Section, Stack } from '../components';
 import { Window } from '../layouts';
-import { Objective } from './common/Objectives';
+import type { Objective } from './common/Objectives';
 
 type Data = {
   antag_name: string;
@@ -38,7 +38,9 @@ export const AntagInfoGlitch = (props) => {
             </Stack.Item>
             <SpecificInfo />
             <Stack.Item>
-              <marquee scrollamount="2">{objectives[0].explanation}</marquee>
+              <span style={{ opacity: 0.6 }}>
+                &#47;&#47; {objectives[0]?.explanation}
+              </span>
             </Stack.Item>
             <Divider />
             <Stack.Item>
@@ -46,7 +48,7 @@ export const AntagInfoGlitch = (props) => {
             </Stack.Item>
             <Stack.Item>
               <span style={textStyles.variable}>system.</span>
-              <span style={textStyles.danger}>INTRUDERS</span>;
+              <span style={textStyles.danger}>INTRUDERS</span>
             </Stack.Item>
             <Stack.Item>
               while <span style={textStyles.variable}>TARGETS</span>.LIFE !={' '}

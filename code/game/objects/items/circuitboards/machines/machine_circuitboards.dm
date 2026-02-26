@@ -234,7 +234,8 @@
 	build_path = /obj/machinery/ntnet_relay
 	req_components = list(
 		/obj/item/stack/cable_coil = 2,
-		/datum/stock_part/filter = 1)
+		/datum/stock_part/filter = 1,
+	)
 
 /obj/item/circuitboard/machine/pacman
 	name = "PACMAN-type Generator"
@@ -287,9 +288,6 @@
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	build_path = /obj/machinery/rnd/production/protolathe/department/engineering
 
-/obj/item/circuitboard/machine/protolathe/department/engineering/no_tax
-	build_path = /obj/machinery/rnd/production/protolathe/department/engineering/no_tax
-
 /obj/item/circuitboard/machine/rtg
 	name = "RTG"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
@@ -322,14 +320,17 @@
 	build_path = /obj/machinery/power/smes
 	req_components = list(
 		/obj/item/stack/cable_coil = 5,
-		/obj/item/stock_parts/cell = 5,
+		/obj/item/stock_parts/power_store/battery = 5,
 		/datum/stock_part/capacitor = 1)
-	def_components = list(/obj/item/stock_parts/cell = /obj/item/stock_parts/cell/high/empty)
+	def_components = list(/obj/item/stock_parts/power_store/battery = /obj/item/stock_parts/power_store/battery/high/empty)
 
 /obj/item/circuitboard/machine/techfab/department/engineering
 	name = "\improper Departmental Techfab - Engineering"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	build_path = /obj/machinery/rnd/production/techfab/department/engineering
+
+/obj/item/circuitboard/machine/smes/super
+	def_components = list(/obj/item/stock_parts/power_store/battery = /obj/item/stock_parts/power_store/battery/super/empty)
 
 /obj/item/circuitboard/machine/thermomachine
 	name = "Thermomachine"
@@ -449,8 +450,7 @@
 	build_path = /obj/machinery/rnd/production/circuit_imprinter
 	req_components = list(
 		/datum/stock_part/matter_bin = 1,
-		/datum/stock_part/manipulator = 1,
-		/obj/item/reagent_containers/cup/beaker = 2)
+		/datum/stock_part/manipulator = 1)
 
 /obj/item/circuitboard/machine/circuit_imprinter/offstation
 	name = "Ancient Circuit Imprinter"
@@ -500,8 +500,7 @@
 	build_path = /obj/machinery/rnd/production/protolathe
 	req_components = list(
 		/datum/stock_part/matter_bin = 2,
-		/datum/stock_part/manipulator = 2,
-		/obj/item/reagent_containers/cup/beaker = 2)
+		/datum/stock_part/manipulator = 2)
 
 /obj/item/circuitboard/machine/protolathe/offstation
 	name = "Ancient Protolathe"
@@ -588,8 +587,7 @@
 	build_path = /obj/machinery/rnd/production/techfab
 	req_components = list(
 		/datum/stock_part/matter_bin = 2,
-		/datum/stock_part/manipulator = 2,
-		/obj/item/reagent_containers/cup/beaker = 2)
+		/datum/stock_part/manipulator = 2)
 
 /obj/item/circuitboard/machine/techfab/department
 	name = "\improper Departmental Techfab"
@@ -602,87 +600,41 @@
 	build_path = /obj/machinery/vending/custom
 	req_components = list(/obj/item/vending_refill/custom = 1)
 
-	var/static/list/vending_names_paths = list(
-		/obj/machinery/vending/boozeomat = "Booze-O-Mat",
-		/obj/machinery/vending/coffee = "Solar's Best Hot Drinks",
-		/obj/machinery/vending/snack = "Getmore Chocolate Corp",
-		/obj/machinery/vending/cola = "Robust Softdrinks",
-		/obj/machinery/vending/cigarette = "ShadyCigs Deluxe",
-		/obj/machinery/vending/games = "\improper Good Clean Fun",
-		/obj/machinery/vending/autodrobe = "AutoDrobe",
-		/obj/machinery/vending/wardrobe/sec_wardrobe = "SecDrobe",
-		/obj/machinery/vending/wardrobe/det_wardrobe = "DetDrobe",
-		/obj/machinery/vending/wardrobe/medi_wardrobe = "MediDrobe",
-		/obj/machinery/vending/wardrobe/engi_wardrobe = "EngiDrobe",
-		/obj/machinery/vending/wardrobe/atmos_wardrobe = "AtmosDrobe",
-		/obj/machinery/vending/wardrobe/cargo_wardrobe = "CargoDrobe",
-		/obj/machinery/vending/wardrobe/robo_wardrobe = "RoboDrobe",
-		/obj/machinery/vending/wardrobe/science_wardrobe = "SciDrobe",
-		/obj/machinery/vending/wardrobe/hydro_wardrobe = "HyDrobe",
-		/obj/machinery/vending/wardrobe/curator_wardrobe = "CuraDrobe",
-		/obj/machinery/vending/wardrobe/bar_wardrobe = "BarDrobe",
-		/obj/machinery/vending/wardrobe/chef_wardrobe = "ChefDrobe",
-		/obj/machinery/vending/wardrobe/jani_wardrobe = "JaniDrobe",
-		/obj/machinery/vending/wardrobe/law_wardrobe = "LawDrobe",
-		/obj/machinery/vending/wardrobe/chap_wardrobe = "ChapDrobe",
-		/obj/machinery/vending/wardrobe/chem_wardrobe = "ChemDrobe",
-		/obj/machinery/vending/wardrobe/gene_wardrobe = "GeneDrobe",
-		/obj/machinery/vending/wardrobe/viro_wardrobe = "ViroDrobe",
-		/obj/machinery/vending/clothing = "ClothesMate",
-		/obj/machinery/vending/medical = "NanoMed Plus",
-		/obj/machinery/vending/drugs = "NanoDrug Plus",
-		/obj/machinery/vending/wallmed = "NanoMed",
-		/obj/machinery/vending/assist = "Part-Mart",
-		/obj/machinery/vending/engivend = "Engi-Vend",
-		/obj/machinery/vending/hydronutrients = "NutriMax",
-		/obj/machinery/vending/hydroseeds = "MegaSeed Servitor",
-		/obj/machinery/vending/sustenance = "Sustenance Vendor",
-		/obj/machinery/vending/dinnerware = "Plasteel Chef's Dinnerware Vendor",
-		/obj/machinery/vending/cart = "PTech",
-		/obj/machinery/vending/robotics = "Robotech Deluxe",
-		/obj/machinery/vending/engineering = "Robco Tool Maker",
-		/obj/machinery/vending/sovietsoda = "BODA",
-		/obj/machinery/vending/security = "SecTech",
-		/obj/machinery/vending/modularpc = "Deluxe Silicate Selections",
-		/obj/machinery/vending/tool = "YouTool",
-		/obj/machinery/vending/custom = "Custom Vendor",
-		// monkestation start
-		/obj/machinery/vending/access/command = "Command Outfitting Station",
-		/obj/machinery/vending/barbervend = "Fab-O-Vend",
-		/obj/machinery/vending/imported = "NT Sustenance Supplier",
-		/obj/machinery/vending/imported/mothic = "Nomad Fleet Ration Chit Exchange",
-		/obj/machinery/vending/imported/tizirian = "Tizirian Imported Delicacies",
-		/obj/machinery/vending/imported/yangyu = "Fudobenda",
-		/obj/machinery/vending/mechcomp = "ThinkTronic MechComp Dispenser",
-		/obj/machinery/vending/plushvendor = "Plushie Vendor",
-		/obj/machinery/vending/wardrobe/xeno_wardrobe = "Xeno_Drobe",
-		// monkestation end
-	)
+	///Assoc list (machine name = machine typepath) of all vendors that can be chosen when the circuit is screwdrivered
+	var/static/list/valid_vendor_names_paths
+
+
+/obj/item/circuitboard/machine/vendor/Initialize(mapload)
+	. = ..()
+	if(!valid_vendor_names_paths)
+		valid_vendor_names_paths = list()
+		for(var/obj/machinery/vending/vendor_type as anything in subtypesof(/obj/machinery/vending))
+			if(vendor_type::refill_canister)
+				valid_vendor_names_paths[vendor_type::name] = vendor_type
 
 /obj/item/circuitboard/machine/vendor/screwdriver_act(mob/living/user, obj/item/tool)
-	var/static/list/display_vending_names_paths
-	if(!display_vending_names_paths)
-		display_vending_names_paths = list()
-		for(var/path in vending_names_paths)
-			display_vending_names_paths[vending_names_paths[path]] = path
-	var/choice = tgui_input_list(user, "Choose a new brand", "Select an Item", sort_list(display_vending_names_paths))
+	. = ITEM_INTERACT_FAILURE
+	var/choice = tgui_input_list(user, "Choose a new brand", "Select an Item", sort_list(valid_vendor_names_paths))
 	if(isnull(choice))
 		return
-	if(isnull(display_vending_names_paths[choice]))
+	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
-	set_type(display_vending_names_paths[choice])
-	return TRUE
+	set_type(valid_vendor_names_paths[choice])
+	return ITEM_INTERACT_SUCCESS
 
+/**
+ * Sets circuitboard details based on the vending machine type to create
+ *
+ * Arguments
+ * * obj/machinery/vending/typepath - the vending machine type to create
+*/
 /obj/item/circuitboard/machine/vendor/proc/set_type(obj/machinery/vending/typepath)
 	build_path = typepath
-	name = "[vending_names_paths[build_path]] Vendor"
+	name = "[typepath::name] Vendor"
 	req_components = list(initial(typepath.refill_canister) = 1)
 
 /obj/item/circuitboard/machine/vendor/apply_default_parts(obj/machinery/machine)
-	for(var/typepath in vending_names_paths)
-		if(istype(machine, typepath))
-			set_type(typepath)
-			break
+	set_type(machine.type)
 	return ..()
 
 /obj/item/circuitboard/machine/vending/donksofttoyvendor
@@ -737,8 +689,8 @@
 		/datum/stock_part/capacitor = 1,
 		/datum/stock_part/manipulator = 1,
 		/obj/item/stack/sheet/glass = 1,
-		/obj/item/stock_parts/cell = 1)
-	def_components = list(/obj/item/stock_parts/cell = /obj/item/stock_parts/cell/high)
+		/obj/item/stock_parts/power_store/cell = 1)
+	def_components = list(/obj/item/stock_parts/power_store/cell = /obj/item/stock_parts/power_store/cell/high)
 	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/chem_dispenser/fullupgrade
@@ -749,7 +701,7 @@
 		/datum/stock_part/capacitor/tier4 = 2,
 		/datum/stock_part/manipulator/tier4 = 2,
 		/obj/item/stack/sheet/glass = 1,
-		/obj/item/stock_parts/cell/bluespace = 1,
+		/obj/item/stock_parts/power_store/cell/bluespace = 1,
 	)
 
 /obj/item/circuitboard/machine/chem_dispenser/mutagensaltpeter
@@ -760,7 +712,7 @@
 		/datum/stock_part/capacitor/tier4 = 2,
 		/datum/stock_part/manipulator/tier4 = 2,
 		/obj/item/stack/sheet/glass = 1,
-		/obj/item/stock_parts/cell/bluespace = 1,
+		/obj/item/stock_parts/power_store/cell/bluespace = 1,
 	)
 
 /obj/item/circuitboard/machine/chem_dispenser/abductor
@@ -774,7 +726,7 @@
 		/datum/stock_part/capacitor/tier4 = 2,
 		/datum/stock_part/manipulator/tier4 = 2,
 		/obj/item/stack/sheet/glass = 1,
-		/obj/item/stock_parts/cell/bluespace = 1,
+		/obj/item/stock_parts/power_store/cell/bluespace = 1,
 	)
 	needs_anchored = FALSE
 
@@ -821,7 +773,7 @@
 /obj/item/circuitboard/machine/cryo_tube
 	name = "Cryotube"
 	greyscale_colors = CIRCUIT_COLOR_MEDICAL
-	build_path = /obj/machinery/atmospherics/components/unary/cryo_cell
+	build_path = /obj/machinery/cryo_cell
 	req_components = list(
 		/datum/stock_part/matter_bin = 1,
 		/obj/item/stack/cable_coil = 1,
@@ -918,7 +870,7 @@
 		/datum/stock_part/capacitor = 1,
 		/datum/stock_part/manipulator = 1,
 		/obj/item/stack/sheet/glass = 1,
-		/obj/item/stock_parts/cell = 1)
+		/obj/item/stock_parts/power_store/cell = 1)
 	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/stasis
@@ -955,9 +907,9 @@
 	build_path = /obj/machinery/recharge_station
 	req_components = list(
 		/datum/stock_part/capacitor = 2,
-		/obj/item/stock_parts/cell = 1,
+		/obj/item/stock_parts/power_store/cell = 1,
 		/datum/stock_part/manipulator = 1)
-	def_components = list(/obj/item/stock_parts/cell = /obj/item/stock_parts/cell/high)
+	def_components = list(/obj/item/stock_parts/power_store/cell = /obj/item/stock_parts/power_store/cell/high)
 
 /obj/item/circuitboard/machine/destructive_analyzer
 	name = "Destructive Analyzer"
@@ -1126,7 +1078,7 @@
 		/datum/stock_part/capacitor/tier4 = 2,
 		/datum/stock_part/manipulator/tier4 = 2,
 		/obj/item/stack/sheet/glass = 1,
-		/obj/item/stock_parts/cell/bluespace = 1,
+		/obj/item/stock_parts/power_store/cell/bluespace = 1,
 	)
 
 /obj/item/circuitboard/machine/chem_dispenser/drinks/beer
@@ -1141,7 +1093,7 @@
 		/datum/stock_part/capacitor/tier4 = 2,
 		/datum/stock_part/manipulator/tier4 = 2,
 		/obj/item/stack/sheet/glass = 1,
-		/obj/item/stock_parts/cell/bluespace = 1,
+		/obj/item/stock_parts/power_store/cell/bluespace = 1,
 	)
 
 /obj/item/circuitboard/machine/chem_master/condi
@@ -1205,11 +1157,10 @@
 	suction = !suction
 	to_chat(user, span_notice("You [suction ? "enable" : "disable"] the board's suction function."))
 
-/obj/item/circuitboard/machine/dish_drive/AltClick(mob/living/user)
-	if(!user.Adjacent(src))
-		return
+/obj/item/circuitboard/machine/dish_drive/click_alt(mob/living/user)
 	transmit = !transmit
 	to_chat(user, span_notice("You [transmit ? "enable" : "disable"] the board's automatic disposal transmission."))
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/circuitboard/machine/gibber
 	name = "Gibber"
@@ -1237,9 +1188,21 @@
 	req_components = list(
 		/datum/stock_part/micro_laser = 1,
 		/datum/stock_part/matter_bin = 1,
+		/datum/stock_part/capacitor = 1,
 		/obj/item/stack/cable_coil = 2,
 		/obj/item/stack/sheet/glass = 2)
 	needs_anchored = FALSE
+
+/obj/item/circuitboard/machine/microwave/engineering
+	name = "Wireless Microwave Oven"
+	greyscale_colors = CIRCUIT_COLOR_SERVICE
+	build_path = /obj/machinery/microwave/engineering
+	req_components = list(
+		/datum/stock_part/micro_laser = 1,
+		/datum/stock_part/matter_bin = 1,
+		/datum/stock_part/capacitor/tier2 = 1,
+		/obj/item/stack/cable_coil = 4,
+		/obj/item/stack/sheet/glass = 2)
 
 /obj/item/circuitboard/machine/processor
 	name = "Food Processor"
@@ -1247,14 +1210,9 @@
 	build_path = /obj/machinery/processor
 	req_components = list(
 		/datum/stock_part/matter_bin = 1,
-		/datum/stock_part/manipulator = 1)
+		/datum/stock_part/manipulator = 1,
+	)
 	needs_anchored = FALSE
-
-/obj/item/circuitboard/machine/processor/screwdriver_act(mob/living/user, obj/item/tool)
-	name = "Food Processor"
-	build_path = /obj/machinery/processor
-	to_chat(user, span_notice("Defaulting name protocols."))
-	return TRUE
 
 /obj/item/circuitboard/machine/protolathe/department/service
 	name = "Departmental Protolathe - Service"
@@ -1381,7 +1339,7 @@
 	req_components = list(
 		/datum/stock_part/capacitor = 1,
 		/datum/stock_part/micro_laser = 1,
-		/obj/item/stock_parts/cell/infinite/abductor = 1)
+		/obj/item/stock_parts/power_store/cell/infinite/abductor = 1)
 	def_components = list(
 		/datum/stock_part/capacitor = /datum/stock_part/capacitor/tier4,
 		/datum/stock_part/micro_laser = /datum/stock_part/micro_laser/tier4)
@@ -1567,4 +1525,14 @@
 	needs_anchored = FALSE
 	req_components = list(
 		/obj/item/pipe/trinary/flippable/filter = 1,
+	)
+/obj/item/circuitboard/machine/flatpacker
+	name = "Flatpacker"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/flatpacker
+	req_components = list(
+		/datum/stock_part/matter_bin = 2,
+		/datum/stock_part/micro_laser = 2,
+		/datum/stock_part/manipulator = 1,
+		/obj/item/stack/sheet/plasteel = 5,
 	)

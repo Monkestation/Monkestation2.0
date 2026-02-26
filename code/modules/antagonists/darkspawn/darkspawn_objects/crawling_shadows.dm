@@ -5,10 +5,10 @@
 	icon = 'icons/mob/simple/darkspawn.dmi' //Placeholder sprite
 	icon_state = "crawling_shadows"
 	icon_living = "crawling_shadows"
-
+	initial_language_holder = /datum/language_holder/darkspawn
 	//survival variables
-	maxHealth = 10
-	health = 10
+	maxHealth = 20
+	health = 20
 	pressure_resistance = INFINITY
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	bodytemp_cold_damage_limit = 0

@@ -63,6 +63,7 @@
 	if(!user.transferItemToLoc(attacking_item, src))
 		return
 	to_chat(user, span_notice("You put [attacking_item] in [src]."))
+	playsound(src.loc, 'sound/machines/gas_tanks/extin.ogg', 100, 1)
 	update_appearance()
 
 /obj/structure/tank_dispenser/ui_state(mob/user)
@@ -85,19 +86,22 @@
 	. = ..()
 	if(.)
 		return
+
+	var/obj/item/tank/internals/dispensed_tank
 	switch(action)
 		if("plasma")
 			if (plasmatanks == 0)
 				return TRUE
-
-			dispense(/obj/item/tank/internals/plasma, usr)
+			dispensed_tank = dispense(/obj/item/tank/internals/plasma, usr)
 			plasmatanks--
 		if("oxygen")
 			if (oxygentanks == 0)
 				return TRUE
-
-			dispense(/obj/item/tank/internals/oxygen, usr)
+			dispensed_tank = dispense(/obj/item/tank/internals/oxygen, usr)
 			oxygentanks--
+
+	to_chat(usr, span_notice("You take [dispensed_tank] out of [src]."))
+	playsound(src.loc, 'sound/machines/gas_tanks/extout.ogg', 100, 1)
 
 	update_appearance()
 	return TRUE
@@ -116,5 +120,6 @@
 	if (isnull(existing_tank))
 		existing_tank = new tank_type
 	receiver.put_in_hands(existing_tank)
+	return existing_tank
 
 #undef TANK_DISPENSER_CAPACITY

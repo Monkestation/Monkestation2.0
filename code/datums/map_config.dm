@@ -51,8 +51,8 @@
 	/// List of unit tests that are skipped when running this map
 	var/list/skipped_tests
 
-	//List of particle_weather types for this map
-	var/particle_weathers = list() //Monkestation addition
+	/// List of station traits that cannot be rolled on this map.
+	var/list/banned_station_traits
 
 /**
  * Proc that simply loads the default map config, which should always be functional.
@@ -170,14 +170,6 @@
 		log_world("map_config traits is not a list!")
 		return
 
-	//monkestation edit start
-	if ("particle_weathers" in json)
-		if(!islist(json["particle_weathers"]))
-			log_world("map_config \"particle_weathers\" field is missing or invalid!")
-			return
-		particle_weathers = json["particle_weathers"]
-	//monkestation edit end
-
 	var/temp = json["space_ruin_levels"]
 	if (isnum(temp))
 		space_ruin_levels = temp
@@ -229,6 +221,13 @@
 			continue
 		LAZYADD(skipped_tests, path_real)
 #endif
+
+	for(var/path_as_text in json["banned_station_traits"])
+		var/path_real = text2path(path_as_text)
+		if(!ispath(path_real, /datum/station_trait))
+			stack_trace("Invalid path in mapping config for banned station trait: \[[path_as_text]\]")
+			continue
+		LAZYADD(banned_station_traits, path_real)
 
 	defaulted = FALSE
 	return json

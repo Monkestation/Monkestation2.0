@@ -16,7 +16,6 @@
 		"genescanner",
 		"healthanalyzer",
 		"scanning_pad",
-		"vitals_monitor",
 		"antibodyscanner",
 		"med_spray_bottle",
 		"medical_kiosk",
@@ -29,12 +28,10 @@
 		"diseaseanalyzer",
 		"centrifuge",
 		"path_data",
-		"heat_pack",
-		"cold_pack",
-		"medical_crutch",
+		"surgery_tray",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
-	discount_experiments = list(/datum/experiment/dissection/human = TECHWEB_DISCOUNT_MINOR * 2)
+	discount_experiments = list(/datum/experiment/autopsy/human = TECHWEB_DISCOUNT_MINOR * 2)
 
 /datum/techweb_node/adv_biotech
 	id = "adv_biotech"
@@ -42,6 +39,7 @@
 	description = "Advanced Biotechnology"
 	prereq_ids = list("biotech")
 	design_ids = list(
+		"autopsyscanner",
 		"crewpinpointer",
 		"vitals_monitor_advanced",
 		"defibrillator_compact",
@@ -56,14 +54,27 @@
 		"plasmarefiller",
 		"smoke_machine",
 		"sleeper",
-		"surgical_gloves", //Monkestation Addition
+		"surgical_gloves",
 		"hypo_pierce_upgrade",
 		"hypo_speed_upgrade",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	discount_experiments = list(/datum/experiment/scanning/random/material/meat = TECHWEB_DISCOUNT_MINOR * 3,
-								/datum/experiment/dissection/nonhuman = TECHWEB_DISCOUNT_MINOR * 3)
+								/datum/experiment/autopsy/nonhuman = TECHWEB_DISCOUNT_MINOR * 3)
 	announce_channels = list(RADIO_CHANNEL_MEDICAL)
+
+/datum/techweb_node/adv_vitals_monitoring
+	id = "adv_vitals_monitoring"
+	display_name = "Advanced Vitals Monitoring"
+	description = "Various experimental handheld crew monitors allowing remote connection to nearby suit sensors without a console."
+	prereq_ids = list("adv_biotech")
+	design_ids = list(
+		"sensor_device",
+		"sensor_device_security",
+		"sensor_device_command",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
+	announce_channels = list(RADIO_CHANNEL_MEDICAL, RADIO_CHANNEL_SECURITY, RADIO_CHANNEL_COMMAND)
 
 /datum/techweb_node/xenoorgan_biotech
 	id = "xenoorgan_bio"
@@ -80,7 +91,7 @@
 	discount_experiments = list(
 		/datum/experiment/scanning/random/cytology/easy = TECHWEB_DISCOUNT_MINOR * 3,
 		/datum/experiment/scanning/points/slime/hard = TECHWEB_TIER_2_POINTS,
-		/datum/experiment/dissection/xenomorph = TECHWEB_TIER_2_POINTS,
+		/datum/experiment/autopsy/xenomorph = TECHWEB_TIER_2_POINTS,
 	)
 	announce_channels = list(RADIO_CHANNEL_MEDICAL)
 

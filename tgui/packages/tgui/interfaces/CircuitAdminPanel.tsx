@@ -1,4 +1,4 @@
-import { BooleanLike } from 'common/react';
+import type { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
 import { Button, Stack, Table } from '../components';
 import { Window } from '../layouts';
@@ -16,7 +16,7 @@ export const CircuitAdminPanel = (props) => {
   const { act, data } = useBackend<CircuitAdminPanelData>();
 
   return (
-    <Window title="Circuit Admin Panel" width={1200} height={500} resizable>
+    <Window title="Circuit Admin Panel" width={1200} height={500}>
       <Window.Content>
         <Stack vertical>
           <Stack.Item>

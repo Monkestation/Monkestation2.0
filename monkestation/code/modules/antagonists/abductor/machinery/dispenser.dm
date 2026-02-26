@@ -16,7 +16,7 @@
 	has_emissive = FALSE
 	var/allowed_to_everyone = FALSE
 
-/obj/machinery/smartfridge/abductor/Initialize()
+/obj/machinery/smartfridge/abductor/Initialize(mapload)
 	. = ..()
 	generate_glands()
 

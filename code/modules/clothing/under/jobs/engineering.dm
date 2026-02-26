@@ -72,3 +72,11 @@
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+
+/obj/item/clothing/under/rank/engineering/signal_tech
+	name = "signal technician's jumpsuit"
+	desc = "It's an orange high visibility jumpsuit with green stripes worn by signal technicians. Made from fire resistant materials."
+	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
+	icon_state = "signal_tech"
+	species_exception = list(/datum/species/golem/uranium)

@@ -40,7 +40,7 @@ Bonus
 
 /datum/symptom/flesh_death/proc/Flesh_death(mob/living/mob, datum/disease/acute/disease)
 	var/get_damage = rand(6,10)
-	mob.take_overall_damage(brute = get_damage, required_bodytype = BODYTYPE_ORGANIC)
+	mob.take_overall_damage(brute = get_damage)
 	if(round(multiplier) == 2 && mob.reagents)
 		mob.reagents.add_reagent_list(list(/datum/reagent/toxin/heparin = 2, /datum/reagent/toxin/lipolicide = 2))
 		if(zombie)

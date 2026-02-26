@@ -2,7 +2,7 @@
 	display_name = "Chemical Mixer"
 	desc = "Mixes chemicals."
 	category = "Chemistry"
-	power_usage_per_input = 40
+	energy_usage_per_input = 40
 
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 

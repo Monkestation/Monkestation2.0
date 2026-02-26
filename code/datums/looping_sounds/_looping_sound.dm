@@ -230,11 +230,18 @@
 		tree[i - 1] -= list(branch) // Remove the empty list
 	return .
 
+/// Returns the start sound.
+/datum/looping_sound/proc/get_start_sound()
+	return islist(start_sound) ? pick_weight_recursive(start_sound) : start_sound
 
+/// Returns the end sound.
+/datum/looping_sound/proc/get_end_sound()
+	return islist(end_sound) ? pick_weight_recursive(end_sound) : end_sound
 
 /// A proc that's there to handle delaying the main sounds if there's a start_sound, and simply starting the sound loop in general.
 /datum/looping_sound/proc/on_start()
 	var/start_wait = 0
+	var/start_sound = get_start_sound()
 	if(start_sound && !skip_starting_sounds)
 		play(start_sound, start_volume)
 		start_wait = start_length
@@ -250,7 +257,7 @@
 /// Simple proc that's executed when the looping sound is stopped, so that the `end_sound` can be played, if there's one.
 /datum/looping_sound/proc/on_stop()
 	if(loop_started) //monkestation edit - Allow null end_sound to stop sound
-		play(end_sound, end_volume)
+		play(get_end_sound(), end_volume)
 
 /// A simple proc to change who our parent is set to, also handling registering and unregistering the QDELETING signals on the parent.
 /datum/looping_sound/proc/set_parent(new_parent)

@@ -87,18 +87,18 @@ GLOBAL_LIST_INIT(biomass_unlocks, list())
 	if(can_recycle)
 		recycle(item, user, can_recycle)
 
-/obj/machinery/biomass_recycler/MouseDrop_T(mob/living/target, mob/living/user)
-	if(!istype(target))
+/obj/machinery/biomass_recycler/mouse_drop_receive(mob/living/dropped, mob/user, params)
+	if(!istype(dropped))
 		return
 
 	var/can_recycle
 	for(var/recycable_type in recyclable_types)
-		if(istype(target, recycable_type))
+		if(istype(dropped, recycable_type))
 			can_recycle = recycable_type
 			break
 
 	if(can_recycle)
-		stuff_creature_in(target, user, can_recycle)
+		stuff_creature_in(dropped, user, can_recycle)
 
 /obj/machinery/biomass_recycler/proc/stuff_creature_in(mob/living/target, mob/living/user, recycable_type)
 	if(!istype(target))
@@ -118,7 +118,7 @@ GLOBAL_LIST_INIT(biomass_unlocks, list())
 	playsound(src.loc, 'sound/machines/juicer.ogg', 50, TRUE)
 	var/offset = prob(50) ? -2 : 2
 	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) //start shaking
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 	stored_matter += cube_production * recyclable_types[recycable_type]
 	addtimer(VARSET_CALLBACK(src, pixel_x, base_pixel_x))
 	addtimer(CALLBACK(GLOBAL_PROC, /proc/to_chat, user, span_notice("The machine now has [stored_matter] unit\s of biomass stored.")))

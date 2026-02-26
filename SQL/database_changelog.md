@@ -2,20 +2,50 @@ Any time you make a change to the schema files, remember to increment the databa
 
 Make sure to also update `DB_MAJOR_VERSION` and `DB_MINOR_VERSION`, which can be found in `code/__DEFINES/subsystem.dm`.
 
-The latest database version is 5.28; The query to update the schema revision table is:
+The latest database version is 6.0; The query to update the schema revision table is:
 
 ```sql
-INSERT INTO `schema_revision` (`major`, `minor`) VALUES (5, 27);
+INSERT INTO `schema_revision` (`major`, `minor`) VALUES (6, 0);
 ```
 
 or
 
 ```sql
-INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (5, 27);
+INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (6, 0);
 ```
 
 In any query remember to add a prefix to the table names if you use one.
 
+---
+
+Version 6.1 6 January 2026, by iliyaxox
+Add `cassette_purchases` table
+
+```sql
+CREATE TABLE `cassette_purchases` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `cassette_id` VARCHAR(32) NOT NULL,
+  `cassette_name` VARCHAR(64) NOT NULL,
+  `buyer_ckey` VARCHAR(32),
+  `purchase_date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `server_id` VARCHAR(50),
+  PRIMARY KEY (`id`),
+  KEY `idx_cassette_id` (`cassette_id`),
+  KEY `idx_purchase_date` (`purchase_date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4; COLLATE=utf8mb4_general_ci;
+```
+---
+
+Version 6.0 6 October 2025, by Flleeppyy
+Remove `stickyban` and its related tables. (Holy shit we're going up a major version!!!!!)
+Also fixed some `CREATE TABLE` statements to remove `IF NOT EXISTS` since that was literally useless after `DROP TABLE IF EXISTS`
+
+```sql
+DROP TABLE IF EXISTS `stickyban`;
+DROP TABLE IF EXISTS `stickyban_matched_ckey`;
+DROP TABLE IF EXISTS `stickyban_matched_ip`;
+DROP TABLE IF EXISTS `stickyban_matched_cid`;
+```
 ---
 
 Version 5.28 1 July 2025, by Flleeppyy
@@ -308,7 +338,7 @@ CREATE TABLE `text_adventures` (
 	`adventure_data` LONGTEXT NOT NULL,
 	`uploader` VARCHAR(32) NOT NULL,
 	`timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	`approved` TINYINT(1) NOT NULL DEFAULT FALSE,
+	`approved` TINYINT NOT NULL DEFAULT FALSE,
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
 ```

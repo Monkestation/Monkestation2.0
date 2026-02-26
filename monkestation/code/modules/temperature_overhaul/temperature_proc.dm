@@ -6,6 +6,25 @@
 #define THERMAL_PROTECTION_ARM (0.075 * 2)
 #define THERMAL_PROTECTION_HAND (0.025 * 2)
 
+/mob/living
+	/// Cached list of insulation in the inventory.
+	/// Each item is a list, in the format of [body_parts_covered, min_cold, max_heat]
+	var/list/cached_insulation
+
+/mob/proc/update_cached_insulation()
+	return
+
+/mob/living/update_cached_insulation()
+	cached_insulation = list()
+	for(var/obj/item/worn as anything in get_equipped_items()) // get_equipped_items already filters for /obj/item
+		if(!worn.body_parts_covered) // don't bother
+			continue
+		cached_insulation += list(list(
+			worn.body_parts_covered,
+			worn.min_cold_protection_temperature,
+			worn.max_heat_protection_temperature,
+		))
+
 /**
  * Get the insulation that is appropriate to the temperature you're being exposed to.
  * All clothing, natural insulation, and traits are combined returning a single value.
@@ -23,19 +42,23 @@
 	temperature = max(temperature, TCMB)
 
 	var/thermal_protection_flags = NONE
-	for(var/obj/item/worn in get_equipped_items())
+	for(var/list/insulation as anything in cached_insulation)
+		var/body_parts_covered = insulation[1]
+		var/min_cold_protection_temperature = insulation[2]
+		var/max_heat_protection_temperature = insulation[3]
+
 		var/valid = FALSE
-		if(isnum(worn.max_heat_protection_temperature) && isnum(worn.min_cold_protection_temperature))
-			valid = worn.max_heat_protection_temperature >= temperature && worn.min_cold_protection_temperature <= temperature
+		if(isnum(max_heat_protection_temperature) && isnum(min_cold_protection_temperature))
+			valid = max_heat_protection_temperature >= temperature && min_cold_protection_temperature <= temperature
 
-		else if (isnum(worn.max_heat_protection_temperature))
-			valid = worn.max_heat_protection_temperature >= temperature
+		else if (isnum(max_heat_protection_temperature))
+			valid = max_heat_protection_temperature >= temperature
 
-		else if (isnum(worn.min_cold_protection_temperature))
-			valid = worn.min_cold_protection_temperature <= temperature
+		else if (isnum(min_cold_protection_temperature))
+			valid = min_cold_protection_temperature <= temperature
 
 		if(valid)
-			thermal_protection_flags |= worn.body_parts_covered
+			thermal_protection_flags |= body_parts_covered
 
 	var/thermal_protection = temperature_insulation
 	if(thermal_protection_flags)

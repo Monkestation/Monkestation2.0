@@ -18,22 +18,43 @@
 	active_msg = "You prepare to smite your foe..."
 	deactive_msg = "You dispel your power."
 
-	//what type of smites should we be forced to used, if unset then pick normally
+	/// what type of smites should we be forced to used, if unset then pick normally
 	var/forced_smite_type
-	//what smite type is selected for our currenting casting, have to put it here so we can reference between procs
+	/// what smite type is selected for our currenting casting, have to put it here so we can reference between procs
 	var/smite_type
-	//list of smites that have a high effect on the target, if a smite is not in one of these lists then it cannot be picked(besides rod which is unique)
-	var/list/heavy_smites = list(/datum/smite/berforate, /datum/smite/bloodless, /datum/smite/boneless, /datum/smite/brain_damage, /datum/smite/bread, /datum/smite/bsa, \
-								 /datum/smite/fireball, /datum/smite/gib, /datum/smite/lightning, /datum/smite/nugget, /datum/smite/puzzgrid, /datum/smite/puzzle)
-	//list of smites that have a low effect on the target
-	var/list/light_smites = list(/datum/smite/bad_luck, /datum/smite/fake_bwoink, /datum/smite/fat, /datum/smite/ghost_control, /datum/smite/immerse, \
-								 /datum/smite/knot_shoes, /datum/smite/ocky_icky, /datum/smite/scarify)
+	/// list of smites that have a high effect on the target, if a smite is not in one of these lists then it cannot be picked(besides rod which is unique)
+	var/list/heavy_smites = list(
+		/datum/smite/berforate,
+		/datum/smite/bloodless,
+		/datum/smite/boneless,
+		/datum/smite/brain_damage,
+		/datum/smite/bread,
+		/datum/smite/bsa,
+		/datum/smite/fireball,
+		/datum/smite/gib,
+		/datum/smite/lightning,
+		/datum/smite/nugget,
+		/datum/smite/puzzgrid,
+		/datum/smite/puzzle,
+	)
+
+	/// list of smites that have a low effect on the target
+	var/list/light_smites = list(
+		/datum/smite/bad_luck,
+		/datum/smite/fake_bwoink,
+		/datum/smite/fat,
+		/datum/smite/ghost_control,
+		/datum/smite/immerse,
+		/datum/smite/knot_shoes,
+		/datum/smite/ocky_icky,
+		/datum/smite/scarify,
+	)
 
 /datum/action/cooldown/spell/pointed/smite/is_valid_target(atom/cast_on)
 	if(cast_on == owner)
 		return FALSE
 	if(!iscarbon(cast_on)) //im just gonna make this only work on carbon mobs
-		cast_on.balloon_alert(owner, "Can only be cast on advanced life forms!")
+		cast_on.balloon_alert(owner, "can only be cast on advanced life forms!")
 		return FALSE
 	return TRUE
 

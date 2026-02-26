@@ -8,7 +8,7 @@
 /**
  * Generate a discord link datum from the values
  *
- * This is only used by SSdiscord wrapper functions for now, so you can reference the fields
+ * This is only used by SSplexora wrapper functions for now, so you can reference the fields
  * slightly easier
  *
  * Arguments:

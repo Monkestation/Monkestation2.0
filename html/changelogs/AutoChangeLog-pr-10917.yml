@@ -1,0 +1,7 @@
+author: "drgnmstrc"
+delete-after: True
+changes:
+  - rscadd: "duplicated the hacked digicoat to separate the donator and non-donator version"
+  - qol: "changed name of donator digicoat to hacked digicoat in loadout to match in-game name"
+  - qol: "changed name of loadout store digicoat to glitched digicoat in-game to match store name"
+  - bugfix: "glitched digicoat not appearing in loadout after purchase (hopefully)"

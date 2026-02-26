@@ -8,8 +8,8 @@
 	anchored = TRUE
 	density = TRUE
 
-	idle_power_usage = 10
-	active_power_usage = 2000
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.1
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
 	circuit = /obj/item/circuitboard/machine/electroplater
 
@@ -120,6 +120,10 @@
 		else
 			holder.held_mob.material_stats.apply_traits_from(holder.material_stats)
 		holder.held_mob.name = "[stored_material.material_stats.material_name] plated [holder.held_mob.name]"
+	else
+		if(isstack(stored_material))
+			var/obj/item/stack/stack_to_fake_mat_of = stored_material
+			plating_item.AddComponent(/datum/component/bane_inducing, list(stack_to_fake_mat_of.material_type))
 
 	QDEL_NULL(stored_material)
 	plating_item = null

@@ -31,10 +31,14 @@ MENTOR_VERB(cmd_mentor_say, R_MENTOR, FALSE, "Mentorsay", "Send a message to oth
 	message = keywords_lookup(message)
 	message = "<b><font color = '[prefix_color]'><span class='prefix'>[prefix]:</span> <EM>[key_name(user, 0, 0)]</EM>: <span class='message linkify'>[message]</span></font></b>"
 
-	to_chat(GLOB.admins | GLOB.mentors,
-		type = MESSAGE_TYPE_MODCHAT,
-		html = message,
-		confidential = TRUE)
+	for(var/client/mentor as anything in GLOB.admins | GLOB.mentors)
+		to_chat(
+			mentor,
+			type = MESSAGE_TYPE_MODCHAT,
+			html = message,
+			avoid_highlighting = (mentor == user),
+			confidential = TRUE,
+		)
 
 	BLACKBOX_LOG_MENTOR_VERB("Msay")
 
@@ -59,7 +63,3 @@ MENTOR_VERB(cmd_mentor_say, R_MENTOR, FALSE, "Mentorsay", "Send a message to oth
 	if(length(mentors_to_ping))
 		mentors_to_ping[ASAY_LINK_PINGED_ADMINS_INDEX] = jointext(msglist, " ")
 		return mentors_to_ping
-
-/client/proc/get_mentor_say()
-	var/msg = input(src, null, "msay \"text\"") as text|null
-	SSadmin_verbs.dynamic_invoke_mentor_verb(src, /datum/mentor_verb/cmd_mentor_say, msg)

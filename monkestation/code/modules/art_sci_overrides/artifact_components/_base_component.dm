@@ -381,7 +381,7 @@
 				logger.Log(LOG_CATEGORY_ARTIFACT, "[parent]'s fault has been triggered, trigger type [chosen_fault].")
 				chosen_fault.on_trigger(src)
 				if(chosen_fault.visible_message)
-					holder.visible_message("[holder] [chosen_fault.visible_message]")
+					holder.visible_message(span_warning("[holder] [chosen_fault.visible_message]"))
 			continue
 		if(!stimuli_is_matching)
 			continue

@@ -4,42 +4,29 @@
 	button_icon_state = "power_cloak"
 	power_explanation = "Cloak of Darkness:\n\
 		Activate this Power in the shadows and you will slowly turn nearly invisible.\n\
-		While using Cloak of Darkness, attempting to run will crush you.\n\
+		While using Cloak of Darkness, you are unable to sprint.\n\
 		Additionally, while Cloak is active, you are completely invisible to the AI.\n\
-		Higher levels will increase how invisible you are."
+		If you attack anyone or get attacked, your cloak will break and you will be revealed.\n\
+		Higher levels will increase how invisible you are, and reduce the cooldown to cloak again should it be broken."
 	power_flags = BP_AM_TOGGLE
 	check_flags = BP_CANT_USE_IN_TORPOR | BP_CANT_USE_IN_FRENZY | BP_CANT_USE_WHILE_UNCONSCIOUS
 	purchase_flags = BLOODSUCKER_CAN_BUY | VASSAL_CAN_BUY
 	bloodcost = 5
 	constant_bloodcost = 0.2
-	sol_multiplier = 2.5
-	cooldown_time = 5 SECONDS
-	var/was_running
-
-/// Must have nobody around to see the cloak
-/datum/action/cooldown/bloodsucker/cloak/can_use(mob/living/carbon/user, trigger_flags)
-	. = ..()
-	if(!.)
-		return FALSE
-	for(var/mob/living/watcher in viewers(9, owner) - owner)
-		if(watcher.stat == DEAD || QDELETED(watcher.client) || watcher.client?.is_afk())
-			continue
-		if(HAS_MIND_TRAIT(watcher, TRAIT_BLOODSUCKER_ALIGNED) || HAS_TRAIT(watcher, TRAIT_GHOST_CRITTER))
-			continue
-		if(watcher.is_blind())
-			continue
-		owner.balloon_alert(owner, "you can only vanish unseen.")
-		return FALSE
-	return TRUE
+	cooldown_time = 10 SECONDS
 
 /datum/action/cooldown/bloodsucker/cloak/ActivatePower(trigger_flags)
 	. = ..()
 	var/mob/living/user = owner
-	was_running = ((user.m_intent == MOVE_INTENT_RUN) || user.m_intent == MOVE_INTENT_SPRINT)
-	if(was_running)
-		user.set_move_intent(MOVE_INTENT_WALK)
+
 	user.add_traits(list(TRAIT_NO_SPRINT, TRAIT_UNKNOWN), REF(src))
 	user.AddElement(/datum/element/digitalcamo)
+
+	user.AddElement(/datum/element/relay_attackers)
+	RegisterSignal(user, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
+	RegisterSignals(user, list(COMSIG_USER_ITEM_INTERACTION, COMSIG_USER_ITEM_INTERACTION_SECONDARY), PROC_REF(on_use_item))
+	RegisterSignals(user, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_HUMAN_MELEE_UNARMED_ATTACK), PROC_REF(on_unarmed_attack))
+
 	user.balloon_alert(user, "cloak turned on.")
 
 /datum/action/cooldown/bloodsucker/cloak/process(seconds_per_tick)
@@ -51,11 +38,6 @@
 		return
 	var/mob/living/user = owner
 	animate(user, alpha = max(25, owner.alpha - min(75, 10 + 5 * level_current)), time = 1.5 SECONDS)
-	// Prevents running while on Cloak of Darkness
-	if(user.m_intent != MOVE_INTENT_WALK)
-		owner.balloon_alert(owner, "you attempt to run, crushing yourself.")
-		user.set_move_intent(MOVE_INTENT_WALK)
-		user.adjustBruteLoss(rand(5,15))
 
 /datum/action/cooldown/bloodsucker/cloak/ContinueActive(mob/living/user, mob/living/target)
 	. = ..()
@@ -70,9 +52,35 @@
 /datum/action/cooldown/bloodsucker/cloak/DeactivatePower()
 	var/mob/living/user = owner
 	animate(user, alpha = 255, time = 1 SECONDS)
+
 	user.RemoveElement(/datum/element/digitalcamo)
-	if(was_running && user.m_intent == MOVE_INTENT_WALK)
-		user.set_move_intent(MOVE_INTENT_RUN)
-	user.balloon_alert(user, "cloak turned off.")
 	user.remove_traits(list(TRAIT_NO_SPRINT, TRAIT_UNKNOWN), REF(src))
+
+	user.RemoveElement(/datum/element/relay_attackers)
+	UnregisterSignal(user, list(
+		COMSIG_ATOM_WAS_ATTACKED,
+		COMSIG_USER_ITEM_INTERACTION,
+		COMSIG_USER_ITEM_INTERACTION_SECONDARY,
+		COMSIG_LIVING_UNARMED_ATTACK,
+		COMSIG_HUMAN_MELEE_UNARMED_ATTACK,
+	))
+
+	user.balloon_alert(user, "cloak turned off.")
 	return ..()
+
+/datum/action/cooldown/bloodsucker/cloak/proc/on_use_item(mob/living/source, atom/target, obj/item/weapon, click_parameters)
+	SIGNAL_HANDLER
+	if(source == target)
+		return
+	if(istype(weapon, /obj/item/gun) || weapon.force)
+		DeactivatePower()
+
+/datum/action/cooldown/bloodsucker/cloak/proc/on_unarmed_attack(mob/living/source, atom/target, proximity, modifiers)
+	SIGNAL_HANDLER
+	if(source != target && proximity && isliving(target) && (source.istate & (ISTATE_HARM | ISTATE_SECONDARY)))
+		DeactivatePower()
+
+/datum/action/cooldown/bloodsucker/cloak/proc/on_attacked(mob/living/source, atom/attacker, attack_flags)
+	SIGNAL_HANDLER
+	if(source != attacker)
+		DeactivatePower()

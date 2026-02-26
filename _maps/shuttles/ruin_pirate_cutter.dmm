@@ -261,7 +261,7 @@
 /obj/structure/table,
 /obj/machinery/cell_charger,
 /obj/item/stack/cable_coil,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plating,
 /area/shuttle/ruin/caravan/pirate)
@@ -751,13 +751,11 @@
 	},
 /area/shuttle/ruin/caravan/pirate)
 "We" = (
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
 /obj/structure/cable,
+/obj/machinery/power/smes/super/full,
 /turf/open/floor/plating,
 /area/shuttle/ruin/caravan/pirate)
 "Wi" = (

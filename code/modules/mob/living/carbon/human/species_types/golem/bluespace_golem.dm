@@ -31,14 +31,10 @@
 			reactive_teleport(H)
 
 /datum/species/golem/bluespace/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style)
-	..()
-	if(world.time > last_teleport + teleport_cooldown && M != H && (M.istate & ISTATE_HARM))
-		reactive_teleport(H)
-
-/datum/species/golem/bluespace/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, mob/living/carbon/human/H)
-	..()
-	if(world.time > last_teleport + teleport_cooldown && user != H)
-		reactive_teleport(H)
+	. = ..()
+	if(world.time < last_teleport + teleport_cooldown)
+		return
+	reactive_teleport(H)
 
 /datum/species/golem/bluespace/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()

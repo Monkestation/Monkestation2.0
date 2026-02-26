@@ -8,6 +8,8 @@
 	category = EVENT_CATEGORY_BUREAUCRATIC
 	description = "A pod containing a random supply crate lands on the station."
 	admin_setup = list(/datum/event_admin_setup/set_location/stray_cargo, /datum/event_admin_setup/listed_options/stray_cargo)
+	track = EVENT_TRACK_MUNDANE
+	tags = list(TAG_COMMUNAL, TAG_POSITIVE)
 
 /datum/event_admin_setup/set_location/stray_cargo
 	input_text = "Aim pod at turf we're on?"
@@ -102,8 +104,8 @@
 		crate.locked = FALSE //Unlock secure crates
 		crate.update_appearance()
 	var/obj/structure/closet/supplypod/pod = make_pod()
-	var/obj/effect/pod_landingzone/landing_marker = new(landing_zone, pod, crate)
-	announce_to_ghosts(landing_marker)
+	new /obj/effect/pod_landingzone(landing_zone, pod, crate)
+	announce_to_ghosts(pod)
 
 ///Handles the creation of the pod, in case it needs to be modified beforehand
 /datum/round_event/stray_cargo/proc/make_pod()

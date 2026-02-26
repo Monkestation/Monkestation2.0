@@ -11,6 +11,10 @@
 	description = "Spawns an angry, soul sucking ghost."
 	min_wizard_trigger_potency = 4
 	max_wizard_trigger_potency = 7
+	track = EVENT_TRACK_MAJOR
+	tags = list(TAG_DESTRUCTIVE, TAG_SPOOKY, TAG_EXTERNAL, TAG_MAGICAL, TAG_OUTSIDER_ANTAG)
+	checks_antag_cap = TRUE
+	dont_spawn_near_roundend = TRUE
 
 /datum/round_event/ghost_role/revenant
 	var/ignore_mobcheck = FALSE

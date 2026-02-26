@@ -9,17 +9,22 @@
 /obj/item/storage/belt/medbandolier/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
-	atom_storage.max_slots = 14
-	atom_storage.max_total_storage = 35
-	atom_storage.set_holdable(list(
+	atom_storage.max_total_storage = 200
+	atom_storage.max_slots = 50
+	atom_storage.numerical_stacking = TRUE
+	atom_storage.set_holdable(list( //chembag+
 		/obj/item/dnainjector,
+		/obj/item/reagent_containers/chem_pack,
 		/obj/item/reagent_containers/dropper,
+		/obj/item/reagent_containers/cup/glass/waterbottle,
+		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
+		/obj/item/reagent_containers/cup/tube,
+		/obj/item/reagent_containers/medigel,
 		/obj/item/reagent_containers/pill,
 		/obj/item/reagent_containers/syringe,
-		/obj/item/reagent_containers/medigel,
 		/obj/item/storage/pill_bottle,
-		/obj/item/implanter
+		/obj/item/implanter,
 		))
 
 /obj/item/storage/belt/military/nri

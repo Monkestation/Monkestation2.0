@@ -46,7 +46,7 @@
 	name = "beanbag slug"
 	icon_state = "pellet"
 	damage = 5 //10 to 5 monkestation edit
-	stamina = 75 //monkestation edit
+	stamina = 55
 	wound_bonus = 20
 	sharpness = NONE
 	embedding = null
@@ -67,18 +67,19 @@
 	icon_state = "pellet"
 	tile_dropoff = 0.45
 	tile_dropoff_s = 0.25
+	sharpness = SHARP_POINTY
 
 /obj/projectile/bullet/pellet/shotgun_buckshot ///6 pellets
 	name = "buckshot pellet"
 	damage = 8
-	wound_bonus = 5
+	wound_bonus = 0
 	bare_wound_bonus = 5
-	wound_falloff_tile = -2.5 // low damage + additional dropoff will already curb wounding potential anything past point blank
+	wound_falloff_tile = -1.5 // low damage + additional dropoff will already curb wounding potential anything past point blank
 
 /obj/projectile/bullet/pellet/shotgun_rubbershot ///6 pellets
 	name = "rubber shot pellet"
 	damage = 2 //monkestation edit 3 to 2
-	stamina = 15 //monkestation edit
+	stamina = 10
 	sharpness = NONE
 	embedding = null
 	tile_dropoff_s = 0 //monkestation edit
@@ -92,8 +93,6 @@
 	ricochet_incidence_leeway = 75
 	/// Subtracted from the ricochet chance for each tile traveled
 	var/tile_dropoff_ricochet = 4
-	debilitating = TRUE
-	debilitate_mult = 1
 
 /obj/projectile/bullet/pellet/shotgun_rubbershot/Range()
 	if(ricochet_chance > 0)
@@ -103,7 +102,7 @@
 /obj/projectile/bullet/pellet/shotgun_buckshot/magnum ///4 pellets
 	name = "magnum blockshot pellet"
 	damage = 12
-	wound_bonus = 7
+	wound_bonus = 2
 
 /obj/projectile/bullet/pellet/shotgun_buckshot/magnum/Initialize(mapload)
 	. = ..()
@@ -136,11 +135,11 @@
 
 
 
-/obj/projectile/bullet/pellet/shotgun_improvised ///10 pellets
+/obj/projectile/bullet/pellet/shotgun_improvised ///8 pellets
 	tile_dropoff = 0.35 //Come on it does 6 damage don't be like that.
 	damage = 6
 	wound_bonus = 0
-	bare_wound_bonus = 7.5
+	bare_wound_bonus = 5
 
 /obj/projectile/bullet/pellet/shotgun_improvised/Initialize(mapload)
 	. = ..()
@@ -198,7 +197,7 @@
 /obj/projectile/bullet/pellet/shotgun_incapacitate ///20 pellets
 	name = "incapacitating pellet"
 	damage = 1
-	stamina = 12 //monkestation edit
+	stamina = 6
 	tile_dropoff_s = 3 //monkestation edit spitting distance
 	embedding = null
 
@@ -207,7 +206,7 @@
 	icon = 'monkestation/code/modules/blueshift/icons/projectiles.dmi'
 	icon_state = "hornet"
 	damage = 4
-	stamina = 15
+	stamina = 7.5
 	wound_bonus = -5
 	bare_wound_bonus = 5
 	wound_falloff_tile = 0
@@ -225,7 +224,7 @@
 	icon = 'monkestation/code/modules/blueshift/icons/projectiles.dmi'
 	icon_state = "stardust"
 	damage = 2
-	stamina = 7
+	stamina = 3.5
 	wound_bonus = 0
 	bare_wound_bonus = 0
 	stutter = 3 SECONDS
@@ -379,8 +378,9 @@
 /obj/projectile/bullet/hydrakinetic
 	name = "Kinetic Hydra Sabot"
 	icon_state = "bullet"
-	damage = 13
+	damage = 7
 	armour_penetration = -15
+	fauna_mod = 2
 
 /obj/projectile/bullet/hydrakinetic/on_hit(atom/target, Firer, blocked = 0, pierce_hit) //its not meant to tear through walls like a plasma cutter, but will still at least bust down a wall if it hits one.
 	if(ismineralturf(target))

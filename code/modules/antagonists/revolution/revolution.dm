@@ -15,6 +15,7 @@
 	antag_hud_name = "rev"
 	suicide_cry = "VIVA LA REVOLUTION!!"
 	stinger_sound = 'sound/ambience/antag/revolutionary_tide.ogg'
+	antag_count_points = 1 //its revs, you get nothing
 	var/datum/team/revolution/rev_team
 	///when this antagonist is being de-antagged, this is why
 	var/deconversion_reason
@@ -188,6 +189,7 @@
 
 	preview_outfit = /datum/outfit/revolutionary
 	hardcore_random_bonus = TRUE
+	antag_count_points = 10
 
 	var/remove_clumsy = FALSE
 	var/give_flash = FALSE

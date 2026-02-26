@@ -6,7 +6,6 @@
 	maxHealth = 150
 	health = 150
 	health_per_level = 15
-	health_regen_per_level = 0.002
 
 	stat_evolution = 8
 	chemical_evolution = 8

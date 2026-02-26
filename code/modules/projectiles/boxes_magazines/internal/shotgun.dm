@@ -42,6 +42,11 @@
 	ammo_type = /obj/item/ammo_casing/shotgun/rubbershot
 	max_ammo = 6
 
+/obj/item/ammo_box/magazine/internal/shot/riot/evil
+	name = "syndicate renoster shotgun internal magazine"
+	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
+	max_ammo = 8
+
 /obj/item/ammo_box/magazine/internal/shot/bounty
 	name = "triple-barrel shotgun internal magazine"
 	ammo_type = /obj/item/ammo_casing/shotgun/incapacitate
@@ -49,8 +54,8 @@
 
 /obj/item/ammo_box/magazine/internal/shot/buckshotroulette
 	name = "buckshotroulette shotgun internal magazine"
-	ammo_type = /obj/item/ammo_casing/shotgun/buckshot/spent
-	max_ammo = 6
+	ammo_type = /obj/item/ammo_casing/shotgun/beanbag/blank
+	max_ammo = 10 //WOW THATS A LOT OF BULLETS you might say, however when the gun cant fire at an enemy more than once, i think its ok.
 
 /obj/item/ammo_box/magazine/internal/shot/levergun
 	name = "brush gun internal magazine"

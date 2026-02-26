@@ -286,7 +286,7 @@
 	icon_state ="chemistrybook"
 	starting_author = "Nanotrasen"
 	starting_title = "Chemistry Textbook"
-	page_link = "Guide_to_chemistry"
+	page_link = "Guide_to_Chemistry"
 
 /obj/item/book/manual/wiki/engineering_construction
 	name = "Station Repairs and Construction"
@@ -384,6 +384,13 @@
 	starting_author = "the City-state of Atmosia"
 	starting_title = "Lexica Atmosia"
 	page_link = "Guide_to_atmospherics"
+
+/obj/item/book/manual/wiki/virology
+	name = "Biological Warfare for Dummies"
+	icon_state = "book5"
+	starting_author = "The Plague Doctors Guild"
+	starting_title = "Biological Warfare for Dummies"
+	page_link = "Guide_to_pathology"
 
 /obj/item/book/manual/wiki/medicine
 	name = "Medical Space Compendium, Volume 638"

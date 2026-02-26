@@ -131,7 +131,6 @@
 			organ.transfer_to_limb(src, phantom_owner)
 
 	update_icon_dropped()
-	synchronize_bodytypes(phantom_owner)
 	phantom_owner.update_health_hud() //update the healthdoll
 	phantom_owner.update_body()
 	phantom_owner.update_body_parts()
@@ -210,6 +209,9 @@
 	for (var/datum/wound/iterated_wound as anything in wounds)
 		base_chance += iterated_wound.get_dismember_chance_bonus(base_chance)
 
+	if (body_zone == BODY_ZONE_CHEST)
+		base_chance = base_chance * WOUND_DISEMBOWEL_MODIFIER
+
 	if(prob(base_chance))
 		var/datum/wound/loss/dismembering = new
 		return dismembering.apply_dismember(src, wounding_type)
@@ -275,7 +277,7 @@
 	if(arm_owner.hud_used)
 		var/atom/movable/screen/inventory/hand/associated_hand = arm_owner.hud_used.hand_slots["[held_index]"]
 		associated_hand?.update_appearance()
-	if(arm_owner.gloves)
+	if(arm_owner.num_hands == 0)
 		arm_owner.dropItemToGround(arm_owner.gloves, TRUE, violent = violent)
 	arm_owner.update_worn_gloves() //to remove the bloody hands overlay
 
@@ -388,7 +390,7 @@
 		// we have to remove the wound from the limb wound list first, so that we can reapply it fresh with the new person
 		// otherwise the wound thinks it's trying to replace an existing wound of the same type (itself) and fails/deletes itself
 		LAZYREMOVE(wounds, wound)
-		wound.apply_wound(src, TRUE)
+		wound.apply_wound(src, TRUE, wound_source = wound.wound_source)
 
 	for(var/datum/scar/scar as anything in scars)
 		if(scar in new_limb_owner.all_scars) // prevent double scars from happening for whatever reason
@@ -403,7 +405,6 @@
 	// Bodyparts need to be sorted for leg masking to be done properly. It also will allow for some predictable
 	// behavior within said bodyparts list. We sort it here, as it's the only place we make changes to bodyparts.
 	new_limb_owner.bodyparts = sort_list(new_limb_owner.bodyparts, GLOBAL_PROC_REF(cmp_bodypart_by_body_part_asc))
-	synchronize_bodytypes(new_limb_owner)
 	new_limb_owner.updatehealth()
 	new_limb_owner.update_body()
 	new_limb_owner.update_damage_overlays()
@@ -454,18 +455,6 @@
 	new_head_owner.updatehealth()
 	new_head_owner.update_body()
 	new_head_owner.update_damage_overlays()
-
-///Makes sure that the owner's bodytype flags match the flags of all of it's parts.
-/obj/item/bodypart/proc/synchronize_bodytypes(mob/living/carbon/carbon_owner)
-	if(!carbon_owner?.dna?.species) //carbon_owner and dna can somehow be null during garbage collection, at which point we don't care anyway.
-		return
-	var/all_limb_flags
-	for(var/obj/item/bodypart/limb as anything in carbon_owner.bodyparts)
-		for(var/obj/item/organ/external/ext_organ as anything in limb.external_organs)
-			all_limb_flags = all_limb_flags | ext_organ.external_bodytypes
-		all_limb_flags = all_limb_flags | limb.bodytype
-
-	carbon_owner.dna.species.bodytype = all_limb_flags
 
 /mob/living/carbon/proc/regenerate_limbs(list/excluded_zones = list())
 	SEND_SIGNAL(src, COMSIG_CARBON_REGENERATE_LIMBS, excluded_zones)

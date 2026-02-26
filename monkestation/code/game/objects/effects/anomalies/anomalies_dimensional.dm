@@ -2,7 +2,7 @@
 	/// How many remaining times this anomaly will relocate, before its detonation.
 	var/relocations_left
 
-/obj/effect/anomaly/dimensional/Initialize(mapload, new_lifespan, drops_core)
+/obj/effect/anomaly/dimensional/Initialize(mapload, new_lifespan)
 	. = ..()
 	if(!isnum(relocations_left))
 		relocations_left = rand(3, 5)

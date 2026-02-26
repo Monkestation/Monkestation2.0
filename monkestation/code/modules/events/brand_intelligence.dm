@@ -12,6 +12,9 @@
 	min_wizard_trigger_potency = 2
 	max_wizard_trigger_potency = 6
 	admin_setup = list(/datum/event_admin_setup/listed_options/brand_intelligence)
+	track = EVENT_TRACK_MODERATE
+	tags = list(TAG_DESTRUCTIVE, TAG_COMMUNAL)
+	event_group = /datum/event_group/bsod
 
 /datum/round_event/brand_intelligence
 	announce_when = 21

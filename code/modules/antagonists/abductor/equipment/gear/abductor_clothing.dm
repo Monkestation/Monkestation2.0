@@ -132,7 +132,7 @@
 			to_chat(loc, span_warning("Combat injection is still recharging."))
 			return
 		var/mob/living/carbon/human/wearer = loc
-		wearer.stamina.adjust(75, forced = TRUE)
+		wearer.stamina.adjust(40, forced = TRUE)
 		wearer.SetUnconscious(0)
 		wearer.SetStun(0)
 		wearer.SetKnockdown(0)
@@ -148,7 +148,7 @@
 
 /obj/item/clothing/suit/armor/abductor/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	for(var/obj/machinery/abductor/console/mothership_console in GLOB.machines)
+	for(var/obj/machinery/abductor/console/mothership_console as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/abductor/console))
 		if(mothership_console.vest == src)
 			mothership_console.vest = null
 			break

@@ -386,6 +386,11 @@ https://file.house/zy7H.png
 Code used for the test in a readable format:
 https://pastebin.com/w50uERkG
 
+### `length(list)` over `list.len`
+
+The former is faster than the latter, as shown by the following benchmark results
+https://pastebin.com/6eRX6zqu
+
 ### Dot variable (`.`)
 
 The `.` variable is present in all procs. It refers to the value returned by a proc.

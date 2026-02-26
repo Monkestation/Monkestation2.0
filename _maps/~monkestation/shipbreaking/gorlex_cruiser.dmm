@@ -1530,7 +1530,7 @@
 /area/template_noop)
 "WA" = (
 /obj/structure/table/reinforced,
-/obj/item/stamp/head/qm{
+/obj/item/stamp/qm{
 	pixel_x = -16;
 	pixel_y = 12
 	},

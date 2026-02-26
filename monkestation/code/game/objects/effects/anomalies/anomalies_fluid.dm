@@ -11,7 +11,7 @@
 
 /obj/effect/anomaly/fluid/Initialize(mapload, new_lifespan)
 	. = ..()
-	if(prob(10))
+	if(prob(5))
 		dangerous = TRUE //Unrestricts the reagent choice and increases fluid amounts
 
 	for(var/i = 1, i <= rand(1,5), i++) //Between 1 and 5 random chemicals

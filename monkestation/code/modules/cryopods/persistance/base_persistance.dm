@@ -17,8 +17,6 @@ GLOBAL_LIST_INIT(modular_persistence_ignored_vars, list(
 	"owner",
 	"vars",
 	"stored_character_slot_index",
-	"demo_last_appearance",
-	"demo_last_loc",
 ))
 
 /obj/item/organ/internal/brain
@@ -100,7 +98,7 @@ GLOBAL_LIST_INIT(modular_persistence_ignored_vars, list(
 	return returned_list
 
 /// Saves the held persistence data to where it needs to go.
-/datum/modular_persistence/proc/save_data(var/ckey)
+/datum/modular_persistence/proc/save_data(ckey)
 	ckey = replacetext(ckey || owner.owner?.ckey || owner.brainmob?.ckey, "@", "")
 	if(!owner.owner && !owner.brainmob)
 		CRASH("Modular persistence save called on a brain with no owning mob or brainmob! How did this happen?! (\ref[owner], [owner])")

@@ -10,5 +10,6 @@
 		return TRUE
 	var/obj/item/organ/external/anime_head/anime_head = user.get_organ_slot(ORGAN_SLOT_EXTERNAL_ANIME_HEAD)
 	var/obj/item/organ/external/anime_bottom/anime_bottom = user.get_organ_slot(ORGAN_SLOT_EXTERNAL_ANIME_BOTTOM)
-	if(istype(anime_head?.bodypart_overlay?.sprite_datum, /datum/sprite_accessory/anime_head/cat) && istype(anime_bottom?.bodypart_overlay?.sprite_datum, /datum/sprite_accessory/anime_bottom/cat)) // cat ears AND tail? aight then, you're very much cat
+	var/list/cat_tails = list(/datum/sprite_accessory/anime_bottom/cat, /datum/sprite_accessory/anime_bottom/leopard, /datum/sprite_accessory/anime_bottom/catbig, /datum/sprite_accessory/anime_bottom/twocat) // if adding new cat tails, be sure to include them in this var list
+	if(istype(anime_head?.bodypart_overlay?.sprite_datum, /datum/sprite_accessory/anime_head/cat) && (anime_bottom?.bodypart_overlay?.sprite_datum?.type in cat_tails)) // cat ears AND tail? aight then, you're very much cat
 		return TRUE

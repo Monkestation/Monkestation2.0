@@ -68,10 +68,10 @@
 		return
 	if(!message)
 		message = "circuit input"
-	if(!(user.can_perform_action(src, FORBID_TELEKINESIS_REACH)))
+	if(!(user.can_perform_action(src, FORBID_TELEKINESIS_REACH|ALLOW_SILICON_REACH|ALLOW_RESTING)))
 		return
 	var/picked = tgui_input_list(user, message = message, items = showed_list)
-	if(!(user.can_perform_action(src, FORBID_TELEKINESIS_REACH)))
+	if(!(user.can_perform_action(src, FORBID_TELEKINESIS_REACH|ALLOW_SILICON_REACH|ALLOW_RESTING)))
 		return
 	choose_item(picked, showed_list)
 

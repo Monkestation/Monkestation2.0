@@ -25,11 +25,6 @@
 	/// A multiplier to an objecet's force when used against a stucture, vechicle, machine, or robot.
 	var/demolition_mod = 1
 
-	var/current_skin //Has the item been reskinned?
-	var/list/unique_reskin //List of options to reskin.
-	///If set to true, we can reskin this item as much as we want.
-	var/infinite_reskin = FALSE
-
 	/// Custom fire overlay icon, will just use the default overlay if this is null
 	var/custom_fire_overlay
 	/// Particles this obj uses when burning, if any
@@ -273,55 +268,6 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 		. += span_notice(desc_controls)
 	if(obj_flags & UNIQUE_RENAME)
 		. += span_notice("Use a pen on it to rename it or change its description.")
-	if(unique_reskin && (!current_skin || infinite_reskin))
-		. += span_notice("Alt-click it to reskin it.")
-
-/obj/AltClick(mob/user)
-	. = ..()
-	if(unique_reskin && (!current_skin || infinite_reskin) && user.can_perform_action(src, NEED_DEXTERITY))
-		reskin_obj(user)
-
-/**
- * Reskins object based on a user's choice
- *
- * Arguments:
- * * M The mob choosing a reskin option
- */
-/obj/proc/reskin_obj(mob/M)
-	if(!LAZYLEN(unique_reskin))
-		return
-
-	var/list/items = list()
-	for(var/reskin_option in unique_reskin)
-		var/image/item_image = image(icon = src.icon, icon_state = unique_reskin[reskin_option])
-		items += list("[reskin_option]" = item_image)
-	sort_list(items)
-
-	var/pick = show_radial_menu(M, src, items, custom_check = CALLBACK(src, PROC_REF(check_reskin_menu), M), radius = 38, require_near = TRUE)
-	if(!pick)
-		return
-	if(!unique_reskin[pick])
-		return
-	current_skin = pick
-	icon_state = unique_reskin[pick]
-	to_chat(M, "[src] is now skinned as '[pick].'")
-
-/**
- * Checks if we are allowed to interact with a radial menu for reskins
- *
- * Arguments:
- * * user The mob interacting with the menu
- */
-/obj/proc/check_reskin_menu(mob/user)
-	if(QDELETED(src))
-		return FALSE
-	if(!infinite_reskin && current_skin)
-		return FALSE
-	if(!istype(user))
-		return FALSE
-	if(user.incapacitated())
-		return FALSE
-	return TRUE
 
 /obj/analyzer_act(mob/living/user, obj/item/analyzer/tool)
 	if(atmos_scan(user=user, target=src, silent=FALSE))
@@ -335,10 +281,11 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 /obj/proc/dump_contents()
 	CRASH("Unimplemented.")
 
-/obj/handle_ricochet(obj/projectile/P)
+/obj/handle_ricochet(obj/projectile/ricocheting)
 	. = ..()
 	if(. && receive_ricochet_damage_coeff)
-		take_damage(P.damage * receive_ricochet_damage_coeff, P.damage_type, P.armor_flag, 0, turn(P.dir, 180), P.armour_penetration) // pass along receive_ricochet_damage_coeff damage to the structure for the ricochet
+		// pass along receive_ricochet_damage_coeff damage to the structure for the ricochet
+		take_damage(ricocheting.damage * receive_ricochet_damage_coeff, ricocheting.damage_type, ricocheting.armor_flag, 0, turn(ricocheting.dir, 180), ricocheting.armour_penetration)
 
 /// Handles exposing an object to reagents.
 /obj/expose_reagents(list/reagents, datum/reagents/source, methods=TOUCH, volume_modifier=1, show_message=TRUE)

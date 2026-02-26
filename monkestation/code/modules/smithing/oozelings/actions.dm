@@ -117,8 +117,8 @@
 	return span_notice("[owner.p_They()] [owner.p_are()] oozing out an oily coating onto [owner.p_their()] outer membrane, water rolling right off.")
 
 /**
- * Toggle Death Signal simply adds and removes the trait required for slimepeople to transmit a GPS signal upon core ejection.
- */
+	* Toggle Death Signal simply adds and removes the trait required for slimepeople to transmit a GPS signal upon core ejection.
+	*/
 /datum/action/innate/core_signal
 	name = "Toggle Core Signal"
 	check_flags = AB_CHECK_CONSCIOUS
@@ -160,7 +160,7 @@
 		"Can't feel... can't... think...",
 		"Plasma... need... plasma...",
 		"It's so... quiet...",
-    )
+	)
 
 /datum/action/cooldown/membrane_murmur/IsAvailable(feedback = FALSE)
 	. = ..()

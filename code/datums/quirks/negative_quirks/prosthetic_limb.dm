@@ -13,13 +13,13 @@
 	species_blacklist = list(SPECIES_OOZELING)
 
 /datum/quirk/prosthetic_limb/add_unique(client/client_source)
-	var/body_zone = GLOB.limb_choice[client_source?.prefs?.read_preference(/datum/preference/choiced/limb/prosthetic)]
-	if (isnull(body_zone))  //Client gone or they chose a random limb
-		body_zone = GLOB.limb_choice[pick(GLOB.limb_choice)]
-	slot_string = body_zone_as_plaintext(body_zone)
+	limb_zone = GLOB.limb_choice[client_source?.prefs?.read_preference(/datum/preference/choiced/limb/prosthetic)]
+	if (isnull(limb_zone))  //Client gone or they chose a random limb
+		limb_zone = GLOB.limb_choice[pick(GLOB.limb_choice)]
+	slot_string = body_zone_as_plaintext(limb_zone)
 
 	var/obj/item/bodypart/surplus
-	switch (body_zone)
+	switch (limb_zone)
 		if (BODY_ZONE_L_ARM)
 			surplus = new /obj/item/bodypart/arm/left/robot/surplus()
 		if (BODY_ZONE_R_ARM)

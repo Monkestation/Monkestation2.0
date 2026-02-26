@@ -1,5 +1,5 @@
-import { Antagonist, Category } from '../base';
 import { multiline } from 'common/string';
+import { type Antagonist, Category } from '../base';
 
 const PlagueRat: Antagonist = {
   key: 'plaguerat',
@@ -10,7 +10,7 @@ const PlagueRat: Antagonist = {
     Also wish micheal a happy birthday.
     `,
   ],
-  category: Category.Midround,
+  category: Category.Ghost,
 };
 
 export default PlagueRat;

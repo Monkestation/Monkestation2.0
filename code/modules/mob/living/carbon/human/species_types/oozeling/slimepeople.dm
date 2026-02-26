@@ -13,6 +13,7 @@ GLOBAL_DATUM_INIT(slimeperson_managers, /alist, alist())
 		TRAIT_EASYDISMEMBER,
 		TRAIT_NOFIRE,
 		TRAIT_SPLEENLESS_METABOLISM,
+		TRAIT_FOOD_ABSORPTION,
 		// Jank prevention
 		TRAIT_NO_MINDSWAP,
 		TRAIT_NO_TRANSFORMATION_STING,
@@ -133,6 +134,7 @@ GLOBAL_DATUM_INIT(slimeperson_managers, /alist, alist())
 	var/mob/living/carbon/human/spare = new /mob/living/carbon/human(user.loc)
 
 	spare.underwear = "Nude"
+	spare.copy_voice_from(user)
 	user.dna.copy_dna(spare.dna, COPY_DNA_SE|COPY_DNA_SPECIES)
 	var/datum/color_palette/generic_colors/palette = spare.dna.color_palettes[/datum/color_palette/generic_colors]
 	palette.mutant_color = "#[pick("7F", "FF")][pick("7F", "FF")][pick("7F", "FF")]"

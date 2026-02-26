@@ -4,21 +4,6 @@
 	// language_holder = /datum/language_holder/slugcat
 	initial_language_holder = /datum/language_holder/slugcat
 
-/datum/language/wawa
-	name = "Slosh"
-	desc = "The language of the slugcats. They have mastered the art of conveying complex thoughts just using one versatile syllable."
-	key = "w"
-	syllables = list("wawa")
-	default_priority = 70
-
-	icon_state = "wawa"
-	icon = 'monkestation/icons/misc/language.dmi'
-
-/datum/language_holder/slugcat
-	understood_languages = list(/datum/language/common = list(LANGUAGE_MIND),
-								/datum/language/wawa = list(LANGUAGE_MIND))
-	spoken_languages = list(/datum/language/wawa = list(LANGUAGE_MIND))
-
 // wawa
 /datum/emote/living/wawa
 	key = "wawa"

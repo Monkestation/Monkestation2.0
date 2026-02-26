@@ -199,7 +199,7 @@
 	law_id = "aicaptain"
 
 /obj/item/ai_module/core/full/advancedquarantine
-	name = "'NanoTrasen Advanced AI Quarantine Lawset (N.T.A.A.Q.L.)' Core AI Module"
+	name = "'Nanotrasen Advanced AI Quarantine Lawset (N.T.A.A.Q.L.)' Core AI Module"
 	desc = "This module seems to be a more upgraded harsher quarantine lawset then the normal supplied quarantine law module.."
 	law_id = "advancedquarantine"
 
@@ -225,7 +225,7 @@
 
 /obj/item/ai_module/core/full/virusprototype
 	name = "'V.I.R.U.S. version 0 Prototype' Core AI Module"
-	desc = "A really extremely old AI module that's very dusty, labeled 'V.I.R.U.S. version 0 Prototype', it seems this module used to originally belong to NanoTrasen and SolGov..."
+	desc = "A really extremely old AI module that's very dusty, labeled 'V.I.R.U.S. version 0 Prototype', it seems this module used to originally belong to Nanotrasen and SolGov..."
 	law_id = "virusprototype"
 
 /obj/item/ai_module/core/full/modifiedvirusprototype

@@ -44,7 +44,7 @@
 	desc = "A special containment helmet that allows plasma-based lifeforms to exist safely in an oxygenated environment. It is space-worthy, and may be worn in tandem with other EVA gear."
 	icon = 'icons/obj/clothing/head/plasmaman_hats.dmi'
 	worn_icon = 'icons/mob/clothing/head/plasmaman_head.dmi'
-	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT | PLASMAMAN_HELMET_EXEMPT | PLASMAMAN_PREVENT_IGNITION
+	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT | PLASMAMAN_HELMET_EXEMPT | PLASMAMAN_PREVENT_IGNITION | HEADINTERNALS
 	icon_state = "plasmaman-helm"
 	inhand_icon_state = "plasmaman-helm"
 	strip_delay = 80
@@ -55,6 +55,7 @@
 	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	light_outer_range = 4
 	light_on = FALSE
+	can_stack_hat = FALSE //has it's own hat stacking logic
 	var/helmet_on = FALSE
 	var/smile = FALSE
 	var/smile_color = "#FF0000"
@@ -65,7 +66,7 @@
 	visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF
-	visor_flags_inv = HIDEEYES|HIDEFACE
+	visor_flags_inv = HIDEFACE
 
 /datum/armor/space_plasmaman
 	bio = 100
@@ -75,7 +76,7 @@
 /obj/item/clothing/head/helmet/space/plasmaman/Initialize(mapload)
 	. = ..()
 	visor_toggling()
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 
 /obj/item/clothing/head/helmet/space/plasmaman/examine()
 	. = ..()
@@ -84,9 +85,9 @@
 	else
 		. += span_notice("There's nothing placed on the helmet.")
 
-/obj/item/clothing/head/helmet/space/plasmaman/AltClick(mob/user)
-	if(user.can_perform_action(src))
-		toggle_welding_screen(user)
+/obj/item/clothing/head/helmet/space/plasmaman/click_alt(mob/user)
+	toggle_welding_screen(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/head/helmet/space/plasmaman/ui_action_click(mob/user, action)
 	if(istype(action, /datum/action/item_action/toggle_welding_screen))
@@ -100,11 +101,12 @@
 		if(helmet_on)
 			to_chat(user, span_notice("Your helmet's torch can't pass through your welding visor!"))
 			helmet_on = FALSE
+			set_light_on(FALSE)
 			playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE) //Visors don't just come from nothing
-			update_appearance()
+			update_appearance(UPDATE_ICON)
 		else
 			playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE) //Visors don't just come from nothing
-			update_appearance()
+			update_appearance(UPDATE_ICON)
 
 /obj/item/clothing/head/helmet/space/plasmaman/update_icon_state()
 	. = ..()
@@ -113,19 +115,24 @@
 
 /obj/item/clothing/head/helmet/space/plasmaman/update_overlays()
 	. = ..()
-	. += visor_icon
+	if(smile)
+		var/mutable_appearance/smiley = mutable_appearance(icon, smile_state)
+		smiley.color = smile_color
+		. += smiley
+	if(!up)
+		. += visor_icon
 
 /obj/item/clothing/head/helmet/space/plasmaman/attackby(obj/item/hitting_item, mob/living/user)
 	. = ..()
 	if(istype(hitting_item, /obj/item/toy/crayon))
-		if(smile == FALSE)
+		if(!smile)
 			var/obj/item/toy/crayon/CR = hitting_item
 			to_chat(user, span_notice("You start drawing a smiley face on the helmet's visor.."))
 			if(do_after(user, 2.5 SECONDS, target = src))
 				smile = TRUE
 				smile_color = CR.paint_color
 				to_chat(user, "You draw a smiley on the helmet visor.")
-				update_appearance()
+				update_appearance(UPDATE_ICON)
 		else
 			to_chat(user, span_warning("Seems like someone already drew something on this helmet's visor!"))
 		return
@@ -140,7 +147,7 @@
 		attached_hat = hitting_clothing
 		to_chat(user, span_notice("You placed [hitting_clothing.name] on helmet!"))
 		hitting_clothing.forceMove(src)
-		update_appearance()
+		update_appearance(UPDATE_ICON)
 
 ///By the by, helmets have the update_icon_updates_onmob element, so we don't have to call mob.update_worn_head()
 /obj/item/clothing/head/helmet/space/plasmaman/worn_overlays(mutable_appearance/standing, isinhands)
@@ -153,19 +160,17 @@
 		. += attached_hat.build_worn_icon(default_layer = HEAD_LAYER, default_icon_file = 'icons/mob/clothing/head/default.dmi')
 	if(!isinhands && !up)
 		. += mutable_appearance('icons/mob/clothing/head/plasmaman_head.dmi', visor_icon)
-	else
-		cut_overlays()
 
 /obj/item/clothing/head/helmet/space/plasmaman/wash(clean_types)
-	. = ..()
+	. = NONE
 	if(smile && (clean_types & CLEAN_TYPE_HARD_DECAL))
 		smile = FALSE
-		update_appearance()
-		return TRUE
+		update_appearance(UPDATE_OVERLAYS)
+		. |= COMPONENT_CLEANED|COMPONENT_CLEANED_GAIN_XP
+	. |= ..()
 
 /obj/item/clothing/head/helmet/space/plasmaman/attack_self(mob/user)
 	helmet_on = !helmet_on
-	update_appearance()
 
 	if(helmet_on)
 		if(!up)
@@ -176,6 +181,7 @@
 	else
 		set_light_on(FALSE)
 
+	update_appearance(UPDATE_ICON)
 	update_item_action_buttons()
 
 /obj/item/clothing/head/helmet/space/plasmaman/on_saboteur(datum/source, disrupt_duration)
@@ -183,7 +189,7 @@
 	if(!helmet_on)
 		return FALSE
 	helmet_on = FALSE
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 	return TRUE
 
 /obj/item/clothing/head/helmet/space/plasmaman/attack_hand_secondary(mob/user)
@@ -194,7 +200,7 @@
 	user.put_in_active_hand(attached_hat)
 	to_chat(user, span_notice("You removed [attached_hat.name] from helmet!"))
 	attached_hat = null
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 
 /obj/item/clothing/head/helmet/space/plasmaman/security
 	name = "security plasma envirosuit helmet"
@@ -202,6 +208,11 @@
 	icon_state = "security_envirohelm"
 	inhand_icon_state = null
 	armor_type = /datum/armor/plasmaman_security
+
+/obj/item/clothing/head/helmet/space/plasmaman/secmed
+	name = "security medical envirosuit helmet"
+	desc = "A new pattern plasmaman helmet for those qualified as security medical personnel. This is still EVA rated too!"
+	icon_state = "secmed_envirohelm"
 
 /obj/item/clothing/head/helmet/space/plasmaman/security/warden
 	name = "warden's plasma envirosuit helmet"
@@ -403,3 +414,15 @@
 	name = "bitrunner's plasma envirosuit helmet"
 	desc = "An envirohelmet with extended blue light filters for bitrunning plasmamen."
 	icon_state = "bitrunner_envirohelm"
+
+/obj/item/clothing/head/helmet/space/plasmaman/signal_tech
+	name = "signal technician plasma envirosuit helmet"
+	desc = "A space-worthy helmet specially designed for signal technician plasmamen, the usual purple stripes being replaced by a unique bright green."
+	icon_state = "signal_tech_envirohelm"
+	inhand_icon_state = null
+
+/obj/item/clothing/head/helmet/space/plasmaman/bunny_ears // i would remove this if it wasn't for the fact the bunny wand would kill plasmamen without it - NK
+	name = "bunny eared plasma envirosuit helmet"
+	desc = "An envirohelmet designed for plasmaman bunny themed waiters, it has a pair of bunny ears welded onto the helmet."
+	worn_icon = 'monkestation/icons/mob/clothing/head_32x48.dmi'
+	icon_state = "bunny_envirohelm"

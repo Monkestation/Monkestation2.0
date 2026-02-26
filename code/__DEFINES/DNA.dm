@@ -112,6 +112,7 @@
 //organ slots
 #define ORGAN_SLOT_ADAMANTINE_RESONATOR "adamantine_resonator"
 #define ORGAN_SLOT_APPENDIX "appendix"
+#define ORGAN_SLOT_BORER_ORGAN "borer_organ"
 #define ORGAN_SLOT_BRAIN "brain"
 #define ORGAN_SLOT_BRAIN_ANTIDROP "brain_antidrop"
 #define ORGAN_SLOT_BRAIN_ANTISTUN "brain_antistun"
@@ -145,6 +146,7 @@
 #define ORGAN_SLOT_LEFT_LEG_AUG "l_leg_device"
 #define ORGAN_SLOT_SPINAL "spinal_implant"
 #define ORGAN_SLOT_BRAIN_NIF "nif"
+#define ORGAN_SLOT_GLAND "silk_gland"
 
 /// Organ slot external
 #define ORGAN_SLOT_EXTERNAL_TAIL "tail"
@@ -159,6 +161,7 @@
 #define ORGAN_SLOT_EXTERNAL_ANIME_HEAD "anime_head"
 #define ORGAN_SLOT_EXTERNAL_ANIME_CHEST "anime_chest"
 #define ORGAN_SLOT_EXTERNAL_ANIME_BOTTOM "anime_bottom"
+#define ORGAN_SLOT_EXTERNAL_ANIME_HALO "anime_halo"
 #define ORGAN_SLOT_EXTERNAL_FLORAN_LEAVES "floran_leaves"
 #define ORGAN_SLOT_EXTERNAL_FLUFF "fluff"
 #define ORGAN_SLOT_EXTERNAL_FEATHERS "feathers"
@@ -217,6 +220,7 @@ GLOBAL_LIST_INIT(organ_process_order, list(
 	ORGAN_SLOT_TONGUE,
 	ORGAN_SLOT_VOICE,
 	ORGAN_SLOT_ADAMANTINE_RESONATOR,
+	ORGAN_SLOT_BORER_ORGAN,
 	ORGAN_SLOT_HEART_AID,
 	ORGAN_SLOT_BRAIN_ANTIDROP,
 	ORGAN_SLOT_BRAIN_ANTISTUN,
@@ -227,7 +231,8 @@ GLOBAL_LIST_INIT(organ_process_order, list(
 	ORGAN_SLOT_XENO_RESINSPINNER,
 	ORGAN_SLOT_XENO_ACIDGLAND,
 	ORGAN_SLOT_XENO_NEUROTOXINGLAND,
-	ORGAN_SLOT_XENO_EGGSAC,))
+	ORGAN_SLOT_XENO_EGGSAC,
+	ORGAN_SLOT_GLAND,))
 
 //Defines for Golem Species IDs
 #define SPECIES_GOLEM "golem"

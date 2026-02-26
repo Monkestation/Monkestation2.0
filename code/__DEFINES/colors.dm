@@ -11,6 +11,19 @@
 #define FIXED_COLOUR_PRIORITY 4
 ///how many colour priority levels there are.
 #define COLOUR_PRIORITY_AMOUNT 4
+/// If this is a plain atom color
+#define ATOM_COLOR_TYPE_NORMAL "normal"
+/// If this is a color filter
+#define ATOM_COLOR_TYPE_FILTER "filter"
+// Indexes for color arrays
+#define ATOM_COLOR_VALUE_INDEX 1
+#define ATOM_COLOR_TYPE_INDEX 2
+#define ATOM_PRIORITY_COLOR_FILTER "atom_priority_color"
+#define ATOM_PRIORITY_COLOR_FILTER_PRIORITY -1
+/// Multiply pixel's saturation by color's saturation. Paints accents while keeping dim areas dim.
+#define SATURATION_MULTIPLY "multiply"
+/// Always affects the original pixel's saturation and lightness.
+#define SATURATION_OVERRIDE "always"
 
 #define COLOR_DARKMODE_BACKGROUND "#202020"
 #define COLOR_DARKMODE_DARKBACKGROUND "#171717"
@@ -141,6 +154,7 @@
 #define COLOR_LIGHT_BROWN "#996666"
 #define COLOR_BROWNER_BROWN "#663300"
 
+#define COLOR_CENTCOM_GREEN "#86ff82"
 #define COLOR_GREEN_GRAY "#99BB76"
 #define COLOR_RED_GRAY "#B4696A"
 #define COLOR_PALE_BLUE_GRAY "#98C5DF"
@@ -166,6 +180,16 @@
 #define COLOR_ASSEMBLY_BLUE "#38559E"
 #define COLOR_ASSEMBLY_PURPLE "#6F6192"
 
+//Colors for crayons.
+#define COLOR_CRAYON_RED "#DA0000"
+#define COLOR_CRAYON_ORANGE "#FF9300"
+#define COLOR_CRAYON_YELLOW "#FFF200"
+#define COLOR_CRAYON_GREEN "#A8E61D"
+#define COLOR_CRAYON_BLUE "#00B7EF"
+#define COLOR_CRAYON_PURPLE "#DA00FF"
+#define COLOR_CRAYON_BLACK "#1C1C1C"
+#define COLOR_CRAYON_RAINBOW "#FFF000"
+
 ///Colors for grayscale tools
 #define COLOR_TOOL_BLUE "#1861d5"
 #define COLOR_TOOL_RED "#951710"
@@ -181,6 +205,14 @@
 #define COLOR_SAMPLE_GREEN "#98b944"
 #define COLOR_SAMPLE_BROWN "#91542d"
 #define COLOR_SAMPLE_GRAY "#5e5856"
+
+///Colors for blood greyscale sprites
+#define BLOOD_COLOR_RED "#AA1010"
+#define BLOOD_COLOR_LIZARD "#035A00"
+#define BLOOD_COLOR_XENO "#96BB00"
+#define BLOOD_COLOR_OIL "#2C2C2C"
+#define BLOOD_COLOR_BLACK "#1F1A00"
+#define BLOOD_COLOR_DRIED "#370404" // Not to be used normally, only exists for mapper convinience
 
 ///Main colors for UI themes
 #define COLOR_THEME_MIDNIGHT "#6086A0"
@@ -363,6 +395,13 @@ GLOBAL_LIST_INIT(cable_colors, list(
 	CABLE_COLOR_YELLOW = CABLE_HEX_COLOR_YELLOW,
 	CABLE_COLOR_BROWN = CABLE_HEX_COLOR_BROWN
 ))
+
+#define HUSK_COLOR_TONE rgb(96, 88, 80)
+
+#define CM_COLOR_SAT_MIN 0.6
+#define CM_COLOR_SAT_MAX 0.7
+#define CM_COLOR_LUM_MIN 0.65
+#define CM_COLOR_LUM_MAX 0.75
 
 //Monkestation non-modular change: This has to be here because we use it in setup_consistent_human_dna
 #define COLOR_MONKEY_BROWN "#cd8765"

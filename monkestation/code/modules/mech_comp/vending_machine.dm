@@ -5,6 +5,7 @@
 /obj/machinery/vending/mechcomp
 	name = "\improper ThinkTronic MechComp Dispenser"
 	desc = "A rather plain vendor for ThinkTronic's line of field-assemblable components."
+	icon_state = "mechcomp"
 	product_ads = "At least it's not Circuits!;95% GPL Compatible!;Source Exists, Somewhere!;Semi-Standards Compliant!;IETF Cleared!"
 	default_price = 0
 	extra_price = 0

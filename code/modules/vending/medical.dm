@@ -18,8 +18,10 @@
 				/obj/item/wrench/medical = 1,
 				/obj/item/stack/sticky_tape/surgical = 3,
 				/obj/item/healthanalyzer/simple = 4,
+				/obj/item/stack/medical/bruise_pack = 3,
 				/obj/item/stack/medical/ointment = 2,
 				/obj/item/stack/medical/suture = 2,
+				/obj/item/stack/medical/mesh = 3,
 				/obj/item/stack/medical/bone_gel = 4,
 				/obj/item/cane/white = 2,
 				/obj/item/clothing/glasses/eyepatch/medical = 2,
@@ -42,6 +44,7 @@
 	contraband = list(
 		/obj/item/storage/box/gum/happiness = 3,
 		/obj/item/storage/box/hug/medical = 1,
+		/obj/item/clothing/head/helmet/toggleable/justice/medical = 2,
 	)
 	premium = list(
 		/obj/item/reagent_containers/medipen = 3,
@@ -49,11 +52,10 @@
 		/obj/item/sensor_device = 2,
 		/obj/item/pinpointer/crew = 2,
 		/obj/item/storage/medkit/advanced = 2,
-		/obj/item/shears = 1,
-		/obj/item/storage/organbox = 1,
-		/obj/item/clothing/gloves/latex/surgical = 1, //Monkestation Edit
-		/obj/item/reagent_containers/medipen/deforest/robot_liquid_solder = 2, //Monkestation Edit
-		/obj/item/fishing_hook/rescue = 1, //Monkestation Edit
+		/obj/item/shears = 2,
+		/obj/item/storage/organbox = 2,
+		/obj/item/clothing/gloves/latex/surgical = 1,
+		/obj/item/reagent_containers/hypospray/medipen/deforest/robot_liquid_solder = 2,
 	)
 	refill_canister = /obj/item/vending_refill/medical
 	default_price = PAYCHECK_CREW
@@ -100,18 +102,20 @@
 		/obj/item/reagent_containers/pill/patch/libital = 5,
 		/obj/item/reagent_containers/pill/patch/aiuri = 5,
 		/obj/item/reagent_containers/syringe/convermol = 2,
-		/obj/item/reagent_containers/pill/insulin = 5,
+		/obj/item/reagent_containers/pill/insulin = 6,
+		/obj/item/reagent_containers/pill/neurine = 3,
 		/obj/item/reagent_containers/cup/bottle/multiver = 2,
 		/obj/item/reagent_containers/cup/bottle/syriniver = 2,
 		/obj/item/reagent_containers/cup/bottle/epinephrine = 3,
 		/obj/item/reagent_containers/cup/bottle/morphine = 4,
-		/obj/item/reagent_containers/cup/bottle/potass_iodide = 1,
+		/obj/item/reagent_containers/cup/bottle/potass_iodide = 2,
 		/obj/item/reagent_containers/cup/bottle/salglu_solution = 3,
 		/obj/item/reagent_containers/cup/bottle/toxin = 3,
+		/obj/item/reagent_containers/cup/bottle/formaldehyde = 2,
 		/obj/item/reagent_containers/syringe/antiviral = 6,
 		/obj/item/reagent_containers/medigel/libital = 2,
 		/obj/item/reagent_containers/medigel/aiuri = 2,
-		/obj/item/reagent_containers/medigel/sterilizine = 1,
+		/obj/item/reagent_containers/medigel/sterilizine = 2,
 		)
 	contraband = list(
 		/obj/item/reagent_containers/pill/tox = 3,

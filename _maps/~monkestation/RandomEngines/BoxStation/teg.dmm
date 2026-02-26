@@ -618,13 +618,13 @@
 /obj/structure/cable,
 /obj/machinery/power/terminal,
 /obj/structure/table,
-/obj/item/stock_parts/cell/upgraded{
+/obj/item/stock_parts/power_store/cell/upgraded{
 	pixel_y = 10
 	},
-/obj/item/stock_parts/cell/upgraded{
+/obj/item/stock_parts/power_store/cell/upgraded{
 	pixel_y = 5
 	},
-/obj/item/stock_parts/cell/upgraded,
+/obj/item/stock_parts/power_store/cell/upgraded,
 /turf/open/floor/iron/dark,
 /area/station/engineering/main)
 "ug" = (
@@ -1499,7 +1499,7 @@
 "YS" = (
 /obj/structure/table/reinforced,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high/empty,
+/obj/item/stock_parts/power_store/cell/high/empty,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmospherics_engine)
 "Zb" = (

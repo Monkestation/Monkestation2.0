@@ -76,7 +76,7 @@
 		if(QDELETED(former_vassal) || former_vassal.revenge_vassal)
 			target_ref = null
 			return
-		if(do_after(owner, 5 SECONDS, target))
+		if(do_after(owner, 5 SECONDS, target, hidden = TRUE))
 			former_vassal.return_to_fold(revenge_vassal)
 		target_ref = null
 		DeactivatePower()

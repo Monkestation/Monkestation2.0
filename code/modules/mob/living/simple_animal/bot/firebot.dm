@@ -14,7 +14,7 @@
 	health = 25
 	maxHealth = 25
 
-	maints_access_required = list(ACCESS_ROBOTICS, ACCESS_CONSTRUCTION)
+	req_one_access = list(ACCESS_ROBOTICS, ACCESS_CONSTRUCTION)
 	radio_key = /obj/item/encryptionkey/headset_eng
 	radio_channel = RADIO_CHANNEL_ENGINEERING
 	bot_type = FIRE_BOT
@@ -36,6 +36,9 @@
 	var/extinguish_people = TRUE
 	var/extinguish_fires = TRUE
 	var/stationary_mode = FALSE
+
+	/// the type of hardhat this firebot was made with so we know what to drop when it breaks
+	var/hardhat_type = /obj/item/clothing/head/utility/hardhat
 
 /mob/living/simple_animal/bot/firebot/Initialize(mapload)
 	. = ..()
@@ -139,7 +142,7 @@
 // Actions received from TGUI
 /mob/living/simple_animal/bot/firebot/ui_act(action, params)
 	. = ..()
-	if(. || (bot_cover_flags & BOT_COVER_LOCKED && !usr.has_unlimited_silicon_privilege))
+	if(. || (bot_cover_flags & BOT_COVER_LOCKED && !HAS_SILICON_ACCESS(usr)))
 		return
 
 	switch(action)
@@ -297,7 +300,7 @@
 	var/atom/Tsec = drop_location()
 
 	new /obj/item/assembly/prox_sensor(Tsec)
-	new /obj/item/clothing/head/utility/hardhat/red(Tsec)
+	new hardhat_type(Tsec)
 
 	var/turf/T = get_turf(Tsec)
 

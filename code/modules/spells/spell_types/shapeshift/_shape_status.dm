@@ -30,10 +30,10 @@
 	return ..()
 
 /datum/status_effect/shapechange_mob/on_apply()
-	// monkestation start: always use caster's gender for the mob
 	owner.gender = caster_mob.gender
+	owner.copy_voice_from(caster_mob)
+	owner.copy_languages(caster_mob)
 	owner.regenerate_icons()
-	// monkestation end
 	caster_mob.mind?.transfer_to(owner)
 	caster_mob.forceMove(owner)
 	ADD_TRAIT(caster_mob, TRAIT_NO_TRANSFORM, TRAIT_STATUS_EFFECT(id))
@@ -201,7 +201,7 @@
 		return
 
 	if(caster_mob.stat != DEAD)
-		caster_mob.revive(HEAL_DAMAGE)
+		caster_mob.revive(HEAL_DAMAGE, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 
 		var/damage_to_apply = caster_mob.maxHealth * ((owner.maxHealth - owner.health) / owner.maxHealth)
 		caster_mob.apply_damage(damage_to_apply, source_spell.convert_damage_type, forced = TRUE, wound_bonus = CANT_WOUND)

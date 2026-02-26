@@ -10,12 +10,17 @@
 
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		M.istate = ISTATE_SECONDARY
+	if(LAZYACCESS(modifiers, CTRL_CLICK))
+		M.istate = ISTATE_CONTROL
 
 	switch (intent)
 		if (INTENT_DISARM)
 			M.istate |= ISTATE_SECONDARY
+			M.istate |= ISTATE_HARM
+			M.istate |= ISTATE_BLOCKING
 		if (INTENT_GRAB)
 			M.istate |= ISTATE_CONTROL
+			M.istate |= ISTATE_HARM
 			M.istate |= ISTATE_BLOCKING
 		if (INTENT_HARM)
 			M.istate |= ISTATE_HARM

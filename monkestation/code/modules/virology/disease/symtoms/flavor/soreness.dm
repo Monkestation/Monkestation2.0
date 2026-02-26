@@ -11,4 +11,4 @@
 	to_chat(mob, span_notice("You feel a little sore."))
 	if(iscarbon(mob))
 		var/mob/living/carbon/host = mob
-		host.stamina.adjust(-10)
+		host.stamina.adjust(-5)

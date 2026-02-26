@@ -63,6 +63,15 @@ menu "menu"
 		command = "fix-chat"
 		category = "&Help"
 		saved-params = "is-checked"
+	elem
+		name = "Stop All Sounds"
+		command = "stop-sounds"
+		category = "&Help"
+		saved-params = "is-checked"
+	elem  "Use Internet Routing Relay"
+		name = "Internet Routing Relays"
+		command = "internet-routing-relays"
+		saved-params = "is-checked"
 
 
 window "mainwindow"
@@ -359,12 +368,13 @@ window "inputwindow"
 	elem "input"
 		type = INPUT
 		pos = 0,0
-		size = 805x20
+		size = 520x20
 		anchor1 = 0,0
 		anchor2 = 100,100
 		is-default = true
 		border = line
 		saved-params = "command"
+		can-scroll = true
 
 window "inputbuttons"
 	elem "inputbuttons"

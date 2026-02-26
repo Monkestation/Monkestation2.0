@@ -246,11 +246,11 @@
 		log_storyteller("Running roundstart antagonist assignment, event type: [src.type], roundstart_antag_minds: [english_list(SSgamemode.roundstart_antag_minds)]")
 		for(var/datum/mind/antag_mind in SSgamemode.roundstart_antag_minds)
 			if(!antag_mind.current)
-				log_storyteller("Roundstart antagonist setup error: antag_mind([antag_mind]) in roundstart_antag_minds without a set mob")
+				log_storyteller("Roundstart antagonist setup error: antag_mind([key_name(antag_mind)]) in roundstart_antag_minds without a set mob")
 				continue
 			candidates += antag_mind.current
 			SSgamemode.roundstart_antag_minds -= antag_mind
-			log_storyteller("Roundstart antag_mind, [antag_mind]")
+			log_storyteller("Roundstart antag_mind, [key_name(antag_mind)]")
 
 	//guh
 	var/list/cliented_list = list()
@@ -269,7 +269,7 @@
 			if(QDELETED(picked_client))
 				continue
 			var/mob/picked_mob = picked_client.mob
-			log_storyteller("Prompted antag event mob: [picked_mob], special role: [picked_mob.mind?.special_role ? picked_mob.mind.special_role : "none"]")
+			log_storyteller("Prompted antag event mob: [key_name(picked_mob)], special role: [picked_mob.mind?.special_role ? picked_mob.mind.special_role : "none"]")
 			if(picked_mob)
 				candidates |= SSpolling.poll_candidates(
 					question = "Would you like to be a [cast_control.name]?",
@@ -289,7 +289,7 @@
 				continue
 			var/mob/picked_mob = picked_client.mob
 			picked_mob?.mind?.picking = TRUE
-			log_storyteller("Picked antag event mob: [picked_mob], special role: [picked_mob.mind?.special_role ? picked_mob.mind.special_role : "none"]")
+			log_storyteller("Picked antag event mob: [key_name(picked_mob)], special role: [picked_mob.mind?.special_role ? picked_mob.mind.special_role : "none"]")
 			candidates |= picked_mob
 
 	var/list/picked_mobs = list()
@@ -299,7 +299,7 @@
 			break
 
 		var/mob/candidate = pick_n_take(candidates)
-		log_storyteller("Antag event spawned mob: [candidate], special role: [candidate.mind?.special_role ? candidate.mind.special_role : "none"]")
+		log_storyteller("Antag event spawned mob: [key_name(candidate)], special role: [candidate.mind?.special_role ? candidate.mind.special_role : "none"]")
 
 		candidate.client?.prefs.reset_antag_rep()
 

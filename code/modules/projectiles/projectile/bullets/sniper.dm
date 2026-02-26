@@ -149,3 +149,32 @@
 			armour_penetration -= 10
 
 	return ..()
+
+
+// 20x160mm Neville, found on the mechs only (for now...)
+
+/obj/projectile/bullet/neville
+	name ="20x160mm Neville"
+	speed = 0.65
+	damage = 50
+	dismemberment = 25
+	armour_penetration = 85 // she may be big, but its armor piercing. less damage then the .50 cal cause of it
+	armour_ignorance = 5
+	///Determines object damage.
+	var/object_damage = 65
+	///Determines how much additional damage the round does to mechs.
+	var/mecha_damage = 40
+	damage_walls = TRUE // big fuken boolet
+
+/obj/projectile/bullet/neville/pierce/on_hit(atom/target, blocked = 0, pierce_hit) /// If anyone is deranged enough to use it on soft targets, you may as well let them have fun
+	if(isliving(target))
+		// if it goes through 3 targets, you dont need to be rewarded more.
+		if(pierces > 3)
+			projectile_piercing = NONE
+
+			if(damage > 10) // it just cut through a man, lets make it do less damage to the person behind them.
+				damage -= 10
+			armour_penetration -= 10
+
+	return ..()
+

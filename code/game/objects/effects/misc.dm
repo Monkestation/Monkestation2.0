@@ -35,12 +35,6 @@
 
 /obj/effect/spawner/Destroy(force)
 	SHOULD_CALL_PARENT(FALSE)
-#ifndef DISABLE_DEMOS
-	// monkestation start: ensure we clean up some stuff with replays
-	demo_last_appearance = null
-	demo_last_loc = null
-#endif
-	// monkestation end
 	moveToNullspace()
 	return QDEL_HINT_QUEUE
 
@@ -57,7 +51,7 @@
 	name = "thermite"
 	desc = "Looks hot."
 	icon = 'icons/effects/fire.dmi'
-	icon_state = "2" //what?
+	icon_state = "medium" //what?
 	anchored = TRUE
 	opacity = TRUE
 	density = TRUE
@@ -95,3 +89,8 @@
 /obj/effect/abstract/marker/intercom
 	name = "intercom range marker"
 	color = COLOR_YELLOW
+
+/// Used by RangedReachCheck
+/obj/effect/abstract/reach_checker
+	pass_flags = PASSTABLE
+	invisibility = INVISIBILITY_ABSTRACT

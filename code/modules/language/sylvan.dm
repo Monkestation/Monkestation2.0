@@ -18,3 +18,6 @@
 	)
 	icon_state = "plant"
 	default_priority = 90
+	mutual_understanding = list(
+		/datum/language/mushroom = 40,
+	)

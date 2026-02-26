@@ -1,6 +1,6 @@
 import { useBackend } from '../backend';
-import { Window } from '../layouts';
 import { ProgressBar, Section, Stack } from '../components';
+import { Window } from '../layouts';
 
 export const XpMenu = (props) => {
   const { data } = useBackend();

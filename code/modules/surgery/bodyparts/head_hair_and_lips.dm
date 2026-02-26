@@ -2,6 +2,8 @@
 
 /// Part of `update_limb()`, basically does all the head specific icon stuff.
 /obj/item/bodypart/head/proc/update_hair_and_lips(dropping_limb, is_creating)
+	if(!ishuman(owner))
+		return
 	var/mob/living/carbon/human/human_head_owner = owner
 	var/datum/species/owner_species = human_head_owner?.dna.species
 
@@ -21,6 +23,13 @@
 			if(mask.flags_inv & HIDEHAIR)
 				hair_hidden = TRUE
 			if(mask.flags_inv & HIDEFACIALHAIR)
+				facial_hair_hidden = TRUE
+
+		if(human_head_owner.wear_neck)
+			var/obj/item/item_neck = human_head_owner.wear_neck
+			if(item_neck.flags_inv & HIDEHAIR)
+				hair_hidden = TRUE
+			if(item_neck.flags_inv & HIDEFACIALHAIR)
 				facial_hair_hidden = TRUE
 
 		if(human_head_owner.w_uniform)

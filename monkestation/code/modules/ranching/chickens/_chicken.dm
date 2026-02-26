@@ -144,10 +144,10 @@
 	disliked_foods = null
 	return ..()
 
-/mob/living/basic/chicken/AltClick(mob/user)
-	. = ..()
+/mob/living/basic/chicken/click_alt(mob/living/user)
 	is_marked = !is_marked
 	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /mob/living/basic/chicken/attack_hand(mob/living/carbon/human/user)
 	..()
@@ -193,7 +193,7 @@
 		else
 			var/turf/vomited_turf = get_turf(src)
 			vomited_turf.add_vomit_floor(src, VOMIT_TOXIC)
-			to_chat(user, "<span class='warning'>[name] can't keep the food down, it vomits all over the floor!</span>")
+			to_chat(user, span_warning("[name] can't keep the food down, it vomits all over the floor!"))
 			adjust_happiness(-15, user)
 			current_feed_amount -= 3
 	else

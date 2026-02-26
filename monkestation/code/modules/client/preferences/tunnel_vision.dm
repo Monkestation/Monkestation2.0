@@ -4,6 +4,7 @@ GLOBAL_LIST_INIT(tunnel_vision_fovs, list("Minor (90 Degrees)","Moderate (180 De
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 	savefile_key = "tunnel_vision_fov"
 	savefile_identifier = PREFERENCE_CHARACTER
+	should_update_preview = FALSE
 
 /datum/preference/choiced/tunnel_vision_fov/init_possible_values()
 	return GLOB.tunnel_vision_fovs

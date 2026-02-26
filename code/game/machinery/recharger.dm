@@ -22,7 +22,7 @@
 		/obj/item/modular_computer,
 		///obj/item/gun/ballistic/automatic/battle_rifle,
 		/obj/item/gun/microfusion, //monkestation edit
-		/obj/item/stock_parts/cell/microfusion, //monkestation edit
+		/obj/item/stock_parts/power_store/cell/microfusion, //monkestation edit
 	))
 
 /obj/machinery/recharger/RefreshParts()
@@ -53,7 +53,7 @@
 	if(!status_display_message_shown)
 		. += span_notice("The status display reads:")
 
-	var/obj/item/stock_parts/cell/charging_cell = charging.get_cell()
+	var/obj/item/stock_parts/power_store/cell/charging_cell = charging.get_cell()
 	if(charging_cell)
 		. += span_notice("- \The [charging]'s cell is at <b>[charging_cell.percent()]%</b>.")
 		return
@@ -117,8 +117,8 @@
 			to_chat(user, span_notice("[microfusion_gun] cannot be recharged!"))
 			return ITEM_INTERACT_BLOCKING
 
-	if(istype(tool, /obj/item/stock_parts/cell/microfusion))
-		var/obj/item/stock_parts/cell/microfusion/inserting_cell = tool
+	if(istype(tool, /obj/item/stock_parts/power_store/cell/microfusion))
+		var/obj/item/stock_parts/power_store/cell/microfusion/inserting_cell = tool
 		if(inserting_cell.chargerate <= 0)
 			to_chat(user, span_notice("[inserting_cell] cannot be recharged!"))
 			return ITEM_INTERACT_BLOCKING
@@ -169,9 +169,10 @@
 	using_power = FALSE
 	if(isnull(charging))
 		return PROCESS_KILL
-	var/obj/item/stock_parts/cell/charging_cell = charging.get_cell()
+	var/obj/item/stock_parts/power_store/cell/charging_cell = charging.get_cell()
 	if(charging_cell)
 		if(charging_cell.charge < charging_cell.maxcharge)
+			charge_cell(charging_cell.chargerate * recharge_coeff * seconds_per_tick, charging_cell)
 			charge_cell(charging_cell.chargerate * recharge_coeff * seconds_per_tick, charging_cell)
 			using_power = TRUE
 		update_appearance()
@@ -182,7 +183,7 @@
 			if(power_pack.stored_ammo.len >= power_pack.max_ammo)
 				break
 			power_pack.stored_ammo += new power_pack.ammo_type(power_pack)
-			use_power(active_power_usage * seconds_per_tick)
+			use_energy(active_power_usage * seconds_per_tick)
 			using_power = TRUE
 		update_appearance()
 		return

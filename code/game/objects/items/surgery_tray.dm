@@ -133,6 +133,8 @@
 
 /obj/item/surgery_tray/attack_self(mob/user, modifiers)
 	. = ..()
+	if (loc != user) // prevents attack_self_tk from placing it on user
+		return
 	if(.)
 		return
 	var/turf/open/placement_turf = get_turf(user)
@@ -205,3 +207,8 @@
 		/obj/item/surgical_drapes,
 		/obj/item/surgicaldrill,
 	))
+
+/obj/item/surgery_tray/craftable
+	name = "surgery tray"
+	desc = "A Deforest brand medical cart. It is a folding model, meaning the wheels on the bottom can be retracted and the body used as a tray."
+	initial_contents = list()

@@ -13,7 +13,7 @@
 	equip_delay_other = 70
 	resistance_flags = FIRE_PROOF
 	alternate_worn_layer = ABOVE_SUIT_LAYER //monkestation addition
-
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 	slowdown = SHOES_SLOWDOWN
 	/// Whether the magpulse system is active
 	var/magpulse = FALSE

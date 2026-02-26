@@ -36,7 +36,7 @@
 
 
 
-/datum/chewin_cooking/recipe_step/New(var/datum/chewin_cooking/recipe/our_recipe)
+/datum/chewin_cooking/recipe_step/New(datum/chewin_cooking/recipe/our_recipe)
 	parent_recipe = our_recipe
 	unique_id = sequential_id("recipe_step")
 
@@ -53,7 +53,7 @@
 
 
 //Calculate how well the recipe step was followed to the letter.
-/datum/chewin_cooking/recipe_step/proc/calculate_quality(var/obj/added_item, var/obj/item/reagent_containers/container)
+/datum/chewin_cooking/recipe_step/proc/calculate_quality(obj/added_item, obj/item/reagent_containers/container)
 	return 0
 
 //Check if the conditions of a recipe step was followed correctly.
@@ -61,7 +61,7 @@
 	return CHEWIN_CHECK_VALID
 
 //Check if a given step is in the same option chain as another step.
-/datum/chewin_cooking/recipe_step/proc/in_option_chain(var/datum/chewin_cooking/recipe_step/step)
+/datum/chewin_cooking/recipe_step/proc/in_option_chain(datum/chewin_cooking/recipe_step/step)
 	if(!step)
 		return FALSE
 	if(!(flags & CHEWIN_IS_OPTION_CHAIN) || !(step.flags & CHEWIN_IS_OPTION_CHAIN))
@@ -85,7 +85,7 @@
 	return FALSE
 
 //Automatically clamps food based on their maximum and minimum quality, if they are set.
-/datum/chewin_cooking/recipe_step/proc/clamp_quality(var/raw_quality)
+/datum/chewin_cooking/recipe_step/proc/clamp_quality(raw_quality)
 	if((flags & CHEWIN_BASE_QUALITY_ENABLED) && (flags & CHEWIN_MAX_QUALITY_ENABLED))
 		return clamp(raw_quality, base_quality_award, max_quality_award)
 	if(flags & CHEWIN_BASE_QUALITY_ENABLED)
@@ -94,15 +94,15 @@
 		return min(raw_quality, max_quality_award)
 	return raw_quality
 
-/datum/chewin_cooking/recipe_step/proc/get_step_result_text(var/obj/used_obj, step_quality)
+/datum/chewin_cooking/recipe_step/proc/get_step_result_text(obj/used_obj, step_quality)
 	if(custom_result_desc)
 		return custom_result_desc
 	else
 		return "skip"
 
-/datum/chewin_cooking/recipe_step/proc/follow_step(var/obj/added_item, var/obj/item/reagent_containers/container)
+/datum/chewin_cooking/recipe_step/proc/follow_step(obj/added_item, obj/item/reagent_containers/container)
 	return CHEWIN_SUCCESS
 
 //Special function to check if the step has been satisfied. Sometimed just following the step is enough, but not always.
-/datum/chewin_cooking/recipe_step/proc/is_complete(var/obj/added_item, var/datum/chewin_cooking/recipe_tracker/tracker)
+/datum/chewin_cooking/recipe_step/proc/is_complete(obj/added_item, datum/chewin_cooking/recipe_tracker/tracker)
 	return TRUE

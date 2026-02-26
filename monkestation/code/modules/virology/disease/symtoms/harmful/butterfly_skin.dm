@@ -11,7 +11,7 @@
 /datum/symptom/butterfly_skin/activate(mob/living/carbon/mob)
 	to_chat(mob, span_warning("Your skin feels a little fragile."))
 
-/datum/symptom/butterfly_skin/deactivate(mob/living/carbon/mob)
+/datum/symptom/butterfly_skin/deactivate(mob/living/carbon/mob, datum/disease/acute/disease, safe = FALSE)
 	if(!skip)
 		to_chat(mob, span_notice("Your skin feels nice and durable again!"))
 	..()

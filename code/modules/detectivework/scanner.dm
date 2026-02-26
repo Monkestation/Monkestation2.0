@@ -165,7 +165,7 @@
 	else if(!ismob(scanned_atom))
 
 		log_entry_data[DETSCAN_CATEGORY_FINGERS] = GET_ATOM_FINGERPRINTS(scanned_atom)
-
+		SEND_SIGNAL(scanned_atom, COMSIG_ON_REAGENT_SCAN, user)
 		// Only get reagents from non-mobs.
 		for(var/datum/reagent/present_reagent as anything in scanned_atom.reagents?.reagent_list)
 			LAZYADD(log_entry_data[DETSCAN_CATEGORY_DRINK], list(present_reagent.name = present_reagent.volume))
@@ -203,7 +203,7 @@
 /proc/get_timestamp()
 	return time2text(world.time + 432000, ":ss")
 
-/obj/item/detective_scanner/AltClick(mob/living/user)
+/obj/item/detective_scanner/click_alt(mob/living/user)
 	return clear_logs()
 
 /obj/item/detective_scanner/examine(mob/user)
@@ -255,10 +255,10 @@
 /obj/item/detective_scanner/proc/clear_logs(mob/living/user)
 	if(!LAZYLEN(log_data))
 		balloon_alert(user, "no logs!")
-		return
+		return CLICK_ACTION_BLOCKING
 	if(scanner_busy)
 		balloon_alert(user, "scanner busy!")
-		return
+		return CLICK_ACTION_BLOCKING
 	balloon_alert(user, "logs cleared")
 	log_data = list()
-	return
+	return CLICK_ACTION_SUCCESS

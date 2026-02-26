@@ -313,10 +313,10 @@
 /turf/open/floor/iron/kitchen/diagonal,
 /area/shuttle/escape)
 "ft" = (
-/obj/item/reagent_containers/blood/universal{
+/obj/item/reagent_containers/chem_pack/saline{
 	pixel_x = -3
 	},
-/obj/item/reagent_containers/blood/universal{
+/obj/item/reagent_containers/chem_pack/saline{
 	pixel_x = 3
 	},
 /obj/item/reagent_containers/medipen/atropine,
@@ -1573,7 +1573,7 @@
 /turf/open/floor/plastic,
 /area/shuttle/escape)
 "DJ" = (
-/obj/machinery/atmospherics/components/unary/cryo_cell,
+/obj/machinery/cryo_cell,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
@@ -1913,7 +1913,7 @@
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "Jm" = (
-/obj/machinery/atmospherics/components/unary/cryo_cell,
+/obj/machinery/cryo_cell,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
@@ -2013,7 +2013,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
 "Lf" = (
-/obj/machinery/door/airlock/glass_large,
+/obj/machinery/door/airlock/multi_tile/public/glass,
 /turf/open/floor/wood/tile,
 /area/shuttle/escape)
 "Lo" = (
