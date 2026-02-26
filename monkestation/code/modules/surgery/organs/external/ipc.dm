@@ -1,5 +1,5 @@
 /obj/item/organ/external/antennae/ipc
-	name = "IPCs antennae"
+	name = "IPC antennae"
 	desc = "An IPC's antennae. What is it telling them? What are they sensing?"
 	icon_state = "antennae"
 
