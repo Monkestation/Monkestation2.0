@@ -1,0 +1,4 @@
+author: "Tractor-Maam"
+delete-after: True
+changes:
+  - bugfix: "fixed ghosts not being able to jump to Stray Cargo Pods after 3 seconds."
