@@ -492,3 +492,18 @@
   - map: '[oshan] Proper Chemistry room'
   - map: '[oshan] Fixes Access For NTrep and Blueshield doors'
   - map: '[oshan] Chefs and Chaplains Medical Front Door Access for Morgue'
+2026-02-26:
+  Cujo:
+  - rscadd: Allows deaf people to see emotes in runechat
+  Lawlolawl:
+  - balance: Bubblegum blood pools are harder to clean (only soap, mops, rags, cleanbot
+      cleaning, and cleaning artifacts can remove them). This prevents cheesing the
+      boss fight using blood removal to negate one of the boss attacks.
+  Tractor-Maam:
+  - bugfix: fixed ghosts not being able to jump to Stray Cargo Pods after 3 seconds.
+  Urist-McCoder:
+  - balance: gave the default salad item in salad.dm the Resistance buff
+  - balance: gave the seafood in meatdish.dm the Resistance buff
+  - balance: gave the meat dishes in meatdish.dm either Healt Tiny or Health Medium
+  notghosti:
+  - map: Thesues Kitchen disposals/delivery has been fixed
