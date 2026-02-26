@@ -54,7 +54,7 @@
 	to_chat(owner, span_notice("You disable your camouflage, and become visible once again."))
 	cloaking = FALSE
 
-/obj/item/reagent_containers/hypospray/medipen/invisibility
+/obj/item/reagent_containers/medipen/invisibility
 	name = "invisibility autoinjector"
 	desc = "An autoinjector containing a stabilized Saturn-X compound. Produced for use in tactical stealth operations, by operatives who were presumably comfortable with nudity."
 	icon_state = "invispen"

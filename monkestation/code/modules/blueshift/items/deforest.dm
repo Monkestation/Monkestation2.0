@@ -183,313 +183,6 @@
 #undef INSTANT_WOUND_HEAL_STAMINA_DAMAGE
 #undef INSTANT_WOUND_HEAL_LIMB_DAMAGE
 
-// Twitch, because having sandevistans be implants is for losers, just inject it!
-/obj/item/reagent_containers/hypospray/medipen/deforest/twitch
-	name = "TWitch sensory stimulant injector"
-	desc = "A Deforest branded autoinjector, loaded with 'TWitch' among other reagents. This drug is known to make \
-		those who take it 'see faster', whatever that means."
-	base_icon_state = "twitch"
-	icon_state = "twitch"
-	list_reagents = list(
-		/datum/reagent/drug/twitch = 10,
-		/datum/reagent/drug/maint/tar = 5,
-		/datum/reagent/medicine/silibinin = 5,
-		/datum/reagent/toxin/leadacetate = 5,
-	)
-	custom_price = PAYCHECK_COMMAND * 3.5
-
-// Demoneye, for when you feel the need to become "fucking invincible"
-/obj/item/reagent_containers/hypospray/medipen/deforest/demoneye
-	name = "DemonEye steroid injector"
-	desc = "A Deforest branded autoinjector, loaded with 'DemonEye' among other reagents. This drug is known to make \
-		those who take it numb to all pains and extremely difficult to kill as a result."
-	base_icon_state = "demoneye"
-	icon_state = "demoneye"
-	list_reagents = list(
-		/datum/reagent/drug/demoneye = 10,
-		/datum/reagent/drug/maint/sludge = 10,
-		/datum/reagent/toxin/leadacetate = 5,
-	)
-	custom_price = PAYCHECK_COMMAND * 3.5
-
-// Mix of many of the stamina damage regenerating drugs to provide a cocktail no baton could hope to beat
-/obj/item/reagent_containers/hypospray/medipen/deforest/aranepaine
-	name = "aranepaine combat stimulant injector"
-	desc = "A Deforest branded autoinjector, loaded with a cocktail of drugs to make any who take it nearly \
-		immune to exhaustion while its in their system."
-	base_icon_state = "aranepaine"
-	icon_state = "aranepaine"
-	list_reagents = list(
-		/datum/reagent/drug/aranesp = 5,
-		/datum/reagent/drug/kronkaine = 5,
-		/datum/reagent/drug/pumpup = 5,
-		/datum/reagent/medicine/diphenhydramine = 5,
-		/datum/reagent/impurity = 5,
-	)
-	custom_price = PAYCHECK_COMMAND * 2.5
-
-// Nothing inherently illegal, just a potentially very dangerous mix of chems to be able to inject into people
-/obj/item/reagent_containers/hypospray/medipen/deforest/pentibinin
-	name = "pentibinin normalizant injector"
-	desc = "A Deforest branded autoinjector, loaded with a cocktail of drugs to make any who take it \
-		recover from many different types of damages, with many unusual or undocumented side-effects."
-	base_icon_state = "pentibinin"
-	icon_state = "pentibinin"
-	list_reagents = list(
-		/datum/reagent/medicine/c2/penthrite = 5,
-		/datum/reagent/medicine/polypyr = 5,
-		/datum/reagent/medicine/silibinin = 5,
-		/datum/reagent/medicine/omnizine = 5,
-		/datum/reagent/inverse/healing/tirimol = 5,
-	)
-	custom_price = PAYCHECK_COMMAND * 2.5
-
-// Combat stimulant that makes you immune to slowdowns for a bit
-/obj/item/reagent_containers/hypospray/medipen/deforest/synalvipitol
-	name = "synalvipitol muscle stimulant injector"
-	desc = "A Deforest branded autoinjector, loaded with a cocktail of drugs to make any who take it \
-		nearly immune to the slowing effects of silly things like 'being tired' or 'facing muscle failure'."
-	base_icon_state = "synalvipitol"
-	icon_state = "synalvipitol"
-	list_reagents = list(
-		/datum/reagent/medicine/mine_salve = 5,
-		/datum/reagent/medicine/synaptizine = 10,
-		/datum/reagent/medicine/muscle_stimulant = 5,
-		/datum/reagent/impurity = 5,
-	)
-	custom_price = PAYCHECK_COMMAND * 2.5
-
-// Pen basetype where the icon is gotten from
-/obj/item/reagent_containers/hypospray/medipen/deforest
-	name = "non-functional Deforest autoinjector"
-	desc = "A Deforest branded autoinjector, though this one seems to be both empty and non-functional."
-	icon = 'monkestation/code/modules/blueshift/icons/deforest/injectors.dmi'
-	icon_state = "default"
-	volume = 25
-	list_reagents = list()
-	custom_price = PAYCHECK_COMMAND
-	/// If this pen has a timer for injecting others with, just for safety with some of the drugs in these
-	var/inject_others_time = 1.5 SECONDS
-
-/obj/item/reagent_containers/hypospray/medipen/deforest/Initialize(mapload)
-	. = ..()
-	amount_per_transfer_from_this = volume
-
-/obj/item/reagent_containers/hypospray/medipen/deforest/inject(mob/living/affected_mob, mob/user)
-	if(!reagents.total_volume)
-		to_chat(user, span_warning("[src] is empty!"))
-		return FALSE
-	if(!iscarbon(affected_mob))
-		return FALSE
-
-	//Always log attemped injects for admins
-	var/list/injected = list()
-	for(var/datum/reagent/injected_reagent in reagents.reagent_list)
-		injected += injected_reagent.name
-	var/contained = english_list(injected)
-	log_combat(user, affected_mob, "attempted to inject", src, "([contained])")
-
-	if((affected_mob != user) && inject_others_time)
-		affected_mob.visible_message(span_danger("[user] is trying to inject [affected_mob]!"), \
-				span_userdanger("[user] is trying to inject something into you!"))
-		if(!do_after(user, CHEM_INTERACT_DELAY(inject_others_time, user), affected_mob))
-			return FALSE
-
-	if(reagents.total_volume && (ignore_flags || affected_mob.try_inject(user, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE))) // Ignore flag should be checked first or there will be an error message.
-		to_chat(affected_mob, span_warning("You feel a tiny prick!"))
-		to_chat(user, span_notice("You inject [affected_mob] with [src]."))
-		if(!stealthy)
-			playsound(affected_mob, 'sound/items/hypospray.ogg', 50, TRUE)
-		var/fraction = min(amount_per_transfer_from_this/reagents.total_volume, 1)
-
-		if(affected_mob.reagents)
-			var/trans = 0
-			if(!infinite)
-				trans = reagents.trans_to(affected_mob, amount_per_transfer_from_this, transfered_by = user, methods = INJECT)
-			else
-				reagents.expose(affected_mob, INJECT, fraction)
-				trans = reagents.copy_to(affected_mob, amount_per_transfer_from_this)
-			to_chat(user, span_notice("[trans] unit\s injected. [reagents.total_volume] unit\s remaining in [src]."))
-			log_combat(user, affected_mob, "injected", src, "([contained])")
-		return TRUE
-	return FALSE
-
-// Sensory restoration, heals eyes and ears with a bit of impurity
-/obj/item/reagent_containers/hypospray/medipen/deforest/occuisate
-	name = "occuisate sensory restoration injector"
-	desc = "A Deforest branded autoinjector, loaded with a mix of reagents to restore your vision and hearing to operation."
-	base_icon_state = "occuisate"
-	icon_state = "occuisate"
-	list_reagents = list(
-		/datum/reagent/medicine/inacusiate = 7,
-		/datum/reagent/medicine/oculine = 7,
-		/datum/reagent/impurity/inacusiate = 3,
-		/datum/reagent/inverse/oculine = 3,
-		/datum/reagent/toxin/lipolicide = 5,
-	)
-
-// Adrenaline, fills you with determination (and also stimulants)
-/obj/item/reagent_containers/hypospray/medipen/deforest/adrenaline
-	name = "adrenaline injector"
-	desc = "A Deforest branded autoinjector, loaded with a mix of reagents to intentionally give yourself fight or flight on demand."
-	base_icon_state = "adrenaline"
-	icon_state = "adrenaline"
-	list_reagents = list(
-		/datum/reagent/medicine/synaptizine = 5,
-		/datum/reagent/medicine/inaprovaline = 5,
-		/datum/reagent/determination = 10,
-		/datum/reagent/toxin/histamine = 5,
-	)
-
-// Morpital, heals a small amount of damage and kills pain for a bit
-/obj/item/reagent_containers/hypospray/medipen/deforest/morpital
-	name = "morpital regenerative stimulant injector"
-	desc = "A Deforest branded autoinjector, loaded with a mix of reagents to numb pain and repair small amounts of physical damage."
-	base_icon_state = "morpital"
-	icon_state = "morpital"
-	list_reagents = list(
-		/datum/reagent/medicine/painkiller/morphine = 5,
-		/datum/reagent/medicine/omnizine/protozine = 15,
-		/datum/reagent/toxin/staminatoxin = 5,
-	)
-
-// Lipital, heals more damage than morpital but doesnt work much at higher damages
-/obj/item/reagent_containers/hypospray/medipen/deforest/lipital
-	name = "lipital regenerative stimulant injector"
-	desc = "A Deforest branded autoinjector, loaded with a mix of reagents to numb pain and repair small amounts of physical damage. \
-		Works most effectively against damaged caused by brute attacks."
-	base_icon_state = "lipital"
-	icon_state = "lipital"
-	list_reagents = list(
-		/datum/reagent/medicine/lidocaine = 5,
-		/datum/reagent/medicine/omnizine = 5,
-		/datum/reagent/medicine/c2/probital = 10,
-	)
-
-// Anti-poisoning injector, with a little bit of radiation healing as a treat
-/obj/item/reagent_containers/hypospray/medipen/deforest/meridine
-	name = "meridine antidote injector"
-	desc = "A Deforest branded autoinjector, loaded with a mix of reagents to serve as antidote to most galactic toxins. \
-		A warning sticker notes it should not be used if the patient is physically damaged, as it may cause complications."
-	base_icon_state = "meridine"
-	icon_state = "meridine"
-	list_reagents = list(
-		/datum/reagent/medicine/c2/multiver = 10,
-		/datum/reagent/medicine/potass_iodide = 10,
-		/datum/reagent/nitrous_oxide = 5,
-	)
-
-// Epinephrine and helps a little bit against stuns and stamina damage
-/obj/item/reagent_containers/hypospray/medipen/deforest/synephrine
-	name = "synephrine emergency stimulant injector"
-	desc = "A Deforest branded autoinjector, loaded with a mix of reagents to stabilize critical condition and recover from stamina deficits."
-	base_icon_state = "synephrine"
-	icon_state = "synephrine"
-	list_reagents = list(
-		/datum/reagent/medicine/epinephrine = 10,
-		/datum/reagent/medicine/synaptizine = 5,
-		/datum/reagent/medicine/synaphydramine = 5,
-	)
-	custom_price = PAYCHECK_COMMAND * 2.5
-
-// Critical condition stabilizer
-/obj/item/reagent_containers/hypospray/medipen/deforest/calopine
-	name = "calopine emergency stabilizant injector"
-	desc = "A Deforest branded autoinjector, loaded with a stabilizing mix of reagents to repair critical conditions."
-	base_icon_state = "calopine"
-	icon_state = "calopine"
-	list_reagents = list(
-		/datum/reagent/medicine/atropine = 10,
-		/datum/reagent/medicine/coagulant/fabricated = 5,
-		/datum/reagent/medicine/salbutamol = 5,
-		/datum/reagent/toxin/staminatoxin = 5,
-	)
-
-// Coagulant, really not a whole lot more
-/obj/item/reagent_containers/hypospray/medipen/deforest/coagulants
-	name = "coagulant-S injector"
-	desc = "A Deforest branded autoinjector, loaded with a mix of coagulants to prevent and stop bleeding."
-	base_icon_state = "coagulant"
-	icon_state = "coagulant"
-	list_reagents = list(
-		/datum/reagent/medicine/coagulant = 5,
-		/datum/reagent/medicine/salglu_solution = 15,
-		/datum/reagent/impurity = 5,
-	)
-
-// Stimulant centered around ondansetron
-/obj/item/reagent_containers/hypospray/medipen/deforest/krotozine
-	name = "krotozine manipulative stimulant injector"
-	desc = "A Deforest branded autoinjector, loaded with a mix of stimulants of weak healing agents."
-	base_icon_state = "krotozine"
-	icon_state = "krotozine"
-	list_reagents = list(
-		/datum/reagent/drug/kronkaine = 5,
-		/datum/reagent/medicine/omnizine/protozine = 10,
-		/datum/reagent/drug/maint/tar = 5,
-	)
-	custom_price = PAYCHECK_COMMAND * 2.5
-
-// Stuff really good at healing burn stuff and stabilizing temps
-/obj/item/reagent_containers/hypospray/medipen/deforest/lepoturi
-	name = "lepoturi burn treatment injector"
-	desc = "A Deforest branded autoinjector, loaded with a mix of medicines to rapidly treat burns."
-	base_icon_state = "lepoturi"
-	icon_state = "lepoturi"
-	list_reagents = list(
-		/datum/reagent/medicine/mine_salve = 5,
-		/datum/reagent/medicine/leporazine = 5,
-		/datum/reagent/medicine/c2/lenturi = 10,
-		/datum/reagent/toxin/staminatoxin = 5,
-	)
-
-// Stabilizes a lot of stats like drowsiness, sanity, dizziness, so on
-/obj/item/reagent_containers/hypospray/medipen/deforest/psifinil
-	name = "psifinil personal recovery injector"
-	desc = "A Deforest branded autoinjector, loaded with a mix of medicines to remedy many common ailments, such as drowsiness, pain, instability, the like."
-	base_icon_state = "psifinil"
-	icon_state = "psifinil"
-	list_reagents = list(
-		/datum/reagent/medicine/modafinil = 10,
-		/datum/reagent/medicine/psicodine = 10,
-		/datum/reagent/medicine/leporazine = 5,
-	)
-
-// Helps with liver failure and some drugs, also alcohol
-/obj/item/reagent_containers/hypospray/medipen/deforest/halobinin
-	name = "halobinin soberant injector"
-	desc = "A Deforest branded autoinjector, loaded with a mix of medicines to remedy the effects of liver failure and common drugs."
-	base_icon_state = "halobinin"
-	icon_state = "halobinin"
-	list_reagents = list(
-		/datum/reagent/medicine/haloperidol = 5,
-		/datum/reagent/medicine/antihol = 5,
-		/datum/reagent/medicine/higadrite = 5,
-		/datum/reagent/medicine/silibinin = 5,
-	)
-
-// Medpen for robots that fixes toxin damage and purges synth chems but slows them down for a bit
-/obj/item/reagent_containers/hypospray/medipen/deforest/robot_system_cleaner
-	name = "synthetic cleaner autoinjector"
-	desc = "A Deforest branded autoinjector, loaded with system cleaner for purging synthetics of reagents."
-	base_icon_state = "robor"
-	icon_state = "robor"
-	list_reagents = list(
-		/datum/reagent/medicine/system_cleaner = 15,
-		/datum/reagent/dinitrogen_plasmide = 5,
-	)
-
-// Medpen for robots that fixes brain damage but slows them down for a bit
-/obj/item/reagent_containers/hypospray/medipen/deforest/robot_liquid_solder
-	name = "synthetic smart-solder autoinjector"
-	desc = "A Deforest branded autoinjector, loaded with liquid solder to repair synthetic processor core damage."
-	base_icon_state = "robor_brain"
-	icon_state = "robor_brain"
-	list_reagents = list(
-		/datum/reagent/medicine/liquid_solder = 15,
-		/datum/reagent/dinitrogen_plasmide = 5,
-	)
-
 /atom/movable/screen/alert/status_effect/vulnerable_to_damage
 	name = "Vulnerable To Damage"
 	desc = "You will take more damage than normal while your body recovers from mending itself!"
@@ -681,7 +374,7 @@
 	. = ..()
 	atom_storage.max_slots = 4
 	atom_storage.set_holdable(list(
-		/obj/item/reagent_containers/hypospray/medipen,
+		/obj/item/reagent_containers/medipen,
 		/obj/item/storage/pill_bottle/prescription_stimulant,
 		/obj/item/food/cheese/firm_cheese_slice, //It's not called a cheese kit for nothing.
 		/obj/item/food/cheese/wedge,
@@ -691,29 +384,29 @@
 
 /obj/item/storage/medkit/civil_defense/stocked/PopulateContents()
 	var/static/items_inside = list(
-		/obj/item/reagent_containers/hypospray/medipen/deforest/meridine = 1,
-		/obj/item/reagent_containers/hypospray/medipen/deforest/halobinin = 1,
-		/obj/item/reagent_containers/hypospray/medipen/deforest/lipital = 1,
-		/obj/item/reagent_containers/hypospray/medipen/deforest/calopine = 1,
+		/obj/item/reagent_containers/medipen/deforest/meridine = 1,
+		/obj/item/reagent_containers/medipen/deforest/halobinin = 1,
+		/obj/item/reagent_containers/medipen/deforest/lipital = 1,
+		/obj/item/reagent_containers/medipen/deforest/calopine = 1,
 	)
 	generate_items_inside(items_inside, src)
 
 /obj/item/storage/medkit/civil_defense/thunderdome
 	/// List of random medpens we can pick from
 	var/list/random_medpen_options = list(
-		/obj/item/reagent_containers/hypospray/medipen/deforest/twitch,
-		/obj/item/reagent_containers/hypospray/medipen/deforest/demoneye,
-		/obj/item/reagent_containers/hypospray/medipen/deforest/aranepaine,
-		/obj/item/reagent_containers/hypospray/medipen/deforest/pentibinin,
-		/obj/item/reagent_containers/hypospray/medipen/deforest/synalvipitol,
-		/obj/item/reagent_containers/hypospray/medipen/deforest/adrenaline,
-		/obj/item/reagent_containers/hypospray/medipen/deforest/morpital,
-		/obj/item/reagent_containers/hypospray/medipen/deforest/lipital,
-		/obj/item/reagent_containers/hypospray/medipen/deforest/synephrine,
-		/obj/item/reagent_containers/hypospray/medipen/deforest/calopine,
-		/obj/item/reagent_containers/hypospray/medipen/deforest/coagulants,
-		/obj/item/reagent_containers/hypospray/medipen/deforest/krotozine,
-		/obj/item/reagent_containers/hypospray/medipen/deforest/lepoturi,
+		/obj/item/reagent_containers/medipen/deforest/twitch,
+		/obj/item/reagent_containers/medipen/deforest/demoneye,
+		/obj/item/reagent_containers/medipen/deforest/aranepaine,
+		/obj/item/reagent_containers/medipen/deforest/pentibinin,
+		/obj/item/reagent_containers/medipen/deforest/synalvipitol,
+		/obj/item/reagent_containers/medipen/deforest/adrenaline,
+		/obj/item/reagent_containers/medipen/deforest/morpital,
+		/obj/item/reagent_containers/medipen/deforest/lipital,
+		/obj/item/reagent_containers/medipen/deforest/synephrine,
+		/obj/item/reagent_containers/medipen/deforest/calopine,
+		/obj/item/reagent_containers/medipen/deforest/coagulants,
+		/obj/item/reagent_containers/medipen/deforest/krotozine,
+		/obj/item/reagent_containers/medipen/deforest/lepoturi,
 	)
 
 /obj/item/storage/medkit/civil_defense/thunderdome/Initialize(mapload)
@@ -735,7 +428,7 @@
 
 /obj/item/storage/medkit/civil_defense/comfort/stocked/PopulateContents()
 	var/static/items_inside = list(
-		/obj/item/reagent_containers/hypospray/medipen/deforest/psifinil = 3,
+		/obj/item/reagent_containers/medipen/deforest/psifinil = 3,
 		/obj/item/storage/pill_bottle/prescription_stimulant = 1,
 	)
 	generate_items_inside(items_inside, src)
@@ -759,8 +452,8 @@
 
 /obj/item/storage/medkit/frontier/stocked/PopulateContents()
 	var/static/items_inside = list(
-		/obj/item/reagent_containers/hypospray/medipen/deforest/meridine = 1,
-		/obj/item/reagent_containers/hypospray/medipen/deforest/morpital = 1,
+		/obj/item/reagent_containers/medipen/deforest/meridine = 1,
+		/obj/item/reagent_containers/medipen/deforest/morpital = 1,
 		/obj/item/stack/heal_pack/brute_pack = 1,
 		/obj/item/stack/heal_pack/burn_pack = 1,
 		/obj/item/stack/medical/suture/coagulant = 1,
@@ -846,7 +539,8 @@
 		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
-		/obj/item/reagent_containers/hypospray,
+		/obj/item/hypospray,
+		/obj/item/reagent_containers/medipen,
 		/obj/item/reagent_containers/medigel,
 		/obj/item/reagent_containers/pill,
 		/obj/item/reagent_containers/spray,
@@ -865,12 +559,12 @@
 
 /obj/item/storage/backpack/deforest_medkit/stocked/PopulateContents()
 	var/static/items_inside = list(
-		/obj/item/reagent_containers/hypospray/medipen/deforest/morpital = 1,
-		/obj/item/reagent_containers/hypospray/medipen/deforest/lepoturi = 1,
-		/obj/item/reagent_containers/hypospray/medipen/deforest/lipital = 1,
-		/obj/item/reagent_containers/hypospray/medipen/deforest/meridine = 1,
-		/obj/item/reagent_containers/hypospray/medipen/deforest/calopine = 1,
-		/obj/item/reagent_containers/hypospray/medipen/deforest/coagulants = 1,
+		/obj/item/reagent_containers/medipen/deforest/morpital = 1,
+		/obj/item/reagent_containers/medipen/deforest/lepoturi = 1,
+		/obj/item/reagent_containers/medipen/deforest/lipital = 1,
+		/obj/item/reagent_containers/medipen/deforest/meridine = 1,
+		/obj/item/reagent_containers/medipen/deforest/calopine = 1,
+		/obj/item/reagent_containers/medipen/deforest/coagulants = 1,
 		/obj/item/bonesetter = 1,
 		/obj/item/hemostat = 1,
 		/obj/item/cautery = 1,
@@ -940,7 +634,8 @@
 		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
-		/obj/item/reagent_containers/hypospray,
+		/obj/item/hypospray,
+		/obj/item/reagent_containers/medipen,
 		/obj/item/reagent_containers/medigel,
 		/obj/item/reagent_containers/pill,
 		/obj/item/reagent_containers/spray,
@@ -1026,9 +721,9 @@
 	var/static/items_inside = list(
 		/obj/item/stack/medical/gauze = 1,
 		/obj/item/stack/cable_coil/five = 3,
-		/obj/item/reagent_containers/hypospray/medipen/synthcare = 2,
-		/obj/item/reagent_containers/hypospray/medipen/deforest/robot_system_cleaner = 1,
-		/obj/item/reagent_containers/hypospray/medipen/deforest/coagulants = 1, // Coagulants help electrical damage
+		/obj/item/reagent_containers/medipen/synthcare = 2,
+		/obj/item/reagent_containers/medipen/deforest/robot_system_cleaner = 1,
+		/obj/item/reagent_containers/medipen/deforest/coagulants = 1, // Coagulants help electrical damage
 		/obj/item/healthanalyzer/simple = 1,
 	)
 	generate_items_inside(items_inside,src)
@@ -1051,10 +746,10 @@
 	var/static/items_inside = list(
 		/obj/item/stack/medical/gauze/twelve = 1,
 		/obj/item/stack/cable_coil/industrial = 1,
-		/obj/item/reagent_containers/hypospray/medipen/synthcare = 4,
-		/obj/item/reagent_containers/hypospray/medipen/deforest/robot_system_cleaner = 1,
-		/obj/item/reagent_containers/hypospray/medipen/deforest/robot_liquid_solder = 1,
-		/obj/item/reagent_containers/hypospray/medipen/deforest/coagulants = 1,
+		/obj/item/reagent_containers/medipen/synthcare = 4,
+		/obj/item/reagent_containers/medipen/deforest/robot_system_cleaner = 1,
+		/obj/item/reagent_containers/medipen/deforest/robot_liquid_solder = 1,
+		/obj/item/reagent_containers/medipen/deforest/coagulants = 1,
 		/obj/item/healthanalyzer/simple = 1,
 		/obj/item/reagent_containers/blood/oil = 1,
 	)

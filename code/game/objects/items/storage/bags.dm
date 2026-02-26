@@ -499,7 +499,7 @@
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/cup/tube,
-		/obj/item/reagent_containers/hypospray/medipen,
+		/obj/item/reagent_containers/medipen,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/weapon/virusdish,//Monkestation Addition
 		/obj/item/food/monkeycube/mouse,//Monkestation Addition

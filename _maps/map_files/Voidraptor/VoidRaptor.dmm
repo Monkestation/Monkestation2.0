@@ -3552,7 +3552,7 @@
 /obj/structure/table/reinforced/rglass,
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/door/firedoor,
-/obj/item/reagent_containers/hypospray/medipen{
+/obj/item/reagent_containers/medipen{
 	pixel_y = 16
 	},
 /obj/machinery/door/poddoor/shutters/window/preopen{
@@ -18473,7 +18473,7 @@
 	},
 /obj/item/reagent_containers/cup/bottle/epinephrine,
 /obj/item/reagent_containers/syringe,
-/obj/item/reagent_containers/hypospray/medipen{
+/obj/item/reagent_containers/medipen{
 	pixel_y = 16
 	},
 /obj/machinery/door/window/right/directional/west{
@@ -20013,7 +20013,7 @@
 /area/station/engineering/atmos)
 "fLo" = (
 /obj/structure/closet/crate/trashcart/laundry,
-/obj/item/reagent_containers/hypospray/medipen,
+/obj/item/reagent_containers/medipen,
 /obj/item/toy/crayon/spraycan,
 /obj/effect/spawner/random/contraband/prison,
 /obj/item/radio/intercom/prison/directional/north,

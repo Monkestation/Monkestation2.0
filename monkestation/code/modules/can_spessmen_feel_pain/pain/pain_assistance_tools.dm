@@ -241,66 +241,6 @@
 	for(var/i in 1 to 2)
 		new /obj/item/reagent_containers/pill/oxycodone(src)
 
-/obj/item/reagent_containers/hypospray/medipen/morphine
-	name = "morphine medipen"
-	desc = "A medipen that contains a dosage of painkilling morphine. \
-		WARNING: Do not use in combination with alcohol. Can cause drowsiness and addiction."
-	icon_state = "morphen"
-	inhand_icon_state = "morphen"
-	base_icon_state = "morphen"
-	list_reagents = list(/datum/reagent/medicine/painkiller/morphine = 10) // Heals ~20 pain (per limb)
-
-/// Miner pen. Heals about 30 pain to all limbs, causes ~150 addiction points
-/obj/item/reagent_containers/hypospray/medipen/survival/painkiller
-	name = "survival painkiller medipen"
-	desc = "A medipen that contains a dosage of painkilling chemicals. \
-		WARNING: Do not use in combination with alcohol. Can cause drowsiness."
-	icon = 'monkestation/code/modules/can_spessmen_feel_pain/icons/obj/syringe.dmi'
-	icon_state = "painkiller_stimpen"
-	base_icon_state = "painkiller_stimpen"
-	volume = 30
-	amount_per_transfer_from_this = 30
-	list_reagents = list(
-		/datum/reagent/medicine/painkiller/paracetamol = 10, // Heals ~10 pain (per limb)
-		/datum/reagent/medicine/painkiller/aspirin_para_coffee = 5, // Heals ~7.5 pain (per limb)
-		/datum/reagent/medicine/painkiller/morphine = 5, // Heals ~10 pain (per limb), causes drowsy
-		/datum/reagent/medicine/synaptizine = 10, // Cures drowsy from morphine
-	)
-
-/// Medkit pen. Heals about 35 pain to all limbs, causes ~450 addiction points
-/obj/item/reagent_containers/hypospray/medipen/emergency_painkiller
-	name = "emergency painkiller medipen"
-	desc = "A medipen that contains a dosage of heavy painkilling chemicals. \
-		WARNING: Do not use in combination with alcohol. Can cause drowsiness and addiction."
-	icon = 'monkestation/code/modules/can_spessmen_feel_pain/icons/obj/syringe.dmi'
-	icon_state = "painkiller"
-	base_icon_state = "painkiller"
-	volume = 25
-	amount_per_transfer_from_this = 25
-	list_reagents = list(
-		/datum/reagent/medicine/painkiller/oxycodone = 7.5, // Heals ~25 pain (per limb)
-		/datum/reagent/medicine/painkiller/morphine = 5, // Heals ~10 pain (per limb), causes drowsy
-		/datum/reagent/medicine/synaptizine = 10, // Cures drowsyness from morphine
-	)
-
-/obj/item/reagent_containers/hypospray/medipen/brute_painkiller
-	name = "ibaltifen painkiller medipen"
-	desc = "An autoinjector containing ibaltifen, used to treat pain caused by bruises and broken limbs. WARNING: Do not use in combination with alcohol."
-	icon = 'monkestation/code/modules/can_spessmen_feel_pain/icons/obj/syringe.dmi'
-	icon_state = "burn_painkiller_pen"
-	base_icon_state = "burn_painkiller_pen"
-	inhand_icon_state = "salacid"
-	list_reagents = list(/datum/reagent/medicine/painkiller/specialized/ibaltifen = 10) // ~20-25 pain healing (if brute pain, per limb)
-
-/obj/item/reagent_containers/hypospray/medipen/burn_painkiller
-	name = "anurifen painkiller medipen"
-	desc = "An autoinjector containing anurifen, used to treat pain caused by bruises and broken limbs. WARNING: Do not use in combination with alcohol."
-	icon = 'monkestation/code/modules/can_spessmen_feel_pain/icons/obj/syringe.dmi'
-	icon_state = "brute_painkiller_pen"
-	base_icon_state = "brute_painkiller_pen"
-	inhand_icon_state = "oxapen"
-	list_reagents = list(/datum/reagent/medicine/painkiller/specialized/anurifen = 10) // ~20-25 pain healing (if burn pain, per limb)
-
 /datum/armor/shock_blanket
 	laser = 20
 	energy = 20
@@ -472,8 +412,8 @@
 		/obj/item/stack/medical/gauze = 1,
 		/obj/item/stack/medical/suture/emergency = 1,
 		/obj/item/stack/medical/ointment = 1,
-		/obj/item/reagent_containers/hypospray/medipen/ekit = 2,
-		/obj/item/reagent_containers/hypospray/medipen/emergency_painkiller = 2,
+		/obj/item/reagent_containers/medipen/ekit = 2,
+		/obj/item/reagent_containers/medipen/emergency_painkiller = 2,
 		/obj/item/storage/pill_bottle/iron = 1,
 		/obj/item/shock_blanket/emergency = 1,
 	)
@@ -486,8 +426,8 @@
 		/obj/item/stack/medical/gauze = 1,
 		/obj/item/stack/medical/suture = 2,
 		/obj/item/stack/medical/mesh = 2,
-		/obj/item/reagent_containers/hypospray/medipen = 1,
-		/obj/item/reagent_containers/hypospray/medipen/morphine = 1,
+		/obj/item/reagent_containers/medipen = 1,
+		/obj/item/reagent_containers/medipen/morphine = 1,
 	)
 	generate_items_inside(items_inside, src)
 
@@ -498,8 +438,8 @@
 		/obj/item/reagent_containers/pill/patch/libital = 3,
 		/obj/item/stack/medical/gauze = 1,
 		/obj/item/storage/pill_bottle/probital = 1,
-		/obj/item/reagent_containers/hypospray/medipen/salacid = 1,
-		/obj/item/reagent_containers/hypospray/medipen/brute_painkiller = 1,
+		/obj/item/reagent_containers/medipen/salacid = 1,
+		/obj/item/reagent_containers/medipen/brute_painkiller = 1,
 	)
 	generate_items_inside(items_inside, src)
 
@@ -510,8 +450,8 @@
 		/obj/item/reagent_containers/pill/patch/aiuri = 3,
 		/obj/item/reagent_containers/spray/hercuri = 1,
 		/obj/item/stack/medical/ointment = 1,
-		/obj/item/reagent_containers/hypospray/medipen/oxandrolone = 1,
-		/obj/item/reagent_containers/hypospray/medipen/burn_painkiller = 1,
+		/obj/item/reagent_containers/medipen/oxandrolone = 1,
+		/obj/item/reagent_containers/medipen/burn_painkiller = 1,
 	)
 	generate_items_inside(items_inside, src)
 
@@ -521,7 +461,7 @@
 	var/static/list/items_inside = list(
 		/obj/item/reagent_containers/pill/patch/synthflesh = 3,
 		/obj/item/storage/pill_bottle/prescription/aspirin_para_coffee = 1,
-		/obj/item/reagent_containers/hypospray/medipen/atropine = 2,
+		/obj/item/reagent_containers/medipen/atropine = 2,
 		/obj/item/stack/medical/gauze = 1,
 		/obj/item/storage/pill_bottle/penacid = 1
 	)

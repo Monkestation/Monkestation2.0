@@ -301,14 +301,14 @@
 	return add_item_to_steal(src, /obj/item/clothing/accessory/medal/gold/captain)
 
 /datum/objective_item/steal/hypo
-	name = "the hypospray"
-	targetitem = /obj/item/reagent_containers/hypospray/cmo
+	name = "the chief medical officer's hypospray"
+	targetitem = /obj/item/hypospray/cmo
 	excludefromjob = list(JOB_CHIEF_MEDICAL_OFFICER)
 	item_owner = list(JOB_CHIEF_MEDICAL_OFFICER)
 	exists_on_map = TRUE
 
-/obj/item/reagent_containers/hypospray/cmo/add_stealing_item_objective()
-	return add_item_to_steal(src, /obj/item/reagent_containers/hypospray/cmo)
+/obj/item/hypospray/cmo/add_stealing_item_objective()
+	return add_item_to_steal(src, /obj/item/hypospray/cmo)
 
 /datum/objective_item/steal/nukedisc
 	name = "the nuclear authentication disk"

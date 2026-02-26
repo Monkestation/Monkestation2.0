@@ -21,7 +21,7 @@ GLOBAL_LIST_INIT(possible_food_allergies, list(
 	medical_record_text = "Patient's immune system responds violently to certain food."
 	hardcore_value = 1
 	quirk_flags = QUIRK_HUMAN_ONLY
-	mail_goodies = list(/obj/item/reagent_containers/hypospray/medipen)
+	mail_goodies = list(/obj/item/reagent_containers/medipen)
 	/// Footype flags that will trigger the allergy
 	var/target_foodtypes = NONE
 	species_blacklist = list(SPECIES_IPC)

@@ -25,9 +25,9 @@
 	desc = "Contains eight different medipens in three different varieties, \
 		to assist in quickly treating seriously injured patients."
 	cost = CARGO_CRATE_VALUE * 3.5
-	contains = list(/obj/item/reagent_containers/hypospray/medipen = 2,
-					/obj/item/reagent_containers/hypospray/medipen/ekit = 3,
-					/obj/item/reagent_containers/hypospray/medipen/blood_loss = 3)
+	contains = list(/obj/item/reagent_containers/medipen = 2,
+					/obj/item/reagent_containers/medipen/ekit = 3,
+					/obj/item/reagent_containers/medipen/blood_loss = 3)
 	crate_name = "medipen crate"
 
 /datum/supply_pack/medical/chemical

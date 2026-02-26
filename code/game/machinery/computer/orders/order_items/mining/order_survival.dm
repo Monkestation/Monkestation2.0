@@ -2,23 +2,23 @@
 	category_index = CATEGORY_SURVIVAL
 
 /datum/orderable_item/survival/survival_pen
-	item_path = /obj/item/reagent_containers/hypospray/medipen/survival
+	item_path = /obj/item/reagent_containers/medipen/survival
 	cost_per_order = 500
 
 /datum/orderable_item/survival/luxury_pen
-	item_path = /obj/item/reagent_containers/hypospray/medipen/survival/luxury
+	item_path = /obj/item/reagent_containers/medipen/survival/luxury
 	cost_per_order = 1000
 
 /datum/orderable_item/survival/luxury_pen/oozeling //monkestation edit
-	item_path = /obj/item/reagent_containers/hypospray/medipen/survival/luxury/oozeling
+	item_path = /obj/item/reagent_containers/medipen/survival/luxury/oozeling
 	cost_per_order = 1000
 
 /datum/orderable_item/survival/survival_pen/synthcare //monkestation edit CHEAPER THAN SURVIVAL PEN BECAUSE IT DOES NOT HEAL NEARLY AS MUCH AS A SURVIVAL PEN
-	item_path = /obj/item/reagent_containers/hypospray/medipen/synthcare
+	item_path = /obj/item/reagent_containers/medipen/synthcare
 	cost_per_order = 250
 
 /datum/orderable_item/survival/luxury_pen/synthcare //monkestation edit WAY CHEAPER THAN A LUX PEN BECAUSE DOES NOT INCLUDE ALL THE FANCY CHEMS AND HAS DEVESTATING OVERDOSE EFFECTS
-	item_path = /obj/item/reagent_containers/hypospray/medipen/survival/synthcare
+	item_path = /obj/item/reagent_containers/medipen/survival/synthcare
 	cost_per_order = 750
 
 /datum/orderable_item/survival/synthcaresurgeon //monke edit, basically a medkit implant for synthetics
@@ -26,23 +26,23 @@
 	cost_per_order = 750
 
 /datum/orderable_item/survival/robopiates //monkestation edit Slows you down so only really good for out of fight usage
-	item_path = /obj/item/reagent_containers/hypospray/medipen/synthpainkill
+	item_path = /obj/item/reagent_containers/medipen/synthpainkill
 	cost_per_order = 500
 
 /datum/orderable_item/survival/temperature //monkestation edit
-	item_path = /obj/item/reagent_containers/hypospray/medipen/temperature
+	item_path = /obj/item/reagent_containers/medipen/temperature
 	cost_per_order = 200
 
 /datum/orderable_item/survival/magnetic //monkestation edit
-	item_path = /obj/item/reagent_containers/hypospray/medipen/magnet
+	item_path = /obj/item/reagent_containers/medipen/magnet
 	cost_per_order = 250
 
 /datum/orderable_item/survival/speed //monkestation edit
-	item_path = /obj/item/reagent_containers/hypospray/medipen/survival/speed
+	item_path = /obj/item/reagent_containers/medipen/survival/speed
 	cost_per_order = 550
 
 /datum/orderable_item/survival/penthrite //monkestation edit
-	item_path = /obj/item/reagent_containers/hypospray/medipen/survival/penthrite
+	item_path = /obj/item/reagent_containers/medipen/survival/penthrite
 	cost_per_order = 750
 
 /datum/orderable_item/survival/mining_stabilizer

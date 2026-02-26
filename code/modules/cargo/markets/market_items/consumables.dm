@@ -55,7 +55,7 @@
 /datum/market_item/consumable/pumpup
 	name = "Maintenance Pump-Up"
 	desc = "Resist any Baton stun with this handy device!"
-	item = /obj/item/reagent_containers/hypospray/medipen/pumpup
+	item = /obj/item/reagent_containers/medipen/pumpup
 
 	stock_max = 3
 	price_min = CARGO_CRATE_VALUE * 0.25

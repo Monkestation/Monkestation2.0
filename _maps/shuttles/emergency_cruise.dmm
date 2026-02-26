@@ -319,13 +319,13 @@
 /obj/item/reagent_containers/blood/universal{
 	pixel_x = 3
 	},
-/obj/item/reagent_containers/hypospray/medipen/atropine,
+/obj/item/reagent_containers/medipen/atropine,
 /obj/structure/closet/crate/medical{
 	name = "emergency survival supplies"
 	},
-/obj/item/reagent_containers/hypospray/medipen/blood_loss,
-/obj/item/reagent_containers/hypospray/medipen/blood_loss,
-/obj/item/reagent_containers/hypospray/medipen,
+/obj/item/reagent_containers/medipen/blood_loss,
+/obj/item/reagent_containers/medipen/blood_loss,
+/obj/item/reagent_containers/medipen,
 /obj/structure/sign/warning/no_smoking/circle/directional/north,
 /turf/open/floor/iron/white/textured_edge{
 	dir = 1

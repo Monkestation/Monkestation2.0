@@ -31,6 +31,7 @@
 	design_ids = list(
 		"bluespacebeaker",
 		"bluespacesyringe",
+		"bluespacevial",
 		"bluespace_coffeepot",
 		"bs_rped",
 		"cargotele",

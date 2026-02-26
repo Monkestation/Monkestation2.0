@@ -328,7 +328,7 @@
 /area/deathmatch/fullbright)
 "CP" = (
 /obj/effect/spawner/random/trash/hobo_squat,
-/obj/item/reagent_containers/hypospray/medipen/stimulants,
+/obj/item/reagent_containers/medipen/stimulants,
 /obj/item/spear,
 /turf/open/indestructible/rockyground,
 /area/deathmatch/fullbright)

@@ -293,3 +293,65 @@
 		return NONE
 	context[SCREENTIP_CONTEXT_LMB] = atom_storage.locked ? "Unlock with ID" : "Lock with ID"
 	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/storage/lockbox/vialbox
+	name = "vial box"
+	desc = "A small box that can hold up to six vials in a sealed enviroment."
+	icon = 'icons/obj/storage/vial_box.dmi'
+	w_class = WEIGHT_CLASS_NORMAL
+	icon_state = "vialbox"
+	req_access = list(ACCESS_MEDICAL)
+	icon_locked = "vialbox"
+	icon_closed = "vialbox"
+	icon_broken = "vialbox"
+	icon_open = "vialbox"
+	custom_price = PAYCHECK_CREW / 2
+
+/obj/item/storage/lockbox/vialbox/update_icon()
+	cut_overlays()
+	var/slot = 1
+	for(var/obj/item/reagent_containers/cup/vial/G in contents)
+		var/mutable_appearance/vial = mutable_appearance(icon, "vialboxvial[slot]")
+		var/mutable_appearance/filling = mutable_appearance(icon, "vialboxvial[slot]-")
+		if(G.reagents.total_volume)
+			var/percent = round((G.reagents.total_volume / G.volume) * 100)
+			switch(percent)
+				if(75 to 79)
+					filling.icon_state = "vialboxvial[slot]-75"
+				if(80 to 90)
+					filling.icon_state = "vialboxvial[slot]-80"
+				if(91 to INFINITY)
+					filling.icon_state = "vialboxvial[slot]-100"
+
+			filling.color = mix_color_from_reagents(G.reagents.reagent_list)
+		add_overlay(vial)
+		add_overlay(filling)
+		slot++
+	if(!broken)
+		var/mutable_appearance/led = mutable_appearance(icon, "led[atom_storage.locked]")
+		add_overlay(led)
+	if(!open)
+		var/mutable_appearance/lid = mutable_appearance(icon, "vialboxcover")
+		add_overlay(lid)
+	..()
+
+/obj/item/storage/lockbox/vialbox/Initialize()
+	. = ..()
+	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
+	atom_storage.max_slots = 8
+	atom_storage.max_total_storage = 12
+	atom_storage.set_holdable(list(/obj/item/reagent_containers/cup/vial))
+	update_icon()
+
+/obj/item/storage/lockbox/vialbox/hypo_deluxe
+	name = "deluxe hypospray vial box"
+	desc = "A small box that can hold up to six vials in a sealed enviroment. This one contains a plethora of different vials for various medical ailments, designed for use in a deluxe hypospray."
+
+/obj/item/storage/lockbox/vialbox/hypo_deluxe/PopulateContents()
+	new /obj/item/reagent_containers/cup/vial/large/bluespace/omnizine(src)
+	new /obj/item/reagent_containers/cup/vial/large/bluespace/omnizine(src)
+	new /obj/item/reagent_containers/cup/vial/large/bluespace/sal_acid(src)
+	new /obj/item/reagent_containers/cup/vial/large/bluespace/oxandrolone(src)
+	new /obj/item/reagent_containers/cup/vial/large/bluespace/pen_acid(src)
+	new /obj/item/reagent_containers/cup/vial/large/bluespace/oxy(src)
+	new /obj/item/reagent_containers/cup/vial/large/bluespace/atropine(src)

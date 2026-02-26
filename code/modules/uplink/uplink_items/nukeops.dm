@@ -938,3 +938,10 @@
 	restricted = TRUE
 	refundable = TRUE
 
+/datum/uplink_item/device_tools/hypospray_kit
+	name = "Syndicate Combat Hypospray Kit"
+	desc = "An advanced kit containing a combat hypospray and a wide variety of vials containing \"perfectly legal chemicals\" to treat combatants."
+	item = /obj/item/storage/medkit/hypospray/syndicate
+	cost = 7
+	surplus = 66
+	purchasable_from = UPLINK_NUKE_OPS

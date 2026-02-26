@@ -18,7 +18,7 @@
 	antigen = null
 	stage = 4
 
-/obj/item/reagent_containers/hypospray/medipen/tuberculosiscure/debug
+/obj/item/reagent_containers/medipen/tuberculosiscure/debug
 	name = "Debug Vaccine autoinjector"
 	desc = "An autoinjector to cure Debug disease, which is otherwise incurable. Has a two use system for yourself, and someone else. Inject when infected."
 	volume = 20
@@ -40,7 +40,7 @@
 
 /obj/item/storage/box/disease_debug/PopulateContents()
 	for(var/i in 1 to 5)
-		new /obj/item/reagent_containers/hypospray/medipen/tuberculosiscure/debug(src)
+		new /obj/item/reagent_containers/medipen/tuberculosiscure/debug(src)
 	new /obj/item/reagent_containers/syringe(src)
 	new /obj/item/reagent_containers/cup/bottle/disease_debug(src)
 

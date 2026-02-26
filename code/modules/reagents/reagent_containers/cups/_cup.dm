@@ -710,3 +710,10 @@
 	possible_transfer_amounts = list(5, 10, 15, 30)
 	volume = 30
 	fill_icon_thresholds = list(0, 1, 20, 40, 60, 80, 100)
+
+/obj/item/storage/box/tube
+	name = "box of test tubes"
+
+/obj/item/storage/box/tube/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/reagent_containers/cup/tube( src )

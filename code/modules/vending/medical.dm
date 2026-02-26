@@ -6,27 +6,45 @@
 	panel_type = "panel11"
 	product_ads = "Go save some lives!;The best stuff for your medbay.;Only the finest tools.;Natural chemicals!;This stuff saves lives.;Don't you want some?;Ping!"
 	req_access = list(ACCESS_MEDICAL)
-	products = list(
-		/obj/item/stack/medical/gauze = 8,
-		/obj/item/reagent_containers/syringe = 12,
-		/obj/item/reagent_containers/dropper = 3,
-		/obj/item/healthanalyzer = 4,
-		/obj/item/wrench/medical = 1,
-		/obj/item/stack/sticky_tape/surgical = 3,
-		/obj/item/healthanalyzer/simple = 4,
-		/obj/item/stack/medical/ointment = 2,
-		/obj/item/stack/medical/suture = 2,
-		/obj/item/stack/medical/bone_gel = 4,
-		/obj/item/cane/white = 2,
-		/obj/item/clothing/glasses/eyepatch/medical = 2,
-		/obj/item/reagent_containers/hypospray/medipen/deforest/robot_system_cleaner = 4,
-	)
+	product_categories = list(
+		list(
+			"name" = "Medical",
+			"icon" = "head-side-virus",
+			"products" = list(
+				/obj/item/stack/medical/gauze = 8,
+				/obj/item/reagent_containers/syringe = 12,
+				/obj/item/reagent_containers/dropper = 3,
+				/obj/item/healthanalyzer = 4,
+				/obj/item/wrench/medical = 1,
+				/obj/item/stack/sticky_tape/surgical = 3,
+				/obj/item/healthanalyzer/simple = 4,
+				/obj/item/stack/medical/ointment = 2,
+				/obj/item/stack/medical/suture = 2,
+				/obj/item/stack/medical/bone_gel = 4,
+				/obj/item/cane/white = 2,
+				/obj/item/clothing/glasses/eyepatch/medical = 2,
+				/obj/item/reagent_containers/medipen/deforest/robot_system_cleaner = 4,
+				/obj/item/shock_blanket/emergency = 3,
+				/obj/item/temperature_pack/cold = 2,
+				/obj/item/temperature_pack/heat = 2,
+			),
+		),
+		list(
+			"name" = "Hyposprays",
+			"icon" = "syringe",
+			"products" = list(
+				/obj/item/hypospray = 5,
+				/obj/item/storage/medkit/hypospray = 3,
+				/obj/item/storage/medkit/hypospray/advanced = 1,
+				/obj/item/storage/lockbox/vialbox = 5,
+			),
+		))
 	contraband = list(
 		/obj/item/storage/box/gum/happiness = 3,
 		/obj/item/storage/box/hug/medical = 1,
 	)
 	premium = list(
-		/obj/item/reagent_containers/hypospray/medipen = 3,
+		/obj/item/reagent_containers/medipen = 3,
 		/obj/item/storage/belt/medical = 3,
 		/obj/item/sensor_device = 2,
 		/obj/item/pinpointer/crew = 2,
@@ -34,7 +52,7 @@
 		/obj/item/shears = 1,
 		/obj/item/storage/organbox = 1,
 		/obj/item/clothing/gloves/latex/surgical = 1, //Monkestation Edit
-		/obj/item/reagent_containers/hypospray/medipen/deforest/robot_liquid_solder = 2, //Monkestation Edit
+		/obj/item/reagent_containers/medipen/deforest/robot_liquid_solder = 2, //Monkestation Edit
 		/obj/item/fishing_hook/rescue = 1, //Monkestation Edit
 	)
 	refill_canister = /obj/item/vending_refill/medical

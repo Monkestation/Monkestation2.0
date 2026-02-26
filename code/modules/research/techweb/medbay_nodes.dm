@@ -57,6 +57,8 @@
 		"smoke_machine",
 		"sleeper",
 		"surgical_gloves", //Monkestation Addition
+		"hypo_pierce_upgrade",
+		"hypo_speed_upgrade",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	discount_experiments = list(/datum/experiment/scanning/random/material/meat = TECHWEB_DISCOUNT_MINOR * 3,

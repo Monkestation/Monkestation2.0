@@ -58,7 +58,7 @@
 	ears = /obj/item/radio/headset/headset_cargo/mining
 	gloves = /obj/item/clothing/gloves/color/black
 	shoes = /obj/item/clothing/shoes/workboots/mining
-	l_pocket = /obj/item/reagent_containers/hypospray/medipen/survival
+	l_pocket = /obj/item/reagent_containers/medipen/survival
 	r_pocket = /obj/item/storage/bag/ore //causes issues if spawned in backpack
 
 	backpack = /obj/item/storage/backpack/explorer
