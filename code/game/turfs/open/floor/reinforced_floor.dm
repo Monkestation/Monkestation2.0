@@ -13,12 +13,12 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	tiled_dirt = FALSE
 	rcd_proof = TRUE
-	var/tooltip_description = "The reinforcement rods are <b>wrenched</b> firmly in place."
+	var/floor_tooltip_description = "The reinforcement rods are <b>wrenched</b> firmly in place."
 
 
 /turf/open/floor/engine/examine(mob/user)
 	. += ..()
-	. += span_notice(tooltip_description)
+	. += span_notice(floor_tooltip_description)
 
 /turf/open/floor/engine/airless
 	initial_gas_mix = AIRLESS_ATMOS
@@ -236,7 +236,7 @@
 	thermal_conductivity = 0
 	heat_capacity = INFINITY
 	floor_tile = /obj/item/stack/sheet/mineral/plastitanium
-	tooltip_description = "The insulated plating is <b>screwed</b> firmly in place."
+	floor_tooltip_description = "The insulated plating is <b>screwed</b> firmly in place."
 
 /turf/open/floor/engine/insulation/wrench_act(mob/living/user, obj/item/I)
 	return
