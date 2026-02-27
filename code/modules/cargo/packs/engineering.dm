@@ -152,6 +152,7 @@
 		Highly advanced research is required for proper construction."
 	cost = CARGO_CRATE_VALUE * 30
 	special = TRUE
+	access = ACCESS_COMMAND
 	access_view = ACCESS_COMMAND
 	contains = list(/obj/item/circuitboard/machine/bsa/front,
 					/obj/item/circuitboard/machine/bsa/middle,
@@ -159,6 +160,7 @@
 					/obj/item/circuitboard/computer/bsa_control,
 				)
 	crate_name= "bluespace artillery parts crate"
+	crate_type = /obj/structure/closet/crate/secure/engineering
 
 /datum/supply_pack/engineering/dna_vault
 	name = "DNA Vault Parts"

@@ -53,10 +53,7 @@ export const BluespaceArtillery = (props) => {
                   <Box color="bad" fontSize="18px">
                     Bluespace artillery is currently locked.
                   </Box>
-                  <Box mt={1}>
-                    Awaiting authorization via keycard reader from at minimum
-                    two station heads.
-                  </Box>
+                  <Box mt={1}>Awaiting authorization from command</Box>
                 </>
               )}
             </Section>
