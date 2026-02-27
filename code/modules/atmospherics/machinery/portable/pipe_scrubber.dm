@@ -77,7 +77,7 @@
 			secondary_tank_contents.pump_gas_to(air_contents, PIPE_SCRUBBER_PUMP_MAX_PRESSURE)
 
 	if(!suppress_reactions)
-		if(secondary_tank_contents.react(src))
+		if(max(air_contents.react(src), secondary_tank_contents.react(src)))
 			excited = TRUE
 
 	if(!excited)
