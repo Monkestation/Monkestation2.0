@@ -143,7 +143,6 @@
 		/obj/item/stack/medical/suture = 2,
 		/obj/item/stack/medical/mesh = 2,
 		/obj/item/reagent_containers/medipen = 1,
-		/obj/item/hypospray = 1,
 		/obj/item/surgical_drapes = 1,
 		/obj/item/scalpel = 1,
 		/obj/item/hemostat = 1,
@@ -188,8 +187,8 @@
 	var/list/items_inside = list(
 		/obj/item/reagent_containers/pill/patch/aiuri = 3,
 		/obj/item/reagent_containers/spray/hercuri = 1,
-		/obj/item/reagent_containers/hypospray/medipen/oxandrolone = 1,
-		/obj/item/reagent_containers/hypospray/medipen = 1)
+		/obj/item/reagent_containers/medipen/oxandrolone = 1,
+		/obj/item/reagent_containers/medipen = 1)
 	generate_items_inside(items_inside, src)
 
 /obj/item/storage/medkit/toxin
@@ -284,10 +283,64 @@
 		return
 	var/list/items_inside = list(
 		/obj/item/reagent_containers/pill/patch/synthflesh = 3,
-		/obj/item/reagent_containers/hypospray/medipen/atropine = 2,
+		/obj/item/reagent_containers/medipen/atropine = 2,
 		/obj/item/stack/medical/gauze/plastiseal = 1,
 		/obj/item/storage/pill_bottle/penacid = 1)
 	generate_items_inside(items_inside, src)
+
+//////////////////////
+/// Hypospray Kits ///
+//////////////////////
+
+/obj/item/storage/medkit/hypospray
+	name = "hypospray chemical kit"
+	desc = "An basic kit containing a hypospray and vials for most situations. Now 100% smaller, for 100% more hypospray per hypospray!"
+	icon_state = "hypobasic"
+	custom_price = PAYCHECK_COMMAND * 3
+
+/obj/item/storage/medkit/hypospray/Initialize(mapload)
+	. = ..()
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.max_slots = 7
+	atom_storage.max_total_storage = 10
+
+/obj/item/storage/medkit/hypospray/PopulateContents()
+	if(empty)
+		return
+	var/static/items_inside = list(
+		/obj/item/hypospray = 1,
+		/obj/item/reagent_containers/cup/vial/brute = 1,
+		/obj/item/reagent_containers/cup/vial/burn = 1,
+		/obj/item/reagent_containers/cup/vial/tox = 1,
+		/obj/item/reagent_containers/cup/vial/oxy = 1,
+		/obj/item/reagent_containers/cup/vial/epi = 1,
+		/obj/item/healthanalyzer = 1,
+		)
+	generate_items_inside(items_inside,src)
+
+/obj/item/storage/medkit/hypospray/advanced
+	name = "Advanced vial chemical kit"
+	desc = "An advanced kit containing vials for most situations. Does not include a hypospray. Now 100% smaller, for 100% more hypospray per hypospray!"
+	icon_state = "hypoqmc"
+	custom_price = PAYCHECK_COMMAND * 5
+
+/obj/item/storage/medkit/hypospray/advanced/PopulateContents()
+	if(empty)
+		return
+	var/static/items_inside = list(
+		/obj/item/reagent_containers/cup/vial/omnizine = 2,
+		/obj/item/reagent_containers/cup/vial/sal_acid = 1,
+		/obj/item/reagent_containers/cup/vial/oxandrolone = 1,
+		/obj/item/reagent_containers/cup/vial/pen_acid = 1,
+		/obj/item/reagent_containers/cup/vial/atropine = 1,
+		/obj/item/reagent_containers/cup/vial/inaprovaline = 1,
+		)
+	generate_items_inside(items_inside,src)
+
+/////////////////////
+/// Tactical Kits ///
+/////////////////////
+/// Will the TO-DO ever be completed? Who knows...
 
 /obj/item/storage/medkit/tactical
 	name = "tactical medical kit"
@@ -315,7 +368,7 @@
 		/obj/item/reagent_containers/pill/patch/aiuri = 4,
 		/obj/item/healthanalyzer/advanced = 1,
 		/obj/item/stack/medical/gauze/plastiseal/twelve = 1,
-		/obj/item/reagent_containers/hypospray/medipen/atropine = 2,
+		/obj/item/reagent_containers/medipen/atropine = 2,
 		/obj/item/reagent_containers/medigel/sterilizine = 1,
 		/obj/item/surgical_drapes = 1,
 		/obj/item/scalpel = 1,
@@ -417,7 +470,7 @@
 		/obj/item/reagent_containers/medipen/advanced/morphine = 1,
 		/obj/item/storage/pill_bottle/modafinil_patch = 1,
 		/obj/item/reagent_containers/medigel/advanced = 1,
-		/obj/item/reagent_containers/hypospray/combat/anti_tox = 1,
+		/obj/item/hypospray/combat/anti_tox = 1,
 	)
 	generate_items_inside(items_inside, src)
 

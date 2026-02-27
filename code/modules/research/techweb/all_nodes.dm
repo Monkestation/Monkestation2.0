@@ -258,7 +258,6 @@
 		"synth_heart",
 		"cybernetic_spleen",
 		"vitals_monitor",,
-		"hypospray",
 		"large_vial",
 		"vial"
 	)

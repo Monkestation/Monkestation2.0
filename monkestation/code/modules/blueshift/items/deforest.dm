@@ -384,10 +384,10 @@
 
 /obj/item/storage/medkit/civil_defense/stocked/PopulateContents()
 	var/list/items_inside = list(
-		/obj/item/reagent_containers/hypospray/medipen/deforest/meridine = 1,
-		/obj/item/reagent_containers/hypospray/medipen/deforest/halobinin = 1,
-		/obj/item/reagent_containers/hypospray/medipen/deforest/lipital = 1,
-		/obj/item/reagent_containers/hypospray/medipen/deforest/calopine = 1,
+		/obj/item/reagent_containers/medipen/deforest/meridine = 1,
+		/obj/item/reagent_containers/medipen/deforest/halobinin = 1,
+		/obj/item/reagent_containers/medipen/deforest/lipital = 1,
+		/obj/item/reagent_containers/medipen/deforest/calopine = 1,
 	)
 	generate_items_inside(items_inside, src)
 
@@ -428,7 +428,7 @@
 
 /obj/item/storage/medkit/civil_defense/comfort/stocked/PopulateContents()
 	var/list/items_inside = list(
-		/obj/item/reagent_containers/hypospray/medipen/deforest/psifinil = 3,
+		/obj/item/reagent_containers/medipen/deforest/psifinil = 3,
 		/obj/item/storage/pill_bottle/prescription_stimulant = 1,
 	)
 	generate_items_inside(items_inside, src)

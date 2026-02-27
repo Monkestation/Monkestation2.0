@@ -23,9 +23,6 @@
 				/obj/item/cane/white = 2,
 				/obj/item/clothing/glasses/eyepatch/medical = 2,
 				/obj/item/reagent_containers/medipen/deforest/robot_system_cleaner = 4,
-				/obj/item/shock_blanket/emergency = 3,
-				/obj/item/temperature_pack/cold = 2,
-				/obj/item/temperature_pack/heat = 2,
 			),
 		),
 		list(

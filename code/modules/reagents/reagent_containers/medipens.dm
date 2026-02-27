@@ -266,40 +266,6 @@
 	volume = 10
 	list_reagents = list(/datum/reagent/medicine/painkiller/robopiates = 7.5, /datum/reagent/dinitrogen_plasmide = 2.5)
 
-/// Medkit pen. Heals about 35 pain to all limbs, causes ~450 addiction points
-/obj/item/reagent_containers/medipen/emergency_painkiller
-	name = "emergency painkiller medipen"
-	desc = "A medipen that contains a dosage of heavy painkilling chemicals. \
-		WARNING: Do not use in combination with alcohol. Can cause drowsiness and addiction."
-	icon = 'monkestation/code/modules/can_spessmen_feel_pain/icons/obj/syringe.dmi'
-	icon_state = "painkiller"
-	base_icon_state = "painkiller"
-	volume = 25
-	amount_per_transfer_from_this = 25
-	list_reagents = list(
-		/datum/reagent/medicine/painkiller/oxycodone = 7.5, // Heals ~25 pain (per limb)
-		/datum/reagent/medicine/painkiller/morphine = 5, // Heals ~10 pain (per limb), causes drowsy
-		/datum/reagent/medicine/synaptizine = 10, // Cures drowsyness from morphine
-	)
-
-/obj/item/reagent_containers/medipen/brute_painkiller
-	name = "ibaltifen painkiller medipen"
-	desc = "An autoinjector containing ibaltifen, used to treat pain caused by bruises and broken limbs. WARNING: Do not use in combination with alcohol."
-	icon = 'monkestation/code/modules/can_spessmen_feel_pain/icons/obj/syringe.dmi'
-	icon_state = "burn_painkiller_pen"
-	base_icon_state = "burn_painkiller_pen"
-	inhand_icon_state = "salacid"
-	list_reagents = list(/datum/reagent/medicine/painkiller/specialized/ibaltifen = 10) // ~20-25 pain healing (if brute pain, per limb)
-
-/obj/item/reagent_containers/medipen/burn_painkiller
-	name = "anurifen painkiller medipen"
-	desc = "An autoinjector containing anurifen, used to treat pain caused by bruises and broken limbs. WARNING: Do not use in combination with alcohol."
-	icon = 'monkestation/code/modules/can_spessmen_feel_pain/icons/obj/syringe.dmi'
-	icon_state = "brute_painkiller_pen"
-	base_icon_state = "brute_painkiller_pen"
-	inhand_icon_state = "oxapen"
-	list_reagents = list(/datum/reagent/medicine/painkiller/specialized/anurifen = 10) // ~20-25 pain healing (if burn pain, per limb)
-
 /obj/item/reagent_containers/medipen/morphine
 	name = "morphine medipen"
 	desc = "A medipen that contains a dosage of painkilling morphine. \
@@ -307,7 +273,7 @@
 	icon_state = "morphen"
 	inhand_icon_state = "morphen"
 	base_icon_state = "morphen"
-	list_reagents = list(/datum/reagent/medicine/painkiller/morphine = 10) // Heals ~20 pain (per limb)
+	list_reagents = list(/datum/reagent/medicine/painkiller/morphine = 10)
 
 /////////////////////////
 /// Advanced Medipens ///

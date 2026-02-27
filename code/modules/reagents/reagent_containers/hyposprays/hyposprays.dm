@@ -10,7 +10,7 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 	desc = "The DeForest Medical Corporation hypospray is a sterile, air-needle autoinjector for rapid administration of drugs to patients."
 	icon_state = "hypo"
 	w_class = WEIGHT_CLASS_SMALL
-	custom_price = PAYCHECK_CREW * 2
+	custom_price = PAYCHECK_COMMAND * 3
 	/// Determines what using this hypospray on a person will do
 	var/mode = HYPO_INJECT
 	/// The amount to transfer from the hypospray
@@ -51,6 +51,8 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 	var/spray_sound = 'sound/effects/spray2.ogg'
 	/// The sound that plays when you draw from someone with the hypospray
 	var/draw_sound = 'sound/items/autoinjector.ogg'
+	/// Buffer for the maximum reagents amount of the most recent vial to be inserted
+	var/last_vial_maximum = 15
 
 /obj/item/hypospray/Initialize(mapload)
 	. = ..()
@@ -68,6 +70,8 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 		. += span_notice("[src] has a polycarbonate diamond tipped needle, allowing it to pierce thick clothing.")
 	if(upgrade_flags & HYPO_UPGRADE_SPEED)
 		. += span_notice("[src] has gold plated electronics, allowing it to inject with reduced delay.")
+	if(upgrade_flags & HYPO_UPGRADE_NOZZLE)
+		. += span_notice("[src] has a widened titanium nozzle, allowing it to spray or inject more units at a time.")
 	if(!can_remove_vials)
 		. += span_notice("It's loading mechanism is blocked, preventing vials from being removed, permanently, once loaded.")
 	switch(mode)
@@ -89,6 +93,7 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 		if(!user.transferItemToLoc(attacking_item,src))
 			return FALSE
 		vial = attacking_item
+		last_vial_maximum = vial.reagents.maximum_volume
 		user.visible_message(span_notice("[user] loads a vial into [src]."),span_notice("You have loaded [vial] into [src]."))
 		playsound(src, load_sound, 50, 1)
 		return TRUE
@@ -100,6 +105,9 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 /obj/item/hypospray/attack_self_secondary(mob/user, list/modifiers)
 	if(user.can_perform_action(src))
 		if("ctrl" in modifiers)
+			if(upgrade_flags & HYPO_UPGRADE_NOZZLE)
+				set_transfer_amount(user)
+				return
 			cycle_transfer_amount(BACKWARD, user)
 			return
 		unload_vial(user)
@@ -111,9 +119,12 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 			mode = HYPO_INJECT
 		user.balloon_alert(user, "Mode set to [mode].")
 
-/obj/item/hypospray/CtrlClick(mob/user)
+/obj/item/hypospray/item_ctrl_click(mob/user)
 	. = ..()
 	if(user.get_active_held_item() != src)
+		return NONE
+	if(upgrade_flags & HYPO_UPGRADE_NOZZLE)
+		set_transfer_amount(user)
 		return
 	cycle_transfer_amount(FORWARD, user)
 
@@ -146,6 +157,13 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 		else
 			CRASH("cycle_transfer_amount() called with invalid direction value")
 	transfer_amount = possible_transfer_amounts[amount_list_position]
+	balloon_alert(user, "transferring [transfer_amount]u")
+
+/obj/item/hypospray/proc/set_transfer_amount(mob/user)
+	var/new_transfer_amount = tgui_input_number(user, "Set transfer amount", "Transfer Amount", 5, last_vial_maximum, 0.1, round_value = FALSE)
+	if(!new_transfer_amount || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src))
+		return
+	transfer_amount = new_transfer_amount
 	balloon_alert(user, "transferring [transfer_amount]u")
 
 /obj/item/hypospray/proc/inject(mob/living/user, atom/target)
@@ -320,6 +338,9 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 	allowed_containers = list(/obj/item/reagent_containers/cup/vial/large/bluespace, /obj/item/reagent_containers/cup/vial/large, /obj/item/reagent_containers/cup/vial/bluespace)
 	possible_transfer_amounts = list(1, 2, 3, 5, 10, 15, 20)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+	inject_other = 1 SECONDS
+	draw_other = 0 SECONDS
+	spray_other = 0.5 SECONDS
 
 //combat
 

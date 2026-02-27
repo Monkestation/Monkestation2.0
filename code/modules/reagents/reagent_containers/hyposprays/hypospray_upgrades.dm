@@ -39,3 +39,8 @@
 		hypo.inject_other = max(0, hypo.inject_other - 0.5 SECONDS)
 		hypo.spray_other = max(0, hypo.spray_other - 0.5 SECONDS)
 		hypo.draw_other = max(0, hypo.draw_other - 0.5 SECONDS)
+
+/obj/item/hypospray_upgrade/nozzle
+	name = "Hypospray Nozzle Upgrade"
+	desc = "Allows a hypospray to inject or apply more units a time."
+	upgrade_flag = HYPO_UPGRADE_NOZZLE

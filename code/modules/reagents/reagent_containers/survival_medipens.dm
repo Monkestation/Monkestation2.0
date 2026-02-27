@@ -10,7 +10,7 @@
 	base_icon_state = "stimpen"
 	volume = 35
 	amount_per_transfer_from_this = 35
-	list_reagents = list( /datum/reagent/medicine/epinephrine = 8, /datum/reagent/medicine/c2/aiuri = 8, /datum/reagent/medicine/c2/libital = 8, /datum/reagent/medicine/leporazine = 6, /datum/reagent/medicine/painkiller/hydromorphone = 5)
+	list_reagents = list( /datum/reagent/medicine/epinephrine = 8, /datum/reagent/medicine/c2/aiuri = 8, /datum/reagent/medicine/c2/libital = 8, /datum/reagent/medicine/leporazine = 6)
 	/// How long it takes to inject this pen in a high-pressure environment, or otherwise outside of lavaland
 	var/high_pressure_inject_time = 10 SECONDS
 	/// Wether or not this pen can be injected at all in high-pressure environments, or otherwise ouotside of lavaland
@@ -48,7 +48,7 @@
 	base_icon_state = "luxpen"
 	volume = 70
 	amount_per_transfer_from_this = 70
-	list_reagents = list(/datum/reagent/medicine/salbutamol = 10, /datum/reagent/medicine/c2/penthrite = 10, /datum/reagent/medicine/oxandrolone = 10, /datum/reagent/medicine/sal_acid = 10 ,/datum/reagent/medicine/omnizine = 10 ,/datum/reagent/medicine/leporazine = 10, /datum/reagent/medicine/painkiller/hydromorphone = 10)
+	list_reagents = list(/datum/reagent/medicine/salbutamol = 10, /datum/reagent/medicine/c2/penthrite = 10, /datum/reagent/medicine/oxandrolone = 10, /datum/reagent/medicine/sal_acid = 10 ,/datum/reagent/medicine/omnizine = 10 ,/datum/reagent/medicine/leporazine = 10)
 
 /obj/item/reagent_containers/medipen/survival/luxury/oozeling //oozeling safe version of the luxury pen!
 	name = "luxury oozeling medipen"
@@ -58,8 +58,7 @@
 	base_icon_state = "luxpen"
 	volume = 90
 	amount_per_transfer_from_this = 90
-	list_reagents = list(/datum/reagent/medicine/salbutamol = 10, /datum/reagent/medicine/c2/penthrite = 10, /datum/reagent/medicine/oxandrolone = 10, /datum/reagent/medicine/sal_acid = 10 ,/datum/reagent/medicine/regen_jelly = 10 ,/datum/reagent/toxin/plasma = 10, /datum/reagent/toxin = 10,/datum/reagent/medicine/leporazine = 10, /datum/reagent/medicine/painkiller/hydromorphone = 10)
-
+	list_reagents = list(/datum/reagent/medicine/salbutamol = 10, /datum/reagent/medicine/c2/penthrite = 10, /datum/reagent/medicine/oxandrolone = 10, /datum/reagent/medicine/sal_acid = 10, /datum/reagent/medicine/regen_jelly/weakened = 5, /datum/reagent/toxin = 5, /datum/reagent/medicine/leporazine = 10)
 /obj/item/reagent_containers/medipen/survival/penthrite
 	name = "Rapid Penthrite Injector"
 	desc = "An expensive single use injector containing penthrite, allowing your body to keep functioning even with wounds that would make someone collapse. Seems to only be rapid in a low pressure enviorment as well... thats misleading. <b> WARNING: DO NOT MIX WITH EPINEPHRINE OR ATROPINE. </b>"
@@ -86,20 +85,3 @@
 	amount_per_transfer_from_this = 10.5
 	volume = 10.5
 	list_reagents = list(/datum/reagent/medicine/nanite_slurry/strong = 9, /datum/reagent/drug/methamphetamine/robo = 1.5)
-
-/// Miner pen. Heals about 30 pain to all limbs, causes ~150 addiction points
-/obj/item/reagent_containers/medipen/survival/painkiller
-	name = "survival painkiller medipen"
-	desc = "A medipen that contains a dosage of painkilling chemicals. \
-		WARNING: Do not use in combination with alcohol. Can cause drowsiness."
-	icon = 'monkestation/code/modules/can_spessmen_feel_pain/icons/obj/syringe.dmi'
-	icon_state = "painkiller_stimpen"
-	base_icon_state = "painkiller_stimpen"
-	volume = 30
-	amount_per_transfer_from_this = 30
-	list_reagents = list(
-		/datum/reagent/medicine/painkiller/paracetamol = 10, // Heals ~10 pain (per limb)
-		/datum/reagent/medicine/painkiller/aspirin_para_coffee = 5, // Heals ~7.5 pain (per limb)
-		/datum/reagent/medicine/painkiller/morphine = 5, // Heals ~10 pain (per limb), causes drowsy
-		/datum/reagent/medicine/synaptizine = 10, // Cures drowsy from morphine
-	)
