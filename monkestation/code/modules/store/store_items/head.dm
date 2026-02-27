@@ -203,6 +203,11 @@ GLOBAL_LIST_INIT(store_head, generate_store_items(/datum/store_item/head))
 	item_path = /obj/item/clothing/head/hats/fez
 	item_cost = 5000
 
+/datum/store_item/head/warning_cone
+	name = "Warning Cone"
+	item_path = /obj/item/clothing/head/cone
+	item_cost = 1000
+
 /*
 *	HALLOWEEN
 */
