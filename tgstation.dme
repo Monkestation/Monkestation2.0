@@ -6915,7 +6915,6 @@
 #include "monkestation\code\modules\antagonists\borers\code\mobs\name_lists.dm"
 #include "monkestation\code\modules\antagonists\borers\code\mobs\neutered_borer.dm"
 #include "monkestation\code\modules\antagonists\changeling\powers\darkness_adaptation.dm"
-#include "monkestation\code\modules\antagonists\changeling\powers\lesserform.dm"
 #include "monkestation\code\modules\antagonists\changeling\powers\storage_cavity.dm"
 #include "monkestation\code\modules\antagonists\changeling\powers\teratomas.dm"
 #include "monkestation\code\modules\antagonists\changeling\powers\tiny_prick.dm"

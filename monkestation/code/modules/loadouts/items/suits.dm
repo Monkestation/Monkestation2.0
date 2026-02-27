@@ -722,7 +722,7 @@ GLOBAL_LIST_INIT(loadout_exosuits, generate_loadout_items(/datum/loadout_item/su
 	restricted_roles = list(JOB_CARGO_TECHNICIAN, JOB_SHAFT_MINER, JOB_QUARTERMASTER)
 	requires_purchase = FALSE
 
-/datum/loadout_item/suit/digicoat_glitched //Public donator reward for Razurath.
+/datum/loadout_item/suit/digicoat_glitched //Purchasable version of Razurath's donator reward.
 	name = "Glitched Digicoat"
 	item_path = /obj/item/clothing/suit/toggle/digicoat/glitched
 

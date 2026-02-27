@@ -56,6 +56,12 @@
 	light_color = COLOR_VERY_LIGHT_GRAY
 	changes_icon = FALSE
 
+/turf/open/misc/asteroid/forest/mushroom/burnt_states()
+	return null
+
+/turf/open/misc/asteroid/forest/mushroom/broken_states()
+	return null
+
 /turf/open/misc/asteroid/forest/mushroom/blue
 	icon_state = "mushroom_blue"
 	base_icon_state = "mushroom_blue"

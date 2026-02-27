@@ -1,0 +1,4 @@
+author: "drgnmstrc"
+delete-after: True
+changes:
+  - rscadd: "check on player arrival that stops announcement board if player is a stowaway"

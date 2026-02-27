@@ -343,7 +343,7 @@
 	name = "Firefighter's Day"
 	begin_day = 4
 	begin_month = MAY
-	holiday_hat = /obj/item/clothing/head/utility/hardhat/red
+	holiday_hat = /obj/item/clothing/head/utility/hardhat/fire
 
 /datum/holiday/firefighter/getStationPrefix()
 	return pick("Burning","Blazing","Plasma","Fire")

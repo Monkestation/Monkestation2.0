@@ -341,3 +341,54 @@
 		if (NAMEOF(src, queued_priority)) //editing this breaks things.
 			return FALSE
 	. = ..()
+	if(!.)
+		return
+	switch(var_name)
+		if (NAMEOF(src, wait), NAMEOF(src, flags))
+			update_nextfire(reset_time = TRUE)
+
+/**
+ * This allows subsystems to change their execution priority at runtime without
+ * affecting the existing queue logic or requiring a full MC restart.
+ *
+ * enable_background (bool) - TRUE to enable SS_BACKGROUND mode, FALSE to disable it
+ *
+ * Returns TRUE if the mode was successfully changed, FALSE otherwise
+ *
+ * NOTE: Only works on subsystems with SS_DYNAMIC for sanity reasons, unless `force` is set.
+ */
+/datum/controller/subsystem/proc/set_background_mode(enable_background = TRUE, force = FALSE)
+	if (!(flags & SS_DYNAMIC) && !force)
+		return FALSE
+
+	// Check if we're actually changing the state
+	var/currently_background = !!(flags & SS_BACKGROUND)
+	var/target_background = enable_background
+
+	if (currently_background == target_background)
+		return FALSE
+
+	// Store the old flag state for priority count adjustments
+	var/was_queued = (state == SS_QUEUED)
+	var/old_flags = flags
+
+	if (enable_background)
+		flags |= SS_BACKGROUND
+	else
+		flags &= ~SS_BACKGROUND
+
+	// If the subsystem is currently queued, we need to:
+	// 1. Update the priority counts
+	// 2. Requeue to maintain proper sort order
+	if (was_queued)
+		// Adjust the master controller's priority counts
+		if (old_flags & SS_BACKGROUND)
+			Master.queue_priority_count_bg -= queued_priority
+		else
+			Master.queue_priority_count -= queued_priority
+
+		// Remove then re-add
+		dequeue()
+		enqueue()
+
+	return TRUE
