@@ -369,7 +369,8 @@
 	human_equipee.adjust_fire_stacks(2)
 	human_equipee.ignite_mob()
 	human_equipee.set_hairstyle("Bald", update = TRUE)
-	human_equipee.visible_message(span_bolddanger("Your hair burns off!"))
+	human_equipee.visible_message(span_bolddanger("[human_equipee]\s hair burns off!"), \
+		span_bolddanger("Your hair burns off!"))
 
 //allows the edagger to lights cigarettes
 /obj/item/pen/edagger/ignition_effect(atom/atom, mob/user)
