@@ -7,5 +7,5 @@
 
 /datum/symptom/minttoxin/activate(mob/living/carbon/mob)
 	if(istype(mob) && mob.reagents?.get_reagent_amount(/datum/reagent/consumable/mintextract) < 5)
-		to_chat(mob, span_notice("You feel a minty freshness"))
+		to_chat(mob, span_notice("You feel a minty freshness."))
 		mob.reagents.add_reagent(/datum/reagent/consumable/mintextract, 5)
