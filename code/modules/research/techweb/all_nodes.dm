@@ -259,5 +259,5 @@
 		"cybernetic_spleen",
 		"vitals_monitor",,
 		"large_vial",
-		"vial"
+		"vial",
 	)

@@ -25,7 +25,6 @@
 	. = ..()
 	if(icon_state in striped_vial_skins)
 		fill_icon_state = "[icon_state]stripe"
-	..()
 
 /obj/item/reagent_containers/cup/vial/attackby(obj/P, mob/user, params)
 	add_fingerprint(user)
