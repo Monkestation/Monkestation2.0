@@ -288,9 +288,9 @@ GLOBAL_LIST_INIT(mining_suit_allowed, list(
 	// Monke edit: Allow more things
 	/obj/item/tank/jetpack,
 	/obj/item/gun/ballistic/shotgun/autoshotgun,
-	/obj/item/gun/ballistic/automatic/proto/pksmg/kineticlmg,
+	/obj/item/gun/ballistic/automatic/pksmg/kineticlmg,
 	/obj/item/gun/ballistic/shotgun/doublebarrel/kinetic,
-	/obj/item/gun/ballistic/automatic/proto/pksmg,
+	/obj/item/gun/ballistic/automatic/pksmg,
 	/obj/item/gun/ballistic/revolver/grenadelauncher/kinetic,
 	/obj/item/gun/ballistic/revolver/govmining,
 ))
