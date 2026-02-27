@@ -11,11 +11,11 @@
 
 /datum/orderable_item/explorer/bowie
 	item_path = /obj/item/storage/belt/bowie_sheath 
-	cost_per_order = 2500
+	cost_per_order = 1500
 
 /datum/orderable_item/explorer/combat // same as bowie but can be bayonetted on the lasgun
 	item_path = /obj/item/knife/combat
-	cost_per_order = 2500
+	cost_per_order = 1500
 
 /datum/orderable_item/explorer/hunting
 	item_path = /obj/item/knife/hunting
@@ -23,7 +23,7 @@
 
 /datum/orderable_item/explorer/sledge 
 	item_path = /obj/item/melee/sledgehammer
-	cost_per_order = 10000
+	cost_per_order = 2000
 
 /datum/orderable_item/explorer/conscription_kit 
 	item_path = /obj/item/storage/backpack/duffelbag/explorer_conscript
