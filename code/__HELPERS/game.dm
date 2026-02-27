@@ -268,6 +268,8 @@
 		return
 	if(!(character.mind.assigned_role.job_flags & JOB_ANNOUNCE_ARRIVAL))
 		return
+	if(HAS_TRAIT(character, TRAIT_STOWAWAY))
+		return
 
 	var/obj/machinery/announcement_system/announcer
 	var/list/available_machines = list()
