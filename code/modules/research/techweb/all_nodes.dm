@@ -257,7 +257,7 @@
 		"synth_ears",
 		"synth_heart",
 		"cybernetic_spleen",
-		"vitals_monitor",,
-		"large_vial",
-		"vial",
+		"vitals_monitor",
+		"vial"
+		"large_vial"
 	)
