@@ -85,7 +85,7 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 /obj/item/hypospray/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/reagent_containers))
 		if(!(attacking_item.type in allowed_containers)) // I swear there was a better solution to this but i forgor
-			user.balloon_alert(user, "Won't fit!")
+			user.balloon_alert(user, "won't fit!")
 			return FALSE
 		if(vial != null)
 			if(!unload_vial(user, TRUE))
@@ -117,7 +117,7 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 		mode = show_radial_menu(user, src, GLOB.hypospray_mode_icons, radius = 48)
 		if(!mode)
 			mode = HYPO_INJECT
-		user.balloon_alert(user, "Mode set to [mode].")
+		user.balloon_alert(user, "mode set to [mode].")
 
 /obj/item/hypospray/item_ctrl_click(mob/user)
 	. = ..()
@@ -170,11 +170,11 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 	SEND_SIGNAL(target, COMSIG_LIVING_TRY_SYRINGE_INJECT, user)
 
 	if(!vial.reagents.total_volume)
-		user.balloon_alert(user, "Container empty!")
+		user.balloon_alert(user, container empty!")
 		return ITEM_INTERACT_BLOCKING
 
 	if(!isliving(target) && !target.is_injectable(user))
-		user.balloon_alert(user, "You cannot directly fill [target]!")
+		user.balloon_alert(user, "you cannot directly fill [target]!")
 		return ITEM_INTERACT_BLOCKING
 
 	if(target.reagents.total_volume >= target.reagents.maximum_volume)
@@ -226,7 +226,7 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 
 /obj/item/hypospray/proc/spray(mob/living/user, atom/target) // Colorful Reagent hypos when?
 	if(!vial.reagents.total_volume)
-		user.balloon_alert(user, "Container empty!")
+		user.balloon_alert(user, "container empty!")
 		return ITEM_INTERACT_BLOCKING
 
 	var/contained = vial.reagents.get_reagent_log_string()
@@ -269,7 +269,7 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 
 /obj/item/hypospray/proc/draw(mob/living/user, atom/target)
 	if(vial.reagents.total_volume >= vial.reagents.maximum_volume)
-		user.balloon_alert(user, "Container full!")
+		user.balloon_alert(user, "container full!")
 		return ITEM_INTERACT_BLOCKING
 
 	SEND_SIGNAL(target, COMSIG_LIVING_TRY_SYRINGE_WITHDRAW, user)

@@ -17,7 +17,7 @@
 		to_chat(user, span_notice("The modkit you are trying to install should not exist."))
 		return FALSE
 	if(hypo.upgrade_flags & upgrade_flag)
-		user.balloon_alert(user, "Already installed!")
+		user.balloon_alert(user, "already installed!")
 		return
 	hypo.upgrade_flags |= upgrade_flag
 	playsound(src, 'sound/items/screwdriver.ogg', 50, 1)
