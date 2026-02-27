@@ -348,12 +348,6 @@
 		add_overlay(vial)
 		add_overlay(filling)
 		slot++
-	if(!broken)
-		var/mutable_appearance/led = mutable_appearance(icon, "led[atom_storage.locked]")
-		add_overlay(led)
-	if(!open)
-		var/mutable_appearance/lid = mutable_appearance(icon, "vialboxcover")
-		add_overlay(lid)
 	..()
 
 /obj/item/storage/lockbox/vialbox/Initialize(mapload)
@@ -362,6 +356,12 @@
 	atom_storage.max_slots = 8
 	atom_storage.max_total_storage = 12
 	atom_storage.set_holdable(list(/obj/item/reagent_containers/cup/vial))
+	if(!broken)
+		var/mutable_appearance/led = mutable_appearance(icon, "led[atom_storage.locked]")
+		add_overlay(led)
+	if(!open)
+		var/mutable_appearance/lid = mutable_appearance(icon, "vialboxcover")
+		add_overlay(lid)
 	update_icon()
 
 /obj/item/storage/lockbox/vialbox/hypo_deluxe
