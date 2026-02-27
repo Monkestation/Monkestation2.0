@@ -353,6 +353,37 @@
 		attack_self(user)
 	return BRUTELOSS
 
+//if edagger is turned on and in ear slot, and the user has hair, light the hair on fire
+/obj/item/pen/edagger/equipped(mob/equipee, slot, human)
+	. = ..()
+	//is it equipped in ears, is it activated, are they not bald
+	if((slot & ITEM_SLOT_EARS) && HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
+		if(ishuman(equipee))
+			var/mob/living/carbon/human/human_equipee = equipee
+			if(human_equipee.hairstyle != "Bald")
+				human_equipee.visible_message("You smell something burning...")
+				addtimer(CALLBACK(src, PROC_REF(deferred_ignite), human_equipee), 25)
+
+//sets them on fire and burns off their hair
+/obj/item/pen/edagger/proc/deferred_ignite(mob/living/carbon/human/human_equipee)
+	human_equipee.adjust_fire_stacks(2)
+	human_equipee.ignite_mob()
+	human_equipee.set_hairstyle("Bald", update = TRUE)
+	human_equipee.visible_message(span_bolddanger("Your hair burns off!"))
+
+//allows the edagger to lights cigarettes
+/obj/item/pen/edagger/ignition_effect(atom/atom, mob/user)
+	if(!heat && !HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
+		return ""
+
+	var/in_mouth = ""
+	if(iscarbon(user))
+		var/mob/living/carbon/carbon_user = user
+		if(carbon_user.wear_mask)
+			in_mouth = ", barely missing [carbon_user.p_their()] nose"
+	. = span_warning("[user] swings [user.p_their()] [name][in_mouth]. [user.p_they(TRUE)] light[user.p_s()] [user.p_their()] [atom.name] in the process.")
+	playsound(loc, hitsound, get_clamped_volume(), TRUE, -1)
+	add_fingerprint(user)
 /*
  * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
  *
