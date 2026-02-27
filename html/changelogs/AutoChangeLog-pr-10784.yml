@@ -1,0 +1,6 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Some assorted minor bugfixes."
+  - bugfix: "Fixed the worn sprite for Wheely Heels being horribly misaligned."
+  - bugfix: "Fixed Lamarr not being able to understand Galactic Common, despite being able to speak it."

@@ -1,4 +1,4 @@
-import { BooleanLike } from 'common/react';
+import type { BooleanLike } from 'common/react';
 import { toTitleCase } from 'common/string';
 
 import { useBackend } from '../backend';
@@ -14,17 +14,17 @@ import {
   Table,
 } from '../components';
 
-
 import { Window } from '../layouts';
 import { MaterialAccessBar } from './Fabrication/MaterialAccessBar';
 import { MaterialIcon } from './Fabrication/MaterialIcon';
-import { Material } from './Fabrication/Types';
+import type { Material } from './Fabrication/Types';
 
 type Data = {
   SHEET_MATERIAL_AMOUNT: number;
   materials: Material[];
   design?: Design;
   busy: BooleanLike;
+  boardInserted: BooleanLike;
 };
 
 type Design = {
@@ -37,7 +37,8 @@ type Design = {
 
 export const Flatpacker = (props: any) => {
   const { act, data } = useBackend<Data>();
-  const { SHEET_MATERIAL_AMOUNT, materials, design, busy } = data;
+  const { SHEET_MATERIAL_AMOUNT, materials, design, busy, boardInserted } =
+    data;
 
   return (
     <Window width={400} height={445} title="Flatpacker">
@@ -75,6 +76,7 @@ export const Flatpacker = (props: any) => {
                   tooltipPosition="left"
                   height="37px"
                   width="37px"
+                  disabled={!boardInserted}
                   onClick={() => act('ejectBoard')}
                 >
                   <Icon name="eject" size={1.5} mt="0.8rem" ml="0rem" />
