@@ -322,7 +322,10 @@
 	if((user.istate & ISTATE_HARM) && user.Adjacent(interacting_with))
 		return ITEM_INTERACT_SKIP_TO_ATTACK // Gun bash / bayonet attack
 
-	if(!isliving(interacting_with) || !can_hold_up)
+	if(!can_hold_up)
+		return ..()
+
+	if(!isliving(interacting_with))
 		return
 
 	var/datum/component/gunpoint/gunpoint_component = user.GetComponent(/datum/component/gunpoint)
