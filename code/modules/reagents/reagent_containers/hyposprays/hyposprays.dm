@@ -170,7 +170,7 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 	SEND_SIGNAL(target, COMSIG_LIVING_TRY_SYRINGE_INJECT, user)
 
 	if(!vial.reagents.total_volume)
-		user.balloon_alert(user, container empty!")
+		user.balloon_alert(user, "container empty!")
 		return ITEM_INTERACT_BLOCKING
 
 	if(!isliving(target) && !target.is_injectable(user))
