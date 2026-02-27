@@ -355,12 +355,14 @@
 			log_bomber(get_mob_by_key(fingerprintslast), "was last key to touch", src, "which ruptured explosively")
 		//Give the gas a chance to build up more pressure through reacting
 		air_contents.react(src)
+		air_contents.react(src)
+		air_contents.react(src)
+		air_contents.react(src)
 		pressure = air_contents.return_pressure()
 
-		// As of writing this this is calibrated to maxcap at 140L and 160atm.
-		var/power = (air_contents.volume * (pressure - TANK_FRAGMENT_PRESSURE)) / TANK_FRAGMENT_SCALE
-		log_atmos("[type] exploded with a power of [power] and a mix of ", air_contents)
-		dyn_explosion(src, power, flash_range = 1.5, ignorecap = FALSE)
+		var/range = (pressure-TANK_FRAGMENT_PRESSURE)/TANK_FRAGMENT_SCALE
+		log_atmos("[type] exploded with a range of [range] and a mix of ", air_contents)
+		explosion(src, round(range*0.25), round(range*0.5), round(range), round(range*1.5))
 	return ..()
 
 /obj/item/tank/proc/merging_information()
