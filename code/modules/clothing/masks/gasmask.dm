@@ -529,5 +529,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 
 	speech_args[SPEECH_SPANS] |= SPAN_ROBOT // I said NO.
 
-
-
+/obj/item/clothing/mask/gas/deforest
+	name = "Deforest Gas Mask"
+	desc = "A reinforced environmental mask designed by Deforest Pharmaceutical for search and rescue, the tinted visor and built-in negative pressure lining guarantee a secure fit even if the wearer were to fall flat on their face."
+	icon_state = "hivismask"

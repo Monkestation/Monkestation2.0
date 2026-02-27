@@ -301,6 +301,11 @@
 	to_preload += /obj/item/reagent_containers/cup/bottle/formaldehyde
 	return to_preload
 
+/obj/item/storage/belt/medical/paramedic/deforest
+	name = "Deforest Medical Belt"
+	icon_state = "hivisbelt"
+	worn_icon_state = "hivisbelt"
+
 /obj/item/storage/belt/medical/secmed
 	name = "security medical belt"
 	icon_state = "secmed"
