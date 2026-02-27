@@ -22,6 +22,7 @@
 	var/list/striped_vial_skins = list("vial_white", "vial_red", "vial_blue", "vial_green", "vial_orange", "vial_purple", "vial_black", "viallarge_white", "viallarge_red", "viallarge_blue", "viallarge_green", "viallarge_orange", "viallarge_purple", "viallarge_black")
 
 /obj/item/reagent_containers/cup/vial/Initialize(mapload)
+	. = ..()
 	if(icon_state in striped_vial_skins)
 		fill_icon_state = "[icon_state]stripe"
 	..()
