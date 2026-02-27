@@ -169,6 +169,15 @@ SUBSYSTEM_DEF(statpanels)
 
 	// Push update
 	target.stat_panel.send_message("update_interviews", data)
+	// Monkestation Addition: Token Manager START
+	var/list/token_data = list(
+		"accepted" = SStoken_manager.accepted_count || 0,
+		"pending" = length(SStoken_manager.pending_requests) || 0,
+		"rejected" = SStoken_manager.rejected_count || 0,
+		"timed_out" = SStoken_manager.timed_out_count || 0,
+	)
+	target.stat_panel.send_message("update_tokens", token_data)
+	// Monkestation Addition END
 
 /datum/controller/subsystem/statpanels/proc/set_SDQL2_tab(client/target)
 	var/list/sdql2A = list()

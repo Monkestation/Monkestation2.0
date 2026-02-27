@@ -6,13 +6,10 @@
 
 #define JOB_BLUESHIELD "Blueshield"
 
-#define JOB_LATEJOIN_BARBER "Barber"
+#define JOB_BARBER "Barber"
 
-#define JOB_LATEJOIN_EXPLORER "Explorer"
+#define JOB_EXPLORER "Explorer"
 
 #define JOB_XENOBIOLOGIST "Xenobiologist"
-
-/// Whether this job is enabled/disabled by the spooktober config
-#define JOB_SPOOKTOBER (1<<16)
 
 

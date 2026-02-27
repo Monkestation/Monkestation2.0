@@ -19,5 +19,5 @@
 		"telshahr", "tifur", "enhi", "am", "bahr", "nei", "neibahri", "n'chow", "n'wah",
 		"s'wit", "b'vehk", "f'lah", "muth", "sera", "sedura", "bal", "dun"
 	)
-	icon_state = "darkspawn"
+	icon_state = "shadow"
 	default_priority = 90

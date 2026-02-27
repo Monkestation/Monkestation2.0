@@ -123,11 +123,11 @@
 	var/datum/antagonist/vassal/vassal = IS_VASSAL(target)
 	if(!victim_has_blood(target))
 		return FALSE
-	if(!bloodsuckerdatum_power.can_make_vassal(target))
-		return FALSE
 	if(vassal)
 		owner.balloon_alert(owner, "attempting to revive.")
 	else
+		if(!bloodsuckerdatum_power.can_make_vassal(target))
+			return FALSE
 		owner.balloon_alert(owner, "attempting to vassalize.")
 	if(!do_after(user, vassal_creation_time, target, NONE, TRUE, hidden = TRUE))
 		return FALSE

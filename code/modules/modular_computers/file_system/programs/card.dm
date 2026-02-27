@@ -133,11 +133,11 @@
 			return TRUE
 		if("PRG_eject_id")
 			if(inserted_auth_card)
-				return computer.RemoveID(usr)
+				return computer.remove_id(usr)
 			else
 				var/obj/item/I = user.get_active_held_item()
 				if(isidcard(I))
-					return computer.InsertID(I, user)
+					return computer.insert_id(I, user)
 			return TRUE
 		// Used to fire someone. Wipes all access from their card and modifies their assignment.
 		if("PRG_terminate")

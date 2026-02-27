@@ -160,8 +160,10 @@
 /datum/component/seethrough/proc/on_client_disconnect(mob/fool)
 	SIGNAL_HANDLER
 
-	tricked_mobs.Remove(fool)
+	tricked_mobs -= fool
 	UnregisterSignal(fool, COMSIG_MOB_LOGOUT)
+	if(QDELETED(fool))
+		return
 	RegisterSignal(fool, COMSIG_MOB_LOGIN, PROC_REF(trick_mob))
 	var/datum/hud/our_hud = fool.hud_used
 	for(var/atom/movable/screen/plane_master/seethrough in our_hud.get_true_plane_masters(SEETHROUGH_PLANE))

@@ -15,7 +15,7 @@
 	if(. || (organ_flags & ORGAN_FAILING))
 		return
 	if(istype(chem, /datum/reagent/toxin/bonehurtingjuice))
-		organ_owner.stamina?.adjust(7.5 * REM * seconds_per_tick, 0)
+		organ_owner.stamina?.adjust(3.75 * REM * seconds_per_tick, 0)
 		organ_owner.adjustBruteLoss(0.5 * REM * seconds_per_tick, 0)
 		if(SPT_PROB(10, seconds_per_tick))
 			switch(rand(1, 3))

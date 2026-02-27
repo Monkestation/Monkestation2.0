@@ -1,17 +1,17 @@
 import { toTitleCase } from 'common/string';
-import { useBackend, useSharedState, useLocalState } from '../backend';
+import { useBackend, useLocalState, useSharedState } from '../backend';
 import {
   Box,
   Button,
-  NumberInput,
-  NoticeBox,
-  ProgressBar,
-  Section,
   Flex,
-  Stack,
+  NoticeBox,
+  NumberInput,
+  ProgressBar,
   RoundGauge,
-  Tabs,
+  Section,
+  Stack,
   Table,
+  Tabs,
   Tooltip,
 } from '../components';
 import { Window } from '../layouts';
@@ -244,7 +244,7 @@ export const DatadiskTab = (props) => {
 const MaterialRow = (props) => {
   const { material, onRelease } = props;
 
-  const [amount, setAmount] = useLocalState('amount' + material.name, 1);
+  const [amount, setAmount] = useLocalState(`amount${material.name}`, 1);
 
   const amountAvailable = Math.floor(material.amount);
   return (
@@ -263,7 +263,7 @@ const MaterialRow = (props) => {
           minValue={1}
           maxValue={50}
           value={amount}
-          onChange={(e, value) => setAmount(value)}
+          onChange={(value) => setAmount(value)}
         />
         <Button
           disabled={amountAvailable < 1}

@@ -1,11 +1,11 @@
-import { Button, Stack, Box } from '../../components';
-import { Component, createRef } from 'inferno';
-import { Port } from './Port';
+import { Component, createRef } from 'react';
+import { Box, Button, Stack } from '../../components';
 import { noop } from './constants';
+import { Port } from './Port';
 
 export class DisplayComponent extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.ref = createRef();
   }
 
@@ -36,8 +36,8 @@ export class DisplayComponent extends Component {
     return false;
   }
 
-  render(props) {
-    const { component, fixedSize, ...rest } = props;
+  render() {
+    const { component, fixedSize, ...rest } = this.props;
     return (
       <Box {...rest}>
         <div ref={this.ref}>

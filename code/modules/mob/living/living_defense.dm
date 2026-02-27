@@ -102,7 +102,13 @@
 	// on [/atom/proc/bullet_act] where it's just to pass it to the projectile's on_hit().
 	var/armor_check = min(ARMOR_MAX_BLOCK, check_projectile_armor(def_zone, hitting_projectile, is_silent = TRUE))
 
-	var/damage_done = apply_damage(
+	var/stamina_armor_check = armor_check
+
+	//If we hit a limb with stamina damage, we check the armor on the chest instead, to prevent cheesing armor by targeting limbs to stamcrit.
+	if (def_zone != BODY_ZONE_CHEST && def_zone != BODY_ZONE_HEAD)
+		stamina_armor_check = min(ARMOR_MAX_BLOCK, check_projectile_armor(BODY_ZONE_CHEST, hitting_projectile, is_silent = TRUE))
+
+	apply_damage(
 		damage = hitting_projectile.damage,
 		damagetype = hitting_projectile.damage_type,
 		def_zone = def_zone,
@@ -117,41 +123,21 @@
 			damage = hitting_projectile.stamina,
 			damagetype = STAMINA,
 			def_zone = def_zone,
-			blocked = armor_check,
+			blocked = stamina_armor_check,
 			attack_direction = hitting_projectile.dir,
 		)
-	if(hitting_projectile.pain)
-		apply_damage(
-			damage = hitting_projectile.pain,
-			damagetype = PAIN,
-			def_zone = def_zone,
-			// blocked = armor_check, // Batons don't factor in armor, soooo we shouldn't?
-			attack_direction = hitting_projectile.dir,
-		)
-
-	var/extra_paralyze = 0 SECONDS
-	var/extra_knockdown = 0 SECONDS
-	if(hitting_projectile.damage_type == BRUTE && !hitting_projectile.grazing && (pain_controller?.get_average_pain() > 50))
-		if(damage_done >= 60)
-			if(!IsParalyzed() && prob(damage_done))
-				extra_paralyze += 0.8 SECONDS
-				extra_knockdown += 1.2 SECONDS
-		else if(damage_done >= 20)
-			if(!IsKnockdown() && prob(damage_done * 2))
-				extra_knockdown += 0.8 SECONDS
 
 	apply_effects(
 		stun = hitting_projectile.stun,
-		knockdown = hitting_projectile.knockdown + extra_knockdown,
+		knockdown = hitting_projectile.knockdown,
 		unconscious = hitting_projectile.unconscious,
 		slur = (mob_biotypes & MOB_ROBOTIC) ? 0 SECONDS : hitting_projectile.slur, // Don't want your cyborgs to slur from being ebow'd
 		stutter = (mob_biotypes & MOB_ROBOTIC) ? 0 SECONDS : hitting_projectile.stutter, // Don't want your cyborgs to stutter from being tazed
 		eyeblur = hitting_projectile.eyeblur,
 		drowsy = hitting_projectile.drowsy,
 		blocked = armor_check,
-		stamina = hitting_projectile.stamina,
 		jitter = (mob_biotypes & MOB_ROBOTIC) ? 0 SECONDS : hitting_projectile.jitter, // Cyborgs can jitter but not from being shot
-		paralyze = hitting_projectile.paralyze + extra_paralyze,
+		paralyze = hitting_projectile.paralyze,
 		immobilize = hitting_projectile.immobilize,
 	)
 	if(hitting_projectile.dismemberment)
@@ -597,6 +583,8 @@
 		return FALSE
 	if(is_blind() && !(override_blindness_check || affect_silicon))
 		return FALSE
+
+	apply_status_effect(/datum/status_effect/currently_flashed, length)
 
 	// this forces any kind of flash (namely normal and static) to use a black screen for photosensitive players
 	// it absolutely isn't an ideal solution since sudden flashes to black can apparently still trigger epilepsy, but byond apparently doesn't let you freeze screens

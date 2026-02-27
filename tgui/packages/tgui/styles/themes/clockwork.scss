@@ -1,70 +1,42 @@
-@use 'sass:color';
-@use 'sass:meta';
+.theme-clockwork:root {
+  // Palette
+  --clockwork-gold: #b18b25;
+  --clockwork-gold-bright: #cfba47;
+  --clockwork-bronze: #896b19;
+  --clockwork-brown: #5f380e;
+  --clockwork-ivory: #d6ca85;
+  --clockwork-shadow-soft: rgba(0, 0, 0, 0.1);
 
-@use '../colors.scss' with (
-  $good: #cfba47,
-  $primary: #b18b25,
-  $average: #896b19,
-  $bad: #5f380e
-);
-@use '../base.scss' with (
-  $color-bg: #5f380e,
-  $color-bg-start: #b18b25,
-  $color-bg-end: #5f380e,
-  $color-bg-grad-spread: 6%,
-  $border-radius: 2px
-);
-
-.theme-clockwork {
-  // Atomic classes
-  @include meta.load-css('../atomic/color.scss');
+  // Base
+  --color-primary: var(--clockwork-gold);
+  --color-good: var(--clockwork-gold-bright);
+  --color-average: var(--clockwork-bronze);
+  --color-bad: var(--clockwork-brown);
+  --color-base: var(--clockwork-brown);
+  --color-base-start: var(--clockwork-gold);
+  --color-base-end: var(--clockwork-brown);
+  --color-secondary: var(--clockwork-brown);
 
   // Components
-  @include meta.load-css(
-    '../components/Button.scss',
-    $with: (
-      'color-default': colors.$primary,
-      'color-disabled': #665c3c,
-      'color-selected': #cfba47,
-      'color-caution': #ffae42,
-      'color-danger': #ffff00
-    )
-  );
-  @include meta.load-css('../components/Input.scss');
-  @include meta.load-css(
-    '../components/Tooltip.scss',
-    $with: ('background-color': #2d1400)
-  );
-  @include meta.load-css(
-    '../components/Section.scss',
-    $with: ('separator-color': #d6ca85)
-  );
-  @include meta.load-css(
-    '../components/Divider.scss',
-    $with: ('color': #d6ca85)
-  );
-  @include meta.load-css(
-    '../components/ProgressBar.scss',
-    $with: ('background-color': rgba(0, 0, 0, 0.5))
-  );
+  --button-background-default: var(--clockwork-gold);
+  --button-background-disabled: #665c3c;
+  --button-background-selected: var(--clockwork-gold-bright);
+  --button-background-caution: #ffae42;
+  --button-background-danger: #ffff00;
+  --tooltip-background: #2d1400;
+  --section-separator-color: var(--clockwork-ivory);
+  --divider-color: var(--clockwork-ivory);
+  --progress-bar-background: rgba(0, 0, 0, 0.5);
+  --input-color: var(--clockwork-gold);
+  --input-background: var(--clockwork-gold-bright);
 
-  //Layouts
-  @include meta.load-css('../layouts/Layout.scss');
-  @include meta.load-css('../layouts/Window.scss');
-  @include meta.load-css(
-    '../layouts/TitleBar.scss',
-    $with: (
-      'background-color': #5f380e,
-      'shadow-color': rgba(0, 0, 0, 0.1),
-      'text-color': #cfba47
-    )
-  );
+  // TitleBar
+  --titlebar-background: var(--clockwork-brown);
+  --titlebar-shadow-color: var(--clockwork-shadow-soft);
+  --titlebar-shadow-core: var(--clockwork-shadow-soft);
+  --titlebar-text: var(--clockwork-gold-bright);
 
-  .Input {
-    color: #b18b25;
-    background-color: #cfba47;
-  }
-
+  // Layouts
   .Layout__content {
     background-image: none;
   }

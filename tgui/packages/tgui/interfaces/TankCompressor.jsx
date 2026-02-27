@@ -4,14 +4,14 @@ import {
   Button,
   Flex,
   Icon,
+  LabeledList,
   Modal,
+  NoticeBox,
   RoundGauge,
   Section,
   Slider,
   Stack,
-  NoticeBox,
   Tabs,
-  LabeledList,
 } from '../components';
 import { Window } from '../layouts';
 import { GasmixParser } from './common/GasmixParser';
@@ -36,9 +36,7 @@ const TankCompressorContent = (props) => {
       {currentTab === 1 && <TankCompressorControls />}
       {currentTab === 2 && <TankCompressorRecords />}
       <Stack.Item>
-        <Section
-          title={disk ? disk + ' (' + storage + ')' : 'No Disk Inserted'}
-        >
+        <Section title={disk ? `${disk} (${storage})` : 'No Disk Inserted'}>
           <Stack>
             <Stack.Item grow>
               <Button
@@ -142,7 +140,7 @@ const TankCompressorControls = (props) => {
                 }}
                 size={5}
                 textAlign="center"
-                format={(value) => (value ? value.toFixed(2) : '-') + ' kPa'}
+                format={(value) => `${value ? value.toFixed(2) : '-'} kPa`}
               />
             </Stack.Item>
             <Stack.Item basis={0} grow>
@@ -201,7 +199,8 @@ const TankCompressorControls = (props) => {
                 stepPixelSize={12.5}
                 step={0.5}
                 unit="L/S"
-                onDrag={(e, new_rate) =>
+                tickWhileDragging
+                onChange={(_, new_rate) =>
                   act('change_rate', { target: new_rate })
                 }
               />
@@ -333,9 +332,11 @@ const TankCompressorRecords = (props) => {
                     <LabeledList>
                       {Object.keys(activeRecord.gases).map((gas_name) => (
                         <LabeledList.Item label={gas_name} key={gas_name}>
-                          {(activeRecord.gases[gas_name]
-                            ? activeRecord.gases[gas_name].toFixed(2)
-                            : '-') + ' moles'}
+                          {`${
+                            activeRecord.gases[gas_name]
+                              ? activeRecord.gases[gas_name].toFixed(2)
+                              : '-'
+                          } moles`}
                         </LabeledList.Item>
                       ))}
                     </LabeledList>

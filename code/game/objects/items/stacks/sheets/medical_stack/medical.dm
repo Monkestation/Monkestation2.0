@@ -77,7 +77,7 @@
 		if(!do_after(user, other_delay, patient, extra_checks=CALLBACK(patient, TYPE_PROC_REF(/mob/living, try_inject), user, null, INJECT_TRY_SHOW_ERROR_MESSAGE)))
 			return
 
-	if(heal(patient, user))
+	if(heal(patient, user, silent))
 		log_combat(user, patient, "healed", src.name)
 		use(1)
 		if(repeating && amount > 0)
@@ -85,27 +85,31 @@
 	return TRUE
 
 /// Apply the actual effects of the healing if it's a simple animal, goes to [/obj/item/stack/medical/proc/heal_carbon] if it's a carbon, returns TRUE if it works, FALSE if it doesn't
-/obj/item/stack/medical/proc/heal(mob/living/patient, mob/user)
+/obj/item/stack/medical/proc/heal(mob/living/patient, mob/user, silent = FALSE)
 	if(patient.stat == DEAD)
 		patient.balloon_alert(user, "they're dead!")
 		return
 	if(isanimal_or_basicmob(patient) && heal_brute) // only brute can heal
 		var/mob/living/simple_animal/critter = patient
 		if (istype(critter) && !critter.healable)
-			patient.balloon_alert(user, "won't work!")
+			if(!silent)
+				patient.balloon_alert(user, "won't work!")
 			return FALSE
 		if (!(patient.mob_biotypes & MOB_ORGANIC))
-			patient.balloon_alert(user, "can't fix that!")
+			if(!silent)
+				patient.balloon_alert(user, "can't fix that!")
 			return FALSE
 		if (patient.health == patient.maxHealth)
-			patient.balloon_alert(user, "not hurt!")
+			if(!silent)
+				patient.balloon_alert(user, "not hurt!")
 			return FALSE
 		user.visible_message("<span class='infoplain'><span class='green'>[user] applies [src] on [patient].</span></span>", "<span class='infoplain'><span class='green'>You apply [src] on [patient].</span></span>")
 		patient.heal_bodypart_damage((heal_brute * 0.5))
 		return TRUE
 	if(iscarbon(patient))
-		return heal_carbon(patient, user, heal_brute, heal_burn)
-	patient.balloon_alert(user, "can't heal that!")
+		return heal_carbon(patient, user, heal_brute, heal_burn, silent)
+	if(!silent)
+		patient.balloon_alert(user, "can't heal that!")
 
 /// The healing effects on a carbon patient. Since we have extra details for dealing with bodyparts, we get our own fancy proc. Still returns TRUE on success and FALSE on fail
 /obj/item/stack/medical/proc/heal_carbon(mob/living/carbon/patient, mob/user, brute, burn, silent = FALSE)
@@ -380,10 +384,10 @@
 	hitsound = 'sound/misc/moist_impact.ogg'
 	merge_type = /obj/item/stack/medical/poultice
 
-/obj/item/stack/medical/poultice/heal(mob/living/patient, mob/user)
+/obj/item/stack/medical/poultice/heal(mob/living/patient, mob/user, silent = FALSE)
 	if(iscarbon(patient))
 		playsound(src, 'sound/misc/soggy.ogg', 30, TRUE)
-		return heal_carbon(patient, user, heal_brute, heal_burn)
+		return heal_carbon(patient, user, heal_brute, heal_burn, silent)
 	return ..()
 
 /obj/item/stack/medical/poultice/post_heal_effects(amount_healed, mob/living/carbon/healed_mob, mob/user)

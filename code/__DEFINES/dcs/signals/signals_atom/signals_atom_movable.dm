@@ -109,6 +109,9 @@
 	#define MOVABLE_SAY_QUOTE_MESSAGE_SPANS 2
 	#define MOVABLE_SAY_QUOTE_MESSAGE_MODS 3
 
+///from base of /atom/movable/point_at: (atom/A, obj/effect/temp_visual/point/point)
+#define COMSIG_MOVABLE_POINTED "movable_pointed"
+
 #define COMSIG_MOB_CI_TOGGLED "mob_ci_toggled"
 
 /// Called when the atom is dropped into a chasm: (turf/chasm)

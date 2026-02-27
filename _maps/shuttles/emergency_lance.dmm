@@ -179,10 +179,10 @@
 "hp" = (
 /obj/item/radio/intercom/directional/east,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/reagent_containers/blood/universal{
+/obj/item/reagent_containers/chem_pack/saline{
 	pixel_x = -3
 	},
-/obj/item/reagent_containers/blood/universal{
+/obj/item/reagent_containers/chem_pack/saline{
 	pixel_x = 3
 	},
 /obj/item/reagent_containers/hypospray/medipen/atropine,
@@ -1021,10 +1021,10 @@
 /area/shuttle/escape)
 "HJ" = (
 /obj/structure/table/reinforced,
-/obj/item/reagent_containers/blood/universal{
+/obj/item/reagent_containers/chem_pack/saline{
 	pixel_x = -3
 	},
-/obj/item/reagent_containers/blood/universal{
+/obj/item/reagent_containers/chem_pack/saline{
 	pixel_x = 3
 	},
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted{

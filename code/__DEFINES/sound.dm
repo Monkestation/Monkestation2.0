@@ -15,7 +15,6 @@
 #define CHANNEL_INSTRUMENTS 1011
 #define CHANNEL_INSTRUMENTS_ROBOT 1010
 #define CHANNEL_MOB_SOUNDS 1009
-#define CHANNEL_Z 1008
 // monkestation edit
 #define CHANNEL_WALKMAN 1007
 #define CHANNEL_MASTER_VOLUME 1006
@@ -82,7 +81,7 @@
 //THIS SHOULD ALWAYS BE THE LOWEST ONE!
 //KEEP IT UPDATED
 
-#define CHANNEL_HIGHEST_AVAILABLE 1001 //monkestation edit
+#define CHANNEL_HIGHEST_AVAILABLE 998 //monkestation edit
 
 #define MAX_INSTRUMENT_CHANNELS (128 * 6)
 
@@ -231,6 +230,7 @@ GLOBAL_LIST_INIT(announcer_keys, list(
 #define SFX_TREE_CHOP "tree_chop"
 #define SFX_ROCK_TAP "rock_tap"
 #define SFX_MUFFLED_SPEECH "muffspeech"
+#define SFX_WRITING_PEN "writing_pen"
 
 #define SFX_BUTTON_CLICK "button_click"
 #define SFX_BUTTON_FAIL	"button_fail"

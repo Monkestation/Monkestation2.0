@@ -224,7 +224,6 @@
 	greyscale_colors = "#39393f"
 	greyscale_config = /datum/greyscale_config/tailcoat
 	greyscale_config_worn = /datum/greyscale_config/tailcoat_worn
-	greyscale_config_worn_digitigrade = /datum/greyscale_config/tailcoat_worn/digitigrade
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/suit/jacket/tailcoat/bartender
@@ -234,7 +233,6 @@
 	greyscale_colors = "#39393f#ffffff"
 	greyscale_config = /datum/greyscale_config/tailcoat_bar
 	greyscale_config_worn = /datum/greyscale_config/tailcoat_bar_worn
-	greyscale_config_worn_digitigrade = /datum/greyscale_config/tailcoat_bar_worn/digitigrade
 	armor_type = /datum/armor/tailcoat_bar
 
 /datum/armor/tailcoat_bar
@@ -262,7 +260,6 @@
 	armor_type = /datum/armor/tailcoat_syndi
 	greyscale_config = null
 	greyscale_config_worn = null
-	greyscale_config_worn_digitigrade = null
 	greyscale_colors = null
 
 
@@ -304,7 +301,6 @@
 	armor_type = /datum/armor/armor_centcom_formal
 	greyscale_config = null
 	greyscale_config_worn = null
-	greyscale_config_worn_digitigrade = null
 	greyscale_colors = null
 
 
@@ -314,7 +310,6 @@
 	icon_state = "tailcoat_brit"
 	greyscale_config = null
 	greyscale_config_worn = null
-	greyscale_config_worn_digitigrade = null
 	greyscale_colors = null
 
 
@@ -324,7 +319,6 @@
 	icon_state = "tailcoat_communist"
 	greyscale_config = null
 	greyscale_config_worn = null
-	greyscale_config_worn_digitigrade = null
 	greyscale_colors = null
 
 /obj/item/clothing/suit/jacket/tailcoat/usa
@@ -333,7 +327,6 @@
 	icon_state = "tailcoat_stars"
 	greyscale_config = null
 	greyscale_config_worn = null
-	greyscale_config_worn_digitigrade = null
 	greyscale_colors = null
 
 /obj/item/clothing/suit/jacket/tailcoat/plasmaman
@@ -342,7 +335,6 @@
 	icon_state = "tailcoat_plasma"
 	greyscale_config = null
 	greyscale_config_worn = null
-	greyscale_config_worn_digitigrade = null
 	greyscale_colors = null
 
 //End of Bunny Costume Jackets

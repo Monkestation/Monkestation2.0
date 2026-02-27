@@ -122,7 +122,7 @@
 	custom_premium_price = PAYCHECK_CREW * 3
 
 /obj/item/storage/box/dishdrive/PopulateContents()
-	var/static/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/circuitboard/machine/dish_drive = 1,
 		/obj/item/screwdriver = 1,
 		/obj/item/stack/cable_coil/five = 1,
@@ -132,7 +132,7 @@
 		/obj/item/stock_parts/matter_bin = 2,
 		/obj/item/wrench = 1,
 	)
-	generate_items_inside(items_inside,src)
+	generate_items_inside(items_inside, src)
 
 /obj/item/storage/box/actionfigure
 	name = "box of action figures"

@@ -31,36 +31,10 @@
 		var/fear_amount = (15 - get_dist(owner, human_resolved))
 		slasherdatum.increase_fear(human_resolved, fear_amount)
 
-		if(stage >= 1)
-			human_resolved.Shake(duration = 7.5 SECONDS)
-			human_resolved.stamina.adjust(-80)
-			human_resolved.SetParalyzed(2 SECONDS)
-			addtimer(CALLBACK(src, PROC_REF(remove_overlay), human_resolved), 7.5 SECONDS)
-
-		if(stage >= 2)
-			human_resolved.Shake(duration = 10 SECONDS)
-			human_resolved.stamina.adjust(-100)
-			human_resolved.SetParalyzed(2.5 SECONDS)
-			addtimer(CALLBACK(src, PROC_REF(remove_overlay), human_resolved), 5 SECONDS)
-
-		if(stage >= 3)
-			human_resolved.Shake(duration = 12.5 SECONDS)
-			human_resolved.stamina.adjust(-120)
-			human_resolved.SetParalyzed(3 SECONDS)
-			addtimer(CALLBACK(src, PROC_REF(remove_overlay), human_resolved), 5 SECONDS)
-
-		if(stage >= 4)
-			human_resolved.Shake(duration = 15 SECONDS)
-			human_resolved.stamina.adjust(-140)
-			human_resolved.SetParalyzed(4 SECONDS)
-			addtimer(CALLBACK(src, PROC_REF(remove_overlay), human_resolved), 5 SECONDS)
-
-		else
-			human_resolved.Shake(duration = 5 SECONDS)
-			human_resolved.stamina.adjust(-60)
-			human_resolved.SetParalyzed(1.5 SECONDS)
-			addtimer(CALLBACK(src, PROC_REF(remove_overlay), human_resolved), 5 SECONDS)
-
+		human_resolved.SetParalyzed((1.5 + (0.5 * stage)) SECONDS)
+		human_resolved.Shake(duration = (5 + (2.5 * stage)) SECONDS)
+		human_resolved.stamina.adjust(-30 - (10 * stage))
+		addtimer(CALLBACK(src, PROC_REF(remove_overlay), human_resolved), 5 SECONDS)
 
 	for(var/obj/machinery/light/light in view(7, owner))
 		light.break_light_tube()

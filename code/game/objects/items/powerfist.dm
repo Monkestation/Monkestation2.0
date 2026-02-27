@@ -71,16 +71,16 @@
 	update_tank(tank, TANK_REMOVING, user)
 	return TRUE
 
-/obj/item/melee/powerfist/attackby(obj/item/item_to_insert, mob/user, params)
+/obj/item/melee/powerfist/item_interaction(mob/living/user, obj/item/item_to_insert, list/modifiers)
 	if(!istype(item_to_insert, /obj/item/tank/internals))
 		return ..()
 	if(tank)
 		to_chat(user, span_notice("A tank is already present, remove it with a screwdriver first."))
-		return
+		return NONE
 	var/obj/item/tank/internals/tank_to_insert = item_to_insert
 	if(tank_to_insert.volume <= 3)
 		to_chat(user, span_warning("\The [tank_to_insert] is too small for \the [src]."))
-		return
+		return NONE
 	update_tank(item_to_insert, TANK_INSERTING, user)
 
 /obj/item/melee/powerfist/proc/update_tank(obj/item/tank/internals/the_tank, removing = TANK_INSERTING, mob/living/carbon/human/user)

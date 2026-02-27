@@ -76,17 +76,15 @@
 
 /datum/computer_file/program/ai_restorer/try_eject(mob/living/user, forced = FALSE)
 	if(!stored_card)
-		if(user)
-			to_chat(user, span_warning("There is no card in \the [computer.name]."))
 		return FALSE
 
 	if(restoring && !forced)
 		if(user)
-			to_chat(user, span_warning("Safeties prevent you from removing the card until reconstruction is complete..."))
+			to_chat(user, span_warning("Safeties prevent you from removing \the [stored_card] until reconstruction is complete..."))
 		return FALSE
 
 	if(user && computer.Adjacent(user))
-		to_chat(user, span_notice("You remove [stored_card] from [computer.name]."))
+		computer.balloon_alert(user, "[stored_card] removed")
 		user.put_in_hands(stored_card)
 	else
 		stored_card.forceMove(computer.drop_location())

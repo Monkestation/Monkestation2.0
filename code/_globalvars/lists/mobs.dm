@@ -62,7 +62,7 @@ GLOBAL_LIST_EMPTY(available_ai_shells)
 GLOBAL_LIST_INIT(simple_animals, list(list(),list(),list())) // One for each AI_* status define
 GLOBAL_LIST_EMPTY(spidermobs) //all sentient spider mobs
 GLOBAL_LIST_EMPTY(bots_list)
-GLOBAL_LIST_EMPTY(aiEyes)
+GLOBAL_LIST_EMPTY(camera_eyes)
 GLOBAL_LIST_EMPTY(suit_sensors_list) //all people with suit sensors on
 GLOBAL_LIST_EMPTY(nanite_sensors_list) //app people with nanite monitoring program
 
@@ -98,6 +98,8 @@ GLOBAL_LIST_EMPTY(latejoin_ai_cores)
 
 GLOBAL_LIST_EMPTY(mob_config_movespeed_type_lookup)
 
+///Assoc list key OR alt_key = emote datum. Important to check by key when going through this so you don't have several
+///alt keys flooding the list.
 GLOBAL_LIST_EMPTY(emote_list)
 
 GLOBAL_LIST_INIT(construct_radial_images, list(
@@ -169,6 +171,13 @@ GLOBAL_LIST_INIT_TYPED(species_prototypes, /datum/species, init_species_prototyp
 				.[E.key] += E
 		else if(E.message) //Assuming all non-base emotes have this
 			stack_trace("Keyless emote: [E.type]")
+
+		if(LAZYLEN(E.alt_keys))
+			for(var/alt_key in E.alt_keys)
+				if(!.[alt_key])
+					.[alt_key] = list(E)
+				else
+					.[alt_key] += E
 
 		if(E.key_third_person) //This one is optional
 			if(!.[E.key_third_person])

@@ -4,99 +4,99 @@
 	template_width = 17
 	template_height = 10
 	weight = 8
-	mappath = "monkestation/code/modules/ghost_players/arena/maps/default.dmm"
+	mappath = "_maps/minigame/CC_Arena/default.dmm"
 
 /datum/map_template/random_room/random_arena/arcadia
 	name = "Arcadia"
 	room_id = "arcadia"
-	mappath = "monkestation/code/modules/ghost_players/arena/maps/arcadia.dmm"
+	mappath = "_maps/minigame/CC_Arena/arcadia.dmm"
 
 /datum/map_template/random_room/random_arena/atlantis
 	name = "Atlantis"
 	room_id = "atlantis"
-	mappath = "monkestation/code/modules/ghost_players/arena/maps/atlantis.dmm"
+	mappath = "_maps/minigame/CC_Arena/atlantis.dmm"
 
 /datum/map_template/random_room/random_arena/bottomless_pit
 	name = "Bottomless Pit"
 	room_id = "bottomless_pit"
-	mappath = "monkestation/code/modules/ghost_players/arena/maps/bottomless_pit.dmm"
+	mappath = "_maps/minigame/CC_Arena/bottomless_pit.dmm"
 
 /datum/map_template/random_room/random_arena/conveyor_hell
 	name = "Conveyor Hell"
 	room_id = "conveyor_hell"
-	mappath = "monkestation/code/modules/ghost_players/arena/maps/conveyor_hell.dmm"
+	mappath = "_maps/minigame/CC_Arena/conveyor_hell.dmm"
 
 /datum/map_template/random_room/random_arena/conveyor_shards
 	name = "Conveyor Shards"
 	room_id = "conveyor_shards"
-	mappath = "monkestation/code/modules/ghost_players/arena/maps/conveyor_shards.dmm"
+	mappath = "_maps/minigame/CC_Arena/conveyor_shards.dmm"
 
 /datum/map_template/random_room/random_arena/cult
 	name = "Cult"
 	room_id = "cult_arena"
-	mappath = "monkestation/code/modules/ghost_players/arena/maps/cult.dmm"
+	mappath = "_maps/minigame/CC_Arena/cult.dmm"
 
 /datum/map_template/random_room/random_arena/diner
 	name = "Diner"
 	room_id = "diner"
-	mappath = "monkestation/code/modules/ghost_players/arena/maps/diner.dmm"
+	mappath = "_maps/minigame/CC_Arena/diner.dmm"
 
 /datum/map_template/random_room/random_arena/flowers
 	name = "Flowers"
 	room_id = "flowers"
-	mappath = "monkestation/code/modules/ghost_players/arena/maps/flowers.dmm"
+	mappath = "_maps/minigame/CC_Arena/flowers.dmm"
 
 /datum/map_template/random_room/random_arena/hive
 	name = "Hive"
 	room_id = "hive"
-	mappath = "monkestation/code/modules/ghost_players/arena/maps/hive.dmm"
+	mappath = "_maps/minigame/CC_Arena/hive.dmm"
 
 /datum/map_template/random_room/random_arena/jungle
 	name = "Jungle"
 	room_id = "jungle"
-	mappath = "monkestation/code/modules/ghost_players/arena/maps/jungle.dmm"
+	mappath = "_maps/minigame/CC_Arena/jungle.dmm"
 
 /datum/map_template/random_room/random_arena/lockers
 	name = "Lockers"
 	room_id = "lockers"
-	mappath = "monkestation/code/modules/ghost_players/arena/maps/lockers.dmm"
+	mappath = "_maps/minigame/CC_Arena/lockers.dmm"
 
 /datum/map_template/random_room/random_arena/monastery
 	name = "Monastery"
 	room_id = "monastery"
-	mappath = "monkestation/code/modules/ghost_players/arena/maps/monastery.dmm"
+	mappath = "_maps/minigame/CC_Arena/monastery.dmm"
 
 /datum/map_template/random_room/random_arena/museum
 	name = "Museum"
 	room_id = "museum"
-	mappath = "monkestation/code/modules/ghost_players/arena/maps/museum.dmm"
+	mappath = "_maps/minigame/CC_Arena/museum.dmm"
 
 /datum/map_template/random_room/random_arena/neon
 	name = "Neon"
 	room_id = "neon"
-	mappath = "monkestation/code/modules/ghost_players/arena/maps/neon.dmm"
+	mappath = "_maps/minigame/CC_Arena/neon.dmm"
 
 /datum/map_template/random_room/random_arena/snow
 	name = "Snow"
 	room_id = "snow"
-	mappath = "monkestation/code/modules/ghost_players/arena/maps/snow.dmm"
+	mappath = "_maps/minigame/CC_Arena/snow.dmm"
 
 /datum/map_template/random_room/random_arena/snowfort
 	name = "Snowfort"
 	room_id = "snowfort"
-	mappath = "monkestation/code/modules/ghost_players/arena/maps/snowfort.dmm"
+	mappath = "_maps/minigame/CC_Arena/snowfort.dmm"
 
 /datum/map_template/random_room/random_arena/syndie
 	name = "Syndie"
 	room_id = "syndie"
-	mappath = "monkestation/code/modules/ghost_players/arena/maps/syndie.dmm"
+	mappath = "_maps/minigame/CC_Arena/syndie.dmm"
 
 /datum/map_template/random_room/random_arena/two_forts
 	name = "Two Forts"
 	room_id = "two_forts"
-	mappath = "monkestation/code/modules/ghost_players/arena/maps/two_forts.dmm"
+	mappath = "_maps/minigame/CC_Arena/two_forts.dmm"
 
 /datum/map_template/random_room/random_arena/upperrail
 	name = "Upperrail"
 	room_id = "upperrail"
-	mappath = "monkestation/code/modules/ghost_players/arena/maps/upperrail.dmm"
+	mappath = "_maps/minigame/CC_Arena/upperrail.dmm"

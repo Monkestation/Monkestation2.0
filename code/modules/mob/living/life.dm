@@ -118,6 +118,10 @@
 	if(temp_delta < 0 && on_fire)
 		return
 
+	// Prevents homeostasis and environmental temperature equalization only direct temperature changes work.
+	if(HAS_TRAIT(src, TRAIT_THERMAL_STASIS))
+		return
+
 	var/thermal_protection = get_insulation(loc_temp)
 	var/protection_modifier = 1
 	if(bodytemperature > standard_body_temperature + 2 KELVIN)

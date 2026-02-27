@@ -72,7 +72,7 @@
 	HELPER_PARTIAL_NAMED(/obj/machinery/atmospherics/pipe/multiz/##Type, "adapter", Name, Color) \
 
 HELPER(yellow, COLOR_YELLOW)
-HELPER(general, COLOR_VERY_LIGHT_GRAY)
+HELPER(general, ATMOS_COLOR_OMNI)
 HELPER(cyan, COLOR_CYAN)
 HELPER(green, COLOR_VIBRANT_LIME)
 HELPER(orange, COLOR_TAN_ORANGE)

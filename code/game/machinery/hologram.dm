@@ -49,7 +49,9 @@ Possible to do for anyone motivated enough:
 	interaction_flags_click = ALLOW_SILICON_REACH
 	// Blue, dim light
 	light_power = 0.8
+	light_outer_range = 2
 	light_color = LIGHT_COLOR_BLUE
+	light_on = FALSE
 	/// associative lazylist of the form: list(owner of a hologram = hologram representing that owner).
 	var/list/masters
 	/// Holoray-owner link
@@ -504,9 +506,6 @@ Possible to do for anyone motivated enough:
 			if(!is_operational || !validate_user(master))
 				clear_holo(master)
 
-	if(outgoing_call)
-		outgoing_call.Check()
-
 	var/are_ringing = FALSE
 
 	for(var/datum/holocall/holocall as anything in holo_calls)
@@ -528,6 +527,12 @@ Possible to do for anyone motivated enough:
 	if(ringing != are_ringing)
 		ringing = are_ringing
 		update_appearance(UPDATE_ICON_STATE)
+		return
+
+	if(outgoing_call)
+		outgoing_call.Check()
+		update_appearance(UPDATE_ICON_STATE)
+
 
 /obj/machinery/holopad/proc/activate_holo(mob/living/user)
 	var/mob/living/silicon/ai/AI = user
@@ -592,14 +597,17 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	var/total_users = LAZYLEN(masters) + LAZYLEN(holo_calls)
 	update_use_power(total_users > 0 ? ACTIVE_POWER_USE : IDLE_POWER_USE)
 	update_mode_power_usage(ACTIVE_POWER_USE, active_power_usage + HOLOPAD_PASSIVE_POWER_USAGE + (HOLOGRAM_POWER_USAGE * total_users))
-	if(total_users || replay_mode)
-		set_light(l_outer_range = 2)
+	if(total_users || replay_mode || outgoing_call)
+		set_light(l_on = TRUE)
 	else
-		set_light(l_outer_range = 2)
-	update_appearance()
+		set_light(l_on = FALSE)
+	update_appearance(UPDATE_ICON)
 
 /obj/machinery/holopad/update_icon_state()
 	var/total_users = LAZYLEN(masters) + LAZYLEN(holo_calls)
+	if(outgoing_call)
+		icon_state = "[base_icon_state]_sending"
+		return ..()
 	if(ringing)
 		icon_state = "[base_icon_state]_ringing"
 		return ..()
@@ -639,6 +647,8 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	set_can_hear_flags(CAN_HEAR_HOLOCALL_USER, set_flag = FALSE)
 	calling = FALSE
 	outgoing_call = null
+	SetLightsAndPower()
+	update_appearance(UPDATE_ICON)
 
 /obj/machinery/holopad/proc/unset_holo(mob/living/user)
 	var/mob/living/silicon/ai/AI = user

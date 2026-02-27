@@ -1,14 +1,15 @@
+import { shallowDiffers } from 'common/react';
+import { multiline } from 'common/string';
+import { Component } from 'react';
 import {
   Box,
-  Stack,
-  Section,
   Button,
-  Input,
   Dropdown,
   Icon,
+  Input,
+  Section,
+  Stack,
 } from '../../components';
-import { Component } from 'inferno';
-import { shallowDiffers } from 'common/react';
 
 export class VariableMenu extends Component {
   constructor() {
@@ -128,7 +129,7 @@ export class VariableMenu extends Component {
                   <Input
                     placeholder="Name"
                     fluid
-                    onChange={(e, nameVal) =>
+                    onChange={(nameVal) =>
                       this.setState({
                         variable_name: nameVal,
                       })

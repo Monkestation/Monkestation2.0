@@ -1,10 +1,10 @@
 import { range } from 'common/collections';
-import { BooleanLike } from 'common/react';
+import type { BooleanLike } from 'common/react';
+import type { CSSProperties } from 'react';
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
-import { Box, Button, Icon, Stack } from '../components';
+import { Box, Button, Icon, Image, Stack } from '../components';
 import { Window } from '../layouts';
-import type { InfernoNode } from 'inferno';
 
 const ROWS = 5;
 const COLUMNS = 6;
@@ -20,7 +20,7 @@ const getGridSpotKey = (spot: [number, number]): GridSpotKey => {
 const CornerText = (props: {
   align: 'left' | 'right';
   children: string;
-}): InfernoNode => {
+}): React.JSX.Element => {
   const { align, children } = props;
 
   return (
@@ -28,8 +28,8 @@ const CornerText = (props: {
       style={{
         position: 'relative',
         left: align === 'left' ? '2px' : '-2px',
-        'text-align': align,
-        'text-shadow': '1px 1px 1px #555',
+        textAlign: align,
+        textShadow: '1px 1px 1px #555',
       }}
     >
       {children}
@@ -72,6 +72,11 @@ const ALTERNATE_ACTIONS: Record<string, AlternateAction> = {
     icon: 'tshirt',
     text: 'Adjust jumpsuit',
   },
+
+  adjust_sensor: {
+    icon: 'microchip',
+    text: 'Adjust sensors',
+  },
 };
 
 const SLOTS: Record<
@@ -80,7 +85,7 @@ const SLOTS: Record<
     displayName: string;
     gridSpot: GridSpotKey;
     image?: string;
-    additionalComponent?: InfernoNode;
+    additionalComponent?: React.JSX.Element;
   }
 > = {
   eyes: {
@@ -236,7 +241,7 @@ type StripMenuItem =
       | {
           icon: string;
           name: string;
-          alternate?: string;
+          alternate?: string[];
         }
       | {
           obscured: ObscuringLevel;
@@ -283,33 +288,60 @@ export const StripMenu = (props) => {
                   const item = data.items[keyAtSpot];
                   const slot = SLOTS[keyAtSpot];
 
-                  let alternateAction: AlternateAction | undefined;
-
-                  let content;
-                  let tooltip;
+                  let content: React.JSX.Element | undefined;
+                  let alternateActions: React.JSX.Element[] | undefined;
+                  let tooltip: string | undefined;
 
                   if (item === null) {
                     tooltip = slot.displayName;
                   } else if ('name' in item) {
-                    if (item.alternate) {
-                      alternateAction = ALTERNATE_ACTIONS[item.alternate];
-                    }
-
                     content = (
-                      <Box
-                        as="img"
+                      <Image
                         src={`data:image/jpeg;base64,${item.icon}`}
                         height="100%"
                         width="100%"
                         style={{
-                          '-ms-interpolation-mode': 'nearest-neighbor',
-                          'image-rendering': 'pixelated',
-                          'vertical-align': 'middle',
+                          verticalAlign: 'middle',
                         }}
                       />
                     );
 
                     tooltip = item.name;
+                    if (item.alternate) {
+                      alternateActions = item.alternate.map(
+                        (alternateKey, idx) => {
+                          const alternateAction =
+                            ALTERNATE_ACTIONS[alternateKey];
+
+                          const alternateActionStyle: CSSProperties = {
+                            background: 'rgba(0, 0, 0, 0.6)',
+                            position: 'absolute',
+                            overflow: 'hidden',
+                            margin: '0px',
+                            maxWidth: '22px', // yes I know its not 20 or 25; they look bad. 22px is perfect
+                            zIndex: '2',
+                            left: `${idx === 0 ? '0' : undefined}`,
+                            right: `${idx === 1 ? '0' : undefined}`,
+                            bottom: '0',
+                          };
+                          return (
+                            <Button
+                              key={alternateAction.text}
+                              onClick={() => {
+                                act('alt', {
+                                  key: keyAtSpot,
+                                  alternate_action: alternateKey,
+                                });
+                              }}
+                              tooltip={alternateAction.text}
+                              style={alternateActionStyle}
+                            >
+                              <Icon name={alternateAction.icon} />
+                            </Button>
+                          );
+                        },
+                      );
+                    }
                   } else if ('obscured' in item) {
                     content = (
                       <Icon
@@ -322,7 +354,7 @@ export const StripMenu = (props) => {
                         ml={0}
                         mt={1.3}
                         style={{
-                          'text-align': 'center',
+                          textAlign: 'center',
                           height: '100%',
                           width: '100%',
                         }}
@@ -362,12 +394,11 @@ export const StripMenu = (props) => {
                             position: 'relative',
                             width: '100%',
                             height: '100%',
-                            padding: 0,
+                            padding: '0',
                           }}
                         >
                           {slot.image && (
-                            <Box
-                              as="img"
+                            <Image
                               className="centered-image"
                               src={resolveAsset(slot.image)}
                               opacity={0.7}
@@ -378,26 +409,7 @@ export const StripMenu = (props) => {
 
                           {slot.additionalComponent}
                         </Button>
-
-                        {alternateAction !== undefined && (
-                          <Button
-                            onClick={() => {
-                              act('alt', {
-                                key: keyAtSpot,
-                              });
-                            }}
-                            tooltip={alternateAction.text}
-                            style={{
-                              background: 'rgba(0, 0, 0, 0.6)',
-                              position: 'absolute',
-                              bottom: 0,
-                              right: 0,
-                              'z-index': 2,
-                            }}
-                          >
-                            <Icon name={alternateAction.icon} />
-                          </Button>
-                        )}
+                        {alternateActions}
                       </Box>
                     </Stack.Item>
                   );

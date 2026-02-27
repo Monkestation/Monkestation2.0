@@ -1,0 +1,4 @@
+author: "Mantle"
+delete-after: True
+changes:
+  - balance: "Hypodermic Prickles gene on plants can now only inject 50u, from 840u"

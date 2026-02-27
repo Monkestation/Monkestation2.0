@@ -4,8 +4,8 @@
  */
 
 @use 'sass:color';
-@use '../base.scss';
-@use '../colors.scss';
+@use '../legacy-base.scss' as base;
+@use '../legacy-colors.scss' as colors;
 @use '../functions.scss';
 
 .PersonalCraftingGridItem {

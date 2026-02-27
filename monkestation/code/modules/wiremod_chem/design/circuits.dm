@@ -23,11 +23,6 @@
 	id = "chemical_synthesizer"
 	build_path = /obj/item/circuit_component/chem/synthesizer
 
-/datum/design/component/bci_bloodstream
-	name = "BCI Bloodstream Injector"
-	id = "chemical_injector_bci"
-	build_path = /obj/item/circuit_component/chem/bci/bloodstream
-
 /datum/design/component/internal_tank
 	name = "Internal Chemical Tank"
 	id = "internal_chemical_tank"

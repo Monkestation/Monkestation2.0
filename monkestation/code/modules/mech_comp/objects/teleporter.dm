@@ -51,7 +51,7 @@ GLOBAL_LIST_INIT(live_teleporters, list())
 	return TRUE
 
 /obj/item/mcobject/teleporter/proc/activate()
-	if(!COOLDOWN_FINISHED(src, teleporter_cooldown))
+	if(!COOLDOWN_FINISHED(src, teleporter_cooldown) || !isturf(loc))
 		return
 
 	var/list/valid_teleport_locations = list()

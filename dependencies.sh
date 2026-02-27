@@ -13,8 +13,11 @@ export RUST_G_REPO="Monkestation/rust-g"
 #rust_g git tag
 export RUST_G_VERSION=4.2.0
 
-#node version
+# node version
 export NODE_VERSION_LTS=24.12.0
+
+# bun version
+export BUN_VERSION=1.3.6
 
 # SpacemanDMM git tag
 export SPACEMAN_DMM_VERSION=suite-1.11

@@ -1,6 +1,6 @@
 /datum/symptom/retrovirus
 	name = "Retrovirus"
-	desc = "A DNA-altering retrovirus that scrambles the structural and unique enzymes of a host constantly."
+	desc = "A DNA-altering retrovirus that constantly scrambles the structural and unique enzymes of its host."
 	max_multiplier = 4
 	stage = 4
 	badness = EFFECT_DANGER_HARMFUL

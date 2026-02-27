@@ -583,7 +583,7 @@
 	tool_behaviour = TOOL_BLOODFILTER
 	toolspeed = 1
 	/// Assoc list of chem ids to names, used for deciding which chems to filter when used for surgery
-	var/list/whitelist = list()
+	var/list/blacklist = list()
 
 /obj/item/blood_filter/get_surgery_tool_overlay(tray_extended)
 	return "filter"
@@ -597,9 +597,9 @@
 /obj/item/blood_filter/ui_data(mob/user)
 	var/list/data = list()
 	var/list/chem_names = list()
-	for(var/key in whitelist)
-		chem_names += whitelist[key]
-	data["whitelist"] = chem_names
+	for(var/key in blacklist)
+		chem_names += blacklist[key]
+	data["blacklist"] = chem_names
 	return data
 
 /obj/item/blood_filter/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -609,7 +609,7 @@
 	. = TRUE
 	switch(action)
 		if("add")
-			var/selected_reagent = tgui_input_list(usr, "Select reagent to filter", "Whitelist reagent", GLOB.chemical_name_list)
+			var/selected_reagent = tgui_input_list(usr, "Select reagent to filter", "Blacklist reagent", GLOB.chemical_name_list)
 			if(!selected_reagent)
 				return TRUE
 
@@ -617,12 +617,12 @@
 			if(!chem_id)
 				return TRUE
 
-			if(!(chem_id in whitelist))
-				whitelist[chem_id] = selected_reagent
+			if(!(chem_id in blacklist))
+				blacklist[chem_id] = selected_reagent
 
 
 
 		if("remove")
 			var/chem_name = params["reagent"]
 			var/chem_id = get_chem_id(chem_name)
-			whitelist -= chem_id
+			blacklist -= chem_id

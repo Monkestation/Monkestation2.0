@@ -1,18 +1,17 @@
-import { Fragment } from 'inferno';
+import { Fragment } from 'react';
 import { useBackend, useLocalState } from '../backend';
 import {
-  Icon,
   Box,
   Button,
-  Section,
-  Table,
-  Divider,
-  Grid,
-  ProgressBar,
   Collapsible,
+  Divider,
+  Icon,
+  ProgressBar,
+  Section,
+  Stack,
+  Table,
 } from '../components';
 import { Window } from '../layouts';
-import { TableRow } from '../components/Table';
 
 const brassColor = '#DFC69C';
 const tinkerCache = '#B5FD9D';
@@ -77,7 +76,7 @@ export const ClockworkSlab = (props) => {
 
 const ClockworkHelp = (props) => {
   return (
-    <Fragment>
+    <>
       <Collapsible title="Where To Start" color="average" open={1}>
         <Section>
           After a long and destructive war, Rat&#39;Var has been imprisoned
@@ -199,7 +198,7 @@ const ClockworkHelp = (props) => {
           <br />
         </Section>
       </Collapsible>
-    </Fragment>
+    </>
   );
 };
 
@@ -212,7 +211,7 @@ const ClockworkSpellList = (props) => {
       {scriptures.map((script) =>
         script.type === selectedTab ? (
           <Fragment key={script}>
-            <TableRow>
+            <Table.Row>
               <Table.Cell bold>{script.name}</Table.Cell>
               <Table.Cell collapsing textAlign="right">
                 <Button
@@ -220,8 +219,8 @@ const ClockworkSpellList = (props) => {
                   color={script.purchased ? 'default' : 'average'}
                   content={
                     script.purchased
-                      ? 'Invoke ' + convertPower(script.cost)
-                      : script.cog_cost + ' Cogs'
+                      ? `Invoke ${convertPower(script.cost)}`
+                      : `${script.cog_cost} Cogs`
                   }
                   tooltip={script.tip}
                   disabled={false}
@@ -232,8 +231,8 @@ const ClockworkSpellList = (props) => {
                   }
                 />
               </Table.Cell>
-            </TableRow>
-            <TableRow>
+            </Table.Row>
+            <Table.Row>
               <Table.Cell>{script.desc}</Table.Cell>
               <Table.Cell collapsing textAlign="right">
                 <Button
@@ -247,7 +246,7 @@ const ClockworkSpellList = (props) => {
                   }
                 />
               </Table.Cell>
-            </TableRow>
+            </Table.Row>
             <Table.Cell>
               <Divider />
             </Table.Cell>
@@ -297,13 +296,13 @@ const ClockworkOverview = (props) => {
 const ClockworkOverviewStat = (props) => {
   const { title, iconName, amount, maxAmount, unit, overrideText } = props;
   return (
-    <Box height="22px" fontSize="16px">
-      <Grid>
-        <Grid.Column>
+    <Section>
+      <Stack>
+        <Stack.Item>
           <Icon name={iconName} rotation={0} spin={0} />
-        </Grid.Column>
-        <Grid.Column size="2">{title}</Grid.Column>
-        <Grid.Column size="8">
+        </Stack.Item>
+        <Stack.Item grow>{title}</Stack.Item>
+        <Stack.Item grow>
           <ProgressBar
             value={amount}
             minValue={0}
@@ -314,11 +313,11 @@ const ClockworkOverviewStat = (props) => {
               bad: [-Infinity, maxAmount / 4],
             }}
           >
-            {overrideText ? overrideText : amount + ' ' + unit}
+            {overrideText ? overrideText : `${amount} ${unit}`}
           </ProgressBar>
-        </Grid.Column>
-      </Grid>
-    </Box>
+        </Stack.Item>
+      </Stack>
+    </Section>
   );
 };
 

@@ -1,17 +1,17 @@
-import { BooleanLike } from 'common/react';
+import type { BooleanLike } from 'common/react';
+import { useBackend } from '../backend';
 import {
   Box,
-  Icon,
-  Stack,
   Button,
-  Dimmer,
-  Section,
-  NoticeBox,
-  LabeledList,
   Collapsible,
+  Dimmer,
+  Icon,
+  LabeledList,
+  NoticeBox,
+  Section,
+  Stack,
 } from '../components';
 import { Window } from '../layouts';
-import { useBackend } from '../backend';
 
 enum VoteConfig {
   None = -1,
@@ -91,10 +91,11 @@ export const VotePanel = (props) => {
               !!user.isLowerAdmin && (
                 <Button
                   icon="refresh"
-                  content="Reset Cooldown"
                   disabled={LastVoteTime + VoteCD <= 0}
                   onClick={() => act('resetCooldown')}
-                />
+                >
+                  Reset Cooldown
+                </Button>
               )
             }
           >
@@ -157,17 +158,16 @@ const VoteOptions = (props) => {
                             ? 'This vote cannot be disabled.'
                             : null
                         }
-                        content={
-                          option.config === VoteConfig.Enabled
-                            ? 'Enabled'
-                            : 'Disabled'
-                        }
                         onClick={() =>
                           act('toggleVote', {
                             voteName: option.name,
                           })
                         }
-                      />
+                      >
+                        {option.config === VoteConfig.Enabled
+                          ? 'Enabled'
+                          : 'Disabled'}
+                      </Button.Checkbox>
                     </Stack.Item>
                   )}
                   <Stack.Item>
@@ -259,14 +259,14 @@ const ChoicesPanel = (props) => {
                   {user.singleSelection &&
                     choice.name === user.singleSelection && (
                       <Icon
-                        alignSelf="right"
+                        style={{ alignSelf: 'right' }}
                         mr={2}
                         color="green"
                         name="vote-yea"
                       />
                     )}
                   {currentVote.displayStatistics
-                    ? choice.votes + ' Votes'
+                    ? `${choice.votes} Votes`
                     : null}
                 </LabeledList.Item>
                 <LabeledList.Divider />
@@ -301,7 +301,7 @@ const ChoicesPanel = (props) => {
                   {user.multiSelection &&
                   user.multiSelection[user.ckey.concat(choice.name)] === 1 ? (
                     <Icon
-                      alignSelf="right"
+                      style={{ alignSelf: 'right' }}
                       mr={2}
                       color="blue"
                       name="vote-yea"

@@ -87,7 +87,7 @@
 
 	//Software Variables
 	///How many programs can the NIF store at once?
-	var/max_nifsofts = 5
+	var/max_nifsofts = 20
 	///What programs are currently loaded onto the NIF?
 	var/list/loaded_nifsofts = list()
 	///What programs come already installed on the NIF?
@@ -298,7 +298,7 @@
 					linked_mob.adjust_disgust(25)
 				if(2)
 					to_chat(linked_mob, span_warning("You feel a wave of fatigue roll over you!"))
-					linked_mob.stamina?.adjust(-50)
+					linked_mob.stamina?.adjust(-25)
 
 		if(NIF_CALIBRATION_STAGE_FINISHED to INFINITY)
 			send_message("The calibration process is complete.")

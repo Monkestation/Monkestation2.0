@@ -1,19 +1,19 @@
-import { useBackend } from '../../backend';
-import { Input, InfinitePlane, Stack, Box, Button } from '../../components';
-import { Component } from 'inferno';
-import { Window } from '../../layouts';
+import { Component } from 'react';
 import { resolveAsset } from '../../assets';
+import { useBackend } from '../../backend';
+import { Box, Button, InfinitePlane, Input, Stack } from '../../components';
+import { Window } from '../../layouts';
+import { Connections } from '../common/Connections';
 import { CircuitInfo } from './CircuitInfo';
+import { ComponentMenu } from './ComponentMenu';
 import {
   ABSOLUTE_Y_OFFSET,
   MOUSE_BUTTON_LEFT,
   TIME_UNTIL_PORT_RELEASE_WORKS,
 } from './constants';
-import { Connections } from '../common/Connections';
-import { ObjectComponent } from './ObjectComponent';
 import { DisplayComponent } from './DisplayComponent';
+import { ObjectComponent } from './ObjectComponent';
 import { VariableMenu } from './VariableMenu';
-import { ComponentMenu } from './ComponentMenu';
 
 export class IntegratedCircuit extends Component {
   constructor() {
@@ -91,8 +91,8 @@ export class IntegratedCircuit extends Component {
     position.color = port.color;
 
     if (
-      isNaN(position.x) ||
-      isNaN(position.y) ||
+      Number.isNaN(position.x) ||
+      Number.isNaN(position.y) ||
       (lastPosition &&
         lastPosition.x === position.x &&
         lastPosition.y === position.y)
@@ -345,8 +345,8 @@ export class IntegratedCircuit extends Component {
     act('add_setter_or_getter', {
       variable: draggingVariable,
       is_setter: variableIsSetter,
-      rel_x: xPos * Math.pow(zoom, -1),
-      rel_y: (yPos + ABSOLUTE_Y_OFFSET) * Math.pow(zoom, -1),
+      rel_x: xPos * zoom ** -1,
+      rel_y: (yPos + ABSOLUTE_Y_OFFSET) * zoom ** -1,
     });
   }
 
@@ -381,8 +381,8 @@ export class IntegratedCircuit extends Component {
 
     act('print_component', {
       component_to_print: draggingComponent.type,
-      rel_x: xPos * Math.pow(zoom, -1),
-      rel_y: (yPos + ABSOLUTE_Y_OFFSET) * Math.pow(zoom, -1),
+      rel_x: xPos * zoom ** -1,
+      rel_y: (yPos + ABSOLUTE_Y_OFFSET) * zoom ** -1,
     });
   }
 
@@ -425,7 +425,7 @@ export class IntegratedCircuit extends Component {
         for (const output of input.connected_to) {
           const output_port = locations[output];
           connections.push({
-            color: (output_port && output_port.color) || 'blue',
+            color: output_port?.color || 'blue',
             from: output_port,
             to: locations[input.ref],
           });
@@ -438,11 +438,11 @@ export class IntegratedCircuit extends Component {
       const isOutput = selectedPort.is_output;
       const portLocation = locations[selectedPort.ref];
       const mouseCoords = {
-        x: mouseX * Math.pow(zoom, -1),
-        y: (mouseY + ABSOLUTE_Y_OFFSET) * Math.pow(zoom, -1),
+        x: mouseX * zoom ** -1,
+        y: (mouseY + ABSOLUTE_Y_OFFSET) * zoom ** -1,
       };
       connections.push({
-        color: (portLocation && portLocation.color) || 'blue',
+        color: portLocation?.color || 'blue',
         from: isOutput ? portLocation : mouseCoords,
         to: isOutput ? mouseCoords : portLocation,
       });
@@ -453,22 +453,20 @@ export class IntegratedCircuit extends Component {
         width={1200}
         height={800}
         buttons={
-          <Box width="160px" position="absolute" top="5px" height="22px">
+          <Box position="relative">
             <Stack>
               <Stack.Item grow>
                 <Input
                   fluid
                   placeholder="Name"
                   value={display_name}
-                  onChange={(e, value) =>
+                  onChange={(value) =>
                     act('set_display_name', { display_name: value })
                   }
                 />
               </Stack.Item>
               <Stack.Item basis="24px">
                 <Button
-                  position="absolute"
-                  top={0}
                   color="transparent"
                   icon="cog"
                   selected={variableMenuOpen}
@@ -481,8 +479,6 @@ export class IntegratedCircuit extends Component {
               </Stack.Item>
               <Stack.Item basis="24px">
                 <Button
-                  position="absolute"
-                  top={0}
                   color="transparent"
                   icon="plus"
                   selected={componentMenuOpen}
@@ -496,8 +492,6 @@ export class IntegratedCircuit extends Component {
               {!!is_admin && (
                 <Stack.Item>
                   <Button
-                    position="absolute"
-                    top={0}
                     color="transparent"
                     onClick={() => act('save_circuit')}
                     icon="save"
@@ -510,7 +504,7 @@ export class IntegratedCircuit extends Component {
       >
         <Window.Content
           style={{
-            'background-image': 'none',
+            backgroundImage: 'none',
           }}
         >
           <InfinitePlane
@@ -572,9 +566,9 @@ export class IntegratedCircuit extends Component {
               minWidth="600px"
               width="50%"
               style={{
-                'border-radius': '0px 32px 0px 0px',
-                'background-color': 'rgba(0, 0, 0, 0.3)',
-                '-ms-user-select': 'none',
+                borderRadius: '0px 32px 0px 0px',
+                backgroundColor: 'rgba(0, 0, 0, 0.3)',
+                userSelect: 'none',
               }}
               unselectable="on"
             >
@@ -597,7 +591,7 @@ export class IntegratedCircuit extends Component {
                 handleMouseDownSetter={this.onVarClickedSetter}
                 handleMouseDownGetter={this.onVarClickedGetter}
                 style={{
-                  'border-radius': '0px 32px 0px 0px',
+                  borderRadius: '0px 32px 0px 0px',
                 }}
               />
             </Box>
@@ -610,8 +604,8 @@ export class IntegratedCircuit extends Component {
               height="100%"
               width="300px"
               style={{
-                'background-color': 'rgba(0, 0, 0, 0.3)',
-                '-ms-user-select': 'none',
+                backgroundColor: 'rgba(0, 0, 0, 0.3)',
+                userSelect: 'none',
               }}
               unselectable="on"
             >

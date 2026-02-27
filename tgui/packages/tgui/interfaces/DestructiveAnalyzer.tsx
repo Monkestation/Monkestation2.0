@@ -1,6 +1,6 @@
-import { BooleanLike } from 'common/react';
+import type { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
-import { Button, Box, Section, NoticeBox, DmIcon } from '../components';
+import { Box, Button, DmIcon, NoticeBox, Section } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -58,13 +58,7 @@ export const DestructiveAnalyzer = (props) => {
     );
   }
   return (
-    <Window
-      width={400}
-      height={260}
-      scrollable
-      fill
-      title="Destructive Analyzer"
-    >
+    <Window width={400} height={260} title="Destructive Analyzer">
       <Window.Content scrollable>
         <Section
           title={loaded_item}

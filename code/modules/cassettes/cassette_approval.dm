@@ -81,6 +81,8 @@ GLOBAL_ALIST_EMPTY(cassette_reviews)
 			action_taken = TRUE
 			cassette_data.id = "[random_string(16, GLOB.hex_characters)]_[submitter_ckey]"
 			cassette_data.status = CASSETTE_STATUS_APPROVED
+			cassette_data.approved_ckey = user.ckey
+			cassette_data.approved_time = rustg_unix_timestamp()
 			cassette_data.save_to_file()
 			SScassettes.cassettes[cassette_data.id] = cassette_data
 			tape.cassette_data = cassette_data.copy()
@@ -94,6 +96,8 @@ GLOBAL_ALIST_EMPTY(cassette_reviews)
 			. = TRUE
 			action_taken = TRUE
 			cassette_data.status = CASSETTE_STATUS_DENIED
+			cassette_data.deleted_ckey = user.ckey
+			cassette_data.deleted_time = rustg_unix_timestamp()
 			tape.cassette_data = cassette_data.copy()
 			log_admin("[key_name(user)] has DENIED [submitter_ckey]'s submitted tape \"[cassette_data.name]\" ([cassette_data.id])")
 			message_admins("[key_name(user)] has DENIED [submitter_ckey]'s submitted tape \"[cassette_data.name]\" ([cassette_data.id])")

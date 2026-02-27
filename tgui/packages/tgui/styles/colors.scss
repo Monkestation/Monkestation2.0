@@ -1,6 +1,8 @@
 /**
  * Copyright (c) 2020 Aleksej Komarov
  * SPDX-License-Identifier: MIT
+ *
+ * @deprecated Use css-variables
  */
 
 @use 'sass:color';
@@ -8,87 +10,80 @@
 @use 'sass:meta';
 
 // Base colors
-$black: #000000 !default;
-$white: #ffffff !default;
-$red: #db2828 !default;
-$orange: #f2711c !default;
-$yellow: #fbd608 !default;
-$olive: #b5cc18 !default;
-$green: #20b142 !default;
-$teal: #00b5ad !default;
-$blue: #2185d0 !default;
-$violet: #6435c9 !default;
-$purple: #a333c8 !default;
-$pink: #e03997 !default;
-$brown: #a5673f !default;
-$grey: #767676 !default;
-$light-grey: #aaa !default;
+$black: var(--color-black) !default;
+$white: var(--color-white) !default;
+$red: var(--color-red) !default;
+$orange: var(--color-orange) !default;
+$yellow: var(--color-yellow) !default;
+$olive: var(--color-olive) !default;
+$green: var(--color-green) !default;
+$teal: var(--color-teal) !default;
+$blue: var(--color-blue) !default;
+$violet: var(--color-violet) !default;
+$purple: var(--color-purple) !default;
+$pink: var(--color-pink) !default;
+$brown: var(--color-brown) !default;
+$grey: var(--color-grey) !default;
+$light-grey: var(--color-light-grey) !default;
 
-//monkestation addition:
-$amber: #b26800 !default;
-$crimson: #750b20 !default;
+$primary: var(--color-primary) !default;
+$good: var(--color-good) !default;
+$average: var(--color-average) !default;
+$bad: var(--color-bad) !default;
+$label: var(--color-label) !default;
 
-$primary: #4972a1 !default;
-$good: #5baa27 !default;
-$average: #f08f11 !default;
-$bad: #db2828 !default;
-$label: #7e90a7 !default;
+// Mappings of color names
+$color-map: ();
 
-// Background and foreground color lightness ratios
+$_gen_map: (
+  /* Base colors */ 'red': var(--color-red),
+  'orange': var(--color-orange),
+  'yellow': var(--color-yellow),
+  'olive': var(--color-olive),
+  'green': var(--color-green),
+  'teal': var(--color-teal),
+  'blue': var(--color-blue),
+  'violet': var(--color-violet),
+  'purple': var(--color-purple),
+  'pink': var(--color-pink),
+  'brown': var(--color-brown),
+  /* Additional colors */ 'gold': var(--color-gold),
+  /* Grayscale colors */ 'black': var(--color-black),
+  'white': var(--color-white),
+  'grey': var(--color-grey),
+  'gray': var(--color-grey),
+  'light-grey': var(--color-light-grey),
+  'light-gray': var(--color-light-grey),
+  /* Semantic colors */ 'primary': var(--color-primary),
+  'good': var(--color-good),
+  'average': var(--color-average),
+  'bad': var(--color-bad),
+  'label': var(--color-label)
+);
+$low-contrast-color-map: ('yellow', 'white') !default;
+
+// Color names for which to generate a color map
+$color-map-keys: map.keys($_gen_map) !default;
+@each $color-name in $color-map-keys {
+  $color-map: map.merge(
+    $color-map,
+    (
+      $color-name: map.get($_gen_map, $color-name),
+    )
+  );
+}
+
+/**
+ * Background and foreground color lightness ratios
+ * @deprecated
+ */
 $bg-lightness: -15% !default;
 $fg-lightness: 10% !default;
 
 @function bg($color) {
-  @return color.scale($color, $lightness: $bg-lightness);
+  @return hsl(from $color h s calc(l - var(--adjust-color)));
 }
 
 @function fg($color) {
-  @return color.scale($color, $lightness: $fg-lightness);
-}
-
-// Mappings of color names
-
-$_gen_map: (
-  'black': $black,
-  'white': $white,
-  'red': $red,
-  'orange': $orange,
-  'yellow': $yellow,
-  'olive': $olive,
-  'green': $green,
-  'teal': $teal,
-  'blue': $blue,
-  'violet': $violet,
-  'purple': $purple,
-  'pink': $pink,
-  'brown': $brown,
-  'grey': $grey,
-  'light-grey': $light-grey,
-  'amber': $amber,
-  'crimson': $crimson,
-  'good': $good,
-  'average': $average,
-  'bad': $bad,
-  'label': $label,
-);
-
-// Foreground color names for which to generate a color map
-$fg-map-keys: map.keys($_gen_map) !default;
-// Background color names for which to generate a color map
-$bg-map-keys: map.keys($_gen_map) !default;
-
-$fg-map: ();
-@each $color-name in $fg-map-keys {
-  // prettier-ignore
-  $fg-map: map-merge($fg-map, (
-    $color-name: fg(map.get($_gen_map, $color-name)),
-  ));
-}
-
-$bg-map: ();
-@each $color-name in $bg-map-keys {
-  // prettier-ignore
-  $bg-map: map-merge($bg-map, (
-    $color-name: bg(map.get($_gen_map, $color-name)),
-  ));
+  @return hsl(from $color h s calc(l + var(--adjust-color)));
 }

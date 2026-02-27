@@ -40,6 +40,7 @@
 # Flleeppyy
 
 #/tools/ticked_file_enforcement/enforce_modified_and_updated.py
+#/code/controllers/subsystem/plexora/
 
 # JohnFulpWizard
 
@@ -199,7 +200,9 @@
 #/code/__DEFINES/atmospherics/ @Ghilker @LemonInTheDark
 #/code/__HELPERS/logging/ @dragomagol @ZephyrTFA
 #/code/controllers/subsystem/air.dm @LemonInTheDark @MrStonedOne
+#/code/controllers/subsystem/floxy.dm @flleeppyy @Absolucy
 #/code/modules/atmospherics/ @Ghilker @LemonInTheDark
+#/code/modules/cassettes/ @Absolucy @flleeppyy
 #/code/modules/client/preferences.dm @Mothblocks @ZephyrTFA
 #/code/modules/client/preferences_savefile.dm @Mothblocks @ZephyrTFA
 #/code/modules/jobs/job_types/chief_medical_officer.dm @ExcessiveUseOfCobblestone @Ryll-Ryll

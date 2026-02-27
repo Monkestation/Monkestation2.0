@@ -23,9 +23,6 @@
 
 // Some source defines for pain and consciousness
 // Consciousness ones are human readable because of laziness (they are shown in cause of death)
-#define PAINSHOCK "neurological shock"
-#define PAINCRIT "paincrit"
-#define PAIN "pain"
 #define HUNGER "starvation"
 #define BRAIN_DAMAGE "brain damage"
 #define BLOOD_LOSS "blood loss"

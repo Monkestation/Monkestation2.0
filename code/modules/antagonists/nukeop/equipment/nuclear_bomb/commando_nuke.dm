@@ -172,7 +172,6 @@
 		)
 		if(SSsecurity_level.get_current_level_as_number() == SEC_LEVEL_DELTA)
 			SSsecurity_level.set_level(SEC_LEVEL_RED)
-		SSshuttle.admin_emergency_no_recall = TRUE
 		if(!EMERGENCY_AT_LEAST_DOCKED)
 			SSshuttle.emergency.request()
 	return ..()

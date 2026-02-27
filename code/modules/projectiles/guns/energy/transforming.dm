@@ -323,7 +323,7 @@
 /obj/projectile/beam/cybersun_laser/disable
 	icon_state = "disable_large"
 	damage = 0
-	stamina = 35
+	stamina = 25
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 	light_color = COLOR_BRIGHT_BLUE
 
@@ -424,7 +424,7 @@
 /obj/projectile/beam/cybersun_laser/disable_bounce
 	icon_state = "disable_bounce"
 	damage = 0
-	stamina = 45
+	stamina = 25
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 	light_color = COLOR_BRIGHT_BLUE
 	ricochet_auto_aim_angle = 30
@@ -879,7 +879,7 @@
 	light_system = OVERLAY_LIGHT
 	damage = 0
 	damage_type = STAMINA
-	stamina = 40
+	stamina = 20
 	paralyze_timer = 5 SECONDS
 	//armor_flag = ENERGY //commented out until i can figure out a way for this to not block out ricochet
 	hitsound = 'sound/weapons/tap.ogg'
@@ -1088,7 +1088,7 @@
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	damage = 0
 	damage_type = STAMINA
-	stamina = 20 // not for use on the employed
+	stamina = 10 // not for use on the employed
 	paralyze_timer = 5 SECONDS
 	armor_flag = ENERGY
 	hitsound = 'sound/weapons/tap.ogg'
@@ -1110,7 +1110,7 @@
 				to_chat(target, span_warning("As the beam hits you, body seems to crumple under its uselessness."))
 				SEND_SIGNAL(C, COMSIG_LIVING_MINOR_SHOCK)
 				playsound(src, 'sound/weapons/taserhit.ogg', 80, TRUE, -1)
-				C.stamina.adjust(-100)
+				C.stamina.adjust(-50)
 				C.Paralyze(10 SECONDS)
 				C.set_jitter_if_lower(40 SECONDS)
 				C.set_stutter(40 SECONDS)

@@ -19,7 +19,7 @@
 		/datum/reagent/medicine/cordiolis_hepatico,
 		/datum/reagent/medicine/synaphydramine,
 		/datum/reagent/medicine/diphenhydramine,
-		/datum/reagent/medicine/changelingadrenaline,
+		// /datum/reagent/medicine/changelingadrenaline,
 		/datum/reagent/medicine/antipathogenic/spaceacillin
 	)
 	var/allergy_string

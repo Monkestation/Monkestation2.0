@@ -1,5 +1,5 @@
-import { useBackend, useLocalState } from '../../backend';
 import { sortStrings } from 'common/collections';
+import { useBackend, useLocalState } from '../../backend';
 import {
   Box,
   Button,
@@ -8,7 +8,7 @@ import {
   Stack,
   TextArea,
 } from '../../components';
-import { RequestsData, RequestType, RequestPriority } from './types';
+import { RequestPriority, type RequestsData, RequestType } from './types';
 
 export const MessageWriteTab = (props) => {
   const { act, data } = useBackend<RequestsData>();
@@ -147,9 +147,8 @@ export const MessageWriteTab = (props) => {
         fluid
         height={20}
         maxLength={1025}
-        multiline
         value={messageText}
-        onChange={(_, value) => setMessageText(value)}
+        onChange={(value) => setMessageText(value)}
         placeholder="Type your message..."
       />
       <Section>
@@ -176,7 +175,6 @@ export const MessageWriteTab = (props) => {
           </Stack.Item>
           <Stack.Item>
             <Button
-              warning
               icon="id-card"
               content={
                 authentication_data.message_verified_by || 'Not verified'
@@ -184,7 +182,6 @@ export const MessageWriteTab = (props) => {
               onClick={() => act('verify_id')}
             />
             <Button
-              warning
               icon="stamp"
               content={authentication_data.message_stamped_by || 'Not stamped'}
               onClick={() => act('stamp')}

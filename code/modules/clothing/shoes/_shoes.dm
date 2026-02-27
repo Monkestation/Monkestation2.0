@@ -8,7 +8,6 @@
 
 	body_parts_covered = FEET
 	slot_flags = ITEM_SLOT_FEET
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 
 	armor_type = /datum/armor/clothing_shoes
 	slowdown = SHOES_SLOWDOWN
@@ -106,6 +105,9 @@
 	if(ismob(loc))
 		var/mob/M = loc
 		M.update_worn_shoes()
+
+/obj/item/clothing/shoes/generate_digitigrade_icons(icon/base_icon, greyscale_colors)
+	return icon(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/digitigrade, greyscale_colors), "boots_worn")
 
 /**
  * adjust_laces adjusts whether our shoes (assuming they can_be_tied) and tied, untied, or knotted
@@ -206,7 +208,7 @@
 				var/obj/item/bodypart/ouchie = L.get_bodypart(pick(GLOB.arm_zones))
 				if(ouchie)
 					ouchie.receive_damage(brute = 10)
-				L.stamina.adjust(-40)
+				L.stamina.adjust(-20)
 				L.Paralyze(10)
 
 ///checking to make sure we're still on the person we're supposed to be, for lacing do_after's

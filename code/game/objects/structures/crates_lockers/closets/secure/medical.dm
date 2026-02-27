@@ -6,7 +6,7 @@
 
 /obj/structure/closet/secure_closet/medical1/PopulateContents()
 	..()
-	var/static/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/reagent_containers/cup/beaker = 2,
 		/obj/item/reagent_containers/dropper = 2,
 		/obj/item/storage/belt/medical = 1,
@@ -16,7 +16,7 @@
 		/obj/item/reagent_containers/cup/bottle/epinephrine= 3,
 		/obj/item/reagent_containers/cup/bottle/multiver = 3,
 		/obj/item/storage/box/rxglasses = 1)
-	generate_items_inside(items_inside,src)
+	generate_items_inside(items_inside, src)
 
 /obj/structure/closet/secure_closet/medical2
 	name = "anesthetic closet"
@@ -90,7 +90,7 @@
 	new /obj/item/storage/photo_album/cmo(src)
 	new /obj/item/storage/lockbox/medal/med(src)
 	new /obj/item/extrapolator(src) //MONKESTATION EDIT:
-	
+
 /obj/structure/closet/secure_closet/chief_medical/populate_contents_immediate()
 	. = ..()
 

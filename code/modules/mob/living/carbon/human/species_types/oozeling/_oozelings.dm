@@ -61,7 +61,8 @@
 	COOLDOWN_DECLARE(starvation_alert_cooldown)
 	/// Cooldown for balloon alerts when being melted from being dripping wet.
 	COOLDOWN_DECLARE(wet_alert_cooldown)
-
+	/// Water exposure cool down. Hopefully makes extinguiser exposure more consistent.
+	COOLDOWN_DECLARE(water_exposure_cooldown)
 
 /datum/species/oozeling/Destroy(force)
 	QDEL_LIST(actions_given)
@@ -235,7 +236,8 @@
 	if(chem.type == /datum/reagent/toxin/plasma || chem.type == /datum/reagent/toxin/hot_ice)
 		if(slime.getBruteLoss() || slime.getFireLoss())
 			if(!HAS_TRAIT(slime, TRAIT_SLIME_HYDROPHOBIA) && slime.get_skin_temperature() > slime.bodytemp_cold_damage_limit)
-				slime.heal_ordered_damage(HEALTH_HEALED * REM * seconds_per_tick, list(BRUTE, BURN))
+				var/list/to_heal = rand(2) ? list(BRUTE, BURN) : list(BURN, BRUTE) // Randomize what is healed first
+				slime.heal_ordered_damage(HEALTH_HEALED * REM * seconds_per_tick, to_heal)
 				slime.reagents.remove_reagent(chem.type, min(chem.volume * 0.22, 10))
 			else
 				to_chat(slime, span_purple("Your membrane is too viscous to mend its wounds..."))
@@ -274,6 +276,9 @@
 		if(!quiet_if_protected)
 			to_chat(slime, span_warning("Water splashes against your oily membrane and rolls right off your body!"))
 		return FALSE
+	if(!COOLDOWN_FINISHED(src, water_exposure_cooldown))
+		return FALSE
+	COOLDOWN_START(src, water_exposure_cooldown, 0.1 SECONDS)
 	remove_blood_volume(slime, 30 * water_multiplier)
 	if(COOLDOWN_FINISHED(src, water_alert_cooldown))
 		slime.visible_message(

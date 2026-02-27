@@ -81,7 +81,6 @@
 	greyscale_colors = "#a52424"
 	flags_1 = IS_PLAYER_COLORABLE_1
 	flags_inv = HIDEFACIALHAIR | HIDESNOUT
-	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
 
 /obj/item/clothing/neck/face_scarf/Initialize(mapload)
 	. = ..()

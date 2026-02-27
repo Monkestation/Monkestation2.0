@@ -13,7 +13,7 @@ import {
 } from '../components';
 import { formatSiUnit } from '../format';
 import { Window } from '../layouts';
-import { Material } from './Fabrication/Types';
+import type { Material } from './Fabrication/Types';
 
 type IconData = {
   id: string;
@@ -135,7 +135,7 @@ const DisplayRow = (props: DisplayRowProps) => {
   const { name, icon, amount, selected, onSelect } = props;
 
   return (
-    <Table.Row collapsing className="candystripe">
+    <Table.Row className="candystripe">
       <Table.Cell collapsing pl={1}>
         {icon ? (
           <Image

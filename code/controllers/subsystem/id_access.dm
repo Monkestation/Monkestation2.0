@@ -274,6 +274,8 @@ SUBSYSTEM_DEF(id_access)
 	desc_by_access["[ACCESS_CHANGE_IDS]"] = "ID Console"
 	desc_by_access["[ACCESS_AI_UPLOAD]"] = "AI Chambers"
 	desc_by_access["[ACCESS_TELEPORTER]"] = "Teleporter"
+	desc_by_access["[ACCESS_BLUESHIELD]"] = "Blueshield Office"
+	desc_by_access["[ACCESS_NT_REPRESENTATVE]"] = "NT Representative Office"
 	desc_by_access["[ACCESS_EVA]"] = "EVA"
 	desc_by_access["[ACCESS_COMMAND]"] = "Command"
 	desc_by_access["[ACCESS_CAPTAIN]"] = "Captain"
@@ -500,7 +502,7 @@ SUBSYSTEM_DEF(id_access)
 	id_card.add_wildcards(trim.wildcard_access, mode = TRY_ADD_ALL)
 	if(istype(trim, /datum/id_trim/job))
 		var/datum/id_trim/job/job_trim = trim // Here is where we update a player's paycheck department for the purposes of discounts/paychecks.
-		id_card.registered_account.account_job.paycheck_department = job_trim.job.paycheck_department
+		id_card.registered_account.account_job = job_trim.job
 
 /**
  * Tallies up all accesses the card has that have flags greater than or equal to the access_flag supplied.

@@ -59,6 +59,7 @@ SUBSYSTEM_DEF(vote)
 	QDEL_LIST(generated_actions)
 
 	SStgui.update_uis(src)
+	SEND_SIGNAL(src, COMSIG_VOTE_ENDED)
 
 /**
  * Process the results of the vote.
@@ -262,6 +263,8 @@ SUBSYSTEM_DEF(vote)
 
 	// And now that it's going, give everyone a voter action
 	for(var/client/new_voter as anything in GLOB.clients)
+		if(!new_voter.holder && length(to_vote.exclude_mobs) && (new_voter.mob.type in to_vote.exclude_mobs))
+			continue
 		var/datum/action/vote/voting_action = new()
 		voting_action.name = "Vote: [current_vote.override_question || current_vote.name]"
 		voting_action.Grant(new_voter.mob)
@@ -272,6 +275,7 @@ SUBSYSTEM_DEF(vote)
 		if(current_vote.vote_sound && (new_voter.prefs.read_preference(/datum/preference/toggle/sound_announcements)))
 			SEND_SOUND(new_voter, sound(current_vote.vote_sound, volume = current_vote.vote_sound_volume)) // monkestation edit
 
+	SEND_SIGNAL(src, COMSIG_VOTE_STARTED)
 	return TRUE
 
 /**
@@ -331,7 +335,7 @@ SUBSYSTEM_DEF(vote)
 		"multiSelection" = current_vote?.choices_by_ckey,
 	)
 
-	data["voting"]= is_lower_admin ? voting : list()
+	data["voting"] = is_lower_admin ? voting : list()
 
 	var/list/all_vote_data = list()
 	for(var/vote_name in possible_votes)
@@ -339,7 +343,13 @@ SUBSYSTEM_DEF(vote)
 		if(!istype(vote))
 			continue
 
-		var/can_vote = vote.can_be_initiated(is_lower_admin)
+		var/can_vote
+		if((user.type in vote.exclude_mobs) && !is_lower_admin)
+			can_vote = vote.exclude_mobs[user.type]
+			can_vote ||= "This mob type is not allowed on this vote."
+		else
+			can_vote = vote.can_be_initiated(is_lower_admin)
+
 		var/list/vote_data = list(
 			"name" = vote_name,
 			"canBeInitiated" = can_vote == VOTE_AVAILABLE,

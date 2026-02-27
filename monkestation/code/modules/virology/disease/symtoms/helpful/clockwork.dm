@@ -61,7 +61,7 @@
 			switch(Oldlimb.slot) //i hate doing it this way, but the cleaner way runtimes and does not work
 				if(ORGAN_SLOT_BRAIN)
 					Oldlimb.name = "enigmatic gearbox"
-					Oldlimb.desc ="An engineer would call this inconcievable wonder of gears and metal a 'black box'"
+					Oldlimb.desc ="An engineer would call this inconcievable wonder of gears and metal a 'black box'."
 					Oldlimb.icon_state = "brain-clock"
 					Oldlimb.organ_flags = ORGAN_ROBOTIC
 					return TRUE

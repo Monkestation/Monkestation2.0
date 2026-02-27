@@ -482,7 +482,7 @@ GLOBAL_LIST_INIT(store_miscunders, generate_store_items(/datum/store_item/under/
 	item_cost = 10000
 
 /datum/store_item/under/formal/moonlit
-	name = "Regal Ball Gown"
+	name = "Moonlit Gown"
 	item_path = /obj/item/clothing/under/dress/moonlit
 	item_cost = 10000
 

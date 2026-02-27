@@ -32,6 +32,7 @@
 	species_exception = list(/datum/species/golem/bananium)
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	can_adjust = FALSE
+	supports_variations_flags = NONE
 	var/squeak_sounds = list('sound/items/bikehorn.ogg'=1)
 
 /obj/item/clothing/under/rank/civilian/clown/Initialize(mapload)

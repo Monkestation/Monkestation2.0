@@ -60,7 +60,6 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	has_fov = FALSE
 	alternative_deathgasps = list('sound/voice/sec_death.ogg')
 	COOLDOWN_DECLARE(hailer_cooldown)
-	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
 	///Decides the phrases available for use; defines used are the last index of a category of available phrases
 	var/aggressiveness = AGGR_BAD_COP
 	///Whether the hailer has been broken due to overuse or not
@@ -100,7 +99,6 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	visor_flags_inv = 0
 	flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES | PEPPERPROOF
 	visor_flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES | PEPPERPROOF
-	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
 
 /obj/item/clothing/mask/gas/sechailer/swat/spacepol
 	name = "spacepol mask"

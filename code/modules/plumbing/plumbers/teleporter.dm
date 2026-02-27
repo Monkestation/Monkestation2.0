@@ -15,16 +15,17 @@
 	AddComponent(/datum/component/plumbing/simple_demand, bolt, layer)
 
 /obj/machinery/plumbing/sender/multitool_act(mob/living/user, obj/item/multitool/M)
-	if(!istype(M.buffer, /obj/machinery/plumbing/receiver))
+	var/datum/buffer = multitool_get_buffer(M)
+	if(!istype(buffer, /obj/machinery/plumbing/receiver))
 		to_chat(user, span_warning("Invalid buffer."))
 		return ITEM_INTERACT_BLOCKING
 
 	if(target)
 		lose_teleport_target()
 
-	set_teleport_target(M.buffer)
+	set_teleport_target(buffer)
 
-	to_chat(user, span_green("You successfully link [src] to the [M.buffer]."))
+	to_chat(user, span_green("You successfully link [src] to the [buffer]."))
 	return ITEM_INTERACT_SUCCESS
 
 ///Lose our previous target and make our previous target lose us. Seperate proc because I feel like I'll need this again
@@ -65,7 +66,7 @@
 	AddComponent(/datum/component/plumbing/simple_supply, bolt)
 
 /obj/machinery/plumbing/receiver/multitool_act(mob/living/user, obj/item/multitool/M)
-	M.set_buffer(src)
+	multitool_set_buffer(M, src)
 	balloon_alert(user, "saved to multitool buffer")
 	return ITEM_INTERACT_SUCCESS
 

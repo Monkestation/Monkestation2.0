@@ -1,3 +1,4 @@
+import type { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
 import {
   Box,
@@ -9,7 +10,6 @@ import {
 } from '../components';
 import { Window } from '../layouts';
 import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
-import { BooleanLike } from 'common/react';
 
 export type Data = {
   locked: BooleanLike;
@@ -104,9 +104,9 @@ export const NavBeaconControlSection = (props: DisabledProps) => {
         </LabeledList.Item>
         <LabeledList.Item label="Delivery Direction">
           <Dropdown
-            disabled={props.disabled}
+            disabled={!!props.disabled}
             options={static_controls.direction_options}
-            displayText={controls.delivery_direction || 'none'}
+            selected={controls.delivery_direction || 'none'}
             onSelected={(value) =>
               act('set_delivery_direction', {
                 direction: value,

@@ -114,31 +114,40 @@
 	return GLOB.new_player_state
 
 /datum/interview/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
-	if (..())
+	if(..())
 		return
 	switch(action)
-		if ("update_answer")
-			if (!read_only)
+		if("update_answer")
+			if(!read_only)
 				responses[text2num(params["qidx"])] = copytext_char(params["answer"], 1, 501) // byond indexing moment
 				. = TRUE
-		if ("submit")
-			if (!read_only)
+		if("submit")
+			if(!read_only)
 				read_only = TRUE
 				GLOB.interviews.enqueue(src)
 				. = TRUE
-		if ("approve")
-			if (usr.client?.holder && status == INTERVIEW_PENDING)
+		if("approve")
+			if(usr.client?.holder && status == INTERVIEW_PENDING)
 				src.approve(usr)
 				SSplexora.interview(src) // Monkestation edit: plexora
 				. = TRUE
-		if ("deny")
-			if (usr.client?.holder && status == INTERVIEW_PENDING)
+		if("deny")
+			if(usr.client?.holder && status == INTERVIEW_PENDING)
 				src.deny(usr)
 				. = TRUE
 				SSplexora.interview(src) // Monkestation edit: plexora
-		if ("adminpm")
-			if (usr.client?.holder && owner)
+		if("adminpm")
+			if(usr.client?.holder && owner)
 				usr.client.cmd_admin_pm(owner, null)
+		if("pp")
+			if(usr.client?.holder && owner)
+				SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/vuap_personal, owner)
+		if("pp_old")
+			if(usr.client?.holder && owner)
+				SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/show_player_panel, owner)
+
+	if(!owner && (action in list("adminpm", "pp", "pp_old")))
+		to_chat(usr, span_danger("User disconnected."))
 
 /datum/interview/ui_data(mob/user)
 	. = list(

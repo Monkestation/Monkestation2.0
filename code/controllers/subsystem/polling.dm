@@ -362,3 +362,31 @@ SUBSYSTEM_DEF(polling)
 		return FALSE
 
 	return next_poll_to_finish
+
+//POLLING MENTORS
+/datum/controller/subsystem/polling/proc/poll_mentor_ghost_candidates(
+	question,
+	role,
+	check_jobban,
+	poll_time = 30 SECONDS,
+	ignore_category = null,
+	flash_window = TRUE,
+	alert_pic,
+	jump_target,
+	role_name_text,
+	list/custom_response_messages,
+	start_signed_up = FALSE,
+	amount_to_pick = 0,
+	chat_text_border_icon,
+	announce_chosen = TRUE,
+	show_candidate_amount = TRUE
+)
+	var/list/candidates = list()
+	if(!(GLOB.ghost_role_flags & GHOSTROLE_STATION_SENTIENCE))
+		return candidates
+
+	for(var/mob/dead/observer/ghost in GLOB.player_list)
+		if(is_mentor(ghost)) //REMEMBER TO UNCOMMENT THIS
+			candidates += ghost
+
+	return poll_candidates(question, role, check_jobban, poll_time, ignore_category, flash_window, candidates, alert_pic, jump_target, role_name_text, custom_response_messages, start_signed_up, amount_to_pick, chat_text_border_icon, announce_chosen, show_candidate_amount)

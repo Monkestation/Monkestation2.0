@@ -1,16 +1,16 @@
-import { BooleanLike } from 'common/react';
+import type { BooleanLike } from 'common/react';
 import { useBackend, useLocalState } from '../backend';
 import {
-  Section,
-  Stack,
-  Tabs,
-  Divider,
   Box,
   Button,
   Dimmer,
+  Divider,
   Icon,
   Input,
   NoticeBox,
+  Section,
+  Stack,
+  Tabs,
   Tooltip,
 } from '../components';
 import { Window } from '../layouts';
@@ -27,14 +27,14 @@ type Atoms = {
 };
 
 type Recipe = {
-  ref: String;
-  result: Number;
-  category: String;
-  name: String;
-  desc: String;
-  machinery_type: String;
+  ref: string;
+  result: number;
+  category: string;
+  name: string;
+  desc: string;
+  machinery_type: string;
   reqs: Atoms;
-  machining_skill_required: Number;
+  machining_skill_required: number;
 };
 
 type Data = {
@@ -44,7 +44,7 @@ type Data = {
   craftable: BooleanLike;
   user_machining_skill: BooleanLike;
   recipes: Recipe[];
-  atom_data: String[];
+  atom_data: string[];
 };
 
 export const Machining = (props) => {
@@ -64,9 +64,9 @@ export const Machining = (props) => {
           <Stack.Item width={'200px'}>
             <Input
               autoFocus
-              placeholder={'Search in ' + recipes.length + ' designs...'}
+              placeholder={`Search in ${recipes.length} designs...`}
               value={searchText}
-              onInput={(e, value) => {
+              onChange={(value) => {
                 setSearchText(value);
               }}
               mb={2}
@@ -114,13 +114,11 @@ export const Machining = (props) => {
           </Stack.Item>
           <Stack.Item grow my={'16px'}>
             <Box
-              scrollable
-              fill
               height={'100%'}
               pr={1}
               pt={1}
               mr={-1}
-              style={{ 'overflow-y': 'auto' }}
+              style={{ overflowY: 'auto' }}
             >
               <MainRecipeScreen tab={activeTab} searchText={searchText} />
             </Box>
@@ -130,14 +128,11 @@ export const Machining = (props) => {
       {busy ? (
         <Dimmer
           style={{
-            'font-size': '2em',
-            'text-align': 'center',
+            fontSize: '2em',
+            textAlign: 'center',
           }}
         >
-          <Icon
-            name={craftable ? 'check' : 'hourglass'}
-            spin={craftable ? false : true}
-          />
+          <Icon name={craftable ? 'check' : 'hourglass'} spin={!craftable} />
           {craftable
             ? ' Ready to produce!'
             : ' Awaiting materials for recipe...'}

@@ -1,12 +1,11 @@
+import { type BooleanLike, classes } from 'common/react';
 import { useBackend } from '../backend';
-import { Box, Button, Section, Stack, Icon } from '../components';
+import { Box, Button, Icon, Section, Stack, Tooltip } from '../components';
 import { Window } from '../layouts';
-import { MaterialAccessBar } from './Fabrication/MaterialAccessBar';
-import { FabricatorData, MaterialMap, Design } from './Fabrication/Types';
 import { DesignBrowser } from './Fabrication/DesignBrowser';
+import { MaterialAccessBar } from './Fabrication/MaterialAccessBar';
 import { MaterialCostSequence } from './Fabrication/MaterialCostSequence';
-import { Tooltip } from '../components';
-import { BooleanLike, classes } from 'common/react';
+import type { Design, FabricatorData, MaterialMap } from './Fabrication/Types';
 
 type ExosuitDesign = Design & {
   constructionTime: number;
@@ -254,10 +253,7 @@ const Queue = (props: QueueProps) => {
             />
           </Section>
         </Stack.Item>
-        <Stack.Item
-          grow
-          style={{ 'overflow-y': 'auto', 'overflow-x': 'hidden' }}
-        >
+        <Stack.Item grow style={{ overflowY: 'auto', overflowX: 'hidden' }}>
           <Section fill>
             <QueueList
               availableMaterials={availableMaterials}
@@ -345,14 +341,11 @@ const QueueList = (props: QueueListProps) => {
                   <Box
                     width={'32px'}
                     height={'32px'}
-                    className={classes([
-                      'design32x32',
-                      entry.design && entry.design.icon,
-                    ])}
+                    className={classes(['design32x32', entry.design?.icon])}
                   />
                 </div>
                 <div className="FabricatorRecipe__Label">
-                  {entry.design && entry.design.name}
+                  {entry.design?.name}
                 </div>
               </div>
             </Tooltip>
@@ -388,12 +381,14 @@ const Authorization = (props) => {
   const emagged = data.emagged;
 
   return (
-    <Section width="420px" style={{ 'white-space': 'pre-wrap' }}>
+    <Section width="420px" style={{ whiteSpace: 'pre-wrap' }}>
       <b>
         {'User: '}
         <span
-          style={!combat_parts_allowed ? 'color:#ff0000' : 'color:#00ff00'}
-          font-style:bold
+          style={{
+            color: !combat_parts_allowed ? '#ff0000' : '#00ff00',
+            fontWeight: 'bold',
+          }}
         >
           {!combat_parts_allowed
             ? 'Unauthorized'

@@ -1,19 +1,19 @@
+import { deepMerge } from 'common/collections';
+import { Color } from 'common/color';
+import type { BooleanLike } from 'common/react';
+import { useEffect } from 'react';
 import { useBackend } from '../backend';
 import {
   Box,
   Button,
-  StyleableSection,
   Icon,
-  Stack,
   NoticeBox,
+  Stack,
+  StyleableSection,
 } from '../components';
 import { Window } from '../layouts';
-import { Color } from 'common/color';
-import { Inferno } from 'inferno';
 import { JOB2ICON } from './common/JobToIcon';
-import { deepMerge } from 'common/collections';
-import { BooleanLike } from 'common/react';
-import { LobbyNotices, LobbyNoticesType } from './common/LobbyNotices';
+import { LobbyNotices, type LobbyNoticesType } from './common/LobbyNotices';
 
 type Job = {
   unavailable_reason: string | null;
@@ -39,9 +39,10 @@ type Data = {
   priority: BooleanLike;
   round_duration: string;
   notices: LobbyNoticesType;
+  selected_character?: string;
 };
 
-export const JobEntry: Inferno.SFC<{
+export const JobEntry: React.FC<{
   jobName: string;
   job: Job;
   department: Department;
@@ -56,7 +57,7 @@ export const JobEntry: Inferno.SFC<{
       fluid
       style={{
         // Try not to think too hard about this one.
-        'background-color': job.unavailable_reason
+        backgroundColor: job.unavailable_reason
           ? '#949494' // Grey background
           : job.prioritized
             ? '#16fc0f' // Bright green background
@@ -64,14 +65,14 @@ export const JobEntry: Inferno.SFC<{
         color: job.unavailable_reason
           ? '#616161' // Dark grey font
           : Color.fromHex(department.color).darken(90).toString(),
-        'font-size': '1.1rem',
+        fontSize: '1.1rem',
         cursor: job.unavailable_reason ? 'initial' : 'pointer',
       }}
       tooltip={
         job.unavailable_reason ||
         (job.prioritized ? (
           <>
-            <p style={{ 'margin-top': '0px' }}>
+            <p style={{ marginTop: '0px' }}>
               <b>The HoP wants more people in this job!</b>
             </p>
             {job.description}
@@ -84,19 +85,17 @@ export const JobEntry: Inferno.SFC<{
         !job.unavailable_reason && data.onClick();
       }}
     >
-      <>
-        {jobIcon && <Icon name={jobIcon} />}
-        {job.command ? <b>{jobName}</b> : jobName}
-        <span
-          style={{
-            'white-space': 'nowrap',
-            position: 'absolute',
-            right: '0.5em',
-          }}
-        >
-          {job.used_slots} / {job.open_slots}
-        </span>
-      </>
+      {jobIcon && <Icon name={jobIcon} mr={1} />}
+      {job.command ? <b>{jobName}</b> : jobName}
+      <span
+        style={{
+          whiteSpace: 'nowrap',
+          position: 'absolute',
+          right: '0.5em',
+        }}
+      >
+        {job.used_slots} / {job.open_slots}
+      </span>
     </Button>
   );
 };
@@ -111,15 +110,13 @@ export const JobSelection = (props) => {
     data.departments_static,
   );
 
+  // Send a heartbeat back to DM to let it know the window is alive and well
+  useEffect(() => {
+    act('ui_mounted_with_no_bluescreen');
+  }, []);
+
   return (
-    <Window
-      width={1012}
-      height={data.shuttle_status ? 690 : 666 /* Hahahahahaha */}
-      onComponentDidMount={() => {
-        // Send a heartbeat back to DM to let it know the window is alive and well
-        act('ui_mounted_with_no_bluescreen');
-      }}
-    >
+    <Window width={1212} height={data.shuttle_status ? 840 : 816}>
       <Window.Content scrollable>
         <LobbyNotices notices={data.notices} />
         <StyleableSection
@@ -128,33 +125,62 @@ export const JobSelection = (props) => {
               {data.shuttle_status && (
                 <NoticeBox info>{data.shuttle_status}</NoticeBox>
               )}
-              <span style={{ color: 'grey' }}>
-                It is currently {data.round_duration} into the shift.
-              </span>
-              <Button
-                style={{ position: 'absolute', right: '1em' }}
-                onClick={() => act('select_job', { job: 'Random' })}
-                content="Random Job!"
-                tooltip="Roll target random job. You can re-roll or cancel your random job if you don't like it."
-              />
+              <Stack
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}
+              >
+                <span
+                  style={{
+                    color: 'lightgrey',
+                  }}
+                >
+                  {!!data.selected_character &&
+                    `Joining as '${data.selected_character}' — `}
+                  <span style={{ color: 'grey' }}>
+                    It is currently {data.round_duration} into the shift.
+                  </span>
+                </span>
+
+                <Stack direction="horizontal" style={{ right: '1em', top: 0 }}>
+                  <Stack.Item>
+                    <Button
+                      onClick={() => act('change_slot')}
+                      tooltip="Quickly change your current character without opening the Character Setup menu."
+                    >
+                      Change Character
+                    </Button>
+                  </Stack.Item>
+                  <Stack.Item>
+                    <Button
+                      onClick={() => act('select_job', { job: 'Random' })}
+                      tooltip="Roll target random job. You can re-roll or cancel your random job if you don't like it."
+                    >
+                      Random Job!
+                    </Button>
+                  </Stack.Item>
+                </Stack>
+              </Stack>
             </>
           }
-          titleStyle={{ 'min-height': '3.4em' }}
+          titleStyle={{ minHeight: '2.5em' }}
         >
           <Box style={{ columns: '20em' }}>
             {Object.entries(departments).map((departmentEntry) => {
               const departmentName = departmentEntry[0];
               const entry = departmentEntry[1];
               return (
-                <Box key={departmentName} minWidth="30%">
+                <Box key={departmentName}>
                   <StyleableSection
                     title={
                       <>
                         {departmentName}
                         <span
                           style={{
-                            'font-size': '1rem',
-                            'white-space': 'nowrap',
+                            fontSize: '1rem',
+                            whiteSpace: 'nowrap',
                             position: 'absolute',
                             right: '1em',
                             color: Color.fromHex(entry.color)
@@ -169,12 +195,12 @@ export const JobSelection = (props) => {
                       </>
                     }
                     style={{
-                      'background-color': entry.color,
-                      'margin-bottom': '1em',
-                      'break-inside': 'avoid-column',
+                      backgroundColor: entry.color,
+                      marginBottom: '1em',
+                      breakInside: 'avoid-column',
                     }}
                     titleStyle={{
-                      'border-bottom-color': Color.fromHex(entry.color)
+                      borderBottomColor: Color.fromHex(entry.color)
                         .darken(50)
                         .toString(),
                     }}
@@ -182,7 +208,7 @@ export const JobSelection = (props) => {
                       color: Color.fromHex(entry.color).darken(80).toString(),
                     }}
                   >
-                    <Stack vertical>
+                    <Stack vertical fill>
                       {Object.entries(entry.jobs).map((job) => (
                         <Stack.Item key={job[0]}>
                           <JobEntry

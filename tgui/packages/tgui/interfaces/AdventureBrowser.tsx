@@ -1,15 +1,15 @@
 import { useBackend, useLocalState } from '../backend';
 import {
+  Box,
   Button,
   LabeledList,
-  Section,
-  Box,
   NoticeBox,
+  Section,
   Table,
 } from '../components';
-import { Window } from '../layouts';
-import { AdventureDataProvider, AdventureScreen } from './ExodroneConsole';
 import { formatTime } from '../format';
+import { Window } from '../layouts';
+import { type AdventureDataProvider, AdventureScreen } from './ExodroneConsole';
 
 type Adventure = {
   ref: string;

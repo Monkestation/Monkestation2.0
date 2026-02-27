@@ -1,4 +1,4 @@
-import { Fragment } from 'inferno';
+import { Fragment } from 'react';
 import { useBackend } from '../backend';
 import { Box, Button, Flex, Icon, Section, Slider } from '../components';
 import { Window } from '../layouts';
@@ -48,7 +48,8 @@ export const BasicOffsetEditor = (properties) => {
                       maxValue={100}
                       stepPixelSize={3.13}
                       value={offset.north}
-                      onChange={(e, value) =>
+                      tickWhileDragging
+                      onChange={(_, value) =>
                         act('offset', {
                           name: offset.name,
                           offset: value,
@@ -108,7 +109,8 @@ export const BasicOffsetEditor = (properties) => {
                       maxValue={100}
                       stepPixelSize={3.13}
                       value={offset.south}
-                      onChange={(e, value) =>
+                      tickWhileDragging
+                      onChange={(_, value) =>
                         act('offset', {
                           name: offset.name,
                           offset: value,
@@ -168,7 +170,8 @@ export const BasicOffsetEditor = (properties) => {
                       maxValue={100}
                       stepPixelSize={3.13}
                       value={offset.east}
-                      onChange={(e, value) =>
+                      tickWhileDragging
+                      onChange={(_, value) =>
                         act('offset', {
                           name: offset.name,
                           offset: value,
@@ -228,7 +231,8 @@ export const BasicOffsetEditor = (properties) => {
                       maxValue={100}
                       stepPixelSize={3.13}
                       value={offset.west}
-                      onChange={(e, value) =>
+                      tickWhileDragging
+                      onChange={(_, value) =>
                         act('offset', {
                           name: offset.name,
                           offset: value,

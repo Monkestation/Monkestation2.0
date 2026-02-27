@@ -1,5 +1,4 @@
 /obj/item/clothing/shoes/magboots/boomboots
-
 	desc = "The ultimate in clown shoe technology. WARNING: EXPLODES ON REMOVAL! VERY FUNNY!"
 	name = "boom boots"
 	icon = 'monkestation/icons/obj/clothing/shoes.dmi'
@@ -9,10 +8,10 @@
 	inhand_icon_state = "clown_shoes"
 	slowdown = SHOES_SLOWDOWN + 1
 	actions_types = list(/datum/action/item_action/toggle)
-	var/enabled_waddle = TRUE
-	var/waddle
 	slot_flags = ITEM_SLOT_FEET
 	body_parts_covered = FEET
+	supports_variations_flags = NONE
+	var/enabled_waddle = TRUE
 
 /obj/item/clothing/shoes/magboots/boomboots/Initialize(mapload)
 	. = ..()
@@ -27,23 +26,19 @@
 	else
 		icon_state = "boomboot0"
 
-/obj/item/clothing/shoes/magboots/boomboots/equipped(mob/user, slot)
+/obj/item/clothing/shoes/magboots/boomboots/equipped(mob/living/user, slot)
 	. = ..()
-	var/mob/living/carbon/human/clown_user = user
-	if(slot == ITEM_SLOT_FEET)
+	if(slot & ITEM_SLOT_FEET)
 		if(enabled_waddle)
-			waddle = user.AddElement(/datum/element/waddling)
+			user.AddElement(/datum/element/waddling)
 		if(is_clown_job(user.mind?.assigned_role))
-			clown_user.add_mood_event("clownshoes", /datum/mood_event/clownshoes)
-			RegisterSignal(src, COMSIG_LIVING_DEATH, PROC_REF(on_mob_death))
-		update_icon_state()
+			user.add_mood_event("clownshoes", /datum/mood_event/clownshoes)
 
-/obj/item/clothing/shoes/magboots/boomboots/dropped(mob/user)
+/obj/item/clothing/shoes/magboots/boomboots/dropped(mob/living/user)
 	. = ..()
-	QDEL_NULL(waddle)
-	var/mob/living/carbon/human/clown_user = user
-	if(user.mind && user.mind.assigned_role == "Clown")
-		clown_user.clear_mood_event("clownshoes")
+	user.RemoveElement(/datum/element/waddling)
+	if(is_clown_job(user.mind?.assigned_role))
+		user.clear_mood_event("clownshoes")
 	if(magpulse)//make sure they're being worn and activated
 		explosion(src,2,4,8,6)//used the size of the big rubber ducky bomb
 		UnregisterSignal(src, COMSIG_LIVING_DEATH, PROC_REF(on_mob_death))

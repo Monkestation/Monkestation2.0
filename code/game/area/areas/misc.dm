@@ -6,8 +6,8 @@
 	always_unpowered = TRUE
 	static_lighting = FALSE
 
-	//base_lighting_alpha = 255
-	//base_lighting_color = "#FFFFFF"
+	base_lighting_alpha = 255
+	base_lighting_color = "#FFFFFF"
 
 	power_light = FALSE
 	power_equip = FALSE
@@ -22,8 +22,7 @@
 
 /area/space/Initialize(mapload)
 	. = ..()
-	if(!SSmapping.level_trait(src.z, ZTRAIT_STARLIGHT))
-		set_base_lighting(GLOB.starlight_color, alpha)
+	set_base_lighting(GLOB.starlight_color, alpha)
 
 
 /area/space/nearstation

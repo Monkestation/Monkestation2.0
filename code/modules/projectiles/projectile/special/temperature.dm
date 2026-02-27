@@ -17,9 +17,12 @@
 /obj/projectile/temp/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(isliving(target))
-
 		var/mob/living/M = target
-		M.adjust_bodytemperature(temperature_mod_per_shot * ((100-blocked) / 100) * (temperature), min, max, use_insulation = TRUE)
+		var/temp_adjust = temperature_mod_per_shot * ((100-blocked) / 100) * (temperature)
+		if(temp_adjust != 0)
+			M.apply_status_effect(/datum/status_effect/thermally_destabilized)
+
+		M.adjust_bodytemperature(temp_adjust, min, max, use_insulation = TRUE)
 
 /obj/projectile/temp/hot
 	name = "heat beam"

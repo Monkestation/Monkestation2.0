@@ -15,7 +15,7 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 	discount_experiments = list(/datum/experiment/scanning/random/material/hard/one = TECHWEB_TIER_2_POINTS)
-	announce_channels = list(RADIO_CHANNEL_ENGINEERING)
+	announce_channels = list(RADIO_CHANNEL_ENGINEERING, RADIO_CHANNEL_MEDICAL)
 
 /datum/techweb_node/rcd_upgrade
 	id = "rcd_upgrade"

@@ -237,6 +237,7 @@
 		JOB_HEAD_OF_SECURITY,
 		JOB_PRISONER,
 		JOB_SECURITY_OFFICER,
+		JOB_BRIG_PHYSICIAN,
 		JOB_SECURITY_ASSISTANT,
 		JOB_WARDEN,
 	)
@@ -376,8 +377,8 @@
 		JOB_DETECTIVE,
 		JOB_HEAD_OF_SECURITY,
 		JOB_SECURITY_OFFICER,
-		JOB_SECURITY_ASSISTANT, // monkestation addition : Jobs
 		JOB_BRIG_PHYSICIAN,
+		JOB_SECURITY_ASSISTANT,
 		JOB_BLUESHIELD,
 	)
 	required_enemies = list(3,3,3,3,3,2,1,1,0,0)
@@ -450,8 +451,8 @@
 		JOB_PRISONER,
 		JOB_SECURITY_OFFICER,
 		JOB_WARDEN,
-		JOB_SECURITY_ASSISTANT,
 		JOB_BRIG_PHYSICIAN,
+		JOB_SECURITY_ASSISTANT,
 	)
 	restricted_roles = list(
 		JOB_AI,
@@ -859,6 +860,7 @@
 		JOB_PRISONER,
 		JOB_SECURITY_OFFICER,
 		JOB_WARDEN,
+		JOB_BRIG_PHYSICIAN,
 		JOB_SECURITY_ASSISTANT,
 	)
 	restricted_roles = list(
@@ -933,15 +935,15 @@
 	weight = 4
 	cost = 3
 	repeatable = TRUE
-	var/list/possible_spawns = list() ///places the antag can spawn
+	/// where the paradox clone spawns
+	var/turf/warp_turf
 
 /datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/forget_startup()
-	possible_spawns = list()
 	return ..()
 
 /datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/execute()
-	possible_spawns += find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = FALSE)
-	if(!possible_spawns.len)
+	warp_turf = find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = FALSE)
+	if(!warp_turf)
 		return MAP_ERROR
 	return ..()
 
@@ -950,7 +952,9 @@
 	player_mind.active = TRUE
 
 	var/mob/living/carbon/human/clone_victim = find_original()
-	var/mob/living/carbon/human/clone = duplicate_object(clone_victim, pick(possible_spawns))
+	var/mob/living/carbon/human/clone = duplicate_object(clone_victim, warp_turf)
+	if(clone.loc != warp_turf)
+		clone.forceMove(warp_turf)
 
 	player_mind.transfer_to(clone)
 	player_mind.set_assigned_role(SSjob.GetJobType(/datum/job/paradox_clone))
@@ -1012,6 +1016,7 @@
 		JOB_HEAD_OF_SECURITY,
 		JOB_PRISONER,
 		JOB_SECURITY_OFFICER,
+		JOB_BRIG_PHYSICIAN,
 		JOB_SECURITY_ASSISTANT,
 		JOB_WARDEN,
 	)

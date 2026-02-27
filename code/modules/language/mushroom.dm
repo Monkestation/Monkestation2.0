@@ -10,6 +10,7 @@
 	additional_syllable_high = -2
 	default_priority = 80
 	syllables = list("poof", "pff", "pFfF", "piff", "puff", "pooof", "pfffff", "piffpiff", "puffpuff", "poofpoof", "pifpafpofpuf")
+	icon_state = "mushroom"
 	mutual_understanding = list(
 		/datum/language/sylvan = 40,
 	)

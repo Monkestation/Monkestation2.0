@@ -453,7 +453,7 @@
 	REMOVE_TRAIT(affected_mob, TRAIT_DOUBLE_TAP, type)
 	if(current_cycle > 10)
 		to_chat(affected_mob, span_warning("You feel kinda tired as your sugar rush wears off..."))
-		affected_mob.stamina.adjust(-min(80, current_cycle * 3))
+		affected_mob.stamina.adjust(-min(80, current_cycle * 1.5))
 		affected_mob.adjust_drowsiness(current_cycle * 2 SECONDS)
 	..()
 
@@ -616,7 +616,7 @@
 	affected_mob.adjust_drowsiness(3 SECONDS * REM * seconds_per_tick)
 	switch(affected_mob.mob_mood.sanity_level)
 		if (SANITY_INSANE to SANITY_CRAZY)
-			affected_mob.stamina.adjust(-3 * REM * seconds_per_tick)//Monkestation Edit: custom stamina
+			affected_mob.stamina.adjust(-1.5 * REM * seconds_per_tick)
 		if (SANITY_UNSTABLE to SANITY_DISTURBED)
 			affected_mob.add_mood_event("wellcheers", /datum/mood_event/wellcheers)
 		if (SANITY_NEUTRAL to SANITY_GREAT)

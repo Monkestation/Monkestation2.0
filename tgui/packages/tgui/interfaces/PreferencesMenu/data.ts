@@ -1,6 +1,5 @@
-import { BooleanLike } from 'common/react';
-import { sendAct } from '../../backend';
-import { Gender } from './preferences/gender';
+import type { BooleanLike } from 'common/react';
+import type { Gender } from './preferences/gender';
 
 export enum Food {
   Alcohol = 'ALCOHOL',
@@ -115,8 +114,14 @@ export enum PreferencesSelectedPage {
   Volume = 2,
 }
 
+// FIX ME
+// Future ref: you do NOT need to pass around the global `act` like this
 export const createSetPreference =
-  (act: typeof sendAct, preference: string) => (value: unknown) => {
+  (
+    act: (event: string, data: Record<string, unknown>) => void,
+    preference: string,
+  ) =>
+  (value: unknown) => {
     act('set_preference', {
       preference,
       value,

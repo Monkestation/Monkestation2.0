@@ -1992,12 +1992,12 @@
 	name = "universal blood storage"
 	},
 /obj/machinery/iv_drip,
-/obj/item/reagent_containers/blood/universal{
+/obj/item/reagent_containers/chem_pack/saline{
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/reagent_containers/blood/universal,
-/obj/item/reagent_containers/blood/universal{
+/obj/item/reagent_containers/chem_pack/saline,
+/obj/item/reagent_containers/chem_pack/saline{
 	pixel_x = -4;
 	pixel_y = -4
 	},
@@ -2020,10 +2020,6 @@
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/bridge)
-"Xj" = (
-/obj/structure/rack,
-/turf/closed/wall/r_wall/syndicate/hull/nodiagonal,
-/area/shuttle/syndicate/eva)
 "YB" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/table/reinforced,
@@ -2360,7 +2356,7 @@ bg
 cU
 ce
 dR
-Xj
+dR
 dg
 dR
 ce

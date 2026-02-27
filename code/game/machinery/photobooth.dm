@@ -187,13 +187,15 @@
 
 /obj/machinery/button/photobooth/multitool_act(mob/living/user, obj/item/multitool/tool)
 	. = ..()
-	if(tool.buffer && !istype(tool.buffer, /obj/machinery/photobooth))
+
+	var/datum/buffer = multitool_get_buffer(tool)
+	if(buffer && !istype(buffer, /obj/machinery/photobooth))
 		return
 	var/obj/item/assembly/control/photobooth_control/controller = device
-	controller.booth_machine_ref = WEAKREF(tool.buffer)
+	controller.booth_machine_ref = WEAKREF(buffer)
 	id = null
 	controller.id = null
-	balloon_alert(user, "linked to [tool.buffer]")
+	balloon_alert(user, "linked to [buffer]")
 
 /obj/item/assembly/control/photobooth_control
 	name = "photobooth controller"

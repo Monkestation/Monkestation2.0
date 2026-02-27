@@ -457,10 +457,6 @@
 	name = "Face Scarf (Worn)"
 	icon_file = 'monkestation/code/modules/blueshift/gags/icons/neck/face_scarf/face_scarf_worn.dmi'
 
-/datum/greyscale_config/face_scarf/worn/muzzled
-	name = "Face Scarf (Worn, Muzzled)"
-	icon_file = 'monkestation/code/modules/blueshift/gags/icons/neck/face_scarf/face_scarf_worn_muzzled.dmi'
-
 /*
 *	SUITS
 */
@@ -488,15 +484,6 @@
 	icon_file = 'monkestation/code/modules/blueshift/gags/icons/suit.dmi'
 	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/flannel/flannel_worn.json'
 
-
-// ARMOR
-
-/datum/greyscale_config/heck_suit/worn/digi
-	icon_file = 'monkestation/code/modules/blueshift/icons/mob/clothing/suits/armor_digi.dmi'
-
-//Helmet pairs with the above suit
-/datum/greyscale_config/heck_helmet/worn/snouted
-	icon_file = 'monkestation/code/modules/blueshift/icons/mob/clothing/head/helmet_muzzled.dmi'
 
 // Bathrobes
 
@@ -528,10 +515,6 @@
 	name = "Formal Suit (Worn)"
 	icon_file = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/suits.dmi'
 
-/datum/greyscale_config/recolorable_suit/worn/digi
-	name = "Formal Suit (Worn, Digi)"
-	icon_file = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/suits_digi.dmi'
-
 /datum/greyscale_config/recolorable_suitskirt
 	name = "Formal Suitskirt"
 	icon_file = 'monkestation/code/modules/blueshift/icons/obj/clothing/under/suits.dmi'
@@ -540,10 +523,6 @@
 /datum/greyscale_config/recolorable_suitskirt/worn
 	name = "Formal Suitskirt (Worn)"
 	icon_file = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/suits.dmi'
-
-/datum/greyscale_config/recolorable_suitskirt/worn/digi
-	name = "Formal Suitskirt (Worn, Digi)"
-	icon_file = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/suits_digi.dmi'
 
 /datum/greyscale_config/fancysuit_casual
 	name = "Casual Fancysuit"
@@ -554,10 +533,6 @@
 	name = "Casual Fancysuit (Worn)"
 	icon_file = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/suits.dmi'
 
-/datum/greyscale_config/fancysuit_casual/worn/digi
-	name = "Casual Fancysuit (Worn, Digi)"
-	icon_file = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/suits_digi.dmi'
-
 /datum/greyscale_config/fancysuit_executive
 	name = "Executive Fancysuit"
 	icon_file = 'monkestation/code/modules/blueshift/icons/obj/clothing/under/suits.dmi'
@@ -566,10 +541,6 @@
 /datum/greyscale_config/fancysuit_executive/worn
 	name = "Executive Fancysuit (Worn)"
 	icon_file = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/suits.dmi'
-
-/datum/greyscale_config/fancysuit_executive/worn/digi
-	name = "Executive Fancysuit (Worn, Digi)"
-	icon_file = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/suits_digi.dmi'
 
 // PENCILSKIRTS
 /datum/greyscale_config/pencilskirt
@@ -581,10 +552,6 @@
 	name = "Pencilskirt (Worn)"
 	icon_file = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/suits.dmi'
 
-/datum/greyscale_config/pencilskirt/worn/digi
-	name = "Pencilskirt (Worn, Digi)"
-	icon_file = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/suits_digi.dmi'
-
 /datum/greyscale_config/pencilskirt_withshirt
 	name = "Pencilskirt + Shirt"
 	icon_file = 'monkestation/code/modules/blueshift/icons/obj/clothing/under/suits.dmi'
@@ -593,10 +560,6 @@
 /datum/greyscale_config/pencilskirt_withshirt/worn
 	name = "Pencilskirt + Shirt (Worn)"
 	icon_file = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/suits.dmi'
-
-/datum/greyscale_config/pencilskirt_withshirt/worn/digi
-	name = "Pencilskirt + Shirt (Worn, Digi)"
-	icon_file = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/suits_digi.dmi'
 
 /datum/greyscale_config/pencilskirt_checkers
 	name = "Checkered Pencilskirt"
@@ -607,10 +570,6 @@
 	name = "Checkered Pencilskirt (Worn)"
 	icon_file = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/suits.dmi'
 
-/datum/greyscale_config/pencilskirt_checkers/worn/digi
-	name = "Checkered Pencilskirt (Worn, Digi)"
-	icon_file = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/suits_digi.dmi'
-
 /datum/greyscale_config/pencilskirt_checkers_withshirt
 	name = "Checkered Pencilskirt + Shirt"
 	icon_file = 'monkestation/code/modules/blueshift/icons/obj/clothing/under/suits.dmi'
@@ -620,10 +579,6 @@
 	name = "Checkered Pencilskirt + Shirt (Worn)"
 	icon_file = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/suits.dmi'
 
-/datum/greyscale_config/pencilskirt_checkers_withshirt/worn/digi
-	name = "Checkered Pencilskirt + Shirt (Worn, Digi)"
-	icon_file = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/suits_digi.dmi'
-
 /datum/greyscale_config/pencilskirt_withsuit
 	name = "Pencilskirt + Suit"
 	icon_file = 'monkestation/code/modules/blueshift/icons/obj/clothing/under/suits.dmi'
@@ -632,10 +587,6 @@
 /datum/greyscale_config/pencilskirt_withsuit/worn
 	name = "Pencilskirt + Suit (Worn)"
 	icon_file = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/suits.dmi'
-
-/datum/greyscale_config/pencilskirt_withsuit/worn/digi
-	name = "Pencilskirt + Suit (Worn, Digi)"
-	icon_file = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/suits_digi.dmi'
 
 // HOODIES
 /datum/greyscale_config/hoodie
@@ -863,36 +814,10 @@
 
 // JUMPSUITS
 
-/datum/greyscale_config/jumpsuit/worn/digi
-	name = "Jumpsuit (Worn, Digi)"
-	icon_file = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/color_digi.dmi'
-
-/datum/greyscale_config/jumpsuit/prison/worn/digi
-	name = "Prison Jumpsuit (Worn, Digi)"
-	icon_file = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/color_digi.dmi'
-
-
 
 // PANTS / SHORTS
 //Note, these icons are now in master_files per TG's sorting. There's no reason to NOT have these pieces in master files now that they're sorted out.
 //The rest will eventually join them - preferably with a cleaner method too instead of having to have unique configs for every single item's digi state.
-
-/datum/greyscale_config/slacks/worn/digi
-	name = "Slacks (Worn, Digi)"
-	icon_file = SHORTS_PANTS_SHIRTS_DIGIFILE
-
-/datum/greyscale_config/jeans/worn/digi
-	name = "Jeans (Worn, Digi)"
-	icon_file = SHORTS_PANTS_SHIRTS_DIGIFILE
-
-/datum/greyscale_config/shorts/worn/digi
-	name = "Shorts (Worn, Digi)"
-	icon_file = SHORTS_PANTS_SHIRTS_DIGIFILE
-
-/datum/greyscale_config/jeanshorts/worn/digi
-	name = "Jean Shorts (Worn, Digi)"
-	icon_file = SHORTS_PANTS_SHIRTS_DIGIFILE
-
 /datum/greyscale_config/shortershorts
 	name = "Shorter Shorts"
 	icon_file = 'monkestation/code/modules/blueshift/gags/icons/shorts_pants.dmi'
@@ -901,10 +826,6 @@
 /datum/greyscale_config/shortershorts/worn
 	name = "Shorter Shorts (Worn)"
 	icon_file = 'monkestation/code/modules/blueshift/gags/icons/shorts_pants.dmi'
-
-/datum/greyscale_config/shortershorts/worn/digi
-	name = "Ripped Shorts (Worn, Digi)"
-	icon_file = SHORTS_PANTS_SHIRTS_DIGIFILE
 
 /datum/greyscale_config/shorts_ripped
 	name = "Ripped Shorts"
@@ -915,10 +836,6 @@
 	name = "Ripped Shorts (Worn)"
 	icon_file = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/shorts_pants_shirts.dmi'
 
-/datum/greyscale_config/shorts_ripped/worn/digi
-	name = "Ripped Shorts (Worn, Digi)"
-	icon_file = SHORTS_PANTS_SHIRTS_DIGIFILE
-
 /datum/greyscale_config/jeans_ripped
 	name = "Ripped Jeans"
 	icon_file = 'monkestation/code/modules/blueshift/icons/obj/clothing/under/shorts_pants_shirts.dmi'
@@ -927,10 +844,6 @@
 /datum/greyscale_config/jeans_ripped/worn
 	name = "Ripped Jeans (Worn)"
 	icon_file = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/shorts_pants_shirts.dmi'
-
-/datum/greyscale_config/jeans_ripped/worn/digi
-	name = "Ripped Jeans (Worn, Digi)"
-	icon_file = SHORTS_PANTS_SHIRTS_DIGIFILE
 
 /datum/greyscale_config/yoga_pants
 	name = "Yoga Pants"
@@ -941,10 +854,6 @@
 	name = "Yoga Pants (Worn)"
 	icon_file = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/shorts_pants_shirts.dmi'
 
-/datum/greyscale_config/yoga_pants/worn/digi
-	name = "Yoga Pants (Worn, Digi)"
-	icon_file = SHORTS_PANTS_SHIRTS_DIGIFILE
-
 /datum/greyscale_config/camo_pants
 	name = "Camo Pants"
 	icon_file = 'monkestation/code/modules/blueshift/icons/obj/clothing/under/shorts_pants_shirts.dmi'
@@ -954,15 +863,7 @@
 	name = "Camo Pants (Worn)"
 	icon_file = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/shorts_pants_shirts.dmi'
 
-/datum/greyscale_config/camo_pants/worn/digi
-	name = "Camo Pants (Worn, Digi)"
-	icon_file = SHORTS_PANTS_SHIRTS_DIGIFILE
-
 // DRESSES / SKIRTS
-
-/datum/greyscale_config/plaidskirt/worn/digi
-	name = "Plaid Skirt (Worn, Digi)"
-	icon_file = SKIRTS_DRESSES_DIGIFILE
 
 /datum/greyscale_config/lone_skirt
 	name = "Skirt"
@@ -990,10 +891,6 @@
 /datum/greyscale_config/jean_skirt/worn
 	name = "Jean Skirt (Worn)"
 	icon_file = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/skirts_dresses.dmi'
-
-/datum/greyscale_config/jean_skirt/worn/digi
-	name = "Jean Skirt (Worn, Digi)"
-	icon_file = SKIRTS_DRESSES_DIGIFILE
 
 /datum/greyscale_config/short_dress
 	name = "Short Dress"
@@ -1043,17 +940,6 @@
 // KILT
 // COSTUMES
 
-/datum/greyscale_config/buttondown_slacks/worn/digi
-	name = "Buttondown with Slacks (Worn, Digi)"
-	icon_file = SHORTS_PANTS_SHIRTS_DIGIFILE
-
-/datum/greyscale_config/buttondown_shorts/worn/digi
-	name = "Buttondown with Shorts (Worn, Digi)"
-	icon_file = SHORTS_PANTS_SHIRTS_DIGIFILE
-
-/datum/greyscale_config/football_suit/worn/digi
-	icon_file = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/costume_digi.dmi'
-
 /datum/greyscale_config/qipao
 	name = "Qipao"
 	icon_file = 'monkestation/code/modules/blueshift/icons/obj/clothing/under/costume.dmi'
@@ -1062,10 +948,6 @@
 /datum/greyscale_config/qipao/worn
 	name = "Qipao (Worn)"
 	icon_file = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/costume.dmi'
-
-/datum/greyscale_config/qipao/worn/digi
-	name = "Qipao (Worn, Digi)"
-	icon_file = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/costume_digi.dmi'
 
 /datum/greyscale_config/cheongsam
 	name = "Cheongsam"
@@ -1076,10 +958,6 @@
 	name = "Cheongsam (Worn)"
 	icon_file = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/costume.dmi'
 
-/datum/greyscale_config/cheongsam/worn/digi
-	name = "Cheongsam (Worn, Digi)"
-	icon_file = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/costume_digi.dmi'
-
 /datum/greyscale_config/qipao_customtrim
 	name = "Qipao"
 	icon_file = 'monkestation/code/modules/blueshift/icons/obj/clothing/under/costume.dmi'
@@ -1088,10 +966,6 @@
 /datum/greyscale_config/qipao_customtrim/worn
 	name = "Qipao (Worn)"
 	icon_file = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/costume.dmi'
-
-/datum/greyscale_config/qipao_customtrim/worn/digi
-	name = "Qipao (Worn, Digi)"
-	icon_file = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/costume_digi.dmi'
 
 /datum/greyscale_config/cheongsam_customtrim
 	name = "Cheongsam"
@@ -1102,10 +976,6 @@
 	name = "Cheongsam (Worn)"
 	icon_file = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/costume.dmi'
 
-/datum/greyscale_config/cheongsam_customtrim/worn/digi
-	name = "Cheongsam (Worn, Digi)"
-	icon_file = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/costume_digi.dmi'
-
 /datum/greyscale_config/yukata
 	name = "Yukata"
 	icon_file = 'monkestation/code/modules/blueshift/icons/obj/clothing/under/costume.dmi'
@@ -1114,10 +984,6 @@
 /datum/greyscale_config/yukata/worn
 	name = "Yukata (Worn)"
 	icon_file = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/costume.dmi'
-
-/datum/greyscale_config/yukata/worn/digi
-	name = "Yukata (Worn, Digi)"
-	icon_file = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/costume_digi.dmi'
 
 /datum/greyscale_config/kilt
 	name = "Kilt"
@@ -1128,10 +994,6 @@
 	name = "Kilt (Worn)"
 	icon_file = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/shorts_pants_shirts.dmi'
 
-/datum/greyscale_config/kilt/worn/digi
-	name = "Kilt (Worn, Digi)"
-	icon_file = SHORTS_PANTS_SHIRTS_DIGIFILE
-
 /datum/greyscale_config/buttondown_vicvest
 	name = "Buttondown with Double-breasted Vest"
 	icon_file = 'monkestation/code/modules/blueshift/icons/obj/clothing/under/shorts_pants_shirts.dmi'
@@ -1141,10 +1003,6 @@
 	name = "Buttondown with Double-breasted Vest (Worn)"
 	icon_file = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/shorts_pants_shirts.dmi'
 
-/datum/greyscale_config/buttondown_vicvest/worn/digi
-	name = "Buttondown with Double-breasted Vest (Worn, Digi)"
-	icon_file = SHORTS_PANTS_SHIRTS_DIGIFILE
-
 /datum/greyscale_config/chrimbo
 	name = "christmas_male"
 	icon_file = 'monkestation/code/modules/blueshift/icons/obj/clothing/under/costume.dmi'
@@ -1153,10 +1011,6 @@
 /datum/greyscale_config/chrimbo/worn
 	name = "christmas_male (Worn)"
 	icon_file = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/costume.dmi'
-
-/datum/greyscale_config/chrimbo/worn/digi
-	name = "christmas_male (Worn, Digi)"
-	icon_file = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/costume_digi.dmi'
 
 //RELIGIOUS COSTUMES (MONK HABIT, ETC)
 /datum/greyscale_config/monk_habit
@@ -1243,27 +1097,8 @@
 	icon_file = 'monkestation/code/modules/blueshift/gags/icons/maid_costume_worn.dmi'
 
 /*
-TREK
-*/
-
-/datum/greyscale_config/trek/worn/digi
-	name = "Trek Uniform (Worn, Digi)"
-	icon_file = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/trek_digi.dmi'
-
-/*
 *	SHOES
 */
-
-// SNEAKERS
-
-/datum/greyscale_config/sneakers/worn/digi
-	name = "Sneakers (Worn, Digi)"
-	icon_file = 'monkestation/code/modules/blueshift/gags/icons/sneakers_digi.dmi'
-
-/datum/greyscale_config/sneakers_orange/worn/digi
-	name = "Orange Sneakers (Worn, Digi)"
-	icon_file = 'monkestation/code/modules/blueshift/gags/icons/sneakers_digi.dmi'
-
 // Boots
 
 /datum/greyscale_config/boots
@@ -1275,9 +1110,6 @@ TREK
 	name = "Colorable Boots (Worn)"
 	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/shoes/boots/boots_worn.json'
 
-/datum/greyscale_config/boots/worn/digi
-	icon_file = 'monkestation/code/modules/blueshift/gags/icons/shoes/shoes_digi.dmi'
-
 /datum/greyscale_config/boots/christmasboots
 	name = "christmas_boots"
 	icon_file = 'monkestation/code/modules/blueshift/icons/obj/clothing/shoes.dmi'
@@ -1286,10 +1118,6 @@ TREK
 /datum/greyscale_config/boots/christmasboots/worn
 	name = "christmas_boots (Worn)"
 	icon_file = 'monkestation/code/modules/blueshift/icons/mob/clothing/feet.dmi'
-
-/datum/greyscale_config/boots/christmasboots/worn/digi
-	name = "christmas_boots (Worn, Digi)"
-	icon_file = 'monkestation/code/modules/blueshift/icons/mob/clothing/feet_digi.dmi'
 
 // Laceups
 
@@ -1302,9 +1130,6 @@ TREK
 	name = "Colorable Laceups (Worn)"
 	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/shoes/laceups/laceups_worn.json'
 
-/datum/greyscale_config/laceup/worn/digi
-	icon_file = 'monkestation/code/modules/blueshift/gags/icons/shoes/shoes_digi.dmi'
-
 // Sandals
 
 /datum/greyscale_config/sandals
@@ -1315,10 +1140,6 @@ TREK
 /datum/greyscale_config/sandals/worn
 	name = "Colorable Sandals (Worn)"
 	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/shoes/sandals/sandals_worn.json'
-
-/datum/greyscale_config/sandals/worn/digi
-	icon_file = 'monkestation/code/modules/blueshift/gags/icons/shoes/shoes_digi.dmi'
-
 
 // WRAPS
 
@@ -1331,9 +1152,6 @@ TREK
 	name = "Cloth Wraps (Worn)"
 	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/wraps/wraps_worn.json'
 
-/datum/greyscale_config/clothwraps/worn/digi
-	name = "Cloth Wraps (Worn, Digi)"
-
 /datum/greyscale_config/legwraps
 	name = "Leg Wraps"
 	icon_file = 'monkestation/code/modules/blueshift/gags/icons/shoes.dmi'
@@ -1342,10 +1160,6 @@ TREK
 /datum/greyscale_config/legwraps/worn
 	name = "Leg Wraps (Worn)"
 	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/wraps/legwraps_worn.json'
-
-/datum/greyscale_config/legwraps/worn/digi
-	name = "Leg Wraps (Worn, Digi)"
-	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/wraps/legwraps_worn_digi.json'
 
 /datum/greyscale_config/armwraps
 	name = "Cloth Arm Wraps"
@@ -1368,10 +1182,6 @@ TREK
 	name = "High Heels (Worn)"
 	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/shoes/heels/heels_worn.json'
 
-/datum/greyscale_config/heels/worn/digi
-	name = "High Heels (Worn, Digi)"
-	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/shoes/heels/heels_worn_digi.json'
-
 /datum/greyscale_config/fancyheels
 	name = "Fancy Heels"
 	icon_file = 'monkestation/code/modules/blueshift/gags/icons/fancyheels.dmi'
@@ -1380,10 +1190,6 @@ TREK
 /datum/greyscale_config/fancyheels/worn
 	name = "Fancy Heels (Worn)"
 	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/shoes/fancyheels/fancyheels_worn.json'
-
-/datum/greyscale_config/fancyheels/worn/digi
-	name = "Fancy Heels (Worn, Digi)"
-	json_config = 'monkestation/code/modules/blueshift/gags/json_configs/shoes/fancyheels/fancyheels_worn_digi.json'
 
 /datum/greyscale_config/cin_surplus_helmet
 	name = "CIN Surplus Helmet"
@@ -1403,9 +1209,6 @@ TREK
 /datum/greyscale_config/cin_surplus_undersuit/object
 	name = "CIN Surplus Undersuit (OBJ)"
 	icon_file = 'monkestation/code/modules/blueshift/icons/surplus_armor/surplus_armor_object.dmi'
-
-/datum/greyscale_config/cin_surplus_undersuit/digi
-	icon_file = 'monkestation/code/modules/blueshift/icons/surplus_armor/surplus_armor_digi.dmi'
 
 // Backpack
 /datum/greyscale_config/cin_surplus_backpack

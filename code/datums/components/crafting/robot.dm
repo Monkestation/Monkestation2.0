@@ -16,6 +16,10 @@
 	time = 6 SECONDS
 	category = CAT_ROBOT
 
+/datum/crafting_recipe/ed209/New()
+	. = ..()
+	blacklist |= typesof(/obj/item/clothing/head/helmet/space)
+
 /datum/crafting_recipe/secbot
 	name = "Secbot"
 	result = /mob/living/simple_animal/bot/secbot
@@ -109,7 +113,7 @@
 		/obj/item/extinguisher = 1,
 		/obj/item/bodypart/arm/right/robot = 1,
 		/obj/item/assembly/prox_sensor = 1,
-		/obj/item/clothing/head/utility/hardhat/red = 1,
+		/obj/item/clothing/head/utility/hardhat = 1,
 	)
 	time = 4 SECONDS
 	category = CAT_ROBOT

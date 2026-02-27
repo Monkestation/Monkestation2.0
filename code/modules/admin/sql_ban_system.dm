@@ -1,7 +1,7 @@
 #define MAX_ADMINBANS_PER_ADMIN 1
 #define MAX_ADMINBANS_PER_HEADMIN 3
 
-#define MAX_REASON_LENGTH 600
+#define MAX_REASON_LENGTH 1024
 
 //checks client ban cache or DB ban table if ckey is banned from one or more roles
 //doesn't return any details, use only for if statements
@@ -336,6 +336,7 @@
 				ROLE_BRAINWASHED,
 				ROLE_DEATHSQUAD,
 				ROLE_DRONE,
+				ROLE_GLITCH,
 				ROLE_LAVALAND,
 				ROLE_MIND_TRANSFER,
 				ROLE_POSIBRAIN,
@@ -345,7 +346,9 @@
 				ROLE_PLAGUERAT,
 				ROLE_ABDUCTOR,
 				ROLE_ALIEN,
+				ROLE_ASSAULT_OPERATIVE,
 				ROLE_BLOB,
+				ROLE_BINGLE,
 				ROLE_BROTHER,
 				ROLE_BLOODSUCKER,
 				ROLE_BLOODSUCKERBREAKOUT,
@@ -355,14 +358,20 @@
 				ROLE_CHANGELING,
 				ROLE_CLOCK_CULTIST,
 				ROLE_CULTIST,
+				ROLE_DARKSPAWN,
+				ROLE_DRIFTING_CONTRACTOR,
+				ROLE_FUGITIVE,
 				ROLE_HERETIC,
 				ROLE_HIVE,
+				ROLE_LONE_OPERATIVE,
+				ROLE_JUNIOR_LONE_OPERATIVE,
 				ROLE_INFILTRATOR,
 				ROLE_MALF,
 				ROLE_MONSTERHUNTER,
 				ROLE_NINJA,
 				ROLE_OPERATIVE,
 				ROLE_COMMANDO_OPERATIVE,
+				ROLE_COMMANDO_OPERATIVE_MIDROUND,
 				ROLE_OVERTHROW,
 				ROLE_REV,
 				ROLE_REVENANT,
@@ -370,14 +379,12 @@
 				ROLE_SLASHER,
 				ROLE_SPIDER,
 				ROLE_SYNDICATE,
+				ROLE_TERATOMA,
 				ROLE_TRAITOR,
 				ROLE_VAMPIRICACCIDENT,
 				ROLE_FORBIDDENCALLING,
 				ROLE_WIZARD,
 				BAN_OPFOR,
-				ROLE_ASSAULT_OPERATIVE,
-				ROLE_BINGLE,
-				ROLE_DARKSPAWN,
 			),
 		)
 		for(var/department in long_job_lists)
@@ -796,13 +803,35 @@
 	if(!SSdbcore.Connect())
 		to_chat(usr, span_danger("Failed to establish database connection."), confidential = TRUE)
 		return
+	var/mirror_unban = FALSE
+	if(tgui_alert(usr, "Do you want to unban matching bans related to this one?", "Mirror Unban", list("Yes", "No")) == "Yes")
+		mirror_unban = TRUE
 	var/target = ban_target_string(player_key, player_ip, player_cid)
 	// Make sure the only input that doesn't early return is "Yes" - This is the only situation in which we want the unban to proceed.
-	if(tgui_alert(usr, "Please confirm unban of [target] from [role].", "Unban confirmation", list("Yes", "No")) != "Yes")
+	if(tgui_alert(usr, "Please confirm unban of [target] from [role][mirror_unban ? " and other matching bans" : ""].", "Unban confirmation", list("Yes", "No")) != "Yes")
 		return
 	var/kn = key_name(usr)
 	var/kna = key_name_admin(usr)
 	var/change_message = "[usr.client.key] unbanned [target] from [role] on [SQLtime()] during round #[GLOB.round_id]<hr>"
+
+	var/list/arguments = list(
+		"ban_id" = ban_id,
+		"admin_ckey" = usr.client.ckey,
+		"admin_ip" = usr.client.address,
+		"admin_cid" = usr.client.computer_id,
+		"round_id" = GLOB.round_id,
+		"change_message" = change_message,
+	)
+
+	var/where
+	if(mirror_unban)
+		var/list/wherelist = list("bantime = (SELECT bantime FROM [format_table_name("ban")] WHERE id = :ban_id)")
+		wherelist += "ckey = :ckey"
+		arguments["ckey"] = ckey(player_key)
+		where = wherelist.Join(" AND ")
+	else
+		where = "id = :ban_id"
+
 	var/datum/db_query/query_unban = SSdbcore.NewQuery({"
 		UPDATE [format_table_name("ban")] SET
 			unbanned_datetime = NOW(),
@@ -811,14 +840,14 @@
 			unbanned_computerid = :admin_cid,
 			unbanned_round_id = :round_id,
 			edits = CONCAT(IFNULL(edits,''), :change_message)
-		WHERE id = :ban_id
-	"}, list("ban_id" = ban_id, "admin_ckey" = usr.client.ckey, "admin_ip" = usr.client.address, "admin_cid" = usr.client.computer_id, "round_id" = GLOB.round_id, "change_message" = change_message))
+		WHERE [where]
+	"}, arguments)
 	if(!query_unban.warn_execute())
 		qdel(query_unban)
 		return
 	qdel(query_unban)
-	log_admin_private("[kn] has unbanned [target] from [role].")
-	message_admins("[kna] has unbanned [target] from [role].")
+	log_admin_private("[kn] has unbanned [target] from [role][mirror_unban ? " and other matching bans" : ""].")
+	message_admins("[kna] has unbanned [target] from [role][mirror_unban ? " and other matching bans" : ""].")
 	var/client/C = GLOB.directory[player_key]
 	if(C)
 		build_ban_cache(C)

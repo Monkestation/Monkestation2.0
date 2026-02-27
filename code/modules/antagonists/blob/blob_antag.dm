@@ -7,21 +7,21 @@
 	job_rank = ROLE_BLOB
 	ui_name = "AntagInfoBlob"
 	stinger_sound = 'sound/ambience/antag/blobalert.ogg'
-	antag_flags = parent_type::antag_flags | FLAG_ANTAG_CAP_IGNORE_HUMANITY
+	antag_flags = FLAG_ANTAG_CAP_IGNORE_HUMANITY
 	antag_count_points = 25 //round ender, very high cost
 	/// Action to release a blob infection
 	var/datum/action/innate/blobpop/pop_action
 	/// Initial points for a human blob
 	var/starting_points_human_blob = OVERMIND_STARTING_POINTS
+	/// Ref to our team
+	var/datum/team/blob/blob_team
 
 /datum/antagonist/blob/roundend_report()
 	var/basic_report = ..()
 	//Display max blobpoints for blebs that lost
-	if(isovermind(owner.current)) //embarrasing if not
-		var/mob/eye/blob/overmind = owner.current
-		if(!overmind.victory_in_progress) //if it won this doesn't really matter
-			var/point_report = "<br><b>[owner.name]</b> took over [overmind.max_count] tiles at the height of its growth."
-			return basic_report+point_report
+	if(blob_team && !blob_team.victory_in_progress) //if it won this doesn't really matter
+		var/point_report = "<br><b>[owner.name]</b> took over [blob_team.highest_tile_count] tiles at the height of its growth."
+		return basic_report+point_report
 	return basic_report
 
 /datum/antagonist/blob/greet()
@@ -31,8 +31,21 @@
 		to_chat(owner.current, span_notice("Use the pop ability to place your blob core! It is recommended you do this away from anyone else, as you'll be taking on the entire crew!"))
 
 /datum/antagonist/blob/on_gain()
+	if(!isovermind(owner.current))
+		blob_team = new /datum/team/blob(owner)
+	else
+		blob_team = astype(owner.current, /mob/eye/blob)?.antag_team
 	create_objectives()
-	. = ..()
+	return ..()
+
+/datum/antagonist/blob/apply_innate_effects(mob/living/mob_override)
+	if(isovermind(owner.current))
+		if(!blob_team)
+			blob_team = astype(owner.current, /mob/eye/blob)?.antag_team
+		return FALSE
+	if(!pop_action)
+		pop_action = new
+	pop_action.Grant(owner.current)
 
 /datum/antagonist/blob/remove_innate_effects()
 	QDEL_NULL(pop_action)
@@ -48,6 +61,10 @@
 
 	return icon
 
+/datum/antagonist/blob/proc/create_objectives()
+	var/datum/objective/blob_takeover/main = new
+	main.owner = owner
+	objectives += main
 
 /datum/antagonist/blob/ui_data(mob/user)
 	var/list/data = list()
@@ -56,8 +73,8 @@
 
 	if(!isovermind(user))
 		return data
-	var/mob/eye/blob/blob = user
-	var/datum/blobstrain/reagent/blobstrain = blob.blobstrain
+
+	var/datum/blobstrain/reagent/blobstrain = blob_team.blobstrain
 
 	if(!blobstrain)
 		return data
@@ -68,18 +85,6 @@
 	data["name"] = blobstrain.name
 
 	return data
-
-/datum/antagonist/blob/proc/create_objectives()
-	var/datum/objective/blob_takeover/main = new
-	main.owner = owner
-	objectives += main
-
-/datum/antagonist/blob/apply_innate_effects(mob/living/mob_override)
-	if(isovermind(owner.current))
-		return FALSE
-	if(!pop_action)
-		pop_action = new
-	pop_action.Grant(owner.current)
 
 /datum/objective/blob_takeover
 	explanation_text = "Reach critical mass!"
@@ -127,7 +132,7 @@
 		placement_override = BLOB_RANDOM_PLACEMENT
 		to_chat(owner, span_warning("Because your current location is an invalid starting spot and you need to pop, you've been moved to a random location!"))
 
-	var/mob/eye/blob/blob_cam = new /mob/eye/blob(get_turf(old_body), blobtag.starting_points_human_blob)
+	var/mob/eye/blob/blob_cam = new /mob/eye/blob(get_turf(old_body), blobtag.starting_points_human_blob, blobtag.blob_team)
 	owner.mind.transfer_to(blob_cam)
 	old_body.gib()
 	blob_cam.place_blob_core(placement_override, pop_override = TRUE)
@@ -146,9 +151,7 @@
 /datum/antagonist/blob/antag_listing_status()
 	. = ..()
 	if(owner?.current)
-		var/mob/eye/blob/blob_cam = owner.current
-		if(istype(blob_cam))
-			. += "(Progress: [length(blob_cam.blobs_legit)]/[blob_cam.blobwincount])"
+		. += "(Progress: [blob_team.blobs_legit]/[blob_team.blobwincount])"
 
 /// A subtype of blob meant to represent the infective version.
 /datum/antagonist/blob/infection

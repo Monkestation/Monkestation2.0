@@ -392,7 +392,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	for (var/datum/preference_middleware/preference_middleware as anything in middleware)
 		preference_middleware.on_new_character(usr)
 
-	character_preview_view.update_body()
+	character_preview_view?.update_body()
 
 /datum/preferences/proc/remove_current_slot()
 	PRIVATE_PROC(TRUE)

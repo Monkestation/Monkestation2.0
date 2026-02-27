@@ -51,7 +51,10 @@
 	var/broadcasting = FALSE
 	/// Cooldown between being able to toggle broadcasting
 	COOLDOWN_DECLARE(broadcast_toggle_cd)
-
+	/// Determines what bitrunning network of domains we can access.
+	var/bitrunning_network = BITRUNNER_DOMAIN_DEFAULT
+	/// Determines our ID for what bitrunning machinery we're linked to.
+	var/bitrunning_id = "DEFAULT"
 
 /obj/machinery/quantum_server/Initialize(mapload)
 	. = ..()
@@ -74,6 +77,7 @@
 
 	// This further gets sorted in the client by cost so it's random and grouped
 	available_domains = shuffle(subtypesof(/datum/lazy_template/virtual_domain))
+	LAZYREMOVE(available_domains, /datum/lazy_template/virtual_domain/tutorial) //TODO: make this less shit
 
 /obj/machinery/quantum_server/Destroy(force)
 	. = ..()
@@ -162,3 +166,10 @@
 
 	servo_bonus = servo_rating
 
+/obj/machinery/quantum_server/tutorial_coop
+	bitrunning_id = "tutorial_coop"
+	bitrunning_network = BITRUNNER_DOMAIN_TUTORIAL
+
+/obj/machinery/quantum_server/tutorial_solo
+	bitrunning_id = "tutorial_solo"
+	bitrunning_network = BITRUNNER_DOMAIN_TUTORIAL

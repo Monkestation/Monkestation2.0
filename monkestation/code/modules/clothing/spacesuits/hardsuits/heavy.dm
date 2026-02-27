@@ -11,7 +11,6 @@
 		TRAIT_SNOWSTORM_IMMUNE,
 		TRAIT_ABATES_SHOCK,
 		TRAIT_ANALGESIA,
-		TRAIT_NO_PAIN_EFFECTS,
 		TRAIT_NO_SHOCK_BUILDUP,
 	)
 	actions_types = null
@@ -41,13 +40,12 @@
 			hud.hide_from(user)
 		user.update_sight()
 
-/datum/action/item_action/toggle_suit_flashlight //monkestation addition
+/datum/action/item_action/toggle_suit_flashlight
 	name = "Toggle Integrated Flashlight"
 
 /obj/item/clothing/suit/space/hardsuit/juggernaut
 	name = "cybersun juggernaut hardsuit"
 	desc = "A hyper resilient suit created from several layers of exotic materials and alloys. An etching in the neck pressure seal reads \"Property of Gorlex Marauders.\""
-	worn_icon_digitigrade = 'monkestation/icons/mob/clothing/species/suit_digi.dmi'
 	icon_state = "hardsuit-juggernaut"
 	resistance_flags = ACID_PROOF | FIRE_PROOF
 	clothing_flags = BLOCKS_SHOVE_KNOCKDOWN | STOPSPRESSUREDAMAGE | THICKMATERIAL //you are a walking wall you can't shove a wall down!
@@ -55,7 +53,6 @@
 		TRAIT_SNOWSTORM_IMMUNE,
 		TRAIT_ABATES_SHOCK,
 		TRAIT_ANALGESIA,
-		TRAIT_NO_PAIN_EFFECTS,
 		TRAIT_NO_SHOCK_BUILDUP,
 	)
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT //Same as an emergency firesuit. Not ideal for extended exposure.
