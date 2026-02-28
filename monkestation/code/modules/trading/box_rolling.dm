@@ -109,11 +109,8 @@
 	qdel(src)
 
 
-/proc/testing_trigger_lootbox(mob/user = usr)
-	if(!user || !user.client)
-		return
-
-	user.overlay_fullscreen("lb_main", /atom/movable/screen/fullscreen/lootbox_overlay/main/guaranteed)
+/mob/proc/testing_trigger_lootbox()
+	overlay_fullscreen("lb_main", /atom/movable/screen/fullscreen/lootbox_overlay/main/guaranteed)
 
 /mob/proc/trigger_lootbox_on_self()
 	src.overlay_fullscreen("lb_main", /atom/movable/screen/fullscreen/lootbox_overlay/main)
