@@ -42,12 +42,8 @@
 
 /mob/proc/clear_fullscreens()
 	for(var/category in screens)
+		screens -= category
 		clear_fullscreen(category)
-
-/mob/proc/hide_fullscreens()
-	if(client)
-		for(var/category in screens)
-			client.screen -= screens[category]
 
 /mob/proc/reload_fullscreen()
 	if(client)

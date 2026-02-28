@@ -47,6 +47,7 @@
 		for(var/mob/dead/observe as anything in observers)
 			observe.reset_perspective(null)
 
+	clear_fullscreens()
 	qdel(hud_used)
 	QDEL_LIST(client_colours)
 	ghostize() //False, since we're deleting it currently
