@@ -683,7 +683,9 @@
 		receievers += computer.loc
 
 	for(var/mob/living/messaged_mob as anything in receievers)
-		if((messaged_mob.stat >= UNCONSCIOUS) || !messaged_mob.is_literate())
+		if(isnull(messaged_mob))
+			continue
+		if(QDELING(messaged_mob) || (messaged_mob.stat >= UNCONSCIOUS) || !messaged_mob.is_literate())
 			receievers -= messaged_mob
 			continue
 		var/reply_href = signal.data["rigged"] ? "explode" : "message"

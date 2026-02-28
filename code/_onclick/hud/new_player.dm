@@ -20,7 +20,7 @@
 			var/atom/movable/screen/lobby/button/lobby_button = lobbyscreen
 			lobby_button.owner = REF(owner)
 
-	if (!owner.client.is_localhost())
+	if (!owner.client?.is_localhost())
 		return
 
 	var/atom/movable/screen/lobby/button/start_now/start_button = new(our_hud = src)

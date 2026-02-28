@@ -20,3 +20,6 @@
 #define COMSIG_SURGERY_STARTING "surgery_starting"
 	#define COMPONENT_CANCEL_SURGERY (1<<0)
 	#define COMPONENT_FORCE_SURGERY (1<<1)
+
+/// From /obj/item/ph_meter/interact_with_atom(): (atom/source, mob/user)
+#define COMSIG_ON_REAGENT_SCAN "on_reagent_scan"
