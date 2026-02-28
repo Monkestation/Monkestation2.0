@@ -1,5 +1,0 @@
-author: "cam_dev"
-delete-after: True
-changes:
-  - rscadd: "right-click screwdriver interaction to machinery based modular computers (such as civilian console and cargo chat console)"
-  - rscdel: "check blocking machinery-based modular computers from having batteries inserted"
