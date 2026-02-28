@@ -33,6 +33,7 @@
 	persistent_client?.set_mob(null)
 
 	unset_machine()
+	clear_fullscreens()
 	remove_from_mob_list()
 	remove_from_dead_mob_list()
 	remove_from_alive_mob_list()
@@ -47,7 +48,6 @@
 		for(var/mob/dead/observe as anything in observers)
 			observe.reset_perspective(null)
 
-	clear_fullscreens()
 	qdel(hud_used)
 	QDEL_LIST(client_colours)
 	ghostize() //False, since we're deleting it currently

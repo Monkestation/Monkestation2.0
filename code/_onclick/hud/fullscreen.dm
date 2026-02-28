@@ -42,8 +42,11 @@
 
 /mob/proc/clear_fullscreens()
 	for(var/category in screens)
-		screens -= category
+		var/atom/movable/screen/fullscreen/screen = screens[category]
 		clear_fullscreen(category)
+		if(!QDELETED(screen))
+			qdel(screen)
+		screens -= category
 
 /mob/proc/reload_fullscreen()
 	if(client)
