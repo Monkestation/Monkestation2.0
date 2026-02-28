@@ -12585,8 +12585,8 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/chemistry)
 "dTT" = (
-/obj/item/kirbyplants/random,
 /obj/structure/sign/poster/contraband/self_ai_liberation/directional/west,
+/obj/structure/table/reinforced,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "dTW" = (
@@ -76658,13 +76658,13 @@
 /turf/open/floor/iron/dark,
 /area/station/service/janitor)
 "xWm" = (
-/obj/item/kirbyplants/random,
 /obj/machinery/status_display/ai/directional/east,
 /obj/machinery/camera/directional/north{
 	c_tag = "ai_upload Turrets";
 	name = "upload camera";
 	network = list("aiupload")
 	},
+/obj/structure/table/reinforced,
 /turf/open/floor/circuit/red,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "xWq" = (
