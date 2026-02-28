@@ -25,6 +25,7 @@ GLOBAL_LIST_INIT(used_sound_channels, list(
 	CHANNEL_RINGTONES,
 	CHANNEL_DELTA_SIRENS,
 	CHANNEL_ADMIN_SOUNDS,
+	CHANNEL_SHUTTLES,
 ))
 
 GLOBAL_LIST_INIT(proxy_sound_channels, list(
@@ -41,6 +42,7 @@ GLOBAL_LIST_INIT(proxy_sound_channels, list(
 	CHANNEL_SILICON_EMOTES,
 	CHANNEL_VOICES,
 	CHANNEL_ADMIN_SOUNDS,
+	CHANNEL_SHUTTLES,
 ))
 
 GLOBAL_DATUM_INIT(cached_mixer_channels, /alist, alist())
@@ -70,6 +72,8 @@ GLOBAL_DATUM_INIT(cached_mixer_channels, /alist, alist())
 		. = GLOB.cached_mixer_channels[sound_text_string] = CHANNEL_SOUND_EFFECTS
 	else if(findtext(sound_text_string, "weapons/"))
 		. = GLOB.cached_mixer_channels[sound_text_string] = CHANNEL_SOUND_EFFECTS
+	else if(findtext(sound_text_string, "hyperspace/"))
+		. = GLOB.cached_mixer_channels[sound_text_string] = CHANNEL_SHUTTLES
 	else
 		return FALSE
 

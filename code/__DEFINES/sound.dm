@@ -19,7 +19,6 @@
 #define CHANNEL_INSTRUMENTS 1009
 #define CHANNEL_INSTRUMENTS_ROBOT 1008
 #define CHANNEL_MOB_SOUNDS 1007
-// monkestation edit
 #define CHANNEL_WALKMAN 1006
 #define CHANNEL_MASTER_VOLUME 1005
 #define CHANNEL_PRUDE 1004
@@ -32,7 +31,7 @@
 #define CHANNEL_RINGTONES 997
 #define CHANNEL_DELTA_SIRENS 996
 #define CHANNEL_ADMIN_SOUNDS 995
-// monkestation end
+#define CHANNEL_SHUTTLES 994
 
 /// This is the lowest volume that can be used by playsound otherwise it gets ignored
 /// Most sounds around 10 volume can barely be heard. Almost all sounds at 5 volume or below are inaudible

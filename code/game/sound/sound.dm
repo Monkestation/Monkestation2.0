@@ -306,5 +306,7 @@
 			return list("Sirens", "The sirens that blares during a Delta Alert.")
 		if(CHANNEL_ADMIN_SOUNDS)
 			return list("Admin Sounds", "Used for fax requests, prayers, and bwoinks. Admin-only.")
+		if(CHANNEL_SHUTTLES)
+			return list("Shuttles", "The sound of shuttles booting/docking/departing.")
 	stack_trace("Sound channel [channel] is trying to pass get_channel_info despite having none set.")
 	return list("BROKEN CHANNEL", "There's a channel in the list of pre-set channels that does not have a category.")
