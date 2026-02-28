@@ -39,7 +39,10 @@
 		return
 	opened = TRUE
 	mouse_over_pointer = MOUSE_INACTIVE_POINTER
-	playsound(usr, pick('goon/sounds/misc/openlootcrate.ogg', 'goon/sounds/misc/openlootcrate2.ogg'), 100, 0)
+	if(isliving(hud.mymob))
+		playsound(hud.mymob, pick('goon/sounds/misc/openlootcrate.ogg', 'goon/sounds/misc/openlootcrate2.ogg'), 100, 0)
+	else
+		hud.mymob.playsound_local(null, pick('goon/sounds/misc/openlootcrate.ogg', 'goon/sounds/misc/openlootcrate2.ogg'), 100, 0)
 	icon_state = "lootb2"
 	flick("lootb1", src)
 	addtimer(CALLBACK(src, PROC_REF(after_open), usr), 2 SECONDS)
