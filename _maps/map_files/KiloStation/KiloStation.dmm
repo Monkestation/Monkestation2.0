@@ -12586,7 +12586,8 @@
 /area/station/medical/chemistry)
 "dTT" = (
 /obj/structure/sign/poster/contraband/self_ai_liberation/directional/west,
-/obj/structure/table/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/table,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "dTW" = (
@@ -53551,7 +53552,6 @@
 "qHT" = (
 /obj/structure/table,
 /obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/window/reinforced/spawner/directional/west,
 /obj/effect/spawner/random/aimodule/neutral,
 /obj/machinery/door/window{
 	base_state = "right";
@@ -55495,7 +55495,6 @@
 /area/station/cargo/sorting)
 "rmL" = (
 /obj/structure/table,
-/obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/effect/spawner/random/aimodule/harmful,
 /obj/machinery/door/window/brigdoor/left/directional/south{
@@ -76664,7 +76663,8 @@
 	name = "upload camera";
 	network = list("aiupload")
 	},
-/obj/structure/table/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/table,
 /turf/open/floor/circuit/red,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "xWq" = (
