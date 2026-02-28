@@ -80,7 +80,7 @@
 
 /atom/movable/screen/pai/host_monitor
 	name = "Host Health Scan"
-	icon_state = "host_monitor"
+	icon_state = "host_scan"
 	required_software = "Host Scan"
 
 /atom/movable/screen/pai/host_monitor/Click(location, control, params)
@@ -95,6 +95,17 @@
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		pAI.host_scan(PAI_SCAN_MASTER)
 		return TRUE
+
+/atom/movable/screen/pai/crew_monitor
+	name = "Crew Monitor"
+	icon_state = "crew_monitor"
+	required_software = "Crew Monitor"
+
+/atom/movable/screen/pai/crew_monitor/Click(location, control, params)
+	. = ..()
+	if(!.)
+		return
+	GLOB.crewmonitor.show(usr, src)
 
 /atom/movable/screen/pai/crew_manifest
 	name = "Crew Manifest"
@@ -224,6 +235,11 @@
 // Host Monitor
 	using = new /atom/movable/screen/pai/host_monitor(null, src)
 	using.screen_loc = ui_pai_host_monitor
+	static_inventory += using
+
+// Crew Monitor
+	using = new /atom/movable/screen/pai/crew_monitor(null, src)
+	using.screen_loc = ui_pai_crew_monitor
 	static_inventory += using
 
 // Crew Manifest
