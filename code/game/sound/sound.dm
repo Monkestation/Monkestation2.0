@@ -204,7 +204,7 @@
 	for(var/m in GLOB.player_list)
 		if(ismob(m) && !isnewplayer(m))
 			var/mob/M = m
-			M.playsound_local(M, null, volume, vary, frequency, null, channel, pressure_affected, S)
+			M.playsound_local(M, null, volume, vary, frequency, null, channel, pressure_affected, S, mixer_channel = CHANNEL_SOUND)
 
 /client/proc/playtitlemusic(vol = 85)
 	set waitfor = FALSE
