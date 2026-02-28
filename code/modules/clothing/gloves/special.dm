@@ -129,7 +129,6 @@
 /obj/item/clothing/gloves/latex/nitrile/deforest/cosmetic
 	desc = "A pair of high-visibility gloves designed by Deforest Medical, made without anything special. They do not confer any benefits to the wearer"
 	clothing_traits = NONE
-	armor_type = NONE
 
 /obj/item/clothing/gloves/tinkerer
 	name = "tinker's gloves"
