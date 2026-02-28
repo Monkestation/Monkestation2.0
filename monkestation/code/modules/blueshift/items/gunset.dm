@@ -347,7 +347,7 @@
 	extra_to_spawn = /obj/item/ammo_box/c585trappiste
 
 // Moar gunsets
-/obj/item/storage/toolbox/guncase/skyrat/pistol
+/obj/item/storage/toolbox/guncase/skyrat/pistol/makarov
 	name = "'Makarov pistol' gunset"
 
 	weapon_to_spawn = /obj/item/gun/ballistic/automatic/pistol
