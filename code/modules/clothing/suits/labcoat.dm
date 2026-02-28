@@ -142,7 +142,7 @@
 
 /obj/item/clothing/suit/toggle/labcoat/paramedic/deforest
 	name = "Hi-Vis Jacket"
-	desc = "A high-visibility jacket designed by Deforest Pharmaceutical for search and rescue, wool lining and interwoven fabrics make this jacket noticeably thick with a webbing directly attached to hold medical equipment."
+	desc = "A high-visibility jacket designed by Deforest Medical for search and rescue, wool lining and interwoven fabrics make this jacket noticeably thick with a webbing directly attached to hold medical equipment."
 	icon_state = "hivisjacket"
 
 /obj/item/clothing/suit/toggle/labcoat/paramedic/deforest/Initialize(mapload)

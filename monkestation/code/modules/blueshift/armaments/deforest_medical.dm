@@ -229,7 +229,7 @@
 
 /datum/armament_entry/company_import/deforest/saftey_clothing/jacket
 	name = "Deforest Jacket"
-	item_type = /obj/item/clothing/suit/toggle/labcoat/paramedic
+	item_type = /obj/item/clothing/suit/toggle/labcoat/paramedic/deforest
 	cost = PAYCHECK_CREW
 
 /datum/armament_entry/company_import/deforest/saftey_clothing/gloves
