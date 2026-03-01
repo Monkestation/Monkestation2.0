@@ -189,6 +189,8 @@
 
 // fix immune system damage
 /datum/immune_system/proc/ImmuneRepair(level, threshold)
+	if(HAS_TRAIT(host, TRAIT_IMMUNODEFICIENCY))
+		level *= 0.5
 	if(level < 0)
 		strength = max(strength + level, 0)
 		return
