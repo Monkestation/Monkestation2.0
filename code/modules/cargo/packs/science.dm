@@ -189,7 +189,7 @@
 	contains = list(/obj/item/analysis_bin = 2)
 
 /datum/supply_pack/science/silicon_upload
-	name = "Silicon Upload Board Crate"
+	name = "Silicon Upload Boards Crate"
 	desc = "A back-up set of upload boards for when the station's silicons are improperly lawed. \
 		Contains an AI and cyborg upload board."
 	cost = CARGO_CRATE_VALUE * 10
