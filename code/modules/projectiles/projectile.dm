@@ -1097,6 +1097,7 @@
 	cleanup_beam_segments()
 	if(trajectory)
 		QDEL_NULL(trajectory)
+	original = null
 	. = ..()
 	impacted?.len = 0
 

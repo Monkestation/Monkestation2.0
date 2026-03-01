@@ -288,7 +288,7 @@
 
 /datum/techweb_node/mech_flamethrower
 	id = "mech_flamethrower"
-	display_name = "Exosuit Weapon (FNX-100 \"Conflagorator\" Flamethrower)"
+	display_name = "Exosuit Weapon (FNX-100 \"Conflagrator\" Flamethrower)"
 	description = "An advanced piece of mech weaponry"
 	prereq_ids = list("exotic_ammo")
 	design_ids = list(

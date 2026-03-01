@@ -71,7 +71,7 @@
 	name = "Basic Megacell"
 	desc = "A basic megacell that holds 1 MJ of energy."
 	id = "basic_battery"
-	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE |MECHFAB
+	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE
 	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 12, /datum/material/glass =SMALL_MATERIAL_AMOUNT * 2)
 	construction_time = 5 SECONDS
 	build_path = /obj/item/stock_parts/power_store/battery/empty
@@ -84,7 +84,7 @@
 	name = "High-Capacity Megacell"
 	desc = "A megacell that holds 10 MJ of energy."
 	id = "high_battery"
-	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE | MECHFAB
+	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE
 	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 12, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 3)
 	construction_time = 5 SECONDS
 	build_path = /obj/item/stock_parts/power_store/battery/high/empty
@@ -97,7 +97,7 @@
 	name = "Super-Capacity Megacell"
 	desc = "A megacell that holds 20 MJ of energy."
 	id = "super_battery"
-	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
+	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 12, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 4)
 	construction_time = 5 SECONDS
 	build_path = /obj/item/stock_parts/power_store/battery/super/empty
@@ -110,7 +110,7 @@
 	name = "Hyper-Capacity Megacell"
 	desc = "A megacell that holds 30 MJ of energy."
 	id = "hyper_battery"
-	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
+	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 12, /datum/material/gold = SMALL_MATERIAL_AMOUNT * 1.5, /datum/material/silver = SMALL_MATERIAL_AMOUNT * 1.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 5)
 	construction_time = 5 SECONDS
 	build_path = /obj/item/stock_parts/power_store/battery/hyper/empty
@@ -123,7 +123,7 @@
 	name = "Bluespace Megacell"
 	desc = "A megacell that holds 40 MJ of energy."
 	id = "bluespace_battery"
-	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
+	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 12, /datum/material/gold = SMALL_MATERIAL_AMOUNT * 1.2, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 6, /datum/material/diamond = SMALL_MATERIAL_AMOUNT * 1.6, /datum/material/titanium =SMALL_MATERIAL_AMOUNT * 3, /datum/material/bluespace =SMALL_MATERIAL_AMOUNT)
 	construction_time = 5 SECONDS
 	build_path = /obj/item/stock_parts/power_store/battery/bluespace/empty
