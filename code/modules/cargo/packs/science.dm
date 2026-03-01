@@ -187,3 +187,16 @@
 	desc = "Two analysis bins, to analyze artifacts. For those who research a lot of artifacts."
 	cost = CARGO_CRATE_VALUE * 4
 	contains = list(/obj/item/analysis_bin = 2)
+
+/datum/supply_pack/science/silicon_upload
+	name = "Silicon Upload Board Crate"
+	desc = "A back-up set of upload boards for when the station's silicons are improperly lawed. \
+		Contains an AI and cyborg upload board."
+	cost = CARGO_CRATE_VALUE * 10
+	access = ACCESS_AI_UPLOAD
+	contains = list(/obj/item/circuitboard/computer/aiupload = 1,
+					/obj/item/circuitboard/computer/borgupload = 1,
+					)
+	crate_name = "\improper silicon upload board crate"
+	crate_type = /obj/structure/closet/crate/secure/ai
+	dangerous = TRUE
