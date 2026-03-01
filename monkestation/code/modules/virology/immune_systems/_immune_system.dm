@@ -103,7 +103,7 @@
 	overloaded = TRUE
 
 
-//If even one antibody hass sufficient concentration, the disease won't be able to infect
+//If even one antibody has sufficient concentration, the disease won't be able to infect
 /datum/immune_system/proc/CanInfect(datum/disease/acute/disease)
 	if (overloaded || (HAS_TRAIT(host, TRAIT_IMMUNODEFICIENCY) && !HAS_TRAIT(host, TRAIT_VIRUS_RESISTANCE)))
 		return TRUE
