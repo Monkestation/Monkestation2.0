@@ -212,6 +212,8 @@ GLOBAL_LIST_INIT(inspectable_diseases, list())
 
 /datum/disease/proc/after_add()
 	SHOULD_CALL_PARENT(TRUE)
+	if(isnull(affected_mob))
+		return
 	if(HAS_TRAIT(affected_mob, TRAIT_IMMUNODEFICIENCY) && (disease_flags & DISEASE_DORMANT))
 		disease_flags &= ~DISEASE_DORMANT
 
