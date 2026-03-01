@@ -507,3 +507,37 @@
   - balance: gave the meat dishes in meatdish.dm either Healt Tiny or Health Medium
   notghosti:
   - map: Thesues Kitchen disposals/delivery has been fixed
+2026-02-28:
+  Absolucy:
+  - bugfix: Some assorted minor bugfixes.
+  - bugfix: Fixed the worn sprite for Wheely Heels being horribly misaligned.
+  - bugfix: Fixed Lamarr not being able to understand Galactic Common, despite being
+      able to speak it.
+  Cujo:
+  - rscadd: Medical penlight can now fit on ear slot
+  - bugfix: Fixes displayed message when choking is cleared by the heimlich
+  Mantle:
+  - balance: Hypodermic Prickles gene on plants can now only inject 50u, from 840u
+  SirNightKnight:
+  - bugfix: fixed changeling tentacle disarm not working.
+  - qol: gave bandoliers quick gather and quick empty like most storage bags.
+  - balance: bandoliers can hold 10 more ammo casings. 18 to 28.
+  - balance: 'bandoliers can hold .357 rounds.
+
+      balance'
+  cam_dev:
+  - rscadd: right-click screwdriver interaction to machinery based modular computers
+      (such as civilian console and cargo chat console)
+  - rscdel: check blocking machinery-based modular computers from having batteries
+      inserted
+  drgnmstrc:
+  - rscadd: check on player arrival that stops announcement board if player is a stowaway
+  - rscadd: duplicated the hacked digicoat to separate the donator and non-donator
+      version
+  - qol: changed name of donator digicoat to hacked digicoat in loadout to match in-game
+      name
+  - qol: changed name of loadout store digicoat to glitched digicoat in-game to match
+      store name
+  - bugfix: glitched digicoat not appearing in loadout after purchase (hopefully)
+  - spellcheck: fixed a few typos, mostly mech weapon names/descriptions and the span
+      notice for Hyper-Fibrinogenesis
