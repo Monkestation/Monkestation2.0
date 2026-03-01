@@ -1,0 +1,5 @@
+author: "Tractor-Maam"
+delete-after: True
+changes:
+  - rscadd: "Readded Yellow Gun Cases to company imports at cargo."
+  - bugfix: "\"small gun case\" no longer incorrectly named \"'Makarov pistol' gunset\""
