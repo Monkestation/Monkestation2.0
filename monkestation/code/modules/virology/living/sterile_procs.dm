@@ -2,21 +2,12 @@
 	return FALSE
 
 /mob/living/carbon/human/check_contact_sterility(body_part)
-	var/check_flags
+	var/check_flags = body_part
 	if(body_part == BODY_ZONE_EVERYTHING)
-		check_flags = FULL_BODY
-	else if(body_part == BODY_ZONE_LEGS)
-		check_flags = LEGS | FEET
-	else if(body_part == BODY_ZONE_ARMS)
-		check_flags = ARMS | HANDS
-	else
-		check_flags = body_zone2cover_flags(body_part)
+		check_flags = null //this will make it check all bodyparts.
 
-	for(var/obj/item/cloth as anything in get_equipped_items())
-		if(QDELETED(cloth))
-			continue
-		if((cloth.body_parts_covered & check_flags) && prob(cloth.get_armor_rating(BIO)))
-			return TRUE
+	if(prob(getarmor(check_flags, BIO)))
+		return TRUE
 	return FALSE
 
 /mob/living/proc/check_bodypart_bleeding(zone)

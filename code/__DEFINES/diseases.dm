@@ -6,6 +6,11 @@
 #define HIDDEN_SCANNER (1<<0)
 #define HIDDEN_PANDEMIC (1<<1)
 
+DEFINE_BITFIELD(visibility_flags, list(
+	"HIDDEN_SCANNER" = HIDDEN_SCANNER,
+	"HIDDEN_PANDEMIC" = HIDDEN_PANDEMIC,
+))
+
 //Disease Flags
 #define CURABLE (1<<0)
 #define CAN_CARRY (1<<1)
