@@ -79,6 +79,12 @@
 		antibodies[antibody] *= new_boost
 	boost = new_boost
 
+/datum/immune_system/proc/change_stength(new_strength = 1)
+	var/old_strength = strength
+	if(new_strength == old_strength)
+		return
+	strength = new_strength
+
 /datum/immune_system/proc/GetImmunity()
 	return list(strength, antibodies.Copy())
 
@@ -99,7 +105,7 @@
 
 //If even one antibody hass sufficient concentration, the disease won't be able to infect
 /datum/immune_system/proc/CanInfect(datum/disease/acute/disease)
-	if (overloaded)
+	if (overloaded || (HAS_TRAIT(host, TRAIT_IMMUNODEFICIENCY) && !HAS_TRAIT(host, TRAIT_VIRUS_RESISTANCE)))
 		return TRUE
 
 	if(HAS_TRAIT(host, TRAIT_VIRUSIMMUNE))
@@ -129,6 +135,8 @@
 						tally += 2//if we're sleeping in a bed, we get up to 4
 			else if(istype(host.loc, /obj/machinery/cryo_cell))
 				tally += 2.5
+			if(HAS_TRAIT(host, TRAIT_IMMUNODEFICIENCY) && !HAS_TRAIT(host, TRAIT_VIRUS_RESISTANCE))
+				tally -= 1
 
 			tally *= boost
 			if (antibodies[A] < threshold)
@@ -166,6 +174,8 @@
 						tally = max(tally - 1.5, 0.5)
 					else
 						EMPTY_BLOCK_GUARD
+			if(HAS_TRAIT(host, TRAIT_IMMUNODEFICIENCY) && !HAS_TRAIT(host, TRAIT_VIRUS_RESISTANCE))
+				tally -= 1
 
 			tally *= boost
 			if (antibodies[A] < 69)

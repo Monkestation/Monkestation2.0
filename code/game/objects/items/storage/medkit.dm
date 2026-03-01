@@ -674,6 +674,15 @@
 	for(var/i in 1 to 5)
 		new /obj/item/reagent_containers/pill/paxpsych(src)
 
+/obj/item/storage/pill_bottle/immunodeficiency
+	name = "bottle of immune boosters"
+	desc = "Contains immune system boosters, used to manage chronic immunodeficiency."
+
+/obj/item/storage/pill_bottle/immunodeficiency/PopulateContents()
+	. = ..()
+	for(var/i in 1 to 5)
+		new /obj/item/reagent_containers/pill/spaceacillin(src)
+
 /obj/item/storage/pill_bottle/naturalbait
 	name = "freshness jar"
 	desc = "Full of natural fish bait."
