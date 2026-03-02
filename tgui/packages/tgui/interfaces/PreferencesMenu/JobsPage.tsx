@@ -426,15 +426,15 @@ const JoblessRoleDropdown2 = () => {
 
   const options = [
     {
-      displayText: `Mode: Simple (One Character)`, // -- Choose one character and set occupations in occupations settings
+      displayText: `Mode: Simple`, // -- Choose one character and set occupations in occupations settings
       value: CharacterMode.Simple,
     },
     {
-      displayText: `Mode: Character Filters (Many Characters)`, // -- Choose at least one character, set occupations in occupation settings and set occupation filters in character settings
+      displayText: `Mode: Character Filters`, // -- Choose at least one character, set occupations in occupation settings and set occupation filters in character settings
       value: CharacterMode.Filters,
     },
     {
-      displayText: `Mode: Per Character Priorities (One Character)`, // -- Choose one character and set occupations in character settings  (old version)
+      displayText: `Mode: Per Character Priorities`, // -- Choose one character and set occupations in character settings  (old version)
       value: CharacterMode.PerCharacterPriorities,
     },
   ];
@@ -444,14 +444,14 @@ const JoblessRoleDropdown2 = () => {
   )?.displayText;
 
   return (
-    <Box width="30%">
+    <Box width="25%">
       <Dropdown
         width="100%"
         selected={selection}
         onSelected={createSetPreference(act, 'character_role_select_mode')}
         options={options}
       />
-      <Collapsible title="How does this work?">
+      <Collapsible title="???" width="20%">
         <Box
           width="250%"
           p={1}
@@ -552,10 +552,8 @@ const Character = (props: {
         ) : (
           ''
         )}
-        {profile ?? 'BAH'}
-        {data.default_character === slot + 1 && multi_select
-          ? ' (default)'
-          : ''}
+        {profile}
+        {data.default_character === slot + 1 && multi_select && ' (default)'}
       </Button>
     </Stack.Item>
   );
@@ -580,9 +578,9 @@ export const JobsPage = (props: { type: JobsPageType }) => {
   const isFilter =
     type === JobsPageType.Character && mode === CharacterMode.Filters;
 
-  const alt_title_mode =
-    (type === JobsPageType.Overall && mode === CharacterMode.Simple) ||
-    (type === JobsPageType.Character && mode !== CharacterMode.Simple);
+  const alt_title_mode = !(
+    type === JobsPageType.Overall && mode === CharacterMode.Filters
+  );
 
   const contents2 = (
     <Stack.Item>
@@ -590,7 +588,6 @@ export const JobsPage = (props: { type: JobsPageType }) => {
         <Stack.Item>
           <Gap amount={36} />
           <PriorityHeaders isFilter={isFilter} />
-
           <Department
             pageType={type}
             alt_title_mode={alt_title_mode}
@@ -611,9 +608,15 @@ export const JobsPage = (props: { type: JobsPageType }) => {
             alt_title_mode={alt_title_mode}
             department="Assistant"
           />
-
           <Gap amount={10} />
-          {/* <Button>Deselect All</Button> */}
+          <Button
+            onClick={() => {
+              act('toggle_all_jobs', { type: type });
+            }}
+          >
+            Toggle All
+          </Button>{' '}
+          <br />
           <Button
             onClick={() => {
               act('set_default_character');
@@ -673,7 +676,7 @@ export const JobsPage = (props: { type: JobsPageType }) => {
       <JoblessRoleDropdown />
       <JoblessRoleDropdown2 />
       <CharacterSelect type={type} />
-      {works ? contents2 : ''}
+      {works && contents2}
     </Stack>
   );
 

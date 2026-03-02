@@ -643,8 +643,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 /datum/preferences/proc/set_character_enabled(slot, enabled)
 	enabled_character_names = null
 	enabled_characters.RemoveAll(slot)
+	enabled_characters.RemoveAll(null)
 	if (enabled)
 		enabled_characters.Add(slot)
+		sort_list(enabled_characters)
 
 /datum/preferences/proc/pick_character_for_job(datum/job/job)
 	// TODO check if character ahs been deleted before picking them

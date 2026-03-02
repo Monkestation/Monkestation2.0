@@ -3,7 +3,25 @@
 		"set_job_preference" = PROC_REF(set_job_preference),
 		"set_job_title" = PROC_REF(set_job_title),
 		"set_default_character" = PROC_REF(set_default_character),
+		"toggle_all_jobs" = PROC_REF(toggle_all_jobs),
 	)
+
+/datum/preference_middleware/jobs/proc/toggle_all_jobs(list/params, mob/user)
+	var/type = params["type"]
+	var/alist/job_prefs
+	if (type == JOB_PREFS_OVERALL)
+		job_prefs = preferences.overall_job_preferences
+	else
+		job_prefs = preferences.selected_character_job_preferences
+
+	if (length(job_prefs) > 0)
+		job_prefs.Cut()
+		return TRUE
+
+	for (var/datum/job/job as anything in SSjob.joinable_occupations)
+		job_prefs[job.title] = JP_LOW
+
+	return TRUE
 
 /datum/preference_middleware/jobs/proc/set_default_character(list/params, mob/user)
 	user.client.prefs.set_default_character()
