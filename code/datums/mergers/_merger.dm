@@ -152,6 +152,11 @@
 		found_turfs[location][MERGE_TURF_PACKET_ATOMS] += thing
 		found_something = TRUE
 
+
+	if(merged_typecache[location.type])
+		if(location.mergers && location.mergers[id] != src)
+			qdel(src)
+
 	return found_something
 
 #undef MERGERS_DEBUG
