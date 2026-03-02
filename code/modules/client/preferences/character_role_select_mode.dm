@@ -12,9 +12,11 @@
 	return TRUE
 
 /datum/preference/choiced/character_role_select_mode/apply_to_client(client/client, value)
-	if (isnull(client.prefs))
+	var/datum/preferences/prefs = client.prefs
+	if (isnull(prefs))
 		return
 
-	client.prefs.job_preferences = client.prefs.overall_job_preferences
+	prefs.enabled_character_names = null
+	prefs.job_preferences = prefs.overall_job_preferences
 	if (value == CHARACTER_ROLE_MODE_PER_CHAR)
-		client.prefs.job_preferences = client.prefs.selected_character_job_preferences
+		prefs.job_preferences = prefs.selected_character_job_preferences

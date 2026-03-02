@@ -614,7 +614,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			return job
 
 /datum/preferences/proc/get_enabled_character_names()
-	if (istype(enabled_character_names))
+	if (!isnull(enabled_character_names))
 		return enabled_character_names
 
 	if (latejoin_overrride_character != 0)
@@ -624,7 +624,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if (mode == CHARACTER_ROLE_MODE_SIMPLE || mode == CHARACTER_ROLE_MODE_PER_CHAR)
 		return read_preference(/datum/preference/name/real_name)
 
-	enabled_character_names = ""
 	var/i = 0
 
 	for (var/character_slot in enabled_characters)
@@ -632,8 +631,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		i += 1
 
 		if (!isnull(name))
-			if (length(enabled_character_names) == 0)
-				enabled_character_names += name
+			if (isnull(enabled_character_names))
+				enabled_character_names = name
 			else if (i == length(enabled_characters) - 1)
 				enabled_character_names += " or [name]"
 			else
@@ -642,10 +641,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	return enabled_character_names
 
 /datum/preferences/proc/set_character_enabled(slot, enabled)
+	enabled_character_names = null
 	enabled_characters.RemoveAll(slot)
 	if (enabled)
 		enabled_characters.Add(slot)
-		enabled_character_names = null
 
 /datum/preferences/proc/pick_character_for_job(datum/job/job)
 	// TODO check if character ahs been deleted before picking them

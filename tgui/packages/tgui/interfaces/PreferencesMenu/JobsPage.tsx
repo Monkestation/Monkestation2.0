@@ -1,6 +1,6 @@
 import { sortBy } from 'common/collections';
 import { classes } from 'common/react';
-import { Fragment, type ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import {
   Box,
   Button,
@@ -126,7 +126,7 @@ const PriorityHeaders = (props: { isFilter: boolean }) => {
 
       <Stack.Item className={className}>Low</Stack.Item>
 
-      <Stack.Item className={className}>Medium</Stack.Item>
+      <Stack.Item className={className}>Med</Stack.Item>
 
       <Stack.Item className={className}>High</Stack.Item>
     </Stack>
@@ -421,15 +421,15 @@ const JoblessRoleDropdown2 = () => {
 
   const options = [
     {
-      displayText: `Simple: One Character`, // -- Choose one character and set occupations in occupations settings
+      displayText: `Mode: Simple (One Character)`, // -- Choose one character and set occupations in occupations settings
       value: CharacterMode.Simple,
     },
     {
-      displayText: `Character Filters: Many Characters`, // -- Choose at least one character, set occupations in occupation settings and set occupation filters in character settings
+      displayText: `Mode: Character Filters (Many Characters)`, // -- Choose at least one character, set occupations in occupation settings and set occupation filters in character settings
       value: CharacterMode.Filters,
     },
     {
-      displayText: `Per Character Priorities: One Character`, // -- Choose one character and set occupations in character settings  (old version)
+      displayText: `Mode: Per Character Priorities (One Character)`, // -- Choose one character and set occupations in character settings  (old version)
       value: CharacterMode.PerCharacterPriorities,
     },
   ];
@@ -439,7 +439,7 @@ const JoblessRoleDropdown2 = () => {
   )?.displayText;
 
   return (
-    <Box width="27%">
+    <Box width="30%">
       <Dropdown
         width="100%"
         selected={selection}
@@ -448,7 +448,7 @@ const JoblessRoleDropdown2 = () => {
       />
       <Collapsible title="How does this work?">
         <Box
-          width="300%"
+          width="250%"
           p={1}
           style={{
             border: '2px dashed grey',
@@ -476,10 +476,44 @@ const JoblessRoleDropdown2 = () => {
   );
 };
 
-const Character = (props: { slot: number; profile: string | null }) => {
+const CharacterSelect = (props: { type: JobsPageType }) => {
+  const { type } = props;
   const { act, data } = useBackend<PreferencesMenuData>();
-  const { slot, profile } = props;
+  const mode = data.character_preferences.misc.character_role_select_mode;
+  const profiles = data.character_profiles;
+
+  const multi_select = mode === CharacterMode.Filters;
+
+  if (type !== JobsPageType.Overall) {
+    return;
+  }
+
+  return (
+    <Stack justify="center" wrap>
+      {profiles.map((profile, slot) => (
+        <Character
+          key={slot}
+          slot={slot}
+          profile={profile}
+          multi_select={multi_select}
+        />
+      ))}
+    </Stack>
+  );
+};
+
+const Character = (props: {
+  slot: number;
+  profile: string | null;
+  multi_select: boolean;
+}) => {
+  const { act, data } = useBackend<PreferencesMenuData>();
+  const { slot, profile, multi_select } = props;
   const enabled_chars = data.enabled_characters;
+
+  const selected = multi_select
+    ? enabled_chars.includes(slot + 1)
+    : data.active_slot === slot + 1;
 
   if (profile === null) {
     return null;
@@ -488,39 +522,35 @@ const Character = (props: { slot: number; profile: string | null }) => {
   return (
     <Stack.Item my={0.25}>
       <Button
-        selected={enabled_chars.includes(slot + 1)}
+        selected={selected}
         onClick={() => {
-          act('set_character_enabled', {
-            slot: slot + 1,
-            enabled: !enabled_chars.includes(slot + 1),
-          });
+          if (multi_select) {
+            act('set_character_enabled', {
+              slot: slot + 1,
+              enabled: !selected,
+            });
+          } else {
+            act('change_slot', {
+              slot: slot + 1,
+            });
+          }
         }}
         fluid
       >
-        <Icon
-          name={
-            enabled_chars.includes(slot + 1) ? 'check-square-o' : 'square-o'
-          }
-          style={{ float: 'left', padding: '4px 4px 4px 2px' }}
-        />
+        {multi_select ? (
+          <Icon
+            name={selected ? 'check-square-o' : 'square-o'}
+            style={{ float: 'left', padding: '4px 4px 4px 2px' }}
+          />
+        ) : (
+          ''
+        )}
         {profile ?? 'BAH'}
-        {data.default_character === slot + 1 ? ' (default)' : ''}
+        {data.default_character === slot + 1 && multi_select
+          ? ' (default)'
+          : ''}
       </Button>
     </Stack.Item>
-  );
-};
-
-const CharacterSelect = () => {
-  const { act, data } = useBackend<PreferencesMenuData>();
-  const profiles = data.character_profiles;
-  const enabled_chars = data.enabled_characters;
-
-  return (
-    <Stack justify="center" wrap>
-      {profiles.map((profile, slot) => (
-        <Character key={slot} slot={slot} profile={profile} />
-      ))}
-    </Stack>
   );
 };
 
@@ -591,14 +621,7 @@ export const JobsPage = (props: { type: JobsPageType }) => {
     <Stack vertical>
       <JoblessRoleDropdown />
       <JoblessRoleDropdown2 />
-      {type === JobsPageType.Overall && mode === CharacterMode.Filters ? (
-        <>
-          {' '}
-          <CharacterSelect />
-        </>
-      ) : (
-        ''
-      )}
+      <CharacterSelect type={type} />
       {works ? contents2 : ''}
     </Stack>
   );

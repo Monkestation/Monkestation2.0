@@ -6,8 +6,8 @@
 	)
 
 /datum/preference_middleware/jobs/proc/set_default_character(list/params, mob/user)
-		user.client.prefs.set_default_character()
-		return TRUE
+	user.client.prefs.set_default_character()
+	return TRUE
 
 /datum/preference_middleware/jobs/proc/set_job_preference(list/params, mob/user)
 	var/job_title = params["job"]
@@ -99,7 +99,6 @@
 	data["selected_character_job_preferences"] = preferences.selected_character_job_preferences
 	data["enabled_characters"] = preferences.enabled_characters
 	data["default_character"] = preferences.default_character
-	data["character_role_select_mode"] = preferences.character_role_select_mode
 
 	data["job_alt_titles"] = preferences.alt_job_titles
 
