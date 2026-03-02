@@ -148,6 +148,7 @@
 #define FROSTMINER_ENRAGE_TRAIT "frostminer-enrage"
 #define NO_GRAVITY_TRAIT "no-gravity"
 #define NEGATIVE_GRAVITY_TRAIT "negative-gravity"
+#define DND_DAGGER_FX_TRAIT "dnd-dagger-fx"
 
 /// A trait gained from a mob's leap action, like the leaper
 #define LEAPING_TRAIT "leaping"
