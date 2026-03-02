@@ -3124,12 +3124,6 @@
 /turf/closed/wall,
 /area/station/maintenance/department/crew_quarters/dorms)
 "apD" = (
-/obj/structure/fluff{
-	desc = "What, you think the water just magically soaks into the metallic flooring?";
-	icon = 'icons/obj/lavaland/survival_pod.dmi';
-	icon_state = "fan_tiny";
-	name = "shower drain"
-	},
 /obj/machinery/duct,
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron/freezer,
@@ -26784,13 +26778,9 @@
 "hpp" = (
 /obj/effect/turf_decal/box,
 /obj/machinery/shower/directional/east,
-/obj/structure/fluff{
-	desc = "Ew, I think I see a hairball.";
-	icon = 'icons/obj/lavaland/survival_pod.dmi';
-	icon_state = "fan_tiny";
-	name = "shower drain"
-	},
 /obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/structure/drain,
+/obj/structure/drain,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "hpE" = (
@@ -30747,14 +30737,10 @@
 /turf/open/floor/iron/textured_large,
 /area/station/security/execution/education)
 "iBp" = (
-/obj/effect/landmark/start/hangover,
-/obj/machinery/duct,
-/obj/structure/fluff{
-	desc = "What, you think the water just magically soaks into the metallic flooring?";
-	icon = 'icons/obj/lavaland/survival_pod.dmi';
-	icon_state = "fan_tiny";
-	name = "shower drain"
-	},
+/obj/structure/curtain,
+/obj/machinery/shower/directional/north,
+/obj/structure/drain,
+/obj/structure/drain,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet)
 "iBx" = (
@@ -42619,14 +42605,9 @@
 /area/station/cargo/drone_bay)
 "mhY" = (
 /obj/effect/turf_decal/box,
-/obj/structure/fluff{
-	desc = "Ew, I think I see a hairball.";
-	icon = 'icons/obj/lavaland/survival_pod.dmi';
-	icon_state = "fan_tiny";
-	name = "shower drain"
-	},
 /obj/machinery/shower/directional/west,
 /obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/structure/drain,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "miE" = (
@@ -53187,6 +53168,7 @@
 "pAv" = (
 /obj/structure/curtain,
 /obj/machinery/shower/directional/north,
+/obj/structure/drain,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet)
 "pAA" = (
@@ -65239,6 +65221,7 @@
 "thi" = (
 /obj/structure/curtain,
 /obj/machinery/shower/directional/south,
+/obj/structure/drain,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet)
 "tho" = (
@@ -75456,6 +75439,7 @@
 /obj/item/storage/box/beakers,
 /obj/item/clothing/neck/stethoscope,
 /obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/structure/drain,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "whI" = (
@@ -94443,7 +94427,7 @@ hAD
 veV
 thi
 alR
-pAv
+iBp
 apC
 jXf
 yah
@@ -94945,7 +94929,7 @@ eCE
 lZP
 apC
 thi
-iBp
+alR
 vcp
 amr
 alT
