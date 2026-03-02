@@ -1,7 +1,6 @@
 import { exhaustiveCheck } from 'common/exhaustive';
 import { useBackend, useLocalState } from '../../backend';
 import { Button, Icon, Stack } from '../../components';
-import { AntagsPage } from './AntagsPage';
 import { CharacterMode, type PreferencesMenuData } from './data';
 import { JobsPage, JobsPageType } from './JobsPage';
 import { LoadoutManager } from './LoadoutPage';
@@ -11,7 +10,6 @@ import { QuirksPage } from './QuirksPage';
 import { SpeciesPage } from './SpeciesPage';
 
 enum Page {
-  Antags,
   Main,
   Loadout,
   Jobs,
@@ -66,9 +64,6 @@ export const CharacterPreferenceWindow = (props) => {
   let pageContents;
 
   switch (currentPage) {
-    case Page.Antags:
-      pageContents = <AntagsPage />;
-      break;
     case Page.Jobs:
       pageContents = <JobsPage type={JobsPageType.Character} />;
       break;
@@ -132,7 +127,7 @@ export const CharacterPreferenceWindow = (props) => {
           </Stack.Item>
 
           {data.character_preferences.misc.character_role_select_mode !==
-          CharacterMode.Simple ? (
+            CharacterMode.Simple && (
             <Stack.Item grow>
               <PageButton
                 currentPage={currentPage}
@@ -146,8 +141,6 @@ export const CharacterPreferenceWindow = (props) => {
                 Character Occupations
               </PageButton>
             </Stack.Item>
-          ) : (
-            ''
           )}
 
           <Stack.Item grow>
