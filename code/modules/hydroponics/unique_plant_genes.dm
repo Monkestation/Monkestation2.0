@@ -18,7 +18,7 @@
 	shield_uses = round(CAPPED_POTENCY(our_seed) / 20)
 	//deliver us from evil o melon god
 	our_plant.AddComponent(/datum/component/anti_magic, \
-		antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY, \
+		antimagic_flags = MAGIC_RESISTANCE_HOLY, \
 		inventory_flags = ITEM_SLOT_HANDS, \
 		charges = shield_uses, \
 		drain_antimagic = CALLBACK(src, PROC_REF(drain_antimagic)), \
