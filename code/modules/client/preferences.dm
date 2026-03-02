@@ -49,28 +49,32 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	//Quirk list
 	var/list/all_quirks = list()
 
-	var/default_character = 1
-
-	// not saved
+	/// Used to change which character the player will join as for this specific round
+	/// not saved
 	var/latejoin_overrride_character = 0
+
+	/// Use `get_enabled_character_names()` instead
+	/// not saved
 	var/enabled_character_names = null
 
-	//Job preferences 2.0 - indexed by job title , no key or value implies never
-	// ["job title"] = priority
+	/// Job preferences 2.0 - indexed by job title , no key or value implies never
+	/// ["job title"] = priority
 	var/list/job_preferences
 
-	// [character slot number]
+	/// The enabled characters for `Character Filters` role selection mode
+	/// [character slot number]
 	var/list/enabled_characters = list()
 
-	// ["character slot"]["job title"] = (int) priority
-	// this is generated on the fly and not saved
-	var/alist/enabled_character_job_preferences = list()
+	/// The default character for `Character Filters` role selection mode
+	var/default_character = 1
 
-	// ["job title"] = (int) priority
-	var/alist/selected_character_job_preferences = list()
+	/// Job preferences for the active character
+	/// ["job title"] = (int) priority
+	var/alist/job_preferences_character = list()
 
-	// ["job title"] = (int) priority
-	var/alist/overall_job_preferences = list()
+	/// Overall job preferences for the `Character Filters` and `Simple` role selection modes
+	/// ["job title"] = (int) priority
+	var/alist/job_preferences_overall = list()
 
 	var/tainted_preferences = FALSE
 
@@ -584,9 +588,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/list/jprefs
 	if (type == JOB_PREFS_OVERALL)
-		jprefs = overall_job_preferences
+		jprefs = job_preferences_overall
 	if (type == JOB_PREFS_CHARACTER)
-		jprefs = selected_character_job_preferences
+		jprefs = job_preferences_character
 	to_chat(parent, html="job=[job.title] level=[level] type=[type]")
 
 	if (level == JP_HIGH)
@@ -665,7 +669,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		// It won't be updated in the savefile yet, so just read the name directly
 		if (character_slot == active_slot)
 			to_chat(parent, "active character")
-			if (!isnull(selected_character_job_preferences[job.title]))
+			if (!isnull(job_preferences_character[job.title]))
 				return
 
 		var/tree_key = "character[character_slot]"

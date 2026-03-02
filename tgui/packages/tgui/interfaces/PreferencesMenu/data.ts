@@ -182,7 +182,7 @@ export type PreferencesMenuData = {
     }
   >;
   job_preferences_overall: Record<string, JobPriority>;
-  selected_character_job_preferences: Record<string, JobPriority>;
+  job_preferences_character: Record<string, JobPriority>;
   enabled_characters: number[];
   default_character: number;
 

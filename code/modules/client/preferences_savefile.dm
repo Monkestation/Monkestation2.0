@@ -175,7 +175,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	// jobs
 	enabled_characters = savefile.get_entry("enabled_characters", enabled_characters)
-	overall_job_preferences = savefile.get_entry("overall_job_preferences", overall_job_preferences)
+	job_preferences_overall = savefile.get_entry("job_preferences_overall", job_preferences_overall)
 
 	apply_all_client_preferences()
 
@@ -235,7 +235,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	be_special = sanitize_be_special(SANITIZE_LIST(be_special))
 	key_bindings = sanitize_keybindings(key_bindings)
 	favorite_outfits = SANITIZE_LIST(favorite_outfits)
-	overall_job_preferences = clean_job_preferences(overall_job_preferences) // <-- needs to happen before apply_all_client_preferences()
+	job_preferences_overall = clean_job_preferences(job_preferences_overall) // <-- needs to happen before apply_all_client_preferences()
 
 	if(needs_update >= 0 || needs_update_monkestation >= 0) //save the updated version //MONKESTATION EDIT - Modular updates
 		var/old_default_slot = active_slot
@@ -256,7 +256,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		save_preferences()
 
 	if (read_preference(/datum/preference/choiced/character_role_select_mode) != CHARACTER_ROLE_MODE_PER_CHAR)
-		job_preferences = overall_job_preferences
+		job_preferences = job_preferences_overall
 
 	return TRUE
 
@@ -288,7 +288,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	savefile.set_entry("hearted_until", (hearted_until > world.realtime ? hearted_until : null))
 	savefile.set_entry("favorite_outfits", favorite_outfits)
 	savefile.set_entry("enabled_characters", enabled_characters)
-	savefile.set_entry("overall_job_preferences", overall_job_preferences)
+	savefile.set_entry("job_preferences_overall", job_preferences_overall)
 	savefile.set_entry("default_character", default_character)
 
 	save_preferences_monkestation()
@@ -324,7 +324,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	randomise = save_data?["randomise"]
 
 	//Load prefs
-	selected_character_job_preferences = save_data?["job_preferences"]
+	job_preferences_character = save_data?["job_preferences"]
 
 	//Quirks
 	all_quirks = save_data?["all_quirks"]
@@ -344,12 +344,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	randomise = SANITIZE_LIST(randomise)
 	all_quirks = SANITIZE_LIST(all_quirks)
 
-	selected_character_job_preferences = clean_job_preferences(selected_character_job_preferences)
+	job_preferences_character = clean_job_preferences(job_preferences_character)
 	all_quirks = SSquirks.filter_invalid_quirks(SANITIZE_LIST(all_quirks))
 	validate_quirks()
 
 	if (read_preference(/datum/preference/choiced/character_role_select_mode) == CHARACTER_ROLE_MODE_PER_CHAR)
-		job_preferences = selected_character_job_preferences
+		job_preferences = job_preferences_character
 
 	return TRUE
 
@@ -394,7 +394,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	save_data["randomise"] = randomise
 
 	//Write prefs
-	save_data["job_preferences"] = selected_character_job_preferences
+	save_data["job_preferences"] = job_preferences_character
 
 	//Quirks
 	save_data["all_quirks"] = all_quirks

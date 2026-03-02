@@ -17,6 +17,6 @@
 		return
 
 	prefs.enabled_character_names = null
-	prefs.job_preferences = prefs.overall_job_preferences
+	prefs.job_preferences = prefs.job_preferences_overall
 	if (value == CHARACTER_ROLE_MODE_PER_CHAR)
-		prefs.job_preferences = prefs.selected_character_job_preferences
+		prefs.job_preferences = prefs.job_preferences_character

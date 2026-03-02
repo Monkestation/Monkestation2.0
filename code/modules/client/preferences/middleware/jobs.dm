@@ -10,9 +10,9 @@
 	var/type = params["type"]
 	var/alist/job_prefs
 	if (type == JOB_PREFS_OVERALL)
-		job_prefs = preferences.overall_job_preferences
+		job_prefs = preferences.job_preferences_overall
 	else
-		job_prefs = preferences.selected_character_job_preferences
+		job_prefs = preferences.job_preferences_character
 
 	if (length(job_prefs) > 0)
 		job_prefs.Cut()
@@ -113,8 +113,8 @@
 	if(isnull(preferences.alt_job_titles))
 		preferences.alt_job_titles = list()
 
-	data["job_preferences_overall"] = preferences.overall_job_preferences
-	data["selected_character_job_preferences"] = preferences.selected_character_job_preferences
+	data["job_preferences_overall"] = preferences.job_preferences_overall
+	data["job_preferences_character"] = preferences.job_preferences_character
 	data["enabled_characters"] = preferences.enabled_characters
 	data["default_character"] = preferences.default_character
 

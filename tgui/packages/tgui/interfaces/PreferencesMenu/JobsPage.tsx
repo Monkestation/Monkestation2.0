@@ -220,7 +220,7 @@ const JobRow = (props: {
   const job_preferences =
     pageType === JobsPageType.Overall
       ? data.job_preferences_overall
-      : data.selected_character_job_preferences;
+      : data.job_preferences_character;
   const priority = job_preferences[name];
 
   const createSetPriority = createCreateSetPriorityFromName(name, pageType);
@@ -475,6 +475,9 @@ const JoblessRoleDropdown2 = () => {
           3. Pick 0 or more enabled characters <br />
           4. Pick one default character
           <h3>Mode: Per Character Priorities</h3>
+          Each character can have different role priorities, but only one
+          character can be selected at once. <br />
+          <br />
           1. Set role priorities in Character Occupations <br />
           2. Pick one enabled character
         </Box>
