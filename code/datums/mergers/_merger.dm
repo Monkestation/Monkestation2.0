@@ -156,6 +156,8 @@
 	if(merged_typecache[location.type])
 		if(location.mergers && location.mergers[id] != src)
 			qdel(src)
+		if(!found_turfs[location])
+			found_turfs[location] = list(us_to_them, list())
 
 	return found_something
 
