@@ -118,6 +118,7 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 		"Bio Janitor" = list("icon_state" = "bio_jan"),
 		"Emergency" = list("icon_state" = "emergency"),
 		"Fire" = list("icon_state" = "fire"),
+		"Hydroponics" = list("icon_state" = "hydro"),
 		"Medical" = list("icon_state" = "med"),
 		"Chemical" = list("icon_state" = "med", "icon_door" = "chemical"),
 		"Medical Secure" = list("icon_state" = "med_secure", "icon_door" = "med_secure"),
