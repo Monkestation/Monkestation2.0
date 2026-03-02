@@ -1,4 +1,4 @@
-#define TANK_PLATING_SHEETS 12
+#define TANK_PLATING_SHEETS 6
 
 /obj/machinery/atmospherics/components/tank
 	icon = 'icons/obj/atmospherics/stationary_canisters.dmi'
