@@ -1,6 +1,6 @@
 import { exhaustiveCheck } from 'common/exhaustive';
 import { useBackend, useLocalState } from '../../backend';
-import { Button, Stack } from '../../components';
+import { Button, Icon, Stack } from '../../components';
 import { AntagsPage } from './AntagsPage';
 import { CharacterMode, type PreferencesMenuData } from './data';
 import { JobsPage, JobsPageType } from './JobsPage';
@@ -25,18 +25,34 @@ const CharacterProfiles = (props: {
   profiles: (string | null)[];
 }) => {
   const { profiles } = props;
+  const { data } = useBackend<PreferencesMenuData>();
+  const enabled_chars = data.enabled_characters;
+  const mode = data.character_preferences.misc.character_role_select_mode;
 
   return (
     <Stack justify="center" wrap>
       {profiles.map((profile, slot) => (
         <Stack.Item key={slot} my={0.25}>
           <Button
+            // bold={enabled_chars.includes(slot + 1)}
             selected={slot === props.activeSlot}
             onClick={() => {
               props.onClick(slot);
             }}
             fluid
           >
+            {mode === CharacterMode.Filters ? (
+              <Icon
+                name={
+                  enabled_chars.includes(slot + 1)
+                    ? 'check-square-o'
+                    : 'square-o'
+                }
+                style={{ float: 'left', padding: '4px 4px 4px 2px' }}
+              />
+            ) : (
+              ''
+            )}
             {profile ?? 'New Character'}
           </Button>
         </Stack.Item>
@@ -130,10 +146,7 @@ export const CharacterPreferenceWindow = (props) => {
                     Fun fact: This isn't "Jobs" so that it intentionally
                     catches your eyes, because it's really important!
                   */}
-                {data.character_preferences.misc.character_role_select_mode ===
-                CharacterMode.Filters
-                  ? 'Filter Occupations'
-                  : 'Character Occupations'}
+                Character Occupations
               </PageButton>
             </Stack.Item>
           ) : (

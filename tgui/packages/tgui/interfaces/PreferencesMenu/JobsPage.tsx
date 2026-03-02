@@ -1,9 +1,10 @@
 import { sortBy } from 'common/collections';
 import { classes } from 'common/react';
-import type { ReactNode } from 'react';
+import { Fragment, type ReactNode } from 'react';
 import {
   Box,
   Button,
+  Collapsible,
   Dropdown,
   Icon,
   Section,
@@ -439,17 +440,73 @@ const JoblessRoleDropdown2 = () => {
 
   return (
     <Box width="27%">
-      Mode:
-      <Button>
-        <Icon name={'question'} />
-      </Button>
       <Dropdown
         width="100%"
         selected={selection}
         onSelected={createSetPreference(act, 'character_role_select_mode')}
         options={options}
       />
+      <Collapsible title="How does this work?">
+        <Box
+          width="300%"
+          p={1}
+          style={{
+            border: '2px dashed grey',
+          }}
+        >
+          <h3>Simple</h3>
+          1. Set role priorities in Occupations <br />
+          2. Pick one enabled character
+          <h3>Character Filters</h3>
+          Allows you to select multiple characters at once. When you join the
+          game the server will pick a character which has your designated job
+          enabled. If the server cannot find one it will pick your default
+          character. <br />
+          <br />
+          1. Set role priorities in Occupations <br />
+          2. Set role filters in Character Occupations <br />
+          3. Pick 0 or more enabled characters <br />
+          4. Pick one default character
+          <h3>Per Character Priorities</h3>
+          1. Set role priorities in Character Occupations <br />
+          2. Pick one enabled character
+        </Box>
+      </Collapsible>
     </Box>
+  );
+};
+
+const Character = (props: { slot: number; profile: string | null }) => {
+  const { act, data } = useBackend<PreferencesMenuData>();
+  const { slot, profile } = props;
+  const enabled_chars = data.enabled_characters;
+
+  if (profile === null) {
+    return null;
+  }
+
+  return (
+    <Stack.Item my={0.25}>
+      <Button
+        selected={enabled_chars.includes(slot + 1)}
+        onClick={() => {
+          act('set_character_enabled', {
+            slot: slot + 1,
+            enabled: !enabled_chars.includes(slot + 1),
+          });
+        }}
+        fluid
+      >
+        <Icon
+          name={
+            enabled_chars.includes(slot + 1) ? 'check-square-o' : 'square-o'
+          }
+          style={{ float: 'left', padding: '4px 4px 4px 2px' }}
+        />
+        {profile ?? 'BAH'}
+        {data.default_character === slot + 1 ? ' (default)' : ''}
+      </Button>
+    </Stack.Item>
   );
 };
 
@@ -461,21 +518,7 @@ const CharacterSelect = () => {
   return (
     <Stack justify="center" wrap>
       {profiles.map((profile, slot) => (
-        <Stack.Item key={slot} my={0.25}>
-          <Button
-            selected={enabled_chars.includes(slot + 1)}
-            onClick={() => {
-              act('set_character_enabled', {
-                slot: slot + 1,
-                enabled: !enabled_chars.includes(slot + 1),
-              });
-            }}
-            fluid
-          >
-            {profile ?? 'BAH'}
-            {data.default_character === slot + 1 ? ' (default)' : ''}
-          </Button>
-        </Stack.Item>
+        <Character key={slot} slot={slot} profile={profile} />
       ))}
     </Stack>
   );
@@ -502,7 +545,6 @@ export const JobsPage = (props: { type: JobsPageType }) => {
 
   const contents2 = (
     <Stack.Item>
-      {data.default_character}
       <Stack className="PreferencesMenu__Jobs">
         <Stack.Item>
           <Gap amount={36} />
@@ -514,7 +556,7 @@ export const JobsPage = (props: { type: JobsPageType }) => {
           <Department pageType={type} department="Assistant" />
 
           <Gap amount={10} />
-          <Button>Deselect All</Button>
+          {/* <Button>Deselect All</Button> */}
           <Button
             onClick={() => {
               act('set_default_character');

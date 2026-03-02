@@ -49,18 +49,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	//Quirk list
 	var/list/all_quirks = list()
 
-	// which mode does the player use to choose jobs
-	// --- filter ---
-	// job_preferences = job_preferences_overall
-	//
-	// when a job is picked the system will iterate over enabled_characters to pick one where
-	// character_job_preferences[character][job] != null
-	// if none fit that then default_character will be used
-	//
-	// --- legacy ---
-	// job_preferences = character_job_preferences[selected_character]
-	var/character_role_select_mode = CHARACTER_ROLE_MODE_SIMPLE
-
 	var/default_character = 1
 
 	// not saved
@@ -73,9 +61,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	// [character slot number]
 	var/list/enabled_characters = list()
-
-	// [character_slot_num] = (enabled, antag enabled)
-	var/list/character_settings	= list()
 
 	// ["character slot"]["job title"] = (int) priority
 	// this is generated on the fly and not saved
@@ -629,7 +614,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			return job
 
 /datum/preferences/proc/get_enabled_character_names()
-	if (enabled_character_names)
+	if (istype(enabled_character_names))
 		return enabled_character_names
 
 	if (latejoin_overrride_character != 0)
@@ -637,7 +622,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/mode = read_preference(/datum/preference/choiced/character_role_select_mode)
 	if (mode == CHARACTER_ROLE_MODE_SIMPLE || mode == CHARACTER_ROLE_MODE_PER_CHAR)
-		return list(read_preference(/datum/preference/name/real_name))
+		return read_preference(/datum/preference/name/real_name)
 
 	enabled_character_names = ""
 	var/i = 0
@@ -650,7 +635,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if (length(enabled_character_names) == 0)
 				enabled_character_names += name
 			else if (i == length(enabled_characters) - 1)
-				enabled_character_names += "or [name]"
+				enabled_character_names += " or [name]"
 			else
 				enabled_character_names += ", [name]"
 
@@ -663,6 +648,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		enabled_character_names = null
 
 /datum/preferences/proc/pick_character_for_job(datum/job/job)
+	// TODO check if character ahs been deleted before picking them
 	if (latejoin_overrride_character != 0)
 		if (latejoin_overrride_character != active_slot)
 			save_character()
