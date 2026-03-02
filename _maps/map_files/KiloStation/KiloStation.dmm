@@ -10536,6 +10536,12 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/captain)
+"dmN" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/reagent_dispensers/plumbed,
+/turf/open/floor/plating,
+/area/station/maintenance/port/greater)
 "dmU" = (
 /obj/structure/flora/bush/lavendergrass/style_random,
 /obj/structure/flora/bush/pale/style_random,
@@ -15193,6 +15199,10 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/closet{
+	name = "janitorial supplies"
+	},
+/obj/item/pushbroom,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "eMX" = (
@@ -26553,6 +26563,12 @@
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/security/prison/safe)
+"ihf" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
+/turf/open/floor/iron/showroomfloor,
+/area/station/medical/treatment_center)
 "ihg" = (
 /turf/closed/wall/r_wall,
 /area/station/ai_monitored/command/storage/satellite)
@@ -40199,6 +40215,15 @@
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/maintenance/starboard/aft)
+"msd" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/duct,
+/turf/open/floor/plating,
+/area/station/maintenance/port/greater)
 "msf" = (
 /obj/structure/sign/painting/library_secure{
 	pixel_x = -32
@@ -40490,15 +40515,6 @@
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/maintenance/port/aft)
-"mxG" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/cable,
-/obj/machinery/duct,
-/turf/open/floor/plating,
-/area/station/maintenance/port/greater)
 "mxP" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -58353,6 +58369,11 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/processing)
+"sgN" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/reagent_dispensers/plumbed,
+/turf/open/floor/plating,
+/area/station/maintenance/port/greater)
 "sgW" = (
 /obj/structure/window/reinforced/spawner/directional/east,
 /mob/living/carbon/human/species/monkey,
@@ -62643,12 +62664,6 @@
 /obj/effect/turf_decal/tile/yellow,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
-"tBp" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/duct,
-/turf/open/floor/iron/showroomfloor,
-/area/station/medical/treatment_center)
 "tBx" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/kirbyplants{
@@ -95217,8 +95232,8 @@ yhL
 fcS
 nBM
 lWI
-nJH
-mxG
+dmN
+msd
 pQO
 vjh
 csa
@@ -95474,7 +95489,7 @@ ljc
 kdo
 gIY
 lWI
-vBi
+sgN
 hpY
 iXl
 eNQ
@@ -97008,7 +97023,7 @@ kQU
 fZS
 kaP
 aJO
-tBp
+ihf
 eno
 rcQ
 oDs

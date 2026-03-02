@@ -72534,6 +72534,10 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "uWX" = (
+/obj/structure/closet{
+	name = "janitorial supplies"
+	},
+/obj/item/pushbroom,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "uXh" = (

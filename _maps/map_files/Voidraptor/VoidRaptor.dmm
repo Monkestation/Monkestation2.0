@@ -24249,6 +24249,10 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/supermatter/room)
 "gVD" = (
+/obj/structure/closet{
+	name = "janitorial supplies"
+	},
+/obj/item/pushbroom,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/medical/morgue)
 "gVG" = (

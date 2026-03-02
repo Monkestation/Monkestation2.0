@@ -50351,6 +50351,13 @@
 	dir = 4
 	},
 /area/station/science/ordnance)
+"mhF" = (
+/obj/structure/closet{
+	name = "janitorial supplies"
+	},
+/obj/item/pushbroom,
+/turf/open/floor/iron/dark,
+/area/station/medical/morgue)
 "mhJ" = (
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -122040,7 +122047,7 @@ ozQ
 iaR
 ozQ
 ozQ
-dfl
+mhF
 kkU
 bgi
 nBH
