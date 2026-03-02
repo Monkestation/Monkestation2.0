@@ -68,7 +68,7 @@
 
 	return ..()
 
-/datum/surgery_step/filter_blood/proc/success_scan(var/tox_loss, var/list/remaining, var/tox_heal_factor, mob/living/carbon/target)
+/datum/surgery_step/filter_blood/proc/success_scan(tox_loss, remaining, tox_heal_factor, mob/living/carbon/target)
 	if(tox_heal_factor > 0 && tox_loss > 0)
 		remaining += "<font color='[COLOR_GREEN]'>[round(tox_loss, 0.1)]</font> toxin"
 	if(target.reagents?.total_volume)
