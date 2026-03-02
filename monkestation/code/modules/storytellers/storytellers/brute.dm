@@ -9,11 +9,11 @@
 		EVENT_TRACK_OBJECTIVES = 1,
 		)
 	point_gains_multipliers = list(
-		EVENT_TRACK_MUNDANE = 1,
-		EVENT_TRACK_MODERATE = 1,
-		EVENT_TRACK_MAJOR = 0.8,
-		EVENT_TRACK_ROLESET = 0.4,
-		EVENT_TRACK_OBJECTIVES = 1,
+		EVENT_TRACK_MUNDANE = 0.5,
+		EVENT_TRACK_MODERATE = 0.5,
+		EVENT_TRACK_MAJOR = 0.4,
+		EVENT_TRACK_ROLESET = 0.2,
+		EVENT_TRACK_OBJECTIVES = 0.5,
 		)
 	population_min = 40 // If crew is gonna get hit hard have the numbers to survive it. Somewhat...
 	weight = 1
