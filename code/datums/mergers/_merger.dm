@@ -131,7 +131,7 @@
 /datum/merger/proc/check_turf(turf/location, list/found_turfs, asking_from)
 	var/found_something = FALSE
 	// if asking_from is invalid (like if it's 0), we get a random output. that's bad, let's check for falsyness
-	var/us_to_them = asking_from && turn(asking_from, 180)
+	var/us_to_them = asking_from && REVERSE_DIR(asking_from)
 
 	if(found_turfs[location])
 		found_turfs[location][MERGE_TURF_PACKET_DIR] |= us_to_them
@@ -150,18 +150,6 @@
 		if(!found_turfs[location])
 			found_turfs[location] = list(us_to_them, list())
 		found_turfs[location][MERGE_TURF_PACKET_ATOMS] += thing
-		found_something = TRUE
-
-
-	if(merged_typecache[location.type])
-		if(location.mergers && location.mergers[id] != src)
-			var/datum/merger/existing = location.mergers[id]
-			qdel(src)
-			existing.Refresh()
-			return FALSE
-		if(!found_turfs[location])
-			found_turfs[location] = list(us_to_them, list())
-		found_turfs[location][MERGE_TURF_PACKET_ATOMS] += location
 		found_something = TRUE
 
 	return found_something
