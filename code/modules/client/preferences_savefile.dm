@@ -176,11 +176,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	// jobs
 	enabled_characters = savefile.get_entry("enabled_characters", enabled_characters)
 	job_preferences_overall = savefile.get_entry("job_preferences_overall", job_preferences_overall)
+	default_character = savefile.get_entry("default_character", default_character)
 
 	apply_all_client_preferences()
-
-	// for (var/enabled_character in enabled_characters)
-	// 	enabled_character_job_preferences[enabled_character] =
 
 	//general preferences
 	lastchangelog = savefile.get_entry("lastchangelog", lastchangelog)
@@ -235,7 +233,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	be_special = sanitize_be_special(SANITIZE_LIST(be_special))
 	key_bindings = sanitize_keybindings(key_bindings)
 	favorite_outfits = SANITIZE_LIST(favorite_outfits)
-	job_preferences_overall = clean_job_preferences(job_preferences_overall) // <-- needs to happen before apply_all_client_preferences()
+	job_preferences_overall = sanitize_job_preferences(job_preferences_overall) // <-- needs to happen before apply_all_client_preferences()
+	enabled_characters = sanitize_enabled_characters(enabled_characters)
+	default_character = sanitize_default_character(default_character)
 
 	if(needs_update >= 0 || needs_update_monkestation >= 0) //save the updated version //MONKESTATION EDIT - Modular updates
 		var/old_default_slot = active_slot
@@ -344,7 +344,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	randomise = SANITIZE_LIST(randomise)
 	all_quirks = SANITIZE_LIST(all_quirks)
 
-	job_preferences_character = clean_job_preferences(job_preferences_character)
+	job_preferences_character = sanitize_job_preferences(job_preferences_character)
 	all_quirks = SSquirks.filter_invalid_quirks(SANITIZE_LIST(all_quirks))
 	validate_quirks()
 
@@ -352,14 +352,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		job_preferences = job_preferences_character
 
 	return TRUE
-
-/datum/preferences/proc/clean_job_preferences(list/job_preferences_in)
-	var/jprefs = SANITIZE_LIST(job_preferences_in)
-	//Validate job prefs
-	for(var/j in jprefs)
-		if(jprefs[j] != JP_LOW && jprefs[j] != JP_MEDIUM && jprefs[j] != JP_HIGH)
-			jprefs -= j
-	return jprefs
 
 /datum/preferences/proc/save_character()
 	SHOULD_NOT_SLEEP(TRUE)
@@ -436,6 +428,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		stack_trace("remove_current_slot() being called when there are no slots to go to, the client should prevent this")
 		return
 
+	if (active_slot == default_character)
+		default_character = closest_slot
+	if (active_slot == latejoin_overrride_character)
+		latejoin_overrride_character = 0
+	enabled_characters.RemoveAll(active_slot)
+	enabled_character_names = null
 	savefile.remove_entry("character[active_slot]")
 	tainted_character_profiles = TRUE
 	switch_to_slot(closest_slot)
@@ -448,6 +446,31 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			output += role
 
 	return output.len == input_be_special.len ? input_be_special : output
+
+/datum/preferences/proc/sanitize_job_preferences(list/input_job_preferences)
+	var/alist/job_prefs = SANITIZE_LIST(input_job_preferences)
+	//Validate job prefs
+	for(var/j in job_prefs)
+		if(job_prefs[j] != JP_LOW && job_prefs[j] != JP_MEDIUM && job_prefs[j] != JP_HIGH)
+			job_prefs -= j
+	return job_prefs
+
+/datum/preferences/proc/sanitize_enabled_characters(list/input_enabled_characters)
+	var/list/enabled_characters = SANITIZE_LIST(input_enabled_characters)
+	for (var/i in 1 to length(enabled_characters))
+		enabled_characters[i] = sanitize_integer(enabled_characters[i], 1, max_save_slots, -1)
+		if (enabled_characters[i] == -1)
+			continue
+		if (isnull(savefile.get_entry("character[enabled_characters[i]]")))
+			enabled_characters[i] = -1
+	enabled_characters.RemoveAll(-1)
+	return enabled_characters
+
+/datum/preferences/proc/sanitize_default_character(input_default_character)
+	var/default_character = sanitize_integer(input_default_character, 1, max_save_slots, initial(src.default_character))
+	if (isnull(savefile.get_entry("character[default_character]")))
+		return 1
+	return default_character
 
 /proc/sanitize_keybindings(value)
 	var/list/base_bindings = sanitize_islist(value,list())

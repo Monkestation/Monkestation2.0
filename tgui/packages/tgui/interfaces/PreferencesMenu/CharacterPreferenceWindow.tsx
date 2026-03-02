@@ -34,14 +34,13 @@ const CharacterProfiles = (props: {
       {profiles.map((profile, slot) => (
         <Stack.Item key={slot} my={0.25}>
           <Button
-            // bold={enabled_chars.includes(slot + 1)}
             selected={slot === props.activeSlot}
             onClick={() => {
               props.onClick(slot);
             }}
             fluid
           >
-            {mode === CharacterMode.Filters ? (
+            {mode === CharacterMode.Filters && profile && (
               <Icon
                 name={
                   enabled_chars.includes(slot + 1)
@@ -50,8 +49,6 @@ const CharacterProfiles = (props: {
                 }
                 style={{ float: 'left', padding: '4px 4px 4px 2px' }}
               />
-            ) : (
-              ''
             )}
             {profile ?? 'New Character'}
           </Button>

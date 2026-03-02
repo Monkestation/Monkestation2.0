@@ -88,7 +88,7 @@ export const PreferencesMenu = () => {
           fontSize="1em"
           fluid
           onClick={() => {
-            act('open_character');
+            act('open_store');
           }}
         >
           Loadout Store
