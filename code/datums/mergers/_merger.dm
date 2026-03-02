@@ -137,7 +137,7 @@
 		found_turfs[location][MERGE_TURF_PACKET_DIR] |= us_to_them
 		return TRUE
 
-	for(var/atom/movable/thing as anything in location)
+	for(var/atom/thing as anything in location)
 		if(!merged_typecache[thing.type])
 			continue
 		if(attempt_merge_proc && !call(thing, attempt_merge_proc)(src, found_turfs))
@@ -151,13 +151,6 @@
 			found_turfs[location] = list(us_to_them, list())
 		found_turfs[location][MERGE_TURF_PACKET_ATOMS] += thing
 		found_something = TRUE
-
-
-	if(merged_typecache[location.type])
-		if(location.mergers && location.mergers[id] != src)
-			qdel(src)
-		if(!found_turfs[location])
-			found_turfs[location] = list(us_to_them, list())
 
 	return found_something
 
