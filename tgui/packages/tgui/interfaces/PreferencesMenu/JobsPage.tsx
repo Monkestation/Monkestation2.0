@@ -207,9 +207,10 @@ const JobRow = (props: {
   job: Job;
   name: string;
   pageType: JobsPageType;
+  alt_title_mode: boolean;
 }) => {
   const { data } = useBackend<PreferencesMenuData>();
-  const { className, job, name, pageType } = props;
+  const { className, job, name, pageType, alt_title_mode } = props;
 
   const isFilter =
     pageType === JobsPageType.Character &&
@@ -273,12 +274,7 @@ const JobRow = (props: {
   }
 
   return (
-    <Box
-      className={className}
-      style={{
-        marginTop: 0,
-      }}
-    >
+    <Box className={className}>
       <Stack>
         <Tooltip content={job.description} position="right">
           <Stack.Item
@@ -289,9 +285,10 @@ const JobRow = (props: {
               paddingLeft: '0.3em',
             }}
           >
-            {' '}
-            {!job.alt_titles ? (
-              <Button width="100%">{name}</Button>
+            {!job.alt_titles || !alt_title_mode ? (
+              <Box color="white" backgroundColor="#1b1b1baa" p={0.5}>
+                {name}
+              </Box>
             ) : (
               <Dropdown
                 width="100%"
@@ -317,9 +314,15 @@ const Department: React.FC<{
   department: string;
   children?: React.ReactNode;
   pageType: JobsPageType;
+  alt_title_mode: boolean;
 }> = (props) => {
-  const { children, department: name, pageType } = props;
-  const className = `PreferencesMenu__Jobs__departments--${name}`;
+  const {
+    children,
+    department: departmentName,
+    pageType,
+    alt_title_mode,
+  } = props;
+  const className = `PreferencesMenu__Jobs__departments--${departmentName}`;
 
   return (
     <ServerPreferencesFetcher
@@ -329,7 +332,7 @@ const Department: React.FC<{
         }
 
         const { departments, jobs } = data.jobs;
-        const department = departments[name];
+        const department = departments[departmentName];
 
         // This isn't necessarily a bug, it's like this
         // so that you can remove entire departments without
@@ -340,29 +343,31 @@ const Department: React.FC<{
         }
 
         const jobsForDepartment = sortJobs(
-          Object.entries(jobs).filter(([_, job]) => job.department === name),
+          Object.entries(jobs).filter(
+            ([_, job]) => job.department === departmentName,
+          ),
           department.head,
         );
 
         return (
           <Box className={className}>
-            <Stack vertical>
-              {jobsForDepartment.map(([name, job]) => {
-                return (
-                  <JobRow
-                    className={classes([
-                      className,
-                      name === department.head && 'head',
-                    ])}
-                    key={name}
-                    job={job}
-                    name={name}
-                    pageType={pageType}
-                  />
-                );
-              })}
-            </Stack>
-
+            {/* <Stack vertical> */}
+            {jobsForDepartment.map(([name, job]) => {
+              return (
+                <JobRow
+                  className={classes([
+                    className,
+                    name === department.head && 'head',
+                  ])}
+                  key={name}
+                  job={job}
+                  name={name}
+                  pageType={pageType}
+                  alt_title_mode={alt_title_mode}
+                />
+              );
+            })}
+            {/* </Stack> */}
             {children}
           </Box>
         );
@@ -454,10 +459,12 @@ const JoblessRoleDropdown2 = () => {
             border: '2px dashed grey',
           }}
         >
-          <h3>Simple</h3>
+          Pick which roles you want the most. Some roles require extra playtime.
+          For recommended starter roles check here (TODO link to wiki).
+          <h3>Mode: Simple</h3>
           1. Set role priorities in Occupations <br />
           2. Pick one enabled character
-          <h3>Character Filters</h3>
+          <h3>Mode: Character Filters</h3>
           Allows you to select multiple characters at once. When you join the
           game the server will pick a character which has your designated job
           enabled. If the server cannot find one it will pick your default
@@ -467,7 +474,7 @@ const JoblessRoleDropdown2 = () => {
           2. Set role filters in Character Occupations <br />
           3. Pick 0 or more enabled characters <br />
           4. Pick one default character
-          <h3>Per Character Priorities</h3>
+          <h3>Mode: Per Character Priorities</h3>
           1. Set role priorities in Character Occupations <br />
           2. Pick one enabled character
         </Box>
@@ -573,6 +580,10 @@ export const JobsPage = (props: { type: JobsPageType }) => {
   const isFilter =
     type === JobsPageType.Character && mode === CharacterMode.Filters;
 
+  const alt_title_mode =
+    (type === JobsPageType.Overall && mode === CharacterMode.Simple) ||
+    (type === JobsPageType.Character && mode !== CharacterMode.Simple);
+
   const contents2 = (
     <Stack.Item>
       <Stack className="PreferencesMenu__Jobs">
@@ -580,10 +591,26 @@ export const JobsPage = (props: { type: JobsPageType }) => {
           <Gap amount={36} />
           <PriorityHeaders isFilter={isFilter} />
 
-          <Department pageType={type} department="Engineering" />
-          <Department pageType={type} department="Science" />
-          <Department pageType={type} department="Silicon" />
-          <Department pageType={type} department="Assistant" />
+          <Department
+            pageType={type}
+            alt_title_mode={alt_title_mode}
+            department="Engineering"
+          />
+          <Department
+            pageType={type}
+            alt_title_mode={alt_title_mode}
+            department="Science"
+          />
+          <Department
+            pageType={type}
+            alt_title_mode={alt_title_mode}
+            department="Silicon"
+          />
+          <Department
+            pageType={type}
+            alt_title_mode={alt_title_mode}
+            department="Assistant"
+          />
 
           <Gap amount={10} />
           {/* <Button>Deselect All</Button> */}
@@ -600,18 +627,42 @@ export const JobsPage = (props: { type: JobsPageType }) => {
           <Gap amount={10} />
           <PriorityHeaders isFilter={isFilter} />
 
-          <Department pageType={type} department="Captain" />
-          <Department pageType={type} department="Service" />
-          <Department pageType={type} department="Cargo" />
+          <Department
+            pageType={type}
+            alt_title_mode={alt_title_mode}
+            department="Captain"
+          />
+          <Department
+            pageType={type}
+            alt_title_mode={alt_title_mode}
+            department="Service"
+          />
+          <Department
+            pageType={type}
+            alt_title_mode={alt_title_mode}
+            department="Cargo"
+          />
         </Stack.Item>
 
         <Stack.Item>
           <Gap amount={36} />
           <PriorityHeaders isFilter={isFilter} />
 
-          <Department pageType={type} department="Security" />
-          <Department pageType={type} department="Medical" />
-          <Department pageType={type} department="Central Command" />
+          <Department
+            pageType={type}
+            alt_title_mode={alt_title_mode}
+            department="Security"
+          />
+          <Department
+            pageType={type}
+            alt_title_mode={alt_title_mode}
+            department="Medical"
+          />
+          <Department
+            pageType={type}
+            alt_title_mode={alt_title_mode}
+            department="Central Command"
+          />
         </Stack.Item>
       </Stack>
     </Stack.Item>
