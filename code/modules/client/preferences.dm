@@ -58,6 +58,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/enabled_character_names = null
 
 	/// Job preferences 2.0 - indexed by job title , no key or value implies never
+	/// Points to either `job_preferences_character` or `job_preferences_overall`
 	/// ["job title"] = priority
 	var/list/job_preferences
 
@@ -75,8 +76,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	/// Overall job preferences for the `Character Filters` and `Simple` role selection modes
 	/// ["job title"] = (int) priority
 	var/alist/job_preferences_overall = list()
-
-	var/tainted_preferences = FALSE
 
 	/// The current window, PREFERENCE_TAB_* in [`code/__DEFINES/preferences.dm`]
 	var/current_window = PREFERENCE_WINDOW_CHARACTERS
@@ -581,14 +580,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	return profiles
 
-/datum/preferences/proc/set_job_preference_level(datum/job/job, level, type)
+/datum/preferences/proc/set_job_preference_level(datum/job/job, level, job_prefs_type)
 	if (!job)
 		return FALSE
 
 	var/list/job_prefs
-	if (type == JOB_PREFS_OVERALL)
+	if (job_prefs_type == JOB_PREFS_OVERALL)
 		job_prefs = job_preferences_overall
-	if (type == JOB_PREFS_CHARACTER)
+	if (job_prefs_type == JOB_PREFS_CHARACTER)
 		job_prefs = job_preferences_character
 
 	if (level == JP_HIGH)

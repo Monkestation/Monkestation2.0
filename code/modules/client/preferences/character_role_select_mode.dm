@@ -11,12 +11,13 @@
 /datum/preference/choiced/character_role_select_mode/should_show_on_page(preference_tab)
 	return TRUE
 
-/datum/preference/choiced/character_role_select_mode/apply_to_client(client/client, value)
+/datum/preference/choiced/character_role_select_mode/apply_to_client_updated(client/client, value)
 	var/datum/preferences/prefs = client.prefs
 	if (isnull(prefs))
 		return
 
 	prefs.enabled_character_names = null
-	prefs.job_preferences = prefs.job_preferences_overall
 	if (value == CHARACTER_ROLE_MODE_PER_CHAR)
 		prefs.job_preferences = prefs.job_preferences_character
+	else
+		prefs.job_preferences = prefs.job_preferences_overall

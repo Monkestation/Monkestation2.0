@@ -233,7 +233,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	be_special = sanitize_be_special(SANITIZE_LIST(be_special))
 	key_bindings = sanitize_keybindings(key_bindings)
 	favorite_outfits = SANITIZE_LIST(favorite_outfits)
-	job_preferences_overall = sanitize_job_preferences(job_preferences_overall) // <-- needs to happen before apply_all_client_preferences()
+	job_preferences_overall = sanitize_job_preferences(job_preferences_overall)
 	enabled_characters = sanitize_enabled_characters(enabled_characters)
 	default_character = sanitize_default_character(default_character)
 
@@ -290,7 +290,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	savefile.set_entry("enabled_characters", enabled_characters)
 	savefile.set_entry("job_preferences_overall", job_preferences_overall)
 	savefile.set_entry("default_character", default_character)
-
 	save_preferences_monkestation()
 	savefile.save()
 	return TRUE
