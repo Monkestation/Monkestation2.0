@@ -1,0 +1,6 @@
+author: "SirNightKnight"
+delete-after: True
+changes:
+  - bugfix: "fixed deconstructing pressure tanks duplicating gasses in merged tanks."
+  - balance: "pressure tanks have a volume of 10,000 liters and rounded the pressure limit to 50,000."
+  - balance: "halved the material cost for finishing pressure tank frames."
