@@ -64,10 +64,10 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 /obj/item/hypospray/examine(mob/user)
 	. = ..()
 	if(vial)
-		. += span_notice("[vial] has [vial.reagents.total_volume]u remaining. R-click, or click with offhand to remove vials.")
+		. += span_notice("[vial] has [vial.reagents.total_volume]u remaining. You can [EXAMINE_HINT("R-click")] the hypospray in your active hand to remove a vial, or [EXAMINE_HINT("click")] it while it is in your offhand to remove a vial")
 	else
-		. += span_notice("It has no container loaded in.")
-	. += span_notice("Currently injects [transfer_amount]u. Ctrl L-click/R-click to increase/decrease transfer amount.")
+		. += span_notice("It has no container loaded in. You can [EXAMINE_HINT("click")] with a vial to load it.")
+	. += span_notice("Currently injects [transfer_amount]u. [EXAMINE_HINT("ctrl L-click/R-click")] to increase/decrease transfer amount.")
 	if(upgrade_flags & HYPO_UPGRADE_PIERCING)
 		. += span_notice("[src] has a polycarbonate diamond tipped needle, allowing it to pierce thick clothing.")
 	if(upgrade_flags & HYPO_UPGRADE_SPEED)
@@ -75,7 +75,7 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 	if(upgrade_flags & HYPO_UPGRADE_NOZZLE)
 		. += span_notice("[src] has a widened titanium nozzle, allowing it to spray or inject more units at a time.")
 	if(!can_remove_vials)
-		. += span_notice("It's loading mechanism is blocked, preventing vials from being removed, permanently, once loaded.")
+		. += span_notice("It's unloading mechanism is blocked, preventing vials from being removed, permanently, once loaded.")
 	if(is_path_in_list(/obj/item/reagent_containers/cup/vial/large, blacklist_containers))
 		. += span_notice("It's loading mechanism is too small to load larger vials.")
 	switch(mode)
@@ -351,7 +351,7 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 /obj/item/hypospray/cmo
 	name = "Deluxe Hypospray"
 	icon_state = "hypo_cmo"
-	desc = "The Deluxe Hypospray can use larger size vials, and deliver more reagents per injection."
+	desc = "The Deluxe Hypospray can use larger size vials, pierce thick clothing, and deliver more reagents per injection."
 	allowed_containers = list(/obj/item/reagent_containers/cup/vial, /obj/item/reagent_containers/cup/tube)
 	possible_transfer_amounts = list(1, 2, 3, 5, 10, 15, 20)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
@@ -359,6 +359,7 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 	draw_other = 0 SECONDS
 	spray_other = 0.5 SECONDS
 	blacklist_containers = NONE
+	upgrade_flags = HYPO_UPGRADE_PIERCING
 
 //combat
 
