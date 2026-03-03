@@ -1,0 +1,24 @@
+2026-03-01:
+  Shoddd:
+  - balance: apocalypse rune can not be used until shuttle can be called
+  Tractor-Maam:
+  - rscadd: Readded Yellow Gun Cases to company imports at cargo.
+  - bugfix: '"small gun case" no longer incorrectly named "''Makarov pistol'' gunset"'
+  drgnmstrc:
+  - map: tweaked AI upload room in kilo to fix borg spawns
+  - rscadd: another check to block stowaways from being snitched on by announcer
+  notghosti:
+  - bugfix: Rule three is now rule one achievment
+2026-03-02:
+  JohnFulpWillard:
+  - rscdel: Bye Mafia.
+2026-03-03:
+  Mantle:
+  - rscadd: Traffic Cone Hat added to monkecoin store
+  Shoddd:
+  - bugfix: interaction comps now check for nodrop
+  SirNightKnight:
+  - bugfix: fixed the nightmare revive timer being off by a decimal point.
+  - qol: added security armbands to the secdrobe.
+  Tractor-Maam:
+  - code_imp: Minor housekeeping with lionhunter rifle code

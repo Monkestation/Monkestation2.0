@@ -287,8 +287,9 @@
 		return
 
 	if(ispath(rune_to_scribe, /obj/effect/rune/apocalypse))
-		if((world.time - SSticker.round_start_time) <= 6000)
-			var/wait = 6000 - (world.time - SSticker.round_start_time)
+		var/shuttle_refuel_delay = CONFIG_GET(number/shuttle_refuel_delay)
+		if(world.time - SSticker.round_start_time < shuttle_refuel_delay)
+			var/wait = shuttle_refuel_delay - (world.time - SSticker.round_start_time)
 			to_chat(cultist, span_cultitalic("The veil is not yet weak enough for this rune - it will be available in [DisplayTimeText(wait)]."))
 			return
 		if(!check_if_in_ritual_site(cultist, user_team, TRUE))
