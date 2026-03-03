@@ -352,7 +352,7 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 	name = "Deluxe Hypospray"
 	icon_state = "hypo_cmo"
 	desc = "The Deluxe Hypospray can use larger size vials, and deliver more reagents per injection."
-	allowed_containers = list(/obj/item/reagent_containers/cup/vial/)
+	allowed_containers = list(/obj/item/reagent_containers/cup/vial, /obj/item/reagent_containers/cup/tube)
 	possible_transfer_amounts = list(1, 2, 3, 5, 10, 15, 20)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	inject_other = 1 SECONDS
@@ -366,7 +366,7 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 	name = "Combat Hypospray"
 	icon_state = "hypo_combat"
 	desc = "A reverse engineered Syndicate Hypospray. Capable of using large vials, and piercing armor."
-	allowed_containers = list(/obj/item/reagent_containers/cup/vial/)
+	allowed_containers = list(/obj/item/reagent_containers/cup/vial, /obj/item/reagent_containers/cup/tube)
 	possible_transfer_amounts = list(1, 2, 3, 5, 10, 15, 20)
 	upgrade_flags = HYPO_UPGRADE_PIERCING
 	default_vial = /obj/item/reagent_containers/cup/vial/large/combat
