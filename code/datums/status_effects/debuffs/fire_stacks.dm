@@ -131,7 +131,7 @@
 	id = "fire_stacks" //fire_stacks and wet_stacks should have different IDs or else has_status_effect won't work
 	remove_on_fullheal = TRUE
 
-	enemy_types = list(/datum/status_effect/fire_handler/wet_stacks)
+	enemy_types = list(/datum/status_effect/fire_handler/wet_stacks, /datum/status_effect/fire_handler/wet_stacks/oozeling)
 	stack_modifier = 1
 
 	/// If we're on fire
@@ -148,6 +148,16 @@
 	if(istype(source_turf, /turf/open/floor/plating/ocean))
 		qdel(src)
 		return TRUE
+
+	for(var/enemy_type in enemy_types)
+		var/datum/status_effect/fire_handler/enemy_effect = owner.has_status_effect(enemy_type)
+		if(!enemy_effect)
+			continue
+		var/cur_stacks = stacks
+		adjust_stacks(-abs(enemy_effect.stacks * enemy_effect.stack_modifier / stack_modifier))
+		enemy_effect.adjust_stacks(-abs(cur_stacks * stack_modifier / enemy_effect.stack_modifier))
+		if(enemy_effect.stacks <= 0)
+			qdel(enemy_effect)
 
 	if(stacks <= 0)
 		qdel(src)
@@ -285,17 +295,72 @@
 	id = "wet_stacks"
 
 	enemy_types = list(/datum/status_effect/fire_handler/fire_stacks)
-	stack_modifier = -1
+	stack_limit = MAX_FIRE_STACKS * 1.5
+	stack_modifier = -2
+	/// do we use special particles
+	var/special_particles = FALSE
 
 /datum/status_effect/fire_handler/wet_stacks/on_apply()
 	. = ..()
-	owner.add_shared_particles(/particles/droplets)
+	if(!special_particles)
+		owner.add_shared_particles(/particles/droplets)
 
 /datum/status_effect/fire_handler/wet_stacks/on_remove()
 	. = ..()
-	owner.remove_shared_particles(/particles/droplets)
+	if(!special_particles)
+		owner.remove_shared_particles(/particles/droplets)
 
 /datum/status_effect/fire_handler/wet_stacks/tick(seconds_between_ticks)
+	for(var/enemy_type in enemy_types)
+		var/datum/status_effect/fire_handler/enemy_effect = owner.has_status_effect(enemy_type)
+		if(!enemy_effect)
+			continue
+		var/cur_stacks = stacks
+		adjust_stacks(-abs(enemy_effect.stacks * enemy_effect.stack_modifier / stack_modifier))
+		enemy_effect.adjust_stacks(-abs(cur_stacks * stack_modifier / enemy_effect.stack_modifier))
+		if(enemy_effect.stacks <= 0)
+			qdel(enemy_effect)
+
 	adjust_stacks(-0.5 * seconds_between_ticks)
+	if(stacks <= 0)
+		qdel(src)
+
+/datum/status_effect/fire_handler/wet_stacks/oozeling
+	id = "oozeling_wet_stacks"
+	enemy_types = list(/datum/status_effect/fire_handler/fire_stacks, /datum/status_effect/fire_handler/wet_stacks)
+	special_particles = TRUE
+
+/datum/status_effect/fire_handler/wet_stacks/oozeling/on_apply()
+	. = ..()
+	var/color
+	if(isoozeling(owner))
+		var/mob/living/carbon/human/oozie = owner
+		var/datum/color_palette/generic_colors/colors = oozie.dna.color_palettes[/datum/color_palette/generic_colors]
+		color = colors.mutant_color
+	if(!color)
+		color = COLOR_LIME
+
+	var/obj/effect/abstract/shared_particle_holder/oozeling_droplets = owner.add_shared_particles(/particles/droplets/slime, "oozeling_droplets_[owner.real_name]")
+
+	oozeling_droplets.color = color
+
+/datum/status_effect/fire_handler/wet_stacks/oozeling/on_remove()
+	. = ..()
+	owner.remove_shared_particles(/particles/droplets/slime)
+
+
+/datum/status_effect/fire_handler/wet_stacks/oozeling/tick(seconds_between_ticks)
+	for(var/enemy_type in enemy_types)
+		var/datum/status_effect/fire_handler/enemy_effect = owner.has_status_effect(enemy_type)
+		if(!enemy_effect)
+			continue
+		var/cur_stacks = stacks
+		adjust_stacks(-abs(enemy_effect.stacks * enemy_effect.stack_modifier / stack_modifier))
+		enemy_effect.adjust_stacks(-abs(cur_stacks * stack_modifier / enemy_effect.stack_modifier))
+		if(enemy_effect.stacks <= 0)
+			qdel(enemy_effect)
+
+	if(owner.stat == DEAD || !isoozeling(owner))
+		adjust_stacks(-0.5 * seconds_between_ticks)
 	if(stacks <= 0)
 		qdel(src)

@@ -161,7 +161,7 @@
 /obj/item/shard,
 /turf/template_noop,
 /area/template_noop)
-"BD" = (
+"Bn" = (
 /obj/structure/table,
 /obj/item/gps/spaceruin{
 	pixel_x = -5;
@@ -190,6 +190,12 @@
 "Fk" = (
 /obj/effect/spawner/random/engineering/tank,
 /turf/open/floor/plating/airless,
+/area/ruin/space/has_grav)
+"Fw" = (
+/obj/structure/tank_holder/oxygen/yellow,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/turf/open/floor/iron/dark/textured,
 /area/ruin/space/has_grav)
 "Gq" = (
 /obj/structure/girder/displaced,
@@ -274,12 +280,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/ruin/space/has_grav)
-"Pu" = (
-/obj/structure/tank_holder/oxygen/red,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/neutral/opposingcorners,
-/turf/open/floor/iron/dark/textured,
 /area/ruin/space/has_grav)
 "Px" = (
 /obj/structure/cable,
@@ -421,7 +421,7 @@ Cp
 wO
 Yp
 OM
-BD
+Bn
 hs
 Yp
 gE
@@ -500,7 +500,7 @@ Cp
 Cp
 es
 Yp
-Pu
+Fw
 uV
 ki
 Yp

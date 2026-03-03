@@ -562,18 +562,6 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"bM" = (
-/obj/structure/rack,
-/obj/item/tank/internals/oxygen/red,
-/obj/item/clothing/suit/utility/fire/firefighter,
-/obj/item/clothing/mask/gas,
-/obj/item/clothing/head/utility/hardhat/fire,
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/machinery/camera/autoname,
-/turf/open/floor/iron,
-/area/shuttle/escape)
 "bN" = (
 /obj/machinery/space_heater,
 /obj/structure/extinguisher_cabinet/directional/south,
@@ -799,6 +787,18 @@
 /obj/machinery/status_display/evac/directional/west,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
+"CO" = (
+/obj/structure/rack,
+/obj/item/tank/internals/oxygen/yellow,
+/obj/item/clothing/suit/utility/fire/firefighter,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/head/utility/hardhat/fire,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/camera/autoname,
+/turf/open/floor/iron,
+/area/shuttle/escape)
 "GL" = (
 /obj/machinery/camera/autoname{
 	dir = 1
@@ -1144,7 +1144,7 @@ ad
 bm
 bv
 bA
-bM
+CO
 ad
 "}
 (20,1,1) = {"

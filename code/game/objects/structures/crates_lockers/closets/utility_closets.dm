@@ -79,7 +79,7 @@
 
 	new /obj/item/clothing/suit/utility/fire/firefighter(src)
 	new /obj/item/clothing/mask/gas(src)
-	new /obj/item/tank/internals/oxygen/red(src)
+	new /obj/item/tank/internals/oxygen/yellow(src)
 	new /obj/item/extinguisher(src)
 	new /obj/item/clothing/head/utility/hardhat/fire(src)
 	new /obj/item/clothing/gloves/color/black(src)
@@ -89,7 +89,7 @@
 	new /obj/item/clothing/suit/utility/fire/firefighter(src)
 	new /obj/item/clothing/mask/gas(src)
 	new /obj/item/flashlight(src)
-	new /obj/item/tank/internals/oxygen/red(src)
+	new /obj/item/tank/internals/oxygen/yellow(src)
 	new /obj/item/extinguisher(src)
 	new /obj/item/clothing/head/utility/hardhat/fire(src)
 	new /obj/item/clothing/gloves/color/black(src)

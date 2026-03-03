@@ -494,6 +494,16 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/mineral/titanium,
 /area/template_noop)
+"IW" = (
+/obj/structure/rack,
+/obj/item/tank/internals/oxygen/yellow,
+/obj/item/clothing/suit/utility/fire/firefighter,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/head/utility/hardhat/fire,
+/obj/item/extinguisher,
+/obj/item/extinguisher,
+/turf/open/floor/mineral/titanium,
+/area/template_noop)
 "Jt" = (
 /obj/machinery/stasis,
 /obj/machinery/light/directional/south,
@@ -623,16 +633,6 @@
 "Qi" = (
 /obj/structure/cable,
 /turf/open/floor/mineral/titanium/blue,
-/area/template_noop)
-"Qj" = (
-/obj/structure/rack,
-/obj/item/tank/internals/oxygen/red,
-/obj/item/clothing/suit/utility/fire/firefighter,
-/obj/item/clothing/mask/gas,
-/obj/item/clothing/head/utility/hardhat/fire,
-/obj/item/extinguisher,
-/obj/item/extinguisher,
-/turf/open/floor/mineral/titanium,
 /area/template_noop)
 "QE" = (
 /obj/structure/bed,
@@ -1117,7 +1117,7 @@ Er
 Er
 aK
 aK
-Qj
+IW
 tN
 tN
 hE

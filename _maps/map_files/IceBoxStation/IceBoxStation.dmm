@@ -1657,21 +1657,6 @@
 "aBR" = (
 /turf/open/genturf/blue,
 /area/icemoon/surface/outdoors/noruins)
-"aBZ" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 6
-	},
-/obj/machinery/light/small/directional/south,
-/obj/structure/rack,
-/obj/item/extinguisher,
-/obj/item/clothing/suit/utility/fire/firefighter,
-/obj/item/clothing/mask/gas,
-/obj/item/clothing/head/utility/hardhat/fire,
-/obj/item/tank/internals/oxygen,
-/obj/item/clothing/glasses/meson,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible/layer4,
-/turf/open/floor/plating,
-/area/station/maintenance/fore)
 "aCb" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -16373,6 +16358,10 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/science/genetics)
+"eSS" = (
+/obj/structure/tank_holder/oxygen/yellow,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/fore)
 "eST" = (
 /obj/structure/toilet{
 	dir = 4
@@ -65503,6 +65492,21 @@
 /obj/structure/sign/warning/electric_shock,
 /turf/closed/wall/r_wall,
 /area/station/engineering/supermatter)
+"ucT" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/obj/machinery/light/small/directional/south,
+/obj/structure/rack,
+/obj/item/extinguisher,
+/obj/item/clothing/suit/utility/fire/firefighter,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/head/utility/hardhat/fire,
+/obj/item/tank/internals/oxygen,
+/obj/item/clothing/glasses/meson,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible/layer4,
+/turf/open/floor/plating,
+/area/station/maintenance/fore)
 "udd" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -75267,10 +75271,6 @@
 	},
 /turf/open/floor/iron/white/smooth_large,
 /area/station/service/kitchen)
-"wZZ" = (
-/obj/structure/tank_holder/oxygen/red,
-/turf/open/floor/plating,
-/area/station/maintenance/starboard/fore)
 "xad" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /obj/structure/cable,
@@ -246086,7 +246086,7 @@ dZh
 skl
 gWG
 tHI
-aBZ
+ucT
 gmW
 tYd
 uRo
@@ -252266,7 +252266,7 @@ kKL
 jhS
 tOX
 kKL
-wZZ
+eSS
 mKD
 iin
 kKL
