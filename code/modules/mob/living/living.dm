@@ -1553,8 +1553,8 @@
 				/mob/living/simple_animal/hostile/megafauna/dragon/lesser,
 				/mob/living/simple_animal/pet/cat,
 				/mob/living/simple_animal/pet/cat/cak,
-				/mob/living/basic/pony
-				/mob/living/basic/pony/syndicate
+				/mob/living/basic/pony,
+				/mob/living/basic/pony/syndicate,
 			)
 			new_mob = new picked_animal(loc)
 
