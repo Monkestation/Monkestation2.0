@@ -2423,6 +2423,7 @@
 	pixel_y = 20
 	},
 /obj/effect/turf_decal/delivery,
+/obj/structure/drain,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "aKT" = (
@@ -21488,6 +21489,7 @@
 	pixel_y = 20
 	},
 /obj/effect/turf_decal/delivery,
+/obj/structure/drain,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "giM" = (

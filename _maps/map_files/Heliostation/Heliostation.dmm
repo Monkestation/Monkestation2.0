@@ -8585,6 +8585,7 @@
 	},
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
+/obj/structure/drain,
 /turf/open/floor/iron/freezer,
 /area/station/medical/treatment_center)
 "aSN" = (
@@ -12573,6 +12574,7 @@
 	dir = 9
 	},
 /obj/machinery/light/small/directional/north,
+/obj/structure/drain,
 /turf/open/floor/iron/white,
 /area/station/commons/toilet)
 "bjE" = (
@@ -12581,6 +12583,7 @@
 /obj/effect/turf_decal/siding/thinplating/light{
 	dir = 5
 	},
+/obj/structure/drain,
 /turf/open/floor/iron/white,
 /area/station/commons/toilet)
 "bjF" = (
@@ -12982,6 +12985,7 @@
 	},
 /obj/effect/turf_decal/siding/thinplating/light/corner,
 /obj/effect/landmark/start/hangover,
+/obj/structure/drain,
 /turf/open/floor/iron/white,
 /area/station/commons/toilet)
 "blk" = (
@@ -12989,6 +12993,7 @@
 /obj/effect/turf_decal/siding/thinplating/light{
 	dir = 6
 	},
+/obj/structure/drain,
 /turf/open/floor/iron/white,
 /area/station/commons/toilet)
 "bll" = (
@@ -23881,6 +23886,13 @@
 /obj/effect/mapping_helpers/airlock/access/all/command/general,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/command/bridge)
+"cKr" = (
+/obj/structure/closet{
+	name = "janitorial supplies"
+	},
+/obj/item/pushbroom,
+/turf/open/floor/iron/dark,
+/area/station/medical/morgue)
 "cKt" = (
 /obj/machinery/requests_console/directional/south{
 	department = "Mining";
@@ -50351,13 +50363,6 @@
 	dir = 4
 	},
 /area/station/science/ordnance)
-"mhF" = (
-/obj/structure/closet{
-	name = "janitorial supplies"
-	},
-/obj/item/pushbroom,
-/turf/open/floor/iron/dark,
-/area/station/medical/morgue)
 "mhJ" = (
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -122047,7 +122052,7 @@ ozQ
 iaR
 ozQ
 ozQ
-mhF
+cKr
 kkU
 bgi
 nBH

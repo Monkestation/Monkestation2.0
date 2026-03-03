@@ -72840,18 +72840,13 @@
 /obj/effect/turf_decal/tile/blue/half{
 	dir = 8
 	},
-/obj/structure/fluff{
-	desc = "Ew, I think I see a hairball.";
-	icon = 'icons/obj/lavaland/survival_pod.dmi';
-	icon_state = "fan_tiny";
-	name = "shower drain"
-	},
 /obj/machinery/shower/directional/east,
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/turf_decal/trimline/blue/end{
 	dir = 4
 	},
+/obj/structure/drain,
 /turf/open/floor/iron/white/textured_edge{
 	dir = 8
 	},

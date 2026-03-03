@@ -8901,6 +8901,7 @@
 "aGI" = (
 /obj/structure/sign/poster/official/no_erp/directional/west,
 /obj/machinery/shower/directional/east,
+/obj/structure/drain,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet/restrooms)
 "aGK" = (
@@ -9058,6 +9059,7 @@
 "aHr" = (
 /obj/item/soap/nanotrasen,
 /obj/machinery/shower/directional/east,
+/obj/structure/drain,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet/restrooms)
 "aHs" = (
@@ -15228,6 +15230,7 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/shower/directional/south,
 /obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/structure/drain,
 /turf/open/floor/iron,
 /area/station/medical/treatment_center)
 "bjW" = (
@@ -38747,6 +38750,7 @@
 	dir = 8
 	},
 /obj/machinery/shower/directional/west,
+/obj/structure/drain,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet/restrooms)
 "lgU" = (
@@ -46444,6 +46448,7 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/shower/directional/south,
 /obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/structure/drain,
 /turf/open/floor/iron,
 /area/station/medical/treatment_center)
 "rvO" = (
@@ -54555,6 +54560,7 @@
 	dir = 8
 	},
 /obj/machinery/shower/directional/west,
+/obj/structure/drain,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet/restrooms)
 "xqq" = (
