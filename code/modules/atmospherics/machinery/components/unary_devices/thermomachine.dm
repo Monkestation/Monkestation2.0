@@ -6,7 +6,6 @@
 
 	icon = 'icons/obj/atmospherics/components/thermomachine.dmi'
 	icon_state = "thermo_base"
-	plane = GAME_PLANE
 	layer = ABOVE_OBJ_LAYER
 
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT
