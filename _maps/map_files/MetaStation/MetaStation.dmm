@@ -6166,6 +6166,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "ckU" = (
@@ -21852,6 +21853,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "hMy" = (
@@ -25478,6 +25480,16 @@
 /obj/effect/turf_decal/box,
 /turf/open/floor/iron,
 /area/station/security/prison)
+"iTU" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/obj/machinery/duct,
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/turf/open/floor/iron/white,
+/area/station/medical/treatment_center)
 "iTV" = (
 /obj/machinery/corral_corner{
 	mapping_id = "3"
@@ -26963,7 +26975,6 @@
 /obj/effect/turf_decal/siding/white{
 	dir = 4
 	},
-/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/white/side{
 	dir = 8
 	},
@@ -27522,10 +27533,17 @@
 /turf/open/floor/iron/white,
 /area/station/science/explab)
 "jCn" = (
-/obj/structure/window/spawner/directional/west,
-/obj/structure/flora/grass/jungle/a/style_random,
-/turf/open/floor/grass,
-/area/station/service/hydroponics/garden)
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/obj/machinery/duct,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/turf/open/floor/iron/white,
+/area/station/medical/treatment_center)
 "jCq" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/duct,
@@ -38519,14 +38537,9 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "nor" = (
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 1
-	},
-/obj/machinery/duct,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/structure/disposalpipe/segment{
-	dir = 6
+	dir = 10
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
@@ -42522,6 +42535,13 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/pathology)
+"oFp" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 8
+	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/iron/white,
+/area/station/medical/treatment_center)
 "oFv" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/broken_floor,
@@ -53050,13 +53070,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
-"smH" = (
-/obj/effect/turf_decal/trimline/blue/filled/line,
-/obj/structure/disposalpipe/segment{
-	dir = 10
-	},
-/turf/open/floor/iron/white,
-/area/station/medical/treatment_center)
 "smZ" = (
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
@@ -60063,12 +60076,9 @@
 /area/station/medical/pathology)
 "uHt" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 1
+	dir = 4
 	},
-/obj/machinery/duct,
-/obj/structure/disposalpipe/segment{
-	dir = 9
-	},
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "uHA" = (
@@ -64929,6 +64939,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/chicken)
+"wvB" = (
+/obj/structure/window/spawner/directional/west,
+/obj/structure/flora/grass/jungle/a/style_random,
+/turf/open/floor/grass,
+/area/station/service/hydroponics/garden)
 "wvC" = (
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 4
@@ -67125,7 +67140,6 @@
 /obj/effect/turf_decal/siding/white{
 	dir = 8
 	},
-/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/white/side{
 	dir = 4
 	},
@@ -90713,7 +90727,7 @@ wvP
 wUQ
 kui
 ckE
-ckE
+uHt
 oJD
 oPv
 nKE
@@ -91229,7 +91243,7 @@ ekk
 mtj
 buN
 lTR
-nor
+jCn
 jGG
 agZ
 rvb
@@ -91482,11 +91496,11 @@ qNi
 jxc
 gNT
 oah
-smH
+nor
 tMK
 xgn
 xfx
-uHt
+iTU
 kui
 fHC
 gNl
@@ -91741,7 +91755,7 @@ jFB
 bHE
 vWv
 hMq
-hMq
+oFp
 sxf
 iMv
 nKE
@@ -107621,7 +107635,7 @@ lnc
 lyD
 dqs
 lqQ
-jCn
+wvB
 jzC
 dra
 xUE
