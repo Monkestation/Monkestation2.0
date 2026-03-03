@@ -30,6 +30,10 @@
 /obj/item/reagent_containers/medipen/attack(mob/living/affected_mob, mob/user)
 	inject(affected_mob, user)
 
+/obj/item/reagent_containers/medipen/attack_self(mob/user)
+	if(user.can_perform_action(src, FORBID_TELEKINESIS_REACH|ALLOW_RESTING))
+		inject(user, user)
+
 ///Handles all injection checks, injection and logging.
 /obj/item/reagent_containers/medipen/proc/inject(mob/living/affected_mob, mob/user)
 	if(!reagents.total_volume)
@@ -68,8 +72,17 @@
 				trans = reagents.copy_to(affected_mob, amount_per_transfer_from_this)
 			to_chat(user, span_notice("[trans] unit\s injected. [reagents.total_volume] unit\s remaining in [src]."))
 			log_combat(user, affected_mob, "injected", src, "([contained])")
+
+		if(!reagents.total_volume) // no chems left,
+			reagents.maximum_volume = 0 //Makes them useless afterwards
+			reagents.flags = NONE
+		update_appearance()
 		return TRUE
 	return FALSE
+
+/obj/item/reagent_containers/medipen/update_icon_state()
+	icon_state = "[base_icon_state][(reagents.total_volume > 0) ? null : 0]"
+	return ..()
 
 /obj/item/reagent_containers/medipen/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins to choke on \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))

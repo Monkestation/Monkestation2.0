@@ -106,7 +106,7 @@
 /obj/item/reagent_containers/cup/vial/large
 	name = "large vial"
 	base_name = "large vial"
-	desc = "A large vial for holding a sizable amounts of reagents."
+	desc = "A large vial for holding a sizable amounts of reagents. NOTE : Too large to fit in standard hyposprays."
 	icon_state = "viallarge"
 	base_icon_state = "viallarge"
 	unique_reskin = list("large vial" = "viallarge",
@@ -213,7 +213,7 @@
 /obj/item/reagent_containers/cup/vial/large/bluespace
 	name = "large bluespace vial"
 	base_name = "large bluespace vial"
-	desc = "A large bluespace vial, capable of holding up to 120 units."
+	desc = "A large bluespace vial, capable of holding up to 120 units. NOTE : Too large to fit in standard hyposprays."
 	icon_state = "vial_bluespace_large"
 	base_icon_state = "vial_bluespace_large"
 	unique_reskin = list("large bluespace vial" = "vial_bluespace_large",

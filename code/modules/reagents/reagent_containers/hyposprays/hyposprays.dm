@@ -25,6 +25,8 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 	var/obj/item/reagent_containers/cup/vial/vial
 	/// What containers are allowed within this hypospray
 	var/list/allowed_containers = list(/obj/item/reagent_containers/cup/vial, /obj/item/reagent_containers/cup/vial/bluespace)
+	/// What containers are blacklisted from this hypospray - NOTE : Adding something like .../vial to just the whitelist will allow also large vials, hence the blacklist
+	var/list/blacklist_containers = list(/obj/item/reagent_containers/cup/vial/large)
 	/// The default vial that this hypospray starts preloaded with
 	var/obj/item/reagent_containers/cup/vial/default_vial
 
@@ -62,7 +64,7 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 /obj/item/hypospray/examine(mob/user)
 	. = ..()
 	if(vial)
-		. += span_notice("[vial] has [vial.reagents.total_volume]u remaining.")
+		. += span_notice("[vial] has [vial.reagents.total_volume]u remaining. R-click, or click with offhand to remove vials.")
 	else
 		. += span_notice("It has no container loaded in.")
 	. += span_notice("Currently injects [transfer_amount]u. Ctrl L-click/R-click to increase/decrease transfer amount.")
@@ -74,6 +76,8 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 		. += span_notice("[src] has a widened titanium nozzle, allowing it to spray or inject more units at a time.")
 	if(!can_remove_vials)
 		. += span_notice("It's loading mechanism is blocked, preventing vials from being removed, permanently, once loaded.")
+	if(is_path_in_list(/obj/item/reagent_containers/cup/vial/large, blacklist_containers))
+		. += span_notice("It's loading mechanism is too small to load larger vials.")
 	switch(mode)
 		if(HYPO_INJECT)
 			. += span_notice("[src] is set to inject contents on application.")
@@ -84,8 +88,11 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 
 /obj/item/hypospray/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/reagent_containers))
-		if(!(attacking_item.type in allowed_containers)) // I swear there was a better solution to this but i forgor
-			user.balloon_alert(user, "won't fit!")
+		if(!is_type_in_list(attacking_item, allowed_containers))
+			balloon_alert(user, "won't fit!")
+			return FALSE
+		if(is_type_in_list(attacking_item, blacklist_containers))
+			balloon_alert(user, "won't fit!")
 			return FALSE
 		if(vial != null)
 			if(!unload_vial(user, TRUE))
@@ -103,7 +110,7 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 		return TRUE
 
 /obj/item/hypospray/attack_self_secondary(mob/user, list/modifiers)
-	if(user.can_perform_action(src))
+	if(user.can_perform_action(src, FORBID_TELEKINESIS_REACH|ALLOW_RESTING))
 		if("ctrl" in modifiers)
 			if(upgrade_flags & HYPO_UPGRADE_NOZZLE)
 				set_transfer_amount(user)
@@ -113,11 +120,17 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 		unload_vial(user)
 
 /obj/item/hypospray/attack_self(mob/user, list/modifiers)
-	if(user.can_perform_action(src))
+	if(user.can_perform_action(src, FORBID_TELEKINESIS_REACH|ALLOW_RESTING))
 		mode = show_radial_menu(user, src, GLOB.hypospray_mode_icons, radius = 48)
 		if(!mode)
 			mode = HYPO_INJECT
-		user.balloon_alert(user, "mode set to [mode].")
+		balloon_alert(user, "mode set to [mode].")
+
+/obj/item/hypospray/attack_hand(mob/user, list/modifiers)
+	if(user.can_perform_action(src, FORBID_TELEKINESIS_REACH|ALLOW_RESTING) && loc == user && user.is_holding(src) && vial)
+		unload_vial(user)
+		return
+	return ..()
 
 /obj/item/hypospray/item_ctrl_click(mob/user)
 	. = ..()
@@ -135,15 +148,17 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 				if(target.reagents)
 					return inject(user, target)
 				else
-					return ITEM_INTERACT_BLOCKING
+					return
 			if(HYPO_SPRAY)
 				return spray(user, target)
 			if(HYPO_DRAW)
 				if(target.reagents)
 					return draw(user, target)
 				else
-					return ITEM_INTERACT_BLOCKING
-	return ITEM_INTERACT_BLOCKING
+					return
+	else if(target.reagents || mode == HYPO_SPRAY)
+		balloon_alert(user, "no vial!")
+		return ITEM_INTERACT_BLOCKING
 
 /obj/item/hypospray/proc/cycle_transfer_amount(direction, user)
 	var/list_len = length(possible_transfer_amounts)
@@ -160,25 +175,42 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 	balloon_alert(user, "transferring [transfer_amount]u")
 
 /obj/item/hypospray/proc/set_transfer_amount(mob/user)
-	var/new_transfer_amount = tgui_input_number(user, "Set transfer amount", "Transfer Amount", 5, last_vial_maximum, 0.1, round_value = FALSE)
-	if(!new_transfer_amount || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src))
+	var/new_transfer_amount = tgui_input_number(user, "Set transfer amount	", "Transfer Amount", 5, last_vial_maximum, 0.1, round_value = FALSE)
+	if(!new_transfer_amount || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH|ALLOW_RESTING))
 		return
 	transfer_amount = new_transfer_amount
 	balloon_alert(user, "transferring [transfer_amount]u")
+
+/obj/item/hypospray/proc/unload_vial(mob/user, silent = FALSE)
+	if(vial)
+		if(!can_remove_vials)
+			return FALSE
+		if(user.can_perform_action(src, FORBID_TELEKINESIS_REACH|ALLOW_RESTING))
+			return FALSE
+		if(!silent)
+			to_chat(user, span_notice("You remove the [vial] from [src]."))
+			playsound(src, eject_sound, 50, 1)
+		vial.forceMove(user.loc)
+		user.put_in_hands(vial)
+		vial = null
+		return TRUE
+	else
+		to_chat(user, span_notice("This hypo isn't loaded!"))
+		return FALSE
 
 /obj/item/hypospray/proc/inject(mob/living/user, atom/target)
 	SEND_SIGNAL(target, COMSIG_LIVING_TRY_SYRINGE_INJECT, user)
 
 	if(!vial.reagents.total_volume)
-		user.balloon_alert(user, "container empty!")
+		balloon_alert(user, "container empty!")
 		return ITEM_INTERACT_BLOCKING
 
 	if(!isliving(target) && !target.is_injectable(user))
-		user.balloon_alert(user, "you cannot directly fill [target]!")
+		balloon_alert(user, "you cannot directly fill [target]!")
 		return ITEM_INTERACT_BLOCKING
 
 	if(target.reagents.total_volume >= target.reagents.maximum_volume)
-		user.balloon_alert(user, "[target] is full!")
+		balloon_alert(user, "[target] is full!")
 		return ITEM_INTERACT_BLOCKING
 
 	var/contained = vial.reagents.get_reagent_log_string()
@@ -226,7 +258,7 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 
 /obj/item/hypospray/proc/spray(mob/living/user, atom/target) // Colorful Reagent hypos when?
 	if(!vial.reagents.total_volume)
-		user.balloon_alert(user, "container empty!")
+		balloon_alert(user, "container empty!")
 		return ITEM_INTERACT_BLOCKING
 
 	var/contained = vial.reagents.get_reagent_log_string()
@@ -269,7 +301,7 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 
 /obj/item/hypospray/proc/draw(mob/living/user, atom/target)
 	if(vial.reagents.total_volume >= vial.reagents.maximum_volume)
-		user.balloon_alert(user, "container full!")
+		balloon_alert(user, "container full!")
 		return ITEM_INTERACT_BLOCKING
 
 	SEND_SIGNAL(target, COMSIG_LIVING_TRY_SYRINGE_WITHDRAW, user)
@@ -316,31 +348,17 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 		return ITEM_INTERACT_SUCCESS
 	return ITEM_INTERACT_BLOCKING
 
-/obj/item/hypospray/proc/unload_vial(mob/user, silent = FALSE)
-	if(vial)
-		if(!can_remove_vials)
-			return FALSE
-		if(!silent)
-			to_chat(user, span_notice("You remove the [vial] from [src]."))
-			playsound(src, eject_sound, 50, 1)
-		vial.forceMove(user.loc)
-		user.put_in_hands(vial)
-		vial = null
-		return TRUE
-	else
-		to_chat(user, span_notice("This hypo isn't loaded!"))
-		return FALSE
-
 /obj/item/hypospray/cmo
 	name = "Deluxe Hypospray"
 	icon_state = "hypo_cmo"
 	desc = "The Deluxe Hypospray can use larger size vials, and deliver more reagents per injection."
-	allowed_containers = list(/obj/item/reagent_containers/cup/vial/large/bluespace, /obj/item/reagent_containers/cup/vial/large, /obj/item/reagent_containers/cup/vial/bluespace)
+	allowed_containers = list(/obj/item/reagent_containers/cup/vial/)
 	possible_transfer_amounts = list(1, 2, 3, 5, 10, 15, 20)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	inject_other = 1 SECONDS
 	draw_other = 0 SECONDS
 	spray_other = 0.5 SECONDS
+	blacklist_containers = NONE
 
 //combat
 
@@ -348,10 +366,11 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 	name = "Combat Hypospray"
 	icon_state = "hypo_combat"
 	desc = "A reverse engineered Syndicate Hypospray. Capable of using large vials, and piercing armor."
-	allowed_containers = list(/obj/item/reagent_containers/cup/vial/large/bluespace, /obj/item/reagent_containers/cup/vial/large, /obj/item/reagent_containers/cup/vial/bluespace)
+	allowed_containers = list(/obj/item/reagent_containers/cup/vial/)
 	possible_transfer_amounts = list(1, 2, 3, 5, 10, 15, 20)
 	upgrade_flags = HYPO_UPGRADE_PIERCING
 	default_vial = /obj/item/reagent_containers/cup/vial/large/combat
+	blacklist_containers = NONE
 
 /obj/item/hypospray/combat/no_vial
 	default_vial = null
