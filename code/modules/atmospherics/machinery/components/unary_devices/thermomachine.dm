@@ -7,6 +7,7 @@
 	icon = 'icons/obj/atmospherics/components/thermomachine.dmi'
 	icon_state = "thermo_base"
 	plane = GAME_PLANE
+	layer = ABOVE_OBJ_LAYER
 
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT
 
@@ -99,20 +100,20 @@
 /obj/machinery/atmospherics/components/unary/thermomachine/update_icon_state()
 	var/colors_to_use = ""
 	switch(target_temperature)
-		if(BODYTEMP_HEAT_WARNING_3 to INFINITY)
+		if(700 to INFINITY)
 			colors_to_use = COLOR_RED
-		if(BODYTEMP_HEAT_WARNING_2 to BODYTEMP_HEAT_WARNING_3)
+		if(460 to 700)
 			colors_to_use = COLOR_ORANGE
-		if(BODYTEMP_HEAT_WARNING_1 to BODYTEMP_HEAT_WARNING_2)
+		if(340 to 460)
 			colors_to_use = COLOR_YELLOW
-		if(BODYTEMP_COLD_WARNING_1 to BODYTEMP_HEAT_WARNING_1)
+		if(270 to 340)
 			colors_to_use = COLOR_VIBRANT_LIME
-		if(BODYTEMP_COLD_WARNING_2 to BODYTEMP_COLD_WARNING_1)
+		if(200 to 270)
 			colors_to_use = COLOR_CYAN
-		if(BODYTEMP_COLD_WARNING_3 to BODYTEMP_COLD_WARNING_2)
+		if(70 to 200)
 			colors_to_use = COLOR_BLUE
 		else
-			colors_to_use = COLOR_VIOLET
+			colors_to_use= COLOR_VIOLET
 
 	if(greyscale_colors != colors_to_use)
 		set_greyscale(colors=colors_to_use)
