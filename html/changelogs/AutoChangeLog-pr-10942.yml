@@ -1,4 +1,0 @@
-author: "Shoddd"
-delete-after: True
-changes:
-  - bugfix: "interaction comps now check for nodrop"
