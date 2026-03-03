@@ -8487,6 +8487,7 @@
 	},
 /area/station/hallway/primary/central/fore)
 "cDJ" = (
+/obj/structure/sign/poster/random/directional/south,
 /obj/machinery/shower/directional/north,
 /obj/effect/turf_decal/box/red,
 /obj/structure/drain,
@@ -26658,7 +26659,6 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/any/medical/general,
 /obj/machinery/duct,
-/obj/machinery/duct,
 /turf/open/floor/iron/dark,
 /area/station/medical/treatment_center)
 "ijG" = (
@@ -33075,8 +33075,11 @@
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "kdo" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/wall,
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 8
+	},
+/obj/machinery/duct,
+/turf/open/floor/iron/showroomfloor,
 /area/station/medical/treatment_center)
 "kdD" = (
 /obj/structure/disposalpipe/segment,
@@ -36414,11 +36417,11 @@
 /turf/open/floor/iron,
 /area/station/security/checkpoint/engineering)
 "ljc" = (
-/obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 8
-	},
-/obj/machinery/duct,
-/turf/open/floor/iron/showroomfloor,
+/obj/machinery/shower/directional/north,
+/obj/effect/turf_decal/box/red,
+/obj/structure/drain,
+/obj/structure/curtain,
+/turf/open/floor/noslip,
 /area/station/medical/treatment_center)
 "ljm" = (
 /obj/structure/sign/nanotrasen,
@@ -37082,12 +37085,12 @@
 /turf/open/floor/engine/telecomms,
 /area/station/tcommsat/server)
 "lut" = (
-/obj/structure/sign/poster/random/directional/south,
-/obj/machinery/shower/directional/north,
-/obj/effect/turf_decal/box/red,
-/obj/structure/drain,
-/obj/structure/curtain,
-/turf/open/floor/noslip,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/reagent_dispensers/plumbed{
+	name = "medbay water reservoir"
+	},
+/turf/open/floor/plating,
 /area/station/medical/treatment_center)
 "lux" = (
 /obj/effect/decal/cleanable/dirt,
@@ -44357,12 +44360,8 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/chemistry)
 "nJH" = (
-/obj/effect/mapping_helpers/broken_floor,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/reagent_dispensers/plumbed{
-	name = "medbay water reservoir"
-	},
-/turf/open/floor/plating,
+/turf/closed/wall,
 /area/station/medical/treatment_center)
 "nJJ" = (
 /obj/machinery/chem_heater/withbuffer,
@@ -94959,7 +94958,7 @@ lWI
 lWI
 lWI
 lWI
-nJH
+lut
 fSH
 wKP
 eNQ
@@ -95216,7 +95215,7 @@ yhL
 fcS
 nBM
 lWI
-kdo
+nJH
 fSH
 pQO
 vjh
@@ -95467,13 +95466,13 @@ jkD
 oKm
 rFI
 rox
-ljc
-ido
-ljc
-ljc
-gIY
-lut
 kdo
+ido
+kdo
+kdo
+gIY
+cDJ
+nJH
 hpY
 iXl
 eNQ
@@ -95729,7 +95728,7 @@ mQF
 eTW
 eTW
 rhl
-cDJ
+ljc
 lWI
 wFG
 hpv
