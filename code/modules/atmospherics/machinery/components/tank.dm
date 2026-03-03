@@ -1,4 +1,4 @@
-#define TANK_PLATING_SHEETS 12
+#define TANK_PLATING_SHEETS 6
 
 /obj/machinery/atmospherics/components/tank
 	icon = 'icons/obj/atmospherics/stationary_canisters.dmi'
@@ -34,9 +34,9 @@
 	/// The open node directions of the tank, assuming that the tank is facing NORTH.
 	var/open_ports = NONE
 	/// The volume of the gas mixture
-	var/volume = 2500 //in liters
+	var/volume = 10000 //in liters about 5 canister's worth
 	/// The max pressure of the gas mixture before damaging the tank
-	var/max_pressure = 46000
+	var/max_pressure = 50000
 	/// The typepath of the gas this tank should be filled with.
 	var/gas_type = null
 
