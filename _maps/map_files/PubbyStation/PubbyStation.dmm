@@ -19939,7 +19939,6 @@
 /area/station/science/explab)
 "bFB" = (
 /obj/item/newspaper,
-/obj/machinery/duct,
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/xenobiology)
 "bFC" = (
@@ -19953,7 +19952,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
 	},
-/obj/machinery/duct,
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/xenobiology)
 "bFD" = (
@@ -30139,6 +30137,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	pump_direction = 2
 	},
+/obj/machinery/duct,
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/xenobiology)
 "dMR" = (
@@ -45954,9 +45953,6 @@
 /area/station/maintenance/department/chapel/monastery)
 "qVi" = (
 /obj/structure/sign/warning/vacuum/external/directional/east,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 8
-	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/xenobiology)
 "qVD" = (
