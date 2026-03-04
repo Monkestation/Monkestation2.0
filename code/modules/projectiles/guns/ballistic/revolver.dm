@@ -122,6 +122,7 @@
 	alternative_ammo_misfires = TRUE
 	misfire_probability = 0
 	misfire_percentage_increment = 25 //about 1 in 4 rounds, which increases rapidly every shot
+	misfire_probability_cap = 50
 
 	obj_flags = UNIQUE_RENAME
 	unique_reskin = list(
