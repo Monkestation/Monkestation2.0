@@ -8486,6 +8486,18 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/primary/central/aft)
+"cMY" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/blue/arrow_cw{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/iron/white/textured,
+/area/station/medical/medbay/central)
 "cNm" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark,
 /obj/effect/turf_decal/trimline/orange/filled/corner{
@@ -11579,6 +11591,16 @@
 /obj/effect/landmark/navigate_destination,
 /turf/open/floor/iron/white/textured_large,
 /area/station/science/lab)
+"dGr" = (
+/obj/effect/turf_decal/tile/orange/opposingcorners{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/iron/white/textured,
+/area/station/medical/pharmacy)
 "dGs" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -16511,15 +16533,15 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/upper)
 "fgZ" = (
-/obj/effect/turf_decal/trimline/blue/filled/corner{
-	dir = 1
+/obj/effect/turf_decal/tile/orange/opposingcorners{
+	dir = 8
 	},
-/obj/effect/turf_decal/trimline/blue/line{
-	dir = 6
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/white/textured,
-/area/station/medical/medbay/central)
+/area/station/medical/pharmacy)
 "fha" = (
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/secondary/entry)
@@ -16632,7 +16654,9 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/station/maintenance/starboard/aft)
 "fiV" = (
-/obj/structure/drain,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
 	},
@@ -19493,6 +19517,8 @@
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 1
 	},
+/obj/item/device/antibody_scanner,
+/obj/item/device/antibody_scanner,
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/virology)
 "gdg" = (
@@ -20902,9 +20928,7 @@
 /obj/effect/turf_decal/trimline/blue/line{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 4
-	},
+/obj/structure/drain,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/medbay/central)
 "gBF" = (
@@ -35302,6 +35326,15 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/white/diagonal,
 /area/station/medical/medbay/lobby)
+"lfn" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/chair/office/tactical{
+	dir = 1
+	},
+/obj/effect/landmark/start/chief_medical_officer,
+/turf/open/floor/wood,
+/area/station/command/heads_quarters/cmo)
 "lfr" = (
 /obj/effect/landmark/start/hangover,
 /obj/effect/decal/cleanable/dirt,
@@ -37959,7 +37992,6 @@
 /turf/open/floor/iron/dark/small,
 /area/station/engineering/atmos)
 "lUS" = (
-/obj/structure/drain,
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 1
 	},
@@ -39428,6 +39460,8 @@
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 1
 	},
+/obj/item/clothing/glasses/pathology,
+/obj/item/clothing/glasses/pathology,
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/virology)
 "mvl" = (
@@ -42589,6 +42623,18 @@
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/primary/aft)
+"nwK" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/iron/white/textured,
+/area/station/medical/medbay/central)
 "nwM" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
@@ -61340,7 +61386,7 @@
 	},
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/drain,
+/obj/machinery/holopad,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/pharmacy)
 "tnb" = (
@@ -66740,6 +66786,7 @@
 	},
 /obj/effect/turf_decal/trimline/blue/corner,
 /obj/machinery/camera/autoname/directional/west,
+/obj/structure/drain,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/medbay/central)
 "uTh" = (
@@ -72795,6 +72842,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/pharmacy)
 "wQW" = (
@@ -74091,6 +74139,16 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/office)
+"xkI" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 4
+	},
+/obj/structure/drain,
+/turf/open/floor/iron/white/textured,
+/area/station/medical/medbay/central)
 "xkQ" = (
 /obj/machinery/door/airlock/freezer{
 	desc = "The freezer where the chef keeps all the stuff that needs to be kept cold. Ice cold.";
@@ -76164,7 +76222,9 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/blue/opposingcorners,
-/obj/machinery/holopad,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
 /turf/open/floor/iron/white/textured,
 /area/station/medical/pharmacy)
 "xQl" = (
@@ -103143,7 +103203,7 @@ axp
 lTb
 rZS
 eVl
-aub
+lfn
 wdj
 bCM
 sXH
@@ -103410,8 +103470,8 @@ lSL
 vWl
 jor
 kQX
-uxf
-kQX
+fgZ
+dGr
 kQX
 aot
 leD
@@ -103924,7 +103984,7 @@ nzl
 xOW
 uNc
 kQX
-kQX
+uxf
 xQc
 kQX
 aot
@@ -104697,7 +104757,7 @@ efi
 ipa
 nWf
 goi
-fiV
+rot
 gBq
 nAj
 aTg
@@ -106497,8 +106557,8 @@ hCs
 mZV
 wAY
 fiV
-rot
-nAj
+xkI
+cMY
 aTg
 uKs
 pgJ
@@ -107776,7 +107836,7 @@ fdA
 dWl
 dWl
 uTa
-fgZ
+hCs
 hcB
 cEO
 mSb
@@ -108289,7 +108349,7 @@ hSm
 oYH
 nxY
 awg
-nFI
+nwK
 pIQ
 gTr
 gTr
