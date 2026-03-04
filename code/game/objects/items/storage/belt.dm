@@ -504,6 +504,12 @@
 		/obj/item/ammo_casing/minerjdj,
 		/obj/item/ammo_box/advanced/s12gauge/hunter, //monkestation edit
 		/obj/item/ammo_casing/shotgun/hunter, //monkestation edit
+		/obj/item/survivalcapsule,
+		/obj/item/survivalcapsule/luxury,
+		/obj/item/survivalcapsule/luxuryelite,
+		/obj/item/survivalcapsule/bathroom,
+		/obj/item/chasm_filler,
+		/obj/item/skeleton_key,
 	))
 
 
