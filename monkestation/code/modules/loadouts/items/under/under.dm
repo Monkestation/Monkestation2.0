@@ -71,6 +71,9 @@ GLOBAL_LIST_INIT(loadout_miscunders, generate_loadout_items(/datum/loadout_item/
 	item_path = /obj/item/clothing/under/rank/security/detective/kim
 	restricted_roles = list(JOB_DETECTIVE)
 
+/datum/loadout_item/under/deforest	//BUYABLE
+	name = "Deforest Uniform"
+	item_path = /obj/item/clothing/under/rank/medical/paramedic/deforest
 
 /*
 *	MISC UNDERSUITS
@@ -954,10 +957,6 @@ GLOBAL_LIST_INIT(loadout_miscunders, generate_loadout_items(/datum/loadout_item/
 /datum/loadout_item/under/miscellaneous/taccas //BUYABLE
 	name = "Tacticasual Uniform"
 	item_path = /obj/item/clothing/under/misc/nova/taccas
-
-/datum/loadout_item/under/miscellaneous/deforest	//BUYABLE
-	name = "Deforest Uniform"
-	item_path = /obj/item/clothing/under/rank/medical/paramedic/deforest
 
 /datum/loadout_item/under/miscellaneous/cargo_casual
 	name = "Cargo Tech Casualwear"

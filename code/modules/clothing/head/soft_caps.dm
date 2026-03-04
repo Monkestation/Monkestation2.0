@@ -220,11 +220,7 @@
 #undef PROPHAT_MOOD
 
 /obj/item/clothing/head/soft/paramedic/deforest
-	name = "Hi-Vis Hood"
-	desc = "A high-visibility hood designed by Deforest Medical for search and rescue, wool lining and interwoven fabrics make this hood noticeably thick."
-	icon_state = "hivishood"
-
-/obj/item/clothing/head/soft/paramedic/deforest/hat
 	name = "Hi-Vis Hat"
 	desc = "A Deforest Medical high-visibility hat often seen worn by local reps trying to shill their wares to various stations."
-	icon_state = "hivishat"
+	icon_state = "hivishatsoft"
+	soft_type = "hivishat"

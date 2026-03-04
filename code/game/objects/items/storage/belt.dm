@@ -307,14 +307,6 @@
 	icon_state = "hivisbelt"
 	worn_icon_state = "hivisbelt"
 
-/obj/item/storage/belt/medical/paramedic/deforest/cosmetic
-	desc = "A finely made Deforest Medical brand medical belt built to carry only a few things."
-
-/obj/item/storage/belt/medical/paramedic/deforest/cosmetic/Initialize(mapload)
-	. = ..()
-	atom_storage.max_slots = 3 // Same as fanny pack
-	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
-
 /obj/item/storage/belt/medical/secmed
 	name = "security medical belt"
 	icon_state = "secmed"

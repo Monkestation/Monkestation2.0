@@ -612,9 +612,9 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 
 /datum/loadout_item/head/deforest_hat //BUYABLE
 	name = "Deforest Hat"
-	item_path = /obj/item/clothing/head/soft/paramedic/deforest/hat
+	item_path = /obj/item/clothing/head/soft/paramedic/deforest
 
-/datum/loadout_item/head/warning_cone
+/datum/loadout_item/head/warning_cone //BUYABLE
 	name = "Warning Cone"
 	item_path = /obj/item/clothing/head/cone
 

@@ -249,7 +249,7 @@
 
 /datum/armament_entry/company_import/deforest/saftey_clothing/hat
 	name = "Deforest Hat"
-	item_type = /obj/item/clothing/head/soft/paramedic/deforest/hat
+	item_type = /obj/item/clothing/head/soft/paramedic/deforest
 	cost = PAYCHECK_CREW
 
 /datum/armament_entry/company_import/deforest/saftey_clothing/mask
