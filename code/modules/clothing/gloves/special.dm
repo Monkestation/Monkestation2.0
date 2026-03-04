@@ -121,6 +121,15 @@
 /datum/armor/nitrile
 	bio = 100
 
+/obj/item/clothing/gloves/latex/nitrile/deforest
+	name = "Deforest Gloves"
+	desc = "A pair of high-visibility gloves designed by Deforest Medical for search and rescue, reinforced with thicker cut-resistant fabrics and lined with a heat insulation layer, these gloves can hold their own in most environments."
+	icon_state = "hivisgloves"
+
+/obj/item/clothing/gloves/latex/nitrile/deforest/cosmetic
+	desc = "A pair of high-visibility gloves designed by Deforest Medical, made without anything special. They do not confer any benefits to the wearer"
+	clothing_traits = NONE
+
 /obj/item/clothing/gloves/tinkerer
 	name = "tinker's gloves"
 	desc = "Overdesigned engineering gloves that have automated construction subrutines dialed in, allowing for faster construction while worn."

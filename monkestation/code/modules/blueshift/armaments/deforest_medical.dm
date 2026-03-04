@@ -218,3 +218,42 @@
 /datum/armament_entry/company_import/deforest/medical_modules/surgical_processor
 	name = "MOD surgical processor module"
 	item_type = /obj/item/mod/module/surgical_processor
+
+/datum/armament_entry/company_import/deforest/saftey_clothing
+	subcategory = "Saftey Clothing"
+
+/datum/armament_entry/company_import/deforest/saftey_clothing/jumpsuit
+	name = "Deforest Jumpsuit"
+	item_type = /obj/item/clothing/under/rank/medical/paramedic/deforest
+	cost = PAYCHECK_CREW
+
+/datum/armament_entry/company_import/deforest/saftey_clothing/jacket
+	name = "Deforest Jacket"
+	item_type = /obj/item/clothing/suit/toggle/labcoat/paramedic/deforest
+	cost = PAYCHECK_CREW
+
+/datum/armament_entry/company_import/deforest/saftey_clothing/gloves
+	name = "Deforest Gloves"
+	item_type = /obj/item/clothing/gloves/latex/nitrile/deforest
+	cost = PAYCHECK_COMMAND * 3
+
+/datum/armament_entry/company_import/deforest/saftey_clothing/boots
+	name = "Deforest Boots"
+	item_type = /obj/item/clothing/shoes/workboots/black/deforest
+	cost = PAYCHECK_CREW
+
+/datum/armament_entry/company_import/deforest/saftey_clothing/belt
+	name = "Deforest Belt"
+	item_type = /obj/item/storage/belt/medical/paramedic/deforest
+	cost = PAYCHECK_CREW
+
+/datum/armament_entry/company_import/deforest/saftey_clothing/hat
+	name = "Deforest Hat"
+	item_type = /obj/item/clothing/head/soft/paramedic/deforest/hat
+	cost = PAYCHECK_CREW
+
+/datum/armament_entry/company_import/deforest/saftey_clothing/mask
+	name = "Deforest Mask"
+	item_type = /obj/item/clothing/mask/gas/deforest
+	cost = PAYCHECK_CREW
+
