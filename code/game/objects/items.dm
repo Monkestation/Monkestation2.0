@@ -100,6 +100,8 @@
 	var/custom_premium_price
 	///Whether spessmen with an ID with an age below AGE_MINOR (20 by default) can buy this item
 	var/age_restricted = FALSE
+	///Whether or not this item is applicable to be discounted via job based discounts
+	var/discountable = TRUE
 
 	/// Set this variable to determine up to which temperature (IN KELVIN) the item protects against heat damage.
 	/// Keep at null to disable protection.

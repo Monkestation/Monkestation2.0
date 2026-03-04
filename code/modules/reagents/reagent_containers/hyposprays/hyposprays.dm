@@ -10,7 +10,8 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 	desc = "The DeForest Medical Corporation hypospray is a sterile, air-needle autoinjector for rapid administration of drugs to patients."
 	icon_state = "hypo"
 	w_class = WEIGHT_CLASS_SMALL
-	custom_price = PAYCHECK_COMMAND * 3
+	custom_price = PAYCHECK_COMMAND * 2
+	discountable = FALSE
 	/// Determines what using this hypospray on a person will do
 	var/mode = HYPO_INJECT
 	/// The amount to transfer from the hypospray
@@ -115,7 +116,7 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 			if(upgrade_flags & HYPO_UPGRADE_NOZZLE)
 				set_transfer_amount(user)
 				return
-			cycle_transfer_amount(BACKWARD, user)
+			cycle_transfer_amount(user, BACKWARD)
 			return
 		unload_vial(user)
 
@@ -139,7 +140,7 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 	if(upgrade_flags & HYPO_UPGRADE_NOZZLE)
 		set_transfer_amount(user)
 		return
-	cycle_transfer_amount(FORWARD, user)
+	cycle_transfer_amount(user, FORWARD)
 
 /obj/item/hypospray/interact_with_atom(atom/target, mob/living/user, list/modifiers)
 	if(vial)
@@ -160,7 +161,7 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 		balloon_alert(user, "no vial!")
 		return ITEM_INTERACT_BLOCKING
 
-/obj/item/hypospray/proc/cycle_transfer_amount(direction, user)
+/obj/item/hypospray/proc/cycle_transfer_amount(mob/user, direction = FORWARD)
 	var/list_len = length(possible_transfer_amounts)
 	if(!list_len)
 		return

@@ -327,6 +327,7 @@
 	icon_broken = "vialbox"
 	icon_open = "vialbox"
 	custom_price = PAYCHECK_CREW / 2
+	discountable = FALSE
 
 /obj/item/storage/lockbox/vialbox/update_icon()
 	cut_overlays()
@@ -369,7 +370,6 @@
 	desc = "A small box that can hold up to six vials in a sealed enviroment. This one contains a plethora of different vials for various medical ailments, designed for use in a deluxe hypospray."
 
 /obj/item/storage/lockbox/vialbox/hypo_deluxe/PopulateContents()
-	new /obj/item/reagent_containers/cup/vial/large/bluespace/omnizine(src)
 	new /obj/item/reagent_containers/cup/vial/large/bluespace/omnizine(src)
 	new /obj/item/reagent_containers/cup/vial/large/bluespace/sal_acid(src)
 	new /obj/item/reagent_containers/cup/vial/large/bluespace/oxandrolone(src)
