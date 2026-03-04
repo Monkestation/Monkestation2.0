@@ -127,7 +127,7 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 		balloon_alert(user, "mode set to [mode].")
 
 /obj/item/hypospray/attack_hand(mob/user, list/modifiers)
-	if(user.can_perform_action(src, FORBID_TELEKINESIS_REACH|ALLOW_RESTING) && loc == user && user.is_holding(src) && vial)
+	if(user.can_perform_action(src, FORBID_TELEKINESIS_REACH|ALLOW_RESTING) && loc == user && user.is_holding(src))
 		unload_vial(user)
 		return
 	return ..()
@@ -185,7 +185,7 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 	if(vial)
 		if(!can_remove_vials)
 			return FALSE
-		if(user.can_perform_action(src, FORBID_TELEKINESIS_REACH|ALLOW_RESTING))
+		if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH|ALLOW_RESTING))
 			return FALSE
 		if(!silent)
 			to_chat(user, span_notice("You remove the [vial] from [src]."))
