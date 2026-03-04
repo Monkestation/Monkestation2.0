@@ -22,3 +22,14 @@
   - qol: added security armbands to the secdrobe.
   Tractor-Maam:
   - code_imp: Minor housekeeping with lionhunter rifle code
+2026-03-04:
+  Mantle, Commissioned by Isotope 436:
+  - rscadd: Deforest medical clothing, available from deforest imports, via cargo
+  - rscadd: Deforest clothing is also available in the monkecoin store.  The gloves
+      do not provide any benefit, unlike their cargo variant.
+  SirNightKnight:
+  - bugfix: fixed deconstructing pressure tanks duplicating gasses in merged tanks.
+  - balance: pressure tanks have a volume of 10,000 liters and rounded the pressure
+      limit to 50,000.
+  - balance: halved the material cost for finishing pressure tank frames.
+  - bugfix: corrected thermo color readings on thermomachines and gas meters

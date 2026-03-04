@@ -1,5 +1,0 @@
-author: "Mantle, Commissioned by Isotope 436"
-delete-after: True
-changes:
-  - rscadd: "Deforest medical clothing, available from deforest imports, via cargo"
-  - rscadd: "Deforest clothing is also available in the monkecoin store.  The gloves do not provide any benefit, unlike their cargo variant."
