@@ -621,11 +621,11 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 		req_access = accesses
 		req_one_access = null
 
-/obj/structure/closet/item_interaction(mob/living/user, obj/item/attacking_item, list/modifiers)
+/obj/structure/closet/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(user in src)
-		return ITEM_INTERACT_BLOCKING
-	if(tool_interact(attacking_item,user))
-		return ITEM_INTERACT_SUCCESS
+		return
+	if(src.tool_interact(attacking_item,user))
+		return 1 // No afterattack
 	else
 		return ..()
 
