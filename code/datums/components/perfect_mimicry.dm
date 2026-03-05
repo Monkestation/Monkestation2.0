@@ -52,9 +52,8 @@
 		new_item = nuclear
 	if(!istype(new_item))
 		new_item = duplicate_object(target_item, owner.drop_location())
-	if(!new_item.loc?.atom_storage)
-		new_item.item_flags &= ~(IN_INVENTORY | IN_STORAGE) // Prevent hover outline when mimicking inventory items.
-		new_item.remove_filter(HOVER_OUTLINE_FILTER)
+	new_item.remove_filter(HOVER_OUTLINE_FILTER)
+	new_item.item_flags &= ~(IN_INVENTORY | IN_STORAGE) // Prevent hover outline when mimicking inventory items.
 	new_item.AddComponent(/datum/component/mimic_disguise)
 	if(new_item.uses_integrity) // Mimicked items can break easier
 		var/weight_multiplier = max(1, new_item.w_class)
