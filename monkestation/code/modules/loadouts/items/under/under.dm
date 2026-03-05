@@ -955,6 +955,10 @@ GLOBAL_LIST_INIT(loadout_miscunders, generate_loadout_items(/datum/loadout_item/
 	name = "Tacticasual Uniform"
 	item_path = /obj/item/clothing/under/misc/nova/taccas
 
+/datum/loadout_item/under/miscellaneous/deforest	//BUYABLE
+	name = "Deforest Uniform"
+	item_path = /obj/item/clothing/under/rank/medical/paramedic/deforest
+
 /datum/loadout_item/under/miscellaneous/cargo_casual
 	name = "Cargo Tech Casualwear"
 	item_path = /obj/item/clothing/under/rank/cargo/tech/nova/casualman
