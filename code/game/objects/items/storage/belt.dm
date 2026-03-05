@@ -504,6 +504,7 @@
 		/obj/item/ammo_casing/minerjdj,
 		/obj/item/ammo_box/advanced/s12gauge/hunter, //monkestation edit
 		/obj/item/ammo_casing/shotgun/hunter, //monkestation edit
+		/obj/item/grenade/c4/explosivecharge, //monkestation edit
 	))
 
 

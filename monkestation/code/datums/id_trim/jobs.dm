@@ -80,6 +80,21 @@
 		)
 	job = /datum/job/shaft_miner
 
+/// ID card from the explorer conscript bag
+/datum/id_trim/job/explorer/spare
+	minimal_access = list(
+		ACCESS_AUX_BASE,
+		ACCESS_CARGO,
+		ACCESS_MECH_MINING,
+		ACCESS_MINERAL_STOREROOM,
+		ACCESS_MINING,
+		ACCESS_MINING_STATION,
+		ACCESS_MAINT_TUNNELS,
+		ACCESS_EXTERNAL_AIRLOCKS,
+		)
+	extra_access = list()
+	template_access = null
+
 /datum/id_trim/job/nanotrasen_representative
 	assignment = "Nanotrasen Representative"
 	trim_state = "trim_centcom"
