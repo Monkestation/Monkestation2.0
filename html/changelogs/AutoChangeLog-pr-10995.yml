@@ -1,0 +1,4 @@
+author: "Cujo"
+delete-after: True
+changes:
+  - rscadd: "Ling husk now takes priority over burn husk for advanced health analyzers"
