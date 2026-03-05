@@ -33,3 +33,11 @@
       limit to 50,000.
   - balance: halved the material cost for finishing pressure tank frames.
   - bugfix: corrected thermo color readings on thermomachines and gas meters
+2026-03-05:
+  notghosti:
+  - map: Oshan medical has connected power.
+  - map: Oshan pharmacy has a air alarm now
+  - map: Oshan chemistry is now accessed by chemistry, not pharmacy
+  - map: Oshan medical department had its distro/power cabling cleaned up.
+  - map: Oshan pathology given more standard equipment
+  - map: Oshan CMO's no longer shall live/spawn in walls
