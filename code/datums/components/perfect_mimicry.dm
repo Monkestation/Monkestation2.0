@@ -27,7 +27,9 @@
 	ranged_mousepointer = 'icons/effects/mouse_pointers/supplypod_target.dmi'
 
 	var/static/list/allowed_objects = list() // typecache of allowed objects to mimic
-	var/static/list/banned_objects = list() // typecache of banned objects that should absolutely not be mimicked
+	var/static/list/banned_objects = list(/obj/item/folder/biscuit, /obj/item/modular_computer, /obj/item/card, \
+		/obj/item/holochip, /obj/item/stack
+		) // typecache of banned objects that should absolutely not be mimicked
 	var/list/applied_mob_traits = list(TRAIT_HANDS_BLOCKED, TRAIT_UI_BLOCKED, TRAIT_PULL_BLOCKED, TRAIT_NOBREATH)
 
 	COOLDOWN_DECLARE(move_cooldown)
@@ -50,6 +52,9 @@
 		new_item = nuclear
 	if(!istype(new_item))
 		new_item = duplicate_object(target_item, owner.drop_location())
+	if(!new_item.loc?.atom_storage)
+		new_item.item_flags &= ~(IN_INVENTORY | IN_STORAGE) // Prevent hover outline when mimicking inventory items.
+		new_item.remove_filter(HOVER_OUTLINE_FILTER)
 	new_item.AddComponent(/datum/component/mimic_disguise)
 	if(new_item.uses_integrity) // Mimicked items can break easier
 		var/weight_multiplier = max(1, new_item.w_class)
@@ -62,6 +67,9 @@
 	SIGNAL_HANDLER
 	if(!damage_amount)
 		return
+	if(isliving(owner))
+		var/mob/living/living_owner = owner
+		living_owner.apply_damage(damage_amount, damage_type, null, 0, FALSE, TRUE, 0, 0, NONE, attack_dir)
 
 /datum/action/cooldown/mimic_ability/mimic_object/proc/handle_speech(datum/source, list/speech_args)
 	SIGNAL_HANDLER
@@ -83,7 +91,7 @@
 	if(mimic_target == owner)
 		to_chat(owner, span_notice("You cannot mimic yourself."))
 		return FALSE
-	if(get_dist(owner, mimic_target) > 2)
+	if(get_dist(owner, mimic_target) > 3)
 		to_chat(owner, span_notice("[mimic_target.name] is too far away."))
 		return FALSE
 	if(!is_allowed_object(mimic_target))
@@ -99,9 +107,9 @@
 		return FALSE
 	if(!target_item.uses_integrity)
 		return FALSE
-	if(length(banned_objects) && is_type_in_typecache(target_item, banned_objects))
+	if(length(banned_objects) && is_type_in_list(target_item, banned_objects))
 		return FALSE
-	if(length(allowed_objects) && !is_type_in_typecache(target_item, allowed_objects))
+	if(length(allowed_objects) && !is_type_in_list(target_item, allowed_objects))
 		return FALSE
 	return TRUE
 

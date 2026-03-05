@@ -51,6 +51,8 @@
 	// We have to manually handle storage in item_interaction because storage is blocking in 99% of interactions, which stifles a lot
 	// Yeah it sucks not being able to signalize this, but the other option is to have a second signal here just for storage which is also not great
 	if(atom_storage)
+		if(src.GetComponent(/datum/component/mimic_disguise) && user?.istate & (ISTATE_HARM))
+			return NONE // Mimicked storages should be attackable when hit with a tool.
 		if(is_left_clicking)
 			if(atom_storage.insert_on_attack)
 				return atom_storage.item_interact_insert(user, tool)
