@@ -188,7 +188,7 @@
 										"gets real close to [Targeted]'s face and cuts the cheese!")]", ignored_mobs = ignored_mobs)
 			hit_target = TRUE
 			break
-	if(!hit_target)
+	if(!hit_target && !user.client?.prefs?.read_preference(/datum/preference/toggle/prude_mode))
 		user.audible_message("[pick(world.file2list("strings/farts.txt"))]", audible_message_flags = list(CHATMESSAGE_EMOTE = TRUE))
 
 	if(superfart_armed)
