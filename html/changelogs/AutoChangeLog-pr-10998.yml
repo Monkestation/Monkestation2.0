@@ -1,0 +1,5 @@
+author: "Mantle"
+delete-after: True
+changes:
+  - rscadd: "Deforest Satchel, Backpack, Mask, and Beret"
+  - bugfix: "Deforest jacket and hat should be less buggy"

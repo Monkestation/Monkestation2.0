@@ -80,3 +80,8 @@
 
 /datum/armor/breath_muzzle
 	bio = 100
+
+/obj/item/clothing/mask/breath/deforest
+	name = "Deforest Mask"
+	desc = "A Deforest Medical sterile mask, colored a neon orange for easier visibility in harsh conditions."
+	icon_state = "deforest_stertile"
