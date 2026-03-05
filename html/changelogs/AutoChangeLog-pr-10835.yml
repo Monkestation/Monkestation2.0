@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - rscadd: "Excavating ore vents now has a progress bar to show how much progress has been made on defending the vent."
