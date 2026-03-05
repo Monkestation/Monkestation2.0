@@ -141,7 +141,7 @@
 	armor_type = /datum/armor/armor_secjacket
 
 /obj/item/clothing/suit/toggle/labcoat/paramedic/deforest
-	name = "Hi-Vis Jacket"
+	name = "Deforest Jacket"
 	desc = "A high-visibility jacket designed by Deforest Medical for search and rescue, wool lining and interwoven fabrics make this jacket noticeably thick with a webbing directly attached to hold medical equipment."
 	icon_state = "hivisjacket"
 

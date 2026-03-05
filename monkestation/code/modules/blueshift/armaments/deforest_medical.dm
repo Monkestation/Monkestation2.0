@@ -252,8 +252,27 @@
 	item_type = /obj/item/clothing/head/soft/paramedic/deforest
 	cost = PAYCHECK_CREW
 
-/datum/armament_entry/company_import/deforest/saftey_clothing/mask
-	name = "Deforest Mask"
+/datum/armament_entry/company_import/deforest/saftey_clothing/gas_mask
+	name = "Deforest Gas Mask"
 	item_type = /obj/item/clothing/mask/gas/deforest
 	cost = PAYCHECK_CREW
 
+/datum/armament_entry/company_import/deforest/saftey_clothing/breath_mask
+	name = "Deforest Breath Mask"
+	item_type = /obj/item/clothing/mask/breath/deforest
+	cost = PAYCHECK_CREW
+
+/datum/armament_entry/company_import/deforest/saftey_clothing/beret
+	name = "Deforest Beret"
+	item_type = /obj/item/clothing/head/beret/medical/deforest
+	cost = PAYCHECK_CREW
+
+/datum/armament_entry/company_import/deforest/saftey_clothing/satchel
+	name = "Deforest Satchel"
+	item_type = /obj/item/storage/backpack/satchel/med/deforest
+	cost = PAYCHECK_CREW
+
+/datum/armament_entry/company_import/deforest/saftey_clothing/backpack
+	name = "Deforest Backpack"
+	item_type = /obj/item/storage/backpack/medic/deforest
+	cost = PAYCHECK_CREW
