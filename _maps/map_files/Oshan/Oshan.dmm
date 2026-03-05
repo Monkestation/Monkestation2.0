@@ -16065,6 +16065,7 @@
 	dir = 4
 	},
 /obj/effect/landmark/start/assistant,
+/obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/medbay/central)
 "eWF" = (
@@ -21245,6 +21246,7 @@
 /obj/machinery/airalarm/directional/north,
 /obj/structure/cable,
 /obj/machinery/duct,
+/obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/patients_rooms)
 "gCU" = (
@@ -21485,6 +21487,7 @@
 /obj/effect/turf_decal/trimline/blue/line{
 	dir = 8
 	},
+/obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/break_room)
 "gFK" = (
@@ -36328,6 +36331,7 @@
 	dir = 4
 	},
 /obj/item/radio/intercom/directional/west,
+/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/patients_rooms)
 "lkq" = (
@@ -38025,6 +38029,7 @@
 	dir = 9
 	},
 /obj/effect/turf_decal/trimline/blue/corner,
+/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/patients_rooms)
 "lJQ" = (
@@ -42723,6 +42728,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
+/obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/treatment_center)
 "niG" = (
@@ -54670,6 +54676,7 @@
 	dir = 1
 	},
 /obj/item/radio/intercom/directional/east,
+/obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/patients_rooms)
 "qQF" = (
@@ -63109,6 +63116,7 @@
 /obj/effect/spawner/random/trash/graffiti,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
+/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/upper)
 "twF" = (
@@ -107410,10 +107418,10 @@ nRM
 vJc
 qpf
 ctS
-qpf
-qpf
-qpf
-fpq
+vUP
+vUP
+vUP
+vUP
 haO
 haO
 haO
