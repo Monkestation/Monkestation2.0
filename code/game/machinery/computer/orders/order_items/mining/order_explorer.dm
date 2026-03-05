@@ -19,11 +19,8 @@
 
 /datum/orderable_item/explorer/hunting
 	item_path = /obj/item/knife/hunting
+	desc = "Not as sharp as other knives, but makes short work of corpses."
 	cost_per_order = 500
-
-/datum/orderable_item/explorer/sledge 
-	item_path = /obj/item/melee/sledgehammer
-	cost_per_order = 2000
 
 /datum/orderable_item/explorer/conscription_kit 
 	item_path = /obj/item/storage/backpack/duffelbag/explorer_conscript
