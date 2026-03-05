@@ -24078,7 +24078,7 @@
 /turf/open/floor/iron/dark/textured,
 /area/centcom/central_command_areas/hall)
 "itR" = (
-/obj/machinery/plumbing/ooze_compressor,
+///obj/machinery/plumbing/ooze_compressor,
 /turf/open/floor/engine,
 /area/centcom/syndicate_mothership/expansion_bioterrorism)
 "iuf" = (

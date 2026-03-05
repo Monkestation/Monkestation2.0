@@ -8561,6 +8561,8 @@
 #include "monkestation\code\modules\slimecore\machines\biomass_recycler.dm"
 #include "monkestation\code\modules\slimecore\machines\extract_requestor.dm"
 #include "monkestation\code\modules\slimecore\machines\ooze_sucker.dm"
+#include "monkestation\code\modules\slimecore\machines\slime_compressor.dm"
+#include "monkestation\code\modules\slimecore\machines\slime_compressor_hud.dm"
 #include "monkestation\code\modules\slimecore\machines\slime_grinder.dm"
 #include "monkestation\code\modules\slimecore\machines\slime_market.dm"
 #include "monkestation\code\modules\slimecore\machines\slime_market_computer.dm"

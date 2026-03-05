@@ -1,4 +1,5 @@
-/obj/machinery/plumbing/ooze_compressor/proc/return_color_from_string(string)
+// Used exclusively for xenobio machines
+/obj/machinery/proc/return_color_from_string(string)
 	switch(string)
 		if("orange")
 			return "#FFA500"
@@ -40,3 +41,4 @@
 			return "#FFB6C1"
 		if("adamantine")
 			return "#008B8B"
+

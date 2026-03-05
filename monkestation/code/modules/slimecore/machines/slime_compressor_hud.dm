@@ -1,37 +1,31 @@
-/*
-/obj/machinery/plumbing/ooze_compressor
+/obj/machinery/slime_compressor
 	var/image/hover_appearance
-	var/datum/atom_hud/alternate_appearance/basic/ooze_compressor/hover_popup
+	var/datum/atom_hud/alternate_appearance/basic/slime_compressor/hover_popup
 
-/obj/machinery/plumbing/ooze_compressor/Destroy()
+/obj/machinery/slime_compressor/Destroy()
 	QDEL_NULL(hover_popup)
 	return ..()
 
-/obj/machinery/plumbing/ooze_compressor/MouseEntered(location, control, params)
+/obj/machinery/slime_compressor/MouseEntered(location, control, params)
 	. = ..()
-	if(!QDELETED(usr) && anchored)
+	if(!QDELETED(usr))
 		manage_hud_as_needed()
 		hover_popup?.show_to(usr)
 
-/obj/machinery/plumbing/ooze_compressor/MouseExited(location, control, params)
+/obj/machinery/slime_compressor/MouseExited(location, control, params)
 	. = ..()
 	if(!QDELETED(usr) && !QDELETED(hover_popup))
 		hover_popup.hide_from(usr)
 		manage_hud_as_needed(cleanup = TRUE)
 
-/obj/machinery/plumbing/ooze_compressor/set_anchored(anchorvalue)
-	. = ..()
-	if(!anchored)
-		manage_hud_as_needed()
-
-/obj/machinery/plumbing/ooze_compressor/proc/manage_hud_as_needed(cleanup = FALSE)
+/obj/machinery/slime_compressor/proc/manage_hud_as_needed(cleanup = FALSE)
 	if(!anchored || (cleanup && !QDELETED(hover_popup) && !length(hover_popup.hud_users_all_z_levels)))
 		// don't bother keeping the hud around if it isn't needed
 		QDEL_NULL(hover_popup)
 		return
 	setup_hud()
 
-/obj/machinery/plumbing/ooze_compressor/proc/setup_hud()
+/obj/machinery/slime_compressor/proc/setup_hud()
 	// delete old hud if it exists and collect a list of its users
 	var/list/mob/old_users
 	if(!QDELETED(hover_popup))
@@ -53,7 +47,7 @@
 	hover_appearance.appearance_flags = RESET_COLOR
 
 	// now setup the actual hud
-	hover_popup = add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/ooze_compressor, "ooze_compressor", hover_appearance)
+	hover_popup = add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/slime_compressor, "slime_compressor", hover_appearance)
 	// and the cooldown maptext
 	refresh_info_maptext()
 
@@ -62,7 +56,7 @@
 			continue
 		hover_popup.show_to(old_user)
 
-/obj/machinery/plumbing/ooze_compressor/proc/refresh_info_maptext()
+/obj/machinery/slime_compressor/proc/refresh_info_maptext()
 	if(!hover_popup)
 		return
 	if(!hover_popup.info_maptext)
@@ -73,52 +67,48 @@
 		hover_popup.info_maptext.maptext_height = world.icon_size / 2
 		hover_popup.info_maptext.maptext_y = 4
 	var/maptext
-	if(compressing)
+	var/maptext_cross
+	if(active)
 		hover_popup.info_maptext.maptext_width = world.icon_size * 2
 		hover_popup.info_maptext.maptext_x = -(world.icon_size / 2)
 		maptext = "compressing..."
 	else
-		hover_popup.info_maptext.maptext_width = world.icon_size
-		hover_popup.info_maptext.maptext_x = 0
-		maptext = current_recipe ? "[get_progress()]%" : "inactive"
-	hover_popup.info_maptext.maptext = MAPTEXT_TINY_UNICODE("<span style='text-align: center'>[maptext]</span>")
+		if(!current_recipe)
+			hover_popup.info_maptext.maptext_width = world.icon_size
+			hover_popup.info_maptext.maptext_x = 0
+			maptext = "inactive"
+		else
+			hover_popup.info_maptext.maptext_width = world.icon_size * 3
+			hover_popup.info_maptext.maptext_x = -world.icon_size
+			maptext = "[base_complete? "1" : "0"]/1 [base_slime_required.name] slime"
+			if (cross_slime_required)
+				hover_popup.info_maptext.maptext_height = world.icon_size
+				maptext_cross = "[cross_complete? "1" : "0"]/1 [cross_slime_required.name] slime"
+	hover_popup.info_maptext.maptext = MAPTEXT_TINY_UNICODE("<span style='text-align:center'>[maptext]</span>\
+								<span style='text-align:center'>[maptext_cross]</span>")
 	hover_popup.give_info()
 
-/obj/machinery/plumbing/ooze_compressor/proc/get_progress()
-	if(!current_recipe || compressing)
-		return 0
-	var/current = 0
-	var/needed = 0
-	for(var/datum/reagent/reagent as anything in current_recipe.required_oozes)
-		needed += current_recipe.required_oozes[reagent] || 0
-		for(var/datum/reagent/listed_reagent as anything in reagents.reagent_list)
-			if(listed_reagent.type != reagent)
-				continue
-			current += listed_reagent.volume
-	return clamp(round((current / needed) * 100, 1), 0, 100)
-
-/datum/atom_hud/alternate_appearance/basic/ooze_compressor
+/datum/atom_hud/alternate_appearance/basic/slime_compressor
 	var/image/info_maptext
 
-/datum/atom_hud/alternate_appearance/basic/ooze_compressor/show_to(mob/new_viewer)
+/datum/atom_hud/alternate_appearance/basic/slime_compressor/show_to(mob/new_viewer)
 	. = ..()
 	if(info_maptext && !QDELETED(new_viewer))
 		new_viewer.client?.images |= info_maptext
 
-/datum/atom_hud/alternate_appearance/basic/ooze_compressor/hide_from(mob/former_viewer, absolute)
+/datum/atom_hud/alternate_appearance/basic/slime_compressor/hide_from(mob/former_viewer, absolute)
 	. = ..()
 	if(info_maptext)
 		former_viewer?.client?.images -= info_maptext
 
-/datum/atom_hud/alternate_appearance/basic/ooze_compressor/proc/give_info()
+/datum/atom_hud/alternate_appearance/basic/slime_compressor/proc/give_info()
 	if(!info_maptext)
 		return
 	for(var/mob/user as anything in hud_users_all_z_levels)
 		user?.client?.images |= info_maptext
 
-/datum/atom_hud/alternate_appearance/basic/ooze_compressor/proc/take_cooldowns()
+/datum/atom_hud/alternate_appearance/basic/slime_compressor/proc/take_cooldowns()
 	if(!info_maptext)
 		return
 	for(var/mob/user as anything in hud_users_all_z_levels)
 		user?.client?.images -= info_maptext
-*/

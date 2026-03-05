@@ -1,3 +1,4 @@
+/*
 /datum/component/plumbing/ooze_compressor
 	demand_connects = NORTH
 
@@ -29,3 +30,4 @@
 	chamber.compress_recipe() //If we move this up, it'll instantly get turned off since any reaction always sets the reagent_total to zero. Other option is make the reaction update
 	//everything for every chemical removed, wich isn't a good option either.
 	chamber.on_reagent_change(reagents) //We need to check it now, because some reactions leave nothing left.
+*/
