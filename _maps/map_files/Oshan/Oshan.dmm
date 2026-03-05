@@ -4646,14 +4646,36 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "byO" = (
-/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
-	dir = 9
+/obj/structure/table/reinforced,
+/obj/item/reagent_containers/cup/beaker/cryoxadone{
+	pixel_y = 4;
+	pixel_x = 4
 	},
-/obj/item/radio/intercom/directional/south,
-/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/item/reagent_containers/cup/beaker/cryoxadone{
+	pixel_y = -4;
+	pixel_x = 4
+	},
+/obj/item/reagent_containers/cup/beaker/cryoxadone{
+	pixel_x = -4;
+	pixel_y = -4
+	},
+/obj/item/reagent_containers/cup/beaker/cryoxadone{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/wrench/medical,
+/obj/item/storage/pill_bottle/mannitol{
+	pixel_x = 9;
+	pixel_y = 9
+	},
 /obj/effect/turf_decal/trimline/blue/line{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
+	dir = 9
+	},
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/treatment_center)
 "bzb" = (
@@ -20187,9 +20209,7 @@
 	},
 /area/station/engineering/atmos)
 "gkP" = (
-/obj/machinery/atmospherics/pipe/smart/manifold/cyan/visible{
-	dir = 1
-	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 9
 	},
@@ -23739,9 +23759,6 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/station/ai_monitored/security/armory)
 "htt" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/blue/full,
 /obj/machinery/camera/autoname/directional/west,
 /obj/machinery/light/directional/west,
@@ -56745,15 +56762,13 @@
 /turf/open/floor/iron/white/textured,
 /area/station/medical/treatment_center)
 "rwX" = (
-/obj/machinery/atmospherics/pipe/smart/manifold/cyan/visible{
-	dir = 4
-	},
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
 	},
 /obj/effect/turf_decal/trimline/blue/line{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/treatment_center)
 "rxb" = (
@@ -67803,29 +67818,8 @@
 /area/station/service/chapel)
 "uRK" = (
 /obj/structure/window/reinforced/spawner/directional/north,
-/obj/structure/table/reinforced,
-/obj/item/reagent_containers/cup/beaker/cryoxadone{
-	pixel_y = 4;
-	pixel_x = 4
-	},
-/obj/item/reagent_containers/cup/beaker/cryoxadone{
-	pixel_y = -4;
-	pixel_x = 4
-	},
-/obj/item/reagent_containers/cup/beaker/cryoxadone{
-	pixel_x = -4;
-	pixel_y = -4
-	},
-/obj/item/reagent_containers/cup/beaker/cryoxadone{
-	pixel_x = -4;
-	pixel_y = 4
-	},
-/obj/item/wrench/medical,
-/obj/item/storage/pill_bottle/mannitol{
-	pixel_x = 9;
-	pixel_y = 9
-	},
 /obj/effect/turf_decal/tile/blue/full,
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/treatment_center)
 "uRS" = (
