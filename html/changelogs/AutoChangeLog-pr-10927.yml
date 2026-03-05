@@ -1,0 +1,9 @@
+author: "notghosti"
+delete-after: True
+changes:
+  - map: "Oshan medical has connected power."
+  - map: "Oshan pharmacy has a air alarm now"
+  - map: "Oshan chemistry is now accessed by chemistry, not pharmacy"
+  - map: "Oshan medical department had its distro/power cabling cleaned up."
+  - map: "Oshan pathology given more standard equipment"
+  - map: "Oshan CMO's no longer shall live/spawn in walls"
