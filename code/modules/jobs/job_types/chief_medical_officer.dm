@@ -69,9 +69,9 @@
 	r_pocket = /obj/item/pinpointer/crew
 	l_hand = /obj/item/storage/medkit/surgery/cmo
 
-	backpack = /obj/item/storage/backpack/medic
-	satchel = /obj/item/storage/backpack/satchel/med
-	duffelbag = /obj/item/storage/backpack/duffelbag/med
+	backpack = /obj/item/storage/backpack/chief_medic
+	satchel = /obj/item/storage/backpack/satchel/chief_medic
+	duffelbag = /obj/item/storage/backpack/duffelbag/chief_medic
 	implants = list(/obj/item/implant/mindshield)
 
 	box = /obj/item/storage/box/survival/medical

@@ -205,6 +205,8 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(close_distance))
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(update_actions))
 	RegisterSignal(parent, COMSIG_TOPIC, PROC_REF(topic_handle))
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(handle_examination))
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE_MORE, PROC_REF(handle_extra_examination))
 	RegisterSignal(parent, COMSIG_CLICK_ALT, PROC_REF(on_click_alt))
 	// monke edit: bluespace compression kit
 	RegisterSignal(parent, COMSIG_ITEM_PRE_COMPRESS, PROC_REF(attempt_compression))
@@ -252,6 +254,18 @@
 
 	if(href_list["show_valid_pocket_items"])
 		handle_show_valid_items(source, user)
+
+/datum/storage/proc/handle_examination(datum/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+
+	if(!isnull(can_hold_description))
+		examine_list += span_notice("You can examine this further to check what kind of extra items it can hold.")
+
+/datum/storage/proc/handle_extra_examination(datum/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+
+	if(!isnull(can_hold_description))
+		examine_list += handle_show_valid_items(source, user)
 
 /datum/storage/proc/handle_show_valid_items(datum/source, user)
 	to_chat(user, span_notice("[source] can hold: [can_hold_description]"))
