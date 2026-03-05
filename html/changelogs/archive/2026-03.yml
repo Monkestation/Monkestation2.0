@@ -1,0 +1,43 @@
+2026-03-01:
+  Shoddd:
+  - balance: apocalypse rune can not be used until shuttle can be called
+  Tractor-Maam:
+  - rscadd: Readded Yellow Gun Cases to company imports at cargo.
+  - bugfix: '"small gun case" no longer incorrectly named "''Makarov pistol'' gunset"'
+  drgnmstrc:
+  - map: tweaked AI upload room in kilo to fix borg spawns
+  - rscadd: another check to block stowaways from being snitched on by announcer
+  notghosti:
+  - bugfix: Rule three is now rule one achievment
+2026-03-02:
+  JohnFulpWillard:
+  - rscdel: Bye Mafia.
+2026-03-03:
+  Mantle:
+  - rscadd: Traffic Cone Hat added to monkecoin store
+  Shoddd:
+  - bugfix: interaction comps now check for nodrop
+  SirNightKnight:
+  - bugfix: fixed the nightmare revive timer being off by a decimal point.
+  - qol: added security armbands to the secdrobe.
+  Tractor-Maam:
+  - code_imp: Minor housekeeping with lionhunter rifle code
+2026-03-04:
+  Mantle, Commissioned by Isotope 436:
+  - rscadd: Deforest medical clothing, available from deforest imports, via cargo
+  - rscadd: Deforest clothing is also available in the monkecoin store.  The gloves
+      do not provide any benefit, unlike their cargo variant.
+  SirNightKnight:
+  - bugfix: fixed deconstructing pressure tanks duplicating gasses in merged tanks.
+  - balance: pressure tanks have a volume of 10,000 liters and rounded the pressure
+      limit to 50,000.
+  - balance: halved the material cost for finishing pressure tank frames.
+  - bugfix: corrected thermo color readings on thermomachines and gas meters
+2026-03-05:
+  notghosti:
+  - map: Oshan medical has connected power.
+  - map: Oshan pharmacy has a air alarm now
+  - map: Oshan chemistry is now accessed by chemistry, not pharmacy
+  - map: Oshan medical department had its distro/power cabling cleaned up.
+  - map: Oshan pathology given more standard equipment
+  - map: Oshan CMO's no longer shall live/spawn in walls

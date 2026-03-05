@@ -1,4 +1,0 @@
-author: "Cujo"
-delete-after: True
-changes:
-  - bugfix: "Fixes displayed message when choking is cleared by the heimlich"

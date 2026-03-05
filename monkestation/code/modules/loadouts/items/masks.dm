@@ -139,6 +139,10 @@ GLOBAL_LIST_INIT(loadout_masks, generate_loadout_items(/datum/loadout_item/mask)
 	name = "Smiley Mask"
 	item_path = /obj/item/clothing/mask/joy/manhunt
 
+/datum/loadout_item/mask/deforest_mask
+	name = "Deforest Mask"
+	item_path = /obj/item/clothing/mask/gas/deforest
+
 /*
 *	DONATOR
 */
