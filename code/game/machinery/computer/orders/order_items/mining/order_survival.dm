@@ -47,7 +47,7 @@
 	cost_per_order = 750
 
 /datum/orderable_item/survival/coagulant //monkestation edit
-	item_path = /obj/item/reagent_containers/hypospray/medipen/advanced/blood_loss
+	item_path = /obj/item/reagent_containers/medipen/advanced/blood_loss
 	desc = "For extreme blood loss."
 	cost_per_order = 180
 
@@ -55,7 +55,7 @@
 	item_path = /obj/item/storage/pill_bottle/painkiller
 	desc = "For minor injuries."
 	cost_per_order = 240
-	
+
 /datum/orderable_item/survival/mining_stabilizer
 	item_path = /obj/item/mining_stabilizer
 	cost_per_order = 400
