@@ -159,7 +159,7 @@
 
 
 	var/touch_zone = zone_selected
-	var/used_bodypart = HANDS
+	var/used_bodypart = user.get_active_hand()
 	var/block = 0
 	var/bleeding = 0
 	// biting causes the check to consider that both sides are bleeding, allowing for blood-only disease transmission through biting.

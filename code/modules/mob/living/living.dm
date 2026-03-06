@@ -109,7 +109,7 @@
 
 	if(length(diseases) && isliving(M))
 		var/mob/living/living = M
-		var/block = living.check_contact_sterility(BODY_ZONE_EVERYTHING)
+		var/block = living.check_contact_sterility()
 		var/list/contact = filter_disease_by_spread(diseases, required = DISEASE_SPREAD_CONTACT_SKIN)
 		if(length(contact) && !block)
 			for(var/datum/disease/acute/V as anything in contact)
@@ -117,7 +117,7 @@
 
 	if(isliving(M))
 		var/mob/living/living = M
-		var/block = check_contact_sterility(BODY_ZONE_EVERYTHING)
+		var/block = check_contact_sterility()
 		if(length(living.diseases))
 			var/list/contact = filter_disease_by_spread(living.diseases, required = DISEASE_SPREAD_CONTACT_SKIN)
 			if(length(contact) && !block)
@@ -424,7 +424,7 @@
 			//Share diseases that are spread by touch
 			if(length(diseases) && isliving(M))
 				var/mob/living/living = M
-				var/block = living.check_contact_sterility(BODY_ZONE_EVERYTHING)
+				var/block = living.check_contact_sterility()
 				var/list/contact = filter_disease_by_spread(diseases, required = DISEASE_SPREAD_CONTACT_SKIN)
 				if(length(contact) && !block)
 					for(var/datum/disease/acute/V as anything in contact)
@@ -432,7 +432,7 @@
 
 			if(isliving(M))
 				var/mob/living/living = M
-				var/block = check_contact_sterility(BODY_ZONE_EVERYTHING)
+				var/block = check_contact_sterility()
 				if(length(living.diseases))
 					var/list/contact = filter_disease_by_spread(living.diseases, required = DISEASE_SPREAD_CONTACT_SKIN)
 					if(length(contact) && !block)

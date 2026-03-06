@@ -161,17 +161,19 @@
 		. = TRUE
 
 
+	//Spreading disease from us to the person touching us through the arm they're touching us with.
 	if(length(diseases) && isliving(user))
 		var/mob/living/living = user
-		var/block = living.check_contact_sterility(BODY_ZONE_ARMS)
+		var/block = living.check_contact_sterility(living.get_active_hand())
 		var/list/contact = filter_disease_by_spread(diseases, required = DISEASE_SPREAD_CONTACT_SKIN)
 		if(length(contact) && !block)
 			for(var/datum/disease/acute/V as anything in contact)
 				living.infect_disease(V, notes="(Skin Contact - (Bump), coming from [src])")
 
+	//Spreading disease from the person touching us to us through the part they're touching.
 	if(isliving(user))
 		var/mob/living/living = user
-		var/block = check_contact_sterility(BODY_ZONE_ARMS)
+		var/block = check_contact_sterility(living.zone_selected)
 		if(length(living.diseases))
 			var/list/contact = filter_disease_by_spread(living.diseases, required = DISEASE_SPREAD_CONTACT_SKIN)
 			if(length(contact) && !block)
