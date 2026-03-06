@@ -33,3 +33,42 @@
       limit to 50,000.
   - balance: halved the material cost for finishing pressure tank frames.
   - bugfix: corrected thermo color readings on thermomachines and gas meters
+2026-03-05:
+  notghosti:
+  - map: Oshan medical has connected power.
+  - map: Oshan pharmacy has a air alarm now
+  - map: Oshan chemistry is now accessed by chemistry, not pharmacy
+  - map: Oshan medical department had its distro/power cabling cleaned up.
+  - map: Oshan pathology given more standard equipment
+  - map: Oshan CMO's no longer shall live/spawn in walls
+2026-03-06:
+  Absolucy:
+  - rscadd: Excavating ore vents now has a progress bar to show how much progress
+      has been made on defending the vent.
+  Cujo:
+  - bugfix: Fix messages displayed when applying gauze
+  - rscadd: Ling husk now takes priority over burn husk for advanced health analyzers
+  Mantle:
+  - rscadd: Deforest Satchel, Backpack, Mask, and Beret
+  - bugfix: Deforest jacket and hat should be less buggy
+  Shoddd:
+  - balance: baseball bats no longer do stam damage
+  SirNightKnight:
+  - qol: made the captain's aid toy a small item.
+  - qol: added a bunch more paintjobs for closets when repainting them.
+  sylvia-from-fulp-station:
+  - rscadd: Added the explorer tab to the mining vendor.
+  - rscadd: Added the explorer voucher, and added it to the Explorer's backpack at
+      round start.
+  - rscadd: Added 7 kits for the new explorer voucher. The laser gun kit, medevac
+      kit, survival kit, breaching kit, bushman kit, explorer conscription kit and
+      lavaland kit.
+  - rscadd: Added the explorer laser gun; a low capacity recharging laser gun. Sprite
+      from TGMC.
+  - rscadd: Added breaching charges, a c-4 subtype for explorers which cannot be placed
+      on station or on living things. Sprite by Chappy
+  - rscadd: Added clown pranks with breaching charges. They also get them in the mail
+      with rather low odds.
+  - rscdel: Removed the Explorer's mining voucher from their backpack at round start.
+  - qol: Mining hardsuits and other mining armor can hold the sledgehammer and explorer
+      laser gun.
