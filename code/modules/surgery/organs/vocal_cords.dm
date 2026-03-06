@@ -120,3 +120,9 @@
 /obj/item/organ/internal/vocal_cords/colossus/speak_with(message)
 	var/cooldown = voice_of_god(uppertext(message), owner, spans, base_multiplier)
 	next_command = world.time + (cooldown * cooldown_mod)
+
+/obj/item/organ/internal/vocal_cords/colossus/science
+	name = "Compulsive Lingui-synthesizer"
+	desc = "This strange bio-technological implant enables its user to alter the world by voice alone."
+	cooldown_mod = 0.7
+	base_multiplier = 0.5
