@@ -39,6 +39,13 @@
 /obj/item/gun/ballistic/automatic/pistol/give_manufacturer_examine()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_SCARBOROUGH)
 
+/obj/item/gun/ballistic/automatic/pistol/old
+	name = "\improper Old Makarov"
+	desc = "A small, easily concealable 9mm handgun. Has a threaded barrel for suppressors. This one is fairly damaged"
+
+/obj/item/gun/ballistic/automatic/pistol/old/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_REMOVED)
+
 /obj/item/gun/ballistic/automatic/pistol/clandestine
 	name = "\improper Ansem pistol"
 	desc = "The spiritual successor of the Makarov, or maybe someone just dropped their gun in a bucket of paint. The gun is chambered in 10mm."

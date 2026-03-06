@@ -4,39 +4,11 @@
 	availability_prob = 100
 	category = "Gun Part"
 	auction_weight = 5
-/*
-/datum/market_item/auction/gun_part/mk58
-	name = "MK 58 Reciever"
-	desc = "An illegal mk 58 reciever for all your gun needs."
-	item = /obj/item/gun/ballistic/modular/mk_58
-
-	price_min = CARGO_CRATE_VALUE * 2.5
-	price_max = CARGO_CRATE_VALUE * 5
-	auction_weight = 2
-
-/datum/market_item/auction/gun_part/cirno
-	name = "MK 58 Cirno keychain"
-	desc = "Cirno in keychain form"
-	item = /obj/item/attachment/keychain/mk_58/cirno
-
-	price_min = CARGO_CRATE_VALUE * 2
-	price_max = CARGO_CRATE_VALUE * 3
-	auction_weight = 2
-
-/datum/market_item/auction/gun_part/mk58_suppressor
-	name = "MK 58 Suppressor"
-	desc = "Super Illegal."
-	item = /obj/item/attachment/barrel/mk58/suppressor
-
-	price_min = CARGO_CRATE_VALUE * 2.5
-	price_max = CARGO_CRATE_VALUE * 7
-	auction_weight = 2
-*/
 
 /datum/market_item/auction/gun_part/makarov //Funny guns that fit the shoddy gun bidding market.
 	name = "Old Makarov"
-	desc = "Especially Illegal."
-	item = /obj/item/gun/ballistic/automatic/pistol
+	desc = "Especially Illegal, functionality not guaranteed."
+	item = /obj/item/gun/ballistic/automatic/pistol/old
 
 	price_min = CARGO_CRATE_VALUE * 6
 	price_max = CARGO_CRATE_VALUE * 8
