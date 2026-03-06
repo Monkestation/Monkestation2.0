@@ -15,11 +15,17 @@ DEFINE_BITFIELD(visibility_flags, list(
 #define CURABLE (1<<0)
 #define CAN_CARRY (1<<1)
 #define CAN_RESIST (1<<2)
+#define DISEASE_DORMANT (1<<3)
+#define DISEASE_COPYSTAGE (1<<4)
+#define DISEASE_ANALYZED (1<<5)
 
 DEFINE_BITFIELD(disease_flags, list(
 	"CURABLE" = CURABLE,
 	"CAN_CARRY" = CAN_CARRY,
 	"CAN_RESIST" = CAN_RESIST,
+	"DORMANT" = DISEASE_DORMANT,
+	"STAGE_COPY" = DISEASE_COPYSTAGE,
+	"ANALYZED" = DISEASE_ANALYZED,
 ))
 
 //Spread Flags
