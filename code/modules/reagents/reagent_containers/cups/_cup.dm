@@ -366,6 +366,9 @@
 /obj/item/reagent_containers/cup/beaker/meta/rezadone
 	list_reagents = list(/datum/reagent/medicine/rezadone = 180)
 
+/obj/item/reagent_containers/cup/beaker/meta/combat_juice
+	list_reagents = list(/datum/reagent/medicine/epinephrine = 12, /datum/reagent/medicine/omnizine = 60, /datum/reagent/medicine/leporazine = 54, /datum/reagent/medicine/atropine = 54)
+
 /obj/item/reagent_containers/cup/beaker/cryoxadone
 	list_reagents = list(/datum/reagent/medicine/cryoxadone = 30)
 

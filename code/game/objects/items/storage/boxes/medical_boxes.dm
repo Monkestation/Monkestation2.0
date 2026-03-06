@@ -153,3 +153,15 @@
 		/obj/item/reagent_containers/cup/beaker/meta/rezadone = 1,
 	)
 	generate_items_inside(items_inside, src)
+
+/obj/item/storage/box/evilmeds/evilhypos
+	name = "box of premimum hypospray vials"
+	desc = "Contains a large number of vials and beakers filled with premimum medical supplies. Straight from Interdyne Pharmceuticals!"
+	illustration = "vial"
+
+/obj/item/storage/box/evilmeds/evilhypos/PopulateContents()
+	var/list/items_inside = list(
+		/obj/item/reagent_containers/cup/beaker/meta/combat_juice = 1,
+		/obj/item/reagent_containers/cup/vial/bluespace = 6,
+	)
+	generate_items_inside(items_inside, src)

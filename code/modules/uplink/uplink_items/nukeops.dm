@@ -743,7 +743,7 @@
 
 /datum/uplink_item/device_tools/medkit/premium
 	name = "Syndicate Combat Medical Suite"
-	desc = "This first aid kit is a suspicious black and red. Included is an unloaded combat chemical injector \
+	desc = "This first aid kit is a suspicious black and red. Included is an combat hypospray \
 			for suit-penetrative chem delivery, a medical science night vision HUD for quick identification of injured personnel and chemical supplies, \
 			improved medical supplies, including Interdyne-approved pharmaceuticals, a hacked cybernetic surgery toolset arm implant, \
 			and some helpful MODsuit modules for for field medical use and operative physiopharmaceutical augmentation."

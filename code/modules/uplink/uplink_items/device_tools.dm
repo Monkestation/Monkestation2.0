@@ -277,3 +277,9 @@
 	desc = "A advanced hypospray, used to inject chemicals into yourself or other people, based off of stolen designs. Capable of loading large vials, and piercing armor."
 	item = /obj/item/hypospray/combat
 	cost = 3
+
+/datum/uplink_item/device_tools/syndicate_hypospray
+	name = "Syndicate Combat Hypospray Vials"
+	desc = "A box containing 6 bluespace vials, and a beaker full of premixed healing chems."
+	item = /obj/item/storage/box/evilmeds/evilhypos
+	cost = 1

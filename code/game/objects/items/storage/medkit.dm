@@ -391,7 +391,7 @@
 /obj/item/storage/medkit/tactical/premium/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 21
-	atom_storage.set_holdable(exception_hold_list = list(/obj/item/storage/box/evilmeds, /obj/item/autosurgeon/syndicate/emaggedsurgerytoolset))
+	atom_storage.set_holdable(exception_hold_list = list(/obj/item/storage/box/evilmeds, /obj/item/autosurgeon/syndicate/emaggedsurgerytoolset, /obj/item/storage/box/evilmeds/evilhypos))
 
 /obj/item/storage/medkit/tactical/premium/PopulateContents()
 	if(empty)
@@ -407,6 +407,7 @@
 		/obj/item/mod/module/health_analyzer = 1,
 		/obj/item/autosurgeon/syndicate/emaggedsurgerytoolset = 1,
 		/obj/item/hypospray/combat = 1,
+		/obj/item/storage/box/evilmeds/evilhypos = 1,
 		/obj/item/storage/box/evilmeds = 1,
 		/obj/item/reagent_containers/medigel/sterilizine = 1,
 		/obj/item/clothing/glasses/hud/health/night/science = 1,

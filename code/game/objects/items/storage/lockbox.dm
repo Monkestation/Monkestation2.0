@@ -14,6 +14,8 @@
 	var/icon_closed = "lockbox"
 	var/icon_open = "lockbox"
 	var/icon_broken = "lockbox+b"
+	///If the lockbox starts locked
+	var/start_locked = TRUE
 
 ///screentips for lockboxes
 /obj/item/storage/lockbox/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -31,7 +33,8 @@
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
 	atom_storage.max_total_storage = 14
 	atom_storage.max_slots = 4
-	atom_storage.set_locked(STORAGE_FULLY_LOCKED)
+	if(start_locked)
+		atom_storage.set_locked(STORAGE_FULLY_LOCKED)
 
 	register_context()
 	update_icon_state()
@@ -328,6 +331,7 @@
 	icon_open = "vialbox"
 	custom_price = PAYCHECK_CREW / 2
 	discountable = FALSE
+	start_locked = FALSE
 
 /obj/item/storage/lockbox/vialbox/update_icon()
 	cut_overlays()
@@ -354,7 +358,7 @@
 /obj/item/storage/lockbox/vialbox/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
-	atom_storage.max_slots = 8
+	atom_storage.max_slots = 6
 	atom_storage.max_total_storage = 12
 	atom_storage.set_holdable(list(/obj/item/reagent_containers/cup/vial))
 	if(!broken)
@@ -368,6 +372,8 @@
 /obj/item/storage/lockbox/vialbox/hypo_deluxe
 	name = "deluxe hypospray vial box"
 	desc = "A small box that can hold up to six vials in a sealed enviroment. This one contains a plethora of different vials for various medical ailments, designed for use in a deluxe hypospray."
+	start_locked = TRUE
+	req_access = list(ACCESS_CMO)
 
 /obj/item/storage/lockbox/vialbox/hypo_deluxe/PopulateContents()
 	new /obj/item/reagent_containers/cup/vial/large/bluespace/omnizine(src)
