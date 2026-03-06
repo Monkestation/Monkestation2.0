@@ -1,0 +1,10 @@
+author: "DragonMasterC"
+delete-after: True
+changes:
+  - rscadd: "tool interactions to assembler"
+  - rscadd: "sabotage and fix interactions to assembler"
+  - qol: "easier to deconstruct assemblers, now usually unnecessary to fix them"
+  - qol: "lot of context, examine, spans, and bubble text for assembler interactions"
+  - bugfix: "attempted fix of assembler.dm's empty_crafting_inventory() proc (would check if items were QDEL'd before continuing which seemingly caused it to freak out)"
+  - image: "updated assembler icon and added assembler_open for when panel is open"
+  - code_imp: "changed how assembler writes its crafting recipe and requirements in examine and updated its crafting speed formula to account for wire cuts"

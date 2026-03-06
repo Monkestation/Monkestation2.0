@@ -2166,6 +2166,7 @@
 #include "code\game\machinery\computer\orders\order_items\cook\order_reagents.dm"
 #include "code\game\machinery\computer\orders\order_items\cook\order_veggies.dm"
 #include "code\game\machinery\computer\orders\order_items\mining\order_crusher.dm"
+#include "code\game\machinery\computer\orders\order_items\mining\order_explorer.dm"
 #include "code\game\machinery\computer\orders\order_items\mining\order_extra.dm"
 #include "code\game\machinery\computer\orders\order_items\mining\order_golem.dm"
 #include "code\game\machinery\computer\orders\order_items\mining\order_mining.dm"
