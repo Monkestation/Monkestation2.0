@@ -71,7 +71,7 @@ GLOBAL_LIST_INIT(loadout_miscunders, generate_loadout_items(/datum/loadout_item/
 	item_path = /obj/item/clothing/under/rank/security/detective/kim
 	restricted_roles = list(JOB_DETECTIVE)
 
-/datum/loadout_item/under/deforest	//BUYABLE
+/datum/loadout_item/under/jumpsuit/deforest	//BUYABLE
 	name = "Deforest Uniform"
 	item_path = /obj/item/clothing/under/rank/medical/paramedic/deforest
 
