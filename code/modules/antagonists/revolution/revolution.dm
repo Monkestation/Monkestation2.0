@@ -54,10 +54,12 @@
 /datum/antagonist/rev/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
 	handle_clown_mutation(M, mob_override ? null : "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
+	determine_pointer_add(M)
 	add_team_hud(M, /datum/antagonist/rev)
 
 /datum/antagonist/rev/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
+	determine_pointer_remove(M)
 	handle_clown_mutation(M, removing = FALSE)
 
 /datum/antagonist/rev/on_mindshield(mob/implanter)
@@ -736,6 +738,81 @@
 	gloves = /obj/item/clothing/gloves/color/black
 	l_hand = /obj/item/spear
 	r_hand = /obj/item/assembly/flash
+
+/atom/movable/screen/alert/status_effect/agent_pinpointer/hunt_command
+	name = "Hunt Command"
+	desc = "You have an odd sense where command is."
+
+/datum/status_effect/agent_pinpointer/hunt_command
+	id = "agent_pinpointer"
+	alert_type = /atom/movable/screen/alert/status_effect/agent_pinpointer/hunt_command
+	minimum_range = 10
+	//tick_interval = HUNTER_PING_TIME
+	//duration = STATUS_EFFECT_PERMANENT
+	//range_fuzz_factor = HUNTER_FUZZ_FACTOR
+
+///Attempting to locate a nearby target to scan and point towards.
+/datum/status_effect/agent_pinpointer/hunt_command/scan_for_target()
+
+	scan_target = null
+	if(!owner && !owner.mind)
+		return
+	var/dist = 1000
+	var/mob/living/body
+	var/mob/living/target
+	var/list/heads_list = SSjob.get_all_heads()
+	for(var/datum/mind/command_mind as anything in heads_list)
+		body = command_mind.current
+		if(get_dist(owner, body) < dist && considered_alive(command_mind))
+			dist = get_dist(owner, body)
+			target = body
+	if(QDELETED(body))
+		return
+	scan_target = target
+
+/datum/antagonist/rev/proc/determine_pointer_add(mob/living/revolter)
+	if (job_rank == ROLE_REV)	// Regular revs know where the closest leader is.
+		revolter.apply_status_effect(/datum/status_effect/agent_pinpointer/hunt_rev_head)
+	else					// Rev heads know where command is.
+		revolter.apply_status_effect(/datum/status_effect/agent_pinpointer/hunt_command)
+
+/datum/antagonist/rev/proc/determine_pointer_remove(mob/living/revolter)
+	if (job_rank == ROLE_REV)
+		revolter.remove_status_effect(/datum/status_effect/agent_pinpointer/hunt_rev_head)
+	else
+		revolter.remove_status_effect(/datum/status_effect/agent_pinpointer/hunt_command)
+
+
+/atom/movable/screen/alert/status_effect/agent_pinpointer/hunt_rev_head
+	name = "Locate Revolution Leader"
+	desc = "You have an odd sense where your commander is."
+
+/datum/status_effect/agent_pinpointer/hunt_rev_head
+	id = "agent_pinpointer"
+	alert_type = /atom/movable/screen/alert/status_effect/agent_pinpointer/hunt_rev_head
+	minimum_range = 1
+	//tick_interval = HUNTER_PING_TIME
+	//duration = STATUS_EFFECT_PERMANENT
+	//range_fuzz_factor = HUNTER_FUZZ_FACTOR
+
+///Attempting to locate a nearby target to scan and point towards.
+/datum/status_effect/agent_pinpointer/hunt_rev_head/scan_for_target()
+
+	scan_target = null
+	if(!owner && !owner.mind)
+		return
+	var/dist = 1000
+	var/mob/living/body
+	var/mob/living/target
+	var/list/heads_list = get_antag_minds(/datum/antagonist/rev/head)
+	for(var/datum/mind/command_mind as anything in heads_list)
+		body = command_mind.current
+		if(get_dist(owner, body) < dist && considered_alive(command_mind))
+			dist = get_dist(owner, body)
+			target = body
+	if(QDELETED(body))
+		return
+	scan_target = target
 
 #undef DECONVERTER_REVS_WIN
 #undef DECONVERTER_STATION_WIN
