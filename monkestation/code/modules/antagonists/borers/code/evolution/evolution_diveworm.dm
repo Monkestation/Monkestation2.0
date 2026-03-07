@@ -7,7 +7,10 @@
 	desc = "Increase the amount of health per level-up you gain."
 	gain_text = "Over time, some of the more aggressive worms became harder to dissect post-mortem. Their skin membrane has become up to thrice as thick."
 	tier = 1
-	unlocked_evolutions = list(/datum/borer_evolution/diveworm/host_speed)
+	unlocked_evolutions = list(
+		/datum/borer_evolution/diveworm/host_speed,
+		/datum/borer_evolution/diveworm/dissection,
+		)
 	evo_cost = 1
 
 /datum/borer_evolution/diveworm/health_per_level/on_evolve(mob/living/basic/cortical_borer/cortical_owner)
@@ -22,20 +25,16 @@
 	desc = "Decrease the time it takes to enter a host when you are not hiding."
 	gain_text = "Once or twice, I would blink, and see the non-host monkeys be grappling with a worm that was cross the room just moments before."
 	tier = 2
-	unlocked_evolutions = list(
-		/datum/borer_evolution/diveworm/expanded_chemicals,
-		/datum/borer_evolution/diveworm/dissection,
-	)
+	unlocked_evolutions = list(/datum/borer_evolution/diveworm/expanded_chemicals)
 
 /datum/borer_evolution/diveworm/host_speed/on_evolve(mob/living/basic/cortical_borer/cortical_owner)
 	. = ..()
 	cortical_owner.upgrade_flags |= BORER_FAST_BORING
 
-
 /datum/borer_evolution/diveworm/dissection
 	name = "Dissect Corspe"
-	desc = "Gain the ability to probes a corspe's brain to further oneself."
-	gain_text = "After applying extreme radiation exposure to a sample of the eggs, the bed of worm's host never produced any more eggs. However, the sanitation team noted these same worms festering around a dead host that was to be removed."
+	desc = "Gain the ability to probes a corspe's brain to further the rate you grow."
+	gain_text = "After applying extreme radiation exposure to a sample of the eggs, that generation's bed of worms never produced eggs. However, the sanitation teams observed these same worms festering around a dead host that was to be removed."
 	tier = -1
 	added_action = /datum/action/cooldown/borer/dissection
 	neutered_only = TRUE
