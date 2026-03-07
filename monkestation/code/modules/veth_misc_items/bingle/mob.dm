@@ -93,6 +93,7 @@
 		updatehealth()
 		new /obj/effect/temp_visual/heal(get_turf(src), COLOR_BLUE_LIGHT)
 
+///Called when attempting to move around in space, if it's near a bingles pit it'll act sorta like lattice.
 /mob/living/basic/bingle/proc/on_space_move(atom/source, movement_dir, continuous_move)
 	SIGNAL_HANDLER
 	if(locate(/obj/structure/bingle_pit_overlay) in range(1, get_turf(source)))
