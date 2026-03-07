@@ -201,6 +201,7 @@
 #include "code\__DEFINES\pipe_construction.dm"
 #include "code\__DEFINES\plexora.dm"
 #include "code\__DEFINES\plumbing.dm"
+#include "code\__DEFINES\plushies.dm"
 #include "code\__DEFINES\polls.dm"
 #include "code\__DEFINES\pollution.dm"
 #include "code\__DEFINES\power.dm"
