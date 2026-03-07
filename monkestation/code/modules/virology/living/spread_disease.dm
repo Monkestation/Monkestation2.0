@@ -68,7 +68,8 @@
 
 /mob/dead/new_player/proc/DiseaseCarrierCheck(mob/living/carbon/human/H)
 	// 10% of players are joining the station with some minor disease if latejoined
-	if(prob(10))
+	//don't let the compromised die right out of the gates.
+	if(prob(10) && !HAS_TRAIT(H, TRAIT_IMMUNODEFICIENCY))
 		var/virus_choice = pick(WILD_ACUTE_DISEASES)
 		var/datum/disease/acute/D = new virus_choice
 

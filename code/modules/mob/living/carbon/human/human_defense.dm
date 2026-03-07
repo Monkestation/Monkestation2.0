@@ -13,8 +13,7 @@
 		//If a specific bodypart is targetted, check how that bodypart is protected and return the value.
 
 	//If you don't specify a bodypart, it checks ALL your bodyparts for protection, and averages out the values
-	for(var/X in bodyparts)
-		var/obj/item/bodypart/BP = X
+	for(var/obj/item/bodypart/BP as anything in bodyparts)
 		armorval += check_armor(BP, type)
 		organnum++
 	return (armorval/max(organnum, 1))
@@ -160,7 +159,7 @@
 
 
 	var/touch_zone = zone_selected
-	var/used_bodypart = HANDS
+	var/used_bodypart = user.get_active_hand()
 	var/block = 0
 	var/bleeding = 0
 	// biting causes the check to consider that both sides are bleeding, allowing for blood-only disease transmission through biting.

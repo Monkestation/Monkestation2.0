@@ -22,18 +22,18 @@
 
 /mob/living/basic/mouse/plague/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	. = ..()
-	if (ishuman(user)||ismonkey(user))
-		var/block = user.check_contact_sterility(HANDS)
-		var/bleeding = user.check_bodypart_bleeding(HANDS)
-		share_contact_diseases(user ,block,bleeding)
+	if (ishuman(user) || ismonkey(user))
+		var/block = user.check_contact_sterility(pick(GLOB.arm_zones))
+		var/bleeding = user.check_bodypart_bleeding(pick(GLOB.arm_zones))
+		share_contact_diseases(user, block, bleeding)
 
 /mob/living/basic/mouse/plague/melee_attack(atom/target, list/modifiers, ignore_cooldown)
 	. = ..()
 	if (ishuman(target)||ismonkey(target))
 		var/mob/living/user = target
-		var/block = user.check_contact_sterility(HANDS)
-		var/bleeding = user.check_bodypart_bleeding(HANDS)
-		share_contact_diseases(target ,block,bleeding)
+		var/block = user.check_contact_sterility(pick(GLOB.arm_zones))
+		var/bleeding = user.check_bodypart_bleeding(pick(GLOB.arm_zones))
+		share_contact_diseases(target, block, bleeding)
 
 /mob/living/basic/mouse/attackby(obj/item/attacking_item, mob/living/user, params)
 	. = ..()

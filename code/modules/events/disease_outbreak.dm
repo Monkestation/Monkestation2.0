@@ -57,9 +57,12 @@
 	for(var/mob/living/carbon/human/candidate in shuffle(GLOB.player_list)) //Player list is much more up to date and requires less checks(?)
 		if(!(candidate.mind?.assigned_role?.job_flags & JOB_CREW_MEMBER) || candidate.stat == DEAD)
 			continue
-		if(HAS_TRAIT(candidate, TRAIT_VIRUSIMMUNE)) //Don't pick someone who's virus immune, only for it to not do anything.
+		//Don't pick someone who's virus immune, only for it to not do anything.
+		if(HAS_TRAIT(candidate, TRAIT_VIRUSIMMUNE) || HAS_TRAIT(candidate, TRAIT_VIRUS_RESISTANCE))
 			continue
 		if(length(candidate.diseases)) //Is our candidate already sick?
+			continue
+		if(candidate.check_contact_sterility())
 			continue
 		disease_candidates += candidate
 

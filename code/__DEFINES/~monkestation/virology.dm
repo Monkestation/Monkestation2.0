@@ -54,10 +54,6 @@
 #define DISEASE_FUNGUS "fungal_spores"
 #define DISEASE_DEBUG "debug"
 
-#define DISEASE_DORMANT (1 << 3)
-#define DISEASE_COPYSTAGE (1<<4)
-#define DISEASE_ANALYZED (1<<5)
-
 #define COMSIG_CRACKER_PUZZLE_FAILURE "cracker_puzzle_failure"
 #define COMSIG_CRACKER_PUZZLE_SUCCESS "cracker_puzzle_success"
 

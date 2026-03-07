@@ -309,6 +309,8 @@ GLOBAL_LIST_INIT(mining_suit_allowed, list(
 #define LOCATION_GLOVES "on your hands"
 /// String for items placed in the eye/glasses slot.
 #define LOCATION_EYES "covering your eyes"
+/// Items placed in the mask slot.
+#define LOCATION_MASK "covering your face"
 /// String for items placed on the head/hat slot.
 #define LOCATION_HEAD "on your head"
 /// String for items placed in the neck slot.
