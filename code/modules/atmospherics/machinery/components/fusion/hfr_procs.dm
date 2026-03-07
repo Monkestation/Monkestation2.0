@@ -38,7 +38,7 @@
 			corners |= object
 			continue
 
-		if(get_step(object,turn(object.dir,180)) != loc)
+		if(get_step(object,REVERSE_DIR(object.dir)) != loc)
 			. = FALSE
 
 		if(istype(object,/obj/machinery/hypertorus/interface))
@@ -53,7 +53,7 @@
 		if(object.panel_open)
 			. = FALSE
 
-		if(get_step(object,turn(object.dir,180)) != loc)
+		if(get_step(object,REVERSE_DIR(object.dir)) != loc)
 			. = FALSE
 
 		if(istype(object,/obj/machinery/atmospherics/components/unary/hypertorus/fuel_input))
@@ -214,9 +214,9 @@
 /**
  * Infrequently plays accent sounds, and adjusts main loop parameters
  */
-/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/play_ambience()
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/play_ambience(seconds_per_tick)
 	// We play delam/neutral sounds at a rate determined by power and critical_threshold_proximity
-	if(last_accent_sound < world.time && prob(20))
+	if(last_accent_sound < world.time && SPT_PROB(10, seconds_per_tick))
 		var/aggression = min(((critical_threshold_proximity / 800) * ((power_level) / 5)), 1.0) * 100
 		if(critical_threshold_proximity >= 300)
 			playsound(src, SFX_HYPERTORUS_MELTING, max(50, aggression), FALSE, 40, 30, falloff_distance = 10)
@@ -330,7 +330,7 @@
 	var/obj/machinery/power/apc/apc = area.apc
 	if (!apc)
 		return 0
-	var/obj/item/stock_parts/power_store/cell/cell = apc.cell
+	var/obj/item/stock_parts/power_store/cell = apc.cell
 	if (!cell)
 		return 0
 	return cell.percent()
@@ -421,10 +421,8 @@
 		"The [src] has begun melting down!",
 		source = src,
 		header = "Meltdown Incoming",
-		action = NOTIFY_ORBIT,
 		ghost_sound = 'sound/machines/warning-buzzer.ogg',
 		notify_volume = 75,
-		notify_flags = NOTIFY_CATEGORY_DEFAULT,
 	)
 
 	for(var/i in HYPERTORUS_COUNTDOWN_TIME to 0 step -10)
@@ -432,7 +430,7 @@
 			radio.talk_into(src, "[safe_alert] Failsafe has been disengaged.", common_channel)
 			final_countdown = FALSE
 			return
-		else if((i % 50) != 0 && i > 50) // A message once every 5 seconds until the final 5 seconds which count down individualy
+		else if((i % 50) != 0 && i > 50) // A message once every 5 seconds until the final 5 seconds which count down individually
 			sleep(1 SECONDS)
 			continue
 		else if(i > 50)
@@ -562,7 +560,7 @@
 			epicenter = loc,
 			heavy_range = critical ? emp_heavy_size * 2 : emp_heavy_size,
 			light_range = critical ? emp_light_size * 2 : emp_heavy_size,
-			log = TRUE
+			log = TRUE /// "emp_source" not found in current build; leaving as is
 			)
 
 	qdel(src)
