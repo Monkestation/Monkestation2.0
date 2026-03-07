@@ -284,6 +284,7 @@
 	name = "trash cart"
 	icon_state = "trashcart"
 	base_icon_state = "trashcart"
+	icon_welded = "trashcart_welded"
 	can_install_electronics = FALSE
 	paint_jobs = null
 

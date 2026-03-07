@@ -1,6 +1,3 @@
-/obj/structure/rack
-	icon = 'monkestation/code/modules/blueshift/icons/rack.dmi'
-
 /obj/structure/rack/shelf
 	name = "shelf"
 	desc = "A shelf, for storing things on. Conveinent!"
