@@ -1,7 +1,7 @@
-/obj/item/ammo_casing/caseless/foam_dart
+/obj/item/ammo_casing/foam_dart
 	name = "foam dart"
 	desc = "It's Donk or Don't! Ages 8 and up."
-	projectile_type = /obj/projectile/bullet/reusable/foam_dart
+	projectile_type = /obj/projectile/bullet/foam_dart
 	caliber = CALIBER_FOAM
 	icon = 'icons/obj/weapons/guns/toy.dmi'
 	icon_state = "foamdart"
@@ -12,7 +12,7 @@
 	var/min_choke_duration = 5 SECONDS
 	var/max_choke_duration = 12 SECONDS
 
-/obj/item/ammo_casing/caseless/foam_dart/Initialize(mapload)
+/obj/item/ammo_casing/foam_dart/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/edible, \
 		initial_reagents = list( \
@@ -29,18 +29,22 @@
 	ADD_TRAIT(src, TRAIT_FISHING_BAIT, INNATE_TRAIT)
 	RegisterSignal(src, COMSIG_FOOD_EATEN, PROC_REF(on_bite))
 
-/obj/item/ammo_casing/caseless/foam_dart/proc/on_bite(atom/used_in, mob/living/target, mob/living/user, bitecount, bitesize)
+/obj/item/ammo_casing/foam_dart/proc/on_bite(atom/used_in, mob/living/target, mob/living/user, bitecount, bitesize)
 	SIGNAL_HANDLER
 	if (HAS_TRAIT(target, TRAIT_CLUMSY))
 		inhale(target)
 		return DESTROY_FOOD
 
-/obj/item/ammo_casing/caseless/foam_dart/proc/inhale(mob/living/target)
+/obj/item/ammo_casing/foam_dart/proc/inhale(mob/living/target)
 	visible_message(span_danger("[target] inhales [src]!"), \
 		span_userdanger("You inhale [src]!"))
 	target.AddComponent(/datum/status_effect/choke, new src.type, flaming = FALSE, vomit_delay = rand(min_choke_duration, max_choke_duration))
 
-/obj/item/ammo_casing/caseless/foam_dart/update_icon_state()
+/obj/item/ammo_casing/foam_dart/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/caseless, TRUE)
+
+/obj/item/ammo_casing/foam_dart/update_icon_state()
 	. = ..()
 	if(modified)
 		icon_state = "[base_icon_state]_empty"
@@ -49,12 +53,12 @@
 	icon_state = "[base_icon_state]"
 	loaded_projectile?.icon_state = "[loaded_projectile.base_icon_state]"
 
-/obj/item/ammo_casing/caseless/foam_dart/update_desc()
+/obj/item/ammo_casing/foam_dart/update_desc()
 	. = ..()
 	desc = "It's Donk or Don't! [modified ? "... Although, this one doesn't look too safe." : "Ages 8 and up."]"
 
-/obj/item/ammo_casing/caseless/foam_dart/attackby(obj/item/A, mob/user, params)
-	var/obj/projectile/bullet/reusable/foam_dart/FD = loaded_projectile
+/obj/item/ammo_casing/foam_dart/attackby(obj/item/A, mob/user, params)
+	var/obj/projectile/bullet/foam_dart/FD = loaded_projectile
 	if (A.tool_behaviour == TOOL_SCREWDRIVER && !modified)
 		modified = TRUE
 		FD.modified = TRUE
@@ -77,18 +81,18 @@
 	else
 		return ..()
 
-/obj/item/ammo_casing/caseless/foam_dart/attack_self(mob/living/user)
-	var/obj/projectile/bullet/reusable/foam_dart/FD = loaded_projectile
+/obj/item/ammo_casing/foam_dart/attack_self(mob/living/user)
+	var/obj/projectile/bullet/foam_dart/FD = loaded_projectile
 	if(FD.pen)
 		FD.damage = initial(FD.damage)
 		user.put_in_hands(FD.pen)
 		to_chat(user, span_notice("You remove [FD.pen] from [src]."))
 		FD.pen = null
 
-/obj/item/ammo_casing/caseless/foam_dart/riot
+/obj/item/ammo_casing/foam_dart/riot
 	name = "riot foam dart"
 	desc = "Whose smart idea was it to use toys as crowd control? Ages 18 and up."
-	projectile_type = /obj/projectile/bullet/reusable/foam_dart/riot
+	projectile_type = /obj/projectile/bullet/foam_dart/riot
 	icon_state = "foamdart_riot"
 	base_icon_state = "foamdart_riot"
 	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT* 1.125)

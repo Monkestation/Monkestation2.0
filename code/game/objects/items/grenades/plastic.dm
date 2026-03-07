@@ -135,9 +135,7 @@
 		var/obj/item/thrown_weapon = bomb_target
 		thrown_weapon.throw_speed = max(1, (thrown_weapon.throw_speed - 3))
 		thrown_weapon.throw_range = max(1, (thrown_weapon.throw_range - 3))
-		if(thrown_weapon.embedding)
-			thrown_weapon.embedding["embed_chance"] = 0
-			thrown_weapon.updateEmbedding()
+		thrown_weapon.get_embed()?.embed_chance = 0
 	else if(isliving(bomb_target))
 		plastic_overlay.layer = FLOAT_LAYER
 

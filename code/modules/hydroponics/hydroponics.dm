@@ -229,20 +229,21 @@
 	return ..()
 
 //Works with the Somatoray to modify plant variables.
-/obj/machinery/hydroponics/bullet_act(obj/projectile/Proj)
+/obj/machinery/hydroponics/bullet_act(obj/projectile/proj)
 	if(!myseed)
 		return ..()
-	if(istype(Proj , /obj/projectile/energy/flora/mut))
+	if(istype(proj, /obj/projectile/energy/flora/mut))
 		mutate()
-	else if(istype(Proj , /obj/projectile/energy/flora/yield))
-		return myseed.bullet_act(Proj)
-	else if(istype(Proj , /obj/projectile/energy/flora/evolution))
+		return BULLET_ACT_HIT
+	if(istype(proj, /obj/projectile/energy/flora/yield))
+		return myseed.projectile_hit(proj)
+	if(istype(proj, /obj/projectile/energy/flora/evolution))
 		if(myseed)
 			if(LAZYLEN(myseed.mutatelist))
 				myseed.mutate()
 		mutatespecie()
-	else
-		return ..()
+		return BULLET_ACT_HIT
+	return ..()
 
 /obj/machinery/hydroponics/process(delta_time)
 	var/needs_update = FALSE // Checks if the icon needs updating so we don't redraw empty trays every time

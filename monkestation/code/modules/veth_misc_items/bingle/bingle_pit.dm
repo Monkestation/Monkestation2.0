@@ -424,7 +424,7 @@
 	if(isbingle(projectile.firer))
 		return BULLET_ACT_FORCE_PIERCE // Projectiles from bingles pass through
 	if(parent_pit)
-		return parent_pit.bullet_act(projectile)
+		return parent_pit.projectile_hit(projectile)
 	else
 		return ..()
 

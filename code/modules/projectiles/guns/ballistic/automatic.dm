@@ -79,12 +79,12 @@
 	fire_delay = 2
 	burst_size = 3
 	pin = /obj/item/firing_pin/implant/pindicate
-	can_bayonet = TRUE
-	knife_x_offset = 26
-	knife_y_offset = 12
 	mag_display = TRUE
 	mag_display_ammo = TRUE
 	empty_indicator = TRUE
+
+/obj/item/gun/ballistic/automatic/c20r/add_bayonet_point()
+	AddComponent(/datum/component/bayonet_attachable, offset_x = 26, offset_y = 12)
 
 /obj/item/gun/ballistic/automatic/c20r/update_overlays()
 	. = ..()
@@ -113,12 +113,12 @@
 	can_suppress = FALSE
 	burst_size = 1
 	actions_types = list()
-	can_bayonet = TRUE
-	knife_x_offset = 25
-	knife_y_offset = 12
 	mag_display = TRUE
 	mag_display_ammo = TRUE
 	empty_indicator = TRUE
+
+/obj/item/gun/ballistic/automatic/wt550/add_bayonet_point()
+	AddComponent(/datum/component/bayonet_attachable, offset_x = 25, offset_y = 12)
 
 /obj/item/gun/ballistic/automatic/wt550/Initialize(mapload)
 	. = ..()
@@ -322,7 +322,6 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/c585trappiste_pistol
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/smg_heavy.ogg'
 	can_suppress = TRUE
-	can_bayonet = FALSE
 	suppressor_x_offset = 9
 	burst_size = 2
 	fire_delay = 0.5 SECONDS
@@ -379,7 +378,6 @@
 	can_suppress = TRUE
 	suppressor_x_offset = 0
 	suppressor_y_offset = 0
-	can_bayonet = FALSE
 	burst_size = 1
 	fire_delay = 0.2 SECONDS
 	actions_types = list()
@@ -429,7 +427,6 @@
 	spawn_magazine_type = /obj/item/ammo_box/magazine/c35sol_pistol/stendo
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/smg_light.ogg'
 	can_suppress = TRUE
-	can_bayonet = FALSE
 	suppressor_x_offset = 11
 	burst_size = 2
 	fire_delay = 0.35 SECONDS
@@ -650,7 +647,6 @@
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/rifle_heavy.ogg'
 	suppressed_sound = 'monkestation/code/modules/blueshift/sounds/suppressed_rifle.ogg'
 	can_suppress = TRUE
-	can_bayonet = FALSE
 	suppressor_x_offset = 12
 	burst_size = 1
 	fire_delay = 0.4 SECONDS
@@ -816,7 +812,6 @@
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/rifle_heavy.ogg'
 	suppressed_sound = 'monkestation/code/modules/blueshift/sounds/suppressed_rifle.ogg'
 	can_suppress = TRUE
-	can_bayonet = FALSE
 	suppressor_x_offset = 12
 	actions_types = list()
 	burst_size = 1
@@ -967,7 +962,6 @@
 	can_suppress = TRUE
 	suppressor_x_offset = 0
 	suppressor_y_offset = 0
-	can_bayonet = FALSE
 	burst_size = 1
 	fire_delay = 1.2 SECONDS
 	actions_types = list()
@@ -1026,7 +1020,6 @@
 	slot_flags = ITEM_SLOT_BACK
 	accepted_magazine_type = /obj/item/ammo_box/magazine/wylom
 	can_suppress = FALSE
-	can_bayonet = FALSE
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/amr_fire.ogg'
 	fire_sound_volume = 100 // BOOM BABY
 	recoil = 4

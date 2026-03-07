@@ -214,7 +214,7 @@
 /datum/action/cooldown/spell/pointed/mindblast/proc/ready_projectile(obj/projectile/to_fire, atom/target, mob/shooter)
 	to_fire.firer = owner
 	to_fire.fired_from = shooter
-	to_fire.preparePixelProjectile(target, shooter)
+	to_fire.aim_projectile(target, shooter)
 
 	if(istype(to_fire, /obj/projectile/magic))
 		var/obj/projectile/magic/magic_to_fire = to_fire

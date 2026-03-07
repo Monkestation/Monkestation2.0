@@ -65,7 +65,7 @@
 	icon = 'monkestation/icons/obj/weapons/guns/whispering_jester_45/item.dmi'
 	icon_state = "mag_jester"
 	multiple_sprites = AMMO_BOX_PER_BULLET
-	ammo_type = /obj/item/ammo_casing/caseless/c45_caseless
+	ammo_type = /obj/item/ammo_casing/c45_caseless
 	caliber = CALIBER_45
 	max_ammo = 18
 

@@ -4,33 +4,39 @@
 	caliber = CALIBER_357
 	max_ammo = 7
 
-/obj/item/ammo_box/magazine/internal/cylinder/get_round(keep = 0)
+///Here, we have to maintain the list size, to emulate a cylinder with several chambers, empty or otherwise.
+/obj/item/ammo_box/magazine/internal/cylinder/remove_from_stored_ammo(atom/movable/gone)
+	for(var/index in 1 to length(stored_ammo))
+		var/obj/item/ammo_casing/bullet = stored_ammo[index]
+		if(gone == bullet)
+			stored_ammo[index] = null
+			update_appearance()
+			return
+
+/obj/item/ammo_box/magazine/internal/cylinder/get_round()
 	rotate()
+	var/casing = stored_ammo[1]
+	if (ispath(casing))
+		casing = new casing(src)
+		stored_ammo[1] = casing
+	return casing
 
-	var/b = stored_ammo[1]
-	if(!keep)
-		stored_ammo[1] = null
-
-	return b
+/obj/item/ammo_box/magazine/internal/cylinder/get_and_shuffle_round()
+	return get_round()
 
 /obj/item/ammo_box/magazine/internal/cylinder/proc/rotate()
 	var/b = stored_ammo[1]
 	stored_ammo.Cut(1,2)
-	stored_ammo.Add(b)
+	stored_ammo.Insert(0, b)
 
 /obj/item/ammo_box/magazine/internal/cylinder/proc/spin()
 	for(var/i in 1 to rand(0, max_ammo*2))
 		rotate()
 
-/obj/item/ammo_box/magazine/internal/cylinder/ammo_list(drop_list = FALSE)
-	var/list/L = list()
-	for(var/i=1 to stored_ammo.len)
-		var/obj/item/ammo_casing/bullet = stored_ammo[i]
-		if(bullet)
-			L.Add(bullet)
-			if(drop_list)//We have to maintain the list size, to emulate a cylinder
-				stored_ammo[i] = null
-	return L
+/obj/item/ammo_box/magazine/internal/cylinder/ammo_list()
+	var/list/no_nulls_ammo = ..()
+	list_clear_nulls(no_nulls_ammo)
+	return no_nulls_ammo
 
 /obj/item/ammo_box/magazine/internal/cylinder/give_round(obj/item/ammo_casing/R, replace_spent = 0)
 	if(!R || !(caliber ? (caliber == R.caliber) : (ammo_type == R.type)))
@@ -38,14 +44,15 @@
 
 	for(var/i in 1 to stored_ammo.len)
 		var/obj/item/ammo_casing/bullet = stored_ammo[i]
-		if(!bullet || !bullet.loaded_projectile) // found a spent ammo
-			stored_ammo[i] = R
-			R.forceMove(src)
+		if(bullet && (!istype(bullet) || bullet.loaded_projectile))
+			continue
+		// empty or spent
+		stored_ammo[i] = R
+		R.forceMove(src)
 
-			if(bullet)
-				bullet.forceMove(drop_location())
-			return TRUE
-
+		if(bullet)
+			bullet.forceMove(drop_location())
+		return TRUE
 	return FALSE
 
 /obj/item/ammo_box/magazine/internal/cylinder/top_off(load_type, starting=FALSE)

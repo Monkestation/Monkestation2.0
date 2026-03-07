@@ -20,17 +20,17 @@
 		return BULLET_ACT_HIT
 
 /obj/item/ammo_box/magazine/recharge/ctf
-	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf
+	ammo_type = /obj/item/ammo_casing/laser/ctf
 
 /obj/item/ammo_box/magazine/recharge/ctf/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/delete_on_drop)
 
 
-/obj/item/ammo_casing/caseless/laser/ctf
+/obj/item/ammo_casing/laser/ctf
 	projectile_type = /obj/projectile/beam/ctf/
 
-/obj/item/ammo_casing/caseless/laser/ctf/Initialize(mapload)
+/obj/item/ammo_casing/laser/ctf/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/delete_on_drop)
 
@@ -49,10 +49,10 @@
 
 
 /obj/item/ammo_box/magazine/recharge/ctf/rifle
-	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf/rifle
+	ammo_type = /obj/item/ammo_casing/laser/ctf/rifle
 
 
-/obj/item/ammo_casing/caseless/laser/ctf/rifle
+/obj/item/ammo_casing/laser/ctf/rifle
 	projectile_type = /obj/projectile/beam/ctf/rifle
 
 
@@ -82,11 +82,11 @@
 	AddElement(/datum/element/delete_on_drop)
 
 /obj/item/ammo_box/magazine/recharge/ctf/shotgun
-	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf/shotgun
+	ammo_type = /obj/item/ammo_casing/laser/ctf/shotgun
 	max_ammo = 6
 
 
-/obj/item/ammo_casing/caseless/laser/ctf/shotgun
+/obj/item/ammo_casing/laser/ctf/shotgun
 	projectile_type = /obj/projectile/beam/ctf/shotgun
 	pellets = 6
 	variance = 25
@@ -107,14 +107,15 @@
 	fire_delay = 1 SECONDS
 
 /obj/item/ammo_box/magazine/recharge/ctf/marksman
-	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf/marksman
+	ammo_type = /obj/item/ammo_casing/laser/ctf/marksman
 	max_ammo = 10
 
-/obj/item/ammo_casing/caseless/laser/ctf/marksman
+/obj/item/ammo_casing/laser/ctf/marksman
 	projectile_type = /obj/projectile/beam/ctf/marksman
 
 /obj/projectile/beam/ctf/marksman
 	damage = 30
+	icon_state = null
 	hitscan = TRUE
 	tracer_type = /obj/effect/projectile/tracer/laser/blue
 	muzzle_type = /obj/effect/projectile/muzzle/laser/blue
@@ -133,11 +134,11 @@
 
 
 /obj/item/ammo_box/magazine/recharge/ctf/deagle
-	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf/deagle
+	ammo_type = /obj/item/ammo_casing/laser/ctf/deagle
 	max_ammo = 7
 
 
-/obj/item/ammo_casing/caseless/laser/ctf/deagle
+/obj/item/ammo_casing/laser/ctf/deagle
 	projectile_type = /obj/projectile/beam/ctf/deagle
 
 
@@ -242,9 +243,9 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/recharge/ctf/rifle/red
 
 /obj/item/ammo_box/magazine/recharge/ctf/rifle/red
-	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf/rifle/red
+	ammo_type = /obj/item/ammo_casing/laser/ctf/rifle/red
 
-/obj/item/ammo_casing/caseless/laser/ctf/rifle/red
+/obj/item/ammo_casing/laser/ctf/rifle/red
 	projectile_type = /obj/projectile/beam/ctf/rifle/red
 
 /obj/projectile/beam/ctf/rifle/red
@@ -258,9 +259,9 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/recharge/ctf/shotgun/red
 
 /obj/item/ammo_box/magazine/recharge/ctf/shotgun/red
-	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf/shotgun/red
+	ammo_type = /obj/item/ammo_casing/laser/ctf/shotgun/red
 
-/obj/item/ammo_casing/caseless/laser/ctf/shotgun/red
+/obj/item/ammo_casing/laser/ctf/shotgun/red
 	projectile_type = /obj/projectile/beam/ctf/shotgun/red
 
 /obj/projectile/beam/ctf/shotgun/red
@@ -274,9 +275,9 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/recharge/ctf/marksman/red
 
 /obj/item/ammo_box/magazine/recharge/ctf/marksman/red
-	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf/marksman/red
+	ammo_type = /obj/item/ammo_casing/laser/ctf/marksman/red
 
-/obj/item/ammo_casing/caseless/laser/ctf/marksman/red
+/obj/item/ammo_casing/laser/ctf/marksman/red
 	projectile_type = /obj/projectile/beam/ctf/marksman/red
 
 /obj/projectile/beam/ctf/marksman/red
@@ -308,9 +309,9 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/recharge/ctf/rifle/blue
 
 /obj/item/ammo_box/magazine/recharge/ctf/rifle/blue
-	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf/rifle/blue
+	ammo_type = /obj/item/ammo_casing/laser/ctf/rifle/blue
 
-/obj/item/ammo_casing/caseless/laser/ctf/rifle/blue
+/obj/item/ammo_casing/laser/ctf/rifle/blue
 	projectile_type = /obj/projectile/beam/ctf/rifle/blue
 
 /obj/projectile/beam/ctf/rifle/blue
@@ -322,9 +323,9 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/recharge/ctf/shotgun/blue
 
 /obj/item/ammo_box/magazine/recharge/ctf/shotgun/blue
-	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf/shotgun/blue
+	ammo_type = /obj/item/ammo_casing/laser/ctf/shotgun/blue
 
-/obj/item/ammo_casing/caseless/laser/ctf/shotgun/blue
+/obj/item/ammo_casing/laser/ctf/shotgun/blue
 	projectile_type = /obj/projectile/beam/ctf/shotgun/blue
 
 /obj/projectile/beam/ctf/shotgun/blue
@@ -337,9 +338,9 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/recharge/ctf/marksman/blue
 
 /obj/item/ammo_box/magazine/recharge/ctf/marksman/blue
-	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf/marksman/blue
+	ammo_type = /obj/item/ammo_casing/laser/ctf/marksman/blue
 
-/obj/item/ammo_casing/caseless/laser/ctf/marksman/blue
+/obj/item/ammo_casing/laser/ctf/marksman/blue
 	projectile_type = /obj/projectile/beam/ctf/marksman/blue
 
 /obj/projectile/beam/ctf/marksman/blue
@@ -367,9 +368,9 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/recharge/ctf/rifle/green
 
 /obj/item/ammo_box/magazine/recharge/ctf/rifle/green
-	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf/rifle/green
+	ammo_type = /obj/item/ammo_casing/laser/ctf/rifle/green
 
-/obj/item/ammo_casing/caseless/laser/ctf/rifle/green
+/obj/item/ammo_casing/laser/ctf/rifle/green
 	projectile_type = /obj/projectile/beam/ctf/rifle/green
 
 /obj/projectile/beam/ctf/rifle/green
@@ -383,9 +384,9 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/recharge/ctf/shotgun/green
 
 /obj/item/ammo_box/magazine/recharge/ctf/shotgun/green
-	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf/shotgun/green
+	ammo_type = /obj/item/ammo_casing/laser/ctf/shotgun/green
 
-/obj/item/ammo_casing/caseless/laser/ctf/shotgun/green
+/obj/item/ammo_casing/laser/ctf/shotgun/green
 	projectile_type = /obj/projectile/beam/ctf/shotgun/green
 
 /obj/projectile/beam/ctf/shotgun/green
@@ -399,9 +400,9 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/recharge/ctf/marksman/green
 
 /obj/item/ammo_box/magazine/recharge/ctf/marksman/green
-	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf/marksman/green
+	ammo_type = /obj/item/ammo_casing/laser/ctf/marksman/green
 
-/obj/item/ammo_casing/caseless/laser/ctf/marksman/green
+/obj/item/ammo_casing/laser/ctf/marksman/green
 	projectile_type = /obj/projectile/beam/ctf/marksman/green
 
 /obj/projectile/beam/ctf/marksman/green
@@ -433,9 +434,9 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/recharge/ctf/rifle/yellow
 
 /obj/item/ammo_box/magazine/recharge/ctf/rifle/yellow
-	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf/rifle/yellow
+	ammo_type = /obj/item/ammo_casing/laser/ctf/rifle/yellow
 
-/obj/item/ammo_casing/caseless/laser/ctf/rifle/yellow
+/obj/item/ammo_casing/laser/ctf/rifle/yellow
 	projectile_type = /obj/projectile/beam/ctf/rifle/yellow
 
 /obj/projectile/beam/ctf/rifle/yellow
@@ -449,9 +450,9 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/recharge/ctf/shotgun/yellow
 
 /obj/item/ammo_box/magazine/recharge/ctf/shotgun/yellow
-	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf/shotgun/yellow
+	ammo_type = /obj/item/ammo_casing/laser/ctf/shotgun/yellow
 
-/obj/item/ammo_casing/caseless/laser/ctf/shotgun/yellow
+/obj/item/ammo_casing/laser/ctf/shotgun/yellow
 	projectile_type = /obj/projectile/beam/ctf/shotgun/yellow
 
 /obj/projectile/beam/ctf/shotgun/yellow
@@ -465,9 +466,9 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/recharge/ctf/marksman/yellow
 
 /obj/item/ammo_box/magazine/recharge/ctf/marksman/yellow
-	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf/marksman/yellow
+	ammo_type = /obj/item/ammo_casing/laser/ctf/marksman/yellow
 
-/obj/item/ammo_casing/caseless/laser/ctf/marksman/yellow
+/obj/item/ammo_casing/laser/ctf/marksman/yellow
 	projectile_type = /obj/projectile/beam/ctf/marksman/yellow
 
 /obj/projectile/beam/ctf/marksman/yellow

@@ -308,20 +308,27 @@
 				casing.bounce_away(bounce_angle = bounce_angle, still_warm = TRUE)
 				SEND_SIGNAL(casing, COMSIG_CASING_EJECTED)
 		else if(empty_chamber)
-			chambered = null
+			clear_chambered()
 	if (chamber_next_round && (magazine?.max_ammo > 1))
 		chamber_round()
 
 ///Used to chamber a new round and eject the old one
-/obj/item/gun/ballistic/proc/chamber_round(keep_bullet = FALSE, spin_cylinder, replace_new_round)
+/obj/item/gun/ballistic/proc/chamber_round(spin_cylinder, replace_new_round)
 	if (chambered || !magazine)
 		return
 	if (magazine.ammo_count())
-		chambered = magazine.get_round(keep_bullet || bolt_type == BOLT_TYPE_NO_BOLT)
-		if (bolt_type != BOLT_TYPE_OPEN)
+		chambered = (bolt_type == BOLT_TYPE_OPEN && !bolt_locked) || bolt_type == BOLT_TYPE_NO_BOLT ? magazine.get_and_shuffle_round() : magazine.get_round()
+		if (bolt_type != BOLT_TYPE_OPEN && !(internal_magazine && bolt_type == BOLT_TYPE_NO_BOLT))
 			chambered.forceMove(src)
+		else
+			RegisterSignal(chambered, COMSIG_MOVABLE_MOVED, PROC_REF(clear_chambered))
 		if(replace_new_round)
 			magazine.give_round(new chambered.type)
+
+/obj/item/gun/ballistic/proc/clear_chambered(datum/source)
+	SIGNAL_HANDLER
+	UnregisterSignal(chambered, COMSIG_MOVABLE_MOVED)
+	chambered = null
 
 ///updates a bunch of racking related stuff and also handles the sound effects and the like
 /obj/item/gun/ballistic/proc/rack(mob/user = null)
@@ -398,58 +405,71 @@
 /obj/item/gun/ballistic/can_shoot()
 	return chambered?.loaded_projectile
 
-/obj/item/gun/ballistic/attackby(obj/item/A, mob/user, params)
+/obj/item/gun/ballistic/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = ..()
 	if (.)
 		return
-	if (!internal_magazine && istype(A, /obj/item/ammo_box/magazine))
-		var/obj/item/ammo_box/magazine/AM = A
+
+	if (!internal_magazine && istype(tool, /obj/item/ammo_box/magazine))
 		if (!magazine)
-			insert_magazine(user, AM)
-		else
-			if (tac_reloads)
-				eject_magazine(user, FALSE, AM)
-			else
-				balloon_alert(user, "already loaded!")
-		return
-	if (isammocasing(A) || istype(A, /obj/item/ammo_box))
+			insert_magazine(user, tool)
+			return ITEM_INTERACT_SUCCESS
+
+		if (tac_reloads)
+			eject_magazine(user, FALSE, tool)
+			return ITEM_INTERACT_SUCCESS
+
+		balloon_alert(user, "already loaded!")
+		return ITEM_INTERACT_FAILURE
+
+	if (isammocasing(tool) || istype(tool, /obj/item/ammo_box))
 		if (bolt_type == BOLT_TYPE_NO_BOLT || internal_magazine)
-			if (chambered && !chambered.loaded_projectile)
-				chambered.forceMove(drop_location())
-				chambered = null
-			var/num_loaded = magazine?.attackby(A, user, params, TRUE)
-			if (num_loaded)
-				balloon_alert(user, "[num_loaded] [cartridge_wording]\s loaded")
-				playsound(src, load_sound, load_sound_volume, load_sound_vary)
-				if (chambered == null && bolt_type == BOLT_TYPE_NO_BOLT)
-					chamber_round()
-				A.update_appearance()
-				update_appearance()
-			return
-	if(istype(A, /obj/item/suppressor))
-		var/obj/item/suppressor/S = A
+			if (load_gun(tool, user))
+				return ITEM_INTERACT_SUCCESS
+			return ITEM_INTERACT_FAILURE
+
+	if(istype(tool, /obj/item/suppressor))
 		if(!can_suppress)
-			balloon_alert(user, "[S.name] doesn't fit!")
-			return
+			balloon_alert(user, "[tool.name] doesn't fit!")
+			return ITEM_INTERACT_FAILURE
+
 		if(!user.is_holding(src))
 			balloon_alert(user, "not in hand!")
-			return
+			return ITEM_INTERACT_FAILURE
+
 		if(suppressed)
-			balloon_alert(user, "already has a supressor!")
-			return
-		if(user.transferItemToLoc(A, src))
-			balloon_alert(user, "[S.name] attached")
-			install_suppressor(A)
-			return
-	if (can_be_sawn_off)
-		if (sawoff(user, A))
-			return
+			balloon_alert(user, "already has a suppressor!")
+			return ITEM_INTERACT_FAILURE
 
-	if(can_misfire && istype(A, /obj/item/stack/sheet/cloth))
-		if(guncleaning(user, A))
-			return
+		if(!user.transferItemToLoc(tool, src))
+			balloon_alert(user, "cannot attach!")
+			return ITEM_INTERACT_FAILURE
 
-	return FALSE
+		balloon_alert(user, "[tool.name] attached")
+		install_suppressor(tool)
+		return ITEM_INTERACT_SUCCESS
+
+	if (can_be_sawn_off && sawoff(user, tool))
+		return ITEM_INTERACT_SUCCESS
+
+/obj/item/gun/ballistic/proc/load_gun(obj/item/ammo, mob/living/user)
+	if (chambered && !chambered.loaded_projectile)
+		chambered.forceMove(drop_location())
+		if(length(magazine?.stored_ammo) && chambered != magazine.stored_ammo[1])
+			magazine.stored_ammo -= chambered
+		chambered = null
+
+	var/num_loaded = magazine?.try_load(user, ammo, silent = TRUE)
+	if (!num_loaded)
+		return FALSE
+
+	balloon_alert(user, "[num_loaded] [cartridge_wording]\s loaded")
+	playsound(src, load_sound, load_sound_volume, load_sound_vary)
+	if (chambered == null && bolt_type == BOLT_TYPE_NO_BOLT)
+		chamber_round()
+	ammo.update_appearance()
+	update_appearance()
+	return TRUE
 
 /obj/item/gun/ballistic/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	if(can_misfire && magazine && chambered?.loaded_projectile && misfire_probability > 0)  //monke edit : moved can_misfire from the third spot to the first to cancel some runtime issues
@@ -459,9 +479,12 @@
 
 	if (sawn_off)
 		bonus_spread += SAWN_OFF_ACC_PENALTY
+
 	return ..()
 
 /obj/item/gun/ballistic/shoot_live_shot(mob/living/user, pointblank = 0, atom/pbtarget = null, message = 1)
+	if(isnull(chambered))
+		return ..()
 	if(can_misfire)
 		misfire_probability += misfire_percentage_increment
 		misfire_probability = clamp(misfire_probability, 0, misfire_probability_cap)
@@ -543,25 +566,7 @@
 			eject_magazine(user)
 			return
 	if(bolt_type == BOLT_TYPE_NO_BOLT)
-		chambered = null
-		var/num_unloaded = 0
-		for(var/obj/item/ammo_casing/casing in get_ammo_list(FALSE, TRUE))
-			casing.forceMove(drop_location())
-			var/bounce_angle
-			if(user)
-				var/sign_x = (istype(user) && !(user.get_held_index_of_item(src) % RIGHT_HANDS)) ? 1 : -1
-				bounce_angle = SIMPLIFY_DEGREES(dir2angle(user.dir) + (sign_x * 90) + rand(-45, 45))
-			casing.bounce_away(bounce_angle = bounce_angle, still_warm = FALSE, sound_delay = 0)
-			num_unloaded++
-			var/turf/our_turf = get_turf(drop_location())
-			if(our_turf && is_station_level(our_turf.z))
-				SSblackbox.record_feedback("tally", "station_mess_created", 1, casing.name)
-		if (num_unloaded)
-			balloon_alert(user, "[num_unloaded] [cartridge_wording] unloaded")
-			playsound(user, eject_sound, eject_sound_volume, eject_sound_vary)
-			update_appearance()
-		else
-			balloon_alert(user, "it's empty!")
+		unload_ammo(user)
 		return
 	if(bolt_type == BOLT_TYPE_LOCKING && bolt_locked)
 		drop_bolt(user)
@@ -572,6 +577,25 @@
 	rack(user)
 	return
 
+/obj/item/gun/ballistic/proc/unload_ammo(mob/living/user, forced = FALSE)
+	var/num_unloaded = 0
+	var/turf/drop_turf = get_turf(drop_location())
+	for(var/obj/item/ammo_casing/casing as anything in get_ammo_list(FALSE))
+		casing.forceMove(drop_location())
+		casing.bounce_away(FALSE, NONE)
+		num_unloaded++
+		if(drop_turf && is_station_level(drop_turf.z))
+			SSblackbox.record_feedback("tally", "station_mess_created", 1, casing.name)
+
+	if (!num_unloaded)
+		if (!forced)
+			balloon_alert(user, "it's empty!")
+		return
+
+	if (!forced)
+		balloon_alert(user, "[num_unloaded] [cartridge_wording]\s unloaded")
+	playsound(user, eject_sound, eject_sound_volume, eject_sound_vary)
+	update_appearance()
 
 /obj/item/gun/ballistic/examine(mob/user)
 	. = ..()
@@ -651,8 +675,7 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 	if(sawn_off)
 		balloon_alert(user, "it's already shortened!")
 		return
-	if(bayonet)
-		balloon_alert(user, "[bayonet.name] must be removed!")
+	if (SEND_SIGNAL(src, COMSIG_GUN_BEING_SAWNOFF, user) & COMPONENT_CANCEL_SAWING_OFF)
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.visible_message(span_notice("[user] begins to shorten [src]."), span_notice("You begin to shorten [src]..."))
@@ -662,27 +685,30 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 		user.visible_message(span_danger("[src] goes off!"), span_danger("[src] goes off in your face!"))
 		return
 
-	if(do_after(user, 3 SECONDS, target = src))
-		if(sawn_off)
-			return
-		user.visible_message(span_notice("[user] shortens [src]!"), span_notice("You shorten [src]."))
-		sawn_off = TRUE
-		if(handle_modifications)
-			name = "sawn-off [src.name]"
-			desc = sawn_desc
-			w_class = WEIGHT_CLASS_NORMAL
-			//The file might not have a "gun" icon, let's prepare for this
-			lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
-			righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
-			inhand_x_dimension = 32
-			inhand_y_dimension = 32
-			inhand_icon_state = "gun"
-			worn_icon_state = "gun"
-			slot_flags &= ~ITEM_SLOT_BACK //you can't sling it on your back
-			slot_flags |= ITEM_SLOT_BELT //but you can wear it on your belt (poorly concealed under a trenchcoat, ideally)
-			recoil = SAWN_OFF_RECOIL
-			update_appearance()
+	if(!do_after(user, 3 SECONDS, target = src))
+		return
+	if(sawn_off)
+		return
+	user.visible_message(span_notice("[user] shortens [src]!"), span_notice("You shorten [src]."))
+	sawn_off = TRUE
+	SEND_SIGNAL(src, COMSIG_GUN_SAWN_OFF)
+	if(!handle_modifications)
 		return TRUE
+	name = "sawn-off [src.name]"
+	desc = sawn_desc
+	update_weight_class(WEIGHT_CLASS_NORMAL)
+	//The file might not have a "gun" icon, let's prepare for this
+	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+	inhand_x_dimension = 32
+	inhand_y_dimension = 32
+	inhand_icon_state = "gun"
+	worn_icon_state = "gun"
+	slot_flags &= ~ITEM_SLOT_BACK //you can't sling it on your back
+	slot_flags |= ITEM_SLOT_BELT //but you can wear it on your belt (poorly concealed under a trenchcoat, ideally)
+	recoil = SAWN_OFF_RECOIL
+	update_appearance()
+	return TRUE
 
 /obj/item/gun/ballistic/proc/guncleaning(mob/user, obj/item/A)
 	if(misfire_probability == 0)
@@ -741,11 +767,7 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 
 ///used for sawing guns, causes the gun to fire without the input of the user
 /obj/item/gun/ballistic/proc/blow_up(mob/user)
-	. = FALSE
-	for(var/obj/item/ammo_casing/AC in magazine.stored_ammo)
-		if(AC.loaded_projectile)
-			process_fire(user, user, FALSE)
-			. = TRUE
+	return chambered && process_fire(user, user, FALSE)
 
 /obj/item/gun/ballistic/proc/instant_reload()
 	SIGNAL_HANDLER
@@ -757,13 +779,6 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 		magazine = new accepted_magazine_type(src)
 	chamber_round()
 	update_appearance()
-
-// monkestation edit start
-/obj/item/gun/ballistic/handle_atom_del(atom/A)
-	if (istype(A, /obj/item/ammo_casing) && magazine)
-		magazine.handle_atom_del(A)
-	return ..()
-// monkestation edit end
 
 /obj/item/suppressor
 	name = "suppressor"

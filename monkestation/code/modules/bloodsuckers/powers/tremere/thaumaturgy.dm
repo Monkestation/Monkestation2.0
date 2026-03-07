@@ -39,8 +39,7 @@
 	var/shot_cooldown = 0
 	var/datum/weakref/blood_shield
 	var/obj/projectile/magic/arcane_barrage/bloodsucker/magic_9ball
-	var/speed = 1
-	var/pixel_speed = 0.3
+	var/speed = 0.3
 
 /datum/action/cooldown/bloodsucker/targeted/tremere/thaumaturgy/Grant()
 	charges = get_max_charges()
@@ -189,12 +188,11 @@
 /datum/action/cooldown/bloodsucker/targeted/tremere/thaumaturgy/proc/handle_shot(mob/user, atom/target)
 	magic_9ball = new(get_turf(user))
 	magic_9ball.speed = speed
-	magic_9ball.pixel_speed_multiplier = pixel_speed
 	magic_9ball.firer = user
 	magic_9ball.power_ref = WEAKREF(src)
 	magic_9ball.damage = get_blood_bolt_damage()
 	magic_9ball.def_zone = ran_zone(user.zone_selected, min(level_current * 10, 90))
-	magic_9ball.preparePixelProjectile(target, user)
+	magic_9ball.aim_projectile(target, user)
 	// autotarget if we aim at a turf
 	if(isturf(target))
 		var/list/targets = list()
@@ -229,6 +227,8 @@
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser
 	range = 30
 	armor_flag = LASER
+	//for cases where homing would act weird with prone targets
+	hit_prone_targets = TRUE
 	var/datum/weakref/power_ref
 
 /obj/projectile/magic/arcane_barrage/bloodsucker/on_hit(target, blocked = 0, pierce_hit)

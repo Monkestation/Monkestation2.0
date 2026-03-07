@@ -53,7 +53,7 @@
 	icon_state = "laser_greyscale"
 	wound_bonus = 0
 	damage = 20 // You are trading damage for a significant wound bonus and speed increase
-	speed = 0.6
+	speed = 1.25
 	color = LIGHT_COLOR_FLARE
 	light_color = LIGHT_COLOR_FLARE
 
@@ -77,7 +77,7 @@
 	tracer_type = /obj/effect/projectile/tracer/heavy_laser
 	muzzle_type = /obj/effect/projectile/muzzle/heavy_laser
 	impact_type = /obj/effect/projectile/impact/heavy_laser
-	speed = 0.4
+	speed = 1.7
 
 /obj/projectile/beam/laser/microfusion/xray
 	name = "x-ray microfusion laser"

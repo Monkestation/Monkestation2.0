@@ -230,6 +230,7 @@
 		eyeblur = 0 SECONDS,
 		drowsy = 0 SECONDS,
 		blocked = 0, // This one's not an effect, don't be confused - it's the % of the other effects to be blocked by armor
+		stamina = 0, // This one's a damage type, and not an effect
 		jitter = 0 SECONDS,
 		paralyze = 0,
 		immobilize = 0,
@@ -248,6 +249,10 @@
 		apply_effect(paralyze, EFFECT_PARALYZE, blocked)
 	if(immobilize)
 		apply_effect(immobilize, EFFECT_IMMOBILIZE, blocked)
+
+	if(stamina)
+		apply_damage(stamina, STAMINA, null, blocked)
+
 	if(drowsy)
 		adjust_drowsiness(drowsy)
 	if(eyeblur)

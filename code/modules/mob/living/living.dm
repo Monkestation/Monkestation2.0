@@ -2664,5 +2664,11 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	var/datum/controller/subsystem/mobs/clientless_subsystem = locate(life_subsystem_type) in Master.subsystems
 	if(!clientless_subsystem)
 		return
-	STOP_PROCESSING(SSclient_mobs, src)
-	START_PROCESSING(clientless_subsystem, src)
+
+	to_chat(src, "You tilt your head downwards.")
+	look_down()
+
+/// Returns the string form of the def_zone we have hit.
+/mob/living/proc/check_hit_limb_zone_name(hit_zone)
+	if(has_limbs)
+		return hit_zone

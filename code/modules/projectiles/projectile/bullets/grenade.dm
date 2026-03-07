@@ -5,11 +5,11 @@
 	icon = 'monkestation/icons/obj/guns/40mm_grenade.dmi'
 	icon_state = "40mm_projectile"
 	damage = 60
-	embedding = null
+	embed_type = null
 	shrapnel_type = null
 	range = 30
 
-/obj/projectile/bullet/a40mm/Range() //because you lob the grenade to achieve the range :)
+/obj/projectile/bullet/a40mm/reduce_range() //because you lob the grenade to achieve the range :)
 	if(!has_gravity(get_area(src)))
 		range++
 	return ..()
