@@ -64,7 +64,7 @@ GLOBAL_LIST_INIT(plastic_wall_panel_recipes, list(
 	if(!use(1))
 		user.balloon_alert(user, "not enough material!")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	build_on.PlaceOnTop(walltype, flags = CHANGETURF_INHERIT_AIR)
+	build_on.place_on_top(walltype, flags = CHANGETURF_INHERIT_AIR)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/stack/sheet/plastic_wall_panel/get_main_recipes()

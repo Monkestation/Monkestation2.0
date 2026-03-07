@@ -239,3 +239,6 @@
 
 /// from /obj/structure/cursed_slot_machine/determine_victor() when someone finally wins.
 #define COMSIG_GLOB_CURSED_SLOT_MACHINE_WON "cursed_slot_machine_won"
+
+/// from /obj/machinery/computer/camera_advanced/shuttle_docker/gatherNavComputerOverlays() : (list/images_out)
+#define COMSIG_SHUTTLE_NAV_COMPUTER_IMAGE_REQUESTED "shuttle_nav_computer_image_requested"

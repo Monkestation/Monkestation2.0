@@ -198,6 +198,8 @@
 	// Click on the floor to close airlocks
 	AddComponent(/datum/component/redirect_attack_hand_from_turf)
 
+	AddElement(/datum/element/nav_computer_icon, 'icons/effects/nav_computer_indicators.dmi', "airlock", TRUE)
+
 	RegisterSignal(src, COMSIG_MACHINERY_BROKEN, PROC_REF(on_break))
 
 	RegisterSignals(SSdcs, list(COMSIG_GLOB_GREY_TIDE, COMSIG_GLOBAL_GREY_TIDE_TRAITOR), PROC_REF(grey_tide))

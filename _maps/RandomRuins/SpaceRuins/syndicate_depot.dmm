@@ -3294,7 +3294,7 @@
 /obj/item/circuitboard/machine/quantumpad,
 /obj/item/circuitboard/machine/quantumpad,
 /obj/item/storage/toolbox/electrical,
-/obj/item/circuitboard/machine/spaceship_navigation_beacon,
+/obj/item/folded_navigation_gigabeacon,
 /obj/item/manipulator_filter,
 /obj/item/manipulator_filter,
 /obj/item/manipulator_filter,

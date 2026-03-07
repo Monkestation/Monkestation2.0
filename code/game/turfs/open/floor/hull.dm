@@ -8,11 +8,6 @@
 
 /turf/open/floor/engine/hull/ceiling
 	name = "shuttle ceiling plating"
-	var/old_turf_type
-
-/turf/open/floor/engine/hull/ceiling/AfterChange(flags, oldType)
-	. = ..()
-	old_turf_type = oldType
 
 /turf/open/floor/engine/hull/reinforced
 	name = "exterior reinforced hull plating"

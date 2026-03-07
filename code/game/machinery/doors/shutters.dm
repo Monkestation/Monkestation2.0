@@ -11,6 +11,7 @@
 	recipe_type = /datum/crafting_recipe/shutters
 	open_sound = 'monkestation/sound/machines/poddoors/shutters_open.ogg'
 	close_sound = 'monkestation/sound/machines/poddoors/shutters_close.ogg'
+	show_nav_computer_icon = FALSE
 
 /obj/machinery/door/poddoor/shutters/preopen
 	icon_state = "open"
