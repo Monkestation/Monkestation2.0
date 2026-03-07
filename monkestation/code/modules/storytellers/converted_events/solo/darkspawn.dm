@@ -1,9 +1,9 @@
-/datum/round_event_control/antagonist/solo/darkspawn
+/datum/round_event_control/antagonist/darkspawn
 	name = "Darkspawns"
 	tags = list(TAG_SPOOKY, TAG_DESTRUCTIVE, TAG_COMBAT, TAG_TEAM_ANTAG, TAG_MAGICAL)
 	antag_flag = ROLE_DARKSPAWN
 	antag_datum = /datum/antagonist/darkspawn
-	typepath = /datum/round_event/antagonist/solo/darkspawn
+	typepath = /datum/round_event/antagonist/darkspawn
 	shared_occurence_type = SHARED_HIGH_THREAT
 	repeated_mode_adjust = TRUE
 	restricted_roles = list(
@@ -38,7 +38,7 @@
 	)
 	base_antags = 2
 	maximum_antags = 4
-	min_players = 25
+	min_players = 35
 	roundstart = TRUE
 	//title_icon = "darkspawn"
 	earliest_start = 0 SECONDS
@@ -46,18 +46,16 @@
 	weight = 4
 	max_occurrences = 1
 
-/datum/round_event/antagonist/solo/darkspawn
-	excute_round_end_reports = TRUE
-	end_when = 60000
+/datum/round_event/antagonist/darkspawn
 	var/static/datum/team/darkspawn/dark_team
 
-/datum/round_event/antagonist/solo/darkspawn/setup()
+/datum/round_event/antagonist/darkspawn/setup()
 	. = ..()
 	if(!dark_team)
 		dark_team = new()
 		dark_team.update_objectives()
 	GLOB.thrallnet.name = "Thrall net"
 
-/datum/round_event/antagonist/solo/darkspawn/start()
+/datum/round_event/antagonist/darkspawn/start()
 	. = ..()
 	dark_team.update_objectives()

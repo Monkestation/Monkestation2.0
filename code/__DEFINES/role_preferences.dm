@@ -220,3 +220,11 @@ GLOBAL_LIST_INIT(special_roles, list(
 #define BEOVERFLOW 1
 #define BERANDOMJOB 2
 #define RETURNTOLOBBY 3
+
+#ifdef ROLE_VAMPIRE
+#define VAMPIRE_ANTAG_DATUM /datum/antagonist/vampire
+#define VAMPIRE_ROUNDSTART_EVENT /datum/round_event_control/antagonist/vampire/roundstart
+#else
+#define VAMPIRE_ANTAG_DATUM /datum/antagonist/bloodsucker
+#define VAMPIRE_ROUNDSTART_EVENT /datum/round_event_control/antagonist/bloodsucker/roundstart
+#endif
