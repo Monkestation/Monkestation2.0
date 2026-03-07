@@ -110,7 +110,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	// Do on-equip effects if we're already equipped
-	var/mob/worn_on = attached_to.loc
+	var/mob/living/worn_on = attached_to.loc
 	if(istype(worn_on))
 		on_uniform_equipped(attached_to, worn_on, worn_on.get_slot_by_item(attached_to))
 
@@ -164,18 +164,17 @@
 	SIGNAL_HANDLER
 
 	accessory_dropped(source, user)
-	// MONKESTATION EDIT START
-	//	user.update_clothing(ITEM_SLOT_ICLOTHING|ITEM_SLOT_OCLOTHING) - original
 	user.update_clothing(ITEM_SLOT_ICLOTHING|ITEM_SLOT_OCLOTHING|ITEM_SLOT_NECK)
-	// MONKESTATION EDIT END
 
 /// Called when the uniform this accessory is pinned to is equipped in a valid slot
 /obj/item/clothing/accessory/proc/accessory_equipped(obj/item/clothing/under/clothes, mob/living/user)
+	SEND_SIGNAL(user, COMSIG_LIVING_ACCESSORY_EQUIPPED, src, clothes)
 	equipped(user, user.get_slot_by_item(clothes)) // so we get any actions, item_flags get set, etc
 	return
 
 /// Called when the uniform this accessory is pinned to is dropped
 /obj/item/clothing/accessory/proc/accessory_dropped(obj/item/clothing/under/clothes, mob/living/user)
+	SEND_SIGNAL(user, COMSIG_LIVING_ACCESSORY_DROPPED, src, clothes)
 	dropped(user)
 	return
 

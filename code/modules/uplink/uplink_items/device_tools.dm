@@ -42,6 +42,7 @@
 			Can also be used in-hand to 'claim' it, granting you priest-like abilities -- no training required!"
 	item = /obj/item/book/bible/syndicate
 	cost = 5
+	purchasable_from = ~UPLINK_GANGS
 
 /datum/uplink_item/device_tools/tram_remote
 	name = "Tram Remote Control"
@@ -84,6 +85,7 @@
 			Comes with 4 charges, recharges randomly. Warranty null and void if exposed to an electromagnetic pulse."
 	item = /obj/item/storage/box/syndie_kit/syndicate_teleporter
 	cost = 8
+	purchasable_from = ~UPLINK_GANGS //might give gangs their own version of this because funny
 
 /datum/uplink_item/device_tools/camera_app
 	name = "SyndEye Program"
@@ -105,6 +107,7 @@
 			After hacking a certain number of airlocks, the device will require some time to recharge."
 	item = /obj/item/card/emag/doorjack
 	cost = 3
+	purchasable_from = ~UPLINK_GANGS //while funny, its not very fun for 90% of the stations doors to be stuck open 15 minutes into the round
 
 /datum/uplink_item/device_tools/fakenucleardisk
 	name = "Decoy Nuclear Authentication Disk"
@@ -124,7 +127,7 @@
 	item = /obj/item/computer_disk/virus/frame
 	cost = 4
 	restricted = TRUE
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_GANGS) //monkestation edit: adds UPLINK_GANGS
 
 /datum/uplink_item/device_tools/frame/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
 	. = ..()
@@ -140,7 +143,7 @@
 	cost = 1
 	surplus = 0
 	restricted = TRUE
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_GANGS)
 
 /datum/uplink_item/device_tools/failsafe/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
 	var/datum/component/uplink/uplink = source.GetComponent(/datum/component/uplink)
@@ -185,6 +188,7 @@
 	restricted = TRUE
 	cost = 7
 	limited_stock = 1
+	purchasable_from = ~UPLINK_GANGS
 
 /datum/uplink_item/device_tools/binary
 	name = "Binary Translator Key"
@@ -231,12 +235,14 @@
 	desc = "A modified flash able to hypnotize targets. If the target is not in a mentally vulnerable state, it will only confuse and pacify them temporarily."
 	item = /obj/item/assembly/flash/hypnotic
 	cost = 7
+	purchasable_from = ~UPLINK_GANGS //if you want to convert people then add them to your gang
 
 /datum/uplink_item/device_tools/hypnotic_grenade
 	name = "Hypnotic Grenade"
 	desc = "A modified flashbang grenade able to hypnotize targets. The sound portion of the flashbang causes hallucinations, and will allow the flash to induce a hypnotic trance to viewers."
 	item = /obj/item/grenade/hypnotic
 	cost = 12
+	purchasable_from = ~UPLINK_GANGS
 
 /datum/uplink_item/device_tools/singularity_beacon
 	name = "Power Beacon"

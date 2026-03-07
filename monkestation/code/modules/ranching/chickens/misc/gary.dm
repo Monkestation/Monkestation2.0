@@ -28,15 +28,13 @@
 	var/list/held_shinies = list()
 
 	var/datum/hideout/hideout
-	var/datum/callback/roundend_callback = null
 
 	var/max_w_class = WEIGHT_CLASS_SMALL
 
 /mob/living/basic/chicken/gary/Initialize(mapload, turf/open/home)
 	. = ..()
 	if(!memory_saved)
-		roundend_callback = CALLBACK(src, PROC_REF(Write_Memory))
-		SSticker.OnRoundend(roundend_callback)
+		RegisterSignal(SSticker, COMSIG_TICKER_DECLARE_ROUND_END, PROC_REF(Write_Memory))
 	Read_Memory()
 	AddComponent(/datum/component/regenerator)
 	add_traits(list(TRAIT_SHOCKIMMUNE, TRAIT_GOES_THROUGH_WOODEN_BARRICADES, TRAIT_WATER_BREATHING), INNATE_TRAIT) // gary REALLY balls (also gary making a hideout in a pool is funny)
@@ -47,8 +45,7 @@
 
 /mob/living/basic/chicken/gary/Destroy()
 	drop_held_item()
-	LAZYREMOVE(SSticker.round_end_events, roundend_callback)
-	roundend_callback = null //This ought to free the callback datum, and prevent us from harddeling
+	UnregisterSignal(SSticker, COMSIG_TICKER_DECLARE_ROUND_END)
 	QDEL_NULL(hideout)
 	return ..()
 

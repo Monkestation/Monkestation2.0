@@ -35,8 +35,6 @@
 	var/mob/living/new_holder
 	///Every person who has touched the greentext, having their colors changed by it.
 	var/list/color_altered_mobs = list()
-	///The callback at the end of a round to check if the greentext has been completed.
-	var/datum/callback/roundend_callback
 	///Boolean on whether to announce the greentext's destruction to all mobs.
 	var/quiet = FALSE
 
@@ -46,8 +44,7 @@
 /obj/item/greentext/Initialize(mapload)
 	. = ..()
 	SSpoints_of_interest.make_point_of_interest(src)
-	roundend_callback = CALLBACK(src, PROC_REF(check_winner))
-	SSticker.OnRoundend(roundend_callback)
+	RegisterSignal(SSticker, COMSIG_TICKER_DECLARE_ROUND_END, PROC_REF(check_winner))
 
 /obj/item/greentext/equipped(mob/user, slot, initial = FALSE)
 	. = ..()
@@ -79,8 +76,7 @@
 		last_holder = new_holder //long live the king
 
 /obj/item/greentext/Destroy(force)
-	LAZYREMOVE(SSticker.round_end_events, roundend_callback)
-	roundend_callback = null //This ought to free the callback datum, and prevent us from harddeling
+	UnregisterSignal(SSticker, COMSIG_TICKER_DECLARE_ROUND_END)
 	for(var/mob/all_player_mobs as anything in GLOB.player_list)
 		var/message = "<span class='warning'>A dark temptation has passed from this world"
 		if(all_player_mobs in color_altered_mobs)

@@ -66,7 +66,6 @@ SUBSYSTEM_DEF(ticker)
 
 	var/round_start_time = 0
 	var/list/round_start_events
-	var/list/round_end_events
 	var/mode_result = "undefined"
 	var/end_state = "undefined"
 
@@ -405,13 +404,6 @@ SUBSYSTEM_DEF(ticker)
 		LAZYADD(round_start_events, cb)
 	else
 		cb.InvokeAsync()
-
-//These callbacks will fire before roundend report
-/datum/controller/subsystem/ticker/proc/OnRoundend(datum/callback/cb)
-	if(current_state >= GAME_STATE_FINISHED)
-		cb.InvokeAsync()
-	else
-		LAZYADD(round_end_events, cb)
 
 /datum/controller/subsystem/ticker/proc/create_characters()
 	for(var/player in GLOB.new_player_list)

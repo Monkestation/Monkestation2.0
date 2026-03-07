@@ -34,10 +34,6 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/can_elimination_hijack = ELIMINATION_NEUTRAL
 	///If above 0, this is the multiplier for the speed at which we hijack the shuttle. Do not directly read, use hijack_speed().
 	var/hijack_speed = 0
-	///The antag hud's icon file
-	var/hud_icon = 'icons/mob/huds/antag_hud.dmi'
-	///Name of the antag hud we provide to this mob.
-	var/antag_hud_name
 	/// If set to true, the antag will not be added to the living antag list.
 	var/count_against_dynamic_roll_chance = TRUE
 	/// The battlecry this antagonist shouts when suiciding with C4/X4.
@@ -53,6 +49,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/show_name_in_check_antagonists = FALSE
 	/// Should this antagonist be shown as antag to ghosts? Shouldn't be used for stealthy antagonists like traitors
 	var/show_to_ghosts = FALSE
+	/// If this antagonist should be removed from the crew manifest upon gain.
+	var/remove_from_manifest = FALSE
 	/// The typepath for the outfit to show in the preview for the preferences menu.
 	var/preview_outfit
 	/// Flags for antags to turn on or off and check!
@@ -67,6 +65,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/stinger_sound
 	/// How many points does this antag contribute to antag cap usage, should only be updated via set_antag_count_points()
 	VAR_PROTECTED/antag_count_points = 10
+	/// The type we use for checking duplicate antag types in can_be_owned()
+	var/base_type
 
 	//ANTAG UI
 
@@ -77,10 +77,17 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 	/// A weakref to the HUD shown to teammates, created by `add_team_hud`
 	var/datum/weakref/team_hud_ref
+	///The antag hud's icon file
+	var/hud_icon = 'icons/mob/huds/antag_hud.dmi'
+	///Name of the antag hud we provide to this mob.
+	var/antag_hud_name
+	///The list of keys that are valid to see our antag hud/of huds we can see
+	var/list/hud_keys
 
 /datum/antagonist/New()
 	GLOB.antagonists += src
 	typecache_datum_blacklist = typecacheof(typecache_datum_blacklist)
+	base_type ||= type
 
 /datum/antagonist/Destroy()
 	GLOB.antagonists -= src
@@ -183,7 +190,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/can_be_owned(datum/mind/new_owner)
 	. = TRUE
 	var/datum/mind/tested = new_owner || owner
-	if(tested.has_antag_datum(type))
+	if(tested.has_antag_datum(base_type))
 		return FALSE
 	for(var/datum/antagonist/badguy as anything in tested.antag_datums)
 		if(is_type_in_typecache(src, badguy.typecache_datum_blacklist))
@@ -213,11 +220,17 @@ GLOBAL_LIST_EMPTY(antagonists)
 	return
 
 //This handles the application of antag huds/special abilities
-/datum/antagonist/proc/apply_innate_effects(mob/living/mob_override)
+/datum/antagonist/proc/apply_innate_effects(mob/living/mob_override) //make mob_override default to owner.current
+	var/mob/living/current = mob_override || owner.current
+	SEND_SIGNAL(src, COMSIG_ANTAGONIST_INNATE_EFFECTS_APPLIED, current) //IMPORTANT TODO: SET SHOULD_CALL_PARENT(TRUE) in a future PR to avoid conflicts, moodlets broken until then
+	give_antag_moodies(current)
 	return
 
 //This handles the removal of antag huds/special abilities
 /datum/antagonist/proc/remove_innate_effects(mob/living/mob_override)
+	var/mob/living/current = mob_override || owner.current
+	SEND_SIGNAL(src, COMSIG_ANTAGONIST_INNATE_EFFECTS_REMOVED, current)
+	clear_antag_moodies(current)
 	return
 
 /// This is called when the antagonist is being mindshielded.
@@ -271,7 +284,6 @@ GLOBAL_LIST_EMPTY(antagonists)
 			to_chat(owner.current, type_policy)
 
 	apply_innate_effects()
-	give_antag_moodies()
 	RegisterSignal(owner, COMSIG_PRE_MINDSHIELD_IMPLANT, PROC_REF(pre_mindshield))
 	RegisterSignal(owner, COMSIG_MINDSHIELD_IMPLANTED, PROC_REF(on_mindshield))
 	if(is_banned(owner.current) && replace_banned)
@@ -326,7 +338,6 @@ GLOBAL_LIST_EMPTY(antagonists)
 		CRASH("Antag datum with no owner.")
 
 	remove_innate_effects()
-	clear_antag_moodies()
 	LAZYREMOVE(owner.antag_datums, src)
 	if(!LAZYLEN(owner.antag_datums))
 		owner.current?.remove_from_current_living_antags()
@@ -375,18 +386,18 @@ GLOBAL_LIST_EMPTY(antagonists)
 /**
  * Proc that assigns this antagonist's ascribed moodlet to the player.
  */
-/datum/antagonist/proc/give_antag_moodies()
-	if(!antag_moodlet)
+/datum/antagonist/proc/give_antag_moodies(mob/living/given_to = owner.current)
+	if(!antag_moodlet || !given_to)
 		return
-	owner.current.add_mood_event("antag_moodlet_[type]", antag_moodlet)
+	given_to.add_mood_event("antag_moodlet_[type]", antag_moodlet)
 
 /**
  * Proc that removes this antagonist's ascribed moodlet from the player.
  */
-/datum/antagonist/proc/clear_antag_moodies()
-	if(!antag_moodlet)
+/datum/antagonist/proc/clear_antag_moodies(mob/living/cleared_from = owner.current)
+	if(!antag_moodlet || !cleared_from)
 		return
-	owner.current.clear_mood_event("antag_moodlet_[type]")
+	cleared_from.clear_mood_event("antag_moodlet_[type]")
 
 /**
  * Proc that will return the team this antagonist belongs to, when called. Helpful with antagonists that may belong to multiple potential teams in a single round.
@@ -545,7 +556,7 @@ GLOBAL_LIST_EMPTY(cached_antag_previews)
 
 /// Adds a HUD that will show you other members with the same antagonist.
 /// If an antag typepath is passed to `antag_to_check`, will check that, otherwise will use the source type.
-/datum/antagonist/proc/add_team_hud(mob/target, antag_to_check, passed_hud_keys) //monkestation edit: adds passed_hud_keys
+/datum/antagonist/proc/add_team_hud(mob/target, antag_to_check, passed_hud_keys)
 	QDEL_NULL(team_hud_ref)
 
 	team_hud_ref = WEAKREF(target.add_alt_appearance(
@@ -553,18 +564,32 @@ GLOBAL_LIST_EMPTY(cached_antag_previews)
 		"antag_team_hud_[REF(src)]",
 		hud_image_on(target),
 		antag_to_check || type,
-		passed_hud_keys || hud_keys, //monkestation edit
+		passed_hud_keys || hud_keys,
 	))
 
 	// Add HUDs that they couldn't see before
-	for (var/datum/atom_hud/alternate_appearance/basic/has_antagonist/antag_hud as anything in GLOB.has_antagonist_huds)
+	for(var/datum/atom_hud/alternate_appearance/basic/has_antagonist/antag_hud as anything in GLOB.has_antagonist_huds) //refactor this terrible thing
 		antag_hud.apply_to_new_mob(owner.current)
 
 /// Takes a location, returns an image drawing "on" it that matches this antag datum's hud icon
-/datum/antagonist/proc/hud_image_on(mob/hud_loc)
-	var/image/hud = image(hud_icon, hud_loc, antag_hud_name)
+/datum/antagonist/proc/hud_image_on(mob/hud_loc, icon_override, name_override)
+	var/image/hud = image(icon_override || hud_icon, hud_loc, name_override || antag_hud_name)
 	SET_PLANE_EXPLICIT(hud, ABOVE_GAME_PLANE, hud_loc)
 	return hud
+
+///Set our hud_keys, if override_old_keys is FALSE then we will simply add keys, otherwise we we set our keys to only be passed ones
+/datum/antagonist/proc/set_hud_keys(list/keys, override_old_keys = FALSE)
+	if(isnull(keys))
+		return
+
+	if(!islist(keys))
+		keys = list(keys)
+
+	if(!isnull(hud_keys))
+		hud_keys = (override_old_keys ? keys : keys | hud_keys)
+	else
+		hud_keys = keys
+	return hud_keys
 
 /// Generic helper to send objectives as data through tgui.
 ///

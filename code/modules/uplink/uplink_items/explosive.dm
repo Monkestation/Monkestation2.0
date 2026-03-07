@@ -47,6 +47,7 @@
 	item = /obj/item/computer_disk/virus/detomatix
 	cost = 6
 	restricted = TRUE
+	purchasable_from = ~UPLINK_GANGS
 
 /datum/uplink_item/explosives/emp
 	name = "EMP Grenades and Implanter Kit"
@@ -78,7 +79,6 @@
 	cost = 6
 	purchasable_from = ~UPLINK_CLOWN_OPS
 
-
 /datum/uplink_item/explosives/syndicate_bomb/emp
 	name = "Syndicate EMP Bomb"
 	desc = "A variation of the syndicate bomb designed to produce a large EMP effect."
@@ -102,6 +102,7 @@
 	progression_minimum = 30 MINUTES
 	item = /obj/item/sbeacondrop/bomb
 	cost = 11
+	purchasable_from = ~UPLINK_GANGS
 
 /datum/uplink_item/explosives/syndicate_bomb/New()
 	. = ..()

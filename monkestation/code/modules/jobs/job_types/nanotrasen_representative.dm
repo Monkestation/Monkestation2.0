@@ -58,14 +58,18 @@
 		"Retired Captain",
 	)
 	job_tone = "incoming message"
+	///List of NT rep minds that have spawned
+	var/list/spawned_reps
 
 /datum/job/nanotrasen_representative/after_spawn(mob/living/spawned, client/player_client)
 	. = ..()
 
 	//we set ourselves as "dead" to CC, then alive as long as 1 of us survives.
 	SSticker.nanotrasen_rep_status = NT_REP_STATUS_DIED
-	var/datum/callback/roundend_callback = CALLBACK(src, PROC_REF(check_living), spawned.mind)
-	SSticker.OnRoundend(roundend_callback)
+	if(isnull(spawned_reps))
+		spawned_reps = list()
+		RegisterSignal(SSticker, COMSIG_TICKER_DECLARE_ROUND_END, PROC_REF(check_living))
+	spawned_reps += spawned.mind
 
 /datum/job/nanotrasen_representative/employment_contract_contents(employee_name)
 	return "<center>Conditions of Employment</center>\
@@ -83,9 +87,10 @@
 ///Checks if our mind survived somehow, since we can change bodies we should not keep track of that instead.
 ///If so, (yes only 1 NT rep exists currently but this is for future proofing), set it as an NT rep surviving,
 ///which won't cause score to tank.
-/datum/job/nanotrasen_representative/proc/check_living(datum/mind/rep_mind)
-	if(rep_mind?.current?.stat < DEAD)
-		SSticker.nanotrasen_rep_status = NT_REP_STATUS_SURVIVED
+/datum/job/nanotrasen_representative/proc/check_living()
+	for(var/datum/mind/rep_mind in spawned_reps)
+		if(rep_mind.current?.stat < DEAD)
+			SSticker.nanotrasen_rep_status = NT_REP_STATUS_SURVIVED
 
 /datum/outfit/job/nanotrasen_representative
 	name = "Nanotrasen Representative"

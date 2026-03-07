@@ -406,3 +406,6 @@
 
 ///The max amount of stars/score the NT rep can give
 #define MAX_NT_REP_SCORE 5
+
+///Simply helper to initialize a subsystem only if it has not yet been initialized
+#define FRESH_INIT_SUBSYSTEM(ss) if(!ss.initialized) ss.Initialize()

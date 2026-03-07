@@ -1,7 +1,7 @@
 /datum/antagonist/clock_cultist/clockmob
 	show_in_antagpanel = FALSE
 	///Our warp action
-	var/datum/action/cooldown/clock_cult/clockmob_warp/warp_action = new
+	var/datum/action/cooldown/clock_cult/clockmob_warp/warp_action = new //CHECK THIS WORKS
 	///A ref to our area bound component
 	var/datum/component/multi_area_bound/area_bound_component
 

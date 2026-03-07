@@ -175,7 +175,7 @@
 	desc = "A horribly outdated automatic weapon. Why would you want to use this?"
 	item = /obj/item/gun/ballistic/automatic/plastikov
 	cost = 2
-	purchasable_from = UPLINK_NUKE_OPS
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_GANGS //monkestation edit: adds UPLINK_GANGS, might need to make a version for gangs that costs more
 
 /datum/uplink_item/dangerous/foamsmg
 	name = "Toy Submachine Gun"
@@ -183,7 +183,7 @@
 	item = /obj/item/gun/ballistic/automatic/c20r/toy
 	cost = 5
 	surplus = 70 //monkestation edit: from 0 to 70
-	purchasable_from = UPLINK_CLOWN_OPS
+	purchasable_from = UPLINK_CLOWN_OPS | UPLINK_GANGS //monkestation edit: adds UPLINK_GANGS
 
 /datum/uplink_item/dangerous/foammachinegun
 	name = "Toy Machine Gun"
@@ -192,7 +192,7 @@
 	item = /obj/item/gun/ballistic/automatic/l6_saw/toy
 	cost = 10
 	surplus = 70 //monkestation edit: from 0 to 70
-	purchasable_from = UPLINK_CLOWN_OPS
+	purchasable_from = UPLINK_CLOWN_OPS | UPLINK_GANGS //monkestation edit: adds UPLINK_GANGS
 
 /datum/uplink_item/stealthy_weapons/cqc
 	name = "CQC Manual"
@@ -427,7 +427,7 @@
 	desc = "A cylindrical magazine designed for the PP-95 SMG."
 	item = /obj/item/ammo_box/magazine/plastikov9mm
 	cost = 1
-	purchasable_from = UPLINK_NUKE_OPS
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_GANGS //monkestation edit: adds UPLINK_GANGS
 	illegal_tech = FALSE
 
 /datum/uplink_item/ammo/mech/bag
@@ -523,7 +523,7 @@
 	item = /obj/item/grenade/spawnergrenade/manhacks
 	cost = 5
 	surplus = 35
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_GANGS //monkestation edit: adds UPLINK_GANGS, make a gang variant
 
 /datum/uplink_item/dangerous/syndicat
 	name = "Syndie cat grenade"
@@ -705,7 +705,7 @@
 	desc = "A holster module for a MODsuit. It can stealthily store any not too heavy gun inside it."
 	item = /obj/item/mod/module/holster
 	cost = 2
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_GANGS //monkestation edit: adds UPLINK_GANGS
 
 /datum/uplink_item/device_tools/assault_pod
 	name = "Assault Pod Targeting Device"
@@ -739,7 +739,7 @@
 			for faster healing on the field. Also comes with basic medical tools and sterlizer."
 	item = /obj/item/storage/medkit/tactical
 	cost = 4
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_GANGS //monkestation edit: adds UPLINK_GANGS, this is the cheap version so it should be ok
 
 /datum/uplink_item/device_tools/medkit/premium
 	name = "Syndicate Combat Medical Suite"
@@ -811,7 +811,7 @@
 	item = /obj/item/storage/box/syndie_kit/imp_deathrattle
 	cost = 4
 	surplus = 0
-	purchasable_from = UPLINK_NUKE_OPS
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_GANGS //monkestation edit: adds UPLINK_GANGS
 
 /datum/uplink_item/badass/costumes
 	surplus = 0
@@ -893,11 +893,11 @@
 	desc = "A strange red potion that's said to turn you into a tiny red space man at 3AM, seems to work at any time though. \
 			Drinking this potion will turn you very small allowing you to be carried in backpacks by your fellow operatives, \
 			seems to not make goblins or monkeys any smaller though. No money refunds."
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_GANGS
 	item = /obj/item/amogus_potion
 	cost = 7
 
-/datum/uplink_item/ammo/LMG
+/datum/uplink_item/ammo/lmg
 	name = "6.5 FMJ Quarad drum"
 	desc = "A surplus 120 round drum of FMJ bullets for the Quarad"
 	item = /obj/item/ammo_box/magazine/c65xeno_drum/evil
@@ -905,7 +905,7 @@
 	purchasable_from = UPLINK_NUKE_OPS
 	illegal_tech = FALSE
 
-/datum/uplink_item/ammo/LMG/incendiary
+/datum/uplink_item/ammo/lmg/incendiary
 	name = "6.5 Inferno Quarad drum"
 	desc = "A 120 round drum of Inferno bullets for the Quarad. They leave a trail of fire"
 	item = /obj/item/ammo_box/magazine/c65xeno_drum/incendiary/evil
@@ -913,7 +913,7 @@
 	purchasable_from = UPLINK_NUKE_OPS
 	illegal_tech = FALSE
 
-/datum/uplink_item/ammo/LMG/pierce
+/datum/uplink_item/ammo/lmg/pierce
 	name = "6.5 UDS Quarad drum"
 	desc = "No, NOT depleted uranium. 120 round drum of piercing and irradiating bullets for the Quarad"
 	item = /obj/item/ammo_box/magazine/c65xeno_drum/pierce/evil

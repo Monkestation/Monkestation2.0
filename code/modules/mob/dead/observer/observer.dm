@@ -38,7 +38,8 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	var/health_scan = FALSE //Are health scans currently enabled?
 	var/chem_scan = FALSE //Are chem scans currently enabled?
 	var/gas_scan = FALSE //Are gas scans currently enabled?
-	var/list/datahuds = list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC_ADVANCED, DATA_HUD_CREW) //list of data HUDs shown to ghosts.
+	///list of data HUDs shown to ghosts.
+	var/list/datahuds = list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC_BASIC, DATA_HUD_DIAGNOSTIC_ADVANCED, DATA_HUD_CREW)
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
 
 	//These variables store hair data if the ghost originates from a species with head and/or facial hair.

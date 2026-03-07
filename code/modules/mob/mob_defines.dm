@@ -67,7 +67,7 @@
 	///Cursor icon used when holding shift over things
 	var/examine_cursor_icon = 'icons/effects/mouse_pointers/examine_pointer.dmi'
 
-	/// Whether a mob is alive or dead. TODO: Move this to living - Nodrak (2019, still here)
+	/// Whether a mob is alive or dead. TODO: Move this to living - Nodrak (2019, still here) - (here for the sake of things like mind.current)
 	var/stat = CONSCIOUS
 
 	/* A bunch of this stuff really needs to go under their own defines instead of being globally attached to mob.

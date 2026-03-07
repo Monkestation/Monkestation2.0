@@ -101,6 +101,7 @@
 	icon = 'monkestation/icons/effects/effects.dmi'
 	icon_state = "royale_storm"
 	plane = HIGH_GAME_PLANE
+	anchored = TRUE
 
 #undef CORE_AREA_MAX_DIST
 #undef CLOSE_AREA_MAX_DIST

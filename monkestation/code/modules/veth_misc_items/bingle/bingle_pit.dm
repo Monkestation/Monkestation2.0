@@ -111,8 +111,9 @@
 		grow_pit(desired_pit_size)
 
 	// Evolve bingles and buff if item_value_consumed >= 100
+	var/should_evolve = item_value_consumed >= 500
 	for(var/mob/living/basic/bingle/bong in bingle_team?.members)
-		if(item_value_consumed >= 500)
+		if(should_evolve)
 			bong.icon_state = "bingle_armored"
 			bong.maxHealth = 200
 			bong.health = 200
@@ -137,11 +138,12 @@
 		if(victim.movement_type & (FLYING | FLOATING))
 			return FALSE
 
-	if(item_value_consumed < 100)
+//why is this even a thing
+/*	if(item_value_consumed < 100)
 		var/turf/target = get_edge_target_turf(src, pick(GLOB.alldirs))
 		victim.throw_at(target, rand(1, 5), rand(1, 5))
 		to_chat(victim, span_warning("The pit has not swallowed enough items to accept creatures yet!"))
-		return FALSE
+		return FALSE */
 	victim.add_traits(list(TRAIT_FALLING_INTO_BINGLE_HOLE, TRAIT_NO_TRANSFORM), REF(src))
 	item_value_consumed += get_item_value(victim)
 	// Only animate if we're actually swallowing

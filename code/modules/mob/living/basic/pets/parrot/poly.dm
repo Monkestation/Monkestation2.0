@@ -34,14 +34,12 @@
 	REGISTER_REQUIRED_MAP_ITEM(1, 1)
 
 	if(!memory_saved)
-		roundend_callback = CALLBACK(src, PROC_REF(Write_Memory))
-		SSticker.OnRoundend(roundend_callback)
+		RegisterSignal(SSticker, COMSIG_TICKER_DECLARE_ROUND_END, PROC_REF(Write_Memory))
 
 	update_appearance()
 
 /mob/living/basic/parrot/poly/Destroy()
-	LAZYREMOVE(SSticker.round_end_events, roundend_callback) // we do the memory writing stuff on death, but this is important to yeet as fast as we can if we need to destroy
-	roundend_callback = null
+	UnregisterSignal(SSticker, COMSIG_TICKER_DECLARE_ROUND_END)
 	return ..()
 
 /mob/living/basic/parrot/poly/death(gibbed)

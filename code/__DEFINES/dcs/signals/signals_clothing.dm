@@ -19,3 +19,6 @@
 /// /obj/item/clothing/accessory/detach : (obj/item/clothing/under/detach_from)
 /// The accessory, at the point of signal sent, is no longer in the accessory list but may still be in the loc
 #define COMSIG_ACCESSORY_DETACHED "accessory_unpinned"
+
+///slightly janky, sent to grab the gang_clothing element from an item
+#define COMSIG_CLOTHING_GET_GANG_ELEMENT "c_get_gang_element"

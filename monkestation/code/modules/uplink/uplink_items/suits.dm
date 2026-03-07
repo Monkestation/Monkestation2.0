@@ -4,4 +4,3 @@
 	It comes with chameleon features."
 	item = /obj/item/clothing/suit/chameleon/syndie_armor
 	cost = 4
-	purchasable_from = ALL
