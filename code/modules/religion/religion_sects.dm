@@ -134,7 +134,7 @@
 	tgui_icon = "robot"
 	alignment = ALIGNMENT_NEUT
 	desired_items = list(/obj/item/stock_parts/power_store/cell = "with battery charge")
-	rites_list = list(/datum/religion_rites/synthconversion, /datum/religion_rites/machine_blessing)
+	rites_list = list(/datum/religion_rites/synthconversion, /datum/religion_rites/autosurgeon, /datum/religion_rites/machine_blessing)
 	altar_icon_state = "convertaltar-blue"
 	max_favor = 2500
 

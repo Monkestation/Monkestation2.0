@@ -5819,6 +5819,8 @@
 #include "code\modules\religion\hunt\hunter_pinpointer.dm"
 #include "code\modules\religion\hunt\hunting_rites.dm"
 #include "code\modules\religion\hunt\prey.dm"
+#include "code\modules\religion\mechanical\mechanical_items.dm"
+#include "code\modules\religion\mechanical\mechanical_rites.dm"
 #include "code\modules\religion\sparring\ceremonial_gear.dm"
 #include "code\modules\religion\sparring\sparring_contract.dm"
 #include "code\modules\religion\sparring\sparring_datum.dm"

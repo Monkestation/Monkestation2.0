@@ -106,3 +106,18 @@
 	),
 	)
 	return to_add
+
+/datum/species/android/holy
+	name = "Advanced Android"
+	id = SPECIES_ADVANCED_ANDROID
+	mutanteyes = /obj/item/organ/internal/eyes/robotic/glow
+	mutantears = /obj/item/organ/internal/ears/cybernetic/upgraded
+	bodypart_overrides = list(
+		BODY_ZONE_HEAD = /obj/item/bodypart/head/robot/android,
+		BODY_ZONE_CHEST = /obj/item/bodypart/chest/robot/android,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/robot/advanced/android,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/robot/advanced/android,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/robot/advanced/android,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/robot/advanced/android,
+	)
+	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN

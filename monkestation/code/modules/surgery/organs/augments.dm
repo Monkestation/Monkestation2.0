@@ -144,6 +144,6 @@
 
 /obj/item/organ/internal/cyberimp/brain/linked_surgery/perfect/nt
 	name = "advanced surgical serverlink brain implant"
-	desc = "A brain implant with a bluespace technology that lets you perform any advanced surgery through private access too Nanotrasen servers."
+	desc = "A brain implant with a bluespace technology that lets you perform any advanced surgery through private access to Nanotrasen servers."
 	organ_flags = parent_type::organ_flags & ~ORGAN_HIDDEN
 	implant_color = "#00eeff"
