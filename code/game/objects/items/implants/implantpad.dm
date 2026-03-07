@@ -35,13 +35,6 @@
 		inserted_case = null
 		update_appearance(UPDATE_ICON)
 
-/obj/item/implantpad/handle_atom_del(atom/A)
-	if(A == inserted_case)
-		inserted_case = null
-	update_appearance()
-	updateSelfDialog()
-	. = ..()
-
 /obj/item/implantpad/click_alt(mob/user)
 	remove_implant(user)
 	return CLICK_ACTION_SUCCESS
