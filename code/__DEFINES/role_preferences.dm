@@ -72,6 +72,7 @@
 #define ROLE_ANOMALY_GHOST "Ectoplasmic Anomaly Ghost"
 #define ROLE_BRAINWASHED "Brainwashed Victim"
 #define ROLE_DEATHSQUAD "Deathsquad"
+#define ROLE_DEVIL "Devil"
 #define ROLE_DRONE "Drone"
 #define ROLE_EMAGGED_BOT "Malfunctioning Bot"
 #define ROLE_HIVE "Hivemind Host" //Role removed, left here for safety.
@@ -187,6 +188,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 //monkestation edit start
 	ROLE_PLAGUERAT = 0,
 	ROLE_CORTICAL_BORER = 0,  // Module ID: CORTICAL_BORERS
+	ROLE_DEVIL = 0,
 	ROLE_DRIFTING_CONTRACTOR = 0,
 	ROLE_VAMPIRICACCIDENT = 0,
 	ROLE_FORBIDDENCALLING = 0,
