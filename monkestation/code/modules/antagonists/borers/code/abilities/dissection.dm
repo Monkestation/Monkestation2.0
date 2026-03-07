@@ -38,5 +38,5 @@
 	cortical_owner.dissections++
 	var/turf/borer_turf = get_turf(cortical_owner)
 	playsound(borer_turf, 'sound/effects/splat.ogg', 50, TRUE)
-	owner.balloon_alert(owner, "Grey Matter Analzyed")
+	owner.balloon_alert(owner, "grey Matter Analzyed")
 	StartCooldown()
