@@ -58,6 +58,8 @@
 	var/always_votable = FALSE
 	///weight this has of being picked for random storyteller/showing up in the vote if not always_votable
 	var/weight = 0
+	/// Starved only
+	var/points_per_death = 0
 
 /datum/storyteller/process(seconds_per_tick)
 	tick(seconds_per_tick)
