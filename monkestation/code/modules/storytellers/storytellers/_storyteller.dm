@@ -19,11 +19,11 @@
 		)
 	/// Multipliers for point gains.
 	var/list/point_gains_multipliers = list(
-		EVENT_TRACK_MUNDANE = 1,
-		EVENT_TRACK_MODERATE = 1,
-		EVENT_TRACK_MAJOR = 1,
-		EVENT_TRACK_ROLESET = 1,
-		EVENT_TRACK_OBJECTIVES = 1
+		EVENT_TRACK_MUNDANE = 0.5,
+		EVENT_TRACK_MODERATE = 0.5,
+		EVENT_TRACK_MAJOR = 0.5,
+		EVENT_TRACK_ROLESET = 0.5,
+		EVENT_TRACK_OBJECTIVES = 0.5
 		)
 	/// Multipliers of weight to apply for each tag of an event.
 	var/list/tag_multipliers
@@ -51,7 +51,7 @@
 	///have we done roundstart checks?
 	var/roundstart_checks = FALSE
 	///prob of roundstart antag
-	var/roundstart_prob = 25
+	var/roundstart_prob = 50 //with later antag chances being kneecapped, it may be wise to have roundstarts get time to get balls rolling
 	///do we ignore ran_roundstart
 	var/ignores_roundstart = FALSE
 	///is a storyteller always able to be voted for(also does not count for the amount of storytellers to pick from)
