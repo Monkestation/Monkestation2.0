@@ -8,10 +8,13 @@
 	RegisterSignals(src, list(
 		SIGNAL_ADDTRAIT(TRAIT_FAKEDEATH),
 		SIGNAL_REMOVETRAIT(TRAIT_FAKEDEATH),
-
-		SIGNAL_ADDTRAIT(TRAIT_DEFIB_BLACKLISTED),
-		SIGNAL_REMOVETRAIT(TRAIT_DEFIB_BLACKLISTED),
 	), PROC_REF(update_medhud_on_signal))
+
+	if(mind)
+		RegisterSignals(mind, list(
+			SIGNAL_ADDTRAIT(TRAIT_DEFIB_BLACKLISTED),
+			SIGNAL_REMOVETRAIT(TRAIT_DEFIB_BLACKLISTED),
+		), PROC_REF(update_medhud_on_signal))
 
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_IMMOBILIZED), PROC_REF(on_immobilized_trait_gain))
 	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_IMMOBILIZED), PROC_REF(on_immobilized_trait_loss))
