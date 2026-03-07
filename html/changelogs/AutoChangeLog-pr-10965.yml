@@ -1,0 +1,4 @@
+author: "Cujo"
+delete-after: True
+changes:
+  - rscadd: "Blood filtering now displays results if an activated vital display or operating computer is nearby."

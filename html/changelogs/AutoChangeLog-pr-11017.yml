@@ -1,0 +1,5 @@
+author: "Mantle"
+delete-after: True
+changes:
+  - rscadd: "Deforest inhands for backpack and satchel"
+  - bugfix: "deforest jumpsuit should properly appear in loadouts now"
