@@ -287,7 +287,7 @@
 			reagents.expose(target, TOUCH)
 			var/turf/targets_loc = target.loc
 			if(istype(targets_loc, /turf/open))
-				if(thrown_by && !target.can_atmos_pass)
+				if(thrown_by && target.can_atmos_pass)
 					var/turf/open/open = get_step(src, get_dir(src, thrown_by))
 					open?.add_liquid_from_reagents(reagents)
 				else
