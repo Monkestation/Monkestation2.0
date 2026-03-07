@@ -6,7 +6,7 @@
 	earliest_start = 0 MINUTES
 	description = "Everything becomes pointy enough to embed in people when thrown."
 	min_wizard_trigger_potency = 3
-	max_wizard_trigger_potency = 7
+	max_wizard_trigger_potency = 100
 
 ///behold... the only reason sticky is a subtype...
 /datum/round_event_control/wizard/embedpocalypse/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE) //MONKESTATION ADDITION: fake_check = FALSE

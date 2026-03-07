@@ -124,15 +124,8 @@
 /datum/traitor_objective/locate_weakpoint/proc/create_shockwave(center_x, center_y, center_z)
 	var/turf/epicenter = locate(center_x, center_y, center_z)
 	var/lowpop = (length(GLOB.clients) <= CONFIG_GET(number/minimal_access_threshold))
-//monkestation removal start
-/*	if(lowpop)
-		explosion(epicenter, devastation_range = 2, heavy_impact_range = 4, light_impact_range = 6, explosion_cause = src)
-	else
-		explosion(epicenter, devastation_range = 3, heavy_impact_range = 6, light_impact_range = 9, explosion_cause = src)*/
-//monkestation removal end
-//monkestation edit start: now creates radiating(one explosion in each ring) light explosions
 	var/greatest_dist = 0
-	var/list/turfs_to_collapse = list()
+	var/alist/turfs_to_collapse = alist()
 	for(var/turf/collapsed_turf as anything in GLOB.station_turfs)
 		var/area/turf_area = get_area(collapsed_turf)
 
@@ -145,15 +138,15 @@
 		if(dist > greatest_dist)
 			greatest_dist = dist
 
-		if(!turfs_to_collapse["[dist]"])
-			turfs_to_collapse["[dist]"] = list()
-		turfs_to_collapse["[dist]"] += collapsed_turf
+		if(!turfs_to_collapse[dist])
+			turfs_to_collapse[dist] = list()
+		turfs_to_collapse[dist] += collapsed_turf
 
 	for(var/iterator in 1 to greatest_dist)
-		if(!turfs_to_collapse["[iterator]"])
+		if(!turfs_to_collapse[iterator])
 			continue
-		for(var/i in 1 to (lowpop ? 1 : 2)) //if lowpop then only do one collapse per ring, otherwise do two
-			addtimer(CALLBACK(pick_n_take(turfs_to_collapse["[iterator]"]), TYPE_PROC_REF(/turf, structural_collapse), 6 SECONDS, list(0, 0, 3), list('sound/effects/creak1.ogg', \
+		for(var/i in 1 to max(2, round(iterator / 10, 1) * (lowpop ? 1 : 2))) //if lowpop then only scale by 1
+			addtimer(CALLBACK(pick_n_take(turfs_to_collapse[iterator]), TYPE_PROC_REF(/turf, structural_collapse), 6 SECONDS, list(0, 0, 3), list('sound/effects/creak1.ogg', \
 																																					'sound/effects/creak2.ogg', \
 																																					'sound/effects/creak3.ogg'), FALSE), \
 					2 SECONDS * iterator)

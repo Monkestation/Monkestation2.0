@@ -14,7 +14,8 @@
 	righthand_file = 'monkestation/icons/mob/inhands/equipment/shields_righthand.dmi'
 	worn_icon = 'monkestation/icons/mob/clothing/back.dmi'
 	worn_icon_state = "wizard_mirror_shield"
-	force = 16
+	force = 20
+	armour_penetration = 25
 	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_BULKY
 	attack_verb_continuous = list("bumps", "prods")
@@ -29,8 +30,6 @@
 	var/reaction_mode = REACTION_MODE_ABSORB
 	///The list of projectiles we have stored ready to fire
 	var/list/stored_projectiles = list()
-	///Cannot absorb projectile types in here
-	var/static/list/blacklisted_projectile_types = list()
 
 /obj/item/gun/magic/mirror_shield/Initialize(mapload)
 	. = ..()
@@ -38,8 +37,8 @@
 
 /obj/item/gun/magic/mirror_shield/Destroy()
 	for(var/projectile in stored_projectiles)
-		qdel(projectile) //could also have them shoot off in random directions
 		stored_projectiles -= projectile
+		qdel(projectile) //could also have them shoot off in random directions
 	return ..()
 
 /obj/item/gun/magic/mirror_shield/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
@@ -99,7 +98,7 @@
 	var/turf/firer_turf = get_turf(hit_by.firer)
 	if(hit_by.firer && get_dist(firer_turf, get_turf(src)) <= 1) //this is due to some jank I cant figure out, if you want to go ahead
 		hit_by.process_hit(firer_turf, hit_by.firer)
-	else if(reaction_mode == REACTION_MODE_ABSORB && length(stored_projectiles) <= max_stored_projectiles && !(hit_by.type in blacklisted_projectile_types))
+	else if(reaction_mode == REACTION_MODE_ABSORB && length(stored_projectiles) <= max_stored_projectiles)
 		absorb_projectile(hit_by)
 	else
 		hit_by.set_angle_centered(get_angle(held_by, hit_by.firer))

@@ -63,7 +63,7 @@
 	return
 
 /obj/item/clockwork/weapon/proc/check_turf(check_override)
-	return (SEND_SIGNAL(src, COMSIG_CHECK_TURF_CLOCKWORK, check_override) & COMPONENT_CHECKER_VALID_TURF)
+	return (SEND_SIGNAL(src, COMSIG_CHECK_TURF_CLOCKWORK, check_override || get_turf(src)) & COMPONENT_CHECKER_VALID_TURF)
 
 /obj/item/clockwork/weapon/brass_spear
 	name = "brass spear"
@@ -191,6 +191,7 @@
 	sharpness = FALSE
 	hitsound = 'sound/weapons/smash.ogg'
 	block_chance = 10
+	COOLDOWN_DECLARE(knockback_cooldown)
 
 /obj/item/clockwork/weapon/brass_battlehammer/Initialize(mapload)
 	. = ..()
@@ -201,11 +202,12 @@
 	)
 
 /obj/item/clockwork/weapon/brass_battlehammer/mob_hit_effect(mob/living/target, mob/living/user, thrown = FALSE)
-	if((!thrown && !HAS_TRAIT(src, TRAIT_WIELDED)) || !istype(target))
+	if((!thrown && !HAS_TRAIT(src, TRAIT_WIELDED)) || !istype(target) || !COOLDOWN_FINISHED(src, knockback_cooldown))
 		return
 
 	var/atom/throw_target = get_edge_target_turf(target, get_dir(src, get_step_away(target, src)))
 	target.throw_at(throw_target, thrown ? HAMMER_THROW_FLING_DISTANCE : HAMMER_FLING_DISTANCE, 4)
+	COOLDOWN_START(src, knockback_cooldown, 15 SECONDS)
 
 /obj/item/clockwork/weapon/brass_battlehammer/update_icon_state()
 	icon_state = "[base_icon_state]0"
@@ -228,11 +230,11 @@
 	if(!COOLDOWN_FINISHED(src, emp_cooldown))
 		return
 
-	COOLDOWN_START(src, emp_cooldown, 30 SECONDS)
+	COOLDOWN_START(src, emp_cooldown, 25 SECONDS)
 
 	target.emp_act(EMP_LIGHT)
 	new /obj/effect/temp_visual/emp/pulse(get_turf(target))
-	addtimer(CALLBACK(src, PROC_REF(send_message), user), 30 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(send_message), user), 25 SECONDS)
 	to_chat(user, span_brass("You strike [target] with an electromagnetic pulse!"))
 	playsound(user, 'sound/magic/lightningshock.ogg', 40)
 
@@ -338,6 +340,7 @@
 	icon_state = "arrow_energy"
 	damage = 25
 	damage_type = BURN
+	armour_penetration = 15
 
 //double damage to non clockwork structures and machines(if we rework reebe itself this will no longer be needed)
 /obj/projectile/energy/clockbolt/on_hit(atom/target, blocked, pierce_hit)

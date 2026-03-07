@@ -53,6 +53,9 @@
 /obj/item/clock_module/sentinels_compromise
 	scripture_datum = /datum/scripture/slab/sentinels_compromise
 
+/obj/item/clock_module/sigil_transmission
+	scripture_datum = /datum/scripture/create_structure/sigil_transmission
+
 /obj/item/clock_module/prosperity_prism
 	scripture_datum = /datum/scripture/create_structure/prosperity_prism
 

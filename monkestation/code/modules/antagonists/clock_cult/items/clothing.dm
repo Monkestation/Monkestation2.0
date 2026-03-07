@@ -101,6 +101,8 @@
 	var/mob/living/wearer
 	/// Are we currently empowered
 	var/is_empowered = FALSE
+	/// Ref to the timer we use for being disabled off clockwork tiles
+	var/disable_timer
 
 /datum/armor/clockwork_cloak
 	melee = 15
@@ -115,8 +117,12 @@
 /obj/item/clothing/suit/clockwork/cloak/set_empowered_state(datum/component/turf_checker/checker, empowered)
 	. = ..()
 	is_empowered = empowered
-	if(shroud_active && !empowered)
-		disable()
+	if(empowered && disable_timer)
+		deltimer(disable_timer)
+		disable_timer = null
+
+	if(shroud_active && !empowered && !disable_timer)
+		disable_timer = addtimer(CALLBACK(src, PROC_REF(disable)), 3 SECONDS, TIMER_STOPPABLE)
 
 /obj/item/clothing/suit/clockwork/cloak/Destroy()
 	if(shroud_active)

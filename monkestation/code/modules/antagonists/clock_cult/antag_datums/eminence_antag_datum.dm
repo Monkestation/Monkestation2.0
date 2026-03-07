@@ -6,6 +6,7 @@
 	communicate = null
 	recall = null
 	antag_flags = parent_type::antag_flags | FLAG_ANTAG_CAP_IGNORE_HUMANITY
+	invocation_value = 2 //counts for 2 invokers
 	///The list of our actions
 	var/list/action_list = list(
 		/datum/action/innate/clockcult/space_fold,
@@ -30,7 +31,8 @@
 								Linked Abscond: Return a marked servant and anything they are pulling to reebe, this has a lengthy cooldown and they must remain still for 7 seconds. <br/>\
 								Space Fold: Fold local spacetime to ensure certain \"events\" are inflicted upon the station, while doing this will cost cogs, \
 								these cogs are not taken from the cult itself. The cooldown is based on the cog cost of the event. <br/>\
-								You can also teleport yourself to any other servant, useful for servants who need to be absconded like those which are dead or being deconverted.")]"))
+								You can also teleport yourself to any other servant, useful for servants who need to be absconded like those which are dead or being deconverted. <br/>\
+								As an eminence you also count as 2 invokers, this means you only need 1 other servant to place an anchoring crystal.")]"))
 
 /datum/antagonist/clock_cultist/eminence/apply_innate_effects(mob/living/mob_override)
 	. = ..()

@@ -8,7 +8,7 @@
 	dire_warning = TRUE
 //	minimum_time = 45 MINUTES //i'd imagine speedrunning this would be crummy, but the wizard's average lifespan is barely reaching this point
 
-/datum/grand_finale/cheese/trigger(mob/living/invoker)
+/datum/grand_finale/cheese/trigger(mob/living/invoker) //this is kinda close to an apoc so dont do the shuttle delay
 	message_admins("[key_name(invoker)] has summoned forth The Wabbajack and cursed the crew with madness!")
 	priority_announce("Danger: Extremely potent reality altering object has been summoned on station. Immediate evacuation advised. Brace for impact.", "[command_name()] Higher Dimensional Affairs", 'sound/effects/glassbr1.ogg')
 

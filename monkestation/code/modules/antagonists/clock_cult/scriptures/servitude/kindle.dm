@@ -12,7 +12,7 @@
 	invocation_text = list("Divinity, show them your light!")
 	after_use_text = "Let the power flow through you!"
 	slab_overlay = "volt"
-	use_time = 15 SECONDS
+	use_time = 0
 	cogs_required = 1
 	category = SPELLTYPE_SERVITUDE
 

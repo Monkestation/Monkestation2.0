@@ -5,6 +5,8 @@
 	max_occurrences = 1
 	earliest_start = 0 MINUTES
 	description = "Summons a gun for everyone. Might turn people into survivalists."
+	min_wizard_trigger_potency = 7
+	max_wizard_trigger_potency = 100
 
 /datum/round_event_control/wizard/summonguns/New()
 	if(CONFIG_GET(flag/no_summon_guns))
@@ -21,6 +23,8 @@
 	max_occurrences = 1
 	earliest_start = 0 MINUTES
 	description = "Summons a magic item for everyone. Might turn people into survivalists."
+	min_wizard_trigger_potency = 7
+	max_wizard_trigger_potency = 100
 
 /datum/round_event_control/wizard/summonmagic/New()
 	if(CONFIG_GET(flag/no_summon_magic))

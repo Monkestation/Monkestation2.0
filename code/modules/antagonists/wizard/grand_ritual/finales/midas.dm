@@ -19,6 +19,7 @@
 
 // I sure hope this doesn't have performance implications
 /datum/grand_finale/midas/trigger(mob/living/carbon/human/invoker)
+	. = ..()
 	var/theme_path = pick(permitted_transforms)
 	chosen_theme = new theme_path()
 	var/turf/start_turf = get_turf(invoker)

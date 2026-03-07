@@ -740,6 +740,9 @@
 		W.max_charges = initial(W.max_charges)
 		W.charges = W.max_charges
 
+/obj/item/storage/belt/wands/wizard/PopulateContents()
+	new /obj/effect/spawner/set_selector/wand_belt(src)
+
 /obj/item/storage/belt/janitor
 	name = "janibelt"
 	desc = "A belt used to hold most janitorial supplies."

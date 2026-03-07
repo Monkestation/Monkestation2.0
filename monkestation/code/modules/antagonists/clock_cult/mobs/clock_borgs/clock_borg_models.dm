@@ -6,14 +6,16 @@
 	clock_modules = list(/obj/item/clock_module/abscond,
 		/obj/item/clock_module/sentinels_compromise,
 		/obj/item/clock_module/prosperity_prism,
-		/obj/item/clock_module/vanguard)
+		/obj/item/clock_module/vanguard,
+		/obj/item/clock_module/sigil_transmission)
 
 /obj/item/robot_model/engineering
 	clock_modules = list(/obj/item/clock_module/abscond,
 		/obj/item/clock_module/ocular_warden,
 		/obj/item/clock_module/tinkerers_cache,
 		/obj/item/clock_module/stargazer,
-		/obj/item/clockwork/replica_fabricator)
+		/obj/item/clockwork/replica_fabricator,
+		/obj/item/clock_module/sigil_transmission)
 
 /obj/item/robot_model/security
 	clock_modules = list(/obj/item/clock_module/abscond,
@@ -51,9 +53,12 @@
 	clock_modules = list(/obj/item/clock_module/abscond,
 		/obj/item/clock_module/vanguard,
 		/obj/item/clock_module/ocular_warden,
-		/obj/item/clock_module/sentinels_compromise)
+		/obj/item/clock_module/sentinels_compromise,
+		/obj/item/clock_module/sigil_transmission,
+		/obj/item/gun/ballistic/bow/clockwork)
 
 /obj/item/robot_model/cargo
 	clock_modules = list(/obj/item/clock_module/abscond,
 		/obj/item/gun/ballistic/bow/clockwork,
-		/obj/item/clock_module/stargazer)
+		/obj/item/clock_module/stargazer,
+		/obj/item/clock_module/sigil_transmission)

@@ -366,7 +366,7 @@
 		SET_PLANE_EXPLICIT(I, initial(I.plane), newloc)
 		I.appearance_flags &= ~NO_CLIENT_COLOR
 		if(!no_move && !(I.item_flags & DROPDEL)) //item may be moved/qdel'd immedietely, don't bother moving it
-			if (isnull(newloc))
+			if (isnull(newloc) || QDELETED(I))
 				I.moveToNullspace()
 			else
 				I.forceMove(newloc)

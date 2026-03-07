@@ -10,10 +10,8 @@
 	cogs_required = 5
 	invokers_required = 3
 	category = SPELLTYPE_STRUCTURES
-	///how long in seconds until the scripture can be invoked again, pretty much a cooldown
-	var/static/time_until_invokable = 0
-	///the list of
-	var/static/list/valid_areas
+	///The next timestamp the cult can summon a crystal
+	var/static/next_crystal_timestamp = 0
 
 /datum/scripture/create_structure/anchoring_crystal/New()
 	update_info()
@@ -26,20 +24,13 @@
 	UnregisterSignal(SSthe_ark, COMSIG_ANCHORING_CRYSTAL_CREATED)
 	return ..()
 
-/datum/scripture/create_structure/anchoring_crystal/process(seconds_per_tick)
-	time_until_invokable = time_until_invokable - (seconds_per_tick SECONDS)
-	if(time_until_invokable <= 0)
-		var/datum/scripture/create_structure/anchoring_crystal/global_datum = GLOB.clock_scriptures_by_type[/datum/scripture/create_structure/anchoring_crystal]
-		STOP_PROCESSING(SSprocessing, global_datum)
-		time_until_invokable = 0
-
 /datum/scripture/create_structure/anchoring_crystal/check_special_requirements(mob/user)
 	. = ..()
 	if(!.)
 		return FALSE
 
-	if(time_until_invokable)
-		to_chat(invoker, span_warning("The ark will be stable enough to summon another crystal in [time_until_invokable] seconds."))
+	if(world.time < next_crystal_timestamp)
+		to_chat(invoker, span_warning("The ark will be stable enough to summon another crystal in [DisplayTimeText(next_crystal_timestamp - world.time)]."))
 		return FALSE
 
 	if(SSthe_ark.charged_anchoring_crystals && !SSthe_ark.valid_crystal_areas[get_area(invoker)])
@@ -56,18 +47,14 @@
 	return TRUE
 
 /datum/scripture/create_structure/anchoring_crystal/invoke()
-	if(time_until_invokable) //check again in case they try and make two at once
-		var/datum/scripture/create_structure/anchoring_crystal/scripture = GLOB.clock_scriptures_by_type[/datum/scripture/create_structure/anchoring_crystal]
-		START_PROCESSING(SSprocessing, scripture) //make sure we dont brick somehow
+	if(SSthe_ark.get_charged_anchor_crystals() != length(SSthe_ark.anchoring_crystals))
 		to_chat(invoker, span_warning("Another Anchoring Crystal is already charging!"))
 		return FALSE
-	. = ..()
+	return ..()
 
 /datum/scripture/create_structure/anchoring_crystal/invoke_success()
 	. = ..()
-	time_until_invokable = ANCHORING_CRYSTAL_COOLDOWN
-	var/datum/scripture/create_structure/anchoring_crystal/scripture = GLOB.clock_scriptures_by_type[/datum/scripture/create_structure/anchoring_crystal]
-	START_PROCESSING(SSprocessing, scripture)
+	next_crystal_timestamp = world.time + ANCHORING_CRYSTAL_COOLDOWN
 
 /datum/scripture/create_structure/anchoring_crystal/proc/on_crystal_charged()
 	SIGNAL_HANDLER

@@ -342,9 +342,9 @@
 	icon_state = "mecha_uac2"
 	equip_cooldown = 10
 	projectile = /obj/projectile/bullet/lmg
-	projectiles = 300
-	projectiles_cache = 300
-	projectiles_cache_max = 1200
+	projectiles = 100
+	projectiles_cache = 100
+	projectiles_cache_max = 300
 	projectiles_per_shot = 3
 	variance = 6
 	randomspread = 1

@@ -155,11 +155,13 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 		if(potential_invoker.stat || !potential_invoker.mind)
 			continue
 
-		if(IS_CLOCK(potential_invoker))
+		var/datum/antagonist/clock_cultist/antag_datum = potential_invoker.mind?.has_antag_datum(/datum/antagonist/clock_cultist)
+		if(antag_datum)
+			invokers += antag_datum.invocation_value
+		else if(FACTION_CLOCK in potential_invoker.faction)
 			invokers++
 
-		if(potential_invoker?.mind.has_antag_datum(/datum/antagonist/clock_cultist/solo)) // They count for infinite so they can do all scriptures solo
-			invokers = INFINITY
+		if(invokers >= invokers_required)
 			break
 
 	if(invokers < invokers_required)
@@ -309,14 +311,15 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 	return ..()
 
 /datum/scripture/slab/invoke()
-	progress = new(invoker, use_time, invoking_slab)
+	if(use_time)
+		progress = new(invoker, use_time, invoking_slab)
+		time_left = use_time
+		count_down()
 	uses_left = uses
-	time_left = use_time
 	invoking_slab.charge_overlay = slab_overlay
 	invoking_slab.update_overlays()
 	invoking_slab.active_scripture = src
 	pointed_spell.set_click_ability(invoker)
-	count_down()
 	SSthe_ark.clock_power -= power_cost
 	GLOB.clock_vitality -= vitality_cost
 	invoke_success()

@@ -11,7 +11,7 @@
 	button_icon_state = "Sentinel's Compromise"
 	category = SPELLTYPE_SERVITUDE //you have a healing spell please please PLEASE use it
 	slab_overlay = "compromise"
-	use_time = 15 SECONDS
+	use_time = 0
 	recital_sound = 'sound/magic/magic_missile.ogg'
 	fast_invoke_mult = 0.8
 
@@ -53,7 +53,8 @@
 	var/healed_amount = -healed_mob.heal_ordered_damage(HEALED_PER_LOOP, list(BRUTE, BURN, OXY, CLONE, BRAIN))
 	healed_mob.stamina.adjust(HEALED_PER_LOOP)
 	healed_mob.reagents.remove_reagent(/datum/reagent/water/holywater, HEALED_PER_LOOP)
-	if(!invoker.adjustToxLoss(healed_amount * 0.8, TRUE, TRUE) || invoker.getToxLoss() > 80 || healed_amount < HEALED_PER_LOOP)
+	//for now im just gonna keep it free for borgs, might add a power cost or something later
+	if((!iscyborg(invoker) && !invoker.adjustToxLoss(healed_amount * 0.8, TRUE, TRUE)) || invoker.getToxLoss() > 80 || healed_amount < HEALED_PER_LOOP)
 		return FALSE
 	return TRUE
 

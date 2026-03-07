@@ -68,6 +68,8 @@
 #define LAZYACCESS(L, I) (L ? (isnum(I) ? (I > 0 && I <= length(L) ? L[I] : null) : L[I]) : null)
 ///Sets the item K to the value V, if the list is null it will initialize it
 #define LAZYSET(L, K, V) if(!L) { L = list(); } L[K] = V;
+///Sets the item K to the value V, if the list is null it will initialize it as an alist
+#define LAZYASSOCSET(L, K, V) if(!L) { L = alist(); } L[K] = V;
 ///Sets the length of a lazylist
 #define LAZYSETLEN(L, V) if (!L) { L = list(); } L.len = V;
 ///Returns the length of the list
@@ -560,14 +562,14 @@
  * Useful for weighted random choices (loot tables, syllables in languages, etc.)
  */
 /proc/fill_with_ones(list/list_to_pad)
-	if (!islist(list_to_pad))
+	if(!islist(list_to_pad))
 		return list_to_pad
 
 	var/list/final_list = list()
 
-	for (var/key in list_to_pad)
-		if (list_to_pad[key])
-			final_list[key] = list_to_pad[key]
+	for(var/key, key_value in list_to_pad)
+		if(key_value)
+			final_list[key] = key_value
 		else
 			final_list[key] = 1
 

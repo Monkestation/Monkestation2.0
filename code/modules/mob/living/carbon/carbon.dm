@@ -839,7 +839,10 @@
 
 	return ..()
 
-/mob/living/carbon/heal_and_revive(heal_to = 75, revive_message)
+/mob/living/carbon/heal_and_revive(heal_to = 75, revive_message, needs_organs = TRUE)
+	if(!needs_organs)
+		return ..()
+
 	// We can't heal them if they're missing a heart
 	if(needs_heart() && !get_organ_slot(ORGAN_SLOT_HEART))
 		return FALSE

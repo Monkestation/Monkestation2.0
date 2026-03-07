@@ -111,24 +111,29 @@ Expects a turf. Returns true if the attack should be blocked, false if not.*/
 				. = TRUE
 	return
 
-/obj/vehicle/sealed/mecha/durand/attack_generic(mob/user, damage_amount = 0, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, armor_penetration = 0)
+/obj/vehicle/sealed/mecha/durand/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armour_penetration)
+	if(attack_dir && defense_check(get_step(src, attack_dir))) //shields now instead of fully blocking the attack just count as a 100 armor object that gets hit first
+		damage_amount = shield.take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armour_penetration)
+	return ..()
+
+/*/obj/vehicle/sealed/mecha/durand/attack_generic(mob/user, damage_amount = 0, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, armor_penetration = 0)
 	if(defense_check(user.loc))
-		log_message("Attack absorbed by defense field. Attacker - [user].", LOG_MECHA, color="orange")
+		log_message("Attack absorbed by defense field. Attacker - [user].", LOG_MECHA, color = "orange")
 		return shield.attack_generic(user, damage_amount, damage_type, damage_flag, sound_effect, armor_penetration)
 	return ..()
 
-/obj/vehicle/sealed/mecha/durand/blob_act(obj/structure/blob/B)
-	if(defense_check(B.loc))
-		log_message("Attack by blob. Attacker - [B].", LOG_MECHA, color="red")
-		log_message("Attack absorbed by defense field.", LOG_MECHA, color="orange")
-		shield.blob_act(B)
+/obj/vehicle/sealed/mecha/durand/blob_act(obj/structure/blob/attacking_blob)
+	if(defense_check(attacking_blob.loc))
+		log_message("Attack by blob. Attacker - [attacking_blob].", LOG_MECHA, color = "red")
+		log_message("Attack absorbed by defense field.", LOG_MECHA, color = "orange")
+		shield.blob_act(attacking_blob)
 	else
 		. = ..()
 
-/obj/vehicle/sealed/mecha/durand/attackby(obj/item/W as obj, mob/user as mob, params)
+/obj/vehicle/sealed/mecha/durand/attackby(obj/item/attacking_item, mob/user, params)
 	if(defense_check(user.loc))
-		log_message("Attack absorbed by defense field. Attacker - [user], with [W]", LOG_MECHA, color="orange")
-		shield.attackby(W, user, params)
+		log_message("Attack absorbed by defense field. Attacker - [user], with [attacking_item]", LOG_MECHA, color = "orange")
+		shield.attackby(attacking_item, user, params)
 	else
 		. = ..()
 
@@ -137,7 +142,7 @@ Expects a turf. Returns true if the attack should be blocked, false if not.*/
 		log_message("Impact with [AM] absorbed by defense field.", LOG_MECHA, color="orange")
 		shield.hitby(AM, skipcatch, hitpush, blocked, throwingdatum)
 	else
-		. = ..()
+		. = ..()*/
 
 /datum/action/vehicle/sealed/mecha/mech_defense_mode
 	name = "Toggle an energy shield that blocks all attacks from the faced direction at a heavy power cost."
@@ -167,17 +172,30 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 	invisibility = INVISIBILITY_MAXIMUM //no showing on right-click
 	pixel_y = 4
 	max_integrity = 10000
+	armor_type = /datum/armor/durand_shield
 	anchored = TRUE
 	light_system = OVERLAY_LIGHT
 	light_outer_range = MINIMUM_USEFUL_LIGHT_RANGE
 	light_power = 5
 	light_color = LIGHT_COLOR_ELECTRIC_CYAN
 	light_on = FALSE
+	mouse_opacity = FALSE
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF //The shield should not take damage from fire,  lava, or acid; that's the mech's job.
 	///Our link back to the durand
 	var/obj/vehicle/sealed/mecha/durand/chassis
 	///To keep track of things during the animation
 	var/switching = FALSE
+
+//100 in everything
+/datum/armor/durand_shield
+	acid = 100
+	bio = 100
+	bomb = 100
+	bullet = 100
+	energy = 100
+	laser = 100
+	fire = 100
+	melee = 100
 
 /obj/durand_shield/Initialize(mapload, chassis, plane, layer, dir)
 	. = ..()
@@ -272,17 +290,18 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 		qdel(src)
 		return
 	if(!chassis.defense_mode) //if defense mode is disabled, we're taking damage that we shouldn't be taking
-		return
+		return damage_amount
 	. = ..()
 	flick("shield_impact", src)
 	if(!.)
 		return
 	if(!chassis.use_energy(. * (STANDARD_CELL_CHARGE / 150)))
 		chassis.cell?.charge = 0
-		for(var/O in chassis.occupants)
-			var/mob/living/occupant = O
+		for(var/mob/living/occupant in chassis.occupants)
 			var/datum/action/action = LAZYACCESSASSOC(chassis.occupant_actions, occupant, /datum/action/vehicle/sealed/mecha/mech_defense_mode)
-			action.Trigger()
+			if(action)
+				action.Trigger()
+				break
 	atom_integrity = 10000
 
 /obj/durand_shield/play_attack_sound()

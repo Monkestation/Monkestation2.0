@@ -67,6 +67,10 @@ SUBSYSTEM_DEF(shuttle)
 
 	/// Things blocking escape shuttle from leaving.
 	var/list/hostile_environments = list()
+	/// Like hostile environments but fully blocks any escape shuttle interaction, also pauses the transit timer
+	var/alist/evac_blockers
+	/// The world.time the emergency shuttle will have its recall become unblocked
+	var/recall_unblock_tick
 
 	/**
 	 * Supply shuttle stuff
@@ -200,10 +204,9 @@ SUBSYSTEM_DEF(shuttle)
 			continue
 		var/obj/docking_port/mobile/port = thing
 		port.check()
-	for(var/thing in transit_docking_ports)
-		var/obj/docking_port/stationary/transit/T = thing
-		if(!T.owner)
-			qdel(T, force=TRUE)
+	for(var/obj/docking_port/stationary/transit/port in transit_docking_ports)
+		if(!port.owner)
+			qdel(port, force = TRUE)
 		// This next one removes transit docks/zones that aren't
 		// immediately being used. This will mean that the zone creation
 		// code will be running a lot.
@@ -212,17 +215,28 @@ SUBSYSTEM_DEF(shuttle)
 		// We're better off holding onto it for now
 		if(transit_utilized < SOFT_TRANSIT_RESERVATION_THRESHOLD)
 			continue
-		var/obj/docking_port/mobile/owner = T.owner
+		var/obj/docking_port/mobile/owner = port.owner
 		if(owner)
 			var/idle = owner.mode == SHUTTLE_IDLE
 			var/not_centcom_evac = owner.launch_status == NOLAUNCH
-			var/not_in_use = (!T.get_docked())
+			var/not_in_use = (!port.get_docked())
 			if(idle && not_centcom_evac && not_in_use)
-				qdel(T, force=TRUE)
+				qdel(port, force = TRUE)
+
 	CheckAutoEvac()
+	if(isnum(recall_unblock_tick) && world.time >= recall_unblock_tick)
+		priority_announce(
+			text= "Emergency shuttle uplink services are now back online.",
+			title = "Uplink Restored",
+			sound = 'sound/misc/announce_dig.ogg',
+			sender_override = "Emergency Shuttle Uplink Alert",
+			color_override = "green",
+		)
+		emergency_no_recall = FALSE
+		recall_unblock_tick = null
 
 	if(!SSmapping.clearing_reserved_turfs)
-		while(transit_requesters.len)
+		while(length(transit_requesters))
 			var/requester = popleft(transit_requesters)
 			var/success = null
 			// Do not try and generate any transit if we're using more then our max already
@@ -274,7 +288,11 @@ SUBSYSTEM_DEF(shuttle)
 /datum/controller/subsystem/shuttle/proc/block_recall(lockout_timer)
 	if(isnull(lockout_timer))
 		CRASH("Emergency shuttle block was called, but missing a value for the lockout duration")
-	if(admin_emergency_no_recall)
+
+	if(isnum(recall_unblock_tick))
+		recall_unblock_tick += lockout_timer
+	else
+		recall_unblock_tick = world.time + lockout_timer
 		priority_announce(
 			text = "Emergency shuttle uplink interference detected, shuttle call disabled while the system reinitializes. Estimated restore in [DisplayTimeText(lockout_timer, round_seconds_to = 60)].",
 			title = "Uplink Interference",
@@ -282,22 +300,7 @@ SUBSYSTEM_DEF(shuttle)
 			sender_override = "Emergency Shuttle Uplink Alert",
 			color_override = "grey",
 		)
-		addtimer(CALLBACK(src, PROC_REF(unblock_recall)), lockout_timer)
-		return
 	emergency_no_recall = TRUE
-	addtimer(CALLBACK(src, PROC_REF(unblock_recall)), lockout_timer)
-
-/datum/controller/subsystem/shuttle/proc/unblock_recall()
-	if(admin_emergency_no_recall)
-		priority_announce(
-			text= "Emergency shuttle uplink services are now back online.",
-			title = "Uplink Restored",
-			sound = 'sound/misc/announce_dig.ogg',
-			sender_override = "Emergency Shuttle Uplink Alert",
-			color_override = "green",
-		)
-		return
-	emergency_no_recall = FALSE
 
 /datum/controller/subsystem/shuttle/proc/getShuttle(id)
 	for(var/obj/docking_port/mobile/M in mobile_docking_ports)
@@ -489,6 +492,14 @@ SUBSYSTEM_DEF(shuttle)
 	hostile_environments -= bad
 	checkHostileEnvironment()
 
+///Like hostile environments but fully blocks all escape shuttle interaction, also pauses its movement if in transit to the station
+/datum/controller/subsystem/shuttle/proc/registerEvacBlocker(datum/bad)
+	LAZYASSOCSET(evac_blockers, bad, TRUE)
+	checkEvacBlockers()
+
+/datum/controller/subsystem/shuttle/proc/clearEvacBlocker(datum/bad)
+	LAZYREMOVE(evac_blockers, bad)
+	checkEvacBlockers()
 
 /datum/controller/subsystem/shuttle/proc/registerTradeBlockade(datum/bad)
 	trade_blockade[bad] = TRUE
@@ -540,6 +551,28 @@ SUBSYSTEM_DEF(shuttle)
 			sender_override = "Emergency Shuttle Uplink Alert",
 			color_override = "green",
 		)
+
+/datum/controller/subsystem/shuttle/proc/checkEvacBlockers()
+	for(var/datum/blocker in evac_blockers)
+		if(QDELETED(blocker))
+			evac_blockers -= blocker
+
+	if(length(evac_blockers))
+		if(emergency.mode == SHUTTLE_DISABLED)
+			return
+		last_mode = emergency.mode
+		last_call_time = emergency.timeLeft(1)
+		emergency_no_recall = TRUE
+		emergency.setTimer(0)
+		emergency.mode = SHUTTLE_DISABLED
+	else if(emergency.mode == SHUTTLE_DISABLED)
+		emergency_no_recall = FALSE
+		if(last_mode == SHUTTLE_DISABLED) //dont brick the shuttle if things go wrong
+			last_mode = SHUTTLE_IDLE
+		SSshuttle.emergency.mode = SSshuttle.last_mode
+		if(SSshuttle.last_call_time < 30 SECONDS && SSshuttle.last_mode != SHUTTLE_IDLE)
+			SSshuttle.last_call_time = 30 SECONDS //Make sure no insta departures.
+		SSshuttle.emergency.setTimer(SSshuttle.last_call_time)
 
 //try to move/request to dock_home if possible, otherwise dock_away. Mainly used for admin buttons
 /datum/controller/subsystem/shuttle/proc/toggleShuttle(shuttle_id, dock_home, dock_away, timed)

@@ -76,6 +76,5 @@
 			servant_datum.silent = TRUE
 			servant_datum.on_removal()
 		eminence.mind.transfer_to(new_mob, TRUE)
-		eminence.dust(TRUE, TRUE)
 	new_mob.mind.add_antag_datum(/datum/antagonist/clock_cultist/eminence)
 	send_clock_message(span_bigbrass("The Eminence has risen!"))

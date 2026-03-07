@@ -1,15 +1,15 @@
-/proc/attempt_enchantment(obj/item/enchanted, list/valid_enchant_types = subtypesof(/datum/enchantment), description_span = "<span class='purple'>", level_override)
+/proc/attempt_enchantment(obj/item/enchanted, list/enchant_types = subtypesof(/datum/enchantment), description_span = "<span class='purple'>", level_override)
 	if(!isitem(enchanted))
 		return FALSE
 
 	if(!length(GLOB.enchantment_datums_by_type))
 		generate_enchantment_datums()
 
-	if(!islist(valid_enchant_types))
-		valid_enchant_types = list(valid_enchant_types)
+	if(!islist(enchant_types))
+		enchant_types = list(enchant_types)
 
-	for(var/datum/enchantment/enchant as anything in valid_enchant_types)
-		valid_enchant_types -= enchant
+	var/list/valid_enchant_types = list()
+	for(var/datum/enchantment/enchant as anything in enchant_types)
 		enchant = GLOB.enchantment_datums_by_type[enchant]
 		if(enchant.can_apply_to(enchanted))
 			valid_enchant_types += enchant

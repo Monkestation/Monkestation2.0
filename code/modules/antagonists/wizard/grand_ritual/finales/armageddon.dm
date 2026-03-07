@@ -1,9 +1,6 @@
-#define DOOM_SINGULARITY "singularity"
-#define DOOM_TESLA "tesla"
-#define DOOM_METEORS "meteors"
-#define DOOM_EVENTS "events" //monkestation edit: we can get singalos and teslas normally, so im adding a few more
-#define DOOM_ANTAGS "threats" //monkestation edit
-#define DOOM_ROD "rod" //monkestation edit
+#define DOOM_EVENTS "events"
+#define DOOM_ANTAGS "threats"
+#define DOOM_ROD "rod"
 
 /// Kill yourself and probably a bunch of other people
 /datum/grand_finale/armageddon
@@ -12,8 +9,8 @@
 		YOU WILL NOT SURVIVE THIS."
 	icon = 'icons/hud/screen_alert.dmi'
 	icon_state = "wounded"
-	minimum_time = 80 MINUTES // This will probably immediately end the round if it gets finished. //monkestation edit: from 90 to 80 minutes
-	ritual_invoke_time = 60 SECONDS // Really give the crew some time to interfere with this one.
+	minimum_time = 75 MINUTES // This will probably immediately end the round if it gets finished. //monkestation edit: from 90 to 75 minutes
+	ritual_invoke_time = 40 SECONDS // Give the crew a bit of extra time to stop it
 	dire_warning = TRUE
 	glow_colour = "#be000048"
 	/// Things to yell before you die
@@ -33,39 +30,19 @@
 		"All of creation, bend to my will!",
 	)
 
-/datum/grand_finale/armageddon/trigger(mob/living/carbon/human/invoker)
-	priority_announce(pick(possible_last_words), null, 'sound/magic/voidblink.ogg', sender_override = "[invoker.real_name]", color_override = "purple")
+/datum/grand_finale/armageddon/trigger(mob/living/carbon/human/invoker, picked_doom)
+	priority_announce(pick(possible_last_words), "ERROR", 'sound/magic/voidblink.ogg', sender_override = "[invoker.real_name]", color_override = "purple")
 	var/turf/current_location = get_turf(invoker)
-	invoker.gib()
+	if(iscarbon(invoker))
+		invoker.gib()
 
-	var/static/list/doom_options = list()
-	if (!length(doom_options))
-//		doom_options = list(DOOM_SINGULARITY, DOOM_TESLA) //monkestation removal
-		doom_options = list(DOOM_EVENTS, DOOM_ANTAGS, DOOM_ROD) //monkestation edit
-		if (!SSmapping.current_map.planetary)
-			doom_options += DOOM_METEORS
-
-	switch(pick(doom_options))
-//monkestation removal start
-		/*if (DOOM_SINGULARITY)
-			var/obj/singularity/singulo = new(current_location)
-			singulo.energy = 300
-		if (DOOM_TESLA)
-			var/obj/energy_ball/tesla = new (current_location)
-			tesla.energy = 200*/
-//monkestation removal end
-		if (DOOM_METEORS)
-			var/datum/dynamic_ruleset/roundstart/meteor/meteors = new()
-			meteors.meteordelay = 0
-			var/datum/game_mode/dynamic/mode = SSticker.mode
-			mode.execute_roundstart_rule(meteors) // Meteors will continue until morale is crushed.
-			priority_announce("Meteors have been detected on collision course with the station.", "Meteor Alert", ANNOUNCER_METEORS)
-//monkestation edit start
+	picked_doom ||= pick(list(DOOM_EVENTS, DOOM_ANTAGS, DOOM_ROD))
+	switch(picked_doom)
 		if (DOOM_EVENTS) //triggers a MASSIVE amount of events pretty quickly
 			summon_events() //wont effect the events created directly from this, but it will effect any events that happen after
 			var/list/possible_events = list()
 			for(var/datum/round_event_control/possible_event as anything in SSevents.control)
-				if(possible_event.max_wizard_trigger_potency < 6) //only run the decently big ones
+				if(possible_event.max_wizard_trigger_potency < 5) //only run the decently big ones
 					continue
 				possible_events += possible_event
 			var/timer_counter = 1
@@ -90,12 +67,8 @@
 			var/obj/effect/immovablerod/rod = new(current_location)
 			rod.loopy_rod = TRUE
 			rod.can_suplex = FALSE
-			rod.deadchat_plays(ANARCHY_MODE, 4 SECONDS)
-//monkestation edit end
+			rod.deadchat_plays(ANARCHY_MODE, 3 SECONDS)
 
-#undef DOOM_SINGULARITY
-#undef DOOM_TESLA
-#undef DOOM_METEORS
 #undef DOOM_EVENTS //monkestation edit
 #undef DOOM_ANTAGS //monkestation edit
 #undef DOOM_ROD //monkestation edit

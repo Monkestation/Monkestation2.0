@@ -13,6 +13,7 @@
 	. = ..()
 	if(is_cult)
 		replace_walls = /turf/closed/wall/clockwork
+		replace_window = /obj/structure/window/reinforced/clockwork/fulltile
 		replace_objs = list(/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/bronze/clock = 1), \
 															   /obj/structure/chair = list(/obj/structure/chair/bronze = 1), \
 															   /obj/structure/table = list(/obj/structure/table/bronze = 1))

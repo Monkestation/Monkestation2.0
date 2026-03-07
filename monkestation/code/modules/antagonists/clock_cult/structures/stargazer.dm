@@ -71,14 +71,20 @@
 	if(!COOLDOWN_FINISHED(src, use_cooldown))
 		to_chat(user, span_brass("\The [src] is still warming up, it will be ready in [DisplayTimeText(COOLDOWN_TIMELEFT(src, use_cooldown))]."))
 		return FALSE
-
-	if(HAS_TRAIT(checked_item, TRAIT_STARGAZED))
-		to_chat(user, span_brass("\The [checked_item] has already been enchanted!"))
-		return FALSE
 	return TRUE
 
 /obj/structure/destructible/clockwork/gear_base/stargazer/proc/upgrade_weapon(obj/item/upgraded_item, mob/living/user)
-	if(!attempt_enchantment(upgraded_item, description_span = "<span class='brass'>"))
+	if(HAS_TRAIT(upgraded_item, TRAIT_STARGAZED))
+		if(on_reebe(src))
+			return FALSE
+		var/datum/component/enchanted/comp = upgraded_item.GetComponent(/datum/component/enchanted)
+		if(comp.level >= comp.used_enchantment.max_level)
+			to_chat(user, span_brass("\The [upgraded_item] cannot be enchanted more!"))
+			return FALSE
+		comp.increase_level(1)
+		return TRUE
+
+	if(!attempt_enchantment(upgraded_item, description_span = "<span class='brass'>", level_override = (on_reebe(src) ? 1 : null)))
 		return FALSE
 	//Prevent re-enchanting
 	ADD_TRAIT(upgraded_item, TRAIT_STARGAZED, STARGAZER_TRAIT)

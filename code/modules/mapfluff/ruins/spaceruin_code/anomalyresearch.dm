@@ -28,6 +28,7 @@
 
 	var/obj/effect/anomaly/anomaly = .
 	anomaly.stabilize(anchor = anchor_anomaly, has_core = FALSE)
+	SSpoints_of_interest.remove_point_of_interest(anomaly) //dont fill up the ghost orbit list
 
 /obj/effect/spawner/random/environmentally_safe_anomaly/immobile
 	name = "stationary safe anomaly spawner"

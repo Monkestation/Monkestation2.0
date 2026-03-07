@@ -123,11 +123,9 @@ PROCESSING_SUBSYSTEM_DEF(the_ark)
 	passive_power += 5 * CLOCK_PASSIVE_POWER_PER_COG //5 APCs worth of passive power
 	max_clock_power += CLOCK_MAX_POWER_PER_COG * 5
 	var/datum/scripture/create_structure/anchoring_crystal/crystal_script
-	addtimer(CALLBACK(src, PROC_REF(clear_shuttle_interference), charged_crystal), \
+	addtimer(CALLBACK(SSshuttle, TYPE_PROC_REF(/datum/controller/subsystem/shuttle, clearEvacBlocker), charged_crystal), \
 			(ANCHORING_CRYSTAL_COOLDOWN - ANCHORING_CRYSTAL_CHARGE_DURATION) + initial(crystal_script.invocation_time))
 
-	/*if(1) //add 2 more max servants and increase replica fabricator build speed
-		GLOB.main_clock_cult.max_human_servants += SERVANT_CAPACITY_TO_GIVE*/
 	if(charged_anchoring_crystals == ANCHORING_CRYSTALS_TO_SUMMON + 1) //create a steam helios on reebe
 		if(length(GLOB.abscond_markers))
 			var/turf/created_at = get_turf(pick(GLOB.abscond_markers))
@@ -138,31 +136,7 @@ PROCESSING_SUBSYSTEM_DEF(the_ark)
 		else
 			message_admins("No valid location for Steam Helios creation.")
 
-///fully disables the shuttle similar to the admin verb
-/datum/controller/subsystem/processing/the_ark/proc/block_shuttle(datum/blocker)
-	if(SSshuttle.admin_emergency_disabled || SSshuttle.emergency.mode == SHUTTLE_DISABLED || SSshuttle.emergency.mode == SHUTTLE_ESCAPE)
-		return
 
-	SSshuttle.last_mode = SSshuttle.emergency.mode
-	SSshuttle.last_call_time = SSshuttle.emergency.timeLeft(1)
-	SSshuttle.emergency_no_recall = TRUE
-	SSshuttle.emergency.setTimer(0)
-	SSshuttle.emergency.mode = SHUTTLE_DISABLED
-
-///renables the shuttle
-/datum/controller/subsystem/processing/the_ark/proc/clear_shuttle_interference(datum/unblocker)
-	if(SSshuttle.admin_emergency_disabled || SSshuttle.emergency.mode != SHUTTLE_DISABLED || \
-		(unblocker && GLOB.clock_ark && GLOB.clock_ark.current_state >= ARK_STATE_CHARGING && istype(unblocker, /obj/structure/destructible/clockwork/anchoring_crystal)))
-		return
-
-	SSshuttle.emergency_no_recall = FALSE
-	if(SSshuttle.last_mode == SHUTTLE_DISABLED)
-		SSshuttle.last_mode = SHUTTLE_IDLE
-
-	SSshuttle.emergency.mode = SSshuttle.last_mode
-	if(SSshuttle.last_call_time < 10 SECONDS && SSshuttle.last_mode != SHUTTLE_IDLE)
-		SSshuttle.last_call_time = 10 SECONDS //Make sure no insta departures.
-	SSshuttle.emergency.setTimer(SSshuttle.last_call_time)
 	priority_announce("Emergency shuttle uplink connection regained.", "Higher Dimensional Affairs", ANNOUNCER_SPANOMALIES, has_important_message = TRUE)
 
 ///returns how many charged anchor crystals there are

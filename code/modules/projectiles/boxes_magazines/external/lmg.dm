@@ -63,7 +63,7 @@
 
 	ammo_type = /obj/item/ammo_casing/c65xeno
 	caliber = CALIBER_C65XENO
-	max_ammo = 120
+	max_ammo = 100
 
 /obj/item/ammo_box/magazine/c65xeno_drum/pierce
 	name = "\improper 6.5mm AP drum magazine"
@@ -73,7 +73,7 @@
 	icon_state = "c65xeno_drumP"
 
 	ammo_type = /obj/item/ammo_casing/c65xeno/pierce
-	max_ammo = 120
+	max_ammo = 100
 
 /obj/item/ammo_box/magazine/c65xeno_drum/incendiary
 	name = "\improper 6.5mm incendiary drum magazine"
@@ -83,7 +83,7 @@
 	icon_state = "c65xeno_drumI"
 
 	ammo_type = /obj/item/ammo_casing/c65xeno/incendiary
-	max_ammo = 120
+	max_ammo = 100
 
 /obj/item/ammo_box/magazine/c65xeno_drum/evil
 	name = "\improper 6.5mm FMJ drum magazine"

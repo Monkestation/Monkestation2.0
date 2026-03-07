@@ -7,7 +7,7 @@
 	invocation_time = 1.5 SECONDS // 1.5 to invoke, 3 to cuff
 	invocation_text = list("Shackle the heretic...", "Break them in body and spirit!")
 	slab_overlay = "hateful_manacles"
-	use_time = 20 SECONDS
+	use_time = 0
 	cogs_required = 1
 	category = SPELLTYPE_SERVITUDE
 

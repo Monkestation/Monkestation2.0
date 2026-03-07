@@ -52,9 +52,8 @@
 /obj/vehicle/sealed/mecha/run_atom_armor(damage_amount, damage_type, damage_flag = 0, attack_dir, armour_penetration)
 	. = ..()
 	if(attack_dir)
-		var/facing_modifier = get_armour_facing(abs(dir2angle(dir) - dir2angle(attack_dir)))
 		if(.)
-			. *= facing_modifier
+			. *= get_armour_facing(abs(dir2angle(dir) - dir2angle(attack_dir)))
 
 /obj/vehicle/sealed/mecha/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
@@ -99,12 +98,12 @@
 /obj/vehicle/sealed/mecha/attack_hulk(mob/living/carbon/human/user)
 	. = ..()
 	if(.)
-		log_message("Attack by hulk. Attacker - [user].", LOG_MECHA, color="red")
+		log_message("Attack by hulk. Attacker - [user].", LOG_MECHA, color = "red")
 		log_combat(user, src, "punched", "hulk powers")
 
-/obj/vehicle/sealed/mecha/blob_act(obj/structure/blob/B)
-	log_message("Attack by blob. Attacker - [B].", LOG_MECHA, color="red")
-	take_damage(30, BRUTE, MELEE, 0, get_dir(src, B))
+/obj/vehicle/sealed/mecha/blob_act(obj/structure/blob/attacking_blob)
+	log_message("Attack by blob. Attacker - [attacking_blob].", LOG_MECHA, color = "red")
+	take_damage(30, BRUTE, MELEE, 0, get_dir(src, attacking_blob))
 
 /obj/vehicle/sealed/mecha/attack_tk()
 	return
@@ -173,8 +172,8 @@
 		return
 	if(get_charge())
 		use_energy((cell.charge/3)/(severity*2))
-		take_damage(30 / severity, BURN, ENERGY, 1)
-	log_message("EMP detected", LOG_MECHA, color="red")
+		take_damage(30 / severity, BURN, ENERGY, TRUE, armour_penetration = 80) //emp damage should probably not be terribly effected by normal armor
+	log_message("EMP detected", LOG_MECHA, color = "red")
 
 	//Mess with the focus of the inbuilt camera if present
 	if(chassis_camera && !chassis_camera.is_emp_scrambled)
@@ -323,7 +322,8 @@
 	if(!attacking_item.force)
 		return
 
-	var/damage_taken = take_damage(attacking_item.force * attacking_item.demolition_mod, attacking_item.damtype, MELEE, 1)
+	//half AP effectiveness
+	var/damage_taken = take_damage(attacking_item.force*attacking_item.demolition_mod, attacking_item.damtype, MELEE, TRUE, get_dir(src, user), round(attacking_item.armour_penetration, 1))
 	try_damage_component(damage_taken, user.zone_selected)
 
 	var/hit_verb = length(attacking_item.attack_verb_simple) ? "[pick(attacking_item.attack_verb_simple)]" : "hit"
@@ -423,13 +423,13 @@
 	if(atom_integrity >= max_integrity)
 		balloon_alert(user, "it's not damaged!")
 		return
-	if(!W.tool_start_check(user, amount=1))
+	if(!W.tool_start_check(user, amount = 1))
 		return
 	user.balloon_alert_to_viewers("started welding [src]", "started repairing [src]")
 	audible_message(span_hear("You hear welding."))
 	var/did_the_thing
 	while(atom_integrity < max_integrity)
-		if(W.use_tool(src, user, 2.5 SECONDS, volume=50, amount=1))
+		if(W.use_tool(src, user, 2.5 SECONDS, volume = 50, amount = 1))
 			did_the_thing = TRUE
 			atom_integrity += min(10, (max_integrity - atom_integrity))
 			audible_message(span_hear("You hear welding."))
@@ -459,18 +459,17 @@
 /obj/vehicle/sealed/mecha/narsie_act()
 	emp_act(EMP_HEAVY)
 
-/obj/vehicle/sealed/mecha/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect)
+/obj/vehicle/sealed/mecha/do_attack_animation(atom/attacked_atom, visual_effect_icon, obj/item/used_item, no_effect)
 	if(!no_effect && !visual_effect_icon)
 		visual_effect_icon = ATTACK_EFFECT_SMASH
 		if(damtype == BURN)
 			visual_effect_icon = ATTACK_EFFECT_MECHFIRE
 		else if(damtype == TOX)
 			visual_effect_icon = ATTACK_EFFECT_MECHTOXIN
-	..()
+	return ..()
 
-
-/obj/vehicle/sealed/mecha/proc/ammo_resupply(obj/item/mecha_ammo/A, mob/user,fail_chat_override = FALSE)
-	if(!A.rounds)
+/obj/vehicle/sealed/mecha/proc/ammo_resupply(obj/item/mecha_ammo/ammo, mob/user, fail_chat_override = FALSE)
+	if(!ammo.rounds)
 		if(!fail_chat_override)
 			balloon_alert(user, "the box is empty!")
 		return FALSE
@@ -479,48 +478,48 @@
 	for(var/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/gun in flat_equipment)
 		ammo_needed = 0
 
-		if(gun.ammo_type != A.ammo_type)
+		if(gun.ammo_type != ammo.ammo_type)
 			continue
 		found_gun = TRUE
-		if(A.direct_load)
+		if(ammo.direct_load)
 			ammo_needed = initial(gun.projectiles) - gun.projectiles
 		else
 			ammo_needed = gun.projectiles_cache_max - gun.projectiles_cache
 
 		if(!ammo_needed)
 			continue
-		if(ammo_needed < A.rounds)
-			if(A.direct_load)
+		if(ammo_needed < ammo.rounds)
+			if(ammo.direct_load)
 				gun.projectiles = gun.projectiles + ammo_needed
 			else
 				gun.projectiles_cache = gun.projectiles_cache + ammo_needed
-			playsound(get_turf(user),A.load_audio,50,TRUE)
-			to_chat(user, span_notice("You add [ammo_needed] [A.ammo_type][ammo_needed > 1?"s":""] to the [gun.name]"))
-			A.rounds = A.rounds - ammo_needed
-			if(A.custom_materials)	//Change material content of the ammo box according to the amount of ammo deposited into the weapon
+			playsound(get_turf(user), ammo.load_audio, 50, TRUE)
+			to_chat(user, span_notice("You add [ammo_needed] [ammo.ammo_type][ammo_needed > 1?"s":""] to the [gun.name]"))
+			ammo.rounds = ammo.rounds - ammo_needed
+			if(ammo.custom_materials)	//Change material content of the ammo box according to the amount of ammo deposited into the weapon
 				/// list of materials contained in the ammo box after we put it through the equation so we can stick this list into set_custom_materials()
 				var/list/new_material_content = list()
-				for(var/datum/material/current_material in A.custom_materials)
+				for(var/datum/material/current_material in ammo.custom_materials)
 					if(istype(current_material, /datum/material/iron))	//we can flatten an empty ammo box into a sheet of iron (2000 units) so we have to make sure the box always has this amount at minimum
-						new_material_content[current_material] = (A.custom_materials[current_material] - SHEET_MATERIAL_AMOUNT) * (A.rounds / initial(A.rounds)) + SHEET_MATERIAL_AMOUNT
+						new_material_content[current_material] = (ammo.custom_materials[current_material] - SHEET_MATERIAL_AMOUNT) * (ammo.rounds / initial(ammo.rounds)) + SHEET_MATERIAL_AMOUNT
 					else
-						new_material_content[current_material] = A.custom_materials[current_material] * (A.rounds / initial(A.rounds))
-				A.set_custom_materials(new_material_content)
-			A.update_name()
+						new_material_content[current_material] = ammo.custom_materials[current_material] * (ammo.rounds / initial(ammo.rounds))
+				ammo.set_custom_materials(new_material_content)
+			ammo.update_name()
 			return TRUE
 
-		if(A.direct_load)
-			gun.projectiles = gun.projectiles + A.rounds
+		if(ammo.direct_load)
+			gun.projectiles = gun.projectiles + ammo.rounds
 		else
-			gun.projectiles_cache = gun.projectiles_cache + A.rounds
-		playsound(get_turf(user),A.load_audio,50,TRUE)
-		to_chat(user, span_notice("You add [A.rounds] [A.ammo_type][A.rounds > 1?"s":""] to the [gun.name]"))
-		if(A.qdel_on_empty)
-			qdel(A)
+			gun.projectiles_cache = gun.projectiles_cache + ammo.rounds
+		playsound(get_turf(user), ammo.load_audio, 50, TRUE)
+		to_chat(user, span_notice("You add [ammo.rounds] [ammo.ammo_type][ammo.rounds > 1?"s":""] to the [gun.name]"))
+		if(ammo.qdel_on_empty)
+			qdel(ammo)
 			return TRUE
-		A.rounds = 0
-		A.set_custom_materials(list(/datum/material/iron=SHEET_MATERIAL_AMOUNT))
-		A.update_appearance()
+		ammo.rounds = 0
+		ammo.set_custom_materials(list(/datum/material/iron=SHEET_MATERIAL_AMOUNT))
+		ammo.update_appearance()
 		return TRUE
 	if(!fail_chat_override)
 		if(found_gun)
