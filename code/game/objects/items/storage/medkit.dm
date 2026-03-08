@@ -409,6 +409,7 @@
 		/obj/item/hypospray/combat = 1,
 		/obj/item/storage/box/evilmeds/evilhypos = 1,
 		/obj/item/storage/box/evilmeds = 1,
+		/obj/item/reagent_containers/cup/vial/bluespace/combat = 2,
 		/obj/item/reagent_containers/medigel/sterilizine = 1,
 		/obj/item/clothing/glasses/hud/health/night/science = 1,
 	)
