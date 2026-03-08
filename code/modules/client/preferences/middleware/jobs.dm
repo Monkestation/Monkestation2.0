@@ -2,11 +2,35 @@
 	action_delegations = list(
 		"set_job_preference" = PROC_REF(set_job_preference),
 		"set_job_title" = PROC_REF(set_job_title),
+		"set_default_character" = PROC_REF(set_default_character),
+		"toggle_all_jobs" = PROC_REF(toggle_all_jobs),
 	)
+
+/datum/preference_middleware/jobs/proc/toggle_all_jobs(list/params, mob/user)
+	var/type = params["type"]
+	var/alist/job_prefs
+	if (type == JOB_PREFS_OVERALL)
+		job_prefs = preferences.job_preferences_overall
+	else
+		job_prefs = preferences.job_preferences_character
+
+	if (length(job_prefs) > 0)
+		job_prefs.Cut()
+		return TRUE
+
+	for (var/datum/job/job as anything in SSjob.joinable_occupations)
+		job_prefs[job.title] = JP_LOW
+
+	return TRUE
+
+/datum/preference_middleware/jobs/proc/set_default_character(list/params, mob/user)
+	user.client.prefs.set_default_character()
+	return TRUE
 
 /datum/preference_middleware/jobs/proc/set_job_preference(list/params, mob/user)
 	var/job_title = params["job"]
 	var/level = params["level"]
+	var/job_prefs_type = params["type"]
 
 	if (level != null && level != JP_LOW && level != JP_MEDIUM && level != JP_HIGH)
 		return FALSE
@@ -19,7 +43,7 @@
 	if (job.faction != FACTION_STATION)
 		return FALSE
 
-	if (!preferences.set_job_preference_level(job, level))
+	if (!preferences.set_job_preference_level(job, level, job_prefs_type))
 		return FALSE
 
 	preferences.character_preview_view?.update_body()
@@ -89,7 +113,10 @@
 	if(isnull(preferences.alt_job_titles))
 		preferences.alt_job_titles = list()
 
-	data["job_preferences"] = preferences.job_preferences
+	data["job_preferences_overall"] = preferences.job_preferences_overall
+	data["job_preferences_character"] = preferences.job_preferences_character
+	data["enabled_characters"] = preferences.enabled_characters
+	data["default_character"] = preferences.default_character
 
 	data["job_alt_titles"] = preferences.alt_job_titles
 
