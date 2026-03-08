@@ -258,4 +258,6 @@
 		"synth_heart",
 		"cybernetic_spleen",
 		"vitals_monitor",
+		"vial",
+		"large_vial",
 	)

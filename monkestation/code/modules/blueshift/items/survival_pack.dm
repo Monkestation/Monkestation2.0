@@ -20,15 +20,15 @@
 	illustration = "epipen"
 
 /obj/item/storage/box/nri_pens/PopulateContents()
-	new /obj/item/reagent_containers/hypospray/medipen/ekit(src)
-	new /obj/item/reagent_containers/hypospray/medipen/stimpack/traitor(src)
-	new /obj/item/reagent_containers/hypospray/medipen/oxandrolone(src)
-	new /obj/item/reagent_containers/hypospray/medipen/salacid(src)
-	new /obj/item/reagent_containers/hypospray/medipen/salacid(src)
-	new /obj/item/reagent_containers/hypospray/medipen/penacid(src)
-	new /obj/item/reagent_containers/hypospray/medipen/salbutamol(src)
-	new /obj/item/reagent_containers/hypospray/medipen/atropine(src)
-	new /obj/item/reagent_containers/hypospray/medipen/blood_loss(src)
+	new /obj/item/reagent_containers/medipen/ekit(src)
+	new /obj/item/reagent_containers/medipen/stimpack/traitor(src)
+	new /obj/item/reagent_containers/medipen/oxandrolone(src)
+	new /obj/item/reagent_containers/medipen/salacid(src)
+	new /obj/item/reagent_containers/medipen/salacid(src)
+	new /obj/item/reagent_containers/medipen/penacid(src)
+	new /obj/item/reagent_containers/medipen/salbutamol(src)
+	new /obj/item/reagent_containers/medipen/atropine(src)
+	new /obj/item/reagent_containers/medipen/blood_loss(src)
 
 /obj/item/storage/box/nri_flares
 	name = "box of flares"

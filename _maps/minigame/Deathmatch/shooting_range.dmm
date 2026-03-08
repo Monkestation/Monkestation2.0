@@ -124,7 +124,7 @@
 /turf/open/floor/wood,
 /area/deathmatch/fullbright)
 "v" = (
-/obj/item/reagent_containers/hypospray/medipen,
+/obj/item/reagent_containers/medipen,
 /turf/open/floor/wood,
 /area/deathmatch/fullbright)
 "x" = (

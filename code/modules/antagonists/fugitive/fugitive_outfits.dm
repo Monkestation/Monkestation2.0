@@ -79,7 +79,7 @@
 	ears = /obj/item/radio/headset
 
 	backpack_contents = list(
-		/obj/item/reagent_containers/hypospray/medipen/invisibility = 3,
+		/obj/item/reagent_containers/medipen/invisibility = 3,
 	)
 
 /datum/outfit/invisible_man/post_equip(mob/living/carbon/human/equipee, visualsOnly)

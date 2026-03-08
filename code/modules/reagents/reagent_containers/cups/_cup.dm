@@ -366,6 +366,9 @@
 /obj/item/reagent_containers/cup/beaker/meta/rezadone
 	list_reagents = list(/datum/reagent/medicine/rezadone = 180)
 
+/obj/item/reagent_containers/cup/beaker/meta/combat_juice
+	list_reagents = list(/datum/reagent/medicine/epinephrine = 12, /datum/reagent/medicine/omnizine = 60, /datum/reagent/medicine/leporazine = 54, /datum/reagent/medicine/atropine = 54)
+
 /obj/item/reagent_containers/cup/beaker/cryoxadone
 	list_reagents = list(/datum/reagent/medicine/cryoxadone = 30)
 
@@ -712,3 +715,10 @@
 	possible_transfer_amounts = list(5, 10, 15, 30)
 	volume = 30
 	fill_icon_thresholds = list(0, 1, 20, 40, 60, 80, 100)
+
+/obj/item/storage/box/tube
+	name = "box of test tubes"
+
+/obj/item/storage/box/tube/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/reagent_containers/cup/tube( src )

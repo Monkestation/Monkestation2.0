@@ -83,7 +83,7 @@
 			new /obj/item/gun/ballistic/automatic/pistol/sol/evil(src)
 			new /obj/item/storage/box/syndie_kit/weapons_auth(src)
 			new /obj/item/ammo_box/magazine/c35sol_pistol(src)
-			new /obj/item/reagent_containers/hypospray/medipen/stimulants(src)
+			new /obj/item/reagent_containers/medipen/stimulants(src)
 			new /obj/item/clothing/shoes/chameleon/noslip(src)
 			new /obj/item/clothing/suit/armor/vest(src)
 			new /obj/item/ammo_box/c35sol(src)
