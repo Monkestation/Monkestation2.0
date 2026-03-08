@@ -344,22 +344,23 @@
 /atom/proc/audible_message(message, deaf_message, hearing_distance = DEFAULT_MESSAGE_RANGE, self_message, audible_message_flags = NONE, atom/push_appearance, list/ignored_mobs)
 	if(!isnull(push_appearance) && !isatom(push_appearance))
 		stack_trace("push_appearance must be an atom, but got [push_appearance] instead")
+	var/list/hearers = get_hearers_in_range(hearing_distance, src) //caches the hearers and then removes ignored mobs.
+	if(isnull(hearers))
+		return
 	if(!islist(ignored_mobs))
 		ignored_mobs = list(ignored_mobs)
-	var/list/hearers = get_hearers_in_range(hearing_distance, src) //caches the hearers and then removes ignored mobs.
-	if(hearers)
-		hearers -= ignored_mobs
-		if(self_message)
-			hearers -= src
-		var/raw_msg = message
-		if(audible_message_flags & EMOTE_MESSAGE)
-			message = "<span class='emote'><b>[src]</b> [message]</span>"
-		for(var/mob/M in hearers)
-			if(push_appearance)
-				M << output(push_appearance, "push_appearance_placeholder_id")
-			if(audible_message_flags & EMOTE_MESSAGE && runechat_prefs_check(M, audible_message_flags))
-				M.create_chat_message(src, raw_message = raw_msg, runechat_flags = audible_message_flags)
-			M.show_message(message, MSG_AUDIBLE, deaf_message, MSG_VISUAL)
+	hearers -= ignored_mobs
+	if(self_message)
+		hearers -= src
+	var/raw_msg = message
+	if(audible_message_flags & EMOTE_MESSAGE)
+		message = "<span class='emote'><b>[src]</b> [message]</span>"
+	for(var/mob/M in hearers)
+		if(push_appearance)
+			M << output(push_appearance, "push_appearance_placeholder_id")
+		if(audible_message_flags & EMOTE_MESSAGE && runechat_prefs_check(M, audible_message_flags))
+			M.create_chat_message(src, raw_message = raw_msg, runechat_flags = audible_message_flags)
+		M.show_message(message, MSG_AUDIBLE, deaf_message, MSG_VISUAL)
 
 /**
  * Show a message to all mobs in earshot of this one
