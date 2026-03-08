@@ -48,7 +48,7 @@
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "trash-can",
 			SPECIES_PERK_NAME = "Maintenance Native",
-			SPECIES_PERK_DESC = "As a creature of filth, you feel right at home in maintenance and can see better!", //Mood boost when in maint? How to do?
+			SPECIES_PERK_DESC = "As a creature of scraps and decay, you feel right at home in maintenance and can see better!", //Mood boost while in maintenance
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
@@ -60,7 +60,7 @@
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "ruler-vertical",
 			SPECIES_PERK_NAME = "Short",
-			SPECIES_PERK_DESC = "Goblins are short so they're harder to hit, you look funny though. haha.", //Dwarf trauma
+			SPECIES_PERK_DESC = "Goblins are short but strangely not harder to hit, you look funny though. haha.", //Dwarf trait doesn't actually change the "hitbox" of a goblin, you can still get hit if someone clicks where a normal human head would be
 		),
 		,list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
@@ -79,6 +79,12 @@
 			SPECIES_PERK_ICON = "fist-raised",
 			SPECIES_PERK_NAME = "Easy to Keep Down",
 			SPECIES_PERK_DESC = "You get back up from stuns slower.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "biohazard",
+			SPECIES_PERK_NAME = "Toxic Homeworld",
+			SPECIES_PERK_DESC = "Your liver has evolved to purge toxins more efficiently, letting you survive very minor poisoning.",
 		),
 	)
 
@@ -128,12 +134,19 @@
 	name = "goblin tongue"
 	disliked_foodtypes = VEGETABLES
 	liked_foodtypes = GORE | MEAT | GROSS
+	var/static/list/speech_replacements = list("sk" = "cks", "sks" = "ckses", new /regex(@"\bx", "g") = "z", new /regex(@"\bX", "g") = "Z", new /regex(@"\bx", "g") = "z", new /regex(@"(?<=[a-z])x", "g") = "cks",  new /regex(@"(?<=[A-Z])x", "g") = "cks",   new /regex(@"(?<=[A-Z])X", "g") = "CKS", ) //Reverses sk to (c)ks, and changes beginning x's to z's, and x's inside words to "cks"
 
-/obj/item/organ/internal/liver/goblin
+/obj/item/organ/internal/tongue/goblin/New(class, timer, datum/mutation/copymut)
+	. = ..()
+	AddComponent(/datum/component/speechmod, replacements = speech_replacements, should_modify_speech = CALLBACK(src, PROC_REF(should_modify_speech)))
+
+/obj/item/organ/internal/liver/goblin //Equivilant to an organic tier 2 cybernetic liver
 	name = "green liver"
 	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
 	icon_state = "goblin_liver"
-	toxTolerance = 9
+	maxHealth = 1.5 * STANDARD_ORGAN_THRESHOLD
+	toxTolerance = 5
+	liver_resistance = 1.2
 	desc = "Its green and pulsing..."
 
 /obj/item/organ/internal/spleen/goblin

@@ -37,6 +37,9 @@
 	)
 	var/wave_timer = WAVE_DURATION_SMALL
 
+	/// Visual indicator for progress.
+	var/obj/effect/world_progressbar/progress_bar
+
 	/// What string do we use to warn the player about the excavation event?
 	var/excavation_warning = "Are you ready to excavate this ore vent?"
 	///Are we currently spawning mobs?
@@ -74,11 +77,11 @@
 	register_context()
 	if(!unique_vent)
 		SSore_generation.possible_vents += src
-	boulder_icon_state = pick(list(
+	boulder_icon_state = pick(
 		"boulder",
 		"rock",
 		"stone",
-	))
+	)
 	if(tapped)
 		SSore_generation.processed_vents += src
 		icon_state = icon_state_tapped
@@ -91,6 +94,7 @@
 	return ..()
 
 /obj/structure/ore_vent/Destroy()
+	QDEL_NULL(progress_bar)
 	if(!isnull(vent_timer))
 		deltimer(vent_timer) // Will return false on an invalid id and not have issues with the prefix.
 	SSore_generation.possible_vents -= src
@@ -98,6 +102,16 @@
 	if(tapped)
 		SSore_generation.processed_vents -= src
 	return ..()
+
+/obj/structure/ore_vent/proc/update_progress_bar()
+	var/time_remaining = wave_time_remaining()
+	var/wave_timers = wave_timer
+	if(tapped || isnull(time_remaining) || isnull(wave_timers) || wave_timers == 0)
+		QDEL_NULL(progress_bar)
+		return
+	if(QDELETED(progress_bar))
+		progress_bar = new(null, src, 1, src, "border", null, "prog_bar", FALSE, "#6699FF", "#FFEE8C", "#FF0033", null, TRUE, -1)
+	progress_bar.update((time_remaining != 0) ? 1 - (time_remaining / wave_timers) : 0)
 
 /obj/structure/ore_vent/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
@@ -238,6 +252,7 @@
 	spawning_mobs = TRUE
 	icon_state = icon_state_tapped
 	update_appearance(UPDATE_ICON_STATE)
+	update_progress_bar()
 
 /**
  * Called when the wave defense event ends, after a variable amount of time in start_wave_defense.
@@ -250,6 +265,7 @@
 /obj/structure/ore_vent/proc/handle_wave_conclusion()
 	SIGNAL_HANDLER
 
+	QDEL_NULL(progress_bar)
 	SEND_SIGNAL(src, COMSIG_SPAWNER_STOP_SPAWNING)
 	var/remaining_time = null // Support for time out failure later
 	if(!isnull(vent_timer))
@@ -299,7 +315,8 @@
 		if(!start && timeleft(vent_timer))
 			deltimer(vent_timer)
 			vent_timer = "tl=" + "[timeleft]"
-	return
+
+		update_progress_bar()
 
 /**
  * Returns time remaining of the current wave defense.

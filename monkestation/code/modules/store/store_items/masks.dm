@@ -31,6 +31,9 @@ GLOBAL_LIST_INIT(store_masks, generate_store_items(/datum/store_item/mask))
 	name = "Sterile Mask"
 	item_path = /obj/item/clothing/mask/surgical
 
+/datum/store_item/mask/deforest_breath_mask
+	name = "Deforest Breath Mask"
+	item_path = /obj/item/clothing/mask/breath/deforest
 
 /*
 *	GAS MASKS
@@ -45,6 +48,11 @@ GLOBAL_LIST_INIT(store_masks, generate_store_items(/datum/store_item/mask))
 	name = "ATP Engineer Mask"
 	item_path = /obj/item/clothing/mask/gas/atp
 	item_cost = 5000
+
+/datum/store_item/mask/deforest_mask
+	name = "Deforest Gas Mask"
+	item_path = /obj/item/clothing/mask/gas/deforest
+	item_cost = 4000
 
 /*
 *	JOB-LOCKED

@@ -12,3 +12,135 @@
 2026-03-02:
   JohnFulpWillard:
   - rscdel: Bye Mafia.
+2026-03-03:
+  Mantle:
+  - rscadd: Traffic Cone Hat added to monkecoin store
+  Shoddd:
+  - bugfix: interaction comps now check for nodrop
+  SirNightKnight:
+  - bugfix: fixed the nightmare revive timer being off by a decimal point.
+  - qol: added security armbands to the secdrobe.
+  Tractor-Maam:
+  - code_imp: Minor housekeeping with lionhunter rifle code
+2026-03-04:
+  Mantle, Commissioned by Isotope 436:
+  - rscadd: Deforest medical clothing, available from deforest imports, via cargo
+  - rscadd: Deforest clothing is also available in the monkecoin store.  The gloves
+      do not provide any benefit, unlike their cargo variant.
+  SirNightKnight:
+  - bugfix: fixed deconstructing pressure tanks duplicating gasses in merged tanks.
+  - balance: pressure tanks have a volume of 10,000 liters and rounded the pressure
+      limit to 50,000.
+  - balance: halved the material cost for finishing pressure tank frames.
+  - bugfix: corrected thermo color readings on thermomachines and gas meters
+2026-03-05:
+  notghosti:
+  - map: Oshan medical has connected power.
+  - map: Oshan pharmacy has a air alarm now
+  - map: Oshan chemistry is now accessed by chemistry, not pharmacy
+  - map: Oshan medical department had its distro/power cabling cleaned up.
+  - map: Oshan pathology given more standard equipment
+  - map: Oshan CMO's no longer shall live/spawn in walls
+2026-03-06:
+  Absolucy:
+  - rscadd: Excavating ore vents now has a progress bar to show how much progress
+      has been made on defending the vent.
+  Cujo:
+  - bugfix: Fix messages displayed when applying gauze
+  - rscadd: Ling husk now takes priority over burn husk for advanced health analyzers
+  Mantle:
+  - rscadd: Deforest Satchel, Backpack, Mask, and Beret
+  - bugfix: Deforest jacket and hat should be less buggy
+  Shoddd:
+  - balance: baseball bats no longer do stam damage
+  SirNightKnight:
+  - qol: made the captain's aid toy a small item.
+  - qol: added a bunch more paintjobs for closets when repainting them.
+  sylvia-from-fulp-station:
+  - rscadd: Added the explorer tab to the mining vendor.
+  - rscadd: Added the explorer voucher, and added it to the Explorer's backpack at
+      round start.
+  - rscadd: Added 7 kits for the new explorer voucher. The laser gun kit, medevac
+      kit, survival kit, breaching kit, bushman kit, explorer conscription kit and
+      lavaland kit.
+  - rscadd: Added the explorer laser gun; a low capacity recharging laser gun. Sprite
+      from TGMC.
+  - rscadd: Added breaching charges, a c-4 subtype for explorers which cannot be placed
+      on station or on living things. Sprite by Chappy
+  - rscadd: Added clown pranks with breaching charges. They also get them in the mail
+      with rather low odds.
+  - rscdel: Removed the Explorer's mining voucher from their backpack at round start.
+  - qol: Mining hardsuits and other mining armor can hold the sledgehammer and explorer
+      laser gun.
+2026-03-07:
+  Cujo:
+  - bugfix: Prude mode now stops fart emotes from displaying in runechat
+  DragonMasterC:
+  - rscadd: tool interactions to assembler
+  - rscadd: sabotage and fix interactions to assembler
+  - qol: easier to deconstruct assemblers, now usually unnecessary to fix them
+  - qol: lot of context, examine, spans, and bubble text for assembler interactions
+  - bugfix: attempted fix of assembler.dm's empty_crafting_inventory() proc (would
+      check if items were QDEL'd before continuing which seemingly caused it to freak
+      out)
+  - image: updated assembler icon and added assembler_open for when panel is open
+  - code_imp: changed how assembler writes its crafting recipe and requirements in
+      examine and updated its crafting speed formula to account for wire cuts
+  EssentialTomato:
+  - balance: Pipe scrubbers now have a stronger pump installed.
+  Glyphee:
+  - rscadd: whole new goblin language syllables
+  - rscadd: goblin accent attached to tongue
+  - balance: weakened goblin liver
+  - bugfix: typo in satyr traits
+  Mantle:
+  - rscadd: Explorere's webbing can now hold skeleton keys & chasm filler capsules
+  Pickle-Coding:
+  - code_imp: The singularity processing is a bit more important than the other subsystems.
+  Shoddd:
+  - bugfix: huds no longer override seeing quirks with empath
+  - bugfix: empath can no longer see the quirks of anyone with their face covered
+2026-03-08:
+  Cujo:
+  - rscadd: Blood filtering now displays results if an activated vital display or
+      operating computer is nearby.
+  - bugfix: Fixed being able to use sign language while handcuffed, on a stasis bed,
+      or in mechs
+  - rscadd: Placing an activated energy dagger over your ear now burns your hair off
+  - rscadd: Energy daggers can now light cigarettes
+  JohnFulpWillard:
+  - rscadd: New sound channel called "Sirens", for the sound that plays during a Delta
+      Alert.
+  - rscdel: The default announcer now has the default welcome message again, rather
+      than being the same as the Ook announcer.
+  - qol: Station announcer has been moved to it's own pref called the Storyteller.
+  - qol: A lot more sounds now care for your volume slider settings, hopefully you
+      wont get your ears blasted as much anymore.
+  - balance: Duke & Dagoth announcers have been halved in weight (so they are less
+      likely to roll).
+  - rscdel: Deleted several sound preferences that already exists as Volume Mixer
+      options.
+  - qol: Elevator music is now a volume slider instead of ON/OFF setting.
+  - bugfix: Instrument volume sliders now work.
+  - bugfix: Whitenoise now takes prefs into account to decide sound volume.
+  - bugfix: Updating sound channels while a looping sound is playing will not stop
+      the looping sound anymore.
+  - bugfix: '''Stop all sounds'' verb no longer removes whitenoise from the round
+      until you enter & exit maints.'
+  - bugfix: Looping sound effects now more consistently care for your volume prefs.
+  - bugfix: Bingles can now walk over their bingle floors even if it's in space. The
+      bingle pit also prevents you from falling down Z-levels now if it's on openspace.
+  - bugfix: Simians can now safely climb stuff with click & drag, while vaulting remains
+      on sprinting into something that can be climbed.
+  Mantle:
+  - rscadd: Deforest inhands for backpack and satchel
+  - bugfix: deforest jumpsuit should properly appear in loadouts now
+  SirNightKnight:
+  - bugfix: fixed light replacers not being able to place lights in floodlight frames.
+  Tractor-Maam:
+  - balance: Vendozer recipes that called for a vending machine now call for that
+      machines resupply, 5 iron, and 5 cable.
+  - balance: Vendozers can now carry trashtank weapons (this is also a bugfix, since
+      it spawned with one that, when removed, cannot be readded.)
+  - spellcheck: fixed a typo on the peashooter breech recipe.
+  - rscadd: Autopsy scanners now fit in medkits.
