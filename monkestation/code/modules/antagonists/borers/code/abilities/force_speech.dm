@@ -1,7 +1,7 @@
 /datum/action/cooldown/borer/force_speak
 	name = "Force Host Speak"
 	cooldown_time = 25 SECONDS
-	willing_cooldown_time = 5 SECONDS
+	var/willing_cooldown_time = 5 SECONDS
 	button_icon_state = "speak"
 	requires_host = TRUE
 	sugar_restricted = TRUE
