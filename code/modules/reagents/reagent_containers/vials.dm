@@ -2,7 +2,6 @@
 	name = "vial"
 	desc = "A small vial for holding small amounts of reagents."
 	icon_state = "vial"
-	possible_transfer_amounts = list(5,10,15)
 	unique_reskin = list("vial" = "vial",
 						"white vial" = "vial_white",
 						"red vial" = "vial_red",
