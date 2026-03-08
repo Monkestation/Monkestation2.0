@@ -4,7 +4,7 @@
 	name = "rebar"
 	icon_state = "rebar"
 	damage = 30
-	speed = 0.4
+	speed = 2.5
 	dismemberment = 1 //because a 1 in 100 chance to just blow someones arm off is enough to be cool but also not enough to be reliable
 	armour_penetration = 20
 	wound_bonus = -20
@@ -42,7 +42,7 @@
 	name = "zaukerite shard"
 	icon_state = "rebar_zaukerite"
 	damage = 60
-	speed = 0.6
+	speed = 1.6
 	dismemberment = 10
 	damage_type = TOX
 	eyeblur = 5
@@ -67,7 +67,7 @@
 	name = "metallic hydrogen bolt"
 	icon_state = "rebar_hydrogen"
 	damage = 45
-	speed = 0.6
+	speed = 1.6
 	projectile_piercing = PASSMOB|PASSVEHICLE
 	projectile_phasing = ~(PASSMOB|PASSVEHICLE)
 	max_pierces = 3
