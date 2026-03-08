@@ -188,8 +188,8 @@
 										"gets real close to [Targeted]'s face and cuts the cheese!")]", ignored_mobs = ignored_mobs)
 			hit_target = TRUE
 			break
-	if(!hit_target && !user.client?.prefs?.read_preference(/datum/preference/toggle/prude_mode))
-		user.audible_message("[pick(world.file2list("strings/farts.txt"))]", audible_message_flags = list(CHATMESSAGE_EMOTE = TRUE))
+	if(!hit_target)
+		user.audible_message("[pick(world.file2list("strings/farts.txt"))]", audible_message_flags = list(CHATMESSAGE_EMOTE = TRUE), ignored_mobs = ignored_mobs)
 
 	if(superfart_armed)
 		to_chat(user, span_notice("You decide to disarm your ass by farting slowly. Thank god."))
