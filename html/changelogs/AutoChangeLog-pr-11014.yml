@@ -1,6 +1,0 @@
-author: "Tractor-Maam"
-delete-after: True
-changes:
-  - balance: "Vendozer recipes that called for a vending machine now call for that machines resupply, 5 iron, and 5 cable."
-  - balance: "Vendozers can now carry trashtank weapons (this is also a bugfix, since it spawned with one that, when removed, cannot be readded.)"
-  - spellcheck: "fixed a typo on the peashooter breech recipe."

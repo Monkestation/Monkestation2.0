@@ -100,3 +100,47 @@
   Shoddd:
   - bugfix: huds no longer override seeing quirks with empath
   - bugfix: empath can no longer see the quirks of anyone with their face covered
+2026-03-08:
+  Cujo:
+  - rscadd: Blood filtering now displays results if an activated vital display or
+      operating computer is nearby.
+  - bugfix: Fixed being able to use sign language while handcuffed, on a stasis bed,
+      or in mechs
+  - rscadd: Placing an activated energy dagger over your ear now burns your hair off
+  - rscadd: Energy daggers can now light cigarettes
+  JohnFulpWillard:
+  - rscadd: New sound channel called "Sirens", for the sound that plays during a Delta
+      Alert.
+  - rscdel: The default announcer now has the default welcome message again, rather
+      than being the same as the Ook announcer.
+  - qol: Station announcer has been moved to it's own pref called the Storyteller.
+  - qol: A lot more sounds now care for your volume slider settings, hopefully you
+      wont get your ears blasted as much anymore.
+  - balance: Duke & Dagoth announcers have been halved in weight (so they are less
+      likely to roll).
+  - rscdel: Deleted several sound preferences that already exists as Volume Mixer
+      options.
+  - qol: Elevator music is now a volume slider instead of ON/OFF setting.
+  - bugfix: Instrument volume sliders now work.
+  - bugfix: Whitenoise now takes prefs into account to decide sound volume.
+  - bugfix: Updating sound channels while a looping sound is playing will not stop
+      the looping sound anymore.
+  - bugfix: '''Stop all sounds'' verb no longer removes whitenoise from the round
+      until you enter & exit maints.'
+  - bugfix: Looping sound effects now more consistently care for your volume prefs.
+  - bugfix: Bingles can now walk over their bingle floors even if it's in space. The
+      bingle pit also prevents you from falling down Z-levels now if it's on openspace.
+  - bugfix: Simians can now safely climb stuff with click & drag, while vaulting remains
+      on sprinting into something that can be climbed.
+  Mantle:
+  - rscadd: Deforest inhands for backpack and satchel
+  - bugfix: deforest jumpsuit should properly appear in loadouts now
+  SirNightKnight:
+  - bugfix: fixed light replacers not being able to place lights in floodlight frames.
+  Tractor-Maam:
+  - balance: Vendozer recipes that called for a vending machine now call for that
+      machines resupply, 5 iron, and 5 cable.
+  - balance: Vendozers can now carry trashtank weapons (this is also a bugfix, since
+      it spawned with one that, when removed, cannot be readded.)
+  - spellcheck: fixed a typo on the peashooter breech recipe.
+  - rscadd: Autopsy scanners now fit in medkits.
