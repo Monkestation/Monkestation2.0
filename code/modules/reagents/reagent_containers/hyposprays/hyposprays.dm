@@ -25,7 +25,7 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 	/// The currently inserted container
 	var/obj/item/reagent_containers/cup/vial/vial
 	/// What containers are allowed within this hypospray
-	var/list/allowed_containers = list(/obj/item/reagent_containers/cup/vial, /obj/item/reagent_containers/cup/vial/bluespace)
+	var/list/allowed_containers = list(/obj/item/reagent_containers/cup/vial, /obj/item/reagent_containers/cup/vial/bluespace, /obj/item/reagent_containers/cup/tube)
 	/// What containers are blacklisted from this hypospray - NOTE : Adding something like .../vial to just the whitelist will allow also large vials, hence the blacklist
 	var/list/blacklist_containers = list(/obj/item/reagent_containers/cup/vial/large)
 	/// The default vial that this hypospray starts preloaded with
