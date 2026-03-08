@@ -132,6 +132,7 @@
 			return ITEM_INTERACT_FAILURE
 
 		powerdevice = tool
+		update_appearance(UPDATE_OVERLAYS)
 		return ITEM_INTERACT_SUCCESS
 
 	else if(istype(tool, /obj/item/stack/sheet/mineral/plasma) && !QDELETED(powerdevice))
@@ -236,6 +237,7 @@
 	icon_state = "inducer-sci"
 	inhand_icon_state = "inducer-sci"
 	desc = "A tool for inductively charging internal power cells. This one has a science color scheme, and is less potent than its engineering counterpart."
+	power_transfer_multiplier = 0.5
 	powerdevice = null
 	opened = TRUE
 
