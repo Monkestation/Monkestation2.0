@@ -53,12 +53,12 @@
 
 /obj/item/reagent_containers/cup/vial/burn
 	name = "vial (Aiuri)"
-	icon_state = "vial_blue"
+	icon_state = "vial_orange"
 	list_reagents = list(/datum/reagent/medicine/c2/aiuri = 15)
 
 /obj/item/reagent_containers/cup/vial/oxandrolone
 	name = "vial (Oxandrolone)"
-	icon_state = "vial_blue"
+	icon_state = "vial_orange"
 	list_reagents = list(/datum/reagent/medicine/oxandrolone = 15)
 
 /obj/item/reagent_containers/cup/vial/tox
@@ -73,7 +73,7 @@
 
 /obj/item/reagent_containers/cup/vial/oxy
 	name = "vial (Salbutamol)"
-	icon_state = "vial_white"
+	icon_state = "vial_blue"
 	list_reagents = list(/datum/reagent/medicine/salbutamol = 15)
 
 /obj/item/reagent_containers/cup/vial/epi
@@ -93,7 +93,7 @@
 
 /obj/item/reagent_containers/cup/vial/atropine
 	name = "vial (Atropine)"
-	icon_state = "vial_white"
+	icon_state = "vial_blue"
 	list_reagents = list(/datum/reagent/medicine/atropine = 15)
 
 /obj/item/reagent_containers/cup/vial/inaprovaline
@@ -140,12 +140,12 @@
 
 /obj/item/reagent_containers/cup/vial/large/burn
 	name = "large vial (Aiuri)"
-	icon_state = "viallarge_blue"
+	icon_state = "viallarge_orange"
 	list_reagents = list(/datum/reagent/medicine/c2/aiuri = 30)
 
 /obj/item/reagent_containers/cup/vial/large/oxandrolone
 	name = "large vial (Oxandrolone)"
-	icon_state = "viallarge_blue"
+	icon_state = "viallarge_orange"
 	list_reagents = list(/datum/reagent/medicine/oxandrolone = 30)
 
 /obj/item/reagent_containers/cup/vial/large/tox
@@ -165,12 +165,12 @@
 
 /obj/item/reagent_containers/cup/vial/large/epi
 	name = "large vial (Epinephrine)"
-	icon_state = "viallarge_white"
+	icon_state = "viallarge_blue"
 	list_reagents = list(/datum/reagent/medicine/epinephrine = 24, /datum/reagent/medicine/coagulant = 6)
 
 /obj/item/reagent_containers/cup/vial/large/atropine
 	name = "large vial (Atropine)"
-	icon_state = "viallarge_white"
+	icon_state = "viallarge_blue"
 	list_reagents = list(/datum/reagent/medicine/atropine = 30)
 
 /obj/item/reagent_containers/cup/vial/large/combat
