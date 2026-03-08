@@ -39,6 +39,13 @@
 	)
 	display_pain(target, "Your head pounds with unimaginable pain!")
 
+/datum/surgery_step/fix_brain/initiate(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
+	if(!..())
+		return
+	while(target.get_organ_loss(ORGAN_SLOT_BRAIN))
+		if(!..())
+			break
+
 /datum/surgery_step/fix_brain/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	display_results(
 		user,

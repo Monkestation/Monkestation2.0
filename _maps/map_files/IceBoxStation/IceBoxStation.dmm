@@ -1666,7 +1666,7 @@
 /obj/item/extinguisher,
 /obj/item/clothing/suit/utility/fire/firefighter,
 /obj/item/clothing/mask/gas,
-/obj/item/clothing/head/utility/hardhat/red,
+/obj/item/clothing/head/utility/hardhat/fire,
 /obj/item/tank/internals/oxygen,
 /obj/item/clothing/glasses/meson,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible/layer4,
@@ -16712,7 +16712,6 @@
 /turf/closed/wall/r_wall,
 /area/station/medical/chemistry)
 "eXM" = (
-/obj/structure/cable,
 /obj/machinery/camera/directional/west{
 	c_tag = "Dormitory South"
 	},
@@ -28535,7 +28534,6 @@
 /turf/open/floor/iron,
 /area/station/commons/fitness)
 "iMo" = (
-/obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
 	},
@@ -37651,6 +37649,9 @@
 	location = "Dorm"
 	},
 /obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "lyl" = (
@@ -40895,6 +40896,9 @@
 	},
 /obj/effect/turf_decal/tile/green,
 /obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "mCX" = (
@@ -41304,7 +41308,6 @@
 /turf/open/floor/iron/cafeteria,
 /area/station/security/prison/mess)
 "mJD" = (
-/obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -58055,7 +58058,6 @@
 /obj/machinery/door/airlock/public/glass{
 	name = "Dormitory"
 	},
-/obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
 	},
@@ -65364,6 +65366,13 @@
 /obj/effect/landmark/navigate_destination/aiupload,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/ai_monitored/turret_protected/ai_upload)
+"uac" = (
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/turf/open/floor/iron,
+/area/station/hallway/primary/central)
 "uan" = (
 /obj/structure/disposalpipe/trunk/multiz,
 /obj/effect/turf_decal/stripes/line,
@@ -67365,12 +67374,12 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory)
 "uGa" = (
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 8
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
 	},
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
-/area/station/commons/dorms)
+/area/station/hallway/primary/central)
 "uGl" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -75000,11 +75009,9 @@
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
 "wVR" = (
-/obj/structure/disposalpipe/segment{
-	dir = 10
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/junction,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "wWm" = (
@@ -241474,7 +241481,7 @@ gmn
 alO
 qCI
 eXM
-uGa
+alO
 rKe
 iMo
 iMo
@@ -243021,13 +243028,13 @@ chB
 twU
 uja
 pkz
-bmv
-dnq
-mny
-mny
-mny
-mny
-mny
+uac
+vBh
+uGa
+uGa
+uGa
+uGa
+uGa
 wVR
 mfW
 kXE
