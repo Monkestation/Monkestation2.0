@@ -838,9 +838,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	var/relative_direction = get_cardinal_dir(src, target)
 	var/atom/throw_target = get_edge_target_turf(target, relative_direction)
 	. = ..()
-	if(iscarbon(target))
-		var/mob/living/carbon/carbon_target = target
-		carbon_target.stamina.adjust(-force * 2)
 
 	if(homerun_ready)
 		user.visible_message(span_userdanger("It's a home run!"))

@@ -1,32 +1,37 @@
 //max channel is 1024. Only go lower from here, because byond tends to pick the first available channel to play sounds on
 #define CHANNEL_LOBBYMUSIC 1024
 #define CHANNEL_ADMIN 1023
+//Sound channel for VOX & Announcements, such as AI, Captain arrivavl/announcements, Doomsday clock, Sec level change, etc.
 #define CHANNEL_VOX 1022
-#define CHANNEL_JUKEBOX 1021
-#define CHANNEL_HEARTBEAT 1020 //sound channel for heartbeats
-#define CHANNEL_AMBIENCE 1019
-#define CHANNEL_BUZZ 1018
-#define CHANNEL_TRAITOR 1017
-#define CHANNEL_CHARGED_SPELL 1016
-#define CHANNEL_SOUND_EFFECTS 1015
-#define CHANNEL_SOUND_FOOTSTEPS 1014
-#define CHANNEL_WEATHER 1013
-#define CHANNEL_MACHINERY 1012
-#define CHANNEL_INSTRUMENTS 1011
-#define CHANNEL_INSTRUMENTS_ROBOT 1010
-#define CHANNEL_MOB_SOUNDS 1009
-// monkestation edit
-#define CHANNEL_WALKMAN 1007
-#define CHANNEL_MASTER_VOLUME 1006
-#define CHANNEL_PRUDE 1005
-#define CHANNEL_SQUEAK 1004
-#define CHANNEL_MOB_EMOTES 1003
-#define CHANNEL_SILICON_EMOTES 1002
-#define CHANNEL_ELEVATOR 1001
-#define CHANNEL_ESCAPEMENU 1000
-#define CHANNEL_VOICES 999
-#define CHANNEL_RINGTONES 998
-// monkestation end
+#define CHANNEL_ANNOUNCEMENTS 1021
+//Sound channel for event announcements, `/datum/centcom_announcer`
+#define CHANNEL_STORYTELLER 1020
+#define CHANNEL_JUKEBOX 1019
+#define CHANNEL_HEARTBEAT 1018 //sound channel for heartbeats
+#define CHANNEL_AMBIENCE 1017
+#define CHANNEL_BUZZ 1016
+#define CHANNEL_TRAITOR 1015
+#define CHANNEL_CHARGED_SPELL 1014
+#define CHANNEL_SOUND_EFFECTS 1013
+#define CHANNEL_SOUND_FOOTSTEPS 1012
+#define CHANNEL_WEATHER 1011
+#define CHANNEL_MACHINERY 1010
+#define CHANNEL_INSTRUMENTS 1009
+#define CHANNEL_INSTRUMENTS_ROBOT 1008
+#define CHANNEL_MOB_SOUNDS 1007
+#define CHANNEL_WALKMAN 1006
+#define CHANNEL_MASTER_VOLUME 1005
+#define CHANNEL_PRUDE 1004
+#define CHANNEL_SQUEAK 1003
+#define CHANNEL_MOB_EMOTES 1002
+#define CHANNEL_SILICON_EMOTES 1001
+#define CHANNEL_ELEVATOR 1000
+#define CHANNEL_ESCAPEMENU 999
+#define CHANNEL_VOICES 998
+#define CHANNEL_RINGTONES 997
+#define CHANNEL_DELTA_SIRENS 996
+#define CHANNEL_ADMIN_SOUNDS 995
+#define CHANNEL_SHUTTLES 994
 
 /// This is the lowest volume that can be used by playsound otherwise it gets ignored
 /// Most sounds around 10 volume can barely be heard. Almost all sounds at 5 volume or below are inaudible

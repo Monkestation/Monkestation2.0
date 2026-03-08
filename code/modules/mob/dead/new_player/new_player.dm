@@ -322,7 +322,8 @@
 		if(SSshuttle.arrivals)
 			SSshuttle.arrivals.QueueAnnounce(humanc, chosen_rank)
 		else
-			announce_arrival(humanc, chosen_rank)
+			if(!HAS_TRAIT(character, TRAIT_STOWAWAY))
+				announce_arrival(humanc, chosen_rank)
 		AddEmploymentContract(humanc)
 
 		humanc.increment_scar_slot()

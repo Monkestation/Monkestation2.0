@@ -567,7 +567,7 @@
 /obj/item/tank/internals/oxygen/red,
 /obj/item/clothing/suit/utility/fire/firefighter,
 /obj/item/clothing/mask/gas,
-/obj/item/clothing/head/utility/hardhat/red,
+/obj/item/clothing/head/utility/hardhat/fire,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},

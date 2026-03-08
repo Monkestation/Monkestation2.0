@@ -275,8 +275,15 @@
 	name = "maintenance pill"
 	desc = "A strange pill found in the depths of maintenance."
 	icon_state = "pill21"
-	var/static/list/descs = list("Your feeling is telling you no, but...","Drugs are expensive, you can't afford not to eat any pills that you find."\
-	, "Surely, there's no way this could go bad.", "Winners don't do dr- oh what the heck!", "Free pills? At no cost, how could I lose?")
+	///Boolean on whether this will count towards your achievement score if you consume it.
+	var/count_towards_achievement = FALSE
+	var/static/list/descs = list(
+		"Your feeling is telling you no, but...",
+		"Drugs are expensive, you can't afford not to eat any pills that you find.",
+		"Surely, there's no way this could go bad.",
+		"Winners don't do dr- oh what the heck!",
+		"Free pills? At no cost, how could I lose?",
+	)
 
 /obj/item/reagent_containers/pill/maintenance/Initialize(mapload)
 	//monkestation edit on next line: replaced get_random_reagent_id_unrestricted() with pick_weight(GLOB.weighted_random_reagents)
@@ -307,10 +314,22 @@
 	else
 		icon_state = "pill[rand(1,21)]"
 
-/obj/item/reagent_containers/pill/maintenance/achievement/on_consumption(mob/M, mob/user)
+/obj/item/reagent_containers/pill/maintenance/on_consumption(mob/person_eating, mob/person_that_fed_us)
 	. = ..()
+	if(count_towards_achievement)
+		person_eating.client?.give_award(/datum/award/score/maintenance_pill, person_eating)
 
-	M.client?.give_award(/datum/award/score/maintenance_pill, M)
+/obj/item/reagent_containers/pill/maintenance/achievement
+	count_towards_achievement = TRUE
+
+/obj/item/reagent_containers/pill/maintenance/achievement/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_ON_REAGENT_SCAN, PROC_REF(on_chemical_scan))
+
+///called when we are chemically scanned.
+/obj/item/reagent_containers/pill/maintenance/achievement/proc/on_chemical_scan(atom/source, mob/user)
+	SIGNAL_HANDLER
+	count_towards_achievement = FALSE
 
 /obj/item/reagent_containers/pill/potassiodide
 	name = "potassium iodide pill"

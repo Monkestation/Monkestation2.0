@@ -148,7 +148,7 @@
 	UnregisterSignal(host_card, COMSIG_QDELETING)
 	host_card = null
 	linked_console = null
-	QDEL_LIST(radial_data)
+	radial_data = null
 	. = ..()
 
 /datum/extract_request_data/proc/end_request_qdeleted()
