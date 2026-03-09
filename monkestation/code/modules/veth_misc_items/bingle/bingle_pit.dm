@@ -164,13 +164,15 @@
 		return FALSE
 	ADD_TRAIT(thing, TRAIT_FALLING_INTO_BINGLE_HOLE, REF(src))
 	item_value_consumed += get_item_value(thing)
-	for(var/atom/movable/content as anything in thing.get_all_contents(HOLOGRAM_1) - thing) // ensure holograms are ignored!!
-		if(QDELETED(content) || HAS_TRAIT(content, TRAIT_FALLING_INTO_BINGLE_HOLE) || isbrain(content))
-			continue
-		if(isliving(content) || is_type_in_typecache(content, swallow_blacklist))
-			content.forceMove(content.drop_location())
-		else if(isobj(content))
-			item_value_consumed += get_item_value(content)
+	// just don't check contents of guns
+	if (!istype(thing, /obj/item/gun))
+		for(var/atom/movable/content as anything in thing.get_all_contents(HOLOGRAM_1) - thing) // ensure holograms are ignored!!
+			if(QDELETED(content) || HAS_TRAIT(content, TRAIT_FALLING_INTO_BINGLE_HOLE) || isbrain(content))
+				continue
+			if(isliving(content) || is_type_in_typecache(content, swallow_blacklist))
+				content.forceMove(content.drop_location())
+			else if(isobj(content))
+				item_value_consumed += get_item_value(content)
 	// Only animate if we're actually swallowing
 	animate_falling_into_pit(thing)
 	// Delay the actual movement to let animation play
@@ -181,11 +183,6 @@
 	if(QDELETED(src) || QDELETED(item) || item == src)
 		return
 	if(is_type_in_typecache(item, swallow_blacklist) || (item.flags_1 & HOLOGRAM_1))
-		if(!istype(item, /obj/projectile))
-			return
-		var/obj/projectile/proj = item
-		if(!proj.fired)
-			qdel(proj)
 		return
 	if(HAS_TRAIT(item, TRAIT_FALLING_INTO_BINGLE_HOLE) || HAS_TRAIT(item, TRAIT_NO_TRANSFORM))
 		return
