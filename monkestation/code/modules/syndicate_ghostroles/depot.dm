@@ -2,6 +2,7 @@
 
 /obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/depot_syndicate
 	name = "Syndicate Depot Worker"
+	desc = "A heavily-reinforced cryogenics sleeper proudly bearing the colours of the Syndicate Coalition. You can see someone inside through the frosted ballistic glass."
 	prompt_name = "a syndicate depot worker"
 	you_are_text = "You are a depot worker, employed at a Syndicate depot."
 	flavour_text = "Produce and move supplies for Syndicate bases in the region, as well as ensure they are safely evacuated should they be lost. Do not let the base fall into enemy hands!"
@@ -59,7 +60,6 @@
 	l_pocket = /obj/item/melee/energy/sword/saber
 	r_pocket = /obj/item/flashlight/lantern/syndicate
 	mask = /obj/item/clothing/mask/chameleon //under ANY OTHER CIRCUMSTANCE i'd make it a gps one, but this place is also the safe evacuation zone for any surviving space outpost operatives after a self-destruct event
-	l_hand = /obj/item/gun/ballistic/automatic/pistol/aps
 
 //ruin areas
 
@@ -106,7 +106,6 @@
 //misc things; fluff, stun-capable turrets
 
 /obj/machinery/porta_turret/syndicate/depot
-	name = "depot turret"
 	desc = "A ballistic machine-gun auto-turret. This one has had one of its barrels replaced with a taser."
 	stun_projectile = /obj/projectile/energy/electrode
 	stun_projectile_sound = 'sound/weapons/taser.ogg'
