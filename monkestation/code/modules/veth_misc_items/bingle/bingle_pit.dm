@@ -181,6 +181,11 @@
 	if(QDELETED(src) || QDELETED(item) || item == src)
 		return
 	if(is_type_in_typecache(item, swallow_blacklist) || (item.flags_1 & HOLOGRAM_1))
+		if(!istype(item, /obj/projectile))
+			return
+		var/obj/projectile/proj = item
+		if(!proj.fired)
+			qdel(proj)
 		return
 	if(HAS_TRAIT(item, TRAIT_FALLING_INTO_BINGLE_HOLE) || HAS_TRAIT(item, TRAIT_NO_TRANSFORM))
 		return
