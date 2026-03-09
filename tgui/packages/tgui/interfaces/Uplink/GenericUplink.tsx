@@ -1,5 +1,5 @@
-import { BooleanLike } from 'common/react';
-import { ReactNode } from 'react';
+import type { BooleanLike } from 'common/react';
+import type { ReactNode } from 'react';
 
 import { useBackend, useLocalState, useSharedState } from '../../backend';
 import {
@@ -39,7 +39,7 @@ export const GenericUplink = (props: GenericUplinkProps) => {
     'compactModeUplink',
     false,
   );
-  let items = props.items.filter((value) => {
+  const items = props.items.filter((value) => {
     if (searchText.length === 0) {
       return value.category === selectedCategory;
     }
@@ -160,7 +160,7 @@ const ItemList = (props: ItemListProps) => {
       <Stack vertical mt={compactMode ? -0.5 : -1}>
         {items.map((item, index) => (
           <Stack.Item key={index} mt={compactMode ? 0.5 : 1}>
-            <Section key={item.name} fitted={compactMode ? true : false}>
+            <Section key={item.name} fitted={!!compactMode}>
               <Stack>
                 <Stack.Item>
                   <Box

@@ -6,6 +6,11 @@
 	interaction_flags_click = ALLOW_RESTING
 	interaction_flags_mouse_drop = ALLOW_RESTING
 
+	/// Default typepath of the subsystem used for Life()
+	/// If this mob has a client/mind, it will always use SSclient_mobs.
+	/// If unset, defaults to SSmobs.
+	var/life_subsystem_type = /datum/controller/subsystem/mobs
+
 	///Tracks the current size of the mob in relation to its original size. Use update_transform(resize) to change it.
 	var/current_size = RESIZE_DEFAULT_SIZE
 	var/lastattacker = null
@@ -224,6 +229,9 @@
 	var/datum/stamina_container/stamina
 	/// What our current gravity state is. Used to avoid duplicate animates and such
 	var/gravity_state = null
+
+	/// how many tiles can this mob reach with their hands? 1 tile is adjacent.
+	var/reach_length = 1
 
 	/// Body temp we homeostasize to
 	var/standard_body_temperature = BODYTEMP_NORMAL

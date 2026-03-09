@@ -633,6 +633,22 @@ monkestation end */
 			message_admins("[key_name_admin(holder)] healed everyone.")
 			log_admin("[key_name(holder)] healed everyone.")
 
+		if("lobotomize_the_bird")
+			var/choice = tgui_alert(usr, "Would you like to lobotomize Poly? This will kill them, and clear ALL saved phrases!", "i have to water the shitbird wait a minute", list("Yes", "No"))
+			if(choice != "Yes")
+				return
+			for(var/mob/living/basic/parrot/poly/shitbird in GLOB.mob_living_list)
+				ADD_TRAIT(shitbird, TRAIT_DONT_WRITE_MEMORY, ADMIN_TRAIT)
+				new /obj/effect/temp_visual/bsa_impact(shitbird.loc) // BOOM.
+				shitbird.dust(just_ash = TRUE)
+
+			for(var/poly_file in list("data/npc_saves/Poly.sav", "data/npc_saves/Poly.json", "data/npc_saves/polytalk.json"))
+				if(fexists(poly_file))
+					fdel(poly_file)
+
+			message_admins("[key_name_admin(holder)] lobotomized Poly.")
+			log_admin("[key_name(holder)] lobotomized Poly.")
+
 	if(E)
 		E.processing = FALSE
 		if(E.announce_when>0)

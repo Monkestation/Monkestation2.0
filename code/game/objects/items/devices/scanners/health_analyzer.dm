@@ -164,10 +164,10 @@
 	// Husk detection
 	if(HAS_TRAIT(target, TRAIT_HUSK))
 		if(advanced)
-			if(HAS_TRAIT_FROM(target, TRAIT_HUSK, BURN))
+			if (HAS_TRAIT_FROM(target, TRAIT_HUSK, CHANGELING_DRAIN))
+				render_list += "<span class='alert ml-1'>Subject has been husked by [conditional_tooltip("desiccation", "Irreparable. Under normal circumstances, revival can only proceed via brain transplant or special surgies.", tochat)].</span><br>"
+			else if(HAS_TRAIT_FROM(target, TRAIT_HUSK, BURN))
 				render_list += "<span class='alert ml-1'>Subject has been husked by [conditional_tooltip("severe burns", "Tend burns and apply a de-husking agent, such as [/datum/reagent/medicine/c2/synthflesh::name].", tochat)].</span><br>"
-			else if (HAS_TRAIT_FROM(target, TRAIT_HUSK, CHANGELING_DRAIN))
-				render_list += "<span class='alert ml-1'>Subject has been husked by [conditional_tooltip("desiccation", "Irreparable. Under normal circumstances, revival can only proceed via brain transplant, cloning, or special surgies.", tochat)].</span><br>"
 			else
 				render_list += "<span class='alert ml-1'>Subject has been husked by mysterious causes.</span>\n"
 
@@ -426,7 +426,7 @@
 		if(istype(disease, /datum/disease/acute))
 			var/datum/disease/acute/acute_disease = disease
 			acute_disease.Refresh_Acute()
-			if(!((disease.visibility_flags & HIDDEN_SCANNER) && (disease.disease_flags & DISEASE_ANALYZED) && !(disease.disease_flags & DISEASE_DORMANT)))
+			if(!(disease.visibility_flags & HIDDEN_SCANNER) && (disease.disease_flags & DISEASE_ANALYZED) && !(disease.disease_flags & DISEASE_DORMANT))
 				if(disease.severity == DISEASE_SEVERITY_POSITIVE || DISEASE_SEVERITY_NONTHREAT)
 					render_list += "<span class='info ml-1'><b>[acute_disease.origin] disease detected</b>\n\
 					<div class='ml-2'>Name: [acute_disease.real_name()].\nType: [disease.get_spread_string()].\nStage: [disease.stage]/[disease.max_stages].</div>\
@@ -437,7 +437,7 @@
 					</span>"
 
 		else
-			if(!((disease.visibility_flags & HIDDEN_SCANNER) && (disease.disease_flags & DISEASE_ANALYZED) && !(disease.disease_flags & DISEASE_DORMANT)))
+			if(!(disease.visibility_flags & HIDDEN_SCANNER) && (disease.disease_flags & DISEASE_ANALYZED) && !(disease.disease_flags & DISEASE_DORMANT))
 				render_list += "<span class='alert ml-1'><b>Warning: [disease.form] disease detected</b>\n\
 				<div class='ml-2'>Name: [disease.name].\nType: [disease.get_spread_string()].\nStage: [disease.stage]/[disease.max_stages].\nPossible Cure: [disease.cure_text]</div>\
 				</span>"
@@ -575,7 +575,6 @@
 			simple_scanner.show_emotion(AID_EMOTION_WARN)
 			playsound(simple_scanner, 'sound/machines/twobeep.ogg', 50, FALSE)
 
-//MONKESTATION ADDITION START
 //Cyborgs can use an integrated health analyzer even if they cant see
 /obj/item/healthanalyzer/cyborg
 
@@ -628,7 +627,21 @@
 
 	chemscan(user, victim)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-//MONKESTATION ADDITION END
+
+/obj/item/healthanalyzer/cyborg/proc/upgrade() //so that it wont get moved upon upgrade in the cyborgs toolkit
+	advanced = TRUE
+	name = /obj/item/healthanalyzer/advanced::name
+	desc = /obj/item/healthanalyzer/advanced::desc
+	icon_state = /obj/item/healthanalyzer/advanced::icon_state
+	update_appearance()
+
+/obj/item/healthanalyzer/cyborg/proc/downgrade()
+	advanced = initial(advanced)
+	name = initial(name)
+	desc = initial(desc)
+	icon_state = initial(icon_state)
+	update_appearance()
+
 
 /obj/item/healthanalyzer/simple
 	name = "wound analyzer"

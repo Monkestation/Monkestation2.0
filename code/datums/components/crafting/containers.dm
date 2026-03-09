@@ -29,7 +29,7 @@
 	result = /obj/item/storage/basket
 	category = CAT_CONTAINERS
 	steps = list(
-		"master the art of underwater basketweaving", 
+		"master the art of underwater basketweaving",
 		"be underwater"
 	)
 

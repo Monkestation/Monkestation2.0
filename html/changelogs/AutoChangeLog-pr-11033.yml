@@ -1,0 +1,5 @@
+author: "notghosti"
+delete-after: True
+changes:
+  - balance: "Borers can no longer force people to preform self stunning emotes such as 'collaspe' 'surrender' and 'faint'"
+  - balance: "Force host speak cooldown has been lowered (30 -> 25 seconds)"

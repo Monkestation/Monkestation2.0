@@ -1,6 +1,6 @@
 import { Box, Button, Slider, Stack } from '../../../../../components';
 
-import {
+import type {
   FeatureChoiced,
   FeatureChoicedServerData,
   FeatureNumeric,

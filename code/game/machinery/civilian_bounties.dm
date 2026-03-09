@@ -29,12 +29,6 @@
 			return TRUE
 	return ..()
 
-/obj/machinery/computer/piratepad_control/multitool_act(mob/living/user, obj/item/multitool/I)
-	if(istype(I) && istype(I.buffer,/obj/machinery/piratepad/civilian))
-		to_chat(user, span_notice("You link [src] with [I.buffer] in [I] buffer."))
-		pad_ref = WEAKREF(I.buffer)
-		return TRUE
-
 /obj/machinery/computer/piratepad_control/civilian/LateInitialize(mapload_arg)
 	. = ..()
 	if(cargo_hold_id)
@@ -202,14 +196,14 @@
 	var/holder_item = FALSE
 
 	if(!isidcard(card_to_insert))
-		card_to_insert = inserting_item.RemoveID()
+		card_to_insert = inserting_item.remove_id()
 		holder_item = TRUE
 
 	if(!card_to_insert || !user.transferItemToLoc(card_to_insert, src))
 		return FALSE
 
 	if(target)
-		if(holder_item && inserting_item.InsertID(target))
+		if(holder_item && inserting_item.insert_id(target))
 			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 		else
 			id_eject(user, target)

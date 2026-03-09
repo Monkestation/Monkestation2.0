@@ -42,11 +42,11 @@
 		TRAIT_BINGLE,
 		TRAIT_CLUMSY,
 		TRAIT_DUMB,
-		TRAIT_NO_PAIN_EFFECTS,
 	)
 
 /mob/living/basic/bingle/Initialize(mapload, obj/structure/bingle_hole/origin_pit)
 	. = ..()
+	RegisterSignal(src, COMSIG_MOVABLE_SPACEMOVE, PROC_REF(on_space_move))
 	RegisterSignal(src, COMSIG_LIVING_BINGLE_EVOLVE, PROC_REF(evolve))
 	add_traits(bingle_traits, INNATE_TRAIT)
 	set_linked_pit(origin_pit)
@@ -92,6 +92,13 @@
 	if(adjust_health(-5 * seconds_per_tick, updating_health = FALSE))
 		updatehealth()
 		new /obj/effect/temp_visual/heal(get_turf(src), COLOR_BLUE_LIGHT)
+
+///Called when attempting to move around in space, if it's near a bingles pit it'll act sorta like lattice.
+/mob/living/basic/bingle/proc/on_space_move(atom/source, movement_dir, continuous_move)
+	SIGNAL_HANDLER
+	if(locate(/obj/structure/bingle_pit_overlay) in range(1, get_turf(source)))
+		return COMSIG_MOVABLE_STOP_SPACEMOVE
+	return NONE
 
 /mob/living/basic/bingle/lord
 	name = "bingle lord"

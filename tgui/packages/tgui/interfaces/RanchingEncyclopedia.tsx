@@ -1,6 +1,6 @@
 import { toTitleCase } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
-import { Flex, Tabs, Stack, DmIcon, Icon } from '../components';
+import { DmIcon, Flex, Icon, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
 
 type Chicken = {
@@ -113,18 +113,18 @@ const ChickenInfo = () => {
       </Flex.Item>
       <Flex.Item className="chicken-metric">
         {selectedChicken.comes_from &&
-          'Mutates from: ' + selectedChicken.comes_from}
+          `Mutates from: ${selectedChicken.comes_from}`}
       </Flex.Item>
       <Flex.Item className="chicken-metric">
         {selectedChicken.max_age &&
-          'Maximum Living Age: ' + selectedChicken.max_age}
+          `Maximum Living Age: ${selectedChicken.max_age}`}
       </Flex.Item>
       <Flex.Item className="chicken-metric">
-        {selectedChicken.desc && 'Description: ' + selectedChicken.desc}
+        {selectedChicken.desc && `Description: ${selectedChicken.desc}`}
       </Flex.Item>
       <Flex.Item className="chicken-metric">
         {selectedChicken.happiness &&
-          'Required Happiness: ' + selectedChicken.happiness}
+          `Required Happiness: ${selectedChicken.happiness}`}
       </Flex.Item>
       <Flex.Item className="chicken-metric">
         {selectedChicken.temperature &&
@@ -143,7 +143,7 @@ const ChickenInfo = () => {
       </Flex.Item>
       <Flex.Item className="chicken-metric">
         {selectedChicken.food_requirements &&
-          'Chicken needs to have eaten ' + selectedChicken.food_requirements}
+          `Chicken needs to have eaten ${selectedChicken.food_requirements}`}
       </Flex.Item>
       <Flex.Item className="chicken-metric">
         {selectedChicken.reagent_requirements &&

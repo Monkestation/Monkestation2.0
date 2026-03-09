@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { useBackend } from '../backend';
-import { Box, Stack, Section, Input, Button, Dropdown } from '../components';
+import { Box, Button, Dropdown, Input, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 type Response = {
@@ -29,7 +29,7 @@ type BitflagToString = {
 };
 
 export class CircuitSignalHandler extends Component<
-  {},
+  any,
   CircuitSignalHandlerState
 > {
   bitflags: BitflagToString;

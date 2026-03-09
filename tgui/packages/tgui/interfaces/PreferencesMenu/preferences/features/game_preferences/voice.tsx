@@ -1,4 +1,4 @@
-import { CheckboxInput, FeatureToggle } from '../base';
+import { CheckboxInput, type FeatureToggle } from '../base';
 
 export const voice_sounds_short: FeatureToggle = {
   name: 'Only One Bark',

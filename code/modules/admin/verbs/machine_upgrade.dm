@@ -5,3 +5,4 @@ ADMIN_VERB_AND_CONTEXT_MENU(machine_upgrade, R_DEBUG, FALSE, "Tweak Component Ra
 			P.rating = new_rating
 		machine.RefreshParts()
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Machine Upgrade", "[new_rating]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+

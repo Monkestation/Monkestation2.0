@@ -294,7 +294,7 @@
 	icon_state = "improvshell"
 	projectile_type = /obj/projectile/bullet/pellet/shotgun_improvised
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*2.5)
-	pellets = 10
+	pellets = 8 //Improvised shells shouldn't be doing MORE damage than the real thing
 	variance = 25
 	can_be_printed = FALSE
 

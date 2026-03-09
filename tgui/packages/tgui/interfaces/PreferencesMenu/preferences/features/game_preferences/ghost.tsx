@@ -1,18 +1,18 @@
+import { binaryInsertWith } from 'common/collections';
+import { classes } from 'common/react';
 import { multiline } from 'common/string';
+import type { ReactNode } from 'react';
+import { useBackend } from 'tgui/backend';
+import { Box, Dropdown, Flex } from 'tgui/components';
+import type { PreferencesMenuData } from '../../../data';
 import {
   CheckboxInput,
-  FeatureChoiced,
-  FeatureChoicedServerData,
+  type FeatureChoiced,
+  type FeatureChoicedServerData,
   FeatureDropdownInput,
-  FeatureToggle,
-  FeatureValueProps,
+  type FeatureToggle,
+  type FeatureValueProps,
 } from '../base';
-import { Box, Dropdown, Flex } from 'tgui/components';
-import { classes } from 'common/react';
-import { ReactNode } from 'react';
-import { binaryInsertWith } from 'common/collections';
-import { useBackend } from 'tgui/backend';
-import { PreferencesMenuData } from '../../../data';
 
 export const ghost_accs: FeatureChoiced = {
   name: 'Ghost accessories',

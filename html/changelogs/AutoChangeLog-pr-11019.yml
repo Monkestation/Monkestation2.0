@@ -1,0 +1,5 @@
+author: "flleeppyy"
+delete-after: True
+changes:
+  - bugfix: "Probably fixed some obscure issue with preferences not loading for some people"
+  - rscadd: "clear_prefs_cache for Kick topic"

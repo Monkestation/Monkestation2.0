@@ -3,16 +3,17 @@ import { flow } from 'common/fp';
 import { clamp } from 'common/math';
 import { createSearch } from 'common/string';
 import { vecLength, vecSubtract } from 'common/vector';
-import { useBackend, useLocalState } from '../backend';
+import { useState } from 'react';
 import {
   Box,
   Button,
   Icon,
+  Input,
   LabeledList,
   Section,
   Table,
-  Input,
-} from '../components';
+} from 'tgui-core/components';
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 const coordsToVec = (coords) => map(parseFloat)(coords.split(', '));
@@ -20,7 +21,7 @@ const coordsToVec = (coords) => map(parseFloat)(coords.split(', '));
 export const Gps = (props) => {
   const { act, data } = useBackend();
   const { currentArea, currentCoords, globalmode, power, tag, updating } = data;
-  const [searchName, setSearchName] = useLocalState('searchName', '');
+  const [searchName, setSearchName] = useState('');
   const searchByName = createSearch(searchName, (gps) => gps.entrytag);
   const signals = flow([
     map((signal, index) => {
@@ -129,7 +130,7 @@ export const Gps = (props) => {
                           rotation={signal.degrees}
                         />
                       )}
-                      {signal.dist !== undefined && signal.dist + 'm'}
+                      {signal.dist !== undefined && `${signal.dist}m`}
                     </Table.Cell>
                     <Table.Cell collapsing>{signal.coords}</Table.Cell>
                   </Table.Row>

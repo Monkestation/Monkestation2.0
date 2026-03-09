@@ -109,9 +109,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 /// This turf will never be cleared away by other objects on Initialize.
 #define NO_CLEARING (1<<7)
 
-#define TURF_WEATHER (1<<8) //monkestation edit
 /// This atom is a pseudo-floor that blocks map generation's checkPlaceAtom() from placing things like trees ontop of it.
-#define TURF_BLOCKS_POPULATE_TERRAIN_FLORAFEATURES (1<<9)
+#define TURF_BLOCKS_POPULATE_TERRAIN_FLORAFEATURES (1<<8)
 
 ////////////////Area flags\\\\\\\\\\\\\\
 /// If it's a valid territory for cult summoning or the CRAB-17 phone to spawn
@@ -335,3 +334,6 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define EMOTE_VISIBLE (1<<1)
 /// Is it an emote that should be shown regardless of blindness/deafness
 #define EMOTE_IMPORTANT (1<<2)
+/// Does this emote play a visual when being played, unrelated to whether or not it's visual
+//(which is whether you need to see to be told of the emote being played)
+#define EMOTE_HAS_VISUAL (1<<3)

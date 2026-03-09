@@ -8,6 +8,7 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	integrity_failure = 0 //prevents bust_open from activating
 	paint_jobs = null
+	can_weld_shut = FALSE
 	/// variable that only lets the crate open if opened by a key from the uplink
 	var/created_items = FALSE
 	/// this is what will spawn when it is opened with a syndicrate key

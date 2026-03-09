@@ -19,7 +19,7 @@
 			deltimer(vote_timer?.resolve())
 			vote_timer = null
 		vote_active = FALSE
-		send_clock_message(null, "[user] has cancelled the Eminence vote.")
+		send_clock_message("[user] has cancelled the Eminence vote.")
 		return
 	if(GLOB.current_eminence)
 		to_chat(user, span_brass("The Eminence has already been released."))
@@ -32,10 +32,10 @@
 		return
 
 	if(option == "Yourself")
-		send_clock_message(null, span_bigbrass("[user] has elected themselves to become the Eminence. Interact with \the [src] to object."))
+		send_clock_message(span_bigbrass("[user] has elected themselves to become the Eminence. Interact with \the [src] to object."))
 		vote_timer = WEAKREF(addtimer(CALLBACK(src, PROC_REF(vote_succeed), user), 60 SECONDS, TIMER_UNIQUE | TIMER_STOPPABLE))
 	else if(option == "A ghost")
-		send_clock_message(null, span_bigbrass("[user] has elected for a ghost to become the Eminence. Interact with \the [src] to object."))
+		send_clock_message(span_bigbrass("[user] has elected for a ghost to become the Eminence. Interact with \the [src] to object."))
 		vote_timer = WEAKREF(addtimer(CALLBACK(src, PROC_REF(vote_succeed)), 60 SECONDS, TIMER_UNIQUE | TIMER_STOPPABLE))
 	else
 		return
@@ -64,7 +64,7 @@
 
 	polling = FALSE
 	if(!(eminence?.client))
-		send_clock_message(null, "The Eminence remains in slumber, for now, try waking it again soon.")
+		send_clock_message("The Eminence remains in slumber, for now. Try waking it again soon.")
 		return
 
 	var/mob/living/eminence/new_mob = new /mob/living/eminence(get_turf(src))
@@ -78,4 +78,4 @@
 		eminence.mind.transfer_to(new_mob, TRUE)
 		eminence.dust(TRUE, TRUE)
 	new_mob.mind.add_antag_datum(/datum/antagonist/clock_cultist/eminence)
-	send_clock_message(null, span_bigbrass("The Eminence has risen!"))
+	send_clock_message(span_bigbrass("The Eminence has risen!"))

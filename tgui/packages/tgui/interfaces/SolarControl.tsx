@@ -1,17 +1,17 @@
-import { BooleanLike } from 'common/react';
-import { formatPower } from '../format';
+import type { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
 import {
   Box,
   Button,
+  Chart,
+  Icon,
   LabeledList,
   NumberInput,
   ProgressBar,
-  Chart,
   Section,
   Stack,
-  Icon,
 } from '../components';
+import { formatPower } from '../format';
 import { Window } from '../layouts';
 
 type Data = {
@@ -181,7 +181,7 @@ export const SolarControl = (props) => {
               )}
               {tracking_state === 2 && (
                 <Box inline color="label" mt="3px">
-                  {azimuth_current + ' °'} (auto)
+                  {`${azimuth_current} °`} (auto)
                 </Box>
               )}
             </LabeledList.Item>

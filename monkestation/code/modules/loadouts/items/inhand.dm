@@ -37,7 +37,7 @@ GLOBAL_LIST_INIT(loadout_inhand_items, generate_loadout_items(/datum/loadout_ite
 
 /datum/loadout_item/inhand/briefcase_secure
 	name = "Secure Briefcase"
-	item_path = /obj/item/storage/secure/briefcase
+	item_path = /obj/item/storage/briefcase/secure
 
 /datum/loadout_item/inhand/skub
 	name = "Skub"
@@ -78,3 +78,11 @@ GLOBAL_LIST_INIT(loadout_inhand_items, generate_loadout_items(/datum/loadout_ite
 /datum/loadout_item/inhand/satchel/wing_devil
 	name = "Devil Wing Satchel"
 	item_path = /obj/item/storage/backpack/satchel/wing/alt
+
+/datum/loadout_item/inhand/satchel/deforest_satchel
+	name = "Deforest Satchel"
+	item_path = /obj/item/storage/backpack/satchel/med/deforest
+
+/datum/loadout_item/inhand/satchel/deforest_backpack
+	name = "Deforest Backpack"
+	item_path = /obj/item/storage/backpack/medic/deforest

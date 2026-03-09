@@ -62,7 +62,7 @@ export const NifPanel = (props) => {
                         title={
                           <>
                             {<Icon name={nifsoft.ui_icon} />}
-                            {nifsoft.name + '  '}
+                            {`${nifsoft.name}  `}
                           </>
                         }
                         buttons={

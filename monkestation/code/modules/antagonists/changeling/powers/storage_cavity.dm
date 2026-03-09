@@ -73,11 +73,11 @@
 	if(!. || !owner)
 		return
 	forceMove(receiver)
-	RegisterSignal(receiver, COMSIG_MOB_TRIED_ACCESS, PROC_REF(on_try_access))
+	RegisterSignal(receiver, COMSIG_MOB_RETRIEVE_ACCESS, PROC_REF(retrieve_access))
 
 /obj/item/organ/internal/storage_cavity/Remove(mob/living/carbon/organ_owner, special)
 	. = ..()
-	UnregisterSignal(organ_owner, COMSIG_MOB_TRIED_ACCESS)
+	UnregisterSignal(organ_owner, COMSIG_MOB_RETRIEVE_ACCESS)
 
 /obj/item/organ/internal/storage_cavity/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
@@ -92,9 +92,9 @@
 		var/obj/item/item = gone
 		access -= item.GetAccess()
 
-/obj/item/organ/internal/storage_cavity/proc/on_try_access(datum/source, obj/target)
+/obj/item/organ/internal/storage_cavity/proc/retrieve_access(datum/source, list/player_access)
 	SIGNAL_HANDLER
-	return target.check_access_list(access)
+	player_access += access
 
 /datum/storage/storage_cavity
 	max_specific_storage = WEIGHT_CLASS_SMALL

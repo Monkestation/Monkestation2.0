@@ -240,6 +240,17 @@
 	. = ..()
 	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 4), TEXT_SOUTH = list(0, 7), TEXT_EAST = list(-12, 7), TEXT_WEST = list( 12, 7)))
 
+/datum/component/riding/vehicle/red_key
+	override_allow_spacemove = TRUE //you'll go flying if you try it though.
+	ride_check_flags = RIDER_NEEDS_LEGS | RIDER_NEEDS_ARMS | UNBUCKLE_DISABLED_RIDER
+
+/datum/component/riding/vehicle/red_key/handle_specials()
+	. = ..()
+	set_vehicle_dir_layer(NORTH, ABOVE_MOB_LAYER)
+	set_vehicle_dir_layer(EAST, OBJ_LAYER)
+	set_riding_offsets(1, list(TEXT_NORTH = list(0, 4), TEXT_SOUTH = list(0, -6), TEXT_EAST = list(6, 0), TEXT_WEST = list(-6, 0)))
+	set_riding_offsets(2, list(TEXT_NORTH = list(0, -12), TEXT_SOUTH = list(0, 8), TEXT_EAST = list(-11, 0), TEXT_WEST = list(11, 0)))
+
 /datum/component/riding/vehicle/scooter
 	ride_check_flags = RIDER_NEEDS_LEGS | RIDER_NEEDS_ARMS | UNBUCKLE_DISABLED_RIDER
 

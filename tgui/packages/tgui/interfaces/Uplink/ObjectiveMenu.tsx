@@ -1,6 +1,6 @@
-import { BooleanLike, classes } from 'common/react';
+import { type BooleanLike, classes } from 'common/react';
+import type { ReactNode } from 'react';
 import { Component } from 'react';
-
 import {
   Box,
   Button,
@@ -15,10 +15,9 @@ import {
 import {
   calculateProgression,
   getDangerLevel,
-  Rank,
+  type Rank,
 } from './calculateDangerLevel';
 import { ObjectiveState } from './constants';
-import type { ReactNode } from 'react';
 
 export type Objective = {
   id: number;
@@ -474,7 +473,7 @@ export const ObjectiveElement = (props: ObjectiveElementProps) => {
                     textAlign="center"
                   >
                     {telecrystalReward} TC,
-                    {contractorRep ? ' ' + contractorRep + ' REP,' : ''}
+                    {contractorRep ? ` ${contractorRep} REP,` : ''}
                     <Box ml={1} as="span">
                       {calculateProgression(progressionReward)} Threat Level
                       {Math.abs(progressionDiff) > 10 && (

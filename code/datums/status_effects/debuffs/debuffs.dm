@@ -434,6 +434,8 @@
 	owner.adjustBruteLoss(bleed_damage)
 	new /obj/effect/temp_visual/bleed/explode(owner.loc)
 	for(var/d in GLOB.alldirs)
+		if(QDELETED(owner))
+			return
 		owner.do_splatter_effect(d)
 	playsound(owner, SFX_DESECRATION, 100, TRUE, -1)
 

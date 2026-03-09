@@ -388,13 +388,11 @@
 	desc = "Stay outta the enemy spawn!"
 	icon_state = "trap"
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	var/team = WHITE_TEAM
 	time_between_triggers = 1
 	anchored = TRUE
 	alpha = 255
-
-/obj/structure/trap/ctf/examine(mob/user)
-	return
+	can_reveal = FALSE
+	var/team = WHITE_TEAM
 
 /obj/structure/trap/ctf/trap_effect(mob/living/living)
 	if(!is_ctf_target(living))

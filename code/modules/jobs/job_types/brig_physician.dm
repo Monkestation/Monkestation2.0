@@ -14,7 +14,7 @@
 	config_tag = "BRIG_PHYSICIAN"
 
 	outfit = /datum/outfit/job/brig_physician
-	plasmaman_outfit = /datum/outfit/plasmaman/security
+	plasmaman_outfit = /datum/outfit/plasmaman/brig_physician
 
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SEC

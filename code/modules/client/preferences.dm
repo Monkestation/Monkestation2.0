@@ -139,7 +139,18 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if(loaded_preferences_successfully)
 		if(load_character())
 			loaded = TRUE
-			return
+
+	var/needs_save = FALSE
+	for(var/channel in GLOB.used_sound_channels)
+		if(isnull(channel_volume["[channel]"]))
+			channel_volume["[channel]"] = 50
+			needs_save = TRUE
+	if(needs_save)
+		save_preferences()
+
+	//If we loaded prefs, we still want to make sure they have all sound channels, now that it's done we can safely early return.
+	if(loaded)
+		return
 	//we couldn't load character data so just randomize the character appearance + name
 	randomise_appearance_prefs() //let's create a random character then - rather than a fat, bald and naked man.
 	if(parent)
@@ -176,15 +187,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		character_preview_view = create_character_preview_view(user)
-
-		var/needs_save = FALSE
-		for(var/channel in GLOB.used_sound_channels)
-			if(isnull(channel_volume["[channel]"]))
-				channel_volume["[channel]"] = 50
-				needs_save = TRUE
-		if(needs_save)
-			save_preferences()
-
 		ui = new(user, src, "PreferencesMenu")
 		ui.set_autoupdate(FALSE)
 		ui.open()
@@ -216,9 +218,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if (current_window == PREFERENCE_WINDOW_GAME_PREFERENCES)
 		var/list/channels = list()
 		for(var/channel in GLOB.used_sound_channels)
+			var/list/channel_info = get_channel_info(channel)
 			channels += list(list(
 				"num" = channel,
-				"name" = get_channel_name(channel),
+				"name" = channel_info[1],
+				"desc" = channel_info[2],
 				"volume" = channel_volume["[channel]"]
 			))
 		data["channels"] = channels
@@ -270,12 +274,23 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	return assets
 
-/datum/preferences/proc/set_channel_volume(channel, vol, mob/user)
-	user.update_media_volume(channel)
+/datum/preferences/proc/set_channel_volume(channel, vol)
+	parent.mob.update_media_volume(channel)
 
-	var/sound/S = sound(null, channel = channel, volume = vol)
-	S.status = SOUND_UPDATE
-	SEND_SOUND(usr, S)
+	//we gotta take into account existing sounds repeating/waiting, otherwise we completely wipe looping sounds (such as whitenoise).
+	for(var/sound/S in parent.SoundQuery())
+		//master channel affects all others.
+		if((channel != CHANNEL_MASTER_VOLUME) && (S.channel != channel))
+			continue
+		var/sound/new_sound = sound(
+			null,
+			repeat = S.repeat,
+			wait = S.wait,
+			channel = S.channel,
+			volume = calculate_mixed_volume(parent, S.volume, S.channel),
+		)
+		new_sound.status = SOUND_UPDATE
+		SEND_SOUND(parent.mob, new_sound)
 
 /datum/preferences/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
@@ -307,7 +322,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			return TRUE
 
 		if ("volume")
-			var/mob/user = ui.user
 			var/channel = text2num(params["channel"])
 			var/volume = text2num(params["volume"])
 			if(isnull(channel))
@@ -319,12 +333,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				CHANNEL_INSTRUMENTS_ROBOT,
 			)
 			if(!(channel in GLOB.proxy_sound_channels)) //if its a proxy we are just wasting time
-				set_channel_volume(channel, volume, user)
+				set_channel_volume(channel, volume)
 
 			else if((channel in instrument_channels))
 				var/datum/song/holder_song = new
 				for(var/used_channel in holder_song.channels_playing)
-					set_channel_volume(used_channel, volume, user)
+					set_channel_volume(used_channel, volume)
 			return TRUE
 
 		if ("change_slot")
@@ -572,6 +586,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	return TRUE
 
+/datum/preferences/proc/GetHighestJobPreference()
+	for(var/job in job_preferences)
+		if(job_preferences[job] == JP_HIGH)
+			return job
+
 /datum/preferences/proc/GetQuirkBalance()
 	var/bal = 0
 	for(var/V in all_quirks)
@@ -661,3 +680,37 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			default_randomization[preference_key] = RANDOM_ENABLED
 
 	return default_randomization
+
+/client/verb/change_character_slot()
+	set name = "Change Character Slot"
+	set desc = "Changes the active character slot. This is no different than clicking the preferred character slot in the Character Setup menu."
+	set category = "OOC"
+
+	var/list/characters = prefs.create_character_profiles()
+	var/list/options = list()
+	var/current_slot
+
+	for(var/i = 1 to length(characters))
+		var/name = characters[i]
+		if (isnull(name))
+			continue
+
+		if(prefs.default_slot == i)
+			current_slot = name
+
+		options[name] = i
+
+	if(!length(options))
+		to_chat(src, span_warning("You have no characters."))
+		return
+
+	var/choice = tgui_input_list(src, "Select a character slot", "Change Character Slot", options, current_slot)
+
+	if(!choice)
+		return
+
+	var/slot = options[choice]
+	prefs.save_character()
+	prefs.switch_to_slot(slot)
+	to_chat(src, span_notice("Selected character '[choice]'"))
+

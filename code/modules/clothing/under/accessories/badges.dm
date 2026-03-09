@@ -243,3 +243,94 @@ GLOBAL_LIST_INIT(pride_pin_reskins, list(
 		to_chat(interacting_living, span_boldwarning("[user] shows [src] to you."))
 		user.visible_message(span_notice("[user] shows [src] to [interacting_living]."))
 	return ITEM_INTERACT_SUCCESS
+
+/obj/item/clothing/accessory/scryer_accessory
+	name = "\improper MODlink scryer accessory"
+	desc = "A MODlink Scryer that someone modified to attach to their clothes."
+	icon = 'icons/obj/clothing/neck.dmi'
+	worn_icon = 'icons/mob/clothing/neck.dmi'
+	icon_state = "modlink"
+	inhand_icon_state = "" //self deletes if removed from clothing
+	attachment_slot = CHEST
+
+	var/obj/item/clothing/neck/link_scryer/scryer // The scryer that this accessory is imitating.
+
+/obj/item/clothing/accessory/scryer_accessory/Initialize(mapload, obj/item/clothing/neck/link_scryer/attaching)
+	. = ..()
+	if(!isliving(src.loc) || QDELETED(attaching))
+		return INITIALIZE_HINT_QDEL
+	var/mob/living/scryer_mob = src.loc
+	if(!scryer_mob.transferItemToLoc(attaching, src))
+		scryer_mob.put_in_hands(attaching)
+		return INITIALIZE_HINT_QDEL
+	scryer = attaching
+	if(!scryer_mob.put_in_hands(src))
+		scryer_mob.put_in_hands(attaching)
+		return INITIALIZE_HINT_QDEL
+	scryer.slot_flags = ITEM_SLOT_ICLOTHING
+	scryer.mod_link.get_user_callback = CALLBACK(scryer, TYPE_PROC_REF(/obj/item/clothing/neck/link_scryer, get_accessory_user))
+	scryer.mod_link.can_call_callback = CALLBACK(scryer, TYPE_PROC_REF(/obj/item/clothing/neck/link_scryer, can_accessory_call))
+
+/obj/item/clothing/accessory/scryer_accessory/detach(obj/item/clothing/under/detach_from, popped)
+	. = ..()
+	if(QDELETED(src))
+		return .
+	if(QDELETED(scryer))
+		qdel(src)
+		return .
+	if(popped && isliving(detach_from.loc))
+		var/mob/living/remover = detach_from.loc
+		remover.put_in_hands(scryer)
+	else
+		scryer.forceMove(detach_from.drop_location())
+	scryer.slot_flags = ITEM_SLOT_NECK
+	scryer.mod_link.get_user_callback = CALLBACK(scryer, TYPE_PROC_REF(/obj/item/clothing/neck/link_scryer, get_user))
+	scryer.mod_link.can_call_callback = CALLBACK(scryer, TYPE_PROC_REF(/obj/item/clothing/neck/link_scryer, can_call))
+	scryer =  null
+	qdel(src)
+
+/obj/item/clothing/accessory/scryer_accessory/Destroy()
+	if(istype(scryer))	// For some reason this was deleted before scryer removed, Assume it was destroyed.
+		QDEL_NULL(scryer)
+	return ..()
+
+// Examining the person wearing the clothes will display the examine message to strip.
+/obj/item/clothing/accessory/scryer_accessory/accessory_equipped(obj/item/clothing/under/clothes, mob/living/user)
+	. = ..()
+	if(istype(scryer))
+		RegisterSignal(user, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
+		scryer.equipped(user, user.get_slot_by_item(clothes))
+
+/obj/item/clothing/accessory/scryer_accessory/accessory_dropped(obj/item/clothing/under/clothes, mob/living/user)
+	. = ..()
+	if(istype(scryer))
+		UnregisterSignal(user, COMSIG_ATOM_EXAMINE)
+		scryer.dropped(user)
+
+/obj/item/clothing/accessory/scryer_accessory/proc/on_examine(datum/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+
+	if(istype(source, /mob/living/carbon/human) && istype(src.loc, /obj/item/clothing/under))
+		var/mob/living/carbon/human/holder = source
+		var/obj/item/clothing/under/uniform = src.loc
+		if(holder.w_uniform == uniform && user != holder && user.CanReach(holder, view_only = TRUE))
+			examine_list += "[ma2html(src, user)]<a href='byond://?src=[REF(src)];strip_scryer=1;clothing=[REF(uniform)];holder=[REF(source)]'>[src.get_examine_name(user)] (Click to strip)</a>"
+
+/obj/item/clothing/accessory/scryer_accessory/Topic(href, list/href_list)
+	. = ..()
+	if(href_list["strip_scryer"])
+		if(!iscarbon(usr) || !usr.can_perform_action(locate(href_list["holder"]), NEED_DEXTERITY | NEED_HANDS | FORBID_TELEKINESIS_REACH | ALLOW_RESTING))
+			return
+		INVOKE_ASYNC(src, PROC_REF(remove_scryer), usr, locate(href_list["holder"]), locate(href_list["clothing"]))
+
+/obj/item/clothing/accessory/scryer_accessory/proc/remove_scryer(mob/living/carbon/remover, mob/living/carbon/human/wearer, obj/item/clothing/under/uniform)
+	if(QDELETED(src) || QDELETED(remover) || QDELETED(wearer) || QDELETED(uniform))
+		return
+	if(DOING_INTERACTION_WITH_TARGET(remover, wearer) || (wearer.w_uniform != uniform) || src.loc != uniform)
+		return
+	remover.visible_message(
+		span_warning("[remover] begins removing [src] from [wearer]."),
+		span_notice("You start removing [src] from [wearer]."))
+	if(!do_after(remover, uniform.strip_delay, wearer) || (wearer.w_uniform != uniform) || src.loc != uniform)
+		return
+	uniform.remove_accessory(src)

@@ -44,6 +44,13 @@
 	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/mine/production)
+"dF" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/railing,
+/turf/open/floor/plating/ocean/rock,
+/area/ocean/dark)
 "en" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -149,6 +156,13 @@
 /obj/machinery/duct/industrial/waste,
 /turf/open/floor/plating,
 /area/mine/maintenance/service)
+"jj" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing,
+/turf/open/floor/plating/ocean/rock,
+/area/ocean/dark)
 "jl" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -166,6 +180,15 @@
 "jI" = (
 /turf/open/floor/iron/white/textured_large,
 /area/mine/production)
+"kk" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/plating/ocean/rock,
+/area/ocean/dark)
 "lY" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
@@ -239,6 +262,10 @@
 /obj/machinery/duct/industrial/waste,
 /turf/open/floor/plating,
 /area/mine/maintenance/service)
+"oT" = (
+/obj/structure/lattice/catwalk/mining,
+/turf/open/floor/plating/ocean/dark,
+/area/ocean/dark)
 "ph" = (
 /obj/machinery/shower/directional/south,
 /obj/effect/turf_decal/bot_red,
@@ -355,6 +382,12 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark/smooth_large,
 /area/mine/production)
+"tG" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/plating/ocean/rock,
+/area/ocean/dark)
 "tL" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
@@ -440,6 +473,12 @@
 	},
 /turf/open/floor/noslip,
 /area/mine/production)
+"vB" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/plating/ocean/rock,
+/area/ocean/dark)
 "vN" = (
 /obj/machinery/shower/directional/east,
 /obj/effect/turf_decal/trimline/blue,
@@ -488,6 +527,12 @@
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/dark,
 /area/mine/maintenance/service/comms)
+"wU" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/plating/ocean/rock,
+/area/ocean/dark)
 "xk" = (
 /obj/effect/turf_decal/tile/brown/opposingcorners,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -811,6 +856,15 @@
 	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/mine/production)
+"Gt" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/plating/ocean/rock,
+/area/ocean/dark)
 "Gu" = (
 /obj/effect/turf_decal/tile/brown/opposingcorners,
 /obj/structure/table,
@@ -1042,6 +1096,10 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark/smooth_large,
 /area/mine/production)
+"Ph" = (
+/obj/structure/lattice/catwalk/mining,
+/turf/open/floor/plating/ocean/rock,
+/area/ocean/dark)
 "Po" = (
 /obj/machinery/holopad,
 /obj/effect/turf_decal/box,
@@ -1192,6 +1250,12 @@
 /obj/structure/tank_holder/extinguisher,
 /turf/open/floor/iron,
 /area/mine/production)
+"Wu" = (
+/obj/structure/ore_vent/starter_resources{
+	icon_state = "ore_vent_active"
+	},
+/turf/open/floor/plating/ocean/dark,
+/area/ocean/dark)
 "WK" = (
 /obj/machinery/atmospherics/components/unary/passive_vent/layer2,
 /turf/open/floor/plating/ocean/plating_real,
@@ -22780,9 +22844,9 @@ qu
 qu
 Gh
 qD
-qu
-qu
-qu
+Gt
+wU
+jj
 qD
 ex
 qu
@@ -23037,11 +23101,11 @@ qu
 qu
 qu
 qu
-qu
-qu
-qu
-qu
-qu
+tG
+Wu
+Ph
+oT
+oT
 qu
 qu
 qu
@@ -23294,9 +23358,9 @@ qu
 qu
 qu
 qu
-qu
-qu
-qu
+kk
+vB
+dF
 qu
 qu
 qu

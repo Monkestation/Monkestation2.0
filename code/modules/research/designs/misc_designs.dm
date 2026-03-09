@@ -129,7 +129,7 @@
 		/datum/material/plastic =SHEET_MATERIAL_AMOUNT * 1.5,
 		/datum/material/silver =SMALL_MATERIAL_AMOUNT*5,
 	)
-	build_path = /obj/item/clothing/head/utility/hardhat/red/upgraded
+	build_path = /obj/item/clothing/head/utility/hardhat/upgraded
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_ENGINEERING
 	)
@@ -577,7 +577,7 @@
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_JANITORIAL
 	)
-	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE | DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/light_replacer_blue
 	name = "Bluespace Light Replacer"

@@ -1,8 +1,8 @@
-import { Window } from '../layouts';
-import { useBackend } from '../backend';
-import { Flex, Box, Image } from '../components';
+import type { BooleanLike } from 'common/react';
 import { resolveAsset } from '../assets';
-import { BooleanLike } from 'common/react';
+import { useBackend } from '../backend';
+import { Box, Flex, Image } from '../components';
+import { Window } from '../layouts';
 
 type Hotspot = {
   center_y: number;

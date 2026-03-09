@@ -33,7 +33,7 @@
 /obj/machinery/mechpad/multitool_act(mob/living/user, obj/item/multitool/multi)
 	if(!panel_open)
 		return
-	multi.set_buffer(src)
+	multitool_set_buffer(multi, src)
 	balloon_alert(user, "saved to multitool buffer")
 	return ITEM_INTERACT_SUCCESS
 

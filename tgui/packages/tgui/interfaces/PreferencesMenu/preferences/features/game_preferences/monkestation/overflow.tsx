@@ -1,4 +1,4 @@
-import { CheckboxInput, FeatureToggle } from '../../base';
+import { CheckboxInput, type FeatureToggle } from '../../base';
 
 export const verify_overflow: FeatureToggle = {
   name: 'Confirm Ready During Job Overflow',

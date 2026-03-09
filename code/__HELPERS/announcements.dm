@@ -44,24 +44,25 @@
 			if(!length(text))
 				return
 
-		announcement_strings += span_announcement_header(generate_unique_announcement_header(title, sender_override))
-		announcement_strings += span_major_announcement_text(text)
-		var/finalized_announcement = create_announcement_div(jointext(announcement_strings, ""), color_override)
+	announcement_strings += span_announcement_header(generate_unique_announcement_header(title, sender_override))
+	announcement_strings += span_major_announcement_text(text)
+	var/finalized_announcement = create_announcement_div(jointext(announcement_strings, ""), color_override)
 
-		if(islist(players))
-			for(var/mob/target in players)
-				to_chat(target, finalized_announcement)
-				if(play_sound && target.client?.prefs.read_preference(/datum/preference/toggle/sound_announcements))
-					SEND_SOUND(target, sound(sound_override))
-		else
-			to_chat(world, finalized_announcement)
 
-			if(!play_sound)
-				return
-
-			for(var/mob/player in GLOB.player_list)
-				if(player.client?.prefs.read_preference(/datum/preference/toggle/sound_announcements))
-					SEND_SOUND(player, sound(sound_override))
+	if(islist(players))
+		for(var/mob/target in players)
+			if(isnull(target.client))
+				continue
+			to_chat(target, finalized_announcement)
+			if(play_sound && target.client?.prefs?.channel_volume["[CHANNEL_ANNOUNCEMENTS]"])
+				SEND_SOUND(target, sound(sound_override, volume = calculate_mixed_volume(target?.client, 100, CHANNEL_ANNOUNCEMENTS)))
+	else
+		to_chat(world, finalized_announcement)
+		if(!play_sound)
+			return
+		for(var/mob/player in GLOB.player_list)
+			if(player.client.prefs?.channel_volume["[CHANNEL_ANNOUNCEMENTS]"])
+				SEND_SOUND(player, sound(sound_override, volume = calculate_mixed_volume(player.client, 100, CHANNEL_ANNOUNCEMENTS)))
 
 /**
  * Inserts a span styled message into an alert box div

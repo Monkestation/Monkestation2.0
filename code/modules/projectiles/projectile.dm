@@ -20,6 +20,7 @@
 	//The sound this plays on impact.
 	var/hitsound = 'sound/weapons/pierce.ogg'
 	var/hitsound_wall = ""
+	var/mixer_channel
 
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/def_zone = "" //Aiming at
@@ -280,8 +281,8 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(fired_from)
-		SEND_SIGNAL(fired_from, COMSIG_PROJECTILE_ON_HIT, firer, target, Angle, def_zone, blocked)
-	SEND_SIGNAL(src, COMSIG_PROJECTILE_SELF_ON_HIT, firer, target, Angle, def_zone, blocked)
+		SEND_SIGNAL(fired_from, COMSIG_PROJECTILE_ON_HIT, firer, target, Angle, def_zone, blocked, pierce_hit)
+	SEND_SIGNAL(src, COMSIG_PROJECTILE_SELF_ON_HIT, firer, target, Angle, def_zone, blocked, pierce_hit)
 
 	if(QDELETED(src)) // in case one of the above signals deleted the projectile for whatever reason
 		return BULLET_ACT_BLOCK
@@ -300,7 +301,7 @@
 		var/volume = clamp(vol_by_damage() + 20, 0, 100)
 		if(suppressed)
 			volume = 5
-		playsound(loc, hitsound_wall, volume, TRUE, -1)
+		playsound(loc, hitsound_wall, volume, TRUE, -1, mixer_channel = mixer_channel)
 
 	if(!isliving(target))
 		if(impact_effect_type && !hitscan)
@@ -358,12 +359,12 @@
 		if(def_zone)
 			organ_hit_text = " in \the [parse_zone(def_zone)]"
 		if(suppressed == SUPPRESSED_VERY)
-			playsound(loc, hitsound, 5, TRUE, -1)
+			playsound(loc, hitsound, 5, TRUE, -1, mixer_channel = mixer_channel)
 		else if(suppressed)
-			playsound(loc, hitsound, 5, TRUE, -1)
+			playsound(loc, hitsound, 5, TRUE, -1, mixer_channel = mixer_channel)
 			to_chat(living_target, span_userdanger("You're [grazing ? "grazed" : "hit"] by \a [generic_name || src][organ_hit_text]!"))
 		else
-			playsound(loc, hitsound, vol_by_damage(), TRUE, -1)
+			playsound(loc, hitsound, vol_by_damage(), TRUE, -1, mixer_channel = mixer_channel)
 			living_target.visible_message(
 				span_danger("[living_target] is [grazing ? "grazed" : "hit"] by \a [generic_name || src][organ_hit_text]!"),
 				span_userdanger("You're [grazing ? "grazed" : "hit"] by \a [generic_name || src][organ_hit_text]!"),
@@ -1096,6 +1097,7 @@
 	cleanup_beam_segments()
 	if(trajectory)
 		QDEL_NULL(trajectory)
+	original = null
 	. = ..()
 	impacted?.len = 0
 
@@ -1207,9 +1209,9 @@
 #undef MUZZLE_EFFECT_PIXEL_INCREMENT
 
 /// Fire a projectile from this atom at another atom
-/atom/proc/fire_projectile(projectile_type, atom/target, sound, firer)
+/atom/proc/fire_projectile(projectile_type, atom/target, sound, firer, mixer_channel)
 	if (!isnull(sound))
-		playsound(src, sound, vol = 100, vary = TRUE)
+		playsound(src, sound, vol = 100, vary = TRUE, mixer_channel = mixer_channel)
 
 	var/turf/startloc = get_turf(src)
 	var/obj/projectile/bullet = new projectile_type(startloc)

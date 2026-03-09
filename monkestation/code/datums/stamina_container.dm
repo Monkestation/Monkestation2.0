@@ -76,6 +76,7 @@
 
 	if(current == maximum)
 		process_stamina = FALSE
+		update_process()
 
 	if(should_notify_parent)
 		parent.on_stamina_update()
@@ -114,6 +115,7 @@
 	if(modify < 0)
 		pause(STAMINA_REGEN_TIME)
 	update()
+	update_process()
 	return modify
 
 /// Revitalize the stamina to the maximum this container can have.
@@ -135,6 +137,7 @@
 	if(modify < 0)
 		pause(STAMINA_REGEN_TIME)
 	update()
+	update_process()
 	return modify
 
 /// Signal handler for COMSIG_MOVABLE_MOVED to ensure that update_process() gets called whenever moving to/from nullspace.
@@ -146,6 +149,8 @@
 /// Returns if the container should currently be processing or not.
 /datum/stamina_container/proc/should_process()
 	SHOULD_BE_PURE(TRUE)
+	if(!process_stamina)
+		return FALSE
 	if(QDELETED(parent) || isnull(parent.loc))
 		return FALSE
 	if(!parent.uses_stamina)

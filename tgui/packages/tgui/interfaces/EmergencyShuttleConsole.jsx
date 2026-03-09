@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Box, Button, Stack, Section } from '../components';
+import { Box, Button, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 export const EmergencyShuttleConsole = (props) => {
@@ -67,7 +67,7 @@ export const EmergencyShuttleConsole = (props) => {
               minHeight="150px"
               buttons={
                 <Box inline bold color={emagged ? 'bad' : 'good'}>
-                  {emagged ? 'ERROR' : 'Remaining: ' + authorizations_remaining}
+                  {emagged ? 'ERROR' : `Remaining: ${authorizations_remaining}`}
                 </Box>
               }
             >

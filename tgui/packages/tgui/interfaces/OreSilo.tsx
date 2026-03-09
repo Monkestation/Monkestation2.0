@@ -1,8 +1,6 @@
 import { classes } from 'common/react';
 import { capitalize } from 'common/string';
-import { useLocalState } from '../backend';
-
-import { useBackend } from '../backend';
+import { useBackend, useLocalState } from '../backend';
 import {
   Box,
   Icon,
@@ -16,7 +14,7 @@ import {
 } from '../components';
 import { Window } from '../layouts';
 import { MaterialAccessBar } from './Fabrication/MaterialAccessBar';
-import { Material } from './Fabrication/Types';
+import type { Material } from './Fabrication/Types';
 
 type Machine = {
   name: string;

@@ -6,7 +6,6 @@
 	icon_state = "necrocrate"
 	loot = list(
 		/obj/item/shared_storage/red = 1,
-		/obj/item/soulstone/anybody/mining = 1,
 		/obj/item/clothing/glasses/godeye = 1,
 		/obj/item/reagent_containers/cup/bottle/potion/flight = 1,
 		/obj/item/clothing/gloves/gauntlets = 1,

@@ -49,16 +49,18 @@
 	if (!turf_source || !soundin || !vol)
 		return
 
-	if(!mixer_channel)
-		mixer_channel = guess_mixer_channel(soundin)
-
 	if(vol < SOUND_AUDIBLE_VOLUME_MIN) // never let sound go below SOUND_AUDIBLE_VOLUME_MIN or bad things will happen
 		return
 
+	var/sound/S = isdatum(soundin) ? soundin : sound(get_sfx(soundin))
 	//allocate a channel if necessary now so its the same for everyone
 	channel = channel || SSsounds.random_available_channel()
+	if(!mixer_channel)
+		if(channel in GLOB.used_sound_channels)
+			mixer_channel = channel
+		else
+			mixer_channel = guess_mixer_channel(S) || channel
 
-	var/sound/S = sound(get_sfx(soundin))
 	var/maxdistance = SOUND_RANGE + extrarange
 	var/source_z = turf_source.z
 
@@ -106,6 +108,12 @@
 
 	if(!sound_to_use)
 		sound_to_use = sound(get_sfx(soundin))
+
+	if(!mixer_channel)
+		if(channel in GLOB.used_sound_channels)
+			mixer_channel = channel
+		else
+			mixer_channel = guess_mixer_channel(sound_to_use) || channel //channel fallback in case nothing could be guessed.
 
 	sound_to_use.wait = 0 //No queue
 	sound_to_use.channel = channel || SSsounds.random_available_channel()
@@ -186,14 +194,8 @@
 	if(HAS_TRAIT(src, TRAIT_SOUND_DEBUGGED))
 		to_chat(src, span_admin("Max Range-[max_distance] Distance-[distance] Vol-[round(sound_to_use.volume, 0.01)] Sound-[sound_to_use.file]"))
 
-	if(!mixer_channel)
-		if(channel in GLOB.used_sound_channels)
-			mixer_channel = channel
-		else
-			mixer_channel = guess_mixer_channel(soundin)
-
+	//Let's recalculate the volume with pressure & falloff applied.
 	sound_to_use.volume = calculate_mixed_volume(client, sound_to_use.volume, mixer_channel)
-
 	SEND_SOUND(src, sound_to_use)
 
 /proc/sound_to_playing_players(soundin, volume = 100, vary = FALSE, frequency = 0, channel = 0, pressure_affected = FALSE, sound/S)
@@ -202,7 +204,7 @@
 	for(var/m in GLOB.player_list)
 		if(ismob(m) && !isnewplayer(m))
 			var/mob/M = m
-			M.playsound_local(M, null, volume, vary, frequency, null, channel, pressure_affected, S)
+			M.playsound_local(M, null, volume, vary, frequency, null, channel, pressure_affected, S, mixer_channel = CHANNEL_SOUND_EFFECTS)
 
 /client/proc/playtitlemusic(vol = 85)
 	set waitfor = FALSE
@@ -213,7 +215,7 @@
 		vol = channel_volume["[CHANNEL_LOBBYMUSIC]"]
 	if("[CHANNEL_MASTER_VOLUME]" in channel_volume)
 		vol *= channel_volume["[CHANNEL_MASTER_VOLUME]"] * 0.01
-	if(vol <= 0 || (prefs && (!prefs.read_preference(/datum/preference/toggle/sound_lobby))) || CONFIG_GET(flag/disallow_title_music))
+	if(CONFIG_GET(flag/disallow_title_music))
 		return
 
 	if(QDELETED(media_player)) ///media is set on creation thats weird
@@ -246,51 +248,65 @@
 	var/datum/sound_effect/sfx = SSsounds.sfx_datum_by_key[soundin]
 	return sfx?.return_sfx() || soundin
 
-/proc/get_channel_name(channel)
+/proc/get_channel_info(channel)
 	switch(channel)
 		if(CHANNEL_MASTER_VOLUME)
-			return "Master Volume"
+			return list("Master Volume", "Controls the volume of the whole game. This applies to every other volume slider as well.")
 		if(CHANNEL_LOBBYMUSIC)
-			return "Lobby Music"
+			return list("Lobby Music", "The music that plays at the start/end of the game, including the reboot theme.")
 		if(CHANNEL_ADMIN)
-			return "Admin MIDIs"
+			return list("Admin MIDIs", "Sound of Admin-played music.")
 		if(CHANNEL_VOX)
-			return "Announcements / AI Noise"
+			return list("AI Vox & Blips", "AI VOX and the sound of AIs speaking over the radio.")
+		if(CHANNEL_ANNOUNCEMENTS)
+			return list("Announcements", "The sound of reports from the Captain/Syndicate/Central Commmand.")
+		if(CHANNEL_STORYTELLER)
+			return list("Storyteller", "The voice that plays during story events.")
 		if(CHANNEL_JUKEBOX)
-			return "Dance Machines"
+			return list("Dance Machines", "Jukeboxes and Rave Modules.")
 		if(CHANNEL_HEARTBEAT)
-			return "Heartbeat"
+			return list("Heartbeat", "The beating of your heart in crit/cardiac arrest.")
 		if(CHANNEL_BUZZ)
-			return "White Noise"
+			return list("White Noise", "Background ambiance, separate from the unique sounds of areas.")
 		if(CHANNEL_CHARGED_SPELL)
-			return "Charged Spells"
+			return list("Charged Spells", "Used for Wizard's charged spells.")
 		if(CHANNEL_TRAITOR)
-			return "Traitor Sounds"
+			return list("Traitor Sounds", "The sound played when you take/reject/complete an objective.")
 		if(CHANNEL_AMBIENCE)
-			return "Ambience"
+			return list("Ambience", "Music that plays when you enter a new room, most prominently in the Detective's Office and Maintenance.")
 		if(CHANNEL_SOUND_EFFECTS)
-			return "Sound Effects"
+			return list("Sound Effects", "Item pickup/drop/equip, anvil, polling, and other sound effects.")
 		if(CHANNEL_SOUND_FOOTSTEPS)
-			return "Footsteps"
+			return list("Footsteps", "The sound when you or anyone else moves around.")
 		if(CHANNEL_WEATHER)
-			return "Weather"
+			return list("Weather", "Looping noise of Lavaland, Icemoon, and Void Heretic ascension.")
 		if(CHANNEL_MACHINERY)
-			return "Machinery"
+			return list("Machinery", "Airlocks, Buttons, Remotes, and all other machines.")
 		if(CHANNEL_INSTRUMENTS)
-			return "Player Instruments"
+			return list("Player Instruments", "All instruments played by non-silicon.")
 		if(CHANNEL_INSTRUMENTS_ROBOT)
-			return "Robot Instruments" //you caused this DONGLE
-		if(CHANNEL_MOB_SOUNDS)
-			return "Mob Sounds"
+			return list("Robot Instruments", "All instruments played by silicon.") //you caused this DONGLE
+		if(CHANNEL_MOB_SOUNDS) //This should be moved to voices or emotes eventually. WTF is a mob sound that isn't one of those?
+			return list("Mob Sounds", "Radio noises (AI, Drones), chittering.")
 		if(CHANNEL_PRUDE)
-			return "Prude Sounds"
+			return list("Prude Sounds", "Farting.")
 		if(CHANNEL_SQUEAK)
-			return "Squeaks / Plushies"
+			return list("Squeaks / Plushies", "Frogs, axolotls, plushies, and anything else that squeaks.")
 		if(CHANNEL_MOB_EMOTES)
-			return "Mob Emotes"
+			return list("Mob Emotes", "Spitting, kissing, and every other emote with a sound tied to it for non-silicons.")
 		if(CHANNEL_SILICON_EMOTES)
-			return "Silicon Emotes"
+			return list("Silicon Emotes", "Any emote with a sound tied to it for silicons.")
+		if(CHANNEL_ELEVATOR)
+			return list("Elevator Music", "The music that plays while you're in an elevator, on multi-z maps.")
 		if(CHANNEL_VOICES)
-			return "Voices"
+			return list("Voices", "The sound of the 'barks' when someone speaks.")
 		if(CHANNEL_RINGTONES)
-			return "Ringtones (Modlinks/PDA)"
+			return list("Ringtones", "Sound when you are being called by a PDA or MODLink Scryer.")
+		if(CHANNEL_DELTA_SIRENS)
+			return list("Sirens", "The sirens that blares during a Delta Alert.")
+		if(CHANNEL_ADMIN_SOUNDS)
+			return list("Admin Sounds", "Used for fax requests, prayers, and bwoinks. Admin-only.")
+		if(CHANNEL_SHUTTLES)
+			return list("Shuttles", "The sound of shuttles booting/docking/departing.")
+	stack_trace("Sound channel [channel] is trying to pass get_channel_info despite having none set.")
+	return list("BROKEN CHANNEL", "There's a channel in the list of pre-set channels that does not have a category.")

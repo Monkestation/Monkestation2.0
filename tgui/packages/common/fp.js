@@ -10,19 +10,20 @@
  * value of the previous.
  */
 // prettier-ignore
-export const flow = (...funcs) => (input, ...rest) => {
-  let output = input;
-  for (let func of funcs) {
-    // Recurse into the array of functions
-    if (Array.isArray(func)) {
-      output = flow(...func)(output, ...rest);
+export const flow =
+  (...funcs) =>
+  (input, ...rest) => {
+    let output = input;
+    for (const func of funcs) {
+      // Recurse into the array of functions
+      if (Array.isArray(func)) {
+        output = flow(...func)(output, ...rest);
+      } else if (func) {
+        output = func(output, ...rest);
+      }
     }
-    else if (func) {
-      output = func(output, ...rest);
-    }
-  }
-  return output;
-};
+    return output;
+  };
 
 /**
  * Composes single-argument functions from right to left.
@@ -44,6 +45,9 @@ export const compose = (...funcs) => {
     return funcs[0];
   }
   // prettier-ignore
-  return funcs.reduce((a, b) => (value, ...rest) =>
-    a(b(value, ...rest), ...rest));
+  return funcs.reduce(
+    (a, b) =>
+      (value, ...rest) =>
+        a(b(value, ...rest), ...rest),
+  );
 };

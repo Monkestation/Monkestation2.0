@@ -180,10 +180,10 @@
 		busy_hands++
 
 	// Handcuffed or otherwise restrained - can't talk
-	if(HAS_TRAIT(src, TRAIT_RESTRAINED))
+	if(HAS_TRAIT(carbon_parent, TRAIT_RESTRAINED))
 		return SIGN_CUFFED
 	// Some other trait preventing us from using our hands now
-	else if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED) || HAS_TRAIT(src, TRAIT_EMOTEMUTE))
+	else if(HAS_TRAIT(carbon_parent, TRAIT_HANDS_BLOCKED) || HAS_TRAIT(carbon_parent, TRAIT_EMOTEMUTE))
 		return SIGN_TRAIT_BLOCKED
 
 	// Okay let's compare the total hands to the number of busy hands

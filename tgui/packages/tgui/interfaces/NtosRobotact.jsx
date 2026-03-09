@@ -12,8 +12,7 @@ import {
   Stack,
   Tabs,
 } from 'tgui-core/components';
-import { formatEnergy } from 'tgui-core/format';
-import { formatPower } from 'tgui-core/format';
+import { formatEnergy, formatPower } from 'tgui-core/format';
 
 import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';

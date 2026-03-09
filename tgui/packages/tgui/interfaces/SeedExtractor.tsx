@@ -1,8 +1,9 @@
 import { sortBy } from 'es-toolkit';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import {
   Box,
   Button,
+  DmIcon,
   Icon,
   Input,
   NoticeBox,
@@ -11,7 +12,6 @@ import {
   Table,
   Tooltip,
 } from 'tgui-core/components';
-import { classes } from 'tgui-core/react';
 import { createSearch } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
@@ -41,6 +41,7 @@ type SeedData = {
   potency: number;
   instability: number;
   icon: string;
+  icon_state: string;
   volume_mod: number;
   volume_units: number;
   traits: string[];
@@ -64,13 +65,28 @@ export const SeedExtractor = (props) => {
   const [searchText, setSearchText] = useState('');
   const [sortField, setSortField] = useState('name');
   const [action, toggleAction] = useState(true);
-  const search = createSearch(searchText, (item: SeedData) => item.name);
-  const seeds_filtered =
-    searchText.length > 0 ? data.seeds.filter(search) : data.seeds;
-  const seeds = sortBy(seeds_filtered || [], [
-    (item: SeedData) => item[sortField as keyof SeedData],
-  ]);
-  sortField !== 'name' && seeds.reverse();
+  const search = createSearch(searchText, (item: SeedData) =>
+    createSearchableString(item),
+  );
+  const seeds_filtered = useMemo(
+    () => (searchText.length > 0 ? data.seeds.filter(search) : data.seeds),
+    [searchText, search, data.seeds],
+  );
+  const seeds_sorted = useMemo(
+    () =>
+      sortBy(seeds_filtered || [], [
+        (item: SeedData) => item[sortField as keyof SeedData],
+      ]),
+    [seeds_filtered],
+  );
+
+  const seeds = useMemo(() => {
+    if (sortField !== 'name') {
+      return seeds_sorted.toReversed();
+    } else {
+      return seeds_sorted;
+    }
+  }, [sortField, seeds_sorted]);
 
   return (
     <Window width={800} height={500}>
@@ -85,6 +101,7 @@ export const SeedExtractor = (props) => {
                   value={searchText}
                   onChange={setSearchText}
                   fluid
+                  expensive
                 />
               </Table.Cell>
               <Table.Cell collapsing p={1}>
@@ -208,9 +225,13 @@ export const SeedExtractor = (props) => {
                   style={{ borderTop: '2px solid #222' }}
                 >
                   <Table.Cell collapsing>
-                    <Box
+                    <DmIcon
                       mb={-2}
-                      className={classes(['seeds32x32', item.icon])}
+                      icon={item.icon}
+                      icon_state={item.icon_state}
+                      fallback={<Icon mr={1} name="spinner" spin />}
+                      height={'32px'}
+                      width={'32px'}
                     />
                   </Table.Cell>
                   <Table.Cell py={0.5} px={1}>
@@ -471,4 +492,11 @@ export const TraitTooltip = (props) => {
       <Icon name={props.grafting ? 'scissors' : trait.icon} m={0.5} />
     </Tooltip>
   );
+};
+
+const createSearchableString = (seedData: SeedData): string => {
+  const reagentNames = seedData.reagents
+    .map((reagent) => reagent.name)
+    .join(' ');
+  return `${seedData.name} ${reagentNames}`;
 };

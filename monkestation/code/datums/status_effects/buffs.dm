@@ -25,7 +25,6 @@
 	var/list/traits = list(
 		TRAIT_NO_SPRINT, // It makes you go really fast already, also makes you focus more on hitting people.
 		TRAIT_IGNOREDAMAGESLOWDOWN,
-		TRAIT_NO_PAIN_EFFECTS,
 		TRAIT_SLEEPIMMUNE,
 		TRAIT_NOSOFTCRIT,
 		TRAIT_NOHARDCRIT,

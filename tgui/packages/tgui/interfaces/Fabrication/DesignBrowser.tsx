@@ -1,10 +1,10 @@
 import { sortBy } from 'common/collections';
 import { classes } from 'common/react';
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { useSharedState } from '../../backend';
-import { Stack, Section, Icon, Dimmer } from '../../components';
-import { Design, MaterialMap } from './Types';
+import { Dimmer, Icon, Section, Stack } from '../../components';
 import { SearchBar } from './SearchBar';
+import type { Design, MaterialMap } from './Types';
 
 /**
  * A function that does nothing.
@@ -269,45 +269,41 @@ export const DesignBrowser = <T extends Design = Design>(
             </Stack.Item>
             <Stack.Item grow style={{ overflowY: 'auto', overflowX: 'hidden' }}>
               <Section fill>
-                {searchText.length > 0 ? (
-                  sortBy((design: T) => design.name)(
-                    Object.values(root.descendants),
-                  )
-                    .filter((design) =>
-                      design.name
-                        .toLowerCase()
-                        .includes(searchText.toLowerCase()),
-                    )
-                    .map((design) =>
-                      buildRecipeElement(
-                        design,
-                        availableMaterials || {},
-                        onPrintDesign || NOOP,
-                      ),
-                    )
-                ) : selectedCategory === ALL_CATEGORY ? (
-                  <>
-                    {sortBy((design: T) => design.name)(
+                {searchText.length > 0
+                  ? sortBy((design: T) => design.name)(
                       Object.values(root.descendants),
-                    ).map((design) =>
-                      buildRecipeElement(
-                        design,
-                        availableMaterials || {},
-                        onPrintDesign || NOOP,
-                      ),
-                    )}
-                  </>
-                ) : (
-                  root.subcategories[selectedCategory] && (
-                    <CategoryView
-                      category={root.subcategories[selectedCategory]}
-                      categoryButtons={categoryButtons}
-                      availableMaterials={availableMaterials}
-                      onPrintDesign={onPrintDesign}
-                      buildRecipeElement={buildRecipeElement}
-                    />
-                  )
-                )}
+                    )
+                      .filter((design) =>
+                        design.name
+                          .toLowerCase()
+                          .includes(searchText.toLowerCase()),
+                      )
+                      .map((design) =>
+                        buildRecipeElement(
+                          design,
+                          availableMaterials || {},
+                          onPrintDesign || NOOP,
+                        ),
+                      )
+                  : selectedCategory === ALL_CATEGORY
+                    ? sortBy((design: T) => design.name)(
+                        Object.values(root.descendants),
+                      ).map((design) =>
+                        buildRecipeElement(
+                          design,
+                          availableMaterials || {},
+                          onPrintDesign || NOOP,
+                        ),
+                      )
+                    : root.subcategories[selectedCategory] && (
+                        <CategoryView
+                          category={root.subcategories[selectedCategory]}
+                          categoryButtons={categoryButtons}
+                          availableMaterials={availableMaterials}
+                          onPrintDesign={onPrintDesign}
+                          buildRecipeElement={buildRecipeElement}
+                        />
+                      )}
               </Section>
             </Stack.Item>
             {!!busy && (
@@ -489,7 +485,7 @@ const CategoryView = <T extends Design = Design>(
     <Section
       title={category.title}
       id={category.anchorKey}
-      buttons={categoryButtons && categoryButtons(category)}
+      buttons={categoryButtons?.(category)}
     >
       {body}
     </Section>

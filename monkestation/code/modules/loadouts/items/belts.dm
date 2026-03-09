@@ -71,3 +71,8 @@ GLOBAL_LIST_INIT(loadout_belts, generate_loadout_items(/datum/loadout_item/belts
 /datum/loadout_item/belts/candle_box
 	name = "Candle Box"
 	item_path = /obj/item/storage/fancy/candle_box
+
+/datum/loadout_item/belts/deforest_belt
+	name = "Deforest Belt"
+	item_path = /obj/item/storage/belt/medical/paramedic/deforest
+	restricted_roles = list(JOB_PARAMEDIC, JOB_MEDICAL_DOCTOR, JOB_CHIEF_MEDICAL_OFFICER, JOB_CHEMIST, JOB_BRIG_PHYSICIAN)

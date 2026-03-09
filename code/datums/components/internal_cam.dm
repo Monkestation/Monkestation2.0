@@ -24,13 +24,13 @@
 	QDEL_NULL(bodcam) // has to be AFTER UnregisterFromParent runs
 
 /datum/component/internal_cam/RegisterWithParent()
-	bodcam.status = TRUE
+	bodcam.camera_enabled = TRUE
 	update_cam()
 	bodcam.built_in = parent
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(update_cam))
 
 /datum/component/internal_cam/UnregisterFromParent()
-	bodcam.status = FALSE
+	bodcam.camera_enabled = FALSE
 	update_cam()
 	bodcam.built_in = null
 	UnregisterSignal(parent, COMSIG_MOVABLE_MOVED)

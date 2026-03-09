@@ -4,11 +4,11 @@
  * @license MIT
  */
 
-import { BoxProps } from '../components/Box';
 import { classes } from 'tgui-core/react';
 import { useBackend } from '../backend';
-import { Layout } from './Layout';
 import { Box } from '../components';
+import type { BoxProps } from '../components/Box';
+import { Layout } from './Layout';
 
 type Props = Partial<{
   canSuspend: boolean;

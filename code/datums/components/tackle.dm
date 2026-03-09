@@ -348,7 +348,8 @@
 		if(!istype(sacker_moth_wing) || sacker_moth_wing.burnt)
 			attack_mod -= 2
 	var/obj/item/organ/external/wings/sacker_wing = sacker.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
-	if(sacker_wing)
+//	if(sacker_wing) // MONKESTATION EDIT OLD -- Arachnids use the external wing slot aswell, so we have to check for actual wings
+	if(sacker_wing && istype(sacker_wing)) // MONKESTATION EDIT NEW
 		attack_mod += 2
 
 	if(ishuman(target))
@@ -423,7 +424,8 @@
 			playsound(user, 'sound/effects/blobattack.ogg', 60, TRUE)
 			playsound(user, 'sound/effects/splat.ogg', 70, TRUE)
 			playsound(user, 'sound/effects/wounds/crack2.ogg', 70, TRUE)
-			user.pain_emote("scream")
+			if(!HAS_TRAIT(user, TRAIT_ANALGESIA))
+				user.emote("scream")
 			user.gain_trauma(/datum/brain_trauma/severe/paralysis/paraplegic) // oopsie indeed!
 			shake_camera(user, 7, 7)
 			user.flash_act(1, TRUE, TRUE, length = 4.5)
