@@ -1,0 +1,6 @@
+author: "Mantlecrawler"
+delete-after: True
+changes:
+  - bugfix: "Elite Lavaland mobs can no longer fall into chasms"
+  - bugfix: "Simians can now pass through xenobio's corral pens"
+  - bugfix: "Knight & Hornet cloaks that are bought from the store are no longer also donator only."

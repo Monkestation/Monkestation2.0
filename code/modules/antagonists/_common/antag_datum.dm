@@ -615,7 +615,7 @@ GLOBAL_LIST_EMPTY(cached_antag_previews)
 	message_admins("[ADMIN_LOOKUPFLW(owner_mob)] has chosen a custom antagonist objective: [span_syndradio("[custom_objective_text]")] | [ADMIN_SMITE(owner_mob)] | [ADMIN_SYNDICATE_REPLY(owner_mob)]")
 	for(var/client/staff as anything in GLOB.admins)
 		if(staff?.prefs?.toggles & SOUND_ADMINHELP)
-			SEND_SOUND(staff, sound('sound/effects/adminhelp.ogg'))
+			staff.mob.playsound_local(null, 'sound/effects/adminhelp.ogg', 100, vary = FALSE, channel = CHANNEL_ADMIN_SOUNDS, pressure_affected = FALSE, use_reverb = FALSE)
 		window_flash(staff, ignorepref = TRUE)
 
 	var/datum/objective/custom/custom_objective = new()

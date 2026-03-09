@@ -54,7 +54,7 @@
 		structure_climber.visible_message(span_warning("[structure_climber] is knocked off [climbed_thing]."), span_warning("You're knocked off [climbed_thing]!"), span_hear("You hear a cry from [structure_climber], followed by a slam."))
 
 
-/datum/element/climbable/proc/climb_structure(atom/climbed_thing, mob/living/user, params)
+/datum/element/climbable/proc/climb_structure(atom/climbed_thing, mob/living/user, params, can_vault = FALSE)
 	if(!can_climb(climbed_thing, user) || DOING_INTERACTION(user, DOAFTER_SOURCE_CLIMBING))
 		return
 	climbed_thing.add_fingerprint(user)
@@ -79,7 +79,7 @@
 		if(QDELETED(climbed_thing)) //Checking if structure has been destroyed
 			return
 
-		if(HAS_TRAIT(user, TRAIT_VAULTING) && (user.m_intent == MOVE_INTENT_RUN || user.m_intent == MOVE_INTENT_SPRINT))//monkestation edit: simians can fling themselves off climbable structures
+		if(HAS_TRAIT(user, TRAIT_VAULTING) && can_vault && (user.m_intent == MOVE_INTENT_RUN || user.m_intent == MOVE_INTENT_SPRINT))//monkestation edit: simians can fling themselves off climbable structures
 			vault_over_object(climbed_thing, user, params)
 			if(climb_stun)
 				user.Immobilize(climb_stun)
@@ -154,7 +154,7 @@
 		return
 	var/mob/living/living_target = dropped_atom
 	if(living_target.mobility_flags & MOBILITY_MOVE)
-		INVOKE_ASYNC(src, PROC_REF(climb_structure), climbed_thing, living_target, params)
+		INVOKE_ASYNC(src, PROC_REF(climb_structure), climbed_thing, living_target, params, FALSE)
 	return COMPONENT_CANCEL_MOUSEDROPPED_ONTO
 
 ///Tries to climb onto the target if the forced movement of the mob allows it
@@ -165,7 +165,7 @@
 	if(bumpee.force_moving?.allow_climbing)
 		do_climb(source, bumpee)
 	if(bumpee.m_intent == MOVE_INTENT_SPRINT)
-		INVOKE_ASYNC(src, PROC_REF(climb_structure), source, bumpee)
+		INVOKE_ASYNC(src, PROC_REF(climb_structure), source, bumpee, null, TRUE)
 
 ///Tries to climb onto the target if the forced movement of the mob allows it
 /datum/element/climbable/proc/attempt_sprint_climb(datum/source, mob/bumpee)
