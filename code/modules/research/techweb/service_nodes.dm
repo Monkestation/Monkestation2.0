@@ -122,7 +122,6 @@
 	design_ids = list(
 		"fishing_rod_tech",
 		"stabilized_hook",
-		"fishing_line",
 		"fish_analyzer",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)

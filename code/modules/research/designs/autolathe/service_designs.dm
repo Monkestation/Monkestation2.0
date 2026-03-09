@@ -527,6 +527,31 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
+/datum/design/fishing_line
+	name = "Fishing Line"
+	desc = "Simple, classic fishing line."
+	id = "fishing_line"
+	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/plastic = SMALL_MATERIAL_AMOUNT)
+	build_path =  /obj/item/fishing_line
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_SERVICE,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
+
+/datum/design/fishing_hook
+	name = "Fishing Hook"
+	id = "fishing_hook"
+	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*5)
+	build_path = /obj/item/fishing_hook
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_SERVICE,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
+
 /datum/design/ticket_machine
 	name = "Ticket Machine Frame"
 	id = "ticket_machine"

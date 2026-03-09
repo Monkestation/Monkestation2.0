@@ -59,6 +59,8 @@
 		"pocketfireextinguisher",
 		"fax",
 		"fishing_rod",
+		"fishing_line",
+		"fishing_hook",
 		"fishing_portal_generator",
 		"flashlight",
 		"fluid_ducts",
