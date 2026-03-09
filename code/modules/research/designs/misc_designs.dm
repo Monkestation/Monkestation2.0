@@ -1039,6 +1039,18 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
+/datum/design/fishing_line
+	name = "Fishing Line"
+	desc = "Simple, classic fishing line."
+	id = "fishing_line"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/plastic = SMALL_MATERIAL_AMOUNT)
+	build_path =  /obj/item/fishing_line
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SERVICE
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
+
 /datum/design/stabilized_hook
 	name = "Gyro-Stabilized Hook"
 	desc = "An advanced fishing hook that gives the user a tighter control on the fish when reeling in."
