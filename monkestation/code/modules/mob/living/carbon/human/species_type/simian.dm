@@ -157,6 +157,7 @@
 	simian_affected = user
 	simian_affected.hud_add_simian_alpha()
 	RegisterSignal(simian_affected, COMSIG_SPECIES_LOSS, PROC_REF(on_species_change))
+	RegisterSignal(simian_affected, COMSIG_ATOM_EXAMINE, PROC_REF(on_examined))
 
 /obj/item/staff/big_stick/dropped(mob/living/user, silent)
 	remove_effects()
@@ -166,6 +167,13 @@
 /obj/item/staff/big_stick/proc/on_species_change(mob/living/carbon/source, datum/species/lost_species)
 	SIGNAL_HANDLER
 	remove_effects()
+
+///Called when examined, Simians get a special text for stick holders.
+/obj/item/staff/big_stick/proc/on_examined(atom/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+
+	if(issimianspecies(user))
+		examine_list += span_danger("[source.p_theyre(TRUE)] wielding the big stick! They are the Leader of the Simians!")
 
 /obj/item/staff/big_stick/proc/remove_effects()
 	REMOVE_TRAIT(src, TRAIT_BLIND_TOOL, INNATE_TRAIT)
