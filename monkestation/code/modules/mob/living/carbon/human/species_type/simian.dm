@@ -40,10 +40,25 @@
 	simian_hud.hide_from(C)
 	return ..()
 
-
 /datum/species/monkey/simian/get_species_description()
 	return "Simians are the closest siblings to Humans, unlike Monkeys, which is a term reserved for bio-engineered and mass produced \
 		creations that can be packaged into a cube, known as the Monkey Cube."
+
+/datum/species/monkey/simian/get_species_lore()
+	return list(
+		"Simians have always been looked down upon. Stolen from Ooga-9 as throwaway test subjects, \
+		these sentient apes have been fighting for their freedom as long as Nanotrasen records go, \
+		through a secret organization called Jungle Fever.",
+
+		"Once the Monkey Cube was created however, Nanotrasen no longer saw use for using sentient creatures, \
+		and granted Simians basic rights and continued employment at the corporation.",
+
+		"This was a great happenstance for the orgnization, which suddenly gained a massive following as it suddenly became legal \
+		and was even praised for their work in the Simian resistance. \
+		This eventually led to bankrolling from large simian-owned companies such as Bananotrasen.",
+
+		"Their organization collectivizes itself through what they call the Alpha, the one wielding the largest stick.",
+	)
 
 /datum/species/monkey/simian/create_pref_unique_perks()
 	var/list/to_add = list()
@@ -96,54 +111,70 @@
 	var/obj/item/clothing/mask/translator/simian_translator = new /obj/item/clothing/mask/translator(equipping.loc)
 	equipping.equip_to_slot(simian_translator, ITEM_SLOT_NECK)
 
-
-
+///The Simian Big Stick. I found it in the forest and kept it.
 /obj/item/staff/big_stick
 	name = "big stick"
 	desc = "A big stick, probably found in the latest trip to the forest. God it looks cool though."
 	force = 10
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
-	throw_speed = 2
+	throw_speed = 0.1
 	attack_verb_continuous = list("smashes", "slams", "whacks", "thwacks")
 	attack_verb_simple = list("smash", "slam", "whack", "thwack")
 	icon = 'icons/obj/weapons/baton.dmi'
 	icon_state = "classic_baton"
 	inhand_icon_state = "classic_baton"
 	worn_icon_state = "classic_baton"
+	base_icon_state = "classic_baton"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	block_chance = 40
 
-	var/datum/mind/last_simian
+	var/mob/living/simian_affected
 
 /obj/item/staff/big_stick/Initialize(mapload)
 	. = ..()
-/*
 	AddComponent(/datum/component/two_handed, \
 		force_unwielded = 10, \
-		force_wielded = 24, \
+		force_wielded = 14, \
 		icon_wielded = "[base_icon_state]1", \
 	)
-*/
+
 /obj/item/staff/big_stick/Destroy(force)
-	last_simian = null
+	simian_affected = null
+	return ..()
+
+/obj/item/staff/big_stick/update_icon_state()
+	icon_state = "[base_icon_state]0"
 	return ..()
 
 /obj/item/staff/big_stick/equipped(mob/living/user, slot, initial)
 	. = ..()
 	if(!issimianspecies(user))
 		return
-	last_simian = user.mind
-	user.hud_add_simian_alpha()
-
+	ADD_TRAIT(src, TRAIT_BLIND_TOOL, INNATE_TRAIT)
+	AddComponent(/datum/component/limbless_aid)
+	simian_affected = user
+	simian_affected.hud_add_simian_alpha()
+	RegisterSignal(simian_affected, COMSIG_SPECIES_LOSS, PROC_REF(on_species_change))
 /obj/item/staff/big_stick/dropped(mob/living/user, silent)
-	last_simian?.current?.hud_remove_simian_alpha()
-	last_simian = null
+	remove_effects()
 	return ..()
 
-/*
-/obj/item/staff/big_stick/update_icon_state()
-	icon_state = "[base_icon_state]0"
-	return ..()
-*/
+///When the simian holding us swaps species, we're no longer a 'simian' so aren't an Alpha anymore.
+/obj/item/staff/big_stick/proc/on_species_change(mob/living/carbon/source, datum/species/lost_species)
+	SIGNAL_HANDLER
+	remove_effects()
+
+/obj/item/staff/big_stick/proc/on_qdeled(atom/source, force)
+	SIGNAL_HANDLER
+	remove_effects()
+
+/obj/item/staff/big_stick/proc/remove_effects()
+	REMOVE_TRAIT(src, TRAIT_BLIND_TOOL, INNATE_TRAIT)
+	qdel(GetComponent(/datum/component/limbless_aid))
+	if(isnull(simian_affected))
+		return
+	simian_affected.hud_remove_simian_alpha()
+	UnregisterSignal(simian_affected, COMSIG_SPECIES_LOSS)
+	simian_affected = null
