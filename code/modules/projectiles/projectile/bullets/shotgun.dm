@@ -19,7 +19,7 @@
 	name = "tungsten sabot-slug"
 	icon_state = "gauss"
 	damage = 25 //10 less than slugs.
-	speed = 0.25 //sub-caliber + lighter = speed. (Smaller number = faster)
+	speed = 4 //sub-caliber + lighter = speed.
 	armour_penetration = 25
 	wound_bonus = -25
 	ricochets_max = 2 //Unlike slugs which tend to squish on impact, these are hard enough to bounce rarely.
