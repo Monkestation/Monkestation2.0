@@ -380,10 +380,10 @@ SUBSYSTEM_DEF(ticker)
 			stack_trace("[S] [S.type] found in start landmarks list, which isn't a start landmark!")
 
 	// handle persistence stuff that requires ckeys, in this case hardcore mode and temporal scarring
-	for(var/i in GLOB.player_list)
-		if(!ishuman(i))
-			continue
-		var/mob/living/carbon/human/iter_human = i
+	var/list/simians
+	for(var/mob/living/carbon/human/iter_human in GLOB.player_list)
+		if(issimianspecies(iter_human))
+			simians += iter_human
 
 		iter_human.increment_scar_slot()
 		iter_human.load_persistent_scars()
@@ -396,7 +396,11 @@ SUBSYSTEM_DEF(ticker)
 		else
 			to_chat(iter_human, span_notice("You will gain [round(iter_human.hardcore_survival_score)] hardcore random points if you survive this round!"))
 
+	if(length(simians) >= 2 && prob(15 * simians))
+		go_simian_mode(pick(simians))
 	SStitle.update_init_text()
+
+/datum/controller/subsystem/ticker/proc/go_simian_mode(mob/living/carbon/human/grug_oog)
 
 //These callbacks will fire after roundstart key transfer
 /datum/controller/subsystem/ticker/proc/OnRoundstart(datum/callback/cb)

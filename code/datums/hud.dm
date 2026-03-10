@@ -21,6 +21,7 @@ GLOBAL_ALIST_INIT(huds, alist(
 	DATA_HUD_SENSORS = new/datum/atom_hud/data/human/medical/basic/sensors(), //monkestation edit - CYBERNETICS
 	DATA_HUD_CREW = new/datum/atom_hud/data/human/crew_hud(), //Monkestation edit, crew hud
 	DATA_HUD_BORER = new/datum/atom_hud/borer(),
+	DATA_HUD_SIMIAN = new/datum/atom_hud/data/human/simian(),
 ))
 
 /datum/atom_hud
