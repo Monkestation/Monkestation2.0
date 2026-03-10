@@ -223,7 +223,7 @@ const MainScreenAuth = (props) => {
         </Table.Row>
         <Table.Row>
           <Table.Cell>
-            <Button
+            <Button.Confirm
               content={'Clear Message Logs'}
               onClick={() => act('clear_message_logs')}
             />
@@ -232,7 +232,7 @@ const MainScreenAuth = (props) => {
         </Table.Row>
         <Table.Row>
           <Table.Cell>
-            <Button
+            <Button.Confirm
               content={'Clear Request Console Logs'}
               onClick={() => act('clear_request_logs')}
             />

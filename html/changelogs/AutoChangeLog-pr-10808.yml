@@ -1,5 +1,0 @@
-author: "SirNightKnight"
-delete-after: True
-changes:
-  - bugfix: "chameleon syndicate body armor can be locked with a multitool like other chameleon clothing items."
-  - bugfix: "fixed chameleon backpacks not being able to have their disguise locked."

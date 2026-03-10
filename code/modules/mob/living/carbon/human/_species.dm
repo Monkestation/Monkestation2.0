@@ -204,6 +204,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	///Unique cookie given by admins through prayers
 	var/species_cookie = /obj/item/food/cookie
 
+	///The path of the mutation that turns the user into this species, so they have it innately.
+	///Defaults to random monkey/simian if null.
+	var/datum/mutation/race/species_race_mutation = null
+
 	/// List of family heirlooms this species can get with the family heirloom quirk. List of types.
 	var/list/family_heirlooms
 

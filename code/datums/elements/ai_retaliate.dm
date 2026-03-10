@@ -23,3 +23,16 @@
 	SIGNAL_HANDLER
 
 	victim.ai_controller?.insert_blackboard_key_lazylist(BB_BASIC_MOB_RETALIATE_LIST, attacker)
+
+// This one prevents friends from ending up on the blackboard.
+/datum/element/ai_retaliate/enemies
+
+/// Add an attacking atom to a blackboard list of things which attacked us, ignoring same faction attackers
+/datum/element/ai_retaliate/enemies/on_attacked(mob/victim, atom/attacker)
+
+	if(victim.ai_controller?.blackboard[BB_ALWAYS_IGNORE_FACTION] || victim.ai_controller?.blackboard[BB_TEMPORARILY_IGNORE_FACTION])
+		victim.ai_controller?.insert_blackboard_key_lazylist(BB_BASIC_MOB_RETALIATE_LIST, attacker)
+		return
+
+	if(!victim.faction_check_atom(attacker))
+		victim.ai_controller?.insert_blackboard_key_lazylist(BB_BASIC_MOB_RETALIATE_LIST, attacker)

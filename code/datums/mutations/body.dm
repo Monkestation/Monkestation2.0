@@ -207,6 +207,9 @@
 	text_lose_indication = span_notice("You feel like your old self.")
 	quality = NEGATIVE
 	locked = TRUE //Species specific, keep out of actual gene pool
+	///The path of the species we turn the player into.
+	var/datum/species/species_turned_into = /datum/species/monkey
+	///The stored original species that the person has when they turned into the species above.
 	var/datum/species/original_species = /datum/species/human
 	var/original_name
 
@@ -218,7 +221,7 @@
 		return
 	original_species = owner.dna.species.type
 	original_name = owner.real_name
-	owner.monkeyize()
+	owner.monkeyize(monkey_type = species_turned_into)
 
 /datum/mutation/race/on_losing(mob/living/carbon/human/owner)
 	if(owner.stat == DEAD)
@@ -231,6 +234,12 @@
 
 	owner.fully_replace_character_name(null, original_name)
 	owner.humanize(original_species)
+
+/datum/mutation/race/simian
+	name = "Simianized"
+	desc = "A strange genome, the strain that connects the original simian to humanhood."
+	text_gain_indication = span_green("You feel unusually simian-like.")
+	species_turned_into = /datum/species/monkey/simian
 
 /datum/mutation/glow
 	name = "Glowy"

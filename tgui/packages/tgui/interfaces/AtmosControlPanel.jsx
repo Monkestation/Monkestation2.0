@@ -50,6 +50,18 @@ export const AtmosControlPanel = (props) => {
               {data.frozen === 1 ? 'Freeze Subsystem' : 'Unfreeze Subsystem'}
             </Button>
           </Flex.Item>
+          <Flex.Item>
+            <Button.Checkbox
+              checked={data.background}
+              onClick={() =>
+                act('set_background', {
+                  status: !data.background,
+                })
+              }
+            >
+              Background
+            </Button.Checkbox>
+          </Flex.Item>
           <Flex.Item>Fire Cnt: {data.fire_count}</Flex.Item>
           <Flex.Item>Active Turfs: {data.active_size}</Flex.Item>
           <Flex.Item>Excited Groups: {data.excited_size}</Flex.Item>

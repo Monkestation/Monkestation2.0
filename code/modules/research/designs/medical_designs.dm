@@ -440,6 +440,18 @@
 	build_path = /obj/item/disk/nifsoft_uploader/sci_hud
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_SERVICE | DEPARTMENT_BITFLAG_MEDICAL
 
+/datum/design/surgery_tray
+	name = "Surgery Tray"
+	desc = "A Deforest brand medical cart. It is a folding model, meaning the wheels on the bottom can be retracted and the body used as a tray."
+	id = "surgery_tray"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/silver =SHEET_MATERIAL_AMOUNT)
+	build_path = "/obj/item/surgery_tray/craftable"
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_MEDICAL
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
 /////////////////////////////////////////
 //////////Cybernetic Implants////////////
 /////////////////////////////////////////

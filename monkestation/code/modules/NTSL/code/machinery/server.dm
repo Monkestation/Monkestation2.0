@@ -77,7 +77,7 @@
 		logger.Log(LOG_CATEGORY_NTSL, "Uploaded by [user]: [rawcode]")
 		compiledcode = rawcode
 	if(istype(user.mind?.assigned_role, /datum/job/signal_technician)) //achivement description says only Signal Technician gets the achivement
-		var/freq = length(freq_listening[1]) ? freq_listening[1] : 1459
+		var/freq = length(freq_listening) ? freq_listening[1] : 1459
 		var/atom/movable/M = new()
 		var/atom/movable/virtualspeaker/speaker = new(null, M, server_radio)
 		speaker.name = "Poly"
@@ -96,5 +96,6 @@
 				if(sample == SPAN_COMMAND)
 					user.client.give_award(/datum/award/achievement/jobs/Poly_loud, user)
 					break // Not having this break leaves us open to a potential DoS attack.
+		signal.data["reject"] = TRUE //Don't pass achievement signals.
 	return compileerrors
 //end-NTSL
