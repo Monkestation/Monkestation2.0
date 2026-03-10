@@ -405,52 +405,51 @@
 /obj/item/gun/ballistic/can_shoot()
 	return chambered?.loaded_projectile
 
-/obj/item/gun/ballistic/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+/obj/item/gun/ballistic/attackby(obj/item/tool, mob/user, params)
 	. = ..()
 	if (.)
 		return
-
 	if (!internal_magazine && istype(tool, /obj/item/ammo_box/magazine))
 		if (!magazine)
 			insert_magazine(user, tool)
-			return ITEM_INTERACT_SUCCESS
-
-		if (tac_reloads)
-			eject_magazine(user, FALSE, tool)
-			return ITEM_INTERACT_SUCCESS
-
-		balloon_alert(user, "already loaded!")
-		return ITEM_INTERACT_FAILURE
+		else
+			if (tac_reloads)
+				eject_magazine(user, FALSE, tool)
+			else
+				balloon_alert(user, "already loaded!")
+		return
 
 	if (isammocasing(tool) || istype(tool, /obj/item/ammo_box))
 		if (bolt_type == BOLT_TYPE_NO_BOLT || internal_magazine)
 			if (load_gun(tool, user))
-				return ITEM_INTERACT_SUCCESS
-			return ITEM_INTERACT_FAILURE
+				return
+			return
 
 	if(istype(tool, /obj/item/suppressor))
 		if(!can_suppress)
 			balloon_alert(user, "[tool.name] doesn't fit!")
-			return ITEM_INTERACT_FAILURE
+			return
 
 		if(!user.is_holding(src))
 			balloon_alert(user, "not in hand!")
-			return ITEM_INTERACT_FAILURE
+			return
 
 		if(suppressed)
-			balloon_alert(user, "already has a suppressor!")
-			return ITEM_INTERACT_FAILURE
+			balloon_alert(user, "already has a supressor!")
+			return
 
 		if(!user.transferItemToLoc(tool, src))
 			balloon_alert(user, "cannot attach!")
-			return ITEM_INTERACT_FAILURE
+			return
 
 		balloon_alert(user, "[tool.name] attached")
 		install_suppressor(tool)
-		return ITEM_INTERACT_SUCCESS
+		return
 
 	if (can_be_sawn_off && sawoff(user, tool))
-		return ITEM_INTERACT_SUCCESS
+		return
+
+	return FALSE
 
 /obj/item/gun/ballistic/proc/load_gun(obj/item/ammo, mob/living/user)
 	if (chambered && !chambered.loaded_projectile)
