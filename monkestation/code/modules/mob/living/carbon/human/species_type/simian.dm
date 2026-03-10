@@ -157,16 +157,13 @@
 	simian_affected = user
 	simian_affected.hud_add_simian_alpha()
 	RegisterSignal(simian_affected, COMSIG_SPECIES_LOSS, PROC_REF(on_species_change))
+
 /obj/item/staff/big_stick/dropped(mob/living/user, silent)
 	remove_effects()
 	return ..()
 
 ///When the simian holding us swaps species, we're no longer a 'simian' so aren't an Alpha anymore.
 /obj/item/staff/big_stick/proc/on_species_change(mob/living/carbon/source, datum/species/lost_species)
-	SIGNAL_HANDLER
-	remove_effects()
-
-/obj/item/staff/big_stick/proc/on_qdeled(atom/source, force)
 	SIGNAL_HANDLER
 	remove_effects()
 
