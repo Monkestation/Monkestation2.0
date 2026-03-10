@@ -1,16 +1,6 @@
-#define CROSSBREED_BASE_PATHS list(\
-/datum/compressor_recipe/crossbreed/burning,\
-/datum/compressor_recipe/crossbreed/charged,\
-/datum/compressor_recipe/crossbreed/chilling,\
-/datum/compressor_recipe/crossbreed/consuming,\
-/datum/compressor_recipe/crossbreed/industrial,\
-/datum/compressor_recipe/crossbreed/prismatic,\
-/datum/compressor_recipe/crossbreed/regenerative,\
-/datum/compressor_recipe/crossbreed/reproductive,\
-/datum/compressor_recipe/crossbreed/selfsustaining,\
-/datum/compressor_recipe/crossbreed/stabilized,\
-)
 /// The maximum amount of extracts that can be on a compressor's tile before it stops.
+
+/*
 #define MAX_EXTRACTS_ON_TILE 30
 
 /obj/machinery/plumbing/ooze_compressor
@@ -73,7 +63,6 @@
 
 				cross_breed_choices["[initial(stored_recipe.output_item.name)]"] |= list("[initial(subtype_breed.colour)] [initial(subtype_stored.output_item.name)]" = subtype_image)
 				choice_to_datum |= list("[initial(subtype_breed.colour)] [initial(subtype_stored.output_item.name)]" = subtype_stored)
-
 	AddComponent(/datum/component/plumbing/ooze_compressor, bolt, layer)
 	register_context()
 
@@ -264,4 +253,5 @@
 			.++
 
 #undef MAX_EXTRACTS_ON_TILE
-#undef CROSSBREED_BASE_PATHS
+
+*/
