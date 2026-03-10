@@ -52,6 +52,8 @@
 			span_warning("[user] discards [user.p_their()] restraints like it's nothing!"),
 			span_warning("We break through our restraints!"),
 		)
+		if (user.buckled)
+			user.buckled.unbuckle_mob(user)
 		user.clear_cuffs(cuffs, TRUE)
 		used = TRUE
 
