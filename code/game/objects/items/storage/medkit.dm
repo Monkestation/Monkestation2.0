@@ -77,6 +77,7 @@
 		/obj/item/device/antibody_scanner, //monkestation addition
 		/obj/item/reagent_containers/cup/tube,
 		/obj/item/surgical_processor,
+		/obj/item/autopsy_scanner,
 	)
 
 /obj/item/storage/medkit/Initialize(mapload)

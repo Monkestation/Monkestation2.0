@@ -1,4 +1,0 @@
-author: "Cujo"
-delete-after: True
-changes:
-  - bugfix: "Prude mode now stops fart emotes from displaying in runechat"

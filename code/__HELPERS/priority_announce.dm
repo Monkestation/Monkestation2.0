@@ -55,6 +55,7 @@
 	else if(SSstation.announcer.event_sounds[sound])
 		sound = SSstation.announcer.event_sounds[sound]
 
+	var/sound_channel = CHANNEL_ANNOUNCEMENTS
 	var/header
 	switch(type)
 		if(ANNOUNCEMENT_TYPE_PRIORITY)
@@ -72,9 +73,11 @@
 			if(!istype(sender))
 				CRASH("Non-AI tried to send an AI station announcement")
 			header = MAJOR_ANNOUNCEMENT_TITLE("Station Announcement by [sender.name] (AI)")
+			sound_channel = CHANNEL_VOX
 		// MONKESTATION ADDITION END
 		else
 			header += generate_unique_announcement_header(title, sender_override, append_update) // Monkestation edit - update append
+			sound_channel = CHANNEL_STORYTELLER
 
 	announcement_strings += ANNOUNCEMENT_HEADER(header)
 
@@ -90,7 +93,7 @@
 	else
 		finalized_announcement = CHAT_ALERT_DEFAULT_SPAN(jointext(announcement_strings, ""))
 
-	dispatch_announcement_to_players(finalized_announcement, players, sound)
+	dispatch_announcement_to_players(finalized_announcement, players, sound, sound_channel = sound_channel)
 
 	if(isnull(sender_override) && players == GLOB.player_list)
 		if(length(title) > 0)
@@ -195,7 +198,7 @@
 	return jointext(returnable_strings, "")
 
 /// Proc that just dispatches the announcement to our applicable audience. Only the announcement is a mandatory arg.
-/proc/dispatch_announcement_to_players(announcement, list/players = GLOB.player_list, sound_override = null, should_play_sound = TRUE)
+/proc/dispatch_announcement_to_players(announcement, list/players = GLOB.player_list, sound_override = null, should_play_sound = TRUE, sound_channel = CHANNEL_ANNOUNCEMENTS)
 	var/sound_to_play = !isnull(sound_override) ? sound_override : 'sound/misc/notice2.ogg'
 
 	for(var/mob/target in players)
@@ -206,11 +209,11 @@
 		if(!should_play_sound)
 			continue
 
-		if(target.client?.prefs?.read_preference(/datum/preference/toggle/sound_announcements))
+		if(target.client?.prefs?.channel_volume["[CHANNEL_ANNOUNCEMENTS]"])
 			// monkestation start: volume mixer
 			var/sound/mixed_sound = sound(sound_to_play)
-			if("[CHANNEL_VOX]" in target.client?.prefs?.channel_volume)
-				mixed_sound.volume = target.client?.prefs?.channel_volume["[CHANNEL_VOX]"]
+			if("[sound_channel]" in target.client?.prefs?.channel_volume)
+				mixed_sound.volume = target.client?.prefs?.channel_volume["[sound_channel]"]
 			if(!isnull(target.client))
 				SEND_SOUND(target, mixed_sound)
 			// monkestation end

@@ -259,7 +259,7 @@
 
 /datum/armament_entry/company_import/deforest/saftey_clothing/breath_mask
 	name = "Deforest Breath Mask"
-	item_type = /obj/item/clothing/mask/breath/deforest
+	item_type = /obj/item/clothing/mask/surgical/deforest
 	cost = PAYCHECK_CREW
 
 /datum/armament_entry/company_import/deforest/saftey_clothing/beret

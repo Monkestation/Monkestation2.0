@@ -1,7 +1,0 @@
-author: "Glyphee"
-delete-after: True
-changes:
-  - rscadd: "whole new goblin language syllables"
-  - rscadd: "goblin accent attached to tongue"
-  - balance: "weakened goblin liver"
-  - bugfix: "typo in satyr traits"
