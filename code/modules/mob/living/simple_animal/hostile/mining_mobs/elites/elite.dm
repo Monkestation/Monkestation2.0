@@ -29,6 +29,7 @@
 //Gives player-controlled variants the ability to swap attacks
 /mob/living/simple_animal/hostile/asteroid/elite/Initialize(mapload)
 	. = ..()
+	ADD_TRAIT(src, TRAIT_CHASM_STOPPER, INNATE_TRAIT)
 	AddComponent(/datum/component/seethrough_mob)
 	for(var/action_type in attack_action_types)
 		var/datum/action/innate/elite_attack/attack_action = new action_type()

@@ -160,3 +160,18 @@
   - balance: Force host speak cooldown has been lowered (30 -> 25 seconds)
   - bugfix: moon amulet can no longer apply a infinite hallucination
   - admin: Admin heals now remove Moon conversion
+2026-03-10:
+  BobDABuilder9001:
+  - qol: Buttons drop all their parts when broken
+  Glyphee:
+  - balance: moved goblin speed to torso
+  - bugfix: goblin accent oversight
+  Mantle:
+  - rscadd: You can now upload a photo of your ass at security records consoles.
+  Mantlecrawler:
+  - bugfix: Elite Lavaland mobs can no longer fall into chasms
+  - bugfix: Simians can now pass through xenobio's corral pens
+  - bugfix: Knight & Hornet cloaks that are bought from the store are no longer also
+      donator only.
+  SirNightKnight:
+  - bugfix: fixed firefighter helmets being available in the loadout store.
