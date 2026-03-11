@@ -13,6 +13,12 @@
 	max_wizard_trigger_potency = 7
 	tags = list(TAG_OUTSIDER_ANTAG, TAG_COMMUNAL, TAG_COMBAT, TAG_ALIEN, TAG_MUNDANE)
 	dont_spawn_near_roundend = TRUE
+	enemy_roles = list(
+		JOB_CHIEF_MEDICAL_OFFICER,
+		JOB_VIROLOGIST,
+		JOB_CHEMIST,
+	)
+	required_enemies = 3
 
 /datum/round_event/ghost_role/plague_rat
 	minimum_required = 1
