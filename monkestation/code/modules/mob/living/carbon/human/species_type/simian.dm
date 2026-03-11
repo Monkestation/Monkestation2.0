@@ -120,15 +120,15 @@
 	throw_speed = 0.1
 	attack_verb_continuous = list("smashes", "slams", "whacks", "thwacks")
 	attack_verb_simple = list("smash", "slam", "whack", "thwack")
-	icon = 'icons/obj/weapons/baton.dmi'
-	icon_state = "classic_baton"
-	inhand_icon_state = "classic_baton"
-	worn_icon_state = "classic_baton"
-	base_icon_state = "classic_baton"
+	icon = 'icons/obj/weapons/stick.dmi'
+	worn_icon = 'icons/mob/clothing/back/stick.dmi'
+	icon_state = "stick"
+	base_icon_state = "stick"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	block_chance = 40
 
+	///The simian holding the stick. Eek ook.
 	var/mob/living/simian_affected
 
 /obj/item/staff/big_stick/Initialize(mapload)
@@ -148,11 +148,11 @@
 	return ..()
 
 /obj/item/staff/big_stick/equipped(mob/living/user, slot, initial)
-	. = ..()
 	if(!issimianspecies(user))
-		return
+		return ..()
 	ADD_TRAIT(src, TRAIT_BLIND_TOOL, INNATE_TRAIT)
 	AddComponent(/datum/component/limbless_aid)
+	. = ..()
 	simian_affected = user
 	simian_affected.hud_add_simian_alpha()
 	RegisterSignal(simian_affected, COMSIG_SPECIES_LOSS, PROC_REF(on_species_change))
