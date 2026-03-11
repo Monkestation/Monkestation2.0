@@ -73,7 +73,7 @@
 
 /datum/keybinding/living/item_pixel_shift/down(client/user)
 	. = ..()
-	if(.)
+	if(. || isnull(user.mob.pulling))
 		return
 	user.mob.AddComponent(/datum/component/pixel_shift)
 	SEND_SIGNAL(user.mob, COMSIG_KB_LIVING_ITEM_PIXEL_SHIFT_DOWN)
