@@ -3943,12 +3943,7 @@
 /area/station/service/theater)
 "aNt" = (
 /obj/structure/table,
-/obj/item/storage/box/donkpockets{
-	pixel_x = -3;
-	pixel_y = 5
-	},
-/obj/item/reagent_containers/cup/glass/coffee{
-	pixel_x = 13;
+/obj/machinery/microwave{
 	pixel_y = 8
 	},
 /turf/open/floor/plating,
@@ -9073,13 +9068,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/central)
-"bLW" = (
-/obj/structure/table,
-/obj/machinery/microwave{
-	pixel_y = 8
-	},
-/turf/open/floor/iron/dark/small,
-/area/station/cargo/storage)
 "bLY" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/trimline/blue/filled/corner{
@@ -29097,6 +29085,7 @@
 "fAn" = (
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
+/obj/machinery/union_stand,
 /turf/open/floor/iron/smooth_large,
 /area/station/cargo/storage)
 "fAw" = (
@@ -110126,7 +110115,14 @@
 /area/station/security/prison/safe)
 "vhe" = (
 /obj/structure/table,
-/obj/item/food/grown/banana,
+/obj/item/storage/box/donkpockets{
+	pixel_x = -3;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/cup/glass/coffee{
+	pixel_x = 13;
+	pixel_y = 8
+	},
 /turf/open/floor/iron/dark/small,
 /area/station/cargo/storage)
 "vhq" = (
@@ -166115,7 +166111,7 @@ oTl
 dod
 aIY
 oTl
-bLW
+kPg
 kPg
 kPg
 grb
