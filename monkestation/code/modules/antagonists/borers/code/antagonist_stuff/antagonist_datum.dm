@@ -7,7 +7,8 @@
 	count_against_dynamic_roll_chance = FALSE // there are thousands of them, we do not need them to be the only antagonist
 	prevent_roundtype_conversion = FALSE
 	show_to_ghosts = TRUE
-
+	antag_flags = parent_type::antag_flags | FLAG_ANTAG_CAP_IGNORE_HUMANITY
+	antag_count_points = 1 //While a single borer can be helpful, if you have a lot on station things are bound to get chaotic and a few diveworms.
 	/// Our linked borer, used for the antagonist panel TGUI
 	var/mob/living/basic/cortical_borer/cortical_owner
 
