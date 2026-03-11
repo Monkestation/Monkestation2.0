@@ -8246,6 +8246,10 @@
 "cxT" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
+/obj/machinery/door/poddoor/preopen{
+	id = "radioblast";
+	name = "Bridge Blast Door"
+	},
 /turf/open/floor/plating,
 /area/station/service/library/upper)
 "cxV" = (
@@ -10239,6 +10243,15 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/chemistry)
+"dbF" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/curtain/cloth/fancy/mechanical{
+	id = "radiocurtain";
+	max_integrity = 100;
+	name = "Privacy Curtains"
+	},
+/turf/open/floor/plating,
+/area/station/service/library/upper)
 "dbG" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/cafeteria,
@@ -27739,9 +27752,12 @@
 	req_access = list("library")
 	},
 /obj/structure/cable,
-/obj/machinery/door/poddoor/preopen{
-	id = "radioblast";
-	name = "Bridge Blast Door"
+/obj/effect/mapping_helpers/airlock/access/all/service/library,
+/obj/structure/curtain/cloth/fancy/mechanical{
+	id = "radiocurtain";
+	max_integrity = 100;
+	name = "Worn Privacy Curtains";
+	desc = "A curtain hanging by it's last thread, with claw marks digging along it's length. Was someone trying to get out, or get in?"
 	},
 /turf/open/floor/wood/large,
 /area/station/service/library/upper)
@@ -29090,6 +29106,14 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
+"iCL" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/curtain/cloth/fancy/mechanical{
+	id = "radiocurtain";
+	name = "Privacy Curtains"
+	},
+/turf/open/floor/plating,
+/area/station/service/library/upper)
 "iCS" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 5
@@ -47209,6 +47233,13 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/security/prison/garden)
+"nLs" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/curtain/cloth/fancy/mechanical{
+	id = "radiocurtain"
+	},
+/turf/open/floor/plating,
+/area/station/service/library/upper)
 "nLz" = (
 /obj/machinery/atmospherics/components/unary/passive_vent,
 /obj/structure/lattice,
@@ -49126,6 +49157,14 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/central)
+"opl" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/preopen{
+	id = "radioblast";
+	name = "Bridge Blast Door"
+	},
+/turf/open/floor/plating,
+/area/station/service/library/upper)
 "opo" = (
 /obj/structure/flora/bush/lavendergrass/style_random,
 /turf/open/floor/grass,
@@ -62881,6 +62920,18 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible/layer4,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
+"snw" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/preopen{
+	id = "radioblast";
+	name = "Bridge Blast Door"
+	},
+/obj/machinery/door/poddoor/preopen{
+	id = "radioblast";
+	name = "Bridge Blast Door"
+	},
+/turf/open/floor/plating,
+/area/station/service/library/upper)
 "snA" = (
 /turf/closed/wall,
 /area/station/maintenance/department/medical)
@@ -65131,6 +65182,19 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
+"sWF" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
+/obj/machinery/door/poddoor/preopen{
+	id = "radioblast";
+	name = "Bridge Blast Door"
+	},
+/obj/machinery/door/poddoor/preopen{
+	id = "radioblast";
+	name = "Bridge Blast Door"
+	},
+/turf/open/floor/plating,
+/area/station/service/library/upper)
 "sWR" = (
 /obj/structure/cable,
 /obj/machinery/firealarm{
@@ -66185,7 +66249,14 @@
 /obj/machinery/button/door/directional/east{
 	pixel_x = 6;
 	id = "radioblast";
-	name = "Panic Shutters"
+	name = "Panic Shutters";
+	pixel_y = -2
+	},
+/obj/machinery/button/door/directional/east{
+	pixel_x = 6;
+	id = "radiocurtain";
+	name = "Curtain Controls";
+	pixel_y = 8
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/library/upper)
@@ -89035,7 +89106,7 @@ cpH
 wZB
 pHz
 jns
-xXt
+opl
 cxT
 jns
 hUA
@@ -89294,7 +89365,7 @@ dnW
 jns
 trq
 iEZ
-rtj
+nLs
 iRD
 oxo
 uYH
@@ -89548,10 +89619,10 @@ jns
 avH
 xme
 eBg
-xXt
+opl
 mux
 iEZ
-rtj
+iCL
 iRD
 xme
 fvx
@@ -90062,10 +90133,10 @@ jns
 avH
 xme
 eBg
-xXt
+opl
 mux
 iEZ
-rtj
+dbF
 xme
 xme
 mPO
@@ -90322,7 +90393,7 @@ eBg
 jns
 umP
 iEZ
-rtj
+iCL
 xme
 ljy
 kfU
@@ -90577,8 +90648,8 @@ gbh
 rHn
 azI
 jns
-xXt
-cxT
+snw
+sWF
 jns
 wCo
 vQN
