@@ -473,7 +473,8 @@
 /obj/item/gun/ballistic/automatic/sol_smg/evil/unrestricted
 	pin = /obj/item/firing_pin
 
-
+/obj/item/gun/ballistic/automatic/sol_smg/evil/unrestricted/damaged // Black market variant, more spread
+	spread = 15
 
 ///Rifles
 

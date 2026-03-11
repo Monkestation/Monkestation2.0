@@ -43,8 +43,8 @@
 
 /datum/market_item/auction/gun_part/evil_sindano
 	name = "Modified Sindano"
-	desc = "Super Duper Illegal, goodluck getting it to fire!"
-	item = /obj/item/gun/ballistic/automatic/sol_smg/evil/unrestricted
+	desc = "Super Duper Illegal, goodluck hitting your target!"
+	item = /obj/item/gun/ballistic/automatic/sol_smg/evil/unrestricted/damaged
 
 	price_min = CARGO_CRATE_VALUE * 8
 	price_max = CARGO_CRATE_VALUE * 12
@@ -53,7 +53,7 @@
 /datum/market_item/auction/gun_part/evil_cawil
 	name = "Modified Carwo-Cawil"
 	desc = "We found these in the wreckage of the GRV Brutus, no one'll care if they aren't found. No lowballing, we know what we got!"
-	item = /obj/item/gun/ballistic/automatic/sol_rifle/evil/unrestricted
+	item = /obj/item/gun/ballistic/automatic/sol_rifle/evil
 
 	price_min = CARGO_CRATE_VALUE * 15
 	price_max = CARGO_CRATE_VALUE * 20
