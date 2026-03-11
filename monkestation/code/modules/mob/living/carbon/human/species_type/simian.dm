@@ -124,8 +124,8 @@
 	worn_icon = 'icons/mob/clothing/back/stick.dmi'
 	icon_state = "stick"
 	base_icon_state = "stick"
-	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/stick_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/stick_righthand.dmi'
 	block_chance = 40
 
 	///The simian holding the stick. Eek ook.
