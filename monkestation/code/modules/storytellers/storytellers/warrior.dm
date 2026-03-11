@@ -1,6 +1,7 @@
 /datum/storyteller/warrior
 	name = "The Warrior"
 	desc = "The Warrior will create more impactful events, often focused on combat."
+	star_colour = STARCOLOUR_MIDNIGHTSUN
 	point_gains_multipliers = list(
 		EVENT_TRACK_MUNDANE = 1,
 		EVENT_TRACK_MODERATE = 1.3,

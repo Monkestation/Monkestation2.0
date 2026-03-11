@@ -16,7 +16,7 @@
 		EVENT_TRACK_ROLESET = 1.2,
 		EVENT_TRACK_OBJECTIVES = 1
 		)
-	tag_multipliers = list(TAG_ALIEN = 0.4, TAG_CREW_ANTAG = 1.1)
+	tag_multipliers = list(TAG_ALIEN = 0.3, TAG_CREW_ANTAG = 1.1)
 	restricted = TRUE
 	population_min = 45
 	ignores_roundstart = TRUE

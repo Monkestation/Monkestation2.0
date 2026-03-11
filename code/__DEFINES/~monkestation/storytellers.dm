@@ -108,3 +108,12 @@
 #define SHARED_METEORS		"meteor event"
 #define SHARED_BSOD			"tech malfunction event"
 #define SHARED_CHANGELING	"changelings"
+
+/// Below are defines for the different Star colours for storytellers
+#define STARCOLOUR_GREENSTAR "Green Star" // For ghost and admin disabled
+#define STARCOLOUR_BLUESTAR "Blue Star" // The lowest threat. So just sleeper really
+#define STARCOLOUR_YELLOWSTAR "Yellow Star" // Unused currently
+#define STARCOLOUR_ORANGESTAR "Orange Star" // Default
+#define STARCOLOUR_REDSTAR "Red Star" // More agressive storytellers but not overly mean
+#define STARCOLOUR_BLACKORBIT "Black Orbit" // Events/admin exclusive storytellers
+#define STARCOLOUR_MIDNIGHTSUN "Midnight Sun" // The storyteller is taking a bat to the crew

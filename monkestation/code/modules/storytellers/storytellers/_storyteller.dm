@@ -58,7 +58,8 @@
 	var/always_votable = FALSE
 	///weight this has of being picked for random storyteller/showing up in the vote if not always_votable
 	var/weight = 0
-
+	/// Determines the "star level" of the storyteller. Effects roundstart report.
+	var/star_colour = STARCOLOUR_ORANGESTAR
 /datum/storyteller/process(seconds_per_tick)
 	tick(seconds_per_tick)
 
