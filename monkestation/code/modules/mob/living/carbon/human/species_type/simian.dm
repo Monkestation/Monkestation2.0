@@ -111,27 +111,32 @@
 	equipping.equip_to_slot(simian_translator, ITEM_SLOT_NECK)
 
 ///The Simian Big Stick. I found it in the forest and kept it.
-/obj/item/staff/big_stick
+/obj/item/big_stick
 	name = "big stick"
 	desc = "A big stick, probably found in the latest trip to the forest. God it looks cool though."
+	icon = 'icons/obj/weapons/stick.dmi'
+	worn_icon = 'icons/mob/clothing/back/stick.dmi'
+	icon_state = "stick0"
+	base_icon_state = "stick"
+	lefthand_file = 'icons/mob/inhands/weapons/stick_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/stick_righthand.dmi'
+
 	force = 10
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
 	throw_speed = 0.1
 	attack_verb_continuous = list("smashes", "slams", "whacks", "thwacks")
 	attack_verb_simple = list("smash", "slam", "whack", "thwack")
-	icon = 'icons/obj/weapons/stick.dmi'
-	worn_icon = 'icons/mob/clothing/back/stick.dmi'
-	icon_state = "stick"
-	base_icon_state = "stick"
-	lefthand_file = 'icons/mob/inhands/weapons/stick_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/stick_righthand.dmi'
+	resistance_flags = FLAMMABLE
 	block_chance = 40
+	armour_penetration = 50
+	attack_verb_continuous = list("bludgeons", "whacks", "disciplines")
+	attack_verb_simple = list("bludgeon", "whack", "discipline")
 
 	///The simian holding the stick. Eek ook.
 	var/mob/living/simian_affected
 
-/obj/item/staff/big_stick/Initialize(mapload)
+/obj/item/big_stick/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/two_handed, \
 		force_unwielded = 10, \
@@ -139,16 +144,16 @@
 		icon_wielded = "[base_icon_state]1", \
 	)
 
-/obj/item/staff/big_stick/Destroy(force)
+/obj/item/big_stick/Destroy(force)
 	simian_affected = null
 	return ..()
 
-/obj/item/staff/big_stick/update_icon_state()
+/obj/item/big_stick/update_icon_state()
 	icon_state = "[base_icon_state]0"
 	return ..()
 
-/obj/item/staff/big_stick/equipped(mob/living/user, slot, initial)
-	if(!issimianspecies(user))
+/obj/item/big_stick/equipped(mob/living/user, slot, initial)
+	if(!issimianspecies(user) || (user == simian_affected))
 		return ..()
 	ADD_TRAIT(src, TRAIT_BLIND_TOOL, INNATE_TRAIT)
 	AddComponent(/datum/component/limbless_aid)
@@ -158,23 +163,23 @@
 	RegisterSignal(simian_affected, COMSIG_SPECIES_LOSS, PROC_REF(on_species_change))
 	RegisterSignal(simian_affected, COMSIG_ATOM_EXAMINE, PROC_REF(on_examined))
 
-/obj/item/staff/big_stick/dropped(mob/living/user, silent)
+/obj/item/big_stick/dropped(mob/living/user, silent)
 	remove_effects()
 	return ..()
 
 ///When the simian holding us swaps species, we're no longer a 'simian' so aren't an Alpha anymore.
-/obj/item/staff/big_stick/proc/on_species_change(mob/living/carbon/source, datum/species/lost_species)
+/obj/item/big_stick/proc/on_species_change(mob/living/carbon/source, datum/species/lost_species)
 	SIGNAL_HANDLER
 	remove_effects()
 
 ///Called when examined, Simians get a special text for stick holders.
-/obj/item/staff/big_stick/proc/on_examined(atom/source, mob/user, list/examine_list)
+/obj/item/big_stick/proc/on_examined(atom/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
 	if(issimianspecies(user))
 		examine_list += span_danger("[source.p_theyre(TRUE)] wielding the big stick! They are the Leader of the Simians!")
 
-/obj/item/staff/big_stick/proc/remove_effects()
+/obj/item/big_stick/proc/remove_effects()
 	REMOVE_TRAIT(src, TRAIT_BLIND_TOOL, INNATE_TRAIT)
 	qdel(GetComponent(/datum/component/limbless_aid))
 	if(isnull(simian_affected))

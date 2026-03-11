@@ -401,7 +401,7 @@ SUBSYSTEM_DEF(ticker)
 	SStitle.update_init_text()
 
 /datum/controller/subsystem/ticker/proc/go_simian_mode(list/jumping_on_the_bed)
-	var/obj/item/staff/big_stick/ooh_stick_i_found = new()
+	var/obj/item/big_stick/ooh_stick_i_found = new()
 	var/mob/living/carbon/human/grug_oog = pick(jumping_on_the_bed)
 	grug_oog.put_in_hands(ooh_stick_i_found)
 	for(var/mob/living/carbon/human/other_grug as anything in jumping_on_the_bed)
