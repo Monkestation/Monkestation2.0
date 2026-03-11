@@ -320,7 +320,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	else if(selected_storyteller.star_colour == STARCOLOUR_ORANGESTAR)
 		. += "Advisory Level: <b>Orange Star</b></center><BR>"
 		. += "Your sector's advisory level is Orange Star. Upon reviewing your sector's intelligence, the Department has determined that the risk of enemy activity is moderate to severe. At this advisory, we recommend maintaining a higher degree of security and alertness, and vigilance against threats that may (or will) arise."
-	else if(selected_storyteller.star_colour == STARCOLOUR_BLUESTAR)
+	else if(selected_storyteller.star_colour == STARCOLOUR_REDSTAR)
 		. += "Advisory Level: <b>Red Star</b></center><BR>"
 		. += "Your sector's advisory level is Red Star. The Department of Intelligence has decrypted Cybersun communications suggesting a high likelihood of attacks on Nanotrasen assets within the Spinward Sector. Stations in the region are advised to remain highly vigilant for signs of enemy activity and to be on high alert."
 	else if(selected_storyteller.star_colour == STARCOLOUR_BLACKORBIT)
