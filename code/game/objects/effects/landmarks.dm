@@ -756,3 +756,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	GLOB.cargo_mail_machine_spawns -= src
 	return ..()
 //End of monke edit
+
+/obj/effect/landmark/navigate_destination/mining_foundry
+	location = "Mining Foundry"

@@ -23,7 +23,7 @@
 	if(check_access_list(player_access))
 		return TRUE
 
-	if(HAS_SILICON_ACCESS(accessor))
+	if(HAS_SILICON_ACCESS(accessor) && !ispAI(accessor))
 		if(!(ROLE_SYNDICATE in accessor.faction))
 			if((ACCESS_SYNDICATE in req_access) || (ACCESS_SYNDICATE_LEADER in req_access) || (ACCESS_SYNDICATE in req_one_access) || (ACCESS_SYNDICATE_LEADER in req_one_access))
 				return FALSE

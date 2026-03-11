@@ -31,6 +31,11 @@
 		window.send_assets()
 	update_static_data_for_all_viewers()
 
+/obj/item/modular_computer/ui_state(mob/user)
+	if(inserted_pai && (user == inserted_pai.pai))
+		return GLOB.contained_state
+	return ..()
+
 /obj/item/modular_computer/interact(mob/user)
 	if(enabled)
 		ui_interact(user)
@@ -213,10 +218,9 @@
 		if("PC_Pai_Interact")
 			switch(params["option"])
 				if("eject")
-					usr.put_in_hands(inserted_pai)
-					to_chat(usr, span_notice("You remove [inserted_pai] from the [name]."))
-					inserted_pai = null
-					update_appearance(UPDATE_ICON)
+					if(!ishuman(usr))
+						return
+					remove_pai(usr)
 				if("interact")
 					inserted_pai.attack_self(usr)
 			return TRUE

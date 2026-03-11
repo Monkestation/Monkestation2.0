@@ -318,7 +318,7 @@ Difficulty: Extremely Hard
 
 /obj/item/pickaxe/drill/jackhammer/demonic/use_tool(atom/target, mob/living/user, delay, amount=0, volume=0, datum/callback/extra_checks, interaction_key)
 	var/turf/T = get_turf(target)
-	mineral_scan_pulse(T, world.view + 1)
+	mineral_scan_pulse(T, world.view + 1, src)
 	. = ..()
 
 /datum/status_effect/ice_block_talisman
