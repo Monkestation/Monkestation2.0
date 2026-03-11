@@ -41,7 +41,10 @@
 
 /obj/item/gun/ballistic/automatic/pistol/old
 	name = "\improper Old Makarov"
-	desc = "A small, easily concealable 9mm handgun. Has a threaded barrel for suppressors. This one is fairly damaged"
+	desc = "A small, easily concealable 9mm handgun. Has a threaded barrel for suppressors. This ones barrel is fairly damaged."
+	can_misfire = TRUE
+	misfire_probability = 30
+	misfire_probability_cap = 30
 
 /obj/item/gun/ballistic/automatic/pistol/old/give_manufacturer_examine()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_REMOVED)
