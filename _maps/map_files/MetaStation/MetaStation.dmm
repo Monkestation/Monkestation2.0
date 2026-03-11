@@ -4744,6 +4744,7 @@
 	dir = 8
 	},
 /obj/machinery/light/small/directional/west,
+/obj/effect/landmark/cargo_mail_machine,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "bDN" = (
@@ -5946,6 +5947,7 @@
 "cfv" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment,
+/obj/effect/landmark/cargo_mail_machine,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "cgd" = (
@@ -23641,6 +23643,7 @@
 	fax_name = "Cargo Office";
 	name = "Cargo Office Fax Machine"
 	},
+/obj/effect/landmark/cargo_mail_machine,
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "isc" = (
@@ -32337,11 +32340,11 @@
 "lme" = (
 /obj/machinery/firealarm/directional/west,
 /obj/machinery/light/directional/west,
-/obj/item/banner/cargo/mundane,
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
 /obj/effect/turf_decal/trimline/brown/filled/corner,
+/obj/machinery/union_stand,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "lmn" = (
@@ -41844,6 +41847,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/white,
 /area/station/science/research)
+"ovc" = (
+/obj/structure/cable,
+/obj/effect/landmark/cargo_mail_machine,
+/turf/open/floor/iron,
+/area/station/cargo/storage)
 "ove" = (
 /obj/structure/closet/firecloset,
 /turf/open/floor/plating,
@@ -87233,7 +87241,7 @@ uAu
 toe
 rbL
 mmR
-mmR
+ovc
 kQP
 kQP
 apZ

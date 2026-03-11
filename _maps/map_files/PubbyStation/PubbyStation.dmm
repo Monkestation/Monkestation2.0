@@ -156,12 +156,9 @@
 /turf/open/floor/wood,
 /area/station/cargo/quartermaster)
 "aaL" = (
-/obj/machinery/computer/security/qm{
-	dir = 8
-	},
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/wood,
-/area/station/cargo/quartermaster)
+/obj/machinery/union_stand,
+/turf/open/floor/iron,
+/area/station/cargo/storage)
 "aaN" = (
 /obj/machinery/airalarm/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
@@ -44584,6 +44581,13 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/maintenance/department/engine)
+"pZU" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/computer/security/qm{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/station/cargo/quartermaster)
 "qaQ" = (
 /turf/closed/wall,
 /area/station/hallway/secondary/service)
@@ -95939,7 +95943,7 @@ aEj
 aPa
 jdj
 abg
-jdj
+pZU
 scK
 anQ
 aVz
@@ -96196,7 +96200,7 @@ aEj
 aPb
 bcS
 aaJ
-aaL
+aTo
 aTo
 aUx
 aVA
@@ -96454,7 +96458,7 @@ wDZ
 aTo
 aTo
 aTo
-aTo
+aaL
 aUz
 rvO
 ney

@@ -46983,10 +46983,6 @@
 /obj/structure/table,
 /obj/machinery/cell_charger,
 /obj/item/radio/intercom/directional/north,
-/obj/item/storage/fancy/donut_box{
-	pixel_x = 4;
-	pixel_y = 9
-	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "ooW" = (
@@ -48742,6 +48738,7 @@
 /obj/structure/table,
 /obj/item/food/cheesiehonkers,
 /obj/effect/turf_decal/tile/brown/half/contrasted,
+/obj/effect/landmark/cargo_mail_machine,
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "oQg" = (
@@ -60440,7 +60437,11 @@
 /obj/machinery/camera/directional/north{
 	c_tag = "Cargo Bay North"
 	},
-/obj/machinery/vending/access/wardrobe_cargo,
+/obj/structure/table,
+/obj/item/storage/fancy/donut_box{
+	pixel_x = 4;
+	pixel_y = 9
+	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "svO" = (
@@ -62796,6 +62797,7 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /obj/machinery/light/directional/north,
+/obj/machinery/union_stand,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "tkz" = (
@@ -68826,6 +68828,7 @@
 /area/station/security/prison/work)
 "veh" = (
 /obj/machinery/vending/access/wardrobe_cargo,
+/obj/effect/landmark/cargo_mail_machine,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "vek" = (

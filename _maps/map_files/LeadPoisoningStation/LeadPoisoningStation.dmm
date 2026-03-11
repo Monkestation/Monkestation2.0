@@ -18005,6 +18005,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
+"iFr" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/union_stand,
+/turf/open/floor/iron,
+/area/station/cargo/storage)
 "iFs" = (
 /obj/structure/flora/bush/lavendergrass/style_random,
 /turf/open/floor/grass,
@@ -66747,7 +66754,7 @@ kmN
 nmy
 xlt
 dhf
-aTw
+iFr
 dga
 fjN
 dOI

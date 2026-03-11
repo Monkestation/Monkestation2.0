@@ -80016,10 +80016,10 @@
 	dir = 4
 	},
 /obj/item/radio/intercom/directional/east,
-/obj/item/kirbyplants/random,
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
+/obj/machinery/union_stand,
 /turf/open/floor/iron/textured_edge{
 	dir = 8
 	},

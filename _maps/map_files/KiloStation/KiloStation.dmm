@@ -6183,8 +6183,8 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cargo_shelf,
 /obj/effect/turf_decal/delivery,
+/obj/machinery/union_stand,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "bWH" = (

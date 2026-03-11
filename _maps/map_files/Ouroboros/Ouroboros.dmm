@@ -15633,6 +15633,7 @@
 /obj/machinery/light/warm/directional/west,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
+/obj/effect/landmark/cargo_mail_machine,
 /turf/open/floor/iron/stairs/left,
 /area/station/cargo/storage)
 "eEh" = (
@@ -20474,6 +20475,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/checker,
 /area/station/hallway/primary/central/fore)
+"gez" = (
+/obj/effect/landmark/start/explorer,
+/turf/open/floor/iron/dark,
+/area/station/cargo/storage)
 "geI" = (
 /obj/effect/turf_decal/arrows/white{
 	dir = 1
@@ -32596,7 +32601,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
-/obj/effect/landmark/start/explorer,
+/obj/effect/landmark/cargo_mail_machine,
 /turf/open/floor/iron/dark,
 /area/station/cargo/storage)
 "jER" = (
@@ -60332,6 +60337,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/kitchen/diagonal,
 /area/station/maintenance/abandon_diner)
+"rMX" = (
+/obj/machinery/union_stand,
+/turf/open/floor/iron/dark,
+/area/station/cargo/office)
 "rNa" = (
 /obj/item/kirbyplants/organic/plant22,
 /obj/effect/turf_decal/siding/dark{
@@ -103081,7 +103090,7 @@ bfG
 nkz
 xEu
 xEu
-llp
+gez
 fNX
 rlf
 hqB
@@ -169648,7 +169657,7 @@ vBE
 swl
 ogU
 dqM
-dqM
+rMX
 mFq
 dTp
 juW

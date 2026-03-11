@@ -5826,8 +5826,8 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/bot,
-/obj/machinery/vending/mechcomp,
 /obj/machinery/newscaster/directional/west,
+/obj/machinery/vending/access/wardrobe_cargo,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "bOS" = (
@@ -7632,7 +7632,6 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 8
 	},
-/obj/machinery/vending/access/wardrobe_cargo,
 /obj/effect/turf_decal/bot,
 /obj/machinery/firealarm/directional/west{
 	pixel_y = 3
@@ -7640,6 +7639,7 @@
 /obj/machinery/light_switch/directional/west{
 	pixel_y = -6
 	},
+/obj/machinery/union_stand,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "cog" = (
@@ -10453,7 +10453,6 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 8
 	},
-/obj/item/kirbyplants/random,
 /obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
@@ -11130,6 +11129,8 @@
 	id = "Cargo Conveyors";
 	req_access = list("cargo")
 	},
+/obj/machinery/vending/mechcomp,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "drL" = (

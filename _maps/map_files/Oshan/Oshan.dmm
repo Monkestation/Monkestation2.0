@@ -32372,10 +32372,10 @@
 /area/station/service/library)
 "kuR" = (
 /obj/effect/turf_decal/trimline/brown/filled/line,
-/obj/structure/liquid_pump,
 /obj/effect/turf_decal/box/white{
 	color = "#EFB341"
 	},
+/obj/machinery/union_stand,
 /turf/open/floor/iron/dark/textured,
 /area/station/cargo/storage)
 "kuU" = (
@@ -54679,6 +54679,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/landmark/cargo_mail_machine,
 /turf/open/floor/iron/dark/textured,
 /area/station/cargo/storage)
 "rql" = (
@@ -70567,7 +70568,7 @@
 /turf/open/floor/plating,
 /area/station/commons/vacant_room/office)
 "woW" = (
-/obj/effect/spawner/random/structure/grille,
+/obj/structure/liquid_pump,
 /turf/open/floor/plating,
 /area/station/cargo/storage)
 "woZ" = (
