@@ -12,7 +12,6 @@
 	show_to_ghosts = TRUE
 	hijack_speed = 2
 	remove_from_manifest = TRUE
-	antag_count_points = 8
 
 	preview_outfit = /datum/outfit/assaultops_preview
 	/// In the preview icon, the operatives who are behind the leader
