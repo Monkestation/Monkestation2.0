@@ -9,6 +9,9 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 	icon = 'icons/obj/medical/syringe.dmi'
 	desc = "The DeForest Medical Corporation hypospray is a sterile, air-needle autoinjector for rapid administration of drugs to patients."
 	icon_state = "hypo"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+	inhand_icon_state = "hypo"
 	w_class = WEIGHT_CLASS_SMALL
 	custom_price = PAYCHECK_COMMAND * 2
 	discountable = FALSE
@@ -61,6 +64,7 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 	. = ..()
 	if(default_vial)
 		vial = new default_vial
+	register_context()
 
 /obj/item/hypospray/examine(mob/user)
 	. = ..()
@@ -198,6 +202,35 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 	else
 		to_chat(user, span_notice("This hypo isn't loaded!"))
 		return FALSE
+
+/obj/item/hypospray/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+
+	if(isnull(held_item))
+		context[SCREENTIP_CONTEXT_LMB] = "Change mode"
+		context[SCREENTIP_CONTEXT_RMB] = "Remove vial"
+		if(upgrade_flags & HYPO_UPGRADE_NOZZLE)
+			context[SCREENTIP_CONTEXT_CTRL_LMB] = "Change transfer amount"
+		else
+			context[SCREENTIP_CONTEXT_CTRL_LMB] = "Cycle transfer amount"
+		// context[SCREENTIP_CONTEXT_CTRL_RMB] = "Cycle tranzfer amount backwards"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(istype(held_item, /obj/item/reagent_containers/cup/vial))
+		if(vial != null)
+			context[SCREENTIP_CONTEXT_LMB] = "Swap vial"
+		else
+			context[SCREENTIP_CONTEXT_LMB] = "Insert vial"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(istype(held_item, /obj/item/reagent_containers/cup/tube))
+		if(vial != null)
+			context[SCREENTIP_CONTEXT_LMB] = "Swap tube"
+		else
+			context[SCREENTIP_CONTEXT_LMB] = "Insert tube"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	return .
 
 /obj/item/hypospray/proc/inject(mob/living/user, atom/target)
 	SEND_SIGNAL(target, COMSIG_LIVING_TRY_SYRINGE_INJECT, user)
@@ -355,6 +388,7 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 	desc = "The Deluxe Hypospray can use larger size vials, pierce thick clothing, and deliver more reagents per injection."
 	allowed_containers = list(/obj/item/reagent_containers/cup/vial, /obj/item/reagent_containers/cup/tube)
 	possible_transfer_amounts = list(1, 2, 3, 5, 10, 15, 20)
+	default_vial = /obj/item/reagent_containers/cup/vial/large/bluespace/omnizine
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	inject_other = 1 SECONDS
 	draw_other = 0 SECONDS
@@ -373,6 +407,7 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 	upgrade_flags = HYPO_UPGRADE_PIERCING
 	default_vial = /obj/item/reagent_containers/cup/vial/large/combat
 	blacklist_containers = NONE
+	inhand_icon_state = "combat_hypo"
 
 /obj/item/hypospray/combat/no_vial
 	default_vial = null
@@ -391,6 +426,7 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 	possible_transfer_amounts = list(1, 2, 3, 5, 10, 15, 20, 40, 60)
 	can_remove_vials = FALSE
 	default_vial = /obj/item/reagent_containers/cup/vial/large/ert
+	inhand_icon_state = "nanite_hypo"
 
 /obj/item/hypospray/combat/heresypurge
 	name = "Combat Hypospray (Holy)"
@@ -399,3 +435,4 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 	possible_transfer_amounts = list(1, 2, 3, 5, 10, 15, 20, 40, 60)
 	can_remove_vials = FALSE
 	default_vial = /obj/item/reagent_containers/cup/vial/large/ert/holy
+	inhand_icon_state = "holy_hypo"
