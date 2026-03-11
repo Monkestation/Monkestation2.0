@@ -8,7 +8,7 @@
 /datum/market_item/auction/gun_part/makarov //Funny guns that fit the shoddy gun bidding market.
 	name = "Old Makarov"
 	desc = "Especially Illegal, functionality not guaranteed."
-	item = /obj/item/gun/ballistic/automatic/pistol/old
+	item = /obj/item/gun/ballistic/automatic/pistol/damaged
 
 	price_min = CARGO_CRATE_VALUE * 6
 	price_max = CARGO_CRATE_VALUE * 8
@@ -35,7 +35,7 @@
 /datum/market_item/auction/gun_part/evil_skild
 	name = "Skild Pistol"
 	desc = "Super Illegal, favoured by frontiermen."
-	item = /obj/item/gun/ballistic/automatic/pistol/trappiste
+	item = /obj/item/gun/ballistic/automatic/pistol/trappiste/damaged
 
 	price_min = CARGO_CRATE_VALUE * 6
 	price_max = CARGO_CRATE_VALUE * 8
@@ -48,13 +48,4 @@
 
 	price_min = CARGO_CRATE_VALUE * 8
 	price_max = CARGO_CRATE_VALUE * 12
-	auction_weight = 4
-
-/datum/market_item/auction/gun_part/evil_cawil
-	name = "Modified Carwo-Cawil"
-	desc = "We found these in the wreckage of the GRV Brutus, no one'll care if they aren't found. No lowballing, we know what we got!"
-	item = /obj/item/gun/ballistic/automatic/sol_rifle/evil
-
-	price_min = CARGO_CRATE_VALUE * 15
-	price_max = CARGO_CRATE_VALUE * 20
 	auction_weight = 4
