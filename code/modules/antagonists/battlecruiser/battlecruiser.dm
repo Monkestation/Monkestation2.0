@@ -24,6 +24,7 @@
 	stinger_sound = 'sound/ambience/antag/ops.ogg'
 	/// Team to place the crewmember on.
 	var/datum/team/battlecruiser/battlecruiser_team
+	antag_count_points = 7
 
 /datum/antagonist/battlecruiser/get_team()
 	return battlecruiser_team
