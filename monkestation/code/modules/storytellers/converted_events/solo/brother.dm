@@ -9,7 +9,7 @@
 	required_enemies = 1
 	roundstart = TRUE
 	earliest_start = 0 SECONDS
-	base_antags = 2 //used to determine how many teams we will have
+	base_antags = 1 //used to determine how many teams we will have
 	maximum_antags = 3 //used to determine the max amount of teams we will have
 	denominator = 30
 	protected_roles = list(
@@ -64,10 +64,17 @@
 			if(and_another)
 				another_brother = 1
 			var/mob/target_player = astype(pick_n_take(possible_bro))
+			message_admins("Target brother found, checking if valid")
 			if(isnull(target_player)) //skip adding a brother if we picked null (like if only one person has BB enabled)
-				break
+				message_admins("Target brother null")
+				continue
 			if(target_player.mind == starting_brother) // If we are trying to add the starting player in this loop. THEY ARE ADDED LATER BECAUSE MAYBE THERES NO OTHER BROTHERS
-				break
+				message_admins("Target brother found is self")
+				continue
+			if(target_player.mind.has_antag_datum(/datum/antagonist/brother)) // Check if they are already a brother
+				message_admins("Target brother has a brother")
+				continue
+			message_admins("Adding brother")
 			new_team.add_member(target_player.mind)
 		//next line is for the rare case where everyone has BB off but the 1-3 people who origionally rolled BB. or if they are all taken (like the 1/1000000000000000000 chance for a team of 20))
 		if(new_team.members.len == 0) //If a BB team is only 1 person long, we just add all the brothers without a team onto this one
@@ -79,12 +86,12 @@
 			for(var/mob/player in GLOB.alive_player_list)
 				if(player.mind.has_antag_datum(/datum/antagonist/brother))
 					enemy_brothers.Add(player)
-			if(enemy_brothers.len == 0)
-				starting_brother.add_antag_datum(/datum/antagonist/traitor) // Give them traitor if theres no brothers
-			else
+			if(ROLE_HERETIC in starting_brother.current.client.prefs.be_special)
 				var/datum/antagonist/heretic/heretic_datum = starting_brother.add_antag_datum(/datum/antagonist/heretic)
 				for(var/mob/heretic_target in enemy_brothers)
 					heretic_datum.add_sacrifice_target(heretic_target)
+			else
+				starting_brother.add_antag_datum(/datum/antagonist/traitor) // Give them traitor if they dont have heretic on
 			qdel(new_team)
 			return
 		new_team.add_member(starting_brother) //Add the first member we picked to the team that we got when this event rolled
