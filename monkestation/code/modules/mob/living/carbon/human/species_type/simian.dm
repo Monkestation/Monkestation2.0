@@ -158,6 +158,7 @@
 	ADD_TRAIT(src, TRAIT_BLIND_TOOL, INNATE_TRAIT)
 	AddComponent(/datum/component/limbless_aid)
 	. = ..()
+	log_game("[user] has picked up the Big Stick (become Simian Leader).")
 	simian_affected = user
 	simian_affected.hud_add_simian_alpha()
 	RegisterSignal(simian_affected, COMSIG_SPECIES_LOSS, PROC_REF(on_species_change))
@@ -176,14 +177,18 @@
 /obj/item/big_stick/proc/on_examined(atom/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	if(issimianspecies(user))
-		examine_list += span_danger("[source.p_theyre(TRUE)] wielding the big stick! They are the Leader of the Simians!")
+	if(issimianspecies(user) || isobserver(user))
+		examine_list += span_danger("[source.p_theyre(TRUE)] wielding \the [src]! [source.p_theyre(TRUE)] the Leader of the Simians!")
 
 /obj/item/big_stick/proc/remove_effects()
 	REMOVE_TRAIT(src, TRAIT_BLIND_TOOL, INNATE_TRAIT)
 	qdel(GetComponent(/datum/component/limbless_aid))
 	if(isnull(simian_affected))
 		return
+	if(QDELETED(simian_affected))
+		simian_affected = null
+		return
+	log_game("[simian_affected] dropped the Big Stick (lost Simian Leader).")
 	simian_affected.hud_remove_simian_alpha()
-	UnregisterSignal(simian_affected, COMSIG_SPECIES_LOSS)
+	UnregisterSignal(simian_affected, list(COMSIG_SPECIES_LOSS, COMSIG_ATOM_EXAMINE))
 	simian_affected = null
