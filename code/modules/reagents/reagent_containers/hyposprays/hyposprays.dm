@@ -95,11 +95,11 @@ GLOBAL_LIST_INIT(hypospray_mode_icons, list(
 		if(is_type_in_list(attacking_item, blacklist_containers))
 			balloon_alert(user, "won't fit!")
 			return FALSE
+		if(!user.transferItemToLoc(attacking_item,src))
+			return FALSE
 		if(vial != null)
 			if(!unload_vial(user, TRUE))
 				return
-		if(!user.transferItemToLoc(attacking_item,src))
-			return FALSE
 		vial = attacking_item
 		last_vial_maximum = vial.reagents.maximum_volume
 		user.visible_message(span_notice("[user] loads a vial into [src]."),span_notice("You have loaded [vial] into [src]."))
