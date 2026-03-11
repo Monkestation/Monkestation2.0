@@ -153,7 +153,7 @@
 	return ..()
 
 /obj/item/big_stick/equipped(mob/living/user, slot, initial)
-	if(!issimianspecies(user) || (user == simian_affected))
+	if(!ismonkey(user) || (user == simian_affected))
 		return ..()
 	ADD_TRAIT(src, TRAIT_BLIND_TOOL, INNATE_TRAIT)
 	AddComponent(/datum/component/limbless_aid)
@@ -177,7 +177,7 @@
 /obj/item/big_stick/proc/on_examined(atom/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	if(issimianspecies(user) || isobserver(user))
+	if(ismonkey(user) || isobserver(user))
 		examine_list += span_danger("[source.p_theyre(TRUE)] wielding \the [src]! [source.p_theyre(TRUE)] the Leader of the Simians!")
 
 /obj/item/big_stick/proc/remove_effects()
