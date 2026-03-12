@@ -393,19 +393,20 @@
 	return ..()
 
 /atom/movable/screen/act_intent3/Click(location, control, params)
-	var/list/paramlist = params2list(params)
-	var/_x = text2num(paramlist["icon-x"])
-	var/_y = text2num(paramlist["icon-y"])
-	if(_x < 17 && _y < 17)
-		intents.intent = INTENT_HARM
-	else if(_x >= 17 && _y >= 17)
-		intents.intent = INTENT_DISARM
-	else if(_x < 17 && _y >= 17 )
-		intents.intent = INTENT_HELP
-	else if(_x >= 17 && _y < 17)
-		intents.intent = INTENT_GRAB
+	if(isliving(usr))
+		var/list/paramlist = params2list(params)
+		var/_x = text2num(paramlist["icon-x"])
+		var/_y = text2num(paramlist["icon-y"])
+		if(_x < 17 && _y < 17)
+			intents.intent = INTENT_HARM
+		else if(_x >= 17 && _y >= 17)
+			intents.intent = INTENT_DISARM
+		else if(_x < 17 && _y >= 17 )
+			intents.intent = INTENT_HELP
+		else if(_x >= 17 && _y < 17)
+			intents.intent = INTENT_GRAB
 
-	intents.update_istate(usr, null)
+		intents.update_istate(usr, null)
 
 /atom/movable/screen/spacesuit
 	name = "Space suit cell status"

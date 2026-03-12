@@ -667,9 +667,9 @@
 
 /obj/machinery/computer/communications/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
-	play_click_sound(user)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if (!ui)
+		play_click_sound(SFX_BUTTON)
 		ui = new(user, src, "CommunicationsConsole")
 		ui.open()
 

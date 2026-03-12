@@ -22635,7 +22635,7 @@
 "hny" = (
 /obj/effect/turf_decal/tile/dark_blue/fourcorners,
 /obj/machinery/light/small/directional/east,
-/obj/item/storage/secure/safe/caps_spare/directional/east,
+/obj/structure/secure_safe/caps_spare/directional/east,
 /obj/machinery/keycard_auth/directional/east{
 	pixel_y = 8
 	},
@@ -26436,7 +26436,7 @@
 /area/station/commons/locker)
 "ixJ" = (
 /obj/machinery/camera/autoname/directional/west,
-/obj/item/storage/secure/safe/directional/west,
+/obj/structure/secure_safe/directional/west,
 /obj/structure/table,
 /obj/item/aicard,
 /obj/item/circuitboard/aicore,
@@ -30489,7 +30489,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
-/obj/item/storage/secure/safe/hos{
+/obj/structure/secure_safe/hos{
 	pixel_x = 32
 	},
 /obj/structure/closet/secure_closet/hos,
@@ -33519,7 +33519,7 @@
 /area/station/service/hydroponics/garden)
 "kOa" = (
 /obj/machinery/airalarm/directional/west,
-/obj/item/storage/secure/safe/directional/south,
+/obj/structure/secure_safe/directional/south,
 /obj/machinery/suit_storage_unit/cmo,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/cmo)
@@ -51827,7 +51827,7 @@
 /turf/open/floor/engine/n2,
 /area/station/engineering/atmos)
 "qJD" = (
-/obj/item/storage/secure/safe/directional/east,
+/obj/structure/secure_safe/directional/east,
 /obj/structure/bed,
 /obj/item/bedsheet/qm,
 /obj/effect/landmark/start/quartermaster,
@@ -64800,7 +64800,7 @@
 /turf/open/floor/iron/dark,
 /area/station/command/teleporter)
 "uQm" = (
-/obj/item/storage/secure/safe/directional/south,
+/obj/structure/secure_safe/directional/south,
 /obj/machinery/requests_console/directional/east{
 	department = "Nanotrasen Representative's Desk";
 	name = "Nanotrasen Representative's Requests Console"

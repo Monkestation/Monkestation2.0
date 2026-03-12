@@ -1,7 +1,7 @@
 import { sortBy, sortStrings } from 'common/collections';
 import { type BooleanLike, classes } from 'common/react';
 import { type ComponentType, createElement, type ReactNode } from 'react';
-import { type sendAct, useBackend, useLocalState } from '../../../../backend';
+import { useBackend, useLocalState } from 'tgui/backend';
 import {
   Box,
   Button,
@@ -11,7 +11,8 @@ import {
   NumberInput,
   Stack,
   Tooltip,
-} from '../../../../components';
+} from 'tgui/components';
+import type { sendAct } from 'tgui/events/act';
 import { createSetPreference, type PreferencesMenuData } from '../../data';
 import { ServerPreferencesFetcher } from '../../ServerPreferencesFetcher';
 import features from '.';

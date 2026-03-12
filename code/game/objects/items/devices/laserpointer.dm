@@ -132,13 +132,15 @@
 
 	//cameras
 	else if(istype(target, /obj/machinery/camera))
-		var/obj/machinery/camera/C = target
-		if(prob(effectchance * diode.rating))
-			C.emp_act(EMP_HEAVY)
-			outmsg = span_notice("You hit the lens of [C] with [src], temporarily disabling the camera!")
-			log_combat(user, C, "EMPed", src)
+		var/obj/machinery/camera/target_camera = target
+		if(!target_camera.camera_enabled && !target_camera.emped)
+			outmsg = span_notice("You point [src] at [target_camera], but it seems to be disabled.")
+		else if(prob(effectchance * diode.rating))
+			target_camera.emp_act(EMP_HEAVY)
+			outmsg = span_notice("You hit the lens of [target_camera] with [src], temporarily disabling the camera!")
+			log_combat(user, target_camera, "EMPed", src)
 		else
-			outmsg = span_warning("You miss the lens of [C] with [src]!")
+			outmsg = span_warning("You miss the lens of [target_camera] with [src]!")
 
 	//catpeople
 	for(var/mob/living/carbon/human/H in view(1,targloc))

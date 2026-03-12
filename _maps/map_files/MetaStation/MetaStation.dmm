@@ -1786,7 +1786,7 @@
 "aEP" = (
 /obj/machinery/light_switch/directional/east,
 /obj/structure/dresser,
-/obj/item/storage/secure/safe/directional/north,
+/obj/structure/secure_safe/directional/north,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain/private)
 "aEW" = (
@@ -7461,8 +7461,12 @@
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "cHV" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/duct,
 /obj/machinery/camera/autoname/directional/east,
-/turf/closed/wall/r_wall,
+/turf/open/floor/stone,
 /area/station/science/xenobiology)
 "cId" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -16061,7 +16065,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/range)
 "fOn" = (
-/obj/item/storage/secure/safe/directional/north,
+/obj/structure/secure_safe/directional/north,
 /obj/machinery/camera/directional/north{
 	c_tag = "Chief Engineer's Office"
 	},
@@ -16507,7 +16511,7 @@
 /area/station/service/kitchen)
 "fWE" = (
 /obj/structure/table/wood/fancy/green,
-/obj/item/storage/secure/safe/directional/north,
+/obj/structure/secure_safe/directional/north,
 /obj/item/flashlight/lamp/green{
 	pixel_x = 5;
 	pixel_y = 16
@@ -16773,7 +16777,7 @@
 /turf/closed/wall,
 /area/station/security/courtroom)
 "gaX" = (
-/obj/item/storage/secure/safe/hos{
+/obj/structure/secure_safe/hos{
 	pixel_x = 36;
 	pixel_y = 28
 	},
@@ -16897,7 +16901,7 @@
 	},
 /obj/machinery/light/directional/west,
 /obj/structure/table/glass,
-/obj/item/storage/secure/safe/caps_spare/directional/west,
+/obj/structure/secure_safe/caps_spare/directional/west,
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 8
 	},
@@ -29804,7 +29808,7 @@
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/testlab)
 "krP" = (
-/obj/item/storage/secure/safe/directional/south,
+/obj/structure/secure_safe/directional/south,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
@@ -32648,7 +32652,7 @@
 /obj/machinery/camera/directional/north{
 	c_tag = "Security - Evidence Storage"
 	},
-/obj/item/storage/secure/safe/directional/north{
+/obj/structure/secure_safe/directional/north{
 	name = "evidence safe"
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -41867,7 +41871,7 @@
 /area/station/maintenance/port/fore)
 "ovz" = (
 /obj/structure/table/wood,
-/obj/item/storage/secure/safe/directional/east,
+/obj/structure/secure_safe/directional/east,
 /obj/machinery/computer/security/wooden_tv{
 	pixel_x = 3;
 	pixel_y = 2
@@ -51066,7 +51070,6 @@
 /obj/structure/table/glass,
 /obj/item/reagent_containers/cup/beaker,
 /obj/item/reagent_containers/dropper,
-/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/iron/white/diagonal,
 /area/station/medical/pathology/isolation)
 "rEO" = (
@@ -56724,7 +56727,7 @@
 	pixel_x = 2;
 	pixel_y = 3
 	},
-/obj/item/storage/secure/safe/directional/east,
+/obj/structure/secure_safe/directional/east,
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp/green{
 	pixel_x = -12;
@@ -59134,7 +59137,7 @@
 /turf/open/floor/carpet,
 /area/station/medical/pathology)
 "uuU" = (
-/obj/item/storage/secure/safe/directional/north{
+/obj/structure/secure_safe/directional/north{
 	name = "armory safe A"
 	},
 /obj/structure/rack,
@@ -65329,6 +65332,7 @@
 "wEN" = (
 /obj/structure/table/glass,
 /obj/item/restraints/handcuffs,
+/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/iron/white/diagonal,
 /area/station/medical/pathology/isolation)
 "wER" = (
@@ -117609,7 +117613,7 @@ hjt
 wEu
 vul
 kkT
-jdj
+cHV
 xNm
 jdj
 jdj
@@ -117866,7 +117870,7 @@ imw
 aft
 ygF
 xRz
-cHV
+jlU
 jlU
 aYt
 gva

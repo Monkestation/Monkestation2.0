@@ -20,7 +20,7 @@
 			var/atom/movable/screen/lobby/button/lobby_button = lobbyscreen
 			lobby_button.owner = REF(owner)
 
-	if (!owner.client.is_localhost())
+	if (!owner.client?.is_localhost())
 		return
 
 	var/atom/movable/screen/lobby/button/start_now/start_button = new(our_hud = src)
@@ -696,7 +696,7 @@
 	. = ..()
 	if(!. || !usr.client.is_localhost() || !check_rights_for(usr.client, R_SERVER))
 		return
-	SEND_SOUND(hud.mymob, sound('sound/effects/cartoon_splat.ogg', volume = 50))
+	SEND_SOUND(hud.mymob, sound('sound/effects/cartoon_splat.ogg', volume = 40))
 	SSticker.start_immediately = TRUE
 	if(SSticker.current_state == GAME_STATE_STARTUP)
 		to_chat(usr, span_admin("The server is still setting up, but the round will be started as soon as possible."))

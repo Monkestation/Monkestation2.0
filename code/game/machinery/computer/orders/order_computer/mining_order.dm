@@ -20,6 +20,7 @@
 
 	order_categories = list(
 		CATEGORY_MINING,
+		CATEGORY_EXPLORER,
 		CATEGORY_SURVIVAL,
 		CATEGORY_CRUSHER,
 		CATEGORY_PKA,
@@ -186,3 +187,55 @@
 #undef CREDIT_TYPE_MINING
 #undef TO_POINT_CARD
 #undef TO_USER_ID
+
+// monke edit explorer vouchers
+
+/obj/machinery/computer/order_console/mining/attackby(obj/item/weapon, mob/user, params)
+	if(istype(weapon, /obj/item/explorer_voucher))
+		redeem_explorer_voucher(weapon, user)
+		return
+	return ..()
+
+/obj/item/explorer_voucher
+	name = "explorer voucher"
+	desc = "A token to redeem a set of space exploration gear. Use it on a mining equipment vendor."
+	icon = 'monkestation/icons/obj/items/explorer_voucher.dmi'
+	icon_state = "explorer_voucher"
+	w_class = WEIGHT_CLASS_TINY
+
+/obj/machinery/computer/order_console/mining/proc/redeem_explorer_voucher(obj/item/explorer_voucher/voucher, mob/redeemer)
+	var/static/list/set_types
+	if(!set_types)
+		set_types = list()
+		for(var/datum/voucher_set/static_set as anything in subtypesof(/datum/voucher_set/explorer))
+			set_types[initial(static_set.name)] = new static_set
+
+	var/list/items = list()
+	for(var/set_name in set_types)
+		var/datum/voucher_set/current_set = set_types[set_name]
+		var/datum/radial_menu_choice/option = new
+		option.image = image(icon = current_set.icon, icon_state = current_set.icon_state)
+		option.info = span_boldnotice(current_set.description)
+		items[set_name] = option
+
+	var/selection = show_radial_menu(redeemer, src, items, custom_check = CALLBACK(src, PROC_REF(explorer_check_menu), voucher, redeemer), radius = 38, require_near = TRUE, tooltips = TRUE)
+	if(!selection)
+		return
+
+	var/datum/voucher_set/chosen_set = set_types[selection]
+	for(var/item in chosen_set.set_items)
+		new item(drop_location())
+
+	SSblackbox.record_feedback("tally", "explorer_voucher_redeemed", 1, selection)
+	qdel(voucher)
+
+/obj/machinery/computer/order_console/mining/proc/explorer_check_menu(obj/item/explorer_voucher/voucher, mob/living/redeemer)
+	if(!istype(redeemer))
+		return FALSE
+	if(redeemer.incapacitated())
+		return FALSE
+	if(QDELETED(voucher))
+		return FALSE
+	if(!redeemer.is_holding(voucher))
+		return FALSE
+	return TRUE

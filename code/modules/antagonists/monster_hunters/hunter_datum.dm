@@ -76,11 +76,7 @@
 		card.moveToNullspace()
 		grant_drop_ability(card)
 	RegisterSignal(src, COMSIG_GAIN_INSIGHT, PROC_REF(insight_gained))
-	for(var/i in 1 to 5)
-		var/turf/rabbit_hole = get_safe_random_station_turf_equal_weight()
-		rabbits += new /obj/effect/bnnuy(rabbit_hole, src)
-	var/obj/effect/bnnuy/gun_holder = pick(rabbits)
-	gun_holder.drop_gun = TRUE
+	spawn_rabbits()
 	var/datum/action/cooldown/spell/track_monster/track = new
 	track.Grant(owner.current)
 	powers += track
@@ -95,6 +91,59 @@
 	to_chat(owner.current, span_userdanger("Your hunt has ended: You enter retirement once again, and are no longer a Monster Hunter."))
 	owner.special_role = null
 	return ..()
+
+/datum/antagonist/monsterhunter/proc/spawn_rabbits(amount = 5)
+	// not static bc we'll only be running this like. once the entire round.
+	var/list/forbidden_area_typecache = typecacheof(list(
+		/area/graveyard,
+		/area/station/ai_monitored,
+		/area/station/command/secure_bunker,
+		/area/station/engineering/atmospherics_engine,
+		/area/station/engineering/shipbreaker_hut,
+		/area/station/engineering/supermatter,
+		/area/station/maintenance,
+		/area/station/science/ordnance/bomb,
+		/area/station/science/ordnance/burnchamber,
+		/area/station/science/ordnance/freezerchamber,
+		/area/station/science/xenobiology/cell,
+		/area/station/solars,
+	))
+
+	var/list/turf_groups = noise_turfs_station_equal_weight(4, forbidden_area_typecache)
+	main_loop:
+		while(length(rabbits) < amount && length(turf_groups))
+			var/idx = rand(1, length(turf_groups))
+			var/list/chosen_group = turf_groups[idx]
+			var/turf/chosen_location = pick_n_take(chosen_group)
+			if(!length(chosen_group))
+				turf_groups.Cut(idx, idx + 1)
+
+			// gotta make sure we're an open, floor turf
+			if(chosen_location.density || isgroundlessturf(chosen_location))
+				continue
+
+			// make sure it's got at least 3x3 open space
+			for(var/turf/nearby_turf as anything in RANGE_TURFS(1, chosen_location))
+				if(!isopenturf(nearby_turf))
+					continue main_loop
+
+			// ensure there's no dense objects on the turf
+			for(var/obj/checked_object in chosen_location)
+				if(checked_object.density)
+					continue main_loop
+
+			// We don't want them close to each other - at least 1 tile of seperation
+			if(locate(/obj/effect/bnnuy) in range(1, chosen_location))
+				continue
+
+			log_game("Generated monster hunter rabbit at [AREACOORD(chosen_location)]")
+			testing("Generated monster hunter rabbit at [AREACOORD(chosen_location)]")
+			rabbits += new /obj/effect/bnnuy(chosen_location, src)
+
+	var/rabbit_count = length(rabbits)
+	if(rabbit_count < amount)
+		message_admins("WARNING: there may not be enough monster hunter rabbits (there should be [amount], but there's only [rabbit_count])")
+		CRASH("WARNING: there may not be enough monster hunter rabbits (there should be [amount], but there's only [rabbit_count])")
 
 /datum/antagonist/monsterhunter/proc/load_wonderland()
 	var/static/wonderland_loaded = FALSE

@@ -220,6 +220,9 @@
 	if(!can_interact_with(weapon))
 		balloon_alert(user, "[weapon] is incompatible!")
 		return
+	if(HAS_TRAIT(weapon, TRAIT_NODROP))
+		to_chat(user, "[weapon] is stuck to you!")
+		return
 	else if(check_restrictions(items = TRUE))
 		balloon_alert(user, "holding items is disabled!")
 		return
@@ -269,6 +272,7 @@
 	if(!QDELETED(dummy_human))
 		QDEL_NULL(dummy_human)
 	dummy_human = new(src)
+	dummy_human.interaction_range = 1
 	RegisterSignal(dummy_human, COMSIG_LIVING_PICKED_UP_ITEM, PROC_REF(on_dummy_pickup))
 	RegisterSignal(dummy_human, COMSIG_QDELETING, PROC_REF(on_dummy_qdel))
 

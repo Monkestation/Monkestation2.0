@@ -61,6 +61,9 @@
 /mob/living/proc/dust(just_ash, drop_items, force)
 	death(TRUE)
 
+	if(QDELETED(src))
+		return
+
 	if(drop_items)
 		unequip_everything()
 

@@ -90,7 +90,8 @@
 /obj/vehicle/sealed/mecha/proc/set_internal_damage(int_dam_flag)
 	internal_damage |= int_dam_flag
 	log_message("Internal damage of type [int_dam_flag].", LOG_MECHA)
-	SEND_SOUND(occupants, sound('sound/machines/warning-buzzer.ogg',wait=0))
+	for(var/mob/occupant as anything in occupants)
+		occupant.playsound_local(null, sound_to_use = sound('sound/machines/warning-buzzer.ogg', wait=0))
 	diag_hud_set_mechstat()
 
 /obj/vehicle/sealed/mecha/proc/clear_internal_damage(int_dam_flag)

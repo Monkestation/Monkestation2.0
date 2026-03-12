@@ -8,6 +8,7 @@
 #define CATEGORY_SURVIVAL "Survival"
 #define CATEGORY_CRUSHER "Crushers"
 #define CATEGORY_PKA "PKAs"
+#define CATEGORY_EXPLORER "Explorer"
 #define CATEGORY_WASTE_WEAPON "Wasteland Weapons"
 #define CATEGORY_BEPIS "Bepis Tech"
 #define CATEGORY_EXTRA "Extra"
