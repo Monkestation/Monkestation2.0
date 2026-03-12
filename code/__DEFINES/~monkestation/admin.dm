@@ -1,14 +1,14 @@
 ///Sends all admins the chosen sound
-#define SEND_ADMINS_NOTFICATION_SOUND(sound_to_play) for(var/client/X in GLOB.admins){X << sound(sound_to_play);}
+#define SEND_ADMINS_NOTFICATION_SOUND(sound_to_play) for(var/client/X in GLOB.admins){X.mob.playsound_local(null, sound_to_play, 100, vary = FALSE, channel = CHANNEL_ADMIN_SOUNDS, pressure_affected = FALSE, use_reverb = FALSE);}
 ///Sends a message in adminchat
 #define SEND_ADMINCHAT_MESSAGE(message) to_chat(GLOB.admins, type = MESSAGE_TYPE_ADMINCHAT, html = message, confidential = TRUE)
 ///Sends a message in adminchat with the chosen notfication sound
 #define SEND_NOTFIED_ADMIN_MESSAGE(sound, message) SEND_ADMINS_NOTFICATION_SOUND(sound); SEND_ADMINCHAT_MESSAGE(message)
 
-#define POLICY_DEATH				"Death"
-#define POLICY_REVIVAL				"Revival"
-#define POLICY_REVIVAL_CLONER		"Revival via Cloning"
-#define POLICY_ANTAGONISTIC_REVIVAL	"Revival via Antagonistic Method"
+#define POLICY_DEATH "Death"
+#define POLICY_REVIVAL "Revival"
+#define POLICY_REVIVAL_CLONER "Revival via Cloning"
+#define POLICY_ANTAGONISTIC_REVIVAL "Revival via Antagonistic Method"
 
 #define AHELP_CLOSETYPE_CLOSE 0
 #define AHELP_CLOSETYPE_REJECT 1

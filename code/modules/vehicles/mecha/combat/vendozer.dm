@@ -13,7 +13,7 @@
 	force = 60 // dont get hit
 	internal_damage_threshold = 18
 	wreckage = null
-	mech_type = EXOSUIT_MODULE_TANK
+	mech_type = (EXOSUIT_MODULE_TANK | EXOSUIT_MODULE_TRASHTANK ) // trashtank because it comes with a pipegun you cant replace if its just tank
 	mecha_flags = OMNIDIRECTIONAL_ATTACKS
 	bumpsmash = TRUE
 	var/crushdmglower = 10

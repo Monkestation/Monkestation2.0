@@ -46,6 +46,16 @@
 	item_path = /obj/item/reagent_containers/hypospray/medipen/survival/penthrite
 	cost_per_order = 750
 
+/datum/orderable_item/survival/coagulant //monkestation edit
+	item_path = /obj/item/reagent_containers/hypospray/medipen/advanced/blood_loss
+	desc = "For extreme blood loss."
+	cost_per_order = 180
+
+/datum/orderable_item/survival/painkillers //monkestation edit
+	item_path = /obj/item/storage/pill_bottle/painkiller
+	desc = "For minor injuries."
+	cost_per_order = 240
+	
 /datum/orderable_item/survival/mining_stabilizer
 	item_path = /obj/item/mining_stabilizer
 	cost_per_order = 400
@@ -70,6 +80,11 @@
 	item_path = /obj/item/storage/medkit/fire
 	desc = "For emergency magmatic burn relief."
 	cost_per_order = 600
+
+/datum/orderable_item/survival/medkit_surgery //monke edit
+	item_path = /obj/item/storage/medkit/combat_surgeon/stocked
+	desc = "A surgical medkit for basic field surgery."
+	cost_per_order = 3000
 
 /datum/orderable_item/survival/rescue_hook
 	item_path = /obj/item/fishing_hook/rescue

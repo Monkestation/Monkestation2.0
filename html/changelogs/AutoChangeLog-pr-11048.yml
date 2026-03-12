@@ -1,0 +1,5 @@
+author: "Fluffles, SirNightKnight"
+delete-after: True
+changes:
+  - bugfix: "emoji show up in the messenger UI"
+  - bugfix: "emoji show up in the message server monitor UI"

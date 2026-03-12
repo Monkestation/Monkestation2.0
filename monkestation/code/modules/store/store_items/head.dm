@@ -134,7 +134,7 @@ GLOBAL_LIST_INIT(store_head, generate_store_items(/datum/store_item/head))
 
 /datum/store_item/head/red_hardhat
 	name = "Red Hardhat"
-	item_path = /obj/item/clothing/head/utility/hardhat/fire
+	item_path = /obj/item/clothing/head/utility/hardhat/red
 
 /datum/store_item/head/white_hardhat
 	name = "White Hardhat"
@@ -205,7 +205,12 @@ GLOBAL_LIST_INIT(store_head, generate_store_items(/datum/store_item/head))
 
 /datum/store_item/head/deforest_hat
 	name = "Deforest Cap"
-	item_path = /obj/item/clothing/head/soft/paramedic/deforest/hat
+	item_path = /obj/item/clothing/head/soft/paramedic/deforest
+	item_cost = 1500
+
+/datum/store_item/head/deforest_beret
+	name = "Deforest Beret"
+	item_path = /obj/item/clothing/head/beret/medical/deforest
 	item_cost = 1500
 
 /datum/store_item/head/warning_cone

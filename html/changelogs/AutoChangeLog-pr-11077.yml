@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - bugfix: "Ignoring someone from OOC/Dchat will now also ignore them in LOOC."

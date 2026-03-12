@@ -869,7 +869,7 @@
 		// Monkestation edit end
 		/obj/item/rsf,
 		/obj/item/instrument/guitar,
-		/obj/item/instrument/piano_synth/robot,
+		/obj/item/instrument/piano_synth,
 		/obj/item/reagent_containers/dropper,
 		/obj/item/lighter,
 		/obj/item/storage/bag/tray,
@@ -1076,7 +1076,7 @@
 		/obj/item/extinguisher/mini,
 		/obj/item/hand_labeler/borg,
 		/obj/item/rsf/deluxe/cyborg,
-		/obj/item/instrument/piano_synth/robot,
+		/obj/item/instrument/piano_synth,
 		/obj/item/lighter,
 		/obj/item/storage/bag/tray,
 		/obj/item/reagent_containers/borghypo/borgshaker/centcom,

@@ -1,12 +1,18 @@
 /datum/action/cooldown/borer/force_speak
 	name = "Force Host Speak"
-	cooldown_time = 30 SECONDS
+	cooldown_time = 25 SECONDS
+	var/willing_cooldown_time = 5 SECONDS
 	button_icon_state = "speak"
 	requires_host = TRUE
 	sugar_restricted = TRUE
 	ability_explanation = "\
 	Forces your host to speak any words you desire.\
 	"
+	var/static/list/blacklist = list(
+		"*surrender",
+		"*collapse",
+		"*faint",
+	)
 
 /datum/action/cooldown/borer/force_speak/Trigger(trigger_flags, atom/target)
 	. = ..()
@@ -18,6 +24,9 @@
 		owner.balloon_alert(owner, "no message given")
 		return
 	var/mob/living/carbon/human/cortical_host = cortical_owner.human_host
+	if(borer_message in blacklist)
+		StartCooldown()
+		return
 	to_chat(cortical_host, span_boldwarning("Your voice moves without your permission!"))
 	cortical_host.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2 * cortical_owner.host_harm_multiplier, maximum = BRAIN_DAMAGE_SEVERE)
 	cortical_host.say(message = borer_message, forced = "borer ([key_name(cortical_owner)])")
@@ -26,6 +35,6 @@
 	cortical_owner.log_message(logging_text, LOG_GAME)
 	cortical_owner.human_host.log_message(logging_text, LOG_GAME)
 	if(cortical_host.is_willing_host(cortical_host))
-		StartCooldown(5 SECONDS)
+		StartCooldown(willing_cooldown_time)
 		return
 	StartCooldown()
