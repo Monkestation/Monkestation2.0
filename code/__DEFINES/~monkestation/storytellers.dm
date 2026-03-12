@@ -94,6 +94,8 @@
 
 ///the duration into the round for which roundstart events are still valid to run
 #define ROUNDSTART_VALID_TIMEFRAME 3 MINUTES
+///when do the first midround rolesets start spawning
+#define BASE_MIDROUND_SPAWN_TIME 20 MINUTES
 
 //used for sorting uncategorized events
 #define WIZARD_EVENT_UNCATEGORIZED "wizard_event"

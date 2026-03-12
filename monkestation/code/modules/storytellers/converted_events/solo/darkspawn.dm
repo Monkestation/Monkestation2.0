@@ -40,7 +40,6 @@
 	maximum_antags = 4
 	min_players = 35
 	roundstart = TRUE
-	//title_icon = "darkspawn"
 	earliest_start = 0 SECONDS
 	denominator = 25 //slightly more people for additional darkspawns
 	weight = 4

@@ -33,6 +33,13 @@
 	id = EVENT_TRACK_ROLESET
 	threshold = ROLESET_POINT_THRESHOLD
 
+/datum/storyteller_track/event/roleset/on_trigger(datum/storyteller/triggered_by)
+	if(world.time > ROUNDSTART_VALID_TIMEFRAME && world.time < BASE_MIDROUND_SPAWN_TIME) //if we are past roundstart but before midround spawn time then just clear our points
+		points = 0
+		message_admins("Roleset track triggered during dead time, clearing points.")
+		return
+	triggered_by.find_and_buy_event_from_track(id)
+
 //should not be triggered
 /datum/storyteller_track/event/objectives
 	id = EVENT_TRACK_OBJECTIVES

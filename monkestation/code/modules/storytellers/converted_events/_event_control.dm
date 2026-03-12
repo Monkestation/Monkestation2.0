@@ -71,6 +71,7 @@
 	track = EVENT_TRACK_ROLESET
 	dont_spawn_near_roundend = TRUE
 	repeated_mode_adjust = TRUE
+	earliest_start = BASE_MIDROUND_SPAWN_TIME //roundstarts need to set this to 0 anyway
 	///list of required roles, needed for this to form
 	var/list/required_roles
 	/// Protected roles from the antag roll. People will not get those roles if a config is enabled
