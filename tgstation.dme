@@ -7165,7 +7165,6 @@
 #include "monkestation\code\modules\assault_ops\code\cyborg.dm"
 #include "monkestation\code\modules\assault_ops\code\goldeneye.dm"
 #include "monkestation\code\modules\assault_ops\code\interrogator.dm"
-#include "monkestation\code\modules\assault_ops\code\midround_event.dm"
 #include "monkestation\code\modules\assault_ops\code\outfits.dm"
 #include "monkestation\code\modules\assault_ops\code\pouch.dm"
 #include "monkestation\code\modules\assault_ops\code\roundstart_event.dm"
