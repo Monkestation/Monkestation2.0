@@ -34,7 +34,8 @@
 	threshold = ROLESET_POINT_THRESHOLD
 
 /datum/storyteller_track/event/roleset/on_trigger(datum/storyteller/triggered_by)
-	if(world.time > ROUNDSTART_VALID_TIMEFRAME && world.time < BASE_MIDROUND_SPAWN_TIME) //if we are past roundstart but before midround spawn time then just clear our points
+	var/round_time = world.time - SSticker.round_start_time
+	if(round_time > ROUNDSTART_VALID_TIMEFRAME && round_time < BASE_MIDROUND_SPAWN_TIME) //if we are past roundstart but before midround spawn time then just clear our points
 		points = 0
 		message_admins("Roleset track triggered during dead time, clearing points.")
 		return
