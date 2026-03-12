@@ -175,3 +175,10 @@
       donator only.
   SirNightKnight:
   - bugfix: fixed firefighter helmets being available in the loadout store.
+2026-03-12:
+  Mantle:
+  - bugfix: Monkeys can no longer break out of xenobio pens
+  notghosti:
+  - rscadd: Silicons can access and toggle Boulder retrieval matrix
+  unit0016:
+  - bugfix: Classic Intents can no longer be influenced by the paranormal.
