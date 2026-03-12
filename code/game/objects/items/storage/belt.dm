@@ -78,6 +78,7 @@
 		/obj/item/melee/sickly_blade/knock, //monkestation edit(maybe)
 		/obj/item/clockwork/replica_fabricator, //monkestation edit
 		/obj/item/clockwork/clockwork_slab, //monkestation edit
+		/obj/item/holotool, //monkestation edit
 	))
 
 /obj/item/storage/belt/utility/chief
@@ -300,6 +301,12 @@
 	to_preload += /obj/item/reagent_containers/cup/bottle/formaldehyde
 	return to_preload
 
+/obj/item/storage/belt/medical/paramedic/deforest
+	name = "Deforest Medical Belt"
+	desc = "A finely made Deforest Medical brand medical belt built to carry anything the local paramedic could want."
+	icon_state = "hivisbelt"
+	worn_icon_state = "hivisbelt"
+
 /obj/item/storage/belt/medical/secmed
 	name = "security medical belt"
 	icon_state = "secmed"
@@ -489,6 +496,13 @@
 		/obj/item/ammo_casing/minerjdj,
 		/obj/item/ammo_box/advanced/s12gauge/hunter, //monkestation edit
 		/obj/item/ammo_casing/shotgun/hunter, //monkestation edit
+		/obj/item/survivalcapsule,
+		/obj/item/survivalcapsule/luxury,
+		/obj/item/survivalcapsule/luxuryelite,
+		/obj/item/survivalcapsule/bathroom,
+		/obj/item/chasm_filler,
+		/obj/item/skeleton_key,
+		/obj/item/grenade/c4/explosivecharge, //monkestation edit
 	))
 
 
@@ -771,12 +785,16 @@
 
 /obj/item/storage/belt/bandolier/Initialize(mapload)
 	. = ..()
-	atom_storage.max_slots = 18
-	atom_storage.max_total_storage = 18
+	atom_storage.max_slots = 28
+	atom_storage.max_total_storage = 28
 	atom_storage.numerical_stacking = TRUE
+	atom_storage.allow_quick_gather = TRUE
+	atom_storage.allow_quick_empty = TRUE
+
 	atom_storage.set_holdable(list(
 		/obj/item/ammo_casing/a762,
 		/obj/item/ammo_casing/shotgun,
+		/obj/item/ammo_casing/a357,
 	))
 
 /obj/item/storage/belt/fannypack

@@ -12,6 +12,8 @@
 /datum/emote
 	/// What calls the emote.
 	var/key = ""
+	///Lazylist of alt keys that will work but not be told to players.
+	var/list/alt_keys
 	/// This will also call the emote.
 	var/key_third_person = ""
 	/// Needed for more user-friendly emote names, so emotes with keys like "aflap" will show as "flap angry". Defaulted to key.

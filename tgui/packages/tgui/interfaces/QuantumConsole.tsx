@@ -1,4 +1,4 @@
-import { Window } from '../layouts';
+import type { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
 import {
   Button,
@@ -11,7 +11,7 @@ import {
   Table,
   Tooltip,
 } from '../components';
-import { BooleanLike } from 'common/react';
+import { Window } from '../layouts';
 import { LoadingScreen } from './common/LoadingToolbox';
 
 type Data =

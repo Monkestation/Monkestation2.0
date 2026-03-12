@@ -1,8 +1,8 @@
 import { marked } from 'marked';
+import { useEffect } from 'react';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { sanitizeText } from '../sanitize';
-import { useEffect } from 'react';
 
 type MarkdownViewerData = {
   title: string;

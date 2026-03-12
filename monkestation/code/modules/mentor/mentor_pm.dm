@@ -128,7 +128,7 @@
 		return
 	var/datum/discord_embed/embed = new()
 	embed.title = "Mentor Reply"
-	embed.description = @"[Join Server!](http://play.monkestation.com:7420)"
+	embed.description = CONFIG_GET(string/roundend_webhook_description)
 	embed.fields = list(
 		"MENTOR ID" = id,
 		"From:" = ckey,

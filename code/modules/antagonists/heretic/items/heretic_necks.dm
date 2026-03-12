@@ -73,6 +73,9 @@
 		return
 	if(!hit.mob_mood)
 		return
+	if (hit.has_status_effect(/datum/status_effect/moon_converted))
+		user.balloon_alert(user, "their mind is already sees the moth's light!")
+		return
 	if(hit.mob_mood.sanity_level < SANITY_LEVEL_UNSTABLE)
 		user.balloon_alert(user, "their mind is too strong!")
 		hit.add_mood_event("Moon Amulette Insanity", /datum/mood_event/amulette_insanity)

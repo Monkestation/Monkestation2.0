@@ -38,5 +38,5 @@
 	default_priority = 90
 
 	mutual_understanding = list(
-		/datum/language/draconic = 45,
+		/datum/language/draconic = 80,
 	)

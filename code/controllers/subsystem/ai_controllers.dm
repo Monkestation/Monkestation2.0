@@ -15,6 +15,7 @@ SUBSYSTEM_DEF(ai_controllers)
 		AI_STATUS_OFF = list(),
 		AI_STATUS_IDLE = list(),
 	)
+	var/list/currentrun = list()
 	///Assoc List of all AI controllers and the Z level they are on, which we check when someone enters/leaves a Z level to turn them on/off.
 	var/list/ai_controllers_by_zlevel = list()
 	/// The average tick cost of all active AI, calculated on fire.
@@ -35,11 +36,16 @@ SUBSYSTEM_DEF(ai_controllers)
 
 /datum/controller/subsystem/ai_controllers/fire(resumed)
 	if(!resumed)
+		var/list/controllers = ai_controllers_by_status[AI_STATUS_ON]
+		currentrun = controllers.Copy()
 		summing_cost = 0
 
-	var/timer = TICK_USAGE_REAL
 	var/seconds_per_tick = wait * 0.1
-	for(var/datum/ai_controller/ai_controller as anything in ai_controllers_by_status[AI_STATUS_ON])
+	var/list/current_run = src.currentrun
+	var/timer = TICK_USAGE_REAL
+	while(length(current_run))
+		var/datum/ai_controller/ai_controller = current_run[length(current_run)]
+		current_run.len--
 		if(!COOLDOWN_FINISHED(ai_controller, failed_planning_cooldown))
 			if(MC_TICK_CHECK)
 				break

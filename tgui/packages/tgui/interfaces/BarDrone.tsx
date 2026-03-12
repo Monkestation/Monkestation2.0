@@ -1,4 +1,4 @@
-import { Section, Box, LabeledList } from '../components';
+import { Box, LabeledList, Section } from '../components';
 import { Window } from '../layouts';
 
 export const BarDrone = () => {

@@ -181,9 +181,11 @@
 		qdel(antagonist)
 		generated_icons[antagonist_type] = preview_icon
 		antag_icons[spritesheet_key] = preview_icon
+		CHECK_TICK
 
 	for (var/spritesheet_key in antag_icons)
 		Insert(spritesheet_key, antag_icons[spritesheet_key])
+		CHECK_TICK
 
 
 /// Serializes an antag name to be used for preferences UI

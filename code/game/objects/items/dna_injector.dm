@@ -46,7 +46,7 @@
 	for(var/removed_mutation in remove_mutations)
 		target.dna.remove_mutation(removed_mutation, list(MUTATION_SOURCE_ACTIVATED, MUTATION_SOURCE_MUTATOR))
 	for(var/added_mutation in add_mutations)
-		if(added_mutation == /datum/mutation/race)
+		if(added_mutation == /datum/mutation/race || added_mutation == /datum/mutation/race/simian)
 			message_admins("[ADMIN_LOOKUPFLW(user)] injected [key_name_admin(target)] with the [name] [span_danger("(MONKEY)")]")
 		if(target.dna.mutation_in_sequence(added_mutation))
 			target.dna.activate_mutation(added_mutation)
@@ -116,6 +116,8 @@
 			continue //Skip permanent mutations we already have.
 		if(mutation == /datum/mutation/race && !ismonkey(target))
 			message_admins("[ADMIN_LOOKUPFLW(user)] injected [key_name_admin(target)] with the [name] [span_danger("(MONKEY)")]")
+		if(mutation == /datum/mutation/race/simian && !is_simian(target))
+			message_admins("[ADMIN_LOOKUPFLW(user)] injected [key_name_admin(target)] with the [name] [span_danger("(SIMIAN)")]")
 		target.dna.add_mutation(mutation, MUTATION_SOURCE_TIMED_INJECTOR)
 		addtimer(CALLBACK(target.dna, TYPE_PROC_REF(/datum/dna, remove_mutation), mutation, MUTATION_SOURCE_TIMED_INJECTOR), duration)
 	if(fields)
@@ -154,6 +156,11 @@
 	name = "\improper DNA injector (Human > Monkey)"
 	desc = "Will make you a flea bag."
 	add_mutations = list(/datum/mutation/race)
+
+/obj/item/dnainjector/timed/h2s
+	name = "\improper DNA injector (Human > Simian)"
+	desc = "Will make you a simian."
+	add_mutations = list(/datum/mutation/race/simian)
 
 /obj/item/dnainjector/activator
 	name = "\improper DNA activator"
@@ -357,6 +364,11 @@
 	name = "\improper DNA injector (Monkey > Human)"
 	desc = "Will make you...less hairy."
 	remove_mutations = list(/datum/mutation/race)
+
+/obj/item/dnainjector/s2h
+	name = "\improper DNA injector (Simian > Human)"
+	desc = "Will make you...less hairy."
+	remove_mutations = list(/datum/mutation/race/simian)
 
 /obj/item/dnainjector/illiterate
 	name = "\improper DNA injector (Illiterate)"

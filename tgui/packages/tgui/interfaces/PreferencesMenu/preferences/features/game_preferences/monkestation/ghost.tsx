@@ -1,4 +1,4 @@
-import { CheckboxInput, FeatureToggle } from '../../base';
+import { CheckboxInput, type FeatureToggle } from '../../base';
 
 export const soulcatcher_join_action: FeatureToggle = {
   name: 'Join soulcatcher action',

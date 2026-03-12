@@ -1049,8 +1049,12 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		return
 
 	for(var/mob/user in can_see_contents())
-		if (!user.CanReach(parent))
+		if (!can_be_reached_by(user))
 			hide_contents(user)
+
+/// Relay for parent.IsReachableBy
+/datum/storage/proc/can_be_reached_by(mob/user)
+	return parent.IsReachableBy(user)
 
 /// Close the storage UI for everyone viewing us.
 /datum/storage/proc/close_all()
@@ -1096,10 +1100,9 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(toshow.active_storage != src && (toshow.stat == CONSCIOUS))
 		for(var/obj/item/thing in real_location)
 			if(thing.on_found(toshow))
-				toshow.active_storage.hide_contents(toshow)
+				toshow.active_storage?.hide_contents(toshow)
 
-	if(toshow.active_storage)
-		toshow.active_storage.hide_contents(toshow)
+	toshow.active_storage?.hide_contents(toshow)
 
 	toshow.active_storage = src
 

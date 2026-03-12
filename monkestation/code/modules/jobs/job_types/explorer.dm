@@ -34,6 +34,9 @@
 		"Explorer",
 		"Expeditionist",
 		"Scavenger",
+		"Astronaut",
+		"Asteroid Miner",
+		"Space Miner",
 	)
 	rpg_title = "Adventurer"
 	job_flags = STATION_JOB_FLAGS | JOB_CANNOT_BE_TARGET | JOB_NO_PLANETARY
@@ -47,7 +50,7 @@
 	backpack_contents = list(
 		/obj/item/flashlight/seclite = 1,
 		/obj/item/knife/combat/survival = 1,
-		/obj/item/mining_voucher = 1,
+		/obj/item/explorer_voucher = 1,
 		/obj/item/gun/energy/recharge/kinetic_accelerator = 1,
 		/obj/item/t_scanner/adv_mining_scanner/lesser = 1,
 		/obj/item/cargo_teleporter = 1,

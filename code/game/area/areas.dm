@@ -59,9 +59,6 @@
 	/// For space, the asteroid, lavaland, etc. Used with blueprints or with weather to determine if we are adding a new area (vs editing a station room)
 	var/outdoors = FALSE
 
-	/// fake outdoors for sunlight  and weather purposes
-	var/false_outdoors = FALSE //monkestation addition
-
 	/// Size of the area in open turfs, only calculated for indoors areas.
 	var/areasize = 0
 
@@ -96,7 +93,7 @@
 	///The background droning loop that plays 24/7
 	var/ambient_buzz = 'sound/ambience/shipambience.ogg'
 	///The volume of the ambient buzz
-	var/ambient_buzz_vol = 35
+	var/ambient_buzz_vol = 65
 	///Used to decide what the minimum time between ambience is
 	var/min_ambience_cooldown = 30 SECONDS
 	///Used to decide what the maximum time between ambience is
@@ -126,6 +123,9 @@
 
 	/// List of all air scrubbers in the area
 	var/list/obj/machinery/atmospherics/components/unary/vent_scrubber/air_scrubbers = list()
+
+	/// Extra A* weight applied to all turfs in this area.
+	var/astar_weight = 0
 
 /**
  * A list of teleport locations

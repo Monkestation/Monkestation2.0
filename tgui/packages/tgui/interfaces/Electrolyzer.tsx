@@ -1,4 +1,4 @@
-import { BooleanLike } from 'common/react';
+import type { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
 import { Button, LabeledList, ProgressBar, Section } from '../components';
 import { Window } from '../layouts';
@@ -52,7 +52,7 @@ export const Electrolyzer = (props) => {
                     bad: [-Infinity, 0.3],
                   }}
                 >
-                  {powerLevel + '%'}
+                  {`${powerLevel}%`}
                 </ProgressBar>
               )) ||
                 'None'}

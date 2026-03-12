@@ -1,3 +1,5 @@
+import { type BooleanLike, classes } from 'common/react';
+import { useBackend, useLocalState } from '../backend';
 import {
   Box,
   Button,
@@ -11,9 +13,6 @@ import {
   Table,
   Tabs,
 } from '../components';
-import { BooleanLike } from 'common/react';
-import { classes } from 'common/react';
-import { useBackend, useLocalState } from '../backend';
 import { Window } from '../layouts';
 
 type Data = {
@@ -202,7 +201,7 @@ const Item = (props: Props) => {
 
   const minAmount = is_reagent ? Math.min(Math.max(space, 1), 10) : 1;
 
-  const [amount, setAmount] = useLocalState('amount-' + id, minAmount);
+  const [amount, setAmount] = useLocalState(`amount-${id}`, minAmount);
 
   const disabled =
     processing ||

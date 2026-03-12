@@ -2,7 +2,7 @@ import { Component } from 'react';
 import { useBackend } from '../../backend';
 
 import { Box, Button, Modal, Stack } from '../../components';
-import { PreferencesMenuData } from './data';
+import type { PreferencesMenuData } from './data';
 
 interface DeleteCharacterPopupProps {
   close: () => void;

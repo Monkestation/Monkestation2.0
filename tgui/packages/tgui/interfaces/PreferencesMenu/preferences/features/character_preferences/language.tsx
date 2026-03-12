@@ -1,9 +1,9 @@
 import {
   CheckboxInput,
-  FeatureChoiced,
-  FeatureToggle,
+  type FeatureChoiced,
   FeatureDropdownInput,
   FeatureIconnedDropdownInput,
+  type FeatureToggle,
 } from '../base';
 
 export const language: FeatureChoiced = {

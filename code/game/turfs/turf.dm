@@ -99,6 +99,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	/// Never directly access this, use get_explosive_block() instead
 	var/inherent_explosive_resistance = -1
 
+	/// The weight of the turf for A* pathfinding.
+	var/astar_weight = 50
+
 
 /turf/vv_edit_var(var_name, new_value)
 	var/static/list/banned_edits = list(NAMEOF_STATIC(src, x), NAMEOF_STATIC(src, y), NAMEOF_STATIC(src, z))
@@ -248,17 +251,12 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /// Allows for reactions to an area change without inherently requiring change_area() be called (I hate maploading)
 /turf/proc/on_change_area(area/old_area, area/new_area)
 	transfer_area_lighting(old_area, new_area)
-	GLOB.SUNLIGHT_QUEUE_WORK += src
-	if(outdoor_effect)
-		GLOB.SUNLIGHT_QUEUE_UPDATE += outdoor_effect
 
 /turf/proc/multiz_turf_del(turf/T, dir)
 	SEND_SIGNAL(src, COMSIG_TURF_MULTIZ_DEL, T, dir)
-	reconsider_sunlight() //Monkestation addition
 
 /turf/proc/multiz_turf_new(turf/T, dir)
 	SEND_SIGNAL(src, COMSIG_TURF_MULTIZ_NEW, T, dir)
-	reconsider_sunlight() //Monkestation addition
 
 /**
  * Check whether the specified turf is blocked by something dense inside it with respect to a specific atom.
@@ -793,3 +791,19 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /// Returns whether it is safe for an atom to move across this turf
 /turf/proc/can_cross_safely(atom/movable/crossing)
 	return TRUE
+
+/// Returns an additional distance factor based on slowdown and other factors.
+/turf/proc/get_heuristic_slowdown(mob/traverser, travel_dir)
+	. = astar_weight
+	var/area/current_area = loc
+	if(current_area?.astar_weight)
+		. += current_area.astar_weight
+
+// Like Distance_cardinal, but includes additional weighting to make A* prefer turfs that are easier to pass through.
+/turf/proc/heuristic_cardinal(turf/T, mob/traverser)
+	var/travel_dir = get_dir(src, T)
+	. = Distance_cardinal(T, traverser) + get_heuristic_slowdown(traverser, travel_dir) + T.get_heuristic_slowdown(traverser, travel_dir)
+
+/// A 3d-aware version of heuristic_cardinal that just... adds the Z-axis distance with a multiplier.
+/turf/proc/heuristic_cardinal_3d(turf/T, mob/traverser)
+	return heuristic_cardinal(T, traverser) + abs(z - T.z) * 5 // Weight z-level differences higher so that we try to change Z-level sooner

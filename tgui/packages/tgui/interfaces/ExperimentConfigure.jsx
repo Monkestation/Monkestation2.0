@@ -1,30 +1,30 @@
-import { Window } from '../layouts';
+import { sortBy } from 'common/collections';
 import { useBackend } from '../backend';
 import {
-  Section,
   Box,
   Button,
   Flex,
   Icon,
   LabeledList,
+  Section,
+  Stack,
   Table,
   Tooltip,
-  Stack,
 } from '../components';
-import { sortBy } from 'common/collections';
+import { Window } from '../layouts';
 
 const ExperimentStages = (props) => {
   return (
     <Table ml={2} className="ExperimentStage__Table">
       {props.children.map((stage, idx) => (
-        <ExperimentStageRow key={idx} {...stage} />
+        <ExperimentStageRow key={idx} stage={stage} />
       ))}
     </Table>
   );
 };
 
 const ExperimentStageRow = (props) => {
-  const [type, description, value, altValue] = props;
+  const [type, description, value, altValue] = props.stage;
 
   // Determine completion based on type of stage
   let completion = false;
@@ -107,12 +107,12 @@ export const TechwebServer = (props) => {
 export const ExperimentConfigure = (props) => {
   const { act, data } = useBackend();
   const { always_active, has_start_callback } = data;
-  let techwebs = data.techwebs ?? [];
+  const techwebs = data.techwebs ?? [];
 
   const experiments = sortBy((exp) => exp.name)(data.experiments ?? []);
 
   // Group servers together by web
-  let webs = new Map();
+  const webs = new Map();
   techwebs.forEach((x) => {
     if (x.web_id !== null) {
       if (!webs.has(x.web_id)) {

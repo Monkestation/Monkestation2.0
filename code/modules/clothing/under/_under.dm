@@ -228,9 +228,9 @@
 /// Removes (pops) the topmost accessory from the accessories list and puts it in the user's hands if supplied
 /obj/item/clothing/under/proc/pop_accessory(mob/living/user, attach_message = TRUE)
 	var/obj/item/clothing/accessory/popped_accessory = attached_accessories[1]
-	remove_accessory(popped_accessory)
+	remove_accessory(popped_accessory, popped = TRUE)
 
-	if(!user)
+	if(!user || QDELETED(popped_accessory))
 		return
 
 	user.put_in_hands(popped_accessory)
@@ -238,13 +238,13 @@
 		popped_accessory.balloon_alert(user, "accessory removed")
 
 /// Removes the passed accesory from our accessories list
-/obj/item/clothing/under/proc/remove_accessory(obj/item/clothing/accessory/removed)
+/obj/item/clothing/under/proc/remove_accessory(obj/item/clothing/accessory/removed, popped = FALSE)
 	if(removed == attached_accessories[1])
 		accessory_overlay = null
 
 	// Remove it from the list before detaching
 	LAZYREMOVE(attached_accessories, removed)
-	removed.detach(src)
+	removed.detach(src , popped)
 
 	if(isnull(accessory_overlay) && LAZYLEN(attached_accessories))
 		create_accessory_overlay()
@@ -278,7 +278,8 @@
 /obj/item/clothing/under/proc/dump_attachments(atom/drop_to = drop_location())
 	for(var/obj/item/clothing/accessory/worn_accessory as anything in attached_accessories)
 		remove_accessory(worn_accessory)
-		worn_accessory.forceMove(drop_to)
+		if(!QDELETED(worn_accessory))
+			worn_accessory.forceMove(drop_to)
 
 /obj/item/clothing/under/atom_destruction(damage_flag)
 	dump_attachments()

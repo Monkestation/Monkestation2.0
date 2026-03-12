@@ -54,9 +54,6 @@
 	/// List of station traits that cannot be rolled on this map.
 	var/list/banned_station_traits
 
-	//List of particle_weather types for this map
-	var/list/particle_weathers = list() //Monkestation addition
-
 /**
  * Proc that simply loads the default map config, which should always be functional.
  */
@@ -172,14 +169,6 @@
 	else if (!isnull(traits))
 		log_world("map_config traits is not a list!")
 		return
-
-	//monkestation edit start
-	if ("particle_weathers" in json)
-		if(!islist(json["particle_weathers"]))
-			log_world("map_config \"particle_weathers\" field is missing or invalid!")
-			return
-		particle_weathers = json["particle_weathers"]
-	//monkestation edit end
 
 	var/temp = json["space_ruin_levels"]
 	if (isnum(temp))

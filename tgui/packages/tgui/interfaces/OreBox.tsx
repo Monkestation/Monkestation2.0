@@ -1,6 +1,6 @@
 import { toTitleCase } from 'common/string';
-import { Box, Button, Section, Table } from '../components';
 import { useBackend } from '../backend';
+import { Box, Button, Section, Table } from '../components';
 import { Window } from '../layouts';
 
 type Data = {

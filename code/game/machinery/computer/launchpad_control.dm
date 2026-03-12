@@ -60,15 +60,17 @@
 
 /obj/machinery/computer/launchpad/multitool_act(mob/living/user, obj/item/multitool/multi)
 	. = NONE
-	if(!istype(multi.buffer, /obj/machinery/launchpad))
+
+	var/datum/buffer = multitool_get_buffer(multi)
+	if(!istype(buffer, /obj/machinery/launchpad))
 		return ITEM_INTERACT_BLOCKING
 
 	if(LAZYLEN(launchpads) > maximum_pads)
 		to_chat(user, span_warning("[src] cannot handle any more connections!"))
 		return ITEM_INTERACT_BLOCKING
 
-	launchpads |= multi.buffer
-	multi.set_buffer(null)
+	launchpads |= buffer
+	multitool_set_buffer(multi, null)
 	to_chat(user, span_notice("You upload the data from the [multi.name]'s buffer."))
 	return ITEM_INTERACT_SUCCESS
 

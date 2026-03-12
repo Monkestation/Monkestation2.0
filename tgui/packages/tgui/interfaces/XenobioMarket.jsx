@@ -1,8 +1,8 @@
-import { useBackend, useLocalState } from '../backend';
-import { Box, Section, Stack, Table, Tabs, Button } from '../components';
-import { Window } from '../layouts';
-import { classes } from 'common/react';
 import { toFixed } from 'common/math';
+import { classes } from 'common/react';
+import { useBackend, useLocalState } from '../backend';
+import { Box, Button, Section, Stack, Table, Tabs } from '../components';
+import { Window } from '../layouts';
 
 export const XenobioMarket = (_) => {
   const [tabIndex, setTabIndex] = useLocalState('tabIndex', 1);
@@ -166,7 +166,7 @@ const StoreViewer = (_) => {
                 color="green"
                 onClick={() => act('buy', { path: item.item_path })}
               >
-                {item.cost + ' Xenobiology Points'}
+                {`${item.cost} Xenobiology Points`}
               </Button>
             </Stack.Item>
           </Stack>

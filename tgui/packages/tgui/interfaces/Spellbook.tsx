@@ -1,5 +1,6 @@
-import { BooleanLike } from 'common/react';
+import type { BooleanLike } from 'common/react';
 import { multiline } from 'common/string';
+import type { ReactNode } from 'react';
 import { useBackend, useLocalState } from '../backend';
 import {
   Box,
@@ -14,7 +15,6 @@ import {
   Stack,
 } from '../components';
 import { Window } from '../layouts';
-import { ReactNode } from 'react';
 
 enum SpellCategory {
   Offensive = 'Offensive',
@@ -458,10 +458,14 @@ const SearchSpells = (props) => {
         // Unsure about including description. Wizard spell descriptions
         // are painfully original and use the same verbiage often,
         // which may both be a benefit and a curse
-        entry.desc.toLowerCase().includes(searchStatement) ||
+        entry.desc
+          .toLowerCase()
+          .includes(searchStatement) ||
         // Also opting to include category
         // so you can search "rituals" to see them all at once
-        entry.cat.toLowerCase().includes(searchStatement),
+        entry.cat
+          .toLowerCase()
+          .includes(searchStatement),
     );
   };
 
@@ -607,7 +611,7 @@ const CategoryDisplay = (props: { ActiveCat: TabType }) => {
           </Stack.Item>
         )}
         <Stack.Item>
-          {(ActiveCat.component && ActiveCat.component()) || (
+          {ActiveCat.component?.() || (
             <SpellTabDisplay TabSpells={TabSpells} PointOffset={38} />
           )}
         </Stack.Item>
@@ -629,7 +633,7 @@ export const Spellbook = (props) => {
 
   // Has a chance of selecting a random funny verb instead of "Searching"
   const SelectSearchVerb = () => {
-    let found = Math.random();
+    const found = Math.random();
     if (found <= 0.03) {
       return 'Seeking';
     }
@@ -753,7 +757,7 @@ export const Spellbook = (props) => {
               <Stack>
                 <Stack.Item grow>
                   <ProgressBar value={points / 10}>
-                    {points + ' points left to spend.'}
+                    {`${points} points left to spend.`}
                   </ProgressBar>
                 </Stack.Item>
                 <Stack.Item>

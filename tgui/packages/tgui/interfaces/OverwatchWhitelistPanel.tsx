@@ -1,12 +1,12 @@
 import { useBackend, useLocalState } from '../backend';
 import {
-  Section,
-  Flex,
-  Stack,
-  Button,
   Box,
+  Button,
+  Flex,
   Input,
   NoticeBox,
+  Section,
+  Stack,
 } from '../components';
 import { Window } from '../layouts';
 
@@ -60,7 +60,7 @@ export const OverwatchWhitelistPanel = (props) => {
             </Flex.Item>
           </Flex>
         </Section>
-        <Section title={'Whitelist Entries: ' + (displayData?.length || 0)}>
+        <Section title={`Whitelist Entries: ${displayData?.length || 0}`}>
           {((displayData?.length || 0) !== 0 && (
             <Stack vertical>
               <Stack.Item>

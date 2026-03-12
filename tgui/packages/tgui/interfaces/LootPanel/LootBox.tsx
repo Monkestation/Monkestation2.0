@@ -1,10 +1,9 @@
-import { Button, Stack } from '../../components';
-import { BooleanLike } from 'common/react';
+import type { BooleanLike } from 'common/react';
 import { capitalizeFirst } from 'common/string';
-
 import { useBackend } from '../../backend';
+import { Button, Stack } from '../../components';
 import { IconDisplay } from './IconDisplay';
-import { SearchGroup, SearchItem } from './types';
+import type { SearchGroup, SearchItem } from './types';
 
 type Data = {
   is_blind: BooleanLike;
@@ -66,7 +65,7 @@ export const LootBox = (props: Props) => {
           {!is_blind && name}
         </Stack.Item>
         <Stack.Item lineHeight="34px" pr={1}>
-          {amount > 1 && 'x' + amount}
+          {amount > 1 && `x${amount}`}
         </Stack.Item>
       </Stack>
     </Button>

@@ -163,7 +163,7 @@
 		/obj/item/t_scanner,
 		/obj/item/gun/ballistic/rifle/boltaction/pipegun,
 		/obj/item/gun/ballistic/rifle/boltaction/pipegun/prime,
-		/obj/item/tank/internals/oxygen, //monkestation edit
+		/obj/item/tank/internals,
 		/obj/item/storage/bag/rebar_quiver,
 		/obj/item/gun/ballistic/rifle/rebarxbow,
 	)
