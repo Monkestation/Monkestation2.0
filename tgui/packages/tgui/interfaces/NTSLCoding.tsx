@@ -346,13 +346,11 @@ const Guide = (props) => {
       (var = languages.language_name) <br />1 (human) <br />2 (monkey) <br />3
       (robot) <br />4 (draconic) <br />5 (beachtounge) <br />6 (sylvan) <br />7
       (etherean) <br />8 (bonespeak) <br />9 (mothian) <br />
-      10 (cat) <br />
-      11 (ash) <br />
-      12 (torii) <br />
-      13 (uncommon) <br />
-      14 (goblin) <br />
-      15 (nekomimetic) <br />
-      16 (slime) <br />
+      10 (ash) <br />
+      11 (torii) <br />
+      12 (uncommon) <br />
+      13 (goblin) <br />
+      14 (slime) <br />
       <br />
       <br />
       Broadcasted signals will not run itself through Scripts.

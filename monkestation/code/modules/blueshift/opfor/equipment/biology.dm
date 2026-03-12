@@ -47,11 +47,6 @@
 	description = "Ook ook ook."
 	language = /datum/language/monkey
 
-/datum/opposing_force_equipment/language/nekomimetic
-	name = "Nekomimetic language"
-	description = "To the casual observer, this langauge is an incomprehensible mess of broken Japanese. To the felinids, it's somehow comprehensible."
-	language = /datum/language/nekomimetic
-
 /datum/opposing_force_equipment/language/mushroom
 	name = "Mushroom language"
 	description = "A language that consists of the sound of periodic gusts of spore-filled air being released."
