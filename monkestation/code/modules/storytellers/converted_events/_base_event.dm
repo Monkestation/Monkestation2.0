@@ -6,7 +6,7 @@
 	/// The antag flag passed from control
 	var/antag_flag
 	/// The antag datum passed from control
-	var/antag_datum
+	var/datum/antagonist/antag_datum
 	/// The antag count passed from control
 	var/antag_count
 	/// The restricted roles (jobs) passed from control

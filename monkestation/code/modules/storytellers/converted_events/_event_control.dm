@@ -89,7 +89,7 @@
 	/// The antag flag to be used
 	var/antag_flag
 	/// The antag datum to be applied
-	var/antag_datum
+	var/datum/antagonist/antag_datum
 	/// Prompt players for consent to turn them into antags before doing so. Dont allow this for roundstart.
 	var/prompted_picking = FALSE
 	/// A list of extra events to force whenever this one is chosen by the storyteller.
@@ -166,8 +166,16 @@
 
 /datum/round_event_control/antagonist/proc/get_antag_amount()
 	var/people = SSgamemode.get_correct_popcount()
-	var/amount = base_antags + FLOOR(people / denominator, 1)
-	return min(amount, maximum_antags)
+	var/amount = min(base_antags + FLOOR(people / denominator, 1), maximum_antags)
+	if(roundstart)
+		return amount
+	var/point_cost = antag_datum::antag_count_points
+	var/points_left = SSgamemode.get_antag_cap() - SSgamemode.get_antag_count()
+	for(var/i in 1 to amount)
+		points_left -= point_cost
+		if(points_left <= 0)
+			return i
+	return amount
 
 /datum/round_event_control/antagonist/proc/get_candidates()
 	var/round_started = SSticker.HasRoundStarted()
