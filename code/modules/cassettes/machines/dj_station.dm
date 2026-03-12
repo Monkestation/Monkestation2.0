@@ -42,7 +42,7 @@ GLOBAL_DATUM(dj_booth, /obj/machinery/dj_station)
 	var/can_play_bootlegs = FALSE
 
 	/// How long of a cooldown between playing two songs.
-	var/song_cooldown = 2 MINUTES
+	var/song_cooldown = 5 MINUTES
 
 	COOLDOWN_DECLARE(next_song_timer)
 	COOLDOWN_DECLARE(fake_loading_time)
