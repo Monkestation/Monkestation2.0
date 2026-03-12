@@ -169,9 +169,10 @@
 	var/amount = min(base_antags + FLOOR(people / denominator, 1), maximum_antags)
 	if(roundstart)
 		return amount
+
 	var/point_cost = antag_datum::antag_count_points
 	var/points_left = SSgamemode.get_antag_cap() - SSgamemode.get_antag_count()
-	for(var/i in 1 to amount)
+	for(var/i in 1 to amount) //due to being inclusive this means we will always spawn at least one
 		points_left -= point_cost
 		if(points_left <= 0)
 			return i
