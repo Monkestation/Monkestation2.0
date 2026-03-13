@@ -142,7 +142,7 @@
 	if(revive_ready)
 		return ..()
 
-	if(!can_enter_stasis(user))
+	if(!can_enter_stasis(user) || !IsAvailable())
 		return
 	//Confirmation for living changelings if they want to fake their death
 	if(user.stat != DEAD)
