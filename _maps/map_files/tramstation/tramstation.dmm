@@ -65141,6 +65141,7 @@
 	name = "Secure Medical Storage";
 	req_access = list("medical")
 	},
+/obj/item/storage/toolbox/electrical/medical,
 /obj/item/clothing/glasses/blindfold,
 /obj/item/clothing/glasses/blindfold,
 /obj/item/clothing/ears/earmuffs,
