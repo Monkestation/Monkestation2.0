@@ -214,8 +214,9 @@ GLOBAL_LIST_INIT(inspectable_diseases, list())
 	SHOULD_CALL_PARENT(TRUE)
 	if(isnull(affected_mob))
 		return
-	if(HAS_TRAIT(affected_mob, TRAIT_IMMUNODEFICIENCY) && (disease_flags & DISEASE_DORMANT))
-		disease_flags &= ~DISEASE_DORMANT
+	if(HAS_TRAIT(affected_mob, TRAIT_IMMUNODEFICIENCY))
+		if(disease_flags & DISEASE_DORMANT)
+			disease_flags &= ~DISEASE_DORMANT
 		for(var/datum/symptom/symptom as anything in symptoms)
 			symptom.power *= 2
 
