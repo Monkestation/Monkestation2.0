@@ -1,16 +1,14 @@
 /// A Syndicate-manufactured alternate rapid construction fabricator with its own recipe list.
 
 /obj/machinery/rnd/production/colony_lathe/syndicate
-	name = "Syndicate 3D Printer"
-	desc = "A sleek, unmarked fabrication unit of Syndicate manufacture. No serial numbers. No warranty. \
-		Capable of producing a wide array of illicit hardware on demand, whether you're outfitting a team \
-		or just need something that shouldn't exist."
+	name = "Omnilathe"
+	desc = "A sleek, unmarked fabrication unit of Cybersun industries. Capable of producing advanced munitions and hacked autolathe designs. It has drive slots for accepting techfab circuit boards to unlock additional design sets."
 	allowed_buildtypes = AUTOLATHE
 	ui_theme = "syndicate"
 	light_color = LIGHT_COLOR_BLOOD_MAGIC
 	light_power = 2
 	link_on_init = FALSE
-	repacked_type = /obj/item/storage/toolbox/emergency/syndicate_printer
+	repacked_type = /obj/item/storage/toolbox/emergency/omnilathe
 	/// Current UI mode: lathe or ammo workbench.
 	var/machine_mode = "lathe"
 	/// Inserted ammo container to fill while in ammo mode.
@@ -26,9 +24,9 @@
 	/// Can print advanced ammo types.
 	var/allowed_advanced = TRUE
 	/// Material cost multiplier per round in ammo mode.
-	var/creation_efficiency = 1.4
+	var/creation_efficiency = 1.0
 	/// Time per round in ammo mode.
-	var/time_per_round = 1.0 SECONDS
+	var/time_per_round = 0.4 SECONDS
 	/// Whether ammo fill loop is running.
 	var/ammo_busy = FALSE
 	/// Timer id for ammo fill loop.
@@ -39,11 +37,19 @@
 	var/ammo_error_type = ""
 	/// Designs imported from technology disks.
 	var/list/imported_designs = list()
+	/// Packed snapshot of local material amounts, keyed by material typepath.
+	var/list/packed_materials = list()
+	/// Which lathe recipe family is currently active in lathe mode.
+	var/lathe_recipe_set = "autolathe"
+	/// Additional recipe families unlocked by inserting matching machine boards.
+	var/list/unlocked_techfab_departments = list()
 
 /obj/machinery/rnd/production/colony_lathe/syndicate/Initialize(mapload)
 	. = ..()
 	RemoveElement(/datum/element/manufacturer_examine, COMPANY_FRONTIER)
 	AddElement(/datum/element/manufacturer_examine, COMPANY_CYBERSUN)
+	if(soundloop)
+		soundloop.volume = 50
 	// This variant is intended to run on local storage and accept broader item inputs.
 	if(materials?.mat_container)
 		materials.mat_container.allowed_item_typecache = null
@@ -60,19 +66,12 @@
 
 /obj/machinery/rnd/production/colony_lathe/syndicate/RefreshParts()
 	. = ..()
-	// On local-only setups this machine may have no matter bins installed, which would yield zero capacity.
-	if(materials && !materials.silo && materials.local_size <= 0)
-		materials.set_local_size(75 * SHEET_MATERIAL_AMOUNT)
-
-	var/time_efficiency = 1.8 SECONDS
-	for(var/datum/stock_part/micro_laser/new_laser in component_parts)
-		time_efficiency -= new_laser.tier * 2
-	time_per_round = clamp(time_efficiency, 1, 20)
-
-	var/efficiency = 1.4
-	for(var/datum/stock_part/manipulator/new_servo in component_parts)
-		efficiency -= new_servo.tier * 0.1
-	creation_efficiency = max(0, efficiency)
+	// Flatpacker original code is stupid and uses stock parts but doesnt have stock parts so I just hardcode ts
+	if(materials && !materials.silo)
+		materials.set_local_size(500 * SHEET_MATERIAL_AMOUNT)
+	efficiency_coeff = 1
+	creation_efficiency = 1.0
+	time_per_round = 0.4 SECONDS
 	update_ammotypes()
 
 
@@ -80,30 +79,258 @@
 	var/previous_design_count = cached_designs.len
 	cached_designs.Cut()
 
-	for(var/design_id in SSresearch.techweb_designs)
-		var/datum/design/design = SSresearch.techweb_designs[design_id]
-		if(!(design.build_type & AUTOLATHE))
-			continue
-		if(!(RND_CATEGORY_INITIAL in design.category) && !(RND_CATEGORY_HACKED in design.category))
-			continue
-		cached_designs |= design
+	if(lathe_recipe_set == "autolathe")
+		for(var/design_id in SSresearch.techweb_designs)
+			var/datum/design/design = SSresearch.techweb_designs[design_id]
+			if(!(design.build_type & AUTOLATHE))
+				continue
+			if(!(RND_CATEGORY_INITIAL in design.category) && !(RND_CATEGORY_HACKED in design.category))
+				continue
+			cached_designs |= design
 
-	for(var/design_id in imported_designs)
-		var/datum/design/design = SSresearch.techweb_design_by_id(design_id)
-		if(design && !(design in cached_designs))
+		for(var/design_id in imported_designs)
+			var/datum/design/design = SSresearch.techweb_design_by_id(design_id)
+			if(design && !(design in cached_designs))
+				cached_designs |= design
+	else if(findtext(lathe_recipe_set, "techfab_") == 1)
+		var/department_flag = get_techfab_department_flag(lathe_recipe_set)
+		if(!department_flag)
+			lathe_recipe_set = "autolathe"
+			return rebuild_cached_designs()
+		var/datum/techweb/research_source = SSresearch.science_tech
+		if(isnull(research_source))
+			return
+
+		for(var/design_id in research_source.researched_designs)
+			var/datum/design/design = SSresearch.techweb_design_by_id(design_id)
+			if(!istype(design))
+				continue
+			if(!(design.build_type & (PROTOLATHE | IMPRINTER)))
+				continue
+			if(!(design.departmental_flags & department_flag))
+				continue
+			cached_designs |= design
+	else
+		var/datum/techweb/research_source = SSresearch.science_tech
+		if(isnull(research_source))
+			return
+
+		var/buildtype_mask = NONE
+		var/department_flag = null
+		switch(lathe_recipe_set)
+			if("mechfab")
+				buildtype_mask = MECHFAB
+			if("imprinter")
+				buildtype_mask = IMPRINTER
+			if("imprinter_away")
+				buildtype_mask = AWAY_IMPRINTER
+			if("imprinter_department")
+				buildtype_mask = IMPRINTER
+			if("imprinter_department_science")
+				buildtype_mask = IMPRINTER
+				department_flag = DEPARTMENT_BITFLAG_SCIENCE
+			if("imprinter_department_engineering")
+				buildtype_mask = IMPRINTER
+				department_flag = DEPARTMENT_BITFLAG_ENGINEERING
+		if(!buildtype_mask)
+			lathe_recipe_set = "autolathe"
+			return rebuild_cached_designs()
+
+		for(var/design_id in research_source.researched_designs)
+			var/datum/design/design = SSresearch.techweb_design_by_id(design_id)
+			if(!istype(design))
+				continue
+			if(!(design.build_type & buildtype_mask))
+				continue
+			if(!isnull(department_flag) && !(design.departmental_flags & department_flag))
+				continue
 			cached_designs |= design
 
 	var/design_delta = cached_designs.len - previous_design_count
 	if(design_delta > 0)
 		say("Received [design_delta] new design[design_delta == 1 ? "" : "s"].")
-		playsound(src, 'sound/machines/twobeep_high.ogg', 50, TRUE)
+		playsound(src, 'sound/machines/twobeep_high.ogg', 25, TRUE)
 
 	update_static_data_for_all_viewers()
 
 /obj/machinery/rnd/production/colony_lathe/syndicate/update_designs()
 	rebuild_cached_designs()
 
+/obj/machinery/rnd/production/colony_lathe/syndicate/proc/build_packed_material_cache()
+	packed_materials = list()
+	if(!materials?.mat_container)
+		return
+
+	for(var/datum/material/material_ref as anything in materials.mat_container.materials)
+		var/amount = materials.mat_container.materials[material_ref]
+		if(amount > 0)
+			packed_materials[material_ref.type] = amount
+
+/obj/machinery/rnd/production/colony_lathe/syndicate/proc/prepare_for_packing()
+	build_packed_material_cache()
+	if(!materials?.mat_container)
+		return
+
+	for(var/datum/material/material_ref as anything in materials.mat_container.materials)
+		materials.mat_container.materials[material_ref] = 0
+
+/obj/machinery/rnd/production/colony_lathe/syndicate/proc/transfer_contents_to_packed_item(obj/item/new_pack)
+	if(!new_pack)
+		return
+
+	atom_storage?.remove_all(new_pack)
+	for(var/obj/item/stored_item in contents)
+		if(stored_item?.loc == src)
+			stored_item.forceMove(new_pack)
+
+/obj/machinery/rnd/production/colony_lathe/syndicate/proc/restore_packed_material_cache()
+	if(!packed_materials?.len || !materials?.mat_container)
+		return
+
+	for(var/material_type in packed_materials)
+		var/amount = packed_materials[material_type]
+		if(amount <= 0)
+			continue
+		var/datum/material/material_ref = GET_MATERIAL_REF(material_type)
+		if(!material_ref)
+			continue
+		materials.mat_container.insert_amount_mat(amount, material_ref)
+
+	packed_materials = list()
+
+/obj/machinery/rnd/production/colony_lathe/syndicate/proc/get_techfab_department_flag(recipe_set)
+	switch(recipe_set)
+		if("techfab_engineering")
+			return DEPARTMENT_BITFLAG_ENGINEERING
+		if("techfab_service")
+			return DEPARTMENT_BITFLAG_SERVICE
+		if("techfab_medical")
+			return DEPARTMENT_BITFLAG_MEDICAL
+		if("techfab_cargo")
+			return DEPARTMENT_BITFLAG_CARGO
+		if("techfab_science")
+			return DEPARTMENT_BITFLAG_SCIENCE
+		if("techfab_security")
+			return DEPARTMENT_BITFLAG_SECURITY
+	return null
+
+/obj/machinery/rnd/production/colony_lathe/syndicate/proc/get_recipe_set_name(recipe_set)
+	switch(recipe_set)
+		if("autolathe")
+			return "Autolathe"
+		if("techfab_engineering")
+			return "Techfab - Engineering"
+		if("techfab_service")
+			return "Techfab - Service"
+		if("techfab_medical")
+			return "Techfab - Medical"
+		if("techfab_cargo")
+			return "Techfab - Cargo"
+		if("techfab_science")
+			return "Techfab - Science"
+		if("techfab_security")
+			return "Techfab - Security"
+		if("mechfab")
+			return "Exosuit Fabricator"
+		if("imprinter")
+			return "Circuit Imprinter"
+		if("imprinter_away")
+			return "Ancient Circuit Imprinter"
+		if("imprinter_department")
+			return "Department Circuit Imprinter"
+		if("imprinter_department_science")
+			return "Department Circuit Imprinter - Science"
+		if("imprinter_department_engineering")
+			return "Department Circuit Imprinter - Engineering"
+	return "Autolathe"
+
+/obj/machinery/rnd/production/colony_lathe/syndicate/proc/get_available_recipe_sets()
+	var/list/available_sets = list("autolathe")
+	if(unlocked_techfab_departments["techfab_engineering"])
+		available_sets += "techfab_engineering"
+	if(unlocked_techfab_departments["techfab_service"])
+		available_sets += "techfab_service"
+	if(unlocked_techfab_departments["techfab_medical"])
+		available_sets += "techfab_medical"
+	if(unlocked_techfab_departments["techfab_cargo"])
+		available_sets += "techfab_cargo"
+	if(unlocked_techfab_departments["techfab_science"])
+		available_sets += "techfab_science"
+	if(unlocked_techfab_departments["techfab_security"])
+		available_sets += "techfab_security"
+	if(unlocked_techfab_departments["mechfab"])
+		available_sets += "mechfab"
+	if(unlocked_techfab_departments["imprinter"])
+		available_sets += "imprinter"
+	if(unlocked_techfab_departments["imprinter_away"])
+		available_sets += "imprinter_away"
+	if(unlocked_techfab_departments["imprinter_department"])
+		available_sets += "imprinter_department"
+	if(unlocked_techfab_departments["imprinter_department_science"])
+		available_sets += "imprinter_department_science"
+	if(unlocked_techfab_departments["imprinter_department_engineering"])
+		available_sets += "imprinter_department_engineering"
+	return available_sets
+
+/obj/machinery/rnd/production/colony_lathe/syndicate/proc/get_techfab_set_from_board(obj/item/circuitboard/machine/techfab/department/board)
+	if(istype(board, /obj/item/circuitboard/machine/techfab/department/engineering))
+		return "techfab_engineering"
+	if(istype(board, /obj/item/circuitboard/machine/techfab/department/service))
+		return "techfab_service"
+	if(istype(board, /obj/item/circuitboard/machine/techfab/department/medical))
+		return "techfab_medical"
+	if(istype(board, /obj/item/circuitboard/machine/techfab/department/cargo))
+		return "techfab_cargo"
+	if(istype(board, /obj/item/circuitboard/machine/techfab/department/science))
+		return "techfab_science"
+	if(istype(board, /obj/item/circuitboard/machine/techfab/department/security))
+		return "techfab_security"
+	return null
+
+/obj/machinery/rnd/production/colony_lathe/syndicate/proc/get_recipe_set_from_board(obj/item/circuitboard/machine/board)
+	if(istype(board, /obj/item/circuitboard/machine/techfab/department))
+		return get_techfab_set_from_board(board)
+	if(istype(board, /obj/item/circuitboard/machine/mechfab))
+		return "mechfab"
+	if(istype(board, /obj/item/circuitboard/machine/circuit_imprinter/offstation))
+		return "imprinter_away"
+	if(istype(board, /obj/item/circuitboard/machine/circuit_imprinter/department/science))
+		return "imprinter_department_science"
+	if(istype(board, /obj/item/circuitboard/machine/circuit_imprinter/department))
+		return "imprinter_department"
+	if(istype(board, /obj/item/circuitboard/machine/circuit_imprinter))
+		return "imprinter"
+	return null
+
 /obj/machinery/rnd/production/colony_lathe/syndicate/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(attacking_item, /obj/item/circuitboard/machine) && istype(user, /mob/living))
+		if(machine_stat)
+			return ITEM_INTERACT_BLOCKING
+		var/mob/living/living_user = user
+		var/obj/item/circuitboard/machine/board = attacking_item
+		var/recipe_set = get_recipe_set_from_board(board)
+		if(isnull(recipe_set))
+			return ITEM_INTERACT_BLOCKING
+		if(unlocked_techfab_departments[recipe_set])
+			balloon_alert(living_user, "department recipes already unlocked")
+			return ITEM_INTERACT_BLOCKING
+		if(!living_user.transferItemToLoc(attacking_item, src))
+			return ITEM_INTERACT_BLOCKING
+		living_user.visible_message(span_notice("[living_user] begins loading [attacking_item] into [src]..."),
+			balloon_alert(living_user, "loading board..."),
+			span_hear("You hear the chatter of a drive slot."))
+		if(!do_after(living_user, 1.5 SECONDS, target = src))
+			if(attacking_item?.loc == src)
+				try_put_in_hand(attacking_item, living_user)
+			balloon_alert(living_user, "interrupted!")
+			return ITEM_INTERACT_BLOCKING
+		qdel(attacking_item)
+		unlocked_techfab_departments[recipe_set] = TRUE
+		lathe_recipe_set = recipe_set
+		rebuild_cached_designs()
+		balloon_alert(living_user, "department recipes unlocked")
+		return ITEM_INTERACT_SUCCESS
+
 	if(istype(attacking_item, /obj/item/disk/design_disk) && istype(user, /mob/living))
 		if(machine_stat)
 			return ITEM_INTERACT_BLOCKING
@@ -140,7 +367,7 @@
 			ammo_fill_finish(FALSE)
 		update_ammotypes()
 		update_appearance()
-		playsound(loc, 'sound/weapons/autoguninsert.ogg', 35, TRUE)
+		playsound(loc, 'sound/weapons/autoguninsert.ogg', 18, TRUE)
 		return TRUE
 
 	if(istype(user, /mob/living) && materials?.mat_container)
@@ -155,6 +382,18 @@
 
 	.["machine_mode"] = machine_mode
 	.["mode_toggle_label"] = machine_mode == "lathe" ? "Switch to Ammo Workbench" : "Switch to Lathe"
+	var/list/available_sets = get_available_recipe_sets()
+	var/list/set_options = list()
+	for(var/set_id in available_sets)
+		set_options += list(list(
+			"displayText" = get_recipe_set_name(set_id),
+			"value" = set_id,
+		))
+	.["lathe_recipe_label"] = get_recipe_set_name(lathe_recipe_set)
+	.["lathe_recipe_set"] = lathe_recipe_set
+	.["lathe_recipe_sets"] = set_options
+	.["lathe_recipe_toggle_label"] = "Recipe Set"
+	.["lathe_recipe_can_switch"] = length(available_sets) > 1
 	.["mag_loaded"] = !!loaded_magazine
 	.["system_busy"] = ammo_busy
 	.["error"] = ammo_error_message
@@ -186,6 +425,37 @@
 		machine_mode = machine_mode == "lathe" ? "ammo" : "lathe"
 		ammo_error_message = ""
 		ammo_error_type = ""
+		SStgui.update_uis(src)
+		return TRUE
+
+	if(action == "switch_recipe_set")
+		if(machine_mode != "lathe" || busy || ammo_busy)
+			return TRUE
+		var/list/available_sets = get_available_recipe_sets()
+		if(length(available_sets) <= 1)
+			return TRUE
+		var/current_index = available_sets.Find(lathe_recipe_set)
+		if(!current_index)
+			current_index = 1
+		var/next_index = current_index + 1
+		if(next_index > length(available_sets))
+			next_index = 1
+		lathe_recipe_set = available_sets[next_index]
+		rebuild_cached_designs()
+		SStgui.update_uis(src)
+		return TRUE
+
+	if(action == "set_recipe_set")
+		if(machine_mode != "lathe" || busy || ammo_busy)
+			return TRUE
+		var/list/available_sets = get_available_recipe_sets()
+		if(length(available_sets) <= 1)
+			return TRUE
+		var/selected_recipe_set = params["recipe_set"]
+		if(!selected_recipe_set || !(selected_recipe_set in available_sets) || selected_recipe_set == lathe_recipe_set)
+			return TRUE
+		lathe_recipe_set = selected_recipe_set
+		rebuild_cached_designs()
 		SStgui.update_uis(src)
 		return TRUE
 
@@ -383,7 +653,7 @@
 	loaded_magazine.update_appearance()
 	flick("ammobench_process", src)
 	directly_use_energy(ROUND_UP(initial(active_power_usage) * 0.1))
-	playsound(loc, 'sound/machines/piston_raise.ogg', 60, TRUE)
+	playsound(loc, 'sound/machines/piston_raise.ogg', 30, TRUE)
 
 	if(loaded_magazine.stored_ammo.len >= loaded_magazine.max_ammo)
 		ammo_error_message = "CONTAINER IS FULL"
@@ -403,25 +673,40 @@
 	set_light(l_outer_range = 0)
 	icon_state = base_icon_state
 	if(successfully)
-		playsound(loc, 'sound/machines/ping.ogg', 40, TRUE)
+		playsound(loc, 'sound/machines/ping.ogg', 20, TRUE)
 		flick("colony_lathe_finish_print", src)
 	else
-		playsound(loc, 'sound/machines/buzz-sigh.ogg', 40, TRUE)
+		playsound(loc, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
 	update_appearance()
 	SStgui.update_uis(src)
 
 // Undeployed printer disguised as a normal emergency toolbox.
 
-/obj/item/storage/toolbox/emergency/syndicate_printer
+/obj/item/storage/toolbox/emergency/omnilathe
 	var/obj/machinery/rnd/production/colony_lathe/syndicate/type_to_deploy = /obj/machinery/rnd/production/colony_lathe/syndicate
 	var/deploy_time = 4 SECONDS
 	/// Imported autolathe design IDs preserved while packed.
 	var/list/imported_designs = list()
+	/// Packed snapshot of local material amounts, keyed by material typepath.
+	var/list/packed_materials = list()
+	/// Techfab department recipes unlocked before this printer was packed.
+	var/list/unlocked_techfab_departments = list()
+	/// Last selected lathe recipe set before this printer was packed.
+	var/lathe_recipe_set = "autolathe"
 
-/obj/item/storage/toolbox/emergency/syndicate_printer/PopulateContents()
+/obj/item/storage/toolbox/emergency/omnilathe/PopulateContents()
 	return
 
-/obj/item/storage/toolbox/emergency/syndicate_printer/attack_self(mob/user)
+/obj/item/storage/toolbox/emergency/omnilathe/proc/transfer_contents_to_deployed_object(obj/machinery/rnd/production/colony_lathe/syndicate/deployed_object)
+	if(!deployed_object)
+		return
+
+	atom_storage?.remove_all(deployed_object)
+	for(var/obj/item/stored_item in contents)
+		if(stored_item?.loc == src)
+			stored_item.forceMove(deployed_object)
+
+/obj/item/storage/toolbox/emergency/omnilathe/attack_self(mob/user)
 	if(!user.can_perform_action(src, NEED_DEXTERITY))
 		return
 
@@ -431,7 +716,7 @@
 		return
 
 	balloon_alert(user, "deploying...")
-	playsound(src, 'sound/items/ratchet.ogg', 50, TRUE)
+	playsound(src, 'sound/items/ratchet.ogg', 25, TRUE)
 	if(!do_after(user, deploy_time, src))
 		return
 
@@ -443,10 +728,17 @@
 	var/obj/machinery/rnd/production/colony_lathe/syndicate/deployed_object = new /obj/machinery/rnd/production/colony_lathe/syndicate(deploy_location)
 	if(imported_designs?.len)
 		deployed_object.imported_designs = imported_designs.Copy()
-		deployed_object.rebuild_cached_designs()
+	if(packed_materials?.len)
+		deployed_object.packed_materials = packed_materials.Copy()
+	if(unlocked_techfab_departments?.len)
+		deployed_object.unlocked_techfab_departments = unlocked_techfab_departments.Copy()
+	if(lathe_recipe_set)
+		deployed_object.lathe_recipe_set = lathe_recipe_set
+	transfer_contents_to_deployed_object(deployed_object)
+	deployed_object.restore_packed_material_cache()
+	deployed_object.rebuild_cached_designs()
 	deployed_object.setDir(user.dir)
 	deployed_object.modify_max_integrity(max_integrity)
 	deployed_object.update_appearance()
 	deployed_object.add_fingerprint(user)
-	atom_storage?.remove_all(get_turf(src))
 	qdel(src)

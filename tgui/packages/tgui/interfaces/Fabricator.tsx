@@ -4,6 +4,7 @@ import {
   Box,
   Button,
   Dimmer,
+  Dropdown,
   Flex,
   Icon,
   NoticeBox,
@@ -29,8 +30,13 @@ export const Fabricator = (props) => {
     ui_theme,
     machine_mode,
     mode_toggle_label,
+    lathe_recipe_label,
+    lathe_recipe_can_switch,
+    lathe_recipe_set,
+    lathe_recipe_sets,
   } = data;
   const ammoMode = machine_mode === 'ammo';
+  const latheMode = machine_mode === 'lathe';
 
   // Reduce the material count array to a map of actually available materials.
   const availableMaterials: MaterialMap = {};
@@ -46,13 +52,35 @@ export const Fabricator = (props) => {
           {!!machine_mode && (
             <Stack.Item>
               <Section
-                title={ammoMode ? 'Ammo Workbench Mode' : 'Fabricator Mode'}
+                title={
+                  ammoMode
+                    ? 'Ammo Workbench Mode'
+                    : 'Fabricator Mode'
+                }
                 buttons={
-                  <Button
-                    icon="exchange-alt"
-                    content={mode_toggle_label || 'Switch Mode'}
-                    onClick={() => act('switch_mode')}
-                  />
+                  <Stack>
+                    {latheMode && (
+                      <Stack.Item>
+                        <Dropdown
+                          width="220px"
+                          selected={lathe_recipe_set || 'autolathe'}
+                          displayText={lathe_recipe_label || 'Autolathe'}
+                          options={lathe_recipe_sets || []}
+                          disabled={!lathe_recipe_can_switch || !!busy}
+                          onSelected={(recipe_set) =>
+                            act('set_recipe_set', { recipe_set })
+                          }
+                        />
+                      </Stack.Item>
+                    )}
+                    <Stack.Item>
+                      <Button
+                        icon="exchange-alt"
+                        content={mode_toggle_label || 'Switch Mode'}
+                        onClick={() => act('switch_mode')}
+                      />
+                    </Stack.Item>
+                  </Stack>
                 }
               />
             </Stack.Item>

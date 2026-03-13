@@ -84,6 +84,34 @@ export type FabricatorData = {
 	 */
 	mode_toggle_label?: string;
 
+  /**
+   * Label for the currently active lathe recipe set.
+   */
+  lathe_recipe_label?: string;
+
+  /**
+   * Internal ID of the currently active lathe recipe set.
+   */
+  lathe_recipe_set?: string;
+
+  /**
+   * Dropdown options for available lathe recipe sets.
+   */
+  lathe_recipe_sets?: Array<{
+    displayText: string;
+    value: string;
+  }>;
+
+  /**
+   * Label for cycling between available lathe recipe sets.
+   */
+  lathe_recipe_toggle_label?: string;
+
+  /**
+   * Whether there is more than one lathe recipe set available.
+   */
+  lathe_recipe_can_switch?: BooleanLike;
+
 	/**
 	 * Optional tgui theme name for this fabricator window.
 	 */
