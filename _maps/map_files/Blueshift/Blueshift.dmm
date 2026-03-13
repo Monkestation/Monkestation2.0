@@ -82121,6 +82121,7 @@
 /obj/effect/turf_decal/stripes{
 	dir = 10
 	},
+/obj/machinery/chem_dispenser,
 /turf/open/floor/iron,
 /area/station/medical/chemistry)
 "pSa" = (

@@ -1,0 +1,5 @@
+author: "notghosti"
+delete-after: True
+changes:
+  - map: "Theseus curator booth is less defensible against pickle ricks. Kill them, kill them all."
+  - map: "Added basic air set up to thesues curator booth"

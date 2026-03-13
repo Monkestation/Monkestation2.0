@@ -392,6 +392,10 @@
 		data["sending_virus"] = sending_virus
 	return data
 
+/datum/computer_file/program/messenger/ui_assets(mob/user)
+	. = ..()
+	. += get_asset_datum(/datum/asset/spritesheet_batched/chat)
+
 //////////////////////
 // MESSAGE HANDLING //
 //////////////////////
@@ -474,7 +478,7 @@
 	if(!check_pda_message_against_filter(message, sender))
 		return null
 
-	return message
+	return emoji_parse(message)
 
 /// Sends a message to targets via PDA. When sending to everyone, set `everyone` to true so the message is formatted accordingly
 /datum/computer_file/program/messenger/proc/send_message(mob/living/sender, message, list/targets, everyone = FALSE)
@@ -706,7 +710,6 @@
 			sender_title = "<a href='byond://?src=[REF(messaged_mob)];track=[html_encode(sender_name)]'>[sender_title]</a>"
 
 		var/inbound_message = "[signal.format_message()]"
-		inbound_message = emoji_parse(inbound_message)
 
 		var/photo_message = signal.data["photo"] ? " (<a href='byond://?src=[REF(src)];choice=[photo_href];skiprefresh=1;target=[REF(chat)]'>Photo Attached</a>)" : ""
 		to_chat(messaged_mob, span_infoplain("[icon2html(computer, messaged_mob)] <b>PDA message from [sender_title], </b>\"[inbound_message]\"[photo_message] [reply]"))

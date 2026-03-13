@@ -352,6 +352,7 @@
 	density = FALSE
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	uses_integrity = TRUE
+	obj_flags = parent_type::obj_flags | BLOCK_Z_OUT_DOWN
 	var/obj/structure/bingle_hole/parent_pit
 
 /obj/structure/bingle_pit_overlay/Initialize(mapload, obj/structure/bingle_hole/parent_pit)

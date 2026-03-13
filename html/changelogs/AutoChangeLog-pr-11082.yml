@@ -1,0 +1,4 @@
+author: "SirNightKnight"
+delete-after: True
+changes:
+  - balance: "wizard smite always pulls from heavy smites, moved fireball and lightning to the light smite category as they are relatively harmless. capped the smite spell at level one since adding more levels does nothing."

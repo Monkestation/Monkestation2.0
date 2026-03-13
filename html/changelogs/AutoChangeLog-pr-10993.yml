@@ -1,0 +1,9 @@
+author: "Shoddd"
+delete-after: True
+changes:
+  - bugfix: "fixes a few typos"
+  - bugfix: "fixes incorrect descriptions with body bags"
+  - qol: "closets now tell you you can repaint them with airlock sprayer"
+  - map: "added wire chem to pubby"
+  - map: "added comp printer to voidraptor"
+  - map: "fixes Helio patho areas"

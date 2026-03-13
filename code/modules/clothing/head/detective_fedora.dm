@@ -42,19 +42,19 @@
 
 /obj/item/clothing/head/fedora/det_hat/examine(mob/user)
 	. = ..()
-	. += span_notice("Alt-click to take a candy corn.")
+	. += span_notice("Alt-right-click to take a candy corn.")
 
 
 /obj/item/clothing/head/fedora/det_hat/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
 
-	context[SCREENTIP_CONTEXT_ALT_LMB] = "Candy Time"
+	context[SCREENTIP_CONTEXT_ALT_RMB] = "Candy Time"
 
 	return CONTEXTUAL_SCREENTIP_SET
 
 
 /// Now to solve where all these keep coming from
-/obj/item/clothing/head/fedora/det_hat/click_alt(mob/user)
+/obj/item/clothing/head/fedora/det_hat/click_alt_secondary(mob/user)
 	if(!COOLDOWN_FINISHED(src, candy_cooldown))
 		to_chat(user, span_warning("A candy corn was just taken! You should wait a couple minutes, lest you burn through the stash."))
 		return CLICK_ACTION_BLOCKING

@@ -386,6 +386,7 @@
 	toEmbed.psize_x = 128
 	toEmbed.psize_y = 128
 	copied_ass.set_picture(toEmbed, TRUE, TRUE)
+	copied_ass.assphoto = TRUE
 	toner_cartridge.charges -= ASS_TONER_USE
 
 /**

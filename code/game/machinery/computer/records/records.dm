@@ -162,7 +162,7 @@
 		playsound(src, 'sound/machines/terminal_error.ogg', 70, TRUE)
 		return FALSE
 
-	if(mugshot.picture.psize_x > world.icon_size || mugshot.picture.psize_y > world.icon_size)
+	if((mugshot.picture.psize_x > world.icon_size || mugshot.picture.psize_y > world.icon_size) && !mugshot.assphoto)
 		balloon_alert(user, "photo too large!")
 		playsound(src, 'sound/machines/terminal_error.ogg', 70, TRUE)
 		return FALSE

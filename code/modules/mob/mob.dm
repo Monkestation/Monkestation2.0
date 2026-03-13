@@ -33,6 +33,7 @@
 	persistent_client?.set_mob(null)
 
 	unset_machine()
+	clear_fullscreens()
 	remove_from_mob_list()
 	remove_from_dead_mob_list()
 	remove_from_alive_mob_list()
