@@ -75986,7 +75986,7 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/main)
 "yaE" = (
-/obj/machinery/rnd/production/protolathe/department/medical,
+/obj/machinery/rnd/production/techfab/department/medical,
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/storage)
 "yaF" = (
