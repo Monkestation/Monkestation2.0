@@ -18,7 +18,6 @@
 	recoil = 1
 	casing_ejector = FALSE
 	weapon_weight = WEAPON_HEAVY
-	bolt_type = BOLT_TYPE_LOCKING
 	internal_magazine = TRUE
 	cartridge_wording = "rocket"
 	empty_indicator = TRUE
@@ -48,10 +47,17 @@
 	desc = "A prototype Spatial Rift Nullifier (SRN) Rocket. Fire at a rogue singularity or Tesla and pray it hits"
 	caliber = "84mm"
 	icon = 'monkestation/icons/obj/guns/projectiles.dmi'
+	base_icon_state = "srn_rocket"
 	icon_state = "srn_rocket"
 	projectile_type = /obj/projectile/bullet/SRN_rocket
 
+/obj/item/ammo_casing/SRN_rocket/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/caseless)
 
+/obj/item/ammo_casing/SRN_rocket/update_icon_state()
+	. = ..()
+	icon_state = "[base_icon_state]"
 
 /// SRN Rocket Projectile
 /obj/projectile/bullet/SRN_rocket

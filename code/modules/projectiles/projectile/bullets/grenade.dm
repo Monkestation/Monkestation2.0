@@ -187,7 +187,7 @@
 	damage = 20
 	stamina = 15
 	range = 14
-	speed = 2 // Higher means slower, y'all
+	speed = 0.5
 	sharpness = NONE
 
 /obj/projectile/bullet/c980grenade/on_hit(atom/target, blocked = 0, pierce_hit)
