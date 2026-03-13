@@ -182,7 +182,10 @@
 		for(var/i in roundstart_experience)
 			spawned_human.mind.adjust_experience(i, roundstart_experience[i], TRUE)
 
-	if(prob(25) && !HAS_TRAIT(spawned, TRAIT_IMMUNODEFICIENCY)) //don't let the compromised die right out of the gates.
+	//don't let the compromised die right out of the gates. We can't check trait as it hasn't been assigned yet.
+	if(/datum/quirk/item_quirk/immunodeficiency::name in player_client.prefs?.all_quirks)
+		return
+	if(prob(25))
 		var/virus_choice = pick(WILD_ACUTE_DISEASES)
 		var/static/list/anti = list(
 			ANTIGEN_BLOOD = 2,
