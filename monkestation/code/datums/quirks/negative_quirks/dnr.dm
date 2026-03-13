@@ -9,12 +9,12 @@
 
 /datum/quirk/dnr/add(client/client_source)
 	. = ..()
-	ADD_TRAIT(quirk_holder.mind, TRAIT_DEFIB_BLACKLISTED, QUIRK_TRAIT)
+	quirk_holder.mind.add_traits(list(TRAIT_DEFIB_BLACKLISTED, TRAIT_NO_SPECIAL_REVIVAL), QUIRK_TRAIT)
 	quirk_holder.hardcrit_threshold -= (MAX_LIVING_HEALTH / 2)
 	quirk_holder.dead_threshold -= MAX_LIVING_HEALTH
 
 /datum/quirk/dnr/remove()
-	REMOVE_TRAIT(quirk_holder.mind, TRAIT_DEFIB_BLACKLISTED, QUIRK_TRAIT)
+	quirk_holder.mind.remove_traits(list(TRAIT_DEFIB_BLACKLISTED, TRAIT_NO_SPECIAL_REVIVAL), QUIRK_TRAIT)
 	quirk_holder.hardcrit_threshold += (MAX_LIVING_HEALTH / 2)
 	quirk_holder.dead_threshold += MAX_LIVING_HEALTH
 	return ..()

@@ -98,6 +98,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_HUSK "husk"
 ///Blacklisted from being revived via defibrilator
 #define TRAIT_DEFIB_BLACKLISTED "defib_blacklisted"
+///Prevented from reviving in special magical antagonist ways (changeling, bloodsucker)
+#define TRAIT_NO_SPECIAL_REVIVAL "no_special_revival"
 #define TRAIT_BADDNA "baddna"
 #define TRAIT_CLUMSY "clumsy"
 /// Trait that means you are capable of holding items in some form
