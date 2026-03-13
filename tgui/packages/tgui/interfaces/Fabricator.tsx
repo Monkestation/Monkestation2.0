@@ -4,7 +4,10 @@ import {
   Box,
   Button,
   Dimmer,
+  Flex,
   Icon,
+  NoticeBox,
+  ProgressBar,
   Section,
   Stack,
   Tooltip,
@@ -17,7 +20,17 @@ import type { Design, FabricatorData, MaterialMap } from './Fabrication/Types';
 
 export const Fabricator = (props) => {
   const { act, data } = useBackend<FabricatorData>();
-  const { fabName, onHold, designs, busy, SHEET_MATERIAL_AMOUNT } = data;
+  const {
+    fabName,
+    onHold,
+    designs,
+    busy,
+    SHEET_MATERIAL_AMOUNT,
+    ui_theme,
+    machine_mode,
+    mode_toggle_label,
+  } = data;
+  const ammoMode = machine_mode === 'ammo';
 
   // Reduce the material count array to a map of actually available materials.
   const availableMaterials: MaterialMap = {};
@@ -27,22 +40,40 @@ export const Fabricator = (props) => {
   }
 
   return (
-    <Window title={fabName} width={670} height={600}>
+    <Window title={fabName} width={670} height={600} theme={ui_theme}>
       <Window.Content>
         <Stack vertical fill>
+          {!!machine_mode && (
+            <Stack.Item>
+              <Section
+                title={ammoMode ? 'Ammo Workbench Mode' : 'Fabricator Mode'}
+                buttons={
+                  <Button
+                    icon="exchange-alt"
+                    content={mode_toggle_label || 'Switch Mode'}
+                    onClick={() => act('switch_mode')}
+                  />
+                }
+              />
+            </Stack.Item>
+          )}
           <Stack.Item grow>
-            <DesignBrowser
-              busy={!!busy}
-              designs={Object.values(designs)}
-              availableMaterials={availableMaterials}
-              buildRecipeElement={(design, availableMaterials) => (
-                <Recipe
-                  design={design}
-                  available={availableMaterials}
-                  SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
-                />
-              )}
-            />
+            {!ammoMode ? (
+              <DesignBrowser
+                busy={!!busy}
+                designs={Object.values(designs)}
+                availableMaterials={availableMaterials}
+                buildRecipeElement={(design, availableMaterials) => (
+                  <Recipe
+                    design={design}
+                    available={availableMaterials}
+                    SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
+                  />
+                )}
+              />
+            ) : (
+              <AmmoWorkbenchPanel />
+            )}
           </Stack.Item>
           <Stack.Item>
             <Section>
@@ -63,6 +94,92 @@ export const Fabricator = (props) => {
         )}
       </Window.Content>
     </Window>
+  );
+};
+
+const AmmoWorkbenchPanel = () => {
+  const { act, data } = useBackend<FabricatorData>();
+  const {
+    mag_loaded,
+    system_busy,
+    error,
+    error_type,
+    mag_name,
+    current_rounds,
+    max_rounds,
+    available_rounds,
+  } = data;
+
+  return (
+    <Stack vertical fill>
+      {!!error && (
+        <Stack.Item>
+          <NoticeBox textAlign="center" color={error_type || undefined}>
+            {error}
+          </NoticeBox>
+        </Stack.Item>
+      )}
+      <Stack.Item>
+        <Section
+          title="Loaded Magazine"
+          buttons={
+            <Button
+              icon="eject"
+              content="Eject"
+              disabled={!mag_loaded}
+              onClick={() => act('EjectMag')}
+            />
+          }
+        >
+          {mag_loaded ? (
+            <Stack vertical>
+              <Stack.Item>{mag_name}</Stack.Item>
+              <Stack.Item>
+                <ProgressBar
+                  value={current_rounds || 0}
+                  minValue={0}
+                  maxValue={max_rounds || 1}
+                >
+                  {(current_rounds || 0) + ' / ' + (max_rounds || 0)}
+                </ProgressBar>
+              </Stack.Item>
+            </Stack>
+          ) : (
+            <Box color="label">Insert a magazine or ammo box to begin.</Box>
+          )}
+        </Section>
+      </Stack.Item>
+      <Stack.Item grow>
+        <Section title="Available Ammunition Types" fill scrollable>
+          {!!mag_loaded && (
+            <Flex.Item grow={1} basis={0}>
+              {(available_rounds || []).map((available_round) => (
+                <Box
+                  key={available_round.typepath}
+                  className="candystripe"
+                  p={1}
+                  pb={2}
+                >
+                    <Stack.Item>
+                      <Tooltip content={available_round.mats_list} position="right">
+                      <Button
+                        content={available_round.name}
+                        disabled={!!system_busy}
+                        onClick={() =>
+                          act('FillMagazine', {
+                            selected_type: available_round.typepath,
+                          })
+                        }
+                      />
+                      </Tooltip>
+                    </Stack.Item>
+                </Box>
+              ))}
+            </Flex.Item>
+          )}
+        </Section>
+      </Stack.Item>
+    </Stack>
   );
 };
 

@@ -7465,6 +7465,7 @@
 #include "monkestation\code\modules\blueshift\structures\primative.dm"
 #include "monkestation\code\modules\blueshift\structures\sauna_oven.dm"
 #include "monkestation\code\modules\blueshift\structures\shelf.dm"
+#include "monkestation\code\modules\blueshift\structures\syndicate_printer.dm"
 #include "monkestation\code\modules\blueshift\structures\veins.dm"
 #include "monkestation\code\modules\blueshift\structures\wall_torch.dm"
 #include "monkestation\code\modules\blueshift\structures\windows.dm"
