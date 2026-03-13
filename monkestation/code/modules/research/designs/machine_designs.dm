@@ -19,17 +19,6 @@
 	)
 	departmental_flags =  DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
 
-/datum/design/board/clonepod_experimental
-	name = "Experimental Clone Pod"
-	desc = "Allows for the construction of circuit boards used to build an Experimental Cloning Pod."
-	id = "clonepod_experimental"
-	build_path = /obj/item/circuitboard/machine/clonepod/experimental
-	category = list(
-		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_GENETICS
-	)
-	departmental_flags =  DEPARTMENT_BITFLAG_SCIENCE
-
-
 /datum/design/board/clonescanner	//hippie end, re-add cloning
 	name = "Cloning Scanner"
 	desc = "Allows for the construction of circuit boards used to build a Cloning Scanner."
