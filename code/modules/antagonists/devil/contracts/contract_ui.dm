@@ -1,6 +1,6 @@
 /datum/contract_ui
 	/// The devil this UI belongs to
-	var/datum/antagonist/devil/devil
+	var/datum/antagonist/devil/devil = null
 	/// The last contract we touched, so we actually know what we are editing
 	var/obj/item/paper/devil_contract/last_touched_contract = null
 

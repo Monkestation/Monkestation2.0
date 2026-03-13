@@ -254,8 +254,9 @@
 			continue
 		arm.dismember()
 		victim.visible_message(span_danger("<B>[victim]'s [arm] is violently dismembered as it burns to ash!</B>"))
-		new /obj/effect/decal/cleanable/ash(arm.loc)
-		QDEL_IN(arm, 1 SECONDS)
+		new /obj/effect/decal/cleanable/ash(get_turf(arm))
+		arm.add_overlay(GLOB.fire_overlay)
+		QDEL_IN(arm, 3 SECONDS)
 		break
 
 /datum/devil_clause/handy/leggy
