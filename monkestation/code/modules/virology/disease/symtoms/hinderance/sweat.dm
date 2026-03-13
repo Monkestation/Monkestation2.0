@@ -6,7 +6,7 @@
 	severity = 2
 
 /datum/symptom/sweat/activate(mob/living/carbon/mob)
-	if(prob(30))
+	if(prob(30 * power))
 		mob.emote("me",1,"is sweating profusely!")
 
 		if(istype(mob.loc,/turf/open))

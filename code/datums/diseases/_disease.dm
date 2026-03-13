@@ -216,6 +216,8 @@ GLOBAL_LIST_INIT(inspectable_diseases, list())
 		return
 	if(HAS_TRAIT(affected_mob, TRAIT_IMMUNODEFICIENCY) && (disease_flags & DISEASE_DORMANT))
 		disease_flags &= ~DISEASE_DORMANT
+		for(var/datum/symptom/symptom as anything in symptoms)
+			symptom.power *= 2
 
 
 /datum/disease/proc/GetDiseaseID()
