@@ -88,3 +88,11 @@
 	desc = "A MODsuit module that grants to the user Optical camouflage and the ability to overload light sources to recharge suit power."
 	item = /obj/item/mod/module/stealth/wraith
 	cost = 2
+
+/datum/uplink_item/suits/syndie_armor
+	name = "Syndicate Body armor"
+	desc = "A highly compact set of body armor with two inner slots for small items.\
+	It comes with chameleon features."
+	item = /obj/item/clothing/suit/chameleon/syndie_armor
+	cost = 4
+	purchasable_from = ALL

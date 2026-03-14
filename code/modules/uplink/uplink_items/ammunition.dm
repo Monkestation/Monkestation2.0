@@ -80,3 +80,21 @@
 	desc = "60 rounds of 12.7x70mm for use with the Devitt Mk3 light tank."
 	item = /obj/item/mecha_ammo/makeshift/lighttankmg
 	cost = 2
+
+/datum/uplink_item/ammo/trickshot
+	name = "Trickshot Shell Box"
+	desc = "A box with 10 trickshot shells, capable of bouncing up to five times, they are made for the most talented trickshooters around."
+	cost = 3
+	item = /obj/item/storage/box/trickshot
+
+/datum/uplink_item/ammo/uraniumpen
+	name = "Uranium Penetrator Box"
+	desc = "A box with 10 uranium penetrators, capable to penetrating walls and objects, but not people. Works best with thermals!"
+	cost = 3
+	item = /obj/item/storage/box/uraniumpen
+
+/datum/uplink_item/ammo/beeshot
+	name = "Beeshot Box"
+	desc = "A box with 10 Beeshot shells. Creates very angry bees upon impact. Not as strong as buckshot."
+	cost = 3
+	item = /obj/item/storage/box/beeshot
