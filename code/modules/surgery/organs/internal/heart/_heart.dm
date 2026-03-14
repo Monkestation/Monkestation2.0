@@ -29,15 +29,8 @@
 	icon_state = "[base_icon_state]-[beating ? "on" : "off"]"
 	return ..()
 
-/obj/item/organ/internal/heart/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
-	. = ..()
-	if(heart_bloodtype)
-		receiver.dna?.human_blood_type = heart_bloodtype
-
 /obj/item/organ/internal/heart/Remove(mob/living/carbon/heartless, special = 0)
 	. = ..()
-	if(heart_bloodtype)
-		heartless.dna?.human_blood_type = random_human_blood_type()
 	if(!special)
 		addtimer(CALLBACK(src, PROC_REF(stop_if_unowned)), 120)
 
@@ -82,7 +75,6 @@
 		base_amount = 80 + rand(-10, 10)
 	base_amount += round(owner.getOxyLoss() / 5)
 	base_amount += ((BLOOD_VOLUME_NORMAL - owner.blood_volume) / 25)
-	base_amount += owner.pain_controller?.get_heartrate_modifier()
 	if(owner.has_status_effect(/datum/status_effect/determined)) // adrenaline
 		base_amount += 10
 
@@ -137,7 +129,6 @@
 					span_userdanger("You feel a terrible pain in your chest, as if your heart has stopped!"))
 			owner.set_heartattack(TRUE)
 			failed = TRUE
-		owner.adjust_pain_shock(1 * seconds_per_tick)
 
 /obj/item/organ/internal/heart/get_availability(datum/species/owner_species, mob/living/owner_mob)
 	return owner_species.mutantheart

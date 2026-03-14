@@ -13,6 +13,7 @@
 	blocks_emissive = EMISSIVE_BLOCK_NONE
 	living_flags = ALWAYS_DEATHGASP
 	max_grab = GRAB_KILL
+	life_subsystem_type = /datum/controller/subsystem/mobs/carbons
 	///List of [/obj/item/organ]s in the mob. They don't go in the contents for some reason I don't want to know.
 	var/list/obj/item/organ/organs = list()
 	///Same as [above][/mob/living/carbon/var/organs], but stores "slot ID" - "organ" pairs for easy access.
@@ -119,3 +120,6 @@
 	COOLDOWN_DECLARE(bleeding_message_cd)
 
 	var/next_smell = 0 /// Cooldown for the next smell
+
+	/// Timer used to make the carbon fart shortly after they die
+	var/death_fart_timerid

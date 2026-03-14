@@ -520,6 +520,7 @@ GLOBAL_LIST_EMPTY(species_list)
 /proc/deadchat_broadcast(message, source=null, mob/follow_target=null, turf/turf_target=null, speaker_key=null, message_type=DEADCHAT_REGULAR, admin_only=FALSE)
 	message = span_deadsay("[source][span_linkify(message)]")
 
+	var/speaker_ckey = speaker_key ? ckey(speaker_key) : null // so we only have to do this once
 	for(var/mob/M in GLOB.player_list)
 		var/chat_toggles = TOGGLES_DEFAULT_CHAT
 		var/toggles = TOGGLES_DEFAULT
@@ -528,7 +529,8 @@ GLOBAL_LIST_EMPTY(species_list)
 			var/datum/preferences/prefs = M.client?.prefs
 			chat_toggles = prefs.chat_toggles
 			toggles = prefs.toggles
-			ignoring = prefs.ignoring
+			for(var/ignored_key in prefs.ignoring)
+				LAZYADD(ignoring, ckey(ignored_key))
 		if(admin_only)
 			if (!M.client?.holder?.check_for_rights(R_ADMIN)) // monkestation edit: only include admins with the +ADMIN permission
 				return
@@ -545,7 +547,7 @@ GLOBAL_LIST_EMPTY(species_list)
 			continue
 		if(M.stat != DEAD && !override)
 			continue
-		if(speaker_key && (speaker_key in ignoring))
+		if(speaker_ckey && (speaker_ckey in ignoring))
 			continue
 
 		switch(message_type)

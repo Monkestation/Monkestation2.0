@@ -87,14 +87,6 @@
 	item_path = /obj/item/storage/backpack/duffelbag/mining_conscript
 	cost_per_order = 1500
 
-/datum/orderable_item/mining/eva_kit
-	item_path = /obj/item/storage/box/emergency_eva/explorer
-	cost_per_order = 1000
-
-/datum/orderable_item/mining/hardsuit_jetpack_upgrade
-	item_path = /obj/item/jetpack_module
-	cost_per_order = 250
-
 /datum/orderable_item/mining/mining_drone //welcome to the big boy tab fellah
 	item_path = /mob/living/basic/mining_drone
 	cost_per_order = 800

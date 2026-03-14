@@ -1,10 +1,10 @@
+import type { BooleanLike } from 'common/react';
 import { useBackend, useLocalState } from '../backend';
-import { Section, Stack, Box, Tabs, Button, BlockQuote } from '../components';
+import { BlockQuote, Box, Button, Section, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
-import { BooleanLike } from 'common/react';
 import {
+  type Objective,
   ObjectivePrintout,
-  Objective,
   ReplaceObjectivesButton,
 } from './common/Objectives';
 

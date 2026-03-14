@@ -22,7 +22,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
 	throw_range = 7
-	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*0.1)
+	custom_materials = null // to not be put into autolathes
 	pressure_resistance = 2
 	grind_results = list(/datum/reagent/iron = 2, /datum/reagent/iodine = 1)
 	var/colour = "#000000" //what colour the ink is!
@@ -162,7 +162,6 @@
 	icon_state = "pen-charcoal"
 	colour = "#696969"
 	font = CHARCOAL_FONT
-	custom_materials = null
 	grind_results = list(/datum/reagent/ash = 5, /datum/reagent/cellulose = 10)
 	requires_gravity = FALSE // this is technically a pencil
 	can_click = FALSE
@@ -182,7 +181,6 @@
 	throwforce = 5
 	throw_speed = 4
 	colour = "#DC143C"
-	custom_materials = list(/datum/material/gold = SMALL_MATERIAL_AMOUNT*7.5)
 	sharpness = SHARP_EDGED
 	resistance_flags = FIRE_PROOF
 	unique_reskin = list("Oak" = "pen-fountain-o",
@@ -355,6 +353,38 @@
 		attack_self(user)
 	return BRUTELOSS
 
+//if edagger is turned on and in ear slot, and the user has hair, light the hair on fire
+/obj/item/pen/edagger/equipped(mob/equipee, slot, human)
+	. = ..()
+	//is it equipped in ears, is it activated, are they not bald
+	if((slot & ITEM_SLOT_EARS) && HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
+		if(ishuman(equipee))
+			var/mob/living/carbon/human/human_equipee = equipee
+			if(human_equipee.hairstyle != "Bald")
+				human_equipee.visible_message("You smell something burning...")
+				addtimer(CALLBACK(src, PROC_REF(deferred_ignite), human_equipee), 25)
+
+//sets them on fire and burns off their hair
+/obj/item/pen/edagger/proc/deferred_ignite(mob/living/carbon/human/human_equipee)
+	human_equipee.adjust_fire_stacks(2)
+	human_equipee.ignite_mob()
+	human_equipee.set_hairstyle("Bald", update = TRUE)
+	human_equipee.visible_message(span_bolddanger("[human_equipee]\s hair burns off!"), \
+		span_bolddanger("Your hair burns off!"))
+
+//allows the edagger to lights cigarettes
+/obj/item/pen/edagger/ignition_effect(atom/atom, mob/user)
+	if(!heat && !HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
+		return ""
+
+	var/in_mouth = ""
+	if(iscarbon(user))
+		var/mob/living/carbon/carbon_user = user
+		if(carbon_user.wear_mask)
+			in_mouth = ", barely missing [carbon_user.p_their()] nose"
+	. = span_warning("[user] swings [user.p_their()] [name][in_mouth]. [user.p_they(TRUE)] light[user.p_s()] [user.p_their()] [atom.name] in the process.")
+	playsound(loc, hitsound, get_clamped_volume(), TRUE, -1)
+	add_fingerprint(user)
 /*
  * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
  *
@@ -399,7 +429,6 @@
 	worn_icon_state = "pen"
 	force = 3
 	w_class = WEIGHT_CLASS_TINY
-	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.1, /datum/material/diamond=SMALL_MATERIAL_AMOUNT, /datum/material/titanium = SMALL_MATERIAL_AMOUNT*0.1)
 	pressure_resistance = 2
 	grind_results = list(/datum/reagent/iron = 2, /datum/reagent/iodine = 1)
 	tool_behaviour = TOOL_MINING //For the classic "digging out of prison with a spoon but you're in space so this analogy doesn't work" situation.

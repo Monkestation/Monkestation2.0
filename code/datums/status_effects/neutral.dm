@@ -563,6 +563,14 @@
 #undef EIGENSTASIUM_PHASE_3_START
 #undef EIGENSTASIUM_PHASE_3_END
 
+// Stops knockback when someone is thrown against something. (See: [/atom/proc/hitby_react])
+/datum/status_effect/no_throw_back
+	id = "no_throw_back"
+	alert_type = null
+	status_type = STATUS_EFFECT_REFRESH
+	duration = 0.5 SECONDS
+	tick_interval = STATUS_EFFECT_NO_TICK
+
 /datum/status_effect/tagalong //applied to darkspawns while they accompany someone //yogs start: darkspawn
 	id = "tagalong"
 	tick_interval = 2 //as fast as possible

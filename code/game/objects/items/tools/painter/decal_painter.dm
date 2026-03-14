@@ -1,6 +1,6 @@
 /obj/item/airlock_painter/decal
 	name = "decal painter"
-	desc = "An airlock painter, reprogrammed to use a different style of paint in order to apply decals for floor tiles as well, in addition to repainting doors. Decals break when the floor tiles are removed."
+	desc = "An airlock painter, reprogrammed to use a different style of paint in order to apply decals for floor tiles as well, in addition to repainting doors and windows. Decals break when the floor tiles are removed."
 	desc_controls = "Alt-Click to remove the ink cartridge."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "decal_sprayer"
@@ -28,6 +28,9 @@
 		return NONE
 	if(isfloorturf(interacting_with) && use_paint(user))
 		paint_floor(interacting_with)
+		return ITEM_INTERACT_SUCCESS
+	if(istype(interacting_with, /obj/structure/window)  && use_paint(user))
+		interacting_with.add_atom_colour(selected_color, FIXED_COLOUR_PRIORITY)
 		return ITEM_INTERACT_SUCCESS
 	return NONE
 

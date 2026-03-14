@@ -161,6 +161,12 @@
 	icon_state = "backpack-medical"
 	inhand_icon_state = "medicalpack"
 
+/obj/item/storage/backpack/medic/deforest
+	name = "Deforest Backpack"
+	desc = "A Deforest Medical backpack, widened straps and gel padding allows the bag to remain comfortable when loaded to the brim, making it comfortable to carry even in the roughest environments."
+	icon_state = "deforest-backpack"
+	inhand_icon_state = "deforest_backpack"
+
 /obj/item/storage/backpack/security
 	name = "security backpack"
 	desc = "It's a very robust backpack."
@@ -396,6 +402,12 @@
 	desc = "A sterile satchel used in medical departments."
 	icon_state = "satchel-medical"
 	inhand_icon_state = "satchel-med"
+
+/obj/item/storage/backpack/satchel/med/deforest
+	name = "Deforest Satchel"
+	desc = "A Deforest Medical satchel, reinforced and cross-stitched with insulated padding, the bag is designed to take a beating well still being light enough to carry easily when loaded down."
+	icon_state = "deforest-satchel"
+	inhand_icon_state = "deforest_satchel"
 
 /obj/item/storage/backpack/satchel/vir
 	name = "virologist satchel"

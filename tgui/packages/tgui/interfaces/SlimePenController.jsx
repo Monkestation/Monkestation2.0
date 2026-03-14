@@ -1,17 +1,17 @@
+import { toFixed } from 'common/math';
 import { useBackend, useLocalState } from '../backend';
 import {
   Box,
-  Table,
-  Tabs,
+  Button,
   Collapsible,
-  Stack,
   LabeledList,
   ProgressBar,
   Section,
-  Button,
+  Stack,
+  Table,
+  Tabs,
 } from '../components';
 import { Window } from '../layouts';
-import { toFixed } from 'common/math';
 
 export const SlimePenController = (_) => {
   const [tabIndex, setTabIndex] = useLocalState('tabIndex', 1);
@@ -73,7 +73,7 @@ const SlimeData = (_) => {
                     minValue={0}
                     maxValue={100}
                   >
-                    {toFixed(slime.health, 0.1) + ' %'}
+                    {`${toFixed(slime.health, 0.1)} %`}
                   </ProgressBar>
                 </LabeledList.Item>
                 <LabeledList.Item label="Hunger">
@@ -87,7 +87,7 @@ const SlimeData = (_) => {
                     minValue={0}
                     maxValue={100}
                   >
-                    {toFixed(slime.hunger_precent * 100, 0.1) + ' %'}
+                    {`${toFixed(slime.hunger_precent * 100, 0.1)} %`}
                   </ProgressBar>
                 </LabeledList.Item>
                 <LabeledList.Item label="Mutation Chance">
@@ -101,11 +101,11 @@ const SlimeData = (_) => {
                     minValue={0}
                     maxValue={100}
                   >
-                    {toFixed(slime.mutation_chance, 0.1) + ' %'}
+                    {`${toFixed(slime.mutation_chance, 0.1)} %`}
                   </ProgressBar>
                 </LabeledList.Item>
                 <LabeledList.Item label="Possible Mutations">
-                  <Collapsible title={slime.slime_color + ' Mutations'}>
+                  <Collapsible title={`${slime.slime_color} Mutations`}>
                     {slime.possible_mutations.map((mutation) => (
                       <Section
                         key={mutation.color}
@@ -116,7 +116,7 @@ const SlimeData = (_) => {
                         }
                       >
                         <Stack>
-                          <Box>{mutation.color + ' Slime'}</Box>
+                          <Box>{`${mutation.color} Slime`}</Box>
                           <Button
                             ml="10px"
                             icon={'spider'}
@@ -139,7 +139,7 @@ const SlimeData = (_) => {
                     {slime.traits.map((trait) => (
                       <Section key={trait.name}>
                         <Stack>
-                          <Box>{trait.name + ' Slime'}</Box>
+                          <Box>{`${trait.name} Slime`}</Box>
                           <Button
                             ml="10px"
                             icon={'drumstick-bite'}
@@ -234,7 +234,7 @@ const StoreViewer = (_) => {
                   disabled={item.owned}
                   onClick={() => act('buy', { path: item.path })}
                 >
-                  {item.cost + ' Xenobiology Points'}
+                  {`${item.cost} Xenobiology Points`}
                 </Button>
               </Stack.Item>
             </Stack>
@@ -267,7 +267,7 @@ const StoreViewer = (_) => {
         ))}
       </Collapsible>
       <Section textAlign="center" fontSize="18px">
-        {'Stored Ooze: ' + toFixed(reagent_amount, 0.1) + ' units'}
+        {`Stored Ooze: ${toFixed(reagent_amount, 0.1)} units`}
       </Section>
       <LabeledList>
         {reagent_data.map((reagent) => (

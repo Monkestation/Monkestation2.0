@@ -84,10 +84,7 @@
 		//Don't hit people through windows, ok?
 		if(!directional_blocked && SEND_SIGNAL(target_shove_turf, COMSIG_CARBON_DISARM_COLLIDE, src, target, shove_blocked) & COMSIG_CARBON_SHOVE_HANDLED)
 			return
-		//MONKESTATION EDIT START
-		// if(directional_blocked || shove_blocked) - MONKESTATION EDIT ORIGINAL
 		if(directional_blocked || shove_blocked || HAS_TRAIT(target, TRAIT_FEEBLE))
-		//MONKESTATION EDIT END
 			target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
 			target.visible_message(span_danger("[name] shoves [target.name], knocking [target.p_them()] down!"),
 				span_userdanger("You're knocked down from a shove by [name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
@@ -153,8 +150,8 @@
 #define VV_HK_ADJUST_HANDS "hand_count"
 /mob/living/basic/vv_get_dropdown()
 	. = ..()
-	VV_DROPDOWN_OPTION("", "-------------") //monkestation edit
-	VV_DROPDOWN_OPTION(VV_HK_ADJUST_HANDS, "Grant Hands") //monkestation edit
+	VV_DROPDOWN_OPTION("", "-------------")
+	VV_DROPDOWN_OPTION(VV_HK_ADJUST_HANDS, "Grant Hands")
 
 /mob/living/basic/vv_do_topic(list/href_list)
 	. = ..()

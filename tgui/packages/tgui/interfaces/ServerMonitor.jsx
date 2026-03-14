@@ -1,14 +1,14 @@
 import { useBackend, useLocalState } from '../backend';
 import {
+  Button,
+  Divider,
+  Flex,
+  Input,
+  LabeledList,
+  NoticeBox,
   Section,
   Stack,
-  Input,
-  Button,
   Table,
-  LabeledList,
-  Flex,
-  Divider,
-  NoticeBox,
 } from '../components';
 import { Window } from '../layouts';
 
@@ -30,7 +30,7 @@ const PacketInfo = (props) => {
       <LabeledList>
         <LabeledList.Item label="Data Type">{packet.type}</LabeledList.Item>
         <LabeledList.Item label="Source">
-          {packet.source + (packet.job ? ' (' + packet.job + ')' : '')}
+          {packet.source + (packet.job ? ` (${packet.job})` : '')}
         </LabeledList.Item>
         <LabeledList.Item label="Class">{packet.race}</LabeledList.Item>
         <LabeledList.Item label="Contents">{packet.message}</LabeledList.Item>
@@ -62,8 +62,8 @@ const ServerScreen = (props) => {
             <LabeledList.Item label="Server">{server.name}</LabeledList.Item>
             <LabeledList.Item label="Total Recorded Traffic">
               {server.traffic >= 1024
-                ? server.traffic / 1024 + ' TB'
-                : server.traffic + ' GB'}
+                ? `${server.traffic / 1024} TB`
+                : `${server.traffic} GB`}
             </LabeledList.Item>
           </LabeledList>
         </Section>

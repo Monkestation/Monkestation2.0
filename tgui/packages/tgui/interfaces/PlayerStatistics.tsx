@@ -1,6 +1,7 @@
-import { Section, LabeledList } from '../components';
-import { Window } from '../layouts';
 import { useBackend } from '../backend';
+import { LabeledList, Section } from '../components';
+import { Window } from '../layouts';
+
 type Data = {
   total_clients: number;
   living_players: number;

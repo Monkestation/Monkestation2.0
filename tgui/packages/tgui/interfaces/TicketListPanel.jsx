@@ -1,5 +1,5 @@
 import { useBackend, useLocalState } from '../backend';
-import { Section, Collapsible, Button, Tabs, Flex } from '../components';
+import { Button, Collapsible, Flex, Section, Tabs } from '../components';
 import { Window } from '../layouts';
 
 export const TicketListPanel = (props) => {
@@ -40,7 +40,7 @@ export const TicketListView = (props) => {
   const open_count = data.active_tickets.length;
   const closed_count = data.closed_tickets.length;
 
-  const filterTicket = function (ticket) {
+  const filterTicket = (ticket) => {
     if (filter_type === 'ALL') return true;
     if (filter_type === 'MY TICKETS' && ticket.admin_key === data.user_key) {
       return true;
@@ -55,7 +55,7 @@ export const TicketListView = (props) => {
         className="ticket_section"
         color={open_count === 0 ? 'default' : 'red'}
         open
-        title={'Active Tickets (' + data.active_tickets.length + ')'}
+        title={`Active Tickets (${data.active_tickets.length})`}
       >
         {data.active_tickets
           .filter(filterTicket)
@@ -195,7 +195,7 @@ export const TicketSummary = (props) => {
     <Section
       className={user === ticket.admin_key ? 'myticket' : ''}
       backgroundColor={ticket.admin_key || !ticket.active ? '' : 'bad'}
-      title={'#' + ticket.id + ': ' + ticket.name}
+      title={`#${ticket.id}: ${ticket.name}`}
     >
       Owner:
       <Button

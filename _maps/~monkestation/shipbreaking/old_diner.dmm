@@ -50,7 +50,7 @@
 /turf/open/floor/wood/airless,
 /area/template_noop)
 "m" = (
-/obj/machinery/door/airlock/glass_large{
+/obj/machinery/door/airlock/multi_tile/public/glass{
 	doorOpen = 'sound/machines/defib_success.ogg'
 	},
 /obj/machinery/door/firedoor/border_only,

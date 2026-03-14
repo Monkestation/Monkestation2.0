@@ -8,6 +8,6 @@
 ///from [/datum/move_loop/process] (result, visual_delay): //Result is an enum value. Enums defined in __DEFINES/movement.dm
 #define COMSIG_MOVELOOP_POSTPROCESS "moveloop_postprocess"
 //from [/datum/move_loop/has_target/jps/recalculate_path] ():
-#define COMSIG_MOVELOOP_JPS_REPATH "moveloop_jps_repath"
+#define COMSIG_MOVELOOP_REPATH "moveloop_repath"
 ///from [/datum/move_loop/has_target/jps/on_finish_pathing]
-#define COMSIG_MOVELOOP_JPS_FINISHED_PATHING "moveloop_jps_finished_pathing"
+#define COMSIG_MOVELOOP_FINISHED_PATHING "moveloop_finished_pathing"

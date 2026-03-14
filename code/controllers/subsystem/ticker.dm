@@ -344,15 +344,16 @@ SUBSYSTEM_DEF(ticker)
 	PostSetup()
 	INVOKE_ASYNC(Tracy, TYPE_PROC_REF(/datum/tracy, flush)) // monkestation edit: byond-tracy
 
+	Master.clear_profiler()
+
 	return TRUE
 
 /datum/controller/subsystem/ticker/proc/welcome_player(mob/player)
-	var/client/client = player.client
-	var/list/channel_volume = client?.prefs?.channel_volume?.Copy()
-	if(!client)
-		SEND_SOUND(player, sound(SSstation.announcer.get_rand_welcome_sound(), volume = 100))
-	else if("[CHANNEL_VOX]" in channel_volume)
-		SEND_SOUND(player, sound(SSstation.announcer.get_rand_welcome_sound(), volume = channel_volume["[CHANNEL_VOX]"] * (channel_volume["[CHANNEL_MASTER_VOLUME]"] * 0.01)))
+	var/list/channel_volume = player?.client?.prefs?.channel_volume
+	if(!(channel_volume["[CHANNEL_STORYTELLER]"]))
+		return
+	var/volume_played = channel_volume["[CHANNEL_STORYTELLER]"] * (channel_volume["[CHANNEL_MASTER_VOLUME]"] * 0.01)
+	SEND_SOUND(player, sound(SSstation.announcer.get_rand_welcome_sound(), volume = volume_played))
 
 /datum/controller/subsystem/ticker/proc/PostSetup()
 	set waitfor = FALSE
@@ -730,7 +731,7 @@ SUBSYSTEM_DEF(ticker)
 			// There was a blob on board, guess it was nuked to stop it
 			if(length(GLOB.overminds))
 				for(var/mob/eye/blob/overmind as anything in GLOB.overminds)
-					if(overmind.max_count < overmind.announcement_size)
+					if(!overmind.antag_team || overmind.antag_team.highest_tile_count < overmind.antag_team.announcement_size)
 						continue
 
 					news_message = "[decoded_station_name] is currently undergoing decontanimation after a controlled \
@@ -835,7 +836,8 @@ SUBSYSTEM_DEF(ticker)
 	///The reference to the end of round sound that we have chosen.
 	var/sound/end_of_round_sound_ref = sound(round_end_sound)
 	for(var/mob/M in GLOB.player_list)
-		if(M.client.prefs.read_preference(/datum/preference/toggle/sound_endofround))
+		if(M.client.prefs?.channel_volume["[CHANNEL_LOBBYMUSIC]"])
+			end_of_round_sound_ref.volume = calculate_mixed_volume(M.client, 100, CHANNEL_LOBBYMUSIC)
 			SEND_SOUND(M.client, end_of_round_sound_ref)
 
 	// monkestation removal start: fix-lobby-music

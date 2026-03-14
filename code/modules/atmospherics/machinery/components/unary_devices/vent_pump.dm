@@ -55,15 +55,16 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/multitool_act(mob/living/user, obj/item/multitool/multi_tool)
 	. = ..()
 
-	if(istype(multi_tool.buffer, /obj/machinery/air_sensor))
-		var/obj/machinery/air_sensor/sensor = multi_tool.buffer
+	var/datum/buffer = multitool_get_buffer(multi_tool)
+	if(istype(buffer, /obj/machinery/air_sensor))
+		var/obj/machinery/air_sensor/sensor = buffer
 		sensor.outlet_id = id_tag
-		multi_tool.set_buffer(null)
+		multitool_set_buffer(multi_tool, null)
 		balloon_alert(user, "output linked to sensor")
 		return ITEM_INTERACT_SUCCESS
 
 	balloon_alert(user, "saved in buffer")
-	multi_tool.set_buffer(src)
+	multitool_set_buffer(multi_tool, src)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/atmospherics/components/unary/vent_pump/Destroy()
@@ -170,11 +171,12 @@
 			pressure_delta = min(pressure_delta, (air_contents.return_pressure() - internal_pressure_bound))
 
 		if(pressure_delta > 0)
-			if(air_contents.temperature > 0)
-				var/transfer_moles = (pressure_delta * environment.volume) / (air_contents.temperature * R_IDEAL_GAS_EQUATION)
+			var/contents_temp = air_contents.temperature
+			if(contents_temp > 0)
+				var/transfer_moles = (pressure_delta * environment.volume) / (contents_temp * R_IDEAL_GAS_EQUATION)
 				var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
 
-				if(!removed || !removed.total_moles())
+				if(!removed?.total_moles())
 					return
 
 				loc.assume_air(removed)
@@ -187,16 +189,18 @@
 		if(pressure_checks&ATMOS_INTERNAL_BOUND)
 			pressure_delta = min(pressure_delta, (internal_pressure_bound - air_contents.return_pressure()))
 
-		if(pressure_delta > 0 && environment.temperature > 0)
-			var/transfer_moles = (pressure_delta * air_contents.volume) / (environment.temperature * R_IDEAL_GAS_EQUATION)
+		if(pressure_delta > 0)
+			var/env_temperature = environment.temperature
+			if(env_temperature > 0)
+				var/transfer_moles = (pressure_delta * air_contents.volume) / (env_temperature * R_IDEAL_GAS_EQUATION)
 
-			var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
+				var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
 
-			if(!removed || !removed.total_moles()) //No venting from space 4head
-				return
+				if(!removed?.total_moles()) //No venting from space 4head
+					return
 
-			air_contents.merge(removed)
-			update_parents()
+				air_contents.merge(removed)
+				update_parents()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/update_name()
 	. = ..()

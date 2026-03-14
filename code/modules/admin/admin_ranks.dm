@@ -83,8 +83,6 @@ GLOBAL_PROTECT(protected_ranks)
 				flag = R_SOUND
 			if("SPAWN")
 				flag = R_SPAWN
-			if("AUTOADMIN")
-				flag = R_AUTOADMIN
 			if("DBRANKS")
 				flag = R_DBRANKS
 			if("ADVANCEDCALL")

@@ -1,4 +1,6 @@
 import { classes } from 'common/react';
+import dateformat from 'dateformat';
+import yaml from 'js-yaml';
 import { Fragment, useEffect, useMemo, useState } from 'react';
 import {
   Box,
@@ -10,13 +12,12 @@ import {
   Stack,
   Table,
 } from 'tgui-core/components';
-import dateformat from 'dateformat';
-import yaml from 'js-yaml';
-
-import { Window } from '../layouts';
+import { fetchRetry } from 'tgui-core/http';
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
-import { LobbyNoticesType } from './common/LobbyNotices';
+import { Window } from '../layouts';
+import { logger } from '../logging';
+import type { LobbyNoticesType } from './common/LobbyNotices';
 
 const icons = {
   bugfix: { icon: 'bug', color: 'green' },
@@ -70,11 +71,9 @@ const ChangeRow = (props: { kind: string; content: string }) => {
       >
         <Icon
           color={
-            icons[props.kind] ? icons[props.kind].color : icons['unknown'].color
+            icons[props.kind] ? icons[props.kind].color : icons.unknown.color
           }
-          name={
-            icons[props.kind] ? icons[props.kind].icon : icons['unknown'].icon
-          }
+          name={icons[props.kind] ? icons[props.kind].icon : icons.unknown.icon}
         />
       </Table.Cell>
       <Table.Cell className="Changelog__Cell">{props.content}</Table.Cell>
@@ -273,26 +272,31 @@ export const Changelog = (_props) => {
     const maxAttempts = 6;
 
     if (attemptNumber > maxAttempts) {
-      return setData('Failed to load data after ' + maxAttempts + ' attempts');
+      return setData(`Failed to load data after ${maxAttempts} attempts`);
     }
 
     act('get_month', { date });
 
-    fetch(resolveAsset(date + '.yml')).then(async (changelogData) => {
-      const result = await changelogData.text();
-      const errorRegex = /^Cannot find/;
+    fetchRetry(resolveAsset(`${date}.yml`))
+      .then((changelogData) => changelogData.text())
+      .then((result) => {
+        const errorRegex = /^Cannot find/;
 
-      if (errorRegex.test(result)) {
-        const timeout = 50 + attemptNumber * 50;
+        if (errorRegex.test(result)) {
+          const timeout = 50 + attemptNumber * 50;
 
-        setData('Loading changelog data' + '.'.repeat(attemptNumber + 3));
-        setTimeout(() => {
-          getData(date, attemptNumber + 1);
-        }, timeout);
-      } else {
-        setData(yaml.load(result, { schema: yaml.CORE_SCHEMA }));
-      }
-    });
+          setData(`Loading changelog data${'.'.repeat(attemptNumber + 3)}`);
+          setTimeout(() => {
+            getData(date, attemptNumber + 1);
+          }, timeout);
+        } else {
+          setData(yaml.load(result, { schema: yaml.CORE_SCHEMA }));
+        }
+      })
+      .catch((error) => {
+        logger.log('Failed to fetch changelog data', JSON.stringify(error));
+        setData('Fetching changelog data errored');
+      });
   };
 
   useEffect(() => {

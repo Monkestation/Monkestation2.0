@@ -34,10 +34,19 @@
 	living_mob.show_message(span_warning("BANG"), MSG_AUDIBLE)
 	var/distance = max(0, get_dist(get_turf(src), turf))
 
+	/// if they are laying down the bang part does less
+	var/hit_the_deck = FALSE
+	/// if they are faceplanted on the floor the flash hits them but not the stun
+	var/hit_the_deck_and_faceplanted = FALSE
+	if(living_mob.body_position == LYING_DOWN)
+		hit_the_deck = TRUE
+		if(living_mob.dir == 1)
+			hit_the_deck_and_faceplanted = TRUE
 //Flash
-	if(!living_mob.has_status_effect(/datum/status_effect/currently_flashed) && living_mob.flash_act(affect_silicon = 1))
-		living_mob.Paralyze(max(20/max(1, distance), 5))
-		living_mob.Knockdown(max(200/max(1, distance), 60))
+	if(!living_mob.has_status_effect(/datum/status_effect/currently_flashed) && !hit_the_deck_and_faceplanted)
+		if(living_mob.flash_act(affect_silicon = 1))
+			living_mob.Paralyze(max(20/max(1, distance), 5))
+			living_mob.Knockdown(max(200/max(1, distance), 60))
 
 //Bang
 	if(!distance || loc == living_mob || loc == living_mob.loc)
@@ -45,10 +54,13 @@
 		living_mob.Knockdown(200)
 		living_mob.soundbang_act(1, 200, 10, 10)
 	else
-		if(distance < 1) // MONKESTATION EDIT - No more adjacent guaranteed stun
+		if(distance < 1) // No more adjacent guaranteed stun
 			living_mob.Paralyze(5)
 			living_mob.Knockdown(30)
-		living_mob.soundbang_act(1, max(200 / max(1, distance), 60), rand(0, 5))
+		if(hit_the_deck)
+			living_mob.soundbang_act(1, max(200 / max(1, distance) * 0.1, 60), rand(0, 2), 5)
+		else
+			living_mob.soundbang_act(1, max(200 / max(1, distance), 60), rand(0, 5))
 
 /obj/item/grenade/stingbang
 	name = "stingbang"

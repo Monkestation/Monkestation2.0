@@ -750,7 +750,7 @@
 	var/mob/living/living_target = target
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
 	if(living_target.reagents && living_target.can_inject())
-		var/injecting_amount = qp_sigmoid(2000, 840, our_seed.potency)
+		var/injecting_amount = qp_sigmoid(2000, 50, our_seed.potency)
 		//420 units at 2000 potency
 		//one 5% reagent would fill a standard plant completely at 2000 potency
 		our_plant.reagents.trans_to(living_target, injecting_amount, methods = INJECT)

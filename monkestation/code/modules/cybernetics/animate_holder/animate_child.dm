@@ -460,7 +460,5 @@
 
 /datum/animate_holder/vv_do_topic(list/href_list)
 	. = ..()
-	//monke edit start: CYBERNETIC
 	if(href_list[VV_HK_ADJUST_ANIMATIONS] && check_rights(R_VAREDIT))
 		ui_interact(usr)
-	//monke edit end: CYBERNETIC

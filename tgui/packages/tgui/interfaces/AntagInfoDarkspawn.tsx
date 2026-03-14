@@ -1,9 +1,9 @@
+import type { BooleanLike } from 'common/react';
 import { capitalize } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
-import { Section, Stack, Box, Tabs, Button, Flex, DmIcon } from '../components';
+import { Box, Button, DmIcon, Flex, Section, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
-import { BooleanLike } from 'common/react';
-import { ObjectivePrintout, Objective } from './common/Objectives';
+import { type Objective, ObjectivePrintout } from './common/Objectives';
 
 const Velvet = {
   fontWeight: 'bold',
@@ -470,7 +470,7 @@ const KnowledgePreview = (props) => {
           </Stack.Item>
           <Stack.Item fontSize="12px" color="purple">
             {selectedKnowledge?.purchases_left > 0 &&
-              'Can be purchased ' + selectedKnowledge.purchases_left + ' times'}
+              `Can be purchased ${selectedKnowledge.purchases_left} times`}
           </Stack.Item>
         </Stack>
       </Section>

@@ -21,7 +21,7 @@
 			return "<font color=red>(DEAD)</font>"
 		else if(!owner.current.client)
 			return "(No client)"
-	return should_count_for_antag_cap() ? "([antag_count_points] points)" : null
+	return should_count_for_antag_cap() ? "([get_antag_count_points()] points)" : null
 
 //Builds the common FLW PM TP commands part
 //Probably not going to be overwritten by anything but you never know

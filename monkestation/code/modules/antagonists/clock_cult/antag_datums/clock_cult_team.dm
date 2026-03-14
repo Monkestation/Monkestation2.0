@@ -75,11 +75,11 @@ GLOBAL_DATUM(main_clock_cult, /datum/team/clock_cult)
 						[ANCHORING_CRYSTALS_TO_SUMMON] Anchoring Crystal[ANCHORING_CRYSTALS_TO_SUMMON > 1 ? "s are" : " is"] summoned and protected on the station."]"
 
 	if((human_servant_count * 2) > max_human_servants && warning_stage < CONVERSION_WARNING_HALFWAY)
-		send_clock_message(null, span_bigbrass("Ratvar's influence is growing. [main_message]"), sent_sound = 'sound/magic/clockwork/scripture_tier_up.ogg')
+		send_clock_message(span_bigbrass("Ratvar's influence is growing. [main_message]"), sent_sound = 'sound/magic/clockwork/scripture_tier_up.ogg')
 		warning_stage = CONVERSION_WARNING_HALFWAY
 
 	else if(human_servant_count > ((3/4) * max_human_servants) && warning_stage < CONVERSION_WARNING_THREEQUARTERS)
-		send_clock_message(null, span_bigbrass("You feel the boundary between reality and fiction lessen as the Ark sparks with an arcane energy.<br> [main_message]"), \
+		send_clock_message(span_bigbrass("You feel the boundary between reality and fiction lessen as the Ark sparks with an arcane energy.<br> [main_message]"), \
 						   sent_sound = 'sound/magic/clockwork/scripture_tier_up.ogg')
 		warning_stage = CONVERSION_WARNING_THREEQUARTERS
 

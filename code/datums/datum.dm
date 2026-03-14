@@ -520,3 +520,23 @@
 		return
 	harddel_deets_dumped = TRUE
 	return "Image icon: [icon] - icon_state: [icon_state] [loc ? "loc: [loc] ([loc.x],[loc.y],[loc.z])" : ""]"
+
+/// Datum-level proc to return a multitool's buffer if it has one. Used to support different multitool types.
+/datum/proc/multitool_get_buffer(obj/item/tool)
+	if(istype(tool, /obj/item/multitool))
+		var/obj/item/multitool/multi = tool
+		return multi.buffer?.resolve()
+	if(istype(tool, /obj/item/holotool))
+		var/obj/item/holotool/holo = tool
+		return holo.buffer?.resolve()
+
+/// Datum-level proc to set the value of a multitool's buffer. Used to support different multitool types.
+/datum/proc/multitool_set_buffer(obj/item/tool, buffer_value)
+	if(istype(tool, /obj/item/multitool))
+		var/obj/item/multitool/multi = tool
+		multi.set_buffer(buffer_value)
+		return TRUE
+	if(istype(tool, /obj/item/holotool))
+		var/obj/item/holotool/holo = tool
+		holo.set_buffer(buffer_value)
+		return TRUE

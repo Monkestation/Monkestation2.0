@@ -1,5 +1,3 @@
-#define LOCKER_FULL -1
-
 /// A comprehensive list of all roundstart closets (NOT CRATES)
 GLOBAL_LIST_EMPTY_TYPED(roundstart_station_closets, /obj/structure/closet)
 
@@ -99,19 +97,51 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 	. = ..()
 
 	var/static/list/closet_paint_jobs = list(
-		"Cargo" = list("icon_state" = "qm"),
-		"Engineering" = list("icon_state" = "ce"),
-		"Engineering Secure" = list("icon_state" = "eng_secure"),
+		"Generic" = list("icon_state" = "generic", "icon_door" = "generic"),
+		"Secure" = list("icon_state" = "secure"),
+		"Blue Wadrobe" = list("icon_state" = "generic", "icon_door" = "blue"),
+		"Mixed Wardrobe" = list("icon_state" = "generic", "icon_door" = "mixed"),
+		"Grey Wardrobe" = list("icon_state" = "generic", "icon_door" = "grey"),
+		"Green Wardrobe" = list("icon_state" = "generic", "icon_door" = "green"),
+		"Pink Wardrobe" = list("icon_state" = "generic", "icon_door" = "pink"),
+		"Red Wardrobe" = list("icon_state" = "generic", "icon_door" = "red"),
+		"White Wardrobe" = list("icon_state" = "generic", "icon_door" = "white"),
+		"Yellow Wardrobe" = list("icon_state" = "generic", "icon_door" = "yellow"),
+		"Black Wardrobe" = list("icon_state" = "generic", "icon_door" = "black"),
+		"Atmos Wardrobe" = list("icon_state" = "generic", "icon_door" = "atmos"),
+		"Suspicous" = list("icon_state" = "syndicate"),
 		"Radiation" = list("icon_state" = "eng", "icon_door" = "eng_rad"),
-		"Tool Storage" = list("icon_state" = "eng", "icon_door" = "eng_tool"),
-		"Fire Equipment" = list("icon_state" = "fire"),
+		"Bomb" = list("icon_state" = "bomb", "icon_door" = "bomb"),
+		"Bio" = list("icon_state" = "bio"),
+		"Bio Virology" = list("icon_state" = "bio_viro"),
+		"Bio Security" = list("icon_state" = "bio_sec"),
+		"Bio Janitor" = list("icon_state" = "bio_jan"),
 		"Emergency" = list("icon_state" = "emergency"),
+		"Fire" = list("icon_state" = "fire"),
 		"Hydroponics" = list("icon_state" = "hydro"),
 		"Medical" = list("icon_state" = "med"),
-		"Science" = list("icon_state" = "rd"),
-		"Security" = list("icon_state" = "cap"),
-		"Mining" = list("icon_state" = "mining"),
-		"Virology" = list("icon_state" = "bio_viro"),
+		"Chemical" = list("icon_state" = "med", "icon_door" = "chemical"),
+		"Medical Secure" = list("icon_state" = "med_secure", "icon_door" = "med_secure"),
+		"Science" = list("icon_state" = "science", "icon_door" = "science"),
+		"Tool" = list("icon_state" = "eng", "icon_door" = "eng_tool"),
+		"Electrical" = list("icon_state" = "eng", "icon_door" = "eng_elec"),
+		"Welding Supplies" = list("icon_state" = "eng", "icon_door" = "eng_weld"),
+		"Engineering" = list("icon_state" = "eng_secure", "icon_door" = "eng_secure"),
+		"Atmospherics" = list("icon_state" = "atmos", "icon_door" = "atmos"),
+		"Cargo" = list("icon_state" = "cargo", "icon_door" = "cargo"),
+		"Mining" = list("icon_state" = "mining", "icon_door" = "mining"),
+		"Quartermaster" = list("icon_state" = "qm", "icon_door" = "qm"),
+		"Security" = list("icon_state" = "sec", "icon_door" = "sec"),
+		"Security Medical" = list("icon_state" = "secmed", "icon_door" = "secmed"),
+		"Armory" = list("icon_state" = "armory", "icon_door" = "armory"),
+		"Tactical" = list("icon_state" = "tac", "icon_door" = "tac"),
+		"Warden" = list("icon_state" = "warden", "icon_door" = "warden"),
+		"Head of Security" = list("icon_state" = "hos", "icon_door" = "hos"),
+		"Captain" = list("icon_state" = "cap", "icon_door" = "cap"),
+		"Head of Personnel" = list("icon_state" = "hop", "icon_door" = "hop"),
+		"Chief Medical Offcier" = list("icon_state" = "cmo", "icon_door" = "cmo"),
+		"Research Director" = list("icon_state" = "rd", "icon_door" = "rd"),
+		"Chief Engineer" = list("icon_state" = "ce", "icon_door" = "ce"),
 		)
 	if(paint_jobs)
 		paint_jobs = closet_paint_jobs
@@ -286,7 +316,7 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 	if(id_card)
 		. += span_notice("It can be [EXAMINE_HINT("marked")] with a pen.")
 	if(can_weld_shut && !welded)
-		. += span_notice("Its can be [EXAMINE_HINT("welded")] shut.")
+		. += span_notice("It can be [EXAMINE_HINT("welded")] shut.")
 	if(welded)
 		. += span_notice("Its [EXAMINE_HINT("welded")] shut.")
 	if(anchorable && !anchored)
@@ -294,7 +324,7 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 	if(anchored)
 		. += span_notice("Its [EXAMINE_HINT("bolted")] to the ground.")
 	if(length(paint_jobs))
-		. += span_notice("It can be [EXAMINE_HINT("painted")] another texture.")
+		. += span_notice("It can be [EXAMINE_HINT("painted")] another texture with an [EXAMINE_HINT("airlock painter")].")
 	if(HAS_TRAIT(user, TRAIT_SKITTISH) && divable)
 		. += span_notice("If you bump into [p_them()] while running, you will jump inside.")
 
@@ -1167,5 +1197,3 @@ GLOBAL_LIST_EMPTY_TYPED(closets, /obj/structure/closet)
 ///Adds the closet to a global list. Placed in its own proc so that crates may be excluded.
 /obj/structure/closet/proc/add_to_roundstart_list()
 	GLOB.roundstart_station_closets += src
-
-#undef LOCKER_FULL

@@ -67,8 +67,8 @@
 			return CONTEXTUAL_SCREENTIP_SET
 	else
 		if(held_item.tool_behaviour == TOOL_MULTITOOL)
-			var/obj/item/multitool/tool = held_item
-			if(!QDELETED(tool.buffer) && istype(tool.buffer, /datum/techweb))
+			var/datum/buffer = multitool_get_buffer(held_item)
+			if(!QDELETED(buffer) && istype(buffer, /datum/techweb))
 				context[SCREENTIP_CONTEXT_LMB] = "Upload Techweb"
 				context[SCREENTIP_CONTEXT_RMB] = "Upload Techweb"
 				return CONTEXTUAL_SCREENTIP_SET
@@ -100,8 +100,9 @@
 	if(panel_open)
 		wires.interact(user)
 		return ITEM_INTERACT_SUCCESS
-	if(!QDELETED(tool.buffer) && istype(tool.buffer, /datum/techweb))
-		connect_techweb(tool.buffer)
+	var/datum/buffer = multitool_get_buffer(tool)
+	if(!QDELETED(buffer) && istype(buffer, /datum/techweb))
+		connect_techweb(buffer)
 		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/rnd/multitool_act_secondary(mob/living/user, obj/item/tool)

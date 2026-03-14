@@ -273,7 +273,7 @@
 /datum/antagonist/changeling/proc/on_life(datum/source, seconds_per_tick, times_fired)
 	SIGNAL_HANDLER
 
-	var/delta_time = DELTA_WORLD_TIME(SSmobs)
+	var/delta_time = DELTA_WORLD_TIME(SSclient_mobs)
 
 	// If dead, we only regenerate up to half chem storage.
 	if(owner.current.stat == DEAD)

@@ -88,8 +88,6 @@
 	SEND_SIGNAL(owner, COMSIG_LIVING_MINOR_SHOCK)
 	owner.add_mood_event("tased", /datum/mood_event/tased)
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/being_tased)
-	if(owner.pain_controller?.pain_modifier > 0.5)
-		owner.pain_emote("scream")
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
 		human_owner.force_say()
@@ -133,8 +131,7 @@
 
 	owner.set_stutter_if_lower(10 SECONDS)
 	owner.set_jitter_if_lower(20 SECONDS)
-	owner.cause_pain(BODY_ZONES_ALL, 2 * seconds_between_ticks, BURN)
-	owner.apply_damage(60 * seconds_between_ticks * (owner.pain_controller?.pain_modifier || 1), STAMINA)
+	owner.apply_damage(60 * seconds_between_ticks, STAMINA)
 	if(owner.stat <= SOFT_CRIT)
 		owner.do_jitter_animation(INFINITY) // maximum POWER
 

@@ -11,7 +11,7 @@ import {
   Tabs,
 } from '../components';
 import { Window } from '../layouts';
-import { Objective, ObjectivePrintout } from './common/Objectives';
+import { type Objective, ObjectivePrintout } from './common/Objectives';
 
 type BorerInformation = {
   ability: AbilityInfo[];
@@ -188,7 +188,7 @@ const AbilitySection = (props: any) => {
         </Stack.Item>
         <Stack.Divider />
         <Stack.Item grow={1} fontSize="16px">
-          {selectedAbility && selectedAbility.ability_explanation}
+          {selectedAbility?.ability_explanation}
         </Stack.Item>
       </Stack>
     </Section>

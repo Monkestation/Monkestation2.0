@@ -1342,8 +1342,15 @@
 	worn_icon = 'monkestation/icons/donator/mob/clothing/suit.dmi'
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
-//Donation reward for Razurath
+//Public version of Razurath's donation reward
 /obj/item/clothing/suit/toggle/digicoat/glitched
+	name = "glitched digicoat"
+	desc = "Glitched images display across the back. Cool!"
+	base_icon_state = "digicoat_glitched"
+	icon_state = "digicoat_glitched"
+
+//Donation reward for Razurath
+/obj/item/clothing/suit/toggle/digicoat/hacked
 	name = "hacked digicoat"
 	desc = "Glitched images display across the back. Cool!"
 	base_icon_state = "digicoat_glitched"
