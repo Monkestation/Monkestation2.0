@@ -30,7 +30,16 @@
 			"Use only as directed.",
 			"16% sales tax will be charged for orders originating within Space Nebraska.",
 		)
-		uplink_item.limited_stock = limited_stock
+				//We want to limit the purchase amount of some items without adjusting the pricing.
+		if (uplink_item.limited_discount_stock > 0) {
+			uplink_item.limited_stock = uplink_item.limited_discount_stock
+		}
+
+		//if stock limited is passed into the function, we'll override everything
+		if (limited_stock > 0) {
+			uplink_item.limited_stock = limited_stock
+		}
+
 		if(uplink_item.cost >= 20) //Tough love for nuke ops
 			discount *= 0.5
 		uplink_item.stock_key = WEAKREF(uplink_item)

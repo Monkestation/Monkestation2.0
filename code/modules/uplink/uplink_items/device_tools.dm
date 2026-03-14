@@ -258,6 +258,7 @@
 	progression_minimum = 30 MINUTES
 	item = /obj/item/powersink
 	cost = 11
+	limited_discount_stock = 1
 
 /datum/uplink_item/device_tools/syndicate_contacts
 	name = "Polarized Contact Lenses"
