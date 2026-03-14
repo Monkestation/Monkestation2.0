@@ -1,7 +1,7 @@
 /datum/storyteller/operative
 	name = "The Operative"
 	desc = "The Operative tries to create more direct confrontation with human threats."
-	star_colour = STARCOLOUR_REDSTAR
+	star_colour = STARCOLOUR_MIDNIGHTSUN
 	welcome_text = "The eyes of multiple organizations have been set on the station."
 	starting_point_multipliers = list(
 		EVENT_TRACK_MUNDANE = 1,
