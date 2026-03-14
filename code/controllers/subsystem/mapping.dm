@@ -582,10 +582,6 @@ Used by the AI doomsday and the self-destruct nuke.
 		INIT_ANNOUNCE(msg)
 #undef INIT_ANNOUNCE
 
-	// Custom maps are removed after station loading so the map files does not persist for no reason.
-	if(current_map.map_path == CUSTOM_MAP_PATH)
-		fdel("_maps/custom/[current_map.map_file]")
-
 /**
  * Global list of AREA TYPES that are associated with the station.
  *

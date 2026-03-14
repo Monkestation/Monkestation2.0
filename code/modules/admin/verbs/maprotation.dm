@@ -25,6 +25,10 @@ ADMIN_VERB(admin_change_map, R_SERVER, FALSE, "Change Map", "Set the next map.",
 		return
 
 	if(chosenmap == "Custom")
+		var/notice = tgui_alert(user, "If you are uploading a custom map, it is important to use the Clear-Custom-Maps verb once the map has loaded next round. ", "Notice", list("I Understand", "Stop")) || "Stop"
+		if(notice == "Stop")
+			return
+
 		message_admins("[key_name_admin(user)] is changing the map to a custom map")
 		log_admin("[key_name(user)] is changing the map to a custom map")
 		var/datum/map_config/virtual_map = new
@@ -117,3 +121,15 @@ ADMIN_VERB(admin_change_map, R_SERVER, FALSE, "Change Map", "Set the next map.",
 
 ADMIN_VERB(admin_revert_map, R_SERVER, FALSE, "Revert Map Vote", "Reverts the next map.", ADMIN_CATEGORY_SERVER)
 	SSmap_vote.revert_next_map()
+
+ADMIN_VERB(admin_clear_custom_maps, R_SERVER, FALSE, "Clear Custom Maps", "Clears admin uploaded maps from persistency.", ADMIN_CATEGORY_SERVER)
+	var/confirm = tgui_alert(user, "Clear Admin uploaded maps from server persistency?", "Confirm", list("Yes", "Cancel")) || "Cancel"
+	if(confirm == "Cancel")
+		return
+
+	// Nuke the custom files, shorter version without + f stopped working once I added the notice above.
+	var/list/files = flist("_maps/custom/")
+	for(var/f in files)
+		fdel("_maps/custom/" + f)
+	message_admins("[key_name_admin(user)] has cleared custom maps from persistency.")
+	log_admin("[key_name(user)] has cleared custom maps from persistency.")
