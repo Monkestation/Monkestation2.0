@@ -66,15 +66,6 @@
 	item = /obj/item/jammer
 	cost = 1
 
-/datum/uplink_item/stealthy_tools/smugglersatchel
-	name = "Smuggler's Satchel"
-	desc = "This satchel is thin enough to be hidden in the gap between plating and tiling; great for stashing \
-			your stolen goods. Comes with a crowbar, a floor tile and some contraband inside."
-	item = /obj/item/storage/backpack/satchel/flat/with_tools
-	cost = 1
-	surplus = 30
-	illegal_tech = FALSE
-
 /datum/uplink_item/stealthy_tools/telecomm_blackout
 	name = "Disable Telecomms"
 	desc = "When purchased, a virus will be uploaded to the telecommunication processing servers to temporarily disable themselves."
@@ -98,7 +89,7 @@
 	surplus = 0
 	progression_minimum = 20 MINUTES
 	limited_stock = 1
-	cost = 6
+	cost = 5
 	restricted = TRUE
 	cant_discount = TRUE
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
@@ -106,3 +97,59 @@
 /datum/uplink_item/stealthy_tools/blackout/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
 	force_event(/datum/round_event_control/grid_check, "a syndicate virus")
 	return source //For log icon
+
+/datum/uplink_item/stealthy_tools/super_kitty_ears
+	name = "Super Syndie-Kitty Ears"
+	desc = "Developed by several Interdyne Pharmaceutics scientists and Wizard Federation archmages during a record-breaking rager, \
+			this set of feline ears combines the finest of bio-engineering and thamaturgy to allow the user to transform to and from a cat at will, \
+			granting them all the benefits (and downsides) of being a true feline, such as ventcrawling. \
+			However, this form will be clad in blood-red Syndicate armor, making its origin somewhat obvious."
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	item = /obj/item/organ/internal/ears/cat/super/syndie
+	cost = 16 // double the price of stealth implant
+	surplus = 5
+	limited_stock = 1
+	lock_secondary_objectives = TRUE // no you can't cheese progtot with ventcrawling
+
+/datum/uplink_item/stealthy_tools/sleepy_pen
+	name = "Sleepy Pen"
+	desc = "A syringe disguised as a functional pen, filled with a potent mix of drugs, including a \
+			strong anesthetic and a chemical that prevents the target from speaking. \
+			The pen holds one dose of the mixture, and can be refilled with any chemicals. Note that before the target \
+			falls asleep, they will be able to move and act."
+	item = /obj/item/pen/sleepy
+	cost = 4
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+
+/datum/uplink_item/stealthy_tools/origami_kit
+	name = "Boxed Origami Kit"
+	desc = "This box contains a guide on how to craft masterful works of origami, allowing you to transform normal pieces of paper into \
+			perfectly aerodynamic (and potentially lethal) paper airplanes."
+	item = /obj/item/storage/box/syndie_kit/origami_bundle
+	progression_minimum = 10 MINUTES
+	cost = 2
+	surplus = 50 //monkestation edit: from 0 to 50
+	purchasable_from = ~UPLINK_NUKE_OPS //clown ops intentionally left in, because that seems like some s-tier shenanigans.
+
+/datum/uplink_item/stealthy_tools/dehy_carp
+	name = "Dehydrated Space Carp"
+	desc = "Looks like a plush toy carp, but just add water and it becomes a real-life space carp! Squeeze in \
+			your hand before use so it knows not to kill you."
+	item = /obj/item/toy/plush/carpplushie/dehy_carp
+	cost = 1
+
+/datum/uplink_item/stealthy_tools/traitor_chem_bottle
+	name = "Poison Kit"
+	desc = "An assortment of deadly chemicals packed into a compact box. Comes with a syringe for more precise application."
+	item = /obj/item/storage/box/syndie_kit/chemical
+	cost = 6
+	surplus = 50
+
+/datum/uplink_item/stealthy_tools/suppressor
+	name = "Suppressor"
+	desc = "This suppressor will silence the shots of the weapon it is attached to for increased stealth and superior ambushing capability. It is compatible with many small ballistic guns including the Makarov, Stechkin APS and C-20r, but not revolvers or energy guns."
+	item = /obj/item/suppressor
+	cost = 1
+	surplus = 10
+	purchasable_from = ~UPLINK_CLOWN_OPS
+	illegal_tech = FALSE

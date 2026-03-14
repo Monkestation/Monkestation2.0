@@ -88,13 +88,25 @@
 	item = /obj/item/storage/box/trickshot
 
 /datum/uplink_item/ammo/uraniumpen
-	name = "Uranium Penetrator Box"
-	desc = "A box with 10 uranium penetrators, capable to penetrating walls and objects, but not people. Works best with thermals!"
+	name = "Uranium Penetrator Shell Box"
+	desc = "A box with 10 uranium penetrator shells, capable to penetrating walls and objects, but not people. Works best with thermals!"
 	cost = 3
 	item = /obj/item/storage/box/uraniumpen
 
 /datum/uplink_item/ammo/beeshot
-	name = "Beeshot Box"
+	name = "Beeshot Shell Box"
 	desc = "A box with 10 Beeshot shells. Creates very angry bees upon impact. Not as strong as buckshot."
 	cost = 3
 	item = /obj/item/storage/box/beeshot
+
+/datum/uplink_item/ammo/buckshot
+	name = "Buckshot Ammo Box"
+	desc = "A box with 16 buckshot shells. A lethal high damage spread of pellets."
+	cost = 3
+	item = /obj/item/ammo_box/advanced/s12gauge/buckshot
+
+/datum/uplink_item/ammo/rubber
+	name = "Rubber Ammo Box"
+	desc = "A box with 16 rubber shells. A less-lethal high stamina damage spread of rubber pellets."
+	cost = 3
+	item = /obj/item/ammo_box/advanced/s12gauge/rubber

@@ -32,15 +32,6 @@
 	cost = 10
 	surplus = 50
 
-/datum/uplink_item/firearms/throwingweapons
-	name = "Box of Throwing Weapons"
-	desc = "A box of shurikens and reinforced bolas from ancient Earth martial arts. They are highly effective \
-			throwing weapons. The bolas can knock a target down and the shurikens will embed into limbs."
-	progression_minimum = 10 MINUTES
-	item = /obj/item/storage/box/syndie_kit/throwing_weapons
-	cost = 3
-	illegal_tech = FALSE
-
 /datum/uplink_item/firearms/crossbow
 	name = "Miniature Energy Crossbow"
 	desc = "A short bow mounted across a tiller in miniature. \
@@ -59,7 +50,7 @@
 	desc = "Waffle Co.'s modernized Syndicate revolver. Fires 7 brutal rounds of .357 Magnum."
 	item = /obj/item/gun/ballistic/revolver/syndicate
 	progression_minimum = 30 MINUTES
-	cost = 13
+	cost = 10
 	surplus = 50
 	purchasable_from = ~UPLINK_CLOWN_OPS
 
@@ -76,7 +67,7 @@
 			Rumors of this 'siphoning power off your lifeforce' are greatly exaggerated, and Aetherofusion assures safety for up to 2 years of use."
 	item = /obj/item/gun/energy/laser/musket/syndicate
 	progression_minimum = 30 MINUTES
-	cost = 10
+	cost = 12
 	surplus = 40
 	purchasable_from = ~UPLINK_CLOWN_OPS
 
@@ -90,7 +81,7 @@
 	name = "\improper Bóbr 12 GA revolver"
 	desc = "An outdated sidearm rarely seen in use by some members of the CIN. A revolver type design with a four shell cylinder. That's right, shell, this one shoots twelve guage."
 	item = /obj/item/storage/box/syndie_kit/shotgun_revolver
-	cost = 8
+	cost = 5
 
 /datum/uplink_item/firearms/shit_smg
 	name = "Surplus Smg Bundle"
@@ -127,17 +118,3 @@
 	progression_minimum = 15 MINUTES
 	cost = 5
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS) //Because I don't think they get an autolathe or the resources to use the disk.
-
-/datum/uplink_item/firearms/minipea
-	name = "5 peashooters strapped together"
-	desc = "For use in a trash tank, 5 small machineguns strapped together using syndicate technology. It burns through ammo like no other."
-	item = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/minipea
-	cost = 8
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
-
-/datum/uplink_item/firearms/devitt
-	name = "Devitt Mk3 Light Tank"
-	desc = "An ancient tank teleported in for your machinations, comes prepared with a cannon and machinegun. REQUIRES TWO CREWMEMBERS TO OPPERATE EFFECTIVELY."
-	item = /obj/vehicle/sealed/mecha/devitt
-	cost = 40
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)

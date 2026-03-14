@@ -111,7 +111,7 @@
 	item = /obj/item/card/id/advanced/chameleon
 	cost = 4
 
-/datum/uplink_item/stealthy_tools/chameleon
+/datum/uplink_item/utility_clothing/chameleon
 	name = "Chameleon Kit"
 	desc = "A set of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more! \
 			Due to budget cuts, the shoes don't provide protection against slipping and skillchips are sold separately. \
@@ -119,3 +119,21 @@
 	item = /obj/item/storage/box/syndie_kit/chameleon
 	cost = 2
 	purchasable_from = ~UPLINK_NUKE_OPS //clown ops are allowed to buy this kit, since it's basically a costume
+
+/datum/uplink_item/utility_clothing/smugglersatchel
+	name = "Smuggler's Satchel"
+	desc = "This satchel is thin enough to be hidden in the gap between plating and tiling; great for stashing \
+			your stolen goods. Comes with a crowbar, a floor tile and some contraband inside."
+	item = /obj/item/storage/backpack/satchel/flat/with_tools
+	cost = 1
+	surplus = 30
+	illegal_tech = FALSE
+
+/datum/uplink_item/utility_clothing/chameleonheadsetdeluxe
+	name = "Advanced Chameleon Headset"
+	desc = "A premium model Chameleon Headset. All the features you love of the original, but now with flashbang \
+			protection, voice amplification, memory-foam, HD Sound Quality, and extra-wide spectrum dial. Usually reserved \
+			for high-ranking Cybersun officers, a few spares have been reserved for field agents."
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	item = /obj/item/radio/headset/chameleon/advanced
+	cost = 2

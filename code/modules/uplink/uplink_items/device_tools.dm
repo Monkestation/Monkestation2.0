@@ -329,15 +329,6 @@
 	surplus = 40
 	refundable = TRUE
 
-/datum/uplink_item/stealthy_tools/chameleonheadsetdeluxe
-	name = "Advanced Chameleon Headset"
-	desc = "A premium model Chameleon Headset. All the features you love of the original, but now with flashbang \
-			protection, voice amplification, memory-foam, HD Sound Quality, and extra-wide spectrum dial. Usually reserved \
-			for high-ranking Cybersun officers, a few spares have been reserved for field agents."
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
-	item = /obj/item/radio/headset/chameleon/advanced
-	cost = 2
-
 /datum/uplink_item/device_tools/plasma_license
 	name = "License to Plasmaflood"
 	desc = "A contract abusing a loophole found by plasmamen to invade halls with harmful gases \
@@ -346,19 +337,6 @@
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 	item = /obj/item/card/plasma_license
 	cost = 20
-
-/datum/uplink_item/device_tools/super_kitty_ears
-	name = "Super Syndie-Kitty Ears"
-	desc = "Developed by several Interdyne Pharmaceutics scientists and Wizard Federation archmages during a record-breaking rager, \
-			this set of feline ears combines the finest of bio-engineering and thamaturgy to allow the user to transform to and from a cat at will, \
-			granting them all the benefits (and downsides) of being a true feline, such as ventcrawling. \
-			However, this form will be clad in blood-red Syndicate armor, making its origin somewhat obvious."
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
-	item = /obj/item/organ/internal/ears/cat/super/syndie
-	cost = 16 // double the price of stealth implant
-	surplus = 5
-	limited_stock = 1
-	lock_secondary_objectives = TRUE // no you can't cheese progtot with ventcrawling
 
 /datum/uplink_item/device_tools/magboots
 	name = "Blood-Red Magboots"
@@ -373,4 +351,27 @@
 	desc = "A lightweight tactical jetpack harness, used by those who don't want to be weighed down by traditional jetpacks."
 	item = /obj/item/tank/jetpack/harness
 	cost = 1
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+
+/datum/uplink_item/device_tools/throwingweapons
+	name = "Box of Throwing Weapons"
+	desc = "A box of shurikens and reinforced bolas from ancient Earth martial arts. They are highly effective \
+			throwing weapons. The bolas can knock a target down and the shurikens will embed into limbs."
+	progression_minimum = 10 MINUTES
+	item = /obj/item/storage/box/syndie_kit/throwing_weapons
+	cost = 3
+	illegal_tech = FALSE
+
+/datum/uplink_item/device_tools/minipea
+	name = "5 peashooters strapped together"
+	desc = "For use in a trash tank, 5 small machineguns strapped together using syndicate technology. It burns through ammo like no other."
+	item = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/minipea
+	cost = 8
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+
+/datum/uplink_item/device_tools/devitt
+	name = "Devitt Mk3 Light Tank"
+	desc = "An ancient tank teleported in for your machinations, comes prepared with a cannon and machinegun. REQUIRES TWO CREWMEMBERS TO OPPERATE EFFECTIVELY."
+	item = /obj/vehicle/sealed/mecha/devitt
+	cost = 40
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)

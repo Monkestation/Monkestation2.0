@@ -6211,7 +6211,6 @@
 #include "code\modules\uplink\uplink_items\melees.dm"
 #include "code\modules\uplink\uplink_items\nukeops.dm"
 #include "code\modules\uplink\uplink_items\species.dm"
-#include "code\modules\uplink\uplink_items\stealthy.dm"
 #include "code\modules\uplink\uplink_items\stealthy_tools.dm"
 #include "code\modules\uplink\uplink_items\utility_clothing.dm"
 #include "code\modules\vehicles\_vehicle.dm"
