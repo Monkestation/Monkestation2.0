@@ -53,7 +53,6 @@
 	var/weight = 0
 	/// Determines the "star level" of the storyteller. Effects roundstart report.
 	var/star_colour = STARCOLOUR_ORANGESTAR
-/datum/storyteller/process(seconds_per_tick)
 	///the base antag capacity points this storyteller has
 	var/base_antag_points = 0
 
