@@ -15,6 +15,7 @@
 
 /datum/action/changeling/storage_cavity/Remove(mob/remove_from)
 	. = ..()
+	cavity.atom_storage.remove_all()
 	qdel(cavity)
 
 /datum/action/changeling/storage_cavity/sting_action(mob/living/user, mob/living/target)

@@ -250,21 +250,21 @@
 /datum/action/changeling/sting/lsd
 	name = "Hallucination Sting"
 	desc = "We cause mass terror to our victim. Costs 10 chemicals."
-	helptext = "We evolve the ability to sting a target with a powerful hallucinogenic chemical. \
-			The target does not notice they have been stung, and the effect occurs after 30 to 60 seconds."
+	helptext = "We evolve the ability to sting a target with a powerful hallucinogenic chemical that focuses in the eyes. \
+			The target does not notice they have been stung, and the effect occurs after 10 to 15 seconds, obscuring their view of other people."
 	button_icon_state = "sting_lsd"
 	chemical_cost = 10
 	dna_cost = 1
 
 /datum/action/changeling/sting/lsd/sting_action(mob/user, mob/living/carbon/target)
 	log_combat(user, target, "stung", "LSD sting")
-	addtimer(CALLBACK(src, PROC_REF(hallucination_time), target), rand(30 SECONDS, 60 SECONDS))
+	addtimer(CALLBACK(src, PROC_REF(hallucination_time), target), rand(10 SECONDS, 15 SECONDS))
 	return TRUE
 
 /datum/action/changeling/sting/lsd/proc/hallucination_time(mob/living/carbon/target)
 	if(QDELETED(src) || QDELETED(target))
 		return
-	target.adjust_hallucinations(180 SECONDS)
+	target.cause_hallucination(/datum/hallucination/delusion/preset/changeling, "changeling sting", duration = 15 SECONDS, affects_us = TRUE, affects_others = TRUE)
 
 /datum/action/changeling/sting/cryo
 	name = "Cryogenic Sting"
@@ -274,8 +274,8 @@
 	chemical_cost = 15
 	dna_cost = 2
 
-/datum/action/changeling/sting/cryo/sting_action(mob/user, mob/target)
+/datum/action/changeling/sting/cryo/sting_action(mob/user, mob/living/target)
 	log_combat(user, target, "stung", "cryo sting")
-	if(target.reagents)
-		target.reagents.add_reagent(/datum/reagent/consumable/frostoil, 30)
+	if(isliving(target))
+		target.apply_status_effect(/datum/status_effect/bloodchill/changeling)
 	return TRUE
