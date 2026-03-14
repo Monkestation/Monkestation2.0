@@ -1,6 +1,7 @@
 /datum/storyteller/sleeper
 	name = "The Sleeper"
 	desc = "The Sleeper will create less impactful events, especially ones involving combat or destruction. The chill experience."
+	star_colour = STARCOLOUR_BLUESTAR
 	point_gains_multipliers = list(
 		EVENT_TRACK_MUNDANE = 1,
 		EVENT_TRACK_MODERATE = 1.2,
