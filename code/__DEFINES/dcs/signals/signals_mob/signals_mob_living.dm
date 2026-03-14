@@ -256,3 +256,10 @@
 #define COMSIG_LIVING_LATE_EXAMINE "late_examine"
 
 #define COMSIG_LIVING_BINGLE_EVOLVE "living_bingle_evolve"
+
+/// From /obj/item/clothing/accessory/accessory_equipped : (/obj/item/clothing/accessory/attached, obj/item/clothing/under/attached_to)
+/// This is the signal sent BY THE MOB THIS IS BEING EQUIPPED TO, not the attaching accessory
+#define COMSIG_LIVING_ACCESSORY_EQUIPPED "accessory_equipped"
+/// From /obj/item/clothing/accessory/accessory_equipped : (/obj/item/clothing/accessory/dropped, obj/item/clothing/under/attached_to)
+/// This is the signal sent BY THE MOB THIS IS BEING DROPPED FROM, not the dropping accessory, depending on situation `dropped` may or may not be being removed from attached_to
+#define COMSIG_LIVING_ACCESSORY_DROPPED "accessory_dropped"

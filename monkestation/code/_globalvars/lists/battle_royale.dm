@@ -274,7 +274,6 @@ GLOBAL_LIST_INIT(royale_misc_loot, list(
 		/obj/item/storage/pill_bottle/maintenance_pill/full = 1,
 		/obj/item/storage/toolbox/haunted = 1,
 		list(/obj/item/stack/cannonball/the_big_one = 1, /obj/structure/cannon = 1, /obj/item/reagent_containers/cup/bucket/wooden = 1, /obj/structure/fermenting_barrel/gunpowder = 1) = 1,
-		/obj/vehicle/ridden/monkey_ball = 1,
 		/obj/structure/healingfountain = 1,
 		/obj/structure/mystery_box = 3,
 		/obj/structure/pinata/syndie = 1,

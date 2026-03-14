@@ -59,7 +59,7 @@
 	/// this mind's ANTAG_HUD should have this icon_state
 	var/antag_hud_icon_state = null
 	///this mind's antag HUD
-	var/datum/atom_hud/alternate_appearance/basic/antagonist_hud/antag_hud = null
+	var/datum/atom_hud/alternate_appearance/basic/antagonist_hud/antag_hud = null //TODO: refactor this to be handled on the hud itself, they are stored on objects not datums
 	var/holy_role = NONE //is this person a chaplain or admin role allowed to use bibles, Any rank besides 'NONE' allows for this.
 
 	///If this mind's master is another mob (i.e. adamantine golems). Weakref of a /living.

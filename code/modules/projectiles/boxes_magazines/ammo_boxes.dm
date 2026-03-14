@@ -119,6 +119,10 @@
 	name = "ammo box (9mm incendiary)"
 	ammo_type = /obj/item/ammo_casing/c9mm/fire
 
+/obj/item/ammo_box/c9mm/bulk
+	name = "bulk ammo box (9mm)"
+	w_class = WEIGHT_CLASS_BULKY
+	max_ammo = 120
 
 /obj/item/ammo_box/c10mm
 	name = "ammo box (10mm)"

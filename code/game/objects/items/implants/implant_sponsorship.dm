@@ -11,7 +11,7 @@
 	ADD_TRAIT(target, TRAIT_SPONSOR_IMPLANT, REF(src))
 	return TRUE
 
-/obj/item/implant/sponsorship/removed(mob/target, silent = FALSE, special = FALSE)
+/obj/item/implant/sponsorship/removed(mob/target, silent = FALSE, special = FALSE, forced = FALSE)
 	. = ..()
 	if(!.)
 		return FALSE

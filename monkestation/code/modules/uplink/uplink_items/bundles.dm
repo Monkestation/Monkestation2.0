@@ -29,6 +29,7 @@
 			make a loot-box style system but failed, so instead just fake their randomness using ook's evil twin brother to sniff out the items to shove in it. \
 			Item price not guaranteed. Can contain normally unobtainable items. Purchasing this will prevent you from purchasing any non-random item. \
 			Cannot be purchased if you have already bought another item."
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_GANGS)
 
 /datum/uplink_item/bundles_tc/surplus/lootbox/unique_checks(mob/user, datum/uplink_handler/handler, atom/movable/source)
 	//we dont acually have the var that makes this get checked so do it manually
@@ -37,6 +38,9 @@
 	return TRUE
 
 /datum/uplink_item/bundles_tc/surplus/lootbox/spawn_item(spawn_path, mob/user, datum/uplink_handler/handler, atom/movable/source)
+	if(!handler)
+		CRASH("/datum/uplink_item/bundles_tc/surplus/lootbox/spawn_item() called without a passed handler.")
+
 	crate_tc_value = rand(1,20) * 5 // randomise how much in TC it gives, from 5 to 100 TC
 
 	if(crate_tc_value == 5) //horrible luck, welcome to gambling
@@ -60,13 +64,13 @@
 
 	var/list/possible_items = generate_possible_items(user, handler, TRUE)
 	// again safety check, if things fucked up badly we give them back their cost and return
-	if(!possible_items || !length(possible_items))
+	if(!length(possible_items))
 		handler.telecrystals += cost
 		to_chat(user, span_warning("You get the feeling something went wrong and that you should inform syndicate command."))
 		qdel(surplus_crate)
 		CRASH("lootbox crate failed to generate possible items")
 
-	fill_crate(surplus_crate, possible_items)
+	fill_crate(surplus_crate, possible_items, handler.purchase_log)
 
 	// unlike other chests, lets give them the chest with STYLE by droppodding in a STYLIZED pod
 	podspawn(list(
@@ -94,4 +98,4 @@
 	item = /obj/item/storage/box/syndie_kit/mini_kit
 	cost = 10
 	stock_key = UPLINK_SHARED_STOCK_KITS
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_GANGS)

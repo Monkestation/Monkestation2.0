@@ -45,17 +45,7 @@
 		/area/station/security,
 	))
 
-//monkestation removal start
-/*	var/list/blacklisted_areas = typecacheof(list(/area/station/engineering/hallway,
-		/area/station/engineering/lobby,
-		/area/station/engineering/storage,
-		/area/station/science/lobby,
-		/area/station/science/ordnance/bomb,
-		/area/station/security/prison,
-	))*/
-//monkestation removal end
-	var/list/blacklisted_areas = typecacheof(TRAITOR_OBJECTIVE_BLACKLISTED_AREAS) //monkestation edit
-
+	var/list/blacklisted_areas = typecacheof(TRAITOR_OBJECTIVE_BLACKLISTED_AREAS)
 	var/list/possible_areas = GLOB.the_station_areas.Copy()
 	for(var/area/possible_area as anything in possible_areas)
 		if(!is_type_in_typecache(possible_area, allowed_areas) || initial(possible_area.outdoors) || is_type_in_typecache(possible_area, blacklisted_areas))

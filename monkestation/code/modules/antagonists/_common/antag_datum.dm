@@ -1,16 +1,4 @@
-/datum/antagonist
-	///The list of keys that are valid to see our antag hud/of huds we can see
-	var/list/hud_keys
-	/// If this antagonist should be removed from the crew manifest upon gain.
-	var/remove_from_manifest = FALSE
-
-///Set our hud_keys, please only use this proc when changing them, if override_old_keys is FALSE then we will simply add keys, otherwise we we set our keys to only be passed ones
-/datum/antagonist/proc/set_hud_keys(list/keys, override_old_keys = FALSE)
-	if(!islist(keys))
-		keys = list(keys)
-
-	hud_keys = (override_old_keys ? keys : keys + hud_keys)
-
+///Call to give someone who spent an antag token this type of antag status
 /datum/antagonist/proc/antag_token(datum/mind/hosts_mind, mob/spender)
 	//SHOULD_CALL_PARENT(FALSE) //this is here for the sake of making it clear you should just fully override this proc, AKA dont call ..()
 	if(isobserver(spender))

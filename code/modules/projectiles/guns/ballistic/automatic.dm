@@ -283,6 +283,18 @@
 	. = ..()
 	AddComponent(/datum/component/automatic_fire, 0.1 SECONDS)
 
+//starts empty and becomes huge when a magazine is inserted
+/obj/item/gun/ballistic/automatic/tommygun/gang
+	spawnwithmagazine = FALSE
+
+/obj/item/gun/ballistic/automatic/tommygun/gang/insert_magazine(mob/user, obj/item/ammo_box/magazine/AM, display_message)
+	. = ..()
+	update_weight_class(WEIGHT_CLASS_HUGE)
+
+/obj/item/gun/ballistic/automatic/tommygun/gang/eject_magazine(mob/user, display_message, obj/item/ammo_box/magazine/tac_load)
+	. = ..()
+	update_weight_class(initial(w_class))
+
 /**
  * Weak uzi for syndicate chimps. It comes in a 4 TC kit.
  * Roughly 9 damage per bullet every 0.2 seconds, equaling out to downing an opponent in a bit over a second, if they have no armor.

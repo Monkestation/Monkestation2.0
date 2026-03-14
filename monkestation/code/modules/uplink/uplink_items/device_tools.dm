@@ -21,6 +21,7 @@
 			Comes with 5 charges."
 	item = /obj/item/compression_kit
 	cost = 4
+	purchasable_from = ~UPLINK_GANGS //too strong with the tommygun
 
 /datum/uplink_item/device_tools/polyglot_voicebox
 	name = "Syndicate Polyglot Voicebox"
