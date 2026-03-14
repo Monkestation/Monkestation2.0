@@ -64,9 +64,3 @@
 	item = /obj/item/tank/jetpack/harness
 	cost = 1
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
-
-/datum/uplink_item/device_tools/hivenode_implanter
-	name = "Hive Node Implanter"
-	desc = "A Xenomorph hive node. When implanted, allows connection to any Xenomorphs in nearby psionic networks."
-	cost = 5 //similar price to binary translator
-	item = /obj/item/autosurgeon/syndicate/organ/hivenode

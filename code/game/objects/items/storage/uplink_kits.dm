@@ -533,7 +533,6 @@
 /obj/item/storage/box/syndie_kit/emp/PopulateContents()
 	for(var/i in 1 to 5)
 		new /obj/item/grenade/empgrenade(src)
-	new /obj/item/implanter/emp(src)
 
 /obj/item/storage/box/syndie_kit/chemical
 	name = "chemical kit"
@@ -548,7 +547,6 @@
 	new /obj/item/reagent_containers/cup/bottle/fentanyl(src)
 	new /obj/item/reagent_containers/cup/bottle/formaldehyde(src)
 	new /obj/item/reagent_containers/cup/bottle/spewium(src)
-	new /obj/item/reagent_containers/cup/bottle/cyanide(src)
 	new /obj/item/reagent_containers/cup/bottle/histamine(src)
 	new /obj/item/reagent_containers/cup/bottle/initropidril(src)
 	new /obj/item/reagent_containers/cup/bottle/pancuronium(src)

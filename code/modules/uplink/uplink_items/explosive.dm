@@ -1,6 +1,6 @@
 /datum/uplink_category/explosives
 	name = "Explosives"
-	weight = 6
+	weight = 3
 
 /datum/uplink_item/explosives
 	category = /datum/uplink_category/explosives
@@ -10,6 +10,7 @@
 	desc = "A traditional clusterbang grenade with a payload consisting entirely of Syndicate soap. Useful in any scenario!"
 	item = /obj/item/grenade/clusterbuster/soap
 	cost = 3
+	surplus = 60
 
 /datum/uplink_item/explosives/c4
 	name = "Composition C-4"
@@ -50,7 +51,7 @@
 
 /datum/uplink_item/explosives/emp
 	name = "EMP Grenades and Implanter Kit"
-	desc = "A box that contains five EMP grenades and an EMP implant with three uses. Useful to disrupt communications, \
+	desc = "A box that contains five EMP grenades. Useful to disrupt communications, \
 			security's energy weapons and silicon lifeforms when you're in a tight spot."
 	item = /obj/item/storage/box/syndie_kit/emp
 	cost = 2
@@ -107,8 +108,12 @@
 	. = ..()
 	desc = replacetext(desc, "%MIN_BOMB_TIMER", SYNDIEBOMB_MIN_TIMER_SECONDS)
 
-/datum/uplink_item/explosives/soap_clusterbang
-	surplus = 60
+/datum/uplink_item/explosives/cat
+	name = "Feral cat grenade"
+	desc = "This grenade is filled with 5 feral cats in stasis. Upon activation, the feral cats are awoken and unleashed unto unlucky bystanders. WARNING: The cats are not trained to discern friend from foe!"
+	cost = 5
+	item = /obj/item/grenade/spawnergrenade/cat
+	surplus = 30
 
 /datum/uplink_item/explosives/explosive_flash
 	name = "Explosive Flash"

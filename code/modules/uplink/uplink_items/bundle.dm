@@ -56,7 +56,7 @@
 			The Syndicate will only provide one Syndi-Kit per agent."
 	progression_minimum = 30 MINUTES
 	item = /obj/item/storage/box/syndicate/bundle_a
-	cost = 20
+	cost = 25
 	stock_key = UPLINK_SHARED_STOCK_KITS
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
@@ -68,7 +68,7 @@
 			The Syndicate will only provide one Syndi-Kit per agent."
 	progression_minimum = 30 MINUTES
 	item = /obj/item/storage/box/syndicate/bundle_b
-	cost = 20
+	cost = 25
 	stock_key = UPLINK_SHARED_STOCK_KITS
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
@@ -78,7 +78,7 @@
 			If the rumors are true, it will fill it's contents based on your current reputation. Get on that grind. \
 			Contents are sorted to always be worth 50 TC. The Syndicate will only provide one surplus item per agent."
 	item = /obj/structure/closet/crate // will be replaced in purchase()
-	cost = 20
+	cost = 25
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 	stock_key = UPLINK_SHARED_STOCK_SURPLUS
 	/// Value of items inside the crate in TC
@@ -149,7 +149,7 @@
 			It is recommended that you only attempt to open it by having another agent purchase a Surplus Crate Key. Unite and fight. \
 			Rumored to contain a valuable assortment of items based on your current reputation, but you never know. Contents are sorted to always be worth 100 TC. \
 			The Syndicate will only provide one surplus item per agent."
-	cost = 20
+	cost = 25
 	item = /obj/structure/closet/crate/syndicrate
 	progression_minimum = 30 MINUTES
 	stock_key = UPLINK_SHARED_STOCK_SURPLUS
@@ -173,7 +173,7 @@
 	desc = "This inconscpicous device is actually a key that can open any United Surplus Crate. It can only be used once. \
 			Though initially designed to encourage cooperation, agents quickly discovered that you can turn the key to the crate by yourself.  \
 			The Syndicate will only provide one surplus item per agent."
-	cost = 20
+	cost = 25
 	item = /obj/item/syndicrate_key
 	progression_minimum = 30 MINUTES
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
@@ -184,7 +184,7 @@
 	desc = "A box containing everything you need to take contracts from the Syndicate. Kidnap people and drop them off at specified locations for rewards in the form of Telecrystals \
 			(Usable in the provided uplink) and Contractor Points. Can not be bought if you have taken any secondary objectives."
 	item = /obj/item/storage/box/syndie_kit/contract_kit
-	cost = 20
+	cost = 25
 	purchasable_from = UPLINK_TRAITORS
 
 /datum/uplink_item/bundles_tc/contract_kit/unique_checks(mob/user, datum/uplink_handler/handler, atom/movable/source)
