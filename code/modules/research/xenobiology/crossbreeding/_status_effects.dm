@@ -771,7 +771,7 @@
 	colour = "pyrite"
 
 /datum/status_effect/stabilized/pyrite/tick()
-	owner.add_atom_colour(rand(0, 255), rand(0, 255), rand(0, 255), TEMPORARY_COLOUR_PRIORITY)
+	owner.add_atom_colour(rgb(rand(0, 255), rand(0, 255), rand(0, 255)), TEMPORARY_COLOUR_PRIORITY)
 
 /datum/status_effect/stabilized/pyrite/on_remove()
 	owner.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)

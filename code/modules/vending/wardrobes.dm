@@ -49,6 +49,12 @@
 				/obj/item/clothing/under/rank/security/officer/blueshirt = 2,
 				/obj/item/clothing/under/rank/security/officer/formal = 3,
 				/obj/item/clothing/under/rank/security/utility = 3,
+				/obj/item/clothing/accessory/armband/deputy = 4,
+				/obj/item/clothing/accessory/armband/cargo = 2,
+				/obj/item/clothing/accessory/armband/engine = 2,
+				/obj/item/clothing/accessory/armband/medblue = 2,
+				/obj/item/clothing/accessory/armband/hydro = 2,
+				/obj/item/clothing/accessory/armband/science = 2,
 			),
 		),
 		list(

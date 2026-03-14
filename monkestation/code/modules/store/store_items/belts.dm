@@ -56,3 +56,7 @@ GLOBAL_LIST_INIT(store_belts, generate_store_items(/datum/store_item/belts))
 	name = "Candle Box"
 	item_path = /obj/item/storage/fancy/candle_box
 	item_cost = 750
+
+/datum/store_item/belts/deforest_belt
+	name = "Deforest Belt"
+	item_path = /obj/item/storage/belt/medical/paramedic/deforest

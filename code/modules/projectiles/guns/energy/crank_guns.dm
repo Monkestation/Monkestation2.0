@@ -162,3 +162,40 @@
 	icon_state = "icell"
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.4, /datum/material/plasma=SMALL_MATERIAL_AMOUNT)
 
+//  Monkestation Edit - explorer laser gun
+/obj/item/gun/energy/laser/explorer
+	name ="explorer laser gun"
+	desc = "A decomissioned military lasergun. Acid damage has left it's internal recharging battery fused inside with pitiful capacity. It can be hand charged for extra speed."
+	pin = /obj/item/firing_pin/explorer
+	icon = 'monkestation/icons/obj/guns/explorer.dmi'
+	icon_state = "explorer"
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/explorer)
+	selfcharge = 1
+	can_bayonet = TRUE
+	knife_x_offset = 17
+	knife_y_offset = 12
+
+/obj/item/gun/energy/laser/explorer/add_seclight_point()
+	AddComponent(/datum/component/seclite_attachable, \
+		light_overlay_icon = 'icons/obj/weapons/guns/flashlights.dmi', \
+		light_overlay = "flight", \
+		overlay_x = 18, \
+		overlay_y = 8)
+	
+/obj/item/gun/energy/laser/explorer/Initialize(mapload)
+	. = ..()
+	AddComponent( \
+		/datum/component/gun_crank, \
+		charging_cell = get_cell(), \
+		charge_amount = STANDARD_CELL_CHARGE * 0.25, \
+		cooldown_time = 1.5 SECONDS, \
+		charge_sound = 'sound/weapons/laser_crank.ogg', \
+		charge_sound_cooldown_time = 1.3 SECONDS, \
+		)
+
+/obj/item/ammo_casing/energy/laser/explorer
+	e_cost = LASER_SHOTS(4, STANDARD_CELL_CHARGE)
+	fire_sound = 'monkestation/sound/weapons/gun/energy/Laser1.ogg'
+
+/obj/item/gun/energy/laser/explorer/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_REMOVED)
