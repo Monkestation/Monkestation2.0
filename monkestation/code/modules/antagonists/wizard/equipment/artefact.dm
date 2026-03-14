@@ -14,18 +14,18 @@
 	cycle_chems() //does this even need to be a proc
 	. = ..()
 	balloon_alert(user, "you change the reagent to [english_list(reagents.reagent_list)].")
-	return
 
 /obj/item/reagent_containers/spray/chemsprayer/magical/examine()
 	. = ..()
 	. += "It currently holds [english_list(reagents.reagent_list)]."
-	return
 
 /obj/item/reagent_containers/spray/chemsprayer/magical/proc/cycle_chems()
 	reagents.clear_reagents()
+	var/selected_reagent = get_random_reagent_id_unrestricted()
+	while(ispath(selected_reagent, /datum/reagent/consumable) && prob(70)) //makes food reagents clog up the list less
+		selected_reagent = get_random_reagent_id_unrestricted()
 	list_reagents = list(get_random_reagent_id_unrestricted() = volume)
 	reagents.add_reagent_list(list_reagents)
-	return
 
 //wizard bio suit
 /obj/item/clothing/head/wizard/bio_suit

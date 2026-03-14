@@ -1,7 +1,7 @@
-/datum/round_event_control/antagonist/solo/from_ghosts/wizard
+/datum/round_event_control/antagonist/from_ghosts/wizard
 	name = "Ghost Wizard"
 	tags = list(TAG_COMBAT, TAG_DESTRUCTIVE, TAG_EXTERNAL, TAG_MAGICAL, TAG_OUTSIDER_ANTAG)
-	typepath = /datum/round_event/antagonist/solo/ghost/wizard
+	typepath = /datum/round_event/antagonist/ghost/wizard
 	shared_occurence_type = SHARED_HIGH_THREAT
 	repeated_mode_adjust = TRUE
 	antag_flag = ROLE_WIZARD
@@ -27,15 +27,15 @@
 	max_occurrences = 1
 	prompted_picking = TRUE
 
-/datum/round_event_control/antagonist/solo/from_ghosts/wizard/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE)
+/datum/round_event_control/antagonist/from_ghosts/wizard/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE)
 	. = ..()
 	if(!.)
 		return
 	if(!length(GLOB.wizardstart))
 		return FALSE
 
-/datum/round_event/antagonist/solo/ghost/wizard
+/datum/round_event/antagonist/ghost/wizard
 
-/datum/round_event/antagonist/solo/ghost/wizard/add_datum_to_mind(datum/mind/antag_mind)
+/datum/round_event/antagonist/ghost/wizard/add_datum_to_mind(datum/mind/antag_mind)
 	. = ..()
 	antag_mind.current.forceMove(pick(GLOB.wizardstart))

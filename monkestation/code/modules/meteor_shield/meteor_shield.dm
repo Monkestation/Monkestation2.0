@@ -122,7 +122,7 @@ GLOBAL_VAR_INIT(total_meteors_zapped, 0)
 			/datum/round_event_control/space_dust,
 			/datum/round_event_control/stray_meteor
 		))
-	var/list/all_events = SSevents.control | SSgamemode.control
+	var/list/all_events = SSevents.control
 	for(var/datum/round_event_control/event as anything in all_events)
 		if(is_type_in_typecache(event, meteor_event_typecache))
 			event.weight *= mod

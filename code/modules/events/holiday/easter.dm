@@ -7,6 +7,7 @@
 	earliest_start = 0 MINUTES
 	category = EVENT_CATEGORY_HOLIDAY
 	description = "Hides surprise filled easter eggs in maintenance."
+	roundstart = TRUE
 
 /datum/round_event/easter/announce(fake)
 	priority_announce(pick("Hip-hop into Easter!","Find some Bunny's stash!","Today is National 'Hunt a Wabbit' Day.","Be kind, give Chocolate Eggs!"))
