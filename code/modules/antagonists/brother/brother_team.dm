@@ -11,6 +11,7 @@
 	var/datum/bb_gear/chosen_gear
 	/// The index of GLOB.color_list_blood_brothers to use to generate the color.
 	var/static/next_color = 1
+	var/brothers_left = 2
 
 /datum/team/brother_team/add_member(datum/mind/new_member)
 	. = ..()
@@ -36,7 +37,12 @@
 /datum/team/brother_team/proc/add_brother(mob/living/new_brother, source)
 	if (isnull(new_brother) || isnull(new_brother.mind) || !GET_CLIENT(new_brother) || new_brother.mind.has_antag_datum(/datum/antagonist/brother))
 		return FALSE
+	var/brotherDatum = /datum/antagonist/brother
+	brotherDatum.brotherRank = members.len
 	new_brother.mind.add_antag_datum(/datum/antagonist/brother, src)
+	if (prob(90))
+		brothers_left += 1
+		message_admins("Another Brother!!")
 	return TRUE
 
 /datum/team/brother_team/proc/update_name()
