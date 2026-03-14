@@ -447,16 +447,19 @@
 
 	. += "[gender == PLURAL ? "They are" : "It is"] a [weight_class_to_text(w_class)] item."
 
-	if(resistance_flags & INDESTRUCTIBLE)
+	// Check for mimic disguise component
+	var/datum/component/mimic_disguise/fake_item = GetComponent(/datum/component/mimic_disguise)
+	var/flags_to_check = resistance_flags | (fake_item ? fake_item.spoofed_flags : 0)
+	if(flags_to_check & INDESTRUCTIBLE)
 		. += "[src] seems extremely robust! It'll probably withstand anything that could happen to it!"
 	else
-		if(resistance_flags & LAVA_PROOF)
+		if(flags_to_check & LAVA_PROOF)
 			. += "[src] is made of an extremely heat-resistant material, it'd probably be able to withstand lava!"
-		if(resistance_flags & (ACID_PROOF | UNACIDABLE))
+		if(flags_to_check & (ACID_PROOF | UNACIDABLE))
 			. += "[src] looks pretty robust! It'd probably be able to withstand acid!"
-		if(resistance_flags & FREEZE_PROOF)
+		if(flags_to_check & FREEZE_PROOF)
 			. += "[src] is made of cold-resistant materials."
-		if(resistance_flags & FIRE_PROOF)
+		if(flags_to_check & FIRE_PROOF)
 			. += "[src] is made of fire-retardant materials."
 		return
 
