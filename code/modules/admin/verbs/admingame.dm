@@ -368,7 +368,7 @@ ADMIN_VERB(combo_hud, R_ADMIN, FALSE, "Toggle Combo HUD", "Toggles the Admin Com
 
 	combo_hud_enabled = TRUE
 
-	for (var/hudtype in list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC_ADVANCED))
+	for (var/hudtype in list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC_ADVANCED, DATA_HUD_SIMIAN))
 		var/datum/atom_hud/atom_hud = GLOB.huds[hudtype]
 		atom_hud.show_to(mob)
 
@@ -384,7 +384,7 @@ ADMIN_VERB(combo_hud, R_ADMIN, FALSE, "Toggle Combo HUD", "Toggles the Admin Com
 
 	combo_hud_enabled = FALSE
 
-	for (var/hudtype in list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC_ADVANCED))
+	for (var/hudtype in list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC_ADVANCED, DATA_HUD_SIMIAN))
 		var/datum/atom_hud/atom_hud = GLOB.huds[hudtype]
 		atom_hud.hide_from(mob)
 

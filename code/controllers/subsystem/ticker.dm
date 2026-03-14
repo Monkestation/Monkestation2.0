@@ -377,7 +377,11 @@ SUBSYSTEM_DEF(ticker)
 			stack_trace("[mark] [(isdatum(mark) ? mark.type : "non datum")] found in start landmarks list, which isn't a start landmark!")
 
 	// handle persistence stuff that requires ckeys, in this case hardcore mode and temporal scarring
+	var/list/simians = list()
 	for(var/mob/living/carbon/human/iter_human in GLOB.player_list)
+		if(issimianspecies(iter_human))
+			simians += iter_human
+
 		iter_human.increment_scar_slot()
 		iter_human.load_persistent_scars()
 		SSpersistence.load_modular_persistence(iter_human.get_organ_slot(ORGAN_SLOT_BRAIN))
@@ -389,7 +393,16 @@ SUBSYSTEM_DEF(ticker)
 		else
 			to_chat(iter_human, span_notice("You will gain [round(iter_human.hardcore_survival_score)] hardcore random points if you survive this round!"))
 
+	if(length(simians) >= 2 && prob(15 * simians))
+		go_simian_mode(simians)
 	SStitle.update_init_text()
+
+/datum/controller/subsystem/ticker/proc/go_simian_mode(list/jumping_on_the_bed)
+	var/obj/item/big_stick/ooh_stick_i_found = new()
+	var/mob/living/carbon/human/grug_oog = pick(jumping_on_the_bed)
+	grug_oog.put_in_hands(ooh_stick_i_found)
+	for(var/mob/living/carbon/human/other_grug as anything in jumping_on_the_bed)
+		to_chat(other_grug, span_warning("[grug_oog.real_name] is the Alpha! Listen to their orders, or mutiny against them, at your own peril."))
 
 //These callbacks will fire after roundstart key transfer
 /datum/controller/subsystem/ticker/proc/OnRoundstart(datum/callback/cb)

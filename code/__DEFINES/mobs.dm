@@ -91,6 +91,8 @@
 ///The limb fits a modular custom shape
 #define BODYTYPE_CUSTOM (1<<8)
 
+#define BODYTYPE_LIST_PROSTHETIC (BODYTYPE_ROBOTIC | BODYTYPE_HUMANOID | BODYTYPE_MONKEY)
+
 //Species gib types
 #define GIB_TYPE_HUMAN "human"
 #define GIB_TYPE_ROBOTIC "robotic"
