@@ -39,7 +39,7 @@
 	roundstart = TRUE
 	earliest_start = 0 SECONDS
 	weight = 3
-	max_occurrences = 1
+	max_occurrences = 0
 
 /datum/round_event/antagonist/assault_operative
 
