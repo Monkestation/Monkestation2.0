@@ -22,14 +22,14 @@
 
 /mob/living/basic/mouse/plague/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	. = ..()
-	if (ishuman(user))
+	if (ishuman(user)||ismonkey(user))
 		var/block = user.check_contact_sterility(HANDS)
 		var/bleeding = user.check_bodypart_bleeding(HANDS)
 		share_contact_diseases(user ,block,bleeding)
 
 /mob/living/basic/mouse/plague/melee_attack(atom/target, list/modifiers, ignore_cooldown)
 	. = ..()
-	if (ishuman(target))
+	if (ishuman(user)||ismonkey(user))
 		var/mob/living/user = target
 		var/block = user.check_contact_sterility(HANDS)
 		var/bleeding = user.check_bodypart_bleeding(HANDS)
