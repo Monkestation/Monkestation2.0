@@ -178,7 +178,7 @@
 		return
 
 	var/path = "data/player_saves/[ckey[1]]/[ckey]/scars.sav"
-	var/loaded_char_slot = client.prefs.default_slot
+	var/loaded_char_slot = client.prefs.active_slot
 
 	if(!loaded_char_slot || !fexists(path))
 		return FALSE
