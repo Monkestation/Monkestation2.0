@@ -73,6 +73,8 @@
 	if(!isliving(target))
 		return ..()
 	var/mob/living/mob_target = target
+	if(mob_target.check_block(src, 0, "[name]'s attack", attack_type = MELEE_ATTACK))
+		return
 	mob_target.Disorient(3 SECONDS)
 	mob_target.stamina?.adjust(-32)
 	SEND_SIGNAL(target, COMSIG_LIVING_MINOR_SHOCK)
