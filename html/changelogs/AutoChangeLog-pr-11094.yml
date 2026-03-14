@@ -1,0 +1,6 @@
+author: "TheColorCyan"
+delete-after: True
+changes:
+  - bugfix: "bingle melee attacks no longer bypass block"
+  - bugfix: "paperplane crossbow emagged cargo borgs get now actually works"
+  - bugfix: "you can't unfold hardlight planes into regular sheet of paper"

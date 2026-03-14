@@ -5,7 +5,11 @@
 	icon_deny = "wallmed-deny"
 	panel_type = "wallmed-panel"
 	density = FALSE
-	products = list(
+	product_categories = list(
+		list(
+			"name" = "Medical",
+			"icon" = "head-side-virus",
+			"products" = list(
 		/obj/item/reagent_containers/syringe = 3,
 		/obj/item/reagent_containers/pill/patch/libital = 5,
 		/obj/item/reagent_containers/pill/patch/aiuri = 5,
@@ -15,9 +19,11 @@
 		/obj/item/reagent_containers/medigel/sterilizine = 1,
 		/obj/item/healthanalyzer/simple = 2,
 		/obj/item/stack/medical/bone_gel = 2,
-		/obj/item/reagent_containers/hypospray/medipen/deforest/robot_liquid_solder = 2,
-		/obj/item/reagent_containers/hypospray/medipen/deforest/robot_system_cleaner = 4,
-	)
+		/obj/item/reagent_containers/medipen/deforest/robot_liquid_solder = 2,
+		/obj/item/reagent_containers/medipen/deforest/robot_system_cleaner = 4,
+		/obj/item/storage/medkit/hypospray = 3,
+			),
+		))
 	contraband = list(
 		/obj/item/reagent_containers/pill/tox = 2,
 		/obj/item/reagent_containers/pill/morphine = 2,

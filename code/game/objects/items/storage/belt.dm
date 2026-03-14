@@ -249,7 +249,8 @@
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/cup/tube,
-		/obj/item/reagent_containers/hypospray,
+		/obj/item/hypospray,
+		/obj/item/reagent_containers/medipen,
 		/obj/item/reagent_containers/medigel,
 		/obj/item/reagent_containers/pill,
 		/obj/item/reagent_containers/spray,
@@ -268,8 +269,9 @@
 		/obj/item/surgicaldrill,
 		/obj/item/tank/internals/emergency_oxygen,
 		/obj/item/wrench/medical,
-		/obj/item/device/antibody_scanner //monkestation addition
-	))
+		/obj/item/device/antibody_scanner, //monkestation addition
+		/obj/item/storage/lockbox/vialbox,
+	) + typesof(/obj/item/reagent_containers/cup/vial))
 
 /obj/item/storage/belt/medical/paramedic
 	name = "EMT belt"
@@ -449,7 +451,7 @@
 		/obj/item/radio,
 		/obj/item/reagent_containers/cup/glass,
 		/obj/item/reagent_containers/cup/glass/bottle,
-		/obj/item/reagent_containers/hypospray,
+		/obj/item/reagent_containers/medipen,
 		/obj/item/reagent_containers/pill,
 		/obj/item/resonator,
 		/obj/item/screwdriver,
@@ -516,9 +518,9 @@
 
 /obj/item/storage/belt/mining/healing/PopulateContents()
 	for(var/i in 1 to 2)
-		new /obj/item/reagent_containers/hypospray/medipen/survival/luxury(src)
+		new /obj/item/reagent_containers/medipen/survival/luxury(src)
 	for(var/i in 1 to 2)
-		new /obj/item/reagent_containers/hypospray/medipen/survival(src)
+		new /obj/item/reagent_containers/medipen/survival(src)
 	for(var/i in 1 to 2)
 		var/obj/item/organ/internal/monster_core/core = new /obj/item/organ/internal/monster_core/regenerative_core/legion(src)
 		core.preserve()

@@ -80,8 +80,6 @@
 	GLOB.dead_player_list |= src
 
 /mob/dead/observer/add_to_current_dead_players()
-	if(!SSticker?.mode)
-		return
 	if(started_as_observer)
 		GLOB.current_observers_list |= src
 		return

@@ -175,3 +175,77 @@
       donator only.
   SirNightKnight:
   - bugfix: fixed firefighter helmets being available in the loadout store.
+2026-03-12:
+  Mantle:
+  - bugfix: Monkeys can no longer break out of xenobio pens
+  notghosti:
+  - rscadd: Silicons can access and toggle Boulder retrieval matrix
+  unit0016:
+  - bugfix: Classic Intents can no longer be influenced by the paranormal.
+2026-03-13:
+  Fluffles, SirNightKnight:
+  - bugfix: emoji show up in the messenger UI
+  - bugfix: emoji show up in the message server monitor UI
+  JohnFulpWillard:
+  - balance: Catching fire now wakes you up.
+  - bugfix: Ignoring someone from OOC/Dchat will now also ignore them in LOOC.
+  cam_dev:
+  - map: 'meta, kilo, tram, helio, pubby, void: added drains to various showers'
+  - map: 'oshan, kilo, pubby, theseus, void: added janitorial closet with pushbroom
+      to morgue'
+  - map: 'tram, theseus: replaced some fake shower drains'
+  - map: 'oshan: expanded medical exam room, morgue, and upper starboard maintenance'
+  - map: 'oshan: new medical break room and recovery ward with two patient rooms'
+  - map: 'oshan: replaced surgical masks with sterile masks in surgery rooms, added
+      two droppers and formaldehyde to and removed two defibrillator mounts and operating
+      computers from medbay exam room, added paper stack and pen to morgue, added
+      CMO, MD, and virologist action figures'
+  - map: 'oshan: moved medbay water reservoir to other side of department (away from
+      chemistry)'
+  - map: 'oshan: omni gas filter for exam room cryo is now on and filtering co2 by
+      default'
+  - map: 'oshan: some more maints loot and slightly more dangerous pathing in upper
+      starboard maints'
+  - map: 'oshan: added table with analysis bin and pen outside of artifact science'
+  - map: 'pubby: added water reservoir for xenobio showers, artisci sink and science
+      bathroom, added vents, scrubbers, and relevant piping through artisci to asteroid
+      mining room, added airlock cycling to external airlock'
+  - map: 'meta: swapped disposals bin and shower in medbay exam room and tweaked middle
+      greenery'
+  - map: 'meta: new greenery in public garden and its hydro trays are now connected
+      to dorms water reservoir'
+  - map: 'kilo: added a water reservoir for medbay, moved some wall mounted buttons
+      to fix emergency closet and make holomap more accessible'
+  - map: 'blueshift: adds chemical dispenser to chemistry lab'
+  - map: 'delta: changed access for experimentation lab from science maintenance to
+      research'
+2026-03-14:
+  Cujo:
+  - bugfix: Changed Oshan medical protolathe to techfab. Now allows printing of computer
+      and machine boards.
+  - rscadd: Adds missing robotic repair toolbox to tramstation medical
+  Gboster-0:
+  - rscadd: Added the devil as an admin-spawn only antagonist
+  Shoddd:
+  - bugfix: fixes a few typos
+  - bugfix: fixes incorrect descriptions with body bags
+  - qol: closets now tell you you can repaint them with airlock sprayer
+  - map: added wire chem to pubby
+  - map: added comp printer to voidraptor
+  - map: fixes Helio patho areas
+  wraith-54321:
+  - del: disabled assault operatives.
+  SirNightKnight:
+  - balance: wizard smite always pulls from heavy smites, moved fireball and lightning
+      to the light smite category as they are relatively harmless. capped the smite
+      spell at level one since adding more levels does nothing.
+  - bugfix: moved taking candy corn out of the detectives fedora to right alt click.
+  - rscadd: active magboots will negate unwrenching high pressure atmospheric component
+      to a certain degree (about 9,000 kPa).
+  - qol: experimental gas analzyers are small sized the same as normal gas anazlyers.
+  - qol: air alarms have a toggle filters button for  which inverts the state all
+      filters of the scrubbers. saves a few clicks :p
+  notghosti:
+  - map: Theseus curator booth is less defensible against pickle ricks. Kill them,
+      kill them all.
+  - map: Added basic air set up to thesues curator booth

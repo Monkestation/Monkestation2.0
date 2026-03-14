@@ -1,0 +1,4 @@
+author: "wonderinghost"
+delete-after: True
+changes:
+  - map: "Minor oshan fixes to atmos, library, and med"

@@ -94,7 +94,7 @@
 	backpack_contents = list(
 		/obj/item/gun/medbeam = 1,
 		/obj/item/melee/baton/security/loaded = 1,
-		/obj/item/reagent_containers/hypospray/combat = 1,
+		/obj/item/hypospray/combat = 1,
 		/obj/item/storage/box/hug/plushes = 1,
 	)
 	belt = /obj/item/storage/belt/medical/ert
@@ -111,7 +111,7 @@
 		/obj/item/gun/energy/pulse/pistol/loyalpin = 1,
 		/obj/item/gun/medbeam = 1,
 		/obj/item/melee/baton/security/loaded = 1,
-		/obj/item/reagent_containers/hypospray/combat/nanites = 1,
+		/obj/item/hypospray/combat/nanites = 1,
 		/obj/item/storage/box/hug/plushes = 1,
 	)
 	mask = /obj/item/clothing/mask/gas/sechailer/swat
@@ -202,8 +202,8 @@
 	backpack_contents = list(
 		/obj/item/gun/medbeam = 1,
 		/obj/item/melee/baton/security/loaded = 1,
-		/obj/item/reagent_containers/hypospray/combat = 1,
-		/obj/item/reagent_containers/hypospray/combat/heresypurge = 1,
+		/obj/item/hypospray/combat = 1,
+		/obj/item/hypospray/combat/heresypurge = 1,
 	)
 
 /datum/outfit/centcom/ert/chaplain
@@ -514,7 +514,7 @@
 	l_pocket = /obj/item/healthanalyzer
 	head = /obj/item/clothing/head/helmet/marine/medic
 	backpack_contents = list(
-		/obj/item/reagent_containers/hypospray/combat = 1,
+		/obj/item/hypospray/combat = 1,
 		/obj/item/storage/medkit/regular = 1,
 		/obj/item/storage/medkit/advanced = 1,
 	)
@@ -548,7 +548,7 @@
 	gloves = /obj/item/clothing/gloves/combat
 	back = /obj/item/storage/backpack/satchel/leather
 	l_pocket = /obj/item/switchblade
-	r_pocket = /obj/item/reagent_containers/hypospray/medipen/salacid
+	r_pocket = /obj/item/reagent_containers/medipen/salacid
 	ears = /obj/item/radio/headset
 	backpack_contents = list(
 			/obj/item/storage/box/survival = 1,

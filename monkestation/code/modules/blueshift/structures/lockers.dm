@@ -43,7 +43,7 @@
 /obj/structure/closet/shuttle/medical/PopulateContents()
 	new /obj/item/storage/medkit/emergency(src)
 	new /obj/item/healthanalyzer(src)
-	new /obj/item/reagent_containers/hypospray(src)
+	new /obj/item/hypospray(src)
 
 /obj/structure/closet/shuttle/medical/white
 	icon_state = "wallcloset_white"

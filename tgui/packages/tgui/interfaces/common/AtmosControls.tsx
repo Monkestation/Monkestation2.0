@@ -206,6 +206,15 @@ export const Scrubber = (props: ScrubberProps) => {
               })
             }
           />
+          <Button
+            icon={'square'}
+            content={'Toggle filters'}
+            onClick={() =>
+              act('toggle_all_filters', {
+                ref: refID,
+              })
+            }
+          />
         </LabeledList.Item>
         <LabeledList.Item label="Filters">
           {(scrubbing &&

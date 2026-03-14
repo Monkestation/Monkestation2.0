@@ -2542,13 +2542,13 @@
 /area/shuttle/sbc_starfury)
 "il" = (
 /obj/structure/table,
-/obj/item/reagent_containers/hypospray/medipen/survival{
+/obj/item/reagent_containers/medipen/survival{
 	pixel_y = 8
 	},
-/obj/item/reagent_containers/hypospray/medipen/survival{
+/obj/item/reagent_containers/medipen/survival{
 	pixel_y = 4
 	},
-/obj/item/reagent_containers/hypospray/medipen/survival,
+/obj/item/reagent_containers/medipen/survival,
 /obj/item/mod/module/visor/medhud,
 /obj/item/mod/module/visor/medhud,
 /obj/effect/turf_decal/siding/thinplating_new/dark{
