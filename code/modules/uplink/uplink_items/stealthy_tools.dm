@@ -15,14 +15,6 @@
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 	cost = 1
 
-/datum/uplink_item/stealthy_tools/syndigaloshes
-	name = "No-Slip Chameleon Shoes"
-	desc = "These shoes will allow the wearer to run on wet floors and slippery objects without falling down. \
-			They do not work on heavily lubricated surfaces."
-	item = /obj/item/clothing/shoes/chameleon/noslip
-	cost = 2
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
-
 /datum/uplink_item/stealthy_tools/chameleon_proj
 	name = "Chameleon Projector"
 	desc = "Projects an image across a user, disguising them as an object scanned with it, as long as they don't \
@@ -106,10 +98,9 @@
 			However, this form will be clad in blood-red Syndicate armor, making its origin somewhat obvious."
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 	item = /obj/item/organ/internal/ears/cat/super/syndie
-	cost = 16 // double the price of stealth implant
+	cost = 14
 	surplus = 5
 	limited_stock = 1
-	lock_secondary_objectives = TRUE // no you can't cheese progtot with ventcrawling
 
 /datum/uplink_item/stealthy_tools/sleepy_pen
 	name = "Sleepy Pen"
@@ -130,13 +121,6 @@
 	cost = 2
 	surplus = 50 //monkestation edit: from 0 to 50
 	purchasable_from = ~UPLINK_NUKE_OPS //clown ops intentionally left in, because that seems like some s-tier shenanigans.
-
-/datum/uplink_item/stealthy_tools/dehy_carp
-	name = "Dehydrated Space Carp"
-	desc = "Looks like a plush toy carp, but just add water and it becomes a real-life space carp! Squeeze in \
-			your hand before use so it knows not to kill you."
-	item = /obj/item/toy/plush/carpplushie/dehy_carp
-	cost = 1
 
 /datum/uplink_item/stealthy_tools/traitor_chem_bottle
 	name = "Poison Kit"

@@ -167,7 +167,7 @@
 
 /obj/item/reagent_containers/cup/bottle/pancuronium
 	name = "pancuronium bottle"
-	desc = "A small bottle. Contains pancuronium."
+	desc = "A small bottle. Contains pancuronium. Quickly incapacitates victims, causes slight oxygen loss."
 	list_reagents = list(/datum/reagent/toxin/pancuronium = 50)
 
 /obj/item/reagent_containers/cup/bottle/sodium_thiopental

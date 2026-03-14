@@ -79,7 +79,7 @@
 	// This one costs more than the nuke op counterpart
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 	progression_minimum = 90 MINUTES
-	cost = 16
+	cost = 18
 	cant_discount = TRUE
 
 /datum/uplink_item/utility_clothing/modsuit/Wraith
@@ -137,3 +137,26 @@
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 	item = /obj/item/radio/headset/chameleon/advanced
 	cost = 2
+
+/datum/uplink_item/stealthy_tools/syndigaloshes
+	name = "No-Slip Chameleon Shoes"
+	desc = "These shoes will allow the wearer to run on wet floors and slippery objects without falling down. \
+			They do not work on heavily lubricated surfaces."
+	item = /obj/item/clothing/shoes/chameleon/noslip
+	cost = 2
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+
+/datum/uplink_item/stealthy_tools/thermal
+	name = "Thermal Imaging Glasses"
+	desc = "These goggles can be turned to resemble common eyewear found throughout the station. \
+			They allow you to see organisms through walls by capturing the upper portion of the infrared light spectrum, \
+			emitted as heat and light by objects. Hotter objects, such as warm bodies, cybernetic organisms \
+			and artificial intelligence cores emit more of this light than cooler objects like walls and airlocks."
+	item = /obj/item/clothing/glasses/thermal/syndi
+	cost = 4
+
+/datum/uplink_item/stealthy_tools/military_belt
+	name = "Chest Rig"
+	desc = "A robust seven-slot set of webbing that is capable of holding all manner of tactical equipment."
+	item = /obj/item/storage/belt/military
+	cost = 1

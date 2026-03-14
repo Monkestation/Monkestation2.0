@@ -49,16 +49,7 @@
 		Includes direction toggle and a rapid mode to bypass door safety checks and crossing signals. \
 		Perfect for running someone over in the name of a tram malfunction!"
 	item = /obj/item/tram_remote
-	cost = 2
-
-/datum/uplink_item/device_tools/thermal
-	name = "Thermal Imaging Glasses"
-	desc = "These goggles can be turned to resemble common eyewear found throughout the station. \
-			They allow you to see organisms through walls by capturing the upper portion of the infrared light spectrum, \
-			emitted as heat and light by objects. Hotter objects, such as warm bodies, cybernetic organisms \
-			and artificial intelligence cores emit more of this light than cooler objects like walls and airlocks."
-	item = /obj/item/clothing/glasses/thermal/syndi
-	cost = 4
+	cost = 1
 
 /datum/uplink_item/device_tools/cutouts
 	name = "Adaptive Cardboard Cutouts"
@@ -81,9 +72,10 @@
 	desc = "A handheld device that teleports the user 4-8 meters forward. \
 			Beware, teleporting into a wall will trigger a parallel emergency teleport; \
 			however if that fails, you may need to be stitched back together. \
-			Comes with 4 charges, recharges randomly. Warranty null and void if exposed to an electromagnetic pulse."
+			Comes with 4 charges, recharges randomly. Warranty null and void if exposed to an electromagnetic pulse.\
+			Each use drains a small amount of blood."
 	item = /obj/item/storage/box/syndie_kit/syndicate_teleporter
-	cost = 8
+	cost = 5
 
 /datum/uplink_item/device_tools/camera_app
 	name = "SyndEye Program"
@@ -93,27 +85,12 @@
 	surplus = 90
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
-/datum/uplink_item/device_tools/military_belt
-	name = "Chest Rig"
-	desc = "A robust seven-slot set of webbing that is capable of holding all manner of tactical equipment."
-	item = /obj/item/storage/belt/military
-	cost = 1
-
 /datum/uplink_item/device_tools/doorjack
 	name = "Airlock Authentication Override Card"
 	desc = "A specialized cryptographic sequencer specifically designed to override station airlock access codes. \
 			After hacking a certain number of airlocks, the device will require some time to recharge."
 	item = /obj/item/card/emag/doorjack
 	cost = 3
-
-/datum/uplink_item/device_tools/fakenucleardisk
-	name = "Decoy Nuclear Authentication Disk"
-	desc = "It's just a normal disk. Visually it's identical to the real deal, but it won't hold up under closer scrutiny by the Captain. \
-			Don't try to give this to us to complete your objective, we know better!"
-	item = /obj/item/disk/nuclear/fake
-	cost = 1
-	surplus = 1
-	illegal_tech = FALSE
 
 /datum/uplink_item/device_tools/frame
 	name = "F.R.A.M.E. disk"
@@ -285,14 +262,14 @@
 			Recharge using bluespace crystals. \
 			Comes with 5 charges."
 	item = /obj/item/compression_kit
-	cost = 4
+	cost = 6
 
 /datum/uplink_item/device_tools/polyglot_voicebox
 	name = "Syndicate Polyglot Voicebox"
 	desc = "A polyglot voicebox which, after replacing the user's tongue will allow them to emulate \
 			the tongue of any species. \
 			WARNING: The polyglot voicebox does not allow you to speak additional languages"
-	cost = 2
+	cost = 1
 	item = /obj/item/autosurgeon/syndicate/polyglot_voicebox
 	surplus = 25
 
@@ -375,3 +352,16 @@
 	item = /obj/vehicle/sealed/mecha/devitt
 	cost = 40
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+
+/datum/uplink_item/device_tools/dehy_carp
+	name = "Dehydrated Space Carp"
+	desc = "Looks like a plush toy carp, but just add water and it becomes a real-life space carp! Squeeze in \
+			your hand before use so it knows not to kill you."
+	item = /obj/item/toy/plush/carpplushie/dehy_carp
+	cost = 1
+
+/datum/uplink_item/device_tools/nifsoft_remover
+	name = "Cybersun 'Scalpel' NIF-Cutter"
+	desc = "A modified version of a NIFSoft remover that allows the user to remove a NIFSoft and have a blank copy of the removed NIFSoft saved to a disk."
+	item = /obj/item/nifsoft_remover/syndie
+	cost = 1

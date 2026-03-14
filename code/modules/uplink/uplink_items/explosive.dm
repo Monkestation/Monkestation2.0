@@ -26,7 +26,7 @@
 	desc = "Because sometimes quantity is quality. Contains 10 C-4 plastic explosives."
 	item = /obj/item/storage/backpack/duffelbag/syndie/c4
 	progression_minimum = 10 MINUTES
-	cost = 8 //20% discount!
+	cost = 5
 	cant_discount = TRUE
 
 /datum/uplink_item/explosives/x4bag
@@ -46,11 +46,11 @@
 			The concussive effect from the explosion will knock the recipient out for a short period, and deafen them for longer."
 	progression_minimum = 20 MINUTES
 	item = /obj/item/computer_disk/virus/detomatix
-	cost = 6
+	cost = 5
 	restricted = TRUE
 
 /datum/uplink_item/explosives/emp
-	name = "EMP Grenades and Implanter Kit"
+	name = "EMP Grenades"
 	desc = "A box that contains five EMP grenades. Useful to disrupt communications, \
 			security's energy weapons and silicon lifeforms when you're in a tight spot."
 	item = /obj/item/storage/box/syndie_kit/emp
@@ -67,7 +67,7 @@
 			opening the box again will trigger the detonation after the timer has elapsed. Comes with free pizza, for you or your target!"
 	progression_minimum = 30 MINUTES
 	item = /obj/item/pizzabox/bomb
-	cost = 6
+	cost = 5
 	surplus = 30 //monkestation edit: from 8 to 30
 
 /datum/uplink_item/explosives/syndicate_minibomb
@@ -124,13 +124,13 @@
 /datum/uplink_item/explosives/door_charge
 	name = "Door Charge"
 	desc = "A small charge that can be rigged to a door, causing it to explode when the handle is moved. Tiny OS and microphone installed for taunting your victims."
-	cost = 5
+	cost = 3
 	item = /obj/item/traitor_machine_trapper/door_charge
 
 /datum/uplink_item/explosives/china_lake
 	name = "China Lake 40mm Grenade Launcher"
 	desc = "A robust, 4 round pump-action grenade launcher. Comes preloaded with three 40mm HE shells."
-	cost = 10
+	cost = 7
 	item = /obj/item/gun/ballistic/shotgun/china_lake
 	purchasable_from = ~UPLINK_CLOWN_OPS
 
@@ -144,7 +144,7 @@
 /datum/uplink_item/explosives/a40mm
 	name = "Box of 40mm HE Grenades"
 	desc = "A box of four 40mm HE grenades. For use with a grenade launcher."
-	cost = 5
+	cost = 4
 	item = /obj/item/storage/fancy/a40mm_box
 	purchasable_from = ~UPLINK_CLOWN_OPS
 
@@ -158,7 +158,7 @@
 /datum/uplink_item/explosives/a40mm/incendiary
 	name = "Box of 40mm Incendiary Grenades"
 	desc = "A box of four 40mm incendiary grenades. For use with a grenade launcher."
-	cost = 5
+	cost = 4
 	item = /obj/item/storage/fancy/a40mm_box/incendiary
 	purchasable_from = ~UPLINK_CLOWN_OPS
 
@@ -179,13 +179,13 @@
 /datum/uplink_item/explosives/a40mm/hedp
 	name = "Box of 40mm HEDP Grenades"
 	desc = "A box of four 40mm HEDP grenades. For use with a grenade launcher."
-	cost = 5
+	cost = 4
 	item = /obj/item/storage/fancy/a40mm_box/hedp
 	purchasable_from = ~UPLINK_CLOWN_OPS
 
 /datum/uplink_item/explosives/a40mm/frag
 	name = "Box of 40mm Fragmentation Grenades"
 	desc = "A box of four 40mm fragmentation grenades. For use with a grenade launcher."
-	cost = 5
+	cost = 4
 	item = /obj/item/storage/fancy/a40mm_box/frag
 	purchasable_from = ~UPLINK_CLOWN_OPS
