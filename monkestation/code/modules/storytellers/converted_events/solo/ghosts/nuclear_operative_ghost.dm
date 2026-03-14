@@ -39,6 +39,7 @@
 	weight = 3
 	max_occurrences = 1
 	prompted_picking = TRUE
+	always_spawn_full_amount = TRUE
 
 /datum/round_event/antagonist/ghost/nuclear_operative
 	var/static/datum/team/nuclear/nuke_team

@@ -97,6 +97,8 @@
 	var/list/extra_spawned_events
 	/// Similar to extra_spawned_events however these are only used by roundstart events and will only try and run if we have the points to do so
 	var/list/preferred_events
+	/// Do we always spawn our full amount, regardless of being over antag cap
+	var/always_spawn_full_amount = FALSE
 
 /datum/round_event_control/antagonist/New()
 	. = ..()
@@ -167,7 +169,7 @@
 /datum/round_event_control/antagonist/proc/get_antag_amount()
 	var/people = SSgamemode.get_correct_popcount()
 	var/amount = min(base_antags + FLOOR(people / denominator, 1), maximum_antags)
-	if(roundstart)
+	if(roundstart || always_spawn_full_amount)
 		return amount
 
 	var/point_cost = antag_datum::antag_count_points
