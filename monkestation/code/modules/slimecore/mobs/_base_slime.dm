@@ -239,7 +239,7 @@
 		new_planning_subtree |= add_or_replace_tree(/datum/ai_planning_subtree/cleaning_subtree_slime)
 
 	if(!(slime_flags & PASSIVE_SLIME))
-		new_planning_subtree |= add_or_replace_tree(/datum/ai_planning_subtree/simple_find_target_no_trait/slime)
+		ai_controller.set_blackboard_key(BB_TARGETING_STRATEGY, /datum/targeting_strategy/basic/no_trait/slime)
 
 	if(length(compiled_liked_foods))
 		AddElement(/datum/element/basic_eating, food_types = compiled_liked_foods)

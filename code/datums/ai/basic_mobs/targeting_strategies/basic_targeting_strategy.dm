@@ -149,3 +149,13 @@
 
 /datum/targeting_strategy/basic/same_faction/faction_check(mob/living/living_mob, mob/living/the_target)
 	return !..() // inverts logic to ONLY target mobs that share a faction
+
+
+/datum/targeting_strategy/basic/no_trait
+	/// Traits of mobs we shall not hunt
+	var/trait = TRAIT_AI_PAUSED
+
+/datum/targeting_strategy/basic/no_trait/can_attack(mob/living/owner, atom/target, vision_range)
+	if(HAS_TRAIT(target, trait))
+		return FALSE
+	return ..()

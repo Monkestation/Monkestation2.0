@@ -8,13 +8,13 @@
 
 /datum/slime_trait/visual/cat/on_add(mob/living/basic/slime/parent)
 	. = ..()
-	parent.replacement_trees += list(/datum/ai_planning_subtree/simple_find_target_no_trait/slime = /datum/ai_planning_subtree/simple_find_target_no_trait/slime_cat)
+	parent.ai_controller.set_blackboard_key(BB_TARGETING_STRATEGY, /datum/targeting_strategy/basic/no_trait/slime/cat)
 	parent.emotion_states[EMOTION_HAPPY] = "aslime-:33"
 	SEND_SIGNAL(parent, EMOTION_BUFFER_UPDATE_OVERLAY_STATES, parent.emotion_states)
 	parent.recompile_ai_tree()
 
 /datum/slime_trait/visual/cat/on_remove (mob/living/basic/slime/parent)
-	parent.replacement_trees -= list(/datum/ai_planning_subtree/simple_find_target_no_trait/slime = /datum/ai_planning_subtree/simple_find_target_no_trait/slime_cat)
+	parent.ai_controller.set_blackboard_key(BB_TARGETING_STRATEGY, /datum/targeting_strategy/basic/no_trait/slime)
 	parent.emotion_states[EMOTION_HAPPY] = "aslime-happy"
 	SEND_SIGNAL(parent, EMOTION_BUFFER_UPDATE_OVERLAY_STATES, parent.emotion_states)
 	parent.recompile_ai_tree()
