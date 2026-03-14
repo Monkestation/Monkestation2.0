@@ -1930,7 +1930,7 @@
 2022-11-01T15:30:55.5207230Z 	110 - /obj/item/cultivator/rake using invalid icon_state, "rake"
 2022-11-01T15:30:55.5214896Z 	111 - /obj/item/hatchet/wooden using invalid icon_state, "woodhatchet"
 2022-11-01T15:30:55.5218699Z 	112 - /obj/item/hatchet/cutterblade using invalid icon_state, "cutterblade"
-2022-11-01T15:30:55.6152861Z 	113 - /obj/item/reagent_containers/hypospray/medipen using invalid worn_icon_state, "medipen"
+2022-11-01T15:30:55.6152861Z 	113 - /obj/item/reagent_containers/medipen using invalid worn_icon_state, "medipen"
 2022-11-01T15:30:55.6332977Z 	114 - /obj/item/storage/pill_bottle using invalid icon_state, "pill_canister"
 2022-11-01T15:30:55.6344463Z 	115 - /obj/item/analyzer/ranged using invalid icon_state, "analyzerranged"
 2022-11-01T15:30:55.6996164Z 	116 - /obj/item/organ/internal/monster_core using invalid icon_state, "hivelord_core"

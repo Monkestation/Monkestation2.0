@@ -171,7 +171,7 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 	name = "holoparasite injector"
 	desc = "It contains an alien nanoswarm of unknown origin. Though capable of near sorcerous feats via use of hardlight holograms and nanomachines, it requires an organic host as a home base and source of fuel."
 	icon = 'icons/obj/medical/syringe.dmi'
-	icon_state = "combat_hypo"
+	icon_state = "hypo_combat"
 	theme = GUARDIAN_THEME_TECH
 	allow_multiple = TRUE
 	allow_changeling = FALSE

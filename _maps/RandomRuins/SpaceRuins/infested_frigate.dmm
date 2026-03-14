@@ -2940,10 +2940,10 @@
 /obj/structure/table/glass,
 /obj/item/surgical_drapes,
 /obj/effect/spawner/random/medical/surgery_tool_advanced,
-/obj/item/reagent_containers/hypospray/medipen{
+/obj/item/reagent_containers/medipen{
 	pixel_y = 6
 	},
-/obj/item/reagent_containers/hypospray/medipen,
+/obj/item/reagent_containers/medipen,
 /obj/effect/turf_decal{
 	icon_state = "warningline_white"
 	},

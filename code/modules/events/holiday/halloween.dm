@@ -7,6 +7,7 @@
 	earliest_start = 0 MINUTES
 	category = EVENT_CATEGORY_HOLIDAY
 	description = "Gives everyone treats, and turns Ian and Poly into their festive versions."
+	roundstart = TRUE
 
 /datum/round_event/spooky/start()
 	..()

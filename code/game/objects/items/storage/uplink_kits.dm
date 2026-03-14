@@ -187,7 +187,7 @@
 			new /obj/item/ammo_box/magazine/m9mm(src)
 			new /obj/item/card/id/advanced/chameleon(src) // 2 tc
 			new /obj/item/clothing/under/chameleon(src) // 1 tc
-			new /obj/item/reagent_containers/hypospray/medipen/stimulants(src) // 5 tc
+			new /obj/item/reagent_containers/medipen/stimulants(src) // 5 tc
 			new /obj/item/reagent_containers/cup/rag(src)
 			new /obj/item/implanter/freedom(src) // 5 tc
 			new /obj/item/flashlight/emp(src) // 2 tc
@@ -197,7 +197,7 @@
 
 		if(KIT_NINJA)
 			new /obj/item/katana(src) // Unique , hard to tell how much tc this is worth. 8 tc?
-			new /obj/item/reagent_containers/hypospray/medipen/stimulants(src) // 5 tc
+			new /obj/item/reagent_containers/medipen/stimulants(src) // 5 tc
 			for(var/i in 1 to 6)
 				new /obj/item/throwing_star(src) // 1 tc
 			new /obj/item/storage/belt/chameleon(src) // worth some fraction of a tc
@@ -582,7 +582,7 @@
 /obj/item/storage/box/syndie_kit/tuberculosisgrenade/PopulateContents()
 	new /obj/item/grenade/chem_grenade/large/tuberculosis(src) // Monkestation Edit: Large grenade
 	for(var/i in 1 to 5)
-		new /obj/item/reagent_containers/hypospray/medipen/tuberculosiscure(src)
+		new /obj/item/reagent_containers/medipen/tuberculosiscure(src)
 	new /obj/item/reagent_containers/syringe(src)
 	new /obj/item/reagent_containers/cup/bottle/tuberculosiscure(src)
 

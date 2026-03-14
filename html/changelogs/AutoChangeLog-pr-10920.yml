@@ -1,0 +1,11 @@
+author: "Mantle, Poojawa, Ynot, Njmask, Triplezeta, Marksuckerberg, assorted other coders and spriters - Port of a port of a port"
+delete-after: True
+changes:
+  - rscadd: "Ported Hyposprays Mk2 from Yogs, inturn from Whitesands, from Citadel, and shiptest. - Effectively advanced syringes that can draw blood, inject reagents, and spray reagents"
+  - rscadd: "Vials - Special containers meant for hyposprays. They come in various sizes - 15u, 30u, 60u, and 120u. Not every type is usable in every hypospray, and the 120u vials are exclusive to the CMO"
+  - rscadd: "Hypospray's mode can be changed by using inhand, their vials removed by rclick, and the transfer size changed by ctrl left / right clicking"
+  - rscadd: "Hyposprays have special upgrade, unlockable via research"
+  - rscadd: "Hyposprays and hypospray accessories can be found for purchase in a new tab in the Nanomed Vendor."
+  - image: "Hypospray, Vial, lockbox sprites"
+  - code_imp: "This PR changes a significant amount around autoinjectors (medipens), and adds hyposprays. Please report any bugs to the PR on GitHub, or ping @mantlecrawler in discord. There should also be a thread up for it in PR-Discusssion"
+  - admin: "Minor ERT loadout tweaks - ERTs now have hyposprays, rather than single or multi use injectors."

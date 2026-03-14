@@ -202,7 +202,7 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 
 
 		/obj/item/mod/control/pre_equipped/debug,
-		/obj/item/reagent_containers/hypospray/medipen/tuberculosiscure/debug,
+		/obj/item/reagent_containers/medipen/tuberculosiscure/debug,
 		/obj/item/reagent_containers/cup/bottle/disease_debug,
 		/obj/item/pinpointer/area_pinpointer/debug,
 		/obj/item/flashlight/emp/debug,

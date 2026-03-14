@@ -1,0 +1,4 @@
+author: "SirNightKnight"
+delete-after: True
+changes:
+  - balance: "silicon upload boards are no longer printable, they are now a cargo order instead."

@@ -233,6 +233,8 @@
   - map: added wire chem to pubby
   - map: added comp printer to voidraptor
   - map: fixes Helio patho areas
+  wraith-54321:
+  - del: disabled assault operatives.
   SirNightKnight:
   - balance: wizard smite always pulls from heavy smites, moved fireball and lightning
       to the light smite category as they are relatively harmless. capped the smite

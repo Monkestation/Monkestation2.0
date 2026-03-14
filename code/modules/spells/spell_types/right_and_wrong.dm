@@ -224,15 +224,13 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
  */
 /proc/summon_events(mob/user)
 	// Already in wiz-mode? Speed er up
-	if(SSgamemode.wizardmode)
-		/*
-		SSevents.frequency_upper -= 1 MINUTES //The upper bound falls a minute each time, making the AVERAGE time between events lessen
-		if(SSevents.frequency_upper < SSevents.frequency_lower) //Sanity
-			SSevents.frequency_upper = SSevents.frequency_lower
+	if(istype(SSgamemode.current_storyteller, /datum/storyteller/wizard))
+		var/datum/storyteller/current_storyteller = SSgamemode.current_storyteller
+		for(var/mult in current_storyteller.point_gains_multipliers)
+			if(mult == EVENT_TRACK_ROLESET)
+				continue
+			current_storyteller.point_gains_multipliers[mult]++
 
-		SSevents.reschedule()
-		*/
-		SSgamemode.event_frequency_multiplier += 0.5
 		if(user)
 			to_chat(user, span_warning("You have intensified summon events, causing them to occur more often!"))
 			message_admins("[ADMIN_LOOKUPFLW(user)] intensified summon events!")
@@ -240,18 +238,12 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 		else
 			log_game("Summon Events was intensified!")
 
-		message_admins("Summon Events intensifies, event frequency multiplier is now [SSgamemode.event_frequency_multiplier]x.")
+		//whatever track, they should all be the same
+		message_admins("Summon Events intensifies, event frequency multiplier is now [current_storyteller.point_gains_multipliers[EVENT_TRACK_MUNDANE]]x.")
 
 	// Not in wiz-mode?  Get this show on the road
 	else
-		/*
-		SSevents.frequency_lower = 1 MINUTES //1 minute lower bound
-		SSevents.frequency_upper = 5 MINUTES //5 minutes upper bound
-		SSevents.toggleWizardmode()
-		SSevents.reschedule()
-		*/
-		SSgamemode.toggleWizardmode()
-		SSgamemode.event_frequency_multiplier++
+		SSgamemode.set_storyteller(/datum/storyteller/wizard)
 		if(user)
 			to_chat(user, span_warning("You have cast summon events!"))
 			message_admins("[ADMIN_LOOKUPFLW(user)] summoned events!")

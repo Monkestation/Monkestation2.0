@@ -60,7 +60,7 @@ GLOBAL_LIST_INIT(mystery_box_extended, list(
 	/obj/item/storage/belt/sabre,
 	/obj/item/knife/combat,
 	/obj/item/melee/baton/security/loaded,
-	/obj/item/reagent_containers/hypospray/combat,
+	/obj/item/hypospray/combat,
 	/obj/item/defibrillator/compact/combat/loaded/nanotrasen,
 	/obj/item/melee/energy/sword/saber,
 	/obj/item/spear,

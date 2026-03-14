@@ -184,7 +184,7 @@
 	name = "Stimpack"
 	desc = "Stimpacks, the tool of many great heroes, make you nearly immune to stuns and knockdowns for about \
 			5 minutes after injection."
-	item = /obj/item/reagent_containers/hypospray/medipen/stimulants
+	item = /obj/item/reagent_containers/medipen/stimulants
 	cost = 5
 	surplus = 90
 
@@ -364,4 +364,15 @@
 	name = "Cybersun 'Scalpel' NIF-Cutter"
 	desc = "A modified version of a NIFSoft remover that allows the user to remove a NIFSoft and have a blank copy of the removed NIFSoft saved to a disk."
 	item = /obj/item/nifsoft_remover/syndie
+
+/datum/uplink_item/device_tools/syndicate_hypospray
+	name = "Syndicate Hypospray"
+	desc = "A advanced hypospray, used to inject chemicals into yourself or other people, based off of stolen designs. Capable of loading large vials, and piercing armor."
+	item = /obj/item/hypospray/combat
+	cost = 3
+
+/datum/uplink_item/device_tools/syndicate_hypospray
+	name = "Syndicate Combat Hypospray Vials"
+	desc = "A box containing 6 bluespace vials, and a beaker full of premixed healing chems."
+	item = /obj/item/storage/box/evilmeds/evilhypos
 	cost = 1
