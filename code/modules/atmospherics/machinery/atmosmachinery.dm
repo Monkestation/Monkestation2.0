@@ -469,7 +469,13 @@
 		var/datum/gas_mixture/env_air = loc.return_air()
 		pressures = int_air.return_pressure() - env_air.return_pressure()
 
-	user.visible_message(span_danger("[user] is sent flying by pressure!"),span_userdanger("The pressure sends you flying!"))
+	if(HAS_TRAIT(user, TRAIT_PRESSURE_FLING_RESISTANT))
+		if(pressures/250 < 40)
+			return
+		else
+			user.visible_message(span_danger("[user]'s footing slips and is sent flying by pressure!"),span_userdanger("Your footing slips and the pressure sends you flying!"))
+	else
+		user.visible_message(span_danger("[user] is sent flying by pressure!"),span_userdanger("The pressure sends you flying!"))
 
 	// if get_dir(src, user) is not 0, target is the edge_target_turf on that dir
 	// otherwise, edge_target_turf uses a random cardinal direction

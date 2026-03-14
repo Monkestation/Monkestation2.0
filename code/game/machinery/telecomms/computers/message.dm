@@ -264,6 +264,9 @@
 		ui = new(user, src, "MessageMonitor", name)
 		ui.open()
 
+/obj/machinery/computer/message_monitor/ui_assets(mob/user)
+	. = ..()
+	. += get_asset_datum(/datum/asset/spritesheet_batched/chat)
 
 #undef MSG_MON_SCREEN_MAIN
 #undef MSG_MON_SCREEN_LOGS

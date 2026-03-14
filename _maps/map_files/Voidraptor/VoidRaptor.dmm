@@ -2423,6 +2423,7 @@
 	pixel_y = 20
 	},
 /obj/effect/turf_decal/delivery,
+/obj/structure/drain,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "aKT" = (
@@ -21489,6 +21490,7 @@
 	pixel_y = 20
 	},
 /obj/effect/turf_decal/delivery,
+/obj/structure/drain,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "giM" = (
@@ -24250,6 +24252,10 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/supermatter/room)
 "gVD" = (
+/obj/structure/closet{
+	name = "janitorial supplies"
+	},
+/obj/item/pushbroom,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/medical/morgue)
 "gVG" = (
@@ -81976,6 +81982,13 @@
 /obj/structure/cable,
 /turf/open/floor/iron/small,
 /area/station/commons/dorms)
+"wGC" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 8
+	},
+/obj/machinery/component_printer,
+/turf/open/floor/iron/freezer,
+/area/station/medical/chemistry)
 "wGI" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -117411,7 +117424,7 @@ tfc
 uYj
 hKm
 gTX
-cyc
+wGC
 cyc
 cyc
 cGX
