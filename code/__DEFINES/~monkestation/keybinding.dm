@@ -1,10 +1,10 @@
 #define COMSIG_KB_CLIENT_LOOC_DOWN "keybinding_client_looc_down"
 
-#define COMSIG_KB_LIVING_ITEM_PIXEL_SHIFT_DOWN	"keybinding_living_item_pixelshift_down"
-#define COMSIG_KB_LIVING_ITEM_PIXEL_SHIFT_UP	"keybinding_living_item_pixelshift_up"
-#define COMSIG_KB_LIVING_PIXELSHIFT				"keybinding_living_pixelshift"
-#define COMSIG_KB_LIVING_PIXEL_SHIFT_DOWN		"keybinding_living_pixelshift_down"
-#define COMSIG_KB_LIVING_PIXEL_SHIFT_UP			"keybinding_living_pixelshift_up"
+#define COMSIG_KB_LIVING_ITEM_PIXEL_SHIFT_DOWN "keybinding_living_item_pixelshift_down"
+#define COMSIG_KB_LIVING_ITEM_PIXEL_SHIFT_UP "keybinding_living_item_pixelshift_up"
+#define COMSIG_KB_LIVING_PIXELSHIFT "keybinding_living_pixelshift"
+#define COMSIG_KB_LIVING_PIXEL_SHIFT_DOWN "keybinding_living_pixelshift_down"
+#define COMSIG_KB_LIVING_PIXEL_SHIFT_UP "keybinding_living_pixelshift_up"
 #define COMSIG_KB_LIVING_PIXEL_TILT_DOWN "keybinding_living_pixeltilt_down"
 #define COMSIG_KB_LIVING_PIXEL_TILT_UP "keybinding_living_pixeltilt_up"
 
