@@ -385,7 +385,9 @@
 	var/atom/movable/moving_atom
 	for(var/thing in src)
 		moving_atom = thing
-		if (!moving_atom.anchored && !moving_atom.pulledby && moving_atom.last_high_pressure_movement_air_cycle < SSair.times_fired)
+		if(!(moving_atom.last_high_pressure_movement_air_cycle < SSair.times_fired))
+			continue
+		if(!moving_atom.anchored && !moving_atom.pulledby)
 			moving_atom.experience_pressure_difference(pressure_difference, pressure_direction)
 
 /atom/movable
@@ -397,16 +399,25 @@
 	set waitfor = FALSE
 	if(SEND_SIGNAL(src, COMSIG_ATOM_PRE_PRESSURE_PUSH) & COMSIG_ATOM_BLOCKS_PRESSURE)
 		return
-	var/const/PROBABILITY_OFFSET = 25
-	var/const/PROBABILITY_BASE_PRECENT = 75
-	var/max_force = sqrt(pressure_difference) * (MOVE_FORCE_DEFAULT / 5)
-	var/move_prob = 100
-	if (pressure_resistance > 0)
-		move_prob = (pressure_difference / pressure_resistance * PROBABILITY_BASE_PRECENT) - PROBABILITY_OFFSET
-	move_prob += pressure_resistance_prob_delta
-	if (move_prob > PROBABILITY_OFFSET && prob(move_prob) && (move_resist != INFINITY) && (!anchored && (max_force >= (move_resist * MOVE_FORCE_PUSH_RATIO))) || (anchored && (max_force >= (move_resist * MOVE_FORCE_FORCEPUSH_RATIO))))
+
+	var/max_force = sqrt(pressure_difference) * MOVE_FORCE_DEFAULT
+
+	if(pressure_difference <= pressure_resistance)
+		return
+
+	if((move_resist != INFINITY) && (!anchored && (max_force >= (move_resist * MOVE_FORCE_PUSH_RATIO))) || (anchored && (max_force >= (move_resist * MOVE_FORCE_FORCEPUSH_RATIO))))
 		step(src, direction)
 		last_high_pressure_movement_air_cycle = SSair.times_fired
+
+		if(!get_step(src, direction)?.has_gravity())
+			var/throw_distance = sqrt(pressure_difference)/4
+			var/throw_speed = sqrt(pressure_difference)/8
+			if(throw_speed <= 1)
+				return
+			var/turf/target = get_ranged_target_turf(src, direction, throw_distance)
+			if(!src)
+				return
+			src.throw_at(target, throw_distance, throw_speed)
 
 ///////////////////////////EXCITED GROUPS/////////////////////////////
 
