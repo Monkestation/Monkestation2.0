@@ -70,7 +70,6 @@ type UplinkData = {
   primary_objectives: {
     [key: number]: string;
   };
-  completed_final_objective: string;
   potential_objectives: Objective[];
   active_objectives: Objective[];
   maximum_active_objectives: number;
@@ -190,7 +189,6 @@ export class Uplink extends Component<{}, UplinkState> {
       progression_points,
       primary_objectives,
       can_renegotiate,
-      completed_final_objective,
       active_objectives,
       potential_objectives,
       has_objectives,
@@ -441,7 +439,6 @@ export class Uplink extends Component<{}, UplinkState> {
               {(currentTab === 0 && primary_objectives && (
                 <PrimaryObjectiveMenu
                   primary_objectives={primary_objectives}
-                  final_objective={completed_final_objective}
                   can_renegotiate={can_renegotiate}
                 />
               )) ||
