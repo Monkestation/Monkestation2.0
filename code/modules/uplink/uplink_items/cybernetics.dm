@@ -29,7 +29,7 @@
 	name = "C.C.M.S Bundle"
 	desc = "A box containing an autosurgeon a C.C.M.S implant that lets you dual wield melee weapons."
 	item = /obj/item/autosurgeon/organ/syndicate/dualwield
-	cost = 10
+	cost = 8
 	purchasable_from = UPLINK_TRAITORS
 
 /datum/uplink_item/cybernetics/razorwire
@@ -70,3 +70,9 @@
 	item = /obj/item/autosurgeon/syndicate/xray_eyes
 	cost = 10
 	surplus = 30
+
+/datum/uplink_item/cybernetics/autosurgeon
+	name = "Syndicate Autosurgeon"
+	desc = "A multi-use autosurgeon for implanting whatever you want into yourself. Rip that station apart and make it part of you."
+	item = /obj/item/autosurgeon/syndicate
+	cost = 5

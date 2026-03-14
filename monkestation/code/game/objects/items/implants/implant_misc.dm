@@ -7,3 +7,4 @@
 
 /obj/item/storage/box/syndie_kit/weapons_auth/PopulateContents()
 	new /obj/item/implanter/weapons_auth(src)
+	new /obj/item/firing_pin/implant/pindicate(src)

@@ -6206,7 +6206,6 @@
 #include "code\modules\uplink\uplink_items\device_tools.dm"
 #include "code\modules\uplink\uplink_items\explosive.dm"
 #include "code\modules\uplink\uplink_items\firearms.dm"
-#include "code\modules\uplink\uplink_items\gadgets.dm"
 #include "code\modules\uplink\uplink_items\implant.dm"
 #include "code\modules\uplink\uplink_items\job.dm"
 #include "code\modules\uplink\uplink_items\melees.dm"

@@ -31,7 +31,7 @@
 			fits inside bags, and has a weapon slot. Nanotrasen crew members are trained to report red space suit \
 			sightings, however." //monkestation edit
 	item = /obj/item/storage/box/syndie_kit/space
-	cost = 4
+	cost = 2
 
 /datum/uplink_item/utility_clothing/modsuit
 	name = "Syndicate MODsuit"
@@ -86,12 +86,12 @@
 	name = "MODsuit wraith cloaking module"
 	desc = "A MODsuit module that grants to the user Optical camouflage and the ability to overload light sources to recharge suit power."
 	item = /obj/item/mod/module/stealth/wraith
-	cost = 2
+	cost = 4
 
 /datum/uplink_item/utility_clothing/syndie_armor
 	name = "Syndicate Body armor"
 	desc = "A highly compact set of body armor with two inner slots for small items. \
-	It comes with chameleon features being able to appear as other outwears. This function be locked with a multitool"
+	It comes with chameleon features being able to appear as other outwears. This function be locked and unlocked with a multitool"
 	item = /obj/item/clothing/suit/chameleon/syndie_armor
 	cost = 4
 	purchasable_from = ALL
@@ -102,3 +102,20 @@
 	item = /obj/item/storage/belt/holster/chameleon
 	cost = 1
 
+/datum/uplink_item/utility_clothing/agent_card
+	name = "Agent Identification Card"
+	desc = "Agent cards prevent artificial intelligences from tracking the wearer, and hold up to 5 wildcards \
+			from other identification cards. In addition, they can be forged to display a new assignment, name and trim. \
+			This can be done an unlimited amount of times. Some Syndicate areas and devices can only be accessed \
+			with these cards."
+	item = /obj/item/card/id/advanced/chameleon
+	cost = 4
+
+/datum/uplink_item/stealthy_tools/chameleon
+	name = "Chameleon Kit"
+	desc = "A set of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more! \
+			Due to budget cuts, the shoes don't provide protection against slipping and skillchips are sold separately. \
+			The chameleon technology can be locked and unlocked using a multitool, hiding it from others."
+	item = /obj/item/storage/box/syndie_kit/chameleon
+	cost = 2
+	purchasable_from = ~UPLINK_NUKE_OPS //clown ops are allowed to buy this kit, since it's basically a costume

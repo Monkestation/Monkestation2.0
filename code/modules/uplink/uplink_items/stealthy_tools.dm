@@ -5,16 +5,6 @@
 /datum/uplink_item/stealthy_tools
 	category = /datum/uplink_category/stealthy_tools
 
-
-/datum/uplink_item/stealthy_tools/agent_card
-	name = "Agent Identification Card"
-	desc = "Agent cards prevent artificial intelligences from tracking the wearer, and hold up to 5 wildcards \
-			from other identification cards. In addition, they can be forged to display a new assignment, name and trim. \
-			This can be done an unlimited amount of times. Some Syndicate areas and devices can only be accessed \
-			with these cards."
-	item = /obj/item/card/id/advanced/chameleon
-	cost = 2
-
 /datum/uplink_item/stealthy_tools/ai_detector
 	name = "Artificial Intelligence Detector"
 	desc = "A functional multitool that turns red when it detects an artificial intelligence watching it, and can be \
@@ -24,15 +14,6 @@
 	item = /obj/item/multitool/ai_detect
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 	cost = 1
-
-/datum/uplink_item/stealthy_tools/chameleon
-	name = "Chameleon Kit"
-	desc = "A set of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more! \
-			Due to budget cuts, the shoes don't provide protection against slipping and skillchips are sold separately. \
-			The chameleon technology can be locked and unlocked using a multitool, hiding it from others."
-	item = /obj/item/storage/box/syndie_kit/chameleon
-	cost = 2
-	purchasable_from = ~UPLINK_NUKE_OPS //clown ops are allowed to buy this kit, since it's basically a costume
 
 /datum/uplink_item/stealthy_tools/syndigaloshes
 	name = "No-Slip Chameleon Shoes"

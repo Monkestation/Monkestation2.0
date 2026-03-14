@@ -54,19 +54,6 @@
 	surplus = 50
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
-
-/datum/uplink_item/firearms/guardian
-	name = "Holoparasites"
-	desc = "Though capable of near sorcerous feats via use of hardlight holograms and nanomachines, they require an \
-			organic host as a home base and source of fuel. Holoparasites come in various types and share damage with their host."
-	progression_minimum = 30 MINUTES
-	item = /obj/item/guardian_creator/tech
-	cost = 15
-	surplus = 40
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
-	restricted = TRUE
-	refundable = TRUE
-
 /datum/uplink_item/firearms/revolver
 	name = "Syndicate Revolver"
 	desc = "Waffle Co.'s modernized Syndicate revolver. Fires 7 brutal rounds of .357 Magnum."
