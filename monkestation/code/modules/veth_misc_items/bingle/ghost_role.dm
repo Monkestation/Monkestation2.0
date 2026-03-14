@@ -3,7 +3,7 @@
 	typepath = /datum/round_event/ghost_role/bingle
 	weight = 5
 	max_occurrences = 1
-	track = EVENT_TRACK_ROLESET
+	track = EVENT_TRACK_MAJOR
 	description = "Spawns a pesky little blue fella."
 	tags = list(TAG_COMBAT, TAG_EXTERNAL, TAG_OUTSIDER_ANTAG, TAG_TEAM_ANTAG, TAG_ALIEN)
 	checks_antag_cap = TRUE
