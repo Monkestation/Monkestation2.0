@@ -90,7 +90,7 @@
 	target.notify_revival("Someone is trying to reboot your posibrain.", source = target)
 
 /datum/surgery_step/finalize_positronic_restoration/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	if(HAS_TRAIT(target, TRAIT_DEFIB_BLACKLISTED))
+	if(target.mind && HAS_TRAIT(target.mind, TRAIT_DEFIB_BLACKLISTED))
 		target.emote("buzz")
 		target.visible_message(span_warning("...[target] does not respond. [target.p_Their()] personality matrix appears corrupted."))
 		return FALSE
