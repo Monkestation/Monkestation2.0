@@ -116,6 +116,9 @@
 /datum/component/scope/proc/start_zooming(mob/user)
 	if(!user.client)
 		return
+	if(HAS_TRAIT(user, TRAIT_USER_SCOPED))
+		user.balloon_alert(user, "already zoomed!")
+		return
 	user.client.mouse_override_icon = 'icons/effects/mouse_pointers/scope_hide.dmi'
 	user.update_mouse_pointer()
 	user.playsound_local(parent, 'sound/weapons/scope.ogg', 75, TRUE)
@@ -123,6 +126,7 @@
 	tracker.assign_to_mob(user, range_modifier)
 	RegisterSignal(user, COMSIG_MOB_SWAP_HANDS, PROC_REF(stop_zooming))
 	START_PROCESSING(SSprojectiles, src)
+	ADD_TRAIT(user, TRAIT_USER_SCOPED, REF(src))
 
 /**
  * We stop zooming, canceling processing, resetting stuff back to normal and deleting our tracker.
@@ -133,12 +137,16 @@
 /datum/component/scope/proc/stop_zooming(mob/user)
 	SIGNAL_HANDLER
 
+	if(!HAS_TRAIT(user, TRAIT_USER_SCOPED))
+		return
+
 	STOP_PROCESSING(SSprojectiles, src)
 	UnregisterSignal(user, COMSIG_MOB_SWAP_HANDS)
 	if(user.client)
 		animate(user.client, 0.2 SECONDS, pixel_x = 0, pixel_y = 0)
 		user.client.mouse_override_icon = null
 		user.update_mouse_pointer()
+	REMOVE_TRAIT(user, TRAIT_USER_SCOPED, REF(src))
 	user.playsound_local(parent, 'sound/weapons/scope.ogg', 75, TRUE, frequency = -1)
 	tracker = null
 	user.clear_fullscreen("scope")

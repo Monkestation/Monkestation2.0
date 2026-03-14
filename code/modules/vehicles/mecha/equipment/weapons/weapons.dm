@@ -58,14 +58,13 @@
 		var/obj/projectile/projectile_obj = new projectile(get_turf(src))
 		projectile_obj.log_override = TRUE //we log being fired ourselves a little further down.
 		projectile_obj.firer = chassis
-		projectile_obj.fired_from = src
-		projectile_obj.preparePixelProjectile(target, source, modifiers, spread)
-		if(source.client && isliving(source)) //dont want it to happen from syndie mecha npc mobs, they do direct fire anyways
+		projectile_obj.aim_projectile(target, source, modifiers, spread)
+		if(isliving(source) && source.client) //dont want it to happen from syndie mecha npc mobs, they do direct fire anyways
 			var/mob/living/shooter = source
 			projectile_obj.hit_prone_targets = (shooter.istate & ISTATE_HARM)
 		projectile_obj.fire()
 		if(!projectile_obj.suppressed && firing_effect_type)
-			new firing_effect_type(get_turf(src), chassis.dir)
+			new firing_effect_type(chassis || get_turf(src), chassis.dir)
 		playsound(chassis, fire_sound, 50, TRUE)
 
 		log_combat(source, target, "fired [projectile_obj] at", src, "from [chassis] at [get_area_name(src, TRUE)]")
@@ -740,7 +739,7 @@
 	mech_flags = EXOSUIT_MODULE_TRASHTANK
 
 /obj/projectile/bullet/pellet/shotgun_improvised/tank
-	tile_dropoff = 0 //its a peashooter that fires with bullets the size of pellets, but don't do this now...
+	damage_falloff_tile = 0
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/peashooter
 	name = "peashooter breech"

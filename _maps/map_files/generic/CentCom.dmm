@@ -22169,7 +22169,7 @@
 /obj/item/gun/energy/tesla_cannon,
 /obj/item/gun/energy/laser/thermal/inferno,
 /obj/item/gun/energy/laser/thermal/cryo,
-/obj/item/gun/energy/beam_rifle,
+/obj/item/gun/energy/event_horizon,
 /obj/item/gun/ballistic/rifle/sniper_rifle,
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/adminroom)
@@ -25119,18 +25119,18 @@
 	pixel_x = 32
 	},
 /obj/machinery/light/small/directional/east,
-/obj/item/ammo_casing/caseless/rocket/heap,
+/obj/item/ammo_casing/rocket/heap,
 /obj/structure/closet/cabinet,
-/obj/item/ammo_casing/caseless/rocket,
-/obj/item/ammo_casing/caseless/rocket,
+/obj/item/ammo_casing/rocket,
+/obj/item/ammo_casing/rocket,
 /obj/item/gun/ballistic/rocketlauncher/nobackblast{
 	pin = /obj/item/firing_pin
 	},
-/obj/item/ammo_casing/caseless/rocket,
-/obj/item/ammo_casing/caseless/rocket,
-/obj/item/ammo_casing/caseless/rocket/heap,
-/obj/item/ammo_casing/caseless/rocket/weak,
-/obj/item/ammo_casing/caseless/rocket/weak,
+/obj/item/ammo_casing/rocket,
+/obj/item/ammo_casing/rocket,
+/obj/item/ammo_casing/rocket/heap,
+/obj/item/ammo_casing/rocket/weak,
+/obj/item/ammo_casing/rocket/weak,
 /obj/item/clothing/under/rank/centcom/official,
 /obj/item/clothing/glasses/sunglasses,
 /obj/item/radio/headset/headset_cent/alt,
@@ -25702,19 +25702,19 @@
 	pixel_x = -8;
 	pixel_y = 20
 	},
-/obj/item/ammo_casing/caseless/rocket{
+/obj/item/ammo_casing/rocket{
 	pixel_x = 0;
 	pixel_y = 2
 	},
-/obj/item/ammo_casing/caseless/rocket{
+/obj/item/ammo_casing/rocket{
 	pixel_x = 4;
 	pixel_y = 2
 	},
-/obj/item/ammo_casing/caseless/rocket{
+/obj/item/ammo_casing/rocket{
 	pixel_x = 9;
 	pixel_y = 2
 	},
-/obj/item/ammo_casing/caseless/rocket/heap{
+/obj/item/ammo_casing/rocket/heap{
 	pixel_x = -6;
 	pixel_y = 1
 	},
@@ -26579,7 +26579,7 @@
 /obj/structure/guncase,
 /obj/item/gun/energy/xray,
 /obj/item/gun/energy/ionrifle,
-/obj/item/gun/energy/beam_rifle,
+/obj/item/gun/energy/event_horizon,
 /obj/item/gun/ballistic/rifle/sniper_rifle,
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/adminroom)
@@ -28254,7 +28254,7 @@
 /obj/structure/guncase,
 /obj/item/gun/energy/wormhole_projector/core_inserted,
 /obj/item/gun/energy/ionrifle/carbine,
-/obj/item/gun/energy/beam_rifle,
+/obj/item/gun/energy/event_horizon,
 /obj/item/gun/ballistic/rifle/sniper_rifle,
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/adminroom)

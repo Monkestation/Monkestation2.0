@@ -17,7 +17,7 @@
 	ricochet_decay_damage = 1
 	shrapnel_type = null
 	sharpness = NONE
-	embedding = null
+	embed_type = null
 
 /obj/projectile/bullet/c45/ap
 	name = ".45 armor-piercing bullet"
@@ -50,7 +50,7 @@
 	name = "4.6x30mm armor-piercing bullet"
 	damage = 15
 	armour_penetration = 40
-	embedding = null
+	embed_type = null
 
 /obj/projectile/bullet/incendiary/c46x30mm
 	name = "4.6x30mm incendiary bullet"
@@ -61,14 +61,14 @@
 	name = "4.6x30mm saltshot bullet"
 	damage = 0
 	stamina = 20
-	embedding = null
+	embed_type = null
 	sharpness = NONE
 
 /obj/projectile/bullet/c46x30mm/rub
 	name = "4.6x30mm rubber bullet"
 	damage = 4
 	stamina = 25
-	embedding = null
+	embed_type = null
 	sharpness = NONE
 
 

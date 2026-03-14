@@ -29,7 +29,7 @@
 	. = ..()
 	teleport(bumper)
 
-/obj/effect/portal/clockcult/teleport(atom/movable/teleported_atom, pull_loop = FALSE)
+/obj/effect/portal/clockcult/teleport(atom/movable/teleported_atom, force = FALSE, pull_loop = FALSE)
 	if(isliving(teleported_atom))
 		if(pull_loop)
 			return

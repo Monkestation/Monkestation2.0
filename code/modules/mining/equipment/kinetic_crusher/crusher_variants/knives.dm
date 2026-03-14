@@ -84,7 +84,7 @@
 	if(!isturf(proj_turf))
 		return
 	var/obj/projectile/knives/knife = new(proj_turf)
-	knife.preparePixelProjectile(target, user, modifiers)
+	knife.aim_projectile(target, user, modifiers)
 	knife.firer = user
 	knife.hammer_synced = src
 	playsound(user, 'sound/weapons/fwoosh.ogg', 100, TRUE)

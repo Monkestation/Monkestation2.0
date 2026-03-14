@@ -5204,7 +5204,7 @@
 	pixel_x = 9;
 	pixel_y = 9
 	},
-/obj/item/ammo_casing/caseless/rocket{
+/obj/item/ammo_casing/rocket{
 	desc = "Your grandpappy brought this home after the war. You're pretty sure it's a dud.";
 	name = "Dud Rocket";
 	pixel_x = 4;

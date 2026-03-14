@@ -891,7 +891,7 @@
 	ricochet_decay_chance = 1
 	ricochet_shoots_firer = FALSE //something something biometrics
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
-	reflectable = REFLECT_NORMAL
+	reflectable = TRUE
 	light_system = OVERLAY_LIGHT
 	light_outer_range = 1
 	light_power = 1
@@ -983,8 +983,7 @@
 	damage = 25
 	damage_type = BRUTE
 	icon_state = "blastwave"
-	speed = 1
-	pixel_speed_multiplier = 0.5
+	speed = 0.5
 	eyeblur = 10
 	jitter = 10 SECONDS
 	knockdown = 1
@@ -1043,7 +1042,7 @@
 				to_chat(target, span_reallybig(span_clown("Your blasted right off your shoes!!")))
 				M.visible_message(span_warning("[M] is is sent rocketing off their shoes!"))
 			playsound(src, 'sound/items/airhorn.ogg', 100, TRUE, -1)
-			var/atom/throw_target = get_edge_target_turf(target, angle2dir(Angle))
+			var/atom/throw_target = get_edge_target_turf(target, angle2dir(angle))
 			M.throw_at(throw_target, 200, 8)
 
 /**
@@ -1068,7 +1067,7 @@
 	. = ..()
 	if(isliving(target))
 		var/mob/living/new_target = target
-		var/atom/throw_target = get_edge_target_turf(target, angle2dir(Angle))
+		var/atom/throw_target = get_edge_target_turf(target, angle2dir(angle))
 		new_target.throw_at(throw_target, 4, 1)
 
 /**
@@ -1093,7 +1092,7 @@
 	armor_flag = ENERGY
 	hitsound = 'sound/weapons/tap.ogg'
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
-	reflectable = REFLECT_NORMAL
+	reflectable = TRUE
 	light_system = OVERLAY_LIGHT
 	light_outer_range = 1
 	light_power = 1

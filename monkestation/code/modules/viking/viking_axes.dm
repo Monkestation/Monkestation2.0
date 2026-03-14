@@ -9,6 +9,9 @@
 	righthand_file = 'monkestation/icons/viking/axes_righthand.dmi'
 	worn_icon = 'monkestation/icons/viking/viking_armor.dmi'
 
+/datum/embedding/viking_axe
+	embed_chance = 50
+
 /obj/item/melee/viking/tenja
 	name = "boarding axe"
 	icon_state = "hand_axe"
@@ -17,7 +20,7 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	force = 20
 	throwforce = 45
-	embedding = 50
+	embed_type = /datum/embedding/viking_axe
 	wound_bonus = 25
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_NORMAL
@@ -30,11 +33,14 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	force = 25
 	throwforce = 65
-	embedding = 75
+	embed_type = /datum/embedding/viking_axe/godly
 	sharpness = SHARP_EDGED
 	wound_bonus = 30
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_NORMAL
+
+/datum/embedding/viking_axe/godly
+	embed_chance = 75
 
 /obj/item/melee/viking/godly_tenja/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
@@ -43,6 +49,7 @@
 		carbon_target.reagents.add_reagent(/datum/reagent/consumable/frostoil, 4)
 		carbon_target.reagents.add_reagent(/datum/reagent/consumable/ice, 4)
 		carbon_target.reagents.add_reagent(/datum/reagent/medicine/c2/hercuri, 4)
+
 /obj/item/melee/viking/genja
 	name = "battle axe"
 	icon_state = "battleaxe0"
@@ -51,7 +58,7 @@
 	desc = "A large 2 handed axe used for raiding."
 	force = 15
 	throwforce = 60
-	embedding = 50
+	embed_type = /datum/embedding/viking_axe
 	sharpness = SHARP_EDGED
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	wound_bonus = 30
@@ -70,6 +77,7 @@
 /obj/item/melee/viking/genja/update_icon_state()
 	icon_state = "[base_icon_state]0"
 	return ..()
+
 /obj/item/melee/viking/skeggox
 	name = "grappling axe"
 	icon_state = "hooking_axe_item"
@@ -80,12 +88,11 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	force = 18
 	throwforce = 40
-	embedding = 50
+	embed_type = /datum/embedding/viking_axe
 	sharpness = SHARP_EDGED
 	wound_bonus = 20
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_NORMAL
-
 
 /obj/item/melee/viking/skeggox/afterattack(target, mob/user, proximity_flag)
 	. = ..()
@@ -102,7 +109,7 @@
 	desc = "A massive two handed axe gilded and inscribed with runes."
 	force = 20
 	throwforce = 60
-	embedding = 50
+	embed_type = /datum/embedding/viking_axe
 	sharpness = SHARP_EDGED
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	wound_bonus = 50
@@ -110,7 +117,7 @@
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_BULKY
-/// How much damage to do unwielded
+	/// How much damage to do unwielded
 	force_unwielded = 20
 	/// How much damage to do wielded
 	force_wielded = 35

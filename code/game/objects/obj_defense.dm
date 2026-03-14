@@ -56,7 +56,7 @@
 			continue
 
 		defenestrated.apply_damage(10, BRUTE, part, blocked = min(90, defenestrated.getarmor(part, MELEE)), sharpness = SHARP_POINTY, wound_bonus = 4, bare_wound_bonus = 8, attacking_item = (length(shards) ? shards[1] : null))
-		if(prob(25 * length(shards)) && shards[1].tryEmbed(part, TRUE))
+		if(prob(25 * length(shards)) && shards[1].force_embed(defenestrated, part))
 			shards -= shards[1]
 
 	if(has_grille)
@@ -109,7 +109,6 @@
 	if(. != BULLET_ACT_HIT)
 		return .
 
-	playsound(src, hitting_projectile.hitsound, 50, TRUE)
 	var/damage_sustained = 0
 	if(!QDELETED(src)) //Bullet on_hit effect might have already destroyed this object
 		damage_sustained = take_damage(
@@ -122,7 +121,7 @@
 		)
 	if(hitting_projectile.suppressed != SUPPRESSED_VERY)
 		visible_message(
-			span_danger("[src] is hit by \a [hitting_projectile.generic_name || hitting_projectile][damage_sustained ? "" : ", without leaving a mark"]!"),
+			span_danger("[src] is hit by \a [hitting_projectile][damage_sustained ? "" : ", without leaving a mark"]!"),
 			vision_distance = COMBAT_MESSAGE_RANGE,
 		)
 

@@ -29,13 +29,16 @@
 	var/degrees = 0
 	var/font = PEN_FONT
 	var/requires_gravity = TRUE // can you use this to write in zero-g
-	embedding = list(embed_chance = 50)
+	embed_type = /datum/embedding/pen
 	sharpness = SHARP_POINTY
 	var/dart_insert_icon = 'icons/obj/weapons/guns/toy.dmi'
 	var/dart_insert_casing_icon_state = "overlay_pen"
 	var/dart_insert_projectile_icon_state = "overlay_pen_proj"
 	/// If this pen can be clicked in order to retract it
 	var/can_click = TRUE
+
+/datum/embedding/pen
+	embed_chance = 50
 
 /obj/item/pen/Initialize(mapload)
 	. = ..()
@@ -83,11 +86,11 @@
 /obj/item/pen/proc/on_inserted_into_dart(datum/source, obj/projectile/dart, mob/user, embedded = FALSE)
 	SIGNAL_HANDLER
 
-/obj/item/pen/proc/get_dart_var_modifiers()
+/obj/item/pen/proc/get_dart_var_modifiers(obj/projectile/projectile)
 	return list(
 		"damage" = max(5, throwforce),
 		"speed" = max(0, throw_speed - 3),
-		"embedding" = embedding,
+		"embedding" = get_embed().create_copy(projectile),
 		"armour_penetration" = armour_penetration,
 		"wound_bonus" = wound_bonus,
 		"bare_wound_bonus" = bare_wound_bonus,
@@ -189,7 +192,10 @@
 						"Black and Silver" = "pen-fountain-b",
 						"Command Blue" = "pen-fountain-cb"
 						)
-	embedding = list("embed_chance" = 75)
+	embed_type = /datum/embedding/pen/captain
+
+/datum/embedding/pen/captain
+	embed_chance = 50
 
 /obj/item/pen/fountain/captain/Initialize(mapload)
 	. = ..()
@@ -399,7 +405,7 @@
 		inhand_icon_state = hidden_icon
 		lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 		righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-		embedding = list(embed_chance = 100) // Rule of cool
+		set_embed(/datum/embedding/edagger_active)
 	else
 		name = initial(name)
 		desc = initial(desc)
@@ -407,14 +413,16 @@
 		inhand_icon_state = initial(inhand_icon_state)
 		lefthand_file = initial(lefthand_file)
 		righthand_file = initial(righthand_file)
-		embedding = list(embed_chance = EMBED_CHANCE)
+		set_embed(embed_type)
 
-	updateEmbedding()
 	if(user)
 		balloon_alert(user, "[hidden_name] [active ? "active" : "concealed"]")
 	playsound(src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 5, TRUE)
 	set_light_on(active)
 	return COMPONENT_NO_DEFAULT_MESSAGE
+
+/datum/embedding/edagger_active
+	embed_chance = 100
 
 /obj/item/pen/edagger/proc/on_scan(datum/source, mob/user, list/extra_data)
 	SIGNAL_HANDLER

@@ -116,4 +116,4 @@
 
 /obj/projectile/magic/aoe/rust_wave/short
 	range = 7
-	speed = 2
+	speed = 0.5

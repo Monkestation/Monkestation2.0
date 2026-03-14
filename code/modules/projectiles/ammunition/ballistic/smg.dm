@@ -27,7 +27,7 @@
 	projectile_type = /obj/projectile/bullet/c45/hp
 	advanced_print_req = TRUE
 
-/obj/item/ammo_casing/caseless/c45_caseless ///Yes yes caseless parent, it belongs here.
+/obj/item/ammo_casing/c45_caseless ///Yes yes caseless parent, it belongs here.
 	name = "caseless .45 bullet"
 	desc = "A .45 bullet casing. This one is caseless!"
 	caliber = CALIBER_45
@@ -37,7 +37,7 @@
 	name = "ammo box (caseless .45)"
 	icon = 'monkestation/icons/obj/weapons/guns/ammo.dmi'
 	icon_state = "caseless_45box"
-	ammo_type = /obj/item/ammo_casing/caseless/c45_caseless
+	ammo_type = /obj/item/ammo_casing/c45_caseless
 	multiple_sprites = AMMO_BOX_FULL_EMPTY
 
 

@@ -64,9 +64,6 @@
 	inhand_icon_state = "moistnugget"
 	slot_flags = ITEM_SLOT_BACK
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction
-	can_bayonet = TRUE
-	knife_x_offset = 27
-	knife_y_offset = 13
 	can_be_sawn_off = TRUE
 	var/jamming_chance = 20
 	var/unjam_chance = 10
@@ -74,11 +71,13 @@
 	var/jammed = FALSE
 	var/can_jam = FALSE
 
+/obj/item/gun/ballistic/rifle/boltaction/add_bayonet_point()
+	AddComponent(/datum/component/bayonet_attachable, offset_x = 32, offset_y = 12)
+
 /obj/item/gun/ballistic/rifle/boltaction/sawoff(mob/user)
 	. = ..()
 	if(.)
 		spread = 36
-		can_bayonet = FALSE
 		update_appearance()
 
 /obj/item/gun/ballistic/rifle/boltaction/attack_self(mob/user)
@@ -104,19 +103,20 @@
 	return ..()
 
 /obj/item/gun/ballistic/rifle/boltaction/attackby(obj/item/item, mob/user, params)
-	. = ..()
-	if(!can_jam)
-		balloon_alert(user, "can't jam!")
-		return
-
-	if(!bolt_locked)
-		balloon_alert(user, "bolt closed!")
-		return
-
-	if(istype(item, /obj/item/gun_maintenance_supplies) && do_after(user, 10 SECONDS, target = src))
+	if(istype(item, /obj/item/gun_maintenance_supplies))
+		if(!can_jam)
+			balloon_alert(user, "can't jam!")
+			return
+		if(!bolt_locked)
+			balloon_alert(user, "bolt is closed!")
+			return
+		if(!do_after(user, 10 SECONDS, target = src))
+			return
 		user.visible_message(span_notice("[user] finishes maintenance of [src]."))
 		jamming_chance = initial(jamming_chance)
 		qdel(item)
+		return
+	return ..()
 
 /obj/item/gun/ballistic/rifle/boltaction/blow_up(mob/user)
 	. = FALSE
@@ -179,10 +179,11 @@
 	alternative_fire_sound = 'sound/weapons/gun/shotgun/shot.ogg'
 	can_modify_ammo = TRUE
 	can_misfire = FALSE
-	can_bayonet = TRUE
-	knife_y_offset = 11
 	can_be_sawn_off = FALSE
 	projectile_damage_multiplier = 0.75
+
+/obj/item/gun/ballistic/rifle/boltaction/pipegun/add_bayonet_point()
+	AddComponent(/datum/component/bayonet_attachable, offset_y = 11)
 
 /obj/item/gun/ballistic/rifle/boltaction/pipegun/handle_chamber(mob/living/user, empty_chamber = TRUE, from_firing = TRUE, chamber_next_round = TRUE)
 	. = ..()
@@ -217,7 +218,6 @@
 	icon_state = "arcane_barrage"
 	inhand_icon_state = "arcane_barrage"
 	slot_flags = null
-	can_bayonet = FALSE
 	item_flags = NEEDS_PERMIT | DROPDEL | ABSTRACT | NOBLUDGEON
 	flags_1 = NONE
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
@@ -318,7 +318,6 @@
 	inhand_icon_state = "moistnugget"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/bubba
 	can_be_sawn_off = FALSE
-	knife_x_offset = 35
 
 /obj/item/gun/ballistic/rifle/boltaction/sporterized/Initialize(mapload)
 	. = ..()

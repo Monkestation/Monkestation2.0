@@ -745,11 +745,9 @@
 			var/mob/living/carbon/carbon_target = atom_target
 			for(var/i in 1 to num_shards)
 				var/obj/item/shard/shard = new /obj/item/shard(get_turf(carbon_target))
-				shard.embedding = list(embed_chance = 100, ignore_throwspeed_threshold = TRUE, impact_pain_mult = 1, pain_chance = 5)
-				shard.updateEmbedding()
+				shard.set_embed(/datum/embedding/glass_candy)
 				carbon_target.hitby(shard, skipcatch = TRUE, hitpush = FALSE)
-				shard.embedding = list()
-				shard.updateEmbedding()
+				shard.set_embed(initial(shard.embed_type))
 			return TRUE
 		if (VENDOR_CRUSH_CRIT_PIN) // pin them beneath the machine until someone untilts it
 			if (!isliving(atom_target))
@@ -979,11 +977,9 @@
 			var/mob/living/carbon/carbon_target = atom_target
 			for(var/i in 1 to num_shards)
 				var/obj/item/shard/shard = new /obj/item/shard(get_turf(carbon_target))
-				shard.embedding = list(embed_chance = 100, ignore_throwspeed_threshold = TRUE, impact_pain_mult = 1, pain_chance = 5)
-				shard.updateEmbedding()
+				shard.set_embed(/datum/embedding/glass_candy)
 				carbon_target.hitby(shard, skipcatch = TRUE, hitpush = FALSE)
-				shard.embedding = list()
-				shard.updateEmbedding()
+				shard.set_embed(initial(shard.embed_type))
 			return TRUE
 		if (VENDOR_CRUSH_CRIT_PIN) // pin them beneath the machine until someone untilts it
 			if (!isliving(atom_target))

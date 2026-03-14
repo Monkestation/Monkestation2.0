@@ -1,3 +1,5 @@
+#define CARBON_EXAMINE_EMBEDDING_MAX_DIST 4
+
 /mob/living/carbon/examine(mob/user)
 	var/t_He = p_they(TRUE)
 	var/t_His = p_their(TRUE)
@@ -41,11 +43,17 @@
 		if(body_part.bodypart_disabled)
 			disabled += body_part
 		missing -= body_part.body_zone
-		for(var/obj/item/leftover in body_part.embedded_objects)
-			var/stuck_or_embedded = "embedded in"
-			if(leftover.isEmbedHarmless())
-				stuck_or_embedded = "stuck to"
-			msg += "<b>[t_He] [t_has] [ma2html(leftover, user)] \a [leftover] [stuck_or_embedded] [t_his] [body_part.plaintext_zone]!</b>\n"
+		for(var/obj/item/embedded as anything in body_part.embedded_objects)
+			var/harmless = embedded.get_embed().is_harmless()
+			var/stuck_wordage = harmless ? "stuck to" : "embedded in"
+			var/embed_line = "\a [embedded]"
+			if (get_dist(src, user) <= CARBON_EXAMINE_EMBEDDING_MAX_DIST)
+				embed_line = "<a href='byond://?src=[REF(src)];embedded_object=[REF(embedded)];embedded_limb=[REF(body_part)]'>\a [embedded]</a>"
+			var/embed_text = "[t_He] [t_has] [icon2html(embedded, user)] [embed_line] [stuck_wordage] [t_his] [body_part.plaintext_zone]!"
+			if (harmless)
+				msg += span_italics(span_notice(embed_text))
+			else
+				msg += span_boldwarning(embed_text)
 
 		if(body_part.current_gauze)
 			var/gauze_href = body_part.current_gauze.name
@@ -187,3 +195,5 @@
 			. += "[scar_text]"
 
 	return .
+
+#undef CARBON_EXAMINE_EMBEDDING_MAX_DIST

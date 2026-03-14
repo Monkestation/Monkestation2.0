@@ -175,7 +175,7 @@
 	desc = "How can plants help you?"
 	species_override = /datum/species/pod
 	l_hand = /obj/item/gun/ballistic/bow
-	r_hand = /obj/item/ammo_casing/caseless/arrow
+	r_hand = /obj/item/ammo_casing/arrow
 	l_pocket = /obj/item/knife/shiv/carrot
 	r_pocket = /obj/item/flashlight/lantern
 	head = /obj/item/food/grown/ambrosia/gaia
@@ -189,7 +189,7 @@
 	backpack_contents = list(
 		/obj/item/reagent_containers/syringe/crude/mushroom = 1,
 		/obj/item/reagent_containers/syringe/crude/blastoff = 1,
-		/obj/item/ammo_casing/caseless/arrow = 2,
+		/obj/item/ammo_casing/arrow = 2,
 		/obj/item/food/grown/nettle/death = 2,
 		/obj/item/food/grown/banana = 2,
 		/obj/item/food/grown/cherry_bomb = 2,

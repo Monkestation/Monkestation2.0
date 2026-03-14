@@ -9,7 +9,6 @@
 	inhand_icon_state = "mcr01"
 	lefthand_file = 'monkestation/code/modules/microfusion/icons/guns_lefthand.dmi'
 	righthand_file = 'monkestation/code/modules/microfusion/icons/guns_righthand.dmi'
-	can_bayonet = FALSE
 	weapon_weight = WEAPON_HEAVY
 	w_class = WEIGHT_CLASS_BULKY
 	obj_flags = UNIQUE_RENAME
