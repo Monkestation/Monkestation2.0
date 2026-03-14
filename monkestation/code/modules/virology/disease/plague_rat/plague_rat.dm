@@ -29,7 +29,7 @@
 
 /mob/living/basic/mouse/plague/melee_attack(atom/target, list/modifiers, ignore_cooldown)
 	. = ..()
-	if (ishuman(user)||ismonkey(user))
+	if (ishuman(target)||ismonkey(target))
 		var/mob/living/user = target
 		var/block = user.check_contact_sterility(HANDS)
 		var/bleeding = user.check_bodypart_bleeding(HANDS)
