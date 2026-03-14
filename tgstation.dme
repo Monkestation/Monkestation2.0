@@ -499,7 +499,6 @@
 #include "code\__DEFINES\~monkestation\text.dm"
 #include "code\__DEFINES\~monkestation\time.dm"
 #include "code\__DEFINES\~monkestation\twitch.dm"
-#include "code\__DEFINES\~monkestation\uplink.dm"
 #include "code\__DEFINES\~monkestation\virology.dm"
 #include "code\__DEFINES\~monkestation\vv.dm"
 #include "code\__DEFINES\~monkestation\dcs\signals\signals_atom.dm"
