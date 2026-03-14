@@ -110,7 +110,7 @@
 	name = "Razorwire Implant"
 	desc = "An integrated spool of razorwire, capable of being used as a weapon when whipped at your foes. \
 	Two tile range and can anchor further targets to keep them still."
-	item = /obj/item/autosurgeon/organ/syndicate/razorwire
+	item = /obj/item/autosurgeon/syndicate/razorwire
 	progression_minimum = 15 MINUTES
 	cost = 12
 	surplus = 20
@@ -119,7 +119,7 @@
 	name = "Razorwire Implant"
 	desc = "An integrated spool of razorwire, capable of being used as a weapon when whipped at your foes. \
 	Two tile range and can anchor further targets to keep them still."
-	item = /obj/item/autosurgeon/organ/syndicate/razorwire
+	item = /obj/item/autosurgeon/syndicate/razorwire
 	progression_minimum = 15 MINUTES
 	cost = 12
 	surplus = 20

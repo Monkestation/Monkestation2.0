@@ -97,7 +97,7 @@
 
 /datum/opposing_force_equipment/implants_illegal/eswordarm
 	name = "Energy Sword Arm Implant"
-	item_type = /obj/item/autosurgeon/syndicate/esword_arm
+	item_type = /obj/item/autosurgeon/syndicate/esword
 	admin_note = "Force 30 no-drop, extremely robust."
 	description = "It's an energy sword, in your arm. Pretty decent for getting past stop-searches and assassinating people. Comes loaded in a Syndicate brand autosurgeon to boot!"
 
@@ -113,7 +113,7 @@
 	name = "Mantis Blade Arm Implant"
 	admin_note = "Force 30 IF emagged. Acts as a power crowbar (Opens airlock after delay)."
 	description = "A pair of armblades, can be used to cut and pry objects and people open alike."
-	item_type = /obj/item/autosurgeon/organ/syndicate/syndie_mantis
+	item_type = /obj/item/autosurgeon/syndicate/syndie_mantis
 
 /datum/opposing_force_equipment/implants_illegal/nodrop
 	item_type = /obj/item/autosurgeon/syndicate/nodrop
