@@ -370,7 +370,7 @@
 	color = color_hex2color_matrix(pick(paper_colors))
 	alpha = initial(alpha) // It's hardlight, it's gotta be see-through.
 
-/obj/item/paperplane/attack_self(mob/user)
+/obj/item/paperplane/syndicate/hardlight/attack_self(mob/user)
 	return
 
 /obj/item/borg/paperplane_crossbow
