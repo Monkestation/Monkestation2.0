@@ -699,6 +699,7 @@
 	item = /obj/item/mod/module/injector
 	cost = 2
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+	illegal_tech = FALSE
 
 /datum/uplink_item/suits/holster
 	name = "MODsuit Holster Module"
@@ -706,6 +707,7 @@
 	item = /obj/item/mod/module/holster
 	cost = 2
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+	illegal_tech = FALSE
 
 /datum/uplink_item/device_tools/assault_pod
 	name = "Assault Pod Targeting Device"

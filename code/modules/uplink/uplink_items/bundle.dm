@@ -76,13 +76,13 @@
 	name = "Syndicate Surplus Crate"
 	desc = "A dusty crate from the back of the Syndicate warehouse delivered directly to you via Supply Pod. \
 			If the rumors are true, it will fill it's contents based on your current reputation. Get on that grind. \
-			Contents are sorted to always be worth 40 TC. The Syndicate will only provide one surplus item per agent."
+			Contents are sorted to always be worth 50 TC. The Syndicate will only provide one surplus item per agent."
 	item = /obj/structure/closet/crate // will be replaced in purchase()
 	cost = 20
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 	stock_key = UPLINK_SHARED_STOCK_SURPLUS
 	/// Value of items inside the crate in TC
-	var/crate_tc_value = 40 //monkestation edit: from 30 to 40
+	var/crate_tc_value = 50
 	/// crate that will be used for the surplus crate
 	var/crate_type = /obj/structure/closet/crate
 
@@ -153,7 +153,7 @@
 	item = /obj/structure/closet/crate/syndicrate
 	progression_minimum = 30 MINUTES
 	stock_key = UPLINK_SHARED_STOCK_SURPLUS
-	crate_tc_value = 100 //monkestation edit: from 80 to 100
+	crate_tc_value = 100
 	crate_type = /obj/structure/closet/crate/syndicrate
 
 /// edited version of fill crate for super surplus to ensure it can only be unlocked with the syndicrate key
