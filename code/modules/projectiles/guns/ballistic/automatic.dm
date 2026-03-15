@@ -473,7 +473,12 @@
 /obj/item/gun/ballistic/automatic/sol_smg/evil/unrestricted
 	pin = /obj/item/firing_pin
 
+/obj/item/gun/ballistic/automatic/sol_smg/evil/unrestricted/damaged // Black market variant, more spread
+	desc = "A small submachinegun, this one is painted in tacticool black and has a bent barrel. Accepts any standard Sol pistol magazine."
+	spread = 15
 
+/obj/item/gun/ballistic/automatic/sol_smg/evil/unrestricted/damaged/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_REMOVED)
 
 ///Rifles
 
