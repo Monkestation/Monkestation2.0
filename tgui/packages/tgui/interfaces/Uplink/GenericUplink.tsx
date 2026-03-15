@@ -5,6 +5,7 @@ import { useBackend, useLocalState, useSharedState } from '../../backend';
 import {
   Box,
   Button,
+  Divider,
   DmIcon,
   Icon,
   Input,
@@ -235,6 +236,7 @@ const ItemList = (props: ItemListProps) => {
                 </Stack.Item>
               </Stack>
             </Section>
+            <Divider />
           </Stack.Item>
         ))}
       </Stack>
