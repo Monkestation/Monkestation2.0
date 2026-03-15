@@ -182,24 +182,27 @@
 		for(var/i in roundstart_experience)
 			spawned_human.mind.adjust_experience(i, roundstart_experience[i], TRUE)
 
+	//don't let the compromised die right out of the gates. We can't check trait as it hasn't been assigned yet.
+	if(/datum/quirk/item_quirk/immunodeficiency::name in player_client.prefs?.all_quirks)
+		return
 	if(prob(25))
 		var/virus_choice = pick(WILD_ACUTE_DISEASES)
-		var/list/anti = list(
-			ANTIGEN_BLOOD	= 2,
-			ANTIGEN_COMMON	= 2,
-			ANTIGEN_RARE	= 1,
-			ANTIGEN_ALIEN	= 0,
+		var/static/list/anti = list(
+			ANTIGEN_BLOOD = 2,
+			ANTIGEN_COMMON = 2,
+			ANTIGEN_RARE = 1,
+			ANTIGEN_ALIEN = 0,
 		)
-		var/list/bad = list(
-			EFFECT_DANGER_HELPFUL	= 1,
-			EFFECT_DANGER_FLAVOR	= 2,
-			EFFECT_DANGER_ANNOYING	= 2,
-			EFFECT_DANGER_HINDRANCE	= 2,
-			EFFECT_DANGER_HARMFUL	= 2,
-			EFFECT_DANGER_DEADLY	= 2,
+		var/static/list/bad = list(
+			EFFECT_DANGER_HELPFUL = 1,
+			EFFECT_DANGER_FLAVOR = 2,
+			EFFECT_DANGER_ANNOYING = 2,
+			EFFECT_DANGER_HINDRANCE = 2,
+			EFFECT_DANGER_HARMFUL = 2,
+			EFFECT_DANGER_DEADLY = 2,
 		)
 		var/datum/disease/acute/disease = new virus_choice
-		disease.makerandom(list(50,90),list(10,100),anti,bad,src)
+		disease.makerandom(list(50,90), list(10,100), anti, bad, src)
 
 		disease.disease_flags |= DISEASE_DORMANT
 		disease.spread_flags &= ~(DISEASE_SPREAD_AIRBORNE | DISEASE_SPREAD_CONTACT_FLUIDS | DISEASE_SPREAD_CONTACT_SKIN | DISEASE_SPREAD_BLOOD)

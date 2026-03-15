@@ -15,11 +15,11 @@
 			continue
 		if(!checked)
 			if(body_position == LYING_DOWN)
-				block = check_contact_sterility(BODY_ZONE_EVERYTHING)
-				bleeding = check_bodypart_bleeding(BODY_ZONE_EVERYTHING)
+				block = check_contact_sterility()
+				bleeding = check_bodypart_bleeding()
 			else
-				block = check_contact_sterility(BODY_ZONE_LEGS)
-				bleeding = check_bodypart_bleeding(BODY_ZONE_LEGS)
+				block = check_contact_sterility(pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
+				bleeding = check_bodypart_bleeding(pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
 			checked = TRUE
 		assume_contact_diseases(yucky.diseases, yucky, block, bleeding)
 
@@ -31,7 +31,7 @@
 
 //This one is used for two-ways infections, such as hand-shakes, hugs, punches, people bumping into each others, etc
 /mob/living/proc/share_contact_diseases(mob/living/carbon/L, block=0, bleeding=0)
-	L.assume_contact_diseases(diseases ,src,block,bleeding)
+	L.assume_contact_diseases(diseases, src, block, bleeding)
 	assume_contact_diseases(L.diseases, L, block, bleeding)
 
 ///////////////////////DISEASE STUFF///////////////////////////////////////////////////////////////////
@@ -106,10 +106,11 @@
 		if(immune_system?.strength > 1)
 			immune_system.strength = max(immune_system.strength - 0.01, 1)
 
-/mob/living/proc/try_contact_infect(datum/disease/acute/D, zone = BODY_ZONE_EVERYTHING, note = "Try Contact Infect")
+/mob/living/proc/try_contact_infect(datum/disease/acute/D, note = "Try Contact Infect")
 	if(!(D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN))
 		return
-	var/block = check_contact_sterility(zone)
-	if(block)
-		infect_disease(D, notes = note)
+	//safe for now...
+	if(check_contact_sterility())
+		return
+	infect_disease(D, notes = note)
 

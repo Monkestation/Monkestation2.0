@@ -1,56 +1,47 @@
+///Checks if a mob has enough sterile protection (RNG chance if less than 100%) on a specified body part.
+///No provided arg will instead use total armor value of the mob.
+///Returns TRUE if successfully sterile, so safe from disease.
 /mob/living/proc/check_contact_sterility(body_part)
 	return FALSE
 
 /mob/living/carbon/human/check_contact_sterility(body_part)
-	var/check_flags
-	if(body_part == BODY_ZONE_EVERYTHING)
-		check_flags = FULL_BODY
-	else if(body_part == BODY_ZONE_LEGS)
-		check_flags = LEGS | FEET
-	else if(body_part == BODY_ZONE_ARMS)
-		check_flags = ARMS | HANDS
-	else
-		check_flags = body_zone2cover_flags(body_part)
-
-	for(var/obj/item/cloth as anything in get_equipped_items())
-		if(QDELETED(cloth))
-			continue
-		if((cloth.body_parts_covered & check_flags) && prob(cloth.get_armor_rating(BIO)))
-			return TRUE
+	if(prob(getarmor(body_part, BIO)))
+		return TRUE
 	return FALSE
 
-/mob/living/proc/check_bodypart_bleeding(zone)
+///Checks if a mob has open bleeding & no sterile protection (RNG chance if less than 100% bio protection) on a specified bodypart.
+///No provided arg will instead use the total armor value of the mob.
+///Returns TRUE if the mob is bleeding & unprotected, AKA able to be infected.
+/mob/living/proc/check_bodypart_bleeding(body_part)
 	return FALSE
 
-/mob/living/carbon/human/check_bodypart_bleeding(zone)
+/mob/living/carbon/human/check_bodypart_bleeding(body_part)
 	if(HAS_TRAIT(src, TRAIT_NOBLOOD) || blood_volume <= 0)
 		return FALSE
 
-	var/list/checks
-	if(zone == BODY_ZONE_EVERYTHING)
-		checks = list(BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG, BODY_ZONE_R_ARM, BODY_ZONE_HEAD)
-	else if(zone == BODY_ZONE_LEGS)
-		checks = list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
-	else if(zone == BODY_ZONE_ARMS)
-		checks = list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)
+	var/obj/item/bodypart/bleeding_limb
+	//If no limb is specified, let's look for any that's bleeding.
+	if(isnull(body_part))
+		for(var/obj/item/bodypart/all_limbs as anything in bodyparts)
+			if(all_limbs.cached_bleed_rate)
+				bleeding_limb = all_limbs
+				break
 	else
-		checks = islist(zone) ? zone : list(zone)
+		bleeding_limb = get_bodypart(body_part)
 
-	var/bleeding_flags = NONE
-	for(var/obj/item/bodypart/limb as anything in bodyparts)
-		if((limb.body_zone in checks) && limb.cached_bleed_rate)
-			bleeding_flags |= limb.body_part
-
-	if(!bleeding_flags)
+	//no limb, what is there to infect?
+	if(isnull(bleeding_limb))
 		return FALSE
+	//No bleeding, end here. Safe.
+	if(!bleeding_limb.cached_bleed_rate)
+		return FALSE
+	//Bleeding? Let's check if you're at least protected-bleeding.
+	if(prob(getarmor(bleeding_limb, BIO)))
+		return FALSE
+	return TRUE
 
-	for(var/obj/item/cloth as anything in get_equipped_items())
-		if(QDELETED(cloth))
-			continue
-		if(prob(cloth.get_armor_rating(BIO)))
-			bleeding_flags &= ~cloth.body_parts_covered
-
-	return !!bleeding_flags
+///Checks if a mob is bleeding or is biologically protected on a specified body part.
+///No provided arg will instead use total armor value of the mob.
 
 /mob/living/proc/check_airborne_sterility()
 	return FALSE
