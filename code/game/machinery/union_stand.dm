@@ -69,7 +69,7 @@
 	return union_stand_for.ui_data(user)
 
 /obj/machinery/union_stand/ui_static_data(mob/user)
-	return union_stand_for.ui_data(user)
+	return union_stand_for.ui_static_data(user)
 
 /obj/machinery/union_stand/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
