@@ -63,7 +63,10 @@
 	return ..()
 
 /obj/machinery/union_stand/ui_interact(mob/user, datum/tgui/ui)
-	return union_stand_for.ui_interact(user, ui, src)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "UnionStand")
+		ui.open()
 
 /obj/machinery/union_stand/ui_data(mob/user)
 	return union_stand_for.ui_data(user)

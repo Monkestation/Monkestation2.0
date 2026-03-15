@@ -85,7 +85,9 @@ export const UnionScreen = () => {
         </Stack>
       </Section>
       <Section
+        my={-0.5}
         title="Union Personnel"
+        scrollable
         buttons={
           <Button
             icon="pencil"
@@ -95,7 +97,7 @@ export const UnionScreen = () => {
         }
       >
         {union_members.map((member) => (
-          <Stack key={member.name} fill my={0.5} p={1} className="candystripe">
+          <Stack key={member.name} my={0.5} p={1} className="candystripe">
             <Stack.Item grow={1}>{member.name}</Stack.Item>
             {!!member.leader && <Stack.Item grow={1}>LEADER</Stack.Item>}
             <Stack.Item textAlign="right">

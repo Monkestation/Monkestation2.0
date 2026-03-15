@@ -131,6 +131,8 @@
 	var/list/player_accounts = list()
 	for(var/member in GLOB.cargo_union.union_employees)
 		var/datum/bank_account/current_bank_account = member[CARGO_UNION_BANK]
+		if(isnull(current_bank_account))
+			continue
 		player_accounts += list(list(
 			"name" = member[CARGO_UNION_NAME],
 			"job" = current_bank_account.account_job.title,

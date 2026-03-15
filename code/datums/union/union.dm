@@ -162,7 +162,7 @@ ADMIN_VERB(union_manager, R_ADMIN, FALSE, "Manage Cargo Union", "View the Cargo 
 	for(var/member in union_employees)
 		if(member[CARGO_UNION_NAME] != removed_member_name)
 			continue
-		union_employees -= member
+		union_employees -= list(member)
 		return TRUE
 	return FALSE
 

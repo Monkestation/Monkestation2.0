@@ -151,7 +151,7 @@ export const AccountingConsoleContents = () => {
           ) : (
             <>
               {screenmode === SCREENS.union && (
-                <Stack.Item grow ml={3}>
+                <Stack.Item grow ml={2}>
                   <FakeWindow name="Cargo Union" setScreenmode={setScreenmode}>
                     <UnionScreen />
                   </FakeWindow>

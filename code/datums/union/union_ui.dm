@@ -1,7 +1,7 @@
-/datum/union/ui_interact(mob/user, datum/tgui/ui, obj/machinery/union_stand/source)
-	ui = SStgui.try_update_ui(user, source || src, ui)
+/datum/union/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, source || src, "UnionStand")
+		ui = new(user, src, "UnionStand")
 		ui.open()
 
 /datum/union/ui_state(mob/user)
@@ -13,7 +13,7 @@
 
 	data["union_active"] = union_active
 	data["admin_mode"] = check_rights_for(user.client, R_ADMIN)
-	data["locked_for"] = COOLDOWN_FINISHED(src, union_demand_delay) ? null : DisplayTimeText(COOLDOWN_TIMELEFT(src, union_demand_delay))
+	data["locked_for"] = COOLDOWN_FINISHED(src, union_demand_delay) ? FALSE : DisplayTimeText(COOLDOWN_TIMELEFT(src, union_demand_delay))
 	data["deadlocked"] = !isnull(saved_time)
 	data["voting_name"] = demand_voting_on?.name || null
 	data["voting_desc"] = demand_voting_on?.union_description || null

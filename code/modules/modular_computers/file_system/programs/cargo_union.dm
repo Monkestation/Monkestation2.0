@@ -88,7 +88,7 @@
 
 			if(member_name == OPTION_CUSTOM)
 				member_name = tgui_input_text(user, "What is the new member's name?", "New Union Personnel", max_length = MAX_NAME_LEN)
-				if(isnull(member_name) || !istext(member_name))
+				if(isnull(member_name) || !istext(member_name) || member_name = "")
 					return TRUE
 			else
 				var/datum/record/crew/target = locate(member_name) in manifest_characters
@@ -108,13 +108,10 @@
 				union_leader = TRUE
 
 			if(isnull(bank_account_details))
-				bank_account_details = tgui_input_text(user, "What is the new member's bank ID? (leaving blank will not pay them)", "New Union Personnel")
-				if(bank_account_details == "" || !istext(bank_account_details))
+				bank_account_details = tgui_input_number(user, "What is the new member's bank ID? (leaving blank will not pay them)", "New Union Personnel", max_value = 999999, min_value = 111111)
+				if(!istext(bank_account_details) || !SSeconomy.bank_accounts_by_id["[bank_account_details]"])
 					var/mob/living/carbon/human/person = findname(member_name)
-					if(!person)
-						computer.balloon_alert(user, "bank account not found!")
-						return TRUE
-					bank_account_details = astype(person, /mob/living/carbon/human)?.account_id
+					bank_account_details = astype(person, /mob/living/carbon/human)?.account_id || null
 
 			if(!user.Adjacent(computer))
 				return TRUE
