@@ -446,31 +446,43 @@ const ModeDropdown = () => {
       />
       <Collapsible title="???" width="20%">
         <Box
-          width="250%"
+          width="300%"
           p={1}
           style={{
             border: '2px dashed grey',
           }}
         >
-          Pick which roles you want the most. Some roles require extra playtime.
-          For recommended starter roles check here (TODO link to wiki).
+          In the occupations windows you can pick which roles you want and
+          select your character(s). If you've never played before it's
+          recommended to start as an Assistant to learn the basic controls.
+          After that an occupation like Botanist, Scientist or Station Engineer
+          is recommended to give you some tasks to do and mechanics to learn.
+          <br />
+          <br />
+          There are three different modes you can pick from which determine how
+          your occupations and character are picked.
           <h3>Mode: Simple</h3>
-          1. Set role priorities in Occupations <br />
+          You have only the one overall page of role priorities. Only one
+          character can be enabled at a time.
+          <br /> <br />
+          1. Set role priorities in Overall Occupations <br />
           2. Pick one enabled character
           <h3>Mode: Character Filters</h3>
-          Allows you to select multiple characters at once. When you join the
-          round the game will pick a character which has your designated job
+          You have only the one overall page of role priorities. Multiple
+          characters can be enabled at a time, each character can have different
+          roles enabled or disabled. When you join the round the game will pick
+          a job for you then pick an enabled character which has that job
           enabled. If the game cannot find one it will pick your default
-          character. <br />
-          <br />
-          1. Set role priorities in Occupations <br />
+          character.
+          <br /> <br />
+          1. Set role priorities in Overall Occupations <br />
           2. Set role filters in Character Occupations <br />
           3. Pick 0 or more enabled characters <br />
           4. Pick one default character
-          <h3>Mode: Per Character Priorities</h3>
-          Each character can have different role priorities, but only one
-          character can be selected at once. <br />
-          <br />
+          <h3>Mode: Per Character Priorities (legacy mode)</h3>
+          Each character has a different page of role priorities. Only one
+          character can be enabled at a time.
+          <br /> <br />
           1. Set role priorities in Character Occupations <br />
           2. Pick one enabled character
         </Box>
@@ -544,6 +556,7 @@ const CharacterButton = (props: {
             style={{ float: 'left', padding: '4px 4px 4px 2px' }}
           />
         )}
+        {enabled_chars}
         {profile}
         {data.default_character === slot + 1 && multiSelect && ' (default)'}
       </Button>
@@ -672,7 +685,7 @@ export const JobsPage = (props: { type: JobsPageType }) => {
 
   if (type === JobsPageType.Overall) {
     return (
-      <Section title="Occupations" maxHeight="100%" overflowY="scroll">
+      <Section title="Overall Occupations" maxHeight="100%" overflowY="scroll">
         {contents}
       </Section>
     );
