@@ -1,6 +1,3 @@
-#define SIGNBOARD_WIDTH		(world.icon_size * 3.5)
-#define SIGNBOARD_HEIGHT	(world.icon_size * 2.5)
-
 /obj/structure/signboard
 	name = "sign"
 	desc = "A foldable sign."
@@ -204,12 +201,12 @@
 
 /obj/effect/abstract/signboard_holder/Initialize(mapload)
 	. = ..()
-	if(!istype(loc, /obj/structure/signboard) || QDELING(loc))
+	if((!istype(loc, /obj/structure/signboard) && !istype(loc, /obj/machinery/union_stand)) || QDELING(loc))
 		return INITIALIZE_HINT_QDEL
 	AddComponent(/datum/component/seethrough, SEE_THROUGH_MAP_THREE_X_TWO, 112, use_parent_turf = TRUE, movement_source = loc)
 
 /obj/effect/abstract/signboard_holder/Destroy(force)
-	if(!force && istype(loc, /obj/structure/signboard) && !QDELING(loc))
+	if(!force && !QDELING(loc))
 		stack_trace("Tried to delete a signboard holder that's inside of a non-deleted signboard!")
 		return QDEL_HINT_LETMELIVE
 	return ..()
@@ -217,6 +214,3 @@
 /obj/effect/abstract/signboard_holder/forceMove(atom/destination, no_tp = FALSE, harderforce = FALSE)
 	if(harderforce)
 		return ..()
-
-#undef SIGNBOARD_HEIGHT
-#undef SIGNBOARD_WIDTH

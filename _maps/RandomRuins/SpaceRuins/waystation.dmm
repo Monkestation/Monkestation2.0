@@ -128,6 +128,13 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/waystation/kitchen)
+"df" = (
+/obj/effect/turf_decal/loading_area{
+	dir = 8
+	},
+/obj/machinery/mail_collector/ruin,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/waystation/cargobay)
 "dl" = (
 /obj/machinery/door/airlock/mining/glass,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -5485,7 +5492,7 @@ er
 nD
 Ar
 yi
-ZZ
+df
 ZZ
 jA
 Lk

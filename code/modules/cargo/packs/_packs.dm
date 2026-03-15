@@ -53,7 +53,7 @@
 			"name" = item.name,
 			"icon" = item.greyscale_config ? null : item.icon,
 			"icon_state" = item.greyscale_config ? null : item.icon_state,
-			"amount" = contains[item]
+			"amount" = contains[item],
 		)
 		UNTYPED_LIST_ADD(data, item_data)
 

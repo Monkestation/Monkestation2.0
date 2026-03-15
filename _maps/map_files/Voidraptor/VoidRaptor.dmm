@@ -5305,6 +5305,7 @@
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment,
+/obj/effect/landmark/cargo_mail_machine,
 /turf/open/floor/iron/textured,
 /area/station/cargo/storage)
 "bAc" = (
@@ -59854,7 +59855,7 @@
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/maintenance/department/crew_quarters/bar)
 "qFR" = (
-/obj/machinery/computer/accounting{
+/obj/machinery/computer/accounting/hop{
 	dir = 4
 	},
 /obj/effect/turf_decal/siding/wood{
@@ -80021,10 +80022,10 @@
 	dir = 4
 	},
 /obj/item/radio/intercom/directional/east,
-/obj/item/kirbyplants/random,
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
+/obj/machinery/union_stand,
 /turf/open/floor/iron/textured_edge{
 	dir = 8
 	},

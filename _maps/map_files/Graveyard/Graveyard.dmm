@@ -8538,6 +8538,7 @@
 /area/station/security/brig)
 "dma" = (
 /obj/effect/turf_decal/box/red,
+/obj/effect/landmark/cargo_mail_machine,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "dmj" = (
@@ -10983,7 +10984,6 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 8
 	},
-/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/iron,
 /area/station/cargo/lobby)
 "elN" = (
@@ -30359,13 +30359,13 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 8
 	},
-/obj/effect/spawner/random/structure/crate,
 /obj/machinery/light/directional/west,
 /obj/machinery/firealarm/directional/west,
 /obj/machinery/light_switch/directional/west{
 	pixel_x = -31;
 	pixel_y = 8
 	},
+/obj/machinery/union_stand,
 /turf/open/floor/iron,
 /area/station/cargo/lobby)
 "lQb" = (
@@ -42508,7 +42508,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/station/commons/dorms)
 "qAO" = (
-/obj/machinery/computer/accounting,
+/obj/machinery/computer/accounting/hop,
 /obj/structure/cable,
 /obj/machinery/light/directional/north,
 /obj/machinery/firealarm/directional/north,
@@ -62036,6 +62036,11 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/wood/tile,
 /area/station/commons/lounge)
+"ycx" = (
+/obj/effect/turf_decal/tile/brown/half/contrasted,
+/obj/effect/landmark/cargo_mail_machine,
+/turf/open/floor/iron,
+/area/station/cargo/sorting)
 "ycE" = (
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 8
@@ -150210,7 +150215,7 @@ bku
 ryu
 mhh
 bku
-jKF
+ycx
 jEI
 qke
 kDP

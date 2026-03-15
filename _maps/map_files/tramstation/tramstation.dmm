@@ -18994,6 +18994,17 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/security/processing)
+"eRj" = (
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 8
+	},
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/effect/landmark/start/explorer,
+/obj/effect/landmark/cargo_mail_machine,
+/turf/open/floor/iron,
+/area/station/cargo/storage)
 "eRm" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
@@ -59680,7 +59691,7 @@
 /turf/closed/wall,
 /area/station/construction/mining/aux_base)
 "ruV" = (
-/obj/machinery/computer/accounting{
+/obj/machinery/computer/accounting/hop{
 	dir = 1
 	},
 /turf/open/floor/carpet,
@@ -59756,6 +59767,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 8
 	},
+/obj/machinery/union_stand,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "rws" = (
@@ -67915,6 +67927,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 4
 	},
+/obj/effect/landmark/cargo_mail_machine,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "tZO" = (
@@ -191778,7 +191791,7 @@ cTU
 aSo
 tAJ
 cUt
-bnw
+eRj
 bnw
 rwo
 dij

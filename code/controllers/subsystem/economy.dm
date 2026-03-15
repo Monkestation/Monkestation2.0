@@ -159,6 +159,7 @@ SUBSYSTEM_DEF(economy)
 		if(MC_TICK_CHECK)
 			cached_processing.Cut(1, i + 1)
 			return FALSE
+	SEND_SIGNAL(src, COMSIG_PAYDAYS_ISSUED)
 	return TRUE
 
 /**

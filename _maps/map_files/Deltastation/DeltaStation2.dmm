@@ -8403,6 +8403,13 @@
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/carpet/grimey,
 /area/station/service/chapel)
+"bTc" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/landmark/cargo_mail_machine,
+/turf/open/floor/iron,
+/area/station/cargo/storage)
 "bTe" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -14037,6 +14044,7 @@
 	dir = 1
 	},
 /obj/machinery/light/directional/east,
+/obj/effect/landmark/cargo_mail_machine,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "dmw" = (
@@ -18200,6 +18208,7 @@
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 1
 	},
+/obj/effect/landmark/cargo_mail_machine,
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "env" = (
@@ -56930,11 +56939,11 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
 "npA" = (
-/obj/machinery/vending/access/wardrobe_cargo,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 4
 	},
+/obj/machinery/union_stand,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "npE" = (
@@ -88037,7 +88046,7 @@
 /turf/open/floor/carpet/blue,
 /area/station/commons/vacant_room/office)
 "uNy" = (
-/obj/machinery/computer/accounting{
+/obj/machinery/computer/accounting/hop{
 	dir = 4
 	},
 /turf/open/floor/wood,
@@ -145432,7 +145441,7 @@ kjl
 lDi
 afF
 jrp
-bqv
+bTc
 iPu
 bfT
 wHs

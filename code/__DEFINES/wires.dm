@@ -63,6 +63,7 @@
 #define WIRE_ZAP1 "High Voltage Circuit 1"
 #define WIRE_ZAP2 "High Voltage Circuit 2"
 #define WIRE_OVERCLOCK "Overclock"
+#define WIRE_RESET "Reset"
 
 // Wire states for the AI
 #define AI_WIRE_NORMAL 0

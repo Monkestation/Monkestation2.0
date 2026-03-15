@@ -3636,6 +3636,7 @@
 	dir = 4
 	},
 /obj/machinery/light/directional/east,
+/obj/effect/landmark/cargo_mail_machine,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "bSD" = (
@@ -18004,6 +18005,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
+"iFr" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/union_stand,
+/turf/open/floor/iron,
+/area/station/cargo/storage)
 "iFs" = (
 /obj/structure/flora/bush/lavendergrass/style_random,
 /turf/open/floor/grass,
@@ -42920,7 +42928,7 @@
 "uvK" = (
 /obj/effect/turf_decal/tile/dark_blue/diagonal_edge,
 /obj/structure/window/reinforced/spawner/directional/north,
-/obj/machinery/computer/accounting,
+/obj/machinery/computer/accounting/hop,
 /turf/open/floor/iron/diagonal,
 /area/station/command/heads_quarters/hop)
 "uvP" = (
@@ -66746,7 +66754,7 @@ kmN
 nmy
 xlt
 dhf
-aTw
+iFr
 dga
 fjN
 dOI

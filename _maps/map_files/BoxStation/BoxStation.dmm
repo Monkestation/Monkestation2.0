@@ -5967,6 +5967,15 @@
 	dir = 10
 	},
 /area/station/service/hydroponics/chicken)
+"bSl" = (
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 1
+	},
+/obj/machinery/union_stand,
+/turf/open/floor/iron/dark/side{
+	dir = 1
+	},
+/area/station/cargo/storage)
 "bSo" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 10
@@ -21545,6 +21554,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 8
 	},
+/obj/effect/landmark/cargo_mail_machine,
 /turf/open/floor/iron/dark/side{
 	dir = 8
 	},
@@ -34892,7 +34902,7 @@
 /obj/machinery/light/directional/west,
 /obj/machinery/keycard_auth/directional/west,
 /obj/structure/cable,
-/obj/machinery/computer/accounting{
+/obj/machinery/computer/accounting/hop{
 	dir = 4
 	},
 /turf/open/floor/wood,
@@ -88388,7 +88398,7 @@ pHx
 pHx
 xzC
 xIL
-nki
+bSl
 jTs
 gzQ
 tEB

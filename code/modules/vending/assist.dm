@@ -22,6 +22,7 @@
 		/obj/item/assembly/voice = 2,
 		/obj/item/stock_parts/power_store/cell/high = 1,
 		/obj/item/stock_parts/power_store/battery/high = 1,
+		/obj/item/market_uplink/blackmarket = 1,
 	)
 	premium = list(
 		/obj/item/assembly/igniter/condenser = 2,
