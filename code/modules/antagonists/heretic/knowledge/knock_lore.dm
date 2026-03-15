@@ -171,6 +171,7 @@
 	gain_text = "The power of my patron courses through my blade, willing their very flesh to part."
 	next_knowledge = list(/datum/heretic_knowledge/spell/caretaker_refuge)
 	route = PATH_KNOCK
+	required_path = PATH_KNOCK
 	wound_type = /datum/wound/slash/flesh/critical
 	var/chance = 35
 
