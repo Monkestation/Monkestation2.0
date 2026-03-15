@@ -67,3 +67,12 @@
 		//Doesn't require a lantern like the original version, which adds a cool bit of utility to the recipe because it's not longer super limited.
 	)
 	category = CAT_TOOLS
+
+/datum/crafting_recipe/heartstring_extractor
+	name = "Heartstring Extractor"
+	result = /obj/item/heartstring_extractor
+	time = 5 SECONDS
+	reqs = list(/obj/item/scissors = 1, /obj/item/stack/sheet/cloth = 5, /datum/reagent/blood = 50) // BLOOD MAGIC YAAAAAAAAY
+	category = CAT_TOOLS
+
+

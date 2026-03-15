@@ -713,6 +713,7 @@
 	desc = "It's Wolfy! You feel like she's staring at you."
 	icon_state = "wolfy"
 	gender = FEMALE
+	plush_traits = list(/datum/plush_trait/ominous_levitation = 100, /datum/plush_trait/wolfy = 100)
 
 /datum/loadout_item/plushies/wolfy
 	name = "Wolfy Plush"
