@@ -15,11 +15,11 @@
 /datum/armament_entry/company_import/microstar/basic_energy_weapons/mini_egun
 	item_type = /obj/item/gun/energy/e_gun/mini
 	cost = PAYCHECK_CREW * 5
-
+/*
 /datum/armament_entry/company_import/microstar/lethal_sidearm/energy_holster
 	item_type = /obj/item/storage/belt/holster/energy/thermal
 	cost = PAYCHECK_COMMAND * 6
-/*
+
 /datum/armament_entry/company_import/microstar/basic_energy_long_weapons
 	subcategory = "Basic Energy Longarms"
 
