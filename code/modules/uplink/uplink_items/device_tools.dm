@@ -1,6 +1,6 @@
 /datum/uplink_category/device_tools
 	name = "Misc. Gadgets"
-	weight = 3
+	weight = 5
 
 /datum/uplink_item/device_tools
 	category = /datum/uplink_category/device_tools
@@ -28,7 +28,7 @@
 			as well as talk on an encrypted Syndicate channel with other agents that have the same key. In addition, this key also protects \
 			your headset from radio jammers."
 	item = /obj/item/encryptionkey/syndicate
-	cost = 2
+	cost = 1
 	surplus = 75
 	restricted = TRUE
 
@@ -49,16 +49,7 @@
 		Includes direction toggle and a rapid mode to bypass door safety checks and crossing signals. \
 		Perfect for running someone over in the name of a tram malfunction!"
 	item = /obj/item/tram_remote
-	cost = 2
-
-/datum/uplink_item/device_tools/thermal
-	name = "Thermal Imaging Glasses"
-	desc = "These goggles can be turned to resemble common eyewear found throughout the station. \
-			They allow you to see organisms through walls by capturing the upper portion of the infrared light spectrum, \
-			emitted as heat and light by objects. Hotter objects, such as warm bodies, cybernetic organisms \
-			and artificial intelligence cores emit more of this light than cooler objects like walls and airlocks."
-	item = /obj/item/clothing/glasses/thermal/syndi
-	cost = 4
+	cost = 1
 
 /datum/uplink_item/device_tools/cutouts
 	name = "Adaptive Cardboard Cutouts"
@@ -81,9 +72,10 @@
 	desc = "A handheld device that teleports the user 4-8 meters forward. \
 			Beware, teleporting into a wall will trigger a parallel emergency teleport; \
 			however if that fails, you may need to be stitched back together. \
-			Comes with 4 charges, recharges randomly. Warranty null and void if exposed to an electromagnetic pulse."
+			Comes with 4 charges, recharges randomly. Warranty null and void if exposed to an electromagnetic pulse.\
+			Each use drains a small amount of blood."
 	item = /obj/item/storage/box/syndie_kit/syndicate_teleporter
-	cost = 8
+	cost = 5
 
 /datum/uplink_item/device_tools/camera_app
 	name = "SyndEye Program"
@@ -93,27 +85,12 @@
 	surplus = 90
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
-/datum/uplink_item/device_tools/military_belt
-	name = "Chest Rig"
-	desc = "A robust seven-slot set of webbing that is capable of holding all manner of tactical equipment."
-	item = /obj/item/storage/belt/military
-	cost = 1
-
 /datum/uplink_item/device_tools/doorjack
 	name = "Airlock Authentication Override Card"
 	desc = "A specialized cryptographic sequencer specifically designed to override station airlock access codes. \
 			After hacking a certain number of airlocks, the device will require some time to recharge."
 	item = /obj/item/card/emag/doorjack
 	cost = 3
-
-/datum/uplink_item/device_tools/fakenucleardisk
-	name = "Decoy Nuclear Authentication Disk"
-	desc = "It's just a normal disk. Visually it's identical to the real deal, but it won't hold up under closer scrutiny by the Captain. \
-			Don't try to give this to us to complete your objective, we know better!"
-	item = /obj/item/disk/nuclear/fake
-	cost = 1
-	surplus = 1
-	illegal_tech = FALSE
 
 /datum/uplink_item/device_tools/frame
 	name = "F.R.A.M.E. disk"
@@ -271,6 +248,122 @@
 	desc = "High-tech rope, a refined hook structure, the peak of climbing technology. Only useful for climbing up holes, provided the operation site has any."
 	item = /obj/item/climbing_hook/syndicate
 	cost = 1
+
+/datum/uplink_item/device_tools/tram_remote
+	surplus = 40
+
+/datum/uplink_item/device_tools/rad_laser
+	surplus = 40
+
+/datum/uplink_item/device_tools/compressionkit
+	name = "Bluespace Compression Kit"
+	desc = "A modified version of a BSRPED that can be used to reduce the size of most items while retaining their original functions! \
+			Does not work on storage items. \
+			Recharge using bluespace crystals. \
+			Comes with 5 charges."
+	item = /obj/item/compression_kit
+	cost = 6
+
+/datum/uplink_item/device_tools/polyglot_voicebox
+	name = "Syndicate Polyglot Voicebox"
+	desc = "A polyglot voicebox which, after replacing the user's tongue will allow them to emulate \
+			the tongue of any species. \
+			WARNING: The polyglot voicebox does not allow you to speak additional languages"
+	cost = 1
+	item = /obj/item/autosurgeon/syndicate/polyglot_voicebox
+	surplus = 25
+
+/datum/uplink_item/device_tools/guardian
+	name = "Holoparasites"
+	desc = "Though capable of near sorcerous feats via use of hardlight holograms and nanomachines, they require an \
+			organic host as a home base and source of fuel. Holoparasites come in various types and share damage with their host."
+	progression_minimum = 30 MINUTES
+	item = /obj/item/guardian_creator/tech
+	cost = 15
+	surplus = 40
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	restricted = TRUE
+	refundable = TRUE
+
+/datum/uplink_item/device_tools/syndie_glue
+	name = "Glue"
+	desc = "A cheap bottle of one use syndicate brand super glue. \
+			Use on any item to make it undroppable. \
+			Be careful not to glue an item you're already holding!"
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	item = /obj/item/syndie_glue
+	cost = 2
+
+/datum/uplink_item/device_tools/neutered_borer_egg
+	name = "Neutered borer egg"
+	desc = "A borer egg specifically bred to aid operatives. \
+			It will obey every command and protect whatever operative they first see when hatched. \
+			Unfortunately due to extreme radiation exposure, they cannot reproduce. \
+			It was put into a cage for easy tranportation"
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	item = /obj/item/neutered_borer_spawner
+	cost = 20
+	surplus = 40
+	refundable = TRUE
+
+/datum/uplink_item/device_tools/plasma_license
+	name = "License to Plasmaflood"
+	desc = "A contract abusing a loophole found by plasmamen to invade halls with harmful gases \
+			without repercussion or warning, garnering no attention from any higher powers. \
+			Has to be signed by purchaser to be considered valid."
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	item = /obj/item/card/plasma_license
+	cost = 20
+
+/datum/uplink_item/device_tools/magboots
+	name = "Blood-Red Magboots"
+	desc = "A pair of magnetic boots with a Syndicate paintjob that assist with freer movement in space or on-station \
+			during gravitational generator failures."
+	item = /obj/item/clothing/shoes/magboots/syndie
+	cost = 1
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+
+/datum/uplink_item/device_tools/jetpack_harness
+	name = "Jet Harness"
+	desc = "A lightweight tactical jetpack harness, used by those who don't want to be weighed down by traditional jetpacks."
+	item = /obj/item/tank/jetpack/harness
+	cost = 1
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+
+/datum/uplink_item/device_tools/throwingweapons
+	name = "Box of Throwing Weapons"
+	desc = "A box of shurikens and reinforced bolas from ancient Earth martial arts. They are highly effective \
+			throwing weapons. The bolas can knock a target down and the shurikens will embed into limbs."
+	progression_minimum = 10 MINUTES
+	item = /obj/item/storage/box/syndie_kit/throwing_weapons
+	cost = 3
+	illegal_tech = FALSE
+
+/datum/uplink_item/device_tools/minipea
+	name = "5 peashooters strapped together"
+	desc = "For use in a trash tank, 5 small machineguns strapped together using syndicate technology. It burns through ammo like no other."
+	item = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/minipea
+	cost = 8
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+
+/datum/uplink_item/device_tools/devitt
+	name = "Devitt Mk3 Light Tank"
+	desc = "An ancient tank teleported in for your machinations, comes prepared with a cannon and machinegun. REQUIRES TWO CREWMEMBERS TO OPPERATE EFFECTIVELY."
+	item = /obj/vehicle/sealed/mecha/devitt
+	cost = 40
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+
+/datum/uplink_item/device_tools/dehy_carp
+	name = "Dehydrated Space Carp"
+	desc = "Looks like a plush toy carp, but just add water and it becomes a real-life space carp! Squeeze in \
+			your hand before use so it knows not to kill you."
+	item = /obj/item/toy/plush/carpplushie/dehy_carp
+	cost = 1
+
+/datum/uplink_item/device_tools/nifsoft_remover
+	name = "Cybersun 'Scalpel' NIF-Cutter"
+	desc = "A modified version of a NIFSoft remover that allows the user to remove a NIFSoft and have a blank copy of the removed NIFSoft saved to a disk."
+	item = /obj/item/nifsoft_remover/syndie
 
 /datum/uplink_item/device_tools/syndicate_hypospray
 	name = "Syndicate Hypospray"

@@ -28,6 +28,9 @@
 /obj/item/gun/ballistic/automatic/pistol/toy/riot
 	accepted_magazine_type = /obj/item/ammo_box/magazine/toy/pistol/riot
 
+/obj/item/gun/ballistic/automatic/pistol/toy/riot/clandestine
+	projectile_damage_multiplier = 1.4
+
 /obj/item/gun/ballistic/automatic/pistol/riot/Initialize(mapload)
 	magazine = new /obj/item/ammo_box/magazine/toy/pistol/riot(src)
 	return ..()

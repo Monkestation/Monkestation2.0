@@ -21,7 +21,7 @@
 	antag_count_points = 8 //gains more points the more objectives they complete, should also add this to things like heretics
 	var/give_objectives = TRUE
 	/// Whether to give secondary objectives to the traitor, which aren't necessary but can be completed for a progression and TC boost.
-	var/give_secondary_objectives = TRUE
+	var/give_secondary_objectives = FALSE // Planning proper secondary kill later but april 1st almost here and just for now.
 	var/should_give_codewords = TRUE
 	///give this traitor an uplink?
 	var/give_uplink = TRUE
@@ -105,7 +105,7 @@
 				if((uplink_handler.assigned_role in item.restricted_roles) || (uplink_handler.assigned_species in item.restricted_species))
 					uplink_items += item
 					continue
-		uplink_handler.extra_purchasable += create_uplink_sales(rand(uplink_sales_min, uplink_sales_max), /datum/uplink_category/discounts, 5, uplink_items) //monkestation edit: from 1 stock to 5
+		uplink_handler.extra_purchasable += create_uplink_sales(rand(uplink_sales_min, uplink_sales_max), /datum/uplink_category/discounts, -1, uplink_items)
 
 	if(give_objectives)
 		forge_traitor_objectives()
@@ -135,7 +135,7 @@
 	else
 		string += ", [to_display.telecrystal_reward] TC"
 		string += ", [to_display.progression_reward] PR"
-	if(to_display.objective_state == OBJECTIVE_STATE_ACTIVE && !istype(to_display, /datum/traitor_objective/ultimate))
+	if(to_display.objective_state == OBJECTIVE_STATE_ACTIVE)
 		string += " <a href='byond://?src=[REF(owner)];fail_objective=[REF(to_display)]'>Fail this objective</a>"
 		string += " <a href='byond://?src=[REF(owner)];succeed_objective=[REF(to_display)]'>Succeed this objective</a>"
 	if(to_display.objective_state == OBJECTIVE_STATE_INACTIVE)
@@ -337,9 +337,6 @@
 				traitor_won = FALSE
 			objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] [objective.get_roundend_success_suffix()]"
 			count++
-		if(uplink_handler.final_objective)
-			objectives_text += "<br>[span_greentext("[traitor_won ? "Additionally" : "However"], the final objective \"[uplink_handler.final_objective]\" was completed!")]"
-			traitor_won = TRUE
 
 	result += "<br>[owner.name] <B>[traitor_flavor["roundend_report"]]</B>"
 

@@ -11,7 +11,7 @@
 	name = "Freedom Implant"
 	desc = "Can be activated to release common restraints such as handcuffs, legcuffs, and even bolas tethered around the legs."
 	item = /obj/item/storage/box/syndie_kit/imp_freedom
-	cost = 5
+	cost = 4
 
 /datum/uplink_item/implants/freedom/New()
 	. = ..()
@@ -22,23 +22,28 @@
 	desc = "An implant injected into the body, allowing the use of an internal Syndicate radio. \
 			Used just like a regular headset, but can be disabled to use external headsets normally and to avoid detection."
 	item = /obj/item/storage/box/syndie_kit/imp_radio
-	cost = 4
+	cost = 2
 	restricted = TRUE
 
+/datum/uplink_item/implants/emp
+	name = "EMP Implant"
+	desc = "An EMP implant with 3 uses. Releases a EMP wave that disrupts silicons, energy weapons, and communications among other technology."
+	item = /obj/item/implanter/emp
+	cost = 2
 
 /datum/uplink_item/implants/stealthimplant
 	name = "Stealth Implant"
 	desc = "This one-of-a-kind implant will make you almost invisible if you play your cards right. \
 			On activation, it will conceal you inside a chameleon cardboard box that is only revealed once someone bumps into it."
 	item = /obj/item/storage/box/syndie_kit/imp_stealth
-	cost = 8
+	cost = 5
 
 /datum/uplink_item/implants/storage
 	name = "Storage Implant"
 	desc = "An implant injected into the body, and later activated at the user's will. It will open a small bluespace \
 			pocket capable of storing two regular-sized items."
 	item = /obj/item/storage/box/syndie_kit/imp_storage
-	cost = 8
+	cost = 6
 
 /datum/uplink_item/implants/uplink
 	name = "Uplink Implant"
@@ -50,19 +55,11 @@
 	surplus = 0
 	restricted = TRUE
 
-/datum/uplink_item/implants/thermals
-	name = "Thermal Eyes"
-	desc = "These cybernetic eyes will give you thermal vision. Comes with only a single-use autosurgeon, a corner cut to achieve a lower price point."
-	item = /obj/item/autosurgeon/syndicate/thermal_eyes
-	cost = 5
-	surplus = 40 //monkestation edit: from 0 to 40
-
-/datum/uplink_item/implants/xray
-	name = "X-ray Vision Implant"
-	desc = "These cybernetic eyes will give you X-ray vision. Comes with an autosurgeon."
-	item = /obj/item/autosurgeon/syndicate/xray_eyes
-	cost = 10
-	surplus = 30 //monkestation edit: from 0 to 30
+/datum/uplink_item/implants/uplink/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
+	var/obj/item/storage/box/syndie_kit/uplink_box = ..()
+	uplink_box.name = "Uplink Implant Box"
+	new /obj/item/implanter/uplink(uplink_box, uplink_handler)
+	return uplink_box
 
 /datum/uplink_item/implants/hardlight
 	name = "Hardlight Spear Implant"
@@ -73,13 +70,7 @@
 	cost = 7
 
 /datum/uplink_item/implants/weapons_auth
-	name = "Weapon Authorization Implant"
-	desc = "An implant that allows you to use any pin restricted weapon."
+	name = "Weapon Authorization Kit"
+	desc = "An implant and firing pin that allows you restrict any pin weapon to those with the implant."
 	item = /obj/item/storage/box/syndie_kit/weapons_auth
-	cost = 5
-
-/datum/uplink_item/implants/uplink/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
-	var/obj/item/storage/box/syndie_kit/uplink_box = ..()
-	uplink_box.name = "Uplink Implant Box"
-	new /obj/item/implanter/uplink(uplink_box, uplink_handler)
-	return uplink_box
+	cost = 2

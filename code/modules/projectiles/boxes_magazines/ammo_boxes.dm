@@ -490,7 +490,7 @@
 	max_ammo = 16
 
 /obj/item/ammo_box/advanced/s12gauge/bean
-	name = "beanbag Slug ammo box"
+	name = "beanbag slug ammo box"
 	desc = "A box of beanbag slug shells. These are large, singular beanbags that pack a less-lethal punch."
 	icon_state = "bean"
 	ammo_type = /obj/item/ammo_casing/shotgun/beanbag

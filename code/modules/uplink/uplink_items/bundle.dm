@@ -56,7 +56,7 @@
 			The Syndicate will only provide one Syndi-Kit per agent."
 	progression_minimum = 30 MINUTES
 	item = /obj/item/storage/box/syndicate/bundle_a
-	cost = 20
+	cost = 25
 	stock_key = UPLINK_SHARED_STOCK_KITS
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
@@ -68,7 +68,7 @@
 			The Syndicate will only provide one Syndi-Kit per agent."
 	progression_minimum = 30 MINUTES
 	item = /obj/item/storage/box/syndicate/bundle_b
-	cost = 20
+	cost = 25
 	stock_key = UPLINK_SHARED_STOCK_KITS
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
@@ -76,13 +76,13 @@
 	name = "Syndicate Surplus Crate"
 	desc = "A dusty crate from the back of the Syndicate warehouse delivered directly to you via Supply Pod. \
 			If the rumors are true, it will fill it's contents based on your current reputation. Get on that grind. \
-			Contents are sorted to always be worth 40 TC. The Syndicate will only provide one surplus item per agent."
+			Contents are sorted to always be worth 50 TC. The Syndicate will only provide one surplus item per agent."
 	item = /obj/structure/closet/crate // will be replaced in purchase()
-	cost = 20
+	cost = 25
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 	stock_key = UPLINK_SHARED_STOCK_SURPLUS
 	/// Value of items inside the crate in TC
-	var/crate_tc_value = 40 //monkestation edit: from 30 to 40
+	var/crate_tc_value = 50
 	/// crate that will be used for the surplus crate
 	var/crate_type = /obj/structure/closet/crate
 
@@ -149,11 +149,11 @@
 			It is recommended that you only attempt to open it by having another agent purchase a Surplus Crate Key. Unite and fight. \
 			Rumored to contain a valuable assortment of items based on your current reputation, but you never know. Contents are sorted to always be worth 100 TC. \
 			The Syndicate will only provide one surplus item per agent."
-	cost = 20
+	cost = 25
 	item = /obj/structure/closet/crate/syndicrate
 	progression_minimum = 30 MINUTES
 	stock_key = UPLINK_SHARED_STOCK_SURPLUS
-	crate_tc_value = 100 //monkestation edit: from 80 to 100
+	crate_tc_value = 100
 	crate_type = /obj/structure/closet/crate/syndicrate
 
 /// edited version of fill crate for super surplus to ensure it can only be unlocked with the syndicrate key
@@ -173,8 +173,110 @@
 	desc = "This inconscpicous device is actually a key that can open any United Surplus Crate. It can only be used once. \
 			Though initially designed to encourage cooperation, agents quickly discovered that you can turn the key to the crate by yourself.  \
 			The Syndicate will only provide one surplus item per agent."
-	cost = 20
+	cost = 25
 	item = /obj/item/syndicrate_key
 	progression_minimum = 30 MINUTES
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 	stock_key = UPLINK_SHARED_STOCK_SURPLUS
+
+/datum/uplink_item/bundles_tc/contract_kit
+	name = "Contractor Bundle"
+	desc = "A box containing everything you need to take contracts from the Syndicate. Kidnap people and drop them off at specified locations for rewards in the form of Telecrystals \
+			(Usable in the provided uplink) and Contractor Points. Can not be bought if you have taken any secondary objectives."
+	item = /obj/item/storage/box/syndie_kit/contract_kit
+	cost = 25
+	purchasable_from = UPLINK_TRAITORS
+
+/datum/uplink_item/bundles_tc/contract_kit/unique_checks(mob/user, datum/uplink_handler/handler, atom/movable/source)
+	if(length(handler.active_objectives) || !handler.can_take_objectives || !handler.has_objectives)
+		return FALSE
+
+	for(var/datum/traitor_objective/objective in handler.completed_objectives)
+		if(objective.objective_state != OBJECTIVE_STATE_INVALID)
+			return FALSE
+
+	return TRUE
+
+/datum/uplink_item/bundles_tc/contract_kit/purchase(mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
+	. = ..()
+	var/datum/component/uplink/our_uplink = source.GetComponent(/datum/component/uplink)
+	if(uplink_handler && our_uplink)
+		our_uplink.become_contractor()
+
+///Override for any unique checks for specific items, by default returns TRUE
+/datum/uplink_item/proc/unique_checks(mob/user, datum/uplink_handler/handler, atom/movable/source)
+	return TRUE
+
+/datum/uplink_item/bundles_tc/surplus/lootbox
+	name = "Syndicate Lootbox Crate"
+	desc = "A dusty crate from the back of the Syndicate warehouse. Rumored to contain a valuable assortment of items, \
+			With their all new kit, codenamed 'scam' the syndicate attempted to extract the energy of the die of fate to \
+			make a loot-box style system but failed, so instead just fake their randomness using ook's evil twin brother to sniff out the items to shove in it. \
+			Item price not guaranteed. Can contain normally unobtainable items. Purchasing this will prevent you from purchasing any non-random item. \
+			Cannot be purchased if you have already bought another item."
+
+/datum/uplink_item/bundles_tc/surplus/lootbox/unique_checks(mob/user, datum/uplink_handler/handler, atom/movable/source)
+	//we dont acually have the var that makes this get checked so do it manually
+	if(length(handler.purchase_log.purchase_log) > 0)
+		return FALSE
+	return TRUE
+
+/datum/uplink_item/bundles_tc/surplus/lootbox/spawn_item(spawn_path, mob/user, datum/uplink_handler/handler, atom/movable/source)
+	crate_tc_value = rand(1,20) * 5 // randomise how much in TC it gives, from 5 to 100 TC
+
+	if(crate_tc_value == 5) //horrible luck, welcome to gambling
+		crate_tc_value = 0
+		to_chat(user, span_warning("You feel an overwhelming sense of pride and accomplishment."))
+
+	if(crate_tc_value == 100) // Jackpot, how lucky
+		crate_tc_value *= 2
+		print_command_report("Congratulations to [user] for being the [rand(2, 9)]th lucky winner of the syndicate lottery! \
+		Dread Admiral Sabertooth has authorised the beaming of your special equipment immediately! Happy hunting operative.",
+		"Syndicate Gambling Division High Command", TRUE)
+		if(ishuman(user) && !(locate(/obj/item/implant/weapons_auth) in user)) //jackpot winners dont have to find firing pins for any guns they get
+			var/obj/item/implant/weapons_auth/auth = new
+			auth.implant(user)
+			to_chat(user, span_notice("You feel as though the syndicate have given you the ability to use weapons beyond your normal access level."))
+
+	var/obj/structure/closet/crate/surplus_crate = new crate_type()
+	// quick safety check
+	if(!istype(surplus_crate))
+		CRASH("crate_type is not a crate")
+
+	var/list/possible_items = generate_possible_items(user, handler, TRUE)
+	// again safety check, if things fucked up badly we give them back their cost and return
+	if(!possible_items || !length(possible_items))
+		handler.telecrystals += cost
+		to_chat(user, span_warning("You get the feeling something went wrong and that you should inform syndicate command."))
+		qdel(surplus_crate)
+		CRASH("lootbox crate failed to generate possible items")
+
+	fill_crate(surplus_crate, possible_items)
+
+	// unlike other chests, lets give them the chest with STYLE by droppodding in a STYLIZED pod
+	podspawn(list(
+		"target" = get_turf(user),
+		"style" = STYLE_SYNDICATE,
+		"spawn" = surplus_crate,
+	))
+
+	// lock everything except random entries, once you start gambling you cannot stop
+	handler.add_locked_entries(subtypesof(/datum/uplink_item) - /datum/uplink_item/bundles_tc/random)
+
+	// return the source, this is so the round-end uplink section shows how many TC the traitor spent on us (20TC) and a radio icon. Instead of 0 TC and a blank one
+	return source
+
+//pain
+///Check if we should ignore handler locked_entries or not
+/datum/uplink_item/bundles_tc/random/proc/check_ignore_locked(datum/uplink_handler/handler)
+	return (length(handler.locked_entries) == (length(subtypesof(/datum/uplink_item)) - 1)) && !(src.type in handler.locked_entries)
+
+
+/datum/uplink_item/bundles_tc/syndicate_mini_kit
+	name = "Syndicate Mini-Kit"
+	desc = "A small, budget-friendly kit for new operatives. Contains a selection of basic tools. \
+			The Syndicate provides only one Mini-Kit per agent."
+	item = /obj/item/storage/box/syndie_kit/mini_kit
+	cost = 10
+	stock_key = UPLINK_SHARED_STOCK_KITS
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
