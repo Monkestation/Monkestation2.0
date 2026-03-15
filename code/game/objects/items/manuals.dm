@@ -235,49 +235,56 @@
 
 // Wiki books that are linked to the configured wiki link.
 
+/// The size of the window that the wiki books open in.
+#define BOOK_WINDOW_BROWSE_SIZE "970x710"
+/// This macro will resolve to code that will open up the associated wiki page in the window.
+#define WIKI_PAGE_IFRAME(title, wikiurl, link_identifier) {"
+<html>
+	<head>
+		<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+		<title>[html_encode(title)]</title>
+		<style>
+			body {
+				margin: 0;
+			}
+			p {
+				margin: 8px;
+			}
+			iframe {
+				border: 0;
+				margin-left: -177px;
+				margin-top: -80px;
+				width: calc(100% + 177px);
+				height: calc(100% + 80px);
+				display: none;
+			}
+			body.loaded p {
+				display: none;
+			}
+			body.loaded iframe {
+				display: inline;
+			}
+		</style>
+	</head>
+	<body>
+		<p>You start skimming through the manual...</p>
+		<iframe src="[wikiurl]/[link_identifier]?useskin=vector" onload="document.body.classList.add('loaded')"></iframe>
+	</body>
+</html>
+"}
+
 // A book that links to the wiki
 /obj/item/book/manual/wiki
 	var/page_link = ""
-	window_size = "970x710"
+	window_size = BOOK_WINDOW_BROWSE_SIZE
 
-/obj/item/book/manual/wiki/attack_self()
-	var/wikiurl = CONFIG_GET(string/wikiurl)
-	if(!wikiurl)
+/obj/item/book/manual/wiki/display_content(mob/living/user)
+	var/wiki_url = CONFIG_GET(string/wikiurl)
+	if(!wiki_url)
+		user.balloon_alert(user, "this book is empty!")
 		return
-	usr.client << link("[wikiurl]/[page_link]")
-	return ..()
-
-/*
-/obj/item/book/manual/wiki/proc/initialize_wikibook()
-	var/wikiurl = CONFIG_GET(string/wikiurl)
-	if(wikiurl)
-		var/wikiinfo = {"
-
-			<html>
-			<head>
-			<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
-			<style>
-				iframe {
-					display: none;
-				}
-			</style>
-			</head>
-			<body>
-			<script type="text/javascript">
-				function pageloaded(myframe) {
-					document.getElementById("loading").style.display = "none";
-					myframe.style.display = "inline";
-			}
-			</script>
-			<p id='loading'>You start skimming through the manual...</p>
-			<iframe width='100%' height='97%' onload="pageloaded(this)" src="[wikiurl]/[page_link]" frameborder="0" id="main_frame"></iframe>
-			</body>
-
-			</html>
-
-			"}
-		book_data.set_content(wikiinfo, trusted = TRUE)
-*/
+	credit_book_to_reader(user)
+	DIRECT_OUTPUT(user, browse(WIKI_PAGE_IFRAME(name, wiki_url, page_link), "window=manual;size=[BOOK_WINDOW_BROWSE_SIZE]")) // if you change this GUARANTEE that it works.
 
 //MONKESTATION EDIT BEGIN - basically there isn't a single thing that's not touched below this line. Just going to make this abundantly obvious that we have a lot of changes, between names of some manuals being changed to reflect different jobs to all of the links to the wiki. There's basically zero excuse for me to not leave an edit comment on here.
 
@@ -478,3 +485,6 @@
 	page_link = "How_to_avoid_getting_banned"
 
 //MONKESTATION EDIT END
+
+#undef BOOK_WINDOW_BROWSE_SIZE
+#undef WIKI_PAGE_IFRAME

@@ -243,9 +243,9 @@ GLOBAL_LIST_EMPTY_TYPED(kindred_archives, /obj/item/book/kindred)
 	GLOB.kindred_archives -= src
 	return ..()
 
-/obj/item/book/kindred/try_carve(obj/item/carving_item, mob/living/user, params)
-	to_chat(user, span_notice("You feel the gentle whispers of a Curator telling you not to cut [starting_title]."))
-	return FALSE
+/obj/item/book/kindred/carving_act(mob/living/user, obj/item/tool)
+	to_chat(user, span_notice("You feel the gentle whispers of a Librarian telling you not to cut [starting_title]."))
+	return ITEM_INTERACT_BLOCKING
 
 ///Attacking someone with the book.
 /obj/item/book/kindred/interact_with_atom(mob/interacting_with, mob/living/user, list/modifiers)
