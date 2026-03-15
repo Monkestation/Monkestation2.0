@@ -88,7 +88,7 @@
 
 			if(member_name == OPTION_CUSTOM)
 				member_name = tgui_input_text(user, "What is the new member's name?", "New Union Personnel", max_length = MAX_NAME_LEN)
-				if(isnull(member_name) || !istext(member_name) || member_name = "")
+				if(isnull(member_name) || !istext(member_name) || member_name == "")
 					return TRUE
 			else
 				var/datum/record/crew/target = locate(member_name) in manifest_characters
