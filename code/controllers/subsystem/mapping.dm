@@ -408,7 +408,8 @@ Used by the AI doomsday and the self-destruct nuke.
 	var/total_z = 0
 	var/list/parsed_maps = list()
 	for (var/file in files)
-		var/full_path = "_maps/[path]/[file]"
+		var/map_dir = (path == "custom") ? "data/custom_map" : "_maps/[path]"
+		var/full_path = "[map_dir]/[file]"
 		var/datum/parsed_map/pm = new(file(full_path))
 		var/bounds = pm?.bounds
 		if (!bounds)
@@ -581,10 +582,6 @@ Used by the AI doomsday and the self-destruct nuke.
 		msg += ". Yell at your server host!"
 		INIT_ANNOUNCE(msg)
 #undef INIT_ANNOUNCE
-
-	// Custom maps are removed after station loading so the map files does not persist for no reason.
-	if(current_map.map_path == CUSTOM_MAP_PATH)
-		fdel("_maps/custom/[current_map.map_file]")
 
 /**
  * Global list of AREA TYPES that are associated with the station.
