@@ -493,8 +493,9 @@
 		go_out()
 		log_cloning("[key_name(mob_occupant)] ejected from [src] at [AREACOORD(src)] due to explosion.")
 
-/obj/machinery/clonepod/handle_atom_del(atom/A)
-	if(A == occupant)
+/obj/machinery/clonepod/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == occupant)
 		occupant = null
 		countdown.stop()
 
