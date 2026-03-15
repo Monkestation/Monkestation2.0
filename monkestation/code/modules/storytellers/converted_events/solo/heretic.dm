@@ -38,7 +38,7 @@
 		JOB_CHAPLAIN,
 	)
 	required_enemies = 6
-	weight = 5
+	weight = 8
 	min_players = 20
 
 /datum/round_event_control/antagonist/heretic/roundstart
