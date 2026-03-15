@@ -128,8 +128,9 @@
 	projectile_wound_bonus = 15
 	pin = /obj/item/firing_pin/implant/pindicate
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/riot/evil
-/obj/item/gun/ballistic/shotgun/riot/sol/evil/unrestricted
 
+/obj/item/gun/ballistic/shotgun/riot/sol/evil/unrestricted
+	pin = /obj/item/firing_pin
 // Automatic Shotguns//
 
 /obj/item/gun/ballistic/shotgun/automatic/shoot_live_shot(mob/living/user)
