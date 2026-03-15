@@ -81,7 +81,7 @@
 			playsound(src, 'sound/items/hammering_wood.ogg', 50, vary = TRUE)
 			if(do_after(user, 5 SECONDS, target=src) && W.use(5))
 				var/turf/T = get_turf(src)
-				T.PlaceOnTop(/turf/closed/wall/mineral/wood/nonmetal)
+				T.place_on_top(/turf/closed/wall/mineral/wood/nonmetal)
 				qdel(src)
 				return
 	return ..()

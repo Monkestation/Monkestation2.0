@@ -19,6 +19,7 @@
 	var/id = 1
 	var/open_sound = 'monkestation/sound/machines/poddoors/blastdoor.ogg'
 	var/close_sound = 'monkestation/sound/machines/poddoors/blastdoor.ogg'
+	var/show_nav_computer_icon = TRUE
 
 /datum/armor/door_poddoor
 	melee = 50
@@ -28,6 +29,11 @@
 	bomb = 50
 	fire = 100
 	acid = 70
+
+/obj/machinery/door/poddoor/Initialize(mapload)
+	. = ..()
+	if(show_nav_computer_icon)
+		AddElement(/datum/element/nav_computer_icon, 'icons/effects/nav_computer_indicators.dmi', "airlock", TRUE)
 
 /obj/machinery/door/poddoor/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()

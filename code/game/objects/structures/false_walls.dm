@@ -44,7 +44,7 @@
 		real_wall.ScrapeAway()
 		var/turf/underneath = get_turf(src)
 		if(!isfloorturf(underneath)) //These can only be built on floors anyway, but the linter screams at me because space is left behind when they are forcibly deleted under some arcane conditions I can't replicate.
-			underneath.PlaceOnTop(/turf/open/floor/plating)
+			underneath.place_on_top(/turf/open/floor/plating)
 	real_wall = null
 	return ..()
 
@@ -76,7 +76,7 @@
 
 /obj/structure/falsewall/proc/place_real_wall()
 	var/turf/our_turf = get_turf(src) //Get the turf the false wall is on and temporarily store it
-	real_wall = our_turf.PlaceOnTop(walltype) //Place the real wall where the false wall is
+	real_wall = our_turf.place_on_top(walltype) //Place the real wall where the false wall is
 
 /obj/structure/falsewall/update_icon(updates=ALL)//Calling icon_update will refresh the smoothwalls if it's closed, otherwise it will make sure the icon is correct if it's open
 	. = ..()
@@ -300,7 +300,7 @@
 
 /obj/structure/falsewall/material/place_real_wall()
 	var/turf/our_turf = get_turf(src) //Get the turf the false wall is on and temporarily store it
-	real_wall = our_turf.PlaceOnTop(walltype) //Place the real wall where the false wall is
+	real_wall = our_turf.place_on_top(walltype) //Place the real wall where the false wall is
 	real_wall.set_custom_materials(custom_materials)
 
 /obj/structure/falsewall/material/set_custom_materials(list/materials, multiplier)
