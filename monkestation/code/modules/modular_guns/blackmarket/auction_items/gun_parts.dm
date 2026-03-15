@@ -5,15 +5,6 @@
 	category = "Gun Part"
 	auction_weight = 5
 
-/datum/market_item/auction/gun_part/makarov //Funny guns that fit the shoddy gun bidding market.
-	name = "Old Makarov"
-	desc = "Especially Illegal, functionality not guaranteed."
-	item = /obj/item/gun/ballistic/automatic/pistol/damaged
-
-	price_min = CARGO_CRATE_VALUE * 6
-	price_max = CARGO_CRATE_VALUE * 8
-	auction_weight = 4
-
 /datum/market_item/auction/gun_part/evil_wespe //Funny guns that fit the shoddy gun bidding market.
 	name = "Modified Wespe"
 	desc = "Super Illegal."
