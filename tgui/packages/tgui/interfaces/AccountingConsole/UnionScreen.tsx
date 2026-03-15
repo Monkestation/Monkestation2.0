@@ -1,6 +1,6 @@
 import type { BooleanLike } from 'common/react';
 import { useBackend } from '../../backend';
-import { Button, DmIcon, Section, Stack } from '../../components';
+import { Button, DmIcon, Section, Stack, Table } from '../../components';
 
 type Data = {
   badge_name: string;
@@ -32,6 +32,7 @@ export const UnionScreen = () => {
     <>
       <Section
         title="Inserted Badge"
+        height="28%"
         buttons={
           <>
             {badge_leader ? (
@@ -85,47 +86,51 @@ export const UnionScreen = () => {
         </Stack>
       </Section>
       <Section
-        my={-0.5}
+        my={-1}
         title="Union Personnel"
+        height="72%"
         scrollable
+        fill
         buttons={
-          <Button
-            icon="pencil"
-            content="Add Member"
-            onClick={() => act('add_member')}
-          />
+          <Button icon="pencil" onClick={() => act('add_member')}>
+            Add Member
+          </Button>
         }
       >
-        {union_members.map((member) => (
-          <Stack key={member.name} my={0.5} p={1} className="candystripe">
-            <Stack.Item grow={1}>{member.name}</Stack.Item>
-            {!!member.leader && <Stack.Item grow={1}>LEADER</Stack.Item>}
-            <Stack.Item textAlign="right">
-              <Button.Confirm
-                confirmContent="Really "
-                onClick={() =>
-                  act('remove_member', { member_name: member.name })
-                }
-                tooltip="Removes this member from the Union."
-              >
-                Remove
-              </Button.Confirm>
-            </Stack.Item>
-            <Stack.Item textAlign="right">
-              <Button
-                disabled={on_cooldown}
-                onClick={() => act('print_badge', { member_name: member.name })}
-                tooltip={
-                  on_cooldown
-                    ? 'On cooldown for ' + seconds_left + '.'
-                    : 'Will print a new ID in their name, printer has a cooldown.'
-                }
-              >
-                Replace Badge
-              </Button>
-            </Stack.Item>
-          </Stack>
-        ))}
+        <Table>
+          {union_members.map((member) => (
+            <Table.Row key={member.name} my={0.5} p={1} className="candystripe">
+              <Table.Cell p={0.5}>{member.name}</Table.Cell>
+              <Table.Cell p={0.5}>{member.leader ? 'LEADER' : ''}</Table.Cell>
+              <Table.Cell p={0.5} textAlign="right">
+                <Button.Confirm
+                  confirmContent="Really "
+                  onClick={() =>
+                    act('remove_member', { member_name: member.name })
+                  }
+                  tooltip="Removes this member from the Union."
+                >
+                  Remove
+                </Button.Confirm>
+              </Table.Cell>
+              <Table.Cell p={0.5} textAlign="right">
+                <Button
+                  disabled={on_cooldown}
+                  onClick={() =>
+                    act('print_badge', { member_name: member.name })
+                  }
+                  tooltip={
+                    on_cooldown
+                      ? 'On cooldown for ' + seconds_left + '.'
+                      : 'Will print a new ID in their name, printer has a cooldown.'
+                  }
+                >
+                  Replace Badge
+                </Button>
+              </Table.Cell>
+            </Table.Row>
+          ))}
+        </Table>
       </Section>
     </>
   );
