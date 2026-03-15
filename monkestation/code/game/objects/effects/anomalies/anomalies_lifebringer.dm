@@ -28,7 +28,9 @@
 	pet_type_cache -= list(/mob/living/basic/pet/penguin, //Removing the risky and broken ones.
 		/mob/living/basic/pet/dog/corgi/narsie,
 		/mob/living/basic/pet/dog,
-		/mob/living/basic/pet/fox
+		/mob/living/basic/pet/fox,
+		/mob/living/basic/pet/slime,
+		/mob/living/basic/pet/spider,
 		)
 
 /obj/effect/anomaly/lifebringer/anomalyEffect(seconds_per_tick)

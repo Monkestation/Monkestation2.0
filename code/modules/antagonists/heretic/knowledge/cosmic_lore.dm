@@ -134,6 +134,7 @@
 		The blades now glistened with fragmented power. I fell to the ground and wept at the beast's feet."
 	next_knowledge = list(/datum/heretic_knowledge/spell/cosmic_expansion)
 	route = PATH_COSMIC
+	required_path = PATH_COSMIC
 	/// Storage for the second target.
 	var/datum/weakref/second_target
 	/// Storage for the third target.
