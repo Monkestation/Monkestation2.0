@@ -60,7 +60,7 @@
 		return .
 	var/mob/user = ui.user
 	var/obj/machinery/host = ui.src_object
-	if(istype(host) && !host.allowed(user))
+	if(istype(host) && !host.allowed(user) && !check_rights_for(user.client, R_ADMIN))
 		host.balloon_alert(user, "no access!")
 		return TRUE
 	if(!union_active && !check_rights_for(user.client, R_ADMIN))
