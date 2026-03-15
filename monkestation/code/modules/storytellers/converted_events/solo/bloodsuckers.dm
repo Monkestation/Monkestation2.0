@@ -39,7 +39,7 @@
 	)
 	required_enemies = 6
 	min_players = 20
-	weight = 8
+	weight = 5
 	maximum_antags = 2
 	event_icon_state = "vampires"
 
