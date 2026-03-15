@@ -24,9 +24,22 @@
 		JOB_AI,
 		JOB_CYBORG,
 	)
+	enemy_roles = list(
+		JOB_AI,
+		JOB_CYBORG,
+		JOB_CAPTAIN,
+		JOB_BLUESHIELD,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_SECURITY,
+		JOB_SECURITY_OFFICER,
+		JOB_SECURITY_ASSISTANT,
+		JOB_BRIG_PHYSICIAN,
+		JOB_WARDEN,
+	)
+	required_enemies = 4
 	base_antags = 2
 	min_players = 20
-	weight = 10
+	weight = 15
 	shared_occurence_type = SHARED_CHANGELING
 	event_icon_state = "changeling"
 
