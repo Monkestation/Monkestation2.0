@@ -1,5 +1,6 @@
 ///Checks if a mob has enough sterile protection (RNG chance if less than 100%) on a specified body part.
 ///No provided arg will instead use total armor value of the mob.
+///Returns TRUE if successfully sterile, so safe from disease.
 /mob/living/proc/check_contact_sterility(body_part)
 	return FALSE
 
@@ -8,6 +9,9 @@
 		return TRUE
 	return FALSE
 
+///Checks if a mob has open bleeding & no sterile protection (RNG chance if less than 100% bio protection) on a specified bodypart.
+///No provided arg will instead use the total armor value of the mob.
+///Returns TRUE if the mob is bleeding & unprotected, AKA able to be infected.
 /mob/living/proc/check_bodypart_bleeding(body_part)
 	return FALSE
 
@@ -27,14 +31,14 @@
 
 	//no limb, what is there to infect?
 	if(isnull(bleeding_limb))
-		return TRUE
+		return FALSE
 	//No bleeding, end here. Safe.
 	if(!bleeding_limb.cached_bleed_rate)
-		return TRUE
+		return FALSE
 	//Bleeding? Let's check if you're at least protected-bleeding.
 	if(prob(getarmor(bleeding_limb, BIO)))
-		return TRUE
-	return FALSE
+		return FALSE
+	return TRUE
 
 ///Checks if a mob is bleeding or is biologically protected on a specified body part.
 ///No provided arg will instead use total armor value of the mob.
