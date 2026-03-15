@@ -16,7 +16,7 @@
 	. = ..()
 	//literally fucking kill it.
 	quirk_holder.immune_system.change_boost(0.1)
-	quirk_holder.immune_system.change_stength(0.1)
+	quirk_holder.immune_system.change_strength(0.1)
 
 /datum/quirk/item_quirk/immunodeficiency/add_unique(client/client_source)
 	give_item_to_holder(

@@ -79,7 +79,7 @@
 		antibodies[antibody] *= new_boost
 	boost = new_boost
 
-/datum/immune_system/proc/change_stength(new_strength = 1)
+/datum/immune_system/proc/change_strength(new_strength = 1)
 	var/old_strength = strength
 	if(new_strength == old_strength)
 		return
