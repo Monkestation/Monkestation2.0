@@ -452,37 +452,38 @@ const ModeDropdown = () => {
             border: '2px dashed grey',
           }}
         >
-          In the occupations windows you can pick which roles you want and
-          select your character(s). If you've never played before it's
-          recommended to start as an Assistant to learn the basic controls.
-          After that an occupation like Botanist, Scientist or Station Engineer
-          is recommended to give you some tasks to do and mechanics to learn.
+          In the occupations windows you can pick which jobs you want and select
+          your character(s). If you've never played before it's recommended to
+          start as an Assistant to learn the basic controls. After that an
+          occupation like Botanist, Scientist or Station Engineer is recommended
+          to give you some tasks to do and mechanics to learn.
           <br />
           <br />
           There are three different modes you can pick from which determine how
           your occupations and character are picked.
           <h3>Mode: Simple</h3>
-          You have one set of role priorities. Only one character can be enabled
+          You have one set of job priorities. Only one character can be enabled
           at a time.
           <br /> <br />
-          1. Set role priorities in Overall Occupations <br />
+          1. Set job priorities in Player Occupations <br />
           2. Pick one enabled character
           <h3>Mode: Character Filters</h3>
-          You have one set of role priorities. Multiple characters can be
-          enabled at a time and each character can have different roles enabled
-          or disabled. When you join the round the game will pick a job for you
-          then pick an enabled character which has that job enabled. If the game
-          cannot find one it will pick your default character.
+          You have one set of job priorities. Multiple characters can be enabled
+          at a time and each character can have different jobs enabled or
+          disabled. When you join the round the game will pick a job for you (or
+          take your chosen job if latejoining) then pick an enabled character
+          which has that job enabled. If the game cannot find one it will pick
+          your default character.
           <br /> <br />
-          1. Set role priorities in Overall Occupations <br />
-          2. Set role filters in Character Occupations <br />
+          1. Set job priorities in Player Occupations <br />
+          2. Set job filters in Character Occupations <br />
           3. Pick 0 or more enabled characters <br />
           4. Pick one default character
           <h3>Mode: Per Character Priorities (legacy mode)</h3>
-          Each character has their own set of role priorities. Only one
-          character can be enabled at a time.
+          Each character has their own set of job priorities. Only one character
+          can be enabled at a time.
           <br /> <br />
-          1. Set role priorities in Character Occupations <br />
+          1. Set job priorities in Character Occupations <br />
           2. Pick one enabled character
         </Box>
       </Collapsible>
@@ -625,13 +626,15 @@ export const JobsPage = (props: { type: JobsPageType }) => {
                 Toggle All
               </Button>{' '}
               <br />
-              <Button
-                onClick={() => {
-                  act('set_default_character');
-                }}
-              >
-                Set Default Character
-              </Button>
+              {mode === CharacterMode.Filters && (
+                <Button
+                  onClick={() => {
+                    act('set_default_character');
+                  }}
+                >
+                  Set Default Character
+                </Button>
+              )}
             </Stack.Item>
 
             <Stack.Item>
@@ -683,7 +686,7 @@ export const JobsPage = (props: { type: JobsPageType }) => {
 
   if (type === JobsPageType.Overall) {
     return (
-      <Section title="Overall Occupations" maxHeight="100%" overflowY="scroll">
+      <Section title="Player Occupations" maxHeight="100%" overflowY="scroll">
         {contents}
       </Section>
     );
