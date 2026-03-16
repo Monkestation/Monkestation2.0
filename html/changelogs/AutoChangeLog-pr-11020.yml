@@ -1,0 +1,7 @@
+author: "SirNightKnight"
+delete-after: True
+changes:
+  - rscadd: "added pocket extinguishers, t-ray scanners, ignition switch controllers to the engineering protolathe."
+  - qol: "made hand labelers, radio headsets, and station bounced radios universal protolathe designs."
+  - bugfix: "fixed a bug where inducers wouldn't update their sprite correctly when removing/adding a cell."
+  - qol: "added an initial lathe design for basic fishing hooks and line."

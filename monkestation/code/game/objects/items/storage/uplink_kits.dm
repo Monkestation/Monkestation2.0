@@ -226,14 +226,14 @@
 	new /obj/item/clothing/suit/jacket/det_suit/khan(src)
 
 /obj/item/storage/box/syndie_kit/razorwire/PopulateContents()
-	new /obj/item/autosurgeon/organ/syndicate/razorwire/l(src)
+	new /obj/item/autosurgeon/syndicate/razorwire/l(src)
 
 /obj/item/storage/box/syndie_kit/esword/PopulateContents()
-	new /obj/item/autosurgeon/organ/syndicate/esword(src)
+	new /obj/item/autosurgeon/syndicate/esword(src)
 
 /obj/item/storage/box/syndie_kit/deepvien/PopulateContents()
-	new /obj/item/autosurgeon/organ/syndicate/deepvien(src)
-	new /obj/item/autosurgeon/organ/syndicate/deepvien/l(src)
+	new /obj/item/autosurgeon/syndicate/deepvien(src)
+	new /obj/item/autosurgeon/syndicate/deepvien/l(src)
 
 /obj/item/storage/box/syndie_kit/xray
 	name = "X-Ray Mutation Kit"

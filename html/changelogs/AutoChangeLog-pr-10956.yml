@@ -1,0 +1,8 @@
+author: "Shoddd"
+delete-after: True
+changes:
+  - balance: "changeling transform power now works while dead"
+  - balance: "changeling hallucination power now makes others appear as a changeling"
+  - balance: "cryogenic sting is now a effect and works again"
+  - bugfix: "you can no longer roll changeling chemicals as allergies"
+  - bugfix: "storage cavity now drops items inside when power is lost"

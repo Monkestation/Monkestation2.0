@@ -1,0 +1,9 @@
+author: "SirNightKnight"
+delete-after: True
+changes:
+  - balance: "the standalone Syndicate autosurgeon is 3 TC instead of 5."
+  - bugfix: "all pre-loaded Syndicate autosurgeons are one use."
+  - bugfix: "bone repair surgeries require you to close up the patient with the final step."
+  - code_imp: "demodularized most autosurgeon code so it's in one file."
+  - bugfix: "wound surgeries don't delete themself automatically when the wound is fixed."
+  - bugfix: "gave cauterizing slash wounds a sound."

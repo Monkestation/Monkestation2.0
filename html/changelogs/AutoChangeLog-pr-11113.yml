@@ -1,0 +1,4 @@
+author: "Cujo"
+delete-after: True
+changes:
+  - bugfix: "No longer applies hard of hearing to people who are genetically deaf or using quirk trait"

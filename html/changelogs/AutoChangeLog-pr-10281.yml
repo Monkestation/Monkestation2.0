@@ -1,0 +1,5 @@
+author: "OliverOtter"
+delete-after: True
+changes:
+  - balance: "Chaplain and Curator are unable to roll vampire. (they can still be vassalized into one)"
+  - balance: "Chaplain is unable to roll heretic."
