@@ -306,7 +306,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	//monkestation edit start:
 	//switch(round(shown_threat))
 	var/greenshift = FALSE
-	var/datum/storyteller/selected_storyteller = SSgamemode.current_storyteller?.type || SSgamemode.selected_storyteller
+	var/datum/storyteller/selected_storyteller = SSgamemode.current_storyteller || SSgamemode.selected_storyteller
 	if((selected_storyteller.star_colour == STARCOLOUR_GREENSTAR) || (SSgamemode.current_storyteller.disable_distribution))
 		greenshift = TRUE
 		. += "Advisory Level: <b>Green Star</b></center><BR>"
