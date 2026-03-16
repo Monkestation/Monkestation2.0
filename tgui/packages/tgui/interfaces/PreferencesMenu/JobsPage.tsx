@@ -462,25 +462,24 @@ const ModeDropdown = () => {
           There are three different modes you can pick from which determine how
           your occupations and character are picked.
           <h3>Mode: Simple</h3>
-          You have only the one overall page of role priorities. Only one
-          character can be enabled at a time.
+          You have one set of role priorities. Only one character can be enabled
+          at a time.
           <br /> <br />
           1. Set role priorities in Overall Occupations <br />
           2. Pick one enabled character
           <h3>Mode: Character Filters</h3>
-          You have only the one overall page of role priorities. Multiple
-          characters can be enabled at a time, each character can have different
-          roles enabled or disabled. When you join the round the game will pick
-          a job for you then pick an enabled character which has that job
-          enabled. If the game cannot find one it will pick your default
-          character.
+          You have one set of role priorities. Multiple characters can be
+          enabled at a time and each character can have different roles enabled
+          or disabled. When you join the round the game will pick a job for you
+          then pick an enabled character which has that job enabled. If the game
+          cannot find one it will pick your default character.
           <br /> <br />
           1. Set role priorities in Overall Occupations <br />
           2. Set role filters in Character Occupations <br />
           3. Pick 0 or more enabled characters <br />
           4. Pick one default character
           <h3>Mode: Per Character Priorities (legacy mode)</h3>
-          Each character has a different page of role priorities. Only one
+          Each character has their own set of role priorities. Only one
           character can be enabled at a time.
           <br /> <br />
           1. Set role priorities in Character Occupations <br />
@@ -556,7 +555,6 @@ const CharacterButton = (props: {
             style={{ float: 'left', padding: '4px 4px 4px 2px' }}
           />
         )}
-        {enabled_chars}
         {profile}
         {data.default_character === slot + 1 && multiSelect && ' (default)'}
       </Button>
