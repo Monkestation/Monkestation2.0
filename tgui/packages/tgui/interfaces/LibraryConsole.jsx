@@ -268,12 +268,9 @@ const CheckoutModal = (props) => {
     })),
     sortBy((book) => book.key),
   ])(data.inventory);
+  const { checkout_title } = data;
 
   const [checkoutBook, setCheckoutBook] = useLocalState('CheckoutBook', false);
-  const [bookName, setBookName] = useLocalState(
-    'CheckoutBookName',
-    'Insert Book name...',
-  );
   const [checkoutee, setCheckoutee] = useLocalState('Checkoutee', 'Recipient');
   const [checkoutPeriod, setCheckoutPeriod] = useLocalState(
     'CheckoutPeriod',
@@ -288,10 +285,15 @@ const CheckoutModal = (props) => {
         over
         mb={1.7}
         width="100%"
-        displayText={bookName}
+        placeholder="Insert Book name..."
+        displayText={checkout_title}
         options={inventory.map((book) => book.title)}
-        value={bookName}
-        onSelected={(e) => setBookName(e)}
+        value={checkout_title}
+        onSelected={(e) => {
+          act('set_checkout', {
+            book_name: e,
+          });
+        }}
       />
       <LabeledList>
         <LabeledList.Item label="Loan To">
@@ -306,6 +308,7 @@ const CheckoutModal = (props) => {
             value={checkoutPeriod}
             unit=" Minutes"
             minValue={1}
+            maxValue={90}
             stepPixelSize={10}
             onChange={(value) => setCheckoutPeriod(value)}
           />
@@ -321,7 +324,6 @@ const CheckoutModal = (props) => {
             onClick={() => {
               setCheckoutBook(false);
               act('checkout', {
-                book_name: bookName,
                 loaned_to: checkoutee,
                 checkout_time: checkoutPeriod,
               });
