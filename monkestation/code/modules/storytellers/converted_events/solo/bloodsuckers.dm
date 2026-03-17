@@ -1,7 +1,7 @@
-/datum/round_event_control/antagonist/solo/bloodsucker
+/datum/round_event_control/antagonist/bloodsucker
 	antag_flag = ROLE_BLOODSUCKER
 	tags = list(TAG_COMBAT, TAG_MAGICAL, TAG_CREW_ANTAG, TAG_SPOOKY)
-	antag_datum = /datum/antagonist/bloodsucker
+	antag_datum = VAMPIRE_ANTAG_DATUM
 	protected_roles = list(
 		JOB_CAPTAIN,
 		JOB_NANOTRASEN_REPRESENTATIVE,
@@ -18,6 +18,8 @@
 		JOB_WARDEN,
 		JOB_BRIG_PHYSICIAN,
 		JOB_BRIDGE_ASSISTANT,
+		JOB_CHAPLAIN,
+		JOB_CURATOR
 	)
 	restricted_roles = list(
 		JOB_AI,
@@ -28,18 +30,18 @@
 	maximum_antags = 2
 	event_icon_state = "vampires"
 
-/datum/round_event_control/antagonist/solo/bloodsucker/roundstart
+/datum/round_event_control/antagonist/bloodsucker/roundstart
 	name = "Bloodsuckers"
 	roundstart = TRUE
 	earliest_start = 0 SECONDS
 
-/datum/round_event_control/antagonist/solo/bloodsucker/midround
-	typepath = /datum/round_event/antagonist/solo/bloodsucker
+/datum/round_event_control/antagonist/bloodsucker/midround
+	typepath = /datum/round_event/antagonist/bloodsucker
 	antag_flag = ROLE_VAMPIRICACCIDENT
 	name = "Vampiric Accident"
 	prompted_picking = TRUE
 	max_occurrences = 1
 
-/datum/round_event/antagonist/solo/bloodsucker/add_datum_to_mind(datum/mind/antag_mind)
+/datum/round_event/antagonist/bloodsucker/add_datum_to_mind(datum/mind/antag_mind)
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = antag_mind.make_bloodsucker()
 	bloodsuckerdatum.bloodsucker_level_unspent = rand(2,3)

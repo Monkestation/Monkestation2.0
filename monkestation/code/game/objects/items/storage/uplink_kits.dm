@@ -70,7 +70,7 @@
 			/obj/item/clothing/shoes/chameleon/noslip,
 			/obj/item/clothing/glasses/thermal/syndi,
 			/obj/item/storage/box/syndie_kit/imp_freedom,
-			/obj/item/reagent_containers/hypospray/medipen/stimulants,
+			/obj/item/reagent_containers/medipen/stimulants,
 			/obj/item/card/emag/doorjack,
 		),
 
@@ -120,7 +120,7 @@
 			/obj/item/clothing/shoes/chameleon/noslip,
 			/obj/item/clothing/glasses/thermal/syndi,
 			/obj/item/storage/box/syndie_kit/imp_freedom,
-			/obj/item/reagent_containers/hypospray/medipen/stimulants,
+			/obj/item/reagent_containers/medipen/stimulants,
 			/obj/item/card/emag/doorjack,
 		),
 
@@ -226,14 +226,14 @@
 	new /obj/item/clothing/suit/jacket/det_suit/khan(src)
 
 /obj/item/storage/box/syndie_kit/razorwire/PopulateContents()
-	new /obj/item/autosurgeon/organ/syndicate/razorwire/l(src)
+	new /obj/item/autosurgeon/syndicate/razorwire/l(src)
 
 /obj/item/storage/box/syndie_kit/esword/PopulateContents()
-	new /obj/item/autosurgeon/organ/syndicate/esword(src)
+	new /obj/item/autosurgeon/syndicate/esword(src)
 
 /obj/item/storage/box/syndie_kit/deepvien/PopulateContents()
-	new /obj/item/autosurgeon/organ/syndicate/deepvien(src)
-	new /obj/item/autosurgeon/organ/syndicate/deepvien/l(src)
+	new /obj/item/autosurgeon/syndicate/deepvien(src)
+	new /obj/item/autosurgeon/syndicate/deepvien/l(src)
 
 /obj/item/storage/box/syndie_kit/xray
 	name = "X-Ray Mutation Kit"
@@ -242,7 +242,7 @@
 /obj/item/storage/box/syndie_kit/xray/PopulateContents()
 	new /obj/item/dnainjector/syndicate_xray(src)
 	for(var/i in 1 to 3)
-		new /obj/item/reagent_containers/hypospray/medipen/deforest/occuisate(src)
+		new /obj/item/reagent_containers/medipen/deforest/occuisate(src)
 
 /obj/item/storage/box/syndie_kit/laser_eyes
 	name = "Laser Eyes Mutation Kit"
@@ -251,7 +251,7 @@
 /obj/item/storage/box/syndie_kit/laser_eyes/PopulateContents()
 	new /obj/item/dnainjector/syndicate_laser_eyes(src)
 	for(var/i in 1 to 3)
-		new /obj/item/reagent_containers/hypospray/medipen/deforest/occuisate(src)
+		new /obj/item/reagent_containers/medipen/deforest/occuisate(src)
 
 #undef KIT_ITEM_CATEGORY_SUPPORT
 #undef KIT_ITEM_CATEGORY_WEAPONS

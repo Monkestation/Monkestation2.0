@@ -1,7 +1,7 @@
-/datum/round_event_control/antagonist/solo/wizard
+/datum/round_event_control/antagonist/wizard
 	name = "Wizard"
 	tags = list(TAG_COMBAT, TAG_DESTRUCTIVE, TAG_EXTERNAL, TAG_MAGICAL, TAG_OUTSIDER_ANTAG)
-	typepath = /datum/round_event/antagonist/solo/wizard
+	typepath = /datum/round_event/antagonist/wizard
 	antag_flag = ROLE_WIZARD
 	antag_datum = /datum/antagonist/wizard
 	shared_occurence_type = SHARED_HIGH_THREAT
@@ -29,16 +29,16 @@
 	max_occurrences = 1
 	event_icon_state = "wizard"
 
-/datum/round_event_control/antagonist/solo/wizard/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE)
+/datum/round_event_control/antagonist/wizard/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE)
 	. = ..()
 	if(!.)
 		return
 	if(!length(GLOB.wizardstart))
 		return FALSE
 
-/datum/round_event/antagonist/solo/wizard
+/datum/round_event/antagonist/wizard
 
-/datum/round_event/antagonist/solo/wizard/add_datum_to_mind(datum/mind/antag_mind)
+/datum/round_event/antagonist/wizard/add_datum_to_mind(datum/mind/antag_mind)
 	var/mob/living/current_mob = antag_mind.current
 	SSjob.FreeRole(antag_mind.assigned_role.title)
 	current_mob.clear_inventory()

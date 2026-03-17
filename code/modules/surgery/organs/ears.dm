@@ -87,6 +87,9 @@
 /obj/item/organ/internal/ears/proc/update_hearing_loss()
 	var/was_deaf = HAS_TRAIT_FROM(owner, TRAIT_DEAF, EAR_DAMAGE)
 	var/was_hoh = HAS_TRAIT_FROM(owner, TRAIT_HARD_OF_HEARING, EAR_DAMAGE)
+//if already deaf from quirks or genetics, don't apply trait_hard_of_hearing or trait_deaf
+	if(HAS_TRAIT_FROM(owner, TRAIT_DEAF, QUIRK_TRAIT) || HAS_TRAIT_FROM(owner, TRAIT_DEAF, GENETIC_MUTATION))
+		return
 
 	if (!deaf)
 		if (was_deaf)

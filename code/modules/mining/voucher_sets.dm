@@ -80,7 +80,7 @@
 // monkestation explorer vouchers
 /datum/voucher_set/explorer
 
-/datum/voucher_set/explorer/retro_laser 
+/datum/voucher_set/explorer/retro_laser
 	name = "Laser Gun Kit"
 	description = "Contains a low capacity but recharging laser gun, and a knife and flashlight to attach to it. It's firing pin won't work on the station or in NanoTrasen controlled space. No connection has been found by NT to any alleged 'war crimes' and the distrubition of this weapon to an incredibly accident prone workforce."
 	icon = 'monkestation/icons/obj/guns/explorer.dmi'
@@ -111,7 +111,7 @@
 		/obj/item/storage/belt/mining/vendor,
 		/obj/item/stack/medical/ointment = 1,
 		/obj/item/stack/medical/suture = 1,
-		/obj/item/reagent_containers/hypospray/medipen/deforest/coagulants,
+		/obj/item/reagent_containers/medipen/deforest/coagulants,
 		)
 
 /datum/voucher_set/explorer/breacher_kit

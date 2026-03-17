@@ -1,4 +1,0 @@
-author: "Cujo"
-delete-after: True
-changes:
-  - bugfix: "Changed Oshan medical protolathe to techfab. Now allows printing of computer and machine boards."

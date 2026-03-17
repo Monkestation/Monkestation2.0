@@ -97352,7 +97352,7 @@
 /obj/item/toy/figure/md{
 	pixel_y = 4
 	},
-/obj/item/reagent_containers/hypospray/medipen{
+/obj/item/reagent_containers/medipen{
 	pixel_y = -4
 	},
 /obj/machinery/light/directional/south,

@@ -43,6 +43,8 @@
 	var/list/returned_products
 	///If set, this access is needed to see this vending product.
 	var/access_requirement
+	///Is the item discountable by job discounts
+	var/discountable
 
 /**
  * # vending machines
@@ -380,6 +382,7 @@
 		R.age_restricted = initial(temp.age_restricted)
 		R.colorable = !!(initial(temp.greyscale_config) && initial(temp.greyscale_colors) && (initial(temp.flags_1) & IS_PLAYER_COLORABLE_1))
 		R.category = product_to_category[typepath]
+		R.discountable = temp.discountable
 		if(access_needed)
 			R.access_requirement = access_needed
 		recordlist += R
@@ -1156,6 +1159,7 @@
 			price = premium ? (record.custom_premium_price || extra_price) : (record.custom_price || default_price),
 			max_amount = record.max_amount,
 			ref = REF(record),
+			discountable = record.discountable,
 		)
 
 		var/atom/printed = record.product_path
@@ -1333,7 +1337,7 @@
 			vend_ready = TRUE
 			return
 		var/datum/bank_account/account = C.registered_account
-		if(account.account_job && account.account_job.paycheck_department == payment_department)
+		if(account.account_job && account.account_job.paycheck_department == payment_department && R.discountable)
 			price_to_use = max(round(price_to_use * DEPARTMENT_DISCOUNT), 1) //No longer free, but signifigantly cheaper.
 		if(coin_records.Find(R) || hidden_records.Find(R))
 			price_to_use = R.custom_premium_price ? R.custom_premium_price : extra_price

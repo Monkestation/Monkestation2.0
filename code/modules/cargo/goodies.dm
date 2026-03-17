@@ -200,7 +200,7 @@
 	name = "Medipen Two-Pak"
 	desc = "Contains one standard epinephrine medipen and one standard emergency medkit medipen. For when you want to prepare for the worst."
 	cost = PAYCHECK_CREW * 2
-	contains = list(/obj/item/reagent_containers/hypospray/medipen, /obj/item/reagent_containers/hypospray/medipen/ekit)
+	contains = list(/obj/item/reagent_containers/medipen, /obj/item/reagent_containers/medipen/ekit)
 
 /datum/supply_pack/goody/mothic_rations
 	name = "Surplus Mothic Ration Pack"
