@@ -17,7 +17,7 @@
 	force = 0 //You can't hit stuff unless wielded
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
-	trigger_guard = TRIGGER_GUARD_NORMAL
+	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
 	throwforce = 5
 	throw_speed = 4
 	armour_penetration = 10
