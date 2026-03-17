@@ -15,7 +15,10 @@
 	var/datum/action/bb/comms/comms_action
 	var/datum/action/bb/gear/gear_action
 	VAR_PRIVATE/datum/team/brother_team/team
-	var/brotherRank = 0 //This is used to say who is the big and little brothers. 0 = big, 1 is little, 2 is little little, 3 is little little little
+	///This is used to say who is the big and little brothers. 0 = big, 1 is the middle brother, 2 is little, 3 is little little
+	var/brotherRank = 0
+	///Whether the confirmation UI popup is active or not
+	var/popup = FALSE
 
 /datum/antagonist/brother/create_team(datum/team/brother_team/new_team)
 	if(!new_team)
@@ -34,6 +37,9 @@
 	finalize_brother()
 
 	team.brothers_left -= 1
+
+	if (prob(team.brother_chance))
+		team.brothers_left += 1
 
 	if (team.brothers_left > 0)
 		var/mob/living/carbon/carbon_owner = owner.current
@@ -163,8 +169,11 @@
 	owner.current.log_talk(html_decode(message), LOG_SAY, tag = "blood brother")
 	var/name_rank = "Big Brother"
 	if(brotherRank > 0)
-		name_rank = "Little Brother"
-	var/formatted_msg = "<span class='[team.color]'><b><i>\[Blood Bond\]</i> [span_name("[name_rank]:[owner.name]")]</b>: [message]</span>"
+		name_rank = ""
+		for (var/littleness in 2 to brotherRank)
+			name_rank += "Little "
+		name_rank += "Brother"
+	var/formatted_msg = "<span class='[team.color]'><b><i>\[Blood Bond\]</i> [span_name("[name_rank]: [owner.name]")]</b>: [message]</span>"
 	for(var/datum/mind/brother as anything in team.members)
 		var/mob/living/target = brother.current
 		if(QDELETED(target))
@@ -211,23 +220,47 @@
 		flashed.balloon_alert(source, "[flashed.p_they()] resist!")
 		return
 
-	if (!team.add_brother(flashed, key_name(source))) // Shouldn't happen given the former, more specific checks but just in case
-		flashed.balloon_alert(source, "failed!")
+	if (flashed in team.rejected_brothers)
+		flashed.balloon_alert(source, "[flashed.p_they()] have rejected you before")
 		return
 
-	source.log_message("converted [key_name(flashed)] to blood brother", LOG_ATTACK)
-	flashed.log_message("was converted by [key_name(source)] to blood brother", LOG_ATTACK)
-	log_game("[key_name(flashed)] was made into a blood brother by [key_name(source)]", list(
-		"converted" = flashed,
-		"converted by" = source,
-	))
+	//The first BB flash against someone should sleep them. They get a popup if they want to join the BB team or not. If they say no they cant be BB flashed anymore
+	flashed.SetSleeping(30 SECONDS)
 	flash.burn_out()
-	flashed.mind.add_memory( \
-		/datum/memory/recruited_by_blood_brother, \
-		protagonist = flashed, \
-		antagonist = owner.current, \
-	)
-	flashed.balloon_alert(source, "converted")
+	join_brother_flashed_popup(source, flashed, flash)
 
-	UnregisterSignal(source, COMSIG_MOB_SUCCESSFUL_FLASHED_CARBON)
-	source.RemoveComponentSource(REF(src), /datum/component/can_flash_from_behind)
+/datum/antagonist/brother/proc/set_brother_rank(newRank)
+	brotherRank = newRank
+
+/datum/antagonist/brother/proc/join_brother_flashed_popup(mob/living/source, mob/living/carbon/flashed, obj/item/assembly/flash/flash)
+	if(popup)
+		return
+	popup = TRUE
+	var/response = tgui_alert(flashed, "Visions of a life with [source] as your brother pass through your mind.", "Become brothers?", list("Become a brother", "Reject Brotherhood"))
+	popup = FALSE
+
+	if(response == "Reject Brotherhood")
+		team.rejected_brothers.Add(flashed)
+		to_chat(flashed, span_big(span_hypnophrase("You wake up forgetting why exactly you feel asleep, and the brotherly visions you had during your sleep")))
+
+	else if(response == "Become a brother")
+		if (!team.add_brother(flashed, key_name(source))) // Shouldn't happen given the former, more specific checks but just in case
+			flashed.balloon_alert(source, "failed!")
+			return
+		source.log_message("converted [key_name(flashed)] to blood brother", LOG_ATTACK)
+		flashed.log_message("was converted by [key_name(source)] to blood brother", LOG_ATTACK)
+		log_game("[key_name(flashed)] was made into a blood brother by [key_name(source)]", list(
+			"converted" = flashed,
+			"converted by" = source,
+		))
+		flashed.mind.add_memory( \
+			/datum/memory/recruited_by_blood_brother, \
+			protagonist = flashed, \
+			antagonist = owner.current, \
+		)
+		flashed.balloon_alert(source, "converted")
+
+		UnregisterSignal(source, COMSIG_MOB_SUCCESSFUL_FLASHED_CARBON)
+		source.RemoveComponentSource(REF(src), /datum/component/can_flash_from_behind)
+
+	flashed.SetSleeping(0 SECONDS)
