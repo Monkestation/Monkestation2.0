@@ -1404,11 +1404,17 @@
 	return TRUE
 
 /mob/living/proc/can_use_guns(obj/item/G)//actually used for more than guns!
+	if(HAS_TRAIT(src, TRAIT_NOGUNS))
+		to_chat(src, span_warning("You can't bring yourself to use a ranged weapon!"))
+		return FALSE
 	if(G.trigger_guard == TRIGGER_GUARD_NONE)
 		to_chat(src, span_warning("You are unable to fire this!"))
 		return FALSE
 	if(G.trigger_guard != TRIGGER_GUARD_ALLOW_ALL && (!ISADVANCEDTOOLUSER(src) && !HAS_TRAIT(src, TRAIT_GUN_NATURAL)))
 		to_chat(src, span_warning("You try to fire [G], but can't use the trigger!"))
+		return FALSE
+	if(G.trigger_guard == TRIGGER_GUARD_NORMAL && HAS_TRAIT(src, TRAIT_CHUNKYFINGERS))
+		balloon_alert(src, "fingers are too big!")
 		return FALSE
 	return TRUE
 
