@@ -630,9 +630,6 @@
 	)
 
 /obj/item/mod/control/pre_equipped/blueshield
-	worn_icon = 'monkestation/icons/mob/clothing/worn_modsuit.dmi'
-	icon = 'monkestation/icons/obj/clothing/modsuits/modsuit.dmi'
-	icon_state = "praetorian-control"
 	theme = /datum/mod_theme/blueshield
 	starting_frequency = MODLINK_FREQ_NANOTRASEN
 	applied_cell = /obj/item/stock_parts/power_store/cell/super
