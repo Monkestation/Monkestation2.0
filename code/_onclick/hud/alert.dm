@@ -63,8 +63,7 @@
 		thealert.icon_state = "template" // We'll set the icon to the client's ui pref in reorganize_alerts()
 		thealert.master_ref = master_ref
 	else
-		thealert.icon_state = "[initial(thealert.icon_state)][severity]"
-		thealert.severity = severity
+		thealert.set_severity(severity)
 
 	alerts[category] = thealert
 	if(HAS_CONNECTED_PLAYER(src) && hud_used)
