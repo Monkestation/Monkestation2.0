@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - bugfix: "Setting off a TTV in a bomb actualizer will no longer get the effects of being actualized."

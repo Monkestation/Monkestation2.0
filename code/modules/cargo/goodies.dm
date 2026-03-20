@@ -250,12 +250,6 @@
 	cost = PAYCHECK_CREW * 12
 	contains = list(/obj/item/encryptionkey/ethereal)
 
-/datum/supply_pack/goody/felinid_encryption_key
-	name = "Felinid radio encryption key"
-	desc = "A hi-tech radio encryption key that allows the wearer to understand nekomimetic when the radio is worn."
-	cost = PAYCHECK_CREW * 12
-	contains = list(/obj/item/encryptionkey/felinid)
-
 /datum/supply_pack/goody/uncommon_encryption_key
 	name = "Uncommon radio encryption key"
 	desc = "A hi-tech radio encryption key that allows the wearer to understand uncommon when the radio is worn."
