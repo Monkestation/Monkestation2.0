@@ -186,11 +186,6 @@
 /obj/machinery/rnd/production/RefreshParts()
 	. = ..()
 
-	if(!LAZYLEN(component_parts))
-		materials.set_local_size(37.5 * SHEET_MATERIAL_AMOUNT)
-		efficiency_coeff = compute_efficiency()
-		return
-
 	var/total_storage = 0
 	for(var/datum/stock_part/matter_bin/bin in component_parts)
 		total_storage += bin.tier * 37.5 * SHEET_MATERIAL_AMOUNT
@@ -205,10 +200,6 @@
 	PROTECTED_PROC(TRUE)
 
 	var/efficiency = 1.2
-	if(!LAZYLEN(component_parts))
-		efficiency -= 0.1
-		return efficiency
-
 	for(var/datum/stock_part/manipulator/manipulator in component_parts)
 		efficiency -= manipulator.tier * 0.1
 
