@@ -239,6 +239,9 @@ REQUEST_INTERNET_ALLOWED youtube\.com\/watch?v=,youtu\.be\/,soundcloud\.com\/,ba
 ## Only fires when an admin requests it, not every ahelp.
 POPUP_ADMIN_PM
 
+## Uncomment this to have country flags pop up in OOC alongside names if the user has the pref turned on (uses IP-API)
+OOC_COUNTRY_FLAGS
+
 ## Uncomment to allow special 'Easter-egg' events on special holidays such as seasonal holidays and stuff like 'Talk Like a Pirate Day' :3 YAARRR
 ALLOW_HOLIDAYS
 

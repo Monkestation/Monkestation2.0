@@ -1,8 +1,17 @@
 import {
+  CheckboxInput,
   type Feature,
   FeatureColorInput,
   FeatureShortTextInput,
+  type FeatureToggle,
 } from '../base';
+
+export const ooc_flags: FeatureToggle = {
+  name: 'OOC flags',
+  category: 'CHAT',
+  description: 'Show off your country flag in OOC.',
+  component: CheckboxInput,
+};
 
 export const ooccolor: Feature<string> = {
   name: 'OOC color',

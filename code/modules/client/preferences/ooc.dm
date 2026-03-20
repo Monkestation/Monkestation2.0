@@ -19,6 +19,18 @@ GLOBAL_LIST_INIT(pronouns_required, list(
 	"he", "her", "she", "they", "them", "it", "fae", "its"
 ))
 
+///Whether the user will display their country flag in OOC.
+/datum/preference/toggle/ooc_flags
+	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+	savefile_key = "ooc_flags"
+	savefile_identifier = PREFERENCE_PLAYER
+	default_value = FALSE
+
+/datum/preference/toggle/ooc_flags/is_accessible(datum/preferences/preferences)
+	if (!..(preferences))
+		return FALSE
+	return CONFIG_GET(flag/ooc_country_flags)
+
 /// The color admins will speak in for OOC.
 /datum/preference/color/ooc_color
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES

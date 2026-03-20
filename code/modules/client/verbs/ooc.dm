@@ -89,6 +89,9 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 		var/datum/asset/spritesheet_batched/chat/sheet = get_asset_datum(/datum/asset/spritesheet_batched/chat)
 		keyname = "[sheet.icon_tag("twitch")][keyname]"
 
+	if(CONFIG_GET(flag/ooc_country_flags) && (prefs.read_preference(/datum/preference/toggle/ooc_flags)))
+		keyname = "[country2chaticon(country, GLOB.clients)][keyname]"
+
 	// pronouns
 	var/pronouns = prefs.read_preference(/datum/preference/text/ooc_pronouns)
 

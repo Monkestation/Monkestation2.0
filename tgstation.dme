@@ -3840,6 +3840,7 @@
 #include "code\modules\client\client_colour.dm"
 #include "code\modules\client\client_defines.dm"
 #include "code\modules\client\client_procs.dm"
+#include "code\modules\client\country_flags.dm"
 #include "code\modules\client\message.dm"
 #include "code\modules\client\persistent_client.dm"
 #include "code\modules\client\preferences.dm"

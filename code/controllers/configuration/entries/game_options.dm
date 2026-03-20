@@ -305,6 +305,8 @@
 
 /datum/config_entry/flag/near_death_experience //If carbons can hear ghosts when unconscious and very close to death
 
+/datum/config_entry/flag/ooc_country_flags
+
 /datum/config_entry/flag/silent_ai
 /datum/config_entry/flag/silent_borg
 
