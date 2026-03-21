@@ -238,6 +238,7 @@
 	desc = "An incredibly rare type of bullet."
 	caliber = CALIBER_C22
 	projectile_type = /obj/projectile/bullet/c22
+	can_be_printed = FALSE
 
 /obj/projectile/bullet/c22
 	name = "5.6mm bullet"
