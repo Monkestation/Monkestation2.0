@@ -28,10 +28,6 @@
 	wound_bonus = -30
 	bare_wound_bonus = 40
 
-//weaker laser, for sidearms
-/obj/projectile/beam/laser/sidearm
-	generic_name = "laser beam"
-	damage = 18
 
 //concentrated laser, similar to hellfires but far lower wounding
 /obj/projectile/beam/laser/conlaser
