@@ -122,7 +122,7 @@
  *
  * We may have exited the clothing's loc at this point
  */
-/obj/item/clothing/accessory/proc/detach(obj/item/clothing/under/detach_from)
+/obj/item/clothing/accessory/proc/detach(obj/item/clothing/under/detach_from, popped = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(detach_from.atom_storage?.real_location == src)
@@ -188,6 +188,8 @@
 		return
 
 	source.remove_accessory(src)
+	if(QDELETED(src))
+		return
 	forceMove(source.drop_location())
 	source.visible_message(span_warning("[src] falls off of [source]!"))
 
@@ -212,7 +214,7 @@
 	. += "It can be worn above or below your suit. Right-click to toggle."
 
 /obj/item/clothing/accessory/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	if(!isnull(held_item))
+	if(!isnull(held_item) && held_item != src)
 		return NONE
 
 	context[SCREENTIP_CONTEXT_RMB] = "Wear [above_suit ? "below" : "above"] suit"

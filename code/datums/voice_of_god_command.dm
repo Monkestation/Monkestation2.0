@@ -53,12 +53,12 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 
 			//Let's ensure the listener's name is not matched within another word or command (and viceversa). e.g. "Saul" in "somersault"
 			var/their_first_name = candidate.first_name()
-			if(!GLOB.all_voice_of_god_triggers.Find(their_first_name) && findtext(message, regex("(\\L|^)[their_first_name](\\L|$)", "i")))
+			if(!GLOB.all_voice_of_god_triggers.Find(their_first_name) && findtext(message, regex("(\\L|^)[REGEX_QUOTE(their_first_name)](\\L|$)", "i")))
 				specific_listeners += candidate //focus on those with the specified name
 				to_remove_string += "[to_remove_string ? "|" : null][their_first_name]"
 				continue
 			var/their_last_name = candidate.last_name()
-			if(their_last_name != their_first_name && !GLOB.all_voice_of_god_triggers.Find(their_last_name) && findtext(message, regex("(\\L|^)[their_last_name](\\L|$)", "i")))
+			if(their_last_name != their_first_name && !GLOB.all_voice_of_god_triggers.Find(their_last_name) && findtext(message, regex("(\\L|^)[REGEX_QUOTE(their_last_name)](\\L|$)", "i")))
 				specific_listeners += candidate // Ditto
 				to_remove_string += "[to_remove_string ? "|" : null][their_last_name]"
 

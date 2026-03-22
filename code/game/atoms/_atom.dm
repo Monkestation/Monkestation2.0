@@ -178,12 +178,6 @@
 		if(SSatoms.InitAtom(src, FALSE, args))
 			//we were deleted
 			return
-#ifndef DISABLE_DEMOS
-		// monkestation start: replays
-		if(!(flags_1 & DEMO_IGNORE_1))
-			SSdemo.mark_new(src)
-		// monkestation end
-#endif
 
 /**
  * The primary method that objects are setup in SS13 with
@@ -653,9 +647,6 @@
 		return null
 	return list("[dna.unique_enzymes]" = blood.type)
 
-/mob/living/carbon/alien/get_blood_dna_list()
-	return list("UNKNOWN DNA" = "X*")
-
 /mob/living/silicon/get_blood_dna_list()
 	return
 
@@ -1066,7 +1057,7 @@
 	var/extra_context = ""
 	var/misc_context = ""
 
-	if(isliving(user) || isovermind(user) || isaicamera(user) || (ghost_screentips && isobserver(user)))
+	if(isliving(user) || isovermind(user) || iscameramob(user) || (ghost_screentips && isobserver(user)))
 		var/obj/item/held_item = user.get_active_held_item()
 
 		if (flags_1 & HAS_CONTEXTUAL_SCREENTIPS_1 || held_item?.item_flags & ITEM_HAS_CONTEXTUAL_SCREENTIPS)

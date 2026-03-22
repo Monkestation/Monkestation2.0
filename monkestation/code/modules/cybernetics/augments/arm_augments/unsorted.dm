@@ -126,7 +126,7 @@
 	var/target_zone = living_target.get_random_valid_zone(source.zone_selected)
 	var/armor_block = living_target.run_armor_check(target_zone, MELEE/*, armour_penetration = attacking_bodypart.unarmed_effectiveness*/)
 	living_target.apply_damage(potential_damage, attacking_bodypart.attack_type, target_zone, armor_block)
-	living_target.apply_damage(potential_damage * 2, STAMINA, target_zone, armor_block)
+	living_target.apply_damage(potential_damage, STAMINA, target_zone, armor_block)
 
 	if(source.body_position != LYING_DOWN) //Throw them if we are standing
 		var/atom/throw_target = get_edge_target_turf(living_target, source.dir)
@@ -271,14 +271,14 @@
 
 /obj/item/organ/internal/cyberimp/arm/cooler/on_life()
 	. = ..()
-	var/amt = BODYTEMP_NORMAL - owner.standard_body_temperature
-	if(amt == 0)
-		return
-	owner.add_homeostasis_level(type, amt, 0.25 KELVIN)
+	if(owner.bodytemperature > (owner.standard_body_temperature + 2 KELVIN))
+		owner.add_homeostasis_level(REF(src), owner.standard_body_temperature, 0.25 KELVIN)
+	else
+		owner.remove_homeostasis_level(REF(src))
 
-/obj/item/organ/internal/cyberimp/arm/cooler/Remove(mob/living/carbon/M, special)
+/obj/item/organ/internal/cyberimp/arm/cooler/Remove(mob/living/carbon/organ_owner, special)
 	. = ..()
-	owner.remove_homeostasis_level(type)
+	organ_owner?.remove_homeostasis_level(REF(src))
 
 /obj/item/organ/internal/cyberimp/arm/heater
 	name = "sub-dermal heater implant"
@@ -290,13 +290,13 @@
 
 /obj/item/organ/internal/cyberimp/arm/heater/on_life()
 	. = ..()
-	var/amt = BODYTEMP_NORMAL - owner.standard_body_temperature
-	if(amt == 0)
-		return
-	owner.add_homeostasis_level(type, amt, 0.25 KELVIN)
+	if(owner.bodytemperature < (owner.standard_body_temperature - 2 KELVIN))
+		owner.add_homeostasis_level(REF(src), owner.standard_body_temperature, 0.25 KELVIN)
+	else
+		owner.remove_homeostasis_level(REF(src))
 
-/obj/item/organ/internal/cyberimp/arm/heater/Remove(mob/living/carbon/M, special)
+/obj/item/organ/internal/cyberimp/arm/heater/Remove(mob/living/carbon/organ_owner, special)
 	. = ..()
-	owner.remove_homeostasis_level(type)
+	organ_owner.remove_homeostasis_level(REF(src))
 
 #undef DOAFTER_SOURCE_STRONGARM_INTERACTION

@@ -1,8 +1,8 @@
 #define FILTER_STAMINACRIT filter(type="drop_shadow", x=0, y=0, size=-3, color="#04080F")
-///Time before regen starts when hit with stam damage
+///Time before regen restarts when hit with stam damage
 #define STAMINA_REGEN_TIME (2.5 SECONDS)
-///The amount of stamina a carbon recovers every 2 seconds
-#define STAMINA_REGEN 15
+///The amount of stamina a carbon recovers every second
+#define STAMINA_REGEN 5
 
 #define ATTACK_DO_NOTHING (0<<0)
 #define ATTACK_HANDLED (1<<1)
@@ -13,16 +13,7 @@
 ////
 
 ///The default maximum stamina
-#define STAMINA_MAX 250
-///Carbons enter Exhaustion when their stamina drops below this percentage
-#define STAMINA_EXHAUSTION_THRESHOLD_MODIFIER (0.3) //30% or less
-///Carbons exit Exhaustion when their stamina drops below this percentage
-#define STAMINA_EXHAUSTION_THRESHOLD_MODIFIER_EXIT (0.45) //45% or less
-///The slowdown when a mob is exhausted
-#define STAMINA_EXHAUSTION_MOVESPEED_SLOWDOWN 3
-///Carbons will be exposed to stamina stuns upon dropping below this percentage
-#define STAMINA_STUN_THRESHOLD_MODIFIER (0.2) //20% or less
-
+#define STAMINA_MAX 100
 
 
 ////
@@ -44,11 +35,7 @@
 ///The amount of stamina at which point swinging is free.
 #define STAMINA_MAXIMUM_TO_SWING 100
 ///The time a mob is stunned when stamina stunned
-#define STAMINA_STUN_TIME 9 SECONDS
-///The base value of a stamina stun chance
-#define STAMINA_SCALING_STUN_BASE 20
-///The maximum additional stun chance based on missing stamina
-#define STAMINA_SCALING_STUN_SCALER 60
+#define STAMINA_STUN_TIME 10 SECONDS
 
 ////
 /// DISARM
@@ -65,10 +52,8 @@
 #define STAMINA_SUSTAINED_RUN_GRACE 0.5 SECONDS
 ///The amount of tiles you need to move to be considered moving in a sustained sprint
 #define STAMINA_SUSTAINED_SPRINT_THRESHOLD 8
-///The amount of stamina required to sprint
-#define STAMINA_MIN2SPRINT_MODIFER 0.45 //Slightly above exhaustion threshold
 ///How much stamina is taken per tile while sprinting
-#define STAMINA_SPRINT_COST 3
+#define STAMINA_SPRINT_COST 0.4
 
 ////
 /// GRAPPLING

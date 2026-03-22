@@ -28,7 +28,7 @@
 	report_paper.ui_interact(ui_user)
 
 /datum/command_report_menu/proc/preview_sound()
-	var/volume_pref = ui_user.client.prefs.channel_volume["[CHANNEL_VOX]"]
+	var/volume_pref = ui_user.client.prefs.channel_volume["[CHANNEL_ANNOUNCEMENTS]"]
 	switch(played_sound)
 		if(DEFAULT_COMMANDREPORT_SOUND)
 			SEND_SOUND(ui_user, sound(SSstation.announcer.get_rand_report_sound(), volume = volume_pref))

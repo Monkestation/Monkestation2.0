@@ -916,7 +916,7 @@
 	//	balloon_alert(user, "[target.p_theyre()] already that color!")
 	//	return FALSE TODO: Port atom color
 
-	var/saturation_mode = SATURATION_MULTIPLY
+//	var/saturation_mode = SATURATION_MULTIPLY
 //	if (LAZYACCESS(modifiers, RIGHT_CLICK)) //we need https://github.com/tgstation/tgstation/pull/88201 for this
 //		saturation_mode = SATURATION_OVERRIDE
 
@@ -936,6 +936,10 @@
 		return ..()
 
 	var/color_is_dark = is_color_dark(paint_color)
+	if (color_is_dark && !(target.flags_1 & ALLOW_DARK_PAINTS_1))
+		to_chat(user, span_warning("A color that dark on an object like this? Surely not..."))
+		return ITEM_INTERACT_BLOCKING
+
 	if(!actually_paints)
 		if(!(SEND_SIGNAL(target, COMSIG_OBJ_PAINTED, user, src, color_is_dark) & DONT_USE_SPRAYCAN_CHARGES))
 			use_charges(user, 2, requires_full = FALSE)
@@ -945,10 +949,6 @@
 			playsound(user.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)
 		user.visible_message(span_notice("[user] coats [target] with spray paint!"), span_notice("You coat [target] with spray paint."))
 		return ITEM_INTERACT_SUCCESS
-
-	if (color_is_dark && saturation_mode == SATURATION_OVERRIDE && !(target.flags_1 & ALLOW_DARK_PAINTS_1))
-		to_chat(user, span_warning("A color that dark on an object like this? Surely not..."))
-		return ITEM_INTERACT_BLOCKING
 
 	if(istype(target, /obj/item/pipe))
 		if(!GLOB.pipe_color_name.Find(paint_color))

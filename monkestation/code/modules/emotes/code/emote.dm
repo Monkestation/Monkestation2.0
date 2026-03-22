@@ -210,7 +210,22 @@
 		)
 	if(prob(5))
 		return 'monkestation/sound/voice/feline/funnymeow.ogg'
-	return pick('monkestation/sound/voice/feline/meow1.ogg', 'monkestation/sound/voice/feline/meow2.ogg', 'monkestation/sound/voice/feline/meow3.ogg', 'monkestation/sound/voice/feline/meow4.ogg')
+	// classy wants her characters to only have her meows play
+	if(user?.ckey == "missclassypineapple")
+		return pick(
+			'monkestation/sound/voice/feline/meow5.ogg',
+			'monkestation/sound/voice/feline/meow6.ogg',
+			'monkestation/sound/voice/feline/meow7.ogg',
+		)
+	return pick(
+		'monkestation/sound/voice/feline/meow1.ogg',
+		'monkestation/sound/voice/feline/meow2.ogg',
+		'monkestation/sound/voice/feline/meow3.ogg',
+		'monkestation/sound/voice/feline/meow4.ogg',
+		'monkestation/sound/voice/feline/meow5.ogg',
+		'monkestation/sound/voice/feline/meow6.ogg',
+		'monkestation/sound/voice/feline/meow7.ogg',
+	)
 
 /datum/emote/living/mggaow
 	key = "mggaow"
@@ -534,7 +549,7 @@
 	name = "Alert"
 	cooldown = 5 SECONDS
 	audio_cooldown = 10 SECONDS //no free *chime
-	emote_type = EMOTE_VISIBLE
+	emote_type = EMOTE_VISIBLE | EMOTE_HAS_VISUAL
 	sound = 'sound/machines/chime.ogg'
 	empty_message_intentional = TRUE
 

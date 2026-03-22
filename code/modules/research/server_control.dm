@@ -15,8 +15,9 @@
 		stored_research = SSresearch.science_tech
 
 /obj/machinery/computer/rdservercontrol/multitool_act(mob/living/user, obj/item/multitool/tool)
-	if(!QDELETED(tool.buffer) && istype(tool.buffer, /datum/techweb))
-		stored_research = tool.buffer
+	var/datum/buffer = multitool_get_buffer(tool)
+	if(!QDELETED(buffer) && istype(buffer, /datum/techweb))
+		stored_research = buffer
 		balloon_alert(user, "techweb connected")
 	return TRUE
 

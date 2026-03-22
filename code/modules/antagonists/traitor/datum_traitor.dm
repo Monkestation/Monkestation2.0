@@ -122,6 +122,9 @@
 		uplink_handler.has_objectives = FALSE
 		uplink_handler.can_replace_objectives = null
 		uplink_handler.replace_objectives = null
+	owner.take_uplink()
+	owner.special_role = null
+	owner.forget_crafting_recipe(/datum/crafting_recipe/syndicate_uplink_beacon)
 	return ..()
 
 /datum/antagonist/traitor/proc/traitor_objective_to_html(datum/traitor_objective/to_display)
@@ -180,11 +183,6 @@
 /datum/antagonist/traitor/proc/generate_replacement_codes()
 	replacement_uplink_code = "[pick(GLOB.phonetic_alphabet)] [rand(10,99)]"
 	replacement_uplink_frequency = sanitize_frequency(rand(MIN_UNUSED_FREQ, MAX_FREQ), free = FALSE, syndie = FALSE)
-
-/datum/antagonist/traitor/on_removal()
-	owner.special_role = null
-	owner.forget_crafting_recipe(/datum/crafting_recipe/syndicate_uplink_beacon)
-	return ..()
 
 /datum/antagonist/traitor/proc/pick_employer()
 	var/faction = prob(75) ? FLAVOR_FACTION_SYNDICATE : FLAVOR_FACTION_NANOTRASEN
@@ -280,7 +278,7 @@
 	handle_clown_mutation(datum_owner, mob_override ? null : "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 	if(should_give_codewords)
 		datum_owner.AddComponent(/datum/component/codeword_hearing, GLOB.syndicate_code_phrase_regex, "blue", src)
-		datum_owner.AddComponent(/datum/component/codeword_hearing, GLOB.syndicate_code_response_regex, "red", src)
+		datum_owner.AddComponent(/datum/component/codeword_hearing, GLOB.syndicate_code_response_regex, "orange", src)
 
 /datum/antagonist/traitor/remove_innate_effects(mob/living/mob_override)
 	. = ..()
@@ -382,8 +380,8 @@
 	var/phrases = jointext(GLOB.syndicate_code_phrase, ", ")
 	var/responses = jointext(GLOB.syndicate_code_response, ", ")
 
-	var/message = "<br><b>The code phrases were:</b> <span class='bluetext'>[phrases]</span><br>\
-					<b>The code responses were:</b> [span_redtext("[responses]")]<br>"
+	var/message = "<br><b>The code phrases were:</b> [span_blue("[phrases]")]<br>\
+					<b>The code responses were:</b> [span_orange("[responses]")]<br>"
 
 	return message
 

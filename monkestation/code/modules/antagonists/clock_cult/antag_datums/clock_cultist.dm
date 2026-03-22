@@ -26,7 +26,7 @@
 																		"Rzvarapr V pnyy gur`r!", "Lbh frr bayl qnexarff.", "Guv`f vf abg gur raq.", "Gv`px, Gbpx"),
 
 														"seizure" = list("Your failure shall not delay my freedom.", "The blind will see only darkness.",
-																		 "Then my ark will feed upon your vitality.", "Do not forget your servitude."))
+																		"Then my ark will feed upon your vitality.", "Do not forget your servitude."))
 
 /datum/antagonist/clock_cultist/Destroy()
 	QDEL_NULL(communicate)
@@ -113,7 +113,7 @@
 /datum/antagonist/clock_cultist/on_removal()
 	if(!silent)
 		owner.current.visible_message(span_deconversion_message("[owner.current] looks like [owner.current.p_theyve()] just reverted to [owner.current.p_their()] old faith!"), \
-									  span_userdanger("As the ticking fades from the back of your mind, you forget all memories you had as a servant of Ratvar."))
+										span_userdanger("As the ticking fades from the back of your mind, you forget all memories you had as a servant of Ratvar."))
 	owner.current.log_message("has renounced the cult of Ratvar!", LOG_ATTACK, color="#960000")
 	handle_equipment_removal()
 	REMOVE_TRAIT(owner, TRAIT_MAGICALLY_GIFTED, REF(src))
@@ -225,8 +225,22 @@
 //putting this here to avoid extra edits to the main file
 /datum/antagonist/cult
 	///used for holy water deconversion
-	var/static/list/cultist_deconversion_phrases = list("spoken" = list("Av'te Nar'Sie","Pa'lid Mors","INO INO ORA ANA","SAT ANA!","Daim'niodeis Arc'iai Le'eones",
-																		"R'ge Na'sie","Diabo us Vo'iscum","Eld' Mon Nobis"),
+	var/static/list/cultist_deconversion_phrases = list(
+		"spoken" = list(
+			"Av'te Nar'Sie",
+			"Pa'lid Mors",
+			"INO INO ORA ANA",
+			"SAT ANA!",
+			"Daim'niodeis Arc'iai Le'eones",
+			"R'ge Na'sie",
+			"Diabo us Vo'iscum",
+			"Eld' Mon Nobis",
+		),
 
-														"seizure" = list("Your blood is your bond - you are nothing without it", "Do not forget your place",
-																		 "All that power, and you still fail?", "If you cannot scour this poison, I shall scour your meager life!"))
+		"seizure" = list(
+			"Your blood is your bond - you are nothing without it",
+			"Do not forget your place",
+			"All that power, and you still fail?",
+			"If you cannot scour this poison, I shall scour your meager life!"
+		)
+	)

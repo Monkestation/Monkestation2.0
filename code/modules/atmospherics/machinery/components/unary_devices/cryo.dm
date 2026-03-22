@@ -339,6 +339,9 @@
 					radio.talk_into(src, msg, radio_channel)
 			else // otherwise if we were only treating wounds and now we don't have any, turn off treating_wounds so we can boot 'em out
 				treating_wounds = FALSE
+				for(var/datum/brain_trauma/trauma as anything in C.get_traumas())
+					if(trauma.resilience == TRAUMA_RESILIENCE_WOUND)
+						qdel(trauma)
 
 		if(!treating_wounds)
 			set_on(FALSE)

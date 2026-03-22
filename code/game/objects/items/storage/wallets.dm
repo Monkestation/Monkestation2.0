@@ -23,7 +23,6 @@
 		/obj/item/flashlight/pen,
 		/obj/item/seeds,
 		/obj/item/stack/medical,
-		/obj/item/stack/heal_pack,
 		/obj/item/toy/crayon,
 		/obj/item/coin,
 		/obj/item/dice,
@@ -127,14 +126,14 @@
 	RETURN_TYPE(/obj/item/card/id)
 	return front_id
 
-/obj/item/storage/wallet/RemoveID()
+/obj/item/storage/wallet/remove_id()
 	if(!front_id)
 		return
 	. = front_id
 	front_id.forceMove(get_turf(src))
 
-/obj/item/storage/wallet/InsertID(obj/item/inserting_item)
-	var/obj/item/card/inserting_id = inserting_item.RemoveID()
+/obj/item/storage/wallet/insert_id(obj/item/inserting_item)
+	var/obj/item/card/inserting_id = inserting_item.remove_id()
 	if(!inserting_id)
 		return FALSE
 	attackby(inserting_id)

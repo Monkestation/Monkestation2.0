@@ -107,6 +107,10 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	name = "Shaft Miner"
 	icon_state = "Shaft Miner"
 
+/obj/effect/landmark/start/explorer
+	name = "Explorer"
+	icon_state = "Explorer"
+
 /obj/effect/landmark/start/security_officer
 	name = "Security Officer"
 	icon_state = "Security Officer"
@@ -195,6 +199,10 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 /obj/effect/landmark/start/psychologist
 	name = "Psychologist"
 	icon_state = "Psychologist"
+
+/obj/effect/landmark/start/barber
+	name = "Barber"
+	icon_state = "Barber"
 
 /obj/effect/landmark/start/chaplain
 	name = "Chaplain"
@@ -677,6 +685,9 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 /obj/effect/landmark/navigate_destination/minisat_access_chapel_library
 	location = "Chapel and Library MiniSat Access"
 
+/obj/effect/landmark/navigate_destination/garden
+	location = "Public Garden"
+
 //Service
 /obj/effect/landmark/navigate_destination/kitchen
 	location = "Kitchen"
@@ -732,3 +743,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 /obj/effect/landmark/navigate_destination/virology
 	location = "Virology"
 //End of monke edit
+
+/obj/effect/landmark/navigate_destination/mining_foundry
+	location = "Mining Foundry"

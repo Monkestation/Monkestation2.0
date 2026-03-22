@@ -453,3 +453,17 @@
 	gold_core_spawnable = NO_SPAWN
 	ai_controller = /datum/ai_controller/basic_controller/
 	ckeywhitelist = list("Milthy")
+
+/mob/living/basic/pet/cyber_mastiff
+	name = "cyber mastiff"
+	desc = "It's The Emperor's good boy!"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "mecha_walter"
+	icon_living = "mecha_walter"
+	icon_dead = "mecha_walter-dead"
+	response_help_continuous = "pets"
+	response_help_simple = "pet"
+	icon_gib = null
+	gold_core_spawnable = NO_SPAWN
+	ai_controller = /datum/ai_controller/basic_controller/
+	ckeywhitelist = list("Flava-Floh")

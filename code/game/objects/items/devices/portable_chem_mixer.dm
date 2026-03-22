@@ -184,6 +184,7 @@ MONKESTATION REMOVAL END */
 	return ..()
 
 /obj/item/storage/portable_chem_mixer/ui_interact(mob/user, datum/tgui/ui)
+	update_contents()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "PortableChemMixer", name)

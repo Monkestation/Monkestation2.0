@@ -380,7 +380,7 @@
 
 /datum/chemical_reaction/slime/slimeexplosion/proc/boom(datum/reagents/holder)
 	if(holder?.my_atom)
-		explosion(holder.my_atom, devastation_range = 1, heavy_impact_range = 3, light_impact_range = 6, explosion_cause = src)
+		explosion(holder.my_atom, devastation_range = 0, heavy_impact_range = 1, light_impact_range = 3, explosion_cause = src)
 
 
 /datum/chemical_reaction/slime/slimecornoil

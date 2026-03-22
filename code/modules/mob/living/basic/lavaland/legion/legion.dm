@@ -56,7 +56,7 @@
 	. = ..()
 	if (gone != stored_mob)
 		return
-	UnregisterSignal(stored_mob, COMSIG_LIVING_REVIVE)
+	UnregisterSignal(stored_mob, list(COMSIG_LIVING_REVIVE, COMSIG_MOVABLE_MOVED))
 	ai_controller.clear_blackboard_key(BB_LEGION_CORPSE)
 	stored_mob.remove_status_effect(/datum/status_effect/grouped/stasis, STASIS_LEGION_EATEN)
 	stored_mob.add_mood_event(MOOD_CATEGORY_LEGION_CORE, /datum/mood_event/healsbadman/long_term) // This will still probably mostly be gone before you are alive
@@ -94,6 +94,8 @@
 	consumed.apply_status_effect(/datum/status_effect/grouped/stasis, STASIS_LEGION_EATEN)
 	RegisterSignal(consumed, COMSIG_LIVING_REVIVE, PROC_REF(on_consumed_revive))
 	consumed.forceMove(src)
+	if(!isoozeling(consumed))
+		RegisterSignal(consumed, COMSIG_MOVABLE_MOVED, PROC_REF(on_consumed_move))
 	ai_controller?.set_blackboard_key(BB_LEGION_CORPSE, consumed)
 	ai_controller?.set_blackboard_key(BB_LEGION_RECENT_LINES, consumed.copy_recent_speech(line_chance = 80))
 	stored_mob = consumed
@@ -104,12 +106,18 @@
 	var/obj/item/organ/internal/legion_tumour/cancer = new()
 	cancer.Insert(consumed, special = TRUE, drop_if_replaced = FALSE)
 
-/// A Legion which only drops skeletons instead of corpses which might have fun loot, so it cannot be farmed
-
-/mob/living/basic/mining/legion/proc/on_consumed_revive(full_heal_flags)
+/// Gibs the legion if whoever is inside revives on their own.
+/mob/living/basic/mining/legion/proc/on_consumed_revive(mob/living/consumed, full_heal_flags)
 	SIGNAL_HANDLER
 	gib()
 
+/// Gibs the legion if whoever is inside somehow moves out of the legion.
+/mob/living/basic/mining/legion/proc/on_consumed_move(mob/living/consumed, atom/old_loc, dir, forced, list/old_locs)
+	SIGNAL_HANDLER
+	if(consumed.loc != src && !QDELETED(src) && !QDELETED(consumed))
+		gib()
+
+/// A Legion which only drops skeletons instead of corpses which might have fun loot, so it cannot be farmed
 /mob/living/basic/mining/legion/spawner_made
 	corpse_type = /obj/effect/mob_spawn/corpse/human/legioninfested/skeleton/charred
 

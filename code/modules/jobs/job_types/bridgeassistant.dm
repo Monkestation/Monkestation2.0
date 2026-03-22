@@ -25,10 +25,15 @@ Bridge Assistant
 	liver_traits = list(TRAIT_PRETENDER_ROYAL_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_BRIDGE_ASSISTANT
-	departments_list = list(/datum/job_department/command)
 	department_for_prefs = /datum/job_department/captain //hes the only person who is exclusively subordinate to the captain and not running another dept
 
-	family_heirlooms = list(/obj/item/banner/command/mundane, /obj/item/pen/fountain, /obj/item/stamp/granted, /obj/item/reagent_containers/cup/glass/mug/nanotrasen, /obj/item/reagent_containers/cup/coffeepot/bluespace/synthesiser)
+	family_heirlooms = list(
+		/obj/item/banner/command/mundane,
+		/obj/item/pen/fountain,
+		/obj/item/stamp/granted,
+		/obj/item/reagent_containers/cup/glass/mug/nanotrasen,
+		/obj/item/reagent_containers/cup/coffeepot/bluespace/synthesiser,
+	)
 
 	mail_goodies = list(
 		/obj/item/storage/fancy/cigarettes = 1,

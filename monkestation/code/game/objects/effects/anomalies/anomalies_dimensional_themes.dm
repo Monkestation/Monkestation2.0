@@ -9,7 +9,7 @@
 														   /obj/structure/table = list(/obj/structure/table/bronze = 1))
 	replace_window = /obj/structure/window/bronze/fulltile
 
-/datum/dimension_theme/clockwork/New(var/is_cult = FALSE) //set to true by clock cult transformation
+/datum/dimension_theme/clockwork/New(is_cult = FALSE) //set to true by clock cult transformation
 	. = ..()
 	if(is_cult)
 		replace_walls = /turf/closed/wall/clockwork

@@ -52,13 +52,14 @@ GLOBAL_LIST_EMPTY(initalized_ocean_areas)
 	baseturfs = /turf/open/openspace/ocean
 	var/replacement_turf = /turf/open/floor/plating/ocean
 
-/turf/open/openspace/ocean/Initialize()
+/turf/open/openspace/ocean/Initialize(mapload)
 	. = ..()
 	ChangeTurf(replacement_turf, null, CHANGETURF_IGNORE_AIR)
 
 /turf/open/floor/plating
 	///do we still call parent but dont want other stuff?
 	var/overwrites_attack_by = FALSE
+
 /turf/open/floor/plating/ocean
 	plane = FLOOR_PLANE
 	layer = TURF_LAYER
@@ -83,6 +84,8 @@ GLOBAL_LIST_EMPTY(initalized_ocean_areas)
 
 	overwrites_attack_by = TRUE
 
+	astar_weight = 50
+
 	var/static/obj/effect/abstract/ocean_overlay/static_overlay
 	var/static/list/ocean_reagents = list(/datum/reagent/water = 10)
 	var/ocean_temp = T20C
@@ -103,7 +106,7 @@ GLOBAL_LIST_EMPTY(initalized_ocean_areas)
 	/// do we build a catwalk or plating with rods
 	var/catwalk = FALSE
 
-/turf/open/floor/plating/ocean/Initialize()
+/turf/open/floor/plating/ocean/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_ATOM_ENTERED, PROC_REF(movable_entered))
 	RegisterSignal(src, COMSIG_TURF_MOB_FALL, PROC_REF(mob_fall))
@@ -350,7 +353,7 @@ GLOBAL_LIST_EMPTY(the_lever)
 	var/moving = FALSE
 
 
-/turf/open/floor/plating/ocean/false_movement/Initialize()
+/turf/open/floor/plating/ocean/false_movement/Initialize(mapload)
 	. = ..()
 	GLOB.scrollable_turfs += src
 	var/obj/machinery/movement_lever/lever = locate() in GLOB.the_lever

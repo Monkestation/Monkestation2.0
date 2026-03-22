@@ -7,7 +7,7 @@
 	name = "record"
 	var/list/fields = list()
 
-/obj/machinery/computer/cloning		//monke start, re-add cloning
+/obj/machinery/computer/cloning
 	name = "cloning console"
 	desc = "Used to clone people and manage DNA."
 	icon_screen = "dna"
@@ -34,7 +34,7 @@
 
 	light_color = LIGHT_COLOR_BLUE
 
-/obj/machinery/computer/cloning/Initialize()
+/obj/machinery/computer/cloning/Initialize(mapload)
 	. = ..()
 	updatemodules(TRUE)
 	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF) // So when an experimental cloner gets emped, it's cloning console doesn't break nullifying the threat.
@@ -141,18 +141,19 @@
 /obj/machinery/computer/cloning/multitool_act(mob/living/user, obj/item/multitool/multi)
 	. = NONE
 
-	if(!istype(multi.buffer, /obj/machinery/clonepod))
-		multi.set_buffer(src)
-		to_chat(user, "<font color = #666633>-% Successfully stored [REF(multi.buffer)] [multi.buffer] in buffer %-</font color>")
+	var/datum/buffer = multitool_get_buffer(multi)
+	if(!istype(buffer, /obj/machinery/clonepod))
+		multitool_set_buffer(multi, src)
+		to_chat(user, "<font color = #666633>-% Successfully stored [REF(buffer)] [buffer] in buffer %-</font color>")
 		return ITEM_INTERACT_SUCCESS
 
-	if(get_area(multi.buffer) != get_area(src))
+	if(get_area(buffer) != get_area(src))
 		to_chat(user, "<font color = #666633>-% Cannot link machines across power zones. Buffer cleared %-</font color>")
-		multi.set_buffer(null)
+		multitool_set_buffer(multi, null)
 		return ITEM_INTERACT_SUCCESS
 
-	to_chat(user, "<font color = #666633>-% Successfully linked [multi.buffer] with [src] %-</font color>")
-	var/obj/machinery/clonepod/pod = multi.buffer
+	to_chat(user, "<font color = #666633>-% Successfully linked [buffer] with [src] %-</font color>")
+	var/obj/machinery/clonepod/pod = buffer
 	pod.connected?.DetachCloner(pod)
 	AttachCloner(pod)
 	return ITEM_INTERACT_SUCCESS
@@ -249,7 +250,7 @@
 				dat += "<h4>[active_record.fields["name"]][body_only ? " - BODY-ONLY" : ""]</h4>"
 				dat += "Scan ID [active_record.fields["id"]] \
 					[!body_only ? "<a href='byond://?src=[REF(src)];clone=[active_record.fields["id"]]'>Clone</a>" : "" ]\
-				 	<a href='byond://?src=[REF(src)];clone=[active_record.fields["id"]];empty=TRUE'>Empty Clone</a><br>"
+					<a href='byond://?src=[REF(src)];clone=[active_record.fields["id"]];empty=TRUE'>Empty Clone</a><br>"
 
 				dat += "<b>Unique Identifier:</b><br /><span class='highlight'>[active_record.fields["UI"]]</span><br>"
 				dat += "<b>Structural Enzymes:</b><br /><span class='highlight'>"
@@ -623,3 +624,5 @@
 	records += R
 	log_cloning("[M ? key_name(M) : "Autoprocess"] added the [body_only ? "body-only " : ""]record of [key_name(mob_occupant)] to [src] at [AREACOORD(src)].")
 	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50)
+
+#undef AUTOCLONING_MINIMAL_LEVEL

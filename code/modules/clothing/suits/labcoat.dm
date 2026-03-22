@@ -4,7 +4,6 @@
 	icon_state = "labcoat"
 	icon = 'icons/obj/clothing/suits/labcoat.dmi'
 	worn_icon = 'icons/mob/clothing/suits/labcoat.dmi'
-	worn_icon_digitigrade = 'icons/mob/clothing/suits/labcoat_digi.dmi'
 	inhand_icon_state = "labcoat"
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|ARMS
@@ -19,14 +18,14 @@
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/cup/tube,
-		/obj/item/reagent_containers/hypospray,
+		/obj/item/hypospray,
+		/obj/item/reagent_containers/medipen,
 		/obj/item/reagent_containers/pill,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/gun/syringe,
 		/obj/item/sensor_device,
 		/obj/item/soap,
 		/obj/item/stack/medical,
-		/obj/item/stack/heal_pack,
 		/obj/item/storage/pill_bottle,
 		/obj/item/tank/internals/emergency_oxygen,
 		/obj/item/tank/internals/plasmaman,
@@ -119,3 +118,49 @@
 	name = "medical labcoat"
 	desc = "A suit that protects against minor chemical spills. Has a light blue stripe on the shoulder."
 	icon_state = "labcoat_med"
+
+/obj/item/clothing/suit/toggle/labcoat/secmed
+	name = "security medical labcoat"
+	desc = "A suit that protects against minor chemical spills. Has a red stripe on the shoulder."
+	icon_state = "labcoat_secmed"
+
+/obj/item/clothing/suit/toggle/labcoat/secmed/Initialize(mapload)
+	. = ..()
+	allowed |= GLOB.security_vest_allowed
+
+/obj/item/clothing/suit/toggle/labcoat/secmed/old
+	name = "grey security medical labcoat"
+	desc = "A formerly retired labcoat pattern now brought back for those working the medical profession in the security apparatus."
+	icon_state = "labcoat_secmed_old"
+
+/obj/item/clothing/suit/toggle/labcoat/secmed/alt
+	name = "security medical jacket"
+	desc = "A red lightly armored jacket with reflective stripes for security medical personnel."
+	icon_state = "labcoat_secmed_alt"
+	inhand_icon_state = null
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	armor_type = /datum/armor/armor_secjacket
+
+/obj/item/clothing/suit/toggle/labcoat/paramedic/deforest
+	name = "Deforest Jacket"
+	desc = "A high-visibility jacket designed by Deforest Medical for search and rescue, wool lining and interwoven fabrics make this jacket noticeably thick with a webbing directly attached to hold medical equipment."
+	icon_state = "hivisjacket"
+
+/obj/item/clothing/suit/toggle/labcoat/paramedic/deforest/Initialize(mapload)
+	. = ..()
+	AddComponent(\
+		/datum/component/toggle_attached_clothing,\
+		deployable_type = /obj/item/clothing/head/hooded/winterhood/medical/deforest,\
+		equipped_slot = ITEM_SLOT_HEAD,\
+		action_name = "Toggle Hood",\
+		destroy_on_removal = TRUE,\
+		parent_icon_state_suffix = "",\
+		down_overlay_state_suffix = "", \
+	)
+
+/obj/item/clothing/head/hooded/winterhood/medical/deforest
+	name = "Hi-Vis Hood"
+	desc = "A high-visibility hood designed by Deforest Medical for search and rescue, wool lining and interwoven fabrics make this hood noticeably thick."
+	icon_state = "hivishood"
+	worn_icon = 'icons/mob/clothing/head/hats.dmi'
+	icon = 'icons/obj/clothing/head/hats.dmi'

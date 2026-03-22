@@ -38,9 +38,7 @@
 	icon_state = "foamdart_riot_proj"
 	base_icon_state = "foamdart_riot_proj"
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/riot
-	stamina = 25
-	debilitating = TRUE
-	debilitate_mult = 4
+	stamina = 11.5
 
 /obj/projectile/bullet/reusable/foam_dart/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()

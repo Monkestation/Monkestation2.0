@@ -45,7 +45,7 @@
 /obj/projectile/bullet/c38/match/bouncy
 	name = ".38 Rubber bullet"
 	damage = 10
-	stamina = 40 //30 to 40 monkestation edit
+	stamina = 25
 	weak_against_armour = TRUE
 	ricochets_max = 6
 	ricochet_incidence_leeway = 0
@@ -135,7 +135,7 @@
 /obj/projectile/bullet/g45l/rubber
 	name = ".45 Long rubber bullet"
 	damage = 5
-	stamina = 35
+	stamina = 17.5
 	weak_against_armour = TRUE
 	sharpness = NONE
 	embedding = null
@@ -153,7 +153,8 @@
 
 /obj/projectile/bullet/govmining
 	name = ".45-70 Gov Kinetic Bullet"
-	damage = 75 //four shots to kill a goliath
+	damage = 25
+	fauna_mod = 3 //four shots to kill a goliath
 
 /obj/projectile/bullet/govmining/on_hit(atom/target, Firer, blocked = 0, pierce_hit) //its not meant to tear through walls like a plasma cutter, but will still at least bust down a wall if it hits one.
 	if(ismineralturf(target))

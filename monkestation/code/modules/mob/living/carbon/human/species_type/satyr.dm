@@ -32,7 +32,7 @@
 	return "Mythical goat-people. The clacking of hooves and smell of beer follow them around."
 
 /mob/living/carbon/human/species/satyr
-    race = /datum/species/satyr
+	race = /datum/species/satyr
 
 /datum/species/satyr/create_pref_unique_perks()
 	var/list/to_add = list()
@@ -66,7 +66,7 @@
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 			SPECIES_PERK_ICON = "fa-book-dead",
 			SPECIES_PERK_NAME = "Fey Ancenstry",
-			SPECIES_PERK_DESC = "Satyr's possess a acute allergy to cold iron.",
+			SPECIES_PERK_DESC = "Satyr's possess an acute allergy to cold iron.",
 		)
 	)
 	return to_add

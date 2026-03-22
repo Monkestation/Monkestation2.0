@@ -19,7 +19,7 @@
 		else
 			msg = "Its tracking indicator is blank."
 	. += msg
-	for(var/obj/machinery/nuclearbomb/bomb as anything in GLOB.nuke_list)
+	for(var/obj/machinery/nuclearbomb/bomb as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/nuclearbomb))
 		if(bomb.timing)
 			. += "Extreme danger. Arming signal detected. Time remaining: [bomb.get_time_left()]."
 
@@ -27,7 +27,7 @@
 	..()
 	if(!active || alert)
 		return
-	for(var/obj/machinery/nuclearbomb/bomb as anything in GLOB.nuke_list)
+	for(var/obj/machinery/nuclearbomb/bomb as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/nuclearbomb))
 		if(!bomb.timing)
 			continue
 		alert = TRUE
@@ -48,14 +48,13 @@
 				var/mob/living/silicon/ai/A = V
 				if(A.nuking)
 					target = A
-			for(var/V in GLOB.apcs_list)
-				var/obj/machinery/power/apc/A = V
-				if(A.malfhack && A.occupier)
-					target = A
+			for(var/obj/machinery/power/apc/apc as anything in SSmachines.get_machines_by_type(/obj/machinery/power/apc))
+				if(apc.malfhack && apc.occupier)
+					target = apc
 		if(TRACK_INFILTRATOR)
 			target = SSshuttle.getShuttle("syndicate")
 		if(TRACK_COMMANDO_NUKE)
-			for(var/obj/machinery/nuclearbomb/commando/bombue as anything in GLOB.nuke_list)
+			for(var/obj/machinery/nuclearbomb/commando/bombue as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/nuclearbomb/commando))
 				if(bombue.timing || bombue.exploding)
 					target = bombue
 					break
@@ -109,6 +108,6 @@
 
 /obj/item/pinpointer/commando_nuke/scan_for_target()
 	target = null
-	var/obj/machinery/nuclearbomb/commando/tracked_nuke = locate(/obj/machinery/nuclearbomb/commando) in GLOB.nuke_list
+	var/obj/machinery/nuclearbomb/commando/tracked_nuke = locate(/obj/machinery/nuclearbomb/commando) in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/nuclearbomb/commando)
 	target = tracked_nuke
 	..()

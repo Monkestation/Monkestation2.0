@@ -56,7 +56,7 @@
 
 	//Equipment slots
 	var/obj/item/clothing/wear_suit = null
-	var/obj/item/clothing/w_uniform = null
+	var/obj/item/clothing/under/w_uniform = null
 	var/obj/item/belt = null
 	var/obj/item/wear_id = null
 	var/obj/item/r_store = null

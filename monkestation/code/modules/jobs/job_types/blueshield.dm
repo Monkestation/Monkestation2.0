@@ -81,7 +81,7 @@
 	head = /obj/item/clothing/head/beret/blueshield
 	box = /obj/item/storage/box/survival/security
 	belt = /obj/item/storage/belt/military/assault/blueshield
-	l_pocket = /obj/item/sensor_device/blueshield
+	l_pocket = /obj/item/sensor_device/command
 	r_pocket = /obj/item/modular_computer/pda/blueshield
 	pda_slot = ITEM_SLOT_RPOCKET
 	id_trim = /datum/id_trim/job/blueshield

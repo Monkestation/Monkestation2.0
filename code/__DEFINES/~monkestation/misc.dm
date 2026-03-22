@@ -13,3 +13,6 @@
 #define TRACY_ENABLE_PATH	"data/enable_tracy"
 /// The DLL path for byond-tracy.
 #define TRACY_DLL_PATH		(world.system_type == MS_WINDOWS ? "prof.dll" : "./libprof.so")
+
+#define CODE_STORAGE_PATH "data/generated_codes.json"
+#define CODE_METADATA_PATH "data/code_metadata.json"

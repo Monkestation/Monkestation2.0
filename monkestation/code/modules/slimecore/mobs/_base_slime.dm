@@ -256,6 +256,13 @@
 	return checker
 
 /mob/living/basic/slime/proc/update_slime_varience()
+	update_appearance(UPDATE_NAME | UPDATE_ICON)
+	if(!chemical_injection)
+		SEND_SIGNAL(src, COMSIG_SECRETION_UPDATE, current_color.secretion_path, ooze_production, 10 SECONDS)
+	else
+		SEND_SIGNAL(src, COMSIG_SECRETION_UPDATE, chemical_injection, ooze_production, 10 SECONDS)
+
+/mob/living/basic/slime/update_icon_state()
 	var/prefix = "grey"
 	if(icon_state_override)
 		prefix = icon_state_override
@@ -271,20 +278,15 @@
 
 	if(stat == DEAD)
 		icon_state = icon_dead
-
-	update_name()
-	if(!chemical_injection)
-		SEND_SIGNAL(src, COMSIG_SECRETION_UPDATE, current_color.secretion_path, ooze_production, 10 SECONDS)
-	else
-		SEND_SIGNAL(src, COMSIG_SECRETION_UPDATE, chemical_injection, ooze_production, 10 SECONDS)
+	return ..()
 
 /mob/living/basic/slime/update_overlays()
 	. = ..()
 	if(worn_accessory)
 		if(slime_flags & ADULT_SLIME)
-			.+= mutable_appearance(worn_accessory.accessory_icon, "[worn_accessory.accessory_icon_state]-adult", layer + 0.15, src, appearance_flags = (KEEP_APART | RESET_COLOR))
+			. += mutable_appearance(worn_accessory.accessory_icon, "[worn_accessory.accessory_icon_state]-adult", layer + 0.15, src, appearance_flags = (KEEP_APART | RESET_COLOR))
 		else
-			.+= mutable_appearance(worn_accessory.accessory_icon, "[worn_accessory.accessory_icon_state]-baby", layer + 0.15, src, appearance_flags = (KEEP_APART | RESET_COLOR))
+			. += mutable_appearance(worn_accessory.accessory_icon, "[worn_accessory.accessory_icon_state]-baby", layer + 0.15, src, appearance_flags = (KEEP_APART | RESET_COLOR))
 
 /mob/living/basic/slime/proc/check_secretion()
 	if((!(slime_flags & ADULT_SLIME)) || (slime_flags & STORED_SLIME) || (slime_flags & MUTATING_SLIME) || (slime_flags & NOOOZE_SLIME))
@@ -296,13 +298,16 @@
 	return TRUE
 
 /mob/living/basic/slime/proc/hunger_updated(datum/source, current_hunger, max_hunger)
+	var/was_adult = slime_flags & ADULT_SLIME
 	hunger_precent = current_hunger / max_hunger
 	if(hunger_precent > production_precent)
-		slime_flags |= ADULT_SLIME
+		if(!was_adult)
+			slime_flags |= ADULT_SLIME
+			update_slime_varience()
 	else
-		slime_flags &= ~ADULT_SLIME
-	update_slime_varience()
-	update_appearance()
+		if(was_adult)
+			slime_flags &= ~ADULT_SLIME
+			update_slime_varience()
 
 /mob/living/basic/slime/proc/add_trait(datum/slime_trait/added_trait)
 	for(var/datum/slime_trait/trait as anything in slime_traits)
@@ -312,7 +317,7 @@
 	var/datum/slime_trait/new_trait = new added_trait
 	new_trait.on_add(src)
 	slime_traits += new_trait
-	update_name()
+	update_slime_varience()
 	return TRUE
 
 ///unlike add trait this uses a type and is checked against the list don't pass the created one pass the type
@@ -322,7 +327,7 @@
 			continue
 		slime_traits -= trait
 		qdel(trait)
-		update_name()
+		update_slime_varience()
 		return
 
 ///unlike add trait this uses a type and is checked against the list don't pass the created one pass the type
@@ -334,7 +339,7 @@
 	return FALSE
 
 /mob/living/basic/slime/update_name()
-	if(slime_name_regex.Find(name))
+	if(findtext(name, slime_name_regex))
 		if(!number)
 			number = rand(1, 1000)
 		var/slime_variant = "slime"
@@ -343,10 +348,11 @@
 		if(slime_flags & CLEANER_SLIME)
 			slime_variant = "cleaner [slime_variant]"
 
+		var/adult = (slime_flags & ADULT_SLIME) ? "adult" : "baby"
 		if(overriding_name_prefix)
-			name = "[overriding_name_prefix] [current_color.name] [(slime_flags & ADULT_SLIME) ? "adult" : "baby"] [slime_variant] ([number])"
+			name = "[overriding_name_prefix] [current_color.name] [adult] [slime_variant] ([number])"
 		else
-			name = "[current_color.name] [(slime_flags & ADULT_SLIME) ? "adult" : "baby"] [slime_variant] ([number])"
+			name = "[current_color.name] [adult] [slime_variant] ([number])"
 		real_name = name
 	return ..()
 
@@ -464,7 +470,7 @@
 		return
 	worn_accessory = attacking_item
 	attacking_item.forceMove(src)
-	update_appearance()
+	update_appearance(UPDATE_OVERLAYS)
 
 /mob/living/basic/slime/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	. = ..()
@@ -473,7 +479,7 @@
 		balloon_alert_to_viewers("removed accessory")
 		user.put_in_hands(worn_accessory)
 		worn_accessory = null
-		update_appearance()
+		update_appearance(UPDATE_OVERLAYS)
 
 /mob/living/basic/slime/Life(seconds_per_tick, times_fired)
 	if(isopenturf(loc))

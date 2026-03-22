@@ -149,7 +149,8 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	data_huds_on = 1
 
 	SSpoints_of_interest.make_point_of_interest(src)
-	ADD_TRAIT(src, TRAIT_HEAR_THROUGH_DARKNESS, ref(src))
+	add_traits(list(TRAIT_HEAR_THROUGH_DARKNESS, TRAIT_CAN_HEAR_MUSIC), INNATE_TRAIT)
+	on_can_hear_music_trait_gain(src)
 
 /mob/dead/observer/get_photo_description(obj/item/camera/camera)
 	if(!invisibility || camera.see_ghosts)
@@ -896,7 +897,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Observe"
 	set category = "Ghost"
 
-	if(!isobserver(usr)) //Make sure they're an observer!
+	if(!isobserver(usr) || HAS_TRAIT(src, TRAIT_NO_OBSERVE)) //Make sure they're an observer!
 		return
 
 	reset_perspective(null)
@@ -935,6 +936,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			this is a bug (and a past exploit) and should be investigated.")
 		return
 
+	if(HAS_TRAIT(src, TRAIT_NO_OBSERVE))
+		return
+
 	//Istype so we filter out points of interest that are not mobs
 	if(client && mob_eye && istype(mob_eye))
 		client.set_eye(mob_eye)
@@ -969,6 +973,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	else
 		to_chat(usr, span_warning("Can't become a pAI candidate while not dead!"))
 
+/*
 /mob/dead/observer/verb/mafia_game_signup()
 	set category = "Ghost"
 	set name = "Signup for Mafia"
@@ -986,6 +991,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(!game)
 		game = create_mafia_game("mafia")
 	game.ui_interact(usr)
+*/
 
 /mob/dead/observer/AltClickOn(atom/target)
 	client.loot_panel.open(get_turf(target))

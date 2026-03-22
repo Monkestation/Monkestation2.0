@@ -304,21 +304,37 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	gain_text = "Under the soft glow of unreason there is a beast that stalks the night. I shall bring it forth and let it enter my presence. It will feast upon my amibitions and leave knowledge in its wake."
 	route = PATH_START
 	required_atoms = list()
+	/// amount of research points granted
+	var/reward = 5
 
 /datum/heretic_knowledge/feast_of_owls/can_be_invoked(datum/antagonist/heretic/invoker)
 	return !invoker.feast_of_owls
 
 /datum/heretic_knowledge/feast_of_owls/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
-	var/alert = tgui_alert(user, "Do you really want to forsake your ascension? This action cannot be reverted.", "Feast of Owls", list("Yes, I'm sure!", "No"), 30 SECONDS)
-	if(alert != "Yes, I'm sure!")
+	var/alert = tgui_alert(user,"Do you really want to forsake your ascension? This action cannot be reverted.", "Feast of Owls", list("Yes I'm sure", "No"), 30 SECONDS)
+	if(alert != "Yes I'm sure" || QDELETED(user) || QDELETED(src) || get_dist(user, loc) > 2)
 		return FALSE
-	user.set_temp_blindness(5 SECONDS)
-	user.AdjustParalyzed(5 SECONDS)
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
-	for(var/i in 0 to 4)
+	if(QDELETED(heretic_datum) || heretic_datum.feast_of_owls)
+		return FALSE
+
+	. = TRUE
+
+	heretic_datum.feast_of_owls = TRUE
+	user.set_temp_blindness(reward * 1 SECONDS)
+	user.AdjustParalyzed(reward * 1 SECONDS)
+	// user.playsound_local(get_turf(user), 'sound/ambience/antag/heretic/heretic_gain_intense.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
+	for(var/i in 1 to reward)
 		user.emote("scream")
 		playsound(loc, 'sound/items/eatfood.ogg', 100, TRUE)
 		heretic_datum.knowledge_points++
 		sleep(1 SECONDS)
-	to_chat(user, span_danger("You feel different..."))
-	heretic_datum.feast_of_owls = TRUE
+		if(QDELETED(user) || QDELETED(heretic_datum))
+			return FALSE
+
+	SStgui.update_uis(heretic_datum)
+
+	to_chat(user, span_danger(span_big("Your ambition is ravaged, but something powerful remains in its wake...")))
+	var/drain_message = pick(strings(HERETIC_INFLUENCE_FILE, "drain_message"))
+	to_chat(user, span_hypnophrase(span_big("[drain_message]")))
+	return .

@@ -178,6 +178,7 @@
 	iconstate_name = "melee"
 	protect_name = "Melee Armor"
 	armor_mod = /datum/armor/mecha_equipment_ccw_boost
+	unstackable = TRUE
 
 /datum/armor/mecha_equipment_ccw_boost
 	melee = 15
@@ -189,9 +190,10 @@
 	iconstate_name = "range"
 	protect_name = "Ranged Armor"
 	armor_mod = /datum/armor/mecha_equipment_ranged_boost
+	unstackable = TRUE
 
 /datum/armor/mecha_equipment_ranged_boost
-	bullet = 10
+	bullet = 15
 	laser = 10
 
 ////////////////////////////////// REPAIR DROID //////////////////////////////////////////////////
@@ -529,6 +531,6 @@
 
 	. = ..()
 
-	mech.chassis_camera = new /obj/machinery/camera/exosuit (mech)
+	mech.chassis_camera = new /obj/machinery/camera/exosuit(mech)
 	mech.chassis_camera.update_c_tag(mech)
 	mech.diag_hud_set_camera()

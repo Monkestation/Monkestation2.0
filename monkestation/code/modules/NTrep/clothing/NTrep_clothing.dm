@@ -4,7 +4,6 @@
 	inhand_icon_state = "dg_suit"
 	icon = 'monkestation/icons/obj/clothing/jobs/nanotrasen_representative_clothing_item.dmi'
 	worn_icon = 'monkestation/icons/mob/clothing/jobs/nanotrasen_representative_clothing.dmi'
-	worn_icon_digitigrade = 'monkestation/icons/mob/clothing/jobs/nanotrasen_representative_clothing-digi.dmi'
 	icon_state = "representative_jumpsuit"
 	can_adjust = FALSE
 
@@ -73,9 +72,9 @@
 	acid = 10
 	wound = 10
 
-/obj/item/storage/secure/briefcase/cash
+/obj/item/storage/briefcase/secure/cash
 // LOADSAMONEY
-/obj/item/storage/secure/briefcase/cash/PopulateContents()
+/obj/item/storage/briefcase/secure/cash/PopulateContents()
 	..()
 	for(var/iterator in 1 to 5)
 		new /obj/item/stack/spacecash/c500(src)
@@ -95,3 +94,8 @@
 	new /obj/item/clothing/suit/armor/vest/nanotrasen_representative(src)
 	new /obj/item/clothing/gloves/color/black(src)
 	new /obj/item/clothing/shoes/laceup(src)
+	new /obj/item/clothing/under/costume/playbunny/centcom(src)
+	new /obj/item/clothing/suit/jacket/tailcoat/centcom/ntrep(src)
+	new /obj/item/clothing/shoes/heels/centcom(src)
+	new /obj/item/clothing/head/playbunnyears/centcom(src)
+	new /obj/item/clothing/neck/tie/bunnytie/centcom/tied(src)

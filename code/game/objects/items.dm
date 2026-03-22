@@ -39,15 +39,6 @@
 	///The config type to use for greyscaled belt overlays. Both this and greyscale_colors must be assigned to work.
 	var/greyscale_config_belt
 
-	//Overrides for digitigrade and snouted clothing handling
-	//Icon file for mob worn overlays, if the user is digitigrade.
-	var/icon/worn_icon_digitigrade
-	//Same as above, but for if the user is snouted.
-	var/icon/worn_icon_snouted
-
-	var/greyscale_config_worn_digitigrade
-	var/greyscale_config_worn_snouted
-
 	/// Used for BODYTYPE_CUSTOM: Needs to follow this syntax: a list() with the x and y coordinates of the pixel you want to get the color from. Colors are filled in as GAGs values for fallback.
 	var/list/species_clothing_color_coords[3]
 	/* !!!!!!!!!!!!!!! IMPORTANT !!!!!!!!!!!!!!
@@ -109,6 +100,8 @@
 	var/custom_premium_price
 	///Whether spessmen with an ID with an age below AGE_MINOR (20 by default) can buy this item
 	var/age_restricted = FALSE
+	///Whether or not this item is applicable to be discounted via job based discounts
+	var/discountable = TRUE
 
 	/// Set this variable to determine up to which temperature (IN KELVIN) the item protects against heat damage.
 	/// Keep at null to disable protection.
@@ -149,14 +142,16 @@
 	var/attack_speed = CLICK_CD_MELEE
 	/// The click cooldown on secondary attacks. Lower numbers mean faster attacks. Will use attack_speed if undefined.
 	var/secondary_attack_speed
-	///In deciseconds, how long an item takes to equip; counts only for normal clothing slots, not pockets etc.
+	/// How long an item takes to equip; counts only for normal clothing slots, not pockets etc.
 	var/equip_delay_self = 0
-	///In deciseconds, how long an item takes to put on another person
-	var/equip_delay_other = 20
-	///In deciseconds, how long an item takes to remove from another person
-	var/strip_delay = 40
-	///How long it takes to resist out of the item (cuffs and such)
+	/// How long an item takes to put on another person
+	var/equip_delay_other = 2 SECONDS
+	/// How long an item takes to remove from another person
+	var/strip_delay = 4 SECONDS
+	/// How long it takes to resist out of the item (cuffs and such)
 	var/breakouttime = 0
+	/// If TRUE, then moving will not cancel resisting out of the item.
+	var/breakout_while_moving = FALSE
 
 	///Used in [atom/proc/attackby] to say how something was attacked `"[x] has been [z.attack_verb] by [y] with [z]"`
 	var/list/attack_verb_continuous
@@ -394,8 +389,8 @@
 		return FALSE
 	return TRUE
 
-/obj/item/blob_act(obj/structure/blob/B)
-	if(B && B.loc == loc)
+/obj/item/blob_act(obj/structure/blob/attacking_blob)
+	if(attacking_blob && attacking_blob.loc == loc)
 		atom_destruction(MELEE)
 
 /**Makes cool stuff happen when you suicide with an item
@@ -423,10 +418,6 @@
 		return
 	if(greyscale_config_worn)
 		worn_icon = SSgreyscale.GetColoredIconByType(greyscale_config_worn, greyscale_colors)
-	if(greyscale_config_worn_digitigrade)
-		worn_icon_digitigrade = SSgreyscale.GetColoredIconByType(greyscale_config_worn_digitigrade, greyscale_colors)
-	if(greyscale_config_worn_snouted)
-		worn_icon_snouted = SSgreyscale.GetColoredIconByType(greyscale_config_worn_snouted, greyscale_colors)
 	if(greyscale_config_inhand_left)
 		lefthand_file = SSgreyscale.GetColoredIconByType(greyscale_config_inhand_left, greyscale_colors)
 	if(greyscale_config_inhand_right)
@@ -1129,7 +1120,7 @@
 			skill_modifier = user.mind.get_skill_modifier(/datum/skill/mining, SKILL_SPEED_MODIFIER)
 
 			if(user.mind.get_skill_level(/datum/skill/mining) >= SKILL_LEVEL_JOURNEYMAN && prob(user.mind.get_skill_modifier(/datum/skill/mining, SKILL_PROBS_MODIFIER))) // we check if the skill level is greater than Journeyman and then we check for the probality for that specific level.
-				mineral_scan_pulse(get_turf(user), SKILL_LEVEL_JOURNEYMAN - 2) //SKILL_LEVEL_JOURNEYMAN = 3 So to get range of 1+ we have to subtract 2 from it,.
+				mineral_scan_pulse(get_turf(user), SKILL_LEVEL_JOURNEYMAN - 2, scanner = src) //SKILL_LEVEL_JOURNEYMAN = 3 So to get range of 1+ we have to subtract 2 from it,.
 
 	delay *= toolspeed * skill_modifier
 

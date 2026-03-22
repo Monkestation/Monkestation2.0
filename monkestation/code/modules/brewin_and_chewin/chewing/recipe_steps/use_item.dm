@@ -7,7 +7,7 @@
 //item_type: The type path of the object we are looking for.
 //base_quality_award: The quality awarded by following this step.
 //our_recipe: The parent recipe object
-/datum/chewin_cooking/recipe_step/use_item/New(var/item_type, var/datum/chewin_cooking/recipe/our_recipe)
+/datum/chewin_cooking/recipe_step/use_item/New(item_type, datum/chewin_cooking/recipe/our_recipe)
 	#ifdef CHEWIN_DEBUG
 	if(!ispath(item_type))
 		log_debug("/datum/chewin_cooking/recipe_step/add_item/New(): item [item_type] is not a valid path")
@@ -28,7 +28,7 @@
 	..(our_recipe)
 
 
-/datum/chewin_cooking/recipe_step/use_item/check_conditions_met(var/obj/added_item, var/datum/chewin_cooking/recipe_tracker/tracker)
+/datum/chewin_cooking/recipe_step/use_item/check_conditions_met(obj/added_item, datum/chewin_cooking/recipe_tracker/tracker)
 	if(src.exact_path)
 		if(added_item.type == required_item_type)
 			return CHEWIN_CHECK_VALID
@@ -38,5 +38,5 @@
 	return CHEWIN_CHECK_INVALID
 
 //Think about a way to make this more intuitive?
-/datum/chewin_cooking/recipe_step/use_item/calculate_quality(var/obj/added_item)
+/datum/chewin_cooking/recipe_step/use_item/calculate_quality(obj/added_item)
 	return clamp_quality(0)

@@ -410,7 +410,7 @@ GLOBAL_LIST_EMPTY(custom_battle_royale_data) //might be able to convert this to 
 		input_list = list(input_list)
 
 	if(islist(input_loot))
-		for(var/entry as anything in input_loot)
+		for(var/entry in input_loot)
 			for(var/count in 1 to input_loot[entry])
 				input_list += entry
 	else
@@ -447,7 +447,7 @@ GLOBAL_LIST_EMPTY(custom_battle_royale_data) //might be able to convert this to 
 			"pods_per_second" = current_data.pods_per_second,
 		))
 
-	for(var/data_value as anything in GLOB.custom_battle_royale_data)
+	for(var/data_value in GLOB.custom_battle_royale_data)
 		var/datum/battle_royale_data/custom_data = GLOB.custom_battle_royale_data[data_value]
 		UNTYPED_LIST_ADD(custom_dataset_list, list(
 			"active_time" = custom_data.active_time,

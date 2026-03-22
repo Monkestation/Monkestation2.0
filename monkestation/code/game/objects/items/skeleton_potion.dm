@@ -8,10 +8,10 @@
 /obj/item/skeleton_potion/attack_self(mob/user, modifiers)
 	. = ..()
 	if(!iscarbon(user))
-		user.balloon_alert(user, "Only a humanoid can drink this!")
+		user.balloon_alert(user, "only a humanoid can drink this!")
 		return FALSE
 	var/datum/smite/rattle_he_bones/boned = new /datum/smite/rattle_he_bones
 	boned.should_log = FALSE
 	boned.effect(user, user)
-	user.balloon_alert(user, "You feel rattled!")
+	user.balloon_alert(user, "you feel rattled!")
 	qdel(src)

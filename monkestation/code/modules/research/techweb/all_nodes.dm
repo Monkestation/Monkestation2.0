@@ -250,15 +250,17 @@
 // Maint mods
 /datum/techweb_node/springlock
 	id = "mod_springlock"
-	display_name = "MOD Springlock Module"
-	description = "A obsolete module decreasing the sealing time of modsuits. A discarded note from the orginal designs was found. 'Try not to nudge or press against ANY of the spring locks inside the suit. Do not touch the spring lock at any time. Do not breathe on a spring lock, as mouisture may loosen them, and cause them to break loose.'"
+	display_name = "MOD Mortality Modules"
+	description = "Obsolete modules involving the users body, for worse or even worse. Pulled from the market for being too dangerous to users, or for being utterly useless."
 	prereq_ids = list("mod_advanced")
 	design_ids = list(
 		"mod_springlock",
+		"mod_corpse", // fuck it im hijacking your techweb theyre really closely related anyways.
 	)
 
 	required_items_to_unlock = list(
 		/obj/item/mod/module/springlock,
+		/obj/item/mod/module/magboot/corpse_exoskeleton,
 	)
 
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 4)
@@ -359,26 +361,6 @@
 
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 4)
 	hidden = TRUE
-
-/datum/techweb_node/improved_robotic_tend_wounds
-	id = "improved_robotic_surgery"
-	display_name = "Improved Robotic Repair Surgeries"
-	description = "As it turns out, you don't actually need to cut out entire support rods if it's just scratched!"
-	prereq_ids = list("engineering")
-	design_ids = list(
-		"surgery_heal_robot_upgrade",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 4)
-
-/datum/techweb_node/advanced_robotic_tend_wounds
-	id = "advanced_robotic_surgery"
-	display_name = "Advanced Robotic Surgeries"
-	description = "Did you know Hephaestus actually has a free online tutorial for synthetic trauma repairs? It's true!"
-	prereq_ids = list("improved_robotic_surgery")
-	design_ids = list(
-		"surgery_heal_robot_upgrade_femto",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 2) // less expensive than the organic surgery research equivalent since its JUST tend wounds
 
 /datum/techweb_node/chemical_weapons
 	discount_experiments = list(/datum/experiment/scanning/random/casing = TECHWEB_DISCOUNT_MINOR * 2.5)

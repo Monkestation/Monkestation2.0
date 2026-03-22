@@ -167,3 +167,10 @@
 	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
 	icon_state = "robodoggo"
 	animal_transformation = /mob/living/basic/pet/cyber_husky
+
+//Cerebresec
+/obj/item/effect_granter/donator/cyber_mastiff
+	name = "Cyber Mastiff transformation"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "mecha_walter"
+	animal_transformation = /mob/living/basic/pet/cyber_mastiff

@@ -85,6 +85,19 @@ among other potential differences. This granularity is helpful for things like t
 /obj/projectile/bullet/rocket/artilleryshell/do_boom(atom/target, blocked=0)
 	explosion(target, devastation_range = 2, heavy_impact_range = 5, light_impact_range = 8, flame_range = 15, flash_range = 11, adminlog = TRUE)
 
+/// giant cannon shell - explosive.
+/obj/projectile/bullet/rocket/sentinelshell
+	name = "\improper sentinel shell"
+	desc = "mecha warfare in spess."
+	icon_state = "LIGHTTANKSHELL"
+	damage = 15
+	armour_penetration = 100
+	dismemberment = 10
+	anti_armour_damage = 90
+
+/obj/projectile/bullet/rocket/sentinelshell/do_boom(atom/target, blocked=0)
+	explosion(target, devastation_range = -1, heavy_impact_range = 2, light_impact_range = 3, flame_range = 3, flash_range = 3, adminlog = TRUE)
+
 /// PM9 weak rocket - just kind of a failure
 /obj/projectile/bullet/rocket/weak
 	name = "low-yield rocket"
@@ -157,7 +170,7 @@ among other potential differences. This granularity is helpful for things like t
 
 
 /// Ignifist rocket launcher - AT only, nearly non effective on crew.
-/obj/projectile/bullet/rocket/ignifis
+/obj/projectile/bullet/rocket/ignifist
 	name = "\improper Ignifist rocket"
 	desc = "anti mechanized warfare in spess."
 	icon_state = "atrocket"
@@ -168,3 +181,38 @@ among other potential differences. This granularity is helpful for things like t
 
 /obj/projectile/bullet/rocket/ignifist/do_boom(atom/target, blocked=0)
 	explosion(target, devastation_range = -1, heavy_impact_range = -1, light_impact_range = -1, flame_range = 1, flash_range = 1, adminlog = FALSE)
+
+/obj/projectile/bullet/rocket/sentinellaser // well its really a laser BUTTT the do boom is here so I hide it in here to save coding time
+	name = "turbolaser"
+	icon_state = "heavylaser"
+	damage = 60
+	damage_type = BURN
+	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
+	hitsound = 'sound/weapons/sear.ogg'
+	hitsound_wall = 'sound/weapons/effects/searwall.ogg'
+	armor_flag = LASER
+	eyeblur = 4 SECONDS
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser
+	light_system = OVERLAY_LIGHT
+	light_outer_range = 1
+	light_power = 1
+	light_color = COLOR_SOFT_RED
+	ricochets_max = 50 //Honk!
+	ricochet_chance = 80
+	reflectable = REFLECT_NORMAL
+	wound_bonus = -20
+	bare_wound_bonus = 10
+	tracer_type = /obj/effect/projectile/tracer/heavy_laser
+	muzzle_type = /obj/effect/projectile/muzzle/heavy_laser
+	impact_type = /obj/effect/projectile/impact/heavy_laser
+
+/obj/projectile/bullet/rocket/sentinellaser/do_boom(atom/target, blocked=0)
+	explosion(target, devastation_range = -1, heavy_impact_range = -1, light_impact_range = 1, flame_range = 2, flash_range = 3, adminlog = TRUE)
+
+/obj/projectile/bullet/rocket/sentinellaser/on_hit(atom/target, blocked = 0, pierce_hit)
+	. = ..()
+	if(iscarbon(target))
+		var/mob/living/carbon/M = target
+		M.ignite_mob()
+	else if(isturf(target))
+		impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser/wall

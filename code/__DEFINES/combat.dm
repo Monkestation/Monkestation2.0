@@ -387,6 +387,8 @@ GLOBAL_LIST_INIT(arm_zones, list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 #define SILENCE_DEFAULT_MESSAGES "silence_default_messages"
 /// If set in modifiers, default hitsound is silenced
 #define SILENCE_HITSOUND "silence_hitsound"
+/// Uf set in modifiers then this attack was blocked
+#define ATTACK_BLOCKED "attack_blocked"
 
 /// Used in attack chain to set the force of the attack without changing the base force of the item.
 #define SET_ATTACK_FORCE(atk_mods, value) \

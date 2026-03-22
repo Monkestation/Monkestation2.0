@@ -360,6 +360,7 @@
 	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "captainsaid_off"
 	custom_price = PAYCHECK_COMMAND * 1.25
+	w_class = WEIGHT_CLASS_SMALL
 
 	/// List of modes it can cycle through
 	var/list/modes = list(

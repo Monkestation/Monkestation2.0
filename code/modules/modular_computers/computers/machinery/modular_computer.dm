@@ -159,6 +159,9 @@
 /obj/machinery/modular_computer/screwdriver_act(mob/user, obj/item/tool)
 	return CPU_INTERACTABLE(user) ? cpu.screwdriver_act(user, tool) : ..()
 
+/obj/machinery/modular_computer/screwdriver_act_secondary(mob/user, obj/item/tool)
+	return CPU_INTERACTABLE(user) ? cpu.screwdriver_act_secondary(user, tool) : ..()
+
 /obj/machinery/modular_computer/wrench_act_secondary(mob/user, obj/item/tool)
 	return CPU_INTERACTABLE(user) ? cpu.wrench_act_secondary(user, tool) : ..()
 

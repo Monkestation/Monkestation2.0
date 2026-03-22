@@ -866,6 +866,12 @@
 /obj/item/storage/backpack/duffelbag/syndie/surgery,
 /turf/open/floor/iron/white/side,
 /area/shuttle/syndicate/medical)
+"zr" = (
+/obj/machinery/holopad/secure/hacked{
+	layer = 2.6
+	},
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/shuttle/syndicate/hallway)
 "zL" = (
 /obj/machinery/status_display/evac{
 	pixel_x = -32
@@ -1335,7 +1341,7 @@ ap
 lm
 aD
 ak
-ak
+zr
 ak
 aD
 Tu

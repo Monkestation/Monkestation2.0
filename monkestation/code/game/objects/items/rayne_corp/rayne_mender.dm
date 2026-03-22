@@ -39,15 +39,15 @@
 	var/static/list/items_inside = list(
 		/obj/item/stack/medical/suture/medicated = 2,
 		/obj/item/stack/medical/mesh/advanced = 2,
-		/obj/item/reagent_containers/hypospray/medipen/deforest/coagulants = 2,
-		/obj/item/reagent_containers/hypospray/medipen/atropine = 2,
+		/obj/item/reagent_containers/medipen/deforest/coagulants = 2,
+		/obj/item/reagent_containers/medipen/atropine = 2,
 		/obj/item/reagent_containers/syringe = 1,
 		/obj/item/reagent_containers/cup/bottle/formaldehyde = 1,
-		/obj/item/reagent_containers/hypospray/medipen/morphine = 1,
-		/obj/item/reagent_containers/hypospray/medipen/salbutamol = 1,
+		/obj/item/reagent_containers/medipen/morphine = 1,
+		/obj/item/reagent_containers/medipen/salbutamol = 1,
 		/obj/item/storage/pill_bottle/multiver = 1
 	)
-	generate_items_inside(items_inside,src)
+	generate_items_inside(items_inside, src)
 
 /obj/item/storage/medkit/rayne/attack(mob/living/M, mob/living/carbon/human/user)
 	if(!user.can_read(src) || user.is_blind())

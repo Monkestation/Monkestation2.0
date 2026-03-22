@@ -65,7 +65,7 @@
 	start_linking_procedure()
 
 /obj/machinery/corral_corner/multitool_act(mob/living/user, obj/item/multitool/multi)
-	multi.set_buffer(src)
+	multitool_set_buffer(multi, src)
 	balloon_alert(user, "saved to multitool buffer")
 	return ITEM_INTERACT_SUCCESS
 
@@ -169,7 +169,7 @@
 	. = ..()
 	if(mover.pulledby)
 		return TRUE
-	if((istype(mover, /mob/living/basic/slime) || ismonkey(mover) || istype(mover, /mob/living/basic/cockroach) || istype(mover, /mob/living/basic/xenofauna)) && !HAS_TRAIT(mover, VACPACK_THROW))
+	if((istype(mover, /mob/living/basic/slime) || ismonkeybasic(mover) || istype(mover, /mob/living/basic/cockroach) || istype(mover, /mob/living/basic/xenofauna)) && !HAS_TRAIT(mover, VACPACK_THROW))
 		return FALSE
 	return TRUE
 

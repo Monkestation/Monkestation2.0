@@ -1,12 +1,12 @@
 import { useBackend, useLocalState } from '../backend';
 import {
-  Section,
-  Stack,
   Box,
-  Divider,
   Button,
+  Divider,
   DmIcon,
   Icon,
+  Section,
+  Stack,
 } from '../components';
 import { Window } from '../layouts';
 
@@ -31,7 +31,7 @@ export const CargoImportConsole = (props) => {
       <Window.Content>
         <Section grow height="100%" title="Company Import Requisition Console">
           <Stack>
-            <Stack.Item grow fill>
+            <Stack.Item grow>
               <Button.Checkbox
                 content="Buy Privately"
                 checked={self_paid}
@@ -136,7 +136,7 @@ export const CargoImportConsole = (props) => {
                                 item.cost > budget_points ? 'red' : 'green'
                               }
                             >
-                              {'Cost: ' + item.cost}
+                              {`Cost: ${item.cost}`}
                             </Stack.Item>
                             <Stack.Item>
                               <Button

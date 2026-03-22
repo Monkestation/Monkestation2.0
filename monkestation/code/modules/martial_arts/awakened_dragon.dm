@@ -27,11 +27,9 @@
 	damage_sharpness = TRUE
 
 /datum/martial_art/the_sleeping_carp/awakened_dragon/can_deflect(mob/living/carp_user, check_intent = TRUE)
-	//if(!COOLDOWN_FINISHED(src, block_cooldown)) //monke edit
-	//	return FALSE
 	if(!can_use(carp_user))
 		return FALSE
-	if(check_intent && !(carp_user.istate & ISTATE_HARM)) // monke edit: istates/intents
+	if(check_intent && !(carp_user.istate & ISTATE_HARM))
 		return FALSE
 	if(carp_user.incapacitated(IGNORE_GRAB)) //NO STUN
 		return FALSE
@@ -47,7 +45,7 @@
 /datum/martial_art/the_sleeping_carp/awakened_dragon/teach(mob/living/carbon/human/target, make_temporary)
 	. = ..()
 	target.physiology.stamina_mod *= 0.7
-	if(findtext_char(target.real_name, title) == 1)
+	if(title && findtext_char(target.real_name, title) == 1)
 		return
 	original_name = target.real_name
 	if(QDELETED(original_body))
@@ -77,7 +75,7 @@
 	attacker.say("Tsunami Kick of the Heavenly Serpent!!", forced = /datum/martial_art/the_sleeping_carp/awakened_dragon, ignore_spam = TRUE)
 
 /datum/martial_art/the_sleeping_carp/awakened_dragon/dropKick(mob/living/attacker, mob/living/defender, set_damage)
-	stamina_damage = -100
+	stamina_damage = -50
 	. = ..(attacker, defender, set_damage = FALSE)
 	defender.adjustOxyLoss(30)
 	attacker.say("Heavenly Dragon Kick!!", forced = /datum/martial_art/the_sleeping_carp/awakened_dragon, ignore_spam = TRUE)

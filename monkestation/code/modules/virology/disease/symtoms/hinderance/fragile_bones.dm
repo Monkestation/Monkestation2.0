@@ -11,7 +11,7 @@
 	for(var/obj/item/bodypart/part in victim.bodyparts)
 		part.wound_resistance -= 10
 
-/datum/symptom/bones/deactivate(mob/living/carbon/human/victim)
+/datum/symptom/bones/deactivate(mob/living/carbon/human/victim, safe = FALSE)
 	if(!ishuman(victim))
 		return
 	for(var/obj/item/bodypart/part in victim.bodyparts)

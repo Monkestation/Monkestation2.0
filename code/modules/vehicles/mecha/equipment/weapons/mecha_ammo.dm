@@ -166,3 +166,9 @@
 	rounds = 60
 	ammo_type = MECHA_AMMO_LIGHTTANKMG
 
+/obj/item/mecha_ammo/sentinel
+	name = "Sentinel Artillery Shells"
+	desc = "A box of barely carriable cannonshells. Used in the Sentinel Siege Walker."
+	icon_state = "sentinel"
+	rounds = 10
+	ammo_type = MECHA_AMMO_SENTINEL

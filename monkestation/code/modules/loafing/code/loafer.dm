@@ -11,9 +11,11 @@
 /obj/structure/disposalpipe/loafer/Initialize(mapload, obj/structure/disposalconstruct/make_from)
 	. = ..()
 	if(isnull(loaf_blacklist))
-		loaf_blacklist = typecacheof(list(
-			/obj/item/organ/internal/brain,
-			/obj/item/bodypart/head,
+		loaf_blacklist = zebra_typecacheof(list(
+			/obj/item/organ/internal/brain = TRUE,
+			/obj/item/organ/internal/brain/primate = FALSE,
+			/obj/item/bodypart/head = TRUE,
+			/obj/item/bodypart/head/monkey = FALSE,
 		))
 
 /obj/structure/disposalpipe/loafer/examine(mob/user)

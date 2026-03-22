@@ -77,7 +77,7 @@
  * Change regulator level -- ie. what liquid depth we are OK with, like a thermostat.
  */
 /obj/machinery/plumbing/floor_pump/proc/set_regulator(mob/living/user)
-	if(!user.can_perform_action())
+	if(!user.can_perform_action(src))
 		return
 	var/new_height = tgui_input_number(user,
 		"At what water level should the pump stop pumping from 0 to [LIQUID_HEIGHT_CONSIDER_FULL_TILE]? 0 disables.",
@@ -281,7 +281,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/plumbing/floor_pump/input/on/waste, 0
 
 /obj/machinery/plumbing/floor_pump/output/should_regulator_permit(turf/affected_turf)
 	// 0 means keep pumping forever.
-	return !height_regulator || affected_turf.liquids.liquid_group.expected_turf_height < height_regulator
+	return !height_regulator || (affected_turf?.liquids?.liquid_group && (affected_turf.liquids.liquid_group.expected_turf_height < height_regulator))
 
 /obj/machinery/plumbing/floor_pump/output/process()
 	over_pressure = FALSE

@@ -1,11 +1,11 @@
-/datum/round_event_control/antagonist/solo/from_ghosts/alien_infestation
+/datum/round_event_control/antagonist/from_ghosts/alien_infestation
 	name = "Alien Infestation"
-	typepath = /datum/round_event/antagonist/solo/ghost/alien_infestation
+	typepath = /datum/round_event/antagonist/ghost/alien_infestation
 	weight = 3
 	max_occurrences = 1
 	min_players = 35 //monkie edit: 10 to 35 (tg what the fuck)
 
-	earliest_start = 60 MINUTES //monkie edit: 20 to 90
+	earliest_start = 60 MINUTES //monkie edit: 20 to 60
 	//dynamic_should_hijack = TRUE
 	category = EVENT_CATEGORY_ENTITIES
 	description = "A xenomorph larva spawns on a random vent."
@@ -20,6 +20,7 @@
 		JOB_SECURITY_OFFICER,
 		JOB_WARDEN,
 		JOB_SECURITY_ASSISTANT,
+		JOB_BRIG_PHYSICIAN,
 	)
 	required_enemies = 5
 	prompted_picking = TRUE
@@ -29,7 +30,7 @@
 	checks_antag_cap = TRUE
 	dont_spawn_near_roundend = TRUE
 
-/datum/round_event_control/antagonist/solo/from_ghosts/alien_infestation/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE) //MONKESTATION ADDITION: fake_check = FALSE
+/datum/round_event_control/antagonist/from_ghosts/alien_infestation/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE) //MONKESTATION ADDITION: fake_check = FALSE
 	. = ..()
 	if(!.)
 		return .
@@ -38,14 +39,14 @@
 		if(A.stat != DEAD)
 			return FALSE
 
-/datum/round_event/antagonist/solo/ghost/alien_infestation
+/datum/round_event/antagonist/ghost/alien_infestation
 	announce_when = 400
 	fakeable = TRUE
 
 
-/datum/round_event/antagonist/solo/ghost/alien_infestation/setup()
+/datum/round_event/antagonist/ghost/alien_infestation/setup()
 	announce_when = rand(announce_when, announce_when + 50)
-	var/datum/round_event_control/antagonist/solo/cast_control = control
+	var/datum/round_event_control/antagonist/cast_control = control
 	antag_count = cast_control.get_antag_amount()
 
 	if(prob(50))
@@ -79,7 +80,7 @@
 	var/list/weighted_candidates = return_antag_rep_weight(candidates)
 
 	var/list/vents = list()
-	for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent in GLOB.machines)
+	for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/atmospherics/components/unary/vent_pump))
 		if(QDELETED(temp_vent))
 			continue
 		if(is_station_level(temp_vent.loc.z) && !temp_vent.welded)
@@ -117,7 +118,7 @@
 
 	setup = TRUE //MONKESTATION ADDITION
 
-/datum/round_event/antagonist/solo/ghost/alien_infestation/announce(fake)
+/datum/round_event/antagonist/ghost/alien_infestation/announce(fake)
 	var/living_aliens = FALSE
 	for(var/mob/living/carbon/alien/A in GLOB.player_list)
 		if(A.stat != DEAD)

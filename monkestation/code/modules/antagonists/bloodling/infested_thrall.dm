@@ -9,7 +9,7 @@
 	suicide_cry = "FOR THE MASTER!!"
 	genetic_points = 5
 	total_genetic_points = 5
-	antag_flags = parent_type::antag_flags | FLAG_ANTAG_CAP_TEAM
+	antag_flags = FLAG_CAN_SEE_EXPOITABLE_INFO
 	antag_count_points = 5
 
 	// This thralls master

@@ -1067,7 +1067,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/airlock/glass_large,
+/obj/machinery/door/airlock/multi_tile/public/glass,
 /turf/open/floor/pod/light,
 /area/shuttle/sbc_starfury)
 "dV" = (
@@ -1720,14 +1720,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor/heavy,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
-/obj/machinery/door/airlock/glass_large,
+/obj/machinery/door/airlock/multi_tile/public/glass,
 /turf/open/floor/pod/light,
 /area/shuttle/sbc_starfury)
 "fF" = (
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/machinery/door/firedoor/heavy,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
-/obj/machinery/door/airlock/glass_large,
+/obj/machinery/door/airlock/multi_tile/public/glass,
 /turf/open/floor/pod/light,
 /area/shuttle/sbc_starfury)
 "fG" = (
@@ -2542,13 +2542,13 @@
 /area/shuttle/sbc_starfury)
 "il" = (
 /obj/structure/table,
-/obj/item/reagent_containers/hypospray/medipen/survival{
+/obj/item/reagent_containers/medipen/survival{
 	pixel_y = 8
 	},
-/obj/item/reagent_containers/hypospray/medipen/survival{
+/obj/item/reagent_containers/medipen/survival{
 	pixel_y = 4
 	},
-/obj/item/reagent_containers/hypospray/medipen/survival,
+/obj/item/reagent_containers/medipen/survival,
 /obj/item/mod/module/visor/medhud,
 /obj/item/mod/module/visor/medhud,
 /obj/effect/turf_decal/siding/thinplating_new/dark{
@@ -4488,7 +4488,7 @@
 "AJ" = (
 /obj/machinery/door/firedoor/heavy,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
-/obj/machinery/door/airlock/glass_large,
+/obj/machinery/door/airlock/multi_tile/public/glass,
 /turf/open/floor/pod/light,
 /area/shuttle/sbc_starfury)
 "AQ" = (

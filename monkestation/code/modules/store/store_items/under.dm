@@ -482,7 +482,7 @@ GLOBAL_LIST_INIT(store_miscunders, generate_store_items(/datum/store_item/under/
 	item_cost = 10000
 
 /datum/store_item/under/formal/moonlit
-	name = "Regal Ball Gown"
+	name = "Moonlit Gown"
 	item_path = /obj/item/clothing/under/dress/moonlit
 	item_cost = 10000
 
@@ -542,6 +542,11 @@ GLOBAL_LIST_INIT(store_miscunders, generate_store_items(/datum/store_item/under/
 /datum/store_item/under/jumpsuit/utility	//BUYABLE
 	name = "Utility Uniform"
 	item_path = /obj/item/clothing/under/misc/nova/utility
+	item_cost = 3000
+
+/datum/store_item/under/jumpsuit/deforest	//BUYABLE
+	name = "Deforest Uniform"
+	item_path = /obj/item/clothing/under/rank/medical/paramedic/deforest
 	item_cost = 3000
 
 /datum/store_item/under/miscellaneous/vicvest //BUYABLE

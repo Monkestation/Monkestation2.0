@@ -170,13 +170,13 @@
 
 /datum/objective_item/steal/traitor/lawyers_badge
 	name = "the lawyer's badge"
-	targetitem = /obj/item/clothing/accessory/lawyers_badge
+	targetitem = /obj/item/clothing/accessory/badge/lawyer
 	excludefromjob = list(JOB_LAWYER)
 	item_owner = list(JOB_LAWYER)
 	exists_on_map = TRUE
 
-/obj/item/clothing/accessory/lawyers_badge/add_stealing_item_objective()
-	return add_item_to_steal(src, /obj/item/clothing/accessory/lawyers_badge)
+/obj/item/clothing/accessory/badge/lawyer/add_stealing_item_objective()
+	return add_item_to_steal(src, /obj/item/clothing/accessory/badge/lawyer)
 
 /datum/objective_item/steal/traitor/chief_engineer_belt
 	name = "the chief engineer's belt"
@@ -186,6 +186,15 @@
 
 /obj/item/storage/belt/utility/chief/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/storage/belt/utility/chief)
+
+/datum/objective_item/steal/traitor/research_director_holotool
+	name = "the research director's holotool."
+	targetitem = /obj/item/holotool
+	excludefromjob = list(JOB_RESEARCH_DIRECTOR)
+	exists_on_map = TRUE
+
+/obj/item/holotool/add_stealing_item_objective()
+	return add_item_to_steal(src, /obj/item/holotool)
 
 /datum/objective_item/steal/traitor/telebaton
 	name = "a head of staff's telescopic baton"
@@ -301,14 +310,14 @@
 	return add_item_to_steal(src, /obj/item/clothing/accessory/medal/gold/captain)
 
 /datum/objective_item/steal/hypo
-	name = "the hypospray"
-	targetitem = /obj/item/reagent_containers/hypospray/cmo
+	name = "the chief medical officer's hypospray"
+	targetitem = /obj/item/hypospray/cmo
 	excludefromjob = list(JOB_CHIEF_MEDICAL_OFFICER)
 	item_owner = list(JOB_CHIEF_MEDICAL_OFFICER)
 	exists_on_map = TRUE
 
-/obj/item/reagent_containers/hypospray/cmo/add_stealing_item_objective()
-	return add_item_to_steal(src, /obj/item/reagent_containers/hypospray/cmo)
+/obj/item/hypospray/cmo/add_stealing_item_objective()
+	return add_item_to_steal(src, /obj/item/hypospray/cmo)
 
 /datum/objective_item/steal/nukedisc
 	name = "the nuclear authentication disk"

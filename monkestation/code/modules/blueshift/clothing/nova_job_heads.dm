@@ -122,7 +122,7 @@
 
 /obj/item/clothing/head/beret/cargo/qm
 	name = "quartermaster's beret"
-	desc = "A beret that helps the QM keep telling themselves that they're an official head of staff."
+	desc = "A beret that helps the QM cope about not being an official head of staff."
 	greyscale_config = /datum/greyscale_config/beret_badge
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
 	icon_state = "beret_badge"
@@ -130,7 +130,7 @@
 
 /obj/item/clothing/head/beret/cargo/qm/alt
 	name = "quartermaster's beret"
-	desc = "A beret that helps the QM keep telling themselves that they're an official head of staff. This one is made out of white fabric. Fancy"
+	desc = "A beret that helps the QM cope about not being an official head of staff. This one is made out of white fabric. Fancy."
 	greyscale_colors = "#FFFFFF#FFCE5B"
 
 /obj/item/clothing/head/caphat/beret/alt

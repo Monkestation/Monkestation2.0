@@ -1,4 +1,4 @@
-// THIS IS A NOVA SECTOR UI FILE
+
 import { useBackend } from '../backend';
 import {
   BlockQuote,
@@ -27,7 +27,7 @@ export const Soulcatcher = (props) => {
   } = data;
 
   return (
-    <Window width={520} height={400} theme={theme} resizable>
+    <Window width={520} height={400} theme={theme}>
       <Window.Content scrollable>
         {current_rooms.map((room) => (
           <Section

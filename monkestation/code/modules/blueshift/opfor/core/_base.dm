@@ -410,8 +410,8 @@
 	add_log(user.ckey, "Blocked user from opposing force requests.")
 
 /**
- * Equipment procs
- */
+	* Equipment procs
+	*/
 
 /datum/opposing_force/proc/deny_equipment(mob/user, datum/opposing_force_selected_equipment/incoming_equipment, denied_reason = "")
 	if(incoming_equipment.status == OPFOR_EQUIPMENT_STATUS_DENIED)
@@ -474,8 +474,8 @@
 	equipment_issued = TRUE
 
 /**
- * Control procs
- */
+	* Control procs
+	*/
 
 /datum/opposing_force/proc/request_update(mob/user)
 	if(request_updates_muted)
@@ -489,7 +489,7 @@
 
 	for(var/client/staff as anything in GLOB.admins)
 		if(staff?.prefs?.toggles & SOUND_ADMINHELP)
-			SEND_SOUND(staff, sound('sound/effects/adminhelp.ogg'))
+			staff.mob.playsound_local(null, 'sound/effects/adminhelp.ogg', 100, vary = FALSE, channel = CHANNEL_ADMIN_SOUNDS, pressure_affected = FALSE, use_reverb = FALSE)
 		window_flash(staff)
 
 	COOLDOWN_START(src, request_update_cooldown, OPFOR_REQUEST_UPDATE_COOLDOWN)
@@ -510,7 +510,7 @@
 
 	for(var/client/staff as anything in GLOB.admins)
 		if(staff?.prefs?.toggles & SOUND_ADMINHELP)
-			SEND_SOUND(staff, sound('sound/effects/adminhelp.ogg'))
+			staff.mob.playsound_local(null, 'sound/effects/adminhelp.ogg', 100, vary = FALSE, channel = CHANNEL_ADMIN_SOUNDS, pressure_affected = FALSE, use_reverb = FALSE)
 		window_flash(staff, ignorepref = TRUE)
 
 	addtimer(CALLBACK(src, PROC_REF(add_to_ping_ss)), 2 MINUTES) // this is not responsible for the notification itself, but only for adding the ticket to the list of those to notify.
@@ -615,8 +615,8 @@
 
 
 /**
- * Objective procs
- */
+	* Objective procs
+	*/
 
 /datum/opposing_force/proc/set_objective_intensity(mob/user, datum/opposing_force_objective/opposing_force_objective, new_intensity)
 	if(!can_edit)
@@ -704,8 +704,8 @@
 	to_chat(mind_reference?.current, span_warning("Your OPFOR objective [span_bold("[opposing_force_objective.title]")] has been approved."))
 
 /**
- * System procs
- */
+	* System procs
+	*/
 
 /datum/opposing_force/proc/add_log(logger_ckey, new_log)
 	var/msg = "OPFOR([ckey]): [logger_ckey ? logger_ckey : "SYSTEM"] - [new_log]"
@@ -823,8 +823,8 @@
 		send_system_message("/ping_user - Pings the user.")
 
 /**
- * System commands
- */
+	* System commands
+	*/
 /datum/opposing_force/proc/check_item(type)
 	var/obj/item/processed_item = text2path(type)
 	if(!processed_item)
@@ -958,9 +958,12 @@
 						// If there isn't category data / a given equipment type, OR if either of those don't fit within certain perameters, it continues
 						var/list/equipment = opfor_data["selected_equipment"][iter_num]
 
-						if(\
-						!equipment["equipment_parent_category"]|| !(equipment["equipment_parent_category"] in SSopposing_force.equipment_list)\
-						 || !equipment["equipment_parent_type"] || !ispath(text2path(equipment["equipment_parent_type"]), /datum/opposing_force_equipment))
+						if( \
+							!equipment["equipment_parent_category"] || \
+							!(equipment["equipment_parent_category"] in SSopposing_force.equipment_list) || \
+							!equipment["equipment_parent_type"] || \
+							!ispath(text2path(equipment["equipment_parent_type"]), /datum/opposing_force_equipment) \
+						)
 							continue
 
 						// creates a new selected equipment datum using a type gotten from the given equipment type via SSopposing_force.equipment_list

@@ -74,7 +74,7 @@ GLOBAL_LIST_EMPTY(elevator_music)
 	if (entered in tracked_mobs)
 		return
 
-	if (entered.client?.prefs.read_preference(/datum/preference/toggle/sound_elevator))
+	if (entered.client?.prefs?.channel_volume["[CHANNEL_ELEVATOR]"])
 		tracked_mobs[entered] = new soundloop_type(_parent = entered, _direct = TRUE, start_immediately = enabled)
 	else
 		tracked_mobs[entered] = null // Still add it to the list so we don't keep making this check

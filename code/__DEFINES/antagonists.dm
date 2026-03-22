@@ -211,6 +211,9 @@ GLOBAL_LIST_INIT(ai_employers, list(
 /// Checks if the given mob is a blood cultist
 #define IS_CULTIST(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/cult))
 
+///Checks if the given mob is an evil clone
+#define IS_EVIL_CLONE(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/evil_clone))
+
 /// Checks if the given mob is a nuclear operative
 #define IS_NUKE_OP(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/nukeop))
 
@@ -345,6 +348,7 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define ANTAG_GROUP_CREW "Deviant Crew"
 #define ANTAG_GROUP_BINGLES "Bingles"
 #define ANTAG_GROUP_DARKSPAWN "Darkspawn"
+#define ANTAG_GROUP_DEVILS "Infernal Agents"
 
 #define HUNTER_PACK_COPS "Spacepol Officers"
 #define HUNTER_PACK_RUSSIAN "Russian Smugglers"

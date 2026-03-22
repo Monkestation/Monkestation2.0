@@ -101,6 +101,25 @@
 	. = ..()
 	SEND_SIGNAL(user.mob, COMSIG_KB_LIVING_PIXEL_SHIFT_UP)
 
+/datum/keybinding/living/pixel_tilting
+	hotkey_keys = list("J")
+	name = "Pixel Tilting"
+	full_name = "Pixel Tilt"
+	description = "Shift a mob's rotational value"
+	category = CATEGORY_MOVEMENT
+	keybind_signal = COMSIG_KB_LIVING_PIXEL_TILT_DOWN
+
+/datum/keybinding/living/pixel_tilting/down(client/user)
+	. = ..()
+	if(.)
+		return
+	user.mob.AddComponent(/datum/component/pixel_shift)
+	SEND_SIGNAL(user.mob, COMSIG_KB_LIVING_PIXEL_TILT_DOWN)
+
+/datum/keybinding/living/pixel_tilting/up(client/user)
+	. = ..()
+	SEND_SIGNAL(user.mob, COMSIG_KB_LIVING_PIXEL_TILT_UP)
+
 /datum/keybinding/living/interaction_toggle_wield
 	hotkey_keys = list("ShiftX")
 	name = "keybinding_living_toggle_wield"
@@ -116,3 +135,4 @@
 	var/obj/item/item = mob?.get_active_held_item()
 	if(item?.GetComponent(/datum/component/two_handed)) // does our active item have a two_handed component? if so let's ctrl click it!
 		mob.base_click_ctrl(item)
+

@@ -103,7 +103,7 @@
 /datum/martial_art/the_sleeping_carp/proc/dropKick(mob/living/attacker, mob/living/defender, set_damage = TRUE)
 	//monke edit start
 	if(set_damage)
-		stamina_damage = -100
+		stamina_damage = -50
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_KICK)
 	playsound(get_turf(attacker), 'sound/effects/hit_kick.ogg', vol = 50, vary = TRUE, extrarange = -1)
 	if(defender.body_position == STANDING_UP)
@@ -155,7 +155,7 @@
 			defender.visible_message(span_warning("[attacker] violently grabs [defender]!"), \
 			span_userdanger("You're grabbed violently by [attacker]!"), span_hear("You hear sounds of aggressive fondling!"), COMBAT_MESSAGE_RANGE, attacker)
 			to_chat(attacker, span_danger("You violently grab [defender]!"))
-	defender.stamina.adjust(-50)
+	defender.stamina.adjust(-25)
 	log_combat(attacker, defender, "[grab_log_description] (Sleeping Carp)")
 	return ..()
 
@@ -211,7 +211,7 @@
 
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
 	playsound(defender, 'sound/weapons/punch1.ogg', vol = 25, vary = TRUE, extrarange = -1)
-	defender.stamina.adjust(-50)
+	defender.stamina.adjust(-25)
 	log_combat(attacker, defender, "disarmed ([log_name])") //monke edit
 
 	return ..()
@@ -357,13 +357,13 @@
 						span_userdanger("[user] [pick(fluffmessages)]s you with [src]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), null, user)
 		to_chat(user, span_danger("You [pick(fluffmessages)] [H] with [src]!"))
 		playsound(get_turf(user), 'sound/effects/woodhit.ogg', 75, TRUE, -1)
-		H.stamina.adjust(-20)
+		H.stamina.adjust(-10)
 		if(prob(10))
 			H.visible_message(span_warning("[H] collapses!"), \
 							span_userdanger("Your legs give out!"))
 			H.Paralyze(8 SECONDS)
-		if(H.staminaloss && !H.IsSleeping())
-			var/total_health = (H.health - H.staminaloss)
+		if(H.stamina.loss && !H.IsSleeping())
+			var/total_health = (H.health - H.stamina.loss)
 			if(total_health <= HEALTH_THRESHOLD_CRIT && !H.stat)
 				H.visible_message(span_warning("[user] delivers a heavy hit to [H]'s head, knocking [H.p_them()] out cold!"), \
 								span_userdanger("You're knocked unconscious by [user]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), null, user)

@@ -27,6 +27,8 @@
 	var/has_emissive = TRUE
 	/// Whether the smartfridge is welded down to the floor disabling unwrenching
 	var/welded_down = FALSE
+	/// The tgui theme to use. Default is null, which means the Nanotrasen theme is used.
+	var/tgui_theme = null
 
 /obj/machinery/smartfridge/Initialize(mapload)
 	. = ..()
@@ -378,6 +380,9 @@
 	.["name"] = name
 	.["isdryer"] = FALSE
 
+/obj/machinery/smartfridge/ui_static_data(mob/user)
+	return list("ui_theme" = tgui_theme)
+
 /obj/machinery/smartfridge/handle_atom_del(atom/A) // Update the UIs in case something inside gets deleted
 	SStgui.update_uis(src)
 
@@ -673,6 +678,7 @@
 	var/static/list/chemfridge_typecache = typecacheof(list(
 					/obj/item/reagent_containers/syringe,
 					/obj/item/reagent_containers/cup/bottle,
+					/obj/item/reagent_containers/cup/tube,
 					/obj/item/reagent_containers/cup/beaker,
 					/obj/item/reagent_containers/spray,
 					/obj/item/reagent_containers/medigel,
@@ -743,3 +749,20 @@
 		return TRUE
 	else
 		return FALSE
+
+// ----------------------------
+// Assault Medical Smartfridge
+// ----------------------------
+/obj/machinery/smartfridge/assault
+	name = "smart chemical storage"
+	desc = "A refrigerated storage unit for curing a few dire aliments."
+
+/obj/machinery/smartfridge/assault/preloaded
+	initial_contents = list(
+		/obj/item/reagent_containers/pill/epinephrine = 12,
+		/obj/item/reagent_containers/pill/multiver = 5,
+		/obj/item/reagent_containers/cup/bottle/epinephrine = 1,
+		/obj/item/reagent_containers/cup/bottle/multiver = 1,
+		/obj/item/reagent_containers/cup/bottle/formaldehyde,
+		/obj/item/reagent_containers/cup/beaker/large/synthflesh = 2,
+		/obj/item/reagent_containers/cup/beaker/large/plasma = 2,)

@@ -2,57 +2,60 @@
 /datum/mind/proc/add_antag_datum(datum_type_or_instance, team)
 	if(!datum_type_or_instance)
 		return
-	var/datum/antagonist/A
+
+	var/datum/antagonist/antag
 	if(!ispath(datum_type_or_instance))
-		A = datum_type_or_instance
-		if(!istype(A))
+		antag = datum_type_or_instance
+		if(!istype(antag))
 			return
 	else
-		A = new datum_type_or_instance()
+		antag = new datum_type_or_instance()
+
 	//Choose snowflake variation if antagonist handles it
-	var/datum/antagonist/S = A.specialization(src)
-	if(S && S != A)
-		qdel(A)
-		A = S
-	if(!A.can_be_owned(src))
-		qdel(A)
+	var/datum/antagonist/special = antag.specialization(src)
+	if(special && special != antag)
+		qdel(antag)
+		antag = special
+	if(!antag.can_be_owned(src))
+		qdel(antag)
 		return
-	A.owner = src
-	LAZYADD(antag_datums, A)
-	A.create_team(team)
-	var/datum/team/antag_team = A.get_team()
+
+	antag.owner = src
+	LAZYADD(antag_datums, antag)
+	antag.create_team(team)
+	var/datum/team/antag_team = antag.get_team()
 	if(antag_team)
 		antag_team.add_member(src)
-	INVOKE_ASYNC(A, TYPE_PROC_REF(/datum/antagonist, on_gain))
-	log_game("[key_name(src)] has gained antag datum [A.name]([A.type]).")
+
+	INVOKE_ASYNC(antag, TYPE_PROC_REF(/datum/antagonist, on_gain))
+	log_game("[key_name(src)] has gained antag datum [antag.name]([antag.type]).")
 	var/client/picked_client = get_player_client(src)
 	picked_client?.mob?.mind.picking = FALSE
-	return A
+	return antag
 
 /datum/mind/proc/remove_antag_datum(datum_type)
 	if(!datum_type)
 		return
-	var/datum/antagonist/A = has_antag_datum(datum_type)
-	if(A)
-		A.on_removal()
-		current.log_message("has lost antag datum [A.name]([A.type]).", LOG_GAME)
+	var/datum/antagonist/antag = has_antag_datum(datum_type)
+	if(antag)
+		antag.on_removal()
+		current.log_message("has lost antag datum [antag.name]([antag.type]).", LOG_GAME)
 		return TRUE
 
 /datum/mind/proc/remove_all_antag_datums() //For the Lazy amongst us.
-	for(var/a in antag_datums)
-		var/datum/antagonist/A = a
-		A.on_removal()
+	for(var/datum/antagonist/antag in antag_datums)
+		antag.on_removal()
 	current.log_message("has lost all antag datums.", LOG_GAME)
 
-/datum/mind/proc/has_antag_datum(datum_type, check_subtypes = TRUE)
+/datum/mind/proc/has_antag_datum(datum_type, check_subtypes = TRUE) as /datum/antagonist
+	RETURN_TYPE(/datum/antagonist)
 	if(!datum_type)
 		return
-	for(var/a in antag_datums)
-		var/datum/antagonist/A = a
-		if(check_subtypes && istype(A, datum_type))
-			return A
-		else if(A.type == datum_type)
-			return A
+	for(var/datum/antagonist/antag in antag_datums)
+		if(check_subtypes && istype(antag, datum_type))
+			return antag
+		else if(antag.type == datum_type)
+			return antag
 
 /// Returns true if mind has any antag datum from a list of types
 /datum/mind/proc/has_antag_datum_in_list(list/antag_types)
@@ -85,13 +88,6 @@
 /datum/mind/proc/remove_wizard()
 	remove_antag_datum(/datum/antagonist/wizard)
 	special_role = null
-
-/datum/mind/proc/remove_rev()
-	var/datum/antagonist/rev/rev = has_antag_datum(/datum/antagonist/rev)
-	if(rev)
-		remove_antag_datum(rev.type)
-		special_role = null
-
 
 /datum/mind/proc/remove_antag_equip()
 	var/list/Mob_Contents = current.get_contents()
@@ -270,10 +266,6 @@
 /datum/mind/proc/take_uplink()
 	qdel(find_syndicate_uplink())
 
-/datum/mind/proc/make_traitor()
-	if(!(has_antag_datum(/datum/antagonist/traitor)))
-		add_antag_datum(/datum/antagonist/traitor)
-
 /datum/mind/proc/make_changeling()
 	var/datum/antagonist/changeling/C = has_antag_datum(/datum/antagonist/changeling)
 	if(!C)
@@ -281,14 +273,12 @@
 		special_role = ROLE_CHANGELING
 	return C
 
-
 /datum/mind/proc/make_wizard()
 	if(has_antag_datum(/datum/antagonist/wizard))
 		return
 	set_assigned_role(SSjob.GetJobType(/datum/job/space_wizard))
 	special_role = ROLE_WIZARD
 	add_antag_datum(/datum/antagonist/wizard)
-
 
 /datum/mind/proc/make_rev()
 	var/datum/antagonist/rev/head/head = new()
@@ -300,11 +290,11 @@
 /// Sets our can_hijack to the fastest speed our antag datums allow.
 /datum/mind/proc/get_hijack_speed()
 	. = 0
-	for(var/datum/antagonist/A in antag_datums)
-		. = max(., A.hijack_speed())
+	for(var/datum/antagonist/antag in antag_datums)
+		. = max(., antag.hijack_speed())
 
 /datum/mind/proc/has_objective(objective_type)
-	for(var/datum/antagonist/A in antag_datums)
-		for(var/O in A.objectives)
-			if(istype(O,objective_type))
+	for(var/datum/antagonist/antag in antag_datums)
+		for(var/objective in antag.objectives)
+			if(istype(objective, objective_type))
 				return TRUE

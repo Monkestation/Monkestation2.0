@@ -44,8 +44,9 @@
 #define EXOSUIT_MODULE_TANK (1<<14)
 // Module is compatbile with drilling "mechs"
 #define EXOSUIT_MODULE_DRILL (1<<15)
+// Module is compatbile with the giant fucking walkers
+#define EXOSUIT_MODULE_SENTINEL (1<<16)
 //monkestation edit end
-
 
 /// Module is compatible with "Working" Exosuit models - Ripley and Clarke
 #define EXOSUIT_MODULE_WORKING (EXOSUIT_MODULE_RIPLEY | EXOSUIT_MODULE_CLARKE)

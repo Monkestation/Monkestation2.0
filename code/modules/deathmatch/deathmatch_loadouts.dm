@@ -237,13 +237,13 @@
 	head = /obj/item/clothing/head/utility/surgerycap
 	mask = /obj/item/clothing/mask/surgical
 	glasses = /obj/item/clothing/glasses/hud/health/night
-	l_pocket = /obj/item/reagent_containers/hypospray/combat
-	r_pocket = /obj/item/reagent_containers/hypospray/medipen/penthrite
+	l_pocket = /obj/item/hypospray/combat
+	r_pocket = /obj/item/reagent_containers/medipen/penthrite
 	l_hand = /obj/item/chainsaw
 
 	backpack_contents = list(
 		/obj/item/storage/medkit/tactical,
-		/obj/item/reagent_containers/hypospray/medipen/stimulants,
+		/obj/item/reagent_containers/medipen/stimulants,
 	)
 
 /datum/outfit/deathmatch_loadout/battler/raider

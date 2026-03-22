@@ -93,6 +93,9 @@ Difficulty: Extremely Hard
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/OpenFire()
 	if(client)
 		return
+	var/mob/living/living_target = target
+	if(istype(living_target) && living_target.stat == DEAD) //don't go out of our way to fire our disintegrating attacks at corpses
+		return
 
 	var/easy_attack = prob(80 - enraged * 40)
 	chosen_attack = rand(1, 3)
@@ -315,7 +318,7 @@ Difficulty: Extremely Hard
 
 /obj/item/pickaxe/drill/jackhammer/demonic/use_tool(atom/target, mob/living/user, delay, amount=0, volume=0, datum/callback/extra_checks, interaction_key)
 	var/turf/T = get_turf(target)
-	mineral_scan_pulse(T, world.view + 1)
+	mineral_scan_pulse(T, world.view + 1, src)
 	. = ..()
 
 /datum/status_effect/ice_block_talisman

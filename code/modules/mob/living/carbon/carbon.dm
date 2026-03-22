@@ -62,6 +62,7 @@
 			take_bodypart_damage(5 + 5 * extra_speed, check_armor = TRUE, wound_bonus = extra_speed * 5)
 		else if(!iscarbon(hit_atom) && extra_speed)
 			take_bodypart_damage(5 * extra_speed, check_armor = TRUE, wound_bonus = extra_speed * 5)
+		impact_fart()
 		oof_noise = TRUE
 
 	if(iscarbon(hit_atom) && hit_atom != src)
@@ -82,6 +83,11 @@
 		if(blocked)
 			visible_message(span_danger("[src] crashes into [victim][extra_speed ? " really hard" : ""], but [victim] blocked the worst of it!"),\
 				span_userdanger("You violently crash into [victim][extra_speed ? " extra hard" : ""], but [victim] managed to block the worst of it!"))
+
+			if(ishuman(victim) && !victim.has_movespeed_modifier(/datum/movespeed_modifier/shove))
+				victim.add_movespeed_modifier(/datum/movespeed_modifier/shove)
+				addtimer(CALLBACK(victim, TYPE_PROC_REF(/mob/living/carbon, clear_shove_slowdown)), SHOVE_SLOWDOWN_LENGTH)
+
 			log_combat(src, victim, "crashed into and was blocked by")
 			return
 		else
@@ -91,6 +97,7 @@
 				span_danger("[src] crashes into [hit_atom][extra_speed ? " really hard" : ""]!"),
 				span_userdanger("You[extra_speed ? " violently" : ""] crash into [hit_atom][extra_speed ? " extra hard" : ""]!"))
 		log_combat(src, victim, "crashed into")
+		victim.impact_fart()
 
 	if(oof_noise)
 		playsound(src,'sound/weapons/punch1.ogg',50,TRUE)
@@ -206,10 +213,13 @@
 		return
 	cuffs.item_flags |= BEING_REMOVED
 	breakouttime = cuffs.breakouttime
+	var/timed_action_flags = IGNORE_HELD_ITEM
+	if(cuffs.breakout_while_moving)
+		timed_action_flags |= IGNORE_USER_LOC_CHANGE
 	if(!cuff_break)
 		visible_message(span_warning("[src] attempts to remove [cuffs]!"))
 		to_chat(src, span_notice("You attempt to remove [cuffs]... (This will take around [DisplayTimeText(breakouttime)] and you need to stand still.)"))
-		if(do_after(src, breakouttime, target = src, timed_action_flags = IGNORE_HELD_ITEM, hidden = TRUE))
+		if(do_after(src, breakouttime, target = src, timed_action_flags = timed_action_flags, hidden = TRUE))
 			. = clear_cuffs(cuffs, cuff_break)
 		else
 			to_chat(src, span_warning("You fail to remove [cuffs]!"))
@@ -218,7 +228,7 @@
 		breakouttime = 5 SECONDS
 		visible_message(span_warning("[src] is trying to break [cuffs]!"))
 		to_chat(src, span_notice("You attempt to break [cuffs]... (This will take around 5 seconds and you need to stand still.)"))
-		if(do_after(src, breakouttime, target = src, timed_action_flags = IGNORE_HELD_ITEM))
+		if(do_after(src, breakouttime, target = src, timed_action_flags = timed_action_flags))
 			. = clear_cuffs(cuffs, cuff_break)
 		else
 			to_chat(src, span_warning("You fail to break [cuffs]!"))
@@ -494,28 +504,25 @@
 /mob/living/carbon/on_stamina_update()
 	if(!stamina)
 		return
-	var/stam = stamina.current
-	var/max = stamina.maximum
-	var/is_exhausted = HAS_TRAIT_FROM(src, TRAIT_EXHAUSTED, STAMINA)
 	var/is_stam_stunned = HAS_TRAIT_FROM(src, TRAIT_INCAPACITATED, STAMINA)
-	if((stam < max * STAMINA_EXHAUSTION_THRESHOLD_MODIFIER) && !is_exhausted)
-		ADD_TRAIT(src, TRAIT_EXHAUSTED, STAMINA)
-		ADD_TRAIT(src, TRAIT_NO_SPRINT, STAMINA)
-		add_movespeed_modifier(/datum/movespeed_modifier/exhaustion)
 
-	if((stam < max * STAMINA_STUN_THRESHOLD_MODIFIER) && !is_stam_stunned && stat <= SOFT_CRIT)
+	//Prevent us from sprinting when our stamina damage is above 40%
+	var/has_no_sprint = HAS_TRAIT_FROM(src, TRAIT_NO_SPRINT, STAMINA)
+
+	if(stamina.loss_as_percent >= 40 && !has_no_sprint)
+		ADD_TRAIT(src, TRAIT_NO_SPRINT, STAMINA)
+		to_chat(src, span_warning("You start to feel exhausted from lack of stamina..."))
+	else if (stamina.loss_as_percent <= 30 && has_no_sprint)
+		REMOVE_TRAIT(src, TRAIT_NO_SPRINT, STAMINA)
+		to_chat(src, span_notice("You feel like you can sprint again."))
+
+	if((stamina.current <= 0) && !is_stam_stunned && stat <= SOFT_CRIT)
 		stamina_stun()
 
-	if(is_exhausted && (stam > max * STAMINA_EXHAUSTION_THRESHOLD_MODIFIER_EXIT))
-		REMOVE_TRAIT(src, TRAIT_EXHAUSTED, STAMINA)
-		REMOVE_TRAIT(src, TRAIT_NO_SPRINT, STAMINA)
-		remove_movespeed_modifier(/datum/movespeed_modifier/exhaustion)
+	if(is_stam_stunned && stamina.current >= stamina.maximum)
+		exit_stamina_stun()
 
 	update_stamina_hud()
-
-/datum/movespeed_modifier/exhaustion
-	id = "exhaustion"
-	multiplicative_slowdown = STAMINA_EXHAUSTION_MOVESPEED_SLOWDOWN
 
 /mob/living/carbon/update_sight()
 	if(!client)
@@ -749,9 +756,7 @@
 	//MONKESTATION EDIT START
 	var/current_stamina = stamina.current
 
-	if(stamina.current <= (0.20 * STAMINA_MAX)) //stamina stun threshold
-		hud_used.stamina.icon_state = "stamina_dead"
-	else if(current_stamina <= (0.30 * STAMINA_MAX)) //exhaustion threshold
+	if(current_stamina <= (0.20 * STAMINA_MAX))
 		hud_used.stamina.icon_state = "stamina_crit"
 	else if(current_stamina <= (0.40 * STAMINA_MAX))
 		hud_used.stamina.icon_state = "stamina_5"
@@ -858,12 +863,12 @@
 	if(heal_flags & HEAL_NEGATIVE_DISEASES)
 		for(var/datum/disease/disease as anything in diseases)
 			if(disease.severity != DISEASE_SEVERITY_POSITIVE)
-				disease.cure(FALSE)
+				disease.cure(add_resistance = FALSE, target = src, safe = TRUE)
 
 	if(heal_flags & HEAL_POSTIVE_DISEASES)
 		for(var/datum/disease/disease as anything in diseases)
 			if(disease.severity == DISEASE_SEVERITY_POSITIVE)
-				disease.cure(FALSE)
+				disease.cure(add_resistance = FALSE, target = src, safe = TRUE)
 
 	if(heal_flags & HEAL_WOUNDS)
 		for(var/datum/wound/wound as anything in all_wounds)
@@ -988,6 +993,8 @@
 			if(!new_bodypart.bodypart_disabled)
 				set_usable_hands(usable_hands + 1)
 
+	synchronize_bodytypes()
+
 
 ///Proc to hook behavior on bodypart removals.  Do not directly call. You're looking for [/obj/item/bodypart/proc/drop_limb()].
 /mob/living/carbon/proc/remove_bodypart(obj/item/bodypart/old_bodypart)
@@ -1003,6 +1010,8 @@
 			set_num_hands(num_hands - 1)
 			if(!old_bodypart.bodypart_disabled)
 				set_usable_hands(usable_hands - 1)
+
+	synchronize_bodytypes()
 
 
 ///Updates the bodypart speed modifier based on our bodyparts.
@@ -1245,7 +1254,7 @@
 			QDEL_NULL(phantom_wound)
 
 /mob/living/carbon/is_face_visible()
-	return !(wear_mask?.flags_inv & HIDEFACE) && !(head?.flags_inv & HIDEFACE)
+	return !((wear_mask?.flags_inv & HIDEFACE) || (head?.flags_inv & HIDEFACE) || (wear_neck?.flags_inv & HIDEFACE))
 
 /// Returns whether or not the carbon should be able to be shocked
 /mob/living/carbon/proc/should_electrocute(power_source)
@@ -1364,3 +1373,54 @@
 		return
 	head.adjustBleedStacks(5)
 	visible_message(span_notice("[src] gets a nosebleed."), span_warning("You get a nosebleed."))
+
+/mob/living/carbon/death(gibbed)
+	if (stat == DEAD)
+		return ..()
+
+	if (gibbed)
+		gib_fart()
+	else if (HAS_TRAIT(src, TRAIT_LOUD_ASS) || prob(1))
+		death_fart_timerid = addtimer(CALLBACK(src, TYPE_PROC_REF(/mob/living/carbon, death_fart)), rand(2 SECONDS, 10 SECONDS), TIMER_STOPPABLE | TIMER_DELETE_ME)
+	else if (prob(10))
+		death_fart_timerid = addtimer(CALLBACK(src, TYPE_PROC_REF(/mob/living/carbon, death_fart)), rand(15 SECONDS, 100 SECONDS), TIMER_STOPPABLE | TIMER_DELETE_ME)
+	. = ..()
+
+/mob/living/carbon/ZImpactDamage(turf/T, levels)
+	impact_fart()
+	. = ..()
+
+/mob/living/carbon/set_stat(new_stat)
+	. = ..()
+	if(isnull(.))
+		return
+
+	if (. == DEAD && stat != DEAD)
+		cancel_death_fart()
+
+/mob/living/carbon/proc/impact_fart(probability = 1, volume = 25)
+	if(HAS_TRAIT(src, TRAIT_LOUD_ASS) || prob(probability))
+		var/obj/item/organ/internal/butt/butt = get_organ_by_type(/obj/item/organ/internal/butt)
+		if (butt)
+			visible_message(span_notice("[src] has the wind knocked out of [p_them()]!"))
+			playsound(src, pick(butt.sound_effect), volume, mixer_channel = CHANNEL_PRUDE)
+
+/mob/living/carbon/proc/cancel_death_fart()
+	if (death_fart_timerid)
+		deltimer(death_fart_timerid)
+		death_fart_timerid = null
+
+/mob/living/carbon/proc/death_fart()
+	var/obj/item/organ/internal/butt/butt = get_organ_by_type(/obj/item/organ/internal/butt)
+	if (butt)
+		visible_message(span_notice("[src]'s ass gives one last salute!"))
+		playsound(src, pick(butt.sound_effect), 50, mixer_channel = CHANNEL_PRUDE)
+
+/mob/living/carbon/proc/gib_fart(freq=0)
+	if (stat == DEAD && world.time - timeofdeath > 1 SECOND)
+		return
+
+	if(HAS_TRAIT(src, TRAIT_LOUD_ASS))
+		if (freq == 0)
+			freq = rand(27000, 37000)
+		playsound(src.loc, 'sound/misc/fart1.ogg', 200, TRUE, frequency=freq, mixer_channel = CHANNEL_PRUDE, pressure_affected = FALSE)

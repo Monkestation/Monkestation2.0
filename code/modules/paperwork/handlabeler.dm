@@ -231,6 +231,7 @@
 	RegisterSignal(sticking_to, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(interacted_with))
 	RegisterSignal(sticking_to, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignals(sticking_to, list(SIGNAL_ADDTRAIT(TRAIT_WAS_RENAMED), SIGNAL_REMOVETRAIT(TRAIT_WAS_RENAMED)), PROC_REF(reapply))
+	RegisterSignal(sticking_to, COMSIG_ATOM_UPDATE_NAME, PROC_REF(reapply))
 	RegisterSignal(sticking_to, COMSIG_QDELETING, PROC_REF(clear_stick_to))
 	apply_label()
 

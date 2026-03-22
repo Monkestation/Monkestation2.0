@@ -42,7 +42,7 @@
 		return
 
 	new_desc += "We current have [length(GLOB.main_clock_cult.human_servants)] human servants out of [GLOB.main_clock_cult.max_human_servants] maximum human servants, \
-			 as well as [length(GLOB.main_clock_cult.members)] servants all together.<br>"
+			as well as [length(GLOB.main_clock_cult.members)] servants all together.<br>"
 
 	if(GLOB.clock_ark?.charging_for)
 		new_desc += "The Ark will open in [600 - GLOB.clock_ark.charging_for] seconds!<br>"

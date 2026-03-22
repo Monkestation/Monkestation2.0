@@ -40,7 +40,7 @@
 	if((. & COMSIG_MOB_STOP_REAGENT_CHECK) || (organ_flags & ORGAN_FAILING))
 		return
 	if(istype(chem, /datum/reagent/silver))
-		organ_owner.stamina?.adjust(7.5 * REM * seconds_per_tick)
+		organ_owner.stamina?.adjust(3.75 * REM * seconds_per_tick)
 		organ_owner.adjustFireLoss(5.0 * REM * seconds_per_tick, updating_health = TRUE)
 
 

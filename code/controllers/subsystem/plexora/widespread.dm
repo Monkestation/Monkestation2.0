@@ -124,13 +124,11 @@
 	))
 
 /datum/controller/subsystem/plexora/proc/new_note(list/note)
-	note["replay_pass"] = CONFIG_GET(string/replay_password)
 	http_fireandforget("noteupdates", note)
 
 /datum/controller/subsystem/plexora/proc/new_ban(list/ban)
 	// TODO: It might be easier to just send off a ban ID to Plexora, but oh well.
 	// list values are in sql_ban_system.dm
-	ban["replay_pass"] = CONFIG_GET(string/replay_password)
 	http_fireandforget("banupdates", ban)
 
 // Maybe we should consider that, if theres no admin_ckey when creating a new ticket,
@@ -151,7 +149,6 @@
 		"urgent" = urgent,
 		"msg_raw" = msg_raw,
 		"opened_at" = rustg_unix_timestamp(),
-		"replay_pass" = CONFIG_GET(string/replay_password),
 //		"icon_b64" = icon2base64(getFlatIcon(ticket.initiator.mob, SOUTH, no_anim = TRUE)),
 		"admin_ckey" = admin_ckey,
 	))
@@ -227,7 +224,6 @@
 		"world_time" = world.time,
 		"opened_at" = rustg_unix_timestamp(),
 //		"icon_b64" = icon2base64(getFlatIcon(ticket.owner.mob, SOUTH, no_anim = TRUE)),
-		"replay_pass" = CONFIG_GET(string/replay_password),
 		"message" = ticket.message,
 	))
 

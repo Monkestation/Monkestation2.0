@@ -268,6 +268,8 @@
 		return
 	if(!(character.mind.assigned_role.job_flags & JOB_ANNOUNCE_ARRIVAL))
 		return
+	if(HAS_TRAIT(character, TRAIT_STOWAWAY))
+		return
 
 	var/obj/machinery/announcement_system/announcer
 	var/list/available_machines = list()
@@ -313,7 +315,7 @@
 
 ///Disable power in the station APCs
 /proc/power_fail(duration_min, duration_max)
-	for(var/obj/machinery/power/apc/current_apc as anything in GLOB.apcs_list)
+	for(var/obj/machinery/power/apc/current_apc as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/apc))
 		if(!current_apc.cell || !SSmapping.level_trait(current_apc.z, ZTRAIT_STATION))
 			continue
 		var/area/apc_area = current_apc.area

@@ -56,7 +56,7 @@
 	user.remove_status_effect(/datum/status_effect/masquerade)
 	user.dna.remove_all_mutations()
 	for(var/datum/disease/diseases as anything in user.diseases)
-		diseases.cure(target = user)
+		diseases.cure(target = user, safe = TRUE)
 
 	// Handle Traits
 	user.add_traits(bloodsuckerdatum_power.bloodsucker_traits, BLOODSUCKER_TRAIT)

@@ -281,10 +281,11 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 /obj/proc/dump_contents()
 	CRASH("Unimplemented.")
 
-/obj/handle_ricochet(obj/projectile/P)
+/obj/handle_ricochet(obj/projectile/ricocheting)
 	. = ..()
 	if(. && receive_ricochet_damage_coeff)
-		take_damage(P.damage * receive_ricochet_damage_coeff, P.damage_type, P.armor_flag, 0, turn(P.dir, 180), P.armour_penetration) // pass along receive_ricochet_damage_coeff damage to the structure for the ricochet
+		// pass along receive_ricochet_damage_coeff damage to the structure for the ricochet
+		take_damage(ricocheting.damage * receive_ricochet_damage_coeff, ricocheting.damage_type, ricocheting.armor_flag, 0, turn(ricocheting.dir, 180), ricocheting.armour_penetration)
 
 /// Handles exposing an object to reagents.
 /obj/expose_reagents(list/reagents, datum/reagents/source, methods=TOUCH, volume_modifier=1, show_message=TRUE)

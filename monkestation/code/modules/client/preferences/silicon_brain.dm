@@ -2,6 +2,7 @@
 	savefile_key = "silicon_brain"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_NON_CONTEXTUAL
+	should_update_preview = FALSE
 
 /datum/preference/choiced/silicon_brain/init_possible_values()
 	return list("MMI", "Positronic")

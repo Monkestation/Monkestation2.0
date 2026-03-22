@@ -180,7 +180,7 @@
 
 /mob/living/basic/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()
-	if(staminaloss > 0)
+	if(stamina?.loss > 0)
 		stamina.adjust(stamina_recovery * seconds_per_tick, forced = TRUE)
 
 /mob/living/basic/say_mod(input, list/message_mods = list())
@@ -310,7 +310,7 @@
 
 /// Updates movement speed based on stamina loss
 /mob/living/basic/on_stamina_update()
-	set_varspeed(initial(speed) + (staminaloss * 0.06))
+	set_varspeed(initial(speed) + (stamina?.loss * 0.06))
 
 /mob/living/basic/get_fire_overlay(stacks, on_fire)
 	var/fire_icon = "generic_fire"

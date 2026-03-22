@@ -144,7 +144,7 @@
 	desc = "A single-use autoinjector which contains an experimental serum that causes rapid muscular growth in Hominidae. \
 			Side-affects may include hypertrichosis, violent outbursts, and an unending affinity for bananas."
 	progression_minimum = 10 MINUTES
-	item = /obj/item/reagent_containers/hypospray/medipen/magillitis
+	item = /obj/item/reagent_containers/medipen/magillitis
 	cost = 15
 	restricted_roles = list(JOB_GENETICIST, JOB_RESEARCH_DIRECTOR)
 

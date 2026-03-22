@@ -27,10 +27,12 @@
 	stunmod = 1.3
 	payday_modifier = 1
 
+	species_race_mutation = /datum/mutation/race/simian
 	give_monkey_species_effects = FALSE
 
 /datum/species/monkey/simian/get_species_description()
-	return "Monke."
+	return "Simians are the closest siblings to Humans, unlike Monkeys, which is a term reserved for bio-engineered and mass produced \
+		creations that can be packaged into a cube, known as the Monkey Cube."
 
 /datum/species/monkey/simian/create_pref_unique_perks()
 	var/list/to_add = list()
@@ -69,9 +71,6 @@
 	)
 
 	return to_add
-
-/datum/species/monkey/simian/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load)
-	. = ..()
 
 /datum/species/monkey/simian/random_name(gender,unique,lastname)
 	if(unique)

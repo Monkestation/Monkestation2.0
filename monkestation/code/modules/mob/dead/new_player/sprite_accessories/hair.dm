@@ -122,19 +122,19 @@
 	icon_state = "elitesimian"
 
 /datum/sprite_accessory/hair/edgerunner
-    icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
-    name = "Edgerunner"
-    icon_state = "edgerunner"
+	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
+	name = "Edgerunner"
+	icon_state = "edgerunner"
 
 /datum/sprite_accessory/hair/alchemist
-    icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
-    name = "Alchemist"
-    icon_state = "alchemist"
+	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
+	name = "Alchemist"
+	icon_state = "alchemist"
 
 /datum/sprite_accessory/hair/mayrain
-    icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
-    name = "May Rain"
-    icon_state = "hair_mayrain"
+	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
+	name = "May Rain"
+	icon_state = "hair_mayrain"
 
 /datum/sprite_accessory/hair/elegantbun
 	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'

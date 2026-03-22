@@ -11,7 +11,7 @@
 
 	var/list/buttons = subtypesof(/atom/movable/screen/lobby)
 	for(var/atom/movable/screen/lobby/button_type as anything in buttons)
-		if(button_type::abstract_type == button_type)
+		if(button_type::abstract_type == button_type || button_type::always_create != TRUE)
 			continue
 		var/atom/movable/screen/lobby/lobbyscreen = new button_type(our_hud = src)
 		lobbyscreen.SlowInit()
@@ -20,6 +20,14 @@
 			var/atom/movable/screen/lobby/button/lobby_button = lobbyscreen
 			lobby_button.owner = REF(owner)
 
+	if (!owner.client?.is_localhost())
+		return
+
+	var/atom/movable/screen/lobby/button/start_now/start_button = new(our_hud = src)
+	start_button.SlowInit()
+	static_inventory += start_button
+	start_button.owner = REF(owner)
+
 /atom/movable/screen/lobby
 	plane = SPLASHSCREEN_PLANE
 	layer = LOBBY_BUTTON_LAYER
@@ -27,6 +35,8 @@
 	/// Do not instantiate if type matches this.
 	var/abstract_type = /atom/movable/screen/lobby
 	var/here
+	/// If true we will create this button every time the HUD is generated
+	var/always_create = TRUE
 
 ///Set the HUD in New, as lobby screens are made before Atoms are Initialized.
 /atom/movable/screen/lobby/New(loc, datum/hud/our_hud, ...)
@@ -191,6 +201,11 @@
 		base_icon_state = "ready"
 		var/client/new_client = new_player.client
 		if(new_client)
+			var/highest_job = new_client.prefs.GetHighestJobPreference()
+			var/ready_message = "Readying up as '[new_client.prefs.read_preference(/datum/preference/name/real_name)]'"
+			if(length(highest_job))
+				ready_message += ", Highest occupation setting: [highest_job]"
+			to_chat(new_client, span_notice(ready_message))
 			if(!new_client.readied_store)
 				new_client.readied_store = new(new_player)
 			new_client.readied_store.ui_interact(new_player)
@@ -227,50 +242,8 @@
 	var/mob/dead/new_player/new_player = hud.mymob
 	if(isnull(new_player?.client))
 		return
-	if(!new_player.client?.fully_created)
-		to_chat(new_player, span_warning("Your client is still initializing, please wait a second..."))
-		return
 
-	if(!SSticker?.IsRoundInProgress())
-		to_chat(new_player, span_boldwarning("The round is either not ready, or has already finished..."))
-		return
-
-	if(new_player.client?.check_overwatch())
-		to_chat(new_player, span_warning("Please wait until your connection has been authenticated before joining."))
-		message_admins("[new_player.key] tried to use the Join button but failed the overwatch check.")
-		return
-
-	//Determines Relevent Population Cap
-	var/relevant_cap
-	var/hard_popcap = CONFIG_GET(number/hard_popcap)
-	var/extreme_popcap = CONFIG_GET(number/extreme_popcap)
-	if(hard_popcap && extreme_popcap)
-		relevant_cap = min(hard_popcap, extreme_popcap)
-	else
-		relevant_cap = max(hard_popcap, extreme_popcap)
-
-	//Allow admins and Patreon supporters to bypass the cap/queue
-	if ((relevant_cap && living_player_count() >= relevant_cap) && (new_player.persistent_client?.patreon?.is_donator() || is_admin(new_player.client) || is_mentor(new_player.client)))
-		to_chat(new_player, span_notice("The server is currently overcap, but you are a(n) patreon/mentor/admin!"))
-	else if (SSticker.queued_players.len || (relevant_cap && living_player_count() >= relevant_cap))
-		to_chat(new_player, span_danger("[CONFIG_GET(string/hard_popcap_message)]"))
-
-		var/queue_position = SSticker.queued_players.Find(new_player)
-		if(queue_position == 1)
-			to_chat(new_player, span_notice("You are next in line to join the game. You will be notified when a slot opens up."))
-		else if(queue_position)
-			to_chat(new_player, span_notice("There are [queue_position-1] players in front of you in the queue to join the game."))
-		else
-			SSticker.queued_players += new_player
-			to_chat(new_player, span_notice("You have been added to the queue to join the game. Your position in queue is [SSticker.queued_players.len]."))
-		return
-
-	if(!LAZYACCESS(params2list(params), CTRL_CLICK))
-		GLOB.latejoin_menu.ui_interact(new_player)
-	else
-		to_chat(new_player, span_warning("Opening emergency fallback late join menu! If THIS doesn't show, ahelp immediately!"))
-		GLOB.latejoin_menu.fallback_ui(new_player)
-
+	new_player.join_game(TRUE, params)
 
 /atom/movable/screen/lobby/button/join/proc/show_join_button()
 	SIGNAL_HANDLER
@@ -709,3 +682,21 @@
 	job_overlay = mutable_appearance(job_icon)
 	job_overlay.pixel_x = 8
 	job_overlay.pixel_y = 18
+
+/// LOCALHOST ONLY - Start Now button
+/atom/movable/screen/lobby/button/start_now
+	name = "Start Now (LOCALHOST ONLY)"
+	screen_loc = "TOP:-150,CENTER:-40"
+	icon = 'icons/hud/lobby/start_now.dmi'
+	icon_state = "start_now"
+	base_icon_state = "start_now"
+	always_create = FALSE
+
+/atom/movable/screen/lobby/button/start_now/Click(location, control, params)
+	. = ..()
+	if(!. || !usr.client.is_localhost() || !check_rights_for(usr.client, R_SERVER))
+		return
+	SEND_SOUND(hud.mymob, sound('sound/effects/cartoon_splat.ogg', volume = 40))
+	SSticker.start_immediately = TRUE
+	if(SSticker.current_state == GAME_STATE_STARTUP)
+		to_chat(usr, span_admin("The server is still setting up, but the round will be started as soon as possible."))

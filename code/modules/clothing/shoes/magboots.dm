@@ -13,14 +13,14 @@
 	equip_delay_other = 70
 	resistance_flags = FIRE_PROOF
 	alternate_worn_layer = ABOVE_SUIT_LAYER //monkestation addition
-
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 	slowdown = SHOES_SLOWDOWN
 	/// Whether the magpulse system is active
 	var/magpulse = FALSE
 	/// Slowdown applied wwhen magpulse is active. This is added onto existing slowdown
 	var/slowdown_active = 2
 	/// A list of traits we apply when we get activated
-	var/list/active_traits = list(TRAIT_NO_SLIP_WATER, TRAIT_NO_SLIP_ICE, TRAIT_NO_SLIP_SLIDE, TRAIT_NEGATES_GRAVITY)
+	var/list/active_traits = list(TRAIT_NO_SLIP_WATER, TRAIT_NO_SLIP_ICE, TRAIT_NO_SLIP_SLIDE, TRAIT_NEGATES_GRAVITY, TRAIT_PRESSURE_FLING_RESISTANT)
 
 /obj/item/clothing/shoes/magboots/Initialize(mapload)
 	. = ..()

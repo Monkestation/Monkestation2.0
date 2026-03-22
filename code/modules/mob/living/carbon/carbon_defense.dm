@@ -272,7 +272,7 @@
 	var/turf/target_old_turf = target.loc
 	if(HAS_TRAIT(target,TRAIT_SHOVE_RESIST))
 		log_combat(src, target, "shoved")
-		target.stamina.adjust(-7)
+		target.stamina.adjust(-3.5)
 		target.visible_message("<span class='danger'>[name] tries to shove [target.name]</span>",
 							"<span class='userdanger'>You're nearly knocked down by [name]!</span>", "<span class='hear'>You hear aggressive shuffling!</span>", COMBAT_MESSAGE_RANGE, src)
 		return
@@ -337,7 +337,7 @@
 
 	if(!target.has_movespeed_modifier(/datum/movespeed_modifier/shove))
 		target.add_movespeed_modifier(/datum/movespeed_modifier/shove)
-		addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living/carbon, clear_shove_slowdown)), SHOVE_SLOWDOWN_LENGTH)
+		addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living/carbon, clear_shove_slowdown)), SHOVE_SLOWDOWN_LENGTH, TIMER_UNIQUE)
 
 	log_combat(src, target, "shoved", append_message)
 

@@ -114,6 +114,11 @@
  * Default behaviour is to move back from the item that hit us
  */
 /atom/proc/hitby_react(atom/movable/harmed_atom)
+	if(isliving(harmed_atom))
+		var/mob/living/hit_atom = harmed_atom
+		if(hit_atom.has_status_effect(/datum/status_effect/no_throw_back))
+			return
+
 	if(harmed_atom && isturf(harmed_atom.loc))
 		step(harmed_atom, turn(harmed_atom.dir, 180))
 

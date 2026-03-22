@@ -49,8 +49,9 @@
 	return ..()
 
 /obj/machinery/computer/operating/multitool_act(mob/living/user, obj/item/multitool/tool)
-	if(!QDELETED(tool.buffer) && istype(tool.buffer, /datum/techweb))
-		linked_techweb = tool.buffer
+	var/datum/buffer = multitool_get_buffer(tool)
+	if(!QDELETED(buffer) && istype(buffer, /datum/techweb))
+		linked_techweb = buffer
 	return TRUE
 
 /obj/machinery/computer/operating/attackby(obj/item/O, mob/user, params)

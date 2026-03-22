@@ -351,7 +351,7 @@
 	var/mob/living/rider = owner
 	var/turf/landing_turf = get_step(vehicle.loc, vehicle.dir)
 	var/tony_hawk = HAS_TRAIT(rider, TRAIT_PRO_SKATER) ? 0.5 : 1
-	rider.stamina.adjust(-vehicle.instability * 0.75 * tony_hawk)
+	rider.stamina.adjust(-vehicle.instability * 0.5 * tony_hawk)
 	if (rider.stamina.loss >= 100)
 		vehicle.obj_flags &= ~CAN_BE_HIT
 		playsound(src, 'sound/effects/bang.ogg', 20, TRUE)

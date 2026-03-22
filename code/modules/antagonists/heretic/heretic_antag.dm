@@ -461,6 +461,7 @@ monkestation end */
  */
 /datum/antagonist/heretic/proc/passive_influence_gain()
 	knowledge_points++
+	SStgui.update_uis(src)
 	if(owner.current?.stat <= SOFT_CRIT)
 		to_chat(owner.current, "[span_hear("You hear a whisper...")] [span_hypnophrase(pick_list(HERETIC_INFLUENCE_FILE, "drain_message"))]")
 	addtimer(CALLBACK(src, PROC_REF(passive_influence_gain)), passive_gain_timer)
@@ -590,6 +591,7 @@ monkestation end */
 		return
 
 	knowledge_points += change_num
+	SStgui.update_uis(src)
 
 /**
  * Admin proc for giving a heretic a focus.

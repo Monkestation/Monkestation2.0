@@ -20,7 +20,7 @@
 
 /datum/quirk/jailbird/proc/apply_arrest(crime_name)
 	var/mob/living/carbon/human/jailbird = quirk_holder
-	jailbird.mind.memories += "You have the law on your back because of your crime of: [crime_name]!"
+	jailbird.mind.add_memory(/datum/memory/key/on_the_run, crime = crime_name)
 	var/crime = "[pick(world.file2list("monkestation/strings/random_police.txt"))] [(rand(9)+1)] [pick("days", "weeks", "months", "years")] ago"
 	var/perpname = jailbird.real_name
 	var/datum/record/crew/jailbird_record = find_record(perpname)
@@ -30,5 +30,7 @@
 		return
 	var/datum/crime/new_crime = new(name = crime_name, details = crime, author = "Nanotrasen Bounty Department")
 	jailbird_record.crimes += new_crime
-	jailbird_record.wanted_status = WANTED_PAROLE
+	//Roundstart/latejoin perma prisoners do not get set to parole, they keep their status
+	if (jailbird_record.wanted_status != WANTED_PRISONER)
+		jailbird_record.wanted_status = WANTED_PAROLE
 	jailbird.sec_hud_set_security_status()

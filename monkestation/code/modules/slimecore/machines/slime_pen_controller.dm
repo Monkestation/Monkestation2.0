@@ -1,5 +1,3 @@
-GLOBAL_LIST_EMPTY_TYPED(slime_pen_controllers, /obj/machinery/slime_pen_controller)
-
 /obj/item/wallframe/slime_pen_controller
 	name = "slime pen management frame"
 	desc = "Used for building slime pen consoles."
@@ -25,7 +23,6 @@ GLOBAL_LIST_EMPTY_TYPED(slime_pen_controllers, /obj/machinery/slime_pen_controll
 
 /obj/machinery/slime_pen_controller/Initialize(mapload)
 	..()
-	GLOB.slime_pen_controllers += src
 	register_context()
 	return INITIALIZE_HINT_LATELOAD
 
@@ -40,10 +37,6 @@ GLOBAL_LIST_EMPTY_TYPED(slime_pen_controllers, /obj/machinery/slime_pen_controll
 		linked_sucker = main
 		main.linked_controller = src
 		return
-
-/obj/machinery/slime_pen_controller/Destroy()
-	GLOB.slime_pen_controllers -= src
-	return ..()
 
 /obj/machinery/slime_pen_controller/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -184,15 +177,17 @@ GLOBAL_LIST_EMPTY_TYPED(slime_pen_controllers, /obj/machinery/slime_pen_controll
 
 /obj/machinery/slime_pen_controller/multitool_act(mob/living/user, obj/item/multitool/multitool)
 	. = NONE
-	if(!multitool.buffer)
+	var/datum/buffer = multitool_get_buffer(multitool)
+
+	if(!buffer)
 		return NONE
 
-	if(linked_oozesucker(multitool.buffer, linked_data))  // Linking a new ooze sucker instead of a pen.
+	if(linked_oozesucker(buffer, linked_data))  // Linking a new ooze sucker instead of a pen.
 		balloon_alert_to_viewers("linked sucker")
-		to_chat(user, span_notice("You link the [multitool.buffer] to the [src]."))
+		to_chat(user, span_notice("You link the [buffer] to the [src]."))
 		return ITEM_INTERACT_SUCCESS
 
-	var/obj/machinery/corral_corner/pad = astype(multitool.buffer)
+	var/obj/machinery/corral_corner/pad = astype(buffer)
 	if(!pad?.connected_data)
 		return
 	if(linked_data)

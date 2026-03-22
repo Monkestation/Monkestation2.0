@@ -8,7 +8,6 @@
 #define JOB_UNAVAILABLE_ANTAG_INCOMPAT 6
 /// Job unavailable due to insufficient donor rank.
 #define JOB_UNAVAILABLE_DONOR_RANK 7 //MONKESTATION EDIT
-#define JOB_UNAVAILABLE_CONDITIONS_UNMET 8
 
 /// Used when the `get_job_unavailable_error_message` proc can't make sense of a given code.
 #define GENERIC_JOB_UNAVAILABLE_ERROR "Error: Unknown job availability."
@@ -236,6 +235,10 @@
 #define JOB_CAN_BE_INTERN (1<<8)
 /// This job cannot have more slots opened by the Head of Personnel (but admins or other random events can still do this).
 #define JOB_CANNOT_OPEN_SLOTS (1<<9)
+/// This job can't be an antagonist target so it's not fair for the antagonist who has to track them down.
+#define JOB_CANNOT_BE_TARGET (1<<10)
+/// This job can't exist on planetary maps.
+#define JOB_NO_PLANETARY (1<<11)
 
 /// Combination flag for jobs which are considered regular crew members of the station.
 #define STATION_JOB_FLAGS (JOB_ANNOUNCE_ARRIVAL|JOB_CREW_MANIFEST|JOB_EQUIP_RANK|JOB_CREW_MEMBER|JOB_NEW_PLAYER_JOINABLE|JOB_REOPEN_ON_ROUNDSTART_LOSS|JOB_ASSIGN_QUIRKS|JOB_CAN_BE_INTERN)

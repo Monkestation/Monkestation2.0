@@ -469,6 +469,7 @@
 		result.forceMove(user.drop_location())
 	to_chat(user, span_notice("[recipe.name] crafted."))
 	user.investigate_log("crafted [recipe]", INVESTIGATE_CRAFTING)
+	result.add_fingerprint(user, FALSE)
 	recipe.on_craft_completion(user, result)
 	return TRUE
 
@@ -491,6 +492,7 @@
 					result.forceMove(user.drop_location())
 				to_chat(user, span_notice("Constructed [crafting_recipe.name]."))
 				user.investigate_log("crafted [crafting_recipe]", INVESTIGATE_CRAFTING)
+				result.add_fingerprint(user, FALSE)
 				crafting_recipe.on_craft_completion(user, result)
 			else
 				to_chat(user, span_warning("Construction failed[result]"))
@@ -610,6 +612,9 @@
 			stack_trace("Invalid reaction found in recipe code! ([recipe.reaction])")
 	else if(!isnull(recipe.reaction))
 		stack_trace("Invalid reaction found in recipe code! ([recipe.reaction])")
+	else if(mode && !data["steps"]) // For cooking recipes, if it's a simple craft with no reaction steps required
+		data["steps"] = list()
+		data["steps"] += "No further reaction needed, and can be crafted from separate reagent containers and ingredients."
 
 	return data
 

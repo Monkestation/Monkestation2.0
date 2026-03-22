@@ -97,7 +97,7 @@
 		COMSIG_ITEM_POST_UNEQUIP,
 		COMSIG_MOVABLE_MOVED,
 	))
-	STOP_PROCESSING(SSactualfastprocess, src)
+	STOP_PROCESSING(SSparticle_spewers, src)
 	QDEL_LIST(living_particles)
 	QDEL_LIST(dead_particles)
 	source_object = null
@@ -117,9 +117,9 @@
 /datum/component/particle_spewer/proc/update_processing()
 	SIGNAL_HANDLER
 	if(paused || QDELETED(src) || QDELETED(source_object) || !processes || !get_turf(source_object) || istype(source_object.loc, /obj/machinery/ore_silo) || istype(source_object.loc, /obj/machinery/rnd/production) || istype(source_object.loc, /obj/machinery/mecha_part_fabricator)) // we do not need the ore silo to sparkle constantly
-		STOP_PROCESSING(SSactualfastprocess, src)
+		STOP_PROCESSING(SSparticle_spewers, src)
 	else
-		START_PROCESSING(SSactualfastprocess, src)
+		START_PROCESSING(SSparticle_spewers, src)
 
 /datum/component/particle_spewer/proc/spawn_particles(atom/movable/mover, turf/target)
 	if(paused)

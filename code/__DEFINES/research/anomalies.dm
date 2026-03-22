@@ -27,6 +27,7 @@ GLOBAL_LIST_INIT(bioscrambler_limb_id_blacklist, list(
 	BODYPART_ID_PSYKER,
 	SPECIES_GOBLIN,
 	SPECIES_TERATOMA,
+	SPECIES_OOZELING,
 ))
 
 /// Blacklist of organs which should not appear when bioscrambled.

@@ -139,7 +139,7 @@ SUBSYSTEM_DEF(job)
 		if(!job.config_check())
 			continue
 		if(!job.map_check()) //Even though we initialize before mapping, this is fine because the config is loaded at new
-			log_job_debug("Removed [job.title] due to map config")
+			log_job_debug("Removed [job.title] due to map config.")
 			continue
 
 		//MONKESTATION EDIT START
@@ -1140,10 +1140,6 @@ SUBSYSTEM_DEF(job)
 	if(required_playtime_remaining)
 		JobDebug("[debug_prefix] Error: [get_job_unavailable_error_message(JOB_UNAVAILABLE_PLAYTIME, possible_job.title)], Player: [player], MissingTime: [required_playtime_remaining][add_job_to_log ? ", Job: [possible_job]" : ""]")
 		return JOB_UNAVAILABLE_PLAYTIME
-
-	if(!possible_job.conditions_met())
-		JobDebug("[debug_prefix] Error: [get_job_unavailable_error_message(JOB_UNAVAILABLE_CONDITIONS_UNMET, possible_job.title)], Player: [player][add_job_to_log ? ", Job: [possible_job]" : ""]")
-		return  JOB_UNAVAILABLE_CONDITIONS_UNMET
 
 	//MONKESTATION EDIT START
 	// Job is for donators of a specific level and fail if they did not meet the requirements.

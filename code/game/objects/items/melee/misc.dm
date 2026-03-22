@@ -14,7 +14,6 @@
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
 	force = 1
-	pain_damage = 12
 	throwforce = 7
 	demolition_mod = 0.25
 	wound_bonus = 15
@@ -88,8 +87,8 @@
 	//fast and effective, but as a sword, it might damage the results.
 
 /obj/item/melee/sabre/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(attack_type == PROJECTILE_ATTACK)
-		final_block_chance = 0 //Don't bring a sword to a gunfight
+	if(attack_type == PROJECTILE_ATTACK || attack_type == LEAP_ATTACK)
+		final_block_chance = 0 //Don't bring a sword to a gunfight. Swords do not block tackles, body throws, or leaps.
 	return ..()
 
 /obj/item/melee/sabre/on_exit_storage(datum/storage/container)

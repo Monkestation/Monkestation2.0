@@ -1,5 +1,5 @@
 /datum/religion_sect/maintenance
-    rites_list = list(/datum/religion_rites/maint_adaptation, /datum/religion_rites/shadowascension, /datum/religion_rites/maint_loot, /datum/religion_rites/adapted_food, /datum/religion_rites/weapon_granter, /datum/religion_rites/ritual_totem)
+	rites_list = list(/datum/religion_rites/maint_adaptation, /datum/religion_rites/shadowascension, /datum/religion_rites/maint_loot, /datum/religion_rites/adapted_food, /datum/religion_rites/weapon_granter, /datum/religion_rites/ritual_totem)
 
 /datum/religion_rites/weapon_granter
 	name = "Maintenance Knowledge"

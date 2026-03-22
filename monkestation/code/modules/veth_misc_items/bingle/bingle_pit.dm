@@ -122,7 +122,7 @@
 			bong.armour_penetration = 10
 			bong.evolved = TRUE
 
-		SEND_SIGNAL(bong, BINGLE_EVOLVE)
+		SEND_SIGNAL(bong, COMSIG_LIVING_BINGLE_EVOLVE)
 
 /obj/structure/bingle_hole/proc/swallow_mob(mob/living/victim)
 	if(!isliving(victim))
@@ -352,6 +352,7 @@
 	density = FALSE
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	uses_integrity = TRUE
+	obj_flags = parent_type::obj_flags | BLOCK_Z_OUT_DOWN
 	var/obj/structure/bingle_hole/parent_pit
 
 /obj/structure/bingle_pit_overlay/Initialize(mapload, obj/structure/bingle_hole/parent_pit)
@@ -504,9 +505,9 @@
 
 	var/area/bingle_pit = GLOB.areas_by_type[/area/misc/bingle_pit]
 	for(var/atom/movable/thing in bingle_pit?.contents)
+		thing.forceMove(target_turf)
 		if(QDELETED(thing))
 			continue
-		thing.forceMove(target_turf)
 		var/dir = pick(GLOB.alldirs)
 		var/turf/edge = get_edge_target_turf(target_turf, dir)
 		thing.throw_at(edge, rand(1, 5), rand(1, 5))

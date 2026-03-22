@@ -121,7 +121,7 @@
 	icon_state = "floor_large"
 
 /turf/open/indestructible/white
-	icon_state = "white"
+	icon_state = "whitefull"
 
 /turf/open/indestructible/white/smooth_large
 	icon_state = "white_large"
@@ -378,9 +378,9 @@
 	if(slide_distance)
 		var/turf/target = get_ranged_target_turf(slipper, olddir, slide_distance)
 		if(lube & SLIDE)
-			slipper.AddComponent(/datum/component/force_move, target, TRUE)
+			slipper.AddComponent(/datum/component/force_move, target, TRUE, TRUE)
 		else if(lube & SLIDE_ICE)
-			slipper.AddComponent(/datum/component/force_move, target, FALSE)//spinning would be bad for ice, fucks up the next dir
+			slipper.AddComponent(/datum/component/force_move, target, FALSE, TRUE)//spinning would be bad for ice, fucks up the next dir
 	return TRUE
 
 /turf/open/proc/MakeSlippery(wet_setting = TURF_WET_WATER, min_wet_time = 0, wet_time_to_add = 0, max_wet_time = MAXIMUM_WET_TIME, permanent)
@@ -445,3 +445,32 @@
 		if(istype(get_step(src, direction), /turf/open/floor))
 			return TRUE
 	return FALSE
+
+/turf/open/get_heuristic_slowdown(mob/traverser, travel_dir)
+	. = ..()
+	if(slowdown)
+		. += slowdown * 10
+
+	var/liquid_state = liquids?.liquid_group?.group_overlay_state
+	if(liquid_state)
+		if(liquid_state == LIQUID_STATE_FULLTILE)
+			. += 20
+		else if(liquid_state == LIQUID_STATE_SHOULDERS)
+			. += 10
+		else if(liquid_state == LIQUID_STATE_WAIST)
+			. += 5
+		else if(liquid_state == LIQUID_STATE_ANKLES)
+			. += 3
+		else if(liquid_state == LIQUID_STATE_PUDDLE)
+			. += 2
+
+	// i don't like these, but they can be improved later ~Lucy
+	// add cost from climbable obstacles
+	for(var/obj/structure/some_object in src)
+		if(some_object.density && HAS_TRAIT(some_object, TRAIT_CLIMBABLE))
+			. += 2 // extra tile penalty
+			break
+	// door will have to be opened
+	var/obj/machinery/door/door = locate() in src
+	if(door?.density && !door.locked)
+		. += 5 // try to avoid closed doors where possible

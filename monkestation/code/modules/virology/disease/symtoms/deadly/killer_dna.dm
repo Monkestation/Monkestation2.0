@@ -6,6 +6,8 @@
 	severity = 5
 
 /datum/symptom/dna/activate(mob/living/carbon/mob)
+	if(!iscarbon(mob))
+		return
 	mob.bodytemperature = max(mob.bodytemperature, 350)
 	scramble_dna(mob, TRUE, TRUE, TRUE, rand(15,45))
 	if(mob.toxloss <= 50)
