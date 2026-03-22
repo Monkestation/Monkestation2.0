@@ -3,9 +3,9 @@
 	desc = "A compact energy-based laser carbine that fires concentrated beams of light which pass through glass and burn flesh."
 	icon_state = "laser"
 	inhand_icon_state = "laser"
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = WEIGHT_CLASS_BULKY
 	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT)
-	ammo_type = list(/obj/item/ammo_casing/energy/lasergun/sidearm)
+	ammo_type = list(/obj/item/ammo_casing/energy/lasergun)
 	ammo_x_offset = 1
 	shaded_charge = 1
 
