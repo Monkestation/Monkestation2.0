@@ -100,12 +100,9 @@
 
 /obj/projectile/bullet/c40sol/pierce/on_hit(atom/target, blocked = 0, pierce_hit)
 	if(isliving(target))
-		var/mob/living/poor_sap = target
-
 		// If the bullet has already gone through two people, stop it on this hit
 		if((pierces > 2))
 			projectile_piercing = NONE
-
 			armour_penetration -= 20
 
 	return ..()
@@ -135,7 +132,7 @@
 	name = ".310 Strilka bullet"
 	damage = 45
 	armour_penetration = 30
-	wound_bonus = -50  //-5 from mosin
+	wound_bonus = -55  //-10 from mosin
 	bare_wound_bonus = -25
 	wound_falloff_tile = 0
 	speed = 0.35
