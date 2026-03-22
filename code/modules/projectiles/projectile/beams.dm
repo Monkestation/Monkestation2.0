@@ -19,7 +19,6 @@
 	wound_bonus = -20
 	bare_wound_bonus = 10
 
-
 /obj/projectile/beam/laser
 	generic_name = "laser beam"
 	tracer_type = /obj/effect/projectile/tracer/laser
@@ -172,13 +171,11 @@
 	tracer_type = /obj/effect/projectile/tracer/disabler
 	muzzle_type = /obj/effect/projectile/muzzle/disabler
 	impact_type = /obj/effect/projectile/impact/disabler
-	speed = 0.65 //Just slightly faster than lasers
+	speed = 0.7 //Just slightly faster than lasers
 
 /obj/projectile/beam/disabler/weak
 	stamina = 11.5
 	speed = 0.8
-
-
 
 /obj/projectile/beam/disabler/smoothbore
 	name = "unfocused disabler beam"
