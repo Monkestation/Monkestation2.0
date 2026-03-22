@@ -51,8 +51,6 @@
 	wound_bonus = 20
 	sharpness = NONE
 	embedding = null
-	debilitating = TRUE
-	debilitate_mult = 3
 
 /obj/projectile/bullet/incendiary/shotgun
 	name = "incendiary slug"
