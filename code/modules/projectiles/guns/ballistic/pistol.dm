@@ -210,7 +210,7 @@
 	icon_state = "wespe_evil"
 	pin = /obj/item/firing_pin/implant/pindicate
 	projectile_damage_multiplier = 2
-	fire_delay = 0.5 SECONDS
+	fire_delay = 0.6 SECONDS
 	recoil = 1.5
 	wield_recoil = 0.75
 
