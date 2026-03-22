@@ -102,22 +102,6 @@
 /obj/item/book/manual/chicken_encyclopedia,
 /turf/open/floor/iron/dark/herringbone,
 /area/station/service/hydroponics/chicken/backroom)
-"abD" = (
-/obj/structure/table/reinforced,
-/obj/effect/turf_decal/trimline/red/line{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/red/line{
-	dir = 8
-	},
-/obj/item/storage/toolbox/electrical{
-	pixel_y = 7
-	},
-/obj/item/storage/toolbox/mechanical,
-/obj/item/crowbar/large,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/dark/textured,
-/area/station/ai_monitored/security/armory)
 "abG" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
@@ -704,6 +688,13 @@
 /obj/machinery/power/apc/auto_name/directional/east,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
+"ahi" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/vehicle/ridden/battering_ram{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/textured_large,
+/area/station/ai_monitored/security/armory)
 "ahn" = (
 /turf/closed/wall/r_wall,
 /area/station/hallway/secondary/entry)
@@ -10553,13 +10544,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/science/tele_sci)
-"bZQ" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark,
-/obj/vehicle/ridden/battering_ram{
-	dir = 8
-	},
-/turf/open/floor/iron/dark/textured_large,
-/area/station/ai_monitored/security/armory)
 "bZR" = (
 /obj/item/spear,
 /turf/open/floor/plating,
@@ -45234,6 +45218,22 @@
 /obj/machinery/duct,
 /turf/open/floor/plating,
 /area/station/maintenance/department/security/greater)
+"iLg" = (
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/trimline/red/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/red/line{
+	dir = 8
+	},
+/obj/item/storage/toolbox/electrical{
+	pixel_y = 7
+	},
+/obj/item/storage/toolbox/mechanical,
+/obj/item/crowbar/large,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark/textured,
+/area/station/ai_monitored/security/armory)
 "iLn" = (
 /obj/structure/table/reinforced,
 /obj/machinery/microwave{
@@ -59943,20 +59943,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
-"lzU" = (
-/obj/structure/table/reinforced,
-/obj/machinery/recharger{
-	pixel_x = 9
-	},
-/obj/machinery/recharger,
-/obj/machinery/recharger{
-	pixel_x = -9
-	},
-/obj/effect/turf_decal/trimline/red/end{
-	dir = 1
-	},
-/turf/open/floor/iron/dark/textured,
-/area/station/ai_monitored/security/armory)
 "lzW" = (
 /obj/machinery/vending/boozeomat,
 /turf/closed/wall,
@@ -100800,6 +100786,20 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
+"tvS" = (
+/obj/structure/table/reinforced,
+/obj/machinery/recharger{
+	pixel_x = 9
+	},
+/obj/machinery/recharger,
+/obj/machinery/recharger{
+	pixel_x = -9
+	},
+/obj/effect/turf_decal/trimline/red/end{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/textured,
+/area/station/ai_monitored/security/armory)
 "tvY" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Genetics Maintenance"
@@ -159867,7 +159867,7 @@ klA
 ksL
 hLn
 aQr
-bZQ
+ahi
 gkm
 cwS
 iTA
@@ -160379,8 +160379,8 @@ nrT
 xJn
 wiY
 pzw
-lzU
-abD
+tvS
+iLg
 iMl
 gkm
 bkG
