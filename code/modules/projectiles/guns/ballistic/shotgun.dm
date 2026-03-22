@@ -24,7 +24,7 @@
 	cartridge_wording = "shell"
 	tac_reloads = FALSE
 	weapon_weight = WEAPON_HEAVY
-	rack_delay = 6
+	rack_delay = 5
 	pb_knockback = 2
 	gun_flags = GUN_SMOKE_PARTICLES
 
@@ -50,8 +50,8 @@
 	desc = "A sturdy shotgun with a longer magazine and a fixed tactical stock designed for non-lethal riot control."
 	icon_state = "riotshotgun"
 	inhand_icon_state = "shotgun"
-	fire_delay = 6
-	rack_delay = 6
+	fire_delay = 5
+	rack_delay = 5
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/riot
 	sawn_desc = "Come with me if you want to live."
 	can_be_sawn_off = TRUE
@@ -472,7 +472,7 @@
 	recoil = SAWN_OFF_RECOIL
 	wield_recoil = SAWN_OFF_RECOIL * 0.5
 	weapon_weight = WEAPON_MEDIUM
-	fire_delay = 0.8 SECONDS
+	fire_delay = 0.6 SECONDS
 	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/szot_dynamica/guns_32.dmi'
 	icon_state = "bobr"
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/revolver_fire.ogg'
