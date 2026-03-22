@@ -146,5 +146,3 @@
 	stamina = 24
 	sharpness = NONE
 	embedding = null
-	debilitating = TRUE
-	debilitate_mult = 1
