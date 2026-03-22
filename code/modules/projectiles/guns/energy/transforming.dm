@@ -307,7 +307,7 @@
 	icon_state = "sniper"
 	damage = 30
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/yellow_laser
-	speed = 0.4
+	speed = 2.5
 	light_outer_range = 2
 	light_color = COLOR_VERY_SOFT_YELLOW
 	wound_falloff_tile = 0.1
@@ -338,7 +338,7 @@
 	name = "plasma grenade"
 	icon_state = "grenade"
 	damage = 50
-	speed = 2
+	speed = 0.5
 	range = 6
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
 	light_color = COLOR_PALE_GREEN
@@ -366,7 +366,7 @@
 	name = "plasma globule"
 	icon_state = "flare"
 	damage = 10
-	speed = 2.5
+	speed = 0.4
 	bare_wound_bonus = 55 // Lasers have a wound bonus of 40, this is a bit higher
 	wound_bonus = -50 // However we do not very much against armor
 	range = 2
@@ -393,7 +393,7 @@
 	icon_state = "because_it_doesnt_miss"
 	damage = 10
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/purple_laser
-	speed = 0.8
+	speed = 1.25
 	light_color = COLOR_SCIENCE_PINK
 	range = 9
 
@@ -409,7 +409,7 @@
 	icon_state = "hellfire"
 	damage = 20
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser
-	speed = 0.6
+	speed = 1.6
 	wound_bonus = -15
 	light_color = COLOR_SOFT_RED
 
@@ -450,7 +450,7 @@
 	name = "plasma flare"
 	icon_state = "flare"
 	damage = 15
-	speed = 2
+	speed = 0.5
 	range = 6
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
 	light_color = COLOR_PALE_GREEN
@@ -891,7 +891,7 @@
 	ricochet_decay_chance = 1
 	ricochet_shoots_firer = FALSE //something something biometrics
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
-	reflectable = REFLECT_NORMAL
+	reflectable = TRUE
 	light_system = OVERLAY_LIGHT
 	light_outer_range = 1
 	light_power = 1
@@ -983,8 +983,7 @@
 	damage = 25
 	damage_type = BRUTE
 	icon_state = "blastwave"
-	speed = 1
-	pixel_speed_multiplier = 0.5
+	speed = 0.5
 	eyeblur = 10
 	jitter = 10 SECONDS
 	knockdown = 1
@@ -1043,7 +1042,7 @@
 				to_chat(target, span_reallybig(span_clown("Your blasted right off your shoes!!")))
 				M.visible_message(span_warning("[M] is is sent rocketing off their shoes!"))
 			playsound(src, 'sound/items/airhorn.ogg', 100, TRUE, -1)
-			var/atom/throw_target = get_edge_target_turf(target, angle2dir(Angle))
+			var/atom/throw_target = get_edge_target_turf(target, angle2dir(angle))
 			M.throw_at(throw_target, 200, 8)
 
 /**
@@ -1068,7 +1067,7 @@
 	. = ..()
 	if(isliving(target))
 		var/mob/living/new_target = target
-		var/atom/throw_target = get_edge_target_turf(target, angle2dir(Angle))
+		var/atom/throw_target = get_edge_target_turf(target, angle2dir(angle))
 		new_target.throw_at(throw_target, 4, 1)
 
 /**
@@ -1093,7 +1092,7 @@
 	armor_flag = ENERGY
 	hitsound = 'sound/weapons/tap.ogg'
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
-	reflectable = REFLECT_NORMAL
+	reflectable = TRUE
 	light_system = OVERLAY_LIGHT
 	light_outer_range = 1
 	light_power = 1

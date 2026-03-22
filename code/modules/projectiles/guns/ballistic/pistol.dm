@@ -384,7 +384,6 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BELT
 	accepted_magazine_type = /obj/item/ammo_box/magazine/whispering_jester_45_magazine
-	can_bayonet = FALSE
 	can_suppress = FALSE
 	can_unsuppress = FALSE
 	suppressed = TRUE
@@ -410,7 +409,6 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BELT
 	accepted_magazine_type = /obj/item/ammo_box/magazine/whispering_jester_45_magazine/big_lmao
-	can_bayonet = FALSE
 	can_suppress = FALSE
 	can_unsuppress = TRUE
 	suppressed = FALSE

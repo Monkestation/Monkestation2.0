@@ -2668,3 +2668,8 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		return
 	STOP_PROCESSING(SSclient_mobs, src)
 	START_PROCESSING(clientless_subsystem, src)
+
+/// Returns the string form of the def_zone we have hit.
+/mob/living/proc/check_hit_limb_zone_name(hit_zone)
+	if(has_limbs)
+		return hit_zone

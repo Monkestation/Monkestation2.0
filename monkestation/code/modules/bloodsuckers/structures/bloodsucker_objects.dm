@@ -111,13 +111,16 @@
 	attack_verb_continuous = list("staked", "stabbed", "tore into")
 	attack_verb_simple = list("staked", "stabbed", "tore into")
 	sharpness = SHARP_EDGED
-	embedding = list("embed_chance" = 20)
+	embed_type = /datum/embedding/stake
 	force = 6
 	throwforce = 10
 	max_integrity = 30
 
 	///Time it takes to embed the stake into someone's chest.
 	var/staketime = 12 SECONDS
+
+/datum/embedding/stake
+	embed_chance = 20
 
 /obj/item/stake/attack(mob/living/target, mob/living/user, params)
 	. = ..()
@@ -145,7 +148,7 @@
 		span_danger("You drive the [src] into [target]'s chest!"),
 	)
 	playsound(get_turf(target), 'sound/effects/splat.ogg', 40, 1)
-	if(tryEmbed(target.get_bodypart(BODY_ZONE_CHEST), TRUE, TRUE)) //and if it embeds successfully in their chest, cause a lot of pain
+	if(force_embed(target, target.get_bodypart(BODY_ZONE_CHEST))) //and if it embeds successfully in their chest, cause a lot of pain
 		target.apply_damage(max(10, force * 1.2), BRUTE, BODY_ZONE_CHEST, wound_bonus = 0, sharpness = TRUE)
 	if(QDELETED(src)) // in case trying to embed it caused its deletion (say, if it's DROPDEL)
 		return
@@ -177,8 +180,11 @@
 	force = 8
 	throwforce = 12
 	armour_penetration = 10
-	embedding = list("embed_chance" = 35)
+	embed_type = /datum/embedding/stake/hardened
 	staketime = 80
+
+/datum/embedding/stake/hardened
+	embed_chance = 35
 
 /obj/item/stake/hardened/silver
 	name = "silver stake"
@@ -188,8 +194,11 @@
 	siemens_coefficient = 1 //flags = CONDUCT // var/siemens_coefficient = 1 // for electrical admittance/conductance (electrocution checks and shit)
 	force = 9
 	armour_penetration = 25
-	embedding = list("embed_chance" = 65)
+	embed_type = /datum/embedding/stake/silver
 	staketime = 60
+
+/datum/embedding/stake/silver
+	embed_chance = 65
 
 /obj/item/stake/hardened/silver/Initialize(mapload)
 	. = ..()

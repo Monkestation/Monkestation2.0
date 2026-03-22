@@ -72,17 +72,18 @@
 	wound_bonus = -5
 	bare_wound_bonus = 10
 	shrapnel_type = /obj/item/shrapnel/stingball
-	embedding = list(
-		embed_chance = 50,
-		fall_chance = 5,
-		jostle_chance = 5,
-		ignore_throwspeed_threshold = TRUE,
-		pain_stam_pct = 0.4,
-		pain_mult = 2,
-		jostle_pain_mult = 3,
-		rip_time = 0.5 SECONDS,
-	)
+	embed_type = /datum/embedding/c40sol
 	embed_falloff_tile = -5
+
+/datum/embedding/c40sol
+	embed_chance = 50
+	fall_chance = 5
+	jostle_chance = 5
+	ignore_throwspeed_threshold = TRUE
+	pain_stam_pct = 0.4
+	pain_mult = 2
+	jostle_pain_mult = 3
+	rip_time = 0.5 SECONDS
 
 /obj/projectile/bullet/c40sol/pierce
 	name = ".40 Sol match bullet"
@@ -123,8 +124,6 @@
 		var/mob/living/carbon/gaslighter = target
 		gaslighter.adjust_fire_stacks(firestacks_to_give)
 		gaslighter.ignite_mob()
-
-
 
 ///.310 Strilka, like 7.62 nagant but also not
 
