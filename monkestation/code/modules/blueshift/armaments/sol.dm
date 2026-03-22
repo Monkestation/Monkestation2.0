@@ -71,7 +71,6 @@
 	item_type = /obj/item/storage/toolbox/guncase/skyrat/carwo_large_case/empty
 	cost = PAYCHECK_COMMAND * 2
 
-/*
 
 /datum/armament_entry/company_import/sol_defense/sidearm
 	subcategory = "Sidearms"
