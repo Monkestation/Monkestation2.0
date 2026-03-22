@@ -172,14 +172,14 @@
 	name = "Renoster Shotgun Case"
 	desc = "A twelve gauge shotgun with an eight shell capacity underneath. Comes with two boxes of buckshot."
 	item = /obj/item/storage/toolbox/guncase/nova/opfor/renoster
-	cost = 8
+	cost = 10
 
 /datum/uplink_item/dangerous/infanteria
 	name = "Carwo-Cawil Battle Rifle Case"
 	desc = "A heavy battle rifle, this one seems to be painted tacticool black. Accepts any standard SolFed rifle magazine. Comes with two mags. This will NOT fit in a backpack... "
 	progression_minimum = 10 MINUTES
 	item = /obj/item/storage/toolbox/guncase/nova/opfor/infanteria
-	cost = 10
+	cost = 12
 
 /datum/uplink_item/dangerous/miecz
 	name = "'Miecz' Submachinegun Case"
@@ -200,7 +200,7 @@
 	desc = "A small submachinegun, this one is painted in tacticool black. Accepts any standard Sol pistol magazine."
 	progression_minimum = 10 MINUTES
 	item = /obj/item/storage/toolbox/guncase/nova/pistol/opfor/sindano
-	cost = 7
+	cost = 10
 
 /datum/uplink_item/dangerous/wespe
 	name = "Wespe Pistol"
