@@ -472,13 +472,13 @@
 	recoil = SAWN_OFF_RECOIL
 	wield_recoil = SAWN_OFF_RECOIL * 0.5
 	weapon_weight = WEAPON_MEDIUM
-	fire_delay = 0.6 SECONDS
+	fire_delay = 0.8 SECONDS
 	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/szot_dynamica/guns_32.dmi'
 	icon_state = "bobr"
 	fire_sound = 'monkestation/code/modules/blueshift/sounds/revolver_fire.ogg'
 	spread = SAWN_OFF_ACC_PENALTY
-	projectile_damage_multiplier = 0.75 /// No way in hell a handgun with a 3 inch barrel should fire the same cartridge with the same force as a full-length barrel
-	projectile_wound_bonus = -15  /// In addition, this should help with the balance issues around the Bobr, it being a concealable shotgun with near-instant reload
+	projectile_damage_multiplier = 0.75 /// Puts it close to par with the trappiste
+	projectile_wound_bonus = -15  /// This should help with the balance issues around the Bobr, it being a concealable shotgun with near-instant reload
 
 /obj/item/gun/ballistic/revolver/shotgun_revolver/give_manufacturer_examine()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_SZOT)
