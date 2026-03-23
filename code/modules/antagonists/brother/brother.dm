@@ -239,11 +239,7 @@
 	var/response = tgui_alert(flashed, "Visions of a life with [source] as your brother pass through your mind.", "Become brothers?", list("Become a brother", "Reject Brotherhood"))
 	popup = FALSE
 
-	if(response == "Reject Brotherhood")
-		team.rejected_brothers.Add(flashed)
-		to_chat(flashed, span_big(span_hypnophrase("You wake up forgetting why exactly you feel asleep, and the brotherly visions you had during your sleep")))
-
-	else if(response == "Become a brother")
+	if(response == "Become a brother")
 		if (!team.add_brother(flashed, key_name(source))) // Shouldn't happen given the former, more specific checks but just in case
 			flashed.balloon_alert(source, "failed!")
 			return
@@ -262,5 +258,8 @@
 
 		UnregisterSignal(source, COMSIG_MOB_SUCCESSFUL_FLASHED_CARBON)
 		source.RemoveComponentSource(REF(src), /datum/component/can_flash_from_behind)
+
+	team.rejected_brothers.Add(flashed)
+	to_chat(flashed, span_big(span_hypnophrase("You wake up forgetting why exactly you feel asleep, and the brotherly visions you had during your sleep")))
 
 	flashed.SetSleeping(0 SECONDS)
