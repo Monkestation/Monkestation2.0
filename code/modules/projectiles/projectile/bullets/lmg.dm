@@ -37,7 +37,7 @@
 /obj/projectile/bullet/mm712x82/ap
 	name = "7.12x82mm armor-piercing bullet"
 	armour_penetration = 85
-	speed = 3.3 //monke edit
+	speed = 2 //monke edit
 
 /obj/projectile/bullet/mm712x82/hp
 	name = "7.12x82mm hollow-point bullet"
@@ -101,7 +101,6 @@
 			damage *= biotype_damage_multiplier
 	return ..()
 
-
 /obj/projectile/bullet/c65xeno/evil
 	name = "6.5mm FMJ round"
 	damage = 10
@@ -113,7 +112,7 @@
 /obj/projectile/bullet/c65xeno/pierce
 	name = "6.5mm subcaliber tungsten sabot round"
 	icon_state = "gaussphase"
-	speed = 3.3
+	speed = 2
 	damage = 6
 	armour_penetration = 60
 	wound_bonus = 5
@@ -136,7 +135,7 @@
 /obj/projectile/bullet/c65xeno/pierce/evil
 	name = "6.5mm UDS"
 	icon_state = "gaussphase"
-	speed = 3.3
+	speed = 2
 	damage = 7
 	armour_penetration = 60
 	wound_bonus = 10
@@ -156,7 +155,7 @@
 	icon_state = "redtrac"
 	damage = 5
 	bare_wound_bonus = 0
-	speed = 1.4 ///half of standard
+	speed = 1.1
 	/// How many firestacks the bullet should impart upon a target when impacting
 	biotype_damage_multiplier = 4
 	var/firestacks_to_give = 1
@@ -175,7 +174,7 @@
 	icon_state = "redtrac"
 	damage = 10
 	bare_wound_bonus = 0
-	speed = 1.4 ///half of standard
+	speed = 1.1
 	/// How many firestacks the bullet should impart upon a target when impacting
 	biotype_damage_multiplier = 4
 	projectile_piercing = PASSMOB

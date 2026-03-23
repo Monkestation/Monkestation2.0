@@ -1,8 +1,0 @@
-author: "TheColorCyan"
-delete-after: True
-changes:
-  - bugfix: "fixes cult leader having broken comms"
-  - bugfix: "fixed temp alert having no description"
-  - bugfix: "fixed ghost being able to teleport chairs"
-  - bugfix: "fixed being able to click drag yourself onto climbables from far away"
-  - bugfix: "fixed vims needing hands"

@@ -137,7 +137,7 @@
  * tochat - Whether to immediately post the result into the chat of the user, otherwise it will return the results.
  */
 /proc/healthscan(mob/user, mob/living/target, mode = SCANNER_VERBOSE, advanced = FALSE, tochat = TRUE)
-	if(user.incapacitated())
+	if(user.incapacitated(IGNORE_SOFTCRIT))
 		return
 
 	// the final list of strings to render
@@ -184,7 +184,7 @@
 		render_list += "<span class='alert ml-1'><b>Subject will suffer highly abnormal hemorrhaging from laceration or surgical incension.</b></span>\n"
 
 	// monkestation edit: DNR Quirk, i mean it also technically will count for all other defib blacklist reasons.
-	if(HAS_TRAIT(target, TRAIT_DEFIB_BLACKLISTED))
+	if(target.mind && HAS_TRAIT(target.mind, TRAIT_DEFIB_BLACKLISTED))
 		render_list += "<span class='alert ml-1'><b>Subject is blacklisted from resuscitation and cannot be defibrillated[target.stat == DEAD ? "" : " after dying"].</b></span>\n"
 	// monkestation end
 

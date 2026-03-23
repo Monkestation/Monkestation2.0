@@ -333,3 +333,52 @@
 2026-03-22:
   BanementI:
   - rscadd: The AI can now go to the soup store, and use a couple of other fishy words.
+2026-03-23:
+  00-Steven, ZephyrTFA, JohnFulpWillard:
+  - rscadd: The Curator's barcode scanner now makes little sounds when operating it.
+  - qol: The Library machines are now replaceable.
+  - bugfix: Books should now have proper html formatting (aka should look like how
+      it does in paper)
+  Gboster-0:
+  - bugfix: wintercoats no longer resist ashstorms
+  Ghommie, SmArtKar, TheColorCyan:
+  - refactor: projectiles and embeds were severely refactored, report any issues
+  - rscadd: (necromanceranne) Replaces the Particle Acceleration Rifle with the Event
+      Horizon anti-existential beam rifle. It shoots black holes. You can make this
+      in-game. That's right, YOU!
+  - balance: (necromanceranne) Only one vortex anomaly can be made in a round.
+  - refactor: (Whoneedspacee) Wendigos abilities have been changed into actions that
+      can be added to any mob.
+  - rscadd: (SmArtKar) You can now craft tether anchors, which can be secured with
+      a wrench and attached to with right click. They won't let you drift into space
+      and you can adjust tether length/cut it via lmb/rmb/ctrl click on the wire.
+  - rscadd: (SmArtKar) MOD tethers now remotely place and connect to tether anchors
+      instead of throwing you at where they landed.
+  - balance: (SmArtKar) MOD tethers can now be used in gravity
+  JohnFulpWillard:
+  - qol: Curators now keep languages through body transformations.
+  - balance: DNR quirk gives 6 points instead of 8, blacklists you from cloning, persists
+      through bodies, and in exchange gives you more health (takes approx. 50 more
+      damage to enter hardcrit and 100 more damage to die)
+  TheColorCyan:
+  - bugfix: fixed temperature insulation checks, stuff like winter coats should no
+      longer make you immune to ash storms and protect from fire
+  - bugfix: fixes cult leader having broken comms
+  - bugfix: fixed temp alert having no description
+  - bugfix: fixed ghost being able to teleport chairs
+  - bugfix: fixed being able to click drag yourself onto climbables from far away
+  - bugfix: fixed vims needing hands
+  - bugfix: fixed borer abilities being usable while dead
+  - bugfix: revenants can no longer pull people by using context menu
+  - bugfix: fixed slimes being invisible after revival
+  - bugfix: fixed not being able to put multitools into destructive analyzer
+  - balance: (Jacquerel) Support Guardians cannot heal their owner while recalled.
+  - balance: ' (Jacquerel) Dextrous Guardians cannot use their hands while recalled.'
+  - bugfix: ' (Jacquerel) Gaseous Guardian particles will correctly dismiss when you
+      recall.'
+  - bugfix: ' (Jacquerel) Guardian health hud will display the correct value when
+      you are first summoned.'
+  byondsucks:
+  - balance: Slasher antag no longer has the dumb trait
+  suffering intensifies:
+  - balance: allows tundra moths to use the mothlet grenade
