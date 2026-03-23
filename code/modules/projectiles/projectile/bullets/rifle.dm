@@ -153,7 +153,7 @@
 	ricochet_decay_damage = 0.7
 	shrapnel_type = null
 	sharpness = NONE
-	embedding = null
+	embed_type = null
 	speed = 1.5
 
 /obj/projectile/bullet/strilka310/ap

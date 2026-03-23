@@ -27,7 +27,7 @@
 	ricochet_chance = 50
 	ricochet_auto_aim_range = 0
 	ricochet_incidence_leeway = 50
-	embedding = null
+	embed_type = null
 	demolition_mod = 3 //High-velocity tungsten > steel doors
 	projectile_piercing = PASSMOB
 

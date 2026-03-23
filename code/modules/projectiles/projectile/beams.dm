@@ -29,7 +29,7 @@
 
 //concentrated laser, similar to hellfires but far lower wounding
 /obj/projectile/beam/laser/conlaser
-	generic_name = "concentrated laser beam"
+	name = "concentrated laser beam"
 	icon_state = "heavylaser"
 	damage = 25
 	pass_flags = PASSTABLE | PASSGLASS
