@@ -125,7 +125,7 @@
 /obj/projectile/bullet/p60strela // The funny thing is, these are wild but you only get three of them a magazine
 	name =".60 Strela bullet"
 	icon_state = "gaussphase"
-	speed = 0.4
+	speed = 3.3
 	damage = 40
 	armour_penetration = 80
 	wound_bonus = 10
@@ -156,7 +156,7 @@
 
 /obj/projectile/bullet/neville
 	name ="20x160mm Neville"
-	speed = 0.65
+	speed = 2.25
 	damage = 50
 	dismemberment = 25
 	armour_penetration = 85 // she may be big, but its armor piercing. less damage then the .50 cal cause of it

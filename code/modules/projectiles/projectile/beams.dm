@@ -51,7 +51,7 @@
 	name = "hellfire laser"
 	wound_bonus = 0
 	damage = 25
-	speed = 0.6 // higher power = faster, that's how light works right
+	speed = 1.5 // higher power = faster, that's how light works right
 
 /obj/projectile/beam/laser/hellfire/Initialize(mapload)
 	. = ..()
@@ -168,11 +168,11 @@
 	tracer_type = /obj/effect/projectile/tracer/disabler
 	muzzle_type = /obj/effect/projectile/muzzle/disabler
 	impact_type = /obj/effect/projectile/impact/disabler
-	speed = 0.7 //Just slightly faster than lasers
+	speed = 1.5 //Just slightly faster than lasers
 
 /obj/projectile/beam/disabler/weak
 	stamina = 11.5
-	speed = 0.8
+	speed = 1.25
 
 /obj/projectile/beam/disabler/smoothbore
 	name = "unfocused disabler beam"
@@ -298,7 +298,7 @@
 	icon = 'monkestation/code/modules/blueshift/icons/obj/company_and_or_faction_based/szot_dynamica/ammo.dmi'
 	icon_state = "plasma_glob"
 	damage = 10
-	speed = 1.8
+	speed = 0.75
 	bare_wound_bonus = 55 // Lasers have a wound bonus of 40, this is a bit higher
 	wound_bonus = -50 // However we do not very much against armor
 	pass_flags = PASSTABLE | PASSGRILLE // His ass does NOT pass through glass!

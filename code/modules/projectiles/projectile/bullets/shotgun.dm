@@ -19,7 +19,7 @@
 	name = "tungsten sabot-slug"
 	icon_state = "gauss"
 	damage = 25
-	speed = 0.3 //sub-caliber + lighter = speed. (Smaller number = faster)
+	speed = 2.5
 	armour_penetration = 50
 	wound_bonus = -40
 	bare_wound_bonus = -40
@@ -55,13 +55,13 @@
 	name = "incendiary slug"
 	icon_state = "pellet"
 	damage = 20
-	speed = 0.5
+	speed = 1.5
 
 /obj/projectile/bullet/incendiary/shotgun/no_trail
 	name = "precision incendiary slug"
 	damage = 35
 	leaves_fire_trail = FALSE
-	speed = 0.5
+	speed = 1.5
 
 /obj/projectile/bullet/pellet
 	icon_state = "pellet"
@@ -80,7 +80,7 @@
 	stamina = 10
 	sharpness = NONE
 	embed_type = null
-	speed = 0.8
+	speed = 1.25
 	stamina_falloff_tile = 0
 	damage_falloff_tile = 0
 	ricochets_max = 4
@@ -103,7 +103,7 @@
 	damage = 13
 	wound_bonus = -13
 	armour_penetration = 30
-	speed = 1.4
+	speed = 0.75
 
 /obj/projectile/bullet/pellet/shotgun_buckshot/magnum/Initialize(mapload)
 	. = ..()
@@ -114,7 +114,7 @@
 	name = "express buckshot pellet"
 	damage = 4
 	wound_bonus = 0
-	speed = 0.6
+	speed = 1.5
 
 /obj/projectile/bullet/pellet/shotgun_buckshot/express/Initialize(mapload)
 	. = ..()
@@ -184,7 +184,7 @@
 	damage = 30
 	armour_penetration = 75
 	projectile_piercing = (ALL & (~PASSMOB))
-	speed = 0.3
+	speed = 3.3
 
 /obj/projectile/bullet/pellet/trickshot
 	name = "trickshot pellet"

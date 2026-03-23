@@ -37,6 +37,7 @@
 	damage = 20
 	armour_penetration = 80
 	projectile_phasing =  PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE | PASSDOORS
+	speed = 2.5
 
 /obj/projectile/bullet/a223
 	name = ".223 bullet"
@@ -53,6 +54,7 @@
 	damage = 30
 	armour_penetration = 100
 	projectile_phasing =  PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE | PASSDOORS
+	speed = 2.5
 
 
 // .40 Sol Long, caseless rifle bullets
@@ -88,7 +90,7 @@
 /obj/projectile/bullet/c40sol/pierce
 	name = ".40 Sol match bullet"
 	icon_state = "gaussphase"
-	speed = 0.3
+	speed = 2.25
 	damage = 13
 	armour_penetration = 40
 	wound_bonus = -30
@@ -113,7 +115,7 @@
 	name = ".40 Sol Long incendiary bullet"
 	icon_state = "redtrac"
 	damage = 15
-	speed = 0.5
+	speed = 1.5
 	/// How many firestacks the bullet should impart upon a target when impacting
 	var/firestacks_to_give = 1
 
@@ -134,7 +136,7 @@
 	wound_bonus = -55  //-10 from mosin
 	bare_wound_bonus = -25
 	wound_falloff_tile = 0
-	speed = 0.35
+	speed = 2.25
 
 /obj/projectile/bullet/strilka310/surplus
 	name = ".310 Strilka surplus bullet"
@@ -152,12 +154,12 @@
 	shrapnel_type = null
 	sharpness = NONE
 	embedding = null
-	speed = 0.5
+	speed = 1.5
 
 /obj/projectile/bullet/strilka310/ap
 	name = ".310 armor-piercing bullet"
 	damage = 35
 	armour_penetration = 60
 	wound_falloff_tile = -2
-	speed = 0.25
+	speed = 3.3
 

@@ -21,7 +21,7 @@
 	armour_penetration = 75
 	embed_type = null
 	shrapnel_type = null
-	speed = 0.3
+	speed = 2.25
 
 /obj/projectile/bullet/c9mm/hp
 	name = "9mm hollow-point bullet"
@@ -32,7 +32,7 @@
 	name = "9mm incendiary bullet"
 	damage = 15
 	fire_stacks = 2
-	speed = 0.5
+	speed = 1.5
 
 
 // 10mm
@@ -45,7 +45,7 @@
 	name = "10mm armor-piercing bullet"
 	damage = 35
 	armour_penetration = 60
-	speed = 0.3
+	speed = 2.25
 
 /obj/projectile/bullet/c10mm/hp
 	name = "10mm hollow-point bullet"
@@ -56,7 +56,7 @@
 	name = "10mm incendiary bullet"
 	damage = 20
 	fire_stacks = 3
-	speed = 0.5
+	speed = 1.5
 
 
 ///.35 sol short, weak crew pistol/smg round
@@ -113,7 +113,7 @@
 	damage = 11
 	bare_wound_bonus = -30
 	armour_penetration = 50
-	speed = 0.3
+	speed = 2.25
 
 
 ///.585 Trappiste, heavy crew pistol/smg round
