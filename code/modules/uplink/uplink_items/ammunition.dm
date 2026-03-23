@@ -39,7 +39,7 @@
 			These rounds are more damaging but ineffective against armour."
 	progression_minimum = 30 MINUTES
 	item = /obj/item/ammo_box/magazine/m9mm/hp
-	cost = 2
+	cost = 3
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
 /datum/uplink_item/ammo/pistolfire
