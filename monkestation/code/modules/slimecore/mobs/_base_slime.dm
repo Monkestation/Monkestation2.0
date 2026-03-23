@@ -106,8 +106,6 @@
 		/datum/pet_command/point_targeting/attack/latch,
 		/datum/pet_command/stop_eating,
 	)
-	///the amount of ooze we produce
-	var/ooze_production = 10
 
 /mob/living/basic/slime/Initialize(mapload, datum/slime_color/passed_color, is_split)
 	. = ..()
@@ -126,7 +124,6 @@
 
 	AddComponent(/datum/component/obeys_commands, friendship_commands)
 
-	AddComponent(/datum/component/liquid_secretion, current_color.secretion_path, ooze_production, 10 SECONDS, TYPE_PROC_REF(/mob/living/basic/slime, check_secretion))
 	AddComponent(/datum/component/generic_mob_hunger, 400, 0.1, 5 MINUTES, 200)
 	AddComponent(/datum/component/scared_of_item, 5)
 	AddComponent(/datum/component/emotion_buffer, emotion_states)
@@ -181,24 +178,15 @@
 			. += span_notice("You are one of [src]'s best friends!")
 		else
 			. += span_notice("You are one of [src]'s friends.")
-	if(check_secretion())
-		switch(ooze_production)
-			if(-INFINITY to 10)
-				. += span_notice("It's secreting some ooze.")
-			if(10 to 40)
-				. += span_notice("It's secreting a lot of ooze.")
-			if(40 to INFINITY)
-				. += span_boldnotice("It's overflowing with ooze!")
 
 /mob/living/basic/slime/resolve_right_click_attack(atom/target, list/modifiers)
 	if(GetComponent(/datum/component/latch_feeding))
 		buckled?.unbuckle_mob(src, force = TRUE)
 		return
 	else if(target != src && isliving(target) && !QDELING(target) && CanReach(target) && !HAS_TRAIT(target, TRAIT_LATCH_FEEDERED))
-		AddComponent(/datum/component/latch_feeding, target, TRUE, TOX, 2, 4, FALSE, CALLBACK(src, TYPE_PROC_REF(/mob/living/basic/slime, latch_callback), target))
+		AddComponent(/datum/component/latch_feeding, target, TRUE, TOX, 2, 4, FALSE)
 		return
 	. = ..()
-
 
 /mob/living/basic/slime/proc/rebuild_foods()
 	compiled_liked_foods = list()
@@ -259,10 +247,6 @@
 
 /mob/living/basic/slime/proc/update_slime_varience()
 	update_appearance(UPDATE_NAME | UPDATE_ICON)
-	if(!chemical_injection)
-		SEND_SIGNAL(src, COMSIG_SECRETION_UPDATE, current_color.secretion_path, ooze_production, 10 SECONDS)
-	else
-		SEND_SIGNAL(src, COMSIG_SECRETION_UPDATE, chemical_injection, ooze_production, 10 SECONDS)
 
 /mob/living/basic/slime/update_icon_state()
 	var/prefix = "grey"
@@ -292,15 +276,6 @@
 			. += mutable_appearance(worn_accessory.accessory_icon, "[worn_accessory.accessory_icon_state]-adult", layer + 0.15, src, appearance_flags = (KEEP_APART | RESET_COLOR))
 		else
 			. += mutable_appearance(worn_accessory.accessory_icon, "[worn_accessory.accessory_icon_state]-baby", layer + 0.15, src, appearance_flags = (KEEP_APART | RESET_COLOR))
-
-/mob/living/basic/slime/proc/check_secretion()
-	if((!(slime_flags & ADULT_SLIME)) || (slime_flags & STORED_SLIME) || (slime_flags & MUTATING_SLIME) || (slime_flags & NOOOZE_SLIME))
-		return FALSE
-	if(stat == DEAD)
-		return FALSE
-	if(hunger_precent < production_precent)
-		return FALSE
-	return TRUE
 
 /mob/living/basic/slime/proc/hunger_updated(datum/source, current_hunger, max_hunger)
 	var/was_adult = slime_flags & ADULT_SLIME
@@ -378,7 +353,6 @@
 
 	var/mob/living/basic/slime/new_slime = new(loc, current_color.type, TRUE)
 	new_slime.mutation_chance = mutation_chance
-	new_slime.ooze_production = ooze_production
 	for(var/datum/slime_mutation_data/data as anything in possible_color_mutations)
 		data.copy_progress(new_slime)
 	for(var/datum/slime_trait/trait as anything in slime_traits)
@@ -498,14 +472,6 @@
 		buckled?.unbuckle_mob(src, force = TRUE)
 	return
 
-/mob/living/basic/slime/proc/latch_callback(mob/living/target)
-	if(!chemical_injection)
-		return FALSE
-	if(!target.reagents)
-		return FALSE
-	target.reagents.add_reagent(chemical_injection, 3) // guh
-	return TRUE
-
 /mob/living/basic/slime/rainbow
 	current_color = /datum/slime_color/rainbow
 
@@ -529,5 +495,5 @@
 	. = ..()
 	if(SEND_SIGNAL(src, COMSIG_FRIENDSHIP_CHECK_LEVEL, throwingdatum.thrower, FRIENDSHIP_FRIEND))
 		if(!HAS_TRAIT(hit_atom, TRAIT_LATCH_FEEDERED) && isliving(hit_atom) && !QDELING(hit_atom))
-			AddComponent(/datum/component/latch_feeding, hit_atom, TRUE, TOX, 2, 4, FALSE, CALLBACK(src, PROC_REF(latch_callback), hit_atom), FALSE)
+			AddComponent(/datum/component/latch_feeding, hit_atom, TRUE, TOX, 2, 4, FALSE)
 			visible_message(span_danger("[throwingdatum.thrower] hucks [src] at [hit_atom] causing the [src] to stick to [hit_atom]."))
