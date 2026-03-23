@@ -205,6 +205,7 @@
 /datum/uplink_item/dangerous/wespe
 	name = "Wespe Pistol"
 	desc = "The standard issue service pistol of SolFed's various military branches. Comes with attached light."
+	progression_minimum = 5 MINUTES
 	item = /obj/item/storage/toolbox/guncase/nova/pistol/opfor/wespe
 	cost = 6
 
