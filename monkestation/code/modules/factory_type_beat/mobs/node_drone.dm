@@ -86,6 +86,7 @@
 
 	if(!isnull(attached_vent))
 		update_appearance(UPDATE_ICON_STATE | UPDATE_OVERLAYS)
+		attached_vent.update_progress_bar()
 
 /mob/living/basic/node_drone/update_overlays()
 	. = ..()

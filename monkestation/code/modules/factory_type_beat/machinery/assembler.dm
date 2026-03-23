@@ -4,9 +4,12 @@
 	circuit = /obj/item/circuitboard/machine/assembler
 
 	var/speed_multiplier = 1
+	var/wire_integrity = 1 // Affects speed_multiplier depending on wires cut and causes electric mishaps
+	var/spark_size = 5
 	var/datum/crafting_recipe/chosen_recipe
 	var/crafting = FALSE
 	var/datum/crafting_recipe/current_craft_recipe // The recipe currently being crafted
+	var/datum/effect_system/spark_spread/spark_system // The spark system, used for generating... sparks?
 
 	var/static/list/legal_crafting_recipes = list()
 	var/list/crafting_inventory = list()
@@ -23,14 +26,17 @@
 	AddElement(/datum/element/connect_loc, loc_connections)
 	AddComponent(/datum/component/hovering_information, /datum/hover_data/assembler)
 	register_context()
+	//Sets up a spark system
+	spark_system = new /datum/effect_system/spark_spread
+	spark_size = (wire_integrity) * 5
+	spark_system.set_up(spark_size, 0, src)
+	spark_system.attach(src)
 
 	if(!length(legal_crafting_recipes))
 		create_recipes()
 
 /obj/machinery/assembler/proc/empty_crafting_inventory()
 	for(var/atom/movable/listed as anything in crafting_inventory)
-		if(QDELETED(listed))
-			continue
 		listed.forceMove(get_turf(src))
 		crafting_inventory -= listed
 
@@ -39,10 +45,20 @@
 	var/datum/stock_part/manipulator/locate_servo = locate() in component_parts
 	if(!locate_servo)
 		return
-	speed_multiplier = 1 / locate_servo.tier
+	speed_multiplier = wire_integrity / locate_servo.tier
+
+/obj/machinery/assembler/proc/refresh_parts()
+	var/datum/stock_part/manipulator/locate_servo = locate() in component_parts
+	if(!locate_servo)
+		return
+	if(wire_integrity >= 2)
+		wire_integrity = 2
+	speed_multiplier = wire_integrity / locate_servo.tier
+	spark_size = (wire_integrity) * 5
 
 /obj/machinery/assembler/Destroy()
 	. = ..()
+	QDEL_NULL(spark_system)
 	empty_crafting_inventory()
 
 /obj/machinery/assembler/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -56,14 +72,75 @@
 			processable += initial(atom.name)
 			comma = !comma
 		context[SCREENTIP_CONTEXT_MISC] = processable
+
+	if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
+		context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] Panel"
+
+	if(!panel_open)
 		return CONTEXTUAL_SCREENTIP_SET
+
+	if(held_item.tool_behaviour == TOOL_CROWBAR)
+		if(!length(crafting_inventory) && !crafting)
+			context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
+		context[SCREENTIP_CONTEXT_RMB] = "Force Apart"
+
+	if(held_item.tool_behaviour == TOOL_MULTITOOL)
+		if(!chosen_recipe == null || length(crafting_inventory))
+			context[SCREENTIP_CONTEXT_LMB] = "Reset"
+		context[SCREENTIP_CONTEXT_RMB] = "Examine Wires"
+
+	if(held_item.tool_behaviour == TOOL_WIRECUTTER && wire_integrity <= 2.0)
+		context[SCREENTIP_CONTEXT_LMB] = "Cut Wires"
+
+	if(held_item)
+		if(istype(held_item, /obj/item/stack/cable_coil))
+			context[SCREENTIP_CONTEXT_LMB] = "Mend Wires"
+
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/assembler/examine(mob/user)
 	. = ..()
+	if(panel_open)
+		. += span_notice("The maintenance panel is open.")
+		if(wire_integrity == 2)
+			. += span_notice("The wires inside are cut apart, hampering its utility.")
+		if(wire_integrity >= 1.4 && !wire_integrity == 2)
+			. += span_notice("Inside you see a couple stray wires.")
+
 	if(chosen_recipe)
-		. += span_notice(chosen_recipe.name)
+		. += span_notice("Selected recipe: [chosen_recipe.name]")
 		for(var/atom/atom as anything in chosen_recipe.reqs)
-			. += span_notice("[initial(atom.name)]: [chosen_recipe.reqs[atom]]")
+			if(chosen_recipe.reqs[atom] >= 2)
+				. += span_notice("Consumes [chosen_recipe.reqs[atom]] [initial(atom.name)]\s per operation.")
+			else
+				. += span_notice("Consumes one [initial(atom.name)] per operation.")
+
+	if(length(crafting_inventory))
+		. += span_notice("The assembler currently contains the following stacks:")
+		for(var/atom/item as anything in crafting_inventory)
+			. += span_notice("[initial(item.name)]")
+
+	if(!crafting)
+		. += span_notice("The machine currently lies dormant.")
+
+	. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
+	if(crafting)
+		. += span_notice("The machine cannot be interacted with further while in operation.")
+		return
+
+	if(panel_open)
+		if(length(crafting_inventory))
+			. += span_notice("The machine's ingredient eject function can be triggered with special [EXAMINE_HINT("tools")].")
+		. += span_notice("The [EXAMINE_HINT("right tools")] could be used to activate the assembler's wiring diagnostic switch.")
+		if(!wire_integrity == 2)
+			. += span_notice("The machine's wires can be [EXAMINE_HINT("cut")].")
+		if(wire_integrity >= 1.4)
+			. += span_notice("The machine's [EXAMINE_HINT("wires")] can be mended.")
+		if(!length(crafting_inventory))
+			. += span_notice("The machine can be safetly [EXAMINE_HINT("pried")] apart.")
+		if(length(crafting_inventory))
+			. += span_notice("With the [EXAMINE_HINT("right")] amount of force, the assembler can be [EXAMINE_HINT("pried")] apart, destroying its contents.")
+
 
 /obj/machinery/assembler/proc/create_recipes()
 	for(var/datum/crafting_recipe/recipe as anything in GLOB.crafting_recipes)
@@ -71,8 +148,16 @@
 			continue
 		legal_crafting_recipes += recipe
 
+/obj/machinery/assembler/attack_hand(mob/living/carbon/user, list/modifiers)
+	if(panel_open && iscarbon(user))
+		shock(user)
+
 /obj/machinery/assembler/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
+	if(panel_open)
+		to_chat(user, span_warning("The assembler cannot select a recipe while its service panel is open!"))
+		user.balloon_alert(user, "panel open!")
+		return
 	var/datum/crafting_recipe/choice = tgui_input_list(user, "Choose a recipe", name, legal_crafting_recipes)
 	if(!choice)
 		return
@@ -80,6 +165,130 @@
 	if(crafting)
 		return
 	empty_crafting_inventory()
+
+/obj/machinery/assembler/crowbar_act(mob/living/user, obj/item/tool)
+	. = ITEM_INTERACT_BLOCKING
+	if(!panel_open)
+		to_chat(user, span_warning("The assembler cannot be deconstructed while the maintenance panel is closed!"))
+		user.balloon_alert(user, "panel closed!")
+		return
+	if(length(crafting_inventory))
+		to_chat(user, span_warning("The assembler cannot be safetly deconstructed until it has been emptied!"))
+		user.balloon_alert(user, "needs a reset!")
+		return
+	if(default_deconstruction_crowbar(tool))
+		return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/assembler/screwdriver_act(mob/living/user, obj/item/tool)
+	. = ITEM_INTERACT_BLOCKING
+	if(default_deconstruction_screwdriver(user, "assembler-open", "assembler", tool))
+		check_recipe_state()
+		return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/assembler/multitool_act(mob/living/user, obj/item/tool)
+	. = ITEM_INTERACT_BLOCKING
+	if(!panel_open)
+		to_chat(user, span_warning("The assembler cannot be reset while the maintenance panel is closed!"))
+		user.balloon_alert(user, "panel closed!")
+		return
+	if(crafting)
+		to_chat(user, span_warning("The assembler cannot be reset until the current operation is completed!"))
+		user.balloon_alert(user, "wait for operation!")
+		return
+	if(!length(crafting_inventory) && chosen_recipe == null)
+		to_chat(user, span_warning("The assembler is already reset!"))
+		user.balloon_alert(user, "already reset!")
+		return
+	chosen_recipe = null
+	empty_crafting_inventory()
+	to_chat(user, span_notice("You reset the assembler with the multitool."))
+	user.balloon_alert(user, "reset!")
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/assembler/multitool_act_secondary(mob/living/user, obj/item/tool)
+	. = ITEM_INTERACT_BLOCKING
+	if(!panel_open)
+		to_chat(user, span_warning("The wiring diagnostic switch cannot be interfaced while the maintenance panel is closed!"))
+		user.balloon_alert(user, "panel closed!")
+		return
+	var/cut_wires = (wire_integrity - 1) * 5
+	if(wire_integrity == 1)
+		user.balloon_alert(user, ("wires intact!"))
+		to_chat(user, span_green("You activate the wiring diagnostic switch. A small light in the assembler turns green!"))
+		return ITEM_INTERACT_SUCCESS
+	user.balloon_alert(user, ("[cut_wires] cut wires!"))
+	to_chat(user, span_warning("You activate the wiring diagnostic switch. A small light in the assembler blinks red [wire_integrity == 1.2 ? "once" : "[cut_wires] times"]."))
+	return ITEM_INTERACT_SUCCESS
+
+
+/obj/machinery/assembler/wirecutter_act(mob/living/user, obj/item/tool, list/modifiers)
+	. = ITEM_INTERACT_BLOCKING
+	if(!panel_open)
+		to_chat(user, span_warning("The maintenance panel is closed!"))
+		user.balloon_alert(user, "panel closed!")
+		return
+	if(wire_integrity == 2)
+		to_chat(user, span_warning("The assembler's wires have all been cut!"))
+		balloon_alert(user, "wires already cut!")
+		return
+	to_chat(user, span_warning("You begin cutting out one of the wires in the assembler."))
+	user.balloon_alert(user, "cutting wire...")
+	if(tool.use_tool(src, user, 2 SECONDS, volume = 50))
+		tool.play_tool_sound(src)
+		balloon_alert(user, "wire cut")
+		to_chat(user, span_warning("You finish cutting out the wire."))
+		wire_integrity += 0.2
+		refresh_parts()
+		if(iscarbon(user))
+			shock(user)
+		return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/assembler/proc/shock(mob/living/carbon/user, list/modifiers)
+	var/zapchance = (wire_integrity-1)*100
+	spark_size = (wire_integrity) * 5
+	if(prob(zapchance))
+		spark_system.start()
+		if(ismecha(loc) || user.wearing_shock_proof_gloves() || HAS_TRAIT(user, TRAIT_SHOCKIMMUNE))
+			return
+		user.electrocute_act(10, src, 1, SHOCK_NOGLOVES|SHOCK_SUPPRESS_MESSAGE)
+
+/obj/machinery/assembler/attackby(obj/item/attacking_item, mob/living/user, params)
+	if(istype(attacking_item, /obj/item/stack/cable_coil))
+		if(!panel_open)
+			to_chat(user, span_warning("The maintenance panel is closed!"))
+			user.balloon_alert(user, "panel closed!")
+			return
+		if(wire_integrity == 1)
+			to_chat(user, span_warning("You find no loose wires to refit."))
+			balloon_alert(user, "no cut wires!")
+			return
+		to_chat(user, span_warning("You begin mending the assembler's wires."))
+		user.balloon_alert(user, "mending wires...")
+		if(attacking_item.use_tool(src, user, 2 SECONDS, volume = 50))
+			attacking_item.play_tool_sound(src)
+			balloon_alert(user, "wires mended")
+			to_chat(user, span_warning("You finish mending the wires."))
+			wire_integrity = 1
+			refresh_parts()
+			return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/assembler/attackby_secondary(obj/item/attacking_item, mob/living/user, params)
+	if(attacking_item.tool_behaviour != TOOL_CROWBAR)
+		return
+	if(!panel_open)
+		to_chat(user, span_warning("The assembler cannot be forcibly deconstructed while the maintenance panel is closed!"))
+		user.balloon_alert(user, "panel closed!")
+		return
+	if(!length(crafting_inventory) && !crafting)
+		if(default_deconstruction_crowbar(attacking_item))
+			return ITEM_INTERACT_SUCCESS
+	user.balloon_alert(user, "forcing apart...")
+	if(attacking_item.use_tool(src, user, 3 SECONDS, volume = 50))
+		attacking_item.play_tool_sound(src, 50)
+		if(length(crafting_inventory))
+			balloon_alert(user, "contents destroyed!")
+		deconstruct(TRUE)
+		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/assembler/CanAllowThrough(atom/movable/mover, border_dir)
 	if(!anchored || !chosen_recipe)
@@ -187,6 +396,8 @@
 /obj/machinery/assembler/proc/check_recipe_state()
 	if(!chosen_recipe)
 		return
+	if(panel_open)
+		return
 	var/list/reqs = chosen_recipe.reqs.Copy()
 	if(!length(reqs))
 		return
@@ -223,6 +434,8 @@
 				return
 
 /obj/machinery/assembler/proc/start_craft()
+	if(panel_open)
+		return
 	if(crafting)
 		return
 	crafting = TRUE
@@ -277,7 +490,9 @@
 				qdel(thing)
 	I.CheckParts(parts, current_craft_recipe)
 	I.forceMove(drop_location())
-
+	var/assembler_spark_chance = (wire_integrity - 1) * 50
+	if(prob(assembler_spark_chance))
+		spark_system.start()
 	if(current_craft_recipe != chosen_recipe)
 		empty_crafting_inventory()
 
@@ -285,6 +500,10 @@
 	current_craft_recipe = null
 	check_recipe_state()
 
+/obj/machinery/assembler/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armour_penetration = 0)
+	. = ..()
+	if(. && atom_integrity > 0 && prob((wire_integrity-1)*50)) //damage received
+		spark_system.start()
 
 /datum/hover_data/assembler
 	var/obj/effect/overlay/hover/recipe_icon

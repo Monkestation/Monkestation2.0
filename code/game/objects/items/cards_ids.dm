@@ -176,7 +176,7 @@
 /obj/item/card/id/equipped(mob/user, slot)
 	. = ..()
 	if (slot & (ITEM_SLOT_ID|ITEM_SLOT_HANDS))
-		RegisterSignal(user, COMSIG_MOB_RETRIEVE_ACCESS, PROC_REF(retrieve_access))
+		RegisterSignal(user, COMSIG_MOB_RETRIEVE_ACCESS, PROC_REF(retrieve_access), override = TRUE)
 	if (slot & ITEM_SLOT_POCKETS)
 		//putting it in your pocket doesn't let you use it as access.
 		UnregisterSignal(user, COMSIG_MOB_RETRIEVE_ACCESS)

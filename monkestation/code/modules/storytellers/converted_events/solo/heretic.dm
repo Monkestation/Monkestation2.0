@@ -1,4 +1,4 @@
-/datum/round_event_control/antagonist/solo/heretic
+/datum/round_event_control/antagonist/heretic
 	antag_flag = ROLE_HERETIC
 	tags = list(TAG_COMBAT, TAG_SPOOKY, TAG_MAGICAL, TAG_CREW_ANTAG)
 	antag_datum = /datum/antagonist/heretic
@@ -19,6 +19,7 @@
 		JOB_WARDEN,
 		JOB_BRIG_PHYSICIAN,
 		JOB_BRIDGE_ASSISTANT,
+		JOB_CHAPLAIN
 	)
 	restricted_roles = list(
 		JOB_AI,
@@ -27,17 +28,17 @@
 	weight = 2
 	min_players = 20
 
-/datum/round_event_control/antagonist/solo/heretic/roundstart
+/datum/round_event_control/antagonist/heretic/roundstart
 	name = "Heretics"
 	roundstart = TRUE
 	earliest_start = 0
 
-/datum/round_event_control/antagonist/solo/heretic/midround
+/datum/round_event_control/antagonist/heretic/midround
 	antag_flag = ROLE_FORBIDDENCALLING
 	name = "Forbidden Calling (Heretics)"
 	prompted_picking = TRUE
 
-/datum/round_event/antagonist/solo/heretic/add_datum_to_mind(datum/mind/antag_mind)
+/datum/round_event/antagonist/heretic/add_datum_to_mind(datum/mind/antag_mind)
 	var/datum/antagonist/heretic/new_heretic = antag_mind.add_antag_datum(antag_datum)
 
 	// Heretics passively gain influence over time.

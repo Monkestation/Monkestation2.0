@@ -33,6 +33,11 @@
 	var/datum/proximity_monitor/advanced/bubble/projectile_dampener/peaceborg/dampening_field
 	/// Energy cost per tracked projectile damage amount per second
 	var/projectile_damage_tick_ecost_coefficient = 10
+	/**
+	 * Speed coefficient
+	 * Higher the coefficient faster the projectile.
+	*/
+	var/projectile_speed_coefficient = 0.66
 	/// Energy cost per tracked projectile per second
 	var/projectile_tick_speed_ecost = 75
 	/// Projectiles dampened by our dampener

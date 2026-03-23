@@ -116,7 +116,7 @@
 		return
 
 	var/turf_footstep = prepared_steps[footstep_type]
-	if(!turf_footstep)
+	if(!turf_footstep || !islist(footstep_sounds[turf_footstep]))
 		return
 	playsound(source_loc, pick(footstep_sounds[turf_footstep][1]), footstep_sounds[turf_footstep][2] * volume, TRUE, footstep_sounds[turf_footstep][3] + e_range, falloff_distance = 1, vary = sound_vary, mixer_channel = CHANNEL_SOUND_FOOTSTEPS)
 

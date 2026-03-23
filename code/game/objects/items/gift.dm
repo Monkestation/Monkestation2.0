@@ -178,7 +178,6 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 		//holy fuck why was this enabled
 		/obj/item/debug,
 		/obj/item/storage/box/debugbox,
-		/obj/item/gun/energy/beam_rifle/debug,
 		/obj/item/multitool/field_debug,
 		/obj/item/bounty_cube/debug_cube,
 		/obj/item/organ/internal/cyberimp/brain/nif/debug,
@@ -202,12 +201,12 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 
 
 		/obj/item/mod/control/pre_equipped/debug,
-		/obj/item/reagent_containers/hypospray/medipen/tuberculosiscure/debug,
+		/obj/item/reagent_containers/medipen/tuberculosiscure/debug,
 		/obj/item/reagent_containers/cup/bottle/disease_debug,
 		/obj/item/pinpointer/area_pinpointer/debug,
 		/obj/item/flashlight/emp/debug,
 		/obj/item/airlock_painter/decal/debug,
-		/obj/item/autosurgeon/organ/nif/debug,
+		/obj/item/autosurgeon/nif/debug,
 
 		/obj/item/melee/skateboard/hoverboard/admin,
 		/obj/item/mod/control/pre_equipped/administrative,

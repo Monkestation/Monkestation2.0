@@ -8,14 +8,14 @@
 	item_flags = NONE
 	obj_flags = UNIQUE_RENAME
 	weapon_weight = WEAPON_LIGHT
-	can_bayonet = TRUE
-	knife_x_offset = 20
-	knife_y_offset = 12
 	var/mob/holder
 	var/max_mod_capacity = 100
 	var/list/modkits = list()
 	gun_flags = NOT_A_REAL_GUN
 	var/disablemodification = FALSE //monkeedit - stops removal and addition of mods
+
+/obj/item/gun/energy/recharge/kinetic_accelerator/add_bayonet_point()
+	AddComponent(/datum/component/bayonet_attachable, offset_x = 20, offset_y = 12)
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/apply_fantasy_bonuses(bonus)
 	. = ..()
@@ -147,7 +147,6 @@
 	hitsound = 'sound/weapons/bladeslice.ogg' // has a blade
 	holds_charge = TRUE
 	unique_frequency = TRUE
-	can_bayonet = FALSE
 	sharpness = SHARP_EDGED
 	force = 15
 	wound_bonus = 5
@@ -183,7 +182,6 @@
 	base_icon_state = "kineticpistol"
 	recharge_time = 2 SECONDS
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/glock)
-	can_bayonet = FALSE
 	max_mod_capacity = 200
 
 
@@ -203,7 +201,6 @@
 	recharge_time = 3 SECONDS
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/railgun)
 	weapon_weight = WEAPON_HEAVY
-	can_bayonet = FALSE
 	max_mod_capacity = 0 // Fuck off
 	recoil = 1 // Railgun go brrrrr
 	disablemodification = TRUE
@@ -235,7 +232,6 @@
 	base_icon_state = "kineticshockwave"
 	recharge_time = 2 SECONDS
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/shockwave)
-	can_bayonet = FALSE
 	max_mod_capacity = 90 //bumped up to 90 to compensate for the 30 you need to spend on the AOE mod that gives it its functionality
 
 
@@ -254,7 +250,6 @@
 	desc = "Mining RnD broke the fabric of space time AGAIN, please return to your nearest centralcommand officer. <b> WARNING FROM THE MINING RND DIRECTOR : DO NOT RAPIDLY PULL TRIGGER : FABRIC OF SPACE TIME LIABLE TO BREAK </b>\
 	Im being bullied by the admins"
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/meme/nonlethal)
-	can_bayonet = FALSE
 	max_mod_capacity = 0
 
 //Modkits

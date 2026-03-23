@@ -218,3 +218,9 @@
 	update_icon()
 
 #undef PROPHAT_MOOD
+
+/obj/item/clothing/head/soft/paramedic/deforest
+	name = "Deforest Hat"
+	desc = "A Deforest Medical high-visibility hat often seen worn by local reps trying to shill their wares to various stations."
+	icon_state = "hivishatsoft"
+	soft_type = "hivishat"

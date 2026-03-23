@@ -56,10 +56,12 @@ export function setClientTheme(name): void | Promise<void> {
     'forum.text-color': themeColor.TEXT,
     'github.background-color': themeColor.BUTTON,
     'github.text-color': themeColor.TEXT,
-    'report-issue.background-color': themeColor.BUTTON,
+    'report-issue.background-color': themeColor.BG_REPORT_ISSUES,
     'report-issue.text-color': themeColor.TEXT,
     'fullscreen-toggle.background-color': themeColor.BUTTON,
     'fullscreen-toggle.text-color': themeColor.TEXT,
+    'tickets.background-color': themeColor.BUTTON,
+    'tickets.text-color': themeColor.TEXT,
     // Status and verb tabs
     'output.background-color': themeColor.BG_BASE,
     'output.text-color': themeColor.TEXT,

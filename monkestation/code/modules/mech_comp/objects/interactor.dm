@@ -220,6 +220,9 @@
 	if(!can_interact_with(weapon))
 		balloon_alert(user, "[weapon] is incompatible!")
 		return
+	if(HAS_TRAIT(weapon, TRAIT_NODROP))
+		to_chat(user, "[weapon] is stuck to you!")
+		return
 	else if(check_restrictions(items = TRUE))
 		balloon_alert(user, "holding items is disabled!")
 		return
