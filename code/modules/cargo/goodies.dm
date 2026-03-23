@@ -200,7 +200,7 @@
 	name = "Medipen Two-Pak"
 	desc = "Contains one standard epinephrine medipen and one standard emergency medkit medipen. For when you want to prepare for the worst."
 	cost = PAYCHECK_CREW * 2
-	contains = list(/obj/item/reagent_containers/hypospray/medipen, /obj/item/reagent_containers/hypospray/medipen/ekit)
+	contains = list(/obj/item/reagent_containers/medipen, /obj/item/reagent_containers/medipen/ekit)
 
 /datum/supply_pack/goody/mothic_rations
 	name = "Surplus Mothic Ration Pack"
@@ -249,12 +249,6 @@
 	desc = "A hi-tech radio encryption key that allows the wearer to understand voltaic when the radio is worn."
 	cost = PAYCHECK_CREW * 12
 	contains = list(/obj/item/encryptionkey/ethereal)
-
-/datum/supply_pack/goody/felinid_encryption_key
-	name = "Felinid radio encryption key"
-	desc = "A hi-tech radio encryption key that allows the wearer to understand nekomimetic when the radio is worn."
-	cost = PAYCHECK_CREW * 12
-	contains = list(/obj/item/encryptionkey/felinid)
 
 /datum/supply_pack/goody/uncommon_encryption_key
 	name = "Uncommon radio encryption key"

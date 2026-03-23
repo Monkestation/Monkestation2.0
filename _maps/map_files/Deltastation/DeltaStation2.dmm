@@ -8006,7 +8006,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
 "bPP" = (
-/obj/effect/mapping_helpers/airlock/access/any/science/maintenance,
+/obj/effect/mapping_helpers/airlock/access/all/science/research,
 /obj/machinery/door/airlock/research{
 	name = "Artifact Science"
 	},
@@ -51365,7 +51365,7 @@
 /obj/machinery/door/airlock/research{
 	name = "Artifact Storage"
 	},
-/obj/effect/mapping_helpers/airlock/access/any/science/maintenance,
+/obj/effect/mapping_helpers/airlock/access/all/science/research,
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
 /area/station/science/explab)
@@ -97352,7 +97352,7 @@
 /obj/item/toy/figure/md{
 	pixel_y = 4
 	},
-/obj/item/reagent_containers/hypospray/medipen{
+/obj/item/reagent_containers/medipen{
 	pixel_y = -4
 	},
 /obj/machinery/light/directional/south,

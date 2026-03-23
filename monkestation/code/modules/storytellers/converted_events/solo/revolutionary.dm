@@ -1,9 +1,9 @@
-/datum/round_event_control/antagonist/solo/revolutionary
+/datum/round_event_control/antagonist/revolutionary
 	name = "Roundstart Revolution"
 	tags = list(TAG_COMMUNAL, TAG_DESTRUCTIVE, TAG_COMBAT, TAG_TEAM_ANTAG, TAG_CREW_ANTAG, TAG_MUNDANE)
 	antag_flag = ROLE_REV_HEAD
 	antag_datum = /datum/antagonist/rev/head/event_trigger
-	typepath = /datum/round_event/antagonist/solo/revolutionary
+	typepath = /datum/round_event/antagonist/revolutionary
 	shared_occurence_type = SHARED_HIGH_THREAT
 	repeated_mode_adjust = TRUE
 	restricted_roles = list(
@@ -48,29 +48,24 @@
 	remove_clumsy = TRUE
 	give_flash = TRUE
 
-/datum/round_event/antagonist/solo/revolutionary
-	excute_round_end_reports = TRUE
+/datum/round_event/antagonist/revolutionary
 	end_when = 60000 /// we will end on our own when revs win
 	var/static/datum/team/revolution/revolution
 	var/static/finished = FALSE
 
-/datum/round_event/antagonist/solo/revolutionary/setup()
+/datum/round_event/antagonist/revolutionary/setup()
 	. = ..()
 	if(!revolution)
 		revolution = new()
 
-/datum/round_event/antagonist/solo/revolutionary/add_datum_to_mind(datum/mind/antag_mind)
+/datum/round_event/antagonist/revolutionary/add_datum_to_mind(datum/mind/antag_mind)
 	antag_mind.add_antag_datum(antag_datum, revolution)
 	if(length(revolution.members))
 		revolution.update_objectives()
 		revolution.update_heads()
 		SSshuttle.registerHostileEnvironment(revolution)
 
-
-/datum/round_event/antagonist/solo/revolutionary/round_end_report()
-	revolution.round_result(finished)
-
-/datum/round_event/antagonist/solo/revolutionary/tick()
+/datum/round_event/antagonist/revolutionary/tick()
 	if(finished)
 		return
 	var/winner = revolution.process_victory()

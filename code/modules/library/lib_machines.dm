@@ -688,6 +688,7 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 	icon = 'icons/obj/library.dmi'
 	icon_state = "bigscanner"
 	desc = "It's an industrial strength book scanner. Perfect!"
+	circuit = /obj/item/circuitboard/machine/libraryscanner
 	density = TRUE
 	var/obj/item/book/held_book
 	///Our scanned-in book
@@ -760,6 +761,7 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 	icon = 'icons/obj/library.dmi'
 	icon_state = "binder"
 	desc = "Only intended for binding paper products."
+	circuit = /obj/item/circuitboard/machine/bookbinder
 	density = TRUE
 
 	/// Are we currently binding a book?

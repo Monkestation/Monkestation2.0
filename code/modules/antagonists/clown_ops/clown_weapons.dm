@@ -90,7 +90,7 @@
 	force = 0
 	throwforce = 0
 	hitsound = null
-	embedding = null
+	embed_type = null
 	light_color = COLOR_YELLOW
 	sword_color_icon = "bananium"
 	active_heat = 0

@@ -3,6 +3,8 @@
 	icon = 'monkestation/code/modules/slimecore/icons/slimes.dmi'
 	icon_state = "grey baby slime"
 	base_icon_state = "grey baby slime"
+
+	icon_living = "grey baby slime"
 	icon_dead = "grey baby slime dead"
 
 	maxHealth = 150
@@ -270,14 +272,17 @@
 		prefix = current_color.icon_prefix
 
 	if(slime_flags & ADULT_SLIME)
-		icon_state = "[prefix] adult slime"
+		icon_living = "[prefix] adult slime"
 		icon_dead = "[prefix] baby slime dead"
 	else
-		icon_state = "[prefix] baby slime"
+		icon_living = "[prefix] baby slime"
 		icon_dead = "[prefix] baby slime dead"
 
 	if(stat == DEAD)
 		icon_state = icon_dead
+	else
+		icon_state = icon_living
+
 	return ..()
 
 /mob/living/basic/slime/update_overlays()

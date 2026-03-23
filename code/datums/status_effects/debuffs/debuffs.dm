@@ -432,11 +432,9 @@
 
 /datum/status_effect/stacking/saw_bleed/threshold_cross_effect()
 	owner.adjustBruteLoss(bleed_damage)
-	new /obj/effect/temp_visual/bleed/explode(owner.loc)
-	for(var/d in GLOB.alldirs)
-		if(QDELETED(owner))
-			return
-		owner.do_splatter_effect(d)
+	new /obj/effect/temp_visual/bleed/explode(get_turf(owner))
+	for(var/splatter_dir in GLOB.alldirs)
+		owner.create_splatter(splatter_dir)
 	playsound(owner, SFX_DESECRATION, 100, TRUE, -1)
 
 /datum/status_effect/stacking/saw_bleed/bloodletting
@@ -560,7 +558,7 @@
 	new/obj/effect/temp_visual/dir_setting/curse/grasp_portal(spawn_turf, owner.dir)
 	playsound(spawn_turf, 'sound/effects/curse2.ogg', 80, TRUE, -1)
 	var/obj/projectile/curse_hand/C = new (spawn_turf)
-	C.preparePixelProjectile(owner, spawn_turf)
+	C.aim_projectile(owner, spawn_turf)
 	C.fire()
 
 /obj/effect/temp_visual/curse
@@ -589,7 +587,7 @@
 	new/obj/effect/temp_visual/dir_setting/curse/grasp_portal(spawn_turf, owner.dir)
 	playsound(spawn_turf, pick('sound/effects/curse1.ogg','sound/effects/curse2.ogg','sound/effects/curse3.ogg'), 80, 1, -1)
 	var/obj/projectile/curse_hand/progenitor/pro = new (spawn_turf)
-	pro.preparePixelProjectile(owner, spawn_turf)
+	pro.aim_projectile(owner, spawn_turf)
 	pro.fire()
 
 /datum/status_effect/gonbola_pacify

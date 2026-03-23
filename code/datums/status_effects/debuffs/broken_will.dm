@@ -28,7 +28,7 @@
 		qdel(src)
 		return
 	owner.Unconscious(15)
-	if(owner.health > HEALTH_THRESHOLD_CRIT)
+	if(owner.health > owner.crit_threshold)
 		return
 	owner.heal_ordered_damage(3, list(BURN, BRUTE)) //so if they're left to bleed out, they'll survive, probably?
 	if(prob(10))

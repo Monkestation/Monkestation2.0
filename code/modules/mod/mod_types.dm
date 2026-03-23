@@ -629,6 +629,24 @@
 		/obj/item/mod/module/anomaly_locked/kinesis/plus,
 	)
 
+/obj/item/mod/control/pre_equipped/blueshield
+	theme = /datum/mod_theme/blueshield
+	starting_frequency = MODLINK_FREQ_NANOTRASEN
+	applied_cell = /obj/item/stock_parts/power_store/cell/super
+	applied_modules = list(
+		/obj/item/mod/module/storage/large_capacity,
+		/obj/item/mod/module/magnetic_harness,
+		/obj/item/mod/module/flashlight,
+		/obj/item/mod/module/projectile_dampener,
+		/obj/item/mod/module/quick_carry,
+		/obj/item/mod/module/holster,
+	)
+	default_pins = list(
+
+		/obj/item/mod/module/holster,
+		/obj/item/mod/module/projectile_dampener,
+	)
+
 //these exist for the prefs menu
 /obj/item/mod/control/pre_equipped/empty
 	starting_frequency = null

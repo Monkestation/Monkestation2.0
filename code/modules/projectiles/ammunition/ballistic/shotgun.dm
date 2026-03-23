@@ -122,7 +122,6 @@
 	variance = 25 // 6 pellets for 10 stam and 2 damage each
 	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*2)
 
-
 /obj/item/ammo_casing/shotgun/dragonsbreath
 	name = "dragonsbreath shell"
 	desc = "A shotgun shell which fires a spread of incendiary pellets."

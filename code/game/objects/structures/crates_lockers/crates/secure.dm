@@ -90,6 +90,12 @@
 	icon_state = "scisecurecrate"
 	base_icon_state = "scisecurecrate"
 
+/obj/structure/closet/crate/secure/ai
+	name = "secure artificial intelligence crate"
+	desc = "A crate with a lock on it, painted in the scheme of the station's research director."
+	icon_state = "aicrate"
+	base_icon_state = "aicrate"
+
 /obj/structure/closet/crate/secure/owned
 	name = "private crate"
 	desc = "A crate cover designed to only open for who purchased its contents."

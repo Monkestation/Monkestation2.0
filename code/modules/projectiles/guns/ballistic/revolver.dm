@@ -15,21 +15,26 @@
 	var/spin_delay = 10
 	var/recent_spin = 0
 	var/last_fire = 0
-	gun_flags = GUN_SMOKE_PARTICLES
-	box_reload_delay = CLICK_CD_RAPID // honestly this is negligible because of the inherent delay of having to switch hands
 
 /obj/item/gun/ballistic/revolver/process_fire(atom/target, mob/living/user, message, params, zone_override, bonus_spread)
-	..()
-	last_fire = world.time
+	. = ..()
+	if(.)
+		last_fire = world.time
 
-
-/obj/item/gun/ballistic/revolver/chamber_round(keep_bullet, spin_cylinder = TRUE, replace_new_round)
+/obj/item/gun/ballistic/revolver/chamber_round(spin_cylinder = TRUE, replace_new_round)
 	if(!magazine) //if it mag was qdel'd somehow.
 		CRASH("revolver tried to chamber a round without a magazine!")
-	if(spin_cylinder)
-		chambered = magazine.get_round(TRUE)
+	if(chambered)
+		UnregisterSignal(chambered, COMSIG_MOVABLE_MOVED)
+	if (spin_cylinder)
+		chambered = magazine.get_round()
 	else
 		chambered = magazine.stored_ammo[1]
+		if (ispath(chambered))
+			chambered = new chambered(src)
+			magazine.stored_ammo[1] = chambered
+	if(chambered)
+		RegisterSignal(chambered, COMSIG_MOVABLE_MOVED, PROC_REF(clear_chambered))
 
 /obj/item/gun/ballistic/revolver/shoot_with_empty_chamber(mob/living/user as mob|obj)
 	..()
@@ -58,9 +63,9 @@
 	set category = "Object"
 	set desc = "Click to spin your revolver's chamber."
 
-	var/mob/M = usr
+	var/mob/user = usr
 
-	if(M.stat || !in_range(M,src))
+	if(user.stat || !in_range(user, src))
 		return
 
 	if (recent_spin > world.time)
@@ -69,7 +74,8 @@
 
 	if(do_spin())
 		playsound(usr, SFX_REVOLVER_SPIN, 30, FALSE)
-		usr.visible_message(span_notice("[usr] spins [src]'s chamber."), span_notice("You spin [src]'s chamber."))
+		visible_message(span_notice("[user] spins [src]'s chamber."), span_notice("You spin [src]'s chamber."))
+		balloon_alert(user, "chamber spun")
 	else
 		verbs -= /obj/item/gun/ballistic/revolver/verb/spin
 
@@ -92,8 +98,7 @@
 	. = ..()
 	var/live_ammo = get_ammo(FALSE, FALSE)
 	. += "[live_ammo ? live_ammo : "None"] of those are live rounds."
-	if (current_skin)
-		. += "It can be spun with <b>alt+click</b>"
+	. += span_notice("It can be spun with [EXAMINE_HINT("alt-click")].")
 
 /obj/item/gun/ballistic/revolver/ignition_effect(atom/A, mob/user)
 	if(last_fire && last_fire + 15 SECONDS > world.time)

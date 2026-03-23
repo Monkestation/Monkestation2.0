@@ -11381,6 +11381,7 @@
 	dir = 4
 	},
 /obj/machinery/duct,
+/obj/structure/cable,
 /turf/open/floor/iron/white/textured,
 /area/station/security/medical)
 "doG" = (
@@ -22934,6 +22935,8 @@
 	},
 /obj/item/reagent_containers/blood,
 /obj/machinery/iv_drip,
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/structure/cable,
 /turf/open/floor/iron/white/textured,
 /area/station/security/medical)
 "gXe" = (
@@ -39711,6 +39714,7 @@
 "mjb" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/duct,
+/obj/structure/cable,
 /turf/open/floor/iron/white/textured,
 /area/station/security/medical)
 "mjg" = (
@@ -71297,8 +71301,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "vSh" = (
-/obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/bodycontainer/morgue{
 	dir = 2
 	},
@@ -71486,7 +71488,7 @@
 /obj/machinery/computer/operating{
 	dir = 8
 	},
-/obj/item/radio/intercom/chapel/directional/east,
+/obj/item/radio/intercom/directional/east,
 /turf/open/floor/iron/white/textured,
 /area/station/security/medical)
 "vWe" = (
