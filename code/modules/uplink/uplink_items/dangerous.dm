@@ -186,33 +186,33 @@
 	desc = "A short barrel, further compacted conversion of the 'Lanca' rifle to fire pistol caliber cartridges. Comes with two magazines."
 	progression_minimum = 10 MINUTES
 	item = /obj/item/storage/toolbox/guncase/nova/opfor/miecz
-	cost = 7
+	cost = 9
 
 /datum/uplink_item/dangerous/kiboko
 	name = "Kiboko Grenade Launcher Case"
 	desc = "A unique grenade launcher firing .980 grenades. A laser sight system allows its user to specify a range for the grenades it fires to detonate at. Comes with two C980 Grenade Drums."
 	progression_minimum = 10 MINUTES
 	item = /obj/item/storage/toolbox/guncase/nova/opfor/kiboko
-	cost = 10
+	cost = 14
 
 /datum/uplink_item/dangerous/sidano
 	name = "Sindano SMG"
 	desc = "A small submachinegun, this one is painted in tacticool black. Accepts any standard Sol pistol magazine."
 	progression_minimum = 10 MINUTES
 	item = /obj/item/storage/toolbox/guncase/nova/pistol/opfor/sindano
-	cost = 10
+	cost = 12
 
 /datum/uplink_item/dangerous/wespe
 	name = "Wespe Pistol"
 	desc = "The standard issue service pistol of SolFed's various military branches. Comes with attached light."
 	item = /obj/item/storage/toolbox/guncase/nova/pistol/opfor/wespe
-	cost = 4
+	cost = 6
 
 /datum/uplink_item/dangerous/shotgun_revolver
 	name = "\improper Bóbr 12 GA revolver"
 	desc = "An outdated sidearm rarely seen in use by some members of the CIN. A revolver type design with a four shell cylinder. That's right, shell, this one shoots twelve guage."
 	item = /obj/item/storage/box/syndie_kit/shotgun_revolver
-	cost = 4
+	cost = 8
 
 /datum/uplink_item/dangerous/shit_smg
 	name = "Surplus Smg Bundle"
