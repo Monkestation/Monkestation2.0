@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - balance: "DNR quirk gives 6 points instead of 8, blacklists you from cloning, persists through bodies, and in exchange gives you more health (takes approx. 50 more damage to enter hardcrit and 100 more damage to die)"

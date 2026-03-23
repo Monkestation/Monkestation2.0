@@ -1,0 +1,6 @@
+author: "00-Steven, ZephyrTFA, JohnFulpWillard"
+delete-after: True
+changes:
+  - rscadd: "The Curator's barcode scanner now makes little sounds when operating it."
+  - qol: "The Library machines are now replaceable."
+  - bugfix: "Books should now have proper html formatting (aka should look like how it does in paper)"

@@ -71,5 +71,5 @@
 	if(visualsOnly)
 		return
 
-	translator.grant_all_languages(source = LANGUAGE_CURATOR)
+	translator.grant_all_languages(source = LANGUAGE_MIND)
 	translator.remove_blocked_language(GLOB.all_languages, source=LANGUAGE_ALL)

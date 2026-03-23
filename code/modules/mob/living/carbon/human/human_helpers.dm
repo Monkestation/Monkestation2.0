@@ -150,8 +150,7 @@
 	for(var/i in missing_bodyparts)
 		var/datum/scar/scaries = new
 		scars += "[scaries.format_amputated(i)]"
-	for(var/i in all_scars)
-		var/datum/scar/iter_scar = i
+	for(var/datum/scar/iter_scar as anything in all_scars)
 		if(!iter_scar.fake)
 			scars += "[iter_scar.format()];"
 	return scars
@@ -241,7 +240,7 @@
 	var/t_is = p_are()
 	//This checks to see if the body is revivable
 	var/client_like = client || HAS_TRAIT(src, TRAIT_MIND_TEMPORARILY_GONE)
-	if((client_like || !get_organ_by_type(/obj/item/organ/internal/brain) || ghost?.can_reenter_corpse) && !HAS_TRAIT(src, TRAIT_DEFIB_BLACKLISTED))
+	if((client_like || !get_organ_by_type(/obj/item/organ/internal/brain) || ghost?.can_reenter_corpse) && (!mind || !HAS_TRAIT(mind, TRAIT_DEFIB_BLACKLISTED)))
 		return span_deadsay("[t_He] [t_is] limp and unresponsive; there are no signs of life...")
 	else
 		return span_deadsay("[t_He] [t_is] limp and unresponsive; there are no signs of life and [t_his] soul has departed...")

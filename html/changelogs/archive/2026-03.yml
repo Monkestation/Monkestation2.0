@@ -316,3 +316,20 @@
   - bugfix: wound surgeries don't delete themself automatically when the wound is
       fixed.
   - bugfix: gave cauterizing slash wounds a sound.
+2026-03-20:
+  JohnFulpWillard:
+  - bugfix: Setting off a TTV in a bomb actualizer will no longer get the effects
+      of being actualized.
+  - rscdel: Deleted Nekomimetic
+  - qol: Airlocks are now faster to build when done by hand.
+  LettuceGuardian:
+  - rscadd: Alternative skin for the blueshield MOD.
+  - code_imp: Demodularized the blueshield MOD code.
+  SirNightKnight:
+  - image: resprited riot armor
+  Tractor-Maam:
+  - qol: Hypospray Vials and Medipens can now fit inside Chemistry Bags and Medical
+      Bandoliers.
+2026-03-22:
+  BanementI:
+  - rscadd: The AI can now go to the soup store, and use a couple of other fishy words.

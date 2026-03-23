@@ -1,0 +1,4 @@
+author: "TheColorCyan"
+delete-after: True
+changes:
+  - bugfix: "fixed temperature insulation checks, stuff like winter coats should no longer make you immune to ash storms and protect from fire"

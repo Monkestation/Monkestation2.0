@@ -99,7 +99,7 @@
 	if(.)
 		return
 	if(!computer_ref?.resolve())
-		user.balloon_alert(user, "not connected to computer!")
+		balloon_alert(user, "connect to computer!")
 		return
 	switch(scan_mode)
 		if(BARCODE_SCANNER_CHECKIN)
@@ -107,7 +107,7 @@
 			balloon_alert(user, "check-out mode")
 		if(BARCODE_SCANNER_CHECKOUT)
 			scan_mode = BARCODE_SCANNER_INVENTORY
-			user.balloon_alert(user, "inventory adding mode")
+			balloon_alert(user, "inventory adding mode")
 		if(BARCODE_SCANNER_INVENTORY)
 			scan_mode = BARCODE_SCANNER_CHECKIN
 			balloon_alert(user, "check-in mode")

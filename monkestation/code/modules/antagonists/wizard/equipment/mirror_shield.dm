@@ -80,7 +80,7 @@
 /obj/item/gun/magic/mirror_shield/proc/absorb_projectile(obj/projectile/absorbed)
 	STOP_PROCESSING(SSprojectiles, absorbed)
 	absorbed.fired = FALSE
-	QDEL_NULL(absorbed.trajectory)
+	QDEL_NULL(absorbed.movement_vector)
 	if(!chambered.loaded_projectile)
 		absorbed.forceMove(chambered)
 		chambered.loaded_projectile = absorbed
@@ -98,7 +98,7 @@
 	hit_by.impacted = list()
 	var/turf/firer_turf = get_turf(hit_by.firer)
 	if(hit_by.firer && get_dist(firer_turf, get_turf(src)) <= 1) //this is due to some jank I cant figure out, if you want to go ahead
-		hit_by.process_hit(firer_turf, hit_by.firer)
+		hit_by.impact(firer_turf)
 	else if(reaction_mode == REACTION_MODE_ABSORB && length(stored_projectiles) <= max_stored_projectiles && !(hit_by.type in blacklisted_projectile_types))
 		absorb_projectile(hit_by)
 	else
