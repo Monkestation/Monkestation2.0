@@ -4390,11 +4390,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
-"bvW" = (
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space,
-/area/space/nearstation)
 "bvY" = (
 /obj/machinery/power/tracker,
 /obj/structure/cable,
@@ -86216,9 +86211,9 @@ lMJ
 rqa
 lFV
 iQd
-bvW
-bvW
-bvW
+aaa
+aaa
+aaa
 pnI
 pnI
 jfB
