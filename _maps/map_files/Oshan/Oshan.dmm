@@ -3777,10 +3777,13 @@
 /turf/open/floor/carpet/executive,
 /area/station/science/lobby)
 "bju" = (
-/obj/effect/turf_decal/trimline/blue/filled/line{
+/obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 1
 	},
-/obj/effect/turf_decal/trimline/blue/line,
+/obj/effect/turf_decal/trimline/blue/warning,
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 4
+	},
 /turf/open/floor/iron/white/textured,
 /area/station/medical/patients_rooms)
 "bjw" = (
@@ -44316,6 +44319,14 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/science/lobby)
+"nJi" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Medbay Maintenance"
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/any/medical/general,
+/turf/open/floor/iron/white/textured,
+/area/station/maintenance/starboard/upper)
 "nJA" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/spawner/random/structure/crate_loot,
@@ -109740,7 +109751,7 @@ pmd
 pmd
 bNq
 iAp
-vUP
+nJi
 bju
 kbr
 vBW
