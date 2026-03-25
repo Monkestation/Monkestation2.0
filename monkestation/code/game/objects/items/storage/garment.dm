@@ -5,6 +5,7 @@
 /obj/item/storage/bag/garment/blueshield/PopulateContents()
 	new /obj/item/clothing/under/rank/security/private/corporal(src)
 	new /obj/item/clothing/head/helmet/swat/nanotrasen(src)
+	new /obj/item/clothing/mask/gas/sechailer/swat(src)
 	new /obj/item/clothing/suit/hooded/wintercoat/nova/blueshield(src)
 	new /obj/item/clothing/head/beret/blueshield(src)
 	new /obj/item/clothing/head/beret/blueshield/navy(src)
