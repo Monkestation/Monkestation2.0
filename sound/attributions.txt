@@ -160,3 +160,6 @@ roaring_fire.ogg made from: 10835 big fire loop.wav by Robinhood76 -- https://fr
 fire_puff made from: Bonfire Being Lit by samararaine -- https://freesound.org/s/186374/ -- License: Creative Commons 0
 
 wishgranter_gain.ogg and wishgranter_awaken.ogg by flleeppyy (https://github.com/flleeppyy)
+
+kero.ogg is taken from Fulpstation
+https://github.com/fulpstation/fulpstation/pull/1109
