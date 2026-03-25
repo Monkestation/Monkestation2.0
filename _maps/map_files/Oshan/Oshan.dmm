@@ -4494,6 +4494,7 @@
 /obj/effect/heretic_rune/big,
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/toy/plush/shrimp,
 /turf/open/floor/wood/tile,
 /area/station/service/library/abandoned)
 "bvK" = (
@@ -27670,6 +27671,11 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/maintenance/abandon_cafeteria)
+"iEL" = (
+/obj/structure/lattice,
+/obj/item/toy/plush/shrimp,
+/turf/open/floor/plating/ocean,
+/area/ocean)
 "iEU" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 8
@@ -30173,6 +30179,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/maintenance/abandon_cafeteria)
+"jtq" = (
+/obj/item/toy/plush/shrimp,
+/turf/open/floor/grass,
+/area/station/science/ordnance/bomb)
 "jts" = (
 /obj/structure/cable,
 /turf/open/floor/iron/dark/small,
@@ -120903,7 +120913,7 @@ meJ
 cgU
 cgU
 cgU
-mdW
+iEL
 mdW
 vfe
 mdW
@@ -121000,7 +121010,7 @@ gic
 mlQ
 olK
 xkj
-xkj
+jtq
 oRV
 hGP
 sDn
