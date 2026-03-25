@@ -389,3 +389,6 @@
   TheColorCyan:
   - balance: some special  monke edited bullets were lowered in speed to account for
       slower speed of bullets in general
+2026-03-25:
+  notghosti:
+  - bugfix: License to plasmaflood no longer implies you have a license to murderbone.
