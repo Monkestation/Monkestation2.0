@@ -335,10 +335,10 @@
 /datum/supply_pack/security/armory/rifle
 	name = "Sol Autorifle Crate"
 	desc = "For when the enemy only somewhat requires flesh to be displaced by lead. \
-		Contains 2 Carwo-Cawil Autorifles and a single magazine for each"
+		Contains 2 Carwo-Cawil Autorifles and 2 magazines for each"
 	cost = CARGO_CRATE_VALUE * 17.5
 	contains = list(/obj/item/gun/ballistic/automatic/sol_rifle = 2,
-					/obj/item/ammo_box/magazine/c40sol_rifle/standard = 2)
+					/obj/item/ammo_box/magazine/c40sol_rifle/standard = 4)
 	crate_name = "autorifle crate"
 
 /datum/supply_pack/security/armory/marksman
@@ -353,10 +353,10 @@
 /datum/supply_pack/security/armory/battlerifle
 	name = "Lanca Heavy Rifle Crate"
 	desc = "For when they are just too far away to use a shotgun. \
-		Contains 2 Lanca marksman rifles and a spare magazine for each."
+		Contains 2 Lanca marksman rifles and 2 spare magazines for each."
 	cost = CARGO_CRATE_VALUE * 17.5
 	contains = list(/obj/item/gun/ballistic/automatic/lanca = 2,
-					/obj/item/ammo_box/magazine/lanca = 2)
+					/obj/item/ammo_box/magazine/lanca = 4)
 	crate_name = "battle rifle crate"
 	contraband = TRUE
 
@@ -376,22 +376,13 @@
 	)
 	crate_name = "Sindano Submachinegun Crate"
 
-/datum/supply_pack/security/armory/renoster
-	name = "Renoster Riot Shotgun Crate"
-	desc = "Three Renoster 12ga riot shotguns, with matching bandoliers for each."
-	cost = CARGO_CRATE_VALUE * 17.5
-	contains = list(
-		/obj/item/gun/ballistic/shotgun/riot/sol = 3,
-		/obj/item/storage/belt/bandolier = 3,
-	)
-	crate_name = "Renoster Riot Shotgun Crate"
-
 /datum/supply_pack/security/armory/kiboko
 	name = "Kiboko Grenade Launcher Crate"
-	desc = "Contains a single Kiboko grenade launcher for replacing the one found in the armory, alongside the equipment that comes with it."
+	desc = "Contains a single Kiboko grenade launcher for replacing the one found in the armory, complete with ammunition."
 	cost = CARGO_CRATE_VALUE * 30
 	contains = list(
 		/obj/item/storage/toolbox/guncase/skyrat/carwo_large_case/kiboko_magless = 1,
+		/obj/item/ammo_box/magazine/c980_grenade/starts_empty = 3,
 		/obj/item/ammo_box/c980grenade = 2,
 		/obj/item/ammo_box/c980grenade/smoke = 1,
 		/obj/item/ammo_box/c980grenade/riot = 1,
@@ -400,10 +391,9 @@
 
 /datum/supply_pack/security/armory/short_mod_laser
 	name = "Modular Laser Carbine Crate"
-	desc = "Five 'Hoshi' modular laser carbines, compact energy weapons that can be rapidly reconfigured into different firing modes."
+	desc = "Four 'Hoshi' modular laser carbines, compact energy weapons that can be rapidly reconfigured into different firing modes."
 	cost = CARGO_CRATE_VALUE * 12
 	contains = list(
-		/obj/item/gun/energy/modular_laser_rifle/carbine,
 		/obj/item/gun/energy/modular_laser_rifle/carbine,
 		/obj/item/gun/energy/modular_laser_rifle/carbine,
 		/obj/item/gun/energy/modular_laser_rifle/carbine,
