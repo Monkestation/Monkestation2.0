@@ -71793,7 +71793,7 @@
 /obj/machinery/computer/order_console/bitrunning,
 /turf/open/floor/engine,
 /area/station/security/bitden)
-"wcn" = (
+"nJi" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Medbay Maintenance"
 	},
