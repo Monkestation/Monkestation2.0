@@ -1025,10 +1025,10 @@
 	new /obj/effect/temp_visual/shrimp_frying_rice(get_turf(new_rice))
 	return ITEM_INTERACT_SUCCESS
 
-
 ///////    = SHRIMP PLUSH RICE FRYING VISUAL EFFECT =    ///////
 
 /obj/effect/temp_visual/shrimp_frying_rice
+	icon = 'icons/obj/toys/plushes.dmi'
 	icon_state = "shrimp"
 	layer = MOB_UPPER_LAYER
 	plane = GAME_PLANE

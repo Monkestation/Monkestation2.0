@@ -3777,10 +3777,13 @@
 /turf/open/floor/carpet/executive,
 /area/station/science/lobby)
 "bju" = (
-/obj/effect/turf_decal/trimline/blue/filled/line{
+/obj/effect/turf_decal/trimline/blue/warning,
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 1
 	},
-/obj/effect/turf_decal/trimline/blue/line,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/patients_rooms)
 "bjw" = (
@@ -71790,6 +71793,14 @@
 /obj/machinery/computer/order_console/bitrunning,
 /turf/open/floor/engine,
 /area/station/security/bitden)
+"wcn" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Morgue Maintenance"
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/any/medical/general,
+/turf/open/floor/iron/white/textured,
+/area/station/maintenance/starboard/upper)
 "wcp" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer{
 	dir = 8
@@ -109750,7 +109761,7 @@ pmd
 pmd
 bNq
 iAp
-vUP
+wcn
 bju
 kbr
 vBW
