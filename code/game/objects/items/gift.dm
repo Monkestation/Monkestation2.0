@@ -178,7 +178,6 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 		//holy fuck why was this enabled
 		/obj/item/debug,
 		/obj/item/storage/box/debugbox,
-		/obj/item/gun/energy/beam_rifle/debug,
 		/obj/item/multitool/field_debug,
 		/obj/item/bounty_cube/debug_cube,
 		/obj/item/organ/internal/cyberimp/brain/nif/debug,

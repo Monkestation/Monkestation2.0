@@ -142,7 +142,7 @@
 	speed = 1.8 // spit is not very fast
 	var/multiplier = 1
 
-/obj/projectile/bullet/acid_spit/preparePixelProjectile(atom/target, atom/source, list/modifiers = null, deviation = 0)
+/obj/projectile/bullet/acid_spit/aim_projectile(atom/target, atom/source, list/modifiers = null, deviation = 0)
 	if(fired_from)
 		var/datum/action/cooldown/spell/pointed/projectile/acid_spit/ability = fired_from
 		if(istype(ability))

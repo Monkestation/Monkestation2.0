@@ -2479,7 +2479,7 @@
 	},
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
-/obj/item/ammo_casing/caseless/rocket/heap,
+/obj/item/ammo_casing/rocket/heap,
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape/luxury)
 "Uo" = (

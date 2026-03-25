@@ -114,7 +114,7 @@
 			beat = BEAT_NONE
 
 		if(owner.has_status_effect(/datum/status_effect/jitter))
-			if(owner.health > HEALTH_THRESHOLD_FULLCRIT && (!beat || beat == BEAT_SLOW))
+			if(owner.health > owner.hardcrit_threshold && (!beat || beat == BEAT_SLOW))
 				owner.playsound_local(get_turf(owner), fastbeat, 40, 0, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
 				beat = BEAT_FAST
 
@@ -405,7 +405,7 @@
 	if(!COOLDOWN_FINISHED(src, crystalize_cooldown))
 		return //lol double rip
 
-	if(HAS_TRAIT(victim, TRAIT_CANNOT_CRYSTALIZE) || HAS_TRAIT(victim, TRAIT_DEFIB_BLACKLISTED))
+	if(HAS_TRAIT(victim, TRAIT_CANNOT_CRYSTALIZE) || (victim.mind && HAS_TRAIT(victim.mind, TRAIT_DEFIB_BLACKLISTED)))
 		return // no reviving during mafia, or other inconvenient times.
 
 	to_chat(victim, span_nicegreen("Crystals start forming around your dead body."))
