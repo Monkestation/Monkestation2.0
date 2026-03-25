@@ -71795,7 +71795,7 @@
 /area/station/security/bitden)
 "wcn" = (
 /obj/machinery/door/airlock/maintenance_hatch{
-	name = "Morgue Maintenance"
+	name = "Medbay Maintenance"
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/any/medical/general,
