@@ -216,6 +216,17 @@ export const PersonalCrafting = (props) => {
     material_occurences[0].atom_id,
   );
   const [tabMode, setTabMode] = useLocalState('tabMode', 0);
+  const visibleMaterials =
+    tabMode === TABS.material && searchText.length > 0
+      ? [
+          ...material_occurences.filter((m) => m.atom_id === activeMaterial),
+          ...material_occurences.filter((m) => {
+            if (m.atom_id === activeMaterial) return false;
+            const name = data.atom_data[Number(m.atom_id) - 1]?.name ?? '';
+            return name.toLowerCase().includes(searchText.toLowerCase());
+          }),
+        ]
+      : material_occurences;
   const searchName = createSearch(searchText, (item: Recipe) => item.name);
   let recipes = flow([
     filter<Recipe>(
@@ -372,7 +383,7 @@ export const PersonalCrafting = (props) => {
                           </Tabs.Tab>
                         ))}
                       {tabMode === TABS.material &&
-                        material_occurences.map((material) => (
+                        visibleMaterials.map((material) => (
                           <Tabs.Tab
                             key={material.atom_id}
                             selected={
