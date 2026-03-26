@@ -2,7 +2,6 @@
 	antag_flag = ROLE_CHANGELING
 	tags = list(TAG_COMBAT, TAG_ALIEN, TAG_CREW_ANTAG)
 	antag_datum = /datum/antagonist/changeling
-	repeated_mode_adjust = TRUE // apparently these roll too often despite their weight, maybe this will help?
 	protected_roles = list(
 		JOB_CAPTAIN,
 		JOB_BLUESHIELD,
@@ -39,7 +38,7 @@
 	required_enemies = 4
 	base_antags = 2
 	min_players = 20
-	weight = 15
+	weight = 12
 	shared_occurence_type = SHARED_CHANGELING
 	event_icon_state = "changeling"
 
