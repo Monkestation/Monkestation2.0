@@ -1094,7 +1094,7 @@
 	donator_only = TRUE
 	requires_purchase = FALSE
 
-/datum/loadout_item/mask/anchor_necklace
+/datum/loadout_item/neck/anchor_necklace
 	name = "Silver Anchor"
 	item_path = /obj/item/clothing/accessory/silver_anchor
 	donator_only = TRUE

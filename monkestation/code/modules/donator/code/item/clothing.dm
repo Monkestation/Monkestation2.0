@@ -972,11 +972,10 @@
 	flags_cover = MASKCOVERSEYES
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
-/obj/item/clothing/accessory/silver_anchor
+/obj/item/clothing/neck/silver_anchor
 	name = "Silver Anchor"
 	desc = "Shiny silver anchor connected to a black string."
 	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
 	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
 	icon_state = "silver_anchor"
-	attachment_slot = NONE
 
