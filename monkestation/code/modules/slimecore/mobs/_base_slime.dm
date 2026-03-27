@@ -298,9 +298,12 @@
 /mob/living/basic/slime/update_overlays()
 	. = ..()
 	if (equipped_hat)
-		var/mutable_appearance/hat_overlay = equipped_hat.build_worn_icon(default_layer = layer + 0.15, default_icon_file = 'icons/mob/clothing/head/default.dmi')
+		// We set layer and plane for the purpose of being positioned over visual traits (i.e. cat ears)
+		var/mutable_appearance/hat_overlay = equipped_hat.build_worn_icon(default_layer = layer, default_icon_file = 'icons/mob/clothing/head/default.dmi')
+		SET_PLANE_EXPLICIT(hat_overlay, PLANE_TO_TRUE(plane), src)
+		hat_overlay.layer = layer + 0.15
 		hat_overlay.appearance_flags = RESET_COLOR|KEEP_APART
-		hat_overlay.pixel_y -= 7
+		hat_overlay.pixel_y -= 8
 		. += hat_overlay
 
 /mob/living/basic/slime/proc/check_secretion()
