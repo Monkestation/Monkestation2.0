@@ -654,12 +654,18 @@ monkestation end */
 /datum/antagonist/heretic/proc/get_researchable_knowledge()
 	var/list/researchable_knowledge = list()
 	var/list/banned_knowledge = list()
+	var/list/blocked_knowledge = list()
 	for(var/knowledge_index in researched_knowledge)
 		var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_index]
 		researchable_knowledge |= knowledge.next_knowledge
 		banned_knowledge |= knowledge.banned_knowledge
 		banned_knowledge |= knowledge.type
 	researchable_knowledge -= banned_knowledge
+	for(var/blocked_knowledge_index in 1 to length(researchable_knowledge))
+		var/datum/heretic_knowledge/knowledge_to_checck = researchable_knowledge[blocked_knowledge_index]
+		if(knowledge_to_checck.required_path != PATH_ANY && knowledge_to_checck.required_path != heretic_path)
+			blocked_knowledge |= knowledge_to_checck
+	researchable_knowledge -= blocked_knowledge
 	return researchable_knowledge
 
 /**

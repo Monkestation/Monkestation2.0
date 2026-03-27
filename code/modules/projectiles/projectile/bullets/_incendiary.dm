@@ -53,7 +53,7 @@
 	damage = 8
 	range = 10
 	damage_walls = TRUE // melt the walls
-	speed = 1.4
+	speed = 1.1
 	bare_wound_bonus = 45
 	fire_stacks = 5
 
