@@ -993,10 +993,3 @@
 
 /obj/item/clothing/head/costume/crown/red_regal_mantle
 	desc = "If you were to taste this crown, you'd notice it would taste like painted copper."
-
-/obj/item/clothing/neck/silver_anchor
-	name = "silver anchor"
-	desc = "Shiny silver anchor connected to a black string."
-	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
-	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
-	icon_state = "silver_anchor"
