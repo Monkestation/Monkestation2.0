@@ -993,3 +993,12 @@
 
 /obj/item/clothing/head/costume/crown/red_regal_mantle
 	desc = "If you were to taste this crown, you'd notice it would taste like painted copper."
+
+/obj/item/clothing/accessory/silver_anchor
+	name = "silver anchor"
+	desc = "A shiny silver anchor connected to a black string."
+	icon_state = "silver_anchor"
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	attachment_slot = NONE
+	slot_flags = ITEM_SLOT_NECK
