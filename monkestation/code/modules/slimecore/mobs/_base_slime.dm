@@ -300,7 +300,7 @@
 	if (equipped_hat)
 		var/mutable_appearance/hat_overlay = equipped_hat.build_worn_icon(default_layer = layer + 0.15, default_icon_file = 'icons/mob/clothing/head/default.dmi')
 		hat_overlay.appearance_flags = RESET_COLOR|KEEP_APART
-		hat_overlay.pixel_y -= 8
+		hat_overlay.pixel_y -= 7
 		. += hat_overlay
 
 /mob/living/basic/slime/proc/check_secretion()
