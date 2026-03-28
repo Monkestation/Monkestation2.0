@@ -1757,7 +1757,7 @@ GLOBAL_LIST_EMPTY(intento_players)
 /obj/item/gun/magic/sickly_blade_toy
 	name = "plastic replica blade"
 	desc = "A sickly green crescent blade, decorated with a plastic eye. You feel like this was cheaply made. A Donk Co logo is on the hilt."
-	icon = 'icons/obj/antags/eldritch.dmi'
+	icon = 'icons/obj/weapons/khopesh.dmi'
 	icon_state = "eldritch_blade"
 	inhand_icon_state = "eldritch_blade"
 	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
