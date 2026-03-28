@@ -17,7 +17,6 @@
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.25
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.5
 
-	var/obj/machinery/plumbing/ooze_sucker/linked_sucker
 	var/datum/corral_data/linked_data
 	var/mapping_id
 
@@ -25,25 +24,6 @@
 	..()
 	register_context()
 	return INITIALIZE_HINT_LATELOAD
-
-/obj/machinery/slime_pen_controller/post_machine_initialize()
-	. = ..()
-
-	if(!mapping_id)
-		return
-	for(var/obj/machinery/plumbing/ooze_sucker/main as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/plumbing/ooze_sucker))
-		if(main.mapping_id != mapping_id)
-			continue
-		linked_sucker = main
-		main.linked_controller = src
-		return
-
-/obj/machinery/slime_pen_controller/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	. = ..()
-
-	if(linked_sucker)
-		context[SCREENTIP_CONTEXT_RMB] = "Toggle Linked Scrubber"
-		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/slime_pen_controller/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
@@ -130,17 +110,6 @@
 			)
 			data["buyable_upgrades"] += list(upgrade_data)
 
-	data["reagent_amount"] = 0
-	data["reagent_data"] = list()
-	if(!QDELETED(linked_sucker))
-		data["reagent_amount"] = linked_sucker.reagents.total_volume
-		data["reagent_data"] = list()
-		for(var/datum/reagent/reagent as anything in linked_sucker.reagents.reagent_list)
-			data["reagent_data"] += list(list(
-				"name" = reagent.name,
-				"amount" = reagent.volume,
-			))
-
 	return data
 
 /obj/machinery/slime_pen_controller/ui_act(action, list/params)
@@ -165,27 +134,12 @@
 	new_upgrade.on_add(linked_data)
 	linked_data.corral_upgrades |= new_upgrade
 
-/obj/machinery/slime_pen_controller/attack_hand_secondary(mob/user, list/modifiers)
-	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-		return
-	if(!QDELETED(linked_sucker))
-		linked_sucker.toggle_state()
-		balloon_alert_to_viewers("[linked_sucker.turned_on ? "enabled" : "disabled"] ooze sucker")
-		visible_message(span_notice("[user] fiddles with the [src], [linked_sucker.turned_on ? "enabling" : "disabling"] the pens ooze sucker."))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
 /obj/machinery/slime_pen_controller/multitool_act(mob/living/user, obj/item/multitool/multitool)
 	. = NONE
 	var/datum/buffer = multitool_get_buffer(multitool)
 
 	if(!buffer)
 		return NONE
-
-	if(linked_oozesucker(buffer, linked_data))  // Linking a new ooze sucker instead of a pen.
-		balloon_alert_to_viewers("linked sucker")
-		to_chat(user, span_notice("You link the [buffer] to the [src]."))
-		return ITEM_INTERACT_SUCCESS
 
 	var/obj/machinery/corral_corner/pad = astype(buffer)
 	if(!pad?.connected_data)
@@ -199,24 +153,6 @@
 	to_chat(user, span_notice("You link the [pad] to the [src]."))
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/slime_pen_controller/proc/linked_oozesucker(obj/machinery/plumbing/ooze_sucker/target, datum/corral_data/linked_pen)
-	if(!istype(target) || !istype(linked_pen))
-		return
-	if(get_turf(target.loc) in linked_pen.corral_turfs)
-		if(linked_sucker)
-			UnregisterSignal(linked_sucker, COMSIG_QDELETING)
-		linked_sucker = target
-		target.linked_controller = src
-		RegisterSignal(linked_sucker, COMSIG_QDELETING, PROC_REF(clear_sucker_data))
-		target.balloon_alert_to_viewers("linked to controller")
-		return TRUE
-	return
-
 /obj/machinery/slime_pen_controller/proc/clear_data()
 	UnregisterSignal(linked_data, COMSIG_QDELETING)
 	linked_data = null
-
-/obj/machinery/slime_pen_controller/proc/clear_sucker_data()
-	UnregisterSignal(linked_sucker, COMSIG_QDELETING)
-	linked_sucker.linked_controller = null
-	linked_sucker = null
