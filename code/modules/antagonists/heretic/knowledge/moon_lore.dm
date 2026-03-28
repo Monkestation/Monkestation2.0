@@ -243,7 +243,7 @@
 		to_chat(convertee, span_boldwarning("[user]'s rise is influencing those who are weak willed. Their minds shall rend." ))
 		return FALSE
 	// Mindshielded and anti-magic folks are immune against this effect because this is a magical mind effect
-	if(HAS_MIND_TRAIT(convertee, TRAIT_UNCONVERTABLE) || convertee.can_block_magic(MAGIC_RESISTANCE))
+	if(HAS_MIND_TRAIT(convertee, TRAIT_UNCONVERTABLE) || HAS_TRAIT_NOT_FROM(convertee, TRAIT_MINDSHIELD, NANITES_TRAIT) || convertee.can_block_magic(MAGIC_RESISTANCE))
 		to_chat(convertee, span_boldwarning("You feel shielded from something." ))
 		return FALSE
 

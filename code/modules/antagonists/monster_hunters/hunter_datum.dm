@@ -29,6 +29,7 @@
 		TRAIT_FEARLESS, // to ensure things like fear of heresy or blood or whatever don't fuck them over
 		TRAIT_NOCRITDAMAGE,
 		TRAIT_NOSOFTCRIT,
+		TRAIT_RUSTIMMUNE,
 	)
 	/// A list of traits innately granted to the mind of monster hunters.
 	var/static/list/mind_traits = list(
