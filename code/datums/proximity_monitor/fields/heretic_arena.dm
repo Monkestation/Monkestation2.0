@@ -153,10 +153,7 @@ GLOBAL_LIST_EMPTY(heretic_arenas)
 
 /// Called when you crit somebody to update your crown
 /datum/status_effect/arena_tracker/proc/on_crit_somebody()
-	owner.cut_overlay(crown_overlay)
-	crown_overlay = mutable_appearance('icons/mob/effects/crown.dmi', "arena_victor", -HALO_LAYER)
-	crown_overlay.pixel_z = 24
-	owner.add_overlay(crown_overlay)
+	owner.update_appearance(UPDATE_OVERLAYS)
 	owner.remove_traits(list(TRAIT_ELDRITCH_ARENA_PARTICIPANT, TRAIT_NO_TELEPORT), TRAIT_STATUS_EFFECT(id))
 
 	// The mansus celebrates your efforts
@@ -193,24 +190,26 @@ GLOBAL_LIST_EMPTY(heretic_arenas)
 	var/datum/weakref/last_attacker
 	/// If our mob is free to leave, set to true
 	var/arena_victor = FALSE
-	/// The overlay for our mob, changes color to indicate that they are a victor and are free to leave
-	var/mutable_appearance/crown_overlay
 
 /datum/status_effect/arena_tracker/on_apply()
 	RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION), PROC_REF(on_enter_crit))
 	RegisterSignal(owner, COMSIG_MOVABLE_IMPACT_ZONE, PROC_REF(on_impact_zone))
 	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(damage_taken))
+	RegisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(add_crown_overlay))
 	owner.add_traits(list(TRAIT_ELDRITCH_ARENA_PARTICIPANT, TRAIT_NO_TELEPORT), TRAIT_STATUS_EFFECT(id))
-	crown_overlay = mutable_appearance('icons/mob/effects/crown.dmi', "arena_fighter", -HALO_LAYER)
-	crown_overlay.pixel_z = 24
-	owner.add_overlay(crown_overlay)
+	owner.update_appearance(UPDATE_OVERLAYS)
 	return TRUE
 
 /datum/status_effect/arena_tracker/on_remove()
-	UnregisterSignal(owner, list(SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION), COMSIG_MOVABLE_IMPACT_ZONE, COMSIG_MOB_APPLY_DAMAGE))
+	UnregisterSignal(owner, list(SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION), COMSIG_MOVABLE_IMPACT_ZONE, COMSIG_MOB_APPLY_DAMAGE, COMSIG_ATOM_UPDATE_OVERLAYS))
 	owner.remove_traits(list(TRAIT_ELDRITCH_ARENA_PARTICIPANT, TRAIT_NO_TELEPORT), TRAIT_STATUS_EFFECT(id))
-	owner.cut_overlay(crown_overlay)
-	crown_overlay = null
+	owner.update_appearance(UPDATE_OVERLAYS)
+
+/datum/status_effect/arena_tracker/proc/add_crown_overlay(mob/living/source, list/overlays)
+	SIGNAL_HANDLER
+	var/mutable_appearance/crown_overlay = mutable_appearance('icons/mob/effects/crown.dmi', arena_victor ? "arena_victor" : "arena_fighter", -HALO_LAYER)
+	crown_overlay.pixel_z = 24
+	overlays += crown_overlay
 
 // If our last attacker is an arena participant, we let them know they've scored a critical hit
 /datum/status_effect/arena_tracker/proc/on_enter_crit(mob/owner)
