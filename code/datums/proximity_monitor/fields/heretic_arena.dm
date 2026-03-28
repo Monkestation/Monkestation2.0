@@ -153,7 +153,6 @@ GLOBAL_LIST_EMPTY(heretic_arenas)
 
 /// Called when you crit somebody to update your crown
 /datum/status_effect/arena_tracker/proc/on_crit_somebody()
-	owner.update_appearance(UPDATE_OVERLAYS)
 	owner.remove_traits(list(TRAIT_ELDRITCH_ARENA_PARTICIPANT, TRAIT_NO_TELEPORT), TRAIT_STATUS_EFFECT(id))
 
 	// The mansus celebrates your efforts
@@ -173,6 +172,7 @@ GLOBAL_LIST_EMPTY(heretic_arenas)
 	else
 		to_chat(owner, span_big(span_hypnophrase("You have done well, you may leave now.")))
 	arena_victor = TRUE
+	owner.update_appearance(UPDATE_OVERLAYS)
 
 /**
  * Status applied to every mob in the heretic arena.
