@@ -286,7 +286,7 @@
 
 /datum/heretic_knowledge/curse/indulgence/curse(mob/living/carbon/human/chosen_mob)
 	chosen_mob.apply_status_effect(/datum/status_effect/eldritch_painting/desire/permanent)
-	chosen_mob.nutrition = NUTRITION_LEVEL_STARVING
+	chosen_mob.set_nutrition(NUTRITION_LEVEL_STARVING)
 	return ..()
 
 /datum/heretic_knowledge/curse/indulgence/uncurse(mob/living/carbon/human/chosen_mob)
