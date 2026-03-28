@@ -908,7 +908,7 @@
 	if(has_fried)
 		. += span_notice("[p_Theyre()] all tuckered out.")
 	if(suishrimp)
-		. += span_notice("[p_They()] ready.")
+		. += span_notice("[p_Theyre()] ready.")
 	else
 		. += span_notice("[p_Theyre()] ready to fry some rice.")
 
