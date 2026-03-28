@@ -207,7 +207,7 @@ GLOBAL_LIST_EMPTY(heretic_arenas)
 	return TRUE
 
 /datum/status_effect/arena_tracker/on_remove()
-	UnregisterSignal(owner, list(SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION), COMSIG_MOB_APPLY_DAMAGE))
+	UnregisterSignal(owner, list(SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION), COMSIG_MOVABLE_IMPACT_ZONE, COMSIG_MOB_APPLY_DAMAGE))
 	owner.remove_traits(list(TRAIT_ELDRITCH_ARENA_PARTICIPANT, TRAIT_NO_TELEPORT), TRAIT_STATUS_EFFECT(id))
 	owner.cut_overlay(crown_overlay)
 	crown_overlay = null
