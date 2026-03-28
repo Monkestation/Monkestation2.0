@@ -36,7 +36,7 @@
 	icon = 'icons/turf/walls.dmi'
 	explosive_resistance = 50
 
-/turf/closed/indestructible/rust_heretic_act()
+/turf/closed/indestructible/rust_heretic_act(rust_strength)
 	return
 
 /turf/closed/indestructible/TerraformTurf(path, new_baseturf, flags, defer_change = FALSE, ignore_air = FALSE)

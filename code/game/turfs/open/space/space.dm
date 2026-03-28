@@ -241,7 +241,7 @@ GLOBAL_VAR_INIT(starlight_color, pick(COLOR_TEAL, COLOR_GREEN, COLOR_CYAN, COLOR
 			return TRUE
 	return FALSE
 
-/turf/open/space/rust_heretic_act()
+/turf/open/space/rust_heretic_act(rust_strength)
 	return FALSE
 
 /turf/open/space/attempt_lattice_replacement()

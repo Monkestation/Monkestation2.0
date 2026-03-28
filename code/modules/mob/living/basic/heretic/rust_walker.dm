@@ -17,7 +17,7 @@
 /mob/living/basic/heretic_summon/rust_walker/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_RUST)
-	var/datum/action/cooldown/spell/aoe/rust_conversion/small/conversion = new(src)
+	var/datum/action/cooldown/spell/aoe/rust_conversion/conversion = new(src)
 	conversion.Grant(src)
 	ai_controller?.set_blackboard_key(BB_GENERIC_ACTION, conversion)
 

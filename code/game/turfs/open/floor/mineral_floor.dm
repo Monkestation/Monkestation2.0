@@ -73,7 +73,7 @@
 /turf/open/floor/mineral/titanium/broken_states()
 	return list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
 
-/turf/open/floor/mineral/titanium/rust_heretic_act()
+/turf/open/floor/mineral/titanium/rust_heretic_act(rust_strength)
 	return // titanium does not rust
 
 /turf/open/floor/mineral/titanium/airless
@@ -157,7 +157,7 @@
 /turf/open/floor/mineral/plastitanium/broken_states()
 	return list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
 
-/turf/open/floor/mineral/plastitanium/rust_heretic_act()
+/turf/open/floor/mineral/plastitanium/rust_heretic_act(rust_strength)
 	return // plastitanium does not rust
 
 /turf/open/floor/mineral/plastitanium/airless

@@ -427,7 +427,7 @@
 /obj/item/melee/blood_magic/stun/cast_spell(mob/living/target, mob/living/carbon/user)
 	if(!istype(target) || IS_CULTIST(target))
 		return
-	var/datum/antagonist/cult/cultist = IS_CULTIST(user)
+	var/datum/antagonist/cult/cultist = GET_CULTIST(user)
 	var/datum/team/cult/cult_team = cultist.get_team()
 	user.visible_message(
 		span_warning("[user] holds up [user.p_their()] hand, which explodes in a flash of red light!"),

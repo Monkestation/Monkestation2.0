@@ -50,7 +50,7 @@
 			return TRUE
 	return FALSE
 
-/turf/open/chasm/rust_heretic_act()
+/turf/open/chasm/rust_heretic_act(rust_strength)
 	return FALSE
 
 /turf/open/chasm/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)

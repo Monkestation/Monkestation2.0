@@ -145,7 +145,7 @@
 			return TRUE
 	return FALSE
 
-/turf/open/openspace/rust_heretic_act()
+/turf/open/openspace/rust_heretic_act(rust_strength)
 	return FALSE
 
 /turf/open/openspace/CanAStarPass(to_dir, datum/can_pass_info/pass_info)

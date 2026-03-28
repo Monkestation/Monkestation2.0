@@ -61,7 +61,7 @@
 			if(!broken)
 				return  span_warning("It's falling apart!")
 
-/obj/structure/rust_heretic_act()
+/obj/structure/rust_heretic_act(rust_strength)
 	take_damage(500, BRUTE, "melee", 1)
 
 /obj/structure/zap_act(power, zap_flags)

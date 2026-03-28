@@ -3,14 +3,6 @@
 /// A global assoc list of all landmarks that denote a heretic sacrifice location. [string heretic path] = [landmark].
 GLOBAL_LIST_EMPTY(heretic_sacrifice_landmarks)
 
-/**
- * A map template loaded in when heretics are created.
- * Hereteic sacrifices are sent here when completed.
- */
-/datum/map_template/heretic_sacrifice_level
-	name = "Heretic Sacrifice Level"
-	mappath = "_maps/templates/heretic_sacrifice_template.dmm"
-
 /// Lardmarks meant to designate where heretic sacrifices are sent.
 /obj/effect/landmark/heretic
 	name = "default heretic sacrifice landmark"
@@ -42,38 +34,16 @@ GLOBAL_LIST_EMPTY(heretic_sacrifice_landmarks)
 	name = "rust heretic sacrifice landmark"
 	for_heretic_path = PATH_RUST
 
-/obj/effect/landmark/heretic/knock
-	name = "knock heretic sacrifice landmark"
-	for_heretic_path = PATH_KNOCK
-
-// A fluff signpost object that doesn't teleport you somewhere when you touch it.
-/obj/structure/no_effect_signpost
-	name = "signpost"
-	desc = "Won't somebody give me a sign?"
-	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "signpost"
-	anchored = TRUE
-	density = TRUE
-
-/obj/structure/no_effect_signpost/void
-	name = "signpost at the edge of the universe"
-	desc = "A direction in the directionless void."
-	density = FALSE
-	/// Brightness of the signpost.
-	var/range = 2
-	/// Light power of the signpost.
-	var/power = 0.8
-
-/obj/structure/no_effect_signpost/void/Initialize(mapload)
-	. = ..()
-	set_light(l_outer_range = range, l_power = power)
+/obj/effect/landmark/heretic/lock
+	name = "lock heretic sacrifice landmark"
+	for_heretic_path = PATH_LOCK
 
 // Some VERY dim lights, used for the void sacrifice realm.
 /obj/machinery/light/very_dim
 	nightshift_allowed = FALSE
 	bulb_colour = "#d6b6a6ff"
-	bulb_inner_range = 3
-	fire_brightness = 2
+	bulb_outer_range = 3
+	fire_brightness = 3.5
 	bulb_power = 0.5
 
 /obj/machinery/light/very_dim/directional/north
@@ -95,12 +65,11 @@ GLOBAL_LIST_EMPTY(heretic_sacrifice_landmarks)
 	has_gravity = STANDARD_GRAVITY
 	ambience_index = AMBIENCE_SPOOKY
 	sound_environment = SOUND_ENVIRONMENT_CAVE
-	area_flags = UNIQUE_AREA | NOTELEPORT | HIDDEN_AREA | BLOCK_SUICIDE
+	area_flags = NOTELEPORT | HIDDEN_AREA | BLOCK_SUICIDE/*  | NO_BOH */
 
 /area/centcom/heretic_sacrifice/Initialize(mapload)
 	if(!ambientsounds)
-		ambientsounds = GLOB.ambience_assoc[ambience_index]
-		ambientsounds += 'sound/ambience/ambiatm1.ogg'
+		ambientsounds = GLOB.ambience_assoc[ambience_index] + 'sound/ambience/ambiatm1.ogg'
 	return ..()
 
 /area/centcom/heretic_sacrifice/ash //also, the default
@@ -119,7 +88,7 @@ GLOBAL_LIST_EMPTY(heretic_sacrifice_landmarks)
 	ambience_index = AMBIENCE_REEBE
 	sound_environment = SOUND_ENVIRONMENT_SEWER_PIPE
 
-/area/centcom/heretic_sacrifice/knock
-	name = "Mansus Knock Gate"
+/area/centcom/heretic_sacrifice/lock
+	name = "Mansus Lock Gate"
 	ambience_index = AMBIENCE_DANGER
 	sound_environment = SOUND_ENVIRONMENT_PSYCHOTIC

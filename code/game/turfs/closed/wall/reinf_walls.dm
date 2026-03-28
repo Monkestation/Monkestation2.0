@@ -220,12 +220,10 @@
 	if(the_rcd.canRturf || passed_mode == RCD_WALLFRAME)
 		return ..()
 
-/turf/closed/wall/r_wall/rust_heretic_act()
-	if(prob(50))
-		return
+/turf/closed/wall/r_wall/rust_turf(magic = FALSE)
 	if(HAS_TRAIT(src, TRAIT_RUSTY))
-		ScrapeAway()
-		return
+		ChangeTurf(/turf/closed/wall/rust)
+		return TRUE
 	return ..()
 
 /turf/closed/wall/r_wall/syndicate
