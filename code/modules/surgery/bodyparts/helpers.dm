@@ -6,10 +6,11 @@
  *
  * Returns a bodypart, or null.
  */
-/mob/living/proc/get_bodypart(zone = BODY_ZONE_CHEST)
+/mob/living/proc/get_bodypart(zone = BODY_ZONE_CHEST) as /obj/item/bodypart
 	return
 
-/mob/living/carbon/get_bodypart(zone = BODY_ZONE_CHEST) as /obj/item/bodypart
+/mob/living/carbon/get_bodypart(zone = BODY_ZONE_CHEST)
+	RETURN_TYPE(/obj/item/bodypart)
 	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
 		if(bodypart.body_zone != zone)
 			continue
