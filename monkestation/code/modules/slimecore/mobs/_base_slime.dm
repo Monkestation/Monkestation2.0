@@ -367,6 +367,7 @@
 		nanites.nanite_volume *= 0.5
 		new_slime.AddComponent(/datum/component/nanites, nanites.nanite_volume)
 		SEND_SIGNAL(new_slime, COMSIG_NANITE_SYNC, nanites, TRUE, TRUE) //The trues are to copy activation as well
+	new_slime.slime_extract_bonus = slime_extract_bonus
 
 /mob/living/basic/slime/proc/start_mutating(random = FALSE)
 	if(!pick_mutation(random))
