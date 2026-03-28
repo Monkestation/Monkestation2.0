@@ -236,7 +236,7 @@
 	if(popup)
 		return
 	popup = TRUE
-	var/response = tgui_alert(flashed, "Visions of a life with [source] as your brother pass through your mind.", "Become brothers?", list("Become a brother", "Reject Brotherhood"))
+	var/response = tgui_alert(flashed, "Visions of a life with [source] as your brother pass through your mind.", "Become brothers?", list("Become a brother", "Reject Brotherhood"), 30)
 	popup = FALSE
 
 	if(response == "Become a brother")
