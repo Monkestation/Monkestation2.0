@@ -392,3 +392,45 @@
 2026-03-25:
   notghosti:
   - bugfix: License to plasmaflood no longer implies you have a license to murderbone.
+2026-03-26:
+  JohnFulpWillard:
+  - balance: Mimes can use their spells while non-human (if they were transformed
+      into something else)
+  PotatoTomahto:
+  - admin: admins can toggle the tram to isekai people
+  Shoddd:
+  - balance: Scatter laser shells actually utilize the real scatter laser beam. Doing
+      45 damage per shot rather than 90
+  cam_dev:
+  - map: 'oshan: adds maintenance door exit to patients room'
+  ghost:
+  - code_imp: The Greytide event will now play bolt audio and update the icon when
+      toggling door bolts.
+  wonderinghost:
+  - map: '[Meta] Adds Boulder Processing To Miner''s Office'
+2026-03-27:
+  CannibalHunter:
+  - rscadd: Added Ravin Hobo's donator item!
+  - rscadd: Added Yatosamasensei's donator items!
+  Mantlecrawler:
+  - balance: Kudzu can no longer be planted on Oshan's sea floor
+  - bugfix: Heretics can no longer research blade upgrades from paths other than their
+      main path (You already couldnt research more than one), this prevents a softlock
+  - bugfix: Lifebringer anomalies will no longer spawn broken mobs
+  Shoddd:
+  - balance: Explorer laser gun now shoots hardlight lasers, disappearing after 6
+      tiles and being unable to pass through glass but doing 32 damage.
+  - balance: explorer laser gun can now be cranked while moving and now has a unremovable
+      firing pin
+  SirNightKnight:
+  - balance: increased the weight of changelings to 12 from 10.
+  - balance: changelings don't get a weight penalty for rolling consecutively.
+  - balance: increased the weight of heretics from 2 to 8.
+  - balance: heretics, bloodsuckers, and changelings all require enemies to roll.
+2026-03-28:
+  JohnFulpWillard:
+  - bugfix: The Magic 8ball now lets ghosts vote on it.
+  TheColorCyan:
+  - rscadd: Added Snackiversal's donator item "Silver Anchor"
+  Tractor-Maam:
+  - rscadd: Readded crutches to medical lathes.

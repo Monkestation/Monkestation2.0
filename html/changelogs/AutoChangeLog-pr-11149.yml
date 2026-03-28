@@ -1,4 +1,0 @@
-author: "Shoddd"
-delete-after: True
-changes:
-  - balance: "Scatter laser shells actually utilize the real scatter laser beam. Doing 45 damage per shot rather than 90"

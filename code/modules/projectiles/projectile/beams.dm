@@ -151,6 +151,13 @@
 	muzzle_type = /obj/effect/projectile/muzzle/xray
 	impact_type = /obj/effect/projectile/impact/xray
 
+/obj/projectile/beam/laser/hardlight
+	name = "hardlight laser"
+	pass_flags = PASSTABLE
+	damage = 32
+	damage_type = BURN
+	range = 6
+
 /obj/projectile/beam/disabler
 	name = "disabler beam"
 	icon_state = "omnilaser"

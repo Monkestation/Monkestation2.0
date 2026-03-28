@@ -1,4 +1,0 @@
-author: "cam_dev"
-delete-after: True
-changes:
-  - map: "oshan: adds maintenance door exit to patients room"
