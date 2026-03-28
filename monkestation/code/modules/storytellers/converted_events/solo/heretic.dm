@@ -2,6 +2,7 @@
 	antag_flag = ROLE_HERETIC
 	tags = list(TAG_COMBAT, TAG_SPOOKY, TAG_MAGICAL, TAG_CREW_ANTAG)
 	antag_datum = /datum/antagonist/heretic
+	typepath = /datum/round_event/antagonist/heretic
 	protected_roles = list(
 		JOB_CAPTAIN,
 		JOB_NANOTRASEN_REPRESENTATIVE,
@@ -51,22 +52,20 @@
 	antag_flag = ROLE_FORBIDDENCALLING
 	name = "Forbidden Calling (Heretics)"
 	prompted_picking = TRUE
+	typepath = /datum/round_event/antagonist/heretic/midround
 
 /datum/round_event/antagonist/heretic/start()
 	. = ..()
 	// go ahead and try to load the heretic sacrifice template after we make our heretics
 	INVOKE_ASYNC(SSmapping, TYPE_PROC_REF(/datum/controller/subsystem/mapping, lazy_load_template), LAZY_TEMPLATE_KEY_HERETIC_SACRIFICE)
 
-/datum/round_event/antagonist/heretic/add_datum_to_mind(datum/mind/antag_mind)
+/datum/round_event/antagonist/heretic/midround/add_datum_to_mind(datum/mind/antag_mind)
 	var/datum/antagonist/heretic/new_heretic = antag_mind.add_antag_datum(antag_datum)
 
 	// Heretics passively gain influence over time.
 	// As a consequence, latejoin heretics start out at a massive
 	// disadvantage if the round's been going on for a while.
 	// Let's give them some influence points when they arrive.
-	new_heretic.knowledge_points += round((world.time - SSticker.round_start_time) / new_heretic.passive_gain_timer)
-	// BUT let's not give smugglers a million points on arrival.
-	// Limit it to four missed passive gain cycles (4 points).
-	new_heretic.knowledge_points = min(new_heretic.knowledge_points, 5)
+	new_heretic.adjust_knowledge_points(min(round(STATION_TIME_PASSED() / new_heretic.passive_gain_timer, 1), 4))
 
-	SStgui.update_uis(new_heretic)
+	return new_heretic
