@@ -243,7 +243,7 @@
 	gain_text = "I could not continue alone. I was able to summon The Uncanny Man to help me see more. \
 		The screams... once constant, now silenced by their wretched appearance. Nothing was out of reach."
 	required_atoms = list(
-		/obj/item/organ/eyes = 1,
+		/obj/item/organ/internal/eyes = 1,
 		/obj/effect/decal/cleanable/blood = 1,
 		/obj/item/bodypart/arm/left = 1,
 	)
@@ -279,9 +279,9 @@
 		An ever shapeshifting mass of flesh, it knew well my goals. The Marshal approved."
 
 	required_atoms = list(
-		/obj/item/organ/tail = 1,
-		/obj/item/organ/stomach = 1,
-		/obj/item/organ/tongue = 1,
+		/obj/item/organ/external/tail = 1,
+		/obj/item/organ/internal/stomach = 1,
+		/obj/item/organ/internal/tongue = 1,
 		/obj/item/pen = 1,
 		/obj/item/paper = 1,
 	)
