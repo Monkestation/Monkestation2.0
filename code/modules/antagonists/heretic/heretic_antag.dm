@@ -445,6 +445,8 @@
 		overlays += mutable_appearance('icons/mob/effects/heretic_aura.dmi', "heretic_aura")
 
 /datum/antagonist/heretic/proc/should_show_aura()
+	if(ascended) // duh
+		return TRUE
 	if(!can_assign_self_objectives)
 		return FALSE // We spurned the offer of the Mansus :(
 	if(!unlimited_blades || HAS_TRAIT(owner.current, TRAIT_HERETIC_AURA_HIDDEN))
