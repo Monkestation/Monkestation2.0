@@ -80,14 +80,22 @@
 		atoms += user
 		return TRUE
 
+	// You can ALWAYS sacrifice heads of staff if you need to do so.
+	var/datum/objective/major_sacrifice/major_sacc_objective = locate() in heretic_datum.objectives
+	var/can_sac_command = major_sacc_objective && !major_sacc_objective.check_completion()
+
 	// If we have targets, we can check to see if we can do a sacrifice
 	// Let's remove any humans in our atoms list that aren't a sac target
 	for(var/mob/living/carbon/human/sacrifice in atoms)
 		// If the mob's not in soft crit or worse, remove from list
 		if(sacrifice.stat < SOFT_CRIT)
 			atoms -= sacrifice
+			continue
 		// Otherwise if it's neither a target nor a cultist, remove it
-		else if(!(sacrifice in heretic_datum.sac_targets) && !IS_CULTIST(sacrifice))
+		var/valid_target = FALSE
+		if(sacrifice in heretic_datum.sac_targets || IS_CULTIST(sacrifice) || (can_sac_command && (sacrifice.mind?.assigned_role?.job_flags & JOB_HEAD_OF_STAFF)))
+			valid_target = TRUE
+		if(!valid_target)
 			atoms -= sacrifice
 
 	// Finally, return TRUE if we have a target in the list
