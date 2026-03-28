@@ -324,9 +324,8 @@
 	// This makes the image 64x64.
 	icon.Crop(-15, -15, 48, 48)
 
-	var/obj/item/melee/sickly_blade/blade = new
-	icon.Blend(icon(blade.lefthand_file, blade.inhand_icon_state), ICON_OVERLAY)
-	qdel(blade)
+	var/obj/item/melee/sickly_blade/blade_type = /obj/item/melee/sickly_blade
+	icon.Blend(icon(blade_type::lefthand_file, blade_type::inhand_icon_state), ICON_OVERLAY)
 
 	// Move the guy back to the bottom left, 32x32.
 	icon.Crop(17, 17, 48, 48)

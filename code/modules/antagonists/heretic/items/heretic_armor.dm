@@ -890,7 +890,7 @@
 	REMOVE_TRAIT(user, TRAIT_PIERCEIMMUNE, REF(src))
 	cut_overlay(object_overlay)
 	QDEL_NULL(rust_overlay)
-	QDEL_NULL(rust_appearance)
+	rust_appearance = null
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/rust/robes_side_effect(mob/living/user)
 	. = ..()
