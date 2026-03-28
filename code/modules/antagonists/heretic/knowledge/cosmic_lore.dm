@@ -238,6 +238,7 @@
 	var/static/list/star_gazer_commands = list(
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
+		/datum/pet_command/protect_owner,
 		/datum/pet_command/follow,
 		/datum/pet_command/point_targeting/attack/star_gazer,
 	)
