@@ -242,11 +242,13 @@ const GuideSection = () => {
           <br />
           This aura will be visible to all those around you and will mark you as
           a heretic. Consider the risks before accumulating too much knowledge!
+          {/*
           <br />
           Keep in mind that using a&nbsp;
           <span style={hereticPurple}>Codex Cicatrix</span> will also make you
           very obvious as a heretic when draining&nbsp;
           <span style={hereticYellow}>influences</span>
+          */}
         </Stack.Item>
       </Stack>
     </Stack.Item>
