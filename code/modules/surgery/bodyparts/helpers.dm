@@ -29,9 +29,7 @@
 	for(var/zone in GLOB.all_body_zones)
 		var/obj/item/bodypart/bodypart = get_bodypart(zone)
 		if(bodypart)
-			parts += bodypart
-
-	return parts
+			. += bodypart
 
 ///Replaces a single limb and deletes the old one if there was one
 /mob/living/carbon/proc/del_and_replace_bodypart(obj/item/bodypart/new_limb, special)
