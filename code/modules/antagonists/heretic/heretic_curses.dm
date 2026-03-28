@@ -73,6 +73,17 @@
 		to_chat(user, span_warning("[to_curse.p_their()] ties to the Mansus are too strong. You are unable to curse [to_curse]."))
 		return TRUE
 
+	if(IS_MONSTERHUNTER(to_curse))
+		to_chat(user, span_warning("Something incomprehensible lashes out at you as you attempt to curse [to_curse], tearing your flesh asunder!"))
+		if(iscarbon(user) && !HAS_TRAIT(user, TRAIT_NEVER_WOUNDED) && !isoozeling(user)) // too lazy to do proper checks for "can they actually be slash wounded", this should suffice
+			var/mob/living/carbon/carbon_user = user
+			carbon_user.cause_wound_of_type_and_severity(WOUND_SLASH, pick(carbon_user.bodyparts), WOUND_SEVERITY_MODERATE, wound_source = "attempted monster hunter curse")
+		else
+			user.take_overall_damage(brute = 50)
+		user.Paralyze(5 SECONDS)
+		INVOKE_ASYNC(user, TYPE_PROC_REF(/mob, emote), "scream")
+		return TRUE
+
 	if(to_curse.can_block_magic(MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY, charge_cost = 0))
 		to_chat(to_curse, span_warning("A ghastly chill envelops you for a moment, but then it passes."))
 		return TRUE
@@ -220,6 +231,8 @@
 /datum/heretic_knowledge/curse/transmutation/curse(mob/living/carbon/human/chosen_mob, obj/item/codex_cicatrix/morbus/cursing_book)
 	if(chosen_mob.dna.species == chosen_species)
 		to_chat(chosen_mob, span_warning("You feel your body morph into... itself?"))
+		return
+	if(HAS_TRAIT(chosen_mob, TRAIT_SPECIESLOCK))
 		return
 	chosen_mob.apply_status_effect(/datum/status_effect/race_swap, chosen_species)
 	cursing_book.transmuted_victims += WEAKREF(chosen_mob)
