@@ -37,7 +37,7 @@
 		/obj/item/organ/internal/liver/corrupt,
 		/obj/item/organ/internal/lungs/corrupt,
 		/obj/item/organ/internal/stomach/corrupt,
-		/obj/item/organ/tongue/corrupt,
+		/obj/item/organ/INTERNAL/tongue/corrupt,
 	)
 
 /datum/heretic_knowledge/hunt_and_sacrifice/Destroy(force)
@@ -148,7 +148,7 @@
 
 	// First target, any command.
 	for(var/datum/mind/head_mind as anything in shuffle(valid_targets))
-		if(head_mind.assigned_role?.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
+		if(head_mind.assigned_role?.job_flags & JOB_HEAD_OF_STAFF)
 			final_targets += head_mind
 			valid_targets -= head_mind
 			break
@@ -223,7 +223,7 @@
 		if(prob(min(15 * rewards_given)) && (rewards_given <= 5))
 			for(var/datum/mind/mind as anything in cultist_datum.cult_team.members)
 				if(mind.current)
-					SEND_SOUND(mind.current, 'sound/effects/magic/clockwork/narsie_attack.ogg')
+					SEND_SOUND(mind.current, 'sound/magic/clockwork/narsie_attack.ogg')
 					var/message = span_narsie("A vile heretic has ") + \
 					span_cultlarge(span_hypnophrase("sacrificed")) + \
 					span_narsie(" one of our own. Destroy and sacrifice the infidel before it claims more!")

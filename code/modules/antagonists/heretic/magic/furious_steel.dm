@@ -47,10 +47,10 @@
 
 /datum/action/cooldown/spell/pointed/projectile/furious_steel/InterceptClickOn(mob/living/user, params, atom/target)
 	// Let the caster prioritize using items like guns over blade casts
-	if(clicker.get_active_held_item())
+	if(user.get_active_held_item())
 		return FALSE
 	// Let the caster prioritize melee attacks like punches and shoves over blade casts
-	if(get_dist(clicker, target) <= 1)
+	if(get_dist(user, target) <= 1)
 		return FALSE
 
 	return ..()

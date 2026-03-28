@@ -1268,7 +1268,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Needs above trait to work.
 /// This trait makes it so that any cast spells will attempt to transfer to the location's location.
 /// For example, a heretic inside the haunted blade's spells would emanate from the mob wielding the sword.
-/* #define TRAIT_SPELLS_TRANSFER_TO_LOC "spells_transfer_to_loc" */
+#define TRAIT_SPELLS_TRANSFER_TO_LOC "spells_transfer_to_loc"
 
 ///Trait given by /datum/element/relay_attacker
 #define TRAIT_RELAYING_ATTACKER "relaying_attacker"

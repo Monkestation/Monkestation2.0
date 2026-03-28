@@ -29,7 +29,7 @@
 
 	if(LAZYLEN(targets))
 		owner.log_message(" attacked someone due to the [id] debuff.", LOG_ATTACK) //the following attack will log itself
-		owner.istate |= ISTATE_HARM
+		owner.istate = ISTATE_HARM
 		owner.ClickOn(pick(targets))
 		num_attacks -= 1
 

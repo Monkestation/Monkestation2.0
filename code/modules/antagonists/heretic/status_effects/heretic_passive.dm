@@ -283,7 +283,7 @@
 		return
 	var/mob/living/carbon/human/fat_human = owner
 	fat_human.on_fat() // Make sure to update the movespeed modifier in case we gain the trait while already fat
-	var/obj/item/organ/tongue/tongue = fat_human.get_organ_slot(ORGAN_SLOT_TONGUE)
+	var/obj/item/organ/internal/tongue/tongue = fat_human.get_organ_slot(ORGAN_SLOT_TONGUE)
 	tongue.liked_foodtypes = ALL
 	tongue.disliked_foodtypes = NONE
 	tongue.toxic_foodtypes = NONE
@@ -292,7 +292,7 @@
 /datum/status_effect/heretic_passive/flesh/proc/on_eat(mob/eater, atom/food)
 	SIGNAL_HANDLER
 	var/obj/item/organ/consumed_organ = food
-	if(istype(consumed_organ) && consumed_organ.foodtype_flags & MEAT)
+	if(istype(consumed_organ) && !IS_ROBOTIC_ORGAN(consumed_organ))
 		heal_glutton() // Heal the owner if they eat meat
 		return
 	var/obj/item/food/consumed_food = food
@@ -303,7 +303,7 @@
 	var/healed_amount = owner.heal_overall_damage(2, 2, updating_health = FALSE)
 	healed_amount += owner.adjustOxyLoss(-2, FALSE)
 	healed_amount += owner.adjustToxLoss(-2, FALSE, TRUE)
-	owner.adjust_blood_volume(2.5)
+	owner.blood_volume += 2.5
 	if(!iscarbon(owner))
 		return
 	var/mob/living/carbon/carbon_eater = owner
@@ -519,7 +519,7 @@
 
 	// Heals all damage + Stamina
 	var/need_mob_update = FALSE
-	var/delta_time = DELTA_WORLD_TIME(SSmobs) * 0.5 // SSmobs.wait is 2 secs, so this should be halved.
+	var/delta_time = DELTA_WORLD_TIME(SSclient_mobs) * 0.5 // SSmobs.wait is 2 secs, so this should be halved.
 	var/main_healing = 1 + 1 * passive_level * delta_time
 	var/stam_healing = 5 + 5 * passive_level * delta_time
 	need_mob_update += source.heal_overall_damage(-main_healing, -main_healing, updating_health = FALSE)
@@ -533,9 +533,10 @@
 	var/stun_reduction = 0.5 * passive_level * delta_time
 	source.AdjustAllImmobility(-stun_reduction)
 	// Heals blood loss
-	source.adjust_blood_volume(2.5 * delta_time, maximum = BLOOD_VOLUME_NORMAL)
-	for(var/datum/reagent/reagent as anything in source.reagents.reagent_list)
-		reagent.volume -= 1 * reagent.purge_multiplier * seconds_per_tick
+	if(source.blood_volume < BLOOD_VOLUME_NORMAL)
+		source.blood_volume += 2.5 * delta_time
+	/* for(var/datum/reagent/reagent as anything in source.reagents.reagent_list)
+		reagent.volume -= 1 * reagent.purge_multiplier * seconds_per_tick */
 	source.reagents.update_total()
 
 	if(!iscarbon(source))

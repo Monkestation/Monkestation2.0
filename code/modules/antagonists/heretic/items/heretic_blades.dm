@@ -137,10 +137,10 @@
 		max_blood = INFINITY,\
 	)
 
-	AddComponent(
+	/* AddComponent(
 		/datum/component/bloody_spreader,\
 		blood_dna = list("Alien DNA" = get_blood_type(BLOOD_TYPE_XENO)),\
-	)
+	) */
 
 // Path of Void's blade
 /obj/item/melee/sickly_blade/void
@@ -304,10 +304,10 @@
 		return ITEM_INTERACT_BLOCKING
 	return NONE
 
-/obj/item/melee/sickly_blade/cursed/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+/* /obj/item/melee/sickly_blade/cursed/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(attack_type == OVERWHELMING_ATTACK)
 		return FALSE
-	return ..()
+	return ..() */
 
 // Weaker blade variant given to people so they can participate in the heretic arena spell
 /obj/item/melee/sickly_blade/training

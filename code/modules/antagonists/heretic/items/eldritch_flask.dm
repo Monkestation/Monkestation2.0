@@ -6,7 +6,7 @@
 	icon = 'icons/obj/antags/eldritch.dmi'
 	icon_state = "eldritch_flask"
 	list_reagents = list(/datum/reagent/eldritch = 50)
-	can_lid = FALSE
+	// can_lid = FALSE
 
 // Unique bottle that lets you instantly draw blood from a victim
 /obj/item/reagent_containers/cup/phylactery
@@ -15,8 +15,8 @@
 	icon = 'icons/obj/antags/eldritch.dmi'
 	icon_state = "phylactery"
 	base_icon_state = "phylactery"
-	has_variable_transfer_amount = FALSE
-	initial_reagent_flags = OPENCONTAINER | DUNKABLE | TRANSPARENT
+	// has_variable_transfer_amount = FALSE
+	reagent_flags = OPENCONTAINER | DUNKABLE | TRANSPARENT
 	volume = 10
 	/// Cooldown before you can steal blood again
 	COOLDOWN_DECLARE(drain_cooldown)

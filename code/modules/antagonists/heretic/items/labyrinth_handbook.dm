@@ -5,7 +5,7 @@
 	initial_duration = 15 SECONDS
 
 /obj/effect/forcefield/wizard/heretic/CanAllowThrough(atom/movable/mover, border_dir)
-	if(istype(mover.throwing?.get_thrower(), /obj/effect/forcefield/wizard/heretic))
+	if(istype(mover.throwing?.thrower, /obj/effect/forcefield/wizard/heretic))
 		return TRUE
 	return ..()
 

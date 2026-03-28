@@ -6,12 +6,12 @@
 /obj/item/grenade/chem_grenade/rust_sower
 	name = "\improper Rust sower"
 	desc = "A nifty little thing that explodes into rust. Causes borgs and mechs to get utterly obliterated"
-	possible_fuse_time = list("5")
+	// possible_fuse_time = list("5")
 	stage = GRENADE_READY
 	base_icon_state = "rustgrenade"
 	inhand_icon_state = "rustgrenade"
-	grenade_arm_sound = 'sound/items/weapons/rust_sower_armbomb.ogg'
-	grenade_sound_vary = FALSE
+	// grenade_arm_sound = 'sound/items/weapons/rust_sower_armbomb.ogg'
+	// grenade_sound_vary = FALSE
 
 /obj/item/grenade/chem_grenade/rust_sower/update_icon_state()
 	. = ..()
@@ -80,7 +80,7 @@
 		return
 
 	var/mob/living/carbon/victim = exposed_mob
-	if(methods & (TOUCH|VAPOR|INHALE))
+	if(methods & (TOUCH|VAPOR|INGEST))
 		//check for protection
 		//actually handle the pepperspray effects
 		if(!victim.is_pepper_proof()) // you need both eye and mouth protection

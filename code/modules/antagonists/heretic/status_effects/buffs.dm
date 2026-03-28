@@ -120,7 +120,8 @@
 				carbie.adjustFireLoss(-heal_amt)
 			else
 				carbie.adjustBruteLoss(-heal_amt)
-				carbie.adjust_blood_volume(heal_amt * 3, maximum = BLOOD_VOLUME_NORMAL)
+				if(carbie.blood_volume < BLOOD_VOLUME_NORMAL)
+					carbie.blood_volume += heal_amt * 3
 
 
 /atom/movable/screen/alert/status_effect/crucible_soul

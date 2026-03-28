@@ -49,7 +49,7 @@
 	cast_on.adjust_temp_blindness(mind_gate_duration)
 	cast_on.set_eye_blur_if_lower(mind_gate_duration + 1 SECONDS)
 
-	cast_on.sound_damage(0, mind_gate_duration)
+	// cast_on.sound_damage(0, mind_gate_duration)
 
 	cast_on.adjust_silence(mind_gate_duration)
 	cast_on.add_mood_event("moon_smile", /datum/mood_event/moon_smile)

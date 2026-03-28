@@ -426,6 +426,6 @@
 /datum/pet_command/attack/star_gazer
 	speech_commands = list("attack", "sic", "kill", "slash them")
 	command_feedback = "stares!"
-	pointed_reaction = "stares intensely!"
-	refuse_reaction = "..."
-	attack_behaviour = /datum/ai_behavior/basic_melee_attack
+	// pointed_reaction = "stares intensely!"
+	// refuse_reaction = "..."
+	// attack_behaviour = /datum/ai_behavior/basic_melee_attack

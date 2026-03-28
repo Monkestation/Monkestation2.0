@@ -15,7 +15,7 @@
 	if(!isorgan(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	var/obj/item/organ/organ_parent = parent
+	var/obj/item/organ/internal/organ_parent = parent
 	action = new(src)
 	action.Grant(organ_parent.owner)
 

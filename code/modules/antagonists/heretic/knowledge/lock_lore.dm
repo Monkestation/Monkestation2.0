@@ -159,7 +159,7 @@
 	)
 	result_atoms = list(/obj/item/heretic_labyrinth_handbook)
 	cost = 2
-	research_tree_icon_path = 'icons/obj/library.dmi'
+	research_tree_icon_path = 'icons/obj/service/library.dmi'
 	research_tree_icon_state = "heretichandbook"
 	drafting_tier = 5
 
