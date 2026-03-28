@@ -2,10 +2,10 @@
 /obj/item/organ/internal/eyes/corrupt
 	name = "corrupt orbs"
 	desc = "These eyes have seen something they shouldn't have."
-	icon_state = "eyes_voidwalker"
+	// icon_state = "eyes_voidwalker"
 	// iris_overlay = null
-	// eye_color_left = COLOR_VOID_PURPLE
-	// eye_color_right = COLOR_VOID_PURPLE
+	eye_color_left = COLOR_VOID_PURPLE
+	eye_color_right = COLOR_VOID_PURPLE
 	organ_flags = parent_type::organ_flags | ORGAN_HAZARDOUS
 	// pupils_name = span_hypnophrase("pierced realities") //teeny tiny mansus portals, IN YOUR EYEBALLS (known to cause cancer in the state of california)
 	// penlight_message = "ARE THE LOCK, THE LIGHT IS THE KEY! THE HIGHER I RISE, THE MORE I-"
