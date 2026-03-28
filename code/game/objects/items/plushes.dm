@@ -900,20 +900,48 @@
 	var/has_fried = FALSE
 	// Decide if we allow unlimited rice frying or not.
 	var/golden = FALSE
+	// Whether it has shrimp fried a man yet
+	var/suishrimp = FALSE
 
 /obj/item/toy/plush/shrimp/examine(mob/user)
 	. = ..()
 	if(has_fried)
 		. += span_notice("[p_Theyre()] all tuckered out.")
+	if(suishrimp)
+		. += span_notice("[p_They()] ready.")
 	else
 		. += span_notice("[p_Theyre()] ready to fry some rice.")
 
+/obj/item/toy/plush/shrimp/suicide_act(mob/living/user)
+	user.visible_message(span_suicide("[user] is <b>frying</b> to <b>krill</b> [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!"))
+	playsound(src, 'sound/effects/kero.ogg', 50, TRUE, -1)
+	var/list/available_spots = get_adjacent_open_turfs(loc)
+	if(available_spots.len) // Totally didn't borrow this from the moth plushie code
+		var/turf/open/random_open_spot = pick(available_spots)
+		forceMove(random_open_spot)
+
+	var/obj/item/food/new_rice = new /obj/item/food/salad/ketchup_fried_rice(loc)
+
+	// same logic as regular frying but with some additions
+	ADD_TRAIT(new_rice, TRAIT_FOOD_CHEF_MADE, user)
+	new_rice.food_buffs = /datum/status_effect/food/speech/shrimp_speech
+	new_rice.AddComponent(/datum/component/shrimp_fried)
+	new_rice.name = "bloody shrimp fried rice"
+	new_rice.desc = "A classic Japanese comfort food, made with sausage, veggies, worchestershire sauce, rice- oh, and of course, the blood of [user]."
+	new /obj/effect/temp_visual/shrimp_frying_rice(get_turf(user))
+	user.dust(just_ash = FALSE, drop_items = TRUE)
+
+	return MANUAL_SUICIDE
+
 /obj/item/toy/plush/shrimp/golden
 	name = "golden shrimp plushie"
-	desc = "You're telling me THIS GUY fries rice ENDLESSLY?"
+	desc = "You're telling me THIS GUY fries rice ENDLESSLY?!"
 	icon_state = "golden_shrimp"
 	golden = TRUE
 
+/obj/item/toy/plush/shrimp/golden/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/particle_spewer/sparkle)
 
 ///////    = MOOD EVENT =    ///////
 
