@@ -4,8 +4,8 @@
 	desc = "These eyes have seen something they shouldn't have."
 	icon_state = "eyes_voidwalker"
 	// iris_overlay = null
-	eye_color_left = COLOR_VOID_PURPLE
-	eye_color_right = COLOR_VOID_PURPLE
+	// eye_color_left = COLOR_VOID_PURPLE
+	// eye_color_right = COLOR_VOID_PURPLE
 	organ_flags = parent_type::organ_flags | ORGAN_HAZARDOUS
 	// pupils_name = span_hypnophrase("pierced realities") //teeny tiny mansus portals, IN YOUR EYEBALLS (known to cause cancer in the state of california)
 	// penlight_message = "ARE THE LOCK, THE LIGHT IS THE KEY! THE HIGHER I RISE, THE MORE I-"
@@ -14,7 +14,7 @@
 
 /obj/item/organ/internal/eyes/corrupt/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/corrupted_organ, FALSE)
+	AddElement(/datum/element/corrupted_organ/* , FALSE */)
 	AddElement(/datum/element/noticable_organ, "%PRONOUN_Their eyes have wide dilated pupils, and no iris. Something is moving in the darkness.", BODY_ZONE_PRECISE_EYES)
 
 // /obj/item/organ/internal/eyes/corrupt/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
