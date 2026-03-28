@@ -145,7 +145,6 @@
 	if(current_recipe && !active)
 		clear_recipe()
 		balloon_alert_to_viewers("cancelled recipe")
-		remove_mobs_inside()
 	else
 		change_recipe(user, TRUE)
 
