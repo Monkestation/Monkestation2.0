@@ -277,11 +277,11 @@
 		if(column_path::route != our_heretic.researched_knowledge[type][HKT_ROUTE])
 			continue
 		our_heretic.heretic_path = new column_path()
+		SEND_SIGNAL(our_heretic.owner, COMSIG_HERETIC_PATH_CHOSEN, our_heretic, our_heretic.heretic_path.route)
 	if(!our_heretic.heretic_path)
 		// If we don't have a path, we can't continue.
 		to_chat(user, span_warning("Oh shit, something broke, no path found!"))
-		stack_trace("failed to find valid path [our_heretic.heretic_shops[HERETIC_KNOWLEDGE_TREE][type][HKT_ROUTE]] from researching [src]")
-		return
+		CRASH("failed to find valid path [our_heretic.heretic_shops[HERETIC_KNOWLEDGE_TREE][type][HKT_ROUTE]] from researching [src]")
 	SSblackbox.record_feedback("tally", "heretic_path_taken", 1, our_heretic.heretic_path.route)
 	our_heretic.update_heretic_aura()
 	our_heretic.generate_heretic_research_tree()
