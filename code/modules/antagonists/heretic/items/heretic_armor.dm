@@ -51,12 +51,6 @@
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/proc/is_equipped(mob/wearer)
 	return wearer.get_slot_by_item(src) & slot_flags
 
-/obj/item/clothing/suit/hooded/cultrobes/eldritch/on_hood_up(obj/item/clothing/head/hooded/hood)
-	hood_up = TRUE
-
-/obj/item/clothing/suit/hooded/cultrobes/eldritch/on_hood_down(obj/item/clothing/head/hooded/hood)
-	hood_up = FALSE
-
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/examine(mob/user)
 	. = ..()
 	if(!IS_HERETIC(user))
