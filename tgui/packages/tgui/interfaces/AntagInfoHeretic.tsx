@@ -680,7 +680,7 @@ export const AntagInfoHeretic = () => {
   return (
     <Window
       width={750}
-      height={635}
+      height={700}
       theme={`${currentTheme()}${ascended ? ' heretic-theme-ascended' : ''}`}
     >
       <Window.Content>
