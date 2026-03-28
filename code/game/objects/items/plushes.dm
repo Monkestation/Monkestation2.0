@@ -898,6 +898,8 @@
 	)
 	/// Whether the shrimp has fried any rice. The shrimp can only fry rice once.
 	var/has_fried = FALSE
+	// Decide if we allow unlimited rice frying or not.
+	var/golden = FALSE
 
 /obj/item/toy/plush/shrimp/examine(mob/user)
 	. = ..()
@@ -905,6 +907,12 @@
 		. += span_notice("[p_Theyre()] all tuckered out.")
 	else
 		. += span_notice("[p_Theyre()] ready to fry some rice.")
+
+/obj/item/toy/plush/shrimp/golden
+	name = "golden shrimp plushie"
+	desc = "You're telling me THIS GUY fries rice ENDLESSLY?"
+	icon_state = "golden_shrimp"
+	golden = TRUE
 
 
 ///////    = MOOD EVENT =    ///////
@@ -1018,7 +1026,10 @@
 	new_rice.food_buffs = /datum/status_effect/food/speech/shrimp_speech
 	new_rice.AddComponent(/datum/component/shrimp_fried)
 
-	has_fried = TRUE
+	if(golden)
+		has_fried = FALSE
+	else
+		has_fried = TRUE
 	target_reagents.remove_reagent(/datum/reagent/consumable/rice, 30)
 	playsound(get_turf(new_rice), 'sound/effects/kero.ogg', 75, frequency = 0.5)
 	user.do_attack_animation(interacting_with)
