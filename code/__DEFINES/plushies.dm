@@ -11,6 +11,8 @@
 #define PLUSH_KIND (1<<4)
 //will never ever betray their partner or lover ever
 #define PLUSH_LOYAL (1<<5)
+//emotive and such
+#define PLUSH_EMOTIVE (1<<6)
 
 
 
