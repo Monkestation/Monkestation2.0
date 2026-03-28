@@ -37,7 +37,7 @@
 		/obj/item/organ/internal/liver/corrupt,
 		/obj/item/organ/internal/lungs/corrupt,
 		/obj/item/organ/internal/stomach/corrupt,
-		/obj/item/organ/INTERNAL/tongue/corrupt,
+		/obj/item/organ/internal/tongue/corrupt,
 	)
 
 /datum/heretic_knowledge/hunt_and_sacrifice/Destroy(force)
