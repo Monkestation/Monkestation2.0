@@ -91,7 +91,7 @@
 	alpha = 180
 	damage = 30
 	damage_type = TOX
-	hitsound = 'sound/items/weapons/punch3.ogg'
+	hitsound = 'sound/weapons/punch3.ogg'
 	trigger_range = 0
 	faction = list(FACTION_HERETIC)
 	range = 15

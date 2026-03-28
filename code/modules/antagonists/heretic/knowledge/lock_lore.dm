@@ -105,7 +105,7 @@
 
 	var/turf/target_turf = get_turf(target)
 	SEND_SIGNAL(target_turf, COMSIG_ATOM_MAGICALLY_UNLOCKED, src, source)
-	SEND_SOUND(source, 'sound/effects/magic/hereticknock.ogg')
+	SEND_SOUND(source, 'sound/magic/hereticknock.ogg')
 
 	if(HAS_TRAIT(source, TRAIT_LOCK_GRASP_UPGRADED))
 		var/datum/action/cooldown/spell/touch/mansus_grasp/grasp = locate() in source.actions

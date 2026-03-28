@@ -337,7 +337,7 @@ Striking a noncultist, however, will tear their flesh."}
 	update_light()
 	trapped_entity.update_mob_action_buttons()
 
-	playsound(src ,'sound/misc/insane_low_laugh.ogg', 200, TRUE) //quiet
+	playsound(src ,'sound/voice/insane_low_laugh.ogg', 200, TRUE) //quiet
 	binding_filters_update()
 
 /obj/item/melee/cultblade/haunted/proc/rebind_blade(mob/user)
@@ -375,13 +375,13 @@ Striking a noncultist, however, will tear their flesh."}
 		return // Can't do anything further down the list
 
 	if(trapped_mind)
-	AddComponent(/datum/component/spirit_holding,\
-			soul_to_bind = trapped_mind,\
-			awakener = awakener,\
-			allow_renaming = FALSE,\
-			allow_channeling = FALSE,\
-			allow_exorcism = FALSE,\
-		)
+		AddComponent(/datum/component/spirit_holding,\
+				soul_to_bind = trapped_mind,\
+				awakener = awakener,\
+				allow_renaming = FALSE,\
+				allow_channeling = FALSE,\
+				allow_exorcism = FALSE,\
+			)
 
 	// Get the heretic's new body and antag datum.
 	trapped_entity = trapped_mind?.current

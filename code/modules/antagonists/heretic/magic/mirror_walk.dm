@@ -68,7 +68,7 @@
 	if(!do_after(jaunter, phase_out_time, nearby_reflection, IGNORE_USER_LOC_CHANGE|IGNORE_INCAPACITATED, hidden = TRUE))
 		return
 
-	playsound(jaunter, 'sound/effects/magic/ethereal_enter.ogg', 50, TRUE, -1)
+	playsound(jaunter, 'sound/magic/ethereal_enter.ogg', 50, TRUE, -1)
 	jaunter.visible_message(
 		span_boldwarning("[jaunter] phases out of reality, vanishing before your very eyes!"),
 		span_notice("You jump into the reflection coming off of [nearby_reflection], entering the mirror's realm."),

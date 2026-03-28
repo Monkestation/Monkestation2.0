@@ -5,9 +5,9 @@
 		You cannot attack while realigning. Can be casted multiple times in short succession, but each cast lengthens the cooldown."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
-	button_icon = 'icons/hud/implants.dmi'
+	button_icon = 'icons/obj/implants.dmi'
 	button_icon_state = "adrenal"
-	// sound = 'sound/effects/magic/whistlereset.ogg' I have no idea why this was commented out
+	// sound = 'sound/magic/whistlereset.ogg' I have no idea why this was commented out
 
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 6 SECONDS

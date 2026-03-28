@@ -44,7 +44,7 @@
 	LAZYNULL(hallucinations)
 
 /* /obj/item/organ/internal/eyes/corrupt/penlight_examine(mob/living/viewer, obj/item/examtool)
-	viewer.playsound_local(src, 'sound/effects/magic/magic_block_mind.ogg', 75, FALSE)
+	viewer.playsound_local(src, 'sound/magic/magic_block_mind.ogg', 75, FALSE)
 	if(!viewer.is_blind() && !IS_HERETIC_OR_MONSTER(viewer))
 		to_chat(viewer, span_danger("Your eyes sizzle in their sockets as eldritch energies assault them!"))
 		viewer.emote("scream")
@@ -223,7 +223,7 @@
 
 /*
 /obj/item/organ/internal/heart/corrupt/hear_beat_noise(mob/living/hearer)
-	hearer.playsound_local(src, 'sound/effects/magic/hereticknock.ogg', 75, FALSE)
+	hearer.playsound_local(src, 'sound/magic/hereticknock.ogg', 75, FALSE)
 	if(!IS_HERETIC_OR_MONSTER(hearer))
 		hearer.emote("scream")
 		hearer.add_mood_event("gates_of_mansus", /datum/mood_event/gates_of_mansus)
@@ -270,7 +270,7 @@
 
 /*
 /obj/item/organ/internal/lungs/corrupt/hear_breath_noise(mob/living/hearer)
-	hearer.playsound_local(src, 'sound/effects/magic/voidblink.ogg', 75, FALSE)
+	hearer.playsound_local(src, 'sound/magic/voidblink.ogg', 75, FALSE)
 	if(!IS_HERETIC_OR_MONSTER(hearer))
 		hearer.adjust_timed_status_effect(15 SECONDS, /datum/status_effect/speech/slurring/heretic)
 		hearer.emote("scream")

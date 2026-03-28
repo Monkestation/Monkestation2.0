@@ -130,8 +130,8 @@
 		get_turf(linked_rune_resolved),
 		no_effects = TRUE,
 		channel = TELEPORT_CHANNEL_MAGIC,
-		asoundin = 'sound/effects/magic/cosmic_energy.ogg',
-		asoundout = 'sound/effects/magic/cosmic_energy.ogg',
+		asoundin = 'sound/magic/cosmic_energy.ogg',
+		asoundout = 'sound/magic/cosmic_energy.ogg',
 	)
 	if(pulled_thing) // Regrab after the teleports are done
 		user.start_pulling(pulled_thing)
