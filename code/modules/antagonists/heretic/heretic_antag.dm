@@ -1092,6 +1092,11 @@
 
 	return HERETIC_HAS_LIVING_HEART
 
+/datum/antagonist/heretic/antag_token(datum/mind/hosts_mind, mob/spender)
+	. = ..()
+	// go ahead and try to load the heretic sacrifice template after we make our heretic
+	INVOKE_ASYNC(SSmapping, TYPE_PROC_REF(/datum/controller/subsystem/mapping, lazy_load_template), LAZY_TEMPLATE_KEY_HERETIC_SACRIFICE)
+
 /// Heretic's minor sacrifice objective. "Minor sacrifices" includes anyone.
 /datum/objective/minor_sacrifice
 	name = "minor sacrifice"

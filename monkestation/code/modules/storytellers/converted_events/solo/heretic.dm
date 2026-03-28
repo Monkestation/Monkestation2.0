@@ -52,6 +52,11 @@
 	name = "Forbidden Calling (Heretics)"
 	prompted_picking = TRUE
 
+/datum/round_event/antagonist/heretic/start()
+	. = ..()
+	// go ahead and try to load the heretic sacrifice template after we make our heretics
+	INVOKE_ASYNC(SSmapping, TYPE_PROC_REF(/datum/controller/subsystem/mapping, lazy_load_template), LAZY_TEMPLATE_KEY_HERETIC_SACRIFICE)
+
 /datum/round_event/antagonist/heretic/add_datum_to_mind(datum/mind/antag_mind)
 	var/datum/antagonist/heretic/new_heretic = antag_mind.add_antag_datum(antag_datum)
 
