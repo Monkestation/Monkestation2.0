@@ -274,7 +274,7 @@
 	if(prob(15))
 		to_chat(user, span_cultlarge(pick("\"An untouched mind? Amusing.\"", "\" I suppose it isn't worth the effort to stop you.\"", "\"Go ahead. I don't care.\"", "\"You'll be mine soon enough.\"")))
 		user.apply_damage(5, BURN, user.get_active_hand())
-		playsound(src, SFX_SEAR, 25, TRUE)
+		playsound(src, 'sound/weapons/sear.ogg', 25, TRUE)
 		to_chat(user, span_danger("Your hand sizzles.")) // Nar nar might not care but their essence still doesn't like you
 	else if(prob(15))
 		to_chat(user, span_big(span_hypnophrase("LW'NAFH'NAHOR UH'ENAH'YMG EPGOKA AH NAFL MGEMPGAH'EHYE")))

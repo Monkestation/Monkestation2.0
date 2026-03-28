@@ -34,7 +34,7 @@
 	playsound(src, 'sound/items/eatfood.ogg', 100, TRUE)
 	update_appearance(UPDATE_ICON_STATE)
 
-/obj/structure/destructible/eldritch_crucible/atom_deconstruct(disassembled = TRUE)
+/obj/structure/destructible/eldritch_crucible/deconstruct(disassembled = TRUE)
 	// Create a spillage if we were destroyed with leftover mass
 	if(current_mass)
 		break_message = span_warning("[src] falls apart with a thud, spilling shining extract everywhere!")

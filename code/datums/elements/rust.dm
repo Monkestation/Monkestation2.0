@@ -82,7 +82,7 @@
 	SIGNAL_HANDLER
 	if(!istype(reagent_splashed, /datum/reagent/consumable/space_cola))
 		return
-	if(methods & INHALE)
+	if(methods & INGEST)
 		return
 	Detach(source)
 

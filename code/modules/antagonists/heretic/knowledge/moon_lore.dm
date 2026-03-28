@@ -69,7 +69,8 @@
 
 /datum/heretic_knowledge/limited_amount/starting/base_moon/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
-	user.AddComponentFrom(REF(src), /datum/component/empathy, seen_it = TRUE, visible_info = ALL, self_empath = FALSE, sense_dead = FALSE, sense_whisper = TRUE, smite_target = FALSE)
+	// user.AddComponentFrom(REF(src), /datum/component/empathy, seen_it = TRUE, visible_info = ALL, self_empath = FALSE, sense_dead = FALSE, sense_whisper = TRUE, smite_target = FALSE)
+	ADD_TRAIT(user, TRAIT_EMPATH, REF(src))
 
 /datum/heretic_knowledge/limited_amount/starting/base_moon/on_mansus_grasp(mob/living/source, mob/living/target)
 	. = ..()
@@ -302,7 +303,7 @@
 				YOU CANNOT EVEN BEGIN TO SCREAM BEFORE YOUR IMPLANT ACTIVATES ITS PSIONIC FAIL-SAFE PROTOCOL, TAKING YOUR HEAD WITH IT.")))
 			var/obj/item/bodypart/head/head = carbon_view.get_bodypart(BODY_ZONE_HEAD)
 			if(!head?.dismember())
-				carbon_view.gib(DROP_ALL_REMAINS)
+				carbon_view.gib(/* DROP_ALL_REMAINS */)
 			var/datum/effect_system/reagents_explosion/explosion = new(get_turf(carbon_view), 1, 1, 1)
 			explosion.start(src)
 		else

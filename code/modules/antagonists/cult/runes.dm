@@ -228,7 +228,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		if(!IS_CULTIST(non_cultist))
 			myriad_targets += non_cultist
 
-	if(!length(myriad_targets) && !try_spawn_sword())
+	if(!length(myriad_targets) && !try_sacrifice_item())
 		fail_invoke()
 		return
 
