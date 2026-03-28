@@ -108,9 +108,12 @@
 
 /datum/heretic_knowledge/hunt_and_sacrifice/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
+	// You can ALWAYS sacrifice heads of staff if you need to do so.
+	var/datum/objective/major_sacrifice/major_sacc_objective = locate() in heretic_datum.objectives
+	var/can_sac_command = major_sacc_objective && !major_sacc_objective.check_completion()
 	// Force it to work if the sacrifice is a cultist, even if there's no targets.
 	var/mob/living/carbon/human/sac = selected_atoms[1]
-	if(!LAZYLEN(heretic_datum.sac_targets) && !IS_CULTIST(sac))
+	if(!LAZYLEN(heretic_datum.sac_targets) && !IS_CULTIST(sac) && !(can_sac_command && (sacrifice.mind?.assigned_role?.job_flags & JOB_HEAD_OF_STAFF)))
 		if(obtain_targets(user, heretic_datum = heretic_datum))
 			return TRUE
 		else
