@@ -797,6 +797,17 @@
 	icon_state = "potred"
 
 /obj/item/slimepotion/slime/steroid/attack(mob/living/basic/slime/M, mob/user)
+	if(!isslime(M))//If target is not a slime.
+		to_chat(user, span_warning("The steroid only works on slimes!"))
+		return ..()
+	if(M.stat)
+		to_chat(user, span_warning("The slime is dead!"))
+		return
+	if(M.slime_extract_bonus >= 6)
+		to_chat(user, span_warning("The slime can't consume any more of the steroid."))
+		return
+	to_chat(user, span_notice("You feed the slime the steroid. It will now produce more extracts."))
+	M.slime_extract_bonus += 3
 	qdel(src)
 
 /obj/item/slimepotion/enhancer

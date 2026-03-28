@@ -65,6 +65,8 @@
 	var/static/regex/slime_name_regex = new("\\w+ (baby|adult) (cleaner )?(cat)?slime \\(\\d+\\)")
 	///our number
 	var/number
+	/// Bonus amount of extracts we make
+	var/slime_extract_bonus
 
 	///list of all possible mutations
 	var/list/possible_color_mutations = list()

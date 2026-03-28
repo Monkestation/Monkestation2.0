@@ -11,6 +11,9 @@
 /datum/compressor_recipe/crossbreed/stabilized,\
 )
 
+#define COMPRESSOR_BASE_EXTRACT_AMOUNT 5
+#define COMPRESSOR_BASE_COMPRESS_TIME 40 SECONDS
+
 /obj/machinery/slime_compressor
 	name = "slime compressor"
 	desc = "Machine used to compress slimes into bases for crossbreed extracts."
@@ -26,17 +29,15 @@
 	density = TRUE
 
 	/// amount of time it takes to compress, scales with manipulator tier
-	var/compress_time = 40 SECONDS
+	var/compress_time = COMPRESSOR_BASE_COMPRESS_TIME
 
 	/// chance to get a bonus crossbreed extract
 	var/bonus_extract_chance = 0
-	/// base amount for regular slime extracts
-	var/base_extract_amount = 5
 
 	///are we grinding some slimes
 	var/active = FALSE
 
-	/// Recipes we can choose from - base of crossbreed
+	/// Recipes we can choose from
 	var/static/list/recipe_choices = list()
 	var/static/list/base_choices = list()
 	var/static/list/cross_breed_choices = list()
@@ -114,18 +115,13 @@
 	. = ..()
 	icon_state = active ? "compressor_active" : base_icon_state
 
-/obj/machinery/slime_compressor/proc/clear_recipe()
-	current_recipe = null
-	base_complete = FALSE
-	cross_complete = FALSE
-	manage_hud_as_needed()
-
 /obj/machinery/slime_compressor/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
 	if(current_recipe)
 		context[SCREENTIP_CONTEXT_RMB] = "Cancel current recipe"
 	else
-		context[SCREENTIP_CONTEXT_LMB] = "Select a crossbreed to make"
+		context[SCREENTIP_CONTEXT_LMB] = "Select an extract to make"
+		context[SCREENTIP_CONTEXT_RMB] = "Select a crossbreed to make"
 	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/slime_compressor/attack_hand(mob/living/user, list/modifiers)
@@ -133,12 +129,12 @@
 		return
 	if(!anchored)
 		balloon_alert(user, "unanchored!")
-		return TRUE
+		return COMPONENT_NO_AFTERATTACK
 	if(!current_recipe)
 		if(change_recipe(user))
-			return TRUE
+			return COMPONENT_NO_AFTERATTACK
 	if (!base_complete || (!cross_complete && cross_slime_required))
-		return TRUE
+		return COMPONENT_NO_AFTERATTACK
 	compress_recipe()
 
 /obj/machinery/slime_compressor/attack_hand_secondary(mob/living/user, list/modifiers)
@@ -153,7 +149,11 @@
 	else
 		change_recipe(user, TRUE)
 
-// Changing the recipe
+/**
+ * Changing recipe
+ * Arguments:
+ * * cross_breed - if TRUE, will show selection for the crossbreed extracts, if not - regular.
+ */
 /obj/machinery/slime_compressor/proc/change_recipe(mob/user, cross_breed = FALSE)
 	var/choice
 	if(cross_breed)
@@ -177,14 +177,28 @@
 	balloon_alert_to_viewers("set extract recipe")
 	remove_mobs_inside()
 
+/**
+ * Clear recipe and update HUD
+ */
+/obj/machinery/slime_compressor/proc/clear_recipe()
+	current_recipe = null
+	base_complete = FALSE
+	cross_complete = FALSE
+	manage_hud_as_needed()
+
+/**
+ * Move all mobs in our contents out
+ */
 /obj/machinery/slime_compressor/proc/remove_mobs_inside()
 	for (var/victim in contents)
-		var/mob/living/slime = victim
-		slime.forceMove(get_turf(src))
+		var/mob/living/removed = victim
+		removed.forceMove(get_turf(src))
 
-// On hit we check if mob is a slime
-// Then we do check_recipe(), and if it passes, complete part of the recipe
-// After, we move the mob inside
+/**
+ * On hit we check if mob is a slime
+ * Then we do check_recipe(), and if it passes, complete part of the recipe
+ * After, we move the mob inside
+ */
 /obj/machinery/slime_compressor/hitby(atom/movable/hit_by, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	if (active)
 		return
@@ -200,7 +214,9 @@
 		return
 	return ..()
 
-// Check if the slime fits the recipe we have set
+/**
+ * Check if the slime fits the recipe we have set
+ */
 /obj/machinery/slime_compressor/proc/check_recipe(mob/living/basic/slime/slime)
 	// Cleaner slimes split very fast so it would make it...too easy
 	for(var/datum/slime_trait/trait in slime.slime_traits)
@@ -215,7 +231,9 @@
 		return TRUE
 	return FALSE
 
-// Set machine to active and start compressing process
+/**
+ * Set machine to active and start compressing process
+ */
 /obj/machinery/slime_compressor/proc/compress_recipe()
 	active = TRUE
 	Shake(6, 6, compress_time)
@@ -224,11 +242,18 @@
 	manage_hud_as_needed()
 	update_icon_state()
 
-// Finish compressing
-// Deactivates machine, removes everything inside and produces the extracts
+/**
+ * Finish compressing
+ * Deactivates machine, removes everything inside and produces the extracts
+ */
 /obj/machinery/slime_compressor/proc/finish_compressing()
 	if (!istype(current_recipe, /datum/compressor_recipe/crossbreed))
-		for(var/i in 1 to base_extract_amount)
+		var/total_extract_amount
+		// Slimes that had steroid used on them produce extra
+		for(var/mob/living/basic/slime/slime in contents)
+			total_extract_amount += slime.slime_extract_bonus
+		total_extract_amount += COMPRESSOR_BASE_EXTRACT_AMOUNT
+		for(var/i in 1 to total_extract_amount)
 			new current_recipe.output_item(drop_location())
 	else
 		new current_recipe.output_item(drop_location())
@@ -245,3 +270,5 @@
 	update_icon_state()
 
 #undef CROSSBREED_BASE_PATHS
+#undef COMPRESSOR_BASE_EXTRACT_AMOUNT
+#undef COMPRESSOR_BASE_COMPRESS_TIME
