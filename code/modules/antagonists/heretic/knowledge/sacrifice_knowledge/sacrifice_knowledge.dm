@@ -92,10 +92,7 @@
 			atoms -= sacrifice
 			continue
 		// Otherwise if it's neither a target nor a cultist, remove it
-		var/valid_target = FALSE
-		if(sacrifice in heretic_datum.sac_targets || IS_CULTIST(sacrifice) || (can_sac_command && (sacrifice.mind?.assigned_role?.job_flags & JOB_HEAD_OF_STAFF)))
-			valid_target = TRUE
-		if(!valid_target)
+		if(!(sacrifice in heretic_datum.sac_targets) && !IS_CULTIST(sacrifice) && !(can_sac_command && (sacrifice.mind?.assigned_role?.job_flags & JOB_HEAD_OF_STAFF)))
 			atoms -= sacrifice
 
 	// Finally, return TRUE if we have a target in the list
@@ -113,7 +110,7 @@
 	var/can_sac_command = major_sacc_objective && !major_sacc_objective.check_completion()
 	// Force it to work if the sacrifice is a cultist, even if there's no targets.
 	var/mob/living/carbon/human/sac = selected_atoms[1]
-	if(!LAZYLEN(heretic_datum.sac_targets) && !IS_CULTIST(sac) && !(can_sac_command && (sacrifice.mind?.assigned_role?.job_flags & JOB_HEAD_OF_STAFF)))
+	if(!LAZYLEN(heretic_datum.sac_targets) && !IS_CULTIST(sac) && !(can_sac_command && (sac.mind?.assigned_role?.job_flags & JOB_HEAD_OF_STAFF)))
 		if(obtain_targets(user, heretic_datum = heretic_datum))
 			return TRUE
 		else
