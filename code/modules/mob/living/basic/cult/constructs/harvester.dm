@@ -26,6 +26,9 @@
 
 /mob/living/basic/construct/harvester/Initialize(mapload)
 	. = ..()
+	grant_abilities()
+
+/mob/living/basic/construct/harvester/proc/grant_abilities()
 	AddComponent(\
 		/datum/component/amputating_limbs,\
 		surgery_time = 0,\
