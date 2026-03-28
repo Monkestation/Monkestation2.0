@@ -1781,7 +1781,7 @@ GLOBAL_LIST_EMPTY(intento_players)
 	to_chat(user, span_warning("The [name] grumbles quietly. It is not yet ready to fire again!"))
 
 /obj/item/gun/magic/sickly_blade_toy/attack(mob/living/M, mob/living/user)
-	if((IS_HERETIC(user) || IS_HERETIC_MONSTER(user)))
+	if(IS_HERETIC_OR_MONSTER(user))
 		to_chat(user, span_danger("You feel a pulse of the old gods lash out at your mind, laughing how you're using a fake blade!"))
 	return ..()
 

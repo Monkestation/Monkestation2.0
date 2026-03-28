@@ -64,7 +64,7 @@
 	ADD_TRAIT(human_target, TRAIT_HERETIC_SUMMON, TRAIT_STATUS_EFFECT(id))
 	human_target.become_husk(TRAIT_STATUS_EFFECT(id))
 	human_target.add_faction(FACTION_HERETIC)
-	human_target.apply_status_effect(/datum/status_effect/desensitized, TRAIT_STATUS_EFFECT(id), DESENSITIZED_THRESHOLD * 0.2)
+	// human_target.apply_status_effect(/datum/status_effect/desensitized, TRAIT_STATUS_EFFECT(id), DESENSITIZED_THRESHOLD * 0.2)
 
 	if(human_target.mind)
 		var/datum/antagonist/heretic_monster/heretic_monster = human_target.mind.add_antag_datum(/datum/antagonist/heretic_monster)

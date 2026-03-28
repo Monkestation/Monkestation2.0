@@ -62,7 +62,7 @@
 	need_mob_update += caster.adjustFireLoss(-10, updating_health = FALSE)
 	need_mob_update += caster.adjustToxLoss(-10, updating_health = FALSE, forced = TRUE)
 	need_mob_update += caster.adjustOxyLoss(-10, updating_health = FALSE)
-	caster.stamina?.adjust(10, updating_stamina = FALSE)
+	caster.stamina?.adjust(10/* , updating_stamina = FALSE */)
 	if(need_mob_update)
 		caster.updatehealth()
 

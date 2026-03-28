@@ -107,7 +107,7 @@
 			if(prob(10))
 				victim.set_dizzy_if_lower(2 SECONDS)
 			if(prob(5))
-				victim.vomit(VOMIT_CATEGORY_DEFAULT)
+				victim.vomit(/* VOMIT_CATEGORY_DEFAULT */)
 
 /datum/reagent/heretic_rust/expose_turf(turf/exposed_turf, reac_volume)
 	. = ..()

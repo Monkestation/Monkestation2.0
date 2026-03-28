@@ -217,6 +217,7 @@
 
 ///Called when something resists while this atom is its loc
 /atom/proc/container_resist_act(mob/living/user)
+	return
 
 /**
  * Called when the atom log's in or out
@@ -241,12 +242,6 @@
 /mob/living/proc/do_rust_heretic_act(atom/target)
 	var/datum/antagonist/heretic/heretic_data = GET_HERETIC(src)
 	target.rust_heretic_act(heretic_data?.rust_strength)
-
-///Called when something resists while this atom is its loc
-/atom/proc/container_resist_act(mob/living/user)
-	return
-
-
 
 
 
