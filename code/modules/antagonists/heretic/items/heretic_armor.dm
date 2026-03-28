@@ -560,7 +560,7 @@
 	/// List of all signals registered, used for cleanup
 	var/signal_registered = list()
 	/// damage modifier to all incoming damage, which is also converted to brain damage
-	var/damage_modifier = 1.15
+	var/damage_modifier = 1
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/equipped(mob/user, slot, initial)
 	. = ..()
