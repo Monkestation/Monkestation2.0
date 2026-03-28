@@ -16647,7 +16647,7 @@
 "bqC" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/extinguisher_cabinet/directional/west,
-/obj/machinery/plumbing/ooze_compressor,
+/obj/machinery/slime_compressor,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "bqE" = (
@@ -16663,14 +16663,6 @@
 /obj/item/vacuum_pack,
 /obj/item/vacuum_pack,
 /turf/open/floor/iron/white,
-/area/station/science/xenobiology)
-"bqH" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/obj/effect/turf_decal/tile/purple/half/contrasted{
-	dir = 1
-	},
-/obj/machinery/duct,
-/turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "bqI" = (
 /obj/machinery/corral_corner{
@@ -16973,13 +16965,6 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron,
-/area/station/science/xenobiology)
-"bse" = (
-/obj/effect/turf_decal/tile/purple/half/contrasted{
-	dir = 1
-	},
-/obj/machinery/duct,
-/turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "bsn" = (
 /obj/structure/girder,
@@ -18297,13 +18282,6 @@
 /obj/item/compact_remote,
 /turf/open/floor/iron/dark,
 /area/station/science/lab)
-"bxN" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/machinery/duct,
-/turf/open/floor/iron,
-/area/station/science/xenobiology)
 "bxT" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/closed/wall,
@@ -18637,7 +18615,6 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/purple/half/contrasted,
-/obj/machinery/duct,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "bzh" = (
@@ -18652,31 +18629,6 @@
 /obj/machinery/component_printer,
 /turf/open/floor/iron/dark,
 /area/station/science/lab)
-"bzk" = (
-/obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "7";
-	dir = 1
-	},
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
-"bzl" = (
-/obj/machinery/duct,
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
-"bzp" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
-	dir = 8
-	},
-/obj/structure/cable,
-/obj/machinery/duct,
-/turf/open/floor/iron/dark,
-/area/station/science/xenobiology)
 "bzs" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -19142,13 +19094,6 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
-"bBU" = (
-/obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "6";
-	dir = 1
-	},
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
 "bBV" = (
 /obj/structure/transit_tube/curved,
 /turf/open/space,
@@ -24147,7 +24092,6 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/machinery/duct,
 /obj/effect/landmark/start/xenobiologist,
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
@@ -27443,7 +27387,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
 	},
-/obj/machinery/duct,
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "csv" = (
@@ -29323,7 +29266,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/duct,
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "dgI" = (
@@ -33416,7 +33358,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
 	},
-/obj/machinery/duct,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "gue" = (
@@ -36837,7 +36778,6 @@
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
 	},
-/obj/machinery/duct,
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "jxt" = (
@@ -40109,11 +40049,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
-"mfu" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/machinery/duct,
-/turf/open/floor/iron,
-/area/station/science/xenobiology)
 "mfz" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
@@ -43870,11 +43805,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/service/chapel/office)
-"pkU" = (
-/obj/effect/turf_decal/tile/purple/half/contrasted,
-/obj/machinery/duct,
-/turf/open/floor/iron/dark,
-/area/station/science/xenobiology)
 "plc" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -45363,7 +45293,6 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/machinery/duct,
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "qux" = (
@@ -52452,13 +52381,6 @@
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/white,
 /area/station/medical/paramedic)
-"vPK" = (
-/mob/living/basic/slime,
-/obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "5"
-	},
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
 "vQo" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Cargo Office Maintenance"
@@ -54400,13 +54322,6 @@
 /obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/space/basic,
 /area/space/nearstation)
-"xdc" = (
-/obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "4"
-	},
-/mob/living/basic/slime,
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
 "xdL" = (
 /obj/machinery/computer/security/telescreen/rd{
 	dir = 1;
@@ -54998,9 +54913,6 @@
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "xur" = (
-/obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "3"
-	},
 /mob/living/basic/slime,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
@@ -100875,7 +100787,7 @@ gBi
 wou
 bqE
 brW
-bzp
+uel
 jYJ
 bkF
 pXg
@@ -101132,7 +101044,7 @@ ilD
 edJ
 bqF
 brW
-bzp
+uel
 wFN
 bkF
 cPT
@@ -101903,7 +101815,7 @@ blX
 blX
 bsa
 gIG
-bzp
+uel
 xoo
 ugG
 lYd
@@ -102160,12 +102072,12 @@ blX
 blX
 eoP
 gIG
-bzp
-pkU
-bxN
-bzl
-bzl
-bBU
+uel
+sXV
+gxO
+blX
+blX
+blX
 bDe
 rKi
 dMO
@@ -102413,11 +102325,11 @@ uSW
 iSi
 bni
 xur
-bzl
-bzl
-mfu
-bse
-bzp
+blX
+blX
+eoP
+gIG
+uel
 sXV
 gxO
 blX
@@ -102674,7 +102586,7 @@ blX
 bqJ
 bsa
 tzm
-bzp
+uel
 sXV
 ugG
 blX
@@ -102931,7 +102843,7 @@ blX
 blX
 eoP
 gIG
-bzp
+uel
 sXV
 gxO
 blX
@@ -103440,12 +103352,12 @@ uSW
 ybX
 iSi
 blX
-vPK
-bzl
-bzl
-mfu
-bse
-bzp
+xur
+blX
+blX
+eoP
+gIG
+uel
 sXV
 gxO
 blX
@@ -103702,7 +103614,7 @@ blX
 xoD
 bsa
 gIG
-bzp
+uel
 xoo
 ugG
 blX
@@ -103959,7 +103871,7 @@ blX
 blX
 eoP
 gIG
-bzp
+uel
 sXV
 gxO
 blX
@@ -104216,7 +104128,7 @@ blX
 blX
 eoP
 gIG
-bzp
+uel
 sXV
 gxO
 blX
@@ -104468,17 +104380,17 @@ rAE
 fNv
 iSi
 bnh
-xdc
-bzl
-bzl
-mfu
-bqH
-bzp
-pkU
-bxN
-bzl
-bzl
-bzk
+xur
+blX
+blX
+eoP
+tzm
+uel
+sXV
+gxO
+blX
+blX
+blX
 bDe
 rKi
 efU

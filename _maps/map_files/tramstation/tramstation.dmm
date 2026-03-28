@@ -1437,7 +1437,6 @@
 /obj/effect/turf_decal/trimline/purple/filled/corner{
 	dir = 4
 	},
-/obj/machinery/duct,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -3240,7 +3239,6 @@
 "aqB" = (
 /obj/effect/turf_decal/trimline/purple/filled/corner,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/duct,
 /obj/machinery/light/floor/has_bulb,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -10645,7 +10643,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/central)
 "cim" = (
-/obj/machinery/duct,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -10839,9 +10836,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/cargo)
 "cml" = (
-/obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "4"
-	},
 /obj/machinery/light/floor/has_bulb,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
@@ -13109,7 +13103,6 @@
 	dir = 5
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/duct,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
@@ -14371,7 +14364,6 @@
 /area/station/hallway/primary/tram/right)
 "dtN" = (
 /obj/effect/turf_decal/trimline/purple/filled/line,
-/obj/machinery/duct,
 /turf/open/floor/stone,
 /area/station/science/xenobiology)
 "dtS" = (
@@ -16314,14 +16306,6 @@
 	},
 /turf/open/floor/noslip,
 /area/station/hallway/primary/tram/center)
-"dZn" = (
-/obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "3";
-	dir = 1
-	},
-/obj/machinery/light/floor/has_bulb,
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
 "dZu" = (
 /obj/machinery/mecha_part_fabricator,
 /obj/effect/turf_decal/delivery,
@@ -18449,9 +18433,8 @@
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "eGt" = (
-/obj/machinery/duct,
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/stone,
+/obj/machinery/slime_compressor,
+/turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "eHj" = (
 /obj/machinery/vending/tool,
@@ -22117,7 +22100,6 @@
 /area/station/maintenance/tram/mid)
 "fOg" = (
 /obj/effect/turf_decal/trimline/purple/filled/line,
-/obj/machinery/duct,
 /obj/effect/landmark/start/xenobiologist,
 /turf/open/floor/stone,
 /area/station/science/xenobiology)
@@ -24446,7 +24428,6 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
 	},
-/obj/machinery/duct,
 /turf/open/floor/stone,
 /area/station/science/xenobiology)
 "gDr" = (
@@ -35871,10 +35852,6 @@
 /obj/structure/cable,
 /turf/open/floor/carpet,
 /area/station/security/detectives_office)
-"keT" = (
-/obj/machinery/plumbing/ooze_compressor,
-/turf/open/floor/iron/white,
-/area/station/science/xenobiology)
 "kfl" = (
 /obj/effect/turf_decal/trimline/purple/filled/corner{
 	dir = 1
@@ -37918,7 +37895,6 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
 	},
-/obj/machinery/duct,
 /turf/open/floor/stone,
 /area/station/science/xenobiology)
 "kMl" = (
@@ -38461,10 +38437,6 @@
 /obj/effect/landmark/start/signal_technician,
 /turf/open/floor/iron,
 /area/station/tcommsat/computer)
-"kTh" = (
-/obj/machinery/duct,
-/turf/open/floor/stone,
-/area/station/science/xenobiology)
 "kTi" = (
 /obj/machinery/duct,
 /obj/structure/cable,
@@ -40497,7 +40469,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
-/obj/machinery/duct,
 /turf/open/floor/stone,
 /area/station/science/xenobiology)
 "lyR" = (
@@ -44371,7 +44342,6 @@
 /area/station/medical/storage)
 "mLE" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/duct,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -54635,10 +54605,6 @@
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "pUb" = (
-/obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "1";
-	dir = 1
-	},
 /obj/machinery/light/floor/has_bulb,
 /mob/living/basic/slime,
 /turf/open/floor/engine,
@@ -55665,7 +55631,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
-/obj/machinery/duct,
 /obj/machinery/light/floor/has_bulb,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
@@ -56461,13 +56426,6 @@
 /obj/effect/turf_decal/trimline/neutral/filled/corner,
 /turf/open/floor/iron,
 /area/station/security/courtroom)
-"qyA" = (
-/obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "6"
-	},
-/obj/machinery/light/floor/has_bulb,
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
 "qyK" = (
 /obj/effect/turf_decal/siding/thinplating,
 /obj/effect/turf_decal/siding/thinplating{
@@ -61615,7 +61573,6 @@
 /obj/effect/turf_decal/trimline/purple/filled/corner{
 	dir = 1
 	},
-/obj/machinery/duct,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -78897,14 +78854,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/science/lower)
-"xox" = (
-/obj/machinery/plumbing/ooze_sucker{
-	mapping_id = "2";
-	dir = 1
-	},
-/obj/machinery/light/floor/has_bulb,
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
 "xoM" = (
 /obj/structure/chair/stool/bar/directional/east,
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -79235,7 +79184,6 @@
 /area/station/science/lower)
 "xuI" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/duct,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -80419,10 +80367,6 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/tram/left)
-"xQh" = (
-/obj/machinery/duct,
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
 "xQv" = (
 /turf/closed/wall/r_wall,
 /area/station/construction/mining/aux_base)
@@ -126306,15 +126250,15 @@ qVr
 bfH
 bfH
 cml
-xQh
+bfH
 cim
-kTh
-kTh
-kTh
-kTh
-eGt
-xQh
-xQh
+pbt
+pbt
+pbt
+pbt
+exH
+bfH
+bfH
 pUb
 bfH
 dgR
@@ -126571,7 +126515,7 @@ bqr
 qYk
 njf
 bfH
-xQh
+bfH
 bfH
 bfH
 bfH
@@ -126828,7 +126772,7 @@ lym
 pph
 wKI
 eCA
-xQh
+bfH
 bfH
 bfH
 tzq
@@ -127336,7 +127280,7 @@ nme
 pbt
 xcM
 dtN
-whn
+eGt
 whn
 tjz
 asv
@@ -127593,18 +127537,18 @@ rdU
 uon
 whd
 fOg
-keT
+whn
 whn
 fof
 aMB
 sXX
 akC
 kMh
-kTh
-eGt
-xQh
-xQh
-dZn
+pbt
+exH
+bfH
+bfH
+cml
 bfH
 qVr
 aaa
@@ -127850,7 +127794,7 @@ kkL
 pbt
 dQK
 dtN
-whn
+eGt
 whn
 pEa
 asv
@@ -128370,7 +128314,7 @@ dOq
 tix
 jhk
 vRp
-xQh
+bfH
 bfH
 bfH
 vxy
@@ -128627,7 +128571,7 @@ lYq
 lYq
 oNg
 bfH
-xQh
+bfH
 bfH
 bfH
 bfH
@@ -128875,17 +128819,17 @@ vmk
 qVr
 bfH
 bfH
-qyA
-xQh
+cml
+bfH
 cim
-kTh
-kTh
-kTh
-kTh
-eGt
-xQh
-xQh
-xox
+pbt
+pbt
+pbt
+pbt
+exH
+bfH
+bfH
+cml
 bfH
 dgR
 qVr
