@@ -168,7 +168,7 @@
 		qdel(mutation)
 
 	QDEL_NULL(current_color)
-	QDEL_NULL(equipped_hat)
+	equipped_hat?.forceMove(drop_location())
 	return ..()
 
 /mob/living/basic/slime/Exited(atom/movable/gone, direction)
@@ -268,7 +268,7 @@
 	return checker
 
 /mob/living/basic/slime/proc/update_slime_varience()
-	update_appearance(UPDATE_NAME | UPDATE_ICON | UPDATE_OVERLAYS)
+	update_appearance(UPDATE_NAME | UPDATE_ICON)
 	if(!chemical_injection)
 		SEND_SIGNAL(src, COMSIG_SECRETION_UPDATE, current_color.secretion_path, ooze_production, 10 SECONDS)
 	else

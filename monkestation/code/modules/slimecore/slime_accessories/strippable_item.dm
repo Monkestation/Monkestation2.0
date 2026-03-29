@@ -16,7 +16,7 @@ GLOBAL_LIST_INIT(strippable_slime_items, create_strippable_list(list(
 	. = ..()
 	var/mob/living/basic/slime/slime = source
 	if(!istype(slime))
-		return
+		return FALSE
 
 	if(slime.stat == DEAD)
 		to_chat(user, span_warning("You can't put a hat on a dead slime."))
