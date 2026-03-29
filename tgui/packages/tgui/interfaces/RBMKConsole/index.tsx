@@ -8,10 +8,10 @@ import RBMKRods from './rods';
 import RBMKGraphs from './graphs';
 
 export const RBMKConsole = () => {
-  const { data, act } = useBackend<any>();
+  const { act } = useBackend<any>();
   const [tab, setTab] = useLocalState<'overview' | 'controls' | 'rods' | 'graphs'>(
     'rbmk_tab',
-    'overview'
+    'overview',
   );
 
   return (
@@ -26,30 +26,34 @@ export const RBMKConsole = () => {
                 icon="gauge">
                 Overview
               </Tabs.Tab>
+
               <Tabs.Tab
                 selected={tab === 'controls'}
                 onClick={() => setTab('controls')}
                 icon="sliders">
                 Controls
               </Tabs.Tab>
+
               <Tabs.Tab
                 selected={tab === 'rods'}
                 onClick={() => setTab('rods')}
                 icon="grip-vertical">
                 Rods
               </Tabs.Tab>
+
               <Tabs.Tab
                 selected={tab === 'graphs'}
                 onClick={() => setTab('graphs')}
                 icon="chart-line">
                 Graphs
               </Tabs.Tab>
+
               <Flex.Item grow />
+
               <Tabs.Tab>
                 <Button
                   icon="sync"
                   content="Rescan"
-                  disabled={data?.status !== 'No reactor linked' ? false : true}
                   onClick={() => act('rescan')}
                 />
               </Tabs.Tab>

@@ -3,23 +3,28 @@ import { Section, Table, Button, LabeledList, Box } from '../../components';
 
 export const RBMKRods = () => {
   const { data, act } = useBackend<any>();
+
   const rods: Array<{
     type: string;
     color: string;
     depleted?: boolean;
     slot_kind: 'normal' | 'special';
     slot_index: number;
-  }> = data.rods || [];
+  }> = data?.rods || [];
 
   const maxNormal = Number(data?.max_normal_slots ?? 0);
   const maxSpecial = Number(data?.max_special_slots ?? 0);
 
-  const normalInstalled = rods.filter((r) => r.slot_kind === 'normal' && r.type !== 'Empty').length;
-  const specialInstalled = rods.filter((r) => r.slot_kind === 'special' && r.type !== 'Empty').length;
+  const normalInstalled = rods.filter(
+    (rod) => rod.slot_kind === 'normal' && rod.type !== 'Empty',
+  ).length;
+
+  const specialInstalled = rods.filter(
+    (rod) => rod.slot_kind === 'special' && rod.type !== 'Empty',
+  ).length;
 
   return (
     <>
-      {/* Bank overview */}
       <Section title="Rod Banks">
         <LabeledList>
           <LabeledList.Item label="Normal Bank">
@@ -31,7 +36,6 @@ export const RBMKRods = () => {
         </LabeledList>
       </Section>
 
-      {/* Rod details */}
       <Section title="Installed Rods" scrollable fill style={{ maxHeight: '300px' }}>
         <Table>
           <Table.Row header>
@@ -43,20 +47,20 @@ export const RBMKRods = () => {
             <Table.Cell collapsing>Action</Table.Cell>
           </Table.Row>
 
-          {rods.map((r) => {
+          {rods.map((rod) => {
             let status = 'Empty';
-            if (r.type !== 'Empty') {
-              status = r.depleted ? 'Depleted' : 'Active';
+            if (rod.type !== 'Empty') {
+              status = rod.depleted ? 'Depleted' : 'Active';
             }
 
             return (
-              <Table.Row key={`${r.slot_kind}-${r.slot_index}`}>
-                <Table.Cell capitalize>{r.slot_kind}</Table.Cell>
-                <Table.Cell>{r.slot_index}</Table.Cell>
-                <Table.Cell>{r.type || 'Empty'}</Table.Cell>
+              <Table.Row key={`${rod.slot_kind}-${rod.slot_index}`}>
+                <Table.Cell capitalize>{rod.slot_kind}</Table.Cell>
+                <Table.Cell>{rod.slot_index}</Table.Cell>
+                <Table.Cell>{rod.type}</Table.Cell>
                 <Table.Cell>
-                  {r.type !== 'Empty' ? (
-                    <Box inline bold color={r.color}>
+                  {rod.type !== 'Empty' ? (
+                    <Box inline bold color={rod.color}>
                       ●
                     </Box>
                   ) : (
@@ -65,15 +69,15 @@ export const RBMKRods = () => {
                 </Table.Cell>
                 <Table.Cell>{status}</Table.Cell>
                 <Table.Cell>
-                  {r.type !== 'Empty' && (
+                  {rod.type !== 'Empty' && (
                     <Button
                       icon="eject"
                       color="bad"
                       content="Eject"
                       onClick={() =>
                         act('remove_rod', {
-                          kind: r.slot_kind,
-                          index: r.slot_index,
+                          kind: rod.slot_kind,
+                          index: rod.slot_index,
                         })
                       }
                     />

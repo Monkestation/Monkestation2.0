@@ -1,12 +1,9 @@
 import { useBackend } from '../../backend';
-import { Section, Flex, ProgressBar } from '../../components';
-import { Chart } from '../../components';
+import { Section, Flex, ProgressBar, Chart } from '../../components';
 import { getGasFromPath } from '../../constants';
 
 interface GasInfo {
   percent: number;
-  heat_modifier?: number;
-  heat_resistance?: number;
 }
 
 export const RBMKGraphs = () => {
@@ -15,27 +12,21 @@ export const RBMKGraphs = () => {
   const gases: Record<string, GasInfo> = data?.gas_composition || {};
   const gasHistory: Record<string, number[]> = data?.gas_history || {};
 
-  // Filter out gases with 0%
   const activeGases = Object.entries(gases)
-    .filter(([, info]) => info?.percent > 0)
+    .filter(([, info]) => (info?.percent ?? 0) > 0)
     .sort((a, b) => b[1].percent - a[1].percent);
 
-  // Build stacked bar segments
-  const segments = activeGases.map(([gas, info]) => ({
+  const segments = activeGases.map(([gasPath, info]) => ({
     value: info.percent,
-    color: getGasFromPath(gas)?.color || 'white',
+    color: getGasFromPath(gasPath)?.color || 'white',
   }));
 
-  // Build multi-line dataset for gas history
-  const datasets = Object.entries(gasHistory).map(([gas, values]) => {
-    const points = values.map((v, i) => [i, v]);
-    return {
-      label: getGasFromPath(gas)?.label || gas,
-      data: points,
-      strokeColor: getGasFromPath(gas)?.color || '#fff',
-      strokeWidth: 2,
-    };
-  });
+  const datasets = Object.entries(gasHistory).map(([gasPath, values]) => ({
+    label: getGasFromPath(gasPath)?.label || gasPath,
+    data: values.map((value, index) => [index, value]),
+    strokeColor: getGasFromPath(gasPath)?.color || '#fff',
+    strokeWidth: 2,
+  }));
 
   return (
     <Flex direction="column" gap={1}>
@@ -45,8 +36,8 @@ export const RBMKGraphs = () => {
             <ProgressBar value={100} maxValue={100} segments={segments}>
               {activeGases
                 .map(
-                  ([gas, info]) =>
-                    `${getGasFromPath(gas)?.label || gas}: ${info.percent.toFixed(1)}%`,
+                  ([gasPath, info]) =>
+                    `${getGasFromPath(gasPath)?.label || gasPath}: ${info.percent.toFixed(1)}%`,
                 )
                 .join(' | ')}
             </ProgressBar>
@@ -60,11 +51,7 @@ export const RBMKGraphs = () => {
 
       <Flex.Item grow>
         <Section title="Gas Composition History" fill>
-          <Chart.Line
-            data={datasets}
-            height="200px"
-            legend
-          />
+          <Chart.Line data={datasets} height="200px" />
         </Section>
       </Flex.Item>
     </Flex>

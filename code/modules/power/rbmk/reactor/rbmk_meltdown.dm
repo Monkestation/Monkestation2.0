@@ -1,50 +1,40 @@
 /*************************************************************
- * RBMK Meltdown Logic — 2025 Linear-Core Revision
+ * RBMK Meltdown Logic — Canonical V1
  * -----------------------------------------------------------
- * This version removes ALL instability mechanics.
- *
- * Meltdown now occurs from:
+ * Meltdown occurs from:
  *   - Extreme temperature
  *   - Extreme pressure
  *   - Integrity reaching zero
  *   - Post-SCRAM decay heat runaway
  *
- * Coolant only leaks during meltdown_atmos_release().
+ * Design rules:
+ * - No instability mechanics
+ * - Coolant only dumps during meltdown release
+ * - Variable ownership lives in rbmk_core.dm
  *************************************************************/
-
-
-/obj/machinery/rbmk/reactor
-    var/meltdown_announced = FALSE
-    var/meltdown_in_progress = FALSE
-
-    // When SCRAMMED: meltdown risk increases if decay heat rises
-    var/decay_meltdown_threshold = RBMK_MAX_TEMP * 0.92
-    var/decay_check_interval = 2 SECONDS
-    var/last_decay_check = 0
 
 
 /*************************************************************
  * DECAY HEAT MELTDOWN CHECK
- * Runs ONLY when reactor is SCRAMMED, not running.
  *************************************************************/
 
-/// Checks if decay heat causes a meltdown after shutdown
+/// Checks if residual heat after shutdown has crossed the decay failure threshold
 /obj/machinery/rbmk/reactor/proc/check_decay_meltdown()
+	if (meltdown_in_progress)
+		return
 
-    // Reactor must be SCRAMMED but not melted yet
-    if (running || meltdown_in_progress)
-        return
+	// Only relevant after shutdown / non-running state
+	if (running)
+		return
 
-    // Time-gated checks
-    if (world.time < last_decay_check + decay_check_interval)
-        return
+	// Time-gated checks to avoid repeated spam
+	if (world.time < last_decay_check + decay_check_interval)
+		return
 
-    last_decay_check = world.time
+	last_decay_check = world.time
 
-    // If temperature is climbing dangerously → meltdown
-    if (temperature >= decay_meltdown_threshold)
-        trigger_meltdown("Post-SCRAM decay heat runaway")
-
+	if (temperature >= decay_meltdown_threshold)
+		trigger_meltdown("Post-SCRAM decay heat runaway")
 
 
 /*************************************************************
@@ -53,53 +43,60 @@
 
 /// Called when the RBMK irreversibly fails
 /obj/machinery/rbmk/reactor/proc/trigger_meltdown(reason)
+	if (meltdown_in_progress)
+		return
 
-    // Prevent double-triggering
-    if (meltdown_in_progress)
-        return
+	meltdown_in_progress = TRUE
+	meltdown_announced = TRUE
 
-    meltdown_in_progress = TRUE
+	/************************************************
+	 * Permanent shutdown state
+	 ************************************************/
+	scrammed = TRUE
+	control_rod_depth = RBMK_CONTROL_ROD_MAX
+	reset_reaction_state()
+	reactor_integrity = 0
 
-    // Global announcement
-    if (!meltdown_announced)
-        meltdown_announced = TRUE
-        world << span_danger("[RBMK_MELTDOWN_PREFIX]: [reason]!")
-        priority_announce("[RBMK_MELTDOWN_BROADCAST] [reason]", "RBMK Reactor Alert")
+	/************************************************
+	 * Global announcement
+	 ************************************************/
+	world << span_danger("[RBMK_MELTDOWN_PREFIX]: [reason]!")
+	priority_announce("[RBMK_MELTDOWN_BROADCAST] [reason]", "RBMK Reactor Alert")
 
-    /*********************************************************
-     * PERMANENT SHUTDOWN STATE
-     *********************************************************/
-    running = FALSE
-    scrammed = TRUE
-    icon_state = "reactor_slagged"
-    cut_overlays()      // We removed add_integrity_overlay() entirely.
+	/************************************************
+	 * Visual state prep
+	 ************************************************/
+	cut_overlays()
+	current_damage_overlay_image = null
+	current_damage_stage = 4
+	update_reactor_icon()
 
-    /*********************************************************
-     * MELTDOWN EFFECTS
-     *********************************************************/
-    #ifdef RBMK_MELTDOWN_RADIATION
-    meltdown_radiation_pulse()
-    #endif
+	/************************************************
+	 * Meltdown effects
+	 ************************************************/
+	#ifdef RBMK_MELTDOWN_RADIATION
+	meltdown_radiation_pulse()
+	#endif
 
-    #ifdef RBMK_MELTDOWN_ATMOS_DUMP
-    meltdown_atmos_release()
-    #endif
+	#ifdef RBMK_MELTDOWN_ATMOS_DUMP
+	meltdown_atmos_release()
+	#endif
 
-    #ifdef RBMK_MELTDOWN_EXPLOSIONS
-    meltdown_explosions()
-    #endif
+	#ifdef RBMK_MELTDOWN_EXPLOSIONS
+	meltdown_explosions()
+	#endif
 
-    #ifdef RBMK_MELTDOWN_ALARMS
-    meltdown_area_alarms()
-    #endif
+	#ifdef RBMK_MELTDOWN_ALARMS
+	meltdown_area_alarms()
+	#endif
 
-    // UI + log updates
-    update_linked_consoles()
-    log_game("[src] MELTDOWN triggered: [reason]")
+	/************************************************
+	 * UI / logging / shutdown
+	 ************************************************/
+	update_linked_consoles()
+	log_game("[src] MELTDOWN triggered: [reason]")
 
-    // Stop all ticking
-    STOP_PROCESSING(SSmachines, src)
-
+	STOP_PROCESSING(SSmachines, src)
 
 
 /*************************************************************
@@ -108,60 +105,56 @@
 
 /// Large, instant reactor radiation pulse
 /obj/machinery/rbmk/reactor/proc/meltdown_radiation_pulse()
-    radiation_pulse(
-        loc,
-        RBMK_MELTDOWN_RAD_RANGE,
-        RBMK_MELTDOWN_RAD_THRESHOLD
-    )
-    playsound(src, 'sound/effects/supermatter.ogg', 90, TRUE)
-
+	radiation_pulse(
+		loc,
+		RBMK_MELTDOWN_RAD_RANGE,
+		RBMK_MELTDOWN_RAD_THRESHOLD
+	)
+	playsound(src, 'sound/effects/supermatter.ogg', 90, TRUE)
 
 
 /*************************************************************
- * COOLANT RELEASE (ONLY IN MELTDOWN)
+ * COOLANT RELEASE
  *************************************************************/
 
-/// Releases ~50% coolant as toxic fallout
+/// Releases half of the internal coolant into the surrounding turf
 /obj/machinery/rbmk/reactor/proc/meltdown_atmos_release()
-    if (!coolant_internal)
-        return
+	if (!coolant_internal)
+		return
 
-    var/datum/gas_mixture/released = coolant_internal.remove_ratio(0.5)
-    if (!released || released.total_moles() <= 0)
-        return
+	var/datum/gas_mixture/released_mix = coolant_internal.remove_ratio(0.5)
+	if (!released_mix || released_mix.total_moles() <= 0)
+		return
 
-    var/turf/T = get_turf(src)
-    if (T)
-        T.assume_air(released)
-
+	var/turf/reactor_turf = get_turf(src)
+	if (reactor_turf)
+		reactor_turf.assume_air(released_mix)
+		air_update_turf(reactor_turf)
 
 
 /*************************************************************
  * EXPLOSION PACKAGE
  *************************************************************/
 
-/// Large reactor explosion + hotspot creation
+/// Main detonation and immediate thermal aftermath
 /obj/machinery/rbmk/reactor/proc/meltdown_explosions()
+	explosion(
+		src,
+		RBMK_MELTDOWN_DEV_RANGE,
+		RBMK_MELTDOWN_HEAVY_RANGE,
+		RBMK_MELTDOWN_LIGHT_RANGE,
+		RBMK_MELTDOWN_FLASH_RANGE,
+		TRUE
+	)
 
-    explosion(
-        src,
-        RBMK_MELTDOWN_DEV_RANGE,
-        RBMK_MELTDOWN_HEAVY_RANGE,
-        RBMK_MELTDOWN_LIGHT_RANGE,
-        RBMK_MELTDOWN_FLASH_RANGE,
-        TRUE
-    )
-
-    // Aftermath hotspot
-    new /obj/effect/hotspot(loc)
-    temperature = RBMK_MAX_TEMP * 2
-
+	new /obj/effect/hotspot(loc)
+	temperature = RBMK_MAX_TEMP * 2
 
 
 /*************************************************************
- * ALARMS AND AUDIO
+ * ALARMS / AUDIO
  *************************************************************/
 
-/// Plays reactor meltdown alarms for nearby areas
+/// Audible meltdown warning for nearby crew
 /obj/machinery/rbmk/reactor/proc/meltdown_area_alarms()
-    playsound(src, 'sound/machines/engine_alert1.ogg', 100, FALSE)
+	playsound(src, 'sound/machines/engine_alert1.ogg', 100, FALSE)

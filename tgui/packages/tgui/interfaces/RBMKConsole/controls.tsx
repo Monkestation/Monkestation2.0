@@ -4,33 +4,33 @@ import {
   Button,
   LabeledList,
   NumberInput,
-  Stack,
+  Flex,
   Box,
   Knob,
   ProgressBar,
-  Flex,
 } from '../../components';
 
 export const RBMKControls = () => {
   const { data, act } = useBackend<any>();
 
-  /* ---- Core ---- */
   const depth = Number(data?.control_rods ?? 0);
   const running = Boolean(data?.running ?? false);
+  const scrammed = Boolean(data?.scrammed ?? false);
   const maxRodDepth = Number(data?.max_control_rod ?? 100);
 
-  /* ---- Inlet ---- */
   const inletOpen = Boolean(data?.inlet_open ?? false);
   const inletRate = Number(data?.inlet_rate ?? 1);
+  const inletMin = Number(data?.inlet_min ?? 1);
+  const inletMax = Number(data?.inlet_max ?? 250);
+  const inletPressure = Number(data?.inlet_pressure ?? 0);
 
-  /* ---- Outlet ---- */
   const outletOpen = Boolean(data?.outlet_open ?? false);
   const outletTargetPressure = Number(data?.outlet_target_pressure ?? 101.3);
+  const outletPressureMax = Number(data?.outlet_pressure_max ?? 1200);
+  const outletPressure = Number(data?.outlet_pressure ?? 0);
 
   return (
     <Flex direction="column" gap={1}>
-
-      {/* Control Rod Depth */}
       <Section title="Control Rod Depth">
         <Flex justify="center" mb={1}>
           <Knob
@@ -39,7 +39,7 @@ export const RBMKControls = () => {
             maxValue={maxRodDepth}
             step={1}
             value={depth}
-            onDrag={(_, v) => act('set_rods', { depth: v })}
+            onDrag={(_, value) => act('set_rods', { depth: value })}
           />
         </Flex>
 
@@ -47,12 +47,11 @@ export const RBMKControls = () => {
           value={depth}
           maxValue={maxRodDepth}
           ranges={{
-            good: [0, 30],
-            yellow: [30, 70],
-            bad: [70, maxRodDepth],
-          }}
-        >
-          {depth}%
+            good: [0, maxRodDepth * 0.3],
+            yellow: [maxRodDepth * 0.3, maxRodDepth * 0.7],
+            bad: [maxRodDepth * 0.7, maxRodDepth],
+          }}>
+          {depth.toFixed(0)}%
         </ProgressBar>
 
         <Flex justify="space-between" mt={0.5}>
@@ -60,12 +59,19 @@ export const RBMKControls = () => {
           <Box color="label">{maxRodDepth}% — Fully Inserted</Box>
         </Flex>
 
-        <Box textAlign="center" mt={1} color={running ? 'good' : 'bad'}>
-          {running ? 'RUNNING' : 'SCRAMMED'}
+        <Box
+          textAlign="center"
+          mt={1}
+          color={scrammed ? 'bad' : running ? 'good' : 'label'}>
+          {scrammed ? 'SCRAMMED' : running ? 'RUNNING' : 'IDLE'}
         </Box>
+
+        <Flex justify="space-between" mt={1}>
+          <Button icon="arrow-up" content="Raise" onClick={() => act('rod_up')} />
+          <Button icon="arrow-down" content="Lower" onClick={() => act('rod_down')} />
+        </Flex>
       </Section>
 
-      {/* Emergency Controls */}
       <Section title="Emergency Controls">
         <Flex justify="center">
           <Button
@@ -79,21 +85,16 @@ export const RBMKControls = () => {
               fontSize: '1.2em',
               padding: '0.8em',
             }}
-            onClick={() =>
-              act('set_rods', { depth: maxRodDepth })
-            }
+            onClick={() => act('scram')}
           />
         </Flex>
       </Section>
 
-      {/* Coolant Controls */}
       <Section title="Coolant Controls">
-        <Stack>
-
-          {/* Inlet */}
-          <Stack.Item grow>
+        <Flex direction="column" gap={1}>
+          <Section title="Inlet">
             <LabeledList>
-              <LabeledList.Item label="Inlet Injector">
+              <LabeledList.Item label="Injector">
                 <Button
                   content={inletOpen ? 'Injecting' : 'Off'}
                   selected={inletOpen}
@@ -106,27 +107,24 @@ export const RBMKControls = () => {
                 <NumberInput
                   value={inletRate}
                   unit="L/s"
-                  width="75px"
-                  minValue={1}
-                  maxValue={200}
+                  width="80px"
+                  minValue={inletMin}
+                  maxValue={inletMax}
                   step={1}
                   suppressFlicker={2000}
-                  onChange={(_, value) =>
-                    act('set_inlet_rate', { rate: value })
-                  }
+                  onChange={(_, value) => act('set_inlet_rate', { rate: value })}
                 />
               </LabeledList.Item>
 
               <LabeledList.Item label="Inlet Pressure">
-                <Box color="label">Derived from coolant system</Box>
+                <Box>{inletPressure.toFixed(2)} kPa</Box>
               </LabeledList.Item>
             </LabeledList>
-          </Stack.Item>
+          </Section>
 
-          {/* Outlet */}
-          <Stack.Item grow>
+          <Section title="Outlet">
             <LabeledList>
-              <LabeledList.Item label="Outlet Regulator">
+              <LabeledList.Item label="Regulator">
                 <Button
                   content={outletOpen ? 'Open' : 'Closed'}
                   selected={outletOpen}
@@ -141,7 +139,7 @@ export const RBMKControls = () => {
                   unit="kPa"
                   width="90px"
                   minValue={0}
-                  maxValue={10000}
+                  maxValue={outletPressureMax}
                   step={10}
                   suppressFlicker={2000}
                   onChange={(_, value) =>
@@ -151,12 +149,11 @@ export const RBMKControls = () => {
               </LabeledList.Item>
 
               <LabeledList.Item label="Outlet Pressure">
-                <Box color="label">Derived from coolant system</Box>
+                <Box>{outletPressure.toFixed(2)} kPa</Box>
               </LabeledList.Item>
             </LabeledList>
-          </Stack.Item>
-
-        </Stack>
+          </Section>
+        </Flex>
       </Section>
     </Flex>
   );

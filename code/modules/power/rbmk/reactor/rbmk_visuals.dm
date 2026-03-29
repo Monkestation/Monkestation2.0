@@ -1,27 +1,21 @@
 /*************************************************************
- * RBMK Visual Logic — Temperature-driven, Fuel-gated
+ * RBMK Visual Logic — Canonical V1
  * -----------------------------------------------------------
- * Design rules (per Dillon):
+ * Design rules:
  * - "reactor_off" ONLY when there are NO fuel rods inserted
  * - Otherwise, visuals are driven purely by temperature
- * - SCRAM does NOT directly change visuals (it drops reactivity -> temp falls)
- * - No flicker, no overlay duplication
- * - No iterating overlays list (avoids runtimes)
- * - Properly hooks into update_icon()
+ * - SCRAM does NOT directly change visuals
+ * - Post-meltdown slagged state overrides everything
+ * - Damage overlays update only when stage changes
+ * - This file is the SOLE owner of update_icon()
  *************************************************************/
 
-/obj/machinery/rbmk/reactor
-	/// Tracks the current damage overlay stage (0–4)
-	var/current_damage_stage = 0
-
-	/// Reference to the damage overlay image currently applied (or null)
-	var/image/current_damage_overlay_image = null
 
 /*************************************************************
  * Standard icon hook
- * Many subsystems call update_icon() automatically.
  *************************************************************/
 
+/// Standard engine icon hook
 /obj/machinery/rbmk/reactor/update_icon()
 	. = ..()
 	update_reactor_icon()
@@ -29,18 +23,18 @@
 
 
 /*************************************************************
- * Update main reactor icon appearance
+ * Main Visual Update
  *************************************************************/
 
-/// Updates sprite + damage overlays (base icon never removed)
+/// Updates the main reactor sprite and damage overlay state
 /obj/machinery/rbmk/reactor/proc/update_reactor_icon()
 	var/previous_damage_stage = current_damage_stage
 	var/new_damage_stage = 0
 
-	/*************************************************************
-	 * 1) SLAGGED STATE OVERRIDE (post-boom wreck)
-	 *************************************************************/
-	if (reactor_integrity <= 0)
+	/************************************************
+	 * 1. Slagged state override
+	 ************************************************/
+	if (meltdown_in_progress || reactor_integrity <= 0)
 		icon_state = "reactor_slagged"
 		new_damage_stage = 4
 
@@ -50,28 +44,26 @@
 
 		return
 
-	/*************************************************************
-	 * 2) BASE ICON SELECTION
-	 * - OFF only if no fuel rods inserted
-	 * - Otherwise temperature-driven
-	 *************************************************************/
+	/************************************************
+	 * 2. Base icon selection
+	 * OFF only when no rods are physically inserted
+	 ************************************************/
 	if (!has_fuel_rods())
 		icon_state = "reactor_off"
+	else if (temperature < RBMK_TEMP_RUNNING)
+		icon_state = "reactor_on"
+	else if (temperature < RBMK_TEMP_HOT)
+		icon_state = "reactor_hot"
+	else if (temperature < RBMK_TEMP_VERYHOT)
+		icon_state = "reactor_veryhot"
+	else if (temperature < RBMK_TEMP_OVERHEAT)
+		icon_state = "reactor_overheat"
 	else
-		if (temperature < RBMK_TEMP_RUNNING)
-			icon_state = "reactor_on"
-		else if (temperature < RBMK_TEMP_HOT)
-			icon_state = "reactor_hot"
-		else if (temperature < RBMK_TEMP_VERYHOT)
-			icon_state = "reactor_veryhot"
-		else if (temperature < RBMK_TEMP_OVERHEAT)
-			icon_state = "reactor_overheat"
-		else
-			icon_state = "reactor_meltdown"
+		icon_state = "reactor_meltdown"
 
-	/*************************************************************
-	 * 3) DAMAGE OVERLAY STAGE (0–4)
-	 *************************************************************/
+	/************************************************
+	 * 3. Damage overlay stage
+	 ************************************************/
 	var/safe_max_integrity = max(max_reactor_integrity, 1)
 	var/integrity_percent = (reactor_integrity / safe_max_integrity) * 100
 
@@ -86,28 +78,24 @@
 	else
 		new_damage_stage = 0
 
-	/*************************************************************
-	 * 4) ONLY UPDATE OVERLAY WHEN STAGE CHANGES
-	 *************************************************************/
+	/************************************************
+	 * 4. Overlay refresh only on stage change
+	 ************************************************/
 	if (new_damage_stage != previous_damage_stage)
 		current_damage_stage = new_damage_stage
 		refresh_damage_overlay(new_damage_stage)
-
-	return
 
 
 /*************************************************************
  * Overlay Helpers
  *************************************************************/
 
-/// Remove current damage overlay and apply the correct new overlay stage
+/// Remove current damage overlay and apply the requested one
 /obj/machinery/rbmk/reactor/proc/refresh_damage_overlay(new_stage)
-	// Remove prior overlay (if any)
 	if (current_damage_overlay_image)
 		overlays -= current_damage_overlay_image
 		current_damage_overlay_image = null
 
-	// Stage 0 means no damage overlay
 	if (new_stage <= 0)
 		return
 

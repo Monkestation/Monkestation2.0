@@ -1,39 +1,35 @@
 /*************************************************************
- * RBMK Void Coefficient System (Linear Base Model – 2025)
+ * RBMK Void Coefficient System — Canonical V1
  * -----------------------------------------------------------
- * - VC depends ONLY on temperature
- * - No poisoning or gas density effects
+ * Design rules:
+ * - Void coefficient depends ONLY on reactor temperature
+ * - No poisoning mechanics
+ * - No coolant gas density effects
  * - No rod-type contributions
- * - update_void_coefficient() computes ONLY the "extra" VC term:
+ * - This proc computes ONLY the extra multiplier term
  *
- *       void_coefficient = temperature * RBMK_VC_TEMP_COEFF
- *
- *   The process loop applies it as:
- *
- *       flux *= (1 + void_coefficient)
- *
+ * Process loop usage:
+ *     flux *= (1 + void_coefficient)
  *************************************************************/
 
-/// Recalculate void coefficient (VC)
-/// Returns the EXTRA multiplier (not the full VC)
-/// Example: if temperature is high, void_coefficient = 0.7
-/// Process loop then does: flux *= 1.7
+/// Recalculate void coefficient and return the extra multiplier term
 /obj/machinery/rbmk/reactor/proc/update_void_coefficient()
+	// No active reaction means no meaningful void feedback
+	if (!running || meltdown_in_progress)
+		void_coefficient = 0
+		return void_coefficient
 
-    // Reactor off → no void effect
-    if (!running)
-        void_coefficient = 0
-        return void_coefficient
+	// Linear temperature-driven VC
+	var/temperature_coefficient = temperature * RBMK_VC_TEMP_COEFF
 
-    // Compute linear void coefficient (extra term only)
-    var/temp_coeff = temperature * RBMK_VC_TEMP_COEFF
+	// Prevent negative contribution
+	temperature_coefficient = max(temperature_coefficient, 0)
 
-    // VC cannot be negative
-    if (temp_coeff < 0)
-        temp_coeff = 0
+	// Clamp to configured ceiling
+	void_coefficient = clamp(
+		temperature_coefficient,
+		0,
+		RBMK_VC_MAX
+	)
 
-    // Clamp to configured max
-    temp_coeff = clamp(temp_coeff, 0, RBMK_VC_MAX)
-
-    void_coefficient = temp_coeff
-    return void_coefficient
+	return void_coefficient

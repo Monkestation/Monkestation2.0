@@ -1,6 +1,18 @@
 /*************************************************************
- * RBMK Reactor Core (Stable-Core Rod-Driven Model)
- * FINAL — VERIFIED WORKING
+ * RBMK Reactor Core — Canonical V1 Backbone
+ * -----------------------------------------------------------
+ * Responsibilities of this file:
+ * - Reactor object definition / vars
+ * - Initialization / cleanup
+ * - SCRAM / restart state helpers
+ * - Rod insertion / removal
+ * - Console synchronization
+ *
+ * This file does NOT own:
+ * - main process logic
+ * - visual update logic
+ * - coolant exchange helpers
+ * - decay helpers
  *************************************************************/
 
 /*************************************************************
@@ -31,27 +43,25 @@
 	/************************************************
 	 * Atmos / Ports
 	 ************************************************/
-	var/obj/machinery/atmospherics/components/unary/rbmk/inlet/inlet
-	var/obj/machinery/atmospherics/components/unary/rbmk/outlet/outlet
+	var/obj/machinery/atmospherics/components/unary/rbmk/inlet/inlet = null
+	var/obj/machinery/atmospherics/components/unary/rbmk/outlet/outlet = null
 
-		/*********************************************************
-	 * Telemetry (API CONTRACT — DO NOT REMOVE)
-	 *********************************************************/
-	var/list/coolant_pressure_history
-	var/list/coolant_temperature_history
-	var/list/coolant_total_moles_history
-	var/list/coolant_gas_hist
-	var/list/reactor_temperature_history
+	/************************************************
+	 * Telemetry History (API CONTRACT)
+	 ************************************************/
+	var/list/coolant_pressure_history = list()
+	var/list/coolant_temperature_history = list()
+	var/list/coolant_total_moles_history = list()
+	var/list/coolant_gas_hist = list()
+	var/list/reactor_temperature_history = list()
 
-		/*********************************************************
-	 * Coolant Control State (REQUIRED BY CONSOLE + ATMOS)
-	 *********************************************************/
+	/************************************************
+	 * Coolant Control State
+	 ************************************************/
 	var/inlet_open = FALSE
 	var/outlet_open = FALSE
-
 	var/inlet_rate = RBMK_INLET_RATE_MIN
 	var/outlet_target_pressure = RBMK_OUTLET_PRESSURE_BASE
-
 
 	/************************************************
 	 * Rod Storage
@@ -69,93 +79,112 @@
 	var/thermal_output = 0
 	var/flux = 0
 	var/void_coefficient = 0
+	var/pressure = 0
 
 	var/running = FALSE
 	var/scrammed = FALSE
 
 	/************************************************
-	 * Control & Integrity
+	 * Control / Integrity
 	 ************************************************/
 	var/control_rod_depth = 0
 	var/reactor_integrity = RBMK_MAX_INTEGRITY
-
-		/*********************************************************
-	 * Structural Integrity (REQUIRED)
-	 *********************************************************/
 	var/max_reactor_integrity = RBMK_MAX_INTEGRITY
 
-
 	/************************************************
-	 * Coolant / Pressure
+	 * Coolant Storage
 	 ************************************************/
-	var/datum/gas_mixture/coolant_internal
-	var/pressure = 0
+	var/datum/gas_mixture/coolant_internal = null
 
 	/************************************************
-	 * Telemetry (DO NOT REMOVE)
+	 * Tick Telemetry
 	 ************************************************/
 	var/last_tick_flux = 0
 	var/last_tick_temp_gain = 0
 	var/last_tick_rod_count = 0
 
+	/************************************************
+	 * Visual Tracking
+	 * Owned by visuals module, stored here
+	 ************************************************/
+	var/current_damage_stage = 0
+	var/image/current_damage_overlay_image = null
+
+	/************************************************
+	 * Meltdown Tracking
+	 * Owned by meltdown module, stored here
+	 ************************************************/
+	var/meltdown_announced = FALSE
+	var/meltdown_in_progress = FALSE
+	var/decay_meltdown_threshold = RBMK_MAX_TEMP * 0.92
+	var/decay_check_interval = 2 SECONDS
+	var/last_decay_check = 0
+
 
 /*************************************************************
- * Helper Procs
+ * Basic Reactor Helpers
  *************************************************************/
 
-/// Rod presence
+/// TRUE if any fuel rods are physically installed
 /obj/machinery/rbmk/reactor/proc/has_fuel_rods()
 	return (length(normal_slots) + length(special_slots)) > 0
 
-/// Active rods
+/// TRUE if any installed rods are active
 /obj/machinery/rbmk/reactor/proc/has_active_fuel_rods()
-	for (var/obj/item/rbmk/fuel_rod/R in (normal_slots + special_slots))
-		if (R && R.active)
+	for (var/obj/item/rbmk/fuel_rod/fuel_rod in (normal_slots + special_slots))
+		if (fuel_rod && fuel_rod.active)
 			return TRUE
 	return FALSE
 
+/// Resets runtime state when the reactor has no active reaction
+/obj/machinery/rbmk/reactor/proc/reset_reaction_state()
+	running = FALSE
+	flux = 0
+	radiation = 0
+	thermal_output = 0
+	void_coefficient = 0
+	last_tick_flux = 0
+	last_tick_temp_gain = 0
+	last_tick_rod_count = 0
 
-/// Passive decay (IDLE / SCRAM only)
-/proc/rbmk_decay_process(obj/machinery/rbmk/reactor/R)
-	if (!R)
-		return
+/// Returns TRUE if this rod belongs in the special bank
+/obj/machinery/rbmk/reactor/proc/is_special_rod(obj/item/rbmk/fuel_rod/fuel_rod)
+	if (!fuel_rod)
+		return FALSE
 
-	R.flux = max(R.flux - RBMK_FLUX_DECAY, 0)
-	R.radiation = max(R.radiation - RBMK_RADIATION_DECAY, 0)
+	return fuel_rod.rod_type in list("plasma", "telecrystal", "supermatter")
 
+/// Returns the slot list a rod should use
+/obj/machinery/rbmk/reactor/proc/get_target_slot_list(obj/item/rbmk/fuel_rod/fuel_rod)
+	if (is_special_rod(fuel_rod))
+		return special_slots
 
-/// Coolant exchange (delta-based, stable)
-/proc/rbmk_coolant_exchange(obj/machinery/rbmk/reactor/R)
-	if (!R || !R.coolant_internal)
-		return
-
-	var/delta = R.temperature - R.coolant_internal.temperature
-	if (delta <= 0)
-		return
-
-	var/transfer = min(5, delta * 0.25)
-	R.temperature -= transfer
-	R.coolant_internal.temperature += transfer
+	return normal_slots
 
 
 /*************************************************************
  * Initialization / Cleanup
  *************************************************************/
 
-/// Initialize
+/// Initialize reactor
 /obj/machinery/rbmk/reactor/Initialize(mapload)
 	. = ..()
 
 	reactor_integrity = RBMK_MAX_INTEGRITY
+	max_reactor_integrity = RBMK_MAX_INTEGRITY
 	control_rod_depth = 0
-	running = FALSE
-	scrammed = FALSE
 
-	var/turf/T = get_turf(src)
-	if (T)
-		var/datum/gas_mixture/env = T.return_air()
-		if (env)
-			temperature = env.temperature
+	reset_reaction_state()
+	scrammed = FALSE
+	meltdown_announced = FALSE
+	meltdown_in_progress = FALSE
+	last_decay_check = 0
+
+	var/turf/reactor_turf = get_turf(src)
+	if (reactor_turf)
+		var/datum/gas_mixture/environment_mix = reactor_turf.return_air()
+		if (environment_mix)
+			temperature = environment_mix.temperature
 
 	if (temperature < RBMK_AMBIENT_TEMP)
 		temperature = RBMK_AMBIENT_TEMP
@@ -163,15 +192,20 @@
 	normal_slots = list()
 	special_slots = list()
 
+	coolant_pressure_history = list()
+	coolant_temperature_history = list()
+	coolant_total_moles_history = list()
+	coolant_gas_hist = list()
+	reactor_temperature_history = list()
+
 	rbmk_init_coolant(src)
 	relink_ports()
 
-	update_icon()
+	update_reactor_icon()
 	START_PROCESSING(SSmachines, src)
 	return INITIALIZE_HINT_NORMAL
 
-
-/// Destroy
+/// Destroy reactor
 /obj/machinery/rbmk/reactor/Destroy()
 	STOP_PROCESSING(SSmachines, src)
 	rbmk_cleanup_atmos(src)
@@ -182,109 +216,19 @@
  * SCRAM
  *************************************************************/
 
-/// Emergency shutdown
+/// Emergency shutdown — forces rods fully inserted and kills reaction
 /obj/machinery/rbmk/reactor/proc/force_scram()
-	if (scrammed)
+	if (meltdown_in_progress)
 		return
 
 	scrammed = TRUE
-	running = FALSE
-	flux = 0
-	radiation = 0
+	control_rod_depth = RBMK_CONTROL_ROD_MAX
+	reset_reaction_state()
 
-	to_chat(src, span_danger("☢ EMERGENCY SCRAM ACTIVATED"))
-	update_linked_consoles()
+	visible_message(span_danger("[src] emits a harsh shutdown alarm!"))
+	playsound(src, 'sound/machines/engine_alert1.ogg', 75, FALSE)
 
-
-/*************************************************************
- * Main Reactor Process
- *************************************************************/
-
-/// Per-tick logic
-/obj/machinery/rbmk/reactor/process()
-
-	/* A. POST-MELTDOWN */
-	if (reactor_integrity <= 0)
-		flux = 0
-		radiation = 0
-		update_icon()
-		update_linked_consoles()
-		return
-
-	/* B. NO RODS */
-	if (!has_fuel_rods())
-		running = FALSE
-		flux = 0
-		radiation = 0
-		rbmk_coolant_exchange(src)
-		update_icon()
-		update_linked_consoles()
-		return
-
-	/* C. COLLECT ROD OUTPUT */
-	var/total_flux = 0
-	var/total_radiation = 0
-	var/active_rods = 0
-
-	for (var/obj/item/rbmk/fuel_rod/rod in (normal_slots + special_slots))
-		if (!rod || !rod.active)
-			continue
-
-		var/list/output = rod.process_rod()
-		total_flux += output["flux"]
-		total_radiation += output["radiation"]
-		active_rods++
-
-	last_tick_rod_count = active_rods
-	running = (active_rods > 0 && !scrammed)
-
-	/* D. IDLE / SCRAM */
-	if (!running)
-		rbmk_decay_process(src)
-		rbmk_coolant_exchange(src)
-		update_icon()
-		update_linked_consoles()
-		return
-
-	/* E. CONTROL RODS */
-	var/control_mult = clamp(
-		1 - (control_rod_depth / RBMK_CONTROL_ROD_MAX),
-		0,
-		1
-	)
-	total_flux *= control_mult
-
-	/* F. FLUX */
-	flux = clamp(total_flux * RBMK_FLUX_GAIN, 0, RBMK_MAX_FLUX)
-
-	/* G. HEAT FROM FLUX */
-	var/generated_heat = flux * RBMK_TEMP_GAIN_PER_TICK
-	temperature += generated_heat
-
-	thermal_output = generated_heat
-	last_tick_flux = flux
-	last_tick_temp_gain = generated_heat
-
-	/* H. VOID COEFFICIENT */
-	void_coefficient = clamp(
-		temperature * RBMK_VC_TEMP_COEFF,
-		0,
-		RBMK_VC_MAX
-	)
-
-	flux = clamp(flux * (1 + void_coefficient), 0, RBMK_MAX_FLUX)
-
-	/* I. RADIATION */
-	radiation = clamp(
-		total_radiation + (flux * RBMK_RADIATION_FLUX_MULT) + (temperature * RBMK_RADIATION_TEMP_MULT),
-		0,
-		RBMK_MAX_RADIATION
-	)
-
-	/* J. COOLANT (AFTER HEAT) */
-	rbmk_coolant_exchange(src)
-
-	update_icon()
+	update_reactor_icon()
 	update_linked_consoles()
 
 
@@ -292,78 +236,120 @@
  * Rod Handling
  *************************************************************/
 
-/// Insert rod
+/// Insert rod into the proper bank
 /obj/machinery/rbmk/reactor/attackby(obj/item/item, mob/user, params)
 	if (!istype(item, /obj/item/rbmk/fuel_rod))
 		return ..()
 
-	var/obj/item/rbmk/fuel_rod/rod = item
-	var/list/slots
+	var/obj/item/rbmk/fuel_rod/fuel_rod = item
+	var/list/target_slots = get_target_slot_list(fuel_rod)
 
-	if (rod.rod_type in list("plasma", "telecrystal", "supermatter"))
-		slots = special_slots
-		if (length(slots) >= max_special_slots)
+	if (target_slots == special_slots)
+		if (length(special_slots) >= max_special_slots)
 			to_chat(user, span_warning("All special rod slots are occupied!"))
 			return TRUE
 	else
-		slots = normal_slots
-		if (length(slots) >= max_normal_slots)
+		if (length(normal_slots) >= max_normal_slots)
 			to_chat(user, span_warning("All normal rod slots are occupied!"))
 			return TRUE
 
-	if (!user.transferItemToLoc(rod, src))
+	if (!user.transferItemToLoc(fuel_rod, src))
 		return TRUE
 
-	slots += rod
-	update_icon()
+	target_slots += fuel_rod
+
+	// Inserting rods means the reactor is no longer "off".
+	// It stays non-running until process logic sees valid active rods.
+	if (scrammed && control_rod_depth < RBMK_CONTROL_ROD_MAX)
+		control_rod_depth = RBMK_CONTROL_ROD_MAX
+
+	update_reactor_icon()
 	update_linked_consoles()
 
-	to_chat(user, span_notice("You insert [rod.name] into the reactor."))
+	to_chat(user, span_notice("You insert [fuel_rod.name] into the reactor."))
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 	return TRUE
 
-
-/// Remove rod
+/// Default hand interaction: remove the last installed rod
 /obj/machinery/rbmk/reactor/attack_hand(mob/user)
-	var/obj/item/rbmk/fuel_rod/rod
-
-	if (length(special_slots))
-		rod = special_slots[length(special_slots)]
-		special_slots -= rod
-	else if (length(normal_slots))
-		rod = normal_slots[length(normal_slots)]
-		normal_slots -= rod
-	else
-		to_chat(user, span_notice("No rods installed."))
+	if (!user)
 		return
 
-	rod.forceMove(get_turf(src))
-	to_chat(user, span_notice("You remove [rod.name] from the reactor."))
+	remove_last_rod(user)
+
+/// Removes the most recently installed rod, prioritizing special bank first
+/obj/machinery/rbmk/reactor/proc/remove_last_rod(mob/user)
+	var/obj/item/rbmk/fuel_rod/fuel_rod = null
+
+	if (length(special_slots))
+		fuel_rod = special_slots[length(special_slots)]
+		special_slots -= fuel_rod
+	else if (length(normal_slots))
+		fuel_rod = normal_slots[length(normal_slots)]
+		normal_slots -= fuel_rod
+	else
+		if (user)
+			to_chat(user, span_notice("No rods installed."))
+		return FALSE
+
+	fuel_rod.forceMove(get_turf(src))
+
+	if (user)
+		to_chat(user, span_notice("You remove [fuel_rod.name] from the reactor."))
+
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 
 	if (!has_fuel_rods())
-		running = FALSE
-		flux = 0
-		radiation = 0
+		reset_reaction_state()
 
-	update_icon()
+	update_reactor_icon()
 	update_linked_consoles()
+	return TRUE
+
+/// Removes a rod by bank + 1-based index, for console/TGUI use
+/obj/machinery/rbmk/reactor/proc/remove_rod_by_slot(slot_kind, slot_index, mob/user = null)
+	var/list/target_slots = null
+
+	if (slot_kind == "special")
+		target_slots = special_slots
+	else
+		target_slots = normal_slots
+
+	if (!isnum(slot_index))
+		return FALSE
+
+	slot_index = round(slot_index)
+
+	if (slot_index < 1 || slot_index > length(target_slots))
+		return FALSE
+
+	var/obj/item/rbmk/fuel_rod/fuel_rod = target_slots[slot_index]
+	if (!fuel_rod)
+		return FALSE
+
+	target_slots -= fuel_rod
+	fuel_rod.forceMove(get_turf(src))
+
+	if (user)
+		to_chat(user, span_notice("You remove [fuel_rod.name] from the reactor."))
+
+	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+
+	if (!has_fuel_rods())
+		reset_reaction_state()
+
+	update_reactor_icon()
+	update_linked_consoles()
+	return TRUE
 
 
 /*************************************************************
- * Icon + Console Sync
+ * Console Sync
  *************************************************************/
 
-/// Engine hook
-/obj/machinery/rbmk/reactor/update_icon()
-	. = ..()
-	update_reactor_icon()
-	return .
-
-
-/// Update linked consoles
+/// Update all linked RBMK consoles in range
 /obj/machinery/rbmk/reactor/proc/update_linked_consoles()
-	for (var/obj/machinery/computer/rbmk_console/C in range(7, src))
-		if (C.linked_reactor == src)
-			C.update_icon()
-			SStgui.update_uis(C)
+	for (var/obj/machinery/computer/rbmk_console/console in range(7, src))
+		if (console.linked_reactor == src)
+			console.update_icon()
+			SStgui.update_uis(console)
