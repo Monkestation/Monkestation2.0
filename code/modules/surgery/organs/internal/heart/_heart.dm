@@ -29,15 +29,8 @@
 	icon_state = "[base_icon_state]-[beating ? "on" : "off"]"
 	return ..()
 
-/obj/item/organ/internal/heart/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
-	. = ..()
-	if(heart_bloodtype)
-		receiver.dna?.human_blood_type = heart_bloodtype
-
 /obj/item/organ/internal/heart/Remove(mob/living/carbon/heartless, special = 0)
 	. = ..()
-	if(heart_bloodtype)
-		heartless.dna?.human_blood_type = random_human_blood_type()
 	if(!special)
 		addtimer(CALLBACK(src, PROC_REF(stop_if_unowned)), 120)
 
@@ -82,7 +75,6 @@
 		base_amount = 80 + rand(-10, 10)
 	base_amount += round(owner.getOxyLoss() / 5)
 	base_amount += ((BLOOD_VOLUME_NORMAL - owner.blood_volume) / 25)
-	base_amount += owner.pain_controller?.get_heartrate_modifier()
 	if(owner.has_status_effect(/datum/status_effect/determined)) // adrenaline
 		base_amount += 10
 
@@ -122,7 +114,7 @@
 			beat = BEAT_NONE
 
 		if(owner.has_status_effect(/datum/status_effect/jitter))
-			if(owner.health > HEALTH_THRESHOLD_FULLCRIT && (!beat || beat == BEAT_SLOW))
+			if(owner.health > owner.hardcrit_threshold && (!beat || beat == BEAT_SLOW))
 				owner.playsound_local(get_turf(owner), fastbeat, 40, 0, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
 				beat = BEAT_FAST
 
@@ -137,7 +129,6 @@
 					span_userdanger("You feel a terrible pain in your chest, as if your heart has stopped!"))
 			owner.set_heartattack(TRUE)
 			failed = TRUE
-		owner.adjust_pain_shock(1 * seconds_per_tick)
 
 /obj/item/organ/internal/heart/get_availability(datum/species/owner_species, mob/living/owner_mob)
 	return owner_species.mutantheart
@@ -414,7 +405,7 @@
 	if(!COOLDOWN_FINISHED(src, crystalize_cooldown))
 		return //lol double rip
 
-	if(HAS_TRAIT(victim, TRAIT_CANNOT_CRYSTALIZE) || HAS_TRAIT(victim, TRAIT_DEFIB_BLACKLISTED))
+	if(HAS_TRAIT(victim, TRAIT_CANNOT_CRYSTALIZE) || (victim.mind && HAS_TRAIT(victim.mind, TRAIT_DEFIB_BLACKLISTED)))
 		return // no reviving during mafia, or other inconvenient times.
 
 	to_chat(victim, span_nicegreen("Crystals start forming around your dead body."))
@@ -446,13 +437,6 @@
 
 	if(!COOLDOWN_FINISHED(src, crystalize_cooldown) || ethereal.stat != DEAD)
 		return //Should probably not happen, but lets be safe.
-
-	//Monkestation Edit Begin
-	if(IS_BLOODSUCKER(ethereal) && SSsol.sunlight_active)
-		to_chat(ethereal, span_warning("You were unable to finish your crystallization as Sol has halted your attempt to crystallize."))
-		stop_crystalization_process(ethereal, FALSE)
-		return
-	//Monkestation Edit End
 
 	if(ismob(location) || isitem(location) || iseffect(location) || HAS_TRAIT_FROM(src, TRAIT_HUSK, CHANGELING_DRAIN)) //Stops crystallization if they are eaten by a dragon, turned into a legion, consumed by his grace, etc.
 		to_chat(ethereal, span_warning("You were unable to finish your crystallization, for obvious reasons."))
@@ -598,4 +582,4 @@
 
 /obj/item/organ/internal/heart/spider
 	name = "spider heart"
-	heart_bloodtype = /datum/blood_type/spider
+	heart_bloodtype = /datum/blood_type/crew/spider

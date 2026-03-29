@@ -8,7 +8,6 @@
 #define JOB_UNAVAILABLE_ANTAG_INCOMPAT 6
 /// Job unavailable due to insufficient donor rank.
 #define JOB_UNAVAILABLE_DONOR_RANK 7 //MONKESTATION EDIT
-#define JOB_UNAVAILABLE_CONDITIONS_UNMET 8
 
 /// Used when the `get_job_unavailable_error_message` proc can't make sense of a given code.
 #define GENERIC_JOB_UNAVAILABLE_ERROR "Error: Unknown job availability."
@@ -43,7 +42,6 @@
 #define JOB_RESEARCH_DIRECTOR "Research Director"
 #define JOB_CHIEF_ENGINEER "Chief Engineer"
 #define JOB_CHIEF_MEDICAL_OFFICER "Chief Medical Officer"
-#define JOB_BLUESHIELD "Blueshield" //Monke edit
 #define JOB_BRIDGE_ASSISTANT "Bridge Assistant"
 //Silicon
 #define JOB_AI "AI"
@@ -210,10 +208,10 @@
 #define DEPARTMENT_BITFLAG_SUMMER (1<<12)
 #define DEPARTMENT_SUMMER "Summer"
 
-#define DEPARTMENT_BITFLAG_CENTRAL_COMMAND (1<<11)
+#define DEPARTMENT_BITFLAG_CENTRAL_COMMAND (1<<13)
 #define DEPARTMENT_CENTRAL_COMMAND "Central Command"
 
-#define DEPARTMENT_BITFLAG_LATE (1<<12)
+#define DEPARTMENT_BITFLAG_LATE (1<<14)
 #define DEPARTMENT_LATE "Late Arrival"
 
 /* Job datum job_flags */
@@ -237,6 +235,10 @@
 #define JOB_CAN_BE_INTERN (1<<8)
 /// This job cannot have more slots opened by the Head of Personnel (but admins or other random events can still do this).
 #define JOB_CANNOT_OPEN_SLOTS (1<<9)
+/// This job can't be an antagonist target so it's not fair for the antagonist who has to track them down.
+#define JOB_CANNOT_BE_TARGET (1<<10)
+/// This job can't exist on planetary maps.
+#define JOB_NO_PLANETARY (1<<11)
 
 /// Combination flag for jobs which are considered regular crew members of the station.
 #define STATION_JOB_FLAGS (JOB_ANNOUNCE_ARRIVAL|JOB_CREW_MANIFEST|JOB_EQUIP_RANK|JOB_CREW_MEMBER|JOB_NEW_PLAYER_JOINABLE|JOB_REOPEN_ON_ROUNDSTART_LOSS|JOB_ASSIGN_QUIRKS|JOB_CAN_BE_INTERN)
@@ -250,5 +252,5 @@
 #define SUPERVISOR_CMO "the Chief Medical Officer"
 #define SUPERVISOR_HOP "the Head of Personnel"
 #define SUPERVISOR_HOS "the Head of Security"
-#define SUPERVISOR_QM "the Quartermaster"
+#define SUPERVISOR_QM_HOP "the Quartermaster and the Head of Personnel" //monkestation edit: Those under QM is also under HoP
 #define SUPERVISOR_RD "the Research Director"

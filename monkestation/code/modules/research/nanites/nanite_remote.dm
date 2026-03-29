@@ -19,6 +19,8 @@
 	var/code = 0
 	var/relay_code = 0
 	var/current_program_name = "Program"
+	/// Affects whether you can lock it, and use local mode.
+	var/silicon = FALSE
 
 /obj/item/nanite_remote/examine(mob/user)
 	. = ..()
@@ -103,6 +105,7 @@
 	data["locked"] = locked
 	data["saved_settings"] = saved_settings
 	data["program_name"] = current_program_name
+	data["silicon"] = silicon
 	return data
 
 /obj/item/nanite_remote/ui_act(action, params)
@@ -169,7 +172,7 @@
 			mode = params["mode"]
 			. = TRUE
 		if("lock")
-			if(!(obj_flags & EMAGGED))
+			if(!(obj_flags & EMAGGED) && !silicon)
 				locked = TRUE
 				update_appearance()
 			. = TRUE
@@ -237,6 +240,9 @@
 				return
 			comm_message = new_message
 			. = TRUE
+
+/obj/item/nanite_remote/cyborg
+	silicon = TRUE
 
 #undef REMOTE_MODE_OFF
 #undef REMOTE_MODE_SELF

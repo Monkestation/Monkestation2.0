@@ -1,5 +1,5 @@
-import { Antagonist, Category } from '../base';
 import { multiline } from 'common/string';
+import { type Antagonist, Category } from '../base';
 
 const SpaceDragon: Antagonist = {
   key: 'spacedragon',
@@ -10,7 +10,7 @@ const SpaceDragon: Antagonist = {
       carps, crush walls, and terrorize the station.
     `,
   ],
-  category: Category.Midround,
+  category: Category.Ghost,
 };
 
 export default SpaceDragon;

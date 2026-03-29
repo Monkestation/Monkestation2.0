@@ -12,6 +12,7 @@
 	item_flags = NOBLUDGEON | NO_MAT_REDEMPTION
 	slot_flags = ITEM_SLOT_BELT
 	req_access = list(ACCESS_SECURITY)
+	custom_price = PAYCHECK_COMMAND * 2.5 //Comes out to 50 with the security dept discount on the vendor
 
 /obj/item/citationinator/attack_self(mob/living/user, modifiers)
 	if(!isliving(user))
@@ -46,33 +47,34 @@
 	if(!citation_name)
 		return
 	var/reason = trim(tgui_input_text(user, "Provide details about the citation.", "Handling a fish in suspicious circumstances", multiline = TRUE, encode = FALSE, timeout = 1 MINUTES))
-	var/issuer_name = using_id.registered_name || "Unknown"
+	var/issuer_name = using_id.assignment + " " + using_id.registered_name
 	var/datum/crime/citation/new_citation = new(name = citation_name, details = reason, author = issuer_name, fine = fine)
 	new_citation.alert_owner(user, src, victim.name, "You have been issued a [fine]cr citation for [citation_name] by [issuer_name]. Fines are payable at Security.")
 	victim.citations += new_citation
 	investigate_log("New Citation: <strong>[citation_name]</strong> Fine: [fine] | Added to [victim.name] by [key_name(user)]", INVESTIGATE_RECORDS)
 	SSblackbox.ReportCitation(REF(new_citation), user.ckey, user.real_name, victim.name, citation_name, fine)
 
-	var/final_paper_text = "<center><b>Security Citation</b></center><br>"
-	final_paper_text  += {"<table style="text-align:center;" border="1" cellspacing="0" width="100%">
-						<tr>
-						<th>Citation</th>
-						<th>Details</th>
-						<th>Author</th>
-						<th>Time Added</th>
-						<th>Fine</th>
-						</tr><br>"}
-	final_paper_text += "<tr><td>[sanitize(new_citation.name)]</td>"
-	final_paper_text += "<td>[sanitize(new_citation.details)]</td>"
-	final_paper_text += "<td>[sanitize(new_citation.author)]</td>"
-	final_paper_text += "<td>[new_citation.time]</td>"
-	final_paper_text += "<td>[new_citation.fine]</td>"
-	final_paper_text += "</tr>"
-	final_paper_text += "</table>"
+	var/final_paper_text = "# <u>SECURITY CITATION</u>\n"
+	final_paper_text += "You have been issued a citation by the on-board station security department for the following offense:<br>"
+	final_paper_text += {"<table style="text-align:left;" border="1" cellspacing="0" width="100%">"}
+	final_paper_text += "<tr><th>Details: </th><td>[length(new_citation.details) > 0 ? sanitize(new_citation.details) : "None provided."]</td></tr>"
+	final_paper_text += "<tr><th>Cited By: </th><td>[sanitize(new_citation.author)]</td></tr>"
+	final_paper_text += "<tr><th>Time: </th><td>[new_citation.time]</td></tr>"
+	final_paper_text += "<tr><th>Fine Amount: </th><td>[new_citation.fine]</td></tr>"
+	final_paper_text += "<center><b>[sanitize(new_citation.name)]</b></center><br>"
+	final_paper_text += "</table><br>"
+	final_paper_text += "Citations are payable at the Security Warrant Console at the front of the station brig.<br><br>"
+	final_paper_text += "<i>Accepting this ticket does not indicate an admission of guilt. If you wish to dispute this citation, please contact the Captain, Head of Security, or the onboard legal counsel.</i><br><br>"
+	final_paper_text += "<i>Refusing to accept this ticket, or failure to pay/dispute this citation within a reasonable timeframe, may result in you being charged with Fine Evasion (code 111) and serving time in the station brig.</i><br>"
 
 	var/obj/item/paper/slip = new(drop_location())
 	slip.name = "Citation - [victim.name] for [sanitize(new_citation.name)]"
 	slip.color = COLOR_FADED_PINK
+
+	var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/simple/paper)
+	slip.add_stamp(sheet.icon_class_name("stamp-law"), 284, 0, 0, "stamp-law")
+	slip.cut_overlays()
+
 	slip.add_raw_text(final_paper_text)
 	slip.update_appearance()
 	user.put_in_hands(slip)

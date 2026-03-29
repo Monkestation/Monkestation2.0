@@ -1,4 +1,6 @@
-/proc/getviewsize(view)
+/proc/getviewsize(view = world.view)
+	SHOULD_BE_PURE(TRUE)
+
 	if(isnum(view))
 		var/totalviewrange = (view < 0 ? -1 : 1) + 2 * view
 		return list(totalviewrange, totalviewrange)
@@ -8,8 +10,9 @@
 			cached_world_view = getviewsize(world.view)
 		return cached_world_view
 	else
-		var/list/viewrangelist = splittext(view,"x")
+		var/list/viewrangelist = splittext(view, "x")
 		return list(text2num(viewrangelist[1]), text2num(viewrangelist[2]))
+
 
 /// Takes a string or num view, and converts it to pixel width/height in a list(pixel_width, pixel_height)
 /proc/view_to_pixels(view)

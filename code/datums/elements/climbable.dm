@@ -35,6 +35,8 @@
 	examine_texts += span_notice("[source] looks climbable.")
 
 /datum/element/climbable/proc/can_climb(atom/source, mob/user)
+	if (!user.CanReach(source))
+		return FALSE
 	var/dir_step = get_dir(user, source.loc)
 	//To jump over a railing you have to be standing next to it, not far behind it.
 	if(source.flags_1 & ON_BORDER_1 && user.loc != source.loc && (dir_step & source.dir) == source.dir)
@@ -54,7 +56,7 @@
 		structure_climber.visible_message(span_warning("[structure_climber] is knocked off [climbed_thing]."), span_warning("You're knocked off [climbed_thing]!"), span_hear("You hear a cry from [structure_climber], followed by a slam."))
 
 
-/datum/element/climbable/proc/climb_structure(atom/climbed_thing, mob/living/user, params)
+/datum/element/climbable/proc/climb_structure(atom/climbed_thing, mob/living/user, params, can_vault = FALSE)
 	if(!can_climb(climbed_thing, user) || DOING_INTERACTION(user, DOAFTER_SOURCE_CLIMBING))
 		return
 	climbed_thing.add_fingerprint(user)
@@ -79,8 +81,8 @@
 		if(QDELETED(climbed_thing)) //Checking if structure has been destroyed
 			return
 
-		if(HAS_TRAIT(user, TRAIT_VAULTING) && user.m_intent == MOVE_INTENT_RUN || HAS_TRAIT(user, TRAIT_VAULTING) &&user.m_intent == MOVE_INTENT_SPRINT)//monkestation edit: simians can fling themselves off climbable structures
-			vault_over_object(user, climbed_thing)
+		if(HAS_TRAIT(user, TRAIT_VAULTING) && can_vault && (user.m_intent == MOVE_INTENT_RUN || user.m_intent == MOVE_INTENT_SPRINT))//monkestation edit: simians can fling themselves off climbable structures
+			vault_over_object(climbed_thing, user, params)
 			if(climb_stun)
 				user.Immobilize(climb_stun)
 				user.visible_message(span_warning("[user] flips over [climbed_thing]!"), \
@@ -92,6 +94,10 @@
 			log_combat(user, climbed_thing, "climbed onto")
 			if(adjusted_climb_stun)
 				user.Immobilize(adjusted_climb_stun)
+			var/atom/movable/buckle_target = climbed_thing
+			if(istype(buckle_target))
+				if(buckle_target.is_buckle_possible(user))
+					buckle_target.buckle_mob(user)
 		else
 			to_chat(user, span_warning("You fail to climb onto [climbed_thing]."))
 		if(HAS_TRAIT(user, TRAIT_EXERTION_OVERHEAT))
@@ -99,19 +105,23 @@
 	LAZYREMOVEASSOC(current_climbers, climbed_thing, user)
 
 
-/proc/vault_over_object(mob/user, object, range = 3, speed = 0.5)
-	var/dir = get_dir(user, object)
-	var/turf/target = get_ranged_target_turf(user, dir, range)
-	var/obj/machinery/machine_target = locate() in target
-	var/mob/living/carbon/human/H = user
-	if(machine_target)
-		user.throw_at(machine_target, range, speed)
-		if(prob(70))
-			H.Knockdown(10)
+/datum/element/climbable/proc/vault_over_object(atom/climbed_thing, mob/living/user, params)
+	if(!can_climb(climbed_thing, user))
+		return
+
+	climbed_thing.set_density(FALSE)
+
+	var/dir_step = get_dir(user, climbed_thing)
+	var/same_loc = climbed_thing.loc == user.loc
+	if((climbed_thing.flags_1 & ON_BORDER_1 && (same_loc || !(dir_step & REVERSE_DIR(climbed_thing.dir)))))
+		. = user.throw_at(get_step(climbed_thing, climbed_thing.dir), range = 3, speed = 0.5)
 	else
-		user.throw_at(target, range, speed)
-		if(prob(25))
-			H.Knockdown(10)
+		var/turf/target = get_ranged_target_turf(user, dir_step, range = 3)
+		. = user.throw_at(target, range = 3, speed = 0.5)
+	if(prob((locate(/obj/machinery) in get_turf(climbed_thing)) ? 70 : 25))
+		user.Knockdown(8)
+
+	climbed_thing.set_density(TRUE)
 
 /datum/element/climbable/proc/do_climb(atom/climbed_thing, mob/living/user, params)
 	if(!can_climb(climbed_thing, user))
@@ -140,14 +150,14 @@
 /datum/element/climbable/proc/mousedrop_receive(atom/climbed_thing, atom/movable/dropped_atom, mob/user, params)
 	SIGNAL_HANDLER
 
-	. = COMPONENT_CANCEL_MOUSEDROPPED_ONTO
 	if(user != dropped_atom || !isliving(dropped_atom))
 		return
 	if(!HAS_TRAIT(dropped_atom, TRAIT_FENCE_CLIMBER) && !HAS_TRAIT(dropped_atom, TRAIT_CAN_HOLD_ITEMS)) // If you can hold items you can probably climb a fence
 		return
 	var/mob/living/living_target = dropped_atom
 	if(living_target.mobility_flags & MOBILITY_MOVE)
-		INVOKE_ASYNC(src, PROC_REF(climb_structure), climbed_thing, living_target, params)
+		INVOKE_ASYNC(src, PROC_REF(climb_structure), climbed_thing, living_target, params, FALSE)
+	return COMPONENT_CANCEL_MOUSEDROPPED_ONTO
 
 ///Tries to climb onto the target if the forced movement of the mob allows it
 /datum/element/climbable/proc/try_speedrun(datum/source, mob/bumpee)
@@ -157,7 +167,7 @@
 	if(bumpee.force_moving?.allow_climbing)
 		do_climb(source, bumpee)
 	if(bumpee.m_intent == MOVE_INTENT_SPRINT)
-		INVOKE_ASYNC(src, PROC_REF(climb_structure), source, bumpee)
+		INVOKE_ASYNC(src, PROC_REF(climb_structure), source, bumpee, null, TRUE)
 
 ///Tries to climb onto the target if the forced movement of the mob allows it
 /datum/element/climbable/proc/attempt_sprint_climb(datum/source, mob/bumpee)

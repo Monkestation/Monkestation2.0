@@ -114,10 +114,10 @@
 /obj/item/stock_parts/power_store/update_overlays()
 	. = ..()
 	if(grown_battery)
-		. += mutable_appearance('icons/obj/machines/cell_charger.dmi', "grown_wires")
+		. += mutable_appearance('icons/obj/power.dmi', "grown_wires")
 	if((charge < 0.01) || !charge_light_type)
 		return
-	. += mutable_appearance('icons/obj/machines/cell_charger.dmi', "[cell_size_prefix]-[charge_light_type]-o[(percent() >= 99.5) ? 2 : 1]")
+	. += mutable_appearance('icons/obj/power.dmi', "[cell_size_prefix]-[charge_light_type]-o[(percent() >= 99.5) ? 2 : 1]")
 
 /obj/item/stock_parts/power_store/vv_edit_var(vname, vval)
 	if(vname == NAMEOF(src, charge))
@@ -205,6 +205,10 @@
 		. += span_danger("This [name] seems to be faulty!")
 	else if(!isnull(charge_light_type))
 		. += "The charge meter reads [CEILING(percent(), 0.1)]%." //so it doesn't say 0% charge when the overlay indicates it still has charge
+	// MONKESTATION EDIT ADDITION
+	else if(microfusion_readout)
+		. += "The charge meter reads [charge]/[maxcharge] MF."
+	// MONKESTATION EDIT END
 
 /obj/item/stock_parts/power_store/proc/on_reagent_change(datum/reagents/holder)
 	SIGNAL_HANDLER

@@ -108,6 +108,6 @@
 	. = ..()
 	playsound(get_turf(src), 'sound/effects/snap.ogg', 50, TRUE)
 
-/obj/structure/trap/darkspawn/legcuff/trap_effect(mob/living/L)
+/obj/structure/trap/darkspawn/legcuff/trap_effect(mob/living/target)
 	var/obj/item/restraints/legcuffs/beartrap/dark/trap = new(get_turf(src))
-	trap.spring_trap(L)
+	trap.spring_trap(null, target)

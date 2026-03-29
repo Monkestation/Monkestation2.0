@@ -195,8 +195,13 @@
 	else if (isliving(AM))
 		var/mob/living/L = AM
 		if(liquid_group.slippery)
-			if(prob(7) && !(L.movement_type & FLYING) && L.body_position == STANDING_UP)
+			if(L.m_intent == MOVE_INTENT_SPRINT && !(L.movement_type & FLYING) && L.body_position == STANDING_UP)
 				L.slip(30, T, NO_SLIP_WHEN_WALKING, 0, TRUE)
+		if(!(L.movement_type & FLYING))
+			if(ishuman(AM))
+				var/mob/living/carbon/human/stepped_human = AM
+				if(!((stepped_human.wear_suit?.body_parts_covered | stepped_human.w_uniform?.body_parts_covered | stepped_human.shoes?.body_parts_covered) & FEET))
+					liquid_group.expose_atom(stepped_human, 0.1, TOUCH)
 
 	if(fire_state)
 		AM.fire_act((T20C+50) + (50*fire_state), 125)
@@ -204,6 +209,12 @@
 /obj/effect/abstract/liquid_turf/proc/mob_fall(datum/source, mob/M)
 	SIGNAL_HANDLER
 	var/turf/T = source
+
+	if(liquid_group.group_overlay_state == LIQUID_STATE_PUDDLE && T.has_gravity(T))
+		if(iscarbon(M))
+			var/mob/living/carbon/C = M
+			liquid_group.expose_atom(C, 1, TOUCH)
+		return
 	if(liquid_group.group_overlay_state >= LIQUID_STATE_ANKLES && T.has_gravity(T))
 		playsound(T, 'monkestation/sound/effects/splash.ogg', 50, 0)
 		if(iscarbon(M))
@@ -218,22 +229,6 @@
 				to_chat(C, span_userdanger("You fall in and swallow some water!"))
 		else
 			to_chat(M, span_userdanger("You fall in the water!"))
-
-/obj/effect/abstract/liquid_turf/proc/ChangeToNewTurf(turf/NewT)
-	if(NewT.liquids)
-		stack_trace("Liquids tried to change to a new turf, that already had liquids on it!")
-
-	UnregisterSignal(my_turf, list(COMSIG_ATOM_ENTERED, COMSIG_TURF_MOB_FALL))
-	if(SSliquids.evaporation_queue[my_turf])
-		SSliquids.evaporation_queue -= my_turf
-		SSliquids.evaporation_queue[NewT] = TRUE
-	my_turf.liquids = null
-	my_turf = NewT
-	liquid_group.move_liquid_group(src)
-	NewT.liquids = src
-	loc = NewT
-	RegisterSignal(my_turf, COMSIG_ATOM_ENTERED, PROC_REF(movable_entered))
-	RegisterSignal(my_turf, COMSIG_TURF_MOB_FALL, PROC_REF(mob_fall))
 
 /**
  * Handles COMSIG_ATOM_EXAMINE for the turf.

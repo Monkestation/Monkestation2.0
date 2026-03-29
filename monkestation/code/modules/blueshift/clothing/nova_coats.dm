@@ -14,11 +14,11 @@
 	allowed = list(
 		/obj/item/analyzer,
 		/obj/item/stack/medical,
-		/obj/item/stack/heal_pack,
 		/obj/item/dnainjector,
 		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/syringe,
-		/obj/item/reagent_containers/hypospray,
+		/obj/item/hypospray,
+		/obj/item/reagent_containers/medipen,
 		/obj/item/healthanalyzer,
 		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/cup/beaker,

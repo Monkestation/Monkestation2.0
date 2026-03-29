@@ -274,7 +274,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/syndicate_depot/engineering)
 "dt" = (
-/obj/machinery/atmospherics/components/unary/cryo_cell{
+/obj/machinery/cryo_cell{
 	dir = 4
 	},
 /turf/open/floor/iron/white/small,
@@ -1943,7 +1943,7 @@
 /area/ruin/space/has_grav/syndicate_depot/engineering)
 "uV" = (
 /obj/machinery/smartfridge/food,
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/turf/open/floor/iron/kitchen,
 /area/ruin/space/has_grav/syndicate_depot/crew_quarters)
 "uW" = (
 /obj/structure/cable,
@@ -2394,7 +2394,7 @@
 	pixel_x = -10;
 	pixel_y = 18
 	},
-/obj/item/stamp/head/qm{
+/obj/item/stamp/qm{
 	pixel_x = 10;
 	pixel_y = 12
 	},

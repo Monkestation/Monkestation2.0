@@ -41,7 +41,7 @@
 	return ..()
 
 /datum/action/cooldown/spell/toggle/shadow_tendril/process()
-	active = owner.is_holding_item_of_type(/obj/item/umbral_tendrils)
+	active = !!owner?.is_holding_item_of_type(/obj/item/umbral_tendrils)
 	return ..()
 
 /datum/action/cooldown/spell/toggle/shadow_tendril/Enable()
@@ -179,7 +179,7 @@
 	var/blocked = FALSE
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
-		if(H.check_shields(src, 0, "[source]", attack_type = LEAP_ATTACK))
+		if(H.check_block(src, 0, "[source]", attack_type = LEAP_ATTACK))
 			blocked = TRUE
 
 	var/destination = get_ranged_target_turf(get_turf(target), throwingdatum.init_dir, 5)

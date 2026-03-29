@@ -6,7 +6,7 @@
 
 	preference = "feature_arachnid_chelicerae"
 	zone = BODY_ZONE_HEAD
-	slot = ORGAN_SLOT_EXTERNAL_ANTENNAE
+	slot = ORGAN_SLOT_EXTERNAL_SNOUT
 
 	use_mob_sprite_as_obj_sprite = TRUE
 	bodypart_overlay = /datum/bodypart_overlay/mutant/arachnid_chelicerae

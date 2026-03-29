@@ -50,12 +50,6 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	var/list/cached_fire_spreads = list()
 	///list of old reagents
 	var/list/cached_reagent_list = list()
-	///cached temperature between turfs recalculated on group_process
-	var/cached_temperature_shift = 0
-	///does temperature need action
-	var/temperature_shift_needs_action = FALSE
-	///this groups list of currently running turfs, we iterate over this to stop redundancy
-	var/list/current_temperature_queue = list()
 	///do we evaporate
 	var/evaporates = TRUE
 	/// Liquids in this group will always evaporate regardless of height
@@ -97,7 +91,6 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	cached_edge_turfs = null
 	cached_fire_spreads = null
 	cached_reagent_list = null
-	current_temperature_queue = null
 	splitting_array = null
 	return ..()
 
@@ -222,17 +215,8 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 			continue
 		remove_from_group(turf)
 
-	var/turf/open/open_turf = pick(members)
-	var/datum/gas_mixture/math_cache = open_turf.air
-
-	if(math_cache && total_reagent_volume)
-		if(!(group_temperature <= math_cache.return_temperature() + 5 && math_cache.return_temperature() - 5 <= group_temperature) && !temperature_shift_needs_action)
-			cached_temperature_shift =((math_cache.return_temperature() * max(1, math_cache.total_moles())) + ((group_temperature * max(1, (total_reagent_volume * 0.025))))) / (max(1, (total_reagent_volume * 0.025)) + max(1, math_cache.total_moles()))
-			temperature_shift_needs_action = TRUE
-
 	if(from_SS)
 		total_reagent_volume = reagents.total_volume
-		reagents.handle_reactions()
 
 		if(!total_reagent_volume || !members)
 			return
@@ -264,7 +248,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 
 /datum/liquid_group/proc/cleanse_members()
 	for(var/turf/listed_turf as anything in members)
-		if(isclosedturf(listed_turf))
+		if(isclosedturf(listed_turf) || isgroundlessturf(listed_turf))
 			remove_from_group(listed_turf)
 			qdel(listed_turf.liquids)
 
@@ -388,12 +372,14 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	reagents.remove_all(amount)
 	if(!QDELETED(remover))
 		check_liquid_removal(remover, amount)
+	if(!length(members) || !reagents.total_volume)
+		if(!QDELETED(src))
+			remove_all()
+			qdel(src)
+		return
 	total_reagent_volume = reagents.total_volume
 	reagents_per_turf = total_reagent_volume / length(members)
 	expected_turf_height = CEILING(reagents_per_turf, 1) / LIQUID_HEIGHT_DIVISOR
-	if(!total_reagent_volume && !reagents.total_volume)
-		remove_all()
-		qdel(src)
 
 /datum/liquid_group/proc/remove_specific(obj/effect/abstract/liquid_turf/remover, amount, datum/reagent/reagent_type, deferred_removal = FALSE)
 	reagents.remove_reagent(reagent_type.type, amount)
@@ -422,14 +408,11 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	var/amount = 0
 	for(var/list_item in reagent_list)
 		amount += reagent_list[list_item]
-	handle_temperature(amount, chem_temp)
 	handle_visual_changes()
 	process_group()
 
 /datum/liquid_group/proc/add_reagent(obj/effect/abstract/liquid_turf/member, datum/reagent/reagent, amount, temperature)
 	reagents.add_reagent(reagent, amount, temperature, no_react = TRUE)
-
-	handle_temperature(amount, temperature)
 	handle_visual_changes()
 	process_group()
 
@@ -498,11 +481,6 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 		reagents_per_turf = 0
 	process_turf_disperse()
 	process_group()
-
-/datum/liquid_group/proc/handle_temperature(previous_reagents, temp)
-	var/baseline_temperature = ((total_reagent_volume * group_temperature) + (previous_reagents * temp)) / (total_reagent_volume + previous_reagents)
-	group_temperature = baseline_temperature
-	reagents.chem_temp = group_temperature
 
 /datum/liquid_group/proc/handle_visual_changes()
 	var/new_color
@@ -695,11 +673,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	for(var/turf/cached_turf in cached_edge_turfs)
 		for(var/direction in cached_edge_turfs[cached_turf])
 			var/turf/directional_turf = get_step(cached_turf, direction)
-			if(isclosedturf(directional_turf))
-				continue
-			if(!(directional_turf in cached_turf.atmos_adjacent_turfs)) //i hate that this is needed
-				continue
-			if(!cached_turf.atmos_adjacent_turfs[directional_turf])
+			if(!directional_turf || isclosedturf(directional_turf) || !TURFS_CAN_SHARE(cached_turf, directional_turf) || HAS_TRAIT(directional_turf, TRAIT_BLOCK_LIQUID_SPREAD))
 				continue
 			if(spread_liquid(directional_turf, cached_turf))
 				cached_edge_turfs[cached_turf] -= direction
@@ -754,7 +728,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 		for(var/turf/adjacent_turf in get_adjacent_open_turfs(queued_turf))
 			if(QDELETED(adjacent_turf.liquids) || !members[adjacent_turf])
 				continue
-			if(!(adjacent_turf in queued_turf.atmos_adjacent_turfs)) //i hate that this is needed
+			if(!TURFS_CAN_SHARE(queued_turf, adjacent_turf)) //i hate that this is needed
 				continue
 			visited_length = length(previously_visited)
 			previously_visited["[adjacent_turf.liquids.x]_[adjacent_turf.liquids.y]"] = adjacent_turf.liquids
@@ -956,20 +930,11 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	turf_reagents.expose(target, method, liquid = TRUE)
 
 /datum/liquid_group/proc/spread_liquid(turf/new_turf, turf/source_turf)
-	if(isclosedturf(new_turf) || !source_turf.atmos_adjacent_turfs)
-		return
-	if(HAS_TRAIT(new_turf, TRAIT_BLOCK_LIQUID_SPREAD))
-		return
-	if(!(new_turf in source_turf.atmos_adjacent_turfs)) //i hate that this is needed
-		return
-	if(!source_turf.atmos_adjacent_turfs[new_turf])
-		return
-
 	if(isopenspaceturf(new_turf))
 		var/turf/Z_turf_below = GET_TURF_BELOW(new_turf)
 		if(!Z_turf_below)
-			return
-		if(isspaceturf(Z_turf_below) || HAS_TRAIT(Z_turf_below, TRAIT_BLOCK_LIQUID_SPREAD))
+			return FALSE
+		if(isclosedturf(Z_turf_below) || isgroundlessturf(Z_turf_below) || isoceanturf(Z_turf_below) || HAS_TRAIT(Z_turf_below, TRAIT_BLOCK_LIQUID_SPREAD))
 			return FALSE
 		if(QDELETED(Z_turf_below.liquids))
 			Z_turf_below.liquids = new(Z_turf_below)
@@ -984,8 +949,10 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 		if(!QDELETED(Z_turf_below.liquids?.liquid_group))
 			splashy.color = Z_turf_below.liquids.liquid_group.group_color
 		return FALSE
+	else if(isgroundlessturf(new_turf) || isoceanturf(new_turf))
+		return FALSE
 
-	if(QDELETED(new_turf.liquids) && !istype(new_turf, /turf/open/openspace) && !isspaceturf(new_turf) && !istype(new_turf, /turf/open/floor/plating/ocean) && source_turf.turf_height == new_turf.turf_height) // no space turfs, or oceans turfs, also don't attempt to spread onto a turf that already has liquids wastes processing time
+	if(QDELETED(new_turf.liquids) && source_turf.turf_height == new_turf.turf_height) // no space turfs, or oceans turfs, also don't attempt to spread onto a turf that already has liquids wastes processing time
 		if(reagents_per_turf < LIQUID_HEIGHT_DIVISOR)
 			return FALSE
 		if(!length(members))
@@ -1036,33 +1003,3 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 				var/mob/living/target_living = target_atom
 				target_living.Paralyze(6 SECONDS)
 				to_chat(target_living, span_danger("You are knocked down by the currents!"))
-
-/datum/liquid_group/proc/fetch_temperature_queue()
-	if(!temperature_shift_needs_action)
-		return list()
-
-	var/list/returned =  list()
-	for(var/tur in members)
-		var/turf/open/member = tur
-		returned |= member
-
-	current_temperature_queue = returned
-	return returned
-
-/datum/liquid_group/proc/act_on_queue(turf/member)
-	if(!temperature_shift_needs_action)
-		return
-
-	var/turf/open/member_open = member
-	var/datum/gas_mixture/gas = member_open.air
-	if(!gas)
-		return
-
-	gas.temperature = cached_temperature_shift
-	if(group_temperature != cached_temperature_shift)
-		group_temperature = cached_temperature_shift
-		reagents.chem_temp = cached_temperature_shift
-
-	current_temperature_queue -= member
-	if(!length(current_temperature_queue))
-		temperature_shift_needs_action = FALSE

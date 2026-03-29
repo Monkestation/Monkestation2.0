@@ -70,6 +70,7 @@
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "console"
 	density = TRUE
+	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN|INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_OPEN_SILICON
 	/// Connected ore processing machine.
 	var/obj/machinery/mineral/processing_unit/processing_machine
 
@@ -176,38 +177,52 @@
 		if(mineral_machine)
 			mineral_machine.updateUsrDialog()
 
-/obj/machinery/mineral/processing_unit/proc/get_machine_data()
-	var/dat = "<b>Smelter control console</b><br><br>"
-	for(var/datum/material/all_materials as anything in materials.materials)
-		var/amount = materials.materials[all_materials]
-		dat += "<span class=\"res_name\">[all_materials.name]: </span>[amount] cm&sup3;"
-		if (selected_material == all_materials)
-			dat += " <i>Smelting</i>"
-		else
-			dat += " <A href='byond://?src=[REF(mineral_machine)];material=[REF(all_materials)]'><b>Not Smelting</b></A> "
-		dat += "<br>"
+/obj/machinery/mineral/processing_unit/ui_static_data()
+	var/list/data = list()
 
-	dat += "<br><br>"
-	dat += "<b>Smelt Alloys</b><br>"
+	for(var/datum/material/material as anything in materials.materials)
+		var/obj/display = initial(material.sheet_type)
+		data["materialIcons"] += list(
+			list(
+				"id" = REF(material),
+				"icon" = icon2base64(icon(initial(display.icon), icon_state = initial(display.icon_state), frame = 1)),
+				)
+			)
 
 	for(var/research in stored_research.researched_designs)
-		var/datum/design/designs = SSresearch.techweb_design_by_id(research)
-		dat += "<span class=\"res_name\">[designs.name] "
-		if (selected_alloy == designs.id)
-			dat += " <i>Smelting</i>"
-		else
-			dat += " <A href='byond://?src=[REF(mineral_machine)];alloy=[designs.id]'><b>Not Smelting</b></A> "
-		dat += "<br>"
+		var/datum/design/design = SSresearch.techweb_design_by_id(research)
+		var/obj/display = initial(design.build_path)
+		data["alloyIcons"] += list(
+			list(
+				"id" = design.id,
+				"icon" = icon2base64(icon(initial(display.icon), icon_state = initial(display.icon_state), frame = 1)),
+				)
+			)
 
-	dat += "<br><br>"
-	//On or off
-	dat += "Machine is currently "
-	if (on)
-		dat += "<A href='byond://?src=[REF(mineral_machine)];set_on=off'>On</A> "
-	else
-		dat += "<A href='byond://?src=[REF(mineral_machine)];set_on=on'>Off</A> "
+	data += materials.ui_static_data()
 
-	return dat
+	return data
+
+/obj/machinery/mineral/processing_unit/ui_data()
+	var/list/data = list()
+
+	data["materials"] = materials.ui_data()
+	data["selectedMaterial"] = selected_material?.name
+
+	data["alloys"] = list()
+	for(var/research in stored_research.researched_designs)
+		var/datum/design/design = SSresearch.techweb_design_by_id(research)
+		data["alloys"] += list(
+			list(
+				"name" = design.name,
+				"id" = design.id,
+				)
+			)
+	data["selectedAlloy"] = selected_alloy
+
+	data["state"] = on
+
+	return data
 
 /obj/machinery/mineral/processing_unit/pickup_item(datum/source, atom/movable/target, direction)
 	if(QDELETED(target))

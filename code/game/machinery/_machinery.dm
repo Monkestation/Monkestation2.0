@@ -172,6 +172,10 @@
 	/// sound played on succesful interface use by a carbon lifeform
 	var/clicksound
 
+	///extra reward for special shipbreaking components
+	var/extra_reward = list()
+
+
 /datum/armor/obj_machinery
 	melee = 25
 	bullet = 10
@@ -181,7 +185,6 @@
 
 /obj/machinery/Initialize(mapload)
 	. = ..()
-	GLOB.machines += src
 	SSmachines.register_machine(src)
 
 	if(ispath(circuit, /obj/item/circuitboard))
@@ -204,12 +207,11 @@
 
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/LateInitialize()
+/obj/machinery/LateInitialize(mapload_arg)
 	. = ..()
 	post_machine_initialize()
 
 /obj/machinery/Destroy()
-	GLOB.machines.Remove(src)
 	SSmachines.unregister_machine(src)
 	end_processing()
 	dump_inventory_contents()
@@ -238,7 +240,6 @@
 		return
 	update_current_power_usage()
 	setup_area_power_relationship()
-
 
 /**
  * proc to call when the machine starts to require power after a duration of not requiring power
@@ -627,12 +628,14 @@
 	set_panel_open(!panel_open)
 
 /obj/machinery/can_interact(mob/user)
+	if(QDELETED(user))
+		return FALSE
+
 	if((machine_stat & (NOPOWER|BROKEN)) && !(interaction_flags_machine & INTERACT_MACHINE_OFFLINE)) // Check if the machine is broken, and if we can still interact with it if so
 		return FALSE
 
 	if(SEND_SIGNAL(user, COMSIG_TRY_USE_MACHINE, src) & COMPONENT_CANT_USE_MACHINE_INTERACT)
 		return FALSE
-
 
 	if(isAdminGhostAI(user))
 		return TRUE //the Gods have unlimited power and do not care for things such as range or blindness
@@ -859,8 +862,13 @@
 		return ..() //we don't have any parts.
 	spawn_frame(disassembled)
 
+	var/area/space/shipbreak/A = get_area(src)
+	if(extra_reward)
+		if(istype(A))
+			for(var/extra in extra_reward)
+				new extra(loc)
+
 	for(var/part in component_parts)
-		var/area/space/shipbreak/A = get_area(src)
 		if(istype(part, /datum/stock_part))
 			var/datum/stock_part/datum_part = part
 			var/obj/item/item = new datum_part.physical_object_type(loc)

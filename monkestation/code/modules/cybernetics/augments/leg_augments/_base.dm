@@ -9,7 +9,7 @@
 	/// This is a typepath and not true/false so we can properly check subtypes.
 	var/double_legged_type = null
 
-/obj/item/organ/internal/cyberimp/leg/Initialize()
+/obj/item/organ/internal/cyberimp/leg/Initialize(mapload)
 	. = ..()
 	update_icon()
 	SetSlotFromZone()

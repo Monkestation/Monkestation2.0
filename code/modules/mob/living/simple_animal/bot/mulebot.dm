@@ -228,14 +228,14 @@
 			wires.cut_random()
 
 
-/mob/living/simple_animal/bot/mulebot/bullet_act(obj/projectile/Proj)
+/mob/living/simple_animal/bot/mulebot/bullet_act(obj/projectile/proj)
 	. = ..()
 	if(. && !QDELETED(src)) //Got hit and not blown up yet.
 		if(prob(50) && !isnull(load))
 			unload(0)
 		if(prob(25))
 			visible_message(span_danger("Something shorts out inside [src]!"))
-			wires.cut_random(source = Proj.firer)
+			wires.cut_random(source = proj.firer)
 
 /mob/living/simple_animal/bot/mulebot/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -371,7 +371,7 @@
 	if(!isliving(user))
 		return
 
-	if(!istype(AM) || isdead(AM) || iscameramob(AM) || istype(AM, /obj/effect/dummy/phased_mob))
+	if(!istype(AM) || isdead(AM) || iseyemob(AM) || istype(AM, /obj/effect/dummy/phased_mob))
 		return
 
 	load(AM)
@@ -801,7 +801,7 @@
 	if(user.incapacitated() || (istype(L) && L.body_position == LYING_DOWN))
 		return
 
-	if(!istype(AM) || iscameramob(AM) || istype(AM, /obj/effect/dummy/phased_mob)) //allows ghosts!
+	if(!istype(AM) || iseyemob(AM) || istype(AM, /obj/effect/dummy/phased_mob)) //allows ghosts!
 		return
 
 	load(AM)

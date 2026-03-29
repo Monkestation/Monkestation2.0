@@ -210,7 +210,7 @@
 	aggressor.stop_pulling()
 
 	var/atom/movable/choking_on = choking_on_ref?.resolve()
-	owner.visible_message(span_green("[victim] vomits up \the[choking_on]. [victim.p_theyre()] gonna make it!"), \
+	owner.visible_message(span_green("[victim] vomits up \the [choking_on]. [victim.p_theyre()] gonna make it!"), \
 			span_green("You vomit up that accursed blockage. YOU CAN BREATHE! The broken chest is a hell of a price to pay."))
 	if(iscarbon(victim))
 		var/mob/living/carbon/carbon_victim = victim
@@ -282,7 +282,7 @@
 	if(flaming)
 		var/obj/item/bodypart/head = owner.get_bodypart(BODY_ZONE_HEAD)
 		if(head)
-			head.receive_damage(0, 2 * seconds_between_ticks)
+			head.receive_damage(0, 2 * seconds_between_ticks, damage_source = "choking")
 		owner.stamina.adjust(-2 * seconds_between_ticks)
 
 /datum/status_effect/choke/proc/do_vfx(client/vfx_on)

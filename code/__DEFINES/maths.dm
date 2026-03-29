@@ -11,7 +11,6 @@
 
 
 #define PI 3.1416
-#define PI2 PI / 2 //MONKESTATION MODULE OUTDOOR_EFFECTS
 #define INFINITY 1e31 //closer then enough
 
 #define SHORT_REAL_LIMIT 16777216
@@ -32,6 +31,9 @@
 
 /// Gets the sign of x, returns -1 if negative, 0 if 0, 1 if positive
 #define SIGN(x) ( ((x) > 0) - ((x) < 0) )
+
+/// Returns the integer closest to 0 from a division
+#define SIGNED_FLOOR_DIVISION(x, y) (SIGN(x) * FLOOR(abs(x) / y, 1))
 
 #define CEILING(x, y) ( -round(-(x) / (y)) * (y) )
 

@@ -30,7 +30,7 @@
 	if(isliving(parent))
 		host_mob = parent
 
-		if(!(host_mob.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD))) //Shouldn't happen, but this avoids HUD runtimes in case a silicon gets them somehow.
+		if(!(host_mob.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD|MOB_ROBOTIC)) || issilicon(host_mob)) //Shouldn't happen, but this avoids HUD runtimes in case a silicon gets them somehow.
 			return COMPONENT_INCOMPATIBLE
 
 		start_time = world.time
@@ -62,7 +62,7 @@
 		RegisterSignal(parent, COMSIG_ATOM_EMP_ACT, PROC_REF(on_emp))
 		RegisterSignal(parent, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 		RegisterSignal(parent, COMSIG_LIVING_REVIVE, PROC_REF(on_revive))
-		RegisterSignal(parent, COMSIG_MOB_TRIED_ACCESS, PROC_REF(check_access))
+		RegisterSignal(parent, COMSIG_MOB_RETRIEVE_ACCESS, PROC_REF(retrieve_access))
 		RegisterSignal(parent, COMSIG_LIVING_ELECTROCUTE_ACT, PROC_REF(on_shock))
 		RegisterSignal(parent, COMSIG_LIVING_MINOR_SHOCK, PROC_REF(on_minor_shock))
 		RegisterSignal(parent, COMSIG_SPECIES_GAIN, PROC_REF(check_viable_biotype))
@@ -87,7 +87,7 @@
 								COMSIG_NANITE_SYNC,
 								COMSIG_ATOM_EMP_ACT,
 								COMSIG_LIVING_DEATH,
-								COMSIG_MOB_TRIED_ACCESS,
+								COMSIG_MOB_RETRIEVE_ACCESS,
 								COMSIG_LIVING_ELECTROCUTE_ACT,
 								COMSIG_LIVING_MINOR_SHOCK,
 								COMSIG_MOVABLE_HEAR,
@@ -98,7 +98,7 @@
 /datum/component/nanites/Destroy()
 	STOP_PROCESSING(SSnanites, src)
 	QDEL_LIST(programs)
-	if(host_mob)
+	if(!QDELETED(host_mob))
 		set_nanite_bar(TRUE)
 		host_mob.hud_set_nanite_indicator()
 	host_mob = null
@@ -111,6 +111,8 @@
 		adjust_nanites(null, amount) //just add to the nanite volume
 
 /datum/component/nanites/process(seconds_per_tick)
+	if(QDELETED(src))
+		return PROCESS_KILL
 	if(!HAS_TRAIT(host_mob, TRAIT_STASIS))
 		adjust_nanites(null, (regen_rate + (SSresearch.science_tech.researched_nodes["nanite_harmonic"] ? HARMONIC_REGEN_BOOST : 0)) * seconds_per_tick)
 		add_research()
@@ -251,7 +253,9 @@
 ///Updates the nanite volume bar visible in diagnostic HUDs
 /datum/component/nanites/proc/set_nanite_bar(remove = FALSE)
 	var/image/holder = host_mob.hud_list[DIAG_NANITE_FULL_HUD]
-	holder.pixel_y = host_mob.get_cached_height() - world.icon_size
+	if(!holder) // what
+		return
+	holder.pixel_z = host_mob.get_cached_height() - world.icon_size
 	holder.icon_state = null
 	if(remove || stealth)
 		return //bye icon
@@ -328,18 +332,14 @@
 /datum/component/nanites/proc/check_viable_biotype()
 	SIGNAL_HANDLER
 
-	if(!(host_mob.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD)))
+	if(!(host_mob.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD|MOB_ROBOTIC)) || issilicon(host_mob))
 		qdel(src) //bodytype no longer sustains nanites
 
-/datum/component/nanites/proc/check_access(datum/source, obj/O)
+/datum/component/nanites/proc/retrieve_access(datum/source, list/access_list)
 	SIGNAL_HANDLER
-
 	for(var/datum/nanite_program/access/access_program in programs)
 		if(access_program.activated)
-			return O.check_access_list(access_program.access)
-		else
-			return FALSE
-	return FALSE
+			access_list += access_program.access
 
 /datum/component/nanites/proc/set_volume(datum/source, amount)
 	SIGNAL_HANDLER

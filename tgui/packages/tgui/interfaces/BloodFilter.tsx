@@ -4,12 +4,12 @@ import { Window } from '../layouts';
 import { ChemFilterPane } from './ChemFilter';
 
 type Data = {
-  whitelist: string[];
+  blacklist: string[];
 };
 
 export const BloodFilter = (props) => {
   const { data } = useBackend<Data>();
-  const { whitelist = [] } = data;
+  const { blacklist = [] } = data;
 
   return (
     <Window width={500} height={300}>
@@ -17,8 +17,8 @@ export const BloodFilter = (props) => {
         <Stack>
           <Stack.Item grow>
             <ChemFilterPane
-              title="Whitelist"
-              list={whitelist}
+              title="Blacklist"
+              list={blacklist}
               buttonColor="green"
             />
           </Stack.Item>

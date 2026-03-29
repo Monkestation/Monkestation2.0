@@ -250,9 +250,8 @@
 /mob/living/basic/bot/cleanbot/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	var/mob/user = ui.user
-	if(. || (bot_access_flags & BOT_COVER_LOCKED) && !HAS_SILICON_ACCESS(user))
+	if(. || !(bot_access_flags & BOT_COVER_LOCKED) && !HAS_SILICON_ACCESS(user))
 		return
-
 	switch(action)
 		if("clean_blood")
 			janitor_mode_flags ^= CLEANBOT_CLEAN_BLOOD

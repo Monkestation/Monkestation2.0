@@ -77,7 +77,12 @@
 			carried++
 	carried = max(carried, 1)
 	deltimer(recharge_timerid)
-	recharge_timerid = addtimer(CALLBACK(src, PROC_REF(reload)), set_recharge_time * carried, TIMER_STOPPABLE)
+	var/actual_recharge_time = set_recharge_time * carried
+	if(actual_recharge_time > 0)
+		recharge_timerid = addtimer(CALLBACK(src, PROC_REF(reload)), actual_recharge_time, TIMER_STOPPABLE)
+	else
+		recharge_timerid = null
+		reload()
 
 /obj/item/gun/energy/recharge/emp_act(severity)
 	return
@@ -114,9 +119,9 @@
 	recharge_time = 2 SECONDS
 	holds_charge = TRUE
 	unique_frequency = TRUE
-	can_bayonet = TRUE
-	knife_x_offset = 20
-	knife_y_offset = 12
+
+/obj/item/gun/energy/recharge/ebow/add_bayonet_point()
+	AddComponent(/datum/component/bayonet_attachable, offset_x = 20, offset_y = 12)
 
 /obj/item/gun/energy/recharge/ebow/give_manufacturer_examine()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_SCARBOROUGH)

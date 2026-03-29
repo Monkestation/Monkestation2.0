@@ -26,12 +26,12 @@
 	if (!CONFIG_GET(flag/secure_chat_commands) || CONFIG_GET(flag/admin_legacy_system) || !SSdbcore.Connect())
 		return Validated_Run(sender, params)
 
-	var/discord_id = SSdiscord.get_discord_id_from_mention(sender.mention) || sender.id
+	var/discord_id = SSplexora.get_discord_id_from_mention(sender.mention) || sender.id
 	if (!discord_id)
 		return new /datum/tgs_message_content("Error: Unknown error trying to get your discord id.")
 
 	var/datum/admins/linked_admin
-	var/admin_ckey = ckey(SSdiscord.lookup_ckey(discord_id))
+	var/admin_ckey = ckey(SSplexora.lookup_ckey(discord_id))
 
 	if (admin_ckey)
 		linked_admin = GLOB.admin_datums[admin_ckey] || GLOB.deadmins[admin_ckey]

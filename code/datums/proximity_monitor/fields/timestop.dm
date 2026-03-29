@@ -203,11 +203,11 @@
 		freeze_atom(i)
 	freeze_turf(target)
 
-/datum/proximity_monitor/advanced/timestop/proc/freeze_projectile(obj/projectile/P)
-	P.paused = TRUE
+/datum/proximity_monitor/advanced/timestop/proc/freeze_projectile(obj/projectile/proj)
+	proj.paused = TRUE
 
-/datum/proximity_monitor/advanced/timestop/proc/unfreeze_projectile(obj/projectile/P)
-	P.paused = FALSE
+/datum/proximity_monitor/advanced/timestop/proc/unfreeze_projectile(obj/projectile/proj)
+	proj.paused = FALSE
 
 /datum/proximity_monitor/advanced/timestop/proc/freeze_mob(mob/living/victim)
 	frozen_mobs += victim
@@ -235,7 +235,7 @@
 
 //you don't look quite right, is something the matter?
 /datum/proximity_monitor/advanced/timestop/proc/into_the_negative_zone(atom/A)
-	A.add_atom_colour(list(-1,0,0,0, 0,-1,0,0, 0,0,-1,0, 0,0,0,1, 1,1,1,0), TEMPORARY_COLOUR_PRIORITY)
+	A.add_atom_colour(COLOR_MATRIX_INVERT, TEMPORARY_COLOUR_PRIORITY)
 
 //let's put some colour back into your cheeks
 /datum/proximity_monitor/advanced/timestop/proc/escape_the_negative_zone(atom/A)

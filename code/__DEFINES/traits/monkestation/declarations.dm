@@ -15,8 +15,6 @@
 // Genetics end
 /// Monkeys are friendly/neutral to this mob by defaulot.
 #define TRAIT_MONKEYFRIEND 	"monkeyfriend"
-/// User's stamina is over the STAMINA_EXHAUSTION_THRESHOLD.
-#define TRAIT_EXHAUSTED "exhausted"
 /// User is sprinting, full speed ahead.
 #define TRAIT_SPRINTING "sprinting"
 ///Slows the user, with additional effects based on the source.
@@ -69,6 +67,8 @@
 #define TRAIT_ZOMBIE_CONSUMED "zombie_consumed"
 /// Applied when blight is cured. Prevents getting blight again while present.
 #define TRAIT_REVENANT_BLIGHT_PROTECTION "revenant_blight_protection"
+/// Caused by temporary deafness, makes everyone sounds like they are whispering
+#define TRAIT_HARD_OF_HEARING "hard_of_hearing"
 
 // Traits related to food
 /// Trait for Fire Burps

@@ -34,8 +34,10 @@
 #define ROLE_ALIEN "Xenomorph"
 #define ROLE_BLOB "Blob"
 #define ROLE_BLOB_INFECTION "Blob Infection"
-#define ROLE_CHANGELING_MIDROUND "Changeling (Midround)"
+#define ROLE_CHANGELING_SPACE "Space Changeling"
+#define ROLE_FORBIDDENCALLING "Forbidden Calling"
 #define ROLE_FUGITIVE "Fugitive"
+#define ROLE_GENOMEAWAKENING "Genome Awakening"
 #define ROLE_LONE_OPERATIVE "Lone Operative"
 #define ROLE_MALF_MIDROUND "Malf AI (Midround)"
 #define ROLE_NIGHTMARE "Nightmare"
@@ -70,6 +72,7 @@
 #define ROLE_ANOMALY_GHOST "Ectoplasmic Anomaly Ghost"
 #define ROLE_BRAINWASHED "Brainwashed Victim"
 #define ROLE_DEATHSQUAD "Deathsquad"
+#define ROLE_DEVIL "Devil"
 #define ROLE_DRONE "Drone"
 #define ROLE_EMAGGED_BOT "Malfunctioning Bot"
 #define ROLE_HIVE "Hivemind Host" //Role removed, left here for safety.
@@ -165,7 +168,8 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_ALIEN = 0,
 	ROLE_BLOB = 0,
 	ROLE_BLOB_INFECTION = 0,
-	ROLE_CHANGELING_MIDROUND = 0,
+	ROLE_CHANGELING_SPACE = 0,
+	ROLE_GENOMEAWAKENING = 0,
 	ROLE_GLITCH = 0,
 	ROLE_FUGITIVE = 0,
 	ROLE_LONE_OPERATIVE = 14,
@@ -184,8 +188,10 @@ GLOBAL_LIST_INIT(special_roles, list(
 //monkestation edit start
 	ROLE_PLAGUERAT = 0,
 	ROLE_CORTICAL_BORER = 0,  // Module ID: CORTICAL_BORERS
+	ROLE_DEVIL = 0,
 	ROLE_DRIFTING_CONTRACTOR = 0,
 	ROLE_VAMPIRICACCIDENT = 0,
+	ROLE_FORBIDDENCALLING = 0,
 	ROLE_MONSTERHUNTER = 0,
 	ROLE_SLASHER = 0,
 	ROLE_FLORIDA_MAN = 0,
@@ -198,7 +204,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_DARKSPAWN_SCOUT = 0,
 	ROLE_DARKSPAWN_WARLOCK = 0,
 	ROLE_DARKSPAWN_ADMEME = 0,
-	ROLE_DARKSPAWN_DEPRIVED = 0,
+	ROLE_DARKSPAWN_CLASSLESS = 0,
 //monkestation edit end
 
 	// Latejoin
@@ -216,3 +222,11 @@ GLOBAL_LIST_INIT(special_roles, list(
 #define BEOVERFLOW 1
 #define BERANDOMJOB 2
 #define RETURNTOLOBBY 3
+
+#ifdef ROLE_VAMPIRE
+#define VAMPIRE_ANTAG_DATUM /datum/antagonist/vampire
+#define VAMPIRE_ROUNDSTART_EVENT /datum/round_event_control/antagonist/vampire/roundstart
+#else
+#define VAMPIRE_ANTAG_DATUM /datum/antagonist/bloodsucker
+#define VAMPIRE_ROUNDSTART_EVENT /datum/round_event_control/antagonist/bloodsucker/roundstart
+#endif

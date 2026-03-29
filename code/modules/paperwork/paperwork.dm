@@ -113,7 +113,7 @@
 //HEAD OF STAFF DOCUMENTS
 
 /obj/item/paperwork/cargo
-	stamp_requested = /obj/item/stamp/head/qm
+	stamp_requested = /obj/item/stamp/qm
 	stamp_job = /datum/job/quartermaster
 	stamp_icon = "paper_stamp-qm"
 

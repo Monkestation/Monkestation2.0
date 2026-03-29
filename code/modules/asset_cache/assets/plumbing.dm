@@ -35,7 +35,6 @@
 			"synthesizer_booze",
 			"tap_output",
 		),
-		/* monkestation start: xenobiology rework */
 		'monkestation/code/modules/slimecore/icons/machinery.dmi' = list(
 			"cross_compressor",
 			"ooze_sucker",
@@ -43,7 +42,10 @@
 		'monkestation/code/modules/slimecore/icons/slime_grinder.dmi' = list(
 			"slime_grinder_backdrop",
 		),
-		/* monkestation end */
+		'monkestation/icons/obj/structures/drains.dmi' = list(
+			"active_input",
+			"active_output",
+		),
 	)
 
 	for(var/icon_file in essentials)

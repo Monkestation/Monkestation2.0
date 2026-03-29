@@ -9,7 +9,7 @@
 
 	if(!internal_cell)
 		return FALSE
-	if(internal_cell.use(amount))
+	if(internal_cell.use(amount) || !amount) //no power to check, we made sure it can use power though.
 		return TRUE
 	if(!check_programs)
 		return FALSE
@@ -18,7 +18,7 @@
 		return TRUE
 	INVOKE_ASYNC(src, PROC_REF(close_all_programs))
 	for(var/datum/computer_file/program/programs as anything in stored_files)
-		if((programs.program_flags & PROGRAM_RUNS_WITHOUT_POWER) && open_program(program = programs))
+		if((programs.program_flags & PROGRAM_RUNS_WITHOUT_POWER) && open_program(program = programs, open_ui = FALSE))
 			return TRUE
 	return FALSE
 

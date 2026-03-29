@@ -294,6 +294,32 @@
 	acid = 80
 	wound = 20
 
+
+/obj/item/clothing/suit/armor/vest/secjacket
+	name = "security jacket"
+	desc = "A red jacket in red Security colors. It has hi-vis stripes all over it."
+	icon_state = "secjacket"
+	inhand_icon_state = "armor"
+	armor_type = /datum/armor/armor_secjacket
+	body_parts_covered = CHEST|GROIN|ARMS
+	resistance_flags = FLAMMABLE
+	dog_fashion = null
+
+/obj/item/clothing/suit/armor/vest/secjacket/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+	. = ..()
+	if(!isinhands)
+		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha)
+
+/datum/armor/armor_secjacket //Gotta compensate those extra covered limbs
+	melee = 25
+	bullet = 25
+	laser = 25
+	energy = 35
+	bomb = 20
+	fire = 30
+	acid = 30
+	wound = 5
+
 /obj/item/clothing/suit/armor/balloon_vest
 	name = "balloon vest"
 	desc = "A vest made entirely from balloons, resistant to any evil forces a mime could throw at you, including electricity and fire. Just a strike with something sharp, though..."

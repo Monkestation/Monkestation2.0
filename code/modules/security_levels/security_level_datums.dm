@@ -35,6 +35,8 @@
 	var/can_set_via_comms_console = FALSE
 	/// If FALSE, then the crew cannot change the alert during this alert.
 	var/can_crew_change_alert = TRUE
+	/// if TRUE, stops mail shipments from being sent during this security level
+	var/disables_mail = FALSE
 
 /datum/security_level/New()
 	. = ..()
@@ -88,6 +90,7 @@
 	lowering_to_configuration_key = /datum/config_entry/string/alert_red_downto
 	elevating_to_configuration_key = /datum/config_entry/string/alert_red_upto
 	shuttle_call_time_mod = 0.5
+	disables_mail = TRUE
 
 /**
  * DELTA
@@ -104,6 +107,7 @@
 	elevating_to_configuration_key = /datum/config_entry/string/alert_delta
 	shuttle_call_time_mod = 0.25
 	can_crew_change_alert = FALSE
+	disables_mail = TRUE
 
 // monkestation start
 /**
@@ -121,6 +125,7 @@
 	elevating_to_configuration_key = /datum/config_entry/string/alert_epsilon
 	shuttle_call_time_mod = 10 //nobody escapes the station
 	can_crew_change_alert = FALSE
+	disables_mail = TRUE
 
 /**
  * YELLOW
@@ -184,4 +189,5 @@
 	elevating_to_configuration_key = /datum/config_entry/string/alert_lambda
 	shuttle_call_time_mod = 0.25 //This is as bad as the nuke going off. Everyone is fucked.
 	can_crew_change_alert = FALSE
+	disables_mail = TRUE
 // monkestation end

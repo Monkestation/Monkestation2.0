@@ -69,9 +69,10 @@
 
 	var/datum/antagonist/changeling/changeling = owner.mind.has_antag_datum(/datum/antagonist/changeling)
 
-	for(var/memory_type in suckedbrain.memories)
-		var/datum/memory/stolen_memory = suckedbrain.memories[memory_type]
-		changeling.stolen_memories[stolen_memory.name] = stolen_memory.generate_story(STORY_CHANGELING_ABSORB, STORY_FLAG_NO_STYLE)
+	for(var/memory_type, memory_value in suckedbrain.memories)
+		var/datum/memory/stolen_memory = memory_value
+		if(stolen_memory)
+			changeling.stolen_memories[stolen_memory.name] = stolen_memory.generate_story(STORY_CHANGELING_ABSORB, STORY_FLAG_NO_STYLE)
 	suckedbrain.wipe_memory()
 
 	for(var/datum/antagonist/antagonist_datum as anything in suckedbrain.antag_datums)
@@ -152,7 +153,7 @@
 			speed_mult = held.suck_power
 		if(speed_mult > 1)
 			zucckynoises.start()
-		if(!do_after(owner, 15 / speed_mult SECONDS, target))
+		if(!do_after(owner, (15 / speed_mult) SECONDS, target, hidden = TRUE))
 			owner.balloon_alert(owner, "interrupted!")
 			zucckynoises.stop()
 			is_absorbing = FALSE

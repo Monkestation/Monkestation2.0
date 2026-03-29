@@ -73,6 +73,9 @@
 		if(!possible_target.assigned_role)
 			continue
 
+		if(possible_target.assigned_role.job_flags & JOB_CANNOT_BE_TARGET)
+			return FALSE
+
 		if(heads_of_staff)
 			if(!(possible_target.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND))
 				continue

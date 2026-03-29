@@ -436,7 +436,7 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/CanAttack(atom/the_target)
 	. = ..()
-	if(istype(the_target, /mob/living/basic/legion_brood)) //ignore temporary targets in favor of more permanent targets
+	if(istype(the_target, /mob/living/basic/mining/legion_brood)) //ignore temporary targets in favor of more permanent targets
 		return FALSE
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/GiveTarget(new_target)
@@ -466,7 +466,7 @@ Difficulty: Hard
 					burst_range = 3
 					INVOKE_ASYNC(src, PROC_REF(burst), get_turf(src), 0.25) //melee attacks on living mobs cause it to release a fast burst if on cooldown
 				OpenFire()
-				if(L.health <= HEALTH_THRESHOLD_DEAD && HAS_TRAIT(L, TRAIT_NODEATH)) //Nope, it still kills yall
+				if(L.health <= L.dead_threshold && HAS_TRAIT(L, TRAIT_NODEATH)) //Nope, it still kills yall
 					devour(L)
 			else
 				devour(L)
@@ -554,8 +554,8 @@ Difficulty: Hard
 	if(mover == caster.pulledby)
 		return
 	if(isprojectile(mover))
-		var/obj/projectile/P = mover
-		if(P.firer == caster)
+		var/obj/projectile/proj = mover
+		if(proj.firer == caster)
 			return
 	if(mover != caster)
 		return FALSE

@@ -127,7 +127,7 @@
 		return
 
 	// Heals all damage + Stamina
-	var/delta_time = DELTA_WORLD_TIME(SSmobs)
+	var/delta_time = DELTA_WORLD_TIME(SSclient_mobs)
 	var/needs_update = FALSE // Optimization, if nothing changes then don't update our owner's health.
 	needs_update += source.adjustBruteLoss(-2 * delta_time, updating_health = FALSE)
 	needs_update += source.adjustFireLoss(-2 * delta_time, updating_health = FALSE)
@@ -191,6 +191,7 @@
 		The heavy rust weights it down. You stare deeply into it. The Rusted Hills call for you, now."
 	next_knowledge = list(/datum/heretic_knowledge/spell/entropic_plume)
 	route = PATH_RUST
+	required_path = PATH_RUST
 
 /datum/heretic_knowledge/blade_upgrade/rust/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
 	// No user == target check here, cause it's technically good for the heretic?
@@ -247,7 +248,6 @@
 		// monkestation addition: pain system
 		TRAIT_ABATES_SHOCK,
 		TRAIT_ANALGESIA,
-		TRAIT_NO_PAIN_EFFECTS,
 		TRAIT_NO_SHOCK_BUILDUP,
 		// monkestation end
 	)
@@ -308,7 +308,7 @@
 	if(!HAS_TRAIT(our_turf, TRAIT_RUSTY))
 		return
 
-	var/delta_time = DELTA_WORLD_TIME(SSmobs)
+	var/delta_time = DELTA_WORLD_TIME(SSclient_mobs) // prolly safe to assume this will be a carbon mob
 	var/needs_update = FALSE
 	needs_update += source.adjustBruteLoss(-4 * delta_time, updating_health = FALSE)
 	needs_update += source.adjustFireLoss(-4 * delta_time, updating_health = FALSE)

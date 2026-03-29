@@ -1,6 +1,6 @@
 import { sortBy } from 'common/collections';
 import { useSharedState } from '../../backend';
-import { Button, Flex, Section, Tabs, Box } from '../../components';
+import { Box, Button, Flex, Section, Tabs } from '../../components';
 
 export const AccessList = (props) => {
   const {
@@ -217,7 +217,7 @@ export const FormatWildcards = (props) => {
         >
           Trim:
           <br />
-          {basicUsed + '/' + basicMax}
+          {`${basicUsed}/${basicMax}`}
         </Tabs.Tab>
       )}
 
@@ -236,7 +236,7 @@ export const FormatWildcards = (props) => {
             selected={selectedWildcard === wildcard}
             onClick={() => setWildcardTab(wildcard)}
           >
-            {wildcard + ':'}
+            {`${wildcard}:`}
             <br />
             {wcLeftStr}
           </Tabs.Tab>
@@ -314,7 +314,7 @@ const RegionAccessList = (props) => {
   );
 
   const allWildcards = Object.keys(wildcardSlots);
-  let wcAccess = {};
+  const wcAccess = {};
   allWildcards.forEach((wildcard) => {
     wildcardSlots[wildcard].usage.forEach((access) => {
       wcAccess[access] = wildcard;
@@ -335,7 +335,7 @@ const RegionAccessList = (props) => {
     const entryName =
       !wcAccess[id] && trimAccess.includes(id)
         ? entry.desc
-        : entry.desc + ' (' + accessFlagNames[accessFlags[id]] + ')';
+        : `${entry.desc} (${accessFlagNames[accessFlags[id]]})`;
 
     return (
       <Button.Checkbox

@@ -42,34 +42,42 @@
 //KNOCKDOWN
 /datum/status_effect/incapacitating/knockdown
 	id = "knockdown"
+	///Boolean that, if TRUE, will prevent the person getting this effect from dropping items.
+	var/prevent_drop = FALSE
 
 /datum/status_effect/incapacitating/knockdown/on_apply()
 	. = ..()
 	if(!.)
 		return
+
+	// anti-drop logic (for shuttle dock or tripped)
+	if(prevent_drop)
+		for(var/obj/item/held_item in owner.held_items)
+			ADD_TRAIT(held_item, TRAIT_NODROP, TRAIT_STATUS_EFFECT(id))
+
+	// Apply floored trait so the mob falls over
 	ADD_TRAIT(owner, TRAIT_FLOORED, TRAIT_STATUS_EFFECT(id))
+
+	// Clean up no-drop immediately after application
+	if(prevent_drop)
+		addtimer(CALLBACK(src, PROC_REF(clear_prevent_drop)), 0)
+
+/datum/status_effect/incapacitating/knockdown/proc/clear_prevent_drop()
+	for(var/obj/item/held_item in owner.held_items)
+		REMOVE_TRAIT(held_item, TRAIT_NODROP, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/incapacitating/knockdown/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_FLOORED, TRAIT_STATUS_EFFECT(id))
 	owner.knockdown_diminish = 1
 	return ..()
 
-// stupid subtype of knockdown for the sole purpose of not being considered a knockdown (to prevent shovestuns) but still having the same effects
+// cleaner tripped version — now uses prevent_drop flag instead of the hack
 /datum/status_effect/incapacitating/knockdown/tripped
 	id = "tripped"
 
 /datum/status_effect/incapacitating/knockdown/tripped/on_apply()
-	// this is a horrible hack to make it so tripping doesn't drop items.
-	// we just apply nodrop to their held items right before tripping them,
-	// and then immediately remove it after the status effect is applied.
-	// i'm sorry ~Lucy
-	var/list/stupid_horrible_list = list()
-	for(var/obj/item/item in owner.held_items)
-		ADD_TRAIT(item, TRAIT_NODROP, TRAIT_STATUS_EFFECT(id))
-		stupid_horrible_list += item
-	. = ..()
-	for(var/obj/item/item in stupid_horrible_list)
-		REMOVE_TRAIT(item, TRAIT_NODROP, TRAIT_STATUS_EFFECT(id))
+	prevent_drop = TRUE
+	return ..()
 
 //IMMOBILIZED
 /datum/status_effect/incapacitating/immobilized
@@ -424,9 +432,9 @@
 
 /datum/status_effect/stacking/saw_bleed/threshold_cross_effect()
 	owner.adjustBruteLoss(bleed_damage)
-	new /obj/effect/temp_visual/bleed/explode(owner.loc)
-	for(var/d in GLOB.alldirs)
-		owner.do_splatter_effect(d)
+	new /obj/effect/temp_visual/bleed/explode(get_turf(owner))
+	for(var/splatter_dir in GLOB.alldirs)
+		owner.create_splatter(splatter_dir)
 	playsound(owner, SFX_DESECRATION, 100, TRUE, -1)
 
 /datum/status_effect/stacking/saw_bleed/bloodletting
@@ -550,7 +558,7 @@
 	new/obj/effect/temp_visual/dir_setting/curse/grasp_portal(spawn_turf, owner.dir)
 	playsound(spawn_turf, 'sound/effects/curse2.ogg', 80, TRUE, -1)
 	var/obj/projectile/curse_hand/C = new (spawn_turf)
-	C.preparePixelProjectile(owner, spawn_turf)
+	C.aim_projectile(owner, spawn_turf)
 	C.fire()
 
 /obj/effect/temp_visual/curse
@@ -579,7 +587,7 @@
 	new/obj/effect/temp_visual/dir_setting/curse/grasp_portal(spawn_turf, owner.dir)
 	playsound(spawn_turf, pick('sound/effects/curse1.ogg','sound/effects/curse2.ogg','sound/effects/curse3.ogg'), 80, 1, -1)
 	var/obj/projectile/curse_hand/progenitor/pro = new (spawn_turf)
-	pro.preparePixelProjectile(owner, spawn_turf)
+	pro.aim_projectile(owner, spawn_turf)
 	pro.fire()
 
 /datum/status_effect/gonbola_pacify

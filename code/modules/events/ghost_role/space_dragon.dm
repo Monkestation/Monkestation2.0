@@ -10,6 +10,10 @@
 	description = "Spawns a space dragon, which will try to take over the station."
 	min_wizard_trigger_potency = 6
 	max_wizard_trigger_potency = 7
+	track = EVENT_TRACK_ROLESET
+	tags = list(TAG_COMBAT, TAG_SPACE, TAG_EXTERNAL, TAG_ALIEN, TAG_MAGICAL, TAG_OUTSIDER_ANTAG)
+	checks_antag_cap = TRUE
+	dont_spawn_near_roundend = TRUE
 
 /datum/round_event/ghost_role/space_dragon
 	minimum_required = 1

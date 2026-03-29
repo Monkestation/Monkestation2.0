@@ -25,10 +25,6 @@
 		return
 
 	switch(action)
-		if("mafia")
-			ui.close()
-			mafia()
-			return TRUE
 		if("ctf")
 			ui.close()
 			ctf()

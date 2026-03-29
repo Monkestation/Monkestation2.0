@@ -23,10 +23,8 @@
 	/// Traits applied during Frenzy.
 	var/static/list/frenzy_traits = list(
 		TRAIT_BATON_RESISTANCE,
-		TRAIT_DEAF,
 		TRAIT_DISCOORDINATED_TOOL_USER,
 		TRAIT_IGNOREDAMAGESLOWDOWN,
-		TRAIT_MUTE,
 		TRAIT_PUSHIMMUNE,
 		TRAIT_SLEEPIMMUNE,
 		TRAIT_STUNIMMUNE,
@@ -50,7 +48,7 @@
 	// Disable ALL Powers and notify their entry
 	bloodsuckerdatum.DisableAllPowers(forced = TRUE)
 	to_chat(owner, span_userdanger("Blood! You need Blood, now! You enter a total Frenzy!"))
-	to_chat(owner, span_announce("* Bloodsucker Tip: While in Frenzy, you instantly Aggresively grab, have stun resistance, cannot speak, hear, or use any powers outside of Feed and Trespass (If you have it)."))
+	to_chat(owner, span_announce("* Bloodsucker Tip: While in Frenzy, you instantly Aggresively grab, have stun resistance, but cannot use any powers outside of Feed and Trespass (If you have it)."))
 	owner.balloon_alert(owner, "you enter a frenzy!")
 	SEND_SIGNAL(bloodsuckerdatum, COMSIG_BLOODSUCKER_ENTERS_FRENZY)
 

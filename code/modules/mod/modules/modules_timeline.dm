@@ -173,7 +173,7 @@
 		//phasing out
 		mod.visible_message(span_warning("[mod.wearer] leaps out of the timeline!"))
 		mod.wearer.SetAllImmobility(0)
-		mod.wearer.setStaminaLoss(0, 0)
+		mod.wearer.stamina.revitalize()
 		phased_mob = new(get_turf(mod.wearer.loc), mod.wearer)
 		RegisterSignal(mod, COMSIG_MOD_ACTIVATE, PROC_REF(on_activate_block))
 	else
@@ -225,7 +225,7 @@
 	//fire projectile
 	var/obj/projectile/energy/chrono_beam/chrono_beam = new /obj/projectile/energy/chrono_beam(get_turf(src))
 	chrono_beam.tem_weakref = WEAKREF(src)
-	chrono_beam.preparePixelProjectile(target, mod.wearer)
+	chrono_beam.aim_projectile(target, mod.wearer)
 	chrono_beam.firer = mod.wearer
 	playsound(src, 'sound/items/modsuit/time_anchor_set.ogg', 50, TRUE)
 	INVOKE_ASYNC(chrono_beam, TYPE_PROC_REF(/obj/projectile, fire))

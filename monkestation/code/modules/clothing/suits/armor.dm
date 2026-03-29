@@ -4,7 +4,7 @@
 	icon_state = "security_rigvest"
 
 /obj/item/clothing/suit/armor/centcom_admiral
-	name = "\improper CentCom Admiral's"
+	name = "\improper CentCom Admiral's coat"
 	desc = "Perfect for hiding a spare pistol under."
 	icon_state = "admiral"
 	inhand_icon_state = "centcom"

@@ -77,11 +77,12 @@
 		/obj/item/switchblade,
 		/obj/item/boxcutter,
 		/obj/item/pen,
+		/obj/item/flashlight/pen,
 		/obj/item/scalpel,
 		/obj/item/dnainjector,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/reagent_containers/pill,
-		/obj/item/reagent_containers/hypospray/medipen,
+		/obj/item/reagent_containers/medipen,
 		/obj/item/reagent_containers/dropper,
 		/obj/item/implanter,
 		/obj/item/screwdriver,
@@ -102,7 +103,7 @@
 		/obj/item/toy/crayon,
 		/obj/item/reagent_containers/cup/glass/flask),
 		list(/obj/item/screwdriver/power,
-		/obj/item/ammo_casing/caseless/rocket,
+		/obj/item/ammo_casing/rocket,
 		/obj/item/clothing/mask/cigarette/pipe,
 		/obj/item/toy/crayon/spraycan)
 		)
@@ -117,7 +118,7 @@
 		/obj/item/scalpel,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/dnainjector,
-		/obj/item/reagent_containers/hypospray/medipen,
+		/obj/item/reagent_containers/medipen,
 		/obj/item/reagent_containers/dropper,
 		/obj/item/implanter,
 		/obj/item/screwdriver,
@@ -137,7 +138,7 @@
 		/obj/item/bikehorn,
 		/obj/item/reagent_containers/cup/glass/flask),
 		list(/obj/item/screwdriver/power,
-		/obj/item/ammo_casing/caseless/rocket,
+		/obj/item/ammo_casing/rocket,
 		/obj/item/clothing/mask/cigarette/pipe,
 		/obj/item/toy/crayon/spraycan)
 		)

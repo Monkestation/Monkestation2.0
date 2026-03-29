@@ -61,7 +61,7 @@
 /datum/heretic_knowledge/knock_grasp/proc/on_mansus_grasp(mob/living/source, mob/living/target)
 	SIGNAL_HANDLER
 	var/obj/item/clothing/under/suit = target.get_item_by_slot(ITEM_SLOT_ICLOTHING)
-	if(istype(suit) && suit.adjusted == NORMAL_STYLE)
+	if(istype(suit) && suit.adjusted == NORMAL_STYLE && suit.can_adjust)
 		suit.toggle_jumpsuit_adjust()
 		suit.update_appearance()
 
@@ -122,12 +122,12 @@
 
 /datum/heretic_knowledge/limited_amount/rite_of_passage // item that creates 3 max at a time heretic only barriers, probably should limit to 1 only, holy people can also pass
 	name = "Rite Of Passage"
-	desc = "Allows you to transmute a crayon, a wooden plank, and a multitool to create a Consecrated Book. \
+	desc = "Allows you to transmute a crayon, a book, and a multitool to create a Consecrated Book. \
 		It can materialize a barricade at range that only you and people resistant to magic can pass. 3 uses."
 	gain_text = "With this I can repel those that intend me harm."
 	required_atoms = list(
 		/obj/item/toy/crayon = 1, //monkestation edit crayon/white ==> crayon (i checked the game code for this and i can't find a consistant spawn for it other than detective pockets)
-		/obj/item/stack/sheet/mineral/wood = 1,
+		/obj/item/book = 1,
 		/obj/item/multitool = 1,
 	)
 	result_atoms = list(/obj/item/heretic_lintel)
@@ -171,6 +171,7 @@
 	gain_text = "The power of my patron courses through my blade, willing their very flesh to part."
 	next_knowledge = list(/datum/heretic_knowledge/spell/caretaker_refuge)
 	route = PATH_KNOCK
+	required_path = PATH_KNOCK
 	wound_type = /datum/wound/slash/flesh/critical
 	var/chance = 35
 

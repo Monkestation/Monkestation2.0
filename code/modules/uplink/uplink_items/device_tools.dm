@@ -207,7 +207,7 @@
 	name = "Stimpack"
 	desc = "Stimpacks, the tool of many great heroes, make you nearly immune to stuns and knockdowns for about \
 			5 minutes after injection."
-	item = /obj/item/reagent_containers/hypospray/medipen/stimulants
+	item = /obj/item/reagent_containers/medipen/stimulants
 	cost = 5
 	surplus = 90
 
@@ -270,4 +270,16 @@
 	name = "Syndicate Climbing Hook"
 	desc = "High-tech rope, a refined hook structure, the peak of climbing technology. Only useful for climbing up holes, provided the operation site has any."
 	item = /obj/item/climbing_hook/syndicate
+	cost = 1
+
+/datum/uplink_item/device_tools/syndicate_hypospray
+	name = "Syndicate Hypospray"
+	desc = "A advanced hypospray, used to inject chemicals into yourself or other people, based off of stolen designs. Capable of loading large vials, and piercing armor."
+	item = /obj/item/hypospray/combat
+	cost = 3
+
+/datum/uplink_item/device_tools/syndicate_hypospray
+	name = "Syndicate Combat Hypospray Vials"
+	desc = "A box containing 6 bluespace vials, and a beaker full of premixed healing chems."
+	item = /obj/item/storage/box/evilmeds/evilhypos
 	cost = 1

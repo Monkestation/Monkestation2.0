@@ -8,6 +8,11 @@
 	description = "Spawns a nightmare, aiming to darken the station."
 	min_wizard_trigger_potency = 6
 	max_wizard_trigger_potency = 7
+	track = EVENT_TRACK_MAJOR
+	tags = list(TAG_COMBAT, TAG_SPOOKY, TAG_EXTERNAL, TAG_ALIEN, TAG_OUTSIDER_ANTAG)
+	checks_antag_cap = TRUE
+	dont_spawn_near_roundend = TRUE
+	repeated_mode_adjust = TRUE
 
 /datum/round_event/ghost_role/nightmare
 	minimum_required = 1

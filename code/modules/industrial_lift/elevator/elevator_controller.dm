@@ -35,7 +35,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/elevator, 32)
 
 	lift_weakref = WEAKREF(lift)
 
-/obj/item/assembly/control/elevator/LateInitialize()
+/obj/item/assembly/control/elevator/LateInitialize(mapload_arg)
 	var/datum/lift_master/lift = get_lift()
 	if(!lift)
 		log_mapping("Elevator call button at [AREACOORD(src)] found no associated lift to link with, this may be a mapping error.")

@@ -173,7 +173,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 			message_range = 1
 			log_talk(message, LOG_WHISPER, forced_by = forced, custom_say_emote = message_mods[MODE_CUSTOM_SAY_EMOTE])
 			if(stat == HARD_CRIT)
-				var/health_diff = round(-HEALTH_THRESHOLD_DEAD + health)
+				var/health_diff = round(-dead_threshold + health)
 				// If we cut our message short, abruptly end it with a-..
 				var/message_len = length_char(message)
 				message = copytext_char(message, 1, health_diff) + "[message_len > health_diff ? "-.." : "..."]"
@@ -260,12 +260,23 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		return FALSE
 	if(!GET_CLIENT(src))
 		return
-	//monkestation edit
-	if(radio_freq && can_hear())
-		var/atom/movable/virtualspeaker/V = speaker
-		if(isAI(V.source))
-			playsound_local(get_turf(src), 'goon/sounds/misc/talk/radio_ai.ogg', 170, 1, 0, 0, pressure_affected = FALSE, use_reverb = FALSE, mixer_channel = CHANNEL_MOB_SOUNDS)
-	//monkestation edit end
+	if((client?.prefs?.channel_volume["[CHANNEL_VOX]"]) && (radio_freq && (radio_freq == FREQ_COMMON || radio_freq < MIN_FREQ)) && can_hear())
+		var/atom/movable/virtualspeaker/vspeaker = speaker
+		if(isAI(vspeaker.source))
+			playsound_local(
+				get_turf(src),
+				'goon/sounds/misc/talk/radio_ai.ogg',
+				vol = 170,
+				vary = TRUE,
+				channel = CHANNEL_VOX,
+				pressure_affected = FALSE,
+				use_reverb = FALSE,
+			)
+
+	if (HAS_TRAIT(src, TRAIT_HARD_OF_HEARING) && !HAS_TRAIT(speaker, TRAIT_SIGN_LANG))
+		message_range = 1
+		spans = spans?.Copy() || list()
+		spans |= SPAN_ITALICS
 
 	var/deaf_message
 	var/deaf_type

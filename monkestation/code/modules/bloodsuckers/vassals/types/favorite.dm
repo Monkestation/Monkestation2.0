@@ -8,8 +8,7 @@
 	show_in_antagpanel = FALSE
 	antag_hud_name = "vassal6"
 	special_type = FAVORITE_VASSAL
-	vassal_description = "The Favorite Vassal gets unique abilities over other Vassals depending on your Clan \
-		and becomes completely immune to Mindshields. If part of Ventrue, this is the Vassal you will rank up."
+	vassal_description = "The Favorite Vassal gets unique abilities over other Vassals depending on your Clan. If part of Ventrue, this is the Vassal you will rank up."
 
 	///Bloodsucker levels, but for Vassals, used by Ventrue.
 	var/vassal_level
@@ -18,13 +17,9 @@
 	. = ..()
 	SEND_SIGNAL(master, COMSIG_BLOODSUCKER_MAKE_FAVORITE, src)
 
-/datum/antagonist/vassal/favorite/pre_mindshield(mob/implanter, mob/living/mob_override)
-	return COMPONENT_MINDSHIELD_RESISTED
-
-///Set the Vassal's rank to their Bloodsucker level, and transfer all abilities to the Bloodsucker level.
-/datum/antagonist/vassal/favorite/proc/set_vassal_level(datum/antagonist/bloodsucker/vassal_bloodsucker_datum)
-	for(var/datum/action/cooldown/bloodsucker/bloodsucker_powers as anything in powers)
-		powers -= bloodsucker_powers
-		vassal_bloodsucker_datum.powers += bloodsucker_powers
-		bloodsucker_powers.bloodsuckerdatum_power = vassal_bloodsucker_datum
-	vassal_bloodsucker_datum.bloodsucker_level = vassal_level
+///Transfers the vassals powers to the new bloodsucker datum
+/datum/antagonist/vassal/favorite/proc/transfer_vassal_powers(datum/antagonist/bloodsucker/vassal_bloodsucker_datum)
+	for(var/datum/action/cooldown/bloodsucker/bloodsucker_power as anything in powers)
+		RemovePower(bloodsucker_power)
+		vassal_bloodsucker_datum.BuyPower(bloodsucker_power)
+		bloodsucker_power.bloodsuckerdatum_power = vassal_bloodsucker_datum

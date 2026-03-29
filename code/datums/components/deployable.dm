@@ -18,7 +18,7 @@
 	/// If the item used to deploy gets deleted on use or not
 	var/delete_on_use = TRUE
 
-/datum/component/deployable/Initialize(deploy_time, thing_to_be_deployed, delete_on_use = TRUE)
+/datum/component/deployable/Initialize(deploy_time, obj/thing_to_be_deployed, delete_on_use = TRUE)
 	. = ..()
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -27,11 +27,14 @@
 	src.thing_to_be_deployed = thing_to_be_deployed
 	src.delete_on_use = delete_on_use
 
+	deployed_name = thing_to_be_deployed::name
+
+/datum/component/deployable/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(examine))
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(on_attack_hand))
 
-	var/obj/item/typecast = thing_to_be_deployed
-	deployed_name = initial(typecast.name)
+/datum/component/deployable/UnregisterFromParent()
+	UnregisterSignal(parent, list(COMSIG_ATOM_EXAMINE, COMSIG_ITEM_ATTACK_SELF))
 
 /datum/component/deployable/proc/examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
@@ -68,7 +71,7 @@
 
 	//Sets the integrity of the new deployed machine to that of the object it came from
 	deployed_object.modify_max_integrity(source.max_integrity)
-	deployed_object.update_icon_state()
+	deployed_object.update_appearance()
 
 	if(delete_on_use)
 		qdel(source)

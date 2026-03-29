@@ -21,7 +21,7 @@
 	changeling.chosen_sting = src
 
 	changeling.lingstingdisplay.icon_state = button_icon_state
-	changeling.lingstingdisplay.invisibility = 0
+	changeling.lingstingdisplay.SetInvisibility(INVISIBILITY_NONE, id=type)
 
 /datum/action/changeling/sting/proc/unset_sting(mob/user)
 	to_chat(user, span_warning("We retract our sting, we can't sting anyone for now."))
@@ -29,7 +29,7 @@
 	changeling.chosen_sting = null
 
 	changeling.lingstingdisplay.icon_state = null
-	changeling.lingstingdisplay.invisibility = INVISIBILITY_ABSTRACT
+	changeling.lingstingdisplay.RemoveInvisibility(type)
 
 /mob/living/carbon/proc/unset_sting()
 	if(mind)
@@ -68,11 +68,14 @@
 	desc = "We silently sting an organism, injecting a retrovirus that forces them to transform."
 	helptext = "The victim will transform much like a changeling would. \
 		For complex humanoids, the transformation only lasts 8 minutes, but the duration is paused while the victim is dead or in stasis. \
+		Mutadone can be used to reduce the duration. \
 		For more simple humanoids, such as monkeys, the transformation is permanent. \
 		Does not provide a warning to others. Mutations will not be transferred." // monkestation edit
 	button_icon_state = "sting_transform"
 	chemical_cost = 33 // Low enough that you can sting only two people in quick succession
 	dna_cost = 2
+	req_absorbs = 1
+	weird = TRUE
 	/// A reference to our active profile, which we grab DNA from
 	VAR_FINAL/datum/changeling_profile/selected_dna
 	/// Duration of the sting
@@ -113,6 +116,7 @@
 		|| HAS_TRAIT(target, TRAIT_HUSK) \
 		|| HAS_TRAIT(target, TRAIT_BADDNA) \
 		|| HAS_TRAIT(target, TRAIT_NO_TRANSFORMATION_STING) \
+		|| HAS_TRAIT(target, TRAIT_SPECIESLOCK) \
 		|| (HAS_TRAIT(target, TRAIT_NO_DNA_COPY) && !ismonkeybasic(target))) // sure, go ahead, make a monk-clone
 		user.balloon_alert(user, "incompatible DNA!")
 		return FALSE
@@ -228,6 +232,7 @@
 	button_icon_state = "sting_blind"
 	chemical_cost = 25
 	dna_cost = 1
+	weird = TRUE
 
 /datum/action/changeling/sting/blind/sting_action(mob/user, mob/living/carbon/target)
 	var/obj/item/organ/internal/eyes/eyes = target.get_organ_slot(ORGAN_SLOT_EYES)
@@ -245,21 +250,21 @@
 /datum/action/changeling/sting/lsd
 	name = "Hallucination Sting"
 	desc = "We cause mass terror to our victim. Costs 10 chemicals."
-	helptext = "We evolve the ability to sting a target with a powerful hallucinogenic chemical. \
-			The target does not notice they have been stung, and the effect occurs after 30 to 60 seconds."
+	helptext = "We evolve the ability to sting a target with a powerful hallucinogenic chemical that focuses in the eyes. \
+			The target does not notice they have been stung, and the effect occurs after 10 to 15 seconds, obscuring their view of other people."
 	button_icon_state = "sting_lsd"
 	chemical_cost = 10
 	dna_cost = 1
 
 /datum/action/changeling/sting/lsd/sting_action(mob/user, mob/living/carbon/target)
 	log_combat(user, target, "stung", "LSD sting")
-	addtimer(CALLBACK(src, PROC_REF(hallucination_time), target), rand(30 SECONDS, 60 SECONDS))
+	addtimer(CALLBACK(src, PROC_REF(hallucination_time), target), rand(10 SECONDS, 15 SECONDS))
 	return TRUE
 
 /datum/action/changeling/sting/lsd/proc/hallucination_time(mob/living/carbon/target)
 	if(QDELETED(src) || QDELETED(target))
 		return
-	target.adjust_hallucinations(180 SECONDS)
+	target.cause_hallucination(/datum/hallucination/delusion/preset/changeling, "changeling sting", duration = 15 SECONDS, affects_us = TRUE, affects_others = TRUE)
 
 /datum/action/changeling/sting/cryo
 	name = "Cryogenic Sting"
@@ -269,8 +274,8 @@
 	chemical_cost = 15
 	dna_cost = 2
 
-/datum/action/changeling/sting/cryo/sting_action(mob/user, mob/target)
+/datum/action/changeling/sting/cryo/sting_action(mob/user, mob/living/target)
 	log_combat(user, target, "stung", "cryo sting")
-	if(target.reagents)
-		target.reagents.add_reagent(/datum/reagent/consumable/frostoil, 30)
+	if(isliving(target))
+		target.apply_status_effect(/datum/status_effect/bloodchill/changeling)
 	return TRUE

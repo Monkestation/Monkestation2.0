@@ -47,30 +47,32 @@
 /datum/component/crate_carrier/proc/on_unarm_attack(mob/living/source, atom/target, proximity, modifiers)
 	SIGNAL_HANDLER
 
-	if((source.istate & ISTATE_HARM))
+	if(!(source.istate & (ISTATE_SECONDARY | ISTATE_HARM)))
 		return
 
 	if(is_type_in_typecache(target, carriable_cache))
 		var/atom/movable/movable_target = target
 		if(LAZYLEN(crates_in_hand) >= crate_limit)
 			source.balloon_alert(source, "too many crates!")
-			return COMPONENT_CANCEL_ATTACK_CHAIN
+			return COMPONENT_NO_AFTERATTACK
 
 		for(var/mob/living/inside_mob in movable_target.get_all_contents())
 			if(inside_mob.mob_size < MOB_SIZE_HUMAN)
 				continue
 			source.balloon_alert(source, "crate too heavy!")
-			return COMPONENT_CANCEL_ATTACK_CHAIN
+			return COMPONENT_NO_AFTERATTACK
 
 		LAZYADD(crates_in_hand, target)
 		movable_target.forceMove(source)
 		source.balloon_alert(source, "grabbed crate")
-		return COMPONENT_CANCEL_ATTACK_CHAIN
+		return COMPONENT_NO_AFTERATTACK
 
 	if(isopenturf(target) && LAZYLEN(crates_in_hand))
-		drop_all_crates(target)
+		var/obj/structure/closet/crate/held_crate = crates_in_hand[1]
+		held_crate.forceMove(target)
+		LAZYREMOVE(crates_in_hand, held_crate)
 		source.balloon_alert(source, "dropped crate")
-		return COMPONENT_CANCEL_ATTACK_CHAIN
+		return COMPONENT_NO_AFTERATTACK
 
 /// Signal proc for [COMSIG_LIVING_DEATH], so we drop crates on death or gib
 /datum/component/crate_carrier/proc/on_death(mob/living/source, gibbed)

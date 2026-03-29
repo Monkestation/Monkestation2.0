@@ -1,10 +1,8 @@
-#define SKIRTS_DRESSES_DIGIFILE 'monkestation/code/modules/blueshift/icons/mob/clothing/under/skirts_dresses_digi.dmi'
 
 /obj/item/clothing/under/dress
 	body_parts_covered = CHEST|GROIN	//For reference
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY //For reference - We dont want to cut a random hole in dresses
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON	//For reference - keep in mind some dresses will need adjusted for digi thighs - hence the link below
-	worn_icon_digitigrade = SKIRTS_DRESSES_DIGIFILE
 
 	//God bless the skirt being a subtype of the dress, only need one worn_digi_icon definition
 
@@ -16,17 +14,9 @@
 	icon_state = "long_skirt"
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/under/skirts_dresses.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/skirts_dresses.dmi'
+	body_parts_covered = GROIN|LEGS
 
 //TG's icons only have a dress.dmi, but that means its not ABC-sorted to be beside shorts_pants_shirts.dmi. So its skirts_dresses for us.
-
-/*
- *	TG DIGI VERSION DRESSES
- */
-/obj/item/clothing/under/dress/striped
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
-
-/obj/item/clothing/under/dress/skirt/plaid
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 
 /*
  *	Skirts
@@ -47,7 +37,6 @@
 	icon_state = "striped_skirt"
 	body_parts_covered = CHEST|GROIN|LEGS
 	can_adjust = TRUE
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 	greyscale_config = null
 	greyscale_config_worn = null
 	greyscale_colors = null
@@ -58,7 +47,6 @@
 	icon_state = "red_skirt"
 	body_parts_covered = CHEST|GROIN|LEGS
 	can_adjust = TRUE
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 	greyscale_config = null
 	greyscale_config_worn = null
 	greyscale_colors = null
@@ -69,7 +57,6 @@
 	icon_state = "black_skirt"
 	body_parts_covered = CHEST|GROIN|LEGS
 	can_adjust = TRUE
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 	greyscale_config = null
 	greyscale_config_worn = null
 	greyscale_colors = null
@@ -85,18 +72,18 @@
 	flags_1 = IS_PLAYER_COLORABLE_1
 	can_adjust = TRUE
 	alt_covers_chest = TRUE
+	body_parts_covered = CHEST|ARMS|GROIN
 
 /obj/item/clothing/under/dress/skirt/nova/jean
 	name = "jean skirt"
 	desc = "Technically, is there much difference between these and jorts? It's just one big hole instead of two. Does that make this a jirt?"
 	icon_state = "jean_skirt"
 	female_sprite_flags = NO_FEMALE_UNIFORM
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 	greyscale_config = /datum/greyscale_config/jean_skirt
 	greyscale_config_worn = /datum/greyscale_config/jean_skirt/worn
-	greyscale_config_worn_digitigrade =  /datum/greyscale_config/jean_skirt/worn/digi
 	greyscale_colors = "#787878#723E0E#4D7EAC"
 	flags_1 = IS_PLAYER_COLORABLE_1
+	body_parts_covered = GROIN|LEGS
 
 /obj/item/clothing/under/dress/skirt/nova/lone_skirt
 	name = "skirt"
@@ -143,6 +130,7 @@
 	greyscale_config_worn = /datum/greyscale_config/short_dress/worn
 	greyscale_colors = "#ff3636#363030"
 	flags_1 = IS_PLAYER_COLORABLE_1
+	body_parts_covered = CHEST|GROIN|LEGS
 
 /obj/item/clothing/under/dress/nova/pinktutu
 	name = "pink tutu"
@@ -153,7 +141,7 @@
 	name = "flower dress"
 	desc = "Lovely dress. Colored like the autumn leaves."
 	icon_state = "flower_dress"
-	body_parts_covered = CHEST|GROIN|LEGS
+	body_parts_covered = GROIN|LEGS
 
 /obj/item/clothing/under/dress/nova/redformal
 	name = "formal red dress"
@@ -195,4 +183,3 @@
 	icon_state = "jute"
 	body_parts_covered = CHEST|GROIN|LEGS
 	can_adjust = TRUE
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION

@@ -45,7 +45,7 @@
 		if("strength")
 			chosen_level = clamp(params["target"], 0, max_shock)
 			. = TRUE
-			active_power_usage = chosen_level * 5
+			active_power_usage = chosen_level * 5 KILO JOULES
 			return
 		if("shock")
 			shock()

@@ -17,7 +17,7 @@
 			breathing = FALSE
 			ADD_TRAIT(mob, TRAIT_NOBREATH, DISEASE_TRAIT)
 
-/datum/symptom/oxygen/deactivate(mob/living/carbon/mob, datum/disease/acute/disease)
+/datum/symptom/oxygen/deactivate(mob/living/carbon/mob, datum/disease/acute/disease, safe = FALSE)
 	if(!breathing)
 		breathing = TRUE
 		REMOVE_TRAIT(mob, TRAIT_NOBREATH, DISEASE_TRAIT)

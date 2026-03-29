@@ -9,8 +9,18 @@
 	ricochet_auto_aim_range = 3
 	wound_bonus = -20
 	bare_wound_bonus = 10
-	embedding = list(embed_chance=25, fall_chance=2, jostle_chance=2, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.4, pain_mult=3, jostle_pain_mult=5, rip_time=1 SECONDS)
+	embed_type = /datum/embedding/n762
 	embed_falloff_tile = -4
+
+/datum/embedding/n762
+	embed_chance = 25
+	fall_chance = 2
+	jostle_chance = 2
+	ignore_throwspeed_threshold = TRUE
+	pain_stam_pct = 0.4
+	pain_mult = 3
+	jostle_pain_mult = 5
+	rip_time = 1 SECONDS
 
 // .50AE (Desert Eagle)
 
@@ -29,8 +39,18 @@
 	ricochet_auto_aim_range = 3
 	wound_bonus = -20
 	bare_wound_bonus = 10
-	embedding = list(embed_chance=25, fall_chance=2, jostle_chance=2, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.4, pain_mult=3, jostle_pain_mult=5, rip_time=1 SECONDS)
+	embed_type = /datum/embedding/bullet_c38
 	embed_falloff_tile = -4
+
+/datum/embedding/bullet_c38
+	embed_chance = 25
+	fall_chance = 2
+	jostle_chance = 2
+	ignore_throwspeed_threshold = TRUE
+	pain_stam_pct = 0.4
+	pain_mult = 3
+	jostle_pain_mult = 5
+	rip_time = 1 SECONDS
 
 /obj/projectile/bullet/c38/match
 	name = ".38 Match bullet"
@@ -45,7 +65,7 @@
 /obj/projectile/bullet/c38/match/bouncy
 	name = ".38 Rubber bullet"
 	damage = 10
-	stamina = 40 //30 to 40 monkestation edit
+	stamina = 25
 	weak_against_armour = TRUE
 	ricochets_max = 6
 	ricochet_incidence_leeway = 0
@@ -53,7 +73,7 @@
 	ricochet_decay_damage = 1 //0.8 to 1 monkestation edit let them have fun
 	shrapnel_type = null
 	sharpness = NONE
-	embedding = null
+	embed_type = null
 
 // premium .38 ammo from cargo, weak against armor, lower base damage, but excellent at embedding and causing slice wounds at close range
 /obj/projectile/bullet/c38/dumdum
@@ -64,9 +84,19 @@
 	sharpness = SHARP_EDGED
 	wound_bonus = 20
 	bare_wound_bonus = 20
-	embedding = list(embed_chance=75, fall_chance=3, jostle_chance=4, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.4, pain_mult=5, jostle_pain_mult=6, rip_time=1 SECONDS)
+	embed_type = /datum/embedding/bullet_c38_dumdum
 	wound_falloff_tile = -5
 	embed_falloff_tile = -15
+
+/datum/embedding/bullet_c38_dumdum
+	embed_chance = 75
+	fall_chance = 3
+	jostle_chance = 4
+	ignore_throwspeed_threshold = TRUE
+	pain_stam_pct = 0.4
+	pain_mult = 5
+	jostle_pain_mult = 6
+	rip_time = 1 SECONDS
 
 /obj/projectile/bullet/c38/trac
 	name = ".38 TRAC bullet"
@@ -135,10 +165,10 @@
 /obj/projectile/bullet/g45l/rubber
 	name = ".45 Long rubber bullet"
 	damage = 5
-	stamina = 35
+	stamina = 17.5
 	weak_against_armour = TRUE
 	sharpness = NONE
-	embedding = null
+	embed_type = null
 
 /obj/projectile/bullet/g45l
 	name = ".45 Long bullet"
@@ -146,14 +176,24 @@
 	weak_against_armour = TRUE // High fire rate
 	wound_bonus = -10
 	sharpness = SHARP_EDGED
-	embedding = list(embed_chance=25, fall_chance=2, jostle_chance=2, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.4, pain_mult=3, jostle_pain_mult=5, rip_time=1 SECONDS)
+	embed_type = /datum/embedding/g45l
 
+/datum/embedding/g45l
+	embed_chance = 25
+	fall_chance = 2
+	jostle_chance = 2
+	ignore_throwspeed_threshold = TRUE
+	pain_stam_pct = 0.4
+	pain_mult = 3
+	jostle_pain_mult = 5
+	rip_time = 1 SECONDS
 
 //.45-70, mining revolver
 
 /obj/projectile/bullet/govmining
 	name = ".45-70 Gov Kinetic Bullet"
-	damage = 75 //four shots to kill a goliath
+	damage = 25
+	fauna_mod = 3 //four shots to kill a goliath
 
 /obj/projectile/bullet/govmining/on_hit(atom/target, Firer, blocked = 0, pierce_hit) //its not meant to tear through walls like a plasma cutter, but will still at least bust down a wall if it hits one.
 	if(ismineralturf(target))
@@ -162,4 +202,12 @@
 	. = ..()
 
 
+// .500 (Admin only)
 
+/obj/projectile/bullet/a500
+	name = ".500 Magnum bullet"
+	damage = 75
+	wound_bonus = 50
+	paralyze = 5
+	dismemberment = 50
+	catastropic_dismemberment = TRUE

@@ -10,7 +10,7 @@
 		return
 
 	if(victim != attacker)
-		if(!do_after(attacker, 5 SECONDS, victim))
+		if(!do_after(attacker, 5 SECONDS, victim, hidden = TRUE))
 			return
 		attacker.visible_message(
 			span_notice("[attacker] forces [victim] to drink from \the [src]."),
@@ -19,7 +19,7 @@
 		playsound(victim.loc, 'sound/items/drink.ogg', vol = 30, vary = TRUE)
 		return TRUE
 
-	while(do_after(victim, 1 SECONDS, victim, timed_action_flags = IGNORE_USER_LOC_CHANGE, extra_checks = CALLBACK(src, PROC_REF(can_drink), victim, attacker)))
+	while(do_after(victim, 1 SECONDS, victim, timed_action_flags = IGNORE_USER_LOC_CHANGE, extra_checks = CALLBACK(src, PROC_REF(can_drink), victim, attacker), hidden = TRUE))
 		victim.visible_message(
 			span_notice("[victim] puts \the [src] up to [victim.p_their()] mouth."),
 			span_notice("You take a sip from \the [src]."),
@@ -104,20 +104,23 @@
 	icon_state = "wood"
 	inhand_icon_state = "wood"
 	lefthand_file = 'monkestation/icons/bloodsuckers/bloodsucker_lefthand.dmi'
-	righthand_file = 'monkestation/icons/bloodsuckers/bloodsucker_lefthand.dmi'
+	righthand_file = 'monkestation/icons/bloodsuckers/bloodsucker_righthand.dmi'
 	slot_flags = ITEM_SLOT_POCKETS
 	w_class = WEIGHT_CLASS_SMALL
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("staked", "stabbed", "tore into")
 	attack_verb_simple = list("staked", "stabbed", "tore into")
 	sharpness = SHARP_EDGED
-	embedding = list("embed_chance" = 20)
+	embed_type = /datum/embedding/stake
 	force = 6
 	throwforce = 10
 	max_integrity = 30
 
 	///Time it takes to embed the stake into someone's chest.
 	var/staketime = 12 SECONDS
+
+/datum/embedding/stake
+	embed_chance = 20
 
 /obj/item/stake/attack(mob/living/target, mob/living/user, params)
 	. = ..()
@@ -145,7 +148,7 @@
 		span_danger("You drive the [src] into [target]'s chest!"),
 	)
 	playsound(get_turf(target), 'sound/effects/splat.ogg', 40, 1)
-	if(tryEmbed(target.get_bodypart(BODY_ZONE_CHEST), TRUE, TRUE)) //and if it embeds successfully in their chest, cause a lot of pain
+	if(force_embed(target, target.get_bodypart(BODY_ZONE_CHEST))) //and if it embeds successfully in their chest, cause a lot of pain
 		target.apply_damage(max(10, force * 1.2), BRUTE, BODY_ZONE_CHEST, wound_bonus = 0, sharpness = TRUE)
 	if(QDELETED(src)) // in case trying to embed it caused its deletion (say, if it's DROPDEL)
 		return
@@ -177,8 +180,11 @@
 	force = 8
 	throwforce = 12
 	armour_penetration = 10
-	embedding = list("embed_chance" = 35)
+	embed_type = /datum/embedding/stake/hardened
 	staketime = 80
+
+/datum/embedding/stake/hardened
+	embed_chance = 35
 
 /obj/item/stake/hardened/silver
 	name = "silver stake"
@@ -188,8 +194,15 @@
 	siemens_coefficient = 1 //flags = CONDUCT // var/siemens_coefficient = 1 // for electrical admittance/conductance (electrocution checks and shit)
 	force = 9
 	armour_penetration = 25
-	embedding = list("embed_chance" = 65)
+	embed_type = /datum/embedding/stake/silver
 	staketime = 60
+
+/datum/embedding/stake/silver
+	embed_chance = 65
+
+/obj/item/stake/hardened/silver/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/bane_inducing, /datum/material/silver)
 
 //////////////////////
 //     ARCHIVES     //
@@ -221,7 +234,7 @@ GLOBAL_LIST_EMPTY_TYPED(kindred_archives, /obj/item/book/kindred)
 	desc = "Cryptic documents explaining hidden truths behind Undead beings. It is said only Curators can decipher what they really mean."
 	icon = 'monkestation/icons/bloodsuckers/vamp_obj.dmi'
 	lefthand_file = 'monkestation/icons/bloodsuckers/bloodsucker_lefthand.dmi'
-	righthand_file = 'monkestation/icons/bloodsuckers/bloodsucker_lefthand.dmi'
+	righthand_file = 'monkestation/icons/bloodsuckers/bloodsucker_righthand.dmi'
 	icon_state = "kindred_book"
 	inhand_icon_state = "kindred_book"
 	starting_author = "dozens of generations of Curators"
@@ -230,7 +243,7 @@ GLOBAL_LIST_EMPTY_TYPED(kindred_archives, /obj/item/book/kindred)
 	throw_range = 10
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
-/obj/item/book/kindred/Initialize()
+/obj/item/book/kindred/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/stationloving, FALSE, TRUE)
 	GLOB.kindred_archives += src
@@ -239,37 +252,42 @@ GLOBAL_LIST_EMPTY_TYPED(kindred_archives, /obj/item/book/kindred)
 	GLOB.kindred_archives -= src
 	return ..()
 
-/obj/item/book/kindred/try_carve(obj/item/carving_item, mob/living/user, params)
-	to_chat(user, span_notice("You feel the gentle whispers of a Curator telling you not to cut [starting_title]."))
-	return FALSE
+/obj/item/book/kindred/carving_act(mob/living/user, obj/item/tool)
+	to_chat(user, span_notice("You feel the gentle whispers of a Librarian telling you not to cut [starting_title]."))
+	return ITEM_INTERACT_BLOCKING
 
 ///Attacking someone with the book.
-/obj/item/book/kindred/afterattack(mob/living/target, mob/living/user, flag, params)
-	. = ..()
-	if(!user.can_read(src) || DOING_INTERACTION(user, DOAFTER_SOURCE_KINDRED_ARCHIVE) || (target == user) || !ismob(target))
-		return
+/obj/item/book/kindred/interact_with_atom(mob/interacting_with, mob/living/user, list/modifiers)
+	if(!ismob(interacting_with) || !user.can_read(src) || interacting_with == user)
+		return NONE
+	if(DOING_INTERACTION(user, DOAFTER_SOURCE_KINDRED_ARCHIVE))
+		return ITEM_INTERACT_BLOCKING
 	if(!HAS_MIND_TRAIT(user, TRAIT_OCCULTIST))
 		if(IS_BLOODSUCKER(user))
 			to_chat(user, span_warning("[src] burns your hands as you try to use it!"))
 			user.apply_damage(3, BURN, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 		else
 			to_chat(user, span_notice("[src] seems to be too complicated for you. It would be best to leave this for someone else to take."))
-		return
+		return ITEM_INTERACT_BLOCKING
 
-	user.balloon_alert_to_viewers("reading book...", "looks at [target] and [src]")
-	if(!do_after(user, 3 SECONDS, target, interaction_key = DOAFTER_SOURCE_KINDRED_ARCHIVE))
+	user.balloon_alert_to_viewers("reading book...", "looks at [interacting_with] and [src]")
+	if(!do_after(user, 3 SECONDS, interacting_with, interaction_key = DOAFTER_SOURCE_KINDRED_ARCHIVE))
 		to_chat(user, span_notice("You quickly close [src]."))
-		return
-	var/datum/antagonist/bloodsucker/bloodsuckerdatum = IS_BLOODSUCKER(target)
+		return ITEM_INTERACT_BLOCKING
+	var/datum/antagonist/bloodsucker/bloodsuckerdatum = IS_BLOODSUCKER(interacting_with)
 	// Are we a Bloodsucker | Are we on Masquerade. If one is true, they will fail.
-	if(IS_BLOODSUCKER(target) && !HAS_TRAIT(target, TRAIT_MASQUERADE))
+	if(IS_BLOODSUCKER(interacting_with) && !HAS_TRAIT(interacting_with, TRAIT_MASQUERADE))
 		if(bloodsuckerdatum.broke_masquerade)
-			to_chat(user, span_warning("[target], also known as '[bloodsuckerdatum.return_full_name()]', is indeed a Bloodsucker, but you already knew this."))
-			return
-		to_chat(user, span_warning("[target], also known as '[bloodsuckerdatum.return_full_name()]', [bloodsuckerdatum.my_clan ? "is part of the [bloodsuckerdatum.my_clan]!" : "is not part of a clan."] You quickly note this information down, memorizing it."))
-		bloodsuckerdatum.break_masquerade()
+			to_chat(user, span_warning("[interacting_with], also known as '[bloodsuckerdatum.return_full_name()]', is indeed a Bloodsucker, but you already knew this."))
+		else
+			to_chat(user, span_warning("[interacting_with], also known as '[bloodsuckerdatum.return_full_name()]', [bloodsuckerdatum.my_clan ? "is part of the [bloodsuckerdatum.my_clan]!" : "is not part of a clan."] You quickly note this information down, memorizing it."))
+			bloodsuckerdatum.break_masquerade()
 	else
-		to_chat(user, span_notice("You fail to draw any conclusions to [target] being a Bloodsucker."))
+		to_chat(user, span_notice("You fail to draw any conclusions to [interacting_with] being a Bloodsucker."))
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/book/kindred/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return interact_with_atom(interacting_with, user, modifiers)
 
 /obj/item/book/kindred/attack_self(mob/living/user)
 	if(!HAS_MIND_TRAIT(user, TRAIT_OCCULTIST))

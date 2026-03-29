@@ -6,7 +6,7 @@
 	purchasable_from = UPLINK_TRAITORS
 
 /obj/item/storage/box/syndie_kit/sandy/PopulateContents()
-	new /obj/item/autosurgeon/organ/syndicate/sandy(src)
+	new /obj/item/autosurgeon/syndicate/sandy(src)
 
 
 /datum/uplink_item/bundles_tc/mantis
@@ -17,8 +17,8 @@
 	purchasable_from = UPLINK_TRAITORS
 
 /obj/item/storage/box/syndie_kit/mantis/PopulateContents()
-	new /obj/item/autosurgeon/organ/syndicate/syndie_mantis(src)
-	new /obj/item/autosurgeon/organ/syndicate/syndie_mantis/l(src)
+	new /obj/item/autosurgeon/syndicate/syndie_mantis(src)
+	new /obj/item/autosurgeon/syndicate/syndie_mantis/l(src)
 
 /datum/uplink_item/bundles_tc/dualwield
 	name = "C.C.M.S Bundle"
@@ -28,4 +28,4 @@
 	purchasable_from = UPLINK_TRAITORS
 
 /obj/item/storage/box/syndie_kit/dualwield/PopulateContents()
-	new /obj/item/autosurgeon/organ/syndicate/dualwield(src)
+	new /obj/item/autosurgeon/syndicate/dualwield(src)

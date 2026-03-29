@@ -84,8 +84,8 @@ Slimecrossing Items
 	name = "hypercharged slime core"
 	desc = "A charged yellow slime extract, infused with plasma. It almost hurts to touch. Its organic nature makes it immune to EMPs."
 	rating = 7
-	maxcharge = 50000
-	chargerate = 2500
+	maxcharge = STANDARD_CELL_CHARGE * 50
+	chargerate = STANDARD_CELL_RATE * 0.25
 
 //Barrier cube - Chilling Grey
 /obj/item/barriercube

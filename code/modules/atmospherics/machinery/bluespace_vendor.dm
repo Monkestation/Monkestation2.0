@@ -75,11 +75,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor, 30)
 	purchased_gas_mix = new(100)
 	AddComponent(/datum/component/payment, tank_cost, SSeconomy.get_dep_account(ACCOUNT_ENG), PAYMENT_ANGRY)
 
-/obj/machinery/bluespace_vendor/LateInitialize()
+/obj/machinery/bluespace_vendor/LateInitialize(mapload_arg)
 	. = ..()
 	if(!map_spawned)
 		return
-	for(var/obj/machinery/atmospherics/components/unary/bluespace_sender/sender as anything in GLOB.bluespace_senders)
+	for(var/obj/machinery/atmospherics/components/unary/bluespace_sender/sender as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/atmospherics/components/unary/bluespace_sender))
 		register_machine(sender)
 
 /obj/machinery/bluespace_vendor/Destroy()
@@ -123,9 +123,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor, 30)
 	purchased_gas_mix.merge(to_merge)
 
 /obj/machinery/bluespace_vendor/multitool_act(mob/living/user, obj/item/multitool/multitool)
-	if(!istype(multitool))
-		return
-	if(!istype(multitool.buffer, /obj/machinery/atmospherics/components/unary/bluespace_sender))
+	var/datum/buffer = multitool_get_buffer(multitool)
+	if(!istype(buffer, /obj/machinery/atmospherics/components/unary/bluespace_sender))
 		to_chat(user, span_notice("Wrong machine type in [multitool] buffer..."))
 		return
 	if(connected_machine)
@@ -133,7 +132,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor, 30)
 	if(!do_after(user, 0.2 SECONDS, src))
 		return
 	playsound(get_turf(user), 'sound/machines/click.ogg', 10, TRUE)
-	register_machine(multitool.buffer)
+	register_machine(buffer)
 	to_chat(user, span_notice("You link [src] to the console in [multitool]'s buffer."))
 	return TRUE
 

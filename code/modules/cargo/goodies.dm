@@ -200,7 +200,7 @@
 	name = "Medipen Two-Pak"
 	desc = "Contains one standard epinephrine medipen and one standard emergency medkit medipen. For when you want to prepare for the worst."
 	cost = PAYCHECK_CREW * 2
-	contains = list(/obj/item/reagent_containers/hypospray/medipen, /obj/item/reagent_containers/hypospray/medipen/ekit)
+	contains = list(/obj/item/reagent_containers/medipen, /obj/item/reagent_containers/medipen/ekit)
 
 /datum/supply_pack/goody/mothic_rations
 	name = "Surplus Mothic Ration Pack"
@@ -250,11 +250,17 @@
 	cost = PAYCHECK_CREW * 12
 	contains = list(/obj/item/encryptionkey/ethereal)
 
-/datum/supply_pack/goody/felinid_encryption_key
-	name = "Felinid radio encryption key"
-	desc = "A hi-tech radio encryption key that allows the wearer to understand nekomimetic when the radio is worn."
+/datum/supply_pack/goody/uncommon_encryption_key
+	name = "Uncommon radio encryption key"
+	desc = "A hi-tech radio encryption key that allows the wearer to understand uncommon when the radio is worn."
 	cost = PAYCHECK_CREW * 12
-	contains = list(/obj/item/encryptionkey/felinid)
+	contains = list(/obj/item/encryptionkey/uncommon)
+
+/datum/supply_pack/goody/slime_encryption_key
+	name = "Slime radio encryption key"
+	desc = "A hi-tech radio encryption key that allows the wearer to understand slime when the radio is worn."
+	cost = PAYCHECK_CREW * 12
+	contains = list(/obj/item/encryptionkey/slime)
 
 /datum/supply_pack/goody/fishing_toolbox
 	name = "Fishing toolbox"
@@ -334,4 +340,12 @@
 	cost = CARGO_CRATE_VALUE * 0.75
 	contains = list(
 		/obj/item/disk/nifsoft_uploader/summoner,
+	)
+
+/datum/supply_pack/goody/pipebox
+	name = "Smoking Pipe Set"
+	desc = "Contains a pipebox, smoking pipe, and two pouches of tobacco."
+	cost = CARGO_CRATE_VALUE * 0.75
+	contains = list(
+		/obj/item/storage/pipebox,
 	)

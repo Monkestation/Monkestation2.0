@@ -49,7 +49,7 @@
 
 	update_appearance()
 
-/obj/machinery/power/turbine/LateInitialize()
+/obj/machinery/power/turbine/LateInitialize(mapload_arg)
 	. = ..()
 	activate_parts()
 
@@ -422,7 +422,7 @@
 	//log rotor to link later to computer
 	balloon_alert(user, "all parts linked")
 	var/obj/item/multitool/multitool = tool
-	multitool.set_buffer(src)
+	multitool_set_buffer(multitool, src)
 	to_chat(user, span_notice("You store linkage information in [tool]'s buffer."))
 
 	//success

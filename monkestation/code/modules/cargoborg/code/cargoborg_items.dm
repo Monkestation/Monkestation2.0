@@ -74,7 +74,7 @@
 	icon = 'icons/mecha/mecha_equipment.dmi' // Just some temporary sprites because I don't have any unique one yet
 	icon_state = "mecha_clamp"
 	/// How much power does it draw per operation?
-	var/charge_cost = 20
+	var/charge_cost = 0.02 * STANDARD_CELL_CHARGE
 	/// How many items can it hold at once in its internal storage?
 	var/storage_capacity = 5
 	/// Does it require the items it takes in to be wrapped in paper wrap? Can have unforeseen consequences, change to FALSE at your own risks.
@@ -365,12 +365,13 @@
 	var/list/paper_colors = list(COLOR_CYAN, COLOR_BLUE_LIGHT, COLOR_BLUE)
 	alpha = 150 // It's hardlight, it's gotta be see-through.
 
-
 /obj/item/paperplane/syndicate/hardlight/Initialize(mapload)
 	. = ..()
 	color = color_hex2color_matrix(pick(paper_colors))
 	alpha = initial(alpha) // It's hardlight, it's gotta be see-through.
 
+/obj/item/paperplane/syndicate/hardlight/attack_self(mob/user)
+	return
 
 /obj/item/borg/paperplane_crossbow
 	name = "paper plane crossbow"
@@ -440,16 +441,20 @@
 	check_amount()
 
 
-/obj/item/borg/paperplane_crossbow/afterattack(atom/target, mob/living/user, proximity, click_params)
+/obj/item/borg/paperplane_crossbow/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()
 	check_amount()
-	if(iscyborg(user))
-		var/mob/living/silicon/robot/robot_user = user
-		if(!robot_user.cell.use(10))
-			to_chat(user, span_warning("Not enough power."))
-			return FALSE
-		shoot(target, user, click_params)
+	if(!iscyborg(user))
+		return ITEM_INTERACT_BLOCKING
+	var/mob/living/silicon/robot/robot_user = user
+	if(!robot_user.cell.use(0.012 * STANDARD_CELL_CHARGE))
+		to_chat(user, span_warning("Not enough power."))
+		return ITEM_INTERACT_BLOCKING
+	shoot(interacting_with, user)
+	return ITEM_INTERACT_SUCCESS
 
+/obj/item/borg/paperplane_crossbow/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return interact_with_atom_secondary(interacting_with, user, modifiers)
 
 /// Holders for the package wrap and the wrapping paper synthetizers.
 

@@ -46,10 +46,16 @@
 	charge = new(src)
 	charge.Grant(src)
 	ai_controller.set_blackboard_key(BB_TARGETED_ACTION, charge)
+	update_appearance(UPDATE_OVERLAYS)
 
 /mob/living/basic/mining/lobstrosity/Destroy()
 	QDEL_NULL(charge)
 	return ..()
+
+/mob/living/basic/mining/lobstrosity/update_overlays()
+	. = ..()
+	if (stat != DEAD)
+		. += emissive_appearance(icon, "[icon_living]_e", src/*, effect_type = EMISSIVE_NO_BLOOM*/)
 
 /mob/living/basic/mining/lobstrosity/ranged_secondary_attack(atom/atom_target, modifiers)
 	charge.Trigger(target = atom_target)

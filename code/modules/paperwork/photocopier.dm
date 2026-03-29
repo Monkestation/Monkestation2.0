@@ -386,6 +386,7 @@
 	toEmbed.psize_x = 128
 	toEmbed.psize_y = 128
 	copied_ass.set_picture(toEmbed, TRUE, TRUE)
+	copied_ass.assphoto = TRUE
 	toner_cartridge.charges -= ASS_TONER_USE
 
 /**
@@ -435,8 +436,8 @@
 		toner_cartridge = object
 		to_chat(user, span_notice("You insert [object] into [src]."))
 
-	else if(istype(object, /obj/item/areaeditor/blueprints))
-		to_chat(user, span_warning("The Blueprint is too large to put into the copier. You need to find something else to record the document."))
+	else if(istype(object, /obj/item/blueprints))
+		to_chat(user, span_warning("\The [object] is too large to put into the copier. You need to find something else to record the document."))
 
 	else if(istype(object, /obj/item/paperwork))
 		if(istype(object, /obj/item/paperwork/photocopy)) //No infinite paper chain. You need the original paperwork to make more copies.
@@ -542,7 +543,7 @@
  */
 /obj/item/toner
 	name = "toner cartridge"
-	desc = "A small, lightweight cartridge of NanoTrasen ValueBrand toner. Fits photocopiers and autopainters alike."
+	desc = "A small, lightweight cartridge of Nanotrasen ValueBrand toner. Fits photocopiers and autopainters alike."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "tonercartridge"
 	grind_results = list(/datum/reagent/iodine = 40, /datum/reagent/iron = 10)
@@ -555,7 +556,7 @@
 
 /obj/item/toner/large
 	name = "large toner cartridge"
-	desc = "A hefty cartridge of NanoTrasen ValueBrand toner. Fits photocopiers and autopainters alike."
+	desc = "A hefty cartridge of Nanotrasen ValueBrand toner. Fits photocopiers and autopainters alike."
 	grind_results = list(/datum/reagent/iodine = 90, /datum/reagent/iron = 10)
 	charges = 25
 	max_charges = 25

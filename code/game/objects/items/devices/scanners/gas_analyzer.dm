@@ -140,20 +140,15 @@
 	ui_interact(user)
 
 /obj/item/analyzer/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(istype(interacting_with, /obj/effect/anomaly) && can_see(user, interacting_with, ranged_scan_distance))
+		var/obj/effect/anomaly/ranged_anomaly = interacting_with
+		ranged_anomaly.analyzer_act(user, src)
+		return ITEM_INTERACT_SUCCESS
 	return interact_with_atom(interacting_with, user, modifiers)
 
 /obj/item/analyzer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(can_see(user, interacting_with, ranged_scan_distance))
-		var/turf/target_turf = get_turf(interacting_with)
-		// only do this if we can't reach the anomaly anyways
-		if(ranged_scan_distance > 1 && !user.CanReach(target_turf))
-			for(var/obj/effect/anomaly/anomaly in target_turf)
-				anomaly.scan_anomaly(user, src)
-				. = ITEM_INTERACT_SUCCESS
-			// block if we scanned an anomaly, to avoid chat spam
-			if(.)
-				return
-		atmos_scan(user, (interacting_with.return_analyzable_air() ? interacting_with : target_turf))
+	if(!HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION) && can_see(user, interacting_with, ranged_scan_distance))
+		atmos_scan(user, (interacting_with.return_analyzable_air() ? interacting_with : get_turf(interacting_with)))
 	return NONE // Non-blocking
 
 /// Called when our analyzer is used on something
@@ -246,7 +241,6 @@
 	name = "long-range gas analyzer"
 	icon_state = "analyzerranged"
 	worn_icon_state = "analyzer"
-	w_class = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.2, /datum/material/gold = SMALL_MATERIAL_AMOUNT*3, /datum/material/bluespace=SMALL_MATERIAL_AMOUNT*2)
 	grind_results = list(/datum/reagent/mercury = 5, /datum/reagent/iron = 5, /datum/reagent/silicon = 5)
 	ranged_scan_distance = 15

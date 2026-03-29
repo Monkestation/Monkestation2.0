@@ -69,6 +69,8 @@
 			repowered()
 		else
 			depowered()
+			return FALSE
+	return TRUE
 
 /obj/structure/destructible/clockwork/gear_base/powered/proc/try_toggle_power(mob/user)
 	if(!has_power_toggle)
@@ -80,15 +82,16 @@
 		return
 
 	if(!enabled)
-		if(!length(transmission_sigils) || !SSthe_ark.adjust_passive_power(passive_consumption, TRUE))
+		if(!length(transmission_sigils) || !SSthe_ark.adjust_passive_power(passive_consumption, TRUE)) //the actual adjustment is done in repowered()
 			if(user)
 				balloon_alert(user, "not enough power!")
 			return
+		enabled = TRUE //cant just do an inversion due to icon updates
 		turn_on()
 	else
+		enabled = FALSE
 		turn_off()
 
-	enabled = !enabled
 	if(user)
 		balloon_alert(user, "turned [enabled ? "on" : "off"]")
 
@@ -117,9 +120,13 @@
 		return FALSE
 	return TRUE
 
+/obj/structure/destructible/clockwork/gear_base/powered/proc/check_powered()
+	is_powered = length(transmission_sigils) > 0
+	return is_powered
+
 /// Uses power if there's enough to do so
 /obj/structure/destructible/clockwork/gear_base/powered/proc/use_energy(amount)
-	return check_transmission_sigils() && SSthe_ark.adjust_clock_power(-amount)
+	return (has_power_toggle ? check_transmission_sigils() : check_powered()) && SSthe_ark.adjust_clock_power(-amount)
 
 /// Triggers when the structure runs out of power to use
 /obj/structure/destructible/clockwork/gear_base/powered/proc/depowered()

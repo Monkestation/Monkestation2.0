@@ -1,6 +1,6 @@
 import { useBackend, useLocalState } from '../backend';
+import { Section, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
-import { Section, Tabs, Stack } from '../components';
 
 type ExtrapolatorData = {
   varients: string[];
@@ -35,7 +35,7 @@ export const Extrapolator = (props) => {
   return (
     <Window title="Extrapolator" width={325} height={200}>
       <Window.Content>
-        <Stack grow>
+        <Stack>
           <Stack.Item>
             <Section title="Diseases">
               <Tabs vertical>

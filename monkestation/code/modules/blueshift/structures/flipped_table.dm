@@ -46,7 +46,7 @@
 	if(istype(mover, /obj/projectile))
 		var/obj/projectile/projectile = mover
 		//Lets through bullets shot from behind the cover of the table
-		if(projectile.trajectory && angle2dir_cardinal(projectile.trajectory.angle) == dir)
+		if(projectile.movement_vector && angle2dir_cardinal(projectile.movement_vector.angle) == dir)
 			return TRUE
 		return FALSE
 	if(border_dir == dir)
@@ -84,6 +84,10 @@
 	user.balloon_alert_to_viewers("flipping table upright...")
 	if(!do_after(user, max_integrity * TABLE_FLIP_TIME_MULTIPLIER))
 		return CLICK_ACTION_BLOCKING
+	unflip_table(user)
+	return CLICK_ACTION_SUCCESS
+
+/obj/structure/flippedtable/proc/unflip_table(mob/user)
 	var/obj/structure/table/unflipped_table = new table_type(loc)
 	unflipped_table.update_integrity(get_integrity())
 	if(flags_1 & HOLOGRAM_1) // no unflipping holographic tables into reality
@@ -97,7 +101,6 @@
 	user.balloon_alert_to_viewers("table flipped upright")
 	playsound(src, 'sound/items/trayhit2.ogg', vol = 100)
 	qdel(src)
-	return CLICK_ACTION_SUCCESS
 
 /mob/proc/can_flip_table(obj/structure/table/table, full_checks = TRUE)
 	if(QDELETED(src) || QDELETED(table))

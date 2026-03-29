@@ -8,7 +8,7 @@
 //set_heat: The temperature the oven must bake at.
 //set_time: How long something must be baked in the overn
 //our_recipe: The parent recipe object
-/datum/chewin_cooking/recipe_step/use_oven/New(var/set_heat, var/set_time, var/datum/chewin_cooking/recipe/our_recipe)
+/datum/chewin_cooking/recipe_step/use_oven/New(set_heat, set_time, datum/chewin_cooking/recipe/our_recipe)
 
 
 
@@ -20,7 +20,7 @@
 	..(our_recipe)
 
 
-/datum/chewin_cooking/recipe_step/use_oven/check_conditions_met(var/obj/used_item, var/datum/chewin_cooking/recipe_tracker/tracker)
+/datum/chewin_cooking/recipe_step/use_oven/check_conditions_met(obj/used_item, datum/chewin_cooking/recipe_tracker/tracker)
 
 	if(!istype(used_item, /obj/machinery/oven))
 		return CHEWIN_CHECK_INVALID
@@ -28,7 +28,7 @@
 	return CHEWIN_CHECK_VALID
 
 //Reagents are calculated prior to object creation
-/datum/chewin_cooking/recipe_step/use_oven/calculate_quality(var/obj/used_item, var/datum/chewin_cooking/recipe_tracker/tracker)
+/datum/chewin_cooking/recipe_step/use_oven/calculate_quality(obj/used_item, datum/chewin_cooking/recipe_tracker/tracker)
 	var/obj/item/reagent_containers/cooking_container/container = tracker.holder_ref.resolve()
 
 	var/bad_cooking = 0
@@ -43,10 +43,10 @@
 	return clamp_quality(good_cooking)
 
 
-/datum/chewin_cooking/recipe_step/use_oven/follow_step(var/obj/used_item, var/datum/chewin_cooking/recipe_tracker/tracker)
+/datum/chewin_cooking/recipe_step/use_oven/follow_step(obj/used_item, datum/chewin_cooking/recipe_tracker/tracker)
 	return CHEWIN_SUCCESS
 
-/datum/chewin_cooking/recipe_step/use_oven/is_complete(var/obj/used_item, var/datum/chewin_cooking/recipe_tracker/tracker)
+/datum/chewin_cooking/recipe_step/use_oven/is_complete(obj/used_item, datum/chewin_cooking/recipe_tracker/tracker)
 
 	var/obj/item/reagent_containers/cooking_container/container = tracker.holder_ref.resolve()
 

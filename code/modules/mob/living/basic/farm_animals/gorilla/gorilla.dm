@@ -159,12 +159,13 @@
  * Preferably in future we can replace this with a popup on the lobby to queue to become a gorilla.
  */
 /mob/living/basic/gorilla/cargorilla/proc/poll_for_gorilla()
+	var/tip = span_notice("You can carry up to three crates by Right-Clicking on them in Combat Mode and put them down by Right-Clicking on an open turf.")
 	AddComponent(\
 		/datum/component/ghost_direct_control,\
 		poll_candidates = TRUE,\
 		poll_length = 30 SECONDS,\
 		role_name = "Cargorilla",\
-		assumed_control_message = "You are Cargorilla, a pacifist friend of the station and carrier of freight.",\
+		assumed_control_message = "You are Cargorilla, a pacifist friend of the station and carrier of freight. [tip]",\
 		poll_ignore_key = POLL_IGNORE_CARGORILLA,\
 		after_assumed_control = CALLBACK(src, PROC_REF(became_player_controlled)),\
 	)

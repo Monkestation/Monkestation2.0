@@ -87,9 +87,10 @@
 	COOLDOWN_START(other, lunge, 10 SECONDS)
 	if(isliving(user))
 		var/mob/living/living = user
-		living.stamina?.adjust(-50) // cost of a lunge
+		living.stamina?.adjust(-25) // cost of a lunge
+	if(!user.Adjacent(interacting_with)) // If we do not reach the target don't hit it.
+		return
 	attack(interacting_with, user)
-	return
 
 /////////SHIELD MANTIS BLADES/////////////////
 /obj/item/mantis_blade/shield
@@ -126,7 +127,7 @@
 	to_chat(user, span_notice("You stop blocking with your blades."))
 
 /obj/item/mantis_blade/shield/attack(mob/living/target, mob/living/user)
-	if(in_stance)
+	if(in_stance && iscarbon(target))
 		user.disarm(target)
 	else
 		return . = ..()

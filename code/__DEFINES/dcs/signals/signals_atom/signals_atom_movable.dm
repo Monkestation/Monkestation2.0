@@ -28,6 +28,7 @@
 	#define COMPONENT_MOVABLE_IMPACT_NEVERMIND (1<<1) //return true if you destroyed whatever it was you're impacting and there won't be anything for hitby() to run on
 ///from base of mob/living/hitby(): (mob/living/target, hit_zone, blocked, datum/thrownthing/throwingdatum)
 #define COMSIG_MOVABLE_IMPACT_ZONE "item_impact_zone"
+	#define MOVABLE_IMPACT_ZONE_OVERRIDE (1<<0)
 ///from /atom/movable/proc/buckle_mob(): (mob/living/M, force, check_loc, buckle_mob_flags)
 #define COMSIG_MOVABLE_PREBUCKLE "prebuckle" // this is the last chance to interrupt and block a buckle before it finishes
 	#define COMPONENT_BLOCK_BUCKLE (1<<0)
@@ -109,4 +110,12 @@
 	#define MOVABLE_SAY_QUOTE_MESSAGE_SPANS 2
 	#define MOVABLE_SAY_QUOTE_MESSAGE_MODS 3
 
+///from base of /atom/movable/point_at: (atom/A, obj/effect/temp_visual/point/point)
+#define COMSIG_MOVABLE_POINTED "movable_pointed"
+
 #define COMSIG_MOB_CI_TOGGLED "mob_ci_toggled"
+
+/// Called when the atom is dropped into a chasm: (turf/chasm)
+#define COMSIG_MOVABLE_CHASM_DROPPED "movable_chasm_dropped"
+	/// Stop it from actually dropping into the chasm
+	#define COMPONENT_NO_CHASM_DROP (1<<0)

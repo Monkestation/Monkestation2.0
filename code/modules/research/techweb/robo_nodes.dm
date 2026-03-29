@@ -17,6 +17,7 @@
 	prereq_ids = list("neural_programming", "robotics", "cyborg")
 	design_ids = list(
 		"mmi_posi",
+		"ecto_sniffer",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
@@ -67,7 +68,6 @@
 		"intellicard",
 		"mecha_tracking_ai_control",
 		"aifixer",
-		"aiupload",
 		"reset_module",
 		"asimov_module",
 		"default_module",
@@ -113,6 +113,11 @@
 		"freeformcore_module",
 		"onehuman_module",
 		"purge_module",
+		"milf_module",
+		"hencmen_module",
+		"tsundere_module",
+		"dj_module",
+		"wormtongue_module",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_COMMAND)

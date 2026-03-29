@@ -115,8 +115,14 @@ SUBSYSTEM_DEF(title)
 	init_infos -= init_category
 	update_init_text()
 
-/// Updates the displayed initialization text according to all initialization information
+/// Updates the displayed initialization text according to all initialization information, unless the round has started,
+/// at which point you don't need anymore information anymore.
 /datum/controller/subsystem/title/proc/update_init_text()
+	if(SSticker.HasRoundStarted())
+		if(maptext_holder)
+			maptext_holder.maptext = null
+		return
+
 	if(!maptext_holder)
 		if(!splash_turf)
 			return

@@ -30,10 +30,12 @@
 
 /obj/item/botpad_remote/multitool_act(mob/living/user, obj/item/multitool/multitool)
 	. = NONE
-	if(!istype(multitool.buffer, /obj/machinery/botpad))
+
+	var/datum/buffer = multitool_get_buffer(multitool)
+	if(!istype(buffer, /obj/machinery/botpad))
 		return
 
-	var/obj/machinery/botpad/buffered_remote = multitool.buffer
+	var/obj/machinery/botpad/buffered_remote = buffer
 	if(buffered_remote == connected_botpad)
 		to_chat(user, span_warning("Controller cannot connect to its own botpad!"))
 		return ITEM_INTERACT_BLOCKING
@@ -42,7 +44,7 @@
 		connected_botpad = buffered_remote
 		connected_botpad.connected_remote = src
 		//connected_botpad.id = id MONKESTATION REMOVAL
-		multitool.set_buffer(null)
+		multitool_set_buffer(multitool, null)
 		to_chat(user, span_notice("You connect the controller to the pad with data from \the [multitool]'s buffer."))
 		return ITEM_INTERACT_SUCCESS
 

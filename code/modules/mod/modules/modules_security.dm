@@ -67,10 +67,10 @@
 	overlay_state_use = "module_pepper_used"
 
 /obj/item/mod/module/pepper_shoulders/on_suit_activation()
-	RegisterSignal(mod.wearer, COMSIG_HUMAN_CHECK_SHIELDS, PROC_REF(on_check_shields))
+	RegisterSignal(mod.wearer, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(on_check_block))
 
 /obj/item/mod/module/pepper_shoulders/on_suit_deactivation(deleting = FALSE)
-	UnregisterSignal(mod.wearer, COMSIG_HUMAN_CHECK_SHIELDS)
+	UnregisterSignal(mod.wearer, COMSIG_LIVING_CHECK_BLOCK)
 
 /obj/item/mod/module/pepper_shoulders/on_use()
 	. = ..()
@@ -84,7 +84,7 @@
 	smoke.start(log = TRUE)
 	QDEL_NULL(capsaicin_holder) // Reagents have a ref to their holder which has a ref to them. No leaks please.
 
-/obj/item/mod/module/pepper_shoulders/proc/on_check_shields()
+/obj/item/mod/module/pepper_shoulders/proc/on_check_block()
 	SIGNAL_HANDLER
 
 	if(!COOLDOWN_FINISHED(src, cooldown_timer))
@@ -298,7 +298,7 @@
 	do_sparks(rand(3, 6), FALSE, src)
 	if(thrower)
 		var/mob/living/simple_animal/hostile/illusion/mirage/mirage = new(get_turf(src))
-		mirage.Copy_Parent(thrower, 15 SECONDS)
+		mirage.copy_parent(thrower, 15 SECONDS)
 	qdel(src)
 
 ///Projectile Dampener - Weakens projectiles in range.
@@ -316,7 +316,7 @@
 	/// Damage multiplier on projectiles.
 	var/damage_multiplier = 0.75
 	/// Speed multiplier on projectiles, higher means slower.
-	var/speed_multiplier = 2.5
+	var/speed_multiplier = 0.4
 	/// List of all tracked projectiles.
 	var/list/tracked_projectiles = list()
 	/// Effect image on projectiles.

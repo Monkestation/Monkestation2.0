@@ -1,4 +1,5 @@
 #define PKBORG_DAMPEN_CYCLE_DELAY (2 SECONDS)
+#define POWER_RECHARGE_CYBORG_DRAIN_MULTIPLIER (0.4 KILO WATTS)
 
 /obj/item/cautery/prt //it's a subtype of cauteries so that it inherits the cautery sprites and behavior and stuff, because I'm too lazy to make sprites for this thing
 	name = "plating repair tool"
@@ -32,6 +33,11 @@
 	var/datum/proximity_monitor/advanced/bubble/projectile_dampener/peaceborg/dampening_field
 	/// Energy cost per tracked projectile damage amount per second
 	var/projectile_damage_tick_ecost_coefficient = 10
+	/**
+	 * Speed coefficient
+	 * Higher the coefficient faster the projectile.
+	*/
+	var/projectile_speed_coefficient = 0.66
 	/// Energy cost per tracked projectile per second
 	var/projectile_tick_speed_ecost = 75
 	/// Projectiles dampened by our dampener
@@ -143,7 +149,7 @@
 			energy = clamp(energy + energy_recharge * seconds_per_tick, 0, maxenergy)
 			return
 	if(host.cell && (host.cell.charge >= (host.cell.maxcharge * cyborg_cell_critical_percentage)) && (energy < maxenergy))
-		host.cell.use(energy_recharge * seconds_per_tick * 0.4) // On TG POWER_RECHARGE_CYBORG_DRAIN_MULTIPLIER is 0.4
+		host.cell.use(energy_recharge * seconds_per_tick * POWER_RECHARGE_CYBORG_DRAIN_MULTIPLIER)
 		energy += energy_recharge * seconds_per_tick
 
 /obj/item/borg/projectile_dampen/proc/dampen_projectile(datum/source, obj/projectile/projectile)
@@ -157,3 +163,4 @@
 	tracked_bullet_cost -= REF(projectile)
 
 #undef PKBORG_DAMPEN_CYCLE_DELAY
+#undef POWER_RECHARGE_CYBORG_DRAIN_MULTIPLIER

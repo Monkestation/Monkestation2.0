@@ -180,6 +180,11 @@
 	greyscale_config_worn = null
 	greyscale_colors = null
 
+/obj/item/clothing/neck/tie/disco/equipped(mob/living/user, slot)
+	. = ..()
+	if(user.client)
+		LoadComponent(/datum/component/soulcatcher/attachable_soulcatcher)
+
 /obj/item/clothing/neck/tie/detective
 	name = "loose tie"
 	desc = "A loosely tied necktie, a perfect accessory for the over-worked detective."

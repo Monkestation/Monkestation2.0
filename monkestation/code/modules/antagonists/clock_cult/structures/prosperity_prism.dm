@@ -29,7 +29,7 @@
 			continue
 
 		var/healed_amount = HEAL_PER_USE * seconds_per_tick
-		possible_cultist.stamina.adjust(8 * seconds_per_tick, TRUE)
+		possible_cultist.stamina.adjust(4 * seconds_per_tick, TRUE)
 		possible_cultist.adjustOxyLoss(-healed_amount)
 		possible_cultist.adjustCloneLoss(-(HEAL_PER_USE / 2) * seconds_per_tick)
 		possible_cultist.heal_overall_damage(healed_amount, healed_amount, updating_health = TRUE)

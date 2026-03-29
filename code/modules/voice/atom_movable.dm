@@ -21,6 +21,15 @@
 		voice = new()
 		voice.set_voice_pack(id)
 
+/// Copies the voice from another atom or voice datum.
+/atom/movable/proc/copy_voice_from(datum/atom_voice/other)
+	if(ismovable(other))
+		var/atom/movable/other_movable = other
+		other = other_movable.get_voice()
+	if(!istype(other))
+		CRASH("Something other than a movable or an atom_voice was passed to copy_voice_from!")
+	get_voice().copy_from(other)
+
 /atom/movable/proc/can_long_bark()
 	return FALSE
 

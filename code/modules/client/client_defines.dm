@@ -72,7 +72,7 @@
 	var/datum/preferences/prefs = null
 	/// Player interaction mode, set by preferences.
 	var/datum/interaction_mode/imode
-	///Cache for the prefence value of [/datum/preference/toggle/context_menu_requires_shift]
+	///Cache for the prefence value of [/datum/preference/choice/context_menu_requires_shift]
 	var/context_menu_requires_shift = FALSE
 	///Move delay of controlled mob, any keypresses inside this period will persist until the next proper move
 	var/move_delay = 0

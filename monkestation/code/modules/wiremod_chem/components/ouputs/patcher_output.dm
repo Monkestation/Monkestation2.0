@@ -31,4 +31,5 @@
 	var/inject_choice = tgui_input_number(user, "How much to put into a patch?", "[name]", inject_amount, max_inject, 1)
 	if(inject_choice)
 		inject_amount = inject_choice
+	..()
 	return CLICK_ACTION_SUCCESS

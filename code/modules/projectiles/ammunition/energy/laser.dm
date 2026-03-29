@@ -10,7 +10,7 @@
 
 /obj/item/ammo_casing/energy/laser/hellfire/blueshield
 	projectile_type = /obj/projectile/beam/laser/hellfire
-	e_cost = LASER_SHOTS(13, 1000)
+	e_cost = LASER_SHOTS(13, STANDARD_CELL_CHARGE)
 	select_name = "maim"
 
 /obj/item/ammo_casing/energy/lasergun
@@ -43,8 +43,7 @@
 
 /obj/item/ammo_casing/energy/laser/musket/prime
 	projectile_type = /obj/projectile/beam/laser/musket/prime
-	pellets = 3
-	variance = 10
+	pellets = 1
 
 /obj/item/ammo_casing/energy/laser/practice
 	projectile_type = /obj/projectile/beam/practice
@@ -141,6 +140,26 @@
 /obj/item/ammo_casing/energy/nanite/cryo
 	projectile_type = /obj/projectile/energy/cryo
 	select_name = "cryo"
+
+///not exactly an energy ammo casing, but it's used by the laser gatling.
+/obj/item/ammo_casing/laser
+	name = "laser casing"
+	desc = "You shouldn't be seeing this."
+	caliber = CALIBER_LASER
+	icon_state = "s-casing-live"
+	base_icon_state = "s-casing-live"
+	slot_flags = null
+	projectile_type = /obj/projectile/beam
+	fire_sound = 'sound/weapons/laser.ogg'
+	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/energy
+
+/obj/item/ammo_casing/laser/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/caseless)
+
+/obj/item/ammo_casing/laser/update_icon_state()
+	. = ..()
+	icon_state = "[base_icon_state]"
 
 /obj/item/ammo_casing/energy/laser/plasma_glob
 	projectile_type = /obj/projectile/beam/laser/plasma_glob

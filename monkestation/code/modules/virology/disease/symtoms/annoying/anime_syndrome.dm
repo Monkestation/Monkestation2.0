@@ -78,7 +78,7 @@
 				if(affected.put_in_hands(katana, del_on_fail = TRUE))
 					katana_ref = WEAKREF(katana)
 
-/datum/symptom/anime_hair/deactivate(mob/living/carbon/mob)
+/datum/symptom/anime_hair/deactivate(mob/living/carbon/mob, datum/disease/acute/disease, safe = FALSE)
 	mob.RemoveComponentSource(REF(src), /datum/component/fluffy_tongue)
 	to_chat(mob, span_notice("You no longer feel quite like the main character."))
 	var/obj/item/katana = katana_ref?.resolve()

@@ -9,9 +9,9 @@
 	force = 5 /// The weapon requires two hands
 	throwforce = 12
 	throw_range = 3 /// Doesn't throw very far
-	demolition_mod = 6 // BREAK THINGS
-	armour_penetration = 0
-	armour_ignorance = -20
+	demolition_mod = 3 // BREAK THINGS
+	armour_penetration = 10
+	armour_ignorance = 0
 	hitsound = 'sound/weapons/smash.ogg' /// Hitsound when thrown at someone
 	attack_verb_continuous = list("slams", "crushes", "smashes", "flattens", "pounds")
 	attack_verb_simple = list("slam", "crush", "smash", "flatten", "pound")
@@ -23,7 +23,7 @@
 
 /obj/item/melee/sledgehammer/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_wielded = 10, wield_callback = CALLBACK(src, PROC_REF(on_wield)), unwield_callback = CALLBACK(src, PROC_REF(on_unwield)), require_twohands = TRUE)
+	AddComponent(/datum/component/two_handed, force_wielded = 12, wield_callback = CALLBACK(src, PROC_REF(on_wield)), unwield_callback = CALLBACK(src, PROC_REF(on_unwield)), require_twohands = FALSE)
 
 /obj/item/melee/sledgehammer/proc/on_wield(atom/source, mob/living/user)
 	hitsound = "swing_hit"
@@ -31,9 +31,9 @@
 /obj/item/melee/sledgehammer/proc/on_unwield(atom/source, mob/living/user)
 	hitsound = initial(hitsound)
 
-/obj/item/melee/sledgehammer/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+/obj/item/melee/sledgehammer/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
-	if(!HAS_TRAIT(src, TRAIT_WIELDED) && user)
+	if(!HAS_TRAIT(src, TRAIT_WIELDED))
 		/// This will already do low damage, so it doesn't need to be intercepted earlier
 		to_chat(user, span_danger("\The [src] is too heavy to attack effectively without being wielded!"))
 		return
@@ -42,16 +42,14 @@
 		if(!HAS_TRAIT(target, TRAIT_SPLEENLESS_METABOLISM) && humantarget.get_organ_slot(ORGAN_SLOT_SPLEEN) && !isnull(humantarget.dna.species.mutantspleen))
 			var/obj/item/organ/internal/spleen/target_spleen = humantarget.get_organ_slot(ORGAN_SLOT_SPLEEN)
 			target_spleen.apply_organ_damage(5)
-	if(!proximity_flag)
-		return
 
 	if(target.uses_integrity)
 		if(!QDELETED(target))
 			if(istype(get_area(target), /area/space/shipbreak))
 				if(isstructure(target))
-					target.take_damage(force * demolition_mod, BRUTE, MELEE, FALSE, null, 20) // Breaks "structures pretty good"
+					target.take_damage(src.force * demolition_mod, BRUTE, MELEE, FALSE, null, 80) // Breaks "structures pretty good"
 				if(ismachinery(target))
-					target.take_damage(force * demolition_mod, BRUTE, MELEE, FALSE, null, 20) // A luddites friend, Sledghammer good at break machine
+					target.take_damage(src.force * demolition_mod, BRUTE, MELEE, FALSE, null, 80) // A luddites friend, Sledghammer good at break machine
 			playsound(src, 'sound/effects/bang.ogg', 40, 1)
 
 /obj/item/melee/sledgehammer/throw_at(atom/target, range, speed, mob/thrower, spin, diagonals_first, datum/callback/callback, force, gentle = FALSE, quickstart)

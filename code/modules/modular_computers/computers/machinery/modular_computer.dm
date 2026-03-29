@@ -30,9 +30,9 @@
 	///Light luminosity when turned on
 	var/light_strength = 2
 	///Power usage when the computer is open (screen is active) and can be interacted with.
-	var/base_active_power_usage = 500
+	var/base_active_power_usage = 50 WATTS
 	///Power usage when the computer is idle and screen is off (currently only applies to laptops)
-	var/base_idle_power_usage = 100
+	var/base_idle_power_usage = 10 WATTS
 
 	///CPU that handles most logic while this type only handles power and other specific things.
 	var/obj/item/modular_computer/processor/cpu
@@ -159,6 +159,9 @@
 /obj/machinery/modular_computer/screwdriver_act(mob/user, obj/item/tool)
 	return CPU_INTERACTABLE(user) ? cpu.screwdriver_act(user, tool) : ..()
 
+/obj/machinery/modular_computer/screwdriver_act_secondary(mob/user, obj/item/tool)
+	return CPU_INTERACTABLE(user) ? cpu.screwdriver_act_secondary(user, tool) : ..()
+
 /obj/machinery/modular_computer/wrench_act_secondary(mob/user, obj/item/tool)
 	return CPU_INTERACTABLE(user) ? cpu.wrench_act_secondary(user, tool) : ..()
 
@@ -201,6 +204,6 @@
 // "Burn" damage is equally strong against internal components and exterior casing
 // "Brute" damage mostly damages the casing.
 /obj/machinery/modular_computer/bullet_act(obj/projectile/proj)
-	return cpu?.bullet_act(proj) || ..()
+	return cpu?.projectile_hit(proj) || ..()
 
 #undef CPU_INTERACTABLE

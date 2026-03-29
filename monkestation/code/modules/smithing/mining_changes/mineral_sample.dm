@@ -57,7 +57,7 @@
 	if(material.material_stats)
 		for(var/datum/material_trait/trait in material.material_stats.material_traits)
 			total_val += trait.value_bonus
-		return round(total_val * ((material.material_stats.density + material.material_stats.hardness)/8)) //Nanotransen only cares about the dens/hardness for building new stations.
+		return round(total_val * ((material.material_stats.density + material.material_stats.hardness)/8)) //Nanotrasen only cares about the dens/hardness for building new stations.
 	return total_val
 
 

@@ -18,11 +18,14 @@
 	var/crusher_loot
 	/// What is the chance the mob drops it if all their health was taken by crusher attacks
 	var/crusher_drop_chance = 25
+	/// Does this mob count for mining mob kills counter?
+	var/kill_count = TRUE
 
 /mob/living/basic/mining/Initialize(mapload)
 	. = ..()
 	add_traits(list(TRAIT_LAVA_IMMUNE, TRAIT_ASHSTORM_IMMUNE), INNATE_TRAIT)
-	AddElement(/datum/element/mob_killed_tally, "mobs_killed_mining")
+	if (kill_count)
+		AddElement(/datum/element/mob_killed_tally, "mobs_killed_mining")
 	AddElement(\
 		/datum/element/ranged_armour,\
 		minimum_projectile_force = 30,\

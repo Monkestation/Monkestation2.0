@@ -140,7 +140,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/organ/internal/monster_core/attack_self(mob/user)
-	if (!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
+	if (!user.can_perform_action(src, FORBID_TELEKINESIS_REACH|ALLOW_RESTING))
 		return
 	try_apply(user, user)
 

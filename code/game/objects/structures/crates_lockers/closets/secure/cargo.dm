@@ -17,7 +17,8 @@
 	new /obj/item/storage/bag/garment/quartermaster(src)
 	new /obj/item/encryptionkey/headset_cargo(src) // monkestation edit - An extra encryption key for someone joining Cargyptia
 	new /obj/item/cargo_teleporter(src) // monkestation edit - singular roundstart cargo teleporter
-	new /obj/item/gun/energy/disabler/cargo(src) // monkestation edit - a single disabler that can only be used in parts of cargo
+	new /obj/item/gun/ballistic/shotgun/cargo(src)
+	new /obj/item/storage/box/beanbag(src)
 
 /obj/structure/closet/secure_closet/quartermaster/populate_contents_immediate()
 	. = ..()

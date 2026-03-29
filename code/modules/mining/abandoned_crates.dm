@@ -13,6 +13,8 @@
 	var/qdel_on_open = FALSE
 	var/spawned_loot = FALSE
 	tamperproof = 90
+	/// What value did our loot roll (for debugging)
+	var/loot_rolled
 
 	// Stop people from "diving into" the crate accidentally, and then detonating it.
 	divable = FALSE
@@ -132,8 +134,8 @@
 		qdel(src)
 
 /obj/structure/closet/crate/secure/loot/proc/spawn_loot()
-	var/loot = rand(1,101) //101 different crates with varying chances of spawning
-	switch(loot)
+	loot_rolled = rand(1,101) //101 different crates with varying chances of spawning
+	switch(loot_rolled)
 		if(1 to 5) //5% chance
 			new /obj/item/reagent_containers/cup/glass/bottle/rum(src)
 			new /obj/item/reagent_containers/cup/glass/bottle/whiskey(src)
@@ -163,7 +165,7 @@
 		if(41 to 45)
 			new /obj/item/modular_computer/pda/clear(src)
 		if(46 to 50)
-			new /obj/item/storage/box/syndie_kit/chameleon/broken
+			new /obj/item/storage/box/syndie_kit/chameleon/broken(src)
 		if(51 to 52) // 2% chance
 			new /obj/item/melee/baton(src)
 		if(53 to 54)

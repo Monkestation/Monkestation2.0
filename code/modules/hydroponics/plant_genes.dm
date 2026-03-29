@@ -268,6 +268,18 @@
 
 	examine_list += span_info("[description]")
 
+/datum/plant_gene/trait/proc/process_stats(obj/item/seeds/parent_seed)
+	if(trait_flags & TRAIT_HALVES_YIELD)
+		parent_seed.adjust_yield(parent_seed.yield * 0.5)
+	if(trait_flags & TRAIT_HALVES_PRODUCTION)
+		parent_seed.adjust_production(parent_seed.production * 0.5)
+	if(trait_flags & TRAIT_HALVES_POTENCY)
+		parent_seed.adjust_potency(parent_seed.potency * 0.5)
+	if(trait_flags & TRAIT_HALVES_ENDURANCE)
+		parent_seed.adjust_endurance(parent_seed.endurance * 0.5)
+	if(trait_flags & TRAIT_HALVES_LIFESPAN)
+		parent_seed.adjust_lifespan(parent_seed.lifespan * 0.5)
+
 /// Allows the plant to be squashed when thrown or slipped on, leaving a colored mess and trash type item behind.
 /datum/plant_gene/trait/squash
 	name = "Liquid Contents"
@@ -284,7 +296,6 @@
 
 	RegisterSignal(our_plant, COMSIG_PLANT_ON_SLIP, PROC_REF(squash_plant))
 	RegisterSignal(our_plant, COMSIG_ITEM_ATTACK_SELF, PROC_REF(squash_plant))
-// monkestation start: use COMSIG_MOVABLE_IMPACT_ZONE for mobs
 	RegisterSignal(our_plant, COMSIG_MOVABLE_IMPACT, PROC_REF(on_impact))
 	RegisterSignal(our_plant, COMSIG_MOVABLE_IMPACT_ZONE, PROC_REF(on_impact_zone))
 
@@ -297,7 +308,6 @@
 	SIGNAL_HANDLER
 	if(!blocked)
 		squash_plant(our_plant, target)
-// monkestation end
 
 /*
  * Signal proc to squash the plant this trait belongs to, causing a smudge, exposing the target to reagents, and deleting it,
@@ -600,7 +610,7 @@
 
 	var/obj/item/food/grown/grown_plant = our_plant
 	if(istype(grown_plant, /obj/item/food/grown))
-		grown_plant.volume_rate = rate //Monkestation Edit
+		grown_plant.volume_rate = rate
 	else
 		//Grown inedibles however just use a reagents holder, so.
 		our_plant.reagents?.maximum_volume *= rate
@@ -680,12 +690,12 @@
 	var/obj/item/stock_parts/power_store/cell/potato/pocell = new /obj/item/stock_parts/power_store/cell/potato(user.loc)
 	pocell.icon = our_plant.icon // Just in case the plant icons get spread out in different files eventually, this trait won't cause error sprites (also yay downstreams)
 	pocell.icon_state = our_plant.icon_state
-	pocell.maxcharge = our_seed.potency * 0.02 * STANDARD_CELL_CHARGE
+	pocell.maxcharge = our_seed.potency * 0.005 * STANDARD_CELL_CHARGE
 
 	// The secret of potato supercells!
 	var/datum/plant_gene/trait/cell_charge/electrical_gene = our_seed.get_gene(/datum/plant_gene/trait/cell_charge)
 	if(electrical_gene) // Like the good old days
-		pocell.maxcharge *= (electrical_gene.rate * 1000)
+		pocell.maxcharge *= (electrical_gene.rate * 750)
 	pocell.charge = pocell.maxcharge
 	pocell.name = "[our_plant.name] battery"
 	pocell.desc = "A rechargeable plant-based power cell. This one has a rating of [display_energy(pocell.maxcharge)], and you should not swallow it."
@@ -712,7 +722,6 @@
 		return
 
 	RegisterSignal(our_plant, COMSIG_PLANT_ON_SLIP, PROC_REF(prickles_inject))
-// monkestation start: use COMSIG_MOVABLE_IMPACT_ZONE for mobs
 	RegisterSignal(our_plant, COMSIG_MOVABLE_IMPACT, PROC_REF(on_impact))
 	RegisterSignal(our_plant, COMSIG_MOVABLE_IMPACT_ZONE, PROC_REF(on_impact_zone))
 
@@ -725,7 +734,6 @@
 	SIGNAL_HANDLER
 	if(!blocked)
 		prickles_inject(our_plant, target)
-// monkestation end
 
 /*
  * Injects a target with a number of reagents from our plant.
@@ -742,7 +750,7 @@
 	var/mob/living/living_target = target
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
 	if(living_target.reagents && living_target.can_inject())
-		var/injecting_amount = qp_sigmoid(2000, 840, our_seed.potency)
+		var/injecting_amount = qp_sigmoid(2000, 50, our_seed.potency)
 		//420 units at 2000 potency
 		//one 5% reagent would fill a standard plant completely at 2000 potency
 		our_plant.reagents.trans_to(living_target, injecting_amount, methods = INJECT)
@@ -964,12 +972,29 @@
 		return
 
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
-	if(our_seed.get_gene(/datum/plant_gene/trait/stinging))
-		our_plant.embedding = EMBED_POINTY
-	else
-		our_plant.embedding = EMBED_HARMLESS
-	our_plant.updateEmbedding()
 	our_plant.throwforce = qp_sigmoid(1000, 50, our_seed.potency)
+	var/datum/embedding/plant_embed = our_plant.get_embed()
+	if (!plant_embed)
+		if(our_seed.get_gene(/datum/plant_gene/trait/stinging))
+			our_plant.set_embed(/datum/embedding/spiky_plant)
+		else
+			our_plant.set_embed(/datum/embedding/sticky_plant)
+		return
+
+	plant_embed.ignore_throwspeed_threshold = TRUE
+	if(our_seed.get_gene(/datum/plant_gene/trait/stinging))
+		return
+
+	plant_embed.pain_mult = 0
+	plant_embed.jostle_pain_mult = 0
+
+/datum/embedding/sticky_plant
+	pain_mult = 0
+	jostle_pain_mult = 0
+	ignore_throwspeed_threshold = TRUE
+
+/datum/embedding/spiky_plant
+	ignore_throwspeed_threshold = TRUE
 
 /**
  * This trait automatically heats up the plant's chemical contents when harvested.
@@ -1050,3 +1075,33 @@
 /datum/plant_gene/trait/plant_type/alien_properties
 	name = "?????"
 	icon = FA_ICON_QUESTION
+
+/*
+ * this limits potency, it is used for plants that have strange behavior above 100 potency.
+ *
+ */
+
+/datum/plant_gene/trait/seedless
+	name = "Seedless"
+	description = "The plant is unable to produce seeds"
+	icon = FA_ICON_STRIKETHROUGH
+	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
+
+/datum/plant_gene/trait/noreact
+	name = "Catalytic Inhibitor Serum"
+	description = "This genetic trait enables the plant to produce a serum that effectively halts chemical reactions within its tissues."
+	icon = FA_ICON_LAYER_GROUP
+	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_GRAFTABLE
+
+/datum/plant_gene/trait/noreact/on_new_plant(obj/item/our_plant, newloc)
+	. = ..()
+	if(!.)
+		return
+	ENABLE_BITFIELD(our_plant.reagents.flags, NO_REACT)
+	RegisterSignal(our_plant, COMSIG_PLANT_ON_SQUASH, PROC_REF(noreact_on_squash))
+
+/datum/plant_gene/trait/noreact/proc/noreact_on_squash(obj/item/our_plant, atom/target)
+	SIGNAL_HANDLER
+
+	DISABLE_BITFIELD(our_plant.reagents.flags, NO_REACT)
+	our_plant.reagents.handle_reactions()

@@ -1,5 +1,3 @@
-#define STATION_RENAME_TIME_LIMIT 3000
-
 /obj/item/station_charter
 	name = "station charter"
 	icon = 'icons/obj/wizard.dmi'
@@ -139,8 +137,6 @@
 	SSblackbox.record_feedback("text", "station_renames", 1, "[station_name()]")
 	if(!unlimited_uses)
 		used = TRUE
-
-#undef STATION_RENAME_TIME_LIMIT
 
 /obj/item/station_charter/revolution
 	name = "revolutionary banner"

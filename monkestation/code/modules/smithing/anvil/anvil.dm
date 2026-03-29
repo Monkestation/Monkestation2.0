@@ -26,6 +26,7 @@
 		var/image/new_image = image(icon = initial(recipe.output.icon), icon_state = initial(recipe.output.icon_state))
 		recipes |= list(initial(recipe.name) = new_image)
 	register_context()
+	AddElement(/datum/element/falling_hazard, damage = 100, wound_bonus = 10, hardhat_safety = FALSE, crushes = TRUE, impact_sound = 'monkestation/code/modules/smithing/sounds/forge.ogg')
 
 /obj/structure/anvil/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()

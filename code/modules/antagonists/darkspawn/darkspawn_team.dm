@@ -29,7 +29,6 @@
 	if(SSgamemode)
 		required_succs = clamp(round(SSgamemode.get_correct_popcount() / 2), 5, 25) //half the players, 5 at minimum, scaling up to 25 at max
 	update_objectives()
-	addtimer(CALLBACK(src, PROC_REF(enable_validhunt)), 75 MINUTES) //allow for validhunting after a duration
 
 /datum/team/darkspawn/add_member(datum/mind/new_member)
 	. = ..()
@@ -44,6 +43,23 @@
 
 /datum/team/darkspawn/proc/remove_thrall(datum/mind/member)
 	thralls -= member
+
+/datum/team/darkspawn/antag_listing_entry()
+	var/list/parts = list()
+	parts += "<b>Darkspawns</b><br>"
+	parts += "<table cellspacing=5>"
+	for(var/datum/antagonist/antag_entry as anything in get_team_antags())
+		parts += antag_entry.antag_listing_entry()
+	parts += "</table>"
+	if(LAZYLEN(thralls))
+		parts += "<b>Darkspawn Thralls</b><br>"
+		parts += "<table cellspacing=5>"
+		for(var/datum/mind/thrall_mind in thralls)
+			var/datum/antagonist/thrall_darkspawn/thrall = thrall_mind.has_antag_datum(/datum/antagonist/thrall_darkspawn)
+			if(thrall)
+				parts += thrall.antag_listing_entry()
+		parts += "</table>"
+	return parts.Join()
 
 ////////////////////////////////////////////////////////////////////////////////////
 //-------------------------------Round end Stuff----------------------------------//
@@ -73,19 +89,10 @@
 
 /datum/team/darkspawn/proc/check_darkspawn_death() //check if a darkspawn is still alive
 	for(var/datum/mind/dark_mind as anything in members)
-		if(!istype(dark_mind)) //if for some reason something other than a mind was mixed in, skip it
+		if(!istype(dark_mind) || QDELETED(dark_mind.current) || isbrain(dark_mind.current) || issilicon(dark_mind.current) || !dark_mind.current.ckey)
 			continue
-		if(!dark_mind.current) //if they don't have a body, skip it
-			continue
-		if(QDELETED(dark_mind.current)) //if the body is deleted, but hasn't been cleaned up yet, skip it
-			continue
-		if(dark_mind.current.stat == DEAD) //if their body is dead, skip it
-			continue
-		if(isbrain(dark_mind.current) || issilicon(dark_mind.current)) //if they're a borg or mmi, skip it
-			continue
-		if(!dark_mind.current.ckey)//if they've gone cata, skip it
-			continue
-		return FALSE //they aren't all dead
+		if(dark_mind.current.stat != DEAD)
+			return FALSE
 	return TRUE //they're all dead
 
 ////////////////////////////////////////////////////////////////////////////////////
@@ -130,7 +137,7 @@
 /datum/team/darkspawn/proc/grant_lucidity(amount = 1)
 	lucidity += amount
 	if(lucidity >= (required_succs -1)) //enable valid hunting right before darkspawns complete their objective
-		enable_validhunt()
+		announce_darkspawns()
 
 	if(lucidity >= required_succs && !announced) //let the darkspawns know they've won
 		announced = TRUE
@@ -151,25 +158,15 @@
 		var/was_dead = FALSE
 		if(master.current.stat == DEAD)
 			was_dead = TRUE
-		master.current.revive(ADMIN_HEAL_ALL)
+		master.current.revive(ADMIN_HEAL_ALL, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 		if(was_dead)
 			to_chat(master.current, span_progenitor("Returning to Nullspace has revitalized your form!"))
 
-//60 minutes after the round starts, enable validhunters and powergamers to do their thing (station is probably fucked by that point anyways)
-/datum/team/darkspawn/proc/enable_validhunt()
+/datum/team/darkspawn/proc/announce_darkspawns()
 	if(check_darkspawn_death())//if no darkspawns are alive, don't bother announcing
 		return
 	if(SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_GAMMA)//if for some reason, it's already gamma, don't bother announcing
 		return
 	SSsecurity_level.set_level(SEC_LEVEL_GAMMA)
-	priority_announce("Dangerous fluctuations in the veil have been detected aboard the station. Be on high alert for unusual beings commanding unnatural powers.", "Central Command Higher Dimensional Affairs")
-
-	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, PROC_REF(lock_validhunt)) //so you can't just turn off gamma
-
-/datum/team/darkspawn/proc/lock_validhunt()
-	if(check_darkspawn_death())//if no darkspawns are alive, don't bother announcing
-		return
-	if(SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_GAMMA)//if for some reason, it's already gamma, don't bother announcing
-		return
-	SSsecurity_level.set_level(SEC_LEVEL_GAMMA)
-	priority_announce("The dangerous fluctuations in the veil have not abated. Do not attempt to lower the security level further.", "Central Command Higher Dimensional Affairs")
+	priority_announce("Dangerous fluctuations in the veil have been detected aboard the station. Be on high alert for unusual beings commanding unnatural powers.", \
+					"Central Command Higher Dimensional Affairs")

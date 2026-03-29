@@ -14,6 +14,8 @@
 	var/icon_closed = "lockbox"
 	var/icon_open = "lockbox"
 	var/icon_broken = "lockbox+b"
+	///If the lockbox starts locked
+	var/start_locked = TRUE
 
 ///screentips for lockboxes
 /obj/item/storage/lockbox/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -31,7 +33,8 @@
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
 	atom_storage.max_total_storage = 14
 	atom_storage.max_slots = 4
-	atom_storage.set_locked(STORAGE_FULLY_LOCKED)
+	if(start_locked)
+		atom_storage.set_locked(STORAGE_FULLY_LOCKED)
 
 	register_context()
 	update_icon_state()
@@ -59,6 +62,9 @@
 	return ITEM_INTERACT_BLOCKING
 
 /obj/item/storage/lockbox/proc/can_unlock(mob/living/user, obj/item/card/id/id_card, silent = FALSE)
+	if (broken) // emagged
+		balloon_alert(user, "broken!")
+		return FALSE
 	if(check_access(id_card))
 		return TRUE
 	if(!silent)
@@ -82,6 +88,7 @@
 
 /obj/item/storage/lockbox/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(!broken)
+		open = TRUE
 		broken = TRUE
 		atom_storage.set_locked(STORAGE_NOT_LOCKED)
 		balloon_alert(user, "lock destroyed")
@@ -131,9 +138,6 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	req_access = list(ACCESS_CAPTAIN)
-	icon_locked = "medalbox+l"
-	icon_closed = "medalbox"
-	icon_broken = "medalbox+b"
 
 /obj/item/storage/lockbox/medal/Initialize(mapload)
 	. = ..()
@@ -144,14 +148,34 @@
 
 /obj/item/storage/lockbox/medal/examine(mob/user)
 	. = ..()
-	if(!atom_storage.locked)
-		. += span_notice("Alt-click to [open ? "close":"open"] it.")
+	. += span_notice("Use in hand to [open ? "close it":"open it in order to access contents"].")
 
-/obj/item/storage/lockbox/medal/click_alt(mob/user)
-	if(!atom_storage.locked)
-		open = !open
-		update_appearance()
-	return CLICK_ACTION_SUCCESS
+/obj/item/storage/lockbox/medal/attack_self(mob/user, modifiers)
+	// . = ..()
+	if (atom_storage?.locked < STORAGE_FULLY_LOCKED) // not fully locked
+		if (open)
+			open = FALSE
+			atom_storage.set_locked(STORAGE_SOFT_LOCKED)
+		else
+			open = TRUE
+			atom_storage.set_locked(STORAGE_NOT_LOCKED)
+	return
+
+/obj/item/storage/lockbox/medal/tool_act(mob/living/user, obj/item/tool, list/modifiers)
+	var/obj/item/card/card = tool.GetID()
+	if(isnull(card))
+		return ..()
+
+	if(can_unlock(user, card))
+		if (!open) // Addition: can only relock if lid closed
+			if (atom_storage?.locked > STORAGE_SOFT_LOCKED)
+				// lid is closed, so still soft locked
+				atom_storage.set_locked(STORAGE_SOFT_LOCKED)
+			else
+				atom_storage.set_locked(STORAGE_FULLY_LOCKED)
+			return ITEM_INTERACT_SUCCESS
+		balloon_alert(user, "close lid!")
+	return ITEM_INTERACT_BLOCKING
 
 /obj/item/storage/lockbox/medal/PopulateContents()
 	new /obj/item/clothing/accessory/medal/gold/captain(src)
@@ -165,16 +189,17 @@
 		new /obj/item/clothing/accessory/medal/conduct(src)
 
 /obj/item/storage/lockbox/medal/update_icon_state()
-	if(atom_storage?.locked)
+	. = ..()
+	if(atom_storage?.locked > STORAGE_SOFT_LOCKED)
 		icon_state = "medalbox+l"
-		return ..()
+		return
 
 	icon_state = "medalbox"
 	if(open)
 		icon_state += "open"
 	if(broken)
 		icon_state += "+b"
-	return ..()
+	return
 
 /obj/item/storage/lockbox/medal/update_overlays()
 	. = ..()
@@ -292,3 +317,68 @@
 		return NONE
 	context[SCREENTIP_CONTEXT_LMB] = atom_storage.locked ? "Unlock with ID" : "Lock with ID"
 	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/storage/lockbox/vialbox
+	name = "vial box"
+	desc = "A small box that can hold up to six vials in a sealed enviroment."
+	icon = 'icons/obj/storage/vial_box.dmi'
+	w_class = WEIGHT_CLASS_NORMAL
+	icon_state = "vialbox"
+	req_access = list(ACCESS_MEDICAL)
+	icon_locked = "vialbox"
+	icon_closed = "vialbox"
+	icon_broken = "vialbox"
+	icon_open = "vialbox"
+	custom_price = PAYCHECK_CREW / 2
+	discountable = FALSE
+	start_locked = FALSE
+
+/obj/item/storage/lockbox/vialbox/update_icon()
+	cut_overlays()
+	var/slot = 1
+	for(var/obj/item/reagent_containers/cup/vial/G in contents)
+		var/mutable_appearance/vial = mutable_appearance(icon, "vialboxvial[slot]")
+		var/mutable_appearance/filling = mutable_appearance(icon, "vialboxvial[slot]-")
+		if(G.reagents.total_volume)
+			var/percent = round((G.reagents.total_volume / G.volume) * 100)
+			switch(percent)
+				if(75 to 79)
+					filling.icon_state = "vialboxvial[slot]-75"
+				if(80 to 90)
+					filling.icon_state = "vialboxvial[slot]-80"
+				if(91 to INFINITY)
+					filling.icon_state = "vialboxvial[slot]-100"
+
+			filling.color = mix_color_from_reagents(G.reagents.reagent_list)
+		add_overlay(vial)
+		add_overlay(filling)
+		slot++
+	..()
+
+/obj/item/storage/lockbox/vialbox/Initialize(mapload)
+	. = ..()
+	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
+	atom_storage.max_slots = 6
+	atom_storage.max_total_storage = 12
+	atom_storage.set_holdable(list(/obj/item/reagent_containers/cup/vial))
+	if(!broken)
+		var/mutable_appearance/led = mutable_appearance(icon, "led[atom_storage.locked]")
+		add_overlay(led)
+	if(!open)
+		var/mutable_appearance/lid = mutable_appearance(icon, "vialboxcover")
+		add_overlay(lid)
+	update_icon()
+
+/obj/item/storage/lockbox/vialbox/hypo_deluxe
+	name = "deluxe hypospray vial box"
+	desc = "A small box that can hold up to six vials in a sealed enviroment. This one contains a plethora of different vials for various medical ailments, designed for use in a deluxe hypospray."
+	start_locked = TRUE
+	req_access = list(ACCESS_CMO)
+
+/obj/item/storage/lockbox/vialbox/hypo_deluxe/PopulateContents()
+	new /obj/item/reagent_containers/cup/vial/large/bluespace/omnizine(src)
+	new /obj/item/reagent_containers/cup/vial/large/bluespace/sal_acid(src)
+	new /obj/item/reagent_containers/cup/vial/large/bluespace/oxandrolone(src)
+	new /obj/item/reagent_containers/cup/vial/large/bluespace/pen_acid(src)
+	new /obj/item/reagent_containers/cup/vial/large/bluespace/oxy(src)
+	new /obj/item/reagent_containers/cup/vial/large/bluespace/atropine(src)

@@ -1,8 +1,8 @@
-import { Box } from '../../components';
 import { createSearch } from 'common/string';
+import { Box } from '../../components';
 
 import { LootBox } from './LootBox';
-import { SearchItem } from './types';
+import type { SearchItem } from './types';
 
 type Props = {
   contents: SearchItem[];

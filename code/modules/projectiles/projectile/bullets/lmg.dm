@@ -1,33 +1,27 @@
 // C3D (Borgs)
 
 /obj/projectile/bullet/c3d
-	generic_name = "bullet"
 	damage = 20
 
 // Mech LMG
 
 /obj/projectile/bullet/lmg
-	generic_name = "bullet"
 	damage = 20
 
 // Mech FNX-99
 
 /obj/projectile/bullet/incendiary/fnx99
-	generic_name = "bullet"
 	damage = 20
 
 // Turrets
 
 /obj/projectile/bullet/manned_turret
-	generic_name = "bullet"
 	damage = 20
 
 /obj/projectile/bullet/manned_turret/hmg
-	generic_name = "bullet"
 	icon_state = "redtrac"
 
 /obj/projectile/bullet/syndicate_turret
-	generic_name = "bullet"
 	damage = 20
 
 // 7.12x82mm (SAW)
@@ -43,7 +37,7 @@
 /obj/projectile/bullet/mm712x82/ap
 	name = "7.12x82mm armor-piercing bullet"
 	armour_penetration = 85
-	speed = 0.3 //monke edit
+	speed = 2 //monke edit
 
 /obj/projectile/bullet/mm712x82/hp
 	name = "7.12x82mm hollow-point bullet"
@@ -58,7 +52,7 @@
 	name = "7.12x82mm incendiary bullet"
 	damage = 15
 	fire_stacks = 3
-	speed = 0.6 //monke edit
+	speed = 1.25 //monke edit
 
 /obj/projectile/bullet/mm712x82/match
 	name = "7.12x82mm match bullet"
@@ -66,7 +60,7 @@
 	ricochet_chance = 60
 	ricochet_auto_aim_range = 4
 	ricochet_incidence_leeway = 55
-	speed = 0.3 //monke edit
+	speed = 2 //monke edit
 
 /obj/projectile/bullet/mm712x82/bouncy
 	name = "7.12x82mm rubber bullet"
@@ -76,7 +70,7 @@
 	ricochet_auto_aim_range = 4
 	ricochet_incidence_leeway = 0
 	ricochet_decay_chance = 0.9
-	speed = 0.6 //monke edit
+	speed = 1.25 //monke edit
 
 
 // 12.7x70mm (Malone / tank MG)
@@ -107,7 +101,6 @@
 			damage *= biotype_damage_multiplier
 	return ..()
 
-
 /obj/projectile/bullet/c65xeno/evil
 	name = "6.5mm FMJ round"
 	damage = 10
@@ -119,7 +112,7 @@
 /obj/projectile/bullet/c65xeno/pierce
 	name = "6.5mm subcaliber tungsten sabot round"
 	icon_state = "gaussphase"
-	speed = 0.3
+	speed = 2
 	damage = 6
 	armour_penetration = 60
 	wound_bonus = 5
@@ -142,7 +135,7 @@
 /obj/projectile/bullet/c65xeno/pierce/evil
 	name = "6.5mm UDS"
 	icon_state = "gaussphase"
-	speed = 0.3
+	speed = 2
 	damage = 7
 	armour_penetration = 60
 	wound_bonus = 10
@@ -162,7 +155,7 @@
 	icon_state = "redtrac"
 	damage = 5
 	bare_wound_bonus = 0
-	speed = 0.7 ///half of standard
+	speed = 1.1
 	/// How many firestacks the bullet should impart upon a target when impacting
 	biotype_damage_multiplier = 4
 	var/firestacks_to_give = 1
@@ -181,7 +174,7 @@
 	icon_state = "redtrac"
 	damage = 10
 	bare_wound_bonus = 0
-	speed = 0.7 ///half of standard
+	speed = 1.1
 	/// How many firestacks the bullet should impart upon a target when impacting
 	biotype_damage_multiplier = 4
 	projectile_piercing = PASSMOB
@@ -217,9 +210,10 @@
 
 /obj/projectile/bullet/a762/kinetic
 	name = "kinetic 7.62 projectile"
-	damage = 15 //somehow does less damage than the SMG, uh... dont ask why?
+	damage = 6 //somehow does less damage than the SMG, uh... dont ask why?
 	armour_ignorance = 0
 	icon_state = "gaussweak"
+	fauna_mod = 2.5 // asks for a 1/10th of a clip to down normal humans
 
 /obj/projectile/bullet/a762/kinetic/on_hit(atom/target, Firer, blocked = 0, pierce_hit) //its not meant to tear through walls like a plasma cutter, but will still at least bust down a wall if it hits one.
 	if(ismineralturf(target))

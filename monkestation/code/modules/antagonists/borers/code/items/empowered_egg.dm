@@ -59,8 +59,8 @@
 	var/mob/dead/observer/new_borer = pick(candidates)
 	var/mob/living/basic/cortical_borer/empowered/spawned_cb = new(owner.drop_location())
 	var/obj/item/bodypart/chest/chest = owner.get_bodypart(BODY_ZONE_CHEST)
-	chest.dismember()
-	owner.visible_message(span_danger("[spawned_cb] explodes out of [owner]'s chest, sending gore flying everywhere!"), span_danger("[spawned_cb] explodes out of your chest, giblets flying everywhere!"))
 	spawned_cb.generation = generation
 	spawned_cb.PossessByPlayer(new_borer.ckey)
 	spawned_cb.mind.add_antag_datum(/datum/antagonist/cortical_borer/hivemind)
+	owner.visible_message(span_danger("[spawned_cb] explodes out of [owner]'s chest, sending gore flying everywhere!"), span_danger("[spawned_cb] explodes out of your chest, giblets flying everywhere!"))
+	chest.dismember()

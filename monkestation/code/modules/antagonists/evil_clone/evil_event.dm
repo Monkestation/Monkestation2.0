@@ -11,10 +11,10 @@
 /datum/round_event/cloner_corruption/start()
 	var/found = FALSE
 	var/objective = pick(subtypesof(/datum/objective/evil_clone))
-	for(var/obj/machinery/clonepod/experimental/cloner in GLOB.machines)
+	for(var/obj/machinery/clonepod/experimental/cloner as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/clonepod/experimental))
 		if(!cloner.locked)
 			cloner.evil_objective = objective
 			cloner.RefreshParts()
 			found = TRUE
 	if(!found) // Refund if no experimental cloners are found.
-		control.occurrences--
+		control.subtract_occurrence()

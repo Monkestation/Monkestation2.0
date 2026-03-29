@@ -105,13 +105,15 @@
 
 // Values for /datum/preferences/current_tab
 /// Open the character preference window
-#define PREFERENCE_TAB_CHARACTER_PREFERENCES 0
-
+#define PREFERENCE_WINDOW_CHARACTERS 0
 /// Open the game preferences window
-#define PREFERENCE_TAB_GAME_PREFERENCES 1
+#define PREFERENCE_WINDOW_GAME_PREFERENCES 1
 
-/// Open the keybindings window
-#define PREFERENCE_TAB_KEYBINDINGS 2
+// Values for /datum/preferences/starting_page
+#define PREFERENCE_PAGE_CHARACTERS -1
+#define PREFERENCE_PAGE_SETTINGS 0
+#define PREFERENCE_PAGE_KEYBINDINGS 1
+#define PREFERENCE_PAGE_PREFERENCES_VOLUME 2
 
 /// These will be shown in the character sidebar, but at the bottom.
 #define PREFERENCE_CATEGORY_FEATURES "features"

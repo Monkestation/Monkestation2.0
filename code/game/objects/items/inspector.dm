@@ -1,3 +1,6 @@
+///Energy used to say an error message.
+#define ENERGY_TO_SPEAK (0.001 * STANDARD_CELL_CHARGE)
+
 /**
  * # N-spect scanner
  *
@@ -120,7 +123,7 @@
 		to_chat(user, "<span class='info'>\The [src] doesn't seem to be on... Perhaps it ran out of power?")
 		return
 	if(!cell.use(energy_per_print))
-		if(cell.use(energy_to_speak))
+		if(cell.use(ENERGY_TO_SPEAK))
 			say("ERROR! POWER CELL CHARGE LEVEL TOO LOW TO PRINT REPORT!")
 		return
 
@@ -266,7 +269,7 @@
 
 /obj/item/inspector/clown/bananium/proc/check_settings_legality()
 	if(print_sound_mode == INSPECTOR_PRINT_SOUND_MODE_NORMAL && time_mode == INSPECTOR_TIME_MODE_HONK)
-		if(cell.use(energy_to_speak))
+		if(cell.use(ENERGY_TO_SPEAK))
 			say("Setting combination forbidden by Geneva convention revision CCXXIII selected, reverting to defaults")
 		time_mode = INSPECTOR_TIME_MODE_SLOW
 		print_sound_mode = INSPECTOR_PRINT_SOUND_MODE_NORMAL
@@ -304,7 +307,7 @@
 	if(time_mode != INSPECTOR_TIME_MODE_HONK)
 		return ..()
 	if(paper_charges == 0)
-		if(cell.use(energy_to_speak))
+		if(cell.use(ENERGY_TO_SPEAK))
 			say("ERROR! OUT OF PAPER! MAXIMUM PRINTING SPEED UNAVAIBLE! SWITCH TO A SLOWER SPEED TO OR PROVIDE PAPER!")
 		else
 			to_chat(user, "<span class='info'>\The [src] doesn't seem to be on... Perhaps it ran out of power?")
@@ -394,3 +397,5 @@
 	to_chat(user, span_notice("As you try to fold [src] into the shape of a plane, it disintegrates into water!"))
 	qdel(src)
 	return CLICK_ACTION_SUCCESS
+
+#undef ENERGY_TO_SPEAK

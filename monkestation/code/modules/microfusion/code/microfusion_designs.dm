@@ -434,3 +434,5 @@
 		/datum/material/bananium = HALF_SHEET_MATERIAL_AMOUNT,
 	)
 	build_path = /obj/item/microfusion_gun_attachment/camo/honk
+
+#undef RND_CATEGORY_MICROFUSION_WEAPONS

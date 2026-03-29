@@ -353,6 +353,10 @@
 		update_sight()
 	if(I.flags_inv & HIDEMASK || forced)
 		update_worn_mask()
+	if(I.flags_inv & HIDEEARS || forced)
+		update_inv_ears()
+	if(I.flags_inv & HIDEEYES || forced)
+		update_worn_glasses()
 	update_worn_head()
 
 /mob/living/carbon/proc/get_holding_bodypart_of_item(obj/item/I)

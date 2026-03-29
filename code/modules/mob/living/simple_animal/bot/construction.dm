@@ -259,7 +259,8 @@
 /obj/item/bot_assembly/medbot
 	name = "incomplete medibot assembly"
 	desc = "A first aid kit with a robot arm permanently grafted to it."
-	icon_state = "firstaid_arm"
+	icon_state = "medbot_assembly_generic"
+	base_icon_state = "medbot_assembly"
 	created_name = "Medibot" //To preserve the name if it's a unique medbot I guess
 	var/skin = null //Same as medbot, set to tox or ointment for the respective kits.
 	var/healthanalyzer = /obj/item/healthanalyzer
@@ -268,7 +269,7 @@
 /obj/item/bot_assembly/medbot/proc/set_skin(skin)
 	src.skin = skin
 	if(skin)
-		add_overlay("kit_skin_[skin]")
+		icon_state = "[base_icon_state]_[skin]"
 
 /obj/item/bot_assembly/medbot/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	..()
@@ -281,7 +282,7 @@
 				to_chat(user, span_notice("You add [attacking_item] to [src]."))
 				qdel(attacking_item)
 				name = "first aid/robot arm/health analyzer assembly"
-				add_overlay("na_scanner")
+				add_overlay("[base_icon_state]_analyzer")
 				build_step++
 
 		if(ASSEMBLY_SECOND_STEP)
@@ -479,17 +480,19 @@
 	desc = "A fire extinguisher with an arm attached to it."
 	icon_state = "firebot_arm"
 	created_name = "Firebot"
+	var/hardhat_type = /obj/item/clothing/head/utility/hardhat
 
 /obj/item/bot_assembly/firebot/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	..()
 	switch(build_step)
 		if(ASSEMBLY_FIRST_STEP)
-			if(istype(attacking_item, /obj/item/clothing/head/utility/hardhat/red))
+			if(istype(attacking_item, /obj/item/clothing/head/utility/hardhat))
 				if(!user.temporarilyRemoveItemFromInventory(attacking_item))
 					return
 				to_chat(user,span_notice("You add the [attacking_item] to [src]!"))
 				icon_state = "firebot_helmet"
 				desc = "An incomplete firebot assembly with a fire helmet."
+				hardhat_type = attacking_item.type
 				qdel(attacking_item)
 				build_step++
 
@@ -500,6 +503,7 @@
 				to_chat(user, span_notice("You add the [attacking_item] to [src]! Beep Boop!"))
 				var/mob/living/simple_animal/bot/firebot/F = new(drop_location())
 				F.name = created_name
+				F.hardhat_type = hardhat_type
 				qdel(attacking_item)
 				qdel(src)
 

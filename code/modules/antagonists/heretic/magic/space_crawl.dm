@@ -33,7 +33,7 @@
 	. = ..()
 	if(!.)
 		return FALSE
-	if(isspaceturf(get_turf(owner)) || ismiscturf(get_turf(owner)))
+	if(isspaceturf(get_turf(owner)) || ismiscturf(get_turf(owner)) || isoceanturf(get_turf(owner)))
 		return TRUE
 	if(feedback)
 		to_chat(owner, span_warning("You must stand on a space or misc turf!"))

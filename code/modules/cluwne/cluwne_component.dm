@@ -95,8 +95,8 @@
 		ADD_TRAIT(cluwne_gloves, TRAIT_NODROP, REF(src))
 		ADD_TRAIT(cluwne_gloves, TRAIT_CLUWNE, REF(src))
 
-	if(our_cluwne.dropItemToGround(our_cluwne.shoes) && !istype(our_cluwne.shoes, /obj/item/clothing/shoes/clown_shoes/cluwne))
-		var/obj/item/clothing/cluwne_shoes = new /obj/item/clothing/shoes/clown_shoes/cluwne(our_cluwne)
+	if(our_cluwne.dropItemToGround(our_cluwne.shoes) && !istype(our_cluwne.shoes, /obj/item/clothing/shoes/clown_shoes/cluwne/cursed))
+		var/obj/item/clothing/cluwne_shoes = new /obj/item/clothing/shoes/clown_shoes/cluwne/cursed(our_cluwne)
 		our_cluwne.equip_to_slot_or_del(cluwne_shoes, ITEM_SLOT_FEET)
 		ADD_TRAIT(cluwne_shoes, TRAIT_NODROP, REF(src))
 		ADD_TRAIT(cluwne_shoes, TRAIT_CLUWNE, REF(src))

@@ -347,6 +347,15 @@
 	result = /obj/item/food/cake/mothmallow
 	category = CAT_MOTH
 
+/datum/crafting_recipe/food/smothe
+	reqs = list(
+		/obj/item/food/cracker = 2,
+		/obj/item/food/chocolatebar = 1,
+		/obj/item/food/cakeslice/mothmallow = 1,
+	)
+	result = /obj/item/food/smothe
+	category = CAT_MOTH
+
 /datum/crafting_recipe/food/moffin
 	name = "Moffin"
 	reqs = list(

@@ -7,21 +7,12 @@
 	icon_state = "hardsuit-mining"
 	armor_type = /datum/armor/hardsuit/mining/explorer
 	hardsuit_helmet = /obj/item/clothing/head/helmet/space/hardsuit/mining
-	allowed = list(
-		/obj/item/flashlight,
-		/obj/item/tank/internals,
-		/obj/item/tank/jetpack,
-		/obj/item/resonator,
-		/obj/item/mining_scanner,
-		/obj/item/t_scanner/adv_mining_scanner,
-		/obj/item/gun/energy/recharge/kinetic_accelerator, //i imagine this suit has a bunch of hooks and pockets for tools :P
-		/obj/item/storage/bag/ore,
-		/obj/item/pickaxe,
-		)
+	allowed = null
 
 /obj/item/clothing/suit/space/hardsuit/mining/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/armor_plate)
+	allowed = GLOB.mining_suit_allowed
 
 /obj/item/clothing/head/helmet/space/hardsuit/mining
 	name = "mining hardsuit helmet"

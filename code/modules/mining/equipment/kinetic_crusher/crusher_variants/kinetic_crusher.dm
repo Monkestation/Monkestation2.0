@@ -225,8 +225,9 @@
 	var/obj/projectile/destabilizer/destabilizer = new crusher_destabilizer(proj_turf)
 	for(var/obj/item/crusher_trophy/attached_trophy as anything in trophies)
 		attached_trophy.on_projectile_fire(destabilizer, user)
-	destabilizer.preparePixelProjectile(target, user, modifiers)
+	destabilizer.aim_projectile(target, user, modifiers)
 	destabilizer.firer = user
+	destabilizer.fired_from = src
 	playsound(user, 'sound/weapons/plasma_cutter.ogg', 100, TRUE)
 	destabilizer.fire()
 	charged = FALSE
@@ -238,7 +239,11 @@
 	if(!set_recharge_time)
 		set_recharge_time = charge_time
 	deltimer(charge_timer)
-	charge_timer = addtimer(CALLBACK(src, PROC_REF(recharge_projectile)), set_recharge_time, TIMER_STOPPABLE)
+	if(set_recharge_time > 0)
+		charge_timer = addtimer(CALLBACK(src, PROC_REF(recharge_projectile)), set_recharge_time, TIMER_STOPPABLE)
+	else
+		charge_timer = null
+		recharge_projectile()
 
 /// Recharges the projectile
 /obj/item/kinetic_crusher/proc/recharge_projectile()

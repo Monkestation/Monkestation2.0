@@ -13,6 +13,7 @@
 #define APC_CHANNEL_EQUIP_TRESHOLD 30
 ///Charge percentage at which the APC icon indicates discharging
 #define APC_CHANNEL_ALARM_TRESHOLD 75
+#define ROUNDSTART_APC_CHARGE 95
 
 /obj/machinery/power/apc
 	name = "area power controller"
@@ -39,7 +40,7 @@
 	///Reference to our internal cell
 	var/obj/item/stock_parts/power_store/cell
 	///Initial cell charge %
-	var/start_charge = 90
+	var/start_charge = ROUNDSTART_APC_CHARGE
 	///Type of cell we start with
 	var/cell_type = /obj/item/stock_parts/power_store/battery/upgraded //Base cell has 2500 capacity. Enter the path of a different cell you want to use. cell determines charge rates, max capacity, ect. These can also be changed with other APC vars, but isn't recommended to minimize the risk of accidental usage of dirty editted APCs
 	///State of the cover (closed, opened, removed)
@@ -85,8 +86,6 @@
 	var/malfhack = FALSE //New var for my changes to AI malf. --NeoFite
 	///Reference to our ai hacker
 	var/mob/living/silicon/ai/malfai = null //See above --NeoFite
-	///Counter for displaying the hacked overlay to mobs within view
-	var/hacked_flicker_counter = 0
 	///State of the electronics inside (missing, installed, secured)
 	var/has_electronics = APC_ELECTRONICS_MISSING
 	///used for the Blackout malf module
@@ -141,8 +140,6 @@
 	var/no_charge = FALSE
 	/// Used for apc helper called full_charge to make apc's charge at 100% meter.
 	var/full_charge = FALSE
-	///When did the apc generate last malf ai processing time.
-	COOLDOWN_DECLARE(malf_ai_pt_generation)
 	armor_type = /datum/armor/power_apc
 
 /datum/armor/power_apc
@@ -224,11 +221,7 @@
 	RegisterSignal(SSdcs, COMSIG_GLOB_GREY_TIDE, PROC_REF(grey_tide))
 	update_appearance()
 
-	GLOB.apcs_list += src
-
 /obj/machinery/power/apc/Destroy()
-	GLOB.apcs_list -= src
-
 	if(malfai && operating)
 		malfai.malf_picker.processing_time = clamp(malfai.malf_picker.processing_time - 10,0,1000)
 	disconnect_from_area()
@@ -526,21 +519,12 @@
 		update_appearance()
 	if(machine_stat & (BROKEN|MAINT))
 		return
-	if(!area || !area.requires_power)
+	if(!area?.requires_power)
 		return
 	if(failure_timer)
 		failure_timer--
 		force_update = TRUE
 		return
-
-	if((obj_flags & EMAGGED) || malfai)
-		hacked_flicker_counter = hacked_flicker_counter - 1
-		if(hacked_flicker_counter <= 0)
-			flicker_hacked_icon()
-
-	if(malfai && COOLDOWN_FINISHED(src, malf_ai_pt_generation) && cell.use(60 KILO JOULES) > 0 && malfai.malf_picker.processing_time < MALF_MAX_PP) // Over time generation of malf points for the ai controlling it, costs a bit of power
-		COOLDOWN_START(src, malf_ai_pt_generation, 30 SECONDS)
-		malfai.malf_picker.processing_time += 1
 
 	//dont use any power from that channel if we shut that power channel off
 	if(operating)
@@ -571,6 +555,7 @@
 
 	if(cell && !shorted) //need to check to make sure the cell is still there since rigged/corrupted cells can randomly explode after give().
 		// set channels depending on how much charge we have left
+		var/cell_percent = cell.percent()
 		if(cell.charge <= 0) // zero charge, turn all off
 			equipment = autoset(equipment, AUTOSET_FORCE_OFF)
 			lighting = autoset(lighting, AUTOSET_FORCE_OFF)
@@ -579,7 +564,7 @@
 			if(!nightshift_lights || (nightshift_lights && !low_power_nightshift_lights))
 				low_power_nightshift_lights = TRUE
 				INVOKE_ASYNC(src, PROC_REF(set_nightshift), TRUE)
-		else if(cell.percent() < APC_CHANNEL_LIGHT_TRESHOLD) // turn off lighting & equipment
+		else if(cell_percent < APC_CHANNEL_LIGHT_TRESHOLD) // turn off lighting & equipment
 			equipment = autoset(equipment, AUTOSET_OFF)
 			lighting = autoset(lighting, AUTOSET_OFF)
 			environ = autoset(environ, AUTOSET_ON)
@@ -587,7 +572,7 @@
 			if(!nightshift_lights || (nightshift_lights && !low_power_nightshift_lights))
 				low_power_nightshift_lights = TRUE
 				INVOKE_ASYNC(src, PROC_REF(set_nightshift), TRUE)
-		else if(cell.percent() < APC_CHANNEL_EQUIP_TRESHOLD) // turn off equipment
+		else if(cell_percent < APC_CHANNEL_EQUIP_TRESHOLD) // turn off equipment
 			equipment = autoset(equipment, AUTOSET_OFF)
 			lighting = autoset(lighting, AUTOSET_ON)
 			environ = autoset(environ, AUTOSET_ON)
@@ -603,8 +588,13 @@
 				low_power_nightshift_lights = FALSE
 				if(!SSnightshift.nightshift_active)
 					INVOKE_ASYNC(src, PROC_REF(set_nightshift), FALSE)
-			if(cell.percent() > APC_CHANNEL_ALARM_TRESHOLD)
+			if(cell_percent > APC_CHANNEL_ALARM_TRESHOLD)
 				alarm_manager.clear_alarm(ALARM_POWER)
+
+		//clock cult stuff
+		if(integration_cog && SSthe_ark.clock_power < SSthe_ark.max_clock_power)
+			var/power_delta = clamp(cell.charge - 70, 350, 700)
+			SSthe_ark.adjust_clock_power(power_delta / 70, TRUE)
 
 	else // no cell, switch everything off
 		charging = APC_NOT_CHARGING
@@ -760,7 +750,17 @@
 	icon_state = "power_mod"
 	desc = "Heavy-duty switching circuits for power control."
 
+/// Returns the amount of time it will take the APC at its current trickle charge rate to reach a charge level. If the APC is functionally not charging, returns null.
+/obj/machinery/power/apc/proc/time_to_charge(joules)
+	var/required_joules = joules - charge()
+	var/trickle_charge_power = energy_to_power(area.energy_usage[AREA_USAGE_APC_CHARGE])
+	if(trickle_charge_power >= 1 KILO WATTS) // require at least a bit of charging
+		return round(energy_to_power(required_joules / trickle_charge_power) * SSmachines.wait + SSmachines.wait, SSmachines.wait)
+
+	return null
+
 #undef CHARGELEVEL
 #undef APC_CHANNEL_LIGHT_TRESHOLD
 #undef APC_CHANNEL_EQUIP_TRESHOLD
 #undef APC_CHANNEL_ALARM_TRESHOLD
+#undef ROUNDSTART_APC_CHARGE

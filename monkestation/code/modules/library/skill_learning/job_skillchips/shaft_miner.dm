@@ -52,7 +52,7 @@
 	/mob/living/basic/mining/goliath/ = list("Goliath!", "Watch the tentacles!", "We got a goliath!", "Goliath! Don't let it grab you!", "Watch where you stick those tentacles, you blasted sack of hellspawn! "),
 	/mob/living/basic/mining/legion/dwarf/ = list("Legion! He's adorable!", "Little legion here!", "I'm gonna call you Steeve!"),
 	/mob/living/basic/mining/legion/ = list("Legion!", "Don't let it create more!", "Watch the legion!", "We've got a legion!"),
-	/mob/living/basic/legion_brood/ = list("Legion spawn!", "Don't let it down you!", "Watch the legion spawn!", "Get the bigger one too!"),
+	/mob/living/basic/mining/legion_brood/ = list("Legion spawn!", "Don't let it down you!", "Watch the legion spawn!", "Get the bigger one too!"),
 	/mob/living/basic/mining/watcher/  = list("Watcher!","Watcher spotted!", "Watcher! I hate these things!", "Break the watcher!", "Dodge the ice!"),
 	/mob/living/basic/mining/brimdemon/ = list("Brimdemon!", "Brimdemon, watch the beams!", "Spotted a brimdemon!", "Keep your distance!"),
 	/mob/living/basic/mining/bileworm/ = list("Bileworm!", "Take out that bileworm!", "Kill the bileworm before it melts us all!", "Acid spreader!"),
@@ -133,7 +133,7 @@
 	/obj/item/wormhole_jaunter/ = list("Jaunter!", "Yeesh, never liked traveling by wormhole!", "Safe...ish wormholes!", "Saves your rear from a chasm if you keep it on you!", "Ready to open a wormhole!"),
 
 	/obj/item/organ/internal/monster_core/ = list("Got some beast organs!", "Organ here!", "Crush this in a pinch!", "Monster organ, grab it before it goes bad!", "Organ! I prefer red sugar..."),
-	/obj/item/reagent_containers/hypospray/medipen/survival/ = list("Survival pen!", "Medipen here!", "Keep one of these in your pocket!", "With this, the fight goes on!", "No time for a lie-down!"),
+	/obj/item/reagent_containers/medipen/survival/ = list("Survival pen!", "Medipen here!", "Keep one of these in your pocket!", "With this, the fight goes on!", "No time for a lie-down!"),
 	/obj/item/extinguisher/ = list("Fire extinguisher!", "Extinguisher here!", "Works against magma fires too!", "Never know when you'll need this!", "Where's the fire?"),
 	/obj/item/lazarus_injector/ = list("Lazarus Injector!", "Wish I had this for my goldfish!", "Lazarus here!", "Lets go revive some pets!"),
 	/obj/item/extraction_pack/ = list("Fulton Pack!", "They're coming too?", "Use this, it's a fulton recovery device.", "Time to grab everything not nailed down!","Heard about a guy that brought home a bear with one of these!", "Link this to a beacon!"),

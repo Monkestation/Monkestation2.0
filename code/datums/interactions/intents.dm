@@ -2,6 +2,12 @@
 	shift_to_open_context_menu = TRUE
 	var/intent = INTENT_HELP
 
+/datum/interaction_mode/intents3/Destroy(force)
+	var/atom/movable/screen/act_intent3/selector = UI
+	if(selector?.intents == src)
+		selector.intents = null
+	return ..()
+
 /datum/interaction_mode/intents3/update_istate(mob/M, modifiers)
 	M.istate = NONE
 
@@ -10,12 +16,17 @@
 
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		M.istate = ISTATE_SECONDARY
+	if(LAZYACCESS(modifiers, CTRL_CLICK))
+		M.istate = ISTATE_CONTROL
 
 	switch (intent)
 		if (INTENT_DISARM)
 			M.istate |= ISTATE_SECONDARY
+			M.istate |= ISTATE_HARM
+			M.istate |= ISTATE_BLOCKING
 		if (INTENT_GRAB)
 			M.istate |= ISTATE_CONTROL
+			M.istate |= ISTATE_HARM
 			M.istate |= ISTATE_BLOCKING
 		if (INTENT_HARM)
 			M.istate |= ISTATE_HARM

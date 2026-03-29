@@ -49,6 +49,8 @@
 	var/list/reaction_info
 	/// Mob that is currently breathing from the tank.
 	var/mob/living/carbon/breathing_mob = null
+	///Progress bar showing how much volume is in the tank when equipped.
+	var/datum/progressbar/volume_bar
 
 /// Closes the tank if dropped while open.
 /datum/armor/item_tank
@@ -77,11 +79,14 @@
 /obj/item/tank/proc/after_internals_opened(mob/living/carbon/carbon_target)
 	breathing_mob = carbon_target
 	RegisterSignal(carbon_target, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
+	var/pressure_on_open = air_contents.return_pressure() //we start off "full" when we toggle, and count down from there.
+	volume_bar = new(carbon_target, pressure_on_open, src, pressure_on_open)
 
 /// Called by carbons after they disconnect the tank from their breathing apparatus.
 /obj/item/tank/proc/after_internals_closed(mob/living/carbon/carbon_target)
 	breathing_mob = null
 	UnregisterSignal(carbon_target, COMSIG_MOB_GET_STATUS_TAB_ITEMS)
+	QDEL_NULL(volume_bar)
 
 /obj/item/tank/proc/get_status_tab_item(mob/living/source, list/items)
 	SIGNAL_HANDLER
@@ -124,6 +129,7 @@
 /obj/item/tank/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	air_contents = null
+	QDEL_NULL(volume_bar)
 	return ..()
 
 /obj/item/tank/examine(mob/user)
@@ -278,6 +284,8 @@
 /obj/item/tank/process(seconds_per_tick)
 	if(!air_contents)
 		return
+	if(!QDELETED(volume_bar))
+		volume_bar.update(air_contents.return_pressure())
 
 	//Allow for reactions
 	excited = (excited | air_contents.react(src))

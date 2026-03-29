@@ -6,6 +6,7 @@
 	dna_cost = CHANGELING_POWER_INNATE
 	req_dna = 1
 	req_human = TRUE
+	req_stat = DEAD
 
 /obj/item/clothing/glasses/changeling
 	name = "flesh"
@@ -117,7 +118,7 @@
 	. = ..()
 	if(hud_icon)
 		var/image/holder = user.hud_list[ID_HUD]
-		holder.pixel_y = user.get_cached_height() - world.icon_size
+		holder.pixel_z = user.get_cached_height() - world.icon_size
 		holder.icon_state = hud_icon
 
 /**

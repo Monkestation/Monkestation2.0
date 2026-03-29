@@ -7,6 +7,9 @@
 
 /obj/proc/hit_by_damage(atom/movable/hitting_us, datum/thrownthing/throwingdatum)
 	var/base_dam = hitting_us.throwforce
+	if(hitting_us.throwforce < damage_deflection) //yea no damage deflection was thrown out the window affecting a ton of stuff
+		take_damage(base_dam, BRUTE, MELEE, TRUE, get_dir(src, hitting_us), 0)
+		return
 	if(isliving(hitting_us))
 		var/mob/living/living_mob = hitting_us
 		var/speed_bonus = throwingdatum.speed - living_mob.throw_speed
@@ -53,7 +56,7 @@
 			continue
 
 		defenestrated.apply_damage(10, BRUTE, part, blocked = min(90, defenestrated.getarmor(part, MELEE)), sharpness = SHARP_POINTY, wound_bonus = 4, bare_wound_bonus = 8, attacking_item = (length(shards) ? shards[1] : null))
-		if(prob(25 * length(shards)) && shards[1].tryEmbed(part, TRUE))
+		if(prob(25 * length(shards)) && shards[1].force_embed(defenestrated, part))
 			shards -= shards[1]
 
 	if(has_grille)
@@ -106,7 +109,6 @@
 	if(. != BULLET_ACT_HIT)
 		return .
 
-	playsound(src, hitting_projectile.hitsound, 50, TRUE)
 	var/damage_sustained = 0
 	if(!QDELETED(src)) //Bullet on_hit effect might have already destroyed this object
 		damage_sustained = take_damage(
@@ -119,7 +121,7 @@
 		)
 	if(hitting_projectile.suppressed != SUPPRESSED_VERY)
 		visible_message(
-			span_danger("[src] is hit by \a [hitting_projectile.generic_name || hitting_projectile][damage_sustained ? "" : ", without leaving a mark"]!"),
+			span_danger("[src] is hit by \a [hitting_projectile][damage_sustained ? "" : ", without leaving a mark"]!"),
 			vision_distance = COMBAT_MESSAGE_RANGE,
 		)
 
@@ -222,6 +224,8 @@
 			return
 	if(exposed_temperature && !(resistance_flags & FIRE_PROOF))
 		take_damage(clamp(0.02 * exposed_temperature, 0, 20), BURN, FIRE, 0)
+	if(QDELETED(src)) // take_damage() can send our obj to an early grave, let's stop here if that happens
+		return
 	if(!(resistance_flags & ON_FIRE) && (resistance_flags & FLAMMABLE) && !(resistance_flags & FIRE_PROOF))
 		AddComponent(/datum/component/burning, custom_fire_overlay || GLOB.fire_overlay, burning_particles)
 		return TRUE

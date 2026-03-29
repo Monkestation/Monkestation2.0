@@ -276,8 +276,8 @@
 /obj/machinery/door/airlock/titanium{
 	name = "Cockpit"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/admin/captain,
 /obj/effect/mapping_helpers/airlock/locked,
+/obj/effect/mapping_helpers/airlock/access/any/admin/general,
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "aX" = (

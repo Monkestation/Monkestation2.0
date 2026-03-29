@@ -1,4 +1,5 @@
-#define THERMAL_REGULATOR_COST 18 // the cost per tick for the thermal regulator
+/// Charge per tick consumed by the thermal regulator
+#define THERMAL_REGULATOR_COST (0.018 * STANDARD_CELL_CHARGE)
 
 //Note: Everything in modules/clothing/spacesuits should have the entire suit grouped together.
 //      Meaning the the suit is defined directly after the corrisponding helmet. Just like below!
@@ -11,7 +12,7 @@
 	desc = "A special helmet with solar UV shielding to protect your eyes from harmful rays."
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT | PLASMAMAN_HELMET_EXEMPT | HEADINTERNALS
 	armor_type = /datum/armor/helmet_space
-	flags_inv = HIDEMASK|HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT //monkestation edit
+	flags_inv = HIDEMASK|HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	interaction_flags_click = NEED_DEXTERITY
 	clothing_traits = list(TRAIT_SNOWSTORM_IMMUNE)
 
@@ -153,7 +154,10 @@
 	return ..()
 
 // support for items that interact with the cell
-/obj/item/clothing/suit/space/get_cell()
+/obj/item/clothing/suit/space/get_cell(atom/movable/interface, mob/user)
+	if(istype(interface, /obj/item/inducer))
+		to_chat(user, span_alert("Error: unable to interface with [interface]."))
+		return null
 	return cell
 
 // Show the status of the suit and the cell

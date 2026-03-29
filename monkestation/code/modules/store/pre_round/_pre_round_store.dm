@@ -5,7 +5,7 @@ GLOBAL_LIST_INIT(pre_round_items, init_pre_round_items())
 	for(var/datum/store_item/store_item_type as anything in (subtypesof(/datum/store_item) - /datum/store_item/roundstart))
 		if(!store_item_type::one_time_buy)
 			continue
-		.[store_item_type] = new store_item_type
+		. += store_item_type
 
 /client
 	var/datum/pre_round_store/readied_store
@@ -35,15 +35,14 @@ GLOBAL_LIST_INIT(pre_round_items, init_pre_round_items())
 /datum/pre_round_store/ui_static_data(mob/user)
 	var/list/items = list()
 	for(var/datum/store_item/store_item_type as anything in GLOB.pre_round_items)
-		var/datum/store_item/store_item = GLOB.pre_round_items[store_item_type]
-		var/obj/item/item_path = store_item.item_path
+		var/obj/item/item_path = store_item_type::item_path
 		if(isnull(item_path))
 			continue
 		items += list(
 			list(
 				"path" = store_item_type,
-				"name" = store_item.name,
-				"cost" = store_item.item_cost,
+				"name" = store_item_type::name,
+				"cost" = store_item_type::item_cost,
 				"icon" = item_path::icon,
 				"icon_state" = item_path::icon_state,
 			)
@@ -62,6 +61,8 @@ GLOBAL_LIST_INIT(pre_round_items, init_pre_round_items())
 	if(!user_prefs.metacoins)
 		user_prefs.load_metacoins(user.client.ckey)
 
+	.["selected_character"] = user_prefs.read_preference(/datum/preference/name/real_name)
+
 	if(!isnull(bought_item))
 		.["balance"] = user_prefs.metacoins - bought_item::item_cost
 		.["currently_owned"] = bought_item::name
@@ -76,6 +77,9 @@ GLOBAL_LIST_INIT(pre_round_items, init_pre_round_items())
 		if("attempt_buy")
 			attempt_buy(params)
 			return TRUE
+		if("change_slot")
+			ui.user.client.change_character_slot()
+			return TRUE
 
 /datum/pre_round_store/proc/attempt_buy(list/params)
 	var/store_item_type = text2path(params["path"])
@@ -84,7 +88,7 @@ GLOBAL_LIST_INIT(pre_round_items, init_pre_round_items())
 	if(!ispath(store_item_type, /datum/store_item))
 		message_admins("[usr] attempted an href exploit - tried to buy pre-round item [store_item_type], which isn't a /datum/store_item")
 		CRASH("Attempted an href exploit - tried to buy pre-round item [store_item_type], which isn't a /datum/store_item")
-	var/datum/store_item/store_item = GLOB.pre_round_items[store_item_type]
+	var/datum/store_item/store_item = locate(store_item_type) in GLOB.pre_round_items
 	if(isnull(store_item))
 		CRASH("[store_item_type] wasn't in GLOB.pre_round_items")
 	bought_item = store_item

@@ -31,6 +31,7 @@
 		"Off-Duty Crew",
 		"Test Subject",
 		"Vagabond",
+		"Bananotrasen CEO",
 	)
 
 /datum/job/atmospheric_technician
@@ -198,6 +199,7 @@
 		"Cyborg",
 		"Robot",
 		"Android",
+		"Servitor",
 	)
 
 /datum/job/detective
@@ -207,6 +209,8 @@
 		"Private Investigator",
 		"Forensic Scientist",
 		"Paranormal Investigator",
+		"Inspector",
+		"Gristled PI",
 	)
 
 /datum/job/doctor
@@ -292,6 +296,7 @@
 		"Felon",
 		"Inmate",
 		"Gamer",
+		"Head of Convicts",
 	)
 
 /datum/job/psychologist
@@ -359,6 +364,7 @@
 		"Security Operative",
 		"Peacekeeper",
 		"Security Cadet",
+		"Guardsman",
 	)
 
 /datum/job/shaft_miner
@@ -369,6 +375,7 @@
 		"Spelunker",
 		"Drill Technician",
 		"Prospector",
+		"Big Game Hunter",
 	)
 
 /datum/job/station_engineer
@@ -383,6 +390,7 @@
 		"Engineering Trainee",
 		"Station Reliability Engineer",
 		"Builder",
+		"Enginseer",
 	)
 
 /datum/job/virologist

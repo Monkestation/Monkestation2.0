@@ -21,6 +21,7 @@
 	density = TRUE
 	status_flags = CANSTUN|CANPUSH
 	istate = ISTATE_HARM|ISTATE_BLOCKING //so we always get pushed instead of trying to swap
+	forced_interaction_mode = /datum/interaction_mode/no_interaction/nopassthrough //a nothingburger interact mode, which forces the istate above for the rest of time
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS
 	hud_type = /datum/hud/ai
 	med_hud = DATA_HUD_MEDICAL_BASIC
@@ -30,7 +31,7 @@
 	radio = /obj/item/radio/headset/silicon/ai
 	can_buckle_to = FALSE
 	var/battery = 200 //emergency power if the AI's APC is off
-	var/list/network = list("ss13")
+	var/list/network = list(CAMERANET_NETWORK_SS13)
 	var/obj/machinery/camera/current
 	var/list/connected_robots = list()
 	var/list/connected_ipcs = list () // monkestation edit PR #5133 from infected IPCs
@@ -73,7 +74,7 @@
 	var/nuking = FALSE
 	var/obj/machinery/doomsday_device/doomsday_device
 
-	var/mob/camera/ai_eye/eyeobj
+	var/mob/eye/camera/ai/eyeobj
 	var/sprint = 10
 	var/last_moved = 0
 	var/acceleration = TRUE
@@ -113,6 +114,11 @@
 	COOLDOWN_DECLARE(command_report_cd) // monkestation edit
 
 	var/jobtitles = TRUE
+
+	///This action opens menu to modify the settings.
+	var/datum/action/innate/internal_nanite_menu/nanite_menu
+	///This action actually uses the remote.
+	var/datum/action/innate/ai/ranged/internal_nanite_remote/nanite_remote
 
 	/* ROBOT CONTROL */
 	/// UI for robot controls
@@ -185,6 +191,11 @@
 
 	deploy_action.Grant(src)
 
+	nanite_remote = new
+	nanite_menu = new(nanite_remote)
+	nanite_menu.Grant(src)
+	nanite_remote.Grant(src)
+
 	if(isturf(loc))
 		add_verb(src, list(
 			/mob/living/silicon/ai/proc/ai_network_change,
@@ -198,7 +209,7 @@
 	GLOB.shuttle_caller_list += src
 
 	builtInCamera = new (src)
-	builtInCamera.network = list("ss13")
+	builtInCamera.network = list(CAMERANET_NETWORK_SS13)
 
 	ai_tracking_tool = new(src)
 	RegisterSignal(ai_tracking_tool, COMSIG_TRACKABLE_TRACKING_TARGET, PROC_REF(on_track_target))
@@ -206,7 +217,13 @@
 
 	add_traits(list(TRAIT_PULL_BLOCKED, TRAIT_AI_ACCESS, TRAIT_HANDS_BLOCKED), INNATE_TRAIT)
 
-	alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER, ALARM_CAMERA, ALARM_BURGLAR, ALARM_MOTION), list(z), camera_view = TRUE)
+	var/static/list/alert_areas
+	if(isnull(alert_areas))
+		alert_areas = (GLOB.the_station_areas + typesof(/area/mine))
+	if(is_station_level(z))
+		alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER, ALARM_CAMERA, ALARM_BURGLAR, ALARM_MOTION), SSmapping.levels_by_trait(ZTRAIT_STATION), alert_areas, camera_view = TRUE)
+	else
+		alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER, ALARM_CAMERA, ALARM_BURGLAR, ALARM_MOTION), (SSmapping.levels_by_trait(ZTRAIT_STATION) + z), alert_areas, camera_view = TRUE)
 	RegisterSignal(alert_control.listener, COMSIG_ALARM_LISTENER_TRIGGERED, PROC_REF(alarm_triggered))
 	RegisterSignal(alert_control.listener, COMSIG_ALARM_LISTENER_CLEARED, PROC_REF(alarm_cleared))
 
@@ -244,6 +261,8 @@
 	QDEL_NULL(aiMulti)
 	QDEL_NULL(alert_control)
 	QDEL_NULL(ai_tracking_tool)
+	QDEL_NULL(nanite_menu)
+	QDEL_NULL(nanite_remote)
 	malfhack = null
 	current = null
 	bot_ref = null
@@ -275,6 +294,11 @@
 		var/preferred_icon = input ? input : C.prefs.read_preference(/datum/preference/choiced/ai_core_display)
 		icon_state = resolve_ai_icon(preferred_icon)
 
+/mob/living/silicon/ai/create_modularInterface()
+	if(!modularInterface)
+		modularInterface = new /obj/item/modular_computer/pda/silicon/ai(src)
+	return ..()
+
 /// Apply an AI's hologram preference
 /mob/living/silicon/ai/proc/apply_pref_hologram_display(client/player_client)
 	if(player_client.prefs?.read_preference(/datum/preference/choiced/ai_hologram_display))
@@ -298,7 +322,7 @@
 
 /// Apply an emote to all AI status displays on the station
 /mob/living/silicon/ai/proc/apply_emote_display(emote)
-	for(var/obj/machinery/status_display/ai/ai_display as anything in GLOB.ai_status_displays)
+	for(var/obj/machinery/status_display/ai/ai_display as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/status_display/ai))
 		ai_display.emotion = emote
 		ai_display.update()
 
@@ -545,14 +569,14 @@
 			src << browse(last_tablet_note_seen, "window=show_tablet")
 	//Carn: holopad requests
 	if(href_list["jump_to_holopad"])
-		var/obj/machinery/holopad/Holopad = locate(href_list["jump_to_holopad"]) in GLOB.machines
+		var/obj/machinery/holopad/Holopad = locate(href_list["jump_to_holopad"]) in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/holopad)
 		if(Holopad)
 			cam_prev = get_turf(eyeobj)
 			eyeobj.setLoc(Holopad)
 		else
 			to_chat(src, span_notice("Unable to locate the holopad."))
 	if(href_list["project_to_holopad"])
-		var/obj/machinery/holopad/Holopad = locate(href_list["project_to_holopad"]) in GLOB.machines
+		var/obj/machinery/holopad/Holopad = locate(href_list["project_to_holopad"]) in SSmachines.get_machines_by_type(/obj/machinery/holopad)
 		if(Holopad)
 			lastloc = get_turf(eyeobj)
 			Holopad.attack_ai_secondary(src) //may as well recycle
@@ -688,11 +712,11 @@
 		var/turf/camera_turf = get_turf(C) //get camera's turf in case it's built into something so we don't get z=0
 
 		var/list/tempnetwork = C.network
-		if(!camera_turf || !(is_station_level(camera_turf.z) || is_mining_level(camera_turf.z) || ("ss13" in tempnetwork)))
+		if(!camera_turf || !(is_station_level(camera_turf.z) || is_mining_level(camera_turf.z) || (CAMERANET_NETWORK_SS13 in tempnetwork)))
 			continue
 		if(!C.can_use())
 			continue
-		tempnetwork.Remove("rd", "ordnance", "prison")
+		tempnetwork.Remove(CAMERANET_NETWORK_RD, CAMERANET_NETWORK_ORDNANCE, CAMERANET_NETWORK_PRISON)
 		if(length(tempnetwork))
 			for(var/i in C.network)
 				cameralist[i] = i
@@ -796,7 +820,9 @@
 				"floating face" = 'icons/mob/silicon/ai.dmi',
 				"xeno queen" = 'icons/mob/nonhuman-player/alien.dmi',
 				"horror" = 'icons/mob/silicon/ai.dmi',
-				"clock" = 'icons/mob/silicon/ai.dmi'
+				"clock" = 'icons/mob/silicon/ai.dmi',
+				"robot" = 'icons/mob/silicon/robots.dmi',
+				"drone" = 'icons/mob/silicon/drone.dmi',
 				)
 
 			input = tgui_input_list(usr, "Select a hologram", "Hologram", sort_list(icon_list))
@@ -808,6 +834,10 @@
 			switch(input)
 				if("xeno queen")
 					working_state = "alienq"
+				if("robot") //this really needs a refactor
+					working_state = "robot_old"
+				if("drone")
+					working_state = "drone_repair"
 				else
 					working_state = input
 			hologram_appearance = mutable_appearance(icon_list[input], working_state)
@@ -945,7 +975,7 @@
 	var/hrefpart = "<a href='byond://?src=[REF(src)];track=[html_encode(namepart)]'>"
 	var/jobpart = "Unknown"
 
-	if(!HAS_TRAIT(speaker, TRAIT_UNKNOWN)) //don't fetch the speaker's job in case they have something that conseals their identity completely
+	if(!(HAS_TRAIT(speaker, TRAIT_UNKNOWN) || HAS_TRAIT(src, TRAIT_ANONYMOUS))) //don't fetch the speaker's job in case they have something that conseals their identity completely
 		if (isliving(speaker))
 			var/mob/living/living_speaker = speaker
 			if(living_speaker.job)
@@ -1036,7 +1066,7 @@
 	// I am so sorry
 	SEND_SIGNAL(src, COMSIG_MOB_RESET_PERSPECTIVE)
 
-/mob/living/silicon/ai/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
+/mob/living/silicon/ai/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE, revival_policy = POLICY_REVIVAL)
 	. = ..()
 	if(!.) //successfully ressuscitated from death
 		return
@@ -1157,8 +1187,8 @@
 		target_ai = src //cheat! just give... ourselves as the spawned AI, because that's technically correct
 	. = ..()
 
-/mob/living/silicon/ai/proc/camera_visibility(mob/camera/ai_eye/moved_eye)
-	GLOB.cameranet.visibility(moved_eye, client, all_eyes, TRUE)
+/mob/living/silicon/ai/proc/camera_visibility(mob/eye/camera/ai/moved_eye)
+	GLOB.cameranet.visibility(moved_eye)
 
 /mob/living/silicon/ai/forceMove(atom/destination)
 	. = ..()

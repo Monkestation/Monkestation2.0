@@ -6,6 +6,8 @@
 	earliest_start = 5 MINUTES
 	category = EVENT_CATEGORY_FRIENDLY
 	description = "A colourful display can be seen through select windows. And the kitchen."
+	track = EVENT_TRACK_MUNDANE
+	tags = list(TAG_COMMUNAL, TAG_POSITIVE, TAG_SPACE)
 
 /datum/round_event_control/aurora_caelus/can_spawn_event(players, allow_magic = FALSE, fake_check = FALSE) //MONKESTATION ADDITION: fake_check = FALSE
 	if(!SSmapping.empty_space)
@@ -25,8 +27,8 @@
 	sender_override = "Nanotrasen Meteorology Division")
 	for(var/V in GLOB.player_list)
 		var/mob/M = V
-		if((M.client.prefs.read_preference(/datum/preference/toggle/sound_midi)) && is_station_level(M.z))
-			M.playsound_local(M, 'sound/ambience/aurora_caelus.ogg', 20, FALSE, pressure_affected = FALSE)
+		if((M.client.prefs.channel_volume["[CHANNEL_WEATHER]"]) && is_station_level(M.z))
+			M.playsound_local(M, 'sound/ambience/aurora_caelus.ogg', 20, FALSE, channel = CHANNEL_WEATHER, pressure_affected = FALSE)
 
 /datum/round_event/aurora_caelus/start()
 	for(var/area/affected_area as anything in GLOB.areas)

@@ -1,5 +1,5 @@
-import { BooleanLike } from 'common/react';
-import { Component, Fragment } from 'inferno';
+import type { BooleanLike } from 'common/react';
+import { Component } from 'react';
 
 import { resolveAsset } from '../../assets';
 import { useBackend } from '../../backend';
@@ -15,14 +15,14 @@ import {
 } from '../../components';
 import { fetchRetry } from '../../http';
 import { Window } from '../../layouts';
+import { type ContractorItem, ContractorMenu } from './ContractorMenu';
 import {
   calculateDangerLevel,
   calculateProgression,
   dangerLevelsTooltip,
 } from './calculateDangerLevel';
-import { ContractorItem, ContractorMenu } from './ContractorMenu';
-import { GenericUplink, Item } from './GenericUplink';
-import { Objective, ObjectiveMenu } from './ObjectiveMenu';
+import { GenericUplink, type Item } from './GenericUplink';
+import { type Objective, ObjectiveMenu } from './ObjectiveMenu';
 import { PrimaryObjectiveMenu } from './PrimaryObjectiveMenu';
 
 type UplinkItem = {
@@ -42,6 +42,7 @@ type UplinkItem = {
   progression_minimum: number;
   cost_override_string: string;
   lock_other_purchases: BooleanLike;
+  lock_secondary_objectives: BooleanLike;
   ref?: string;
 };
 
@@ -105,7 +106,7 @@ type ItemExtraData = Item & {
 // Cache response so it's only sent once
 let fetchServerData: Promise<ServerData> | undefined;
 
-export class Uplink extends Component<{}, UplinkState> {
+export class Uplink extends Component<any, UplinkState> {
   constructor(props) {
     super(props);
     this.state = {
@@ -158,10 +159,8 @@ export class Uplink extends Component<{}, UplinkState> {
       ) {
         return false;
       }
-      {
-        if (value.purchasable_from & uplinkFlag) {
-          return true;
-        }
+      if (value.purchasable_from & uplinkFlag) {
+        return true;
       }
       return false;
     });
@@ -246,6 +245,14 @@ export class Uplink extends Component<{}, UplinkState> {
                 Taking this item will lock you from further purchasing from the
                 marketplace. Additionally, if you have already purchased an
                 item, you will not be able to purchase this.
+              </NoticeBox>
+            )) ||
+              null}
+            {(item.lock_secondary_objectives && (
+              <NoticeBox mt={1}>
+                Taking this item will lock you from completing any secondary
+                objectives. Additionally, if you have already completed any
+                secondary objectives, you will not be able to purchase this.
               </NoticeBox>
             )) ||
               null}
@@ -357,8 +364,8 @@ export class Uplink extends Component<{}, UplinkState> {
                           <Tabs.Tab
                             style={{
                               overflow: 'hidden',
-                              'white-space': 'nowrap',
-                              'text-overflow': 'ellipsis',
+                              whiteSpace: 'nowrap',
+                              textOverflow: 'ellipsis',
                             }}
                             icon="star"
                             selected={currentTab === 0}
@@ -371,8 +378,8 @@ export class Uplink extends Component<{}, UplinkState> {
                           <Tabs.Tab
                             style={{
                               overflow: 'hidden',
-                              'white-space': 'nowrap',
-                              'text-overflow': 'ellipsis',
+                              whiteSpace: 'nowrap',
+                              textOverflow: 'ellipsis',
                             }}
                             icon="star-half-stroke"
                             selected={currentTab === 1}
@@ -385,8 +392,8 @@ export class Uplink extends Component<{}, UplinkState> {
                           <Tabs.Tab
                             style={{
                               overflow: 'hidden',
-                              'white-space': 'nowrap',
-                              'text-overflow': 'ellipsis',
+                              whiteSpace: 'nowrap',
+                              textOverflow: 'ellipsis',
                             }}
                             icon="dollar-sign"
                             selected={currentTab === 2}
@@ -398,8 +405,8 @@ export class Uplink extends Component<{}, UplinkState> {
                         <Tabs.Tab
                           style={{
                             overflow: 'hidden',
-                            'white-space': 'nowrap',
-                            'text-overflow': 'ellipsis',
+                            whiteSpace: 'nowrap',
+                            textOverflow: 'ellipsis',
                           }}
                           icon="store"
                           selected={currentTab === 3 || !has_objectives}

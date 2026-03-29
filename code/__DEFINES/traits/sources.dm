@@ -28,6 +28,7 @@
 #define QUIRK_TRAIT "quirk_trait"
 /// (B)admins only.
 #define ADMIN_TRAIT "admin"
+#define DEVIL_TRAIT "devil"
 /// Any traits given through a smite.
 #define SMITE_TRAIT "smite"
 #define CHANGELING_TRAIT "changeling"
@@ -292,3 +293,9 @@
 
 /// Trait added by style component
 #define STYLE_TRAIT "style"
+
+/// Trait added by battle royale
+#define BATTLE_ROYALE_TRAIT "battle_royale"
+
+/// Trait gained by a guardian who is recalled
+#define GUARDIAN_RECALLED "guardian_recalled"

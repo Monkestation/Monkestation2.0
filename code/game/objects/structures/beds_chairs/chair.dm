@@ -12,6 +12,7 @@
 	custom_materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT)
 	layer = OBJ_LAYER
 	interaction_flags_mouse_drop = NEED_HANDS | NEED_DEXTERITY
+	astar_weight = 2
 
 	var/buildstacktype = /obj/item/stack/sheet/iron
 	var/buildstackamount = 1
@@ -276,15 +277,18 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool, 0)
 	return
 
 /obj/structure/chair/mouse_drop_dragged(atom/over_object, mob/user, src_location, over_location, params)
-	if(over_object == user)
-		if(!item_chair || has_buckled_mobs())
-			return
-		user.visible_message(span_notice("[user] grabs \the [src.name]."), span_notice("You grab \the [src.name]."))
-		var/obj/item/C = new item_chair(loc)
-		C.set_custom_materials(custom_materials)
-		TransferComponents(C)
-		user.put_in_hands(C)
-		qdel(src)
+	if(!isliving(user) || over_object != user)
+		return
+
+	if(!item_chair || has_buckled_mobs())
+		return
+
+	user.visible_message(span_notice("[user] grabs \the [src.name]."), span_notice("You grab \the [src.name]."))
+	var/obj/item/C = new item_chair(loc)
+	C.set_custom_materials(custom_materials)
+	TransferComponents(C)
+	user.put_in_hands(C)
+	qdel(src)
 
 /obj/structure/chair/user_buckle_mob(mob/living/M, mob/user, check_loc = TRUE)
 	return ..()
@@ -463,6 +467,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 /obj/structure/chair/bronze/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
 	. = ..()
+
+/obj/structure/chair/bronze/MakeRotate() // we have our own rotation handler
+	return
 
 /obj/structure/chair/bronze/process()
 	setDir(turn(dir,-90))

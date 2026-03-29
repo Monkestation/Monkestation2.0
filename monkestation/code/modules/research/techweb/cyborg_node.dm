@@ -1,4 +1,3 @@
-//monkestation edits: The whole thing.
 /datum/techweb_node/augmentation
 	id = "augmentation"
 	display_name = "Advanced Prosthetics"

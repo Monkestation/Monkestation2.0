@@ -15,6 +15,11 @@
 	/// If TRUE, we're ready to revive and can click the button to heal.
 	var/revive_ready = FALSE
 
+/datum/action/changeling/fakedeath/IsAvailable(feedback = FALSE)
+	if(HAS_TRAIT(owner?.mind, TRAIT_NO_SPECIAL_REVIVAL))
+		return FALSE
+	return ..()
+
 //Fake our own death and fully heal. You will appear to be dead but regenerate fully after a short delay.
 /datum/action/changeling/fakedeath/sting_action(mob/living/user)
 	..()
@@ -103,7 +108,7 @@
 	// Heal all damage and some minor afflictions,
 	var/flags_to_heal = (HEAL_DAMAGE|HEAL_BODY|HEAL_STATUS|HEAL_CC_STATUS)
 	// but leave out limbs so we can do it specially
-	user.revive(flags_to_heal & ~HEAL_LIMBS)
+	user.revive(flags_to_heal & ~HEAL_LIMBS, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 	to_chat(user, span_changeling("We have revived ourselves."))
 
 	var/static/list/dont_regenerate = list(BODY_ZONE_HEAD) // headless changelings are funny
@@ -137,7 +142,7 @@
 	if(revive_ready)
 		return ..()
 
-	if(!can_enter_stasis(user))
+	if(!can_enter_stasis(user) || !IsAvailable())
 		return
 	//Confirmation for living changelings if they want to fake their death
 	if(user.stat != DEAD)

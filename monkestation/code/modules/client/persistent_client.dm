@@ -3,6 +3,8 @@
 	var/datum/patreon_data/patreon
 	/// Twitch subscription data for this player.
 	var/datum/twitch_data/twitch
+	/// Discord linking details for this player.
+	var/datum/discord_details/discord_details
 	/// Currently active challenges.
 	var/list/datum/challenge/active_challenges
 	/// Currently applied challenges.

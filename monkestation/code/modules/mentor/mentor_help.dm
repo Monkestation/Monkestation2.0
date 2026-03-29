@@ -1,7 +1,7 @@
 /proc/format_mhelp_embed(message, id, ckey)
 	var/datum/discord_embed/embed = new()
 	embed.title = "Mentor Help"
-	embed.description = @"[Join Server!](http://play.monkestation.com:7420)"
+	embed.description = CONFIG_GET(string/roundend_webhook_description)
 	embed.author = key_name(ckey)
 	var/round_state
 	var/admin_text

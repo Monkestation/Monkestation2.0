@@ -22,7 +22,7 @@
 
 	return INITIALIZE_HINT_LATELOAD
 
-/turf/open/floor/lowered/iron/pool/LateInitialize()
+/turf/open/floor/lowered/iron/pool/LateInitialize(mapload_arg)
 	. = ..()
 	GetMergeGroup(merger_id, merger_typecache)
 

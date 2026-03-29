@@ -147,7 +147,7 @@ export const NtosCyborgRemoteMonitorContent = (props) => {
                         }
                       >
                         {typeof cyborg.charge === 'number'
-                          ? cyborg.charge + '%'
+                          ? `${cyborg.charge}%`
                           : 'Not Found'}
                       </Box>
                     </LabeledList.Item>

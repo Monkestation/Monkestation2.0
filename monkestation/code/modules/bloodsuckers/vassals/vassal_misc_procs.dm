@@ -44,11 +44,13 @@
 /datum/antagonist/vassal/proc/BuyPower(datum/action/cooldown/bloodsucker/power)
 	powers += power
 	power.Grant(owner.current)
-	log_uplink("[key_name(owner.current)] purchased [power].")
+	log_uplink("[key_name(owner.current)] gained [power].")
 
-/datum/antagonist/vassal/proc/LevelUpPowers()
-	for(var/datum/action/cooldown/bloodsucker/power in powers)
-		power.level_current++
+/datum/antagonist/vassal/proc/RemovePower(datum/action/cooldown/bloodsucker/power)
+	if(power.active)
+		power.DeactivatePower()
+	powers -= power
+	power.Remove(owner.current)
 
 /// Called when we are made into the Favorite Vassal
 /datum/antagonist/vassal/proc/make_special(datum/antagonist/vassal/vassal_type)
@@ -68,6 +70,6 @@
 	vassaldatum.silent = FALSE
 
 	//send alerts of completion
-	to_chat(master, span_danger("You have turned [vassal_owner.current] into your [vassaldatum.name]! [vassal_owner.current.p_They()] will no longer be deconverted upon Mindshielding!"))
+	to_chat(master, span_danger("You have turned [vassal_owner.current] into your [vassaldatum.name]!"))
 	to_chat(vassal_owner, span_notice("As Blood drips over your body, you feel closer to your Master... You are now the [vassaldatum.name]!"))
 	vassal_owner.current.playsound_local(null, 'sound/magic/mutate.ogg', vol = 75, vary = FALSE, pressure_affected = FALSE)

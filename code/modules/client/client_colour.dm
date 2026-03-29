@@ -203,7 +203,7 @@
 	colour = list(255,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, -130,0,0,0) //every color is either red or black
 
 /datum/client_colour/monochrome
-	colour = list(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
+	colour = COLOR_MATRIX_GRAYSCALE
 	priority = PRIORITY_HIGH //we can't see colors anyway!
 	override = TRUE
 	fade_in = 20

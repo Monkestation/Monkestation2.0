@@ -99,6 +99,11 @@
 	toggle_the_gate(user)
 	return ..()
 
+/obj/structure/necropolis_gate/attack_robot(mob/living/user)
+	. = ..()
+	if (Adjacent(user))
+		return attack_hand(user)
+
 /obj/structure/necropolis_gate/proc/toggle_the_gate(mob/user, legion_damaged)
 	if(changing_openness)
 		return

@@ -193,6 +193,8 @@
 	contains = list(/obj/machinery/satellite/meteor_shield = 3)
 	crate_name= "shield sat crate"
 
+/datum/supply_pack/engineering/shield_sat/available()
+	return ..() && !SSmapping.is_planetary()
 
 /datum/supply_pack/engineering/shield_sat_control
 	name = "Shield System Control Board"
@@ -203,6 +205,8 @@
 	contains = list(/obj/item/circuitboard/computer/sat_control)
 	crate_name= "shield control board crate"
 
+/datum/supply_pack/engineering/shield_sat_control/available()
+	return ..() && !SSmapping.is_planetary()
 
 /// Engine Construction
 

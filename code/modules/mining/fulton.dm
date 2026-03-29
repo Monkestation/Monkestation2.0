@@ -83,7 +83,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 		to_chat(user, span_warning("[src] is not safe for use with living creatures, they wouldn't survive the trip back!"))
 		balloon_alert(user, "not safe!")
 		return ITEM_INTERACT_BLOCKING
-	if(thing.move_resist > max_force_fulton)
+	if(thing.anchored || (thing.move_resist > max_force_fulton))
 		balloon_alert(user, "too heavy!")
 		return ITEM_INTERACT_BLOCKING
 	balloon_alert_to_viewers("attaching...")

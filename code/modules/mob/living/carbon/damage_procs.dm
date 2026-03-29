@@ -152,8 +152,12 @@
 	return ..()
 
 /mob/living/carbon/pre_stamina_change(diff as num, forced)
-	if(!forced && HAS_TRAIT(src, TRAIT_GODMODE))
+	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		return 0
+
+	if (!forced && HAS_TRAIT(src, TRAIT_STUNIMMUNE))
+		return 0
+
 	return diff
 
 /**

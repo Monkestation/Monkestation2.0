@@ -218,3 +218,33 @@
 		return max(new_value, threshold)
 	if(sign == -1)
 		return min(new_value, threshold * -1)
+
+/// Takes two values x and y, and returns 1/((1/x) + y)
+/// Useful for providing an additive modifier to a value that is used as a divisor
+/proc/reciprocal_add(x, y)
+	return 1/((1/x)+y)
+
+/// Returns a text string containing N prefixed with a series of zeros with length equal to max_zeros minus log(10, N), rounded down.
+/proc/prefix_zeros_to_number(number, max_zeros)
+	var/zeros = ""
+	var/how_many_zeros = max_zeros - round(log(10, number))
+	for(var/zero in 1 to how_many_zeros)
+		zeros += "0"
+	return "[zeros][number]"
+
+/// 180s an angle
+/proc/reverse_angle(angle)
+	return (angle + 180) % 360
+
+/proc/poisson_noise(width, height, radius, seed)
+	. = list()
+	if(!seed)
+		seed = rand(0, 50000)
+	var/noise_string = rustg_noise_poisson_map("[seed]", "[width]", "[height]", "[radius]")
+	for(var/idx = 1 to length(noise_string))
+		if(noise_string[idx] != "1")
+			continue
+		var/idx0 = idx - 1
+		var/x = (idx0 % width) + 1
+		var/y = idx0 / width + 1
+		. += list(list(x, y))

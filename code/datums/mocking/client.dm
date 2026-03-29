@@ -92,3 +92,6 @@
 
 /datum/client_interface/proc/is_afk(duration)
 	return FALSE
+
+/datum/client_interface/proc/check_drag_proximity(atom/dragging, atom/over, src_location, over_location, src_control, over_control, params)
+	return FALSE

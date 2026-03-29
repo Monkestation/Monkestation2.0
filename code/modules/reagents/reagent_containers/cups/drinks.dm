@@ -30,11 +30,11 @@
 	qdel(src)
 	target.Bumped(B)
 
-/obj/item/reagent_containers/cup/glass/bullet_act(obj/projectile/P)
+/obj/item/reagent_containers/cup/glass/bullet_act(obj/projectile/proj)
 	. = ..()
 	if(QDELETED(src))
 		return
-	if(P.damage > 0 && P.damage_type == BRUTE)
+	if(proj.damage > 0 && proj.damage_type == BRUTE)
 		var/atom/T = get_turf(src)
 		smash(T)
 
@@ -463,8 +463,8 @@
 	. = ..()
 	register_context()
 	if(prob(10))
-		name = "\improper NanoTrasen 20th Anniversary Shaker"
-		desc += " It has an emblazoned NanoTrasen logo on it."
+		name = "\improper Nanotrasen 20th Anniversary Shaker"
+		desc += " It has an emblazoned Nanotrasen logo on it."
 		icon_state = "shaker_n"
 
 /obj/item/reagent_containers/cup/glass/shaker/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -544,6 +544,7 @@
 	name = "captain's flask"
 	desc = "A gold flask belonging to the captain."
 	icon_state = "flask_gold"
+	volume = 90
 	custom_materials = list(/datum/material/gold=SMALL_MATERIAL_AMOUNT*5)
 
 /obj/item/reagent_containers/cup/glass/flask/det

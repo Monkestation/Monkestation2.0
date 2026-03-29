@@ -42,7 +42,7 @@
 		LAZYREMOVEASSOC(SSlua.editors, text_ref(current_state), src)
 
 /datum/lua_editor/ui_state(mob/user)
-	return ADMIN_STATE(R_DEBUG)
+	return ADMIN_STATE(R_ADVANCEDCALL)
 
 /datum/lua_editor/ui_data(mob/user)
 	var/list/data = list()
@@ -135,7 +135,7 @@
 	if(.)
 		return
 	var/mob/user = ui.user
-	if(!check_rights_for(user.client, R_DEBUG))
+	if(!check_rights_for(user.client, R_ADVANCEDCALL))
 		return
 	if(action == "runCodeFile")
 		params["code"] = file2text(input(user, "Input File") as null|file)
@@ -282,7 +282,7 @@
 	qdel(src)
 #endif
 
-ADMIN_VERB(lua_editor, R_DEBUG, FALSE, "Open Lua Editor", "Its codin' time.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(lua_editor, R_ADVANCEDCALL, FALSE, "Open Lua Editor", "Its codin' time.", ADMIN_CATEGORY_DEBUG)
 #ifndef DISABLE_DREAMLUAU
 	var/datum/lua_editor/editor = new
 	editor.ui_interact(user.mob)

@@ -124,6 +124,15 @@
 /obj/item/assembly/flash/proc/flash_end()
 	set_light_on(FALSE)
 
+///Status effect used to track if the user is currently blinded from a flash, to prevent quick chaining into stamcrit.
+/datum/status_effect/currently_flashed
+	id = "currently_flashed"
+	alert_type = null
+
+/datum/status_effect/currently_flashed/on_creation(mob/living/new_owner, length = 2.5 SECONDS)
+	src.duration = length
+	return ..()
+
 /**
  * Handles actual flashing part of the attack
  *
@@ -168,17 +177,18 @@
 		ADD_TRAIT(flashed, TRAIT_CONVERSION_FLASHED, TRAIT_GENERIC)
 
 	if(targeted)
-		if(flashed.flash_act(1, 1))
+		if(!flashed.has_status_effect(/datum/status_effect/currently_flashed) && flashed.flash_act(1, 1))
 			flashed.set_confusion_if_lower(confusion_duration * CONFUSION_STACK_MAX_MULTIPLIER)
 			visible_message(span_danger("[user] blinds [flashed] with the flash!"), span_userdanger("[user] blinds you with the flash!"))
-			//easy way to make sure that you can only long stun someone who is facing in your direction
-			flashed.stamina.adjust(-rand(40, 90) * (1 - (deviation * 0.5)))
-			var/paralyze_duration = 2 SECONDS
-			if(ishuman(flashed))
-				var/mob/living/carbon/human/flashed_human = flashed
-				if(ismoth(flashed_human))
-					paralyze_duration = 6 SECONDS
-			flashed.Disorient(7 SECONDS, 110, paralyze = paralyze_duration)
+			if (deviation == DEVIATION_PARTIAL)
+				flashed.stamina.adjust(-60)
+			else if (deviation == DEVIATION_NONE)
+				flashed.stamina.adjust(-80)
+
+			if (!flashed.has_movespeed_modifier(/datum/movespeed_modifier/shove))
+				flashed.add_movespeed_modifier(/datum/movespeed_modifier/shove)
+				addtimer(CALLBACK(flashed, TYPE_PROC_REF(/mob/living/carbon, clear_shove_slowdown)), SHOVE_SLOWDOWN_LENGTH, TIMER_UNIQUE | TIMER_OVERRIDE)
+				flashed.Disorient(SHOVE_SLOWDOWN_LENGTH)
 			SEND_SIGNAL(user, COMSIG_MOB_SUCCESSFUL_FLASHED_CARBON, flashed, src, deviation)
 		else if(user)
 			visible_message(span_warning("[user] fails to blind [flashed] with the flash!"), span_danger("[user] fails to blind you with the flash!"))

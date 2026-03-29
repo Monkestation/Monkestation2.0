@@ -33,15 +33,13 @@
 	icon = 'monkestation/code/modules/slimecore/icons/machinery.dmi'
 	icon_state = "corral_corner"
 	circuit = /obj/item/circuitboard/machine/corral_corner
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.25
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.5
 
 	density = TRUE
 	var/max_range = 9
 	var/datum/corral_data/connected_data
 	var/mapping_id
-
-/obj/machinery/corral_corner/Initialize(mapload)
-	. = ..()
-	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/corral_corner/post_machine_initialize()
 	. = ..()
@@ -67,7 +65,7 @@
 	start_linking_procedure()
 
 /obj/machinery/corral_corner/multitool_act(mob/living/user, obj/item/multitool/multi)
-	multi.set_buffer(src)
+	multitool_set_buffer(multi, src)
 	balloon_alert(user, "saved to multitool buffer")
 	return ITEM_INTERACT_SUCCESS
 
@@ -171,7 +169,7 @@
 	. = ..()
 	if(mover.pulledby)
 		return TRUE
-	if((istype(mover, /mob/living/basic/slime) || ismonkey(mover) || istype(mover, /mob/living/basic/cockroach) || istype(mover, /mob/living/basic/xenofauna)) && !HAS_TRAIT(mover, VACPACK_THROW))
+	if((istype(mover, /mob/living/basic/slime) || ismonkeybasic(mover) || istype(mover, /mob/living/basic/cockroach) || istype(mover, /mob/living/basic/xenofauna)) && !HAS_TRAIT(mover, VACPACK_THROW))
 		return FALSE
 	return TRUE
 

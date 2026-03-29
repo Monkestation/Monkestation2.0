@@ -23,14 +23,14 @@
 	find_table()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/computer/operating/LateInitialize()
+/obj/machinery/computer/operating/LateInitialize(mapload_arg)
 	. = ..()
 	var/static/list/dissection_signals = list(
-		COMSIG_OPERATING_COMPUTER_DISSECTION_COMPLETE = TYPE_PROC_REF(/datum/component/experiment_handler, try_run_dissection_experiment)
+		COMSIG_OPERATING_COMPUTER_AUTOPSY_COMPLETE = TYPE_PROC_REF(/datum/component/experiment_handler, try_run_autopsy_experiment)
 	)
 	experiment_handler = AddComponent(
 		/datum/component/experiment_handler, \
-		allowed_experiments = list(/datum/experiment/dissection), \
+		allowed_experiments = list(/datum/experiment/autopsy), \
 		config_flags = EXPERIMENT_CONFIG_ALWAYS_ACTIVE, \
 		config_mode = EXPERIMENT_CONFIG_ALTCLICK, \
 		experiment_signals = dissection_signals, \
@@ -49,8 +49,9 @@
 	return ..()
 
 /obj/machinery/computer/operating/multitool_act(mob/living/user, obj/item/multitool/tool)
-	if(!QDELETED(tool.buffer) && istype(tool.buffer, /datum/techweb))
-		linked_techweb = tool.buffer
+	var/datum/buffer = multitool_get_buffer(tool)
+	if(!QDELETED(buffer) && istype(buffer, /datum/techweb))
+		linked_techweb = buffer
 	return TRUE
 
 /obj/machinery/computer/operating/attackby(obj/item/O, mob/user, params)
@@ -141,7 +142,7 @@
 	data["patient"]["blood_type"] = "[patient.get_blood_type() || "None"]"
 
 	data["patient"]["maxHealth"] = patient.maxHealth
-	data["patient"]["minHealth"] = HEALTH_THRESHOLD_DEAD
+	data["patient"]["minHealth"] = patient.dead_threshold
 	data["patient"]["bruteLoss"] = patient.getBruteLoss()
 	data["patient"]["fireLoss"] = patient.getFireLoss()
 	data["patient"]["toxLoss"] = patient.getToxLoss()

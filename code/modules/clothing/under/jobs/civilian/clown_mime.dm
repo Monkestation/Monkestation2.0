@@ -32,6 +32,7 @@
 	species_exception = list(/datum/species/golem/bananium)
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	can_adjust = FALSE
+	supports_variations_flags = NONE
 	var/squeak_sounds = list('sound/items/bikehorn.ogg'=1)
 
 /obj/item/clothing/under/rank/civilian/clown/Initialize(mapload)
@@ -80,6 +81,10 @@
 	name = "jester suit"
 	desc = "A jolly dress, well suited to entertain your master, nuncle."
 	icon_state = "jester"
+	greyscale_config = /datum/greyscale_config/jester
+	greyscale_config_worn = /datum/greyscale_config/jester_worn
+	greyscale_colors = "#51E33F#FF1F1F"
+	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/under/rank/civilian/clown/sexy
 	name = "sexy-clown suit"

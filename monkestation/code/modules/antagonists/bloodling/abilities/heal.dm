@@ -9,15 +9,15 @@
 	var/mob/living/target_mob = target
 
 	if(get_dist(usr, target) > 1)
-		owner.balloon_alert(owner, "Too Far!")
+		owner.balloon_alert(owner, "too Far!")
 		return FALSE
 
 	if(!ismob(target_mob))
-		owner.balloon_alert(owner, "Must target living being!")
+		owner.balloon_alert(owner, "must target living being!")
 		return FALSE
 
 	if(!IS_BLOODLING_OR_THRALL(target_mob))
-		owner.balloon_alert(owner, "Only works on your thralls!")
+		owner.balloon_alert(owner, "only works on your thralls!")
 		return FALSE
 	. = ..()
 	return
@@ -30,7 +30,7 @@
 	..()
 
 	var/mob/living/carbon/carbon_mob = target
-	if(!do_after(owner, 2 SECONDS))
+	if(!do_after(owner, 2 SECONDS, hidden = TRUE))
 		return FALSE
 
 	// A bit of everything healing not much but helpful
@@ -43,7 +43,7 @@
 	if(carbon_mob.stat != DEAD)
 		return FALSE
 
-	carbon_mob.revive()
+	carbon_mob.revive(revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 	// Any oxygen damage they suffered whilst in crit
 	carbon_mob.adjustOxyLoss(-200)
 	return TRUE

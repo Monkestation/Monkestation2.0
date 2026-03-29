@@ -37,27 +37,6 @@
 	var/last_creation = 0
 	var/brother_creation_cooldown = 300
 
-/datum/species/golem/cardboard/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, mob/living/carbon/human/H)
-	. = ..()
-	if(user != H)
-		return FALSE
-	if(istype(I, /obj/item/stack/sheet/cardboard))
-		var/obj/item/stack/sheet/cardboard/C = I
-		if(last_creation + brother_creation_cooldown > world.time) //no cheesing dork
-			return
-		if(C.amount < 10)
-			to_chat(H, span_warning("You do not have enough cardboard!"))
-			return FALSE
-		to_chat(H, span_notice("You attempt to create a new cardboard brother."))
-		if(do_after(user, 3 SECONDS, target = user))
-			if(last_creation + brother_creation_cooldown > world.time) //no cheesing dork
-				return
-			if(!C.use(10))
-				to_chat(H, span_warning("You do not have enough cardboard!"))
-				return FALSE
-			to_chat(H, span_notice("You create a new cardboard golem shell."))
-			create_brother(H, H.loc)
-
 /datum/species/golem/cardboard/proc/create_brother(mob/living/carbon/human/golem, atom/location)
 	var/mob/living/master = golem.mind.enslaved_to?.resolve()
 	if(master)

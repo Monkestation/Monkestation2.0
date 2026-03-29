@@ -22,6 +22,8 @@
 	var/turf/our_tile = get_turf(src)
 	var/obj/visual = new /obj/effect/temp_visual/point(our_tile, invisibility)
 
+	SEND_SIGNAL(src, COMSIG_MOVABLE_POINTED, pointed_atom, visual)
+
 	animate(visual, pixel_x = (tile.x - our_tile.x) * world.icon_size + pointed_atom.pixel_x, pixel_y = (tile.y - our_tile.y) * world.icon_size + pointed_atom.pixel_y, time = 1.7, easing = EASE_OUT)
 
 /atom/movable/proc/create_point_bubble(atom/pointed_atom)
@@ -40,10 +42,7 @@
 	pointed_atom_appearance.pixel_x = 0
 	pointed_atom_appearance.pixel_y = 0
 	thought_bubble.overlays += pointed_atom_appearance
-
-	var/hover_outline_index = pointed_atom.get_filter_index(HOVER_OUTLINE_FILTER)
-	if (!isnull(hover_outline_index))
-		pointed_atom_appearance.filters.Cut(hover_outline_index, hover_outline_index + 1)
+	pointed_atom_appearance.remove_filter(HOVER_OUTLINE_FILTER)
 
 	thought_bubble.pixel_x = 16
 	thought_bubble.pixel_y = 32

@@ -372,6 +372,8 @@
 
 /obj/structure/window/proc/on_painted(obj/structure/window/source, is_dark_color)
 	SIGNAL_HANDLER
+	if(HAS_TRAIT(src, TRAIT_WINDOW_POLARIZED))
+		return
 	if (is_dark_color && fulltile) //Opaque directional windows restrict vision even in directions they are not placed in, please don't do this
 		set_opacity(255)
 	else
@@ -379,7 +381,7 @@
 
 /obj/structure/window/wash(clean_types)
 	. = ..()
-	if(!(clean_types & CLEAN_SCRUB))
+	if(!(clean_types & CLEAN_SCRUB) || HAS_TRAIT(src, TRAIT_WINDOW_POLARIZED))
 		return
 	set_opacity(initial(opacity))
 	remove_atom_colour(WASHABLE_COLOUR_PRIORITY)

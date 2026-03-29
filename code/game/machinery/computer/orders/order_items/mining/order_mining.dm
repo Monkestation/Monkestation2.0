@@ -87,14 +87,6 @@
 	item_path = /obj/item/storage/backpack/duffelbag/mining_conscript
 	cost_per_order = 1500
 
-/datum/orderable_item/mining/eva_kit
-	item_path = /obj/item/storage/box/emergency_eva/explorer
-	cost_per_order = 1000
-
-/datum/orderable_item/mining/hardsuit_jetpack_upgrade
-	item_path = /obj/item/jetpack_module
-	cost_per_order = 250
-
 /datum/orderable_item/mining/mining_drone //welcome to the big boy tab fellah
 	item_path = /mob/living/basic/mining_drone
 	cost_per_order = 800
@@ -110,3 +102,11 @@
 /datum/orderable_item/mining/drone_sentience
 	item_path = /obj/item/slimepotion/slime/sentience/mining
 	cost_per_order = 1000
+
+/datum/orderable_item/mining/magnetic
+	item_path = /obj/item/reagent_containers/medipen/magnet
+	cost_per_order = 250
+
+/datum/orderable_item/mining/ventpointer
+	item_path = /obj/item/pinpointer/vent
+	cost_per_order = 1150

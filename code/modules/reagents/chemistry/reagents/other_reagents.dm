@@ -354,6 +354,7 @@
 	default_container = /obj/item/reagent_containers/cup/glass/bottle/holywater
 	turf_exposure = TRUE
 	metabolized_traits = list(TRAIT_HOLY)
+	process_flags = ORGANIC | SYNTHETIC
 
 /datum/glass_style/drinking_glass/holywater
 	required_drink_type = /datum/reagent/water/holywater
@@ -570,7 +571,6 @@
 		affected_mob.adjustOxyLoss(-2 * REM * seconds_per_tick, 0)
 		affected_mob.adjustBruteLoss(-2 * REM * seconds_per_tick, 0)
 		affected_mob.adjustFireLoss(-2 * REM * seconds_per_tick, 0)
-		affected_mob.cause_pain(BODY_ZONES_ALL, -8 * REM * seconds_per_tick) //MONKESTATION ADDITION
 		if(ishuman(affected_mob) && affected_mob.blood_volume < BLOOD_VOLUME_NORMAL)
 			affected_mob.blood_volume += 3 * REM * seconds_per_tick
 	else  // Will deal about 90 damage when 50 units are thrown
@@ -671,32 +671,17 @@
 						exposed_human.skin_tone = "caucasian1"
 
 			if(HAS_TRAIT(exposed_human, TRAIT_MUTANT_COLORS)) //take current alien color and darken it slightly
-				var/newcolor = ""
-				var/datum/color_palette/generic_colors/located = exposed_human.dna.color_palettes[/datum/color_palette/generic_colors]
-				var/string = located.return_color(MUTANT_COLOR)
-				var/len = length(string)
-				var/char = ""
-				var/ascii = 0
-				for(var/i=1, i <= len, i += length(char))
-					char = string[i]
-					ascii = text2ascii(char)
-					switch(ascii)
-						if(48)
-							newcolor += "0"
-						if(49 to 57)
-							newcolor += ascii2text(ascii-1) //numbers 1 to 9
-						if(97)
-							newcolor += "9"
-						if(98 to 102)
-							newcolor += ascii2text(ascii-1) //letters b to f lowercase
-						if(65)
-							newcolor += "9"
-						if(66 to 70)
-							newcolor += ascii2text(ascii+31) //letters B to F - translates to lowercase
-						else
-							break
-				if(ReadHSV(newcolor)[3] >= ReadHSV("#7F7F7F")[3])
-					located.mutant_color = newcolor
+				var/list/existing_color = rgb2num(exposed_human.dna.features["mcolor"])
+				var/list/darkened_color = list()
+				// Reduces each part of the color by 16
+				for(var/channel in existing_color)
+					darkened_color += max(channel - 17, 0)
+
+				var/new_color = rgb(darkened_color[1], darkened_color[2], darkened_color[3])
+				var/list/new_hsv = rgb2hsv(new_color)
+				// Can't get too dark now
+				if(new_hsv[3] >= 50)
+					exposed_human.dna.features["mcolor"] = new_color
 			exposed_human.update_body(is_creating = TRUE)
 
 		if((methods & INGEST) && show_message)
@@ -2445,7 +2430,7 @@
 	// Silently add the zombie infection organ to be activated upon death
 	if(!exposed_mob.get_organ_slot(ORGAN_SLOT_ZOMBIE))
 		var/obj/item/organ/internal/zombie_infection/nodamage/ZI = new()
-		ZI.Insert(exposed_mob)
+		ZI.Follow_Insert(exposed_mob, ORGAN_SLOT_BRAIN)
 
 /datum/reagent/magillitis
 	name = "Magillitis"
@@ -2843,7 +2828,6 @@
 		drinker.adjustOxyLoss(-2 * REM * seconds_per_tick, FALSE)
 		drinker.adjustBruteLoss(-2 * REM * seconds_per_tick, FALSE)
 		drinker.adjustFireLoss(-2 * REM * seconds_per_tick, FALSE)
-		drinker.cause_pain(BODY_ZONES_ALL, -5 * REM * seconds_per_tick) // MONKESTATION ADDITION
 		drinker.fully_heal(HEAL_NEGATIVE_DISEASES)
 		if(drinker.blood_volume < BLOOD_VOLUME_NORMAL)
 			drinker.blood_volume += 3 * REM * seconds_per_tick
@@ -2984,10 +2968,20 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = list(/datum/addiction/stimulants = 5)
 
-/datum/reagent/kronkus_extract/on_mob_life(mob/living/carbon/kronkus_enjoyer)
+/datum/reagent/kronkus_extract/on_mob_metabolize(mob/living/carbon/user)
 	. = ..()
-	kronkus_enjoyer.adjustOrganLoss(ORGAN_SLOT_HEART, 0.1)
-	kronkus_enjoyer.stamina.adjust(2, FALSE)
+
+	user.stamina.regen_rate += 2 * REM
+
+/datum/reagent/kronkus_extract/on_mob_end_metabolize(mob/living/carbon/user)
+	user.stamina.regen_rate -= 2 * REM
+
+	return ..()
+
+/datum/reagent/kronkus_extract/on_mob_life(mob/living/carbon/kronkus_enjoyer, seconds_per_tick)
+	. = ..()
+	kronkus_enjoyer.adjustOrganLoss(ORGAN_SLOT_HEART, 0.1 * seconds_per_tick)
+	kronkus_enjoyer.stamina.adjust(1, FALSE)
 
 /datum/reagent/brimdust
 	name = "Brimdust"

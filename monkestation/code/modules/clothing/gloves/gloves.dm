@@ -5,10 +5,6 @@
 	worn_icon = 'monkestation/icons/mob/clothing/gloves.dmi'
 	icon_state = "syndimaid_arms"
 
-/obj/item/clothing/gloves/color/plasmaman
-	icon = 'monkestation/icons/obj/clothing/plasmaman_gloves.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/plasmaman_gloves.dmi'
-
 /obj/item/clothing/gloves/crueltysquad_gloves
 	name = "CSIJ level I gloves"
 	desc = "Armor used by assassins working for Cruelty Squad, stripped of all of its functions for kids to play with."
@@ -42,7 +38,7 @@
 /obj/item/clothing/gloves/latex/surgical
 	name = "Black Latex gloves"
 	desc = "Pricy sterile gloves that are thinner than latex. The lining allows for the person to operate \
-	        quicker along with the faster use time of various chemical related items"
+					quicker along with the faster use time of various chemical related items"
 	icon = 'monkestation/icons/obj/clothing/gloves.dmi'
 	worn_icon = 'monkestation/icons/mob/clothing/gloves.dmi'
 	icon_state = "surgeonlatex"
@@ -51,7 +47,7 @@
 	custom_premium_price = PAYCHECK_CREW * 6
 
 /datum/armor/surgeon
-    bio = 100
+	bio = 100
 
 /obj/item/clothing/gloves/tackler/combat/insulated/admiral // Reskin for Abraxis's Admiral set
 	icon_state = "admiral"

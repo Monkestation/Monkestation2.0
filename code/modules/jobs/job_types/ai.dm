@@ -22,7 +22,8 @@
 	job_flags = JOB_NEW_PLAYER_JOINABLE | JOB_EQUIP_RANK | JOB_BOLD_SELECT_TEXT | JOB_CANNOT_OPEN_SLOTS
 	var/do_special_check = TRUE
 	config_tag = "AI"
-
+	antag_capacity_points = 3
+	allow_overflow = FALSE // We have Triumvirate event for this. 
 
 /datum/job/ai/after_spawn(mob/living/spawned, client/player_client)
 	. = ..()

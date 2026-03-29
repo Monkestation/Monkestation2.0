@@ -1,24 +1,29 @@
 /datum/orderable_item/survival //should be used for anything that makes sure the miner is not dead in ways that do not involve killing stuff
 	category_index = CATEGORY_SURVIVAL
 
+/datum/orderable_item/survival/chasm_filler
+	item_path = /obj/item/chasm_filler
+	desc = "A capsule that can be thrown into chasms to fill them with thick dirt."
+	cost_per_order = 350
+
 /datum/orderable_item/survival/survival_pen
-	item_path = /obj/item/reagent_containers/hypospray/medipen/survival
+	item_path = /obj/item/reagent_containers/medipen/survival
 	cost_per_order = 500
 
 /datum/orderable_item/survival/luxury_pen
-	item_path = /obj/item/reagent_containers/hypospray/medipen/survival/luxury
+	item_path = /obj/item/reagent_containers/medipen/survival/luxury
 	cost_per_order = 1000
 
 /datum/orderable_item/survival/luxury_pen/oozeling //monkestation edit
-	item_path = /obj/item/reagent_containers/hypospray/medipen/survival/luxury/oozeling
+	item_path = /obj/item/reagent_containers/medipen/survival/luxury/oozeling
 	cost_per_order = 1000
 
 /datum/orderable_item/survival/survival_pen/synthcare //monkestation edit CHEAPER THAN SURVIVAL PEN BECAUSE IT DOES NOT HEAL NEARLY AS MUCH AS A SURVIVAL PEN
-	item_path = /obj/item/reagent_containers/hypospray/medipen/synthcare
+	item_path = /obj/item/reagent_containers/medipen/synthcare
 	cost_per_order = 250
 
 /datum/orderable_item/survival/luxury_pen/synthcare //monkestation edit WAY CHEAPER THAN A LUX PEN BECAUSE DOES NOT INCLUDE ALL THE FANCY CHEMS AND HAS DEVESTATING OVERDOSE EFFECTS
-	item_path = /obj/item/reagent_containers/hypospray/medipen/survival/synthcare
+	item_path = /obj/item/reagent_containers/medipen/survival/synthcare
 	cost_per_order = 750
 
 /datum/orderable_item/survival/synthcaresurgeon //monke edit, basically a medkit implant for synthetics
@@ -26,24 +31,30 @@
 	cost_per_order = 750
 
 /datum/orderable_item/survival/robopiates //monkestation edit Slows you down so only really good for out of fight usage
-	item_path = /obj/item/reagent_containers/hypospray/medipen/synthpainkill
+	item_path = /obj/item/reagent_containers/medipen/synthpainkill
 	cost_per_order = 500
 
 /datum/orderable_item/survival/temperature //monkestation edit
-	item_path = /obj/item/reagent_containers/hypospray/medipen/temperature
+	item_path = /obj/item/reagent_containers/medipen/temperature
 	cost_per_order = 200
 
-/datum/orderable_item/survival/magnetic //monkestation edit
-	item_path = /obj/item/reagent_containers/hypospray/medipen/magnet
-	cost_per_order = 250
-
 /datum/orderable_item/survival/speed //monkestation edit
-	item_path = /obj/item/reagent_containers/hypospray/medipen/survival/speed
+	item_path = /obj/item/reagent_containers/medipen/survival/speed
 	cost_per_order = 550
 
 /datum/orderable_item/survival/penthrite //monkestation edit
-	item_path = /obj/item/reagent_containers/hypospray/medipen/survival/penthrite
+	item_path = /obj/item/reagent_containers/medipen/survival/penthrite
 	cost_per_order = 750
+
+/datum/orderable_item/survival/coagulant //monkestation edit
+	item_path = /obj/item/reagent_containers/medipen/advanced/blood_loss
+	desc = "For extreme blood loss."
+	cost_per_order = 180
+
+/datum/orderable_item/survival/painkillers //monkestation edit
+	item_path = /obj/item/storage/pill_bottle/painkiller
+	desc = "For minor injuries."
+	cost_per_order = 240
 
 /datum/orderable_item/survival/mining_stabilizer
 	item_path = /obj/item/mining_stabilizer
@@ -51,6 +62,10 @@
 
 /datum/orderable_item/survival/capsule
 	item_path = /obj/item/survivalcapsule
+	cost_per_order = 400
+
+/datum/orderable_item/survival/bathroom
+	item_path = /obj/item/survivalcapsule/bathroom
 	cost_per_order = 400
 
 /datum/orderable_item/survival/medkit_basic
@@ -65,6 +80,11 @@
 	item_path = /obj/item/storage/medkit/fire
 	desc = "For emergency magmatic burn relief."
 	cost_per_order = 600
+
+/datum/orderable_item/survival/medkit_surgery //monke edit
+	item_path = /obj/item/storage/medkit/combat_surgeon/stocked
+	desc = "A surgical medkit for basic field surgery."
+	cost_per_order = 3000
 
 /datum/orderable_item/survival/rescue_hook
 	item_path = /obj/item/fishing_hook/rescue

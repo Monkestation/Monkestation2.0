@@ -222,7 +222,7 @@
 	if(SEND_SIGNAL(victim, COMSIG_LIVING_BLOOD_CRAWL_CONSUMED, src, jaunter) & COMPONENT_STOP_CONSUMPTION)
 		return FALSE
 
-	jaunter.revive(HEAL_ALL)
+	jaunter.revive(HEAL_ALL, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 
 	// No defib possible after laughter
 	victim.apply_damage(1000, BRUTE, wound_bonus = CANT_WOUND)
@@ -296,7 +296,7 @@
 
 		friend.forceMove(release_turf)
 		// Heals them back to state one
-		if(!friend.revive(ADMIN_HEAL_ALL, force_grab_ghost = TRUE))
+		if(!friend.revive(ADMIN_HEAL_ALL, force_grab_ghost = TRUE, revival_policy = POLICY_ANTAGONISTIC_REVIVAL))
 			continue
 		playsound(release_turf, consumed_mobs, 50, TRUE, -1)
 		to_chat(friend, span_clown("You leave [source]'s warm embrace, and feel ready to take on the world."))

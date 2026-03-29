@@ -37,8 +37,8 @@
 /obj/machinery/launchpad/Initialize(mapload)
 	. = ..()
 	prepare_huds()
-	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
-		diag_hud.add_atom_to_hud(src)
+	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC_BASIC]
+	diag_hud.add_atom_to_hud(src)
 
 	update_hud()
 
@@ -60,8 +60,8 @@
 		))
 
 /obj/machinery/launchpad/Destroy()
-	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
-		diag_hud.remove_atom_from_hud(src)
+	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC_BASIC]
+	diag_hud.remove_atom_from_hud(src)
 	return ..()
 
 /obj/machinery/launchpad/examine(mob/user)
@@ -74,7 +74,7 @@
 	if(!stationary || !panel_open)
 		return ITEM_INTERACT_BLOCKING
 
-	multi.set_buffer(src)
+	multitool_set_buffer(multi, src)
 	balloon_alert(user, "saved to multitool buffer")
 	return ITEM_INTERACT_SUCCESS
 
@@ -207,7 +207,7 @@
 	for(var/atom/movable/ROI in source)
 		if(ROI == src)
 			continue
-		if(!istype(ROI) || isdead(ROI) || iscameramob(ROI) || istype(ROI, /obj/effect/dummy/phased_mob))
+		if(!istype(ROI) || isdead(ROI) || iseyemob(ROI) || istype(ROI, /obj/effect/dummy/phased_mob))
 			continue//don't teleport these
 		var/on_chair = ""
 		if(ROI.anchored)// if it's anchored, don't teleport

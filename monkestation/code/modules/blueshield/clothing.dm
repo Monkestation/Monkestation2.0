@@ -78,7 +78,7 @@
 	desc = "A tight-fitting kevlar-lined vest with a blue badge on the chest of it."
 	icon_state = "blueshieldarmor"
 	body_parts_covered = CHEST
-	item_flags = INFINITE_RESKIN
+	uses_advanced_reskins = TRUE
 	unique_reskin = list(
 		"Slim" = list(
 			RESKIN_ICON = 'monkestation/code/modules/blueshift/icons/obj/clothing/suits/armor.dmi',
@@ -151,7 +151,6 @@
 /obj/item/clothing/under/rank/blueshield
 	icon = 'monkestation/code/modules/blueshift/icons/obj/clothing/under/command.dmi'
 	worn_icon = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/command.dmi'
-	worn_icon_digitigrade = 'monkestation/code/modules/blueshift/icons/mob/clothing/under/command_digi.dmi'
 	name = "blueshield's suit"
 	desc = "A classic bodyguard's suit, with custom-fitted Blueshield-Blue cuffs and a Nanotrasen insignia over one of the pockets."
 	icon_state = "blueshield"

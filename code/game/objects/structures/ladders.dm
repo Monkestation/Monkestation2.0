@@ -44,7 +44,7 @@
 	disconnect()
 	return ..()
 
-/obj/structure/ladder/LateInitialize()
+/obj/structure/ladder/LateInitialize(mapload_arg)
 	// By default, discover ladders above and below us vertically
 	var/turf/T = get_turf(src)
 	var/obj/structure/ladder/L
@@ -287,7 +287,7 @@
 	var/id
 	var/height = 0  // higher numbers are considered physically higher
 
-/obj/structure/ladder/unbreakable/LateInitialize()
+/obj/structure/ladder/unbreakable/LateInitialize(mapload_arg)
 	// Override the parent to find ladders based on being height-linked
 	if (!id || (up && down))
 		update_appearance()

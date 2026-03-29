@@ -18,7 +18,7 @@
 		MECHA_R_ARM = 1,
 		MECHA_UTILITY = 3,
 		MECHA_POWER = 1,
-		MECHA_ARMOR = 3,
+		MECHA_ARMOR = 2,
 	)
 	var/obj/durand_shield/shield
 
@@ -35,8 +35,6 @@
 	. = ..()
 	shield = new /obj/durand_shield(loc, src, plane, layer, dir)
 	RegisterSignal(src, COMSIG_MECHA_ACTION_TRIGGER, PROC_REF(relay))
-	RegisterSignal(src, COMSIG_PROJECTILE_PREHIT, PROC_REF(prehit))
-
 
 /obj/vehicle/sealed/mecha/durand/Destroy()
 	if(shield)
@@ -50,7 +48,7 @@
 
 /obj/vehicle/sealed/mecha/durand/process()
 	. = ..()
-	if(defense_mode && !use_energy(100 KILO JOULES)) //Defence mode can only be on with a occupant so we check if one of them can toggle it and toggle
+	if(defense_mode && !use_energy(0.01 * STANDARD_CELL_CHARGE)) //Defence mode can only be on with a occupant so we check if one of them can toggle it and toggle
 		for(var/O in occupants)
 			var/mob/living/occupant = O
 			var/datum/action/action = LAZYACCESSASSOC(occupant_actions, occupant, /datum/action/vehicle/sealed/mecha/mech_defense_mode)
@@ -85,10 +83,11 @@
 	SEND_SIGNAL(shield, COMSIG_MECHA_ACTION_TRIGGER, owner, signal_args)
 
 //Redirects projectiles to the shield if defense_check decides they should be blocked and returns true.
-/obj/vehicle/sealed/mecha/durand/proc/prehit(obj/projectile/source, list/signal_args)
-	SIGNAL_HANDLER
+/obj/vehicle/sealed/mecha/durand/bullet_act(obj/projectile/source, def_zone, mode)
 	if(defense_check(source.loc) && shield)
-		signal_args[2] = shield
+		return shield.projectile_hit(source, def_zone, mode)
+	return ..()
+
 
 /**Checks if defense mode is enabled, and if the attacker is standing in an area covered by the shield.
 Expects a turf. Returns true if the attack should be blocked, false if not.*/
@@ -275,7 +274,9 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 		return
 	. = ..()
 	flick("shield_impact", src)
-	if(!chassis.use_energy((max_integrity - atom_integrity) * 100))
+	if(!.)
+		return
+	if(!chassis.use_energy(. * (STANDARD_CELL_CHARGE / 150)))
 		chassis.cell?.charge = 0
 		for(var/O in chassis.occupants)
 			var/mob/living/occupant = O

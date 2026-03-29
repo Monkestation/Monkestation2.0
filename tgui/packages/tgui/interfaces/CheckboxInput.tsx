@@ -1,3 +1,5 @@
+import { createSearch, decodeHtmlEntities } from 'common/string';
+import { useBackend, useLocalState } from '../backend';
 import {
   Button,
   Icon,
@@ -8,13 +10,9 @@ import {
   Table,
   Tooltip,
 } from '../components';
-import { TableCell, TableRow } from '../components/Table';
-import { createSearch, decodeHtmlEntities } from 'common/string';
-import { useBackend, useLocalState } from '../backend';
-
+import { Window } from '../layouts';
 import { InputButtons } from './common/InputButtons';
 import { Loader } from './common/Loader';
-import { Window } from '../layouts';
 
 type Data = {
   items: string[];
@@ -70,8 +68,8 @@ export const CheckboxInput = (props) => {
             <Section fill scrollable>
               <Table>
                 {toDisplay.map((item, index) => (
-                  <TableRow className="candystripe" key={index}>
-                    <TableCell>
+                  <Table.Row className="candystripe" key={index}>
+                    <Table.Cell>
                       <Button.Checkbox
                         checked={selections.includes(item)}
                         disabled={
@@ -83,8 +81,8 @@ export const CheckboxInput = (props) => {
                       >
                         {item}
                       </Button.Checkbox>
-                    </TableCell>
-                  </TableRow>
+                    </Table.Cell>
+                  </Table.Row>
                 ))}
               </Table>
             </Section>
@@ -99,7 +97,7 @@ export const CheckboxInput = (props) => {
               <Input
                 fluid
                 value={searchQuery}
-                onInput={(_, value) => setSearchQuery(value)}
+                onChange={(value) => setSearchQuery(value)}
               />
             </Stack.Item>
           </Stack>

@@ -43,23 +43,23 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/multitool_act(mob/living/user, obj/item/multitool/multi_tool)
 	. = ..()
 
-	if(istype(multi_tool.buffer, /obj/machinery/air_sensor))
-		var/obj/machinery/air_sensor/sensor = multi_tool.buffer
+	var/datum/buffer = multitool_get_buffer(multi_tool)
+	if(istype(buffer, /obj/machinery/air_sensor))
+		var/obj/machinery/air_sensor/sensor = buffer
 		sensor.inlet_id = id_tag
-		multi_tool.set_buffer(null)
+		multitool_set_buffer(multi_tool, null)
 		balloon_alert(user, "input linked to sensor")
 		return ITEM_INTERACT_SUCCESS
 
 	balloon_alert(user, "saved in buffer")
-	multi_tool.set_buffer(src)
+	multitool_set_buffer(multi_tool, src)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/click_ctrl(mob/user)
 	if(can_interact(user))
-		on = !on
+		set_on(!on)
 		balloon_alert(user, "turned [on ? "on" : "off"]")
 		investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
-		update_appearance()
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/click_alt(mob/user)
@@ -76,7 +76,9 @@
 	cut_overlays()
 	if(showpipe)
 		// everything is already shifted so don't shift the cap
-		add_overlay(get_pipe_image(icon, "inje_cap", initialize_directions, pipe_color))
+		var/image/cap = get_pipe_image(icon, "inje_cap", initialize_directions, pipe_color)
+		cap.appearance_flags |= RESET_COLOR|KEEP_APART
+		add_overlay(cap)
 
 	if(!nodes[1] || !on || !is_operational)
 		icon_state = "inje_off"
@@ -126,7 +128,7 @@
 
 	switch(action)
 		if("power")
-			on = !on
+			set_on(!on)
 			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
 		if("rate")
@@ -140,7 +142,7 @@
 			if(.)
 				volume_rate = clamp(rate, 0, MAX_TRANSFER_RATE)
 				investigate_log("was set to [volume_rate] L/s by [key_name(usr)]", INVESTIGATE_ATMOS)
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/can_unwrench(mob/user)
 	. = ..()

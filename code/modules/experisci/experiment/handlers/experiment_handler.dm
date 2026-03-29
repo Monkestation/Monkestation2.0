@@ -160,15 +160,13 @@
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 25)
 		our_scanner.say("The scan did not result in anything.")
 
-/// Hooks on a successful dissection experiment
-/datum/component/experiment_handler/proc/try_run_dissection_experiment(obj/source, mob/living/target)
+/// Hooks on a successful autopsy experiment
+/datum/component/experiment_handler/proc/try_run_autopsy_experiment(obj/source, mob/living/target)
 	SIGNAL_HANDLER
 
 	if (action_experiment(source, target))
 		playsound(source, 'sound/machines/ping.ogg', 25)
-	else
-		playsound(source, 'sound/machines/buzz-sigh.ogg', 25)
-		source.say("The dissection did not result in anything, either prior dissections have not been complete, or this one has already been researched.")
+		source.say("New unique autopsy successfully catalogued.")
 
 /**
  * Announces a message to all experiment handlers

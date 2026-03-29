@@ -458,8 +458,8 @@ Behavior that's still missing from this component that original food items had t
 	var/atom/owner = parent
 
 	if(!owner?.reagents)
+		. = FALSE
 		stack_trace("[eater] failed to bite [owner], because [owner] had no reagents.")
-		return FALSE
 	if(eater.satiety > -200)
 		eater.adjust_satiety(-junkiness)
 	playsound(eater.loc,'sound/items/eatfood.ogg', rand(10,50), TRUE)
@@ -505,6 +505,20 @@ Behavior that's still missing from this component that original food items had t
 	if(!iscarbon(eater))
 		return FALSE
 	var/mob/living/carbon/C = eater
+
+	if(HAS_TRAIT(eater, TRAIT_FOOD_ABSORPTION))
+		if(SEND_SIGNAL(eater, COMSIG_CARBON_ATTEMPT_EAT, parent) & COMSIG_CARBON_BLOCK_EAT)
+			return
+		var/covered_bodyparts = NONE
+		for(var/obj/item/clothing/equipped in C.get_equipped_items())
+			covered_bodyparts |= equipped.body_parts_covered
+
+		if((covered_bodyparts & CHEST|HEAD|ARMS|HANDS|LEGS|FEET) == (CHEST|HEAD|ARMS|HANDS|LEGS|FEET) && C.is_mouth_covered())
+			var/who = (isnull(feeder) || eater == feeder) ? "your" : "[eater.p_their()]"
+			to_chat(feeder, span_warning("You have to expose the membrane on [who] body."))
+			return FALSE
+		else
+			return TRUE
 
 	if(!C.has_mouth())
 		return FALSE

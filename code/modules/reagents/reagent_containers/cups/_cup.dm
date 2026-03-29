@@ -108,7 +108,7 @@
 
 /obj/item/reagent_containers/cup/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
 	. = ..()
-	if(!isliving(over))
+	if(!canconsume(over, user))
 		return
 
 	if(!isliving(usr) && !check_rights(R_FUN)) // monkestation edit: a bug? nah, its a feature!
@@ -212,8 +212,10 @@
 		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transfered_by = user)
 		to_chat(user, span_notice("You fill [src] with [trans] unit\s of the contents of [target]."))
 
-	target.update_appearance()
-	return ITEM_INTERACT_SUCCESS
+		target.update_appearance()
+		return ITEM_INTERACT_SUCCESS
+
+	return ..()
 
 /obj/item/reagent_containers/cup/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	var/hotness = attacking_item.get_temperature()
@@ -363,6 +365,9 @@
 
 /obj/item/reagent_containers/cup/beaker/meta/rezadone
 	list_reagents = list(/datum/reagent/medicine/rezadone = 180)
+
+/obj/item/reagent_containers/cup/beaker/meta/combat_juice
+	list_reagents = list(/datum/reagent/medicine/epinephrine = 12, /datum/reagent/medicine/omnizine = 60, /datum/reagent/medicine/leporazine = 54, /datum/reagent/medicine/atropine = 54)
 
 /obj/item/reagent_containers/cup/beaker/cryoxadone
 	list_reagents = list(/datum/reagent/medicine/cryoxadone = 30)
@@ -552,7 +557,7 @@
 		if(!grinded)
 			to_chat(user, span_warning("There is nothing to grind!"))
 			return ITEM_INTERACT_BLOCKING
-		if(user.staminaloss > 50)
+		if(user.stamina.loss_as_percent > 50)
 			to_chat(user, span_warning("You are too tired to work!"))
 			return ITEM_INTERACT_BLOCKING
 
@@ -561,12 +566,12 @@
 			"Juice" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_juice")
 		)
 		var/picked_option = show_radial_menu(user, src, choose_options, radius = 38, require_near = TRUE)
-		if(!grinded || !in_range(src, user) || !user.is_holding(tool) || picked_option)
+		if(!grinded || !in_range(src, user) || !user.is_holding(tool) || !picked_option)
 			return ITEM_INTERACT_BLOCKING
 		to_chat(user, span_notice("You start grinding..."))
 		if(!do_after(user, 2.5 SECONDS, target = src))
 			return ITEM_INTERACT_BLOCKING
-		user.stamina.adjust(-40)
+		user.stamina.adjust(-20)
 		switch(picked_option)
 			if("Juice") //prioritize juicing
 				if(grinded.juice_results)
@@ -710,3 +715,10 @@
 	possible_transfer_amounts = list(5, 10, 15, 30)
 	volume = 30
 	fill_icon_thresholds = list(0, 1, 20, 40, 60, 80, 100)
+
+/obj/item/storage/box/tube
+	name = "box of test tubes"
+
+/obj/item/storage/box/tube/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/reagent_containers/cup/tube( src )

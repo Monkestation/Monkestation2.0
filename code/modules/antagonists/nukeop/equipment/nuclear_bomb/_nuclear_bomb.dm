@@ -62,7 +62,6 @@ GLOBAL_VAR(station_nuke_source)
 /obj/machinery/nuclearbomb/Initialize(mapload)
 	. = ..()
 	countdown = new(src)
-	GLOB.nuke_list += src
 	core = new /obj/item/nuke_core(src)
 	STOP_PROCESSING(SSobj, core)
 	update_appearance()
@@ -75,7 +74,6 @@ GLOBAL_VAR(station_nuke_source)
 	if(!exploded)
 		// If we're not exploding, set the alert level back to normal
 		toggle_nuke_safety()
-	GLOB.nuke_list -= src
 	QDEL_NULL(countdown)
 	QDEL_NULL(core)
 	return ..()
@@ -154,7 +152,7 @@ GLOBAL_VAR(station_nuke_source)
 			if(istype(weapon, /obj/item/nuke_core_container))
 				var/obj/item/nuke_core_container/core_box = weapon
 				to_chat(user, span_notice("You start loading the plutonium core into [core_box]..."))
-				if(do_after(user, 5 SECONDS, target=src))
+				if(do_after(user, 5 SECONDS, target = src, hidden = TRUE))
 					if(core_box.load(core, user))
 						to_chat(user, span_notice("You load the plutonium core into [core_box]."))
 						deconstruction_state = NUKESTATE_CORE_REMOVED

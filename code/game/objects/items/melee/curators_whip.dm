@@ -10,7 +10,6 @@
 	slot_flags = ITEM_SLOT_BELT
 	obj_flags = parent_type::obj_flags | UNIQUE_RENAME
 	force = 15
-	pain_damage = 5
 	demolition_mod = 0.25
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb_continuous = list("flogs", "whips", "lashes", "disciplines")
@@ -110,7 +109,7 @@
 		return FALSE
 	if(ishuman(target))
 		var/mob/living/carbon/human/human_target = target
-		if(human_target.check_shields(src, 0, "[user]'s [name]", attack_type = MELEE_ATTACK))
+		if(human_target.check_block(src, 0, "[user]'s [name]", attack_type = MELEE_ATTACK))
 			return TRUE // we still return TRUE so we don't continue the attack chain
 	if(!target.dropItemToGround(item))
 		return FALSE

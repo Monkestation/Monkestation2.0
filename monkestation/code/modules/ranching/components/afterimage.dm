@@ -5,7 +5,6 @@
 
 	//cycles colors
 	var/color_cycle = FALSE
-	var/list/hsv
 
 /datum/component/after_image/Initialize(count = 4, rest_time = 1, color_cycle = FALSE)
 	..()
@@ -69,10 +68,8 @@
 	targeted_image.loc = null
 
 	if(color_cycle)
-		if(!hsv)
-			hsv = RGBtoHSV(rgb(255, 0, 0))
-		hsv = RotateHue(hsv, world.time - rest_time * 15)
-		targeted_image.color = HSVtoRGB(hsv)
+		var/list/rgb_colors = RotateHue(rgb(255, 0, 0), world.time - rest_time * 15)
+		targeted_image.color = rgb_colors
 
 	if(!isnull(dir_override))
 		targeted_image.setDir(dir_override)
@@ -88,7 +85,6 @@
 /obj/effect/after_image
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	anchored = TRUE
-	flags_1 = parent_type::flags_1 | DEMO_IGNORE_1
 	var/finalized_alpha = 100
 	var/active = FALSE
 	var/last_appearance_ref

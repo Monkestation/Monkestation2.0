@@ -38,16 +38,16 @@
 #define R_VAREDIT (1<<10)
 #define R_SOUND (1<<11)
 #define R_SPAWN (1<<12)
-#define R_AUTOADMIN (1<<13)
-#define R_DBRANKS (1<<14)
+#define R_DBRANKS (1<<13)
+#define R_ADVANCEDCALL (1<<14)
 
-#define R_DEFAULT R_AUTOADMIN
+#define R_DEFAULT R_NONE
 
 #define R_EVERYTHING (1<<15)-1 //the sum of all other rank permissions, used for +EVERYTHING MONKE EDIT
 
 #define ADMIN_QUE(user) "(<a href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];adminmoreinfo=[REF(user)]'>?</a>)"
 #define ADMIN_FLW(user) "(<a href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];adminplayerobservefollow=[REF(user)]'>FLW</a>)"
-#define ADMIN_DEMO(user) "(<a href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];adminopendemo=[REF(user)]'>REPLAY</a>)" //Monkestation Edit: REPLAYS
+#define ADMIN_STLTHFLW(user) "(<a href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];adminplayerobservefollow=[REF(user)];stealth=1'>STLTH-FLW</a>)"
 #define ADMIN_PP(user) "(<a href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];adminplayeropts=[REF(user)]'>PP</a>)"
 #define ADMIN_VV(atom) "(<a href='byond://?_src_=vars;[HrefToken(forceGlobal = TRUE)];Vars=[REF(atom)]'>VV</a>)"
 #define ADMIN_SM(user) "(<a href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];subtlemessage=[REF(user)]'>SM</a>)"
@@ -59,9 +59,10 @@
 #define ADMIN_SC(user) "(<a href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];adminspawncookie=[REF(user)]'>SC</a>)"
 #define ADMIN_SMITE(user) "(<a href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];adminsmite=[REF(user)]'>SMITE</a>)"
 #define ADMIN_LOOKUP(user) "[key_name_admin(user)][ADMIN_QUE(user)]"
-#define ADMIN_LOOKUPFLW(user) "[key_name_admin(user)][ADMIN_QUE(user)] [ADMIN_FLW(user)]"
+#define ADMIN_LOOKUPFLW(user) "[key_name_admin(user)][ADMIN_QUE(user)] [ADMIN_STLTHFLW(user)] [ADMIN_FLW(user)]"
+#define ADMIN_STEALTHLOOKUPFLW(user) "[key_name_admin(user)][ADMIN_QUE(user)] [ADMIN_FLW(user)] [ADMIN_STLTHFLW(user)]"
 #define ADMIN_SET_SD_CODE "(<a href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];set_selfdestruct_code=1'>SETCODE</a>)"
-#define ADMIN_FULLMONTY_NONAME(user) "[ADMIN_QUE(user)] [ADMIN_PP(user)] [ADMIN_VV(user)] [ADMIN_SM(user)] [ADMIN_FLW(user)] [ADMIN_TP(user)] [ADMIN_INDIVIDUALLOG(user)] [ADMIN_SMITE(user)]"
+#define ADMIN_FULLMONTY_NONAME(user) "[ADMIN_QUE(user)] [ADMIN_PP(user)] [ADMIN_VV(user)] [ADMIN_SM(user)] [ADMIN_FLW(user)] [ADMIN_STLTHFLW(user)] [ADMIN_TP(user)] [ADMIN_INDIVIDUALLOG(user)] [ADMIN_SMITE(user)]"
 #define ADMIN_FULLMONTY(user) "[key_name_admin(user)] [ADMIN_FULLMONTY_NONAME(user)]"
 #define ADMIN_JMP(src) "(<a href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)"
 #define COORD(src) "[src ? src.Admin_Coordinates_Readable() : "nonexistent location"]"
@@ -99,6 +100,9 @@
 #define AHELP_CLOSED 2
 #define AHELP_RESOLVED 3
 
+/// Time key for currently_typing on a ticket for windows that arent TGUI, guarenteed to delete themselves after not typing.
+#define CLASSIC_ADMINPM_TIME_KEY -1
+
 /// Amount of time after the round starts that the player disconnect report is issued.
 #define ROUNDSTART_LOGOUT_REPORT_TIME (10 MINUTES)
 
@@ -118,9 +122,6 @@
 #define MAX_KEYPRESS_AUTOKICK 50
 ///Length of held key buffer
 #define HELD_KEY_BUFFER_LENGTH 15
-
-#define STICKYBAN_DB_CACHE_TIME (10 SECONDS)
-#define STICKYBAN_ROGUE_CHECK_TIME 5
 
 /// Reference index for policy.json to locate any policy text applicable to polymorphed/staff of changed mobs.
 #define POLICY_POLYMORPH "Polymorph"
@@ -183,5 +184,5 @@ GLOBAL_VAR_INIT(ghost_role_flags, (~0))
 //Monke edit for port servers
 #define MRP2_PORT		3122
 #define MRP_PORT		3121
-#define HRP_PORT		1342
+#define HRP_PORT		6969
 #define VANDERLIN_PORT	1541

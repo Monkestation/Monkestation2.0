@@ -142,6 +142,21 @@
 	donator_pet = /mob/living/basic/pet/theclown_clownpet
 
 /obj/item/choice_beacon/pet/donator/cyber_husky
-	name ="Cyber Husky"
+	name = "Cyber Husky"
 	default_name = "Cyber Husky"
 	donator_pet = /mob/living/basic/pet/cyber_husky
+
+/obj/item/choice_beacon/pet/donator/bananadola
+	name = "bananadola"
+	default_name = "bananadola"
+	donator_pet = /mob/living/basic/pet/bananadola
+
+/obj/item/choice_beacon/pet/donator/cyber_mastiff
+	name = "cyber mastiff"
+	default_name = "cyber mastiff"
+	donator_pet = /mob/living/basic/pet/cyber_mastiff
+
+/obj/item/choice_beacon/pet/donator/yato_neco_arc
+	name = "Neco-Arc"
+	default_name = "Neco-Arc"
+	donator_pet = /mob/living/basic/pet/yato_neco_arc

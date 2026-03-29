@@ -55,10 +55,10 @@
 				balloon_alert(user, "out of range!")
 				return TRUE
 
+			investigate_log("[key_name(user)] expunged the record of [target.name].", INVESTIGATE_RECORDS)
 			expunge_record_info(target)
 			balloon_alert(user, "record expunged")
 			playsound(src, 'sound/machines/terminal_eject.ogg', 70, TRUE)
-			investigate_log("[key_name(user)] expunged the record of [target.name].", INVESTIGATE_RECORDS)
 
 			return TRUE
 
@@ -162,7 +162,7 @@
 		playsound(src, 'sound/machines/terminal_error.ogg', 70, TRUE)
 		return FALSE
 
-	if(mugshot.picture.psize_x > world.icon_size || mugshot.picture.psize_y > world.icon_size)
+	if((mugshot.picture.psize_x > world.icon_size || mugshot.picture.psize_y > world.icon_size) && !mugshot.assphoto)
 		balloon_alert(user, "photo too large!")
 		playsound(src, 'sound/machines/terminal_error.ogg', 70, TRUE)
 		return FALSE
@@ -173,7 +173,7 @@
 		return FALSE
 
 	new /datum/record/crew(name = name, character_appearance = mugshot.picture.picture_image)
-
+	investigate_log("[key_name(user)] created a new record named [name]", INVESTIGATE_RECORDS)
 	balloon_alert(user, "record created")
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 70, TRUE)
 

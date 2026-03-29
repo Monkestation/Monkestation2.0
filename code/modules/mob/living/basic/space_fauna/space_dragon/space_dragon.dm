@@ -1,5 +1,5 @@
 /// You can't make a dragon darker than this, it'd be hard to see
-#define REJECT_DARK_COLOUR_THRESHOLD 50
+#define REJECT_DARK_COLOUR_THRESHOLD 20
 /// Any interactions executed by the space dragon
 #define DOAFTER_SOURCE_SPACE_DRAGON_INTERACTION "space dragon interaction"
 
@@ -46,6 +46,7 @@
 	death_sound = 'sound/creatures/space_dragon_roar.ogg'
 	death_message = "screeches in agony as it collapses to the floor, its life extinguished."
 	butcher_results = list(/obj/item/stack/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/bone = 30)
+	uses_stamina = FALSE
 
 	/// The colour of the space dragon
 	var/chosen_colour
@@ -105,13 +106,17 @@
 		to_chat(src, span_warning("Not a valid colour, please try again."))
 		select_colour()
 		return
-	var/temp_hsv = RGBtoHSV(chosen_colour)
-	if(ReadHSV(temp_hsv)[3] < REJECT_DARK_COLOUR_THRESHOLD)
+	var/list/skin_hsv = rgb2hsv(chosen_colour)
+	if(skin_hsv[3] < REJECT_DARK_COLOUR_THRESHOLD)
 		to_chat(src, span_danger("Invalid colour. Your colour is not bright enough."))
 		select_colour()
 		return
 	add_atom_colour(chosen_colour, FIXED_COLOUR_PRIORITY)
 	update_appearance(UPDATE_OVERLAYS)
+
+///Space dragons are immune to stamina damage.
+/mob/living/basic/space_dragon/pre_stamina_change(diff, forced)
+	return 0
 
 /mob/living/basic/space_dragon/update_icon_state()
 	. = ..()

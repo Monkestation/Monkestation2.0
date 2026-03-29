@@ -386,3 +386,7 @@
 /datum/mood_event/sling
 	description = span_velvet("<b>The keys to reality are within my grasp.</b>\n")
 	mood_change = 20
+
+/datum/mood_event/wishgranter
+	description = span_hierophant("MY POWER IS LIMITLESS... IT'S ALL MINE!")
+	mood_change = 50

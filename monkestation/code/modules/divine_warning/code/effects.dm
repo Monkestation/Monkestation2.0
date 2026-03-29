@@ -8,7 +8,7 @@
 	alpha = 120
 
 /mob/living/proc/flash_divine_overlay(alpha = 120, soundvolume = 80, time = 2 SECONDS, force = FALSE)
-	if(client?.prefs?.read_preference(/datum/preference/toggle/darkened_flash))
+	if(client?.prefs?.read_preference(/datum/preference/choiced/flash_visuals) != "Light")
 		clear_fullscreen("divine", time)
 		return
 	if (COOLDOWN_FINISHED(src, divine_cooldown) || force)

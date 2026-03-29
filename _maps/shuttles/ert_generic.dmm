@@ -1113,7 +1113,7 @@
 /obj/machinery/button/flasher{
 	id = "ert_shuttle_flash"
 	},
-/obj/item/storage/secure/briefcase{
+/obj/item/storage/briefcase/secure{
 	pixel_x = 0;
 	pixel_y = 12
 	},
@@ -1373,7 +1373,7 @@
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/shuttle/ert/bridge)
 "Tv" = (
-/obj/machinery/atmospherics/components/unary/cryo_cell{
+/obj/machinery/cryo_cell{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue/opposingcorners,

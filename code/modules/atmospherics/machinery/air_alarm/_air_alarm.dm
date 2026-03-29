@@ -180,11 +180,12 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	if (!istype(multi_tool) || locked)
 		return .
 
-	if(istype(multi_tool.buffer, /obj/machinery/air_sensor))
+	var/datum/buffer = multitool_get_buffer(multi_tool)
+	if(istype(buffer, /obj/machinery/air_sensor))
 		if(!allow_link_change)
 			balloon_alert(user, "linking disabled")
 			return ITEM_INTERACT_BLOCKING
-		connect_sensor(multi_tool.buffer)
+		connect_sensor(buffer)
 		balloon_alert(user, "connected sensor")
 		return ITEM_INTERACT_SUCCESS
 
@@ -424,6 +425,11 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 				return TRUE
 
 			scrubber.toggle_filters(params["val"])
+		if("toggle_all_filters")
+			if (isnull(scrubber))
+				return TRUE
+
+			scrubber.toggle_filters(GLOB.meta_gas_info)
 		if ("mode")
 			select_mode(user, text2path(params["mode"]))
 			investigate_log("was turned to [selected_mode.name] mode by [key_name(user)]", INVESTIGATE_ATMOS)
@@ -470,6 +476,25 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 		if ("lock")
 			togglelock(user)
 			return TRUE
+
+		if("air_conditioning")
+			if(!isnum(params["value"]))
+				return TRUE
+			if(params["value"])
+				stop_ac()
+			else
+				start_ac()
+			investigate_log("has had its air conditioning turned [air_conditioning ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
+
+		if("set_ac_target")
+			if(!isnum(params["target"]))
+				return TRUE
+			set_ac_target(params["target"])
+			investigate_log("has had its air conditioning target set to [params["target"]] by [key_name(user)]", INVESTIGATE_ATMOS)
+
+		if("default_ac_target")
+			set_ac_target(initial(ac_temp_target))
+			investigate_log("has had its air conditioning target reset to default by [key_name(user)]", INVESTIGATE_ATMOS)
 
 	update_appearance()
 

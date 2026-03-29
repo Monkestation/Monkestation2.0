@@ -303,3 +303,5 @@
 		/datum/action/cooldown/bloodling_hivespeak,
 	)
 	speed = 2.5
+
+#undef FORMAT_BIO_TEXT

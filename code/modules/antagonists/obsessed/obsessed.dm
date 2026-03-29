@@ -7,12 +7,12 @@
 	antag_hud_name = "obsessed"
 	show_name_in_check_antagonists = TRUE
 	roundend_category = "obsessed"
-	count_against_dynamic_roll_chance = FALSE
 	silent = TRUE //not actually silent, because greet will be called by the trauma anyway.
 	suicide_cry = "FOR MY LOVE!!"
 	preview_outfit = /datum/outfit/obsessed
 	hardcore_random_bonus = TRUE
 	stinger_sound = 'sound/ambience/antag/creepalert.ogg'
+	antag_count_points = 3
 	var/datum/brain_trauma/special/obsessed/trauma
 
 /datum/antagonist/obsessed/admin_add(datum/mind/new_owner,mob/admin)

@@ -12,4 +12,5 @@
 	src.dir ||= dir
 	abstract_move(T)
 	flick(state, src)
-	addtimer(CALLBACK(src, /atom/movable/proc/moveToNullspace), duration)
+	if(!QDELETED(src))
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/movable, moveToNullspace)), duration)

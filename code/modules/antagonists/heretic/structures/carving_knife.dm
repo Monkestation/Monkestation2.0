@@ -15,15 +15,7 @@
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "rends")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "rend")
 	actions_types = list(/datum/action/item_action/rune_shatter)
-	embedding = list(
-		ignore_throwspeed_threshold = TRUE,
-		embed_chance = 75,
-		jostle_chance = 2,
-		jostle_pain_mult = 5,
-		pain_stam_pct = 0.4,
-		pain_mult = 3,
-		rip_time = 15,
-	)
+	embed_type = /datum/embedding/rune_carver
 
 	/// Whether we're currently drawing a rune
 	var/drawing = FALSE
@@ -33,6 +25,15 @@
 	var/list/datum/weakref/current_runes = list()
 	/// Turfs that you cannot draw carvings on
 	var/static/list/blacklisted_turfs = typecacheof(list(/turf/open/space, /turf/open/openspace, /turf/open/lava))
+
+/datum/embedding/rune_carver
+	ignore_throwspeed_threshold = TRUE
+	embed_chance = 75
+	jostle_chance = 2
+	jostle_pain_mult = 5
+	pain_stam_pct = 0.4
+	pain_mult = 3
+	rip_time = 15
 
 /obj/item/melee/rune_carver/examine(mob/user)
 	. = ..()
@@ -108,7 +109,7 @@
 
 	target_turf.balloon_alert(user, "carving [picked_choice]...")
 	user.playsound_local(target_turf, 'sound/items/sheath.ogg', 50, TRUE)
-	if(!do_after(user, 5 SECONDS, target = target_turf))
+	if(!do_after(user, 5 SECONDS, target = target_turf, hidden = TRUE))
 		target_turf.balloon_alert(user, "interrupted!")
 		return
 
@@ -174,7 +175,7 @@
 
 /obj/structure/trap/eldritch/on_trap_entered(datum/source, atom/movable/entering_atom)
 	if(!isliving(entering_atom))
-		return ..()
+		return
 	var/mob/living/living_mob = entering_atom
 	if(WEAKREF(living_mob) == owner)
 		return
@@ -231,7 +232,7 @@
 	if(!iscarbon(victim))
 		return
 	var/mob/living/carbon/carbon_victim = victim
-	carbon_victim.stamina.adjust(-80)
+	carbon_victim.stamina.adjust(-40)
 	carbon_victim.adjust_silence(20 SECONDS)
 	carbon_victim.adjust_emote_mute(20 SECONDS)
 	carbon_victim.adjust_stutter(1 MINUTES)

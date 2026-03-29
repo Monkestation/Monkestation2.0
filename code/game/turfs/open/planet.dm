@@ -13,6 +13,7 @@
 	clawfootstep = FOOTSTEP_SAND
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	tiled_dirt = FALSE
+	astar_weight = 60
 
 /turf/open/misc/dirt/station
 	name = "dirt flooring" //FOR THE LOVE OF GOD USE THIS INSTEAD OF DIRT FOR STATION MAPS
@@ -20,6 +21,7 @@
 	baseturfs = /turf/open/floor/plating
 	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 	planetary_atmos = FALSE
+	astar_weight = /turf/open::astar_weight
 
 /turf/open/misc/dirt/jungle
 	slowdown = 0.5
@@ -33,6 +35,7 @@
 	baseturfs = /turf/open/floor/plating
 	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 	planetary_atmos = FALSE
+	astar_weight = /turf/open::astar_weight
 
 /turf/open/misc/dirt/dark/station/airless
 	initial_gas_mix = AIRLESS_ATMOS
@@ -97,3 +100,11 @@
 
 /turf/closed/mineral/random/jungle/space_safe
 	baseturfs = /turf/open/misc/dirt/dark/station/airless
+
+/turf/open/misc/dirt/filling
+	name = "filling dirt"
+	desc = "Compressed dirt, meant to fill very large holes. It's very annoying and slow to walk through"
+	slowdown = 1.5
+
+/turf/open/misc/dirt/filling/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
+	return FALSE

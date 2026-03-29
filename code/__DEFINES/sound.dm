@@ -1,31 +1,37 @@
 //max channel is 1024. Only go lower from here, because byond tends to pick the first available channel to play sounds on
 #define CHANNEL_LOBBYMUSIC 1024
 #define CHANNEL_ADMIN 1023
+//Sound channel for VOX & Announcements, such as AI, Captain arrivavl/announcements, Doomsday clock, Sec level change, etc.
 #define CHANNEL_VOX 1022
-#define CHANNEL_JUKEBOX 1021
-#define CHANNEL_HEARTBEAT 1020 //sound channel for heartbeats
-#define CHANNEL_AMBIENCE 1019
-#define CHANNEL_BUZZ 1018
-#define CHANNEL_TRAITOR 1017
-#define CHANNEL_CHARGED_SPELL 1016
-#define CHANNEL_SOUND_EFFECTS 1015
-#define CHANNEL_SOUND_FOOTSTEPS 1014
-#define CHANNEL_WEATHER 1013
-#define CHANNEL_MACHINERY 1012
-#define CHANNEL_INSTRUMENTS 1011
-#define CHANNEL_INSTRUMENTS_ROBOT 1010
-#define CHANNEL_MOB_SOUNDS 1009
-#define CHANNEL_Z 1008
-// monkestation edit
-#define CHANNEL_WALKMAN 1007
-#define CHANNEL_MASTER_VOLUME 1006
-#define CHANNEL_PRUDE 1005
-#define CHANNEL_SQUEAK 1004
-#define CHANNEL_MOB_EMOTES 1003
-#define CHANNEL_SILICON_EMOTES 1002
-#define CHANNEL_ELEVATOR 1001
-#define CHANNEL_VOICES 1000
-// monkestation end
+#define CHANNEL_ANNOUNCEMENTS 1021
+//Sound channel for event announcements, `/datum/centcom_announcer`
+#define CHANNEL_STORYTELLER 1020
+#define CHANNEL_JUKEBOX 1019
+#define CHANNEL_HEARTBEAT 1018 //sound channel for heartbeats
+#define CHANNEL_AMBIENCE 1017
+#define CHANNEL_BUZZ 1016
+#define CHANNEL_TRAITOR 1015
+#define CHANNEL_CHARGED_SPELL 1014
+#define CHANNEL_SOUND_EFFECTS 1013
+#define CHANNEL_SOUND_FOOTSTEPS 1012
+#define CHANNEL_WEATHER 1011
+#define CHANNEL_MACHINERY 1010
+#define CHANNEL_INSTRUMENTS 1009
+#define CHANNEL_INSTRUMENTS_ROBOT 1008
+#define CHANNEL_MOB_SOUNDS 1007
+#define CHANNEL_WALKMAN 1006
+#define CHANNEL_MASTER_VOLUME 1005
+#define CHANNEL_PRUDE 1004
+#define CHANNEL_SQUEAK 1003
+#define CHANNEL_MOB_EMOTES 1002
+#define CHANNEL_SILICON_EMOTES 1001
+#define CHANNEL_ELEVATOR 1000
+#define CHANNEL_ESCAPEMENU 999
+#define CHANNEL_VOICES 998
+#define CHANNEL_RINGTONES 997
+#define CHANNEL_DELTA_SIRENS 996
+#define CHANNEL_ADMIN_SOUNDS 995
+#define CHANNEL_SHUTTLES 994
 
 /// This is the lowest volume that can be used by playsound otherwise it gets ignored
 /// Most sounds around 10 volume can barely be heard. Almost all sounds at 5 volume or below are inaudible
@@ -80,7 +86,7 @@
 //THIS SHOULD ALWAYS BE THE LOWEST ONE!
 //KEEP IT UPDATED
 
-#define CHANNEL_HIGHEST_AVAILABLE 1001 //monkestation edit
+#define CHANNEL_HIGHEST_AVAILABLE 998 //monkestation edit
 
 #define MAX_INSTRUMENT_CHANNELS (128 * 6)
 
@@ -137,7 +143,7 @@
 #define SOUND_ENVIRONMENT_DIZZY 24
 #define SOUND_ENVIRONMENT_PSYCHOTIC 25
 //If we ever make custom ones add them here
-#define SOUND_ENVIROMENT_PHASED list(1.8, 0.5, -1000, -4000, 0, 5, 0.1, 1, -15500, 0.007, 2000, 0.05, 0.25, 1, 1.18, 0.348, -5, 2000, 250, 0, 3, 100, 63)
+#define SOUND_ENVIRONMENT_PHASED list(1.8, 0.5, -1000, -4000, 0, 5, 0.1, 1, -15500, 0.007, 2000, 0.05, 0.25, 1, 1.18, 0.348, -5, 2000, 250, 0, 3, 100, 63)
 
 //"sound areas": easy way of keeping different types of areas consistent.
 #define SOUND_AREA_STANDARD_STATION SOUND_ENVIRONMENT_HANGAR
@@ -229,6 +235,8 @@ GLOBAL_LIST_INIT(announcer_keys, list(
 #define SFX_TREE_CHOP "tree_chop"
 #define SFX_ROCK_TAP "rock_tap"
 #define SFX_MUFFLED_SPEECH "muffspeech"
+#define SFX_WRITING_PEN "writing_pen"
+
 #define SFX_BUTTON_CLICK "button_click"
 #define SFX_BUTTON_FAIL	"button_fail"
 #define SFX_LIGHTSWITCH	 "lightswitch"
@@ -241,3 +249,18 @@ GLOBAL_LIST_INIT(announcer_keys, list(
 #define SFX_PORTAL_CLOSE "portal_closed"
 #define SFX_PORTAL_CREATED "portal_created"
 #define SFX_SCREECH "screech"
+#define SFX_VISOR_UP "visor_up"
+#define SFX_VISOR_DOWN "visor_down"
+
+#define SFX_DJSTATION_OPENTAKEOUT "djstation_opentakeout"
+#define SFX_DJSTATION_PUTINANDCLOSE "djstation_putinandclose"
+#define SFX_DJSTATION_OPENPUTINANDCLOSE "djstation_openputinandclose"
+#define SFX_DJSTATION_OPENTAKEOUTANDCLOSE "djstation_opentakeoutandclose"
+#define SFX_DJSTATION_PLAY "djstation_play"
+#define SFX_DJSTATION_STOP "djstation_stop"
+#define SFX_DJSTATION_TRACKSWITCH "djstation_trackswitch"
+
+#define SFX_CASSETTE_PUT_IN "cassette_tape_put_in"
+#define SFX_CASSETTE_TAKE_OUT "cassette_tape_take_out"
+#define SFX_CASSETTE_DUMP "cassette_tape_dump"
+#define SFX_CASSETTE_ASMR "cassette_tape_asmr"

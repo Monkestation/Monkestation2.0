@@ -9,7 +9,7 @@
 /datum/symptom/wendigo_hallucination/first_activate(mob/living/carbon/mob)
 	RegisterSignal(mob, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 
-/datum/symptom/wendigo_hallucination/deactivate(mob/living/carbon/mob)
+/datum/symptom/wendigo_hallucination/deactivate(mob/living/carbon/mob, datum/disease/acute/disease, safe = FALSE)
 	UnregisterSignal(mob, COMSIG_MOB_SAY)
 
 /datum/symptom/wendigo_hallucination/activate(mob/living/carbon/mob)

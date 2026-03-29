@@ -1,10 +1,10 @@
 import { sortBy } from 'common/collections';
 import { classes } from 'common/react';
-import { InfernoNode } from 'inferno';
+import type { ReactNode } from 'react';
 import { useSharedState } from '../../backend';
-import { Stack, Section, Icon, Dimmer } from '../../components';
-import { Design, MaterialMap } from './Types';
+import { Dimmer, Icon, Section, Stack } from '../../components';
 import { SearchBar } from './SearchBar';
+import type { Design, MaterialMap } from './Types';
 
 /**
  * A function that does nothing.
@@ -51,12 +51,12 @@ export type DesignBrowserProps<T extends Design = Design> = {
      * A callback to print the design.
      */
     onPrintDesign: (design: T, amount: number) => void,
-  ) => InfernoNode;
+  ) => ReactNode;
 
   /**
    * If provided, renders a node into each category in the output.
    */
-  categoryButtons?: (category: Category<T>) => InfernoNode;
+  categoryButtons?: (category: Category<T>) => ReactNode;
 };
 
 /**
@@ -207,10 +207,7 @@ export const DesignBrowser = <T extends Design = Design>(
             <Stack.Item>
               <Section title="Categories" fitted />
             </Stack.Item>
-            <Stack.Item
-              grow
-              style={{ 'overflow-y': 'auto', 'overflow-x': 'hidden' }}
-            >
+            <Stack.Item grow style={{ overflowY: 'auto', overflowX: 'hidden' }}>
               <Section fill>
                 <div className="FabricatorTabs">
                   <div
@@ -270,57 +267,50 @@ export const DesignBrowser = <T extends Design = Design>(
                 />
               </Section>
             </Stack.Item>
-            <Stack.Item
-              grow
-              style={{ 'overflow-y': 'auto', 'overflow-x': 'hidden' }}
-            >
+            <Stack.Item grow style={{ overflowY: 'auto', overflowX: 'hidden' }}>
               <Section fill>
-                {searchText.length > 0 ? (
-                  sortBy((design: T) => design.name)(
-                    Object.values(root.descendants),
-                  )
-                    .filter((design) =>
-                      design.name
-                        .toLowerCase()
-                        .includes(searchText.toLowerCase()),
-                    )
-                    .map((design) =>
-                      buildRecipeElement(
-                        design,
-                        availableMaterials || {},
-                        onPrintDesign || NOOP,
-                      ),
-                    )
-                ) : selectedCategory === ALL_CATEGORY ? (
-                  <>
-                    {sortBy((design: T) => design.name)(
+                {searchText.length > 0
+                  ? sortBy((design: T) => design.name)(
                       Object.values(root.descendants),
-                    ).map((design) =>
-                      buildRecipeElement(
-                        design,
-                        availableMaterials || {},
-                        onPrintDesign || NOOP,
-                      ),
-                    )}
-                  </>
-                ) : (
-                  root.subcategories[selectedCategory] && (
-                    <CategoryView
-                      category={root.subcategories[selectedCategory]}
-                      categoryButtons={categoryButtons}
-                      availableMaterials={availableMaterials}
-                      onPrintDesign={onPrintDesign}
-                      buildRecipeElement={buildRecipeElement}
-                    />
-                  )
-                )}
+                    )
+                      .filter((design) =>
+                        design.name
+                          .toLowerCase()
+                          .includes(searchText.toLowerCase()),
+                      )
+                      .map((design) =>
+                        buildRecipeElement(
+                          design,
+                          availableMaterials || {},
+                          onPrintDesign || NOOP,
+                        ),
+                      )
+                  : selectedCategory === ALL_CATEGORY
+                    ? sortBy((design: T) => design.name)(
+                        Object.values(root.descendants),
+                      ).map((design) =>
+                        buildRecipeElement(
+                          design,
+                          availableMaterials || {},
+                          onPrintDesign || NOOP,
+                        ),
+                      )
+                    : root.subcategories[selectedCategory] && (
+                        <CategoryView
+                          category={root.subcategories[selectedCategory]}
+                          categoryButtons={categoryButtons}
+                          availableMaterials={availableMaterials}
+                          onPrintDesign={onPrintDesign}
+                          buildRecipeElement={buildRecipeElement}
+                        />
+                      )}
               </Section>
             </Stack.Item>
             {!!busy && (
               <Dimmer
                 style={{
-                  'font-size': '2em',
-                  'text-align': 'center',
+                  fontSize: '2em',
+                  textAlign: 'center',
                 }}
               >
                 <Icon name="cog" spin />
@@ -441,12 +431,12 @@ type CategoryViewProps<T extends Design = Design> = {
      * A callback to print the design.
      */
     onPrintDesign: (design: T, amount: number) => void,
-  ) => InfernoNode;
+  ) => ReactNode;
 
   /**
    * If provided, renders a node into each category in the output.
    */
-  categoryButtons?: (category: Category<T>) => InfernoNode;
+  categoryButtons?: (category: Category<T>) => ReactNode;
 };
 
 const CategoryView = <T extends Design = Design>(
@@ -495,7 +485,7 @@ const CategoryView = <T extends Design = Design>(
     <Section
       title={category.title}
       id={category.anchorKey}
-      buttons={categoryButtons && categoryButtons(category)}
+      buttons={categoryButtons?.(category)}
     >
       {body}
     </Section>

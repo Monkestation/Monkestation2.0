@@ -35,14 +35,14 @@ export const scale = (value, min, max) => {
  * @return {number}
  */
 export const round = (value, precision) => {
-  if (!value || isNaN(value)) {
+  if (!value || Number.isNaN(value)) {
     return value;
   }
   // helper variables
   let m, f, isHalf, sgn;
   // making sure precision is integer
   precision |= 0;
-  m = Math.pow(10, precision);
+  m = 10 ** precision;
   value *= m;
   // sign of the number
   sgn = +(value > 0) | -(value < 0);
@@ -79,7 +79,7 @@ export const inRange = (value, range) => {
  * Range is an array of two numbers, for example: [0, 15].
  */
 export const keyOfMatchingRange = (value, ranges) => {
-  for (let rangeName of Object.keys(ranges)) {
+  for (const rangeName of Object.keys(ranges)) {
     const range = ranges[rangeName];
     if (inRange(value, range)) {
       return rangeName;

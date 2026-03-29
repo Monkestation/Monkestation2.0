@@ -70,13 +70,12 @@ GLOBAL_VAR_INIT(wonderland_apocalypse, FALSE)
 	target.apply_status_effect(/datum/status_effect/wonderland_district)
 
 /obj/effect/anomaly/dimensional/wonderland
-	aSignal = null
+	anomaly_core = null
 	range = 5
 	immortal = TRUE
-	drops_core = FALSE
 	relocations_left = -1
 
-/obj/effect/anomaly/dimensional/wonderland/Initialize(mapload, new_lifespan, drops_core)
+/obj/effect/anomaly/dimensional/wonderland/Initialize(mapload, new_lifespan)
 	INVOKE_ASYNC(src, PROC_REF(prepare_area), /datum/dimension_theme/wonderland)
 	return ..()
 
@@ -237,7 +236,6 @@ GLOBAL_VAR_INIT(wonderland_apocalypse, FALSE)
 	if(vis_msg)
 		owner.visible_message(vis_msg, self_msg)
 	owner.take_overall_damage(brute = rand(5, 15))
-	owner.sharp_pain(BODY_ZONES_ALL, rand(5, 15), BRUTE, 10 SECONDS)
 	if(iscarbon(owner))
 		var/mob/living/carbon/carbon_owner = owner
 		carbon_owner.vomit(lost_nutrition = 0, blood = TRUE, stun = FALSE, distance = prob(20) + 1, message = FALSE)

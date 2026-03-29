@@ -6,10 +6,6 @@
 		var/turf/open/my_our_turf = loc
 		if(my_our_turf.pollution)
 			my_our_turf.pollution.touch_act(src)
-	//monkestation edit start
-	if(SSparticle_weather.running_weather || SSparticle_weather.running_eclipse_weather)
-		handle_weather(seconds_per_tick)
-	//monkestation edit end
 	if(damageoverlaytemp)
 		damageoverlaytemp = 0
 		update_damage_hud()
@@ -87,6 +83,10 @@
 			losebreath = max(losebreath, 1)
 		else if(HAS_TRAIT(src, TRAIT_LABOURED_BREATHING))
 			losebreath += (1 / next_breath)
+
+	var/obj/item/organ/lungs = get_organ_slot(ORGAN_SLOT_LUNGS)
+	if(((pulledby?.grab_state >= GRAB_KILL) || (lungs?.organ_flags & ORGAN_FAILING)) && !HAS_TRAIT(src, TRAIT_ASSISTED_BREATHING))
+		losebreath ++  //You can't breath at all when being choked or if your lungs are failing, so you're going to miss a breath
 
 	if(losebreath < 1)
 		var/pre_sig_return = SEND_SIGNAL(src, COMSIG_CARBON_ATTEMPT_BREATHE, seconds_per_tick, times_fired)

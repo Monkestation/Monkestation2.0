@@ -1,0 +1,23 @@
+{
+    "green_jester_shoes": [
+        {
+            "type": "icon_state",
+            "icon_state": "left_green_jester_shoes",
+            "blend_mode": "overlay",
+            "color_ids": [1]
+        },
+		{
+            "type": "icon_state",
+            "icon_state": "right_green_jester_shoes",
+            "blend_mode": "overlay",
+			"color_ids": [2]
+        },
+		{
+            "type": "icon_state",
+            "icon_state": "bells_green_jester_shoes",
+            "blend_mode": "overlay",
+			"color_ids": [3]
+        }
+
+    ]
+}

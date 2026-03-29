@@ -10,6 +10,9 @@ GLOBAL_LIST_EMPTY(all_wormholes) // So we can pick wormholes to teleport to
 	description = "Space time anomalies appear on the station, randomly teleporting people who walk into them."
 	min_wizard_trigger_potency = 3
 	max_wizard_trigger_potency = 7
+	track = EVENT_TRACK_MODERATE
+	tags = list(TAG_COMMUNAL, TAG_MAGICAL)
+	event_group = /datum/event_group/anomalies
 
 /datum/round_event/wormholes
 	announce_when = 10
@@ -66,7 +69,7 @@ GLOBAL_LIST_EMPTY(all_wormholes) // So we can pick wormholes to teleport to
 	. = ..()
 	GLOB.all_wormholes -= src
 
-/obj/effect/portal/wormhole/teleport(atom/movable/M)
+/obj/effect/portal/wormhole/teleport(atom/movable/M, force = FALSE)
 	if(iseffect(M)) //sparks don't teleport
 		return
 	if(M.anchored)

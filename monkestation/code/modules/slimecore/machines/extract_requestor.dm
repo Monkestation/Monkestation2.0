@@ -24,7 +24,7 @@
 			name_to_path |= list("[extract::name]" = extract)
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/slime_extract_requestor/LateInitialize()
+/obj/machinery/slime_extract_requestor/LateInitialize(mapload_arg)
 	if(GLOB.default_slime_market)
 		console = GLOB.default_slime_market
 		console.request_pad = src
@@ -58,7 +58,7 @@
 	if(!panel_open)
 		user.balloon_alert(user, "panel closed")
 		return ITEM_INTERACT_BLOCKING
-	multi.set_buffer(src)
+	multitool_set_buffer(multi, src)
 	balloon_alert(user, "saved to multitool buffer")
 	return ITEM_INTERACT_SUCCESS
 
@@ -148,7 +148,7 @@
 	UnregisterSignal(host_card, COMSIG_QDELETING)
 	host_card = null
 	linked_console = null
-	QDEL_LIST(radial_data)
+	radial_data = null
 	. = ..()
 
 /datum/extract_request_data/proc/end_request_qdeleted()

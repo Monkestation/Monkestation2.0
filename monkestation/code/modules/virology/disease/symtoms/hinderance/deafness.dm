@@ -22,5 +22,5 @@
 			mob.emote("scream")
 			ADD_TRAIT(mob, TRAIT_DEAF, type)
 
-/datum/symptom/deaf/deactivate(mob/living/carbon/mob)
+/datum/symptom/deaf/deactivate(mob/living/carbon/mob, datum/disease/acute/disease, safe = FALSE)
 	REMOVE_TRAIT(mob, TRAIT_DEAF, type)

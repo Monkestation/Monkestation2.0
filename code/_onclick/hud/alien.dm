@@ -60,6 +60,7 @@
 	static_inventory += using
 
 	using = new /atom/movable/screen/navigate(null, src)
+	using.icon = ui_style
 	using.screen_loc = ui_alien_navigate_menu
 	static_inventory += using
 

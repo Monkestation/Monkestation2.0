@@ -27,13 +27,17 @@
 	/// The maximum power that the shell can use in a minute before entering overheating and destroying itself.
 	var/max_power_use_in_minute = 20000
 
-/datum/component/shell/Initialize(unremovable_circuit_components, capacity, shell_flags, starting_circuit)
+	/// List of integrated circuits that cannot be installed in the shell.
+	var/list/blacklisted_integrated_circuits = list()
+
+/datum/component/shell/Initialize(unremovable_circuit_components, capacity, shell_flags, starting_circuit, blacklisted_integrated_circuits)
 	. = ..()
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	src.shell_flags = shell_flags || src.shell_flags
 	src.capacity = capacity || src.capacity
+	src.blacklisted_integrated_circuits = typecacheof(blacklisted_integrated_circuits)
 	set_unremovable_circuit_components(unremovable_circuit_components)
 
 	if(starting_circuit)
@@ -170,7 +174,7 @@
 
 	if(istype(item, /obj/item/inducer))
 		var/obj/item/inducer/inducer = item
-		INVOKE_ASYNC(inducer, TYPE_PROC_REF(/obj/item, attack_atom), attached_circuit, attacker, list())
+		INVOKE_ASYNC(inducer, TYPE_PROC_REF(/obj/item, interact_with_atom), attached_circuit, attacker, list())
 		return COMPONENT_NO_AFTERATTACK
 
 	if(attached_circuit)
@@ -190,6 +194,11 @@
 
 	if(!istype(item, /obj/item/integrated_circuit))
 		return
+
+	if(is_type_in_typecache(item, blacklisted_integrated_circuits))
+		source.balloon_alert(attacker, "incompatible circuit!")
+		return
+
 	var/obj/item/integrated_circuit/logic_board = item
 	. = COMPONENT_NO_AFTERATTACK
 

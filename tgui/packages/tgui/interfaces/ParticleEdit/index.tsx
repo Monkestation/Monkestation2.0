@@ -2,21 +2,21 @@
 import { useBackend, useLocalState } from '../../backend';
 import { Button, LabeledList, Section } from '../../components';
 import { Window } from '../../layouts';
-import { ParticleUIData } from './data';
-import { ShowDesc } from './Tutorial';
+import type { ParticleUIData } from './data';
 import {
-  EntryFloat,
   EntryCoord,
+  EntryFloat,
   EntryGradient,
-  EntryTransform,
   EntryIcon,
   EntryIconState,
+  EntryTransform,
 } from './EntriesBasic';
 import {
+  EntryGeneratorNumbersList,
   FloatGenerator,
   FloatGeneratorColor,
-  EntryGeneratorNumbersList,
 } from './EntriesGenerators';
+import { ShowDesc } from './Tutorial';
 
 export const ParticleEdit = (props) => {
   const { act, data } = useBackend<ParticleUIData>();
@@ -52,7 +52,7 @@ export const ParticleEdit = (props) => {
   } = data.particle_data;
 
   return (
-    <Window title={data.target_name + "'s particles"} width={940} height={890}>
+    <Window title={`${data.target_name}'s particles`} width={940} height={890}>
       {desc ? <ShowDesc /> : null}
       <Window.Content scrollable>
         <LabeledList>

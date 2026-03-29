@@ -35,23 +35,65 @@
  * and the number of minds we're tracking.
  */
 /datum/reality_smash_tracker/proc/generate_new_influences()
+	var/static/list/forbidden_area_typecache
+	if(isnull(forbidden_area_typecache))
+		forbidden_area_typecache = typecacheof(list(
+			/area/graveyard,
+			/area/station/ai_monitored,
+			/area/station/command/secure_bunker,
+			/area/station/engineering/atmospherics_engine,
+			/area/station/engineering/shipbreaker_hut,
+			/area/station/engineering/supermatter,
+			/area/station/maintenance,
+			/area/station/science/ordnance/bomb,
+			/area/station/science/ordnance/burnchamber,
+			/area/station/science/ordnance/freezerchamber,
+			/area/station/science/xenobiology/cell,
+			/area/station/solars,
+		))
+
 	var/how_many_can_we_make = 0
 	for(var/heretic_number in 1 to length(tracked_heretics))
 		how_many_can_we_make += max(NUM_INFLUENCES_PER_HERETIC - heretic_number + 1, 1)
 
-	var/location_sanity = 0
-	while((length(smashes) + num_drained) < how_many_can_we_make && location_sanity < 100)
-		var/turf/chosen_location = get_safe_random_station_turf_equal_weight()
+	var/list/turf_groups = noise_turfs_station_equal_weight(6, forbidden_area_typecache)
+	main_loop:
+		while((length(smashes) + num_drained) < how_many_can_we_make && length(turf_groups))
+			var/idx = rand(1, length(turf_groups))
+			var/list/chosen_group = turf_groups[idx]
+			var/turf/chosen_location = pick_n_take(chosen_group)
+			if(!length(chosen_group))
+				turf_groups.Cut(idx, idx + 1)
 
-		// We don't want them close to each other - at least 1 tile of seperation
-		var/list/nearby_things = range(1, chosen_location)
-		var/obj/effect/heretic_influence/what_if_i_have_one = locate() in nearby_things
-		var/obj/effect/visible_heretic_influence/what_if_i_had_one_but_its_used = locate() in nearby_things
-		if(what_if_i_have_one || what_if_i_had_one_but_its_used)
-			location_sanity++
-			continue
+			// gotta make sure we're an open, floor turf
+			if(chosen_location.density || isgroundlessturf(chosen_location))
+				continue
 
-		new /obj/effect/heretic_influence(chosen_location)
+			// make sure it's got at least 3x3 open space
+			for(var/turf/nearby_turf as anything in RANGE_TURFS(1, chosen_location))
+				if(!isopenturf(nearby_turf))
+					continue main_loop
+
+			// ensure there's no dense objects on the turf
+			for(var/obj/checked_object in chosen_location)
+				if(checked_object.density)
+					continue main_loop
+
+			// We don't want them close to each other - at least 1 tile of seperation
+			var/list/nearby_things = range(1, chosen_location)
+			var/obj/effect/heretic_influence/what_if_i_have_one = locate() in nearby_things
+			var/obj/effect/visible_heretic_influence/what_if_i_had_one_but_its_used = locate() in nearby_things
+			if(what_if_i_have_one || what_if_i_had_one_but_its_used)
+				continue
+
+			log_game("Generated heretic influence at [AREACOORD(chosen_location)]")
+			testing("Generated heretic influence at [AREACOORD(chosen_location)]")
+			new /obj/effect/heretic_influence(chosen_location)
+
+	var/num_smashes = length(smashes) + num_drained
+	if(num_smashes < how_many_can_we_make)
+		message_admins("WARNING: there may not be enough heretic influences (there should be [how_many_can_we_make], but there's only [num_smashes])")
+		CRASH("WARNING: there may not be enough heretic influences (there should be [how_many_can_we_make], but there's only [num_smashes])")
 
 /**
  * Adds a mind to the list of people that can see the reality smashes
@@ -63,7 +105,7 @@
 
 	// If our heretic's on station, generate some new influences
 	if(ishuman(heretic.current) && !is_centcom_level(heretic.current.z))
-		generate_new_influences()
+		addtimer(CALLBACK(src, PROC_REF(generate_new_influences)), 1 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE) // we use a 1 second overriding timer here, so we only run the proc once when multiple heretics are created in succession
 
 /**
  * Removes a mind from the list of people that can see the reality smashes
@@ -84,7 +126,7 @@
 
 /obj/effect/visible_heretic_influence/Initialize(mapload)
 	. = ..()
-	// monke edit: make influences only show up after a minute or so, and disappear after about 10 minutes
+	SetInvisibility(INVISIBILITY_ABSTRACT, id = type)
 	addtimer(CALLBACK(src, PROC_REF(show_presence)), 1 MINUTES)
 	QDEL_IN(src, 10 MINUTES)
 
@@ -96,6 +138,7 @@
  * Makes the influence fade in after 15 seconds.
  */
 /obj/effect/visible_heretic_influence/proc/show_presence()
+	RemoveInvisibility(type)
 	animate(src, alpha = 255, time = 15 SECONDS)
 
 /obj/effect/visible_heretic_influence/attack_hand(mob/living/user, list/modifiers)
@@ -184,6 +227,10 @@
 	AddElement(/datum/element/block_turf_fingerprints)
 	AddComponent(/datum/component/redirect_attack_hand_from_turf, interact_check = CALLBACK(src, PROC_REF(verify_user_can_see)))
 
+	if(isnull(loc))
+		message_admins("WARNING: heretic influence spawned in nullspace, this almost certainly should not happen!!!")
+		CRASH("Heretic influence spawned in nullspace, this almost certainly should not happen!!!")
+
 /obj/effect/heretic_influence/proc/verify_user_can_see(mob/user)
 	return (user.mind in GLOB.reality_smash_track.tracked_heretics)
 
@@ -230,7 +277,7 @@
 	being_drained = TRUE
 	loc.balloon_alert(user, "draining influence...")
 
-	if(!do_after(user, 10 SECONDS, src))
+	if(!do_after(user, 10 SECONDS, src, hidden = TRUE))
 		being_drained = FALSE
 		loc.balloon_alert(user, "interrupted!")
 		return
@@ -240,6 +287,7 @@
 
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
 	heretic_datum.knowledge_points += knowledge_to_gain
+	SStgui.update_uis(heretic_datum)
 
 	// Aaand now we delete it
 	after_drain(user)

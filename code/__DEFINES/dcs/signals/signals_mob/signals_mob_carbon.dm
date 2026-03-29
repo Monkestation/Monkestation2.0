@@ -77,13 +77,11 @@
 ///from /mob/living/carbon/doUnEquip(obj/item/I, force, newloc, no_move, invdrop, silent)
 #define COMSIG_CARBON_UNEQUIP_SHOECOVER "carbon_unequip_shoecover"
 #define COMSIG_CARBON_EQUIP_SHOECOVER "carbon_equip_shoecover"
-///defined twice, in carbon and human's topics, fired when interacting with a valid embedded_object to pull it out (mob/living/carbon/target, /obj/item, /obj/item/bodypart/L)
-#define COMSIG_CARBON_EMBED_RIP "item_embed_start_rip"
-///called when removing a given item from a mob, from mob/living/carbon/remove_embedded_object(mob/living/carbon/target, /obj/item)
-#define COMSIG_CARBON_EMBED_REMOVAL "item_embed_remove_safe"
 ///Called when someone attempts to cuff a carbon
 #define COMSIG_CARBON_CUFF_ATTEMPTED "carbon_attempt_cuff"
 	#define COMSIG_CARBON_CUFF_PREVENT (1<<0)
+///Called when a limb a carbon has gets an embed (mob/living/carbon/the_guy_getting_embedded, /obj/item/the_embed, /obj/item/bodypart/the_part_getting_the_embed)
+#define COMSIG_CARBON_EMBED_ADDED "item_embed_on_add"
 ///Called when a carbon mutates (source = dna, mutation = mutation added)
 #define COMSIG_CARBON_GAIN_MUTATION "carbon_gain_mutation"
 ///Called when a carbon loses a mutation (source = dna, mutation = mutation lose)
@@ -143,9 +141,7 @@
 #define COMSIG_HUMAN_EARLY_UNARMED_ATTACK "human_early_unarmed_attack"
 ///from mob/living/carbon/human/UnarmedAttack(): (atom/target, proximity, modifiers)
 #define COMSIG_HUMAN_MELEE_UNARMED_ATTACK "human_melee_unarmed_attack"
-///from /mob/living/carbon/human/proc/check_shields(): (atom/hit_by, damage, attack_text, attack_type, armour_penetration)
-#define COMSIG_HUMAN_CHECK_SHIELDS "human_check_shields"
-	#define SHIELD_BLOCK (1<<0)
+
 ///from /mob/living/carbon/human/proc/force_say(): ()
 #define COMSIG_HUMAN_FORCESAY "human_forcesay"
 

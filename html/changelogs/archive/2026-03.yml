@@ -1,0 +1,439 @@
+2026-03-01:
+  Shoddd:
+  - balance: apocalypse rune can not be used until shuttle can be called
+  Tractor-Maam:
+  - rscadd: Readded Yellow Gun Cases to company imports at cargo.
+  - bugfix: '"small gun case" no longer incorrectly named "''Makarov pistol'' gunset"'
+  drgnmstrc:
+  - map: tweaked AI upload room in kilo to fix borg spawns
+  - rscadd: another check to block stowaways from being snitched on by announcer
+  notghosti:
+  - bugfix: Rule three is now rule one achievment
+2026-03-02:
+  JohnFulpWillard:
+  - rscdel: Bye Mafia.
+2026-03-03:
+  Mantle:
+  - rscadd: Traffic Cone Hat added to monkecoin store
+  Shoddd:
+  - bugfix: interaction comps now check for nodrop
+  SirNightKnight:
+  - bugfix: fixed the nightmare revive timer being off by a decimal point.
+  - qol: added security armbands to the secdrobe.
+  Tractor-Maam:
+  - code_imp: Minor housekeeping with lionhunter rifle code
+2026-03-04:
+  Mantle, Commissioned by Isotope 436:
+  - rscadd: Deforest medical clothing, available from deforest imports, via cargo
+  - rscadd: Deforest clothing is also available in the monkecoin store.  The gloves
+      do not provide any benefit, unlike their cargo variant.
+  SirNightKnight:
+  - bugfix: fixed deconstructing pressure tanks duplicating gasses in merged tanks.
+  - balance: pressure tanks have a volume of 10,000 liters and rounded the pressure
+      limit to 50,000.
+  - balance: halved the material cost for finishing pressure tank frames.
+  - bugfix: corrected thermo color readings on thermomachines and gas meters
+2026-03-05:
+  notghosti:
+  - map: Oshan medical has connected power.
+  - map: Oshan pharmacy has a air alarm now
+  - map: Oshan chemistry is now accessed by chemistry, not pharmacy
+  - map: Oshan medical department had its distro/power cabling cleaned up.
+  - map: Oshan pathology given more standard equipment
+  - map: Oshan CMO's no longer shall live/spawn in walls
+2026-03-06:
+  Absolucy:
+  - rscadd: Excavating ore vents now has a progress bar to show how much progress
+      has been made on defending the vent.
+  Cujo:
+  - bugfix: Fix messages displayed when applying gauze
+  - rscadd: Ling husk now takes priority over burn husk for advanced health analyzers
+  Mantle:
+  - rscadd: Deforest Satchel, Backpack, Mask, and Beret
+  - bugfix: Deforest jacket and hat should be less buggy
+  Shoddd:
+  - balance: baseball bats no longer do stam damage
+  SirNightKnight:
+  - qol: made the captain's aid toy a small item.
+  - qol: added a bunch more paintjobs for closets when repainting them.
+  sylvia-from-fulp-station:
+  - rscadd: Added the explorer tab to the mining vendor.
+  - rscadd: Added the explorer voucher, and added it to the Explorer's backpack at
+      round start.
+  - rscadd: Added 7 kits for the new explorer voucher. The laser gun kit, medevac
+      kit, survival kit, breaching kit, bushman kit, explorer conscription kit and
+      lavaland kit.
+  - rscadd: Added the explorer laser gun; a low capacity recharging laser gun. Sprite
+      from TGMC.
+  - rscadd: Added breaching charges, a c-4 subtype for explorers which cannot be placed
+      on station or on living things. Sprite by Chappy
+  - rscadd: Added clown pranks with breaching charges. They also get them in the mail
+      with rather low odds.
+  - rscdel: Removed the Explorer's mining voucher from their backpack at round start.
+  - qol: Mining hardsuits and other mining armor can hold the sledgehammer and explorer
+      laser gun.
+2026-03-07:
+  Cujo:
+  - bugfix: Prude mode now stops fart emotes from displaying in runechat
+  DragonMasterC:
+  - rscadd: tool interactions to assembler
+  - rscadd: sabotage and fix interactions to assembler
+  - qol: easier to deconstruct assemblers, now usually unnecessary to fix them
+  - qol: lot of context, examine, spans, and bubble text for assembler interactions
+  - bugfix: attempted fix of assembler.dm's empty_crafting_inventory() proc (would
+      check if items were QDEL'd before continuing which seemingly caused it to freak
+      out)
+  - image: updated assembler icon and added assembler_open for when panel is open
+  - code_imp: changed how assembler writes its crafting recipe and requirements in
+      examine and updated its crafting speed formula to account for wire cuts
+  EssentialTomato:
+  - balance: Pipe scrubbers now have a stronger pump installed.
+  Glyphee:
+  - rscadd: whole new goblin language syllables
+  - rscadd: goblin accent attached to tongue
+  - balance: weakened goblin liver
+  - bugfix: typo in satyr traits
+  Mantle:
+  - rscadd: Explorere's webbing can now hold skeleton keys & chasm filler capsules
+  Pickle-Coding:
+  - code_imp: The singularity processing is a bit more important than the other subsystems.
+  Shoddd:
+  - bugfix: huds no longer override seeing quirks with empath
+  - bugfix: empath can no longer see the quirks of anyone with their face covered
+2026-03-08:
+  Cujo:
+  - rscadd: Blood filtering now displays results if an activated vital display or
+      operating computer is nearby.
+  - bugfix: Fixed being able to use sign language while handcuffed, on a stasis bed,
+      or in mechs
+  - rscadd: Placing an activated energy dagger over your ear now burns your hair off
+  - rscadd: Energy daggers can now light cigarettes
+  JohnFulpWillard:
+  - rscadd: New sound channel called "Sirens", for the sound that plays during a Delta
+      Alert.
+  - rscdel: The default announcer now has the default welcome message again, rather
+      than being the same as the Ook announcer.
+  - qol: Station announcer has been moved to it's own pref called the Storyteller.
+  - qol: A lot more sounds now care for your volume slider settings, hopefully you
+      wont get your ears blasted as much anymore.
+  - balance: Duke & Dagoth announcers have been halved in weight (so they are less
+      likely to roll).
+  - rscdel: Deleted several sound preferences that already exists as Volume Mixer
+      options.
+  - qol: Elevator music is now a volume slider instead of ON/OFF setting.
+  - bugfix: Instrument volume sliders now work.
+  - bugfix: Whitenoise now takes prefs into account to decide sound volume.
+  - bugfix: Updating sound channels while a looping sound is playing will not stop
+      the looping sound anymore.
+  - bugfix: '''Stop all sounds'' verb no longer removes whitenoise from the round
+      until you enter & exit maints.'
+  - bugfix: Looping sound effects now more consistently care for your volume prefs.
+  - bugfix: Bingles can now walk over their bingle floors even if it's in space. The
+      bingle pit also prevents you from falling down Z-levels now if it's on openspace.
+  - bugfix: Simians can now safely climb stuff with click & drag, while vaulting remains
+      on sprinting into something that can be climbed.
+  Mantle:
+  - rscadd: Deforest inhands for backpack and satchel
+  - bugfix: deforest jumpsuit should properly appear in loadouts now
+  SirNightKnight:
+  - bugfix: fixed light replacers not being able to place lights in floodlight frames.
+  Tractor-Maam:
+  - balance: Vendozer recipes that called for a vending machine now call for that
+      machines resupply, 5 iron, and 5 cable.
+  - balance: Vendozers can now carry trashtank weapons (this is also a bugfix, since
+      it spawned with one that, when removed, cannot be readded.)
+  - spellcheck: fixed a typo on the peashooter breech recipe.
+  - rscadd: Autopsy scanners now fit in medkits.
+2026-03-09:
+  Mantlecrawler:
+  - bugfix: deforest masks are now properly sterile
+  TheColorCyan:
+  - rscadd: Security officer spawn with armor vest and helmet instead of dusters once
+      again
+  flleeppyy:
+  - bugfix: Probably fixed some obscure issue with preferences not loading for some
+      people
+  - rscadd: clear_prefs_cache for Kick topic
+  notghosti:
+  - balance: Borers can no longer force people to preform self stunning emotes such
+      as 'collaspe' 'surrender' and 'faint'
+  - balance: Force host speak cooldown has been lowered (30 -> 25 seconds)
+  - bugfix: moon amulet can no longer apply a infinite hallucination
+  - admin: Admin heals now remove Moon conversion
+2026-03-10:
+  BobDABuilder9001:
+  - qol: Buttons drop all their parts when broken
+  Glyphee:
+  - balance: moved goblin speed to torso
+  - bugfix: goblin accent oversight
+  Mantle:
+  - rscadd: You can now upload a photo of your ass at security records consoles.
+  Mantlecrawler:
+  - bugfix: Elite Lavaland mobs can no longer fall into chasms
+  - bugfix: Simians can now pass through xenobio's corral pens
+  - bugfix: Knight & Hornet cloaks that are bought from the store are no longer also
+      donator only.
+  SirNightKnight:
+  - bugfix: fixed firefighter helmets being available in the loadout store.
+2026-03-12:
+  Mantle:
+  - bugfix: Monkeys can no longer break out of xenobio pens
+  notghosti:
+  - rscadd: Silicons can access and toggle Boulder retrieval matrix
+  unit0016:
+  - bugfix: Classic Intents can no longer be influenced by the paranormal.
+2026-03-13:
+  Fluffles, SirNightKnight:
+  - bugfix: emoji show up in the messenger UI
+  - bugfix: emoji show up in the message server monitor UI
+  JohnFulpWillard:
+  - balance: Catching fire now wakes you up.
+  - bugfix: Ignoring someone from OOC/Dchat will now also ignore them in LOOC.
+  cam_dev:
+  - map: 'meta, kilo, tram, helio, pubby, void: added drains to various showers'
+  - map: 'oshan, kilo, pubby, theseus, void: added janitorial closet with pushbroom
+      to morgue'
+  - map: 'tram, theseus: replaced some fake shower drains'
+  - map: 'oshan: expanded medical exam room, morgue, and upper starboard maintenance'
+  - map: 'oshan: new medical break room and recovery ward with two patient rooms'
+  - map: 'oshan: replaced surgical masks with sterile masks in surgery rooms, added
+      two droppers and formaldehyde to and removed two defibrillator mounts and operating
+      computers from medbay exam room, added paper stack and pen to morgue, added
+      CMO, MD, and virologist action figures'
+  - map: 'oshan: moved medbay water reservoir to other side of department (away from
+      chemistry)'
+  - map: 'oshan: omni gas filter for exam room cryo is now on and filtering co2 by
+      default'
+  - map: 'oshan: some more maints loot and slightly more dangerous pathing in upper
+      starboard maints'
+  - map: 'oshan: added table with analysis bin and pen outside of artifact science'
+  - map: 'pubby: added water reservoir for xenobio showers, artisci sink and science
+      bathroom, added vents, scrubbers, and relevant piping through artisci to asteroid
+      mining room, added airlock cycling to external airlock'
+  - map: 'meta: swapped disposals bin and shower in medbay exam room and tweaked middle
+      greenery'
+  - map: 'meta: new greenery in public garden and its hydro trays are now connected
+      to dorms water reservoir'
+  - map: 'kilo: added a water reservoir for medbay, moved some wall mounted buttons
+      to fix emergency closet and make holomap more accessible'
+  - map: 'blueshift: adds chemical dispenser to chemistry lab'
+  - map: 'delta: changed access for experimentation lab from science maintenance to
+      research'
+2026-03-14:
+  Cujo:
+  - bugfix: Changed Oshan medical protolathe to techfab. Now allows printing of computer
+      and machine boards.
+  - rscadd: Adds missing robotic repair toolbox to tramstation medical
+  Gboster-0:
+  - rscadd: Added the devil as an admin-spawn only antagonist
+  Shoddd:
+  - bugfix: fixes a few typos
+  - bugfix: fixes incorrect descriptions with body bags
+  - qol: closets now tell you you can repaint them with airlock sprayer
+  - map: added wire chem to pubby
+  - map: added comp printer to voidraptor
+  - map: fixes Helio patho areas
+  SirNightKnight:
+  - balance: wizard smite always pulls from heavy smites, moved fireball and lightning
+      to the light smite category as they are relatively harmless. capped the smite
+      spell at level one since adding more levels does nothing.
+  - bugfix: moved taking candy corn out of the detectives fedora to right alt click.
+  - rscadd: active magboots will negate unwrenching high pressure atmospheric component
+      to a certain degree (about 9,000 kPa).
+  - qol: experimental gas analzyers are small sized the same as normal gas anazlyers.
+  - qol: air alarms have a toggle filters button for  which inverts the state all
+      filters of the scrubbers. saves a few clicks :p
+  notghosti:
+  - map: Theseus curator booth is less defensible against pickle ricks. Kill them,
+      kill them all.
+  - map: Added basic air set up to thesues curator booth
+  wraith-54321:
+  - del: disabled assault operatives.
+2026-03-15:
+  JohnFulpWillard:
+  - qol: Added 2 biosuits to Heliostation and made the Security biosuit more accessible
+      to Security personnel.
+  Mantle, Poojawa, Ynot, Njmask, Triplezeta, Marksuckerberg, assorted other coders and spriters - Port of a port of a port:
+  - rscadd: Ported Hyposprays Mk2 from Yogs, inturn from Whitesands, from Citadel,
+      and shiptest. - Effectively advanced syringes that can draw blood, inject reagents,
+      and spray reagents
+  - rscadd: Vials - Special containers meant for hyposprays. They come in various
+      sizes - 15u, 30u, 60u, and 120u. Not every type is usable in every hypospray,
+      and the 120u vials are exclusive to the CMO
+  - rscadd: Hypospray's mode can be changed by using inhand, their vials removed by
+      rclick, and the transfer size changed by ctrl left / right clicking
+  - rscadd: Hyposprays have special upgrade, unlockable via research
+  - rscadd: Hyposprays and hypospray accessories can be found for purchase in a new
+      tab in the Nanomed Vendor.
+  - image: Hypospray, Vial, lockbox sprites
+  - code_imp: This PR changes a significant amount around autoinjectors (medipens),
+      and adds hyposprays. Please report any bugs to the PR on GitHub, or ping @mantlecrawler
+      in discord. There should also be a thread up for it in PR-Discusssion
+  - admin: Minor ERT loadout tweaks - ERTs now have hyposprays, rather than single
+      or multi use injectors.
+  SirNightKnight:
+  - bugfix: fixed being unable to unfold paperplanes.
+  - balance: nanites and borer force speech can't make you piss yourself.
+  - balance: silicon upload boards are no longer printable, they are now a cargo order
+      instead.
+  TheColorCyan:
+  - bugfix: bingle melee attacks no longer bypass block
+  - bugfix: paperplane crossbow emagged cargo borgs get now actually works
+  - bugfix: you can't unfold hardlight planes into regular sheet of paper
+  wonderinghost:
+  - map: Minor oshan fixes to atmos, library, and med
+2026-03-16:
+  Cujo:
+  - bugfix: No longer applies hard of hearing to people who are genetically deaf or
+      using quirk trait
+  JohnFulpWillard:
+  - bugfix: '[IceBox] Fixed Brig Medical area''s intercom & APC.'
+  OliverOtter:
+  - balance: Chaplain and Curator are unable to roll vampire. (they can still be vassalized
+      into one)
+  - balance: Chaplain is unable to roll heretic.
+  Shoddd:
+  - balance: removed thermal pistols from imports
+  - balance: changeling transform power now works while dead
+  - balance: changeling hallucination power now makes others appear as a changeling
+  - balance: cryogenic sting is now a effect and works again
+  - bugfix: you can no longer roll changeling chemicals as allergies
+  - bugfix: storage cavity now drops items inside when power is lost
+  - qol: holopay no longer has a range limit
+  SirNightKnight:
+  - rscadd: added pocket extinguishers, t-ray scanners, ignition switch controllers
+      to the engineering protolathe.
+  - qol: made hand labelers, radio headsets, and station bounced radios universal
+      protolathe designs.
+  - bugfix: fixed a bug where inducers wouldn't update their sprite correctly when
+      removing/adding a cell.
+  - qol: added an initial lathe design for basic fishing hooks and line.
+  - balance: the standalone Syndicate autosurgeon is 3 TC instead of 5.
+  - bugfix: all pre-loaded Syndicate autosurgeons are one use.
+  - bugfix: bone repair surgeries require you to close up the patient with the final
+      step.
+  - code_imp: demodularized most autosurgeon code so it's in one file.
+  - bugfix: wound surgeries don't delete themself automatically when the wound is
+      fixed.
+  - bugfix: gave cauterizing slash wounds a sound.
+2026-03-20:
+  JohnFulpWillard:
+  - bugfix: Setting off a TTV in a bomb actualizer will no longer get the effects
+      of being actualized.
+  - rscdel: Deleted Nekomimetic
+  - qol: Airlocks are now faster to build when done by hand.
+  LettuceGuardian:
+  - rscadd: Alternative skin for the blueshield MOD.
+  - code_imp: Demodularized the blueshield MOD code.
+  SirNightKnight:
+  - image: resprited riot armor
+  Tractor-Maam:
+  - qol: Hypospray Vials and Medipens can now fit inside Chemistry Bags and Medical
+      Bandoliers.
+2026-03-22:
+  BanementI:
+  - rscadd: The AI can now go to the soup store, and use a couple of other fishy words.
+2026-03-23:
+  00-Steven, ZephyrTFA, JohnFulpWillard:
+  - rscadd: The Curator's barcode scanner now makes little sounds when operating it.
+  - qol: The Library machines are now replaceable.
+  - bugfix: Books should now have proper html formatting (aka should look like how
+      it does in paper)
+  Gboster-0:
+  - bugfix: wintercoats no longer resist ashstorms
+  Ghommie, SmArtKar, TheColorCyan:
+  - refactor: projectiles and embeds were severely refactored, report any issues
+  - rscadd: (necromanceranne) Replaces the Particle Acceleration Rifle with the Event
+      Horizon anti-existential beam rifle. It shoots black holes. You can make this
+      in-game. That's right, YOU!
+  - balance: (necromanceranne) Only one vortex anomaly can be made in a round.
+  - refactor: (Whoneedspacee) Wendigos abilities have been changed into actions that
+      can be added to any mob.
+  - rscadd: (SmArtKar) You can now craft tether anchors, which can be secured with
+      a wrench and attached to with right click. They won't let you drift into space
+      and you can adjust tether length/cut it via lmb/rmb/ctrl click on the wire.
+  - rscadd: (SmArtKar) MOD tethers now remotely place and connect to tether anchors
+      instead of throwing you at where they landed.
+  - balance: (SmArtKar) MOD tethers can now be used in gravity
+  JohnFulpWillard:
+  - qol: Curators now keep languages through body transformations.
+  - balance: DNR quirk gives 6 points instead of 8, blacklists you from cloning, persists
+      through bodies, and in exchange gives you more health (takes approx. 50 more
+      damage to enter hardcrit and 100 more damage to die)
+  TheColorCyan:
+  - bugfix: fixed temperature insulation checks, stuff like winter coats should no
+      longer make you immune to ash storms and protect from fire
+  - bugfix: fixes cult leader having broken comms
+  - bugfix: fixed temp alert having no description
+  - bugfix: fixed ghost being able to teleport chairs
+  - bugfix: fixed being able to click drag yourself onto climbables from far away
+  - bugfix: fixed vims needing hands
+  - bugfix: fixed borer abilities being usable while dead
+  - bugfix: revenants can no longer pull people by using context menu
+  - bugfix: fixed slimes being invisible after revival
+  - bugfix: fixed not being able to put multitools into destructive analyzer
+  - balance: (Jacquerel) Support Guardians cannot heal their owner while recalled.
+  - balance: ' (Jacquerel) Dextrous Guardians cannot use their hands while recalled.'
+  - bugfix: ' (Jacquerel) Gaseous Guardian particles will correctly dismiss when you
+      recall.'
+  - bugfix: ' (Jacquerel) Guardian health hud will display the correct value when
+      you are first summoned.'
+  byondsucks:
+  - balance: Slasher antag no longer has the dumb trait
+  suffering intensifies:
+  - balance: allows tundra moths to use the mothlet grenade
+2026-03-24:
+  JohnFulpWillard:
+  - bugfix: The boulder retrieval matrix board can be printed by cargo now.
+  - rscadd: "There\u2019s now a checkout mode on the barcode scanner."
+  TheColorCyan:
+  - balance: some special  monke edited bullets were lowered in speed to account for
+      slower speed of bullets in general
+2026-03-25:
+  notghosti:
+  - bugfix: License to plasmaflood no longer implies you have a license to murderbone.
+2026-03-26:
+  JohnFulpWillard:
+  - balance: Mimes can use their spells while non-human (if they were transformed
+      into something else)
+  PotatoTomahto:
+  - admin: admins can toggle the tram to isekai people
+  Shoddd:
+  - balance: Scatter laser shells actually utilize the real scatter laser beam. Doing
+      45 damage per shot rather than 90
+  cam_dev:
+  - map: 'oshan: adds maintenance door exit to patients room'
+  ghost:
+  - code_imp: The Greytide event will now play bolt audio and update the icon when
+      toggling door bolts.
+  wonderinghost:
+  - map: '[Meta] Adds Boulder Processing To Miner''s Office'
+2026-03-27:
+  CannibalHunter:
+  - rscadd: Added Ravin Hobo's donator item!
+  - rscadd: Added Yatosamasensei's donator items!
+  Mantlecrawler:
+  - balance: Kudzu can no longer be planted on Oshan's sea floor
+  - bugfix: Heretics can no longer research blade upgrades from paths other than their
+      main path (You already couldnt research more than one), this prevents a softlock
+  - bugfix: Lifebringer anomalies will no longer spawn broken mobs
+  Shoddd:
+  - balance: Explorer laser gun now shoots hardlight lasers, disappearing after 6
+      tiles and being unable to pass through glass but doing 32 damage.
+  - balance: explorer laser gun can now be cranked while moving and now has a unremovable
+      firing pin
+  SirNightKnight:
+  - balance: increased the weight of changelings to 12 from 10.
+  - balance: changelings don't get a weight penalty for rolling consecutively.
+  - balance: increased the weight of heretics from 2 to 8.
+  - balance: heretics, bloodsuckers, and changelings all require enemies to roll.
+2026-03-28:
+  JohnFulpWillard:
+  - bugfix: The Magic 8ball now lets ghosts vote on it.
+  TheColorCyan:
+  - rscadd: Added Snackiversal's donator item "Silver Anchor"
+  Tractor-Maam:
+  - rscadd: Readded crutches to medical lathes.
+2026-03-29:
+  notghosti:
+  - bugfix: SAYA Arms can no longer shove unshoveable things

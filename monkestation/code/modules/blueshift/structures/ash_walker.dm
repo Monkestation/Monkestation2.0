@@ -742,7 +742,7 @@
 		qdel(src)
 		return
 
-	living_inside.revive(ADMIN_HEAL_ALL)
+	living_inside.revive(ADMIN_HEAL_ALL, revival_policy = POLICY_ANTAGONISTIC_REVIVAL)
 	living_inside.forceMove(get_turf(src))
 	living_inside.mind.grab_ghost()
 	living_inside.balloon_alert_to_viewers("[living_inside] breaks out of [src]!")
@@ -984,7 +984,7 @@
 /**
  * a proc that will increase the amount of items the crop could produce (at a maximum of 6, from base of 3)
  */
-/obj/structure/simple_farm/proc/increase_yield(mob/user, var/silent = FALSE)
+/obj/structure/simple_farm/proc/increase_yield(mob/user, silent = FALSE)
 	if(!allow_yield_increase())
 		if(!silent)
 			balloon_alert(user, "plant is at maximum yield")
@@ -1010,7 +1010,7 @@
 /**
  * a proc that will decrease the amount of time it takes to be ready for harvest (at a maximum of 30 seconds, from a base of 1 minute)
  */
-/obj/structure/simple_farm/proc/decrease_cooldown(mob/user, var/silent = FALSE)
+/obj/structure/simple_farm/proc/decrease_cooldown(mob/user, silent = FALSE)
 	if(!allow_decrease_cooldown())
 		if(!silent)
 			balloon_alert(user, "already at maximum growth speed!")
@@ -1027,7 +1027,7 @@
 /**
  * a proc that will increase the potency the crop grows at
  */
-/obj/structure/simple_farm/proc/increase_potency(mob/user, var/silent = FALSE)
+/obj/structure/simple_farm/proc/increase_potency(mob/user, silent = FALSE)
 	if(bonus_potency >= 50)
 		if(!silent)
 			balloon_alert(user, "plant is at maximum potency")
@@ -1058,7 +1058,7 @@
 /**
  * will create a harvest of the seeds product, with a chance to create a mutated version
  */
-/obj/structure/simple_farm/proc/create_harvest(var/obj/item/storage/bag/plants/plant_bag, var/mob/user)
+/obj/structure/simple_farm/proc/create_harvest(obj/item/storage/bag/plants/plant_bag, mob/user)
 	if(!planted_seed)
 		return
 
@@ -1100,6 +1100,9 @@
 	icon = 'monkestation/icons/obj/vending.dmi'
 	icon_state = "ashclothvendor"
 	icon_deny = "necrocrate"
+	use_power = NO_POWER_USE
+	initial_language_holder = /datum/language_holder/ashwalker
+	vend_reply = "Glory to the Necropolis."
 
 	products = list( //Relatively normal to have, I GUESS
 		/obj/item/clothing/under/costume/gladiator/ash_walker/tribal = 15,
@@ -1116,7 +1119,7 @@
 		/obj/item/clothing/shoes/jackboots/ashwalker/legate = 12,
 		/obj/item/clothing/shoes/wraps/ashwalker/mundanewraps = 15,
 		/obj/item/clothing/shoes/wraps/ashwalker = 10,
-		/obj/item/clothing/shoes/wraps/ashwalker/tribalwraps = 2,,
+		/obj/item/clothing/shoes/wraps/ashwalker/tribalwraps = 2,
 		/obj/item/clothing/head/shamanash = 3,
 		/obj/item/clothing/neck/cloak/tribalmantle = 2,
 		/obj/item/clothing/gloves/military/claw = 5,

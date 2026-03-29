@@ -17,11 +17,11 @@ GLOBAL_LIST_INIT(virusdishes, list())
 	var/mob/last_openner
 	COOLDOWN_DECLARE(cloud_cooldown)
 
-/obj/item/weapon/virusdish/New(loc)
-	..()
+/obj/item/weapon/virusdish/Initialize(mapload)
+	. = ..()
 	reagents = new(10)
 	reagents.my_atom = src
-	GLOB.virusdishes.Add(src)
+	GLOB.virusdishes += src
 
 	var/list/reagent_change_signals = list(
 			COMSIG_REAGENTS_ADD_REAGENT,
@@ -34,10 +34,11 @@ GLOBAL_LIST_INIT(virusdishes, list())
 	RegisterSignals(src.reagents, reagent_change_signals, PROC_REF(on_reagent_change))
 
 /obj/item/weapon/virusdish/Destroy()
+	GLOB.virusdishes -= src
 	STOP_PROCESSING(SSobj, src)
 	contained_virus = null
-	GLOB.virusdishes.Remove(src)
-	. = ..()
+	last_openner = null
+	return ..()
 
 /*
 /obj/item/weapon/virusdish/clean_blood()
@@ -137,6 +138,9 @@ GLOBAL_LIST_INIT(virusdishes, list())
 		return ITEM_INTERACT_SUCCESS
 
 /obj/item/weapon/virusdish/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(istype(interacting_with, /obj/machinery/smartfridge/chemistry))
+		return ITEM_INTERACT_SKIP_TO_ATTACK
+
 	if(!open)
 		user.balloon_alert(user, "lid closed")
 		return ITEM_INTERACT_BLOCKING
@@ -192,33 +196,33 @@ GLOBAL_LIST_INIT(virusdishes, list())
 /obj/item/weapon/virusdish/random
 	name = "growth dish"
 
-/obj/item/weapon/virusdish/random/New(loc)
-	..(loc)
-	if(loc)//because fuck you /datum/subsystem/supply_shuttle/Initialize()
-		var/virus_choice = pick(WILD_ACUTE_DISEASES)
-		contained_virus = new virus_choice
-		var/list/anti = list(
-			ANTIGEN_BLOOD	= 2,
-			ANTIGEN_COMMON	= 2,
-			ANTIGEN_RARE	= 1,
-			ANTIGEN_ALIEN	= 0,
-			)
-		var/list/bad = list(
-			EFFECT_DANGER_HELPFUL	= 1,
-			EFFECT_DANGER_FLAVOR	= 2,
-			EFFECT_DANGER_ANNOYING	= 2,
-			EFFECT_DANGER_HINDRANCE	= 2,
-			EFFECT_DANGER_HARMFUL	= 2,
-			EFFECT_DANGER_DEADLY	= 0,
-			)
-		contained_virus.makerandom(list(50,90),list(10,100),anti,bad,src)
-		contained_virus.Refresh_Acute()
-		growth = rand(5, 50)
-		name = "growth dish (Unknown [contained_virus.form])"
-		update_appearance()
-		contained_virus.origin = "Random Dish"
-	else
-		GLOB.virusdishes.Remove(src)
+/obj/item/weapon/virusdish/random/Initialize(mapload)
+	. = ..()
+	if(!loc) //because fuck you /datum/subsystem/supply_shuttle/Initialize()
+		GLOB.virusdishes -= src
+		return
+	var/virus_choice = pick(WILD_ACUTE_DISEASES)
+	contained_virus = new virus_choice
+	var/list/anti = list(
+		ANTIGEN_BLOOD	= 2,
+		ANTIGEN_COMMON	= 2,
+		ANTIGEN_RARE	= 1,
+		ANTIGEN_ALIEN	= 0,
+		)
+	var/list/bad = list(
+		EFFECT_DANGER_HELPFUL	= 1,
+		EFFECT_DANGER_FLAVOR	= 2,
+		EFFECT_DANGER_ANNOYING	= 2,
+		EFFECT_DANGER_HINDRANCE	= 2,
+		EFFECT_DANGER_HARMFUL	= 2,
+		EFFECT_DANGER_DEADLY	= 0,
+		)
+	contained_virus.makerandom(list(50,90),list(10,100),anti,bad,src)
+	contained_virus.Refresh_Acute()
+	growth = rand(5, 50)
+	name = "growth dish (Unknown [contained_virus.form])"
+	update_appearance()
+	contained_virus.origin = "Random Dish"
 
 /obj/item/weapon/virusdish/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()

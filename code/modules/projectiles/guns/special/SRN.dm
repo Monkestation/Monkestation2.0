@@ -8,6 +8,7 @@
 	righthand_file = 'monkestation/icons/mob/inhands/weapons/guns_righthand.dmi'
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/SRN_rocket
 	fire_sound = 'sound/weapons/gun/general/rocket_launch.ogg'
+	item_flags = NONE
 	bolt_type = BOLT_TYPE_NO_BOLT
 	fire_sound_volume = 80
 	w_class = WEIGHT_CLASS_BULKY
@@ -17,7 +18,6 @@
 	recoil = 1
 	casing_ejector = FALSE
 	weapon_weight = WEAPON_HEAVY
-	bolt_type = BOLT_TYPE_LOCKING
 	internal_magazine = TRUE
 	cartridge_wording = "rocket"
 	empty_indicator = TRUE
@@ -35,22 +35,29 @@
 ///SRN Internal Magazine
 /obj/item/ammo_box/magazine/internal/SRN_rocket
 	name = "SRN Rocket"
-	ammo_type = /obj/item/ammo_casing/caseless/SRN_rocket
+	ammo_type = /obj/item/ammo_casing/SRN_rocket
 	caliber = "84mm"
 	max_ammo = 3
 
 
 
 /// SRN caseless ammo casing
-/obj/item/ammo_casing/caseless/SRN_rocket
+/obj/item/ammo_casing/SRN_rocket
 	name = "\improper Spatial Rift Nullifier Rocket"
 	desc = "A prototype Spatial Rift Nullifier (SRN) Rocket. Fire at a rogue singularity or Tesla and pray it hits"
 	caliber = "84mm"
 	icon = 'monkestation/icons/obj/guns/projectiles.dmi'
+	base_icon_state = "srn_rocket"
 	icon_state = "srn_rocket"
 	projectile_type = /obj/projectile/bullet/SRN_rocket
 
+/obj/item/ammo_casing/SRN_rocket/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/caseless)
 
+/obj/item/ammo_casing/SRN_rocket/update_icon_state()
+	. = ..()
+	icon_state = "[base_icon_state]"
 
 /// SRN Rocket Projectile
 /obj/projectile/bullet/SRN_rocket
@@ -60,49 +67,43 @@
 	hitsound = "sound/effects/meteorimpact.ogg"
 	damage = 10
 	ricochets_max = 0 //it's a MISSILE
+	pass_flags = PASSTABLE | PASSGRILLE
 
 /obj/projectile/bullet/SRN_rocket/on_hit(atom/target, blocked = 0, pierce_hit)
-	..()
 	if(ishuman(target))
-		var/mob/living/carbon/human/M = target
-		playsound(src.loc, "pierce", 100, 1)
-		M.oxyloss = 5
-		to_chat(M, "<span class='alert'>You are struck by a spatial nullifier! Thankfully it didn't affect you... much.</span>")
-		M.emote("scream")
+		var/mob/living/carbon/human/target_human = target
+		playsound(src.loc, 'sound/weapons/pierce.ogg', vol = 100, vary = TRUE)
+		target_human.adjustOxyLoss(5)
+		to_chat(target_human, span_alert("You are struck by a spatial nullifier! Thankfully it didn't affect you... much."))
+		INVOKE_ASYNC(target_human, TYPE_PROC_REF(/mob, emote), "scream")
 	else
-		playsound(src.loc, "sparks", 100, 1)
-	return BULLET_ACT_HIT
+		playsound(src.loc, SFX_SPARKS, vol = 100, vary = TRUE)
+	return ..()
 
-/obj/projectile/bullet/SRN_rocket/Impact(atom/A)
+/obj/projectile/bullet/SRN_rocket/impact(atom/impacted)
 	. = ..()
-	if(istype(A, /obj/singularity))
-		var/mob/living/user = firer
-		user.client.give_award(/datum/award/achievement/misc/singularity_buster, user)
-		user.emote("scream")
 
-		for(var/mob/player as anything in GLOB.player_list)
-			SEND_SOUND(player, sound('sound/magic/charge.ogg', volume = player.client.prefs.channel_volume["[CHANNEL_SOUND_EFFECTS]"]))
-			to_chat(player, "<span class='boldannounce'>You feel reality distort for a moment...</span>")
-			shake_camera(player, 15, 3)
+	if(istype(impacted, /obj/singularity))
+		nullify(firer, impacted)
+	else if(istype(impacted, /obj/energy_ball))
+		var/obj/energy_ball/ball = impacted
+		if(istype(ball.orbiting?.parent, /obj/energy_ball))
+			nullify(firer, ball.orbiting.parent)
+		else
+			nullify(firer, ball)
 
-		new/obj/spatial_rift(A.loc)
-		qdel(A)
+/obj/projectile/bullet/SRN_rocket/proc/nullify(mob/living/hero, atom/impacted)
+	if(isliving(hero))
+		hero.client?.give_award(/datum/award/achievement/misc/singularity_buster, hero)
+		INVOKE_ASYNC(hero, TYPE_PROC_REF(/mob, emote), "scream")
 
-	if(istype(A, /obj/energy_ball))
-		var/mob/living/user = firer
-		user.client.give_award(/datum/award/achievement/misc/singularity_buster, user)
-		user.emote("scream")
+	for(var/mob/player as anything in GLOB.player_list)
+		player.playsound_local(null, 'sound/magic/charge.ogg', vol = 100, vary = FALSE, pressure_affected = FALSE, mixer_channel = CHANNEL_SOUND_EFFECTS)
+		to_chat(player, span_boldannounce("You feel reality distort for a moment..."))
+		shake_camera(player, 1.5 SECONDS, 3)
 
-		for(var/mob/player as anything in GLOB.player_list)
-			SEND_SOUND(player, sound('sound/magic/charge.ogg', volume = player.client.prefs.channel_volume["[CHANNEL_SOUND_EFFECTS]"]))
-			to_chat(player, "<span class='boldannounce'>You feel reality distort for a moment...</span>")
-			shake_camera(player, 15, 3)
-
-		new/obj/spatial_rift(A.loc)
-		qdel(A)
-
-	return
-
+	new /obj/spatial_rift(impacted.loc)
+	qdel(impacted)
 
 /datum/award/achievement/misc/singularity_buster
 	name = "Scrungularity"

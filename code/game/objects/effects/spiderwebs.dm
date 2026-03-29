@@ -35,6 +35,8 @@
 	var/genetic = FALSE
 	///Whether or not the web is a sealed web
 	var/sealed = FALSE
+	///Whether or not the web comes from an arachnid
+	var/arachnid = FALSE
 	icon_state = "stickyweb1"
 
 /obj/structure/spider/stickyweb/attack_hand(mob/user, list/modifiers)
@@ -59,6 +61,8 @@
 /obj/structure/spider/stickyweb/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(genetic)
+		return
+	if(arachnid)
 		return
 	if(sealed)
 		return FALSE

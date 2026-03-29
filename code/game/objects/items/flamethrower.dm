@@ -22,7 +22,9 @@
 	var/lit = FALSE //on or off
 	var/operating = FALSE//cooldown
 	var/obj/item/weldingtool/weldtool = null
+	/// The igniter stored in the flamethrower
 	var/obj/item/assembly/igniter/igniter = null
+	/// The plasma tank that we shoot gas from
 	var/obj/item/tank/internals/plasma/ptank = null
 	var/obj/item/reagent_containers/cup/beaker/beaker = null
 	var/warned_admins = FALSE //for the message_admins() when lit
@@ -60,7 +62,6 @@
 	if(isturf(location)) //start a fire if possible
 		igniter.flamethrower_process(location)
 
-
 /obj/item/flamethrower/update_icon_state()
 	inhand_icon_state = "flamethrower_[lit]"
 	return ..()
@@ -77,6 +78,8 @@
 		. += "+beaker"
 
 /obj/item/flamethrower/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if (!ptank)
+		return NONE
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, span_warning("You can't bring yourself to fire \the [src]! You don't want to risk harming anyone..."))
 		log_combat(user, interacting_with, "attempted to flamethrower", src, "with gas mixture: {[print_gas_mixture(ptank.return_analyzable_air())]}, flamethrower: \"[name]\" ([src]), igniter: \"[igniter.name]\", tank: \"[ptank.name]\" and tank distribution pressure: \"[siunit(1000 * ptank.distribute_pressure, unit = "Pa", maxdecimals = 9)]\"" + (lit ? " while lit" : "" + " but failed due to pacifism."))
@@ -85,7 +88,7 @@
 	if(target_turf)
 		var/turflist = get_line(user, target_turf)
 		log_combat(user, interacting_with, "flamethrowered", src, "with gas mixture: {[print_gas_mixture(ptank.return_analyzable_air())]}, flamethrower: \"[name]\", igniter: \"[igniter.name]\", tank: \"[ptank.name]\" and tank distribution pressure: \"[siunit(1000 * ptank.distribute_pressure, unit = "Pa", maxdecimals = 9)]\"" + (lit ? " while lit." : "."))
-		flame_turf(turflist)
+		flame_turf(turflist, user)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/flamethrower/wrench_act(mob/living/user, obj/item/tool)
@@ -113,49 +116,51 @@
 		to_chat(user, span_notice("[igniter] is now [status ? "secured" : "unsecured"]!"))
 		update_appearance()
 		return TRUE
-// XANTODO: Check on flamethrowers and figure out wtf is supposed to be going on
-/obj/item/flamethrower/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(isigniter(attacking_item))
-		var/obj/item/assembly/igniter/I = attacking_item
-		if(I.secured)
-			return
+
+/obj/item/flamethrower/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(isigniter(tool))
+		var/obj/item/assembly/igniter/inserting_igniter = tool
+		if(inserting_igniter.secured)
+			return ITEM_INTERACT_BLOCKING
 		if(igniter)
-			return
-		if(!user.transferItemToLoc(attacking_item, src))
-			return
-		igniter = I
+			return ITEM_INTERACT_BLOCKING
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
+		igniter = inserting_igniter
 		update_appearance()
-		return
+		balloon_alert(user, "attached")
+		return ITEM_INTERACT_SUCCESS
 
-	else if(istype(attacking_item, /obj/item/tank/internals/plasma))
+	if(istype(tool, /obj/item/tank/internals/plasma))
 		if(ptank)
-			if(user.transferItemToLoc(attacking_item,src))
-				ptank.forceMove(get_turf(src))
-				ptank = attacking_item
-				to_chat(user, span_notice("You swap the plasma tank in [src]!"))
-			return
-		if(!user.transferItemToLoc(attacking_item, src))
-			return
-		ptank = attacking_item
+			if(!user.transferItemToLoc(tool, src))
+				return ITEM_INTERACT_BLOCKING
+			ptank.forceMove(get_turf(src))
+			ptank = tool
+			to_chat(user, span_notice("You swap the plasma tank in [src]!"))
+			return ITEM_INTERACT_SUCCESS
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
+		ptank = tool
 		update_appearance()
-		return
+		return ITEM_INTERACT_SUCCESS
 
-	else if(istype(attacking_item, /obj/item/reagent_containers/cup/beaker))
+	if(istype(tool, /obj/item/reagent_containers/cup/beaker))
 		if(beaker)
-			if(user.transferItemToLoc(attacking_item,src))
-				beaker.forceMove(get_turf(src))
-				beaker = attacking_item
-				to_chat(user, "<span class='notice'>You swap [beaker] in [src]!</span>")
-			return
-		if(!user.transferItemToLoc(attacking_item, src))
-			return
-		beaker = attacking_item
+			if(!user.transferItemToLoc(tool,src))
+				return ITEM_INTERACT_BLOCKING
+			beaker.forceMove(get_turf(src))
+			beaker = tool
+			to_chat(user, "<span class='notice'>You swap [beaker] in [src]!</span>")
+			return ITEM_INTERACT_SUCCESS
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
+		beaker = tool
 		to_chat(user, "<span class='notice'>You attach [beaker] to [src]!</span>")
 		update_icon()
-		return
+		return ITEM_INTERACT_SUCCESS
 
-	else
-		return ..()
+	return NONE
 
 /obj/item/flamethrower/return_analyzable_air()
 	if(ptank)
@@ -240,6 +245,7 @@
 				igniter.ignite_turf(src,T)
 			else
 				default_ignite(T)
+		// If anyone in the future ever cares about chemthrower, just know it's completely fucked and needs to be rewritten completely
 		if(beaker)
 			if(beaker.reagents.total_volume)
 				project_reagents(T, user)

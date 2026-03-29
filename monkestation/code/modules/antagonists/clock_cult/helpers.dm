@@ -1,6 +1,7 @@
 ///check if an atom is on the reebe z level, will also return FALSE if the atom has no z level
 /proc/on_reebe(atom/checked_atom)
-	if(!checked_atom.z || !is_reebe_level(checked_atom.z))
+	var/turf/checked_turf = get_turf(checked_atom)
+	if(!checked_turf?.z || !is_reebe_level(checked_turf.z))
 		return FALSE
 	return TRUE
 

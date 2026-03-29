@@ -19,12 +19,12 @@
 	mutation_list = list()
 
 
-/mob/living/basic/chicken/turkey/LateInitialize() //reset this as regular chickens override
+/mob/living/basic/chicken/turkey/LateInitialize(mapload_arg) //reset this as regular chickens override
 	. = ..()
 	icon_state = "turkey_plain"
 	icon_living = "turkey_plain"
 	icon_dead = "turkey_plain_dead"
 
-/mob/living/basic/chicken/hen/LateInitialize()
+/mob/living/basic/chicken/hen/LateInitialize(mapload_arg)
 	.=..()
 	gender = FEMALE

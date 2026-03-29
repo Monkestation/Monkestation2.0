@@ -25,7 +25,6 @@
 		TRAIT_MUTANT_COLORS,
 		TRAIT_MUTANT_COLORS_SECONDARY,
 		TRAIT_NO_HUSK,
-
 	)
 
 	mutant_organs = list(
@@ -85,8 +84,7 @@
 	var/forced_speech = 0
 
 /datum/species/ipc/get_species_description()
-	return "Integrated Positronic Chassis - or IPC for short - \
-	 are a race of sentient and unbound humanoid robots."
+	return "Integrated Positronic Chassis - or IPC for short - are a race of sentient and unbound humanoid robots."
 
 /datum/species/ipc/random_name(gender, unique, lastname, attempts)
 	. = "[pick(GLOB.posibrain_names)]-[rand(100, 999)]"
@@ -101,10 +99,6 @@
 	if(A)
 		A.Remove(C)
 		QDEL_NULL(A)
-	var/obj/item/organ/internal/lungs/L = C.get_organ_slot("lungs") //Hacky and bad. Will be rewritten entirely in KapuCarbons anyway.
-	if(L)
-		L.Remove(C)
-		QDEL_NULL(L)
 	if(ishuman(C) && !change_screen)
 		change_screen = new
 		change_screen.Grant(C)
@@ -147,12 +141,12 @@
 	COOLDOWN_START(src, blend_cd, 60 SECONDS)
 
 /**
- * Makes the IPC screen switch to BSOD followed by a blank screen
- *
- * Arguments:
- * * transformer - The human that will be affected by the screen change (read: IPC).
- * * screen_name - The name of the screen to switch the ipc_screen mutant bodypart to. Defaults to BSOD.
- */
+	* Makes the IPC screen switch to BSOD followed by a blank screen
+	*
+	* Arguments:
+	* * transformer - The human that will be affected by the screen change (read: IPC).
+	* * screen_name - The name of the screen to switch the ipc_screen mutant bodypart to. Defaults to BSOD.
+	*/
 /datum/species/ipc/proc/bsod_death(mob/living/carbon/human/transformer, screen_name = "BSOD")
 	if(!transformer.get_bodypart(BODY_ZONE_HEAD))
 		return
@@ -298,12 +292,12 @@
 	owner.say(threat)
 
 /**
- * Simple proc to switch the screen of a monitor-enabled synth, while updating their appearance.
- *
- * Arguments:
- * * transformer - The human that will be affected by the screen change (read: IPC).
- * * screen_name - The name of the screen to switch the ipc_screen mutant bodypart to.
- */
+	* Simple proc to switch the screen of a monitor-enabled synth, while updating their appearance.
+	*
+	* Arguments:
+	* * transformer - The human that will be affected by the screen change (read: IPC).
+	* * screen_name - The name of the screen to switch the ipc_screen mutant bodypart to.
+	*/
 /datum/species/ipc/proc/switch_to_screen(mob/living/carbon/human/transformer, screen_name)
 	if(!change_screen)
 		return
@@ -346,19 +340,19 @@
 	powerdraw_loop(target_apc, ipc)
 
 /**
- * Runs a loop to charge a synth cell (stomach) via powercord from an APC.
- *
- * Stops when:
- * - The user is full.
- * - The APC has less than 20% charge.
- * - The APC has machine power turned off.
- * - The APC is unable to provide charge for any other reason.
- * - The user moves, or anything else that can happen to interrupt a do_after.
- *
- * Arguments:
- * * target_apc - The APC to drain.
- * * user - The carbon draining the APC.
- */
+	* Runs a loop to charge a synth cell (stomach) via powercord from an APC.
+	*
+	* Stops when:
+	* - The user is full.
+	* - The APC has less than 20% charge.
+	* - The APC has machine power turned off.
+	* - The APC is unable to provide charge for any other reason.
+	* - The user moves, or anything else that can happen to interrupt a do_after.
+	*
+	* Arguments:
+	* * target_apc - The APC to drain.
+	* * user - The carbon draining the APC.
+	*/
 /obj/item/apc_powercord/proc/powerdraw_loop(obj/machinery/power/apc/target_apc, mob/living/carbon/human/user)
 	user.visible_message(span_notice("[user] inserts a power connector into the [target_apc]."), span_notice("You begin to draw power from the [target_apc]."))
 
@@ -407,12 +401,12 @@
 #undef SYNTH_CHARGE_DELAY_PER_100
 
 /**
- * Global timer proc used in defib.dm. Removes the temporary trauma caused by being defibbed as a synth.
- *
- * Args:
- * * obj/item/organ/internal/brain/synth_brain: The brain with the trauma on it. Non-nullable.
- * * datum/brain_trauma/trauma: The trauma itself. Non-nullable.
- */
+	* Global timer proc used in defib.dm. Removes the temporary trauma caused by being defibbed as a synth.
+	*
+	* Args:
+	* * obj/item/organ/internal/brain/synth_brain: The brain with the trauma on it. Non-nullable.
+	* * datum/brain_trauma/trauma: The trauma itself. Non-nullable.
+	*/
 /proc/remove_synth_defib_trauma(obj/item/organ/internal/brain/synth_brain, datum/brain_trauma/trauma)
 	if (QDELETED(synth_brain) || QDELETED(trauma))
 		return
@@ -442,12 +436,13 @@
 /datum/species/ipc/handle_chemical(datum/reagent/chem, mob/living/carbon/human/ipc, seconds_per_tick, times_fired)
 	if(chem?.synthetic_boozepwr)
 		var/booze_power = chem.synthetic_boozepwr
-		if(ipc.nutrition < NUTRITION_LEVEL_FULL)
+		if(ipc.nutrition < NUTRITION_LEVEL_ALMOST_FULL)
 			ipc.adjust_nutrition(booze_power * 0.055) //one full glass of acetone = 1 full charge if my math is correct
 		if(HAS_TRAIT(ipc, TRAIT_ALCOHOL_TOLERANCE))
 			booze_power *= 0.7
 		if(HAS_TRAIT(ipc, TRAIT_LIGHT_DRINKER))
 			booze_power *= 2
-		ipc.adjust_drunk_effect(sqrt(chem.volume) * booze_power * ALCOHOL_RATE * REM * seconds_per_tick)
-		ipc.mind.add_addiction_points(/datum/addiction/alcohol, chem.synthetic_boozepwr/5)
+		if(ipc.get_drunk_amount() < chem.volume * chem.synthetic_boozepwr)
+			ipc.adjust_drunk_effect(sqrt(chem.volume) * booze_power * ALCOHOL_RATE * REM * seconds_per_tick)
+		ipc.mind.add_addiction_points(/datum/addiction/alcohol, chem.synthetic_boozepwr/20)
 	return ..()

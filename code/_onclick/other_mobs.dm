@@ -20,7 +20,7 @@
 	Otherwise pretty standard.
 */
 /mob/living/carbon/human/UnarmedAttack(atom/A, proximity_flag, list/params)
-	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED) && stat < SOFT_CRIT)
+	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		if(src == A)
 			check_self_for_injuries()
 		return
@@ -32,6 +32,12 @@
 
 		to_chat(src, span_notice("You look at your arm and sigh."))
 		return
+
+	// Bandaid fix for chaplain code while attack chain refactor is being finished - NK
+	if(isliving(A))
+		var/sigreturn = SEND_SIGNAL(src, COMSIG_LIVING_EARLY_UNARMED_ATTACK, A, proximity_flag, params)
+		if(sigreturn & COMPONENT_CANCEL_ATTACK_CHAIN)
+			return TRUE
 
 	//This signal is needed to prevent gloves of the north star + hulk.
 	if(SEND_SIGNAL(src, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, A, proximity_flag) & COMPONENT_CANCEL_ATTACK_CHAIN)
@@ -169,6 +175,9 @@
 /mob/living/proc/resolve_right_click_attack(atom/target, list/modifiers)
 	return target.attack_animal_secondary(src, modifiers)
 
+/**
+ * Called when a simple animal is unarmed attacking / clicking on this atom.
+ */
 /atom/proc/attack_animal(mob/user, list/modifiers)
 	SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_ANIMAL, user)
 

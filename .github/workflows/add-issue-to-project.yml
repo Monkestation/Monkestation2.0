@@ -15,4 +15,4 @@ jobs:
           # You can target a project in a different organization
           # to the issue
           project-url: https://github.com/orgs/Monkestation/projects/12
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.TRIAGE_TOKEN }}

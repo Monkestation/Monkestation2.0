@@ -9,8 +9,8 @@
 	max_integrity = 1000
 	density = TRUE
 	use_power = IDLE_POWER_USE
-	idle_power_usage = 10
-	active_power_usage = 3000
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.1
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 3
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	circuit = null
 	light_outer_range = 5
