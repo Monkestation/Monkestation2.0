@@ -434,3 +434,6 @@
   - rscadd: Added Snackiversal's donator item "Silver Anchor"
   Tractor-Maam:
   - rscadd: Readded crutches to medical lathes.
+2026-03-29:
+  notghosti:
+  - bugfix: SAYA Arms can no longer shove unshoveable things
