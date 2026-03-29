@@ -374,8 +374,6 @@
 /area/ruin/space/has_grav/syndicate_depot/crew_quarters)
 "ea" = (
 /obj/structure/closet/toolcloset,
-/obj/item/pipe_dispenser,
-/obj/item/pipe_dispenser,
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/syndicate_depot/engineering)
@@ -546,7 +544,6 @@
 /obj/item/flatpacked_machine/airlock_kit_manual,
 /obj/item/flatpacked_machine/fuel_generator,
 /obj/item/flatpacked_machine/gps_beacon,
-/obj/item/holosign_creator/atmos,
 /obj/item/watertank/atmos,
 /turf/open/floor/iron/dark/smooth_large,
 /area/ruin/space/has_grav/syndicate_depot/cargo_bay)
