@@ -273,6 +273,8 @@ GLOBAL_LIST_EMPTY(heretic_arenas)
 	objectives = list()
 	antag_hud_name = "brainwashed"
 	antag_flags = ANTAG_FAKE
+	antag_count_points = 0
+	count_against_dynamic_roll_chance = FALSE
 
 /datum/antagonist/heretic_arena_participant/on_gain()
 	forge_objectives()
