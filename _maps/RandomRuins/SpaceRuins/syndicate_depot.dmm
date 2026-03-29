@@ -2830,12 +2830,6 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/syndicate_depot/cargo_bay)
-"DY" = (
-/obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/window/reinforced/spawner/directional/north,
-/obj/machinery/computer/order_console/mining,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/syndicate_depot/cargo_bay)
 "DZ" = (
 /obj/machinery/atmospherics/components/unary/passive_vent,
 /turf/open/floor/engine/o2,
@@ -7972,7 +7966,7 @@ mz
 Nu
 IE
 XO
-DY
+Fc
 BR
 BR
 QR
