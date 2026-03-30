@@ -5572,11 +5572,7 @@
 #include "code\modules\power\lighting\light_items.dm"
 #include "code\modules\power\lighting\light_mapping_helpers.dm"
 #include "code\modules\power\lighting\light_wallframes.dm"
-<<<<<<< HEAD
 #include "code\modules\power\rbmk\INCLUDES.dm"
-#include "code\modules\power\singularity\boh_tear.dm"
-=======
->>>>>>> upstream/master
 #include "code\modules\power\singularity\containment_field.dm"
 #include "code\modules\power\singularity\dark_matter_singularity.dm"
 #include "code\modules\power\singularity\emitter.dm"
