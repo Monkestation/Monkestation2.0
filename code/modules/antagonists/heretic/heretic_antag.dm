@@ -1193,3 +1193,12 @@
 	suit = /obj/item/clothing/suit/hooded/cultrobes/eldritch/rust
 	head = /obj/item/clothing/head/hooded/cult_hoodie/eldritch/rust
 	r_hand = /obj/item/melee/touch_attack/mansus_fist
+
+/datum/outfit/heretic/equip(mob/living/carbon/human/H, visualsOnly)
+	// this is complete ass but I have no clue why I can't get this shit to work normally ~lucy
+	if(visualsOnly && isdummy(H))
+		H.add_overlay(icon('icons/mob/clothing/suits/armor.dmi', "rust_armor_t", frame = 1))
+		H.add_overlay(icon('icons/mob/inhands/items/touchspell_righthand.dmi', "mansus", frame = 1))
+		return TRUE
+	else
+		return ..()
