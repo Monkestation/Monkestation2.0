@@ -49,7 +49,7 @@
 		if(interacting_with.extrapolator_act(user, src, scan))
 			to_chat(user, span_notice("You store \the [interacting_with]'s blood sample in [src]."))
 		else if(scan)
-			to_chat(user, "<span class='notice'>[src] fails to return any data</span>")
+			to_chat(user, span_notice("[src] fails to return any data."))
 
 /obj/item/extrapolator/attack_self(mob/user)
 	. = ..()
