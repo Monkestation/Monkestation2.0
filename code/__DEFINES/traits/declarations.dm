@@ -918,7 +918,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Hides the heretic overlay that outs them as the heretic
 #define TRAIT_HERETIC_AURA_HIDDEN "heretic_aura_hidden"
 /// This rod was infused by a heretic, making it awesome and improving influence gain
-#define TRAIT_ROD_MANSUS_INFUSED "rod_infused"
+// #define TRAIT_ROD_MANSUS_INFUSED "rod_infused"
 /// Allows heretics to cast their spells.
 #define TRAIT_ALLOW_HERETIC_CASTING "allow_heretic_casting"
 /// Designates a heart as a living heart for a heretic.
