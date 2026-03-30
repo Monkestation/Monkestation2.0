@@ -22,7 +22,7 @@
 	antag_moodlet = /datum/mood_event/heretics
 	job_rank = ROLE_HERETIC
 	antag_hud_name = "heretic"
-	hijack_speed = 0.5
+	hijack_speed = 0.5 // only if ascended or moon
 	suicide_cry = "THE MANSUS SMILES UPON ME!!"
 	preview_outfit = /datum/outfit/heretic
 	can_assign_self_objectives = TRUE
@@ -262,6 +262,11 @@
 	data["knowledge_shop"] = shop_knowledge
 
 	return data
+
+/datum/antagonist/heretic/hijack_speed()
+	if(!ascended && heretic_path?.route != PATH_MOON)
+		return 0
+	return ..()
 
 /datum/antagonist/heretic/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
