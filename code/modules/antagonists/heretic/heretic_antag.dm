@@ -447,6 +447,7 @@
 	SIGNAL_HANDLER
 	if(should_show_aura())
 		overlays += mutable_appearance('icons/mob/effects/heretic_aura.dmi', "heretic_aura")
+		overlays += emissive_appearance('icons/mob/effects/heretic_aura.dmi', "heretic_aura_e", source)
 
 /datum/antagonist/heretic/proc/should_show_aura()
 	if(ascended) // duh
