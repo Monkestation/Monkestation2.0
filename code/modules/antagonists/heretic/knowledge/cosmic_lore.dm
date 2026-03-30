@@ -257,12 +257,8 @@
 /datum/heretic_knowledge/ultimate/cosmic_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
 	user.add_traits(ascended_traits, type)
-	if(ishuman(user))
-		var/mob/living/carbon/human/ascended_human = user
-		var/obj/item/organ/internal/eyes/heretic_eyes = ascended_human.get_organ_slot(ORGAN_SLOT_EYES)
-		ascended_human.update_sight()
-		heretic_eyes?.color_cutoffs = list(30, 30, 30)
-		ascended_human.update_sight()
+	RegisterSignal(user, COMSIG_MOB_UPDATE_SIGHT, PROC_REF(on_update_sight))
+	user.update_sight()
 
 	var/mob/living/basic/heretic_summon/star_gazer/star_gazer_mob = new /mob/living/basic/heretic_summon/star_gazer(loc, user)
 	star_gazer_mob.maxHealth = INFINITY
@@ -293,6 +289,11 @@
 	var/datum/action/cooldown/mob_cooldown/replace_star_gazer/replace_gazer = new(src)
 	replace_gazer.Grant(user)
 	replace_gazer.bad_dog = WEAKREF(star_gazer_mob)
+
+/datum/heretic_knowledge/ultimate/cosmic_final/proc/on_update_sight(mob/user)
+	SIGNAL_HANDLER
+	user.lighting_cutoff = max(user.lighting_cutoff, LIGHTING_CUTOFF_HIGH)
+	user.lighting_color_cutoffs = user.lighting_color_cutoffs ? blend_cutoff_colors(user.lighting_color_cutoffs, list(30, 30, 30)) : list(30, 30, 30)
 
 /// Replace an annoying griefer you were paired up to with a different but probably no less annoying player.
 /datum/action/cooldown/mob_cooldown/replace_star_gazer
