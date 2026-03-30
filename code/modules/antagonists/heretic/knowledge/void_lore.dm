@@ -221,16 +221,18 @@
 	sound_loop = new(user, TRUE, TRUE)
 	RegisterSignal(user, COMSIG_LIVING_LIFE, PROC_REF(on_life))
 	RegisterSignal(user, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(hit_by_projectile))
+	RegisterSignal(user, COMSIG_MOB_UPDATE_SIGHT, PROC_REF(on_update_sight))
 	RegisterSignals(user, list(COMSIG_LIVING_DEATH, COMSIG_QDELETING), PROC_REF(on_death))
 	heavy_storm = new(user, 10)
-	if(ishuman(user))
-		var/mob/living/carbon/human/ascended_human = user
-		var/obj/item/organ/internal/eyes/heretic_eyes = ascended_human.get_organ_slot(ORGAN_SLOT_EYES)
-		heretic_eyes?.color_cutoffs = list(30, 30, 30)
-		ascended_human.update_sight()
+	user.update_sight()
 
 /datum/heretic_knowledge/ultimate/void_final/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
-	on_death() // Losing is pretty much dying. I think
+	on_death(user) // Losing is pretty much dying. I think
+
+/datum/heretic_knowledge/ultimate/void_final/proc/on_update_sight(mob/user)
+	SIGNAL_HANDLER
+	user.lighting_cutoff = max(user.lighting_cutoff, LIGHTING_CUTOFF_HIGH)
+	user.lighting_color_cutoffs = user.lighting_color_cutoffs ? blend_cutoff_colors(user.lighting_color_cutoffs, list(30, 30, 30)) : list(30, 30, 30)
 
 /**
  * Signal proc for [COMSIG_LIVING_LIFE].
@@ -279,7 +281,7 @@
  *
  * Stop the storm when the heretic passes away.
  */
-/datum/heretic_knowledge/ultimate/void_final/proc/on_death(datum/source)
+/datum/heretic_knowledge/ultimate/void_final/proc/on_death(mob/source)
 	SIGNAL_HANDLER
 
 	if(sound_loop)
@@ -289,7 +291,9 @@
 		QDEL_NULL(storm)
 	if(heavy_storm)
 		QDEL_NULL(heavy_storm)
-	UnregisterSignal(source, list(COMSIG_LIVING_LIFE, COMSIG_ATOM_PRE_BULLET_ACT, COMSIG_LIVING_DEATH, COMSIG_QDELETING))
+	UnregisterSignal(source, list(COMSIG_LIVING_LIFE, COMSIG_ATOM_PRE_BULLET_ACT, COMSIG_LIVING_DEATH, COMSIG_QDELETING, COMSIG_MOB_UPDATE_SIGHT))
+	if(!QDELETED(source))
+		source.update_sight()
 
 ///Few checks to determine if we can deflect bullets
 /datum/heretic_knowledge/ultimate/void_final/proc/can_deflect(mob/living/ascended_heretic)
