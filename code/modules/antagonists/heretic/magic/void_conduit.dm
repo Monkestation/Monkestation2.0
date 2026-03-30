@@ -100,7 +100,7 @@
 				else
 					affected_mob.apply_status_effect(/datum/status_effect/void_chill, 1)
 
-			if(istype(thing_to_affect, /obj/machinery/door) || istype(thing_to_affect, /obj/structure/door_assembly) || istype(thing_to_affect, /obj/structure/window) || istype(thing_to_affect, /obj/structure/grille))
+			else if(istype(thing_to_affect, /obj/machinery/door) || istype(thing_to_affect, /obj/structure/door_assembly) || istype(thing_to_affect, /obj/structure/window) || istype(thing_to_affect, /obj/structure/grille) || istype(thing_to_affect, /obj/structure/window_sill))
 				var/obj/affected_structure = thing_to_affect
 				affected_structure.take_damage(rand(15, 30))
 
@@ -115,6 +115,7 @@
 /datum/status_effect/void_conduit
 	id = "void_conduit"
 	duration = 15 SECONDS
+	tick_interval = STATUS_EFFECT_NO_TICK
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = null
 
