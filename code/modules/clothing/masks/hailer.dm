@@ -100,6 +100,14 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES | PEPPERPROOF
 	visor_flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES | PEPPERPROOF
 
+/obj/item/clothing/mask/gas/sechailer/swat/alt
+	name = "\improper SWAT gas mask"
+	icon_state = "swat2"
+	max_filters = 3
+
+/obj/item/clothing/mask/gas/sechailer/swat/alt/pig
+	icon_state = "swat1"
+
 /obj/item/clothing/mask/gas/sechailer/swat/spacepol
 	name = "spacepol mask"
 	desc = "A close-fitting tactical mask created in cooperation with a certain megacorporation, comes with an especially aggressive Compli-o-nator 3000."

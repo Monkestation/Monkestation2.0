@@ -359,6 +359,7 @@
 	desc = "A tactical turtleneck for the privates of Nanotrasen's private security force."
 	icon_state = "private"
 	inhand_icon_state = "b_suit"
+	armor_type = /datum/armor/security_head_of_security
 
 /obj/item/clothing/under/rank/security/private/corporal
 	name = "private security jumpsuit"
