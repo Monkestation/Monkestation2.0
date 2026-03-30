@@ -1,0 +1,4 @@
+author: "Tractor-Maam"
+delete-after: True
+changes:
+  - rscadd: "RGB and Self-Recharging MCR attachments are now printable."

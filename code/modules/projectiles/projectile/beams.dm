@@ -156,7 +156,7 @@
 	pass_flags = PASSTABLE
 	damage = 32
 	damage_type = BURN
-	range = 6
+	range = 8
 
 /obj/projectile/beam/disabler
 	name = "disabler beam"
