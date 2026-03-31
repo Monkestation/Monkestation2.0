@@ -88,6 +88,7 @@
 		for(var/turf/turf as anything in block(bottom_left, top_right))
 			loaded_turfs += turf
 			loaded_areas |= get_area(turf)
+
 			// atoms can actually be in the contents of two or more turfs based on its icon/bound size
 			// see https://www.byond.com/docs/ref/index.html#/atom/var/contents
 			for(var/thing in (turf.get_all_contents() - turf))
@@ -98,8 +99,10 @@
 				loaded_atom_movables |= thing
 
 	SSatoms.InitializeAtoms(loaded_areas + loaded_atom_movables + loaded_turfs)
+	SSlighting.setup_static_lighting_if_needed(loaded_turfs)
 	SSmachines.setup_template_powernets(loaded_cables)
 	SSair.setup_template_machinery(loaded_atmospherics)
+
 	SEND_SIGNAL(src, COMSIG_LAZY_TEMPLATE_LOADED, loaded_atom_movables, loaded_turfs, loaded_areas)
 	reservations += reservation
 	return reservation

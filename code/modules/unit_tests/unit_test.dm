@@ -262,6 +262,9 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		//Both are abstract types meant to scream bloody murder if spawned in raw
 		/obj/item/organ/external,
 		/obj/item/organ/external/wings,
+		// Abstract type, controlled by turfs
+		// Literally errors on creation/deletion
+		/atom/movable/lighting_object,
 		// monkestation start
 		/obj/effect/spawner/random_engines,
 		/obj/effect/spawner/random_bar,
