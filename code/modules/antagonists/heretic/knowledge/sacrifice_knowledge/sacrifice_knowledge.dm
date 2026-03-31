@@ -139,6 +139,8 @@
 			continue
 		if(possible_target.current.stat == DEAD)
 			continue
+		if(possible_target.assigned_role?.job_flags & JOB_CANNOT_BE_TARGET)
+			continue
 
 		valid_targets += possible_target
 
