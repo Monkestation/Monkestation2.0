@@ -16,10 +16,8 @@
 		if(ispath(created, /obj/item))
 			items_ref |= created
 
-	for(var/datum/crafting_recipe/craft as anything in typesof(/datum/crafting_recipe))
-		var/created = craft::result
-		if(ispath(created, /obj/item))
-			items_ref |= created
+	items_ref |= GLOB.summoned_guns
+	items_ref |= GLOB.summoned_magic
 
 /datum/controller/subsystem/atoms/proc/compile_swap_paths()
 	for(var/parent, path_list in paths_to_swap)
