@@ -282,7 +282,7 @@
 		var/carbon_sanity = carbon_view.mob_mood.sanity
 		if(carbon_view.stat != CONSCIOUS)
 			continue
-		if(IS_HERETIC_OR_MONSTER(carbon_view))
+		if(IS_HERETIC_OR_MONSTER(carbon_view) || source.faction_check_atom(carbon_view))
 			continue
 		if(carbon_view.can_block_magic(MAGIC_RESISTANCE_MOON)) //Somehow a shitty piece of tinfoil is STILL able to hold out against the power of an ascended heretic.
 			continue
