@@ -174,8 +174,8 @@
 	if(ismob(tracked_thing))
 		var/mob/tracked_mob = tracked_thing
 		if(tracked_mob.stat == DEAD)
-			to_chat(owner, span_hierophant("[tracked_mob] is dead. Bring them to a transmutation rune \
-				and invoke \"[sac_knowledge.name]\" to sacrifice them!"))
+			to_chat(owner, span_hierophant("[tracked_mob] is dead. Bring [tracked_mob.p_them()] to a transmutation rune \
+				and invoke \"[sac_knowledge.name]\" to sacrifice [tracked_mob.p_them()]!"))
 
 	StartCooldown()
 	return TRUE
@@ -195,6 +195,21 @@
 	var/turf/our_turf = get_turf(owner)
 	var/their_z = their_turf?.z
 	var/our_z = our_turf?.z
+
+	var/is_alone = TRUE
+	if(ismob(tracked_thing))
+		var/mob/tracked_mob = tracked_thing
+		for(var/mob/living/watcher in viewers(tracked_mob))
+			if(!watcher.client || watcher == tracked_mob)
+				continue
+			if(IS_HERETIC_OR_MONSTER(watcher) || IS_WEAKREF_OF(owner, watcher.mind?.enslaved_to))
+				continue
+			if(HAS_TRAIT(watcher, TRAIT_GHOST_CRITTER) || isrevenant(watcher))
+				continue
+			if(watcher.stat == DEAD || watcher.is_blind())
+				continue
+			is_alone = FALSE
+			break
 
 	// One of us is in somewhere we shouldn't be
 	if(!our_z || !their_z)
@@ -254,7 +269,9 @@
 	if(ismob(tracked_thing))
 		var/mob/tracked_mob = tracked_thing
 		if(tracked_mob.stat == DEAD)
-			balloon_message = "they're dead, " + balloon_message
+			balloon_message = "[tracked_mob.p_theyre()] dead, " + balloon_message
+		else if(is_alone)
+			balloon_message = "[tracked_mob.p_theyre()] alone, " + balloon_message
 
 	return balloon_message
 
