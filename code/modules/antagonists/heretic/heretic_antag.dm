@@ -464,10 +464,6 @@
 		return FALSE // No use in giving the aura to a heretic that can't ascend
 	if(heretic_path?.route == PATH_LOCK)
 		return FALSE // Lock heretics never get this aura
-	// alright, now only if we have completed all our objectives
-	for(var/datum/objective/objective as anything in objectives)
-		if(!objective.check_completion())
-			return FALSE
 	return TRUE
 
 /datum/antagonist/heretic/proc/on_heretic_examine(datum/source, mob/user, text)
