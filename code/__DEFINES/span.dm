@@ -139,6 +139,9 @@
 #define span_yellowteamradio(str) ("<span class='yellowteamradio'>" + str + "</span>")
 #define span_center(str) ("<span class='center'>[str]</span>")
 
+#define span_stargazer(str) ("<span class='stargazer'>[str]</span>")
+#define span_stargazer_big(str) ("<span class='stargazer_big'>[str]</span>")
+
 // Spans that use embedded tgui components:
 // Sorted alphabetically
 #define span_tooltip(tip, main_text) ("<span data-component=\"Tooltip\" data-content=\"" + tip + "\" class=\"tooltip\">" + main_text + "</span>")

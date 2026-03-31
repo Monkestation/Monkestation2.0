@@ -27,6 +27,9 @@
 	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 0, STAMINA = 0, OXY = 0)
 	death_sound = 'sound/magic/cosmic_expansion.ogg'
 
+	chat_color = "#a903fc"
+	speech_span = "stargazer_big"
+
 	slowed_by_drag = FALSE
 	move_force = MOVE_FORCE_OVERPOWERING
 	move_resist = MOVE_FORCE_OVERPOWERING
@@ -35,10 +38,12 @@
 	mob_size = MOB_SIZE_HUGE
 	layer = LARGE_MOB_LAYER
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
+
+	lighting_cutoff = LIGHTING_CUTOFF_HIGH
 	lighting_cutoff_red = 12
 	lighting_cutoff_green = 15
 	lighting_cutoff_blue = 34
-	sight = SEE_TURFS|SEE_MOBS|SEE_OBJS
+	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS
 
 	ai_controller = /datum/ai_controller/basic_controller/star_gazer
 	/// Reference to the mob which summoned us
@@ -88,10 +93,15 @@
 
 /mob/living/basic/heretic_summon/star_gazer/Destroy()
 	deltimer(begging_timer)
+	begging_timer = null
 	return ..()
 
 /// Tries to find a ghost to take control of the mob. If no ghost accepts, ask again in a bit
 /mob/living/basic/heretic_summon/star_gazer/proc/beg_for_ghost()
+	if(client && !client.is_afk())
+		deltimer(begging_timer)
+		begging_timer = null
+		return
 	if(timeleft(begging_timer) && !client)
 		return
 	begging_timer = addtimer(CALLBACK(src, PROC_REF(beg_for_ghost)), 2 MINUTES, TIMER_STOPPABLE | TIMER_UNIQUE) // Keep begging until someone accepts
@@ -100,7 +110,7 @@
 		check_jobban = ROLE_HERETIC,
 		poll_time = 20 SECONDS,
 		ignore_category = POLL_IGNORE_HERETIC_MONSTER,
-		alert_pic = mutable_appearance('icons/effects/eldritch.dmi', "cosmic_diamond"),
+		alert_pic = icon('icons/effects/eldritch.dmi', "cosmic_diamond"),
 		jump_target = src,
 		role_name_text = "star gazer",
 		amount_to_pick = 1
@@ -108,6 +118,7 @@
 	if(chosen_ghost)
 		PossessByPlayer(chosen_ghost.key)
 		deltimer(begging_timer)
+		begging_timer = null
 
 /// Connects these two mobs by a leash
 /mob/living/basic/heretic_summon/star_gazer/proc/leash_to(atom/movable/leashed, atom/movable/leashed_to)
@@ -135,12 +146,12 @@
 			continue
 		nearby_mob.apply_status_effect(/datum/status_effect/star_mark)
 		nearby_mob.apply_damage(10)
-		to_chat(nearby_mob, span_userdanger("\The [src] [attack_verb_continuous] you!"))
+		to_chat(nearby_mob, span_userdanger("\The [src] [attack_verb_continuous] you!"), type = MESSAGE_TYPE_COMBAT)
 		do_attack_animation(nearby_mob, ATTACK_EFFECT_SLASH)
 		log_combat(src, nearby_mob, "slashed")
 
 /datum/action/cooldown/recall_stargazer
-	name = "Seek master"
+	name = "Seek Master"
 	desc = "Teleports you to your master"
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
@@ -218,15 +229,14 @@
 	cycle_tracker = 0
 	orb_visual = new(get_step(owner, owner.dir))
 	var/beam_timer = addtimer(CALLBACK(src, PROC_REF(open_laser), owner, targets), 2.2 SECONDS, TIMER_STOPPABLE)
-	playsound(owner, 'sound/mobs/non-humanoids/stargazer/beam_open.ogg', 50, FALSE)
+	playsound(owner, 'sound/mobs/non-humanoids/stargazer/beam_open.ogg', 50, FALSE, pressure_affected = FALSE)
 	if(!do_after(owner, 3 SECONDS, owner))
 		cooldown_time = 1 SECONDS
 		deltimer(beam_timer)
 		QDEL_NULL(orb_visual)
 		QDEL_NULL(beam_visual)
 		QDEL_NULL(end_visual)
-		for(var/atom/to_delete as anything in beam_fillings)
-			QDEL_NULL(to_delete)
+		QDEL_LIST(beam_fillings)
 		targets = null
 		return
 
@@ -271,10 +281,9 @@
 	. = ..()
 	if(!target)
 		return INITIALIZE_HINT_QDEL
-	var/Angle = get_angle_raw(x, y, pixel_x, pixel_y, target.x , target.y, target.pixel_x, target.pixel_y)
+	var/angle = round(get_angle_raw(x, y, pixel_x, pixel_y, target.x , target.y, target.pixel_x, target.pixel_y), 45)
 	var/matrix/transform_matrix = matrix()
-	Angle = round(Angle, 45)
-	transform_matrix.Turn(Angle-90)
+	transform_matrix.Turn(angle - 90)
 	transform_matrix.Scale(2, 2)
 	transform = transform_matrix
 	flick("gazer_beam_start", src)
@@ -288,9 +297,8 @@
 	. = ..()
 	if(!direction)
 		return INITIALIZE_HINT_QDEL
-	var/Angle = dir2angle(direction)
 	var/matrix/transform_matrix = matrix()
-	transform_matrix.Turn(Angle)
+	transform_matrix.Turn(dir2angle(direction))
 	transform_matrix.Scale(2, 2)
 	transform = transform_matrix
 	flick("gazer_beam_end_opening", src)
@@ -313,18 +321,18 @@
 	. = ..()
 	if(!origin)
 		return INITIALIZE_HINT_QDEL
-	var/Angle = get_angle_raw(origin.x , origin.y, origin.pixel_x, origin.pixel_y, x, y, pixel_x, pixel_y)
+	var/angle = round(get_angle_raw(origin.x, origin.y, origin.pixel_x, origin.pixel_y, x, y, pixel_x, pixel_y), 45)
 	var/matrix/transform_matrix = matrix()
-	Angle = round(Angle, 45)
-	transform_matrix.Turn(Angle)
+	transform_matrix.Turn(angle)
 	transform_matrix.Scale(2, 2)
 	transform = transform_matrix
 	flick("gazer_beam_end_opening", src)
 
 /datum/looping_sound/gazer_beam
 	mid_sounds = list('sound/mobs/non-humanoids/stargazer/beam_loop_one.ogg')
-	mid_length = 109
+	mid_length = 10.9 SECONDS
 	volume = 80
+	pressure_affected = FALSE
 
 /obj/effect/ebeam/phase_in // Beam subtype that has a "windup" phase
 	alpha = 0
@@ -351,28 +359,28 @@
 			var/turf/closed/wall/wall_target = target
 			wall_target.dismantle_wall(devastated = TRUE)
 			continue
-		if(isfloorturf(target))
+		else if(isfloorturf(target))
 			var/turf/open/floor/to_burn = target
 			to_burn.burn_tile()
-		for(var/victim in target)
+		for(var/atom/movable/victim in target)
 			if(isobj(victim))
 				var/obj/to_obliterate = victim
 				if(to_obliterate.resistance_flags & INDESTRUCTIBLE)
 					continue
 				to_obliterate.atom_destruction(FIRE)
-			if(isliving(victim))
-				if(victim == our_master?.resolve())
+			else if(isliving(victim))
+				if(IS_WEAKREF_OF(victim, our_master) || victim.get_filter("dust_animation"))
 					continue
 				var/mob/living/living_victim = victim
 				if(living_victim.stat > CONSCIOUS)
 					playsound(living_victim, 'sound/effects/supermatter.ogg', 80, TRUE)
 					living_victim.visible_message(
-						span_danger("You see [living_victim] engulfed in the scorching wrath of the cosmos. \
-							For a moment, you see their silhouette flail in agony before fading to mere atoms."),
-						span_boldbig(span_hypnophrase("THE POWER OF THE COSMOS ITSELF POURS OUT OVER YOUR FORM. \
+						span_danger("You see [living_victim] engulfed in the [span_stargazer("scorching wrath of the cosmos")]. \
+							For a moment, you see [living_victim.p_their()] silhouette flail in agony before fading to mere atoms."),
+						span_stargazer_big("THE POWER OF THE COSMOS ITSELF POURS OUT OVER YOUR FORM. \
 							WAVES OF HEAT LATCH ONTO YOUR BODY, PULLING IT APART AT THE SEAMS. \
 							YOUR TOTAL ANNIHILATION TAKES ONLY A MOMENT BEFORE YOU ARE REDUCED BACK TO WHAT YOU ALWAYS WERE. \
-							MOTES OF MERE DUST..."))
+							MOTES OF MERE DUST...")
 						)
 					living_victim.dust()
 				living_victim.emote("scream")

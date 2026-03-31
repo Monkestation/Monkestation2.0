@@ -1482,3 +1482,25 @@ $job-colors: (
     color: $job-color;
   }
 }
+
+.stargazer {
+  color: hsl(280, 98%, 50%);
+  animation: stargazer_glow 2s ease-in-out infinite;
+}
+
+.stargazer_big {
+  color: hsl(280, 98%, 50%);
+  font-weight: bold;
+  font-size: 185%;
+  animation: stargazer_glow 2s ease-in-out infinite;
+}
+
+@keyframes stargazer_glow {
+  0%,
+  100% {
+    text-shadow: 0 0 8px hsl(280, 93%, 82%);
+  }
+  50% {
+    text-shadow: 0 0 16px hsl(280, 75%, 35%);
+  }
+}
