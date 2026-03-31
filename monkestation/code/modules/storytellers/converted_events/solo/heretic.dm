@@ -25,7 +25,21 @@
 		JOB_AI,
 		JOB_CYBORG,
 	)
-	weight = 2
+	enemy_roles = list(
+		JOB_AI,
+		JOB_CYBORG,
+		JOB_CAPTAIN,
+		JOB_BLUESHIELD,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_SECURITY,
+		JOB_SECURITY_OFFICER,
+		JOB_SECURITY_ASSISTANT,
+		JOB_BRIG_PHYSICIAN,
+		JOB_WARDEN,
+		JOB_CHAPLAIN,
+	)
+	required_enemies = 6
+	weight = 8
 	min_players = 20
 
 /datum/round_event_control/antagonist/heretic/roundstart

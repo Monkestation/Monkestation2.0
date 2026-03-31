@@ -7,7 +7,7 @@ export const EightBallVote = (props) => {
   const { act, data } = useBackend();
   const { shaking } = data;
   return (
-    <Window width={400} height={600}>
+    <Window width={400} height={160}>
       <Window.Content>
         {(!shaking && (
           <NoticeBox>No question is currently being asked.</NoticeBox>

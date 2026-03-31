@@ -1,0 +1,9 @@
+author: "SirNightKnight"
+delete-after: True
+changes:
+  - rscadd: "rebranded dogginos outfit to the existing moffuchi's pizza."
+  - rscadd: "added private security clothing, basically dark blue security clothing. blueshield gets one private security jumpsuit."
+  - rscadd: "added nanotrasen baseballs caps. NT rep gets a box of them and one in their garment bag."
+  - rscadd: "added the corporate liason's suit and suitskirt. a command blue outfit for the nanotrasen representative."
+  - rscadd: "gave the blueshield a swat mask and helmet in their garment bag."
+  - rscdel: "removed the CC bunny outfit from the NT rep's garment bag."

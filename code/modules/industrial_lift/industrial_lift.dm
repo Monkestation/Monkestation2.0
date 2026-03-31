@@ -322,6 +322,7 @@ GLOBAL_LIST_INIT(all_radial_directions, list(
 				playsound(hit_wall, 'sound/effects/meteorimpact.ogg', 100, TRUE)
 
 			for(var/mob/living/crushed in dest_turf.contents)
+				var/client/cached_client = crushed.client
 				to_chat(crushed, span_userdanger("You are crushed by [src]!"))
 				if(violent_landing)
 					// Violent landing = gibbed. But the nicest kind of gibbing, keeping everything intact.
@@ -336,6 +337,9 @@ GLOBAL_LIST_INIT(all_radial_directions, list(
 					crushed.apply_damage(15, BRUTE, BODY_ZONE_R_LEG, wound_bonus = 15)
 					crushed.apply_damage(15, BRUTE, BODY_ZONE_L_ARM, wound_bonus = 15)
 					crushed.apply_damage(15, BRUTE, BODY_ZONE_R_ARM, wound_bonus = 15)
+
+				if(GLOB.tram_isekai && (cached_client && !check_rights_for(cached_client, R_ADMIN)) && (QDELETED(crushed) || crushed.stat >= HARD_CRIT))
+					cached_client << link("play.monkestation.com:1541")
 
 	else if(going == UP)
 		for(var/turf/dest_turf as anything in entering_locs)

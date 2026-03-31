@@ -224,3 +224,10 @@
 	desc = "A Deforest Medical high-visibility hat often seen worn by local reps trying to shill their wares to various stations."
 	icon_state = "hivishatsoft"
 	soft_type = "hivishat"
+
+/obj/item/clothing/head/soft/nt
+	name = "\improper Nanotrasen cap"
+	desc = "It's a baseball hat in a tasteless white colour with the Nanotrasen logo embroidered on the front. Glory to Nanotrasen!"
+	icon_state = "ntsoft"
+	soft_type = "nt"
+	dog_fashion = null
