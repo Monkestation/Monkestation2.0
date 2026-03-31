@@ -415,9 +415,15 @@
 
 /// Apply a sinister curse to some of the target's organs as an incentive to leave us alone
 /datum/heretic_knowledge/hunt_and_sacrifice/proc/curse_organs(mob/living/carbon/human/sac_target)
-	var/usable_organs = grantable_organs.Copy()
+	var/list/usable_organs = grantable_organs.Copy()
 	if (isplasmaman(sac_target))
 		usable_organs -= /obj/item/organ/internal/lungs/corrupt // Their lungs are already more cursed than anything I could give them
+
+	// don't remove unremovable organs
+	for(var/obj/item/organ/internal/organ_type as anything in usable_organs)
+		var/obj/item/organ/internal/current_organ = sac_target.get_organ_slot(organ_type::slot)
+		if(current_organ?.organ_flags & ORGAN_UNREMOVABLE)
+			usable_organs -= organ_type
 
 	var/total_implant = rand(2, 4)
 
