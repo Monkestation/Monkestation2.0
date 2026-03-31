@@ -44,7 +44,7 @@
 	)
 
 	rpg_title = "Guard"
-	job_flags = STATION_JOB_FLAGS | HEAD_OF_STAFF_JOB_FLAGS
+	job_flags = STATION_JOB_FLAGS | JOB_BOLD_SELECT_TEXT | JOB_CANNOT_OPEN_SLOTS
 
 /datum/job/blueshield/employment_contract_contents(employee_name)
 	return "<center>Conditions of Employment</center>\
