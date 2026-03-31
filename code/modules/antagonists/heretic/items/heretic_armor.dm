@@ -520,13 +520,14 @@
 	armor_type = /datum/armor/eldritch_armor/moon
 	flags_inv = HIDESHOES | HIDEJUMPSUIT | HIDEMUTWINGS
 	clothing_traits = list(
-		TRAIT_HERETIC_AURA_HIDDEN,
 		TRAIT_BATON_RESISTANCE,
-		TRAIT_STUNIMMUNE,
+		TRAIT_HERETIC_AURA_HIDDEN,
 		TRAIT_NEVER_WOUNDED,
-		TRAIT_PACIFISM,
+		TRAIT_NODISMEMBER,
 		TRAIT_NOHUNGER,
 		TRAIT_NO_SLIP_ALL,
+		TRAIT_PACIFISM,
+		TRAIT_STUNIMMUNE,
 	)
 	/// Hud that gets shown to the wearer, gives a rough estimate of their current brain damage
 	var/atom/movable/screen/moon_health/health_hud
