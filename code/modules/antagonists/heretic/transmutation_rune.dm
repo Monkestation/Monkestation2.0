@@ -237,6 +237,15 @@
 	if (path_colour)
 		set_greyscale(colors = list(path_colour))
 
+// stupid bugfix bc `get_turf_pixel` is broken
+/obj/effect/heretic_rune/big/IsObscured()
+	if(!isturf(loc)) //This only makes sense for things directly on turfs for now
+		return FALSE
+	for(var/atom/movable/thing in loc)
+		if(thing.flags_1 & PREVENT_CLICK_UNDER_1 && thing.density && thing.layer > layer)
+			return TRUE
+	return FALSE
+
 /obj/effect/temp_visual/drawing_heretic_rune
 	duration = 30 SECONDS
 	icon = 'icons/effects/96x96.dmi'
