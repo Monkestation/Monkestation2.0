@@ -330,3 +330,120 @@
   Tractor-Maam:
   - qol: Hypospray Vials and Medipens can now fit inside Chemistry Bags and Medical
       Bandoliers.
+2026-03-22:
+  BanementI:
+  - rscadd: The AI can now go to the soup store, and use a couple of other fishy words.
+2026-03-23:
+  00-Steven, ZephyrTFA, JohnFulpWillard:
+  - rscadd: The Curator's barcode scanner now makes little sounds when operating it.
+  - qol: The Library machines are now replaceable.
+  - bugfix: Books should now have proper html formatting (aka should look like how
+      it does in paper)
+  Gboster-0:
+  - bugfix: wintercoats no longer resist ashstorms
+  Ghommie, SmArtKar, TheColorCyan:
+  - refactor: projectiles and embeds were severely refactored, report any issues
+  - rscadd: (necromanceranne) Replaces the Particle Acceleration Rifle with the Event
+      Horizon anti-existential beam rifle. It shoots black holes. You can make this
+      in-game. That's right, YOU!
+  - balance: (necromanceranne) Only one vortex anomaly can be made in a round.
+  - refactor: (Whoneedspacee) Wendigos abilities have been changed into actions that
+      can be added to any mob.
+  - rscadd: (SmArtKar) You can now craft tether anchors, which can be secured with
+      a wrench and attached to with right click. They won't let you drift into space
+      and you can adjust tether length/cut it via lmb/rmb/ctrl click on the wire.
+  - rscadd: (SmArtKar) MOD tethers now remotely place and connect to tether anchors
+      instead of throwing you at where they landed.
+  - balance: (SmArtKar) MOD tethers can now be used in gravity
+  JohnFulpWillard:
+  - qol: Curators now keep languages through body transformations.
+  - balance: DNR quirk gives 6 points instead of 8, blacklists you from cloning, persists
+      through bodies, and in exchange gives you more health (takes approx. 50 more
+      damage to enter hardcrit and 100 more damage to die)
+  TheColorCyan:
+  - bugfix: fixed temperature insulation checks, stuff like winter coats should no
+      longer make you immune to ash storms and protect from fire
+  - bugfix: fixes cult leader having broken comms
+  - bugfix: fixed temp alert having no description
+  - bugfix: fixed ghost being able to teleport chairs
+  - bugfix: fixed being able to click drag yourself onto climbables from far away
+  - bugfix: fixed vims needing hands
+  - bugfix: fixed borer abilities being usable while dead
+  - bugfix: revenants can no longer pull people by using context menu
+  - bugfix: fixed slimes being invisible after revival
+  - bugfix: fixed not being able to put multitools into destructive analyzer
+  - balance: (Jacquerel) Support Guardians cannot heal their owner while recalled.
+  - balance: ' (Jacquerel) Dextrous Guardians cannot use their hands while recalled.'
+  - bugfix: ' (Jacquerel) Gaseous Guardian particles will correctly dismiss when you
+      recall.'
+  - bugfix: ' (Jacquerel) Guardian health hud will display the correct value when
+      you are first summoned.'
+  byondsucks:
+  - balance: Slasher antag no longer has the dumb trait
+  suffering intensifies:
+  - balance: allows tundra moths to use the mothlet grenade
+2026-03-24:
+  JohnFulpWillard:
+  - bugfix: The boulder retrieval matrix board can be printed by cargo now.
+  - rscadd: "There\u2019s now a checkout mode on the barcode scanner."
+  TheColorCyan:
+  - balance: some special  monke edited bullets were lowered in speed to account for
+      slower speed of bullets in general
+2026-03-25:
+  notghosti:
+  - bugfix: License to plasmaflood no longer implies you have a license to murderbone.
+2026-03-26:
+  JohnFulpWillard:
+  - balance: Mimes can use their spells while non-human (if they were transformed
+      into something else)
+  PotatoTomahto:
+  - admin: admins can toggle the tram to isekai people
+  Shoddd:
+  - balance: Scatter laser shells actually utilize the real scatter laser beam. Doing
+      45 damage per shot rather than 90
+  cam_dev:
+  - map: 'oshan: adds maintenance door exit to patients room'
+  ghost:
+  - code_imp: The Greytide event will now play bolt audio and update the icon when
+      toggling door bolts.
+  wonderinghost:
+  - map: '[Meta] Adds Boulder Processing To Miner''s Office'
+2026-03-27:
+  CannibalHunter:
+  - rscadd: Added Ravin Hobo's donator item!
+  - rscadd: Added Yatosamasensei's donator items!
+  Mantlecrawler:
+  - balance: Kudzu can no longer be planted on Oshan's sea floor
+  - bugfix: Heretics can no longer research blade upgrades from paths other than their
+      main path (You already couldnt research more than one), this prevents a softlock
+  - bugfix: Lifebringer anomalies will no longer spawn broken mobs
+  Shoddd:
+  - balance: Explorer laser gun now shoots hardlight lasers, disappearing after 6
+      tiles and being unable to pass through glass but doing 32 damage.
+  - balance: explorer laser gun can now be cranked while moving and now has a unremovable
+      firing pin
+  SirNightKnight:
+  - balance: increased the weight of changelings to 12 from 10.
+  - balance: changelings don't get a weight penalty for rolling consecutively.
+  - balance: increased the weight of heretics from 2 to 8.
+  - balance: heretics, bloodsuckers, and changelings all require enemies to roll.
+2026-03-28:
+  JohnFulpWillard:
+  - bugfix: The Magic 8ball now lets ghosts vote on it.
+  TheColorCyan:
+  - rscadd: Added Snackiversal's donator item "Silver Anchor"
+  Tractor-Maam:
+  - rscadd: Readded crutches to medical lathes.
+2026-03-29:
+  notghosti:
+  - bugfix: SAYA Arms can no longer shove unshoveable things
+2026-03-31:
+  JohnFulpWillard:
+  - rscadd: The Nanotrasen Representative is now better equipped to hide Corporate
+      secrets.
+  Shoddd:
+  - balance: hardlight laser now has a range of 8
+  Tractor-Maam:
+  - rscadd: RGB and Self-Recharging MCR attachments are now printable.
+  notghosti:
+  - bugfix: Living Drunk no longer processes while dead.

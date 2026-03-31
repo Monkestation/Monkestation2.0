@@ -174,3 +174,10 @@
 	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
 	icon_state = "mecha_walter"
 	animal_transformation = /mob/living/basic/pet/cyber_mastiff
+
+//Yatosamasensei
+/obj/item/effect_granter/donator/yato_neco_arc
+	name = "Neco-Arc"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "neco_arc"
+	animal_transformation = /mob/living/basic/pet/yato_neco_arc

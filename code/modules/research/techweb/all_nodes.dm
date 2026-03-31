@@ -264,4 +264,5 @@
 		"vitals_monitor",
 		"vial",
 		"large_vial",
+		"medical_crutch"
 	)

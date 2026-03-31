@@ -188,6 +188,10 @@
 
 	return top_vote
 
+// Only ghosts can interact because only ghosts can open the ui
+/obj/item/toy/eightball/haunted/can_interact(mob/living/user)
+	return isobserver(user)
+
 /obj/item/toy/eightball/haunted/ui_state(mob/user)
 	return GLOB.observer_state
 
@@ -207,7 +211,7 @@
 		var/list/L = list()
 		L["answer"] = pa
 		L["amount"] = votes[pa]
-		L["selected"] = voted[user.ckey]
+		L["selected"] = !!(voted[user.ckey] == pa)
 
 		data["answers"] += list(L)
 	return data
@@ -217,7 +221,7 @@
 	if(.)
 		return
 
-	var/mob/user = usr
+	var/mob/dead/user = ui.user
 
 	switch(action)
 		if("vote")
@@ -225,8 +229,7 @@
 			if(!(selected_answer in haunted_answers))
 				return
 			if(user.ckey in voted)
-				return
-			else
-				votes[selected_answer] += 1
-				voted[user.ckey] = selected_answer
-				. = TRUE
+				votes[voted[user.ckey]] -= 1
+			votes[selected_answer] += 1
+			voted[user.ckey] = selected_answer
+			return TRUE
