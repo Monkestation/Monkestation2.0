@@ -360,9 +360,13 @@
 
 	// ADD_TRAIT(owner, TRAIT_SEE_BLESSED_TILES, REF(src))
 	addtimer(CALLBACK(src, PROC_REF(passive_influence_gain)), passive_gain_timer) // Gain +1 knowledge every 20 minutes.
+
+	RegisterSignal(SSdcs, COMSIG_GLOB_MONSTER_HUNTER_QUERY, PROC_REF(query_for_monster_hunter))
 	return ..()
 
 /datum/antagonist/heretic/on_removal()
+	UnregisterSignal(SSdcs, COMSIG_GLOB_MONSTER_HUNTER_QUERY)
+
 	if(owner.current)
 		for(var/knowledge_path in researched_knowledge)
 			var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_path][HKT_INSTANCE]
@@ -1103,6 +1107,12 @@
 		return HERETIC_NO_LIVING_HEART
 
 	return HERETIC_HAS_LIVING_HEART
+
+/datum/antagonist/heretic/proc/query_for_monster_hunter(datum/source, list/prey)
+	SIGNAL_HANDLER
+	// if you've sacced a head of staff, or passed the point where blade breaking gets disabled, you're potential prey
+	if(high_value_sacrifices > 0 || unlimited_blades)
+		prey += owner
 
 /datum/antagonist/heretic/antag_token(datum/mind/hosts_mind, mob/spender)
 	. = ..()
