@@ -78,6 +78,11 @@ GLOBAL_LIST_EMPTY(antagonists)
 	/// A weakref to the HUD shown to teammates, created by `add_team_hud`
 	var/datum/weakref/team_hud_ref
 
+	/// If set, the info button's background icon state will be set to this.
+	var/info_background_icon_state
+	/// If set, the info button's overlay icon state will be set to this.
+	var/info_overlay_icon_state
+
 /datum/antagonist/New()
 	GLOB.antagonists += src
 	typecache_datum_blacklist = typecacheof(typecache_datum_blacklist)
@@ -265,6 +270,10 @@ GLOBAL_LIST_EMPTY(antagonists)
 		if(antag_flags & FLAG_ANTAG_OBSERVER_VISIBLE_PANEL)
 			info_button.show_to_observers = TRUE
 			info_button.allow_observer_click = TRUE
+		if(info_background_icon_state)
+			info_button.background_icon_state = info_background_icon_state
+		if(info_overlay_icon_state)
+			info_button.overlay_icon_state = info_overlay_icon_state
 		info_button.Grant(owner.current)
 		info_button_ref = WEAKREF(info_button)
 	if(!silent)

@@ -31,6 +31,9 @@
 	stinger_sound = 'sound/music/antag/heretic/heretic_gain.ogg'
 	antag_flags = parent_type::antag_flags | FLAG_ANTAG_OBSERVER_VISIBLE_PANEL
 
+	info_background_icon_state = "bg_heretic"
+	info_overlay_icon_state = "bg_heretic_border"
+
 	/// Contains multiple separate heretic shops so you can choose between multiple when buying.
 	var/list/heretic_shops = list(
 		HERETIC_KNOWLEDGE_START = list(),
