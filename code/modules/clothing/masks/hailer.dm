@@ -104,6 +104,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	name = "\improper SWAT gas mask"
 	icon_state = "swat1"
 	max_filters = 3
+	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 
 /obj/item/clothing/mask/gas/sechailer/swat/alt/pig
 	icon_state = "swat2"
