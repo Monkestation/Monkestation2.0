@@ -1,0 +1,6 @@
+author: "Tractor-Maam"
+delete-after: True
+changes:
+  - bugfix: "the Theseus curator sat can now toggle its curtains."
+  - bugfix: "the Theseus EVA storage no longer is free access through the shutters."
+  - rscadd: "Theseus EVA is now on EVA or Library access instead of Command access."
