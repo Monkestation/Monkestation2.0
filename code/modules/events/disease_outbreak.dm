@@ -62,7 +62,7 @@
 			continue
 		if(length(candidate.diseases)) //Is our candidate already sick?
 			continue
-		if(candidate.check_contact_sterility())
+		if(candidate.check_contact_sterility(BODY_ZONE_EVERYTHING))
 			continue
 		disease_candidates += candidate
 

@@ -18,8 +18,8 @@ GLOBAL_LIST_INIT(infected_items, list())
 	for(var/datum/disease/acute/V as anything in viruses)
 		infection_attempt(M, V, bodypart)
 
-	if(isnull(bodypart)) //no bodypart specified? that should mean we're being held.
-		bodypart = (M.active_hand_index % 2 == 0) ? BODY_ZONE_R_ARM : BODY_ZONE_L_ARM
+	if (!bodypart)//no bodypart specified? that should mean we're being held.
+		bodypart = BODY_ZONE_ARMS
 
 	//secondly, do they happen to carry contact-spreading viruses themselves?
 	var/list/contact_diseases = filter_disease_by_spread(M.diseases, required = DISEASE_SPREAD_CONTACT_SKIN)
@@ -35,8 +35,8 @@ GLOBAL_LIST_INIT(infected_items, list())
 	if (!istype(D))
 		return
 
-	if(isnull(bodypart))
-		bodypart = (perp.active_hand_index % 2 == 0) ? BODY_ZONE_R_ARM : BODY_ZONE_L_ARM
+	if (src in perp.held_items)
+		bodypart = BODY_ZONE_ARMS
 
 	if (bodypart)
 		var/block = perp.check_contact_sterility(bodypart)
