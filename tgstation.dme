@@ -7328,7 +7328,6 @@
 #include "monkestation\code\modules\blueshift\cargo\flatpacks.dm"
 #include "monkestation\code\modules\blueshift\cargo\permit_pin.dm"
 #include "monkestation\code\modules\blueshift\cargo\specialist_armor.dm"
-#include "monkestation\code\modules\blueshift\clothing\dogginos.dm"
 #include "monkestation\code\modules\blueshift\clothing\kahraman.dm"
 #include "monkestation\code\modules\blueshift\clothing\nova_armorsuit.dm"
 #include "monkestation\code\modules\blueshift\clothing\nova_belt.dm"
