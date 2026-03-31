@@ -138,9 +138,14 @@ SUBSYSTEM_DEF(atoms)
 
 	testing("Initialized [count] atoms")
 
+//#define NO_SWAP 1
 /// Init this specific atom
 /datum/controller/subsystem/atoms/proc/InitAtom(atom/A, from_template = FALSE, should_swap = FALSE, list/arguments)
 	var/the_type = A.type
+
+#ifdef NO_SWAP
+	should_swap = FALSE
+#endif
 
 	if(QDELING(A))
 		// Check init_start_time to not worry about atoms created before the atoms SS that are cleaned up before this
