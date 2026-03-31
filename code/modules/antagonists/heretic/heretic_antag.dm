@@ -439,6 +439,7 @@
 	update_heretic_aura()
 	var/datum/action/cooldown/spell/shadow_cloak/cloak_spell = locate() in heretic_mob.actions
 	cloak_spell.Remove(heretic_mob)
+	show_to_ghosts = TRUE // you're visible anyways
 
 /// Adds an overlay to the heretic
 /datum/antagonist/heretic/proc/update_heretic_aura()

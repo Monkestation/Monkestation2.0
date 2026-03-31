@@ -622,9 +622,7 @@
 
 	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
 	heretic_datum.ascended = TRUE
-	// there's literally a big unique announcement saying "HEY THIS PERSON'S AN ASCENDED HERETIC", no reason to not have them in the orbit menu
-	heretic_datum.show_to_ghosts = TRUE
-	heretic_datum.antagpanel_category = "Ascended Heretics"
+	heretic_datum.antagpanel_category = "Ascended Heretic"
 	// In case we skipped ritual of knowledge
 	SEND_SIGNAL(heretic_datum, COMSIG_HERETIC_PASSIVE_UPGRADE_FINAL)
 
