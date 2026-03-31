@@ -102,11 +102,11 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 
 /obj/item/clothing/mask/gas/sechailer/swat/alt
 	name = "\improper SWAT gas mask"
-	icon_state = "swat2"
+	icon_state = "swat1"
 	max_filters = 3
 
 /obj/item/clothing/mask/gas/sechailer/swat/alt/pig
-	icon_state = "swat1"
+	icon_state = "swat2"
 
 /obj/item/clothing/mask/gas/sechailer/swat/spacepol
 	name = "spacepol mask"
