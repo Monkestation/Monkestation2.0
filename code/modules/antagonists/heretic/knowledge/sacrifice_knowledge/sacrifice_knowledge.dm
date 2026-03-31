@@ -205,8 +205,13 @@
 	var/mob/living/carbon/human/sacrifice = locate() in selected_atoms
 	if(!sacrifice)
 		CRASH("[type] sacrifice_process didn't have a human in the atoms list. How'd it make it so far?")
-	if(!(sacrifice in heretic_datum.sac_targets) && !IS_CULTIST(sacrifice))
-		CRASH("[type] sacrifice_process managed to get a non-target, non-cult human. This is incorrect.")
+
+	var/sac_job_flag = sacrifice.mind?.assigned_role?.job_flags | sacrifice.last_mind?.assigned_role?.job_flags
+	var/datum/objective/major_sacrifice/major_sacc_objective = locate() in heretic_datum.objectives
+	var/can_sac_command = major_sacc_objective && !major_sacc_objective.check_completion()
+
+	if(!(sacrifice in heretic_datum.sac_targets) && !IS_CULTIST(sacrifice) && !(can_sac_command && (sac_job_flag & JOB_HEAD_OF_STAFF)))
+		CRASH("[type] sacrifice_process managed to get a non-target, non-cult, non-command human. This is incorrect.")
 
 	if(sacrifice.mind)
 		LAZYADD(target_blacklist, sacrifice.mind)
@@ -214,7 +219,6 @@
 
 
 	var/feedback = "Your patrons accept your offer"
-	var/sac_job_flag = sacrifice.mind?.assigned_role?.job_flags | sacrifice.last_mind?.assigned_role?.job_flags
 	var/datum/antagonist/cult/cultist_datum = GET_CULTIST(sacrifice)
 	// Heads give 3 points, cultists give 1 point (and a special reward), normal sacrifices give 2 points.
 	heretic_datum.total_sacrifices++
