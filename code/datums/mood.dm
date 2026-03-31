@@ -239,7 +239,7 @@
 
 /// Updates the mob's mood icon
 /datum/mood/proc/update_mood_icon()
-	if (!(mob_parent.client || mob_parent.hud_used))
+	if (!(mob_parent.client || mob_parent.hud_used) || isnull(mood_screen_object))
 		return
 
 	mood_screen_object.cut_overlays()
