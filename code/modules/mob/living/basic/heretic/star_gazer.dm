@@ -171,7 +171,7 @@
 
 /datum/action/cooldown/spell/stargazer_laser
 	name = "Star Gaze"
-	desc = "Generates a massive death beam that eradicates everything in it's path. \
+	desc = "Generates a massive death beam that eradicates everything in its path. \
 			Has it's own gravitational pull, sucking in new victims."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
