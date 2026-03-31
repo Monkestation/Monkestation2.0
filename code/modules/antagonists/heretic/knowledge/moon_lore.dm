@@ -76,15 +76,18 @@
 	. = ..()
 
 	if(target.can_block_magic(MAGIC_RESISTANCE_MOON))
-		to_chat(target, span_danger("You hear echoing laughter from above..but it is dull and distant."))
+		to_chat(target, span_danger("You hear echoing laughter from above... but it is dull and distant."))
 		return
 
 	source.apply_status_effect(/datum/status_effect/moon_grasp_hide)
 
 	if(!iscarbon(target))
 		return
+	if(IS_MONSTERHUNTER(target))
+		to_chat(target, span_danger("You hear echoing laughter from above... but it is <i>pathetic</i> compared to what surrounds you."))
+		return
 	var/mob/living/carbon/carbon_target = target
-	to_chat(carbon_target, span_danger("You hear echoing laughter from above"))
+	to_chat(carbon_target, span_danger("You hear echoing laughter from above!"))
 	carbon_target.cause_hallucination(/datum/hallucination/delusion/preset/moon, "delusion/preset/moon hallucination caused by mansus grasp")
 	carbon_target.mob_mood.adjust_sanity(-30)
 
@@ -155,7 +158,7 @@
 	if(source == target || !isliving(target))
 		return
 
-	if(target.can_block_magic(MAGIC_RESISTANCE_MOON))
+	if(target.can_block_magic(MAGIC_RESISTANCE_MOON) || IS_MONSTERHUNTER(target))
 		return
 
 	target.cause_hallucination( \
@@ -240,11 +243,14 @@
 /datum/heretic_knowledge/ultimate/moon_final/proc/attempt_conversion(mob/living/carbon/convertee, mob/user)
 	// Heretics, lunatics and monsters shouldn't become lunatics because they either have a master or have a mansus grasp
 	if(IS_HERETIC_OR_MONSTER(convertee))
-		to_chat(convertee, span_boldwarning("[user]'s rise is influencing those who are weak willed. Their minds shall rend." ))
+		to_chat(convertee, span_boldwarning("[user]'s rise is influencing those who are weak willed. Their minds shall rend."))
+		return FALSE
+	if(IS_MONSTERHUNTER(convertee)) // they get special text (they're shielded by the TRAIT_UNCONVERTABLE check anyways)
+		to_chat(convertee, span_boldwarning("Echoing laughter pierces the veil around you... a weak, monstrous mockery of Wonderland."))
 		return FALSE
 	// Mindshielded and anti-magic folks are immune against this effect because this is a magical mind effect
 	if(HAS_MIND_TRAIT(convertee, TRAIT_UNCONVERTABLE) || HAS_TRAIT_NOT_FROM(convertee, TRAIT_MINDSHIELD, NANITES_TRAIT) || convertee.can_block_magic(MAGIC_RESISTANCE))
-		to_chat(convertee, span_boldwarning("You feel shielded from something." ))
+		to_chat(convertee, span_boldwarning("You feel shielded from something."))
 		return FALSE
 
 	if(!convertee.mind)
@@ -280,6 +286,8 @@
 			continue
 		if(carbon_view.can_block_magic(MAGIC_RESISTANCE_MOON)) //Somehow a shitty piece of tinfoil is STILL able to hold out against the power of an ascended heretic.
 			continue
+		if(IS_MONSTERHUNTER(carbon_view)) // YOUR MADNESS IS WEAK COMPARED TO THE WONDERLAND
+			continue
 		new /obj/effect/temp_visual/moon_ringleader(get_turf(carbon_view))
 		if(carbon_view.has_status_effect(/datum/status_effect/confusion))
 			to_chat(carbon_view, span_big(span_hypnophrase("YOUR HEAD RATTLES WITH A THOUSAND VOICES JOINED IN A MADDENING CACOPHONY OF SOUND AND MUSIC. EVERY FIBER OF YOUR BEING SAYS 'RUN'.")))
@@ -309,9 +317,8 @@
 		else
 			attempt_conversion(carbon_view, source)
 
-
 /datum/heretic_knowledge/ultimate/moon_final/proc/should_mind_explode(mob/living/carbon/target)
-	if(HAS_TRAIT(target, TRAIT_MINDSHIELD))
+	if(HAS_TRAIT_NOT_FROM(target, TRAIT_MINDSHIELD, NANITES_TRAIT))
 		return TRUE
 	if(IS_CULTIST_OR_CULTIST_MOB(target))
 		return TRUE
