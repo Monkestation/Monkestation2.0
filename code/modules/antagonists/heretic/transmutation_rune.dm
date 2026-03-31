@@ -178,8 +178,8 @@
 				if(!istype(nearby_stack, stack_path) && (!islist(stack_path) || !is_type_in_list(nearby_stack, stack_path)))
 					continue
 				var/amount_to_give = min(nearby_stack.amount || stack_reqs[stack_path])
-				var/obj/item/stack/our_stack = locate(nearby_stack.merge_type) in selected_atoms
-				if(!our_stack)
+				var/obj/item/stack/our_stack = locate(nearby_stack.merge_type) in (selected_atoms - nearby_stack)
+				if(QDELETED(our_stack))
 					our_stack = nearby_stack.split_stack(amount = amount_to_give)
 					selected_atoms |= our_stack
 				else
