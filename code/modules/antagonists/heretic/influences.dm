@@ -140,7 +140,6 @@
 /obj/effect/visible_heretic_influence/proc/show_presence()
 	RemoveInvisibility(type)
 	animate(src, alpha = 255, time = 15 SECONDS)
-	addtimer(CALLBACK(src, PROC_REF(fade_out)), rand(10 MINUTES, 15 MINUTES))
 
 /obj/effect/visible_heretic_influence/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
@@ -202,10 +201,6 @@
 	. += span_userdanger("Your mind burns as you stare at the tear!")
 	user.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10, 190)
 	user.add_mood_event("gates_of_mansus", /datum/mood_event/gates_of_mansus)
-
-/obj/effect/visible_heretic_influence/proc/fade_out()
-	animate(src, alpha = 0, time = 30 SECONDS)
-	QDEL_IN(src, 30 SECONDS)
 
 /obj/effect/heretic_influence
 	name = "reality smash"
