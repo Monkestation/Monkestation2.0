@@ -755,10 +755,16 @@
  */
 /datum/antagonist/heretic/proc/add_sacrifice_target(mob/living/carbon/human/target)
 
-	var/image/target_image = image(icon = target.icon, icon_state = target.icon_state)
-	target_image.overlays = target.overlays
+	var/mutable_appearance/target_appearance = copy_appearance_filter_overlays(target.appearance, recursion = 1)
+	target_appearance.appearance_flags = KEEP_TOGETHER
+	target_appearance.layer = FLOAT_LAYER
+	target_appearance.plane = FLOAT_PLANE
+	target_appearance.dir = SOUTH
+	target_appearance.pixel_x = target.base_pixel_x
+	target_appearance.pixel_y = target.base_pixel_y
+	target_appearance.pixel_z = target.base_pixel_z
 
-	LAZYSET(sac_targets, target, target_image)
+	LAZYSET(sac_targets, target, target_appearance)
 	RegisterSignal(target, COMSIG_QDELETING, PROC_REF(on_target_deleted))
 	all_sac_targets += target.real_name
 
