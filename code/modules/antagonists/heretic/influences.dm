@@ -126,7 +126,8 @@
 
 /obj/effect/visible_heretic_influence/Initialize(mapload)
 	. = ..()
-	addtimer(CALLBACK(src, PROC_REF(show_presence)), 15 SECONDS)
+	SetInvisibility(INVISIBILITY_ABSTRACT, id = type)
+	addtimer(CALLBACK(src, PROC_REF(show_presence)), 1 MINUTES)
 	/* AddComponent(/datum/component/fishing_spot, GLOB.preset_fish_sources[/datum/fish_source/dimensional_rift]) */
 
 	var/image/silicon_image = image('icons/effects/eldritch.dmi', src, null, OBJ_LAYER)
@@ -134,10 +135,12 @@
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "pierced_reality", silicon_image)
 
 /*
- * Makes the influence fade in after 15 seconds.
+ * Makes the influence fade in after a minute
  */
 /obj/effect/visible_heretic_influence/proc/show_presence()
+	RemoveInvisibility(type)
 	animate(src, alpha = 255, time = 15 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(fade_out)), rand(10 MINUTES, 15 MINUTES))
 
 /obj/effect/visible_heretic_influence/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
@@ -201,6 +204,10 @@
 	. += span_userdanger("Your mind burns as you stare at the tear!")
 	user.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10, 190)
 	user.add_mood_event("gates_of_mansus", /datum/mood_event/gates_of_mansus)
+
+/obj/effect/visible_heretic_influence/proc/fade_out()
+	animate(src, alpha = 0, time = 30 SECONDS)
+	QDEL_IN(src, 30 SECONDS)
 
 /obj/effect/heretic_influence
 	name = "reality smash"
