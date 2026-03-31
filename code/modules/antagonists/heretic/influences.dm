@@ -159,8 +159,14 @@
 
 	if(prob(25))
 		to_chat(human_user, span_userdanger("An otherwordly presence tears and atomizes your [their_poor_arm.name] as you try to touch the hole in the very fabric of reality!"))
-		if (their_poor_arm.dismember())
-			their_poor_arm.forceMove(src) // stored for later fishage
+		// while in theory it should atomize your arm anyways, a dismemberment fail and then qdeling the still-attached limb causes Weird Things to happen.
+		if(HAS_TRAIT(human_user, TRAIT_NODISMEMBER) || (their_poor_arm.bodypart_flags & BODYPART_UNREMOVABLE))
+			to_chat(human_user, span_userdanger("An otherwordly presence lashes out and violently mangles your [their_poor_arm.name] as you try to touch the hole in the very fabric of reality!"))
+			their_poor_arm.receive_damage(brute = 50, wound_bonus = 100) // guaranteed to wound
+		else
+			to_chat(human_user, span_userdanger("An otherwordly presence tears and atomizes your [their_poor_arm.name] as you try to touch the hole in the very fabric of reality!"))
+			their_poor_arm.dismember()
+			qdel(their_poor_arm)
 	else
 		to_chat(human_user,span_danger("You pull your hand away from the hole as the eldritch energy flails, trying to latch onto existence itself!"))
 	return TRUE
