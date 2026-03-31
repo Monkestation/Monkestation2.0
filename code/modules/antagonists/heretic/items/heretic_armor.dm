@@ -525,7 +525,8 @@
 		TRAIT_STUNIMMUNE,
 		TRAIT_NEVER_WOUNDED,
 		TRAIT_PACIFISM,
-		TRAIT_NOHUNGER
+		TRAIT_NOHUNGER,
+		TRAIT_NO_SLIP_ALL,
 	)
 	/// Hud that gets shown to the wearer, gives a rough estimate of their current brain damage
 	var/atom/movable/screen/moon_health/health_hud
