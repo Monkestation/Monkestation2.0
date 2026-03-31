@@ -431,6 +431,8 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define FLAG_ANTAG_CAP_SINGLE (1 << 4)
 /// If set then we ignore mobs being human or not for antag point counting
 #define FLAG_ANTAG_CAP_IGNORE_HUMANITY (1 << 5)
+/// Antag's panel action button and the UI therein is viewable by observers
+#define FLAG_ANTAG_OBSERVER_VISIBLE_PANEL (1 << 6)
 
 #define FREEDOM_IMPLANT_CHARGES 4
 

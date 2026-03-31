@@ -29,7 +29,7 @@
 	default_custom_objective = "Turn a department into a testament for your dark knowledge."
 	hardcore_random_bonus = TRUE
 	stinger_sound = 'sound/music/antag/heretic/heretic_gain.ogg'
-	// antag_flags = parent_type::antag_flags | ANTAG_OBSERVER_VISIBLE_PANEL
+	antag_flags = parent_type::antag_flags | FLAG_ANTAG_OBSERVER_VISIBLE_PANEL
 
 	/// Contains multiple separate heretic shops so you can choose between multiple when buying.
 	var/list/heretic_shops = list(
