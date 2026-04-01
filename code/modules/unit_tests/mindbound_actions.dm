@@ -23,7 +23,7 @@
 
 	for(var/datum/action/cooldown/spell/remaining_spell in wizard.actions)
 		if(remaining_spell == /datum/action/cooldown/spell/pointed/flash)
-			continue
+			break
 		TEST_FAIL("Spell: [remaining_spell] failed to transfer minds when a mind transfer occured.")
 
 	qdel(fireball)
