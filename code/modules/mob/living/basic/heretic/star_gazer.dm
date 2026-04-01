@@ -382,7 +382,8 @@
 							YOUR TOTAL ANNIHILATION TAKES ONLY A MOMENT BEFORE YOU ARE REDUCED BACK TO WHAT YOU ALWAYS WERE. \
 							MOTES OF MERE DUST...")
 						)
-					living_victim.dust()
+					living_victim.death(TRUE, span_stargazer("COMPLETE ATOMIZATION")) // manually call death() so we have a cool-ass "you have succumbed to X" message
+					living_victim.dust(just_ash = TRUE)
 				living_victim.emote("scream")
 				living_victim.apply_status_effect(/datum/status_effect/star_mark)
 				living_victim.apply_damage(damage = 30, damagetype = BURN, spread_damage = TRUE)
