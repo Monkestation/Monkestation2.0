@@ -433,9 +433,9 @@
 	else
 		var/actual_created
 		if(GLOB.do_midround_swap)
-			actual_created = SSatoms.swap_paths[R.result] || R.result
+			actual_created = SSatoms.swap_paths[design.build_path] || design.build_path
 		else
-			actual_created = R.result
+			actual_created = design.build_path
 		created = new actual_created(null)
 		split_materials_uniformly(design_materials, material_cost_coefficient, created)
 
