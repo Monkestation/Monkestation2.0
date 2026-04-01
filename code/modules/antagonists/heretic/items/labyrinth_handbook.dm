@@ -11,7 +11,11 @@
 
 /obj/effect/forcefield/wizard/heretic/Bumped(mob/living/bumpee)
 	. = ..()
-	if(!istype(bumpee) || IS_HERETIC_OR_MONSTER(bumpee))
+	if(ismecha(bumpee))
+		var/obj/vehicle/sealed/mecha/mecha = bumpee
+		mecha.emp_act(EMP_LIGHT) // lol
+		return
+	if(!isliving(bumpee) || IS_HERETIC_OR_MONSTER(bumpee))
 		return
 	var/throwtarget = get_edge_target_turf(loc, get_dir(loc, get_step_away(bumpee, loc)))
 	bumpee.safe_throw_at(throwtarget, 10, 10, src, force = MOVE_FORCE_EXTREMELY_STRONG)
