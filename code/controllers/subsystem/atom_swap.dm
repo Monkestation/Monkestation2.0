@@ -35,8 +35,6 @@
 /datum/controller/subsystem/atoms/proc/do_atom_swap()
 	for(var/atom/swapped in qued_swap_atoms)
 		qued_swap_atoms -= swapped
-		if(!isdatum(swapped) || ispath(swapped))
-			continue
 		var/swap_to = swap_paths[swapped.type]
 		if(!swap_to)
 			stack_trace("atom([swapped]) tried to swap without an assigned path.")
