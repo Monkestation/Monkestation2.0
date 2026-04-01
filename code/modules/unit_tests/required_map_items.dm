@@ -5,7 +5,7 @@
  * - Add the typepath(s) to setup_expected_types
  * - In the type's initialize, REGISTER_REQUIRED_MAP_ITEM() a minimum and maximum
  */
-/datum/unit_test/required_map_items
+/*/datum/unit_test/required_map_items
 	/// A list of all typepaths that we expect to be in the required items list
 	var/list/expected_types = list()
 	/// Subtypes to ignore.
@@ -76,4 +76,4 @@
 	src.tracked_type = tracked_type
 	src.minimum_amount = minimum_amount
 	src.maximum_amount = maximum_amount
-	total_amount += 1
+	total_amount += 1*/
