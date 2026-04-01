@@ -65,6 +65,9 @@
 			if(!length(chosen_group))
 				turf_groups.Cut(idx, idx + 1)
 
+			if(chosen_location.initial_gas_mix != OPENTURF_DEFAULT_ATMOS) // no
+				continue
+
 			// gotta make sure we're an open, floor turf
 			if(chosen_location.density || isgroundlessturf(chosen_location))
 				continue
