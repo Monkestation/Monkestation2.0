@@ -84,6 +84,12 @@
 	add_traits(traits_to_apply, ROUNDSTART_TRAIT)
 	ADD_TRAIT(src, TRAIT_SILICON_EMOTES_ALLOWED, INNATE_TRAIT)
 
+	var/datum/action/cooldown/spell/pointed/flash/flash = locate() in src.actions
+	if(!flash)
+		flash = new(src)
+		flash.Grant(src)
+		flash.cast_range = 500
+
 /mob/living/silicon/Destroy()
 	QDEL_NULL(radio)
 	QDEL_NULL(aicamera)

@@ -33,6 +33,11 @@
 	AddElement(/datum/element/connect_loc, loc_connections)
 	GLOB.human_list += src
 
+	var/datum/action/cooldown/spell/pointed/flash/flash = locate() in src.actions
+	if(!flash)
+		flash = new(src)
+		flash.Grant(src)
+
 /mob/living/carbon/human/proc/setup_mood()
 	if (CONFIG_GET(flag/disable_human_mood))
 		return
