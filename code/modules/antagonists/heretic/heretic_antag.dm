@@ -72,7 +72,7 @@
 	/// The path our heretic has chosen.
 	var/datum/heretic_knowledge_tree_column/heretic_path
 	/// A sum of how many knowledge points this heretic CURRENTLY has. Used to research.
-	var/knowledge_points = 1
+	var/knowledge_points = 2
 	/// The time between gaining influence passively. The heretic gain +1 knowledge points every this duration of time.
 	var/passive_gain_timer = 20 MINUTES
 	/// Tracks how many knowledge points the heretic has aqcuired. Once you get enough points you lose the ability to blade break
@@ -83,6 +83,8 @@
 	var/total_sacrifices = 0
 	/// A list of TOTAL how many high value sacrifices completed. (Heads of staff)
 	var/high_value_sacrifices = 0
+	/// The total number of essences siphoned from influences.
+	var/essences_siphoned = 0
 	/// Controls what types of turf we can spread rust to
 	var/rust_strength = 1
 	/// Simpler version of above used to limit amount of loot that can be hoarded
@@ -746,7 +748,7 @@
 	var/datum/objective/minor_sacrifice/sac_objective = new()
 	sac_objective.owner = owner
 	if(num_heads < 2) // They won't get major sacrifice, so bump up minor sacrifice a bit
-		sac_objective.target_amount = 5
+		sac_objective.target_amount = 6
 		sac_objective.update_explanation_text()
 	objectives += sac_objective
 
@@ -1137,7 +1139,7 @@
 
 /datum/objective/minor_sacrifice/New(text)
 	. = ..()
-	target_amount = 4
+	target_amount = 5
 	update_explanation_text()
 
 /datum/objective/minor_sacrifice/update_explanation_text()
@@ -1187,7 +1189,7 @@
 	// Add in the base research we spawn with, otherwise it'd be too easy.
 	target_amount += length(GLOB.heretic_start_knowledge)
 	// And add in some buffer, to require some sidepathing, especially since heretics get some free side paths.
-	target_amount += rand(2, 4)
+	target_amount += rand(5, 8)
 	update_explanation_text()
 
 /datum/objective/heretic_research/update_explanation_text()

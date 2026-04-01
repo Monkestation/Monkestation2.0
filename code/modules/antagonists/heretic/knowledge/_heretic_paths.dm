@@ -358,6 +358,9 @@ GLOBAL_LIST_INIT(heretic_path_datums, init_heretic_path_datums())
 
 	// all possible drafts are added to the shop, this time with costs
 	for(var/drafting_tier in 1 to length(shop_knowledge))
+		if(drafting_tier == 5 && route != PATH_LOCK)
+			continue
+
 		var/unlocked_by = shop_unlock_order[drafting_tier]
 		var/list/eligible_tier = shop_knowledge[drafting_tier]
 		for(var/knowledge_type in eligible_tier)
