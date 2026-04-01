@@ -605,7 +605,15 @@
 	// Remove all non-dead humans from the atoms list.
 	// (We only want to sacrifice dead folk.)
 	for(var/mob/living/carbon/human/sacrifice in atoms)
-		if(!is_valid_sacrifice(sacrifice))
+		// valid sacrifices will briefly flash with a green outline
+		if(is_valid_sacrifice(sacrifice))
+			sacrifice.add_filter("heretic_ascend_helper", 1, outline_filter(size = 1, color = COLOR_HERETIC_GREEN))
+			var/sac_filter = sacrifice.get_filter("heretic_ascend_helper")
+			if(sac_filter) // just in case
+				animate(sac_filter, size = 2, time = 2 SECONDS)
+				animate(size = 1, time = 0.5 SECONDS)
+			addtimer(CALLBACK(sacrifice, TYPE_PROC_REF(/datum, remove_filter), "heretic_ascend_helper"), 2.5 SECONDS, TIMER_OVERRIDE | TIMER_UNIQUE)
+		else
 			atoms -= sacrifice
 
 	// All the non-dead humans are removed in this proc.
