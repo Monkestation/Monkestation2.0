@@ -217,7 +217,7 @@
 	for(var/path_as_text in json["ignored_unit_tests"])
 		var/path_real = text2path(path_as_text)
 		if(!ispath(path_real, /datum/unit_test))
-			stack_trace("Invalid path in mapping config for ignored unit tests: \[[path_as_text]\]")
+			//stack_trace("Invalid path in mapping config for ignored unit tests: \[[path_as_text]\]")
 			continue
 		LAZYADD(skipped_tests, path_real)
 #endif
