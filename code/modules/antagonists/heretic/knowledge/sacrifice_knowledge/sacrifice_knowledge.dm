@@ -347,7 +347,15 @@
 
 	var/turf/destination = get_turf(destination_landmark)
 
-	sac_target.visible_message(span_danger("[sac_target] begins to shudder violenty as dark tendrils begin to drag them into thin air!"))
+	notify_ghosts(
+		"[heretic_mind.name] has sacrificed [sac_target.real_name] to the Mansus!",
+		source = sac_target,
+		action = NOTIFY_ORBIT,
+		notify_flags = NOTIFY_CATEGORY_NOFLASH,
+		header = "touhou hijack lol",
+	)
+
+	sac_target.visible_message(span_danger("[sac_target] begins to shudder violently as dark tendrils begin to drag [sac_target.p_them()] into thin air!"))
 	sac_target.equip_to_slot_or_del(new /obj/item/restraints/handcuffs/energy/cult, ITEM_SLOT_HANDCUFFED/* , indirect_action = TRUE */)
 	sac_target.dropItemToGround(sac_target.legcuffed, TRUE)
 
