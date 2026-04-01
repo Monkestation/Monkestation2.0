@@ -1,4 +1,6 @@
 //its for april fools im not organizaing this well, also to insure things are still somewhat playable cargo orders should remain untouched
+#define NO_SWAP 1
+GLOBAL_VAR_INIT(do_midround_swap, FALSE)
 /datum/controller/subsystem/atoms
 	var/list/swap_paths = list()
 	var/list/list/paths_to_swap = list(/obj/effect/spawner/random = list(), /obj/item = list())
@@ -33,6 +35,7 @@
 			swap_paths[swap_source] = swap_target
 
 /datum/controller/subsystem/atoms/proc/do_atom_swap()
+#ifndef NO_SWAP
 	for(var/atom/swapped in qued_swap_atoms)
 		qued_swap_atoms -= swapped
 		var/swap_to = swap_paths[swapped.type]
@@ -42,3 +45,4 @@
 		var/atom/spawn_loc = swapped.loc
 		qdel(swapped)
 		new swap_to(spawn_loc)
+#endif

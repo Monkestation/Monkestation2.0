@@ -431,7 +431,11 @@
 
 		created = new stack_item(null, number_to_make)
 	else
-		var/actual_created = SSatoms.swap_paths[design.build_path] || design.build_path
+		var/actual_created
+		if(GLOB.do_midround_swap)
+			actual_created = SSatoms.swap_paths[R.result] || R.result
+		else
+			actual_created = R.result
 		created = new actual_created(null)
 		split_materials_uniformly(design_materials, material_cost_coefficient, created)
 

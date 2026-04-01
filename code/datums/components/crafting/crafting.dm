@@ -203,7 +203,11 @@
 			if(ispath(R.result, /obj/item/stack))
 				I = new R.result (get_turf(a.loc), R.result_amount || 1)
 			else
-				var/real_result = SSatoms.swap_paths[R.result] || R.result
+				var/real_result
+				if(GLOB.do_midround_swap)
+					real_result = SSatoms.swap_paths[R.result] || R.result
+				else
+					real_result = R.result
 				I = new real_result(get_turf(a.loc))
 				if(I.atom_storage && R.delete_contents)
 					for(var/obj/item/thing in I)
