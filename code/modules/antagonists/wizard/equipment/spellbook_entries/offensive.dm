@@ -59,6 +59,7 @@
 	desc = "Charges your hand with the power to turn victims into inert statues for a long period of time."
 	spell_type = /datum/action/cooldown/spell/touch/flesh_to_stone
 	category = SPELLBOOK_CATEGORY_OFFENSIVE
+	moba_blacklist = TRUE
 
 /datum/spellbook_entry/teslablast
 	name = "Tesla Blast"
