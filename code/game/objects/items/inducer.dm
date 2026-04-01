@@ -28,7 +28,8 @@
 	update_appearance(UPDATE_OVERLAYS)
 
 /obj/item/inducer/Destroy(force)
-	QDEL_NULL(powerdevice)
+	if(isdatum(powerdevice))
+		QDEL_NULL(powerdevice)
 	. = ..()
 
 /obj/item/inducer/Exited(atom/movable/gone, direction)
